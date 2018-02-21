@@ -1,9 +1,9 @@
 # `AMR`
-This is an [R package](https://www.r-project.org) to simplify the analysis of Antimicrobial Resistance (AMR).
+This is an [R package](https://www.r-project.org) to simplify the analysis and prediction of Antimicrobial Resistance (AMR).
 
 ![logo](man/figures/logo_en.png)
 
-This R package was created for academic research by PhD students of the Medical Microbiology & Infection Prevention (mmb) department of the [University of Groningen](https://www.rug.nl/) who also maintain this package, see [Authors](#authors).
+This R package was created for academic research by PhD students of the Faculty of Medical Sciences of the [University of Groningen](https://www.rug.nl/) who also maintain this package, see [Authors](#authors).
 
 ## Why this package?
 This R package contains functions to make microbiological, epidemiological data analysis easier. It allows the use of some new S3 classes to work with MIC values and antimicrobial interpretations (i.e. values S, I and R).
@@ -122,9 +122,9 @@ reset_config()
 
 ## Authors
 
-  - [Berends MS](https://github.com/msberends)<sup>1,2</sup>
-  - [Luz CF](https://github.com/ceefluz)<sup>1</sup>
-  - [Hassing EEA](https://github.com/erwinhassing)<sup>2</sup> (contributor)
+  - [Berends MS](https://github.com/msberends)<sup>1,2</sup>, PhD Student
+  - [Luz CF](https://github.com/ceefluz)<sup>1</sup>, PhD Student
+  - [Hassing EEA](https://github.com/erwinhassing)<sup>2</sup>, Data Analyst (contributor)
   
 <sup>1</sup> Department of Medical Microbiology, University of Groningen, University Medical Center Groningen, Groningen, the Netherlands
 
