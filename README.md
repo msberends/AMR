@@ -10,6 +10,8 @@ This R package contains functions to make microbiological, epidemiological data 
 
 AMR can also be predicted for the forthcoming years with the `rsi_predict` function. For use with the `dplyr` package, the `rsi` function can be used in conjunction with `summarise` to calculate the resistance percentages of different antibiotic columns of a table.
 
+It also contains functions to translate antibiotic codes from the lab (like `"AMOX"`) or the [WHO](https://www.whocc.no/atc_ddd_index/?code=J01CA04&showdescription=no) (like `"J01CA04"`) to trivial names (like `"amoxicillin"`) and vice versa.
+
 ## How to use it?
 ```r
 # Call it with:
@@ -73,7 +75,7 @@ Other epidemiological functions:
 
 ```r
 # Apply EUCAST Expert Rules v3.1 (latest) to antibiotic columns
-interpretive_reading(...)
+EUCAST_rules(...)
 
 # Determine key antibiotic based on bacteria ID
 key_antibiotics(...)
@@ -91,11 +93,6 @@ rsi_predict(...)
 # Get name of antibiotic by ATC code
 abname(...)
 abname("J01CR02", from = "atc", to = "umcg") # "AMCL"
-
-# Calculate age of patients
-age(...)
-# Categorize patients age to age groups
-age.group(...)
 ```
 
 ## How to get it?
