@@ -8,7 +8,7 @@ This R package was created for academic research by PhD students of the Faculty 
 ## Why this package?
 This R package contains functions to make microbiological, epidemiological data analysis easier. It allows the use of some new S3 classes to work with MIC values and antimicrobial interpretations (i.e. values S, I and R).
 
-AMR can also be predicted for the forthcoming years with the `rsi_predict` function. For use with the `dplyr` package, the `rsi` can be used in conjunction with `summarise` to calculate the resistance percentages of different antibiotic columns of a table.
+AMR can also be predicted for the forthcoming years with the `rsi_predict` function. For use with the `dplyr` package, the `rsi` function can be used in conjunction with `summarise` to calculate the resistance percentages of different antibiotic columns of a table.
 
 ## How to use it?
 ```r
