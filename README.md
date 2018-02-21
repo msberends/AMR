@@ -3,7 +3,7 @@ This is an [R package](https://www.r-project.org) to simplify the analysis of An
 
 ![logo](man/figures/logo_en.png)
 
-This R package was created for academic research by PhD students of the Medical Microbiology & Infection Prevention (mmb) department of the [University of Groningen](https://www.rug.nl/) who also maintain this package, see [#authors].
+This R package was created for academic research by PhD students of the Medical Microbiology & Infection Prevention (mmb) department of the [University of Groningen](https://www.rug.nl/) who also maintain this package, see [Authors](#authors).
 
 ## Why this package?
 This R package contains functions to make microbiological, epidemiological data analysis easier. It allows the use of some new S3 classes to work with MIC values and antimicrobial interpretations (i.e. values S, I and R).
