@@ -1,10 +1,14 @@
 # `AMR`
 This is an [R package](https://www.r-project.org) to simplify the analysis of Antimicrobial Resistance (AMR).
 
+![logo](man/figures/logo_en.png)
+
+This R package was created for academic research by PhD students of the Medical Microbiology & Infection Prevention (mmb) department of the [University of Groningen](https://www.rug.nl/) who also maintain this package, see [#authors].
+
 ## Why this package?
 This R package contains functions to make microbiological, epidemiological data analysis easier. It allows the use of some new S3 classes to work with MIC values and antimicrobial interpretations (i.e. values S, I and R).
 
-This R package was created for academic research by PhD students of the [University of Groningen](https://www.rug.nl/).
+AMR can also be predicted for the forthcoming years with the `rsi_predict` function. For use with the `dplyr` package, the `rsi` can be used in conjunction with `summarise` to calculate the resistance percentages of different antibiotic columns of a table.
 
 ## How to use it?
 ```r
@@ -63,7 +67,7 @@ A plot of `rsi_data`:
 plot(rsi_data)
 ```
 
-![plot2_ex4](man/figures/rsi_example.png)
+![example](man/figures/rsi_example.png)
 
 Other epidemiological functions:
 

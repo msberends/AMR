@@ -119,3 +119,104 @@ atc_property <- function(atc_code,
   returnvalue
   
 }
+
+#' Name of an antibiotic
+#'
+#' Convert antibiotic codes (from a laboratory information system like MOLIS or GLIMS) to a (trivial) antibiotic name or ATC code, or vice versa. This uses the data from \code{\link{ablist}}.
+#' @param abcode a code or name, like \code{"amox"}, \code{"cftr"} or \code{"J01CA04"}
+#' @param from,to type to transform from and to. See \code{\link{ablist}} for its column names.
+#' @param textbetween text to put between multiple returned texts
+#' @param tolower return output as lower case with function \code{\link{tolower}}.
+#' @keywords ab antibiotics
+#' @export
+#' @importFrom dplyr %>% filter select slice 
+#' @examples
+#' abname("AMCL")
+#' # "amoxicillin and enzyme inhibitor"
+#'
+#' abname("AMCL+GENT")
+#' # "amoxicillin and enzyme inhibitor + gentamicin"
+#'
+#' abname(c("AMCL", "GENT"))
+#' # "amoxicillin and enzyme inhibitor" "gentamicin" 
+#'
+#' abname("AMCL", to = "trivial")
+#' # "Amoxicilline/clavulaanzuur"
+#'
+#' abname("AMCL", to = "atc")
+#' # "J01CR02"
+#'
+#' abname("J01CR02", from = "atc", to = "umcg")
+#' # "AMCL"
+#'
+#' @source \code{\link{ablist}}
+abname <- function(abcode, from = 'umcg', to = 'official', textbetween = ' + ', tolower = FALSE) {
+  
+  ablist <- AMR::ablist
+  colnames(ablist) <- colnames(ablist) %>% tolower()
+  from <- from %>% tolower()
+  to <- to %>% tolower()
+  
+  if (!from %in% colnames(ablist) |
+      !to %in% colnames(ablist)) {
+    stop(paste0('Invalid `from` or `to`. Choose one of ', 
+                colnames(ablist) %>% paste(collapse = ","), '.'), call. = FALSE)
+  }
+  
+  abcode <- as.character(abcode)
+  
+  for (i in 1:length(abcode)) {
+    drug <- abcode[i]
+    if (!grepl('+', drug, fixed = TRUE) & !grepl(' en ', drug, fixed = TRUE)) {
+      # bestaat maar uit 1 middel
+      if (any(ablist[, from] == drug)) {
+        abcode[i] <-
+          ablist %>%
+          filter(.[, from] == drug) %>%
+          select(to) %>%
+          slice(1) %>%
+          as.character()
+      } else {
+        # niet gevonden
+        warning('Code "', drug, '" not found in antibiotics list.', call. = FALSE)
+        abcode[i] <- NA
+      }
+    } else {
+      # meerdere middelen
+      if (grepl('+', drug, fixed = TRUE)) {
+        drug.group <-
+          strsplit(drug, '+', fixed = TRUE) %>%
+          unlist() %>%
+          trimws('both')
+      } else if (grepl(' en ', drug, fixed = TRUE)) {
+        drug.group <-
+          strsplit(drug, ' en ', fixed = TRUE) %>%
+          unlist() %>%
+          trimws('both')
+      } else {
+        warning('Invalid concat.')
+        abcode[i] <- NA
+        next
+      }
+      
+      for (j in 1:length(drug.group)) {
+        drug.group[j] <-
+          ablist %>%
+          filter(.[, from] == drug.group[j]) %>%
+          select(to) %>%
+          slice(1) %>%
+          as.character()
+        if (j > 1 & to %in% c('official', 'trivial')) {
+          drug.group[j] <- drug.group[j] %>% tolower()
+        }
+      }
+      abcode[i] <- paste(drug.group, collapse = textbetween)
+    }
+  }
+  
+  if (tolower == TRUE) {
+    abcode <- abcode %>% tolower()
+  }
+  
+  abcode
+}
