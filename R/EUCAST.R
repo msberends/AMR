@@ -24,7 +24,6 @@
 #' @param info print progress
 #' @param amcl,amik,amox,ampi,azit,aztr,cefa,cfra,cfep,cfot,cfox,cfta,cftr,cfur,chlo,cipr,clar,clin,clox,coli,czol,dapt,doxy,erta,eryt,fosf,fusi,gent,imip,kana,levo,linc,line,mero,mino,moxi,nali,neom,neti,nitr,novo,norf,oflo,peni,pita,poly,qida,rifa,roxi,siso,teic,tetr,tica,tige,tobr,trim,trsu,vanc column names of antibiotics. Use \code{NA} to skip a column, like \code{tica = NA}. Non-existing column will be skipped.
 #' @param ... parameters that are passed on to \code{EUCAST_rules}
-#' @name EUCAST
 #' @rdname EUCAST
 #' @export
 #' @importFrom dplyr %>% left_join select
@@ -610,7 +609,6 @@ EUCAST_rules <- function(tbl,
   tbl
 }
 
-#' @name EUCAST
 #' @rdname EUCAST
 #' @export
 interpretive_reading <- function(...) {
