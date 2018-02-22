@@ -1,7 +1,7 @@
 Package: AMR
-Version: 0.1.0
-Date: 2018-02-20
-Title: Antimicrobial Resistance (AMR) Analysis
+Version: 0.1.1
+Date: 2018-02-22
+Title: Antimicrobial Resistance Analysis
 Authors@R: c(
     person(
         given = c("Matthijs", "S."),
@@ -19,8 +19,9 @@ Authors@R: c(
         email = "e.hassing@certe.nl",
         role = "ctb"))
 Description: Functions to simplify the analysis of Antimicrobial Resistance (AMR)
-    of microbial isolates, by using new S3 classes and applying EUCAST expert rules 
-    on antibiograms.
+    of microbial isolates, by using new S3 classes and applying EUCAST expert rules
+    on antibiograms according to Leclercq (2013)
+    <doi:10.1111/j.1469-0691.2011.03703.x>.
 Depends: R (>= 3.0)
 Imports: dplyr (>= 0.7.0), reshape2 (>= 1.4.0), xml2, rvest
 URL: https://github.com/msberends/AMR

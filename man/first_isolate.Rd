@@ -57,6 +57,7 @@ To conduct an analysis of antimicrobial resistance, you should only include the 
 \examples{
 \dontrun{
 
+# set key antibiotics to a new variable
 tbl$keyab <- key_antibiotics(tbl)
 
 tbl$first_isolate <-

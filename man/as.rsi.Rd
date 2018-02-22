@@ -20,6 +20,14 @@ This transforms a vector to a new class \code{rsi}, which is an ordered factor w
 }
 \examples{
 rsi_data <- as.rsi(c(rep("S", 474), rep("I", 36), rep("R", 370)))
-
 rsi_data <- as.rsi(c(rep("S", 474), rep("I", 36), rep("R", 370), "A", "B", "C"))
+is.rsi(rsi_data)
+plot(rsi_data)
+
+\donttest{
+library(dplyr)
+tbl \%>\%
+  mutate_at(vars(ends_with("_rsi")), as.rsi)
+sapply(mic_data, is.rsi)
+}
 }

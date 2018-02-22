@@ -40,7 +40,6 @@ abname("AMCL", to = "atc")
 
 abname("J01CR02", from = "atc", to = "umcg")
 # "AMCL"
-
 }
 \keyword{ab}
 \keyword{antibiotics}

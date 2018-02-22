@@ -12,6 +12,26 @@ AMR can also be predicted for the forthcoming years with the `rsi_predict` funct
 
 It also contains functions to translate antibiotic codes from the lab (like `"AMOX"`) or the [WHO](https://www.whocc.no/atc_ddd_index/?code=J01CA04&showdescription=no) (like `"J01CA04"`) to trivial names (like `"amoxicillin"`) and vice versa.
 
+## How to get it?
+[![CRAN_Badge](http://www.r-pkg.org/badges/version/AMR)](http://cran.r-project.org/package=AMR)
+
+This package is available on CRAN (latest stable version) and also here on GitHub (latest development version).
+
+#### Latest stable version from CRAN (recommended)
+RStudio:
+-  Click on `Tools` and then `Install Packages..`
+-  Type in `AMR` and press <kbd>Install</kbd>
+
+Other:
+```r
+install.packages("AMR")
+```
+
+#### Latest development version from GitHub
+```r
+devtools::install_github("msberends/AMR")
+```
+
 ## How to use it?
 ```r
 # Call it with:
@@ -93,28 +113,6 @@ rsi_predict(...)
 # Get name of antibiotic by ATC code
 abname(...)
 abname("J01CR02", from = "atc", to = "umcg") # "AMCL"
-```
-
-## How to get it?
-This package is only available here on GitHub, but respects the [CRAN Repository Policy](https://cran.r-project.org/web/packages/policies.html).
-
-*Installation commands:*
-```r
-library(devtools)
-install_github("msberends/AMR")
-```
-
-*Working behind a proxy? Then use:*
-```r
-library(httr)
-library(devtools)
-set_config(use_proxy("yourproxydomain.com",
-                     8080,
-                     "username",
-                     "password",
-                     "any")) # change "any" to "basic" or "digest" if needed
-install_github("msberends/AMR")
-reset_config()
 ```
 
 ## Authors

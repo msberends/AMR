@@ -20,3 +20,15 @@ New class \code{mic}
 \description{
 This transforms a vector to a new class\code{mic}, which is an ordered factor valid MIC values as levels. Invalid MIC values will be translated as \code{NA} with a warning.
 }
+\examples{
+mic_data <- as.mic(c(">=32", "1.0", "1", "1.00", 8, "<=0.128", "8", "16", "16"))
+is.mic(mic_data)
+plot(mic_data)
+
+\donttest{
+library(dplyr)
+tbl \%>\%
+  mutate_at(vars(ends_with("_mic")), as.mic)
+sapply(mic_data, is.mic)
+}
+}

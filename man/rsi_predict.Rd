@@ -40,6 +40,7 @@ Create a prediction model to predict antimicrobial resistance for the next years
 rsi_predict(tbl[which(first_isolate == TRUE & genus == "Haemophilus"),], "amcl")
   
 # or with dplyr so you can actually read it:
+library(dplyr)
 tbl \%>\%
   filter(first_isolate == TRUE,
          genus == "Haemophilus") \%>\%

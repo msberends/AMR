@@ -1,4 +1,4 @@
-#' Join van tabel en \code{bactlist}
+#' Join a table with \code{bactlist}
 #'
 #' Join the list of microorganisms \code{\link{bactlist}} easily to an existing table.
 #' @rdname join
@@ -9,6 +9,17 @@
 #' @param ... other parameters to pass trhough to \code{dplyr::\link[dplyr]{join}}.
 #' @details As opposed to the \code{\link[dplyr]{join}} functions of \code{dplyr}, at default existing columns will get a suffix \code{"2"} and the newly joined columns will not get a suffix. See \code{\link[dplyr]{join}} for more information.
 #' @export
+#' @examples 
+#' df <- data.frame(date = seq(from = as.Date("2018-01-01"),
+#'                             to = as.Date("2018-01-07"),
+#'                             by = 1),
+#'                  bacteria_id = c("STAAUR", "STAAUR", "STAAUR", "STAAUR",
+#'                                  "ESCCOL", "ESCCOL", "ESCCOL"),
+#'                  stringsAsFactors = FALSE)
+#'                  
+#' colnames(df)
+#' df2 <- left_join_bactlist(df, "bacteria_id")
+#' colnames(df2)
 inner_join_bactlist <- function(x, by = 'bactid', ...) {
   # no name set to `by` parameter
   if (is.null(names(by))) {

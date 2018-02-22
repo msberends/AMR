@@ -167,7 +167,7 @@ rsi_df <- function(tbl,
 
 #' Resistance of isolates
 #'
-#' This function can be used in \code{\link[dplyr]{summarise}}, see \emph{Examples}. CaBerekent het percentage S, SI, I, IR of R van een lijst isolaten. 
+#' This function can be used in \code{dplyr}s \code{\link[dplyr]{summarise}}, see \emph{Examples}. Calculate the percentage S, SI, I, IR or R of a vector of isolates.
 #' @param ab1,ab2 list with interpretations of an antibiotic
 #' @inheritParams rsi_df
 #' @details This function uses the \code{\link{rsi_df}} function internally.
@@ -177,20 +177,19 @@ rsi_df <- function(tbl,
 #' @examples
 #' \dontrun{
 #' tbl %>%
+#'   group_by(hospital) %>%
+#'   summarise(cipr = rsi(cipr))
+#'   
+#' tbl %>%
 #'   group_by(year, hospital) %>%
 #'   summarise(
 #'     isolates = n(),
-#'     cipro = rsi(cipr, percent = TRUE),
-#'     amoxi = rsi(amox, percent = TRUE)
-#'   )
+#'     cipro = rsi(cipr %>% as.rsi(), percent = TRUE),
+#'     amoxi = rsi(amox %>% as.rsi(), percent = TRUE))
+#'     
+#' rsi(as.rsi(isolates$amox))
 #'
-#' tbl %>%
-#'   group_by(hospital) %>%
-#'   summarise(cipr = rsi(cipr))
-#'
-#' rsi(isolates$amox)
-#'
-#' rsi(isolates$amcl, interpretation = "S")
+#' rsi(as.rsi(isolates$amcl), interpretation = "S")
 #' }
 rsi <- function(ab1, ab2 = NA, interpretation = 'IR', minimum = 30, percent = FALSE, info = FALSE, warning = FALSE) {
   functietekst <- as.character(match.call())
@@ -258,6 +257,7 @@ rsi <- function(ab1, ab2 = NA, interpretation = 'IR', minimum = 30, percent = FA
 #' rsi_predict(tbl[which(first_isolate == TRUE & genus == "Haemophilus"),], "amcl")
 #'   
 #' # or with dplyr so you can actually read it:
+#' library(dplyr)
 #' tbl %>%
 #'   filter(first_isolate == TRUE,
 #'          genus == "Haemophilus") %>%

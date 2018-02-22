@@ -44,11 +44,14 @@ interpretive_reading(...)
 
 \item{...}{parameters that are passed on to \code{EUCAST_rules}}
 }
+\value{
+table with edited variables of antibiotics.
+}
 \description{
 Apply expert rules (like intrinsic resistance), as defined by the European Committee on Antimicrobial Susceptibility Testing (EUCAST, \url{http://eucast.org}), see \emph{Source}.
 }
 \examples{
 \dontrun{
-tbl <- interpretive_reading(tbl)
+tbl <- EUCAST_rules(tbl)
 }
 }

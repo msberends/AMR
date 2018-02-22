@@ -46,6 +46,7 @@
 #' @examples
 #' \dontrun{
 #'
+#' # set key antibiotics to a new variable
 #' tbl$keyab <- key_antibiotics(tbl)
 #'
 #' tbl$first_isolate <-
@@ -355,7 +356,13 @@ first_isolate <- function(tbl,
 #' @param amcl,amox,cfot,cfta,cftr,cfur,cipr,clar,clin,clox,doxy,gent,line,mero,peni,pita,rifa,teic,trsu,vanc column names of antibiotics.
 #' @export
 #' @importFrom dplyr %>% mutate if_else 
+#' @return Character of length 1.
 #' @seealso \code{\link{mo_property}} \code{\link{ablist}}
+#' @examples 
+#' \donttest{
+#' #' # set key antibiotics to a new variable
+#' tbl$keyab <- key_antibiotics(tbl)
+#' }
 key_antibiotics <- function(tbl,
                             col_bactcode = 'bacteriecode',
                             info = TRUE,
@@ -439,15 +446,17 @@ key_antibiotics <- function(tbl,
   
 }
 
-#' Compare key antibiotics
-#'
-#' Check whether two text values with key antibiotics match. Supports vectors.
-#' @param x,y tekst (or multiple text vectors) with antimicrobial interpretations
-#' @param ignore_I ignore \code{"I"} as antimicrobial interpretation of key antibiotics (with \code{FALSE}, changes in antibiograms from S to I and I to R will be interpreted as difference)
-#' @param info print progress
-#' @return logical
-#' @export
-#' @seealso \code{\link{key_antibiotics}}
+# Compare key antibiotics
+#
+# Check whether two text values with key antibiotics match. Supports vectors.
+# @param x,y tekst (or multiple text vectors) with antimicrobial interpretations
+# @param ignore_I ignore \code{"I"} as antimicrobial interpretation of key antibiotics (with \code{FALSE}, changes in antibiograms from S to I and I to R will be interpreted as difference)
+# @param info print progress
+# @return logical
+# @export
+# @seealso \code{\link{key_antibiotics}}
+
+# only internal use
 key_antibiotics_equal <- function(x, y, ignore_I = TRUE, info = FALSE) {
   if (length(x) != length(y)) {
     stop('Length of `x` and `y` must be equal.')

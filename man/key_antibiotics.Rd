@@ -20,8 +20,17 @@ key_antibiotics(tbl, col_bactcode = "bacteriecode", info = TRUE,
 
 \item{amcl, amox, cfot, cfta, cftr, cfur, cipr, clar, clin, clox, doxy, gent, line, mero, peni, pita, rifa, teic, trsu, vanc}{column names of antibiotics.}
 }
+\value{
+Character of length 1.
+}
 \description{
 Key antibiotics based on bacteria ID
+}
+\examples{
+\donttest{
+#' # set key antibiotics to a new variable
+tbl$keyab <- key_antibiotics(tbl)
+}
 }
 \seealso{
 \code{\link{mo_property}} \code{\link{ablist}}

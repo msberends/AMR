@@ -20,7 +20,7 @@ atc_property(atc_code, property, administration = "O",
 \item{url}{url of website of the WHO. The sign \code{\%s} can be used as a placeholder for ATC codes.}
 }
 \description{
-Gets data from the WHO to determine properties of an ATC of e.g. an antibiotic.
+Gets data from the WHO to determine properties of an ATC of e.g. an antibiotic. \strong{This function requires an internet connection.}
 }
 \details{
 Abbreviations for the property \code{"Adm.R"} (parameter \code{administration}):
@@ -47,5 +47,11 @@ Abbreviations for the property \code{"U"} (unit):
   \item{\code{"MU"}}{ = million units}
   \item{\code{"mmol"}}{ = millimole}
   \item{\code{"ml"}}{ = milliliter (e.g. eyedrops)}
+}
+}
+\examples{
+\donttest{
+atc_property("J01CA04", "DDD", "O") # oral DDD of amoxicillin
+atc_property("J01CA04", "DDD", "P") # parenteral DDD of amoxicillin
 }
 }

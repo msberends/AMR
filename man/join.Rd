@@ -9,7 +9,7 @@
 \alias{full_join_bactlist}
 \alias{semi_join_bactlist}
 \alias{anti_join_bactlist}
-\title{Join van tabel en \code{bactlist}}
+\title{Join a table with \code{bactlist}}
 \usage{
 inner_join_bactlist(x, by = "bactid", ...)
 
@@ -35,4 +35,16 @@ Join the list of microorganisms \code{\link{bactlist}} easily to an existing tab
 }
 \details{
 As opposed to the \code{\link[dplyr]{join}} functions of \code{dplyr}, at default existing columns will get a suffix \code{"2"} and the newly joined columns will not get a suffix. See \code{\link[dplyr]{join}} for more information.
+}
+\examples{
+df <- data.frame(date = seq(from = as.Date("2018-01-01"),
+                            to = as.Date("2018-01-07"),
+                            by = 1),
+                 bacteria_id = c("STAAUR", "STAAUR", "STAAUR", "STAAUR",
+                                 "ESCCOL", "ESCCOL", "ESCCOL"),
+                 stringsAsFactors = FALSE)
+                 
+colnames(df)
+df2 <- left_join_bactlist(df, "bacteria_id")
+colnames(df2)
 }

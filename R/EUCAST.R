@@ -28,6 +28,7 @@
 #' @rdname EUCAST
 #' @export
 #' @importFrom dplyr %>% left_join select
+#' @return table with edited variables of antibiotics.
 #' @source
 #'   EUCAST Expert Rules Version 2.0: \cr
 #'   Leclercq et al. \strong{EUCAST expert rules in antimicrobial susceptibility testing.} \emph{Clin Microbiol Infect.} 2013;19(2):141-60. \cr
@@ -37,7 +38,7 @@
 #'   \url{http://www.eucast.org/expert_rules_and_intrinsic_resistance}
 #' @examples
 #' \dontrun{
-#' tbl <- interpretive_reading(tbl)
+#' tbl <- EUCAST_rules(tbl)
 #' }
 EUCAST_rules <- function(tbl,
                          col_bactcode = 'bacteriecode',

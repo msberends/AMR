@@ -26,8 +26,16 @@
 #' @importFrom dplyr %>%
 #' @examples
 #' rsi_data <- as.rsi(c(rep("S", 474), rep("I", 36), rep("R", 370)))
-#' 
 #' rsi_data <- as.rsi(c(rep("S", 474), rep("I", 36), rep("R", 370), "A", "B", "C"))
+#' is.rsi(rsi_data)
+#' plot(rsi_data)
+#' 
+#' \donttest{
+#' library(dplyr)
+#' tbl %>%
+#'   mutate_at(vars(ends_with("_rsi")), as.rsi)
+#' sapply(mic_data, is.rsi)
+#' }
 as.rsi <- function(x) {
   if (is.rsi(x)) {
     x
@@ -157,6 +165,17 @@ plot.rsi <- function(x, ...) {
 #' @return New class \code{mic}
 #' @export
 #' @importFrom dplyr %>%
+#' @examples
+#' mic_data <- as.mic(c(">=32", "1.0", "1", "1.00", 8, "<=0.128", "8", "16", "16"))
+#' is.mic(mic_data)
+#' plot(mic_data)
+#' 
+#' \donttest{
+#' library(dplyr)
+#' tbl %>%
+#'   mutate_at(vars(ends_with("_mic")), as.mic)
+#' sapply(mic_data, is.mic)
+#' }
 as.mic <- function(x, na.rm = FALSE) {
   if (is.mic(x)) {
     x

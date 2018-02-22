@@ -18,7 +18,7 @@
 
 #' Properties of an ATC code
 #'
-#' Gets data from the WHO to determine properties of an ATC of e.g. an antibiotic.
+#' Gets data from the WHO to determine properties of an ATC of e.g. an antibiotic. \strong{This function requires an internet connection.}
 #' @param atc_code a character or character vector with ATC code(s) of antibiotic(s)
 #' @param property property of an ATC code. Valid values are \code{"ATC code"}, \code{"Name"}, \code{"DDD"}, \code{"U"} (\code{"unit"}), \code{"Adm.R"} en \code{"Note"}.
 #' @param administration type of administration, see \emph{Details}
@@ -54,6 +54,11 @@
 #' @importFrom xml2 read_html
 #' @importFrom rvest html_nodes html_table
 #' @source \url{https://www.whocc.no/atc_ddd_alterations__cumulative/ddd_alterations/abbrevations/}
+#' @examples 
+#' \donttest{
+#' atc_property("J01CA04", "DDD", "O") # oral DDD of amoxicillin
+#' atc_property("J01CA04", "DDD", "P") # parenteral DDD of amoxicillin
+#' }
 atc_property <- function(atc_code,
                          property,
                          administration = 'O',
@@ -128,6 +133,7 @@ atc_property <- function(atc_code,
 #' @param textbetween text to put between multiple returned texts
 #' @param tolower return output as lower case with function \code{\link{tolower}}.
 #' @keywords ab antibiotics
+#' @source \code{\link{ablist}}
 #' @export
 #' @importFrom dplyr %>% filter select slice 
 #' @examples
@@ -148,8 +154,6 @@ atc_property <- function(atc_code,
 #'
 #' abname("J01CR02", from = "atc", to = "umcg")
 #' # "AMCL"
-#'
-#' @source \code{\link{ablist}}
 abname <- function(abcode, from = 'umcg', to = 'official', textbetween = ' + ', tolower = FALSE) {
   
   ablist <- AMR::ablist
