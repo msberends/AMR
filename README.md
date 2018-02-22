@@ -40,14 +40,37 @@ library(AMR)
 # For a list of functions:
 help(package = "AMR")
 ```
-
-### Databases included in package
+### Overwrite/force resistance based on EUCAST rules
+This is also called *interpretive reading*.
 ```r
-# Dataset with ATC antibiotics codes, official names and DDD's (oral and parenteral)
-ablist        # A tibble: 420 x 12
+before <- data.frame(bactid = c("STAAUR",  # Staphylococcus aureus
+                                "ENCFAE"   # Enterococcus faecalis
+                                "ESCCOL",  # Escherichia coli
+                                "KLEPNE",  # Klebsiella pneumoniae
+                                "PSEAER"), # Pseudomonas aeruginosa
+                     vanc = "-",           # Vancomycin
+                     amox = "-",           # Amoxicillin
+                     coli = "-",           # Colistin
+                     cfta = "-",           # Ceftazidime
+                     cfur = "-",           # Cefuroxime
+                     stringsAsFactors = FALSE)
+before
+#   bactid vanc amox coli cfta cfur
+# 1 STAAUR    -    -    -    -    -
+# 2 ENCFAE    -    -    -    -    -
+# 3 ESCCOL    -    -    -    -    -
+# 4 KLEPNE    -    -    -    -    -
+# 5 PSEAER    -    -    -    -    -
 
-# Dataset with bacteria codes and properties like gram stain and aerobic/anaerobic
-bactlist      # A tibble: 2,507 x 10
+# Now apply those rules; just need a column with bacteria ID's and antibiotic results:
+after <- EUCAST_rules(before)
+after
+#   bactid vanc amox coli cfta cfur
+# 1 STAAUR    -    -    R    R    -
+# 2 ENCFAE    -    -    R    R    R
+# 3 ESCCOL    R    -    -    -    -
+# 4 KLEPNE    R    R    -    -    -
+# 5 PSEAER    R    R    -    -    R
 ```
 
 ### New classes
@@ -94,18 +117,13 @@ plot(rsi_data)
 Other epidemiological functions:
 
 ```r
-# Apply EUCAST Expert Rules v3.1 (latest) to antibiotic columns
-EUCAST_rules(...)
-
 # Determine key antibiotic based on bacteria ID
 key_antibiotics(...)
-# Check if key antibiotics are equal
-key_antibiotics_equal(...)
 
 # Selection of first isolates of any patient
 first_isolate(...)
 
-# Calculate resistance levels of antibiotics
+# Calculate resistance levels of antibiotics, can be used with `summarise` (dplyr)
 rsi(...)
 # Predict resistance levels of antibiotics
 rsi_predict(...)
@@ -114,6 +132,17 @@ rsi_predict(...)
 abname(...)
 abname("J01CR02", from = "atc", to = "umcg") # "AMCL"
 ```
+
+### Databases included in package
+Datasets to work with antibiotics and bacteria properties.
+```r
+# Dataset with ATC antibiotics codes, official names and DDD's (oral and parenteral)
+ablist        # A tibble: 420 x 12
+
+# Dataset with bacteria codes and properties like gram stain and aerobic/anaerobic
+bactlist      # A tibble: 2,507 x 10
+```
+
 
 ## Authors
 

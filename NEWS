@@ -1,0 +1,6 @@
+## 0.1.1
+- EUCAST_rules applies for amoxicillin even if ampicillin is missing
+- Edited column names to comply with GLIMS, the laboratory information system
+
+## 0.1.0
+- First submission to CRAN.
