@@ -21,7 +21,7 @@
 #' Determine first (weighted) isolates of all microorganisms of every patient per episode and (if needed) per specimen type.
 #' @param tbl a \code{data.frame} containing isolates.
 #' @param col_date column name of the result date (or date that is was received on the lab)
-#' @param col_patid column name of the unique IDs of the patients
+#' @param col_patient_id column name of the unique IDs of the patients
 #' @param col_genus column name of the genus of the microorganisms
 #' @param col_species column name of the species of the microorganisms
 #' @param col_testcode column name of the test codes, see Details
@@ -84,7 +84,7 @@
 #' }
 first_isolate <- function(tbl,
                           col_date,
-                          col_patid,
+                          col_patient_id,
                           col_genus,
                           col_species,
                           col_testcode = NA,
@@ -113,7 +113,7 @@ first_isolate <- function(tbl,
   }
   
   check_columns_existance(col_date)
-  check_columns_existance(col_patid)
+  check_columns_existance(col_patient_id)
   check_columns_existance(col_genus)
   check_columns_existance(col_species)
   check_columns_existance(col_testcode)
@@ -162,7 +162,10 @@ first_isolate <- function(tbl,
     mutate(first_isolate_row_index = 1:nrow(tbl),
            eersteisolaatbepaling = 0,
            date_lab = tbl %>% pull(col_date),
-           species = if_else(is.na(species), '', species),
+           patient_id = tbl %>% pull(col_patient_id),
+           species = tbl %>% pull(col_species),
+           genus = tbl %>% pull(col_genus)) %>%
+    mutate(species = if_else(is.na(species), '', species),
            genus = if_else(is.na(genus), '', genus))
   
   if (filter_specimen == '') {
@@ -172,7 +175,7 @@ first_isolate <- function(tbl,
         cat('Isolates from ICU will *NOT* be ignored.\n')
       }
       tbl <- tbl %>%
-        arrange_at(c(col_patid,
+        arrange_at(c(col_patient_id,
                      col_genus,
                      col_species,
                      col_date))
@@ -184,7 +187,7 @@ first_isolate <- function(tbl,
       }
       tbl <- tbl %>%
         arrange_at(c(col_icu,
-                     col_patid,
+                     col_patient_id,
                      col_genus,
                      col_species,
                      col_date))
@@ -205,7 +208,7 @@ first_isolate <- function(tbl,
       }
       tbl <- tbl %>%
         arrange_at(c(col_specimen,
-                     col_patid,
+                     col_patient_id,
                      col_genus,
                      col_species,
                      col_date))
@@ -222,7 +225,7 @@ first_isolate <- function(tbl,
       tbl <- tbl %>%
         arrange_at(c(col_icu,
                      col_specimen,
-                     col_patid,
+                     col_patient_id,
                      col_genus,
                      col_species,
                      col_date))

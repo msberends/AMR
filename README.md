@@ -17,17 +17,17 @@ It also contains functions to translate antibiotic codes from the lab (like `"AM
 
 This package is available on CRAN (latest stable version) and also here on GitHub (latest development version).
 
-#### Latest stable version from CRAN (recommended)
-RStudio:
--  Click on `Tools` and then `Install Packages..`
+### Latest stable version from CRAN (recommended)
+For RStudio:
+-  Click on `Tools` and then `Install Packages...`
 -  Type in `AMR` and press <kbd>Install</kbd>
 
-Other:
+Or in the R console:
 ```r
 install.packages("AMR")
 ```
 
-#### Latest development version from GitHub
+### Latest development version from GitHub
 ```r
 devtools::install_github("msberends/AMR")
 ```

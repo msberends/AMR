@@ -4,7 +4,7 @@
 \alias{first_isolate}
 \title{Determine first (weighted) isolates}
 \usage{
-first_isolate(tbl, col_date, col_patid, col_genus, col_species,
+first_isolate(tbl, col_date, col_patient_id, col_genus, col_species,
   col_testcode = NA, col_specimen, col_icu, col_keyantibiotics = NA,
   episode_days = 365, testcodes_exclude = "", icu_exclude = FALSE,
   filter_specimen = NA, output_logical = TRUE, ignore_I = TRUE,
@@ -15,7 +15,7 @@ first_isolate(tbl, col_date, col_patid, col_genus, col_species,
 
 \item{col_date}{column name of the result date (or date that is was received on the lab)}
 
-\item{col_patid}{column name of the unique IDs of the patients}
+\item{col_patient_id}{column name of the unique IDs of the patients}
 
 \item{col_genus}{column name of the genus of the microorganisms}
 
