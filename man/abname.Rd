@@ -11,7 +11,7 @@ abname(abcode, from = "umcg", to = "official", textbetween = " + ",
   tolower = FALSE)
 }
 \arguments{
-\item{abcode}{a code or name, like \code{"amox"}, \code{"cftr"} or \code{"J01CA04"}}
+\item{abcode}{a code or name, like \code{"AMOX"}, \code{"AMCL"} or \code{"J01CA04"}}
 
 \item{from, to}{type to transform from and to. See \code{\link{ablist}} for its column names.}
 
@@ -32,7 +32,7 @@ abname("AMCL+GENT")
 abname(c("AMCL", "GENT"))
 # "amoxicillin and enzyme inhibitor" "gentamicin" 
 
-abname("AMCL", to = "trivial")
+abname("AMCL", to = "trivial_nl")
 # "Amoxicilline/clavulaanzuur"
 
 abname("AMCL", to = "atc")

@@ -254,7 +254,8 @@ rsi <- function(ab1, ab2 = NA, interpretation = 'IR', minimum = 30, percent = FA
 #' @examples
 #' \dontrun{
 #' # use it directly:
-#' rsi_predict(tbl[which(first_isolate == TRUE & genus == "Haemophilus"),], col_ab = "amcl", coldate = "date")
+#' rsi_predict(tbl = tbl[which(first_isolate == TRUE & genus == "Haemophilus"),],
+#'             col_ab = "amcl", coldate = "date")
 #'   
 #' # or with dplyr so you can actually read it:
 #' library(dplyr)

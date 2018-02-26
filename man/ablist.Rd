@@ -11,7 +11,7 @@
   \item{\code{umcg}}{UMCG code, like \code{AMCL}}
   \item{\code{official}}{Official name by the WHO, like \code{"amoxicillin and enzyme inhibitor"}}
   \item{\code{official_nl}}{Official name in the Netherlands, like \code{"Amoxicilline met enzymremmer"}}
-  \item{\code{trivial}}{Trivial name in Dutch, like \code{"Amoxicilline/clavulaanzuur"}}
+  \item{\code{trivial_nl}}{Trivial name in Dutch, like \code{"Amoxicilline/clavulaanzuur"}}
   \item{\code{oral_ddd}}{Daily Defined Dose (DDD) according to the WHO, oral treatment}
   \item{\code{oral_units}}{Units of \code{ddd_units}}
   \item{\code{iv_ddd}}{Daily Defined Dose (DDD) according to the WHO, parenteral treatment}

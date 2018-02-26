@@ -37,7 +37,8 @@ Create a prediction model to predict antimicrobial resistance for the next years
 \examples{
 \dontrun{
 # use it directly:
-rsi_predict(tbl[which(first_isolate == TRUE & genus == "Haemophilus"),], col_ab = "amcl", coldate = "date")
+rsi_predict(tbl = tbl[which(first_isolate == TRUE & genus == "Haemophilus"),],
+            col_ab = "amcl", coldate = "date")
   
 # or with dplyr so you can actually read it:
 library(dplyr)

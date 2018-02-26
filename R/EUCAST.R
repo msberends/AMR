@@ -45,10 +45,10 @@
 #'                 stringsAsFactors = FALSE)
 #' a
 #' 
-#' b <- EUCAST_rules(a)
+#' b <- EUCAST_rules(a, "bactid")
 #' b
 EUCAST_rules <- function(tbl,
-                         col_bactcode = 'bactid',
+                         col_bactcode,
                          info = TRUE,
                          amcl = 'amcl',
                          amik = 'amik',

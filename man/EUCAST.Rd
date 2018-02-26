@@ -13,22 +13,21 @@ EUCAST Expert Rules Version 2.0: \cr
   \url{http://www.eucast.org/expert_rules_and_intrinsic_resistance}
 }
 \usage{
-EUCAST_rules(tbl, col_bactcode = "bactid", info = TRUE, amcl = "amcl",
-  amik = "amik", amox = "amox", ampi = "ampi", azit = "azit",
-  aztr = "aztr", cefa = "cefa", cfra = "cfra", cfep = "cfep",
-  cfot = "cfot", cfox = "cfox", cfta = "cfta", cftr = "cftr",
-  cfur = "cfur", chlo = "chlo", cipr = "cipr", clar = "clar",
-  clin = "clin", clox = "clox", coli = "coli", czol = "czol",
-  dapt = "dapt", doxy = "doxy", erta = "erta", eryt = "eryt",
-  fosf = "fosf", fusi = "fusi", gent = "gent", imip = "imip",
-  kana = "kana", levo = "levo", linc = "linc", line = "line",
-  mero = "mero", mino = "mino", moxi = "moxi", nali = "nali",
-  neom = "neom", neti = "neti", nitr = "nitr", novo = "novo",
-  norf = "norf", oflo = "oflo", peni = "peni", pita = "pita",
-  poly = "poly", qida = "qida", rifa = "rifa", roxi = "roxi",
-  siso = "siso", teic = "teic", tetr = "tetr", tica = "tica",
-  tige = "tige", tobr = "tobr", trim = "trim", trsu = "trsu",
-  vanc = "vanc")
+EUCAST_rules(tbl, col_bactcode, info = TRUE, amcl = "amcl", amik = "amik",
+  amox = "amox", ampi = "ampi", azit = "azit", aztr = "aztr",
+  cefa = "cefa", cfra = "cfra", cfep = "cfep", cfot = "cfot",
+  cfox = "cfox", cfta = "cfta", cftr = "cftr", cfur = "cfur",
+  chlo = "chlo", cipr = "cipr", clar = "clar", clin = "clin",
+  clox = "clox", coli = "coli", czol = "czol", dapt = "dapt",
+  doxy = "doxy", erta = "erta", eryt = "eryt", fosf = "fosf",
+  fusi = "fusi", gent = "gent", imip = "imip", kana = "kana",
+  levo = "levo", linc = "linc", line = "line", mero = "mero",
+  mino = "mino", moxi = "moxi", nali = "nali", neom = "neom",
+  neti = "neti", nitr = "nitr", novo = "novo", norf = "norf",
+  oflo = "oflo", peni = "peni", pita = "pita", poly = "poly",
+  qida = "qida", rifa = "rifa", roxi = "roxi", siso = "siso",
+  teic = "teic", tetr = "tetr", tica = "tica", tige = "tige",
+  tobr = "tobr", trim = "trim", trsu = "trsu", vanc = "vanc")
 
 interpretive_reading(...)
 }
@@ -59,6 +58,6 @@ a <- data.frame(bactid = c("STAAUR", "ESCCOL", "KLEPNE", "PSEAER"),
                 stringsAsFactors = FALSE)
 a
 
-b <- EUCAST_rules(a)
+b <- EUCAST_rules(a, "bactid")
 b
 }

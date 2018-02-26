@@ -128,7 +128,7 @@ atc_property <- function(atc_code,
 #' Name of an antibiotic
 #'
 #' Convert antibiotic codes (from a laboratory information system like MOLIS or GLIMS) to a (trivial) antibiotic name or ATC code, or vice versa. This uses the data from \code{\link{ablist}}.
-#' @param abcode a code or name, like \code{"amox"}, \code{"cftr"} or \code{"J01CA04"}
+#' @param abcode a code or name, like \code{"AMOX"}, \code{"AMCL"} or \code{"J01CA04"}
 #' @param from,to type to transform from and to. See \code{\link{ablist}} for its column names.
 #' @param textbetween text to put between multiple returned texts
 #' @param tolower return output as lower case with function \code{\link{tolower}}.
@@ -146,7 +146,7 @@ atc_property <- function(atc_code,
 #' abname(c("AMCL", "GENT"))
 #' # "amoxicillin and enzyme inhibitor" "gentamicin" 
 #'
-#' abname("AMCL", to = "trivial")
+#' abname("AMCL", to = "trivial_nl")
 #' # "Amoxicilline/clavulaanzuur"
 #'
 #' abname("AMCL", to = "atc")
@@ -210,7 +210,7 @@ abname <- function(abcode, from = 'umcg', to = 'official', textbetween = ' + ', 
           select(to) %>%
           slice(1) %>%
           as.character()
-        if (j > 1 & to %in% c('official', 'trivial')) {
+        if (j > 1 & to %in% c('official', 'trivial_nl')) {
           drug.group[j] <- drug.group[j] %>% tolower()
         }
       }
