@@ -192,6 +192,7 @@ EUCAST_rules <- function(tbl,
   }
   
   total <- 0
+  total_rows <- integer(0)
   
   # functie voor uitvoeren
   edit_rsi <- function(to, rows, cols) {
@@ -200,6 +201,7 @@ EUCAST_rules <- function(tbl,
     if (length(rows) > 0 & length(cols) > 0) {
       tbl[rows, cols] <<- to
       total <<- total + (length(rows) * length(cols))
+      total_rows <<- c(total_rows, rows)
     }
   }
   
@@ -222,9 +224,9 @@ EUCAST_rules <- function(tbl,
   fluorochinolonen <- c(oflo, cipr, norf, levo, moxi)
   
   if (info == TRUE) {
-    cat('\nApplying EUCAST expert rules on',
-        tbl[!is.na(tbl$genus),] %>% nrow(),
-        'isolates according to "EUCAST Expert Rules Version 3.1"\n\n')
+    cat('\nApplying rules to',
+        tbl[!is.na(tbl$genus),] %>% nrow() %>% format(big.mark = ","),
+        'rows according to "EUCAST Expert Rules Version 3.1"\n\n')
   }
   
   # Table 1: Intrinsic resistance in Enterobacteriaceae ----
@@ -603,7 +605,10 @@ EUCAST_rules <- function(tbl,
   colnames(tbl) <- gsub("_tempbactlist", "", colnames(tbl))
   
   if (info == TRUE) {
-    cat('\nDone.\nExpert rules applied to', total, 'test results.\n')
+    cat('\nDone.\nEUCAST Expert rules applied to',
+        total_rows %>% unique() %>% length() %>% format(big.mark = ","),
+        'different rows, to a total of',
+        total %>% format(big.mark = ","), 'test results.\n\n')
   }
   
   tbl
