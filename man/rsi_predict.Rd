@@ -4,7 +4,7 @@
 \alias{rsi_predict}
 \title{Predict antimicrobial resistance}
 \usage{
-rsi_predict(tbl, col_ab, col_date = "ontvangstdatum",
+rsi_predict(tbl, col_ab, col_date,
   year_max = as.integer(format(as.Date(Sys.Date()), "\%Y")) + 15,
   year_every = 1, model = "binomial", I_as_R = TRUE,
   preserve_measurements = TRUE, info = TRUE)
@@ -37,19 +37,20 @@ Create a prediction model to predict antimicrobial resistance for the next years
 \examples{
 \dontrun{
 # use it directly:
-rsi_predict(tbl[which(first_isolate == TRUE & genus == "Haemophilus"),], "amcl")
+rsi_predict(tbl[which(first_isolate == TRUE & genus == "Haemophilus"),], col_ab = "amcl", coldate = "date")
   
 # or with dplyr so you can actually read it:
 library(dplyr)
 tbl \%>\%
   filter(first_isolate == TRUE,
          genus == "Haemophilus") \%>\%
-  rsi_predict("amcl")
+  rsi_predict(col_ab = "amcl", coldate = "date")
 
 tbl \%>\%
   filter(first_isolate_weighted == TRUE,
          genus == "Haemophilus") \%>\%
   rsi_predict(col_ab = "amcl",
+              coldate = "date",
               year_max = 2050,
               year_every = 5)
 

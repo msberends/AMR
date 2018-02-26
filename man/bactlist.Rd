@@ -13,7 +13,7 @@
   \item{\code{species}}{Species name of microorganism, like \code{"coli"}}
   \item{\code{subspecies}}{Subspecies name of bio-/serovar of microorganism, like \code{"EHEC"}}
   \item{\code{fullname}}{Full name, like \code{"Echerichia coli (EHEC)"}}
-  \item{\code{type}}{Type of microorganism, like \code{"Bacterie"} en \code{"Schimmel/gist"} (these are Dutch)}
+  \item{\code{type}}{Type of microorganism in Dutch, like \code{"Bacterie"} and \code{"Schimmel/gist"}}
   \item{\code{gramstain}}{Gram of microorganism in Dutch, like \code{"Negatieve staven"}}
   \item{\code{aerobic}}{Type aerobe/anaerobe of bacteria}
 }}

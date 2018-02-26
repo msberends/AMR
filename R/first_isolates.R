@@ -35,12 +35,11 @@
 #' @param output_logical return output as \code{logical} (will else the values \code{0} or \code{1})
 #' @param ignore_I ignore \code{"I"} as antimicrobial interpretation of key antibiotics (with \code{FALSE}, changes in antibiograms from S to I and I to R will be interpreted as difference)
 #' @param info print progress
-# @param ... parameters to pass through to \code{first_isolate}.
-#' @rdname first_isolate
 #' @details To conduct an analysis of antimicrobial resistance, you should only include the first isolate of every patient per episode. If you would not do this, you could easily get an overestimate or underestimate of the resistance of an antibiotic. Imagine that a patient was admitted with an MRSA and that is was found in 5 different blood cultures the following week. The resistance percentage of oxacillin of all \emph{S. aureus} isolates would be overestimated, because you included this MRSA more than once. It would be selection bias.
 #'
 #'     Use \code{col_testcode = NA} to \strong{not} exclude certain test codes (like test codes for screening). In that case \code{testcodes_exclude} will be ignored.
 #' @keywords isolate isolates first
+#' @export
 #' @importFrom dplyr arrange_at lag between row_number filter mutate arrange
 #' @return A vector to add to table, see Examples.
 #' @examples

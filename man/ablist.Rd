@@ -14,7 +14,7 @@
   \item{\code{trivial}}{Trivial name in Dutch, like \code{"Amoxicilline/clavulaanzuur"}}
   \item{\code{oral_ddd}}{Daily Defined Dose (DDD) according to the WHO, oral treatment}
   \item{\code{oral_units}}{Units of \code{ddd_units}}
-  \item{\code{iv_ddd}}{Daily Defined Dose (DDD) according to the WHO, bij parenteral treatment}
+  \item{\code{iv_ddd}}{Daily Defined Dose (DDD) according to the WHO, parenteral treatment}
   \item{\code{iv_units}}{Units of \code{iv_ddd}}
   \item{\code{atc_group1}}{ATC group in Dutch, like \code{"Macroliden, lincosamiden en streptograminen"}}
   \item{\code{atc_group2}}{Subgroup of \code{atc_group1} in Dutch, like \code{"Macroliden"}}

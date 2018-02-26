@@ -4,12 +4,12 @@
 \alias{key_antibiotics}
 \title{Key antibiotics based on bacteria ID}
 \usage{
-key_antibiotics(tbl, col_bactcode = "bacteriecode", info = TRUE,
-  amcl = "amcl", amox = "amox", cfot = "cfot", cfta = "cfta",
-  cftr = "cftr", cfur = "cfur", cipr = "cipr", clar = "clar",
-  clin = "clin", clox = "clox", doxy = "doxy", gent = "gent",
-  line = "line", mero = "mero", peni = "peni", pita = "pita",
-  rifa = "rifa", teic = "teic", trsu = "trsu", vanc = "vanc")
+key_antibiotics(tbl, col_bactcode = "bactid", info = TRUE, amcl = "amcl",
+  amox = "amox", cfot = "cfot", cfta = "cfta", cftr = "cftr",
+  cfur = "cfur", cipr = "cipr", clar = "clar", clin = "clin",
+  clox = "clox", doxy = "doxy", gent = "gent", line = "line",
+  mero = "mero", peni = "peni", pita = "pita", rifa = "rifa",
+  teic = "teic", trsu = "trsu", vanc = "vanc")
 }
 \arguments{
 \item{tbl}{table with antibiotics coloms, like \code{amox} and \code{amcl}.}
