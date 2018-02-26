@@ -29,7 +29,7 @@
 #'   \item{\code{trivial}}{Trivial name in Dutch, like \code{"Amoxicilline/clavulaanzuur"}}
 #'   \item{\code{oral_ddd}}{Daily Defined Dose (DDD) according to the WHO, oral treatment}
 #'   \item{\code{oral_units}}{Units of \code{ddd_units}}
-#'   \item{\code{iv_ddd}}{Daily Defined Dose (DDD) according to the WHO, bij parenteral treatment}
+#'   \item{\code{iv_ddd}}{Daily Defined Dose (DDD) according to the WHO, parenteral treatment}
 #'   \item{\code{iv_units}}{Units of \code{iv_ddd}}
 #'   \item{\code{atc_group1}}{ATC group in Dutch, like \code{"Macroliden, lincosamiden en streptograminen"}}
 #'   \item{\code{atc_group2}}{Subgroup of \code{atc_group1} in Dutch, like \code{"Macroliden"}}
@@ -56,7 +56,7 @@
 #'   \item{\code{species}}{Species name of microorganism, like \code{"coli"}}
 #'   \item{\code{subspecies}}{Subspecies name of bio-/serovar of microorganism, like \code{"EHEC"}}
 #'   \item{\code{fullname}}{Full name, like \code{"Echerichia coli (EHEC)"}}
-#'   \item{\code{type}}{Type of microorganism, like \code{"Bacterie"} en \code{"Schimmel/gist"} (these are Dutch)}
+#'   \item{\code{type}}{Type of microorganism in Dutch, like \code{"Bacterie"} and \code{"Schimmel/gist"}}
 #'   \item{\code{gramstain}}{Gram of microorganism in Dutch, like \code{"Negatieve staven"}}
 #'   \item{\code{aerobic}}{Type aerobe/anaerobe of bacteria}
 #' }

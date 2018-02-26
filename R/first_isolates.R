@@ -364,7 +364,7 @@ first_isolate <- function(tbl,
 #' tbl$keyab <- key_antibiotics(tbl)
 #' }
 key_antibiotics <- function(tbl,
-                            col_bactcode = 'bacteriecode',
+                            col_bactcode = 'bactid',
                             info = TRUE,
                             amcl = 'amcl',
                             amox = 'amox',
