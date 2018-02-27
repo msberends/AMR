@@ -13,22 +13,22 @@
 \usage{
 inner_join_bactlist(x, by = "bactid", ...)
 
-left_join_bactlist(x, by = "bacteriecode", ...)
+left_join_bactlist(x, by = "bactid", ...)
 
-right_join_bactlist(x, by = "bacteriecode", ...)
+right_join_bactlist(x, by = "bactid", ...)
 
-full_join_bactlist(x, by = "bacteriecode", ...)
+full_join_bactlist(x, by = "bactid", ...)
 
-semi_join_bactlist(x, by = "bacteriecode", ...)
+semi_join_bactlist(x, by = "bactid", ...)
 
-anti_join_bactlist(x, by = "bacteriecode", ...)
+anti_join_bactlist(x, by = "bactid", ...)
 }
 \arguments{
 \item{x}{existing table to join}
 
 \item{by}{a variable to join by - could be a column name of \code{x} with values that exist in \code{bactlist$bactid} (like \code{by = "bacteria_id"}), or another column in \code{\link{bactlist}} (but then it should be named, like \code{by = c("my_genus_species" = "fullname")})}
 
-\item{...}{other parameters to pass trhough to \code{dplyr::\link[dplyr]{join}}.}
+\item{...}{other parameters to pass on to \code{dplyr::\link[dplyr]{join}}.}
 }
 \description{
 Join the list of microorganisms \code{\link{bactlist}} easily to an existing table.

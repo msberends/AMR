@@ -12,9 +12,9 @@ rsi_predict(tbl, col_ab, col_date,
 \arguments{
 \item{tbl}{table that contains columns \code{col_ab} and \code{col_date}}
 
-\item{col_ab}{column name of \code{tbl} with antimicrobial interpretations (\code{R}, \code{I} and \code{S})}
+\item{col_ab}{column name of \code{tbl} with antimicrobial interpretations (\code{R}, \code{I} and \code{S}), supports tidyverse-like quotation}
 
-\item{col_date}{column name of the date, will be used to calculate years}
+\item{col_date}{column name of the date, will be used to calculate years if this column doesn't consist of years already, supports tidyverse-like quotation}
 
 \item{year_max}{highest year to use in the prediction model, deafults to 15 years after today}
 
@@ -32,30 +32,47 @@ rsi_predict(tbl, col_ab, col_date,
 \code{data.frame} with columns \code{year}, \code{probR}, \code{se_min} and \code{se_max}.
 }
 \description{
-Create a prediction model to predict antimicrobial resistance for the next years on statistical solid ground. Standard errors (SE) will be returned as columns \code{se_min} and \code{se_max}.
+Create a prediction model to predict antimicrobial resistance for the next years on statistical solid ground. Standard errors (SE) will be returned as columns \code{se_min} and \code{se_max}. See Examples for a real live example.
 }
 \examples{
 \dontrun{
 # use it directly:
 rsi_predict(tbl = tbl[which(first_isolate == TRUE & genus == "Haemophilus"),],
-            col_ab = "amcl", coldate = "date")
+            col_ab = "amcl", col_date = "date")
   
 # or with dplyr so you can actually read it:
 library(dplyr)
 tbl \%>\%
   filter(first_isolate == TRUE,
          genus == "Haemophilus") \%>\%
-  rsi_predict(col_ab = "amcl", coldate = "date")
-
-tbl \%>\%
-  filter(first_isolate_weighted == TRUE,
-         genus == "Haemophilus") \%>\%
-  rsi_predict(col_ab = "amcl",
-              coldate = "date",
-              year_max = 2050,
-              year_every = 5)
-
+  rsi_predict(amcl, date)
 }
+
+
+# real live example:
+library(dplyr)
+septic_patients \%>\%
+  # get bacteria properties like genus and species
+  left_join_bactlist("bactid") \%>\% 
+  # calculate first isolates
+  mutate(first_isolate = 
+           first_isolate(.,
+                         "date",
+                         "patient_id",
+                         "genus",
+                         "species",
+                         col_specimen = NA,
+                         col_icu = NA)) \%>\% 
+  # filter on first E. coli isolates
+  filter(genus == "Escherichia", 
+         species == "coli", 
+         first_isolate == TRUE) \%>\%
+  # predict resistance of cefotaxime for next years
+  rsi_predict(col_ab = cfot,
+              col_date = date,
+              year_max = 2025,
+              preserve_measurements = FALSE)
+
 }
 \seealso{
 \code{\link{lm}} \cr \code{\link{glm}}

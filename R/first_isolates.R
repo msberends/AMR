@@ -24,7 +24,7 @@
 #' @param col_patient_id column name of the unique IDs of the patients
 #' @param col_genus column name of the genus of the microorganisms
 #' @param col_species column name of the species of the microorganisms
-#' @param col_testcode column name of the test codes, see Details
+#' @param col_testcode column name of the test codes. Use \code{col_testcode = NA} to \strong{not} exclude certain test codes (like test codes for screening). In that case \code{testcodes_exclude} will be ignored.
 #' @param col_specimen column name of the specimen type or group
 #' @param col_icu column name of the logicals (\code{TRUE}/\code{FALSE}) whether a ward or department is an Intensive Care Unit (ICU)
 #' @param col_keyantibiotics column name of the key antibiotics to determine first \emph{weighted} isolates, see \code{\link{key_antibiotics}}.
@@ -33,11 +33,13 @@
 #' @param icu_exclude logical whether ICU isolates should be excluded
 #' @param filter_specimen specimen group or type that should be excluded
 #' @param output_logical return output as \code{logical} (will else the values \code{0} or \code{1})
-#' @param ignore_I ignore \code{"I"} as antimicrobial interpretation of key antibiotics (with \code{FALSE}, changes in antibiograms from S to I and I to R will be interpreted as difference)
+#' @param points_threshold points until the comparison of key antibiotics will lead to inclusion of an isolate, see Details
 #' @param info print progress
-#' @details To conduct an analysis of antimicrobial resistance, you should only include the first isolate of every patient per episode. If you would not do this, you could easily get an overestimate or underestimate of the resistance of an antibiotic. Imagine that a patient was admitted with an MRSA and that is was found in 5 different blood cultures the following week. The resistance percentage of oxacillin of all \emph{S. aureus} isolates would be overestimated, because you included this MRSA more than once. It would be selection bias.
-#'
-#'     Use \code{col_testcode = NA} to \strong{not} exclude certain test codes (like test codes for screening). In that case \code{testcodes_exclude} will be ignored.
+#' @details \strong{Why this is so important} \cr
+#'     To conduct an analysis of antimicrobial resistance, you should only include the first isolate of every patient per episode \href{https://www.ncbi.nlm.nih.gov/pubmed/17304462}{[1]}. If you would not do this, you could easily get an overestimate or underestimate of the resistance of an antibiotic. Imagine that a patient was admitted with an MRSA and that it was found in 5 different blood cultures the following week. The resistance percentage of oxacillin of all \emph{S. aureus} isolates would be overestimated, because you included this MRSA more than once. It would be \href{https://en.wikipedia.org/wiki/Selection_bias}{selection bias}.
+
+#'     \strong{\code{points_threshold}} \cr
+#'     To compare key antibiotics, the difference between antimicrobial interpretations will be measured. A difference from I to S|R (or vice versa) means 0.5 points. A difference from S to R (or vice versa) means 1 point. When the sum of points exceeds \code{points_threshold}, an isolate will be (re)selected as a first weighted isolate.
 #' @keywords isolate isolates first
 #' @export
 #' @importFrom dplyr arrange_at lag between row_number filter mutate arrange
@@ -96,7 +98,7 @@ first_isolate <- function(tbl,
                           icu_exclude = FALSE,
                           filter_specimen = NA,
                           output_logical = TRUE,
-                          ignore_I = TRUE,
+                          points_threshold = 2,
                           info = TRUE) {
   
   # controleren of kolommen wel bestaan
@@ -274,20 +276,16 @@ first_isolate <- function(tbl,
                                0))
   
   if (col_keyantibiotics != '') {
-    # dit duurt 2 min bij 120.000 isolaten
     if (info == TRUE) {
-      cat('Comparing key antibiotics for first weighted isolates')
-      if (ignore_I == TRUE) {
-        cat(' (ignoring I)')
-      }
-      cat('...\n')
+      cat(paste0('Comparing key antibiotics for first weighted isolates (using points threshold of '
+                 , points_threshold, ')...\n'))
     }
     all_first <- all_first %>%
       mutate(key_ab_lag = lag(key_ab)) %>%
-      mutate(key_ab_other = !key_antibiotics_equal(key_ab,
-                                                  key_ab_lag,
-                                                  ignore_I = ignore_I,
-                                                  info = info)) %>%
+      mutate(key_ab_other = !key_antibiotics_equal(x = key_ab,
+                                                   y = key_ab_lag,
+                                                   points_threshold = points_threshold,
+                                                   info = info)) %>%
       mutate(
         real_first_isolate =
           if_else(
@@ -448,18 +446,11 @@ key_antibiotics <- function(tbl,
   
 }
 
-# Compare key antibiotics
-#
-# Check whether two text values with key antibiotics match. Supports vectors.
-# @param x,y tekst (or multiple text vectors) with antimicrobial interpretations
-# @param ignore_I ignore \code{"I"} as antimicrobial interpretation of key antibiotics (with \code{FALSE}, changes in antibiograms from S to I and I to R will be interpreted as difference)
-# @param info print progress
-# @return logical
-# @export
-# @seealso \code{\link{key_antibiotics}}
+#' @importFrom dplyr progress_estimated %>%
+#' @noRd
+key_antibiotics_equal <- function(x, y, points_threshold = 2, info = FALSE) {
+  # x is active row, y is lag
 
-# only internal use
-key_antibiotics_equal <- function(x, y, ignore_I = TRUE, info = FALSE) {
   if (length(x) != length(y)) {
     stop('Length of `x` and `y` must be equal.')
   }
@@ -467,13 +458,13 @@ key_antibiotics_equal <- function(x, y, ignore_I = TRUE, info = FALSE) {
   result <- logical(length(x))
   
   if (info == TRUE) {
-    voortgang <- dplyr::progress_estimated(length(x))
+    p <- dplyr::progress_estimated(length(x))
   }
   
   for (i in 1:length(x)) {
     
     if (info == TRUE) {
-      voortgang$tick()$print()
+      p$tick()$print()
     }
     
     if (is.na(x[i])) {
@@ -493,22 +484,17 @@ key_antibiotics_equal <- function(x, y, ignore_I = TRUE, info = FALSE) {
       
     } else {
       
-      x2 <- strsplit(x[i], "")[[1]]
-      y2 <- strsplit(y[i], "")[[1]]
+      # count points for every single character:
+      # - no change is 0 points
+      # - I <-> S|R is 0.5 point
+      # - S|R <-> R|S is 1 point
+      # use the levels of as.rsi (S = 1, I = 2, R = 3)
+
+      x2 <- strsplit(x[i], "")[[1]] %>% as.rsi() %>% as.double()
+      y2 <- strsplit(y[i], "")[[1]] %>% as.rsi() %>% as.double()
       
-      if (ignore_I == TRUE) {
-        valid_chars <- c('S', 's', 'R', 'r')
-      } else {
-        valid_chars <- c('S', 's', 'I', 'i', 'R', 'r')
-      }
-      
-      # Ongeldige waarden (zoals "-", NA) op beide locaties verwijderen
-      x2[which(!x2 %in% valid_chars)] <- '?'
-      x2[which(!y2 %in% valid_chars)] <- '?'
-      y2[which(!x2 %in% valid_chars)] <- '?'
-      y2[which(!y2 %in% valid_chars)] <- '?'
-      
-      result[i] <- all(x2 == y2)
+      points <- (x2 - y2) %>% abs() %>% sum(na.rm = TRUE)
+      result[i] <- ((points / 2) >= points_threshold)
     }
   }
   if (info == TRUE) {

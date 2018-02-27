@@ -192,15 +192,15 @@ rsi_df <- function(tbl,
 #' rsi(as.rsi(isolates$amcl), interpretation = "S")
 #' }
 rsi <- function(ab1, ab2 = NA, interpretation = 'IR', minimum = 30, percent = FALSE, info = FALSE, warning = FALSE) {
-  functietekst <- as.character(match.call())
+  function_text <- as.character(match.call())
   # param 1 = functienaam
   # param 2 = ab1
   # param 3 = ab2
-  ab1.naam <- functietekst[2]
+  ab1.naam <- function_text[2]
   if (!grepl('^[a-z]{3,4}$', ab1.naam)) {
     ab1.naam <- 'rsi1'
   }
-  ab2.naam <- functietekst[3]
+  ab2.naam <- function_text[3]
   if (!grepl('^[a-z]{3,4}$', ab2.naam)) {
     ab2.naam <- 'rsi2'
   }
@@ -236,10 +236,10 @@ rsi <- function(ab1, ab2 = NA, interpretation = 'IR', minimum = 30, percent = FA
 
 #' Predict antimicrobial resistance
 #'
-#' Create a prediction model to predict antimicrobial resistance for the next years on statistical solid ground. Standard errors (SE) will be returned as columns \code{se_min} and \code{se_max}.
+#' Create a prediction model to predict antimicrobial resistance for the next years on statistical solid ground. Standard errors (SE) will be returned as columns \code{se_min} and \code{se_max}. See Examples for a real live example.
 #' @param tbl table that contains columns \code{col_ab} and \code{col_date}
-#' @param col_ab column name of \code{tbl} with antimicrobial interpretations (\code{R}, \code{I} and \code{S})
-#' @param col_date column name of the date, will be used to calculate years
+#' @param col_ab column name of \code{tbl} with antimicrobial interpretations (\code{R}, \code{I} and \code{S}), supports tidyverse-like quotation
+#' @param col_date column name of the date, will be used to calculate years if this column doesn't consist of years already, supports tidyverse-like quotation
 #' @param year_max highest year to use in the prediction model, deafults to 15 years after today
 #' @param year_every unit of sequence between lowest year found in the data and \code{year_max}
 #' @param model the statistical model of choice. Valid values are \code{"binomial"} (or \code{"binom"} or \code{"logit"}) or \code{"loglin"} or \code{"linear"} (or \code{"lin"}).
@@ -255,24 +255,41 @@ rsi <- function(ab1, ab2 = NA, interpretation = 'IR', minimum = 30, percent = FA
 #' \dontrun{
 #' # use it directly:
 #' rsi_predict(tbl = tbl[which(first_isolate == TRUE & genus == "Haemophilus"),],
-#'             col_ab = "amcl", coldate = "date")
+#'             col_ab = "amcl", col_date = "date")
 #'   
 #' # or with dplyr so you can actually read it:
 #' library(dplyr)
 #' tbl %>%
 #'   filter(first_isolate == TRUE,
 #'          genus == "Haemophilus") %>%
-#'   rsi_predict(col_ab = "amcl", coldate = "date")
-#'
-#' tbl %>%
-#'   filter(first_isolate_weighted == TRUE,
-#'          genus == "Haemophilus") %>%
-#'   rsi_predict(col_ab = "amcl",
-#'               coldate = "date",
-#'               year_max = 2050,
-#'               year_every = 5)
-#'
+#'   rsi_predict(amcl, date)
 #' }
+#'
+#'
+#' # real live example:
+#' library(dplyr)
+#' septic_patients %>%
+#'   # get bacteria properties like genus and species
+#'   left_join_bactlist("bactid") %>% 
+#'   # calculate first isolates
+#'   mutate(first_isolate = 
+#'            first_isolate(.,
+#'                          "date",
+#'                          "patient_id",
+#'                          "genus",
+#'                          "species",
+#'                          col_specimen = NA,
+#'                          col_icu = NA)) %>% 
+#'   # filter on first E. coli isolates
+#'   filter(genus == "Escherichia", 
+#'          species == "coli", 
+#'          first_isolate == TRUE) %>%
+#'   # predict resistance of cefotaxime for next years
+#'   rsi_predict(col_ab = cfot,
+#'               col_date = date,
+#'               year_max = 2025,
+#'               preserve_measurements = FALSE)
+#'
 rsi_predict <- function(tbl,
                         col_ab,
                         col_date,
@@ -283,12 +300,33 @@ rsi_predict <- function(tbl,
                         preserve_measurements = TRUE,
                         info = TRUE) {
   
+  col_ab <- quasiquotate(deparse(substitute(col_ab)), col_ab)
+  if (!col_ab %in% colnames(tbl)) {
+    stop('Column ', col_ab, ' not found.')
+  }
+  col_date <- quasiquotate(deparse(substitute(col_date)), col_date)
+  if (!col_date %in% colnames(tbl)) {
+    stop('Column ', col_date, ' not found.')
+  }
+  if ('grouped_df' %in% class(tbl)) {
+    # no grouped tibbles please, mutate will throw errors
+    tbl <- base::as.data.frame(tbl, stringsAsFactors = FALSE)
+  }
+
   if (I_as_R == TRUE) {
     tbl[, col_ab] <- gsub('I', 'R', tbl %>% pull(col_ab))
   }
+
+  if (!all(tbl %>% pull(col_ab) %>% as.rsi() %in% c(NA, 'S', 'I', 'R'))) {
+    stop('Column ', col_ab, ' must contain antimicrobial interpretations (S, I, R).')
+  }
   
   year <- function(x) {
-    as.integer(format(as.Date(x), '%Y'))
+    if (all(grepl('^[0-9]{4}$', x))) {
+      x
+    } else {
+      as.integer(format(as.Date(x), '%Y'))
+    }
   }
   
   years_predict <- seq(from = min(year(tbl %>% pull(col_date))), to = year_max, by = year_every)
