@@ -3,6 +3,7 @@
 - Edited column names to comply with GLIMS, the laboratory information system
 - Added more valid MIC values
 - Renamed 'Daily Defined Dose' to 'Defined Daily Dose'
+- Added barplots for `rsi` and `mic` classes
 
 ## 0.1.0
 - First submission to CRAN.

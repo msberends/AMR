@@ -48,7 +48,7 @@ help(package = "AMR")
 This is also called *interpretive reading*.
 ```r
 before <- data.frame(bactid = c("STAAUR",  # Staphylococcus aureus
-                                "ENCFAE"   # Enterococcus faecalis
+                                "ENCFAE",  # Enterococcus faecalis
                                 "ESCCOL",  # Escherichia coli
                                 "KLEPNE",  # Klebsiella pneumoniae
                                 "PSEAER"), # Pseudomonas aeruginosa

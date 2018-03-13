@@ -20,7 +20,7 @@
 #'
 #' Apply expert rules (like intrinsic resistance), as defined by the European Committee on Antimicrobial Susceptibility Testing (EUCAST, \url{http://eucast.org}), see \emph{Source}.
 #' @param tbl table with antibiotic columns, like e.g. \code{amox} and \code{amcl}
-#' @param col_bactcode column name of the bacteria ID in \code{tbl} - should also be present in \code{bactlist$bactid}, see \code{\link{bactlist}}.
+#' @param col_bactcode column name of the bacteria ID in \code{tbl} - values of this column should be present in \code{bactlist$bactid}, see \code{\link{bactlist}}
 #' @param info print progress
 #' @param amcl,amik,amox,ampi,azit,aztr,cefa,cfra,cfep,cfot,cfox,cfta,cftr,cfur,chlo,cipr,clar,clin,clox,coli,czol,dapt,doxy,erta,eryt,fosf,fusi,gent,imip,kana,levo,linc,line,mero,mino,moxi,nali,neom,neti,nitr,novo,norf,oflo,peni,pita,poly,qida,rifa,roxi,siso,teic,tetr,tica,tige,tobr,trim,trsu,vanc column names of antibiotics. Use \code{NA} to skip a column, like \code{tica = NA}. Non-existing column will be skipped.
 #' @param ... parameters that are passed on to \code{EUCAST_rules}
@@ -36,19 +36,23 @@
 #'   EUCAST Expert Rules Version 3.1: \cr
 #'   \url{http://www.eucast.org/expert_rules_and_intrinsic_resistance}
 #' @examples
-#' a <- data.frame(bactid = c("STAAUR", "ESCCOL", "KLEPNE", "PSEAER"), 
-#'                 vanc = "-",
-#'                 amox = "-",
-#'                 coli = "-",
-#'                 cfta = "-",
-#'                 cfur = "-",
+#' a <- data.frame(bactid = c("STAAUR",  # Staphylococcus aureus
+#'                            "ENCFAE",  # Enterococcus faecalis
+#'                            "ESCCOL",  # Escherichia coli
+#'                            "KLEPNE",  # Klebsiella pneumoniae
+#'                            "PSEAER"), # Pseudomonas aeruginosa
+#'                 vanc = "-",           # Vancomycin
+#'                 amox = "-",           # Amoxicillin
+#'                 coli = "-",           # Colistin
+#'                 cfta = "-",           # Ceftazidime
+#'                 cfur = "-",           # Cefuroxime
 #'                 stringsAsFactors = FALSE)
 #' a
 #' 
-#' b <- EUCAST_rules(a, "bactid")
+#' b <- EUCAST_rules(a)
 #' b
 EUCAST_rules <- function(tbl,
-                         col_bactcode,
+                         col_bactcode = 'bactid',
                          info = TRUE,
                          amcl = 'amcl',
                          amik = 'amik',
