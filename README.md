@@ -13,22 +13,26 @@ AMR can also be predicted for the forthcoming years with the `rsi_predict` funct
 It also contains functions to translate antibiotic codes from the lab (like `"AMOX"`) or the [WHO](https://www.whocc.no/atc_ddd_index/?code=J01CA04&showdescription=no) (like `"J01CA04"`) to trivial names (like `"amoxicillin"`) and vice versa.
 
 ## How to get it?
-[![CRAN_Badge](http://www.r-pkg.org/badges/version/AMR)](http://cran.r-project.org/package=AMR)[![CRAN_Downloads](https://cranlogs.r-pkg.org/badges/grand-total/AMR)](http://cran.r-project.org/package=AMR)[![Travis_Build](https://travis-ci.org/msberends/AMR.svg?branch=master)](https://travis-ci.org/msberends/AMR)
+This package is available on CRAN and also here on GitHub.
 
-This package is available on CRAN (latest stable version) and also here on GitHub (latest development version).
+### From CRAN (recommended, latest stable version)
+[![CRAN_Badge](https://img.shields.io/cran/v/AMR.svg?label=CRAN&colorB=3679BC)](http://cran.r-project.org/package=AMR)
+[![CRAN_Downloads](https://cranlogs.r-pkg.org/badges/grand-total/AMR)](http://cran.r-project.org/package=AMR)
 
-### Latest stable version from CRAN (recommended)
-For RStudio:
--  Click on `Tools` and then `Install Packages...`
--  Type in `AMR` and press <kbd>Install</kbd>
+- RStudio:
+  - Click on `Tools` and then `Install Packages...`
+  -  Type in `AMR` and press <kbd>Install</kbd>
 
-Or in the R console:
+- R console:
+  - `install.packages("AMR")`
+
+### From GitHub (latest development version)
+[![Travis_Build](https://travis-ci.org/msberends/AMR.svg?branch=master)](https://travis-ci.org/msberends/AMR)
+[![Since_Release](https://img.shields.io/github/commits-since/msberends/AMR/latest.svg?colorB=3679BC)](https://github.com/msberends/AMR/releases)
+[![Last_Commit](https://img.shields.io/github/last-commit/msberends/AMR.svg?colorB=3679BC)](https://github.com/msberends/AMR/commits/master)
+
 ```r
-install.packages("AMR")
-```
-
-### Latest development version from GitHub
-```r
+install.packages("devtools")
 devtools::install_github("msberends/AMR")
 ```
 
@@ -155,6 +159,8 @@ bactlist      # A tibble: 2,507 x 10
 <sup>2</sup> Department of Medical, Market and Innovation (MMI), Certe Medische diagnostiek & advies, Groningen, the Netherlands
 
 ## Copyright
+[![License](https://img.shields.io/github/license/msberends/AMR.svg?colorB=3679BC)](https://github.com/msberends/AMR/blob/master/LICENSE)
+
 This R package is licensed under the [GNU General Public License (GPL) v2.0](https://github.com/msberends/AMR/blob/master/LICENSE). In a nutshell, this means that this package:
 
 - May be used for commercial purposes

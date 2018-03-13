@@ -125,7 +125,7 @@ summary.rsi <- function(object, ...) {
 
 #' @exportMethod plot.rsi
 #' @export
-#' @importFrom dplyr %>% group_by summarise filter mutate if_else
+#' @importFrom dplyr %>% group_by summarise filter mutate if_else n_distinct
 #' @importFrom graphics plot text
 #' @noRd
 plot.rsi <- function(x, ...) {
@@ -150,10 +150,41 @@ plot.rsi <- function(x, ...) {
        ylab = 'Percentage',
        xlab = 'Antimicrobial Interpretation',
        main = paste('Susceptibilty Analysis of', x_name),
+       axes = FALSE,
        ...)
+  # x axis
+  axis(side = 1, at = 1:n_distinct(data$x), labels = levels(data$x), lwd = 0)
+  # y axis, 0-100%
+  axis(side = 2, at = seq(0, 100, 5))
+  
   text(x = data$x,
-       y = data$s + 5,
+       y = data$s + 4,
        labels = paste0(data$s, '% (n = ', data$n, ')'))
+}
+
+
+#' @exportMethod barplot.rsi
+#' @export
+#' @importFrom dplyr %>% group_by summarise filter mutate if_else n_distinct
+#' @importFrom graphics plot text
+#' @noRd
+barplot.rsi <- function(x, ...) {
+  x_name <- deparse(substitute(x))
+  
+  data <- data.frame(rsi = x, cnt = 1) %>%
+    group_by(rsi) %>%
+    summarise(cnt = sum(cnt)) %>%
+    droplevels()
+
+  barplot(table(rsi_data),
+          col = c('green3', 'orange2', 'red3'),
+          xlab = 'Antimicrobial Interpretation',
+          main = paste('Susceptibilty Analysis of', x_name),
+          ylab = 'Frequency',
+          axes = FALSE,
+          ...)
+  # y axis, 0-100%
+  axis(side = 2, at = seq(0, max(data$cnt) + max(data$cnt) * 1.1, by = 25))
 }
 
 #' Class 'mic'
@@ -169,6 +200,7 @@ plot.rsi <- function(x, ...) {
 #' mic_data <- as.mic(c(">=32", "1.0", "1", "1.00", 8, "<=0.128", "8", "16", "16"))
 #' is.mic(mic_data)
 #' plot(mic_data)
+#' barplot(mic_data)
 #' 
 #' \donttest{
 #' library(dplyr)
@@ -357,21 +389,29 @@ summary.mic <- function(object, ...) {
 #' @noRd
 plot.mic <- function(x, ...) {
   x_name <- deparse(substitute(x))
-  
+  create_barplot_mic(x, x_name, ...)
+}
+
+#' @exportMethod barplot.mic
+#' @export
+#' @importFrom dplyr %>% group_by summarise
+#' @importFrom graphics plot text
+#' @noRd
+barplot.mic <- function(x, ...) {
+  x_name <- deparse(substitute(x))
+  create_barplot_mic(x, x_name, ...)
+}
+
+create_barplot_mic <- function(x, x_name, ...) {
   data <- data.frame(mic = x, cnt = 1) %>%
     group_by(mic) %>%
     summarise(cnt = sum(cnt)) %>%
     droplevels()
-
-  plot(x = data$mic,
-       y = data$cnt,
-       lwd = 2,
-       ylim = c(-0.5, max(5, max(data$cnt))),
-       ylab = 'Frequency',
-       xlab = 'MIC value',
-       main = paste('MIC values of', x_name),
-       ...)
-  text(x = data$mic,
-       y = -0.5,
-       labels = paste('n =', data$cnt))
+  barplot(table(droplevels(x)),
+          ylab = 'Frequency',
+          xlab = 'MIC value',
+          main = paste('MIC values of', x_name), 
+          axes = FALSE,
+          ...)
+  axis(2, seq(0, max(data$cnt)))
 }

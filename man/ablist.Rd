@@ -12,9 +12,9 @@
   \item{\code{official}}{Official name by the WHO, like \code{"amoxicillin and enzyme inhibitor"}}
   \item{\code{official_nl}}{Official name in the Netherlands, like \code{"Amoxicilline met enzymremmer"}}
   \item{\code{trivial_nl}}{Trivial name in Dutch, like \code{"Amoxicilline/clavulaanzuur"}}
-  \item{\code{oral_ddd}}{Daily Defined Dose (DDD) according to the WHO, oral treatment}
+  \item{\code{oral_ddd}}{Defined Daily Dose (DDD) according to the WHO, oral treatment}
   \item{\code{oral_units}}{Units of \code{ddd_units}}
-  \item{\code{iv_ddd}}{Daily Defined Dose (DDD) according to the WHO, parenteral treatment}
+  \item{\code{iv_ddd}}{Defined Daily Dose (DDD) according to the WHO, parenteral treatment}
   \item{\code{iv_units}}{Units of \code{iv_ddd}}
   \item{\code{atc_group1}}{ATC group in Dutch, like \code{"Macroliden, lincosamiden en streptograminen"}}
   \item{\code{atc_group2}}{Subgroup of \code{atc_group1} in Dutch, like \code{"Macroliden"}}
