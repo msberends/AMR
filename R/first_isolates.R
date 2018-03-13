@@ -37,8 +37,8 @@
 #' @param info print progress
 #' @details \strong{Why this is so important} \cr
 #'     To conduct an analysis of antimicrobial resistance, you should only include the first isolate of every patient per episode \href{https://www.ncbi.nlm.nih.gov/pubmed/17304462}{[1]}. If you would not do this, you could easily get an overestimate or underestimate of the resistance of an antibiotic. Imagine that a patient was admitted with an MRSA and that it was found in 5 different blood cultures the following week. The resistance percentage of oxacillin of all \emph{S. aureus} isolates would be overestimated, because you included this MRSA more than once. It would be \href{https://en.wikipedia.org/wiki/Selection_bias}{selection bias}.
-
-#'     \strong{\code{points_threshold}} \cr
+#'
+#'     \strong{Using parameter \code{points_threshold}} \cr
 #'     To compare key antibiotics, the difference between antimicrobial interpretations will be measured. A difference from I to S|R (or vice versa) means 0.5 points. A difference from S to R (or vice versa) means 1 point. When the sum of points exceeds \code{points_threshold}, an isolate will be (re)selected as a first weighted isolate.
 #' @keywords isolate isolates first
 #' @export

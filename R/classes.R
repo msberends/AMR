@@ -158,7 +158,7 @@ plot.rsi <- function(x, ...) {
 
 #' Class 'mic'
 #'
-#' This transforms a vector to a new class\code{mic}, which is an ordered factor valid MIC values as levels. Invalid MIC values will be translated as \code{NA} with a warning.
+#' This transforms a vector to a new class\code{mic}, which is an ordered factor with valid MIC values as levels. Invalid MIC values will be translated as \code{NA} with a warning.
 #' @rdname as.mic
 #' @param x vector
 #' @param na.rm a logical indicating whether missing values should be removed
@@ -207,24 +207,29 @@ as.mic <- function(x, na.rm = FALSE) {
               "<0.012", "<=0.012", "0.012", ">=0.012", ">0.012",
               "<0.016", "<=0.016", "0.016", ">=0.016", ">0.016",
               "<0.023", "<=0.023", "0.023", ">=0.023", ">0.023",
+              "<0.025", "<=0.025", "0.025", ">=0.025", ">0.025",
               "<0.03", "<=0.03", "0.03", ">=0.03", ">0.03",
               "<0.032", "<=0.032", "0.032", ">=0.032", ">0.032",
               "<0.047", "<=0.047", "0.047", ">=0.047", ">0.047",
               "<0.05", "<=0.05", "0.05", ">=0.05", ">0.05",
               "<0.06", "<=0.06", "0.06", ">=0.06", ">0.06",
               "<0.0625", "<=0.0625", "0.0625", ">=0.0625", ">0.0625",
+              "<0.063", "<=0.063", "0.063", ">=0.063", ">0.063",
               "<0.064", "<=0.064", "0.064", ">=0.064", ">0.064",
               "<0.09", "<=0.09", "0.09", ">=0.09", ">0.09",
               "<0.094", "<=0.094", "0.094", ">=0.094", ">0.094",
               "<0.12", "<=0.12", "0.12", ">=0.12", ">0.12",
               "<0.125", "<=0.125", "0.125", ">=0.125", ">0.125",
               "<0.128", "<=0.128", "0.128", ">=0.128", ">0.128",
+              "<0.16", "<=0.16", "0.16", ">=0.16", ">0.16",
               "<0.19", "<=0.19", "0.19", ">=0.19", ">0.19",
               "<0.25", "<=0.25", "0.25", ">=0.25", ">0.25",
               "<0.256", "<=0.256", "0.256", ">=0.256", ">0.256",
+              "<0.32", "<=0.32", "0.32", ">=0.32", ">0.32",
               "<0.38", "<=0.38", "0.38", ">=0.38", ">0.38",
               "<0.5", "<=0.5", "0.5", ">=0.5", ">0.5",
               "<0.512", "<=0.512", "0.512", ">=0.512", ">0.512",
+              "<0.64", "<=0.64", "0.64", ">=0.64", ">0.64",
               "<0.75", "<=0.75", "0.75", ">=0.75", ">0.75",
               "<1", "<=1", "1", ">=1", ">1",
               "<1.5", "<=1.5", "1.5", ">=1.5", ">1.5",
@@ -284,26 +289,23 @@ is.mic <- function(x) {
 
 #' @exportMethod as.double.mic
 #' @export
-#' @importFrom dplyr %>%
 #' @noRd
 as.double.mic <- function(x, ...) {
-  as.double(gsub('(<=)|(>=)', '', as.character(x)))
+  as.double(gsub('(<|=|>)+', '', as.character(x)))
 }
 
 #' @exportMethod as.integer.mic
 #' @export
-#' @importFrom dplyr %>%
 #' @noRd
 as.integer.mic <- function(x, ...) {
-  as.integer(gsub('(<=)|(>=)', '', as.character(x)))
+  as.integer(gsub('(<|=|>)+', '', as.character(x)))
 }
 
 #' @exportMethod as.numeric.mic
 #' @export
-#' @importFrom dplyr %>%
 #' @noRd
 as.numeric.mic <- function(x, ...) {
-  as.numeric(gsub('(<=)|(>=)', '', as.character(x)))
+  as.numeric(gsub('(<|=|>)+', '', as.character(x)))
 }
 
 #' @exportMethod print.mic

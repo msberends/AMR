@@ -13,7 +13,7 @@ AMR can also be predicted for the forthcoming years with the `rsi_predict` funct
 It also contains functions to translate antibiotic codes from the lab (like `"AMOX"`) or the [WHO](https://www.whocc.no/atc_ddd_index/?code=J01CA04&showdescription=no) (like `"J01CA04"`) to trivial names (like `"amoxicillin"`) and vice versa.
 
 ## How to get it?
-[![CRAN_Badge](http://www.r-pkg.org/badges/version/AMR)](http://cran.r-project.org/package=AMR)
+[![CRAN_Badge](http://www.r-pkg.org/badges/version/AMR)](http://cran.r-project.org/package=AMR)[![CRAN_Downloads](https://cranlogs.r-pkg.org/badges/grand-total/AMR)](http://cran.r-project.org/package=AMR)[![Travis_Build](https://travis-ci.org/msberends/AMR.svg?branch=master)](https://travis-ci.org/msberends/AMR)
 
 This package is available on CRAN (latest stable version) and also here on GitHub (latest development version).
 
