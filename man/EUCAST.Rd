@@ -13,28 +13,29 @@ EUCAST Expert Rules Version 2.0: \cr
   \url{http://www.eucast.org/expert_rules_and_intrinsic_resistance}
 }
 \usage{
-EUCAST_rules(tbl, col_bactcode, info = TRUE, amcl = "amcl", amik = "amik",
-  amox = "amox", ampi = "ampi", azit = "azit", aztr = "aztr",
-  cefa = "cefa", cfra = "cfra", cfep = "cfep", cfot = "cfot",
-  cfox = "cfox", cfta = "cfta", cftr = "cftr", cfur = "cfur",
-  chlo = "chlo", cipr = "cipr", clar = "clar", clin = "clin",
-  clox = "clox", coli = "coli", czol = "czol", dapt = "dapt",
-  doxy = "doxy", erta = "erta", eryt = "eryt", fosf = "fosf",
-  fusi = "fusi", gent = "gent", imip = "imip", kana = "kana",
-  levo = "levo", linc = "linc", line = "line", mero = "mero",
-  mino = "mino", moxi = "moxi", nali = "nali", neom = "neom",
-  neti = "neti", nitr = "nitr", novo = "novo", norf = "norf",
-  oflo = "oflo", peni = "peni", pita = "pita", poly = "poly",
-  qida = "qida", rifa = "rifa", roxi = "roxi", siso = "siso",
-  teic = "teic", tetr = "tetr", tica = "tica", tige = "tige",
-  tobr = "tobr", trim = "trim", trsu = "trsu", vanc = "vanc")
+EUCAST_rules(tbl, col_bactcode = "bactid", info = TRUE, amcl = "amcl",
+  amik = "amik", amox = "amox", ampi = "ampi", azit = "azit",
+  aztr = "aztr", cefa = "cefa", cfra = "cfra", cfep = "cfep",
+  cfot = "cfot", cfox = "cfox", cfta = "cfta", cftr = "cftr",
+  cfur = "cfur", chlo = "chlo", cipr = "cipr", clar = "clar",
+  clin = "clin", clox = "clox", coli = "coli", czol = "czol",
+  dapt = "dapt", doxy = "doxy", erta = "erta", eryt = "eryt",
+  fosf = "fosf", fusi = "fusi", gent = "gent", imip = "imip",
+  kana = "kana", levo = "levo", linc = "linc", line = "line",
+  mero = "mero", mino = "mino", moxi = "moxi", nali = "nali",
+  neom = "neom", neti = "neti", nitr = "nitr", novo = "novo",
+  norf = "norf", oflo = "oflo", peni = "peni", pita = "pita",
+  poly = "poly", qida = "qida", rifa = "rifa", roxi = "roxi",
+  siso = "siso", teic = "teic", tetr = "tetr", tica = "tica",
+  tige = "tige", tobr = "tobr", trim = "trim", trsu = "trsu",
+  vanc = "vanc")
 
 interpretive_reading(...)
 }
 \arguments{
 \item{tbl}{table with antibiotic columns, like e.g. \code{amox} and \code{amcl}}
 
-\item{col_bactcode}{column name of the bacteria ID in \code{tbl} - should also be present in \code{bactlist$bactid}, see \code{\link{bactlist}}.}
+\item{col_bactcode}{column name of the bacteria ID in \code{tbl} - values of this column should be present in \code{bactlist$bactid}, see \code{\link{bactlist}}}
 
 \item{info}{print progress}
 
@@ -49,15 +50,19 @@ table with edited variables of antibiotics.
 Apply expert rules (like intrinsic resistance), as defined by the European Committee on Antimicrobial Susceptibility Testing (EUCAST, \url{http://eucast.org}), see \emph{Source}.
 }
 \examples{
-a <- data.frame(bactid = c("STAAUR", "ESCCOL", "KLEPNE", "PSEAER"), 
-                vanc = "-",
-                amox = "-",
-                coli = "-",
-                cfta = "-",
-                cfur = "-",
+a <- data.frame(bactid = c("STAAUR",  # Staphylococcus aureus
+                           "ENCFAE",  # Enterococcus faecalis
+                           "ESCCOL",  # Escherichia coli
+                           "KLEPNE",  # Klebsiella pneumoniae
+                           "PSEAER"), # Pseudomonas aeruginosa
+                vanc = "-",           # Vancomycin
+                amox = "-",           # Amoxicillin
+                coli = "-",           # Colistin
+                cfta = "-",           # Ceftazidime
+                cfur = "-",           # Cefuroxime
                 stringsAsFactors = FALSE)
 a
 
-b <- EUCAST_rules(a, "bactid")
+b <- EUCAST_rules(a)
 b
 }

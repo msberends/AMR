@@ -28,7 +28,8 @@
 #' rsi_data <- as.rsi(c(rep("S", 474), rep("I", 36), rep("R", 370)))
 #' rsi_data <- as.rsi(c(rep("S", 474), rep("I", 36), rep("R", 370), "A", "B", "C"))
 #' is.rsi(rsi_data)
-#' plot(rsi_data)
+#' plot(rsi_data)    # for percentages
+#' barplot(rsi_data) # for frequencies
 #' 
 #' \donttest{
 #' library(dplyr)
@@ -166,17 +167,18 @@ plot.rsi <- function(x, ...) {
 #' @exportMethod barplot.rsi
 #' @export
 #' @importFrom dplyr %>% group_by summarise filter mutate if_else n_distinct
-#' @importFrom graphics plot text
+#' @importFrom graphics barplot axis
 #' @noRd
-barplot.rsi <- function(x, ...) {
-  x_name <- deparse(substitute(x))
+barplot.rsi <- function(height, ...) {
+  x <- height
+  x_name <- deparse(substitute(height))
   
   data <- data.frame(rsi = x, cnt = 1) %>%
     group_by(rsi) %>%
     summarise(cnt = sum(cnt)) %>%
     droplevels()
 
-  barplot(table(rsi_data),
+  barplot(table(x),
           col = c('green3', 'orange2', 'red3'),
           xlab = 'Antimicrobial Interpretation',
           main = paste('Susceptibilty Analysis of', x_name),
@@ -395,13 +397,14 @@ plot.mic <- function(x, ...) {
 #' @exportMethod barplot.mic
 #' @export
 #' @importFrom dplyr %>% group_by summarise
-#' @importFrom graphics plot text
+#' @importFrom graphics barplot axis
 #' @noRd
-barplot.mic <- function(x, ...) {
-  x_name <- deparse(substitute(x))
-  create_barplot_mic(x, x_name, ...)
+barplot.mic <- function(height, ...) {
+  x_name <- deparse(substitute(height))
+  create_barplot_mic(height, x_name, ...)
 }
 
+#' @importFrom graphics barplot axis
 create_barplot_mic <- function(x, x_name, ...) {
   data <- data.frame(mic = x, cnt = 1) %>%
     group_by(mic) %>%
