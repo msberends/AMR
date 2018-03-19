@@ -12,7 +12,8 @@ Authors@R: c(
         given = c("Christian", "F."),
         family = "Luz",
         email = "c.f.luz@umcg.nl",
-        role = c("aut", "ctb")),
+        role = c("aut", "ctb"),
+        comment = c(ORCID = "0000-0001-5809-5995")),
     person(
         given = c("Erwin", "E.A."),
         family = "Hassing",
