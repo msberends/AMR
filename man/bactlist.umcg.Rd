@@ -16,9 +16,9 @@ MOLIS (LIS of Certe) - \url{https://www.certe.nl} \cr \cr GLIMS (LIS of UMCG) - 
 bactlist.umcg
 }
 \description{
-A dataset containing all bacteria codes of UMCG MMB. These codes can be joined to data with an ID from \code{\link{bactlist}$bactid}, using \code{\link{left_join_bactlist}}.
+A dataset containing all bacteria codes of UMCG MMB. These codes can be joined to data with an ID from \code{\link{bactlist}$bactid} (using \code{\link{left_join_bactlist}}). GLIMS codes can also be translated to valid \code{bactid}'s with \code{\link{guess_bactid}}.
 }
 \seealso{
-\code{\link{bactlist}}
+\code{\link{guess_bactid}} \code{\link{bactlist}}
 }
 \keyword{datasets}

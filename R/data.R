@@ -85,14 +85,14 @@
 
 #' Translation table for UMCG with ~1100 microorganisms
 #'
-#' A dataset containing all bacteria codes of UMCG MMB. These codes can be joined to data with an ID from \code{\link{bactlist}$bactid}, using \code{\link{left_join_bactlist}}.
+#' A dataset containing all bacteria codes of UMCG MMB. These codes can be joined to data with an ID from \code{\link{bactlist}$bactid} (using \code{\link{left_join_bactlist}}). GLIMS codes can also be translated to valid \code{bactid}'s with \code{\link{guess_bactid}}.
 #' @format A data.frame with 1090 observations and 2 variables:
 #' \describe{
 #'   \item{\code{mocode}}{Code of microorganism according to UMCG MMB}
 #'   \item{\code{bactid}}{Code of microorganism in \code{\link{bactlist}}}
 #' }
 #' @source MOLIS (LIS of Certe) - \url{https://www.certe.nl} \cr \cr GLIMS (LIS of UMCG) - \url{https://www.umcg.nl}
-#' @seealso \code{\link{bactlist}}
+#' @seealso \code{\link{guess_bactid}} \code{\link{bactlist}}
 "bactlist.umcg"
 
 #' Dataset with 2000 blood culture isolates of septic patients

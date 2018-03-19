@@ -41,10 +41,10 @@
 #'     To conduct an analysis of antimicrobial resistance, you should only include the first isolate of every patient per episode \href{https://www.ncbi.nlm.nih.gov/pubmed/17304462}{[1]}. If you would not do this, you could easily get an overestimate or underestimate of the resistance of an antibiotic. Imagine that a patient was admitted with an MRSA and that it was found in 5 different blood cultures the following week. The resistance percentage of oxacillin of all \emph{S. aureus} isolates would be overestimated, because you included this MRSA more than once. It would be \href{https://en.wikipedia.org/wiki/Selection_bias}{selection bias}.
 #'
 #'     \strong{DETERMINING WEIGHTED ISOLATES} \cr
-#'     \strong{1. Using \code{type = "keyantibiotics"} and parameter \code{ignore_I}} \cr
-#'     To determine weighted isolates, the difference between key antibiotics will be checked. Any difference from S to R (or vice versa) will (re)select an isolate as a first weighted isolate. With \code{ignore_I == FALSE}, also differences from I to S|R (or vice versa) will lead to this. This is a reliable and fast method. \cr
-#'     \strong{2. Using \code{type = "points"} and parameter \code{points_threshold}} \cr
-#'     To determine weighted isolates, difference between antimicrobial interpretations will be measured with points. A difference from I to S|R (or vice versa) means 0.5 points. A difference from S to R (or vice versa) means 1 point. When the sum of points exceeds \code{points_threshold}, an isolate will be (re)selected as a first weighted isolate. This method is being used by the Infection Prevention department (Dr M. Lokate) of the University Medical Center Groningen (UMCG).
+#'     \strong{1. Using} \code{type = "keyantibiotics"} \strong{and parameter} \code{ignore_I} \cr
+#'     To determine weighted isolates, the difference between key antibiotics will be checked. Any difference from S to R (or vice versa) will (re)select an isolate as a first weighted isolate. With \code{ignore_I = FALSE}, also differences from I to S|R (or vice versa) will lead to this. This is a reliable method and 30-35 times faster than method 2. \cr
+#'     \strong{2. Using} \code{type = "points"} \strong{and parameter} \code{points_threshold} \cr
+#'     To determine weighted isolates, difference between antimicrobial interpretations will be measured with points. A difference from I to S|R (or vice versa) means 0.5 points, a difference from S to R (or vice versa) means 1 point. When the sum of points exceeds \code{points_threshold}, an isolate will be (re)selected as a first weighted isolate. This method is being used by the Infection Prevention department (Dr M. Lokate) of the University Medical Center Groningen (UMCG).
 #' @keywords isolate isolates first
 #' @export
 #' @importFrom dplyr arrange_at lag between row_number filter mutate arrange
@@ -675,6 +675,12 @@ guess_bactid <- function(x) {
     if (nrow(found) == 0) {
       # try only genus, with 'species' attached
       found <- AMR::bactlist %>% filter(fullname %like% x_species[i])
+    }
+    if (nrow(found) == 0) {
+      # search for GLIMS code
+      if (toupper(x.bak[i]) %in% toupper(AMR::bactlist.umcg$mocode)) {
+        found <- AMR::bactlist.umcg %>% filter(toupper(mocode) == toupper(x.bak[i]))
+      }
     }
     if (nrow(found) == 0) {
       # try splitting of characters and then find ID
