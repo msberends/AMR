@@ -1,2 +1,21 @@
+# R for travis: see documentation at https://docs.travis-ci.com/user/languages/r
+
 language: r
 cache: packages
+
+r:
+  - 3.0
+
+r_packages:
+  - covr
+
+after_success:
+  - Rscript -e 'covr::codecov()'
+
+notifications:
+  email:
+    recipients:
+      - m.s.berends@umcg.nl
+      - c.f.luz@umcg.nl
+    on_success: change
+    on_failure: always

@@ -28,7 +28,7 @@ This package is available on CRAN and also here on GitHub.
 
 ### From GitHub (latest development version)
 [![Travis_Build](https://travis-ci.org/msberends/AMR.svg?branch=master)](https://travis-ci.org/msberends/AMR)
-[![Since_Release](https://img.shields.io/github/commits-since/msberends/AMR/latest.svg?colorB=3679BC)](https://github.com/msberends/AMR/releases)
+[![Since_Release](https://img.shields.io/github/commits-since/msberends/AMR/latest.svg?colorB=3679BC)](https://github.com/msberends/AMR/commits/master)
 [![Last_Commit](https://img.shields.io/github/last-commit/msberends/AMR.svg?colorB=3679BC)](https://github.com/msberends/AMR/commits/master)
 
 ```r
@@ -116,7 +116,14 @@ A plot of `rsi_data`:
 plot(rsi_data)
 ```
 
-![example](man/figures/rsi_example.png)
+![example1](man/figures/rsi_example.png)
+
+A plot of `mic_data` (defaults to bar plot):
+```r
+plot(mic_data)
+```
+
+![example2](man/figures/mic_example.png)
 
 Other epidemiological functions:
 

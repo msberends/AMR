@@ -11,22 +11,24 @@
 \alias{anti_join_bactlist}
 \title{Join a table with \code{bactlist}}
 \usage{
-inner_join_bactlist(x, by = "bactid", ...)
+inner_join_bactlist(x, by = "bactid", suffix = c("2", ""), ...)
 
-left_join_bactlist(x, by = "bactid", ...)
+left_join_bactlist(x, by = "bactid", suffix = c("2", ""), ...)
 
-right_join_bactlist(x, by = "bactid", ...)
+right_join_bactlist(x, by = "bactid", suffix = c("2", ""), ...)
 
-full_join_bactlist(x, by = "bactid", ...)
+full_join_bactlist(x, by = "bactid", suffix = c("2", ""), ...)
 
 semi_join_bactlist(x, by = "bactid", ...)
 
 anti_join_bactlist(x, by = "bactid", ...)
 }
 \arguments{
-\item{x}{existing table to join}
+\item{x}{existing table to join, also supports character vectors}
 
 \item{by}{a variable to join by - could be a column name of \code{x} with values that exist in \code{bactlist$bactid} (like \code{by = "bacteria_id"}), or another column in \code{\link{bactlist}} (but then it should be named, like \code{by = c("my_genus_species" = "fullname")})}
+
+\item{suffix}{if there are non-joined duplicate variables in \code{x} and \code{y}, these suffixes will be added to the output to disambiguate them. Should be a character vector of length 2.}
 
 \item{...}{other parameters to pass on to \code{dplyr::\link[dplyr]{join}}.}
 }
@@ -34,16 +36,17 @@ anti_join_bactlist(x, by = "bactid", ...)
 Join the list of microorganisms \code{\link{bactlist}} easily to an existing table.
 }
 \details{
-As opposed to the \code{\link[dplyr]{join}} functions of \code{dplyr}, at default existing columns will get a suffix \code{"2"} and the newly joined columns will not get a suffix. See \code{\link[dplyr]{join}} for more information.
+As opposed to the \code{\link[dplyr]{join}} functions of \code{dplyr}, characters vectors are supported and at default existing columns will get a suffix \code{"2"} and the newly joined columns will not get a suffix. See \code{\link[dplyr]{join}} for more information.
 }
 \examples{
+left_join_bactlist("STAAUR")
+
 df <- data.frame(date = seq(from = as.Date("2018-01-01"),
                             to = as.Date("2018-01-07"),
                             by = 1),
                  bacteria_id = c("STAAUR", "STAAUR", "STAAUR", "STAAUR",
                                  "ESCCOL", "ESCCOL", "ESCCOL"),
                  stringsAsFactors = FALSE)
-                 
 colnames(df)
 df2 <- left_join_bactlist(df, "bacteria_id")
 colnames(df2)

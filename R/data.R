@@ -18,36 +18,53 @@
 
 #' Dataset with 420 antibiotics
 #'
-#' A dataset containing all antibiotics with a J0 code, with their DDD's.
-#' @format A data.frame with 420 observations and 12 variables:
+#' A dataset containing all antibiotics with a J0 code, with their DDD's. Properties were downloaded from the WHO, see Source.
+#' @format A data.frame with 420 observations and 16 variables:
 #' \describe{
 #'   \item{\code{atc}}{ATC code, like \code{J01CR02}}
 #'   \item{\code{molis}}{MOLIS code, like \code{amcl}}
 #'   \item{\code{umcg}}{UMCG code, like \code{AMCL}}
-#'   \item{\code{official}}{Official name by the WHO, like \code{"amoxicillin and enzyme inhibitor"}}
+#'   \item{\code{official}}{Official name by the WHO, like \code{"Amoxicillin and enzyme inhibitor"}}
 #'   \item{\code{official_nl}}{Official name in the Netherlands, like \code{"Amoxicilline met enzymremmer"}}
 #'   \item{\code{trivial_nl}}{Trivial name in Dutch, like \code{"Amoxicilline/clavulaanzuur"}}
-#'   \item{\code{oral_ddd}}{Defined Daily Dose (DDD) according to the WHO, oral treatment}
+#'   \item{\code{oral_ddd}}{Defined Daily Dose (DDD), oral treatment}
 #'   \item{\code{oral_units}}{Units of \code{ddd_units}}
-#'   \item{\code{iv_ddd}}{Defined Daily Dose (DDD) according to the WHO, parenteral treatment}
+#'   \item{\code{iv_ddd}}{Defined Daily Dose (DDD), parenteral treatment}
 #'   \item{\code{iv_units}}{Units of \code{iv_ddd}}
-#'   \item{\code{atc_group1}}{ATC group in Dutch, like \code{"Macroliden, lincosamiden en streptograminen"}}
-#'   \item{\code{atc_group2}}{Subgroup of \code{atc_group1} in Dutch, like \code{"Macroliden"}}
+#'   \item{\code{atc_group1}}{ATC group, like \code{"Macrolides, lincosamides and streptogramins"}}
+#'   \item{\code{atc_group2}}{Subgroup of \code{atc_group1}, like \code{"Macrolides"}}
+#'   \item{\code{atc_group1_nl}}{ATC group in Dutch, like \code{"Macroliden, lincosamiden en streptograminen"}}
+#'   \item{\code{atc_group2_nl}}{Subgroup of \code{atc_group1} in Dutch, like \code{"Macroliden"}}
+#'   \item{\code{useful_gramnegative}}{\code{FALSE} if not useful according to EUCAST, \code{NA} otherwise (see Source)}
+#'   \item{\code{useful_grampositive}}{\code{FALSE} if not useful according to EUCAST, \code{NA} otherwise (see Source)}
 #' }
-#' @source MOLIS (LIS of Certe) - \url{https://www.certe.nl} \cr \cr GLIMS (LIS of UMCG) - \url{https://www.umcg.nl} \cr \cr World Health Organization - \url{https://www.whocc.no/atc_ddd_index/}
+#' @source - World Health Organization: \url{https://www.whocc.no/atc_ddd_index/} \cr - EUCAST - Expert rules intrinsic exceptional V3.1 \cr - MOLIS (LIS of Certe): \url{https://www.certe.nl} \cr - GLIMS (LIS of UMCG): \url{https://www.umcg.nl}
 #' @seealso \code{\link{bactlist}}
-# todo:
-# ablist <- ablist %>% mutate(useful_gramnegative = if_else(atc_group2 == 'Tetracyclines', FALSE, TRUE))
-# ablist <- ablist %>% mutate(useful_gramnegative = if_else(atc_group2 %like% 'Glycopept', FALSE, useful_gramnegative))
-# Tbl1 Enterobacteriaceae are also intrinsically resistant to benzylpenicillin, glycopeptides, fusidic acid, macrolides (with some exceptions1), lincosamides, streptogramins, rifampicin, daptomycin and linezolid.
-# Tbl2 Non-fermentative Gram-negative bacteria are also generally intrinsically resistant to benzylpenicillin, first and second generation cephalosporins, glycopeptides, fusidic acid, macrolides, lincosamides, streptogramins, rifampicin, daptomycin and linezolid
-# Tbl3 Gram-negative bacteria other than Enterobacteriaceae and non-fermentative Gram-negative bacteria listed are also intrinsically resistant to glycopeptides, lincosamides, daptomycin and linezolid.
-"ablist"
+# last two columns created with:
+# antibiotics %>%
+#   mutate(useful_gramnegative = 
+#            if_else(
+#              atc_group1 %like% '(fusidic|glycopeptide|macrolide|lincosamide|daptomycin|linezolid)' |
+#                atc_group2 %like% '(fusidic|glycopeptide|macrolide|lincosamide|daptomycin|linezolid)' |
+#                official %like% '(fusidic|glycopeptide|macrolide|lincosamide|daptomycin|linezolid)',
+#              FALSE,
+#              NA
+#            ),
+#          useful_grampositive =
+#            if_else(
+#              atc_group1 %like% '(aztreonam|temocillin|polymyxin|colistin|nalidixic)' |
+#                atc_group2 %like% '(aztreonam|temocillin|polymyxin|colistin|nalidixic)' |
+#                official %like% '(aztreonam|temocillin|polymyxin|colistin|nalidixic)',
+#              FALSE,
+#              NA
+#            )
+#   )
+"antibiotics"
 
 #' Dataset with ~2500 microorganisms
 #'
 #' A dataset containing all microorganisms of MOLIS. MO codes of the UMCG can be looked up using \code{\link{bactlist.umcg}}.
-#' @format A data.frame with 2507 observations and 10 variables:
+#' @format A data.frame with 2507 observations and 12 variables:
 #' \describe{
 #'   \item{\code{bactid}}{ID of microorganism}
 #'   \item{\code{bactsys}}{Bactsyscode of microorganism}
@@ -56,12 +73,14 @@
 #'   \item{\code{species}}{Species name of microorganism, like \code{"coli"}}
 #'   \item{\code{subspecies}}{Subspecies name of bio-/serovar of microorganism, like \code{"EHEC"}}
 #'   \item{\code{fullname}}{Full name, like \code{"Echerichia coli (EHEC)"}}
-#'   \item{\code{type}}{Type of microorganism in Dutch, like \code{"Bacterie"} and \code{"Schimmel/gist"}}
-#'   \item{\code{gramstain}}{Gram of microorganism in Dutch, like \code{"Negatieve staven"}}
-#'   \item{\code{aerobic}}{Type aerobe/anaerobe of bacteria}
+#'   \item{\code{type}}{Type of microorganism, like \code{"Bacteria"} and \code{"Fungus/yeast"}}
+#'   \item{\code{gramstain}}{Gram of microorganism, like \code{"Negative rods"}}
+#'   \item{\code{aerobic}}{Logical whether bacteria is aerobic}
+#'   \item{\code{type_nl}}{Type of microorganism in Dutch, like \code{"Bacterie"} and \code{"Schimmel/gist"}}
+#'   \item{\code{gramstain_nl}}{Gram of microorganism in Dutch, like \code{"Negatieve staven"}}
 #' }
 #' @source MOLIS (LIS of Certe) - \url{https://www.certe.nl}
-#' @seealso \code{\link{ablist}} \code{\link{bactlist.umcg}}
+#' @seealso \code{\link{guess_bactid}} \code{\link{antibiotics}} \code{\link{bactlist.umcg}}
 "bactlist"
 
 #' Translation table for UMCG with ~1100 microorganisms
@@ -90,7 +109,7 @@
 #'   \item{\code{sex}}{sex of the patient}
 #'   \item{\code{patient_id}}{ID of the patient, first 10 characters of an SHA hash containing irretrievable information}
 #'   \item{\code{bactid}}{ID of microorganism, see \code{\link{bactlist}}}
-#'   \item{\code{peni:mupi}}{38 different antibiotics with class \code{rsi} (see \code{\link{as.rsi}}), these column names occur in \code{\link{ablist}} and can be translated with \code{\link{abname}}}
+#'   \item{\code{peni:mupi}}{38 different antibiotics with class \code{rsi} (see \code{\link{as.rsi}}), these column names occur in \code{\link{antibiotics}} and can be translated with \code{\link{abname}}}
 #' }
 #' @source MOLIS (LIS of Certe) - \url{https://www.certe.nl}
 "septic_patients"

@@ -1,3 +1,9 @@
+## 0.1.2
+- Added new function `guess_bactid` to determine the ID of a microorganism based on genus/species
+- Renamed `ablist` to `antibiotics`
+- Added support for character vector in join functions
+- Altered `%like%` to make it case insensitive
+
 ## 0.1.1
 - `EUCAST_rules` applies for amoxicillin even if ampicillin is missing
 - Edited column names to comply with GLIMS, the laboratory information system

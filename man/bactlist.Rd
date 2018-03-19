@@ -4,7 +4,7 @@
 \name{bactlist}
 \alias{bactlist}
 \title{Dataset with ~2500 microorganisms}
-\format{A data.frame with 2507 observations and 10 variables:
+\format{A data.frame with 2507 observations and 12 variables:
 \describe{
   \item{\code{bactid}}{ID of microorganism}
   \item{\code{bactsys}}{Bactsyscode of microorganism}
@@ -13,9 +13,11 @@
   \item{\code{species}}{Species name of microorganism, like \code{"coli"}}
   \item{\code{subspecies}}{Subspecies name of bio-/serovar of microorganism, like \code{"EHEC"}}
   \item{\code{fullname}}{Full name, like \code{"Echerichia coli (EHEC)"}}
-  \item{\code{type}}{Type of microorganism in Dutch, like \code{"Bacterie"} and \code{"Schimmel/gist"}}
-  \item{\code{gramstain}}{Gram of microorganism in Dutch, like \code{"Negatieve staven"}}
-  \item{\code{aerobic}}{Type aerobe/anaerobe of bacteria}
+  \item{\code{type}}{Type of microorganism, like \code{"Bacteria"} and \code{"Fungus/yeast"}}
+  \item{\code{gramstain}}{Gram of microorganism, like \code{"Negative rods"}}
+  \item{\code{aerobic}}{Logical whether bacteria is aerobic}
+  \item{\code{type_nl}}{Type of microorganism in Dutch, like \code{"Bacterie"} and \code{"Schimmel/gist"}}
+  \item{\code{gramstain_nl}}{Gram of microorganism in Dutch, like \code{"Negatieve staven"}}
 }}
 \source{
 MOLIS (LIS of Certe) - \url{https://www.certe.nl}
@@ -27,6 +29,6 @@ bactlist
 A dataset containing all microorganisms of MOLIS. MO codes of the UMCG can be looked up using \code{\link{bactlist.umcg}}.
 }
 \seealso{
-\code{\link{ablist}} \code{\link{bactlist.umcg}}
+\code{\link{guess_bactid}} \code{\link{antibiotics}} \code{\link{bactlist.umcg}}
 }
 \keyword{datasets}

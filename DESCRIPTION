@@ -1,13 +1,14 @@
 Package: AMR
-Version: 0.1.1
-Date: 2018-03-13
+Version: 0.1.2
+Date: 2018-03-19
 Title: Antimicrobial Resistance Analysis
 Authors@R: c(
     person(
         given = c("Matthijs", "S."),
         family = "Berends",
         email = "m.s.berends@umcg.nl",
-        role = c("aut", "cre")),
+        role = c("aut", "cre"),
+        comment = c(ORCID = "0000-0001-7620-1800")),
     person(
         given = c("Christian", "F."),
         family = "Luz",

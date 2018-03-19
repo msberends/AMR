@@ -357,7 +357,7 @@ first_isolate <- function(tbl,
 #' @export
 #' @importFrom dplyr %>% mutate if_else 
 #' @return Character of length 1.
-#' @seealso \code{\link{mo_property}} \code{\link{ablist}}
+#' @seealso \code{\link{mo_property}} \code{\link{antibiotics}}
 #' @examples 
 #' \donttest{
 #' #' # set key antibiotics to a new variable
@@ -403,7 +403,7 @@ key_antibiotics <- function(tbl,
     }
   }
   
-  # bactlist aan vastknopen
+  # join bactlist
   tbl <- tbl %>% left_join_bactlist(col_bactcode)
   
   tbl$key_ab <- NA_character_
@@ -422,7 +422,7 @@ key_antibiotics <- function(tbl,
   list_ab <- c(peni, amox, teic, vanc, clin, line, clar, trsu)
   list_ab <- list_ab[list_ab %in% colnames(tbl)]
   tbl <- tbl %>% mutate(key_ab =
-                          if_else(gramstain %like% '^Positi[e]?ve',
+                          if_else(gramstain %like% '^Positive ',
                                   apply(X = tbl[, list_ab],
                                         MARGIN = 1,
                                         FUN = function(x) paste(x, collapse = "")),
@@ -432,7 +432,7 @@ key_antibiotics <- function(tbl,
   list_ab <- c(amox, amcl, pita, cfur, cfot, cfta, cftr, mero, cipr, trsu, gent)
   list_ab <- list_ab[list_ab %in% colnames(tbl)]
   tbl <- tbl %>% mutate(key_ab =
-                          if_else(gramstain %like% '^Negati[e]?ve',
+                          if_else(gramstain %like% '^Negative ',
                                   apply(X = tbl[, list_ab],
                                         MARGIN = 1,
                                         FUN = function(x) paste(x, collapse = "")),
@@ -501,4 +501,96 @@ key_antibiotics_equal <- function(x, y, points_threshold = 2, info = FALSE) {
     cat('\n')
   }
   result
+}
+
+#' Find bacteria ID based on genus/species
+#'
+#' Use this function to determine a valid ID based on a genus (and species). This input could be a full name (like \code{"Staphylococcus aureus"}), an abbreviated name (like \code{"S. aureus"}), or just a genus. You could also use a \code{\link{paste}} of a genus and species column to use the full name as input: \code{x = paste(df$genus, df$species)}, where \code{df} is your dataframe.
+#' @param x character vector to determine \code{bactid}
+#' @export
+#' @importFrom dplyr %>% filter slice pull
+#' @return Character (vector).
+#' @seealso \code{\link{bactlist}} for the dataframe that is being used to determine ID's.
+#' @examples 
+#' # These examples all return "STAAUR", the ID of S. aureus:
+#' guess_bactid("stau")
+#' guess_bactid("STAU")
+#' guess_bactid("staaur")
+#' guess_bactid("S. aureus")
+#' guess_bactid("S aureus")
+#' guess_bactid("Staphylococcus aureus")
+#' guess_bactid("MRSA") # Methicillin-resistant S. aureus
+#' guess_bactid("VISA") # Vancomycin Intermediate S. aureus
+guess_bactid <- function(x) {
+  # remove dots and other non-text in case of "E. coli" except spaces
+  x <- gsub("[^a-zA-Z ]+", "", x)
+  x.bak <- x
+  # replace space by regex sign
+  x <- gsub(" ", ".*", x, fixed = TRUE)
+  # add start and stop
+  x_species <- paste(x, 'species')
+  x <- paste0('^', x, '$')
+  
+  for (i in 1:length(x)) {
+    if (tolower(x[i]) == '^e.*coli$') {
+      # avoid detection of Entamoeba coli in case of Escherichia coli
+      x[i] <- 'Escherichia coli'
+    }
+    if (tolower(x[i]) == '^st.*au$'
+        | tolower(x[i]) == '^stau$'
+        | tolower(x[i]) == '^staaur$') {
+      # avoid detection of Staphylococcus auricularis in case of S. aureus
+      x[i] <- 'Staphylococcus aureus'
+    }
+    if (tolower(x[i]) == '^p.*aer$') {
+      # avoid detection of Pasteurella aerogenes in case of Pseudomonas aeruginosa
+      x[i] <- 'Pseudomonas aeruginosa'
+    }
+    # translate known trivial names to genus+species
+    if (toupper(x.bak[i]) == 'MRSA'
+        | toupper(x.bak[i]) == 'VISA'
+        | toupper(x.bak[i]) == 'VRSA') {
+      x[i] <- 'Staphylococcus aureus'
+    }
+    if (toupper(x.bak[i]) == 'MRSE') {
+      x[i] <- 'Staphylococcus epidermidis'
+    }
+    if (toupper(x.bak[i]) == 'VRE') {
+      x[i] <- 'Enterococcus'
+    }
+
+    # let's try the ID's first
+    found <- AMR::bactlist %>% filter(bactid == x.bak[i])
+    
+    if (nrow(found) == 0) {
+      # now try exact match
+      found <- AMR::bactlist %>% filter(fullname == x[i])
+    }
+    if (nrow(found) == 0) {
+      # try any match
+      found <- AMR::bactlist %>% filter(fullname %like% x[i])
+    }
+    if (nrow(found) == 0) {
+      # try only genus, with 'species' attached
+      found <- AMR::bactlist %>% filter(fullname %like% x_species[i])
+    }
+    if (nrow(found) == 0) {
+      # try splitting of characters and then find ID
+      # like esco = E. coli, klpn = K. pneumoniae, stau = S. aureus
+      x_length <- nchar(x.bak[i])
+      x[i] <- paste0(x.bak[i] %>% substr(1, x_length / 2) %>% trimws(),
+                     '.* ',
+                     x.bak[i] %>% substr((x_length / 2) + 1, x_length) %>% trimws())
+      found <- AMR::bactlist %>% filter(fullname %like% paste0('^', x[i]))
+    }
+    
+    if (nrow(found) != 0) {
+      x[i] <- found %>% 
+        slice(1) %>% 
+        pull(bactid)
+    } else {
+      x[i] <- ""
+    }
+  }
+  x
 }

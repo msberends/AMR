@@ -19,17 +19,20 @@
 # No export, no Rd
 "%like%" <- function(vector, pattern) {
   # Source: https://github.com/Rdatatable/data.table/blob/master/R/like.R
+  # But made it case insensitive
   if (is.factor(vector)) {
-    as.integer(vector) %in% grep(pattern, levels(vector))
+    as.integer(vector) %in% grep(pattern, levels(vector), ignore.case = TRUE)
   } else {
-    grepl(pattern, vector)
+    grepl(pattern, vector, ignore.case = TRUE)
   }
 }
 
+# No export, no Rd
 percent <- function(x, round = 1, ...) {
   base::paste0(base::round(x * 100, digits = round), "%")
 }
 
+# No export, no Rd
 quasiquotate <- function(deparsed, parsed) {
   # when text: remove first and last "
   if (any(deparsed %like% '^".+"$' | deparsed %like% "^'.+'$")) {

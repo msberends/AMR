@@ -15,7 +15,7 @@
   \item{\code{sex}}{sex of the patient}
   \item{\code{patient_id}}{ID of the patient, first 10 characters of an SHA hash containing irretrievable information}
   \item{\code{bactid}}{ID of microorganism, see \code{\link{bactlist}}}
-  \item{\code{peni:mupi}}{38 different antibiotics with class \code{rsi} (see \code{\link{as.rsi}}), these column names occur in \code{\link{ablist}} and can be translated with \code{\link{abname}}}
+  \item{\code{peni:mupi}}{38 different antibiotics with class \code{rsi} (see \code{\link{as.rsi}}), these column names occur in \code{\link{antibiotics}} and can be translated with \code{\link{abname}}}
 }}
 \source{
 MOLIS (LIS of Certe) - \url{https://www.certe.nl}

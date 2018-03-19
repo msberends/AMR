@@ -33,5 +33,5 @@ tbl$keyab <- key_antibiotics(tbl)
 }
 }
 \seealso{
-\code{\link{mo_property}} \code{\link{ablist}}
+\code{\link{mo_property}} \code{\link{antibiotics}}
 }
