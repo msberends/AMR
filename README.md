@@ -18,18 +18,27 @@ This package is available on CRAN and also here on GitHub.
 ### From CRAN (recommended, latest stable version)
 [![CRAN_Badge](https://img.shields.io/cran/v/AMR.svg?label=CRAN&colorB=3679BC)](http://cran.r-project.org/package=AMR)
 [![CRAN_Downloads](https://cranlogs.r-pkg.org/badges/grand-total/AMR)](http://cran.r-project.org/package=AMR)
+[![CRAN_Downloads](https://cranlogs.r-pkg.org/badges/AMR)](http://cran.r-project.org/package=AMR)
 
-- RStudio:
-  - Click on `Tools` and then `Install Packages...`
-  -  Type in `AMR` and press <kbd>Install</kbd>
-
-- R console:
+- <img src="https://cran.r-project.org/favicon.ico" alt="R favicon" height="20px">In R:
   - `install.packages("AMR")`
+  
+- <img src="http://www.rstudio.com/favicon.ico" alt="RStudio favicon" height="20px"> In RStudio:
+  - Click on `Tools` and then `Install Packages...`
+  - Type in `AMR` and press <kbd>Install</kbd>
+  
+- <img src="https://exploratory.io/favicon.ico" alt="Exploratory favicon" height="20px"> In Exploratory.io:
+  - Click on your username at the right hand side top
+  - Click on `R Packages`
+  - Click on the `Install` tab
+  - Type in `AMR` and press <kbd>Install</kbd>
+  - Once it’s installed it will show up in the `User Packages` section under the `Packages` tab.
 
 ### From GitHub (latest development version)
 [![Travis_Build](https://travis-ci.org/msberends/AMR.svg?branch=master)](https://travis-ci.org/msberends/AMR)
 [![Since_Release](https://img.shields.io/github/commits-since/msberends/AMR/latest.svg?colorB=3679BC)](https://github.com/msberends/AMR/commits/master)
-[![Last_Commit](https://img.shields.io/github/last-commit/msberends/AMR.svg?colorB=3679BC)](https://github.com/msberends/AMR/commits/master)
+[![Last_Commit](https://img.shields.io/github/last-commit/msberends/AMR.svg)](https://github.com/msberends/AMR/commits/master)
+[![Code_Coverage](https://codecov.io/gh/msberends/AMR/branch/master/graph/badge.svg)](https://codecov.io/gh/msberends/AMR)
 
 ```r
 install.packages("devtools")

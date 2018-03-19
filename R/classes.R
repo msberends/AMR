@@ -24,6 +24,7 @@
 #' @return New class \code{rsi}
 #' @export
 #' @importFrom dplyr %>%
+#' @importFrom utils packageDescription
 #' @examples
 #' rsi_data <- as.rsi(c(rep("S", 474), rep("I", 36), rep("R", 370)))
 #' rsi_data <- as.rsi(c(rep("S", 474), rep("I", 36), rep("R", 370), "A", "B", "C"))
@@ -54,13 +55,15 @@ as.rsi <- function(x) {
         sort()
       list_missing <- paste0('"', list_missing , '"', collapse = ", ")
       warning(na_after - na_before, ' results truncated (',
-              round(((na_after - na_before) / length(x)) / 100),
+              round(((na_after - na_before) / length(x)) * 100),
               '%) that were invalid antimicrobial interpretations: ',
               list_missing, call. = FALSE)
     }
     
     x <- x %>% toupper() %>% factor(levels = c("S", "I", "R"), ordered = TRUE)
     class(x) <- c('rsi', 'ordered', 'factor')
+    attr(x, 'package') <- 'AMR'
+    attr(x, 'package.version') <- packageDescription('AMR')$Version
     x
   }
 }
@@ -192,6 +195,7 @@ barplot.rsi <- function(height, ...) {
 #' @return New class \code{mic}
 #' @export
 #' @importFrom dplyr %>%
+#' @importFrom utils packageDescription
 #' @examples
 #' mic_data <- as.mic(c(">=32", "1.0", "1", "1.00", 8, "<=0.128", "8", "16", "16"))
 #' is.mic(mic_data)
@@ -289,7 +293,7 @@ as.mic <- function(x, na.rm = FALSE) {
         sort()
       list_missing <- paste0('"', list_missing , '"', collapse = ", ")
       warning(na_after - na_before, ' results truncated (',
-              round(((na_after - na_before) / length(x)) / 100),
+              round(((na_after - na_before) / length(x)) * 100),
               '%) that were invalid MICs: ',
               list_missing, call. = FALSE)
     }
@@ -298,6 +302,8 @@ as.mic <- function(x, na.rm = FALSE) {
                 levels = lvls,
                 ordered = TRUE)
     class(x) <- c('mic', 'ordered', 'factor')
+    attr(x, 'package') <- 'AMR'
+    attr(x, 'package.version') <- packageDescription('AMR')$Version
     x
   }
 }

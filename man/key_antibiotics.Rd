@@ -18,7 +18,7 @@ key_antibiotics(tbl, col_bactcode = "bactid", info = TRUE, amcl = "amcl",
 
 \item{info}{print warnings}
 
-\item{amcl, amox, cfot, cfta, cftr, cfur, cipr, clar, clin, clox, doxy, gent, line, mero, peni, pita, rifa, teic, trsu, vanc}{column names of antibiotics.}
+\item{amcl, amox, cfot, cfta, cftr, cfur, cipr, clar, clin, clox, doxy, gent, line, mero, peni, pita, rifa, teic, trsu, vanc}{column names of antibiotics, case-insensitive}
 }
 \value{
 Character of length 1.

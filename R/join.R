@@ -13,6 +13,9 @@
 #' @examples 
 #' left_join_bactlist("STAAUR")
 #' 
+#' library(dplyr)
+#' septic_patients %>% left_join_bactlist()
+#' 
 #' df <- data.frame(date = seq(from = as.Date("2018-01-01"),
 #'                             to = as.Date("2018-01-07"),
 #'                             by = 1),

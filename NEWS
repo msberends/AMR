@@ -3,6 +3,9 @@
 - Renamed `ablist` to `antibiotics`
 - Added support for character vector in join functions
 - Altered `%like%` to make it case insensitive
+- Added new algorithm to determine weighted isolates, can now be `points` or `keyantibiotics, see `?first_isolate`
+- Function `first_isolate` supports tidyverse-like evaluation of parameters (no need to quote them anymore)
+- Functions `as.rsi` and `as.mic` now add the package name and version as attribute
 
 ## 0.1.1
 - `EUCAST_rules` applies for amoxicillin even if ampicillin is missing
