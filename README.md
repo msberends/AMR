@@ -20,7 +20,7 @@ This package is available on CRAN and also here on GitHub.
 [![CRAN_Downloads](https://cranlogs.r-pkg.org/badges/grand-total/AMR)](http://cran.r-project.org/package=AMR)
 [![CRAN_Downloads](https://cranlogs.r-pkg.org/badges/AMR)](http://cran.r-project.org/package=AMR)
 
-- <img src="https://cran.r-project.org/favicon.ico" alt="R favicon" height="20px">In R:
+- <img src="https://cran.r-project.org/favicon.ico" alt="R favicon" height="20px"> In R:
   - `install.packages("AMR")`
   
 - <img src="http://www.rstudio.com/favicon.ico" alt="RStudio favicon" height="20px"> In RStudio:

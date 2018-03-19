@@ -321,11 +321,12 @@ first_isolate <- function(tbl,
                    , points_threshold, ')...\n'))
       }
     }
+    type_param <- type
     all_first <- all_first %>%
       mutate(key_ab_lag = lag(key_ab)) %>%
       mutate(key_ab_other = !key_antibiotics_equal(x = key_ab,
                                                    y = key_ab_lag,
-                                                   type = type,
+                                                   type = type_param,
                                                    ignore_I = ignore_I,
                                                    points_threshold = points_threshold,
                                                    info = info)) %>%
@@ -524,9 +525,9 @@ key_antibiotics_equal <- function(x,
                                   points_threshold = 2, 
                                   info = FALSE) {
   # x is active row, y is lag
-  
-  type <- type[1]
 
+  type <- type[1]
+  
   if (length(x) != length(y)) {
     stop('Length of `x` and `y` must be equal.')
   }
@@ -594,7 +595,7 @@ key_antibiotics_equal <- function(x,
         result[i] <- all(x2 == y2)
         
       } else {
-        stop('No valid value for type, must be `points` or `keyantibiotics`. See ?first_isolate.')
+        stop('`', type, '` is not a valid value for type, must be `points` or `keyantibiotics`. See ?first_isolate.')
       }
     }
   }
