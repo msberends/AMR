@@ -3,31 +3,35 @@ This is an [R package](https://www.r-project.org) to simplify the analysis and p
 
 ![logo_uni](man/figures/logo_en.png)![logo_umcg](man/figures/logo_umcg.png)
 
-This R package was created for academic research by PhD students of the Faculty of Medical Sciences of the [University of Groningen](https://www.rug.nl/) and the Medical Microbiology & Infection Prevention department of the University Medical Center Groningen (UMCG). They also maintain this package, see [Authors](#authors).
+This R package was created for academic research by PhD students of the Faculty of Medical Sciences of the [University of Groningen (rug.nl)](https://www.rug.nl/) and the Medical Microbiology & Infection Prevention department of the [University Medical Center Groningen (UMCG, umcg.nl)](https://www.umcg.nl). They also maintain this package, see [Authors](#authors).
 
 ## Why this package?
-This R package contains functions to make microbiological, epidemiological data analysis easier. It allows the use of some new S3 classes to work with MIC values and antimicrobial interpretations (i.e. values S, I and R).
+This R package contains functions to make microbiological, epidemiological data analysis easier. It allows the use of some new classes to work with MIC values and antimicrobial interpretations (i.e. values S, I and R).
 
-AMR can also be predicted for the forthcoming years with the `rsi_predict` function. For use with the `dplyr` package, the `rsi` function can be used in conjunction with `summarise` to calculate the resistance percentages of different antibiotic columns of a table.
+With AMR you can also apply EUCAST rules to isolates, identify first isolates of every patient, translate antibiotic codes from the lab (like `"AMOX"`) or the [WHO](https://www.whocc.no/atc_ddd_index/?code=J01CA04&showdescription=no) (like `"J01CA04"`) to trivial names (like `"amoxicillin"`), or predict antimicrobial resistance for the nextcoming years with the `rsi_predict` function.
 
-It also contains functions to translate antibiotic codes from the lab (like `"AMOX"`) or the [WHO](https://www.whocc.no/atc_ddd_index/?code=J01CA04&showdescription=no) (like `"J01CA04"`) to trivial names (like `"amoxicillin"`) and vice versa.
+For regular AMR analysis, the `rsi` function can be used. This function als works with the `dplyr` package (e.g. in conjunction with `summarise`) to calculate the resistance percentages of different antibiotic columns of a table.
+
+This package contains an example data set `septic_patients`, consisting of 2000 isolates from anonymised septic patients between 2001 and 2017.
 
 ## How to get it?
 This package is available on CRAN and also here on GitHub.
 
-### From CRAN (recommended, latest stable version)
+### From CRAN (recommended)
 [![CRAN_Badge](https://img.shields.io/cran/v/AMR.svg?label=CRAN&colorB=3679BC)](http://cran.r-project.org/package=AMR)
 [![CRAN_Downloads](https://cranlogs.r-pkg.org/badges/grand-total/AMR)](http://cran.r-project.org/package=AMR)
 [![CRAN_Downloads](https://cranlogs.r-pkg.org/badges/AMR)](http://cran.r-project.org/package=AMR)
-
-- <img src="https://cran.r-project.org/favicon.ico" alt="R favicon" height="20px"> In R:
-  - `install.packages("AMR")`
   
-- <img src="http://www.rstudio.com/favicon.ico" alt="RStudio favicon" height="20px"> In RStudio:
+- <img src="http://www.rstudio.com/favicon.ico" alt="RStudio favicon" height="20px"> In [RStudio](http://www.rstudio.com) (recommended):
   - Click on `Tools` and then `Install Packages...`
   - Type in `AMR` and press <kbd>Install</kbd>
-  
-- <img src="https://exploratory.io/favicon.ico" alt="Exploratory favicon" height="20px"> In Exploratory.io:
+
+- <img src="https://cran.r-project.org/favicon.ico" alt="R favicon" height="20px"> In R directly:
+  - `install.packages("AMR")`
+
+- <img src="https://exploratory.io/favicon.ico" alt="Exploratory favicon" height="20px"> In [Exploratory.io](https://exploratory.io):
+  - (Exploratory.io costs $40/month but is free for students and teachers; if you have an `@umcg.nl` or `@rug.nl` email address, [click here to enroll](https://exploratory.io/plan?plan=Community))
+  - Start the software and log in
   - Click on your username at the right hand side top
   - Click on `R Packages`
   - Click on the `Install` tab
