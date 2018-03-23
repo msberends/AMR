@@ -9,7 +9,7 @@
 #' @param as_vector a logical value indicating whether data consisting of only one column should be imported as vector using \code{\link[dplyr]{pull}}. This will strip off the header.
 #' @keywords clipboard clipboard_import clipboard_export import export
 #' @importFrom dplyr %>% pull as_tibble
-#' @importFrom utils read.delim write.table object.size writeClipboard
+#' @importFrom utils read.delim write.table object.size
 #' @details For \code{clipboard_export}, the reserved clipboard size for exporting will be set automatically to 125\% of the object size of \code{x}. This way, it is possible to export data with thousands of rows as the only limit will be your systems RAM.
 #' @export
 #' @return data.frame
