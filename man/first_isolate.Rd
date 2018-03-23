@@ -4,12 +4,12 @@
 \alias{first_isolate}
 \title{Determine first (weighted) isolates}
 \usage{
-first_isolate(tbl, col_date, col_patient_id, col_genus, col_species,
+first_isolate(tbl, col_date, col_patient_id, col_bactid = NA,
   col_testcode = NA, col_specimen = NA, col_icu = NA,
   col_keyantibiotics = NA, episode_days = 365, testcodes_exclude = "",
   icu_exclude = FALSE, filter_specimen = NA, output_logical = TRUE,
   type = "keyantibiotics", ignore_I = TRUE, points_threshold = 2,
-  info = TRUE)
+  info = TRUE, col_genus = NA, col_species = NA)
 }
 \arguments{
 \item{tbl}{a \code{data.frame} containing isolates.}
@@ -18,9 +18,7 @@ first_isolate(tbl, col_date, col_patient_id, col_genus, col_species,
 
 \item{col_patient_id}{column name of the unique IDs of the patients, supports tidyverse-like quotation}
 
-\item{col_genus}{column name of the genus of the microorganisms, supports tidyverse-like quotation}
-
-\item{col_species}{column name of the species of the microorganisms, supports tidyverse-like quotation}
+\item{col_bactid}{column name of the unique IDs of the microorganisms (should occur in the \code{\link{microorganisms}} dataset), supports tidyverse-like quotation}
 
 \item{col_testcode}{column name of the test codes. Use \code{col_testcode = NA} to \strong{not} exclude certain test codes (like test codes for screening). In that case \code{testcodes_exclude} will be ignored. Supports tidyverse-like quotation.}
 
@@ -47,6 +45,10 @@ first_isolate(tbl, col_date, col_patient_id, col_genus, col_species,
 \item{points_threshold}{points until the comparison of key antibiotics will lead to inclusion of an isolate when \code{type = "points"}, see Details}
 
 \item{info}{print progress}
+
+\item{col_genus}{(deprecated, use \code{col_bactid} instead) column name of the genus of the microorganisms, supports tidyverse-like quotation}
+
+\item{col_species}{(deprecated, use \code{col_bactid} instead) column name of the species of the microorganisms, supports tidyverse-like quotation}
 }
 \value{
 A vector to add to table, see Examples.
@@ -71,7 +73,7 @@ my_patients <- septic_patients
 
 library(dplyr)
 my_patients$first_isolate <- my_patients \%>\%
-  left_join_bactlist() \%>\%
+  left_join_microorganisms() \%>\%
   first_isolate(col_date = date,
                 col_patient_id = patient_id,
                 col_genus = genus,

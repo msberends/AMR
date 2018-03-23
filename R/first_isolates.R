@@ -22,8 +22,7 @@
 #' @param tbl a \code{data.frame} containing isolates.
 #' @param col_date column name of the result date (or date that is was received on the lab), supports tidyverse-like quotation
 #' @param col_patient_id column name of the unique IDs of the patients, supports tidyverse-like quotation
-#' @param col_genus column name of the genus of the microorganisms, supports tidyverse-like quotation
-#' @param col_species column name of the species of the microorganisms, supports tidyverse-like quotation
+#' @param col_bactid column name of the unique IDs of the microorganisms (should occur in the \code{\link{microorganisms}} dataset), supports tidyverse-like quotation
 #' @param col_testcode column name of the test codes. Use \code{col_testcode = NA} to \strong{not} exclude certain test codes (like test codes for screening). In that case \code{testcodes_exclude} will be ignored. Supports tidyverse-like quotation.
 #' @param col_specimen column name of the specimen type or group, supports tidyverse-like quotation
 #' @param col_icu column name of the logicals (\code{TRUE}/\code{FALSE}) whether a ward or department is an Intensive Care Unit (ICU), supports tidyverse-like quotation
@@ -37,6 +36,8 @@
 #' @param ignore_I logical to determine whether antibiotic interpretations with \code{"I"} will be ignored when \code{type = "keyantibiotics"}, see Details
 #' @param points_threshold points until the comparison of key antibiotics will lead to inclusion of an isolate when \code{type = "points"}, see Details
 #' @param info print progress
+#' @param col_genus (deprecated, use \code{col_bactid} instead) column name of the genus of the microorganisms, supports tidyverse-like quotation
+#' @param col_species (deprecated, use \code{col_bactid} instead) column name of the species of the microorganisms, supports tidyverse-like quotation
 #' @details \strong{WHY THIS IS SO IMPORTANT} \cr
 #'     To conduct an analysis of antimicrobial resistance, you should only include the first isolate of every patient per episode \href{https://www.ncbi.nlm.nih.gov/pubmed/17304462}{[1]}. If you would not do this, you could easily get an overestimate or underestimate of the resistance of an antibiotic. Imagine that a patient was admitted with an MRSA and that it was found in 5 different blood cultures the following week. The resistance percentage of oxacillin of all \emph{S. aureus} isolates would be overestimated, because you included this MRSA more than once. It would be \href{https://en.wikipedia.org/wiki/Selection_bias}{selection bias}.
 #'
@@ -56,7 +57,7 @@
 #' 
 #' library(dplyr)
 #' my_patients$first_isolate <- my_patients %>%
-#'   left_join_bactlist() %>%
+#'   left_join_microorganisms() %>%
 #'   first_isolate(col_date = date,
 #'                 col_patient_id = patient_id,
 #'                 col_genus = genus,
@@ -104,8 +105,7 @@
 first_isolate <- function(tbl,
                           col_date,
                           col_patient_id,
-                          col_genus,
-                          col_species,
+                          col_bactid = NA,
                           col_testcode = NA,
                           col_specimen = NA,
                           col_icu = NA,
@@ -118,11 +118,14 @@ first_isolate <- function(tbl,
                           type = "keyantibiotics",
                           ignore_I = TRUE,
                           points_threshold = 2,
-                          info = TRUE) {
+                          info = TRUE,
+                          col_genus = NA,
+                          col_species = NA) {
   
   # support tidyverse-like quotation
   col_date <- quasiquotate(deparse(substitute(col_date)), col_date)
   col_patient_id <- quasiquotate(deparse(substitute(col_patient_id)), col_patient_id)
+  col_bactid <- quasiquotate(deparse(substitute(col_bactid)), col_bactid)
   col_genus <- quasiquotate(deparse(substitute(col_genus)), col_genus)
   col_species <- quasiquotate(deparse(substitute(col_species)), col_species)
   col_testcode <- quasiquotate(deparse(substitute(col_testcode)), col_testcode)
@@ -145,11 +148,18 @@ first_isolate <- function(tbl,
   
   check_columns_existance(col_date)
   check_columns_existance(col_patient_id)
+  check_columns_existance(col_bactid)
   check_columns_existance(col_genus)
   check_columns_existance(col_species)
   check_columns_existance(col_testcode)
   check_columns_existance(col_icu)
   check_columns_existance(col_keyantibiotics)
+  
+  if (!is.na(col_bactid)) {
+    tbl <- tbl %>% left_join_microorganisms()
+    col_genus <- "genus"
+    col_species <- "species"
+  }
   
   if (is.na(col_testcode)) {
     testcodes_exclude <- NA
@@ -395,7 +405,7 @@ first_isolate <- function(tbl,
 #' Key antibiotics based on bacteria ID
 #'
 #' @param tbl table with antibiotics coloms, like \code{amox} and \code{amcl}.
-#' @param col_bactcode column of bacteria IDs in \code{tbl}; these should occur in \code{bactlist$bactid}, see \code{\link{bactlist}}
+#' @param col_bactid column of bacteria IDs in \code{tbl}; these should occur in \code{microorganisms$bactid}, see \code{\link{microorganisms}}
 #' @param info print warnings
 #' @param amcl,amox,cfot,cfta,cftr,cfur,cipr,clar,clin,clox,doxy,gent,line,mero,peni,pita,rifa,teic,trsu,vanc column names of antibiotics, case-insensitive
 #' @export
@@ -408,7 +418,7 @@ first_isolate <- function(tbl,
 #' tbl$keyab <- key_antibiotics(tbl)
 #' }
 key_antibiotics <- function(tbl,
-                            col_bactcode = 'bactid',
+                            col_bactid = 'bactid',
                             info = TRUE,
                             amcl = 'amcl',
                             amox = 'amox',
@@ -443,6 +453,8 @@ key_antibiotics <- function(tbl,
       col.list[i] <- toupper(col.list[i])
     } else if (tolower(col.list[i]) %in% colnames(tbl)) {
       col.list[i] <- tolower(col.list[i])
+    } else if (!col.list[i] %in% colnames(tbl)) {
+      col.list[i] <- NA
     }
   }
   if (!all(col.list %in% colnames(tbl))) {
@@ -473,8 +485,8 @@ key_antibiotics <- function(tbl,
   trsu <- col.list[18]
   vanc <- col.list[19]
   
-  # join bactlist
-  tbl <- tbl %>% left_join_bactlist(col_bactcode)
+  # join microorganisms
+  tbl <- tbl %>% left_join_microorganisms(col_bactid)
   
   tbl$key_ab <- NA_character_
   
@@ -595,7 +607,7 @@ key_antibiotics_equal <- function(x,
         result[i] <- all(x2 == y2)
         
       } else {
-        stop('`', type, '` is not a valid value for type, must be `points` or `keyantibiotics`. See ?first_isolate.')
+        stop('`', type, '` is not a valid value for type, must be "points" or "keyantibiotics". See ?first_isolate.')
       }
     }
   }
@@ -612,7 +624,7 @@ key_antibiotics_equal <- function(x,
 #' @export
 #' @importFrom dplyr %>% filter slice pull
 #' @return Character (vector).
-#' @seealso \code{\link{bactlist}} for the dataframe that is being used to determine ID's.
+#' @seealso \code{\link{microorganisms}} for the dataframe that is being used to determine ID's.
 #' @examples 
 #' # These examples all return "STAAUR", the ID of S. aureus:
 #' guess_bactid("stau")
@@ -662,24 +674,24 @@ guess_bactid <- function(x) {
     }
 
     # let's try the ID's first
-    found <- AMR::bactlist %>% filter(bactid == x.bak[i])
+    found <- AMR::microorganisms %>% filter(bactid == x.bak[i])
     
     if (nrow(found) == 0) {
       # now try exact match
-      found <- AMR::bactlist %>% filter(fullname == x[i])
+      found <- AMR::microorganisms %>% filter(fullname == x[i])
     }
     if (nrow(found) == 0) {
       # try any match
-      found <- AMR::bactlist %>% filter(fullname %like% x[i])
+      found <- AMR::microorganisms %>% filter(fullname %like% x[i])
     }
     if (nrow(found) == 0) {
       # try only genus, with 'species' attached
-      found <- AMR::bactlist %>% filter(fullname %like% x_species[i])
+      found <- AMR::microorganisms %>% filter(fullname %like% x_species[i])
     }
     if (nrow(found) == 0) {
       # search for GLIMS code
-      if (toupper(x.bak[i]) %in% toupper(AMR::bactlist.umcg$mocode)) {
-        found <- AMR::bactlist.umcg %>% filter(toupper(mocode) == toupper(x.bak[i]))
+      if (toupper(x.bak[i]) %in% toupper(AMR::microorganisms.umcg$mocode)) {
+        found <- AMR::microorganisms.umcg %>% filter(toupper(mocode) == toupper(x.bak[i]))
       }
     }
     if (nrow(found) == 0) {
@@ -689,7 +701,7 @@ guess_bactid <- function(x) {
       x[i] <- paste0(x.bak[i] %>% substr(1, x_length / 2) %>% trimws(),
                      '.* ',
                      x.bak[i] %>% substr((x_length / 2) + 1, x_length) %>% trimws())
-      found <- AMR::bactlist %>% filter(fullname %like% paste0('^', x[i]))
+      found <- AMR::microorganisms %>% filter(fullname %like% paste0('^', x[i]))
     }
     
     if (nrow(found) != 0) {

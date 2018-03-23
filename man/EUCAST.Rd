@@ -9,11 +9,11 @@ EUCAST Expert Rules Version 2.0: \cr
   Leclercq et al. \strong{EUCAST expert rules in antimicrobial susceptibility testing.} \emph{Clin Microbiol Infect.} 2013;19(2):141-60. \cr
   \url{https://doi.org/10.1111/j.1469-0691.2011.03703.x} \cr
   \cr
-  EUCAST Expert Rules Version 3.1: \cr
-  \url{http://www.eucast.org/expert_rules_and_intrinsic_resistance}
+  EUCAST Expert Rules Version 3.1 (Intrinsic Resistance and Exceptional Phenotypes Tables): \cr
+  \url{http://www.eucast.org/fileadmin/src/media/PDFs/EUCAST_files/Expert_Rules/Expert_rules_intrinsic_exceptional_V3.1.pdf}
 }
 \usage{
-EUCAST_rules(tbl, col_bactcode = "bactid", info = TRUE, amcl = "amcl",
+EUCAST_rules(tbl, col_bactid = "bactid", info = TRUE, amcl = "amcl",
   amik = "amik", amox = "amox", ampi = "ampi", azit = "azit",
   aztr = "aztr", cefa = "cefa", cfra = "cfra", cfep = "cfep",
   cfot = "cfot", cfox = "cfox", cfta = "cfta", cftr = "cftr",
@@ -35,7 +35,7 @@ interpretive_reading(...)
 \arguments{
 \item{tbl}{table with antibiotic columns, like e.g. \code{amox} and \code{amcl}}
 
-\item{col_bactcode}{column name of the bacteria ID in \code{tbl} - values of this column should be present in \code{bactlist$bactid}, see \code{\link{bactlist}}}
+\item{col_bactid}{column name of the bacteria ID in \code{tbl} - values of this column should be present in \code{microorganisms$bactid}, see \code{\link{microorganisms}}}
 
 \item{info}{print progress}
 

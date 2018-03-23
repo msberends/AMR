@@ -20,7 +20,7 @@
 #'
 #' \strong{NOTE: use \code{\link{rsi}} in dplyr functions like \code{\link[dplyr]{summarise}}.} \cr Calculate the percentage of S, SI, I, IR or R of a \code{data.frame} containing isolates.
 #' @param tbl \code{data.frame} containing columns with antibiotic interpretations.
-#' @param antibiotics character vector with 1, 2 or 3 antibiotics that occur as column names in \code{tbl}, like \code{antibiotics = c("amox", "amcl")}
+#' @param ab character vector with 1, 2 or 3 antibiotics that occur as column names in \code{tbl}, like \code{ab = c("amox", "amcl")}
 #' @param interpretation antimicrobial interpretation of which the portion must be calculated. Valid values are \code{"S"}, \code{"SI"}, \code{"I"}, \code{"IR"} or \code{"R"}.
 #' @param minimum minimal amount of available isolates. Any number lower than \code{minimum} will return \code{NA} with a warning (when \code{warning = TRUE}).
 #' @param percent return output as percent (text), will else (at default) be a double
@@ -43,27 +43,27 @@
 #' my_table %>%
 #'   filter(first_isolate == TRUE, 
 #'          genus == "Helicobacter") %>%
-#'   rsi_df(antibiotics = c("amox", "metr"))
+#'   rsi_df(ab = c("amox", "metr"))
 #' }
 rsi_df <- function(tbl,
-                   antibiotics,
+                   ab,
                    interpretation = 'IR',
                    minimum = 30,
                    percent = FALSE,
                    info = TRUE,
                    warning = TRUE) {
+
+  # in case tbl$interpretation already exists:
+  interpretations_to_check <- paste(interpretation, collapse = "")
   
-  # we willen niet dat tbl$interpretation toevallig ook bestaat, dus:
-  te_testen_uitslag_ab <- interpretation
-  
-  # validatie:
-  if (min(grepl('^[a-z]{3,4}$', antibiotics)) == 0 &
-      min(grepl('^rsi[1-2]$', antibiotics)) == 0) {
-    for (i in 1:length(antibiotics)) {
-      antibiotics[i] <- paste0('rsi', i)
+  # validate:
+  if (min(grepl('^[a-z]{3,4}$', ab)) == 0 &
+      min(grepl('^rsi[1-2]$', ab)) == 0) {
+    for (i in 1:length(ab)) {
+      ab[i] <- paste0('rsi', i)
     }
   }
-  if (!grepl('^(S|SI|IS|I|IR|RI|R){1}$', te_testen_uitslag_ab)) {
+  if (!grepl('^(S|SI|IS|I|IR|RI|R){1}$', interpretations_to_check)) {
     stop('Invalid `interpretation`; must be "S", "SI", "I", "IR", or "R".')
   }
   if ('is_ic' %in% colnames(tbl)) {
@@ -72,59 +72,59 @@ rsi_df <- function(tbl,
     }
   }
   
-  # transformeren wanneer gezocht wordt op verschillende uitslagen
-  if (te_testen_uitslag_ab %in% c('SI', 'IS')) {
-    for (i in 1:length(antibiotics)) {
-      lijst <- tbl[, antibiotics[i]]
+  # transform when checking for different results
+  if (interpretations_to_check %in% c('SI', 'IS')) {
+    for (i in 1:length(ab)) {
+      lijst <- tbl[, ab[i]]
       if ('I' %in% lijst) {
-        tbl[which(tbl[antibiotics[i]] == 'I'), ][antibiotics[i]] <- 'S'
+        tbl[which(tbl[ab[i]] == 'I'), ][ab[i]] <- 'S'
       }
     }
-    te_testen_uitslag_ab <- 'S'
+    interpretations_to_check <- 'S'
   }
-  if (te_testen_uitslag_ab %in% c('RI', 'IR')) {
-    for (i in 1:length(antibiotics)) {
-      lijst <- tbl[, antibiotics[i]]
+  if (interpretations_to_check %in% c('RI', 'IR')) {
+    for (i in 1:length(ab)) {
+      lijst <- tbl[, ab[i]]
       if ('I' %in% lijst) {
-        tbl[which(tbl[antibiotics[i]] == 'I'), ][antibiotics[i]] <- 'R'
+        tbl[which(tbl[ab[i]] == 'I'), ][ab[i]] <- 'R'
       }
     }
-    te_testen_uitslag_ab <- 'R'
+    interpretations_to_check <- 'R'
   }
-  
-  # breuk samenstellen
-  if (length(antibiotics) == 1) {
+
+  # get fraction
+  if (length(ab) == 1) {
     numerator <- tbl %>%
-      filter(pull(., antibiotics[1]) == te_testen_uitslag_ab) %>%
+      filter(pull(., ab[1]) == interpretations_to_check) %>%
       nrow()
-    
+
     denominator <- tbl %>%
-      filter(pull(., antibiotics[1]) %in% c("S", "I", "R")) %>%
+      filter(pull(., ab[1]) %in% c("S", "I", "R")) %>%
       nrow()
     
-  } else if (length(antibiotics) == 2) {
+  } else if (length(ab) == 2) {
     numerator <- tbl %>%
-      filter_at(vars(antibiotics[1], antibiotics[2]),
-                any_vars(. == te_testen_uitslag_ab)) %>%
-      filter_at(vars(antibiotics[1], antibiotics[2]),
+      filter_at(vars(ab[1], ab[2]),
+                any_vars(. == interpretations_to_check)) %>%
+      filter_at(vars(ab[1], ab[2]),
                 all_vars(. %in% c("S", "R", "I"))) %>%
       nrow()
     
     denominator <- tbl %>%
-      filter_at(vars(antibiotics[1], antibiotics[2]),
+      filter_at(vars(ab[1], ab[2]),
                 all_vars(. %in% c("S", "R", "I"))) %>%
       nrow()
     
-  } else if (length(antibiotics) == 3) {
+  } else if (length(ab) == 3) {
     numerator <- tbl %>%
-      filter_at(vars(antibiotics[1], antibiotics[2], antibiotics[3]),
-                any_vars(. == te_testen_uitslag_ab)) %>%
-      filter_at(vars(antibiotics[1], antibiotics[2], antibiotics[3]),
+      filter_at(vars(ab[1], ab[2], ab[3]),
+                any_vars(. == interpretations_to_check)) %>%
+      filter_at(vars(ab[1], ab[2], ab[3]),
                 all_vars(. %in% c("S", "R", "I"))) %>%
       nrow()
     
     denominator <- tbl %>%
-      filter_at(vars(antibiotics[1], antibiotics[2], antibiotics[3]),
+      filter_at(vars(ab[1], ab[2], ab[3]),
                 all_vars(. %in% c("S", "R", "I"))) %>%
       nrow()
     
@@ -132,7 +132,7 @@ rsi_df <- function(tbl,
     stop('Maximum of 3 drugs allowed.')
   }
   
-  # tekstdeel opbouwen
+  # build text part
   if (info == TRUE) {
     cat('n =', denominator)
     info.txt1 <- percent(denominator / nrow(tbl))
@@ -140,23 +140,22 @@ rsi_df <- function(tbl,
       info.txt1 <- 'none'
     }
     info.txt2 <- gsub(',', ' and',
-                      antibiotics %>%
-                        abname(to = 'trivial',
-                               tolower = TRUE) %>%
+                      ab %>%
+                        abname(tolower = TRUE) %>%
                         toString(), fixed = TRUE)
     info.txt2 <- gsub('rsi1 and rsi2', 'these two drugs', info.txt2, fixed = TRUE)
     info.txt2 <- gsub('rsi1', 'this drug', info.txt2, fixed = TRUE)
     cat(paste0(' (of ', nrow(tbl), ' in total; ', info.txt1, ' tested on ', info.txt2, ')\n'))
   }
   
-  # rekenen en opmaken
+  # calculate and format
   y <- numerator / denominator
   if (percent == TRUE) {
     y <- percent(y)
   }
   if (denominator < minimum) {
     if (warning == TRUE) {
-      warning(paste0('TOO FEW ISOLATES OF ', toString(antibiotics), ' (n = ', denominator, ', n < ', minimum, '); NO RESULT.'))
+      warning(paste0('TOO FEW ISOLATES OF ', toString(ab), ' (n = ', denominator, ', n < ', minimum, '); NO RESULT.'))
     }
     y <- NA
   }
@@ -192,26 +191,31 @@ rsi_df <- function(tbl,
 #' rsi(as.rsi(isolates$amcl), interpretation = "S")
 #' }
 rsi <- function(ab1, ab2 = NA, interpretation = 'IR', minimum = 30, percent = FALSE, info = FALSE, warning = FALSE) {
-  function_text <- as.character(match.call())
-  # param 1 = functienaam
-  # param 2 = ab1
-  # param 3 = ab2
-  ab1.naam <- function_text[2]
-  if (!grepl('^[a-z]{3,4}$', ab1.naam)) {
-    ab1.naam <- 'rsi1'
+  ab1.name <- deparse(substitute(ab1))
+  if (ab1.name %like% '.[$].') {
+    ab1.name <- unlist(strsplit(ab1.name, "$", fixed = TRUE))
+    ab1.name <- ab1.name[length(ab1.name)]
   }
-  ab2.naam <- function_text[3]
-  if (!grepl('^[a-z]{3,4}$', ab2.naam)) {
-    ab2.naam <- 'rsi2'
+  if (!ab1.name %like% '^[a-z]{3,4}$') {
+    ab1.name <- 'rsi1'
   }
+  ab2.name <- deparse(substitute(ab2))
+  if (ab2.name %like% '.[$].') {
+    ab2.name <- unlist(strsplit(ab2.name, "$", fixed = TRUE))
+    ab2.name <- ab2.name[length(ab2.name)]
+  }
+  if (!ab2.name %like% '^[a-z]{3,4}$') {
+    ab2.name <- 'rsi2'
+  }
+  
+  interpretation <- paste(interpretation, collapse = "")
   
   tbl <- tibble(rsi1 = ab1, rsi2 = ab2)
-  
-  colnames(tbl) <- c(ab1.naam, ab2.naam)
+  colnames(tbl) <- c(ab1.name, ab2.name)
   
   if (length(ab2) == 1) {
     return(rsi_df(tbl = tbl,
-                  antibiotics = ab1.naam,
+                  ab = ab1.name,
                   interpretation = interpretation,
                   minimum = minimum,
                   percent = percent,
@@ -225,7 +229,7 @@ rsi <- function(ab1, ab2 = NA, interpretation = 'IR', minimum = 30, percent = FA
       warning('`interpretation` is not set to S, albeit analysing a combination therapy.')
     }
     return(rsi_df(tbl = tbl,
-                  antibiotics = c(ab1.naam, ab2.naam),
+                  ab = c(ab1.name, ab2.name),
                   interpretation = interpretation,
                   minimum = minimum,
                   percent = percent,
@@ -270,7 +274,7 @@ rsi <- function(ab1, ab2 = NA, interpretation = 'IR', minimum = 30, percent = FA
 #' library(dplyr)
 #' septic_patients %>%
 #'   # get bacteria properties like genus and species
-#'   left_join_bactlist("bactid") %>% 
+#'   left_join_microorganisms("bactid") %>% 
 #'   # calculate first isolates
 #'   mutate(first_isolate = 
 #'            first_isolate(.,

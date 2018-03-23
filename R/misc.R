@@ -40,9 +40,9 @@ quasiquotate <- function(deparsed, parsed) {
   }
   # apply if needed
   if (any(!deparsed %like% '[[$:()]'
-      & !deparsed %in% c('""', "''", "", # empty text
-                         ".", ".data", # dplyr references
-                         "TRUE", "FALSE", # logicals
+      & !deparsed %in% c('""', "''", "",      # empty text
+                         ".", ".data",        # dplyr references
+                         "TRUE", "FALSE",     # logicals
                          "NA", "NaN", "NULL", # empty values
                          ls(.GlobalEnv)))) {
     deparsed

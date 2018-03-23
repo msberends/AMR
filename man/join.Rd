@@ -2,47 +2,47 @@
 % Please edit documentation in R/join.R
 \name{join}
 \alias{join}
-\alias{inner_join_bactlist}
+\alias{inner_join_microorganisms}
 \alias{inner_join}
-\alias{left_join_bactlist}
-\alias{right_join_bactlist}
-\alias{full_join_bactlist}
-\alias{semi_join_bactlist}
-\alias{anti_join_bactlist}
-\title{Join a table with \code{bactlist}}
+\alias{left_join_microorganisms}
+\alias{right_join_microorganisms}
+\alias{full_join_microorganisms}
+\alias{semi_join_microorganisms}
+\alias{anti_join_microorganisms}
+\title{Join a table with \code{microorganisms}}
 \usage{
-inner_join_bactlist(x, by = "bactid", suffix = c("2", ""), ...)
+inner_join_microorganisms(x, by = "bactid", suffix = c("2", ""), ...)
 
-left_join_bactlist(x, by = "bactid", suffix = c("2", ""), ...)
+left_join_microorganisms(x, by = "bactid", suffix = c("2", ""), ...)
 
-right_join_bactlist(x, by = "bactid", suffix = c("2", ""), ...)
+right_join_microorganisms(x, by = "bactid", suffix = c("2", ""), ...)
 
-full_join_bactlist(x, by = "bactid", suffix = c("2", ""), ...)
+full_join_microorganisms(x, by = "bactid", suffix = c("2", ""), ...)
 
-semi_join_bactlist(x, by = "bactid", ...)
+semi_join_microorganisms(x, by = "bactid", ...)
 
-anti_join_bactlist(x, by = "bactid", ...)
+anti_join_microorganisms(x, by = "bactid", ...)
 }
 \arguments{
 \item{x}{existing table to join, also supports character vectors}
 
-\item{by}{a variable to join by - could be a column name of \code{x} with values that exist in \code{bactlist$bactid} (like \code{by = "bacteria_id"}), or another column in \code{\link{bactlist}} (but then it should be named, like \code{by = c("my_genus_species" = "fullname")})}
+\item{by}{a variable to join by - could be a column name of \code{x} with values that exist in \code{microorganisms$bactid} (like \code{by = "bacteria_id"}), or another column in \code{\link{microorganisms}} (but then it should be named, like \code{by = c("my_genus_species" = "fullname")})}
 
 \item{suffix}{if there are non-joined duplicate variables in \code{x} and \code{y}, these suffixes will be added to the output to disambiguate them. Should be a character vector of length 2.}
 
 \item{...}{other parameters to pass on to \code{dplyr::\link[dplyr]{join}}.}
 }
 \description{
-Join the list of microorganisms \code{\link{bactlist}} easily to an existing table.
+Join the dataset \code{\link{microorganisms}} easily to an existing table or character vector.
 }
 \details{
 As opposed to the \code{\link[dplyr]{join}} functions of \code{dplyr}, characters vectors are supported and at default existing columns will get a suffix \code{"2"} and the newly joined columns will not get a suffix. See \code{\link[dplyr]{join}} for more information.
 }
 \examples{
-left_join_bactlist("STAAUR")
+left_join_microorganisms("STAAUR")
 
 library(dplyr)
-septic_patients \%>\% left_join_bactlist()
+septic_patients \%>\% left_join_microorganisms()
 
 df <- data.frame(date = seq(from = as.Date("2018-01-01"),
                             to = as.Date("2018-01-07"),
@@ -51,6 +51,6 @@ df <- data.frame(date = seq(from = as.Date("2018-01-01"),
                                  "ESCCOL", "ESCCOL", "ESCCOL"),
                  stringsAsFactors = FALSE)
 colnames(df)
-df2 <- left_join_bactlist(df, "bacteria_id")
+df2 <- left_join_microorganisms(df, "bacteria_id")
 colnames(df2)
 }

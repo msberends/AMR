@@ -129,7 +129,7 @@ atc_property <- function(atc_code,
 #'
 #' Convert antibiotic codes (from a laboratory information system like MOLIS or GLIMS) to a (trivial) antibiotic name or ATC code, or vice versa. This uses the data from \code{\link{antibiotics}}.
 #' @param abcode a code or name, like \code{"AMOX"}, \code{"AMCL"} or \code{"J01CA04"}
-#' @param from,to type to transform from and to. See \code{\link{antibiotics}} for its column names.
+#' @param from,to type to transform from and to. See \code{\link{antibiotics}} for its column names. WIth \code{from = "guess"} the from will be guessed from \code{"atc"}, \code{"molis"} and \code{"umcg"}.
 #' @param textbetween text to put between multiple returned texts
 #' @param tolower return output as lower case with function \code{\link{tolower}}.
 #' @keywords ab antibiotics
@@ -154,9 +154,22 @@ atc_property <- function(atc_code,
 #'
 #' abname("J01CR02", from = "atc", to = "umcg")
 #' # "AMCL"
-abname <- function(abcode, from = 'umcg', to = 'official', textbetween = ' + ', tolower = FALSE) {
+abname <- function(abcode, from = c("guess", "atc", "molis", "umcg"), to = 'official', textbetween = ' + ', tolower = FALSE) {
   
   antibiotics <- AMR::antibiotics
+  
+  from <- from[1]
+  if (from == "guess") {
+    for (i in 1:3) {
+      if (abcode[1] %in% (antibiotics %>% pull(i))) {
+        from <- colnames(antibiotics)[i]
+      }
+    }
+    if (from == "guess") {
+      from <- "umcg"
+    }
+  }
+  
   colnames(antibiotics) <- colnames(antibiotics) %>% tolower()
   from <- from %>% tolower()
   to <- to %>% tolower()
@@ -172,8 +185,8 @@ abname <- function(abcode, from = 'umcg', to = 'official', textbetween = ' + ', 
   for (i in 1:length(abcode)) {
     drug <- abcode[i]
     if (!grepl('+', drug, fixed = TRUE) & !grepl(' en ', drug, fixed = TRUE)) {
-      # bestaat maar uit 1 middel
-      if (any(antibiotics[, from] == drug)) {
+      # only 1 drug
+      if (drug %in% (antibiotics %>% pull(from))) {
         abcode[i] <-
           antibiotics %>%
           filter(.[, from] == drug) %>%
@@ -181,12 +194,12 @@ abname <- function(abcode, from = 'umcg', to = 'official', textbetween = ' + ', 
           slice(1) %>%
           as.character()
       } else {
-        # niet gevonden
+        # not found
         warning('Code "', drug, '" not found in antibiotics list.', call. = FALSE)
         abcode[i] <- NA
       }
     } else {
-      # meerdere middelen
+      # more than 1 drug
       if (grepl('+', drug, fixed = TRUE)) {
         drug.group <-
           strsplit(drug, '+', fixed = TRUE) %>%

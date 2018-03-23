@@ -39,7 +39,7 @@
 #'   \item{\code{useful_grampositive}}{\code{FALSE} if not useful according to EUCAST, \code{NA} otherwise (see Source)}
 #' }
 #' @source - World Health Organization: \url{https://www.whocc.no/atc_ddd_index/} \cr - EUCAST - Expert rules intrinsic exceptional V3.1 \cr - MOLIS (LIS of Certe): \url{https://www.certe.nl} \cr - GLIMS (LIS of UMCG): \url{https://www.umcg.nl}
-#' @seealso \code{\link{bactlist}}
+#' @seealso \code{\link{microorganisms}}
 # last two columns created with:
 # antibiotics %>%
 #   mutate(useful_gramnegative = 
@@ -63,7 +63,7 @@
 
 #' Dataset with ~2500 microorganisms
 #'
-#' A dataset containing all microorganisms of MOLIS. MO codes of the UMCG can be looked up using \code{\link{bactlist.umcg}}.
+#' A dataset containing 2500 microorganisms. MO codes of the UMCG can be looked up using \code{\link{microorganisms.umcg}}.
 #' @format A data.frame with 2507 observations and 12 variables:
 #' \describe{
 #'   \item{\code{bactid}}{ID of microorganism}
@@ -80,24 +80,24 @@
 #'   \item{\code{gramstain_nl}}{Gram of microorganism in Dutch, like \code{"Negatieve staven"}}
 #' }
 #' @source MOLIS (LIS of Certe) - \url{https://www.certe.nl}
-#' @seealso \code{\link{guess_bactid}} \code{\link{antibiotics}} \code{\link{bactlist.umcg}}
-"bactlist"
+#' @seealso \code{\link{guess_bactid}} \code{\link{antibiotics}} \code{\link{microorganisms.umcg}}
+"microorganisms"
 
 #' Translation table for UMCG with ~1100 microorganisms
 #'
-#' A dataset containing all bacteria codes of UMCG MMB. These codes can be joined to data with an ID from \code{\link{bactlist}$bactid} (using \code{\link{left_join_bactlist}}). GLIMS codes can also be translated to valid \code{bactid}'s with \code{\link{guess_bactid}}.
+#' A dataset containing all bacteria codes of UMCG MMB. These codes can be joined to data with an ID from \code{\link{microorganisms}$bactid} (using \code{\link{left_join_microorganisms}}). GLIMS codes can also be translated to valid \code{bactid}'s with \code{\link{guess_bactid}}.
 #' @format A data.frame with 1090 observations and 2 variables:
 #' \describe{
 #'   \item{\code{mocode}}{Code of microorganism according to UMCG MMB}
-#'   \item{\code{bactid}}{Code of microorganism in \code{\link{bactlist}}}
+#'   \item{\code{bactid}}{Code of microorganism in \code{\link{microorganisms}}}
 #' }
 #' @source MOLIS (LIS of Certe) - \url{https://www.certe.nl} \cr \cr GLIMS (LIS of UMCG) - \url{https://www.umcg.nl}
-#' @seealso \code{\link{guess_bactid}} \code{\link{bactlist}}
-"bactlist.umcg"
+#' @seealso \code{\link{guess_bactid}} \code{\link{microorganisms}}
+"microorganisms.umcg"
 
 #' Dataset with 2000 blood culture isolates of septic patients
 #'
-#' An anonymised dataset containing 2000 microbial blood culture isolates with their antibiogram of septic patients found in 5 different hospitals in the Netherlands, between 2001 and 2017. This data.frame can be used to practice AMR analysis e.g. with \code{\link{rsi}} or \code{\link{rsi_predict}}, or it can be used to practice other statistics.
+#' An anonymised dataset containing 2000 microbial blood culture isolates with their antibiogram of septic patients found in 5 different hospitals in the Netherlands, between 2001 and 2017. This data.frame can be used to practice AMR analysis. For examples, press F1.
 #' @format A data.frame with 2000 observations and 47 variables:
 #' \describe{
 #'   \item{\code{date}}{date of receipt at the laboratory}
@@ -108,8 +108,47 @@
 #'   \item{\code{age}}{age of the patient}
 #'   \item{\code{sex}}{sex of the patient}
 #'   \item{\code{patient_id}}{ID of the patient, first 10 characters of an SHA hash containing irretrievable information}
-#'   \item{\code{bactid}}{ID of microorganism, see \code{\link{bactlist}}}
-#'   \item{\code{peni:mupi}}{38 different antibiotics with class \code{rsi} (see \code{\link{as.rsi}}), these column names occur in \code{\link{antibiotics}} and can be translated with \code{\link{abname}}}
+#'   \item{\code{bactid}}{ID of microorganism, see \code{\link{microorganisms}}}
+#'   \item{\code{peni:mupi}}{38 different antibiotics with class \code{rsi} (see \code{\link{as.rsi}}); these column names occur in \code{\link{antibiotics}} and can be translated with \code{\link{abname}}}
 #' }
 #' @source MOLIS (LIS of Certe) - \url{https://www.certe.nl}
+#' @examples
+#' # ----------- #
+#' # PREPARATION #
+#' # ----------- #
+#' 
+#' # Save this example dataset to an object, so we can edit it:
+#' my_data <- septic_patients
+#' 
+#' # load the dplyr package to make data science A LOT easier
+#' library(dplyr)
+#' 
+#' # Add first isolates to our dataset:
+#' my_data <- my_data %>% 
+#'   mutate(first_isolates = first_isolate(my_data, date, patient_id, bactid))
+#' 
+#' # -------- #
+#' # ANALYSIS #
+#' # -------- #
+#' 
+#' # 1. Get the amoxicillin resistance percentages 
+#' #    of E. coli, divided by hospital:
+#' 
+#' my_data %>%
+#'   filter(bactid == "ESCCOL",
+#'          first_isolates == TRUE) %>% 
+#'   group_by(hospital_id) %>% 
+#'   summarise(n = n(),
+#'             amoxicillin_resistance = rsi(amox))
+#'   
+#'   
+#' # 2. Get the amoxicillin/clavulanic acid resistance 
+#' #    percentages of E. coli, trend over the years:
+#' 
+#' my_data %>% 
+#'   filter(bactid == guess_bactid("E. coli"),
+#'          first_isolates == TRUE) %>% 
+#'   group_by(year = format(date, "%Y")) %>% 
+#'   summarise(n = n(),
+#'             amoxclav_resistance = rsi(amcl, minimum = 20))
 "septic_patients"

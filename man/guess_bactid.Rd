@@ -27,5 +27,5 @@ guess_bactid("MRSA") # Methicillin-resistant S. aureus
 guess_bactid("VISA") # Vancomycin Intermediate S. aureus
 }
 \seealso{
-\code{\link{bactlist}} for the dataframe that is being used to determine ID's.
+\code{\link{microorganisms}} for the dataframe that is being used to determine ID's.
 }

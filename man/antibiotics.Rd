@@ -33,6 +33,6 @@ antibiotics
 A dataset containing all antibiotics with a J0 code, with their DDD's. Properties were downloaded from the WHO, see Source.
 }
 \seealso{
-\code{\link{bactlist}}
+\code{\link{microorganisms}}
 }
 \keyword{datasets}

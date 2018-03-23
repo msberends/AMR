@@ -53,7 +53,7 @@ tbl \%>\%
 library(dplyr)
 septic_patients \%>\%
   # get bacteria properties like genus and species
-  left_join_bactlist("bactid") \%>\% 
+  left_join_microorganisms("bactid") \%>\% 
   # calculate first isolates
   mutate(first_isolate = 
            first_isolate(.,

@@ -1,11 +1,14 @@
 ## 0.1.2
-- Added new function `guess_bactid` to determine the ID of a microorganism based on genus/species
-- Renamed `ablist` to `antibiotics`
-- Added support for character vector in join functions
-- Altered `%like%` to make it case insensitive
-- Added new algorithm to determine weighted isolates, can now be `points` or `keyantibiotics, see `?first_isolate`
-- Function `first_isolate` supports tidyverse-like evaluation of parameters (no need to quote them anymore)
-- Functions `as.rsi` and `as.mic` now add the package name and version as attribute
+- NEW: Function `guess_bactid` to determine the ID of a microorganism based on genus/species
+- NEW: Functions `clipboard_import` and `clipboard_export` as helper functions to quickly copy and paste from/to software like Excel and SPSS
+- NEW: New algorithm to determine weighted isolates, can now be `"points"` or `"keyantibiotics"`, see `?first_isolate`
+- EDIT: Renamed dataset `ablist` to `antibiotics`
+- EDIT: Renamed dataset `bactlist` to `microorganisms`
+- EDIT: Added support for character vector in join functions
+- EDIT: Altered `%like%` to make it case insensitive
+- EDIT: Functions `first_isolate`, `EUCAST_rules` and `rsi_predict` supports tidyverse-like evaluation of parameters (no need to quote columns them anymore)
+- EDIT: For functions `first_isolate`, `EUCAST_rules` the antibiotic column names are case-insensitive
+- EDIT: Functions `as.rsi` and `as.mic` now add the package name and version as attribute
 
 ## 0.1.1
 - `EUCAST_rules` applies for amoxicillin even if ampicillin is missing

@@ -14,8 +14,8 @@
   \item{\code{age}}{age of the patient}
   \item{\code{sex}}{sex of the patient}
   \item{\code{patient_id}}{ID of the patient, first 10 characters of an SHA hash containing irretrievable information}
-  \item{\code{bactid}}{ID of microorganism, see \code{\link{bactlist}}}
-  \item{\code{peni:mupi}}{38 different antibiotics with class \code{rsi} (see \code{\link{as.rsi}}), these column names occur in \code{\link{antibiotics}} and can be translated with \code{\link{abname}}}
+  \item{\code{bactid}}{ID of microorganism, see \code{\link{microorganisms}}}
+  \item{\code{peni:mupi}}{38 different antibiotics with class \code{rsi} (see \code{\link{as.rsi}}); these column names occur in \code{\link{antibiotics}} and can be translated with \code{\link{abname}}}
 }}
 \source{
 MOLIS (LIS of Certe) - \url{https://www.certe.nl}
@@ -24,6 +24,46 @@ MOLIS (LIS of Certe) - \url{https://www.certe.nl}
 septic_patients
 }
 \description{
-An anonymised dataset containing 2000 microbial blood culture isolates with their antibiogram of septic patients found in 5 different hospitals in the Netherlands, between 2001 and 2017. This data.frame can be used to practice AMR analysis e.g. with \code{\link{rsi}} or \code{\link{rsi_predict}}, or it can be used to practice other statistics.
+An anonymised dataset containing 2000 microbial blood culture isolates with their antibiogram of septic patients found in 5 different hospitals in the Netherlands, between 2001 and 2017. This data.frame can be used to practice AMR analysis. For examples, press F1.
+}
+\examples{
+# ----------- #
+# PREPARATION #
+# ----------- #
+
+# Save this example dataset to an object, so we can edit it:
+my_data <- septic_patients
+
+# load the dplyr package to make data science A LOT easier
+library(dplyr)
+
+# Add first isolates to our dataset:
+my_data <- my_data \%>\% 
+  mutate(first_isolates = first_isolate(my_data, date, patient_id, bactid))
+
+# -------- #
+# ANALYSIS #
+# -------- #
+
+# 1. Get the amoxicillin resistance percentages 
+#    of E. coli, divided by hospital:
+
+my_data \%>\%
+  filter(bactid == "ESCCOL",
+         first_isolates == TRUE) \%>\% 
+  group_by(hospital_id) \%>\% 
+  summarise(n = n(),
+            amoxicillin_resistance = rsi(amox))
+  
+  
+# 2. Get the amoxicillin/clavulanic acid resistance 
+#    percentages of E. coli, trend over the years:
+
+my_data \%>\% 
+  filter(bactid == guess_bactid("E. coli"),
+         first_isolates == TRUE) \%>\% 
+  group_by(year = format(date, "\%Y")) \%>\% 
+  summarise(n = n(),
+            amoxclav_resistance = rsi(amcl, minimum = 20))
 }
 \keyword{datasets}

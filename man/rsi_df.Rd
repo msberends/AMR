@@ -4,13 +4,13 @@
 \alias{rsi_df}
 \title{Resistance of isolates in data.frame}
 \usage{
-rsi_df(tbl, antibiotics, interpretation = "IR", minimum = 30,
-  percent = FALSE, info = TRUE, warning = TRUE)
+rsi_df(tbl, ab, interpretation = "IR", minimum = 30, percent = FALSE,
+  info = TRUE, warning = TRUE)
 }
 \arguments{
 \item{tbl}{\code{data.frame} containing columns with antibiotic interpretations.}
 
-\item{antibiotics}{character vector with 1, 2 or 3 antibiotics that occur as column names in \code{tbl}, like \code{antibiotics = c("amox", "amcl")}}
+\item{ab}{character vector with 1, 2 or 3 antibiotics that occur as column names in \code{tbl}, like \code{ab = c("amox", "amcl")}}
 
 \item{interpretation}{antimicrobial interpretation of which the portion must be calculated. Valid values are \code{"S"}, \code{"SI"}, \code{"I"}, \code{"IR"} or \code{"R"}.}
 
@@ -42,7 +42,7 @@ library(dplyr)
 my_table \%>\%
   filter(first_isolate == TRUE, 
          genus == "Helicobacter") \%>\%
-  rsi_df(antibiotics = c("amox", "metr"))
+  rsi_df(ab = c("amox", "metr"))
 }
 }
 \seealso{

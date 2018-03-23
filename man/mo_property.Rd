@@ -4,10 +4,10 @@
 \alias{mo_property}
 \title{Poperties of a microorganism}
 \usage{
-mo_property(bactcode, property = "fullname")
+mo_property(bactid, property = "fullname")
 }
 \arguments{
-\item{bactcode}{ID of a microorganisme, like \code{"STAAUR} and \code{"ESCCOL}}
+\item{bactid}{ID of a microorganisme, like \code{"STAAUR} and \code{"ESCCOL}}
 
 \item{property}{One of the values \code{bactid}, \code{bactsys}, \code{family}, \code{genus}, \code{species}, \code{subspecies}, \code{fullname}, \code{type}, \code{gramstain}, \code{aerobic}}
 }
@@ -15,5 +15,5 @@ mo_property(bactcode, property = "fullname")
 Poperties of a microorganism
 }
 \seealso{
-\code{\link{bactlist}}
+\code{\link{microorganisms}}
 }
