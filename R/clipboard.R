@@ -64,21 +64,17 @@ clipboard_export <- function(x,
     as.integer()
   
   x <- get(x)
-  
-  if (size > 25 * 1024 * 1024) {
-    # above 25 MB use a hacker function
-    writeClipboard(knitr::kable(x))
-  } else {
-    # set size of clipboard to 125% of the object size of x
-    write.table(x = x,
-                file = paste0("clipboard-", size * 1.25),
-                sep = sep,
-                na = na,
-                row.names = FALSE,
-                col.names = header,
-                dec = dec,
-                quote = FALSE)
-  }
+
+  # set size of clipboard to 125% of the object size of x
+  write.table(x = x,
+              file = paste0("clipboard-", size * 1.25),
+              sep = sep,
+              na = na,
+              row.names = FALSE,
+              col.names = header,
+              dec = dec,
+              quote = FALSE)
+
   cat("Successfully exported to clipboard:", NROW(x), "obs. of", NCOL(x), "variables.\n")
   
 }
