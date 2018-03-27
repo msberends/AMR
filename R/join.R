@@ -96,7 +96,11 @@ full_join_microorganisms <- function(x, by = 'bactid', suffix = c("2", ""), ...)
   } else {
     joinby <- by
   }
-  dplyr::full_join(x = x, y = AMR::microorganisms, by = joinby, suffix = c("2", ""), ...)
+  join <- dplyr::full_join(x = x, y = AMR::microorganisms, by = joinby, suffix = c("2", ""), ...)
+  if (nrow(join) > nrow(x)) {
+    warning('the newly joined tbl contains ', nrow(join) - nrow(x), ' rows more that its original')
+  }
+  join
 }
 
 #' @rdname join

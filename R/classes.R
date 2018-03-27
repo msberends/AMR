@@ -364,7 +364,7 @@ summary.mic <- function(object, ...) {
   x <- x[!is.na(x)]
   n <- x %>% length()
   return(c("Mode" = 'mic',
-           "NA" = n_total - n,
+           "<NA>" = n_total - n,
            "Min." = sort(x)[1] %>% as.character(),
            "Max." = sort(x)[n] %>% as.character()
   ))

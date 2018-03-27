@@ -188,7 +188,7 @@ EUCAST_rules <- function(tbl,
                 teic, tetr, tica, tige, tobr, trim, trsu, vanc)
   col.list <- col.list[!is.na(col.list)]
   col.list.bak <- col.list
-  # are they available as upper case then?
+  # are they available as upper case or lower case then?
   for (i in 1:length(col.list)) {
     if (toupper(col.list[i]) %in% colnames(tbl)) {
       col.list[i] <- toupper(col.list[i])
@@ -708,7 +708,7 @@ mo_property <- function(bactid, property = 'fullname') {
       result = tryCatch({
         mocode[i] <-
           AMR::microorganisms %>%
-          filter(bactid == bactid) %>%
+          filter(bactid == bug) %>%
           select(property) %>%
           unlist() %>%
           as.character()

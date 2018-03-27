@@ -59,8 +59,7 @@ septic_patients \%>\%
            first_isolate(.,
                          "date",
                          "patient_id",
-                         "genus",
-                         "species",
+                         "bactid",
                          col_specimen = NA,
                          col_icu = NA)) \%>\% 
   # filter on first E. coli isolates

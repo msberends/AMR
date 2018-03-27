@@ -67,7 +67,7 @@ rsi_df <- function(tbl,
     stop('Invalid `interpretation`; must be "S", "SI", "I", "IR", or "R".')
   }
   if ('is_ic' %in% colnames(tbl)) {
-    if (n_distinct(tbl$is_ic) > 1) {
+    if (n_distinct(tbl$is_ic) > 1 & warning == TRUE) {
       warning('Dataset contains isolates from the Intensive Care. Exclude them from proper epidemiological analysis.')
     }
   }
@@ -280,8 +280,7 @@ rsi <- function(ab1, ab2 = NA, interpretation = 'IR', minimum = 30, percent = FA
 #'            first_isolate(.,
 #'                          "date",
 #'                          "patient_id",
-#'                          "genus",
-#'                          "species",
+#'                          "bactid",
 #'                          col_specimen = NA,
 #'                          col_icu = NA)) %>% 
 #'   # filter on first E. coli isolates
@@ -303,6 +302,10 @@ rsi_predict <- function(tbl,
                         I_as_R = TRUE,
                         preserve_measurements = TRUE,
                         info = TRUE) {
+  
+  if (nrow(tbl) == 0) {
+    stop('This table does not contain any observations.')
+  }
   
   col_ab <- quasiquotate(deparse(substitute(col_ab)), col_ab)
   if (!col_ab %in% colnames(tbl)) {

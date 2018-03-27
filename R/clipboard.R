@@ -7,6 +7,7 @@
 #' @inheritParams utils::write.table
 #' @param startrow \emph{n}th row to start importing from. For \code{clipboard_import}, when \code{header = TRUE} the import will start on row \code{startrow} \emph{below} the header.
 #' @param as_vector a logical value indicating whether data consisting of only one column should be imported as vector using \code{\link[dplyr]{pull}}. This will strip off the header.
+#' @param info print info about copying
 #' @keywords clipboard clipboard_import clipboard_export import export
 #' @importFrom dplyr %>% pull as_tibble
 #' @importFrom utils read.delim write.table object.size
@@ -54,7 +55,8 @@ clipboard_export <- function(x,
                              sep = '\t',
                              dec = ".",
                              na = "",
-                             header = TRUE) {
+                             header = TRUE,
+                             info = TRUE) {
   
   x <- deparse(substitute(x))
   size <- x %>%
@@ -75,6 +77,7 @@ clipboard_export <- function(x,
               dec = dec,
               quote = FALSE)
 
-  cat("Successfully exported to clipboard:", NROW(x), "obs. of", NCOL(x), "variables.\n")
-  
+  if (info == TRUE) {
+    cat("Successfully exported to clipboard:", NROW(x), "obs. of", NCOL(x), "variables.\n")
+  }
 }

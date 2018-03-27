@@ -9,7 +9,8 @@
 clipboard_import(sep = "\\t", header = TRUE, dec = ".", na = c("", "NA",
   "NULL"), startrow = 1, as_vector = TRUE)
 
-clipboard_export(x, sep = "\\t", dec = ".", na = "", header = TRUE)
+clipboard_export(x, sep = "\\t", dec = ".", na = "", header = TRUE,
+  info = TRUE)
 }
 \arguments{
 \item{sep}{the field separator character.  Values on each line of the
@@ -33,6 +34,8 @@ clipboard_export(x, sep = "\\t", dec = ".", na = "", header = TRUE)
 
 \item{x}{the object to be written, preferably a matrix or data frame.
     If not, it is attempted to coerce \code{x} to a data frame.}
+
+\item{info}{print info about copying}
 }
 \value{
 data.frame

@@ -448,6 +448,8 @@ key_antibiotics <- function(tbl,
                 clin, clox, doxy, gent, line, mero, peni,
                 pita, rifa, teic, trsu, vanc)
   col.list <- col.list[!is.na(col.list)]
+  col.list.bak <- col.list
+  # are they available as upper case or lower case then?
   for (i in 1:length(col.list)) {
     if (toupper(col.list[i]) %in% colnames(tbl)) {
       col.list[i] <- toupper(col.list[i])
@@ -459,8 +461,8 @@ key_antibiotics <- function(tbl,
   }
   if (!all(col.list %in% colnames(tbl))) {
     if (info == TRUE) {
-      warning('These columns do not exist and will be ignored:\n',
-              col.list[!(col.list %in% colnames(tbl))] %>% toString(),
+      warning('These columns do not exist and will be ignored: ',
+              col.list.bak[!(col.list %in% colnames(tbl))] %>% toString(),
               immediate. = TRUE,
               call. = FALSE)
     }
@@ -647,8 +649,12 @@ guess_bactid <- function(x) {
   
   for (i in 1:length(x)) {
     if (tolower(x[i]) == '^e.*coli$') {
-      # avoid detection of Entamoeba coli in case of Escherichia coli
+      # avoid detection of Entamoeba coli in case of E. coli
       x[i] <- 'Escherichia coli'
+    }
+    if (tolower(x[i]) == '^h.*influenzae$') {
+      # avoid detection of Haematobacter influenzae in case of H. influenzae
+      x[i] <- 'Haemophilus influenzae'
     }
     if (tolower(x[i]) == '^st.*au$'
         | tolower(x[i]) == '^stau$'
