@@ -3,8 +3,13 @@
 # Setting up R deps
 language: r
 r: 3.2
-r_packages: covr
-cache: packages
+r_packages:
+  - covr
+  - testthat
+  - dplyr
+  - rvest
+  - xml2
+  - reshape2
 
 # system deps
 os:
