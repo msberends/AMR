@@ -82,7 +82,7 @@ clipboard_export <- function(x,
   } else {
     # use xclip package
     check_xclip()
-    file <- pipe("xclip -i -selection primary", "w")
+    file <- pipe("xclip -i", "w")
     on.exit(close(file))
   }
 
