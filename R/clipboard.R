@@ -26,7 +26,7 @@ clipboard_import <- function(sep = '\t',
   } else {
     # use xclip package
     check_xclip()
-    file <- pipe("xclip -o -selection c", "r")
+    file <- pipe("xclip -o", "r")
     on.exit(close(file))
   }
   
