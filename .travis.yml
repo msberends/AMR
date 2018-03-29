@@ -10,11 +10,10 @@ cache: packages
 os:
   - linux
   - osx
-sudo: true
 install:
   - if [ $TRAVIS_OS_NAME = linux ]; then sudo apt-get -qq update; fi
   - if [ $TRAVIS_OS_NAME = linux ]; then sudo apt-get install -y xclip; fi
-  - if [ $TRAVIS_OS_NAME = osx ]; then sudo brew install xclip; fi
+  - if [ $TRAVIS_OS_NAME = osx ]; then brew install xclip; fi
 
 # postrun
 after_success:
@@ -25,4 +24,4 @@ notifications:
       - m.s.berends@umcg.nl
       - c.f.luz@umcg.nl
     on_success: change
-    on_failure: always
+    on_failure: change
