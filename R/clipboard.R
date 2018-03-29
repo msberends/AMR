@@ -1,6 +1,6 @@
 #' Import/export from clipboard
 #'
-#' These are helper functions around \code{\link{read.table}} and \code{\link{write.table}} to import from and export to clipboard. The data will be read and written as tab-separated by default, which makes it possible to copy and paste from other software like Excel and SPSS without further transformation.
+#' These are helper functions around \code{\link{read.table}} and \code{\link{write.table}} to import from and export to clipboard, with support for Windows, Linux and macOS. The data will be read and written as tab-separated by default, which makes it possible to copy and paste from other software like Excel and SPSS without further transformation.
 #' @rdname clipboard
 #' @name clipboard
 #' @inheritParams utils::read.table
@@ -20,8 +20,17 @@ clipboard_import <- function(sep = '\t',
                              na = c("", "NA", "NULL"),
                              startrow = 1,
                              as_vector = TRUE) {
+
+  if (is_Windows() == TRUE) {
+    file <- 'clipboard'
+  } else {
+    # use xclip package
+    check_xclip()
+    file <- pipe("xclip -o", "r")
+    on.exit(close(file))
+  }
   
-  import_tbl <- read.delim(file = 'clipboard',
+  import_tbl <- read.delim(file = file,
                            sep = sep,
                            header = header,
                            strip.white = TRUE,
@@ -67,9 +76,18 @@ clipboard_export <- function(x,
   
   x <- get(x)
 
-  # set size of clipboard to 125% of the object size of x
+  if (is_Windows() == TRUE) {
+    # set size of clipboard to 125% of the object size of x
+    file <- paste0("clipboard-", size * 1.25)
+  } else {
+    # use xclip package
+    check_xclip()
+    file <- pipe("xclip -i", "w")
+    on.exit(close(file))
+  }
+
   write.table(x = x,
-              file = paste0("clipboard-", size * 1.25),
+              file = file,
               sep = sep,
               na = na,
               row.names = FALSE,
@@ -79,5 +97,14 @@ clipboard_export <- function(x,
 
   if (info == TRUE) {
     cat("Successfully exported to clipboard:", NROW(x), "obs. of", NCOL(x), "variables.\n")
+  }
+}
+
+is_Windows <- function() {
+  Sys.info()['sysname'] %like% "Windows"
+}
+check_xclip <- function() {
+  if (!isTRUE(file.exists(Sys.which("xclip")[1L]))) {
+      stop("Please install Linux package xclip first.")
   }
 }
