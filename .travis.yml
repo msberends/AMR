@@ -1,21 +1,23 @@
 # R for travis: see documentation at https://docs.travis-ci.com/user/languages/r
 
+# Setting up R deps
 language: r
+r: 3.2
+r_packages: covr
 cache: packages
 
+# system deps
 os:
   - linux
   - osx
+sudo: true
+before_install:
+  - sudo apt-get -qq update
+  - sudo apt-get install -y xclip
 
-r:
-  - 3.2
-
-r_packages:
-  - covr
-
+# postrun
 after_success:
   - Rscript -e 'covr::codecov()'
-
 notifications:
   email:
     recipients:
