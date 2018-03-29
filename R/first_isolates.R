@@ -123,15 +123,15 @@ first_isolate <- function(tbl,
                           col_species = NA) {
   
   # support tidyverse-like quotation
-  col_date <- quasiquotate(deparse(substitute(col_date)), col_date)
-  col_patient_id <- quasiquotate(deparse(substitute(col_patient_id)), col_patient_id)
-  col_bactid <- quasiquotate(deparse(substitute(col_bactid)), col_bactid)
-  col_genus <- quasiquotate(deparse(substitute(col_genus)), col_genus)
-  col_species <- quasiquotate(deparse(substitute(col_species)), col_species)
-  col_testcode <- quasiquotate(deparse(substitute(col_testcode)), col_testcode)
-  col_specimen <- quasiquotate(deparse(substitute(col_specimen)), col_specimen)
-  col_icu <- quasiquotate(deparse(substitute(col_icu)), col_icu)
-  col_keyantibiotics <- quasiquotate(deparse(substitute(col_keyantibiotics)), col_keyantibiotics)
+  # col_date <- quasiquotate(deparse(substitute(col_date)), col_date)
+  # col_patient_id <- quasiquotate(deparse(substitute(col_patient_id)), col_patient_id)
+  # col_bactid <- quasiquotate(deparse(substitute(col_bactid)), col_bactid)
+  # col_genus <- quasiquotate(deparse(substitute(col_genus)), col_genus)
+  # col_species <- quasiquotate(deparse(substitute(col_species)), col_species)
+  # col_testcode <- quasiquotate(deparse(substitute(col_testcode)), col_testcode)
+  # col_specimen <- quasiquotate(deparse(substitute(col_specimen)), col_specimen)
+  # col_icu <- quasiquotate(deparse(substitute(col_icu)), col_icu)
+  # col_keyantibiotics <- quasiquotate(deparse(substitute(col_keyantibiotics)), col_keyantibiotics)
   
   # check if columns exist
   check_columns_existance <- function(column, tblname = tbl) {
