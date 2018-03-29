@@ -27,7 +27,7 @@ clipboard_import <- function(sep = '\t',
     # use xclip package
     check_xclip()
     file <- pipe("xclip -o -selection c", "r")
-    gc(FALSE) # ?gc: A call of gc causes a garbage collection to take place.
+    on.exit(close(file))
   }
   
   import_tbl <- read.delim(file = file,
@@ -82,8 +82,8 @@ clipboard_export <- function(x,
   } else {
     # use xclip package
     check_xclip()
-    file <- pipe("xclip -i -selection c", "w")
-    gc(FALSE) # ?gc: A call of gc causes a garbage collection to take place.
+    file <- pipe("xclip -i -selection primary", "w")
+    on.exit(close(file))
   }
 
   write.table(x = x,
