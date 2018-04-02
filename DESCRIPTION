@@ -32,7 +32,7 @@ Imports:
     xml2 (>= 1.0.0),
     rvest (>= 0.3.2)
 Suggests:
-    testthat (>= 2.0.0),
+    testthat (>= 1.0.2),
     covr (>= 3.0.1)
 URL: https://github.com/msberends/AMR
 BugReports: https://github.com/msberends/AMR/issues
