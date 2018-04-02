@@ -4,12 +4,13 @@
 language: r
 r: 3.2
 r_packages: covr
+cache: packages
 
 # system deps, install xclip for clipboard support
 os:
   - linux
   - osx
-install:
+before_install:
   - if [ $TRAVIS_OS_NAME = linux ]; then sudo apt-get -qq update; fi
   - if [ $TRAVIS_OS_NAME = linux ]; then sudo apt-get install -y xclip; fi
   - if [ $TRAVIS_OS_NAME = osx ]; then brew install xclip; fi
