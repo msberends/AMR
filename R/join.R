@@ -10,12 +10,12 @@
 #' @param ... other parameters to pass on to \code{dplyr::\link[dplyr]{join}}.
 #' @details As opposed to the \code{\link[dplyr]{join}} functions of \code{dplyr}, characters vectors are supported and at default existing columns will get a suffix \code{"2"} and the newly joined columns will not get a suffix. See \code{\link[dplyr]{join}} for more information.
 #' @export
-#' @examples 
+#' @examples
 #' left_join_microorganisms("STAAUR")
-#' 
+#'
 #' library(dplyr)
 #' septic_patients %>% left_join_microorganisms()
-#' 
+#'
 #' df <- data.frame(date = seq(from = as.Date("2018-01-01"),
 #'                             to = as.Date("2018-01-07"),
 #'                             by = 1),

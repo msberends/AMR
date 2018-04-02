@@ -14,17 +14,17 @@ first_isolate(tbl, col_date, col_patient_id, col_bactid = NA,
 \arguments{
 \item{tbl}{a \code{data.frame} containing isolates.}
 
-\item{col_date}{column name of the result date (or date that is was received on the lab), supports tidyverse-like quotation}
+\item{col_date}{column name of the result date (or date that is was received on the lab)}
 
-\item{col_patient_id}{column name of the unique IDs of the patients, supports tidyverse-like quotation}
+\item{col_patient_id}{column name of the unique IDs of the patients}
 
-\item{col_bactid}{column name of the unique IDs of the microorganisms (should occur in the \code{\link{microorganisms}} dataset), supports tidyverse-like quotation}
+\item{col_bactid}{column name of the unique IDs of the microorganisms (should occur in the \code{\link{microorganisms}} dataset)}
 
 \item{col_testcode}{column name of the test codes. Use \code{col_testcode = NA} to \strong{not} exclude certain test codes (like test codes for screening). In that case \code{testcodes_exclude} will be ignored. Supports tidyverse-like quotation.}
 
-\item{col_specimen}{column name of the specimen type or group, supports tidyverse-like quotation}
+\item{col_specimen}{column name of the specimen type or group}
 
-\item{col_icu}{column name of the logicals (\code{TRUE}/\code{FALSE}) whether a ward or department is an Intensive Care Unit (ICU), supports tidyverse-like quotation}
+\item{col_icu}{column name of the logicals (\code{TRUE}/\code{FALSE}) whether a ward or department is an Intensive Care Unit (ICU)}
 
 \item{col_keyantibiotics}{column name of the key antibiotics to determine first \emph{weighted} isolates, see \code{\link{key_antibiotics}}. Supports tidyverse-like quotation.}
 
@@ -46,9 +46,9 @@ first_isolate(tbl, col_date, col_patient_id, col_bactid = NA,
 
 \item{info}{print progress}
 
-\item{col_genus}{(deprecated, use \code{col_bactid} instead) column name of the genus of the microorganisms, supports tidyverse-like quotation}
+\item{col_genus}{(deprecated, use \code{col_bactid} instead) column name of the genus of the microorganisms}
 
-\item{col_species}{(deprecated, use \code{col_bactid} instead) column name of the species of the microorganisms, supports tidyverse-like quotation}
+\item{col_species}{(deprecated, use \code{col_bactid} instead) column name of the species of the microorganisms}
 }
 \value{
 A vector to add to table, see Examples.
@@ -73,12 +73,10 @@ my_patients <- septic_patients
 
 library(dplyr)
 my_patients$first_isolate <- my_patients \%>\%
-  left_join_microorganisms() \%>\%
-  first_isolate(col_date = date,
-                col_patient_id = patient_id,
-                col_genus = genus,
-                col_species = species)
-                
+  first_isolate(col_date = "date",
+                col_patient_id = "patient_id",
+                col_bactid = "bactid")
+
 \dontrun{
 
 # set key antibiotics to a new variable

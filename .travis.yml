@@ -3,15 +3,9 @@
 # Setting up R deps
 language: r
 r: 3.2
-r_packages:
-  - covr
-  - testthat
-  - dplyr
-  - rvest
-  - xml2
-  - reshape2
+r_packages: covr
 
-# system deps
+# system deps, install xclip for clipboard support
 os:
   - linux
   - osx

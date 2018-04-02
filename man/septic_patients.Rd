@@ -38,31 +38,31 @@ my_data <- septic_patients
 library(dplyr)
 
 # Add first isolates to our dataset:
-my_data <- my_data \%>\% 
-  mutate(first_isolates = first_isolate(my_data, date, patient_id, bactid))
+my_data <- my_data \%>\%
+  mutate(first_isolates = first_isolate(my_data, "date", "patient_id", "bactid"))
 
 # -------- #
 # ANALYSIS #
 # -------- #
 
-# 1. Get the amoxicillin resistance percentages 
+# 1. Get the amoxicillin resistance percentages
 #    of E. coli, divided by hospital:
 
 my_data \%>\%
   filter(bactid == "ESCCOL",
-         first_isolates == TRUE) \%>\% 
-  group_by(hospital_id) \%>\% 
+         first_isolates == TRUE) \%>\%
+  group_by(hospital_id) \%>\%
   summarise(n = n(),
             amoxicillin_resistance = rsi(amox))
-  
-  
-# 2. Get the amoxicillin/clavulanic acid resistance 
+
+
+# 2. Get the amoxicillin/clavulanic acid resistance
 #    percentages of E. coli, trend over the years:
 
-my_data \%>\% 
+my_data \%>\%
   filter(bactid == guess_bactid("E. coli"),
-         first_isolates == TRUE) \%>\% 
-  group_by(year = format(date, "\%Y")) \%>\% 
+         first_isolates == TRUE) \%>\%
+  group_by(year = format(date, "\%Y")) \%>\%
   summarise(n = n(),
             amoxclav_resistance = rsi(amcl, minimum = 20))
 }

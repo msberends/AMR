@@ -3,3 +3,4 @@
 .RData
 .Ruserdata
 AMR.Rproj
+tests/testthat/Rplots.pdf

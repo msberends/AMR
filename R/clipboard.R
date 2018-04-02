@@ -29,27 +29,39 @@ clipboard_import <- function(sep = '\t',
     file <- pipe("xclip -o", "r")
     on.exit(close(file))
   }
-  
-  import_tbl <- read.delim(file = file,
-                           sep = sep,
-                           header = header,
-                           strip.white = TRUE,
-                           dec = dec,
-                           na.strings = na,
-                           fileEncoding = 'UTF-8',
-                           encoding = 'UTF-8',
-                           stringsAsFactors = FALSE)
-  
+
+  import_tbl <- tryCatch(read.delim(file = file,
+                                    sep = sep,
+                                    header = header,
+                                    strip.white = TRUE,
+                                    dec = dec,
+                                    na.strings = na,
+                                    fileEncoding = 'UTF-8',
+                                    encoding = 'UTF-8',
+                                    stringsAsFactors = FALSE),
+                         error = function(e) {
+                           FALSE
+                         })
+
+  if (import_tbl == FALSE) {
+    cat("No clipboard content found.")
+    if (Sys.info()['sysname'] %like% "Linux") {
+      cat(" These functions do not work without X11 installed.")
+    }
+    cat("\n")
+    return(invisible())
+  }
+
   # use tibble, so column types will be translated correctly
   import_tbl <- as_tibble(import_tbl)
-  
+
   if (startrow > 1) {
     # would else lose column headers
     import_tbl <- import_tbl[startrow:nrow(import_tbl),]
   }
-  
+
   colnames(import_tbl) <- gsub('[.]+', '_', colnames(import_tbl))
-  
+
   if (NCOL(import_tbl) == 1 & as_vector == TRUE) {
     import_tbl %>% pull(1)
   } else {
@@ -66,14 +78,14 @@ clipboard_export <- function(x,
                              na = "",
                              header = TRUE,
                              info = TRUE) {
-  
+
   x <- deparse(substitute(x))
   size <- x %>%
-    get() %>% 
+    get() %>%
     object.size() %>%
     formatC(format = 'd') %>%
     as.integer()
-  
+
   x <- get(x)
 
   if (is_Windows() == TRUE) {
@@ -86,18 +98,22 @@ clipboard_export <- function(x,
     on.exit(close(file))
   }
 
-  write.table(x = x,
-              file = file,
-              sep = sep,
-              na = na,
-              row.names = FALSE,
-              col.names = header,
-              dec = dec,
-              quote = FALSE)
+  tryCatch(write.table(x = x,
+                       file = file,
+                       sep = sep,
+                       na = na,
+                       row.names = FALSE,
+                       col.names = header,
+                       dec = dec,
+                       quote = FALSE),
+           error = function(e) {
+             FALSE
+           })
 
   if (info == TRUE) {
     cat("Successfully exported to clipboard:", NROW(x), "obs. of", NCOL(x), "variables.\n")
   }
+
 }
 
 is_Windows <- function() {
@@ -105,6 +121,10 @@ is_Windows <- function() {
 }
 check_xclip <- function() {
   if (!isTRUE(file.exists(Sys.which("xclip")[1L]))) {
+    if (Sys.info()['sysname'] %like% "Linux") {
       stop("Please install Linux package xclip first.")
+    } else {
+      stop("Please install package xclip first (use `brew install xclip on macOS`).")
+    }
   }
 }
