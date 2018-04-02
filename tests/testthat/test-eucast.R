@@ -12,8 +12,8 @@ test_that("EUCAST rules work", {
                   amox = "R",           # Amoxicillin
                   stringsAsFactors = FALSE)
   expect_equal(EUCAST_rules(a, info = FALSE), b)
-  expect_equal(interpretive_reading(a, info = FALSE), b)
-  
+  expect_equal(suppressWarnings(interpretive_reading(a, info = TRUE)), b)
+
   a <- data.frame(bactid = c("STAAUR",  # Staphylococcus aureus
                              "STCGRA"), # Streptococcus pyognenes (Lancefield Group A)
                   coli = "-",           # Colistin

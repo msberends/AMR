@@ -39,7 +39,7 @@ Create a prediction model to predict antimicrobial resistance for the next years
 # use it directly:
 rsi_predict(tbl = tbl[which(first_isolate == TRUE & genus == "Haemophilus"),],
             col_ab = "amcl", col_date = "date")
-  
+
 # or with dplyr so you can actually read it:
 library(dplyr)
 tbl \%>\%
@@ -53,22 +53,22 @@ tbl \%>\%
 library(dplyr)
 septic_patients \%>\%
   # get bacteria properties like genus and species
-  left_join_microorganisms("bactid") \%>\% 
+  left_join_microorganisms("bactid") \%>\%
   # calculate first isolates
-  mutate(first_isolate = 
+  mutate(first_isolate =
            first_isolate(.,
                          "date",
                          "patient_id",
                          "bactid",
                          col_specimen = NA,
-                         col_icu = NA)) \%>\% 
+                         col_icu = NA)) \%>\%
   # filter on first E. coli isolates
-  filter(genus == "Escherichia", 
-         species == "coli", 
+  filter(genus == "Escherichia",
+         species == "coli",
          first_isolate == TRUE) \%>\%
   # predict resistance of cefotaxime for next years
-  rsi_predict(col_ab = cfot,
-              col_date = date,
+  rsi_predict(col_ab = "cfot",
+              col_date = "date",
               year_max = 2025,
               preserve_measurements = FALSE)
 

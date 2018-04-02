@@ -41,7 +41,7 @@
 #' library(dplyr)
 #' # calculate current empiric therapy of Helicobacter gastritis:
 #' my_table %>%
-#'   filter(first_isolate == TRUE, 
+#'   filter(first_isolate == TRUE,
 #'          genus == "Helicobacter") %>%
 #'   rsi_df(ab = c("amox", "metr"))
 #' }
@@ -55,7 +55,7 @@ rsi_df <- function(tbl,
 
   # in case tbl$interpretation already exists:
   interpretations_to_check <- paste(interpretation, collapse = "")
-  
+
   # validate:
   if (min(grepl('^[a-z]{3,4}$', ab)) == 0 &
       min(grepl('^rsi[1-2]$', ab)) == 0) {
@@ -71,7 +71,7 @@ rsi_df <- function(tbl,
       warning('Dataset contains isolates from the Intensive Care. Exclude them from proper epidemiological analysis.')
     }
   }
-  
+
   # transform when checking for different results
   if (interpretations_to_check %in% c('SI', 'IS')) {
     for (i in 1:length(ab)) {
@@ -101,7 +101,7 @@ rsi_df <- function(tbl,
     denominator <- tbl %>%
       filter(pull(., ab[1]) %in% c("S", "I", "R")) %>%
       nrow()
-    
+
   } else if (length(ab) == 2) {
     numerator <- tbl %>%
       filter_at(vars(ab[1], ab[2]),
@@ -109,12 +109,12 @@ rsi_df <- function(tbl,
       filter_at(vars(ab[1], ab[2]),
                 all_vars(. %in% c("S", "R", "I"))) %>%
       nrow()
-    
+
     denominator <- tbl %>%
       filter_at(vars(ab[1], ab[2]),
                 all_vars(. %in% c("S", "R", "I"))) %>%
       nrow()
-    
+
   } else if (length(ab) == 3) {
     numerator <- tbl %>%
       filter_at(vars(ab[1], ab[2], ab[3]),
@@ -122,16 +122,16 @@ rsi_df <- function(tbl,
       filter_at(vars(ab[1], ab[2], ab[3]),
                 all_vars(. %in% c("S", "R", "I"))) %>%
       nrow()
-    
+
     denominator <- tbl %>%
       filter_at(vars(ab[1], ab[2], ab[3]),
                 all_vars(. %in% c("S", "R", "I"))) %>%
       nrow()
-    
+
   } else {
     stop('Maximum of 3 drugs allowed.')
   }
-  
+
   # build text part
   if (info == TRUE) {
     cat('n =', denominator)
@@ -147,7 +147,7 @@ rsi_df <- function(tbl,
     info.txt2 <- gsub('rsi1', 'this drug', info.txt2, fixed = TRUE)
     cat(paste0(' (of ', nrow(tbl), ' in total; ', info.txt1, ' tested on ', info.txt2, ')\n'))
   }
-  
+
   # calculate and format
   y <- numerator / denominator
   if (percent == TRUE) {
@@ -159,7 +159,7 @@ rsi_df <- function(tbl,
     }
     y <- NA
   }
-  
+
   # output
   y
 }
@@ -178,14 +178,14 @@ rsi_df <- function(tbl,
 #' tbl %>%
 #'   group_by(hospital) %>%
 #'   summarise(cipr = rsi(cipr))
-#'   
+#'
 #' tbl %>%
 #'   group_by(year, hospital) %>%
 #'   summarise(
 #'     isolates = n(),
 #'     cipro = rsi(cipr %>% as.rsi(), percent = TRUE),
 #'     amoxi = rsi(amox %>% as.rsi(), percent = TRUE))
-#'     
+#'
 #' rsi(as.rsi(isolates$amox))
 #'
 #' rsi(as.rsi(isolates$amcl), interpretation = "S")
@@ -207,12 +207,12 @@ rsi <- function(ab1, ab2 = NA, interpretation = 'IR', minimum = 30, percent = FA
   if (!ab2.name %like% '^[a-z]{3,4}$') {
     ab2.name <- 'rsi2'
   }
-  
+
   interpretation <- paste(interpretation, collapse = "")
-  
+
   tbl <- tibble(rsi1 = ab1, rsi2 = ab2)
   colnames(tbl) <- c(ab1.name, ab2.name)
-  
+
   if (length(ab2) == 1) {
     return(rsi_df(tbl = tbl,
                   ab = ab1.name,
@@ -260,7 +260,7 @@ rsi <- function(ab1, ab2 = NA, interpretation = 'IR', minimum = 30, percent = FA
 #' # use it directly:
 #' rsi_predict(tbl = tbl[which(first_isolate == TRUE & genus == "Haemophilus"),],
 #'             col_ab = "amcl", col_date = "date")
-#'   
+#'
 #' # or with dplyr so you can actually read it:
 #' library(dplyr)
 #' tbl %>%
@@ -274,22 +274,22 @@ rsi <- function(ab1, ab2 = NA, interpretation = 'IR', minimum = 30, percent = FA
 #' library(dplyr)
 #' septic_patients %>%
 #'   # get bacteria properties like genus and species
-#'   left_join_microorganisms("bactid") %>% 
+#'   left_join_microorganisms("bactid") %>%
 #'   # calculate first isolates
-#'   mutate(first_isolate = 
+#'   mutate(first_isolate =
 #'            first_isolate(.,
 #'                          "date",
 #'                          "patient_id",
 #'                          "bactid",
 #'                          col_specimen = NA,
-#'                          col_icu = NA)) %>% 
+#'                          col_icu = NA)) %>%
 #'   # filter on first E. coli isolates
-#'   filter(genus == "Escherichia", 
-#'          species == "coli", 
+#'   filter(genus == "Escherichia",
+#'          species == "coli",
 #'          first_isolate == TRUE) %>%
 #'   # predict resistance of cefotaxime for next years
-#'   rsi_predict(col_ab = cfot,
-#'               col_date = date,
+#'   rsi_predict(col_ab = "cfot",
+#'               col_date = "date",
 #'               year_max = 2025,
 #'               preserve_measurements = FALSE)
 #'
@@ -302,16 +302,15 @@ rsi_predict <- function(tbl,
                         I_as_R = TRUE,
                         preserve_measurements = TRUE,
                         info = TRUE) {
-  
+
   if (nrow(tbl) == 0) {
     stop('This table does not contain any observations.')
   }
-  
-  col_ab <- quasiquotate(deparse(substitute(col_ab)), col_ab)
+
   if (!col_ab %in% colnames(tbl)) {
     stop('Column ', col_ab, ' not found.')
   }
-  col_date <- quasiquotate(deparse(substitute(col_date)), col_date)
+
   if (!col_date %in% colnames(tbl)) {
     stop('Column ', col_date, ' not found.')
   }
@@ -327,7 +326,7 @@ rsi_predict <- function(tbl,
   if (!all(tbl %>% pull(col_ab) %>% as.rsi() %in% c(NA, 'S', 'I', 'R'))) {
     stop('Column ', col_ab, ' must contain antimicrobial interpretations (S, I, R).')
   }
-  
+
   year <- function(x) {
     if (all(grepl('^[0-9]{4}$', x))) {
       x
@@ -335,9 +334,9 @@ rsi_predict <- function(tbl,
       as.integer(format(as.Date(x), '%Y'))
     }
   }
-  
+
   years_predict <- seq(from = min(year(tbl %>% pull(col_date))), to = year_max, by = year_every)
-  
+
   df <- tbl %>%
     mutate(year = year(tbl %>% pull(col_date))) %>%
     group_by_at(c('year', col_ab)) %>%
@@ -345,7 +344,7 @@ rsi_predict <- function(tbl,
   colnames(df) <- c('year', 'antibiotic', 'count')
   df <- df %>%
     reshape2::dcast(year ~ antibiotic, value.var = 'count')
-  
+
   if (model %in% c('binomial', 'binom', 'logit')) {
     logitmodel <- with(df, glm(cbind(R, S) ~ year, family = binomial))
     if (info == TRUE) {
@@ -353,11 +352,11 @@ rsi_predict <- function(tbl,
       cat('\n------------------------------------------------------------\n')
       print(summary(logitmodel))
     }
-    
+
     predictmodel <- stats::predict(logitmodel, newdata = with(df, list(year = years_predict)), type = "response", se.fit = TRUE)
     prediction <- predictmodel$fit
     se <- predictmodel$se.fit
-    
+
   } else if (model == 'loglin') {
     loglinmodel <- with(df, glm(R ~ year, family = poisson))
     if (info == TRUE) {
@@ -365,11 +364,11 @@ rsi_predict <- function(tbl,
       cat('\n--------------------------------------------------------------\n')
       print(summary(loglinmodel))
     }
-    
+
     predictmodel <- stats::predict(loglinmodel, newdata = with(df, list(year = years_predict)), type = "response", se.fit = TRUE)
     prediction <- predictmodel$fit
     se <- predictmodel$se.fit
-    
+
   } else if (model %in% c('lin', 'linear')) {
     linmodel <- with(df, lm((R / (R + S)) ~ year))
     if (info == TRUE) {
@@ -377,36 +376,36 @@ rsi_predict <- function(tbl,
       cat('\n-----------------------\n')
       print(summary(linmodel))
     }
-    
+
     predictmodel <- stats::predict(linmodel, newdata = with(df, list(year = years_predict)), se.fit = TRUE)
     prediction <- predictmodel$fit
     se <- predictmodel$se.fit
-    
+
   } else {
     stop('No valid model selected.')
   }
-  
+
   # prepare the output dataframe
   prediction <- data.frame(year = years_predict, probR = prediction, stringsAsFactors = FALSE)
-  
+
   prediction$se_min <- prediction$probR - se
   prediction$se_max <- prediction$probR + se
-  
+
   if (model == 'loglin') {
     prediction$probR <- prediction$probR %>%
       format(scientific = FALSE) %>%
       as.integer()
     prediction$se_min <- prediction$se_min %>% as.integer()
     prediction$se_max <- prediction$se_max %>% as.integer()
-    
+
     colnames(prediction) <- c('year', 'amountR', 'se_max', 'se_min')
   } else {
     prediction$se_max[which(prediction$se_max > 1)] <- 1
   }
   prediction$se_min[which(prediction$se_min < 0)] <- 0
-  
+
   total <- prediction
-  
+
   if (preserve_measurements == TRUE) {
     # geschatte data vervangen door gemeten data
     if (I_as_R == TRUE) {
@@ -424,10 +423,10 @@ rsi_predict <- function(tbl,
                            stringsAsFactors = FALSE)
     colnames(measurements) <- colnames(prediction)
     prediction <- prediction %>% filter(!year %in% df$year)
-    
+
     total <- rbind(measurements, prediction)
   }
-  
+
   total
-  
+
 }

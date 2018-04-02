@@ -29,18 +29,23 @@
 #' rsi_data <- as.rsi(c(rep("S", 474), rep("I", 36), rep("R", 370)))
 #' rsi_data <- as.rsi(c(rep("S", 474), rep("I", 36), rep("R", 370), "A", "B", "C"))
 #' is.rsi(rsi_data)
-#' 
+#'
 #' plot(rsi_data)    # for percentages
 #' barplot(rsi_data) # for frequencies
 as.rsi <- function(x) {
   if (is.rsi(x)) {
     x
   } else {
-    
+
     x <- x %>% unlist()
     x.bak <- x
-    
+
     na_before <- x[is.na(x) | x == ''] %>% length()
+    # remove all spaces
+    x <- gsub(' {2,55}', '', x)
+    # disallow more than 3 characters
+    x[nchar(x) > 3] <- NA
+    # remove all invalid characters
     x <- gsub('[^RSI]+', '', x %>% toupper())
     # needed for UMCG in cases of "S;S" but also "S;I"; the latter will be NA:
     x <- gsub('^S+$', 'S', x)
@@ -48,7 +53,7 @@ as.rsi <- function(x) {
     x <- gsub('^R+$', 'R', x)
     x[!x %in% c('S', 'I', 'R')] <- NA
     na_after <- x[is.na(x) | x == ''] %>% length()
-    
+
     if (na_before != na_after) {
       list_missing <- x.bak[is.na(x) & !is.na(x.bak) & x.bak != ''] %>%
         unique() %>%
@@ -59,7 +64,7 @@ as.rsi <- function(x) {
               '%) that were invalid antimicrobial interpretations: ',
               list_missing, call. = FALSE)
     }
-    
+
     x <- x %>% toupper() %>% factor(levels = c("S", "I", "R"), ordered = TRUE)
     class(x) <- c('rsi', 'ordered', 'factor')
     attr(x, 'package') <- 'AMR'
@@ -128,7 +133,7 @@ summary.rsi <- function(object, ...) {
 #' @noRd
 plot.rsi <- function(x, ...) {
   x_name <- deparse(substitute(x))
-  
+
   data <- data.frame(x = x,
                      y = 1,
                      stringsAsFactors = TRUE) %>%
@@ -137,7 +142,7 @@ plot.rsi <- function(x, ...) {
     filter(!is.na(x)) %>%
     mutate(s = round((n / sum(n)) * 100, 1))
   data$x <- factor(data$x, levels = c('S', 'I', 'R'), ordered = TRUE)
-  
+
   ymax <- if_else(max(data$s) > 95, 105, 100)
 
   plot(x = data$x,
@@ -154,7 +159,7 @@ plot.rsi <- function(x, ...) {
   axis(side = 1, at = 1:n_distinct(data$x), labels = levels(data$x), lwd = 0)
   # y axis, 0-100%
   axis(side = 2, at = seq(0, 100, 5))
-  
+
   text(x = data$x,
        y = data$s + 4,
        labels = paste0(data$s, '% (n = ', data$n, ')'))
@@ -169,7 +174,7 @@ plot.rsi <- function(x, ...) {
 barplot.rsi <- function(height, ...) {
   x <- height
   x_name <- deparse(substitute(height))
-  
+
   data <- data.frame(rsi = x, cnt = 1) %>%
     group_by(rsi) %>%
     summarise(cnt = sum(cnt)) %>%
@@ -199,7 +204,7 @@ barplot.rsi <- function(height, ...) {
 #' @examples
 #' mic_data <- as.mic(c(">=32", "1.0", "1", "1.00", 8, "<=0.128", "8", "16", "16"))
 #' is.mic(mic_data)
-#' 
+#'
 #' plot(mic_data)
 #' barplot(mic_data)
 as.mic <- function(x, na.rm = FALSE) {
@@ -211,7 +216,7 @@ as.mic <- function(x, na.rm = FALSE) {
       x <- x[!is.na(x)]
     }
     x.bak <- x
-    
+
     # comma to dot
     x <- gsub(',', '.', x, fixed = TRUE)
     # starting dots must start with 0
@@ -224,7 +229,7 @@ as.mic <- function(x, na.rm = FALSE) {
     x <- gsub('[^0-9]$', '', x)
     # remove last zeroes
     x <- gsub('[.]?0+$', '', x)
-    
+
     lvls <- c("<0.002", "<=0.002", "0.002", ">=0.002", ">0.002",
               "<0.003", "<=0.003", "0.003", ">=0.003", ">0.003",
               "<0.004", "<=0.004", "0.004", ">=0.004", ">0.004",
@@ -282,11 +287,11 @@ as.mic <- function(x, na.rm = FALSE) {
               "<512", "<=512", "512", ">=512", ">512",
               "<1024", "<=1024", "1024", ">=1024", ">1024")
     x <- x %>% as.character()
-    
+
     na_before <- x[is.na(x) | x == ''] %>% length()
     x[!x %in% lvls] <- NA
     na_after <- x[is.na(x) | x == ''] %>% length()
-    
+
     if (na_before != na_after) {
       list_missing <- x.bak[is.na(x) & !is.na(x.bak) & x.bak != ''] %>%
         unique() %>%
@@ -297,7 +302,7 @@ as.mic <- function(x, na.rm = FALSE) {
               '%) that were invalid MICs: ',
               list_missing, call. = FALSE)
     }
-    
+
     x <- factor(x = x,
                 levels = lvls,
                 ordered = TRUE)
@@ -407,7 +412,7 @@ create_barplot_mic <- function(x, x_name, ...) {
   barplot(table(droplevels(x)),
           ylab = 'Frequency',
           xlab = 'MIC value',
-          main = paste('MIC values of', x_name), 
+          main = paste('MIC values of', x_name),
           axes = FALSE,
           ...)
   axis(2, seq(0, max(data$cnt)))

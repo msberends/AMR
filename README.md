@@ -30,7 +30,7 @@ This package is available on CRAN and also here on GitHub.
   - `install.packages("AMR")`
 
 - <img src="https://exploratory.io/favicon.ico" alt="Exploratory favicon" height="20px"> In [Exploratory.io](https://exploratory.io):
-  - (Exploratory.io costs $40/month but is free for students and teachers; if you have an `@umcg.nl` or `@rug.nl` email address, [click here to enroll](https://exploratory.io/plan?plan=Community))
+  - (Exploratory.io costs $40/month, but is free for students and teachers; if you have an `@umcg.nl` or `@rug.nl` email address, [click here to enroll](https://exploratory.io/plan?plan=Community))
   - Start the software and log in
   - Click on your username at the right hand side top
   - Click on `R Packages`

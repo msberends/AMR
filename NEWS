@@ -1,14 +1,19 @@
 ## 0.1.2
-- NEW: Function `guess_bactid` to determine the ID of a microorganism based on genus/species
-- NEW: Functions `clipboard_import` and `clipboard_export` as helper functions to quickly copy and paste from/to software like Excel and SPSS
-- NEW: New algorithm to determine weighted isolates, can now be `"points"` or `"keyantibiotics"`, see `?first_isolate`
-- EDIT: Renamed dataset `ablist` to `antibiotics`
-- EDIT: Renamed dataset `bactlist` to `microorganisms`
-- EDIT: Added support for character vector in join functions
-- EDIT: Altered `%like%` to make it case insensitive
-- EDIT: Functions `first_isolate`, `EUCAST_rules` and `rsi_predict` supports tidyverse-like evaluation of parameters (no need to quote columns them anymore)
-- EDIT: For functions `first_isolate`, `EUCAST_rules` the antibiotic column names are case-insensitive
-- EDIT: Functions `as.rsi` and `as.mic` now add the package name and version as attribute
+- Added full support for Windows, Linux and macOS; this package now works everywhere :)
+- New function `guess_bactid` to determine the ID of a microorganism based on genus/species
+- New functions `clipboard_import` and `clipboard_export` as helper functions to quickly copy and paste from/to software like Excel and SPSS
+- New algorithm to determine weighted isolates, can now be `"points"` or `"keyantibiotics"`, see `?first_isolate`
+- Renamed dataset `ablist` to `antibiotics`
+- Renamed dataset `bactlist` to `microorganisms`
+- Added analysis examples on help page of dataset `septic_patients`
+- Added support for character vector in join functions
+- Added warnings when applying a join results in more rows after than before the join
+- Altered `%like%` to make it case insensitive
+- For parameters of functions `first_isolate`, `EUCAST_rules` the column names are now case-insensitive
+- Functions `as.rsi` and `as.mic` now add the package name and version as attribute
+- Expanded README.md
+- Added unit testing with Travis CI (https://travis-ci.org/msberends/AMR)
+- Added code coverage checking with Codecov (https://codecov.io/gh/msberends/AMR/tree/master/R)
 
 ## 0.1.1
 - `EUCAST_rules` applies for amoxicillin even if ampicillin is missing

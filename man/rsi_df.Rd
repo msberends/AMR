@@ -40,7 +40,7 @@ rsi_df(tbl_with_bloodcultures, c('amcl', 'gent'), interpretation = 'IR')
 library(dplyr)
 # calculate current empiric therapy of Helicobacter gastritis:
 my_table \%>\%
-  filter(first_isolate == TRUE, 
+  filter(first_isolate == TRUE,
          genus == "Helicobacter") \%>\%
   rsi_df(ab = c("amox", "metr"))
 }

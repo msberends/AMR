@@ -9,6 +9,7 @@ test_that("atc_property works", {
 test_that("abname works", {
   expect_equal(abname("AMOX"), "Amoxicillin")
   expect_equal(abname(c("AMOX", "GENT")), c("Amoxicillin", "Gentamicin"))
+  expect_equal(abname(c("AMOX+GENT")), "Amoxicillin + gentamicin")
   expect_equal(abname("AMOX", from = 'umcg'), "Amoxicillin")
   expect_equal(abname("amox", from = 'molis'), "Amoxicillin")
   expect_equal(abname("J01CA04", from = 'atc'), "Amoxicillin")

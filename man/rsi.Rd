@@ -34,14 +34,14 @@ This function uses the \code{\link{rsi_df}} function internally.
 tbl \%>\%
   group_by(hospital) \%>\%
   summarise(cipr = rsi(cipr))
-  
+
 tbl \%>\%
   group_by(year, hospital) \%>\%
   summarise(
     isolates = n(),
     cipro = rsi(cipr \%>\% as.rsi(), percent = TRUE),
     amoxi = rsi(amox \%>\% as.rsi(), percent = TRUE))
-    
+
 rsi(as.rsi(isolates$amox))
 
 rsi(as.rsi(isolates$amcl), interpretation = "S")

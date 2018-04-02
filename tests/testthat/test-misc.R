@@ -12,9 +12,3 @@ test_that("percentages works", {
   expect_equal(percent(0.5), "50%")
   expect_equal(percent(0.1234), "12.3%")
 })
-
-test_that("quasiquotation works", {
-  expect_equal(quasiquotate(deparse(substitute("test")), "test"), "test")
-  expect_equal(quasiquotate(deparse(substitute('test')), "'test'"), "test")
-  expect_equal(quasiquotate(deparse(substitute(test)), test), "test")
-})

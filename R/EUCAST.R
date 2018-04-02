@@ -48,7 +48,7 @@
 #'                 cfur = "-",           # Cefuroxime
 #'                 stringsAsFactors = FALSE)
 #' a
-#' 
+#'
 #' b <- EUCAST_rules(a)
 #' b
 EUCAST_rules <- function(tbl,
@@ -114,71 +114,11 @@ EUCAST_rules <- function(tbl,
                          vanc = 'vanc') {
 
   EUCAST_VERSION <- "3.1"
-  
-  # support using columns as objects; the tidyverse way
-  amcl <- quasiquotate(deparse(substitute(amcl)), amcl)
-  amik <- quasiquotate(deparse(substitute(amik)), amik)
-  amox <- quasiquotate(deparse(substitute(amox)), amox)
-  ampi <- quasiquotate(deparse(substitute(ampi)), ampi)
-  azit <- quasiquotate(deparse(substitute(azit)), azit)
-  aztr <- quasiquotate(deparse(substitute(aztr)), aztr)
-  cefa <- quasiquotate(deparse(substitute(cefa)), cefa)
-  cfra <- quasiquotate(deparse(substitute(cfra)), cfra)
-  cfep <- quasiquotate(deparse(substitute(cfep)), cfep)
-  cfot <- quasiquotate(deparse(substitute(cfot)), cfot)
-  cfox <- quasiquotate(deparse(substitute(cfox)), cfox)
-  cfta <- quasiquotate(deparse(substitute(cfta)), cfta)
-  cftr <- quasiquotate(deparse(substitute(cftr)), cftr)
-  cfur <- quasiquotate(deparse(substitute(cfur)), cfur)
-  chlo <- quasiquotate(deparse(substitute(chlo)), chlo)
-  cipr <- quasiquotate(deparse(substitute(cipr)), cipr)
-  clar <- quasiquotate(deparse(substitute(clar)), clar)
-  clin <- quasiquotate(deparse(substitute(clin)), clin)
-  clox <- quasiquotate(deparse(substitute(clox)), clox)
-  coli <- quasiquotate(deparse(substitute(coli)), coli)
-  czol <- quasiquotate(deparse(substitute(czol)), czol)
-  dapt <- quasiquotate(deparse(substitute(dapt)), dapt)
-  doxy <- quasiquotate(deparse(substitute(doxy)), doxy)
-  erta <- quasiquotate(deparse(substitute(erta)), erta)
-  eryt <- quasiquotate(deparse(substitute(eryt)), eryt)
-  fosf <- quasiquotate(deparse(substitute(fosf)), fosf)
-  fusi <- quasiquotate(deparse(substitute(fusi)), fusi)
-  gent <- quasiquotate(deparse(substitute(gent)), gent)
-  imip <- quasiquotate(deparse(substitute(imip)), imip)
-  kana <- quasiquotate(deparse(substitute(kana)), kana)
-  levo <- quasiquotate(deparse(substitute(levo)), levo)
-  linc <- quasiquotate(deparse(substitute(linc)), linc)
-  line <- quasiquotate(deparse(substitute(line)), line)
-  mero <- quasiquotate(deparse(substitute(mero)), mero)
-  mino <- quasiquotate(deparse(substitute(mino)), mino)
-  moxi <- quasiquotate(deparse(substitute(moxi)), moxi)
-  nali <- quasiquotate(deparse(substitute(nali)), nali)
-  neom <- quasiquotate(deparse(substitute(neom)), neom)
-  neti <- quasiquotate(deparse(substitute(neti)), neti)
-  nitr <- quasiquotate(deparse(substitute(nitr)), nitr)
-  novo <- quasiquotate(deparse(substitute(novo)), novo)
-  norf <- quasiquotate(deparse(substitute(norf)), norf)
-  oflo <- quasiquotate(deparse(substitute(oflo)), oflo)
-  peni <- quasiquotate(deparse(substitute(peni)), peni)
-  pita <- quasiquotate(deparse(substitute(pita)), pita)
-  poly <- quasiquotate(deparse(substitute(poly)), poly)
-  qida <- quasiquotate(deparse(substitute(qida)), qida)
-  rifa <- quasiquotate(deparse(substitute(rifa)), rifa)
-  roxi <- quasiquotate(deparse(substitute(roxi)), roxi)
-  siso <- quasiquotate(deparse(substitute(siso)), siso)
-  teic <- quasiquotate(deparse(substitute(teic)), teic)
-  tetr <- quasiquotate(deparse(substitute(tetr)), tetr)
-  tica <- quasiquotate(deparse(substitute(tica)), tica)
-  tige <- quasiquotate(deparse(substitute(tige)), tige)
-  tobr <- quasiquotate(deparse(substitute(tobr)), tobr)
-  trim <- quasiquotate(deparse(substitute(trim)), trim)
-  trsu <- quasiquotate(deparse(substitute(trsu)), trsu)
-  vanc <- quasiquotate(deparse(substitute(vanc)), vanc)
 
   if (!col_bactid %in% colnames(tbl)) {
     stop('Column ', col_bactid, ' not found.')
   }
-  
+
   # check columns
   col.list <- c(amcl, amik, amox, ampi, azit, aztr, cefa, cfra, cfep, cfot,
                 cfox, cfta, cftr, cfur, chlo, cipr, clar, clin, clox, coli,
@@ -209,7 +149,7 @@ EUCAST_rules <- function(tbl,
               call. = FALSE)
     }
   }
-  
+
   amcl <- col.list[1]
   amik <- col.list[2]
   amox <- col.list[3]
@@ -268,10 +208,10 @@ EUCAST_rules <- function(tbl,
   trim <- col.list[56]
   trsu <- col.list[57]
   vanc <- col.list[58]
-  
+
   total <- 0
   total_rows <- integer(0)
-  
+
   # helper function for editing the table
   edit_rsi <- function(to, rows, cols) {
     cols <- cols[!is.na(cols)]
@@ -281,12 +221,12 @@ EUCAST_rules <- function(tbl,
       total_rows <<- c(total_rows, rows)
     }
   }
-  
+
   # join to microorganisms table
   joinby <- colnames(AMR::microorganisms)[1]
   names(joinby) <- col_bactid
   tbl <- tbl %>% left_join(y = AMR::microorganisms, by = joinby, suffix = c("_tempmicroorganisms", ""))
-  
+
   # antibiotic classes
   aminoglycosides <- c(tobr, gent, kana, neom, neti, siso)
   tetracyclines <- c(doxy, mino, tetr) # since EUCAST v3.1 tige(cycline) is set apart
@@ -299,7 +239,7 @@ EUCAST_rules <- function(tbl,
   aminopenicillins <- c(ampi, amox)
   ureidopenicillins <- pita # should officially also be azlo and mezlo
   fluoroquinolones <- c(oflo, cipr, norf, levo, moxi)
-  
+
   if (info == TRUE) {
     cat(
       paste0(
@@ -308,7 +248,7 @@ EUCAST_rules <- function(tbl,
         ' rows according to "EUCAST Expert Rules Version ', EUCAST_VERSION, '"\n')
     )
   }
-  
+
   # Table 1: Intrinsic resistance in Enterobacteriaceae ----
   if (info == TRUE) {
     cat('...Table 1: Intrinsic resistance in Enterobacteriaceae\n')
@@ -378,8 +318,8 @@ EUCAST_rules <- function(tbl,
   edit_rsi(to = 'R',
            rows = which(tbl$fullname %like% '^Yersinia pseudotuberculosis'),
            cols = c(poly, coli))
-  
-  
+
+
   # Table 2: Intrinsic resistance in non-fermentative Gram-negative bacteria ----
   if (info == TRUE) {
     cat('...Table 2: Intrinsic resistance in non-fermentative Gram-negative bacteria\n')
@@ -426,8 +366,8 @@ EUCAST_rules <- function(tbl,
   edit_rsi(to = 'R',
            rows = which(tbl$fullname %like% '^Stenotrophomonas maltophilia'),
            cols = c(aminopenicillins, amcl, tica, pita, czol, cfot, cftr, cfta, aztr, erta, imip, mero, aminoglycosides, trim, fosf, tetr))
-  
-  
+
+
   # Table 3: Intrinsic resistance in other Gram-negative bacteria ----
   if (info == TRUE) {
     cat('...Table 3: Intrinsic resistance in other Gram-negative bacteria\n')
@@ -458,8 +398,8 @@ EUCAST_rules <- function(tbl,
   edit_rsi(to = 'R',
            rows = which(tbl$fullname %like% '^Campylobacter (jejuni|coli)'),
            cols = c(fusi, streptogramins, trim))
-  
-  
+
+
   # Table 4: Intrinsic resistance in Gram-positive bacteria ----
   if (info == TRUE) {
     cat('...Table 4: Intrinsic resistance in Gram-positive bacteria\n')
@@ -513,7 +453,7 @@ EUCAST_rules <- function(tbl,
   edit_rsi(to = 'R',
            rows = which(tbl$fullname %like% '^Clostridium (ramosum|innocuum)'),
            cols = vanc)
-  
+
   # Table 8: Interpretive rules for B-lactam agents and Gram-positive cocci ----
   if (info == TRUE) {
     cat('...Table 8: Interpretive rules for B-lactam agents and Gram-positive cocci\n')
@@ -538,7 +478,7 @@ EUCAST_rules <- function(tbl,
                           & tbl[, amox] == 'R'),
              cols = c(ureidopenicillins, carbapenems))
   }
-  
+
   # Table 9: Interpretive rules for B-lactam agents and Gram-negative rods ----
   if (info == TRUE) {
     cat('...Table 9: Interpretive rules for B-lactam agents and Gram-negative rods\n')
@@ -551,7 +491,7 @@ EUCAST_rules <- function(tbl,
                           & tbl[, pita] == 'S'),
              cols = pita)
   }
-  
+
   # Table 10: Interpretive rules for B-lactam agents and other Gram-negative bacteria ----
   if (info == TRUE) {
     cat('...Table 10: Interpretive rules for B-lactam agents and other Gram-negative bacteria\n')
@@ -564,7 +504,7 @@ EUCAST_rules <- function(tbl,
     #                       & tbl[, ampi] == 'R'),
     #          cols = c(ampi, amox, amcl, pita, cfur))
   }
-  
+
   # Table 11: Interpretive rules for macrolides, lincosamides, and streptogramins ----
   if (info == TRUE) {
     cat('...Table 11: Interpretive rules for macrolides, lincosamides, and streptogramins\n')
@@ -578,7 +518,7 @@ EUCAST_rules <- function(tbl,
       tbl[, clar] <- tbl[, eryt]
     }
   }
-  
+
   # Table 12: Interpretive rules for aminoglycosides ----
   if (info == TRUE) {
     cat('...Table 12: Interpretive rules for aminoglycosides\n')
@@ -613,8 +553,8 @@ EUCAST_rules <- function(tbl,
                           & tbl[, gent] == 'R'),
              cols = tobr)
   }
-  
-  
+
+
   # Table 13: Interpretive rules for quinolones ----
   if (info == TRUE) {
     cat('...Table 13: Interpretive rules for quinolones\n')
@@ -647,8 +587,8 @@ EUCAST_rules <- function(tbl,
                           & tbl[, cipr] == 'R'),
              cols = fluoroquinolones)
   }
-  
-  
+
+
   # Other ----
   if (info == TRUE) {
     cat('...Non-EUCAST: trim = R where trsu = R and ampi = R where amcl = R\n')
@@ -666,21 +606,21 @@ EUCAST_rules <- function(tbl,
   if (!is.na(ampi) & !is.na(amox)) {
     tbl[, amox] <- tbl %>% pull(ampi)
   }
-  
+
   # Remove added columns again
   microorganisms.ncol <- ncol(AMR::microorganisms) - 2
   tbl.ncol <- ncol(tbl)
   tbl <- tbl %>% select(-c((tbl.ncol - microorganisms.ncol):tbl.ncol))
   # and remove added suffices
   colnames(tbl) <- gsub("_tempmicroorganisms", "", colnames(tbl))
-  
+
   if (info == TRUE) {
     cat('Done.\n\nEUCAST Expert rules applied to',
         total_rows %>% unique() %>% length() %>% format(big.mark = ","),
         'different rows (isolates); edited a total of',
         total %>% format(big.mark = ","), 'test results.\n\n')
   }
-  
+
   tbl
 }
 
@@ -698,12 +638,12 @@ interpretive_reading <- function(...) {
 #' @importFrom dplyr %>% filter select
 #' @seealso \code{\link{microorganisms}}
 mo_property <- function(bactid, property = 'fullname') {
-  
+
   mocode <- as.character(bactid)
-  
+
   for (i in 1:length(mocode)) {
     bug <- mocode[i]
-    
+
     if (!is.na(bug)) {
       result = tryCatch({
         mocode[i] <-
@@ -720,7 +660,7 @@ mo_property <- function(bactid, property = 'fullname') {
         }
       })
     }
-    
+
   }
   mocode
 }
