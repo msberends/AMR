@@ -7,11 +7,6 @@ test_that("keyantibiotics work", {
   expect_false(key_antibiotics_equal("SSS", "SIS", ignore_I = FALSE))
 })
 
-test_that("guess_bactid works", {
-  expect_equal(guess_bactid("E. coli"), "ESCCOL")
-  expect_equal(guess_bactid("Escherichia coli"), "ESCCOL")
-})
-
 test_that("first isolates work", {
   # septic_patients contains 1960 out of 2000 first isolates
   #septic_ptns <- septic_patients

@@ -1,10 +1,11 @@
 ## 0.1.2
-- Added full support for Windows, Linux and macOS; this package now works everywhere :)
-- New function `guess_bactid` to determine the ID of a microorganism based on genus/species
+- Added full support for Windows, Linux and macOS
+- New function `guess_bactid` to determine the ID of a microorganism based on genus/species or known abbreviations like MRSA
 - New functions `clipboard_import` and `clipboard_export` as helper functions to quickly copy and paste from/to software like Excel and SPSS
 - New algorithm to determine weighted isolates, can now be `"points"` or `"keyantibiotics"`, see `?first_isolate`
 - Renamed dataset `ablist` to `antibiotics`
 - Renamed dataset `bactlist` to `microorganisms`
+- Added more microorganisms to `bactlist`
 - Added analysis examples on help page of dataset `septic_patients`
 - Added support for character vector in join functions
 - Added warnings when applying a join results in more rows after than before the join

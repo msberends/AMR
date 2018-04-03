@@ -30,7 +30,7 @@ abname("AMCL+GENT")
 # "amoxicillin and enzyme inhibitor + gentamicin"
 
 abname(c("AMCL", "GENT"))
-# "amoxicillin and enzyme inhibitor" "gentamicin" 
+# "amoxicillin and enzyme inhibitor" "gentamicin"
 
 abname("AMCL", to = "trivial_nl")
 # "Amoxicilline/clavulaanzuur"

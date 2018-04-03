@@ -28,7 +28,7 @@ clipboard_export(x, sep = "\\t", dec = ".", na = "", header = TRUE,
 
 \item{na}{the string to use for missing values in the data.}
 
-\item{startrow}{\emph{n}th row to start importing from. For \code{clipboard_import}, when \code{header = TRUE} the import will start on row \code{startrow} \emph{below} the header.}
+\item{startrow}{\emph{n}th row to start importing from. When \code{header = TRUE}, the import will start on row \code{startrow} \emph{below} the header.}
 
 \item{as_vector}{a logical value indicating whether data consisting of only one column should be imported as vector using \code{\link[dplyr]{pull}}. This will strip off the header.}
 
@@ -41,10 +41,28 @@ clipboard_export(x, sep = "\\t", dec = ".", na = "", header = TRUE,
 data.frame
 }
 \description{
-These are helper functions around \code{\link{read.table}} and \code{\link{write.table}} to import from and export to clipboard, with support for Windows, Linux and macOS. The data will be read and written as tab-separated by default, which makes it possible to copy and paste from other software like Excel and SPSS without further transformation.
+These are helper functions around \code{\link{read.table}} and \code{\link{write.table}} to import from and export to clipboard with support for Windows, Linux and macOS. The data will be read and written as tab-separated by default, which makes it possible to copy and paste from other software like Excel and SPSS without further transformation. See Details for an example.
 }
 \details{
-For \code{clipboard_export}, the reserved clipboard size for exporting will be set automatically to 125\% of the object size of \code{x}. This way, it is possible to export data with thousands of rows as the only limit will be your systems RAM.
+For \code{clipboard_export()}, the reserved clipboard size for exporting will be set to 125\% of the object size of \code{x}. This way, it is possible to export data with thousands of rows as the only limit will be your systems RAM.
+
+  Example for copying from Excel:
+  \if{html}{
+    \out{<div style="text-align: left">}\figure{Excel_copy.png}\out{</div>}
+  }
+  \if{latex}{
+    \out{\begin{left}}\figure{Excel_copy.png}\out{\end{left}}
+  }
+  \cr
+  And pasting in R: \cr \cr
+  \code{> data <- clipboard_import()} \cr
+  \code{> data} \cr
+  \if{html}{
+    \out{<div style="text-align: left">}\figure{Excel_paste.png}\out{</div>}
+  }
+  \if{latex}{
+    \out{\begin{left}}\figure{Excel_paste.png}\out{\end{left}}
+  }
 }
 \keyword{clipboard}
 \keyword{clipboard_export}

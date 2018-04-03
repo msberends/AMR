@@ -1,17 +1,35 @@
 #' Import/export from clipboard
 #'
-#' These are helper functions around \code{\link{read.table}} and \code{\link{write.table}} to import from and export to clipboard, with support for Windows, Linux and macOS. The data will be read and written as tab-separated by default, which makes it possible to copy and paste from other software like Excel and SPSS without further transformation.
+#' These are helper functions around \code{\link{read.table}} and \code{\link{write.table}} to import from and export to clipboard with support for Windows, Linux and macOS. The data will be read and written as tab-separated by default, which makes it possible to copy and paste from other software like Excel and SPSS without further transformation. See Details for an example.
 #' @rdname clipboard
 #' @name clipboard
 #' @inheritParams utils::read.table
 #' @inheritParams utils::write.table
-#' @param startrow \emph{n}th row to start importing from. For \code{clipboard_import}, when \code{header = TRUE} the import will start on row \code{startrow} \emph{below} the header.
+#' @param startrow \emph{n}th row to start importing from. When \code{header = TRUE}, the import will start on row \code{startrow} \emph{below} the header.
 #' @param as_vector a logical value indicating whether data consisting of only one column should be imported as vector using \code{\link[dplyr]{pull}}. This will strip off the header.
 #' @param info print info about copying
 #' @keywords clipboard clipboard_import clipboard_export import export
 #' @importFrom dplyr %>% pull as_tibble
 #' @importFrom utils read.delim write.table object.size
-#' @details For \code{clipboard_export}, the reserved clipboard size for exporting will be set automatically to 125\% of the object size of \code{x}. This way, it is possible to export data with thousands of rows as the only limit will be your systems RAM.
+#' @details For \code{clipboard_export()}, the reserved clipboard size for exporting will be set to 125\% of the object size of \code{x}. This way, it is possible to export data with thousands of rows as the only limit will be your systems RAM.
+#'
+#'   Example for copying from Excel:
+#'   \if{html}{
+#'     \out{<div style="text-align: left">}\figure{Excel_copy.png}\out{</div>}
+#'   }
+#'   \if{latex}{
+#'     \out{\begin{left}}\figure{Excel_copy.png}\out{\end{left}}
+#'   }
+#'   \cr
+#'   And pasting in R: \cr \cr
+#'   \code{> data <- clipboard_import()} \cr
+#'   \code{> data} \cr
+#'   \if{html}{
+#'     \out{<div style="text-align: left">}\figure{Excel_paste.png}\out{</div>}
+#'   }
+#'   \if{latex}{
+#'     \out{\begin{left}}\figure{Excel_paste.png}\out{\end{left}}
+#'   }
 #' @export
 #' @return data.frame
 clipboard_import <- function(sep = '\t',

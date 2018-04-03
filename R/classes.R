@@ -361,26 +361,19 @@ print.mic <- function(x, ...) {
 
 #' @exportMethod summary.mic
 #' @export
-#' @importFrom dplyr %>% tibble group_by summarise pull
+#' @importFrom dplyr %>%
 #' @noRd
 summary.mic <- function(object, ...) {
   x <- object
   n_total <- x %>% length()
   x <- x[!is.na(x)]
   n <- x %>% length()
-  return(c("Mode" = 'mic',
-           "<NA>" = n_total - n,
-           "Min." = sort(x)[1] %>% as.character(),
-           "Max." = sort(x)[n] %>% as.character()
-  ))
-  cat("Class 'mic': ", n, " isolates\n", sep = '')
-  cat('\n')
-  cat('<NA> ', n_total - n, '\n')
-  cat('\n')
-  tbl <- tibble(x = x, y = 1) %>% group_by(x) %>% summarise(y = sum(y))
-  cnt <- tbl %>% pull(y)
-  names(cnt) <- tbl %>% pull(x)
-  print(cnt)
+  lst <- c('mic',
+           n_total - n,
+           sort(x)[1] %>% as.character(),
+           sort(x)[n] %>% as.character())
+  names(lst) <- c("Mode", "<NA>", "Min.", "Max.")
+  lst
 }
 
 #' @exportMethod plot.mic

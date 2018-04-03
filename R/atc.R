@@ -54,7 +54,7 @@
 #' @importFrom xml2 read_html
 #' @importFrom rvest html_nodes html_table
 #' @source \url{https://www.whocc.no/atc_ddd_alterations__cumulative/ddd_alterations/abbrevations/}
-#' @examples 
+#' @examples
 #' \donttest{
 #' atc_property("J01CA04", "DDD", "O") # oral DDD (Defined Daily Dose) of amoxicillin
 #' atc_property("J01CA04", "DDD", "P") # parenteral DDD (Defined Daily Dose) of amoxicillin
@@ -63,50 +63,50 @@ atc_property <- function(atc_code,
                          property,
                          administration = 'O',
                          url = 'https://www.whocc.no/atc_ddd_index/?code=%s&showdescription=no') {
-  
+
   # property <- property %>% tolower()
   #
   if (property %like% 'unit') {
     property <- 'U'
   }
-  
+
   # validation of properties
   valid_properties.bak <- c("ATC code", "Name", "DDD", "U", "Adm.R", "Note")
   valid_properties <- valid_properties.bak #%>% tolower()
   if (!property %in% valid_properties) {
     stop('Invalid `property`, use one of ', paste(valid_properties, collapse = ", "), '.')
   }
-  
+
   returnvalue <- rep(NA_character_, length(atc_code))
   if (property == 'DDD') {
     returnvalue <- rep(NA_real_, length(atc_code))
   }
-  
+
   progress <- progress_estimated(n = length(atc_code))
-  
+
   for (i in 1:length(atc_code)) {
-    
+
     progress$tick()$print()
-    
+
     atc_url <- sub('%s', atc_code[i], url, fixed = TRUE)
     tbl <- xml2::read_html(atc_url) %>%
       rvest::html_nodes('table') %>%
       rvest::html_table(header = TRUE)
-    
+
     if (length(tbl) == 0) {
       warning('ATC not found: ', atc_code[i], '. Please check ', atc_url, '.', call. = FALSE)
       returnvalue[i] <- NA
       next
     }
-    
+
     tbl <- tbl[[1]]
-    
+
     if (property == 'Name') {
       returnvalue[i] <- tbl[1, 2]
     } else {
-      
+
       names(returnvalue)[i] <- tbl[1, 2] %>% as.character()
-      
+
       if (!'Adm.R' %in% colnames(tbl) | is.na(tbl[1, 'Adm.R'])) {
         returnvalue[i] <- NA
         next
@@ -119,10 +119,10 @@ atc_property <- function(atc_code,
       }
     }
   }
-  
+
   cat('\n')
   returnvalue
-  
+
 }
 
 #' Name of an antibiotic
@@ -135,7 +135,7 @@ atc_property <- function(atc_code,
 #' @keywords ab antibiotics
 #' @source \code{\link{antibiotics}}
 #' @export
-#' @importFrom dplyr %>% filter select slice 
+#' @importFrom dplyr %>% filter select slice
 #' @examples
 #' abname("AMCL")
 #' # "amoxicillin and enzyme inhibitor"
@@ -144,7 +144,7 @@ atc_property <- function(atc_code,
 #' # "amoxicillin and enzyme inhibitor + gentamicin"
 #'
 #' abname(c("AMCL", "GENT"))
-#' # "amoxicillin and enzyme inhibitor" "gentamicin" 
+#' # "amoxicillin and enzyme inhibitor" "gentamicin"
 #'
 #' abname("AMCL", to = "trivial_nl")
 #' # "Amoxicilline/clavulaanzuur"
@@ -155,9 +155,9 @@ atc_property <- function(atc_code,
 #' abname("J01CR02", from = "atc", to = "umcg")
 #' # "AMCL"
 abname <- function(abcode, from = c("guess", "atc", "molis", "umcg"), to = 'official', textbetween = ' + ', tolower = FALSE) {
-  
+
   antibiotics <- AMR::antibiotics
-  
+
   from <- from[1]
   if (from == "guess") {
     for (i in 1:3) {
@@ -169,19 +169,19 @@ abname <- function(abcode, from = c("guess", "atc", "molis", "umcg"), to = 'offi
       from <- "umcg"
     }
   }
-  
+
   colnames(antibiotics) <- colnames(antibiotics) %>% tolower()
   from <- from %>% tolower()
   to <- to %>% tolower()
-  
+
   if (!from %in% colnames(antibiotics) |
       !to %in% colnames(antibiotics)) {
-    stop(paste0('Invalid `from` or `to`. Choose one of ', 
+    stop(paste0('Invalid `from` or `to`. Choose one of ',
                 colnames(antibiotics) %>% paste(collapse = ","), '.'), call. = FALSE)
   }
-  
+
   abcode <- as.character(abcode)
-  
+
   for (i in 1:length(abcode)) {
     drug <- abcode[i]
     if (!grepl('+', drug, fixed = TRUE) & !grepl(' en ', drug, fixed = TRUE)) {
@@ -215,7 +215,7 @@ abname <- function(abcode, from = c("guess", "atc", "molis", "umcg"), to = 'offi
         abcode[i] <- NA
         next
       }
-      
+
       for (j in 1:length(drug.group)) {
         drug.group[j] <-
           antibiotics %>%
@@ -230,10 +230,140 @@ abname <- function(abcode, from = c("guess", "atc", "molis", "umcg"), to = 'offi
       abcode[i] <- paste(drug.group, collapse = textbetween)
     }
   }
-  
+
   if (tolower == TRUE) {
     abcode <- abcode %>% tolower()
   }
-  
+
   abcode
+}
+
+#' Find bacteria ID based on genus/species
+#'
+#' Use this function to determine a valid ID based on a genus (and species). This input could be a full name (like \code{"Staphylococcus aureus"}), an abbreviated name (like \code{"S. aureus"}), or just a genus. You could also use a \code{\link{paste}} of a genus and species column to use the full name as input: \code{x = paste(df$genus, df$species)}, where \code{df} is your dataframe.
+#' @param x character vector to determine \code{bactid}
+#' @export
+#' @importFrom dplyr %>% filter slice pull
+#' @return Character (vector).
+#' @seealso \code{\link{microorganisms}} for the dataframe that is being used to determine ID's.
+#' @examples
+#' # These examples all return "STAAUR", the ID of S. aureus:
+#' guess_bactid("stau")
+#' guess_bactid("STAU")
+#' guess_bactid("staaur")
+#' guess_bactid("S. aureus")
+#' guess_bactid("S aureus")
+#' guess_bactid("Staphylococcus aureus")
+#' guess_bactid("MRSA") # Methicillin-resistant S. aureus
+#' guess_bactid("VISA") # Vancomycin Intermediate S. aureus
+guess_bactid <- function(x) {
+  # remove dots and other non-text in case of "E. coli" except spaces
+  x <- gsub("[^a-zA-Z ]+", "", x)
+  # but spaces before and after should be omitted
+  x <- trimws(x, which = "both")
+  x.bak <- x
+  # replace space by regex sign
+  x <- gsub(" ", ".*", x, fixed = TRUE)
+  # add start and stop
+  x_species <- paste(x, 'species')
+  x <- paste0('^', x, '$')
+
+  for (i in 1:length(x)) {
+    if (tolower(x[i]) == '^e.*coli$') {
+      # avoid detection of Entamoeba coli in case of E. coli
+      x[i] <- 'Escherichia coli'
+    }
+    if (tolower(x[i]) == '^h.*influenzae$') {
+      # avoid detection of Haematobacter influenzae in case of H. influenzae
+      x[i] <- 'Haemophilus influenzae'
+    }
+    if (tolower(x[i]) == '^st.*au$'
+        | tolower(x[i]) == '^stau$'
+        | tolower(x[i]) == '^staaur$') {
+      # avoid detection of Staphylococcus auricularis in case of S. aureus
+      x[i] <- 'Staphylococcus aureus'
+    }
+    if (tolower(x[i]) == '^p.*aer$') {
+      # avoid detection of Pasteurella aerogenes in case of Pseudomonas aeruginosa
+      x[i] <- 'Pseudomonas aeruginosa'
+    }
+
+    # translate known trivial names to genus+species
+    if (toupper(x.bak[i]) == 'MRSA'
+        | toupper(x.bak[i]) == 'VISA'
+        | toupper(x.bak[i]) == 'VRSA') {
+      x[i] <- 'Staphylococcus aureus'
+    }
+    if (toupper(x.bak[i]) == 'MRSE') {
+      x[i] <- 'Staphylococcus epidermidis'
+    }
+    if (toupper(x.bak[i]) == 'VRE') {
+      x[i] <- 'Enterococcus'
+    }
+    if (toupper(x.bak[i]) == 'MRPA') {
+      # multi resistant P. aeruginosa
+      x[i] <- 'Pseudomonas aeruginosa'
+    }
+    if (toupper(x.bak[i]) == 'PISP'
+        | toupper(x.bak[i]) == 'PRSP') {
+      # peni resistant S. pneumoniae
+      x[i] <- 'Streptococcus pneumoniae'
+    }
+    if (toupper(x.bak[i]) == 'VISP'
+        | toupper(x.bak[i]) == 'VRSP') {
+      # vanco resistant S. pneumoniae
+      x[i] <- 'Streptococcus pneumoniae'
+    }
+
+    # let's try the ID's first
+    found <- AMR::microorganisms %>% filter(bactid == x.bak[i])
+
+    if (nrow(found) == 0) {
+      # now try exact match
+      found <- AMR::microorganisms %>% filter(fullname == x[i])
+    }
+    if (nrow(found) == 0) {
+      # try any match
+      found <- AMR::microorganisms %>% filter(fullname %like% x[i])
+    }
+    if (nrow(found) == 0) {
+      # try only genus, with 'species' attached
+      found <- AMR::microorganisms %>% filter(fullname %like% x_species[i])
+    }
+    if (nrow(found) == 0) {
+      # search for GLIMS code
+      if (toupper(x.bak[i]) %in% toupper(AMR::microorganisms.umcg$mocode)) {
+        found <- AMR::microorganisms.umcg %>% filter(toupper(mocode) == toupper(x.bak[i]))
+      }
+    }
+    if (nrow(found) == 0) {
+      # try splitting of characters and then find ID
+      # like esco = E. coli, klpn = K. pneumoniae, stau = S. aureus
+      x_split <- x
+      x_length <- nchar(x.bak[i])
+      x_split[i] <- paste0(x.bak[i] %>% substr(1, x_length / 2) %>% trimws(),
+                     '.* ',
+                     x.bak[i] %>% substr((x_length / 2) + 1, x_length) %>% trimws())
+      found <- AMR::microorganisms %>% filter(fullname %like% paste0('^', x_split[i]))
+    }
+    if (nrow(found) == 0) {
+      # try any match with text before and after original search string
+      # so "negative rods" will be "GNR"
+      if (x.bak[i] %like% "^Gram") {
+        x.bak[i] <- gsub("^Gram", "", x.bak[i], ignore.case = TRUE)
+        # remove leading and trailing spaces again
+        x.bak[i] <- trimws(x.bak[i], which = "both")
+      }
+      found <- AMR::microorganisms %>% filter(fullname %like% x.bak[i])
+    }
+
+    if (nrow(found) != 0) {
+      x[i] <- found %>%
+        slice(1) %>%
+        pull(bactid)
+    } else {
+      x[i] <- ""
+    }
+  }
+  x
 }
