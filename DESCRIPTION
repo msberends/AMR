@@ -25,7 +25,7 @@ Description: Functions to simplify the analysis of Antimicrobial Resistance (AMR
     on antibiograms according to Leclercq (2013)
     <doi:10.1111/j.1469-0691.2011.03703.x>.
 Depends:
-    R (>= 3.2.0)
+    R (>= 3.1.0)
 Imports:
     dplyr (>= 0.7.0),
     data.table (>= 1.10.0),

@@ -28,6 +28,7 @@
 #' @rdname print
 #' @name print
 #' @importFrom dplyr %>% n_groups group_vars group_size filter pull select
+#' @importFrom data.table data.table
 #' @exportMethod print.tbl_df
 #' @export
 #' @examples

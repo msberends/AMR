@@ -111,3 +111,12 @@ size_humanreadable <- function(bytes, decimals = 1) {
   out <- paste(sprintf(paste0("%.", decimals, "f"), bytes / (1024 ^ factor)), size[factor + 1])
   out
 }
+
+# strrep is only available in R 3.3 and later
+# and we want to support R 3.2 too, so:
+strrep <- function(x, times) {
+  for (i in 1:length(x)) {
+    x[i] <- paste(rep(x[i], times[i]), collapse = "")
+  }
+  x
+}

@@ -337,7 +337,7 @@ freq <- function(x,
                  '; ',
                  (Count.rest / length(x)) %>% percent(force_zero = TRUE),
                  ')'),
-          '. Use `nmax` to show more rows.\n\n', sep = '')
+          '. Use `nmax` to show more rows.\n', sep = '')
 
     } else {
       print(
