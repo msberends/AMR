@@ -90,6 +90,104 @@ after
 # 5 PSEAER    R    R    -    -    R
 ```
 
+### Frequency tables
+Base R lacks a simple function to create frequency tables. We created such a function that works with almost all data types: `freq()` (or `frequency_tbl()`).
+```r
+## Factors sort on item by default:
+
+freq(septic_patients$hospital_id)
+# Class:     factor
+# Length:    2000 (of which NA: 0 = 0.0%)
+# Unique:    5
+# 
+# Item    Count   Percent   Cum. Count   Cum. Percent   (Factor Level)
+# -----  ------  --------  -----------  -------------  ---------------
+# A         233     11.7%          233          11.7%                1
+# B         583     29.1%          816          40.8%                2
+# C         221     11.1%         1037          51.8%                3
+# D         650     32.5%         1687          84.4%                4
+# E         313     15.7%         2000         100.0%                5
+
+
+## This can be changed with the `sort.count` parameter:
+
+freq(septic_patients$hospital_id, sort.count = TRUE)
+# Class:     factor
+# Length:    2000 (of which NA: 0 = 0.0%)
+# Unique:    5
+# 
+# Item    Count   Percent   Cum. Count   Cum. Percent   (Factor Level)
+# -----  ------  --------  -----------  -------------  ---------------
+# D         650     32.5%          650          32.5%                4
+# B         583     29.1%         1233          61.7%                2
+# E         313     15.7%         1546          77.3%                5
+# A         233     11.7%         1779          88.9%                1
+# C         221     11.1%         2000         100.0%                3
+
+
+## Other types, like numbers or dates, sort on count by default:
+
+> freq(septic_patients$date)
+# Class:     Date
+# Length:    2000 (of which NA: 0 = 0.0%)
+# Unique:    1662
+# 
+# Oldest:    2 January 2001
+# Newest:    18 October 2017 (+6133)
+# 
+# Item          Count   Percent   Cum. Count   Cum. Percent
+# -----------  ------  --------  -----------  -------------
+# 2008-12-24        5      0.2%            5           0.2%
+# 2010-12-10        4      0.2%            9           0.4%
+# 2011-03-03        4      0.2%           13           0.6%
+# 2013-06-24        4      0.2%           17           0.8%
+# 2017-09-01        4      0.2%           21           1.1%
+# 2002-09-02        3      0.2%           24           1.2%
+# 2003-10-14        3      0.2%           27           1.4%
+# 2004-06-25        3      0.2%           30           1.5%
+# 2004-06-27        3      0.2%           33           1.7%
+# 2004-10-29        3      0.2%           36           1.8%
+# 2005-09-27        3      0.2%           39           2.0%
+# 2006-08-01        3      0.2%           42           2.1%
+# 2006-10-10        3      0.2%           45           2.2%
+# 2007-11-16        3      0.2%           48           2.4%
+# 2008-03-09        3      0.2%           51           2.5%
+# ... and 1647 more (n = 1949; 97.5%). Use `nmax` to show more rows.
+
+
+## For numeric values, some extra descriptive statistics will be calculated:
+
+> freq(runif(n = 10, min = 1, max = 5))
+# Class:     numeric
+# Length:    10 (of which NA: 0 = 0.0%)
+# Unique:    10
+#   
+# Mean:      3
+# Std. dev.: 0.93 (CV: 0.31)
+# Five-Num:  1.1  |  2.3  |  3.1  |  3.8  |  4.0 (CQV: 0.25)
+# Outliers:  0
+# 
+#      Item   Count   Percent   Cum. Count   Cum. Percent
+# ---------  ------  --------  -----------  -------------
+#  1.132033       1     10.0%            1          10.0%
+#  2.226903       1     10.0%            2          20.0%
+#  2.280779       1     10.0%            3          30.0%
+#  2.640898       1     10.0%            4          40.0%
+#  2.913462       1     10.0%            5          50.0%
+#  3.364201       1     10.0%            6          60.0%
+#  3.771975       1     10.0%            7          70.0%
+#  3.802861       1     10.0%            8          80.0%
+#  3.803547       1     10.0%            9          90.0%
+#  3.985691       1     10.0%           10         100.0%
+# 
+# Warning message:
+# All observations are unique. 
+```
+Learn more about this function with:
+```r
+?freq
+```
+
 ### New classes
 This package contains two new S3 classes: `mic` for MIC values (e.g. from Vitek or Phoenix) and `rsi` for antimicrobial drug interpretations (i.e. S, I and R). Both are actually ordered factors under the hood (an MIC of `2` being higher than `<=1` but lower than `>=32`, and for class `rsi` factors are ordered as `S < I < R`). 
 Both classes have extensions for existing generic functions like `print`, `summary` and `plot`.

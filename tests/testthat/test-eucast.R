@@ -1,4 +1,4 @@
-context("EUCAST.R")
+context("eucast.R")
 
 test_that("EUCAST rules work", {
   a <- data.frame(bactid = c("KLEPNE",  # Klebsiella pneumoniae

@@ -439,45 +439,26 @@ key_antibiotics <- function(tbl,
   col.list <- c(amox, cfot, cfta, cftr, cfur, cipr, clar,
                 clin, clox, doxy, gent, line, mero, peni,
                 pita, rifa, teic, trsu, vanc)
-  col.list <- col.list[!is.na(col.list)]
-  col.list.bak <- col.list
-  # are they available as upper case or lower case then?
-  for (i in 1:length(col.list)) {
-    if (toupper(col.list[i]) %in% colnames(tbl)) {
-      col.list[i] <- toupper(col.list[i])
-    } else if (tolower(col.list[i]) %in% colnames(tbl)) {
-      col.list[i] <- tolower(col.list[i])
-    } else if (!col.list[i] %in% colnames(tbl)) {
-      col.list[i] <- NA
-    }
-  }
-  if (!all(col.list %in% colnames(tbl))) {
-    if (info == TRUE) {
-      warning('These columns do not exist and will be ignored: ',
-              col.list.bak[!(col.list %in% colnames(tbl))] %>% toString(),
-              immediate. = TRUE,
-              call. = FALSE)
-    }
-  }
-  amox <- col.list[1]
-  cfot <- col.list[2]
-  cfta <- col.list[3]
-  cftr <- col.list[4]
-  cfur <- col.list[5]
-  cipr <- col.list[6]
-  clar <- col.list[7]
-  clin <- col.list[8]
-  clox <- col.list[9]
-  doxy <- col.list[10]
-  gent <- col.list[11]
-  line <- col.list[12]
-  mero <- col.list[13]
-  peni <- col.list[14]
-  pita <- col.list[15]
-  rifa <- col.list[16]
-  teic <- col.list[17]
-  trsu <- col.list[18]
-  vanc <- col.list[19]
+  col.list <- check_available_columns(tbl = tbl, col.list = col.list, info = info)
+  amox <- col.list[amox]
+  cfot <- col.list[cfot]
+  cfta <- col.list[cfta]
+  cftr <- col.list[cftr]
+  cfur <- col.list[cfur]
+  cipr <- col.list[cipr]
+  clar <- col.list[clar]
+  clin <- col.list[clin]
+  clox <- col.list[clox]
+  doxy <- col.list[doxy]
+  gent <- col.list[gent]
+  line <- col.list[line]
+  mero <- col.list[mero]
+  peni <- col.list[peni]
+  pita <- col.list[pita]
+  rifa <- col.list[rifa]
+  teic <- col.list[teic]
+  trsu <- col.list[trsu]
+  vanc <- col.list[vanc]
 
   # join microorganisms
   tbl <- tbl %>% left_join_microorganisms(col_bactid)

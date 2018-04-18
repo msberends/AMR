@@ -16,16 +16,20 @@
 # GNU General Public License for more details.                         #
 # ==================================================================== #
 
-globalVariables(c('.',
-                  'abname',
+globalVariables(c('abname',
                   'bactid',
                   'cnt',
+                  'Count',
+                  'Cum',
+                  'CumTot',
                   'date_lab',
                   'days_diff',
+                  'Fctlvl',
                   'first_isolate_row_index',
                   'fullname',
                   'genus',
                   'gramstain',
+                  'Item',
                   'key_ab',
                   'key_ab_lag',
                   'key_ab_other',
@@ -34,6 +38,9 @@ globalVariables(c('.',
                   'n',
                   'other_pat_or_mo',
                   'patient_id',
+                  'Percent',
+                  'quantile',
                   'real_first_isolate',
                   'species',
-                  'y'))
+                  'y',
+                  '.'))
