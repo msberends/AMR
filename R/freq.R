@@ -161,7 +161,7 @@ freq <- function(x,
   }
 
   if (mult.columns > 1) {
-    NAs <- x[is.na(x) | x == trimws(strrep('NA ', mult.columns))]
+    NAs <- x[is.na(x) | x == trimws(AMR:::strrep('NA ', mult.columns))]
   } else {
     NAs <- x[is.na(x)]
   }
