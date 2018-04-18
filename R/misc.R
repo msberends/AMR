@@ -112,11 +112,23 @@ size_humanreadable <- function(bytes, decimals = 1) {
   out
 }
 
+
+# Support for older R versions --------------------------------------------
+
 # strrep is only available in R 3.3 and later
-# and we want to support R 3.2 too, so:
 strrep <- function(x, times) {
   for (i in 1:length(x)) {
     x[i] <- paste(rep(x[i], times[i]), collapse = "")
+  }
+  x
+}
+# trimws is only available in R 3.2 and later
+trimws <- function(x, which = "both") {
+  if (which %in% c("left", "both", "l", "b")) {
+    x <- gsub('^ {1,255}', '', x)
+  }
+  if (which %in% c("right", "both", "r", "b")) {
+    x <- gsub(' {1,255}$', '', x)
   }
   x
 }

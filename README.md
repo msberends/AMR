@@ -10,6 +10,8 @@ This R package contains functions to make microbiological, epidemiological data 
 
 With AMR you can also apply EUCAST rules to isolates, identify first isolates of every patient, translate antibiotic codes from the lab (like `"AMOX"`) or the [WHO](https://www.whocc.no/atc_ddd_index/?code=J01CA04&showdescription=no) (like `"J01CA04"`) to trivial names (like `"amoxicillin"`), or predict antimicrobial resistance for the nextcoming years with the `rsi_predict` function.
 
+With the `MDRO` function (abbreviation of mutli-drug resistant organisms), you can check your isolates for exceptional resistance with country-specific guidelines. Currently guidelines for Germany and the Netherlands are supported. Please suggest addition of your own country here: [https://github.com/msberends/AMR/issues](https://github.com/msberends/AMR/issues/new?title=New%20guideline%20for%20MDRO&body=%3C--%20Please%20add%20your%20country%20code,%20guideline%20name,%20version%20and%20source%20below%20and%20remove%20this%20line--%3E).
+
 For regular AMR analysis, the `rsi` function can be used. This function als works with the `dplyr` package (e.g. in conjunction with `summarise`) to calculate the resistance percentages of different antibiotic columns of a table.
 
 This package contains an example data set `septic_patients`, consisting of 2000 isolates from anonymised septic patients between 2001 and 2017.
