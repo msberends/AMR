@@ -91,6 +91,10 @@ MDRO <- function(tbl,
 
   tbl$MDRO <- 1
 
+  if (guideline$country$code == 'de') {
+    stop("We are still working on German guidelines in this beta version.", call. = FALSE)
+  }
+
   if (guideline$country$code == 'nl') {
     # BRMO; Bijzonder Resistente Micro-Organismen
     aminoglycosides <- aminoglycosides[aminoglycosides %in% colnames(tbl)]

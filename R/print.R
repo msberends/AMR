@@ -32,17 +32,20 @@
 #' @exportMethod print.tbl_df
 #' @export
 #' @examples
-#' # still showing all values unchanged:
+#' # more reliable data view:
 #' library(dplyr)
 #' starwars
 #' print(starwars, width = 3)
 #'
-#' # compare the significance notation of this
-#' starwars %>% select(birth_year)
-#' # with this
-#' tibble:::print.tbl_df(starwars %>% select(birth_year))
+#' # This is how the tibble package prints since v1.4.0:
+#' # (mind the quite unfamiliar underscores and ending dots)
+#' tibble(now_what = c(1.2345, 2345.67, 321.456)) %>% tibble:::print.tbl_df()
 #'
-#' # supports info about groups (look at header)
+#' # This is how this AMR package prints:
+#' # (every number shown as you would expect)
+#' tibble(now_what = c(1.2345, 2345.67, 321.456))
+#'
+#' # also supports info about groups (look at header)
 #' starwars %>% group_by(homeworld, gender)
 print.tbl_df <- function(x,
                          nmax = 10,
@@ -74,22 +77,10 @@ print.tbl <- function(x, ...) {
 #' @exportMethod print.data.table
 #' @export
 print.data.table <- function(x,
-                             nmax = 10,
-                             header = TRUE,
-                             row.names = TRUE,
                              print.keys = FALSE,
-                             right = FALSE,
-                             width = 1,
-                             na = "<NA>",
                              ...) {
   prettyprint_df(x = x,
-                 nmax = nmax,
-                 header = header,
-                 row.names = row.names,
                  print.keys = print.keys,
-                 right = right,
-                 width = width,
-                 na = na,
                  ...)
 }
 
@@ -190,7 +181,7 @@ prettyprint_df <- function(x,
   # extra space of 3 chars, right to row name or number
   if (NROW(x) > 0) {
     maxrowchars <- rownames(x) %>% nchar() %>% max() + 3
-    rownames(x) <- paste0(rownames(x), strrep2(" ", maxrowchars - nchar(rownames(x))))
+    rownames(x) <- paste0(rownames(x), strrep(" ", maxrowchars - nchar(rownames(x))))
   } else {
     maxrowchars <- 0
   }
@@ -203,7 +194,7 @@ prettyprint_df <- function(x,
     x <- x %>% filter(row_number() %in% rows_list)
     rownames(x) <- rownames(x.bak)[rows_list]
     # set inbetweener between parts
-    rownames(x)[n / 2 + 1] <- strrep2("~", maxrowchars)
+    rownames(x)[n / 2 + 1] <- strrep("~", maxrowchars)
   }
 
   if (header == TRUE) {
@@ -259,7 +250,7 @@ prettyprint_df <- function(x,
     # replace NAs
     if (nchar(na) < 2) {
       # make as long as the text "NA"
-      na <- paste0(na, strrep2(" ", 2 - nchar(na)))
+      na <- paste0(na, strrep(" ", 2 - nchar(na)))
     }
     try(x[, i] <- gsub("^NA$", na, trimws(x[, i], 'both')), silent = TRUE)
     # place class into 1st row
@@ -269,20 +260,20 @@ prettyprint_df <- function(x,
     # dashes between two parts when exceeding nmax
     maxvalchars <- max(colnames(x)[i] %>% nchar(), x[, i] %>% nchar() %>% max())
     if (n + 1 < nrow(x.bak)) {
-      x[n / 2 + if_else(header == TRUE, 2, 1), i] <- strrep2("~", maxvalchars)
+      x[n / 2 + if_else(header == TRUE, 2, 1), i] <- strrep("~", maxvalchars)
     }
 
-    # align according to `right` parameter, but only factors and text, but not MICs
-    if (any(x.bak %>% pull(i) %>% class() %in% c('factor', 'character'))
+    # align according to `right` parameter, but only factors, logicals text, but not MICs
+    if (any(x.bak %>% pull(i) %>% class() %in% c('factor', 'character', 'logical'))
         & !("mic" %in% (x.bak %>% pull(i) %>% class()))) {
       vals <- x %>% pull(i) %>% trimws('both')
       colname <- colnames(x)[i] %>% trimws('both')
       if (right == FALSE) {
-        vals <- paste0(vals, strrep2(" ", maxvalchars - nchar(vals)))
-        colname <- paste0(colname, strrep2(" ", maxvalchars - nchar(colname)))
+        vals <- paste0(vals, strrep(" ", maxvalchars - nchar(vals)))
+        colname <- paste0(colname, strrep(" ", maxvalchars - nchar(colname)))
       } else {
-        vals <- paste0(strrep2(" ", maxvalchars - nchar(vals)), vals)
-        colname <- paste0(strrep2(" ", maxvalchars - nchar(colname)), colname)
+        vals <- paste0(strrep(" ", maxvalchars - nchar(vals)), vals)
+        colname <- paste0(strrep(" ", maxvalchars - nchar(colname)), colname)
       }
       x[, i] <- vals
       colnames(x)[i] <- colname
@@ -291,25 +282,25 @@ prettyprint_df <- function(x,
     # add left padding according to `width` parameter
     # but not in 1st col when row names are off
     if (row.names == TRUE | i > 1) {
-      x[, i] <- paste0(strrep2(" ", width), x[, i])
-      colnames(x)[i] <- paste0(strrep2(" ", width), colnames(x)[i])
+      x[, i] <- paste0(strrep(" ", width), x[, i])
+      colnames(x)[i] <- paste0(strrep(" ", width), colnames(x)[i])
     }
 
     # strip columns that do not fit (3 chars as margin)
     width_console <- options()$width
     width_until_col <- x %>%
       select(1:i) %>%
-      apply(1, paste, collapse = strrep2(" ", width + 1)) %>%
+      apply(1, paste, collapse = strrep(" ", width + 1)) %>%
       nchar() %>%
       max()
     width_until_col_before <- x %>%
       select(1:(max(i, 2) - 1)) %>%
-      apply(1, paste, collapse = strrep2(" ", width + 1)) %>%
+      apply(1, paste, collapse = strrep(" ", width + 1)) %>%
       nchar() %>%
       max()
     extraspace <- maxrowchars + nchar(rownames(x)[length(rownames(x))])
-    width_until_colnames <- colnames(x)[1:i] %>% paste0(collapse = strrep2(" ", width + 1)) %>% nchar() + extraspace
-    width_until_colnames_before <- colnames(x)[1:(max(i, 2) - 1)] %>% paste0(collapse = strrep2(" ", width + 1)) %>% nchar() + extraspace
+    width_until_colnames <- colnames(x)[1:i] %>% paste0(collapse = strrep(" ", width + 1)) %>% nchar() + extraspace
+    width_until_colnames_before <- colnames(x)[1:(max(i, 2) - 1)] %>% paste0(collapse = strrep(" ", width + 1)) %>% nchar() + extraspace
 
     if (i > 1 &
         (width_until_col > width_console

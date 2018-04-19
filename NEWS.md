@@ -9,7 +9,7 @@
 * New print format for tibbles and data.tables
 
 #### Changed
-* Support for older R versions, only R 3.1.3 or later is needed
+* Support for old R versions, only R-3.0.0 (April 2013) or later is needed
 * Renamed dataset `ablist` to `antibiotics`
 * Renamed dataset `bactlist` to `microorganisms`
 * Added more microorganisms to `bactlist`

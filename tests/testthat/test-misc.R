@@ -19,8 +19,8 @@ test_that("size format works", {
 })
 
 test_that("functions missing in older R versions work", {
-  expect_equal(strrep2("A", 5), "AAAAA")
-  expect_equal(strrep2(c("A", "B"), c(5, 2)), c("AAAAA", "BB"))
+  expect_equal(strrep("A", 5), "AAAAA")
+  expect_equal(strrep(c("A", "B"), c(5, 2)), c("AAAAA", "BB"))
   expect_equal(trimws(" test "), "test")
   expect_equal(trimws(" test ", "l"), "test ")
   expect_equal(trimws(" test ", "r"), " test")

@@ -12,8 +12,7 @@
 
 \method{print}{tbl}(x, ...)
 
-\method{print}{data.table}(x, nmax = 10, header = TRUE, row.names = TRUE,
-  print.keys = FALSE, right = FALSE, width = 1, na = "<NA>", ...)
+\method{print}{data.table}(x, print.keys = FALSE, ...)
 }
 \arguments{
 \item{x}{object of class \code{data.frame}.}
@@ -40,16 +39,19 @@
 Print a data table or tibble. It prints: \cr- The \strong{first and last rows} like \code{data.table}s are printed by the \code{data.table} package,\cr- A \strong{header} and \strong{left aligned text} like \code{tibble}s are printed by the \code{tibble} package with info about grouped variables,\cr- \strong{Unchanged values} and \strong{support for row names} like \code{data.frame}s are printed by the \code{base} package.
 }
 \examples{
-# still showing all values unchanged:
+# more reliable data view:
 library(dplyr)
 starwars
 print(starwars, width = 3)
 
-# compare the significance notation of this
-starwars \%>\% select(birth_year)
-# with this
-tibble:::print.tbl_df(starwars \%>\% select(birth_year))
+# This is how the tibble package prints since v1.4.0:
+# (mind the quite unfamiliar underscores and ending dots)
+tibble(now_what = c(1.2345, 2345.67, 321.456)) \%>\% tibble:::print.tbl_df()
 
-# supports info about groups (look at header)
+# This is how this AMR package prints:
+# (every number shown as you would expect)
+tibble(now_what = c(1.2345, 2345.67, 321.456))
+
+# also supports info about groups (look at header)
 starwars \%>\% group_by(homeworld, gender)
 }

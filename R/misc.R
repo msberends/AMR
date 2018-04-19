@@ -49,7 +49,7 @@
 percent <- function(x, round = 1, force_zero = FALSE, ...) {
   val <- base::round(x * 100, digits = round)
   if (force_zero & any(val == as.integer(val))) {
-    val[val == as.integer(val)] <- paste0(val[val == as.integer(val)], ".", strrep2(0, round))
+    val[val == as.integer(val)] <- paste0(val[val == as.integer(val)], ".", strrep(0, round))
   }
   base::paste0(val, "%")
 }
@@ -110,26 +110,4 @@ size_humanreadable <- function(bytes, decimals = 1) {
 
   out <- paste(sprintf(paste0("%.", decimals, "f"), bytes / (1024 ^ factor)), size[factor + 1])
   out
-}
-
-
-# Support for older R versions --------------------------------------------
-
-# strrep is only available in R 3.3 and later
-strrep2 <- function(x, times) {
-  for (i in 1:length(x)) {
-    x[i] <- paste(rep(x[i], times[i]), collapse = "")
-  }
-  x
-}
-
-# trimws is only available in R 3.2 and later
-trimws <- function(x, which = "both") {
-  if (which %in% c("left", "both", "l", "b")) {
-    x <- gsub('^ {1,255}', '', x)
-  }
-  if (which %in% c("right", "both", "r", "b")) {
-    x <- gsub(' {1,255}$', '', x)
-  }
-  x
 }
