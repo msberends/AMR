@@ -1,7 +1,7 @@
 context("misc.R")
 
 test_that("`like` works", {
-  expect_true("test" %like% "^t")
+  expect_true(suppressWarnings("test" %like% c("^t", "^s")))
   expect_true("test" %like% "test")
   expect_true("test" %like% "TEST")
   expect_true(as.factor("test") %like% "TEST")

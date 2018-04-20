@@ -1,6 +1,7 @@
 # 0.2.0
 #### New
 * Full support for Windows, Linux and macOS
+* Full support for old R versions, only R-3.0.0 (April 2013) or later is needed
 * Function `guess_bactid` to determine the ID of a microorganism based on genus/species or known abbreviations like MRSA
 * Functions `clipboard_import` and `clipboard_export` as helper functions to quickly copy and paste from/to software like Excel and SPSS
 * Function `MDRO` to determine Multi Drug Resistant Organisms (MDRO) with support for country-specific guidelines. Suggest your own via [this link](https://github.com/msberends/AMR/issues/new?title=New%20guideline%20for%20MDRO&body=%3C--%20Please%20add%20your%20country%20code,%20guideline%20name,%20version%20and%20source%20below%20and%20remove%20this%20line--%3E). Functions `BRMO` and `MRGN` are wrappers for Dutch and German guidelines, respectively
@@ -9,7 +10,6 @@
 * New print format for tibbles and data.tables
 
 #### Changed
-* Support for old R versions, only R-3.0.0 (April 2013) or later is needed
 * Renamed dataset `ablist` to `antibiotics`
 * Renamed dataset `bactlist` to `microorganisms`
 * Added more microorganisms to `bactlist`

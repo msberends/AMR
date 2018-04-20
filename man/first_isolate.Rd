@@ -3,6 +3,9 @@
 \name{first_isolate}
 \alias{first_isolate}
 \title{Determine first (weighted) isolates}
+\source{
+Methodology of this function is based on: "M39 Analysis and Presentation of Cumulative Antimicrobial Susceptibility Test Data, 4th Edition", 2014, Clinical and Laboratory Standards Institute. \url{https://clsi.org/standards/products/microbiology/documents/m39/}.
+}
 \usage{
 first_isolate(tbl, col_date, col_patient_id, col_bactid = NA,
   col_testcode = NA, col_specimen = NA, col_icu = NA,

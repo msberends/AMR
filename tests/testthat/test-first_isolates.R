@@ -17,7 +17,6 @@ test_that("first isolates work", {
                                  info = FALSE)), 1960)
 
   # septic_patients contains 1962 out of 2000 first *weighted* isolates
-  #septic_ptns$keyab <- suppressWarnings(key_antibiotics(septic_ptns))
   expect_equal(
     suppressWarnings(sum(
       first_isolate(tbl = septic_patients %>% mutate(keyab = key_antibiotics(.)),
@@ -28,6 +27,13 @@ test_that("first isolates work", {
                     type = "keyantibiotics",
                     info = TRUE))),
     1962)
+
+  # septic_patients contains 1733 out of 2000 first non-ICU isolates
+  expect_equal(
+    sum(
+      first_isolate(septic_patients, col_bactid = "bactid", col_date = "date", col_patient_id = "patient_id", col_icu = "ward_icu", info = TRUE, icu_exclude = TRUE)),
+    1733
+  )
 
   # set 1500 random observations to be of specimen type 'Urine'
   random_rows <- sample(x = 1:2000, size = 1500, replace = FALSE)

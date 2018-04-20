@@ -8,11 +8,14 @@ This R package was created for academic research by PhD students of the Faculty 
 ## Why this package?
 This R package contains functions to make microbiological, epidemiological data analysis easier. It allows the use of some new classes to work with MIC values and antimicrobial interpretations (i.e. values S, I and R).
 
-With AMR you can also apply EUCAST rules to isolates, identify first isolates of every patient, translate antibiotic codes from the lab (like `"AMOX"`) or the [WHO](https://www.whocc.no/atc_ddd_index/?code=J01CA04&showdescription=no) (like `"J01CA04"`) to trivial names (like `"amoxicillin"`), or predict antimicrobial resistance for the nextcoming years with the `rsi_predict` function.
+With `AMR` you can also:
+* Conduct AMR analysis with the `rsi()` function, that can also be used with the `dplyr` package (e.g. in conjunction with `summarise`) to calculate the resistance percentages of different antibiotic columns of a table.
+* Predict antimicrobial resistance for the nextcoming years with the `rsi_predict()` function
+* Apply [EUCAST rules to isolates](http://www.eucast.org/expert_rules_and_intrinsic_resistance/) with the `EUCAST_rules()` function
+* Identify first isolates of every patient [using guidelines from the CLSI](https://clsi.org/standards/products/microbiology/documents/m39/) (Clinical and Laboratory Standards Institute) with the `first_isolate()` function
+* Translate antibiotic codes from the lab (like `"AMOX"`) or the [WHO](https://www.whocc.no/atc_ddd_index/?code=J01CA04&showdescription=no) (like `"J01CA04"`) to trivial names (like `"amoxicillin"`) with the `abname()` function
 
 With the `MDRO` function (abbreviation of mutli-drug resistant organisms), you can check your isolates for exceptional resistance with country-specific guidelines. Currently guidelines for Germany and the Netherlands are supported. Please suggest addition of your own country here: [https://github.com/msberends/AMR/issues](https://github.com/msberends/AMR/issues/new?title=New%20guideline%20for%20MDRO&body=%3C--%20Please%20add%20your%20country%20code,%20guideline%20name,%20version%20and%20source%20below%20and%20remove%20this%20line--%3E).
-
-For regular AMR analysis, the `rsi` function can be used. This function als works with the `dplyr` package (e.g. in conjunction with `summarise`) to calculate the resistance percentages of different antibiotic columns of a table.
 
 This package contains an example data set `septic_patients`, consisting of 2000 isolates from anonymised septic patients between 2001 and 2017.
 
@@ -32,7 +35,7 @@ This package is available on CRAN and also here on GitHub.
   - `install.packages("AMR")`
 
 - <img src="https://exploratory.io/favicon.ico" alt="Exploratory favicon" height="20px"> In [Exploratory.io](https://exploratory.io):
-  - (Exploratory.io costs $40/month, but is free for students and teachers; if you have an `@umcg.nl` or `@rug.nl` email address, [click here to enroll](https://exploratory.io/plan?plan=Community))
+  - (Exploratory.io costs $40/month but the somewhat limited Community Plan is free for students and teachers, [click here to enroll](https://exploratory.io/plan?plan=Community))
   - Start the software and log in
   - Click on your username at the right hand side top
   - Click on `R Packages`
@@ -276,7 +279,7 @@ bactlist      # A tibble: 2,507 x 10
   
 <sup>1</sup> Department of Medical Microbiology, University of Groningen, University Medical Center Groningen, Groningen, the Netherlands
 
-<sup>2</sup> Department of Medical, Market and Innovation (MMI), Certe Medische diagnostiek & advies, Groningen, the Netherlands
+<sup>2</sup> Certe Medical Diagnostics & Advice, Groningen, the Netherlands
 
 ## Copyright
 [![License](https://img.shields.io/github/license/msberends/AMR.svg?colorB=3679BC)](https://github.com/msberends/AMR/blob/master/LICENSE)
@@ -286,6 +289,8 @@ This R package is licensed under the [GNU General Public License (GPL) v2.0](htt
 - May be used for commercial purposes
 
 - May be used for private purposes
+
+- May **not** be used for patent purposes
 
 - May be modified, although:
 
