@@ -21,7 +21,7 @@
 #' This transforms a vector to a new class \code{rsi}, which is an ordered factor with levels \code{S < I < R}. Invalid antimicrobial interpretations will be translated as \code{NA} with a warning.
 #' @rdname as.rsi
 #' @param x vector
-#' @return New class \code{rsi}
+#' @return Ordered factor with new class \code{rsi} and new attributes \code{package} and \code{package.version}
 #' @export
 #' @importFrom dplyr %>%
 #' @importFrom utils packageDescription
@@ -92,20 +92,13 @@ print.rsi <- function(x, ...) {
   I <- x[x == 'I'] %>% length()
   R <- x[x == 'R'] %>% length()
   IR <- x[x %in% c('I', 'R')] %>% length()
-  cat("Class 'rsi': ", n, " isolates\n", sep = '')
+  cat("Class 'rsi'\n")
+  cat(n, " results (missing: ", n_total - n, ' = ', percent((n_total - n) / n, force_zero = TRUE), ')\n', sep = "")
   cat('\n')
-  cat('<NA>:      ', n_total - n, '\n')
-  cat('Sum of S:  ', S, '\n')
-  cat('Sum of IR: ', IR, '\n')
-  cat('- Sum of R:', R, '\n')
-  cat('- Sum of I:', I, '\n')
-  cat('\n')
-  print(c(
-    `%S` = round((S / n) * 100, 1),
-    `%IR` = round((IR / n) * 100, 1),
-    `%I` = round((I / n) * 100, 1),
-    `%R` = round((R / n) * 100, 1)
-  ))
+  cat('Sum of S:   ', S, ' (', percent(S / n, force_zero = TRUE), ')\n', sep = "")
+  cat('Sum of IR:  ', IR, ' (', percent(IR / n, force_zero = TRUE), ')\n', sep = "")
+  cat('- Sum of R: ', R, ' (', percent(R / n, force_zero = TRUE), ')\n', sep = "")
+  cat('- Sum of I: ', I, ' (', percent(I / n, force_zero = TRUE), ')\n', sep = "")
 }
 
 #' @exportMethod summary.rsi
@@ -197,7 +190,7 @@ barplot.rsi <- function(height, ...) {
 #' @rdname as.mic
 #' @param x vector
 #' @param na.rm a logical indicating whether missing values should be removed
-#' @return New class \code{mic}
+#' @return Ordered factor with new class \code{mic} and new attributes \code{package} and \code{package.version}
 #' @export
 #' @importFrom dplyr %>%
 #' @importFrom utils packageDescription

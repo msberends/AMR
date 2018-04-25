@@ -15,7 +15,7 @@ is.mic(x)
 \item{na.rm}{a logical indicating whether missing values should be removed}
 }
 \value{
-New class \code{mic}
+Ordered factor with new class \code{mic} and new attributes \code{package} and \code{package.version}
 }
 \description{
 This transforms a vector to a new class\code{mic}, which is an ordered factor with valid MIC values as levels. Invalid MIC values will be translated as \code{NA} with a warning.

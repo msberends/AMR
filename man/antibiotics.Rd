@@ -9,9 +9,11 @@
   \item{\code{atc}}{ATC code, like \code{J01CR02}}
   \item{\code{molis}}{MOLIS code, like \code{amcl}}
   \item{\code{umcg}}{UMCG code, like \code{AMCL}}
+  \item{\code{abbr}}{Abbreviation as used by many countries, to be used for \code{\link{guess_atc}}}
   \item{\code{official}}{Official name by the WHO, like \code{"Amoxicillin and enzyme inhibitor"}}
   \item{\code{official_nl}}{Official name in the Netherlands, like \code{"Amoxicilline met enzymremmer"}}
   \item{\code{trivial_nl}}{Trivial name in Dutch, like \code{"Amoxicilline/clavulaanzuur"}}
+  \item{\code{trade_name}}{Trade name as used by many countries, to be used for \code{\link{guess_atc}}}
   \item{\code{oral_ddd}}{Defined Daily Dose (DDD), oral treatment}
   \item{\code{oral_units}}{Units of \code{ddd_units}}
   \item{\code{iv_ddd}}{Defined Daily Dose (DDD), parenteral treatment}

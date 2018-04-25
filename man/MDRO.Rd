@@ -4,36 +4,58 @@
 \alias{MDRO}
 \alias{BRMO}
 \alias{MRGN}
+\alias{EUCAST_exceptional_phenotypes}
 \title{Determine multidrug-resistant organisms (MDRO)}
 \usage{
-MDRO(tbl, country, col_bactid = "bactid", info = TRUE,
-  aminoglycosides = c("gent", "tobr", "kana"), quinolones = c("cipr",
-  "norf"), carbapenems = c("imip", "mero", "erta"), ceftazidime = "cfta",
-  piperacillin = "pita", trimethoprim_sulfa = "trsu", penicillin = "peni",
-  vancomycin = "vanc")
+MDRO(tbl, country = NULL, col_bactid = "bactid", info = TRUE,
+  amcl = "amcl", amik = "amik", amox = "amox", ampi = "ampi",
+  azit = "azit", aztr = "aztr", cefa = "cefa", cfra = "cfra",
+  cfep = "cfep", cfot = "cfot", cfox = "cfox", cfta = "cfta",
+  cftr = "cftr", cfur = "cfur", chlo = "chlo", cipr = "cipr",
+  clar = "clar", clin = "clin", clox = "clox", coli = "coli",
+  czol = "czol", dapt = "dapt", doxy = "doxy", erta = "erta",
+  eryt = "eryt", fosf = "fosf", fusi = "fusi", gent = "gent",
+  imip = "imip", kana = "kana", levo = "levo", linc = "linc",
+  line = "line", mero = "mero", metr = "metr", mino = "mino",
+  moxi = "moxi", nali = "nali", neom = "neom", neti = "neti",
+  nitr = "nitr", novo = "novo", norf = "norf", oflo = "oflo",
+  peni = "peni", pita = "pita", poly = "poly", qida = "qida",
+  rifa = "rifa", roxi = "roxi", siso = "siso", teic = "teic",
+  tetr = "tetr", tica = "tica", tige = "tige", tobr = "tobr",
+  trim = "trim", trsu = "trsu", vanc = "vanc")
 
 BRMO(tbl, country = "nl", ...)
 
 MRGN(tbl, country = "de", ...)
+
+EUCAST_exceptional_phenotypes(tbl, country = "EUCAST", ...)
 }
 \arguments{
 \item{tbl}{table with antibiotic columns, like e.g. \code{amox} and \code{amcl}}
 
-\item{country}{country to determine guidelines. Should be a code from the \href{https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2#Officially_assigned_code_elements}{list of ISO 3166-1 alpha-2 country codes}. Case-insensitive. Currently supported are \code{de} (Germany) and \code{nl} (the Netherlands).}
+\item{country}{country code to determine guidelines. EUCAST rules will be used when left empty, see Details. Should be or a code from the \href{https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2#Officially_assigned_code_elements}{list of ISO 3166-1 alpha-2 country codes}. Case-insensitive. Currently supported are \code{de} (Germany) and \code{nl} (the Netherlands).}
 
 \item{col_bactid}{column name of the bacteria ID in \code{tbl} - values of this column should be present in \code{microorganisms$bactid}, see \code{\link{microorganisms}}}
 
 \item{info}{print progress}
 
-\item{aminoglycosides, quinolones, carbapenems}{character vector with column names of antibiotics}
+\item{amcl, amik, amox, ampi, azit, aztr, cefa, cfra, cfep, cfot, cfox, cfta, cftr, cfur, chlo, cipr, clar, clin, clox, coli, czol, dapt, doxy, erta, eryt, fosf, fusi, gent, imip, kana, levo, linc, line, mero, metr, mino, moxi, nali, neom, neti, nitr, novo, norf, oflo, peni, pita, poly, qida, rifa, roxi, siso, teic, tetr, tica, tige, tobr, trim, trsu, vanc}{column names of antibiotics. column names of antibiotics}
 
-\item{ceftazidime, piperacillin, trimethoprim_sulfa, penicillin, vancomycin}{column names of antibiotics}
-
-\item{...}{parameters that are passed on to \code{MDR}}
+\item{...}{parameters that are passed on to methods}
 }
 \value{
-Ordered factor with values \code{Positive}, \code{Unconfirmed}, \code{Negative}.
+Ordered factor with levels \code{Unknown < Negative < Unconfirmed < Positive}.
 }
 \description{
 Determine which isolates are multidrug-resistant organisms (MDRO) according to country-specific guidelines.
+}
+\details{
+When \code{country} will be left blank, guidelines will be taken from EUCAST Expert Rules Version 3.1 "Intrinsic Resistance and Exceptional Phenotypes Tables" (\url{http://www.eucast.org/fileadmin/src/media/PDFs/EUCAST_files/Expert_Rules/Expert_rules_intrinsic_exceptional_V3.1.pdf}).
+}
+\examples{
+library(dplyr)
+
+septic_patients \%>\%
+  mutate(EUCAST = MDRO(.),
+         BRMO = MDRO(., "nl"))
 }

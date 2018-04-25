@@ -73,6 +73,7 @@ check_available_columns <- function(tbl, col.list, info = TRUE) {
     if (info == TRUE) {
       warning('These columns do not exist and will be ignored: ',
               col.list.bak[!(col.list %in% colnames(tbl))] %>% toString(),
+              '.\nTHIS MAY STRONGLY INFLUENCE THE OUTCOME.',
               immediate. = TRUE,
               call. = FALSE)
     }

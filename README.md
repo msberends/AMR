@@ -9,13 +9,14 @@ This R package was created for academic research by PhD students of the Faculty 
 This R package contains functions to make microbiological, epidemiological data analysis easier. It allows the use of some new classes to work with MIC values and antimicrobial interpretations (i.e. values S, I and R).
 
 With `AMR` you can also:
-* Conduct AMR analysis with the `rsi()` function, that can also be used with the `dplyr` package (e.g. in conjunction with `summarise`) to calculate the resistance percentages of different antibiotic columns of a table.
-* Predict antimicrobial resistance for the nextcoming years with the `rsi_predict()` function
-* Apply [EUCAST rules to isolates](http://www.eucast.org/expert_rules_and_intrinsic_resistance/) with the `EUCAST_rules()` function
-* Identify first isolates of every patient [using guidelines from the CLSI](https://clsi.org/standards/products/microbiology/documents/m39/) (Clinical and Laboratory Standards Institute) with the `first_isolate()` function
-* Translate antibiotic codes from the lab (like `"AMOX"`) or the [WHO](https://www.whocc.no/atc_ddd_index/?code=J01CA04&showdescription=no) (like `"J01CA04"`) to trivial names (like `"amoxicillin"`) with the `abname()` function
+* Create frequency tables with the `freq` function
+* Conduct AMR analysis with the `rsi` function, that can also be used with the `dplyr` package (e.g. in conjunction with `summarise`) to calculate the resistance percentages of different antibiotic columns of a table
+* Predict antimicrobial resistance for the nextcoming years with the `rsi_predict` function
+* Apply [EUCAST rules to isolates](http://www.eucast.org/expert_rules_and_intrinsic_resistance/) with the `EUCAST_rules` function
+* Identify first isolates of every patient [using guidelines from the CLSI](https://clsi.org/standards/products/microbiology/documents/m39/) (Clinical and Laboratory Standards Institute) with the `first_isolate` function
+* Translate antibiotic codes from the lab (like `"AMOX"`) or the [WHO](https://www.whocc.no/atc_ddd_index/?code=J01CA04&showdescription=no) (like `"J01CA04"`) to trivial names (like `"amoxicillin"`) with the `abname` function
 
-With the `MDRO` function (abbreviation of mutli-drug resistant organisms), you can check your isolates for exceptional resistance with country-specific guidelines. Currently guidelines for Germany and the Netherlands are supported. Please suggest addition of your own country here: [https://github.com/msberends/AMR/issues](https://github.com/msberends/AMR/issues/new?title=New%20guideline%20for%20MDRO&body=%3C--%20Please%20add%20your%20country%20code,%20guideline%20name,%20version%20and%20source%20below%20and%20remove%20this%20line--%3E).
+With the `MDRO` function (abbreviation of Multi Drug Resistant Organisms), you can check your isolates for exceptional resistance with country-specific guidelines or EUCAST rules. Currently guidelines for Germany and the Netherlands are supported. Please suggest addition of your own country here: [https://github.com/msberends/AMR/issues/new](https://github.com/msberends/AMR/issues/new?title=New%20guideline%20for%20MDRO&body=%3C--%20Please%20add%20your%20country%20code,%20guideline%20name,%20version%20and%20source%20below%20and%20remove%20this%20line--%3E).
 
 This package contains an example data set `septic_patients`, consisting of 2000 isolates from anonymised septic patients between 2001 and 2017.
 
@@ -96,7 +97,7 @@ after
 ```
 
 ### Frequency tables
-Base R lacks a simple function to create frequency tables. We created such a function that works with almost all data types: `freq()` (or `frequency_tbl()`).
+Base R lacks a simple function to create frequency tables. We created such a function that works with almost all data types: `freq` (or `frequency_tbl`).
 ```r
 ## Factors sort on item by default:
 

@@ -13,7 +13,7 @@ is.rsi(x)
 \item{x}{vector}
 }
 \value{
-New class \code{rsi}
+Ordered factor with new class \code{rsi} and new attributes \code{package} and \code{package.version}
 }
 \description{
 This transforms a vector to a new class \code{rsi}, which is an ordered factor with levels \code{S < I < R}. Invalid antimicrobial interpretations will be translated as \code{NA} with a warning.

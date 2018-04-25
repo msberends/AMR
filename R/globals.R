@@ -17,6 +17,7 @@
 # ==================================================================== #
 
 globalVariables(c('abname',
+                  'atc',
                   'bactid',
                   'cnt',
                   'Count',
@@ -35,6 +36,7 @@ globalVariables(c('abname',
                   'key_ab_other',
                   'mic',
                   'mocode',
+                  'molis',
                   'n',
                   'other_pat_or_mo',
                   'patient_id',
@@ -42,5 +44,6 @@ globalVariables(c('abname',
                   'quantile',
                   'real_first_isolate',
                   'species',
+                  'umcg',
                   'y',
                   '.'))

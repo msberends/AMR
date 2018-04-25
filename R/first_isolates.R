@@ -436,6 +436,10 @@ key_antibiotics <- function(tbl,
 
   keylist <- character(length = nrow(tbl))
 
+  if (!col_bactid %in% colnames(tbl)) {
+    stop('Column ', col_bactid, ' not found.', call. = FALSE)
+  }
+
   # check columns
   col.list <- c(amox, cfot, cfta, cftr, cfur, cipr, clar,
                 clin, clox, doxy, gent, line, mero, peni,

@@ -116,7 +116,7 @@ EUCAST_rules <- function(tbl,
   EUCAST_VERSION <- "3.1"
 
   if (!col_bactid %in% colnames(tbl)) {
-    stop('Column ', col_bactid, ' not found.')
+    stop('Column ', col_bactid, ' not found.', call. = FALSE)
   }
 
   # check columns
@@ -126,88 +126,65 @@ EUCAST_rules <- function(tbl,
                 levo, linc, line, mero, mino, moxi, nali, neom, neti, nitr,
                 novo, norf, oflo, peni, pita, poly, qida, rifa, roxi, siso,
                 teic, tetr, tica, tige, tobr, trim, trsu, vanc)
-  col.list <- col.list[!is.na(col.list)]
-  col.list.bak <- col.list
-  # are they available as upper case or lower case then?
-  for (i in 1:length(col.list)) {
-    if (toupper(col.list[i]) %in% colnames(tbl)) {
-      col.list[i] <- toupper(col.list[i])
-    } else if (tolower(col.list[i]) %in% colnames(tbl)) {
-      col.list[i] <- tolower(col.list[i])
-    } else if (!col.list[i] %in% colnames(tbl)) {
-      col.list[i] <- NA
-    }
-  }
-  if (!all(col.list %in% colnames(tbl))) {
-    if (info == TRUE) {
-      cat('\n')
-    }
-    if (info == TRUE) {
-      warning('These columns do not exist and will be ignored: ',
-              col.list.bak[!(col.list %in% colnames(tbl))] %>% toString(),
-              immediate. = TRUE,
-              call. = FALSE)
-    }
-  }
-
-  amcl <- col.list[1]
-  amik <- col.list[2]
-  amox <- col.list[3]
-  ampi <- col.list[4]
-  azit <- col.list[5]
-  aztr <- col.list[6]
-  cefa <- col.list[7]
-  cfra <- col.list[8]
-  cfep <- col.list[9]
-  cfot <- col.list[10]
-  cfox <- col.list[11]
-  cfta <- col.list[12]
-  cftr <- col.list[13]
-  cfur <- col.list[14]
-  chlo <- col.list[15]
-  cipr <- col.list[16]
-  clar <- col.list[17]
-  clin <- col.list[18]
-  clox <- col.list[19]
-  coli <- col.list[20]
-  czol <- col.list[21]
-  dapt <- col.list[22]
-  doxy <- col.list[23]
-  erta <- col.list[24]
-  eryt <- col.list[25]
-  fosf <- col.list[26]
-  fusi <- col.list[27]
-  gent <- col.list[28]
-  imip <- col.list[29]
-  kana <- col.list[30]
-  levo <- col.list[31]
-  linc <- col.list[32]
-  line <- col.list[33]
-  mero <- col.list[34]
-  mino <- col.list[35]
-  moxi <- col.list[36]
-  nali <- col.list[37]
-  neom <- col.list[38]
-  neti <- col.list[39]
-  nitr <- col.list[40]
-  novo <- col.list[41]
-  norf <- col.list[42]
-  oflo <- col.list[43]
-  peni <- col.list[44]
-  pita <- col.list[45]
-  poly <- col.list[46]
-  qida <- col.list[47]
-  rifa <- col.list[48]
-  roxi <- col.list[49]
-  siso <- col.list[50]
-  teic <- col.list[51]
-  tetr <- col.list[52]
-  tica <- col.list[53]
-  tige <- col.list[54]
-  tobr <- col.list[55]
-  trim <- col.list[56]
-  trsu <- col.list[57]
-  vanc <- col.list[58]
+  col.list <- check_available_columns(tbl = tbl, col.list = col.list, info = info)
+  amcl <- col.list[amcl]
+  amik <- col.list[amik]
+  amox <- col.list[amox]
+  ampi <- col.list[ampi]
+  azit <- col.list[azit]
+  aztr <- col.list[aztr]
+  cefa <- col.list[cefa]
+  cfra <- col.list[cfra]
+  cfep <- col.list[cfep]
+  cfot <- col.list[cfot]
+  cfox <- col.list[cfox]
+  cfta <- col.list[cfta]
+  cftr <- col.list[cftr]
+  cfur <- col.list[cfur]
+  chlo <- col.list[chlo]
+  cipr <- col.list[cipr]
+  clar <- col.list[clar]
+  clin <- col.list[clin]
+  clox <- col.list[clox]
+  coli <- col.list[coli]
+  czol <- col.list[czol]
+  dapt <- col.list[dapt]
+  doxy <- col.list[doxy]
+  erta <- col.list[erta]
+  eryt <- col.list[eryt]
+  fosf <- col.list[fosf]
+  fusi <- col.list[fusi]
+  gent <- col.list[gent]
+  imip <- col.list[imip]
+  kana <- col.list[kana]
+  levo <- col.list[levo]
+  linc <- col.list[linc]
+  line <- col.list[line]
+  mero <- col.list[mero]
+  mino <- col.list[mino]
+  moxi <- col.list[moxi]
+  nali <- col.list[nali]
+  neom <- col.list[neom]
+  neti <- col.list[neti]
+  nitr <- col.list[nitr]
+  novo <- col.list[novo]
+  norf <- col.list[norf]
+  oflo <- col.list[oflo]
+  peni <- col.list[peni]
+  pita <- col.list[pita]
+  poly <- col.list[poly]
+  qida <- col.list[qida]
+  rifa <- col.list[rifa]
+  roxi <- col.list[roxi]
+  siso <- col.list[siso]
+  teic <- col.list[teic]
+  tetr <- col.list[tetr]
+  tica <- col.list[tica]
+  tige <- col.list[tige]
+  tobr <- col.list[tobr]
+  trim <- col.list[trim]
+  trsu <- col.list[trsu]
+  vanc <- col.list[vanc]
 
   total <- 0
   total_rows <- integer(0)
