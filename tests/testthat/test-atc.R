@@ -29,3 +29,16 @@ test_that("guess_bactid works", {
                               "VISA")),
                rep("STAAUR", 8))
 })
+
+test_that("guess_atc works", {
+  expect_equal(guess_atc(c("J01FA01",
+                           "Erythromycin",
+                           "eryt",
+                           "ERYT",
+                           "ERY",
+                           "Erythrocin",
+                           "Eryzole",
+                           "Pediamycin")),
+               rep("J01FA01", 8))
+
+})

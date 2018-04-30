@@ -46,22 +46,14 @@ These are helper functions around \code{\link{read.table}} and \code{\link{write
 \details{
 For \code{clipboard_export()}, the reserved clipboard size for exporting will be set to 125\% of the object size of \code{x}. This way, it is possible to export data with thousands of rows as the only limit will be your systems RAM.
 
-  Example for copying from Excel:
   \if{html}{
+     Example for copying from Excel:
     \out{<div style="text-align: left">}\figure{Excel_copy.png}\out{</div>}
-  }
-  \if{latex}{
-    \out{\begin{left}}\figure{Excel_copy.png}\out{\end{left}}
-  }
-  \cr
-  And pasting in R: \cr \cr
-  \code{> data <- clipboard_import()} \cr
-  \code{> data} \cr
-  \if{html}{
+    \cr
+    And pasting in R: \cr \cr
+    \code{> data <- clipboard_import()} \cr
+    \code{> data} \cr
     \out{<div style="text-align: left">}\figure{Excel_paste.png}\out{</div>}
-  }
-  \if{latex}{
-    \out{\begin{left}}\figure{Excel_paste.png}\out{\end{left}}
   }
 }
 \keyword{clipboard}

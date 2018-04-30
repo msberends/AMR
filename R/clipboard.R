@@ -13,22 +13,14 @@
 #' @importFrom utils read.delim write.table object.size
 #' @details For \code{clipboard_export()}, the reserved clipboard size for exporting will be set to 125\% of the object size of \code{x}. This way, it is possible to export data with thousands of rows as the only limit will be your systems RAM.
 #'
-#'   Example for copying from Excel:
 #'   \if{html}{
+#'      Example for copying from Excel:
 #'     \out{<div style="text-align: left">}\figure{Excel_copy.png}\out{</div>}
-#'   }
-#'   \if{latex}{
-#'     \out{\begin{left}}\figure{Excel_copy.png}\out{\end{left}}
-#'   }
-#'   \cr
-#'   And pasting in R: \cr \cr
-#'   \code{> data <- clipboard_import()} \cr
-#'   \code{> data} \cr
-#'   \if{html}{
+#'     \cr
+#'     And pasting in R: \cr \cr
+#'     \code{> data <- clipboard_import()} \cr
+#'     \code{> data} \cr
 #'     \out{<div style="text-align: left">}\figure{Excel_paste.png}\out{</div>}
-#'   }
-#'   \if{latex}{
-#'     \out{\begin{left}}\figure{Excel_paste.png}\out{\end{left}}
 #'   }
 #' @export
 #' @return data.frame
@@ -135,14 +127,14 @@ clipboard_export <- function(x,
 }
 
 is_Windows <- function() {
-  Sys.info()['sysname'] %like% "Windows"
+  all(Sys.info()['sysname'] %like% "Windows")
 }
 check_xclip <- function() {
   if (!isTRUE(file.exists(Sys.which("xclip")[1L]))) {
-    if (Sys.info()['sysname'] %like% "Linux") {
+    if (all(Sys.info()['sysname'] %like% "Linux")) {
       stop("Please install Linux package xclip first.")
     } else {
-      stop("Please install package xclip first (use `brew install xclip on macOS`).")
+      stop("Please install package xclip first (use `brew install xclip` on macOS).")
     }
   }
 }
