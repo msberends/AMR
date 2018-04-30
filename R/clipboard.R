@@ -53,7 +53,7 @@ clipboard_import <- function(sep = '\t',
                            FALSE
                          })
 
-  if (import_tbl == FALSE) {
+  if (all(import_tbl == FALSE)) {
     cat("No clipboard content found.")
     if (Sys.info()['sysname'] %like% "Linux") {
       cat(" These functions do not work without X11 installed.")
@@ -127,11 +127,11 @@ clipboard_export <- function(x,
 }
 
 is_Windows <- function() {
-  all(Sys.info()['sysname'] %like% "Windows")
+  Sys.info()['sysname'] %like% "Windows"
 }
 check_xclip <- function() {
   if (!isTRUE(file.exists(Sys.which("xclip")[1L]))) {
-    if (all(Sys.info()['sysname'] %like% "Linux")) {
+    if (Sys.info()['sysname'] %like% "Linux") {
       stop("Please install Linux package xclip first.")
     } else {
       stop("Please install package xclip first (use `brew install xclip` on macOS).")
