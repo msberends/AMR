@@ -4,7 +4,7 @@
 \name{microorganisms}
 \alias{microorganisms}
 \title{Dataset with ~2500 microorganisms}
-\format{A data.frame with 2507 observations and 12 variables:
+\format{A data.frame with 2453 observations and 12 variables:
 \describe{
   \item{\code{bactid}}{ID of microorganism}
   \item{\code{bactsys}}{Bactsyscode of microorganism}
@@ -26,7 +26,7 @@ MOLIS (LIS of Certe) - \url{https://www.certe.nl}
 microorganisms
 }
 \description{
-A dataset containing 2500 microorganisms. MO codes of the UMCG can be looked up using \code{\link{microorganisms.umcg}}.
+A dataset containing 2453 microorganisms. MO codes of the UMCG can be looked up using \code{\link{microorganisms.umcg}}.
 }
 \seealso{
 \code{\link{guess_bactid}} \code{\link{antibiotics}} \code{\link{microorganisms.umcg}}

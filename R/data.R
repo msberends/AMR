@@ -19,7 +19,7 @@
 #' Dataset with 420 antibiotics
 #'
 #' A dataset containing all antibiotics with a J0 code, with their DDD's. Properties were downloaded from the WHO, see Source.
-#' @format A data.frame with 420 observations and 16 variables:
+#' @format A data.frame with 420 observations and 18 variables:
 #' \describe{
 #'   \item{\code{atc}}{ATC code, like \code{J01CR02}}
 #'   \item{\code{molis}}{MOLIS code, like \code{amcl}}
@@ -236,8 +236,8 @@
 
 #' Dataset with ~2500 microorganisms
 #'
-#' A dataset containing 2500 microorganisms. MO codes of the UMCG can be looked up using \code{\link{microorganisms.umcg}}.
-#' @format A data.frame with 2507 observations and 12 variables:
+#' A dataset containing 2453 microorganisms. MO codes of the UMCG can be looked up using \code{\link{microorganisms.umcg}}.
+#' @format A data.frame with 2453 observations and 12 variables:
 #' \describe{
 #'   \item{\code{bactid}}{ID of microorganism}
 #'   \item{\code{bactsys}}{Bactsyscode of microorganism}

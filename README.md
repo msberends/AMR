@@ -1,12 +1,12 @@
 # `AMR`
-This is an [R package](https://www.r-project.org) to simplify the analysis and prediction of Antimicrobial Resistance (AMR).
+### An [R package](https://www.r-project.org) to simplify the analysis and prediction of Antimicrobial Resistance (AMR).
 
-[![logo_rug](man/figures/logo_rug.png)](https://www.rug.nl)[![logo_umcg](man/figures/logo_umcg.png)](https://www.umcg.nl)[![logo_eh1h](man/figures/logo_eh1h.png)](http://www.eurhealth-1health.eu)[![logo_interreg](man/figures/logo_interreg.png)](http://www.eurhealth-1health.eu)
+[![logo_rug](man/figures/logo_rug.png)](https://www.rug.nl)[![logo_umcg](man/figures/logo_umcg.png)](https://www.umcg.nl)
 
-This R package was created for academic research by PhD students of the Faculty of Medical Sciences of the [University of Groningen)](https://www.rug.nl) and the Medical Microbiology & Infection Prevention department of the [University Medical Center Groningen (UMCG)](https://www.umcg.nl). They also maintain this package, see [Authors](#authors).
+This R package was created for academic research by PhD students of the Faculty of Medical Sciences of the [University of Groningen)](https://www.rug.nl) and the Medical Microbiology & Infection Prevention (MMBI) department of the [University Medical Center Groningen (UMCG)](https://www.umcg.nl). See [Authors](#authors).
 
 ## Why this package?
-This R package contains functions to make microbiological, epidemiological data analysis easier. It allows the use of some new classes to work with MIC values and antimicrobial interpretations (i.e. values S, I and R).
+This R package contains functions to make **microbiological, epidemiological data analysis easier**. It allows the use of some new classes to work with MIC values and antimicrobial interpretations (i.e. values S, I and R).
 
 With `AMR` you can also:
 * Create frequency tables with the `freq` function
@@ -264,11 +264,14 @@ abname("J01CR02", from = "atc", to = "umcg") # "AMCL"
 ### Databases included in package
 Datasets to work with antibiotics and bacteria properties.
 ```r
-# Dataset with ATC antibiotics codes, official names and DDD's (oral and parenteral)
-ablist        # A tibble: 420 x 12
+# Dataset with 2000 random blood culture isolates from anonymised septic patients between 2001 and 2017 in 5 Dutch hospitals
+septic_patients   # A tibble: 4,000 x 47
+
+# Dataset with ATC antibiotics codes, official names, trade names and DDD's (oral and parenteral)
+antibiotics       # A tibble: 420 x 18
 
 # Dataset with bacteria codes and properties like gram stain and aerobic/anaerobic
-bactlist      # A tibble: 2,507 x 10
+microorganisms    # A tibble: 2,453 x 12
 ```
 
 
@@ -281,6 +284,8 @@ bactlist      # A tibble: 2,507 x 10
 <sup>1</sup> Department of Medical Microbiology, University of Groningen, University Medical Center Groningen, Groningen, the Netherlands
 
 <sup>2</sup> Certe Medical Diagnostics & Advice, Groningen, the Netherlands
+
+[![logo_umcg](man/figures/logo_umcg.png)](https://www.umcg.nl)[![logo_certe](man/figures/logo_certe.png)](https://www.certe.nl)[![logo_eh1h](man/figures/logo_eh1h.png)](http://www.eurhealth-1health.eu)[![logo_interreg](man/figures/logo_interreg.png)](http://www.eurhealth-1health.eu)
 
 ## Copyright
 [![License](https://img.shields.io/github/license/msberends/AMR.svg?colorB=3679BC)](https://github.com/msberends/AMR/blob/master/LICENSE)

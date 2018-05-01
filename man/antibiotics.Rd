@@ -4,7 +4,7 @@
 \name{antibiotics}
 \alias{antibiotics}
 \title{Dataset with 420 antibiotics}
-\format{A data.frame with 420 observations and 16 variables:
+\format{A data.frame with 420 observations and 18 variables:
 \describe{
   \item{\code{atc}}{ATC code, like \code{J01CR02}}
   \item{\code{molis}}{MOLIS code, like \code{amcl}}
