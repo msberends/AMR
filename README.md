@@ -1,9 +1,9 @@
 # `AMR`
 This is an [R package](https://www.r-project.org) to simplify the analysis and prediction of Antimicrobial Resistance (AMR).
 
-![logo_uni](man/figures/logo_en.png)![logo_umcg](man/figures/logo_umcg.png)
+[![logo_rug](man/figures/logo_rug.png)](https://www.rug.nl)[![logo_umcg](man/figures/logo_umcg.png)](https://www.umcg.nl)[![logo_eh1h](man/figures/logo_eh1h.png)](http://www.eurhealth-1health.eu)[![logo_interreg](man/figures/logo_interreg.png)](http://www.eurhealth-1health.eu)
 
-This R package was created for academic research by PhD students of the Faculty of Medical Sciences of the [University of Groningen (rug.nl)](https://www.rug.nl/) and the Medical Microbiology & Infection Prevention department of the [University Medical Center Groningen (UMCG, umcg.nl)](https://www.umcg.nl). They also maintain this package, see [Authors](#authors).
+This R package was created for academic research by PhD students of the Faculty of Medical Sciences of the [University of Groningen)](https://www.rug.nl) and the Medical Microbiology & Infection Prevention department of the [University Medical Center Groningen (UMCG)](https://www.umcg.nl). They also maintain this package, see [Authors](#authors).
 
 ## Why this package?
 This R package contains functions to make microbiological, epidemiological data analysis easier. It allows the use of some new classes to work with MIC values and antimicrobial interpretations (i.e. values S, I and R).
