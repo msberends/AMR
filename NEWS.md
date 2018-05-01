@@ -4,7 +4,6 @@
 * Full support for old R versions, only R-3.0.0 (April 2013) or later is needed (needed packages may have other dependencies)
 * Function `guess_bactid` to **determine the ID** of a microorganism based on genus/species or known abbreviations like MRSA
 * Function `guess_atc` to **determine the ATC** of an antibiotic based on name, trade name, or known abbreviations
-* Functions `clipboard_import` and `clipboard_export` as helper functions to **quickly copy and paste** from/to software like Excel and SPSS
 * Function `freq` to create **frequency tables**, with additional info in a header
 * Function `MDRO` to **determine Multi Drug Resistant Organisms (MDRO)** with support for country-specific guidelines.
   * Suggest your own via [https://github.com/msberends/AMR/issues/new](https://github.com/msberends/AMR/issues/new?title=New%20guideline%20for%20MDRO&body=%3C--%20Please%20add%20your%20country%20code,%20guideline%20name,%20version%20and%20source%20below%20and%20remove%20this%20line--%3E)
