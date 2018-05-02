@@ -29,6 +29,21 @@ test_that("rsi works", {
                       info = FALSE),
                0.9858,
                tolerance = 0.0001)
+
+  # count of cases
+  expect_equal(septic_patients %>%
+                 group_by(hospital_id) %>%
+                 summarise(cipro_S = rsi(cipr, interpretation = "S",
+                                         as_percent = TRUE, warning = FALSE),
+                           cipro_n = n_rsi(cipr),
+                           genta_S = rsi(gent, interpretation = "S",
+                                         as_percent = TRUE, warning = FALSE),
+                           genta_n = n_rsi(gent),
+                           combination_S = rsi(cipr, gent, interpretation = "S",
+                                               as_percent = TRUE, warning = FALSE),
+                           combination_n = n_rsi(cipr, gent)) %>%
+                 pull(combination_n),
+               c(138, 474, 170, 464, 183))
 })
 
 test_that("prediction of rsi works", {

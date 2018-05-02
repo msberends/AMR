@@ -36,6 +36,7 @@
 #'   EUCAST Expert Rules Version 3.1 (Intrinsic Resistance and Exceptional Phenotypes Tables): \cr
 #'   \url{http://www.eucast.org/fileadmin/src/media/PDFs/EUCAST_files/Expert_Rules/Expert_rules_intrinsic_exceptional_V3.1.pdf}
 #' @examples
+#' a <- EUCAST_rules(septic_patients)
 #' a <- data.frame(bactid = c("STAAUR",  # Staphylococcus aureus
 #'                            "ENCFAE",  # Enterococcus faecalis
 #'                            "ESCCOL",  # Escherichia coli

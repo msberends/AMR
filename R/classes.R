@@ -93,12 +93,14 @@ print.rsi <- function(x, ...) {
   R <- x[x == 'R'] %>% length()
   IR <- x[x %in% c('I', 'R')] %>% length()
   cat("Class 'rsi'\n")
-  cat(n, " results (missing: ", n_total - n, ' = ', percent((n_total - n) / n, force_zero = TRUE), ')\n', sep = "")
-  cat('\n')
-  cat('Sum of S:   ', S, ' (', percent(S / n, force_zero = TRUE), ')\n', sep = "")
-  cat('Sum of IR:  ', IR, ' (', percent(IR / n, force_zero = TRUE), ')\n', sep = "")
-  cat('- Sum of R: ', R, ' (', percent(R / n, force_zero = TRUE), ')\n', sep = "")
-  cat('- Sum of I: ', I, ' (', percent(I / n, force_zero = TRUE), ')\n', sep = "")
+  cat(n, " results (missing: ", n_total - n, ' = ', percent((n_total - n) / n_total, force_zero = TRUE), ')\n', sep = "")
+  if (n > 0) {
+    cat('\n')
+    cat('Sum of S:   ', S, ' (', percent(S / n, force_zero = TRUE), ')\n', sep = "")
+    cat('Sum of IR:  ', IR, ' (', percent(IR / n, force_zero = TRUE), ')\n', sep = "")
+    cat('- Sum of R: ', R, ' (', percent(R / n, force_zero = TRUE), ')\n', sep = "")
+    cat('- Sum of I: ', I, ' (', percent(I / n, force_zero = TRUE), ')\n', sep = "")
+  }
 }
 
 #' @exportMethod summary.rsi

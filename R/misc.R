@@ -48,10 +48,12 @@
 # No export, no Rd
 percent <- function(x, round = 1, force_zero = FALSE, ...) {
   val <- base::round(x * 100, digits = round)
-  if (force_zero & any(val == as.integer(val))) {
+  if (force_zero == TRUE & any(val == as.integer(val) & !is.na(val))) {
     val[val == as.integer(val)] <- paste0(val[val == as.integer(val)], ".", strrep(0, round))
   }
-  base::paste0(val, "%")
+  pct <- base::paste0(val, "%")
+  pct[pct == "NA%"] <- NA_character_
+  pct
 }
 
 check_available_columns <- function(tbl, col.list, info = TRUE) {

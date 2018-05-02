@@ -16,40 +16,164 @@
 # GNU General Public License for more details.                         #
 # ==================================================================== #
 
-#' Resistance of isolates in data.frame
+#' Resistance of isolates
 #'
-#' \strong{NOTE: use \code{\link{rsi}} in dplyr functions like \code{\link[dplyr]{summarise}}.} \cr Calculate the percentage of S, SI, I, IR or R of a \code{data.frame} containing isolates.
+#' This functions can be used to calculate the (co-)resistance of isolates (i.e. percentage S, SI, I, IR or R [of a vector] of isolates). The functions \code{rsi} and \code{n_rsi} can be used in \code{dplyr}s \code{\link[dplyr]{summarise}} and support grouped variables, see \emph{Examples}.
 #' @param tbl \code{data.frame} containing columns with antibiotic interpretations.
 #' @param ab character vector with 1, 2 or 3 antibiotics that occur as column names in \code{tbl}, like \code{ab = c("amox", "amcl")}
+#' @param ab1,ab2 vector of antibiotic interpretations, they will be transformed internally with \code{\link{as.rsi}}
 #' @param interpretation antimicrobial interpretation of which the portion must be calculated. Valid values are \code{"S"}, \code{"SI"}, \code{"I"}, \code{"IR"} or \code{"R"}.
 #' @param minimum minimal amount of available isolates. Any number lower than \code{minimum} will return \code{NA} with a warning (when \code{warning = TRUE}).
-#' @param percent return output as percent (text), will else (at default) be a double
+#' @param as_percent return output as percent (text), will else (at default) be a double
 #' @param info calculate the amount of available isolates and print it, like \code{n = 423}
 #' @param warning show a warning when the available amount of isolates is below \code{minimum}
 #' @details Remember that you should filter your table to let it contain \strong{only first isolates}!
+#'
+#' To calculate the probability (\emph{p}) of susceptibility of one antibiotic, we use this formula:
+#' \if{html}{
+#'   \out{<div style="text-align: center">}\figure{mono_therapy.png}\out{</div>}
+#' }
+#' \if{latex}{
+#'   \deqn{p = \frac{\sum{ab1_S}}{\sum{ab1_{R|I|S}}}}
+#' }
+#' \cr
+#' To calculate the probability (\emph{p}) of susceptibility of more antibiotics a combination therapy, we need to check whether one of them has a susceptible result (as numerator) and count all cases where all antibiotics were tested (as denominator). \cr
+#' For two antibiotics:
+#' \if{html}{
+#'   \out{<div style="text-align: center">}\figure{combi_therapy_2.png}\out{</div>}
+#' }
+#' \if{latex}{
+#'   \deqn{p = \frac{\sum{ab1_S}\mid{ab2_S}}{\sum{ab1_{R|I|S},ab2_{R|I|S}}}}
+#' }
+#' \cr
+#' For three antibiotics:
+#' \if{html}{
+#'   \out{<div style="text-align: center">}\figure{combi_therapy_3.png}\out{</div>}
+#' }
+#' \if{latex}{
+#'   \deqn{p = \frac{\sum{ab1_S}\mid{ab2_S}\mid{ab3_S}}{\sum{ab1_{R|I|S},ab2_{R|I|S},ab3_{R|I|S}}}}
+#' }
+#'
 #' @keywords rsi antibiotics isolate isolates
-#' @return Double or, when \code{percent = TRUE}, a character.
+#' @return Double or, when \code{as_percent = TRUE}, a character.
+#' @rdname rsi
 #' @export
 #' @importFrom dplyr %>% n_distinct filter filter_at pull vars all_vars any_vars
-#' @seealso \code{\link{rsi}} for the function that can be used with \code{\link[dplyr]{summarise}} directly.
 #' @examples
-#' \dontrun{
-#' rsi_df(tbl_with_bloodcultures, 'amcl')
-#'
-#' rsi_df(tbl_with_bloodcultures, c('amcl', 'gent'), interpretation = 'IR')
-#'
 #' library(dplyr)
-#' # calculate current empiric therapy of Helicobacter gastritis:
+#'
+#' septic_patients %>%
+#'   group_by(hospital_id) %>%
+#'   summarise(cipro_susceptibility = rsi(cipr, interpretation = "S"),
+#'             n = n_rsi(cipr)) # n_rsi works like n_distinct in dplyr
+#'
+#' septic_patients %>%
+#'   group_by(hospital_id) %>%
+#'   summarise(cipro_S = rsi(cipr, interpretation = "S",
+#'                           as_percent = TRUE, warning = FALSE),
+#'             cipro_n = n_rsi(cipr),
+#'             genta_S = rsi(gent, interpretation = "S",
+#'                           as_percent = TRUE, warning = FALSE),
+#'             genta_n = n_rsi(gent),
+#'             combination_S = rsi(cipr, gent, interpretation = "S",
+#'                                 as_percent = TRUE, warning = FALSE),
+#'             combination_n = n_rsi(cipr, gent))
+#'
+#' # calculate resistance
+#' rsi(septic_patients$amox)
+#' # or susceptibility
+#' rsi(septic_patients$amox, interpretation = "S")
+#'
+#' # calculate co-resistance between amoxicillin/clav acid and gentamicin,
+#' # so we can review that combination therapy does a lot more than mono therapy:
+#' septic_patients %>% rsi_df(ab = "amcl", interpretation = "S") # = 67.8%
+#' septic_patients %>% rsi_df(ab = "gent", interpretation = "S") # = 69.1%
+#' septic_patients %>% rsi_df(ab = c("amcl", "gent"), interpretation = "S") # = 90.6%
+#'
+#' \dontrun{
+#' # calculate current empiric combination therapy of Helicobacter gastritis:
 #' my_table %>%
 #'   filter(first_isolate == TRUE,
 #'          genus == "Helicobacter") %>%
-#'   rsi_df(ab = c("amox", "metr"))
+#'   rsi_df(ab = c("amox", "metr")) # amoxicillin with metronidazole
 #' }
+rsi <- function(ab1,
+                ab2 = NA,
+                interpretation = 'IR',
+                minimum = 30,
+                as_percent = FALSE,
+                info = FALSE,
+                warning = TRUE) {
+  ab1.name <- deparse(substitute(ab1))
+  if (ab1.name %like% '.[$].') {
+    ab1.name <- unlist(strsplit(ab1.name, "$", fixed = TRUE))
+    ab1.name <- ab1.name[length(ab1.name)]
+  }
+  if (!ab1.name %like% '^[a-z]{3,4}$') {
+    ab1.name <- 'rsi1'
+  }
+  if (length(ab1) == 1 & is.character(ab1)) {
+    stop('`ab1` must be a vector of antibiotic interpretations.',
+         '\n  Try rsi(', ab1, ', ...) instead of rsi("', ab1, '", ...)', call. = FALSE)
+  }
+  ab2.name <- deparse(substitute(ab2))
+  if (ab2.name %like% '.[$].') {
+    ab2.name <- unlist(strsplit(ab2.name, "$", fixed = TRUE))
+    ab2.name <- ab2.name[length(ab2.name)]
+  }
+  if (!ab2.name %like% '^[a-z]{3,4}$') {
+    ab2.name <- 'rsi2'
+  }
+  if (length(ab2) == 1 & is.character(ab2)) {
+    stop('`ab2` must be a vector of antibiotic interpretations.',
+         '\n  Try rsi(', ab2, ', ...) instead of rsi("', ab2, '", ...)', call. = FALSE)
+  }
+
+  interpretation <- paste(interpretation, collapse = "")
+
+  ab1 <- as.rsi(ab1)
+  ab2 <- as.rsi(ab2)
+
+  tbl <- tibble(rsi1 = ab1, rsi2 = ab2)
+  colnames(tbl) <- c(ab1.name, ab2.name)
+
+  if (length(ab2) == 1) {
+    r <- rsi_df(tbl = tbl,
+                ab = ab1.name,
+                interpretation = interpretation,
+                minimum = minimum,
+                as_percent = FALSE,
+                info = info,
+                warning = warning)
+  } else {
+    if (length(ab1) != length(ab2)) {
+      stop('`ab1` (n = ', length(ab1), ') and `ab2` (n = ', length(ab2), ') must be of same length.', call. = FALSE)
+    }
+    if (!interpretation %in% c('S', 'IS', 'SI')) {
+      warning('`interpretation` not set to S or I/S, albeit analysing a combination therapy.', call. = FALSE)
+    }
+    r <- rsi_df(tbl = tbl,
+                ab = c(ab1.name, ab2.name),
+                interpretation = interpretation,
+                minimum = minimum,
+                as_percent = FALSE,
+                info = info,
+                warning = warning)
+  }
+  if (as_percent == TRUE) {
+    percent(r, force_zero = TRUE)
+  } else {
+    r
+  }
+}
+
+#' @export
+#' @rdname rsi
 rsi_df <- function(tbl,
                    ab,
                    interpretation = 'IR',
                    minimum = 30,
-                   percent = FALSE,
+                   as_percent = FALSE,
                    info = TRUE,
                    warning = TRUE) {
 
@@ -103,6 +227,9 @@ rsi_df <- function(tbl,
       nrow()
 
   } else if (length(ab) == 2) {
+    if (interpretations_to_check != 'S') {
+      warning('`interpretation` not set to S or I/S, albeit analysing a combination therapy.', call. = FALSE)
+    }
     numerator <- tbl %>%
       filter_at(vars(ab[1], ab[2]),
                 any_vars(. == interpretations_to_check)) %>%
@@ -116,6 +243,9 @@ rsi_df <- function(tbl,
       nrow()
 
   } else if (length(ab) == 3) {
+    if (interpretations_to_check != 'S') {
+      warning('`interpretation` not set to S or I/S, albeit analysing a combination therapy.', call. = FALSE)
+    }
     numerator <- tbl %>%
       filter_at(vars(ab[1], ab[2], ab[3]),
                 any_vars(. == interpretations_to_check)) %>%
@@ -150,9 +280,10 @@ rsi_df <- function(tbl,
 
   # calculate and format
   y <- numerator / denominator
-  if (percent == TRUE) {
-    y <- percent(y)
+  if (as_percent == TRUE) {
+   y <- percent(y, force_zero = TRUE)
   }
+
   if (denominator < minimum) {
     if (warning == TRUE) {
       warning(paste0('TOO FEW ISOLATES OF ', toString(ab), ' (n = ', denominator, ', n < ', minimum, '); NO RESULT.'))
@@ -164,78 +295,29 @@ rsi_df <- function(tbl,
   y
 }
 
-#' Resistance of isolates
-#'
-#' This function can be used in \code{dplyr}s \code{\link[dplyr]{summarise}}, see \emph{Examples}. Calculate the percentage S, SI, I, IR or R of a vector of isolates.
-#' @param ab1,ab2 list with interpretations of an antibiotic
-#' @inheritParams rsi_df
-#' @details This function uses the \code{\link{rsi_df}} function internally.
-#' @keywords rsi antibiotics isolate isolates
-#' @return Double or, when \code{percent = TRUE}, a character.
 #' @export
-#' @examples
-#' \dontrun{
-#' tbl %>%
-#'   group_by(hospital) %>%
-#'   summarise(cipr = rsi(cipr))
-#'
-#' tbl %>%
-#'   group_by(year, hospital) %>%
-#'   summarise(
-#'     isolates = n(),
-#'     cipro = rsi(cipr %>% as.rsi(), percent = TRUE),
-#'     amoxi = rsi(amox %>% as.rsi(), percent = TRUE))
-#'
-#' rsi(as.rsi(isolates$amox))
-#'
-#' rsi(as.rsi(isolates$amcl), interpretation = "S")
-#' }
-rsi <- function(ab1, ab2 = NA, interpretation = 'IR', minimum = 30, percent = FALSE, info = FALSE, warning = FALSE) {
-  ab1.name <- deparse(substitute(ab1))
-  if (ab1.name %like% '.[$].') {
-    ab1.name <- unlist(strsplit(ab1.name, "$", fixed = TRUE))
-    ab1.name <- ab1.name[length(ab1.name)]
-  }
-  if (!ab1.name %like% '^[a-z]{3,4}$') {
-    ab1.name <- 'rsi1'
-  }
-  ab2.name <- deparse(substitute(ab2))
-  if (ab2.name %like% '.[$].') {
-    ab2.name <- unlist(strsplit(ab2.name, "$", fixed = TRUE))
-    ab2.name <- ab2.name[length(ab2.name)]
-  }
-  if (!ab2.name %like% '^[a-z]{3,4}$') {
-    ab2.name <- 'rsi2'
-  }
+#' @rdname rsi
+n_rsi <- function(ab1, ab2 = NA) {
 
-  interpretation <- paste(interpretation, collapse = "")
+  if (length(ab1) == 1 & is.character(ab1)) {
+    stop('`ab1` must be a vector of antibiotic interpretations.',
+         '\n  Try n_rsi(', ab1, ', ...) instead of n_rsi("', ab1, '", ...)', call. = FALSE)
+  }
+  ab1 <- as.rsi(ab1)
 
-  tbl <- tibble(rsi1 = ab1, rsi2 = ab2)
-  colnames(tbl) <- c(ab1.name, ab2.name)
-
-  if (length(ab2) == 1) {
-    return(rsi_df(tbl = tbl,
-                  ab = ab1.name,
-                  interpretation = interpretation,
-                  minimum = minimum,
-                  percent = percent,
-                  info = info,
-                  warning = warning))
+  if (length(ab2) == 1 & all(is.na(ab2))) {
+    # only 1 antibiotic
+    length(ab1[!is.na(ab1)])
   } else {
-    if (length(ab1) != length(ab2)) {
-      stop('`ab1` (n = ', length(ab1), ') and `ab2` (n = ', length(ab2), ') must be of same length.', call. = FALSE)
+    if (length(ab2) == 1 & is.character(ab2)) {
+      stop('`ab2` must be a vector of antibiotic interpretations.',
+           '\n  Try n_rsi(', ab2, ', ...) instead of n_rsi("', ab2, '", ...)', call. = FALSE)
     }
-    if (interpretation != 'S') {
-      warning('`interpretation` is not set to S, albeit analysing a combination therapy.')
-    }
-    return(rsi_df(tbl = tbl,
-                  ab = c(ab1.name, ab2.name),
-                  interpretation = interpretation,
-                  minimum = minimum,
-                  percent = percent,
-                  info = info,
-                  warning = warning))
+    ab2 <- as.rsi(ab2)
+    tbl <- tibble(ab1, ab2)
+    tbl %>% filter(!is.na(ab1) & !is.na(ab2)) %>% nrow()
   }
+
 }
 
 #' Predict antimicrobial resistance

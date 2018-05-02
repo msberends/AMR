@@ -10,7 +10,7 @@ This R package contains functions to make **microbiological, epidemiological dat
 
 With `AMR` you can also:
 * Create frequency tables with the `freq` function
-* Conduct AMR analysis with the `rsi` function, that can also be used with the `dplyr` package (e.g. in conjunction with `summarise`) to calculate the resistance percentages of different antibiotic columns of a table
+* Conduct AMR analysis with the `rsi` function, that can also be used with the `dplyr` package (e.g. in conjunction with `summarise`) to calculate the resistance percentages (and even co-resistance) of different antibiotic columns of a table
 * Predict antimicrobial resistance for the nextcoming years with the `rsi_predict` function
 * Apply [EUCAST rules to isolates](http://www.eucast.org/expert_rules_and_intrinsic_resistance/) with the `EUCAST_rules` function
 * Identify first isolates of every patient [using guidelines from the CLSI](https://clsi.org/standards/products/microbiology/documents/m39/) (Clinical and Laboratory Standards Institute) with the `first_isolate` function
@@ -264,13 +264,16 @@ abname("J01CR02", from = "atc", to = "umcg") # "AMCL"
 ### Databases included in package
 Datasets to work with antibiotics and bacteria properties.
 ```r
-# Dataset with 2000 random blood culture isolates from anonymised septic patients between 2001 and 2017 in 5 Dutch hospitals
+# Dataset with 2000 random blood culture isolates from anonymised
+# septic patients between 2001 and 2017 in 5 Dutch hospitals
 septic_patients   # A tibble: 4,000 x 47
 
-# Dataset with ATC antibiotics codes, official names, trade names and DDD's (oral and parenteral)
+# Dataset with ATC antibiotics codes, official names, trade names 
+# and DDD's (oral and parenteral)
 antibiotics       # A tibble: 420 x 18
 
-# Dataset with bacteria codes and properties like gram stain and aerobic/anaerobic
+# Dataset with bacteria codes and properties like gram stain and 
+# aerobic/anaerobic
 microorganisms    # A tibble: 2,453 x 12
 ```
 

@@ -50,6 +50,7 @@ table with edited variables of antibiotics.
 Apply expert rules (like intrinsic resistance), as defined by the European Committee on Antimicrobial Susceptibility Testing (EUCAST, \url{http://eucast.org}), see \emph{Source}.
 }
 \examples{
+a <- EUCAST_rules(septic_patients)
 a <- data.frame(bactid = c("STAAUR",  # Staphylococcus aureus
                            "ENCFAE",  # Enterococcus faecalis
                            "ESCCOL",  # Escherichia coli

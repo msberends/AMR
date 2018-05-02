@@ -2,6 +2,7 @@
 #### New
 * Full support for Windows, Linux and macOS
 * Full support for old R versions, only R-3.0.0 (April 2013) or later is needed (needed packages may have other dependencies)
+* Function `n_rsi` to count cases where antibiotic test results were available, to be used in conjunction with `dplyr::summarise`, see ?rsi
 * Function `guess_bactid` to **determine the ID** of a microorganism based on genus/species or known abbreviations like MRSA
 * Function `guess_atc` to **determine the ATC** of an antibiotic based on name, trade name, or known abbreviations
 * Function `freq` to create **frequency tables**, with additional info in a header
@@ -13,6 +14,7 @@
 * New print format for `tibble`s and `data.table`s
 
 #### Changed
+* Fixed `rsi` class for vectors that contain only invalid antimicrobial interpretations
 * Renamed dataset `ablist` to `antibiotics`
 * Renamed dataset `bactlist` to `microorganisms`
 * Added common abbreviations and trade names to the `antibiotics` dataset

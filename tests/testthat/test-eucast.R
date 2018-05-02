@@ -1,6 +1,8 @@
 context("eucast.R")
 
 test_that("EUCAST rules work", {
+  a <- EUCAST_rules(septic_patients)
+
   a <- data.frame(bactid = c("KLEPNE",  # Klebsiella pneumoniae
                              "PSEAER",  # Pseudomonas aeruginosa
                              "ENTAER"), # Enterobacter aerogenes

@@ -29,6 +29,7 @@
 #' @name print
 #' @importFrom dplyr %>% n_groups group_vars group_size filter pull select
 #' @importFrom data.table data.table
+#' @importFrom utils object.size
 #' @exportMethod print.tbl_df
 #' @export
 #' @examples
@@ -191,7 +192,8 @@ prettyprint_df <- function(x,
   if (n + 1 < nrow(x)) {
     # remove in between part, 1 extra for ~~~~ between first and last part
     rows_list <- c(1:(n / 2 + 1), (nrow(x) - (n / 2) + 1):nrow(x))
-    x <- x %>% filter(row_number() %in% rows_list)
+    x <- as.data.frame(x.bak[rows_list,])
+    colnames(x) <- colnames(x.bak)
     rownames(x) <- rownames(x.bak)[rows_list]
     # set inbetweener between parts
     rownames(x)[n / 2 + 1] <- strrep("~", maxrowchars)
@@ -218,7 +220,11 @@ prettyprint_df <- function(x,
                      gsub('POSIX', '', .) %>%
                      paste0(collapse = '/'))
           } else {
-            c[[1]]
+            if (NCOL(.) > 1) {
+              .[1,]
+            } else {
+              c[[1]]
+            }
           }
         }) %>%
       unlist() %>%
