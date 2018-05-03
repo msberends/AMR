@@ -39,30 +39,16 @@ This functions can be used to calculate the (co-)resistance of isolates (i.e. pe
 }
 \details{
 Remember that you should filter your table to let it contain \strong{only first isolates}!
-
-To calculate the probability (\emph{p}) of susceptibility of one antibiotic, we use this formula:
 \if{html}{
+  \cr \cr
+  To calculate the probability (\emph{p}) of susceptibility of one antibiotic, we use this formula:
   \out{<div style="text-align: center">}\figure{mono_therapy.png}\out{</div>}
-}
-\if{latex}{
-  \deqn{p = \frac{\sum{ab1_S}}{\sum{ab1_{R|I|S}}}}
-}
-\cr
-To calculate the probability (\emph{p}) of susceptibility of more antibiotics a combination therapy, we need to check whether one of them has a susceptible result (as numerator) and count all cases where all antibiotics were tested (as denominator). \cr
-For two antibiotics:
-\if{html}{
+  To calculate the probability (\emph{p}) of susceptibility of more antibiotics (i.e. combination therapy), we need to check whether one of them has a susceptible result (as numerator) and count all cases where all antibiotics were tested (as denominator). \cr
+  For two antibiotics:
   \out{<div style="text-align: center">}\figure{combi_therapy_2.png}\out{</div>}
-}
-\if{latex}{
-  \deqn{p = \frac{\sum{ab1_S}\mid{ab2_S}}{\sum{ab1_{R|I|S},ab2_{R|I|S}}}}
-}
-\cr
-For three antibiotics:
-\if{html}{
+  \cr
+  For three antibiotics:
   \out{<div style="text-align: center">}\figure{combi_therapy_3.png}\out{</div>}
-}
-\if{latex}{
-  \deqn{p = \frac{\sum{ab1_S}\mid{ab2_S}\mid{ab3_S}}{\sum{ab1_{R|I|S},ab2_{R|I|S},ab3_{R|I|S}}}}
 }
 }
 \examples{
