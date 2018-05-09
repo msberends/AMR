@@ -1,4 +1,13 @@
-# 0.2.0
+# 0.2.9000 (development version)
+#### New
+* Vignettes about frequency tables: [vignettes/freq.html](vignettes/freq.html)
+* Possibility to globally set the default for the amount of items to print in frequency tables (`freq` function), with `options(max.print.freq = n)`
+
+#### Changed
+* Renamed `toConsole` parameter of `freq` to `as.data.frame`
+* Small translational improvements to the `septic_patients` dataset
+
+# 0.2.0 (latest stable version)
 #### New
 * Full support for Windows, Linux and macOS
 * Full support for old R versions, only R-3.0.0 (April 2013) or later is needed (needed packages may have other dependencies)

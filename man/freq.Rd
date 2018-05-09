@@ -5,24 +5,26 @@
 \alias{frequency_tbl}
 \title{Frequency table}
 \usage{
-freq(x, sort.count = TRUE, nmax = 15, na.rm = TRUE, markdown = FALSE,
-  toConsole = TRUE, digits = 2, sep = " ")
+freq(x, sort.count = TRUE, nmax = getOption("max.print.freq"),
+  na.rm = TRUE, markdown = FALSE, as.data.frame = FALSE, digits = 2,
+  sep = " ")
 
-frequency_tbl(x, sort.count = TRUE, nmax = 15, na.rm = TRUE,
-  markdown = FALSE, toConsole = TRUE, digits = 2, sep = " ")
+frequency_tbl(x, sort.count = TRUE, nmax = getOption("max.print.freq"),
+  na.rm = TRUE, markdown = FALSE, as.data.frame = FALSE, digits = 2,
+  sep = " ")
 }
 \arguments{
 \item{x}{data}
 
 \item{sort.count}{Sort on count. Use \code{FALSE} to sort alphabetically on item.}
 
-\item{nmax}{number of row to print. Use \code{nmax = 0} or \code{nmax = NA} to print all rows.}
+\item{nmax}{number of row to print. The default, \code{15}, uses \code{\link[base]{getOption}("max.print.freq")}. Use \code{nmax = 0} or \code{nmax = NA} to print all rows.}
 
-\item{na.rm}{a logical value indicating whether NA values should be removed from the frequency table. The header will always print the amount of\code{NA}s.}
+\item{na.rm}{a logical value indicating whether NA values should be removed from the frequency table. The header will always print the amount of \code{NA}s.}
 
 \item{markdown}{print table in markdown format (this forces \code{nmax = NA})}
 
-\item{toConsole}{Print table to the console. Use \code{FALSE} to assign the table to an object.}
+\item{as.data.frame}{return frequency table without header as a \code{data.frame} (e.g. to assign the table to an object)}
 
 \item{digits}{how many significant digits are to be used for numeric values (not for the items themselves, that depends on \code{\link{getOption}("digits")})}
 
@@ -37,7 +39,7 @@ For numeric values, the next values will be calculated and shown into the header
   \item{Mean, using \code{\link[base]{mean}}}
   \item{Standard deviation, using \code{\link[stats]{sd}}}
   \item{Five numbers of Tukey (min, Q1, median, Q3, max), using \code{\link[stats]{fivenum}}}
-  \item{Outliers (count and list), using \code{\link{boxplot.stats}}}
+  \item{Outliers (total count and unique count), using \code{\link{boxplot.stats}}}
   \item{Coefficient of variation (CV), the standard deviation divided by the mean}
   \item{Coefficient of quartile variation (CQV, sometimes called coefficient of dispersion), calculated as \code{(Q3 - Q1) / (Q3 + Q1)} using \code{\link{quantile}} with \code{type = 6} as quantile algorithm to comply with SPSS standards}
 }
@@ -63,7 +65,7 @@ septic_patients \%>\%
 years <- septic_patients \%>\%
   mutate(year = format(date, "\%Y")) \%>\%
   select(year) \%>\%
-  freq(toConsole = FALSE)
+  freq(as.data.frame = TRUE)
 }
 \keyword{freq}
 \keyword{frequency}

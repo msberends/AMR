@@ -3,7 +3,7 @@
 
 [![logo_rug](man/figures/logo_rug.png)](https://www.rug.nl)[![logo_umcg](man/figures/logo_umcg.png)](https://www.umcg.nl)
 
-This R package was created for academic research by PhD students of the Faculty of Medical Sciences of the [University of Groningen)](https://www.rug.nl) and the Medical Microbiology & Infection Prevention (MMBI) department of the [University Medical Center Groningen (UMCG)](https://www.umcg.nl). See [Authors](#authors).
+This R package was created for academic research by PhD students of the Faculty of Medical Sciences of the [University of Groningen](https://www.rug.nl) and the Medical Microbiology & Infection Prevention (MMBI) department of the [University Medical Center Groningen (UMCG)](https://www.umcg.nl). See [Authors](#authors).
 
 ## Why this package?
 This R package contains functions to make **microbiological, epidemiological data analysis easier**. It allows the use of some new classes to work with MIC values and antimicrobial interpretations (i.e. values S, I and R).

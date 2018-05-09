@@ -21,10 +21,10 @@
 #' Create a frequency table of a vector of data, a single column or a maximum of 9 columns of a data frame. Supports markdown for reports.
 #' @param x data
 #' @param sort.count Sort on count. Use \code{FALSE} to sort alphabetically on item.
-#' @param nmax number of row to print. Use \code{nmax = 0} or \code{nmax = NA} to print all rows.
-#' @param na.rm a logical value indicating whether NA values should be removed from the frequency table. The header will always print the amount of\code{NA}s.
+#' @param nmax number of row to print. The default, \code{15}, uses \code{\link[base]{getOption}("max.print.freq")}. Use \code{nmax = 0} or \code{nmax = NA} to print all rows.
+#' @param na.rm a logical value indicating whether NA values should be removed from the frequency table. The header will always print the amount of \code{NA}s.
 #' @param markdown print table in markdown format (this forces \code{nmax = NA})
-#' @param toConsole Print table to the console. Use \code{FALSE} to assign the table to an object.
+#' @param as.data.frame return frequency table without header as a \code{data.frame} (e.g. to assign the table to an object)
 #' @param digits how many significant digits are to be used for numeric values (not for the items themselves, that depends on \code{\link{getOption}("digits")})
 #' @param sep a character string to separate the terms when selecting multiple columns
 #' @details For numeric values, the next values will be calculated and shown into the header:
@@ -32,7 +32,7 @@
 #'   \item{Mean, using \code{\link[base]{mean}}}
 #'   \item{Standard deviation, using \code{\link[stats]{sd}}}
 #'   \item{Five numbers of Tukey (min, Q1, median, Q3, max), using \code{\link[stats]{fivenum}}}
-#'   \item{Outliers (count and list), using \code{\link{boxplot.stats}}}
+#'   \item{Outliers (total count and unique count), using \code{\link{boxplot.stats}}}
 #'   \item{Coefficient of variation (CV), the standard deviation divided by the mean}
 #'   \item{Coefficient of quartile variation (CQV, sometimes called coefficient of dispersion), calculated as \code{(Q3 - Q1) / (Q3 + Q1)} using \code{\link{quantile}} with \code{type = 6} as quantile algorithm to comply with SPSS standards}
 #' }
@@ -63,13 +63,13 @@
 #' years <- septic_patients %>%
 #'   mutate(year = format(date, "%Y")) %>%
 #'   select(year) %>%
-#'   freq(toConsole = FALSE)
+#'   freq(as.data.frame = TRUE)
 freq <- function(x,
                  sort.count = TRUE,
-                 nmax = 15,
+                 nmax = getOption("max.print.freq"),
                  na.rm = TRUE,
                  markdown = FALSE,
-                 toConsole = TRUE,
+                 as.data.frame = FALSE,
                  digits = 2,
                  sep = " ") {
 
@@ -156,8 +156,8 @@ freq <- function(x,
       stop('A maximum of 9 columns can be analysed at the same time.', call. = FALSE)
     }
   }
-  if (markdown == TRUE & toConsole == FALSE) {
-    warning('`toConsole = FALSE` will be ignored when `markdown = TRUE`.')
+  if (markdown == TRUE & as.data.frame == TRUE) {
+    warning('`as.data.frame = TRUE` will be ignored when `markdown = TRUE`.')
   }
 
   if (mult.columns > 1) {
@@ -232,7 +232,7 @@ freq <- function(x,
     x <- x %>% format(formatdates)
   }
 
-  if (toConsole == TRUE) {
+  if (as.data.frame == FALSE) {
     cat(header)
   }
 
@@ -244,22 +244,30 @@ freq <- function(x,
     warning('All observations are unique.', call. = FALSE)
   }
 
-  if (nmax == 0 | is.na(nmax)) {
+  nmax.set <- !missing(nmax)
+  if (is.null(nmax) & is.null(base::getOption("max.print.freq", default = NULL))) {
+    # default for max print setting
+    nmax <- 15
+  }
+
+  if (nmax == 0 | is.na(nmax) | is.null(nmax)) {
     nmax <- length(x)
   }
   nmax.1 <- min(length(x), nmax + 1)
 
   # create table with counts and percentages
+  column_names <- c('Item', 'Count', 'Percent', 'Cum. Count', 'Cum. Percent', '(Factor Level)')
+  column_names_df <- c('item', 'count', 'percent', 'cum_count', 'cum_percent', 'factor_level')
   if (any(class(x) == 'factor')) {
     df <- tibble::tibble(Item = x,
                          Fctlvl = x %>% as.integer()) %>%
       group_by(Item, Fctlvl)
-    column_names <- c('Item', 'Count', 'Percent', 'Cum. Count', 'Cum. Percent', '(Factor Level)')
     column_align <- c('l', 'r', 'r', 'r', 'r', 'r')
   } else {
     df <- tibble::tibble(Item = x) %>%
       group_by(Item)
-    column_names <- c('Item', 'Count', 'Percent', 'Cum. Count', 'Cum. Percent')
+    column_names <- column_names[1:5] # strip factor lvl
+    column_names_df <- column_names_df[1:5] # strip factor lvl
     column_align <- c(x_align, 'r', 'r', 'r', 'r')
   }
   df <- df %>%
@@ -276,10 +284,10 @@ freq <- function(x,
 
   # sort according to setting
   if (sort.count == TRUE) {
-    df <- df %>% arrange(desc(Count))
+    df <- df %>% arrange(desc(Count), Item)
   } else {
     if (any(class(x) == 'factor')) {
-      df <- df %>% arrange(Fctlvl)
+      df <- df %>% arrange(Fctlvl, Item)
     } else {
       df <- df %>% arrange(Item)
     }
@@ -295,65 +303,68 @@ freq <- function(x,
     df <- df %>% select(Item, Count, Percent, Cum, CumTot, Fctlvl)
   }
 
+  if (as.data.frame == TRUE) {
+    # assign to object
+    df[, 3] <- df[, 2] / sum(df[, 2], na.rm = TRUE)
+    df[, 4] <- cumsum(df[, 2])
+    df[, 5] <- df[, 4] / sum(df[, 2], na.rm = TRUE)
+    colnames(df) <- column_names_df
+    return(as.data.frame(df, stringsAsFactors = FALSE))
+  }
+
   if (markdown == TRUE) {
     tblformat <- 'markdown'
   } else {
     tblformat <- 'pandoc'
   }
 
-  if (toConsole == FALSE) {
-    # assign to object
-    df[, 3] <- df[, 2] / sum(df[, 2], na.rm = TRUE)
-    df[, 4] <- cumsum(df[, 2])
-    df[, 5] <- df[, 4] / sum(df[, 2], na.rm = TRUE)
-    return(df)
+  # save old NA setting for kable
+  opt.old <- options()$knitr.kable.NA
+  options(knitr.kable.NA = "<NA>")
 
-  } else {
+  Count.rest <- sum(df[nmax.1:nrow(df), 'Count'], na.rm = TRUE)
+  if (any(class(x) %in% c('double', 'integer', 'numeric', 'raw', 'single'))) {
+    df <- df %>% mutate(Item = format(Item))
+  }
+  df <- df %>% mutate(Count = format(Count))
 
-    # save old NA setting for kable
-    opt.old <- options()$knitr.kable.NA
-    options(knitr.kable.NA = "<NA>")
-
-    Count.rest <- sum(df[nmax.1:nrow(df), 'Count'], na.rm = TRUE)
-    if (any(class(x) %in% c('double', 'integer', 'numeric', 'raw', 'single'))) {
-      df <- df %>% mutate(Item = format(Item))
-    }
-    df <- df %>% mutate(Count = format(Count))
-
-    if (nrow(df) > nmax.1 & markdown == FALSE) {
-      df2 <- df[1:nmax,]
-      print(
-        knitr::kable(df2,
-                     format = tblformat,
-                     col.names = column_names,
-                     align = column_align,
-                     padding = 1)
-      )
-      cat('... and ',
-          format(nrow(df) - nmax),
-          ' more ',
-          paste0('(n = ',
-                 format(Count.rest),
-                 '; ',
-                 (Count.rest / length(x)) %>% percent(force_zero = TRUE),
-                 ')'),
-          '. Use `nmax` to show more rows.\n', sep = '')
-
-    } else {
-      print(
-        knitr::kable(df,
-                     format = tblformat,
-                     col.names = column_names,
-                     align = column_align,
-                     padding = 1)
-      )
+  if (nrow(df) > nmax.1 & markdown == FALSE) {
+    df2 <- df[1:nmax,]
+    print(
+      knitr::kable(df2,
+                   format = tblformat,
+                   col.names = column_names,
+                   align = column_align,
+                   padding = 1)
+    )
+    cat('... and ',
+        format(nrow(df) - nmax),
+        ' more ',
+        paste0('(n = ',
+               format(Count.rest),
+               '; ',
+               (Count.rest / length(x)) %>% percent(force_zero = TRUE),
+               ')'),
+        '.', sep = '')
+    if (nmax.set == FALSE) {
+      cat(' Use `nmax` to show more or less rows.')
     }
     cat('\n')
 
-    # reset old kable setting
-    options(knitr.kable.NA = opt.old)
-    return(invisible())
+  } else {
+    print(
+      knitr::kable(df,
+                   format = tblformat,
+                   col.names = column_names,
+                   align = column_align,
+                   padding = 1)
+    )
   }
+  cat('\n')
+
+  # reset old kable setting
+  options(knitr.kable.NA = opt.old)
+  return(invisible())
 }
 
 #' @rdname freq
