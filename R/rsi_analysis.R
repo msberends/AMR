@@ -184,19 +184,13 @@ rsi_df <- function(tbl,
   # transform when checking for different results
   if (interpretations_to_check %in% c('SI', 'IS')) {
     for (i in 1:length(ab)) {
-      lijst <- tbl[, ab[i]]
-      if ('I' %in% lijst) {
-        tbl[which(tbl[ab[i]] == 'I'), ][ab[i]] <- 'S'
-      }
+      tbl[which(tbl[, ab[i]] == 'I'), ab[i]] <- 'S'
     }
     interpretations_to_check <- 'S'
   }
   if (interpretations_to_check %in% c('RI', 'IR')) {
     for (i in 1:length(ab)) {
-      lijst <- tbl[, ab[i]]
-      if ('I' %in% lijst) {
-        tbl[which(tbl[ab[i]] == 'I'), ][ab[i]] <- 'R'
-      }
+      tbl[which(tbl[, ab[i]] == 'I'), ab[i]] <- 'R'
     }
     interpretations_to_check <- 'R'
   }
