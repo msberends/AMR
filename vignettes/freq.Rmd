@@ -105,7 +105,7 @@ So for example, the above frequency table quickly shows the median age of patien
 
 Frequencies of factors will be sorted on factor level instead of item count by default. This can be changed with the `sort.count` parameter. Frequency tables of factors always show the factor level as an additional last column.
 
-`sort.count` is `TRUE` by default, except for factors. Compare this default behaviour:
+`sort.count` is `TRUE` by default, except for factors. Compare this default behaviour...
 
 ```{r, echo = TRUE}
 septic_patients %>%
@@ -113,7 +113,7 @@ septic_patients %>%
   freq()
 ```
 
-To this, where items are now sorted on item count:
+... with this, where items are now sorted on count:
 
 ```{r, echo = TRUE}
 septic_patients %>%

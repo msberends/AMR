@@ -2,12 +2,12 @@ context("rsi_analysis.R")
 
 test_that("rsi works", {
   # amox resistance in `septic_patients` should be around 53.86%
-  expect_equal(rsi(septic_patients$amox), 0.5386, tolerance = 0.0001)
-  expect_equal(rsi(septic_patients$amox), 0.5386, tolerance = 0.0001)
+  expect_equal(rsi(septic_patients$amox), 0.5756, tolerance = 0.0001)
+  expect_equal(rsi(septic_patients$amox), 0.5756, tolerance = 0.0001)
   expect_equal(rsi_df(septic_patients,
                       ab = "amox",
                       info = FALSE),
-               0.5386,
+               0.5756,
                tolerance = 0.0001)
   # pita+genta susceptibility around 98.09%
   expect_equal(rsi(septic_patients$pita,

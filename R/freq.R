@@ -21,7 +21,7 @@
 #' Create a frequency table of a vector of data, a single column or a maximum of 9 columns of a data frame. Supports markdown for reports.
 #' @param x data
 #' @param sort.count Sort on count. Use \code{FALSE} to sort alphabetically on item.
-#' @param nmax number of row to print. The default, \code{15}, uses \code{\link[base]{getOption}("max.print.freq")}. Use \code{nmax = 0} or \code{nmax = NA} to print all rows.
+#' @param nmax number of row to print. The default, \code{15}, uses \code{\link{getOption}("max.print.freq")}. Use \code{nmax = 0} or \code{nmax = NA} to print all rows.
 #' @param na.rm a logical value indicating whether NA values should be removed from the frequency table. The header will always print the amount of \code{NA}s.
 #' @param markdown print table in markdown format (this forces \code{nmax = NA})
 #' @param as.data.frame return frequency table without header as a \code{data.frame} (e.g. to assign the table to an object)
@@ -337,18 +337,18 @@ freq <- function(x,
                    align = column_align,
                    padding = 1)
     )
-    cat('... and ',
-        format(nrow(df) - nmax),
-        ' more ',
-        paste0('(n = ',
-               format(Count.rest),
-               '; ',
-               (Count.rest / length(x)) %>% percent(force_zero = TRUE),
-               ')'),
-        '.', sep = '')
-    if (nmax.set == FALSE) {
-      cat(' Use `nmax` to show more or less rows.')
+    if (nmax.set == TRUE) {
+      cat('[ reached `nmax = ', nmax, '`', sep = '')
+    } else {
+      cat('[ reached getOption("max.print.freq")')
     }
+    cat(' -- omitted ',
+        format(nrow(df) - nmax),
+        ' entries, n = ',
+        format(Count.rest),
+        ' (',
+        (Count.rest / length(x)) %>% percent(force_zero = TRUE),
+        ') ]\n', sep = '')
     cat('\n')
 
   } else {

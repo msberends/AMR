@@ -1,4 +1,4 @@
-# 0.2.9000 (development version)
+# 0.2.0.9000 (development version)
 #### New
 * Vignettes about frequency tables
 * Possibility to globally set the default for the amount of items to print in frequency tables (`freq` function), with `options(max.print.freq = n)`
