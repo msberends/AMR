@@ -20,7 +20,7 @@
 #'
 #' Create a frequency table of a vector of data, a single column or a maximum of 9 columns of a data frame. Supports markdown for reports.
 #' @param x data
-#' @param sort.count Sort on count. Use \code{FALSE} to sort alphabetically on item.
+#' @param sort.count sort on count. Use \code{FALSE} to sort alphabetically on item.
 #' @param nmax number of row to print. The default, \code{15}, uses \code{\link{getOption}("max.print.freq")}. Use \code{nmax = 0} or \code{nmax = NA} to print all rows.
 #' @param na.rm a logical value indicating whether NA values should be removed from the frequency table. The header will always print the amount of \code{NA}s.
 #' @param markdown print table in markdown format (this forces \code{nmax = NA})

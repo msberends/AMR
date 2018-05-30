@@ -16,7 +16,7 @@ frequency_tbl(x, sort.count = TRUE, nmax = getOption("max.print.freq"),
 \arguments{
 \item{x}{data}
 
-\item{sort.count}{Sort on count. Use \code{FALSE} to sort alphabetically on item.}
+\item{sort.count}{sort on count. Use \code{FALSE} to sort alphabetically on item.}
 
 \item{nmax}{number of row to print. The default, \code{15}, uses \code{\link{getOption}("max.print.freq")}. Use \code{nmax = 0} or \code{nmax = NA} to print all rows.}
 

@@ -43,8 +43,8 @@ as.rsi <- function(x) {
     na_before <- x[is.na(x) | x == ''] %>% length()
     # remove all spaces
     x <- gsub(' {2,55}', '', x)
-    # disallow more than 3 characters
-    x[nchar(x) > 3] <- NA
+    # disallow more than 10 characters to start with
+    x[nchar(x) > 10] <- NA
     # remove all invalid characters
     x <- gsub('[^RSI]+', '', x %>% toupper())
     # needed for UMCG in cases of "S;S" but also "S;I"; the latter will be NA:
