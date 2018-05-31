@@ -42,12 +42,16 @@ as.rsi <- function(x) {
 
     na_before <- x[is.na(x) | x == ''] %>% length()
     # remove all spaces
-    x <- gsub(' {2,55}', '', x)
-    # disallow more than 10 characters to start with
-    x[nchar(x) > 10] <- NA
+    x <- gsub(' +', '', x)
+    # remove all MIC-like values: numbers, operators and periods
+    x <- gsub('[0-9.,<=>]+', '', x)
+    # disallow more than 3 characters
+    x[nchar(x) > 3] <- NA
+    # set to capitals
+    x <- toupper(x)
     # remove all invalid characters
-    x <- gsub('[^RSI]+', '', x %>% toupper())
-    # needed for UMCG in cases of "S;S" but also "S;I"; the latter will be NA:
+    x <- gsub('[^RSI]+', '', x)
+    # in cases of "S;S" keep S, but in case of "S;I" make it NA
     x <- gsub('^S+$', 'S', x)
     x <- gsub('^I+$', 'I', x)
     x <- gsub('^R+$', 'R', x)
@@ -65,7 +69,7 @@ as.rsi <- function(x) {
               list_missing, call. = FALSE)
     }
 
-    x <- x %>% toupper() %>% factor(levels = c("S", "I", "R"), ordered = TRUE)
+    x <- x %>% factor(levels = c("S", "I", "R"), ordered = TRUE)
     class(x) <- c('rsi', 'ordered', 'factor')
     attr(x, 'package') <- 'AMR'
     attr(x, 'package.version') <- packageDescription('AMR')$Version
@@ -147,7 +151,7 @@ plot.rsi <- function(x, ...) {
        ylim = c(0, ymax),
        ylab = 'Percentage',
        xlab = 'Antimicrobial Interpretation',
-       main = paste('Susceptibilty Analysis of', x_name),
+       main = paste('Susceptibility Analysis of', x_name),
        axes = FALSE,
        ...)
   # x axis
@@ -178,7 +182,7 @@ barplot.rsi <- function(height, ...) {
   barplot(table(x),
           col = c('green3', 'orange2', 'red3'),
           xlab = 'Antimicrobial Interpretation',
-          main = paste('Susceptibilty Analysis of', x_name),
+          main = paste('Susceptibility Analysis of', x_name),
           ylab = 'Frequency',
           axes = FALSE,
           ...)
@@ -215,16 +219,17 @@ as.mic <- function(x, na.rm = FALSE) {
     # comma to dot
     x <- gsub(',', '.', x, fixed = TRUE)
     # starting dots must start with 0
-    x <- gsub('^[.]', '0.', x)
+    x <- gsub('^[.]+', '0.', x)
     # <=0.2560.512 should be 0.512
     x <- gsub('.*[.].*[.]', '0.', x)
     # remove ending .0
-    x <- gsub('[.]0$', '', x)
+    x <- gsub('[.]+0$', '', x)
     # remove all after last digit
-    x <- gsub('[^0-9]$', '', x)
+    x <- gsub('[^0-9]+$', '', x)
     # remove last zeroes
     x <- gsub('[.]?0+$', '', x)
 
+    # these are alllowed MIC values and will be factor levels
     lvls <- c("<0.002", "<=0.002", "0.002", ">=0.002", ">0.002",
               "<0.003", "<=0.003", "0.003", ">=0.003", ">0.003",
               "<0.004", "<=0.004", "0.004", ">=0.004", ">0.004",
