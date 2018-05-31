@@ -1,4 +1,4 @@
-# 0.2.0.9000 (development version)
+# 0.2.0.90xx (development version)
 #### New
 * Vignettes about frequency tables
 * Possibility to globally set the default for the amount of items to print in frequency tables (`freq` function), with `options(max.print.freq = n)`
@@ -6,6 +6,8 @@
 #### Changed
 * Renamed `toConsole` parameter of `freq` to `as.data.frame`
 * Small translational improvements to the `septic_patients` dataset
+* Coerce RSI values from combined MIC/RSI values: `as.rsi("<=0.002; S")` will now return `"S"`
+* Fix for warning `hybrid evaluation forced for row_number` from the `dplyr` package v0.7.5 and above.
 
 # 0.2.0 (latest stable version)
 #### New

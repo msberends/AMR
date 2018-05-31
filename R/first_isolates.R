@@ -292,11 +292,14 @@ first_isolate <- function(tbl,
   }
 
   scope.size <- tbl %>%
-    filter(row_number() %>%
-             between(row.start,
-                     row.end),
-           genus != '') %>%
+    filter(
+      suppressWarnings(
+        row_number() %>% between(row.start,
+                                 row.end)
+      ),
+      genus != '') %>%
     nrow()
+
 
   # Analysis of first isolate ----
   all_first <- tbl %>%
@@ -336,13 +339,14 @@ first_isolate <- function(tbl,
       mutate(
         real_first_isolate =
           if_else(
-            between(row_number(), row.start, row.end)
+            suppressWarnings(between(row_number(), row.start, row.end))
             & genus != ''
             & (other_pat_or_mo
                | days_diff >= episode_days
                | key_ab_other),
             TRUE,
             FALSE))
+
     if (info == TRUE) {
       cat('\n')
     }
@@ -351,7 +355,7 @@ first_isolate <- function(tbl,
       mutate(
         real_first_isolate =
           if_else(
-            between(row_number(), row.start, row.end)
+            suppressWarnings(between(row_number(), row.start, row.end))
             & genus != ''
             & (other_pat_or_mo
                | days_diff >= episode_days),

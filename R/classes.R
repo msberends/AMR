@@ -44,7 +44,7 @@ as.rsi <- function(x) {
     # remove all spaces
     x <- gsub(' +', '', x)
     # remove all MIC-like values: numbers, operators and periods
-    x <- gsub('[0-9.,<=>]+', '', x)
+    x <- gsub('[0-9.,;:<=>]+', '', x)
     # disallow more than 3 characters
     x[nchar(x) > 3] <- NA
     # set to capitals

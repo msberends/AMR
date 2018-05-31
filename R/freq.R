@@ -349,7 +349,6 @@ freq <- function(x,
         ' (',
         (Count.rest / length(x)) %>% percent(force_zero = TRUE),
         ') ]\n', sep = '')
-    cat('\n')
 
   } else {
     print(

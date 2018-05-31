@@ -204,7 +204,12 @@ prettyprint_df <- function(x,
     # class will be marked up per column
     if (NROW(x.bak) > 0) {
       rownames.x <- rownames(x)
-      x <- x %>% filter(row_number() == 1) %>% rbind(x, stringsAsFactors = FALSE)
+      x <- x %>%
+        filter(
+          suppressWarnings(
+            row_number() == 1)
+        ) %>%
+        rbind(x, stringsAsFactors = FALSE)
       rownames(x) <- c('*', rownames.x)
     }
 
