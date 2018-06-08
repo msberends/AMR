@@ -22,7 +22,7 @@
 #' @param tbl a \code{data.frame} containing isolates.
 #' @param col_date column name of the result date (or date that is was received on the lab)
 #' @param col_patient_id column name of the unique IDs of the patients
-#' @param col_bactid column name of the unique IDs of the microorganisms (should occur in the \code{\link{microorganisms}} dataset)
+#' @param col_bactid column name of the unique IDs of the microorganisms (should occur in the \code{\link{microorganisms}} dataset). Get your bactid's with the function \code{\link{guess_bactid}}, that takes microorganism names as input.
 #' @param col_testcode column name of the test codes. Use \code{col_testcode = NA} to \strong{not} exclude certain test codes (like test codes for screening). In that case \code{testcodes_exclude} will be ignored. Supports tidyverse-like quotation.
 #' @param col_specimen column name of the specimen type or group
 #' @param col_icu column name of the logicals (\code{TRUE}/\code{FALSE}) whether a ward or department is an Intensive Care Unit (ICU)
@@ -291,15 +291,15 @@ first_isolate <- function(tbl,
     return(tbl %>% pull(real_first_isolate))
   }
 
-  scope.size <- tbl %>%
-    filter(
-      suppressWarnings(
+  # suppress warnings because dplyr want us to use library(dplyr) when using filter(row_number())
+  suppressWarnings(
+    scope.size <- tbl %>%
+      filter(
         row_number() %>% between(row.start,
-                                 row.end)
-      ),
-      genus != '') %>%
-    nrow()
-
+                                 row.end),
+        genus != '') %>%
+      nrow()
+  )
 
   # Analysis of first isolate ----
   all_first <- tbl %>%
@@ -328,39 +328,44 @@ first_isolate <- function(tbl,
       }
     }
     type_param <- type
-    all_first <- all_first %>%
-      mutate(key_ab_lag = lag(key_ab)) %>%
-      mutate(key_ab_other = !key_antibiotics_equal(x = key_ab,
-                                                   y = key_ab_lag,
-                                                   type = type_param,
-                                                   ignore_I = ignore_I,
-                                                   points_threshold = points_threshold,
-                                                   info = info)) %>%
-      mutate(
-        real_first_isolate =
-          if_else(
-            suppressWarnings(between(row_number(), row.start, row.end))
-            & genus != ''
-            & (other_pat_or_mo
-               | days_diff >= episode_days
-               | key_ab_other),
-            TRUE,
-            FALSE))
-
+    # suppress warnings because dplyr want us to use library(dplyr) when using filter(row_number())
+    suppressWarnings(
+      all_first <- all_first %>%
+        mutate(key_ab_lag = lag(key_ab)) %>%
+        mutate(key_ab_other = !key_antibiotics_equal(x = key_ab,
+                                                     y = key_ab_lag,
+                                                     type = type_param,
+                                                     ignore_I = ignore_I,
+                                                     points_threshold = points_threshold,
+                                                     info = info)) %>%
+        mutate(
+          real_first_isolate =
+            if_else(
+              between(row_number(), row.start, row.end)
+              & genus != ''
+              & (other_pat_or_mo
+                 | days_diff >= episode_days
+                 | key_ab_other),
+              TRUE,
+              FALSE))
+    )
     if (info == TRUE) {
       cat('\n')
     }
   } else {
-    all_first <- all_first %>%
-      mutate(
-        real_first_isolate =
-          if_else(
-            suppressWarnings(between(row_number(), row.start, row.end))
-            & genus != ''
-            & (other_pat_or_mo
-               | days_diff >= episode_days),
-            TRUE,
-            FALSE))
+    # suppress warnings because dplyr want us to use library(dplyr) when using filter(row_number())
+    suppressWarnings(
+      all_first <- all_first %>%
+        mutate(
+          real_first_isolate =
+            if_else(
+              between(row_number(), row.start, row.end)
+              & genus != ''
+              & (other_pat_or_mo
+                 | days_diff >= episode_days),
+              TRUE,
+              FALSE))
+    )
   }
 
   # first one as TRUE
@@ -402,8 +407,7 @@ first_isolate <- function(tbl,
 #' Key antibiotics based on bacteria ID
 #'
 #' @param tbl table with antibiotics coloms, like \code{amox} and \code{amcl}.
-#' @param col_bactid column of bacteria IDs in \code{tbl}; these should occur in \code{microorganisms$bactid}, see \code{\link{microorganisms}}
-#' @param info print warnings
+#' @inheritParams first_isolate
 #' @param amcl,amox,cfot,cfta,cftr,cfur,cipr,clar,clin,clox,doxy,gent,line,mero,peni,pita,rifa,teic,trsu,vanc column names of antibiotics, case-insensitive
 #' @export
 #' @importFrom dplyr %>% mutate if_else

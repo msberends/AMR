@@ -14,9 +14,9 @@ key_antibiotics(tbl, col_bactid = "bactid", info = TRUE, amcl = "amcl",
 \arguments{
 \item{tbl}{table with antibiotics coloms, like \code{amox} and \code{amcl}.}
 
-\item{col_bactid}{column of bacteria IDs in \code{tbl}; these should occur in \code{microorganisms$bactid}, see \code{\link{microorganisms}}}
+\item{col_bactid}{column name of the unique IDs of the microorganisms (should occur in the \code{\link{microorganisms}} dataset). Get your bactid's with the function \code{\link{guess_bactid}}, that takes microorganism names as input.}
 
-\item{info}{print warnings}
+\item{info}{print progress}
 
 \item{amcl, amox, cfot, cfta, cftr, cfur, cipr, clar, clin, clox, doxy, gent, line, mero, peni, pita, rifa, teic, trsu, vanc}{column names of antibiotics, case-insensitive}
 }

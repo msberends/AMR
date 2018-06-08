@@ -192,7 +192,7 @@ prettyprint_df <- function(x,
   if (n + 1 < nrow(x)) {
     # remove in between part, 1 extra for ~~~~ between first and last part
     rows_list <- c(1:(n / 2 + 1), (nrow(x) - (n / 2) + 1):nrow(x))
-    x <- as.data.frame(x.bak[rows_list,])
+    x <- as.data.frame(x.bak[rows_list,], stringsAsFactors = FALSE)
     colnames(x) <- colnames(x.bak)
     rownames(x) <- rownames(x.bak)[rows_list]
     # set inbetweener between parts
@@ -204,12 +204,12 @@ prettyprint_df <- function(x,
     # class will be marked up per column
     if (NROW(x.bak) > 0) {
       rownames.x <- rownames(x)
-      x <- x %>%
-        filter(
-          suppressWarnings(
-            row_number() == 1)
-        ) %>%
-        rbind(x, stringsAsFactors = FALSE)
+      # suppress warnings because dplyr want us to use library(dplyr) when using filter(row_number())
+      suppressWarnings(
+        x <- x %>%
+          filter(row_number() == 1) %>%
+          rbind(x, stringsAsFactors = FALSE)
+      )
       rownames(x) <- c('*', rownames.x)
     }
 
@@ -252,12 +252,12 @@ prettyprint_df <- function(x,
   }
 
   # markup cols
+
   for (i in 1:ncol(x)) {
     if (all(!class(x[, i]) %in% class(x.bak[, i]))) {
       class(x[, i]) <- class(x.bak[, i])
     }
     try(x[, i] <- format(x %>% pull(i)), silent = TRUE)
-
     # replace NAs
     if (nchar(na) < 2) {
       # make as long as the text "NA"
@@ -297,16 +297,16 @@ prettyprint_df <- function(x,
       colnames(x)[i] <- paste0(strrep(" ", width), colnames(x)[i])
     }
 
-    # strip columns that do not fit (3 chars as margin)
+    # strip columns that do not fit (width + 2 extra chars as margin)
     width_console <- options()$width
     width_until_col <- x %>%
       select(1:i) %>%
-      apply(1, paste, collapse = strrep(" ", width + 1)) %>%
+      apply(1, paste, collapse = strrep(" ", width + 2)) %>%
       nchar() %>%
       max()
     width_until_col_before <- x %>%
       select(1:(max(i, 2) - 1)) %>%
-      apply(1, paste, collapse = strrep(" ", width + 1)) %>%
+      apply(1, paste, collapse = strrep(" ", width + 2)) %>%
       nchar() %>%
       max()
     extraspace <- maxrowchars + nchar(rownames(x)[length(rownames(x))])
@@ -340,9 +340,9 @@ prettyprint_df <- function(x,
   if (ncol(x) < ncol(x.bak)) {
     x.notshown <- x.bak %>% select((ncol(x) + 1):ncol(x.bak))
     if (ncol(x.notshown) == 1) {
-      cat('...and 1 more column: ')
+      cat('... and 1 more column: ')
     } else {
-      cat('...and', ncol(x.notshown), 'more columns: ')
+      cat('... and', ncol(x.notshown), 'more columns: ')
     }
     cat(x.notshown %>%
           colnames() %>%
