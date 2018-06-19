@@ -18,13 +18,14 @@
 
 #' Properties of an ATC code
 #'
-#' Gets data from the WHO to determine properties of an ATC (e.g. an antibiotic) like name, defined daily dose (DDD) or standard unit. \strong{This function requires an internet connection.}
+#' Gets data from the WHO to determine properties of an ATC (e.g. an antibiotic) like name, defined daily dose (DDD) or standard unit. \cr \strong{This function requires an internet connection.}
 #' @param atc_code a character or character vector with ATC code(s) of antibiotic(s)
-#' @param property property of an ATC code. Valid values are \code{"ATC code"}, \code{"Name"}, \code{"DDD"}, \code{"U"} (\code{"unit"}), \code{"Adm.R"} en \code{"Note"}.
-#' @param administration type of administration, see \emph{Details}
+#' @param property property of an ATC code. Valid values are \code{"ATC"}, \code{"Name"}, \code{"DDD"}, \code{"U"} (\code{"unit"}), \code{"Adm.R"}, \code{"Note"} and \code{groups}. For this last option, all hierarchical groups of an ATC code will be returned, see Examples.
+#' @param administration type of administration when using \code{property = "Adm.R"}, see Details
 #' @param url url of website of the WHO. The sign \code{\%s} can be used as a placeholder for ATC codes.
+#' @param ... parameters to pass on to \code{atc_property}
 #' @details
-#' Abbreviations for the property \code{"Adm.R"} (parameter \code{administration}):
+#' Options for parameter \code{administration}:
 #' \itemize{
 #'   \item{\code{"Implant"}}{ = Implant}
 #'   \item{\code{"Inhal"}}{ = Inhalation}
@@ -38,7 +39,7 @@
 #'   \item{\code{"V"}}{ = vaginal}
 #' }
 #'
-#' Abbreviations for the property \code{"U"} (unit):
+#' Abbreviations of return values when using \code{property = "U"} (unit):
 #' \itemize{
 #'   \item{\code{"g"}}{ = gram}
 #'   \item{\code{"mg"}}{ = milligram}
@@ -50,36 +51,80 @@
 #'   \item{\code{"ml"}}{ = milliliter (e.g. eyedrops)}
 #' }
 #' @export
+#' @rdname atc_property
 #' @importFrom dplyr %>% progress_estimated
 #' @importFrom xml2 read_html
-#' @importFrom rvest html_nodes html_table
+#' @importFrom rvest html_children html_node html_nodes html_table
+#' @importFrom curl nslookup
 #' @source \url{https://www.whocc.no/atc_ddd_alterations__cumulative/ddd_alterations/abbrevations/}
 #' @examples
 #' \donttest{
-#' atc_property("J01CA04", "DDD", "O") # oral DDD (Defined Daily Dose) of amoxicillin
-#' atc_property("J01CA04", "DDD", "P") # parenteral DDD (Defined Daily Dose) of amoxicillin
+#' # What's the ATC of amoxicillin?
+#' guess_atc("Amoxicillin")
+#' # [1] "J01CA04"
+#'
+#' # oral DDD (Defined Daily Dose) of amoxicillin
+#' atc_property("J01CA04", "DDD", "O")
+#' # parenteral DDD (Defined Daily Dose) of amoxicillin
+#' atc_property("J01CA04", "DDD", "P")
+#'
+#' atc_property("J01CA04", property = "groups") # search hierarchical groups of amoxicillin
+#' # [1] "ANTIINFECTIVES FOR SYSTEMIC USE"
+#' # [2] "ANTIBACTERIALS FOR SYSTEMIC USE"
+#' # [3] "BETA-LACTAM ANTIBACTERIALS, PENICILLINS"
+#' # [4] "Penicillins with extended spectrum"
 #' }
 atc_property <- function(atc_code,
                          property,
                          administration = 'O',
                          url = 'https://www.whocc.no/atc_ddd_index/?code=%s&showdescription=no') {
 
-  # property <- property %>% tolower()
-  #
+  # check active network interface, from https://stackoverflow.com/a/5078002/4575331
+  has_internet <- function(url) {
+    # extract host from given url
+    # https://www.whocc.no/atc_ddd_index/ -> www.whocc.no
+    url <- url %>%
+      gsub("^(http://|https://)", "", .) %>%
+      strsplit('/', fixed = TRUE) %>%
+      unlist() %>%
+      .[1]
+    !is.null(curl::nslookup(url, error = FALSE))
+  }
+  # check for connection using the ATC of amoxicillin
+  if (!has_internet(url = url)) {
+    message("The URL could not be reached.")
+    return(rep(NA, length(atc_code)))
+  }
+
+  if (length(property) != 1L) {
+    stop('`property` must be of length 1', call. = FALSE)
+  }
+  if (length(administration) != 1L) {
+    stop('`administration` must be of length 1', call. = FALSE)
+  }
+
+  # also allow unit as property
   if (property %like% 'unit') {
     property <- 'U'
   }
 
   # validation of properties
-  valid_properties.bak <- c("ATC code", "Name", "DDD", "U", "Adm.R", "Note")
-  valid_properties <- valid_properties.bak #%>% tolower()
+  valid_properties <- c("ATC", "Name", "DDD", "U", "Adm.R", "Note", "groups")
+  valid_properties.bak <- valid_properties
+
+  property <- tolower(property)
+  valid_properties <- tolower(valid_properties)
+
   if (!property %in% valid_properties) {
-    stop('Invalid `property`, use one of ', paste(valid_properties, collapse = ", "), '.')
+    stop('Invalid `property`, use one of ', paste(valid_properties.bak, collapse = ", "), '.')
   }
 
-  returnvalue <- rep(NA_character_, length(atc_code))
-  if (property == 'DDD') {
+  if (property == 'ddd') {
     returnvalue <- rep(NA_real_, length(atc_code))
+  } else if (property == 'groups') {
+    returnvalue <- list()
+  } else {
+    returnvalue <- rep(NA_character_, length(atc_code))
   }
 
   progress <- progress_estimated(n = length(atc_code))
@@ -89,47 +134,80 @@ atc_property <- function(atc_code,
     progress$tick()$print()
 
     atc_url <- sub('%s', atc_code[i], url, fixed = TRUE)
-    tbl <- xml2::read_html(atc_url) %>%
-      rvest::html_nodes('table') %>%
-      rvest::html_table(header = TRUE)
 
-    if (length(tbl) == 0) {
-      warning('ATC not found: ', atc_code[i], '. Please check ', atc_url, '.', call. = FALSE)
-      returnvalue[i] <- NA
-      next
-    }
+    if (property == "groups") {
+      tbl <- xml2::read_html(atc_url) %>%
+        rvest::html_node("#content") %>%
+        rvest::html_children() %>%
+        rvest::html_node("a")
 
-    tbl <- tbl[[1]]
+      # get URLS of items
+      hrefs <- tbl %>% rvest::html_attr("href")
+      # get text of items
+      texts <- tbl %>% rvest::html_text()
+      # select only text items where URL like "code="
+      texts <- texts[grepl("?code=", tolower(hrefs), fixed = TRUE)]
+      # last one is antibiotics, skip it
+      texts <- texts[1:length(texts) - 1]
+      returnvalue <- c(list(texts), returnvalue)
 
-    if (property == 'Name') {
-      returnvalue[i] <- tbl[1, 2]
     } else {
+      tbl <- xml2::read_html(atc_url) %>%
+        rvest::html_nodes('table') %>%
+        rvest::html_table(header = TRUE) %>%
+        as.data.frame(stringsAsFactors = FALSE)
 
-      names(returnvalue)[i] <- tbl[1, 2] %>% as.character()
+      # case insensitive column names
+      colnames(tbl) <- tolower(colnames(tbl)) %>% gsub('^atc.*', 'atc', .)
 
-      if (!'Adm.R' %in% colnames(tbl) | is.na(tbl[1, 'Adm.R'])) {
+      if (length(tbl) == 0) {
+        warning('ATC not found: ', atc_code[i], '. Please check ', atc_url, '.', call. = FALSE)
         returnvalue[i] <- NA
         next
+      }
+
+      if (property %in% c('atc', 'name')) {
+        # ATC and name are only in first row
+        returnvalue[i] <- tbl[1, property]
       } else {
-        for (j in 1:nrow(tbl)) {
-          if (tbl[j, 'Adm.R'] == administration) {
-            returnvalue[i] <- tbl[j, property]
+        if (!'adm.r' %in% colnames(tbl) | is.na(tbl[1, 'adm.r'])) {
+          returnvalue[i] <- NA
+          next
+        } else {
+          for (j in 1:nrow(tbl)) {
+            if (tbl[j, 'adm.r'] == administration) {
+              returnvalue[i] <- tbl[j, property]
+            }
           }
         }
       }
     }
   }
 
-  cat('\n')
-  returnvalue
+  if (property == "groups" & length(returnvalue) == 1) {
+    returnvalue <- returnvalue[[1]]
+  }
 
+  returnvalue
+}
+
+#' @rdname atc_property
+#' @export
+atc_groups <- function(atc_code, ...) {
+  atc_property(atc_code = atc_code, property = "groups", ...)
+}
+
+#' @rdname atc_property
+#' @export
+atc_ddd <- function(atc_code, ...) {
+  atc_property(atc_code = atc_code, property = "ddd", ...)
 }
 
 #' Name of an antibiotic
 #'
 #' Convert antibiotic codes (from a laboratory information system like MOLIS or GLIMS) to a (trivial) antibiotic name or ATC code, or vice versa. This uses the data from \code{\link{antibiotics}}.
 #' @param abcode a code or name, like \code{"AMOX"}, \code{"AMCL"} or \code{"J01CA04"}
-#' @param from,to type to transform from and to. See \code{\link{antibiotics}} for its column names. WIth \code{from = "guess"} the from will be guessed from \code{"atc"}, \code{"molis"} and \code{"umcg"}.
+#' @param from,to type to transform from and to. See \code{\link{antibiotics}} for its column names. WIth \code{from = "guess"} the from will be guessed from \code{"atc"}, \code{"molis"} and \code{"umcg"}. When using \code{to = "atc"}, the ATC code will be search using \code{\link{guess_atc}}.
 #' @param textbetween text to put between multiple returned texts
 #' @param tolower return output as lower case with function \code{\link{tolower}}.
 #' @keywords ab antibiotics
@@ -155,6 +233,14 @@ atc_property <- function(atc_code,
 #' abname("J01CR02", from = "atc", to = "umcg")
 #' # "AMCL"
 abname <- function(abcode, from = c("guess", "atc", "molis", "umcg"), to = 'official', textbetween = ' + ', tolower = FALSE) {
+
+  if (length(to) != 1L) {
+    stop('`to` must be of length 1', call. = FALSE)
+  }
+
+  if (to == "atc") {
+    return(guess_atc(abcode))
+  }
 
   antibiotics <- AMR::antibiotics
 
@@ -291,12 +377,12 @@ guess_atc <- function(x) {
 
     if (nrow(found) == 0) {
       # try abbreviation of molis and glims
-      found <- AMR::antibiotics %>% filter(molis == x[i] | umcg == x[i])
+      found <- AMR::antibiotics %>% filter(tolower(molis) == tolower(x[i]) | tolower(umcg) == tolower(x[i]))
     }
 
     if (nrow(found) == 0) {
       # try exact official name
-      found <- AMR::antibiotics[which(AMR::antibiotics$official == x[i]),]
+      found <- AMR::antibiotics[which(tolower(AMR::antibiotics$official) == tolower(x[i])),]
     }
 
     if (nrow(found) == 0) {

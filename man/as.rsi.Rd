@@ -23,6 +23,9 @@ rsi_data <- as.rsi(c(rep("S", 474), rep("I", 36), rep("R", 370)))
 rsi_data <- as.rsi(c(rep("S", 474), rep("I", 36), rep("R", 370), "A", "B", "C"))
 is.rsi(rsi_data)
 
+# this can also coerce combined MIC/RSI values:
+as.rsi("<= 0.002; R") # will return R
+
 plot(rsi_data)    # for percentages
 barplot(rsi_data) # for frequencies
 }

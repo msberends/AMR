@@ -24,6 +24,9 @@ This transforms a vector to a new class\code{mic}, which is an ordered factor wi
 mic_data <- as.mic(c(">=32", "1.0", "1", "1.00", 8, "<=0.128", "8", "16", "16"))
 is.mic(mic_data)
 
+# this can also coerce combined MIC/RSI values:
+as.mic("<=0.002; R") # will return <=0.002
+
 plot(mic_data)
 barplot(mic_data)
 }

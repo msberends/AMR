@@ -44,7 +44,7 @@
 #' # and can even contain 2 columns, which is convenient for genus/species combinations:
 #' df$bactid <- df %>% select(genus, species) %>% guess_bactid()
 #' # same result:
-#' df <- df %>% mutate(bactid = paste(genus, species) %>% guess_bactid())
+#' df <- df %>% mutate(bactid = paste(genus, species)) %>% guess_bactid())
 #' }
 guess_bactid <- function(x) {
 

@@ -1,11 +1,14 @@
 # 0.2.0.90xx (development version)
 
-* Vignettes about frequency tables
-* Possibility to globally set the default for the amount of items to print in frequency tables (`freq` function), with `options(max.print.freq = n)`
-* Renamed `toConsole` parameter of `freq` to `as.data.frame`
+* New vignette about frequency tables
+* Added possibility to globally set the default for the amount of items to print in frequency tables (`freq` function), with `options(max.print.freq = n)`
+* Renamed `toConsole` parameter of `freq` function to `as.data.frame`
 * Small translational improvements to the `septic_patients` dataset
-* Coerce RSI values from combined MIC/RSI values: `as.rsi("<=0.002; S")` will now return `"S"`
-* Fix for warning **hybrid evaluation forced for row_number** ([`924b62`](https://github.com/tidyverse/dplyr/commit/924b62)) from the `dplyr` package v0.7.5 and above
+* Combined MIC/RSI values will now be coerced by the `rsi` and `mic` functions: `as.rsi("<=0.002; S")` will return `S` and `as.mic("<=0.002; S")` will return `<=0.002`
+* It is now possible to coerce MIC values when there's a space between the operator and the value, i.e. `as.mic("<= 0.002")` now works
+* Added `"groups"` option for `atc_property(..., property)`. It will return a vector of the ATC hierarchy as defined by the [WHO](https://www.whocc.no/atc/structure_and_principles/). The new function `atc_groups` is a convenient wrapper around this. * Build-in host check for `atc_property` as it requires the host set by `url` to be responsive
+* Improved `first_isolate` algorithm to exclude isolates where bacteria ID or genus is unavailable
+* Fix for warning *hybrid evaluation forced for row_number* ([`924b62`](https://github.com/tidyverse/dplyr/commit/924b62)) from the `dplyr` package v0.7.5 and above
 * Support for 1 or 2 columns as input for `guess_bactid`
 * Fix for printing tibbles where characters would be accidentally transformed to factors
 

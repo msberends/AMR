@@ -2,6 +2,8 @@
 % Please edit documentation in R/atc.R
 \name{atc_property}
 \alias{atc_property}
+\alias{atc_groups}
+\alias{atc_ddd}
 \title{Properties of an ATC code}
 \source{
 \url{https://www.whocc.no/atc_ddd_alterations__cumulative/ddd_alterations/abbrevations/}
@@ -9,21 +11,27 @@
 \usage{
 atc_property(atc_code, property, administration = "O",
   url = "https://www.whocc.no/atc_ddd_index/?code=\%s&showdescription=no")
+
+atc_groups(atc_code, ...)
+
+atc_ddd(atc_code, ...)
 }
 \arguments{
 \item{atc_code}{a character or character vector with ATC code(s) of antibiotic(s)}
 
-\item{property}{property of an ATC code. Valid values are \code{"ATC code"}, \code{"Name"}, \code{"DDD"}, \code{"U"} (\code{"unit"}), \code{"Adm.R"} en \code{"Note"}.}
+\item{property}{property of an ATC code. Valid values are \code{"ATC"}, \code{"Name"}, \code{"DDD"}, \code{"U"} (\code{"unit"}), \code{"Adm.R"}, \code{"Note"} and \code{groups}. For this last option, all hierarchical groups of an ATC code will be returned, see Examples.}
 
-\item{administration}{type of administration, see \emph{Details}}
+\item{administration}{type of administration when using \code{property = "Adm.R"}, see Details}
 
 \item{url}{url of website of the WHO. The sign \code{\%s} can be used as a placeholder for ATC codes.}
+
+\item{...}{parameters to pass on to \code{atc_property}}
 }
 \description{
-Gets data from the WHO to determine properties of an ATC (e.g. an antibiotic) like name, defined daily dose (DDD) or standard unit. \strong{This function requires an internet connection.}
+Gets data from the WHO to determine properties of an ATC (e.g. an antibiotic) like name, defined daily dose (DDD) or standard unit. \cr \strong{This function requires an internet connection.}
 }
 \details{
-Abbreviations for the property \code{"Adm.R"} (parameter \code{administration}):
+Options for parameter \code{administration}:
 \itemize{
   \item{\code{"Implant"}}{ = Implant}
   \item{\code{"Inhal"}}{ = Inhalation}
@@ -37,7 +45,7 @@ Abbreviations for the property \code{"Adm.R"} (parameter \code{administration}):
   \item{\code{"V"}}{ = vaginal}
 }
 
-Abbreviations for the property \code{"U"} (unit):
+Abbreviations of return values when using \code{property = "U"} (unit):
 \itemize{
   \item{\code{"g"}}{ = gram}
   \item{\code{"mg"}}{ = milligram}
@@ -51,7 +59,19 @@ Abbreviations for the property \code{"U"} (unit):
 }
 \examples{
 \donttest{
-atc_property("J01CA04", "DDD", "O") # oral DDD (Defined Daily Dose) of amoxicillin
-atc_property("J01CA04", "DDD", "P") # parenteral DDD (Defined Daily Dose) of amoxicillin
+# What's the ATC of amoxicillin?
+guess_atc("Amoxicillin")
+# [1] "J01CA04"
+
+# oral DDD (Defined Daily Dose) of amoxicillin
+atc_property("J01CA04", "DDD", "O")
+# parenteral DDD (Defined Daily Dose) of amoxicillin
+atc_property("J01CA04", "DDD", "P")
+
+atc_property("J01CA04", property = "groups") # search hierarchical groups of amoxicillin
+# [1] "ANTIINFECTIVES FOR SYSTEMIC USE"
+# [2] "ANTIBACTERIALS FOR SYSTEMIC USE"
+# [3] "BETA-LACTAM ANTIBACTERIALS, PENICILLINS"
+# [4] "Penicillins with extended spectrum"
 }
 }

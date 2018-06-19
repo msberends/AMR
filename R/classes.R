@@ -30,6 +30,9 @@
 #' rsi_data <- as.rsi(c(rep("S", 474), rep("I", 36), rep("R", 370), "A", "B", "C"))
 #' is.rsi(rsi_data)
 #'
+#' # this can also coerce combined MIC/RSI values:
+#' as.rsi("<= 0.002; R") # will return R
+#'
 #' plot(rsi_data)    # for percentages
 #' barplot(rsi_data) # for frequencies
 as.rsi <- function(x) {
@@ -204,6 +207,9 @@ barplot.rsi <- function(height, ...) {
 #' mic_data <- as.mic(c(">=32", "1.0", "1", "1.00", 8, "<=0.128", "8", "16", "16"))
 #' is.mic(mic_data)
 #'
+#' # this can also coerce combined MIC/RSI values:
+#' as.mic("<=0.002; R") # will return <=0.002
+#'
 #' plot(mic_data)
 #' barplot(mic_data)
 as.mic <- function(x, na.rm = FALSE) {
@@ -216,8 +222,10 @@ as.mic <- function(x, na.rm = FALSE) {
     }
     x.bak <- x
 
-    # comma to dot
+    # comma to period
     x <- gsub(',', '.', x, fixed = TRUE)
+    # remove space between operator and number ("<= 0.002" -> "<=0.002")
+    x <- gsub('(<|=|>) +', '\\1', x)
     # starting dots must start with 0
     x <- gsub('^[.]+', '0.', x)
     # <=0.2560.512 should be 0.512
@@ -228,8 +236,10 @@ as.mic <- function(x, na.rm = FALSE) {
     x <- gsub('[^0-9]+$', '', x)
     # remove last zeroes
     x <- gsub('[.]?0+$', '', x)
+    # force to be character
+    x <- as.character(x)
 
-    # these are alllowed MIC values and will be factor levels
+    # these are alllowed MIC values and will become factor levels
     lvls <- c("<0.002", "<=0.002", "0.002", ">=0.002", ">0.002",
               "<0.003", "<=0.003", "0.003", ">=0.003", ">0.003",
               "<0.004", "<=0.004", "0.004", ">=0.004", ">0.004",
@@ -286,7 +296,6 @@ as.mic <- function(x, na.rm = FALSE) {
               "<320", "<=320", "320", ">=320", ">320",
               "<512", "<=512", "512", ">=512", ">512",
               "<1024", "<=1024", "1024", ">=1024", ">1024")
-    x <- x %>% as.character()
 
     na_before <- x[is.na(x) | x == ''] %>% length()
     x[!x %in% lvls] <- NA

@@ -13,7 +13,7 @@ abname(abcode, from = c("guess", "atc", "molis", "umcg"), to = "official",
 \arguments{
 \item{abcode}{a code or name, like \code{"AMOX"}, \code{"AMCL"} or \code{"J01CA04"}}
 
-\item{from, to}{type to transform from and to. See \code{\link{antibiotics}} for its column names. WIth \code{from = "guess"} the from will be guessed from \code{"atc"}, \code{"molis"} and \code{"umcg"}.}
+\item{from, to}{type to transform from and to. See \code{\link{antibiotics}} for its column names. WIth \code{from = "guess"} the from will be guessed from \code{"atc"}, \code{"molis"} and \code{"umcg"}. When using \code{to = "atc"}, the ATC code will be search using \code{\link{guess_atc}}.}
 
 \item{textbetween}{text to put between multiple returned texts}
 

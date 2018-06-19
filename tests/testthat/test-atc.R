@@ -3,6 +3,9 @@ context("atc.R")
 test_that("atc_property works", {
   expect_equal(tolower(atc_property("J01CA04", property = "Name")), "amoxicillin")
   expect_equivalent(atc_property("J01CA04", "DDD"), 1)
+  expect_equal(length(atc_property("J01CA04", property = "Groups")), 4)
+  expect_error(atc_property("J01CA04", property = c(1:5)))
+  expect_error(atc_property("J01CA04", administration = c(1:5)))
 })
 
 test_that("abname works", {

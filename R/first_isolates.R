@@ -173,7 +173,6 @@ first_isolate <- function(tbl,
     filter_specimen <- ''
   }
 
-  specgroup.notice <- ''
   weighted.notice <- ''
   # filter on specimen group and keyantibiotics when they are filled in
   if (!is.na(filter_specimen) & filter_specimen != '') {
@@ -197,13 +196,12 @@ first_isolate <- function(tbl,
   # create new dataframe with original row index and right sorting
   tbl <- tbl %>%
     mutate(first_isolate_row_index = 1:nrow(tbl),
-           eersteisolaatbepaling = 0,
            date_lab = tbl %>% pull(col_date),
            patient_id = tbl %>% pull(col_patient_id),
            species = tbl %>% pull(col_species),
            genus = tbl %>% pull(col_genus)) %>%
-    mutate(species = if_else(is.na(species), '', species),
-           genus = if_else(is.na(genus), '', genus))
+    mutate(species = if_else(is.na(species) | species == "(no MO)", "", species),
+           genus = if_else(is.na(genus) | genus == "(no MO)", "", genus))
 
   if (filter_specimen == '') {
 
@@ -380,7 +378,7 @@ first_isolate <- function(tbl,
 
   # NA's where genus is unavailable
   all_first <- all_first %>%
-    mutate(real_first_isolate = if_else(genus == '', NA, real_first_isolate))
+    mutate(real_first_isolate = if_else(genus %in% c('', '(no MO)', NA), NA, real_first_isolate))
 
   all_first <- all_first %>%
     arrange(first_isolate_row_index) %>%
