@@ -6,12 +6,12 @@
 \title{Frequency table}
 \usage{
 freq(x, sort.count = TRUE, nmax = getOption("max.print.freq"),
-  na.rm = TRUE, markdown = FALSE, as.data.frame = FALSE, digits = 2,
-  sep = " ")
+  na.rm = TRUE, row.names = TRUE, markdown = FALSE,
+  as.data.frame = FALSE, digits = 2, sep = " ")
 
 frequency_tbl(x, sort.count = TRUE, nmax = getOption("max.print.freq"),
-  na.rm = TRUE, markdown = FALSE, as.data.frame = FALSE, digits = 2,
-  sep = " ")
+  na.rm = TRUE, row.names = TRUE, markdown = FALSE,
+  as.data.frame = FALSE, digits = 2, sep = " ")
 }
 \arguments{
 \item{x}{data}
@@ -21,6 +21,8 @@ frequency_tbl(x, sort.count = TRUE, nmax = getOption("max.print.freq"),
 \item{nmax}{number of row to print. The default, \code{15}, uses \code{\link{getOption}("max.print.freq")}. Use \code{nmax = 0} or \code{nmax = NA} to print all rows.}
 
 \item{na.rm}{a logical value indicating whether NA values should be removed from the frequency table. The header will always print the amount of \code{NA}s.}
+
+\item{row.names}{a logical value indicating whether row indices should be printed as \code{1:nrow(x)}}
 
 \item{markdown}{print table in markdown format (this forces \code{nmax = NA})}
 

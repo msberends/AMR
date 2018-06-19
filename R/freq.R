@@ -23,6 +23,7 @@
 #' @param sort.count sort on count. Use \code{FALSE} to sort alphabetically on item.
 #' @param nmax number of row to print. The default, \code{15}, uses \code{\link{getOption}("max.print.freq")}. Use \code{nmax = 0} or \code{nmax = NA} to print all rows.
 #' @param na.rm a logical value indicating whether NA values should be removed from the frequency table. The header will always print the amount of \code{NA}s.
+#' @param row.names a logical value indicating whether row indices should be printed as \code{1:nrow(x)}
 #' @param markdown print table in markdown format (this forces \code{nmax = NA})
 #' @param as.data.frame return frequency table without header as a \code{data.frame} (e.g. to assign the table to an object)
 #' @param digits how many significant digits are to be used for numeric values (not for the items themselves, that depends on \code{\link{getOption}("digits")})
@@ -68,6 +69,7 @@ freq <- function(x,
                  sort.count = TRUE,
                  nmax = getOption("max.print.freq"),
                  na.rm = TRUE,
+                 row.names = TRUE,
                  markdown = FALSE,
                  as.data.frame = FALSE,
                  digits = 2,
@@ -222,11 +224,13 @@ freq <- function(x,
   }
   if (any(class(x) %in% c('Date', 'POSIXct', 'POSIXlt'))) {
     header <- header %>% paste0('\n')
-    mindatum <- x %>% min()
-    maxdatum <- x %>% max()
-    header <- header %>% paste0(markdown_line, '\nOldest:    ', mindatum %>% format(formatdates) %>% trimws())
-    header <- header %>% paste0(markdown_line, '\nNewest:    ', maxdatum %>% format(formatdates) %>% trimws(),
-                                ' (+', difftime(maxdatum, mindatum, units = 'auto') %>% as.double() %>% format(), ')')
+    mindate <- x %>% min(na.rm = TRUE)
+    maxdate <- x %>% max(na.rm = TRUE)
+    mediandate <- x %>% median(na.rm = TRUE)
+    header <- header %>% paste0(markdown_line, '\nOldest:    ', mindate %>% format(formatdates) %>% trimws())
+    header <- header %>% paste0(markdown_line, '\nNewest:    ', maxdate %>% format(formatdates) %>% trimws(),
+                                ' (+', difftime(maxdate, mindate, units = 'auto') %>% as.double() %>% format(), ')')
+    header <- header %>% paste0(markdown_line, '\nMedian:    ', mediandate %>% format(formatdates) %>% trimws())
   }
   if (any(class(x) == 'POSIXlt')) {
     x <- x %>% format(formatdates)
@@ -266,8 +270,9 @@ freq <- function(x,
   } else {
     df <- tibble::tibble(Item = x) %>%
       group_by(Item)
-    column_names <- column_names[1:5] # strip factor lvl
-    column_names_df <- column_names_df[1:5] # strip factor lvl
+    # strip factor lvl from col names
+    column_names <- column_names[1:length(column_names) - 1]
+    column_names_df <- column_names_df[1:length(column_names_df) - 1]
     column_align <- c(x_align, 'r', 'r', 'r', 'r')
   }
   df <- df %>%
@@ -333,6 +338,7 @@ freq <- function(x,
     print(
       knitr::kable(df2,
                    format = tblformat,
+                   row.names = row.names,
                    col.names = column_names,
                    align = column_align,
                    padding = 1)
@@ -354,6 +360,7 @@ freq <- function(x,
     print(
       knitr::kable(df,
                    format = tblformat,
+                   row.names = row.names,
                    col.names = column_names,
                    align = column_align,
                    padding = 1)

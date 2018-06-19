@@ -27,13 +27,13 @@ Frequency tables (or frequency distributions) are summaries of the distribution 
 
 To only show and quickly review the content of one variable, you can just select this variable in various ways. Let's say we want to get the frequencies of the `sex` variable of the `septic_patients` dataset:
 ```{r, echo = TRUE, results = 'hide'}
-# # just using base R
+# just using base R
 freq(septic_patients$sex)
 
-# # using base R to select the variable and pass it on with a pipe
+# using base R to select the variable and pass it on with a pipe
 septic_patients$sex %>% freq()
 
-# # do it all with pipes, using the `select` function of the dplyr package
+# do it all with pipes, using the `select` function of the dplyr package
 septic_patients %>%
   select(sex) %>%
   freq()
@@ -143,10 +143,20 @@ septic_patients %>%
 
 ### Parameter `na.rm`
 With the `na.rm` parameter (defaults to `TRUE`, but they will always be shown into the header), you can include `NA` values in the frequency table:
+
 ```{r, echo = TRUE}
 septic_patients %>%
   select(amox) %>% 
   freq(na.rm = FALSE)
+```
+
+### Parameter `row.names`
+The default frequency tables shows row indices. To remove them, use `row.names = FALSE`:
+
+```{r, echo = TRUE}
+septic_patients %>%
+  select(hospital_id) %>% 
+  freq(row.names = FALSE)
 ```
 
 ### Parameter `markdown`

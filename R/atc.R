@@ -263,7 +263,7 @@ abname <- function(abcode, from = c("guess", "atc", "molis", "umcg"), to = 'offi
   if (!from %in% colnames(antibiotics) |
       !to %in% colnames(antibiotics)) {
     stop(paste0('Invalid `from` or `to`. Choose one of ',
-                colnames(antibiotics) %>% paste(collapse = ","), '.'), call. = FALSE)
+                colnames(antibiotics) %>% paste(collapse = ", "), '.'), call. = FALSE)
   }
 
   abcode <- as.character(abcode)

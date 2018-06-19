@@ -7,13 +7,13 @@ library(dplyr)
 library(AMR)
 
 ## ---- echo = TRUE, results = 'hide'--------------------------------------
-# # just using base R
+# just using base R
 freq(septic_patients$sex)
 
-# # using base R to select the variable and pass it on with a pipe
+# using base R to select the variable and pass it on with a pipe
 septic_patients$sex %>% freq()
 
-# # do it all with pipes, using the `select` function of the dplyr package
+# do it all with pipes, using the `select` function of the dplyr package
 septic_patients %>%
   select(sex) %>%
   freq()
@@ -68,6 +68,11 @@ septic_patients %>%
 septic_patients %>%
   select(amox) %>% 
   freq(na.rm = FALSE)
+
+## ---- echo = TRUE--------------------------------------------------------
+septic_patients %>%
+  select(hospital_id) %>% 
+  freq(row.names = FALSE)
 
 ## ---- echo = TRUE--------------------------------------------------------
 septic_patients %>%
