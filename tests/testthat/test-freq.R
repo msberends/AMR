@@ -9,8 +9,11 @@ test_that("frequency table works", {
   expect_equal(nrow(freq(septic_patients$date, as.data.frame = TRUE)),
                length(unique(septic_patients$date)))
 
+  # int
   expect_output(freq(septic_patients$age))
+  # date
   expect_output(freq(septic_patients$date))
+  # factor
   expect_output(freq(septic_patients$hospital_id))
 
   library(dplyr)
@@ -22,5 +25,32 @@ test_that("frequency table works", {
   expect_output(septic_patients %>% select(1:7) %>% freq())
   expect_output(septic_patients %>% select(1:8) %>% freq())
   expect_output(septic_patients %>% select(1:9) %>% freq())
+
+  # top 5
+  expect_equal(
+    septic_patients %>%
+      select(bactid) %>%
+      freq(as.data.frame = TRUE) %>%
+      top_freq(5) %>%
+      length(),
+    5)
+  # there're more than 5 lowest values
+  expect_gt(
+    septic_patients %>%
+      select(bactid) %>%
+      freq(as.data.frame = TRUE) %>%
+      top_freq(-5) %>%
+      length(),
+    5)
+  # n has length > 1
+  expect_error(
+    septic_patients %>%
+      select(bactid) %>%
+      freq(as.data.frame = TRUE) %>%
+      top_freq(n = c(1, 2))
+  )
+  # input must be freq tbl
+  expect_error(septic_patients %>% top_freq(1))
+
 })
 

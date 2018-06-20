@@ -3,6 +3,7 @@
 \name{freq}
 \alias{freq}
 \alias{frequency_tbl}
+\alias{top_freq}
 \title{Frequency table}
 \usage{
 freq(x, sort.count = TRUE, nmax = getOption("max.print.freq"),
@@ -12,6 +13,8 @@ freq(x, sort.count = TRUE, nmax = getOption("max.print.freq"),
 frequency_tbl(x, sort.count = TRUE, nmax = getOption("max.print.freq"),
   na.rm = TRUE, row.names = TRUE, markdown = FALSE,
   as.data.frame = FALSE, digits = 2, sep = " ")
+
+top_freq(f, n)
 }
 \arguments{
 \item{x}{data}
@@ -31,12 +34,24 @@ frequency_tbl(x, sort.count = TRUE, nmax = getOption("max.print.freq"),
 \item{digits}{how many significant digits are to be used for numeric values (not for the items themselves, that depends on \code{\link{getOption}("digits")})}
 
 \item{sep}{a character string to separate the terms when selecting multiple columns}
+
+\item{f}{a frequency table as \code{data.frame}, used as \code{freq(..., as.data.frame = TRUE)}}
+
+\item{n}{number of top \emph{n} items to return, use -n for the bottom \emph{n} items. It will include more than \code{n} rows if there are ties.}
+}
+\value{
+\itemize{
+  \item{When using \code{as.data.frame = FALSE} (default): only printed text}
+  \item{When using \code{as.data.frame = TRUE}: a \code{data.frame} object with an additional class \code{"frequency_tbl"}}
+}
 }
 \description{
-Create a frequency table of a vector of data, a single column or a maximum of 9 columns of a data frame. Supports markdown for reports.
+Create a frequency table of a vector of data, a single column or a maximum of 9 columns of a data frame. Supports markdown for reports. \code{top_freq} can be used to get the top/bottom \emph{n} items of a frequency table, with counts as names.
 }
 \details{
-For numeric values, the next values will be calculated and shown into the header:
+This package also has a vignette available about this function, run: \code{browseVignettes("AMR")} to read it.
+
+For numeric values of any class, these additional values will be calculated and shown into the header:
 \itemize{
   \item{Mean, using \code{\link[base]{mean}}}
   \item{Standard deviation, using \code{\link[stats]{sd}}}
@@ -45,6 +60,15 @@ For numeric values, the next values will be calculated and shown into the header
   \item{Coefficient of variation (CV), the standard deviation divided by the mean}
   \item{Coefficient of quartile variation (CQV, sometimes called coefficient of dispersion), calculated as \code{(Q3 - Q1) / (Q3 + Q1)} using \code{\link{quantile}} with \code{type = 6} as quantile algorithm to comply with SPSS standards}
 }
+
+For dates and times of any class, these additional values will be calculated and shown into the header:
+\itemize{
+  \item{Oldest, using \code{\link[base]{min}}}
+  \item{Newest, using \code{\link[base]{max}}, with difference between newest and oldest}
+  \item{Median, using \code{\link[stats]{median}}, with percentage since oldest}
+}
+
+The function \code{top_freq} uses \code{\link[dplyr]{top_n}} internally and will include more than \code{n} rows if there are ties.
 }
 \examples{
 library(dplyr)
@@ -68,6 +92,13 @@ years <- septic_patients \%>\%
   mutate(year = format(date, "\%Y")) \%>\%
   select(year) \%>\%
   freq(as.data.frame = TRUE)
+
+# get top 10 bugs of hospital A as a vector
+septic_patients \%>\%
+  filter(hospital_id == "A") \%>\%
+  select(bactid) \%>\%
+  freq(as.data.frame = TRUE) \%>\%
+  top_freq(10)
 }
 \keyword{freq}
 \keyword{frequency}

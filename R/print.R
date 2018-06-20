@@ -75,6 +75,13 @@ print.tbl <- function(x, ...) {
 }
 
 #' @rdname print
+#' @exportMethod print.frequency_tbl
+#' @export
+print.frequency_tbl <- function(x, ...) {
+  prettyprint_df(x, ...)
+}
+
+#' @rdname print
 #' @exportMethod print.data.table
 #' @export
 print.data.table <- function(x,
@@ -124,6 +131,8 @@ prettyprint_df <- function(x,
 
   if ('tbl_df' %in% class(x)) {
     type <- 'tibble'
+  } else if ('frequency_tbl' %in% class(x)) {
+    type <- 'frequency table'
   } else if ('data.table' %in% class(x)) {
     type <- 'data.table'
   } else {
@@ -226,7 +235,7 @@ prettyprint_df <- function(x,
                      paste0(collapse = '/'))
           } else {
             if (NCOL(.) > 1) {
-              .[1,]
+              .[1, ]
             } else {
               c[[1]]
             }

@@ -4,6 +4,7 @@
 \alias{print}
 \alias{print.tbl_df}
 \alias{print.tbl}
+\alias{print.frequency_tbl}
 \alias{print.data.table}
 \title{Printing Data Tables and Tibbles}
 \usage{
@@ -11,6 +12,8 @@
   right = FALSE, width = 1, na = "<NA>", ...)
 
 \method{print}{tbl}(x, ...)
+
+\method{print}{frequency_tbl}(x, ...)
 
 \method{print}{data.table}(x, print.keys = FALSE, ...)
 }

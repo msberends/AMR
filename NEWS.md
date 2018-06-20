@@ -1,8 +1,12 @@
 # 0.2.0.90xx (development version)
+#### New
+* Function `top_freq` function to get the top/below *n* items of frequency tables
+* Vignette about frequency tables
+* Possibility to globally set the default for the amount of items to print in frequency tables (`freq` function), with `options(max.print.freq = n)`
 
-* New vignette about frequency tables
-* Added possibility to globally set the default for the amount of items to print in frequency tables (`freq` function), with `options(max.print.freq = n)`
+#### Changed
 * Renamed `toConsole` parameter of `freq` function to `as.data.frame`
+* Added pretty printing for frequency tables when returned as `data.frame`
 * Small translational improvements to the `septic_patients` dataset
 * Combined MIC/RSI values will now be coerced by the `rsi` and `mic` functions:
   * `as.rsi("<=0.002; S")` will return `S`

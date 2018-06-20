@@ -18,7 +18,7 @@
 
 #' Frequency table
 #'
-#' Create a frequency table of a vector of data, a single column or a maximum of 9 columns of a data frame. Supports markdown for reports.
+#' Create a frequency table of a vector of data, a single column or a maximum of 9 columns of a data frame. Supports markdown for reports. \code{top_freq} can be used to get the top/bottom \emph{n} items of a frequency table, with counts as names.
 #' @param x data
 #' @param sort.count sort on count. Use \code{FALSE} to sort alphabetically on item.
 #' @param nmax number of row to print. The default, \code{15}, uses \code{\link{getOption}("max.print.freq")}. Use \code{nmax = 0} or \code{nmax = NA} to print all rows.
@@ -28,7 +28,11 @@
 #' @param as.data.frame return frequency table without header as a \code{data.frame} (e.g. to assign the table to an object)
 #' @param digits how many significant digits are to be used for numeric values (not for the items themselves, that depends on \code{\link{getOption}("digits")})
 #' @param sep a character string to separate the terms when selecting multiple columns
-#' @details For numeric values, the next values will be calculated and shown into the header:
+#' @param f a frequency table as \code{data.frame}, used as \code{freq(..., as.data.frame = TRUE)}
+#' @param n number of top \emph{n} items to return, use -n for the bottom \emph{n} items. It will include more than \code{n} rows if there are ties.
+#' @details This package also has a vignette available about this function, run: \code{browseVignettes("AMR")} to read it.
+#'
+#' For numeric values of any class, these additional values will be calculated and shown into the header:
 #' \itemize{
 #'   \item{Mean, using \code{\link[base]{mean}}}
 #'   \item{Standard deviation, using \code{\link[stats]{sd}}}
@@ -37,11 +41,25 @@
 #'   \item{Coefficient of variation (CV), the standard deviation divided by the mean}
 #'   \item{Coefficient of quartile variation (CQV, sometimes called coefficient of dispersion), calculated as \code{(Q3 - Q1) / (Q3 + Q1)} using \code{\link{quantile}} with \code{type = 6} as quantile algorithm to comply with SPSS standards}
 #' }
+#'
+#' For dates and times of any class, these additional values will be calculated and shown into the header:
+#' \itemize{
+#'   \item{Oldest, using \code{\link[base]{min}}}
+#'   \item{Newest, using \code{\link[base]{max}}, with difference between newest and oldest}
+#'   \item{Median, using \code{\link[stats]{median}}, with percentage since oldest}
+#' }
+#'
+#' The function \code{top_freq} uses \code{\link[dplyr]{top_n}} internally and will include more than \code{n} rows if there are ties.
 #' @importFrom stats fivenum sd quantile
 #' @importFrom grDevices boxplot.stats
 #' @importFrom dplyr %>% select pull n_distinct group_by arrange desc mutate summarise
+#' @importFrom utils browseVignettes
 #' @keywords summary summarise frequency freq
 #' @rdname freq
+#' @return \itemize{
+#'   \item{When using \code{as.data.frame = FALSE} (default): only printed text}
+#'   \item{When using \code{as.data.frame = TRUE}: a \code{data.frame} object with an additional class \code{"frequency_tbl"}}
+#' }
 #' @export
 #' @examples
 #' library(dplyr)
@@ -65,6 +83,13 @@
 #'   mutate(year = format(date, "%Y")) %>%
 #'   select(year) %>%
 #'   freq(as.data.frame = TRUE)
+#'
+#' # get top 10 bugs of hospital A as a vector
+#' septic_patients %>%
+#'   filter(hospital_id == "A") %>%
+#'   select(bactid) %>%
+#'   freq(as.data.frame = TRUE) %>%
+#'   top_freq(10)
 freq <- function(x,
                  sort.count = TRUE,
                  nmax = getOption("max.print.freq"),
@@ -200,7 +225,6 @@ freq <- function(x,
                               ' = ', (NAs %>% length() / (NAs %>% length() + x %>% length())) %>% percent(force_zero = TRUE), ')')
   header <- header %>% paste0(markdown_line, '\nUnique:    ', x %>% n_distinct() %>% format())
 
-  header.numbers.done <- FALSE
   if (any(class(x) %in% c('double', 'integer', 'numeric', 'raw', 'single'))) {
     # right align number
     x_align <- 'r'
@@ -226,11 +250,15 @@ freq <- function(x,
     header <- header %>% paste0('\n')
     mindate <- x %>% min(na.rm = TRUE)
     maxdate <- x %>% max(na.rm = TRUE)
+    maxdate_days <- difftime(maxdate, mindate, units = 'auto') %>% as.double()
     mediandate <- x %>% median(na.rm = TRUE)
+    median_days <- difftime(mediandate, mindate, units = 'auto') %>% as.double()
+
     header <- header %>% paste0(markdown_line, '\nOldest:    ', mindate %>% format(formatdates) %>% trimws())
     header <- header %>% paste0(markdown_line, '\nNewest:    ', maxdate %>% format(formatdates) %>% trimws(),
                                 ' (+', difftime(maxdate, mindate, units = 'auto') %>% as.double() %>% format(), ')')
-    header <- header %>% paste0(markdown_line, '\nMedian:    ', mediandate %>% format(formatdates) %>% trimws())
+    header <- header %>% paste0(markdown_line, '\nMedian:    ', mediandate %>% format(formatdates) %>% trimws(),
+                                ' (~', percent(median_days / maxdate_days, round = 0), ')')
   }
   if (any(class(x) == 'POSIXlt')) {
     x <- x %>% format(formatdates)
@@ -314,7 +342,9 @@ freq <- function(x,
     df[, 4] <- cumsum(df[, 2])
     df[, 5] <- df[, 4] / sum(df[, 2], na.rm = TRUE)
     colnames(df) <- column_names_df
-    return(as.data.frame(df, stringsAsFactors = FALSE))
+    df <- as.data.frame(df, stringsAsFactors = FALSE)
+    class(df) <- c('frequency_tbl', class(df))
+    return(df)
   }
 
   if (markdown == TRUE) {
@@ -376,3 +406,24 @@ freq <- function(x,
 #' @rdname freq
 #' @export
 frequency_tbl <- freq
+
+#' @rdname freq
+#' @export
+#' @importFrom dplyr top_n pull
+top_freq <- function(f, n) {
+  if (!'frequency_tbl' %in% class(f)) {
+    stop('top_freq can only be applied to frequency tables', call. = FALSE)
+  }
+  if (!is.numeric(n) | length(n) != 1L) {
+    stop('For top_freq, `nmax` must be a number of length 1', call. = FALSE)
+  }
+  top <- f %>% top_n(n, count)
+  vect <- top %>% pull(item)
+  names(vect) <- top %>% pull(count)
+  if (length(vect) > abs(n)) {
+    message("top_freq: selecting ", length(vect), " items instead of ", abs(n), ", because of ties")
+  }
+  vect
+}
+
+
