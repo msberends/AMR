@@ -8,11 +8,11 @@ cache: packages
 os:
   - linux
   - osx
-#before_install:
-#  # needed for clipboard function:
-#  - if [ $TRAVIS_OS_NAME = linux ]; then sudo apt-get -qq update; fi
-#  - if [ $TRAVIS_OS_NAME = linux ]; then sudo apt-get install -y xclip; fi
-#  - if [ $TRAVIS_OS_NAME = osx ]; then brew install xclip; fi
+before_install:
+  # needed for clipboard function:
+  # - if [ $TRAVIS_OS_NAME = linux ]; then sudo apt-get -qq update; fi
+  - if [ $TRAVIS_OS_NAME = linux ]; then sudo apt-get install -y xclip; fi
+  - if [ $TRAVIS_OS_NAME = osx ]; then brew install xclip; fi
 
 # postrun
 after_success:
