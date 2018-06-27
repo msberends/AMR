@@ -114,3 +114,55 @@ size_humanreadable <- function(bytes, decimals = 1) {
   out <- paste(sprintf(paste0("%.", decimals, "f"), bytes / (1024 ^ factor)), size[factor + 1])
   out
 }
+
+# transforms date format like "dddd d mmmm yyyy" to "%A %e %B %Y"
+date_generic <- function(format) {
+  if (!grepl('%', format, fixed = TRUE)) {
+
+    # first months and minutes, after that everything is case INsensitive
+    format <- gsub('mmmm', '%B1', format, fixed = TRUE)
+    format <- gsub('mmm', '%b', format, fixed = TRUE)
+    format <- gsub('mm', '%m', format, fixed = TRUE)
+    format <- gsub('MM', '%M1', format, fixed = TRUE)
+    format <- format %>%
+      tolower() %>%
+      gsub('%b1', '%B', ., fixed = TRUE) %>%
+      gsub('%m1', '%M', ., fixed = TRUE)
+
+    # dates
+    format <- gsub('dddd', '%A', format, fixed = TRUE)
+    format <- gsub('ddd', '%a', format, fixed = TRUE)
+    format <- gsub('dd', '%!', format, fixed = TRUE)
+    format <- gsub('d', '%e', format, fixed = TRUE)
+    format <- gsub('%!', '%d', format, fixed = TRUE)
+
+    format <- gsub('ww', '%V', format, fixed = TRUE)
+    format <- gsub('w', '%V', format, fixed = TRUE)
+
+    format <- gsub('qq', 'Qq', format, fixed = TRUE) # so will be 'Q%%q' after this
+    format <- gsub('kk', 'Kq', format, fixed = TRUE)
+    format <- gsub('k', 'q', format, fixed = TRUE)
+    format <- gsub('q', '%%q', format, fixed = TRUE)
+
+    format <- gsub('yyyy_iso', '%G', format, fixed = TRUE)
+    format <- gsub('jjjj_iso', '%G', format, fixed = TRUE)
+    format <- gsub('yyyy', '%Y', format, fixed = TRUE)
+    format <- gsub('jjjj', '%Y', format, fixed = TRUE)
+    format <- gsub('yy_iso', '%g', format, fixed = TRUE)
+    format <- gsub('jj_iso', '%g', format, fixed = TRUE)
+    format <- gsub('yy', '%y', format, fixed = TRUE)
+    format <- gsub('jj', '%y', format, fixed = TRUE)
+
+    # time
+    format <- gsub('hh', '%H', format, fixed = TRUE)
+    format <- gsub('h', '%k', format, fixed = TRUE)
+    format <- gsub('ss', '%S', format, fixed = TRUE)
+
+    # seconds since the Epoch, 1970-01-01 00:00:00
+    format <- gsub('unix', '%s', format, fixed = TRUE)
+    # Equivalent to %Y-%m-%d (the ISO 8601 date format)
+    format <- gsub('iso', '%F', format, fixed = TRUE)
+
+  }
+  format
+}

@@ -3,6 +3,7 @@
 * Function `top_freq` function to get the top/below *n* items of frequency tables
 * Vignette about frequency tables
 * Possibility to globally set the default for the amount of items to print in frequency tables (`freq` function), with `options(max.print.freq = n)`
+* Functions `clipboard_import` and `clipboard_export` as helper functions to quickly copy and paste from/to software like Excel and SPSS
 
 #### Changed
 * Renamed `toConsole` parameter of `freq` function to `as.data.frame`
