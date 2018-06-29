@@ -115,6 +115,50 @@ size_humanreadable <- function(bytes, decimals = 1) {
   out
 }
 
+# based on readr::parse_guess
+tbl_parse_guess <- function(tbl,
+                            date_names = 'en',
+                            date_format = '%Y-%m-%d',
+                            time_format = '%H:%M',
+                            decimal_mark = '.',
+                            tz = Sys.timezone(),
+                            encoding = "UTF-8",
+                            na = c("", "NA", "NULL")) {
+
+  date_format <- date_generic(date_format)
+  time_format <- date_generic(time_format)
+  # set col types with readr
+  for (i in 1:ncol(tbl)) {
+    if (!all(tbl %>% pull(i) %>% class() %in% c('list', 'matrix'))) {
+      tbl[, i] <- readr::parse_guess(x = tbl %>% pull(i) %>% as.character(),
+                                     na = na,
+                                     locale = readr::locale(date_names = date_names,
+                                                            date_format = date_format,
+                                                            time_format = time_format,
+                                                            decimal_mark = decimal_mark,
+                                                            encoding = encoding,
+                                                            tz = tz,
+                                                            asciify = FALSE))
+    }
+    if (any(tbl %>% pull(i) %>% class() %in% c('factor', 'character'))) {
+      # get values
+      distinct_val <- tbl %>% pull(i) %>% unique() %>% sort()
+      # remove ASCII escape character: https://en.wikipedia.org/wiki/Escape_character#ASCII_escape_character
+      tbl[, i] <- tbl %>% pull(i) %>% gsub('\033', ' ', ., fixed = TRUE)
+      # look for RSI, shouldn't all be "" and must be valid antibiotic interpretations
+      if (!all(distinct_val[!is.na(distinct_val)] == '')
+          & all(distinct_val[!is.na(distinct_val)] %in% c('', 'I', 'I;I', 'R', 'R;R', 'S', 'S;S'))) {
+        tbl[, i] <- tbl %>% pull(i) %>% as.rsi()
+      }
+    }
+    # convert to MIC class
+    if (colnames(tbl)[i] %like% '_mic$') {
+      tbl[, i] <- tbl %>% pull(i) %>% as.mic()
+    }
+  }
+  tbl
+}
+
 # transforms date format like "dddd d mmmm yyyy" to "%A %e %B %Y"
 date_generic <- function(format) {
   if (!grepl('%', format, fixed = TRUE)) {
