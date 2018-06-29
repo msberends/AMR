@@ -9,7 +9,7 @@
 clipboard_import(sep = "\\t", header = TRUE, dec = ".", na = c("", "NA",
   "NULL"), startrow = 1, as_vector = TRUE, guess_col_types = TRUE,
   date_names = "en", date_format = "\%Y-\%m-\%d", time_format = "\%H:\%M",
-  tz = Sys.timezone(), encoding = "UTF-8", info = FALSE)
+  tz = Sys.timezone(), encoding = "UTF-8", info = TRUE)
 
 clipboard_export(x, sep = "\\t", dec = ".", na = "", header = TRUE,
   info = TRUE)
@@ -34,7 +34,7 @@ clipboard_export(x, sep = "\\t", dec = ".", na = "", header = TRUE,
 
 \item{as_vector}{a logical value indicating whether data consisting of only one column should be imported as vector using \code{\link[dplyr]{pull}}. This will strip off the header.}
 
-\item{guess_col_types}{a logical value indicating whether column types should be guessed with the \code{readr} package.}
+\item{guess_col_types}{a logical value indicating whether column types should be guessed and transformed automatically with \code{\link[readr]{parse_guess}} from the \code{readr} package. Besides, the antimicrobial classes in this AMR package (\code{\link{as.rsi}} and \code{\link{as.mic}}) are also supported.}
 
 \item{date_names}{Character representations of day and month names. Either
 the language code as string (passed on to \code{\link[=date_names_lang]{date_names_lang()}})
@@ -67,7 +67,7 @@ DST. It is \emph{not} Eastern Standard Time. It's better to use
     and \sQuote{Note}.
   }
 
-\item{info}{print info about copying}
+\item{info}{print info to console}
 
 \item{x}{the object to be written, preferably a matrix or data frame.
     If not, it is attempted to coerce \code{x} to a data frame.}
@@ -77,12 +77,10 @@ These are helper functions around \code{\link{read.table}} and \code{\link{write
 
 The data will be read and written as tab-separated by default, which makes it possible to copy and paste from other software like Excel and SPSS without further transformation.
 
-Supports automatic column type transformation and supports new classes \code{\link{as.rsi}} and \code{\link{as.mic}}.
+This also supports automatic column type transformation, with AMR classes \code{\link{as.rsi}} and \code{\link{as.mic}}.
 }
 \details{
-When using \code{guess_col_types = TRUE}, all column types will be determined automatically with \code{\link[readr]{parse_guess}} from the \code{readr} package. Besides, the antimicrobial classes in this AMR package (\code{\link{as.rsi}} and \code{\link{as.mic}}) are also supported.
-
-  \if{html}{
+\if{html}{
     \strong{Example for copying from Excel:}
     \out{<div style="text-align: left">}\figure{clipboard_copy.png}\out{</div>}
     \cr

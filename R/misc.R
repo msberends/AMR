@@ -85,16 +85,15 @@ check_available_columns <- function(tbl, col.list, info = TRUE) {
 
 # Coefficient of variation (CV)
 cv <- function(x, na.rm = TRUE) {
-  cv.x <- sd(x, na.rm = na.rm) / abs(mean(x, na.rm = na.rm))
-  cv.x
+  stats::sd(x, na.rm = na.rm) / base::abs(base::mean(x, na.rm = na.rm))
 }
 
 # Coefficient of dispersion, or coefficient of quartile variation (CQV).
 # (Bonett et al., 2006: Confidence interval for a coefficient of quartile variation).
 cqv <- function(x, na.rm = TRUE) {
   cqv.x <-
-    (quantile(x, 0.75, na.rm = na.rm, type = 6) - quantile(x, 0.25, na.rm = na.rm, type = 6)) /
-    (quantile(x, 0.75, na.rm = na.rm, type = 6) + quantile(x, 0.25, na.rm = na.rm, type = 6))
+    (stats::quantile(x, 0.75, na.rm = na.rm, type = 6) - stats::quantile(x, 0.25, na.rm = na.rm, type = 6)) /
+    (stats::quantile(x, 0.75, na.rm = na.rm, type = 6) + stats::quantile(x, 0.25, na.rm = na.rm, type = 6))
   unname(cqv.x)
 }
 
