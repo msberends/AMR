@@ -30,13 +30,17 @@ To only show and quickly review the content of one variable, you can just select
 # just using base R
 freq(septic_patients$sex)
 
-# using base R to select the variable and pass it on with a pipe
+# using base R to select the variable and pass it on with a pipe from the dplyr package
 septic_patients$sex %>% freq()
 
-# do it all with pipes, using the `select` function of the dplyr package
+# do it all with pipes, using the `select` function from the dplyr package
 septic_patients %>%
   select(sex) %>%
   freq()
+
+# or the preferred way: using a pipe to pass the variable on to the freq function
+septic_patients %>% freq(sex) # this also shows 'age' in the title
+
 ```
 This will all lead to the following table:
 ```{r, echo = TRUE}
@@ -50,8 +54,7 @@ Multiple variables will be pasted into one variable to review individual cases, 
 
 For illustration, we could add some more variables to the `septic_patients` dataset to learn about bacterial properties:
 ```{r, echo = TRUE, results = 'hide'}
-my_patients <- septic_patients %>% 
-  left_join_microorganisms()
+my_patients <- septic_patients %>% left_join_microorganisms()
 ```
 Now all variables of the `microorganisms` dataset have been joined to the `septic_patients` dataset. The `microorganisms` dataset consists of the following variables:
 ```{r, echo = TRUE}
@@ -66,9 +69,7 @@ dim(my_patients)
 
 So now the `genus` and `species` variables are available. A frequency table of these combined variables can be created like this:
 ```{r, echo = TRUE}
-my_patients %>%
-  select(genus, species) %>%
-  freq()
+my_patients %>% freq(genus, species)
 ```
 
 ## Frequencies of numeric values
@@ -81,8 +82,7 @@ In case of numeric values (like integers, doubles, etc.) additional descriptive 
 # # get age distribution of unique patients
 septic_patients %>% 
   distinct(patient_id, .keep_all = TRUE) %>% 
-  select(age) %>% 
-  freq(nmax = 5)
+  freq(age, nmax = 5)
 ```
 
 So the following properties are determined, where `NA` values are always ignored:
@@ -109,16 +109,14 @@ Frequencies of factors will be sorted on factor level instead of item count by d
 
 ```{r, echo = TRUE}
 septic_patients %>%
-  select(hospital_id) %>% 
-  freq()
+  freq(hospital_id)
 ```
 
 ... with this, where items are now sorted on count:
 
 ```{r, echo = TRUE}
 septic_patients %>%
-  select(hospital_id) %>% 
-  freq(sort.count = TRUE)
+  freq(hospital_id, sort.count = TRUE)
 ```
 
 All classes will be printed into the header. Variables with the new `rsi` class of this AMR package are actually ordered factors and have three classes (look at `Class` in the header):
@@ -139,6 +137,21 @@ septic_patients %>%
   freq(nmax = 5)
 ```
 
+## Assigning a frequency table to an object
+
+A frequency table is actaually a regular `data.frame`, with the exception that it contains an additional class.
+
+```{r, echo = TRUE}
+my_df <- septic_patients %>% freq(age)
+class(my_df)
+```
+
+Because of this additional class, a frequency table prints like the examples above. But the object itself contains the complete table without a row limitation:
+
+```{r, echo = TRUE}
+dim(my_df)
+```
+
 ## Additional parameters
 
 ### Parameter `na.rm`
@@ -146,8 +159,7 @@ With the `na.rm` parameter (defaults to `TRUE`, but they will always be shown in
 
 ```{r, echo = TRUE}
 septic_patients %>%
-  select(amox) %>% 
-  freq(na.rm = FALSE)
+  freq(amox, na.rm = FALSE)
 ```
 
 ### Parameter `row.names`
@@ -155,8 +167,7 @@ The default frequency tables shows row indices. To remove them, use `row.names =
 
 ```{r, echo = TRUE}
 septic_patients %>%
-  select(hospital_id) %>% 
-  freq(row.names = FALSE)
+  freq(hospital_id, row.names = FALSE)
 ```
 
 ### Parameter `markdown`
@@ -164,21 +175,7 @@ The `markdown` parameter can be used in reports created with R Markdown. This wi
 
 ```{r, echo = TRUE}
 septic_patients %>%
-  select(hospital_id) %>% 
-  freq(markdown = TRUE)
-```
-
-### Parameter `as.data.frame`
-With the `as.data.frame` parameter you can assign the frequency table to an object, or just print it as a `data.frame` to the console:
-
-```{r, echo = TRUE}
-my_df <- septic_patients %>%
-  select(hospital_id) %>% 
-  freq(as.data.frame = TRUE)
-
-my_df
-
-class(my_df)
+  freq(hospital_id, markdown = TRUE)
 ```
 
 ----

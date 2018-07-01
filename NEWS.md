@@ -4,10 +4,17 @@
 * Vignette about frequency tables
 * Possibility to globally set the default for the amount of items to print in frequency tables (`freq` function), with `options(max.print.freq = n)`
 * Functions `clipboard_import` and `clipboard_export` as helper functions to quickly copy and paste from/to software like Excel and SPSS
+* Function `g.test` to perform the Χ<sup>2</sup> distributed [*G*-test](https://en.wikipedia.org/wiki/G-test)
+* Function `p.symbol` to transform p value to their related symbol: `0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1`
+* Function `vector2ratio` to transform a vector of values to a preset ratio. For example:
+```r
+vector2ratio(c(772, 1611, 737), ratio = "1:2:1")
+# [1]  780 1560  780
+```
 
 #### Changed
-* Renamed `toConsole` parameter of `freq` function to `as.data.frame`
-* Added pretty printing for frequency tables when returned as `data.frame`
+* Frequency tables (function `freq`) now supports quasiquotation: `freq(mydata, mycolumn)`, or `mydata %>% freq(mycolumn)`
+* Frequency tables are now actual `data.frame`s with altered console printing to make it look like a frequency table. Because of this, the parameter `toConsole` is not longer needed.
 * Small translational improvements to the `septic_patients` dataset
 * Combined MIC/RSI values will now be coerced by the `rsi` and `mic` functions:
   * `as.rsi("<=0.002; S")` will return `S`

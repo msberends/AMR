@@ -75,13 +75,6 @@ print.tbl <- function(x, ...) {
 }
 
 #' @rdname print
-#' @exportMethod print.frequency_tbl
-#' @export
-print.frequency_tbl <- function(x, ...) {
-  prettyprint_df(x, ...)
-}
-
-#' @rdname print
 #' @exportMethod print.data.table
 #' @export
 print.data.table <- function(x,

@@ -16,34 +16,42 @@
 # GNU General Public License for more details.                         #
 # ==================================================================== #
 
-globalVariables(c('abname',
-                  'atc',
-                  'bactid',
-                  'cnt',
-                  'count',
-                  'cum_count',
-                  'cum_percent',
-                  'date_lab',
-                  'days_diff',
-                  'fctlvl',
-                  'first_isolate_row_index',
-                  'fullname',
-                  'genus',
-                  'gramstain',
-                  'item',
-                  'key_ab',
-                  'key_ab_lag',
-                  'key_ab_other',
-                  'median',
-                  'mic',
-                  'mocode',
-                  'molis',
-                  'n',
-                  'other_pat_or_mo',
-                  'patient_id',
-                  'quantile',
-                  'real_first_isolate',
-                  'species',
-                  'umcg',
-                  'y',
-                  '.'))
+#' Symbol of a p value
+#'
+#' Return the symbol related to the p value: 0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+#' @param p p value
+#' @param emptychar text to show when \code{p > 0.1}
+#' @return Text
+#' @export
+p.symbol <- function(p, emptychar = " ") {
+  instelling.oud <- options()$scipen
+  options(scipen = 999)
+  s <- ''
+  s[1:length(p)] <- ''
+  for (i in 1:length(p)) {
+    if (is.na(p[i])) {
+      s[i] <- NA
+      next
+    }
+    if (p[i] > 1) {
+      s[i] <- NA
+      next
+    } else {
+      p_test <- p[i]
+    }
+
+    if (p_test > 0.1) {
+      s[i] <- emptychar
+    } else if (p_test > 0.05) {
+      s[i] <- '.'
+    } else if (p_test > 0.01) {
+      s[i] <- '*'
+    } else if (p_test > 0.001) {
+      s[i] <- '**'
+    } else if (p_test >= 0) {
+      s[i] <- '***'
+    }
+  }
+  options(scipen = instelling.oud)
+  s
+}

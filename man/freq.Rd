@@ -6,22 +6,24 @@
 \alias{top_freq}
 \title{Frequency table}
 \usage{
-freq(x, sort.count = TRUE, nmax = getOption("max.print.freq"),
-  na.rm = TRUE, row.names = TRUE, markdown = FALSE,
-  as.data.frame = FALSE, digits = 2, sep = " ")
+frequency_tbl(x, ..., sort.count = TRUE, nmax = getOption("max.print.freq"),
+  na.rm = TRUE, row.names = TRUE, markdown = FALSE, digits = 2,
+  sep = " ")
 
-frequency_tbl(x, sort.count = TRUE, nmax = getOption("max.print.freq"),
-  na.rm = TRUE, row.names = TRUE, markdown = FALSE,
-  as.data.frame = FALSE, digits = 2, sep = " ")
+freq(x, ..., sort.count = TRUE, nmax = getOption("max.print.freq"),
+  na.rm = TRUE, row.names = TRUE, markdown = FALSE, digits = 2,
+  sep = " ")
 
 top_freq(f, n)
 }
 \arguments{
-\item{x}{data}
+\item{x}{vector with items, or \code{data.frame}}
 
-\item{sort.count}{sort on count. Use \code{FALSE} to sort alphabetically on item.}
+\item{...}{up to nine different columns of \code{x} to calculate frequencies from, see Examples}
 
-\item{nmax}{number of row to print. The default, \code{15}, uses \code{\link{getOption}("max.print.freq")}. Use \code{nmax = 0} or \code{nmax = NA} to print all rows.}
+\item{sort.count}{sort on count, i.e. frequencies. Use \code{FALSE} to sort alphabetically on item.}
+
+\item{nmax}{number of row to print. The default, \code{15}, uses \code{\link{getOption}("max.print.freq")}. Use \code{nmax = 0}, \code{nmax = NULL} or \code{nmax = NA} to print all rows.}
 
 \item{na.rm}{a logical value indicating whether NA values should be removed from the frequency table. The header will always print the amount of \code{NA}s.}
 
@@ -29,24 +31,19 @@ top_freq(f, n)
 
 \item{markdown}{print table in markdown format (this forces \code{nmax = NA})}
 
-\item{as.data.frame}{return frequency table without header as a \code{data.frame} (e.g. to assign the table to an object)}
-
-\item{digits}{how many significant digits are to be used for numeric values (not for the items themselves, that depends on \code{\link{getOption}("digits")})}
+\item{digits}{how many significant digits are to be used for numeric values in the header (not for the items themselves, that depends on \code{\link{getOption}("digits")})}
 
 \item{sep}{a character string to separate the terms when selecting multiple columns}
 
-\item{f}{a frequency table as \code{data.frame}, used as \code{freq(..., as.data.frame = TRUE)}}
+\item{f}{a frequency table}
 
 \item{n}{number of top \emph{n} items to return, use -n for the bottom \emph{n} items. It will include more than \code{n} rows if there are ties.}
 }
 \value{
-\itemize{
-  \item{When using \code{as.data.frame = FALSE} (default): only printed text}
-  \item{When using \code{as.data.frame = TRUE}: a \code{data.frame} object with an additional class \code{"frequency_tbl"}}
-}
+A \code{data.frame} with an additional class \code{"frequency_tbl"}
 }
 \description{
-Create a frequency table of a vector of data, a single column or a maximum of 9 columns of a data frame. Supports markdown for reports. \code{top_freq} can be used to get the top/bottom \emph{n} items of a frequency table, with counts as names.
+Create a frequency table of a vector with items or a data frame. Supports quasiquotation and markdown for reports. \code{top_freq} can be used to get the top/bottom \emph{n} items of a frequency table, with counts as names.
 }
 \details{
 This package also has a vignette available about this function, run: \code{browseVignettes("AMR")} to read it.
@@ -73,31 +70,41 @@ The function \code{top_freq} uses \code{\link[dplyr]{top_n}} internally and will
 \examples{
 library(dplyr)
 
+# this all gives the same result:
 freq(septic_patients$hospital_id)
+freq(septic_patients[, "hospital_id"])
+septic_patients$hospital_id \%>\% freq()
+septic_patients[, "hospital_id"] \%>\% freq()
+septic_patients \%>\% freq("hospital_id")
+septic_patients \%>\% freq(hospital_id)  # <- easiest to remember when used to tidyverse
 
+# you could use `select`...
 septic_patients \%>\%
   filter(hospital_id == "A") \%>\%
   select(bactid) \%>\%
   freq()
+
+# ... or you use `freq` to select it immediately
+septic_patients \%>\%
+  filter(hospital_id == "A") \%>\%
+  freq(bactid)
 
 # select multiple columns; they will be pasted together
 septic_patients \%>\%
   left_join_microorganisms \%>\%
   filter(hospital_id == "A") \%>\%
-  select(genus, species) \%>\%
-  freq()
+  freq(genus, species)
 
 # save frequency table to an object
 years <- septic_patients \%>\%
   mutate(year = format(date, "\%Y")) \%>\%
-  select(year) \%>\%
-  freq(as.data.frame = TRUE)
+  freq(year)
+years \%>\% pull(item)
 
 # get top 10 bugs of hospital A as a vector
 septic_patients \%>\%
   filter(hospital_id == "A") \%>\%
-  select(bactid) \%>\%
-  freq(as.data.frame = TRUE) \%>\%
+  freq(bactid) \%>\%
   top_freq(10)
 }
 \keyword{freq}

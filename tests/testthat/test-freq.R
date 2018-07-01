@@ -10,43 +10,40 @@ test_that("frequency table works", {
                length(unique(septic_patients$date)))
 
   # int
-  expect_output(freq(septic_patients$age))
+  expect_output(print(freq(septic_patients$age)))
   # date
-  expect_output(freq(septic_patients$date))
+  expect_output(print(freq(septic_patients$date)))
   # factor
-  expect_output(freq(septic_patients$hospital_id))
+  expect_output(print(freq(septic_patients$hospital_id)))
 
   library(dplyr)
-  expect_output(septic_patients %>% select(1:2) %>% freq())
-  expect_output(septic_patients %>% select(1:3) %>% freq())
-  expect_output(septic_patients %>% select(1:4) %>% freq())
-  expect_output(septic_patients %>% select(1:5) %>% freq())
-  expect_output(septic_patients %>% select(1:6) %>% freq())
-  expect_output(septic_patients %>% select(1:7) %>% freq())
-  expect_output(septic_patients %>% select(1:8) %>% freq())
-  expect_output(septic_patients %>% select(1:9) %>% freq())
+  expect_output(septic_patients %>% select(1:2) %>% freq() %>% print())
+  expect_output(septic_patients %>% select(1:3) %>% freq() %>% print())
+  expect_output(septic_patients %>% select(1:4) %>% freq() %>% print())
+  expect_output(septic_patients %>% select(1:5) %>% freq() %>% print())
+  expect_output(septic_patients %>% select(1:6) %>% freq() %>% print())
+  expect_output(septic_patients %>% select(1:7) %>% freq() %>% print())
+  expect_output(septic_patients %>% select(1:8) %>% freq() %>% print())
+  expect_output(septic_patients %>% select(1:9) %>% freq() %>% print())
 
   # top 5
   expect_equal(
     septic_patients %>%
-      select(bactid) %>%
-      freq(as.data.frame = TRUE) %>%
+      freq(bactid) %>%
       top_freq(5) %>%
       length(),
     5)
   # there're more than 5 lowest values
   expect_gt(
     septic_patients %>%
-      select(bactid) %>%
-      freq(as.data.frame = TRUE) %>%
+      freq(bactid) %>%
       top_freq(-5) %>%
       length(),
     5)
   # n has length > 1
   expect_error(
     septic_patients %>%
-      select(bactid) %>%
-      freq(as.data.frame = TRUE) %>%
+      freq(bactid) %>%
       top_freq(n = c(1, 2))
   )
   # input must be freq tbl

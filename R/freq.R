@@ -18,17 +18,17 @@
 
 #' Frequency table
 #'
-#' Create a frequency table of a vector of data, a single column or a maximum of 9 columns of a data frame. Supports markdown for reports. \code{top_freq} can be used to get the top/bottom \emph{n} items of a frequency table, with counts as names.
-#' @param x data
-#' @param sort.count sort on count. Use \code{FALSE} to sort alphabetically on item.
-#' @param nmax number of row to print. The default, \code{15}, uses \code{\link{getOption}("max.print.freq")}. Use \code{nmax = 0} or \code{nmax = NA} to print all rows.
+#' Create a frequency table of a vector with items or a data frame. Supports quasiquotation and markdown for reports. \code{top_freq} can be used to get the top/bottom \emph{n} items of a frequency table, with counts as names.
+#' @param x vector with items, or \code{data.frame}
+#' @param ... up to nine different columns of \code{x} to calculate frequencies from, see Examples
+#' @param sort.count sort on count, i.e. frequencies. Use \code{FALSE} to sort alphabetically on item.
+#' @param nmax number of row to print. The default, \code{15}, uses \code{\link{getOption}("max.print.freq")}. Use \code{nmax = 0}, \code{nmax = NULL} or \code{nmax = NA} to print all rows.
 #' @param na.rm a logical value indicating whether NA values should be removed from the frequency table. The header will always print the amount of \code{NA}s.
 #' @param row.names a logical value indicating whether row indices should be printed as \code{1:nrow(x)}
 #' @param markdown print table in markdown format (this forces \code{nmax = NA})
-#' @param as.data.frame return frequency table without header as a \code{data.frame} (e.g. to assign the table to an object)
-#' @param digits how many significant digits are to be used for numeric values (not for the items themselves, that depends on \code{\link{getOption}("digits")})
+#' @param digits how many significant digits are to be used for numeric values in the header (not for the items themselves, that depends on \code{\link{getOption}("digits")})
 #' @param sep a character string to separate the terms when selecting multiple columns
-#' @param f a frequency table as \code{data.frame}, used as \code{freq(..., as.data.frame = TRUE)}
+#' @param f a frequency table
 #' @param n number of top \emph{n} items to return, use -n for the bottom \emph{n} items. It will include more than \code{n} rows if there are ties.
 #' @details This package also has a vignette available about this function, run: \code{browseVignettes("AMR")} to read it.
 #'
@@ -54,51 +54,82 @@
 #' @importFrom grDevices boxplot.stats
 #' @importFrom dplyr %>% select pull n_distinct group_by arrange desc mutate summarise
 #' @importFrom utils browseVignettes
+#' @importFrom tibble tibble
+#' @importFrom rlang ensyms
 #' @keywords summary summarise frequency freq
 #' @rdname freq
-#' @return \itemize{
-#'   \item{When using \code{as.data.frame = FALSE} (default): only printed text}
-#'   \item{When using \code{as.data.frame = TRUE}: a \code{data.frame} object with an additional class \code{"frequency_tbl"}}
-#' }
+#' @name freq
+#' @return A \code{data.frame} with an additional class \code{"frequency_tbl"}
 #' @export
 #' @examples
 #' library(dplyr)
 #'
+#' # this all gives the same result:
 #' freq(septic_patients$hospital_id)
+#' freq(septic_patients[, "hospital_id"])
+#' septic_patients$hospital_id %>% freq()
+#' septic_patients[, "hospital_id"] %>% freq()
+#' septic_patients %>% freq("hospital_id")
+#' septic_patients %>% freq(hospital_id)  # <- easiest to remember when used to tidyverse
 #'
+#' # you could use `select`...
 #' septic_patients %>%
 #'   filter(hospital_id == "A") %>%
 #'   select(bactid) %>%
 #'   freq()
+#'
+#' # ... or you use `freq` to select it immediately
+#' septic_patients %>%
+#'   filter(hospital_id == "A") %>%
+#'   freq(bactid)
 #'
 #' # select multiple columns; they will be pasted together
 #' septic_patients %>%
 #'   left_join_microorganisms %>%
 #'   filter(hospital_id == "A") %>%
-#'   select(genus, species) %>%
-#'   freq()
+#'   freq(genus, species)
 #'
 #' # save frequency table to an object
 #' years <- septic_patients %>%
 #'   mutate(year = format(date, "%Y")) %>%
-#'   select(year) %>%
-#'   freq(as.data.frame = TRUE)
+#'   freq(year)
+#' years %>% pull(item)
 #'
 #' # get top 10 bugs of hospital A as a vector
 #' septic_patients %>%
 #'   filter(hospital_id == "A") %>%
-#'   select(bactid) %>%
-#'   freq(as.data.frame = TRUE) %>%
+#'   freq(bactid) %>%
 #'   top_freq(10)
-freq <- function(x,
-                 sort.count = TRUE,
-                 nmax = getOption("max.print.freq"),
-                 na.rm = TRUE,
-                 row.names = TRUE,
-                 markdown = FALSE,
-                 as.data.frame = FALSE,
-                 digits = 2,
-                 sep = " ") {
+frequency_tbl <- function(x,
+                          ...,
+                          sort.count = TRUE,
+                          nmax = getOption("max.print.freq"),
+                          na.rm = TRUE,
+                          row.names = TRUE,
+                          markdown = FALSE,
+                          digits = 2,
+                          sep = " ") {
+
+  if (any(class(x) == 'data.frame')) {
+    x.name <- deparse(substitute(x))
+    if (x.name == ".") {
+      x.name <- NULL
+    }
+    dots <- rlang::ensyms(...)
+    ndots <- length(dots)
+
+    if (ndots > 0 & ndots < 10) {
+      cols <- as.character(dots)
+      x <- x[, cols]
+    } else if (ndots >= 10) {
+      stop('A maximum of 9 columns can be analysed at the same time.', call. = FALSE)
+    } else {
+      cols <- NULL
+    }
+  } else {
+    x.name <- NULL
+    cols <- NULL
+  }
 
   mult.columns <- 0
 
@@ -117,64 +148,64 @@ freq <- function(x,
       colnames(x) <- LETTERS[1:ncol(x)]
       if (ncol(x) == 2) {
         x$total <- paste(x$A %>% as.character(),
-                          x$B %>% as.character(),
-                          sep = sep)
+                         x$B %>% as.character(),
+                         sep = sep)
       } else if (ncol(x) == 3) {
         x$total <- paste(x$A %>% as.character(),
-                          x$B %>% as.character(),
-                          x$C %>% as.character(),
-                          sep = sep)
+                         x$B %>% as.character(),
+                         x$C %>% as.character(),
+                         sep = sep)
       } else if (ncol(x) == 4) {
         x$total <- paste(x$A %>% as.character(),
-                          x$B %>% as.character(),
-                          x$C %>% as.character(),
-                          x$D %>% as.character(),
-                          sep = sep)
+                         x$B %>% as.character(),
+                         x$C %>% as.character(),
+                         x$D %>% as.character(),
+                         sep = sep)
       } else if (ncol(x) == 5) {
         x$total <- paste(x$A %>% as.character(),
-                          x$B %>% as.character(),
-                          x$C %>% as.character(),
-                          x$D %>% as.character(),
-                          x$E %>% as.character(),
-                          sep = sep)
+                         x$B %>% as.character(),
+                         x$C %>% as.character(),
+                         x$D %>% as.character(),
+                         x$E %>% as.character(),
+                         sep = sep)
       } else if (ncol(x) == 6) {
         x$total <- paste(x$A %>% as.character(),
-                          x$B %>% as.character(),
-                          x$C %>% as.character(),
-                          x$D %>% as.character(),
-                          x$E %>% as.character(),
-                          x$F %>% as.character(),
-                          sep = sep)
+                         x$B %>% as.character(),
+                         x$C %>% as.character(),
+                         x$D %>% as.character(),
+                         x$E %>% as.character(),
+                         x$F %>% as.character(),
+                         sep = sep)
       } else if (ncol(x) == 7) {
         x$total <- paste(x$A %>% as.character(),
-                          x$B %>% as.character(),
-                          x$C %>% as.character(),
-                          x$D %>% as.character(),
-                          x$E %>% as.character(),
-                          x$F %>% as.character(),
-                          x$G %>% as.character(),
-                          sep = sep)
+                         x$B %>% as.character(),
+                         x$C %>% as.character(),
+                         x$D %>% as.character(),
+                         x$E %>% as.character(),
+                         x$F %>% as.character(),
+                         x$G %>% as.character(),
+                         sep = sep)
       } else if (ncol(x) == 8) {
         x$total <- paste(x$A %>% as.character(),
-                          x$B %>% as.character(),
-                          x$C %>% as.character(),
-                          x$D %>% as.character(),
-                          x$E %>% as.character(),
-                          x$F %>% as.character(),
-                          x$G %>% as.character(),
-                          x$H %>% as.character(),
-                          sep = sep)
+                         x$B %>% as.character(),
+                         x$C %>% as.character(),
+                         x$D %>% as.character(),
+                         x$E %>% as.character(),
+                         x$F %>% as.character(),
+                         x$G %>% as.character(),
+                         x$H %>% as.character(),
+                         sep = sep)
       } else if (ncol(x) == 9) {
         x$total <- paste(x$A %>% as.character(),
-                          x$B %>% as.character(),
-                          x$C %>% as.character(),
-                          x$D %>% as.character(),
-                          x$E %>% as.character(),
-                          x$F %>% as.character(),
-                          x$G %>% as.character(),
-                          x$H %>% as.character(),
-                          x$I %>% as.character(),
-                          sep = sep)
+                         x$B %>% as.character(),
+                         x$C %>% as.character(),
+                         x$D %>% as.character(),
+                         x$E %>% as.character(),
+                         x$F %>% as.character(),
+                         x$G %>% as.character(),
+                         x$H %>% as.character(),
+                         x$I %>% as.character(),
+                         sep = sep)
       }
 
       x <- x$total
@@ -182,9 +213,6 @@ freq <- function(x,
     } else {
       stop('A maximum of 9 columns can be analysed at the same time.', call. = FALSE)
     }
-  }
-  if (markdown == TRUE & as.data.frame == TRUE) {
-    warning('`as.data.frame = TRUE` will be ignored when `markdown = TRUE`.')
   }
 
   if (mult.columns > 1) {
@@ -264,22 +292,12 @@ freq <- function(x,
     x <- x %>% format(formatdates)
   }
 
-  if (as.data.frame == FALSE) {
-    cat(header)
-  }
-
-  if (all(is.na(x))) {
-    cat('\n\nNo observations.\n')
-    return(invisible())
-  }
-  if (n_distinct(x) == length(x)) {
-    warning('All observations are unique.', call. = FALSE)
-  }
-
   nmax.set <- !missing(nmax)
-  if (is.null(nmax) & is.null(base::getOption("max.print.freq", default = NULL))) {
+  if (!nmax.set & is.null(nmax) & is.null(base::getOption("max.print.freq", default = NULL))) {
     # default for max print setting
     nmax <- 15
+  } else if (is.null(nmax)) {
+    nmax <- length(x)
   }
 
   if (nmax == 0 | is.na(nmax) | is.null(nmax)) {
@@ -290,26 +308,25 @@ freq <- function(x,
   # create table with counts and percentages
   column_names <- c('Item', 'Count', 'Percent', 'Cum. Count', 'Cum. Percent', '(Factor Level)')
   column_names_df <- c('item', 'count', 'percent', 'cum_count', 'cum_percent', 'factor_level')
+
   if (any(class(x) == 'factor')) {
-    df <- tibble::tibble(Item = x,
-                         Fctlvl = x %>% as.integer()) %>%
-      group_by(Item, Fctlvl)
+    df <- tibble::tibble(item = x,
+                         fctlvl = x %>% as.integer()) %>%
+      group_by(item, fctlvl)
     column_align <- c('l', 'r', 'r', 'r', 'r', 'r')
   } else {
-    df <- tibble::tibble(Item = x) %>%
-      group_by(Item)
+    df <- tibble::tibble(item = x) %>%
+      group_by(item)
     # strip factor lvl from col names
     column_names <- column_names[1:length(column_names) - 1]
     column_names_df <- column_names_df[1:length(column_names_df) - 1]
     column_align <- c(x_align, 'r', 'r', 'r', 'r')
   }
-  df <- df %>%
-    summarise(Count = n(),
-              Percent = (n() / length(x)) %>% percent(force_zero = TRUE))
+  df <- df %>% summarise(count = n())
 
-  if (df$Item %>% paste(collapse = ',') %like% '\033') {
+  if (df$item %>% paste(collapse = ',') %like% '\033') {
     df <- df %>%
-      mutate(Item = Item %>%
+      mutate(item = item %>%
                # remove escape char
                # see https://en.wikipedia.org/wiki/Escape_character#ASCII_escape_character
                gsub('\033', ' ', ., fixed = TRUE))
@@ -317,95 +334,54 @@ freq <- function(x,
 
   # sort according to setting
   if (sort.count == TRUE) {
-    df <- df %>% arrange(desc(Count), Item)
+    df <- df %>% arrange(desc(count), item)
   } else {
     if (any(class(x) == 'factor')) {
-      df <- df %>% arrange(Fctlvl, Item)
+      df <- df %>% arrange(fctlvl, item)
     } else {
-      df <- df %>% arrange(Item)
+      df <- df %>% arrange(item)
     }
   }
 
-  # add cumulative values
-  df$Cum <- cumsum(df$Count)
-  df$CumTot <- (df$Cum / sum(df$Count, na.rm = TRUE)) %>% percent(force_zero = TRUE)
-  df$Cum <- df$Cum %>% format()
+  df <- as.data.frame(df, stringsAsFactors = FALSE)
+
+  df$percent <- df$count / base::sum(df$count, na.rm = TRUE)
+  df$cum_count <- base::cumsum(df$count)
+  df$cum_percent <- df$cum_count / base::sum(df$count, na.rm = TRUE)
 
   if (any(class(x) == 'factor')) {
     # put factor last
-    df <- df %>% select(Item, Count, Percent, Cum, CumTot, Fctlvl)
+    df <- df %>% select(item, count, percent, cum_count, cum_percent, fctlvl)
   }
 
-  if (as.data.frame == TRUE) {
-    # assign to object
-    df[, 3] <- df[, 2] / sum(df[, 2], na.rm = TRUE)
-    df[, 4] <- cumsum(df[, 2])
-    df[, 5] <- df[, 4] / sum(df[, 2], na.rm = TRUE)
-    colnames(df) <- column_names_df
-    df <- as.data.frame(df, stringsAsFactors = FALSE)
-    class(df) <- c('frequency_tbl', class(df))
-    return(df)
-  }
+  colnames(df) <- column_names_df
+
+  class(df) <- c('frequency_tbl', class(df))
+  attr(df, 'package') <- 'AMR'
+  attr(df, 'package.version') <- packageDescription('AMR')$Version
 
   if (markdown == TRUE) {
-    tblformat <- 'markdown'
+    tbl_format <- 'markdown'
   } else {
-    tblformat <- 'pandoc'
+    tbl_format <- 'pandoc'
   }
 
-  # save old NA setting for kable
-  opt.old <- options()$knitr.kable.NA
-  options(knitr.kable.NA = "<NA>")
+  attr(df, 'opt') <- list(data = x.name,
+                          vars = cols,
+                          header = header,
+                          row_names = row.names,
+                          column_names = column_names,
+                          column_align = column_align,
+                          tbl_format = tbl_format,
+                          nmax = nmax,
+                          nmax.set = nmax.set)
 
-  Count.rest <- sum(df[nmax.1:nrow(df), 'Count'], na.rm = TRUE)
-  if (any(class(x) %in% c('double', 'integer', 'numeric', 'raw', 'single'))) {
-    df <- df %>% mutate(Item = format(Item))
-  }
-  df <- df %>% mutate(Count = format(Count))
-
-  if (nrow(df) > nmax.1 & markdown == FALSE) {
-    df2 <- df[1:nmax,]
-    print(
-      knitr::kable(df2,
-                   format = tblformat,
-                   row.names = row.names,
-                   col.names = column_names,
-                   align = column_align,
-                   padding = 1)
-    )
-    if (nmax.set == TRUE) {
-      cat('[ reached `nmax = ', nmax, '`', sep = '')
-    } else {
-      cat('[ reached getOption("max.print.freq")')
-    }
-    cat(' -- omitted ',
-        format(nrow(df) - nmax),
-        ' entries, n = ',
-        format(Count.rest),
-        ' (',
-        (Count.rest / length(x)) %>% percent(force_zero = TRUE),
-        ') ]\n', sep = '')
-
-  } else {
-    print(
-      knitr::kable(df,
-                   format = tblformat,
-                   row.names = row.names,
-                   col.names = column_names,
-                   align = column_align,
-                   padding = 1)
-    )
-  }
-  cat('\n')
-
-  # reset old kable setting
-  options(knitr.kable.NA = opt.old)
-  return(invisible())
+  df
 }
 
 #' @rdname freq
 #' @export
-frequency_tbl <- freq
+freq <- frequency_tbl
 
 #' @rdname freq
 #' @export
@@ -426,4 +402,95 @@ top_freq <- function(f, n) {
   vect
 }
 
+#' @rdname print
+#' @exportMethod print.frequency_tbl
+#' @importFrom knitr kable
+#' @importFrom dplyr n_distinct
+#' @export
+print.frequency_tbl <- function(x, ...) {
+
+  opt <- attr(x, 'opt')
+
+  if (!is.null(opt$data) & !is.null(opt$vars)) {
+    title <- paste0("of `", paste0(opt$vars, collapse = "` and `"), "` from ", opt$data)
+  } else if (!is.null(opt$data) & is.null(opt$vars)) {
+    title <- paste("of", opt$data)
+  } else if (is.null(opt$data) & !is.null(opt$vars)) {
+    title <- paste0("of `", paste0(opt$vars, collapse = "` and `"), "`")
+  } else {
+    title <- ""
+  }
+
+  cat("Frequency table", title, "\n\n")
+
+  if (!is.null(opt$header)) {
+    cat(opt$header)
+  }
+
+  if (NROW(x) == 0) {
+    cat('\n\nNo observations.\n')
+    return(invisible())
+  }
+
+  if (all(x$count == 1)) {
+    warning('All observations are unique.', call. = FALSE)
+  }
+
+  # save old NA setting for kable
+  opt.old <- options()$knitr.kable.NA
+  options(knitr.kable.NA = "<NA>")
+
+  if (nrow(x) > opt$nmax & opt$tbl_format != "markdown") {
+
+    x.rows <- nrow(x)
+    x.unprinted <- base::sum(x[(opt$nmax + 1):nrow(x), 'count'], na.rm = TRUE)
+    x.printed <- base::sum(x$count) - x.unprinted
+
+    x <- x[1:opt$nmax,]
+
+    if (opt$nmax.set == TRUE) {
+      footer <- paste('[ reached `nmax = ', opt$nmax, '`', sep = '')
+    } else {
+      footer <- '[ reached getOption("max.print.freq")'
+    }
+    footer <- paste(footer,
+                    ' -- omitted ',
+                    format(x.rows - opt$nmax),
+                    ' entries, n = ',
+                    format(x.unprinted),
+                    ' (',
+                    (x.unprinted / (x.unprinted + x.printed)) %>% percent(force_zero = TRUE),
+                    ') ]\n', sep = '')
+  } else {
+    footer <- NULL
+  }
+
+  if (any(class(x$item) %in% c('double', 'integer', 'numeric', 'raw', 'single'))) {
+    x$item <- format(x$item)
+  }
+  x$count <- format(x$count)
+  x$percent <- percent(x$percent, force_zero = TRUE)
+  x$cum_count <- format(x$cum_count)
+  x$cum_percent <- percent(x$cum_percent, force_zero = TRUE)
+
+  print(
+    knitr::kable(x,
+                 format = opt$tbl_format,
+                 row.names = opt$row_names,
+                 col.names = opt$column_names,
+                 align = opt$column_align,
+                 padding = 1)
+  )
+
+  if (!is.null(footer)) {
+    cat(footer)
+  }
+
+  cat('\n')
+
+  # reset old kable setting
+  options(knitr.kable.NA = opt.old)
+  return(invisible())
+
+}
 

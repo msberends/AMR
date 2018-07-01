@@ -10,20 +10,23 @@ library(AMR)
 # just using base R
 freq(septic_patients$sex)
 
-# using base R to select the variable and pass it on with a pipe
+# using base R to select the variable and pass it on with a pipe from the dplyr package
 septic_patients$sex %>% freq()
 
-# do it all with pipes, using the `select` function of the dplyr package
+# do it all with pipes, using the `select` function from the dplyr package
 septic_patients %>%
   select(sex) %>%
   freq()
+
+# or the preferred way: using a pipe to pass the variable on to the freq function
+septic_patients %>% freq(sex) # this also shows 'age' in the title
+
 
 ## ---- echo = TRUE--------------------------------------------------------
 freq(septic_patients$sex)
 
 ## ---- echo = TRUE, results = 'hide'--------------------------------------
-my_patients <- septic_patients %>% 
-  left_join_microorganisms()
+my_patients <- septic_patients %>% left_join_microorganisms()
 
 ## ---- echo = TRUE--------------------------------------------------------
 colnames(microorganisms)
@@ -33,26 +36,21 @@ dim(septic_patients)
 dim(my_patients)
 
 ## ---- echo = TRUE--------------------------------------------------------
-my_patients %>%
-  select(genus, species) %>%
-  freq()
+my_patients %>% freq(genus, species)
 
 ## ---- echo = TRUE--------------------------------------------------------
 # # get age distribution of unique patients
 septic_patients %>% 
   distinct(patient_id, .keep_all = TRUE) %>% 
-  select(age) %>% 
-  freq(nmax = 5)
+  freq(age, nmax = 5)
 
 ## ---- echo = TRUE--------------------------------------------------------
 septic_patients %>%
-  select(hospital_id) %>% 
-  freq()
+  freq(hospital_id)
 
 ## ---- echo = TRUE--------------------------------------------------------
 septic_patients %>%
-  select(hospital_id) %>% 
-  freq(sort.count = TRUE)
+  freq(hospital_id, sort.count = TRUE)
 
 ## ---- echo = TRUE--------------------------------------------------------
 septic_patients %>%
@@ -65,28 +63,23 @@ septic_patients %>%
   freq(nmax = 5)
 
 ## ---- echo = TRUE--------------------------------------------------------
-septic_patients %>%
-  select(amox) %>% 
-  freq(na.rm = FALSE)
-
-## ---- echo = TRUE--------------------------------------------------------
-septic_patients %>%
-  select(hospital_id) %>% 
-  freq(row.names = FALSE)
-
-## ---- echo = TRUE--------------------------------------------------------
-septic_patients %>%
-  select(hospital_id) %>% 
-  freq(markdown = TRUE)
-
-## ---- echo = TRUE--------------------------------------------------------
-my_df <- septic_patients %>%
-  select(hospital_id) %>% 
-  freq(as.data.frame = TRUE)
-
-my_df
-
+my_df <- septic_patients %>% freq(age)
 class(my_df)
+
+## ---- echo = TRUE--------------------------------------------------------
+dim(my_df)
+
+## ---- echo = TRUE--------------------------------------------------------
+septic_patients %>%
+  freq(amox, na.rm = FALSE)
+
+## ---- echo = TRUE--------------------------------------------------------
+septic_patients %>%
+  freq(hospital_id, row.names = FALSE)
+
+## ---- echo = TRUE--------------------------------------------------------
+septic_patients %>%
+  freq(hospital_id, markdown = TRUE)
 
 ## ---- echo = FALSE-------------------------------------------------------
 # this will print "2018" in 2018, and "2018-yyyy" after 2018.
