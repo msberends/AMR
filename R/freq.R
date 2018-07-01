@@ -55,7 +55,6 @@
 #' @importFrom dplyr %>% select pull n_distinct group_by arrange desc mutate summarise
 #' @importFrom utils browseVignettes
 #' @importFrom tibble tibble
-#' @importFrom rlang ensyms
 #' @keywords summary summarise frequency freq
 #' @rdname freq
 #' @name freq
@@ -115,11 +114,14 @@ frequency_tbl <- function(x,
     if (x.name == ".") {
       x.name <- NULL
     }
-    dots <- rlang::ensyms(...)
+    dots <- base::eval(base::substitute(base::alist(...)))
     ndots <- length(dots)
 
     if (ndots > 0 & ndots < 10) {
       cols <- as.character(dots)
+      if (!all(cols %in% colnames(x))) {
+        stop("one or more columns not found: `", paste(cols, collapse = "`, `"), '`', call. = FALSE)
+      }
       x <- x[, cols]
     } else if (ndots >= 10) {
       stop('A maximum of 9 columns can be analysed at the same time.', call. = FALSE)
