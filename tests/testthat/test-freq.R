@@ -1,12 +1,12 @@
 context("freq.R")
 
 test_that("frequency table works", {
-  expect_equal(nrow(freq(c(1, 1, 2, 2, 3, 3, 4, 4, 5, 5), as.data.frame = TRUE)), 5)
-  expect_equal(nrow(frequency_tbl(c(1, 1, 2, 2, 3, 3, 4, 4, 5, 5), as.data.frame = TRUE)), 5)
+  expect_equal(nrow(freq(c(1, 1, 2, 2, 3, 3, 4, 4, 5, 5))), 5)
+  expect_equal(nrow(frequency_tbl(c(1, 1, 2, 2, 3, 3, 4, 4, 5, 5))), 5)
 
   # date column of septic_patients should contain 1662 unique dates
-  expect_equal(nrow(freq(septic_patients$date, as.data.frame = TRUE)), 1662)
-  expect_equal(nrow(freq(septic_patients$date, as.data.frame = TRUE)),
+  expect_equal(nrow(freq(septic_patients$date)), 1662)
+  expect_equal(nrow(freq(septic_patients$date)),
                length(unique(septic_patients$date)))
 
   # int

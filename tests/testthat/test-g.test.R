@@ -2,6 +2,8 @@ context("g.test.R")
 
 test_that("G-test works", {
 
+  # GOODNESS-OF-FIT
+
   # example 1: clearfield rice vs. red rice
   x <- c(772, 1611, 737)
   x.expected <- vector2ratio(x, ratio = "1:2:1")
@@ -15,5 +17,14 @@ test_that("G-test works", {
   expect_equal(g.test(x, x.expected),
                expected = 0.01787343,
                tolerance = 0.00000001)
+
+  # INDEPENDENCE
+
+  # this should always yield a p value of around 0
+  x <- matrix(data = round(runif(4) * 100000, 0),
+              ncol = 2,
+              byrow = TRUE)
+  expect_lt(g.test(x),
+            0.0001)
 
 })

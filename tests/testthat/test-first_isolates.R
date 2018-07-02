@@ -16,7 +16,8 @@ test_that("first isolates work", {
                     col_patient_id = "patient_id",
                     col_bactid = "bactid",
                     info = FALSE),
-      na.rm = TRUE), 1959)
+      na.rm = TRUE),
+    1959)
 
   # septic_patients contains 1961 out of 2000 first *weighted* isolates
   expect_equal(
@@ -31,6 +32,19 @@ test_that("first isolates work", {
                       info = TRUE),
         na.rm = TRUE)),
     1961)
+  # and 1998 when using points
+  expect_equal(
+    suppressWarnings(
+      sum(
+        first_isolate(tbl = septic_patients %>% mutate(keyab = key_antibiotics(.)),
+                      col_date = "date",
+                      col_patient_id = "patient_id",
+                      col_bactid = "bactid",
+                      col_keyantibiotics = "keyab",
+                      type = "points",
+                      info = TRUE),
+        na.rm = TRUE)),
+    1998)
 
   # septic_patients contains 1732 out of 2000 first non-ICU isolates
   expect_equal(
@@ -58,6 +72,23 @@ test_that("first isolates work", {
                     col_bactid = "bactid",
                     col_specimen = "specimen",
                     filter_specimen = "Urine",
+                    info = TRUE),
+      na.rm = TRUE),
+    1501)
+  # same, but now exclude ICU
+  expect_lt(
+    sum(
+      first_isolate(tbl = mutate(septic_patients,
+                                 specimen = if_else(row_number() %in% random_rows,
+                                                    "Urine",
+                                                    "Unknown")),
+                    col_date = "date",
+                    col_patient_id = "patient_id",
+                    col_bactid = "bactid",
+                    col_specimen = "specimen",
+                    filter_specimen = "Urine",
+                    col_icu = "ward_icu",
+                    icu_exclude = TRUE,
                     info = TRUE),
       na.rm = TRUE),
     1501)
