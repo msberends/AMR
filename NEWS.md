@@ -5,12 +5,12 @@
 * Possibility to globally set the default for the amount of items to print in frequency tables (`freq` function), with `options(max.print.freq = n)`
 * Functions `clipboard_import` and `clipboard_export` as helper functions to quickly copy and paste from/to software like Excel and SPSS
 * Function `g.test` to perform the Χ<sup>2</sup> distributed [*G*-test](https://en.wikipedia.org/wiki/G-test)
-* Function `p.symbol` to transform p value to their related symbol: `0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1`
-* Function `vector2ratio` to transform a vector of values to a preset ratio. For example:
+* Function `ratio` to transform a vector of values to a preset ratio (convenient to use with `g.test`). For example:
 ```r
-vector2ratio(c(772, 1611, 737), ratio = "1:2:1")
+ratio(c(772, 1611, 737), ratio = "1:2:1")
 # [1]  780 1560  780
 ```
+* Function `p.symbol` to transform p value to their related symbol: `0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1`
 
 #### Changed
 * Frequency tables (function `freq`) now supports quasiquotation: `freq(mydata, mycolumn)`, or `mydata %>% freq(mycolumn)`

@@ -20,7 +20,7 @@
 #'
 #' A \emph{G}-test can be used to see whether the number of observations in each category fits a theoretical expectation (called a \strong{\emph{G}-test of goodness-of-fit}), or to see whether the proportions of one variable are different for different values of the other variable (called a \strong{\emph{G}-test of independence}).
 #' @param x numeric vector or matrix
-#' @param y expected value of \code{x}. Leave empty to determine automatically. This can also be ratios of \code{x}, e.g. calculated with \code{\link{vector2ratio}}.
+#' @param y expected value of \code{x}. Leave empty to determine automatically. This can also be ratios of \code{x}, e.g. calculated with \code{\link{ratio}}.
 #' @param alpha value to test the p value against
 #' @param info logical to determine whether the analysis should be printed
 #' @param minimum the test with fail if any of the observed values is below this value. Use \code{minimum = 30} for microbial epidemiology, to prevent calculating a p value when less than 30 isolates are available.
@@ -70,7 +70,7 @@
 #' # ratio.
 #'
 #' x <- c(772, 1611, 737)
-#' x.expected <- vector2ratio(x, ratio = "1:2:1")
+#' x.expected <- ratio(x, "1:2:1")
 #' x.expected
 #' # 780 1560 780
 #'
@@ -90,7 +90,7 @@
 #' # observed 1752 right-billed and 1895 left-billed crossbills.
 #'
 #' x <- c(1752, 1895)
-#' x.expected <- vector2ratio(x, ratio = c(1, 1))
+#' x.expected <- ratio(x, ratio = c(1, 1))
 #' x.expected
 #' # 1823.5 1823.5
 #'
@@ -215,7 +215,7 @@ g.test <- function(x,
 #' # ratio.
 #'
 #' x <- c(772, 1611, 737)
-#' x.expected <- vector2ratio(x, ratio = "1:2:1")
+#' x.expected <- ratio(x, "1:2:1")
 #' x.expected
 #' # 780 1560 780
 #'
@@ -235,7 +235,7 @@ g.test <- function(x,
 #' # observed 1752 right-billed and 1895 left-billed crossbills.
 #'
 #' x <- c(1752, 1895)
-#' x.expected <- vector2ratio(x, ratio = c(1, 1))
+#' x.expected <- ratio(x, ratio = c(1, 1))
 #' x.expected
 #' # 1823.5 1823.5
 #'
@@ -245,7 +245,7 @@ g.test <- function(x,
 #' # There is a significant difference from a 1:1 ratio.
 #' # Meaning: there are significantly more left-billed birds.
 #'
-vector2ratio <- function(x, ratio) {
+ratio <- function(x, ratio) {
   if (!all(is.numeric(x))) {
     stop('`x` must be a vector of numeric values.')
   }

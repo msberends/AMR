@@ -9,7 +9,7 @@ g.test(x, y = NULL, alpha = 0.05, info = TRUE, minimum = 0)
 \arguments{
 \item{x}{numeric vector or matrix}
 
-\item{y}{expected value of \code{x}. Leave empty to determine automatically. This can also be ratios of \code{x}, e.g. calculated with \code{\link{vector2ratio}}.}
+\item{y}{expected value of \code{x}. Leave empty to determine automatically. This can also be ratios of \code{x}, e.g. calculated with \code{\link{ratio}}.}
 
 \item{alpha}{value to test the p value against}
 
@@ -68,7 +68,7 @@ If there are more than two categories and you want to find out which ones are si
 # ratio.
 
 x <- c(772, 1611, 737)
-x.expected <- vector2ratio(x, ratio = "1:2:1")
+x.expected <- ratio(x, "1:2:1")
 x.expected
 # 780 1560 780
 
@@ -88,7 +88,7 @@ g.test(x, x.expected)
 # observed 1752 right-billed and 1895 left-billed crossbills.
 
 x <- c(1752, 1895)
-x.expected <- vector2ratio(x, ratio = c(1, 1))
+x.expected <- ratio(x, ratio = c(1, 1))
 x.expected
 # 1823.5 1823.5
 
