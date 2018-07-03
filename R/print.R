@@ -124,8 +124,6 @@ prettyprint_df <- function(x,
 
   if ('tbl_df' %in% class(x)) {
     type <- 'tibble'
-  } else if ('frequency_tbl' %in% class(x)) {
-    type <- 'frequency table'
   } else if ('data.table' %in% class(x)) {
     type <- 'data.table'
   } else {

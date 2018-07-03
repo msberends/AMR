@@ -2,6 +2,7 @@
 #### New
 * Function `top_freq` function to get the top/below *n* items of frequency tables
 * Vignette about frequency tables
+* Header of frequency tables now also show MAD and IQR
 * Possibility to globally set the default for the amount of items to print in frequency tables (`freq` function), with `options(max.print.freq = n)`
 * Functions `clipboard_import` and `clipboard_export` as helper functions to quickly copy and paste from/to software like Excel and SPSS
 * Function `g.test` to perform the Χ<sup>2</sup> distributed [*G*-test](https://en.wikipedia.org/wiki/G-test)

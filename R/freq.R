@@ -19,40 +19,43 @@
 #' Frequency table
 #'
 #' Create a frequency table of a vector with items or a data frame. Supports quasiquotation and markdown for reports. \code{top_freq} can be used to get the top/bottom \emph{n} items of a frequency table, with counts as names.
-#' @param x vector with items, or \code{data.frame}
+#' @param x vector with items, or a \code{data.frame}
 #' @param ... up to nine different columns of \code{x} to calculate frequencies from, see Examples
-#' @param sort.count sort on count, i.e. frequencies. Use \code{FALSE} to sort alphabetically on item.
-#' @param nmax number of row to print. The default, \code{15}, uses \code{\link{getOption}("max.print.freq")}. Use \code{nmax = 0}, \code{nmax = NULL} or \code{nmax = NA} to print all rows.
-#' @param na.rm a logical value indicating whether NA values should be removed from the frequency table. The header will always print the amount of \code{NA}s.
+#' @param sort.count sort on count, i.e. frequencies. This will be \code{TRUE} at default for everything except for factors.
+#' @param nmax number of row to print. The default, \code{15}, uses \code{\link{getOption}("max.print.freq")}. Use \code{nmax = 0}, \code{nmax = Inf}, \code{nmax = NULL} or \code{nmax = NA} to print all rows.
+#' @param na.rm a logical value indicating whether \code{NA} values should be removed from the frequency table. The header will always print the amount of \code{NA}s.
 #' @param row.names a logical value indicating whether row indices should be printed as \code{1:nrow(x)}
 #' @param markdown print table in markdown format (this forces \code{nmax = NA})
 #' @param digits how many significant digits are to be used for numeric values in the header (not for the items themselves, that depends on \code{\link{getOption}("digits")})
 #' @param sep a character string to separate the terms when selecting multiple columns
 #' @param f a frequency table
 #' @param n number of top \emph{n} items to return, use -n for the bottom \emph{n} items. It will include more than \code{n} rows if there are ties.
-#' @details This package also has a vignette available about this function, run: \code{browseVignettes("AMR")} to read it.
+#' @details Frequency tables (or frequency distributions) are summaries of the distribution of values in a sample. With the `freq` function, you can create univariate frequency tables. Multiple variables will be pasted into one variable, so it forces a univariate distribution. This package also has a vignette available to explain the use of this function further, run \code{browseVignettes("AMR")} to read it.
 #'
-#' For numeric values of any class, these additional values will be calculated and shown into the header:
+#' For numeric values of any class, these additional values will all be calculated with \code{na.rm = TRUE} and shown into the header:
 #' \itemize{
 #'   \item{Mean, using \code{\link[base]{mean}}}
-#'   \item{Standard deviation, using \code{\link[stats]{sd}}}
-#'   \item{Five numbers of Tukey (min, Q1, median, Q3, max), using \code{\link[stats]{fivenum}}}
-#'   \item{Outliers (total count and unique count), using \code{\link{boxplot.stats}}}
-#'   \item{Coefficient of variation (CV), the standard deviation divided by the mean}
-#'   \item{Coefficient of quartile variation (CQV, sometimes called coefficient of dispersion), calculated as \code{(Q3 - Q1) / (Q3 + Q1)} using \code{\link{quantile}} with \code{type = 6} as quantile algorithm to comply with SPSS standards}
+#'   \item{Standard Deviation, using \code{\link[stats]{sd}}}
+#'   \item{Coefficient of Variation (CV), the standard deviation divided by the mean}
+#'   \item{Mean Absolute Deviation (MAD), using \code{\link[stats]{mad}}}
+#'   \item{Tukey Five-Number Summaries (minimum, Q1, median, Q3, maximum), using \code{\link[stats]{fivenum}}}
+#'   \item{Interquartile Range (IQR) calculated as \code{Q3 - Q1} using the Tukey Five-Number Summaries, i.e. \strong{not} using the \code{\link[stats]{quantile}} function}
+#'   \item{Coefficient of Quartile Variation (CQV, sometimes called coefficient of dispersion), calculated as \code{(Q3 - Q1) / (Q3 + Q1)} using the Tukey Five-Number Summaries}
+#'   \item{Outliers (total count and unique count), using \code{\link[grDevices]{boxplot.stats}}}
 #' }
 #'
-#' For dates and times of any class, these additional values will be calculated and shown into the header:
+#' For dates and times of any class, these additional values will be calculated with \code{na.rm = TRUE} and shown into the header:
 #' \itemize{
 #'   \item{Oldest, using \code{\link[base]{min}}}
 #'   \item{Newest, using \code{\link[base]{max}}, with difference between newest and oldest}
 #'   \item{Median, using \code{\link[stats]{median}}, with percentage since oldest}
 #' }
 #'
+#'
 #' The function \code{top_freq} uses \code{\link[dplyr]{top_n}} internally and will include more than \code{n} rows if there are ties.
-#' @importFrom stats fivenum sd quantile
+#' @importFrom stats fivenum sd mad
 #' @importFrom grDevices boxplot.stats
-#' @importFrom dplyr %>% select pull n_distinct group_by arrange desc mutate summarise
+#' @importFrom dplyr %>% select pull n_distinct group_by arrange desc mutate summarise n_distinct
 #' @importFrom utils browseVignettes
 #' @importFrom tibble tibble
 #' @keywords summary summarise frequency freq
@@ -88,17 +91,24 @@
 #'   filter(hospital_id == "A") %>%
 #'   freq(genus, species)
 #'
-#' # save frequency table to an object
-#' years <- septic_patients %>%
-#'   mutate(year = format(date, "%Y")) %>%
-#'   freq(year)
-#' years %>% pull(item)
-#'
 #' # get top 10 bugs of hospital A as a vector
 #' septic_patients %>%
 #'   filter(hospital_id == "A") %>%
 #'   freq(bactid) %>%
 #'   top_freq(10)
+#'
+#' # save frequency table to an object
+#' years <- septic_patients %>%
+#'   mutate(year = format(date, "%Y")) %>%
+#'   freq(year)
+#'
+#' # print only top 5
+#' years %>% print(nmax = 5)
+#'
+#' # transform to plain data.frame
+#' septic_patients %>%
+#'   freq(age) %>%
+#'   as.data.frame()
 frequency_tbl <- function(x,
                           ...,
                           sort.count = TRUE,
@@ -134,11 +144,6 @@ frequency_tbl <- function(x,
   }
 
   mult.columns <- 0
-
-  if (NROW(x) == 0) {
-    cat('\nNo observations.\n')
-    return(invisible())
-  }
 
   if (!is.null(ncol(x))) {
     if (ncol(x) == 1 & any(class(x) == 'data.frame')) {
@@ -226,8 +231,8 @@ frequency_tbl <- function(x,
     x <- x[!x %in% NAs]
   }
 
-  if (missing(sort.count) & any(class(x) %in% c('double', 'integer', 'numeric', 'raw', 'single', 'factor'))) {
-    # sort on item/level at default when x is numeric or a factor and sort.count is not set
+  if (missing(sort.count) & 'factor' %in% class(x)) {
+    # sort on factor level at default when x is a factor and sort.count is not set
     sort.count <- FALSE
   }
 
@@ -246,28 +251,30 @@ frequency_tbl <- function(x,
   }
 
   if (is.list(x) | is.matrix(x) | is.environment(x) | is.function(x)) {
-    cat(header, "\n")
-    stop('`freq()` does not support lists, matrices, environments or functions.', call. = FALSE)
+    stop('frequency tables do not support lists, matrices, environments and functions.', call. = FALSE)
   }
 
   header <- header %>% paste0(markdown_line, '\nLength:    ', (NAs %>% length() + x %>% length()) %>% format(),
                               ' (of which NA: ', NAs %>% length() %>% format(),
-                              ' = ', (NAs %>% length() / (NAs %>% length() + x %>% length())) %>% percent(force_zero = TRUE), ')')
+                              ' = ', (NAs %>% length() / (NAs %>% length() + x %>% length())) %>% percent(force_zero = TRUE) %>% sub('NaN', '0', ., fixed = TRUE), ')')
   header <- header %>% paste0(markdown_line, '\nUnique:    ', x %>% n_distinct() %>% format())
 
-  if (any(class(x) %in% c('double', 'integer', 'numeric', 'raw', 'single'))) {
+  if (NROW(x) > 0 & any(class(x) %in% c('double', 'integer', 'numeric', 'raw', 'single'))) {
     # right align number
+    Tukey_five <- stats::fivenum(x, na.rm = TRUE)
     x_align <- 'r'
     header <- header %>% paste0('\n')
     header <- header %>% paste(markdown_line, '\nMean:     ', x %>% base::mean(na.rm = TRUE) %>% format(digits = digits))
     header <- header %>% paste0(markdown_line, '\nStd. dev.: ', x %>% stats::sd(na.rm = TRUE) %>% format(digits = digits),
-                                ' (CV: ', x %>% cv(na.rm = TRUE) %>% format(digits = digits), ')')
-    header <- header %>% paste0(markdown_line, '\nFive-Num:  ', x %>% stats::fivenum(na.rm = TRUE) %>% format(digits = digits) %>% trimws() %>% paste(collapse = '  |  '),
-                                ' (CQV: ', x %>% cqv(na.rm = TRUE) %>% format(digits = digits), ')')
+                                ' (CV: ', x %>% cv(na.rm = TRUE) %>% format(digits = digits),
+                                ', MAD: ', x %>% stats::mad(na.rm = TRUE) %>% format(digits = digits), ')')
+    header <- header %>% paste0(markdown_line, '\nFive-Num:  ', Tukey_five %>% format(digits = digits) %>% trimws() %>% paste(collapse = ' | '),
+                                ' (IQR: ', (Tukey_five[4] - Tukey_five[2]) %>% format(digits = digits),
+                                ', CQV: ', x %>% cqv(na.rm = TRUE) %>% format(digits = digits), ')')
     outlier_length <- length(boxplot.stats(x)$out)
     header <- header %>% paste0(markdown_line, '\nOutliers:  ', outlier_length)
     if (outlier_length > 0) {
-      header <- header %>% paste0(' (unique: ', boxplot.stats(x)$out %>% unique() %>% length(), ')')
+      header <- header %>% paste0(' (unique: ', boxplot.stats(x)$out %>% n_distinct(), ')')
     }
   }
 
@@ -276,7 +283,7 @@ frequency_tbl <- function(x,
     x <- x %>% as.POSIXlt()
     formatdates <- "%H:%M:%S"
   }
-  if (any(class(x) %in% c('Date', 'POSIXct', 'POSIXlt'))) {
+  if (NROW(x) > 0 & any(class(x) %in% c('Date', 'POSIXct', 'POSIXlt'))) {
     header <- header %>% paste0('\n')
     mindate <- x %>% min(na.rm = TRUE)
     maxdate <- x %>% max(na.rm = TRUE)
@@ -302,10 +309,9 @@ frequency_tbl <- function(x,
     nmax <- length(x)
   }
 
-  if (nmax == 0 | is.na(nmax) | is.null(nmax)) {
+  if (nmax %in% c(0, Inf, NA, NULL)) {
     nmax <- length(x)
   }
-  nmax.1 <- min(length(x), nmax + 1)
 
   # create table with counts and percentages
   column_names <- c('Item', 'Count', 'Percent', 'Cum. Count', 'Cum. Percent', '(Factor Level)')
@@ -404,12 +410,12 @@ top_freq <- function(f, n) {
   vect
 }
 
-#' @rdname print
+#' @rdname freq
 #' @exportMethod print.frequency_tbl
 #' @importFrom knitr kable
 #' @importFrom dplyr n_distinct
 #' @export
-print.frequency_tbl <- function(x, ...) {
+print.frequency_tbl <- function(x, nmax = getOption("max.print.freq", default = 15), ...) {
 
   opt <- attr(x, 'opt')
 
@@ -423,7 +429,12 @@ print.frequency_tbl <- function(x, ...) {
     title <- ""
   }
 
-  cat("Frequency table", title, "\n\n")
+  if (!missing(nmax)) {
+    opt$nmax <- nmax
+    opt$nmax.set <- TRUE
+  }
+
+  cat("Frequency table", title, "\n")
 
   if (!is.null(opt$header)) {
     cat(opt$header)
@@ -448,7 +459,13 @@ print.frequency_tbl <- function(x, ...) {
     x.unprinted <- base::sum(x[(opt$nmax + 1):nrow(x), 'count'], na.rm = TRUE)
     x.printed <- base::sum(x$count) - x.unprinted
 
-    x <- x[1:opt$nmax,]
+    if (opt$nmax.set == TRUE) {
+      nmax <- opt$nmax
+    } else {
+      nmax <- getOption("max.print.freq", default = 15)
+    }
+
+    x <- x[1:nmax,]
 
     if (opt$nmax.set == TRUE) {
       footer <- paste('[ reached `nmax = ', opt$nmax, '`', sep = '')
@@ -496,3 +513,12 @@ print.frequency_tbl <- function(x, ...) {
 
 }
 
+#' @noRd
+#' @exportMethod as.data.frame.frequency_tbl
+#' @export
+as.data.frame.frequency_tbl <- function(x, ...) {
+  attr(x, 'package') <- NULL
+  attr(x, 'package.version') <- NULL
+  attr(x, 'opt') <- NULL
+  as.data.frame.data.frame(x, ...)
+}

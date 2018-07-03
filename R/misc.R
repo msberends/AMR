@@ -91,10 +91,8 @@ cv <- function(x, na.rm = TRUE) {
 # Coefficient of dispersion, or coefficient of quartile variation (CQV).
 # (Bonett et al., 2006: Confidence interval for a coefficient of quartile variation).
 cqv <- function(x, na.rm = TRUE) {
-  cqv.x <-
-    (stats::quantile(x, 0.75, na.rm = na.rm, type = 6) - stats::quantile(x, 0.25, na.rm = na.rm, type = 6)) /
-    (stats::quantile(x, 0.75, na.rm = na.rm, type = 6) + stats::quantile(x, 0.25, na.rm = na.rm, type = 6))
-  unname(cqv.x)
+  fives <- stats::fivenum(x, na.rm = na.rm)
+  (fives[4] - fives[2]) / (fives[4] + fives[2])
 }
 
 # show bytes as kB/MB/GB

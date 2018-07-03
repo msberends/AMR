@@ -4,6 +4,7 @@
 \alias{freq}
 \alias{frequency_tbl}
 \alias{top_freq}
+\alias{print.frequency_tbl}
 \title{Frequency table}
 \usage{
 frequency_tbl(x, ..., sort.count = TRUE, nmax = getOption("max.print.freq"),
@@ -15,17 +16,20 @@ freq(x, ..., sort.count = TRUE, nmax = getOption("max.print.freq"),
   sep = " ")
 
 top_freq(f, n)
+
+\method{print}{frequency_tbl}(x, nmax = getOption("max.print.freq", default =
+  15), ...)
 }
 \arguments{
-\item{x}{vector with items, or \code{data.frame}}
+\item{x}{vector with items, or a \code{data.frame}}
 
 \item{...}{up to nine different columns of \code{x} to calculate frequencies from, see Examples}
 
-\item{sort.count}{sort on count, i.e. frequencies. Use \code{FALSE} to sort alphabetically on item.}
+\item{sort.count}{sort on count, i.e. frequencies. This will be \code{TRUE} at default for everything except for factors.}
 
-\item{nmax}{number of row to print. The default, \code{15}, uses \code{\link{getOption}("max.print.freq")}. Use \code{nmax = 0}, \code{nmax = NULL} or \code{nmax = NA} to print all rows.}
+\item{nmax}{number of row to print. The default, \code{15}, uses \code{\link{getOption}("max.print.freq")}. Use \code{nmax = 0}, \code{nmax = Inf}, \code{nmax = NULL} or \code{nmax = NA} to print all rows.}
 
-\item{na.rm}{a logical value indicating whether NA values should be removed from the frequency table. The header will always print the amount of \code{NA}s.}
+\item{na.rm}{a logical value indicating whether \code{NA} values should be removed from the frequency table. The header will always print the amount of \code{NA}s.}
 
 \item{row.names}{a logical value indicating whether row indices should be printed as \code{1:nrow(x)}}
 
@@ -46,24 +50,27 @@ A \code{data.frame} with an additional class \code{"frequency_tbl"}
 Create a frequency table of a vector with items or a data frame. Supports quasiquotation and markdown for reports. \code{top_freq} can be used to get the top/bottom \emph{n} items of a frequency table, with counts as names.
 }
 \details{
-This package also has a vignette available about this function, run: \code{browseVignettes("AMR")} to read it.
+Frequency tables (or frequency distributions) are summaries of the distribution of values in a sample. With the `freq` function, you can create univariate frequency tables. Multiple variables will be pasted into one variable, so it forces a univariate distribution. This package also has a vignette available to explain the use of this function further, run \code{browseVignettes("AMR")} to read it.
 
-For numeric values of any class, these additional values will be calculated and shown into the header:
+For numeric values of any class, these additional values will all be calculated with \code{na.rm = TRUE} and shown into the header:
 \itemize{
   \item{Mean, using \code{\link[base]{mean}}}
-  \item{Standard deviation, using \code{\link[stats]{sd}}}
-  \item{Five numbers of Tukey (min, Q1, median, Q3, max), using \code{\link[stats]{fivenum}}}
-  \item{Outliers (total count and unique count), using \code{\link{boxplot.stats}}}
-  \item{Coefficient of variation (CV), the standard deviation divided by the mean}
-  \item{Coefficient of quartile variation (CQV, sometimes called coefficient of dispersion), calculated as \code{(Q3 - Q1) / (Q3 + Q1)} using \code{\link{quantile}} with \code{type = 6} as quantile algorithm to comply with SPSS standards}
+  \item{Standard Deviation, using \code{\link[stats]{sd}}}
+  \item{Coefficient of Variation (CV), the standard deviation divided by the mean}
+  \item{Mean Absolute Deviation (MAD), using \code{\link[stats]{mad}}}
+  \item{Tukey Five-Number Summaries (minimum, Q1, median, Q3, maximum), using \code{\link[stats]{fivenum}}}
+  \item{Interquartile Range (IQR) calculated as \code{Q3 - Q1} using the Tukey Five-Number Summaries, i.e. \strong{not} using the \code{\link[stats]{quantile}} function}
+  \item{Coefficient of Quartile Variation (CQV, sometimes called coefficient of dispersion), calculated as \code{(Q3 - Q1) / (Q3 + Q1)} using the Tukey Five-Number Summaries}
+  \item{Outliers (total count and unique count), using \code{\link[grDevices]{boxplot.stats}}}
 }
 
-For dates and times of any class, these additional values will be calculated and shown into the header:
+For dates and times of any class, these additional values will be calculated with \code{na.rm = TRUE} and shown into the header:
 \itemize{
   \item{Oldest, using \code{\link[base]{min}}}
   \item{Newest, using \code{\link[base]{max}}, with difference between newest and oldest}
   \item{Median, using \code{\link[stats]{median}}, with percentage since oldest}
 }
+
 
 The function \code{top_freq} uses \code{\link[dplyr]{top_n}} internally and will include more than \code{n} rows if there are ties.
 }
@@ -95,17 +102,24 @@ septic_patients \%>\%
   filter(hospital_id == "A") \%>\%
   freq(genus, species)
 
-# save frequency table to an object
-years <- septic_patients \%>\%
-  mutate(year = format(date, "\%Y")) \%>\%
-  freq(year)
-years \%>\% pull(item)
-
 # get top 10 bugs of hospital A as a vector
 septic_patients \%>\%
   filter(hospital_id == "A") \%>\%
   freq(bactid) \%>\%
   top_freq(10)
+
+# save frequency table to an object
+years <- septic_patients \%>\%
+  mutate(year = format(date, "\%Y")) \%>\%
+  freq(year)
+
+# print only top 5
+years \%>\% print(nmax = 5)
+
+# transform to plain data.frame
+septic_patients \%>\%
+  freq(age) \%>\%
+  as.data.frame()
 }
 \keyword{freq}
 \keyword{frequency}
