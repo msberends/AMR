@@ -15,5 +15,5 @@ p.symbol(p, emptychar = " ")
 Text
 }
 \description{
-Return the symbol related to the p value: 0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+Return the symbol related to the p value: 0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1. Values above \code{p = 1} will return \code{NA}.
 }

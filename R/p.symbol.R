@@ -18,23 +18,22 @@
 
 #' Symbol of a p value
 #'
-#' Return the symbol related to the p value: 0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+#' Return the symbol related to the p value: 0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1. Values above \code{p = 1} will return \code{NA}.
 #' @param p p value
 #' @param emptychar text to show when \code{p > 0.1}
 #' @return Text
 #' @export
 p.symbol <- function(p, emptychar = " ") {
-  instelling.oud <- options()$scipen
+  setting.bak <- options()$scipen
   options(scipen = 999)
-  s <- ''
-  s[1:length(p)] <- ''
+  s <- vector(mode = "character", length = length(p))
   for (i in 1:length(p)) {
     if (is.na(p[i])) {
-      s[i] <- NA
+      s[i] <- NA_character_
       next
     }
     if (p[i] > 1) {
-      s[i] <- NA
+      s[i] <- NA_character_
       next
     } else {
       p_test <- p[i]
@@ -52,6 +51,6 @@ p.symbol <- function(p, emptychar = " ") {
       s[i] <- '***'
     }
   }
-  options(scipen = instelling.oud)
+  options(scipen = setting.bak)
   s
 }

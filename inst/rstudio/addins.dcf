@@ -1,0 +1,19 @@
+Name: Insert %in%
+Binding: addin_insert_in
+Interactive: false
+
+Name: Insert %like%
+Binding: addin_insert_like
+Interactive: false
+
+Name: View 'antibiotics' data set
+Binding: addin_open_antibiotics
+Interactive: false
+
+Name: View 'microorganisms' data set
+Binding: addin_open_microorganisms
+Interactive: false
+
+Name: View 'septic_patients' data set
+Binding: addin_open_septic_patients
+Interactive: false

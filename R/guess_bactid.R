@@ -96,6 +96,10 @@ guess_bactid <- function(x) {
       # avoid detection of Pasteurella aerogenes in case of Pseudomonas aeruginosa
       x[i] <- 'Pseudomonas aeruginosa'
     }
+    if (tolower(x[i]) %like% 'coagulase') {
+      # coerce S. coagulase negative
+      x[i] <- 'Coagulase Negative Staphylococcus (CNS)'
+    }
 
     # translate known trivial names to genus+species
     if (!is.na(x.bak[i])) {

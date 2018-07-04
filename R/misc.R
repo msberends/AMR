@@ -16,33 +16,32 @@
 # GNU General Public License for more details.                         #
 # ==================================================================== #
 
-#' Pattern Matching
-#'
-#' Convenience function to compare a vector with a pattern, like \code{\link[base]{grep}}. It always returns a \code{logical} vector and is always case-insensitive.
-#' @inheritParams base::grep
-#' @return A \code{logical} vector
-#' @name like
-#' @rdname like
-#' @export
-#' @source Inherited from the \href{https://github.com/Rdatatable/data.table/blob/master/R/like.R}{\code{like} function from the \code{data.table} package}, but made it case insensitive at default.
-#' @examples
-#' library(dplyr)
-#' # get unique occurences of bacteria whose name start with 'Ent'
-#' septic_patients %>%
-#'   left_join_microorganisms() %>%
-#'   filter(fullname %like% '^Ent') %>%
-#'   pull(fullname) %>%
-#'   unique()
-"%like%" <- function(x, pattern) {
-  if (length(pattern) > 1) {
-    pattern <- pattern[1]
-    warning('only the first element of argument `pattern` used for `%like%`', call. = FALSE)
-  }
-  if (is.factor(x)) {
-    as.integer(x) %in% base::grep(pattern, levels(x), ignore.case = TRUE)
-  } else {
-    base::grepl(pattern, x, ignore.case = TRUE)
-  }
+# No export, no Rd
+addin_insert_in <- function() {
+  rstudioapi::insertText(" %in% ")
+}
+
+# No export, no Rd
+addin_insert_like <- function() {
+  rstudioapi::insertText(" %like% ")
+}
+
+#  No export, no Rd
+#' @importFrom utils View
+addin_open_antibiotics <- function() {
+  View(antibiotics)
+}
+
+#  No export, no Rd
+#' @importFrom utils View
+addin_open_microorganisms <- function() {
+  View(microorganisms)
+}
+
+#  No export, no Rd
+#' @importFrom utils View
+addin_open_septic_patients <- function() {
+  View(septic_patients)
 }
 
 # No export, no Rd

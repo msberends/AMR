@@ -1,5 +1,6 @@
 # 0.2.0.90xx (development version)
 #### New
+* Support for Addins menu in RStudio to quickly insert `%in%` or `%like%` (and give them keyboard shortcuts), or to view the datasets that come with this package
 * Function `top_freq` function to get the top/below *n* items of frequency tables
 * Vignette about frequency tables
 * Header of frequency tables now also show MAD and IQR
@@ -14,9 +15,11 @@ ratio(c(772, 1611, 737), ratio = "1:2:1")
 * Function `p.symbol` to transform p value to their related symbol: `0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1`
 
 #### Changed
+* `%like%` now supports multiple patterns
 * Frequency tables (function `freq`) now supports quasiquotation: `freq(mydata, mycolumn)`, or `mydata %>% freq(mycolumn)`
 * Frequency tables are now actual `data.frame`s with altered console printing to make it look like a frequency table. Because of this, the parameter `toConsole` is not longer needed.
 * Small translational improvements to the `septic_patients` dataset
+* Small improvements to the `microorganisms` dataset, especially for *Salmonella*
 * Combined MIC/RSI values will now be coerced by the `rsi` and `mic` functions:
   * `as.rsi("<=0.002; S")` will return `S`
   * `as.mic("<=0.002; S")` will return `<=0.002`

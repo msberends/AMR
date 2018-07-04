@@ -34,9 +34,12 @@ With `AMR` you can also:
   * Get the latest antibiotic properties like hierarchic groups and [defined daily dose](https://en.wikipedia.org/wiki/Defined_daily_dose) (DDD) with units and administration form from the WHOCC website with the `atc_property` function
 * Create frequency tables with the `freq` function
 
-With the `MDRO` function (abbreviation of Multi Drug Resistant Organisms), you can check your isolates for exceptional resistance with country-specific guidelines or EUCAST rules. Currently guidelines for Germany and the Netherlands are supported. Please suggest addition of your own country here: [https://github.com/msberends/AMR/issues/new](https://github.com/msberends/AMR/issues/new?title=New%20guideline%20for%20MDRO&body=%3C--%20Please%20add%20your%20country%20code,%20guideline%20name,%20version%20and%20source%20below%20and%20remove%20this%20line--%3E).
+And it contains:
+* A recent data set with ~2500 human pathogenic microorganisms, including family, genus, species, gram stain and aerobic/anaerobic
+* A recent data set with all antibiotics as defined by the [WHOCC](https://www.whocc.no/atc_ddd_methodology/who_collaborating_centre/), including ATC code, official name and DDD's
+* An example data set `septic_patients`, consisting of 2000 blood culture isolates from anonymised septic patients between 2001 and 2017.
 
-This package contains an example data set `septic_patients`, consisting of 2000 isolates from anonymised septic patients between 2001 and 2017.
+With the `MDRO` function (abbreviation of Multi Drug Resistant Organisms), you can check your isolates for exceptional resistance with country-specific guidelines or EUCAST rules. Currently guidelines for Germany and the Netherlands are supported. Please suggest addition of your own country here: [https://github.com/msberends/AMR/issues/new](https://github.com/msberends/AMR/issues/new?title=New%20guideline%20for%20MDRO&body=%3C--%20Please%20add%20your%20country%20code,%20guideline%20name,%20version%20and%20source%20below%20and%20remove%20this%20line--%3E).
 
 ## How to get it?
 This package is available on CRAN and also here on GitHub.
