@@ -32,7 +32,7 @@ With `AMR` you can also:
 * Get antimicrobial ATC properties from the WHO Collaborating Centre for Drug Statistics Methodology ([WHOCC](https://www.whocc.no/atc_ddd_methodology/who_collaborating_centre/)), to be able to:
   * Translate antibiotic codes (like *AMOX*), official names (like *amoxicillin*) and even trade names (like *Amoxil* or *Trimox*) to an [ATC code](https://www.whocc.no/atc_ddd_index/?code=J01CA04&showdescription=no) (like *J01CA04*) and vice versa with the `abname` function
   * Get the latest antibiotic properties like hierarchic groups and [defined daily dose](https://en.wikipedia.org/wiki/Defined_daily_dose) (DDD) with units and administration form from the WHOCC website with the `atc_property` function
-* Create frequency tables with the `freq` function
+* Conduct descriptive statistics: calculate kurtosis, skewness and create frequency tables
 
 And it contains:
 * A recent data set with ~2500 human pathogenic microorganisms, including family, genus, species, gram stain and aerobic/anaerobic
@@ -41,13 +41,17 @@ And it contains:
 
 With the `MDRO` function (abbreviation of Multi Drug Resistant Organisms), you can check your isolates for exceptional resistance with country-specific guidelines or EUCAST rules. Currently guidelines for Germany and the Netherlands are supported. Please suggest addition of your own country here: [https://github.com/msberends/AMR/issues/new](https://github.com/msberends/AMR/issues/new?title=New%20guideline%20for%20MDRO&body=%3C--%20Please%20add%20your%20country%20code,%20guideline%20name,%20version%20and%20source%20below%20and%20remove%20this%20line--%3E).
 
+#### Read all changes and new functions in [NEWS.md](NEWS.md).
+
 ## How to get it?
 This package is available on CRAN and also here on GitHub.
 
 ### From CRAN (recommended)
 [![CRAN_Badge](https://img.shields.io/cran/v/AMR.svg?label=CRAN&colorB=3679BC)](http://cran.r-project.org/package=AMR)
+
+Downloads via RStudio CRAN server (downloads by all other CRAN mirrors not measured):
 [![CRAN_Downloads](https://cranlogs.r-pkg.org/badges/grand-total/AMR)](http://cran.r-project.org/package=AMR)
-[![CRAN_Downloads](https://cranlogs.r-pkg.org/badges/AMR)](http://cran.r-project.org/package=AMR)
+[![CRAN_Downloads](https://cranlogs.r-pkg.org/badges/AMR)](https://cranlogs.r-pkg.org/downloads/daily/last-month/AMR)
   
 - <img src="http://www.rstudio.com/favicon.ico" alt="RStudio favicon" height="20px"> In [RStudio](http://www.rstudio.com) (recommended):
   - Click on `Tools` and then `Install Packages...`

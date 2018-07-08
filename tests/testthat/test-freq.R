@@ -49,5 +49,9 @@ test_that("frequency table works", {
   # input must be freq tbl
   expect_error(septic_patients %>% top_freq(1))
 
+  # charts from plot and hist, should not raise errors
+  plot(freq(septic_patients, age))
+  hist(freq(septic_patients, age))
+
 })
 

@@ -29,7 +29,7 @@ x \%like\% pattern
 A \code{logical} vector
 }
 \description{
-Convenient wrapper around \code{\link[base]{grepl}} to match a pattern: \code{a \%like\% b}. It always returns a \code{logical} vector and is always case-insensitive. Also, \code{pattern} (\code{b}) can be as long as \code{x} (\code{a}) to compare items of each index in both vectors.
+Convenient wrapper around \code{\link[base]{grep}} to match a pattern: \code{a \%like\% b}. It always returns a \code{logical} vector and is always case-insensitive. Also, \code{pattern} (\code{b}) can be as long as \code{x} (\code{a}) to compare items of each index in both vectors.
 }
 \details{
 Using RStudio? This function can also be inserted from the Addins menu and can have its own Keyboard Shortcut like Ctrl+Shift+L or Cmd+Shift+L (see Tools > Modify Keyboard Shortcuts...).

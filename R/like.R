@@ -18,7 +18,7 @@
 
 #' Pattern Matching
 #'
-#' Convenient wrapper around \code{\link[base]{grepl}} to match a pattern: \code{a \%like\% b}. It always returns a \code{logical} vector and is always case-insensitive. Also, \code{pattern} (\code{b}) can be as long as \code{x} (\code{a}) to compare items of each index in both vectors.
+#' Convenient wrapper around \code{\link[base]{grep}} to match a pattern: \code{a \%like\% b}. It always returns a \code{logical} vector and is always case-insensitive. Also, \code{pattern} (\code{b}) can be as long as \code{x} (\code{a}) to compare items of each index in both vectors.
 #' @inheritParams base::grepl
 #' @return A \code{logical} vector
 #' @name like

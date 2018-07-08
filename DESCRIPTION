@@ -1,6 +1,6 @@
 Package: AMR
-Version: 0.2.0.9008
-Date: 2018-07-04
+Version: 0.2.0.9009
+Date: 2018-07-06
 Title: Antimicrobial Resistance Analysis
 Authors@R: c(
     person(
@@ -28,6 +28,7 @@ Depends:
     R (>= 3.0.0)
 Imports:
     backports,
+    broom,
     clipr,
     curl,
     dplyr (>= 0.7.0),

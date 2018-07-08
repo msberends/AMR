@@ -66,8 +66,8 @@ For numeric values of any class, these additional values will all be calculated 
 
 For dates and times of any class, these additional values will be calculated with \code{na.rm = TRUE} and shown into the header:
 \itemize{
-  \item{Oldest, using \code{\link[base]{min}}}
-  \item{Newest, using \code{\link[base]{max}}, with difference between newest and oldest}
+  \item{Oldest, using \code{\link{min}}}
+  \item{Newest, using \code{\link{max}}, with difference between newest and oldest}
   \item{Median, using \code{\link[stats]{median}}, with percentage since oldest}
 }
 

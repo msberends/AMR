@@ -1,10 +1,14 @@
 # 0.2.0.90xx (development version)
 #### New
 * Support for Addins menu in RStudio to quickly insert `%in%` or `%like%` (and give them keyboard shortcuts), or to view the datasets that come with this package
-* Function `top_freq` function to get the top/below *n* items of frequency tables
-* Vignette about frequency tables
-* Header of frequency tables now also show MAD and IQR
-* Possibility to globally set the default for the amount of items to print in frequency tables (`freq` function), with `options(max.print.freq = n)`
+* For convience, descriptive statistical functions `kurtosis` and `skewness` that are lacking in base R - they are generic functions and have support for vectors, data.frames and matrices
+* New for frequency tables (function `freq`):
+  * A vignette to explain its usage
+  * Support for existing functions `hist` and `plot` to use a frequency table as input: `hist(freq(df$age))`
+  * Support for quasiquotation: `freq(mydata, mycolumn)` is the same as `mydata %>% freq(mycolumn)`
+  * Function `top_freq` function to return the top/below *n* items as vector
+  * Header of frequency tables now also show Mean Absolute Deviaton (MAD) and Interquartile Range (IQR)
+  * Possibility to globally set the default for the amount of items to print, with `options(max.print.freq = n)` where *n* is your preset value
 * Functions `clipboard_import` and `clipboard_export` as helper functions to quickly copy and paste from/to software like Excel and SPSS
 * Function `g.test` to perform the Χ<sup>2</sup> distributed [*G*-test](https://en.wikipedia.org/wiki/G-test)
 * Function `ratio` to transform a vector of values to a preset ratio (convenient to use with `g.test`). For example:
@@ -16,7 +20,6 @@ ratio(c(772, 1611, 737), ratio = "1:2:1")
 
 #### Changed
 * `%like%` now supports multiple patterns
-* Frequency tables (function `freq`) now supports quasiquotation: `freq(mydata, mycolumn)`, or `mydata %>% freq(mycolumn)`
 * Frequency tables are now actual `data.frame`s with altered console printing to make it look like a frequency table. Because of this, the parameter `toConsole` is not longer needed.
 * Small translational improvements to the `septic_patients` dataset
 * Small improvements to the `microorganisms` dataset, especially for *Salmonella*

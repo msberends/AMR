@@ -46,8 +46,8 @@
 #'
 #' For dates and times of any class, these additional values will be calculated with \code{na.rm = TRUE} and shown into the header:
 #' \itemize{
-#'   \item{Oldest, using \code{\link[base]{min}}}
-#'   \item{Newest, using \code{\link[base]{max}}, with difference between newest and oldest}
+#'   \item{Oldest, using \code{\link{min}}}
+#'   \item{Newest, using \code{\link{max}}, with difference between newest and oldest}
 #'   \item{Median, using \code{\link[stats]{median}}, with percentage since oldest}
 #' }
 #'
@@ -521,4 +521,43 @@ as.data.frame.frequency_tbl <- function(x, ...) {
   attr(x, 'package.version') <- NULL
   attr(x, 'opt') <- NULL
   as.data.frame.data.frame(x, ...)
+}
+
+#' @noRd
+#' @exportMethod hist.frequency_tbl
+#' @export
+#' @importFrom dplyr %>% pull
+#' @importFrom graphics hist
+hist.frequency_tbl <- function(x, ...) {
+
+  opt <- attr(x, 'opt')
+
+  if (!is.null(opt$vars)) {
+    title <- opt$vars
+  } else {
+    title <- ""
+  }
+
+  items <- x %>% pull(item)
+  counts <- x %>% pull(count)
+  vect <- rep(items, counts)
+  hist(vect, main = paste("Histogram of", title), xlab = title, ...)
+}
+
+#' @noRd
+#' @exportMethod plot.frequency_tbl
+#' @export
+#' @importFrom dplyr %>% pull
+plot.frequency_tbl <- function(x, y, ...) {
+  opt <- attr(x, 'opt')
+
+  if (!is.null(opt$vars)) {
+    title <- opt$vars
+  } else {
+    title <- ""
+  }
+
+  items <- x %>% pull(item)
+  counts <- x %>% pull(count)
+  plot(x = items, y = counts, ylab = "Count", xlab = title, ...)
 }
