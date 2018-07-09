@@ -47,9 +47,12 @@ With the `MDRO` function (abbreviation of Multi Drug Resistant Organisms), you c
 This package is available on CRAN and also here on GitHub.
 
 ### From CRAN (recommended)
+Latest released version on CRAN:
+
 [![CRAN_Badge](https://img.shields.io/cran/v/AMR.svg?label=CRAN&colorB=3679BC)](http://cran.r-project.org/package=AMR)
 
-Downloads via RStudio CRAN server (downloads by all other CRAN mirrors not measured):
+Downloads via RStudio CRAN server (downloads by all other CRAN mirrors **not** measured, including the official https://cran.r-project.org):
+
 [![CRAN_Downloads](https://cranlogs.r-pkg.org/badges/grand-total/AMR)](http://cran.r-project.org/package=AMR)
 [![CRAN_Downloads](https://cranlogs.r-pkg.org/badges/AMR)](https://cranlogs.r-pkg.org/downloads/daily/last-month/AMR)
   
@@ -122,80 +125,91 @@ after
 ```
 
 ### Frequency tables
-Base R lacks a simple function to create frequency tables. We created such a function that works with almost all data types: `freq` (or `frequency_tbl`).
+Base R lacks a simple function to create frequency tables. We created such a function that works with almost all data types: `freq` (or `frequency_tbl`). It can be used in two ways:
 ```r
-## Factors sort on item by default:
+# Like base R:
+freq(mydata$myvariable)
 
-freq(septic_patients$hospital_id)
+# And like tidyverse:
+mydata %>% freq(myvariable)
+```
+
+Factors sort on item by default:
+```r
+septic_patients %>% freq(hospital_id)
+# Frequency table of `hospital_id`
 # Class:     factor
 # Length:    2000 (of which NA: 0 = 0.0%)
 # Unique:    5
 # 
-# Item    Count   Percent   Cum. Count   Cum. Percent   (Factor Level)
-# -----  ------  --------  -----------  -------------  ---------------
-# A         233     11.7%          233          11.7%                1
-# B         583     29.1%          816          40.8%                2
-# C         221     11.1%         1037          51.8%                3
-# D         650     32.5%         1687          84.4%                4
-# E         313     15.7%         2000         100.0%                5
+#      Item    Count   Percent   Cum. Count   Cum. Percent   (Factor Level)
+# ---  -----  ------  --------  -----------  -------------  ---------------
+# 1    A         233     11.7%          233          11.7%                1
+# 2    B         583     29.1%          816          40.8%                2
+# 3    C         221     11.1%         1037          51.8%                3
+# 4    D         650     32.5%         1687          84.4%                4
+# 5    E         313     15.7%         2000         100.0%                5
+```
 
-
-## This can be changed with the `sort.count` parameter:
-
-freq(septic_patients$hospital_id, sort.count = TRUE)
+This can be changed with the `sort.count` parameter:
+```r
+septic_patients %>% freq(hospital_id, sort.count = TRUE)
+# Frequency table of `hospital_id`
 # Class:     factor
 # Length:    2000 (of which NA: 0 = 0.0%)
 # Unique:    5
 # 
-# Item    Count   Percent   Cum. Count   Cum. Percent   (Factor Level)
-# -----  ------  --------  -----------  -------------  ---------------
-# D         650     32.5%          650          32.5%                4
-# B         583     29.1%         1233          61.7%                2
-# E         313     15.7%         1546          77.3%                5
-# A         233     11.7%         1779          88.9%                1
-# C         221     11.1%         2000         100.0%                3
+#      Item    Count   Percent   Cum. Count   Cum. Percent   (Factor Level)
+# ---  -----  ------  --------  -----------  -------------  ---------------
+# 1    D         650     32.5%          650          32.5%                4
+# 2    B         583     29.1%         1233          61.7%                2
+# 3    E         313     15.7%         1546          77.3%                5
+# 4    A         233     11.7%         1779          88.9%                1
+# 5    C         221     11.1%         2000         100.0%                3
+```
 
-
-## Other types, like numbers or dates, sort on count by default:
-
-> freq(septic_patients$date)
+All other types, like numbers, characters and dates, sort on count by default:
+```r
+septic_patients %>% freq(date)
+# Frequency table of `date` 
 # Class:     Date
 # Length:    2000 (of which NA: 0 = 0.0%)
 # Unique:    1662
 # 
 # Oldest:    2 January 2001
 # Newest:    18 October 2017 (+6133)
+# Median:    6 December 2009 (~53%)
 # 
-# Item          Count   Percent   Cum. Count   Cum. Percent
-# -----------  ------  --------  -----------  -------------
-# 2008-12-24        5      0.2%            5           0.2%
-# 2010-12-10        4      0.2%            9           0.4%
-# 2011-03-03        4      0.2%           13           0.6%
-# 2013-06-24        4      0.2%           17           0.8%
-# 2017-09-01        4      0.2%           21           1.1%
-# 2002-09-02        3      0.2%           24           1.2%
-# 2003-10-14        3      0.2%           27           1.4%
-# 2004-06-25        3      0.2%           30           1.5%
-# 2004-06-27        3      0.2%           33           1.7%
-# 2004-10-29        3      0.2%           36           1.8%
-# 2005-09-27        3      0.2%           39           2.0%
-# 2006-08-01        3      0.2%           42           2.1%
-# 2006-10-10        3      0.2%           45           2.2%
-# 2007-11-16        3      0.2%           48           2.4%
-# 2008-03-09        3      0.2%           51           2.5%
-# ... and 1647 more (n = 1949; 97.5%). Use `nmax` to show more rows.
-
-
-## For numeric values, some extra descriptive statistics will be calculated:
-
-> freq(runif(n = 10, min = 1, max = 5))
+#      Item          Count   Percent   Cum. Count   Cum. Percent
+# ---  -----------  ------  --------  -----------  -------------
+# 1    2008-12-24        5      0.2%            5           0.2%
+# 2    2010-12-10        4      0.2%            9           0.4%
+# 3    2011-03-03        4      0.2%           13           0.6%
+# 4    2013-06-24        4      0.2%           17           0.8%
+# 5    2017-09-01        4      0.2%           21           1.1%
+# 6    2002-09-02        3      0.2%           24           1.2%
+# 7    2003-10-14        3      0.2%           27           1.4%
+# 8    2004-06-25        3      0.2%           30           1.5%
+# 9    2004-06-27        3      0.2%           33           1.7%
+# 10   2004-10-29        3      0.2%           36           1.8%
+# 11   2005-09-27        3      0.2%           39           2.0%
+# 12   2006-08-01        3      0.2%           42           2.1%
+# 13   2006-10-10        3      0.2%           45           2.2%
+# 14   2007-11-16        3      0.2%           48           2.4%
+# 15   2008-03-09        3      0.2%           51           2.5%
+# [ reached getOption("max.print.freq") -- omitted 1647 entries, n = 1949 (97.5%) ]
+```
+For numeric values, some extra descriptive statistics will be calculated:
+```r
+freq(runif(n = 10, min = 1, max = 5))
+# Frequency table 
 # Class:     numeric
 # Length:    10 (of which NA: 0 = 0.0%)
 # Unique:    10
 #   
-# Mean:      3
-# Std. dev.: 0.93 (CV: 0.31)
-# Five-Num:  1.1  |  2.3  |  3.1  |  3.8  |  4.0 (CQV: 0.25)
+# Mean:      2.9
+# Std. dev.: 1.3 (CV: 0.43, MAD: 1.5)
+# Five-Num:  1.5 | 1.7 | 2.6 | 4.0 | 4.7 (IQR: 2.3, CQV: 0.4)
 # Outliers:  0
 # 
 #      Item   Count   Percent   Cum. Count   Cum. Percent

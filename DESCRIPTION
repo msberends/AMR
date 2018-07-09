@@ -43,7 +43,8 @@ Suggests:
     testthat (>= 1.0.2),
     covr (>= 3.0.1),
     rmarkdown,
-    rstudioapi
+    rstudioapi,
+    tidyr
 VignetteBuilder: knitr
 URL: https://github.com/msberends/AMR
 BugReports: https://github.com/msberends/AMR/issues

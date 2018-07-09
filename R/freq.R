@@ -19,8 +19,8 @@
 #' Frequency table
 #'
 #' Create a frequency table of a vector with items or a data frame. Supports quasiquotation and markdown for reports. \code{top_freq} can be used to get the top/bottom \emph{n} items of a frequency table, with counts as names.
-#' @param x vector with items, or a \code{data.frame}
-#' @param ... up to nine different columns of \code{x} to calculate frequencies from, see Examples
+#' @param x vector of any class or a \code{\link{data.frame}}, \code{\link{tibble}} or \code{\link{table}}
+#' @param ... up to nine different columns of \code{x} when \code{x} is a \code{data.frame} or \code{tibble}, to calculate frequencies from - see Examples
 #' @param sort.count sort on count, i.e. frequencies. This will be \code{TRUE} at default for everything except for factors.
 #' @param nmax number of row to print. The default, \code{15}, uses \code{\link{getOption}("max.print.freq")}. Use \code{nmax = 0}, \code{nmax = Inf}, \code{nmax = NULL} or \code{nmax = NA} to print all rows.
 #' @param na.rm a logical value indicating whether \code{NA} values should be removed from the frequency table. The header will always print the amount of \code{NA}s.
@@ -56,7 +56,7 @@
 #' @importFrom stats fivenum sd mad
 #' @importFrom grDevices boxplot.stats
 #' @importFrom dplyr %>% select pull n_distinct group_by arrange desc mutate summarise n_distinct
-#' @importFrom utils browseVignettes
+#' @importFrom utils browseVignettes installed.packages
 #' @importFrom tibble tibble
 #' @keywords summary summarise frequency freq
 #' @rdname freq
@@ -72,20 +72,15 @@
 #' septic_patients$hospital_id %>% freq()
 #' septic_patients[, "hospital_id"] %>% freq()
 #' septic_patients %>% freq("hospital_id")
-#' septic_patients %>% freq(hospital_id)  # <- easiest to remember when used to tidyverse
+#' septic_patients %>% freq(hospital_id)  #<- easiest to remember when you're used to tidyverse
 #'
-#' # you could use `select`...
+#' # you could also use `select` or `pull` to get your variables
 #' septic_patients %>%
 #'   filter(hospital_id == "A") %>%
 #'   select(bactid) %>%
 #'   freq()
 #'
-#' # ... or you use `freq` to select it immediately
-#' septic_patients %>%
-#'   filter(hospital_id == "A") %>%
-#'   freq(bactid)
-#'
-#' # select multiple columns; they will be pasted together
+#' # multiple selected variables will be pasted together
 #' septic_patients %>%
 #'   left_join_microorganisms %>%
 #'   filter(hospital_id == "A") %>%
@@ -102,13 +97,40 @@
 #'   mutate(year = format(date, "%Y")) %>%
 #'   freq(year)
 #'
-#' # print only top 5
+#' # show only the top 5
 #' years %>% print(nmax = 5)
 #'
-#' # transform to plain data.frame
+#' # print a histogram of numeric values
+#' septic_patients %>%
+#'   freq(age) %>%
+#'   hist() # prettier: ggplot(septic_patients, aes(age)) + geom_histogram()
+#'
+#' # or print all points to a regular plot
+#' septic_patients %>%
+#'   freq(age) %>%
+#'   plot()
+#'
+#' # transform to a data.frame or tibble
 #' septic_patients %>%
 #'   freq(age) %>%
 #'   as.data.frame()
+#'
+#' # or transform (back) to a vector
+#' septic_patients %>%
+#'   freq(age) %>%
+#'   as.vector()
+#'
+#' identical(septic_patients %>%
+#'             freq(age) %>%
+#'             as.vector() %>%
+#'             sort(),
+#'           sort(septic_patients$age)
+#' ) # TRUE
+#'
+#' # also supports table:
+#' table(septic_patients$sex,
+#'       septic_patients$age) %>%
+#'   freq()
 frequency_tbl <- function(x,
                           ...,
                           sort.count = TRUE,
@@ -138,6 +160,24 @@ frequency_tbl <- function(x,
     } else {
       cols <- NULL
     }
+  } else if (any(class(x) == 'table')) {
+    if (!"tidyr" %in% rownames(installed.packages())) {
+      stop('transformation from `table` to frequency table requires the tidyr package.', call. = FALSE)
+    }
+    values <- x %>%
+      as.data.frame(stringsAsFactors = FALSE) %>%
+      # delete last variable: these are frequencies
+      select(-ncol(.)) %>%
+      # paste all other columns:
+      tidyr::unite(sep = sep) %>%
+      .[, 1]
+    counts <- x %>%
+      as.data.frame(stringsAsFactors = FALSE) %>%
+      # get last variable: these are frequencies
+      pull(ncol(.))
+    x <- rep(values, counts)
+    x.name <- NULL
+    cols <- NULL
   } else {
     x.name <- NULL
     cols <- NULL
@@ -524,40 +564,46 @@ as.data.frame.frequency_tbl <- function(x, ...) {
 }
 
 #' @noRd
+#' @exportMethod as_tibble.frequency_tbl
+#' @export
+#' @importFrom dplyr as_tibble
+as_tibble.frequency_tbl <- function(x, validate = TRUE, ..., rownames = NA) {
+  attr(x, 'package') <- NULL
+  attr(x, 'package.version') <- NULL
+  attr(x, 'opt') <- NULL
+  as_tibble(x = as.data.frame(x), validate = validate, ..., rownames = rownames)
+}
+
+#' @noRd
 #' @exportMethod hist.frequency_tbl
 #' @export
-#' @importFrom dplyr %>% pull
 #' @importFrom graphics hist
 hist.frequency_tbl <- function(x, ...) {
-
   opt <- attr(x, 'opt')
-
   if (!is.null(opt$vars)) {
     title <- opt$vars
   } else {
     title <- ""
   }
-
-  items <- x %>% pull(item)
-  counts <- x %>% pull(count)
-  vect <- rep(items, counts)
-  hist(vect, main = paste("Histogram of", title), xlab = title, ...)
+  hist(as.vector(x), main = paste("Histogram of", title), xlab = title, ...)
 }
 
 #' @noRd
 #' @exportMethod plot.frequency_tbl
 #' @export
-#' @importFrom dplyr %>% pull
 plot.frequency_tbl <- function(x, y, ...) {
   opt <- attr(x, 'opt')
-
   if (!is.null(opt$vars)) {
     title <- opt$vars
   } else {
     title <- ""
   }
+  plot(x = x$item, y = x$count, ylab = "Count", xlab = title, ...)
+}
 
-  items <- x %>% pull(item)
-  counts <- x %>% pull(count)
-  plot(x = items, y = counts, ylab = "Count", xlab = title, ...)
+#' @noRd
+#' @exportMethod as.vector.frequency_tbl
+#' @export
+as.vector.frequency_tbl <- function(x, mode = "any") {
+  as.vector(rep(x$item, x$count), mode = mode)
 }

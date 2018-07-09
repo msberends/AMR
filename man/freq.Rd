@@ -21,9 +21,9 @@ top_freq(f, n)
   15), ...)
 }
 \arguments{
-\item{x}{vector with items, or a \code{data.frame}}
+\item{x}{vector of any class or a \code{\link{data.frame}}, \code{\link{tibble}} or \code{\link{table}}}
 
-\item{...}{up to nine different columns of \code{x} to calculate frequencies from, see Examples}
+\item{...}{up to nine different columns of \code{x} when \code{x} is a \code{data.frame} or \code{tibble}, to calculate frequencies from - see Examples}
 
 \item{sort.count}{sort on count, i.e. frequencies. This will be \code{TRUE} at default for everything except for factors.}
 
@@ -83,20 +83,15 @@ freq(septic_patients[, "hospital_id"])
 septic_patients$hospital_id \%>\% freq()
 septic_patients[, "hospital_id"] \%>\% freq()
 septic_patients \%>\% freq("hospital_id")
-septic_patients \%>\% freq(hospital_id)  # <- easiest to remember when used to tidyverse
+septic_patients \%>\% freq(hospital_id)  #<- easiest to remember when you're used to tidyverse
 
-# you could use `select`...
+# you could also use `select` or `pull` to get your variables
 septic_patients \%>\%
   filter(hospital_id == "A") \%>\%
   select(bactid) \%>\%
   freq()
 
-# ... or you use `freq` to select it immediately
-septic_patients \%>\%
-  filter(hospital_id == "A") \%>\%
-  freq(bactid)
-
-# select multiple columns; they will be pasted together
+# multiple selected variables will be pasted together
 septic_patients \%>\%
   left_join_microorganisms \%>\%
   filter(hospital_id == "A") \%>\%
@@ -113,13 +108,40 @@ years <- septic_patients \%>\%
   mutate(year = format(date, "\%Y")) \%>\%
   freq(year)
 
-# print only top 5
+# show only the top 5
 years \%>\% print(nmax = 5)
 
-# transform to plain data.frame
+# print a histogram of numeric values
+septic_patients \%>\%
+  freq(age) \%>\%
+  hist() # prettier: ggplot(septic_patients, aes(age)) + geom_histogram()
+
+# or print all points to a regular plot
+septic_patients \%>\%
+  freq(age) \%>\%
+  plot()
+
+# transform to a data.frame or tibble
 septic_patients \%>\%
   freq(age) \%>\%
   as.data.frame()
+
+# or transform (back) to a vector
+septic_patients \%>\%
+  freq(age) \%>\%
+  as.vector()
+
+identical(septic_patients \%>\%
+            freq(age) \%>\%
+            as.vector() \%>\%
+            sort(),
+          sort(septic_patients$age)
+) # TRUE
+
+# also supports table:
+table(septic_patients$sex,
+      septic_patients$age) \%>\%
+  freq()
 }
 \keyword{freq}
 \keyword{frequency}

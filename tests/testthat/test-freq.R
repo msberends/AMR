@@ -9,12 +9,16 @@ test_that("frequency table works", {
   expect_equal(nrow(freq(septic_patients$date)),
                length(unique(septic_patients$date)))
 
-  # int
+  # character
+  expect_output(print(freq(septic_patients$bactid)))
+  # integer
   expect_output(print(freq(septic_patients$age)))
   # date
   expect_output(print(freq(septic_patients$date)))
   # factor
   expect_output(print(freq(septic_patients$hospital_id)))
+  # table
+  expect_output(print(freq(table(septic_patients$sex, septic_patients$age))))
 
   library(dplyr)
   expect_output(septic_patients %>% select(1:2) %>% freq() %>% print())
@@ -52,6 +56,15 @@ test_that("frequency table works", {
   # charts from plot and hist, should not raise errors
   plot(freq(septic_patients, age))
   hist(freq(septic_patients, age))
+
+  # check vector
+  expect_identical(septic_patients %>%
+                     freq(age) %>%
+                     as.vector() %>%
+                     sort(),
+                   septic_patients %>%
+                     pull(age) %>%
+                     sort())
 
 })
 

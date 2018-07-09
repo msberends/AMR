@@ -4,7 +4,9 @@
 * For convience, descriptive statistical functions `kurtosis` and `skewness` that are lacking in base R - they are generic functions and have support for vectors, data.frames and matrices
 * New for frequency tables (function `freq`):
   * A vignette to explain its usage
+  * Support for `table` to use as input: `freq(table(x, y))`
   * Support for existing functions `hist` and `plot` to use a frequency table as input: `hist(freq(df$age))`
+  * Support for `as.vector`, `as.data.frame` and `as_tibble`
   * Support for quasiquotation: `freq(mydata, mycolumn)` is the same as `mydata %>% freq(mycolumn)`
   * Function `top_freq` function to return the top/below *n* items as vector
   * Header of frequency tables now also show Mean Absolute Deviaton (MAD) and Interquartile Range (IQR)
