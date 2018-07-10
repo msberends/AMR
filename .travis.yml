@@ -5,7 +5,9 @@ r:
   - 3.0
   # latest available release
   - release
-r_packages: covr
+r_packages:
+  allow_failures:
+    - covr
 cache: packages
 cran: https://cran.rstudio.com
 os:
@@ -19,6 +21,7 @@ before_install:
 
 # postrun
 after_success:
+  allow_failures:
   - Rscript -e 'covr::codecov()'
 notifications:
   email:
