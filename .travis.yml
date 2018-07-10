@@ -3,31 +3,34 @@ language: r
 jobs:
   include:
   - r: 3.1
-    os:
-    - linux
-    - osx
+    os: linux
+    warnings_are_errors: false
+  - r: 3.1
+    os: osx
     warnings_are_errors: false
   - r: 3.2
-    os:
-    - linux
-    - osx
+    os: linux
+    warnings_are_errors: false
+  - r: 3.2
+    os: osx
     warnings_are_errors: false
   - r: 3.3
-    os:
-    - linux
-    - osx
+    os: linux
+  - r: 3.3
+    os: osx
   - r: 3.4
-    os:
-    - linux
-    - osx
+    os: linux
+  - r: 3.4
+    os: osx
   - r: release
-    os:
-    - linux
-    - osx
+    os: linux
+  - r: release
+    os: osx
   - r: devel
-    os:
-    - linux
-    - osx
+    os: linux
+    warnings_are_errors: false
+  - r: devel
+    os: osx
     warnings_are_errors: false
 r_packages: covr
 cache: packages
@@ -40,8 +43,7 @@ before_install:
 
 # postrun
 after_success:
-  - Rscript -e 'covr::codecov()'
-    if: os = osx
+  - if [ $TRAVIS_OS_NAME = osx ]; then Rscript -e 'covr::codecov()'; fi
 notifications:
   email:
     recipients:
