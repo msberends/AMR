@@ -1,24 +1,35 @@
 # Setting up R deps
-language: R
-dist: trusty
-cache: packages
-
+language: r
 jobs:
   include:
   - r: 3.1
+    os:
+    - linux
+    - osx
   - r: 3.2
+    os:
+    - linux
+    - osx
   - r: 3.3
+    os:
+    - linux
+    - osx
   - r: 3.4
+    os:
+    - linux
+    - osx
   - r: release
+    os:
+    - linux
+    - osx
   - r: devel
+    os:
+    - linux
+    - osx
     warnings_are_errors: false
-
 r_packages: covr
 cache: packages
 cran: https://cran.rstudio.com
-os:
-  - linux
-  - osx
 before_install:
   # needed for clipboard function:
   # - if [ $TRAVIS_OS_NAME = linux ]; then sudo apt-get -qq update; fi
@@ -28,6 +39,7 @@ before_install:
 # postrun
 after_success:
   - Rscript -e 'covr::codecov()'
+    if: os = osx
 notifications:
   email:
     recipients:
