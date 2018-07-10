@@ -25,12 +25,12 @@ Transform vector to ratio
 # ratio.
 
 x <- c(772, 1611, 737)
-x.expected <- ratio(x, "1:2:1")
-x.expected
+E <- ratio(x, "1:2:1")
+E
 # 780 1560 780
 
-g.test(x, x.expected)
-# p = 0.12574.
+G <- g.test(x, p = c(1, 2, 1) / 4)
+# G$p.value = 0.12574.
 
 # There is no significant difference from a 1:2:1 ratio.
 # Meaning: resistance controlled by a single gene with two co-dominant
@@ -45,11 +45,7 @@ g.test(x, x.expected)
 # observed 1752 right-billed and 1895 left-billed crossbills.
 
 x <- c(1752, 1895)
-x.expected <- ratio(x, ratio = c(1, 1))
-x.expected
-# 1823.5 1823.5
-
-g.test(x, x.expected)
+g.test(x)
 # p = 0.01787343
 
 # There is a significant difference from a 1:1 ratio.

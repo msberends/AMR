@@ -1,10 +1,13 @@
 # Setting up R deps
 language: r
-r: 3.2
+r:
+  # oldest support according to DESCRIPTION
+  - 3.0
+  # latest available release
+  - release
 r_packages: covr
 cache: packages
-
-# system deps, install xclip for clipboard support
+cran: https://cran.rstudio.com
 os:
   - linux
   - osx

@@ -2,31 +2,75 @@
 % Please edit documentation in R/g.test.R
 \name{g.test}
 \alias{g.test}
-\title{\emph{G}-test of matrix or vector}
+\title{\emph{G}-test for Count Data}
+\source{
+This code is almost perfectly equal to \code{\link{chisq.test}}; only the calculation of the statistic was changed to \code{2 * sum(x * log(x / E))} and Yates' continuity correction was deleted.
+}
 \usage{
-g.test(x, y = NULL, alpha = 0.05, info = TRUE, minimum = 0)
+g.test(x, y = NULL, p = rep(1/length(x), length(x)), rescale.p = FALSE,
+  simulate.p.value = FALSE, B = 2000)
 }
 \arguments{
-\item{x}{numeric vector or matrix}
+\item{x}{a numeric vector or matrix. \code{x} and \code{y} can also
+    both be factors.}
 
-\item{y}{expected value of \code{x}. Leave empty to determine automatically. This can also be ratios of \code{x}, e.g. calculated with \code{\link{ratio}}.}
+\item{y}{a numeric vector; ignored if \code{x} is a matrix.  If
+    \code{x} is a factor, \code{y} should be a factor of the same length.}
 
-\item{alpha}{value to test the p value against}
+\item{p}{a vector of probabilities of the same length of \code{x}.
+    An error is given if any entry of \code{p} is negative.}
 
-\item{info}{logical to determine whether the analysis should be printed}
+\item{rescale.p}{a logical scalar; if TRUE then \code{p} is rescaled
+    (if necessary) to sum to 1.  If \code{rescale.p} is FALSE, and
+    \code{p} does not sum to 1, an error is given.}
 
-\item{minimum}{the test with fail if any of the observed values is below this value. Use \code{minimum = 30} for microbial epidemiology, to prevent calculating a p value when less than 30 isolates are available.}
+\item{simulate.p.value}{a logical indicating whether to compute
+    p-values by Monte Carlo simulation.}
+
+\item{B}{an integer specifying the number of replicates used in the
+    Monte Carlo test.}
+}
+\value{
+A list with class \code{"htest"} containing the following
+  components:
+  \item{statistic}{the value the chi-squared test statistic.}
+  \item{parameter}{the degrees of freedom of the approximate
+    chi-squared distribution of the test statistic, \code{NA} if the
+    p-value is computed by Monte Carlo simulation.}
+  \item{p.value}{the p-value for the test.}
+  \item{method}{a character string indicating the type of test
+    performed, and whether Monte Carlo simulation or continuity
+    correction was used.}
+  \item{data.name}{a character string giving the name(s) of the data.}
+  \item{observed}{the observed counts.}
+  \item{expected}{the expected counts under the null hypothesis.}
+  \item{residuals}{the Pearson residuals,
+    \code{(observed - expected) / sqrt(expected)}.}
+  \item{stdres}{standardized residuals,
+    \code{(observed - expected) / sqrt(V)}, where \code{V} is the residual cell variance (Agresti, 2007,
+    section 2.4.5 for the case where \code{x} is a matrix, \code{n * p * (1 - p)} otherwise).}
 }
 \description{
-A \emph{G}-test can be used to see whether the number of observations in each category fits a theoretical expectation (called a \strong{\emph{G}-test of goodness-of-fit}), or to see whether the proportions of one variable are different for different values of the other variable (called a \strong{\emph{G}-test of independence}).
+\code{g.test} performs chi-squared contingency table tests and goodness-of-fit tests, just like \code{\link{chisq.test}} but is more reliable [1]. A \emph{G}-test can be used to see whether the number of observations in each category fits a theoretical expectation (called a \strong{\emph{G}-test of goodness-of-fit}), or to see whether the proportions of one variable are different for different values of the other variable (called a \strong{\emph{G}-test of independence}).
+}
+\details{
+If \code{x} is a matrix with one row or column, or if \code{x} is a vector and \code{y} is not given, then a \emph{goodness-of-fit test} is performed (\code{x} is treated as a one-dimensional contingency table). The entries of \code{x} must be non-negative integers. In this case, the hypothesis tested is whether the population probabilities equal those in \code{p}, or are all equal if \code{p} is not given.
+
+  If \code{x} is a matrix with at least two rows and columns, it is taken as a two-dimensional contingency table: the entries of \code{x} must be non-negative integers.  Otherwise, \code{x} and \code{y} must be vectors or factors of the same length; cases with missing values are removed, the objects are coerced to factors, and the contingency table is computed from these.  Then Pearson's chi-squared test is performed of the null hypothesis that the joint distribution of the cell counts in a 2-dimensional contingency table is the product of the row and column marginals.
+
+  If \code{simulate.p.value} is \code{FALSE}, the p-value is computed from the asymptotic chi-squared distribution of the test statistic. Otherwise the p-value is computed for a Monte Carlo test (Hope, 1968) with \code{B} replicates.
+
+  In the contingency table case simulation is done by random sampling from the set of all contingency tables with given marginals, and works only if the marginals are strictly positive. Note that this is not the usual sampling situation assumed for a chi-squared test (like the \emph{G}-test) but rather that for Fisher's exact test.
+
+  In the goodness-of-fit case simulation is done by random sampling from the discrete distribution specified by \code{p}, each sample being of size \code{n = sum(x)}. This simulation is done in \R and may be slow.
 }
 \section{\emph{G}-test of goodness-of-fit (likelihood ratio test)}{
 
 Use the \emph{G}-test of goodness-of-fit when you have one nominal variable with two or more values (such as male and female, or red, pink and white flowers). You compare the observed counts of numbers of observations in each category with the expected counts, which you calculate using some kind of theoretical expectation (such as a 1:1 sex ratio or a 1:2:1 ratio in a genetic cross).
 
-If the expected number of observations in any category is too small, the \emph{G}-test may give inaccurate results, and you should use an exact test instead. See the web page on small sample sizes for discussion of what "small" means.
+If the expected number of observations in any category is too small, the \emph{G}-test may give inaccurate results, and you should use an exact test instead (\code{\link{fisher.test}}).
 
-The \emph{G}-test of goodness-of-fit is an alternative to the chi-square test of goodness-of-fit; each of these tests has some advantages and some disadvantages, and the results of the two tests are usually very similar.
+The \emph{G}-test of goodness-of-fit is an alternative to the chi-square test of goodness-of-fit (\code{\link{chisq.test}}); each of these tests has some advantages and some disadvantages, and the results of the two tests are usually very similar.
 }
 
 \section{\emph{G}-test of independence}{
@@ -35,24 +79,24 @@ Use the \emph{G}-test of independence when you have two nominal variables, each 
 
 It is also possible to do a \emph{G}-test of independence with more than two nominal variables. For example, Jackson et al. (2013) also had data for children under 3, so you could do an analysis of old vs. young, thigh vs. arm, and reaction vs. no reaction, all analyzed together.
 
-Fisher's exact test is more accurate than the \emph{G}-test of independence when the expected numbers are small, so it is recommend to only use the \emph{G}-test if your total sample size is greater than 1000.
+Fisher's exact test (\code{\link{fisher.test}}) is more accurate than the \emph{G}-test of independence when the expected numbers are small, so it is recommend to only use the \emph{G}-test if your total sample size is greater than 1000.
 
-The \emph{G}-test of independence is an alternative to the chi-square test of independence, and they will give approximately the same results.
+The \emph{G}-test of independence is an alternative to the chi-square test of independence (\code{\link{chisq.test}}), and they will give approximately the same results.
 }
 
 \section{How the test works}{
 
-Unlike the exact test of goodness-of-fit, the \emph{G}-test does not directly calculate the probability of obtaining the observed results or something more extreme. Instead, like almost all statistical tests, the \emph{G}-test has an intermediate step; it uses the data to calculate a test statistic that measures how far the observed data are from the null expectation. You then use a mathematical relationship, in this case the chi-square distribution, to estimate the probability of obtaining that value of the test statistic.
+Unlike the exact test of goodness-of-fit (\code{\link{fisher.test}}), the \emph{G}-test does not directly calculate the probability of obtaining the observed results or something more extreme. Instead, like almost all statistical tests, the \emph{G}-test has an intermediate step; it uses the data to calculate a test statistic that measures how far the observed data are from the null expectation. You then use a mathematical relationship, in this case the chi-square distribution, to estimate the probability of obtaining that value of the test statistic.
 
 The \emph{G}-test uses the log of the ratio of two likelihoods as the test statistic, which is why it is also called a likelihood ratio test or log-likelihood ratio test. The formula to calculate a \emph{G}-statistic is:
 
-\code{G <- 2 * sum(x * log(x / x.expected))}
+\code{G <- 2 * sum(x * log(x / E))}
 
-Since this is chi-square distributed, the p value can be calculated with:
+where \code{E} are the expected values. Since this is chi-square distributed, the p value can be calculated with:
 
-\code{p <- 1 - stats::pchisq(G, df))}
+\code{p <- stats::pchisq(G, df, lower.tail = FALSE)}
 
-where \code{df} are the degrees of freedom: \code{max(NROW(x) - 1, 1) * max(NCOL(x) - 1, 1)}.
+where \code{df} are the degrees of freedom.
 
 If there are more than two categories and you want to find out which ones are significantly different from their null expectation, you can use the same method of testing each category vs. the sum of all categories, with the Bonferroni correction. You use \emph{G}-tests for each category, of course.
 }
@@ -68,12 +112,12 @@ If there are more than two categories and you want to find out which ones are si
 # ratio.
 
 x <- c(772, 1611, 737)
-x.expected <- ratio(x, "1:2:1")
-x.expected
+E <- ratio(x, "1:2:1")
+E
 # 780 1560 780
 
-g.test(x, x.expected)
-# p = 0.12574.
+G <- g.test(x, p = c(1, 2, 1) / 4)
+# G$p.value = 0.12574.
 
 # There is no significant difference from a 1:2:1 ratio.
 # Meaning: resistance controlled by a single gene with two co-dominant
@@ -88,11 +132,7 @@ g.test(x, x.expected)
 # observed 1752 right-billed and 1895 left-billed crossbills.
 
 x <- c(1752, 1895)
-x.expected <- ratio(x, ratio = c(1, 1))
-x.expected
-# 1823.5 1823.5
-
-g.test(x, x.expected)
+g.test(x)
 # p = 0.01787343
 
 # There is a significant difference from a 1:1 ratio.
@@ -100,7 +140,7 @@ g.test(x, x.expected)
 
 }
 \references{
-McDonald, J.H. 2014. \strong{Handbook of Biological Statistics (3rd ed.)}. Sparky House Publishing, Baltimore, Maryland. \url{http://www.biostathandbook.com/gtestgof.html}.
+[1] McDonald, J.H. 2014. \strong{Handbook of Biological Statistics (3rd ed.)}. Sparky House Publishing, Baltimore, Maryland. \url{http://www.biostathandbook.com/gtestgof.html}.
 }
 \seealso{
 \code{\link{chisq.test}}

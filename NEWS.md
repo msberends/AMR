@@ -2,6 +2,13 @@
 #### New
 * Support for Addins menu in RStudio to quickly insert `%in%` or `%like%` (and give them keyboard shortcuts), or to view the datasets that come with this package
 * For convience, descriptive statistical functions `kurtosis` and `skewness` that are lacking in base R - they are generic functions and have support for vectors, data.frames and matrices
+* Function `g.test` to perform the Χ<sup>2</sup> distributed [*G*-test](https://en.wikipedia.org/wiki/G-test), which use is the same as `chisq.test`
+* Function `ratio` to transform a vector of values to a preset ratio. For example:
+```r
+ratio(c(772, 1611, 737), ratio = "1:2:1")
+# [1]  780 1560  780
+```
+* Function `p.symbol` to transform p value to their related symbol: `0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1`
 * New for frequency tables (function `freq`):
   * A vignette to explain its usage
   * Support for `table` to use as input: `freq(table(x, y))`
@@ -12,13 +19,6 @@
   * Header of frequency tables now also show Mean Absolute Deviaton (MAD) and Interquartile Range (IQR)
   * Possibility to globally set the default for the amount of items to print, with `options(max.print.freq = n)` where *n* is your preset value
 * Functions `clipboard_import` and `clipboard_export` as helper functions to quickly copy and paste from/to software like Excel and SPSS
-* Function `g.test` to perform the Χ<sup>2</sup> distributed [*G*-test](https://en.wikipedia.org/wiki/G-test)
-* Function `ratio` to transform a vector of values to a preset ratio (convenient to use with `g.test`). For example:
-```r
-ratio(c(772, 1611, 737), ratio = "1:2:1")
-# [1]  780 1560  780
-```
-* Function `p.symbol` to transform p value to their related symbol: `0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1`
 
 #### Changed
 * `%like%` now supports multiple patterns
@@ -35,6 +35,9 @@ ratio(c(772, 1611, 737), ratio = "1:2:1")
 * Fix for warning *hybrid evaluation forced for row_number* ([`924b62`](https://github.com/tidyverse/dplyr/commit/924b62)) from the `dplyr` package v0.7.5 and above
 * Support for 1 or 2 columns as input for `guess_bactid`
 * Fix for printing tibbles where characters would be accidentally transformed to factors
+
+#### Other
+* Unit testing for R 3.0 and the latest available release: https://travis-ci.org/msberends/AMR
 
 # 0.2.0 (latest stable version)
 #### New

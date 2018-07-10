@@ -141,6 +141,8 @@ frequency_tbl <- function(x,
                           digits = 2,
                           sep = " ") {
 
+  mult.columns <- 0
+
   if (any(class(x) == 'data.frame')) {
     x.name <- deparse(substitute(x))
     if (x.name == ".") {
@@ -176,14 +178,13 @@ frequency_tbl <- function(x,
       # get last variable: these are frequencies
       pull(ncol(.))
     x <- rep(values, counts)
-    x.name <- NULL
+    x.name <- "a `table` object"
     cols <- NULL
+    mult.columns <- 2
   } else {
     x.name <- NULL
     cols <- NULL
   }
-
-  mult.columns <- 0
 
   if (!is.null(ncol(x))) {
     if (ncol(x) == 1 & any(class(x) == 'data.frame')) {
