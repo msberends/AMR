@@ -6,10 +6,12 @@ jobs:
     os:
     - linux
     - osx
+    warnings_are_errors: false
   - r: 3.2
     os:
     - linux
     - osx
+    warnings_are_errors: false
   - r: 3.3
     os:
     - linux
