@@ -1,13 +1,19 @@
 # Setting up R deps
-language: r
-r:
-  # oldest support according to DESCRIPTION
-  - 3.0
-  # latest available release
-  - release
-r_packages:
-  allow_failures:
-    - covr
+language: R
+dist: trusty
+cache: packages
+
+jobs:
+  include:
+  - r: 3.1
+  - r: 3.2
+  - r: 3.3
+  - r: 3.4
+  - r: release
+  - r: devel
+    warnings_are_errors: false
+
+r_packages: covr
 cache: packages
 cran: https://cran.rstudio.com
 os:
@@ -21,7 +27,6 @@ before_install:
 
 # postrun
 after_success:
-  allow_failures:
   - Rscript -e 'covr::codecov()'
 notifications:
   email:
