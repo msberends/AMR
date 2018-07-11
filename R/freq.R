@@ -166,18 +166,11 @@ frequency_tbl <- function(x,
     if (!"tidyr" %in% rownames(installed.packages())) {
       stop('transformation from `table` to frequency table requires the tidyr package.', call. = FALSE)
     }
-    values <- x %>%
+    x <- x %>%
       as.data.frame(stringsAsFactors = FALSE) %>%
-      # delete last variable: these are frequencies
-      select(-ncol(.)) %>%
-      # paste all other columns:
-      tidyr::unite(sep = sep) %>%
-      .[, 1]
-    counts <- x %>%
-      as.data.frame(stringsAsFactors = FALSE) %>%
-      # get last variable: these are frequencies
-      pull(ncol(.))
-    x <- rep(values, counts)
+      # paste first two columns
+      tidyr::unite(col = "Pasted", 1:2, sep = sep, remove = TRUE)
+    x <- rep(x %>% pull(Pasted), x %>% pull(Freq))
     x.name <- "a `table` object"
     cols <- NULL
     mult.columns <- 2

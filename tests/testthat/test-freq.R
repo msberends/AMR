@@ -18,9 +18,7 @@ test_that("frequency table works", {
   # factor
   expect_output(print(freq(septic_patients$hospital_id)))
   # table
-  #if (Sys.info()['sysname'] %in% c("Windows", "Linux")) {
-    expect_output(print(freq(table(septic_patients$sex, septic_patients$age))))
-  #}
+  expect_output(print(freq(table(septic_patients$sex, septic_patients$age))))
 
   library(dplyr)
   expect_output(septic_patients %>% select(1:2) %>% freq() %>% print())
