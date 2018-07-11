@@ -44,7 +44,7 @@ Suggests:
     covr (>= 3.0.1),
     rmarkdown,
     rstudioapi,
-    tidyr
+    tidyr (>= 0.8.0)
 VignetteBuilder: knitr
 URL: https://github.com/msberends/AMR
 BugReports: https://github.com/msberends/AMR/issues
