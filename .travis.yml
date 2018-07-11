@@ -45,6 +45,7 @@ before_install:
   # - if [ $TRAVIS_OS_NAME = linux ]; then sudo apt-get -qq update; fi
   - if [ $TRAVIS_OS_NAME = linux ]; then sudo apt-get install -y xclip; fi
   - if [ $TRAVIS_OS_NAME = osx ]; then brew install xclip; fi
+  - if [ $TRAVIS_OS_NAME = osx ]; then brew install libgit2; fi
 
 # postrun
 after_success:
