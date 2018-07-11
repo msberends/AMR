@@ -21,6 +21,7 @@ ratio(c(772, 1611, 737), ratio = "1:2:1")
 * Functions `clipboard_import` and `clipboard_export` as helper functions to quickly copy and paste from/to software like Excel and SPSS
 
 #### Changed
+* Pretty printing for tibbles removed as it is not really the scope of this package
 * `%like%` now supports multiple patterns
 * Frequency tables are now actual `data.frame`s with altered console printing to make it look like a frequency table. Because of this, the parameter `toConsole` is not longer needed.
 * Small translational improvements to the `septic_patients` dataset
@@ -34,7 +35,6 @@ ratio(c(772, 1611, 737), ratio = "1:2:1")
 * Improved `first_isolate` algorithm to exclude isolates where bacteria ID or genus is unavailable
 * Fix for warning *hybrid evaluation forced for row_number* ([`924b62`](https://github.com/tidyverse/dplyr/commit/924b62)) from the `dplyr` package v0.7.5 and above
 * Support for 1 or 2 columns as input for `guess_bactid`
-* Fix for printing tibbles where characters would be accidentally transformed to factors
 
 #### Other
 * Unit testing for R 3.0 and the latest available release: https://travis-ci.org/msberends/AMR
