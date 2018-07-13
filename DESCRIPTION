@@ -35,7 +35,7 @@ Imports:
     reshape2 (>= 1.4.0),
     xml2 (>= 1.0.0),
     knitr (>= 1.0.0),
-    Rcpp (>= 0.12.17),
+    Rcpp (>= 0.12.14),
     readr,
     rvest (>= 0.3.2),
     tibble
