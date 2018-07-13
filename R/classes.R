@@ -22,6 +22,7 @@
 #' @rdname as.rsi
 #' @param x vector
 #' @return Ordered factor with new class \code{rsi} and new attributes \code{package} and \code{package.version}
+#' @keywords rsi
 #' @export
 #' @importFrom dplyr %>%
 #' @importFrom utils packageDescription
@@ -200,6 +201,7 @@ barplot.rsi <- function(height, ...) {
 #' @param x vector
 #' @param na.rm a logical indicating whether missing values should be removed
 #' @return Ordered factor with new class \code{mic} and new attributes \code{package} and \code{package.version}
+#' @keywords mic
 #' @export
 #' @importFrom dplyr %>%
 #' @importFrom utils packageDescription

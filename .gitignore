@@ -5,3 +5,10 @@
 AMR.Rproj
 tests/testthat/Rplots.pdf
 inst/doc
+/src/*.o
+/src/*.o-*
+/src/*.d
+/src/*.so
+*.dll
+vignettes/*.R
+.DS_Store

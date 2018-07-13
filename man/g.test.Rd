@@ -4,11 +4,15 @@
 \alias{g.test}
 \title{\emph{G}-test for Count Data}
 \source{
-This code is almost perfectly equal to \code{\link{chisq.test}}; only the calculation of the statistic was changed to \code{2 * sum(x * log(x / E))} and Yates' continuity correction was deleted.
+This code is almost identical to \code{\link{chisq.test}}, except that:
+\itemize{
+  \item{The calculation of the statistic was changed to \code{2 * sum(x * log(x / E))}}
+  \item{Yates' continuity correction was removed as it does not apply to a \emph{G}-test}
+  \item{The possibility to simulate p values with \code{simulate.p.value} was removed}
+}
 }
 \usage{
-g.test(x, y = NULL, p = rep(1/length(x), length(x)), rescale.p = FALSE,
-  simulate.p.value = FALSE, B = 2000)
+g.test(x, y = NULL, p = rep(1/length(x), length(x)), rescale.p = FALSE)
 }
 \arguments{
 \item{x}{a numeric vector or matrix. \code{x} and \code{y} can also
@@ -23,12 +27,6 @@ g.test(x, y = NULL, p = rep(1/length(x), length(x)), rescale.p = FALSE,
 \item{rescale.p}{a logical scalar; if TRUE then \code{p} is rescaled
     (if necessary) to sum to 1.  If \code{rescale.p} is FALSE, and
     \code{p} does not sum to 1, an error is given.}
-
-\item{simulate.p.value}{a logical indicating whether to compute
-    p-values by Monte Carlo simulation.}
-
-\item{B}{an integer specifying the number of replicates used in the
-    Monte Carlo test.}
 }
 \value{
 A list with class \code{"htest"} containing the following
@@ -58,7 +56,7 @@ If \code{x} is a matrix with one row or column, or if \code{x} is a vector and \
 
   If \code{x} is a matrix with at least two rows and columns, it is taken as a two-dimensional contingency table: the entries of \code{x} must be non-negative integers.  Otherwise, \code{x} and \code{y} must be vectors or factors of the same length; cases with missing values are removed, the objects are coerced to factors, and the contingency table is computed from these.  Then Pearson's chi-squared test is performed of the null hypothesis that the joint distribution of the cell counts in a 2-dimensional contingency table is the product of the row and column marginals.
 
-  If \code{simulate.p.value} is \code{FALSE}, the p-value is computed from the asymptotic chi-squared distribution of the test statistic. Otherwise the p-value is computed for a Monte Carlo test (Hope, 1968) with \code{B} replicates.
+  The p-value is computed from the asymptotic chi-squared distribution of the test statistic.
 
   In the contingency table case simulation is done by random sampling from the set of all contingency tables with given marginals, and works only if the marginals are strictly positive. Note that this is not the usual sampling situation assumed for a chi-squared test (like the \emph{G}-test) but rather that for Fisher's exact test.
 

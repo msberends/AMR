@@ -1,6 +1,6 @@
 Package: AMR
-Version: 0.2.0.9010
-Date: 2018-07-11
+Version: 0.2.0.9011
+Date: 2018-07-13
 Title: Antimicrobial Resistance Analysis
 Authors@R: c(
     person(
@@ -35,6 +35,7 @@ Imports:
     reshape2 (>= 1.4.0),
     xml2 (>= 1.0.0),
     knitr (>= 1.0.0),
+    Rcpp (>= 0.12.17),
     readr,
     rvest (>= 0.3.2),
     tibble
@@ -44,6 +45,7 @@ Suggests:
     rmarkdown,
     rstudioapi,
     tidyr
+LinkingTo: Rcpp
 VignetteBuilder: knitr
 URL: https://github.com/msberends/AMR
 BugReports: https://github.com/msberends/AMR/issues

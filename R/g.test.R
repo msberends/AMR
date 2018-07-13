@@ -24,7 +24,7 @@
 #'
 #'   If \code{x} is a matrix with at least two rows and columns, it is taken as a two-dimensional contingency table: the entries of \code{x} must be non-negative integers.  Otherwise, \code{x} and \code{y} must be vectors or factors of the same length; cases with missing values are removed, the objects are coerced to factors, and the contingency table is computed from these.  Then Pearson's chi-squared test is performed of the null hypothesis that the joint distribution of the cell counts in a 2-dimensional contingency table is the product of the row and column marginals.
 #'
-#'   If \code{simulate.p.value} is \code{FALSE}, the p-value is computed from the asymptotic chi-squared distribution of the test statistic. Otherwise the p-value is computed for a Monte Carlo test (Hope, 1968) with \code{B} replicates.
+#'   The p-value is computed from the asymptotic chi-squared distribution of the test statistic.
 #'
 #'   In the contingency table case simulation is done by random sampling from the set of all contingency tables with given marginals, and works only if the marginals are strictly positive. Note that this is not the usual sampling situation assumed for a chi-squared test (like the \emph{G}-test) but rather that for Fisher's exact test.
 #'
@@ -61,7 +61,12 @@
 #' @keywords chi
 #' @seealso \code{\link{chisq.test}}
 #' @references [1] McDonald, J.H. 2014. \strong{Handbook of Biological Statistics (3rd ed.)}. Sparky House Publishing, Baltimore, Maryland. \url{http://www.biostathandbook.com/gtestgof.html}.
-#' @source This code is almost perfectly equal to \code{\link{chisq.test}}; only the calculation of the statistic was changed to \code{2 * sum(x * log(x / E))} and Yates' continuity correction was deleted.
+#' @source This code is almost identical to \code{\link{chisq.test}}, except that:
+#' \itemize{
+#'   \item{The calculation of the statistic was changed to \code{2 * sum(x * log(x / E))}}
+#'   \item{Yates' continuity correction was removed as it does not apply to a \emph{G}-test}
+#'   \item{The possibility to simulate p values with \code{simulate.p.value} was removed}
+#' }
 #' @export
 #' @importFrom stats pchisq complete.cases
 #' @examples
@@ -105,9 +110,7 @@ g.test <- function(x,
                     y = NULL,
                     # correct = TRUE,
                     p = rep(1/length(x), length(x)),
-                    rescale.p = FALSE,
-                    simulate.p.value = FALSE,
-                    B = 2000) {
+                    rescale.p = FALSE) {
   DNAME <- deparse(substitute(x))
   if (is.data.frame(x))
     x <- as.matrix(x)
@@ -141,11 +144,11 @@ g.test <- function(x,
     stop("all entries of 'x' must be nonnegative and finite")
   if ((n <- sum(x)) == 0)
     stop("at least one entry of 'x' must be positive")
-  if (simulate.p.value) {
-    setMETH <- function() METHOD <<- paste(METHOD, "with simulated p-value\n\t (based on",
-                                           B, "replicates)")
-    almost.1 <- 1 - 64 * .Machine$double.eps
-  }
+  # if (simulate.p.value) {
+  #   setMETH <- function() METHOD <<- paste(METHOD, "with simulated p-value\n\t (based on",
+  #                                          B, "replicates)")
+  #   almost.1 <- 1 - 64 * .Machine$double.eps
+  # }
   if (is.matrix(x)) {
     METHOD <- "G-test of independence"
     nr <- as.integer(nrow(x))
@@ -158,17 +161,17 @@ g.test <- function(x,
     v <- function(r, c, n) c * r * (n - r) * (n - c)/n^3
     V <- outer(sr, sc, v, n)
     dimnames(E) <- dimnames(x)
-    if (simulate.p.value && all(sr > 0) && all(sc > 0)) {
-      setMETH()
-      tmp <- .Call(C_chisq_sim, sr, sc, B, E)
-      STATISTIC <- 2 * sum(x * log(x / E)) # sum(sort((x - E)^2/E, decreasing = TRUE)) for chisq.test
-      PARAMETER <- NA
-      PVAL <- (1 + sum(tmp >= almost.1 * STATISTIC))/(B +
-                                                        1)
-    }
-    else {
-      if (simulate.p.value)
-        warning("cannot compute simulated p-value with zero marginals")
+    # if (simulate.p.value && all(sr > 0) && all(sc > 0)) {
+    #   setMETH()
+    #   tmp <- .Call(chisq_sim, sr, sc, B, E, PACKAGE = "stats")
+    #   STATISTIC <- 2 * sum(x * log(x / E)) # sum(sort((x - E)^2/E, decreasing = TRUE)) for chisq.test
+    #   PARAMETER <- NA
+    #   PVAL <- (1 + sum(tmp >= almost.1 * STATISTIC))/(B +
+    #                                                     1)
+    # }
+    # else {
+      # if (simulate.p.value)
+      #   warning("cannot compute simulated p-value with zero marginals")
       # if (correct && nrow(x) == 2L && ncol(x) == 2L) {
       #   YATES <- min(0.5, abs(x - E))
       #   if (YATES > 0)
@@ -178,7 +181,7 @@ g.test <- function(x,
       STATISTIC <- 2 * sum(x * log(x / E)) # sum((abs(x - E) - YATES)^2/E) for chisq.test
       PARAMETER <- (nr - 1L) * (nc - 1L)
       PVAL <- pchisq(STATISTIC, PARAMETER, lower.tail = FALSE)
-    }
+   # }
   }
   else {
     if (length(dim(x)) > 2L)
@@ -199,22 +202,22 @@ g.test <- function(x,
     V <- n * p * (1 - p)
     STATISTIC <- 2 * sum(x * log(x / E)) # sum((x - E)^2/E) for chisq.test
     names(E) <- names(x)
-    if (simulate.p.value) {
-      setMETH()
-      nx <- length(x)
-      sm <- matrix(sample.int(nx, B * n, TRUE, prob = p),
-                   nrow = n)
-      ss <- apply(sm, 2L, function(x, E, k) {
-        sum((table(factor(x, levels = 1L:k)) - E)^2/E)
-      }, E = E, k = nx)
-      PARAMETER <- NA
-      PVAL <- (1 + sum(ss >= almost.1 * STATISTIC))/(B +
-                                                       1)
-    }
-    else {
+    # if (simulate.p.value) {
+    #   setMETH()
+    #   nx <- length(x)
+    #   sm <- matrix(sample.int(nx, B * n, TRUE, prob = p),
+    #                nrow = n)
+    #   ss <- apply(sm, 2L, function(x, E, k) {
+    #     sum((table(factor(x, levels = 1L:k)) - E)^2/E)
+    #   }, E = E, k = nx)
+    #   PARAMETER <- NA
+    #   PVAL <- (1 + sum(ss >= almost.1 * STATISTIC))/(B +
+    #                                                    1)
+    # }
+    # else {
       PARAMETER <- length(x) - 1
       PVAL <- pchisq(STATISTIC, PARAMETER, lower.tail = FALSE)
-    }
+    # }
   }
   names(STATISTIC) <- "X-squared"
   names(PARAMETER) <- "df"

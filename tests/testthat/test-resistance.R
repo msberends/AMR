@@ -1,46 +1,29 @@
-context("rsi_analysis.R")
+context("resistance.R")
 
-test_that("rsi works", {
-  # amox resistance in `septic_patients` should be around 53.86%
-  expect_equal(rsi(septic_patients$amox), 0.5756, tolerance = 0.0001)
-  expect_equal(rsi(septic_patients$amox), 0.5756, tolerance = 0.0001)
-  expect_equal(rsi_df(septic_patients,
-                      ab = "amox",
-                      info = FALSE),
-               0.5756,
-               tolerance = 0.0001)
+test_that("resistance works", {
+  # amox resistance in `septic_patients` should be around 57.56%
+  expect_equal(resistance(septic_patients$amox), 0.5756, tolerance = 0.0001)
+  expect_equal(susceptibility(septic_patients$amox), 1 - 0.5756, tolerance = 0.0001)
+
   # pita+genta susceptibility around 98.09%
-  expect_equal(rsi(septic_patients$pita,
-                   septic_patients$gent,
-                   interpretation = "S",
-                   info = TRUE),
+  expect_equal(susceptibility(septic_patients$pita,
+                              septic_patients$gent),
                0.9809,
                tolerance = 0.0001)
-  expect_equal(rsi_df(septic_patients,
-                      ab = c("pita", "gent"),
-                      interpretation = "S",
-                      info = FALSE),
+  expect_equal(suppressWarnings(rsi(septic_patients$pita,
+                                    septic_patients$gent,
+                                    interpretation = "S")),
                0.9809,
-               tolerance = 0.0001)
-  # mero+pita+genta susceptibility around 98.58%
-  expect_equal(rsi_df(septic_patients,
-                      ab = c("mero", "pita", "gent"),
-                      interpretation = "IS",
-                      info = FALSE),
-               0.9858,
                tolerance = 0.0001)
 
   # count of cases
   expect_equal(septic_patients %>%
                  group_by(hospital_id) %>%
-                 summarise(cipro_S = rsi(cipr, interpretation = "S",
-                                         as_percent = TRUE, warning = FALSE),
+                 summarise(cipro_p = susceptibility(cipr, as_percent = TRUE),
                            cipro_n = n_rsi(cipr),
-                           genta_S = rsi(gent, interpretation = "S",
-                                         as_percent = TRUE, warning = FALSE),
+                           genta_p = susceptibility(gent, as_percent = TRUE),
                            genta_n = n_rsi(gent),
-                           combination_S = rsi(cipr, gent, interpretation = "S",
-                                               as_percent = TRUE, warning = FALSE),
+                           combination_p = susceptibility(cipr, gent, as_percent = TRUE),
                            combination_n = n_rsi(cipr, gent)) %>%
                  pull(combination_n),
                c(138, 474, 170, 464, 183))

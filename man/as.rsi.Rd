@@ -29,3 +29,4 @@ as.rsi("<= 0.002; R") # will return R
 plot(rsi_data)    # for percentages
 barplot(rsi_data) # for frequencies
 }
+\keyword{rsi}

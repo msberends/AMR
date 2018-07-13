@@ -30,3 +30,4 @@ as.mic("<=0.002; R") # will return <=0.002
 plot(mic_data)
 barplot(mic_data)
 }
+\keyword{mic}

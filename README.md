@@ -24,8 +24,8 @@ This R package was created for academic research by PhD students of the Faculty 
 ## Why this package?
 This R package contains functions to make **microbiological, epidemiological data analysis easier**. It allows the use of some new classes to work with MIC values and antimicrobial interpretations (i.e. values S, I and R).
 
-With `AMR` you can also:
-* Conduct AMR analysis with the `rsi` function, that can also be used with the `dplyr` package (e.g. in conjunction with `summarise`) to calculate the resistance percentages (and even co-resistance) of different antibiotic columns of a table
+With `AMR` you can:
+* Calculate the resistance (and even co-resistance) of microbial isolates with the `resistance` and `susceptibility` functions, that can also be used with the `dplyr` package (e.g. in conjunction with `summarise`). Our functions use expressions that are not evaluated by R, but by alternative C++ code that is dramatically faster and uses less memory. This is called *hybrid evaluation*.
 * Predict antimicrobial resistance for the nextcoming years with the `rsi_predict` function
 * Apply [EUCAST rules to isolates](http://www.eucast.org/expert_rules_and_intrinsic_resistance/) with the `EUCAST_rules` function
 * Identify first isolates of every patient [using guidelines from the CLSI](https://clsi.org/standards/products/microbiology/documents/m39/) (Clinical and Laboratory Standards Institute) with the `first_isolate` function
