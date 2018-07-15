@@ -2,8 +2,8 @@ context("resistance.R")
 
 test_that("resistance works", {
   # amox resistance in `septic_patients` should be around 57.56%
-  expect_equal(resistance(septic_patients$amox), 0.5756, tolerance = 0.0001)
-  expect_equal(susceptibility(septic_patients$amox), 1 - 0.5756, tolerance = 0.0001)
+  expect_equal(resistance(septic_patients$amox, include_I = TRUE), 0.5756, tolerance = 0.0001)
+  expect_equal(susceptibility(septic_patients$amox, include_I = FALSE), 1 - 0.5756, tolerance = 0.0001)
 
   # pita+genta susceptibility around 98.09%
   expect_equal(susceptibility(septic_patients$pita,

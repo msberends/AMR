@@ -19,7 +19,7 @@ test_that("first isolates work", {
       na.rm = TRUE),
     1959)
 
-  # septic_patients contains 1961 out of 2000 first *weighted* isolates
+  # septic_patients contains 1963 out of 2000 first *weighted* isolates
   expect_equal(
     suppressWarnings(
       sum(
@@ -31,7 +31,7 @@ test_that("first isolates work", {
                       type = "keyantibiotics",
                       info = TRUE),
         na.rm = TRUE)),
-    1961)
+    1963)
   # and 1998 when using points
   expect_equal(
     suppressWarnings(

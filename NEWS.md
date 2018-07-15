@@ -1,6 +1,6 @@
 # 0.2.0.90xx (development version)
 #### New
-* **BREAKING**: `rsi_df` was removed in favour of new functions `resistance` and `susceptibility`. Now, all functions used to calculate resistance (`resistance` and `susceptibility`) or count isolates (`n_rsi`) use **hybrid evaluation**. This means calculations are not done in R directly but rather in C++ using the `Rcpp` package, making them 60 to 65 times faster. The function `rsi` still works, but is deprecated.
+* **BREAKING**: `rsi_df` was removed in favour of new functions `resistance` and `susceptibility`. Now, all functions used to calculate resistance (`resistance` and `susceptibility`) or count isolates (`n_rsi`) use **hybrid evaluation**. This means calculations are not done in R directly but rather in C++ using the `Rcpp` package, making them 25 to 30 times faster. The function `rsi` still works, but is deprecated.
 * Support for Addins menu in RStudio to quickly insert `%in%` or `%like%` (and give them keyboard shortcuts), or to view the datasets that come with this package
 * For convience, new descriptive statistical functions `kurtosis` and `skewness` that are lacking in base R - they are generic functions and have support for vectors, data.frames and matrices
 * Function `g.test` as added to perform the Χ<sup>2</sup> distributed [*G*-test](https://en.wikipedia.org/wiki/G-test), which use is the same as `chisq.test`
@@ -23,6 +23,8 @@ ratio(c(772, 1611, 737), ratio = "1:2:1")
 
 #### Changed
 * Pretty printing for tibbles removed as it is not really the scope of this package
+* Improved speed of key antibiotics comparison for determining first isolates
+* Printing of class `mic` now shows all MIC values
 * `%like%` now supports multiple patterns
 * Frequency tables are now actual `data.frame`s with altered console printing to make it look like a frequency table. Because of this, the parameter `toConsole` is not longer needed.
 * Small translational improvements to the `septic_patients` dataset

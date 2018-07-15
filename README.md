@@ -25,7 +25,7 @@ This R package was created for academic research by PhD students of the Faculty 
 This R package contains functions to make **microbiological, epidemiological data analysis easier**. It allows the use of some new classes to work with MIC values and antimicrobial interpretations (i.e. values S, I and R).
 
 With `AMR` you can:
-* Calculate the resistance (and even co-resistance) of microbial isolates with the `resistance` and `susceptibility` functions, that can also be used with the `dplyr` package (e.g. in conjunction with `summarise`). Our functions use expressions that are not evaluated by R, but by alternative C++ code that is dramatically faster and uses less memory. This is called *hybrid evaluation*.
+* Calculate the resistance (and even co-resistance) of microbial isolates with the `resistance` and `susceptibility` functions, that can also be used with the `dplyr` package (e.g. in conjunction with `summarise`)
 * Predict antimicrobial resistance for the nextcoming years with the `rsi_predict` function
 * Apply [EUCAST rules to isolates](http://www.eucast.org/expert_rules_and_intrinsic_resistance/) with the `EUCAST_rules` function
 * Identify first isolates of every patient [using guidelines from the CLSI](https://clsi.org/standards/products/microbiology/documents/m39/) (Clinical and Laboratory Standards Institute) with the `first_isolate` function
@@ -40,6 +40,8 @@ And it contains:
 * An example data set `septic_patients`, consisting of 2000 blood culture isolates from anonymised septic patients between 2001 and 2017.
 
 With the `MDRO` function (abbreviation of Multi Drug Resistant Organisms), you can check your isolates for exceptional resistance with country-specific guidelines or EUCAST rules. Currently guidelines for Germany and the Netherlands are supported. Please suggest addition of your own country here: [https://github.com/msberends/AMR/issues/new](https://github.com/msberends/AMR/issues/new?title=New%20guideline%20for%20MDRO&body=%3C--%20Please%20add%20your%20country%20code,%20guideline%20name,%20version%20and%20source%20below%20and%20remove%20this%20line--%3E).
+
+The functions to calculate microbial resistance use expressions that are not evaluated by R itself, but by alternative C++ code that is 25 to 30 times faster and uses less memory. This is called *hybrid evaluation*.
 
 #### Read all changes and new functions in [NEWS.md](NEWS.md).
 

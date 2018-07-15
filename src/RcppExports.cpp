@@ -6,36 +6,36 @@
 using namespace Rcpp;
 
 // rsi_calc_S
-int rsi_calc_S(std::vector<double> x, bool include_I);
+int rsi_calc_S(DoubleVector x, bool include_I);
 RcppExport SEXP _AMR_rsi_calc_S(SEXP xSEXP, SEXP include_ISEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< std::vector<double> >::type x(xSEXP);
+    Rcpp::traits::input_parameter< DoubleVector >::type x(xSEXP);
     Rcpp::traits::input_parameter< bool >::type include_I(include_ISEXP);
     rcpp_result_gen = Rcpp::wrap(rsi_calc_S(x, include_I));
     return rcpp_result_gen;
 END_RCPP
 }
 // rsi_calc_R
-int rsi_calc_R(std::vector<double> x, bool include_I);
+int rsi_calc_R(DoubleVector x, bool include_I);
 RcppExport SEXP _AMR_rsi_calc_R(SEXP xSEXP, SEXP include_ISEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< std::vector<double> >::type x(xSEXP);
+    Rcpp::traits::input_parameter< DoubleVector >::type x(xSEXP);
     Rcpp::traits::input_parameter< bool >::type include_I(include_ISEXP);
     rcpp_result_gen = Rcpp::wrap(rsi_calc_R(x, include_I));
     return rcpp_result_gen;
 END_RCPP
 }
 // rsi_calc_total
-int rsi_calc_total(std::vector<double> x);
+int rsi_calc_total(DoubleVector x);
 RcppExport SEXP _AMR_rsi_calc_total(SEXP xSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< std::vector<double> >::type x(xSEXP);
+    Rcpp::traits::input_parameter< DoubleVector >::type x(xSEXP);
     rcpp_result_gen = Rcpp::wrap(rsi_calc_total(x));
     return rcpp_result_gen;
 END_RCPP

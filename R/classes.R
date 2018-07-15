@@ -360,14 +360,15 @@ print.mic <- function(x, ...) {
   n_total <- x %>% length()
   x <- x[!is.na(x)]
   n <- x %>% length()
-  cat("Class 'mic': ", n, " isolates\n", sep = '')
-  cat('\n')
-  cat('<NA> ', n_total - n, '\n')
-  cat('\n')
-  tbl <- tibble(x = x, y = 1) %>% group_by(x) %>% summarise(y = sum(y))
-  cnt <- tbl %>% pull(y)
-  names(cnt) <- tbl %>% pull(x)
-  print(cnt)
+  cat("Class 'mic'\n")
+  cat(n, " results (missing: ", n_total - n, ' = ', percent((n_total - n) / n_total, force_zero = TRUE), ')\n', sep = "")
+  if (n > 0) {
+    cat('\n')
+    tibble(MIC = x, y = 1) %>%
+      group_by(MIC) %>%
+      summarise(n = sum(y)) %>%
+      base::print.data.frame(row.names = FALSE)
+  }
 }
 
 #' @exportMethod summary.mic

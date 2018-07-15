@@ -14,8 +14,8 @@ susceptibility(ab1, ab2 = NULL, include_I = FALSE, minimum = 30,
 
 n_rsi(ab1, ab2 = NULL)
 
-rsi(ab1, ab2 = NULL, interpretation = "IR", minimum = 30,
-  as_percent = FALSE)
+rsi(ab1, ab2 = NA, interpretation = "IR", minimum = 30,
+  as_percent = FALSE, info = FALSE, warning = TRUE)
 }
 \arguments{
 \item{ab, ab1, ab2}{vector of antibiotic interpretations, they will be transformed internally with \code{\link{as.rsi}}}
@@ -27,6 +27,10 @@ rsi(ab1, ab2 = NULL, interpretation = "IR", minimum = 30,
 \item{as_percent}{logical to indicate whether the output must be returned as percent (text), will else be a double}
 
 \item{interpretation}{antimicrobial interpretation}
+
+\item{info}{\emph{DEPRECATED} calculate the amount of available isolates and print it, like \code{n = 423}}
+
+\item{warning}{\emph{DEPRECATED} show a warning when the available amount of isolates is below \code{minimum}}
 }
 \value{
 Double or, when \code{as_percent = TRUE}, a character.
@@ -37,7 +41,7 @@ These functions can be used to calculate the (co-)resistance of microbial isolat
 \details{
 \strong{Remember that you should filter your table to let it contain only first isolates!} Use \code{\link{first_isolate}} to determine them in your data set.
 
-All return values are calculated using hybrid evaluation (i.e. using C++), which makes these functions 60-65 times faster than in \code{AMR} v0.2.0 and below. The \code{rsi} function is available for backwards compatibility and deprecated. It now uses the \code{resistance} and \code{susceptibility} functions internally, based on the \code{interpretation} parameter.
+The functions \code{resistance}, \code{susceptibility} and \code{n_rsi} calculate using hybrid evaluation (i.e. using C++), which makes these functions 25-30 times faster than the old \code{rsi} function. This function is still available for backwards compatibility but is deprecated.
 \if{html}{
   \cr
   To calculate the probability (\emph{p}) of susceptibility of one antibiotic, we use this formula:
@@ -98,6 +102,29 @@ my_table \%>\%
          genus == "Helicobacter") \%>\%
   summarise(p = susceptibility(amox, metr), # amoxicillin with metronidazole
             n = n_rsi(amox, metr))
+
+
+# How fast is this hybrid evaluation in C++ compared to R?
+# In other words: how is the speed improvement of the new `resistance` compared to old `rsi`?
+
+library(microbenchmark)
+df <- septic_patients \%>\% group_by(hospital_id, bactid) # 317 groups with sizes 1 to 167
+
+microbenchmark(old_IR = df \%>\% summarise(p = rsi(amox, minimum = 0, interpretation = "IR")),
+               new_IR = df \%>\% summarise(p = resistance(amox, minimum = 0)),
+               old_S = df \%>\% summarise(p = rsi(amox, minimum = 0, interpretation = "S")),
+               new_S = df \%>\% summarise(p = susceptibility(amox, minimum = 0)),
+               times = 5,
+               unit = "s")
+
+# Unit: seconds
+#    expr          min         lq       mean     median         uq        max neval
+#  old_IR   1.95600230 1.96096857 1.97981537 1.96823318 2.00645711 2.00741568     5
+#  new_IR   0.06872808 0.06984932 0.07162866 0.06987306 0.07050094 0.07919192     5
+#   old_S   1.68893579 1.69024888 1.72461867 1.69785934 1.70428796 1.84176137     5
+#   new_S   0.06737037 0.06838167 0.07431906 0.07745364 0.07827224 0.08011738     5
+
+# The old function took roughly 2 seconds, the new ones take 0.07 seconds.
 }
 }
 \keyword{antibiotics}

@@ -151,7 +151,9 @@ frequency_tbl <- function(x,
     dots <- base::eval(base::substitute(base::alist(...)))
     ndots <- length(dots)
 
-    if (ndots > 0 & ndots < 10) {
+    if (NROW(x) == 0) {
+      x <- NA
+    } else if (ndots > 0 & ndots < 10) {
       cols <- as.character(dots)
       if (!all(cols %in% colnames(x))) {
         stop("one or more columns not found: `", paste(cols, collapse = "`, `"), '`', call. = FALSE)
