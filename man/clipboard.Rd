@@ -7,9 +7,10 @@
 \title{Import/export from clipboard}
 \usage{
 clipboard_import(sep = "\\t", header = TRUE, dec = ".", na = c("", "NA",
-  "NULL"), startrow = 1, as_vector = TRUE, guess_col_types = TRUE,
-  date_names = "en", date_format = "\%Y-\%m-\%d", time_format = "\%H:\%M",
-  tz = Sys.timezone(), encoding = "UTF-8", info = TRUE)
+  "NULL"), stringsAsFactors = FALSE, startrow = 1, as_vector = TRUE,
+  guess_col_types = TRUE, date_names = "en", date_format = "\%Y-\%m-\%d",
+  time_format = "\%H:\%M", tz = Sys.timezone(), encoding = "UTF-8",
+  info = TRUE)
 
 clipboard_export(x, sep = "\\t", dec = ".", na = "", header = TRUE,
   info = TRUE)
@@ -29,6 +30,11 @@ clipboard_export(x, sep = "\\t", dec = ".", na = "", header = TRUE,
 \item{dec}{the character used in the file for decimal points.}
 
 \item{na}{the string to use for missing values in the data.}
+
+\item{stringsAsFactors}{logical: should character vectors be converted
+    to factors?  The \sQuote{factory-fresh} default is \code{TRUE}, but
+    this can be changed by setting \code{\link{options}(stringsAsFactors
+      = FALSE)}.}
 
 \item{startrow}{\emph{n}th row to start importing from. When \code{header = TRUE}, the import will start on row \code{startrow} \emph{below} the header.}
 
@@ -80,7 +86,11 @@ The data will be read and written as tab-separated by default, which makes it po
 This also supports automatic column type transformation, with AMR classes \code{\link{as.rsi}} and \code{\link{as.mic}}.
 }
 \details{
-\if{html}{
+The parameter \code{stringsAsFactors} defaults to \code{FALSE}, as opposed to most base \R methods.
+
+The parameters \code{date_format} and \code{time_format} also support generic date and time formats like \code{"dd-mm-yyyy"} like Excel.
+
+  \if{html}{
     \strong{Example for copying from Excel:}
     \out{<div style="text-align: left">}\figure{clipboard_copy.png}\out{</div>}
     \cr
@@ -95,6 +105,23 @@ This also supports automatic column type transformation, with AMR classes \code{
     \code{> data$amox} \cr
     \out{<div style="text-align: left">}\figure{clipboard_rsi.png}\out{</div>}
   }
+}
+\examples{
+\dontrun{
+
+df1 <- data.frame(a = letters[1:12],
+                  b = runif(n = 12, min = 1000, max = 2000),
+                  stringsAsFactors = FALSE)
+clipboard_export(df1)
+df2 <- clipboard_import()
+identical(df1, df2)
+
+# send frequency table to clipboard (e.g. for pasting in Excel)
+septic_patients \%>\%
+  freq(age) \%>\%
+  format() \%>\%       # this will format the percentages
+  clipboard_export()
+}
 }
 \keyword{clipboard}
 \keyword{clipboard_export}

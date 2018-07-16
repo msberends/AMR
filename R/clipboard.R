@@ -7,6 +7,7 @@
 #' This also supports automatic column type transformation, with AMR classes \code{\link{as.rsi}} and \code{\link{as.mic}}.
 #' @rdname clipboard
 #' @name clipboard
+#' @inheritParams base::data.frame
 #' @inheritParams utils::read.table
 #' @inheritParams utils::write.table
 #' @inheritParams readr::locale
@@ -20,6 +21,10 @@
 #' @importFrom utils read.delim write.table object.size
 #' @importFrom readr parse_guess locale
 #' @details
+#' The parameter \code{stringsAsFactors} defaults to \code{FALSE}, as opposed to most base \R methods.
+#'
+#' The parameters \code{date_format} and \code{time_format} also support generic date and time formats like \code{"dd-mm-yyyy"} like Excel.
+#'
 #'   \if{html}{
 #'     \strong{Example for copying from Excel:}
 #'     \out{<div style="text-align: left">}\figure{clipboard_copy.png}\out{</div>}
@@ -36,10 +41,27 @@
 #'     \out{<div style="text-align: left">}\figure{clipboard_rsi.png}\out{</div>}
 #'   }
 #' @export
+#' @examples
+#' \dontrun{
+#'
+#' df1 <- data.frame(a = letters[1:12],
+#'                   b = runif(n = 12, min = 1000, max = 2000),
+#'                   stringsAsFactors = FALSE)
+#' clipboard_export(df1)
+#' df2 <- clipboard_import()
+#' identical(df1, df2)
+#'
+#' # send frequency table to clipboard (e.g. for pasting in Excel)
+#' septic_patients %>%
+#'   freq(age) %>%
+#'   format() %>%       # this will format the percentages
+#'   clipboard_export()
+#' }
 clipboard_import <- function(sep = '\t',
                              header = TRUE,
                              dec = ".",
                              na = c("", "NA", "NULL"),
+                             stringsAsFactors = FALSE,
                              startrow = 1,
                              as_vector = TRUE,
                              guess_col_types = TRUE,
@@ -58,7 +80,7 @@ clipboard_import <- function(sep = '\t',
                                      dec = dec,
                                      na.strings = na,
                                      encoding = 'UTF-8',
-                                     stringsAsFactors = FALSE)
+                                     stringsAsFactors = stringsAsFactors)
 
   # use tibble, so column types will be translated correctly
   import_tbl <- as_tibble(import_tbl)
@@ -90,6 +112,9 @@ clipboard_import <- function(sep = '\t',
   if (NCOL(import_tbl) == 1 & as_vector == TRUE) {
     import_tbl <-  import_tbl %>% pull(1)
   }
+
+  # and transform back to data.frame
+  import_tbl <- as.data.frame(import_tbl, stringsAsFactors = stringsAsFactors)
 
   if (info == TRUE) {
     cat("Successfully imported from clipboard:", NROW(import_tbl), "obs. of", NCOL(import_tbl), "variables.\n")

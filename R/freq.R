@@ -100,10 +100,13 @@
 #' # show only the top 5
 #' years %>% print(nmax = 5)
 #'
+#' # save to an object with formatted percentages
+#' years <- format(years)
+#'
 #' # print a histogram of numeric values
 #' septic_patients %>%
 #'   freq(age) %>%
-#'   hist() # prettier: ggplot(septic_patients, aes(age)) + geom_histogram()
+#'   hist()  # prettier: ggplot(septic_patients, aes(age)) + geom_histogram()
 #'
 #' # or print all points to a regular plot
 #' septic_patients %>%
@@ -124,13 +127,20 @@
 #'             freq(age) %>%
 #'             as.vector() %>%
 #'             sort(),
-#'           sort(septic_patients$age)
-#' ) # TRUE
+#'           sort(septic_patients$age)) # TRUE
 #'
-#' # also supports table:
+#' # it also supports `table` objects:
 #' table(septic_patients$sex,
 #'       septic_patients$age) %>%
-#'   freq()
+#'   freq(sep = " **sep** ")
+#'
+#' \dontrun{
+#' # send frequency table to clipboard (e.g. for pasting in Excel)
+#' septic_patients %>%
+#'   freq(age) %>%
+#'   format() %>%       # this will format the percentages
+#'   clipboard_export()
+#' }
 frequency_tbl <- function(x,
                           ...,
                           sort.count = TRUE,
@@ -602,4 +612,21 @@ plot.frequency_tbl <- function(x, y, ...) {
 #' @export
 as.vector.frequency_tbl <- function(x, mode = "any") {
   as.vector(rep(x$item, x$count), mode = mode)
+}
+
+#' @noRd
+#' @exportMethod format.frequency_tbl
+#' @export
+format.frequency_tbl <- function(x, digits = 1, ...) {
+  opt <- attr(x, 'opt')
+  if (opt$nmax.set == TRUE) {
+    nmax <- opt$nmax
+  } else {
+    nmax <- getOption("max.print.freq", default = 15)
+  }
+
+  x <- x[1:nmax,]
+  x$percent <- percent(x$percent, round = digits, force_zero = TRUE)
+  x$cum_percent <- percent(x$cum_percent, round = digits, force_zero = TRUE)
+  base::format.data.frame(x, ...)
 }

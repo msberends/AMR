@@ -111,10 +111,13 @@ years <- septic_patients \%>\%
 # show only the top 5
 years \%>\% print(nmax = 5)
 
+# save to an object with formatted percentages
+years <- format(years)
+
 # print a histogram of numeric values
 septic_patients \%>\%
   freq(age) \%>\%
-  hist() # prettier: ggplot(septic_patients, aes(age)) + geom_histogram()
+  hist()  # prettier: ggplot(septic_patients, aes(age)) + geom_histogram()
 
 # or print all points to a regular plot
 septic_patients \%>\%
@@ -135,13 +138,20 @@ identical(septic_patients \%>\%
             freq(age) \%>\%
             as.vector() \%>\%
             sort(),
-          sort(septic_patients$age)
-) # TRUE
+          sort(septic_patients$age)) # TRUE
 
-# also supports table:
+# it also supports `table` objects:
 table(septic_patients$sex,
       septic_patients$age) \%>\%
-  freq()
+  freq(sep = " **sep** ")
+
+\dontrun{
+# send frequency table to clipboard (e.g. for pasting in Excel)
+septic_patients \%>\%
+  freq(age) \%>\%
+  format() \%>\%       # this will format the percentages
+  clipboard_export()
+}
 }
 \keyword{freq}
 \keyword{frequency}

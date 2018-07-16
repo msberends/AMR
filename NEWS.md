@@ -14,7 +14,7 @@ ratio(c(772, 1611, 737), ratio = "1:2:1")
   * A vignette to explain its usage
   * Support for `table` to use as input: `freq(table(x, y))`
   * Support for existing functions `hist` and `plot` to use a frequency table as input: `hist(freq(df$age))`
-  * Support for `as.vector`, `as.data.frame` and `as_tibble`
+  * Support for `as.vector`, `as.data.frame`, `as_tibble` and `format`
   * Support for quasiquotation: `freq(mydata, mycolumn)` is the same as `mydata %>% freq(mycolumn)`
   * Function `top_freq` function to return the top/below *n* items as vector
   * Header of frequency tables now also show Mean Absolute Deviaton (MAD) and Interquartile Range (IQR)
