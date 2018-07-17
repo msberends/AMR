@@ -9,7 +9,3 @@ rsi_calc_R <- function(x, include_I) {
     .Call(`_AMR_rsi_calc_R`, x, include_I)
 }
 
-rsi_calc_total <- function(x) {
-    .Call(`_AMR_rsi_calc_total`, x)
-}
-

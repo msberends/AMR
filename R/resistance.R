@@ -136,10 +136,11 @@ resistance <- function(ab,
 
   if (!is.rsi(ab)) {
     x <- as.rsi(ab)
+    warning("Increase speed by transforming to class `rsi` on beforehand: df %>% mutate_at(vars(col10:col20), as.rsi)")
   } else {
     x <- ab
   }
-  total <-  .Call(`_AMR_rsi_calc_total`, x)
+  total <- length(x) - sum(is.na(x)) # faster than C++
   if (total < minimum) {
     return(NA)
   }
@@ -173,8 +174,10 @@ susceptibility <- function(ab1,
     stop('`as_percent` must be logical', call. = FALSE)
   }
 
+  print_warning <- FALSE
   if (!is.rsi(ab1)) {
     ab1 <- as.rsi(ab1)
+    print_warning <- TRUE
   }
   if (!is.null(ab2)) {
     if (NCOL(ab2) > 1) {
@@ -182,6 +185,7 @@ susceptibility <- function(ab1,
     }
     if (!is.rsi(ab2)) {
       ab2 <- as.rsi(ab2)
+      print_warning <- TRUE
     }
     x <- apply(X = data.frame(ab1 = as.integer(ab1),
                               ab2 = as.integer(ab2)),
@@ -190,11 +194,15 @@ susceptibility <- function(ab1,
   } else {
     x <- ab1
   }
-  total <-  .Call(`_AMR_rsi_calc_total`, x)
+  total <- length(x) - sum(is.na(x))
   if (total < minimum) {
     return(NA)
   }
   found <- .Call(`_AMR_rsi_calc_S`, x, include_I)
+
+  if (print_warning == TRUE) {
+    warning("Increase speed by transforming to class `rsi` on beforehand: df %>% mutate_at(vars(col10:col20), as.rsi)")
+  }
 
   if (as_percent == TRUE) {
     percent(found / total, force_zero = TRUE)
@@ -219,14 +227,10 @@ n_rsi <- function(ab1, ab2 = NULL) {
     if (!is.rsi(ab2)) {
       ab2 <- as.rsi(ab2)
     }
-    x <- apply(X = data.frame(ab1 = as.integer(ab1),
-                              ab2 = as.integer(ab2)),
-               MARGIN = 1,
-               FUN = min)
+    sum(!is.na(ab1) & !is.na(ab2))
   } else {
-    x <- ab1
+    sum(!is.na(ab1))
   }
-  .Call(`_AMR_rsi_calc_total`, x)
 }
 
 #' @rdname resistance
@@ -370,24 +374,8 @@ rsi_df <- function(tbl,
                 all_vars(. %in% c("S", "R", "I"))) %>%
       nrow()
 
-  } else if (length(ab) == 3) {
-    if (interpretations_to_check != 'S') {
-      warning('`interpretation` not set to S or I/S, albeit analysing a combination therapy.', call. = FALSE)
-    }
-    numerator <- tbl %>%
-      filter_at(vars(ab[1], ab[2], ab[3]),
-                any_vars(. == interpretations_to_check)) %>%
-      filter_at(vars(ab[1], ab[2], ab[3]),
-                all_vars(. %in% c("S", "R", "I"))) %>%
-      nrow()
-
-    denominator <- tbl %>%
-      filter_at(vars(ab[1], ab[2], ab[3]),
-                all_vars(. %in% c("S", "R", "I"))) %>%
-      nrow()
-
   } else {
-    stop('Maximum of 3 drugs allowed.')
+    stop('Maximum of 2 drugs allowed.')
   }
 
   # build text part

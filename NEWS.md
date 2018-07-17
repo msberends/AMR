@@ -19,7 +19,7 @@ ratio(c(772, 1611, 737), ratio = "1:2:1")
   * Function `top_freq` function to return the top/below *n* items as vector
   * Header of frequency tables now also show Mean Absolute Deviaton (MAD) and Interquartile Range (IQR)
   * Possibility to globally set the default for the amount of items to print, with `options(max.print.freq = n)` where *n* is your preset value
-* Functions `clipboard_import` and `clipboard_export` as helper functions to quickly copy and paste from/to software like Excel and SPSS
+* Functions `clipboard_import` and `clipboard_export` as helper functions to quickly copy and paste from/to software like Excel and SPSS. These functions use the `clipr` package, but are a little altered to also support headless Linux servers (so you can use it in RStudio Server).
 
 #### Changed
 * Pretty printing for tibbles removed as it is not really the scope of this package

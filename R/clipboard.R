@@ -72,7 +72,12 @@ clipboard_import <- function(sep = '\t',
                              encoding = "UTF-8",
                              info = TRUE) {
 
-  # this will fail when clipr is not available
+  if (!clipr::clipr_available() & Sys.info()['sysname'] == "Linux") {
+    # try to support on X11, by setting the R variable DISPLAY
+    Sys.setenv(DISPLAY = "localhost:10.0")
+  }
+
+  # this will fail when clipr is (still) not available
   import_tbl <- clipr::read_clip_tbl(file = file,
                                      sep = sep,
                                      header = header,
@@ -133,6 +138,11 @@ clipboard_export <- function(x,
                              na = "",
                              header = TRUE,
                              info = TRUE) {
+
+  if (!clipr::clipr_available() & Sys.info()['sysname'] == "Linux") {
+    # try to support on X11, by setting the R variable DISPLAY
+    Sys.setenv(DISPLAY = "localhost:10.0")
+  }
 
   clipr::write_clip(content = x,
                     na = na,

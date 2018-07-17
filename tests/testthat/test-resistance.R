@@ -27,6 +27,12 @@ test_that("resistance works", {
                            combination_n = n_rsi(cipr, gent)) %>%
                  pull(combination_n),
                c(138, 474, 170, 464, 183))
+
+  expect_warning(resistance(as.character(septic_patients$amcl)))
+  expect_warning(susceptibility(as.character(septic_patients$amcl)))
+  expect_warning(susceptibility(as.character(septic_patients$amcl,
+                                             septic_patients$gent)))
+
 })
 
 test_that("prediction of rsi works", {

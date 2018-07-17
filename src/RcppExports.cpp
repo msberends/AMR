@@ -29,22 +29,10 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
-// rsi_calc_total
-int rsi_calc_total(DoubleVector x);
-RcppExport SEXP _AMR_rsi_calc_total(SEXP xSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< DoubleVector >::type x(xSEXP);
-    rcpp_result_gen = Rcpp::wrap(rsi_calc_total(x));
-    return rcpp_result_gen;
-END_RCPP
-}
 
 static const R_CallMethodDef CallEntries[] = {
     {"_AMR_rsi_calc_S", (DL_FUNC) &_AMR_rsi_calc_S, 2},
     {"_AMR_rsi_calc_R", (DL_FUNC) &_AMR_rsi_calc_R, 2},
-    {"_AMR_rsi_calc_total", (DL_FUNC) &_AMR_rsi_calc_total, 1},
     {NULL, NULL, 0}
 };
 
