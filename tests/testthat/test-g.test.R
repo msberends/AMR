@@ -18,6 +18,7 @@ test_that("G-test works", {
                expected = 0.01787343,
                tolerance = 0.00000001)
 
+
   # INDEPENDENCE
 
   x <- matrix(data = round(runif(4) * 100000, 0),
@@ -25,5 +26,9 @@ test_that("G-test works", {
               byrow = TRUE)
   expect_lt(g.test(x)$p.value,
             1)
+
+  expect_warning(g.test(x = c(772, 1611, 737),
+                        y = c(780, 1560, 780),
+                        rescale.p = TRUE))
 
 })
