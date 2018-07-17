@@ -136,7 +136,8 @@ key_antibiotics <- function(tbl,
   # format
   key_abs <- tbl %>%
     pull(key_ab) %>%
-    gsub('(NA|NULL)', '-', .)
+    gsub('(NA|NULL)', '.', .) %>%
+    gsub('[^SIR]', '.', ., ignore.case = TRUE)
 
   key_abs
 
@@ -162,21 +163,23 @@ key_antibiotics_equal <- function(x,
 
   if (type == "keyantibiotics") {
     if (ignore_I == TRUE) {
-      # evaluation using regular expression will treat '?' as any character
+      # evaluation using regular expression will treat '.' as any character
       # so I is actually ignored then
-      x <- gsub('I', '?', x, ignore.case = TRUE)
-      y <- gsub('I', '?', y, ignore.case = TRUE)
+      x <- gsub('I', '.', x, ignore.case = TRUE)
+      y <- gsub('I', '.', y, ignore.case = TRUE)
     }
     for (i in 1:length(x)) {
-      result[i] <- grepl(x = x[i],
-                         pattern = y[i],
-                         ignore.case = TRUE) |
-        grepl(x = y[i],
-              pattern = x[i],
-              ignore.case = TRUE)
+      result[i] <- nchar(x[i]) == nchar(y[i]) &
+        (x[i] %like% paste0("^", y[i], "$") |
+           y[i] %like% paste0("^", x[i], "$"))
     }
     return(result)
+
   } else {
+
+    if (type != 'points') {
+      stop('`', type, '` is not a valid value for type, must be "points" or "keyantibiotics". See ?first_isolate.')
+    }
 
     if (info == TRUE) {
       p <- dplyr::progress_estimated(length(x))
@@ -208,22 +211,17 @@ key_antibiotics_equal <- function(x,
         x2 <- strsplit(x[i], "")[[1]]
         y2 <- strsplit(y[i], "")[[1]]
 
-        if (type == 'points') {
-          # count points for every single character:
-          # - no change is 0 points
-          # - I <-> S|R is 0.5 point
-          # - S|R <-> R|S is 1 point
-          # use the levels of as.rsi (S = 1, I = 2, R = 3)
+        # count points for every single character:
+        # - no change is 0 points
+        # - I <-> S|R is 0.5 point
+        # - S|R <-> R|S is 1 point
+        # use the levels of as.rsi (S = 1, I = 2, R = 3)
 
-          suppressWarnings(x2 <- x2 %>% as.rsi() %>% as.double())
-          suppressWarnings(y2 <- y2 %>% as.rsi() %>% as.double())
+        suppressWarnings(x2 <- x2 %>% as.rsi() %>% as.double())
+        suppressWarnings(y2 <- y2 %>% as.rsi() %>% as.double())
 
-          points <- (x2 - y2) %>% abs() %>% sum(na.rm = TRUE)
-          result[i] <- ((points / 2) >= points_threshold)
-
-        } else {
-          stop('`', type, '` is not a valid value for type, must be "points" or "keyantibiotics". See ?first_isolate.')
-        }
+        points <- (x2 - y2) %>% abs() %>% sum(na.rm = TRUE)
+        result[i] <- ((points / 2) >= points_threshold)
       }
     }
     if (info == TRUE) {

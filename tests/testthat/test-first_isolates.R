@@ -3,6 +3,7 @@ context("first_isolates.R")
 test_that("keyantibiotics work", {
   expect_equal(length(key_antibiotics(septic_patients, info = FALSE)), nrow(septic_patients))
   expect_true(key_antibiotics_equal("SSS", "SSS"))
+  expect_false(key_antibiotics_equal("SSS", "SRS"))
   expect_true(key_antibiotics_equal("SSS", "SIS", ignore_I = TRUE))
   expect_false(key_antibiotics_equal("SSS", "SIS", ignore_I = FALSE))
 })
@@ -19,7 +20,7 @@ test_that("first isolates work", {
       na.rm = TRUE),
     1959)
 
-  # septic_patients contains 1963 out of 2000 first *weighted* isolates
+  # septic_patients contains 1962 out of 2000 first *weighted* isolates
   expect_equal(
     suppressWarnings(
       sum(
@@ -31,7 +32,7 @@ test_that("first isolates work", {
                       type = "keyantibiotics",
                       info = TRUE),
         na.rm = TRUE)),
-    1963)
+    1962)
   # and 1997 when using points
   expect_equal(
     suppressWarnings(

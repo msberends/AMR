@@ -1,18 +1,16 @@
 # 0.2.0.90xx (development version)
 #### New
-* **BREAKING**: `rsi_df` was removed in favour of new functions `resistance` and `susceptibility`. Now, all functions used to calculate resistance (`resistance` and `susceptibility`) or count isolates (`n_rsi`) use **hybrid evaluation**. This means calculations are not done in R directly but rather in C++ using the `Rcpp` package, making them 25 to 30 times faster. The function `rsi` still works, but is deprecated.
-* **BREAKING**: the methodology for determining first weighted isolates was changed. The antibiotics (call *key antibiotics*) that are compared between isolated to include more first isolates (called first *weighted* isolates) are now as follows:
+* **BREAKING**: `rsi_df` was removed in favour of new functions `resistance` and `susceptibility`. Now, all functions used to calculate resistance (`resistance` and `susceptibility`) use **hybrid evaluation**. This means calculations are not done in R directly but rather in C++ using the `Rcpp` package, making them 25 to 30 times faster. The function `rsi` still works, but is deprecated.
+* **BREAKING**: the methodology for determining first weighted isolates was changed. The antibiotics that are compared between isolates (call *key antibiotics*) to include more first isolates (afterwards called first *weighted* isolates) are now as follows:
   * Gram-positive: amoxicillin, amoxicillin/clavlanic acid, cefuroxime, piperacillin/tazobactam, ciprofloxacin, trimethoprim/sulfamethoxazole, vancomycin, teicoplanin, tetracycline, erythromycin, oxacillin, rifampicin
   * Gram-negative: amoxicillin, amoxicillin/clavlanic acid, cefuroxime, piperacillin/tazobactam, ciprofloxacin, trimethoprim/sulfamethoxazole, gentamicin, tobramycin, colistin, cefotaxime, ceftazidime, meropenem
-* Support for Addins menu in RStudio to quickly insert `%in%` or `%like%` (and give them keyboard shortcuts), or to view the datasets that come with this package
 * For convience, new descriptive statistical functions `kurtosis` and `skewness` that are lacking in base R - they are generic functions and have support for vectors, data.frames and matrices
-* Function `g.test` as added to perform the Χ<sup>2</sup> distributed [*G*-test](https://en.wikipedia.org/wiki/G-test), which use is the same as `chisq.test`
-* Function `ratio` was added to transform a vector of values to a preset ratio. For example:
-```r
-ratio(c(772, 1611, 737), ratio = "1:2:1")
-# [1]  780 1560  780
-```
-* Function `p.symbol` was added to transform p values to their related symbols: `0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1`
+* Function `g.test` to perform the Χ<sup>2</sup> distributed [*G*-test](https://en.wikipedia.org/wiki/G-test), which use is the same as `chisq.test`
+* Function `ratio` to transform a vector of values to a preset ratio
+  * For example: `ratio(c(10, 500, 10), ratio = "1:2:1")` would return `130, 260, 130`
+* Support for Addins menu in RStudio to quickly insert `%in%` or `%like%` (and give them keyboard shortcuts), or to view the datasets that come with this package
+* Function `p.symbol` to transform p values to their related symbols: `0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1`
+* Functions `clipboard_import` and `clipboard_export` as helper functions to quickly copy and paste from/to software like Excel and SPSS. These functions use the `clipr` package, but are a little altered to also support headless Linux servers (so you can use it in RStudio Server)
 * New for frequency tables (function `freq`):
   * A vignette to explain its usage
   * Support for `table` to use as input: `freq(table(x, y))`
@@ -22,7 +20,6 @@ ratio(c(772, 1611, 737), ratio = "1:2:1")
   * Function `top_freq` function to return the top/below *n* items as vector
   * Header of frequency tables now also show Mean Absolute Deviaton (MAD) and Interquartile Range (IQR)
   * Possibility to globally set the default for the amount of items to print, with `options(max.print.freq = n)` where *n* is your preset value
-* Functions `clipboard_import` and `clipboard_export` as helper functions to quickly copy and paste from/to software like Excel and SPSS. These functions use the `clipr` package, but are a little altered to also support headless Linux servers (so you can use it in RStudio Server).
 
 #### Changed
 * Pretty printing for tibbles removed as it is not really the scope of this package

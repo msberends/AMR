@@ -18,3 +18,8 @@ test_that("functions missing in older R versions work", {
   expect_equal(trimws(" test ", "l"), "test ")
   expect_equal(trimws(" test ", "r"), " test")
 })
+
+test_that("generic dates work", {
+  expect_equal(date_generic("yyyy-mm-dd"), "%Y-%m-%d")
+  expect_equal(date_generic("dddd d mmmm yyyy"), "%A %e %B %Y")
+})

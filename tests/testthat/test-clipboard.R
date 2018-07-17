@@ -14,6 +14,8 @@ test_that("clipboard works", {
                    clipboard_import())
 
   clipboard_export(septic_patients[1:100,])
-  expect_identical(as.data.frame(tbl_parse_guess(septic_patients[1:100,]), stringsAsFactors = FALSE),
-                   clipboard_import(guess_col_types = TRUE, stringsAsFactors = FALSE))
+  expect_identical(as.data.frame(tbl_parse_guess(septic_patients[1:100,]),
+                                 stringsAsFactors = FALSE),
+                   clipboard_import(guess_col_types = TRUE,
+                                    stringsAsFactors = FALSE))
 })
