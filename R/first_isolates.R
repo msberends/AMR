@@ -49,7 +49,7 @@
 #'     \strong{2. Using} \code{type = "points"} \strong{and parameter} \code{points_threshold} \cr
 #'     A difference from I to S|R (or vice versa) means 0.5 points, a difference from S to R (or vice versa) means 1 point. When the sum of points exceeds \code{points_threshold}, an isolate will be (re)selected as a first weighted isolate.
 #' @keywords isolate isolates first
-#' @seealso \code{\link{keyantibiotics}}
+#' @seealso \code{\link{key_antibiotics}}
 #' @export
 #' @importFrom dplyr arrange_at lag between row_number filter mutate arrange
 #' @return A vector to add to table, see Examples.

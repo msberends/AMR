@@ -24,6 +24,8 @@ key_antibiotics_equal(x, y, type = c("keyantibiotics", "points"),
 
 \item{info}{print progress}
 
+\item{x, y}{characters to compare}
+
 \item{type}{type to determine weighed isolates; can be \code{"keyantibiotics"} or \code{"points"}, see Details}
 
 \item{ignore_I}{logical to determine whether antibiotic interpretations with \code{"I"} will be ignored when \code{type = "keyantibiotics"}, see Details}

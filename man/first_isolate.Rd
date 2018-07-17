@@ -126,7 +126,7 @@ tbl$first_resp_isolate_weighed <-
 }
 }
 \seealso{
-\code{\link{keyantibiotics}}
+\code{\link{key_antibiotics}}
 }
 \keyword{first}
 \keyword{isolate}

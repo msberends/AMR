@@ -20,6 +20,7 @@
 #'
 #' These function can be used to determine first isolates (see \code{\link{first_isolate}}). Using key antibiotics to determine first isolates is more reliable than without key antibiotics. These selected isolates will then be called first \emph{weighted} isolates.
 #' @param tbl table with antibiotics coloms, like \code{amox} and \code{amcl}.
+#' @param x,y characters to compare
 #' @inheritParams first_isolate
 #' @param amcl,amox,cfot,cfta,cfur,cipr,coli,eryt,gent,mero,oxac,pita,rifa,teic,tetr,tobr,trsu,vanc column names of antibiotics, case-insensitive
 #' @details The function \code{key_antibiotics} returns a character vector with antibiotic results.
