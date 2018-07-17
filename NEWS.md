@@ -1,6 +1,9 @@
 # 0.2.0.90xx (development version)
 #### New
 * **BREAKING**: `rsi_df` was removed in favour of new functions `resistance` and `susceptibility`. Now, all functions used to calculate resistance (`resistance` and `susceptibility`) or count isolates (`n_rsi`) use **hybrid evaluation**. This means calculations are not done in R directly but rather in C++ using the `Rcpp` package, making them 25 to 30 times faster. The function `rsi` still works, but is deprecated.
+* **BREAKING**: the methodology for determining first weighted isolates was changed. The antibiotics (call *key antibiotics*) that are compared between isolated to include more first isolates (called first *weighted* isolates) are now as follows:
+  * Gram-positive: amoxicillin, amoxicillin/clavlanic acid, cefuroxime, piperacillin/tazobactam, ciprofloxacin, trimethoprim/sulfamethoxazole, vancomycin, teicoplanin, tetracycline, erythromycin, oxacillin, rifampicin
+  * Gram-negative: amoxicillin, amoxicillin/clavlanic acid, cefuroxime, piperacillin/tazobactam, ciprofloxacin, trimethoprim/sulfamethoxazole, gentamicin, tobramycin, colistin, cefotaxime, ceftazidime, meropenem
 * Support for Addins menu in RStudio to quickly insert `%in%` or `%like%` (and give them keyboard shortcuts), or to view the datasets that come with this package
 * For convience, new descriptive statistical functions `kurtosis` and `skewness` that are lacking in base R - they are generic functions and have support for vectors, data.frames and matrices
 * Function `g.test` as added to perform the Χ<sup>2</sup> distributed [*G*-test](https://en.wikipedia.org/wiki/G-test), which use is the same as `chisq.test`

@@ -32,7 +32,7 @@ test_that("first isolates work", {
                       info = TRUE),
         na.rm = TRUE)),
     1963)
-  # and 1998 when using points
+  # and 1997 when using points
   expect_equal(
     suppressWarnings(
       sum(
@@ -44,7 +44,7 @@ test_that("first isolates work", {
                       type = "points",
                       info = TRUE),
         na.rm = TRUE)),
-    1998)
+    1997)
 
   # septic_patients contains 1732 out of 2000 first non-ICU isolates
   expect_equal(
