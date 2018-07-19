@@ -5,12 +5,13 @@
 \alias{key_antibiotics_equal}
 \title{Key antibiotics for first \emph{weighted} isolates}
 \usage{
-key_antibiotics(tbl, col_bactid = "bactid", amcl = "amcl", amox = "amox",
-  cfot = "cfot", cfta = "cfta", cfur = "cfur", cipr = "cipr",
-  coli = "coli", eryt = "eryt", gent = "gent", mero = "mero",
-  oxac = "oxac", pita = "pita", rifa = "rifa", teic = "teic",
-  tetr = "tetr", tobr = "tobr", trsu = "trsu", vanc = "vanc",
-  info = TRUE)
+key_antibiotics(tbl, col_bactid = "bactid", universal_1 = "amox",
+  universal_2 = "amcl", universal_3 = "cfur", universal_4 = "pita",
+  universal_5 = "cipr", universal_6 = "trsu", GramPos_1 = "vanc",
+  GramPos_2 = "teic", GramPos_3 = "tetr", GramPos_4 = "eryt",
+  GramPos_5 = "oxac", GramPos_6 = "rifa", GramNeg_1 = "gent",
+  GramNeg_2 = "tobr", GramNeg_3 = "coli", GramNeg_4 = "cfot",
+  GramNeg_5 = "cfta", GramNeg_6 = "mero", info = TRUE)
 
 key_antibiotics_equal(x, y, type = c("keyantibiotics", "points"),
   ignore_I = TRUE, points_threshold = 2, info = FALSE)
@@ -20,7 +21,11 @@ key_antibiotics_equal(x, y, type = c("keyantibiotics", "points"),
 
 \item{col_bactid}{column name of the unique IDs of the microorganisms (should occur in the \code{\link{microorganisms}} dataset). Get your bactid's with the function \code{\link{guess_bactid}}, that takes microorganism names as input.}
 
-\item{amcl, amox, cfot, cfta, cfur, cipr, coli, eryt, gent, mero, oxac, pita, rifa, teic, tetr, tobr, trsu, vanc}{column names of antibiotics, case-insensitive}
+\item{universal_1, universal_2, universal_3, universal_4, universal_5, universal_6}{column names of \strong{broad-spectrum} antibiotics, case-insensitive}
+
+\item{GramPos_1, GramPos_2, GramPos_3, GramPos_4, GramPos_5, GramPos_6}{column names of antibiotics for \strong{Gram positives}, case-insensitive}
+
+\item{GramNeg_1, GramNeg_2, GramNeg_3, GramNeg_4, GramNeg_5, GramNeg_6}{column names of antibiotics for \strong{Gram negatives}, case-insensitive}
 
 \item{info}{print progress}
 
@@ -38,11 +43,11 @@ These function can be used to determine first isolates (see \code{\link{first_is
 \details{
 The function \code{key_antibiotics} returns a character vector with antibiotic results.
 
-  The antibiotics that are used for \strong{Gram positive bacteria} are (colum names): \cr
-  amox, amcl, cfur, pita, cipr, trsu, vanc, teic, tetr, eryt, oxac, rifa.
+  At default, the antibiotics that are used for \strong{Gram positive bacteria} are (colum names): \cr
+  \code{"amox"}, \code{"amcl"}, \code{"cfur"}, \code{"pita"}, \code{"cipr"}, \code{"trsu"} (until here is universal), \code{"vanc"}, \code{"teic"}, \code{"tetr"}, \code{"eryt"}, \code{"oxac"}, \code{"rifa"}.
 
-  The antibiotics that are used for \strong{Gram negative bacteria} are (colum names): \cr
-  amox, amcl, cfur, pita, cipr, trsu, gent, tobr, coli, cfot, cfta, mero.
+  At default, the antibiotics that are used for \strong{Gram negative bacteria} are (colum names): \cr
+  \code{"amox"}, \code{"amcl"}, \code{"cfur"}, \code{"pita"}, \code{"cipr"}, \code{"trsu"} (until here is universal), \code{"gent"}, \code{"tobr"}, \code{"coli"}, \code{"cfot"}, \code{"cfta"}, \code{"mero"}.
 
 
   The function \code{key_antibiotics_equal} checks the characters returned by \code{key_antibiotics} for equality, and returns a logical value.

@@ -22,14 +22,16 @@
 #' @param tbl table with antibiotics coloms, like \code{amox} and \code{amcl}.
 #' @param x,y characters to compare
 #' @inheritParams first_isolate
-#' @param amcl,amox,cfot,cfta,cfur,cipr,coli,eryt,gent,mero,oxac,pita,rifa,teic,tetr,tobr,trsu,vanc column names of antibiotics, case-insensitive
+#' @param universal_1,universal_2,universal_3,universal_4,universal_5,universal_6 column names of \strong{broad-spectrum} antibiotics, case-insensitive
+#' @param GramPos_1,GramPos_2,GramPos_3,GramPos_4,GramPos_5,GramPos_6 column names of antibiotics for \strong{Gram positives}, case-insensitive
+#' @param GramNeg_1,GramNeg_2,GramNeg_3,GramNeg_4,GramNeg_5,GramNeg_6 column names of antibiotics for \strong{Gram negatives}, case-insensitive
 #' @details The function \code{key_antibiotics} returns a character vector with antibiotic results.
 #'
-#'   The antibiotics that are used for \strong{Gram positive bacteria} are (colum names): \cr
-#'   amox, amcl, cfur, pita, cipr, trsu, vanc, teic, tetr, eryt, oxac, rifa.
+#'   At default, the antibiotics that are used for \strong{Gram positive bacteria} are (colum names): \cr
+#'   \code{"amox"}, \code{"amcl"}, \code{"cfur"}, \code{"pita"}, \code{"cipr"}, \code{"trsu"} (until here is universal), \code{"vanc"}, \code{"teic"}, \code{"tetr"}, \code{"eryt"}, \code{"oxac"}, \code{"rifa"}.
 #'
-#'   The antibiotics that are used for \strong{Gram negative bacteria} are (colum names): \cr
-#'   amox, amcl, cfur, pita, cipr, trsu, gent, tobr, coli, cfot, cfta, mero.
+#'   At default, the antibiotics that are used for \strong{Gram negative bacteria} are (colum names): \cr
+#'   \code{"amox"}, \code{"amcl"}, \code{"cfur"}, \code{"pita"}, \code{"cipr"}, \code{"trsu"} (until here is universal), \code{"gent"}, \code{"tobr"}, \code{"coli"}, \code{"cfot"}, \code{"cfta"}, \code{"mero"}.
 #'
 #'
 #'   The function \code{key_antibiotics_equal} checks the characters returned by \code{key_antibiotics} for equality, and returns a logical value.
@@ -54,24 +56,24 @@
 #' }
 key_antibiotics <- function(tbl,
                             col_bactid = "bactid",
-                            amcl = "amcl",
-                            amox = "amox",
-                            cfot = "cfot",
-                            cfta = "cfta",
-                            cfur = "cfur",
-                            cipr = "cipr",
-                            coli = "coli",
-                            eryt = "eryt",
-                            gent = "gent",
-                            mero = "mero",
-                            oxac = "oxac",
-                            pita = "pita",
-                            rifa = "rifa",
-                            teic = "teic",
-                            tetr = "tetr",
-                            tobr = "tobr",
-                            trsu = "trsu",
-                            vanc = "vanc",
+                            universal_1 = "amox",
+                            universal_2 = "amcl",
+                            universal_3 = "cfur",
+                            universal_4 = "pita",
+                            universal_5 = "cipr",
+                            universal_6 = "trsu",
+                            GramPos_1 = "vanc",
+                            GramPos_2 = "teic",
+                            GramPos_3 = "tetr",
+                            GramPos_4 = "eryt",
+                            GramPos_5 = "oxac",
+                            GramPos_6 = "rifa",
+                            GramNeg_1 = "gent",
+                            GramNeg_2 = "tobr",
+                            GramNeg_3 = "coli",
+                            GramNeg_4 = "cfot",
+                            GramNeg_5 = "cfta",
+                            GramNeg_6 = "mero",
                             info = TRUE) {
 
   if (!col_bactid %in% colnames(tbl)) {
@@ -79,37 +81,40 @@ key_antibiotics <- function(tbl,
   }
 
   # check columns
-  col.list <- c(amcl, amox, cfot, cfta, cfur, cipr,
-                coli, eryt, gent, mero, oxac, pita,
-                rifa, teic, tetr, tobr, trsu, vanc)
+  col.list <- c(universal_1, universal_2, universal_3, universal_4, universal_5, universal_6,
+                GramPos_1, GramPos_2, GramPos_3, GramPos_4, GramPos_5, GramPos_6,
+                GramNeg_1, GramNeg_2, GramNeg_3, GramNeg_4, GramNeg_5, GramNeg_6)
   col.list <- check_available_columns(tbl = tbl, col.list = col.list, info = info)
-  amcl <- col.list[amcl]
-  amox <- col.list[amox]
-  cfot <- col.list[cfot]
-  cfta <- col.list[cfta]
-  cfur <- col.list[cfur]
-  cipr <- col.list[cipr]
-  coli <- col.list[coli]
-  eryt <- col.list[eryt]
-  gent <- col.list[gent]
-  mero <- col.list[mero]
-  oxac <- col.list[oxac]
-  pita <- col.list[pita]
-  rifa <- col.list[rifa]
-  teic <- col.list[teic]
-  tetr <- col.list[tetr]
-  tobr <- col.list[tobr]
-  trsu <- col.list[trsu]
-  vanc <- col.list[vanc]
+  universal_1 <- col.list[universal_1]
+  universal_2 <- col.list[universal_2]
+  universal_3 <- col.list[universal_3]
+  universal_4 <- col.list[universal_4]
+  universal_5 <- col.list[universal_5]
+  universal_6 <- col.list[universal_6]
+  GramPos_1 <- col.list[GramPos_1]
+  GramPos_2 <- col.list[GramPos_2]
+  GramPos_3 <- col.list[GramPos_3]
+  GramPos_4 <- col.list[GramPos_4]
+  GramPos_5 <- col.list[GramPos_5]
+  GramPos_6 <- col.list[GramPos_6]
+  GramNeg_1 <- col.list[GramNeg_1]
+  GramNeg_2 <- col.list[GramNeg_2]
+  GramNeg_3 <- col.list[GramNeg_3]
+  GramNeg_4 <- col.list[GramNeg_4]
+  GramNeg_5 <- col.list[GramNeg_5]
+  GramNeg_6 <- col.list[GramNeg_6]
 
-  gram_positive = c(amox, amcl, cfur, pita, cipr, trsu,
-                    # specific for G+:
-                    vanc, teic, tetr, eryt, oxac, rifa)
+  universal <- c(universal_1, universal_2, universal_3,
+                 universal_4, universal_5, universal_6)
+
+  gram_positive = c(universal,
+                    GramPos_1, GramPos_2, GramPos_3,
+                    GramPos_4, GramPos_5, GramPos_6)
   gram_positive <- gram_positive[!is.na(gram_positive)]
 
-  gram_negative = c(amox, amcl, cfur, pita, cipr, trsu,
-                    # specific for G-:
-                    gent, tobr, coli, cfot, cfta, mero)
+  gram_negative = c(universal,
+                    GramNeg_1, GramNeg_2, GramNeg_3,
+                    GramNeg_4, GramNeg_5, GramNeg_6)
   gram_negative <- gram_negative[!is.na(gram_negative)]
 
   # join microorganisms

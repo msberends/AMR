@@ -162,7 +162,7 @@ first_isolate <- function(tbl,
   }
   # remove testcodes
   if (!is.na(testcodes_exclude[1]) & testcodes_exclude[1] != '' & info == TRUE) {
-    cat('Isolates from these test codes will be ignored:\n', toString(testcodes_exclude), '\n')
+    cat('[Criteria] Excluded test codes:\n', toString(testcodes_exclude), '\n')
   }
 
   if (is.na(col_icu)) {
@@ -181,7 +181,7 @@ first_isolate <- function(tbl,
   if (!is.na(filter_specimen) & filter_specimen != '') {
     check_columns_existance(col_specimen, tbl)
     if (info == TRUE) {
-      cat('Isolates other than of specimen group \'', filter_specimen, '\' will be ignored. ', sep = '')
+      cat('[Criteria] Excluded other than specimen group \'', filter_specimen, '\'\n', sep = '')
     }
   } else {
     filter_specimen <- ''
@@ -209,8 +209,8 @@ first_isolate <- function(tbl,
   if (filter_specimen == '') {
 
     if (icu_exclude == FALSE) {
-      if (info == TRUE) {
-        cat('Isolates from ICU will *NOT* be ignored.\n')
+      if (info == TRUE & !is.na(col_icu)) {
+        cat('[Criteria] Included isolates from ICU.\n')
       }
       tbl <- tbl %>%
         arrange_at(c(col_patient_id,
@@ -221,7 +221,7 @@ first_isolate <- function(tbl,
       row.end <- nrow(tbl)
     } else {
       if (info == TRUE) {
-        cat('Isolates from ICU will be ignored.\n')
+        cat('[Criteria] Excluded isolates from ICU.\n')
       }
       tbl <- tbl %>%
         arrange_at(c(col_icu,
@@ -241,8 +241,8 @@ first_isolate <- function(tbl,
   } else {
     # sort on specimen and only analyse these row to save time
     if (icu_exclude == FALSE) {
-      if (info == TRUE) {
-        cat('Isolates from ICU will *NOT* be ignored.\n')
+      if (info == TRUE & !is.na(col_icu)) {
+        cat('[Criteria] Included isolates from ICU.\n')
       }
       tbl <- tbl %>%
         arrange_at(c(col_specimen,
@@ -258,7 +258,7 @@ first_isolate <- function(tbl,
       )
     } else {
       if (info == TRUE) {
-        cat('Isolates from ICU will be ignored.\n')
+        cat('[Criteria] Excluded isolates from ICU.\n')
       }
       tbl <- tbl %>%
         arrange_at(c(col_icu,
@@ -281,7 +281,7 @@ first_isolate <- function(tbl,
 
   if (abs(row.start) == Inf | abs(row.end) == Inf) {
     if (info == TRUE) {
-      cat('No isolates found.\n')
+      message('No isolates found.')
     }
     # NA's where genus is unavailable
     tbl <- tbl %>%
@@ -317,15 +317,15 @@ first_isolate <- function(tbl,
   if (col_keyantibiotics != '') {
     if (info == TRUE) {
       if (type == 'keyantibiotics') {
-        cat('Key antibiotics for first weighted isolates will be compared (')
+        cat('[Criteria] Inclusion based on key antibiotics, ')
         if (ignore_I == FALSE) {
-          cat('NOT ')
+          cat('not ')
         }
-        cat('ignoring I).')
+        cat('ignoring I.\n')
       }
       if (type == 'points') {
-        cat(paste0('Comparing antibiotics for first weighted isolates (using points threshold of '
-                   , points_threshold, ')...\n'))
+        cat(paste0('[Criteria] Inclusion based on key antibiotics, using points threshold of '
+                   , points_threshold, '.\n'))
       }
     }
     type_param <- type
@@ -350,9 +350,6 @@ first_isolate <- function(tbl,
               TRUE,
               FALSE))
     )
-    if (info == TRUE) {
-      cat('\n')
-    }
   } else {
     # suppress warnings because dplyr want us to use library(dplyr) when using filter(row_number())
     suppressWarnings(
@@ -388,13 +385,13 @@ first_isolate <- function(tbl,
     pull(real_first_isolate)
 
   if (info == TRUE) {
-    cat(paste0('\nFound ',
+    message(paste0('Found ',
                all_first %>% sum(na.rm = TRUE),
                ' first ', weighted.notice, 'isolates (',
                (all_first %>% sum(na.rm = TRUE) / scope.size) %>% percent(),
                ' of isolates in scope [where genus was not empty] and ',
                (all_first %>% sum(na.rm = TRUE) / tbl %>% nrow()) %>% percent(),
-               ' of total)\n'))
+               ' of total)'))
   }
 
   if (output_logical == FALSE) {
