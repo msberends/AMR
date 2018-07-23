@@ -41,7 +41,7 @@ key_antibiotics_equal(x, y, type = c("keyantibiotics", "points"),
 These function can be used to determine first isolates (see \code{\link{first_isolate}}). Using key antibiotics to determine first isolates is more reliable than without key antibiotics. These selected isolates will then be called first \emph{weighted} isolates.
 }
 \details{
-The function \code{key_antibiotics} returns a character vector with antibiotic results.
+The function \code{key_antibiotics} returns a character vector with 12 antibiotic results for every isolate. These isolates can then be compared using \code{key_antibiotics_equal}, to check if two isolates have generally the same antibiogram. Missing and invalid values are replaced with a dot (\code{"."}). The \code{\link{first_isolate}} function only uses this function on the same microbial species from the same patient. Using this, an MRSA will be included after a susceptible \emph{S. aureus} (MSSA) found within the same episode (see \code{episode} parameter of \code{\link{first_isolate}}). Without key antibiotic comparison it wouldn't.
 
   At default, the antibiotics that are used for \strong{Gram positive bacteria} are (colum names): \cr
   \code{"amox"}, \code{"amcl"}, \code{"cfur"}, \code{"pita"}, \code{"cipr"}, \code{"trsu"} (until here is universal), \code{"vanc"}, \code{"teic"}, \code{"tetr"}, \code{"eryt"}, \code{"oxac"}, \code{"rifa"}.
@@ -50,7 +50,7 @@ The function \code{key_antibiotics} returns a character vector with antibiotic r
   \code{"amox"}, \code{"amcl"}, \code{"cfur"}, \code{"pita"}, \code{"cipr"}, \code{"trsu"} (until here is universal), \code{"gent"}, \code{"tobr"}, \code{"coli"}, \code{"cfot"}, \code{"cfta"}, \code{"mero"}.
 
 
-  The function \code{key_antibiotics_equal} checks the characters returned by \code{key_antibiotics} for equality, and returns a logical value.
+  The function \code{key_antibiotics_equal} checks the characters returned by \code{key_antibiotics} for equality, and returns a logical vector.
 }
 \section{Key antibiotics}{
 
@@ -77,6 +77,16 @@ tbl$first_isolate_weighed <-
   first_isolate(tbl,
                 col_keyantibiotics = 'keyab')
 }
+
+# output of the `key_antibiotics` function could be like this:
+strainA <- "SSSRR.S.R..S"
+strainB <- "SSSIRSSSRSSS"
+
+key_antibiotics_equal(strainA, strainB)
+# TRUE, because I is ignored (as are missing values)
+
+key_antibiotics_equal(strainA, strainB, ignore_I = FALSE)
+# FALSE, because I is not ignored and so the 4th value differs
 }
 \seealso{
 \code{\link{first_isolate}}

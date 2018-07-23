@@ -1,13 +1,5 @@
 context("first_isolates.R")
 
-test_that("keyantibiotics work", {
-  expect_equal(length(key_antibiotics(septic_patients, info = FALSE)), nrow(septic_patients))
-  expect_true(key_antibiotics_equal("SSS", "SSS"))
-  expect_false(key_antibiotics_equal("SSS", "SRS"))
-  expect_true(key_antibiotics_equal("SSS", "SIS", ignore_I = TRUE))
-  expect_false(key_antibiotics_equal("SSS", "SIS", ignore_I = FALSE))
-})
-
 test_that("first isolates work", {
   # septic_patients contains 1959 out of 2000 first isolates
   expect_equal(

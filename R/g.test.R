@@ -254,3 +254,4 @@ ratio <- function(x, ratio) {
   }
   base::sum(x, na.rm = TRUE) * (ratio / base::sum(ratio, na.rm = TRUE))
 }
+
