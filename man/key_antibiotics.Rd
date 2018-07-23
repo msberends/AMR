@@ -11,7 +11,7 @@ key_antibiotics(tbl, col_bactid = "bactid", universal_1 = "amox",
   GramPos_2 = "teic", GramPos_3 = "tetr", GramPos_4 = "eryt",
   GramPos_5 = "oxac", GramPos_6 = "rifa", GramNeg_1 = "gent",
   GramNeg_2 = "tobr", GramNeg_3 = "coli", GramNeg_4 = "cfot",
-  GramNeg_5 = "cfta", GramNeg_6 = "mero", info = TRUE)
+  GramNeg_5 = "cfta", GramNeg_6 = "mero", warnings = TRUE)
 
 key_antibiotics_equal(x, y, type = c("keyantibiotics", "points"),
   ignore_I = TRUE, points_threshold = 2, info = FALSE)
@@ -27,7 +27,7 @@ key_antibiotics_equal(x, y, type = c("keyantibiotics", "points"),
 
 \item{GramNeg_1, GramNeg_2, GramNeg_3, GramNeg_4, GramNeg_5, GramNeg_6}{column names of antibiotics for \strong{Gram negatives}, case-insensitive}
 
-\item{info}{print progress}
+\item{warnings}{give warning about missing antibiotic columns, they will anyway be ignored}
 
 \item{x, y}{characters to compare}
 
@@ -36,6 +36,8 @@ key_antibiotics_equal(x, y, type = c("keyantibiotics", "points"),
 \item{ignore_I}{logical to determine whether antibiotic interpretations with \code{"I"} will be ignored when \code{type = "keyantibiotics"}, see Details}
 
 \item{points_threshold}{points until the comparison of key antibiotics will lead to inclusion of an isolate when \code{type = "points"}, see Details}
+
+\item{info}{print progress}
 }
 \description{
 These function can be used to determine first isolates (see \code{\link{first_isolate}}). Using key antibiotics to determine first isolates is more reliable than without key antibiotics. These selected isolates will then be called first \emph{weighted} isolates.
