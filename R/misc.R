@@ -119,6 +119,7 @@ tbl_parse_guess <- function(tbl,
                             decimal_mark = '.',
                             tz = Sys.timezone(),
                             encoding = "UTF-8",
+                            remove_ASCII_escape_char = FALSE,
                             na = c("", "NA", "NULL")) {
 
   date_format <- date_generic(date_format)
@@ -139,8 +140,10 @@ tbl_parse_guess <- function(tbl,
     if (any(tbl %>% pull(i) %>% class() %in% c('factor', 'character'))) {
       # get values
       distinct_val <- tbl %>% pull(i) %>% unique() %>% sort()
-      # remove ASCII escape character: https://en.wikipedia.org/wiki/Escape_character#ASCII_escape_character
-      tbl[, i] <- tbl %>% pull(i) %>% gsub('\033', ' ', ., fixed = TRUE)
+      if (remove_ASCII_escape_char == TRUE) {
+        # remove ASCII escape character: https://en.wikipedia.org/wiki/Escape_character#ASCII_escape_character
+        tbl[, i] <- tbl %>% pull(i) %>% gsub('\033', ' ', ., fixed = TRUE)
+      }
       # look for RSI, shouldn't all be "" and must be valid antibiotic interpretations
       if (!all(distinct_val[!is.na(distinct_val)] == '')
           & all(distinct_val[!is.na(distinct_val)] %in% c('', 'I', 'I;I', 'R', 'R;R', 'S', 'S;S'))) {

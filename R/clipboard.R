@@ -14,6 +14,7 @@
 #' @param startrow \emph{n}th row to start importing from. When \code{header = TRUE}, the import will start on row \code{startrow} \emph{below} the header.
 #' @param as_vector a logical value indicating whether data consisting of only one column should be imported as vector using \code{\link[dplyr]{pull}}. This will strip off the header.
 #' @param guess_col_types a logical value indicating whether column types should be guessed and transformed automatically with \code{\link[readr]{parse_guess}} from the \code{readr} package. Besides, the antimicrobial classes in this AMR package (\code{\link{as.rsi}} and \code{\link{as.mic}}) are also supported.
+#' @param remove_ASCII_escape_char remove ASCII escape character
 #' @param info print info to console
 #' @keywords clipboard clipboard_import clipboard_export import export
 #' @importFrom dplyr %>% pull as_tibble
@@ -58,6 +59,7 @@
 #'   clipboard_export()
 #' }
 clipboard_import <- function(sep = '\t',
+                             quote = "",
                              header = TRUE,
                              dec = ".",
                              na = c("", "NA", "NULL"),
@@ -68,6 +70,7 @@ clipboard_import <- function(sep = '\t',
                              date_names = 'en',
                              date_format = '%Y-%m-%d',
                              time_format = '%H:%M',
+                             remove_ASCII_escape_char = FALSE,
                              tz = Sys.timezone(),
                              encoding = "UTF-8",
                              info = TRUE) {
@@ -80,6 +83,7 @@ clipboard_import <- function(sep = '\t',
   # this will fail when clipr is (still) not available
   import_tbl <- clipr::read_clip_tbl(file = file,
                                      sep = sep,
+                                     quote = quote,
                                      header = header,
                                      strip.white = TRUE,
                                      dec = dec,
@@ -108,6 +112,7 @@ clipboard_import <- function(sep = '\t',
                                   decimal_mark = dec,
                                   tz = tz,
                                   encoding = encoding,
+                                  remove_ASCII_escape_char = remove_ASCII_escape_char,
                                   na = na)
     if (info == TRUE) {
       cat('OK\n')

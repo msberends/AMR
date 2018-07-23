@@ -6,11 +6,12 @@
 \alias{clipboard_export}
 \title{Import/export from clipboard}
 \usage{
-clipboard_import(sep = "\\t", header = TRUE, dec = ".", na = c("", "NA",
-  "NULL"), stringsAsFactors = FALSE, startrow = 1, as_vector = TRUE,
-  guess_col_types = TRUE, date_names = "en", date_format = "\%Y-\%m-\%d",
-  time_format = "\%H:\%M", tz = Sys.timezone(), encoding = "UTF-8",
-  info = TRUE)
+clipboard_import(sep = "\\t", quote = "", header = TRUE, dec = ".",
+  na = c("", "NA", "NULL"), stringsAsFactors = FALSE, startrow = 1,
+  as_vector = TRUE, guess_col_types = TRUE, date_names = "en",
+  date_format = "\%Y-\%m-\%d", time_format = "\%H:\%M",
+  remove_ASCII_escape_char = FALSE, tz = Sys.timezone(),
+  encoding = "UTF-8", info = TRUE)
 
 clipboard_export(x, sep = "\\t", dec = ".", na = "", header = TRUE,
   info = TRUE)
@@ -20,6 +21,12 @@ clipboard_export(x, sep = "\\t", dec = ".", na = "", header = TRUE,
     file are separated by this character.  If \code{sep = ""} (the
     default for \code{read.table}) the separator is \sQuote{white space},
     that is one or more spaces, tabs, newlines or carriage returns.}
+
+\item{quote}{the set of quoting characters. To disable quoting
+    altogether, use \code{quote = ""}.  See \code{\link{scan}} for the
+    behaviour on quotes embedded in quotes.  Quoting is only considered
+    for columns read as character, which is all of them unless
+    \code{colClasses} is specified.}
 
 \item{header}{a logical value indicating whether the file contains the
     names of the variables as its first line.  If missing, the value is
@@ -49,6 +56,8 @@ or an object created by \code{\link[=date_names]{date_names()}}.}
 \item{date_format}{Default date and time formats.}
 
 \item{time_format}{Default date and time formats.}
+
+\item{remove_ASCII_escape_char}{remove ASCII escape character}
 
 \item{tz}{Default tz. This is used both for input (if the time zone isn't
 present in individual strings), and for output (to control the default
