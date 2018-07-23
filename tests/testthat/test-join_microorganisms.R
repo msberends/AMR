@@ -1,4 +1,4 @@
-context("joins.R")
+context("join_microorganisms.R")
 
 test_that("joins work", {
   unjoined <- septic_patients

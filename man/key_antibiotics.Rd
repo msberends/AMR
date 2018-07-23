@@ -19,7 +19,7 @@ key_antibiotics_equal(x, y, type = c("keyantibiotics", "points"),
 \arguments{
 \item{tbl}{table with antibiotics coloms, like \code{amox} and \code{amcl}.}
 
-\item{col_bactid}{column name of the unique IDs of the microorganisms (should occur in the \code{\link{microorganisms}} dataset). Get your bactid's with the function \code{\link{guess_bactid}}, that takes microorganism names as input.}
+\item{col_bactid}{column name of the unique IDs of the microorganisms: \code{bactid}'s. If this column has another class than \code{"bactid"}, values will be coerced using \code{\link{as.bactid}}.}
 
 \item{universal_1, universal_2, universal_3, universal_4, universal_5, universal_6}{column names of \strong{broad-spectrum} antibiotics, case-insensitive}
 

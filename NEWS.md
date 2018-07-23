@@ -4,6 +4,7 @@
 * **BREAKING**: the methodology for determining first weighted isolates was changed. The antibiotics that are compared between isolates (call *key antibiotics*) to include more first isolates (afterwards called first *weighted* isolates) are now as follows:
   * Gram-positive: amoxicillin, amoxicillin/clavlanic acid, cefuroxime, piperacillin/tazobactam, ciprofloxacin, trimethoprim/sulfamethoxazole, vancomycin, teicoplanin, tetracycline, erythromycin, oxacillin, rifampicin
   * Gram-negative: amoxicillin, amoxicillin/clavlanic acid, cefuroxime, piperacillin/tazobactam, ciprofloxacin, trimethoprim/sulfamethoxazole, gentamicin, tobramycin, colistin, cefotaxime, ceftazidime, meropenem
+* Functions `as.bactid` and `is.bactid` to transform/look up microbial ID's; this replaces the function `guess_bactid` but it will remain available for backwards compatibility
 * For convience, new descriptive statistical functions `kurtosis` and `skewness` that are lacking in base R - they are generic functions and have support for vectors, data.frames and matrices
 * Function `g.test` to perform the Χ<sup>2</sup> distributed [*G*-test](https://en.wikipedia.org/wiki/G-test), which use is the same as `chisq.test`
 * Function `ratio` to transform a vector of values to a preset ratio
@@ -28,8 +29,9 @@
 * Printing of class `mic` now shows all MIC values
 * `%like%` now supports multiple patterns
 * Frequency tables are now actual `data.frame`s with altered console printing to make it look like a frequency table. Because of this, the parameter `toConsole` is not longer needed.
-* Small translational improvements to the `septic_patients` dataset
-* Small improvements to the `microorganisms` dataset, especially for *Salmonella*
+* Fix for `freq` where the class of an item would be lost
+* Small translational improvements to the `septic_patients` dataset and the column `bactid` now has the new class `"bactid"`
+* Small improvements to the `microorganisms` dataset (especially for *Salmonella*) and the column `bactid` now has the new class `"bactid"`
 * Combined MIC/RSI values will now be coerced by the `rsi` and `mic` functions:
   * `as.rsi("<=0.002; S")` will return `S`
   * `as.mic("<=0.002; S")` will return `<=0.002`
@@ -38,7 +40,8 @@
 * Build-in host check for `atc_property` as it requires the host set by `url` to be responsive
 * Improved `first_isolate` algorithm to exclude isolates where bacteria ID or genus is unavailable
 * Fix for warning *hybrid evaluation forced for row_number* ([`924b62`](https://github.com/tidyverse/dplyr/commit/924b62)) from the `dplyr` package v0.7.5 and above
-* Support for 1 or 2 columns as input for `guess_bactid`
+* Support for empty values and for 1 or 2 columns as input for `guess_bactid` (now called `as.bactid`)
+  * So `yourdata %>% select(genus, species) %>% as.bactid()` now also works
 
 #### Other
 * Unit testing for R 3.0 and the latest available release: https://travis-ci.org/msberends/AMR

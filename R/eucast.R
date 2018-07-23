@@ -201,9 +201,10 @@ EUCAST_rules <- function(tbl,
   }
 
   # join to microorganisms table
-  joinby <- colnames(AMR::microorganisms)[1]
-  names(joinby) <- col_bactid
-  tbl <- tbl %>% left_join(y = AMR::microorganisms, by = joinby, suffix = c("_tempmicroorganisms", ""))
+  if (!tbl %>% pull(col_bactid) %>% is.bactid()) {
+    tbl[, col_bactid] <- tbl %>% pull(col_bactid) %>% as.bactid()
+  }
+  tbl <- tbl %>% left_join_microorganisms(by = col_bactid, suffix = c("_tempmicroorganisms", ""))
 
   # antibiotic classes
   aminoglycosides <- c(tobr, gent, kana, neom, neti, siso)

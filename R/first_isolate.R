@@ -22,7 +22,7 @@
 #' @param tbl a \code{data.frame} containing isolates.
 #' @param col_date column name of the result date (or date that is was received on the lab)
 #' @param col_patient_id column name of the unique IDs of the patients
-#' @param col_bactid column name of the unique IDs of the microorganisms (should occur in the \code{\link{microorganisms}} dataset). Get your bactid's with the function \code{\link{guess_bactid}}, that takes microorganism names as input.
+#' @param col_bactid column name of the unique IDs of the microorganisms: \code{bactid}'s. If this column has another class than \code{"bactid"}, values will be coerced using \code{\link{as.bactid}}.
 #' @param col_testcode column name of the test codes. Use \code{col_testcode = NA} to \strong{not} exclude certain test codes (like test codes for screening). In that case \code{testcodes_exclude} will be ignored. Supports tidyverse-like quotation.
 #' @param col_specimen column name of the specimen type or group
 #' @param col_icu column name of the logicals (\code{TRUE}/\code{FALSE}) whether a ward or department is an Intensive Care Unit (ICU)
@@ -126,7 +126,7 @@ first_isolate <- function(tbl,
 
   # bactid OR genus+species must be available
   if (is.na(col_bactid) & (is.na(col_genus) | is.na(col_species))) {
-    stop('`col_bactid or both `col_genus` and `col_species` must be available.')
+    stop('`col_bactid` or both `col_genus` and `col_species` must be available.')
   }
 
   # check if columns exist
@@ -152,6 +152,9 @@ first_isolate <- function(tbl,
   check_columns_existance(col_keyantibiotics)
 
   if (!is.na(col_bactid)) {
+    if (!tbl %>% pull(col_bactid) %>% is.bactid()) {
+      tbl[, col_bactid] <- tbl %>% pull(col_bactid) %>% as.bactid()
+    }
     tbl <- tbl %>% left_join_microorganisms(by = col_bactid)
     col_genus <- "genus"
     col_species <- "species"

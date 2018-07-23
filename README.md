@@ -126,6 +126,86 @@ after
 # 5 PSEAER    R    R    -    -    R
 ```
 
+Bacteria ID's can be retrieved with the `as.bactid` function. It uses any type of info about a microorganism as input. For example, all these will return value `STAAUR`, the ID of *S. aureus*:
+```r
+as.bactid("stau")
+as.bactid("STAU")
+as.bactid("staaur")
+as.bactid("S. aureus")
+as.bactid("S aureus")
+as.bactid("Staphylococcus aureus")
+as.bactid("MRSA") # Methicillin Resistant S. aureus
+as.bactid("VISA") # Vancomycin Intermediate S. aureus
+as.bactid("VRSA") # Vancomycin Resistant S. aureus
+```
+
+### New classes
+This package contains two new S3 classes: `mic` for MIC values (e.g. from Vitek or Phoenix) and `rsi` for antimicrobial drug interpretations (i.e. S, I and R). Both are actually ordered factors under the hood (an MIC of `2` being higher than `<=1` but lower than `>=32`, and for class `rsi` factors are ordered as `S < I < R`). 
+Both classes have extensions for existing generic functions like `print`, `summary` and `plot`.
+
+```r
+# Transform values to new classes
+mic_data <- as.mic(c(">=32", "1.0", "8", "<=0.128", "8", "16", "16"))
+rsi_data <- as.rsi(c(rep("S", 474), rep("I", 36), rep("R", 370)))
+```
+These functions also try to coerce valid values.
+
+Quick overviews when just printing objects:
+```r
+mic_data
+# Class 'mic': 7 isolates
+# 
+# <NA>  0
+# 
+# <=0.128       1       8      16    >=32
+#       1       1       2       2       1
+
+rsi_data
+# Class 'rsi': 880 isolates
+# 
+# <NA>:       0 
+# Sum of S:   474 
+# Sum of IR:  406 
+# - Sum of R: 370 
+# - Sum of I: 36 
+# 
+#   %S  %IR   %I   %R 
+# 53.9 46.1  4.1 42.0 
+```
+
+A plot of `rsi_data`:
+```r
+plot(rsi_data)
+```
+
+![example1](man/figures/rsi_example.png)
+
+A plot of `mic_data` (defaults to bar plot):
+```r
+plot(mic_data)
+```
+
+![example2](man/figures/mic_example.png)
+
+Other epidemiological functions:
+
+```r
+# Determine key antibiotic based on bacteria ID
+key_antibiotics(...)
+
+# Selection of first isolates of any patient
+first_isolate(...)
+
+# Calculate resistance levels of antibiotics, can be used with `summarise` (dplyr)
+rsi(...)
+# Predict resistance levels of antibiotics
+rsi_predict(...)
+
+# Get name of antibiotic by ATC code
+abname(...)
+abname("J01CR02", from = "atc", to = "umcg") # "AMCL"
+```
+
 ### Frequency tables
 Base R lacks a simple function to create frequency tables. We created such a function that works with almost all data types: `freq` (or `frequency_tbl`). It can be used in two ways:
 ```r
@@ -235,79 +315,12 @@ Learn more about this function with:
 ?freq
 ```
 
-### New classes
-This package contains two new S3 classes: `mic` for MIC values (e.g. from Vitek or Phoenix) and `rsi` for antimicrobial drug interpretations (i.e. S, I and R). Both are actually ordered factors under the hood (an MIC of `2` being higher than `<=1` but lower than `>=32`, and for class `rsi` factors are ordered as `S < I < R`). 
-Both classes have extensions for existing generic functions like `print`, `summary` and `plot`.
-
-```r
-# Transform values to new classes
-mic_data <- as.mic(c(">=32", "1.0", "8", "<=0.128", "8", "16", "16"))
-rsi_data <- as.rsi(c(rep("S", 474), rep("I", 36), rep("R", 370)))
-```
-These functions also try to coerce valid values.
-
-Quick overviews when just printing objects:
-```r
-mic_data
-# Class 'mic': 7 isolates
-# 
-# <NA>  0
-# 
-# <=0.128       1       8      16    >=32
-#       1       1       2       2       1
-
-rsi_data
-# Class 'rsi': 880 isolates
-# 
-# <NA>:       0 
-# Sum of S:   474 
-# Sum of IR:  406 
-# - Sum of R: 370 
-# - Sum of I: 36 
-# 
-#   %S  %IR   %I   %R 
-# 53.9 46.1  4.1 42.0 
-```
-
-A plot of `rsi_data`:
-```r
-plot(rsi_data)
-```
-
-![example1](man/figures/rsi_example.png)
-
-A plot of `mic_data` (defaults to bar plot):
-```r
-plot(mic_data)
-```
-
-![example2](man/figures/mic_example.png)
-
-Other epidemiological functions:
-
-```r
-# Determine key antibiotic based on bacteria ID
-key_antibiotics(...)
-
-# Selection of first isolates of any patient
-first_isolate(...)
-
-# Calculate resistance levels of antibiotics, can be used with `summarise` (dplyr)
-rsi(...)
-# Predict resistance levels of antibiotics
-rsi_predict(...)
-
-# Get name of antibiotic by ATC code
-abname(...)
-abname("J01CR02", from = "atc", to = "umcg") # "AMCL"
-```
-
 ### Databases included in package
 Datasets to work with antibiotics and bacteria properties.
 ```r
 # Dataset with 2000 random blood culture isolates from anonymised
 # septic patients between 2001 and 2017 in 5 Dutch hospitals
-septic_patients   # A tibble: 4,000 x 47
+septic_patients   # A tibble: 2,000 x 47
 
 # Dataset with ATC antibiotics codes, official names, trade names 
 # and DDD's (oral and parenteral)

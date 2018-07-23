@@ -1,4 +1,4 @@
-context("first_isolates.R")
+context("first_isolate.R")
 
 test_that("first isolates work", {
   # septic_patients contains 1959 out of 2000 first isolates

@@ -26,8 +26,8 @@
 #' df2 <- left_join_microorganisms(df, "bacteria_id")
 #' colnames(df2)
 inner_join_microorganisms <- function(x, by = 'bactid', suffix = c("2", ""), ...) {
-  if (any(class(x) %in% c('character', 'factor'))) {
-    x <- data.frame(bactid = x, stringsAsFactors = FALSE)
+  if (!any(class(x) %in% c("bactid", "data.frame", "matrix"))) {
+    x <- data.frame(bactid = as.bactid(x), stringsAsFactors = FALSE)
   }
   # no name set to `by` parameter
   if (is.null(names(by))) {
@@ -36,7 +36,9 @@ inner_join_microorganisms <- function(x, by = 'bactid', suffix = c("2", ""), ...
   } else {
     joinby <- by
   }
-  join <- dplyr::inner_join(x = x, y = AMR::microorganisms, by = joinby, suffix = c("2", ""), ...)
+  join <- suppressWarnings(
+    dplyr::inner_join(x = x, y = AMR::microorganisms, by = joinby, suffix = c("2", ""), ...)
+  )
   if (nrow(join) > nrow(x)) {
     warning('the newly joined tbl contains ', nrow(join) - nrow(x), ' rows more that its original')
   }
@@ -46,8 +48,8 @@ inner_join_microorganisms <- function(x, by = 'bactid', suffix = c("2", ""), ...
 #' @rdname join
 #' @export
 left_join_microorganisms <- function(x, by = 'bactid', suffix = c("2", ""), ...) {
-  if (any(class(x) %in% c('character', 'factor'))) {
-    x <- data.frame(bactid = x, stringsAsFactors = FALSE)
+  if (!any(class(x) %in% c("bactid", "data.frame", "matrix"))) {
+    x <- data.frame(bactid = as.bactid(x), stringsAsFactors = FALSE)
   }
   # no name set to `by` parameter
   if (is.null(names(by))) {
@@ -56,7 +58,9 @@ left_join_microorganisms <- function(x, by = 'bactid', suffix = c("2", ""), ...)
   } else {
     joinby <- by
   }
-  join <- dplyr::left_join(x = x, y = AMR::microorganisms, by = joinby, suffix = c("2", ""), ...)
+  join <- suppressWarnings(
+    dplyr::left_join(x = x, y = AMR::microorganisms, by = joinby, suffix = c("2", ""), ...)
+  )
   if (nrow(join) > nrow(x)) {
     warning('the newly joined tbl contains ', nrow(join) - nrow(x), ' rows more that its original')
   }
@@ -66,8 +70,8 @@ left_join_microorganisms <- function(x, by = 'bactid', suffix = c("2", ""), ...)
 #' @rdname join
 #' @export
 right_join_microorganisms <- function(x, by = 'bactid', suffix = c("2", ""), ...) {
-  if (any(class(x) %in% c('character', 'factor'))) {
-    x <- data.frame(bactid = x, stringsAsFactors = FALSE)
+  if (!any(class(x) %in% c("bactid", "data.frame", "matrix"))) {
+    x <- data.frame(bactid = as.bactid(x), stringsAsFactors = FALSE)
   }
   # no name set to `by` parameter
   if (is.null(names(by))) {
@@ -76,7 +80,9 @@ right_join_microorganisms <- function(x, by = 'bactid', suffix = c("2", ""), ...
   } else {
     joinby <- by
   }
-  join <- dplyr::right_join(x = x, y = AMR::microorganisms, by = joinby, suffix = c("2", ""), ...)
+  join <- suppressWarnings(
+    dplyr::right_join(x = x, y = AMR::microorganisms, by = joinby, suffix = c("2", ""), ...)
+  )
   if (nrow(join) > nrow(x)) {
     warning('the newly joined tbl contains ', nrow(join) - nrow(x), ' rows more that its original')
   }
@@ -86,8 +92,8 @@ right_join_microorganisms <- function(x, by = 'bactid', suffix = c("2", ""), ...
 #' @rdname join
 #' @export
 full_join_microorganisms <- function(x, by = 'bactid', suffix = c("2", ""), ...) {
-  if (any(class(x) %in% c('character', 'factor'))) {
-    x <- data.frame(bactid = x, stringsAsFactors = FALSE)
+  if (!any(class(x) %in% c("bactid", "data.frame", "matrix"))) {
+    x <- data.frame(bactid = as.bactid(x), stringsAsFactors = FALSE)
   }
   # no name set to `by` parameter
   if (is.null(names(by))) {
@@ -96,7 +102,9 @@ full_join_microorganisms <- function(x, by = 'bactid', suffix = c("2", ""), ...)
   } else {
     joinby <- by
   }
-  join <- dplyr::full_join(x = x, y = AMR::microorganisms, by = joinby, suffix = c("2", ""), ...)
+  join <- suppressWarnings(
+    dplyr::full_join(x = x, y = AMR::microorganisms, by = joinby, suffix = c("2", ""), ...)
+  )
   if (nrow(join) > nrow(x)) {
     warning('the newly joined tbl contains ', nrow(join) - nrow(x), ' rows more that its original')
   }
@@ -106,8 +114,8 @@ full_join_microorganisms <- function(x, by = 'bactid', suffix = c("2", ""), ...)
 #' @rdname join
 #' @export
 semi_join_microorganisms <- function(x, by = 'bactid', ...) {
-  if (any(class(x) %in% c('character', 'factor'))) {
-    x <- data.frame(bactid = x, stringsAsFactors = FALSE)
+  if (!any(class(x) %in% c("bactid", "data.frame", "matrix"))) {
+    x <- data.frame(bactid = as.bactid(x), stringsAsFactors = FALSE)
   }
   # no name set to `by` parameter
   if (is.null(names(by))) {
@@ -116,14 +124,16 @@ semi_join_microorganisms <- function(x, by = 'bactid', ...) {
   } else {
     joinby <- by
   }
-  dplyr::semi_join(x = x, y = AMR::microorganisms, by = joinby, ...)
+  suppressWarnings(
+    dplyr::semi_join(x = x, y = AMR::microorganisms, by = joinby, ...)
+  )
 }
 
 #' @rdname join
 #' @export
 anti_join_microorganisms <- function(x, by = 'bactid', ...) {
-  if (any(class(x) %in% c('character', 'factor'))) {
-    x <- data.frame(bactid = x, stringsAsFactors = FALSE)
+  if (!any(class(x) %in% c("bactid", "data.frame", "matrix"))) {
+    x <- data.frame(bactid = as.bactid(x), stringsAsFactors = FALSE)
   }
   # no name set to `by` parameter
   if (is.null(names(by))) {
@@ -132,5 +142,7 @@ anti_join_microorganisms <- function(x, by = 'bactid', ...) {
   } else {
     joinby <- by
   }
-  dplyr::anti_join(x = x, y = AMR::microorganisms, by = joinby, ...)
+  suppressWarnings(
+    dplyr::anti_join(x = x, y = AMR::microorganisms, by = joinby, ...)
+  )
 }

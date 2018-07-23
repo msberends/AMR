@@ -28,7 +28,6 @@ Depends:
     R (>= 3.0.0)
 Imports:
     backports,
-    broom,
     clipr,
     curl,
     dplyr (>= 0.7.0),

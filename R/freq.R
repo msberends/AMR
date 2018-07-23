@@ -273,8 +273,11 @@ frequency_tbl <- function(x,
   } else {
     NAs <- x[is.na(x)]
   }
+
   if (na.rm == TRUE) {
+    x_class <- class(x)
     x <- x[!x %in% NAs]
+    class(x) <- x_class
   }
 
   if (missing(sort.count) & 'factor' %in% class(x)) {
