@@ -8,9 +8,9 @@ test_that("first isolates work", {
                     col_date = "date",
                     col_patient_id = "patient_id",
                     col_bactid = "bactid",
-                    info = FALSE),
+                    info = TRUE),
       na.rm = TRUE),
-    1959)
+    1326)
 
   # septic_patients contains 1962 out of 2000 first *weighted* isolates
   expect_equal(
@@ -24,8 +24,8 @@ test_that("first isolates work", {
                       type = "keyantibiotics",
                       info = TRUE),
         na.rm = TRUE)),
-    1962)
-  # and 1997 when using points
+    1421)
+  # and 1961 when using points
   expect_equal(
     suppressWarnings(
       sum(
@@ -37,7 +37,7 @@ test_that("first isolates work", {
                       type = "points",
                       info = TRUE),
         na.rm = TRUE)),
-    1997)
+    1425)
 
   # septic_patients contains 1732 out of 2000 first non-ICU isolates
   expect_equal(
@@ -50,7 +50,7 @@ test_that("first isolates work", {
                     info = TRUE,
                     icu_exclude = TRUE),
       na.rm = TRUE),
-    1732)
+    1171)
 
   # set 1500 random observations to be of specimen type 'Urine'
   random_rows <- sample(x = 1:2000, size = 1500, replace = FALSE)
@@ -59,7 +59,7 @@ test_that("first isolates work", {
       first_isolate(tbl = mutate(septic_patients,
                                  specimen = if_else(row_number() %in% random_rows,
                                                     "Urine",
-                                                    "Unknown")),
+                                                    "Other")),
                     col_date = "date",
                     col_patient_id = "patient_id",
                     col_bactid = "bactid",
@@ -74,7 +74,7 @@ test_that("first isolates work", {
       first_isolate(tbl = mutate(septic_patients,
                                  specimen = if_else(row_number() %in% random_rows,
                                                     "Urine",
-                                                    "Unknown")),
+                                                    "Other")),
                     col_date = "date",
                     col_patient_id = "patient_id",
                     col_bactid = "bactid",

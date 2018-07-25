@@ -4,7 +4,7 @@
 \name{septic_patients}
 \alias{septic_patients}
 \title{Dataset with 2000 blood culture isolates of septic patients}
-\format{A data.frame with 2000 observations and 47 variables:
+\format{A data.frame with 2000 observations and 49 variables:
 \describe{
   \item{\code{date}}{date of receipt at the laboratory}
   \item{\code{hospital_id}}{ID of the hospital}
@@ -15,11 +15,8 @@
   \item{\code{sex}}{sex of the patient}
   \item{\code{patient_id}}{ID of the patient, first 10 characters of an SHA hash containing irretrievable information}
   \item{\code{bactid}}{ID of microorganism, see \code{\link{microorganisms}}}
-  \item{\code{peni:mupi}}{38 different antibiotics with class \code{rsi} (see \code{\link{as.rsi}}); these column names occur in \code{\link{antibiotics}} and can be translated with \code{\link{abname}}}
+  \item{\code{peni:rifa}}{40 different antibiotics with class \code{rsi} (see \code{\link{as.rsi}}); these column names occur in \code{\link{antibiotics}} data set and can be translated with \code{\link{abname}}}
 }}
-\source{
-MOLIS (LIS of Certe) - \url{https://www.certe.nl}
-}
 \usage{
 septic_patients
 }
@@ -45,15 +42,15 @@ my_data <- my_data \%>\%
 # ANALYSIS #
 # -------- #
 
-# 1. Get the amoxicillin resistance percentages
-#    of E. coli, divided by hospital:
+# 1. Get the amoxicillin resistance percentages (p)
+#     and numbers (n) of E. coli, divided by hospital:
 
 my_data \%>\%
-  filter(bactid == "ESCCOL",
+  filter(bactid == guess_bactid("E. coli"),
          first_isolates == TRUE) \%>\%
   group_by(hospital_id) \%>\%
-  summarise(n = n(),
-            amoxicillin_resistance = rsi(amox))
+  summarise(n = n_rsi(amox),
+            p = resistance(amox))
 
 
 # 2. Get the amoxicillin/clavulanic acid resistance
@@ -63,7 +60,7 @@ my_data \%>\%
   filter(bactid == guess_bactid("E. coli"),
          first_isolates == TRUE) \%>\%
   group_by(year = format(date, "\%Y")) \%>\%
-  summarise(n = n(),
-            amoxclav_resistance = rsi(amcl, minimum = 20))
+  summarise(n = n_rsi(amcl),
+            p = resistance(amcl, minimum = 20))
 }
 \keyword{datasets}

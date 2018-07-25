@@ -26,8 +26,8 @@
 #' df2 <- left_join_microorganisms(df, "bacteria_id")
 #' colnames(df2)
 inner_join_microorganisms <- function(x, by = 'bactid', suffix = c("2", ""), ...) {
-  if (!any(class(x) %in% c("bactid", "data.frame", "matrix"))) {
-    x <- data.frame(bactid = as.bactid(x), stringsAsFactors = FALSE)
+  if (!any(class(x) %in% c("data.frame", "matrix"))) {
+    x <- data.frame(bactid = as.character(x), stringsAsFactors = FALSE)
   }
   # no name set to `by` parameter
   if (is.null(names(by))) {
@@ -48,8 +48,8 @@ inner_join_microorganisms <- function(x, by = 'bactid', suffix = c("2", ""), ...
 #' @rdname join
 #' @export
 left_join_microorganisms <- function(x, by = 'bactid', suffix = c("2", ""), ...) {
-  if (!any(class(x) %in% c("bactid", "data.frame", "matrix"))) {
-    x <- data.frame(bactid = as.bactid(x), stringsAsFactors = FALSE)
+  if (!any(class(x) %in% c("data.frame", "matrix"))) {
+    x <- data.frame(bactid = as.character(x), stringsAsFactors = FALSE)
   }
   # no name set to `by` parameter
   if (is.null(names(by))) {
@@ -70,8 +70,8 @@ left_join_microorganisms <- function(x, by = 'bactid', suffix = c("2", ""), ...)
 #' @rdname join
 #' @export
 right_join_microorganisms <- function(x, by = 'bactid', suffix = c("2", ""), ...) {
-  if (!any(class(x) %in% c("bactid", "data.frame", "matrix"))) {
-    x <- data.frame(bactid = as.bactid(x), stringsAsFactors = FALSE)
+  if (!any(class(x) %in% c("data.frame", "matrix"))) {
+    x <- data.frame(bactid = as.character(x), stringsAsFactors = FALSE)
   }
   # no name set to `by` parameter
   if (is.null(names(by))) {
@@ -92,8 +92,8 @@ right_join_microorganisms <- function(x, by = 'bactid', suffix = c("2", ""), ...
 #' @rdname join
 #' @export
 full_join_microorganisms <- function(x, by = 'bactid', suffix = c("2", ""), ...) {
-  if (!any(class(x) %in% c("bactid", "data.frame", "matrix"))) {
-    x <- data.frame(bactid = as.bactid(x), stringsAsFactors = FALSE)
+  if (!any(class(x) %in% c("data.frame", "matrix"))) {
+    x <- data.frame(bactid = as.character(x), stringsAsFactors = FALSE)
   }
   # no name set to `by` parameter
   if (is.null(names(by))) {
@@ -114,8 +114,8 @@ full_join_microorganisms <- function(x, by = 'bactid', suffix = c("2", ""), ...)
 #' @rdname join
 #' @export
 semi_join_microorganisms <- function(x, by = 'bactid', ...) {
-  if (!any(class(x) %in% c("bactid", "data.frame", "matrix"))) {
-    x <- data.frame(bactid = as.bactid(x), stringsAsFactors = FALSE)
+  if (!any(class(x) %in% c("data.frame", "matrix"))) {
+    x <- data.frame(bactid = as.character(x), stringsAsFactors = FALSE)
   }
   # no name set to `by` parameter
   if (is.null(names(by))) {
@@ -132,8 +132,8 @@ semi_join_microorganisms <- function(x, by = 'bactid', ...) {
 #' @rdname join
 #' @export
 anti_join_microorganisms <- function(x, by = 'bactid', ...) {
-  if (!any(class(x) %in% c("bactid", "data.frame", "matrix"))) {
-    x <- data.frame(bactid = as.bactid(x), stringsAsFactors = FALSE)
+  if (!any(class(x) %in% c("data.frame", "matrix"))) {
+    x <- data.frame(bactid = as.character(x), stringsAsFactors = FALSE)
   }
   # no name set to `by` parameter
   if (is.null(names(by))) {

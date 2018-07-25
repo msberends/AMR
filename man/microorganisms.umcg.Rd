@@ -9,9 +9,6 @@
   \item{\code{mocode}}{Code of microorganism according to UMCG MMB}
   \item{\code{bactid}}{Code of microorganism in \code{\link{microorganisms}}}
 }}
-\source{
-MOLIS (LIS of Certe) - \url{https://www.certe.nl} \cr \cr GLIMS (LIS of UMCG) - \url{https://www.umcg.nl}
-}
 \usage{
 microorganisms.umcg
 }

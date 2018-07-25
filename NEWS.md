@@ -2,8 +2,9 @@
 #### New
 * **BREAKING**: `rsi_df` was removed in favour of new functions `resistance` and `susceptibility`. Now, all functions used to calculate resistance (`resistance` and `susceptibility`) use **hybrid evaluation**. This means calculations are not done in R directly but rather in C++ using the `Rcpp` package, making them 25 to 30 times faster. The function `rsi` still works, but is deprecated.
 * **BREAKING**: the methodology for determining first weighted isolates was changed. The antibiotics that are compared between isolates (call *key antibiotics*) to include more first isolates (afterwards called first *weighted* isolates) are now as follows:
-  * Gram-positive: amoxicillin, amoxicillin/clavlanic acid, cefuroxime, piperacillin/tazobactam, ciprofloxacin, trimethoprim/sulfamethoxazole, vancomycin, teicoplanin, tetracycline, erythromycin, oxacillin, rifampicin
-  * Gram-negative: amoxicillin, amoxicillin/clavlanic acid, cefuroxime, piperacillin/tazobactam, ciprofloxacin, trimethoprim/sulfamethoxazole, gentamicin, tobramycin, colistin, cefotaxime, ceftazidime, meropenem
+  * Universal: amoxicillin, amoxicillin/clavlanic acid, cefuroxime, piperacillin/tazobactam, ciprofloxacin,  trimethoprim/sulfamethoxazole
+  * Gram-positive: vancomycin, teicoplanin, tetracycline, erythromycin, oxacillin, rifampicin
+  * Gram-negative: gentamicin, tobramycin, colistin, cefotaxime, ceftazidime, meropenem
 * Functions `as.bactid` and `is.bactid` to transform/look up microbial ID's; this replaces the function `guess_bactid` but it will remain available for backwards compatibility
 * For convience, new descriptive statistical functions `kurtosis` and `skewness` that are lacking in base R - they are generic functions and have support for vectors, data.frames and matrices
 * Function `g.test` to perform the Χ<sup>2</sup> distributed [*G*-test](https://en.wikipedia.org/wiki/G-test), which use is the same as `chisq.test`
@@ -23,6 +24,7 @@
   * Possibility to globally set the default for the amount of items to print, with `options(max.print.freq = n)` where *n* is your preset value
 
 #### Changed
+* Updates version of the `setic_patients` dataset to better reflect the reality
 * Pretty printing for tibbles removed as it is not really the scope of this package
 * Improved speed of key antibiotics comparison for determining first isolates
 * Column names for the `key_antibiotics` function are now generic: 6 for broadspectrum ABs, 6 for Gram-positive specific and 6 for Gram-negative specific ABs
@@ -36,6 +38,7 @@
   * `as.rsi("<=0.002; S")` will return `S`
   * `as.mic("<=0.002; S")` will return `<=0.002`
 * Now possible to coerce MIC values with a space between operator and value, i.e. `as.mic("<= 0.002")` now works
+* Classes `rsi` and `mic` do not add the attribute `package.version` anymore
 * Added `"groups"` option for `atc_property(..., property)`. It will return a vector of the ATC hierarchy as defined by the [WHO](https://www.whocc.no/atc/structure_and_principles/). The new function `atc_groups` is a convenient wrapper around this.
 * Build-in host check for `atc_property` as it requires the host set by `url` to be responsive
 * Improved `first_isolate` algorithm to exclude isolates where bacteria ID or genus is unavailable

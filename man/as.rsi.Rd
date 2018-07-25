@@ -13,7 +13,7 @@ is.rsi(x)
 \item{x}{vector}
 }
 \value{
-Ordered factor with new class \code{rsi} and new attributes \code{package} and \code{package.version}
+Ordered factor with new class \code{rsi} and new attribute \code{package}
 }
 \description{
 This transforms a vector to a new class \code{rsi}, which is an ordered factor with levels \code{S < I < R}. Invalid antimicrobial interpretations will be translated as \code{NA} with a warning.
@@ -24,9 +24,12 @@ rsi_data <- as.rsi(c(rep("S", 474), rep("I", 36), rep("R", 370), "A", "B", "C"))
 is.rsi(rsi_data)
 
 # this can also coerce combined MIC/RSI values:
-as.rsi("<= 0.002; R") # will return R
+as.rsi("<= 0.002; S") # will return S
 
 plot(rsi_data)    # for percentages
 barplot(rsi_data) # for frequencies
+}
+\seealso{
+\code{\link{as.mic}}
 }
 \keyword{rsi}

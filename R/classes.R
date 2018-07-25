@@ -21,18 +21,18 @@
 #' This transforms a vector to a new class \code{rsi}, which is an ordered factor with levels \code{S < I < R}. Invalid antimicrobial interpretations will be translated as \code{NA} with a warning.
 #' @rdname as.rsi
 #' @param x vector
-#' @return Ordered factor with new class \code{rsi} and new attributes \code{package} and \code{package.version}
+#' @return Ordered factor with new class \code{rsi} and new attribute \code{package}
 #' @keywords rsi
 #' @export
 #' @importFrom dplyr %>%
-#' @importFrom utils packageDescription
+#' @seealso \code{\link{as.mic}}
 #' @examples
 #' rsi_data <- as.rsi(c(rep("S", 474), rep("I", 36), rep("R", 370)))
 #' rsi_data <- as.rsi(c(rep("S", 474), rep("I", 36), rep("R", 370), "A", "B", "C"))
 #' is.rsi(rsi_data)
 #'
 #' # this can also coerce combined MIC/RSI values:
-#' as.rsi("<= 0.002; R") # will return R
+#' as.rsi("<= 0.002; S") # will return S
 #'
 #' plot(rsi_data)    # for percentages
 #' barplot(rsi_data) # for frequencies
@@ -76,7 +76,6 @@ as.rsi <- function(x) {
     x <- x %>% factor(levels = c("S", "I", "R"), ordered = TRUE)
     class(x) <- c('rsi', 'ordered', 'factor')
     attr(x, 'package') <- 'AMR'
-    attr(x, 'package.version') <- packageDescription('AMR')$Version
     x
   }
 }
@@ -196,21 +195,21 @@ barplot.rsi <- function(height, ...) {
 
 #' Class 'mic'
 #'
-#' This transforms a vector to a new class\code{mic}, which is an ordered factor with valid MIC values as levels. Invalid MIC values will be translated as \code{NA} with a warning.
+#' This transforms a vector to a new class \code{mic}, which is an ordered factor with valid MIC values as levels. Invalid MIC values will be translated as \code{NA} with a warning.
 #' @rdname as.mic
 #' @param x vector
 #' @param na.rm a logical indicating whether missing values should be removed
-#' @return Ordered factor with new class \code{mic} and new attributes \code{package} and \code{package.version}
+#' @return Ordered factor with new class \code{mic} and new attribute \code{package}
 #' @keywords mic
 #' @export
 #' @importFrom dplyr %>%
-#' @importFrom utils packageDescription
+#' @seealso \code{\link{as.rsi}}
 #' @examples
 #' mic_data <- as.mic(c(">=32", "1.0", "1", "1.00", 8, "<=0.128", "8", "16", "16"))
 #' is.mic(mic_data)
 #'
 #' # this can also coerce combined MIC/RSI values:
-#' as.mic("<=0.002; R") # will return <=0.002
+#' as.mic("<=0.002; S") # will return <=0.002
 #'
 #' plot(mic_data)
 #' barplot(mic_data)
@@ -319,7 +318,6 @@ as.mic <- function(x, na.rm = FALSE) {
                 ordered = TRUE)
     class(x) <- c('mic', 'ordered', 'factor')
     attr(x, 'package') <- 'AMR'
-    attr(x, 'package.version') <- packageDescription('AMR')$Version
     x
   }
 }

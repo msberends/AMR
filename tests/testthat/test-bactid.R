@@ -37,8 +37,8 @@ test_that("as.bactid works", {
       select(genus) %>%
       as.bactid() %>%
       as.character(),
-    c("STC", "STC", "NEI", "STA", "STA",
-      "NEI", "ENT", "ENT", "ESC", "KLE"))
+    c("ESC", "ESC", "STA", "STA", "STA",
+      "STA", "STA", "STA", "STA", "STA"))
 
   # select with two columns
   expect_identical(

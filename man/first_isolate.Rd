@@ -65,7 +65,7 @@ Determine first (weighted) isolates of all microorganisms of every patient per e
 }
 \section{Key antibiotics}{
 
-    There are two ways to determine whether isolates can be included as first \emph{weighted} isolates: \cr
+    There are two ways to determine whether isolates can be included as first \emph{weighted} isolates which will give generally the same results: \cr
 
     \strong{1. Using} \code{type = "keyantibiotics"} \strong{and parameter} \code{ignore_I} \cr
     Any difference from S to R (or vice versa) will (re)select an isolate as a first weighted isolate. With \code{ignore_I = FALSE}, also differences from I to S|R (or vice versa) will lead to this. This is a reliable method and 30-35 times faster than method 2. \cr
@@ -84,6 +84,24 @@ my_patients$first_isolate <- my_patients \%>\%
   first_isolate(col_date = "date",
                 col_patient_id = "patient_id",
                 col_bactid = "bactid")
+
+# Now let's see if first isolates matter:
+A <- my_patients \%>\%
+  group_by(hospital_id) \%>\%
+  summarise(count = n_rsi(gent), # gentamicin
+            resistance = resistance(gent))
+
+B <- my_patients \%>\%
+  filter(first_isolate == TRUE) \%>\%
+  group_by(hospital_id) \%>\%
+  summarise(count = n_rsi(gent), # gentamicin
+            resistance = resistance(gent))
+
+# Have a look at A and B. B is more reliable because every isolate is
+# counted once. Gentamicin resitance in hospital D seems to be 5\%
+# higher than originally thought.
+
+## OTHER EXAMPLES:
 
 \dontrun{
 

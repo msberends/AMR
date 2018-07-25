@@ -415,7 +415,6 @@ frequency_tbl <- function(x,
 
   class(df) <- c('frequency_tbl', class(df))
   attr(df, 'package') <- 'AMR'
-  attr(df, 'package.version') <- packageDescription('AMR')$Version
 
   if (markdown == TRUE) {
     tbl_format <- 'markdown'
@@ -567,7 +566,6 @@ print.frequency_tbl <- function(x, nmax = getOption("max.print.freq", default = 
 #' @export
 as.data.frame.frequency_tbl <- function(x, ...) {
   attr(x, 'package') <- NULL
-  attr(x, 'package.version') <- NULL
   attr(x, 'opt') <- NULL
   as.data.frame.data.frame(x, ...)
 }
@@ -578,7 +576,6 @@ as.data.frame.frequency_tbl <- function(x, ...) {
 #' @importFrom dplyr as_tibble
 as_tibble.frequency_tbl <- function(x, validate = TRUE, ..., rownames = NA) {
   attr(x, 'package') <- NULL
-  attr(x, 'package.version') <- NULL
   attr(x, 'opt') <- NULL
   as_tibble(x = as.data.frame(x), validate = validate, ..., rownames = rownames)
 }

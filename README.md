@@ -26,9 +26,13 @@ This R package contains functions to make **microbiological, epidemiological dat
 
 With `AMR` you can:
 * Calculate the resistance (and even co-resistance) of microbial isolates with the `resistance` and `susceptibility` functions, that can also be used with the `dplyr` package (e.g. in conjunction with `summarise`)
-* Predict antimicrobial resistance for the nextcoming years with the `rsi_predict` function
+* Predict antimicrobial resistance for the nextcoming years with the `resistance_predict` function
 * Apply [EUCAST rules to isolates](http://www.eucast.org/expert_rules_and_intrinsic_resistance/) with the `EUCAST_rules` function
 * Identify first isolates of every patient [using guidelines from the CLSI](https://clsi.org/standards/products/microbiology/documents/m39/) (Clinical and Laboratory Standards Institute) with the `first_isolate` function
+  * You can also identify first *weighted* isolates of every patient, an adjusted version of the CLSI guideline. This takes into account key antibiotics of every strain and compares them. The following 12 antibiotics will be used as key antibiotics at default:
+    * Universal: amoxicillin, amoxicillin/clavlanic acid, cefuroxime, piperacillin/tazobactam, ciprofloxacin,  trimethoprim/sulfamethoxazole
+    * Specific for Gram-positives: vancomycin, teicoplanin, tetracycline, erythromycin, oxacillin, rifampicin
+    * Specific for Gram-negatives: gentamicin, tobramycin, colistin, cefotaxime, ceftazidime, meropenem
 * Get antimicrobial ATC properties from the WHO Collaborating Centre for Drug Statistics Methodology ([WHOCC](https://www.whocc.no/atc_ddd_methodology/who_collaborating_centre/)), to be able to:
   * Translate antibiotic codes (like *AMOX*), official names (like *amoxicillin*) and even trade names (like *Amoxil* or *Trimox*) to an [ATC code](https://www.whocc.no/atc_ddd_index/?code=J01CA04&showdescription=no) (like *J01CA04*) and vice versa with the `abname` function
   * Get the latest antibiotic properties like hierarchic groups and [defined daily dose](https://en.wikipedia.org/wiki/Defined_daily_dose) (DDD) with units and administration form from the WHOCC website with the `atc_property` function
@@ -219,35 +223,33 @@ mydata %>% freq(myvariable)
 Factors sort on item by default:
 ```r
 septic_patients %>% freq(hospital_id)
-# Frequency table of `hospital_id`
+# Frequency table of `hospital_id` 
 # Class:     factor
 # Length:    2000 (of which NA: 0 = 0.0%)
-# Unique:    5
+# Unique:    4
 # 
 #      Item    Count   Percent   Cum. Count   Cum. Percent   (Factor Level)
 # ---  -----  ------  --------  -----------  -------------  ---------------
-# 1    A         233     11.7%          233          11.7%                1
-# 2    B         583     29.1%          816          40.8%                2
-# 3    C         221     11.1%         1037          51.8%                3
-# 4    D         650     32.5%         1687          84.4%                4
-# 5    E         313     15.7%         2000         100.0%                5
+# 1    A         319     16.0%          319          16.0%                1
+# 2    B         661     33.1%          980          49.0%                2
+# 3    C         256     12.8%         1236          61.8%                3
+# 4    D         764     38.2%         2000         100.0%                4
 ```
 
 This can be changed with the `sort.count` parameter:
 ```r
 septic_patients %>% freq(hospital_id, sort.count = TRUE)
-# Frequency table of `hospital_id`
+# Frequency table of `hospital_id` 
 # Class:     factor
 # Length:    2000 (of which NA: 0 = 0.0%)
-# Unique:    5
+# Unique:    4
 # 
 #      Item    Count   Percent   Cum. Count   Cum. Percent   (Factor Level)
 # ---  -----  ------  --------  -----------  -------------  ---------------
-# 1    D         650     32.5%          650          32.5%                4
-# 2    B         583     29.1%         1233          61.7%                2
-# 3    E         313     15.7%         1546          77.3%                5
-# 4    A         233     11.7%         1779          88.9%                1
-# 5    C         221     11.1%         2000         100.0%                3
+# 1    D         764     38.2%          764          38.2%                4
+# 2    B         661     33.1%         1425          71.2%                2
+# 3    A         319     16.0%         1744          87.2%                1
+# 4    C         256     12.8%         2000         100.0%                3
 ```
 
 All other types, like numbers, characters and dates, sort on count by default:
@@ -256,56 +258,56 @@ septic_patients %>% freq(date)
 # Frequency table of `date` 
 # Class:     Date
 # Length:    2000 (of which NA: 0 = 0.0%)
-# Unique:    1662
+# Unique:    1151
 # 
-# Oldest:    2 January 2001
-# Newest:    18 October 2017 (+6133)
-# Median:    6 December 2009 (~53%)
+# Oldest:    2 January 2002
+# Newest:    28 December 2017 (+5839)
+# Median:    7 Augustus 2009 (~48%)
 # 
 #      Item          Count   Percent   Cum. Count   Cum. Percent
 # ---  -----------  ------  --------  -----------  -------------
-# 1    2008-12-24        5      0.2%            5           0.2%
-# 2    2010-12-10        4      0.2%            9           0.4%
-# 3    2011-03-03        4      0.2%           13           0.6%
-# 4    2013-06-24        4      0.2%           17           0.8%
-# 5    2017-09-01        4      0.2%           21           1.1%
-# 6    2002-09-02        3      0.2%           24           1.2%
-# 7    2003-10-14        3      0.2%           27           1.4%
-# 8    2004-06-25        3      0.2%           30           1.5%
-# 9    2004-06-27        3      0.2%           33           1.7%
-# 10   2004-10-29        3      0.2%           36           1.8%
-# 11   2005-09-27        3      0.2%           39           2.0%
-# 12   2006-08-01        3      0.2%           42           2.1%
-# 13   2006-10-10        3      0.2%           45           2.2%
-# 14   2007-11-16        3      0.2%           48           2.4%
-# 15   2008-03-09        3      0.2%           51           2.5%
-# [ reached getOption("max.print.freq") -- omitted 1647 entries, n = 1949 (97.5%) ]
+# 1    2016-05-21       10      0.5%           10           0.5%
+# 2    2004-11-15        8      0.4%           18           0.9%
+# 3    2013-07-29        8      0.4%           26           1.3%
+# 4    2017-06-12        8      0.4%           34           1.7%
+# 5    2015-11-19        7      0.4%           41           2.1%
+# 6    2005-12-22        6      0.3%           47           2.4%
+# 7    2015-10-12        6      0.3%           53           2.6%
+# 8    2002-05-16        5      0.2%           58           2.9%
+# 9    2004-02-02        5      0.2%           63           3.1%
+# 10   2004-02-18        5      0.2%           68           3.4%
+# 11   2005-08-16        5      0.2%           73           3.6%
+# 12   2005-09-01        5      0.2%           78           3.9%
+# 13   2006-06-29        5      0.2%           83           4.2%
+# 14   2007-08-10        5      0.2%           88           4.4%
+# 15   2008-08-29        5      0.2%           93           4.7%
+# [ reached getOption("max.print.freq") -- omitted 1136 entries, n = 1907 (95.3%) ]
 ```
 For numeric values, some extra descriptive statistics will be calculated:
 ```r
 freq(runif(n = 10, min = 1, max = 5))
-# Frequency table 
+# Frequency table  
 # Class:     numeric
 # Length:    10 (of which NA: 0 = 0.0%)
 # Unique:    10
-#   
-# Mean:      2.9
-# Std. dev.: 1.3 (CV: 0.43, MAD: 1.5)
-# Five-Num:  1.5 | 1.7 | 2.6 | 4.0 | 4.7 (IQR: 2.3, CQV: 0.4)
+# 
+# Mean:      3.4
+# Std. dev.: 1.3 (CV: 0.38, MAD: 1.3)
+# Five-Num:  1.6 | 2.0 | 3.9 | 4.7 | 4.8 (IQR: 2.7, CQV: 0.4)
 # Outliers:  0
 # 
-#      Item   Count   Percent   Cum. Count   Cum. Percent
-# ---------  ------  --------  -----------  -------------
-#  1.132033       1     10.0%            1          10.0%
-#  2.226903       1     10.0%            2          20.0%
-#  2.280779       1     10.0%            3          30.0%
-#  2.640898       1     10.0%            4          40.0%
-#  2.913462       1     10.0%            5          50.0%
-#  3.364201       1     10.0%            6          60.0%
-#  3.771975       1     10.0%            7          70.0%
-#  3.802861       1     10.0%            8          80.0%
-#  3.803547       1     10.0%            9          90.0%
-#  3.985691       1     10.0%           10         100.0%
+#           Item   Count   Percent   Cum. Count   Cum. Percent
+# ---  ---------  ------  --------  -----------  -------------
+# 1     1.568997       1     10.0%            1          10.0%
+# 2     1.993575       1     10.0%            2          20.0%
+# 3     2.022348       1     10.0%            3          30.0%
+# 4     2.236038       1     10.0%            4          40.0%
+# 5     3.579828       1     10.0%            5          50.0%
+# 6     4.178081       1     10.0%            6          60.0%
+# 7     4.394818       1     10.0%            7          70.0%
+# 8     4.689871       1     10.0%            8          80.0%
+# 9     4.698626       1     10.0%            9          90.0%
+# 10    4.751488       1     10.0%           10         100.0%
 # 
 # Warning message:
 # All observations are unique. 
@@ -320,7 +322,7 @@ Datasets to work with antibiotics and bacteria properties.
 ```r
 # Dataset with 2000 random blood culture isolates from anonymised
 # septic patients between 2001 and 2017 in 5 Dutch hospitals
-septic_patients   # A tibble: 2,000 x 47
+septic_patients   # A tibble: 2,000 x 49
 
 # Dataset with ATC antibiotics codes, official names, trade names 
 # and DDD's (oral and parenteral)

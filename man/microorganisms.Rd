@@ -19,9 +19,6 @@
   \item{\code{type_nl}}{Type of microorganism in Dutch, like \code{"Bacterie"} and \code{"Schimmel/gist"}}
   \item{\code{gramstain_nl}}{Gram of microorganism in Dutch, like \code{"Negatieve staven"}}
 }}
-\source{
-MOLIS (LIS of Certe) - \url{https://www.certe.nl}
-}
 \usage{
 microorganisms
 }

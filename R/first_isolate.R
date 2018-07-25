@@ -41,7 +41,7 @@
 #' @details \strong{WHY THIS IS SO IMPORTANT} \cr
 #'     To conduct an analysis of antimicrobial resistance, you should only include the first isolate of every patient per episode \href{https://www.ncbi.nlm.nih.gov/pubmed/17304462}{[1]}. If you would not do this, you could easily get an overestimate or underestimate of the resistance of an antibiotic. Imagine that a patient was admitted with an MRSA and that it was found in 5 different blood cultures the following week. The resistance percentage of oxacillin of all \emph{S. aureus} isolates would be overestimated, because you included this MRSA more than once. It would be \href{https://en.wikipedia.org/wiki/Selection_bias}{selection bias}.
 #' @section Key antibiotics:
-#'     There are two ways to determine whether isolates can be included as first \emph{weighted} isolates: \cr
+#'     There are two ways to determine whether isolates can be included as first \emph{weighted} isolates which will give generally the same results: \cr
 #'
 #'     \strong{1. Using} \code{type = "keyantibiotics"} \strong{and parameter} \code{ignore_I} \cr
 #'     Any difference from S to R (or vice versa) will (re)select an isolate as a first weighted isolate. With \code{ignore_I = FALSE}, also differences from I to S|R (or vice versa) will lead to this. This is a reliable method and 30-35 times faster than method 2. \cr
@@ -64,6 +64,24 @@
 #'   first_isolate(col_date = "date",
 #'                 col_patient_id = "patient_id",
 #'                 col_bactid = "bactid")
+#'
+#' # Now let's see if first isolates matter:
+#' A <- my_patients %>%
+#'   group_by(hospital_id) %>%
+#'   summarise(count = n_rsi(gent), # gentamicin
+#'             resistance = resistance(gent))
+#'
+#' B <- my_patients %>%
+#'   filter(first_isolate == TRUE) %>%
+#'   group_by(hospital_id) %>%
+#'   summarise(count = n_rsi(gent), # gentamicin
+#'             resistance = resistance(gent))
+#'
+#' # Have a look at A and B. B is more reliable because every isolate is
+#' # counted once. Gentamicin resitance in hospital D seems to be 5%
+#' # higher than originally thought.
+#'
+#' ## OTHER EXAMPLES:
 #'
 #' \dontrun{
 #'
@@ -153,7 +171,7 @@ first_isolate <- function(tbl,
 
   if (!is.na(col_bactid)) {
     if (!tbl %>% pull(col_bactid) %>% is.bactid()) {
-      tbl[, col_bactid] <- tbl %>% pull(col_bactid) %>% as.bactid()
+      warning("Improve integrity of the `", col_bactid, "` column by transforming it with 'as.bactid'.")
     }
     tbl <- tbl %>% left_join_microorganisms(by = col_bactid)
     col_genus <- "genus"
@@ -179,7 +197,6 @@ first_isolate <- function(tbl,
     filter_specimen <- ''
   }
 
-  weighted.notice <- ''
   # filter on specimen group and keyantibiotics when they are filled in
   if (!is.na(filter_specimen) & filter_specimen != '') {
     check_columns_existance(col_specimen, tbl)
@@ -317,7 +334,9 @@ first_isolate <- function(tbl,
                                (date_lab - lag(date_lab)) + lag(days_diff),
                                0))
 
+  weighted.notice <- ''
   if (col_keyantibiotics != '') {
+    weighted.notice <- 'weighted '
     if (info == TRUE) {
       if (type == 'keyantibiotics') {
         cat('[Criteria] Inclusion based on key antibiotics, ')

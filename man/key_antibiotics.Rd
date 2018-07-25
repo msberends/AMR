@@ -56,7 +56,7 @@ The function \code{key_antibiotics} returns a character vector with 12 antibioti
 }
 \section{Key antibiotics}{
 
-    There are two ways to determine whether isolates can be included as first \emph{weighted} isolates: \cr
+    There are two ways to determine whether isolates can be included as first \emph{weighted} isolates which will give generally the same results: \cr
 
     \strong{1. Using} \code{type = "keyantibiotics"} \strong{and parameter} \code{ignore_I} \cr
     Any difference from S to R (or vice versa) will (re)select an isolate as a first weighted isolate. With \code{ignore_I = FALSE}, also differences from I to S|R (or vice versa) will lead to this. This is a reliable method and 30-35 times faster than method 2. \cr
@@ -66,19 +66,26 @@ The function \code{key_antibiotics} returns a character vector with 12 antibioti
 }
 
 \examples{
-\dontrun{
+# septic_patients is a dataset available in the AMR package
+?septic_patients
+my_patients <- septic_patients
+
+library(dplyr)
 # set key antibiotics to a new variable
-tbl$keyab <- key_antibiotics(tbl)
+my_patients <- my_patients \%>\%
+  mutate(keyab = key_antibiotics(.)) \%>\%
+  mutate(
+    # now calculate first isolates
+    first_regular = first_isolate(., "date", "patient_id", "bactid"),
+    # and first WEIGHTED isolates
+    first_weighted = first_isolate(., "date", "patient_id", "bactid",
+                                   col_keyantibiotics = "keyab")
+  )
 
-# add regular first isolates
-tbl$first_isolate <-
-  first_isolate(tbl)
+# Check the difference, in this data set it results in 7\% more isolates:
+sum(my_patients$first_regular, na.rm = TRUE)
+sum(my_patients$first_weighted, na.rm = TRUE)
 
-# add first WEIGHTED isolates using key antibiotics
-tbl$first_isolate_weighed <-
-  first_isolate(tbl,
-                col_keyantibiotics = 'keyab')
-}
 
 # output of the `key_antibiotics` function could be like this:
 strainA <- "SSSRR.S.R..S"

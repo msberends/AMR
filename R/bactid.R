@@ -221,7 +221,6 @@ as.bactid <- function(x) {
   }
   class(x) <- "bactid"
   attr(x, 'package') <- 'AMR'
-  attr(x, 'package.version') <- packageDescription('AMR')$Version
   x
 }
 
