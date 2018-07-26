@@ -22,8 +22,73 @@
 #' @param tbl table with antibiotic columns, like e.g. \code{amox} and \code{amcl}
 #' @param col_bactid column name of the bacteria ID in \code{tbl} - values of this column should be present in \code{microorganisms$bactid}, see \code{\link{microorganisms}}
 #' @param info print progress
-#' @param amcl,amik,amox,ampi,azit,aztr,cefa,cfra,cfep,cfot,cfox,cfta,cftr,cfur,chlo,cipr,clar,clin,clox,coli,czol,dapt,doxy,erta,eryt,fosf,fusi,gent,imip,kana,levo,linc,line,mero,mino,moxi,nali,neom,neti,nitr,novo,norf,oflo,peni,pita,poly,qida,rifa,roxi,siso,teic,tetr,tica,tige,tobr,trim,trsu,vanc column names of antibiotics. Use \code{NA} to skip a column, like \code{tica = NA}. Non-existing column will be skipped.
+#' @param amcl,amik,amox,ampi,azit,azlo,aztr,cefa,cfep,cfot,cfox,cfra,cfta,cftr,cfur,chlo,cipr,clar,clin,clox,coli,czol,dapt,doxy,erta,eryt,fosf,fusi,gent,imip,kana,levo,linc,line,mero,mezl,mino,moxi,nali,neom,neti,nitr,norf,novo,oflo,peni,pita,poly,pris,qida,rifa,roxi,siso,teic,tetr,tica,tige,tobr,trim,trsu,vanc column names of antibiotics. Use \code{NA} to skip a column, like \code{tica = NA}. Non-existing columns will anyway be skipped. See the Antibiotics section for an explanation of the abbreviations.
 #' @param ... parameters that are passed on to \code{EUCAST_rules}
+#' @section Abbrevations of antibiotics:
+#' Abbrevations of the column containing antibiotics:
+#'
+#'  \strong{amcl}: amoxicillin and beta-lactamase inhibitor (\emph{J01CR02}),
+#'  \strong{amik}: amikacin (\emph{J01GB06}),
+#'  \strong{amox}: amoxicillin (\emph{J01CA04}),
+#'  \strong{ampi}: ampicillin (\emph{J01CA01}),
+#'  \strong{azit}: azithromycin (\emph{J01FA10}),
+#'  \strong{azlo}: azlocillin (\emph{J01CA09}),
+#'  \strong{aztr}: aztreonam (\emph{J01DF01}),
+#'  \strong{cefa}: cefaloridine (\emph{J01DB02}),
+#'  \strong{cfep}: cefepime (\emph{J01DE01}),
+#'  \strong{cfot}: cefotaxime (\emph{J01DD01}),
+#'  \strong{cfox}: cefoxitin (\emph{J01DC01}),
+#'  \strong{cfra}: cefradine (\emph{J01DB09}),
+#'  \strong{cfta}: ceftazidime (\emph{J01DD02}),
+#'  \strong{cftr}: ceftriaxone (\emph{J01DD04}),
+#'  \strong{cfur}: cefuroxime (\emph{J01DC02}),
+#'  \strong{chlo}: chloramphenicol (\emph{J01BA01}),
+#'  \strong{cipr}: ciprofloxacin (\emph{J01MA02}),
+#'  \strong{clar}: clarithromycin (\emph{J01FA09}),
+#'  \strong{clin}: clindamycin (\emph{J01FF01}),
+#'  \strong{clox}: flucloxacillin (\emph{J01CF05}),
+#'  \strong{coli}: colistin (\emph{J01XB01}),
+#'  \strong{czol}: cefazolin (\emph{J01DB04}),
+#'  \strong{dapt}: daptomycin (\emph{J01XX09}),
+#'  \strong{doxy}: doxycycline (\emph{J01AA02}),
+#'  \strong{erta}: ertapenem (\emph{J01DH03}),
+#'  \strong{eryt}: erythromycin (\emph{J01FA01}),
+#'  \strong{fosf}: fosfomycin (\emph{J01XX01}),
+#'  \strong{fusi}: fusidic acid (\emph{J01XC01}),
+#'  \strong{gent}: gentamicin (\emph{J01GB03}),
+#'  \strong{imip}: imipenem and cilastatin (\emph{J01DH51}),
+#'  \strong{kana}: kanamycin (\emph{J01GB04}),
+#'  \strong{levo}: levofloxacin (\emph{J01MA12}),
+#'  \strong{linc}: lincomycin (\emph{J01FF02}),
+#'  \strong{line}: linezolid (\emph{J01XX08}),
+#'  \strong{mero}: meropenem (\emph{J01DH02}),
+#'  \strong{mezl}: mezlocillin (\emph{J01CA10}),
+#'  \strong{mino}: minocycline (\emph{J01AA08}),
+#'  \strong{moxi}: moxifloxacin (\emph{J01MA14}),
+#'  \strong{nali}: nalidixic acid (\emph{J01MB02}),
+#'  \strong{neom}: neomycin (\emph{J01GB05}),
+#'  \strong{neti}: netilmicin (\emph{J01GB07}),
+#'  \strong{nitr}: nitrofurantoin (\emph{J01XE01}),
+#'  \strong{norf}: norfloxacin (\emph{J01MA06}),
+#'  \strong{novo}: novobiocin (an ATCvet code: \emph{QJ01XX95}),
+#'  \strong{oflo}: ofloxacin (\emph{J01MA01}),
+#'  \strong{peni}: penicillins, combinations with other antibacterials (\emph{J01RA01}),
+#'  \strong{pita}: piperacillin and beta-lactamase inhibitor (\emph{J01CR05}),
+#'  \strong{poly}: polymyxin B (\emph{J01XB02}),
+#'  \strong{pris}: pristinamycin (\emph{J01FG01}),
+#'  \strong{qida}: quinupristin/dalfopristin (\emph{J01FG02}),
+#'  \strong{rifa}: rifampicin (\emph{J04AB02}),
+#'  \strong{roxi}: roxithromycin (\emph{J01FA06}),
+#'  \strong{siso}: sisomicin (\emph{J01GB08}),
+#'  \strong{teic}: teicoplanin (\emph{J01XA02}),
+#'  \strong{tetr}: tetracycline (\emph{J01AA07}),
+#'  \strong{tica}: ticarcillin (\emph{J01CA13}),
+#'  \strong{tige}: tigecycline (\emph{J01AA12}),
+#'  \strong{tobr}: tobramycin (\emph{J01GB01}),
+#'  \strong{trim}: trimethoprim (\emph{J01EA01}),
+#'  \strong{trsu}: sulfamethoxazole and trimethoprim (\emph{J01EE01}),
+#'  \strong{vanc}: vancomycin (\emph{J01XA01}).
+#' @keywords interpretive eucast reading resistance
 #' @rdname EUCAST
 #' @export
 #' @importFrom dplyr %>% left_join select
@@ -60,12 +125,13 @@ EUCAST_rules <- function(tbl,
                          amox = 'amox',
                          ampi = 'ampi',
                          azit = 'azit',
+                         azlo = 'azlo',
                          aztr = 'aztr',
                          cefa = 'cefa',
-                         cfra = 'cfra',
                          cfep = 'cfep',
                          cfot = 'cfot',
                          cfox = 'cfox',
+                         cfra = 'cfra',
                          cfta = 'cfta',
                          cftr = 'cftr',
                          cfur = 'cfur',
@@ -89,18 +155,20 @@ EUCAST_rules <- function(tbl,
                          linc = 'linc',
                          line = 'line',
                          mero = 'mero',
+                         mezl = 'mezl',
                          mino = 'mino',
                          moxi = 'moxi',
                          nali = 'nali',
                          neom = 'neom',
                          neti = 'neti',
                          nitr = 'nitr',
-                         novo = 'novo',
                          norf = 'norf',
+                         novo = 'novo',
                          oflo = 'oflo',
                          peni = 'peni',
                          pita = 'pita',
                          poly = 'poly',
+                         pris = 'pris',
                          qida = 'qida',
                          rifa = 'rifa',
                          roxi = 'roxi',
@@ -121,11 +189,11 @@ EUCAST_rules <- function(tbl,
   }
 
   # check columns
-  col.list <- c(amcl, amik, amox, ampi, azit, aztr, cefa, cfra, cfep, cfot,
+  col.list <- c(amcl, amik, amox, ampi, azit, azlo, aztr, cefa, cfra, cfep, cfot,
                 cfox, cfta, cftr, cfur, chlo, cipr, clar, clin, clox, coli,
                 czol, dapt, doxy, erta, eryt, fosf, fusi, gent, imip, kana,
-                levo, linc, line, mero, mino, moxi, nali, neom, neti, nitr,
-                novo, norf, oflo, peni, pita, poly, qida, rifa, roxi, siso,
+                levo, linc, line, mero, mezl, mino, moxi, nali, neom, neti, nitr,
+                novo, norf, oflo, peni, pita, poly, pris,  qida, rifa, roxi, siso,
                 teic, tetr, tica, tige, tobr, trim, trsu, vanc)
   col.list <- check_available_columns(tbl = tbl, col.list = col.list, info = info)
   amcl <- col.list[amcl]
@@ -133,12 +201,13 @@ EUCAST_rules <- function(tbl,
   amox <- col.list[amox]
   ampi <- col.list[ampi]
   azit <- col.list[azit]
+  azlo <- col.list[azlo]
   aztr <- col.list[aztr]
   cefa <- col.list[cefa]
-  cfra <- col.list[cfra]
   cfep <- col.list[cfep]
   cfot <- col.list[cfot]
   cfox <- col.list[cfox]
+  cfra <- col.list[cfra]
   cfta <- col.list[cfta]
   cftr <- col.list[cftr]
   cfur <- col.list[cfur]
@@ -162,18 +231,20 @@ EUCAST_rules <- function(tbl,
   linc <- col.list[linc]
   line <- col.list[line]
   mero <- col.list[mero]
+  mezl <- col.list[mezl]
   mino <- col.list[mino]
   moxi <- col.list[moxi]
   nali <- col.list[nali]
   neom <- col.list[neom]
   neti <- col.list[neti]
   nitr <- col.list[nitr]
-  novo <- col.list[novo]
   norf <- col.list[norf]
+  novo <- col.list[novo]
   oflo <- col.list[oflo]
   peni <- col.list[peni]
   pita <- col.list[pita]
   poly <- col.list[poly]
+  pris <- col.list[pris]
   qida <- col.list[qida]
   rifa <- col.list[rifa]
   roxi <- col.list[roxi]
@@ -191,7 +262,9 @@ EUCAST_rules <- function(tbl,
   total_rows <- integer(0)
 
   # helper function for editing the table
-  edit_rsi <- function(to, rows, cols) {
+  edit_rsi <- function(to, rows, cols, EUCAST_rule = "") {
+    # later: use this as attribute for the edited observations
+    EUCAST_rule <- trimws(paste("EUCAST rule", EUCAST_rule))
     cols <- cols[!is.na(cols)]
     if (length(rows) > 0 & length(cols) > 0) {
       tbl[rows, cols] <<- to
@@ -200,9 +273,9 @@ EUCAST_rules <- function(tbl,
     }
   }
 
-  # join to microorganisms table
+  # join to microorganisms data set
   if (!tbl %>% pull(col_bactid) %>% is.bactid()) {
-    tbl[, col_bactid] <- tbl %>% pull(col_bactid) %>% as.bactid()
+    # warning("Improve integrity of the `", col_bactid, "` column by transforming it with 'as.bactid'.")
   }
   tbl <- tbl %>% left_join_microorganisms(by = col_bactid, suffix = c("_tempmicroorganisms", ""))
 
@@ -212,11 +285,11 @@ EUCAST_rules <- function(tbl,
   polymyxins <- c(poly, coli)
   macrolides <- c(eryt, azit, roxi, clar) # since EUCAST v3.1 clinda is set apart
   glycopeptides <- c(vanc, teic)
-  streptogramins <- qida # should officially also be pristinamycin and quinupristin/dalfopristin
+  streptogramins <- c(qida, pris) # should officially also be quinupristin/dalfopristin
   cephalosporins <- c(cfep, cfot, cfox, cfra, cfta, cftr, cfur, czol)
   carbapenems <- c(erta, imip, mero)
   aminopenicillins <- c(ampi, amox)
-  ureidopenicillins <- pita # should officially also be azlo and mezlo
+  ureidopenicillins <- c(pita, azlo, mezl)
   fluoroquinolones <- c(oflo, cipr, norf, levo, moxi)
 
   if (info == TRUE) {
@@ -230,7 +303,7 @@ EUCAST_rules <- function(tbl,
 
   # Table 1: Intrinsic resistance in Enterobacteriaceae ----
   if (info == TRUE) {
-    cat('...Table 1: Intrinsic resistance in Enterobacteriaceae\n')
+    cat('- Table 1:  Intrinsic resistance in Enterobacteriaceae\n')
   }
   # Intrisiek R for this group
   edit_rsi(to = 'R',
@@ -301,7 +374,7 @@ EUCAST_rules <- function(tbl,
 
   # Table 2: Intrinsic resistance in non-fermentative Gram-negative bacteria ----
   if (info == TRUE) {
-    cat('...Table 2: Intrinsic resistance in non-fermentative Gram-negative bacteria\n')
+    cat('- Table 2:  Intrinsic resistance in non-fermentative Gram-negative bacteria\n')
   }
   # Intrisiek R for this group
   edit_rsi(to = 'R',
@@ -349,7 +422,7 @@ EUCAST_rules <- function(tbl,
 
   # Table 3: Intrinsic resistance in other Gram-negative bacteria ----
   if (info == TRUE) {
-    cat('...Table 3: Intrinsic resistance in other Gram-negative bacteria\n')
+    cat('- Table 3:  Intrinsic resistance in other Gram-negative bacteria\n')
   }
   # Intrisiek R for this group
   edit_rsi(to = 'R',
@@ -381,7 +454,7 @@ EUCAST_rules <- function(tbl,
 
   # Table 4: Intrinsic resistance in Gram-positive bacteria ----
   if (info == TRUE) {
-    cat('...Table 4: Intrinsic resistance in Gram-positive bacteria\n')
+    cat('- Table 4:  Intrinsic resistance in Gram-positive bacteria\n')
   }
   # Intrisiek R for this group
   edit_rsi(to = 'R',
@@ -435,7 +508,7 @@ EUCAST_rules <- function(tbl,
 
   # Table 8: Interpretive rules for B-lactam agents and Gram-positive cocci ----
   if (info == TRUE) {
-    cat('...Table 8: Interpretive rules for B-lactam agents and Gram-positive cocci\n')
+    cat('- Table 8:  Interpretive rules for B-lactam agents and Gram-positive cocci\n')
   }
   # rule 8.3
   if (!is.na(peni)) {
@@ -460,7 +533,7 @@ EUCAST_rules <- function(tbl,
 
   # Table 9: Interpretive rules for B-lactam agents and Gram-negative rods ----
   if (info == TRUE) {
-    cat('...Table 9: Interpretive rules for B-lactam agents and Gram-negative rods\n')
+    cat('- Table 9:  Interpretive rules for B-lactam agents and Gram-negative rods\n')
   }
   # rule 9.3
   if (!is.na(tica) & !is.na(pita)) {
@@ -473,7 +546,7 @@ EUCAST_rules <- function(tbl,
 
   # Table 10: Interpretive rules for B-lactam agents and other Gram-negative bacteria ----
   if (info == TRUE) {
-    cat('...Table 10: Interpretive rules for B-lactam agents and other Gram-negative bacteria\n')
+    cat('- Table 10: Interpretive rules for B-lactam agents and other Gram-negative bacteria\n')
   }
   # rule 10.2
   if (!is.na(ampi)) {
@@ -486,7 +559,7 @@ EUCAST_rules <- function(tbl,
 
   # Table 11: Interpretive rules for macrolides, lincosamides, and streptogramins ----
   if (info == TRUE) {
-    cat('...Table 11: Interpretive rules for macrolides, lincosamides, and streptogramins\n')
+    cat('- Table 11: Interpretive rules for macrolides, lincosamides, and streptogramins\n')
   }
   # rule 11.1
   if (!is.na(eryt)) {
@@ -500,7 +573,7 @@ EUCAST_rules <- function(tbl,
 
   # Table 12: Interpretive rules for aminoglycosides ----
   if (info == TRUE) {
-    cat('...Table 12: Interpretive rules for aminoglycosides\n')
+    cat('- Table 12: Interpretive rules for aminoglycosides\n')
   }
   # rule 12.2
   if (!is.na(tobr)) {
@@ -536,7 +609,7 @@ EUCAST_rules <- function(tbl,
 
   # Table 13: Interpretive rules for quinolones ----
   if (info == TRUE) {
-    cat('...Table 13: Interpretive rules for quinolones\n')
+    cat('- Table 13: Interpretive rules for quinolones\n')
   }
   # rule 13.2
   if (!is.na(moxi)) {
@@ -570,7 +643,7 @@ EUCAST_rules <- function(tbl,
 
   # Other ----
   if (info == TRUE) {
-    cat('...Non-EUCAST: trim = R where trsu = R and ampi = R where amcl = R\n')
+    cat('- Non-EUCAST: trim = R where trsu = R and ampi = R where amcl = R\n')
   }
   if (!is.na(amcl)) {
     edit_rsi(to = 'R',
@@ -582,6 +655,20 @@ EUCAST_rules <- function(tbl,
              rows = which(tbl[, trsu] == 'R'),
              cols = trim)
   }
+  if (info == TRUE) {
+    cat('- Non-EUCAST: trsu = S where trim = S and amcl = S where ampi = S\n')
+  }
+  if (!is.na(amcl)) {
+    edit_rsi(to = 'S',
+             rows = which(tbl[, ampi] == 'S'),
+             cols = amcl)
+  }
+  if (!is.na(trsu)) {
+    edit_rsi(to = 'S',
+             rows = which(tbl[, trim] == 'S'),
+             cols = trsu)
+  }
+  # amox = ampi
   if (!is.na(ampi) & !is.na(amox)) {
     tbl[, amox] <- tbl %>% pull(ampi)
   }
@@ -596,7 +683,7 @@ EUCAST_rules <- function(tbl,
   if (info == TRUE) {
     cat('Done.\n\nEUCAST Expert rules applied to',
         total_rows %>% unique() %>% length() %>% format(big.mark = ","),
-        'different rows (isolates); edited a total of',
+        'different rows; overwritten a total of',
         total %>% format(big.mark = ","), 'test results.\n\n')
   }
 

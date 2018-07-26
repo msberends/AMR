@@ -24,7 +24,9 @@
   * Possibility to globally set the default for the amount of items to print, with `options(max.print.freq = n)` where *n* is your preset value
 
 #### Changed
-* Updates version of the `setic_patients` dataset to better reflect the reality
+* Improvements for forcasting with `resistance_predict` and added more examples
+* More antibiotics for EUCAST rules
+* Updated version of the `setic_patients` data set to better reflect the reality
 * Pretty printing for tibbles removed as it is not really the scope of this package
 * Improved speed of key antibiotics comparison for determining first isolates
 * Column names for the `key_antibiotics` function are now generic: 6 for broadspectrum ABs, 6 for Gram-positive specific and 6 for Gram-negative specific ABs

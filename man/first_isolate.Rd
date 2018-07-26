@@ -92,13 +92,13 @@ A <- my_patients \%>\%
             resistance = resistance(gent))
 
 B <- my_patients \%>\%
-  filter(first_isolate == TRUE) \%>\%
+  filter(first_isolate == TRUE) \%>\% # the 1st isolate filter
   group_by(hospital_id) \%>\%
-  summarise(count = n_rsi(gent), # gentamicin
+  summarise(count = n_rsi(gent),
             resistance = resistance(gent))
 
 # Have a look at A and B. B is more reliable because every isolate is
-# counted once. Gentamicin resitance in hospital D seems to be 5\%
+# counted once. Gentamicin resitance in hospital D appears to be 5\%
 # higher than originally thought.
 
 ## OTHER EXAMPLES:

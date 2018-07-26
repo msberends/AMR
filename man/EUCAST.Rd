@@ -15,20 +15,20 @@ EUCAST Expert Rules Version 2.0: \cr
 \usage{
 EUCAST_rules(tbl, col_bactid = "bactid", info = TRUE, amcl = "amcl",
   amik = "amik", amox = "amox", ampi = "ampi", azit = "azit",
-  aztr = "aztr", cefa = "cefa", cfra = "cfra", cfep = "cfep",
-  cfot = "cfot", cfox = "cfox", cfta = "cfta", cftr = "cftr",
-  cfur = "cfur", chlo = "chlo", cipr = "cipr", clar = "clar",
-  clin = "clin", clox = "clox", coli = "coli", czol = "czol",
-  dapt = "dapt", doxy = "doxy", erta = "erta", eryt = "eryt",
-  fosf = "fosf", fusi = "fusi", gent = "gent", imip = "imip",
-  kana = "kana", levo = "levo", linc = "linc", line = "line",
-  mero = "mero", mino = "mino", moxi = "moxi", nali = "nali",
-  neom = "neom", neti = "neti", nitr = "nitr", novo = "novo",
-  norf = "norf", oflo = "oflo", peni = "peni", pita = "pita",
-  poly = "poly", qida = "qida", rifa = "rifa", roxi = "roxi",
-  siso = "siso", teic = "teic", tetr = "tetr", tica = "tica",
-  tige = "tige", tobr = "tobr", trim = "trim", trsu = "trsu",
-  vanc = "vanc")
+  azlo = "azlo", aztr = "aztr", cefa = "cefa", cfep = "cfep",
+  cfot = "cfot", cfox = "cfox", cfra = "cfra", cfta = "cfta",
+  cftr = "cftr", cfur = "cfur", chlo = "chlo", cipr = "cipr",
+  clar = "clar", clin = "clin", clox = "clox", coli = "coli",
+  czol = "czol", dapt = "dapt", doxy = "doxy", erta = "erta",
+  eryt = "eryt", fosf = "fosf", fusi = "fusi", gent = "gent",
+  imip = "imip", kana = "kana", levo = "levo", linc = "linc",
+  line = "line", mero = "mero", mezl = "mezl", mino = "mino",
+  moxi = "moxi", nali = "nali", neom = "neom", neti = "neti",
+  nitr = "nitr", norf = "norf", novo = "novo", oflo = "oflo",
+  peni = "peni", pita = "pita", poly = "poly", pris = "pris",
+  qida = "qida", rifa = "rifa", roxi = "roxi", siso = "siso",
+  teic = "teic", tetr = "tetr", tica = "tica", tige = "tige",
+  tobr = "tobr", trim = "trim", trsu = "trsu", vanc = "vanc")
 
 interpretive_reading(...)
 }
@@ -39,7 +39,7 @@ interpretive_reading(...)
 
 \item{info}{print progress}
 
-\item{amcl, amik, amox, ampi, azit, aztr, cefa, cfra, cfep, cfot, cfox, cfta, cftr, cfur, chlo, cipr, clar, clin, clox, coli, czol, dapt, doxy, erta, eryt, fosf, fusi, gent, imip, kana, levo, linc, line, mero, mino, moxi, nali, neom, neti, nitr, novo, norf, oflo, peni, pita, poly, qida, rifa, roxi, siso, teic, tetr, tica, tige, tobr, trim, trsu, vanc}{column names of antibiotics. Use \code{NA} to skip a column, like \code{tica = NA}. Non-existing column will be skipped.}
+\item{amcl, amik, amox, ampi, azit, azlo, aztr, cefa, cfep, cfot, cfox, cfra, cfta, cftr, cfur, chlo, cipr, clar, clin, clox, coli, czol, dapt, doxy, erta, eryt, fosf, fusi, gent, imip, kana, levo, linc, line, mero, mezl, mino, moxi, nali, neom, neti, nitr, norf, novo, oflo, peni, pita, poly, pris, qida, rifa, roxi, siso, teic, tetr, tica, tige, tobr, trim, trsu, vanc}{column names of antibiotics. Use \code{NA} to skip a column, like \code{tica = NA}. Non-existing columns will anyway be skipped. See the Antibiotics section for an explanation of the abbreviations.}
 
 \item{...}{parameters that are passed on to \code{EUCAST_rules}}
 }
@@ -49,6 +49,73 @@ table with edited variables of antibiotics.
 \description{
 Apply expert rules (like intrinsic resistance), as defined by the European Committee on Antimicrobial Susceptibility Testing (EUCAST, \url{http://eucast.org}), see \emph{Source}.
 }
+\section{Abbrevations of antibiotics}{
+
+Abbrevations of the column containing antibiotics:
+
+ \strong{amcl}: amoxicillin and beta-lactamase inhibitor (\emph{J01CR02}),
+ \strong{amik}: amikacin (\emph{J01GB06}),
+ \strong{amox}: amoxicillin (\emph{J01CA04}),
+ \strong{ampi}: ampicillin (\emph{J01CA01}),
+ \strong{azit}: azithromycin (\emph{J01FA10}),
+ \strong{azlo}: azlocillin (\emph{J01CA09}),
+ \strong{aztr}: aztreonam (\emph{J01DF01}),
+ \strong{cefa}: cefaloridine (\emph{J01DB02}),
+ \strong{cfep}: cefepime (\emph{J01DE01}),
+ \strong{cfot}: cefotaxime (\emph{J01DD01}),
+ \strong{cfox}: cefoxitin (\emph{J01DC01}),
+ \strong{cfra}: cefradine (\emph{J01DB09}),
+ \strong{cfta}: ceftazidime (\emph{J01DD02}),
+ \strong{cftr}: ceftriaxone (\emph{J01DD04}),
+ \strong{cfur}: cefuroxime (\emph{J01DC02}),
+ \strong{chlo}: chloramphenicol (\emph{J01BA01}),
+ \strong{cipr}: ciprofloxacin (\emph{J01MA02}),
+ \strong{clar}: clarithromycin (\emph{J01FA09}),
+ \strong{clin}: clindamycin (\emph{J01FF01}),
+ \strong{clox}: flucloxacillin (\emph{J01CF05}),
+ \strong{coli}: colistin (\emph{J01XB01}),
+ \strong{czol}: cefazolin (\emph{J01DB04}),
+ \strong{dapt}: daptomycin (\emph{J01XX09}),
+ \strong{doxy}: doxycycline (\emph{J01AA02}),
+ \strong{erta}: ertapenem (\emph{J01DH03}),
+ \strong{eryt}: erythromycin (\emph{J01FA01}),
+ \strong{fosf}: fosfomycin (\emph{J01XX01}),
+ \strong{fusi}: fusidic acid (\emph{J01XC01}),
+ \strong{gent}: gentamicin (\emph{J01GB03}),
+ \strong{imip}: imipenem and cilastatin (\emph{J01DH51}),
+ \strong{kana}: kanamycin (\emph{J01GB04}),
+ \strong{levo}: levofloxacin (\emph{J01MA12}),
+ \strong{linc}: lincomycin (\emph{J01FF02}),
+ \strong{line}: linezolid (\emph{J01XX08}),
+ \strong{mero}: meropenem (\emph{J01DH02}),
+ \strong{mezl}: mezlocillin (\emph{J01CA10}),
+ \strong{mino}: minocycline (\emph{J01AA08}),
+ \strong{moxi}: moxifloxacin (\emph{J01MA14}),
+ \strong{nali}: nalidixic acid (\emph{J01MB02}),
+ \strong{neom}: neomycin (\emph{J01GB05}),
+ \strong{neti}: netilmicin (\emph{J01GB07}),
+ \strong{nitr}: nitrofurantoin (\emph{J01XE01}),
+ \strong{norf}: norfloxacin (\emph{J01MA06}),
+ \strong{novo}: novobiocin (an ATCvet code: \emph{QJ01XX95}),
+ \strong{oflo}: ofloxacin (\emph{J01MA01}),
+ \strong{peni}: penicillins, combinations with other antibacterials (\emph{J01RA01}),
+ \strong{pita}: piperacillin and beta-lactamase inhibitor (\emph{J01CR05}),
+ \strong{poly}: polymyxin B (\emph{J01XB02}),
+ \strong{pris}: pristinamycin (\emph{J01FG01}),
+ \strong{qida}: quinupristin/dalfopristin (\emph{J01FG02}),
+ \strong{rifa}: rifampicin (\emph{J04AB02}),
+ \strong{roxi}: roxithromycin (\emph{J01FA06}),
+ \strong{siso}: sisomicin (\emph{J01GB08}),
+ \strong{teic}: teicoplanin (\emph{J01XA02}),
+ \strong{tetr}: tetracycline (\emph{J01AA07}),
+ \strong{tica}: ticarcillin (\emph{J01CA13}),
+ \strong{tige}: tigecycline (\emph{J01AA12}),
+ \strong{tobr}: tobramycin (\emph{J01GB01}),
+ \strong{trim}: trimethoprim (\emph{J01EA01}),
+ \strong{trsu}: sulfamethoxazole and trimethoprim (\emph{J01EE01}),
+ \strong{vanc}: vancomycin (\emph{J01XA01}).
+}
+
 \examples{
 a <- EUCAST_rules(septic_patients)
 a <- data.frame(bactid = c("STAAUR",  # Staphylococcus aureus
@@ -67,3 +134,7 @@ a
 b <- EUCAST_rules(a)
 b
 }
+\keyword{eucast}
+\keyword{interpretive}
+\keyword{reading}
+\keyword{resistance}

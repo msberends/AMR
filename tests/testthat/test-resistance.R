@@ -84,8 +84,9 @@ test_that("prediction of rsi works", {
     filter(bactid == "ESCCOL") %>%
     rsi_predict(col_ab = "amox",
                 col_date = "date",
+                minimum = 10,
                 info = TRUE) %>%
-    pull("probR")
+    pull("resistance")
   # amox resistance will increase according to data set `septic_patients`
   expect_true(amox_R[3] < amox_R[20])
 

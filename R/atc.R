@@ -267,33 +267,33 @@ abname <- function(abcode, from = c("guess", "atc", "molis", "umcg"), to = 'offi
   }
 
   abcode <- as.character(abcode)
+  abcode.bak <- abcode
 
   for (i in 1:length(abcode)) {
-    drug <- abcode[i]
-    if (!grepl('+', drug, fixed = TRUE) & !grepl(' en ', drug, fixed = TRUE)) {
+    abcode[i] <- abcode[i]
+    if (!grepl('+', abcode[i], fixed = TRUE) & !grepl(' en ', abcode[i], fixed = TRUE)) {
       # only 1 drug
-      if (drug %in% (antibiotics %>% pull(from))) {
+      if (abcode[i] %in% (antibiotics %>% pull(from))) {
         abcode[i] <-
           antibiotics %>%
-          filter(.[, from] == drug) %>%
+          filter(.[, from] == abcode[i]) %>%
           select(to) %>%
           slice(1) %>%
           as.character()
       } else {
         # not found
-        warning('Code "', drug, '" not found in antibiotics list.', call. = FALSE)
         abcode[i] <- NA
       }
     } else {
       # more than 1 drug
-      if (grepl('+', drug, fixed = TRUE)) {
-        drug.group <-
-          strsplit(drug, '+', fixed = TRUE) %>%
+      if (grepl('+', abcode[i], fixed = TRUE)) {
+        abcode.group <-
+          strsplit(abcode[i], '+', fixed = TRUE) %>%
           unlist() %>%
           trimws('both')
-      } else if (grepl(' en ', drug, fixed = TRUE)) {
-        drug.group <-
-          strsplit(drug, ' en ', fixed = TRUE) %>%
+      } else if (grepl(' en ', abcode[i], fixed = TRUE)) {
+        abcode.group <-
+          strsplit(abcode[i], ' en ', fixed = TRUE) %>%
           unlist() %>%
           trimws('both')
       } else {
@@ -302,18 +302,29 @@ abname <- function(abcode, from = c("guess", "atc", "molis", "umcg"), to = 'offi
         next
       }
 
-      for (j in 1:length(drug.group)) {
-        drug.group[j] <-
+      for (j in 1:length(abcode.group)) {
+        abcode.group[j] <-
           antibiotics %>%
-          filter(.[, from] == drug.group[j]) %>%
+          filter(.[, from] == abcode.group[j]) %>%
           select(to) %>%
           slice(1) %>%
           as.character()
         if (j > 1 & to %in% c('official', 'trivial_nl')) {
-          drug.group[j] <- drug.group[j] %>% tolower()
+          abcode.group[j] <- abcode.group[j] %>% tolower()
         }
       }
-      abcode[i] <- paste(drug.group, collapse = textbetween)
+      abcode[i] <- paste(abcode.group, collapse = textbetween)
+    }
+
+    # when nothing found, try first chars of official name
+    if (is.na(abcode[i])) {
+      abcode[i] <- antibiotics %>%
+        filter(official %like% paste0('^', abcode.bak[i])) %>%
+        pull(to) %>%
+        .[1]
+    }
+    if (is.na(abcode[i])) {
+      warning('Code "', abcode.bak[i], '" not found in antibiotics list.', call. = FALSE)
     }
   }
 

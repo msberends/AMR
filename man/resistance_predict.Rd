@@ -5,53 +5,64 @@
 \alias{rsi_predict}
 \title{Predict antimicrobial resistance}
 \usage{
-resistance_predict(tbl, col_ab, col_date,
-  year_max = as.integer(format(as.Date(Sys.Date()), "\%Y")) + 15,
-  year_every = 1, model = "binomial", I_as_R = TRUE,
+resistance_predict(tbl, col_ab, col_date, year_min = NULL, year_max = NULL,
+  year_every = 1, minimum = 30, model = "binomial", I_as_R = TRUE,
   preserve_measurements = TRUE, info = TRUE)
 
-rsi_predict(tbl, col_ab, col_date,
-  year_max = as.integer(format(as.Date(Sys.Date()), "\%Y")) + 15,
-  year_every = 1, model = "binomial", I_as_R = TRUE,
+rsi_predict(tbl, col_ab, col_date, year_min = NULL, year_max = NULL,
+  year_every = 1, minimum = 30, model = "binomial", I_as_R = TRUE,
   preserve_measurements = TRUE, info = TRUE)
 }
 \arguments{
-\item{tbl}{table that contains columns \code{col_ab} and \code{col_date}}
+\item{tbl}{a \code{data.frame} containing isolates.}
 
-\item{col_ab}{column name of \code{tbl} with antimicrobial interpretations (\code{R}, \code{I} and \code{S}), supports tidyverse-like quotation}
+\item{col_ab}{column name of \code{tbl} with antimicrobial interpretations (\code{R}, \code{I} and \code{S})}
 
-\item{col_date}{column name of the date, will be used to calculate years if this column doesn't consist of years already, supports tidyverse-like quotation}
+\item{col_date}{column name of the date, will be used to calculate years if this column doesn't consist of years already}
 
-\item{year_max}{highest year to use in the prediction model, deafults to 15 years after today}
+\item{year_min}{lowest year to use in the prediction model, dafaults the lowest year in \code{col_date}}
+
+\item{year_max}{highest year to use in the prediction model, defaults to 15 years after today}
 
 \item{year_every}{unit of sequence between lowest year found in the data and \code{year_max}}
+
+\item{minimum}{minimal amount of available isolates per year to include. Years containing less observations will be estimated by the model.}
 
 \item{model}{the statistical model of choice. Valid values are \code{"binomial"} (or \code{"binom"} or \code{"logit"}) or \code{"loglin"} or \code{"linear"} (or \code{"lin"}).}
 
 \item{I_as_R}{treat \code{I} as \code{R}}
 
-\item{preserve_measurements}{overwrite predictions of years that are actually available in the data, with the original data. The standard errors of those years will be \code{NA}.}
+\item{preserve_measurements}{logical to indicate whether predictions of years that are actually available in the data should be overwritten with the original data. The standard errors of those years will be \code{NA}.}
 
 \item{info}{print textual analysis with the name and \code{\link{summary}} of the model.}
 }
 \value{
-\code{data.frame} with columns \code{year}, \code{probR}, \code{se_min} and \code{se_max}.
+\code{data.frame} with columns:
+\itemize{
+  \item{\code{year}}
+  \item{\code{resistance}, the same as \code{estimated} when \code{preserve_measurements = FALSE}, and a combination of \code{observed} and \code{estimated} otherwise}
+  \item{\code{se_min}, the lower bound of the standard error with a minimum of \code{0}}
+  \item{\code{se_max} the upper bound of the standard error with a maximum of \code{1}}
+  \item{\code{observations}, the total number of observations, i.e. S + I + R}
+  \item{\code{observed}, the original observed values}
+  \item{\code{estimated}, the estimated values, calculated by the model}
+}
 }
 \description{
 Create a prediction model to predict antimicrobial resistance for the next years on statistical solid ground. Standard errors (SE) will be returned as columns \code{se_min} and \code{se_max}. See Examples for a real live example.
 }
 \examples{
 \dontrun{
-# use it directly:
-rsi_predict(tbl = tbl[which(first_isolate == TRUE & genus == "Haemophilus"),],
-            col_ab = "amcl", col_date = "date")
+# use it with base R:
+resistance_predict(tbl = tbl[which(first_isolate == TRUE & genus == "Haemophilus"),],
+                   col_ab = "amcl", col_date = "date")
 
-# or with dplyr so you can actually read it:
+# or use dplyr so you can actually read it:
 library(dplyr)
 tbl \%>\%
   filter(first_isolate == TRUE,
          genus == "Haemophilus") \%>\%
-  rsi_predict(amcl, date)
+  resistance_predict(amcl, date)
 }
 
 
@@ -73,11 +84,38 @@ septic_patients \%>\%
          species == "coli",
          first_isolate == TRUE) \%>\%
   # predict resistance of cefotaxime for next years
-  rsi_predict(col_ab = "cfot",
-              col_date = "date",
-              year_max = 2025,
-              preserve_measurements = FALSE)
+  resistance_predict(col_ab = "cfot",
+                     col_date = "date",
+                     year_max = 2025,
+                     preserve_measurements = TRUE,
+                     minimum = 0)
 
+# create nice plots with ggplot
+if (!require(ggplot2)) {
+
+  data <- septic_patients \%>\%
+    filter(bactid == "ESCCOL") \%>\%
+    resistance_predict(col_ab = "amox",
+                      col_date = "date",
+                      info = FALSE,
+                      minimum = 15)
+
+  ggplot(data,
+         aes(x = year)) +
+    geom_col(aes(y = resistance),
+             fill = "grey75") +
+    geom_errorbar(aes(ymin = se_min,
+                      ymax = se_max),
+                  colour = "grey50") +
+    scale_y_continuous(limits = c(0, 1),
+                       breaks = seq(0, 1, 0.1),
+                       labels = paste0(seq(0, 100, 10), "\%")) +
+    labs(title = expression(paste("Forecast of amoxicillin resistance in ",
+                                  italic("E. coli"))),
+         y = "\%IR",
+         x = "Year") +
+    theme_minimal(base_size = 13)
+}
 }
 \seealso{
 \code{\link{resistance}} \cr \code{\link{lm}} \code{\link{glm}}

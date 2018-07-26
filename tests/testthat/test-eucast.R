@@ -11,10 +11,9 @@ test_that("EUCAST rules work", {
                   amox = "-",           # Amoxicillin
                   stringsAsFactors = FALSE)
   b <- data.frame(bactid =
-                    as.bactid(
-                      c("KLEPNE",  # Klebsiella pneumoniae
-                        "PSEAER",  # Pseudomonas aeruginosa
-                        "ENTAER")), # Enterobacter aerogenes
+                    c("KLEPNE",  # Klebsiella pneumoniae
+                      "PSEAER",  # Pseudomonas aeruginosa
+                      "ENTAER"), # Enterobacter aerogenes
                   amox = "R",           # Amoxicillin
                   stringsAsFactors = FALSE)
   expect_identical(EUCAST_rules(a, info = FALSE), b)
@@ -26,9 +25,8 @@ test_that("EUCAST rules work", {
                   coli = "-",           # Colistin
                   stringsAsFactors = FALSE)
   b <- data.frame(bactid =
-                    as.bactid(
-                      c("STAAUR",  # Staphylococcus aureus
-                        "STCGRA")), # Streptococcus pyognenes (Lancefield Group A)
+                    c("STAAUR",  # Staphylococcus aureus
+                      "STCGRA"), # Streptococcus pyognenes (Lancefield Group A)
                   coli = "R",           # Colistin
                   stringsAsFactors = FALSE)
   expect_equal(EUCAST_rules(a, info = FALSE), b)

@@ -72,13 +72,13 @@
 #'             resistance = resistance(gent))
 #'
 #' B <- my_patients %>%
-#'   filter(first_isolate == TRUE) %>%
+#'   filter(first_isolate == TRUE) %>% # the 1st isolate filter
 #'   group_by(hospital_id) %>%
-#'   summarise(count = n_rsi(gent), # gentamicin
+#'   summarise(count = n_rsi(gent),
 #'             resistance = resistance(gent))
 #'
 #' # Have a look at A and B. B is more reliable because every isolate is
-#' # counted once. Gentamicin resitance in hospital D seems to be 5%
+#' # counted once. Gentamicin resitance in hospital D appears to be 5%
 #' # higher than originally thought.
 #'
 #' ## OTHER EXAMPLES:
@@ -171,8 +171,9 @@ first_isolate <- function(tbl,
 
   if (!is.na(col_bactid)) {
     if (!tbl %>% pull(col_bactid) %>% is.bactid()) {
-      warning("Improve integrity of the `", col_bactid, "` column by transforming it with 'as.bactid'.")
+      # warning("Improve integrity of the `", col_bactid, "` column by transforming it with 'as.bactid'.")
     }
+    # join to microorganisms data set
     tbl <- tbl %>% left_join_microorganisms(by = col_bactid)
     col_genus <- "genus"
     col_species <- "species"
