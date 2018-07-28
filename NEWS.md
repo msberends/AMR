@@ -47,6 +47,7 @@
 * Fix for warning *hybrid evaluation forced for row_number* ([`924b62`](https://github.com/tidyverse/dplyr/commit/924b62)) from the `dplyr` package v0.7.5 and above
 * Support for empty values and for 1 or 2 columns as input for `guess_bactid` (now called `as.bactid`)
   * So `yourdata %>% select(genus, species) %>% as.bactid()` now also works
+* Other small fixes
 
 #### Other
 * Unit testing for R 3.0 and the latest available release: https://travis-ci.org/msberends/AMR
