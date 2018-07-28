@@ -429,7 +429,7 @@ rsi_df <- function(tbl,
 #' @return \code{data.frame} with columns:
 #' \itemize{
 #'   \item{\code{year}}
-#'   \item{\code{resistance}, the same as \code{estimated} when \code{preserve_measurements = FALSE}, and a combination of \code{observed} and \code{estimated} otherwise}
+#'   \item{\code{value}, the same as \code{estimated} when \code{preserve_measurements = FALSE}, and a combination of \code{observed} and \code{estimated} otherwise}
 #'   \item{\code{se_min}, the lower bound of the standard error with a minimum of \code{0}}
 #'   \item{\code{se_max} the upper bound of the standard error with a maximum of \code{1}}
 #'   \item{\code{observations}, the total number of observations, i.e. S + I + R}
@@ -440,7 +440,7 @@ rsi_df <- function(tbl,
 #' @rdname resistance_predict
 #' @export
 #' @importFrom stats predict glm lm
-#' @importFrom dplyr %>% pull mutate group_by_at summarise filter n_distinct arrange
+#' @importFrom dplyr %>% pull mutate group_by_at summarise filter n_distinct arrange case_when
 # @importFrom tidyr spread
 #' @examples
 #' \dontrun{
@@ -493,7 +493,7 @@ rsi_df <- function(tbl,
 #'
 #'   ggplot(data,
 #'          aes(x = year)) +
-#'     geom_col(aes(y = resistance),
+#'     geom_col(aes(y = value),
 #'              fill = "grey75") +
 #'     geom_errorbar(aes(ymin = se_min,
 #'                       ymax = se_max),
@@ -626,13 +626,13 @@ resistance_predict <- function(tbl,
   }
 
   # prepare the output dataframe
-  prediction <- data.frame(year = years_predict, resistance = prediction, stringsAsFactors = FALSE)
+  prediction <- data.frame(year = years_predict, value = prediction, stringsAsFactors = FALSE)
 
-  prediction$se_min <- prediction$resistance - se
-  prediction$se_max <- prediction$resistance + se
+  prediction$se_min <- prediction$value - se
+  prediction$se_max <- prediction$value + se
 
   if (model == 'loglin') {
-    prediction$resistance <- prediction$resistance %>%
+    prediction$value <- prediction$value %>%
       format(scientific = FALSE) %>%
       as.integer()
     prediction$se_min <- prediction$se_min %>% as.integer()
@@ -653,12 +653,12 @@ resistance_predict <- function(tbl,
       if (!'I' %in% colnames(df)) {
         df$I <- 0
       }
-      df$resistance <- df$R / rowSums(df[, c('R', 'S', 'I')])
+      df$value <- df$R / rowSums(df[, c('R', 'S', 'I')])
     } else {
-      df$resistance <- df$R / rowSums(df[, c('R', 'S')])
+      df$value <- df$R / rowSums(df[, c('R', 'S')])
     }
     measurements <- data.frame(year = df$year,
-                               resistance = df$resistance,
+                               value = df$value,
                                se_min = NA,
                                se_max = NA,
                                observations = df$total,
@@ -668,16 +668,18 @@ resistance_predict <- function(tbl,
     total <- rbind(measurements,
                    prediction %>% filter(!year %in% df$year))
     if (model %in% c('binomial', 'binom', 'logit')) {
-      total <- total %>% mutate(observed = ifelse(is.na(observations), NA, resistance),
-                                estimated = prediction$resistance)
+      total <- total %>% mutate(observed = ifelse(is.na(observations), NA, value),
+                                estimated = prediction$value)
     }
   }
 
-  try(
-    total$resistance[which(total$resistance > 1)] <- 1,
-    total$resistance[which(total$resistance < 0)] <- 0,
-    silent = TRUE
-  )
+  if ("value" %in% colnames(total)) {
+    total <- total %>%
+      mutate(value = case_when(value > 1 ~ 1,
+                               value < 0 ~ 0,
+                               TRUE ~ value))
+  }
+
   total %>% arrange(year)
 
 }

@@ -86,7 +86,7 @@ test_that("prediction of rsi works", {
                 col_date = "date",
                 minimum = 10,
                 info = TRUE) %>%
-    pull("resistance")
+    pull("value")
   # amox resistance will increase according to data set `septic_patients`
   expect_true(amox_R[3] < amox_R[20])
 

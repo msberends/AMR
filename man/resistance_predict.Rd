@@ -40,7 +40,7 @@ rsi_predict(tbl, col_ab, col_date, year_min = NULL, year_max = NULL,
 \code{data.frame} with columns:
 \itemize{
   \item{\code{year}}
-  \item{\code{resistance}, the same as \code{estimated} when \code{preserve_measurements = FALSE}, and a combination of \code{observed} and \code{estimated} otherwise}
+  \item{\code{value}, the same as \code{estimated} when \code{preserve_measurements = FALSE}, and a combination of \code{observed} and \code{estimated} otherwise}
   \item{\code{se_min}, the lower bound of the standard error with a minimum of \code{0}}
   \item{\code{se_max} the upper bound of the standard error with a maximum of \code{1}}
   \item{\code{observations}, the total number of observations, i.e. S + I + R}
@@ -102,7 +102,7 @@ if (!require(ggplot2)) {
 
   ggplot(data,
          aes(x = year)) +
-    geom_col(aes(y = resistance),
+    geom_col(aes(y = value),
              fill = "grey75") +
     geom_errorbar(aes(ymin = se_min,
                       ymax = se_max),
