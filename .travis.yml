@@ -2,18 +2,21 @@
 language: r
 jobs:
   include:
-  - r: 3.1
+  - r: 3.0
     os: linux
     warnings_are_errors: false
+  - r: 3.0
+    os: osx
+    warnings_are_errors: false
+  - r: 3.1
+    os: linux
   - r: 3.1
     os: osx
     warnings_are_errors: false
   - r: 3.2
     os: linux
-    warnings_are_errors: false
   - r: 3.2
     os: osx
-    warnings_are_errors: false
   - r: 3.3
     os: linux
   - r: 3.3
@@ -43,12 +46,13 @@ cran: https://cran.rstudio.com
 before_install:
   # needed for clipboard function:
   # - if [ $TRAVIS_OS_NAME = linux ]; then sudo apt-get -qq update; fi
-  - if [ $TRAVIS_OS_NAME = linux ]; then sudo apt-get install -y xclip; fi
+  # - if [ $TRAVIS_OS_NAME = linux ]; then sudo apt-get install -y xclip; fi
   - if [ $TRAVIS_OS_NAME = osx ]; then brew install xclip; fi
   - if [ $TRAVIS_OS_NAME = osx ]; then brew install libgit2; fi
 
 # postrun
 after_success:
+  # only run on osx, so clipboard functions can be checked
   - if [ $TRAVIS_OS_NAME = osx ]; then Rscript -e 'covr::codecov()'; fi
 notifications:
   email:

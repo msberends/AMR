@@ -126,23 +126,27 @@ as.bactid <- function(x) {
     }
     if (tolower(x[i]) == '^h.*influenzae$') {
       # avoid detection of Haematobacter influenzae in case of H. influenzae
-      x[i] <- 'Haemophilus influenzae'
+      x[i] <- 'HAEINF'
+      next
     }
     if (tolower(x[i]) == '^st.*au$'
         | tolower(x[i]) == '^stau$'
         | tolower(x[i]) == '^staaur$') {
       # avoid detection of Staphylococcus auricularis in case of S. aureus
-      x[i] <- 'Staphylococcus aureus'
+      x[i] <- 'STAAUR'
+      next
     }
     if (tolower(x[i]) == '^p.*aer$') {
       # avoid detection of Pasteurella aerogenes in case of Pseudomonas aeruginosa
-      x[i] <- 'Pseudomonas aeruginosa'
+      x[i] <- 'PSEAER'
+      next
     }
     if (tolower(x[i]) %like% 'coagulase'
         | tolower(x[i]) %like% 'cns'
         | tolower(x[i]) %like% 'cons') {
       # coerce S. coagulase negative, also as CNS and CoNS
-      x[i] <- 'Coagulase Negative Staphylococcus (CNS)'
+      x[i] <- 'STACNS'
+      next
     }
 
     # translate known trivial names to genus+species
@@ -150,17 +154,20 @@ as.bactid <- function(x) {
       if (toupper(x.backup[i]) == 'MRSA'
           | toupper(x.backup[i]) == 'VISA'
           | toupper(x.backup[i]) == 'VRSA') {
-        x[i] <- 'Staphylococcus aureus'
+        x[i] <- 'STAAUR'
+        next
       }
       if (toupper(x.backup[i]) == 'MRSE') {
         x[i] <- 'Staphylococcus epidermidis'
       }
       if (toupper(x.backup[i]) == 'VRE') {
-        x[i] <- 'Enterococcus'
+        x[i] <- 'ENC'
+        next
       }
       if (toupper(x.backup[i]) == 'MRPA') {
         # multi resistant P. aeruginosa
-        x[i] <- 'Pseudomonas aeruginosa'
+        x[i] <- 'PSEAER'
+        next
       }
       if (toupper(x.backup[i]) == 'PISP'
           | toupper(x.backup[i]) == 'PRSP') {
