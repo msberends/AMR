@@ -52,7 +52,7 @@
 * Other small fixes
 
 #### Other
-* Unit testing for R 3.0 and the latest available release: https://travis-ci.org/msberends/AMR
+* Unit testing for all Linux and macOS release of R 3.1 and higher: https://travis-ci.org/msberends/AMR
 
 # 0.2.0 (latest stable version)
 **Published on CRAN: 2018-05-03**

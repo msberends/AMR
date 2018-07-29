@@ -2,14 +2,9 @@
 language: r
 jobs:
   include:
-  - r: 3.0
-    os: linux
-    warnings_are_errors: false
-  - r: 3.0
-    os: osx
-    warnings_are_errors: false
   - r: 3.1
     os: linux
+    warnings_are_errors: true
   - r: 3.1
     os: osx
     warnings_are_errors: false
