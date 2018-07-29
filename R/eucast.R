@@ -275,7 +275,7 @@ EUCAST_rules <- function(tbl,
 
   # join to microorganisms data set
   if (!tbl %>% pull(col_bactid) %>% is.bactid()) {
-    # warning("Improve integrity of the `", col_bactid, "` column by transforming it with 'as.bactid'.")
+    warning("Improve integrity of the `", col_bactid, "` column by transforming it with 'as.bactid'.")
   }
   tbl <- tbl %>% left_join_microorganisms(by = col_bactid, suffix = c("_tempmicroorganisms", ""))
 

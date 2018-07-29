@@ -16,7 +16,8 @@ test_that("EUCAST rules work", {
                       "ENTAER"), # Enterobacter aerogenes
                   amox = "R",           # Amoxicillin
                   stringsAsFactors = FALSE)
-  expect_identical(EUCAST_rules(a, info = FALSE), b)
+  expect_warning(EUCAST_rules(a, info = FALSE))
+  expect_identical(suppressWarnings(EUCAST_rules(a, info = FALSE)), b)
   expect_identical(suppressWarnings(interpretive_reading(a, info = TRUE)), b)
 
   a <- data.frame(bactid =
@@ -29,7 +30,7 @@ test_that("EUCAST rules work", {
                       "STCGRA"), # Streptococcus pyognenes (Lancefield Group A)
                   coli = "R",           # Colistin
                   stringsAsFactors = FALSE)
-  expect_equal(EUCAST_rules(a, info = FALSE), b)
+  expect_equal(suppressWarnings(EUCAST_rules(a, info = FALSE)), b)
 })
 
 test_that("MO properties work", {

@@ -171,7 +171,7 @@ first_isolate <- function(tbl,
 
   if (!is.na(col_bactid)) {
     if (!tbl %>% pull(col_bactid) %>% is.bactid()) {
-      # warning("Improve integrity of the `", col_bactid, "` column by transforming it with 'as.bactid'.")
+      warning("Improve integrity of the `", col_bactid, "` column by transforming it with 'as.bactid'.")
     }
     # join to microorganisms data set
     tbl <- tbl %>% left_join_microorganisms(by = col_bactid)

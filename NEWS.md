@@ -1,4 +1,6 @@
 # 0.2.0.90xx (development version)
+**Published on CRAN: (unpublished)**
+
 #### New
 * **BREAKING**: `rsi_df` was removed in favour of new functions `R`, `IR`, `SI` and `S` to selectively calculate resistance or susceptibility. These functions use **hybrid evaluation**, which means that calculations are not done in R directly but rather in C++ using the `Rcpp` package, making them 20 to 30 times faster. The function `rsi` still works, but is deprecated.
 * **BREAKING**: the methodology for determining first weighted isolates was changed. The antibiotics that are compared between isolates (call *key antibiotics*) to include more first isolates (afterwards called first *weighted* isolates) are now as follows:
@@ -53,6 +55,8 @@
 * Unit testing for R 3.0 and the latest available release: https://travis-ci.org/msberends/AMR
 
 # 0.2.0 (latest stable version)
+**Published on CRAN: 2018-05-03**
+
 #### New
 * Full support for Windows, Linux and macOS
 * Full support for old R versions, only R-3.0.0 (April 2013) or later is needed (needed packages may have other dependencies)
@@ -88,6 +92,8 @@
 * Added line coverage checking using CodeCov (https://codecov.io/gh/msberends/AMR/tree/master/R)
 
 # 0.1.1
+**Published on CRAN: 2018-03-14**
+
 * `EUCAST_rules` applies for amoxicillin even if ampicillin is missing
 * Edited column names to comply with GLIMS, the laboratory information system
 * Added more valid MIC values
@@ -95,4 +101,6 @@
 * Added barplots for `rsi` and `mic` classes
 
 # 0.1.0
+**Published on CRAN: 2018-02-22**
+
 * First submission to CRAN.

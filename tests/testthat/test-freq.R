@@ -66,5 +66,20 @@ test_that("frequency table works", {
                      pull(age) %>%
                      sort())
 
+  # check format
+  expect_identical(septic_patients %>%
+                     freq(age) %>%
+                     format() %>%
+                     apply(2, class) %>%
+                     unname(),
+                   rep("character", 5))
+
+  # check tibble
+  expect_identical(septic_patients %>%
+                     freq(age) %>%
+                     as_tibble() %>%
+                     class() %>%
+                     .[1],
+                   "tbl_df")
 })
 

@@ -43,6 +43,25 @@ test_that("resistance works", {
   expect_warning(susceptibility(as.character(septic_patients$amcl,
                                              septic_patients$gent)))
 
+
+  # check for errors
+  expect_error(IR(septic_patients %>% select(amox, amcl)))
+  expect_error(IR("test", minimum = "test"))
+  expect_error(IR("test", as_percent = "test"))
+  expect_error(S("test", minimum = "test"))
+  expect_error(S("test", as_percent = "test"))
+  expect_error(S(septic_patients %>% select(amox, amcl)))
+  expect_error(S("R", septic_patients %>% select(amox, amcl)))
+
+  # check too low amount of isolates
+  expect_identical(IR(septic_patients$amox, minimum = nrow(septic_patients) + 1),
+                   NA)
+  expect_identical(S(septic_patients$amox, minimum = nrow(septic_patients) + 1),
+                   NA)
+
+  # warning for speed loss
+  expect_warning(S(septic_patients$amcl, as.character(septic_patients$gent)))
+
 })
 
 test_that("old rsi works", {
@@ -129,4 +148,9 @@ test_that("prediction of rsi works", {
                            col_ab = "amox",
                            col_date = "NOT EXISTING COLUMN",
                            info = TRUE))
+  # almost all E. coli are mero S in the Netherlands :)
+  expect_error(resistance_predict(tbl = filter(septic_patients, bactid == "ESCCOL"),
+                                  col_ab = "mero",
+                                  col_date = "date",
+                                  info = TRUE))
 })
