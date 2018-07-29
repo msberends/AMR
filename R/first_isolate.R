@@ -53,7 +53,7 @@
 #' @export
 #' @importFrom dplyr arrange_at lag between row_number filter mutate arrange
 #' @return A vector to add to table, see Examples.
-#' @source Methodology of this function is based on: "M39 Analysis and Presentation of Cumulative Antimicrobial Susceptibility Test Data, 4th Edition", 2014, Clinical and Laboratory Standards Institute. \url{https://clsi.org/standards/products/microbiology/documents/m39/}.
+#' @source Methodology of this function is based on: \strong{M39 Analysis and Presentation of Cumulative Antimicrobial Susceptibility Test Data, 4th Edition}, 2014, \emph{Clinical and Laboratory Standards Institute (CLSI)}. \url{https://clsi.org/standards/products/microbiology/documents/m39/}.
 #' @examples
 #' # septic_patients is a dataset available in the AMR package
 #' ?septic_patients

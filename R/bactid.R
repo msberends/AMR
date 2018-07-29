@@ -101,6 +101,18 @@ as.bactid <- function(x) {
   x <- paste0('^', x, '$')
 
   for (i in 1:length(x)) {
+
+    if (x.fullbackup[i] %in% AMR::microorganisms$bactid) {
+      # is already a valid bactid
+      x[i] <- x.fullbackup[i]
+      next
+    }
+    if (x.backup[i] %in% AMR::microorganisms$bactid) {
+      # is already a valid bactid
+      x[i] <- x.backup[i]
+      next
+    }
+
     if (tolower(x[i]) == '^e.*coli$') {
       # avoid detection of Entamoeba coli in case of E. coli
       x[i] <- 'Escherichia coli'
@@ -254,4 +266,12 @@ as.data.frame.bactid <- function (x, ...) {
   } else {
     as.data.frame.vector(x, ...)
   }
+}
+
+#' @exportMethod pull.bactid
+#' @export
+#' @importFrom dplyr pull
+#' @noRd
+pull.bactid <- function(.data, ...) {
+  pull(as.data.frame(.data), ...)
 }

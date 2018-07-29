@@ -1,6 +1,16 @@
 context("resistance.R")
 
 test_that("resistance works", {
+  # check shortcuts
+  expect_equal(resistance(septic_patients$amox, include_I = TRUE),
+               IR(septic_patients$amox))
+  expect_equal(resistance(septic_patients$amox, include_I = FALSE),
+               R(septic_patients$amox))
+  expect_equal(susceptibility(septic_patients$amox, include_I = TRUE),
+               SI(septic_patients$amox))
+  expect_equal(susceptibility(septic_patients$amox, include_I = FALSE),
+               S(septic_patients$amox))
+
   # amox resistance in `septic_patients` should be around 66.33%
   expect_equal(resistance(septic_patients$amox, include_I = TRUE), 0.6633, tolerance = 0.0001)
   expect_equal(susceptibility(septic_patients$amox, include_I = FALSE), 1 - 0.6633, tolerance = 0.0001)
@@ -37,18 +47,18 @@ test_that("resistance works", {
 
 test_that("old rsi works", {
   # amox resistance in `septic_patients` should be around 66.33%
-  expect_equal(rsi(septic_patients$amox), 0.6633, tolerance = 0.0001)
-  expect_equal(rsi(septic_patients$amox, interpretation = "S"), 1 - 0.6633, tolerance = 0.0001)
+  expect_equal(suppressWarnings(rsi(septic_patients$amox)), 0.6633, tolerance = 0.0001)
+  expect_equal(suppressWarnings(rsi(septic_patients$amox, interpretation = "S")), 1 - 0.6633, tolerance = 0.0001)
   expect_equal(rsi_df(septic_patients,
                       ab = "amox",
                       info = TRUE),
                0.6633,
                tolerance = 0.0001)
   # pita+genta susceptibility around 98.09%
-  expect_equal(rsi(septic_patients$pita,
-                   septic_patients$gent,
-                   interpretation = "S",
-                   info = TRUE),
+  expect_equal(suppressWarnings(rsi(septic_patients$pita,
+                                    septic_patients$gent,
+                                    interpretation = "S",
+                                    info = TRUE)),
                0.9535,
                tolerance = 0.0001)
   expect_equal(rsi_df(septic_patients,
@@ -66,14 +76,14 @@ test_that("old rsi works", {
   # count of cases
   expect_equal(septic_patients %>%
                  group_by(hospital_id) %>%
-                 summarise(cipro_S = rsi(cipr, interpretation = "S",
-                                         as_percent = TRUE, warning = FALSE),
+                 summarise(cipro_S = suppressWarnings(rsi(cipr, interpretation = "S",
+                                                          as_percent = TRUE, warning = FALSE)),
                            cipro_n = n_rsi(cipr),
-                           genta_S = rsi(gent, interpretation = "S",
-                                         as_percent = TRUE, warning = FALSE),
+                           genta_S = suppressWarnings(rsi(gent, interpretation = "S",
+                                                          as_percent = TRUE, warning = FALSE)),
                            genta_n = n_rsi(gent),
-                           combination_S = rsi(cipr, gent, interpretation = "S",
-                                               as_percent = TRUE, warning = FALSE),
+                           combination_S = suppressWarnings(rsi(cipr, gent, interpretation = "S",
+                                                                as_percent = TRUE, warning = FALSE)),
                            combination_n = n_rsi(cipr, gent)) %>%
                  pull(combination_n),
                c(202, 482, 201, 499))

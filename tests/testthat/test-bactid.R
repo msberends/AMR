@@ -60,5 +60,12 @@ test_that("as.bactid works", {
   expect_identical(as.bactid("ESCCOL"),
                    guess_bactid("ESCCOL"))
 
+  # test pull
+  expect_equal(nrow(septic_patients %>% mutate(bactid = as.bactid(bactid))),
+               2000)
+
+  # test data.frame
+  expect_equal(nrow(data.frame(test = as.bactid("ESCCOL"))),
+               1)
 
 })

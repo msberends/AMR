@@ -25,7 +25,7 @@ This R package was created for academic research by PhD students of the Faculty 
 This R package contains functions to make **microbiological, epidemiological data analysis easier**. It allows the use of some new classes to work with MIC values and antimicrobial interpretations (i.e. values S, I and R).
 
 With `AMR` you can:
-* Calculate the resistance (and even co-resistance) of microbial isolates with the `resistance` and `susceptibility` functions, that can also be used with the `dplyr` package (e.g. in conjunction with `summarise`)
+* Calculate the resistance (and even co-resistance) of microbial isolates with the `R`, `IR`, `SI` and `S` functions, that can also be used with the `dplyr` package (e.g. in conjunction with `summarise`)
 * Predict antimicrobial resistance for the nextcoming years with the `resistance_predict` function
 * Apply [EUCAST rules to isolates](http://www.eucast.org/expert_rules_and_intrinsic_resistance/) with the `EUCAST_rules` function
 * Identify first isolates of every patient [using guidelines from the CLSI](https://clsi.org/standards/products/microbiology/documents/m39/) (Clinical and Laboratory Standards Institute) with the `first_isolate` function
@@ -50,35 +50,21 @@ The functions to calculate microbial resistance use expressions that are not eva
 #### Read all changes and new functions in [NEWS.md](NEWS.md).
 
 ## How to get it?
-This package is available on CRAN and also here on GitHub.
+This package [is published on CRAN](http://cran.r-project.org/package=AMR), the official R network.
 
-### From CRAN (recommended)
-Latest released version on CRAN:
+### Install from CRAN (recommended)
+[![CRAN_Badge](https://img.shields.io/cran/v/AMR.svg?label=CRAN)](http://cran.r-project.org/package=AMR) [![CRAN_Downloads](https://cranlogs.r-pkg.org/badges/grand-total/AMR)](http://cran.r-project.org/package=AMR)
 
-[![CRAN_Badge](https://img.shields.io/cran/v/AMR.svg?label=CRAN&colorB=3679BC)](http://cran.r-project.org/package=AMR)
+(Note: downloads measured only by [cran.rstudio.com](https://cran.rstudio.com/package=AMR), i.e. this excludes the official [cran.r-project.org](https://cran.r-project.org/package=AMR))
 
-Downloads via RStudio CRAN server (downloads by all other CRAN mirrors **not** measured, including the official https://cran.r-project.org):
-
-[![CRAN_Downloads](https://cranlogs.r-pkg.org/badges/grand-total/AMR)](http://cran.r-project.org/package=AMR)
-[![CRAN_Downloads](https://cranlogs.r-pkg.org/badges/AMR)](https://cranlogs.r-pkg.org/downloads/daily/last-month/AMR)
-  
-- <img src="http://www.rstudio.com/favicon.ico" alt="RStudio favicon" height="20px"> In [RStudio](http://www.rstudio.com) (recommended):
+- <img src="http://www.rstudio.com/favicon.ico" alt="RStudio favicon" height="20px"> Install using [RStudio](http://www.rstudio.com) (recommended):
   - Click on `Tools` and then `Install Packages...`
   - Type in `AMR` and press <kbd>Install</kbd>
 
-- <img src="https://cran.r-project.org/favicon.ico" alt="R favicon" height="20px"> In R directly:
+- <img src="https://cran.r-project.org/favicon.ico" alt="R favicon" height="20px"> Install in R directly:
   - `install.packages("AMR")`
 
-- <img src="https://exploratory.io/favicon.ico" alt="Exploratory favicon" height="20px"> In [Exploratory.io](https://exploratory.io):
-  - (Exploratory.io costs $40/month but the somewhat limited Community Plan is free for students and teachers, [click here to enroll](https://exploratory.io/plan?plan=Community))
-  - Start the software and log in
-  - Click on your username at the right hand side top
-  - Click on `R Packages`
-  - Click on the `Install` tab
-  - Type in `AMR` and press <kbd>Install</kbd>
-  - Once it’s installed it will show up in the `User Packages` section under the `Packages` tab.
-
-### From GitHub (latest development version)
+### Install from GitHub (latest development version)
 [![Travis_Build](https://travis-ci.org/msberends/AMR.svg?branch=master)](https://travis-ci.org/msberends/AMR)
 [![Since_Release](https://img.shields.io/github/commits-since/msberends/AMR/latest.svg?colorB=3679BC)](https://github.com/msberends/AMR/commits/master)
 [![Last_Commit](https://img.shields.io/github/last-commit/msberends/AMR.svg)](https://github.com/msberends/AMR/commits/master)

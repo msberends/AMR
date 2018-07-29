@@ -2,29 +2,46 @@
 % Please edit documentation in R/resistance.R
 \name{resistance}
 \alias{resistance}
-\alias{susceptibility}
+\alias{S}
+\alias{SI}
+\alias{IR}
+\alias{R}
 \alias{n_rsi}
+\alias{susceptibility}
 \alias{rsi}
 \title{Calculate resistance of isolates}
+\source{
+\strong{M39 Analysis and Presentation of Cumulative Antimicrobial Susceptibility Test Data, 4th Edition}, 2014, \emph{Clinical and Laboratory Standards Institute (CLSI)}. \url{https://clsi.org/standards/products/microbiology/documents/m39/}.
+}
 \usage{
-resistance(ab, include_I = TRUE, minimum = 30, as_percent = FALSE)
+S(ab1, ab2 = NULL, minimum = 30, as_percent = FALSE)
+
+SI(ab1, ab2 = NULL, minimum = 30, as_percent = FALSE)
+
+IR(ab1, minimum = 30, as_percent = FALSE)
+
+R(ab1, minimum = 30, as_percent = FALSE)
+
+n_rsi(ab1, ab2 = NULL)
+
+resistance(ab1, include_I = TRUE, minimum = 30, as_percent = FALSE)
 
 susceptibility(ab1, ab2 = NULL, include_I = FALSE, minimum = 30,
   as_percent = FALSE)
-
-n_rsi(ab1, ab2 = NULL)
 
 rsi(ab1, ab2 = NA, interpretation = "IR", minimum = 30,
   as_percent = FALSE, info = FALSE, warning = TRUE)
 }
 \arguments{
-\item{ab, ab1, ab2}{vector of antibiotic interpretations, they will be transformed internally with \code{\link{as.rsi}}}
+\item{ab1}{vector of antibiotic interpretations, they will be transformed internally with \code{\link{as.rsi}}}
 
-\item{include_I}{logical to indicate whether antimicrobial interpretations of "I" should be included}
+\item{ab2}{like \code{ab}, a vector of antibiotic interpretations. Use this to calculate (the lack of) co-resistance: the probability where one of two drugs have a susceptible result. See Examples.}
 
-\item{minimum}{minimal amount of available isolates. Any number lower than \code{minimum} will return \code{NA}.}
+\item{minimum}{minimal amount of available isolates. Any number lower than \code{minimum} will return \code{NA}. The default number of \code{30} isolates is advised by the CLSI as best practice, see Source.}
 
 \item{as_percent}{logical to indicate whether the output must be returned as percent (text), will else be a double}
+
+\item{include_I}{logical to indicate whether antimicrobial interpretations of "I" should be included}
 
 \item{interpretation}{antimicrobial interpretation}
 
@@ -36,14 +53,16 @@ rsi(ab1, ab2 = NA, interpretation = "IR", minimum = 30,
 Double or, when \code{as_percent = TRUE}, a character.
 }
 \description{
-These functions can be used to calculate the (co-)resistance of microbial isolates (i.e. percentage S, SI, I, IR or R). All functions can be used in \code{dplyr}s \code{\link[dplyr]{summarise}} and support grouped variables, see \emph{Examples}.
+These functions can be used to calculate the (co-)resistance of microbial isolates (i.e. percentage S, SI, IR or R). All functions can be used in \code{dplyr}s \code{\link[dplyr]{summarise}} and support grouped variables, see \emph{Examples}. \cr\cr
+\code{R} and \code{IR} can be used to calculate resistance, \code{S} and \code{SI} can be used to calculate susceptibility.\cr
+\code{n_rsi} counts all cases where antimicrobial interpretations are available.
 }
 \details{
 \strong{Remember that you should filter your table to let it contain only first isolates!} Use \code{\link{first_isolate}} to determine them in your data set.
 
-The functions \code{resistance}, \code{susceptibility} and \code{n_rsi} calculate using hybrid evaluation (i.e. using C++), which makes these functions 25-30 times faster than the old \code{rsi} function. This function is still available for backwards compatibility but is deprecated.
+The functions \code{resistance} and \code{susceptibility} are wrappers around \code{IR} and \code{S}, respectively. All functions except \code{rsi} use hybrid evaluation (i.e. using C++), which makes these functions 20-30 times faster than the old \code{rsi} function. This latter function is still available for backwards compatibility but is deprecated.
 \if{html}{
-  \cr
+  \cr\cr
   To calculate the probability (\emph{p}) of susceptibility of one antibiotic, we use this formula:
   \out{<div style="text-align: center">}\figure{mono_therapy.png}\out{</div>}
   To calculate the probability (\emph{p}) of susceptibility of more antibiotics (i.e. combination therapy), we need to check whether one of them has a susceptible result (as numerator) and count all cases where all antibiotics were tested (as denominator). \cr
@@ -56,80 +75,60 @@ The functions \code{resistance}, \code{susceptibility} and \code{n_rsi} calculat
 }
 }
 \examples{
-library(dplyr)
-
-septic_patients \%>\%
-  group_by(hospital_id) \%>\%
-  summarise(p = susceptibility(cipr),
-            n = n_rsi(cipr)) # n_rsi works like n_distinct in dplyr
-
-septic_patients \%>\%
-  group_by(hospital_id) \%>\%
-  summarise(cipro_p = susceptibility(cipr, as_percent = TRUE),
-            cipro_n = n_rsi(cipr),
-            genta_p = susceptibility(gent, as_percent = TRUE),
-            genta_n = n_rsi(gent),
-            combination_p = susceptibility(cipr, gent, as_percent = TRUE),
-            combination_n = n_rsi(cipr, gent))
-
-
 # Calculate resistance
-resistance(septic_patients$amox)
-rsi(septic_patients$amox, interpretation = "IR") # deprecated
+R(septic_patients$amox)
+IR(septic_patients$amox)
 
 # Or susceptibility
-susceptibility(septic_patients$amox)
-rsi(septic_patients$amox, interpretation = "S") # deprecated
+S(septic_patients$amox)
+SI(septic_patients$amox)
 
+# Since n_rsi counts available isolates (and is used as denominator),
+# you can calculate back to e.g. count resistant isolates:
+IR(septic_patients$amox) * n_rsi(septic_patients$amox)
+
+library(dplyr)
+septic_patients \%>\%
+  group_by(hospital_id) \%>\%
+  summarise(p = S(cipr),
+            n = n_rsi(cipr)) # n_rsi works like n_distinct in dplyr
 
 # Calculate co-resistance between amoxicillin/clav acid and gentamicin,
 # so we can see that combination therapy does a lot more than mono therapy:
-susceptibility(septic_patients$amcl) # p = 67.8\%
-n_rsi(septic_patients$amcl)          # n = 1641
+S(septic_patients$amcl)     # p = 67.3\%
+n_rsi(septic_patients$amcl) # n = 1570
 
-susceptibility(septic_patients$gent) # p = 69.1\%
-n_rsi(septic_patients$gent)          # n = 1863
+S(septic_patients$gent)     # p = 74.0\%
+n_rsi(septic_patients$gent) # n = 1842
 
 with(septic_patients,
-     susceptibility(amcl, gent))     # p = 90.6\%
+     S(amcl, gent))         # p = 92.1\%
 with(septic_patients,
-     n_rsi(amcl, gent))              # n = 1580
+     n_rsi(amcl, gent))     # n = 1504
+
+septic_patients \%>\%
+  group_by(hospital_id) \%>\%
+  summarise(cipro_p = S(cipr, as_percent = TRUE),
+            cipro_n = n_rsi(cipr),
+            genta_p = S(gent, as_percent = TRUE),
+            genta_n = n_rsi(gent),
+            combination_p = S(cipr, gent, as_percent = TRUE),
+            combination_n = n_rsi(cipr, gent))
 
 \dontrun{
+
 # calculate current empiric combination therapy of Helicobacter gastritis:
 my_table \%>\%
   filter(first_isolate == TRUE,
          genus == "Helicobacter") \%>\%
-  summarise(p = susceptibility(amox, metr), # amoxicillin with metronidazole
+  summarise(p = S(amox, metr),     # amoxicillin with metronidazole
             n = n_rsi(amox, metr))
-
-
-# How fast is this hybrid evaluation in C++ compared to R?
-# In other words: how is the speed improvement of the new `resistance` compared to old `rsi`?
-
-library(microbenchmark)
-df <- septic_patients \%>\% group_by(hospital_id, bactid) # 317 groups with sizes 1 to 167
-
-microbenchmark(old_IR = df \%>\% summarise(p = rsi(amox, minimum = 0, interpretation = "IR")),
-               new_IR = df \%>\% summarise(p = resistance(amox, minimum = 0)),
-               old_S = df \%>\% summarise(p = rsi(amox, minimum = 0, interpretation = "S")),
-               new_S = df \%>\% summarise(p = susceptibility(amox, minimum = 0)),
-               times = 5,
-               unit = "s")
-
-# Unit: seconds
-#    expr          min         lq       mean     median         uq        max neval
-#  old_IR   1.95600230 1.96096857 1.97981537 1.96823318 2.00645711 2.00741568     5
-#  new_IR   0.06872808 0.06984932 0.07162866 0.06987306 0.07050094 0.07919192     5
-#   old_S   1.68893579 1.69024888 1.72461867 1.69785934 1.70428796 1.84176137     5
-#   new_S   0.06737037 0.06838167 0.07431906 0.07745364 0.07827224 0.08011738     5
-
-# The old function took roughly 2 seconds, the new ones take 0.07 seconds.
 }
 }
 \keyword{antibiotics}
 \keyword{isolate}
 \keyword{isolates}
 \keyword{resistance}
+\keyword{rsi}
 \keyword{rsi_df}
 \keyword{susceptibility}
