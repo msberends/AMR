@@ -68,4 +68,8 @@ test_that("as.bactid works", {
   expect_equal(nrow(data.frame(test = as.bactid("ESCCOL"))),
                1)
 
+  # check empty values
+  expect_equal(as.character(suppressWarnings(as.bactid(""))),
+               NA_character_)
+
 })

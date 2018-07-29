@@ -102,6 +102,12 @@ as.bactid <- function(x) {
 
   for (i in 1:length(x)) {
 
+    if (identical(x.backup[i], "")) {
+      # empty values
+      x[i] <- NA
+      failures <- c(failures, x.fullbackup[i])
+      next
+    }
     if (x.fullbackup[i] %in% AMR::microorganisms$bactid) {
       # is already a valid bactid
       x[i] <- x.fullbackup[i]
@@ -115,7 +121,8 @@ as.bactid <- function(x) {
 
     if (tolower(x[i]) == '^e.*coli$') {
       # avoid detection of Entamoeba coli in case of E. coli
-      x[i] <- 'Escherichia coli'
+      x[i] <- 'ESCCOL'
+      next
     }
     if (tolower(x[i]) == '^h.*influenzae$') {
       # avoid detection of Haematobacter influenzae in case of H. influenzae
@@ -168,60 +175,80 @@ as.bactid <- function(x) {
     }
 
     # let's try the ID's first
-    found <- AMR::microorganisms %>% filter(bactid == x.backup[i])
-
-    if (nrow(found) == 0) {
-      # now try exact match
-      found <- AMR::microorganisms %>% filter(fullname == x[i])
-    }
-    if (nrow(found) == 0) {
-      # try any match
-      found <- AMR::microorganisms %>% filter(fullname %like% x[i])
-    }
-    if (nrow(found) == 0) {
-      # try exact match of only genus, with 'species' attached
-      # (e.g. this prevents Streptococcus for becoming Peptostreptococcus, since "p" < "s")
-      found <- AMR::microorganisms %>% filter(fullname == x_species[i])
-    }
-    if (nrow(found) == 0) {
-      # try any match of only genus, with 'species' attached
-      found <- AMR::microorganisms %>% filter(fullname %like% x_species[i])
-    }
-    if (nrow(found) == 0) {
-      # search for GLIMS code
-      if (toupper(x.backup[i]) %in% toupper(AMR::microorganisms.umcg$mocode)) {
-        found <- AMR::microorganisms.umcg %>% filter(toupper(mocode) == toupper(x.backup[i]))
-      }
-    }
-    if (nrow(found) == 0) {
-      # try splitting of characters and then find ID
-      # like esco = E. coli, klpn = K. pneumoniae, stau = S. aureus
-      x_split <- x
-      x_length <- nchar(x.backup[i])
-      x_split[i] <- paste0(x.backup[i] %>% substr(1, x_length / 2) %>% trimws(),
-                           '.* ',
-                           x.backup[i] %>% substr((x_length / 2) + 1, x_length) %>% trimws())
-      found <- AMR::microorganisms %>% filter(fullname %like% paste0('^', x_split[i]))
-    }
-    if (nrow(found) == 0) {
-      # try any match with text before and after original search string
-      # so "negative rods" will be "GNR"
-      if (x.backup[i] %like% "^Gram") {
-        x.backup[i] <- gsub("^Gram", "", x.backup[i], ignore.case = TRUE)
-        # remove leading and trailing spaces again
-        x.backup[i] <- trimws(x.backup[i], which = "both")
-      }
-      if (!is.na(x.backup[i])) {
-        found <- AMR::microorganisms %>% filter(fullname %like% x.backup[i])
-      }
+    found <- AMR::microorganisms[which(AMR::microorganisms$bactid == x.backup[i]),]$bactid
+    if (length(found) > 0) {
+      x[i] <- found[1L]
+      next
     }
 
-    if (nrow(found) != 0 & x.backup[i] != "") {
-      x[i] <- as.character(found[1, 'bactid'])
-    } else {
-      x[i] <- NA_character_
-      failures <- c(failures, x.fullbackup[i])
+    # now try exact match
+    found <- AMR::microorganisms[which(AMR::microorganisms$fullname == x[i]),]$bactid
+    if (length(found) > 0) {
+      x[i] <- found[1L]
+      next
     }
+
+    # try any match
+    found <- AMR::microorganisms[which(AMR::microorganisms$fullname %like% x[i]),]$bactid
+    if (length(found) > 0) {
+      x[i] <- found[1L]
+      next
+    }
+
+    # try exact match of only genus, with 'species' attached
+    # (e.g. this prevents Streptococcus for becoming Peptostreptococcus, since "p" < "s")
+    found <- AMR::microorganisms[which(AMR::microorganisms$fullname == x_species[i]),]$bactid
+    if (length(found) > 0) {
+      x[i] <- found[1L]
+      next
+    }
+
+    # try any match of only genus, with 'species' attached
+    found <- AMR::microorganisms[which(AMR::microorganisms$fullname %like% x_species[i]),]$bactid
+    if (length(found) > 0) {
+      x[i] <- found[1L]
+      next
+    }
+
+    # search for GLIMS code
+    found <- AMR::microorganisms.umcg[which(toupper(AMR::microorganisms.umcg$mocode) == toupper(x.backup[i])),]$bactid
+    if (length(found) > 0) {
+      x[i] <- found[1L]
+      next
+    }
+
+    # try splitting of characters and then find ID
+    # like esco = E. coli, klpn = K. pneumoniae, stau = S. aureus
+    x_split <- x
+    x_length <- nchar(x.backup[i])
+    x_split[i] <- paste0(x.backup[i] %>% substr(1, x_length / 2) %>% trimws(),
+                         '.* ',
+                         x.backup[i] %>% substr((x_length / 2) + 1, x_length) %>% trimws())
+    found <- AMR::microorganisms[which(AMR::microorganisms$fullname %like% paste0('^', x_split[i])),]$bactid
+    if (length(found) > 0) {
+      x[i] <- found[1L]
+      next
+    }
+
+    # try any match with text before and after original search string
+    # so "negative rods" will be "GNR"
+    if (x.backup[i] %like% "^Gram") {
+      x.backup[i] <- gsub("^Gram", "", x.backup[i], ignore.case = TRUE)
+      # remove leading and trailing spaces again
+      x.backup[i] <- trimws(x.backup[i], which = "both")
+    }
+    if (!is.na(x.backup[i])) {
+      found <- AMR::microorganisms[which(AMR::microorganisms$fullname %like% x.backup[i]),]$bactid
+      if (length(found) > 0) {
+        x[i] <- found[1L]
+        next
+      }
+    }
+
+    # not found
+    x[i] <- NA_character_
+    failures <- c(failures, x.fullbackup[i])
+
   }
 
   failures <- failures[!failures %in% c(NA, NULL, NaN)]
