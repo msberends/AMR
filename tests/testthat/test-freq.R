@@ -19,6 +19,8 @@ test_that("frequency table works", {
   expect_output(print(freq(septic_patients$hospital_id)))
   # table
   expect_output(print(freq(table(septic_patients$sex, septic_patients$age))))
+  # rsi
+  expect_output(print(freq(septic_patients$amcl)))
 
   library(dplyr)
   expect_output(septic_patients %>% select(1:2) %>% freq() %>% print())

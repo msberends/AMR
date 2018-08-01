@@ -305,7 +305,7 @@ frequency_tbl <- function(x,
 
   header <- header %>% paste0(markdown_line, '\nLength:    ', (NAs %>% length() + x %>% length()) %>% format(),
                               ' (of which NA: ', NAs %>% length() %>% format(),
-                              ' = ', (NAs %>% length() / (NAs %>% length() + x %>% length())) %>% percent(force_zero = TRUE) %>% sub('NaN', '0', ., fixed = TRUE), ')')
+                              ' = ', (NAs %>% length() / (NAs %>% length() + x %>% length())) %>% percent(force_zero = TRUE, round = digits) %>% sub('NaN', '0', ., fixed = TRUE), ')')
   header <- header %>% paste0(markdown_line, '\nUnique:    ', x %>% n_distinct() %>% format())
 
   if (NROW(x) > 0 & any(class(x) %in% c('double', 'integer', 'numeric', 'raw', 'single'))) {
@@ -325,6 +325,17 @@ frequency_tbl <- function(x,
     if (outlier_length > 0) {
       header <- header %>% paste0(' (unique: ', boxplot.stats(x)$out %>% n_distinct(), ')')
     }
+  }
+  if (any(class(x) == "rsi")) {
+    header <- header %>% paste0('\n')
+    cnt_S <- sum(x == "S")
+    cnt_I <- sum(x == "I")
+    cnt_R <- sum(x == "R")
+    header <- header %>% paste(markdown_line, '\n%IR:      ',
+                               ((cnt_I + cnt_R) / sum(!is.na(x))) %>% percent(force_zero = TRUE, round = digits))
+    header <- header %>% paste0(markdown_line, '\nRatio SIR: 1.0 : ',
+                                (cnt_I / cnt_S) %>% format(digits = 1, nsmall = 1), " : ",
+                                (cnt_R / cnt_S) %>% format(digits = 1, nsmall = 1))
   }
 
   formatdates <- "%e %B %Y" # = d mmmm yyyy

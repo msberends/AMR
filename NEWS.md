@@ -17,6 +17,7 @@
 * Functions `clipboard_import` and `clipboard_export` as helper functions to quickly copy and paste from/to software like Excel and SPSS. These functions use the `clipr` package, but are a little altered to also support headless Linux servers (so you can use it in RStudio Server)
 * New for frequency tables (function `freq`):
   * A vignette to explain its usage
+  * Support for `rsi` (antimicrobial resistance) to use as input
   * Support for `table` to use as input: `freq(table(x, y))`
   * Support for existing functions `hist` and `plot` to use a frequency table as input: `hist(freq(df$age))`
   * Support for `as.vector`, `as.data.frame`, `as_tibble` and `format`
@@ -30,9 +31,9 @@
 * More antibiotics for EUCAST rules
 * Updated version of the `septic_patients` data set to better reflect the reality
 * Pretty printing for tibbles removed as it is not really the scope of this package
+* Printing of `mic` and `rsi` classes now returns all values - use `freq` to check distributions
 * Improved speed of key antibiotics comparison for determining first isolates
 * Column names for the `key_antibiotics` function are now generic: 6 for broadspectrum ABs, 6 for Gram-positive specific and 6 for Gram-negative specific ABs
-* Printing of class `mic` now shows all MIC values
 * `%like%` now supports multiple patterns
 * Frequency tables are now actual `data.frame`s with altered console printing to make it look like a frequency table. Because of this, the parameter `toConsole` is not longer needed.
 * Fix for `freq` where the class of an item would be lost
@@ -52,7 +53,7 @@
 * Other small fixes
 
 #### Other
-* Unit testing for all Linux and macOS release of R 3.1 and higher: https://travis-ci.org/msberends/AMR
+* Unit testing for all Linux and macOS releases of R 3.1 and higher: https://travis-ci.org/msberends/AMR
 
 # 0.2.0 (latest stable version)
 **Published on CRAN: 2018-05-03**

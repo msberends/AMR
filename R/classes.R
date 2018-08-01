@@ -36,6 +36,7 @@
 #'
 #' plot(rsi_data)    # for percentages
 #' barplot(rsi_data) # for frequencies
+#' freq(rsi_data)    # frequency table with informative header
 as.rsi <- function(x) {
   if (is.rsi(x)) {
     x
@@ -92,39 +93,17 @@ is.rsi <- function(x) {
 #' @importFrom dplyr %>%
 #' @noRd
 print.rsi <- function(x, ...) {
-  n_total <- x %>% length()
-  x <- x[!is.na(x)]
-  n <- x %>% length()
-  S <- x[x == 'S'] %>% length()
-  I <- x[x == 'I'] %>% length()
-  R <- x[x == 'R'] %>% length()
-  IR <- x[x %in% c('I', 'R')] %>% length()
   cat("Class 'rsi'\n")
-  cat(n, " results (missing: ", n_total - n, ' = ', percent((n_total - n) / n_total, force_zero = TRUE), ')\n', sep = "")
-  if (n > 0) {
-    cat('\n')
-    cat('Sum of S:   ', S, ' (', percent(S / n, force_zero = TRUE), ')\n', sep = "")
-    cat('Sum of IR:  ', IR, ' (', percent(IR / n, force_zero = TRUE), ')\n', sep = "")
-    cat('- Sum of R: ', R, ' (', percent(R / n, force_zero = TRUE), ')\n', sep = "")
-    cat('- Sum of I: ', I, ' (', percent(I / n, force_zero = TRUE), ')\n', sep = "")
-  }
+  print(as.character(x), quote = FALSE)
 }
 
 #' @exportMethod summary.rsi
 #' @export
-#' @importFrom dplyr %>%
 #' @noRd
 summary.rsi <- function(object, ...) {
   x <- object
-  n_total <- x %>% length()
-  x <- x[!is.na(x)]
-  n <- x %>% length()
-  S <- x[x == 'S'] %>% length()
-  I <- x[x == 'I'] %>% length()
-  R <- x[x == 'R'] %>% length()
-  IR <- x[x %in% c('I', 'R')] %>% length()
-  lst <- c('rsi', n_total - n, S, IR, R, I)
-  names(lst) <- c("Mode", "<NA>", "Sum S", "Sum IR", "Sum R", "Sum I")
+  lst <- c('rsi', sum(is.na(x)), sum(x == "S"), sum(x %in% c("I", "R")), sum(x == "R"), sum(x == "I"))
+  names(lst) <- c("Mode", "<NA>", "Sum S", "Sum IR", "-Sum R", "-Sum I")
   lst
 }
 
@@ -213,6 +192,7 @@ barplot.rsi <- function(height, ...) {
 #'
 #' plot(mic_data)
 #' barplot(mic_data)
+#' freq(mic_data)
 as.mic <- function(x, na.rm = FALSE) {
   if (is.mic(x)) {
     x
@@ -363,18 +343,8 @@ as.numeric.mic <- function(x, ...) {
 #' @importFrom dplyr %>% tibble group_by summarise pull
 #' @noRd
 print.mic <- function(x, ...) {
-  n_total <- x %>% length()
-  x <- x[!is.na(x)]
-  n <- x %>% length()
   cat("Class 'mic'\n")
-  cat(n, " results (missing: ", n_total - n, ' = ', percent((n_total - n) / n_total, force_zero = TRUE), ')\n', sep = "")
-  if (n > 0) {
-    cat('\n')
-    tibble(MIC = x, y = 1) %>%
-      group_by(MIC) %>%
-      summarise(n = sum(y)) %>%
-      base::print.data.frame(row.names = FALSE)
-  }
+  print(as.character(x), quote = FALSE)
 }
 
 #' @exportMethod summary.mic
@@ -406,7 +376,6 @@ plot.mic <- function(x, ...) {
 
 #' @exportMethod barplot.mic
 #' @export
-#' @importFrom dplyr %>% group_by summarise
 #' @importFrom graphics barplot axis
 #' @noRd
 barplot.mic <- function(height, ...) {
@@ -415,6 +384,7 @@ barplot.mic <- function(height, ...) {
 }
 
 #' @importFrom graphics barplot axis
+#' @importFrom dplyr %>% group_by summarise
 create_barplot_mic <- function(x, x_name, ...) {
   data <- data.frame(mic = x, cnt = 1) %>%
     group_by(mic) %>%

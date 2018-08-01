@@ -28,6 +28,7 @@ as.rsi("<= 0.002; S") # will return S
 
 plot(rsi_data)    # for percentages
 barplot(rsi_data) # for frequencies
+freq(rsi_data)    # frequency table with informative header
 }
 \seealso{
 \code{\link{as.mic}}

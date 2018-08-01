@@ -17,8 +17,8 @@ test_that("rsi works", {
                                                "<NA>" = "0",
                                                "Sum S" = "1",
                                                "Sum IR" = "1",
-                                               "Sum R" = "1",
-                                               "Sum I" = "0"))
+                                               "-Sum R" = "1",
+                                               "-Sum I" = "0"))
 })
 
 test_that("mic works", {
