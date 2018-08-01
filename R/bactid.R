@@ -21,7 +21,9 @@
 #' Use this function to determine a valid ID based on a genus (and species). This input can be a full name (like \code{"Staphylococcus aureus"}), an abbreviated name (like \code{"S. aureus"}), or just a genus. You could also \code{\link{select}} a genus and species column, zie Examples.
 #' @param x a character vector or a dataframe with one or two columns
 #' @rdname as.bactid
-#' @details Some exceptions have been built in to get more logical results, based on prevalence of human pathogens. For example:
+#' @details \code{guess_bactid} does exactly the same as \code{as.bactid}.
+#'
+#' Some exceptions have been built in to get more logical results, based on prevalence of human pathogens. For example:
 #' \itemize{
 #'   \item{\code{"E. coli"} will return the ID of \emph{Escherichia coli} and not \emph{Entamoeba coli}, although the latter would alphabetically come first}
 #'   \item{\code{"H. influenzae"} will return the ID of \emph{Haemophilus influenzae} and not \emph{Haematobacter influenzae}}
@@ -53,17 +55,16 @@
 #' library(dplyr)
 #' df$bactid <- df %>%
 #'   select(microorganism_name) %>%
-#'   as.bactid()
+#'   guess_bactid()
 #'
 #' # and can even contain 2 columns, which is convenient for genus/species combinations:
 #' df$bactid <- df %>%
 #'   select(genus, species) %>%
-#'   as.bactid()
+#'   guess_bactid()
 #'
 #' # same result:
 #' df <- df %>%
-#'   mutate(bactid = paste(genus, species) %>%
-#'                     as.bactid())
+#'   mutate(bactid = guess_bactid(paste(genus, species)))
 #' }
 as.bactid <- function(x) {
 
@@ -158,7 +159,8 @@ as.bactid <- function(x) {
         next
       }
       if (toupper(x.backup[i]) == 'MRSE') {
-        x[i] <- 'Staphylococcus epidermidis'
+        x[i] <- 'STAEPI'
+        next
       }
       if (toupper(x.backup[i]) == 'VRE') {
         x[i] <- 'ENC'
@@ -169,15 +171,9 @@ as.bactid <- function(x) {
         x[i] <- 'PSEAER'
         next
       }
-      if (toupper(x.backup[i]) == 'PISP'
-          | toupper(x.backup[i]) == 'PRSP') {
-        # peni resistant S. pneumoniae
-        x[i] <- 'Streptococcus pneumoniae'
-      }
-      if (toupper(x.backup[i]) == 'VISP'
-          | toupper(x.backup[i]) == 'VRSP') {
-        # vanco resistant S. pneumoniae
-        x[i] <- 'Streptococcus pneumoniae'
+      if (toupper(x.backup[i]) %in% c('PISP', 'PRSP', 'VISP', 'VRSP')) {
+        # peni R, peni I, vanco I, vanco R: S. pneumoniae
+        x[i] <- 'STCPNE'
       }
     }
 

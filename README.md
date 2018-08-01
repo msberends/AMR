@@ -53,9 +53,9 @@ The functions to calculate microbial resistance use expressions that are not eva
 This package [is published on CRAN](http://cran.r-project.org/package=AMR), the official R network.
 
 ### Install from CRAN (recommended)
-[![CRAN_Badge](https://img.shields.io/cran/v/AMR.svg?label=CRAN)](http://cran.r-project.org/package=AMR) [![CRAN_Downloads](https://cranlogs.r-pkg.org/badges/grand-total/AMR)](http://cran.r-project.org/package=AMR)
+[![CRAN_Badge](https://img.shields.io/cran/v/AMR.svg?label=CRAN&colorB=3679BC)](http://cran.r-project.org/package=AMR) [![CRAN_Downloads](https://cranlogs.r-pkg.org/badges/grand-total/AMR)](http://cran.r-project.org/package=AMR)
 
-(Note: downloads measured only by [cran.rstudio.com](https://cran.rstudio.com/package=AMR), i.e. this excludes the official [cran.r-project.org](https://cran.r-project.org/package=AMR))
+(Note: Downloads measured only by [cran.rstudio.com](https://cran.rstudio.com/package=AMR), this excludes e.g. the official [cran.r-project.org](https://cran.r-project.org/package=AMR))
 
 - <img src="http://www.rstudio.com/favicon.ico" alt="RStudio favicon" height="20px"> Install using [RStudio](http://www.rstudio.com) (recommended):
   - Click on `Tools` and then `Install Packages...`

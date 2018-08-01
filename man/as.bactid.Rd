@@ -22,6 +22,8 @@ Character (vector) with class \code{"bactid"}. Unknown values will return \code{
 Use this function to determine a valid ID based on a genus (and species). This input can be a full name (like \code{"Staphylococcus aureus"}), an abbreviated name (like \code{"S. aureus"}), or just a genus. You could also \code{\link{select}} a genus and species column, zie Examples.
 }
 \details{
+\code{guess_bactid} does exactly the same as \code{as.bactid}.
+
 Some exceptions have been built in to get more logical results, based on prevalence of human pathogens. For example:
 \itemize{
   \item{\code{"E. coli"} will return the ID of \emph{Escherichia coli} and not \emph{Entamoeba coli}, although the latter would alphabetically come first}
@@ -51,17 +53,16 @@ df$bactid <- as.bactid(df$microorganism_name)
 library(dplyr)
 df$bactid <- df \%>\%
   select(microorganism_name) \%>\%
-  as.bactid()
+  guess_bactid()
 
 # and can even contain 2 columns, which is convenient for genus/species combinations:
 df$bactid <- df \%>\%
   select(genus, species) \%>\%
-  as.bactid()
+  guess_bactid()
 
 # same result:
 df <- df \%>\%
-  mutate(bactid = paste(genus, species) \%>\%
-                    as.bactid())
+  mutate(bactid = guess_bactid(paste(genus, species)))
 }
 }
 \seealso{

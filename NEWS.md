@@ -7,7 +7,7 @@
   * Universal: amoxicillin, amoxicillin/clavlanic acid, cefuroxime, piperacillin/tazobactam, ciprofloxacin,  trimethoprim/sulfamethoxazole
   * Gram-positive: vancomycin, teicoplanin, tetracycline, erythromycin, oxacillin, rifampicin
   * Gram-negative: gentamicin, tobramycin, colistin, cefotaxime, ceftazidime, meropenem
-* Functions `as.bactid` and `is.bactid` to transform/look up microbial ID's; this replaces the function `guess_bactid` but it will remain available for backwards compatibility
+* Functions `as.bactid` and `is.bactid` to transform/look up microbial ID's
 * For convience, new descriptive statistical functions `kurtosis` and `skewness` that are lacking in base R - they are generic functions and have support for vectors, data.frames and matrices
 * Function `g.test` to perform the Χ<sup>2</sup> distributed [*G*-test](https://en.wikipedia.org/wiki/G-test), which use is the same as `chisq.test`
 * Function `ratio` to transform a vector of values to a preset ratio
