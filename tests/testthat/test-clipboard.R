@@ -10,12 +10,14 @@ test_that("clipboard works", {
   skip_if_not(clipr::clipr_available())
 
   clipboard_export(antibiotics)
+  imp <- clipboard_import()
   expect_identical(as.data.frame(antibiotics, stringsAsFactors = FALSE),
-                   clipboard_import())
+                   imp)
 
   clipboard_export(septic_patients[1:100,])
+  imp <- clipboard_import(guess_col_types = TRUE,
+                          stringsAsFactors = FALSE)
   expect_identical(as.data.frame(tbl_parse_guess(septic_patients[1:100,]),
                                  stringsAsFactors = FALSE),
-                   clipboard_import(guess_col_types = TRUE,
-                                    stringsAsFactors = FALSE))
+                   imp)
 })

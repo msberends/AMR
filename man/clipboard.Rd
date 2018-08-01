@@ -10,8 +10,8 @@ clipboard_import(sep = "\\t", quote = "", header = TRUE, dec = ".",
   na = c("", "NA", "NULL"), stringsAsFactors = FALSE, startrow = 1,
   as_vector = TRUE, guess_col_types = TRUE, date_names = "en",
   date_format = "\%Y-\%m-\%d", time_format = "\%H:\%M",
-  remove_ASCII_escape_char = FALSE, tz = Sys.timezone(),
-  encoding = "UTF-8", info = TRUE)
+  remove_ASCII_escape_char = FALSE, tz = "UTC", encoding = "UTF-8",
+  info = TRUE)
 
 clipboard_export(x, sep = "\\t", dec = ".", na = "", header = TRUE,
   info = TRUE)

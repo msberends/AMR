@@ -117,7 +117,7 @@ tbl_parse_guess <- function(tbl,
                             date_format = '%Y-%m-%d',
                             time_format = '%H:%M',
                             decimal_mark = '.',
-                            tz = Sys.timezone(),
+                            tz = "UTC",
                             encoding = "UTF-8",
                             remove_ASCII_escape_char = FALSE,
                             na = c("", "NA", "NULL")) {

@@ -71,7 +71,7 @@ clipboard_import <- function(sep = '\t',
                              date_format = '%Y-%m-%d',
                              time_format = '%H:%M',
                              remove_ASCII_escape_char = FALSE,
-                             tz = Sys.timezone(),
+                             tz = "UTC",
                              encoding = "UTF-8",
                              info = TRUE) {
 
