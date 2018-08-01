@@ -174,6 +174,7 @@ as.bactid <- function(x) {
       if (toupper(x.backup[i]) %in% c('PISP', 'PRSP', 'VISP', 'VRSP')) {
         # peni R, peni I, vanco I, vanco R: S. pneumoniae
         x[i] <- 'STCPNE'
+        next
       }
     }
 
