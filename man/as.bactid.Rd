@@ -5,15 +5,25 @@
 \alias{guess_bactid}
 \alias{is.bactid}
 \title{Transform to bacteria ID}
+\source{
+[1] Becker K \emph{et al.} \strong{Coagulase-Negative Staphylococci}. 2014. Clin Microbiol Rev. 27(4): 870–926. \cr
+    \url{https://dx.doi.org/10.1128/CMR.00109-13} \cr
+[2] Lancefield RC \strong{A serological differentiation of human and other groups of hemolytic streptococci}. 1933. J Exp Med. 57(4): 571–95. \cr
+    \url{https://dx.doi.org/10.1084/jem.57.4.571}
+}
 \usage{
-as.bactid(x)
+as.bactid(x, Becker = FALSE, Lancefield = FALSE)
 
-guess_bactid(x)
+guess_bactid(x, Becker = FALSE, Lancefield = FALSE)
 
 is.bactid(x)
 }
 \arguments{
 \item{x}{a character vector or a dataframe with one or two columns}
+
+\item{Becker}{a logical to indicate whether \emph{Staphylococci} should be categorised into Coagulase Negative \emph{Staphylococci} ("CoNS") and Coagulase Positive \emph{Staphylococci} ("CoPS") instead of their own species, according to Karsten Becker \emph{et al.} [1]. This excludes \emph{Staphylococcus aureus} at default, use \code{Becker = "all"} to also categorise \emph{S. aureus} as "CoPS".}
+
+\item{Lancefield}{a logical to indicate whether beta-haemolytic \emph{Streptococci} should be categorised into Lancefield groups instead of their own species, according to Rebecca C. Lancefield [2]. These \emph{Streptococci} will be categorised in their first group, i.e. \emph{Streptococcus dysgalactiae} will be group C, although officially it was also categorised into groups G and L. Groups D and E will be ignored, since they are \emph{Enterococci}.}
 }
 \value{
 Character (vector) with class \code{"bactid"}. Unknown values will return \code{NA}.
@@ -22,9 +32,9 @@ Character (vector) with class \code{"bactid"}. Unknown values will return \code{
 Use this function to determine a valid ID based on a genus (and species). This input can be a full name (like \code{"Staphylococcus aureus"}), an abbreviated name (like \code{"S. aureus"}), or just a genus. You could also \code{\link{select}} a genus and species column, zie Examples.
 }
 \details{
-\code{guess_bactid} does exactly the same as \code{as.bactid}.
+\code{guess_bactid} is an alias of \code{as.bactid}.
 
-Some exceptions have been built in to get more logical results, based on prevalence of human pathogens. For example:
+Some exceptions have been built in to get more logical results, based on prevalence of human pathogens. These are:
 \itemize{
   \item{\code{"E. coli"} will return the ID of \emph{Escherichia coli} and not \emph{Entamoeba coli}, although the latter would alphabetically come first}
   \item{\code{"H. influenzae"} will return the ID of \emph{Haemophilus influenzae} and not \emph{Haematobacter influenzae}}
@@ -45,6 +55,12 @@ as.bactid("Staphylococcus aureus")
 as.bactid("MRSA") # Methicillin Resistant S. aureus
 as.bactid("VISA") # Vancomycin Intermediate S. aureus
 as.bactid("VRSA") # Vancomycin Resistant S. aureus
+
+guess_bactid("S. epidermidis")                 # will remain species: STAEPI
+guess_bactid("S. epidermidis", Becker = TRUE)  # will not remain species: STACNS
+
+guess_bactid("S. pyogenes")                    # will remain species: STCAGA
+guess_bactid("S. pyogenes", Lancefield = TRUE) # will not remain species: STCGRA
 
 \dontrun{
 df$bactid <- as.bactid(df$microorganism_name)

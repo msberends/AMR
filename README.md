@@ -33,6 +33,8 @@ With `AMR` you can:
     * Universal: amoxicillin, amoxicillin/clavlanic acid, cefuroxime, piperacillin/tazobactam, ciprofloxacin,  trimethoprim/sulfamethoxazole
     * Specific for Gram-positives: vancomycin, teicoplanin, tetracycline, erythromycin, oxacillin, rifampicin
     * Specific for Gram-negatives: gentamicin, tobramycin, colistin, cefotaxime, ceftazidime, meropenem
+* Categorise *Staphylococci* into Coagulase Negative *Staphylococci* (CoNS) and Coagulase Positve *Staphylococci* (CoPS) according to [Karsten Becker *et al.*](https://www.ncbi.nlm.nih.gov/pmc/articles/pmid/25278577/)
+* Categorise *Streptococci* into Lancefield groups
 * Get antimicrobial ATC properties from the WHO Collaborating Centre for Drug Statistics Methodology ([WHOCC](https://www.whocc.no/atc_ddd_methodology/who_collaborating_centre/)), to be able to:
   * Translate antibiotic codes (like *AMOX*), official names (like *amoxicillin*) and even trade names (like *Amoxil* or *Trimox*) to an [ATC code](https://www.whocc.no/atc_ddd_index/?code=J01CA04&showdescription=no) (like *J01CA04*) and vice versa with the `abname` function
   * Get the latest antibiotic properties like hierarchic groups and [defined daily dose](https://en.wikipedia.org/wiki/Defined_daily_dose) (DDD) with units and administration form from the WHOCC website with the `atc_property` function

@@ -1,7 +1,7 @@
 context("first_isolate.R")
 
 test_that("first isolates work", {
-  # septic_patients contains 1959 out of 2000 first isolates
+  # septic_patients contains 1331 out of 2000 first isolates
   expect_equal(
     sum(
       first_isolate(tbl = septic_patients,
@@ -10,9 +10,9 @@ test_that("first isolates work", {
                     col_bactid = "bactid",
                     info = TRUE),
       na.rm = TRUE),
-    1326)
+    1331)
 
-  # septic_patients contains 1962 out of 2000 first *weighted* isolates
+  # septic_patients contains 1426 out of 2000 first *weighted* isolates
   expect_equal(
     suppressWarnings(
       sum(
@@ -24,8 +24,8 @@ test_that("first isolates work", {
                       type = "keyantibiotics",
                       info = TRUE),
         na.rm = TRUE)),
-    1421)
-  # and 1961 when using points
+    1426)
+  # and 1430 when using points
   expect_equal(
     suppressWarnings(
       sum(
@@ -37,9 +37,9 @@ test_that("first isolates work", {
                       type = "points",
                       info = TRUE),
         na.rm = TRUE)),
-    1425)
+    1430)
 
-  # septic_patients contains 1732 out of 2000 first non-ICU isolates
+  # septic_patients contains 1176 out of 2000 first non-ICU isolates
   expect_equal(
     sum(
       first_isolate(septic_patients,
@@ -50,7 +50,7 @@ test_that("first isolates work", {
                     info = TRUE,
                     icu_exclude = TRUE),
       na.rm = TRUE),
-    1171)
+    1176)
 
   # set 1500 random observations to be of specimen type 'Urine'
   random_rows <- sample(x = 1:2000, size = 1500, replace = FALSE)

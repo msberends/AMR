@@ -30,6 +30,33 @@ test_that("as.bactid works", {
                      "VISA"))),
     rep("STAAUR", 8))
 
+  # check for Becker classification
+  expect_identical(as.character(guess_bactid("S. epidermidis", Becker = FALSE)), "STAEPI")
+  expect_identical(as.character(guess_bactid("S. epidermidis", Becker = TRUE)),  "STACNS")
+  expect_identical(as.character(guess_bactid("STAEPI",         Becker = TRUE)),  "STACNS")
+  expect_identical(as.character(guess_bactid("S. intermedius", Becker = FALSE)), "STAINT")
+  expect_identical(as.character(guess_bactid("S. intermedius", Becker = TRUE)),  "STACPS")
+  expect_identical(as.character(guess_bactid("STAINT",         Becker = TRUE)),  "STACPS")
+  # aureus must only be influenced if Becker = "all"
+  expect_identical(as.character(guess_bactid("STAAUR", Becker = FALSE)), "STAAUR")
+  expect_identical(as.character(guess_bactid("STAAUR", Becker = TRUE)),  "STAAUR")
+  expect_identical(as.character(guess_bactid("STAAUR", Becker = "all")), "STACPS")
+
+  # check for Lancefield classification
+  expect_identical(as.character(guess_bactid("S. pyogenes", Lancefield = FALSE)), "STCPYO")
+  expect_identical(as.character(guess_bactid("S. pyogenes", Lancefield = TRUE)),  "STCGRA")
+  expect_identical(as.character(guess_bactid("STCPYO",      Lancefield = TRUE)),  "STCGRA")
+  expect_identical(as.character(guess_bactid("S. agalactiae",  Lancefield = FALSE)),  "STCAGA")
+  expect_identical(as.character(guess_bactid("S. agalactiae",  Lancefield = TRUE)),   "STCGRB") # group B
+  expect_identical(as.character(guess_bactid("S. equisimilis", Lancefield = FALSE)),  "STCEQS")
+  expect_identical(as.character(guess_bactid("S. equisimilis", Lancefield = TRUE)),   "STCGRC") # group C
+  expect_identical(as.character(guess_bactid("S. anginosus",   Lancefield = FALSE)),  "STCANG")
+  expect_identical(as.character(guess_bactid("S. anginosus",   Lancefield = TRUE)),   "STCGRF") # group F
+  expect_identical(as.character(guess_bactid("S. sanguis",     Lancefield = FALSE)),  "STCSAN")
+  expect_identical(as.character(guess_bactid("S. sanguis",     Lancefield = TRUE)),   "STCGRH") # group H
+  expect_identical(as.character(guess_bactid("S. salivarius",  Lancefield = FALSE)),  "STCSAL")
+  expect_identical(as.character(guess_bactid("S. salivarius",  Lancefield = TRUE)),   "STCGRK") # group K
+
   # select with one column
   expect_identical(
     septic_patients[1:10,] %>%

@@ -20,10 +20,12 @@
 #'
 #' Use this function to determine a valid ID based on a genus (and species). This input can be a full name (like \code{"Staphylococcus aureus"}), an abbreviated name (like \code{"S. aureus"}), or just a genus. You could also \code{\link{select}} a genus and species column, zie Examples.
 #' @param x a character vector or a dataframe with one or two columns
+#' @param Becker a logical to indicate whether \emph{Staphylococci} should be categorised into Coagulase Negative \emph{Staphylococci} ("CoNS") and Coagulase Positive \emph{Staphylococci} ("CoPS") instead of their own species, according to Karsten Becker \emph{et al.} [1]. This excludes \emph{Staphylococcus aureus} at default, use \code{Becker = "all"} to also categorise \emph{S. aureus} as "CoPS".
+#' @param Lancefield a logical to indicate whether beta-haemolytic \emph{Streptococci} should be categorised into Lancefield groups instead of their own species, according to Rebecca C. Lancefield [2]. These \emph{Streptococci} will be categorised in their first group, i.e. \emph{Streptococcus dysgalactiae} will be group C, although officially it was also categorised into groups G and L. Groups D and E will be ignored, since they are \emph{Enterococci}.
 #' @rdname as.bactid
-#' @details \code{guess_bactid} does exactly the same as \code{as.bactid}.
+#' @details \code{guess_bactid} is an alias of \code{as.bactid}.
 #'
-#' Some exceptions have been built in to get more logical results, based on prevalence of human pathogens. For example:
+#' Some exceptions have been built in to get more logical results, based on prevalence of human pathogens. These are:
 #' \itemize{
 #'   \item{\code{"E. coli"} will return the ID of \emph{Escherichia coli} and not \emph{Entamoeba coli}, although the latter would alphabetically come first}
 #'   \item{\code{"H. influenzae"} will return the ID of \emph{Haemophilus influenzae} and not \emph{Haematobacter influenzae}}
@@ -32,6 +34,11 @@
 #' }
 #' Moreover, this function also supports ID's based on only Gram stain, when the species is not known. \cr
 #' For example, \code{"Gram negative rods"} and \code{"GNR"} will both return the ID of a Gram negative rod: \code{GNR}.
+#' @source
+#' [1] Becker K \emph{et al.} \strong{Coagulase-Negative Staphylococci}. 2014. Clin Microbiol Rev. 27(4): 870–926. \cr
+#'     \url{https://dx.doi.org/10.1128/CMR.00109-13} \cr
+#' [2] Lancefield RC \strong{A serological differentiation of human and other groups of hemolytic streptococci}. 1933. J Exp Med. 57(4): 571–95. \cr
+#'     \url{https://dx.doi.org/10.1084/jem.57.4.571}
 #' @export
 #' @importFrom dplyr %>% filter pull
 #' @return Character (vector) with class \code{"bactid"}. Unknown values will return \code{NA}.
@@ -47,6 +54,12 @@
 #' as.bactid("MRSA") # Methicillin Resistant S. aureus
 #' as.bactid("VISA") # Vancomycin Intermediate S. aureus
 #' as.bactid("VRSA") # Vancomycin Resistant S. aureus
+#'
+#' guess_bactid("S. epidermidis")                 # will remain species: STAEPI
+#' guess_bactid("S. epidermidis", Becker = TRUE)  # will not remain species: STACNS
+#'
+#' guess_bactid("S. pyogenes")                    # will remain species: STCAGA
+#' guess_bactid("S. pyogenes", Lancefield = TRUE) # will not remain species: STCGRA
 #'
 #' \dontrun{
 #' df$bactid <- as.bactid(df$microorganism_name)
@@ -66,7 +79,7 @@
 #' df <- df %>%
 #'   mutate(bactid = guess_bactid(paste(genus, species)))
 #' }
-as.bactid <- function(x) {
+as.bactid <- function(x, Becker = FALSE, Lancefield = FALSE) {
 
   failures <- character(0)
 
@@ -96,12 +109,78 @@ as.bactid <- function(x) {
   x <- trimws(x, which = "both")
   x.backup <- x
   # replace space by regex sign
+  x_withspaces <- gsub(" ", ".* ", x, fixed = TRUE)
   x <- gsub(" ", ".*", x, fixed = TRUE)
-  # add start and stop
+  # for species
   x_species <- paste(x, 'species')
+  # add start en stop regex
   x <- paste0('^', x, '$')
+  x_withspaces <- paste0('^', x_withspaces, '$')
 
   for (i in 1:length(x)) {
+
+    if (Becker == TRUE | Becker == "all") {
+      mo <- suppressWarnings(guess_bactid(x.fullbackup[i]))
+      if (mo %like% '^STA') {
+        # See Source. It's this figure:
+        # https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4187637/figure/F3/
+        species <- left_join_microorganisms(mo)$species
+        if (species %in% c("arlettae", "auricularis", "capitis",
+                           "caprae", "carnosus", "cohnii", "condimene",
+                           "devriesei", "epidermidis", "equorum",
+                           "fleurettii", "gallinarum", "haemolyticus",
+                           "hominis", "jettensis", "kloosii", "lentus",
+                           "lugdunensis", "massiliensis", "microti",
+                           "muscae", "nepalensis", "pasteuri", "perrasii",
+                           "pettenkoleri", "piscifermentans", "rostri",
+                           "saccharott", "saprophyticus", "sciuri",
+                           "siepanovicii", "simulans", "succinus",
+                           "vitulinus", "warneri", "xylosus")) {
+          x[i] <- "STACNS"
+          next
+        } else if ((Becker == "all"  & species == "aureus")
+                   | species %in% c("simiae", "agnetis", "chromogenes",
+                                    "delphirul", "felis", "futrae",
+                                    "hyicus", "intermedius",
+                                    "pseudointermedius", "schleiferi")) {
+          x[i] <- "STACPS"
+          next
+        }
+      }
+    }
+
+    if (Lancefield == TRUE) {
+      mo <- suppressWarnings(guess_bactid(x.fullbackup[i]))
+      if (mo %like% '^STC') {
+        # See Source
+        species <- left_join_microorganisms(mo)$species
+        if (species == "pyogenes") {
+          x[i] <- "STCGRA"
+          next
+        }
+        if (species == "agalactiae") {
+          x[i] <- "STCGRB"
+          next
+        }
+        if (species %in% c("equisimilis", "equi",
+                           "zooepidemicus", "dysgalactiae")) {
+          x[i] <- "STCGRC"
+          next
+        }
+        if (species == "anginosus") {
+          x[i] <- "STCGRF"
+          next
+        }
+        if (species == "sanguis") {
+          x[i] <- "STCGRH"
+          next
+        }
+        if (species == "salivarius") {
+          x[i] <- "STCGRK"
+          next
+        }
+      }
+    }
 
     if (identical(x.backup[i], "")) {
       # empty values
@@ -142,7 +221,7 @@ as.bactid <- function(x) {
       x[i] <- 'PSEAER'
       next
     }
-    if (tolower(x[i]) %like% 'coagulase'
+    if (tolower(x[i]) %like% 'coagulase negative'
         | tolower(x[i]) %like% 'cns'
         | tolower(x[i]) %like% 'cons') {
       # coerce S. coagulase negative, also as CNS and CoNS
@@ -192,7 +271,14 @@ as.bactid <- function(x) {
       next
     }
 
-    # try any match
+    # try any match keeping spaces
+    found <- AMR::microorganisms[which(AMR::microorganisms$fullname %like% x_withspaces[i]),]$bactid
+    if (length(found) > 0) {
+      x[i] <- found[1L]
+      next
+    }
+
+    # try any match diregarding spaces
     found <- AMR::microorganisms[which(AMR::microorganisms$fullname %like% x[i]),]$bactid
     if (length(found) > 0) {
       x[i] <- found[1L]
@@ -200,7 +286,7 @@ as.bactid <- function(x) {
     }
 
     # try exact match of only genus, with 'species' attached
-    # (e.g. this prevents Streptococcus for becoming Peptostreptococcus, since "p" < "s")
+    # (this prevents Streptococcus from becoming Peptostreptococcus, since "p" < "s")
     found <- AMR::microorganisms[which(AMR::microorganisms$fullname == x_species[i]),]$bactid
     if (length(found) > 0) {
       x[i] <- found[1L]

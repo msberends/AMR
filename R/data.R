@@ -236,8 +236,8 @@
 
 #' Dataset with ~2500 microorganisms
 #'
-#' A dataset containing 2453 microorganisms. MO codes of the UMCG can be looked up using \code{\link{microorganisms.umcg}}.
-#' @format A data.frame with 2453 observations and 12 variables:
+#' A dataset containing 2456 microorganisms. MO codes of the UMCG can be looked up using \code{\link{microorganisms.umcg}}.
+#' @format A data.frame with 2456 observations and 12 variables:
 #' \describe{
 #'   \item{\code{bactid}}{ID of microorganism}
 #'   \item{\code{bactsys}}{Bactsyscode of microorganism}
