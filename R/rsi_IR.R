@@ -18,20 +18,17 @@
 
 #' Calculate resistance of isolates
 #'
-#' These functions can be used to calculate the (co-)resistance of microbial isolates (i.e. percentage S, SI, IR or R). All functions can be used in \code{dplyr}s \code{\link[dplyr]{summarise}} and support grouped variables, see \emph{Examples}. \cr\cr
-#' \code{R} and \code{IR} can be used to calculate resistance, \code{S} and \code{SI} can be used to calculate susceptibility.\cr
-#' \code{n_rsi} counts all cases where antimicrobial interpretations are available.
+#' These functions can be used to calculate the (co-)resistance of microbial isolates (i.e. percentage S, SI, I, IR or R). All functions can be used in \code{dplyr}s \code{\link[dplyr]{summarise}} and support grouped variables, see \emph{Examples}. \cr\cr
+#' \code{rsi_R} and \code{rsi_IR} can be used to calculate resistance, \code{rsi_S} and \code{rsi_SI} can be used to calculate susceptibility.\cr
+#' \code{rsi_n} counts all cases where antimicrobial interpretations are available.
 #' @param ab1 vector of antibiotic interpretations, they will be transformed internally with \code{\link{as.rsi}}
 #' @param ab2 like \code{ab}, a vector of antibiotic interpretations. Use this to calculate (the lack of) co-resistance: the probability where one of two drugs have a susceptible result. See Examples.
 #' @param include_I logical to indicate whether antimicrobial interpretations of "I" should be included
 #' @param minimum minimal amount of available isolates. Any number lower than \code{minimum} will return \code{NA}. The default number of \code{30} isolates is advised by the CLSI as best practice, see Source.
 #' @param as_percent logical to indicate whether the output must be returned as percent (text), will else be a double
-#' @param interpretation antimicrobial interpretation
-#' @param info \emph{DEPRECATED} calculate the amount of available isolates and print it, like \code{n = 423}
-#' @param warning \emph{DEPRECATED} show a warning when the available amount of isolates is below \code{minimum}
 #' @details \strong{Remember that you should filter your table to let it contain only first isolates!} Use \code{\link{first_isolate}} to determine them in your data set.
 #'
-#' The functions \code{resistance} and \code{susceptibility} are wrappers around \code{IR} and \code{S}, respectively. All functions except \code{rsi} use hybrid evaluation (i.e. using C++), which makes these functions 20-30 times faster than the old \code{rsi} function. This latter function is still available for backwards compatibility but is deprecated.
+#' The functions \code{resistance} and \code{susceptibility} are wrappers around \code{rsi_IR} and \code{rsi_S}, respectively. All functions use hybrid evaluation (i.e. using C++), which makes these functions 20-30 times faster than the old \code{\link{rsi}} function. This latter function is still available for backwards compatibility but is deprecated.
 #' \if{html}{
 #'   \cr\cr
 #'   To calculate the probability (\emph{p}) of susceptibility of one antibiotic, we use this formula:
@@ -47,48 +44,57 @@
 #' @source \strong{M39 Analysis and Presentation of Cumulative Antimicrobial Susceptibility Test Data, 4th Edition}, 2014, \emph{Clinical and Laboratory Standards Institute (CLSI)}. \url{https://clsi.org/standards/products/microbiology/documents/m39/}.
 #' @keywords resistance susceptibility rsi_df rsi antibiotics isolate isolates
 #' @return Double or, when \code{as_percent = TRUE}, a character.
-#' @rdname resistance
+#' @rdname rsi_IR
+#' @name rsi_IR
 #' @export
 #' @examples
 #' # Calculate resistance
-#' R(septic_patients$amox)
-#' IR(septic_patients$amox)
+#' rsi_R(septic_patients$amox)
+#' rsi_IR(septic_patients$amox)
 #'
 #' # Or susceptibility
-#' S(septic_patients$amox)
-#' SI(septic_patients$amox)
+#' rsi_S(septic_patients$amox)
+#' rsi_SI(septic_patients$amox)
 #'
 #' # Since n_rsi counts available isolates (and is used as denominator),
 #' # you can calculate back to e.g. count resistant isolates:
-#' IR(septic_patients$amox) * n_rsi(septic_patients$amox)
+#' rsi_IR(septic_patients$amox) * n_rsi(septic_patients$amox)
 #'
 #' library(dplyr)
 #' septic_patients %>%
 #'   group_by(hospital_id) %>%
-#'   summarise(p = S(cipr),
-#'             n = n_rsi(cipr)) # n_rsi works like n_distinct in dplyr
-#'
-#' # Calculate co-resistance between amoxicillin/clav acid and gentamicin,
-#' # so we can see that combination therapy does a lot more than mono therapy:
-#' S(septic_patients$amcl)     # p = 67.3%
-#' n_rsi(septic_patients$amcl) # n = 1570
-#'
-#' S(septic_patients$gent)     # p = 74.0%
-#' n_rsi(septic_patients$gent) # n = 1842
-#'
-#' with(septic_patients,
-#'      S(amcl, gent))         # p = 92.1%
-#' with(septic_patients,
-#'      n_rsi(amcl, gent))     # n = 1504
+#'   summarise(p = rsi_S(cipr),
+#'             n = rsi_n(cipr)) # n_rsi works like n_distinct in dplyr
 #'
 #' septic_patients %>%
 #'   group_by(hospital_id) %>%
-#'   summarise(cipro_p = S(cipr, as_percent = TRUE),
-#'             cipro_n = n_rsi(cipr),
-#'             genta_p = S(gent, as_percent = TRUE),
-#'             genta_n = n_rsi(gent),
-#'             combination_p = S(cipr, gent, as_percent = TRUE),
-#'             combination_n = n_rsi(cipr, gent))
+#'   summarise(R = rsi_R(cipr, as_percent = TRUE),
+#'             I = rsi_I(cipr, as_percent = TRUE),
+#'             S = rsi_S(cipr, as_percent = TRUE),
+#'             n = rsi_n(cipr), # also: n_rsi, works like n_distinct in dplyr
+#'             total = n()) # this is the length, NOT the amount of tested isolates
+#'
+#' # Calculate co-resistance between amoxicillin/clav acid and gentamicin,
+#' # so we can see that combination therapy does a lot more than mono therapy:
+#' rsi_S(septic_patients$amcl) # S = 67.3%
+#' rsi_n(septic_patients$amcl) # n = 1570
+#'
+#' rsi_S(septic_patients$gent) # S = 74.0%
+#' rsi_n(septic_patients$gent) # n = 1842
+#'
+#' with(septic_patients,
+#'      rsi_S(amcl, gent))     # S = 92.1%
+#' with(septic_patients,       # n = 1504
+#'      rsi_n(amcl, gent))
+#'
+#' septic_patients %>%
+#'   group_by(hospital_id) %>%
+#'   summarise(cipro_p = rsi_S(cipr, as_percent = TRUE),
+#'             cipro_n = rsi_n(cipr),
+#'             genta_p = rsi_S(gent, as_percent = TRUE),
+#'             genta_n = rsi_n(gent),
+#'             combination_p = rsi_S(cipr, gent, as_percent = TRUE),
+#'             combination_n = rsi_n(cipr, gent))
 #'
 #' \dontrun{
 #'
@@ -96,31 +102,45 @@
 #' my_table %>%
 #'   filter(first_isolate == TRUE,
 #'          genus == "Helicobacter") %>%
-#'   summarise(p = S(amox, metr),     # amoxicillin with metronidazole
-#'             n = n_rsi(amox, metr))
+#'   summarise(p = rsi_S(amox, metr),  # amoxicillin with metronidazole
+#'             n = rsi_n(amox, metr))
 #' }
-#' @rdname resistance
-#' @name resistance
-#' @export
-#' @rdname resistance
-#' @export
-S <- function(ab1,
-              ab2 = NULL,
-              minimum = 30,
-              as_percent = FALSE) {
-  susceptibility(ab1 = ab1,
-                 ab2 = ab2,
-                 include_I = FALSE,
-                 minimum = minimum,
-                 as_percent = as_percent)
+rsi_R <- function(ab1,
+                  minimum = 30,
+                  as_percent = FALSE) {
+  resistance(ab1 = ab1,
+             include_I = FALSE,
+             minimum = minimum,
+             as_percent = as_percent)
 }
 
-#' @rdname resistance
+#' @rdname rsi_IR
 #' @export
-SI <- function(ab1,
-               ab2 = NULL,
-               minimum = 30,
-               as_percent = FALSE) {
+rsi_IR <- function(ab1,
+                   minimum = 30,
+                   as_percent = FALSE) {
+  resistance(ab1 = ab1,
+             include_I = TRUE,
+             minimum = minimum,
+             as_percent = as_percent)
+}
+
+#' @rdname rsi_IR
+#' @export
+rsi_I <- function(ab1,
+                  minimum = 30,
+                  as_percent = FALSE) {
+  intermediate(ab1 = ab1,
+               minimum = minimum,
+               as_percent = as_percent)
+}
+
+#' @rdname rsi_IR
+#' @export
+rsi_SI <- function(ab1,
+                   ab2 = NULL,
+                   minimum = 30,
+                   as_percent = FALSE) {
   susceptibility(ab1 = ab1,
                  ab2 = ab2,
                  include_I = TRUE,
@@ -128,51 +148,20 @@ SI <- function(ab1,
                  as_percent = as_percent)
 }
 
-#' @rdname resistance
+#' @rdname rsi_IR
 #' @export
-IR <- function(ab1,
-               minimum = 30,
-               as_percent = FALSE) {
-  resistance(ab1 = ab1,
-             include_I = TRUE,
-             minimum = minimum,
-             as_percent = as_percent)
+rsi_S <- function(ab1,
+                  ab2 = NULL,
+                  minimum = 30,
+                  as_percent = FALSE) {
+  susceptibility(ab1 = ab1,
+                 ab2 = ab2,
+                 include_I = FALSE,
+                 minimum = minimum,
+                 as_percent = as_percent)
 }
 
-#' @rdname resistance
-#' @export
-R <- function(ab1,
-              minimum = 30,
-              as_percent = FALSE) {
-  resistance(ab1 = ab1,
-             include_I = FALSE,
-             minimum = minimum,
-             as_percent = as_percent)
-}
-
-#' @rdname resistance
-#' @export
-n_rsi <- function(ab1, ab2 = NULL) {
-  if (NCOL(ab1) > 1) {
-    stop('`ab` must be a vector of antimicrobial interpretations', call. = FALSE)
-  }
-  if (!is.rsi(ab1)) {
-    ab1 <- as.rsi(ab1)
-  }
-  if (!is.null(ab2)) {
-    if (NCOL(ab2) > 1) {
-      stop('`ab2` must be a vector of antimicrobial interpretations', call. = FALSE)
-    }
-    if (!is.rsi(ab2)) {
-      ab2 <- as.rsi(ab2)
-    }
-    sum(!is.na(ab1) & !is.na(ab2))
-  } else {
-    sum(!is.na(ab1))
-  }
-}
-
-#' @rdname resistance
+#' @rdname rsi_IR
 #' @export
 resistance <- function(ab1,
                        include_I = TRUE,
@@ -214,7 +203,45 @@ resistance <- function(ab1,
   }
 }
 
-#' @rdname resistance
+#' @rdname rsi_IR
+#' @export
+intermediate <- function(ab1,
+                         minimum = 30,
+                         as_percent = FALSE) {
+
+  if (NCOL(ab1) > 1) {
+    stop('`ab1` must be a vector of antimicrobial interpretations', call. = FALSE)
+  }
+  if (!is.numeric(minimum)) {
+    stop('`minimum` must be numeric', call. = FALSE)
+  }
+  if (!is.logical(as_percent)) {
+    stop('`as_percent` must be logical', call. = FALSE)
+  }
+
+  # ab_name <- deparse(substitute(ab))
+
+  if (!is.rsi(ab1)) {
+    x <- as.rsi(ab1)
+    warning("Increase speed by transforming to class `rsi` on beforehand: df %>% mutate_at(vars(col10:col20), as.rsi)")
+  } else {
+    x <- ab1
+  }
+  total <- length(x) - sum(is.na(x)) # faster than C++
+  if (total < minimum) {
+    # warning("Too few isolates available for ", ab_name, ": ", total, " < ", minimum, "; returning NA.", call. = FALSE)
+    return(NA)
+  }
+  found <- .Call(`_AMR_rsi_calc_I`, x)
+
+  if (as_percent == TRUE) {
+    percent(found / total, force_zero = TRUE)
+  } else {
+    found / total
+  }
+}
+
+#' @rdname rsi_IR
 #' @export
 susceptibility <- function(ab1,
                            ab2 = NULL,
@@ -275,7 +302,37 @@ susceptibility <- function(ab1,
   }
 }
 
-#' @rdname resistance
+#' @rdname rsi_IR
+#' @export
+rsi_n <- function(ab1, ab2 = NULL) {
+  if (NCOL(ab1) > 1) {
+    stop('`ab` must be a vector of antimicrobial interpretations', call. = FALSE)
+  }
+  if (!is.rsi(ab1)) {
+    ab1 <- as.rsi(ab1)
+  }
+  if (!is.null(ab2)) {
+    if (NCOL(ab2) > 1) {
+      stop('`ab2` must be a vector of antimicrobial interpretations', call. = FALSE)
+    }
+    if (!is.rsi(ab2)) {
+      ab2 <- as.rsi(ab2)
+    }
+    sum(!is.na(ab1) & !is.na(ab2))
+  } else {
+    sum(!is.na(ab1))
+  }
+}
+
+#' @rdname rsi_IR
+#' @export
+n_rsi <- rsi_n
+
+#' @inherit resistance
+#' @description This function is deprecated. Use \code{\link{rsi_IR}} instead.
+#' @param info calculate the amount of available isolates and print it, like \code{n = 423}
+#' @param warning show a warning when the available amount of isolates is below \code{minimum}
+#' @param interpretation antimicrobial interpretation
 #' @export
 rsi <- function(ab1,
                 ab2 = NA,

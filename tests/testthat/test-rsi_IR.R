@@ -1,19 +1,23 @@
-context("resistance.R")
+context("rsi_IR.R")
 
 test_that("resistance works", {
   # check shortcuts
   expect_equal(resistance(septic_patients$amox, include_I = TRUE),
-               IR(septic_patients$amox))
+               rsi_IR(septic_patients$amox))
   expect_equal(resistance(septic_patients$amox, include_I = FALSE),
-               R(septic_patients$amox))
+               rsi_R(septic_patients$amox))
+  expect_equal(intermediate(septic_patients$amox),
+               rsi_I(septic_patients$amox))
   expect_equal(susceptibility(septic_patients$amox, include_I = TRUE),
-               SI(septic_patients$amox))
+               rsi_SI(septic_patients$amox))
   expect_equal(susceptibility(septic_patients$amox, include_I = FALSE),
-               S(septic_patients$amox))
+               rsi_S(septic_patients$amox))
 
-  # amox resistance in `septic_patients` should be around 66.33%
-  expect_equal(resistance(septic_patients$amox, include_I = TRUE), 0.6633, tolerance = 0.0001)
-  expect_equal(susceptibility(septic_patients$amox, include_I = FALSE), 1 - 0.6633, tolerance = 0.0001)
+  # amox resistance in `septic_patients`
+  expect_equal(rsi_R(septic_patients$amox), 0.6603, tolerance = 0.0001)
+  expect_equal(rsi_I(septic_patients$amox), 0.0030, tolerance = 0.0001)
+  expect_equal(1 - rsi_R(septic_patients$amox) - rsi_I(septic_patients$amox),
+               rsi_S(septic_patients$amox))
 
   # pita+genta susceptibility around 98.09%
   expect_equal(susceptibility(septic_patients$pita,
@@ -26,6 +30,18 @@ test_that("resistance works", {
                0.9535,
                tolerance = 0.0001)
 
+  # percentages
+  expect_equal(septic_patients %>%
+                 group_by(hospital_id) %>%
+                 summarise(R = rsi_R(cipr, as_percent = TRUE),
+                           I = rsi_I(cipr, as_percent = TRUE),
+                           S = rsi_S(cipr, as_percent = TRUE),
+                           n = rsi_n(cipr),
+                           total = n()) %>%
+                 pull(n) %>%
+                 sum(),
+               1404)
+
   # count of cases
   expect_equal(septic_patients %>%
                  group_by(hospital_id) %>%
@@ -34,7 +50,7 @@ test_that("resistance works", {
                            genta_p = susceptibility(gent, as_percent = TRUE),
                            genta_n = n_rsi(gent),
                            combination_p = susceptibility(cipr, gent, as_percent = TRUE),
-                           combination_n = n_rsi(cipr, gent)) %>%
+                           combination_n = rsi_n(cipr, gent)) %>%
                  pull(combination_n),
                c(202, 482, 201, 499))
 
@@ -45,22 +61,29 @@ test_that("resistance works", {
 
 
   # check for errors
-  expect_error(IR(septic_patients %>% select(amox, amcl)))
-  expect_error(IR("test", minimum = "test"))
-  expect_error(IR("test", as_percent = "test"))
-  expect_error(S("test", minimum = "test"))
-  expect_error(S("test", as_percent = "test"))
-  expect_error(S(septic_patients %>% select(amox, amcl)))
-  expect_error(S("R", septic_patients %>% select(amox, amcl)))
+  expect_error(rsi_IR(septic_patients %>% select(amox, amcl)))
+  expect_error(rsi_IR("test", minimum = "test"))
+  expect_error(rsi_IR("test", as_percent = "test"))
+  expect_error(rsi_I(septic_patients %>% select(amox, amcl)))
+  expect_error(rsi_I("test", minimum = "test"))
+  expect_error(rsi_I("test", as_percent = "test"))
+  expect_error(rsi_S("test", minimum = "test"))
+  expect_error(rsi_S("test", as_percent = "test"))
+  expect_error(rsi_S(septic_patients %>% select(amox, amcl)))
+  expect_error(rsi_S("R", septic_patients %>% select(amox, amcl)))
 
   # check too low amount of isolates
-  expect_identical(IR(septic_patients$amox, minimum = nrow(septic_patients) + 1),
+  expect_identical(rsi_R(septic_patients$amox, minimum = nrow(septic_patients) + 1),
                    NA)
-  expect_identical(S(septic_patients$amox, minimum = nrow(septic_patients) + 1),
+  expect_identical(rsi_I(septic_patients$amox, minimum = nrow(septic_patients) + 1),
+                   NA)
+  expect_identical(rsi_S(septic_patients$amox, minimum = nrow(septic_patients) + 1),
                    NA)
 
   # warning for speed loss
-  expect_warning(S(septic_patients$amcl, as.character(septic_patients$gent)))
+  expect_warning(rsi_R(as.character(septic_patients$gent)))
+  expect_warning(rsi_I(as.character(septic_patients$gent)))
+  expect_warning(rsi_S(septic_patients$amcl, as.character(septic_patients$gent)))
 
 })
 

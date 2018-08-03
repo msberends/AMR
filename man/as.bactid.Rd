@@ -84,3 +84,9 @@ df <- df \%>\%
 \seealso{
 \code{\link{microorganisms}} for the dataframe that is being used to determine ID's.
 }
+\keyword{Becker}
+\keyword{Lancefield}
+\keyword{bactid}
+\keyword{becker}
+\keyword{guess}
+\keyword{lancefield}

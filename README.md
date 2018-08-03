@@ -28,7 +28,7 @@ Erwin E.A. Hassing<sup>2</sup>,
 This R package contains functions to make **microbiological, epidemiological data analysis easier**. It allows the use of some new classes to work with MIC values and antimicrobial interpretations (i.e. values S, I and R).
 
 With `AMR` you can:
-* Calculate the resistance (and even co-resistance) of microbial isolates with the `R`, `IR`, `SI` and `S` functions, that can also be used with the `dplyr` package (e.g. in conjunction with `summarise`)
+* Calculate the resistance (and even co-resistance) of microbial isolates with the `rsi_R`, `rsi_IR`, `rsi_I`, `rsi_SI` and `rsi_S` functions, that can also be used with the `dplyr` package (e.g. in conjunction with `summarise`)
 * Predict antimicrobial resistance for the nextcoming years with the `resistance_predict` function
 * Apply [EUCAST rules to isolates](http://www.eucast.org/expert_rules_and_intrinsic_resistance/) with the `EUCAST_rules` function
 * Identify first isolates of every patient [using guidelines from the CLSI](https://clsi.org/standards/products/microbiology/documents/m39/) (Clinical and Laboratory Standards Institute) with the `first_isolate` function
@@ -121,17 +121,17 @@ after
 # 5 PSEAER    R    R    -    -    R
 ```
 
-Bacteria ID's can be retrieved with the `as.bactid` function. It uses any type of info about a microorganism as input. For example, all these will return value `STAAUR`, the ID of *S. aureus*:
+Bacteria ID's can be retrieved with the `guess_bactid` function. It uses any type of info about a microorganism as input. For example, all these will return value `STAAUR`, the ID of *S. aureus*:
 ```r
-as.bactid("stau")
-as.bactid("STAU")
-as.bactid("staaur")
-as.bactid("S. aureus")
-as.bactid("S aureus")
-as.bactid("Staphylococcus aureus")
-as.bactid("MRSA") # Methicillin Resistant S. aureus
-as.bactid("VISA") # Vancomycin Intermediate S. aureus
-as.bactid("VRSA") # Vancomycin Resistant S. aureus
+guess_bactid("stau")
+guess_bactid("STAU")
+guess_bactid("staaur")
+guess_bactid("S. aureus")
+guess_bactid("S aureus")
+guess_bactid("Staphylococcus aureus")
+guess_bactid("MRSA") # Methicillin Resistant S. aureus
+guess_bactid("VISA") # Vancomycin Intermediate S. aureus
+guess_bactid("VRSA") # Vancomycin Resistant S. aureus
 ```
 
 ### New classes

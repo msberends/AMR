@@ -2,7 +2,7 @@
 **Published on CRAN: (unpublished)**
 
 #### New
-* **BREAKING**: `rsi_df` was removed in favour of new functions `R`, `IR`, `SI` and `S` to selectively calculate resistance or susceptibility. These functions use **hybrid evaluation**, which means that calculations are not done in R directly but rather in C++ using the `Rcpp` package, making them 20 to 30 times faster. The function `rsi` still works, but is deprecated.
+* **BREAKING**: `rsi_df` was removed in favour of new functions `rsi_R`, `rsi_IR`, `rsi_I`, `rsi_SI` and `rsi_S` to selectively calculate resistance or susceptibility. These functions use **hybrid evaluation**, which means that calculations are not done in R directly but rather in C++ using the `Rcpp` package, making them 20 to 30 times faster. The function `rsi` still works, but is deprecated. The function `n_rsi` is accompanied by `rsi_n`. 
 * **BREAKING**: the methodology for determining first weighted isolates was changed. The antibiotics that are compared between isolates (call *key antibiotics*) to include more first isolates (afterwards called first *weighted* isolates) are now as follows:
   * Universal: amoxicillin, amoxicillin/clavlanic acid, cefuroxime, piperacillin/tazobactam, ciprofloxacin,  trimethoprim/sulfamethoxazole
   * Gram-positive: vancomycin, teicoplanin, tetracycline, erythromycin, oxacillin, rifampicin

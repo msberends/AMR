@@ -17,6 +17,17 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// rsi_calc_I
+int rsi_calc_I(DoubleVector x);
+RcppExport SEXP _AMR_rsi_calc_I(SEXP xSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< DoubleVector >::type x(xSEXP);
+    rcpp_result_gen = Rcpp::wrap(rsi_calc_I(x));
+    return rcpp_result_gen;
+END_RCPP
+}
 // rsi_calc_R
 int rsi_calc_R(DoubleVector x, bool include_I);
 RcppExport SEXP _AMR_rsi_calc_R(SEXP xSEXP, SEXP include_ISEXP) {
@@ -32,6 +43,7 @@ END_RCPP
 
 static const R_CallMethodDef CallEntries[] = {
     {"_AMR_rsi_calc_S", (DL_FUNC) &_AMR_rsi_calc_S, 2},
+    {"_AMR_rsi_calc_I", (DL_FUNC) &_AMR_rsi_calc_I, 1},
     {"_AMR_rsi_calc_R", (DL_FUNC) &_AMR_rsi_calc_R, 2},
     {NULL, NULL, 0}
 };

@@ -5,6 +5,10 @@ rsi_calc_S <- function(x, include_I) {
     .Call(`_AMR_rsi_calc_S`, x, include_I)
 }
 
+rsi_calc_I <- function(x) {
+    .Call(`_AMR_rsi_calc_I`, x)
+}
+
 rsi_calc_R <- function(x, include_I) {
     .Call(`_AMR_rsi_calc_R`, x, include_I)
 }
