@@ -126,23 +126,24 @@ as.bactid <- function(x, Becker = FALSE, Lancefield = FALSE) {
         # https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4187637/figure/F3/
         species <- left_join_microorganisms(mo)$species
         if (species %in% c("arlettae", "auricularis", "capitis",
-                           "caprae", "carnosus", "cohnii", "condimene",
+                           "caprae", "carnosus", "cohnii", "condimenti",
                            "devriesei", "epidermidis", "equorum",
                            "fleurettii", "gallinarum", "haemolyticus",
                            "hominis", "jettensis", "kloosii", "lentus",
                            "lugdunensis", "massiliensis", "microti",
-                           "muscae", "nepalensis", "pasteuri", "perrasii",
-                           "pettenkoleri", "piscifermentans", "rostri",
-                           "saccharott", "saprophyticus", "sciuri",
-                           "siepanovicii", "simulans", "succinus",
+                           "muscae", "nepalensis", "pasteuri", "petrasii",
+                           "pettenkoferi", "piscifermentans", "rostri",
+                           "saccharolyticus", "saprophyticus", "sciuri",
+                           "stepanovicii", "simulans", "succinus",
                            "vitulinus", "warneri", "xylosus")) {
           x[i] <- "STACNS"
           next
         } else if ((Becker == "all"  & species == "aureus")
                    | species %in% c("simiae", "agnetis", "chromogenes",
-                                    "delphirul", "felis", "futrae",
+                                    "delphini", "felis", "lutrae",
                                     "hyicus", "intermedius",
-                                    "pseudointermedius", "schleiferi")) {
+                                    "pseudintermedius", "pseudointermedius",
+                                    "schleiferi")) {
           x[i] <- "STACPS"
           next
         }
