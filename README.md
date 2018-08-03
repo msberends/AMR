@@ -6,14 +6,17 @@ This R package was created for academic research by PhD students of the Faculty 
 :arrow_forward: Download it with `install.packages("AMR")` or see below for other possibilities.
 
 ## Authors
-
-  - [Berends MS](https://github.com/msberends)<sup>1,2</sup>, PhD Student
-  - [Luz CF](https://github.com/ceefluz)<sup>1</sup>, PhD Student
-  - [Hassing EEA](https://github.com/erwinhassing)<sup>2</sup>, Data Analyst (contributor)
+<a href="https://orcid.org/0000-0001-7620-1800"><img src="https://cran.r-project.org/web/orcid.svg" height="16px"></a> Matthijs S. Berends<sup>1,2,a</sup>,
+<a href="https://orcid.org/0000-0001-5809-5995"><img src="https://cran.r-project.org/web/orcid.svg" height="16px"></a> Christian F. Luz<sup>1,a</sup>,
+Erwin E.A. Hassing<sup>2</sup>,
+<a href="https://orcid.org/0000-0003-1241-1328"><img src="https://cran.r-project.org/web/orcid.svg" height="16px"></a> Corinna Glasner<sup>1,b</sup>,
+<a href="https://orcid.org/0000-0003-4881-038X"><img src="https://cran.r-project.org/web/orcid.svg" height="16px"></a> Alex W. Friedrich<sup>1,b</sup>,
+<a href="https://orcid.org/0000-0003-1634-0010"><img src="https://cran.r-project.org/web/orcid.svg" height="16px"></a> Bhanu Sinha<sup>1,b</sup>
   
-<sup>1</sup> Department of Medical Microbiology, University of Groningen, University Medical Center Groningen, Groningen, the Netherlands
-
-<sup>2</sup> Certe Medical Diagnostics & Advice, Groningen, the Netherlands
+<sup>1</sup> Department of Medical Microbiology, University of Groningen, University Medical Center Groningen, Groningen, the Netherlands<br>
+<sup>2</sup> Certe Medical Diagnostics & Advice, Groningen, the Netherlands<br>
+<sup>a</sup> R package author and dissertant<br>
+<sup>b</sup> Thesis advisor
 
 <a href="https://www.rug.nl"><img src="man/figures/logo_rug.png" height="60px"></a>
 <a href="https://www.umcg.nl"><img src="man/figures/logo_umcg.png" height="60px"></a>

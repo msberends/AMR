@@ -58,6 +58,7 @@
 
 #### Other
 * Unit testing for all Linux and macOS releases of R 3.1 and higher: https://travis-ci.org/msberends/AMR
+* Added thesis advisors to DESCRIPTION file
 
 # 0.2.0 (latest stable version)
 **Published on CRAN: 2018-05-03**

@@ -326,7 +326,7 @@ frequency_tbl <- function(x,
       header <- header %>% paste0(' (unique: ', boxplot.stats(x)$out %>% n_distinct(), ')')
     }
   }
-  if (any(class(x) == "rsi")) {
+  if (NROW(x) > 0 & any(class(x) == "rsi")) {
     header <- header %>% paste0('\n')
     cnt_S <- sum(x == "S")
     cnt_I <- sum(x == "I")

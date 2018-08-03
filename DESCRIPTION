@@ -7,19 +7,40 @@ Authors@R: c(
         given = c("Matthijs", "S."),
         family = "Berends",
         email = "m.s.berends@umcg.nl",
-        role = c("aut", "cre"),
+        role = c("aut", "dis", "cre"),
         comment = c(ORCID = "0000-0001-7620-1800")),
     person(
         given = c("Christian", "F."),
         family = "Luz",
         email = "c.f.luz@umcg.nl",
-        role = c("aut", "ctb"),
+        role = c("aut", "dis"),
         comment = c(ORCID = "0000-0001-5809-5995")),
     person(
         given = c("Erwin", "E.A."),
         family = "Hassing",
         email = "e.hassing@certe.nl",
-        role = "ctb"))
+        role = "ctb"),
+    person(
+        given = "Corinna",
+        family = "Glasner",
+        email = "c.glasner@umcg.nl",
+        role = "ths",
+        comment = c(ORCID = "0000-0003-1241-1328")),
+    person(
+        given = c("Alex", "W."),
+        family = "Friedrich",
+        email = "alex.friedrich@umcg.nl",
+        role = c("ths", "ldr"),
+        comment = c(ORCID = "0000-0003-4881-038X")),
+    person(
+        given = "Bhanu",
+        family = "Sinha",
+        email = "b.sinha@umcg.nl",
+        role = "ths",
+        comment = c(ORCID = "0000-0003-1634-0010")),
+    person(
+        family = "University of Groningen",
+        role = "uvp"))
 Description: Functions to simplify the analysis of Antimicrobial Resistance (AMR)
     of microbial isolates, by using new S3 classes and applying EUCAST expert rules
     on antibiograms according to Leclercq (2013)
