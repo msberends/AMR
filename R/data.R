@@ -236,8 +236,8 @@
 
 #' Dataset with ~2500 microorganisms
 #'
-#' A dataset containing 2456 microorganisms. MO codes of the UMCG can be looked up using \code{\link{microorganisms.umcg}}.
-#' @format A data.frame with 2456 observations and 12 variables:
+#' A dataset containing 2464 microorganisms. MO codes of the UMCG can be looked up using \code{\link{microorganisms.umcg}}.
+#' @format A data.frame with 2464 observations and 12 variables:
 #' \describe{
 #'   \item{\code{bactid}}{ID of microorganism}
 #'   \item{\code{bactsys}}{Bactsyscode of microorganism}
@@ -253,6 +253,15 @@
 #'   \item{\code{gramstain_nl}}{Gram of microorganism in Dutch, like \code{"Negatieve staven"}}
 #' }
 #  source MOLIS (LIS of Certe) - \url{https://www.certe.nl}
+# new <- microorganisms %>% filter(genus == "Bacteroides") %>% .[1,]
+# new[1, 'bactid'] <- "DIAPNU"
+# new[1, 'bactsys'] <- "DIAPNU"
+# new[1, 'family'] <- "Veillonellaceae"
+# new[1, 'genus'] <- "Dialister"
+# new[1, 'species'] <- "pneumosintes"
+# new[1, 'subspecies'] <- NA
+# new[1, 'fullname'] <- paste(new[1, 'genus'], new[1, 'species'])
+# microorganisms <- microorganisms %>% bind_rows(new) %>% arrange(bactid)
 #' @seealso \code{\link{guess_bactid}} \code{\link{antibiotics}} \code{\link{microorganisms.umcg}}
 "microorganisms"
 
