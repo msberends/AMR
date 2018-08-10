@@ -50,7 +50,7 @@ my_data \%>\%
          first_isolates == TRUE) \%>\%
   group_by(hospital_id) \%>\%
   summarise(n = n_rsi(amox),
-            p = resistance(amox))
+            p = portion_IR(amox))
 
 
 # 2. Get the amoxicillin/clavulanic acid resistance
@@ -61,6 +61,6 @@ my_data \%>\%
          first_isolates == TRUE) \%>\%
   group_by(year = format(date, "\%Y")) \%>\%
   summarise(n = n_rsi(amcl),
-            p = resistance(amcl, minimum = 20))
+            p = portion_IR(amcl, minimum = 20))
 }
 \keyword{datasets}

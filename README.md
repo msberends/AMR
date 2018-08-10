@@ -13,8 +13,8 @@ Erwin E.A. Hassing<sup>2</sup>,
 <a href="https://orcid.org/0000-0003-4881-038X"><img src="https://cran.r-project.org/web/orcid.svg" height="16px"></a> Alex W. Friedrich<sup>1,b</sup>,
 <a href="https://orcid.org/0000-0003-1634-0010"><img src="https://cran.r-project.org/web/orcid.svg" height="16px"></a> Bhanu Sinha<sup>1,b</sup>
   
-<sup>1</sup> Department of Medical Microbiology, University of Groningen, University Medical Center Groningen, Groningen, the Netherlands<br>
-<sup>2</sup> Certe Medical Diagnostics & Advice, Groningen, the Netherlands<br>
+<sup>1</sup> Department of Medical Microbiology, University of Groningen, University Medical Center Groningen, Groningen, the Netherlands - [rug.nl](http://www.rug.nl) [umcg.nl](http://www.umcg.nl)<br>
+<sup>2</sup> Certe Medical Diagnostics & Advice, Groningen, the Netherlands - [certe.nl](http://www.certe.nl)<br>
 <sup>a</sup> R package author and dissertant<br>
 <sup>b</sup> Thesis advisor
 
@@ -25,10 +25,10 @@ Erwin E.A. Hassing<sup>2</sup>,
 <a href="http://www.eurhealth-1health.eu"><img src="man/figures/logo_interreg.png" height="60px"></a>
 
 ## Why this package?
-This R package contains functions to make **microbiological, epidemiological data analysis easier**. It allows the use of some new classes to work with MIC values and antimicrobial interpretations (i.e. values S, I and R).
+This R package was intended to make microbial epidemiology easier. Most functions contain extensive help pages to get started.
 
 With `AMR` you can:
-* Calculate the resistance (and even co-resistance) of microbial isolates with the `rsi_R`, `rsi_IR`, `rsi_I`, `rsi_SI` and `rsi_S` functions, that can also be used with the `dplyr` package (e.g. in conjunction with `summarise`)
+* Calculate the resistance (and even co-resistance) of microbial isolates with the `portion_R`, `portion_IR`, `portion_I`, `portion_SI` and `portion_S` functions, that can also be used with the `dplyr` package (e.g. in conjunction with `summarise`)
 * Predict antimicrobial resistance for the nextcoming years with the `resistance_predict` function
 * Apply [EUCAST rules to isolates](http://www.eucast.org/expert_rules_and_intrinsic_resistance/) with the `EUCAST_rules` function
 * Identify first isolates of every patient [using guidelines from the CLSI](https://clsi.org/standards/products/microbiology/documents/m39/) (Clinical and Laboratory Standards Institute) with the `first_isolate` function
@@ -50,7 +50,7 @@ And it contains:
 
 With the `MDRO` function (abbreviation of Multi Drug Resistant Organisms), you can check your isolates for exceptional resistance with country-specific guidelines or EUCAST rules. Currently guidelines for Germany and the Netherlands are supported. Please suggest addition of your own country here: [https://github.com/msberends/AMR/issues/new](https://github.com/msberends/AMR/issues/new?title=New%20guideline%20for%20MDRO&body=%3C--%20Please%20add%20your%20country%20code,%20guideline%20name,%20version%20and%20source%20below%20and%20remove%20this%20line--%3E).
 
-The functions to calculate microbial resistance use expressions that are not evaluated by R itself, but by alternative C++ code that is 25 to 30 times faster and uses less memory. This is called *hybrid evaluation*.
+The functions to calculate microbial resistance use expressions that are not evaluated by R itself, but by alternative C++ code that is 25 to 30 times faster than R and uses less memory. This is called *hybrid evaluation*.
 
 #### Read all changes and new functions in [NEWS.md](NEWS.md).
 

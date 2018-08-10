@@ -55,31 +55,32 @@
 #' @return A vector to add to table, see Examples.
 #' @source Methodology of this function is based on: \strong{M39 Analysis and Presentation of Cumulative Antimicrobial Susceptibility Test Data, 4th Edition}, 2014, \emph{Clinical and Laboratory Standards Institute (CLSI)}. \url{https://clsi.org/standards/products/microbiology/documents/m39/}.
 #' @examples
-#' # septic_patients is a dataset available in the AMR package
+#' # septic_patients is a dataset available in the AMR package. It is true data.
 #' ?septic_patients
-#' my_patients <- septic_patients
 #'
 #' library(dplyr)
-#' my_patients$first_isolate <- my_patients %>%
-#'   first_isolate(col_date = "date",
-#'                 col_patient_id = "patient_id",
-#'                 col_bactid = "bactid")
+#' my_patients <- septic_patients %>%
+#'   mutate(first_isolate = first_isolate(.,
+#'                                        col_date = "date",
+#'                                        col_patient_id = "patient_id",
+#'                                        col_bactid = "bactid"))
 #'
 #' # Now let's see if first isolates matter:
 #' A <- my_patients %>%
 #'   group_by(hospital_id) %>%
-#'   summarise(count = n_rsi(gent), # gentamicin
-#'             resistance = resistance(gent))
+#'   summarise(count = n_rsi(gent),            # gentamicin availability
+#'             resistance = portion_IR(gent))  # gentamicin resistance
 #'
 #' B <- my_patients %>%
-#'   filter(first_isolate == TRUE) %>% # the 1st isolate filter
+#'   filter(first_isolate == TRUE) %>%         # the 1st isolate filter
 #'   group_by(hospital_id) %>%
-#'   summarise(count = n_rsi(gent),
-#'             resistance = resistance(gent))
+#'   summarise(count = n_rsi(gent),            # gentamicin availability
+#'             resistance = portion_IR(gent))  # gentamicin resistance
 #'
-#' # Have a look at A and B. B is more reliable because every isolate is
-#' # counted once. Gentamicin resitance in hospital D appears to be 5%
-#' # higher than originally thought.
+#' # Have a look at A and B.
+#' # B is more reliable because every isolate is only counted once.
+#' # Gentamicin resitance in hospital D appears to be 5.4% higher than
+#' # when you (erroneously) would have used all isolates!
 #'
 #' ## OTHER EXAMPLES:
 #'
