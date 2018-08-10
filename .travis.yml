@@ -5,9 +5,6 @@ jobs:
   - r: 3.1
     os: linux
     warnings_are_errors: false
-  - r: 3.1
-    os: osx
-    warnings_are_errors: false
   - r: 3.2
     os: linux
   - r: 3.2
@@ -27,13 +24,10 @@ jobs:
   - r: devel
     os: linux
     warnings_are_errors: false
-  - r: devel
-    os: osx
-    warnings_are_errors: false
-matrix:
-  allow_failures:
-    - r: 3.1
-    - r: devel
+# matrix:
+#   allow_failures:
+#     - r: 3.1
+#     - r: devel
 r_packages: covr
 cache: packages
 cran: https://cran.rstudio.com
