@@ -7,9 +7,9 @@
 \alias{print.frequency_tbl}
 \title{Frequency table}
 \usage{
-frequency_tbl(x, ..., sort.count = TRUE, nmax = getOption("max.print.freq"),
-  na.rm = TRUE, row.names = TRUE, markdown = FALSE, digits = 2,
-  sep = " ")
+frequency_tbl(x, ..., sort.count = TRUE,
+  nmax = getOption("max.print.freq"), na.rm = TRUE, row.names = TRUE,
+  markdown = FALSE, digits = 2, sep = " ")
 
 freq(x, ..., sort.count = TRUE, nmax = getOption("max.print.freq"),
   na.rm = TRUE, row.names = TRUE, markdown = FALSE, digits = 2,
@@ -17,8 +17,8 @@ freq(x, ..., sort.count = TRUE, nmax = getOption("max.print.freq"),
 
 top_freq(f, n)
 
-\method{print}{frequency_tbl}(x, nmax = getOption("max.print.freq", default =
-  15), ...)
+\method{print}{frequency_tbl}(x, nmax = getOption("max.print.freq",
+  default = 15), ...)
 }
 \arguments{
 \item{x}{vector of any class or a \code{\link{data.frame}}, \code{\link{tibble}} or \code{\link{table}}}

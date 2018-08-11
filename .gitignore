@@ -12,3 +12,4 @@ inst/doc
 *.dll
 vignettes/*.R
 .DS_Store
+^cran-comments\.md$

@@ -12,7 +12,8 @@ This code is almost identical to \code{\link{chisq.test}}, except that:
 }
 }
 \usage{
-g.test(x, y = NULL, p = rep(1/length(x), length(x)), rescale.p = FALSE)
+g.test(x, y = NULL, p = rep(1/length(x), length(x)),
+  rescale.p = FALSE)
 }
 \arguments{
 \item{x}{a numeric vector or matrix. \code{x} and \code{y} can also

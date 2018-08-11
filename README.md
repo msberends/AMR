@@ -50,8 +50,6 @@ And it contains:
 
 With the `MDRO` function (abbreviation of Multi Drug Resistant Organisms), you can check your isolates for exceptional resistance with country-specific guidelines or EUCAST rules. Currently guidelines for Germany and the Netherlands are supported. Please suggest addition of your own country here: [https://github.com/msberends/AMR/issues/new](https://github.com/msberends/AMR/issues/new?title=New%20guideline%20for%20MDRO&body=%3C--%20Please%20add%20your%20country%20code,%20guideline%20name,%20version%20and%20source%20below%20and%20remove%20this%20line--%3E).
 
-The functions to calculate microbial resistance use expressions that are not evaluated by R itself, but by alternative C++ code that is 25 to 30 times faster than R and uses less memory. This is called *hybrid evaluation*.
-
 #### Read all changes and new functions in [NEWS.md](NEWS.md).
 
 ## How to get it?
@@ -145,27 +143,21 @@ rsi_data <- as.rsi(c(rep("S", 474), rep("I", 36), rep("R", 370)))
 ```
 These functions also try to coerce valid values.
 
-Quick overviews when just printing objects:
+Quick overviews with `summary`:
 ```r
-mic_data
-# Class 'mic': 7 isolates
-# 
-# <NA>  0
-# 
-# <=0.128       1       8      16    >=32
-#       1       1       2       2       1
+summary(rsi_data)
+#  Mode  :rsi  
+#  <NA>  :0    
+#  Sum S :474  
+#  Sum IR:406  
+#  -Sum R:370  
+#  -Sum I:36
 
-rsi_data
-# Class 'rsi': 880 isolates
-# 
-# <NA>:       0 
-# Sum of S:   474 
-# Sum of IR:  406 
-# - Sum of R: 370 
-# - Sum of I: 36 
-# 
-#   %S  %IR   %I   %R 
-# 53.9 46.1  4.1 42.0 
+summary(mic_data)
+#  Mode:mic      
+#  <NA>:0        
+#  Min.:<=0.128  
+#  Max.:>=32 
 ```
 
 A plot of `rsi_data`:

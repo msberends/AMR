@@ -9,10 +9,11 @@ Methodology of this function is based on: \strong{M39 Analysis and Presentation 
 \usage{
 first_isolate(tbl, col_date, col_patient_id, col_bactid = NA,
   col_testcode = NA, col_specimen = NA, col_icu = NA,
-  col_keyantibiotics = NA, episode_days = 365, testcodes_exclude = "",
-  icu_exclude = FALSE, filter_specimen = NA, output_logical = TRUE,
-  type = "keyantibiotics", ignore_I = TRUE, points_threshold = 2,
-  info = TRUE, col_genus = NA, col_species = NA)
+  col_keyantibiotics = NA, episode_days = 365,
+  testcodes_exclude = "", icu_exclude = FALSE, filter_specimen = NA,
+  output_logical = TRUE, type = "keyantibiotics", ignore_I = TRUE,
+  points_threshold = 2, info = TRUE, col_genus = NA,
+  col_species = NA)
 }
 \arguments{
 \item{tbl}{a \code{data.frame} containing isolates.}

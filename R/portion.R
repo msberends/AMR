@@ -25,7 +25,11 @@
 #' @param ab2 like \code{ab}, a vector of antibiotic interpretations. Use this to calculate (the lack of) co-resistance: the probability where one of two drugs have a resistant or susceptible result. See Examples.
 #' @param minimum minimal amount of available isolates. Any number lower than \code{minimum} will return \code{NA}. The default number of \code{30} isolates is advised by the CLSI as best practice, see Source.
 #' @param as_percent logical to indicate whether the output must be returned as percent (text), will else be a double
+#' @param data a code{data.frame} containing columns with class \code{rsi} (see \code{\link{as.rsi}})
+#' @param translate a logical value to indicate whether antibiotic abbreviations should be translated with \code{\link{abname}}
 #' @details \strong{Remember that you should filter your table to let it contain only first isolates!} Use \code{\link{first_isolate}} to determine them in your data set.
+#'
+#' \code{portion_df} takes any variable from \code{data} that has an \code{"rsi"} class (created with \code{\link{as.rsi}}) and calculates the portions R, I and S. The resulting \code{data.frame} will have three rows (for R/I/S) and a column for each variable with class \code{"rsi"}.
 #'
 #' The old \code{\link{rsi}} function is still available for backwards compatibility but is deprecated.
 #' \if{html}{
@@ -225,11 +229,11 @@ rsi_calc <- function(type,
   }
 
   if (type == "S") {
-    found <- .Call(`_AMR_rsi_calc_S`, x, include_I)
+    found <- sum(as.integer(x) <= 1 + include_I, na.rm = TRUE)
   } else if (type == "I") {
-    found <- .Call(`_AMR_rsi_calc_I`, x)
+    found <- sum(as.integer(x) == 2, na.rm = TRUE)
   } else if (type == "R") {
-    found <- .Call(`_AMR_rsi_calc_R`, x, include_I)
+    found <- sum(as.integer(x) >= 3 - include_I, na.rm = TRUE)
   } else {
     stop("invalid type")
   }
@@ -239,4 +243,30 @@ rsi_calc <- function(type,
   } else {
     found / total
   }
+}
+
+#' @rdname portion
+#' @importFrom dplyr bind_cols summarise_if mutate
+#' @export
+portion_df <- function(data, translate = getOption("get_antibiotic_names", TRUE)) {
+  resS <- bind_cols(data.frame(Interpretation = "S", stringsAsFactors = FALSE),
+                    summarise_if(.tbl = data,
+                                 .predicate = is.rsi,
+                                 .funs = portion_S))
+  resI <- bind_cols(data.frame(Interpretation = "I", stringsAsFactors = FALSE),
+                    summarise_if(.tbl = data,
+                                 .predicate = is.rsi,
+                                 .funs = portion_I))
+  resR <- bind_cols(data.frame(Interpretation = "R", stringsAsFactors = FALSE),
+                    summarise_if(.tbl = data,
+                                 .predicate = is.rsi,
+                                 .funs = portion_R))
+
+  res <- bind_rows(resS, resI, resR) %>%
+    mutate(Interpretation = factor(Interpretation, levels = c("R", "I", "S"), ordered = TRUE)) %>%
+    tidyr::gather(Antibiotic, Percentage, -Interpretation)
+  if (translate == TRUE) {
+    res <- res %>% mutate(Antibiotic = abname(Antibiotic, from = "guess", to = "official"))
+  }
+  res
 }

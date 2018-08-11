@@ -5,9 +5,10 @@
 \alias{rsi_predict}
 \title{Predict antimicrobial resistance}
 \usage{
-resistance_predict(tbl, col_ab, col_date, year_min = NULL, year_max = NULL,
-  year_every = 1, minimum = 30, model = "binomial", I_as_R = TRUE,
-  preserve_measurements = TRUE, info = TRUE)
+resistance_predict(tbl, col_ab, col_date, year_min = NULL,
+  year_max = NULL, year_every = 1, minimum = 30,
+  model = "binomial", I_as_R = TRUE, preserve_measurements = TRUE,
+  info = TRUE)
 
 rsi_predict(tbl, col_ab, col_date, year_min = NULL, year_max = NULL,
   year_every = 1, minimum = 30, model = "binomial", I_as_R = TRUE,

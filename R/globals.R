@@ -17,6 +17,14 @@
 # ==================================================================== #
 
 globalVariables(c('abname',
+                  'Antibiotic',
+                  'Interpretation',
+                  'Percentage',
+                  'bind_rows',
+                  'element_blank',
+                  'element_line',
+                  'theme',
+                  'theme_minimal',
                   'antibiotic',
                   'antibiotics',
                   'atc',

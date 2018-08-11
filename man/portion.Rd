@@ -7,6 +7,7 @@
 \alias{portion_I}
 \alias{portion_SI}
 \alias{portion_S}
+\alias{portion_df}
 \title{Calculate resistance of isolates}
 \source{
 \strong{M39 Analysis and Presentation of Cumulative Antimicrobial Susceptibility Test Data, 4th Edition}, 2014, \emph{Clinical and Laboratory Standards Institute (CLSI)}. \url{https://clsi.org/standards/products/microbiology/documents/m39/}.
@@ -21,6 +22,8 @@ portion_I(ab1, minimum = 30, as_percent = FALSE)
 portion_SI(ab1, ab2 = NULL, minimum = 30, as_percent = FALSE)
 
 portion_S(ab1, ab2 = NULL, minimum = 30, as_percent = FALSE)
+
+portion_df(data, translate = getOption("get_antibiotic_names", TRUE))
 }
 \arguments{
 \item{ab1}{vector of antibiotic interpretations, they will be transformed internally with \code{\link{as.rsi}} if needed}
@@ -30,6 +33,10 @@ portion_S(ab1, ab2 = NULL, minimum = 30, as_percent = FALSE)
 \item{minimum}{minimal amount of available isolates. Any number lower than \code{minimum} will return \code{NA}. The default number of \code{30} isolates is advised by the CLSI as best practice, see Source.}
 
 \item{as_percent}{logical to indicate whether the output must be returned as percent (text), will else be a double}
+
+\item{data}{a code{data.frame} containing columns with class \code{rsi} (see \code{\link{as.rsi}})}
+
+\item{translate}{a logical value to indicate whether antibiotic abbreviations should be translated with \code{\link{abname}}}
 }
 \value{
 Double or, when \code{as_percent = TRUE}, a character.
@@ -41,6 +48,8 @@ These functions can be used to calculate the (co-)resistance of microbial isolat
 }
 \details{
 \strong{Remember that you should filter your table to let it contain only first isolates!} Use \code{\link{first_isolate}} to determine them in your data set.
+
+\code{portion_df} takes any variable from \code{data} that has an \code{"rsi"} class (created with \code{\link{as.rsi}}) and calculates the portions R, I and S. The resulting \code{data.frame} will have three rows (for R/I/S) and a column for each variable with class \code{"rsi"}.
 
 The old \code{\link{rsi}} function is still available for backwards compatibility but is deprecated.
 \if{html}{

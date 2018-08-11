@@ -7,8 +7,8 @@
 \code{\link{antibiotics}}
 }
 \usage{
-abname(abcode, from = c("guess", "atc", "molis", "umcg"), to = "official",
-  textbetween = " + ", tolower = FALSE)
+abname(abcode, from = c("guess", "atc", "molis", "umcg"),
+  to = "official", textbetween = " + ", tolower = FALSE)
 }
 \arguments{
 \item{abcode}{a code or name, like \code{"AMOX"}, \code{"AMCL"} or \code{"J01CA04"}}
