@@ -35,7 +35,7 @@
 #'             combination_n = n_rsi(cipr, gent))
 n_rsi <- function(ab1, ab2 = NULL) {
   if (NCOL(ab1) > 1) {
-    stop('`ab` must be a vector of antimicrobial interpretations', call. = FALSE)
+    stop('`ab1` must be a vector of antimicrobial interpretations', call. = FALSE)
   }
   if (!is.rsi(ab1)) {
     ab1 <- as.rsi(ab1)

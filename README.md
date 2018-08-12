@@ -136,43 +136,61 @@ guess_bactid("VRSA") # Vancomycin Resistant S. aureus
 This package contains two new S3 classes: `mic` for MIC values (e.g. from Vitek or Phoenix) and `rsi` for antimicrobial drug interpretations (i.e. S, I and R). Both are actually ordered factors under the hood (an MIC of `2` being higher than `<=1` but lower than `>=32`, and for class `rsi` factors are ordered as `S < I < R`). 
 Both classes have extensions for existing generic functions like `print`, `summary` and `plot`.
 
-```r
-# Transform values to new classes
-mic_data <- as.mic(c(">=32", "1.0", "8", "<=0.128", "8", "16", "16"))
-rsi_data <- as.rsi(c(rep("S", 474), rep("I", 36), rep("R", 370)))
-```
 These functions also try to coerce valid values.
 
-Quick overviews with `summary`:
+#### RSI
+The `septic_patients` data set comes with antimicrobial results of more than 40 different drugs. For example, columns `amox` and `cipr` contain results of amoxicillin and ciprofloxacin, respectively.
 ```r
-summary(rsi_data)
-#  Mode  :rsi  
-#  <NA>  :0    
-#  Sum S :474  
-#  Sum IR:406  
-#  -Sum R:370  
-#  -Sum I:36
+summary(septic_patients[, c("amox", "cipr")])
+#      amox          cipr     
+#  Mode  :rsi    Mode  :rsi   
+#  <NA>  :1002   <NA>  :596   
+#  Sum S :336    Sum S :1108  
+#  Sum IR:662    Sum IR:296   
+#  -Sum R:659    -Sum R:227   
+#  -Sum I:3      -Sum I:69  
+```
+
+You can use the `plot` function from base R:
+```r
+plot(septic_patients$cipr)
+```
+
+![example_1_rsi](man/figures/rsi_example1.png)
+
+Or use the `ggplot2` and `dplyr` packages to create more appealing plots:
+```r
+septic_patients %>%
+  select(amox, cipr) %>%
+  ggplot_rsi()
+```
+
+![example_2_rsi](man/figures/rsi_example2.png)
+
+```r
+septic_patients %>%
+    select(amox, cipr) %>%
+    ggplot_rsi(x = "Interpretation", facet = "Antibiotic")
+```
+
+![example_3_rsi](man/figures/rsi_example3.png)
+
+
+#### MIC
+
+```r
+# Transform values to new class
+mic_data <- as.mic(c(">=32", "1.0", "8", "<=0.128", "8", "16", "16"))
 
 summary(mic_data)
 #  Mode:mic      
 #  <NA>:0        
 #  Min.:<=0.128  
 #  Max.:>=32 
-```
 
-A plot of `rsi_data`:
-```r
-plot(rsi_data)
-```
-
-![example1](man/figures/rsi_example.png)
-
-A plot of `mic_data` (defaults to bar plot):
-```r
 plot(mic_data)
 ```
-
-![example2](man/figures/mic_example.png)
+![example_mic](man/figures/mic_example.png)
 
 Other epidemiological functions:
 

@@ -18,7 +18,7 @@
 
 #' AMR bar plots with \code{ggplot}
 #'
-#' Use these functions to create bar plots for antimicrobial resistance analysis. All functions rely on internal \code{\link{ggplot}} functions.
+#' Use these functions to create bar plots for antimicrobial resistance analysis. All functions rely on internal \code{\link[ggplot2]{ggplot}} functions.
 #' @param data a \code{data.frame} with column(s) of class \code{"rsi"} (see \code{\link{as.rsi}})
 #' @param position position adjustment of bars, either \code{"stack"} (default) or \code{"dodge"}
 #' @param x parameter to show on x axis, either \code{"Antibiotic"} (default) or \code{"Interpretation"}
@@ -28,13 +28,13 @@
 #' \strong{The functions}\cr
 #' \code{geom_rsi} will take any variable from the data that has an \code{rsi} class (created with \code{\link{as.rsi}}) using \code{\link{portion_df}} and will plot bars with the percentage R, I and S. The default behaviour is to have the bars stacked and to have the different antibiotics on the x axis.
 #'
-#' \code{facet_rsi} creates 2d plots (at default based on S/I/R) using \code{\link{facet_wrap}}.
+#' \code{facet_rsi} creates 2d plots (at default based on S/I/R) using \code{\link[ggplot2]{facet_wrap}}.
 #'
 #' \code{scale_y_percent} transforms the y axis to a 0 to 100% range.
 #'
 #' \code{scale_rsi_colours} sets colours to the bars: green for S, yellow for I and red for R.
 #'
-#' \code{theme_rsi} is a \code{\link{theme}} with minimal distraction.
+#' \code{theme_rsi} is a \code{\link[ggplot2]{theme}} with minimal distraction.
 #'
 #' \code{ggplot_rsi} is a wrapper around all above functions that uses data as first input. This makes it possible to use this function after a pipe (\code{\%>\%}). See Examples.
 #' @rdname ggplot_rsi
@@ -67,6 +67,11 @@
 ggplot_rsi <- function(data,
                        x = "Antibiotic",
                        facet = NULL) {
+
+  if (!"ggplot2" %in% rownames(installed.packages())) {
+    stop('this function requires the ggplot2 package.', call. = FALSE)
+  }
+
   p <- ggplot2::ggplot(data = data) +
     geom_rsi(x = x) +
     scale_y_percent() +

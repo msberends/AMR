@@ -176,6 +176,32 @@ portion_S <- function(ab1,
            as_percent = as_percent)
 }
 
+#' @rdname portion
+#' @importFrom dplyr bind_cols summarise_if mutate
+#' @export
+portion_df <- function(data, translate = getOption("get_antibiotic_names", TRUE)) {
+  resS <- bind_cols(data.frame(Interpretation = "S", stringsAsFactors = FALSE),
+                    summarise_if(.tbl = data,
+                                 .predicate = is.rsi,
+                                 .funs = portion_S))
+  resI <- bind_cols(data.frame(Interpretation = "I", stringsAsFactors = FALSE),
+                    summarise_if(.tbl = data,
+                                 .predicate = is.rsi,
+                                 .funs = portion_I))
+  resR <- bind_cols(data.frame(Interpretation = "R", stringsAsFactors = FALSE),
+                    summarise_if(.tbl = data,
+                                 .predicate = is.rsi,
+                                 .funs = portion_R))
+
+  res <- bind_rows(resS, resI, resR) %>%
+    mutate(Interpretation = factor(Interpretation, levels = c("R", "I", "S"), ordered = TRUE)) %>%
+    tidyr::gather(Antibiotic, Percentage, -Interpretation)
+  if (translate == TRUE) {
+    res <- res %>% mutate(Antibiotic = abname(Antibiotic, from = "guess", to = "official"))
+  }
+  res
+}
+
 rsi_calc <- function(type,
                      ab1,
                      ab2,
@@ -243,30 +269,4 @@ rsi_calc <- function(type,
   } else {
     found / total
   }
-}
-
-#' @rdname portion
-#' @importFrom dplyr bind_cols summarise_if mutate
-#' @export
-portion_df <- function(data, translate = getOption("get_antibiotic_names", TRUE)) {
-  resS <- bind_cols(data.frame(Interpretation = "S", stringsAsFactors = FALSE),
-                    summarise_if(.tbl = data,
-                                 .predicate = is.rsi,
-                                 .funs = portion_S))
-  resI <- bind_cols(data.frame(Interpretation = "I", stringsAsFactors = FALSE),
-                    summarise_if(.tbl = data,
-                                 .predicate = is.rsi,
-                                 .funs = portion_I))
-  resR <- bind_cols(data.frame(Interpretation = "R", stringsAsFactors = FALSE),
-                    summarise_if(.tbl = data,
-                                 .predicate = is.rsi,
-                                 .funs = portion_R))
-
-  res <- bind_rows(resS, resI, resR) %>%
-    mutate(Interpretation = factor(Interpretation, levels = c("R", "I", "S"), ordered = TRUE)) %>%
-    tidyr::gather(Antibiotic, Percentage, -Interpretation)
-  if (translate == TRUE) {
-    res <- res %>% mutate(Antibiotic = abname(Antibiotic, from = "guess", to = "official"))
-  }
-  res
 }

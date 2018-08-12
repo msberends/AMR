@@ -31,7 +31,7 @@ theme_rsi()
 \item{position}{position adjustment of bars, either \code{"stack"} (default) or \code{"dodge"}}
 }
 \description{
-Use these functions to create bar plots for antimicrobial resistance analysis. All functions rely on internal \code{\link{ggplot}} functions.
+Use these functions to create bar plots for antimicrobial resistance analysis. All functions rely on internal \code{\link[ggplot2]{ggplot}} functions.
 }
 \details{
 At default, the names of antibiotics will be shown on the plots using \code{\link{abname}}. This can be set with the option \code{get_antibiotic_names} (a logical value), so change it e.g. to \code{FALSE} with \code{options(get_antibiotic_names = FALSE)}.
@@ -39,13 +39,13 @@ At default, the names of antibiotics will be shown on the plots using \code{\lin
 \strong{The functions}\cr
 \code{geom_rsi} will take any variable from the data that has an \code{rsi} class (created with \code{\link{as.rsi}}) using \code{\link{portion_df}} and will plot bars with the percentage R, I and S. The default behaviour is to have the bars stacked and to have the different antibiotics on the x axis.
 
-\code{facet_rsi} creates 2d plots (at default based on S/I/R) using \code{\link{facet_wrap}}.
+\code{facet_rsi} creates 2d plots (at default based on S/I/R) using \code{\link[ggplot2]{facet_wrap}}.
 
 \code{scale_y_percent} transforms the y axis to a 0 to 100% range.
 
 \code{scale_rsi_colours} sets colours to the bars: green for S, yellow for I and red for R.
 
-\code{theme_rsi} is a \code{\link{theme}} with minimal distraction.
+\code{theme_rsi} is a \code{\link[ggplot2]{theme}} with minimal distraction.
 
 \code{ggplot_rsi} is a wrapper around all above functions that uses data as first input. This makes it possible to use this function after a pipe (\code{\%>\%}). See Examples.
 }

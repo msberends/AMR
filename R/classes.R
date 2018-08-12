@@ -102,9 +102,14 @@ print.rsi <- function(x, ...) {
 #' @noRd
 summary.rsi <- function(object, ...) {
   x <- object
-  lst <- c('rsi', sum(is.na(x)), sum(x == "S"), sum(x %in% c("I", "R")), sum(x == "R"), sum(x == "I"))
-  names(lst) <- c("Mode", "<NA>", "Sum S", "Sum IR", "-Sum R", "-Sum I")
-  lst
+  c(
+    "Mode" = 'rsi',
+    "<NA>" = sum(is.na(x)),
+    "Sum S" = sum(x == "S", na.rm = TRUE),
+    "Sum IR" = sum(x %in% c("I", "R"), na.rm = TRUE),
+    "-Sum R" = sum(x == "R", na.rm = TRUE),
+    "-Sum I" = sum(x == "I", na.rm = TRUE)
+  )
 }
 
 #' @exportMethod plot.rsi

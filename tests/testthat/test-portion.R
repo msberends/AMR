@@ -1,6 +1,6 @@
 context("portion.R")
 
-test_that("resistance works", {
+test_that("portions works", {
   # amox resistance in `septic_patients`
   expect_equal(portion_R(septic_patients$amox), 0.6603, tolerance = 0.0001)
   expect_equal(portion_I(septic_patients$amox), 0.0030, tolerance = 0.0001)
@@ -46,6 +46,9 @@ test_that("resistance works", {
   expect_warning(portion_S(as.character(septic_patients$amcl)))
   expect_warning(portion_S(as.character(septic_patients$amcl,
                                              septic_patients$gent)))
+  expect_equal(n_rsi(as.character(septic_patients$amcl,
+                                  septic_patients$gent)),
+               1570)
 
 
   # check for errors
@@ -59,6 +62,9 @@ test_that("resistance works", {
   expect_error(portion_S("test", as_percent = "test"))
   expect_error(portion_S(septic_patients %>% select(amox, amcl)))
   expect_error(portion_S("R", septic_patients %>% select(amox, amcl)))
+  expect_error(n_rsi(septic_patients %>% select(amox, amcl)))
+  expect_error(n_rsi(septic_patients$amox, septic_patients %>% select(amox, amcl)))
+
 
   # check too low amount of isolates
   expect_identical(portion_R(septic_patients$amox, minimum = nrow(septic_patients) + 1),
@@ -102,6 +108,15 @@ test_that("old rsi works", {
                            combination_n = n_rsi(cipr, gent)) %>%
                  pull(combination_n),
                c(202, 482, 201, 499))
+
+  # portion_df
+  expect_equal(
+    septic_patients %>% select(amox) %>% portion_df(TRUE) %>% pull(Percentage),
+    c(septic_patients$amox %>% portion_S(),
+      septic_patients$amox %>% portion_I(),
+      septic_patients$amox %>% portion_R())
+  )
+
 })
 
 test_that("prediction of rsi works", {

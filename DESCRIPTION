@@ -1,6 +1,6 @@
 Package: AMR
 Version: 0.2.0.9023
-Date: 2018-08-11
+Date: 2018-08-12
 Title: Antimicrobial Resistance Analysis
 Authors@R: c(
     person(
@@ -57,14 +57,14 @@ Imports:
     Rcpp (>= 0.12.14),
     readr,
     rvest (>= 0.3.2),
-    tibble,
-    ggplot2
+    tibble
 Suggests:
     testthat (>= 1.0.2),
     covr (>= 3.0.1),
     rmarkdown,
     rstudioapi,
-    tidyr
+    tidyr,
+    ggplot2
 VignetteBuilder: knitr
 URL: https://github.com/msberends/AMR
 BugReports: https://github.com/msberends/AMR/issues
