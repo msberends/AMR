@@ -24,6 +24,19 @@ Erwin E.A. Hassing<sup>2</sup>,
 <a href="http://www.eurhealth-1health.eu"><img src="man/figures/logo_eh1h.png" height="60px"></a>
 <a href="http://www.eurhealth-1health.eu"><img src="man/figures/logo_interreg.png" height="60px"></a>
 
+## Contents
+* [Why this package?](#why-this-package)
+* [How to get it?](#how-to-get-it)
+  * [Install from CRAN](#install-from-cran)
+  * [Install from GitHub](#install-from-github)
+* [How to use it?](#how-to-use-it)
+  * [New classes](#new-classes)
+  * [Overwrite/force resistance based on EUCAST rules](#overwriteforce-resistance-based-on-eucast-rules)
+  * [Other (microbial) epidemiological functions](#other-microbial-epidemiological-functions)
+  * [Frequency tables](#frequency-tables)
+  * [Data sets included in package](#data-sets-included-in-package)
+* [Copyright](#copyright)
+
 ## Why this package?
 This R package was intended to make microbial epidemiology easier. Most functions contain extensive help pages to get started.
 
@@ -50,12 +63,12 @@ And it contains:
 
 With the `MDRO` function (abbreviation of Multi Drug Resistant Organisms), you can check your isolates for exceptional resistance with country-specific guidelines or EUCAST rules. Currently guidelines for Germany and the Netherlands are supported. Please suggest addition of your own country here: [https://github.com/msberends/AMR/issues/new](https://github.com/msberends/AMR/issues/new?title=New%20guideline%20for%20MDRO&body=%3C--%20Please%20add%20your%20country%20code,%20guideline%20name,%20version%20and%20source%20below%20and%20remove%20this%20line--%3E).
 
-#### Read all changes and new functions in [NEWS.md](NEWS.md).
+**Read all changes and new functions in [NEWS.md](NEWS.md).**
 
 ## How to get it?
 This package [is published on CRAN](http://cran.r-project.org/package=AMR), the official R network.
 
-### Install from CRAN (recommended)
+### Install from CRAN
 [![CRAN_Badge](https://img.shields.io/cran/v/AMR.svg?label=CRAN&colorB=3679BC)](http://cran.r-project.org/package=AMR) [![CRAN_Downloads](https://cranlogs.r-pkg.org/badges/grand-total/AMR)](http://cran.r-project.org/package=AMR)
 
 (Note: Downloads measured only by [cran.rstudio.com](https://cran.rstudio.com/package=AMR), this excludes e.g. the official [cran.r-project.org](https://cran.r-project.org/package=AMR))
@@ -67,7 +80,7 @@ This package [is published on CRAN](http://cran.r-project.org/package=AMR), the 
 - <img src="https://cran.r-project.org/favicon.ico" alt="R favicon" height="20px"> Install in R directly:
   - `install.packages("AMR")`
 
-### Install from GitHub (latest development version)
+### Install from GitHub
 [![Travis_Build](https://travis-ci.org/msberends/AMR.svg?branch=master)](https://travis-ci.org/msberends/AMR)
 [![Since_Release](https://img.shields.io/github/commits-since/msberends/AMR/latest.svg?colorB=3679BC)](https://github.com/msberends/AMR/commits/master)
 [![Last_Commit](https://img.shields.io/github/last-commit/msberends/AMR.svg)](https://github.com/msberends/AMR/commits/master)
@@ -86,6 +99,85 @@ library(AMR)
 # For a list of functions:
 help(package = "AMR")
 ```
+
+### New classes
+This package contains two new S3 classes: `mic` for MIC values (e.g. from Vitek or Phoenix) and `rsi` for antimicrobial drug interpretations (i.e. S, I and R). Both are actually ordered factors under the hood (an MIC of `2` being higher than `<=1` but lower than `>=32`, and for class `rsi` factors are ordered as `S < I < R`). 
+Both classes have extensions for existing generic functions like `print`, `summary` and `plot`.
+
+These functions also try to coerce valid values.
+
+#### RSI
+The `septic_patients` data set comes with antimicrobial results of more than 40 different drugs. For example, columns `amox` and `cipr` contain results of amoxicillin and ciprofloxacin, respectively.
+```r
+summary(septic_patients[, c("amox", "cipr")])
+#      amox          cipr     
+#  Mode  :rsi    Mode  :rsi   
+#  <NA>  :1002   <NA>  :596   
+#  Sum S :336    Sum S :1108  
+#  Sum IR:662    Sum IR:296   
+#  -Sum R:659    -Sum R:227   
+#  -Sum I:3      -Sum I:69  
+```
+
+You can use the `plot` function from base R:
+```r
+plot(septic_patients$cipr)
+```
+
+![example_1_rsi](man/figures/rsi_example1.png)
+
+Or use the `ggplot2` and `dplyr` packages to create more appealing plots:
+```r
+library(dplyr)
+library(ggplot2)
+
+septic_patients %>%
+  select(amox, cipr) %>%
+  ggplot_rsi()
+```
+
+![example_2_rsi](man/figures/rsi_example2.png)
+
+```r
+septic_patients %>%
+    select(amox, cipr) %>%
+    ggplot_rsi(x = "Interpretation", facet = "Antibiotic")
+```
+
+![example_3_rsi](man/figures/rsi_example3.png)
+
+It also supports grouping variables. Let's say we want to compare resistance of these antibiotics between hospitals A to D (variable `hospital_id`):
+
+```r
+septic_patients %>%
+  select(hospital_id, amox, cipr) %>%
+  group_by(hospital_id) %>%
+  ggplot_rsi() +               # start adding ggplot elements here with `+`
+  facet_grid("hospital_id") +  # splitting the plots on our grouping variable
+  labs(title = "AMR of Amoxicillin And Ciprofloxacine Per Hospital")
+```
+
+![example_4_rsi](man/figures/rsi_example4.png)
+
+You could use this to group on anything in your plots: Gram stain, age (group), genus, geographic location, et cetera.
+
+#### MIC
+
+```r
+# Transform values to new class
+mic_data <- as.mic(c(">=32", "1.0", "8", "<=0.128", "8", "16", "16"))
+
+summary(mic_data)
+#  Mode:mic      
+#  <NA>:0        
+#  Min.:<=0.128  
+#  Max.:>=32 
+
+plot(mic_data)
+```
+![example_mic](man/figures/mic_example.png)
+
+
 ### Overwrite/force resistance based on EUCAST rules
 This is also called *interpretive reading*.
 ```r
@@ -132,69 +224,12 @@ guess_bactid("VISA") # Vancomycin Intermediate S. aureus
 guess_bactid("VRSA") # Vancomycin Resistant S. aureus
 ```
 
-### New classes
-This package contains two new S3 classes: `mic` for MIC values (e.g. from Vitek or Phoenix) and `rsi` for antimicrobial drug interpretations (i.e. S, I and R). Both are actually ordered factors under the hood (an MIC of `2` being higher than `<=1` but lower than `>=32`, and for class `rsi` factors are ordered as `S < I < R`). 
-Both classes have extensions for existing generic functions like `print`, `summary` and `plot`.
-
-These functions also try to coerce valid values.
-
-#### RSI
-The `septic_patients` data set comes with antimicrobial results of more than 40 different drugs. For example, columns `amox` and `cipr` contain results of amoxicillin and ciprofloxacin, respectively.
-```r
-summary(septic_patients[, c("amox", "cipr")])
-#      amox          cipr     
-#  Mode  :rsi    Mode  :rsi   
-#  <NA>  :1002   <NA>  :596   
-#  Sum S :336    Sum S :1108  
-#  Sum IR:662    Sum IR:296   
-#  -Sum R:659    -Sum R:227   
-#  -Sum I:3      -Sum I:69  
-```
-
-You can use the `plot` function from base R:
-```r
-plot(septic_patients$cipr)
-```
-
-![example_1_rsi](man/figures/rsi_example1.png)
-
-Or use the `ggplot2` and `dplyr` packages to create more appealing plots:
-```r
-septic_patients %>%
-  select(amox, cipr) %>%
-  ggplot_rsi()
-```
-
-![example_2_rsi](man/figures/rsi_example2.png)
+### Other (microbial) epidemiological functions
 
 ```r
-septic_patients %>%
-    select(amox, cipr) %>%
-    ggplot_rsi(x = "Interpretation", facet = "Antibiotic")
-```
+# G-test to replace Chi squared test
+g.test(...)
 
-![example_3_rsi](man/figures/rsi_example3.png)
-
-
-#### MIC
-
-```r
-# Transform values to new class
-mic_data <- as.mic(c(">=32", "1.0", "8", "<=0.128", "8", "16", "16"))
-
-summary(mic_data)
-#  Mode:mic      
-#  <NA>:0        
-#  Min.:<=0.128  
-#  Max.:>=32 
-
-plot(mic_data)
-```
-![example_mic](man/figures/mic_example.png)
-
-Other epidemiological functions:
-
-```r
 # Determine key antibiotic based on bacteria ID
 key_antibiotics(...)
 
@@ -318,7 +353,7 @@ Learn more about this function with:
 ?freq
 ```
 
-### Databases included in package
+### Data sets included in package
 Datasets to work with antibiotics and bacteria properties.
 ```r
 # Dataset with 2000 random blood culture isolates from anonymised

@@ -11,6 +11,8 @@
 \title{Calculate resistance of isolates}
 \source{
 \strong{M39 Analysis and Presentation of Cumulative Antimicrobial Susceptibility Test Data, 4th Edition}, 2014, \emph{Clinical and Laboratory Standards Institute (CLSI)}. \url{https://clsi.org/standards/products/microbiology/documents/m39/}.
+
+Wickham H. \strong{Tidy Data.} The Journal of Statistical Software, vol. 59, 2014. \url{http://vita.had.co.nz/papers/tidy-data.html}
 }
 \usage{
 portion_R(ab1, ab2 = NULL, minimum = 30, as_percent = FALSE)
@@ -49,7 +51,7 @@ These functions can be used to calculate the (co-)resistance of microbial isolat
 \details{
 \strong{Remember that you should filter your table to let it contain only first isolates!} Use \code{\link{first_isolate}} to determine them in your data set.
 
-\code{portion_df} takes any variable from \code{data} that has an \code{"rsi"} class (created with \code{\link{as.rsi}}) and calculates the portions R, I and S. The resulting \code{data.frame} will have three rows (for R/I/S) and a column for each variable with class \code{"rsi"}.
+\code{portion_df} takes any variable from \code{data} that has an \code{"rsi"} class (created with \code{\link{as.rsi}}) and calculates the portions R, I and S. The resulting \emph{tidy data} (see Source) \code{data.frame} will have three rows (S/I/R) and a column for each variable with class \code{"rsi"}.
 
 The old \code{\link{rsi}} function is still available for backwards compatibility but is deprecated.
 \if{html}{
@@ -66,6 +68,9 @@ The old \code{\link{rsi}} function is still available for backwards compatibilit
 }
 }
 \examples{
+# septic_patients is a data set available in the AMR package. It is true, genuine data.
+?septic_patients
+
 # Calculate resistance
 portion_R(septic_patients$amox)
 portion_IR(septic_patients$amox)
@@ -113,6 +118,18 @@ septic_patients \%>\%
             genta_n = n_rsi(gent),
             combination_p = portion_S(cipr, gent, as_percent = TRUE),
             combination_n = n_rsi(cipr, gent))
+
+# Get portions S/I/R immediately of all rsi columns
+septic_patients \%>\%
+  select(amox, cipr) \%>\%
+  portion_df(translate = FALSE)
+
+# It also supports grouping variables
+septic_patients \%>\%
+  select(hospital_id, amox, cipr) \%>\%
+  group_by(hospital_id) \%>\%
+  portion_df(translate = FALSE)
+
 
 \dontrun{
 

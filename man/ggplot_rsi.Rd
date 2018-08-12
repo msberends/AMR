@@ -9,9 +9,11 @@
 \alias{theme_rsi}
 \title{AMR bar plots with \code{ggplot}}
 \usage{
-ggplot_rsi(data, x = "Antibiotic", facet = NULL)
+ggplot_rsi(data, position = "stack", x = "Antibiotic",
+  fill = "Interpretation", facet = NULL)
 
-geom_rsi(position = "stack", x = c("Antibiotic", "Interpretation"))
+geom_rsi(position = "stack", x = c("Antibiotic", "Interpretation"),
+  fill = "Interpretation")
 
 facet_rsi(facet = c("Interpretation", "Antibiotic"))
 
@@ -24,11 +26,13 @@ theme_rsi()
 \arguments{
 \item{data}{a \code{data.frame} with column(s) of class \code{"rsi"} (see \code{\link{as.rsi}})}
 
-\item{x}{parameter to show on x axis, either \code{"Antibiotic"} (default) or \code{"Interpretation"}}
-
-\item{facet}{parameter to split plots by, either \code{"Interpretation"} (default) or \code{"Antibiotic"}}
-
 \item{position}{position adjustment of bars, either \code{"stack"} (default) or \code{"dodge"}}
+
+\item{x}{variable to show on x axis, either \code{"Antibiotic"} (default) or \code{"Interpretation"}}
+
+\item{fill}{variable to categorise using the plots legend}
+
+\item{facet}{variable to split plots by, either \code{"Interpretation"} (default) or \code{"Antibiotic"}}
 }
 \description{
 Use these functions to create bar plots for antimicrobial resistance analysis. All functions rely on internal \code{\link[ggplot2]{ggplot}} functions.
@@ -74,4 +78,12 @@ septic_patients \%>\%
 septic_patients \%>\%
   select(amox, nitr, fosf, trim, cipr) \%>\%
   ggplot_rsi(x = "Interpretation", facet = "Antibiotic")
+
+# it also supports groups (don't forget to use facet on the group):
+septic_patients \%>\%
+  select(hospital_id, amox, cipr) \%>\%
+  group_by(hospital_id) \%>\%
+  ggplot_rsi() +
+  facet_grid("hospital_id") +
+  labs(title = "AMR of Amoxicillin And Ciprofloxacine Per Hospital")
 }

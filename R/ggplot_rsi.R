@@ -21,8 +21,9 @@
 #' Use these functions to create bar plots for antimicrobial resistance analysis. All functions rely on internal \code{\link[ggplot2]{ggplot}} functions.
 #' @param data a \code{data.frame} with column(s) of class \code{"rsi"} (see \code{\link{as.rsi}})
 #' @param position position adjustment of bars, either \code{"stack"} (default) or \code{"dodge"}
-#' @param x parameter to show on x axis, either \code{"Antibiotic"} (default) or \code{"Interpretation"}
-#' @param facet parameter to split plots by, either \code{"Interpretation"} (default) or \code{"Antibiotic"}
+#' @param x variable to show on x axis, either \code{"Antibiotic"} (default) or \code{"Interpretation"}
+#' @param fill variable to categorise using the plots legend
+#' @param facet variable to split plots by, either \code{"Interpretation"} (default) or \code{"Antibiotic"}
 #' @details At default, the names of antibiotics will be shown on the plots using \code{\link{abname}}. This can be set with the option \code{get_antibiotic_names} (a logical value), so change it e.g. to \code{FALSE} with \code{options(get_antibiotic_names = FALSE)}.
 #'
 #' \strong{The functions}\cr
@@ -64,8 +65,18 @@
 #' septic_patients %>%
 #'   select(amox, nitr, fosf, trim, cipr) %>%
 #'   ggplot_rsi(x = "Interpretation", facet = "Antibiotic")
+#'
+#' # it also supports groups (don't forget to use facet on the group):
+#' septic_patients %>%
+#'   select(hospital_id, amox, cipr) %>%
+#'   group_by(hospital_id) %>%
+#'   ggplot_rsi() +
+#'   facet_grid("hospital_id") +
+#'   labs(title = "AMR of Amoxicillin And Ciprofloxacine Per Hospital")
 ggplot_rsi <- function(data,
+                       position = "stack",
                        x = "Antibiotic",
+                       fill = "Interpretation",
                        facet = NULL) {
 
   if (!"ggplot2" %in% rownames(installed.packages())) {
@@ -73,10 +84,14 @@ ggplot_rsi <- function(data,
   }
 
   p <- ggplot2::ggplot(data = data) +
-    geom_rsi(x = x) +
+    geom_rsi(position = position, x = x, fill = fill) +
     scale_y_percent() +
-    scale_rsi_colours() +
     theme_rsi()
+
+  if (fill == "Interpretation") {
+    # set RSI colours
+    p <- p + scale_rsi_colours()
+  }
 
   if (!is.null(facet)) {
     p <- p + facet_rsi(facet = facet)
@@ -87,7 +102,7 @@ ggplot_rsi <- function(data,
 
 #' @rdname ggplot_rsi
 #' @export
-geom_rsi <- function(position = "stack", x = c("Antibiotic", "Interpretation"))  {
+geom_rsi <- function(position = "stack", x = c("Antibiotic", "Interpretation"), fill = "Interpretation")  {
 
   x <- x[1]
   if (!x %in% c("Antibiotic", "Interpretation")) {
@@ -95,8 +110,8 @@ geom_rsi <- function(position = "stack", x = c("Antibiotic", "Interpretation")) 
   }
 
   ggplot2::layer(geom = "bar", stat = "identity", position = position,
-        mapping = ggplot2::aes_string(x = x, y = "Percentage", fill = "Interpretation"),
-        data = AMR::portion_df, params = list())
+                 mapping = ggplot2::aes_string(x = x, y = "Percentage", fill = fill),
+                 data = AMR::portion_df, params = list())
 
 }
 

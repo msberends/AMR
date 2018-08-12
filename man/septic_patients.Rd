@@ -7,7 +7,7 @@
 \format{A data.frame with 2000 observations and 49 variables:
 \describe{
   \item{\code{date}}{date of receipt at the laboratory}
-  \item{\code{hospital_id}}{ID of the hospital}
+  \item{\code{hospital_id}}{ID of the hospital, from A to D}
   \item{\code{ward_icu}}{logical to determine if ward is an intensive care unit}
   \item{\code{ward_clinical}}{logical to determine if ward is a regular clinical ward}
   \item{\code{ward_outpatient}}{logical to determine if ward is an outpatient clinic}
@@ -21,7 +21,7 @@
 septic_patients
 }
 \description{
-An anonymised dataset containing 2000 microbial blood culture isolates with their antibiogram of septic patients found in 5 different hospitals in the Netherlands, between 2001 and 2017. This data.frame can be used to practice AMR analysis. For examples, press F1.
+An anonymised dataset containing 2000 microbial blood culture isolates with their full antibiograms found in septic patients in 4 different hospitals in the Netherlands, between 2001 and 2017. It is true, genuine data. This \code{data.frame} can be used to practice AMR analysis. For examples, press F1.
 }
 \examples{
 # ----------- #

@@ -76,7 +76,7 @@ Determine first (weighted) isolates of all microorganisms of every patient per e
 }
 
 \examples{
-# septic_patients is a dataset available in the AMR package. It is true data.
+# septic_patients is a dataset available in the AMR package. It is true, genuine data.
 ?septic_patients
 
 library(dplyr)

@@ -29,7 +29,7 @@
 #' @param translate a logical value to indicate whether antibiotic abbreviations should be translated with \code{\link{abname}}
 #' @details \strong{Remember that you should filter your table to let it contain only first isolates!} Use \code{\link{first_isolate}} to determine them in your data set.
 #'
-#' \code{portion_df} takes any variable from \code{data} that has an \code{"rsi"} class (created with \code{\link{as.rsi}}) and calculates the portions R, I and S. The resulting \code{data.frame} will have three rows (for R/I/S) and a column for each variable with class \code{"rsi"}.
+#' \code{portion_df} takes any variable from \code{data} that has an \code{"rsi"} class (created with \code{\link{as.rsi}}) and calculates the portions R, I and S. The resulting \emph{tidy data} (see Source) \code{data.frame} will have three rows (S/I/R) and a column for each variable with class \code{"rsi"}.
 #'
 #' The old \code{\link{rsi}} function is still available for backwards compatibility but is deprecated.
 #' \if{html}{
@@ -45,6 +45,8 @@
 #'   \out{<div style="text-align: center">}\figure{combi_therapy_3.png}\out{</div>}
 #' }
 #' @source \strong{M39 Analysis and Presentation of Cumulative Antimicrobial Susceptibility Test Data, 4th Edition}, 2014, \emph{Clinical and Laboratory Standards Institute (CLSI)}. \url{https://clsi.org/standards/products/microbiology/documents/m39/}.
+#'
+#' Wickham H. \strong{Tidy Data.} The Journal of Statistical Software, vol. 59, 2014. \url{http://vita.had.co.nz/papers/tidy-data.html}
 #' @seealso \code{\link{n_rsi}} to count cases with antimicrobial results.
 #' @keywords resistance susceptibility rsi_df rsi antibiotics isolate isolates
 #' @return Double or, when \code{as_percent = TRUE}, a character.
@@ -52,6 +54,9 @@
 #' @name portion
 #' @export
 #' @examples
+#' # septic_patients is a data set available in the AMR package. It is true, genuine data.
+#' ?septic_patients
+#'
 #' # Calculate resistance
 #' portion_R(septic_patients$amox)
 #' portion_IR(septic_patients$amox)
@@ -99,6 +104,18 @@
 #'             genta_n = n_rsi(gent),
 #'             combination_p = portion_S(cipr, gent, as_percent = TRUE),
 #'             combination_n = n_rsi(cipr, gent))
+#'
+#' # Get portions S/I/R immediately of all rsi columns
+#' septic_patients %>%
+#'   select(amox, cipr) %>%
+#'   portion_df(translate = FALSE)
+#'
+#' # It also supports grouping variables
+#' septic_patients %>%
+#'   select(hospital_id, amox, cipr) %>%
+#'   group_by(hospital_id) %>%
+#'   portion_df(translate = FALSE)
+#'
 #'
 #' \dontrun{
 #'
@@ -177,25 +194,33 @@ portion_S <- function(ab1,
 }
 
 #' @rdname portion
-#' @importFrom dplyr bind_cols summarise_if mutate
+#' @importFrom dplyr bind_rows summarise_if mutate group_vars select everything
 #' @export
 portion_df <- function(data, translate = getOption("get_antibiotic_names", TRUE)) {
-  resS <- bind_cols(data.frame(Interpretation = "S", stringsAsFactors = FALSE),
-                    summarise_if(.tbl = data,
-                                 .predicate = is.rsi,
-                                 .funs = portion_S))
-  resI <- bind_cols(data.frame(Interpretation = "I", stringsAsFactors = FALSE),
-                    summarise_if(.tbl = data,
-                                 .predicate = is.rsi,
-                                 .funs = portion_I))
-  resR <- bind_cols(data.frame(Interpretation = "R", stringsAsFactors = FALSE),
-                    summarise_if(.tbl = data,
-                                 .predicate = is.rsi,
-                                 .funs = portion_R))
+
+  resS <- summarise_if(.tbl = data,
+                       .predicate = is.rsi,
+                       .funs = portion_S) %>%
+    mutate(Interpretation = "S") %>%
+    select(Interpretation, everything())
+
+  resI <- summarise_if(.tbl = data,
+                       .predicate = is.rsi,
+                       .funs = portion_I) %>%
+    mutate(Interpretation = "I") %>%
+    select(Interpretation, everything())
+
+  resR <- summarise_if(.tbl = data,
+                       .predicate = is.rsi,
+                       .funs = portion_R) %>%
+    mutate(Interpretation = "R") %>%
+    select(Interpretation, everything())
+
+  data.groups <- group_vars(data)
 
   res <- bind_rows(resS, resI, resR) %>%
     mutate(Interpretation = factor(Interpretation, levels = c("R", "I", "S"), ordered = TRUE)) %>%
-    tidyr::gather(Antibiotic, Percentage, -Interpretation)
+    tidyr::gather(Antibiotic, Percentage, -Interpretation, -data.groups)
   if (translate == TRUE) {
     res <- res %>% mutate(Antibiotic = abname(Antibiotic, from = "guess", to = "official"))
   }

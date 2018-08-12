@@ -55,7 +55,7 @@
 #' @return A vector to add to table, see Examples.
 #' @source Methodology of this function is based on: \strong{M39 Analysis and Presentation of Cumulative Antimicrobial Susceptibility Test Data, 4th Edition}, 2014, \emph{Clinical and Laboratory Standards Institute (CLSI)}. \url{https://clsi.org/standards/products/microbiology/documents/m39/}.
 #' @examples
-#' # septic_patients is a dataset available in the AMR package. It is true data.
+#' # septic_patients is a dataset available in the AMR package. It is true, genuine data.
 #' ?septic_patients
 #'
 #' library(dplyr)
