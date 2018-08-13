@@ -35,13 +35,14 @@
   * Possibility to globally set the default for the amount of items to print, with `options(max.print.freq = n)` where *n* is your preset value
 
 #### Changed
-* Improvements for forcasting with `resistance_predict` and added more examples
-* More antibiotics for EUCAST rules
+* Improvements for forecasting with `resistance_predict` and added more examples
+* More antibiotics added as parameters for EUCAST rules
 * Updated version of the `septic_patients` data set to better reflect the reality
 * Pretty printing for tibbles removed as it is not really the scope of this package
 * Printing of `mic` and `rsi` classes now returns all values - use `freq` to check distributions
 * Improved speed of key antibiotics comparison for determining first isolates
 * Column names for the `key_antibiotics` function are now generic: 6 for broadspectrum ABs, 6 for Gram-positive specific and 6 for Gram-negative specific ABs
+* Speed improvement for the `abname` function
 * `%like%` now supports multiple patterns
 * Frequency tables are now actual `data.frame`s with altered console printing to make it look like a frequency table. Because of this, the parameter `toConsole` is not longer needed.
 * Fix for `freq` where the class of an item would be lost

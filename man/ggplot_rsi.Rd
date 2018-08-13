@@ -84,6 +84,6 @@ septic_patients \%>\%
   select(hospital_id, amox, cipr) \%>\%
   group_by(hospital_id) \%>\%
   ggplot_rsi() +
-  facet_grid("hospital_id") +
+  facet_wrap("hospital_id", nrow = 1) +
   labs(title = "AMR of Amoxicillin And Ciprofloxacine Per Hospital")
 }
