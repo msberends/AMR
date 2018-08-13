@@ -15,7 +15,7 @@ Erwin E.A. Hassing<sup>2</sup>,
   
 <sup>1</sup> Department of Medical Microbiology, University of Groningen, University Medical Center Groningen, Groningen, the Netherlands - [rug.nl](http://www.rug.nl) [umcg.nl](http://www.umcg.nl)<br>
 <sup>2</sup> Certe Medical Diagnostics & Advice, Groningen, the Netherlands - [certe.nl](http://www.certe.nl)<br>
-<sup>a</sup> R package author and dissertant<br>
+<sup>a</sup> R package author and thesis dissertant<br>
 <sup>b</sup> Thesis advisor
 
 <a href="https://www.rug.nl"><img src="man/figures/logo_rug.png" height="60px"></a>
@@ -83,6 +83,7 @@ This package [is published on CRAN](http://cran.r-project.org/package=AMR), the 
 
 ### Install from GitHub
 [![Travis_Build](https://travis-ci.org/msberends/AMR.svg?branch=master)](https://travis-ci.org/msberends/AMR)
+[![AppVeyor_Build](https://ci.appveyor.com/api/projects/status/github/msberends/AMR?branch=master&svg=true)](https://ci.appveyor.com/project/msberends/AMR)
 [![Since_Release](https://img.shields.io/github/commits-since/msberends/AMR/latest.svg?colorB=3679BC)](https://github.com/msberends/AMR/commits/master)
 [![Last_Commit](https://img.shields.io/github/last-commit/msberends/AMR.svg)](https://github.com/msberends/AMR/commits/master)
 [![Code_Coverage](https://codecov.io/gh/msberends/AMR/branch/master/graph/badge.svg)](https://codecov.io/gh/msberends/AMR)
