@@ -10,12 +10,13 @@
 \title{AMR bar plots with \code{ggplot}}
 \usage{
 ggplot_rsi(data, position = "stack", x = "Antibiotic",
-  fill = "Interpretation", facet = NULL)
+  fill = "Interpretation", facet = NULL, translate_ab = "official",
+  ...)
 
 geom_rsi(position = "stack", x = c("Antibiotic", "Interpretation"),
-  fill = "Interpretation")
+  fill = "Interpretation", translate_ab = "official")
 
-facet_rsi(facet = c("Interpretation", "Antibiotic"))
+facet_rsi(facet = c("Interpretation", "Antibiotic"), ...)
 
 scale_y_percent()
 
@@ -28,11 +29,15 @@ theme_rsi()
 
 \item{position}{position adjustment of bars, either \code{"stack"} (default) or \code{"dodge"}}
 
-\item{x}{variable to show on x axis, either \code{"Antibiotic"} (default) or \code{"Interpretation"}}
+\item{x}{variable to show on x axis, either \code{"Antibiotic"} (default) or \code{"Interpretation"} or a grouping variable}
 
-\item{fill}{variable to categorise using the plots legend}
+\item{fill}{variable to categorise using the plots legend, either \code{"Antibiotic"} (default) or \code{"Interpretation"} or a grouping variable}
 
-\item{facet}{variable to split plots by, either \code{"Interpretation"} (default) or \code{"Antibiotic"}}
+\item{facet}{variable to split plots by, either \code{"Interpretation"} (default) or \code{"Antibiotic"} or a grouping variable}
+
+\item{translate_ab}{a column name of the \code{\link{antibiotics}} data set to translate the antibiotic abbreviations into, using \code{\link{abname}}. Default behaviour is to translate to official names according to the WHO. Use \code{translate_ab = FALSE} to disable translation.}
+
+\item{...}{other parameters passed on to \code{\link[ggplot2]{facet_wrap}}}
 }
 \description{
 Use these functions to create bar plots for antimicrobial resistance analysis. All functions rely on internal \code{\link[ggplot2]{ggplot}} functions.
@@ -45,7 +50,7 @@ At default, the names of antibiotics will be shown on the plots using \code{\lin
 
 \code{facet_rsi} creates 2d plots (at default based on S/I/R) using \code{\link[ggplot2]{facet_wrap}}.
 
-\code{scale_y_percent} transforms the y axis to a 0 to 100% range.
+\code{scale_y_percent} transforms the y axis to a 0 to 100\% range.
 
 \code{scale_rsi_colours} sets colours to the bars: green for S, yellow for I and red for R.
 
@@ -61,11 +66,11 @@ library(ggplot2)
 ggplot(septic_patients \%>\% select(amox, nitr, fosf, trim, cipr)) +
   geom_rsi()
 
-# prettify it using some additional functions
+# prettify the plot using some additional functions:
 df <- septic_patients[, c("amox", "nitr", "fosf", "trim", "cipr")]
 ggplot(df) +
-  geom_rsi(x = "Interpretation") +
-  facet_rsi(facet = "Antibiotic") +
+  geom_rsi() +
+  facet_rsi() +
   scale_y_percent() +
   scale_rsi_colours() +
   theme_rsi()
@@ -74,16 +79,42 @@ ggplot(df) +
 septic_patients \%>\%
   select(amox, nitr, fosf, trim, cipr) \%>\%
   ggplot_rsi()
-
+\donttest{
+# it also supports groups (don't forget to use the group on `x` or `facet`):
 septic_patients \%>\%
-  select(amox, nitr, fosf, trim, cipr) \%>\%
-  ggplot_rsi(x = "Interpretation", facet = "Antibiotic")
-
-# it also supports groups (don't forget to use facet on the group):
-septic_patients \%>\%
-  select(hospital_id, amox, cipr) \%>\%
+  select(hospital_id, amox, nitr, fosf, trim, cipr) \%>\%
   group_by(hospital_id) \%>\%
-  ggplot_rsi() +
-  facet_wrap("hospital_id", nrow = 1) +
-  labs(title = "AMR of Amoxicillin And Ciprofloxacine Per Hospital")
+  ggplot_rsi(x = "hospital_id",
+             facet = "Antibiotic",
+             nrow = 1) +
+  labs(title = "AMR of Anti-UTI Drugs Per Hospital",
+       x = "Hospital")
+
+# genuine analysis: check 2 most prevalent microorganisms
+septic_patients \%>\%
+  # create new bacterial ID's, with all CoNS under the same group (Becker et al.)
+  mutate(bactid = as.bactid(bactid, Becker = TRUE)) \%>\%
+  # filter on top 2 bacterial ID's
+  filter(bactid \%in\% top_freq(freq(.$bactid), 2)) \%>\%
+  # determine first isolates
+  mutate(first_isolate = first_isolate(.,
+                                       col_date = "date",
+                                       col_patient_id = "patient_id",
+                                       col_bactid = "bactid")) \%>\%
+  # filter on first isolates
+  filter(first_isolate == TRUE) \%>\%
+  # join the `microorganisms` data set
+  left_join_microorganisms() \%>\%
+  # select full name and some antiseptic drugs
+  select(mo = fullname,
+            cfur, gent, cipr) \%>\%
+  # group by MO
+  group_by(mo) \%>\%
+  # plot the thing, putting MOs on the facet
+  ggplot_rsi(x = "Antibiotic",
+             facet = "mo") +
+  labs(title = "AMR of Top Two Microorganisms In Blood Culture Isolates",
+       subtitle = "Only First Isolates, CoNS grouped according to Becker et al.",
+       x = "Microorganisms")
+}
 }

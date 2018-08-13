@@ -25,7 +25,8 @@ portion_SI(ab1, ab2 = NULL, minimum = 30, as_percent = FALSE)
 
 portion_S(ab1, ab2 = NULL, minimum = 30, as_percent = FALSE)
 
-portion_df(data, translate = getOption("get_antibiotic_names", TRUE))
+portion_df(data, translate_ab = getOption("get_antibiotic_names",
+  "official"))
 }
 \arguments{
 \item{ab1}{vector of antibiotic interpretations, they will be transformed internally with \code{\link{as.rsi}} if needed}
@@ -38,7 +39,7 @@ portion_df(data, translate = getOption("get_antibiotic_names", TRUE))
 
 \item{data}{a code{data.frame} containing columns with class \code{rsi} (see \code{\link{as.rsi}})}
 
-\item{translate}{a logical value to indicate whether antibiotic abbreviations should be translated with \code{\link{abname}}}
+\item{translate_ab}{a column name of the \code{\link{antibiotics}} data set to translate the antibiotic abbreviations to, using \code{\link{abname}}. This can be set with \code{\link{getOption}("get_antibiotic_names")}.}
 }
 \value{
 Double or, when \code{as_percent = TRUE}, a character.

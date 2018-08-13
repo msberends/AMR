@@ -42,6 +42,7 @@ This R package was intended to make microbial epidemiology easier. Most function
 
 With `AMR` you can:
 * Calculate the resistance (and even co-resistance) of microbial isolates with the `portion_R`, `portion_IR`, `portion_I`, `portion_SI` and `portion_S` functions, that can also be used with the `dplyr` package (e.g. in conjunction with `summarise`)
+* Plot AMR results with `geom_rsi`, a function made for the `ggplot` package
 * Predict antimicrobial resistance for the nextcoming years with the `resistance_predict` function
 * Apply [EUCAST rules to isolates](http://www.eucast.org/expert_rules_and_intrinsic_resistance/) with the `EUCAST_rules` function
 * Identify first isolates of every patient [using guidelines from the CLSI](https://clsi.org/standards/products/microbiology/documents/m39/) (Clinical and Laboratory Standards Institute) with the `first_isolate` function

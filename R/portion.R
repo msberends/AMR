@@ -26,7 +26,7 @@
 #' @param minimum minimal amount of available isolates. Any number lower than \code{minimum} will return \code{NA}. The default number of \code{30} isolates is advised by the CLSI as best practice, see Source.
 #' @param as_percent logical to indicate whether the output must be returned as percent (text), will else be a double
 #' @param data a code{data.frame} containing columns with class \code{rsi} (see \code{\link{as.rsi}})
-#' @param translate a logical value to indicate whether antibiotic abbreviations should be translated with \code{\link{abname}}
+#' @param translate_ab a column name of the \code{\link{antibiotics}} data set to translate the antibiotic abbreviations to, using \code{\link{abname}}. This can be set with \code{\link{getOption}("get_antibiotic_names")}.
 #' @details \strong{Remember that you should filter your table to let it contain only first isolates!} Use \code{\link{first_isolate}} to determine them in your data set.
 #'
 #' \code{portion_df} takes any variable from \code{data} that has an \code{"rsi"} class (created with \code{\link{as.rsi}}) and calculates the portions R, I and S. The resulting \emph{tidy data} (see Source) \code{data.frame} will have three rows (S/I/R) and a column for each variable with class \code{"rsi"}.
@@ -196,7 +196,12 @@ portion_S <- function(ab1,
 #' @rdname portion
 #' @importFrom dplyr bind_rows summarise_if mutate group_vars select everything
 #' @export
-portion_df <- function(data, translate = getOption("get_antibiotic_names", TRUE)) {
+portion_df <- function(data, translate_ab = getOption("get_antibiotic_names", "official")) {
+
+  if (as.character(translate_ab) == "TRUE") {
+    translate_ab <- "official"
+  }
+  options(get_antibiotic_names = translate_ab)
 
   resS <- summarise_if(.tbl = data,
                        .predicate = is.rsi,
@@ -221,9 +226,14 @@ portion_df <- function(data, translate = getOption("get_antibiotic_names", TRUE)
   res <- bind_rows(resS, resI, resR) %>%
     mutate(Interpretation = factor(Interpretation, levels = c("R", "I", "S"), ordered = TRUE)) %>%
     tidyr::gather(Antibiotic, Percentage, -Interpretation, -data.groups)
-  if (translate == TRUE) {
-    res <- res %>% mutate(Antibiotic = abname(Antibiotic, from = "guess", to = "official"))
+
+  if (!translate_ab == FALSE) {
+    if (!tolower(translate_ab) %in% tolower(colnames(AMR::antibiotics))) {
+      stop("Parameter `translate_ab` does not occur in the `antibiotics` data set.", call. = FALSE)
+    }
+    res <- res %>% mutate(Antibiotic = abname(Antibiotic, from = "guess", to = translate_ab))
   }
+
   res
 }
 

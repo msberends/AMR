@@ -2,7 +2,7 @@
 
 #### New
 * **BREAKING**: `rsi_df` was removed in favour of new functions `portion_R`, `portion_IR`, `portion_I`, `portion_SI` and `portion_S` to selectively calculate resistance or susceptibility. These functions are 20 to 30 times faster than the old `rsi` function. The old function still works, but is deprecated.
-  * New function `portion_df` to get all portions of S, I and R of a data set with antibiotic columns
+  * New function `portion_df` to get all portions of S, I and R of a data set with antibiotic columns, with support for grouped variables
 * **BREAKING**: the methodology for determining first weighted isolates was changed. The antibiotics that are compared between isolates (call *key antibiotics*) to include more first isolates (afterwards called first *weighted* isolates) are now as follows:
   * Universal: amoxicillin, amoxicillin/clavlanic acid, cefuroxime, piperacillin/tazobactam, ciprofloxacin,  trimethoprim/sulfamethoxazole
   * Gram-positive: vancomycin, teicoplanin, tetracycline, erythromycin, oxacillin, rifampicin
@@ -11,6 +11,7 @@
   * New functions `geom_rsi`, `facet_rsi`, `scale_y_percent`, `scale_rsi_colours` and `theme_rsi`
   * New wrapper function `ggplot_rsi` to apply all above functions on a data set:
     * `septic_patients %>% select(tobr, gent) %>% ggplot_rsi` will show portions of S, I and R immediately in a pretty plot
+    * Support for grouped variables, see `?ggplot_rsi`
 * Determining bacterial ID:
   * New functions `as.bactid` and `is.bactid` to transform/ look up microbial ID's.
   * The existing function `guess_bactid` is now an alias of `as.bactid`
