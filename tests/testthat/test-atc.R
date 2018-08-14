@@ -1,6 +1,8 @@
 context("atc.R")
 
 test_that("atc_property works", {
+  skip_if(Sys.info()['sysname'] == "Windows") # security error on AppVeyor
+
   if (!is.null(curl::nslookup("www.whocc.no", error = FALSE))) {
     expect_equal(tolower(atc_property("J01CA04", property = "Name")), "amoxicillin")
     expect_equal(atc_property("J01CA04", property = "unit"), "g")

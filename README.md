@@ -70,7 +70,7 @@ With the `MDRO` function (abbreviation of Multi Drug Resistant Organisms), you c
 This package [is published on CRAN](http://cran.r-project.org/package=AMR), the official R network.
 
 ### Install from CRAN
-[![CRAN_Badge](https://img.shields.io/cran/v/AMR.svg?label=CRAN&colorB=3679BC)](http://cran.r-project.org/package=AMR) [![CRAN_Downloads](https://cranlogs.r-pkg.org/badges/grand-total/AMR)](http://cran.r-project.org/package=AMR)
+[![CRAN_Badge](https://www.r-pkg.org/badges/version/dplyr)](http://cran.r-project.org/package=AMR) [![CRAN_Downloads](https://cranlogs.r-pkg.org/badges/grand-total/AMR)](http://cran.r-project.org/package=AMR)
 
 (Note: Downloads measured only by [cran.rstudio.com](https://cran.rstudio.com/package=AMR), this excludes e.g. the official [cran.r-project.org](https://cran.r-project.org/package=AMR))
 

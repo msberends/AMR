@@ -15,6 +15,35 @@ cache:
 
 # Adapt as necessary starting from here
 
+environment:
+  global:
+    R_ARCH: x64
+    GCC_PATH: mingw_64
+    WARNINGS_ARE_ERRORS: 1
+
+  matrix:
+  - R_VERSION: 3.1
+    WARNINGS_ARE_ERRORS: 0
+
+  - R_VERSION: 3.2
+
+  - R_VERSION: 3.3
+
+  - R_VERSION: 3.4
+
+  - R_VERSION: release
+
+  - R_VERSION: devel
+
+notifications:
+- provider: Email
+  to: m.s.berends@umcg.nl
+  subject: 'AppVeyor: status changed'
+  message: The status of https://ci.appveyor.com/project/msberends/amr has changed.
+  on_build_success: false
+  on_build_failure: false
+  on_build_status_changed: true
+
 build_script:
   - travis-tool.sh install_deps
 

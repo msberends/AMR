@@ -63,8 +63,9 @@
 * Other small fixes
 
 #### Other
-* Unit testing for all Linux and macOS releases of R 3.1 and higher: https://travis-ci.org/msberends/AMR
-* Added units tests for Windows with AppVeyor
+* Added integration tests (check if everything works as expected) for all releases of R 3.1 and higher
+  * Linux and macOS: https://travis-ci.org/msberends/AMR
+  * Windows: https://ci.appveyor.com/project/msberends/amr
 * Added thesis advisors to DESCRIPTION file
 
 # 0.2.0 (latest stable version)
