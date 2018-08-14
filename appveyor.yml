@@ -22,17 +22,7 @@ environment:
     WARNINGS_ARE_ERRORS: 1
 
   matrix:
-  - R_VERSION: 3.1
-    WARNINGS_ARE_ERRORS: 0
-
-  - R_VERSION: 3.2
-
-  - R_VERSION: 3.3
-
-  - R_VERSION: 3.4
-
   - R_VERSION: release
-
   - R_VERSION: devel
 
 notifications:
