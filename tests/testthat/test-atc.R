@@ -1,9 +1,9 @@
 context("atc.R")
 
 test_that("atc_property works", {
-  skip() # relies on internet connection of server, don't test
+  skip_on_travis() # relies on internet connection of server, don't test
 
-  skip_if(Sys.info()['sysname'] == "Windows") # security error on AppVeyor
+  skip_on_appveyor() # security error on AppVeyor
 
   if (!is.null(curl::nslookup("www.whocc.no", error = FALSE))) {
     expect_equal(tolower(atc_property("J01CA04", property = "Name")), "amoxicillin")
