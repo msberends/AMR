@@ -1,4 +1,5 @@
-# 0.2.0.90xx (development version)
+# 0.3.0
+**Published on CRAN: 2018-08-14**
 
 #### New
 * **BREAKING**: `rsi_df` was removed in favour of new functions `portion_R`, `portion_IR`, `portion_I`, `portion_SI` and `portion_S` to selectively calculate resistance or susceptibility. These functions are 20 to 30 times faster than the old `rsi` function. The old function still works, but is deprecated.
@@ -68,7 +69,7 @@
   * Windows: https://ci.appveyor.com/project/msberends/amr
 * Added thesis advisors to DESCRIPTION file
 
-# 0.2.0 (latest stable version)
+# 0.2.0
 **Published on CRAN: 2018-05-03**
 
 #### New
