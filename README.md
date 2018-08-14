@@ -145,15 +145,17 @@ septic_patients %>%
 
 ![example_3_rsi](man/figures/rsi_example3.png)
 
-It also supports grouping variables. Let's say we want to compare resistance of these antibiotics between hospitals A to D (variable `hospital_id`):
+It also supports grouping variables. Let's say we want to compare resistance of drugs against Urine Tract Infections (UTI) between hospitals A to D (variable `hospital_id`):
 
 ```r
 septic_patients %>%
-  select(hospital_id, amox, cipr) %>%
+  select(hospital_id, amox, nitr, fosf, trim, cipr) %>%
   group_by(hospital_id) %>%
-  ggplot_rsi() +               # start adding ggplot elements here with `+`
-  facet_grid("hospital_id") +  # splitting the plots on our grouping variable
-  labs(title = "AMR of Amoxicillin And Ciprofloxacine Per Hospital")
+  ggplot_rsi(x = "hospital_id",
+             facet = "Antibiotic",
+             nrow = 1) +
+  labs(title = "AMR of Anti-UTI Drugs Per Hospital",
+       x = "Hospital")
 ```
 
 ![example_4_rsi](man/figures/rsi_example4.png)
