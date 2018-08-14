@@ -1,6 +1,8 @@
 context("atc.R")
 
 test_that("atc_property works", {
+  skip() # relies on internet connection of server, don't test
+
   skip_if(Sys.info()['sysname'] == "Windows") # security error on AppVeyor
 
   if (!is.null(curl::nslookup("www.whocc.no", error = FALSE))) {

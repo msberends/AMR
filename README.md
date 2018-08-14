@@ -70,7 +70,7 @@ With the `MDRO` function (abbreviation of Multi Drug Resistant Organisms), you c
 This package [is published on CRAN](http://cran.r-project.org/package=AMR), the official R network.
 
 ### Install from CRAN
-[![CRAN_Badge](https://www.r-pkg.org/badges/version/dplyr)](http://cran.r-project.org/package=AMR) [![CRAN_Downloads](https://cranlogs.r-pkg.org/badges/grand-total/AMR)](http://cran.r-project.org/package=AMR)
+[![CRAN_Badge](https://www.r-pkg.org/badges/version/AMR)](http://cran.r-project.org/package=AMR) [![CRAN_Downloads](https://cranlogs.r-pkg.org/badges/grand-total/AMR)](http://cran.r-project.org/package=AMR)
 
 (Note: Downloads measured only by [cran.rstudio.com](https://cran.rstudio.com/package=AMR), this excludes e.g. the official [cran.r-project.org](https://cran.r-project.org/package=AMR))
 
@@ -84,14 +84,11 @@ This package [is published on CRAN](http://cran.r-project.org/package=AMR), the 
 ### Install from GitHub
 [![Travis_Build](https://travis-ci.org/msberends/AMR.svg?branch=master)](https://travis-ci.org/msberends/AMR)
 [![AppVeyor_Build](https://ci.appveyor.com/api/projects/status/github/msberends/AMR?branch=master&svg=true)](https://ci.appveyor.com/project/msberends/AMR)
-[![Since_Release](https://img.shields.io/github/commits-since/msberends/AMR/latest.svg?colorB=3679BC)](https://github.com/msberends/AMR/commits/master)
 [![Last_Commit](https://img.shields.io/github/last-commit/msberends/AMR.svg)](https://github.com/msberends/AMR/commits/master)
 [![Code_Coverage](https://codecov.io/gh/msberends/AMR/branch/master/graph/badge.svg)](https://codecov.io/gh/msberends/AMR)
 
-```r
-install.packages("devtools")
-devtools::install_github("msberends/AMR")
-```
+```r install.packages("devtools") 
+devtools::install_github("msberends/AMR") ```
 
 ## How to use it?
 ```r
