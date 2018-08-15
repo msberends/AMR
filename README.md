@@ -42,8 +42,8 @@ This R package was intended to make microbial epidemiology easier. Most function
 
 With `AMR` you can:
 * Calculate the resistance (and even co-resistance) of microbial isolates with the `portion_R`, `portion_IR`, `portion_I`, `portion_SI` and `portion_S` functions, that can also be used with the `dplyr` package (e.g. in conjunction with `summarise`)
-* Plot AMR results with `geom_rsi`, a function made for the `ggplot` package
-* Predict antimicrobial resistance for the nextcoming years with the `resistance_predict` function
+* Plot AMR results with `geom_rsi`, a function made for the `ggplot2` package
+* Predict antimicrobial resistance for the nextcoming years using logistic regression models with the `resistance_predict` function
 * Apply [EUCAST rules to isolates](http://www.eucast.org/expert_rules_and_intrinsic_resistance/) with the `EUCAST_rules` function
 * Identify first isolates of every patient [using guidelines from the CLSI](https://clsi.org/standards/products/microbiology/documents/m39/) (Clinical and Laboratory Standards Institute) with the `first_isolate` function
   * You can also identify first *weighted* isolates of every patient, an adjusted version of the CLSI guideline. This takes into account key antibiotics of every strain and compares them. The following 12 antibiotics will be used as key antibiotics at default:
@@ -88,7 +88,8 @@ This package [is published on CRAN](http://cran.r-project.org/package=AMR), the 
 [![Code_Coverage](https://codecov.io/gh/msberends/AMR/branch/master/graph/badge.svg)](https://codecov.io/gh/msberends/AMR)
 
 ```r install.packages("devtools") 
-devtools::install_github("msberends/AMR") ```
+devtools::install_github("msberends/AMR")
+```
 
 ## How to use it?
 ```r
