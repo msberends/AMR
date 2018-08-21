@@ -1,4 +1,15 @@
-# 0.3.0
+# 0.3.0.90xx (latest development version)
+
+#### New
+* Functions `count_R`, `count_IR`, `count_I`, `count_SI` and `count_S` to selectively count resistant or susceptibile isolates
+* Function `is.rsi.eligible` to check for columns that have valid antimicrobial results, but do not have the `rsi` class yet. Transform the columns of your raw data with: `data %>% mutate_at(is.rsi.eligible, as.rsi)`
+
+#### Changed
+* Added parameters `minimum` and `as_percent` to `portion_df`
+* Edited `ggplot_rsi` and `geom_rsi` so they can cope with `count_df`. The new `fun` parameter has value `portion_df` at default, but can be set to `count_df`.
+* Fix for `ggplot_rsi` when the `ggplot2` was not loaded
+
+# 0.3.0 (latest stable version)
 **Published on CRAN: 2018-08-14**
 
 #### New

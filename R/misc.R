@@ -138,21 +138,18 @@ tbl_parse_guess <- function(tbl,
                                                             asciify = FALSE))
     }
     if (any(tbl %>% pull(i) %>% class() %in% c('factor', 'character'))) {
-      # get values
-      distinct_val <- tbl %>% pull(i) %>% unique() %>% sort()
       if (remove_ASCII_escape_char == TRUE) {
         # remove ASCII escape character: https://en.wikipedia.org/wiki/Escape_character#ASCII_escape_character
         tbl[, i] <- tbl %>% pull(i) %>% gsub('\033', ' ', ., fixed = TRUE)
       }
-      # look for RSI, shouldn't all be "" and must be valid antibiotic interpretations
-      if (!all(distinct_val[!is.na(distinct_val)] == '')
-          & all(distinct_val[!is.na(distinct_val)] %in% c('', 'I', 'I;I', 'R', 'R;R', 'S', 'S;S'))) {
-        tbl[, i] <- tbl %>% pull(i) %>% as.rsi()
+      if (tbl %>% pull(i) %>% is.rsi.eligible()) {
+        # look for RSI
+        tbl[, i] <- as.rsi(tbl[, i])
       }
     }
-    # convert to MIC class
+    # convert to MIC class when ends on `_mic`
     if (colnames(tbl)[i] %like% '_mic$') {
-      tbl[, i] <- tbl %>% pull(i) %>% as.mic()
+      tbl[, i] <- as.mic(tbl[, i])
     }
   }
   tbl

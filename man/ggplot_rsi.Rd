@@ -9,12 +9,13 @@
 \alias{theme_rsi}
 \title{AMR bar plots with \code{ggplot}}
 \usage{
-ggplot_rsi(data, position = "stack", x = "Antibiotic",
+ggplot_rsi(data, position = NULL, x = "Antibiotic",
   fill = "Interpretation", facet = NULL, translate_ab = "official",
-  ...)
+  fun = portion_df, ...)
 
-geom_rsi(position = "stack", x = c("Antibiotic", "Interpretation"),
-  fill = "Interpretation", translate_ab = "official")
+geom_rsi(position = NULL, x = c("Antibiotic", "Interpretation"),
+  fill = "Interpretation", translate_ab = "official",
+  fun = portion_df)
 
 facet_rsi(facet = c("Interpretation", "Antibiotic"), ...)
 
@@ -27,7 +28,7 @@ theme_rsi()
 \arguments{
 \item{data}{a \code{data.frame} with column(s) of class \code{"rsi"} (see \code{\link{as.rsi}})}
 
-\item{position}{position adjustment of bars, either \code{"stack"} (default) or \code{"dodge"}}
+\item{position}{position adjustment of bars, either \code{"stack"} (default when \code{fun} is \code{\link{portion_df}}) or \code{"dodge"} (default when \code{fun} is \code{\link{count_df}})}
 
 \item{x}{variable to show on x axis, either \code{"Antibiotic"} (default) or \code{"Interpretation"} or a grouping variable}
 
@@ -36,6 +37,8 @@ theme_rsi()
 \item{facet}{variable to split plots by, either \code{"Interpretation"} (default) or \code{"Antibiotic"} or a grouping variable}
 
 \item{translate_ab}{a column name of the \code{\link{antibiotics}} data set to translate the antibiotic abbreviations into, using \code{\link{abname}}. Default behaviour is to translate to official names according to the WHO. Use \code{translate_ab = FALSE} to disable translation.}
+
+\item{fun}{function to transform \code{data}, either \code{\link{portion_df}} (default) or \code{\link{count_df}}}
 
 \item{...}{other parameters passed on to \code{\link[ggplot2]{facet_wrap}}}
 }
@@ -46,7 +49,7 @@ Use these functions to create bar plots for antimicrobial resistance analysis. A
 At default, the names of antibiotics will be shown on the plots using \code{\link{abname}}. This can be set with the option \code{get_antibiotic_names} (a logical value), so change it e.g. to \code{FALSE} with \code{options(get_antibiotic_names = FALSE)}.
 
 \strong{The functions}\cr
-\code{geom_rsi} will take any variable from the data that has an \code{rsi} class (created with \code{\link{as.rsi}}) using \code{\link{portion_df}} and will plot bars with the percentage R, I and S. The default behaviour is to have the bars stacked and to have the different antibiotics on the x axis.
+\code{geom_rsi} will take any variable from the data that has an \code{rsi} class (created with \code{\link{as.rsi}}) using \code{fun} (\code{\link{portion_df}} at default, could also be \code{\link{count_df}}) and will plot bars with the percentage R, I and S. The default behaviour is to have the bars stacked and to have the different antibiotics on the x axis.
 
 \code{facet_rsi} creates 2d plots (at default based on S/I/R) using \code{\link[ggplot2]{facet_wrap}}.
 
@@ -79,6 +82,11 @@ ggplot(df) +
 septic_patients \%>\%
   select(amox, nitr, fosf, trim, cipr) \%>\%
   ggplot_rsi()
+
+# get counts instead of percentages:
+septic_patients \%>\%
+  select(amox, nitr, fosf, trim, cipr) \%>\%
+  ggplot_rsi(fun = count_df)
 \donttest{
 # it also supports groups (don't forget to use the group on `x` or `facet`):
 septic_patients \%>\%

@@ -67,7 +67,7 @@ With the `MDRO` function (abbreviation of Multi Drug Resistant Organisms), you c
 **Read all changes and new functions in [NEWS.md](NEWS.md).**
 
 ## How to get it?
-This package [is published on CRAN](http://cran.r-project.org/package=AMR), the official R network.
+All versions of this package [are published on CRAN](http://cran.r-project.org/package=AMR), the official R network with a peer-reviewed submission process.
 
 ### Install from CRAN
 [![CRAN_Badge](https://www.r-pkg.org/badges/version/AMR)](http://cran.r-project.org/package=AMR) [![CRAN_Downloads](https://cranlogs.r-pkg.org/badges/grand-total/AMR)](http://cran.r-project.org/package=AMR)
@@ -87,9 +87,15 @@ This package [is published on CRAN](http://cran.r-project.org/package=AMR), the 
 [![Last_Commit](https://img.shields.io/github/last-commit/msberends/AMR.svg)](https://github.com/msberends/AMR/commits/master)
 [![Code_Coverage](https://codecov.io/gh/msberends/AMR/branch/master/graph/badge.svg)](https://codecov.io/gh/msberends/AMR)
 
-```r install.packages("devtools") 
+```r
+install.packages("devtools") 
 devtools::install_github("msberends/AMR")
 ```
+
+### Install from Zenodo
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.1305355.svg)](https://doi.org/10.5281/zenodo.1305355)
+
+This package was also published on Zenodo: https://doi.org/10.5281/zenodo.1305355
 
 ## How to use it?
 ```r

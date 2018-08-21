@@ -26,7 +26,7 @@ portion_SI(ab1, ab2 = NULL, minimum = 30, as_percent = FALSE)
 portion_S(ab1, ab2 = NULL, minimum = 30, as_percent = FALSE)
 
 portion_df(data, translate_ab = getOption("get_antibiotic_names",
-  "official"))
+  "official"), minimum = 30, as_percent = FALSE)
 }
 \arguments{
 \item{ab1}{vector of antibiotic interpretations, they will be transformed internally with \code{\link{as.rsi}} if needed}
@@ -35,9 +35,9 @@ portion_df(data, translate_ab = getOption("get_antibiotic_names",
 
 \item{minimum}{minimal amount of available isolates. Any number lower than \code{minimum} will return \code{NA}. The default number of \code{30} isolates is advised by the CLSI as best practice, see Source.}
 
-\item{as_percent}{logical to indicate whether the output must be returned as percent (text), will else be a double}
+\item{as_percent}{logical to indicate whether the output must be returned as a hundred fold with \% sign (a character). A value of \code{0.123456} will then be returned as \code{"12.3\%"}.}
 
-\item{data}{a code{data.frame} containing columns with class \code{rsi} (see \code{\link{as.rsi}})}
+\item{data}{a \code{data.frame} containing columns with class \code{rsi} (see \code{\link{as.rsi}})}
 
 \item{translate_ab}{a column name of the \code{\link{antibiotics}} data set to translate the antibiotic abbreviations to, using \code{\link{abname}}. This can be set with \code{\link{getOption}("get_antibiotic_names")}.}
 }
@@ -51,6 +51,8 @@ These functions can be used to calculate the (co-)resistance of microbial isolat
 }
 \details{
 \strong{Remember that you should filter your table to let it contain only first isolates!} Use \code{\link{first_isolate}} to determine them in your data set.
+
+These functions are not meant to count isolates, but to calculate the portion of resistance/susceptibility. If a column has been transformed with \code{\link{as.rsi}}, just use e.g. \code{isolates[isolates == "R"]} to get the resistant ones. You could then calculate the \code{\link{length}} of it.
 
 \code{portion_df} takes any variable from \code{data} that has an \code{"rsi"} class (created with \code{\link{as.rsi}}) and calculates the portions R, I and S. The resulting \emph{tidy data} (see Source) \code{data.frame} will have three rows (S/I/R) and a column for each variable with class \code{"rsi"}.
 
@@ -143,7 +145,8 @@ my_table \%>\%
 }
 }
 \seealso{
-\code{\link{n_rsi}} to count cases with antimicrobial results.
+\code{\link[AMR]{count}_*} to count resistant and susceptibile isolates.\cr
+\code{\link{n_rsi}} to count all cases where antimicrobial results are available.
 }
 \keyword{antibiotics}
 \keyword{isolate}

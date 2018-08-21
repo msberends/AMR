@@ -16,7 +16,7 @@ rsi(ab1, ab2 = NULL, interpretation = "IR", minimum = 30,
 
 \item{minimum}{minimal amount of available isolates. Any number lower than \code{minimum} will return \code{NA}. The default number of \code{30} isolates is advised by the CLSI as best practice, see Source.}
 
-\item{as_percent}{logical to indicate whether the output must be returned as percent (text), will else be a double}
+\item{as_percent}{logical to indicate whether the output must be returned as a hundred fold with \% sign (a character). A value of \code{0.123456} will then be returned as \code{"12.3\%"}.}
 
 \item{...}{deprecated parameters to support usage on older versions}
 }

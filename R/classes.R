@@ -21,6 +21,7 @@
 #' This transforms a vector to a new class \code{rsi}, which is an ordered factor with levels \code{S < I < R}. Invalid antimicrobial interpretations will be translated as \code{NA} with a warning.
 #' @rdname as.rsi
 #' @param x vector
+#' @details The function \code{is.rsi.eligible} returns \code{TRUE} when a columns contains only valid antimicrobial interpretations (S and/or I and/or R), and \code{FALSE} otherwise.
 #' @return Ordered factor with new class \code{rsi} and new attribute \code{package}
 #' @keywords rsi
 #' @export
@@ -37,6 +38,12 @@
 #' plot(rsi_data)    # for percentages
 #' barplot(rsi_data) # for frequencies
 #' freq(rsi_data)    # frequency table with informative header
+#'
+#' # fastest way to transform all columns with already valid AB results to class `rsi`:
+#' library(dplyr)
+#' septic_patients %>%
+#'   mutate_if(is.rsi.eligible,
+#'             as.rsi)
 as.rsi <- function(x) {
   if (is.rsi(x)) {
     x
@@ -86,6 +93,18 @@ as.rsi <- function(x) {
 #' @importFrom dplyr %>%
 is.rsi <- function(x) {
   class(x) %>% identical(c('rsi', 'ordered', 'factor'))
+}
+
+#' @rdname as.rsi
+#' @export
+#' @importFrom dplyr %>%
+is.rsi.eligible <- function(x) {
+  distinct_val <- x %>% unique() %>% sort() %>% as.character()
+  distinct_val <- distinct_val[!is.na(distinct_val) & trimws(distinct_val) != ""]
+  distinct_val_rsi <- as.character(suppressWarnings(as.rsi(distinct_val)))
+
+  length(distinct_val) > 0 &
+    identical(distinct_val, distinct_val_rsi)
 }
 
 #' @exportMethod print.rsi
