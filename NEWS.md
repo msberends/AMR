@@ -2,7 +2,7 @@
 
 #### New
 * Functions `count_R`, `count_IR`, `count_I`, `count_SI` and `count_S` to selectively count resistant or susceptibile isolates
-* Function `is.rsi.eligible` to check for columns that have valid antimicrobial results, but do not have the `rsi` class yet. Transform the columns of your raw data with: `data %>% mutate_at(is.rsi.eligible, as.rsi)`
+* Function `is.rsi.eligible` to check for columns that have valid antimicrobial results, but do not have the `rsi` class yet. Transform the columns of your raw data with: `data %>% mutate_if(is.rsi.eligible, as.rsi)`
 
 #### Changed
 * Added parameters `minimum` and `as_percent` to `portion_df`
