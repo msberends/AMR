@@ -38,9 +38,13 @@ before_install:
   - if [ $TRAVIS_OS_NAME = osx ]; then brew install xclip; fi
   - if [ $TRAVIS_OS_NAME = osx ]; then brew install libgit2; fi
 
+install:
+  - if [ $TRAVIS_OS_NAME = osx ]; then Rscript -e "install.packages('devtools')"; fi
+  - if [ $TRAVIS_OS_NAME = osx ]; then Rscript -e "devtools::install_github('r-lib/rlang')"; fi
+
 # postrun
 after_success:
-  # only run on osx, so clipboard functions can be checked
+  # only run codecov on osx, so clipboard functions can be checked
   - if [ $TRAVIS_OS_NAME = osx ]; then Rscript -e 'covr::codecov()'; fi
 notifications:
   email:
