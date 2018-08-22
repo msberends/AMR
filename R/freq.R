@@ -55,9 +55,8 @@
 #' The function \code{top_freq} uses \code{\link[dplyr]{top_n}} internally and will include more than \code{n} rows if there are ties.
 #' @importFrom stats fivenum sd mad
 #' @importFrom grDevices boxplot.stats
-#' @importFrom dplyr %>% select pull n_distinct group_by arrange desc mutate summarise n_distinct
+#' @importFrom dplyr %>% select pull n_distinct group_by arrange desc mutate summarise n_distinct tibble
 #' @importFrom utils browseVignettes installed.packages
-#' @importFrom tibble tibble
 #' @keywords summary summarise frequency freq
 #' @rdname freq
 #' @name freq
@@ -378,12 +377,12 @@ frequency_tbl <- function(x,
   column_names_df <- c('item', 'count', 'percent', 'cum_count', 'cum_percent', 'factor_level')
 
   if (any(class(x) == 'factor')) {
-    df <- tibble::tibble(item = x,
+    df <- tibble(item = x,
                          fctlvl = x %>% as.integer()) %>%
       group_by(item, fctlvl)
     column_align <- c('l', 'r', 'r', 'r', 'r', 'r')
   } else {
-    df <- tibble::tibble(item = x) %>%
+    df <- tibble(item = x) %>%
       group_by(item)
     # strip factor lvl from col names
     column_names <- column_names[1:length(column_names) - 1]

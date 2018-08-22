@@ -13,23 +13,21 @@
 Wickham H. \strong{Tidy Data.} The Journal of Statistical Software, vol. 59, 2014. \url{http://vita.had.co.nz/papers/tidy-data.html}
 }
 \usage{
-count_R(ab1, ab2 = NULL)
+count_R(...)
 
-count_IR(ab1, ab2 = NULL)
+count_IR(...)
 
-count_I(ab1)
+count_I(...)
 
-count_SI(ab1, ab2 = NULL)
+count_SI(...)
 
-count_S(ab1, ab2 = NULL)
+count_S(...)
 
 count_df(data, translate_ab = getOption("get_antibiotic_names",
   "official"))
 }
 \arguments{
-\item{ab1}{vector of antibiotic interpretations, they will be transformed internally with \code{\link{as.rsi}} if needed}
-
-\item{ab2}{like \code{ab}, a vector of antibiotic interpretations. Use this to calculate (the lack of) co-resistance: the probability where one of two drugs have a resistant or susceptible result. See Examples.}
+\item{...}{one or more vectors (or columns) with antibiotic interpretations. They will be transformed internally with \code{\link{as.rsi}} if needed. Use multiple columns to calculate (the lack of) co-resistance: the probability where one of two drugs have a resistant or susceptible result. See Examples.}
 
 \item{data}{a \code{data.frame} containing columns with class \code{rsi} (see \code{\link{as.rsi}})}
 
@@ -39,7 +37,7 @@ count_df(data, translate_ab = getOption("get_antibiotic_names",
 Integer
 }
 \description{
-These functions can be used to count resistant/susceptible microbial isolates. All functions can be used in \code{dplyr}s \code{\link[dplyr]{summarise}} and support grouped variables, see \emph{Examples}.
+These functions can be used to count resistant/susceptible microbial isolates. All functions support quasiquotation with pipes, can be used in \code{dplyr}s \code{\link[dplyr]{summarise}} and support grouped variables, see \emph{Examples}.
 
 \code{count_R} and \code{count_IR} can be used to count resistant isolates, \code{count_S} and \code{count_SI} can be used to count susceptible isolates.\cr
 }

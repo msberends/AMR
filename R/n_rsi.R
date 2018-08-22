@@ -18,10 +18,11 @@
 
 #' Count cases with antimicrobial results
 #'
-#' This counts all cases where antimicrobial interpretations are available. Its use is equal to \code{\link{n_distinct}}.
-#' @param ab1,ab2 vector of antibiotic interpretations, they will be transformed internally with \code{\link{as.rsi}} if needed
+#' This counts all cases where antimicrobial interpretations are available. The way it can be used is equal to \code{\link{n_distinct}}. Its function is equal to \code{count_S(...) + count_IR(...)}.
+#' @inheritParams portion
 #' @export
-#' @seealso The \code{\link{portion}} functions to calculate resistance and susceptibility.
+#' @seealso \code{\link[AMR]{count}_*} to count resistant and susceptibile isolates per interpretation type.\cr
+#' \code{\link{portion}_*} to calculate microbial resistance and susceptibility.
 #' @examples
 #' library(dplyr)
 #'
@@ -33,22 +34,7 @@
 #'             genta_n = n_rsi(gent),
 #'             combination_p = portion_S(cipr, gent, as_percent = TRUE),
 #'             combination_n = n_rsi(cipr, gent))
-n_rsi <- function(ab1, ab2 = NULL) {
-  if (NCOL(ab1) > 1) {
-    stop('`ab1` must be a vector of antimicrobial interpretations', call. = FALSE)
-  }
-  if (!is.rsi(ab1)) {
-    ab1 <- as.rsi(ab1)
-  }
-  if (!is.null(ab2)) {
-    if (NCOL(ab2) > 1) {
-      stop('`ab2` must be a vector of antimicrobial interpretations', call. = FALSE)
-    }
-    if (!is.rsi(ab2)) {
-      ab2 <- as.rsi(ab2)
-    }
-    sum(!is.na(ab1) & !is.na(ab2))
-  } else {
-    sum(!is.na(ab1))
-  }
+n_rsi <- function(...) {
+  # only print warnings once, if needed
+  count_S(...) + suppressWarnings(count_IR(...))
 }

@@ -18,7 +18,7 @@
 
 #' Count isolates
 #'
-#' @description These functions can be used to count resistant/susceptible microbial isolates. All functions can be used in \code{dplyr}s \code{\link[dplyr]{summarise}} and support grouped variables, see \emph{Examples}.
+#' @description These functions can be used to count resistant/susceptible microbial isolates. All functions support quasiquotation with pipes, can be used in \code{dplyr}s \code{\link[dplyr]{summarise}} and support grouped variables, see \emph{Examples}.
 #'
 #' \code{count_R} and \code{count_IR} can be used to count resistant isolates, \code{count_S} and \code{count_SI} can be used to count susceptible isolates.\cr
 #' @inheritParams portion
@@ -87,11 +87,9 @@
 #'   group_by(hospital_id) %>%
 #'   count_df(translate = FALSE)
 #'
-count_R <- function(ab1,
-                    ab2 = NULL) {
-  rsi_calc(type = "R",
-           ab1 = ab1,
-           ab2 = ab2,
+count_R <- function(...) {
+  rsi_calc(...,
+           type = "R",
            include_I = FALSE,
            minimum = 0,
            as_percent = FALSE,
@@ -100,11 +98,9 @@ count_R <- function(ab1,
 
 #' @rdname count
 #' @export
-count_IR <- function(ab1,
-                     ab2 = NULL) {
-  rsi_calc(type = "R",
-           ab1 = ab1,
-           ab2 = ab2,
+count_IR <- function(...) {
+  rsi_calc(...,
+           type = "R",
            include_I = TRUE,
            minimum = 0,
            as_percent = FALSE,
@@ -113,10 +109,9 @@ count_IR <- function(ab1,
 
 #' @rdname count
 #' @export
-count_I <- function(ab1) {
-  rsi_calc(type = "I",
-           ab1 = ab1,
-           ab2 = NULL,
+count_I <- function(...) {
+  rsi_calc(...,
+           type = "I",
            include_I = FALSE,
            minimum = 0,
            as_percent = FALSE,
@@ -125,11 +120,9 @@ count_I <- function(ab1) {
 
 #' @rdname count
 #' @export
-count_SI <- function(ab1,
-                     ab2 = NULL) {
-  rsi_calc(type = "S",
-           ab1 = ab1,
-           ab2 = ab2,
+count_SI <- function(...) {
+  rsi_calc(...,
+           type = "S",
            include_I = TRUE,
            minimum = 0,
            as_percent = FALSE,
@@ -138,11 +131,9 @@ count_SI <- function(ab1,
 
 #' @rdname count
 #' @export
-count_S <- function(ab1,
-                    ab2 = NULL) {
-  rsi_calc(type = "S",
-           ab1 = ab1,
-           ab2 = ab2,
+count_S <- function(...) {
+  rsi_calc(...,
+           type = "S",
            include_I = FALSE,
            minimum = 0,
            as_percent = FALSE,

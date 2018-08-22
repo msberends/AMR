@@ -11,10 +11,10 @@
 \usage{
 ggplot_rsi(data, position = NULL, x = "Antibiotic",
   fill = "Interpretation", facet = NULL, translate_ab = "official",
-  fun = portion_df, ...)
+  alpha = 1, fun = portion_df, ...)
 
 geom_rsi(position = NULL, x = c("Antibiotic", "Interpretation"),
-  fill = "Interpretation", translate_ab = "official",
+  fill = "Interpretation", translate_ab = "official", alpha = 1,
   fun = portion_df)
 
 facet_rsi(facet = c("Interpretation", "Antibiotic"), ...)
@@ -37,6 +37,8 @@ theme_rsi()
 \item{facet}{variable to split plots by, either \code{"Interpretation"} (default) or \code{"Antibiotic"} or a grouping variable}
 
 \item{translate_ab}{a column name of the \code{\link{antibiotics}} data set to translate the antibiotic abbreviations into, using \code{\link{abname}}. Default behaviour is to translate to official names according to the WHO. Use \code{translate_ab = FALSE} to disable translation.}
+
+\item{alpha}{opacity of the fill colours}
 
 \item{fun}{function to transform \code{data}, either \code{\link{portion_df}} (default) or \code{\link{count_df}}}
 

@@ -1,13 +1,19 @@
 # 0.3.0.90xx (latest development version)
 
 #### New
-* Functions `count_R`, `count_IR`, `count_I`, `count_SI` and `count_S` to selectively count resistant or susceptibile isolates
+* Functions `count_R`, `count_IR`, `count_I`, `count_SI` and `count_S` to selectively count resistant or susceptible isolates
 * Function `is.rsi.eligible` to check for columns that have valid antimicrobial results, but do not have the `rsi` class yet. Transform the columns of your raw data with: `data %>% mutate_if(is.rsi.eligible, as.rsi)`
 
 #### Changed
 * Added parameters `minimum` and `as_percent` to `portion_df`
+* Support for quasiquotation in the functions series `count_*` and `portions_*`, and `n_rsi`. This allow to check for more than 2 vectors or columns.
+  * `septic_patients %>% select(amox, cipr) %>% count_R()`
+  * `septic_patients %>% portion_S(amcl)`
+  * `septic_patients %>% portion_S(amcl, gent)`
+  * `septic_patients %>% portion_S(amcl, gent, pita)`
 * Edited `ggplot_rsi` and `geom_rsi` so they can cope with `count_df`. The new `fun` parameter has value `portion_df` at default, but can be set to `count_df`.
-* Fix for `ggplot_rsi` when the `ggplot2` was not loaded
+* Fix for `ggplot_rsi` when the `ggplot2` package was not loaded
+* Added parameter `alpha` to `ggplot_rsi` and `geom_rsi`
 
 # 0.3.0 (latest stable version)
 **Published on CRAN: 2018-08-14**

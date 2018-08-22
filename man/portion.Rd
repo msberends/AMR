@@ -15,23 +15,21 @@
 Wickham H. \strong{Tidy Data.} The Journal of Statistical Software, vol. 59, 2014. \url{http://vita.had.co.nz/papers/tidy-data.html}
 }
 \usage{
-portion_R(ab1, ab2 = NULL, minimum = 30, as_percent = FALSE)
+portion_R(..., minimum = 30, as_percent = FALSE)
 
-portion_IR(ab1, ab2 = NULL, minimum = 30, as_percent = FALSE)
+portion_IR(..., minimum = 30, as_percent = FALSE)
 
-portion_I(ab1, minimum = 30, as_percent = FALSE)
+portion_I(..., minimum = 30, as_percent = FALSE)
 
-portion_SI(ab1, ab2 = NULL, minimum = 30, as_percent = FALSE)
+portion_SI(..., minimum = 30, as_percent = FALSE)
 
-portion_S(ab1, ab2 = NULL, minimum = 30, as_percent = FALSE)
+portion_S(..., minimum = 30, as_percent = FALSE)
 
 portion_df(data, translate_ab = getOption("get_antibiotic_names",
   "official"), minimum = 30, as_percent = FALSE)
 }
 \arguments{
-\item{ab1}{vector of antibiotic interpretations, they will be transformed internally with \code{\link{as.rsi}} if needed}
-
-\item{ab2}{like \code{ab}, a vector of antibiotic interpretations. Use this to calculate (the lack of) co-resistance: the probability where one of two drugs have a resistant or susceptible result. See Examples.}
+\item{...}{one or more vectors (or columns) with antibiotic interpretations. They will be transformed internally with \code{\link{as.rsi}} if needed. Use multiple columns to calculate (the lack of) co-resistance: the probability where one of two drugs have a resistant or susceptible result. See Examples.}
 
 \item{minimum}{minimal amount of available isolates. Any number lower than \code{minimum} will return \code{NA}. The default number of \code{30} isolates is advised by the CLSI as best practice, see Source.}
 
@@ -45,7 +43,7 @@ portion_df(data, translate_ab = getOption("get_antibiotic_names",
 Double or, when \code{as_percent = TRUE}, a character.
 }
 \description{
-These functions can be used to calculate the (co-)resistance of microbial isolates (i.e. percentage S, SI, I, IR or R). All functions can be used in \code{dplyr}s \code{\link[dplyr]{summarise}} and support grouped variables, see \emph{Examples}.
+These functions can be used to calculate the (co-)resistance of microbial isolates (i.e. percentage S, SI, I, IR or R). All functions support quasiquotation with pipes, can be used in \code{dplyr}s \code{\link[dplyr]{summarise}} and support grouped variables, see \emph{Examples}.
 
 \code{portion_R} and \code{portion_IR} can be used to calculate resistance, \code{portion_S} and \code{portion_SI} can be used to calculate susceptibility.\cr
 }
@@ -66,8 +64,10 @@ The old \code{\link{rsi}} function is still available for backwards compatibilit
   For two antibiotics:
   \out{<div style="text-align: center">}\figure{combi_therapy_2.png}\out{</div>}
   \cr
-  Theoretically for three antibiotics:
+  For three antibiotics:
   \out{<div style="text-align: center">}\figure{combi_therapy_3.png}\out{</div>}
+  \cr
+  And so on.
 }
 }
 \examples{
@@ -82,11 +82,13 @@ portion_IR(septic_patients$amox)
 portion_S(septic_patients$amox)
 portion_SI(septic_patients$amox)
 
-# Since n_rsi counts available isolates (and is used as denominator),
-# you can calculate back to count e.g. non-susceptible isolates:
-portion_IR(septic_patients$amox) * n_rsi(septic_patients$amox)
-
+# Do the above with pipes:
 library(dplyr)
+septic_patients \%>\% portion_R(amox)
+septic_patients \%>\% portion_IR(amox)
+septic_patients \%>\% portion_S(amox)
+septic_patients \%>\% portion_SI(amox)
+
 septic_patients \%>\%
   group_by(hospital_id) \%>\%
   summarise(p = portion_S(cipr),
@@ -102,16 +104,15 @@ septic_patients \%>\%
 
 # Calculate co-resistance between amoxicillin/clav acid and gentamicin,
 # so we can see that combination therapy does a lot more than mono therapy:
-portion_S(septic_patients$amcl) # S = 67.3\%
-n_rsi(septic_patients$amcl)     # n = 1570
+septic_patients \%>\% portion_S(amcl)       # S = 67.3\%
+septic_patients \%>\% n_rsi(amcl)           # n = 1570
 
-portion_S(septic_patients$gent) # S = 74.0\%
-n_rsi(septic_patients$gent)     # n = 1842
+septic_patients \%>\% portion_S(gent)       # S = 74.0\%
+septic_patients \%>\% n_rsi(gent)           # n = 1842
 
-with(septic_patients,
-     portion_S(amcl, gent))     # S = 92.1\%
-with(septic_patients,           # n = 1504
-     n_rsi(amcl, gent))
+septic_patients \%>\% portion_S(amcl, gent) # S = 92.1\%
+septic_patients \%>\% n_rsi(amcl, gent)     # n = 1504
+
 
 septic_patients \%>\%
   group_by(hospital_id) \%>\%

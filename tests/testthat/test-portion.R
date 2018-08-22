@@ -11,12 +11,19 @@ test_that("portions works", {
   expect_equal(portion_S(septic_patients$amox) + portion_I(septic_patients$amox),
                portion_SI(septic_patients$amox))
 
-  # pita+genta susceptibility around 98.09%
-  expect_equal(suppressWarnings(rsi(septic_patients$pita,
+  expect_equal(septic_patients %>% portion_S(amcl),
+               0.673,
+               tolerance = 0.001)
+  expect_equal(septic_patients %>% portion_S(amcl, gent),
+               0.921,
+               tolerance = 0.001)
+
+  # amcl+genta susceptibility around 92.1%
+  expect_equal(suppressWarnings(rsi(septic_patients$amcl,
                                     septic_patients$gent,
                                     interpretation = "S")),
-               0.9535,
-               tolerance = 0.0001)
+               0.9208777,
+               tolerance = 0.000001)
 
   # percentages
   expect_equal(septic_patients %>%
@@ -46,25 +53,19 @@ test_that("portions works", {
   expect_warning(portion_S(as.character(septic_patients$amcl)))
   expect_warning(portion_S(as.character(septic_patients$amcl,
                                              septic_patients$gent)))
-  expect_equal(n_rsi(as.character(septic_patients$amcl,
-                                  septic_patients$gent)),
+  expect_warning(n_rsi(as.character(septic_patients$amcl,
+                                    septic_patients$gent)))
+  expect_equal(suppressWarnings(n_rsi(as.character(septic_patients$amcl,
+                                                   septic_patients$gent))),
                1570)
 
-
   # check for errors
-  expect_error(portion_IR(septic_patients %>% select(amox, amcl)))
   expect_error(portion_IR("test", minimum = "test"))
   expect_error(portion_IR("test", as_percent = "test"))
-  expect_error(portion_I(septic_patients %>% select(amox, amcl)))
   expect_error(portion_I("test", minimum = "test"))
   expect_error(portion_I("test", as_percent = "test"))
   expect_error(portion_S("test", minimum = "test"))
   expect_error(portion_S("test", as_percent = "test"))
-  expect_error(portion_S(septic_patients %>% select(amox, amcl)))
-  expect_error(portion_S("R", septic_patients %>% select(amox, amcl)))
-  expect_error(n_rsi(septic_patients %>% select(amox, amcl)))
-  expect_error(n_rsi(septic_patients$amox, septic_patients %>% select(amox, amcl)))
-
 
   # check too low amount of isolates
   expect_identical(portion_R(septic_patients$amox, minimum = nrow(septic_patients) + 1),

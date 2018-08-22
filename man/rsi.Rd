@@ -8,9 +8,7 @@ rsi(ab1, ab2 = NULL, interpretation = "IR", minimum = 30,
   as_percent = FALSE, ...)
 }
 \arguments{
-\item{ab1}{vector of antibiotic interpretations, they will be transformed internally with \code{\link{as.rsi}} if needed}
-
-\item{ab2}{like \code{ab}, a vector of antibiotic interpretations. Use this to calculate (the lack of) co-resistance: the probability where one of two drugs have a resistant or susceptible result. See Examples.}
+\item{ab1, ab2}{vector (or column) with antibiotic interpretations. It will be transformed internally with \code{\link{as.rsi}} if needed.}
 
 \item{interpretation}{antimicrobial interpretation to check for}
 

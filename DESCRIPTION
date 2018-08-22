@@ -1,6 +1,6 @@
 Package: AMR
-Version: 0.3.0.9001
-Date: 2018-08-21
+Version: 0.3.0.9002
+Date: 2018-08-23
 Title: Antimicrobial Resistance Analysis
 Authors@R: c(
     person(
@@ -52,8 +52,8 @@ Imports:
     xml2 (>= 1.0.0),
     knitr (>= 1.0.0),
     readr,
-    rvest (>= 0.3.2),
-    tibble
+    rlang,
+    rvest (>= 0.3.2)
 Suggests:
     testthat (>= 1.0.2),
     covr (>= 3.0.1),

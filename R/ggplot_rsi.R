@@ -25,6 +25,7 @@
 #' @param fill variable to categorise using the plots legend, either \code{"Antibiotic"} (default) or \code{"Interpretation"} or a grouping variable
 #' @param facet variable to split plots by, either \code{"Interpretation"} (default) or \code{"Antibiotic"} or a grouping variable
 #' @param translate_ab a column name of the \code{\link{antibiotics}} data set to translate the antibiotic abbreviations into, using \code{\link{abname}}. Default behaviour is to translate to official names according to the WHO. Use \code{translate_ab = FALSE} to disable translation.
+#' @param alpha opacity of the fill colours
 #' @param fun function to transform \code{data}, either \code{\link{portion_df}} (default) or \code{\link{count_df}}
 #' @param ... other parameters passed on to \code{\link[ggplot2]{facet_wrap}}
 #' @details At default, the names of antibiotics will be shown on the plots using \code{\link{abname}}. This can be set with the option \code{get_antibiotic_names} (a logical value), so change it e.g. to \code{FALSE} with \code{options(get_antibiotic_names = FALSE)}.
@@ -113,6 +114,7 @@ ggplot_rsi <- function(data,
                        fill = "Interpretation",
                        facet = NULL,
                        translate_ab = "official",
+                       alpha = 1,
                        fun = portion_df,
                        ...) {
 
@@ -126,7 +128,7 @@ ggplot_rsi <- function(data,
   }
 
   p <- ggplot2::ggplot(data = data) +
-    geom_rsi(position = position, x = x, fill = fill, translate_ab = translate_ab, fun = fun) +
+    geom_rsi(position = position, x = x, fill = fill, translate_ab = translate_ab, alpha = alpha, fun = fun) +
     theme_rsi()
 
   if (fill == "Interpretation") {
@@ -151,6 +153,7 @@ geom_rsi <- function(position = NULL,
                      x = c("Antibiotic", "Interpretation"),
                      fill = "Interpretation",
                      translate_ab = "official",
+                     alpha = 1,
                      fun = portion_df)  {
 
   fun_name <- deparse(substitute(fun))
@@ -180,7 +183,7 @@ geom_rsi <- function(position = NULL,
 
   ggplot2::layer(geom = "bar", stat = "identity", position = position,
                  mapping = ggplot2::aes_string(x = x, y = y, fill = fill),
-                 data = fun, params = list())
+                 data = fun, params = list(alpha = alpha))
 
 }
 
