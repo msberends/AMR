@@ -22,6 +22,9 @@ test_that("counts work", {
                  pull(combination),
                c(192, 440, 184, 474))
 
+  expect_equal(septic_patients %>% select(amox, cipr) %>% count_df(translate_ab = "official") %>% nrow(),
+               6)
+
   # warning for speed loss
   expect_warning(count_R(as.character(septic_patients$amcl)))
   expect_warning(count_I(as.character(septic_patients$amcl)))

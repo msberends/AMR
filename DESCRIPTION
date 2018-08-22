@@ -52,7 +52,7 @@ Imports:
     xml2 (>= 1.0.0),
     knitr (>= 1.0.0),
     readr,
-    rlang,
+    rlang (>= 0.2.0),
     rvest (>= 0.3.2)
 Suggests:
     testthat (>= 1.0.2),

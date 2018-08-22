@@ -6,7 +6,7 @@
 
 #### Changed
 * Added parameters `minimum` and `as_percent` to `portion_df`
-* Support for quasiquotation in the functions series `count_*` and `portions_*`, and `n_rsi`. This allow to check for more than 2 vectors or columns.
+* Support for quasiquotation in the functions series `count_*` and `portions_*`, and `n_rsi`. This allows to check for more than 2 vectors or columns.
   * `septic_patients %>% select(amox, cipr) %>% count_R()`
   * `septic_patients %>% portion_S(amcl)`
   * `septic_patients %>% portion_S(amcl, gent)`
