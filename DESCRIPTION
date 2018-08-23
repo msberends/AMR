@@ -49,18 +49,19 @@ Imports:
     clipr,
     curl,
     dplyr (>= 0.7.0),
-    xml2 (>= 1.0.0),
+    hms,
     knitr (>= 1.0.0),
     readr,
     rlang (>= 0.2.0),
-    rvest (>= 0.3.2)
+    rvest (>= 0.3.2),
+    xml2 (>= 1.0.0)
 Suggests:
-    testthat (>= 1.0.2),
     covr (>= 3.0.1),
+    ggplot2,
     rmarkdown,
     rstudioapi,
-    tidyr,
-    ggplot2
+    testthat (>= 1.0.2),
+    tidyr
 VignetteBuilder: knitr
 URL: https://github.com/msberends/AMR
 BugReports: https://github.com/msberends/AMR/issues
