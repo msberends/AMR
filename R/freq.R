@@ -350,9 +350,17 @@ frequency_tbl <- function(x,
     mediandate <- x %>% median(na.rm = TRUE)
     median_days <- difftime(mediandate, mindate, units = 'auto') %>% as.double()
 
-    header <- header %>% paste0(markdown_line, '\nOldest:    ', mindate %>% format(formatdates) %>% trimws())
-    header <- header %>% paste0(markdown_line, '\nNewest:    ', maxdate %>% format(formatdates) %>% trimws(),
-                                ' (+', difftime(maxdate, mindate, units = 'auto') %>% as.double() %>% format(), ')')
+    if (formatdates == "%H:%M:%S") {
+      # hms
+      header <- header %>% paste0(markdown_line, '\nEarliest:  ', mindate %>% format(formatdates) %>% trimws())
+      header <- header %>% paste0(markdown_line, '\nLatest:    ', maxdate %>% format(formatdates) %>% trimws(),
+                                  ' (+', difftime(maxdate, mindate, units = 'mins') %>% as.double() %>% format(digits = digits), ' min.)')
+    } else {
+      # other date formats
+      header <- header %>% paste0(markdown_line, '\nOldest:    ', mindate %>% format(formatdates) %>% trimws())
+      header <- header %>% paste0(markdown_line, '\nNewest:    ', maxdate %>% format(formatdates) %>% trimws(),
+                                  ' (+', difftime(maxdate, mindate, units = 'auto') %>% as.double() %>% format(digits = digits), ')')
+    }
     header <- header %>% paste0(markdown_line, '\nMedian:    ', mediandate %>% format(formatdates) %>% trimws(),
                                 ' (~', percent(median_days / maxdate_days, round = 0), ')')
   }
@@ -490,6 +498,14 @@ print.frequency_tbl <- function(x, nmax = getOption("max.print.freq", default = 
   if (!missing(nmax)) {
     opt$nmax <- nmax
     opt$nmax.set <- TRUE
+  }
+  dots <- list(...)
+  if ("markdown" %in% names(dots)) {
+    if (dots$markdown == TRUE) {
+      opt$tbl_format <- "markdown"
+    } else {
+      opt$tbl_format <- "pandoc"
+    }
   }
 
   cat("Frequency table", title, "\n")

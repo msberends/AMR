@@ -23,11 +23,11 @@
 #' @param position position adjustment of bars, either \code{"stack"} (default when \code{fun} is \code{\link{portion_df}}) or \code{"dodge"} (default when \code{fun} is \code{\link{count_df}})
 #' @param x variable to show on x axis, either \code{"Antibiotic"} (default) or \code{"Interpretation"} or a grouping variable
 #' @param fill variable to categorise using the plots legend, either \code{"Antibiotic"} (default) or \code{"Interpretation"} or a grouping variable
+# @param params a list with parameters passed on to the new \code{geom_rsi} layer, like \code{alpha} and \code{width}
 #' @param facet variable to split plots by, either \code{"Interpretation"} (default) or \code{"Antibiotic"} or a grouping variable
 #' @param translate_ab a column name of the \code{\link{antibiotics}} data set to translate the antibiotic abbreviations into, using \code{\link{abname}}. Default behaviour is to translate to official names according to the WHO. Use \code{translate_ab = FALSE} to disable translation.
-#' @param alpha opacity of the fill colours
 #' @param fun function to transform \code{data}, either \code{\link{portion_df}} (default) or \code{\link{count_df}}
-#' @param ... other parameters passed on to \code{\link[ggplot2]{facet_wrap}}
+#' @param ... other parameters passed on to \code{geom_rsi}
 #' @details At default, the names of antibiotics will be shown on the plots using \code{\link{abname}}. This can be set with the option \code{get_antibiotic_names} (a logical value), so change it e.g. to \code{FALSE} with \code{options(get_antibiotic_names = FALSE)}.
 #'
 #' \strong{The functions}\cr
@@ -112,9 +112,9 @@ ggplot_rsi <- function(data,
                        position = NULL,
                        x = "Antibiotic",
                        fill = "Interpretation",
+                       # params = list(),
                        facet = NULL,
                        translate_ab = "official",
-                       alpha = 1,
                        fun = portion_df,
                        ...) {
 
@@ -128,7 +128,7 @@ ggplot_rsi <- function(data,
   }
 
   p <- ggplot2::ggplot(data = data) +
-    geom_rsi(position = position, x = x, fill = fill, translate_ab = translate_ab, alpha = alpha, fun = fun) +
+    geom_rsi(position = position, x = x, fill = fill, translate_ab = translate_ab, fun = fun, ...) +
     theme_rsi()
 
   if (fill == "Interpretation") {
@@ -141,7 +141,7 @@ ggplot_rsi <- function(data,
   }
 
   if (!is.null(facet)) {
-    p <- p + facet_rsi(facet = facet, ...)
+    p <- p + facet_rsi(facet = facet)
   }
 
   p
@@ -152,9 +152,10 @@ ggplot_rsi <- function(data,
 geom_rsi <- function(position = NULL,
                      x = c("Antibiotic", "Interpretation"),
                      fill = "Interpretation",
+                     # params = list(),
                      translate_ab = "official",
-                     alpha = 1,
-                     fun = portion_df)  {
+                     fun = portion_df,
+                     ...)  {
 
   fun_name <- deparse(substitute(fun))
   if (!fun_name %in% c("portion_df", "count_df", "fun")) {
@@ -173,32 +174,36 @@ geom_rsi <- function(position = NULL,
   }
 
   x <- x[1]
-  if (x %in% tolower(c('ab', 'antibiotic', 'abx', 'antibiotics'))) {
+  if (tolower(x) %in% tolower(c('ab', 'antibiotic', 'abx', 'antibiotics'))) {
     x <- "Antibiotic"
-  } else if (x %in% tolower(c('SIR', 'RSI', 'interpretation', 'interpretations', 'result'))) {
+  } else if (tolower(x) %in% tolower(c('SIR', 'RSI', 'interpretation', 'interpretations', 'result'))) {
     x <- "Interpretation"
   }
 
   options(get_antibiotic_names = translate_ab)
 
+  # if (!is.list(params)) {
+  #   params <- as.list(params)
+  # }
+
   ggplot2::layer(geom = "bar", stat = "identity", position = position,
                  mapping = ggplot2::aes_string(x = x, y = y, fill = fill),
-                 data = fun, params = list(alpha = alpha))
+                 data = fun, params = list(...))
 
 }
 
 #' @rdname ggplot_rsi
 #' @export
-facet_rsi <- function(facet = c("Interpretation", "Antibiotic"), ...) {
+facet_rsi <- function(facet = c("Interpretation", "Antibiotic")) {
 
   facet <- facet[1]
-  if (facet %in% tolower(c('SIR', 'RSI', 'interpretation', 'interpretations', 'result'))) {
+  if (tolower(facet) %in% tolower(c('SIR', 'RSI', 'interpretation', 'interpretations', 'result'))) {
     facet <- "Interpretation"
-  } else if (facet %in% tolower(c('ab', 'antibiotic', 'abx', 'antibiotics'))) {
+  } else if (tolower(facet) %in% tolower(c('ab', 'antibiotic', 'abx', 'antibiotics'))) {
     facet <- "Antibiotic"
   }
 
-  ggplot2::facet_wrap(facets = facet, scales = "free_x", ...)
+  ggplot2::facet_wrap(facets = facet, scales = "free_x")
 }
 
 #' @rdname ggplot_rsi

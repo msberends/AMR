@@ -85,4 +85,11 @@ test_that("first isolates work", {
                     info = TRUE),
       na.rm = TRUE),
     1501)
+
+  expect_message(septic_patients %>%
+                   mutate(specimen = "test") %>%
+                   mutate(first = first_isolate(., "date", "patient_id",
+                                                col_bactid = "bactid", col_specimen = "specimen",
+                                                filter_specimen = "something_unexisting")))
+  expect_error(first_isolate("date", "patient_id", col_bactid = "bactid"))
 })

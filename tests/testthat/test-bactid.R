@@ -6,9 +6,17 @@ test_that("as.bactid works", {
     c("ESCCOL", "HAEINF"))
 
   expect_equal(as.character(as.bactid("Escherichia coli")), "ESCCOL")
+  expect_equal(as.character(as.bactid("Escherichia  coli")), "ESCCOL")
+  expect_equal(as.character(as.bactid("Escherichia  species")), "ESC")
+  expect_equal(as.character(as.bactid(" ESCCOL ")), "ESCCOL")
+  expect_equal(as.character(as.bactid("klpn")), "KLEPNE")
+
   expect_equal(as.character(as.bactid("P. aer")), "PSEAER") # not Pasteurella aerogenes
 
   expect_equal(as.character(as.bactid("Negative rods")), "GNR")
+
+  # GLIMS
+  expect_equal(as.character(as.bactid("shiboy")), "SHIBOY")
 
   expect_equal(as.character(as.bactid("MRSE")), "STAEPI")
   expect_equal(as.character(as.bactid("VRE")), "ENC")

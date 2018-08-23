@@ -13,7 +13,7 @@
   * `septic_patients %>% portion_S(amcl, gent, pita)`
 * Edited `ggplot_rsi` and `geom_rsi` so they can cope with `count_df`. The new `fun` parameter has value `portion_df` at default, but can be set to `count_df`.
 * Fix for `ggplot_rsi` when the `ggplot2` package was not loaded
-* Added parameter `alpha` to `ggplot_rsi` and `geom_rsi`
+* Added possibility to set any parameter to `geom_rsi` (and `ggplot_rsi`) so you can set your own preferences
 
 # 0.3.0 (latest stable version)
 **Published on CRAN: 2018-08-14**

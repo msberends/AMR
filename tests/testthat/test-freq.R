@@ -9,6 +9,15 @@ test_that("frequency table works", {
   expect_equal(nrow(freq(septic_patients$date)),
                length(unique(septic_patients$date)))
 
+  expect_output(print(freq(septic_patients$age, nmax = Inf)))
+  expect_output(print(freq(septic_patients$age, nmax = NA)))
+  expect_output(print(freq(septic_patients$age, nmax = NULL)))
+  expect_output(print(freq(septic_patients$age, sort.count = FALSE)))
+  expect_output(print(freq(septic_patients$age, markdown = TRUE)))
+  expect_output(print(freq(septic_patients$age, markdown = TRUE), markdown = FALSE))
+  expect_output(print(freq(septic_patients$age, markdown = TRUE), markdown = TRUE))
+  expect_output(print(freq(septic_patients$age[0])))
+
   # character
   expect_output(print(freq(septic_patients$bactid)))
   # integer
@@ -21,6 +30,8 @@ test_that("frequency table works", {
   expect_output(print(freq(table(septic_patients$sex, septic_patients$age))))
   # rsi
   expect_output(print(freq(septic_patients$amcl)))
+  # hms
+  expect_output(print(freq(hms::as.hms(sample(c(0:86399), 50)))))
 
   library(dplyr)
   expect_output(septic_patients %>% select(1:2) %>% freq() %>% print())

@@ -259,20 +259,6 @@ as.bactid <- function(x, Becker = FALSE, Lancefield = FALSE) {
       }
     }
 
-    # let's try the ID's first
-    found <- AMR::microorganisms[which(AMR::microorganisms$bactid == x.backup[i]),]$bactid
-    if (length(found) > 0) {
-      x[i] <- found[1L]
-      next
-    }
-
-    # now try exact match
-    found <- AMR::microorganisms[which(AMR::microorganisms$fullname == x[i]),]$bactid
-    if (length(found) > 0) {
-      x[i] <- found[1L]
-      next
-    }
-
     # try any match keeping spaces
     found <- AMR::microorganisms[which(AMR::microorganisms$fullname %like% x_withspaces[i]),]$bactid
     if (length(found) > 0) {
