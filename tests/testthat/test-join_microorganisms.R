@@ -34,7 +34,7 @@ test_that("joins work", {
   expect_equal(nrow(semi_join_microorganisms("ESCCOL")), 1)
   expect_equal(nrow(anti_join_microorganisms("ESCCOL")), 0)
 
-  eexpect_warning(right_join_microorganisms("ESCCOL"))
-  eexpect_warning(full_join_microorganisms("ESCCOL"))
+  expect_warning(right_join_microorganisms("ESCCOL"))
+  expect_warning(full_join_microorganisms("ESCCOL"))
 
 })
