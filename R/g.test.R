@@ -79,11 +79,7 @@
 #' # by a single gene with two co-dominant alleles, you would expect a 1:2:1
 #' # ratio.
 #'
-#' x <- c(772, 1611, 737)
-#' E <- ratio(x, "1:2:1")
-#' E
-#' # 780 1560 780
-#'
+#' x <- c(772, 1611, 737)#'
 #' G <- g.test(x, p = c(1, 2, 1) / 4)
 #' # G$p.value = 0.12574.
 #'
@@ -228,30 +224,3 @@ g.test <- function(x,
                  observed = x, expected = E, residuals = (x - E)/sqrt(E),
                  stdres = (x - E)/sqrt(V)), class = "htest")
 }
-
-#' Transform vector to ratio
-#' @param x vector of values
-#' @param ratio vector with ratios of \code{x} and with same length (like \code{ratio = c(1, 2, 1)}) or a text with characters \code{":"}, \code{"-"} or \code{","} (like \code{ratio = "1:2:1"} or even \code{ratio = "1:2:1.25"})
-#' @export
-#' @seealso \code{\link{g.test}}
-#' @references McDonald, J.H. 2014. \strong{Handbook of Biological Statistics (3rd ed.)}. Sparky House Publishing, Baltimore, Maryland.
-#' @importFrom dplyr %>%
-#' @inherit g.test examples
-ratio <- function(x, ratio) {
-  if (!all(is.numeric(x))) {
-    stop('`x` must be a vector of numeric values.')
-  }
-  if (length(ratio) == 1) {
-    if (ratio %like% '^([0-9]+([.][0-9]+)?[-,:])+[0-9]+([.][0-9]+)?$') {
-      # support for "1:2:1", "1-2-1", "1,2,1" and even "1.75:2:1.5"
-      ratio <- ratio %>% base::strsplit("[-,:]") %>% base::unlist() %>% base::as.double()
-    } else {
-      stop('Invalid `ratio`: ', ratio, '.')
-    }
-  }
-  if (length(x) != length(ratio)) {
-    stop('`x` and `ratio` must be of same size.')
-  }
-  base::sum(x, na.rm = TRUE) * (ratio / base::sum(ratio, na.rm = TRUE))
-}
-

@@ -1,6 +1,8 @@
 context("freq.R")
 
 test_that("frequency table works", {
+  library(dplyr)
+
   expect_equal(nrow(freq(c(1, 1, 2, 2, 3, 3, 4, 4, 5, 5))), 5)
   expect_equal(nrow(frequency_tbl(c(1, 1, 2, 2, 3, 3, 4, 4, 5, 5))), 5)
 
@@ -9,6 +11,7 @@ test_that("frequency table works", {
   expect_equal(nrow(freq(septic_patients$date)),
                length(unique(septic_patients$date)))
 
+  expect_output(print(septic_patients %>% freq(age, nmax = Inf)))
   expect_output(print(freq(septic_patients$age, nmax = Inf)))
   expect_output(print(freq(septic_patients$age, nmax = NA)))
   expect_output(print(freq(septic_patients$age, nmax = NULL)))
@@ -31,7 +34,13 @@ test_that("frequency table works", {
   # rsi
   expect_output(print(freq(septic_patients$amcl)))
   # hms
-  expect_output(print(freq(hms::as.hms(sample(c(0:86399), 50)))))
+  expect_output(suppressWarnings(print(freq(hms::as.hms(sample(c(0:86399), 50))))))
+  # matrix
+  expect_output(print(freq(as.matrix(septic_patients$age))))
+  expect_output(print(freq(as.matrix(septic_patients[, c("age", "sex")]))))
+  # list
+  expect_output(print(freq(list(age = septic_patients$age))))
+  expect_output(print(freq(list(age = septic_patients$age, sex = septic_patients$sex))))
 
   library(dplyr)
   expect_output(septic_patients %>% select(1:2) %>% freq() %>% print())
@@ -94,5 +103,11 @@ test_that("frequency table works", {
                      class() %>%
                      .[1],
                    "tbl_df")
+
+  expect_error(septic_patients %>% freq(nonexisting))
+  expect_error(septic_patients %>% select(1:10) %>% freq())
+  expect_error(septic_patients %>% freq(peni, oxac, clox, amox, amcl,
+                                        ampi, pita, czol, cfep, cfur))
+
 })
 

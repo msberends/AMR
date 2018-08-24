@@ -110,11 +110,7 @@ If there are more than two categories and you want to find out which ones are si
 # by a single gene with two co-dominant alleles, you would expect a 1:2:1
 # ratio.
 
-x <- c(772, 1611, 737)
-E <- ratio(x, "1:2:1")
-E
-# 780 1560 780
-
+x <- c(772, 1611, 737)#'
 G <- g.test(x, p = c(1, 2, 1) / 4)
 # G$p.value = 0.12574.
 

@@ -16,7 +16,7 @@
 # GNU General Public License for more details.                         #
 # ==================================================================== #
 
-#' @importFrom dplyr %>% bind_cols pull
+#' @importFrom dplyr %>% pull
 rsi_calc <- function(...,
                      type,
                      include_I,
@@ -34,33 +34,36 @@ rsi_calc <- function(...,
     stop('`as_percent` must be logical', call. = FALSE)
   }
 
-  dots_length <- ...length()
-  dots <- ...elt(1) # it needs this evaluation
-  dots <- rlang::exprs(...) # or this will be a list without actual values
+  dots_df <- ...elt(1) # it needs this evaluation
+  dots <- base::eval(base::substitute(base::alist(...)))
+  ndots <- length(dots)
 
-  if ("data.frame" %in% class(dots[[1]]) & dots_length > 1) {
-    # data.frame passed with other columns, like:
-    #   septic_patients %>% portion_S(amcl, gent)
-    df <- dots[[1]]
-    dots_df <- data.frame(col1 = df[,1])
-    for (i in 2:dots_length) {
-      dots_col <- as.character(dots[[i]])
-      if (!dots_col %in% colnames(df)) {
-        stop("variable not found: ", dots_col)
-      }
-      dots_df <- dots_df %>% bind_cols(data.frame(df %>% pull(dots_col)))
+ if ("data.frame" %in% class(dots_df)) {
+   # data.frame passed with other columns, like:
+   #   septic_patients %>% portion_S(amcl, gent)
+   dots <- as.character(dots)
+   dots <- dots[dots != "."]
+    if (length(dots) == 0 | all(dots == "df")) {
+      # for complete data.frames, like septic_patients %>% select(amcl, gent) %>% portion_S()
+      # and the old rsi function, that has "df" as name of the first parameter
+      x <- dots_df
+    } else {
+      x <- dots_df[, dots]
     }
-    x <- dots_df[, -1]
-  } else if (dots_length == 1) {
-    # only 1 variable passed (count also be data.frame), like:
+  } else if (ndots == 1) {
+    # only 1 variable passed (can also be data.frame), like:
     #   portion_S(septic_patients$amcl)
     #   septic_patients$amcl %>% portion_S()
-    x <- dots[[1]]
+    x <- dots_df
   } else {
     # multiple variables passed without pipe, like:
     #   portion_S(septic_patients$amcl, septic_patients$gent)
-    #   with(septic_patients, portion_S(amcl, gent))
-    x <- as.data.frame(rlang::list2(...))
+    x <- NULL
+    try(x <- as.data.frame(dots), silent = TRUE)
+    if (is.null(x)) {
+      # support for: with(septic_patients, portion_S(amcl, gent))
+      x <- as.data.frame(rlang::list2(...))
+    }
   }
 
   print_warning <- FALSE

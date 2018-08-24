@@ -152,22 +152,39 @@ frequency_tbl <- function(x,
 
   mult.columns <- 0
 
+  x.name <- NULL
+  cols <- NULL
+  if (any(class(x) == 'list')) {
+    cols <- names(x)
+    x <- as.data.frame(x, stringsAsFactors = FALSE)
+    x.name <- "a list"
+  } else if (any(class(x) == 'matrix')) {
+    x <- as.data.frame(x, stringsAsFactors = FALSE)
+    x.name <- "a matrix"
+    cols <- colnames(x)
+    if (all(cols %like% 'V[0-9]')) {
+      cols <- NULL
+    }
+  }
+
   if (any(class(x) == 'data.frame')) {
-    x.name <- deparse(substitute(x))
+    if (is.null(x.name)) {
+      x.name <- deparse(substitute(x))
+    }
     if (x.name == ".") {
       x.name <- NULL
     }
     dots <- base::eval(base::substitute(base::alist(...)))
     ndots <- length(dots)
 
-    if (NROW(x) == 0) {
-      x <- NA
-    } else if (ndots > 0 & ndots < 10) {
+    if (ndots < 10) {
       cols <- as.character(dots)
       if (!all(cols %in% colnames(x))) {
         stop("one or more columns not found: `", paste(cols, collapse = "`, `"), '`', call. = FALSE)
       }
-      x <- x[, cols]
+      if (length(cols) > 0) {
+        x <- x[, cols]
+      }
     } else if (ndots >= 10) {
       stop('A maximum of 9 columns can be analysed at the same time.', call. = FALSE)
     } else {
@@ -296,10 +313,6 @@ frequency_tbl <- function(x,
     header <- header %>% paste0(markdown_line, 'Columns:   ', mult.columns)
   } else {
     header <- header %>% paste0(markdown_line, 'Class:     ', class(x) %>% rev() %>% paste(collapse = " > "))
-  }
-
-  if (is.list(x) | is.matrix(x) | is.environment(x) | is.function(x)) {
-    stop('frequency tables do not support lists, matrices, environments and functions.', call. = FALSE)
   }
 
   header <- header %>% paste0(markdown_line, '\nLength:    ', (NAs %>% length() + x %>% length()) %>% format(),
@@ -484,6 +497,10 @@ top_freq <- function(f, n) {
 print.frequency_tbl <- function(x, nmax = getOption("max.print.freq", default = 15), ...) {
 
   opt <- attr(x, 'opt')
+
+  if (length(opt$vars) == 0) {
+    opt$vars <- NULL
+  }
 
   if (!is.null(opt$data) & !is.null(opt$vars)) {
     title <- paste0("of `", paste0(opt$vars, collapse = "` and `"), "` from ", opt$data)

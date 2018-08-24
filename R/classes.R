@@ -240,9 +240,12 @@ as.mic <- function(x, na.rm = FALSE) {
     # remove all after last digit
     x <- gsub('[^0-9]+$', '', x)
     # remove last zeroes
-    x <- gsub('[.]?0+$', '', x)
+    x <- gsub('([.].?)0+$', '\\1', x)
     # force to be character
     x <- as.character(x)
+
+    # previously unempty values now empty - should return a warning later on
+    x[x.bak != "" & x == ""] <- "invalid"
 
     # these are alllowed MIC values and will become factor levels
     lvls <- c("<0.002", "<=0.002", "0.002", ">=0.002", ">0.002",
@@ -275,7 +278,7 @@ as.mic <- function(x, na.rm = FALSE) {
               "<0.25", "<=0.25", "0.25", ">=0.25", ">0.25",
               "<0.256", "<=0.256", "0.256", ">=0.256", ">0.256",
               "<0.28", "<=0.28", "0.28", ">=0.28", ">0.28",
-              "<0.30", "<=0.30", "0.30", ">=0.30", ">0.30",
+              "<0.3", "<=0.3", "0.3", ">=0.3", ">0.3",
               "<0.32", "<=0.32", "0.32", ">=0.32", ">0.32",
               "<0.36", "<=0.36", "0.36", ">=0.36", ">0.36",
               "<0.38", "<=0.38", "0.38", ">=0.38", ">0.38",

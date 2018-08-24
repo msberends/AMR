@@ -2,9 +2,12 @@
 
 #### New
 * Functions `count_R`, `count_IR`, `count_I`, `count_SI` and `count_S` to selectively count resistant or susceptible isolates
+  * New function `count_df` to get all counts of S, I and R of a data set with antibiotic columns, with support for grouped variables
 * Function `is.rsi.eligible` to check for columns that have valid antimicrobial results, but do not have the `rsi` class yet. Transform the columns of your raw data with: `data %>% mutate_if(is.rsi.eligible, as.rsi)`
 
 #### Changed
+* Removed function `ratio`
+* Fix in `as.mic` for values ending in zeroes after a real number
 * Added parameters `minimum` and `as_percent` to `portion_df`
 * Support for quasiquotation in the functions series `count_*` and `portions_*`, and `n_rsi`. This allows to check for more than 2 vectors or columns.
   * `septic_patients %>% select(amox, cipr) %>% count_R()`
@@ -14,6 +17,19 @@
 * Edited `ggplot_rsi` and `geom_rsi` so they can cope with `count_df`. The new `fun` parameter has value `portion_df` at default, but can be set to `count_df`.
 * Fix for `ggplot_rsi` when the `ggplot2` package was not loaded
 * Added possibility to set any parameter to `geom_rsi` (and `ggplot_rsi`) so you can set your own preferences
+* Support for types list and matrix for `freq`
+  ```r
+  my_matrix = with(septic_patients, matrix(c(age, sex), ncol = 2))
+  freq(my_matrix)
+  ```
+  * Subsetting also possible for lists:
+    ```r
+    my_list = list(age = septic_patients$age, sex = septic_patients$sex)
+    my_list %>% freq(age)
+    ```
+    
+#### Other
+* More unit tests to ensure better integrity of functions
 
 # 0.3.0 (latest stable version)
 **Published on CRAN: 2018-08-14**

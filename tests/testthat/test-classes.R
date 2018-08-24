@@ -28,8 +28,14 @@ test_that("mic works", {
   expect_true(is.mic(as.mic(8)))
 
   expect_equal(as.double(as.mic(">=32")), 32)
+  expect_equal(as.numeric(as.mic(">=32")), 32)
   expect_equal(as.integer(as.mic(">=32")), 32)
   expect_equal(suppressWarnings(as.logical(as.mic("INVALID VALUE"))), NA)
+
+  # all levels should be valid MICs
+  expect_silent(as.mic(levels(as.mic(1))))
+
+  expect_warning(as.mic("INVALID VALUE"))
 
   # print plots, should not raise errors
   barplot(as.mic(c(1, 2, 4, 8)))
