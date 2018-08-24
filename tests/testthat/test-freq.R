@@ -51,6 +51,7 @@ test_that("frequency table works", {
   expect_output(septic_patients %>% select(1:7) %>% freq() %>% print())
   expect_output(septic_patients %>% select(1:8) %>% freq() %>% print())
   expect_output(septic_patients %>% select(1:9) %>% freq() %>% print())
+  expect_output(print(freq(septic_patients$age), nmax = 20))
 
   # top 5
   expect_equal(

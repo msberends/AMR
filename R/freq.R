@@ -413,11 +413,9 @@ frequency_tbl <- function(x,
   df <- df %>% summarise(count = n())
 
   if (df$item %>% paste(collapse = ',') %like% '\033') {
-    df <- df %>%
-      mutate(item = item %>%
-               # remove escape char
-               # see https://en.wikipedia.org/wiki/Escape_character#ASCII_escape_character
-               gsub('\033', ' ', ., fixed = TRUE))
+    # remove escape char
+    # see https://en.wikipedia.org/wiki/Escape_character#ASCII_escape_character
+    df <- df %>% mutate(item = item %>% gsub('\033', ' ', ., fixed = TRUE))
   }
 
   # sort according to setting

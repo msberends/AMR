@@ -26,6 +26,7 @@
     ```r
     my_list = list(age = septic_patients$age, sex = septic_patients$sex)
     my_list %>% freq(age)
+    my_list %>% freq(sex)
     ```
     
 #### Other
@@ -53,8 +54,8 @@
   * New Lancefield classification for *Streptococcus* to categorise them into Lancefield groups
 * For convience, new descriptive statistical functions `kurtosis` and `skewness` that are lacking in base R - they are generic functions and have support for vectors, data.frames and matrices
 * Function `g.test` to perform the Χ<sup>2</sup> distributed [*G*-test](https://en.wikipedia.org/wiki/G-test), which use is the same as `chisq.test`
-* Function `ratio` to transform a vector of values to a preset ratio
-  * For example: `ratio(c(10, 500, 10), ratio = "1:2:1")` would return `130, 260, 130`
+* ~~Function `ratio` to transform a vector of values to a preset ratio~~
+  * ~~For example: `ratio(c(10, 500, 10), ratio = "1:2:1")` would return `130, 260, 130`~~
 * Support for Addins menu in RStudio to quickly insert `%in%` or `%like%` (and give them keyboard shortcuts), or to view the datasets that come with this package
 * Function `p.symbol` to transform p values to their related symbols: `0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1`
 * Functions `clipboard_import` and `clipboard_export` as helper functions to quickly copy and paste from/to software like Excel and SPSS. These functions use the `clipr` package, but are a little altered to also support headless Linux servers (so you can use it in RStudio Server)
