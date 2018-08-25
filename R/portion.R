@@ -251,3 +251,48 @@ portion_df <- function(data,
 
   res
 }
+
+
+#' Calculate resistance of isolates
+#'
+#' This function is deprecated. Use the \code{\link{portion}} functions instead.
+#' @inheritParams portion
+#' @param ab1,ab2  vector (or column) with antibiotic interpretations. It will be transformed internally with \code{\link{as.rsi}} if needed.
+#' @param interpretation antimicrobial interpretation to check for
+#' @param ... deprecated parameters to support usage on older versions
+#' @importFrom dplyr tibble case_when
+#' @export
+rsi <- function(ab1,
+                ab2 = NULL,
+                interpretation = "IR",
+                minimum = 30,
+                as_percent = FALSE,
+                ...) {
+
+  if (all(is.null(ab2))) {
+    df <- tibble(ab1 = ab1)
+  } else {
+    df <- tibble(ab1 = ab1,
+                 ab2 = ab2)
+  }
+
+  result <- case_when(
+    interpretation == "S"             ~ portion_S(df, minimum = minimum, as_percent = FALSE),
+    interpretation %in% c("SI", "IS") ~ portion_SI(df, minimum = minimum, as_percent = FALSE),
+    interpretation == "I"             ~ portion_I(df, minimum = minimum, as_percent = FALSE),
+    interpretation %in% c("RI", "IR") ~ portion_IR(df, minimum = minimum, as_percent = FALSE),
+    interpretation == "R"             ~ portion_R(df, minimum = minimum, as_percent = FALSE),
+    TRUE ~ -1
+  )
+  if (result == -1) {
+    stop("invalid interpretation")
+  }
+
+  .Deprecated(new = paste0("portion_", interpretation))
+
+  if (as_percent == TRUE) {
+    percent(result, force_zero = TRUE)
+  } else {
+    result
+  }
+}

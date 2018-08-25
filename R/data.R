@@ -22,7 +22,7 @@
 #' @format A data.frame with 420 observations and 18 variables:
 #' \describe{
 #'   \item{\code{atc}}{ATC code, like \code{J01CR02}}
-#'   \item{\code{molis}}{MOLIS code, like \code{amcl}}
+#'   \item{\code{certe}}{Certe code, like \code{amcl}}
 #'   \item{\code{umcg}}{UMCG code, like \code{AMCL}}
 #'   \item{\code{abbr}}{Abbreviation as used by many countries, to be used for \code{\link{guess_atc}}}
 #'   \item{\code{official}}{Official name by the WHO, like \code{"Amoxicillin and enzyme inhibitor"}}
@@ -42,6 +42,25 @@
 #' }
 #' @source - World Health Organization: \url{https://www.whocc.no/atc_ddd_index/} \cr - EUCAST - Expert rules intrinsic exceptional V3.1 \cr - MOLIS (LIS of Certe): \url{https://www.certe.nl} \cr - GLIMS (LIS of UMCG): \url{https://www.umcg.nl}
 #' @seealso \code{\link{microorganisms}}
+# use this later to further fill AMR::antibiotics
+# drug <- "Ciprofloxacin"
+# url <- xml2::read_html(paste0("https://www.ncbi.nlm.nih.gov/pccompound?term=", drug)) %>%
+#   html_nodes(".rslt") %>%
+#   .[[1]] %>%
+#   html_nodes(".title a") %>%
+#   html_attr("href") %>%
+#   gsub("/compound/", "/rest/pug_view/data/compound/", ., fixed = TRUE) %>%
+#   paste0("/XML/?response_type=display")
+# synonyms <- url %>%
+#   read_xml() %>%
+#   xml_contents() %>% .[[6]] %>%
+#   xml_contents() %>% .[[8]] %>%
+#   xml_contents() %>% .[[3]] %>%
+#   xml_contents() %>% .[[3]] %>%
+#   xml_contents() %>%
+#   paste() %>%
+#   .[. %like% "StringValueList"] %>%
+#   gsub("[</]+StringValueList[>]", "", .)
 # abbr and trade_name created with:
 # https://hs.unr.edu/Documents/dhs/chs/NVPHTC/antibiotic_refeference_guide.pdf
 # antibiotics %>%

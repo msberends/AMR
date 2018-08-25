@@ -16,6 +16,185 @@
 # GNU General Public License for more details.                         #
 # ==================================================================== #
 
+
+#' Find ATC code based on antibiotic property
+#'
+#' Use this function to determine the ATC code of one or more antibiotics. The dataset \code{\link{antibiotics}} will be searched for abbreviations, official names and trade names.
+#' @param x character vector to determine \code{ATC} code
+#' @rdname as.atc
+#' @aliases atc
+#' @keywords atc
+#' @export
+#' @importFrom dplyr %>% filter slice pull
+#' @details In the ATC classification system, the active substances are classified in a hierarchy with five different levels.  The system has fourteen main anatomical/pharmacological groups or 1st levels. Each ATC main group is divided into 2nd levels which could be either pharmacological or therapeutic groups.  The 3rd and 4th levels are chemical, pharmacological or therapeutic subgroups and the 5th level is the chemical substance.  The 2nd, 3rd and 4th levels are often used to identify pharmacological subgroups when that is considered more appropriate than therapeutic or chemical subgroups.
+#'   Source: \url{https://www.whocc.no/atc/structure_and_principles/}
+#' @return Character (vector) with class \code{"act"}. Unknown values will return \code{NA}.
+#' @seealso \code{\link{antibiotics}} for the dataframe that is being used to determine ATC's.
+#' @examples
+#' # These examples all return "J01FA01", the ATC code of Erythromycin:
+#' as.atc("J01FA01")
+#' as.atc("Erythromycin")
+#' as.atc("eryt")
+#' as.atc("ERYT")
+#' as.atc("ERY")
+#' as.atc("Erythrocin") # Trade name
+#' as.atc("Eryzole")    # Trade name
+#' as.atc("Pediamycin") # Trade name
+as.atc <- function(x) {
+
+  x.new <- rep(NA_character_, length(x))
+  x.bak <- x
+  x <- unique(x[!is.na(x)])
+  failures <- character(0)
+
+  for (i in 1:length(x)) {
+    fail <- TRUE
+
+    # first try atc
+    found <- AMR::antibiotics[which(AMR::antibiotics$atc == x[i]),]$atc
+    if (length(found) > 0) {
+      fail <- FALSE
+      x.new[is.na(x.new) & x.bak == x[i]] <- found[1L]
+    }
+
+    # try abbreviation of certe and glims
+    found <- AMR::antibiotics[which(tolower(AMR::antibiotics$certe) == tolower(x[i])),]$atc
+    if (length(found) > 0) {
+      fail <- FALSE
+      x.new[is.na(x.new) & x.bak == x[i]] <- found[1L]
+    }
+    found <- AMR::antibiotics[which(tolower(AMR::antibiotics$umcg) == tolower(x[i])),]$atc
+    if (length(found) > 0) {
+      fail <- FALSE
+      x.new[is.na(x.new) & x.bak == x[i]] <- found[1L]
+    }
+
+    # try exact official name
+    found <- AMR::antibiotics[which(tolower(AMR::antibiotics$official) == tolower(x[i])),]$atc
+    if (length(found) > 0) {
+      fail <- FALSE
+      x.new[is.na(x.new) & x.bak == x[i]] <- found[1L]
+    }
+
+    # try trade name
+    found <- AMR::antibiotics[which(paste0("(", AMR::antibiotics$trade_name, ")") %like% x[i]),]$atc
+    if (length(found) > 0) {
+      fail <- FALSE
+      x.new[is.na(x.new) & x.bak == x[i]] <- found[1L]
+    }
+
+    # try abbreviation
+    found <- AMR::antibiotics[which(paste0("(", AMR::antibiotics$abbr, ")") %like% x[i]),]$atc
+    if (length(found) > 0) {
+      fail <- FALSE
+      x.new[is.na(x.new) & x.bak == x[i]] <- found[1L]
+    }
+
+    # not found
+    if (fail == TRUE) {
+      failures <- c(failures, x[i])
+    }
+  }
+
+  failures <- failures[!failures %in% c(NA, NULL, NaN)]
+  if (length(failures) > 0) {
+    warning("These values could not be coerced to a valid atc: ",
+            paste('"', unique(failures), '"', sep = "", collapse = ', '),
+            ".",
+            call. = FALSE)
+  }
+  class(x.new) <- "atc"
+  attr(x.new, 'package') <- 'AMR'
+  x.new
+}
+
+#' @rdname as.atc
+#' @export
+guess_atc <- as.atc
+
+#' @rdname as.atc
+#' @export
+is.atc <- function(x) {
+  identical(class(x), "atc")
+}
+
+
+#' @exportMethod print.atc
+#' @export
+#' @noRd
+print.atc <- function(x, ...) {
+  cat("Class 'atc'\n")
+  print.default(as.character(x), quote = FALSE)
+}
+
+#' @exportMethod as.data.frame.atc
+#' @export
+#' @noRd
+as.data.frame.atc <- function (x, ...) {
+  # same as as.data.frame.character but with removed stringsAsFactors
+  nm <- paste(deparse(substitute(x), width.cutoff = 500L),
+              collapse = " ")
+  if (!"nm" %in% names(list(...))) {
+    as.data.frame.vector(x, ..., nm = nm)
+  } else {
+    as.data.frame.vector(x, ...)
+  }
+}
+
+#' @exportMethod pull.atc
+#' @export
+#' @importFrom dplyr pull
+#' @noRd
+pull.atc <- function(.data, ...) {
+  pull(as.data.frame(.data), ...)
+}
+
+atc_get_property <- function(atc, param) {
+  if (!is.atc(atc)) {
+    atc <- as.atc(atc)
+  }
+  suppressWarnings(
+    data.frame(atc = atc, stringsAsFactors = FALSE) %>%
+      left_join(AMR::antibiotics, by = "atc") %>%
+      pull(param)
+  )
+}
+
+#' Get antibiotic property based on ATC
+#'
+#' Use these functions to return a specific property of an antibiotic from the \code{\link{antibiotics}} data set, based on their ATC code.
+#' @param atc a valid ATC code, created with \code{\link{as.atc}}
+#' @rdname atc.property
+#' @name atc.property
+#' @export
+atc.official <- function(atc) {
+  atc_get_property(atc, "official")
+}
+
+#' @rdname atc.property
+#' @export
+atc.official_nl <- function(atc) {
+  atc_get_property(atc, "official_nl")
+}
+
+#' @rdname atc.property
+#' @export
+atc.trivial_nl <- function(atc) {
+  atc_get_property(atc, "trivial_nl")
+}
+
+#' @rdname atc.property
+#' @export
+atc.certe <- function(atc) {
+  atc_get_property(atc, "certe")
+}
+
+#' @rdname atc.property
+#' @export
+atc.umcg <- function(atc) {
+  atc_get_property(atc, "umcg")
+}
+
 #' Properties of an ATC code
 #'
 #' Gets data from the WHO to determine properties of an ATC (e.g. an antibiotic) like name, defined daily dose (DDD) or standard unit. \cr \strong{This function requires an internet connection.}
@@ -203,87 +382,3 @@ atc_ddd <- function(atc_code, ...) {
   atc_property(atc_code = atc_code, property = "ddd", ...)
 }
 
-
-#' Find ATC code based on antibiotic property
-#'
-#' Use this function to determine the ATC code of one or more antibiotics. The dataset \code{\link{antibiotics}} will be searched for abbreviations, official names and trade names.
-#' @param x character vector to determine \code{ATC} code
-#' @export
-#' @importFrom dplyr %>% filter slice pull
-#' @details In the ATC classification system, the active substances are classified in a hierarchy with five different levels.  The system has fourteen main anatomical/pharmacological groups or 1st levels.  Each ATC main group is divided into 2nd levels which could be either pharmacological or therapeutic groups.  The 3rd and 4th levels are chemical, pharmacological or therapeutic subgroups and the 5th level is the chemical substance.  The 2nd, 3rd and 4th levels are often used to identify pharmacological subgroups when that is considered more appropriate than therapeutic or chemical subgroups.
-#'   Source: \url{https://www.whocc.no/atc/structure_and_principles/}
-#' @return Character (vector).
-#' @seealso \code{\link{antibiotics}} for the dataframe that is being used to determine ATC's.
-#' @examples
-#' # These examples all return "J01FA01", the ATC code of Erythromycin:
-#' guess_atc("J01FA01")
-#' guess_atc("Erythromycin")
-#' guess_atc("eryt")
-#' guess_atc("ERYT")
-#' guess_atc("ERY")
-#' guess_atc("Erythrocin") # Trade name
-#' guess_atc("Eryzole")    # Trade name
-#' guess_atc("Pediamycin") # Trade name
-guess_atc <- function(x) {
-
-  # use this later to further fill AMR::antibiotics
-
-  # drug <- "Ciprofloxacin"
-  # url <- xml2::read_html(paste0("https://www.ncbi.nlm.nih.gov/pccompound?term=", drug)) %>%
-  #   html_nodes(".rslt") %>%
-  #   .[[1]] %>%
-  #   html_nodes(".title a") %>%
-  #   html_attr("href") %>%
-  #   gsub("/compound/", "/rest/pug_view/data/compound/", ., fixed = TRUE) %>%
-  #   paste0("/XML/?response_type=display")
-  # synonyms <- url %>%
-  #   read_xml() %>%
-  #   xml_contents() %>% .[[6]] %>%
-  #   xml_contents() %>% .[[8]] %>%
-  #   xml_contents() %>% .[[3]] %>%
-  #   xml_contents() %>% .[[3]] %>%
-  #   xml_contents() %>%
-  #   paste() %>%
-  #   .[. %like% "StringValueList"] %>%
-  #   gsub("[</]+StringValueList[>]", "", .)
-
-
-  for (i in 1:length(x)) {
-
-    # first try atc
-    found <- AMR::antibiotics %>% filter(atc == x[i])
-
-    if (nrow(found) == 0) {
-      # try abbreviation of molis and glims
-      found <- AMR::antibiotics %>% filter(tolower(molis) == tolower(x[i]) | tolower(umcg) == tolower(x[i]))
-    }
-
-    if (nrow(found) == 0) {
-      # try exact official name
-      found <- AMR::antibiotics[which(tolower(AMR::antibiotics$official) == tolower(x[i])),]
-    }
-
-    if (nrow(found) == 0) {
-      # try trade name
-      found <- AMR::antibiotics[which(paste0("(", AMR::antibiotics$trade_name, ")") %like% x[i]),]
-    }
-
-    if (nrow(found) == 0) {
-      # try abbreviation
-      found <- AMR::antibiotics[which(paste0("(", AMR::antibiotics$abbr, ")") %like% x[i]),]
-    }
-    # if (nrow(found) == 0) {
-    #   # loosely try official name
-    #   found <- AMR::antibiotics[which(AMR::antibiotics$official %like% x[i]),]
-    # }
-
-    if (nrow(found) != 0) {
-      x[i] <- found %>%
-        slice(1) %>%
-        pull(atc)
-    } else {
-      x[i] <- NA
-    }
-  }
-  x
-}

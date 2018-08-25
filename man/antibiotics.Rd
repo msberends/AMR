@@ -7,7 +7,7 @@
 \format{A data.frame with 420 observations and 18 variables:
 \describe{
   \item{\code{atc}}{ATC code, like \code{J01CR02}}
-  \item{\code{molis}}{MOLIS code, like \code{amcl}}
+  \item{\code{certe}}{Certe code, like \code{amcl}}
   \item{\code{umcg}}{UMCG code, like \code{AMCL}}
   \item{\code{abbr}}{Abbreviation as used by many countries, to be used for \code{\link{guess_atc}}}
   \item{\code{official}}{Official name by the WHO, like \code{"Amoxicillin and enzyme inhibitor"}}

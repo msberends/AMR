@@ -108,3 +108,16 @@ test_that("as.bactid works", {
                NA_character_)
 
 })
+
+test_that("bactid.property works", {
+  expect_equal(bactid.family("E. coli"), "Enterobacteriaceae")
+  expect_equal(bactid.genus("E. coli"), "Escherichia")
+  expect_equal(bactid.species("E. coli"), "coli")
+  expect_equal(bactid.subspecies("E. coli"), NA_character_)
+  expect_equal(bactid.fullname("E. coli"), "Escherichia coli")
+  expect_equal(bactid.type("E. coli"), "Bacteria")
+  expect_equal(bactid.gramstain("E. coli"), "Negative rods")
+  expect_equal(bactid.aerobic("E. coli"), TRUE)
+  expect_equal(bactid.type_nl("E. coli"), "Bacterie")
+  expect_equal(bactid.gramstain_nl("E. coli"), "Negatieve staven")
+})

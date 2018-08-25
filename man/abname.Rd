@@ -7,24 +7,24 @@
 \code{\link{antibiotics}}
 }
 \usage{
-abname(abcode, from = c("guess", "atc", "molis", "umcg"),
+abname(abcode, from = c("guess", "atc", "certe", "umcg"),
   to = "official", textbetween = " + ", tolower = FALSE)
 }
 \arguments{
 \item{abcode}{a code or name, like \code{"AMOX"}, \code{"AMCL"} or \code{"J01CA04"}}
 
-\item{from, to}{type to transform from and to. See \code{\link{antibiotics}} for its column names. WIth \code{from = "guess"} the from will be guessed from \code{"atc"}, \code{"molis"} and \code{"umcg"}. When using \code{to = "atc"}, the ATC code will be searched using \code{\link{guess_atc}}.}
+\item{from, to}{type to transform from and to. See \code{\link{antibiotics}} for its column names. WIth \code{from = "guess"} the from will be guessed from \code{"atc"}, \code{"certe"} and \code{"umcg"}. When using \code{to = "atc"}, the ATC code will be searched using \code{\link{as.atc}}.}
 
 \item{textbetween}{text to put between multiple returned texts}
 
 \item{tolower}{return output as lower case with function \code{\link{tolower}}.}
 }
 \description{
-Convert antibiotic codes (from a laboratory information system like MOLIS or GLIMS) to a (trivial) antibiotic name or ATC code, or vice versa. This uses the data from \code{\link{antibiotics}}.
+Convert antibiotic codes to a (trivial) antibiotic name or ATC code, or vice versa. This uses the data from \code{\link{antibiotics}}.
 }
 \examples{
 abname("AMCL")
-# "amoxicillin and enzyme inhibitor"
+# "Amoxicillin and beta-lactamase inhibitor"
 
 # It is quite flexible at default (having `from = "guess"`)
 abname(c("amox", "J01CA04", "Trimox", "dispermox", "Amoxil"))
@@ -47,6 +47,10 @@ abname("AMCL", to = "atc")
 # specific codes for University Medical Center Groningen (UMCG):
 abname("J01CR02", from = "atc", to = "umcg")
 # "AMCL"
+
+# specific codes for Certe:
+abname("J01CR02", from = "atc", to = "certe")
+# "amcl"
 }
 \keyword{ab}
 \keyword{antibiotics}

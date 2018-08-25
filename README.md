@@ -3,7 +3,7 @@
 
 This R package was created for academic research by PhD students of the Faculty of Medical Sciences of the [University of Groningen](https://www.rug.nl) and the Medical Microbiology & Infection Prevention (MMBI) department of the [University Medical Center Groningen (UMCG)](https://www.umcg.nl).
 
-:arrow_forward: Download it with `install.packages("AMR")` or see below for other possibilities.
+:arrow_forward: Get it with `install.packages("AMR")` or see below for other possibilities. Read all changes and new functions in [NEWS.md](NEWS.md).
 
 ## Authors
 <a href="https://orcid.org/0000-0001-7620-1800"><img src="https://cran.r-project.org/web/orcid.svg" height="16px"></a> Matthijs S. Berends<sup>1,2,a</sup>,
@@ -40,31 +40,31 @@ Erwin E.A. Hassing<sup>2</sup>,
 ## Why this package?
 This R package was intended to make microbial epidemiology easier. Most functions contain extensive help pages to get started.
 
-With `AMR` you can:
-* Calculate the resistance (and even co-resistance) of microbial isolates with the `portion_R`, `portion_IR`, `portion_I`, `portion_SI` and `portion_S` functions, that can also be used with the `dplyr` package (e.g. in conjunction with `summarise`)
-* Plot AMR results with `geom_rsi`, a function made for the `ggplot2` package
-* Predict antimicrobial resistance for the nextcoming years using logistic regression models with the `resistance_predict` function
-* Apply [EUCAST rules to isolates](http://www.eucast.org/expert_rules_and_intrinsic_resistance/) with the `EUCAST_rules` function
-* Identify first isolates of every patient [using guidelines from the CLSI](https://clsi.org/standards/products/microbiology/documents/m39/) (Clinical and Laboratory Standards Institute) with the `first_isolate` function
-  * You can also identify first *weighted* isolates of every patient, an adjusted version of the CLSI guideline. This takes into account key antibiotics of every strain and compares them. The following 12 antibiotics will be used as key antibiotics at default:
-    * Universal: amoxicillin, amoxicillin/clavlanic acid, cefuroxime, piperacillin/tazobactam, ciprofloxacin,  trimethoprim/sulfamethoxazole
-    * Specific for Gram-positives: vancomycin, teicoplanin, tetracycline, erythromycin, oxacillin, rifampicin
-    * Specific for Gram-negatives: gentamicin, tobramycin, colistin, cefotaxime, ceftazidime, meropenem
-* Categorise *Staphylococci* into Coagulase Negative *Staphylococci* (CoNS) and Coagulase Positve *Staphylococci* (CoPS) according to [Karsten Becker *et al.*](https://www.ncbi.nlm.nih.gov/pmc/articles/pmid/25278577/)
-* Categorise *Streptococci* into Lancefield groups
-* Get antimicrobial ATC properties from the WHO Collaborating Centre for Drug Statistics Methodology ([WHOCC](https://www.whocc.no/atc_ddd_methodology/who_collaborating_centre/)), to be able to:
-  * Translate antibiotic codes (like *AMOX*), official names (like *amoxicillin*) and even trade names (like *Amoxil* or *Trimox*) to an [ATC code](https://www.whocc.no/atc_ddd_index/?code=J01CA04&showdescription=no) (like *J01CA04*) and vice versa with the `abname` function
-  * Get the latest antibiotic properties like hierarchic groups and [defined daily dose](https://en.wikipedia.org/wiki/Defined_daily_dose) (DDD) with units and administration form from the WHOCC website with the `atc_property` function
-* Conduct descriptive statistics: calculate kurtosis, skewness and create frequency tables
+This `AMR` package basically does four important things:
 
-And it contains:
-* A recent data set with ~2500 human pathogenic microorganisms, including family, genus, species, gram stain and aerobic/anaerobic
-* A recent data set with all antibiotics as defined by the [WHOCC](https://www.whocc.no/atc_ddd_methodology/who_collaborating_centre/), including ATC code, official name and DDD's
-* An example data set `septic_patients`, consisting of 2000 blood culture isolates from anonymised septic patients between 2001 and 2017.
+1. It **cleanses existing data**, by transforming it to reproducible and profound *classes*, making the most efficient use of R. These function all use artificial intelligence to get expected results:
 
-With the `MDRO` function (abbreviation of Multi Drug Resistant Organisms), you can check your isolates for exceptional resistance with country-specific guidelines or EUCAST rules. Currently guidelines for Germany and the Netherlands are supported. Please suggest addition of your own country here: [https://github.com/msberends/AMR/issues/new](https://github.com/msberends/AMR/issues/new?title=New%20guideline%20for%20MDRO&body=%3C--%20Please%20add%20your%20country%20code,%20guideline%20name,%20version%20and%20source%20below%20and%20remove%20this%20line--%3E).
+   * Use `as.bactid` to get an ID of a microorganism. It takes almost any text as input that looks like the name or code of a microorganism like "E. coli", "esco" and "esccol". Moreover, it can group all coagulase negative and positive *Staphylococci*, and can transform *Streptococci* into Lancefield groups. This package has a database of ~2500 different (potential) human pathogenic microorganisms.
+   * Use `as.rsi` to transform values to valid antimicrobial results. It produces just S, I or R based on your input and warns about invalid values. Even values like "<=0.002; S" (combined MIC/RSI) will result in "S".
+   * Use `as.mic` to cleanse your MIC values. It produces a so-called factor (in SPSS calls this *ordinal*) with valid MIC values as levels. A value like "<=0.002; S" (combined MIC/RSI) will result in "<=0.002".
+   * Use `as.atc` to get the ATC code of an antibiotic as defined by the WHO. This package contains a database with most LIS codes, official names, DDDs and even trade names of antibiotics. For example, the values "Furabid", "Furadantine", "nitro" will return the ATC code of Nitrofurantoine.
+   
+2. It **enhances existing data** and **adds new data** from data sets included in this package.
 
-**Read all changes and new functions in [NEWS.md](NEWS.md).**
+   * Use `EUCAST_rules` to apply [EUCAST expert rules to isolates](http://www.eucast.org/expert_rules_and_intrinsic_resistance/).
+   * Use `MDRO` (abbreviation of Multi Drug Resistant Organisms) to check your isolates for exceptional resistance with country-specific guidelines with or EUCAST rules. Currently, national guidelines for Germany and the Netherlands are supported.
+   * Data set `microorganisms` contains the family, genus, species, subspecies, colloqual name and Gram stain of almost 2500 microorganisms. This enables e.g. resistance analysis of different antibiotics per Gram stain. 
+   * Data set `antibiotics` contains the ATC code, LIS codes, official name, trivial name, trade name and DDD of both oral and parenteral administration.
+   * Use `first_isolate` to identify the first isolates of every patient [using guidelines from the CLSI](https://clsi.org/standards/products/microbiology/documents/m39/) (Clinical and Laboratory Standards Institute).      * You can also identify first *weighted* isolates of every patient, an adjusted version of the CLSI guideline. This takes into account key antibiotics of every strain and compares them.
+   
+3. It **analyses the data** with convenient functions that use well-known methods.
+
+   * Calculate the resistance (and even co-resistance) of microbial isolates with the `portion_R`, `portion_IR`, `portion_I`, `portion_SI` and `portion_S` functions, that can also be used with the `dplyr` package (e.g. in conjunction with `summarise`)
+   * Plot AMR results with `geom_rsi`, a function made for the `ggplot2` package
+   * Predict antimicrobial resistance for the nextcoming years using logistic regression models with the `resistance_predict` function
+   * Conduct descriptive statistics to enhance base R: calculate kurtosis, skewness and create frequency tables
+
+4. It **teaches the user** how to use all the above actions, by showing many examples in the help pages. The package contains an example data set called `septic_patients`. This data set, consisting of 2000 blood culture isolates from anonymised septic patients between 2001 and 2017 in the Northern Netherlands, is real and genuine data.
 
 ## How to get it?
 All versions of this package [are published on CRAN](http://cran.r-project.org/package=AMR), the official R network with a peer-reviewed submission process.

@@ -32,8 +32,3 @@ test_that("EUCAST rules work", {
                   stringsAsFactors = FALSE)
   expect_equal(suppressWarnings(EUCAST_rules(a, info = FALSE)), b)
 })
-
-test_that("MO properties work", {
-  expect_equal(mo_property("ESCCOL"), "Escherichia coli")
-  expect_equal(mo_property("STAAUR"), "Staphylococcus aureus")
-})

@@ -22,14 +22,25 @@ test_that("atc_property works", {
 })
 
 test_that("guess_atc works", {
-  expect_equal(guess_atc(c("J01FA01",
+  expect_equal(as.character(guess_atc(c("J01FA01",
                            "Erythromycin",
                            "eryt",
                            "ERYT",
                            "ERY",
                            "Erythrocin",
                            "Eryzole",
-                           "Pediamycin")),
+                           "Pediamycin"))),
                rep("J01FA01", 8))
 
+  expect_identical(class(as.atc("amox")), "atc")
+
+
+})
+
+test_that("atc.property works", {
+  expect_equal(atc.certe("J01CA04"), "amox")
+  expect_equal(atc.umcg("J01CA04"), "AMOX")
+  expect_equal(atc.official("J01CA04"), "Amoxicillin")
+  expect_equal(atc.official_nl("J01CA04"), "Amoxicilline")
+  expect_equal(atc.trivial_nl("J01CA04"), "Amoxicilline")
 })

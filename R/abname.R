@@ -18,9 +18,9 @@
 
 #' Name of an antibiotic
 #'
-#' Convert antibiotic codes (from a laboratory information system like MOLIS or GLIMS) to a (trivial) antibiotic name or ATC code, or vice versa. This uses the data from \code{\link{antibiotics}}.
+#' Convert antibiotic codes to a (trivial) antibiotic name or ATC code, or vice versa. This uses the data from \code{\link{antibiotics}}.
 #' @param abcode a code or name, like \code{"AMOX"}, \code{"AMCL"} or \code{"J01CA04"}
-#' @param from,to type to transform from and to. See \code{\link{antibiotics}} for its column names. WIth \code{from = "guess"} the from will be guessed from \code{"atc"}, \code{"molis"} and \code{"umcg"}. When using \code{to = "atc"}, the ATC code will be searched using \code{\link{guess_atc}}.
+#' @param from,to type to transform from and to. See \code{\link{antibiotics}} for its column names. WIth \code{from = "guess"} the from will be guessed from \code{"atc"}, \code{"certe"} and \code{"umcg"}. When using \code{to = "atc"}, the ATC code will be searched using \code{\link{as.atc}}.
 #' @param textbetween text to put between multiple returned texts
 #' @param tolower return output as lower case with function \code{\link{tolower}}.
 #' @keywords ab antibiotics
@@ -29,7 +29,7 @@
 #' @importFrom dplyr %>% pull
 #' @examples
 #' abname("AMCL")
-#' # "amoxicillin and enzyme inhibitor"
+#' # "Amoxicillin and beta-lactamase inhibitor"
 #'
 #' # It is quite flexible at default (having `from = "guess"`)
 #' abname(c("amox", "J01CA04", "Trimox", "dispermox", "Amoxil"))
@@ -52,8 +52,12 @@
 #' # specific codes for University Medical Center Groningen (UMCG):
 #' abname("J01CR02", from = "atc", to = "umcg")
 #' # "AMCL"
+#'
+#' # specific codes for Certe:
+#' abname("J01CR02", from = "atc", to = "certe")
+#' # "amcl"
 abname <- function(abcode,
-                   from = c("guess", "atc", "molis", "umcg"),
+                   from = c("guess", "atc", "certe", "umcg"),
                    to = 'official',
                    textbetween = ' + ',
                    tolower = FALSE) {
@@ -63,24 +67,12 @@ abname <- function(abcode,
   }
 
   if (to == "atc") {
-    return(guess_atc(abcode))
+    return(as.character(as.atc(abcode)))
   }
 
-  #antibiotics <- AMR::antibiotics
   abx <- AMR::antibiotics
 
   from <- from[1]
-  # if (from == "guess") {
-  #   for (i in 1:3) {
-  #     if (abcode[1] %in% (antibiotics %>% pull(i))) {
-  #       from <- colnames(antibiotics)[i]
-  #     }
-  #   }
-  #   if (from == "guess") {
-  #     from <- "umcg"
-  #   }
-  # }
-
   colnames(abx) <- colnames(abx) %>% tolower()
   from <- from %>% tolower()
   to <- to %>% tolower()
@@ -112,9 +104,9 @@ abname <- function(abcode,
         next
       }
     }
-    if (from %in% c("molis", "guess")) {
-      if (abcode[i] %in% abx$molis) {
-        abcode[i] <- abx[which(abx$molis == abcode[i]),] %>% pull(to)
+    if (from %in% c("certe", "guess")) {
+      if (abcode[i] %in% abx$certe) {
+        abcode[i] <- abx[which(abx$certe == abcode[i]),] %>% pull(to)
         next
       }
     }

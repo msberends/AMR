@@ -380,3 +380,79 @@ as.data.frame.bactid <- function (x, ...) {
 pull.bactid <- function(.data, ...) {
   pull(as.data.frame(.data), ...)
 }
+
+bactid_get_property <- function(bactid, param) {
+  if (!is.bactid(bactid)) {
+    bactid <- as.bactid(bactid)
+  }
+  suppressWarnings(
+    data.frame(bactid = bactid, stringsAsFactors = FALSE) %>%
+      left_join(AMR::microorganisms, by = "bactid") %>%
+      pull(param)
+  )
+}
+
+#' Get microbial property based on `bactid`
+#'
+#' Use these functions to return a specific property of a microorganism from the \code{\link{microorganisms}} data set, based on their \code{bactid}. Get such an ID with \code{\link{as.bactid}}.
+#' @param bactid a valid bactid code, created with \code{\link{as.bactid}}
+#' @rdname bactid.property
+#' @name bactid.property
+#' @export
+bactid.family <- function(bactid) {
+  bactid_get_property(bactid, "family")
+}
+
+#' @rdname bactid.property
+#' @export
+bactid.genus <- function(bactid) {
+  bactid_get_property(bactid, "genus")
+}
+
+#' @rdname bactid.property
+#' @export
+bactid.species <- function(bactid) {
+  bactid_get_property(bactid, "species")
+}
+
+#' @rdname bactid.property
+#' @export
+bactid.subspecies <- function(bactid) {
+  bactid_get_property(bactid, "subspecies")
+}
+
+#' @rdname bactid.property
+#' @export
+bactid.fullname <- function(bactid) {
+  bactid_get_property(bactid, "fullname")
+}
+
+#' @rdname bactid.property
+#' @export
+bactid.type <- function(bactid) {
+  bactid_get_property(bactid, "type")
+}
+
+#' @rdname bactid.property
+#' @export
+bactid.gramstain <- function(bactid) {
+  bactid_get_property(bactid, "gramstain")
+}
+
+#' @rdname bactid.property
+#' @export
+bactid.aerobic <- function(bactid) {
+  bactid_get_property(bactid, "aerobic")
+}
+
+#' @rdname bactid.property
+#' @export
+bactid.type_nl <- function(bactid) {
+  bactid_get_property(bactid, "type_nl")
+}
+
+#' @rdname bactid.property
+#' @export
+bactid.gramstain_nl <- function(bactid) {
+  bactid_get_property(bactid, "gramstain_nl")
+}

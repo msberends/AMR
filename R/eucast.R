@@ -695,38 +695,3 @@ EUCAST_rules <- function(tbl,
 interpretive_reading <- function(...) {
   EUCAST_rules(...)
 }
-
-#' Poperties of a microorganism
-#'
-#' @param bactid ID of a microorganisme, like \code{"STAAUR} and \code{"ESCCOL}
-#' @param property One of the values \code{bactid}, \code{bactsys}, \code{family}, \code{genus}, \code{species}, \code{subspecies}, \code{fullname}, \code{type}, \code{gramstain}, \code{aerobic}
-#' @export
-#' @importFrom dplyr %>% filter select
-#' @seealso \code{\link{microorganisms}}
-mo_property <- function(bactid, property = 'fullname') {
-
-  mocode <- as.character(bactid)
-
-  for (i in 1:length(mocode)) {
-    bug <- mocode[i]
-
-    if (!is.na(bug)) {
-      result = tryCatch({
-        mocode[i] <-
-          AMR::microorganisms %>%
-          filter(bactid == bug) %>%
-          select(property) %>%
-          unlist() %>%
-          as.character()
-      }, error = function(error_condition) {
-        warning('Code ', bug, ' not found in bacteria list.')
-      }, finally = {
-        if (mocode[i] == bug & !property %in% c('bactid', 'bactsys')) {
-          mocode[i] <- NA
-        }
-      })
-    }
-
-  }
-  mocode
-}

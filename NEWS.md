@@ -4,6 +4,8 @@
 * Functions `count_R`, `count_IR`, `count_I`, `count_SI` and `count_S` to selectively count resistant or susceptible isolates
   * New function `count_df` to get all counts of S, I and R of a data set with antibiotic columns, with support for grouped variables
 * Function `is.rsi.eligible` to check for columns that have valid antimicrobial results, but do not have the `rsi` class yet. Transform the columns of your raw data with: `data %>% mutate_if(is.rsi.eligible, as.rsi)`
+* Functions `as.atc` and `is.atc` to transform/look up antibiotic ATC codes as defined by the WHO. The existing function `guess_atc` is now an alias of `as.atc`.
+* Function `mo_property` removed in favour of functions `bactid.family`, `bactid.genus`, `bactid.species`, `bactid.subspecies`, `bactid.fullname`, `bactid.type`, `bactid.gramstain`, `bactid.aerobic` to get a property of a microorganism based on their 'bactid'.
 
 #### Changed
 * Removed function `ratio`

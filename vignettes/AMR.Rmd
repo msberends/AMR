@@ -1,0 +1,58 @@
+---
+title: "Introduction to the AMR package"
+author: "Matthijs S. Berends"
+output: 
+  rmarkdown::html_vignette:
+    toc: true
+vignette: >
+  %\VignetteIndexEntry{Creating Frequency Tables}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE, results = 'markup'}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#"
+)
+```
+
+This R package was intended to make microbial epidemiology easier. Most functions contain extensive help pages to get started.
+
+This `AMR` package basically does four important things:
+
+1. It **cleanses existing data**, by transforming it to reproducible and profound *classes*, making the most efficient use of R. These function all use artificial intelligence to get expected results:
+
+   * Use `as.bactid` to get an ID of a microorganism. It takes almost any text as input that looks like the name or code of a microorganism like "E. coli", "esco" and "esccol". Moreover, it can group all coagulase negative and positive *Staphylococci*, and can transform *Streptococci* into Lancefield groups. This package has a database of ~2500 different (potential) human pathogenic microorganisms.
+   * Use `as.rsi` to transform values to valid antimicrobial results. It produces just S, I or R based on your input and warns about invalid values. Even values like "<=0.002; S" (combined MIC/RSI) will result in "S".
+   * Use `as.mic` to cleanse your MIC values. It produces a so-called factor (in SPSS calls this *ordinal*) with valid MIC values as levels. A value like "<=0.002; S" (combined MIC/RSI) will result in "<=0.002".
+   * Use `as.atc` to get the ATC code of an antibiotic as defined by the WHO. This package contains a database with most LIS codes, official names, DDDs and even trade names of antibiotics. For example, the values "Furabid", "Furadantine", "nitro" will return the ATC code of Nitrofurantoine.
+   
+2. It **enhances existing data** and **adds new data** from data sets included in this package.
+
+   * Use `EUCAST_rules` to apply [EUCAST expert rules to isolates](http://www.eucast.org/expert_rules_and_intrinsic_resistance/).
+   * Use `MDRO` (abbreviation of Multi Drug Resistant Organisms) to check your isolates for exceptional resistance with country-specific guidelines with or EUCAST rules. Currently, national guidelines for Germany and the Netherlands are supported.
+   * Data set `microorganisms` contains the family, genus, species, subspecies, colloqual name and Gram stain of almost 2500 microorganisms. This enables e.g. resistance analysis of different antibiotics per Gram stain. 
+   * Data set `antibiotics` contains the ATC code, LIS codes, official name, trivial name, trade name and DDD of both oral and parenteral administration.
+   * Use `first_isolate` to identify the first isolates of every patient [using guidelines from the CLSI](https://clsi.org/standards/products/microbiology/documents/m39/) (Clinical and Laboratory Standards Institute).      * You can also identify first *weighted* isolates of every patient, an adjusted version of the CLSI guideline. This takes into account key antibiotics of every strain and compares them.
+   
+3. It **analyses the data** with convenient functions that use well-known methods.
+
+   * Calculate the resistance (and even co-resistance) of microbial isolates with the `portion_R`, `portion_IR`, `portion_I`, `portion_SI` and `portion_S` functions, that can also be used with the `dplyr` package (e.g. in conjunction with `summarise`)
+   * Plot AMR results with `geom_rsi`, a function made for the `ggplot2` package
+   * Predict antimicrobial resistance for the nextcoming years using logistic regression models with the `resistance_predict` function
+   * Conduct descriptive statistics to enhance base R: calculate kurtosis, skewness and create frequency tables
+
+4. It **teaches the user** how to use all the above actions, by showing many examples in the help pages. The package contains an example data set called `septic_patients`. This data set, consisting of 2000 blood culture isolates from anonymised septic patients between 2001 and 2017 in the Northern Netherlands, is real and genuine data.
+
+
+----
+```{r, echo = FALSE}
+# this will print "2018" in 2018, and "2018-yyyy" after 2018.
+yrs <- c(2018:format(Sys.Date(), "%Y"))
+yrs <- c(min(yrs), max(yrs))
+yrs <- paste(unique(yrs), collapse = "-")
+```
+AMR, (c) `r yrs`, `r packageDescription("AMR")$URL`
+
+Licensed under the [GNU General Public License v2.0](https://github.com/msberends/AMR/blob/master/LICENSE).
