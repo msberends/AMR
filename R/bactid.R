@@ -23,8 +23,11 @@
 #' @param Becker a logical to indicate whether \emph{Staphylococci} should be categorised into Coagulase Negative \emph{Staphylococci} ("CoNS") and Coagulase Positive \emph{Staphylococci} ("CoPS") instead of their own species, according to Karsten Becker \emph{et al.} [1]. This excludes \emph{Staphylococcus aureus} at default, use \code{Becker = "all"} to also categorise \emph{S. aureus} as "CoPS".
 #' @param Lancefield a logical to indicate whether beta-haemolytic \emph{Streptococci} should be categorised into Lancefield groups instead of their own species, according to Rebecca C. Lancefield [2]. These \emph{Streptococci} will be categorised in their first group, i.e. \emph{Streptococcus dysgalactiae} will be group C, although officially it was also categorised into groups G and L. Groups D and E will be ignored, since they are \emph{Enterococci}.
 #' @rdname as.bactid
+#' @aliases bactid
 #' @keywords bactid Becker becker Lancefield lancefield guess
 #' @details \code{guess_bactid} is an alias of \code{as.bactid}.
+#'
+#' Use the \code{\link{mo_property}} functions to get properties based on the returned bactid, see Examples.
 #'
 #' Some exceptions have been built in to get more logical results, based on prevalence of human pathogens. These are:
 #' \itemize{
@@ -41,7 +44,7 @@
 #' [2] Lancefield RC \strong{A serological differentiation of human and other groups of hemolytic streptococci}. 1933. J Exp Med. 57(4): 571–95. \cr
 #'     \url{https://dx.doi.org/10.1084/jem.57.4.571}
 #' @export
-#' @importFrom dplyr %>% filter pull
+#' @importFrom dplyr %>% pull left_join
 #' @return Character (vector) with class \code{"bactid"}. Unknown values will return \code{NA}.
 #' @seealso \code{\link{microorganisms}} for the dataframe that is being used to determine ID's.
 #' @examples
@@ -56,11 +59,17 @@
 #' as.bactid("VISA") # Vancomycin Intermediate S. aureus
 #' as.bactid("VRSA") # Vancomycin Resistant S. aureus
 #'
+#' # guess_bactid is an alias of as.bactid and works the same
 #' guess_bactid("S. epidermidis")                 # will remain species: STAEPI
 #' guess_bactid("S. epidermidis", Becker = TRUE)  # will not remain species: STACNS
 #'
 #' guess_bactid("S. pyogenes")                    # will remain species: STCAGA
 #' guess_bactid("S. pyogenes", Lancefield = TRUE) # will not remain species: STCGRA
+#'
+#' # Use mo_* functions to get a specific property based on a bactid
+#' Ecoli <- as.bactid("E. coli") # returns `ESCCOL`
+#' mo_genus(Ecoli)               # returns "Escherichia"
+#' mo_gramstain(Ecoli)           # returns "Negative rods"
 #'
 #' \dontrun{
 #' df$bactid <- as.bactid(df$microorganism_name)
@@ -82,7 +91,6 @@
 #' }
 as.bactid <- function(x, Becker = FALSE, Lancefield = FALSE) {
 
-  failures <- character(0)
 
   if (NCOL(x) == 2) {
     # support tidyverse selection like: df %>% select(colA, colB)
@@ -103,12 +111,19 @@ as.bactid <- function(x, Becker = FALSE, Lancefield = FALSE) {
     }
   }
 
-  x.fullbackup <- x
+  MOs <- AMR::microorganisms %>% filter(!bactid %like% '^_FAM') # dont search in those
+  failures <- character(0)
+  x_input <- x
+
+  # only check the uniques, which is way faster
+  x <- unique(x)
+
+  x_backup <- x
   # remove dots and other non-text in case of "E. coli" except spaces
   x <- gsub("[^a-zA-Z0-9 ]+", "", x)
   # but spaces before and after should be omitted
   x <- trimws(x, which = "both")
-  x.backup <- x
+  x_trimmed <- x
   # replace space by regex sign
   x_withspaces <- gsub(" ", ".* ", x, fixed = TRUE)
   x <- gsub(" ", ".*", x, fixed = TRUE)
@@ -121,7 +136,7 @@ as.bactid <- function(x, Becker = FALSE, Lancefield = FALSE) {
   for (i in 1:length(x)) {
 
     if (Becker == TRUE | Becker == "all") {
-      mo <- suppressWarnings(guess_bactid(x.fullbackup[i]))
+      mo <- suppressWarnings(guess_bactid(x_backup[i]))
       if (mo %like% '^STA') {
         # See Source. It's this figure:
         # https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4187637/figure/F3/
@@ -152,7 +167,7 @@ as.bactid <- function(x, Becker = FALSE, Lancefield = FALSE) {
     }
 
     if (Lancefield == TRUE) {
-      mo <- suppressWarnings(guess_bactid(x.fullbackup[i]))
+      mo <- suppressWarnings(guess_bactid(x_backup[i]))
       if (mo %like% '^STC') {
         # See Source
         species <- left_join_microorganisms(mo)$species
@@ -184,20 +199,20 @@ as.bactid <- function(x, Becker = FALSE, Lancefield = FALSE) {
       }
     }
 
-    if (identical(x.backup[i], "")) {
+    if (identical(x_trimmed[i], "")) {
       # empty values
       x[i] <- NA
-      failures <- c(failures, x.fullbackup[i])
+      failures <- c(failures, x_backup[i])
       next
     }
-    if (x.fullbackup[i] %in% AMR::microorganisms$bactid) {
+    if (x_backup[i] %in% MOs$bactid) {
       # is already a valid bactid
-      x[i] <- x.fullbackup[i]
+      x[i] <- x_backup[i]
       next
     }
-    if (x.backup[i] %in% AMR::microorganisms$bactid) {
+    if (x_trimmed[i] %in% MOs$bactid) {
       # is already a valid bactid
-      x[i] <- x.backup[i]
+      x[i] <- x_trimmed[i]
       next
     }
 
@@ -232,27 +247,27 @@ as.bactid <- function(x, Becker = FALSE, Lancefield = FALSE) {
     }
 
     # translate known trivial names to genus+species
-    if (!is.na(x.backup[i])) {
-      if (toupper(x.backup[i]) == 'MRSA'
-          | toupper(x.backup[i]) == 'VISA'
-          | toupper(x.backup[i]) == 'VRSA') {
+    if (!is.na(x_trimmed[i])) {
+      if (toupper(x_trimmed[i]) == 'MRSA'
+          | toupper(x_trimmed[i]) == 'VISA'
+          | toupper(x_trimmed[i]) == 'VRSA') {
         x[i] <- 'STAAUR'
         next
       }
-      if (toupper(x.backup[i]) == 'MRSE') {
+      if (toupper(x_trimmed[i]) == 'MRSE') {
         x[i] <- 'STAEPI'
         next
       }
-      if (toupper(x.backup[i]) == 'VRE') {
+      if (toupper(x_trimmed[i]) == 'VRE') {
         x[i] <- 'ENC'
         next
       }
-      if (toupper(x.backup[i]) == 'MRPA') {
+      if (toupper(x_trimmed[i]) == 'MRPA') {
         # multi resistant P. aeruginosa
         x[i] <- 'PSEAER'
         next
       }
-      if (toupper(x.backup[i]) %in% c('PISP', 'PRSP', 'VISP', 'VRSP')) {
+      if (toupper(x_trimmed[i]) %in% c('PISP', 'PRSP', 'VISP', 'VRSP')) {
         # peni R, peni I, vanco I, vanco R: S. pneumoniae
         x[i] <- 'STCPNE'
         next
@@ -260,14 +275,14 @@ as.bactid <- function(x, Becker = FALSE, Lancefield = FALSE) {
     }
 
     # try any match keeping spaces
-    found <- AMR::microorganisms[which(AMR::microorganisms$fullname %like% x_withspaces[i]),]$bactid
+    found <- MOs[which(MOs$fullname %like% x_withspaces[i]),]$bactid
     if (length(found) > 0) {
       x[i] <- found[1L]
       next
     }
 
     # try any match diregarding spaces
-    found <- AMR::microorganisms[which(AMR::microorganisms$fullname %like% x[i]),]$bactid
+    found <- MOs[which(MOs$fullname %like% x[i]),]$bactid
     if (length(found) > 0) {
       x[i] <- found[1L]
       next
@@ -275,21 +290,21 @@ as.bactid <- function(x, Becker = FALSE, Lancefield = FALSE) {
 
     # try exact match of only genus, with 'species' attached
     # (this prevents Streptococcus from becoming Peptostreptococcus, since "p" < "s")
-    found <- AMR::microorganisms[which(AMR::microorganisms$fullname == x_species[i]),]$bactid
+    found <- MOs[which(MOs$fullname == x_species[i]),]$bactid
     if (length(found) > 0) {
       x[i] <- found[1L]
       next
     }
 
     # try any match of only genus, with 'species' attached
-    found <- AMR::microorganisms[which(AMR::microorganisms$fullname %like% x_species[i]),]$bactid
+    found <- MOs[which(MOs$fullname %like% x_species[i]),]$bactid
     if (length(found) > 0) {
       x[i] <- found[1L]
       next
     }
 
     # search for GLIMS code
-    found <- AMR::microorganisms.umcg[which(toupper(AMR::microorganisms.umcg$mocode) == toupper(x.backup[i])),]$bactid
+    found <- AMR::microorganisms.umcg[which(toupper(AMR::microorganisms.umcg$mocode) == toupper(x_trimmed[i])),]$bactid
     if (length(found) > 0) {
       x[i] <- found[1L]
       next
@@ -298,11 +313,11 @@ as.bactid <- function(x, Becker = FALSE, Lancefield = FALSE) {
     # try splitting of characters and then find ID
     # like esco = E. coli, klpn = K. pneumoniae, stau = S. aureus
     x_split <- x
-    x_length <- nchar(x.backup[i])
-    x_split[i] <- paste0(x.backup[i] %>% substr(1, x_length / 2) %>% trimws(),
+    x_length <- nchar(x_trimmed[i])
+    x_split[i] <- paste0(x_trimmed[i] %>% substr(1, x_length / 2) %>% trimws(),
                          '.* ',
-                         x.backup[i] %>% substr((x_length / 2) + 1, x_length) %>% trimws())
-    found <- AMR::microorganisms[which(AMR::microorganisms$fullname %like% paste0('^', x_split[i])),]$bactid
+                         x_trimmed[i] %>% substr((x_length / 2) + 1, x_length) %>% trimws())
+    found <- MOs[which(MOs$fullname %like% paste0('^', x_split[i])),]$bactid
     if (length(found) > 0) {
       x[i] <- found[1L]
       next
@@ -310,13 +325,13 @@ as.bactid <- function(x, Becker = FALSE, Lancefield = FALSE) {
 
     # try any match with text before and after original search string
     # so "negative rods" will be "GNR"
-    if (x.backup[i] %like% "^Gram") {
-      x.backup[i] <- gsub("^Gram", "", x.backup[i], ignore.case = TRUE)
+    if (x_trimmed[i] %like% "^Gram") {
+      x_trimmed[i] <- gsub("^Gram", "", x_trimmed[i], ignore.case = TRUE)
       # remove leading and trailing spaces again
-      x.backup[i] <- trimws(x.backup[i], which = "both")
+      x_trimmed[i] <- trimws(x_trimmed[i], which = "both")
     }
-    if (!is.na(x.backup[i])) {
-      found <- AMR::microorganisms[which(AMR::microorganisms$fullname %like% x.backup[i]),]$bactid
+    if (!is.na(x_trimmed[i])) {
+      found <- MOs[which(MOs$fullname %like% x_trimmed[i]),]$bactid
       if (length(found) > 0) {
         x[i] <- found[1L]
         next
@@ -325,7 +340,7 @@ as.bactid <- function(x, Becker = FALSE, Lancefield = FALSE) {
 
     # not found
     x[i] <- NA_character_
-    failures <- c(failures, x.fullbackup[i])
+    failures <- c(failures, x_backup[i])
 
   }
 
@@ -336,6 +351,19 @@ as.bactid <- function(x, Becker = FALSE, Lancefield = FALSE) {
             ".",
             call. = FALSE)
   }
+
+  # left join the found results to the original input values (x_input)
+  df_found <- data.frame(input = as.character(unique(x_input)),
+                         found = x,
+                         stringsAsFactors = FALSE)
+  df_input <- data.frame(input = as.character(x_input),
+                         stringsAsFactors = FALSE)
+
+  x <- df_input %>%
+    left_join(df_found,
+              by = "input") %>%
+    pull(found)
+
   class(x) <- "bactid"
   attr(x, 'package') <- 'AMR'
   x
@@ -379,80 +407,4 @@ as.data.frame.bactid <- function (x, ...) {
 #' @noRd
 pull.bactid <- function(.data, ...) {
   pull(as.data.frame(.data), ...)
-}
-
-bactid_get_property <- function(bactid, param) {
-  if (!is.bactid(bactid)) {
-    bactid <- as.bactid(bactid)
-  }
-  suppressWarnings(
-    data.frame(bactid = bactid, stringsAsFactors = FALSE) %>%
-      left_join(AMR::microorganisms, by = "bactid") %>%
-      pull(param)
-  )
-}
-
-#' Get microbial property based on `bactid`
-#'
-#' Use these functions to return a specific property of a microorganism from the \code{\link{microorganisms}} data set, based on their \code{bactid}. Get such an ID with \code{\link{as.bactid}}.
-#' @param bactid a valid bactid code, created with \code{\link{as.bactid}}
-#' @rdname bactid.property
-#' @name bactid.property
-#' @export
-bactid.family <- function(bactid) {
-  bactid_get_property(bactid, "family")
-}
-
-#' @rdname bactid.property
-#' @export
-bactid.genus <- function(bactid) {
-  bactid_get_property(bactid, "genus")
-}
-
-#' @rdname bactid.property
-#' @export
-bactid.species <- function(bactid) {
-  bactid_get_property(bactid, "species")
-}
-
-#' @rdname bactid.property
-#' @export
-bactid.subspecies <- function(bactid) {
-  bactid_get_property(bactid, "subspecies")
-}
-
-#' @rdname bactid.property
-#' @export
-bactid.fullname <- function(bactid) {
-  bactid_get_property(bactid, "fullname")
-}
-
-#' @rdname bactid.property
-#' @export
-bactid.type <- function(bactid) {
-  bactid_get_property(bactid, "type")
-}
-
-#' @rdname bactid.property
-#' @export
-bactid.gramstain <- function(bactid) {
-  bactid_get_property(bactid, "gramstain")
-}
-
-#' @rdname bactid.property
-#' @export
-bactid.aerobic <- function(bactid) {
-  bactid_get_property(bactid, "aerobic")
-}
-
-#' @rdname bactid.property
-#' @export
-bactid.type_nl <- function(bactid) {
-  bactid_get_property(bactid, "type_nl")
-}
-
-#' @rdname bactid.property
-#' @export
-bactid.gramstain_nl <- function(bactid) {
-  bactid_get_property(bactid, "gramstain_nl")
 }

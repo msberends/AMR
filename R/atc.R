@@ -26,7 +26,9 @@
 #' @keywords atc
 #' @export
 #' @importFrom dplyr %>% filter slice pull
-#' @details In the ATC classification system, the active substances are classified in a hierarchy with five different levels.  The system has fourteen main anatomical/pharmacological groups or 1st levels. Each ATC main group is divided into 2nd levels which could be either pharmacological or therapeutic groups.  The 3rd and 4th levels are chemical, pharmacological or therapeutic subgroups and the 5th level is the chemical substance.  The 2nd, 3rd and 4th levels are often used to identify pharmacological subgroups when that is considered more appropriate than therapeutic or chemical subgroups.
+#' @details Use the \code{\link{ab_property}} functions to get properties based on the returned ATC code, see Examples.
+#'
+#' In the ATC classification system, the active substances are classified in a hierarchy with five different levels.  The system has fourteen main anatomical/pharmacological groups or 1st levels. Each ATC main group is divided into 2nd levels which could be either pharmacological or therapeutic groups.  The 3rd and 4th levels are chemical, pharmacological or therapeutic subgroups and the 5th level is the chemical substance.  The 2nd, 3rd and 4th levels are often used to identify pharmacological subgroups when that is considered more appropriate than therapeutic or chemical subgroups.
 #'   Source: \url{https://www.whocc.no/atc/structure_and_principles/}
 #' @return Character (vector) with class \code{"act"}. Unknown values will return \code{NA}.
 #' @seealso \code{\link{antibiotics}} for the dataframe that is being used to determine ATC's.
@@ -40,6 +42,11 @@
 #' as.atc("Erythrocin") # Trade name
 #' as.atc("Eryzole")    # Trade name
 #' as.atc("Pediamycin") # Trade name
+#'
+#' # Use ab_* functions to get a specific property based on an ATC code
+#' Cipro <- as.atc("cipro") # returns `J01MA02`
+#' ab_official(Cipro)       # returns "Ciprofloxacin"
+#' ab_umcg(Cipro)           # returns "CIPR", the code used in the UMCG
 as.atc <- function(x) {
 
   x.new <- rep(NA_character_, length(x))
@@ -88,6 +95,15 @@ as.atc <- function(x) {
     if (length(found) > 0) {
       fail <- FALSE
       x.new[is.na(x.new) & x.bak == x[i]] <- found[1L]
+    }
+
+    # nothing helped, try first chars of official name, but only if nchar > 4 (cipro, nitro, fosfo)
+    if (nchar(x[i]) > 4) {
+      found <- AMR::antibiotics[which(AMR::antibiotics$official %like% paste0("^", substr(x[i], 1, 5))),]$atc
+      if (length(found) > 0) {
+        fail <- FALSE
+        x.new[is.na(x.new) & x.bak == x[i]] <- found[1L]
+      }
     }
 
     # not found
@@ -147,52 +163,6 @@ as.data.frame.atc <- function (x, ...) {
 #' @noRd
 pull.atc <- function(.data, ...) {
   pull(as.data.frame(.data), ...)
-}
-
-atc_get_property <- function(atc, param) {
-  if (!is.atc(atc)) {
-    atc <- as.atc(atc)
-  }
-  suppressWarnings(
-    data.frame(atc = atc, stringsAsFactors = FALSE) %>%
-      left_join(AMR::antibiotics, by = "atc") %>%
-      pull(param)
-  )
-}
-
-#' Get antibiotic property based on ATC
-#'
-#' Use these functions to return a specific property of an antibiotic from the \code{\link{antibiotics}} data set, based on their ATC code.
-#' @param atc a valid ATC code, created with \code{\link{as.atc}}
-#' @rdname atc.property
-#' @name atc.property
-#' @export
-atc.official <- function(atc) {
-  atc_get_property(atc, "official")
-}
-
-#' @rdname atc.property
-#' @export
-atc.official_nl <- function(atc) {
-  atc_get_property(atc, "official_nl")
-}
-
-#' @rdname atc.property
-#' @export
-atc.trivial_nl <- function(atc) {
-  atc_get_property(atc, "trivial_nl")
-}
-
-#' @rdname atc.property
-#' @export
-atc.certe <- function(atc) {
-  atc_get_property(atc, "certe")
-}
-
-#' @rdname atc.property
-#' @export
-atc.umcg <- function(atc) {
-  atc_get_property(atc, "umcg")
 }
 
 #' Properties of an ATC code

@@ -34,13 +34,8 @@ test_that("guess_atc works", {
 
   expect_identical(class(as.atc("amox")), "atc")
 
+  # first 5 chars of official name
+  expect_equal(as.character(as.atc(c("nitro", "cipro"))),
+               c("J01XE01", "J01MA02"))
 
-})
-
-test_that("atc.property works", {
-  expect_equal(atc.certe("J01CA04"), "amox")
-  expect_equal(atc.umcg("J01CA04"), "AMOX")
-  expect_equal(atc.official("J01CA04"), "Amoxicillin")
-  expect_equal(atc.official_nl("J01CA04"), "Amoxicilline")
-  expect_equal(atc.trivial_nl("J01CA04"), "Amoxicilline")
 })

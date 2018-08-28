@@ -24,11 +24,11 @@
 #'   \item{\code{atc}}{ATC code, like \code{J01CR02}}
 #'   \item{\code{certe}}{Certe code, like \code{amcl}}
 #'   \item{\code{umcg}}{UMCG code, like \code{AMCL}}
-#'   \item{\code{abbr}}{Abbreviation as used by many countries, to be used for \code{\link{guess_atc}}}
-#'   \item{\code{official}}{Official name by the WHO, like \code{"Amoxicillin and enzyme inhibitor"}}
+#'   \item{\code{abbr}}{Abbreviation as used by many countries, used internally by \code{\link{as.atc}}}
+#'   \item{\code{official}}{Official name by the WHO, like \code{"Amoxicillin and beta-lactamase inhibitor"}}
 #'   \item{\code{official_nl}}{Official name in the Netherlands, like \code{"Amoxicilline met enzymremmer"}}
 #'   \item{\code{trivial_nl}}{Trivial name in Dutch, like \code{"Amoxicilline/clavulaanzuur"}}
-#'   \item{\code{trade_name}}{Trade name as used by many countries, to be used for \code{\link{guess_atc}}}
+#'   \item{\code{trade_name}}{Trade name as used by many countries, used internally by \code{\link{as.atc}}}
 #'   \item{\code{oral_ddd}}{Defined Daily Dose (DDD), oral treatment}
 #'   \item{\code{oral_units}}{Units of \code{ddd_units}}
 #'   \item{\code{iv_ddd}}{Defined Daily Dose (DDD), parenteral treatment}
@@ -252,11 +252,25 @@
 #            )
 #   )
 "antibiotics"
+antibiotics_add_to_property <- function(antibiotics, atc, property, value) {
+  if (length(atc) > 1L) {
+    stop("only one atc at a time")
+  }
+  if (!property %in% c("abbr", "trade_name")) {
+    stop("only possible for abbr and trade_name")
+  }
+  if (atc %in% antibiotics$atc) {
+    current <- antibiotics[which(antibiotics$atc == atc), property]
+    antibiotics[which(antibiotics$atc == atc), property] <- paste(current, value, sep = "|")
+    message("done")
+  }
+  antibiotics
+}
 
-#' Dataset with ~2500 microorganisms
+#' Dataset with ~2650 microorganisms
 #'
-#' A dataset containing 2464 microorganisms. MO codes of the UMCG can be looked up using \code{\link{microorganisms.umcg}}.
-#' @format A data.frame with 2464 observations and 12 variables:
+#' A dataset containing 2,646 microorganisms. MO codes of the UMCG can be looked up using \code{\link{microorganisms.umcg}}.
+#' @format A data.frame with 2,646 observations and 12 variables:
 #' \describe{
 #'   \item{\code{bactid}}{ID of microorganism}
 #'   \item{\code{bactsys}}{Bactsyscode of microorganism}

@@ -23,6 +23,8 @@ Character (vector) with class \code{"act"}. Unknown values will return \code{NA}
 Use this function to determine the ATC code of one or more antibiotics. The dataset \code{\link{antibiotics}} will be searched for abbreviations, official names and trade names.
 }
 \details{
+Use the \code{\link{ab_property}} functions to get properties based on the returned ATC code, see Examples.
+
 In the ATC classification system, the active substances are classified in a hierarchy with five different levels.  The system has fourteen main anatomical/pharmacological groups or 1st levels. Each ATC main group is divided into 2nd levels which could be either pharmacological or therapeutic groups.  The 3rd and 4th levels are chemical, pharmacological or therapeutic subgroups and the 5th level is the chemical substance.  The 2nd, 3rd and 4th levels are often used to identify pharmacological subgroups when that is considered more appropriate than therapeutic or chemical subgroups.
   Source: \url{https://www.whocc.no/atc/structure_and_principles/}
 }
@@ -36,6 +38,11 @@ as.atc("ERY")
 as.atc("Erythrocin") # Trade name
 as.atc("Eryzole")    # Trade name
 as.atc("Pediamycin") # Trade name
+
+# Use ab_* functions to get a specific property based on an ATC code
+Cipro <- as.atc("cipro") # returns `J01MA02`
+ab_official(Cipro)       # returns "Ciprofloxacin"
+ab_umcg(Cipro)           # returns "CIPR", the code used in the UMCG
 }
 \seealso{
 \code{\link{antibiotics}} for the dataframe that is being used to determine ATC's.

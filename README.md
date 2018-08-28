@@ -42,29 +42,36 @@ This R package was intended to make microbial epidemiology easier. Most function
 
 This `AMR` package basically does four important things:
 
-1. It **cleanses existing data**, by transforming it to reproducible and profound *classes*, making the most efficient use of R. These function all use artificial intelligence to get expected results:
+1. It **cleanses existing data**, by transforming it to reproducible and profound *classes*, making the most efficient use of R. These functions all use artificial intelligence to get 'more expected' results:
 
-   * Use `as.bactid` to get an ID of a microorganism. It takes almost any text as input that looks like the name or code of a microorganism like "E. coli", "esco" and "esccol". Moreover, it can group all coagulase negative and positive *Staphylococci*, and can transform *Streptococci* into Lancefield groups. This package has a database of ~2500 different (potential) human pathogenic microorganisms.
+   * Use `as.bactid` to get an ID of a microorganism. The IDs are quite obvious - the ID of *E. coli* is "ESCCOL" and the ID of *S. aureus* is "STAAUR". This `as.bactid` function takes almost any text as input that looks like the name or code of a microorganism like "E. coli", "esco" and "esccol". Even `as.bactid("MRSA")` will return the ID of *S. aureus*. Moreover, it can group all coagulase negative and positive *Staphylococci*, and can transform *Streptococci* into Lancefield groups. To find bacteria based on your input, this package contains a freely available database of ~2,650 different (potential) human pathogenic microorganisms.
    * Use `as.rsi` to transform values to valid antimicrobial results. It produces just S, I or R based on your input and warns about invalid values. Even values like "<=0.002; S" (combined MIC/RSI) will result in "S".
-   * Use `as.mic` to cleanse your MIC values. It produces a so-called factor (in SPSS calls this *ordinal*) with valid MIC values as levels. A value like "<=0.002; S" (combined MIC/RSI) will result in "<=0.002".
-   * Use `as.atc` to get the ATC code of an antibiotic as defined by the WHO. This package contains a database with most LIS codes, official names, DDDs and even trade names of antibiotics. For example, the values "Furabid", "Furadantine", "nitro" will return the ATC code of Nitrofurantoine.
+   * Use `as.mic` to cleanse your MIC values. It produces a so-called factor (called *ordinal* in SPSS) with valid MIC values as levels. A value like "<=0.002; S" (combined MIC/RSI) will result in "<=0.002".
+   * Use `as.atc` to get the ATC code of an antibiotic as defined by the WHO. This package contains a database with most LIS codes, official names, DDDs and even trade names of antibiotics. For example, the values "Furabid", "Furadantine", "nitro" all return the ATC code of Nitrofurantoine.
    
 2. It **enhances existing data** and **adds new data** from data sets included in this package.
 
    * Use `EUCAST_rules` to apply [EUCAST expert rules to isolates](http://www.eucast.org/expert_rules_and_intrinsic_resistance/).
-   * Use `MDRO` (abbreviation of Multi Drug Resistant Organisms) to check your isolates for exceptional resistance with country-specific guidelines with or EUCAST rules. Currently, national guidelines for Germany and the Netherlands are supported.
-   * Data set `microorganisms` contains the family, genus, species, subspecies, colloqual name and Gram stain of almost 2500 microorganisms. This enables e.g. resistance analysis of different antibiotics per Gram stain. 
-   * Data set `antibiotics` contains the ATC code, LIS codes, official name, trivial name, trade name and DDD of both oral and parenteral administration.
-   * Use `first_isolate` to identify the first isolates of every patient [using guidelines from the CLSI](https://clsi.org/standards/products/microbiology/documents/m39/) (Clinical and Laboratory Standards Institute).      * You can also identify first *weighted* isolates of every patient, an adjusted version of the CLSI guideline. This takes into account key antibiotics of every strain and compares them.
-   
+   * Use `first_isolate` to identify the first isolates of every patient [using guidelines from the CLSI](https://clsi.org/standards/products/microbiology/documents/m39/) (Clinical and Laboratory Standards Institute).
+     * You can also identify first *weighted* isolates of every patient, an adjusted version of the CLSI guideline. This takes into account key antibiotics of every strain and compares them.
+   * Use `MDRO` (abbreviation of Multi Drug Resistant Organisms) to check your isolates for exceptional resistance with country-specific guidelines or EUCAST rules. Currently, national guidelines for Germany and the Netherlands are supported.
+   * The data set `microorganisms` contains the family, genus, species, subspecies, colloquial name and Gram stain of almost 2,650 microorganisms (2,207 bacteria, 285 fungi/yeasts, 153 parasites, 1 other). This enables resistance analysis of e.g. different antibiotics per Gram stain. The package also contains functions to look up values in this data set. For example, to get properties of a bacteria ID, use `mo_genus`, `mo_family` or `mo_gramstain`. These functions can be used to add new variables to your data.
+   * The data set `antibiotics` contains the ATC code, LIS codes, official name, trivial name, trade name and DDD of both oral and parenteral administration.
+
 3. It **analyses the data** with convenient functions that use well-known methods.
 
-   * Calculate the resistance (and even co-resistance) of microbial isolates with the `portion_R`, `portion_IR`, `portion_I`, `portion_SI` and `portion_S` functions, that can also be used with the `dplyr` package (e.g. in conjunction with `summarise`)
+   * Calculate the resistance (and even co-resistance) of microbial isolates with the `portion_R`, `portion_IR`, `portion_I`, `portion_SI` and `portion_S` functions. Similarly, the *amount* of isolates can be determined with the `count_R`, `count_IR`, `count_I`, `count_SI` and `count_S` functions. All these functions can be used [with the `dplyr` package](https://dplyr.tidyverse.org/#usage) (e.g. in conjunction with [`summarise`](https://dplyr.tidyverse.org/reference/summarise.html))
    * Plot AMR results with `geom_rsi`, a function made for the `ggplot2` package
    * Predict antimicrobial resistance for the nextcoming years using logistic regression models with the `resistance_predict` function
    * Conduct descriptive statistics to enhance base R: calculate kurtosis, skewness and create frequency tables
 
-4. It **teaches the user** how to use all the above actions, by showing many examples in the help pages. The package contains an example data set called `septic_patients`. This data set, consisting of 2000 blood culture isolates from anonymised septic patients between 2001 and 2017 in the Northern Netherlands, is real and genuine data.
+4. It **teaches the user** how to use all the above actions.
+
+   * The package contains extensive help pages with many examples.
+   * It also contains an example data set called `septic_patients`. This data set contains:
+     * 2,000 blood culture isolates from anonymised septic patients between 2001 and 2017 in the Northern Netherlands
+     * Results of 40 antibiotics (each antibiotic in its own column) with a total of 38,414 antimicrobial results
+     * Real and genuine data
 
 ## How to get it?
 All versions of this package [are published on CRAN](http://cran.r-project.org/package=AMR), the official R network with a peer-reviewed submission process.
@@ -82,13 +89,17 @@ All versions of this package [are published on CRAN](http://cran.r-project.org/p
   - `install.packages("AMR")`
 
 ### Install from GitHub
-This is the latest development version. Although it may contain bugfixes and even new functions compared to the latest released version on CRAN, it is also subject to change and may be unstable or behave unexpectedly. Always consider this a beta version.
-
-[![Travis_Build](https://travis-ci.org/msberends/AMR.svg?branch=master)](https://travis-ci.org/msberends/AMR)
-[![AppVeyor_Build](https://ci.appveyor.com/api/projects/status/github/msberends/AMR?branch=master&svg=true)](https://ci.appveyor.com/project/msberends/AMR)
 [![Last_Commit](https://img.shields.io/github/last-commit/msberends/AMR.svg)](https://github.com/msberends/AMR/commits/master)
-[![Code_Coverage](https://codecov.io/gh/msberends/AMR/branch/master/graph/badge.svg)](https://codecov.io/gh/msberends/AMR)
 
+This is the latest development version. Although it may contain bugfixes and even new functions compared to the latest released version on CRAN, it is also subject to change and may be unstable or behave unexpectedly. Always consider this a beta version. All below 'badges' should be green.
+
+Development Test | Result
+--- | :---:
+Works on Linux and macOS | [![Travis_Build](https://travis-ci.org/msberends/AMR.svg?branch=master)](https://travis-ci.org/msberends/AMR)
+Works on Windows | [![AppVeyor_Build](https://ci.appveyor.com/api/projects/status/github/msberends/AMR?branch=master&svg=true)](https://ci.appveyor.com/project/msberends/AMR)
+Syntax lines checked | [![Code_Coverage](https://codecov.io/gh/msberends/AMR/branch/master/graph/badge.svg)](https://codecov.io/gh/msberends/AMR)
+
+If so, try it with:
 ```r
 install.packages("devtools") 
 devtools::install_github("msberends/AMR")
@@ -210,7 +221,7 @@ before
 # 4 KLEPNE    -    -    -    -    -
 # 5 PSEAER    -    -    -    -    -
 
-# Now apply those rules; just need a column with bacteria ID's and antibiotic results:
+# Now apply those rules; just need a column with bacteria IDs and antibiotic results:
 after <- EUCAST_rules(before)
 after
 #   bactid vanc amox coli cfta cfur
@@ -221,7 +232,7 @@ after
 # 5 PSEAER    R    R    -    -    R
 ```
 
-Bacteria ID's can be retrieved with the `guess_bactid` function. It uses any type of info about a microorganism as input. For example, all these will return value `STAAUR`, the ID of *S. aureus*:
+Bacteria IDs can be retrieved with the `guess_bactid` function. It uses any type of info about a microorganism as input. For example, all these will return value `STAAUR`, the ID of *S. aureus*:
 ```r
 guess_bactid("stau")
 guess_bactid("STAU")
@@ -371,7 +382,7 @@ Datasets to work with antibiotics and bacteria properties.
 septic_patients   # A tibble: 2,000 x 49
 
 # Dataset with ATC antibiotics codes, official names, trade names 
-# and DDD's (oral and parenteral)
+# and DDDs (oral and parenteral)
 antibiotics       # A tibble: 420 x 18
 
 # Dataset with bacteria codes and properties like gram stain and 

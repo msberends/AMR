@@ -5,17 +5,22 @@
   * New function `count_df` to get all counts of S, I and R of a data set with antibiotic columns, with support for grouped variables
 * Function `is.rsi.eligible` to check for columns that have valid antimicrobial results, but do not have the `rsi` class yet. Transform the columns of your raw data with: `data %>% mutate_if(is.rsi.eligible, as.rsi)`
 * Functions `as.atc` and `is.atc` to transform/look up antibiotic ATC codes as defined by the WHO. The existing function `guess_atc` is now an alias of `as.atc`.
-* Function `mo_property` removed in favour of functions `bactid.family`, `bactid.genus`, `bactid.species`, `bactid.subspecies`, `bactid.fullname`, `bactid.type`, `bactid.gramstain`, `bactid.aerobic` to get a property of a microorganism based on their 'bactid'.
+* Aliases for existing function `mo_property`: `mo_aerobic`, `mo_family`, `mo_fullname`, `mo_genus`, `mo_gramstain`, `mo_gramstain_nl`, `mo_property`, `mo_species`, `mo_subspecies`, `mo_type`, `mo_type_nl`
+* Function `ab_property` and its aliases: `ab_certe`, `ab_official`, `ab_official_nl`, `ab_property`, `ab_trivial_nl`, `ab_umcg`
 
 #### Changed
-* Removed function `ratio`
+* Added 182 microorganisms to the `microorganisms` data set, now n = 2,646 (2,207 bacteria, 285 fungi/yeasts, 153 parasites, 1 other)
+* Removed function `ratio` as it is not really the scope of this package
 * Fix in `as.mic` for values ending in zeroes after a real number
+* Huge speed improvement for `as.bactid`
 * Added parameters `minimum` and `as_percent` to `portion_df`
 * Support for quasiquotation in the functions series `count_*` and `portions_*`, and `n_rsi`. This allows to check for more than 2 vectors or columns.
-  * `septic_patients %>% select(amox, cipr) %>% count_R()`
-  * `septic_patients %>% portion_S(amcl)`
-  * `septic_patients %>% portion_S(amcl, gent)`
-  * `septic_patients %>% portion_S(amcl, gent, pita)`
+  ```r
+  septic_patients %>% select(amox, cipr) %>% count_R()
+  septic_patients %>% portion_S(amcl)
+  septic_patients %>% portion_S(amcl, gent)
+  septic_patients %>% portion_S(amcl, gent, pita)
+  ```
 * Edited `ggplot_rsi` and `geom_rsi` so they can cope with `count_df`. The new `fun` parameter has value `portion_df` at default, but can be set to `count_df`.
 * Fix for `ggplot_rsi` when the `ggplot2` package was not loaded
 * Added possibility to set any parameter to `geom_rsi` (and `ggplot_rsi`) so you can set your own preferences
@@ -30,6 +35,7 @@
     my_list %>% freq(age)
     my_list %>% freq(sex)
     ```
+* Added "Furabid" as a trade name to Nitrofurantoine in the `antibiotics` data set
     
 #### Other
 * More unit tests to ensure better integrity of functions

@@ -2,6 +2,7 @@
 % Please edit documentation in R/bactid.R
 \name{as.bactid}
 \alias{as.bactid}
+\alias{bactid}
 \alias{guess_bactid}
 \alias{is.bactid}
 \title{Transform to bacteria ID}
@@ -34,6 +35,8 @@ Use this function to determine a valid ID based on a genus (and species). This i
 \details{
 \code{guess_bactid} is an alias of \code{as.bactid}.
 
+Use the \code{\link{mo_property}} functions to get properties based on the returned bactid, see Examples.
+
 Some exceptions have been built in to get more logical results, based on prevalence of human pathogens. These are:
 \itemize{
   \item{\code{"E. coli"} will return the ID of \emph{Escherichia coli} and not \emph{Entamoeba coli}, although the latter would alphabetically come first}
@@ -56,11 +59,17 @@ as.bactid("MRSA") # Methicillin Resistant S. aureus
 as.bactid("VISA") # Vancomycin Intermediate S. aureus
 as.bactid("VRSA") # Vancomycin Resistant S. aureus
 
+# guess_bactid is an alias of as.bactid and works the same
 guess_bactid("S. epidermidis")                 # will remain species: STAEPI
 guess_bactid("S. epidermidis", Becker = TRUE)  # will not remain species: STACNS
 
 guess_bactid("S. pyogenes")                    # will remain species: STCAGA
 guess_bactid("S. pyogenes", Lancefield = TRUE) # will not remain species: STCGRA
+
+# Use mo_* functions to get a specific property based on a bactid
+Ecoli <- as.bactid("E. coli") # returns `ESCCOL`
+mo_genus(Ecoli)               # returns "Escherichia"
+mo_gramstain(Ecoli)           # returns "Negative rods"
 
 \dontrun{
 df$bactid <- as.bactid(df$microorganism_name)

@@ -3,8 +3,8 @@
 \docType{data}
 \name{microorganisms}
 \alias{microorganisms}
-\title{Dataset with ~2500 microorganisms}
-\format{A data.frame with 2464 observations and 12 variables:
+\title{Dataset with ~2650 microorganisms}
+\format{A data.frame with 2,646 observations and 12 variables:
 \describe{
   \item{\code{bactid}}{ID of microorganism}
   \item{\code{bactsys}}{Bactsyscode of microorganism}
@@ -23,7 +23,7 @@
 microorganisms
 }
 \description{
-A dataset containing 2464 microorganisms. MO codes of the UMCG can be looked up using \code{\link{microorganisms.umcg}}.
+A dataset containing 2,646 microorganisms. MO codes of the UMCG can be looked up using \code{\link{microorganisms.umcg}}.
 }
 \seealso{
 \code{\link{guess_bactid}} \code{\link{antibiotics}} \code{\link{microorganisms.umcg}}
