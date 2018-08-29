@@ -26,6 +26,7 @@
 #' @param facet variable to split plots by, either \code{"Interpretation"} (default) or \code{"Antibiotic"} or a grouping variable
 #' @param translate_ab a column name of the \code{\link{antibiotics}} data set to translate the antibiotic abbreviations into, using \code{\link{abname}}. Default behaviour is to translate to official names according to the WHO. Use \code{translate_ab = FALSE} to disable translation.
 #' @param fun function to transform \code{data}, either \code{\link{portion_df}} (default) or \code{\link{count_df}}
+#' @param nrow (when using \code{facet}) number of rows
 #' @param ... other parameters passed on to \code{geom_rsi}
 #' @details At default, the names of antibiotics will be shown on the plots using \code{\link{abname}}. This can be set with the option \code{get_antibiotic_names} (a logical value), so change it e.g. to \code{FALSE} with \code{options(get_antibiotic_names = FALSE)}.
 #'
@@ -129,6 +130,7 @@ ggplot_rsi <- function(data,
                        facet = NULL,
                        translate_ab = "official",
                        fun = portion_df,
+                       nrow = NULL,
                        ...) {
 
   if (!"ggplot2" %in% rownames(installed.packages())) {
@@ -154,7 +156,7 @@ ggplot_rsi <- function(data,
   }
 
   if (!is.null(facet)) {
-    p <- p + facet_rsi(facet = facet)
+    p <- p + facet_rsi(facet = facet, nrow = nrow)
   }
 
   p
@@ -202,7 +204,7 @@ geom_rsi <- function(position = NULL,
 
 #' @rdname ggplot_rsi
 #' @export
-facet_rsi <- function(facet = c("Interpretation", "Antibiotic")) {
+facet_rsi <- function(facet = c("Interpretation", "Antibiotic"), nrow = NULL) {
 
   facet <- facet[1]
   if (tolower(facet) %in% tolower(c('SIR', 'RSI', 'interpretation', 'interpretations', 'result'))) {
@@ -211,7 +213,7 @@ facet_rsi <- function(facet = c("Interpretation", "Antibiotic")) {
     facet <- "Antibiotic"
   }
 
-  ggplot2::facet_wrap(facets = facet, scales = "free_x")
+  ggplot2::facet_wrap(facets = facet, scales = "free_x", nrow = nrow)
 }
 
 #' @rdname ggplot_rsi

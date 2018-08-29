@@ -11,13 +11,13 @@
 \usage{
 ggplot_rsi(data, position = NULL, x = "Antibiotic",
   fill = "Interpretation", facet = NULL, translate_ab = "official",
-  fun = portion_df, ...)
+  fun = portion_df, nrow = NULL, ...)
 
 geom_rsi(position = NULL, x = c("Antibiotic", "Interpretation"),
   fill = "Interpretation", translate_ab = "official",
   fun = portion_df, ...)
 
-facet_rsi(facet = c("Interpretation", "Antibiotic"))
+facet_rsi(facet = c("Interpretation", "Antibiotic"), nrow = NULL)
 
 scale_y_percent()
 
@@ -39,6 +39,8 @@ theme_rsi()
 \item{translate_ab}{a column name of the \code{\link{antibiotics}} data set to translate the antibiotic abbreviations into, using \code{\link{abname}}. Default behaviour is to translate to official names according to the WHO. Use \code{translate_ab = FALSE} to disable translation.}
 
 \item{fun}{function to transform \code{data}, either \code{\link{portion_df}} (default) or \code{\link{count_df}}}
+
+\item{nrow}{(when using \code{facet}) number of rows}
 
 \item{...}{other parameters passed on to \code{geom_rsi}}
 }
