@@ -85,11 +85,6 @@ septic_patients \%>\%
   select(amox, nitr, fosf, trim, cipr) \%>\%
   ggplot_rsi()
 
-# for colourblind mode, use divergent colours from the viridis package:
-septic_patients \%>\%
-  select(amox, nitr, fosf, trim, cipr) \%>\%
-  ggplot_rsi() + scale_fill_viridis_d()
-
 # get counts instead of percentages:
 septic_patients \%>\%
   select(amox, nitr, fosf, trim, cipr) \%>\%
@@ -104,6 +99,13 @@ septic_patients \%>\%
              linetype = 2,
              alpha = 0.25)
 \donttest{
+
+# for colourblind mode, use divergent colours from the viridis package:
+septic_patients \%>\%
+  select(amox, nitr, fosf, trim, cipr) \%>\%
+  ggplot_rsi() + scale_fill_viridis_d()
+
+
 # it also supports groups (don't forget to use the group on `x` or `facet`):
 septic_patients \%>\%
   select(hospital_id, amox, nitr, fosf, trim, cipr) \%>\%
