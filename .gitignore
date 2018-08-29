@@ -9,6 +9,7 @@ inst/doc
 /src/*.o-*
 /src/*.d
 /src/*.so
+_noinclude
 *.dll
 vignettes/*.R
 .DS_Store

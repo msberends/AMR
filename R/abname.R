@@ -23,6 +23,7 @@
 #' @param from,to type to transform from and to. See \code{\link{antibiotics}} for its column names. WIth \code{from = "guess"} the from will be guessed from \code{"atc"}, \code{"certe"} and \code{"umcg"}. When using \code{to = "atc"}, the ATC code will be searched using \code{\link{as.atc}}.
 #' @param textbetween text to put between multiple returned texts
 #' @param tolower return output as lower case with function \code{\link{tolower}}.
+#' @details \strong{The \code{\link{ab_property}} functions are faster and more concise}, but do not support concatenated strings, like \code{abname("AMCL+GENT"}.
 #' @keywords ab antibiotics
 #' @source \code{\link{antibiotics}}
 #' @export
@@ -100,29 +101,29 @@ abname <- function(abcode,
     }
     if (from %in% c("atc", "guess")) {
       if (abcode[i] %in% abx$atc) {
-        abcode[i] <- abx[which(abx$atc == abcode[i]),] %>% pull(to)
+        abcode[i] <- abx[which(abx$atc == abcode[i]),] %>% pull(to) %>% .[1]
         next
       }
     }
     if (from %in% c("certe", "guess")) {
       if (abcode[i] %in% abx$certe) {
-        abcode[i] <- abx[which(abx$certe == abcode[i]),] %>% pull(to)
+        abcode[i] <- abx[which(abx$certe == abcode[i]),] %>% pull(to) %>% .[1]
         next
       }
     }
     if (from %in% c("umcg", "guess")) {
       if (abcode[i] %in% abx$umcg) {
-        abcode[i] <- abx[which(abx$umcg == abcode[i]),] %>% pull(to)
+        abcode[i] <- abx[which(abx$umcg == abcode[i]),] %>% pull(to) %>% .[1]
         next
       }
     }
     if (from %in% c("trade_name", "guess")) {
       if (abcode[i] %in% abx$trade_name) {
-        abcode[i] <- abx[which(abx$trade_name == abcode[i]),] %>% pull(to)
+        abcode[i] <- abx[which(abx$trade_name == abcode[i]),] %>% pull(to) %>% .[1]
         next
       }
       if (sum(abx$trade_name %like% abcode[i]) > 0) {
-        abcode[i] <- abx[which(abx$trade_name %like% abcode[i]),] %>% pull(to)
+        abcode[i] <- abx[which(abx$trade_name %like% abcode[i]),] %>% pull(to) %>% .[1]
         next
       }
     }

@@ -64,6 +64,13 @@ as.atc <- function(x) {
       x.new[is.na(x.new) & x.bak == x[i]] <- found[1L]
     }
 
+    # try ATC in code form, even if it does not exist in the antibiotics data set YET
+    if (length(found) == 0 & x[i] %like% '[A-Z][0-9][0-9][A-Z][A-Z][0-9][0-9]') {
+      warning("ATC code ", x[i], " is not yet in the `antibiotics` data set.")
+      fail <- FALSE
+      x.new[is.na(x.new) & x.bak == x[i]] <- x[i]
+    }
+
     # try abbreviation of certe and glims
     found <- AMR::antibiotics[which(tolower(AMR::antibiotics$certe) == tolower(x[i])),]$atc
     if (length(found) > 0) {
@@ -78,6 +85,13 @@ as.atc <- function(x) {
 
     # try exact official name
     found <- AMR::antibiotics[which(tolower(AMR::antibiotics$official) == tolower(x[i])),]$atc
+    if (length(found) > 0) {
+      fail <- FALSE
+      x.new[is.na(x.new) & x.bak == x[i]] <- found[1L]
+    }
+
+    # try exact official Dutch
+    found <- AMR::antibiotics[which(tolower(AMR::antibiotics$official_nl) == tolower(x[i])),]$atc
     if (length(found) > 0) {
       fail <- FALSE
       x.new[is.na(x.new) & x.bak == x[i]] <- found[1L]

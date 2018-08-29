@@ -22,6 +22,7 @@
 #' @param x a (vector of a) valid \code{\link{atc}} code or any text that can be coerced to a valid atc with \code{\link{as.atc}}
 #' @param property one of the column names of one of the \code{\link{antibiotics}} data set, like \code{"atc"} and \code{"official"}
 #' @rdname ab_property
+#' @return A vector of values. In case of \code{ab_tradenames}, if \code{x} is of length one, a vector will be returned. Otherwise a \code{\link{list}}, with \code{x} as names.
 #' @export
 #' @importFrom dplyr %>% left_join pull
 #' @seealso \code{\link{antibiotics}}
@@ -81,4 +82,17 @@ ab_certe <- function(x) {
 #' @export
 ab_umcg <- function(x) {
   ab_property(x, "umcg")
+}
+
+#' @rdname ab_property
+#' @export
+ab_tradenames <- function(x) {
+  res <- ab_property(x, "trade_name")
+  res <- strsplit(res, "|", fixed = TRUE)
+  if (length(x) == 1) {
+    res <- unlist(res)
+  } else {
+    names(res) <- x
+  }
+  res
 }

@@ -181,9 +181,7 @@ septic_patients %>%
 ----
 ```{r, echo = FALSE}
 # this will print "2018" in 2018, and "2018-yyyy" after 2018.
-yrs <- c(2018:format(Sys.Date(), "%Y"))
-yrs <- c(min(yrs), max(yrs))
-yrs <- paste(unique(yrs), collapse = "-")
+yrs <- paste(unique(c(2018, format(Sys.Date(), "%Y"))), collapse = "-")
 ```
 AMR, (c) `r yrs`, `r packageDescription("AMR")$URL`
 

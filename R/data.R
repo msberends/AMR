@@ -16,10 +16,10 @@
 # GNU General Public License for more details.                         #
 # ==================================================================== #
 
-#' Dataset with 420 antibiotics
+#' Dataset with 423 antibiotics
 #'
-#' A dataset containing all antibiotics with a J0 code, with their DDD's. Properties were downloaded from the WHO, see Source.
-#' @format A data.frame with 420 observations and 18 variables:
+#' A dataset containing all antibiotics with a J0 code and some other antimicrobial agents, with their DDD's. Except for trade names and abbreviations, all properties were downloaded from the WHO, see Source.
+#' @format A data.frame with 423 observations and 18 variables:
 #' \describe{
 #'   \item{\code{atc}}{ATC code, like \code{J01CR02}}
 #'   \item{\code{certe}}{Certe code, like \code{amcl}}
@@ -28,7 +28,7 @@
 #'   \item{\code{official}}{Official name by the WHO, like \code{"Amoxicillin and beta-lactamase inhibitor"}}
 #'   \item{\code{official_nl}}{Official name in the Netherlands, like \code{"Amoxicilline met enzymremmer"}}
 #'   \item{\code{trivial_nl}}{Trivial name in Dutch, like \code{"Amoxicilline/clavulaanzuur"}}
-#'   \item{\code{trade_name}}{Trade name as used by many countries, used internally by \code{\link{as.atc}}}
+#'   \item{\code{trade_name}}{Trade name as used by many countries (a total of 294), used internally by \code{\link{as.atc}}}
 #'   \item{\code{oral_ddd}}{Defined Daily Dose (DDD), oral treatment}
 #'   \item{\code{oral_units}}{Units of \code{ddd_units}}
 #'   \item{\code{iv_ddd}}{Defined Daily Dose (DDD), parenteral treatment}
@@ -61,177 +61,7 @@
 #   paste() %>%
 #   .[. %like% "StringValueList"] %>%
 #   gsub("[</]+StringValueList[>]", "", .)
-# abbr and trade_name created with:
-# https://hs.unr.edu/Documents/dhs/chs/NVPHTC/antibiotic_refeference_guide.pdf
-# antibiotics %>%
-#   mutate(abbr =
-#            case_when(
-#              official == 'Amikacin' ~ 'Ak|AN|AMI|AMK',
-#              official == 'Amoxicillin' ~ 'AMX|AMOX|AC',
-#              official == 'Amoxicillin and beta-lactamase inhibitor' ~ 'AUG|A/C|XL|AML',
-#              official == 'Ampicillin' ~ 'AM|AMP',
-#              official == 'Ampicillin and beta-lactamase inhibitor' ~ 'A/S|SAM|AMS|AB',
-#              official == 'Azithromycin' ~ 'Azi|AZM|AZ',
-#              official == 'Azlocillin' ~ 'AZ|AZL',
-#              official == 'Aztreonam' ~ 'Azt|ATM|AT|AZM',
-#              official == 'Carbenicillin' ~ 'Cb|BAR',
-#              official == 'Cefaclor' ~ 'Ccl|CEC|Cfr|FAC|CF',
-#              official == 'Cefadroxil' ~ 'CFR|FAD',
-#              official == 'Cefazolin' ~ 'Cfz|CZ|FAZ|KZ',
-#              official == 'Cefdinir' ~ 'Cdn|CDR|DIN|CD|CFD',
-#              official == 'Cefditoren' ~ 'CDN',
-#              official == 'Cefepime' ~ 'Cpe|FEP|PM|CPM',
-#              official == 'Cefixime' ~ 'Cfe|DCFM|FIX|IX',
-#              official == 'Cefoperazone' ~ 'Cfp|CPZ|PER|FOP|CP',
-#              official == 'Cefotaxime' ~ 'Cft|CTX|TAX|FOT|CT',
-#              official == 'Cefotetan' ~ 'Ctn|CTT|CTE|TANS|CN',
-#              official == 'Cefoxitin' ~ 'Cfx|FOX|CX|FX',
-#              official == 'Cefpodoxime' ~ 'Cpd|POD|PX',
-#              official == 'Cefprozil' ~ 'Cpz|CPR|FP',
-#              official == 'Ceftaroline' ~ 'CPT',
-#              official == 'Ceftazidime' ~ 'Caz|TAZ|TZ',
-#              official == 'Ceftibuten' ~ 'CTB|TIB|CB',
-#              official == 'Ceftizoxime' ~ 'Cz|ZOX|CZX|CZ|CTZ|TIZ',
-#              official == 'Ceftriaxone' ~ 'Cax|CRO|CTR|FRX|AXO|TX',
-#              official == 'Cefuroxime' ~ 'Crm|CXM|CFX|ROX|FUR|XM',
-#              official == 'Cephalexin' ~ 'CN|LX|CFL',
-#              official == 'Cephalothin' ~ 'Cf',
-#              official == 'Chloramphenicol' ~ 'C|CHL|CL',
-#              official == 'Ciprofloxacin' ~ 'Cp|CIP|CI',
-#              official == 'Clarithromycin' ~ 'Cla|CLR|CLM|CH',
-#              official == 'Clindamycin' ~ 'Cd|CC|CM|CLI|DA',
-#              official == 'Colistin' ~ 'CL|CS|CT',
-#              official == 'Daptomycin' ~ 'Dap',
-#              official == 'Doxycycline' ~ 'Dox',
-#              official == 'Doripenem' ~ 'DOR|Dor',
-#              official == 'Ertapenem' ~ 'Etp',
-#              official == 'Erythromycin' ~ 'E|ERY|EM',
-#              official == 'Fosfomycin' ~ 'FOS|FF|FO|FM',
-#              official == 'Flucloxacillin' ~ 'CLOX',
-#              official == 'Gentamicin' ~ 'Gm|CN|GEN',
-#              official == 'Imipenem' ~ 'Imp|IPM|IMI|IP',
-#              official == 'Kanamycin' ~ 'K|KAN|HLK|KM',
-#              official == 'Levofloxacin' ~ 'Lvx|LEV|LEVO|LE',
-#              official == 'Linezolid' ~ 'Lzd|LNZ|LZ',
-#              official == 'Lomefloxacin' ~ 'Lmf|LOM',
-#              official == 'Meropenem' ~ 'Mer|MEM|MERO|MRP|MP',
-#              official == 'Metronidazole' ~ 'MNZ',
-#              official == 'Mezlocillin' ~ 'Mz|MEZ',
-#              official == 'Minocycline' ~ 'Min|MI|MN|MNO|MC|MH',
-#              official == 'Moxifloxacin' ~ 'Mox|MXF',
-#              official == 'Mupirocin' ~ 'MUP',
-#              official == 'Nafcillin' ~ 'Naf|NF',
-#              official == 'Nalidixic acid' ~ 'NA|NAL',
-#              official == 'Nitrofurantoin' ~ 'Fd|F/M|FT|NIT|NI|F',
-#              official == 'Norfloxacin' ~ 'Nxn|NOR|NX',
-#              official == 'Ofloxacin' ~ 'Ofl|OFX|OF',
-#              official == 'Oxacillin' ~ 'Ox|OXS|OXA',
-#              official == 'Benzylpenicillin' ~ 'P|PEN|PV',
-#              official == 'Penicillins, combinations with other antibacterials' ~ 'P|PEN|PV',
-#              official == 'Piperacillin' ~ 'Pi|PIP|PP',
-#              official == 'Piperacillin and beta-lactamase inhibitor' ~ 'PT|TZP|PTZ|P/T|PTc',
-#              official == 'Polymyxin B' ~ 'PB',
-#              official == 'Quinupristin/dalfopristin' ~ 'Syn|Q/D|QDA|RP',
-#              official == 'Rifampin' ~ 'Rif|RA|RI|RD',
-#              official == 'Spectinomycin' ~ 'SPT|SPE|SC',
-#              official == 'Streptomycin' ~ 'S|STR',
-#              official == 'Teicoplanin' ~ 'Tei|TEC|TPN|TP|TPL',
-#              official == 'Telavancin' ~ 'TLV',
-#              official == 'Telithromcyin' ~ 'Tel',
-#              official == 'Tetracycline' ~ 'Te|TET|TC',
-#              official == 'Ticarcillin' ~ 'Ti|TIC|TC',
-#              official == 'Ticarcillin and beta-lactamase inhibitor' ~ 'Tim|T/C|TCC|TLc',
-#              official == 'Tigecycline' ~ 'TGC',
-#              official == 'Tobramycin' ~ 'To|NN|TM|TOB',
-#              official == 'Trimethoprim' ~ 'T|TMP|TR|W',
-#              official == 'Sulfamethoxazole and trimethoprim' ~ 'T/S|SXT|SxT|TS|COT',
-#              official == 'Vancomycin' ~ 'Va|VAN',
-#              TRUE ~ NA_character_),
-#
-#          trade_name =
-#            case_when(
-#              official == 'Amikacin' ~ 'Amikin',
-#              official == 'Amoxicillin' ~ 'Amoxil|Dispermox|Larotid|Trimox',
-#              official == 'Amoxicillin and beta-lactamase inhibitor' ~ 'Augmentin',
-#              official == 'Ampicillin' ~ 'Pfizerpen-A|Principen',
-#              official == 'Ampicillin and beta-lactamase inhibitor' ~ 'Unasyn',
-#              official == 'Azithromycin' ~ 'Zithromax',
-#              official == 'Azlocillin' ~ 'Azlin',
-#              official == 'Aztreonam' ~ 'Azactam',
-#              official == 'Carbenicillin' ~ 'Geocillin',
-#              official == 'Cefaclor' ~ 'Ceclor',
-#              official == 'Cefadroxil' ~ 'Duricef',
-#              official == 'Cefazolin' ~ 'Ancef',
-#              official == 'Cefdinir' ~ 'Omnicef',
-#              official == 'Cefditoren' ~ 'Spectracef',
-#              official == 'Cefepime' ~ 'Maxipime',
-#              official == 'Cefixime' ~ 'Suprax',
-#              official == 'Cefoperazone' ~ 'Cefobid',
-#              official == 'Cefotaxime' ~ 'Claforan',
-#              official == 'Cefotetan' ~ 'Cefotan',
-#              official == 'Cefoxitin' ~ 'Mefoxin',
-#              official == 'Cefpodoxime' ~ 'Vantin',
-#              official == 'Cefprozil' ~ 'Cefzil',
-#              official == 'Ceftaroline' ~ 'Teflaro',
-#              official == 'Ceftazidime' ~ 'Fortaz|Tazicef|Tazidime',
-#              official == 'Ceftibuten' ~ 'Cedax',
-#              official == 'Ceftizoxime' ~ 'Cefizox',
-#              official == 'Ceftriaxone' ~ 'Rocephin',
-#              official == 'Cefuroxime' ~ 'Ceftin|Zinacef',
-#              official == 'Cephalexin' ~ 'Keflex|Panixine',
-#              official == 'Cephalothin' ~ 'Keflin',
-#              official == 'Chloramphenicol' ~ 'Chloromycetin',
-#              official == 'Ciprofloxacin' ~ 'Cipro|Ciloxan|Ciproxin',
-#              official == 'Clarithromycin' ~ 'Biaxin',
-#              official == 'Clindamycin' ~ 'Cleocin|Clinda-Derm|Clindagel|Clindesse|Clindets|Evoclin',
-#              official == 'Colistin' ~ 'Coly-Mycin',
-#              official == 'Daptomycin' ~ 'Cubicin',
-#              official == 'Doxycycline' ~ 'Doryx|Monodox|Vibramycin|Atridox|Oracea|Periostat|Vibra-Tabs',
-#              official == 'Doripenem' ~ 'Doribax',
-#              official == 'Ertapenem' ~ 'Invanz',
-#              official == 'Erythromycin' ~ 'Eryc|EryPed|Erythrocin|E-Base|E-Glades|E-Mycin|E.E.S.|Ery-Tab|Eryderm|Erygel|Erythra-derm|Eryzole|Pediamycin',
-#              official == 'Fosfomycin' ~ 'Monurol',
-#              official == 'Flucloxacillin' ~ 'Flopen|Floxapen|Fluclox|Sesamol|Softapen|Staphylex',
-#              official == 'Gentamicin' ~ 'Garamycin|Genoptic',
-#              official == 'Imipenem' ~ 'Primaxin',
-#              official == 'Kanamycin' ~ 'Kantrex',
-#              official == 'Levofloxacin' ~ 'Levaquin|Quixin',
-#              official == 'Linezolid' ~ 'Zyvox',
-#              official == 'Lomefloxacin' ~ 'Maxaquin',
-#              official == 'Meropenem' ~ 'Merrem',
-#              official == 'Metronidazole' ~ 'Flagyl|MetroGel|MetroCream|MetroLotion',
-#              official == 'Mezlocillin' ~ 'Mezlin',
-#              official == 'Minocycline' ~ 'Arestin|Solodyn',
-#              official == 'Moxifloxacin' ~ 'Avelox|Vigamox',
-#              official == 'Mupirocin' ~ 'Bactroban|Centany',
-#              official == 'Nafcillin' ~ 'Unipen',
-#              official == 'Nalidixic acid' ~ 'NegGram',
-#              official == 'Nitrofurantoin' ~ 'Furadantin|Macrobid|Macrodantin',
-#              official == 'Norfloxacin' ~ 'Noroxin',
-#              official == 'Ofloxacin' ~ 'Floxin|Ocuflox|Ophthalmic',
-#              official == 'Oxacillin' ~ 'Bactocill',
-#              official == 'Benzylpenicillin' ~ 'Permapen|Pfizerpen|Veetids',
-#              official == 'Penicillins, combinations with other antibacterials' ~ 'Permapen|Pfizerpen|Veetids',
-#              official == 'Piperacillin' ~ 'Pipracil',
-#              official == 'Piperacillin and beta-lactamase inhibitor' ~ 'Zosyn',
-#              official == 'Polymyxin B' ~ 'Poly-RX',
-#              official == 'Quinupristin/dalfopristin' ~ 'Synercid',
-#              official == 'Rifampin' ~ 'Rifadin|Rifamate|Rimactane',
-#              official == 'Spectinomycin' ~ 'Trobicin',
-#              official == 'Streptomycin' ~ 'Streptomycin Sulfate',
-#              official == 'Teicoplanin' ~ 'Targocid',
-#              official == 'Telavancin' ~ 'Vibativ',
-#              official == 'Telithromcyin' ~ 'Ketek',
-#              official == 'Tetracycline' ~ 'Sumycin|Bristacycline|Tetrex',
-#              official == 'Ticarcillin' ~ 'Ticar',
-#              official == 'Ticarcillin and beta-lactamase inhibitor' ~ 'Timentin',
-#              official == 'Tigecycline' ~ 'Tygacil',
-#              official == 'Tobramycin' ~ 'Tobi|Aktob|Tobre',
-#              official == 'Trimethoprim' ~ 'Primsol|Proloprim',
-#              official == 'Sulfamethoxazole and trimethoprim' ~ 'Bactrim|Septra|Sulfatrim',
-#              official == 'Vancomycin' ~ 'Vancocin|Vancomycin Hydrochloride',
-#              TRUE ~ NA_character_)
-#   )
+
 # last two columns created with:
 # antibiotics %>%
 #   mutate(useful_gramnegative =
@@ -251,21 +81,44 @@
 #              NA
 #            )
 #   )
+#
+# ADD NEW TRADE NAMES FROM OTHER DATAFRAME
+# antibiotics_add_to_property <- function(ab_df, atc, property, value) {
+#   if (length(atc) > 1L) {
+#     stop("only one atc at a time")
+#   }
+#   if (!property %in% c("abbr", "trade_name")) {
+#     stop("only possible for abbr and trade_name")
+#   }
+#
+#   value <- gsub(ab_df[which(ab_df$atc == atc),] %>% pull("official"), "", value, fixed = TRUE)
+#   value <- gsub("||", "|", value, fixed = TRUE)
+#   value <- gsub("[äáàâ]", "a", value)
+#   value <- gsub("[ëéèê]", "e", value)
+#   value <- gsub("[ïíìî]", "i", value)
+#   value <- gsub("[öóòô]", "o", value)
+#   value <- gsub("[üúùû]", "u", value)
+#   if (!atc %in% ab_df$atc) {
+#     message("SKIPPING - UNKNOWN ATC: ", atc)
+#   }
+#   if (is.na(value)) {
+#     message("SKIPPING - VALUE MISSES: ", atc)
+#   }
+#   if (atc %in% ab_df$atc & !is.na(value)) {
+#     current <- ab_df[which(ab_df$atc == atc),] %>% pull(property)
+#     if (!is.na(current)) {
+#       value <- paste(current, value, sep = "|")
+#     }
+#     value <- strsplit(value, "|", fixed = TRUE) %>% unlist() %>% unique() %>% paste(collapse = "|")
+#     value <- gsub("||", "|", value, fixed = TRUE)
+#     # print(value)
+#     ab_df[which(ab_df$atc == atc), property] <- value
+#     message("Added ", value, " to ", ab_official(atc), " (", atc, ", ", ab_certe(atc), ")")
+#   }
+#   ab_df
+# }
+#
 "antibiotics"
-antibiotics_add_to_property <- function(antibiotics, atc, property, value) {
-  if (length(atc) > 1L) {
-    stop("only one atc at a time")
-  }
-  if (!property %in% c("abbr", "trade_name")) {
-    stop("only possible for abbr and trade_name")
-  }
-  if (atc %in% antibiotics$atc) {
-    current <- antibiotics[which(antibiotics$atc == atc), property]
-    antibiotics[which(antibiotics$atc == atc), property] <- paste(current, value, sep = "|")
-    message("done")
-  }
-  antibiotics
-}
 
 #' Dataset with ~2650 microorganisms
 #'

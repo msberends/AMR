@@ -22,6 +22,9 @@ abname(abcode, from = c("guess", "atc", "certe", "umcg"),
 \description{
 Convert antibiotic codes to a (trivial) antibiotic name or ATC code, or vice versa. This uses the data from \code{\link{antibiotics}}.
 }
+\details{
+\strong{The \code{\link{ab_property}} functions are faster and more concise}, but do not support concatenated strings, like \code{abname("AMCL+GENT"}.
+}
 \examples{
 abname("AMCL")
 # "Amoxicillin and beta-lactamase inhibitor"

@@ -2,14 +2,25 @@
 
 #### New
 * Functions `count_R`, `count_IR`, `count_I`, `count_SI` and `count_S` to selectively count resistant or susceptible isolates
-  * New function `count_df` to get all counts of S, I and R of a data set with antibiotic columns, with support for grouped variables
+  * Extra function `count_df` (which works like `portion_df`) to get all counts of S, I and R of a data set with antibiotic columns, with support for grouped variables
 * Function `is.rsi.eligible` to check for columns that have valid antimicrobial results, but do not have the `rsi` class yet. Transform the columns of your raw data with: `data %>% mutate_if(is.rsi.eligible, as.rsi)`
 * Functions `as.atc` and `is.atc` to transform/look up antibiotic ATC codes as defined by the WHO. The existing function `guess_atc` is now an alias of `as.atc`.
 * Aliases for existing function `mo_property`: `mo_aerobic`, `mo_family`, `mo_fullname`, `mo_genus`, `mo_gramstain`, `mo_gramstain_nl`, `mo_property`, `mo_species`, `mo_subspecies`, `mo_type`, `mo_type_nl`
 * Function `ab_property` and its aliases: `ab_certe`, `ab_official`, `ab_official_nl`, `ab_property`, `ab_trivial_nl`, `ab_umcg`
+* Introduction to AMR as a vignette
 
 #### Changed
-* Added 182 microorganisms to the `microorganisms` data set, now n = 2,646 (2,207 bacteria, 285 fungi/yeasts, 153 parasites, 1 other)
+* Added 182 microorganisms to the `microorganisms` data set, now *n* = 2,646 (2,207 bacteria, 285 fungi/yeasts, 153 parasites, 1 other)
+* Added three antimicrobial agents to the `antibiotics` data set: Terbinafine (D01BA02), Rifaximin (A07AA11) and Isoconazole (D01AC05)
+* Added 163 trade names to the `antibiotics` data set, it now contains 298 different trade names in total, e.g.:
+  ```r
+  ab_official("Bactroban")
+  # [1] "Mupirocin"
+  ab_official(c("Bactroban", "Amoxil", "Zithromax", "Floxapen"))
+  # [1] "Mupirocin" "Amoxicillin" "Azithromycin" "Flucloxacillin"
+  ab_atc(c("Bactroban", "Amoxil", "Zithromax", "Floxapen"))
+  # [1] "R01AX06" "J01CA04" "J01FA10" "J01CF05"
+  ```
 * Removed function `ratio` as it is not really the scope of this package
 * Fix in `as.mic` for values ending in zeroes after a real number
 * Huge speed improvement for `as.bactid`

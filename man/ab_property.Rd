@@ -8,6 +8,7 @@
 \alias{ab_trivial_nl}
 \alias{ab_certe}
 \alias{ab_umcg}
+\alias{ab_tradenames}
 \title{Property of an antibiotic}
 \usage{
 ab_property(x, property = "official")
@@ -23,11 +24,16 @@ ab_trivial_nl(x)
 ab_certe(x)
 
 ab_umcg(x)
+
+ab_tradenames(x)
 }
 \arguments{
 \item{x}{a (vector of a) valid \code{\link{atc}} code or any text that can be coerced to a valid atc with \code{\link{as.atc}}}
 
 \item{property}{one of the column names of one of the \code{\link{antibiotics}} data set, like \code{"atc"} and \code{"official"}}
+}
+\value{
+A vector of values. In case of \code{ab_tradenames}, if \code{x} is of length one, a vector will be returned. Otherwise a \code{\link{list}}, with \code{x} as names.
 }
 \description{
 Use these functions to return a specific property of an antibiotic from the \code{\link{antibiotics}} data set, based on their ATC code. Get such a code with \code{\link{as.atc}}.

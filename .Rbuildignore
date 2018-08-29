@@ -4,3 +4,4 @@
 .zenodo.json
 ^cran-comments\.md$
 ^appveyor\.yml$
+_noinclude

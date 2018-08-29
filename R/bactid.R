@@ -205,12 +205,12 @@ as.bactid <- function(x, Becker = FALSE, Lancefield = FALSE) {
       failures <- c(failures, x_backup[i])
       next
     }
-    if (x_backup[i] %in% MOs$bactid) {
+    if (x_backup[i] %in% AMR::microorganisms$bactid) {
       # is already a valid bactid
       x[i] <- x_backup[i]
       next
     }
-    if (x_trimmed[i] %in% MOs$bactid) {
+    if (x_trimmed[i] %in% AMR::microorganisms$bactid) {
       # is already a valid bactid
       x[i] <- x_trimmed[i]
       next

@@ -34,6 +34,10 @@ test_that("guess_atc works", {
 
   expect_identical(class(as.atc("amox")), "atc")
 
+  expect_identical(ab_trivial_nl("Cefmenoxim"), "Cefmenoxim")
+
+  expect_warning(as.atc("Z00ZZ00")) # not yet available in data set
+
   # first 5 chars of official name
   expect_equal(as.character(as.atc(c("nitro", "cipro"))),
                c("J01XE01", "J01MA02"))
