@@ -83,10 +83,24 @@ septic_patients \%>\%
   select(amox, nitr, fosf, trim, cipr) \%>\%
   ggplot_rsi()
 
+# for colourblind mode, use divergent colours from the viridis package:
+septic_patients \%>\%
+  select(amox, nitr, fosf, trim, cipr) \%>\%
+  ggplot_rsi() + scale_fill_viridis_d()
+
 # get counts instead of percentages:
 septic_patients \%>\%
   select(amox, nitr, fosf, trim, cipr) \%>\%
   ggplot_rsi(fun = count_df)
+
+# add other ggplot2 parameters as you like:
+septic_patients \%>\%
+  select(amox, nitr, fosf, trim, cipr) \%>\%
+  ggplot_rsi(width = 0.5,
+             colour = "black",
+             size = 1,
+             linetype = 2,
+             alpha = 0.25)
 \donttest{
 # it also supports groups (don't forget to use the group on `x` or `facet`):
 septic_patients \%>\%
@@ -115,7 +129,7 @@ septic_patients \%>\%
   left_join_microorganisms() \%>\%
   # select full name and some antiseptic drugs
   select(mo = fullname,
-            cfur, gent, cipr) \%>\%
+         cfur, gent, cipr) \%>\%
   # group by MO
   group_by(mo) \%>\%
   # plot the thing, putting MOs on the facet

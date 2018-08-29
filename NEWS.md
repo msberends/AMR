@@ -6,7 +6,7 @@
 * Function `is.rsi.eligible` to check for columns that have valid antimicrobial results, but do not have the `rsi` class yet. Transform the columns of your raw data with: `data %>% mutate_if(is.rsi.eligible, as.rsi)`
 * Functions `as.atc` and `is.atc` to transform/look up antibiotic ATC codes as defined by the WHO. The existing function `guess_atc` is now an alias of `as.atc`.
 * Aliases for existing function `mo_property`: `mo_aerobic`, `mo_family`, `mo_fullname`, `mo_genus`, `mo_gramstain`, `mo_gramstain_nl`, `mo_property`, `mo_species`, `mo_subspecies`, `mo_type`, `mo_type_nl`
-* Function `ab_property` and its aliases: `ab_certe`, `ab_official`, `ab_official_nl`, `ab_property`, `ab_trivial_nl`, `ab_umcg`
+* Function `ab_property` and its aliases: `ab_certe`, `ab_official`, `ab_official_nl`, `ab_property`, `ab_trivial_nl`, `ab_umcg`, `ab_tradenames`
 * Introduction to AMR as a vignette
 
 #### Changed
@@ -22,7 +22,7 @@
   # [1] "R01AX06" "J01CA04" "J01FA10" "J01CF05"
   ```
 * Removed function `ratio` as it is not really the scope of this package
-* Fix in `as.mic` for values ending in zeroes after a real number
+* Fix for `as.mic` for values ending in zeroes after a real number
 * Huge speed improvement for `as.bactid`
 * Added parameters `minimum` and `as_percent` to `portion_df`
 * Support for quasiquotation in the functions series `count_*` and `portions_*`, and `n_rsi`. This allows to check for more than 2 vectors or columns.
@@ -46,8 +46,7 @@
     my_list %>% freq(age)
     my_list %>% freq(sex)
     ```
-* Added "Furabid" as a trade name to Nitrofurantoine in the `antibiotics` data set
-    
+
 #### Other
 * More unit tests to ensure better integrity of functions
 

@@ -25,6 +25,20 @@ test_that("first isolates work", {
                       info = TRUE),
         na.rm = TRUE)),
     1426)
+  # and 1449 when not ignoring I
+  expect_equal(
+    suppressWarnings(
+      sum(
+        first_isolate(tbl = septic_patients %>% mutate(keyab = key_antibiotics(.)),
+                      col_date = "date",
+                      col_patient_id = "patient_id",
+                      col_bactid = "bactid",
+                      col_keyantibiotics = "keyab",
+                      ignore_I = FALSE,
+                      type = "keyantibiotics",
+                      info = TRUE),
+        na.rm = TRUE)),
+    1449)
   # and 1430 when using points
   expect_equal(
     suppressWarnings(
@@ -86,10 +100,34 @@ test_that("first isolates work", {
       na.rm = TRUE),
     1501)
 
+  # "No isolates found"
   expect_message(septic_patients %>%
                    mutate(specimen = "test") %>%
                    mutate(first = first_isolate(., "date", "patient_id",
-                                                col_bactid = "bactid", col_specimen = "specimen",
-                                                filter_specimen = "something_unexisting")))
+                                                col_bactid = "bactid",
+                                                col_specimen = "specimen",
+                                                filter_specimen = "something_unexisting",
+                                                output_logical = FALSE)))
+
+  # printing of exclusion message
+  expect_output(septic_patients %>%
+                            first_isolate(col_date = "date",
+                                          col_bactid = "bactid",
+                                          col_patient_id = "patient_id",
+                                          col_testcode = "sex",
+                                          testcodes_exclude = "M"))
+
+  # errors
   expect_error(first_isolate("date", "patient_id", col_bactid = "bactid"))
+  expect_error(first_isolate(septic_patients))
+  expect_error(first_isolate(septic_patients,
+                             col_date = "non-existing col",
+                             col_bactid = "bactid"))
+
+  expect_warning(septic_patients %>%
+                   mutate(bactid = as.character(bactid)) %>%
+                   first_isolate(col_date = "date",
+                                 col_bactid = "bactid",
+                                 col_patient_id = "patient_id"))
+
 })

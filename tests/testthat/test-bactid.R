@@ -10,10 +10,13 @@ test_that("as.bactid works", {
   expect_equal(as.character(as.bactid("Escherichia  species")), "ESC")
   expect_equal(as.character(as.bactid(" ESCCOL ")), "ESCCOL")
   expect_equal(as.character(as.bactid("klpn")), "KLEPNE")
+  expect_equal(as.character(as.bactid("Klebsiella")), "KLE")
+  expect_equal(as.character(as.bactid("coagulase negative")), "STACNS")
 
   expect_equal(as.character(as.bactid("P. aer")), "PSEAER") # not Pasteurella aerogenes
 
   expect_equal(as.character(as.bactid("Negative rods")), "GNR")
+  expect_equal(as.character(as.bactid("Gram negative rods")), "GNR")
 
   # GLIMS
   expect_equal(as.character(as.bactid("shiboy")), "SHIBOY")
@@ -65,6 +68,8 @@ test_that("as.bactid works", {
   expect_identical(as.character(guess_bactid("S. salivarius",  Lancefield = FALSE)),  "STCSAL")
   expect_identical(as.character(guess_bactid("S. salivarius",  Lancefield = TRUE)),   "STCGRK") # group K
 
+  library(dplyr)
+
   # select with one column
   expect_identical(
     septic_patients[1:10,] %>%
@@ -87,6 +92,9 @@ test_that("as.bactid works", {
 
   # unknown results
   expect_warning(as.bactid(c("INVALID", "Yeah, unknown")))
+
+  # too many columns
+  expect_error(septic_patients %>% select(1:3) %>% as.bactid())
 
   # print
   expect_output(print(as.bactid(c("ESCCOL", NA))))

@@ -23,7 +23,6 @@
 #' @param position position adjustment of bars, either \code{"stack"} (default when \code{fun} is \code{\link{portion_df}}) or \code{"dodge"} (default when \code{fun} is \code{\link{count_df}})
 #' @param x variable to show on x axis, either \code{"Antibiotic"} (default) or \code{"Interpretation"} or a grouping variable
 #' @param fill variable to categorise using the plots legend, either \code{"Antibiotic"} (default) or \code{"Interpretation"} or a grouping variable
-# @param params a list with parameters passed on to the new \code{geom_rsi} layer, like \code{alpha} and \code{width}
 #' @param facet variable to split plots by, either \code{"Interpretation"} (default) or \code{"Antibiotic"} or a grouping variable
 #' @param translate_ab a column name of the \code{\link{antibiotics}} data set to translate the antibiotic abbreviations into, using \code{\link{abname}}. Default behaviour is to translate to official names according to the WHO. Use \code{translate_ab = FALSE} to disable translation.
 #' @param fun function to transform \code{data}, either \code{\link{portion_df}} (default) or \code{\link{count_df}}
@@ -66,10 +65,24 @@
 #'   select(amox, nitr, fosf, trim, cipr) %>%
 #'   ggplot_rsi()
 #'
+#' # for colourblind mode, use divergent colours from the viridis package:
+#' septic_patients %>%
+#'   select(amox, nitr, fosf, trim, cipr) %>%
+#'   ggplot_rsi() + scale_fill_viridis_d()
+#'
 #' # get counts instead of percentages:
 #' septic_patients %>%
 #'   select(amox, nitr, fosf, trim, cipr) %>%
 #'   ggplot_rsi(fun = count_df)
+#'
+#' # add other ggplot2 parameters as you like:
+#' septic_patients %>%
+#'   select(amox, nitr, fosf, trim, cipr) %>%
+#'   ggplot_rsi(width = 0.5,
+#'              colour = "black",
+#'              size = 1,
+#'              linetype = 2,
+#'              alpha = 0.25)
 #' \donttest{
 #' # it also supports groups (don't forget to use the group on `x` or `facet`):
 #' septic_patients %>%
@@ -98,7 +111,7 @@
 #'   left_join_microorganisms() %>%
 #'   # select full name and some antiseptic drugs
 #'   select(mo = fullname,
-#'             cfur, gent, cipr) %>%
+#'          cfur, gent, cipr) %>%
 #'   # group by MO
 #'   group_by(mo) %>%
 #'   # plot the thing, putting MOs on the facet
@@ -152,7 +165,6 @@ ggplot_rsi <- function(data,
 geom_rsi <- function(position = NULL,
                      x = c("Antibiotic", "Interpretation"),
                      fill = "Interpretation",
-                     # params = list(),
                      translate_ab = "official",
                      fun = portion_df,
                      ...)  {
@@ -181,10 +193,6 @@ geom_rsi <- function(position = NULL,
   }
 
   options(get_antibiotic_names = translate_ab)
-
-  # if (!is.list(params)) {
-  #   params <- as.list(params)
-  # }
 
   ggplot2::layer(geom = "bar", stat = "identity", position = position,
                  mapping = ggplot2::aes_string(x = x, y = y, fill = fill),

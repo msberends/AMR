@@ -151,16 +151,18 @@ library(dplyr)
 library(ggplot2)
 
 septic_patients %>%
-  select(amox, cipr) %>%
+  select(amox, nitr, fosf, trim, cipr) %>%
   ggplot_rsi()
 ```
 
 ![example_2_rsi](man/figures/rsi_example2.png)
 
+Adjust it with any parameter you know from the `ggplot2` package:
+
 ```r
 septic_patients %>%
-    select(amox, cipr) %>%
-    ggplot_rsi(x = "Interpretation", facet = "Antibiotic")
+  select(amox, nitr, fosf, trim, cipr) %>%
+  ggplot_rsi(width = 0.5, colour = "black", size = 1, linetype = 2, alpha = 0.25)
 ```
 
 ![example_3_rsi](man/figures/rsi_example3.png)
