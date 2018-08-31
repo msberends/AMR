@@ -13,7 +13,7 @@ EUCAST Expert Rules Version 2.0: \cr
   \url{http://www.eucast.org/fileadmin/src/media/PDFs/EUCAST_files/Expert_Rules/Expert_rules_intrinsic_exceptional_V3.1.pdf}
 }
 \usage{
-EUCAST_rules(tbl, col_bactid = "bactid", info = TRUE, amcl = "amcl",
+EUCAST_rules(tbl, col_mo = "mo", info = TRUE, amcl = "amcl",
   amik = "amik", amox = "amox", ampi = "ampi", azit = "azit",
   azlo = "azlo", aztr = "aztr", cefa = "cefa", cfep = "cfep",
   cfot = "cfot", cfox = "cfox", cfra = "cfra", cfta = "cfta",
@@ -28,18 +28,21 @@ EUCAST_rules(tbl, col_bactid = "bactid", info = TRUE, amcl = "amcl",
   peni = "peni", pita = "pita", poly = "poly", pris = "pris",
   qida = "qida", rifa = "rifa", roxi = "roxi", siso = "siso",
   teic = "teic", tetr = "tetr", tica = "tica", tige = "tige",
-  tobr = "tobr", trim = "trim", trsu = "trsu", vanc = "vanc")
+  tobr = "tobr", trim = "trim", trsu = "trsu", vanc = "vanc",
+  col_bactid = "bactid")
 
 interpretive_reading(...)
 }
 \arguments{
 \item{tbl}{table with antibiotic columns, like e.g. \code{amox} and \code{amcl}}
 
-\item{col_bactid}{column name of the bacteria ID in \code{tbl} - values of this column should be present in \code{microorganisms$bactid}, see \code{\link{microorganisms}}}
+\item{col_mo}{column name of the bacteria ID in \code{tbl} - values of this column should be present in \code{microorganisms$mo}, see \code{\link{microorganisms}}}
 
 \item{info}{print progress}
 
-\item{amcl, amik, amox, ampi, azit, azlo, aztr, cefa, cfep, cfot, cfox, cfra, cfta, cftr, cfur, chlo, cipr, clar, clin, clox, coli, czol, dapt, doxy, erta, eryt, fosf, fusi, gent, imip, kana, levo, linc, line, mero, mezl, mino, moxi, nali, neom, neti, nitr, norf, novo, oflo, peni, pita, poly, pris, qida, rifa, roxi, siso, teic, tetr, tica, tige, tobr, trim, trsu, vanc}{column names of antibiotics. Use \code{NA} to skip a column, like \code{tica = NA}. Non-existing columns will anyway be skipped. See the Antibiotics section for an explanation of the abbreviations.}
+\item{amcl, amik, amox, ampi, azit, azlo, aztr, cefa, cfep, cfot, cfox, cfra, cfta, cftr, cfur, chlo, cipr, clar, clin, clox, coli, czol, dapt, doxy, erta, eryt, fosf, fusi, gent, imip, kana, levo, linc, line, mero, mezl, mino, moxi, nali, neom, neti, nitr, norf, novo, oflo, peni, pita, poly, pris, qida, rifa, roxi, siso, teic, tetr, tica, tige, tobr, trim, trsu, vanc}{column name of an antibiotic. Use \code{NA} to skip a column, like \code{tica = NA}. Non-existing columns will anyway be skipped. See the Antibiotics section for an explanation of the abbreviations.}
+
+\item{col_bactid}{Deprecated. Use \code{col_mo} instead.}
 
 \item{...}{parameters that are passed on to \code{EUCAST_rules}}
 }
@@ -49,7 +52,7 @@ table with edited variables of antibiotics.
 \description{
 Apply expert rules (like intrinsic resistance), as defined by the European Committee on Antimicrobial Susceptibility Testing (EUCAST, \url{http://eucast.org}), see \emph{Source}.
 }
-\section{Abbrevations of antibiotics}{
+\section{Antibiotics}{
 
 Abbrevations of the column containing antibiotics:
 
@@ -118,16 +121,16 @@ Abbrevations of the column containing antibiotics:
 
 \examples{
 a <- EUCAST_rules(septic_patients)
-a <- data.frame(bactid = c("STAAUR",  # Staphylococcus aureus
-                           "ENCFAE",  # Enterococcus faecalis
-                           "ESCCOL",  # Escherichia coli
-                           "KLEPNE",  # Klebsiella pneumoniae
-                           "PSEAER"), # Pseudomonas aeruginosa
-                vanc = "-",           # Vancomycin
-                amox = "-",           # Amoxicillin
-                coli = "-",           # Colistin
-                cfta = "-",           # Ceftazidime
-                cfur = "-",           # Cefuroxime
+a <- data.frame(mo = c("STAAUR",  # Staphylococcus aureus
+                       "ENCFAE",  # Enterococcus faecalis
+                       "ESCCOL",  # Escherichia coli
+                       "KLEPNE",  # Klebsiella pneumoniae
+                       "PSEAER"), # Pseudomonas aeruginosa
+                vanc = "-",       # Vancomycin
+                amox = "-",       # Amoxicillin
+                coli = "-",       # Colistin
+                cfta = "-",       # Ceftazidime
+                cfur = "-",       # Cefuroxime
                 stringsAsFactors = FALSE)
 a
 

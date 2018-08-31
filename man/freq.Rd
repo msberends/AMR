@@ -88,7 +88,7 @@ septic_patients \%>\% freq(hospital_id)  #<- easiest to remember when you're use
 # you could also use `select` or `pull` to get your variables
 septic_patients \%>\%
   filter(hospital_id == "A") \%>\%
-  select(bactid) \%>\%
+  select(mo) \%>\%
   freq()
 
 # multiple selected variables will be pasted together
@@ -100,7 +100,7 @@ septic_patients \%>\%
 # get top 10 bugs of hospital A as a vector
 septic_patients \%>\%
   filter(hospital_id == "A") \%>\%
-  freq(bactid) \%>\%
+  freq(mo) \%>\%
   top_freq(10)
 
 # save frequency table to an object

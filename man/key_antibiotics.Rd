@@ -5,13 +5,14 @@
 \alias{key_antibiotics_equal}
 \title{Key antibiotics for first \emph{weighted} isolates}
 \usage{
-key_antibiotics(tbl, col_bactid = "bactid", universal_1 = "amox",
+key_antibiotics(tbl, col_mo = "mo", universal_1 = "amox",
   universal_2 = "amcl", universal_3 = "cfur", universal_4 = "pita",
   universal_5 = "cipr", universal_6 = "trsu", GramPos_1 = "vanc",
   GramPos_2 = "teic", GramPos_3 = "tetr", GramPos_4 = "eryt",
   GramPos_5 = "oxac", GramPos_6 = "rifa", GramNeg_1 = "gent",
   GramNeg_2 = "tobr", GramNeg_3 = "coli", GramNeg_4 = "cfot",
-  GramNeg_5 = "cfta", GramNeg_6 = "mero", warnings = TRUE)
+  GramNeg_5 = "cfta", GramNeg_6 = "mero", warnings = TRUE,
+  col_bactid = "bactid")
 
 key_antibiotics_equal(x, y, type = c("keyantibiotics", "points"),
   ignore_I = TRUE, points_threshold = 2, info = FALSE)
@@ -19,7 +20,7 @@ key_antibiotics_equal(x, y, type = c("keyantibiotics", "points"),
 \arguments{
 \item{tbl}{table with antibiotics coloms, like \code{amox} and \code{amcl}.}
 
-\item{col_bactid}{column name of the unique IDs of the microorganisms: \code{bactid}'s. If this column has another class than \code{"bactid"}, values will be coerced using \code{\link{as.bactid}}.}
+\item{col_mo}{column name of the unique IDs of the microorganisms, see \code{\link{mo}}. If this column has another class than \code{"mo"}, values will be coerced using \code{\link{as.mo}}.}
 
 \item{universal_1, universal_2, universal_3, universal_4, universal_5, universal_6}{column names of \strong{broad-spectrum} antibiotics, case-insensitive}
 
@@ -28,6 +29,8 @@ key_antibiotics_equal(x, y, type = c("keyantibiotics", "points"),
 \item{GramNeg_1, GramNeg_2, GramNeg_3, GramNeg_4, GramNeg_5, GramNeg_6}{column names of antibiotics for \strong{Gram negatives}, case-insensitive}
 
 \item{warnings}{give warning about missing antibiotic columns, they will anyway be ignored}
+
+\item{col_bactid}{(deprecated, use \code{col_mo} instead)}
 
 \item{x, y}{characters to compare}
 
@@ -76,9 +79,9 @@ my_patients <- my_patients \%>\%
   mutate(keyab = key_antibiotics(.)) \%>\%
   mutate(
     # now calculate first isolates
-    first_regular = first_isolate(., "date", "patient_id", "bactid"),
+    first_regular = first_isolate(., "date", "patient_id", "mo"),
     # and first WEIGHTED isolates
-    first_weighted = first_isolate(., "date", "patient_id", "bactid",
+    first_weighted = first_isolate(., "date", "patient_id", "mo",
                                    col_keyantibiotics = "keyab")
   )
 

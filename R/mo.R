@@ -16,18 +16,18 @@
 # GNU General Public License for more details.                         #
 # ==================================================================== #
 
-#' Transform to bacteria ID
+#' Transform to microorganism ID
 #'
 #' Use this function to determine a valid ID based on a genus (and species). This input can be a full name (like \code{"Staphylococcus aureus"}), an abbreviated name (like \code{"S. aureus"}), or just a genus. You could also \code{\link{select}} a genus and species column, zie Examples.
 #' @param x a character vector or a dataframe with one or two columns
 #' @param Becker a logical to indicate whether \emph{Staphylococci} should be categorised into Coagulase Negative \emph{Staphylococci} ("CoNS") and Coagulase Positive \emph{Staphylococci} ("CoPS") instead of their own species, according to Karsten Becker \emph{et al.} [1]. This excludes \emph{Staphylococcus aureus} at default, use \code{Becker = "all"} to also categorise \emph{S. aureus} as "CoPS".
 #' @param Lancefield a logical to indicate whether beta-haemolytic \emph{Streptococci} should be categorised into Lancefield groups instead of their own species, according to Rebecca C. Lancefield [2]. These \emph{Streptococci} will be categorised in their first group, i.e. \emph{Streptococcus dysgalactiae} will be group C, although officially it was also categorised into groups G and L. Groups D and E will be ignored, since they are \emph{Enterococci}.
-#' @rdname as.bactid
-#' @aliases bactid
-#' @keywords bactid Becker becker Lancefield lancefield guess
-#' @details \code{guess_bactid} is an alias of \code{as.bactid}.
+#' @rdname as.mo
+#' @aliases mo
+#' @keywords mo Becker becker Lancefield lancefield guess
+#' @details \code{guess_mo} is an alias of \code{as.mo}.
 #'
-#' Use the \code{\link{mo_property}} functions to get properties based on the returned bactid, see Examples.
+#' Use the \code{\link{mo_property}} functions to get properties based on the returned mo, see Examples.
 #'
 #' Some exceptions have been built in to get more logical results, based on prevalence of human pathogens. These are:
 #' \itemize{
@@ -45,51 +45,51 @@
 #'     \url{https://dx.doi.org/10.1084/jem.57.4.571}
 #' @export
 #' @importFrom dplyr %>% pull left_join
-#' @return Character (vector) with class \code{"bactid"}. Unknown values will return \code{NA}.
+#' @return Character (vector) with class \code{"mo"}. Unknown values will return \code{NA}.
 #' @seealso \code{\link{microorganisms}} for the dataframe that is being used to determine ID's.
 #' @examples
 #' # These examples all return "STAAUR", the ID of S. aureus:
-#' as.bactid("stau")
-#' as.bactid("STAU")
-#' as.bactid("staaur")
-#' as.bactid("S. aureus")
-#' as.bactid("S aureus")
-#' as.bactid("Staphylococcus aureus")
-#' as.bactid("MRSA") # Methicillin Resistant S. aureus
-#' as.bactid("VISA") # Vancomycin Intermediate S. aureus
-#' as.bactid("VRSA") # Vancomycin Resistant S. aureus
+#' as.mo("stau")
+#' as.mo("STAU")
+#' as.mo("staaur")
+#' as.mo("S. aureus")
+#' as.mo("S aureus")
+#' as.mo("Staphylococcus aureus")
+#' as.mo("MRSA") # Methicillin Resistant S. aureus
+#' as.mo("VISA") # Vancomycin Intermediate S. aureus
+#' as.mo("VRSA") # Vancomycin Resistant S. aureus
 #'
-#' # guess_bactid is an alias of as.bactid and works the same
-#' guess_bactid("S. epidermidis")                 # will remain species: STAEPI
-#' guess_bactid("S. epidermidis", Becker = TRUE)  # will not remain species: STACNS
+#' # guess_mo is an alias of as.mo and works the same
+#' guess_mo("S. epidermidis")                 # will remain species: STAEPI
+#' guess_mo("S. epidermidis", Becker = TRUE)  # will not remain species: STACNS
 #'
-#' guess_bactid("S. pyogenes")                    # will remain species: STCAGA
-#' guess_bactid("S. pyogenes", Lancefield = TRUE) # will not remain species: STCGRA
+#' guess_mo("S. pyogenes")                    # will remain species: STCAGA
+#' guess_mo("S. pyogenes", Lancefield = TRUE) # will not remain species: STCGRA
 #'
-#' # Use mo_* functions to get a specific property based on a bactid
-#' Ecoli <- as.bactid("E. coli") # returns `ESCCOL`
+#' # Use mo_* functions to get a specific property based on `mo`
+#' Ecoli <- as.mo("E. coli") # returns `ESCCOL`
 #' mo_genus(Ecoli)               # returns "Escherichia"
 #' mo_gramstain(Ecoli)           # returns "Negative rods"
 #'
 #' \dontrun{
-#' df$bactid <- as.bactid(df$microorganism_name)
+#' df$mo <- as.mo(df$microorganism_name)
 #'
 #' # the select function of tidyverse is also supported:
 #' library(dplyr)
-#' df$bactid <- df %>%
+#' df$mo <- df %>%
 #'   select(microorganism_name) %>%
-#'   guess_bactid()
+#'   guess_mo()
 #'
 #' # and can even contain 2 columns, which is convenient for genus/species combinations:
-#' df$bactid <- df %>%
+#' df$mo <- df %>%
 #'   select(genus, species) %>%
-#'   guess_bactid()
+#'   guess_mo()
 #'
 #' # same result:
 #' df <- df %>%
-#'   mutate(bactid = guess_bactid(paste(genus, species)))
+#'   mutate(mo = guess_mo(paste(genus, species)))
 #' }
-as.bactid <- function(x, Becker = FALSE, Lancefield = FALSE) {
+as.mo <- function(x, Becker = FALSE, Lancefield = FALSE) {
 
 
   if (NCOL(x) == 2) {
@@ -111,7 +111,7 @@ as.bactid <- function(x, Becker = FALSE, Lancefield = FALSE) {
     }
   }
 
-  MOs <- AMR::microorganisms %>% filter(!bactid %like% '^_FAM') # dont search in those
+  MOs <- AMR::microorganisms %>% filter(!mo %like% '^_FAM') # dont search in those
   failures <- character(0)
   x_input <- x
 
@@ -136,7 +136,7 @@ as.bactid <- function(x, Becker = FALSE, Lancefield = FALSE) {
   for (i in 1:length(x)) {
 
     if (Becker == TRUE | Becker == "all") {
-      mo <- suppressWarnings(guess_bactid(x_backup[i]))
+      mo <- suppressWarnings(guess_mo(x_backup[i]))
       if (mo %like% '^STA') {
         # See Source. It's this figure:
         # https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4187637/figure/F3/
@@ -167,7 +167,7 @@ as.bactid <- function(x, Becker = FALSE, Lancefield = FALSE) {
     }
 
     if (Lancefield == TRUE) {
-      mo <- suppressWarnings(guess_bactid(x_backup[i]))
+      mo <- suppressWarnings(guess_mo(x_backup[i]))
       if (mo %like% '^STC') {
         # See Source
         species <- left_join_microorganisms(mo)$species
@@ -205,13 +205,13 @@ as.bactid <- function(x, Becker = FALSE, Lancefield = FALSE) {
       failures <- c(failures, x_backup[i])
       next
     }
-    if (x_backup[i] %in% AMR::microorganisms$bactid) {
-      # is already a valid bactid
+    if (x_backup[i] %in% AMR::microorganisms$mo) {
+      # is already a valid mo
       x[i] <- x_backup[i]
       next
     }
-    if (x_trimmed[i] %in% AMR::microorganisms$bactid) {
-      # is already a valid bactid
+    if (x_trimmed[i] %in% AMR::microorganisms$mo) {
+      # is already a valid mo
       x[i] <- x_trimmed[i]
       next
     }
@@ -275,14 +275,14 @@ as.bactid <- function(x, Becker = FALSE, Lancefield = FALSE) {
     }
 
     # try any match keeping spaces
-    found <- MOs[which(MOs$fullname %like% x_withspaces[i]),]$bactid
+    found <- MOs[which(MOs$fullname %like% x_withspaces[i]),]$mo
     if (length(found) > 0) {
       x[i] <- found[1L]
       next
     }
 
     # try any match diregarding spaces
-    found <- MOs[which(MOs$fullname %like% x[i]),]$bactid
+    found <- MOs[which(MOs$fullname %like% x[i]),]$mo
     if (length(found) > 0) {
       x[i] <- found[1L]
       next
@@ -290,21 +290,21 @@ as.bactid <- function(x, Becker = FALSE, Lancefield = FALSE) {
 
     # try exact match of only genus, with 'species' attached
     # (this prevents Streptococcus from becoming Peptostreptococcus, since "p" < "s")
-    found <- MOs[which(MOs$fullname == x_species[i]),]$bactid
+    found <- MOs[which(MOs$fullname == x_species[i]),]$mo
     if (length(found) > 0) {
       x[i] <- found[1L]
       next
     }
 
     # try any match of only genus, with 'species' attached
-    found <- MOs[which(MOs$fullname %like% x_species[i]),]$bactid
+    found <- MOs[which(MOs$fullname %like% x_species[i]),]$mo
     if (length(found) > 0) {
       x[i] <- found[1L]
       next
     }
 
     # search for GLIMS code
-    found <- AMR::microorganisms.umcg[which(toupper(AMR::microorganisms.umcg$mocode) == toupper(x_trimmed[i])),]$bactid
+    found <- AMR::microorganisms.umcg[which(toupper(AMR::microorganisms.umcg$umcg) == toupper(x_trimmed[i])),]$mo
     if (length(found) > 0) {
       x[i] <- found[1L]
       next
@@ -317,7 +317,7 @@ as.bactid <- function(x, Becker = FALSE, Lancefield = FALSE) {
     x_split[i] <- paste0(x_trimmed[i] %>% substr(1, x_length / 2) %>% trimws(),
                          '.* ',
                          x_trimmed[i] %>% substr((x_length / 2) + 1, x_length) %>% trimws())
-    found <- MOs[which(MOs$fullname %like% paste0('^', x_split[i])),]$bactid
+    found <- MOs[which(MOs$fullname %like% paste0('^', x_split[i])),]$mo
     if (length(found) > 0) {
       x[i] <- found[1L]
       next
@@ -331,7 +331,7 @@ as.bactid <- function(x, Becker = FALSE, Lancefield = FALSE) {
       x_trimmed[i] <- trimws(x_trimmed[i], which = "both")
     }
     if (!is.na(x_trimmed[i])) {
-      found <- MOs[which(MOs$fullname %like% x_trimmed[i]),]$bactid
+      found <- MOs[which(MOs$fullname %like% x_trimmed[i]),]$mo
       if (length(found) > 0) {
         x[i] <- found[1L]
         next
@@ -346,7 +346,7 @@ as.bactid <- function(x, Becker = FALSE, Lancefield = FALSE) {
 
   failures <- failures[!failures %in% c(NA, NULL, NaN)]
   if (length(failures) > 0) {
-    warning("These values could not be coerced to a valid bactid: ",
+    warning("These values could not be coerced to a valid mo: ",
             paste('"', unique(failures), '"', sep = "", collapse = ', '),
             ".",
             call. = FALSE)
@@ -364,19 +364,51 @@ as.bactid <- function(x, Becker = FALSE, Lancefield = FALSE) {
               by = "input") %>%
     pull(found)
 
-  class(x) <- "bactid"
+  class(x) <- "mo"
   attr(x, 'package') <- 'AMR'
   x
 }
 
-#' @rdname as.bactid
+#' @rdname as.mo
 #' @export
-guess_bactid <- as.bactid
+is.mo <- function(x) {
+  # bactid for older releases
+  # remove when is.bactid will be removed
+  identical(class(x), "mo") | identical(class(x), "bactid")
+}
 
-#' @rdname as.bactid
+#' @rdname as.mo
 #' @export
-is.bactid <- function(x) {
-  identical(class(x), "bactid")
+guess_mo <- as.mo
+
+#' @exportMethod print.mo
+#' @export
+#' @noRd
+print.mo <- function(x, ...) {
+  cat("Class 'mo'\n")
+  print.default(as.character(x), quote = FALSE)
+}
+
+#' @exportMethod as.data.frame.mo
+#' @export
+#' @noRd
+as.data.frame.mo <- function (x, ...) {
+  # same as as.data.frame.character but with removed stringsAsFactors
+  nm <- paste(deparse(substitute(x), width.cutoff = 500L),
+              collapse = " ")
+  if (!"nm" %in% names(list(...))) {
+    as.data.frame.vector(x, ..., nm = nm)
+  } else {
+    as.data.frame.vector(x, ...)
+  }
+}
+
+#' @exportMethod pull.mo
+#' @export
+#' @importFrom dplyr pull
+#' @noRd
+pull.mo <- function(.data, ...) {
+  pull(as.data.frame(.data), ...)
 }
 
 #' @exportMethod print.bactid

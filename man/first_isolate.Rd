@@ -7,13 +7,13 @@
 Methodology of this function is based on: \strong{M39 Analysis and Presentation of Cumulative Antimicrobial Susceptibility Test Data, 4th Edition}, 2014, \emph{Clinical and Laboratory Standards Institute (CLSI)}. \url{https://clsi.org/standards/products/microbiology/documents/m39/}.
 }
 \usage{
-first_isolate(tbl, col_date, col_patient_id, col_bactid = NA,
+first_isolate(tbl, col_date, col_patient_id, col_mo = NA,
   col_testcode = NA, col_specimen = NA, col_icu = NA,
   col_keyantibiotics = NA, episode_days = 365,
   testcodes_exclude = "", icu_exclude = FALSE, filter_specimen = NA,
   output_logical = TRUE, type = "keyantibiotics", ignore_I = TRUE,
-  points_threshold = 2, info = TRUE, col_genus = NA,
-  col_species = NA)
+  points_threshold = 2, info = TRUE, col_bactid = NA,
+  col_genus = NA, col_species = NA)
 }
 \arguments{
 \item{tbl}{a \code{data.frame} containing isolates.}
@@ -22,7 +22,7 @@ first_isolate(tbl, col_date, col_patient_id, col_bactid = NA,
 
 \item{col_patient_id}{column name of the unique IDs of the patients}
 
-\item{col_bactid}{column name of the unique IDs of the microorganisms: \code{bactid}'s. If this column has another class than \code{"bactid"}, values will be coerced using \code{\link{as.bactid}}.}
+\item{col_mo}{column name of the unique IDs of the microorganisms, see \code{\link{mo}}. If this column has another class than \code{"mo"}, values will be coerced using \code{\link{as.mo}}.}
 
 \item{col_testcode}{column name of the test codes. Use \code{col_testcode = NA} to \strong{not} exclude certain test codes (like test codes for screening). In that case \code{testcodes_exclude} will be ignored. Supports tidyverse-like quotation.}
 
@@ -50,9 +50,11 @@ first_isolate(tbl, col_date, col_patient_id, col_bactid = NA,
 
 \item{info}{print progress}
 
-\item{col_genus}{(deprecated, use \code{col_bactid} instead) column name of the genus of the microorganisms}
+\item{col_bactid}{(deprecated, use \code{col_mo} instead)}
 
-\item{col_species}{(deprecated, use \code{col_bactid} instead) column name of the species of the microorganisms}
+\item{col_genus}{(deprecated, use \code{col_mo} instead) column name of the genus of the microorganisms}
+
+\item{col_species}{(deprecated, use \code{col_mo} instead) column name of the species of the microorganisms}
 }
 \value{
 A vector to add to table, see Examples.
@@ -84,7 +86,7 @@ my_patients <- septic_patients \%>\%
   mutate(first_isolate = first_isolate(.,
                                        col_date = "date",
                                        col_patient_id = "patient_id",
-                                       col_bactid = "bactid"))
+                                       col_mo = "mo"))
 
 # Now let's see if first isolates matter:
 A <- my_patients \%>\%

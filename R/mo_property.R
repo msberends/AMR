@@ -18,9 +18,9 @@
 
 #' Property of a microorganism
 #'
-#' Use these functions to return a specific property of a microorganism from the \code{\link{microorganisms}} data set, based on their \code{bactid}. Get such an ID with \code{\link{as.bactid}}.
-#' @param x a (vector of a) valid \code{\link{bactid}} or any text that can be coerced to a valid bactid with \code{\link{as.bactid}}
-#' @param property one of the column names of one of the \code{\link{microorganisms}} data set, like \code{"bactid"}, \code{"bactsys"}, \code{"family"}, \code{"genus"}, \code{"species"}, \code{"fullname"}, \code{"gramstain"} and \code{"aerobic"}
+#' Use these functions to return a specific property of a microorganism from the \code{\link{microorganisms}} data set, based on their \code{mo}. Get such an ID with \code{\link{as.mo}}.
+#' @param x a (vector of a) valid \code{\link{mo}} or any text that can be coerced to a valid microorganism code with \code{\link{as.mo}}
+#' @param property one of the column names of one of the \code{\link{microorganisms}} data set, like \code{"mo"}, \code{"bactsys"}, \code{"family"}, \code{"genus"}, \code{"species"}, \code{"fullname"}, \code{"gramstain"} and \code{"aerobic"}
 #' @rdname mo_property
 #' @export
 #' @importFrom dplyr %>% left_join pull
@@ -68,12 +68,12 @@ mo_property <- function(x, property = 'fullname') {
   if (!property %in% colnames(microorganisms)) {
     stop("invalid property: ", property, " - use a column name of `microorganisms`")
   }
-  if (!is.bactid(x)) {
-    x <- as.bactid(x) # this will give a warning if x cannot be coerced
+  if (!is.mo(x)) {
+    x <- as.mo(x) # this will give a warning if x cannot be coerced
   }
   suppressWarnings(
-    data.frame(bactid = x, stringsAsFactors = FALSE) %>%
-      left_join(AMR::microorganisms, by = "bactid") %>%
+    data.frame(mo = x, stringsAsFactors = FALSE) %>%
+      left_join(AMR::microorganisms, by = "mo") %>%
       pull(property)
   )
 }

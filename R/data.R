@@ -125,7 +125,7 @@
 #' A dataset containing 2,646 microorganisms. MO codes of the UMCG can be looked up using \code{\link{microorganisms.umcg}}.
 #' @format A data.frame with 2,646 observations and 12 variables:
 #' \describe{
-#'   \item{\code{bactid}}{ID of microorganism}
+#'   \item{\code{mo}}{ID of microorganism}
 #'   \item{\code{bactsys}}{Bactsyscode of microorganism}
 #'   \item{\code{family}}{Family name of microorganism}
 #'   \item{\code{genus}}{Genus name of microorganism, like \code{"Echerichia"}}
@@ -140,27 +140,27 @@
 #' }
 #  source MOLIS (LIS of Certe) - \url{https://www.certe.nl}
 # new <- microorganisms %>% filter(genus == "Bacteroides") %>% .[1,]
-# new[1, 'bactid'] <- "DIAPNU"
+# new[1, 'mo'] <- "DIAPNU"
 # new[1, 'bactsys'] <- "DIAPNU"
 # new[1, 'family'] <- "Veillonellaceae"
 # new[1, 'genus'] <- "Dialister"
 # new[1, 'species'] <- "pneumosintes"
 # new[1, 'subspecies'] <- NA
 # new[1, 'fullname'] <- paste(new[1, 'genus'], new[1, 'species'])
-# microorganisms <- microorganisms %>% bind_rows(new) %>% arrange(bactid)
-#' @seealso \code{\link{guess_bactid}} \code{\link{antibiotics}} \code{\link{microorganisms.umcg}}
+# microorganisms <- microorganisms %>% bind_rows(new) %>% arrange(mo)
+#' @seealso \code{\link{guess_mo}} \code{\link{antibiotics}} \code{\link{microorganisms.umcg}}
 "microorganisms"
 
 #' Translation table for UMCG with ~1100 microorganisms
 #'
-#' A dataset containing all bacteria codes of UMCG MMB. These codes can be joined to data with an ID from \code{\link{microorganisms}$bactid} (using \code{\link{left_join_microorganisms}}). GLIMS codes can also be translated to valid \code{bactid}'s with \code{\link{guess_bactid}}.
+#' A dataset containing all bacteria codes of UMCG MMB. These codes can be joined to data with an ID from \code{\link{microorganisms}$mo} (using \code{\link{left_join_microorganisms}}). GLIMS codes can also be translated to valid \code{mo}'s with \code{\link{guess_mo}}.
 #' @format A data.frame with 1090 observations and 2 variables:
 #' \describe{
-#'   \item{\code{mocode}}{Code of microorganism according to UMCG MMB}
-#'   \item{\code{bactid}}{Code of microorganism in \code{\link{microorganisms}}}
+#'   \item{\code{umcg}}{Code of microorganism according to UMCG MMB}
+#'   \item{\code{mo}}{Code of microorganism in \code{\link{microorganisms}}}
 #' }
 # source MOLIS (LIS of Certe) - \url{https://www.certe.nl} \cr \cr GLIMS (LIS of UMCG) - \url{https://www.umcg.nl}
-#' @seealso \code{\link{guess_bactid}} \code{\link{microorganisms}}
+#' @seealso \code{\link{guess_mo}} \code{\link{microorganisms}}
 "microorganisms.umcg"
 
 #' Dataset with 2000 blood culture isolates of septic patients
@@ -176,7 +176,7 @@
 #'   \item{\code{age}}{age of the patient}
 #'   \item{\code{sex}}{sex of the patient}
 #'   \item{\code{patient_id}}{ID of the patient, first 10 characters of an SHA hash containing irretrievable information}
-#'   \item{\code{bactid}}{ID of microorganism, see \code{\link{microorganisms}}}
+#'   \item{\code{mo}}{ID of microorganism, see \code{\link{microorganisms}}}
 #'   \item{\code{peni:rifa}}{40 different antibiotics with class \code{rsi} (see \code{\link{as.rsi}}); these column names occur in \code{\link{antibiotics}} data set and can be translated with \code{\link{abname}}}
 #' }
 # source MOLIS (LIS of Certe) - \url{https://www.certe.nl}
@@ -193,7 +193,7 @@
 #'
 #' # Add first isolates to our dataset:
 #' my_data <- my_data %>%
-#'   mutate(first_isolates = first_isolate(my_data, "date", "patient_id", "bactid"))
+#'   mutate(first_isolates = first_isolate(my_data, "date", "patient_id", "mo"))
 #'
 #' # -------- #
 #' # ANALYSIS #
@@ -203,7 +203,7 @@
 #' #     and numbers (n) of E. coli, divided by hospital:
 #'
 #' my_data %>%
-#'   filter(bactid == guess_bactid("E. coli"),
+#'   filter(mo == guess_mo("E. coli"),
 #'          first_isolates == TRUE) %>%
 #'   group_by(hospital_id) %>%
 #'   summarise(n = n_rsi(amox),
@@ -214,7 +214,7 @@
 #' #    percentages of E. coli, trend over the years:
 #'
 #' my_data %>%
-#'   filter(bactid == guess_bactid("E. coli"),
+#'   filter(mo == guess_mo("E. coli"),
 #'          first_isolates == TRUE) %>%
 #'   group_by(year = format(date, "%Y")) %>%
 #'   summarise(n = n_rsi(amcl),

@@ -4,6 +4,11 @@
 * Functions `count_R`, `count_IR`, `count_I`, `count_SI` and `count_S` to selectively count resistant or susceptible isolates
   * Extra function `count_df` (which works like `portion_df`) to get all counts of S, I and R of a data set with antibiotic columns, with support for grouped variables
 * Function `is.rsi.eligible` to check for columns that have valid antimicrobial results, but do not have the `rsi` class yet. Transform the columns of your raw data with: `data %>% mutate_if(is.rsi.eligible, as.rsi)`
+* Functions `as.mo` and `is.mo` as replacements for `as.bactid` and `is.bactid`. These last two functions are deprecated and will be removed in a future release.
+* Renamed all previous references to `bactid` to `mo`, like:
+  * Column names inputs of `EUCAST_rules`, `first_isolate` and `key_antibiotics`
+  * Column names of datasets `microorganisms` and `septic_patients`
+  * All old syntaxes will still work with this version, but will throw warnings
 * Functions `as.atc` and `is.atc` to transform/look up antibiotic ATC codes as defined by the WHO. The existing function `guess_atc` is now an alias of `as.atc`.
 * Aliases for existing function `mo_property`: `mo_aerobic`, `mo_family`, `mo_fullname`, `mo_genus`, `mo_gramstain`, `mo_gramstain_nl`, `mo_property`, `mo_species`, `mo_subspecies`, `mo_type`, `mo_type_nl`
 * Function `ab_property` and its aliases: `ab_certe`, `ab_official`, `ab_official_nl`, `ab_property`, `ab_trivial_nl`, `ab_umcg`, `ab_tradenames`
@@ -21,9 +26,9 @@
   ab_atc(c("Bactroban", "Amoxil", "Zithromax", "Floxapen"))
   # [1] "R01AX06" "J01CA04" "J01FA10" "J01CF05"
   ```
-* Removed function `ratio` as it is not really the scope of this package
+* Function `ratio` is now deprecated and will be removed in a future release, as it is not really the scope of this package
 * Fix for `as.mic` for values ending in zeroes after a real number
-* Huge speed improvement for `as.bactid`
+* Huge speed improvement for `as.bactid` (now `as.mo`)
 * Added parameters `minimum` and `as_percent` to `portion_df`
 * Support for quasiquotation in the functions series `count_*` and `portions_*`, and `n_rsi`. This allows to check for more than 2 vectors or columns.
   ```r

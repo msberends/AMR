@@ -22,7 +22,7 @@ test_that("frequency table works", {
   expect_output(print(freq(septic_patients$age[0])))
 
   # character
-  expect_output(print(freq(septic_patients$bactid)))
+  expect_output(print(freq(septic_patients$mo)))
   # integer
   expect_output(print(freq(septic_patients$age)))
   # date
@@ -56,21 +56,21 @@ test_that("frequency table works", {
   # top 5
   expect_equal(
     septic_patients %>%
-      freq(bactid) %>%
+      freq(mo) %>%
       top_freq(5) %>%
       length(),
     5)
   # there're more than 5 lowest values
   expect_gt(
     septic_patients %>%
-      freq(bactid) %>%
+      freq(mo) %>%
       top_freq(-5) %>%
       length(),
     5)
   # n has length > 1
   expect_error(
     septic_patients %>%
-      freq(bactid) %>%
+      freq(mo) %>%
       top_freq(n = c(1, 2))
   )
   # input must be freq tbl

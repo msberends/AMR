@@ -71,13 +71,13 @@ tbl \%>\%
 library(dplyr)
 septic_patients \%>\%
   # get bacteria properties like genus and species
-  left_join_microorganisms("bactid") \%>\%
+  left_join_microorganisms("mo") \%>\%
   # calculate first isolates
   mutate(first_isolate =
            first_isolate(.,
                          "date",
                          "patient_id",
-                         "bactid",
+                         "mo",
                          col_specimen = NA,
                          col_icu = NA)) \%>\%
   # filter on first E. coli isolates
@@ -95,7 +95,7 @@ septic_patients \%>\%
 if (!require(ggplot2)) {
 
   data <- septic_patients \%>\%
-    filter(bactid == "ESCCOL") \%>\%
+    filter(mo == "ESCCOL") \%>\%
     resistance_predict(col_ab = "amox",
                       col_date = "date",
                       info = FALSE,

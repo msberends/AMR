@@ -11,22 +11,22 @@
 \alias{anti_join_microorganisms}
 \title{Join a table with \code{microorganisms}}
 \usage{
-inner_join_microorganisms(x, by = "bactid", suffix = c("2", ""), ...)
+inner_join_microorganisms(x, by = "mo", suffix = c("2", ""), ...)
 
-left_join_microorganisms(x, by = "bactid", suffix = c("2", ""), ...)
+left_join_microorganisms(x, by = "mo", suffix = c("2", ""), ...)
 
-right_join_microorganisms(x, by = "bactid", suffix = c("2", ""), ...)
+right_join_microorganisms(x, by = "mo", suffix = c("2", ""), ...)
 
-full_join_microorganisms(x, by = "bactid", suffix = c("2", ""), ...)
+full_join_microorganisms(x, by = "mo", suffix = c("2", ""), ...)
 
-semi_join_microorganisms(x, by = "bactid", ...)
+semi_join_microorganisms(x, by = "mo", ...)
 
-anti_join_microorganisms(x, by = "bactid", ...)
+anti_join_microorganisms(x, by = "mo", ...)
 }
 \arguments{
 \item{x}{existing table to join, also supports character vectors}
 
-\item{by}{a variable to join by - could be a column name of \code{x} with values that exist in \code{microorganisms$bactid} (like \code{by = "bacteria_id"}), or another column in \code{\link{microorganisms}} (but then it should be named, like \code{by = c("my_genus_species" = "fullname")})}
+\item{by}{a variable to join by - could be a column name of \code{x} with values that exist in \code{microorganisms$mo} (like \code{by = "bacteria_id"}), or another column in \code{\link{microorganisms}} (but then it should be named, like \code{by = c("my_genus_species" = "fullname")})}
 
 \item{suffix}{if there are non-joined duplicate variables in \code{x} and \code{y}, these suffixes will be added to the output to disambiguate them. Should be a character vector of length 2.}
 

@@ -20,11 +20,12 @@
 #'
 #' Apply expert rules (like intrinsic resistance), as defined by the European Committee on Antimicrobial Susceptibility Testing (EUCAST, \url{http://eucast.org}), see \emph{Source}.
 #' @param tbl table with antibiotic columns, like e.g. \code{amox} and \code{amcl}
-#' @param col_bactid column name of the bacteria ID in \code{tbl} - values of this column should be present in \code{microorganisms$bactid}, see \code{\link{microorganisms}}
+#' @param col_mo column name of the bacteria ID in \code{tbl} - values of this column should be present in \code{microorganisms$mo}, see \code{\link{microorganisms}}
 #' @param info print progress
-#' @param amcl,amik,amox,ampi,azit,azlo,aztr,cefa,cfep,cfot,cfox,cfra,cfta,cftr,cfur,chlo,cipr,clar,clin,clox,coli,czol,dapt,doxy,erta,eryt,fosf,fusi,gent,imip,kana,levo,linc,line,mero,mezl,mino,moxi,nali,neom,neti,nitr,norf,novo,oflo,peni,pita,poly,pris,qida,rifa,roxi,siso,teic,tetr,tica,tige,tobr,trim,trsu,vanc column names of antibiotics. Use \code{NA} to skip a column, like \code{tica = NA}. Non-existing columns will anyway be skipped. See the Antibiotics section for an explanation of the abbreviations.
+#' @param amcl,amik,amox,ampi,azit,azlo,aztr,cefa,cfep,cfot,cfox,cfra,cfta,cftr,cfur,chlo,cipr,clar,clin,clox,coli,czol,dapt,doxy,erta,eryt,fosf,fusi,gent,imip,kana,levo,linc,line,mero,mezl,mino,moxi,nali,neom,neti,nitr,norf,novo,oflo,peni,pita,poly,pris,qida,rifa,roxi,siso,teic,tetr,tica,tige,tobr,trim,trsu,vanc column name of an antibiotic. Use \code{NA} to skip a column, like \code{tica = NA}. Non-existing columns will anyway be skipped. See the Antibiotics section for an explanation of the abbreviations.
+#' @param col_bactid Deprecated. Use \code{col_mo} instead.
 #' @param ... parameters that are passed on to \code{EUCAST_rules}
-#' @section Abbrevations of antibiotics:
+#' @section Antibiotics:
 #' Abbrevations of the column containing antibiotics:
 #'
 #'  \strong{amcl}: amoxicillin and beta-lactamase inhibitor (\emph{J01CR02}),
@@ -102,23 +103,23 @@
 #'   \url{http://www.eucast.org/fileadmin/src/media/PDFs/EUCAST_files/Expert_Rules/Expert_rules_intrinsic_exceptional_V3.1.pdf}
 #' @examples
 #' a <- EUCAST_rules(septic_patients)
-#' a <- data.frame(bactid = c("STAAUR",  # Staphylococcus aureus
-#'                            "ENCFAE",  # Enterococcus faecalis
-#'                            "ESCCOL",  # Escherichia coli
-#'                            "KLEPNE",  # Klebsiella pneumoniae
-#'                            "PSEAER"), # Pseudomonas aeruginosa
-#'                 vanc = "-",           # Vancomycin
-#'                 amox = "-",           # Amoxicillin
-#'                 coli = "-",           # Colistin
-#'                 cfta = "-",           # Ceftazidime
-#'                 cfur = "-",           # Cefuroxime
+#' a <- data.frame(mo = c("STAAUR",  # Staphylococcus aureus
+#'                        "ENCFAE",  # Enterococcus faecalis
+#'                        "ESCCOL",  # Escherichia coli
+#'                        "KLEPNE",  # Klebsiella pneumoniae
+#'                        "PSEAER"), # Pseudomonas aeruginosa
+#'                 vanc = "-",       # Vancomycin
+#'                 amox = "-",       # Amoxicillin
+#'                 coli = "-",       # Colistin
+#'                 cfta = "-",       # Ceftazidime
+#'                 cfur = "-",       # Cefuroxime
 #'                 stringsAsFactors = FALSE)
 #' a
 #'
 #' b <- EUCAST_rules(a)
 #' b
 EUCAST_rules <- function(tbl,
-                         col_bactid = 'bactid',
+                         col_mo = 'mo',
                          info = TRUE,
                          amcl = 'amcl',
                          amik = 'amik',
@@ -180,12 +181,17 @@ EUCAST_rules <- function(tbl,
                          tobr = 'tobr',
                          trim = 'trim',
                          trsu = 'trsu',
-                         vanc = 'vanc') {
+                         vanc = 'vanc',
+                         col_bactid = 'bactid') {
 
   EUCAST_VERSION <- "3.1"
 
-  if (!col_bactid %in% colnames(tbl)) {
-    stop('Column ', col_bactid, ' not found.', call. = FALSE)
+  if (col_bactid %in% colnames(tbl)) {
+    col_mo <- col_bactid
+    warning("Use of `col_bactid` is deprecated. Use `col_mo` instead.")
+  }
+  if (!col_mo %in% colnames(tbl)) {
+    stop('Column ', col_mo, ' not found.', call. = FALSE)
   }
 
   # check columns
@@ -274,10 +280,10 @@ EUCAST_rules <- function(tbl,
   }
 
   # join to microorganisms data set
-  if (!tbl %>% pull(col_bactid) %>% is.bactid()) {
-    warning("Improve integrity of the `", col_bactid, "` column by transforming it with 'as.bactid'.")
+  if (!tbl %>% pull(col_mo) %>% is.mo()) {
+    warning("Improve integrity of the `", col_mo, "` column by transforming it with 'as.mo'.")
   }
-  tbl <- tbl %>% left_join_microorganisms(by = col_bactid, suffix = c("_tempmicroorganisms", ""))
+  tbl <- tbl %>% left_join_microorganisms(by = col_mo, suffix = c("_tempmicroorganisms", ""))
 
   # antibiotic classes
   aminoglycosides <- c(tobr, gent, kana, neom, neti, siso)

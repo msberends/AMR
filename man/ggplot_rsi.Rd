@@ -119,14 +119,14 @@ septic_patients \%>\%
 # genuine analysis: check 2 most prevalent microorganisms
 septic_patients \%>\%
   # create new bacterial ID's, with all CoNS under the same group (Becker et al.)
-  mutate(bactid = as.bactid(bactid, Becker = TRUE)) \%>\%
+  mutate(mo = as.mo(mo, Becker = TRUE)) \%>\%
   # filter on top 2 bacterial ID's
-  filter(bactid \%in\% top_freq(freq(.$bactid), 2)) \%>\%
+  filter(mo \%in\% top_freq(freq(.$mo), 2)) \%>\%
   # determine first isolates
   mutate(first_isolate = first_isolate(.,
                                        col_date = "date",
                                        col_patient_id = "patient_id",
-                                       col_bactid = "bactid")) \%>\%
+                                       col_mo = "mo")) \%>\%
   # filter on first isolates
   filter(first_isolate == TRUE) \%>\%
   # join the `microorganisms` data set
@@ -140,7 +140,7 @@ septic_patients \%>\%
   ggplot_rsi(x = "Antibiotic",
              facet = "mo") +
   labs(title = "AMR of Top Two Microorganisms In Blood Culture Isolates",
-       subtitle = "Only First Isolates, CoNS grouped according to Becker et al.",
+       subtitle = "Only First Isolates, CoNS grouped according to Becker et al. (2014)",
        x = "Microorganisms")
 }
 }

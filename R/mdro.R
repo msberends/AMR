@@ -21,10 +21,11 @@
 #' Determine which isolates are multidrug-resistant organisms (MDRO) according to country-specific guidelines.
 #' @param tbl table with antibiotic columns, like e.g. \code{amox} and \code{amcl}
 #' @param country country code to determine guidelines. EUCAST rules will be used when left empty, see Details. Should be or a code from the \href{https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2#Officially_assigned_code_elements}{list of ISO 3166-1 alpha-2 country codes}. Case-insensitive. Currently supported are \code{de} (Germany) and \code{nl} (the Netherlands).
-#' @param col_bactid column name of the bacteria ID in \code{tbl} - values of this column should be present in \code{microorganisms$bactid}, see \code{\link{microorganisms}}
 #' @param info print progress
-#' @param amcl,amik,amox,ampi,azit,aztr,cefa,cfra,cfep,cfot,cfox,cfta,cftr,cfur,chlo,cipr,clar,clin,clox,coli,czol,dapt,doxy,erta,eryt,fosf,fusi,gent,imip,kana,levo,linc,line,mero,metr,mino,moxi,nali,neom,neti,nitr,novo,norf,oflo,peni,pita,poly,qida,rifa,roxi,siso,teic,tetr,tica,tige,tobr,trim,trsu,vanc column names of antibiotics. column names of antibiotics
+#' @inheritParams EUCAST_rules
+#' @param metr column name of an antibiotic. Use \code{NA} to skip a column, like \code{tica = NA}. Non-existing columns will anyway be skipped. See the Antibiotics section for an explanation of the abbreviations.
 #' @param ... parameters that are passed on to methods
+#' @inheritSection EUCAST_rules Antibiotics
 #' @details When \code{country} will be left blank, guidelines will be taken from EUCAST Expert Rules Version 3.1 "Intrinsic Resistance and Exceptional Phenotypes Tables" (\url{http://www.eucast.org/fileadmin/src/media/PDFs/EUCAST_files/Expert_Rules/Expert_rules_intrinsic_exceptional_V3.1.pdf}).
 #' @return Ordered factor with levels \code{Unknown < Negative < Unconfirmed < Positive}.
 #' @rdname MDRO
@@ -34,10 +35,10 @@
 #'
 #' septic_patients %>%
 #'   mutate(EUCAST = MDRO(.),
-#'          BRMO = MDRO(., "nl"))
+#'          BRMO = BRMO(.))
 MDRO <- function(tbl,
                  country = NULL,
-                 col_bactid = 'bactid',
+                 col_mo = 'mo',
                  info = TRUE,
                  amcl = 'amcl',
                  amik = 'amik',
@@ -97,10 +98,15 @@ MDRO <- function(tbl,
                  tobr = 'tobr',
                  trim = 'trim',
                  trsu = 'trsu',
-                 vanc = 'vanc') {
+                 vanc = 'vanc',
+                 col_bactid = 'bactid') {
 
-  if (!col_bactid %in% colnames(tbl)) {
-    stop('Column ', col_bactid, ' not found.', call. = FALSE)
+  if (col_bactid %in% colnames(tbl)) {
+    col_mo <- col_bactid
+    warning("Use of `col_bactid` is deprecated. Use `col_mo` instead.")
+  }
+  if (!col_mo %in% colnames(tbl)) {
+    stop('Column ', col_mo, ' not found.', call. = FALSE)
   }
 
   # strip whitespaces
@@ -249,7 +255,7 @@ MDRO <- function(tbl,
   }
 
   # join microorganisms
-  tbl <- tbl %>% left_join_microorganisms(col_bactid)
+  tbl <- tbl %>% left_join_microorganisms(col_mo)
 
   tbl$MDRO <- NA_integer_
 

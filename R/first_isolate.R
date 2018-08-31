@@ -22,7 +22,7 @@
 #' @param tbl a \code{data.frame} containing isolates.
 #' @param col_date column name of the result date (or date that is was received on the lab)
 #' @param col_patient_id column name of the unique IDs of the patients
-#' @param col_bactid column name of the unique IDs of the microorganisms: \code{bactid}'s. If this column has another class than \code{"bactid"}, values will be coerced using \code{\link{as.bactid}}.
+#' @param col_mo column name of the unique IDs of the microorganisms, see \code{\link{mo}}. If this column has another class than \code{"mo"}, values will be coerced using \code{\link{as.mo}}.
 #' @param col_testcode column name of the test codes. Use \code{col_testcode = NA} to \strong{not} exclude certain test codes (like test codes for screening). In that case \code{testcodes_exclude} will be ignored. Supports tidyverse-like quotation.
 #' @param col_specimen column name of the specimen type or group
 #' @param col_icu column name of the logicals (\code{TRUE}/\code{FALSE}) whether a ward or department is an Intensive Care Unit (ICU)
@@ -36,8 +36,9 @@
 #' @param ignore_I logical to determine whether antibiotic interpretations with \code{"I"} will be ignored when \code{type = "keyantibiotics"}, see Details
 #' @param points_threshold points until the comparison of key antibiotics will lead to inclusion of an isolate when \code{type = "points"}, see Details
 #' @param info print progress
-#' @param col_genus (deprecated, use \code{col_bactid} instead) column name of the genus of the microorganisms
-#' @param col_species (deprecated, use \code{col_bactid} instead) column name of the species of the microorganisms
+#' @param col_bactid (deprecated, use \code{col_mo} instead)
+#' @param col_genus (deprecated, use \code{col_mo} instead) column name of the genus of the microorganisms
+#' @param col_species (deprecated, use \code{col_mo} instead) column name of the species of the microorganisms
 #' @details \strong{WHY THIS IS SO IMPORTANT} \cr
 #'     To conduct an analysis of antimicrobial resistance, you should only include the first isolate of every patient per episode \href{https://www.ncbi.nlm.nih.gov/pubmed/17304462}{[1]}. If you would not do this, you could easily get an overestimate or underestimate of the resistance of an antibiotic. Imagine that a patient was admitted with an MRSA and that it was found in 5 different blood cultures the following week. The resistance percentage of oxacillin of all \emph{S. aureus} isolates would be overestimated, because you included this MRSA more than once. It would be \href{https://en.wikipedia.org/wiki/Selection_bias}{selection bias}.
 #' @section Key antibiotics:
@@ -63,7 +64,7 @@
 #'   mutate(first_isolate = first_isolate(.,
 #'                                        col_date = "date",
 #'                                        col_patient_id = "patient_id",
-#'                                        col_bactid = "bactid"))
+#'                                        col_mo = "mo"))
 #'
 #' # Now let's see if first isolates matter:
 #' A <- my_patients %>%
@@ -126,7 +127,7 @@
 first_isolate <- function(tbl,
                           col_date,
                           col_patient_id,
-                          col_bactid = NA,
+                          col_mo = NA,
                           col_testcode = NA,
                           col_specimen = NA,
                           col_icu = NA,
@@ -140,12 +141,17 @@ first_isolate <- function(tbl,
                           ignore_I = TRUE,
                           points_threshold = 2,
                           info = TRUE,
+                          col_bactid = NA,
                           col_genus = NA,
                           col_species = NA) {
 
+  if (!is.na(col_bactid)) {
+    col_mo <- col_bactid
+    warning("Use of `col_bactid` is deprecated. Use `col_mo` instead.")
+  }
   # bactid OR genus+species must be available
-  if (is.na(col_bactid) & (is.na(col_genus) | is.na(col_species))) {
-    stop('`col_bactid` or both `col_genus` and `col_species` must be available.')
+  if (is.na(col_mo) & (is.na(col_genus) | is.na(col_species))) {
+    stop('`col_mo` or both `col_genus` and `col_species` must be available.')
   }
 
   # check if columns exist
@@ -163,19 +169,19 @@ first_isolate <- function(tbl,
 
   check_columns_existance(col_date)
   check_columns_existance(col_patient_id)
-  check_columns_existance(col_bactid)
+  check_columns_existance(col_mo)
   check_columns_existance(col_genus)
   check_columns_existance(col_species)
   check_columns_existance(col_testcode)
   check_columns_existance(col_icu)
   check_columns_existance(col_keyantibiotics)
 
-  if (!is.na(col_bactid)) {
-    if (!tbl %>% pull(col_bactid) %>% is.bactid()) {
-      warning("Improve integrity of the `", col_bactid, "` column by transforming it with 'as.bactid'.")
+  if (!is.na(col_mo)) {
+    if (!tbl %>% pull(col_mo) %>% is.mo()) {
+      warning("Improve integrity of the `", col_mo, "` column by transforming it with 'as.mo'.")
     }
     # join to microorganisms data set
-    tbl <- tbl %>% left_join_microorganisms(by = col_bactid)
+    tbl <- tbl %>% left_join_microorganisms(by = col_mo)
     col_genus <- "genus"
     col_species <- "species"
   }

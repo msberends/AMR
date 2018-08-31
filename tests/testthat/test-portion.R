@@ -122,7 +122,7 @@ test_that("old rsi works", {
 
 test_that("prediction of rsi works", {
   amox_R <- septic_patients %>%
-    filter(bactid == "ESCCOL") %>%
+    filter(mo == "ESCCOL") %>%
     rsi_predict(col_ab = "amox",
                 col_date = "date",
                 minimum = 10,
@@ -131,37 +131,37 @@ test_that("prediction of rsi works", {
   # amox resistance will increase according to data set `septic_patients`
   expect_true(amox_R[3] < amox_R[20])
 
-  expect_output(rsi_predict(tbl = filter(septic_patients, bactid == "ESCCOL"),
+  expect_output(rsi_predict(tbl = filter(septic_patients, mo == "ESCCOL"),
                             model = "binomial",
                             col_ab = "amox",
                             col_date = "date",
                             info = TRUE))
-  expect_output(rsi_predict(tbl = filter(septic_patients, bactid == "ESCCOL"),
+  expect_output(rsi_predict(tbl = filter(septic_patients, mo == "ESCCOL"),
                             model = "loglin",
                             col_ab = "amox",
                             col_date = "date",
                             info = TRUE))
-  expect_output(rsi_predict(tbl = filter(septic_patients, bactid == "ESCCOL"),
+  expect_output(rsi_predict(tbl = filter(septic_patients, mo == "ESCCOL"),
                             model = "lin",
                             col_ab = "amox",
                             col_date = "date",
                             info = TRUE))
 
-  expect_error(rsi_predict(tbl = filter(septic_patients, bactid == "ESCCOL"),
+  expect_error(rsi_predict(tbl = filter(septic_patients, mo == "ESCCOL"),
                            model = "INVALID MODEL",
                            col_ab = "amox",
                            col_date = "date",
                            info = TRUE))
-  expect_error(rsi_predict(tbl = filter(septic_patients, bactid == "ESCCOL"),
+  expect_error(rsi_predict(tbl = filter(septic_patients, mo == "ESCCOL"),
                            col_ab = "NOT EXISTING COLUMN",
                            col_date = "date",
                            info = TRUE))
-  expect_error(rsi_predict(tbl = filter(septic_patients, bactid == "ESCCOL"),
+  expect_error(rsi_predict(tbl = filter(septic_patients, mo == "ESCCOL"),
                            col_ab = "amox",
                            col_date = "NOT EXISTING COLUMN",
                            info = TRUE))
   # almost all E. coli are mero S in the Netherlands :)
-  expect_error(resistance_predict(tbl = filter(septic_patients, bactid == "ESCCOL"),
+  expect_error(resistance_predict(tbl = filter(septic_patients, mo == "ESCCOL"),
                                   col_ab = "mero",
                                   col_date = "date",
                                   info = TRUE))

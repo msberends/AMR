@@ -37,12 +37,12 @@ mo_type_nl(x)
 mo_gramstain_nl(x)
 }
 \arguments{
-\item{x}{a (vector of a) valid \code{\link{bactid}} or any text that can be coerced to a valid bactid with \code{\link{as.bactid}}}
+\item{x}{a (vector of a) valid \code{\link{mo}} or any text that can be coerced to a valid microorganism code with \code{\link{as.mo}}}
 
-\item{property}{one of the column names of one of the \code{\link{microorganisms}} data set, like \code{"bactid"}, \code{"bactsys"}, \code{"family"}, \code{"genus"}, \code{"species"}, \code{"fullname"}, \code{"gramstain"} and \code{"aerobic"}}
+\item{property}{one of the column names of one of the \code{\link{microorganisms}} data set, like \code{"mo"}, \code{"bactsys"}, \code{"family"}, \code{"genus"}, \code{"species"}, \code{"fullname"}, \code{"gramstain"} and \code{"aerobic"}}
 }
 \description{
-Use these functions to return a specific property of a microorganism from the \code{\link{microorganisms}} data set, based on their \code{bactid}. Get such an ID with \code{\link{as.bactid}}.
+Use these functions to return a specific property of a microorganism from the \code{\link{microorganisms}} data set, based on their \code{mo}. Get such an ID with \code{\link{as.mo}}.
 }
 \examples{
 # All properties

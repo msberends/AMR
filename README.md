@@ -44,7 +44,7 @@ This `AMR` package basically does four important things:
 
 1. It **cleanses existing data**, by transforming it to reproducible and profound *classes*, making the most efficient use of R. These functions all use artificial intelligence to guess results that you would expect:
 
-   * Use `as.bactid` to get an ID of a microorganism. The IDs are quite obvious - the ID of *E. coli* is "ESCCOL" and the ID of *S. aureus* is "STAAUR". The function takes almost any text as input that looks like the name or code of a microorganism like "E. coli", "esco" and "esccol". Even `as.bactid("MRSA")` will return the ID of *S. aureus*. Moreover, it can group all coagulase negative and positive *Staphylococci*, and can transform *Streptococci* into Lancefield groups. To find bacteria based on your input, this package contains a freely available database of ~2,650 different (potential) human pathogenic microorganisms.
+   * Use `as.mo` to get an ID of a microorganism. The IDs are quite obvious - the ID of *E. coli* is "ESCCOL" and the ID of *S. aureus* is "STAAUR". The function takes almost any text as input that looks like the name or code of a microorganism like "E. coli", "esco" and "esccol". Even `as.mo("MRSA")` will return the ID of *S. aureus*. Moreover, it can group all coagulase negative and positive *Staphylococci*, and can transform *Streptococci* into Lancefield groups. To find bacteria based on your input, this package contains a freely available database of ~2,650 different (potential) human pathogenic microorganisms.
    * Use `as.rsi` to transform values to valid antimicrobial results. It produces just S, I or R based on your input and warns about invalid values. Even values like "<=0.002; S" (combined MIC/RSI) will result in "S".
    * Use `as.mic` to cleanse your MIC values. It produces a so-called factor (called *ordinal* in SPSS) with valid MIC values as levels. A value like "<=0.002; S" (combined MIC/RSI) will result in "<=0.002".
    * Use `as.atc` to get the ATC code of an antibiotic as defined by the WHO. This package contains a database with most LIS codes, official names, DDDs and even trade names of antibiotics. For example, the values "Furabid", "Furadantin", "nitro" all return the ATC code of Nitrofurantoine.
@@ -55,8 +55,8 @@ This `AMR` package basically does four important things:
    * Use `first_isolate` to identify the first isolates of every patient [using guidelines from the CLSI](https://clsi.org/standards/products/microbiology/documents/m39/) (Clinical and Laboratory Standards Institute).
      * You can also identify first *weighted* isolates of every patient, an adjusted version of the CLSI guideline. This takes into account key antibiotics of every strain and compares them.
    * Use `MDRO` (abbreviation of Multi Drug Resistant Organisms) to check your isolates for exceptional resistance with country-specific guidelines or EUCAST rules. Currently, national guidelines for Germany and the Netherlands are supported.
-   * The data set `microorganisms` contains the family, genus, species, subspecies, colloquial name and Gram stain of almost 2,650 microorganisms (2,207 bacteria, 285 fungi/yeasts, 153 parasites, 1 other). This enables resistance analysis of e.g. different antibiotics per Gram stain. The package also contains functions to look up values in this data set like `mo_genus`, `mo_family` or `mo_gramstain`. Since it uses `as.bactid` internally, AI is supported. For example, `mo_genus("MRSA")` and `mo_genus("S. aureus")` will both return `"Staphylococcus"`. These functions can be used to add new variables to your data.
-   * The data set `antibiotics` contains the ATC code, LIS codes, official name, trivial name and DDD of both oral and parenteral administration. It also contains a total of 298 trade names. Use functions like `ab_official` and `ab_tradenames` to look up values. As the `mo_*` functions use `as.bactid` internally, the `ab_*` functions use `as.atc` internally so it uses AI to guess your expected result. For example, `ab_official("Fluclox")`, `ab_official("Floxapen")` and `ab_official("J01CF05")` will all return `"Flucloxacillin"`. These functions can again be used to add new variables to your data.
+   * The data set `microorganisms` contains the family, genus, species, subspecies, colloquial name and Gram stain of almost 2,650 microorganisms (2,207 bacteria, 285 fungi/yeasts, 153 parasites, 1 other). This enables resistance analysis of e.g. different antibiotics per Gram stain. The package also contains functions to look up values in this data set like `mo_genus`, `mo_family` or `mo_gramstain`. Since it uses `as.mo` internally, AI is supported. For example, `mo_genus("MRSA")` and `mo_genus("S. aureus")` will both return `"Staphylococcus"`. These functions can be used to add new variables to your data.
+   * The data set `antibiotics` contains the ATC code, LIS codes, official name, trivial name and DDD of both oral and parenteral administration. It also contains a total of 298 trade names. Use functions like `ab_official` and `ab_tradenames` to look up values. As the `mo_*` functions use `as.mo` internally, the `ab_*` functions use `as.atc` internally so it uses AI to guess your expected result. For example, `ab_official("Fluclox")`, `ab_official("Floxapen")` and `ab_official("J01CF05")` will all return `"Flucloxacillin"`. These functions can again be used to add new variables to your data.
 
 3. It **analyses the data** with convenient functions that use well-known methods.
 
@@ -204,7 +204,7 @@ plot(mic_data)
 ### Overwrite/force resistance based on EUCAST rules
 This is also called *interpretive reading*.
 ```r
-before <- data.frame(bactid = c("STAAUR",  # Staphylococcus aureus
+before <- data.frame(bact = c("STAAUR",  # Staphylococcus aureus
                                 "ENCFAE",  # Enterococcus faecalis
                                 "ESCCOL",  # Escherichia coli
                                 "KLEPNE",  # Klebsiella pneumoniae
@@ -216,7 +216,7 @@ before <- data.frame(bactid = c("STAAUR",  # Staphylococcus aureus
                      cfur = "-",           # Cefuroxime
                      stringsAsFactors = FALSE)
 before
-#   bactid vanc amox coli cfta cfur
+#   bact   vanc amox coli cfta cfur
 # 1 STAAUR    -    -    -    -    -
 # 2 ENCFAE    -    -    -    -    -
 # 3 ESCCOL    -    -    -    -    -
@@ -224,9 +224,9 @@ before
 # 5 PSEAER    -    -    -    -    -
 
 # Now apply those rules; just need a column with bacteria IDs and antibiotic results:
-after <- EUCAST_rules(before)
+after <- EUCAST_rules(before, col_mo = "bact")
 after
-#   bactid vanc amox coli cfta cfur
+#   bact   vanc amox coli cfta cfur
 # 1 STAAUR    -    -    R    R    -
 # 2 ENCFAE    -    -    R    R    R
 # 3 ESCCOL    R    -    -    -    -
@@ -234,17 +234,17 @@ after
 # 5 PSEAER    R    R    -    -    R
 ```
 
-Bacteria IDs can be retrieved with the `guess_bactid` function. It uses any type of info about a microorganism as input. For example, all these will return value `STAAUR`, the ID of *S. aureus*:
+Bacteria IDs can be retrieved with the `guess_mo` function. It uses any type of info about a microorganism as input. For example, all these will return value `STAAUR`, the ID of *S. aureus*:
 ```r
-guess_bactid("stau")
-guess_bactid("STAU")
-guess_bactid("staaur")
-guess_bactid("S. aureus")
-guess_bactid("S aureus")
-guess_bactid("Staphylococcus aureus")
-guess_bactid("MRSA") # Methicillin Resistant S. aureus
-guess_bactid("VISA") # Vancomycin Intermediate S. aureus
-guess_bactid("VRSA") # Vancomycin Resistant S. aureus
+guess_mo("stau")
+guess_mo("STAU")
+guess_mo("staaur")
+guess_mo("S. aureus")
+guess_mo("S aureus")
+guess_mo("Staphylococcus aureus")
+guess_mo("MRSA") # Methicillin Resistant S. aureus
+guess_mo("VISA") # Vancomycin Intermediate S. aureus
+guess_mo("VRSA") # Vancomycin Resistant S. aureus
 ```
 
 ### Other (microbial) epidemiological functions

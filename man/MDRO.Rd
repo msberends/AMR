@@ -7,7 +7,7 @@
 \alias{EUCAST_exceptional_phenotypes}
 \title{Determine multidrug-resistant organisms (MDRO)}
 \usage{
-MDRO(tbl, country = NULL, col_bactid = "bactid", info = TRUE,
+MDRO(tbl, country = NULL, col_mo = "mo", info = TRUE,
   amcl = "amcl", amik = "amik", amox = "amox", ampi = "ampi",
   azit = "azit", aztr = "aztr", cefa = "cefa", cfra = "cfra",
   cfep = "cfep", cfot = "cfot", cfox = "cfox", cfta = "cfta",
@@ -22,7 +22,8 @@ MDRO(tbl, country = NULL, col_bactid = "bactid", info = TRUE,
   peni = "peni", pita = "pita", poly = "poly", qida = "qida",
   rifa = "rifa", roxi = "roxi", siso = "siso", teic = "teic",
   tetr = "tetr", tica = "tica", tige = "tige", tobr = "tobr",
-  trim = "trim", trsu = "trsu", vanc = "vanc")
+  trim = "trim", trsu = "trsu", vanc = "vanc",
+  col_bactid = "bactid")
 
 BRMO(tbl, country = "nl", ...)
 
@@ -35,11 +36,129 @@ EUCAST_exceptional_phenotypes(tbl, country = "EUCAST", ...)
 
 \item{country}{country code to determine guidelines. EUCAST rules will be used when left empty, see Details. Should be or a code from the \href{https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2#Officially_assigned_code_elements}{list of ISO 3166-1 alpha-2 country codes}. Case-insensitive. Currently supported are \code{de} (Germany) and \code{nl} (the Netherlands).}
 
-\item{col_bactid}{column name of the bacteria ID in \code{tbl} - values of this column should be present in \code{microorganisms$bactid}, see \code{\link{microorganisms}}}
+\item{col_mo}{column name of the bacteria ID in \code{tbl} - values of this column should be present in \code{microorganisms$mo}, see \code{\link{microorganisms}}}
 
 \item{info}{print progress}
 
-\item{amcl, amik, amox, ampi, azit, aztr, cefa, cfra, cfep, cfot, cfox, cfta, cftr, cfur, chlo, cipr, clar, clin, clox, coli, czol, dapt, doxy, erta, eryt, fosf, fusi, gent, imip, kana, levo, linc, line, mero, metr, mino, moxi, nali, neom, neti, nitr, novo, norf, oflo, peni, pita, poly, qida, rifa, roxi, siso, teic, tetr, tica, tige, tobr, trim, trsu, vanc}{column names of antibiotics. column names of antibiotics}
+\item{amcl}{column name of an antibiotic. Use \code{NA} to skip a column, like \code{tica = NA}. Non-existing columns will anyway be skipped. See the Antibiotics section for an explanation of the abbreviations.}
+
+\item{amik}{column name of an antibiotic. Use \code{NA} to skip a column, like \code{tica = NA}. Non-existing columns will anyway be skipped. See the Antibiotics section for an explanation of the abbreviations.}
+
+\item{amox}{column name of an antibiotic. Use \code{NA} to skip a column, like \code{tica = NA}. Non-existing columns will anyway be skipped. See the Antibiotics section for an explanation of the abbreviations.}
+
+\item{ampi}{column name of an antibiotic. Use \code{NA} to skip a column, like \code{tica = NA}. Non-existing columns will anyway be skipped. See the Antibiotics section for an explanation of the abbreviations.}
+
+\item{azit}{column name of an antibiotic. Use \code{NA} to skip a column, like \code{tica = NA}. Non-existing columns will anyway be skipped. See the Antibiotics section for an explanation of the abbreviations.}
+
+\item{aztr}{column name of an antibiotic. Use \code{NA} to skip a column, like \code{tica = NA}. Non-existing columns will anyway be skipped. See the Antibiotics section for an explanation of the abbreviations.}
+
+\item{cefa}{column name of an antibiotic. Use \code{NA} to skip a column, like \code{tica = NA}. Non-existing columns will anyway be skipped. See the Antibiotics section for an explanation of the abbreviations.}
+
+\item{cfra}{column name of an antibiotic. Use \code{NA} to skip a column, like \code{tica = NA}. Non-existing columns will anyway be skipped. See the Antibiotics section for an explanation of the abbreviations.}
+
+\item{cfep}{column name of an antibiotic. Use \code{NA} to skip a column, like \code{tica = NA}. Non-existing columns will anyway be skipped. See the Antibiotics section for an explanation of the abbreviations.}
+
+\item{cfot}{column name of an antibiotic. Use \code{NA} to skip a column, like \code{tica = NA}. Non-existing columns will anyway be skipped. See the Antibiotics section for an explanation of the abbreviations.}
+
+\item{cfox}{column name of an antibiotic. Use \code{NA} to skip a column, like \code{tica = NA}. Non-existing columns will anyway be skipped. See the Antibiotics section for an explanation of the abbreviations.}
+
+\item{cfta}{column name of an antibiotic. Use \code{NA} to skip a column, like \code{tica = NA}. Non-existing columns will anyway be skipped. See the Antibiotics section for an explanation of the abbreviations.}
+
+\item{cftr}{column name of an antibiotic. Use \code{NA} to skip a column, like \code{tica = NA}. Non-existing columns will anyway be skipped. See the Antibiotics section for an explanation of the abbreviations.}
+
+\item{cfur}{column name of an antibiotic. Use \code{NA} to skip a column, like \code{tica = NA}. Non-existing columns will anyway be skipped. See the Antibiotics section for an explanation of the abbreviations.}
+
+\item{chlo}{column name of an antibiotic. Use \code{NA} to skip a column, like \code{tica = NA}. Non-existing columns will anyway be skipped. See the Antibiotics section for an explanation of the abbreviations.}
+
+\item{cipr}{column name of an antibiotic. Use \code{NA} to skip a column, like \code{tica = NA}. Non-existing columns will anyway be skipped. See the Antibiotics section for an explanation of the abbreviations.}
+
+\item{clar}{column name of an antibiotic. Use \code{NA} to skip a column, like \code{tica = NA}. Non-existing columns will anyway be skipped. See the Antibiotics section for an explanation of the abbreviations.}
+
+\item{clin}{column name of an antibiotic. Use \code{NA} to skip a column, like \code{tica = NA}. Non-existing columns will anyway be skipped. See the Antibiotics section for an explanation of the abbreviations.}
+
+\item{clox}{column name of an antibiotic. Use \code{NA} to skip a column, like \code{tica = NA}. Non-existing columns will anyway be skipped. See the Antibiotics section for an explanation of the abbreviations.}
+
+\item{coli}{column name of an antibiotic. Use \code{NA} to skip a column, like \code{tica = NA}. Non-existing columns will anyway be skipped. See the Antibiotics section for an explanation of the abbreviations.}
+
+\item{czol}{column name of an antibiotic. Use \code{NA} to skip a column, like \code{tica = NA}. Non-existing columns will anyway be skipped. See the Antibiotics section for an explanation of the abbreviations.}
+
+\item{dapt}{column name of an antibiotic. Use \code{NA} to skip a column, like \code{tica = NA}. Non-existing columns will anyway be skipped. See the Antibiotics section for an explanation of the abbreviations.}
+
+\item{doxy}{column name of an antibiotic. Use \code{NA} to skip a column, like \code{tica = NA}. Non-existing columns will anyway be skipped. See the Antibiotics section for an explanation of the abbreviations.}
+
+\item{erta}{column name of an antibiotic. Use \code{NA} to skip a column, like \code{tica = NA}. Non-existing columns will anyway be skipped. See the Antibiotics section for an explanation of the abbreviations.}
+
+\item{eryt}{column name of an antibiotic. Use \code{NA} to skip a column, like \code{tica = NA}. Non-existing columns will anyway be skipped. See the Antibiotics section for an explanation of the abbreviations.}
+
+\item{fosf}{column name of an antibiotic. Use \code{NA} to skip a column, like \code{tica = NA}. Non-existing columns will anyway be skipped. See the Antibiotics section for an explanation of the abbreviations.}
+
+\item{fusi}{column name of an antibiotic. Use \code{NA} to skip a column, like \code{tica = NA}. Non-existing columns will anyway be skipped. See the Antibiotics section for an explanation of the abbreviations.}
+
+\item{gent}{column name of an antibiotic. Use \code{NA} to skip a column, like \code{tica = NA}. Non-existing columns will anyway be skipped. See the Antibiotics section for an explanation of the abbreviations.}
+
+\item{imip}{column name of an antibiotic. Use \code{NA} to skip a column, like \code{tica = NA}. Non-existing columns will anyway be skipped. See the Antibiotics section for an explanation of the abbreviations.}
+
+\item{kana}{column name of an antibiotic. Use \code{NA} to skip a column, like \code{tica = NA}. Non-existing columns will anyway be skipped. See the Antibiotics section for an explanation of the abbreviations.}
+
+\item{levo}{column name of an antibiotic. Use \code{NA} to skip a column, like \code{tica = NA}. Non-existing columns will anyway be skipped. See the Antibiotics section for an explanation of the abbreviations.}
+
+\item{linc}{column name of an antibiotic. Use \code{NA} to skip a column, like \code{tica = NA}. Non-existing columns will anyway be skipped. See the Antibiotics section for an explanation of the abbreviations.}
+
+\item{line}{column name of an antibiotic. Use \code{NA} to skip a column, like \code{tica = NA}. Non-existing columns will anyway be skipped. See the Antibiotics section for an explanation of the abbreviations.}
+
+\item{mero}{column name of an antibiotic. Use \code{NA} to skip a column, like \code{tica = NA}. Non-existing columns will anyway be skipped. See the Antibiotics section for an explanation of the abbreviations.}
+
+\item{metr}{column name of an antibiotic. Use \code{NA} to skip a column, like \code{tica = NA}. Non-existing columns will anyway be skipped. See the Antibiotics section for an explanation of the abbreviations.}
+
+\item{mino}{column name of an antibiotic. Use \code{NA} to skip a column, like \code{tica = NA}. Non-existing columns will anyway be skipped. See the Antibiotics section for an explanation of the abbreviations.}
+
+\item{moxi}{column name of an antibiotic. Use \code{NA} to skip a column, like \code{tica = NA}. Non-existing columns will anyway be skipped. See the Antibiotics section for an explanation of the abbreviations.}
+
+\item{nali}{column name of an antibiotic. Use \code{NA} to skip a column, like \code{tica = NA}. Non-existing columns will anyway be skipped. See the Antibiotics section for an explanation of the abbreviations.}
+
+\item{neom}{column name of an antibiotic. Use \code{NA} to skip a column, like \code{tica = NA}. Non-existing columns will anyway be skipped. See the Antibiotics section for an explanation of the abbreviations.}
+
+\item{neti}{column name of an antibiotic. Use \code{NA} to skip a column, like \code{tica = NA}. Non-existing columns will anyway be skipped. See the Antibiotics section for an explanation of the abbreviations.}
+
+\item{nitr}{column name of an antibiotic. Use \code{NA} to skip a column, like \code{tica = NA}. Non-existing columns will anyway be skipped. See the Antibiotics section for an explanation of the abbreviations.}
+
+\item{novo}{column name of an antibiotic. Use \code{NA} to skip a column, like \code{tica = NA}. Non-existing columns will anyway be skipped. See the Antibiotics section for an explanation of the abbreviations.}
+
+\item{norf}{column name of an antibiotic. Use \code{NA} to skip a column, like \code{tica = NA}. Non-existing columns will anyway be skipped. See the Antibiotics section for an explanation of the abbreviations.}
+
+\item{oflo}{column name of an antibiotic. Use \code{NA} to skip a column, like \code{tica = NA}. Non-existing columns will anyway be skipped. See the Antibiotics section for an explanation of the abbreviations.}
+
+\item{peni}{column name of an antibiotic. Use \code{NA} to skip a column, like \code{tica = NA}. Non-existing columns will anyway be skipped. See the Antibiotics section for an explanation of the abbreviations.}
+
+\item{pita}{column name of an antibiotic. Use \code{NA} to skip a column, like \code{tica = NA}. Non-existing columns will anyway be skipped. See the Antibiotics section for an explanation of the abbreviations.}
+
+\item{poly}{column name of an antibiotic. Use \code{NA} to skip a column, like \code{tica = NA}. Non-existing columns will anyway be skipped. See the Antibiotics section for an explanation of the abbreviations.}
+
+\item{qida}{column name of an antibiotic. Use \code{NA} to skip a column, like \code{tica = NA}. Non-existing columns will anyway be skipped. See the Antibiotics section for an explanation of the abbreviations.}
+
+\item{rifa}{column name of an antibiotic. Use \code{NA} to skip a column, like \code{tica = NA}. Non-existing columns will anyway be skipped. See the Antibiotics section for an explanation of the abbreviations.}
+
+\item{roxi}{column name of an antibiotic. Use \code{NA} to skip a column, like \code{tica = NA}. Non-existing columns will anyway be skipped. See the Antibiotics section for an explanation of the abbreviations.}
+
+\item{siso}{column name of an antibiotic. Use \code{NA} to skip a column, like \code{tica = NA}. Non-existing columns will anyway be skipped. See the Antibiotics section for an explanation of the abbreviations.}
+
+\item{teic}{column name of an antibiotic. Use \code{NA} to skip a column, like \code{tica = NA}. Non-existing columns will anyway be skipped. See the Antibiotics section for an explanation of the abbreviations.}
+
+\item{tetr}{column name of an antibiotic. Use \code{NA} to skip a column, like \code{tica = NA}. Non-existing columns will anyway be skipped. See the Antibiotics section for an explanation of the abbreviations.}
+
+\item{tica}{column name of an antibiotic. Use \code{NA} to skip a column, like \code{tica = NA}. Non-existing columns will anyway be skipped. See the Antibiotics section for an explanation of the abbreviations.}
+
+\item{tige}{column name of an antibiotic. Use \code{NA} to skip a column, like \code{tica = NA}. Non-existing columns will anyway be skipped. See the Antibiotics section for an explanation of the abbreviations.}
+
+\item{tobr}{column name of an antibiotic. Use \code{NA} to skip a column, like \code{tica = NA}. Non-existing columns will anyway be skipped. See the Antibiotics section for an explanation of the abbreviations.}
+
+\item{trim}{column name of an antibiotic. Use \code{NA} to skip a column, like \code{tica = NA}. Non-existing columns will anyway be skipped. See the Antibiotics section for an explanation of the abbreviations.}
+
+\item{trsu}{column name of an antibiotic. Use \code{NA} to skip a column, like \code{tica = NA}. Non-existing columns will anyway be skipped. See the Antibiotics section for an explanation of the abbreviations.}
+
+\item{vanc}{column name of an antibiotic. Use \code{NA} to skip a column, like \code{tica = NA}. Non-existing columns will anyway be skipped. See the Antibiotics section for an explanation of the abbreviations.}
+
+\item{col_bactid}{Deprecated. Use \code{col_mo} instead.}
 
 \item{...}{parameters that are passed on to methods}
 }
@@ -52,10 +171,77 @@ Determine which isolates are multidrug-resistant organisms (MDRO) according to c
 \details{
 When \code{country} will be left blank, guidelines will be taken from EUCAST Expert Rules Version 3.1 "Intrinsic Resistance and Exceptional Phenotypes Tables" (\url{http://www.eucast.org/fileadmin/src/media/PDFs/EUCAST_files/Expert_Rules/Expert_rules_intrinsic_exceptional_V3.1.pdf}).
 }
+\section{Antibiotics}{
+
+Abbrevations of the column containing antibiotics:
+
+ \strong{amcl}: amoxicillin and beta-lactamase inhibitor (\emph{J01CR02}),
+ \strong{amik}: amikacin (\emph{J01GB06}),
+ \strong{amox}: amoxicillin (\emph{J01CA04}),
+ \strong{ampi}: ampicillin (\emph{J01CA01}),
+ \strong{azit}: azithromycin (\emph{J01FA10}),
+ \strong{azlo}: azlocillin (\emph{J01CA09}),
+ \strong{aztr}: aztreonam (\emph{J01DF01}),
+ \strong{cefa}: cefaloridine (\emph{J01DB02}),
+ \strong{cfep}: cefepime (\emph{J01DE01}),
+ \strong{cfot}: cefotaxime (\emph{J01DD01}),
+ \strong{cfox}: cefoxitin (\emph{J01DC01}),
+ \strong{cfra}: cefradine (\emph{J01DB09}),
+ \strong{cfta}: ceftazidime (\emph{J01DD02}),
+ \strong{cftr}: ceftriaxone (\emph{J01DD04}),
+ \strong{cfur}: cefuroxime (\emph{J01DC02}),
+ \strong{chlo}: chloramphenicol (\emph{J01BA01}),
+ \strong{cipr}: ciprofloxacin (\emph{J01MA02}),
+ \strong{clar}: clarithromycin (\emph{J01FA09}),
+ \strong{clin}: clindamycin (\emph{J01FF01}),
+ \strong{clox}: flucloxacillin (\emph{J01CF05}),
+ \strong{coli}: colistin (\emph{J01XB01}),
+ \strong{czol}: cefazolin (\emph{J01DB04}),
+ \strong{dapt}: daptomycin (\emph{J01XX09}),
+ \strong{doxy}: doxycycline (\emph{J01AA02}),
+ \strong{erta}: ertapenem (\emph{J01DH03}),
+ \strong{eryt}: erythromycin (\emph{J01FA01}),
+ \strong{fosf}: fosfomycin (\emph{J01XX01}),
+ \strong{fusi}: fusidic acid (\emph{J01XC01}),
+ \strong{gent}: gentamicin (\emph{J01GB03}),
+ \strong{imip}: imipenem and cilastatin (\emph{J01DH51}),
+ \strong{kana}: kanamycin (\emph{J01GB04}),
+ \strong{levo}: levofloxacin (\emph{J01MA12}),
+ \strong{linc}: lincomycin (\emph{J01FF02}),
+ \strong{line}: linezolid (\emph{J01XX08}),
+ \strong{mero}: meropenem (\emph{J01DH02}),
+ \strong{mezl}: mezlocillin (\emph{J01CA10}),
+ \strong{mino}: minocycline (\emph{J01AA08}),
+ \strong{moxi}: moxifloxacin (\emph{J01MA14}),
+ \strong{nali}: nalidixic acid (\emph{J01MB02}),
+ \strong{neom}: neomycin (\emph{J01GB05}),
+ \strong{neti}: netilmicin (\emph{J01GB07}),
+ \strong{nitr}: nitrofurantoin (\emph{J01XE01}),
+ \strong{norf}: norfloxacin (\emph{J01MA06}),
+ \strong{novo}: novobiocin (an ATCvet code: \emph{QJ01XX95}),
+ \strong{oflo}: ofloxacin (\emph{J01MA01}),
+ \strong{peni}: penicillins, combinations with other antibacterials (\emph{J01RA01}),
+ \strong{pita}: piperacillin and beta-lactamase inhibitor (\emph{J01CR05}),
+ \strong{poly}: polymyxin B (\emph{J01XB02}),
+ \strong{pris}: pristinamycin (\emph{J01FG01}),
+ \strong{qida}: quinupristin/dalfopristin (\emph{J01FG02}),
+ \strong{rifa}: rifampicin (\emph{J04AB02}),
+ \strong{roxi}: roxithromycin (\emph{J01FA06}),
+ \strong{siso}: sisomicin (\emph{J01GB08}),
+ \strong{teic}: teicoplanin (\emph{J01XA02}),
+ \strong{tetr}: tetracycline (\emph{J01AA07}),
+ \strong{tica}: ticarcillin (\emph{J01CA13}),
+ \strong{tige}: tigecycline (\emph{J01AA12}),
+ \strong{tobr}: tobramycin (\emph{J01GB01}),
+ \strong{trim}: trimethoprim (\emph{J01EA01}),
+ \strong{trsu}: sulfamethoxazole and trimethoprim (\emph{J01EE01}),
+ \strong{vanc}: vancomycin (\emph{J01XA01}).
+}
+
 \examples{
 library(dplyr)
 
 septic_patients \%>\%
   mutate(EUCAST = MDRO(.),
-         BRMO = MDRO(., "nl"))
+         BRMO = BRMO(.))
 }

@@ -25,11 +25,11 @@ test_that("joins work", {
 
 
   expect_equal(nrow(inner_join_microorganisms("ESCCOL")), 1)
-  expect_equal(nrow(inner_join_microorganisms("ESCCOL", by = c("bactid" = "bactid"))), 1)
-  expect_warning(inner_join_microorganisms("Escherichia", by = c("bactid" = "genus")))
+  expect_equal(nrow(inner_join_microorganisms("ESCCOL", by = c("mo" = "mo"))), 1)
+  expect_warning(inner_join_microorganisms("Escherichia", by = c("mo" = "genus")))
 
   expect_equal(nrow(left_join_microorganisms("ESCCOL")), 1)
-  expect_warning(left_join_microorganisms("Escherichia", by = c("bactid" = "genus")))
+  expect_warning(left_join_microorganisms("Escherichia", by = c("mo" = "genus")))
 
   expect_equal(nrow(semi_join_microorganisms("ESCCOL")), 1)
   expect_equal(nrow(anti_join_microorganisms("ESCCOL")), 0)

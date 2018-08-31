@@ -6,7 +6,7 @@
 \title{Dataset with ~2650 microorganisms}
 \format{A data.frame with 2,646 observations and 12 variables:
 \describe{
-  \item{\code{bactid}}{ID of microorganism}
+  \item{\code{mo}}{ID of microorganism}
   \item{\code{bactsys}}{Bactsyscode of microorganism}
   \item{\code{family}}{Family name of microorganism}
   \item{\code{genus}}{Genus name of microorganism, like \code{"Echerichia"}}
@@ -26,6 +26,6 @@ microorganisms
 A dataset containing 2,646 microorganisms. MO codes of the UMCG can be looked up using \code{\link{microorganisms.umcg}}.
 }
 \seealso{
-\code{\link{guess_bactid}} \code{\link{antibiotics}} \code{\link{microorganisms.umcg}}
+\code{\link{guess_mo}} \code{\link{antibiotics}} \code{\link{microorganisms.umcg}}
 }
 \keyword{datasets}

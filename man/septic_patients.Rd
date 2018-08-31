@@ -14,7 +14,7 @@
   \item{\code{age}}{age of the patient}
   \item{\code{sex}}{sex of the patient}
   \item{\code{patient_id}}{ID of the patient, first 10 characters of an SHA hash containing irretrievable information}
-  \item{\code{bactid}}{ID of microorganism, see \code{\link{microorganisms}}}
+  \item{\code{mo}}{ID of microorganism, see \code{\link{microorganisms}}}
   \item{\code{peni:rifa}}{40 different antibiotics with class \code{rsi} (see \code{\link{as.rsi}}); these column names occur in \code{\link{antibiotics}} data set and can be translated with \code{\link{abname}}}
 }}
 \usage{
@@ -36,7 +36,7 @@ library(dplyr)
 
 # Add first isolates to our dataset:
 my_data <- my_data \%>\%
-  mutate(first_isolates = first_isolate(my_data, "date", "patient_id", "bactid"))
+  mutate(first_isolates = first_isolate(my_data, "date", "patient_id", "mo"))
 
 # -------- #
 # ANALYSIS #
@@ -46,7 +46,7 @@ my_data <- my_data \%>\%
 #     and numbers (n) of E. coli, divided by hospital:
 
 my_data \%>\%
-  filter(bactid == guess_bactid("E. coli"),
+  filter(mo == guess_mo("E. coli"),
          first_isolates == TRUE) \%>\%
   group_by(hospital_id) \%>\%
   summarise(n = n_rsi(amox),
@@ -57,7 +57,7 @@ my_data \%>\%
 #    percentages of E. coli, trend over the years:
 
 my_data \%>\%
-  filter(bactid == guess_bactid("E. coli"),
+  filter(mo == guess_mo("E. coli"),
          first_isolates == TRUE) \%>\%
   group_by(year = format(date, "\%Y")) \%>\%
   summarise(n = n_rsi(amcl),

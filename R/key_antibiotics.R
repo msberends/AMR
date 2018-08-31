@@ -52,9 +52,9 @@
 #'   mutate(keyab = key_antibiotics(.)) %>%
 #'   mutate(
 #'     # now calculate first isolates
-#'     first_regular = first_isolate(., "date", "patient_id", "bactid"),
+#'     first_regular = first_isolate(., "date", "patient_id", "mo"),
 #'     # and first WEIGHTED isolates
-#'     first_weighted = first_isolate(., "date", "patient_id", "bactid",
+#'     first_weighted = first_isolate(., "date", "patient_id", "mo",
 #'                                    col_keyantibiotics = "keyab")
 #'   )
 #'
@@ -73,7 +73,7 @@
 #' key_antibiotics_equal(strainA, strainB, ignore_I = FALSE)
 #' # FALSE, because I is not ignored and so the 4th value differs
 key_antibiotics <- function(tbl,
-                            col_bactid = "bactid",
+                            col_mo = "mo",
                             universal_1 = "amox",
                             universal_2 = "amcl",
                             universal_3 = "cfur",
@@ -92,10 +92,15 @@ key_antibiotics <- function(tbl,
                             GramNeg_4 = "cfot",
                             GramNeg_5 = "cfta",
                             GramNeg_6 = "mero",
-                            warnings = TRUE) {
+                            warnings = TRUE,
+                            col_bactid = "bactid") {
 
-  if (!col_bactid %in% colnames(tbl)) {
-    stop('Column ', col_bactid, ' not found.', call. = FALSE)
+  if (col_bactid %in% colnames(tbl)) {
+    col_mo <- col_bactid
+    warning("Use of `col_bactid` is deprecated. Use `col_mo` instead.")
+  }
+  if (!col_mo %in% colnames(tbl)) {
+    stop('Column ', col_mo, ' not found.', call. = FALSE)
   }
 
   # check columns
@@ -136,7 +141,7 @@ key_antibiotics <- function(tbl,
   gram_negative <- gram_negative[!is.na(gram_negative)]
 
   # join microorganisms
-  tbl <- tbl %>% left_join_microorganisms(col_bactid)
+  tbl <- tbl %>% left_join_microorganisms(col_mo)
 
   tbl$key_ab <- NA_character_
 
