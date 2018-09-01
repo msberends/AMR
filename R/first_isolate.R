@@ -178,7 +178,7 @@ first_isolate <- function(tbl,
 
   if (!is.na(col_mo)) {
     if (!tbl %>% pull(col_mo) %>% is.mo()) {
-      warning("Improve integrity of the `", col_mo, "` column by transforming it with 'as.mo'.")
+      tbl[, col_mo] <- as.mo(tbl[, col_mo])
     }
     # join to microorganisms data set
     tbl <- tbl %>% left_join_microorganisms(by = col_mo)
@@ -311,7 +311,7 @@ first_isolate <- function(tbl,
     if (info == TRUE) {
       message('No isolates found.')
     }
-    # NA's where genus is unavailable
+    # NAs where genus is unavailable
     tbl <- tbl %>%
       mutate(real_first_isolate = if_else(genus == '', NA, FALSE))
     if (output_logical == FALSE) {
@@ -406,7 +406,7 @@ first_isolate <- function(tbl,
     all_first[which(all_first[, col_icu] == TRUE), 'real_first_isolate'] <- FALSE
   }
 
-  # NA's where genus is unavailable
+  # NAs where genus is unavailable
   all_first <- all_first %>%
     mutate(real_first_isolate = if_else(genus %in% c('', '(no MO)', NA), NA, real_first_isolate))
 

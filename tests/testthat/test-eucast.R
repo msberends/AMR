@@ -20,7 +20,6 @@ test_that("EUCAST rules work", {
                       "ENTAER"), # Enterobacter aerogenes
                   amox = "R",           # Amoxicillin
                   stringsAsFactors = FALSE)
-  expect_warning(EUCAST_rules(a, info = FALSE))
   expect_identical(suppressWarnings(EUCAST_rules(a, info = FALSE)), b)
   expect_identical(suppressWarnings(interpretive_reading(a, info = TRUE)), b)
 

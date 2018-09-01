@@ -45,6 +45,6 @@ ab_official(Cipro)       # returns "Ciprofloxacin"
 ab_umcg(Cipro)           # returns "CIPR", the code used in the UMCG
 }
 \seealso{
-\code{\link{antibiotics}} for the dataframe that is being used to determine ATC's.
+\code{\link{antibiotics}} for the dataframe that is being used to determine ATCs.
 }
 \keyword{atc}

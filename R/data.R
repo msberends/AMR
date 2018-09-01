@@ -16,10 +16,10 @@
 # GNU General Public License for more details.                         #
 # ==================================================================== #
 
-#' Dataset with 423 antibiotics
+#' Data set with 423 antibiotics
 #'
-#' A dataset containing all antibiotics with a J0 code and some other antimicrobial agents, with their DDD's. Except for trade names and abbreviations, all properties were downloaded from the WHO, see Source.
-#' @format A data.frame with 423 observations and 18 variables:
+#' A data set containing all antibiotics with a J0 code and some other antimicrobial agents, with their DDDs. Except for trade names and abbreviations, all properties were downloaded from the WHO, see Source.
+#' @format A \code{\link{tibble}} with 423 observations and 18 variables:
 #' \describe{
 #'   \item{\code{atc}}{ATC code, like \code{J01CR02}}
 #'   \item{\code{certe}}{Certe code, like \code{amcl}}
@@ -120,10 +120,10 @@
 #
 "antibiotics"
 
-#' Dataset with ~2650 microorganisms
+#' Data set with human pathogenic microorganisms
 #'
-#' A dataset containing 2,646 microorganisms. MO codes of the UMCG can be looked up using \code{\link{microorganisms.umcg}}.
-#' @format A data.frame with 2,646 observations and 12 variables:
+#' A data set containing 2,664 (potential) human pathogenic microorganisms. MO codes can be looked up using \code{\link{guess_mo}}.
+#' @format A \code{\link{tibble}} with 2,664 observations and 12 variables:
 #' \describe{
 #'   \item{\code{mo}}{ID of microorganism}
 #'   \item{\code{bactsys}}{Bactsyscode of microorganism}
@@ -151,10 +151,10 @@
 #' @seealso \code{\link{guess_mo}} \code{\link{antibiotics}} \code{\link{microorganisms.umcg}}
 "microorganisms"
 
-#' Translation table for UMCG with ~1100 microorganisms
+#' Translation table for UMCG with ~1,100 microorganisms
 #'
-#' A dataset containing all bacteria codes of UMCG MMB. These codes can be joined to data with an ID from \code{\link{microorganisms}$mo} (using \code{\link{left_join_microorganisms}}). GLIMS codes can also be translated to valid \code{mo}'s with \code{\link{guess_mo}}.
-#' @format A data.frame with 1090 observations and 2 variables:
+#' A data set containing all bacteria codes of UMCG MMB. These codes can be joined to data with an ID from \code{\link{microorganisms}$mo} (using \code{\link{left_join_microorganisms}}). GLIMS codes can also be translated to valid \code{MO}s with \code{\link{guess_mo}}.
+#' @format A \code{\link{tibble}} with 1,090 observations and 2 variables:
 #' \describe{
 #'   \item{\code{umcg}}{Code of microorganism according to UMCG MMB}
 #'   \item{\code{mo}}{Code of microorganism in \code{\link{microorganisms}}}
@@ -163,10 +163,10 @@
 #' @seealso \code{\link{guess_mo}} \code{\link{microorganisms}}
 "microorganisms.umcg"
 
-#' Dataset with 2000 blood culture isolates of septic patients
+#' Data set with 2000 blood culture isolates of septic patients
 #'
-#' An anonymised dataset containing 2000 microbial blood culture isolates with their full antibiograms found in septic patients in 4 different hospitals in the Netherlands, between 2001 and 2017. It is true, genuine data. This \code{data.frame} can be used to practice AMR analysis. For examples, press F1.
-#' @format A data.frame with 2000 observations and 49 variables:
+#' An anonymised data set containing 2,000 microbial blood culture isolates with their full antibiograms found in septic patients in 4 different hospitals in the Netherlands, between 2001 and 2017. It is true, genuine data. This \code{data.frame} can be used to practice AMR analysis. For examples, press F1.
+#' @format A \code{\link{tibble}} with 2,000 observations and 49 variables:
 #' \describe{
 #'   \item{\code{date}}{date of receipt at the laboratory}
 #'   \item{\code{hospital_id}}{ID of the hospital, from A to D}
@@ -185,13 +185,13 @@
 #' # PREPARATION #
 #' # ----------- #
 #'
-#' # Save this example dataset to an object, so we can edit it:
+#' # Save this example data set to an object, so we can edit it:
 #' my_data <- septic_patients
 #'
 #' # load the dplyr package to make data science A LOT easier
 #' library(dplyr)
 #'
-#' # Add first isolates to our dataset:
+#' # Add first isolates to our data set:
 #' my_data <- my_data %>%
 #'   mutate(first_isolates = first_isolate(my_data, "date", "patient_id", "mo"))
 #'

@@ -124,10 +124,15 @@ test_that("first isolates work", {
                              col_date = "non-existing col",
                              col_mo = "mo"))
 
-  expect_warning(septic_patients %>%
+  # if mo is not an mo class, result should be the same
+  expect_identical(septic_patients %>%
                    mutate(mo = as.character(mo)) %>%
                    first_isolate(col_date = "date",
                                  col_mo = "mo",
-                                 col_patient_id = "patient_id"))
+                                 col_patient_id = "patient_id"),
+                   septic_patients %>%
+                     first_isolate(col_date = "date",
+                                   col_mo = "mo",
+                                   col_patient_id = "patient_id"))
 
 })

@@ -140,6 +140,9 @@ key_antibiotics <- function(tbl,
                     GramNeg_4, GramNeg_5, GramNeg_6)
   gram_negative <- gram_negative[!is.na(gram_negative)]
 
+  if (!tbl %>% pull(col_mo) %>% is.mo()) {
+    tbl[, col_mo] <- as.mo(tbl[, col_mo])
+  }
   # join microorganisms
   tbl <- tbl %>% left_join_microorganisms(col_mo)
 

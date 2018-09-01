@@ -3,8 +3,8 @@
 \docType{data}
 \name{septic_patients}
 \alias{septic_patients}
-\title{Dataset with 2000 blood culture isolates of septic patients}
-\format{A data.frame with 2000 observations and 49 variables:
+\title{Data set with 2000 blood culture isolates of septic patients}
+\format{A \code{\link{tibble}} with 2,000 observations and 49 variables:
 \describe{
   \item{\code{date}}{date of receipt at the laboratory}
   \item{\code{hospital_id}}{ID of the hospital, from A to D}
@@ -21,20 +21,20 @@
 septic_patients
 }
 \description{
-An anonymised dataset containing 2000 microbial blood culture isolates with their full antibiograms found in septic patients in 4 different hospitals in the Netherlands, between 2001 and 2017. It is true, genuine data. This \code{data.frame} can be used to practice AMR analysis. For examples, press F1.
+An anonymised data set containing 2,000 microbial blood culture isolates with their full antibiograms found in septic patients in 4 different hospitals in the Netherlands, between 2001 and 2017. It is true, genuine data. This \code{data.frame} can be used to practice AMR analysis. For examples, press F1.
 }
 \examples{
 # ----------- #
 # PREPARATION #
 # ----------- #
 
-# Save this example dataset to an object, so we can edit it:
+# Save this example data set to an object, so we can edit it:
 my_data <- septic_patients
 
 # load the dplyr package to make data science A LOT easier
 library(dplyr)
 
-# Add first isolates to our dataset:
+# Add first isolates to our data set:
 my_data <- my_data \%>\%
   mutate(first_isolates = first_isolate(my_data, "date", "patient_id", "mo"))
 

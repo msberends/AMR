@@ -55,7 +55,7 @@ This `AMR` package basically does four important things:
    * Use `first_isolate` to identify the first isolates of every patient [using guidelines from the CLSI](https://clsi.org/standards/products/microbiology/documents/m39/) (Clinical and Laboratory Standards Institute).
      * You can also identify first *weighted* isolates of every patient, an adjusted version of the CLSI guideline. This takes into account key antibiotics of every strain and compares them.
    * Use `MDRO` (abbreviation of Multi Drug Resistant Organisms) to check your isolates for exceptional resistance with country-specific guidelines or EUCAST rules. Currently, national guidelines for Germany and the Netherlands are supported.
-   * The data set `microorganisms` contains the family, genus, species, subspecies, colloquial name and Gram stain of almost 2,650 microorganisms (2,207 bacteria, 285 fungi/yeasts, 153 parasites, 1 other). This enables resistance analysis of e.g. different antibiotics per Gram stain. The package also contains functions to look up values in this data set like `mo_genus`, `mo_family` or `mo_gramstain`. Since it uses `as.mo` internally, AI is supported. For example, `mo_genus("MRSA")` and `mo_genus("S. aureus")` will both return `"Staphylococcus"`. These functions can be used to add new variables to your data.
+   * The data set `microorganisms` contains the family, genus, species, subspecies, colloquial name and Gram stain of almost 3,000 potential human pathogenic microorganisms (bacteria, fungi/yeasts and parasites). This enables resistance analysis of e.g. different antibiotics per Gram stain. The package also contains functions to look up values in this data set like `mo_genus`, `mo_family` or `mo_gramstain`. Since it uses `as.mo` internally, AI is supported. For example, `mo_genus("MRSA")` and `mo_genus("S. aureus")` will both return `"Staphylococcus"`. These functions can be used to add new variables to your data.
    * The data set `antibiotics` contains the ATC code, LIS codes, official name, trivial name and DDD of both oral and parenteral administration. It also contains a total of 298 trade names. Use functions like `ab_official` and `ab_tradenames` to look up values. As the `mo_*` functions use `as.mo` internally, the `ab_*` functions use `as.atc` internally so it uses AI to guess your expected result. For example, `ab_official("Fluclox")`, `ab_official("Floxapen")` and `ab_official("J01CF05")` will all return `"Flucloxacillin"`. These functions can again be used to add new variables to your data.
 
 3. It **analyses the data** with convenient functions that use well-known methods.
@@ -74,7 +74,7 @@ This `AMR` package basically does four important things:
      * Real and genuine data
 
 ## How to get it?
-All versions of this package [are published on CRAN](http://cran.r-project.org/package=AMR), the official R network with a peer-reviewed submission process.
+All stable versions of this package [are published on CRAN](http://cran.r-project.org/package=AMR), the official R network with a peer-reviewed submission process.
 
 ### Install from CRAN
 [![CRAN_Badge](https://www.r-pkg.org/badges/version/AMR)](http://cran.r-project.org/package=AMR) [![CRAN_Downloads](https://cranlogs.r-pkg.org/badges/grand-total/AMR)](http://cran.r-project.org/package=AMR)
@@ -89,15 +89,14 @@ All versions of this package [are published on CRAN](http://cran.r-project.org/p
   - `install.packages("AMR")`
 
 ### Install from GitHub
-[![Last_Commit](https://img.shields.io/github/last-commit/msberends/AMR.svg)](https://github.com/msberends/AMR/commits/master)
 
-This is the latest development version. Although it may contain bugfixes and even new functions compared to the latest released version on CRAN, it is also subject to change and may be unstable or behave unexpectedly. Always consider this a beta version. All below 'badges' should be green.
+This is the latest **development version**. Although it may contain bugfixes and even new functions compared to the latest released version on CRAN, it is also subject to change and may be unstable or behave unexpectedly. Always consider this a beta version. All below 'badges' should be green:
 
-Development Test | Result
---- | :---:
-Works on Linux and macOS | [![Travis_Build](https://travis-ci.org/msberends/AMR.svg?branch=master)](https://travis-ci.org/msberends/AMR)
-Works on Windows | [![AppVeyor_Build](https://ci.appveyor.com/api/projects/status/github/msberends/AMR?branch=master&svg=true)](https://ci.appveyor.com/project/msberends/AMR)
-Syntax lines checked | [![Code_Coverage](https://codecov.io/gh/msberends/AMR/branch/master/graph/badge.svg)](https://codecov.io/gh/msberends/AMR)
+Development Test | Result | Reference
+--- | :---: | ---
+Works on Linux and macOS | [![Travis_Build](https://travis-ci.org/msberends/AMR.svg?branch=master)](https://travis-ci.org/msberends/AMR) | Checked by Travis CI, GmbH [[ref 1]](https://travis-ci.org/msberends/AMR) 
+Works on Windows | [![AppVeyor_Build](https://ci.appveyor.com/api/projects/status/github/msberends/AMR?branch=master&svg=true)](https://ci.appveyor.com/project/msberends/AMR) | Checked by Appveyor Systems Inc. [[ref 2]](https://ci.appveyor.com/project/msberends/AMR)
+Syntax lines checked | [![Code_Coverage](https://codecov.io/gh/msberends/AMR/branch/master/graph/badge.svg)](https://codecov.io/gh/msberends/AMR) | Checked by Codecov LLC [[ref 3]](https://codecov.io/gh/msberends/AMR)
 
 If so, try it with:
 ```r

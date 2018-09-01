@@ -3,8 +3,8 @@
 \docType{data}
 \name{antibiotics}
 \alias{antibiotics}
-\title{Dataset with 423 antibiotics}
-\format{A data.frame with 423 observations and 18 variables:
+\title{Data set with 423 antibiotics}
+\format{A \code{\link{tibble}} with 423 observations and 18 variables:
 \describe{
   \item{\code{atc}}{ATC code, like \code{J01CR02}}
   \item{\code{certe}}{Certe code, like \code{amcl}}
@@ -32,7 +32,7 @@
 antibiotics
 }
 \description{
-A dataset containing all antibiotics with a J0 code and some other antimicrobial agents, with their DDD's. Except for trade names and abbreviations, all properties were downloaded from the WHO, see Source.
+A data set containing all antibiotics with a J0 code and some other antimicrobial agents, with their DDDs. Except for trade names and abbreviations, all properties were downloaded from the WHO, see Source.
 }
 \seealso{
 \code{\link{microorganisms}}

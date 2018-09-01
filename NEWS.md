@@ -15,7 +15,7 @@
 * Introduction to AMR as a vignette
 
 #### Changed
-* Added 182 microorganisms to the `microorganisms` data set, now *n* = 2,646 (2,207 bacteria, 285 fungi/yeasts, 153 parasites, 1 other)
+* Added 226 microorganisms to the `microorganisms` data set and removed the few viruses it contained, now *n* = 2,664 (2,225 bacteria, 285 fungi/yeasts, 153 parasites, 1 other)
 * Added three antimicrobial agents to the `antibiotics` data set: Terbinafine (D01BA02), Rifaximin (A07AA11) and Isoconazole (D01AC05)
 * Added 163 trade names to the `antibiotics` data set, it now contains 298 different trade names in total, e.g.:
   ```r
@@ -28,7 +28,7 @@
   ```
 * Function `ratio` is now deprecated and will be removed in a future release, as it is not really the scope of this package
 * Fix for `as.mic` for values ending in zeroes after a real number
-* Huge speed improvement for `as.bactid` (now `as.mo`)
+* Tremendous speed improvement for `as.bactid` (now `as.mo`)
 * Added parameters `minimum` and `as_percent` to `portion_df`
 * Support for quasiquotation in the functions series `count_*` and `portions_*`, and `n_rsi`. This allows to check for more than 2 vectors or columns.
   ```r

@@ -280,8 +280,10 @@ EUCAST_rules <- function(tbl,
   }
 
   # join to microorganisms data set
+  col_mo_original <- NULL
   if (!tbl %>% pull(col_mo) %>% is.mo()) {
-    warning("Improve integrity of the `", col_mo, "` column by transforming it with 'as.mo'.")
+    col_mo_original <- tbl %>% pull(col_mo)
+    tbl[, col_mo] <- as.mo(tbl[, col_mo])
   }
   tbl <- tbl %>% left_join_microorganisms(by = col_mo, suffix = c("_tempmicroorganisms", ""))
 
@@ -685,6 +687,10 @@ EUCAST_rules <- function(tbl,
   tbl <- tbl %>% select(-c((tbl.ncol - microorganisms.ncol):tbl.ncol))
   # and remove added suffices
   colnames(tbl) <- gsub("_tempmicroorganisms", "", colnames(tbl))
+  # restore old col_mo values if needed
+  if (!is.null(col_mo_original)) {
+    tbl[, col_mo] <- col_mo_original
+  }
 
   if (info == TRUE) {
     cat('Done.\n\nEUCAST Expert rules applied to',

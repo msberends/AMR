@@ -3,8 +3,8 @@
 \docType{data}
 \name{microorganisms}
 \alias{microorganisms}
-\title{Dataset with ~2650 microorganisms}
-\format{A data.frame with 2,646 observations and 12 variables:
+\title{Data set with human pathogenic microorganisms}
+\format{A \code{\link{tibble}} with 2,664 observations and 12 variables:
 \describe{
   \item{\code{mo}}{ID of microorganism}
   \item{\code{bactsys}}{Bactsyscode of microorganism}
@@ -23,7 +23,7 @@
 microorganisms
 }
 \description{
-A dataset containing 2,646 microorganisms. MO codes of the UMCG can be looked up using \code{\link{microorganisms.umcg}}.
+A data set containing 2,664 (potential) human pathogenic microorganisms. MO codes can be looked up using \code{\link{guess_mo}}.
 }
 \seealso{
 \code{\link{guess_mo}} \code{\link{antibiotics}} \code{\link{microorganisms.umcg}}

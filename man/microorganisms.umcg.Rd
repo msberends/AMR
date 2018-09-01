@@ -3,8 +3,8 @@
 \docType{data}
 \name{microorganisms.umcg}
 \alias{microorganisms.umcg}
-\title{Translation table for UMCG with ~1100 microorganisms}
-\format{A data.frame with 1090 observations and 2 variables:
+\title{Translation table for UMCG with ~1,100 microorganisms}
+\format{A \code{\link{tibble}} with 1,090 observations and 2 variables:
 \describe{
   \item{\code{umcg}}{Code of microorganism according to UMCG MMB}
   \item{\code{mo}}{Code of microorganism in \code{\link{microorganisms}}}
@@ -13,7 +13,7 @@
 microorganisms.umcg
 }
 \description{
-A dataset containing all bacteria codes of UMCG MMB. These codes can be joined to data with an ID from \code{\link{microorganisms}$mo} (using \code{\link{left_join_microorganisms}}). GLIMS codes can also be translated to valid \code{mo}'s with \code{\link{guess_mo}}.
+A data set containing all bacteria codes of UMCG MMB. These codes can be joined to data with an ID from \code{\link{microorganisms}$mo} (using \code{\link{left_join_microorganisms}}). GLIMS codes can also be translated to valid \code{MO}s with \code{\link{guess_mo}}.
 }
 \seealso{
 \code{\link{guess_mo}} \code{\link{microorganisms}}

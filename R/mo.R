@@ -91,7 +91,6 @@
 #' }
 as.mo <- function(x, Becker = FALSE, Lancefield = FALSE) {
 
-
   if (NCOL(x) == 2) {
     # support tidyverse selection like: df %>% select(colA, colB)
     # paste these columns together
@@ -131,73 +130,10 @@ as.mo <- function(x, Becker = FALSE, Lancefield = FALSE) {
   x_species <- paste(x, 'species')
   # add start en stop regex
   x <- paste0('^', x, '$')
+  x_withspaces_all <- x_withspaces
   x_withspaces <- paste0('^', x_withspaces, '$')
 
   for (i in 1:length(x)) {
-
-    if (Becker == TRUE | Becker == "all") {
-      mo <- suppressWarnings(guess_mo(x_backup[i]))
-      if (mo %like% '^STA') {
-        # See Source. It's this figure:
-        # https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4187637/figure/F3/
-        species <- left_join_microorganisms(mo)$species
-        if (species %in% c("arlettae", "auricularis", "capitis",
-                           "caprae", "carnosus", "cohnii", "condimenti",
-                           "devriesei", "epidermidis", "equorum",
-                           "fleurettii", "gallinarum", "haemolyticus",
-                           "hominis", "jettensis", "kloosii", "lentus",
-                           "lugdunensis", "massiliensis", "microti",
-                           "muscae", "nepalensis", "pasteuri", "petrasii",
-                           "pettenkoferi", "piscifermentans", "rostri",
-                           "saccharolyticus", "saprophyticus", "sciuri",
-                           "stepanovicii", "simulans", "succinus",
-                           "vitulinus", "warneri", "xylosus")) {
-          x[i] <- "STACNS"
-          next
-        } else if ((Becker == "all"  & species == "aureus")
-                   | species %in% c("simiae", "agnetis", "chromogenes",
-                                    "delphini", "felis", "lutrae",
-                                    "hyicus", "intermedius",
-                                    "pseudintermedius", "pseudointermedius",
-                                    "schleiferi")) {
-          x[i] <- "STACPS"
-          next
-        }
-      }
-    }
-
-    if (Lancefield == TRUE) {
-      mo <- suppressWarnings(guess_mo(x_backup[i]))
-      if (mo %like% '^STC') {
-        # See Source
-        species <- left_join_microorganisms(mo)$species
-        if (species == "pyogenes") {
-          x[i] <- "STCGRA"
-          next
-        }
-        if (species == "agalactiae") {
-          x[i] <- "STCGRB"
-          next
-        }
-        if (species %in% c("equisimilis", "equi",
-                           "zooepidemicus", "dysgalactiae")) {
-          x[i] <- "STCGRC"
-          next
-        }
-        if (species == "anginosus") {
-          x[i] <- "STCGRF"
-          next
-        }
-        if (species == "sanguis") {
-          x[i] <- "STCGRH"
-          next
-        }
-        if (species == "salivarius") {
-          x[i] <- "STCGRK"
-          next
-        }
-      }
-    }
 
     if (identical(x_trimmed[i], "")) {
       # empty values
@@ -206,12 +142,12 @@ as.mo <- function(x, Becker = FALSE, Lancefield = FALSE) {
       next
     }
     if (x_backup[i] %in% AMR::microorganisms$mo) {
-      # is already a valid mo
+      # is already a valid MO code
       x[i] <- x_backup[i]
       next
     }
     if (x_trimmed[i] %in% AMR::microorganisms$mo) {
-      # is already a valid mo
+      # is already a valid MO code
       x[i] <- x_trimmed[i]
       next
     }
@@ -303,6 +239,13 @@ as.mo <- function(x, Becker = FALSE, Lancefield = FALSE) {
       next
     }
 
+    # try fullname without start and stop regex, to also find subspecies, like "K. pneu rhino"
+    found <- MOs[which(gsub("[\\(\\)]", "", MOs$fullname) %like% x_withspaces_all[i]),]$mo
+    if (length(found) > 0) {
+      x[i] <- found[1L]
+      next
+    }
+
     # search for GLIMS code
     found <- AMR::microorganisms.umcg[which(toupper(AMR::microorganisms.umcg$umcg) == toupper(x_trimmed[i])),]$mo
     if (length(found) > 0) {
@@ -350,6 +293,57 @@ as.mo <- function(x, Becker = FALSE, Lancefield = FALSE) {
             paste('"', unique(failures), '"', sep = "", collapse = ', '),
             ".",
             call. = FALSE)
+  }
+
+  if (Becker == TRUE | Becker == "all") {
+    # See Source. It's this figure:
+    # https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4187637/figure/F3/
+    CoNS <- MOs %>%
+      filter(genus == "Staphylococcus",
+             species %in% c("arlettae", "auricularis", "capitis",
+                            "caprae", "carnosus", "cohnii", "condimenti",
+                            "devriesei", "epidermidis", "equorum",
+                            "fleurettii", "gallinarum", "haemolyticus",
+                            "hominis", "jettensis", "kloosii", "lentus",
+                            "lugdunensis", "massiliensis", "microti",
+                            "muscae", "nepalensis", "pasteuri", "petrasii",
+                            "pettenkoferi", "piscifermentans", "rostri",
+                            "saccharolyticus", "saprophyticus", "sciuri",
+                            "stepanovicii", "simulans", "succinus",
+                            "vitulinus", "warneri", "xylosus")) %>%
+      pull(mo)
+    CoPS <- MOs %>%
+      filter(genus == "Staphylococcus",
+             species %in% c("simiae", "agnetis", "chromogenes",
+                            "delphini", "felis", "lutrae",
+                            "hyicus", "intermedius",
+                            "pseudintermedius", "pseudointermedius",
+                            "schleiferi")) %>%
+      pull(mo)
+    x[x %in% CoNS] <- "STACNS"
+    x[x %in% CoPS] <- "STACPS"
+    if (Becker == "all") {
+      x[x == "STAAUR"] <- "STACPS"
+    }
+  }
+
+  if (Lancefield == TRUE) {
+    # group A
+    x[x == "STCPYO"] <- "STCGRA" # S. pyogenes
+    # group B
+    x[x == "STCAGA"] <- "STCGRB" # S. agalactiae
+    # group C
+    S_groupC <- MOs %>% filter(genus == "Streptococcus",
+                               species %in% c("equisimilis", "equi",
+                                              "zooepidemicus", "dysgalactiae")) %>%
+      pull(mo)
+    x[x %in% S_groupC] <- "STCGRC" # S. agalactiae
+    # group F
+    x[x == "STCANG"] <- "STCGRF" # S. anginosus
+    # group H
+    x[x == "STCSAN"] <- "STCGRH" # S. sanguis
+    # group K
+    x[x == "STCSAL"] <- "STCGRK" # S. salivarius
   }
 
   # left join the found results to the original input values (x_input)
