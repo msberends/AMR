@@ -4,14 +4,14 @@
 * Functions `count_R`, `count_IR`, `count_I`, `count_SI` and `count_S` to selectively count resistant or susceptible isolates
   * Extra function `count_df` (which works like `portion_df`) to get all counts of S, I and R of a data set with antibiotic columns, with support for grouped variables
 * Function `is.rsi.eligible` to check for columns that have valid antimicrobial results, but do not have the `rsi` class yet. Transform the columns of your raw data with: `data %>% mutate_if(is.rsi.eligible, as.rsi)`
-* Functions `as.mo` and `is.mo` as replacements for `as.bactid` and `is.bactid`. These last two functions are deprecated and will be removed in a future release.
+* Functions `as.mo` and `is.mo` as replacements for `as.bactid` and `is.bactid` (since the `microoganisms` data set not only contains bacteria). These last two functions are deprecated and will be removed in a future release.
 * Renamed all previous references to `bactid` to `mo`, like:
   * Column names inputs of `EUCAST_rules`, `first_isolate` and `key_antibiotics`
   * Column names of datasets `microorganisms` and `septic_patients`
   * All old syntaxes will still work with this version, but will throw warnings
 * Functions `as.atc` and `is.atc` to transform/look up antibiotic ATC codes as defined by the WHO. The existing function `guess_atc` is now an alias of `as.atc`.
-* Aliases for existing function `mo_property`: `mo_aerobic`, `mo_family`, `mo_fullname`, `mo_genus`, `mo_gramstain`, `mo_gramstain_nl`, `mo_property`, `mo_species`, `mo_subspecies`, `mo_type`, `mo_type_nl`
-* Function `ab_property` and its aliases: `ab_certe`, `ab_official`, `ab_official_nl`, `ab_property`, `ab_trivial_nl`, `ab_umcg`, `ab_tradenames`
+* Aliases for existing function `mo_property`: `mo_family`, `mo_genus`, `mo_species`, `mo_subspecies`, `mo_fullname`, `mo_type`, `mo_gramstain`, `mo_aerobic`, `mo_type_nl` and `mo_gramstain_nl`
+* Function `ab_property` and its aliases: `ab_official`, `ab_tradenames`, `ab_certe`, `ab_umcg`, `ab_official_nl` and `ab_trivial_nl`
 * Introduction to AMR as a vignette
 
 #### Changed
@@ -32,7 +32,10 @@
 * Added parameters `minimum` and `as_percent` to `portion_df`
 * Support for quasiquotation in the functions series `count_*` and `portions_*`, and `n_rsi`. This allows to check for more than 2 vectors or columns.
   ```r
-  septic_patients %>% select(amox, cipr) %>% count_R()
+  septic_patients %>% select(amox, cipr) %>% count_IR()
+  # which is the same as:
+  septic_patients %>% count_IR(amox, cipr)
+  
   septic_patients %>% portion_S(amcl)
   septic_patients %>% portion_S(amcl, gent)
   septic_patients %>% portion_S(amcl, gent, pita)
