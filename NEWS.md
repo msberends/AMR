@@ -40,6 +40,7 @@
 * Edited `ggplot_rsi` and `geom_rsi` so they can cope with `count_df`. The new `fun` parameter has value `portion_df` at default, but can be set to `count_df`.
 * Fix for `ggplot_rsi` when the `ggplot2` package was not loaded
 * Added possibility to set any parameter to `geom_rsi` (and `ggplot_rsi`) so you can set your own preferences
+* Fix for joins, where predefined suffices would not be honoured
 * Support for types list and matrix for `freq`
   ```r
   my_matrix = with(septic_patients, matrix(c(age, sex), ncol = 2))
