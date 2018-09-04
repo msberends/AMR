@@ -16,9 +16,11 @@ test_that("deprecated functions work", {
 
   old_mo <- "ESCCOL"
   class(old_mo) <- "bactid"
+  df_oldmo <- data.frame(test = old_mo)
   # print
   expect_output(print(old_mo))
-  # test data.frame and pull
-  expect_equal(as.character(dplyr::pull(data.frame(test = old_mo), test)), "ESCCOL")
+  # test pull
+  library(dplyr)
+  expect_identical(df_oldmo %>% pull(test), old_mo)
 
 })

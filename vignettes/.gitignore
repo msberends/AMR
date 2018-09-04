@@ -1,4 +1,5 @@
 figure
 *.html
 *.md
+*.R
 rsconnect

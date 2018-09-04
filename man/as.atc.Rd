@@ -5,7 +5,7 @@
 \alias{atc}
 \alias{guess_atc}
 \alias{is.atc}
-\title{Find ATC code based on antibiotic property}
+\title{Transform to ATC code}
 \usage{
 as.atc(x)
 
@@ -20,7 +20,7 @@ is.atc(x)
 Character (vector) with class \code{"act"}. Unknown values will return \code{NA}.
 }
 \description{
-Use this function to determine the ATC code of one or more antibiotics. The dataset \code{\link{antibiotics}} will be searched for abbreviations, official names and trade names.
+Use this function to determine the ATC code of one or more antibiotics. The data set \code{\link{antibiotics}} will be searched for abbreviations, official names and trade names.
 }
 \details{
 Use the \code{\link{ab_property}} functions to get properties based on the returned ATC code, see Examples.

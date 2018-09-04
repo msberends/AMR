@@ -8,4 +8,7 @@ test_that("ab_property works", {
   expect_equal(ab_umcg("amox"), "AMOX")
   expect_equal(class(ab_tradenames("amox")), "character")
   expect_equal(class(ab_tradenames(c("amox", "amox"))), "list")
+  expect_equal(ab_atc("amox"), as.character(as.atc("amox")))
+
+  expect_error(ab_property("amox", "invalid property"))
 })

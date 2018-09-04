@@ -4,7 +4,7 @@
 \name{microorganisms}
 \alias{microorganisms}
 \title{Data set with human pathogenic microorganisms}
-\format{A \code{\link{tibble}} with 2,664 observations and 12 variables:
+\format{A \code{\link{tibble}} with 2,664 observations and 16 variables:
 \describe{
   \item{\code{mo}}{ID of microorganism}
   \item{\code{bactsys}}{Bactsyscode of microorganism}
@@ -13,11 +13,15 @@
   \item{\code{species}}{Species name of microorganism, like \code{"coli"}}
   \item{\code{subspecies}}{Subspecies name of bio-/serovar of microorganism, like \code{"EHEC"}}
   \item{\code{fullname}}{Full name, like \code{"Echerichia coli (EHEC)"}}
+  \item{\code{aerobic}}{Logical whether bacteria is aerobic}
   \item{\code{type}}{Type of microorganism, like \code{"Bacteria"} and \code{"Fungus/yeast"}}
   \item{\code{gramstain}}{Gram of microorganism, like \code{"Negative rods"}}
-  \item{\code{aerobic}}{Logical whether bacteria is aerobic}
+  \item{\code{type_de}}{Type of microorganism in German, like \code{"Bakterien"} and \code{"Pilz/Hefe"}}
+  \item{\code{gramstain_de}}{Gram of microorganism in German, like \code{"Negative Staebchen"}}
   \item{\code{type_nl}}{Type of microorganism in Dutch, like \code{"Bacterie"} and \code{"Schimmel/gist"}}
   \item{\code{gramstain_nl}}{Gram of microorganism in Dutch, like \code{"Negatieve staven"}}
+  \item{\code{type_es}}{Type of microorganism in Spanish, like \code{"Bacteria"} and \code{"Hongo/levadura"}}
+  \item{\code{gramstain_es}}{Gram of microorganism in Spanish, like \code{"Bacilos negativos"}}
 }}
 \usage{
 microorganisms

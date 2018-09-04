@@ -19,15 +19,19 @@
 #' Transform to microorganism ID
 #'
 #' Use this function to determine a valid ID based on a genus (and species). This input can be a full name (like \code{"Staphylococcus aureus"}), an abbreviated name (like \code{"S. aureus"}), or just a genus. You could also \code{\link{select}} a genus and species column, zie Examples.
-#' @param x a character vector or a dataframe with one or two columns
-#' @param Becker a logical to indicate whether \emph{Staphylococci} should be categorised into Coagulase Negative \emph{Staphylococci} ("CoNS") and Coagulase Positive \emph{Staphylococci} ("CoPS") instead of their own species, according to Karsten Becker \emph{et al.} [1]. This excludes \emph{Staphylococcus aureus} at default, use \code{Becker = "all"} to also categorise \emph{S. aureus} as "CoPS".
-#' @param Lancefield a logical to indicate whether beta-haemolytic \emph{Streptococci} should be categorised into Lancefield groups instead of their own species, according to Rebecca C. Lancefield [2]. These \emph{Streptococci} will be categorised in their first group, i.e. \emph{Streptococcus dysgalactiae} will be group C, although officially it was also categorised into groups G and L. Groups D and E will be ignored, since they are \emph{Enterococci}.
+#' @param x a character vector or a \code{data.frame} with one or two columns
+#' @param Becker a logical to indicate whether \emph{Staphylococci} should be categorised into Coagulase Negative \emph{Staphylococci} ("CoNS") and Coagulase Positive \emph{Staphylococci} ("CoPS") instead of their own species, according to Karsten Becker \emph{et al.} [1].
+#'
+#'   This excludes \emph{Staphylococcus aureus} at default, use \code{Becker = "all"} to also categorise \emph{S. aureus} as "CoPS".
+#' @param Lancefield a logical to indicate whether beta-haemolytic \emph{Streptococci} should be categorised into Lancefield groups instead of their own species, according to Rebecca C. Lancefield [2]. These \emph{Streptococci} will be categorised in their first group, i.e. \emph{Streptococcus dysgalactiae} will be group C, although officially it was also categorised into groups G and L.
+#'
+#'   This excludes \emph{Enterococci} at default (who are in group D), use \code{Lancefield = "all"} to also categorise all \emph{Enterococci} as group D.
 #' @rdname as.mo
 #' @aliases mo
 #' @keywords mo Becker becker Lancefield lancefield guess
 #' @details \code{guess_mo} is an alias of \code{as.mo}.
 #'
-#' Use the \code{\link{mo_property}} functions to get properties based on the returned mo, see Examples.
+#' Use the \code{\link{mo_property}} functions to get properties based on the returned code, see Examples.
 #'
 #' Some exceptions have been built in to get more logical results, based on prevalence of human pathogens. These are:
 #' \itemize{
@@ -39,10 +43,9 @@
 #' Moreover, this function also supports ID's based on only Gram stain, when the species is not known. \cr
 #' For example, \code{"Gram negative rods"} and \code{"GNR"} will both return the ID of a Gram negative rod: \code{GNR}.
 #' @source
-#' [1] Becker K \emph{et al.} \strong{Coagulase-Negative Staphylococci}. 2014. Clin Microbiol Rev. 27(4): 870–926. \cr
-#'     \url{https://dx.doi.org/10.1128/CMR.00109-13} \cr
-#' [2] Lancefield RC \strong{A serological differentiation of human and other groups of hemolytic streptococci}. 1933. J Exp Med. 57(4): 571–95. \cr
-#'     \url{https://dx.doi.org/10.1084/jem.57.4.571}
+#' [1] Becker K \emph{et al.} \strong{Coagulase-Negative Staphylococci}. 2014. Clin Microbiol Rev. 27(4): 870–926. \url{https://dx.doi.org/10.1128/CMR.00109-13}
+#'
+#' [2] Lancefield RC \strong{A serological differentiation of human and other groups of hemolytic streptococci}. 1933. J Exp Med. 57(4): 571–95. \url{https://dx.doi.org/10.1084/jem.57.4.571}
 #' @export
 #' @importFrom dplyr %>% pull left_join
 #' @return Character (vector) with class \code{"mo"}. Unknown values will return \code{NA}.
@@ -63,7 +66,7 @@
 #' guess_mo("S. epidermidis")                 # will remain species: STAEPI
 #' guess_mo("S. epidermidis", Becker = TRUE)  # will not remain species: STACNS
 #'
-#' guess_mo("S. pyogenes")                    # will remain species: STCAGA
+#' guess_mo("S. pyogenes")                    # will remain species: STCPYO
 #' guess_mo("S. pyogenes", Lancefield = TRUE) # will not remain species: STCGRA
 #'
 #' # Use mo_* functions to get a specific property based on `mo`
@@ -177,8 +180,15 @@ as.mo <- function(x, Becker = FALSE, Lancefield = FALSE) {
     if (tolower(x[i]) %like% 'coagulase negative'
         | tolower(x[i]) %like% 'cns'
         | tolower(x[i]) %like% 'cons') {
-      # coerce S. coagulase negative, also as CNS and CoNS
+      # coerce S. coagulase negative
       x[i] <- 'STACNS'
+      next
+    }
+    if (tolower(x[i]) %like% 'coagulase positive'
+        | tolower(x[i]) %like% 'cps'
+        | tolower(x[i]) %like% 'cops') {
+      # coerce S. coagulase positive
+      x[i] <- 'STACPS'
       next
     }
 
@@ -204,7 +214,7 @@ as.mo <- function(x, Becker = FALSE, Lancefield = FALSE) {
         next
       }
       if (toupper(x_trimmed[i]) %in% c('PISP', 'PRSP', 'VISP', 'VRSP')) {
-        # peni R, peni I, vanco I, vanco R: S. pneumoniae
+        # peni I, peni R, vanco I, vanco R: S. pneumoniae
         x[i] <- 'STCPNE'
         next
       }
@@ -327,7 +337,7 @@ as.mo <- function(x, Becker = FALSE, Lancefield = FALSE) {
     }
   }
 
-  if (Lancefield == TRUE) {
+  if (Lancefield == TRUE | Lancefield == "all") {
     # group A
     x[x == "STCPYO"] <- "STCGRA" # S. pyogenes
     # group B
@@ -338,6 +348,9 @@ as.mo <- function(x, Becker = FALSE, Lancefield = FALSE) {
                                               "zooepidemicus", "dysgalactiae")) %>%
       pull(mo)
     x[x %in% S_groupC] <- "STCGRC" # S. agalactiae
+    if (Lancefield == "all") {
+      x[substr(x, 1, 3) == "ENC"] <- "STCGRD" # all Enterococci
+    }
     # group F
     x[x == "STCANG"] <- "STCGRF" # S. anginosus
     # group H

@@ -17,9 +17,9 @@
 # ==================================================================== #
 
 
-#' Find ATC code based on antibiotic property
+#' Transform to ATC code
 #'
-#' Use this function to determine the ATC code of one or more antibiotics. The dataset \code{\link{antibiotics}} will be searched for abbreviations, official names and trade names.
+#' Use this function to determine the ATC code of one or more antibiotics. The data set \code{\link{antibiotics}} will be searched for abbreviations, official names and trade names.
 #' @param x character vector to determine \code{ATC} code
 #' @rdname as.atc
 #' @aliases atc

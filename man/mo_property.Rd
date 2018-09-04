@@ -10,78 +10,105 @@
 \alias{mo_type}
 \alias{mo_gramstain}
 \alias{mo_aerobic}
-\alias{mo_type_nl}
-\alias{mo_gramstain_nl}
 \title{Property of a microorganism}
+\source{
+[1] Becker K \emph{et al.} \strong{Coagulase-Negative Staphylococci}. 2014. Clin Microbiol Rev. 27(4): 870–926. \url{https://dx.doi.org/10.1128/CMR.00109-13}
+
+[2] Lancefield RC \strong{A serological differentiation of human and other groups of hemolytic streptococci}. 1933. J Exp Med. 57(4): 571–95. \url{https://dx.doi.org/10.1084/jem.57.4.571}
+}
 \usage{
-mo_property(x, property = "fullname")
+mo_property(x, property = "fullname", Becker = FALSE,
+  Lancefield = FALSE)
 
 mo_family(x)
 
 mo_genus(x)
 
-mo_species(x)
+mo_species(x, Becker = FALSE, Lancefield = FALSE)
 
-mo_subspecies(x)
+mo_subspecies(x, Becker = FALSE, Lancefield = FALSE)
 
-mo_fullname(x)
+mo_fullname(x, Becker = FALSE, Lancefield = FALSE)
 
-mo_type(x)
+mo_type(x, language = "en")
 
-mo_gramstain(x)
+mo_gramstain(x, language = "en")
 
 mo_aerobic(x)
-
-mo_type_nl(x)
-
-mo_gramstain_nl(x)
 }
 \arguments{
-\item{x}{a (vector of a) valid \code{\link{mo}} or any text that can be coerced to a valid microorganism code with \code{\link{as.mo}}}
+\item{x}{any (vector of) text that can be coerced to a valid microorganism code with \code{\link{as.mo}}}
 
 \item{property}{one of the column names of one of the \code{\link{microorganisms}} data set, like \code{"mo"}, \code{"bactsys"}, \code{"family"}, \code{"genus"}, \code{"species"}, \code{"fullname"}, \code{"gramstain"} and \code{"aerobic"}}
+
+\item{Becker}{a logical to indicate whether \emph{Staphylococci} should be categorised into Coagulase Negative \emph{Staphylococci} ("CoNS") and Coagulase Positive \emph{Staphylococci} ("CoPS") instead of their own species, according to Karsten Becker \emph{et al.} [1].
+
+  This excludes \emph{Staphylococcus aureus} at default, use \code{Becker = "all"} to also categorise \emph{S. aureus} as "CoPS".}
+
+\item{Lancefield}{a logical to indicate whether beta-haemolytic \emph{Streptococci} should be categorised into Lancefield groups instead of their own species, according to Rebecca C. Lancefield [2]. These \emph{Streptococci} will be categorised in their first group, i.e. \emph{Streptococcus dysgalactiae} will be group C, although officially it was also categorised into groups G and L.
+
+  This excludes \emph{Enterococci} at default (who are in group D), use \code{Lancefield = "all"} to also categorise all \emph{Enterococci} as group D.}
+
+\item{language}{language of the returned text, either one of \code{"en"} (English), \code{"de"} (German) or \code{"nl"} (Dutch)}
 }
 \description{
-Use these functions to return a specific property of a microorganism from the \code{\link{microorganisms}} data set, based on their \code{mo}. Get such an ID with \code{\link{as.mo}}.
+Use these functions to return a specific property of a microorganism from the \code{\link{microorganisms}} data set. All input values will be evaluated internally with \code{\link{as.mo}}.
 }
 \examples{
 # All properties
-mo_family("E. coli")       # Enterobacteriaceae
-mo_genus("E. coli")        # Escherichia
-mo_species("E. coli")      # coli
-mo_subspecies("E. coli")   # <NA>
-mo_fullname("E. coli")     # Escherichia coli
-mo_type("E. coli")         # Bacteria
-mo_gramstain("E. coli")    # Negative rods
-mo_aerobic("E. coli")      # TRUE
-mo_type_nl("E. coli")      # Bacterie
-mo_gramstain_nl("E. coli") # Negatieve staven
+mo_family("E. coli")          # "Enterobacteriaceae"
+mo_genus("E. coli")           # "Escherichia"
+mo_species("E. coli")         # "coli"
+mo_subspecies("E. coli")      # <NA>
+mo_fullname("E. coli")        # "Escherichia coli"
+mo_type("E. coli")            # "Bacteria"
+mo_gramstain("E. coli")       # "Negative rods"
+mo_aerobic("E. coli")         # TRUE
+
+# language support for Spanish, German and Dutch
+mo_type("E. coli", "es")      # "Bakteria"
+mo_type("E. coli", "de")      # "Bakterien"
+mo_type("E. coli", "nl")      # "Bacterie"
+mo_gramstain("E. coli", "es") # "Bacilos negativos"
+mo_gramstain("E. coli", "de") # "Negative Staebchen"
+mo_gramstain("E. coli", "nl") # "Negatieve staven"
 
 
 # Abbreviations known in the field
-mo_genus("EHEC")           # Escherichia
-mo_species("EHEC")         # coli
-mo_subspecies("EHEC")      # EHEC
-mo_fullname("EHEC")        # Escherichia coli (EHEC)
+mo_genus("MRSA")              # "Staphylococcus"
+mo_species("MRSA")            # "aureus"
+mo_gramstain("MRSA")          # "Positive cocci"
 
-mo_genus("MRSA")           # Staphylococcus
-mo_species("MRSA")         # aureus
-mo_gramstain("MRSA")       # Positive cocci
-
-mo_genus("VISA")           # Staphylococcus
-mo_species("VISA")         # aureus
+mo_genus("VISA")              # "Staphylococcus"
+mo_species("VISA")            # "aureus"
 
 
 # Known subspecies
-mo_genus("doylei")         # Campylobacter
-mo_species("doylei")       # jejuni
-mo_fullname("doylei")      # Campylobacter jejuni (doylei)
+mo_genus("EHEC")              # "Escherichia"
+mo_species("EHEC")            # "coli"
+mo_subspecies("EHEC")         # "EHEC"
+mo_fullname("EHEC")           # "Escherichia coli (EHEC)"
+
+mo_genus("doylei")            # "Campylobacter"
+mo_species("doylei")          # "jejuni"
+mo_fullname("doylei")         # "Campylobacter jejuni (doylei)"
+
+mo_fullname("K. pneu rh")     # "Klebsiella pneumoniae (rhinoscleromatis)"
 
 
 # Anaerobic bacteria
-mo_genus("B. fragilis")    # Bacteroides
-mo_species("B. fragilis")  # fragilis
-mo_aerobic("B. fragilis")  # FALSE
+mo_genus("B. fragilis")       # "Bacteroides"
+mo_species("B. fragilis")     # "fragilis"
+mo_aerobic("B. fragilis")     # FALSE
+
+
+# Becker classification, see ?as.mo
+mo_fullname("S. epidermidis")                 # "Staphylococcus epidermidis"
+mo_fullname("S. epidermidis", Becker = TRUE)  # "Coagulase Negative Staphylococcus (CoNS)"
+
+# Lancefield classification, see ?as.mo
+mo_fullname("S. pyogenes")                    # "Streptococcus pyogenes"
+mo_fullname("S. pyogenes", Lancefield = TRUE) # "Streptococcus group A"
 }
 \seealso{
 \code{\link{microorganisms}}

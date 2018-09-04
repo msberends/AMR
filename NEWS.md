@@ -10,7 +10,15 @@
   * Column names of datasets `microorganisms` and `septic_patients`
   * All old syntaxes will still work with this version, but will throw warnings
 * Functions `as.atc` and `is.atc` to transform/look up antibiotic ATC codes as defined by the WHO. The existing function `guess_atc` is now an alias of `as.atc`.
-* Aliases for existing function `mo_property`: `mo_family`, `mo_genus`, `mo_species`, `mo_subspecies`, `mo_fullname`, `mo_type`, `mo_gramstain`, `mo_aerobic`, `mo_type_nl` and `mo_gramstain_nl`
+* Aliases for existing function `mo_property`: `mo_family`, `mo_genus`, `mo_species`, `mo_subspecies`, `mo_fullname`, `mo_aerobic`, `mo_type`, `mo_gramstain`. The last two functions have a `language` parameter, with support for Spanish, German and Dutch:
+  ```r
+  mo_gramstain("E. coli")
+  # [1] "Negative rods"
+  mo_gramstain("E. coli", language = "de") # "de" = Deutsch / German
+  # [1] "Negative Staebchen"
+  mo_gramstain("E. coli", language = "es") # "es" = Español / Spanish
+  # [1] "Bacilos negativos"
+  ```
 * Function `ab_property` and its aliases: `ab_official`, `ab_tradenames`, `ab_certe`, `ab_umcg`, `ab_official_nl` and `ab_trivial_nl`
 * Introduction to AMR as a vignette
 

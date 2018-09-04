@@ -7,10 +7,9 @@
 \alias{guess_mo}
 \title{Transform to microorganism ID}
 \source{
-[1] Becker K \emph{et al.} \strong{Coagulase-Negative Staphylococci}. 2014. Clin Microbiol Rev. 27(4): 870–926. \cr
-    \url{https://dx.doi.org/10.1128/CMR.00109-13} \cr
-[2] Lancefield RC \strong{A serological differentiation of human and other groups of hemolytic streptococci}. 1933. J Exp Med. 57(4): 571–95. \cr
-    \url{https://dx.doi.org/10.1084/jem.57.4.571}
+[1] Becker K \emph{et al.} \strong{Coagulase-Negative Staphylococci}. 2014. Clin Microbiol Rev. 27(4): 870–926. \url{https://dx.doi.org/10.1128/CMR.00109-13}
+
+[2] Lancefield RC \strong{A serological differentiation of human and other groups of hemolytic streptococci}. 1933. J Exp Med. 57(4): 571–95. \url{https://dx.doi.org/10.1084/jem.57.4.571}
 }
 \usage{
 as.mo(x, Becker = FALSE, Lancefield = FALSE)
@@ -20,11 +19,15 @@ is.mo(x)
 guess_mo(x, Becker = FALSE, Lancefield = FALSE)
 }
 \arguments{
-\item{x}{a character vector or a dataframe with one or two columns}
+\item{x}{a character vector or a \code{data.frame} with one or two columns}
 
-\item{Becker}{a logical to indicate whether \emph{Staphylococci} should be categorised into Coagulase Negative \emph{Staphylococci} ("CoNS") and Coagulase Positive \emph{Staphylococci} ("CoPS") instead of their own species, according to Karsten Becker \emph{et al.} [1]. This excludes \emph{Staphylococcus aureus} at default, use \code{Becker = "all"} to also categorise \emph{S. aureus} as "CoPS".}
+\item{Becker}{a logical to indicate whether \emph{Staphylococci} should be categorised into Coagulase Negative \emph{Staphylococci} ("CoNS") and Coagulase Positive \emph{Staphylococci} ("CoPS") instead of their own species, according to Karsten Becker \emph{et al.} [1].
 
-\item{Lancefield}{a logical to indicate whether beta-haemolytic \emph{Streptococci} should be categorised into Lancefield groups instead of their own species, according to Rebecca C. Lancefield [2]. These \emph{Streptococci} will be categorised in their first group, i.e. \emph{Streptococcus dysgalactiae} will be group C, although officially it was also categorised into groups G and L. Groups D and E will be ignored, since they are \emph{Enterococci}.}
+  This excludes \emph{Staphylococcus aureus} at default, use \code{Becker = "all"} to also categorise \emph{S. aureus} as "CoPS".}
+
+\item{Lancefield}{a logical to indicate whether beta-haemolytic \emph{Streptococci} should be categorised into Lancefield groups instead of their own species, according to Rebecca C. Lancefield [2]. These \emph{Streptococci} will be categorised in their first group, i.e. \emph{Streptococcus dysgalactiae} will be group C, although officially it was also categorised into groups G and L.
+
+  This excludes \emph{Enterococci} at default (who are in group D), use \code{Lancefield = "all"} to also categorise all \emph{Enterococci} as group D.}
 }
 \value{
 Character (vector) with class \code{"mo"}. Unknown values will return \code{NA}.
@@ -35,7 +38,7 @@ Use this function to determine a valid ID based on a genus (and species). This i
 \details{
 \code{guess_mo} is an alias of \code{as.mo}.
 
-Use the \code{\link{mo_property}} functions to get properties based on the returned mo, see Examples.
+Use the \code{\link{mo_property}} functions to get properties based on the returned code, see Examples.
 
 Some exceptions have been built in to get more logical results, based on prevalence of human pathogens. These are:
 \itemize{
@@ -63,7 +66,7 @@ as.mo("VRSA") # Vancomycin Resistant S. aureus
 guess_mo("S. epidermidis")                 # will remain species: STAEPI
 guess_mo("S. epidermidis", Becker = TRUE)  # will not remain species: STACNS
 
-guess_mo("S. pyogenes")                    # will remain species: STCAGA
+guess_mo("S. pyogenes")                    # will remain species: STCPYO
 guess_mo("S. pyogenes", Lancefield = TRUE) # will not remain species: STCGRA
 
 # Use mo_* functions to get a specific property based on `mo`

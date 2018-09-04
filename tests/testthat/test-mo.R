@@ -12,7 +12,7 @@ test_that("as.mo works", {
   expect_equal(as.character(as.mo("klpn")), "KLEPNE")
   expect_equal(as.character(as.mo("Klebsiella")), "KLE")
   expect_equal(as.character(as.mo("K. pneu rhino")), "KLEPNERH") # K. pneumoniae subspp. rhinoscleromatis
-  expect_equal(as.character(as.mo("coagulase negative")), "STACNS")
+  expect_equal(as.character(as.mo("Bartonella")), "BAR")
 
   expect_equal(as.character(as.mo("P. aer")), "PSEAER") # not Pasteurella aerogenes
 
@@ -30,16 +30,21 @@ test_that("as.mo works", {
   expect_equal(as.character(as.mo("VISP")), "STCPNE")
   expect_equal(as.character(as.mo("VRSP")), "STCPNE")
 
+  expect_equal(as.character(as.mo("CNS")), "STACNS")
+  expect_equal(as.character(as.mo("CoNS")), "STACNS")
+  expect_equal(as.character(as.mo("CPS")), "STACPS")
+  expect_equal(as.character(as.mo("CoPS")), "STACPS")
+
   expect_identical(
     as.character(
       as.mo(c("stau",
-                     "STAU",
-                     "staaur",
-                     "S. aureus",
-                     "S aureus",
-                     "Staphylococcus aureus",
-                     "MRSA",
-                     "VISA"))),
+              "STAU",
+              "staaur",
+              "S. aureus",
+              "S aureus",
+              "Staphylococcus aureus",
+              "MRSA",
+              "VISA"))),
     rep("STAAUR", 8))
 
   # check for Becker classification
@@ -55,19 +60,23 @@ test_that("as.mo works", {
   expect_identical(as.character(guess_mo("STAAUR", Becker = "all")), "STACPS")
 
   # check for Lancefield classification
-  expect_identical(as.character(guess_mo("S. pyogenes", Lancefield = FALSE)), "STCPYO")
-  expect_identical(as.character(guess_mo("S. pyogenes", Lancefield = TRUE)),  "STCGRA")
-  expect_identical(as.character(guess_mo("STCPYO",      Lancefield = TRUE)),  "STCGRA")
-  expect_identical(as.character(guess_mo("S. agalactiae",  Lancefield = FALSE)),  "STCAGA")
-  expect_identical(as.character(guess_mo("S. agalactiae",  Lancefield = TRUE)),   "STCGRB") # group B
-  expect_identical(as.character(guess_mo("S. equisimilis", Lancefield = FALSE)),  "STCEQS")
-  expect_identical(as.character(guess_mo("S. equisimilis", Lancefield = TRUE)),   "STCGRC") # group C
-  expect_identical(as.character(guess_mo("S. anginosus",   Lancefield = FALSE)),  "STCANG")
-  expect_identical(as.character(guess_mo("S. anginosus",   Lancefield = TRUE)),   "STCGRF") # group F
-  expect_identical(as.character(guess_mo("S. sanguis",     Lancefield = FALSE)),  "STCSAN")
-  expect_identical(as.character(guess_mo("S. sanguis",     Lancefield = TRUE)),   "STCGRH") # group H
-  expect_identical(as.character(guess_mo("S. salivarius",  Lancefield = FALSE)),  "STCSAL")
-  expect_identical(as.character(guess_mo("S. salivarius",  Lancefield = TRUE)),   "STCGRK") # group K
+  expect_identical(as.character(guess_mo("S. pyogenes", Lancefield = FALSE)),    "STCPYO")
+  expect_identical(as.character(guess_mo("S. pyogenes", Lancefield = TRUE)),     "STCGRA")
+  expect_identical(as.character(guess_mo("STCPYO",      Lancefield = TRUE)),     "STCGRA") # group A
+  expect_identical(as.character(guess_mo("S. agalactiae",  Lancefield = FALSE)), "STCAGA")
+  expect_identical(as.character(guess_mo("S. agalactiae",  Lancefield = TRUE)),  "STCGRB") # group B
+  expect_identical(as.character(guess_mo("S. equisimilis", Lancefield = FALSE)), "STCEQS")
+  expect_identical(as.character(guess_mo("S. equisimilis", Lancefield = TRUE)),  "STCGRC") # group C
+  # Enterococci must only be influenced if Lancefield = "all"
+  expect_identical(as.character(guess_mo("E. faecium", Lancefield = FALSE)),     "ENCFAC")
+  expect_identical(as.character(guess_mo("E. faecium", Lancefield = TRUE)),      "ENCFAC")
+  expect_identical(as.character(guess_mo("E. faecium", Lancefield = "all")),     "STCGRD") # group D
+  expect_identical(as.character(guess_mo("S. anginosus",   Lancefield = FALSE)), "STCANG")
+  expect_identical(as.character(guess_mo("S. anginosus",   Lancefield = TRUE)),  "STCGRF") # group F
+  expect_identical(as.character(guess_mo("S. sanguis",     Lancefield = FALSE)), "STCSAN")
+  expect_identical(as.character(guess_mo("S. sanguis",     Lancefield = TRUE)),  "STCGRH") # group H
+  expect_identical(as.character(guess_mo("S. salivarius",  Lancefield = FALSE)), "STCSAL")
+  expect_identical(as.character(guess_mo("S. salivarius",  Lancefield = TRUE)),  "STCGRK") # group K
 
   library(dplyr)
 

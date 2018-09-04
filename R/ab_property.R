@@ -36,7 +36,7 @@
 ab_property <- function(x, property = 'official') {
   property <- property[1]
   if (!property %in% colnames(antibiotics)) {
-    stop("invalid property: ", property, " - use a column name of `antibiotics`")
+    stop("invalid property: ", property, " - use a column name of the `antibiotics` data set")
   }
   if (!is.atc(x)) {
     x <- as.atc(x) # this will give a warning if x cannot be coerced

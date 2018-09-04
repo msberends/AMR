@@ -9,6 +9,12 @@ test_that("mo_property works", {
   expect_equal(mo_type("E. coli"), "Bacteria")
   expect_equal(mo_gramstain("E. coli"), "Negative rods")
   expect_equal(mo_aerobic("E. coli"), TRUE)
-  expect_equal(mo_type_nl("E. coli"), "Bacterie")
-  expect_equal(mo_gramstain_nl("E. coli"), "Negatieve staven")
+
+  expect_equal(mo_type("E. coli", language = "de"), "Bakterien")
+  expect_equal(mo_gramstain("E. coli", language = "de"), "Negative Staebchen")
+
+  expect_equal(mo_type("E. coli", language = "nl"), "Bacterie")
+  expect_equal(mo_gramstain("E. coli", language = "nl"), "Negatieve staven")
+
+  expect_error(mo_type("E. coli", language = "INVALID"))
 })
