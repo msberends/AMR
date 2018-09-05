@@ -146,7 +146,7 @@ as.mo <- function(x, Becker = FALSE, Lancefield = FALSE) {
     if (identical(x_trimmed[i], "")) {
       # empty values
       x[i] <- NA
-      failures <- c(failures, x_backup[i])
+      #failures <- c(failures, x_backup[i])
       next
     }
     if (x_backup[i] %in% AMR::microorganisms$mo) {

@@ -54,6 +54,9 @@ mo_aerobic(x)
 
 \item{language}{language of the returned text, either one of \code{"en"} (English), \code{"de"} (German) or \code{"nl"} (Dutch)}
 }
+\value{
+Character or logical (only \code{mo_aerobic})
+}
 \description{
 Use these functions to return a specific property of a microorganism from the \code{\link{microorganisms}} data set. All input values will be evaluated internally with \code{\link{as.mo}}.
 }
@@ -62,7 +65,7 @@ Use these functions to return a specific property of a microorganism from the \c
 mo_family("E. coli")          # "Enterobacteriaceae"
 mo_genus("E. coli")           # "Escherichia"
 mo_species("E. coli")         # "coli"
-mo_subspecies("E. coli")      # <NA>
+mo_subspecies("E. coli")      # ""
 mo_fullname("E. coli")        # "Escherichia coli"
 mo_shortname("E. coli")       # "E. coli"
 mo_type("E. coli")            # "Bacteria"
@@ -110,16 +113,16 @@ mo_aerobic("B. fragilis")     # FALSE
 
 
 # Becker classification, see ?as.mo
-mo_fullname("S. epidermidis")                  # "Staphylococcus epidermidis"
-mo_fullname("S. epidermidis", Becker = TRUE)   # "Coagulase Negative Staphylococcus (CoNS)"
-mo_shortname("S. epidermidis")                 # "S. epidermidis"
-mo_shortname("S. epidermidis", Becker = TRUE)  # "CoNS"
+mo_fullname("S. epi")                     # "Staphylococcus epidermidis"
+mo_fullname("S. epi", Becker = TRUE)      # "Coagulase Negative Staphylococcus (CoNS)"
+mo_shortname("S. epi")                    # "S. epidermidis"
+mo_shortname("S. epi", Becker = TRUE)     # "CoNS"
 
 # Lancefield classification, see ?as.mo
-mo_fullname("S. pyogenes")                     # "Streptococcus pyogenes"
-mo_fullname("S. pyogenes", Lancefield = TRUE)  # "Streptococcus group A"
-mo_shortname("S. pyogenes")                    # "S. pyogenes"
-mo_shortname("S. pyogenes", Lancefield = TRUE) # "GAS"
+mo_fullname("S. pyo")                     # "Streptococcus pyogenes"
+mo_fullname("S. pyo", Lancefield = TRUE)  # "Streptococcus group A"
+mo_shortname("S. pyo")                    # "S. pyogenes"
+mo_shortname("S. pyo", Lancefield = TRUE) # "GAS"
 }
 \seealso{
 \code{\link{microorganisms}}
