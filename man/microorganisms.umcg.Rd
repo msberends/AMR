@@ -4,7 +4,7 @@
 \name{microorganisms.umcg}
 \alias{microorganisms.umcg}
 \title{Translation table for UMCG with ~1,100 microorganisms}
-\format{A \code{\link{tibble}} with 1,090 observations and 2 variables:
+\format{A \code{\link{tibble}} with 1,095 observations and 2 variables:
 \describe{
   \item{\code{umcg}}{Code of microorganism according to UMCG MMB}
   \item{\code{mo}}{Code of microorganism in \code{\link{microorganisms}}}

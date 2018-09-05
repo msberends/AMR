@@ -4,7 +4,7 @@
 \name{microorganisms}
 \alias{microorganisms}
 \title{Data set with human pathogenic microorganisms}
-\format{A \code{\link{tibble}} with 2,664 observations and 16 variables:
+\format{A \code{\link{tibble}} with 2,669 observations and 16 variables:
 \describe{
   \item{\code{mo}}{ID of microorganism}
   \item{\code{bactsys}}{Bactsyscode of microorganism}
@@ -27,7 +27,7 @@
 microorganisms
 }
 \description{
-A data set containing 2,664 (potential) human pathogenic microorganisms. MO codes can be looked up using \code{\link{guess_mo}}.
+A data set containing 2,669 (potential) human pathogenic microorganisms. MO codes can be looked up using \code{\link{guess_mo}}.
 }
 \seealso{
 \code{\link{guess_mo}} \code{\link{antibiotics}} \code{\link{microorganisms.umcg}}
