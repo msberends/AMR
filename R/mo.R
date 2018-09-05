@@ -18,7 +18,7 @@
 
 #' Transform to microorganism ID
 #'
-#' Use this function to determine a valid ID based on a genus (and species). This input can be a full name (like \code{"Staphylococcus aureus"}), an abbreviated name (like \code{"S. aureus"}), or just a genus. You could also \code{\link{select}} a genus and species column, zie Examples.
+#' Use this function to determine a valid ID based on a genus (and species). Determination is done using Artificial Intelligence (AI), so the input can be almost anything: a full name (like \code{"Staphylococcus aureus"}), an abbreviated name (like \code{"S. aureus"}), an abbreviation known in the field (like \code{"MRSA"}), or just a genus. You could also \code{\link{select}} a genus and species column, zie Examples.
 #' @param x a character vector or a \code{data.frame} with one or two columns
 #' @param Becker a logical to indicate whether \emph{Staphylococci} should be categorised into Coagulase Negative \emph{Staphylococci} ("CoNS") and Coagulase Positive \emph{Staphylococci} ("CoPS") instead of their own species, according to Karsten Becker \emph{et al.} [1].
 #'
@@ -37,6 +37,7 @@
 #' \itemize{
 #'   \item{\code{"E. coli"} will return the ID of \emph{Escherichia coli} and not \emph{Entamoeba coli}, although the latter would alphabetically come first}
 #'   \item{\code{"H. influenzae"} will return the ID of \emph{Haemophilus influenzae} and not \emph{Haematobacter influenzae}}
+#'   \item{Something like \code{"s pyo"} will return the ID of \emph{Streptococcus pyogenes} and not \emph{Actinomyes pyogenes}}
 #'   \item{Something like \code{"p aer"} will return the ID of \emph{Pseudomonas aeruginosa} and not \emph{Pasteurella aerogenes}}
 #'   \item{Something like \code{"stau"} or \code{"staaur"} will return the ID of \emph{Staphylococcus aureus} and not \emph{Staphylococcus auricularis}}
 #' }
@@ -61,6 +62,10 @@
 #' as.mo("MRSA") # Methicillin Resistant S. aureus
 #' as.mo("VISA") # Vancomycin Intermediate S. aureus
 #' as.mo("VRSA") # Vancomycin Resistant S. aureus
+#'
+#' as.mo("Streptococcus group A")
+#' as.mo("GAS") # Group A Streptococci
+#' as.mo("GBS") # Group B Streptococci
 #'
 #' # guess_mo is an alias of as.mo and works the same
 #' guess_mo("S. epidermidis")                 # will remain species: STAEPI
@@ -172,6 +177,11 @@ as.mo <- function(x, Becker = FALSE, Lancefield = FALSE) {
       x[i] <- 'STAAUR'
       next
     }
+    if (tolower(x[i]) == '^s.*pyo$') {
+      # avoid detection of Actinomyces pyogenes in case of Streptococcus pyogenes
+      x[i] <- 'STCPYO'
+      next
+    }
     if (tolower(x[i]) == '^p.*aer$') {
       # avoid detection of Pasteurella aerogenes in case of Pseudomonas aeruginosa
       x[i] <- 'PSEAER'
@@ -192,7 +202,7 @@ as.mo <- function(x, Becker = FALSE, Lancefield = FALSE) {
       next
     }
 
-    # translate known trivial names to genus+species
+    # translate known trivial abbreviations to genus+species
     if (!is.na(x_trimmed[i])) {
       if (toupper(x_trimmed[i]) == 'MRSA'
           | toupper(x_trimmed[i]) == 'VISA'
@@ -216,6 +226,10 @@ as.mo <- function(x, Becker = FALSE, Lancefield = FALSE) {
       if (toupper(x_trimmed[i]) %in% c('PISP', 'PRSP', 'VISP', 'VRSP')) {
         # peni I, peni R, vanco I, vanco R: S. pneumoniae
         x[i] <- 'STCPNE'
+        next
+      }
+      if (toupper(x_trimmed[i]) %like% '^G[ABCDFHK]S$') {
+        x[i] <- gsub("G([ABCDFHK])S", "STCGR\\1", x_trimmed[i])
         next
       }
     }

@@ -38,6 +38,7 @@
 #' mo_species("E. coli")         # "coli"
 #' mo_subspecies("E. coli")      # <NA>
 #' mo_fullname("E. coli")        # "Escherichia coli"
+#' mo_shortname("E. coli")       # "E. coli"
 #' mo_type("E. coli")            # "Bacteria"
 #' mo_gramstain("E. coli")       # "Negative rods"
 #' mo_aerobic("E. coli")         # TRUE
@@ -54,6 +55,7 @@
 #' # Abbreviations known in the field
 #' mo_genus("MRSA")              # "Staphylococcus"
 #' mo_species("MRSA")            # "aureus"
+#' mo_shortname("MRSA")          # "S. aureus"
 #' mo_gramstain("MRSA")          # "Positive cocci"
 #'
 #' mo_genus("VISA")              # "Staphylococcus"
@@ -65,12 +67,14 @@
 #' mo_species("EHEC")            # "coli"
 #' mo_subspecies("EHEC")         # "EHEC"
 #' mo_fullname("EHEC")           # "Escherichia coli (EHEC)"
+#' mo_shortname("EHEC")          # "E. coli"
 #'
 #' mo_genus("doylei")            # "Campylobacter"
 #' mo_species("doylei")          # "jejuni"
 #' mo_fullname("doylei")         # "Campylobacter jejuni (doylei)"
 #'
 #' mo_fullname("K. pneu rh")     # "Klebsiella pneumoniae (rhinoscleromatis)"
+#' mo_shortname("K. pneu rh")    # "K. pneumoniae"
 #'
 #'
 #' # Anaerobic bacteria
@@ -80,12 +84,16 @@
 #'
 #'
 #' # Becker classification, see ?as.mo
-#' mo_fullname("S. epidermidis")                 # "Staphylococcus epidermidis"
-#' mo_fullname("S. epidermidis", Becker = TRUE)  # "Coagulase Negative Staphylococcus (CoNS)"
+#' mo_fullname("S. epidermidis")                  # "Staphylococcus epidermidis"
+#' mo_fullname("S. epidermidis", Becker = TRUE)   # "Coagulase Negative Staphylococcus (CoNS)"
+#' mo_shortname("S. epidermidis")                 # "S. epidermidis"
+#' mo_shortname("S. epidermidis", Becker = TRUE)  # "CoNS"
 #'
 #' # Lancefield classification, see ?as.mo
-#' mo_fullname("S. pyogenes")                    # "Streptococcus pyogenes"
-#' mo_fullname("S. pyogenes", Lancefield = TRUE) # "Streptococcus group A"
+#' mo_fullname("S. pyogenes")                     # "Streptococcus pyogenes"
+#' mo_fullname("S. pyogenes", Lancefield = TRUE)  # "Streptococcus group A"
+#' mo_shortname("S. pyogenes")                    # "S. pyogenes"
+#' mo_shortname("S. pyogenes", Lancefield = TRUE) # "GAS"
 mo_property <- function(x, property = 'fullname', Becker = FALSE, Lancefield = FALSE) {
   property <- tolower(property[1])
   if (!property %in% colnames(microorganisms)) {
@@ -128,6 +136,35 @@ mo_subspecies <- function(x, Becker = FALSE, Lancefield = FALSE) {
 mo_fullname <- function(x, Becker = FALSE, Lancefield = FALSE) {
   mo_property(x, "fullname", Becker = Becker, Lancefield = Lancefield)
 }
+
+#' @rdname mo_property
+#' @export
+mo_shortname <- function(x, Becker = FALSE, Lancefield = FALSE) {
+  if (Becker %in% c(TRUE, "all") | Lancefield == TRUE) {
+    res1 <- as.mo(x)
+    res2 <- as.mo(x, Becker = Becker, Lancefield = Lancefield)
+    res2_fullname <- mo_fullname(res2)
+    res2_fullname[res2_fullname %like% "\\(CoNS\\)"] <- "CoNS"
+    res2_fullname[res2_fullname %like% "\\(CoPS\\)"] <- "CoPS"
+    res2_fullname <- gsub("Streptococcus group (.*)",
+                          "G\\1S",
+                          res2_fullname) # turn "Streptococcus group A" to "GAS"
+    res2_fullname[res2_fullname == mo_fullname(x)] <- paste0(substr(mo_genus(res2_fullname), 1, 1),
+                                                             ". ",
+                                                             mo_species(res2_fullname))
+    if (sum(res1 == res2, na.rm = TRUE) > 0) {
+      res1[res1 == res2] <- paste0(substr(mo_genus(res1[res1 == res2]), 1, 1),
+                                   ". ",
+                                   mo_species(res1[res1 == res2]))
+    }
+    res1[res1 != res2] <- res2_fullname
+    as.character(res1)
+  } else {
+    # return G. species
+    paste0(substr(mo_genus(x), 1, 1), ". ", mo_species(x))
+  }
+}
+
 
 #' @rdname mo_property
 #' @export

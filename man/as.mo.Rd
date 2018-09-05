@@ -33,7 +33,7 @@ guess_mo(x, Becker = FALSE, Lancefield = FALSE)
 Character (vector) with class \code{"mo"}. Unknown values will return \code{NA}.
 }
 \description{
-Use this function to determine a valid ID based on a genus (and species). This input can be a full name (like \code{"Staphylococcus aureus"}), an abbreviated name (like \code{"S. aureus"}), or just a genus. You could also \code{\link{select}} a genus and species column, zie Examples.
+Use this function to determine a valid ID based on a genus (and species). Determination is done using Artificial Intelligence (AI), so the input can be almost anything: a full name (like \code{"Staphylococcus aureus"}), an abbreviated name (like \code{"S. aureus"}), an abbreviation known in the field (like \code{"MRSA"}), or just a genus. You could also \code{\link{select}} a genus and species column, zie Examples.
 }
 \details{
 \code{guess_mo} is an alias of \code{as.mo}.
@@ -44,6 +44,7 @@ Some exceptions have been built in to get more logical results, based on prevale
 \itemize{
   \item{\code{"E. coli"} will return the ID of \emph{Escherichia coli} and not \emph{Entamoeba coli}, although the latter would alphabetically come first}
   \item{\code{"H. influenzae"} will return the ID of \emph{Haemophilus influenzae} and not \emph{Haematobacter influenzae}}
+  \item{Something like \code{"s pyo"} will return the ID of \emph{Streptococcus pyogenes} and not \emph{Actinomyes pyogenes}}
   \item{Something like \code{"p aer"} will return the ID of \emph{Pseudomonas aeruginosa} and not \emph{Pasteurella aerogenes}}
   \item{Something like \code{"stau"} or \code{"staaur"} will return the ID of \emph{Staphylococcus aureus} and not \emph{Staphylococcus auricularis}}
 }
@@ -61,6 +62,10 @@ as.mo("Staphylococcus aureus")
 as.mo("MRSA") # Methicillin Resistant S. aureus
 as.mo("VISA") # Vancomycin Intermediate S. aureus
 as.mo("VRSA") # Vancomycin Resistant S. aureus
+
+as.mo("Streptococcus group A")
+as.mo("GAS") # Group A Streptococci
+as.mo("GBS") # Group B Streptococci
 
 # guess_mo is an alias of as.mo and works the same
 guess_mo("S. epidermidis")                 # will remain species: STAEPI

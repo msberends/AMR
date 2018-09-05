@@ -14,6 +14,8 @@ test_that("as.mo works", {
   expect_equal(as.character(as.mo("K. pneu rhino")), "KLEPNERH") # K. pneumoniae subspp. rhinoscleromatis
   expect_equal(as.character(as.mo("Bartonella")), "BAR")
 
+  expect_equal(as.character(as.mo("S. pyo")), "STCPYO") # not Actinomyces pyogenes
+
   expect_equal(as.character(as.mo("P. aer")), "PSEAER") # not Pasteurella aerogenes
 
   expect_equal(as.character(as.mo("Negative rods")), "GNR")

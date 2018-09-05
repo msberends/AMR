@@ -7,6 +7,7 @@
 \alias{mo_species}
 \alias{mo_subspecies}
 \alias{mo_fullname}
+\alias{mo_shortname}
 \alias{mo_type}
 \alias{mo_gramstain}
 \alias{mo_aerobic}
@@ -29,6 +30,8 @@ mo_species(x, Becker = FALSE, Lancefield = FALSE)
 mo_subspecies(x, Becker = FALSE, Lancefield = FALSE)
 
 mo_fullname(x, Becker = FALSE, Lancefield = FALSE)
+
+mo_shortname(x, Becker = FALSE, Lancefield = FALSE)
 
 mo_type(x, language = "en")
 
@@ -61,6 +64,7 @@ mo_genus("E. coli")           # "Escherichia"
 mo_species("E. coli")         # "coli"
 mo_subspecies("E. coli")      # <NA>
 mo_fullname("E. coli")        # "Escherichia coli"
+mo_shortname("E. coli")       # "E. coli"
 mo_type("E. coli")            # "Bacteria"
 mo_gramstain("E. coli")       # "Negative rods"
 mo_aerobic("E. coli")         # TRUE
@@ -77,6 +81,7 @@ mo_gramstain("E. coli", "nl") # "Negatieve staven"
 # Abbreviations known in the field
 mo_genus("MRSA")              # "Staphylococcus"
 mo_species("MRSA")            # "aureus"
+mo_shortname("MRSA")          # "S. aureus"
 mo_gramstain("MRSA")          # "Positive cocci"
 
 mo_genus("VISA")              # "Staphylococcus"
@@ -88,12 +93,14 @@ mo_genus("EHEC")              # "Escherichia"
 mo_species("EHEC")            # "coli"
 mo_subspecies("EHEC")         # "EHEC"
 mo_fullname("EHEC")           # "Escherichia coli (EHEC)"
+mo_shortname("EHEC")          # "E. coli"
 
 mo_genus("doylei")            # "Campylobacter"
 mo_species("doylei")          # "jejuni"
 mo_fullname("doylei")         # "Campylobacter jejuni (doylei)"
 
 mo_fullname("K. pneu rh")     # "Klebsiella pneumoniae (rhinoscleromatis)"
+mo_shortname("K. pneu rh")    # "K. pneumoniae"
 
 
 # Anaerobic bacteria
@@ -103,12 +110,16 @@ mo_aerobic("B. fragilis")     # FALSE
 
 
 # Becker classification, see ?as.mo
-mo_fullname("S. epidermidis")                 # "Staphylococcus epidermidis"
-mo_fullname("S. epidermidis", Becker = TRUE)  # "Coagulase Negative Staphylococcus (CoNS)"
+mo_fullname("S. epidermidis")                  # "Staphylococcus epidermidis"
+mo_fullname("S. epidermidis", Becker = TRUE)   # "Coagulase Negative Staphylococcus (CoNS)"
+mo_shortname("S. epidermidis")                 # "S. epidermidis"
+mo_shortname("S. epidermidis", Becker = TRUE)  # "CoNS"
 
 # Lancefield classification, see ?as.mo
-mo_fullname("S. pyogenes")                    # "Streptococcus pyogenes"
-mo_fullname("S. pyogenes", Lancefield = TRUE) # "Streptococcus group A"
+mo_fullname("S. pyogenes")                     # "Streptococcus pyogenes"
+mo_fullname("S. pyogenes", Lancefield = TRUE)  # "Streptococcus group A"
+mo_shortname("S. pyogenes")                    # "S. pyogenes"
+mo_shortname("S. pyogenes", Lancefield = TRUE) # "GAS"
 }
 \seealso{
 \code{\link{microorganisms}}
