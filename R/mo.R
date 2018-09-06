@@ -37,7 +37,6 @@
 #' \itemize{
 #'   \item{\code{"E. coli"} will return the ID of \emph{Escherichia coli} and not \emph{Entamoeba coli}, although the latter would alphabetically come first}
 #'   \item{\code{"H. influenzae"} will return the ID of \emph{Haemophilus influenzae} and not \emph{Haematobacter influenzae}}
-#'   \item{Something like \code{"s pyo"} will return the ID of \emph{Streptococcus pyogenes} and not \emph{Actinomyes pyogenes}}
 #'   \item{Something like \code{"p aer"} will return the ID of \emph{Pseudomonas aeruginosa} and not \emph{Pasteurella aerogenes}}
 #'   \item{Something like \code{"stau"} or \code{"staaur"} will return the ID of \emph{Staphylococcus aureus} and not \emph{Staphylococcus auricularis}}
 #' }
@@ -139,6 +138,7 @@ as.mo <- function(x, Becker = FALSE, Lancefield = FALSE) {
   # add start en stop regex
   x <- paste0('^', x, '$')
   x_withspaces_all <- x_withspaces
+  x_withspaces_start <- paste0('^', x_withspaces)
   x_withspaces <- paste0('^', x_withspaces, '$')
 
   for (i in 1:length(x)) {
@@ -175,11 +175,6 @@ as.mo <- function(x, Becker = FALSE, Lancefield = FALSE) {
         | tolower(x[i]) == '^staaur$') {
       # avoid detection of Staphylococcus auricularis in case of S. aureus
       x[i] <- 'STAAUR'
-      next
-    }
-    if (tolower(x[i]) == '^s.*pyo$') {
-      # avoid detection of Actinomyces pyogenes in case of Streptococcus pyogenes
-      x[i] <- 'STCPYO'
       next
     }
     if (tolower(x[i]) == '^p.*aer$') {
@@ -236,6 +231,12 @@ as.mo <- function(x, Becker = FALSE, Lancefield = FALSE) {
 
     # try any match keeping spaces
     found <- MOs[which(MOs$fullname %like% x_withspaces[i]),]$mo
+    if (length(found) > 0) {
+      x[i] <- found[1L]
+      next
+    }
+    # try any match keeping spaces, not ending with $
+    found <- MOs[which(MOs$fullname %like% x_withspaces_start[i]),]$mo
     if (length(found) > 0) {
       x[i] <- found[1L]
       next
