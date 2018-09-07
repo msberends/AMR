@@ -39,11 +39,11 @@ septic_patients %>%
   freq()
 
 # or the preferred way: using a pipe to pass the variable on to the freq function
-septic_patients %>% freq(sex) # this also shows 'age' in the title
+septic_patients %>% freq(sex) # this also shows 'sex' in the title
 
 ```
 This will all lead to the following table:
-```{r, echo = TRUE}
+```{r, echo = FALSE}
 freq(septic_patients$sex)
 ```
 This immediately shows the class of the variable, its length and availability (i.e. the amount of `NA`), the amount of unique values and (most importantly) that among septic patients men are more prevalent than women.
