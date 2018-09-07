@@ -24,10 +24,10 @@ jobs:
   - r: devel
     os: linux
     warnings_are_errors: false
-# matrix:
-#   allow_failures:
-#     - r: 3.1
-#     - r: devel
+matrix:
+  allow_failures:
+    - os: osx
+    # - r: devel
 r_packages: covr
 cache: packages
 cran: https://cran.rstudio.com
