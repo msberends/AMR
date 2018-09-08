@@ -17,7 +17,6 @@ test_that("mo_property works", {
   expect_equal(mo_shortname("S. aga", Lancefield = TRUE), "GBS")
 
   expect_equal(mo_type("E. coli", language = "de"), "Bakterium")
-  expect_equal(mo_gramstain("E. coli", language = "de"), "Negative St\u00e4bchen")
 
   expect_equal(mo_type("E. coli", language = "nl"), "Bacterie")
   expect_equal(mo_gramstain("E. coli", language = "nl"), "Negatieve staven")

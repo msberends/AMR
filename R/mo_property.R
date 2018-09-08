@@ -222,6 +222,8 @@ mo_translate <- function(x, language) {
   case_when(
     # German
     language == "de" ~ x %>%
+      gsub("Coagulase Negative Staphylococcus","Koagulase-negative Staphylococcus", ., fixed = TRUE) %>%
+      gsub("Coagulase Positive Staphylococcus","Koagulase-positive Staphylococcus", ., fixed = TRUE) %>%
       gsub("(no MO)",          "(kein MO)", ., fixed = TRUE) %>%
       gsub("Negative rods",    "Negative St\u00e4bchen", ., fixed = TRUE) %>%
       gsub("Negative cocci",   "Negative Kokken", ., fixed = TRUE) %>%
@@ -240,6 +242,8 @@ mo_translate <- function(x, language) {
 
     # Dutch
     language == "nl" ~ x %>%
+      gsub("Coagulase Negative Staphylococcus","Coagulase-negatieve Staphylococcus", ., fixed = TRUE) %>%
+      gsub("Coagulase Positive Staphylococcus","Coagulase-positieve Staphylococcus", ., fixed = TRUE) %>%
       gsub("(no MO)",          "(geen MO)", ., fixed = TRUE) %>%
       gsub("Negative rods",    "Negatieve staven", ., fixed = TRUE) %>%
       gsub("Negative cocci",   "Negatieve kokken", ., fixed = TRUE) %>%
@@ -258,6 +262,8 @@ mo_translate <- function(x, language) {
 
     # Spanish
     language == "es" ~ x %>%
+      gsub("Coagulase Negative Staphylococcus","Staphylococcus coagulasa negativo", ., fixed = TRUE) %>%
+      gsub("Coagulase Positive Staphylococcus","Staphylococcus coagulasa positivo", ., fixed = TRUE) %>%
       gsub("(no MO)",          "(sin MO)", ., fixed = TRUE) %>%
       gsub("Negative rods",    "Bacilos negativos", ., fixed = TRUE) %>%
       gsub("Negative cocci",   "Cocos negativos", ., fixed = TRUE) %>%
@@ -276,6 +282,8 @@ mo_translate <- function(x, language) {
 
     # Portuguese
     language == "pt" ~ x %>%
+      gsub("Coagulase Negative Staphylococcus","Staphylococcus coagulase negativo", ., fixed = TRUE) %>%
+      gsub("Coagulase Positive Staphylococcus","Staphylococcus coagulase positivo", ., fixed = TRUE) %>%
       gsub("(no MO)",          "(sem MO)", ., fixed = TRUE) %>%
       gsub("Negative rods",    "Bacilos negativos", ., fixed = TRUE) %>%
       gsub("Negative cocci",   "Cocos negativos", ., fixed = TRUE) %>%
