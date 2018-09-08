@@ -22,12 +22,13 @@
 #' @param x any (vector of) text that can be coerced to a valid microorganism code with \code{\link{as.mo}}
 #' @param property one of the column names of one of the \code{\link{microorganisms}} data set, like \code{"mo"}, \code{"bactsys"}, \code{"family"}, \code{"genus"}, \code{"species"}, \code{"fullname"}, \code{"gramstain"} and \code{"aerobic"}
 #' @inheritParams as.mo
-#' @param language language of the returned text, either one of \code{"en"} (English), \code{"de"} (German) or \code{"nl"} (Dutch)
+#' @param language language of the returned text, defaults to the systems language. Either one of \code{"en"} (English), \code{"de"} (German), \code{"nl"} (Dutch), \code{"es"} (Spanish) or \code{"pt"} (Portuguese).
 #' @source
 #' [1] Becker K \emph{et al.} \strong{Coagulase-Negative Staphylococci}. 2014. Clin Microbiol Rev. 27(4): 870–926. \url{https://dx.doi.org/10.1128/CMR.00109-13}
 #'
 #' [2] Lancefield RC \strong{A serological differentiation of human and other groups of hemolytic streptococci}. 1933. J Exp Med. 57(4): 571–95. \url{https://dx.doi.org/10.1084/jem.57.4.571}
 #' @rdname mo_property
+#' @name mo_property
 #' @return Character or logical (only \code{mo_aerobic})
 #' @export
 #' @importFrom dplyr %>% left_join pull
@@ -43,14 +44,6 @@
 #' mo_type("E. coli")            # "Bacteria"
 #' mo_gramstain("E. coli")       # "Negative rods"
 #' mo_aerobic("E. coli")         # TRUE
-#'
-#' # language support for Spanish, German and Dutch
-#' mo_type("E. coli", "es")      # "Bakteria"
-#' mo_type("E. coli", "de")      # "Bakterien"
-#' mo_type("E. coli", "nl")      # "Bacterie"
-#' mo_gramstain("E. coli", "es") # "Bacilos negativos"
-#' mo_gramstain("E. coli", "de") # "Negative Staebchen"
-#' mo_gramstain("E. coli", "nl") # "Negatieve staven"
 #'
 #'
 #' # Abbreviations known in the field
@@ -95,26 +88,23 @@
 #' mo_fullname("S. pyo", Lancefield = TRUE)  # "Streptococcus group A"
 #' mo_shortname("S. pyo")                    # "S. pyogenes"
 #' mo_shortname("S. pyo", Lancefield = TRUE) # "GAS"
-mo_property <- function(x, property = 'fullname', Becker = FALSE, Lancefield = FALSE) {
-  property <- tolower(property[1])
-  if (!property %in% colnames(microorganisms)) {
-    stop("invalid property: ", property, " - use a column name of the `microorganisms` data set")
-  }
-  result1 <- as.mo(x = x, Becker = Becker, Lancefield = Lancefield) # this will give a warning if x cannot be coerced
-  result2 <- suppressWarnings(
-    data.frame(mo = result1, stringsAsFactors = FALSE) %>%
-      left_join(AMR::microorganisms, by = "mo") %>%
-      pull(property)
-  )
-  if (property != "aerobic") {
-    # will else not retain logical class
-    result2[x %in% c("", NA) | result2 %in% c("", NA, "(no MO)")] <- ""
-  }
-  result2
-}
-
-#' @rdname mo_property
-#' @export
+#'
+#'
+#' # Language support for German, Dutch, Spanish and Portuguese
+#' mo_type("E. coli", language = "de")       # "Bakterium"
+#' mo_type("E. coli", language = "nl")       # "Bacterie"
+#' mo_type("E. coli", language = "es")       # "Bakteria"
+#' mo_gramstain("E. coli", language = "de")  # "Negative Staebchen"
+#' mo_gramstain("E. coli", language = "nl")  # "Negatieve staven"
+#' mo_gramstain("E. coli", language = "es")  # "Bacilos negativos"
+#' mo_gramstain("Giardia", language = "pt")  # "Parasitas"
+#'
+#' mo_fullname("S. pyo",
+#'             Lancefield = TRUE,
+#'             language = "de")              # "Streptococcus Gruppe A"
+#' mo_fullname("S. pyo",
+#'             Lancefield = TRUE,
+#'             language = "nl")              # "Streptococcus groep A"
 mo_family <- function(x) {
   mo_property(x, "family")
 }
@@ -127,34 +117,34 @@ mo_genus <- function(x) {
 
 #' @rdname mo_property
 #' @export
-mo_species <- function(x, Becker = FALSE, Lancefield = FALSE) {
-  mo_property(x, "species", Becker = Becker, Lancefield = Lancefield)
+mo_species <- function(x, Becker = FALSE, Lancefield = FALSE, language = NULL) {
+  mo_property(x, "species", Becker = Becker, Lancefield = Lancefield, language = language)
 }
 
 #' @rdname mo_property
 #' @export
-mo_subspecies <- function(x, Becker = FALSE, Lancefield = FALSE) {
-  mo_property(x, "subspecies", Becker = Becker, Lancefield = Lancefield)
+mo_subspecies <- function(x, Becker = FALSE, Lancefield = FALSE, language = NULL) {
+  mo_property(x, "subspecies", Becker = Becker, Lancefield = Lancefield, language = language)
 }
 
 #' @rdname mo_property
 #' @export
-mo_fullname <- function(x, Becker = FALSE, Lancefield = FALSE) {
-  mo_property(x, "fullname", Becker = Becker, Lancefield = Lancefield)
+mo_fullname <- function(x, Becker = FALSE, Lancefield = FALSE, language = NULL) {
+  mo_property(x, "fullname", Becker = Becker, Lancefield = Lancefield, language = language)
 }
 
 #' @rdname mo_property
 #' @export
-mo_shortname <- function(x, Becker = FALSE, Lancefield = FALSE) {
+mo_shortname <- function(x, Becker = FALSE, Lancefield = FALSE, language = NULL) {
   if (Becker %in% c(TRUE, "all") | Lancefield == TRUE) {
     res1 <- as.mo(x)
     res2 <- suppressWarnings(as.mo(x, Becker = Becker, Lancefield = Lancefield))
     res2_fullname <- mo_fullname(res2)
     res2_fullname[res2_fullname %like% "\\(CoNS\\)"] <- "CoNS"
     res2_fullname[res2_fullname %like% "\\(CoPS\\)"] <- "CoPS"
-    res2_fullname <- gsub("Streptococcus group (.*)",
-                          "G\\1S",
-                          res2_fullname) # turn "Streptococcus group A" to "GAS"
+    res2_fullname <- gsub("Streptococcus (group|gruppe|Gruppe|groep|grupo) (.)",
+                          "G\\2S",
+                          res2_fullname) # turn "Streptococcus group A" and "Streptococcus grupo A" to "GAS"
     res2_fullname[res2_fullname == mo_fullname(x)] <- paste0(substr(mo_genus(res2_fullname), 1, 1),
                                                              ". ",
                                                              suppressWarnings(mo_species(res2_fullname)))
@@ -170,20 +160,20 @@ mo_shortname <- function(x, Becker = FALSE, Lancefield = FALSE) {
     result <- paste0(substr(mo_genus(x), 1, 1), ". ", suppressWarnings(mo_species(x)))
   }
   result[result %in% c(". ")] <- ""
-  result
+  mo_translate(result, language = language)
 }
 
 
 #' @rdname mo_property
 #' @export
-mo_type <- function(x, language = "en") {
-  mo_property(x, paste0("type", checklang(language)))
+mo_type <- function(x, language = NULL) {
+  mo_property(x, "type", language = language)
 }
 
 #' @rdname mo_property
 #' @export
-mo_gramstain <- function(x, language = "en") {
-  mo_property(x, paste0("gramstain", checklang(language)))
+mo_gramstain <- function(x, language = NULL) {
+  mo_property(x, "gramstain", language = language)
 }
 
 #' @rdname mo_property
@@ -192,15 +182,127 @@ mo_aerobic <- function(x) {
   mo_property(x, "aerobic")
 }
 
-checklang <- function(language) {
-  language <- tolower(language[1])
-  supported <- c("en", "de", "nl", "es")
-  if (!language %in% c(NULL, "", supported)) {
-    stop("invalid language: ", language, " - use one of ", paste0("'", sort(supported), "'", collapse = ", "), call. = FALSE)
+#' @rdname mo_property
+#' @export
+mo_property <- function(x, property = 'fullname', Becker = FALSE, Lancefield = FALSE, language = NULL) {
+  property <- tolower(property[1])
+  if (!property %in% colnames(microorganisms)) {
+    stop("invalid property: ", property, " - use a column name of the `microorganisms` data set")
   }
-  if (language %in% c(NULL, "", "en")) {
-    ""
+  result1 <- as.mo(x = x, Becker = Becker, Lancefield = Lancefield) # this will give a warning if x cannot be coerced
+  result2 <- suppressWarnings(
+    data.frame(mo = result1, stringsAsFactors = FALSE) %>%
+      left_join(AMR::microorganisms, by = "mo") %>%
+      pull(property)
+  )
+  if (property != "aerobic") {
+    # will else not retain `logical` class
+    result2[x %in% c("", NA) | result2 %in% c("", NA, "(no MO)")] <- ""
+    result2 <- mo_translate(result2, language = language)
+  }
+  result2
+}
+
+#' @importFrom dplyr %>% case_when
+mo_translate <- function(x, language) {
+  if (is.null(language)) {
+    language <- mo_getlangcode()
   } else {
-    paste0("_", language)
+    language <- tolower(language[1])
   }
+  if (language %in% c("en", "")) {
+    return(x)
+  }
+
+  supported <- c("en", "de", "nl", "es", "pt")
+  if (!language %in% supported) {
+    stop("Unsupported language: '", language, "' - use one of ", paste0("'", sort(supported), "'", collapse = ", "), call. = FALSE)
+  }
+
+  case_when(
+    # German
+    language == "de" ~ x %>%
+      gsub("(no MO)",          "(kein MO)", ., fixed = TRUE) %>%
+      gsub("Negative rods",    "Negative St\u00e4bchen", ., fixed = TRUE) %>%
+      gsub("Negative cocci",   "Negative Kokken", ., fixed = TRUE) %>%
+      gsub("Positive rods",    "Positive St\u00e4bchen", ., fixed = TRUE) %>%
+      gsub("Positive cocci",   "Positive Kokken", ., fixed = TRUE) %>%
+      gsub("Parasites",        "Parasiten", ., fixed = TRUE) %>%
+      gsub("Fungi and yeasts", "Pilze und Hefen", ., fixed = TRUE) %>%
+      gsub("Bacteria",         "Bakterium", ., fixed = TRUE) %>%
+      gsub("Fungus/yeast",     "Pilz/Hefe", ., fixed = TRUE) %>%
+      gsub("Parasite",         "Parasit", ., fixed = TRUE) %>%
+      gsub("biogroup",         "Biogruppe", ., fixed = TRUE) %>%
+      gsub("biotype",          "Biotyp", ., fixed = TRUE) %>%
+      gsub("vegetative",       "vegetativ", ., fixed = TRUE) %>%
+      gsub("([([ ]*?)group",   "\\1Gruppe", .) %>%
+      gsub("([([ ]*?)Group",   "\\1Gruppe", .),
+
+    # Dutch
+    language == "nl" ~ x %>%
+      gsub("(no MO)",          "(geen MO)", ., fixed = TRUE) %>%
+      gsub("Negative rods",    "Negatieve staven", ., fixed = TRUE) %>%
+      gsub("Negative cocci",   "Negatieve kokken", ., fixed = TRUE) %>%
+      gsub("Positive rods",    "Positieve staven", ., fixed = TRUE) %>%
+      gsub("Positive cocci",   "Positieve kokken", ., fixed = TRUE) %>%
+      gsub("Parasites",        "Parasieten", ., fixed = TRUE) %>%
+      gsub("Fungi and yeasts", "Schimmels en gisten", ., fixed = TRUE) %>%
+      gsub("Bacteria",         "Bacterie", ., fixed = TRUE) %>%
+      gsub("Fungus/yeast",     "Schimmel/gist", ., fixed = TRUE) %>%
+      gsub("Parasite",         "Parasiet", ., fixed = TRUE) %>%
+      gsub("biogroup",         "biogroep", ., fixed = TRUE) %>%
+      # gsub("biotype",          "biotype", ., fixed = TRUE) %>%
+      gsub("vegetative",       "vegetatief", ., fixed = TRUE) %>%
+      gsub("([([ ]*?)group",   "\\1groep", .) %>%
+      gsub("([([ ]*?)Group",   "\\1Groep", .),
+
+    # Spanish
+    language == "es" ~ x %>%
+      gsub("(no MO)",          "(sin MO)", ., fixed = TRUE) %>%
+      gsub("Negative rods",    "Bacilos negativos", ., fixed = TRUE) %>%
+      gsub("Negative cocci",   "Cocos negativos", ., fixed = TRUE) %>%
+      gsub("Positive rods",    "Bacilos positivos", ., fixed = TRUE) %>%
+      gsub("Positive cocci",   "Cocos positivos", ., fixed = TRUE) %>%
+      gsub("Parasites",        "Par\u00e1sitos", ., fixed = TRUE) %>%
+      gsub("Fungi and yeasts", "Hongos y levaduras", ., fixed = TRUE) %>%
+      # gsub("Bacteria",         "Bacteria", ., fixed = TRUE) %>%
+      gsub("Fungus/yeast",     "Hongo/levadura", ., fixed = TRUE) %>%
+      gsub("Parasite",         "Par\u00e1sito", ., fixed = TRUE) %>%
+      gsub("biogroup",         "biogrupo", ., fixed = TRUE) %>%
+      gsub("biotype",          "biotipo", ., fixed = TRUE) %>%
+      gsub("vegetative",       "vegetativo", ., fixed = TRUE) %>%
+      gsub("([([ ]*?)group",   "\\1grupo", .) %>%
+      gsub("([([ ]*?)Group",   "\\1Grupo", .),
+
+    # Portuguese
+    language == "pt" ~ x %>%
+      gsub("(no MO)",          "(sem MO)", ., fixed = TRUE) %>%
+      gsub("Negative rods",    "Bacilos negativos", ., fixed = TRUE) %>%
+      gsub("Negative cocci",   "Cocos negativos", ., fixed = TRUE) %>%
+      gsub("Positive rods",    "Bacilos positivos", ., fixed = TRUE) %>%
+      gsub("Positive cocci",   "Cocos positivos", ., fixed = TRUE) %>%
+      gsub("Parasites",        "Parasitas", ., fixed = TRUE) %>%
+      gsub("Fungi and yeasts", "Cogumelos e leveduras", ., fixed = TRUE) %>%
+      gsub("Bacteria",         "Bact\u00e9ria", ., fixed = TRUE) %>%
+      gsub("Fungus/yeast",     "Cogumelo/levedura", ., fixed = TRUE) %>%
+      gsub("Parasite",         "Parasita", ., fixed = TRUE) %>%
+      gsub("biogroup",         "biogrupo", ., fixed = TRUE) %>%
+      gsub("biotype",          "bi\u00f3tipo", ., fixed = TRUE) %>%
+      gsub("vegetative",       "vegetativo", ., fixed = TRUE) %>%
+      gsub("([([ ]*?)group",   "\\1grupo", .) %>%
+      gsub("([([ ]*?)Group",   "\\1Grupo", .)
+  )
+
+}
+
+#' @importFrom dplyr case_when
+mo_getlangcode <- function() {
+  sys <- base::Sys.getlocale()
+  case_when(
+    sys %like% '(Deutsch|German|de_)'       ~ "de",
+    sys %like% '(Nederlands|Dutch|nl_)'     ~ "nl",
+    sys %like% '(Espa.ol|Spanish|es_)'      ~ "es",
+    sys %like% '(Portugu.s|Portuguese|pt_)' ~ "pt",
+    TRUE                                    ~ "en"
+  )
 }

@@ -125,6 +125,8 @@ as.mo <- function(x, Becker = FALSE, Lancefield = FALSE) {
   x <- unique(x)
 
   x_backup <- x
+  # translate to English for supported languages of mo_property
+  x <- gsub("(Gruppe|gruppe|groep|grupo)", "group", x)
   # remove dots and other non-text in case of "E. coli" except spaces
   x <- gsub("[^a-zA-Z0-9 ]+", "", x)
   # but spaces before and after should be omitted
@@ -168,6 +170,11 @@ as.mo <- function(x, Becker = FALSE, Lancefield = FALSE) {
     if (tolower(x[i]) == '^h.*influenzae$') {
       # avoid detection of Haematobacter influenzae in case of H. influenzae
       x[i] <- 'HAEINF'
+      next
+    }
+    if (tolower(x[i]) == '^c.*difficile$') {
+      # avoid detection of Clostridium difficile in case of C. difficile
+      x[i] <- 'CLODIF'
       next
     }
     if (tolower(x[i]) == '^st.*au$'

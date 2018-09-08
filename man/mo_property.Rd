@@ -18,31 +18,29 @@
 [2] Lancefield RC \strong{A serological differentiation of human and other groups of hemolytic streptococci}. 1933. J Exp Med. 57(4): 571–95. \url{https://dx.doi.org/10.1084/jem.57.4.571}
 }
 \usage{
-mo_property(x, property = "fullname", Becker = FALSE,
-  Lancefield = FALSE)
-
 mo_family(x)
 
 mo_genus(x)
 
-mo_species(x, Becker = FALSE, Lancefield = FALSE)
+mo_species(x, Becker = FALSE, Lancefield = FALSE, language = NULL)
 
-mo_subspecies(x, Becker = FALSE, Lancefield = FALSE)
+mo_subspecies(x, Becker = FALSE, Lancefield = FALSE, language = NULL)
 
-mo_fullname(x, Becker = FALSE, Lancefield = FALSE)
+mo_fullname(x, Becker = FALSE, Lancefield = FALSE, language = NULL)
 
-mo_shortname(x, Becker = FALSE, Lancefield = FALSE)
+mo_shortname(x, Becker = FALSE, Lancefield = FALSE, language = NULL)
 
-mo_type(x, language = "en")
+mo_type(x, language = NULL)
 
-mo_gramstain(x, language = "en")
+mo_gramstain(x, language = NULL)
 
 mo_aerobic(x)
+
+mo_property(x, property = "fullname", Becker = FALSE,
+  Lancefield = FALSE, language = NULL)
 }
 \arguments{
 \item{x}{any (vector of) text that can be coerced to a valid microorganism code with \code{\link{as.mo}}}
-
-\item{property}{one of the column names of one of the \code{\link{microorganisms}} data set, like \code{"mo"}, \code{"bactsys"}, \code{"family"}, \code{"genus"}, \code{"species"}, \code{"fullname"}, \code{"gramstain"} and \code{"aerobic"}}
 
 \item{Becker}{a logical to indicate whether \emph{Staphylococci} should be categorised into Coagulase Negative \emph{Staphylococci} ("CoNS") and Coagulase Positive \emph{Staphylococci} ("CoPS") instead of their own species, according to Karsten Becker \emph{et al.} [1].
 
@@ -52,7 +50,9 @@ mo_aerobic(x)
 
   This excludes \emph{Enterococci} at default (who are in group D), use \code{Lancefield = "all"} to also categorise all \emph{Enterococci} as group D.}
 
-\item{language}{language of the returned text, either one of \code{"en"} (English), \code{"de"} (German) or \code{"nl"} (Dutch)}
+\item{language}{language of the returned text, defaults to the systems language. Either one of \code{"en"} (English), \code{"de"} (German), \code{"nl"} (Dutch), \code{"es"} (Spanish) or \code{"pt"} (Portuguese).}
+
+\item{property}{one of the column names of one of the \code{\link{microorganisms}} data set, like \code{"mo"}, \code{"bactsys"}, \code{"family"}, \code{"genus"}, \code{"species"}, \code{"fullname"}, \code{"gramstain"} and \code{"aerobic"}}
 }
 \value{
 Character or logical (only \code{mo_aerobic})
@@ -71,14 +71,6 @@ mo_shortname("E. coli")       # "E. coli"
 mo_type("E. coli")            # "Bacteria"
 mo_gramstain("E. coli")       # "Negative rods"
 mo_aerobic("E. coli")         # TRUE
-
-# language support for Spanish, German and Dutch
-mo_type("E. coli", "es")      # "Bakteria"
-mo_type("E. coli", "de")      # "Bakterien"
-mo_type("E. coli", "nl")      # "Bacterie"
-mo_gramstain("E. coli", "es") # "Bacilos negativos"
-mo_gramstain("E. coli", "de") # "Negative Staebchen"
-mo_gramstain("E. coli", "nl") # "Negatieve staven"
 
 
 # Abbreviations known in the field
@@ -123,6 +115,23 @@ mo_fullname("S. pyo")                     # "Streptococcus pyogenes"
 mo_fullname("S. pyo", Lancefield = TRUE)  # "Streptococcus group A"
 mo_shortname("S. pyo")                    # "S. pyogenes"
 mo_shortname("S. pyo", Lancefield = TRUE) # "GAS"
+
+
+# Language support for German, Dutch, Spanish and Portuguese
+mo_type("E. coli", language = "de")       # "Bakterium"
+mo_type("E. coli", language = "nl")       # "Bacterie"
+mo_type("E. coli", language = "es")       # "Bakteria"
+mo_gramstain("E. coli", language = "de")  # "Negative Staebchen"
+mo_gramstain("E. coli", language = "nl")  # "Negatieve staven"
+mo_gramstain("E. coli", language = "es")  # "Bacilos negativos"
+mo_gramstain("Giardia", language = "pt")  # "Parasitas"
+
+mo_fullname("S. pyo",
+            Lancefield = TRUE,
+            language = "de")              # "Streptococcus Gruppe A"
+mo_fullname("S. pyo",
+            Lancefield = TRUE,
+            language = "nl")              # "Streptococcus groep A"
 }
 \seealso{
 \code{\link{microorganisms}}

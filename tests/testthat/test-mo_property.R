@@ -6,8 +6,8 @@ test_that("mo_property works", {
   expect_equal(mo_species("E. coli"), "coli")
   expect_equal(mo_subspecies("E. coli"), "")
   expect_equal(mo_fullname("E. coli"), "Escherichia coli")
-  expect_equal(mo_type("E. coli"), "Bacteria")
-  expect_equal(mo_gramstain("E. coli"), "Negative rods")
+  expect_equal(mo_type("E. coli", language = "en"), "Bacteria")
+  expect_equal(mo_gramstain("E. coli", language = "en"), "Negative rods")
   expect_equal(mo_aerobic("E. coli"), TRUE)
 
   expect_equal(mo_shortname("MRSA"), "S. aureus")
@@ -16,8 +16,8 @@ test_that("mo_property works", {
   expect_equal(mo_shortname("S. aga"), "S. agalactiae")
   expect_equal(mo_shortname("S. aga", Lancefield = TRUE), "GBS")
 
-  expect_equal(mo_type("E. coli", language = "de"), "Bakterien")
-  expect_equal(mo_gramstain("E. coli", language = "de"), "Negative Staebchen")
+  expect_equal(mo_type("E. coli", language = "de"), "Bakterium")
+  expect_equal(mo_gramstain("E. coli", language = "de"), "Negative St\u00e4bchen")
 
   expect_equal(mo_type("E. coli", language = "nl"), "Bacterie")
   expect_equal(mo_gramstain("E. coli", language = "nl"), "Negatieve staven")

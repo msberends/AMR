@@ -326,7 +326,8 @@ first_isolate <- function(tbl,
       filter(
         row_number() %>% between(row.start,
                                  row.end),
-        genus != '') %>%
+        genus != "",
+        species != "") %>%
       nrow()
   )
 
@@ -373,7 +374,8 @@ first_isolate <- function(tbl,
           real_first_isolate =
             if_else(
               between(row_number(), row.start, row.end)
-              & genus != ''
+              & genus != ""
+              & species != ""
               & (other_pat_or_mo
                  | days_diff >= episode_days
                  | key_ab_other),
@@ -388,7 +390,8 @@ first_isolate <- function(tbl,
           real_first_isolate =
             if_else(
               between(row_number(), row.start, row.end)
-              & genus != ''
+              & genus != ""
+              & species != ""
               & (other_pat_or_mo
                  | days_diff >= episode_days),
               TRUE,

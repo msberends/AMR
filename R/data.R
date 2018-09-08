@@ -123,7 +123,7 @@
 #' Data set with human pathogenic microorganisms
 #'
 #' A data set containing 2,669 (potential) human pathogenic microorganisms. MO codes can be looked up using \code{\link{guess_mo}}.
-#' @format A \code{\link{tibble}} with 2,669 observations and 16 variables:
+#' @format A \code{\link{tibble}} with 2,669 observations and 10 variables:
 #' \describe{
 #'   \item{\code{mo}}{ID of microorganism}
 #'   \item{\code{bactsys}}{Bactsyscode of microorganism}
@@ -135,12 +135,6 @@
 #'   \item{\code{aerobic}}{Logical whether bacteria is aerobic}
 #'   \item{\code{type}}{Type of microorganism, like \code{"Bacteria"} and \code{"Fungus/yeast"}}
 #'   \item{\code{gramstain}}{Gram of microorganism, like \code{"Negative rods"}}
-#'   \item{\code{type_de}}{Type of microorganism in German, like \code{"Bakterien"} and \code{"Pilz/Hefe"}}
-#'   \item{\code{gramstain_de}}{Gram of microorganism in German, like \code{"Negative Staebchen"}}
-#'   \item{\code{type_nl}}{Type of microorganism in Dutch, like \code{"Bacterie"} and \code{"Schimmel/gist"}}
-#'   \item{\code{gramstain_nl}}{Gram of microorganism in Dutch, like \code{"Negatieve staven"}}
-#'   \item{\code{type_es}}{Type of microorganism in Spanish, like \code{"Bacteria"} and \code{"Hongo/levadura"}}
-#'   \item{\code{gramstain_es}}{Gram of microorganism in Spanish, like \code{"Bacilos negativos"}}
 #' }
 #  source MOLIS (LIS of Certe) - \url{https://www.certe.nl}
 # new <- microorganisms %>% filter(genus == "Bacteroides") %>% .[1,]

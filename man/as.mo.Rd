@@ -44,7 +44,6 @@ Some exceptions have been built in to get more logical results, based on prevale
 \itemize{
   \item{\code{"E. coli"} will return the ID of \emph{Escherichia coli} and not \emph{Entamoeba coli}, although the latter would alphabetically come first}
   \item{\code{"H. influenzae"} will return the ID of \emph{Haemophilus influenzae} and not \emph{Haematobacter influenzae}}
-  \item{Something like \code{"s pyo"} will return the ID of \emph{Streptococcus pyogenes} and not \emph{Actinomyes pyogenes}}
   \item{Something like \code{"p aer"} will return the ID of \emph{Pseudomonas aeruginosa} and not \emph{Pasteurella aerogenes}}
   \item{Something like \code{"stau"} or \code{"staaur"} will return the ID of \emph{Staphylococcus aureus} and not \emph{Staphylococcus auricularis}}
 }
