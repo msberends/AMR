@@ -110,6 +110,7 @@ as.mo <- function(x, Becker = FALSE, Lancefield = FALSE) {
     if (NCOL(x) > 2) {
       stop('`x` can be 2 columns at most', call. = FALSE)
     }
+    x[is.null(x)] <- NA
 
     # support tidyverse selection like: df %>% select(colA)
     if (!is.vector(x)) {
@@ -127,6 +128,8 @@ as.mo <- function(x, Becker = FALSE, Lancefield = FALSE) {
   x_backup <- x
   # translate to English for supported languages of mo_property
   x <- gsub("(Gruppe|gruppe|groep|grupo)", "group", x)
+  # remove 'empty' genus and species values
+  x <- gsub("(no MO)", "", x, fixed = TRUE)
   # remove dots and other non-text in case of "E. coli" except spaces
   x <- gsub("[^a-zA-Z0-9 ]+", "", x)
   # but spaces before and after should be omitted
@@ -144,11 +147,9 @@ as.mo <- function(x, Becker = FALSE, Lancefield = FALSE) {
   x_withspaces <- paste0('^', x_withspaces, '$')
 
   for (i in 1:length(x)) {
-
     if (identical(x_trimmed[i], "")) {
       # empty values
       x[i] <- NA
-      #failures <- c(failures, x_backup[i])
       next
     }
     if (x_backup[i] %in% AMR::microorganisms$mo) {
@@ -159,6 +160,11 @@ as.mo <- function(x, Becker = FALSE, Lancefield = FALSE) {
     if (x_trimmed[i] %in% AMR::microorganisms$mo) {
       # is already a valid MO code
       x[i] <- x_trimmed[i]
+      next
+    }
+    if (x_backup[i] %in% AMR::microorganisms$fullname) {
+      # is exact match in fullname
+      x[i] <- AMR::microorganisms[which(AMR::microorganisms$fullname == x_backup[i]), ]$mo[1]
       next
     }
 
@@ -173,7 +179,7 @@ as.mo <- function(x, Becker = FALSE, Lancefield = FALSE) {
       next
     }
     if (tolower(x[i]) == '^c.*difficile$') {
-      # avoid detection of Clostridium difficile in case of C. difficile
+      # avoid detection of Catabacter difficile in case of C. difficile
       x[i] <- 'CLODIF'
       next
     }
@@ -189,16 +195,18 @@ as.mo <- function(x, Becker = FALSE, Lancefield = FALSE) {
       x[i] <- 'PSEAER'
       next
     }
-    if (tolower(x[i]) %like% 'coagulase negative'
-        | tolower(x[i]) %like% 'cns'
-        | tolower(x[i]) %like% 'cons') {
+
+    # CoNS and CoPS in different languages (support for German, Dutch, Spanish, Portuguese)
+    if (tolower(x[i]) %like% '[ck]oagulas[ea] negatie?[vf]'
+        | tolower(x_trimmed[i]) %like% '[ck]oagulas[ea] negatie?[vf]'
+        | tolower(x[i]) %like% '[ck]o?ns[^a-z]?$') {
       # coerce S. coagulase negative
       x[i] <- 'STACNS'
       next
     }
-    if (tolower(x[i]) %like% 'coagulase positive'
-        | tolower(x[i]) %like% 'cps'
-        | tolower(x[i]) %like% 'cops') {
+    if (tolower(x[i]) %like% '[ck]oagulas[ea] positie?[vf]'
+        | tolower(x_trimmed[i]) %like% '[ck]oagulas[ea] positie?[vf]'
+        | tolower(x[i]) %like% '[ck]o?ps[^a-z]?$') {
       # coerce S. coagulase positive
       x[i] <- 'STACPS'
       next
@@ -380,6 +388,10 @@ as.mo <- function(x, Becker = FALSE, Lancefield = FALSE) {
     # group K
     x[x == "STCSAL"] <- "STCGRK" # S. salivarius
   }
+
+  # for the returned genera without species (like "ESC"), add species (like "ESCSPP") where the input contained it
+  indices <- unique(x_input) %like% "[A-Z]{3}SPP" & !x %like% "[A-Z]{3}SPP"
+  x[indices] <- paste0(x[indices], 'SPP')
 
   # left join the found results to the original input values (x_input)
   df_found <- data.frame(input = as.character(unique(x_input)),

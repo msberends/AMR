@@ -20,7 +20,7 @@
 \usage{
 mo_family(x)
 
-mo_genus(x)
+mo_genus(x, language = NULL)
 
 mo_species(x, Becker = FALSE, Lancefield = FALSE, language = NULL)
 
@@ -42,6 +42,8 @@ mo_property(x, property = "fullname", Becker = FALSE,
 \arguments{
 \item{x}{any (vector of) text that can be coerced to a valid microorganism code with \code{\link{as.mo}}}
 
+\item{language}{language of the returned text, defaults to the systems language. Either one of \code{"en"} (English), \code{"de"} (German), \code{"nl"} (Dutch), \code{"es"} (Spanish) or \code{"pt"} (Portuguese).}
+
 \item{Becker}{a logical to indicate whether \emph{Staphylococci} should be categorised into Coagulase Negative \emph{Staphylococci} ("CoNS") and Coagulase Positive \emph{Staphylococci} ("CoPS") instead of their own species, according to Karsten Becker \emph{et al.} [1].
 
   This excludes \emph{Staphylococcus aureus} at default, use \code{Becker = "all"} to also categorise \emph{S. aureus} as "CoPS".}
@@ -49,8 +51,6 @@ mo_property(x, property = "fullname", Becker = FALSE,
 \item{Lancefield}{a logical to indicate whether beta-haemolytic \emph{Streptococci} should be categorised into Lancefield groups instead of their own species, according to Rebecca C. Lancefield [2]. These \emph{Streptococci} will be categorised in their first group, i.e. \emph{Streptococcus dysgalactiae} will be group C, although officially it was also categorised into groups G and L.
 
   This excludes \emph{Enterococci} at default (who are in group D), use \code{Lancefield = "all"} to also categorise all \emph{Enterococci} as group D.}
-
-\item{language}{language of the returned text, defaults to the systems language. Either one of \code{"en"} (English), \code{"de"} (German), \code{"nl"} (Dutch), \code{"es"} (Spanish) or \code{"pt"} (Portuguese).}
 
 \item{property}{one of the column names of one of the \code{\link{microorganisms}} data set, like \code{"mo"}, \code{"bactsys"}, \code{"family"}, \code{"genus"}, \code{"species"}, \code{"fullname"}, \code{"gramstain"} and \code{"aerobic"}}
 }
@@ -126,10 +126,10 @@ mo_gramstain("E. coli", language = "nl")  # "Negatieve staven"
 mo_gramstain("E. coli", language = "es")  # "Bacilos negativos"
 mo_gramstain("Giardia", language = "pt")  # "Parasitas"
 
-mo_fullname("S. pyo",
+mo_fullname("S. pyogenes",
             Lancefield = TRUE,
             language = "de")              # "Streptococcus Gruppe A"
-mo_fullname("S. pyo",
+mo_fullname("S. pyogenes",
             Lancefield = TRUE,
             language = "nl")              # "Streptococcus groep A"
 }

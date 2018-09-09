@@ -1,6 +1,13 @@
 context("mo.R")
 
 test_that("as.mo works", {
+
+  library(dplyr)
+  MOs <- AMR::microorganisms %>% filter(!is.na(mo))
+
+  expect_identical(as.character(MOs$mo), as.character(as.mo(MOs$mo)))
+  expect_identical(MOs$fullname, mo_fullname(MOs$fullname, language = "en"))
+
   expect_identical(
     as.character(as.mo(c("E. coli", "H. influenzae"))),
     c("ESCCOL", "HAEINF"))

@@ -99,10 +99,10 @@
 #' mo_gramstain("E. coli", language = "es")  # "Bacilos negativos"
 #' mo_gramstain("Giardia", language = "pt")  # "Parasitas"
 #'
-#' mo_fullname("S. pyo",
+#' mo_fullname("S. pyogenes",
 #'             Lancefield = TRUE,
 #'             language = "de")              # "Streptococcus Gruppe A"
-#' mo_fullname("S. pyo",
+#' mo_fullname("S. pyogenes",
 #'             Lancefield = TRUE,
 #'             language = "nl")              # "Streptococcus groep A"
 mo_family <- function(x) {
@@ -111,8 +111,8 @@ mo_family <- function(x) {
 
 #' @rdname mo_property
 #' @export
-mo_genus <- function(x) {
-  mo_property(x, "genus")
+mo_genus <- function(x, language = NULL) {
+  mo_property(x, "genus", language = language)
 }
 
 #' @rdname mo_property

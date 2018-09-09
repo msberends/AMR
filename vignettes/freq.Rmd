@@ -26,25 +26,8 @@ Frequency tables (or frequency distributions) are summaries of the distribution 
 ## Frequencies of one variable
 
 To only show and quickly review the content of one variable, you can just select this variable in various ways. Let's say we want to get the frequencies of the `sex` variable of the `septic_patients` dataset:
-```{r, echo = TRUE, results = 'hide'}
-# just using base R
-freq(septic_patients$sex)
-
-# using base R to select the variable and pass it on with a pipe from the dplyr package
-septic_patients$sex %>% freq()
-
-# do it all with pipes, using the `select` function from the dplyr package
-septic_patients %>%
-  select(sex) %>%
-  freq()
-
-# or the preferred way: using a pipe to pass the variable on to the freq function
-septic_patients %>% freq(sex) # this also shows 'sex' in the title
-
-```
-This will all lead to the following table:
-```{r, echo = FALSE}
-freq(septic_patients$sex)
+```{r, echo = TRUE}
+septic_patients %>% freq(sex)
 ```
 This immediately shows the class of the variable, its length and availability (i.e. the amount of `NA`), the amount of unique values and (most importantly) that among septic patients men are more prevalent than women.
 
