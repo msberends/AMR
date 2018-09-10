@@ -25,7 +25,7 @@
 * Introduction to AMR as a vignette
 
 #### Changed
-* Added 231 microorganisms to the `microorganisms` data set and removed the few viruses it contained, now *n* = 2,669 (2,230 bacteria, 285 fungi/yeasts, 153 parasites, 1 other)
+* Added almost 200 microorganisms to the `microorganisms` data set and removed the few viruses it contained
 * Added three antimicrobial agents to the `antibiotics` data set: Terbinafine (D01BA02), Rifaximin (A07AA11) and Isoconazole (D01AC05)
 * Added 163 trade names to the `antibiotics` data set, it now contains 298 different trade names in total, e.g.:
   ```r

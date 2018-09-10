@@ -159,7 +159,7 @@ mo_shortname <- function(x, Becker = FALSE, Lancefield = FALSE, language = NULL)
     # return G. species
     result <- paste0(substr(mo_genus(x), 1, 1), ". ", suppressWarnings(mo_species(x)))
   }
-  result[result %in% c(". ")] <- ""
+  result[result %in% c(". ", "(. ")] <- ""
   mo_translate(result, language = language)
 }
 
@@ -224,6 +224,7 @@ mo_translate <- function(x, language) {
     language == "de" ~ x %>%
       gsub("Coagulase Negative Staphylococcus","Koagulase-negative Staphylococcus", ., fixed = TRUE) %>%
       gsub("Coagulase Positive Staphylococcus","Koagulase-positive Staphylococcus", ., fixed = TRUE) %>%
+      gsub("Beta-haemolytic Streptococcus",    "Beta-h\u00e4molytischer Streptococcus", ., fixed = TRUE) %>%
       gsub("(no MO)",          "(kein MO)", ., fixed = TRUE) %>%
       gsub("Negative rods",    "Negative St\u00e4bchen", ., fixed = TRUE) %>%
       gsub("Negative cocci",   "Negative Kokken", ., fixed = TRUE) %>%
@@ -244,6 +245,7 @@ mo_translate <- function(x, language) {
     language == "nl" ~ x %>%
       gsub("Coagulase Negative Staphylococcus","Coagulase-negatieve Staphylococcus", ., fixed = TRUE) %>%
       gsub("Coagulase Positive Staphylococcus","Coagulase-positieve Staphylococcus", ., fixed = TRUE) %>%
+      gsub("Beta-haemolytic Streptococcus",    "Beta-hemolytische Streptococcus", ., fixed = TRUE) %>%
       gsub("(no MO)",          "(geen MO)", ., fixed = TRUE) %>%
       gsub("Negative rods",    "Negatieve staven", ., fixed = TRUE) %>%
       gsub("Negative cocci",   "Negatieve kokken", ., fixed = TRUE) %>%
@@ -264,6 +266,7 @@ mo_translate <- function(x, language) {
     language == "es" ~ x %>%
       gsub("Coagulase Negative Staphylococcus","Staphylococcus coagulasa negativo", ., fixed = TRUE) %>%
       gsub("Coagulase Positive Staphylococcus","Staphylococcus coagulasa positivo", ., fixed = TRUE) %>%
+      gsub("Beta-haemolytic Streptococcus",    "Streptococcus Beta-hemol\u00edtico", ., fixed = TRUE) %>%
       gsub("(no MO)",          "(sin MO)", ., fixed = TRUE) %>%
       gsub("Negative rods",    "Bacilos negativos", ., fixed = TRUE) %>%
       gsub("Negative cocci",   "Cocos negativos", ., fixed = TRUE) %>%
@@ -284,6 +287,7 @@ mo_translate <- function(x, language) {
     language == "pt" ~ x %>%
       gsub("Coagulase Negative Staphylococcus","Staphylococcus coagulase negativo", ., fixed = TRUE) %>%
       gsub("Coagulase Positive Staphylococcus","Staphylococcus coagulase positivo", ., fixed = TRUE) %>%
+      gsub("Beta-haemolytic Streptococcus",    "Streptococcus Beta-hemol\u00edtico", ., fixed = TRUE) %>%
       gsub("(no MO)",          "(sem MO)", ., fixed = TRUE) %>%
       gsub("Negative rods",    "Bacilos negativos", ., fixed = TRUE) %>%
       gsub("Negative cocci",   "Cocos negativos", ., fixed = TRUE) %>%

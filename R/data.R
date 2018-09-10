@@ -122,8 +122,8 @@
 
 #' Data set with human pathogenic microorganisms
 #'
-#' A data set containing 2,669 (potential) human pathogenic microorganisms. MO codes can be looked up using \code{\link{guess_mo}}.
-#' @format A \code{\link{tibble}} with 2,669 observations and 10 variables:
+#' A data set containing 2,630 (potential) human pathogenic microorganisms. MO codes can be looked up using \code{\link{guess_mo}}.
+#' @format A \code{\link{tibble}} with 2,630 observations and 10 variables:
 #' \describe{
 #'   \item{\code{mo}}{ID of microorganism}
 #'   \item{\code{bactsys}}{Bactsyscode of microorganism}

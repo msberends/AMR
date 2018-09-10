@@ -388,7 +388,7 @@ antibiotics       # A tibble: 423 x 18
 
 # Dataset with bacteria codes and properties like gram stain and 
 # aerobic/anaerobic
-microorganisms    # A tibble: 2,669 x 10
+microorganisms    # A tibble: 2,630 x 10
 ```
 
 ## Copyright

@@ -4,9 +4,7 @@ test_that("as.mo works", {
 
   library(dplyr)
   MOs <- AMR::microorganisms %>% filter(!is.na(mo))
-
   expect_identical(as.character(MOs$mo), as.character(as.mo(MOs$mo)))
-  expect_identical(MOs$fullname, mo_fullname(MOs$fullname, language = "en"))
 
   expect_identical(
     as.character(as.mo(c("E. coli", "H. influenzae"))),
@@ -21,6 +19,9 @@ test_that("as.mo works", {
   expect_equal(as.character(as.mo("K. pneu rhino")), "KLEPNERH") # K. pneumoniae subspp. rhinoscleromatis
   expect_equal(as.character(as.mo("Bartonella")), "BAR")
   expect_equal(as.character(as.mo("C. difficile")), "CLODIF")
+  expect_equal(as.character(as.mo("L. pneumophila")), "LEGPNE")
+  expect_equal(as.character(as.mo("L. non pneumophila")), "LEGNON")
+  expect_equal(as.character(as.mo("S. beta-haemolytic")), "STCHAE")
 
   expect_equal(as.character(as.mo("S. pyo")), "STCPYO") # not Actinomyces pyogenes
 

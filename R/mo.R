@@ -131,7 +131,7 @@ as.mo <- function(x, Becker = FALSE, Lancefield = FALSE) {
   # remove 'empty' genus and species values
   x <- gsub("(no MO)", "", x, fixed = TRUE)
   # remove dots and other non-text in case of "E. coli" except spaces
-  x <- gsub("[^a-zA-Z0-9 ]+", "", x)
+  x <- gsub("[^a-zA-Z0-9/ \\-]+", "", x)
   # but spaces before and after should be omitted
   x <- trimws(x, which = "both")
   x_trimmed <- x
@@ -145,6 +145,12 @@ as.mo <- function(x, Becker = FALSE, Lancefield = FALSE) {
   x_withspaces_all <- x_withspaces
   x_withspaces_start <- paste0('^', x_withspaces)
   x_withspaces <- paste0('^', x_withspaces, '$')
+
+  # print(x)
+  # print(x_withspaces_all)
+  # print(x_withspaces_start)
+  # print(x_withspaces)
+  # print(x_backup)
 
   for (i in 1:length(x)) {
     if (identical(x_trimmed[i], "")) {
@@ -193,6 +199,11 @@ as.mo <- function(x, Becker = FALSE, Lancefield = FALSE) {
     if (tolower(x[i]) == '^p.*aer$') {
       # avoid detection of Pasteurella aerogenes in case of Pseudomonas aeruginosa
       x[i] <- 'PSEAER'
+      next
+    }
+    if (x_backup[i] %like% '^l.*pneum.*' & !x_backup[i] %like% '^l.*non.*pneum.*') {
+      # avoid detection of Legionella non pneumophila in case of Legionella pneumophila
+      x[i] <- 'LEGPNE'
       next
     }
 
@@ -246,6 +257,12 @@ as.mo <- function(x, Becker = FALSE, Lancefield = FALSE) {
 
     # try any match keeping spaces
     found <- MOs[which(MOs$fullname %like% x_withspaces[i]),]$mo
+    if (length(found) > 0) {
+      x[i] <- found[1L]
+      next
+    }
+    # try the same, now based on genus + species
+    found <- MOs[which(paste(MOs$genus, MOs$species) %like% x_withspaces[i]),]$mo
     if (length(found) > 0) {
       x[i] <- found[1L]
       next
@@ -329,7 +346,7 @@ as.mo <- function(x, Becker = FALSE, Lancefield = FALSE) {
 
   failures <- failures[!failures %in% c(NA, NULL, NaN)]
   if (length(failures) > 0) {
-    warning("These values could not be coerced to a valid mo: ",
+    warning("These ", length(failures) , " values could not be coerced to a valid mo: ",
             paste('"', unique(failures), '"', sep = "", collapse = ', '),
             ".",
             call. = FALSE)

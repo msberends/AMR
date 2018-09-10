@@ -22,4 +22,27 @@ test_that("mo_property works", {
   expect_equal(mo_gramstain("E. coli", language = "nl"), "Negatieve staven")
 
   expect_error(mo_type("E. coli", language = "INVALID"))
+
+  # test integrity
+  library(dplyr)
+  MOs <- AMR::microorganisms %>% filter(!is.na(mo))
+  expect_identical(MOs$fullname, mo_fullname(MOs$fullname, language = "en"))
+
+  mo_clean <- MOs$mo
+  mo_from_shortname <- as.mo(mo_shortname(mo_clean))
+  mo_clean <- mo_clean[nchar(mo_from_shortname) == 6 &
+                         !is.na(mo_from_shortname) &
+                         !mo_from_shortname %like% "...SPP"]
+  mo_from_shortname <- mo_from_shortname[nchar(mo_from_shortname) == 6 &
+                                           !is.na(mo_from_shortname) &
+                                           !mo_from_shortname %like% "...SPP"]
+  tb <- tibble(a = substr(mo_clean, 1, 6),
+               b = mo_from_shortname,
+               c = a == b,
+               d = mo_shortname(a),
+               e = mo_shortname(b),
+               f = d == e)
+  expect_gt(sum(tb$c) / nrow(tb), 0.9) # more than 90% of MO code should be identical
+  expect_identical(sum(tb$f), nrow(tb)) # all shortnames should be identical
+
 })
