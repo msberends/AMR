@@ -20,6 +20,7 @@ test_that("frequency table works", {
   expect_output(print(freq(septic_patients$age, markdown = TRUE), markdown = FALSE))
   expect_output(print(freq(septic_patients$age, markdown = TRUE), markdown = TRUE))
   expect_output(print(freq(septic_patients$age[0])))
+  expect_output(print(freq(septic_patients$age, quote = TRUE)))
 
   # character
   expect_output(print(freq(septic_patients$mo)))

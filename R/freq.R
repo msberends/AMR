@@ -27,6 +27,7 @@
 #' @param row.names a logical value indicating whether row indices should be printed as \code{1:nrow(x)}
 #' @param markdown print table in markdown format (this forces \code{nmax = NA})
 #' @param digits how many significant digits are to be used for numeric values in the header (not for the items themselves, that depends on \code{\link{getOption}("digits")})
+#' @param quote a logical value indicating whether or not strings should be printed with surrounding quotes
 #' @param sep a character string to separate the terms when selecting multiple columns
 #' @param f a frequency table
 #' @param n number of top \emph{n} items to return, use -n for the bottom \emph{n} items. It will include more than \code{n} rows if there are ties.
@@ -148,6 +149,7 @@ frequency_tbl <- function(x,
                           row.names = TRUE,
                           markdown = FALSE,
                           digits = 2,
+                          quote = FALSE,
                           sep = " ") {
 
   mult.columns <- 0
@@ -427,6 +429,10 @@ frequency_tbl <- function(x,
     } else {
       df <- df %>% arrange(item)
     }
+  }
+
+  if (quote == TRUE) {
+    df$item <- paste0('"', df$item, '"')
   }
 
   df <- as.data.frame(df, stringsAsFactors = FALSE)

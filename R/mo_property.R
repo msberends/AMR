@@ -214,9 +214,9 @@ mo_translate <- function(x, language) {
     return(x)
   }
 
-  supported <- c("en", "de", "nl", "es", "pt")
+  supported <- c("en", "de", "nl", "es", "pt", "it", "fr")
   if (!language %in% supported) {
-    stop("Unsupported language: '", language, "' - use one of ", paste0("'", sort(supported), "'", collapse = ", "), call. = FALSE)
+    stop("Unsupported language: '", language, "' - use one of: ", paste0("'", sort(supported), "'", collapse = ", "), call. = FALSE)
   }
 
   case_when(
@@ -302,7 +302,50 @@ mo_translate <- function(x, language) {
       gsub("biotype",          "bi\u00f3tipo", ., fixed = TRUE) %>%
       gsub("vegetative",       "vegetativo", ., fixed = TRUE) %>%
       gsub("([([ ]*?)group",   "\\1grupo", .) %>%
-      gsub("([([ ]*?)Group",   "\\1Grupo", .)
+      gsub("([([ ]*?)Group",   "\\1Grupo", .),
+
+    # Italian
+    language == "it" ~ x %>%
+      gsub("Coagulase Negative Staphylococcus","Staphylococcus negativo coagulasi", ., fixed = TRUE) %>%
+      gsub("Coagulase Positive Staphylococcus","Staphylococcus positivo coagulasi", ., fixed = TRUE) %>%
+      gsub("Beta-haemolytic Streptococcus",    "Streptococcus Beta-emolitico", ., fixed = TRUE) %>%
+      gsub("(no MO)",          "(non MO)", ., fixed = TRUE) %>%
+      gsub("Negative rods",    "Bastoncini Gram-negativi", ., fixed = TRUE) %>%
+      gsub("Negative cocci",   "Cocchi Gram-negativi", ., fixed = TRUE) %>%
+      gsub("Positive rods",    "Bastoncini Gram-positivi", ., fixed = TRUE) %>%
+      gsub("Positive cocci",   "Cocchi Gram-positivi", ., fixed = TRUE) %>%
+      gsub("Parasites",        "Parassiti", ., fixed = TRUE) %>%
+      gsub("Fungi and yeasts", "Funghi e lieviti", ., fixed = TRUE) %>%
+      gsub("Bacteria",         "Batterio", ., fixed = TRUE) %>%
+      gsub("Fungus/yeast",     "Fungo/lievito", ., fixed = TRUE) %>%
+      gsub("Parasite",         "Parassita", ., fixed = TRUE) %>%
+      gsub("biogroup",         "biogruppo", ., fixed = TRUE) %>%
+      gsub("biotype",          "biotipo", ., fixed = TRUE) %>%
+      gsub("vegetative",       "vegetativo", ., fixed = TRUE) %>%
+      gsub("([([ ]*?)group",   "\\1gruppo", .) %>%
+      gsub("([([ ]*?)Group",   "\\1Gruppo", .),
+
+    # French
+    language == "fr" ~ x %>%
+      gsub("Coagulase Negative Staphylococcus","Staphylococcus \u00e0 coagulase n\u00e9gative", ., fixed = TRUE) %>%
+      gsub("Coagulase Positive Staphylococcus","Staphylococcus \u00e0 coagulase positif", ., fixed = TRUE) %>%
+      gsub("Beta-haemolytic Streptococcus",    "Streptococcus B\u00eata-h\u00e9molytique", ., fixed = TRUE) %>%
+      gsub("(no MO)",          "(pas MO)", ., fixed = TRUE) %>%
+      gsub("Negative rods",    "Bacilles n\u00e9gatif", ., fixed = TRUE) %>%
+      gsub("Negative cocci",   "Cocci n\u00e9gatif", ., fixed = TRUE) %>%
+      gsub("Positive rods",    "Bacilles positif", ., fixed = TRUE) %>%
+      gsub("Positive cocci",   "Cocci positif", ., fixed = TRUE) %>%
+      # gsub("Parasites",        "Parasites", ., fixed = TRUE) %>%
+      gsub("Fungi and yeasts", "Champignons et levures", ., fixed = TRUE) %>%
+      gsub("Bacteria",         "Bact\u00e9rie", ., fixed = TRUE) %>%
+      gsub("Fungus/yeast",     "Champignon/levure", ., fixed = TRUE) %>%
+      # gsub("Parasite",         "Parasite", ., fixed = TRUE) %>%
+      gsub("biogroup",         "biogroupe", ., fixed = TRUE) %>%
+      # gsub("biotype",          "biotype", ., fixed = TRUE) %>%
+      gsub("vegetative",       "v\u00e9g\u00e9tatif", ., fixed = TRUE) %>%
+      gsub("([([ ]*?)group",   "\\1groupe", .) %>%
+      gsub("([([ ]*?)Group",   "\\1Groupe", .)
+
   )
 
 }
@@ -314,7 +357,9 @@ mo_getlangcode <- function() {
     sys %like% '(Deutsch|German|de_)'       ~ "de",
     sys %like% '(Nederlands|Dutch|nl_)'     ~ "nl",
     sys %like% '(Espa.ol|Spanish|es_)'      ~ "es",
+    sys %like% '(Fran.ais|French|fr_)'      ~ "fr",
     sys %like% '(Portugu.s|Portuguese|pt_)' ~ "pt",
+    sys %like% '(Italiano|Italian|it_)'     ~ "it",
     TRUE                                    ~ "en"
   )
 }

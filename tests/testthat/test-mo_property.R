@@ -16,13 +16,6 @@ test_that("mo_property works", {
   expect_equal(mo_shortname("S. aga"), "S. agalactiae")
   expect_equal(mo_shortname("S. aga", Lancefield = TRUE), "GBS")
 
-  expect_equal(mo_type("E. coli", language = "de"), "Bakterium")
-
-  expect_equal(mo_type("E. coli", language = "nl"), "Bacterie")
-  expect_equal(mo_gramstain("E. coli", language = "nl"), "Negatieve staven")
-
-  expect_error(mo_type("E. coli", language = "INVALID"))
-
   # test integrity
   library(dplyr)
   MOs <- AMR::microorganisms %>% filter(!is.na(mo))
@@ -44,5 +37,20 @@ test_that("mo_property works", {
                f = d == e)
   expect_gt(sum(tb$c) / nrow(tb), 0.9) # more than 90% of MO code should be identical
   expect_identical(sum(tb$f), nrow(tb)) # all shortnames should be identical
+
+  # check languages
+  expect_equal(mo_type("E. coli", language = "de"), "Bakterium")
+  expect_equal(mo_type("E. coli", language = "nl"), "Bacterie")
+  expect_equal(mo_gramstain("E. coli", language = "nl"), "Negatieve staven")
+
+  expect_output(print(mo_gramstain("E. coli", language = "en")))
+  expect_output(print(mo_gramstain("E. coli", language = "de")))
+  expect_output(print(mo_gramstain("E. coli", language = "nl")))
+  expect_output(print(mo_gramstain("E. coli", language = "es")))
+  expect_output(print(mo_gramstain("E. coli", language = "pt")))
+  expect_output(print(mo_gramstain("E. coli", language = "it")))
+  expect_output(print(mo_gramstain("E. coli", language = "fr")))
+
+  expect_error(mo_gramstain("E. coli", language = "UNKNOWN"))
 
 })

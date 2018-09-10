@@ -10,7 +10,7 @@
   * Column names of datasets `microorganisms` and `septic_patients`
   * All old syntaxes will still work with this version, but will throw warnings
 * Functions `as.atc` and `is.atc` to transform/look up antibiotic ATC codes as defined by the WHO. The existing function `guess_atc` is now an alias of `as.atc`.
-* Aliases for existing function `mo_property`: `mo_family`, `mo_genus`, `mo_species`, `mo_subspecies`, `mo_fullname`, `mo_shortname`, `mo_aerobic`, `mo_type` and `mo_gramstain`. They also come with support for German, Dutch, Spanish and Portuguese, and it defaults to the systems locale:
+* Aliases for existing function `mo_property`: `mo_family`, `mo_genus`, `mo_species`, `mo_subspecies`, `mo_fullname`, `mo_shortname`, `mo_aerobic`, `mo_type` and `mo_gramstain`. They also come with support for German, Dutch, French, Italian, Spanish and Portuguese, and it defaults to the systems locale:
   ```r
   mo_gramstain("E. coli")
   # [1] "Negative rods"
@@ -55,7 +55,8 @@
 * Fix for `ggplot_rsi` when the `ggplot2` package was not loaded
 * Added possibility to set any parameter to `geom_rsi` (and `ggplot_rsi`) so you can set your own preferences
 * Fix for joins, where predefined suffices would not be honoured
-* Support for types list and matrix for `freq`
+* Added parameter `quote` to the `freq` function
+* Support for types (classes) list and matrix for `freq`
   ```r
   my_matrix = with(septic_patients, matrix(c(age, sex), ncol = 2))
   freq(my_matrix)

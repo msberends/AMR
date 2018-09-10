@@ -127,7 +127,7 @@ as.mo <- function(x, Becker = FALSE, Lancefield = FALSE) {
 
   x_backup <- x
   # translate to English for supported languages of mo_property
-  x <- gsub("(Gruppe|gruppe|groep|grupo)", "group", x)
+  x <- gsub("(Gruppe|gruppe|groep|grupo|gruppo|groupe)", "group", x)
   # remove 'empty' genus and species values
   x <- gsub("(no MO)", "", x, fixed = TRUE)
   # remove dots and other non-text in case of "E. coli" except spaces

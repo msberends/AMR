@@ -9,11 +9,11 @@
 \usage{
 frequency_tbl(x, ..., sort.count = TRUE,
   nmax = getOption("max.print.freq"), na.rm = TRUE, row.names = TRUE,
-  markdown = FALSE, digits = 2, sep = " ")
+  markdown = FALSE, digits = 2, quote = FALSE, sep = " ")
 
 freq(x, ..., sort.count = TRUE, nmax = getOption("max.print.freq"),
   na.rm = TRUE, row.names = TRUE, markdown = FALSE, digits = 2,
-  sep = " ")
+  quote = FALSE, sep = " ")
 
 top_freq(f, n)
 
@@ -36,6 +36,8 @@ top_freq(f, n)
 \item{markdown}{print table in markdown format (this forces \code{nmax = NA})}
 
 \item{digits}{how many significant digits are to be used for numeric values in the header (not for the items themselves, that depends on \code{\link{getOption}("digits")})}
+
+\item{quote}{a logical value indicating whether or not strings should be printed with surrounding quotes}
 
 \item{sep}{a character string to separate the terms when selecting multiple columns}
 
