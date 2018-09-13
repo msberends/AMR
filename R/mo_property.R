@@ -142,12 +142,13 @@ mo_shortname <- function(x, Becker = FALSE, Lancefield = FALSE, language = NULL)
     res2_fullname <- mo_fullname(res2)
     res2_fullname[res2_fullname %like% "\\(CoNS\\)"] <- "CoNS"
     res2_fullname[res2_fullname %like% "\\(CoPS\\)"] <- "CoPS"
-    res2_fullname <- gsub("Streptococcus (group|gruppe|Gruppe|groep|grupo) (.)",
+    res2_fullname <- gsub("Streptococcus (group|Gruppe|gruppe|groep|grupo|gruppo|groupe) (.)",
                           "G\\2S",
                           res2_fullname) # turn "Streptococcus group A" and "Streptococcus grupo A" to "GAS"
-    res2_fullname[res2_fullname == mo_fullname(x)] <- paste0(substr(mo_genus(res2_fullname), 1, 1),
+    res2_fullname_vector <- res2_fullname[res2_fullname == mo_fullname(x)]
+    res2_fullname[res2_fullname == mo_fullname(x)] <- paste0(substr(mo_genus(res2_fullname_vector), 1, 1),
                                                              ". ",
-                                                             suppressWarnings(mo_species(res2_fullname)))
+                                                             suppressWarnings(mo_species(res2_fullname_vector)))
     if (sum(res1 == res2, na.rm = TRUE) > 0) {
       res1[res1 == res2] <- paste0(substr(mo_genus(res1[res1 == res2]), 1, 1),
                                    ". ",

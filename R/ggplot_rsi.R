@@ -20,7 +20,7 @@
 #'
 #' Use these functions to create bar plots for antimicrobial resistance analysis. All functions rely on internal \code{\link[ggplot2]{ggplot}} functions.
 #' @param data a \code{data.frame} with column(s) of class \code{"rsi"} (see \code{\link{as.rsi}})
-#' @param position position adjustment of bars, either \code{"stack"} (default when \code{fun} is \code{\link{portion_df}}) or \code{"dodge"} (default when \code{fun} is \code{\link{count_df}})
+#' @param position position adjustment of bars, either \code{"fill"}, \code{"stack"} (default when \code{fun} is \code{\link{portion_df}}) or \code{"dodge"} (default when \code{fun} is \code{\link{count_df}})
 #' @param x variable to show on x axis, either \code{"Antibiotic"} (default) or \code{"Interpretation"} or a grouping variable
 #' @param fill variable to categorise using the plots legend, either \code{"Antibiotic"} (default) or \code{"Interpretation"} or a grouping variable
 #' @param facet variable to split plots by, either \code{"Interpretation"} (default) or \code{"Antibiotic"} or a grouping variable
@@ -56,7 +56,6 @@
 #' df <- septic_patients[, c("amox", "nitr", "fosf", "trim", "cipr")]
 #' ggplot(df) +
 #'   geom_rsi() +
-#'   facet_rsi() +
 #'   scale_y_percent() +
 #'   scale_rsi_colours() +
 #'   theme_rsi()
@@ -87,12 +86,12 @@
 #'   ggplot_rsi() + scale_fill_viridis_d()
 #'
 #'
-#' # it also supports groups (don't forget to use the group on `x` or `facet`):
+#' # it also supports groups (don't forget to use the group var on `x` or `facet`):
 #' septic_patients %>%
 #'   select(hospital_id, amox, nitr, fosf, trim, cipr) %>%
 #'   group_by(hospital_id) %>%
-#'   ggplot_rsi(x = "hospital_id",
-#'              facet = "Antibiotic",
+#'   ggplot_rsi(x = hospital_id,
+#'              facet = Antibiotic,
 #'              nrow = 1) +
 #'   labs(title = "AMR of Anti-UTI Drugs Per Hospital",
 #'        x = "Hospital")
@@ -101,8 +100,8 @@
 #' septic_patients %>%
 #'   # create new bacterial ID's, with all CoNS under the same group (Becker et al.)
 #'   mutate(mo = as.mo(mo, Becker = TRUE)) %>%
-#'   # filter on top 2 bacterial ID's
-#'   filter(mo %in% top_freq(freq(.$mo), 2)) %>%
+#'   # filter on top three bacterial ID's
+#'   filter(mo %in% top_freq(freq(.$mo), 3)) %>%
 #'   # determine first isolates
 #'   mutate(first_isolate = first_isolate(.,
 #'                                        col_date = "date",
@@ -110,17 +109,18 @@
 #'                                        col_mo = "mo")) %>%
 #'   # filter on first isolates
 #'   filter(first_isolate == TRUE) %>%
-#'   # join the `microorganisms` data set
-#'   left_join_microorganisms() %>%
-#'   # select full name and some antiseptic drugs
-#'   select(mo = fullname,
-#'          cfur, gent, cipr) %>%
+#'   # get short MO names (like "E. coli")
+#'   mutate(mo = mo_shortname(mo, Becker = TRUE)) %>%
+#'   # select this short name and some antiseptic drugs
+#'   select(mo, cfur, gent, cipr) %>%
 #'   # group by MO
 #'   group_by(mo) %>%
 #'   # plot the thing, putting MOs on the facet
-#'   ggplot_rsi(x = "Antibiotic",
-#'              facet = "mo") +
-#'   labs(title = "AMR of Top Two Microorganisms In Blood Culture Isolates",
+#'   ggplot_rsi(x = Antibiotic,
+#'              facet = mo,
+#'              translate_ab = FALSE,
+#'              nrow = 1) +
+#'   labs(title = "AMR of Top Three Microorganisms In Blood Culture Isolates",
 #'        subtitle = "Only First Isolates, CoNS grouped according to Becker et al. (2014)",
 #'        x = "Microorganisms")
 #' }
@@ -142,6 +142,28 @@ ggplot_rsi <- function(data,
   fun_name <- deparse(substitute(fun))
   if (!fun_name %in% c("portion_df", "count_df")) {
     stop("`fun` must be portion_df or count_df")
+  }
+
+  x <- x[1]
+  facet <- facet[1]
+
+  # we work with aes_string later on
+  x_deparse <- deparse(substitute(x))
+  if (x_deparse != "x") {
+    x <- x_deparse
+  }
+  if (x %like% '".*"') {
+    x <- substr(x, 2, nchar(x) - 1)
+  }
+  facet_deparse <- deparse(substitute(facet))
+  if (facet_deparse != "facet") {
+    facet <- facet_deparse
+  }
+  if (facet %like% '".*"') {
+    facet <- substr(facet, 2, nchar(facet) - 1)
+  }
+  if (facet %in% c("NULL", "")) {
+    facet <- NULL
   }
 
   p <- ggplot2::ggplot(data = data) +
@@ -190,6 +212,16 @@ geom_rsi <- function(position = NULL,
   }
 
   x <- x[1]
+
+  # we work with aes_string later on
+  x_deparse <- deparse(substitute(x))
+  if (x_deparse != "x") {
+    x <- x_deparse
+  }
+  if (x %like% '".*"') {
+    x <- substr(x, 2, nchar(x) - 1)
+  }
+
   if (tolower(x) %in% tolower(c('ab', 'antibiotic', 'abx', 'antibiotics'))) {
     x <- "Antibiotic"
   } else if (tolower(x) %in% tolower(c('SIR', 'RSI', 'interpretation', 'interpretations', 'result'))) {
@@ -208,7 +240,17 @@ geom_rsi <- function(position = NULL,
 #' @export
 facet_rsi <- function(facet = c("Interpretation", "Antibiotic"), nrow = NULL) {
 
-  facet <- facet[1]
+   facet <- facet[1]
+
+  # we work with aes_string later on
+  facet_deparse <- deparse(substitute(facet))
+  if (facet_deparse != "facet") {
+    facet <- facet_deparse
+  }
+  if (facet %like% '".*"') {
+    facet <- substr(facet, 2, nchar(facet) - 1)
+  }
+
   if (tolower(facet) %in% tolower(c('SIR', 'RSI', 'interpretation', 'interpretations', 'result'))) {
     facet <- "Interpretation"
   } else if (tolower(facet) %in% tolower(c('ab', 'antibiotic', 'abx', 'antibiotics'))) {
