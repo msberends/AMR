@@ -4,7 +4,12 @@ context("mdro.R")
 test_that("MDRO works", {
   library(dplyr)
 
-  outcome <- suppressWarnings(MDRO(septic_patients, "EUCAST", info = TRUE))
+  expect_error(suppressWarnings(MDRO(septic_patients, "invalid", col_bactid = "mo", info = TRUE)))
+  expect_error(suppressWarnings(MDRO(septic_patients, "fr", col_bactid = "mo", info = TRUE)))
+  expect_error(suppressWarnings(MDRO(septic_patients, country = c("de", "nl"), info = TRUE)))
+  expect_error(suppressWarnings(MDRO(septic_patients, col_mo = "invalid", info = TRUE)))
+
+  outcome <- suppressWarnings(MDRO(septic_patients))
   outcome <- suppressWarnings(EUCAST_exceptional_phenotypes(septic_patients, info = TRUE))
   # check class
   expect_equal(outcome %>% class(), c('ordered', 'factor'))

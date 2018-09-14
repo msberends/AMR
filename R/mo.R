@@ -138,8 +138,6 @@ as.mo <- function(x, Becker = FALSE, Lancefield = FALSE) {
   # replace space by regex sign
   x_withspaces <- gsub(" ", ".* ", x, fixed = TRUE)
   x <- gsub(" ", ".*", x, fixed = TRUE)
-  # for species
-  x_species <- paste(x, 'species')
   # add start en stop regex
   x <- paste0('^', x, '$')
   x_withspaces_all <- x_withspaces
@@ -228,12 +226,14 @@ as.mo <- function(x, Becker = FALSE, Lancefield = FALSE) {
       x[i] <- found[1L]
       next
     }
+
     # try the same, now based on genus + species ----
     found <- MOs[which(paste(MOs$genus, MOs$species) %like% x_withspaces[i]),]$mo
     if (length(found) > 0) {
       x[i] <- found[1L]
       next
     }
+
     # try any match keeping spaces, not ending with $ ----
     found <- MOs[which(MOs$fullname %like% x_withspaces_start[i]),]$mo
     if (length(found) > 0) {
@@ -243,21 +243,6 @@ as.mo <- function(x, Becker = FALSE, Lancefield = FALSE) {
 
     # try any match diregarding spaces ----
     found <- MOs[which(MOs$fullname %like% x[i]),]$mo
-    if (length(found) > 0) {
-      x[i] <- found[1L]
-      next
-    }
-
-    # try exact match of only genus, with 'species' attached ----
-    # (this prevents Streptococcus from becoming Peptostreptococcus, since "p" < "s")
-    found <- MOs[which(MOs$fullname == x_species[i]),]$mo
-    if (length(found) > 0) {
-      x[i] <- found[1L]
-      next
-    }
-
-    # try any match of only genus, with 'species' attached ----
-    found <- MOs[which(MOs$fullname %like% x_species[i]),]$mo
     if (length(found) > 0) {
       x[i] <- found[1L]
       next
@@ -322,6 +307,8 @@ as.mo <- function(x, Becker = FALSE, Lancefield = FALSE) {
   x[x == "PASAER" & toupper(x_backup) != "PASAER" & !(x_backup %like% '^pas?' | x_backup %like% 'aero')] <- "PSEAER"
   # avoid detection of Legionella non pneumophila in case of Legionella pneumophila ----
   x[x == "LEGNON" & toupper(x_backup) != "LEGNON" & !x_backup %like% 'non'] <- "LEGPNE"
+  # avoid detection of Streptobacillus in case of Streptococcus ----
+  x[x == "STB" & toupper(x_backup) != "STB" & !x_backup %like% 'streptob'] <- "STC"
 
   failures <- failures[!failures %in% c(NA, NULL, NaN)]
   if (length(failures) > 0) {

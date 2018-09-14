@@ -18,8 +18,8 @@
   thousands_of_E_colis <- rep("E. coli", 25000)
   microbenchmark::microbenchmark(as.mo(thousands_of_E_colis), unit = "s")
   # Unit: seconds
-  #          min      median         max neval
-  #  0.00861352  0.008774335  0.01952958   100
+  #         min       median         max  neval
+  #  0.00861352  0.008774335  0.01952958    100
   ```
 * Renamed all previous references to `bactid` to `mo`, like:
   * Column names inputs of `EUCAST_rules`, `first_isolate` and `key_antibiotics`
@@ -55,7 +55,8 @@
 * For `first_isolate`, rows will be ignored when there's no species available
 * Function `ratio` is now deprecated and will be removed in a future release, as it is not really the scope of this package
 * Fix for `as.mic` for values ending in zeroes after a real number
-* Tremendous speed improvement for `as.bactid` (now `as.mo`)
+* Small fix where *B. fragilis* would not be found in the `microorganisms.umcg` data set
+* Fix for `is.rsi.eligible`, now ignores reading marks
 * Added parameters `minimum` and `as_percent` to `portion_df`
 * Support for quasiquotation in the functions series `count_*` and `portions_*`, and `n_rsi`. This allows to check for more than 2 vectors or columns.
   ```r
@@ -77,12 +78,12 @@
   my_matrix = with(septic_patients, matrix(c(age, sex), ncol = 2))
   freq(my_matrix)
   ```
-  * Subsetting also possible for lists:
-    ```r
-    my_list = list(age = septic_patients$age, sex = septic_patients$sex)
-    my_list %>% freq(age)
-    my_list %>% freq(sex)
-    ```
+  For lists, subsetting is possible:
+  ```r
+  my_list = list(age = septic_patients$age, sex = septic_patients$sex)
+  my_list %>% freq(age)
+  my_list %>% freq(sex)
+  ```
 
 #### Other
 * More unit tests to ensure better integrity of functions

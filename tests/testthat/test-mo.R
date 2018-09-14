@@ -22,6 +22,11 @@ test_that("as.mo works", {
   expect_equal(as.character(as.mo("L. pneumophila")), "LEGPNE")
   expect_equal(as.character(as.mo("L. non pneumophila")), "LEGNON")
   expect_equal(as.character(as.mo("S. beta-haemolytic")), "STCHAE")
+  expect_equal(as.character(as.mo("Strepto")), "STC") # not Streptobacillus
+  expect_equal(as.character(as.mo("Streptococcus")), "STC") # not Peptostreptoccus
+
+  expect_equal(as.character(as.mo(c("GAS", "GBS"))), c("STCGRA", "STCGRB"))
+
 
   expect_equal(as.character(as.mo("S. pyo")), "STCPYO") # not Actinomyces pyogenes
 
@@ -31,7 +36,7 @@ test_that("as.mo works", {
   expect_equal(as.character(as.mo("Gram negative rods")), "GNR")
 
   # GLIMS
-  expect_equal(as.character(as.mo("shiboy")), "SHIBOY")
+  expect_equal(as.character(as.mo("bctfgr")), "BACFRA")
 
   expect_equal(as.character(as.mo("MRSE")), "STAEPI")
   expect_equal(as.character(as.mo("VRE")), "ENC")

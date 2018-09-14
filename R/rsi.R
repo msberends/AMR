@@ -99,10 +99,14 @@ is.rsi <- function(x) {
 #' @export
 #' @importFrom dplyr %>%
 is.rsi.eligible <- function(x) {
-  distinct_val <- x %>% unique() %>% sort() %>% as.character()
+  # remove all but a-z
+  distinct_val <- x %>% unique() %>% sort() %>% as.character() %>% gsub("(\\W|\\d)+", "", .)
+  # remove NAs and empty values
   distinct_val <- distinct_val[!is.na(distinct_val) & trimws(distinct_val) != ""]
+  # get RSI class
   distinct_val_rsi <- as.character(suppressWarnings(as.rsi(distinct_val)))
 
+  # is not empty and identical to new class
   length(distinct_val) > 0 &
     identical(distinct_val, distinct_val_rsi)
 }
