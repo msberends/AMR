@@ -4,7 +4,23 @@
 * Functions `count_R`, `count_IR`, `count_I`, `count_SI` and `count_S` to selectively count resistant or susceptible isolates
   * Extra function `count_df` (which works like `portion_df`) to get all counts of S, I and R of a data set with antibiotic columns, with support for grouped variables
 * Function `is.rsi.eligible` to check for columns that have valid antimicrobial results, but do not have the `rsi` class yet. Transform the columns of your raw data with: `data %>% mutate_if(is.rsi.eligible, as.rsi)`
-* Functions `as.mo` and `is.mo` as replacements for `as.bactid` and `is.bactid` (since the `microoganisms` data set not only contains bacteria). These last two functions are deprecated and will be removed in a future release.
+* Functions `as.mo` and `is.mo` as replacements for `as.bactid` and `is.bactid` (since the `microoganisms` data set not only contains bacteria). These last two functions are deprecated and will be removed in a future release. The `as.mo` function determines microbial IDs using Artificial Intelligence (AI):
+  ```r
+  as.mo("E. coli")
+  # [1] ESCCOL
+  as.mo("MRSA")
+  # [1] STAAUR
+  as.mo("S group A")
+  # [1] STCGRA
+  ```
+  And with great speed too - on a quite regular Linux server from 2007 it takes us 0.009 seconds to transform 25,000 items:
+  ```r
+  thousands_of_E_colis <- rep("E. coli", 25000)
+  microbenchmark::microbenchmark(as.mo(thousands_of_E_colis), unit = "s")
+  # Unit: seconds
+  #          min      median         max neval
+  #  0.00861352  0.008774335  0.01952958   100
+  ```
 * Renamed all previous references to `bactid` to `mo`, like:
   * Column names inputs of `EUCAST_rules`, `first_isolate` and `key_antibiotics`
   * Column names of datasets `microorganisms` and `septic_patients`

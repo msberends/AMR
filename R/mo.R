@@ -158,56 +158,23 @@ as.mo <- function(x, Becker = FALSE, Lancefield = FALSE) {
       x[i] <- NA
       next
     }
-    if (x_backup[i] %in% AMR::microorganisms$mo) {
+    if (toupper(x_backup[i]) %in% AMR::microorganisms$mo) {
       # is already a valid MO code
-      x[i] <- x_backup[i]
+      x[i] <- toupper(x_backup[i])
       next
     }
-    if (x_trimmed[i] %in% AMR::microorganisms$mo) {
+    if (toupper(x_trimmed[i]) %in% AMR::microorganisms$mo) {
       # is already a valid MO code
-      x[i] <- x_trimmed[i]
+      x[i] <- toupper(x_trimmed[i])
       next
     }
-    if (x_backup[i] %in% AMR::microorganisms$fullname) {
+    if (tolower(x_backup[i]) %in% tolower(AMR::microorganisms$fullname)) {
       # is exact match in fullname
-      x[i] <- AMR::microorganisms[which(AMR::microorganisms$fullname == x_backup[i]), ]$mo[1]
+      x[i] <- AMR::microorganisms[which(AMR::microorganisms$fullname == x_backup[i]), ]$mo[1L]
       next
     }
 
-    if (tolower(x[i]) == '^e.*coli$') {
-      # avoid detection of Entamoeba coli in case of E. coli
-      x[i] <- 'ESCCOL'
-      next
-    }
-    if (tolower(x[i]) == '^h.*influenzae$') {
-      # avoid detection of Haematobacter influenzae in case of H. influenzae
-      x[i] <- 'HAEINF'
-      next
-    }
-    if (tolower(x[i]) == '^c.*difficile$') {
-      # avoid detection of Catabacter difficile in case of C. difficile
-      x[i] <- 'CLODIF'
-      next
-    }
-    if (tolower(x[i]) == '^st.*au$'
-        | tolower(x[i]) == '^stau$'
-        | tolower(x[i]) == '^staaur$') {
-      # avoid detection of Staphylococcus auricularis in case of S. aureus
-      x[i] <- 'STAAUR'
-      next
-    }
-    if (tolower(x[i]) == '^p.*aer$') {
-      # avoid detection of Pasteurella aerogenes in case of Pseudomonas aeruginosa
-      x[i] <- 'PSEAER'
-      next
-    }
-    if (x_backup[i] %like% '^l.*pneum.*' & !x_backup[i] %like% '^l.*non.*pneum.*') {
-      # avoid detection of Legionella non pneumophila in case of Legionella pneumophila
-      x[i] <- 'LEGPNE'
-      next
-    }
-
-    # CoNS and CoPS in different languages (support for German, Dutch, Spanish, Portuguese)
+    # CoNS/CoPS in different languages (support for German, Dutch, Spanish, Portuguese) ----
     if (tolower(x[i]) %like% '[ck]oagulas[ea] negatie?[vf]'
         | tolower(x_trimmed[i]) %like% '[ck]oagulas[ea] negatie?[vf]'
         | tolower(x[i]) %like% '[ck]o?ns[^a-z]?$') {
@@ -223,7 +190,7 @@ as.mo <- function(x, Becker = FALSE, Lancefield = FALSE) {
       next
     }
 
-    # translate known trivial abbreviations to genus+species
+    # translate known trivial abbreviations to genus + species ----
     if (!is.na(x_trimmed[i])) {
       if (toupper(x_trimmed[i]) == 'MRSA'
           | toupper(x_trimmed[i]) == 'VISA'
@@ -255,33 +222,33 @@ as.mo <- function(x, Becker = FALSE, Lancefield = FALSE) {
       }
     }
 
-    # try any match keeping spaces
+    # try any match keeping spaces ----
     found <- MOs[which(MOs$fullname %like% x_withspaces[i]),]$mo
     if (length(found) > 0) {
       x[i] <- found[1L]
       next
     }
-    # try the same, now based on genus + species
+    # try the same, now based on genus + species ----
     found <- MOs[which(paste(MOs$genus, MOs$species) %like% x_withspaces[i]),]$mo
     if (length(found) > 0) {
       x[i] <- found[1L]
       next
     }
-    # try any match keeping spaces, not ending with $
+    # try any match keeping spaces, not ending with $ ----
     found <- MOs[which(MOs$fullname %like% x_withspaces_start[i]),]$mo
     if (length(found) > 0) {
       x[i] <- found[1L]
       next
     }
 
-    # try any match diregarding spaces
+    # try any match diregarding spaces ----
     found <- MOs[which(MOs$fullname %like% x[i]),]$mo
     if (length(found) > 0) {
       x[i] <- found[1L]
       next
     }
 
-    # try exact match of only genus, with 'species' attached
+    # try exact match of only genus, with 'species' attached ----
     # (this prevents Streptococcus from becoming Peptostreptococcus, since "p" < "s")
     found <- MOs[which(MOs$fullname == x_species[i]),]$mo
     if (length(found) > 0) {
@@ -289,28 +256,29 @@ as.mo <- function(x, Becker = FALSE, Lancefield = FALSE) {
       next
     }
 
-    # try any match of only genus, with 'species' attached
+    # try any match of only genus, with 'species' attached ----
     found <- MOs[which(MOs$fullname %like% x_species[i]),]$mo
     if (length(found) > 0) {
       x[i] <- found[1L]
       next
     }
 
-    # try fullname without start and stop regex, to also find subspecies, like "K. pneu rhino"
+    # try fullname without start and stop regex, to also find subspecies ----
+    # like "K. pneu rhino" -> "Klebsiella pneumoniae (rhinoscleromatis)" = KLEPNERH
     found <- MOs[which(gsub("[\\(\\)]", "", MOs$fullname) %like% x_withspaces_all[i]),]$mo
     if (length(found) > 0) {
       x[i] <- found[1L]
       next
     }
 
-    # search for GLIMS code
+    # search for GLIMS code ----
     found <- AMR::microorganisms.umcg[which(toupper(AMR::microorganisms.umcg$umcg) == toupper(x_trimmed[i])),]$mo
     if (length(found) > 0) {
       x[i] <- found[1L]
       next
     }
 
-    # try splitting of characters and then find ID
+    # try splitting of characters and then find ID ----
     # like esco = E. coli, klpn = K. pneumoniae, stau = S. aureus
     x_split <- x
     x_length <- nchar(x_trimmed[i])
@@ -323,7 +291,7 @@ as.mo <- function(x, Becker = FALSE, Lancefield = FALSE) {
       next
     }
 
-    # try any match with text before and after original search string
+    # try any match with text before and after original search string ----
     # so "negative rods" will be "GNR"
     if (x_trimmed[i] %like% "^Gram") {
       x_trimmed[i] <- gsub("^Gram", "", x_trimmed[i], ignore.case = TRUE)
@@ -338,11 +306,22 @@ as.mo <- function(x, Becker = FALSE, Lancefield = FALSE) {
       }
     }
 
-    # not found
+    # not found ----
     x[i] <- NA_character_
     failures <- c(failures, x_backup[i])
 
   }
+
+  # avoid detection of Staphylococcus auricularis in case of S. aureus ----
+  x[x == "STAAUC" & toupper(x_backup) != "STAAUC" & !x_backup %like% 'auri'] <- "STAAUR"
+  # avoid detection of Entamoeba coli in case of E. coli ----
+  x[x == "ENMCOL" & toupper(x_backup) != "ENMCOL" & !x_backup %like% '^ent?'] <- "ESCCOL"
+  # avoid detection of Haematobacter influenzae in case of H. influenzae ----
+  x[x == "HABINF" & toupper(x_backup) != "HABINF" & !x_backup %like% '^haema'] <- "HAEINF"
+  # avoid detection of Pasteurella aerogenes in case of P. aeruginosa ----
+  x[x == "PASAER" & toupper(x_backup) != "PASAER" & !(x_backup %like% '^pas?' | x_backup %like% 'aero')] <- "PSEAER"
+  # avoid detection of Legionella non pneumophila in case of Legionella pneumophila ----
+  x[x == "LEGNON" & toupper(x_backup) != "LEGNON" & !x_backup %like% 'non'] <- "LEGPNE"
 
   failures <- failures[!failures %in% c(NA, NULL, NaN)]
   if (length(failures) > 0) {
@@ -352,6 +331,7 @@ as.mo <- function(x, Becker = FALSE, Lancefield = FALSE) {
             call. = FALSE)
   }
 
+  # Becker ----
   if (Becker == TRUE | Becker == "all") {
     # See Source. It's this figure:
     # https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4187637/figure/F3/
@@ -384,6 +364,7 @@ as.mo <- function(x, Becker = FALSE, Lancefield = FALSE) {
     }
   }
 
+  # Lancefield ----
   if (Lancefield == TRUE | Lancefield == "all") {
     # group A
     x[x == "STCPYO"] <- "STCGRA" # S. pyogenes
@@ -406,7 +387,8 @@ as.mo <- function(x, Becker = FALSE, Lancefield = FALSE) {
     x[x == "STCSAL"] <- "STCGRK" # S. salivarius
   }
 
-  # for the returned genera without species (like "ESC"), add species (like "ESCSPP") where the input contained it
+  # for the returned genera without species, add species ----
+  # like "ESC" -> "ESCSPP", but only where the input contained it
   indices <- unique(x_input) %like% "[A-Z]{3}SPP" & !x %like% "[A-Z]{3}SPP"
   x[indices] <- paste0(x[indices], 'SPP')
 
@@ -466,35 +448,5 @@ as.data.frame.mo <- function (x, ...) {
 #' @importFrom dplyr pull
 #' @noRd
 pull.mo <- function(.data, ...) {
-  pull(as.data.frame(.data), ...)
-}
-
-#' @exportMethod print.bactid
-#' @export
-#' @noRd
-print.bactid <- function(x, ...) {
-  cat("Class 'bactid'\n")
-  print.default(as.character(x), quote = FALSE)
-}
-
-#' @exportMethod as.data.frame.bactid
-#' @export
-#' @noRd
-as.data.frame.bactid <- function (x, ...) {
-  # same as as.data.frame.character but with removed stringsAsFactors
-  nm <- paste(deparse(substitute(x), width.cutoff = 500L),
-              collapse = " ")
-  if (!"nm" %in% names(list(...))) {
-    as.data.frame.vector(x, ..., nm = nm)
-  } else {
-    as.data.frame.vector(x, ...)
-  }
-}
-
-#' @exportMethod pull.bactid
-#' @export
-#' @importFrom dplyr pull
-#' @noRd
-pull.bactid <- function(.data, ...) {
   pull(as.data.frame(.data), ...)
 }

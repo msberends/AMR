@@ -42,6 +42,36 @@ guess_bactid <- function(...) {
   guess_mo(...)
 }
 
+#' @exportMethod print.bactid
+#' @export
+#' @noRd
+print.bactid <- function(x, ...) {
+  cat("Class 'bactid'\n")
+  print.default(as.character(x), quote = FALSE)
+}
+
+#' @exportMethod as.data.frame.bactid
+#' @export
+#' @noRd
+as.data.frame.bactid <- function (x, ...) {
+  # same as as.data.frame.character but with removed stringsAsFactors
+  nm <- paste(deparse(substitute(x), width.cutoff = 500L),
+              collapse = " ")
+  if (!"nm" %in% names(list(...))) {
+    as.data.frame.vector(x, ..., nm = nm)
+  } else {
+    as.data.frame.vector(x, ...)
+  }
+}
+
+#' @exportMethod pull.bactid
+#' @export
+#' @importFrom dplyr pull
+#' @noRd
+pull.bactid <- function(.data, ...) {
+  pull(as.data.frame(.data), ...)
+}
+
 #' @rdname AMR-deprecated
 #' @export
 ratio <- function(x, ratio) {
@@ -53,13 +83,13 @@ ratio <- function(x, ratio) {
   if (length(ratio) == 1) {
     if (ratio %like% '^([0-9]+([.][0-9]+)?[-,:])+[0-9]+([.][0-9]+)?$') {
       # support for "1:2:1", "1-2-1", "1,2,1" and even "1.75:2:1.5"
-      ratio <- ratio %>% base::strsplit("[-,:]") %>% base::unlist() %>% base::as.double()
+      ratio <- ratio %>% strsplit("[-,:]") %>% unlist() %>% as.double()
     } else {
       stop('Invalid `ratio`: ', ratio, '.')
     }
   }
-  if (length(x) != length(ratio)) {
+  if (length(x) != 1 & length(x) != length(ratio)) {
     stop('`x` and `ratio` must be of same size.')
   }
-  base::sum(x, na.rm = TRUE) * (ratio / base::sum(ratio, na.rm = TRUE))
+  sum(x, na.rm = TRUE) * (ratio / sum(ratio, na.rm = TRUE))
 }

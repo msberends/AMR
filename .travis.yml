@@ -26,8 +26,12 @@ jobs:
     warnings_are_errors: false
 matrix:
   allow_failures:
-    - os: osx
-    # - r: devel
+    - r: 3.2
+      os: osx
+    - r: 3.3
+      os: osx
+    - r: 3.4
+      os: osx
 r_packages: covr
 cache: packages
 cran: https://cran.rstudio.com
