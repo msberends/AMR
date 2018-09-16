@@ -18,7 +18,7 @@ test_that("mo_property works", {
 
   # test integrity
   library(dplyr)
-  MOs <- AMR::microorganisms %>% filter(!is.na(mo))
+  MOs <- AMR::microorganisms %>% filter(!is.na(mo), nchar(mo) > 3)
   expect_identical(MOs$fullname, mo_fullname(MOs$fullname, language = "en"))
 
   mo_clean <- MOs$mo

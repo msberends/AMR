@@ -37,7 +37,7 @@
   mo_fullname("S. group A") # when run on a on a Portuguese system
   # [1] "Streptococcus grupo A"
   ```
-* Function `ab_property` and its aliases: `ab_official`, `ab_tradenames`, `ab_certe`, `ab_umcg`, `ab_official_nl` and `ab_trivial_nl`
+* Function `ab_property` and its aliases: `ab_name`, `ab_tradenames`, `ab_certe`, `ab_umcg` and `ab_trivial_nl`
 * Introduction to AMR as a vignette
 
 #### Changed
@@ -47,7 +47,7 @@
   ```r
   ab_official("Bactroban")
   # [1] "Mupirocin"
-  ab_official(c("Bactroban", "Amoxil", "Zithromax", "Floxapen"))
+  ab_name(c("Bactroban", "Amoxil", "Zithromax", "Floxapen"))
   # [1] "Mupirocin" "Amoxicillin" "Azithromycin" "Flucloxacillin"
   ab_atc(c("Bactroban", "Amoxil", "Zithromax", "Floxapen"))
   # [1] "R01AX06" "J01CA04" "J01FA10" "J01CF05"
@@ -56,7 +56,7 @@
 * Function `ratio` is now deprecated and will be removed in a future release, as it is not really the scope of this package
 * Fix for `as.mic` for values ending in zeroes after a real number
 * Small fix where *B. fragilis* would not be found in the `microorganisms.umcg` data set
-* Fix for `is.rsi.eligible`, now ignores reading marks
+* Added `prevalence` column to the `microorganisms` data set
 * Added parameters `minimum` and `as_percent` to `portion_df`
 * Support for quasiquotation in the functions series `count_*` and `portions_*`, and `n_rsi`. This allows to check for more than 2 vectors or columns.
   ```r

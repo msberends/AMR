@@ -56,7 +56,7 @@ This `AMR` package basically does four important things:
      * You can also identify first *weighted* isolates of every patient, an adjusted version of the CLSI guideline. This takes into account key antibiotics of every strain and compares them.
    * Use `MDRO` (abbreviation of Multi Drug Resistant Organisms) to check your isolates for exceptional resistance with country-specific guidelines or EUCAST rules. Currently, national guidelines for Germany and the Netherlands are supported.
    * The data set `microorganisms` contains the family, genus, species, subspecies, colloquial name and Gram stain of almost 3,000 potential human pathogenic microorganisms (bacteria, fungi/yeasts and parasites). This enables resistance analysis of e.g. different antibiotics per Gram stain. The package also contains functions to look up values in this data set like `mo_genus`, `mo_family` or `mo_gramstain`. As they use `as.mo` internally, they also use artificial intelligence. For example, `mo_genus("MRSA")` and `mo_genus("S. aureus")` will both return `"Staphylococcus"`. They also come with support for German, Dutch, French, Italian, Spanish and Portuguese. These functions can be used to add new variables to your data.
-   * The data set `antibiotics` contains the ATC code, LIS codes, official name, trivial name and DDD of both oral and parenteral administration. It also contains a total of 298 trade names. Use functions like `ab_official` and `ab_tradenames` to look up values. As the `mo_*` functions use `as.mo` internally, the `ab_*` functions use `as.atc` internally so it uses AI to guess your expected result. For example, `ab_official("Fluclox")`, `ab_official("Floxapen")` and `ab_official("J01CF05")` will all return `"Flucloxacillin"`. These functions can again be used to add new variables to your data.
+   * The data set `antibiotics` contains the ATC code, LIS codes, official name, trivial name and DDD of both oral and parenteral administration. It also contains a total of 298 trade names. Use functions like `ab_name` and `ab_tradenames` to look up values. As the `mo_*` functions use `as.mo` internally, the `ab_*` functions use `as.atc` internally so it uses AI to guess your expected result. For example, `ab_name("Fluclox")`, `ab_name("Floxapen")` and `ab_name("J01CF05")` will all return `"Flucloxacillin"`. These functions can again be used to add new variables to your data.
 
 3. It **analyses the data** with convenient functions that use well-known methods.
 
@@ -388,7 +388,7 @@ antibiotics       # A tibble: 423 x 18
 
 # Dataset with bacteria codes and properties like gram stain and 
 # aerobic/anaerobic
-microorganisms    # A tibble: 2,630 x 10
+microorganisms    # A tibble: 2,642 x 11
 ```
 
 ## Copyright

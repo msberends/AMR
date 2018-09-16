@@ -40,12 +40,12 @@ Use this function to determine a valid ID based on a genus (and species). Determ
 
 Use the \code{\link{mo_property}} functions to get properties based on the returned code, see Examples.
 
-Some exceptions have been built in to get more logical results, based on prevalence of human pathogens. These are:
+Thus function uses Artificial Intelligence (AI) to help getting more logical results, based on type of input and known prevalence of human pathogens. For example:
 \itemize{
   \item{\code{"E. coli"} will return the ID of \emph{Escherichia coli} and not \emph{Entamoeba coli}, although the latter would alphabetically come first}
-  \item{\code{"H. influenzae"} will return the ID of \emph{Haemophilus influenzae} and not \emph{Haematobacter influenzae}}
+  \item{\code{"H. influenzae"} will return the ID of \emph{Haemophilus influenzae} and not \emph{Haematobacter influenzae} for the same reason}
   \item{Something like \code{"p aer"} will return the ID of \emph{Pseudomonas aeruginosa} and not \emph{Pasteurella aerogenes}}
-  \item{Something like \code{"stau"} or \code{"staaur"} will return the ID of \emph{Staphylococcus aureus} and not \emph{Staphylococcus auricularis}}
+  \item{Something like \code{"stau"} or \code{"S aur"} will return the ID of \emph{Staphylococcus aureus} and not \emph{Staphylococcus auricularis}}
 }
 Moreover, this function also supports ID's based on only Gram stain, when the species is not known. \cr
 For example, \code{"Gram negative rods"} and \code{"GNR"} will both return the ID of a Gram negative rod: \code{GNR}.

@@ -207,7 +207,7 @@ mo_property <- function(x, property = 'fullname', Becker = FALSE, Lancefield = F
 #' @importFrom dplyr %>% case_when
 mo_translate <- function(x, language) {
   if (is.null(language)) {
-    language <- mo_getlangcode()
+    language <- Sys.locale()
   } else {
     language <- tolower(language[1])
   }
@@ -349,18 +349,4 @@ mo_translate <- function(x, language) {
 
   )
 
-}
-
-#' @importFrom dplyr case_when
-mo_getlangcode <- function() {
-  sys <- base::Sys.getlocale()
-  case_when(
-    sys %like% '(Deutsch|German|de_)'       ~ "de",
-    sys %like% '(Nederlands|Dutch|nl_)'     ~ "nl",
-    sys %like% '(Espa.ol|Spanish|es_)'      ~ "es",
-    sys %like% '(Fran.ais|French|fr_)'      ~ "fr",
-    sys %like% '(Portugu.s|Portuguese|pt_)' ~ "pt",
-    sys %like% '(Italiano|Italian|it_)'     ~ "it",
-    TRUE                                    ~ "en"
-  )
 }

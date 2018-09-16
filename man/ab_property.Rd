@@ -4,7 +4,7 @@
 \alias{ab_property}
 \alias{ab_atc}
 \alias{ab_official}
-\alias{ab_official_nl}
+\alias{ab_name}
 \alias{ab_trivial_nl}
 \alias{ab_certe}
 \alias{ab_umcg}
@@ -15,9 +15,9 @@ ab_property(x, property = "official")
 
 ab_atc(x)
 
-ab_official(x)
+ab_official(x, language = NULL)
 
-ab_official_nl(x)
+ab_name(x, language = NULL)
 
 ab_trivial_nl(x)
 
@@ -31,6 +31,8 @@ ab_tradenames(x)
 \item{x}{a (vector of a) valid \code{\link{atc}} code or any text that can be coerced to a valid atc with \code{\link{as.atc}}}
 
 \item{property}{one of the column names of one of the \code{\link{antibiotics}} data set, like \code{"atc"} and \code{"official"}}
+
+\item{language}{language of the returned text, defaults to the systems language. Either one of \code{"en"} (English) or \code{"nl"} (Dutch).}
 }
 \value{
 A vector of values. In case of \code{ab_tradenames}, if \code{x} is of length one, a vector will be returned. Otherwise a \code{\link{list}}, with \code{x} as names.
@@ -40,8 +42,8 @@ Use these functions to return a specific property of an antibiotic from the \cod
 }
 \examples{
 ab_atc("amcl")         # J01CR02
-ab_official("amcl")    # Amoxicillin and beta-lactamase inhibitor
-ab_official_nl("amcl") # Amoxicilline met enzymremmer
+ab_name("amcl")        # Amoxicillin and beta-lactamase inhibitor
+ab_name("amcl", "nl")  # Amoxicilline met enzymremmer
 ab_trivial_nl("amcl")  # Amoxicilline/clavulaanzuur
 ab_certe("amcl")       # amcl
 ab_umcg("amcl")        # AMCL

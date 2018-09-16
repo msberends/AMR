@@ -33,12 +33,12 @@
 #'
 #' Use the \code{\link{mo_property}} functions to get properties based on the returned code, see Examples.
 #'
-#' Some exceptions have been built in to get more logical results, based on prevalence of human pathogens. These are:
+#' Thus function uses Artificial Intelligence (AI) to help getting more logical results, based on type of input and known prevalence of human pathogens. For example:
 #' \itemize{
 #'   \item{\code{"E. coli"} will return the ID of \emph{Escherichia coli} and not \emph{Entamoeba coli}, although the latter would alphabetically come first}
-#'   \item{\code{"H. influenzae"} will return the ID of \emph{Haemophilus influenzae} and not \emph{Haematobacter influenzae}}
+#'   \item{\code{"H. influenzae"} will return the ID of \emph{Haemophilus influenzae} and not \emph{Haematobacter influenzae} for the same reason}
 #'   \item{Something like \code{"p aer"} will return the ID of \emph{Pseudomonas aeruginosa} and not \emph{Pasteurella aerogenes}}
-#'   \item{Something like \code{"stau"} or \code{"staaur"} will return the ID of \emph{Staphylococcus aureus} and not \emph{Staphylococcus auricularis}}
+#'   \item{Something like \code{"stau"} or \code{"S aur"} will return the ID of \emph{Staphylococcus aureus} and not \emph{Staphylococcus auricularis}}
 #' }
 #' Moreover, this function also supports ID's based on only Gram stain, when the species is not known. \cr
 #' For example, \code{"Gram negative rods"} and \code{"GNR"} will both return the ID of a Gram negative rod: \code{GNR}.
@@ -47,7 +47,7 @@
 #'
 #' [2] Lancefield RC \strong{A serological differentiation of human and other groups of hemolytic streptococci}. 1933. J Exp Med. 57(4): 571–95. \url{https://dx.doi.org/10.1084/jem.57.4.571}
 #' @export
-#' @importFrom dplyr %>% pull left_join
+#' @importFrom dplyr %>% pull left_join arrange
 #' @return Character (vector) with class \code{"mo"}. Unknown values will return \code{NA}.
 #' @seealso \code{\link{microorganisms}} for the dataframe that is being used to determine ID's.
 #' @examples
@@ -118,7 +118,10 @@ as.mo <- function(x, Becker = FALSE, Lancefield = FALSE) {
     }
   }
 
-  MOs <- AMR::microorganisms %>% filter(!mo %like% '^_FAM') # dont search in those
+  MOs <- AMR::microorganisms %>%
+    arrange(prevalence) %>%    # more expected result on multiple findings
+    filter(!mo %like% '^_FAM', # don't search in those
+           (nchar(mo) > 3 | mo %in% c("GNR", "GPR", "GNC", "GPC")))      # no genera
   failures <- character(0)
   x_input <- x
 
@@ -144,11 +147,11 @@ as.mo <- function(x, Becker = FALSE, Lancefield = FALSE) {
   x_withspaces_start <- paste0('^', x_withspaces)
   x_withspaces <- paste0('^', x_withspaces, '$')
 
-  # print(x)
-  # print(x_withspaces_all)
-  # print(x_withspaces_start)
-  # print(x_withspaces)
-  # print(x_backup)
+  # cat(paste0('x                  "', x, '"\n'))
+  # cat(paste0('x_withspaces_all   "', x_withspaces_all, '"\n'))
+  # cat(paste0('x_withspaces_start "', x_withspaces_start, '"\n'))
+  # cat(paste0('x_withspaces       "', x_withspaces, '"\n'))
+  # cat(paste0('x_backup           "', x_backup, '"\n'))
 
   for (i in 1:length(x)) {
     if (identical(x_trimmed[i], "")) {
@@ -201,7 +204,7 @@ as.mo <- function(x, Becker = FALSE, Lancefield = FALSE) {
         next
       }
       if (toupper(x_trimmed[i]) == 'VRE') {
-        x[i] <- 'ENC'
+        x[i] <- 'ENCSPP'
         next
       }
       if (toupper(x_trimmed[i]) == 'MRPA') {
@@ -229,6 +232,13 @@ as.mo <- function(x, Becker = FALSE, Lancefield = FALSE) {
 
     # try the same, now based on genus + species ----
     found <- MOs[which(paste(MOs$genus, MOs$species) %like% x_withspaces[i]),]$mo
+    if (length(found) > 0) {
+      x[i] <- found[1L]
+      next
+    }
+
+    # try any match with genus, keeping spaces, not ending with $ ----
+    found <- MOs[which(MOs$genus %like% x_withspaces_start[i] & MOs$mo %like% 'SPP$'),]$mo
     if (length(found) > 0) {
       x[i] <- found[1L]
       next
@@ -297,19 +307,6 @@ as.mo <- function(x, Becker = FALSE, Lancefield = FALSE) {
 
   }
 
-  # avoid detection of Staphylococcus auricularis in case of S. aureus ----
-  x[x == "STAAUC" & toupper(x_backup) != "STAAUC" & !x_backup %like% 'auri'] <- "STAAUR"
-  # avoid detection of Entamoeba coli in case of E. coli ----
-  x[x == "ENMCOL" & toupper(x_backup) != "ENMCOL" & !x_backup %like% '^ent?'] <- "ESCCOL"
-  # avoid detection of Haematobacter influenzae in case of H. influenzae ----
-  x[x == "HABINF" & toupper(x_backup) != "HABINF" & !x_backup %like% '^haema'] <- "HAEINF"
-  # avoid detection of Pasteurella aerogenes in case of P. aeruginosa ----
-  x[x == "PASAER" & toupper(x_backup) != "PASAER" & !(x_backup %like% '^pas?' | x_backup %like% 'aero')] <- "PSEAER"
-  # avoid detection of Legionella non pneumophila in case of Legionella pneumophila ----
-  x[x == "LEGNON" & toupper(x_backup) != "LEGNON" & !x_backup %like% 'non'] <- "LEGPNE"
-  # avoid detection of Streptobacillus in case of Streptococcus ----
-  x[x == "STB" & toupper(x_backup) != "STB" & !x_backup %like% 'streptob'] <- "STC"
-
   failures <- failures[!failures %in% c(NA, NULL, NaN)]
   if (length(failures) > 0) {
     warning("These ", length(failures) , " values could not be coerced to a valid mo: ",
@@ -376,7 +373,9 @@ as.mo <- function(x, Becker = FALSE, Lancefield = FALSE) {
 
   # for the returned genera without species, add species ----
   # like "ESC" -> "ESCSPP", but only where the input contained it
-  indices <- unique(x_input) %like% "[A-Z]{3}SPP" & !x %like% "[A-Z]{3}SPP"
+  indices <- nchar(unique(x)) == 3 & !x %like% "[A-Z]{3}SPP" & !x %in% c("GNR", "GPR", "GNC", "GPC",
+                                                                         "GNS", "GPS", "GNK", "GPK")
+  indices <- indices[!is.na(indices)]
   x[indices] <- paste0(x[indices], 'SPP')
 
   # left join the found results to the original input values (x_input)

@@ -3,7 +3,7 @@ context("mo.R")
 test_that("as.mo works", {
 
   library(dplyr)
-  MOs <- AMR::microorganisms %>% filter(!is.na(mo))
+  MOs <- AMR::microorganisms %>% filter(!is.na(mo), nchar(mo) > 3)
   expect_identical(as.character(MOs$mo), as.character(as.mo(MOs$mo)))
 
   expect_identical(
@@ -12,18 +12,20 @@ test_that("as.mo works", {
 
   expect_equal(as.character(as.mo("Escherichia coli")), "ESCCOL")
   expect_equal(as.character(as.mo("Escherichia  coli")), "ESCCOL")
-  expect_equal(as.character(as.mo("Escherichia  species")), "ESC")
+  expect_equal(as.character(as.mo("Escherichia  species")), "ESCSPP")
+  expect_equal(as.character(as.mo("Escherichia")), "ESCSPP")
   expect_equal(as.character(as.mo(" ESCCOL ")), "ESCCOL")
+  expect_equal(as.character(as.mo("coli")), "ESCCOL") # not Campylobacter
   expect_equal(as.character(as.mo("klpn")), "KLEPNE")
-  expect_equal(as.character(as.mo("Klebsiella")), "KLE")
+  expect_equal(as.character(as.mo("Klebsiella")), "KLESPP")
   expect_equal(as.character(as.mo("K. pneu rhino")), "KLEPNERH") # K. pneumoniae subspp. rhinoscleromatis
-  expect_equal(as.character(as.mo("Bartonella")), "BAR")
+  expect_equal(as.character(as.mo("Bartonella")), "BARSPP")
   expect_equal(as.character(as.mo("C. difficile")), "CLODIF")
   expect_equal(as.character(as.mo("L. pneumophila")), "LEGPNE")
   expect_equal(as.character(as.mo("L. non pneumophila")), "LEGNON")
   expect_equal(as.character(as.mo("S. beta-haemolytic")), "STCHAE")
-  expect_equal(as.character(as.mo("Strepto")), "STC") # not Streptobacillus
-  expect_equal(as.character(as.mo("Streptococcus")), "STC") # not Peptostreptoccus
+  expect_equal(as.character(as.mo("Strepto")), "STCSPP")
+  expect_equal(as.character(as.mo("Streptococcus")), "STCSPP") # not Peptostreptoccus
 
   expect_equal(as.character(as.mo(c("GAS", "GBS"))), c("STCGRA", "STCGRB"))
 
@@ -39,7 +41,7 @@ test_that("as.mo works", {
   expect_equal(as.character(as.mo("bctfgr")), "BACFRA")
 
   expect_equal(as.character(as.mo("MRSE")), "STAEPI")
-  expect_equal(as.character(as.mo("VRE")), "ENC")
+  expect_equal(as.character(as.mo("VRE")), "ENCSPP")
   expect_equal(as.character(as.mo("MRPA")), "PSEAER")
   expect_equal(as.character(as.mo("PISP")), "STCPNE")
   expect_equal(as.character(as.mo("PRSP")), "STCPNE")
@@ -67,8 +69,9 @@ test_that("as.mo works", {
   expect_identical(as.character(guess_mo("S. epidermidis", Becker = FALSE)), "STAEPI")
   expect_identical(as.character(guess_mo("S. epidermidis", Becker = TRUE)),  "STACNS")
   expect_identical(as.character(guess_mo("STAEPI",         Becker = TRUE)),  "STACNS")
-  expect_identical(as.character(guess_mo("S. intermedius", Becker = FALSE)), "STAINT")
-  expect_identical(as.character(guess_mo("S. intermedius", Becker = TRUE)),  "STACPS")
+  expect_identical(as.character(guess_mo("S. intermedius", Becker = FALSE)), "STCINT") # Strep (!) intermedius
+  expect_identical(as.character(guess_mo("Sta intermedius",Becker = FALSE)), "STAINT")
+  expect_identical(as.character(guess_mo("Sta intermedius",Becker = TRUE)),  "STACPS")
   expect_identical(as.character(guess_mo("STAINT",         Becker = TRUE)),  "STACPS")
   # aureus must only be influenced if Becker = "all"
   expect_identical(as.character(guess_mo("STAAUR", Becker = FALSE)), "STAAUR")
@@ -103,8 +106,9 @@ test_that("as.mo works", {
       select(genus) %>%
       as.mo() %>%
       as.character(),
-    c("ESC", "ESC", "STA", "STA", "STA",
-      "STA", "STA", "STA", "STA", "STA"))
+    paste0(c("ESC", "ESC", "STA", "STA", "STA",
+             "STA", "STA", "STA", "STA", "STA"),
+           "SPP"))
 
   # select with two columns
   expect_identical(
