@@ -161,7 +161,8 @@ Adjust it with any parameter you know from the `ggplot2` package:
 ```r
 septic_patients %>%
   select(amox, nitr, fosf, trim, cipr) %>%
-  ggplot_rsi(width = 0.5, colour = "black", size = 1, linetype = 2, alpha = 0.25)
+  ggplot_rsi(datalabels = FALSE, 
+             width = 0.5, colour = "black", size = 1, linetype = 2, alpha = 0.25)
 ```
 
 ![example_3_rsi](man/figures/rsi_example3.png)
@@ -174,7 +175,8 @@ septic_patients %>%
   group_by(hospital_id) %>%
   ggplot_rsi(x = "hospital_id",
              facet = "Antibiotic",
-             nrow = 1) +
+             nrow = 1,
+             datalabels = FALSE) +
   labs(title = "AMR of Anti-UTI Drugs Per Hospital",
        x = "Hospital")
 ```

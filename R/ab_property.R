@@ -36,7 +36,7 @@
 #' ab_umcg("amcl")        # AMCL
 ab_property <- function(x, property = 'official') {
   property <- property[1]
-  if (!property %in% colnames(antibiotics)) {
+  if (!property %in% colnames(AMR::antibiotics)) {
     stop("invalid property: ", property, " - use a column name of the `antibiotics` data set")
   }
   if (!is.atc(x)) {

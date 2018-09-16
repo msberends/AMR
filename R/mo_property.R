@@ -187,7 +187,7 @@ mo_aerobic <- function(x) {
 #' @export
 mo_property <- function(x, property = 'fullname', Becker = FALSE, Lancefield = FALSE, language = NULL) {
   property <- tolower(property[1])
-  if (!property %in% colnames(microorganisms)) {
+  if (!property %in% colnames(AMR::microorganisms)) {
     stop("invalid property: ", property, " - use a column name of the `microorganisms` data set")
   }
   result1 <- as.mo(x = x, Becker = Becker, Lancefield = Lancefield) # this will give a warning if x cannot be coerced

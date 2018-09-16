@@ -25,6 +25,7 @@
   * Column names inputs of `EUCAST_rules`, `first_isolate` and `key_antibiotics`
   * Column names of datasets `microorganisms` and `septic_patients`
   * All old syntaxes will still work with this version, but will throw warnings
+* Function `labels_rsi_count` to print datalabels on a RSI `ggplot2` model
 * Functions `as.atc` and `is.atc` to transform/look up antibiotic ATC codes as defined by the WHO. The existing function `guess_atc` is now an alias of `as.atc`.
 * Aliases for existing function `mo_property`: `mo_family`, `mo_genus`, `mo_species`, `mo_subspecies`, `mo_fullname`, `mo_shortname`, `mo_aerobic`, `mo_type` and `mo_gramstain`. They also come with support for German, Dutch, French, Italian, Spanish and Portuguese, and it defaults to the systems locale:
   ```r
@@ -70,6 +71,7 @@
   ```
 * Edited `ggplot_rsi` and `geom_rsi` so they can cope with `count_df`. The new `fun` parameter has value `portion_df` at default, but can be set to `count_df`.
 * Fix for `ggplot_rsi` when the `ggplot2` package was not loaded
+* Added datalabels function `labels_rsi_count` to `ggplot_rsi`
 * Added possibility to set any parameter to `geom_rsi` (and `ggplot_rsi`) so you can set your own preferences
 * Fix for joins, where predefined suffices would not be honoured
 * Added parameter `quote` to the `freq` function

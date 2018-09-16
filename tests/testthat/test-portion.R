@@ -112,7 +112,7 @@ test_that("old rsi works", {
 
   # portion_df
   expect_equal(
-    septic_patients %>% select(amox) %>% portion_df() %>% pull(Percentage),
+    septic_patients %>% select(amox) %>% portion_df() %>% pull(Value),
     c(septic_patients$amox %>% portion_S(),
       septic_patients$amox %>% portion_I(),
       septic_patients$amox %>% portion_R())
@@ -165,4 +165,6 @@ test_that("prediction of rsi works", {
                                   col_ab = "mero",
                                   col_date = "date",
                                   info = TRUE))
+
+  expect_error(portion_df(c("A", "B", "C")))
 })

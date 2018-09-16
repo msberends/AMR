@@ -41,4 +41,6 @@ test_that("counts work", {
   expect_error(count_S("test", minimum = "test"))
   expect_error(count_S("test", as_percent = "test"))
 
+  expect_error(count_df(c("A", "B", "C")))
+
 })

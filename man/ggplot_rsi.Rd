@@ -7,15 +7,17 @@
 \alias{scale_y_percent}
 \alias{scale_rsi_colours}
 \alias{theme_rsi}
+\alias{labels_rsi_count}
 \title{AMR bar plots with \code{ggplot}}
 \usage{
 ggplot_rsi(data, position = NULL, x = "Antibiotic",
   fill = "Interpretation", facet = NULL, translate_ab = "official",
-  fun = portion_df, nrow = NULL, ...)
+  fun = count_df, nrow = NULL, datalabels = TRUE,
+  datalabels.size = 3, datalabels.colour = "grey15", ...)
 
 geom_rsi(position = NULL, x = c("Antibiotic", "Interpretation"),
-  fill = "Interpretation", translate_ab = "official",
-  fun = portion_df, ...)
+  fill = "Interpretation", translate_ab = "official", fun = count_df,
+  ...)
 
 facet_rsi(facet = c("Interpretation", "Antibiotic"), nrow = NULL)
 
@@ -24,11 +26,14 @@ scale_y_percent()
 scale_rsi_colours()
 
 theme_rsi()
+
+labels_rsi_count(position = NULL, x = "Antibiotic",
+  datalabels.size = 3, datalabels.colour = "grey15")
 }
 \arguments{
 \item{data}{a \code{data.frame} with column(s) of class \code{"rsi"} (see \code{\link{as.rsi}})}
 
-\item{position}{position adjustment of bars, either \code{"fill"}, \code{"stack"} (default when \code{fun} is \code{\link{portion_df}}) or \code{"dodge"} (default when \code{fun} is \code{\link{count_df}})}
+\item{position}{position adjustment of bars, either \code{"fill"} (default when \code{fun} is \code{\link{count_df}}), \code{"stack"} (default when \code{fun} is \code{\link{portion_df}}) or \code{"dodge"}}
 
 \item{x}{variable to show on x axis, either \code{"Antibiotic"} (default) or \code{"Interpretation"} or a grouping variable}
 
@@ -38,9 +43,15 @@ theme_rsi()
 
 \item{translate_ab}{a column name of the \code{\link{antibiotics}} data set to translate the antibiotic abbreviations into, using \code{\link{abname}}. Default behaviour is to translate to official names according to the WHO. Use \code{translate_ab = FALSE} to disable translation.}
 
-\item{fun}{function to transform \code{data}, either \code{\link{portion_df}} (default) or \code{\link{count_df}}}
+\item{fun}{function to transform \code{data}, either \code{\link{count_df}} (default) or \code{\link{portion_df}}}
 
 \item{nrow}{(when using \code{facet}) number of rows}
+
+\item{datalabels}{show datalabels using \code{labels_rsi_count}, will at default only be shown when \code{fun = count_df}}
+
+\item{datalabels.size}{size of the datalabels}
+
+\item{datalabels.colour}{colour of the datalabels}
 
 \item{...}{other parameters passed on to \code{geom_rsi}}
 }
@@ -55,11 +66,13 @@ At default, the names of antibiotics will be shown on the plots using \code{\lin
 
 \code{facet_rsi} creates 2d plots (at default based on S/I/R) using \code{\link[ggplot2]{facet_wrap}}.
 
-\code{scale_y_percent} transforms the y axis to a 0 to 100\% range.
+\code{scale_y_percent} transforms the y axis to a 0 to 100\% range using \code{\link[ggplot2]{scale_y_continuous}}.
 
-\code{scale_rsi_colours} sets colours to the bars: green for S, yellow for I and red for R.
+\code{scale_rsi_colours} sets colours to the bars: green for S, yellow for I and red for R, using \code{\link[ggplot2]{scale_fill_brewer}}.
 
 \code{theme_rsi} is a \code{\link[ggplot2]{theme}} with minimal distraction.
+
+\code{labels_rsi_count} print datalabels on the bars with percentage and amount of isolates using \code{\link[ggplot2]{geom_text}}
 
 \code{ggplot_rsi} is a wrapper around all above functions that uses data as first input. This makes it possible to use this function after a pipe (\code{\%>\%}). See Examples.
 }
@@ -77,6 +90,7 @@ ggplot(df) +
   geom_rsi() +
   scale_y_percent() +
   scale_rsi_colours() +
+  labels_rsi_count() +
   theme_rsi()
 
 # or better yet, simplify this using the wrapper function - a single command:

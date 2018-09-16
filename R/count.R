@@ -146,6 +146,10 @@ count_S <- function(...) {
 count_df <- function(data,
                      translate_ab = getOption("get_antibiotic_names", "official")) {
 
+  if (!"data.frame" %in% class(data)) {
+    stop("`count_df` must be called on a data.frame")
+  }
+
   if (data %>% select_if(is.rsi) %>% ncol() == 0) {
     stop("No columns with class 'rsi' found. See ?as.rsi.")
   }
@@ -177,7 +181,7 @@ count_df <- function(data,
 
   res <- bind_rows(resS, resI, resR) %>%
     mutate(Interpretation = factor(Interpretation, levels = c("R", "I", "S"), ordered = TRUE)) %>%
-    tidyr::gather(Antibiotic, Count, -Interpretation, -data.groups)
+    tidyr::gather(Antibiotic, Value, -Interpretation, -data.groups)
 
   if (!translate_ab == FALSE) {
     if (!tolower(translate_ab) %in% tolower(colnames(AMR::antibiotics))) {
