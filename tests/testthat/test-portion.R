@@ -167,4 +167,5 @@ test_that("prediction of rsi works", {
                                   info = TRUE))
 
   expect_error(portion_df(c("A", "B", "C")))
+  expect_error(portion_df(septic_patients[,"date"]))
 })

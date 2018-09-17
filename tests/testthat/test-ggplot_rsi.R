@@ -38,4 +38,10 @@ test_that("ggplot_rsi works", {
       summarise_all(count_IR) %>% as.double()
   )
 
+  expect_equal(colnames(getlbls(septic_patients %>% select(amcl, cipr))),
+               c("Interpretation", "Antibiotic", "Value", "lbl"))
+
+  expect_error(ggplot_rsi(septic_patients, fun = "invalid"))
+  expect_error(geom_rsi(septic_patients, fun = "invalid"))
+
 })

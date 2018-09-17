@@ -12,6 +12,7 @@ test_that("mo_property works", {
   expect_equal(mo_type("E. coli", language = "en"), "Bacteria")
   expect_equal(mo_gramstain("E. coli", language = "en"), "Negative rods")
   expect_equal(mo_aerobic("E. coli"), TRUE)
+  expect_equal(class(mo_taxonomy("E. coli")), "list")
 
   expect_equal(mo_shortname("MRSA"), "S. aureus")
   expect_equal(mo_shortname("MRSA", Becker = TRUE), "S. aureus")
