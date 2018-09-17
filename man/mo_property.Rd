@@ -2,33 +2,45 @@
 % Please edit documentation in R/mo_property.R
 \name{mo_property}
 \alias{mo_property}
-\alias{mo_family}
-\alias{mo_genus}
-\alias{mo_species}
-\alias{mo_subspecies}
 \alias{mo_fullname}
 \alias{mo_shortname}
+\alias{mo_subspecies}
+\alias{mo_species}
+\alias{mo_genus}
+\alias{mo_family}
+\alias{mo_order}
+\alias{mo_class}
+\alias{mo_phylum}
 \alias{mo_type}
 \alias{mo_gramstain}
 \alias{mo_aerobic}
+\alias{mo_taxonomy}
 \title{Property of a microorganism}
 \source{
 [1] Becker K \emph{et al.} \strong{Coagulase-Negative Staphylococci}. 2014. Clin Microbiol Rev. 27(4): 870–926. \url{https://dx.doi.org/10.1128/CMR.00109-13}
 
 [2] Lancefield RC \strong{A serological differentiation of human and other groups of hemolytic streptococci}. 1933. J Exp Med. 57(4): 571–95. \url{https://dx.doi.org/10.1084/jem.57.4.571}
+
+[3] Integrated Taxonomic Information System (ITIS) on-line database, \url{https://www.itis.gov}.
 }
 \usage{
-mo_family(x)
-
-mo_genus(x, language = NULL)
-
-mo_species(x, Becker = FALSE, Lancefield = FALSE, language = NULL)
-
-mo_subspecies(x, Becker = FALSE, Lancefield = FALSE, language = NULL)
-
 mo_fullname(x, Becker = FALSE, Lancefield = FALSE, language = NULL)
 
 mo_shortname(x, Becker = FALSE, Lancefield = FALSE, language = NULL)
+
+mo_subspecies(x, Becker = FALSE, Lancefield = FALSE, language = NULL)
+
+mo_species(x, Becker = FALSE, Lancefield = FALSE, language = NULL)
+
+mo_genus(x, language = NULL)
+
+mo_family(x)
+
+mo_order(x)
+
+mo_class(x)
+
+mo_phylum(x)
 
 mo_type(x, language = NULL)
 
@@ -38,11 +50,11 @@ mo_aerobic(x)
 
 mo_property(x, property = "fullname", Becker = FALSE,
   Lancefield = FALSE, language = NULL)
+
+mo_taxonomy(x)
 }
 \arguments{
 \item{x}{any (vector of) text that can be coerced to a valid microorganism code with \code{\link{as.mo}}}
-
-\item{language}{language of the returned text, defaults to the systems language. Either one of \code{"en"} (English), \code{"de"} (German), \code{"nl"} (Dutch), \code{"es"} (Spanish) or \code{"pt"} (Portuguese).}
 
 \item{Becker}{a logical to indicate whether \emph{Staphylococci} should be categorised into Coagulase Negative \emph{Staphylococci} ("CoNS") and Coagulase Positive \emph{Staphylococci} ("CoPS") instead of their own species, according to Karsten Becker \emph{et al.} [1].
 
@@ -52,16 +64,21 @@ mo_property(x, property = "fullname", Becker = FALSE,
 
   This excludes \emph{Enterococci} at default (who are in group D), use \code{Lancefield = "all"} to also categorise all \emph{Enterococci} as group D.}
 
+\item{language}{language of the returned text, defaults to the systems language. Either one of \code{"en"} (English), \code{"de"} (German), \code{"nl"} (Dutch), \code{"es"} (Spanish) or \code{"pt"} (Portuguese).}
+
 \item{property}{one of the column names of one of the \code{\link{microorganisms}} data set, like \code{"mo"}, \code{"bactsys"}, \code{"family"}, \code{"genus"}, \code{"species"}, \code{"fullname"}, \code{"gramstain"} and \code{"aerobic"}}
 }
 \value{
-Character or logical (only \code{mo_aerobic})
+A logical (in case of \code{mo_aerobic}), a list (in case of \code{mo_taxonomy}), a character otherwise
 }
 \description{
 Use these functions to return a specific property of a microorganism from the \code{\link{microorganisms}} data set. All input values will be evaluated internally with \code{\link{as.mo}}.
 }
 \examples{
 # All properties
+mo_phylum("E. coli")          # "Proteobacteria"
+mo_class("E. coli")           # "Gammaproteobacteria"
+mo_order("E. coli")           # "Enterobacteriales"
 mo_family("E. coli")          # "Enterobacteriaceae"
 mo_genus("E. coli")           # "Escherichia"
 mo_species("E. coli")         # "coli"
@@ -132,6 +149,10 @@ mo_fullname("S. pyogenes",
 mo_fullname("S. pyogenes",
             Lancefield = TRUE,
             language = "nl")              # "Streptococcus groep A"
+
+
+# Complete taxonomy up to Phylum, returns a list
+mo_taxonomy("E. coli")
 }
 \seealso{
 \code{\link{microorganisms}}

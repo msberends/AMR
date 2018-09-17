@@ -27,14 +27,19 @@
 #' [1] Becker K \emph{et al.} \strong{Coagulase-Negative Staphylococci}. 2014. Clin Microbiol Rev. 27(4): 870–926. \url{https://dx.doi.org/10.1128/CMR.00109-13}
 #'
 #' [2] Lancefield RC \strong{A serological differentiation of human and other groups of hemolytic streptococci}. 1933. J Exp Med. 57(4): 571–95. \url{https://dx.doi.org/10.1084/jem.57.4.571}
+#'
+#' [3] Integrated Taxonomic Information System (ITIS) on-line database, \url{https://www.itis.gov}.
 #' @rdname mo_property
 #' @name mo_property
-#' @return Character or logical (only \code{mo_aerobic})
+#' @return A logical (in case of \code{mo_aerobic}), a list (in case of \code{mo_taxonomy}), a character otherwise
 #' @export
 #' @importFrom dplyr %>% left_join pull
 #' @seealso \code{\link{microorganisms}}
 #' @examples
 #' # All properties
+#' mo_phylum("E. coli")          # "Proteobacteria"
+#' mo_class("E. coli")           # "Gammaproteobacteria"
+#' mo_order("E. coli")           # "Enterobacteriales"
 #' mo_family("E. coli")          # "Enterobacteriaceae"
 #' mo_genus("E. coli")           # "Escherichia"
 #' mo_species("E. coli")         # "coli"
@@ -105,30 +110,10 @@
 #' mo_fullname("S. pyogenes",
 #'             Lancefield = TRUE,
 #'             language = "nl")              # "Streptococcus groep A"
-mo_family <- function(x) {
-  mo_property(x, "family")
-}
-
-#' @rdname mo_property
-#' @export
-mo_genus <- function(x, language = NULL) {
-  mo_property(x, "genus", language = language)
-}
-
-#' @rdname mo_property
-#' @export
-mo_species <- function(x, Becker = FALSE, Lancefield = FALSE, language = NULL) {
-  mo_property(x, "species", Becker = Becker, Lancefield = Lancefield, language = language)
-}
-
-#' @rdname mo_property
-#' @export
-mo_subspecies <- function(x, Becker = FALSE, Lancefield = FALSE, language = NULL) {
-  mo_property(x, "subspecies", Becker = Becker, Lancefield = Lancefield, language = language)
-}
-
-#' @rdname mo_property
-#' @export
+#'
+#'
+#' # Complete taxonomy up to Phylum, returns a list
+#' mo_taxonomy("E. coli")
 mo_fullname <- function(x, Becker = FALSE, Lancefield = FALSE, language = NULL) {
   mo_property(x, "fullname", Becker = Becker, Lancefield = Lancefield, language = language)
 }
@@ -164,6 +149,47 @@ mo_shortname <- function(x, Becker = FALSE, Lancefield = FALSE, language = NULL)
   mo_translate(result, language = language)
 }
 
+#' @rdname mo_property
+#' @export
+mo_subspecies <- function(x, Becker = FALSE, Lancefield = FALSE, language = NULL) {
+  mo_property(x, "subspecies", Becker = Becker, Lancefield = Lancefield, language = language)
+}
+
+#' @rdname mo_property
+#' @export
+mo_species <- function(x, Becker = FALSE, Lancefield = FALSE, language = NULL) {
+  mo_property(x, "species", Becker = Becker, Lancefield = Lancefield, language = language)
+}
+
+#' @rdname mo_property
+#' @export
+mo_genus <- function(x, language = NULL) {
+  mo_property(x, "genus", language = language)
+}
+
+#' @rdname mo_property
+#' @export
+mo_family <- function(x) {
+  mo_property(x, "family")
+}
+
+#' @rdname mo_property
+#' @export
+mo_order <- function(x) {
+  mo_property(x, "order")
+}
+
+#' @rdname mo_property
+#' @export
+mo_class <- function(x) {
+  mo_property(x, "class")
+}
+
+#' @rdname mo_property
+#' @export
+mo_phylum <- function(x) {
+  mo_property(x, "phylum")
+}
 
 #' @rdname mo_property
 #' @export
@@ -202,6 +228,19 @@ mo_property <- function(x, property = 'fullname', Becker = FALSE, Lancefield = F
     result2 <- mo_translate(result2, language = language)
   }
   result2
+}
+
+#' @rdname mo_property
+#' @export
+mo_taxonomy <- function(x) {
+  x <- as.mo(x)
+  base::list(phylum = mo_phylum(x),
+             class = mo_class(x),
+             order = mo_order(x),
+             family = mo_family(x),
+             genus = mo_genus(x),
+             species = mo_species(x),
+             subspecies = mo_subspecies(x))
 }
 
 #' @importFrom dplyr %>% case_when

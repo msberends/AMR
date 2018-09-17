@@ -34,15 +34,15 @@
 #' @details At default, the names of antibiotics will be shown on the plots using \code{\link{abname}}. This can be set with the option \code{get_antibiotic_names} (a logical value), so change it e.g. to \code{FALSE} with \code{options(get_antibiotic_names = FALSE)}.
 #'
 #' \strong{The functions}\cr
-#' \code{geom_rsi} will take any variable from the data that has an \code{rsi} class (created with \code{\link{as.rsi}}) using \code{fun} (\code{\link{portion_df}} at default, could also be \code{\link{count_df}}) and will plot bars with the percentage R, I and S. The default behaviour is to have the bars stacked and to have the different antibiotics on the x axis.
+#' \code{geom_rsi} will take any variable from the data that has an \code{rsi} class (created with \code{\link{as.rsi}}) using \code{fun} (\code{\link{count_df}} at default, can also be \code{\link{portion_df}}) and will plot bars with the percentage R, I and S. The default behaviour is to have the bars stacked and to have the different antibiotics on the x axis.
 #'
 #' \code{facet_rsi} creates 2d plots (at default based on S/I/R) using \code{\link[ggplot2]{facet_wrap}}.
 #'
-#' \code{scale_y_percent} transforms the y axis to a 0 to 100\% range using \code{\link[ggplot2]{scale_y_continuous}}.
+#' \code{scale_y_percent} transforms the y axis to a 0 to 100\% range using \code{\link[ggplot2]{scale_continuous}}.
 #'
-#' \code{scale_rsi_colours} sets colours to the bars: green for S, yellow for I and red for R, using \code{\link[ggplot2]{scale_fill_brewer}}.
+#' \code{scale_rsi_colours} sets colours to the bars: green for S, yellow for I and red for R, using \code{\link[ggplot2]{scale_colour_brewer}}.
 #'
-#' \code{theme_rsi} is a \code{\link[ggplot2]{theme}} with minimal distraction.
+#' \code{theme_rsi} is a \code{ggplot \link[ggplot2]{theme}} with minimal distraction.
 #'
 #' \code{labels_rsi_count} print datalabels on the bars with percentage and amount of isolates using \code{\link[ggplot2]{geom_text}}
 #'
@@ -71,10 +71,10 @@
 #'   select(amox, nitr, fosf, trim, cipr) %>%
 #'   ggplot_rsi()
 #'
-#' # get counts instead of percentages:
+#' # get only portions and no counts:
 #' septic_patients %>%
 #'   select(amox, nitr, fosf, trim, cipr) %>%
-#'   ggplot_rsi(fun = count_df)
+#'   ggplot_rsi(fun = portion_df)
 #'
 #' # add other ggplot2 parameters as you like:
 #' septic_patients %>%

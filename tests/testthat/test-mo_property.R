@@ -1,6 +1,9 @@
 context("mo_property.R")
 
 test_that("mo_property works", {
+  expect_equal(mo_phylum("E. coli"), "Proteobacteria")
+  expect_equal(mo_class("E. coli"), "Gammaproteobacteria")
+  expect_equal(mo_order("E. coli"), "Enterobacteriales")
   expect_equal(mo_family("E. coli"), "Enterobacteriaceae")
   expect_equal(mo_genus("E. coli"), "Escherichia")
   expect_equal(mo_species("E. coli"), "coli")

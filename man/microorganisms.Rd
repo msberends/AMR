@@ -4,20 +4,26 @@
 \name{microorganisms}
 \alias{microorganisms}
 \title{Data set with human pathogenic microorganisms}
-\format{A \code{\link{tibble}} with 2,642 observations and 11 variables:
+\format{A \code{\link{tibble}} with 2,642 observations and 14 variables:
 \describe{
   \item{\code{mo}}{ID of microorganism}
   \item{\code{bactsys}}{Bactsyscode of microorganism}
-  \item{\code{family}}{Family name of microorganism}
   \item{\code{genus}}{Genus name of microorganism, like \code{"Echerichia"}}
   \item{\code{species}}{Species name of microorganism, like \code{"coli"}}
   \item{\code{subspecies}}{Subspecies name of bio-/serovar of microorganism, like \code{"EHEC"}}
   \item{\code{fullname}}{Full name, like \code{"Echerichia coli (EHEC)"}}
-  \item{\code{aerobic}}{Logical whether bacteria is aerobic}
-  \item{\code{type}}{Type of microorganism, like \code{"Bacteria"} and \code{"Fungus/yeast"}}
   \item{\code{gramstain}}{Gram of microorganism, like \code{"Negative rods"}}
+  \item{\code{aerobic}}{Logical whether bacteria is aerobic}
+  \item{\code{family}}{Taxonomic family of the microorganism as found in ITIS, see Source}
+  \item{\code{order}}{Taxonomic order of the microorganism as found in ITIS, see Source}
+  \item{\code{class}}{Taxonomic class of the microorganism as found in ITIS, see Source}
+  \item{\code{phylum}}{Taxonomic phylum of the microorganism as found in ITIS, see Source}
+  \item{\code{type}}{Type of microorganism, like \code{"Bacteria"} and \code{"Fungus/yeast"}}
   \item{\code{prevalence}}{A rounded integer based on prevalence of the microorganism. Used internally by \code{\link{as.mo}}, otherwise quite meaningless.}
 }}
+\source{
+Integrated Taxonomic Information System (ITIS) on-line database, \url{https://www.itis.gov}.
+}
 \usage{
 microorganisms
 }

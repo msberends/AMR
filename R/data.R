@@ -123,34 +123,28 @@
 #' Data set with human pathogenic microorganisms
 #'
 #' A data set containing (potential) human pathogenic microorganisms. MO codes can be looked up using \code{\link{guess_mo}}.
-#' @format A \code{\link{tibble}} with 2,642 observations and 11 variables:
+#' @format A \code{\link{tibble}} with 2,642 observations and 14 variables:
 #' \describe{
 #'   \item{\code{mo}}{ID of microorganism}
 #'   \item{\code{bactsys}}{Bactsyscode of microorganism}
-#'   \item{\code{family}}{Family name of microorganism}
 #'   \item{\code{genus}}{Genus name of microorganism, like \code{"Echerichia"}}
 #'   \item{\code{species}}{Species name of microorganism, like \code{"coli"}}
 #'   \item{\code{subspecies}}{Subspecies name of bio-/serovar of microorganism, like \code{"EHEC"}}
 #'   \item{\code{fullname}}{Full name, like \code{"Echerichia coli (EHEC)"}}
-#'   \item{\code{aerobic}}{Logical whether bacteria is aerobic}
-#'   \item{\code{type}}{Type of microorganism, like \code{"Bacteria"} and \code{"Fungus/yeast"}}
 #'   \item{\code{gramstain}}{Gram of microorganism, like \code{"Negative rods"}}
+#'   \item{\code{aerobic}}{Logical whether bacteria is aerobic}
+#'   \item{\code{family}}{Taxonomic family of the microorganism as found in ITIS, see Source}
+#'   \item{\code{order}}{Taxonomic order of the microorganism as found in ITIS, see Source}
+#'   \item{\code{class}}{Taxonomic class of the microorganism as found in ITIS, see Source}
+#'   \item{\code{phylum}}{Taxonomic phylum of the microorganism as found in ITIS, see Source}
+#'   \item{\code{type}}{Type of microorganism, like \code{"Bacteria"} and \code{"Fungus/yeast"}}
 #'   \item{\code{prevalence}}{A rounded integer based on prevalence of the microorganism. Used internally by \code{\link{as.mo}}, otherwise quite meaningless.}
 #' }
-#  source MOLIS (LIS of Certe) - \url{https://www.certe.nl}
-# new <- microorganisms %>% filter(genus == "Bacteroides") %>% .[1,]
-# new[1, 'mo'] <- "DIAPNU"
-# new[1, 'bactsys'] <- "DIAPNU"
-# new[1, 'family'] <- "Veillonellaceae"
-# new[1, 'genus'] <- "Dialister"
-# new[1, 'species'] <- "pneumosintes"
-# new[1, 'subspecies'] <- NA
-# new[1, 'fullname'] <- paste(new[1, 'genus'], new[1, 'species'])
-# microorganisms <- microorganisms %>% bind_rows(new) %>% arrange(mo)
+#' @source Integrated Taxonomic Information System (ITIS) on-line database, \url{https://www.itis.gov}.
 #' @seealso \code{\link{guess_mo}} \code{\link{antibiotics}} \code{\link{microorganisms.umcg}}
 "microorganisms"
 
-#' Translation table for UMCG with ~1,100 microorganisms
+#' Translation table for UMCG
 #'
 #' A data set containing all bacteria codes of UMCG MMB. These codes can be joined to data with an ID from \code{\link{microorganisms}$mo} (using \code{\link{left_join_microorganisms}}). GLIMS codes can also be translated to valid \code{MO}s with \code{\link{guess_mo}}.
 #' @format A \code{\link{tibble}} with 1,095 observations and 2 variables:
@@ -158,7 +152,6 @@
 #'   \item{\code{umcg}}{Code of microorganism according to UMCG MMB}
 #'   \item{\code{mo}}{Code of microorganism in \code{\link{microorganisms}}}
 #' }
-# source MOLIS (LIS of Certe) - \url{https://www.certe.nl} \cr \cr GLIMS (LIS of UMCG) - \url{https://www.umcg.nl}
 #' @seealso \code{\link{guess_mo}} \code{\link{microorganisms}}
 "microorganisms.umcg"
 

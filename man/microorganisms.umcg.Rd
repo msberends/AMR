@@ -3,7 +3,7 @@
 \docType{data}
 \name{microorganisms.umcg}
 \alias{microorganisms.umcg}
-\title{Translation table for UMCG with ~1,100 microorganisms}
+\title{Translation table for UMCG}
 \format{A \code{\link{tibble}} with 1,095 observations and 2 variables:
 \describe{
   \item{\code{umcg}}{Code of microorganism according to UMCG MMB}

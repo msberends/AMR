@@ -27,7 +27,11 @@
   * All old syntaxes will still work with this version, but will throw warnings
 * Function `labels_rsi_count` to print datalabels on a RSI `ggplot2` model
 * Functions `as.atc` and `is.atc` to transform/look up antibiotic ATC codes as defined by the WHO. The existing function `guess_atc` is now an alias of `as.atc`.
-* Aliases for existing function `mo_property`: `mo_family`, `mo_genus`, `mo_species`, `mo_subspecies`, `mo_fullname`, `mo_shortname`, `mo_aerobic`, `mo_type` and `mo_gramstain`. They also come with support for German, Dutch, French, Italian, Spanish and Portuguese, and it defaults to the systems locale:
+* Aliases for existing function `mo_property` and new data from ITIS (Integrated Taxonomic Information System, https://www.itis.gov)
+  * Taxonomic names: `mo_phylum`, `mo_class`, `mo_order`, `mo_family`, `mo_genus`, `mo_species`, `mo_subspecies`
+  * Semantic names: `mo_fullname`, `mo_shortname`
+  * Microbial properties: `mo_aerobic`, `mo_type`, `mo_gramstain`.
+  They also come with support for German, Dutch, French, Italian, Spanish and Portuguese, and it defaults to the systems locale:
   ```r
   mo_gramstain("E. coli")
   # [1] "Negative rods"
