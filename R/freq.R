@@ -315,12 +315,21 @@ frequency_tbl <- function(x,
     header <- header %>% paste0(markdown_line, 'Columns:   ', mult.columns)
   } else {
     header <- header %>% paste0(markdown_line, 'Class:     ', class(x) %>% rev() %>% paste(collapse = " > "))
+    if (!mode(x) %in% class(x)) {
+      header <- header %>% paste0(" (", mode(x), ")")
+    }
   }
 
   header <- header %>% paste0(markdown_line, '\nLength:    ', (NAs %>% length() + x %>% length()) %>% format(),
                               ' (of which NA: ', NAs %>% length() %>% format(),
                               ' = ', (NAs %>% length() / (NAs %>% length() + x %>% length())) %>% percent(force_zero = TRUE, round = digits) %>% sub('NaN', '0', ., fixed = TRUE), ')')
   header <- header %>% paste0(markdown_line, '\nUnique:    ', x %>% n_distinct() %>% format())
+
+  if (NROW(x) > 0 & any(class(x) == "character")) {
+    header <- header %>% paste0('\n')
+    header <- header %>% paste0(markdown_line, '\nShortest:  ', x %>% base::nchar() %>% base::min(na.rm = TRUE))
+    header <- header %>% paste0(markdown_line, '\nLongest:   ', x %>% base::nchar() %>% base::max(na.rm = TRUE))
+  }
 
   if (NROW(x) > 0 & any(class(x) %in% c('double', 'integer', 'numeric', 'raw', 'single'))) {
     # right align number

@@ -75,6 +75,7 @@
 * Added possibility to set any parameter to `geom_rsi` (and `ggplot_rsi`) so you can set your own preferences
 * Fix for joins, where predefined suffices would not be honoured
 * Added parameter `quote` to the `freq` function
+* Added longest en shortest character length in the frequency table (`freq`) header of class `character`
 * Support for types (classes) list and matrix for `freq`
   ```r
   my_matrix = with(septic_patients, matrix(c(age, sex), ncol = 2))
