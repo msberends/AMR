@@ -2,8 +2,8 @@ context("portion.R")
 
 test_that("portions works", {
   # amox resistance in `septic_patients`
-  expect_equal(portion_R(septic_patients$amox), 0.6603, tolerance = 0.0001)
-  expect_equal(portion_I(septic_patients$amox), 0.0030, tolerance = 0.0001)
+  expect_equal(portion_R(septic_patients$amox), 0.662, tolerance = 0.0001)
+  expect_equal(portion_I(septic_patients$amox), 0.003, tolerance = 0.0001)
   expect_equal(1 - portion_R(septic_patients$amox) - portion_I(septic_patients$amox),
                portion_S(septic_patients$amox))
   expect_equal(portion_R(septic_patients$amox) + portion_I(septic_patients$amox),
@@ -12,17 +12,17 @@ test_that("portions works", {
                portion_SI(septic_patients$amox))
 
   expect_equal(septic_patients %>% portion_S(amcl),
-               0.673,
+               0.6706853,
                tolerance = 0.001)
   expect_equal(septic_patients %>% portion_S(amcl, gent),
-               0.921,
+               0.9202373,
                tolerance = 0.001)
 
   # amcl+genta susceptibility around 92.1%
   expect_equal(suppressWarnings(rsi(septic_patients$amcl,
                                     septic_patients$gent,
                                     interpretation = "S")),
-               0.9208777,
+               0.9202373,
                tolerance = 0.000001)
 
   # percentages
@@ -35,7 +35,7 @@ test_that("portions works", {
                            total = n()) %>%
                  pull(n) %>%
                  sum(),
-               1404)
+               1409)
 
   # count of cases
   expect_equal(septic_patients %>%
@@ -47,7 +47,7 @@ test_that("portions works", {
                            combination_p = portion_S(cipr, gent, as_percent = TRUE),
                            combination_n = n_rsi(cipr, gent)) %>%
                  pull(combination_n),
-               c(202, 482, 201, 499))
+               c(202, 488, 201, 499))
 
   expect_warning(portion_R(as.character(septic_patients$amcl)))
   expect_warning(portion_S(as.character(septic_patients$amcl)))
@@ -57,7 +57,7 @@ test_that("portions works", {
                                     septic_patients$gent)))
   expect_equal(suppressWarnings(n_rsi(as.character(septic_patients$amcl,
                                                    septic_patients$gent))),
-               1570)
+               1576)
 
   # check for errors
   expect_error(portion_IR("test", minimum = "test"))
@@ -84,15 +84,15 @@ test_that("portions works", {
 
 test_that("old rsi works", {
   # amox resistance in `septic_patients` should be around 66.33%
-  expect_equal(suppressWarnings(rsi(septic_patients$amox)), 0.6633, tolerance = 0.0001)
-  expect_equal(suppressWarnings(rsi(septic_patients$amox, interpretation = "S")), 1 - 0.6633, tolerance = 0.0001)
+  expect_equal(suppressWarnings(rsi(septic_patients$amox)), 0.665, tolerance = 0.0001)
+  expect_equal(suppressWarnings(rsi(septic_patients$amox, interpretation = "S")), 1 - 0.665, tolerance = 0.0001)
 
   # pita+genta susceptibility around 98.09%
   expect_equal(suppressWarnings(rsi(septic_patients$pita,
                                     septic_patients$gent,
                                     interpretation = "S",
                                     info = TRUE)),
-               0.9535,
+               0.9540412,
                tolerance = 0.0001)
 
   # count of cases
@@ -108,7 +108,7 @@ test_that("old rsi works", {
                                                                 as_percent = TRUE, warning = FALSE)),
                            combination_n = n_rsi(cipr, gent)) %>%
                  pull(combination_n),
-               c(202, 482, 201, 499))
+               c(202, 488, 201, 499))
 
   # portion_df
   expect_equal(
@@ -122,7 +122,7 @@ test_that("old rsi works", {
 
 test_that("prediction of rsi works", {
   amox_R <- septic_patients %>%
-    filter(mo == "ESCCOL") %>%
+    filter(mo == "B_ESCHR_COL") %>%
     rsi_predict(col_ab = "amox",
                 col_date = "date",
                 minimum = 10,
@@ -131,37 +131,37 @@ test_that("prediction of rsi works", {
   # amox resistance will increase according to data set `septic_patients`
   expect_true(amox_R[3] < amox_R[20])
 
-  expect_output(rsi_predict(tbl = filter(septic_patients, mo == "ESCCOL"),
+  expect_output(rsi_predict(tbl = filter(septic_patients, mo == "B_ESCHR_COL"),
                             model = "binomial",
                             col_ab = "amox",
                             col_date = "date",
                             info = TRUE))
-  expect_output(rsi_predict(tbl = filter(septic_patients, mo == "ESCCOL"),
+  expect_output(rsi_predict(tbl = filter(septic_patients, mo == "B_ESCHR_COL"),
                             model = "loglin",
                             col_ab = "amox",
                             col_date = "date",
                             info = TRUE))
-  expect_output(rsi_predict(tbl = filter(septic_patients, mo == "ESCCOL"),
+  expect_output(rsi_predict(tbl = filter(septic_patients, mo == "B_ESCHR_COL"),
                             model = "lin",
                             col_ab = "amox",
                             col_date = "date",
                             info = TRUE))
 
-  expect_error(rsi_predict(tbl = filter(septic_patients, mo == "ESCCOL"),
+  expect_error(rsi_predict(tbl = filter(septic_patients, mo == "B_ESCHR_COL"),
                            model = "INVALID MODEL",
                            col_ab = "amox",
                            col_date = "date",
                            info = TRUE))
-  expect_error(rsi_predict(tbl = filter(septic_patients, mo == "ESCCOL"),
+  expect_error(rsi_predict(tbl = filter(septic_patients, mo == "B_ESCHR_COL"),
                            col_ab = "NOT EXISTING COLUMN",
                            col_date = "date",
                            info = TRUE))
-  expect_error(rsi_predict(tbl = filter(septic_patients, mo == "ESCCOL"),
+  expect_error(rsi_predict(tbl = filter(septic_patients, mo == "B_ESCHR_COL"),
                            col_ab = "amox",
                            col_date = "NOT EXISTING COLUMN",
                            info = TRUE))
   # almost all E. coli are mero S in the Netherlands :)
-  expect_error(resistance_predict(tbl = filter(septic_patients, mo == "ESCCOL"),
+  expect_error(resistance_predict(tbl = filter(septic_patients, mo == "B_ESCHR_COL"),
                                   col_ab = "mero",
                                   col_date = "date",
                                   info = TRUE))

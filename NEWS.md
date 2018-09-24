@@ -1,6 +1,30 @@
 # 0.3.0.90xx (latest development version)
 
 #### New
+* The data set `microorganisms` now contains **all microbial taxonomic data from ITIS** (kingdoms Bacteria, Fungi and Protozoa), the Integrated Taxonomy Information System, available via https://itis.gov. The data set now contains more than 18,000 microorganisms with all known bacteria, fungi and protozoa according ITIS with genus, species, subspecies, family, order, class, phylum and subkingdom. The new data set `microorganisms.old` contains all previously known taxonomic names from those kingdoms.
+* Aliases for existing function `mo_property`
+  * Taxonomic names: `mo_phylum`, `mo_class`, `mo_order`, `mo_family`, `mo_genus`, `mo_species`, `mo_subspecies`
+  * Semantic names: `mo_fullname`, `mo_shortname`
+  * Microbial properties: `mo_type`, `mo_gramstain`.
+  
+  They also come with support for German, Dutch, French, Italian, Spanish and Portuguese, and it defaults to the systems locale:
+  ```r
+  mo_gramstain("E. coli")
+  # [1] "Gram negative"
+  mo_gramstain("E. coli", language = "de") # "de" = Deutsch / German
+  # [1] "Gramnegativ"
+  mo_gramstain("E. coli", language = "es") # "es" = Español / Spanish
+  # [1] "Gram negativo"
+  mo_fullname("S. group A") # when run on a on a Portuguese system
+  # [1] "Streptococcus grupo A"
+  ```
+  
+  Furthermore, old taxonomic names kan easily be looked up and give a note about the taxonomic change:
+  ```r
+  mo_fullname("Pseudomonas facilis")
+  # Note: 'Pseudomonas facilis' was renamed to 'Acidovorax facilis' by Willems et al. in 1990
+  # [1] "Acidovorax facilis"
+  ```
 * Functions `count_R`, `count_IR`, `count_I`, `count_SI` and `count_S` to selectively count resistant or susceptible isolates
   * Extra function `count_df` (which works like `portion_df`) to get all counts of S, I and R of a data set with antibiotic columns, with support for grouped variables
 * Function `is.rsi.eligible` to check for columns that have valid antimicrobial results, but do not have the `rsi` class yet. Transform the columns of your raw data with: `data %>% mutate_if(is.rsi.eligible, as.rsi)`
@@ -27,21 +51,7 @@
   * All old syntaxes will still work with this version, but will throw warnings
 * Function `labels_rsi_count` to print datalabels on a RSI `ggplot2` model
 * Functions `as.atc` and `is.atc` to transform/look up antibiotic ATC codes as defined by the WHO. The existing function `guess_atc` is now an alias of `as.atc`.
-* Aliases for existing function `mo_property` and new data from ITIS (Integrated Taxonomic Information System, https://www.itis.gov)
-  * Taxonomic names: `mo_phylum`, `mo_class`, `mo_order`, `mo_family`, `mo_genus`, `mo_species`, `mo_subspecies`
-  * Semantic names: `mo_fullname`, `mo_shortname`
-  * Microbial properties: `mo_aerobic`, `mo_type`, `mo_gramstain`.
-  They also come with support for German, Dutch, French, Italian, Spanish and Portuguese, and it defaults to the systems locale:
-  ```r
-  mo_gramstain("E. coli")
-  # [1] "Negative rods"
-  mo_gramstain("E. coli", language = "de") # "de" = Deutsch / German
-  # [1] "Negative Stäbchen"
-  mo_gramstain("E. coli", language = "es") # "es" = Español / Spanish
-  # [1] "Bacilos negativos"
-  mo_fullname("S. group A") # when run on a on a Portuguese system
-  # [1] "Streptococcus grupo A"
-  ```
+
 * Function `ab_property` and its aliases: `ab_name`, `ab_tradenames`, `ab_certe`, `ab_umcg` and `ab_trivial_nl`
 * Introduction to AMR as a vignette
 

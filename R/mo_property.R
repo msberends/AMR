@@ -22,21 +22,17 @@
 #' @param x any (vector of) text that can be coerced to a valid microorganism code with \code{\link{as.mo}}
 #' @param property one of the column names of one of the \code{\link{microorganisms}} data set, like \code{"mo"}, \code{"bactsys"}, \code{"family"}, \code{"genus"}, \code{"species"}, \code{"fullname"}, \code{"gramstain"} and \code{"aerobic"}
 #' @inheritParams as.mo
-#' @param language language of the returned text, defaults to the systems language. Either one of \code{"en"} (English), \code{"de"} (German), \code{"nl"} (Dutch), \code{"es"} (Spanish) or \code{"pt"} (Portuguese).
-#' @source
-#' [1] Becker K \emph{et al.} \strong{Coagulase-Negative Staphylococci}. 2014. Clin Microbiol Rev. 27(4): 870–926. \url{https://dx.doi.org/10.1128/CMR.00109-13}
-#'
-#' [2] Lancefield RC \strong{A serological differentiation of human and other groups of hemolytic streptococci}. 1933. J Exp Med. 57(4): 571–95. \url{https://dx.doi.org/10.1084/jem.57.4.571}
-#'
-#' [3] Integrated Taxonomic Information System (ITIS) on-line database, \url{https://www.itis.gov}.
+#' @param language language of the returned text, defaults to the systems language but can also be set with \code{\link{getOption}("AMR_locale")}. Either one of \code{"en"} (English), \code{"de"} (German), \code{"nl"} (Dutch), \code{"es"} (Spanish) or \code{"pt"} (Portuguese).
+#' @inheritSection as.mo ITIS
+#' @inheritSection as.mo Source
 #' @rdname mo_property
 #' @name mo_property
 #' @return A logical (in case of \code{mo_aerobic}), a list (in case of \code{mo_taxonomy}), a character otherwise
 #' @export
-#' @importFrom dplyr %>% left_join pull
 #' @seealso \code{\link{microorganisms}}
 #' @examples
 #' # All properties
+#' mo_subkingdom("E. coli")      # "Negibacteria"
 #' mo_phylum("E. coli")          # "Proteobacteria"
 #' mo_class("E. coli")           # "Gammaproteobacteria"
 #' mo_order("E. coli")           # "Enterobacteriales"
@@ -46,40 +42,28 @@
 #' mo_subspecies("E. coli")      # ""
 #' mo_fullname("E. coli")        # "Escherichia coli"
 #' mo_shortname("E. coli")       # "E. coli"
+#' mo_gramstain("E. coli")       # "Gram negative"
+#' mo_TSN("E. coli")             # 285
 #' mo_type("E. coli")            # "Bacteria"
-#' mo_gramstain("E. coli")       # "Negative rods"
-#' mo_aerobic("E. coli")         # TRUE
 #'
 #'
 #' # Abbreviations known in the field
 #' mo_genus("MRSA")              # "Staphylococcus"
 #' mo_species("MRSA")            # "aureus"
 #' mo_shortname("MRSA")          # "S. aureus"
-#' mo_gramstain("MRSA")          # "Positive cocci"
+#' mo_gramstain("MRSA")          # "Gram positive"
 #'
 #' mo_genus("VISA")              # "Staphylococcus"
 #' mo_species("VISA")            # "aureus"
 #'
 #'
 #' # Known subspecies
-#' mo_genus("EHEC")              # "Escherichia"
-#' mo_species("EHEC")            # "coli"
-#' mo_subspecies("EHEC")         # "EHEC"
-#' mo_fullname("EHEC")           # "Escherichia coli (EHEC)"
-#' mo_shortname("EHEC")          # "E. coli"
-#'
 #' mo_genus("doylei")            # "Campylobacter"
 #' mo_species("doylei")          # "jejuni"
-#' mo_fullname("doylei")         # "Campylobacter jejuni (doylei)"
+#' mo_fullname("doylei")         # "Campylobacter jejuni doylei"
 #'
-#' mo_fullname("K. pneu rh")     # "Klebsiella pneumoniae (rhinoscleromatis)"
+#' mo_fullname("K. pneu rh")     # "Klebsiella pneumoniae rhinoscleromatis"
 #' mo_shortname("K. pneu rh")    # "K. pneumoniae"
-#'
-#'
-#' # Anaerobic bacteria
-#' mo_genus("B. fragilis")       # "Bacteroides"
-#' mo_species("B. fragilis")     # "fragilis"
-#' mo_aerobic("B. fragilis")     # FALSE
 #'
 #'
 #' # Becker classification, see ?as.mo
@@ -99,10 +83,9 @@
 #' mo_type("E. coli", language = "de")       # "Bakterium"
 #' mo_type("E. coli", language = "nl")       # "Bacterie"
 #' mo_type("E. coli", language = "es")       # "Bakteria"
-#' mo_gramstain("E. coli", language = "de")  # "Negative Staebchen"
-#' mo_gramstain("E. coli", language = "nl")  # "Negatieve staven"
-#' mo_gramstain("E. coli", language = "es")  # "Bacilos negativos"
-#' mo_gramstain("Giardia", language = "pt")  # "Parasitas"
+#' mo_gramstain("E. coli", language = "de")  # "Gramnegativ"
+#' mo_gramstain("E. coli", language = "nl")  # "Gram-negatief"
+#' mo_gramstain("E. coli", language = "es")  # "Gram negativo"
 #'
 #' mo_fullname("S. pyogenes",
 #'             Lancefield = TRUE,
@@ -112,7 +95,7 @@
 #'             language = "nl")              # "Streptococcus groep A"
 #'
 #'
-#' # Complete taxonomy up to Phylum, returns a list
+#' # Complete taxonomy up to Subkingdom, returns a list
 #' mo_taxonomy("E. coli")
 mo_fullname <- function(x, Becker = FALSE, Lancefield = FALSE, language = NULL) {
   mo_property(x, "fullname", Becker = Becker, Lancefield = Lancefield, language = language)
@@ -193,8 +176,20 @@ mo_phylum <- function(x) {
 
 #' @rdname mo_property
 #' @export
+mo_subkingdom  <- function(x) {
+  mo_property(x, "subkingdom")
+}
+
+#' @rdname mo_property
+#' @export
 mo_type <- function(x, language = NULL) {
   mo_property(x, "type", language = language)
+}
+
+#' @rdname mo_property
+#' @export
+mo_TSN  <- function(x) {
+  mo_property(x, "tsn")
 }
 
 #' @rdname mo_property
@@ -204,28 +199,32 @@ mo_gramstain <- function(x, language = NULL) {
 }
 
 #' @rdname mo_property
-#' @export
-mo_aerobic <- function(x) {
-  mo_property(x, "aerobic")
-}
-
-#' @rdname mo_property
+#' @importFrom data.table data.table as.data.table setkey
 #' @export
 mo_property <- function(x, property = 'fullname', Becker = FALSE, Lancefield = FALSE, language = NULL) {
   property <- tolower(property[1])
   if (!property %in% colnames(AMR::microorganisms)) {
     stop("invalid property: ", property, " - use a column name of the `microorganisms` data set")
   }
-  result1 <- as.mo(x = x, Becker = Becker, Lancefield = Lancefield) # this will give a warning if x cannot be coerced
-  result2 <- suppressWarnings(
-    data.frame(mo = result1, stringsAsFactors = FALSE) %>%
-      left_join(AMR::microorganisms, by = "mo") %>%
-      pull(property)
-  )
-  if (property != "aerobic") {
+  if (Becker == TRUE | Lancefield == TRUE | !is.mo(x)) {
+    # this will give a warning if x cannot be coerced
+    result1 <- AMR::as.mo(x = x, Becker = Becker, Lancefield = Lancefield)
+  } else {
+    result1 <- x
+  }
+  A <- data.table(mo = result1, stringsAsFactors = FALSE)
+  B <- as.data.table(AMR::microorganisms)
+  setkey(B, mo)
+  result2 <- B[A, on = 'mo', ..property][[1]]
+
+  if (property == "tsn") {
+    result2 <- as.integer(result2)
+  } else {
     # will else not retain `logical` class
     result2[x %in% c("", NA) | result2 %in% c("", NA, "(no MO)")] <- ""
-    result2 <- mo_translate(result2, language = language)
+    if (property %in% c("fullname", "shortname", "genus", "species", "subspecies", "type", "gramstain")) {
+      result2 <- mo_translate(result2, language = language)
+    }
   }
   result2
 }
@@ -234,7 +233,8 @@ mo_property <- function(x, property = 'fullname', Becker = FALSE, Lancefield = F
 #' @export
 mo_taxonomy <- function(x) {
   x <- as.mo(x)
-  base::list(phylum = mo_phylum(x),
+  base::list(subkingdom = mo_subkingdom(x),
+             phylum = mo_phylum(x),
              class = mo_class(x),
              order = mo_order(x),
              family = mo_family(x),
@@ -266,15 +266,11 @@ mo_translate <- function(x, language) {
       gsub("Coagulase Positive Staphylococcus","Koagulase-positive Staphylococcus", ., fixed = TRUE) %>%
       gsub("Beta-haemolytic Streptococcus",    "Beta-h\u00e4molytischer Streptococcus", ., fixed = TRUE) %>%
       gsub("(no MO)",          "(kein MO)", ., fixed = TRUE) %>%
-      gsub("Negative rods",    "Negative St\u00e4bchen", ., fixed = TRUE) %>%
-      gsub("Negative cocci",   "Negative Kokken", ., fixed = TRUE) %>%
-      gsub("Positive rods",    "Positive St\u00e4bchen", ., fixed = TRUE) %>%
-      gsub("Positive cocci",   "Positive Kokken", ., fixed = TRUE) %>%
-      gsub("Parasites",        "Parasiten", ., fixed = TRUE) %>%
-      gsub("Fungi and yeasts", "Pilze und Hefen", ., fixed = TRUE) %>%
-      gsub("Bacteria",         "Bakterium", ., fixed = TRUE) %>%
-      gsub("Fungus/yeast",     "Pilz/Hefe", ., fixed = TRUE) %>%
-      gsub("Parasite",         "Parasit", ., fixed = TRUE) %>%
+      gsub("Gram negative",    "Gramnegativ", ., fixed = TRUE) %>%
+      gsub("Gram positive",    "Grampositiv", ., fixed = TRUE) %>%
+      gsub("Bacteria",         "Bakterien", ., fixed = TRUE) %>%
+      gsub("Fungi",            "Hefen/Pilze", ., fixed = TRUE) %>%
+      gsub("Protozoa",         "Protozoen", ., fixed = TRUE) %>%
       gsub("biogroup",         "Biogruppe", ., fixed = TRUE) %>%
       gsub("biotype",          "Biotyp", ., fixed = TRUE) %>%
       gsub("vegetative",       "vegetativ", ., fixed = TRUE) %>%
@@ -287,15 +283,11 @@ mo_translate <- function(x, language) {
       gsub("Coagulase Positive Staphylococcus","Coagulase-positieve Staphylococcus", ., fixed = TRUE) %>%
       gsub("Beta-haemolytic Streptococcus",    "Beta-hemolytische Streptococcus", ., fixed = TRUE) %>%
       gsub("(no MO)",          "(geen MO)", ., fixed = TRUE) %>%
-      gsub("Negative rods",    "Negatieve staven", ., fixed = TRUE) %>%
-      gsub("Negative cocci",   "Negatieve kokken", ., fixed = TRUE) %>%
-      gsub("Positive rods",    "Positieve staven", ., fixed = TRUE) %>%
-      gsub("Positive cocci",   "Positieve kokken", ., fixed = TRUE) %>%
-      gsub("Parasites",        "Parasieten", ., fixed = TRUE) %>%
-      gsub("Fungi and yeasts", "Schimmels en gisten", ., fixed = TRUE) %>%
-      gsub("Bacteria",         "Bacterie", ., fixed = TRUE) %>%
-      gsub("Fungus/yeast",     "Schimmel/gist", ., fixed = TRUE) %>%
-      gsub("Parasite",         "Parasiet", ., fixed = TRUE) %>%
+      gsub("Gram negative",    "Gram-negatief", ., fixed = TRUE) %>%
+      gsub("Gram positive",    "Gram-positief", ., fixed = TRUE) %>%
+      gsub("Bacteria",         "Bacteri\u00ebn", ., fixed = TRUE) %>%
+      gsub("Fungi",            "Schimmels/gisten", ., fixed = TRUE) %>%
+      gsub("Protozoa",         "protozo\u00ebn", ., fixed = TRUE) %>%
       gsub("biogroup",         "biogroep", ., fixed = TRUE) %>%
       # gsub("biotype",          "biotype", ., fixed = TRUE) %>%
       gsub("vegetative",       "vegetatief", ., fixed = TRUE) %>%
@@ -308,15 +300,11 @@ mo_translate <- function(x, language) {
       gsub("Coagulase Positive Staphylococcus","Staphylococcus coagulasa positivo", ., fixed = TRUE) %>%
       gsub("Beta-haemolytic Streptococcus",    "Streptococcus Beta-hemol\u00edtico", ., fixed = TRUE) %>%
       gsub("(no MO)",          "(sin MO)", ., fixed = TRUE) %>%
-      gsub("Negative rods",    "Bacilos negativos", ., fixed = TRUE) %>%
-      gsub("Negative cocci",   "Cocos negativos", ., fixed = TRUE) %>%
-      gsub("Positive rods",    "Bacilos positivos", ., fixed = TRUE) %>%
-      gsub("Positive cocci",   "Cocos positivos", ., fixed = TRUE) %>%
-      gsub("Parasites",        "Par\u00e1sitos", ., fixed = TRUE) %>%
-      gsub("Fungi and yeasts", "Hongos y levaduras", ., fixed = TRUE) %>%
-      # gsub("Bacteria",         "Bacteria", ., fixed = TRUE) %>%
-      gsub("Fungus/yeast",     "Hongo/levadura", ., fixed = TRUE) %>%
-      gsub("Parasite",         "Par\u00e1sito", ., fixed = TRUE) %>%
+      gsub("Gram negative",    "Gram negativo", ., fixed = TRUE) %>%
+      gsub("Gram positive",    "Gram positivo", ., fixed = TRUE) %>%
+      gsub("Bacteria",         "Bacterias", ., fixed = TRUE) %>%
+      gsub("Fungi",            "Hongos", ., fixed = TRUE) %>%
+      gsub("Protozoa",         "Protozoarios", ., fixed = TRUE) %>%
       gsub("biogroup",         "biogrupo", ., fixed = TRUE) %>%
       gsub("biotype",          "biotipo", ., fixed = TRUE) %>%
       gsub("vegetative",       "vegetativo", ., fixed = TRUE) %>%
@@ -329,15 +317,11 @@ mo_translate <- function(x, language) {
       gsub("Coagulase Positive Staphylococcus","Staphylococcus coagulase positivo", ., fixed = TRUE) %>%
       gsub("Beta-haemolytic Streptococcus",    "Streptococcus Beta-hemol\u00edtico", ., fixed = TRUE) %>%
       gsub("(no MO)",          "(sem MO)", ., fixed = TRUE) %>%
-      gsub("Negative rods",    "Bacilos negativos", ., fixed = TRUE) %>%
-      gsub("Negative cocci",   "Cocos negativos", ., fixed = TRUE) %>%
-      gsub("Positive rods",    "Bacilos positivos", ., fixed = TRUE) %>%
-      gsub("Positive cocci",   "Cocos positivos", ., fixed = TRUE) %>%
-      gsub("Parasites",        "Parasitas", ., fixed = TRUE) %>%
-      gsub("Fungi and yeasts", "Cogumelos e leveduras", ., fixed = TRUE) %>%
-      gsub("Bacteria",         "Bact\u00e9ria", ., fixed = TRUE) %>%
-      gsub("Fungus/yeast",     "Cogumelo/levedura", ., fixed = TRUE) %>%
-      gsub("Parasite",         "Parasita", ., fixed = TRUE) %>%
+      gsub("Gram negative",    "Gram negativo", ., fixed = TRUE) %>%
+      gsub("Gram positive",    "Gram positivo", ., fixed = TRUE) %>%
+      gsub("Bacteria",         "Bact\u00e9rias", ., fixed = TRUE) %>%
+      gsub("Fungi",            "Fungos", ., fixed = TRUE) %>%
+      gsub("Protozoa",         "Protozo\u00e1rios", ., fixed = TRUE) %>%
       gsub("biogroup",         "biogrupo", ., fixed = TRUE) %>%
       gsub("biotype",          "bi\u00f3tipo", ., fixed = TRUE) %>%
       gsub("vegetative",       "vegetativo", ., fixed = TRUE) %>%
@@ -350,15 +334,11 @@ mo_translate <- function(x, language) {
       gsub("Coagulase Positive Staphylococcus","Staphylococcus positivo coagulasi", ., fixed = TRUE) %>%
       gsub("Beta-haemolytic Streptococcus",    "Streptococcus Beta-emolitico", ., fixed = TRUE) %>%
       gsub("(no MO)",          "(non MO)", ., fixed = TRUE) %>%
-      gsub("Negative rods",    "Bastoncini Gram-negativi", ., fixed = TRUE) %>%
-      gsub("Negative cocci",   "Cocchi Gram-negativi", ., fixed = TRUE) %>%
-      gsub("Positive rods",    "Bastoncini Gram-positivi", ., fixed = TRUE) %>%
-      gsub("Positive cocci",   "Cocchi Gram-positivi", ., fixed = TRUE) %>%
-      gsub("Parasites",        "Parassiti", ., fixed = TRUE) %>%
-      gsub("Fungi and yeasts", "Funghi e lieviti", ., fixed = TRUE) %>%
-      gsub("Bacteria",         "Batterio", ., fixed = TRUE) %>%
-      gsub("Fungus/yeast",     "Fungo/lievito", ., fixed = TRUE) %>%
-      gsub("Parasite",         "Parassita", ., fixed = TRUE) %>%
+      gsub("Gram negative",    "Gram negativo", ., fixed = TRUE) %>%
+      gsub("Gram positive",    "Gram positivo", ., fixed = TRUE) %>%
+      gsub("Bacteria",         "Batteri", ., fixed = TRUE) %>%
+      gsub("Fungi",            "Fungo", ., fixed = TRUE) %>%
+      gsub("Protozoa",         "Protozoi", ., fixed = TRUE) %>%
       gsub("biogroup",         "biogruppo", ., fixed = TRUE) %>%
       gsub("biotype",          "biotipo", ., fixed = TRUE) %>%
       gsub("vegetative",       "vegetativo", ., fixed = TRUE) %>%
@@ -371,15 +351,11 @@ mo_translate <- function(x, language) {
       gsub("Coagulase Positive Staphylococcus","Staphylococcus \u00e0 coagulase positif", ., fixed = TRUE) %>%
       gsub("Beta-haemolytic Streptococcus",    "Streptococcus B\u00eata-h\u00e9molytique", ., fixed = TRUE) %>%
       gsub("(no MO)",          "(pas MO)", ., fixed = TRUE) %>%
-      gsub("Negative rods",    "Bacilles n\u00e9gatif", ., fixed = TRUE) %>%
-      gsub("Negative cocci",   "Cocci n\u00e9gatif", ., fixed = TRUE) %>%
-      gsub("Positive rods",    "Bacilles positif", ., fixed = TRUE) %>%
-      gsub("Positive cocci",   "Cocci positif", ., fixed = TRUE) %>%
-      # gsub("Parasites",        "Parasites", ., fixed = TRUE) %>%
-      gsub("Fungi and yeasts", "Champignons et levures", ., fixed = TRUE) %>%
-      gsub("Bacteria",         "Bact\u00e9rie", ., fixed = TRUE) %>%
-      gsub("Fungus/yeast",     "Champignon/levure", ., fixed = TRUE) %>%
-      # gsub("Parasite",         "Parasite", ., fixed = TRUE) %>%
+      gsub("Gram negative",    "Gram n\u00e9gatif", ., fixed = TRUE) %>%
+      gsub("Gram positive",    "Gram positif", ., fixed = TRUE) %>%
+      gsub("Bacteria",         "Bact\u00e9ries", ., fixed = TRUE) %>%
+      gsub("Fungi",            "Champignons", ., fixed = TRUE) %>%
+      gsub("Protozoa",         "Protozoaires", ., fixed = TRUE) %>%
       gsub("biogroup",         "biogroupe", ., fixed = TRUE) %>%
       # gsub("biotype",          "biotype", ., fixed = TRUE) %>%
       gsub("vegetative",       "v\u00e9g\u00e9tatif", ., fixed = TRUE) %>%

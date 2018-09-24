@@ -11,18 +11,12 @@
 \alias{mo_order}
 \alias{mo_class}
 \alias{mo_phylum}
+\alias{mo_subkingdom}
 \alias{mo_type}
+\alias{mo_TSN}
 \alias{mo_gramstain}
-\alias{mo_aerobic}
 \alias{mo_taxonomy}
 \title{Property of a microorganism}
-\source{
-[1] Becker K \emph{et al.} \strong{Coagulase-Negative Staphylococci}. 2014. Clin Microbiol Rev. 27(4): 870–926. \url{https://dx.doi.org/10.1128/CMR.00109-13}
-
-[2] Lancefield RC \strong{A serological differentiation of human and other groups of hemolytic streptococci}. 1933. J Exp Med. 57(4): 571–95. \url{https://dx.doi.org/10.1084/jem.57.4.571}
-
-[3] Integrated Taxonomic Information System (ITIS) on-line database, \url{https://www.itis.gov}.
-}
 \usage{
 mo_fullname(x, Becker = FALSE, Lancefield = FALSE, language = NULL)
 
@@ -42,11 +36,13 @@ mo_class(x)
 
 mo_phylum(x)
 
+mo_subkingdom(x)
+
 mo_type(x, language = NULL)
 
-mo_gramstain(x, language = NULL)
+mo_TSN(x)
 
-mo_aerobic(x)
+mo_gramstain(x, language = NULL)
 
 mo_property(x, property = "fullname", Becker = FALSE,
   Lancefield = FALSE, language = NULL)
@@ -60,11 +56,11 @@ mo_taxonomy(x)
 
   This excludes \emph{Staphylococcus aureus} at default, use \code{Becker = "all"} to also categorise \emph{S. aureus} as "CoPS".}
 
-\item{Lancefield}{a logical to indicate whether beta-haemolytic \emph{Streptococci} should be categorised into Lancefield groups instead of their own species, according to Rebecca C. Lancefield [2]. These \emph{Streptococci} will be categorised in their first group, i.e. \emph{Streptococcus dysgalactiae} will be group C, although officially it was also categorised into groups G and L.
+\item{Lancefield}{a logical to indicate whether beta-haemolytic \emph{Streptococci} should be categorised into Lancefield groups instead of their own species, according to Rebecca C. Lancefield [2]. These \emph{Streptococci} will be categorised in their first group, e.g. \emph{Streptococcus dysgalactiae} will be group C, although officially it was also categorised into groups G and L.
 
   This excludes \emph{Enterococci} at default (who are in group D), use \code{Lancefield = "all"} to also categorise all \emph{Enterococci} as group D.}
 
-\item{language}{language of the returned text, defaults to the systems language. Either one of \code{"en"} (English), \code{"de"} (German), \code{"nl"} (Dutch), \code{"es"} (Spanish) or \code{"pt"} (Portuguese).}
+\item{language}{language of the returned text, defaults to the systems language but can also be set with \code{\link{getOption}("AMR_locale")}. Either one of \code{"en"} (English), \code{"de"} (German), \code{"nl"} (Dutch), \code{"es"} (Spanish) or \code{"pt"} (Portuguese).}
 
 \item{property}{one of the column names of one of the \code{\link{microorganisms}} data set, like \code{"mo"}, \code{"bactsys"}, \code{"family"}, \code{"genus"}, \code{"species"}, \code{"fullname"}, \code{"gramstain"} and \code{"aerobic"}}
 }
@@ -74,8 +70,24 @@ A logical (in case of \code{mo_aerobic}), a list (in case of \code{mo_taxonomy})
 \description{
 Use these functions to return a specific property of a microorganism from the \code{\link{microorganisms}} data set. All input values will be evaluated internally with \code{\link{as.mo}}.
 }
+\section{ITIS}{
+
+\if{html}{\figure{itis_logo.jpg}{options: height=60px style=margin-bottom:5px} \cr}
+This \code{AMR} package contains the \strong{complete microbial taxonomic data} from the publicly available Integrated Taxonomic Information System (ITIS, https://www.itis.gov). ITIS is a partnership of U.S., Canadian, and Mexican agencies and taxonomic specialists [3]. The complete taxonomic kingdoms Bacteria, Fungi and Protozoa (from subkingdom to the subspecies level) are included in this package.
+}
+
+\section{Source}{
+
+[1] Becker K \emph{et al.} \strong{Coagulase-Negative Staphylococci}. 2014. Clin Microbiol Rev. 27(4): 870–926. \url{https://dx.doi.org/10.1128/CMR.00109-13}
+
+[2] Lancefield RC \strong{A serological differentiation of human and other groups of hemolytic streptococci}. 1933. J Exp Med. 57(4): 571–95. \url{https://dx.doi.org/10.1084/jem.57.4.571}
+
+[3] Integrated Taxonomic Information System (ITIS). Retrieved September 2018. \url{http://www.itis.gov}
+}
+
 \examples{
 # All properties
+mo_subkingdom("E. coli")      # "Negibacteria"
 mo_phylum("E. coli")          # "Proteobacteria"
 mo_class("E. coli")           # "Gammaproteobacteria"
 mo_order("E. coli")           # "Enterobacteriales"
@@ -85,40 +97,28 @@ mo_species("E. coli")         # "coli"
 mo_subspecies("E. coli")      # ""
 mo_fullname("E. coli")        # "Escherichia coli"
 mo_shortname("E. coli")       # "E. coli"
+mo_gramstain("E. coli")       # "Gram negative"
+mo_TSN("E. coli")             # 285
 mo_type("E. coli")            # "Bacteria"
-mo_gramstain("E. coli")       # "Negative rods"
-mo_aerobic("E. coli")         # TRUE
 
 
 # Abbreviations known in the field
 mo_genus("MRSA")              # "Staphylococcus"
 mo_species("MRSA")            # "aureus"
 mo_shortname("MRSA")          # "S. aureus"
-mo_gramstain("MRSA")          # "Positive cocci"
+mo_gramstain("MRSA")          # "Gram positive"
 
 mo_genus("VISA")              # "Staphylococcus"
 mo_species("VISA")            # "aureus"
 
 
 # Known subspecies
-mo_genus("EHEC")              # "Escherichia"
-mo_species("EHEC")            # "coli"
-mo_subspecies("EHEC")         # "EHEC"
-mo_fullname("EHEC")           # "Escherichia coli (EHEC)"
-mo_shortname("EHEC")          # "E. coli"
-
 mo_genus("doylei")            # "Campylobacter"
 mo_species("doylei")          # "jejuni"
-mo_fullname("doylei")         # "Campylobacter jejuni (doylei)"
+mo_fullname("doylei")         # "Campylobacter jejuni doylei"
 
-mo_fullname("K. pneu rh")     # "Klebsiella pneumoniae (rhinoscleromatis)"
+mo_fullname("K. pneu rh")     # "Klebsiella pneumoniae rhinoscleromatis"
 mo_shortname("K. pneu rh")    # "K. pneumoniae"
-
-
-# Anaerobic bacteria
-mo_genus("B. fragilis")       # "Bacteroides"
-mo_species("B. fragilis")     # "fragilis"
-mo_aerobic("B. fragilis")     # FALSE
 
 
 # Becker classification, see ?as.mo
@@ -138,10 +138,9 @@ mo_shortname("S. pyo", Lancefield = TRUE) # "GAS"
 mo_type("E. coli", language = "de")       # "Bakterium"
 mo_type("E. coli", language = "nl")       # "Bacterie"
 mo_type("E. coli", language = "es")       # "Bakteria"
-mo_gramstain("E. coli", language = "de")  # "Negative Staebchen"
-mo_gramstain("E. coli", language = "nl")  # "Negatieve staven"
-mo_gramstain("E. coli", language = "es")  # "Bacilos negativos"
-mo_gramstain("Giardia", language = "pt")  # "Parasitas"
+mo_gramstain("E. coli", language = "de")  # "Gramnegativ"
+mo_gramstain("E. coli", language = "nl")  # "Gram-negatief"
+mo_gramstain("E. coli", language = "es")  # "Gram negativo"
 
 mo_fullname("S. pyogenes",
             Lancefield = TRUE,
@@ -151,7 +150,7 @@ mo_fullname("S. pyogenes",
             language = "nl")              # "Streptococcus groep A"
 
 
-# Complete taxonomy up to Phylum, returns a list
+# Complete taxonomy up to Subkingdom, returns a list
 mo_taxonomy("E. coli")
 }
 \seealso{

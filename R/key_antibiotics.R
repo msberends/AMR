@@ -150,7 +150,7 @@ key_antibiotics <- function(tbl,
 
   # Gram +
   tbl <- tbl %>% mutate(key_ab =
-                          if_else(gramstain %like% '^Positive ',
+                          if_else(gramstain == "Gram positive",
                                   apply(X = tbl[, gram_positive],
                                         MARGIN = 1,
                                         FUN = function(x) paste(x, collapse = "")),
@@ -158,7 +158,7 @@ key_antibiotics <- function(tbl,
 
   # Gram -
   tbl <- tbl %>% mutate(key_ab =
-                          if_else(gramstain %like% '^Negative ',
+                          if_else(gramstain == "Gram negative",
                                   apply(X = tbl[, gram_negative],
                                         MARGIN = 1,
                                         FUN = function(x) paste(x, collapse = "")),

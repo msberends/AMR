@@ -6,8 +6,8 @@ test_that("frequency table works", {
   expect_equal(nrow(freq(c(1, 1, 2, 2, 3, 3, 4, 4, 5, 5))), 5)
   expect_equal(nrow(frequency_tbl(c(1, 1, 2, 2, 3, 3, 4, 4, 5, 5))), 5)
 
-  # date column of septic_patients should contain 1151 unique dates
-  expect_equal(nrow(freq(septic_patients$date)), 1151)
+  # date column of septic_patients should contain 1140 unique dates
+  expect_equal(nrow(freq(septic_patients$date)), 1140)
   expect_equal(nrow(freq(septic_patients$date)),
                length(unique(septic_patients$date)))
 
@@ -24,7 +24,7 @@ test_that("frequency table works", {
 
   # character
   expect_output(print(freq(septic_patients$mo)))
-  expect_output(print(freq(microorganisms$fullname)))
+  expect_output(suppressWarnings(print(freq(microorganisms$fullname))))
   # integer
   expect_output(print(freq(septic_patients$age)))
   # date

@@ -38,13 +38,17 @@ Erwin E.A. Hassing<sup>2</sup>,
 * [Copyright](#copyright)
 
 ## Why this package?
-This R package was intended to make microbial epidemiology easier. Most functions contain extensive help pages to get started.
+This R package was intended **to make microbial epidemiology easier**. Most functions contain extensive help pages to get started.
 
-This `AMR` package basically does four important things:
+<a href="https://www.itis.gov"><img src="man/figures/itis_logo.jpg" height="50px"></a>
+
+This `AMR` package contains the *complete microbial taxonomic data* from the publicly available Integrated Taxonomic Information System (ITIS, https://www.itis.gov). ITIS is a partnership of U.S., Canadian, and Mexican agencies and taxonomic specialists. The complete taxonomic kingdoms Bacteria, Fungi and Protozoa (from subkingdom to the subspecies level) are included in this package. This allows users to use authoritative taxonomic information for their data analyses on any microorganisms, not only human pathogens.
+
+Combined with several new functions, this `AMR` package basically does four important things:
 
 1. It **cleanses existing data**, by transforming it to reproducible and profound *classes*, making the most efficient use of R. These functions all use artificial intelligence to guess results that you would expect:
 
-   * Use `as.mo` to get an ID of a microorganism. The IDs are quite obvious - the ID of *E. coli* is "ESCCOL" and the ID of *S. aureus* is "STAAUR". The function takes almost any text as input that looks like the name or code of a microorganism like "E. coli", "esco" and "esccol". Even `as.mo("MRSA")` will return the ID of *S. aureus*. Moreover, it can group all coagulase negative and positive *Staphylococci*, and can transform *Streptococci* into Lancefield groups. To find bacteria based on your input, this package contains a freely available database of almost 3,000 different (potential) human pathogenic microorganisms.
+   * Use `as.mo` to get an ID of a microorganism. The IDs are human readable for the trained eye - the ID of *Klebsiella pneumoniae* is "B_KLBSL_PNE" (B stands for Bacteria) and the ID of *S. aureus* is "B_STPHY_AUR". The function takes almost any text as input that looks like the name or code of a microorganism like "E. coli", "esco" and "esccol". Even `as.mo("MRSA")` will return the ID of *S. aureus*. Moreover, it can group all coagulase negative and positive *Staphylococci*, and can transform *Streptococci* into Lancefield groups. To find bacteria based on your input, it uses Artificial Intelligence to look up values in the included ITIS data, consisting of more than 18,000 microorganisms.
    * Use `as.rsi` to transform values to valid antimicrobial results. It produces just S, I or R based on your input and warns about invalid values. Even values like "<=0.002; S" (combined MIC/RSI) will result in "S".
    * Use `as.mic` to cleanse your MIC values. It produces a so-called factor (called *ordinal* in SPSS) with valid MIC values as levels. A value like "<=0.002; S" (combined MIC/RSI) will result in "<=0.002".
    * Use `as.atc` to get the ATC code of an antibiotic as defined by the WHO. This package contains a database with most LIS codes, official names, DDDs and even trade names of antibiotics. For example, the values "Furabid", "Furadantin", "nitro" all return the ATC code of Nitrofurantoine.
@@ -55,7 +59,7 @@ This `AMR` package basically does four important things:
    * Use `first_isolate` to identify the first isolates of every patient [using guidelines from the CLSI](https://clsi.org/standards/products/microbiology/documents/m39/) (Clinical and Laboratory Standards Institute).
      * You can also identify first *weighted* isolates of every patient, an adjusted version of the CLSI guideline. This takes into account key antibiotics of every strain and compares them.
    * Use `MDRO` (abbreviation of Multi Drug Resistant Organisms) to check your isolates for exceptional resistance with country-specific guidelines or EUCAST rules. Currently, national guidelines for Germany and the Netherlands are supported.
-   * The data set `microorganisms` contains the taxonomic properties of almost 3,000 potential human pathogenic microorganisms (bacteria, fungi/yeasts and parasites). Taxonomic names were downloaded from ITIS (Integrated Taxonomic Information System, http://www.itis.gov). Furhermore, the colloquial name and Gram stain are available, which enables resistance analysis of e.g. different antibiotics per Gram stain. The package also contains functions to look up values in this data set like `mo_genus`, `mo_family`, `mo_gramstain` or even `mo_phylum`. As they use `as.mo` internally, they also use artificial intelligence. For example, `mo_genus("MRSA")` and `mo_genus("S. aureus")` will both return `"Staphylococcus"`. They also come with support for German, Dutch, French, Italian, Spanish and Portuguese. These functions can be used to add new variables to your data.
+   * The data set `microorganisms` contains the complete taxonomic tree of more than 18,000 microorganisms (bacteria, fungi/yeasts and protozoa). Furthermore, the colloquial name and Gram stain are available, which enables resistance analysis of e.g. different antibiotics per Gram stain. The package also contains functions to look up values in this data set like `mo_genus`, `mo_family`, `mo_gramstain` or even `mo_phylum`. As they use `as.mo` internally, they also use artificial intelligence. For example, `mo_genus("MRSA")` and `mo_genus("S. aureus")` will both return `"Staphylococcus"`. They also come with support for German, Dutch, French, Italian, Spanish and Portuguese. These functions can be used to add new variables to your data.
    * The data set `antibiotics` contains the ATC code, LIS codes, official name, trivial name and DDD of both oral and parenteral administration. It also contains a total of 298 trade names. Use functions like `ab_name` and `ab_tradenames` to look up values. The `ab_*` functions use `as.atc` internally so they support AI to guess your expected result. For example, `ab_name("Fluclox")`, `ab_name("Floxapen")` and `ab_name("J01CF05")` will all return `"Flucloxacillin"`. These functions can again be used to add new variables to your data.
 
 3. It **analyses the data** with convenient functions that use well-known methods.
@@ -378,19 +382,19 @@ Learn more about this function with:
 ```
 
 ### Data sets included in package
-Datasets to work with antibiotics and bacteria properties.
+Data sets to work with antibiotics and bacteria properties.
 ```r
-# Dataset with 2000 random blood culture isolates from anonymised
+# Data set with complete taxonomic trees from ITIS, containing of 
+# the three kingdoms Bacteria, Fungi and Protozoa
+microorganisms    # A tibble: 18,831 x 15
+
+# Data set with 2000 random blood culture isolates from anonymised
 # septic patients between 2001 and 2017 in 5 Dutch hospitals
 septic_patients   # A tibble: 2,000 x 49
 
-# Dataset with ATC antibiotics codes, official names, trade names 
+# Data set with ATC antibiotics codes, official names, trade names 
 # and DDDs (oral and parenteral)
 antibiotics       # A tibble: 423 x 18
-
-# Dataset with bacteria codes and properties like gram stain and 
-# aerobic/anaerobic
-microorganisms    # A tibble: 2,642 x 14
 ```
 
 ## Copyright

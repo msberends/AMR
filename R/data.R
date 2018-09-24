@@ -120,29 +120,47 @@
 #
 "antibiotics"
 
-#' Data set with human pathogenic microorganisms
+#' Data set with taxonomic data from ITIS
 #'
-#' A data set containing (potential) human pathogenic microorganisms. MO codes can be looked up using \code{\link{guess_mo}}.
-#' @format A \code{\link{tibble}} with 2,642 observations and 14 variables:
+#' A data set containing the complete microbial taxonomy of the kingdoms Bacteria, Fungi and Protozoa. MO codes can be looked up using \code{\link{as.mo}}.
+#' @inheritSection as.mo ITIS
+#' @format A \code{\link{data.frame}} with 18,831 observations and 15 variables:
 #' \describe{
 #'   \item{\code{mo}}{ID of microorganism}
-#'   \item{\code{bactsys}}{Bactsyscode of microorganism}
-#'   \item{\code{genus}}{Genus name of microorganism, like \code{"Echerichia"}}
-#'   \item{\code{species}}{Species name of microorganism, like \code{"coli"}}
-#'   \item{\code{subspecies}}{Subspecies name of bio-/serovar of microorganism, like \code{"EHEC"}}
-#'   \item{\code{fullname}}{Full name, like \code{"Echerichia coli (EHEC)"}}
-#'   \item{\code{gramstain}}{Gram of microorganism, like \code{"Negative rods"}}
-#'   \item{\code{aerobic}}{Logical whether bacteria is aerobic}
+#'   \item{\code{tsn}}{Taxonomic Serial Number (TSN), as defined by ITIS}
+#'   \item{\code{genus}}{Taxonomic genus of the microorganism as found in ITIS, see Source}
+#'   \item{\code{species}}{Taxonomic species of the microorganism as found in ITIS, see Source}
+#'   \item{\code{subspecies}}{Taxonomic subspecies of the microorganism as found in ITIS, see Source}
+#'   \item{\code{fullname}}{Full name, like \code{"Echerichia coli"}}
 #'   \item{\code{family}}{Taxonomic family of the microorganism as found in ITIS, see Source}
 #'   \item{\code{order}}{Taxonomic order of the microorganism as found in ITIS, see Source}
 #'   \item{\code{class}}{Taxonomic class of the microorganism as found in ITIS, see Source}
 #'   \item{\code{phylum}}{Taxonomic phylum of the microorganism as found in ITIS, see Source}
-#'   \item{\code{type}}{Type of microorganism, like \code{"Bacteria"} and \code{"Fungus/yeast"}}
+#'   \item{\code{subkingdom}}{Taxonomic subkingdom of the microorganism as found in ITIS, see Source}
+#'   \item{\code{gramstain}}{Gram of microorganism, like \code{"Gram negative"}}
+#'   \item{\code{type}}{Type of microorganism, like \code{"Bacteria"} and \code{"Fungi"}}
 #'   \item{\code{prevalence}}{A rounded integer based on prevalence of the microorganism. Used internally by \code{\link{as.mo}}, otherwise quite meaningless.}
+#'   \item{\code{mo.old}}{The old ID for package versions 0.3.0 and lower.}
 #' }
-#' @source Integrated Taxonomic Information System (ITIS) on-line database, \url{https://www.itis.gov}.
-#' @seealso \code{\link{guess_mo}} \code{\link{antibiotics}} \code{\link{microorganisms.umcg}}
+#' @source [3] Integrated Taxonomic Information System (ITIS) on-line database, \url{https://www.itis.gov}.
+#' @seealso \code{\link{as.mo}} \code{\link{mo_property}} \code{\link{microorganisms.umcg}}
 "microorganisms"
+
+#' Data set with old taxonomic data from ITIS
+#'
+#' A data set containing old, previously valid, taxonomic names. This data set is used internally by \code{\link{as.mo}}.
+#' @inheritSection as.mo ITIS
+#' @format A \code{\link{data.frame}} with 58 observations and 5 variables:
+#' \describe{
+#'   \item{\code{tsn}}{Old Taxonomic Serial Number (TSN), as defined by ITIS}
+#'   \item{\code{name}}{Old taxonomic name of the microorganism as found in ITIS, see Source}
+#'   \item{\code{tsn_new}}{New Taxonomic Serial Number (TSN), as defined by ITIS}
+#'   \item{\code{authors}}{Authors responsible for renaming as found in ITIS, see Source}
+#'   \item{\code{year}}{Year in which the literature was published about the renaming as found in ITIS, see Source}
+#' }
+#' @source [3] Integrated Taxonomic Information System (ITIS) on-line database, \url{https://www.itis.gov}.
+#' @seealso \code{\link{as.mo}} \code{\link{mo_property}} \code{\link{microorganisms}}
+"microorganisms.old"
 
 #' Translation table for UMCG
 #'
@@ -152,7 +170,7 @@
 #'   \item{\code{umcg}}{Code of microorganism according to UMCG MMB}
 #'   \item{\code{mo}}{Code of microorganism in \code{\link{microorganisms}}}
 #' }
-#' @seealso \code{\link{guess_mo}} \code{\link{microorganisms}}
+#' @seealso \code{\link{as.mo}} \code{\link{microorganisms}}
 "microorganisms.umcg"
 
 #' Data set with 2000 blood culture isolates of septic patients

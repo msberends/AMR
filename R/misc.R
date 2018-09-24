@@ -157,6 +157,12 @@ tbl_parse_guess <- function(tbl,
 
 #' @importFrom dplyr case_when
 Sys.locale <- function() {
+  alreadyset <- getOption("AMR_locale")
+  if (!is.null(alreadyset)) {
+    if (tolower(alreadyset) %in% c("en", "de", "nl", "es", "fr", "pt", "it")) {
+      return(tolower(alreadyset))
+    }
+  }
   sys <- base::Sys.getlocale()
   case_when(
     sys %like% '(Deutsch|German|de_)'       ~ "de",

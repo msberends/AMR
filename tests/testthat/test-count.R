@@ -2,16 +2,16 @@ context("count.R")
 
 test_that("counts work", {
   # amox resistance in `septic_patients`
-  expect_equal(count_R(septic_patients$amox), 659)
+  expect_equal(count_R(septic_patients$amox), 662)
   expect_equal(count_I(septic_patients$amox), 3)
-  expect_equal(count_S(septic_patients$amox), 336)
+  expect_equal(count_S(septic_patients$amox), 335)
   expect_equal(count_R(septic_patients$amox) + count_I(septic_patients$amox),
                count_IR(septic_patients$amox))
   expect_equal(count_S(septic_patients$amox) + count_I(septic_patients$amox),
                count_SI(septic_patients$amox))
 
-  expect_equal(septic_patients %>% count_S(amcl), 1056)
-  expect_equal(septic_patients %>% count_S(amcl, gent), 1385)
+  expect_equal(septic_patients %>% count_S(amcl), 1057)
+  expect_equal(septic_patients %>% count_S(amcl, gent), 1396)
 
   # count of cases
   expect_equal(septic_patients %>%
@@ -20,7 +20,7 @@ test_that("counts work", {
                            genta = count_S(gent),
                            combination = count_S(cipr, gent)) %>%
                  pull(combination),
-               c(192, 440, 184, 474))
+               c(192, 446, 184, 474))
 
   expect_equal(septic_patients %>% select(amox, cipr) %>% count_df(translate_ab = "official") %>% nrow(),
                6)

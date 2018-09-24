@@ -6,17 +6,13 @@
 \alias{is.mo}
 \alias{guess_mo}
 \title{Transform to microorganism ID}
-\source{
-[1] Becker K \emph{et al.} \strong{Coagulase-Negative Staphylococci}. 2014. Clin Microbiol Rev. 27(4): 870–926. \url{https://dx.doi.org/10.1128/CMR.00109-13}
-
-[2] Lancefield RC \strong{A serological differentiation of human and other groups of hemolytic streptococci}. 1933. J Exp Med. 57(4): 571–95. \url{https://dx.doi.org/10.1084/jem.57.4.571}
-}
 \usage{
-as.mo(x, Becker = FALSE, Lancefield = FALSE)
+as.mo(x, Becker = FALSE, Lancefield = FALSE, allow_uncertain = FALSE)
 
 is.mo(x)
 
-guess_mo(x, Becker = FALSE, Lancefield = FALSE)
+guess_mo(x, Becker = FALSE, Lancefield = FALSE,
+  allow_uncertain = FALSE)
 }
 \arguments{
 \item{x}{a character vector or a \code{data.frame} with one or two columns}
@@ -25,31 +21,62 @@ guess_mo(x, Becker = FALSE, Lancefield = FALSE)
 
   This excludes \emph{Staphylococcus aureus} at default, use \code{Becker = "all"} to also categorise \emph{S. aureus} as "CoPS".}
 
-\item{Lancefield}{a logical to indicate whether beta-haemolytic \emph{Streptococci} should be categorised into Lancefield groups instead of their own species, according to Rebecca C. Lancefield [2]. These \emph{Streptococci} will be categorised in their first group, i.e. \emph{Streptococcus dysgalactiae} will be group C, although officially it was also categorised into groups G and L.
+\item{Lancefield}{a logical to indicate whether beta-haemolytic \emph{Streptococci} should be categorised into Lancefield groups instead of their own species, according to Rebecca C. Lancefield [2]. These \emph{Streptococci} will be categorised in their first group, e.g. \emph{Streptococcus dysgalactiae} will be group C, although officially it was also categorised into groups G and L.
 
   This excludes \emph{Enterococci} at default (who are in group D), use \code{Lancefield = "all"} to also categorise all \emph{Enterococci} as group D.}
+
+\item{allow_uncertain}{a logical to indicate whether empty results should be checked for only a part of the input string. When results are found, a warning will be given about the uncertainty and the result.}
 }
 \value{
 Character (vector) with class \code{"mo"}. Unknown values will return \code{NA}.
 }
 \description{
-Use this function to determine a valid ID based on a genus (and species). Determination is done using Artificial Intelligence (AI), so the input can be almost anything: a full name (like \code{"Staphylococcus aureus"}), an abbreviated name (like \code{"S. aureus"}), an abbreviation known in the field (like \code{"MRSA"}), or just a genus. You could also \code{\link{select}} a genus and species column, zie Examples.
+Use this function to determine a valid microorganism ID (\code{mo}). Determination is done using Artificial Intelligence (AI) and the complete taxonomic kingdoms \emph{Bacteria}, \emph{Fungi} and \emph{Protozoa} (see Source), so the input can be almost anything: a full name (like \code{"Staphylococcus aureus"}), an abbreviated name (like \code{"S. aureus"}), an abbreviation known in the field (like \code{"MRSA"}), or just a genus. You could also \code{\link{select}} a genus and species column, zie Examples.
 }
 \details{
-\code{guess_mo} is an alias of \code{as.mo}.
+A microbial ID (class: \code{mo}) typically looks like these examples:\cr
+\preformatted{
+  Code                Full name
+  ---------------     --------------------------------------
+  B_KLBSL             Klebsiella
+  B_KLBSL_PNE         Klebsiella pneumoniae
+  B_KLBSL_PNE_RHI     Klebsiella pneumoniae rhinoscleromatis
+  |   |    |   |
+  |   |    |   |
+  |   |    |    ----> subspecies, a 3-4 letter acronym
+  |   |     ----> species, a 3-4 letter acronym
+  |    ----> genus, a 5-7 letter acronym, mostly without vowels
+   ----> taxonomic kingdom, either Bacteria (B), Fungi (F) or Protozoa (P)
+}
 
 Use the \code{\link{mo_property}} functions to get properties based on the returned code, see Examples.
 
-Thus function uses Artificial Intelligence (AI) to help getting more logical results, based on type of input and known prevalence of human pathogens. For example:
+This function uses Artificial Intelligence (AI) to help getting more logical results, based on type of input and known prevalence of human pathogens. For example:
 \itemize{
   \item{\code{"E. coli"} will return the ID of \emph{Escherichia coli} and not \emph{Entamoeba coli}, although the latter would alphabetically come first}
   \item{\code{"H. influenzae"} will return the ID of \emph{Haemophilus influenzae} and not \emph{Haematobacter influenzae} for the same reason}
   \item{Something like \code{"p aer"} will return the ID of \emph{Pseudomonas aeruginosa} and not \emph{Pasteurella aerogenes}}
   \item{Something like \code{"stau"} or \code{"S aur"} will return the ID of \emph{Staphylococcus aureus} and not \emph{Staphylococcus auricularis}}
 }
-Moreover, this function also supports ID's based on only Gram stain, when the species is not known. \cr
-For example, \code{"Gram negative rods"} and \code{"GNR"} will both return the ID of a Gram negative rod: \code{GNR}.
+This means that looking up human non-pathogenic microorganisms takes a longer time compares to human pathogenic microorganisms.
+
+\code{guess_mo} is an alias of \code{as.mo}.
 }
+\section{ITIS}{
+
+\if{html}{\figure{itis_logo.jpg}{options: height=60px style=margin-bottom:5px} \cr}
+This \code{AMR} package contains the \strong{complete microbial taxonomic data} from the publicly available Integrated Taxonomic Information System (ITIS, https://www.itis.gov). ITIS is a partnership of U.S., Canadian, and Mexican agencies and taxonomic specialists [3]. The complete taxonomic kingdoms Bacteria, Fungi and Protozoa (from subkingdom to the subspecies level) are included in this package.
+}
+
+\section{Source}{
+
+[1] Becker K \emph{et al.} \strong{Coagulase-Negative Staphylococci}. 2014. Clin Microbiol Rev. 27(4): 870–926. \url{https://dx.doi.org/10.1128/CMR.00109-13}
+
+[2] Lancefield RC \strong{A serological differentiation of human and other groups of hemolytic streptococci}. 1933. J Exp Med. 57(4): 571–95. \url{https://dx.doi.org/10.1084/jem.57.4.571}
+
+[3] Integrated Taxonomic Information System (ITIS). Retrieved September 2018. \url{http://www.itis.gov}
+}
+
 \examples{
 # These examples all return "STAAUR", the ID of S. aureus:
 as.mo("stau")
@@ -61,22 +88,27 @@ as.mo("Staphylococcus aureus")
 as.mo("MRSA") # Methicillin Resistant S. aureus
 as.mo("VISA") # Vancomycin Intermediate S. aureus
 as.mo("VRSA") # Vancomycin Resistant S. aureus
+as.mo(369)    # Search on TSN (Taxonomic Serial Number), a unique identifier
+              # for the Integrated Taxonomic Information System (ITIS)
 
 as.mo("Streptococcus group A")
 as.mo("GAS") # Group A Streptococci
 as.mo("GBS") # Group B Streptococci
 
 # guess_mo is an alias of as.mo and works the same
-guess_mo("S. epidermidis")                 # will remain species: STAEPI
-guess_mo("S. epidermidis", Becker = TRUE)  # will not remain species: STACNS
+guess_mo("S. epidermidis")                 # will remain species: B_STPHY_EPI
+guess_mo("S. epidermidis", Becker = TRUE)  # will not remain species: B_STPHY_CNS
 
-guess_mo("S. pyogenes")                    # will remain species: STCPYO
-guess_mo("S. pyogenes", Lancefield = TRUE) # will not remain species: STCGRA
+guess_mo("S. pyogenes")                    # will remain species: B_STRPTC_PYO
+guess_mo("S. pyogenes", Lancefield = TRUE) # will not remain species: B_STRPTC_GRA
 
 # Use mo_* functions to get a specific property based on `mo`
-Ecoli <- as.mo("E. coli") # returns `ESCCOL`
+Ecoli <- as.mo("E. coli")     # returns `B_ESCHR_COL`
 mo_genus(Ecoli)               # returns "Escherichia"
-mo_gramstain(Ecoli)           # returns "Negative rods"
+mo_gramstain(Ecoli)           # returns "Gram negative"
+# but it uses as.mo internally too, so you could also just use:
+mo_genus("E. coli")           # returns "Escherichia"
+
 
 \dontrun{
 df$mo <- as.mo(df$microorganism_name)
@@ -98,7 +130,8 @@ df <- df \%>\%
 }
 }
 \seealso{
-\code{\link{microorganisms}} for the dataframe that is being used to determine ID's.
+\code{\link{microorganisms}} for the \code{data.frame} with ITIS content that is being used to determine ID's. \cr
+The \code{\link{mo_property}} functions (like \code{\link{mo_genus}}, \code{\link{mo_gramstain}}) to get properties based on the returned code.
 }
 \keyword{Becker}
 \keyword{Lancefield}

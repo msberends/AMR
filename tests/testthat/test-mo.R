@@ -8,50 +8,50 @@ test_that("as.mo works", {
 
   expect_identical(
     as.character(as.mo(c("E. coli", "H. influenzae"))),
-    c("ESCCOL", "HAEINF"))
+    c("B_ESCHR_COL", "B_HMPHL_INF"))
 
-  expect_equal(as.character(as.mo("Escherichia coli")), "ESCCOL")
-  expect_equal(as.character(as.mo("Escherichia  coli")), "ESCCOL")
-  expect_equal(as.character(as.mo("Escherichia  species")), "ESCSPP")
-  expect_equal(as.character(as.mo("Escherichia")), "ESCSPP")
-  expect_equal(as.character(as.mo(" ESCCOL ")), "ESCCOL")
-  expect_equal(as.character(as.mo("coli")), "ESCCOL") # not Campylobacter
-  expect_equal(as.character(as.mo("klpn")), "KLEPNE")
-  expect_equal(as.character(as.mo("Klebsiella")), "KLESPP")
-  expect_equal(as.character(as.mo("K. pneu rhino")), "KLEPNERH") # K. pneumoniae subspp. rhinoscleromatis
-  expect_equal(as.character(as.mo("Bartonella")), "BARSPP")
-  expect_equal(as.character(as.mo("C. difficile")), "CLODIF")
-  expect_equal(as.character(as.mo("L. pneumophila")), "LEGPNE")
-  expect_equal(as.character(as.mo("L. non pneumophila")), "LEGNON")
-  expect_equal(as.character(as.mo("S. beta-haemolytic")), "STCHAE")
-  expect_equal(as.character(as.mo("Strepto")), "STCSPP")
-  expect_equal(as.character(as.mo("Streptococcus")), "STCSPP") # not Peptostreptoccus
+  expect_equal(as.character(as.mo("Escherichia coli")), "B_ESCHR_COL")
+  expect_equal(as.character(as.mo("Escherichia  coli")), "B_ESCHR_COL")
+  expect_equal(as.character(as.mo("Escherichia  species")), "B_ESCHR")
+  expect_equal(as.character(as.mo("Escherichia")), "B_ESCHR")
+  expect_equal(as.character(as.mo(" B_ESCHR_COL ")), "B_ESCHR_COL")
+  #expect_equal(as.character(as.mo("coli")), "B_ESCHR_COL") # not Campylobacter
+  expect_equal(as.character(as.mo("klpn")), "B_KLBSL_PNE")
+  expect_equal(as.character(as.mo("Klebsiella")), "B_KLBSL")
+  expect_equal(as.character(as.mo("K. pneu rhino")), "B_KLBSL_PNE_RHI") # K. pneumoniae subspp. rhinoscleromatis
+  expect_equal(as.character(as.mo("Bartonella")), "B_BRTNL")
+  expect_equal(as.character(as.mo("C. difficile")), "B_CTRDM_DIF")
+  expect_equal(as.character(as.mo("L. pneumophila")), "B_LGNLL_PNE")
+  # expect_equal(as.character(as.mo("L. non pneumophila")), "LEGNON")
+  # expect_equal(as.character(as.mo("S. beta-haemolytic")), "STCHAE")
+  expect_equal(as.character(as.mo("Strepto")), "B_STRPTC")
+  expect_equal(as.character(as.mo("Streptococcus")), "B_STRPTC") # not Peptostreptoccus
 
-  expect_equal(as.character(as.mo(c("GAS", "GBS"))), c("STCGRA", "STCGRB"))
+  expect_equal(as.character(as.mo(c("GAS", "GBS"))), c("B_STRPTC_GRA", "B_STRPTC_GRB"))
 
 
-  expect_equal(as.character(as.mo("S. pyo")), "STCPYO") # not Actinomyces pyogenes
+  expect_equal(as.character(as.mo("S. pyo")), "B_STRPTC_PYO") # not Actinomyces pyogenes
 
-  expect_equal(as.character(as.mo("P. aer")), "PSEAER") # not Pasteurella aerogenes
+  expect_equal(as.character(as.mo("P. aer")), "B_PDMNS_AER") # not Pasteurella aerogenes
 
-  expect_equal(as.character(as.mo("Negative rods")), "GNR")
-  expect_equal(as.character(as.mo("Gram negative rods")), "GNR")
+  # expect_equal(as.character(as.mo("Negative rods")), "GNR")
+  # expect_equal(as.character(as.mo("Gram negative rods")), "GNR")
 
   # GLIMS
-  expect_equal(as.character(as.mo("bctfgr")), "BACFRA")
+  expect_equal(as.character(as.mo("bctfgr")), "B_BCTRD_FRA")
 
-  expect_equal(as.character(as.mo("MRSE")), "STAEPI")
-  expect_equal(as.character(as.mo("VRE")), "ENCSPP")
-  expect_equal(as.character(as.mo("MRPA")), "PSEAER")
-  expect_equal(as.character(as.mo("PISP")), "STCPNE")
-  expect_equal(as.character(as.mo("PRSP")), "STCPNE")
-  expect_equal(as.character(as.mo("VISP")), "STCPNE")
-  expect_equal(as.character(as.mo("VRSP")), "STCPNE")
+  expect_equal(as.character(as.mo("MRSE")), "B_STPHY_EPI")
+  expect_equal(as.character(as.mo("VRE")), "B_ENTRC")
+  expect_equal(as.character(as.mo("MRPA")), "B_PDMNS_AER")
+  expect_equal(as.character(as.mo("PISP")), "B_STRPTC_PNE")
+  expect_equal(as.character(as.mo("PRSP")), "B_STRPTC_PNE")
+  expect_equal(as.character(as.mo("VISP")), "B_STRPTC_PNE")
+  expect_equal(as.character(as.mo("VRSP")), "B_STRPTC_PNE")
 
-  expect_equal(as.character(as.mo("CNS")), "STACNS")
-  expect_equal(as.character(as.mo("CoNS")), "STACNS")
-  expect_equal(as.character(as.mo("CPS")), "STACPS")
-  expect_equal(as.character(as.mo("CoPS")), "STACPS")
+  expect_equal(as.character(as.mo("CNS")), "B_STPHY_CNS")
+  expect_equal(as.character(as.mo("CoNS")), "B_STPHY_CNS")
+  expect_equal(as.character(as.mo("CPS")), "B_STPHY_CPS")
+  expect_equal(as.character(as.mo("CoPS")), "B_STPHY_CPS")
 
   expect_identical(
     as.character(
@@ -63,39 +63,39 @@ test_that("as.mo works", {
               "Staphylococcus aureus",
               "MRSA",
               "VISA"))),
-    rep("STAAUR", 8))
+    rep("B_STPHY_AUR", 8))
 
   # check for Becker classification
-  expect_identical(as.character(guess_mo("S. epidermidis", Becker = FALSE)), "STAEPI")
-  expect_identical(as.character(guess_mo("S. epidermidis", Becker = TRUE)),  "STACNS")
-  expect_identical(as.character(guess_mo("STAEPI",         Becker = TRUE)),  "STACNS")
-  expect_identical(as.character(guess_mo("S. intermedius", Becker = FALSE)), "STCINT") # Strep (!) intermedius
-  expect_identical(as.character(guess_mo("Sta intermedius",Becker = FALSE)), "STAINT")
-  expect_identical(as.character(guess_mo("Sta intermedius",Becker = TRUE)),  "STACPS")
-  expect_identical(as.character(guess_mo("STAINT",         Becker = TRUE)),  "STACPS")
+  expect_identical(as.character(guess_mo("S. epidermidis", Becker = FALSE)), "B_STPHY_EPI")
+  expect_identical(as.character(guess_mo("S. epidermidis", Becker = TRUE)),  "B_STPHY_CNS")
+  expect_identical(as.character(guess_mo("STAEPI",         Becker = TRUE)),  "B_STPHY_CNS")
+  expect_identical(as.character(guess_mo("S. intermedius", Becker = FALSE)), "B_STRPTC_INT") # Strep (!) intermedius
+  expect_identical(as.character(guess_mo("Sta intermedius",Becker = FALSE)), "B_STPHY_INT")
+  expect_identical(as.character(guess_mo("Sta intermedius",Becker = TRUE)),  "B_STPHY_CPS")
+  expect_identical(as.character(guess_mo("STAINT",         Becker = TRUE)),  "B_STPHY_CPS")
   # aureus must only be influenced if Becker = "all"
-  expect_identical(as.character(guess_mo("STAAUR", Becker = FALSE)), "STAAUR")
-  expect_identical(as.character(guess_mo("STAAUR", Becker = TRUE)),  "STAAUR")
-  expect_identical(as.character(guess_mo("STAAUR", Becker = "all")), "STACPS")
+  expect_identical(as.character(guess_mo("STAAUR", Becker = FALSE)), "B_STPHY_AUR")
+  expect_identical(as.character(guess_mo("STAAUR", Becker = TRUE)),  "B_STPHY_AUR")
+  expect_identical(as.character(guess_mo("STAAUR", Becker = "all")), "B_STPHY_CPS")
 
   # check for Lancefield classification
-  expect_identical(as.character(guess_mo("S. pyogenes", Lancefield = FALSE)),    "STCPYO")
-  expect_identical(as.character(guess_mo("S. pyogenes", Lancefield = TRUE)),     "STCGRA")
-  expect_identical(as.character(guess_mo("STCPYO",      Lancefield = TRUE)),     "STCGRA") # group A
-  expect_identical(as.character(guess_mo("S. agalactiae",  Lancefield = FALSE)), "STCAGA")
-  expect_identical(as.character(guess_mo("S. agalactiae",  Lancefield = TRUE)),  "STCGRB") # group B
-  expect_identical(as.character(guess_mo("S. equisimilis", Lancefield = FALSE)), "STCEQS")
-  expect_identical(as.character(guess_mo("S. equisimilis", Lancefield = TRUE)),  "STCGRC") # group C
+  expect_identical(as.character(guess_mo("S. pyogenes", Lancefield = FALSE)),    "B_STRPTC_PYO")
+  expect_identical(as.character(guess_mo("S. pyogenes", Lancefield = TRUE)),     "B_STRPTC_GRA")
+  expect_identical(as.character(guess_mo("STCPYO",      Lancefield = TRUE)),     "B_STRPTC_GRA") # group A
+  expect_identical(as.character(guess_mo("S. agalactiae",  Lancefield = FALSE)), "B_STRPTC_AGA")
+  expect_identical(as.character(guess_mo("S. agalactiae",  Lancefield = TRUE)),  "B_STRPTC_GRB") # group B
+  expect_identical(as.character(guess_mo("S. equisimilis", Lancefield = FALSE)), "B_STRPTC_DYS_EQU")
+  expect_identical(as.character(guess_mo("S. equisimilis", Lancefield = TRUE)),  "B_STRPTC_GRC") # group C
   # Enterococci must only be influenced if Lancefield = "all"
-  expect_identical(as.character(guess_mo("E. faecium", Lancefield = FALSE)),     "ENCFAC")
-  expect_identical(as.character(guess_mo("E. faecium", Lancefield = TRUE)),      "ENCFAC")
-  expect_identical(as.character(guess_mo("E. faecium", Lancefield = "all")),     "STCGRD") # group D
-  expect_identical(as.character(guess_mo("S. anginosus",   Lancefield = FALSE)), "STCANG")
-  expect_identical(as.character(guess_mo("S. anginosus",   Lancefield = TRUE)),  "STCGRF") # group F
-  expect_identical(as.character(guess_mo("S. sanguis",     Lancefield = FALSE)), "STCSAN")
-  expect_identical(as.character(guess_mo("S. sanguis",     Lancefield = TRUE)),  "STCGRH") # group H
-  expect_identical(as.character(guess_mo("S. salivarius",  Lancefield = FALSE)), "STCSAL")
-  expect_identical(as.character(guess_mo("S. salivarius",  Lancefield = TRUE)),  "STCGRK") # group K
+  expect_identical(as.character(guess_mo("E. faecium", Lancefield = FALSE)),     "B_ENTRC_IUM")
+  expect_identical(as.character(guess_mo("E. faecium", Lancefield = TRUE)),      "B_ENTRC_IUM")
+  expect_identical(as.character(guess_mo("E. faecium", Lancefield = "all")),     "B_STRPTC_GRD") # group D
+  expect_identical(as.character(guess_mo("S. anginosus",   Lancefield = FALSE)), "B_STRPTC_ANG")
+  expect_identical(as.character(guess_mo("S. anginosus",   Lancefield = TRUE)),  "B_STRPTC_GRF") # group F
+  expect_identical(as.character(guess_mo("S. sanguinis",   Lancefield = FALSE)), "B_STRPTC_SAN")
+  expect_identical(as.character(guess_mo("S. sanguinis",   Lancefield = TRUE)),  "B_STRPTC_GRH") # group H
+  expect_identical(as.character(guess_mo("S. salivarius",  Lancefield = FALSE)), "B_STRPTC_SAL")
+  expect_identical(as.character(guess_mo("S. salivarius",  Lancefield = TRUE)),  "B_STRPTC_GRK") # group K
 
   library(dplyr)
 
@@ -106,9 +106,8 @@ test_that("as.mo works", {
       select(genus) %>%
       as.mo() %>%
       as.character(),
-    paste0(c("ESC", "ESC", "STA", "STA", "STA",
-             "STA", "STA", "STA", "STA", "STA"),
-           "SPP"))
+    c("B_ESCHR", "B_ESCHR", "B_STPHY", "B_STPHY", "B_STPHY",
+      "B_STPHY", "B_STPHY", "B_STPHY", "B_STPHY", "B_STPHY"))
 
   # select with two columns
   expect_identical(
@@ -127,18 +126,18 @@ test_that("as.mo works", {
   expect_error(septic_patients %>% select(1:3) %>% as.mo())
 
   # print
-  expect_output(print(as.mo(c("ESCCOL", NA))))
+  expect_output(print(as.mo(c("B_ESCHR_COL", NA))))
 
   # helper function
-  expect_identical(as.mo("ESCCOL"),
-                   guess_mo("ESCCOL"))
+  expect_identical(as.mo("B_ESCHR_COL"),
+                   guess_mo("B_ESCHR_COL"))
 
   # test pull
   expect_equal(nrow(septic_patients %>% mutate(mo = as.mo(mo))),
                2000)
 
   # test data.frame
-  expect_equal(nrow(data.frame(test = as.mo("ESCCOL"))),
+  expect_equal(nrow(data.frame(test = as.mo("B_ESCHR_COL"))),
                1)
 
   # check empty values
