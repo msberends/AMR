@@ -43,7 +43,8 @@ before_install:
   - if [ $TRAVIS_OS_NAME = osx ]; then brew install libgit2; fi
 
 install:
-  - if [ $TRAVIS_OS_NAME = osx ]; then Rscript -e "install.packages('devtools')"; fi
+  - Rscript -e "install.packages('devtools')"
+  - Rscript -e "install.packages('knitr')"
   - if [ $TRAVIS_OS_NAME = osx ]; then Rscript -e "devtools::install_github('r-lib/rlang')"; fi
 
 # postrun

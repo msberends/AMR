@@ -30,7 +30,6 @@ test_that("mo_property works", {
 
   # check languages
   expect_equal(mo_type("E. coli", language = "de"), "Bakterien")
-  expect_equal(mo_type("E. coli", language = "nl"), "Bacteri\u00ebn")
   expect_equal(mo_gramstain("E. coli", language = "nl"), "Gram-negatief")
 
   expect_output(print(mo_gramstain("E. coli", language = "en")))
