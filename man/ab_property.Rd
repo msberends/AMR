@@ -32,7 +32,7 @@ ab_tradenames(x)
 
 \item{property}{one of the column names of one of the \code{\link{antibiotics}} data set, like \code{"atc"} and \code{"official"}}
 
-\item{language}{language of the returned text, defaults to the systems language. Either one of \code{"en"} (English) or \code{"nl"} (Dutch).}
+\item{language}{language of the returned text, defaults to English (\code{"en"}) and can be set with \code{\link{getOption}("AMR_locale")}. Either one of \code{"en"} (English) or \code{"nl"} (Dutch).}
 }
 \value{
 A vector of values. In case of \code{ab_tradenames}, if \code{x} is of length one, a vector will be returned. Otherwise a \code{\link{list}}, with \code{x} as names.

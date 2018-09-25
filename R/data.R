@@ -150,7 +150,7 @@
 #'
 #' A data set containing old, previously valid, taxonomic names. This data set is used internally by \code{\link{as.mo}}.
 #' @inheritSection as.mo ITIS
-#' @format A \code{\link{data.frame}} with 58 observations and 5 variables:
+#' @format A \code{\link{data.frame}} with 1,682 observations and 5 variables:
 #' \describe{
 #'   \item{\code{tsn}}{Old Taxonomic Serial Number (TSN), as defined by ITIS}
 #'   \item{\code{name}}{Old taxonomic name of the microorganism as found in ITIS, see Source}

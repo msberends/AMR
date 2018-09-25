@@ -60,7 +60,7 @@
 #' \code{guess_mo} is an alias of \code{as.mo}.
 #' @section ITIS:
 #' \if{html}{\figure{itis_logo.jpg}{options: height=60px style=margin-bottom:5px} \cr}
-#' This \code{AMR} package contains the \strong{complete microbial taxonomic data} from the publicly available Integrated Taxonomic Information System (ITIS, https://www.itis.gov). ITIS is a partnership of U.S., Canadian, and Mexican agencies and taxonomic specialists [3]. The complete taxonomic kingdoms Bacteria, Fungi and Protozoa (from subkingdom to the subspecies level) are included in this package.
+#' This \code{AMR} package contains the \strong{complete microbial taxonomic data} (with seven taxonomic ranks - from subkingdom to subspecies) from the publicly available Integrated Taxonomic Information System (ITIS, https://www.itis.gov). ITIS is a partnership of U.S., Canadian, and Mexican agencies and taxonomic specialists [3]. The complete taxonomic kingdoms Bacteria, Fungi and Protozoa are included in this package, as well as all previously accepted names known to ITIS.
 #  (source as section, so it can be inherited by mo_property:)
 #' @section Source:
 #' [1] Becker K \emph{et al.} \strong{Coagulase-Negative Staphylococci}. 2014. Clin Microbiol Rev. 27(4): 870–926. \url{https://dx.doi.org/10.1128/CMR.00109-13}
@@ -302,7 +302,8 @@ as.mo <- function(x, Becker = FALSE, Lancefield = FALSE, allow_uncertain = FALSE
       next
     }
     found <- MOs_mostprevalent[mo.old == toupper(x_backup[i])
-                               | (substr(x_backup[i], 4, 6) == "SPP" & mo.old == substr(x_backup[i], 1, 3)), mo]
+                               | (substr(x_backup[i], 4, 6) == "SPP" & mo.old == substr(x_backup[i], 1, 3))
+                               | mo.old == substr(x_backup[i], 1, 3), mo]
     # is a valid old mo
     if (length(found) > 0) {
       x[i] <- found[1L]
@@ -395,7 +396,9 @@ as.mo <- function(x, Becker = FALSE, Lancefield = FALSE, allow_uncertain = FALSE
       x[i] <- found[1L]
       next
     }
-    found <- MOs_allothers[mo.old == toupper(x_backup[i]), mo]
+    found <- MOs_allothers[mo.old == toupper(x_backup[i])
+                           | (substr(x_backup[i], 4, 6) == "SPP" & mo.old == substr(x_backup[i], 1, 3))
+                           | mo.old == substr(x_backup[i], 1, 3), mo]
     # is a valid old mo
     if (length(found) > 0) {
       x[i] <- found[1L]
@@ -463,27 +466,47 @@ as.mo <- function(x, Becker = FALSE, Lancefield = FALSE, allow_uncertain = FALSE
 
     # look for old taxonomic names ----
     if (is.null(MOs_old)) {
-      MOs_old <- as.data.table(microorganisms.old)
+      MOs_old <- as.data.table(AMR::microorganisms.old)
       setkey(MOs_old, name, tsn_new)
     }
     found <- MOs_old[tolower(name) == tolower(x_backup[i]) |
                        tsn == x_trimmed[i],]
     if (NROW(found) > 0) {
       x[i] <- MOs[tsn == found[1, tsn_new], mo]
-      message("Note: '", found[1, name], "' was renamed to '",
-              MOs[tsn == found[1, tsn_new], fullname], "' by ",
-              found[1, authors], " in ", found[1, year])
+      renamed_note(name_old = found[1, name],
+                   name_new = MOs[tsn == found[1, tsn_new], fullname],
+                   authors = found[1, authors],
+                   year = found[1, year])
       next
     }
 
     # check for uncertain results ----
-    # (1) try to strip off one element and check the remains
     if (allow_uncertain == TRUE) {
+      # (1) look again for old taxonomic names, now for G. species ----
+      found <- MOs_old[name %like% x_withspaces[i]
+                       | name %like% x_withspaces_start[i]
+                       | name %like% x[i],]
+      if (NROW(found) > 0) {
+        x[i] <- MOs[tsn == found[1, tsn_new], mo]
+        warning("Uncertain interpretation: '",
+                x_backup[i], "' -> '", found[1, name], "'",
+                call. = FALSE, immediate. = TRUE)
+        renamed_note(name_old = found[1, name],
+                     name_new = MOs[tsn == found[1, tsn_new], fullname],
+                     authors = found[1, authors],
+                     year = found[1, year])
+
+        next
+      }
+
+      # (2) try to strip off one element and check the remains
       x_strip <- x_backup[i] %>% strsplit(" ") %>% unlist()
       x_strip <- x_strip[1:length(x_strip) - 1]
       x[i] <- suppressWarnings(suppressMessages(as.mo(x_strip)))
       if (!is.na(x[i])) {
-        warning("Uncertain result: '", x_backup[i], "' -> '", MOs[mo == x[i], fullname], "' (", x[i], ")")
+        warning("Uncertain interpretation: '",
+                x_backup[i], "' -> '", MOs[mo == x[i], fullname], "' (", x[i], ")",
+                call. = FALSE, immediate. = TRUE)
         next
       }
     }
@@ -506,28 +529,24 @@ as.mo <- function(x, Becker = FALSE, Lancefield = FALSE, allow_uncertain = FALSE
   if (Becker == TRUE | Becker == "all") {
     # See Source. It's this figure:
     # https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4187637/figure/F3/
-    CoNS <- MOs %>%
-      filter(genus == "Staphylococcus",
-             species %in% c("arlettae", "auricularis", "capitis",
-                            "caprae", "carnosus", "cohnii", "condimenti",
-                            "devriesei", "epidermidis", "equorum",
-                            "fleurettii", "gallinarum", "haemolyticus",
-                            "hominis", "jettensis", "kloosii", "lentus",
-                            "lugdunensis", "massiliensis", "microti",
-                            "muscae", "nepalensis", "pasteuri", "petrasii",
-                            "pettenkoferi", "piscifermentans", "rostri",
-                            "saccharolyticus", "saprophyticus", "sciuri",
-                            "stepanovicii", "simulans", "succinus",
-                            "vitulinus", "warneri", "xylosus")) %>%
-      pull(mo)
-    CoPS <- MOs %>%
-      filter(genus == "Staphylococcus",
-             species %in% c("simiae", "agnetis", "chromogenes",
-                            "delphini", "felis", "lutrae",
-                            "hyicus", "intermedius",
-                            "pseudintermedius", "pseudointermedius",
-                            "schleiferi")) %>%
-      pull(mo)
+    MOs_staph <- MOs[genus == "Staphylococcus"]
+    setkey(MOs_staph, species)
+    CoNS <- MOs_staph[species %in% c("arlettae", "auricularis", "capitis",
+                                     "caprae", "carnosus", "cohnii", "condimenti",
+                                     "devriesei", "epidermidis", "equorum",
+                                     "fleurettii", "gallinarum", "haemolyticus",
+                                     "hominis", "jettensis", "kloosii", "lentus",
+                                     "lugdunensis", "massiliensis", "microti",
+                                     "muscae", "nepalensis", "pasteuri", "petrasii",
+                                     "pettenkoferi", "piscifermentans", "rostri",
+                                     "saccharolyticus", "saprophyticus", "sciuri",
+                                     "stepanovicii", "simulans", "succinus",
+                                     "vitulinus", "warneri", "xylosus"), mo]
+    CoPS <- MOs_staph[species %in% c("simiae", "agnetis", "chromogenes",
+                                     "delphini", "felis", "lutrae",
+                                     "hyicus", "intermedius",
+                                     "pseudintermedius", "pseudointermedius",
+                                     "schleiferi"), mo]
     x[x %in% CoNS] <- "B_STPHY_CNS"
     x[x %in% CoPS] <- "B_STPHY_CPS"
     if (Becker == "all") {
@@ -559,21 +578,40 @@ as.mo <- function(x, Becker = FALSE, Lancefield = FALSE, allow_uncertain = FALSE
   }
 
   # left join the found results to the original input values (x_input)
-  df_found <- data.frame(input = as.character(unique(x_input)),
+  DT_found <- data.table(input = as.character(unique(x_input)),
                          found = x,
+                         key = "input",
                          stringsAsFactors = FALSE)
-  df_input <- data.frame(input = as.character(x_input),
+  DT_input <- data.table(input = as.character(x_input),
+                         key = "input",
                          stringsAsFactors = FALSE)
+  x <- DT_found[DT_input, on = "input", found]
 
-  x <- df_input %>%
-    left_join(df_found,
-              by = "input") %>%
-    pull(found)
+  # df_found <- data.frame(input = as.character(unique(x_input)),
+  #                        found = x,
+  #                        stringsAsFactors = FALSE)
+  # df_input <- data.frame(input = as.character(x_input),
+  #                        stringsAsFactors = FALSE)
+  # x <- df_input %>%
+  #   left_join(df_found,
+  #             by = "input") %>%
+  #   pull(found)
 
   class(x) <- "mo"
   attr(x, 'package') <- 'AMR'
   attr(x, 'ITIS') <- TRUE
   x
+}
+
+renamed_note <- function(name_old, name_new, authors, year) {
+  msg <- paste0("Note: '", name_old, "' was renamed to '", name_new, "'")
+  if (!authors %in% c("", NA)) {
+    msg <- paste0(msg, " by ", authors)
+  }
+  if (!year %in% c("", NA)) {
+    msg <- paste0(msg, " in ", year)
+  }
+  base::message(msg)
 }
 
 

@@ -42,7 +42,7 @@ This R package was intended **to make microbial epidemiology easier**. Most func
 
 <a href="https://www.itis.gov"><img src="man/figures/itis_logo.jpg" height="50px"></a>
 
-This `AMR` package contains the *complete microbial taxonomic data* from the publicly available Integrated Taxonomic Information System (ITIS, https://www.itis.gov). ITIS is a partnership of U.S., Canadian, and Mexican agencies and taxonomic specialists. The complete taxonomic kingdoms Bacteria, Fungi and Protozoa (from subkingdom to the subspecies level) are included in this package. This allows users to use authoritative taxonomic information for their data analyses on any microorganisms, not only human pathogens.
+This `AMR` package contains the **complete microbial taxonomic data** (with seven taxonomic ranks - from subkingdom to subspecies) from the publicly available Integrated Taxonomic Information System (ITIS, https://www.itis.gov). ITIS is a partnership of U.S., Canadian, and Mexican agencies and taxonomic specialists. The complete taxonomic kingdoms Bacteria, Fungi and Protozoa are included in this package, as well as all previously accepted names known to ITIS. This allows users to use authoritative taxonomic information for their data analyses on any microorganisms, not only human pathogens.
 
 Combined with several new functions, this `AMR` package basically does four important things:
 

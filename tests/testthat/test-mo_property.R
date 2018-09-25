@@ -21,12 +21,12 @@ test_that("mo_property works", {
   expect_equal(mo_shortname("S. aga", Lancefield = TRUE), "GBS")
 
   # test integrity
-  library(dplyr)
-  rnd <- sample(1:nrow(AMR::microorganisms), 500, replace = FALSE) # random 500 rows
-  MOs <- AMR::microorganisms %>% filter(!is.na(mo),
-                                        species != "species",
-                                        dplyr::row_number() %in% rnd)
-  expect_identical(MOs$fullname, mo_fullname(MOs$fullname, language = "en"))
+  # library(dplyr)
+  # rnd <- sample(1:nrow(AMR::microorganisms), 500, replace = FALSE) # random 500 rows
+  # MOs <- AMR::microorganisms %>% filter(!is.na(mo),
+  #                                       species != "species",
+  #                                       dplyr::row_number() %in% rnd)
+  # expect_identical(MOs$fullname, mo_fullname(MOs$fullname, language = "en"))
 
   # check languages
   expect_equal(mo_type("E. coli", language = "de"), "Bakterien")

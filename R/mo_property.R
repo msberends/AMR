@@ -20,9 +20,9 @@
 #'
 #' Use these functions to return a specific property of a microorganism from the \code{\link{microorganisms}} data set. All input values will be evaluated internally with \code{\link{as.mo}}.
 #' @param x any (vector of) text that can be coerced to a valid microorganism code with \code{\link{as.mo}}
-#' @param property one of the column names of one of the \code{\link{microorganisms}} data set, like \code{"mo"}, \code{"bactsys"}, \code{"family"}, \code{"genus"}, \code{"species"}, \code{"fullname"}, \code{"gramstain"} and \code{"aerobic"}
+#' @param property one of the column names of one of the \code{\link{microorganisms}} data set or \code{"shortname"}
 #' @inheritParams as.mo
-#' @param language language of the returned text, defaults to the systems language but can also be set with \code{\link{getOption}("AMR_locale")}. Either one of \code{"en"} (English), \code{"de"} (German), \code{"nl"} (Dutch), \code{"es"} (Spanish) or \code{"pt"} (Portuguese).
+#' @param language language of the returned text, defaults to English (\code{"en"}) and can also be set with \code{\link{getOption}("AMR_locale")}. Either one of \code{"en"} (English), \code{"de"} (German), \code{"nl"} (Dutch), \code{"es"} (Spanish) or \code{"pt"} (Portuguese).
 #' @inheritSection as.mo ITIS
 #' @inheritSection as.mo Source
 #' @rdname mo_property
@@ -113,8 +113,8 @@ mo_shortname <- function(x, Becker = FALSE, Lancefield = FALSE, language = NULL)
     res2_fullname <- gsub("Streptococcus (group|Gruppe|gruppe|groep|grupo|gruppo|groupe) (.)",
                           "G\\2S",
                           res2_fullname) # turn "Streptococcus group A" and "Streptococcus grupo A" to "GAS"
-    res2_fullname_vector <- res2_fullname[res2_fullname == mo_fullname(x)]
-    res2_fullname[res2_fullname == mo_fullname(x)] <- paste0(substr(mo_genus(res2_fullname_vector), 1, 1),
+    res2_fullname_vector <- res2_fullname[res2_fullname == mo_fullname(res1)]
+    res2_fullname[res2_fullname == mo_fullname(res1)] <- paste0(substr(mo_genus(res2_fullname_vector), 1, 1),
                                                              ". ",
                                                              suppressWarnings(mo_species(res2_fullname_vector)))
     if (sum(res1 == res2, na.rm = TRUE) > 0) {
@@ -125,6 +125,7 @@ mo_shortname <- function(x, Becker = FALSE, Lancefield = FALSE, language = NULL)
     res1[res1 != res2] <- res2_fullname
     result <- as.character(res1)
   } else {
+    x <- AMR::as.mo(x)
     # return G. species
     result <- paste0(substr(mo_genus(x), 1, 1), ". ", suppressWarnings(mo_species(x)))
   }
@@ -208,11 +209,9 @@ mo_property <- function(x, property = 'fullname', Becker = FALSE, Lancefield = F
   }
   if (Becker == TRUE | Lancefield == TRUE | !is.mo(x)) {
     # this will give a warning if x cannot be coerced
-    result1 <- AMR::as.mo(x = x, Becker = Becker, Lancefield = Lancefield)
-  } else {
-    result1 <- x
+    x <- AMR::as.mo(x = x, Becker = Becker, Lancefield = Lancefield)
   }
-  A <- data.table(mo = result1, stringsAsFactors = FALSE)
+  A <- data.table(mo = x, stringsAsFactors = FALSE)
   B <- as.data.table(AMR::microorganisms)
   setkey(B, mo)
   result2 <- B[A, on = 'mo', ..property][[1]]
@@ -246,7 +245,7 @@ mo_taxonomy <- function(x) {
 #' @importFrom dplyr %>% case_when
 mo_translate <- function(x, language) {
   if (is.null(language)) {
-    language <- Sys.locale()
+    language <- getOption("AMR_locale", default = "en")[1L]
   } else {
     language <- tolower(language[1])
   }

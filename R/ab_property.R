@@ -21,7 +21,7 @@
 #' Use these functions to return a specific property of an antibiotic from the \code{\link{antibiotics}} data set, based on their ATC code. Get such a code with \code{\link{as.atc}}.
 #' @param x a (vector of a) valid \code{\link{atc}} code or any text that can be coerced to a valid atc with \code{\link{as.atc}}
 #' @param property one of the column names of one of the \code{\link{antibiotics}} data set, like \code{"atc"} and \code{"official"}
-#' @param language language of the returned text, defaults to the systems language. Either one of \code{"en"} (English) or \code{"nl"} (Dutch).
+#' @param language language of the returned text, defaults to English (\code{"en"}) and can be set with \code{\link{getOption}("AMR_locale")}. Either one of \code{"en"} (English) or \code{"nl"} (Dutch).
 #' @rdname ab_property
 #' @return A vector of values. In case of \code{ab_tradenames}, if \code{x} is of length one, a vector will be returned. Otherwise a \code{\link{list}}, with \code{x} as names.
 #' @export
@@ -60,7 +60,7 @@ ab_atc <- function(x) {
 ab_official <- function(x, language = NULL) {
 
   if (is.null(language)) {
-    language <- Sys.locale()
+    language <- getOption("AMR_locale", default = "en")[1L]
   } else {
     language <- tolower(language[1])
   }

@@ -155,26 +155,6 @@ tbl_parse_guess <- function(tbl,
   tbl
 }
 
-#' @importFrom dplyr case_when
-Sys.locale <- function() {
-  alreadyset <- getOption("AMR_locale")
-  if (!is.null(alreadyset)) {
-    if (tolower(alreadyset) %in% c("en", "de", "nl", "es", "fr", "pt", "it")) {
-      return(tolower(alreadyset))
-    }
-  }
-  sys <- base::Sys.getlocale()
-  case_when(
-    sys %like% '(Deutsch|German|de_)'       ~ "de",
-    sys %like% '(Nederlands|Dutch|nl_)'     ~ "nl",
-    sys %like% '(Espa.ol|Spanish|es_)'      ~ "es",
-    sys %like% '(Fran.ais|French|fr_)'      ~ "fr",
-    sys %like% '(Portugu.s|Portuguese|pt_)' ~ "pt",
-    sys %like% '(Italiano|Italian|it_)'     ~ "it",
-    TRUE                                    ~ "en"
-  )
-}
-
 # transforms date format like "dddd d mmmm yyyy" to "%A %e %B %Y"
 date_generic <- function(format) {
   if (!grepl('%', format, fixed = TRUE)) {
