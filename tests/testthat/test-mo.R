@@ -15,7 +15,7 @@ test_that("as.mo works", {
   expect_equal(as.character(as.mo("Escherichia  species")), "B_ESCHR")
   expect_equal(as.character(as.mo("Escherichia")), "B_ESCHR")
   expect_equal(as.character(as.mo(" B_ESCHR_COL ")), "B_ESCHR_COL")
-  #expect_equal(as.character(as.mo("coli")), "B_ESCHR_COL") # not Campylobacter
+  expect_equal(as.character(as.mo("e coli")), "B_ESCHR_COL") # not Campylobacter
   expect_equal(as.character(as.mo("klpn")), "B_KLBSL_PNE")
   expect_equal(as.character(as.mo("Klebsiella")), "B_KLBSL")
   expect_equal(as.character(as.mo("K. pneu rhino")), "B_KLBSL_PNE_RHI") # K. pneumoniae subspp. rhinoscleromatis
@@ -33,9 +33,6 @@ test_that("as.mo works", {
   expect_equal(as.character(as.mo("S. pyo")), "B_STRPTC_PYO") # not Actinomyces pyogenes
 
   expect_equal(as.character(as.mo("P. aer")), "B_PDMNS_AER") # not Pasteurella aerogenes
-
-  # expect_equal(as.character(as.mo("Negative rods")), "GNR")
-  # expect_equal(as.character(as.mo("Gram negative rods")), "GNR")
 
   # GLIMS
   expect_equal(as.character(as.mo("bctfgr")), "B_BCTRD_FRA")

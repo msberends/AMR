@@ -65,7 +65,7 @@ mo_taxonomy(x)
 \item{property}{one of the column names of one of the \code{\link{microorganisms}} data set or \code{"shortname"}}
 }
 \value{
-A logical (in case of \code{mo_aerobic}), a list (in case of \code{mo_taxonomy}), a character otherwise
+A \code{list} (in case of \code{mo_taxonomy}) or a \code{character} otherwise
 }
 \description{
 Use these functions to return a specific property of a microorganism from the \code{\link{microorganisms}} data set. All input values will be evaluated internally with \code{\link{as.mo}}.
@@ -73,7 +73,7 @@ Use these functions to return a specific property of a microorganism from the \c
 \section{ITIS}{
 
 \if{html}{\figure{itis_logo.jpg}{options: height=60px style=margin-bottom:5px} \cr}
-This \code{AMR} package contains the \strong{complete microbial taxonomic data} (with seven taxonomic ranks - from subkingdom to subspecies) from the publicly available Integrated Taxonomic Information System (ITIS, https://www.itis.gov). ITIS is a partnership of U.S., Canadian, and Mexican agencies and taxonomic specialists [3]. The complete taxonomic kingdoms Bacteria, Fungi and Protozoa are included in this package, as well as all previously accepted names known to ITIS.
+This \code{AMR} package contains the \strong{complete microbial taxonomic data} (with seven taxonomic ranks - from subkingdom to subspecies) from the publicly available Integrated Taxonomic Information System (ITIS, \url{https://www.itis.gov}). ITIS is a partnership of U.S., Canadian, and Mexican agencies and taxonomic specialists [3]. The complete taxonomic kingdoms Bacteria, Fungi and Protozoa are included in this package, as well as all previously accepted names known to ITIS.
 }
 
 \section{Source}{
@@ -94,7 +94,7 @@ mo_order("E. coli")           # "Enterobacteriales"
 mo_family("E. coli")          # "Enterobacteriaceae"
 mo_genus("E. coli")           # "Escherichia"
 mo_species("E. coli")         # "coli"
-mo_subspecies("E. coli")      # ""
+mo_subspecies("E. coli")      # NA
 mo_fullname("E. coli")        # "Escherichia coli"
 mo_shortname("E. coli")       # "E. coli"
 mo_gramstain("E. coli")       # "Gram negative"

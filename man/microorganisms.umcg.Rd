@@ -7,7 +7,7 @@
 \format{A \code{\link{tibble}} with 1,095 observations and 2 variables:
 \describe{
   \item{\code{umcg}}{Code of microorganism according to UMCG MMB}
-  \item{\code{mo}}{Code of microorganism in \code{\link{microorganisms}}}
+  \item{\code{certe}}{Code of microorganism according to Certe MMB}
 }}
 \usage{
 microorganisms.umcg
@@ -16,6 +16,6 @@ microorganisms.umcg
 A data set containing all bacteria codes of UMCG MMB. These codes can be joined to data with an ID from \code{\link{microorganisms}$mo} (using \code{\link{left_join_microorganisms}}). GLIMS codes can also be translated to valid \code{MO}s with \code{\link{guess_mo}}.
 }
 \seealso{
-\code{\link{as.mo}} \code{\link{microorganisms}}
+\code{\link{as.mo}} \code{\link{microorganisms.certe}} \code{\link{microorganisms}}
 }
 \keyword{datasets}

@@ -8,11 +8,13 @@ test_that("mo_property works", {
   expect_equal(mo_family("E. coli"), "Enterobacteriaceae")
   expect_equal(mo_genus("E. coli"), "Escherichia")
   expect_equal(mo_species("E. coli"), "coli")
-  expect_equal(mo_subspecies("E. coli"), "")
+  expect_equal(mo_subspecies("E. coli"), NA_character_)
   expect_equal(mo_fullname("E. coli"), "Escherichia coli")
   expect_equal(mo_type("E. coli", language = "en"), "Bacteria")
   expect_equal(mo_gramstain("E. coli", language = "en"), "Gram negative")
   expect_equal(class(mo_taxonomy("E. coli")), "list")
+  expect_equal(names(mo_taxonomy("E. coli")), c("subkingdom", "phylum", "class", "order",
+                                                "family", "genus", "species", "subspecies"))
 
   expect_equal(mo_shortname("MRSA"), "S. aureus")
   expect_equal(mo_shortname("MRSA", Becker = TRUE), "S. aureus")
@@ -21,12 +23,8 @@ test_that("mo_property works", {
   expect_equal(mo_shortname("S. aga", Lancefield = TRUE), "GBS")
 
   # test integrity
-  # library(dplyr)
-  # rnd <- sample(1:nrow(AMR::microorganisms), 500, replace = FALSE) # random 500 rows
-  # MOs <- AMR::microorganisms %>% filter(!is.na(mo),
-  #                                       species != "species",
-  #                                       dplyr::row_number() %in% rnd)
-  # expect_identical(MOs$fullname, mo_fullname(MOs$fullname, language = "en"))
+  MOs <- AMR::microorganisms
+  expect_identical(MOs$fullname, mo_fullname(MOs$fullname, language = "en"))
 
   # check languages
   expect_equal(mo_type("E. coli", language = "de"), "Bakterien")

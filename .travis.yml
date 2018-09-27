@@ -43,7 +43,7 @@ before_install:
   - if [ $TRAVIS_OS_NAME = osx ]; then brew install libgit2; fi
 
 install:
-  - Rscript -e "install.packages(c('devtools', 'backports', 'clipr', 'curl', 'data.table', 'dplyr', 'hms', 'knitr', 'readr', 'rlang', 'rvest', 'xml2'))"
+  - Rscript -e "install.packages(c('devtools', 'backports', 'clipr', 'curl', 'data.table', 'dplyr', 'hms', 'knitr', 'readr', 'rlang', 'rvest', 'xml2', 'covr', 'ggplot2', 'rmarkdown', 'testthat', 'tidyr'))"
   - if [ $TRAVIS_OS_NAME = osx ]; then Rscript -e "devtools::install_github('r-lib/rlang')"; fi
 
 # postrun

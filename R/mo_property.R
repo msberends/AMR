@@ -27,7 +27,7 @@
 #' @inheritSection as.mo Source
 #' @rdname mo_property
 #' @name mo_property
-#' @return A logical (in case of \code{mo_aerobic}), a list (in case of \code{mo_taxonomy}), a character otherwise
+#' @return A \code{list} (in case of \code{mo_taxonomy}) or a \code{character} otherwise
 #' @export
 #' @seealso \code{\link{microorganisms}}
 #' @examples
@@ -39,7 +39,7 @@
 #' mo_family("E. coli")          # "Enterobacteriaceae"
 #' mo_genus("E. coli")           # "Escherichia"
 #' mo_species("E. coli")         # "coli"
-#' mo_subspecies("E. coli")      # ""
+#' mo_subspecies("E. coli")      # NA
 #' mo_fullname("E. coli")        # "Escherichia coli"
 #' mo_shortname("E. coli")       # "E. coli"
 #' mo_gramstain("E. coli")       # "Gram negative"
@@ -98,15 +98,17 @@
 #' # Complete taxonomy up to Subkingdom, returns a list
 #' mo_taxonomy("E. coli")
 mo_fullname <- function(x, Becker = FALSE, Lancefield = FALSE, language = NULL) {
-  mo_property(x, "fullname", Becker = Becker, Lancefield = Lancefield, language = language)
+  x <- mo_validate(x = x, property = "fullname", Becker = Becker, Lancefield = Lancefield)
+  mo_translate(x, language = language)
 }
 
 #' @rdname mo_property
+#' @importFrom dplyr %>% left_join mutate pull
 #' @export
 mo_shortname <- function(x, Becker = FALSE, Lancefield = FALSE, language = NULL) {
   if (Becker %in% c(TRUE, "all") | Lancefield == TRUE) {
-    res1 <- as.mo(x)
-    res2 <- suppressWarnings(as.mo(x, Becker = Becker, Lancefield = Lancefield))
+    res1 <- AMR::as.mo(x)
+    res2 <- suppressWarnings(AMR::as.mo(res1, Becker = Becker, Lancefield = Lancefield))
     res2_fullname <- mo_fullname(res2)
     res2_fullname[res2_fullname %like% "\\(CoNS\\)"] <- "CoNS"
     res2_fullname[res2_fullname %like% "\\(CoPS\\)"] <- "CoPS"
@@ -115,8 +117,8 @@ mo_shortname <- function(x, Becker = FALSE, Lancefield = FALSE, language = NULL)
                           res2_fullname) # turn "Streptococcus group A" and "Streptococcus grupo A" to "GAS"
     res2_fullname_vector <- res2_fullname[res2_fullname == mo_fullname(res1)]
     res2_fullname[res2_fullname == mo_fullname(res1)] <- paste0(substr(mo_genus(res2_fullname_vector), 1, 1),
-                                                             ". ",
-                                                             suppressWarnings(mo_species(res2_fullname_vector)))
+                                                                ". ",
+                                                                suppressWarnings(mo_species(res2_fullname_vector)))
     if (sum(res1 == res2, na.rm = TRUE) > 0) {
       res1[res1 == res2] <- paste0(substr(mo_genus(res1[res1 == res2]), 1, 1),
                                    ". ",
@@ -126,112 +128,115 @@ mo_shortname <- function(x, Becker = FALSE, Lancefield = FALSE, language = NULL)
     result <- as.character(res1)
   } else {
     x <- AMR::as.mo(x)
-    # return G. species
-    result <- paste0(substr(mo_genus(x), 1, 1), ". ", suppressWarnings(mo_species(x)))
+    result <- data.frame(mo = x) %>%
+      left_join(AMR::microorganisms, by = "mo") %>%
+      mutate(shortname = ifelse(!is.na(genus) & !is.na(species), paste0(substr(genus, 1, 1), ". ", species), NA_character_)) %>%
+      pull(shortname)
   }
-  result[result %in% c(". ", "(. ")] <- ""
   mo_translate(result, language = language)
 }
 
 #' @rdname mo_property
 #' @export
 mo_subspecies <- function(x, Becker = FALSE, Lancefield = FALSE, language = NULL) {
-  mo_property(x, "subspecies", Becker = Becker, Lancefield = Lancefield, language = language)
+  mo_translate(exec_as.mo(x,
+                          Becker = Becker,
+                          Lancefield = Lancefield,
+                          property = "subspecies"),
+               language = language)
 }
 
 #' @rdname mo_property
 #' @export
 mo_species <- function(x, Becker = FALSE, Lancefield = FALSE, language = NULL) {
-  mo_property(x, "species", Becker = Becker, Lancefield = Lancefield, language = language)
+  x <- mo_validate(x = x, property = "species", Becker = Becker, Lancefield = Lancefield)
+  mo_translate(x, language = language)
 }
 
 #' @rdname mo_property
 #' @export
 mo_genus <- function(x, language = NULL) {
-  mo_property(x, "genus", language = language)
+  x <- mo_validate(x = x, property = "genus")
+  mo_translate(x, language = language)
 }
 
 #' @rdname mo_property
 #' @export
 mo_family <- function(x) {
-  mo_property(x, "family")
+  mo_validate(x = x, property = "family")
 }
 
 #' @rdname mo_property
 #' @export
 mo_order <- function(x) {
-  mo_property(x, "order")
+  mo_validate(x = x, property = "order")
 }
 
 #' @rdname mo_property
 #' @export
 mo_class <- function(x) {
-  mo_property(x, "class")
+  mo_validate(x = x, property = "class")
 }
 
 #' @rdname mo_property
 #' @export
 mo_phylum <- function(x) {
-  mo_property(x, "phylum")
+  mo_validate(x = x, property = "phylum")
 }
 
 #' @rdname mo_property
 #' @export
 mo_subkingdom  <- function(x) {
-  mo_property(x, "subkingdom")
+  mo_validate(x = x, property = "subkingdom")
 }
 
 #' @rdname mo_property
 #' @export
 mo_type <- function(x, language = NULL) {
-  mo_property(x, "type", language = language)
+  x <- mo_validate(x = x, property = "type")
+  mo_translate(x, language = language)
 }
 
 #' @rdname mo_property
 #' @export
 mo_TSN  <- function(x) {
-  mo_property(x, "tsn")
+  mo_validate(x = x, property = "tsn")
 }
 
 #' @rdname mo_property
 #' @export
 mo_gramstain <- function(x, language = NULL) {
-  mo_property(x, "gramstain", language = language)
+  x <- mo_validate(x = x, property = "gramstain")
+  mo_translate(x, language = language)
 }
 
 #' @rdname mo_property
 #' @importFrom data.table data.table as.data.table setkey
 #' @export
 mo_property <- function(x, property = 'fullname', Becker = FALSE, Lancefield = FALSE, language = NULL) {
-  property <- tolower(property[1])
+  if (length(property) != 1L) {
+    stop("'property' must be of length 1.")
+  }
   if (!property %in% colnames(AMR::microorganisms)) {
-    stop("invalid property: ", property, " - use a column name of the `microorganisms` data set")
+    stop("invalid property: '", property, "' - use a column name of the `microorganisms` data set")
   }
-  if (Becker == TRUE | Lancefield == TRUE | !is.mo(x)) {
-    # this will give a warning if x cannot be coerced
-    x <- AMR::as.mo(x = x, Becker = Becker, Lancefield = Lancefield)
-  }
-  A <- data.table(mo = x, stringsAsFactors = FALSE)
-  B <- as.data.table(AMR::microorganisms)
-  setkey(B, mo)
-  result2 <- B[A, on = 'mo', ..property][[1]]
 
-  if (property == "tsn") {
-    result2 <- as.integer(result2)
-  } else {
-    # will else not retain `logical` class
-    result2[x %in% c("", NA) | result2 %in% c("", NA, "(no MO)")] <- ""
+  # this will give a warning if x cannot be coerced
+  res <- exec_as.mo(x = x, Becker = Becker, Lancefield = Lancefield, property = property)
+
+  if (property != "tsn") {
+    res[x %in% c("", NA) | res %in% c("", NA, "(no MO)")] <- ""
     if (property %in% c("fullname", "shortname", "genus", "species", "subspecies", "type", "gramstain")) {
-      result2 <- mo_translate(result2, language = language)
+      res <- mo_translate(res, language = language)
     }
   }
-  result2
+  res
 }
 
 #' @rdname mo_property
 #' @export
 mo_taxonomy <- function(x) {
-  x <- as.mo(x)
+  x <- AMR::as.mo(x)
   base::list(subkingdom = mo_subkingdom(x),
              phylum = mo_phylum(x),
              class = mo_class(x),
@@ -247,7 +252,7 @@ mo_translate <- function(x, language) {
   if (is.null(language)) {
     language <- getOption("AMR_locale", default = "en")[1L]
   } else {
-    language <- tolower(language[1])
+    language <- tolower(language[1L])
   }
   if (language %in% c("en", "")) {
     return(x)
@@ -363,4 +368,15 @@ mo_translate <- function(x, language) {
 
   )
 
+}
+
+mo_validate <- function(x, property, Becker = FALSE, Lancefield = FALSE) {
+  if (!all(x %in% AMR::microorganisms[, property]) | Becker %in% c(TRUE, "all") | Lancefield == TRUE) {
+    exec_as.mo(x,
+               Becker = Becker,
+               Lancefield = Lancefield,
+               property = property)
+  } else {
+    x
+  }
 }

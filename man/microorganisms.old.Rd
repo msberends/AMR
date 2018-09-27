@@ -4,7 +4,7 @@
 \name{microorganisms.old}
 \alias{microorganisms.old}
 \title{Data set with old taxonomic data from ITIS}
-\format{A \code{\link{data.frame}} with 1,682 observations and 5 variables:
+\format{A \code{\link{data.frame}} with 2,384 observations and 5 variables:
 \describe{
   \item{\code{tsn}}{Old Taxonomic Serial Number (TSN), as defined by ITIS}
   \item{\code{name}}{Old taxonomic name of the microorganism as found in ITIS, see Source}
@@ -19,12 +19,12 @@
 microorganisms.old
 }
 \description{
-A data set containing old, previously valid, taxonomic names. This data set is used internally by \code{\link{as.mo}}.
+A data set containing old (previously valid or accepted) taxonomic names according to ITIS. This data set is used internally by \code{\link{as.mo}}.
 }
 \section{ITIS}{
 
 \if{html}{\figure{itis_logo.jpg}{options: height=60px style=margin-bottom:5px} \cr}
-This \code{AMR} package contains the \strong{complete microbial taxonomic data} (with seven taxonomic ranks - from subkingdom to subspecies) from the publicly available Integrated Taxonomic Information System (ITIS, https://www.itis.gov). ITIS is a partnership of U.S., Canadian, and Mexican agencies and taxonomic specialists [3]. The complete taxonomic kingdoms Bacteria, Fungi and Protozoa are included in this package, as well as all previously accepted names known to ITIS.
+This \code{AMR} package contains the \strong{complete microbial taxonomic data} (with seven taxonomic ranks - from subkingdom to subspecies) from the publicly available Integrated Taxonomic Information System (ITIS, \url{https://www.itis.gov}). ITIS is a partnership of U.S., Canadian, and Mexican agencies and taxonomic specialists [3]. The complete taxonomic kingdoms Bacteria, Fungi and Protozoa are included in this package, as well as all previously accepted names known to ITIS.
 }
 
 \seealso{

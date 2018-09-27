@@ -148,9 +148,9 @@
 
 #' Data set with old taxonomic data from ITIS
 #'
-#' A data set containing old, previously valid, taxonomic names. This data set is used internally by \code{\link{as.mo}}.
+#' A data set containing old (previously valid or accepted) taxonomic names according to ITIS. This data set is used internally by \code{\link{as.mo}}.
 #' @inheritSection as.mo ITIS
-#' @format A \code{\link{data.frame}} with 1,682 observations and 5 variables:
+#' @format A \code{\link{data.frame}} with 2,384 observations and 5 variables:
 #' \describe{
 #'   \item{\code{tsn}}{Old Taxonomic Serial Number (TSN), as defined by ITIS}
 #'   \item{\code{name}}{Old taxonomic name of the microorganism as found in ITIS, see Source}
@@ -168,10 +168,21 @@
 #' @format A \code{\link{tibble}} with 1,095 observations and 2 variables:
 #' \describe{
 #'   \item{\code{umcg}}{Code of microorganism according to UMCG MMB}
+#'   \item{\code{certe}}{Code of microorganism according to Certe MMB}
+#' }
+#' @seealso \code{\link{as.mo}} \code{\link{microorganisms.certe}} \code{\link{microorganisms}}
+"microorganisms.umcg"
+
+#' Translation table for Certe
+#'
+#' A data set containing all bacteria codes of Certe MMB. These codes can be joined to data with an ID from \code{\link{microorganisms}$mo} (using \code{\link{left_join_microorganisms}}). GLIMS codes can also be translated to valid \code{MO}s with \code{\link{guess_mo}}.
+#' @format A \code{\link{tibble}} with 2,664 observations and 2 variables:
+#' \describe{
+#'   \item{\code{certe}}{Code of microorganism according to Certe MMB}
 #'   \item{\code{mo}}{Code of microorganism in \code{\link{microorganisms}}}
 #' }
 #' @seealso \code{\link{as.mo}} \code{\link{microorganisms}}
-"microorganisms.umcg"
+"microorganisms.certe"
 
 #' Data set with 2000 blood culture isolates of septic patients
 #'
