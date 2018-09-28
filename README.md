@@ -30,6 +30,7 @@ Erwin E.A. Hassing<sup>2</sup>,
   * [Install from CRAN](#install-from-cran)
   * [Install from GitHub](#install-from-github)
 * [How to use it?](#how-to-use-it)
+  * [ITIS](#itis)
   * [New classes](#new-classes)
   * [Overwrite/force resistance based on EUCAST rules](#overwriteforce-resistance-based-on-eucast-rules)
   * [Other (microbial) epidemiological functions](#other-microbial-epidemiological-functions)
@@ -40,11 +41,7 @@ Erwin E.A. Hassing<sup>2</sup>,
 ## Why this package?
 This R package was intended **to make microbial epidemiology easier**. Most functions contain extensive help pages to get started.
 
-<a href="https://www.itis.gov"><img src="man/figures/itis_logo.jpg" height="50px"></a>
-
-This `AMR` package contains the **complete microbial taxonomic data** (with seven taxonomic ranks - from subkingdom to subspecies) from the publicly available Integrated Taxonomic Information System (ITIS, https://www.itis.gov). ITIS is a partnership of U.S., Canadian, and Mexican agencies and taxonomic specialists. The complete taxonomic kingdoms Bacteria, Fungi and Protozoa are included in this package, as well as all previously accepted names known to ITIS. This allows users to use authoritative taxonomic information for their data analyses on any microorganisms, not only human pathogens.
-
-Combined with several new functions, this `AMR` package basically does four important things:
+The `AMR` package basically does four important things:
 
 1. It **cleanses existing data**, by transforming it to reproducible and profound *classes*, making the most efficient use of R. These functions all use artificial intelligence to guess results that you would expect:
 
@@ -122,6 +119,11 @@ library(AMR)
 help(package = "AMR")
 ```
 
+## ITIS
+<img src="man/figures/logo_amr.png" height="50px"><img src="man/figures/plus.png" height="50px"><img src="man/figures/itis_logo.jpg" height="50px">
+
+This `AMR` package contains the **complete microbial taxonomic data** (with seven taxonomic ranks - from subkingdom to subspecies) from the publicly available Integrated Taxonomic Information System (ITIS, https://www.itis.gov). ITIS is a partnership of U.S., Canadian, and Mexican agencies and taxonomic specialists. The complete taxonomic kingdoms Bacteria, Fungi and Protozoa are included in this package, as well as all previously accepted names known to ITIS. This allows users to use authoritative taxonomic information for their data analyses on any microorganisms, not only human pathogens.
+
 ### New classes
 This package contains two new S3 classes: `mic` for MIC values (e.g. from Vitek or Phoenix) and `rsi` for antimicrobial drug interpretations (i.e. S, I and R). Both are actually ordered factors under the hood (an MIC of `2` being higher than `<=1` but lower than `>=32`, and for class `rsi` factors are ordered as `S < I < R`). 
 Both classes have extensions for existing generic functions like `print`, `summary` and `plot`.
@@ -147,6 +149,8 @@ plot(septic_patients$cipr)
 ```
 
 ![example_1_rsi](man/figures/rsi_example1.png)
+
+<img src="man/figures/logo_amr.png" height="50px"><img src="man/figures/plus.png" height="50px"><img src="https://github.com/tidyverse/dplyr/blob/master/man/figures/logo.png" height="50px"><img src="man/figures/plus.png" height="50px"><img src="https://github.com/tidyverse/ggplot2/blob/master/man/figures/logo.png" height="50px">
 
 Or use the `ggplot2` and `dplyr` packages to create more appealing plots:
 ```r
