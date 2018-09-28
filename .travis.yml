@@ -35,12 +35,6 @@ matrix:
 r_packages: covr
 cache: packages
 cran: https://cran.rstudio.com
-before_install:
-  # needed for clipboard function:
-  # - if [ $TRAVIS_OS_NAME = linux ]; then sudo apt-get -qq update; fi
-  # - if [ $TRAVIS_OS_NAME = linux ]; then sudo apt-get install -y xclip; fi
-  - if [ $TRAVIS_OS_NAME = osx ]; then brew install xclip; fi
-  - if [ $TRAVIS_OS_NAME = osx ]; then brew install libgit2; fi
 
 install:
   - Rscript -e "install.packages(c('devtools', 'backports', 'clipr', 'curl', 'data.table', 'dplyr', 'hms', 'knitr', 'readr', 'rlang', 'rvest', 'xml2', 'covr', 'ggplot2', 'rmarkdown', 'testthat', 'tidyr'))"
@@ -48,8 +42,7 @@ install:
 
 # postrun
 after_success:
-  # only run codecov on osx, so clipboard functions can be checked
-  - if [ $TRAVIS_OS_NAME = osx ]; then Rscript -e 'covr::codecov()'; fi
+  - Rscript -e 'covr::codecov()'
 notifications:
   email:
     recipients:

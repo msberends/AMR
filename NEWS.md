@@ -54,9 +54,9 @@
 
 * Function `ab_property` and its aliases: `ab_name`, `ab_tradenames`, `ab_certe`, `ab_umcg` and `ab_trivial_nl`
 * Introduction to AMR as a vignette
+* Removed clipbaord functions as it violated the CRAN policy
 
 #### Changed
-* Added almost 200 microorganisms to the `microorganisms` data set and removed the few viruses it contained
 * Added three antimicrobial agents to the `antibiotics` data set: Terbinafine (D01BA02), Rifaximin (A07AA11) and Isoconazole (D01AC05)
 * Added 163 trade names to the `antibiotics` data set, it now contains 298 different trade names in total, e.g.:
   ```r
