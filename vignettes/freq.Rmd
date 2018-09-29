@@ -25,9 +25,9 @@ Frequency tables (or frequency distributions) are summaries of the distribution 
 
 ## Frequencies of one variable
 
-To only show and quickly review the content of one variable, you can just select this variable in various ways. Let's say we want to get the frequencies of the `sex` variable of the `septic_patients` dataset:
+To only show and quickly review the content of one variable, you can just select this variable in various ways. Let's say we want to get the frequencies of the `gender` variable of the `septic_patients` dataset:
 ```{r, echo = TRUE}
-septic_patients %>% freq(sex)
+septic_patients %>% freq(gender)
 ```
 This immediately shows the class of the variable, its length and availability (i.e. the amount of `NA`), the amount of unique values and (most importantly) that among septic patients men are more prevalent than women.
 

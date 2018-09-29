@@ -130,7 +130,7 @@
 #'           sort(septic_patients$age)) # TRUE
 #'
 #' # it also supports `table` objects:
-#' table(septic_patients$sex,
+#' table(septic_patients$gender,
 #'       septic_patients$age) %>%
 #'   freq(sep = " **sep** ")
 #'
@@ -500,6 +500,46 @@ top_freq <- function(f, n) {
     message("top_freq: selecting ", length(vect), " items instead of ", abs(n), ", because of ties")
   }
   vect
+}
+
+#' @rdname freq
+#' @exportMethod diff.frequency_tbl
+#' @importFrom dplyr %>% full_join mutate
+#' @export
+diff.frequency_tbl <- function(x, y, ...) {
+  # check classes
+  if (!"frequency_tbl" %in% class(x)
+      | !"frequency_tbl" %in% class(y)) {
+    stop("Both x and y must be a frequency table.")
+  }
+
+  x.attr <- attributes(x)$opt
+
+  # only keep item and count
+  x <- x[, 1:2]
+  y <- y[, 1:2]
+
+  x <- x %>%
+    full_join(y,
+              by = colnames(x)[1],
+              suffix = c(".x", ".y")) %>%
+    mutate(
+      diff = case_when(
+        is.na(count.y) ~ -count.x,
+        is.na(count.x) ~ count.y,
+        TRUE ~ count.y - count.x)) %>%
+    mutate(
+      diff.percent = percent(
+        diff / count.x,
+        force_zero = TRUE))
+
+  print(
+    knitr::kable(x,
+                 format = x.attr$tbl_format,
+                 col.names = c("Item", "Count #1", "Count #2", "Difference", "Diff. percent"),
+                 align = "lrrrr",
+                 padding = 1)
+  )
 }
 
 #' @rdname freq

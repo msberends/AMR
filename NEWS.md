@@ -7,15 +7,15 @@
   * Semantic names: `mo_fullname`, `mo_shortname`
   * Microbial properties: `mo_type`, `mo_gramstain`.
   
-  They also come with support for German, Dutch, French, Italian, Spanish and Portuguese, and it defaults to the systems locale:
+  They also come with support for German, Dutch, French, Italian, Spanish and Portuguese:
   ```r
   mo_gramstain("E. coli")
   # [1] "Gram negative"
-  mo_gramstain("E. coli", language = "de") # "de" = Deutsch / German
+  mo_gramstain("E. coli", language = "de") # "de" = German
   # [1] "Gramnegativ"
-  mo_gramstain("E. coli", language = "es") # "es" = Español / Spanish
+  mo_gramstain("E. coli", language = "es") # "es" = Spanish
   # [1] "Gram negativo"
-  mo_fullname("S. group A") # when run on a on a Portuguese system
+  mo_fullname("S. group A", language = "pt") # Portuguese
   # [1] "Streptococcus grupo A"
   ```
   
@@ -31,11 +31,11 @@
 * Functions `as.mo` and `is.mo` as replacements for `as.bactid` and `is.bactid` (since the `microoganisms` data set not only contains bacteria). These last two functions are deprecated and will be removed in a future release. The `as.mo` function determines microbial IDs using Artificial Intelligence (AI):
   ```r
   as.mo("E. coli")
-  # [1] ESCCOL
+  # [1] B_ESCHR_COL
   as.mo("MRSA")
-  # [1] STAAUR
+  # [1] B_STPHY_AUR
   as.mo("S group A")
-  # [1] STCGRA
+  # [1] B_STRPTC_GRA
   ```
   And with great speed too - on a quite regular Linux server from 2007 it takes us 0.009 seconds to transform 25,000 items:
   ```r
@@ -54,7 +54,8 @@
 
 * Function `ab_property` and its aliases: `ab_name`, `ab_tradenames`, `ab_certe`, `ab_umcg` and `ab_trivial_nl`
 * Introduction to AMR as a vignette
-* Removed clipbaord functions as it violated the CRAN policy
+* Removed clipboard functions as it violated the CRAN policy
+* Renamed `septic_patients$sex` to `septic_patients$gender`
 
 #### Changed
 * Added three antimicrobial agents to the `antibiotics` data set: Terbinafine (D01BA02), Rifaximin (A07AA11) and Isoconazole (D01AC05)
@@ -92,14 +93,14 @@
 * Added longest en shortest character length in the frequency table (`freq`) header of class `character`
 * Support for types (classes) list and matrix for `freq`
   ```r
-  my_matrix = with(septic_patients, matrix(c(age, sex), ncol = 2))
+  my_matrix = with(septic_patients, matrix(c(age, gender), ncol = 2))
   freq(my_matrix)
   ```
   For lists, subsetting is possible:
   ```r
-  my_list = list(age = septic_patients$age, sex = septic_patients$sex)
+  my_list = list(age = septic_patients$age, gender = septic_patients$gender)
   my_list %>% freq(age)
-  my_list %>% freq(sex)
+  my_list %>% freq(gender)
   ```
 
 #### Other

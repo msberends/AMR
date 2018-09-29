@@ -114,7 +114,7 @@ test_that("first isolates work", {
                             first_isolate(col_date = "date",
                                           col_mo = "mo",
                                           col_patient_id = "patient_id",
-                                          col_testcode = "sex",
+                                          col_testcode = "gender",
                                           testcodes_exclude = "M"))
 
   # errors

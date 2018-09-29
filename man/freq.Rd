@@ -4,6 +4,7 @@
 \alias{freq}
 \alias{frequency_tbl}
 \alias{top_freq}
+\alias{diff.frequency_tbl}
 \alias{print.frequency_tbl}
 \title{Frequency table}
 \usage{
@@ -16,6 +17,8 @@ freq(x, ..., sort.count = TRUE, nmax = getOption("max.print.freq"),
   quote = FALSE, sep = " ")
 
 top_freq(f, n)
+
+\method{diff}{frequency_tbl}(x, y, ...)
 
 \method{print}{frequency_tbl}(x, nmax = getOption("max.print.freq",
   default = 15), ...)
@@ -143,7 +146,7 @@ identical(septic_patients \%>\%
           sort(septic_patients$age)) # TRUE
 
 # it also supports `table` objects:
-table(septic_patients$sex,
+table(septic_patients$gender,
       septic_patients$age) \%>\%
   freq(sep = " **sep** ")
 

@@ -120,9 +120,13 @@ help(package = "AMR")
 ```
 
 ## ITIS
-<img src="man/figures/logo_amr.png" height="50px"><img src="man/figures/plus.png" height="50px"><img src="man/figures/itis_logo.jpg" height="50px">
+<img src="man/figures/itis_logo.jpg" height="100px">
 
-This `AMR` package contains the **complete microbial taxonomic data** (with seven taxonomic ranks - from subkingdom to subspecies) from the publicly available Integrated Taxonomic Information System (ITIS, https://www.itis.gov). ITIS is a partnership of U.S., Canadian, and Mexican agencies and taxonomic specialists. The complete taxonomic kingdoms Bacteria, Fungi and Protozoa are included in this package, as well as all previously accepted names known to ITIS. This allows users to use authoritative taxonomic information for their data analyses on any microorganisms, not only human pathogens.
+This `AMR` package contains the **complete microbial taxonomic data** (with all  seven taxonomic ranks - from subkingdom to subspecies) from the publicly available Integrated Taxonomic Information System (ITIS, https://www.itis.gov). 
+
+The complete taxonomic kingdoms Bacteria, Fungi and Protozoa are included in this package, as well as all previously accepted names known to ITIS. This allows users to use authoritative taxonomic information for their data analyses on any microorganisms, not only human pathogens.
+
+ITIS is a partnership of U.S., Canadian, and Mexican agencies and taxonomic specialists.
 
 ### New classes
 This package contains two new S3 classes: `mic` for MIC values (e.g. from Vitek or Phoenix) and `rsi` for antimicrobial drug interpretations (i.e. S, I and R). Both are actually ordered factors under the hood (an MIC of `2` being higher than `<=1` but lower than `>=32`, and for class `rsi` factors are ordered as `S < I < R`). 
@@ -150,7 +154,7 @@ plot(septic_patients$cipr)
 
 ![example_1_rsi](man/figures/rsi_example1.png)
 
-<img src="man/figures/logo_amr.png" height="50px"><img src="man/figures/plus.png" height="50px"><img src="https://github.com/tidyverse/dplyr/blob/master/man/figures/logo.png" height="50px"><img src="man/figures/plus.png" height="50px"><img src="https://github.com/tidyverse/ggplot2/blob/master/man/figures/logo.png" height="50px">
+<<img src="https://github.com/tidyverse/dplyr/blob/master/man/figures/logo.png" height="50px"> <img src="https://github.com/tidyverse/ggplot2/blob/master/man/figures/logo.png" height="50px">
 
 Or use the `ggplot2` and `dplyr` packages to create more appealing plots:
 ```r

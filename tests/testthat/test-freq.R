@@ -32,17 +32,17 @@ test_that("frequency table works", {
   # factor
   expect_output(print(freq(septic_patients$hospital_id)))
   # table
-  expect_output(print(freq(table(septic_patients$sex, septic_patients$age))))
+  expect_output(print(freq(table(septic_patients$gender, septic_patients$age))))
   # rsi
   expect_output(print(freq(septic_patients$amcl)))
   # hms
   expect_output(suppressWarnings(print(freq(hms::as.hms(sample(c(0:86399), 50))))))
   # matrix
   expect_output(print(freq(as.matrix(septic_patients$age))))
-  expect_output(print(freq(as.matrix(septic_patients[, c("age", "sex")]))))
+  expect_output(print(freq(as.matrix(septic_patients[, c("age", "gender")]))))
   # list
   expect_output(print(freq(list(age = septic_patients$age))))
-  expect_output(print(freq(list(age = septic_patients$age, sex = septic_patients$sex))))
+  expect_output(print(freq(list(age = septic_patients$age, gender = septic_patients$gender))))
 
   library(dplyr)
   expect_output(septic_patients %>% select(1:2) %>% freq() %>% print())

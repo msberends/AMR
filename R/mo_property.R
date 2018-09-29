@@ -128,10 +128,12 @@ mo_shortname <- function(x, Becker = FALSE, Lancefield = FALSE, language = NULL)
     result <- as.character(res1)
   } else {
     x <- AMR::as.mo(x)
-    result <- data.frame(mo = x) %>%
-      left_join(AMR::microorganisms, by = "mo") %>%
-      mutate(shortname = ifelse(!is.na(genus) & !is.na(species), paste0(substr(genus, 1, 1), ". ", species), NA_character_)) %>%
-      pull(shortname)
+    suppressWarnings(
+      result <- data.frame(mo = x) %>%
+        left_join(AMR::microorganisms, by = "mo") %>%
+        mutate(shortname = ifelse(!is.na(genus) & !is.na(species), paste0(substr(genus, 1, 1), ". ", species), NA_character_)) %>%
+        pull(shortname)
+    )
   }
   mo_translate(result, language = language)
 }
