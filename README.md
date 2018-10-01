@@ -472,7 +472,7 @@ microbenchmark(A = as.mo(repetive_results),
                unit = "ms")
 # Unit: milliseconds
 #  expr      min       lq     mean   median       uq      max neval
-#     A 14.61282  14.6372 14.70817 14.72597 14.76124 14.78498     1
+#     A 14.61282  14.6372 14.70817 14.72597 14.76124 14.78498    10
 ```
 
 So transforming 25,000 times (!) `"Staphylococcus aureus"` only takes 4 ms (0.004 seconds) more than transforming it once. You only lose time on your unique input values.
@@ -489,7 +489,7 @@ microbenchmark(A = mo_fullname("B_STPHY_AUR"),
 #  expr       min       lq       mean    median        uq       max neval
 #     A 13.548652 13.74588 13.8052969 13.813594 13.881165 14.090969    10
 #     B 15.079781 15.16785 15.3835842 15.374477 15.395115 16.072995    10
-#     C  0.171182 0.185639  0.2306307 0.2034135 0.224610   0.492312    10
+#     C  0.171182  0.18563  0.2306307  0.203413  0.224610  0.492312    10
 ```
 
 So going from `mo_fullname("Staphylococcus aureus")` to `"Staphylococcus aureus"` takes 0.0002 seconds - it doesn't even start calculating *if the result would be the same as the expected resulting value*. That goes for all helper functions:
