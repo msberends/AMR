@@ -141,4 +141,21 @@ test_that("as.mo works", {
   expect_equal(as.character(suppressWarnings(as.mo(""))),
                NA_character_)
 
+  # check less prevalent MOs
+  expect_equal(as.character(as.mo("Gomphosphaeria aponina delicatula")), "B_GMPHS_APO_DEL")
+  expect_equal(as.character(as.mo("G apo deli")), "B_GMPHS_APO_DEL")
+  expect_equal(as.character(as.mo("Gomphosphaeria  aponina")), "B_GMPHS_APO")
+  expect_equal(as.character(as.mo("Gomphosphaeria  species")), "B_GMPHS")
+  expect_equal(as.character(as.mo("Gomphosphaeria")), "B_GMPHS")
+  expect_equal(as.character(as.mo(" B_GMPHS_APO ")), "B_GMPHS_APO")
+  expect_equal(as.character(as.mo("g aponina")), "B_GMPHS_APO")
+
+  # check old names
+  expect_equal(suppressMessages(as.character(as.mo("Escherichia blattae"))), "B_SHMWL_BLA")
+
+  # check uncertain names
+  expect_equal(suppressWarnings(as.character(as.mo("esco extra_text", allow_uncertain = FALSE))), NA_character_)
+  expect_equal(suppressWarnings(as.character(as.mo("esco extra_text", allow_uncertain = TRUE))), "B_ESCHR_COL")
+  expect_warning(as.mo("esco extra_text", allow_uncertain = TRUE))
+
 })

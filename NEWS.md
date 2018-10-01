@@ -2,28 +2,29 @@
 
 #### New
 * The data set `microorganisms` now contains **all microbial taxonomic data from ITIS** (kingdoms Bacteria, Fungi and Protozoa), the Integrated Taxonomy Information System, available via https://itis.gov. The data set now contains more than 18,000 microorganisms with all known bacteria, fungi and protozoa according ITIS with genus, species, subspecies, family, order, class, phylum and subkingdom. The new data set `microorganisms.old` contains all previously known taxonomic names from those kingdoms.
-* Aliases for existing function `mo_property`
+* New functions based on the existing function `mo_property`:
   * Taxonomic names: `mo_phylum`, `mo_class`, `mo_order`, `mo_family`, `mo_genus`, `mo_species`, `mo_subspecies`
   * Semantic names: `mo_fullname`, `mo_shortname`
-  * Microbial properties: `mo_type`, `mo_gramstain`.
+  * Microbial properties: `mo_type`, `mo_gramstain`
+  * Author information: `mo_author`, `mo_year`
   
   They also come with support for German, Dutch, French, Italian, Spanish and Portuguese:
   ```r
   mo_gramstain("E. coli")
   # [1] "Gram negative"
-  mo_gramstain("E. coli", language = "de") # "de" = German
+  mo_gramstain("E. coli", language = "de") # German
   # [1] "Gramnegativ"
-  mo_gramstain("E. coli", language = "es") # "es" = Spanish
+  mo_gramstain("E. coli", language = "es") # Spanish
   # [1] "Gram negativo"
   mo_fullname("S. group A", language = "pt") # Portuguese
   # [1] "Streptococcus grupo A"
   ```
   
-  Furthermore, old taxonomic names kan easily be looked up and give a note about the taxonomic change:
+  Furthermore, old taxonomic names will give a note about the current taxonomic name:
   ```r
-  mo_fullname("Pseudomonas facilis")
-  # Note: 'Pseudomonas facilis' was renamed to 'Acidovorax facilis' by Willems et al. in 1990
-  # [1] "Acidovorax facilis"
+  mo_gramstain("Escherichia blattae")
+  # Note: 'Escherichia blattae' (Burgess et al., 1973) was renamed 'Shimwellia blattae' (Priest and Barker, 2010)
+  # [1] "Gram negative
   ```
 * Functions `count_R`, `count_IR`, `count_I`, `count_SI` and `count_S` to selectively count resistant or susceptible isolates
   * Extra function `count_df` (which works like `portion_df`) to get all counts of S, I and R of a data set with antibiotic columns, with support for grouped variables
@@ -37,14 +38,15 @@
   as.mo("S group A")
   # [1] B_STRPTC_GRA
   ```
-  And with great speed too - on a quite regular Linux server from 2007 it takes us 0.009 seconds to transform 25,000 items:
+  And with great speed too - on a quite regular Linux server from 2007 it takes us less than 0.02 seconds to transform 25,000 items:
   ```r
   thousands_of_E_colis <- rep("E. coli", 25000)
   microbenchmark::microbenchmark(as.mo(thousands_of_E_colis), unit = "s")
   # Unit: seconds
   #         min       median         max  neval
-  #  0.00861352  0.008774335  0.01952958    100
+  #  0.01817717  0.01843957  0.03878077    100
   ```
+* Added parameter `reference_df` for `as.mo`, so users can supply their own microbial IDs, name or codes as a reference table
 * Renamed all previous references to `bactid` to `mo`, like:
   * Column names inputs of `EUCAST_rules`, `first_isolate` and `key_antibiotics`
   * Column names of datasets `microorganisms` and `septic_patients`
@@ -90,6 +92,7 @@
 * Added possibility to set any parameter to `geom_rsi` (and `ggplot_rsi`) so you can set your own preferences
 * Fix for joins, where predefined suffices would not be honoured
 * Added parameter `quote` to the `freq` function
+* Added generic function `diff` for frequency tables
 * Added longest en shortest character length in the frequency table (`freq`) header of class `character`
 * Support for types (classes) list and matrix for `freq`
   ```r

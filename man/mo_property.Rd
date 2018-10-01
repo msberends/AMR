@@ -12,55 +12,54 @@
 \alias{mo_class}
 \alias{mo_phylum}
 \alias{mo_subkingdom}
+\alias{mo_authors}
+\alias{mo_year}
 \alias{mo_type}
 \alias{mo_TSN}
 \alias{mo_gramstain}
 \alias{mo_taxonomy}
 \title{Property of a microorganism}
 \usage{
-mo_fullname(x, Becker = FALSE, Lancefield = FALSE, language = NULL)
+mo_fullname(x, language = NULL, ...)
 
-mo_shortname(x, Becker = FALSE, Lancefield = FALSE, language = NULL)
+mo_shortname(x, language = NULL, ...)
 
-mo_subspecies(x, Becker = FALSE, Lancefield = FALSE, language = NULL)
+mo_subspecies(x, language = NULL, ...)
 
-mo_species(x, Becker = FALSE, Lancefield = FALSE, language = NULL)
+mo_species(x, language = NULL, ...)
 
-mo_genus(x, language = NULL)
+mo_genus(x, language = NULL, ...)
 
-mo_family(x)
+mo_family(x, ...)
 
-mo_order(x)
+mo_order(x, ...)
 
-mo_class(x)
+mo_class(x, ...)
 
-mo_phylum(x)
+mo_phylum(x, ...)
 
-mo_subkingdom(x)
+mo_subkingdom(x, ...)
 
-mo_type(x, language = NULL)
+mo_authors(x, ...)
 
-mo_TSN(x)
+mo_year(x, ...)
 
-mo_gramstain(x, language = NULL)
+mo_type(x, language = NULL, ...)
 
-mo_property(x, property = "fullname", Becker = FALSE,
-  Lancefield = FALSE, language = NULL)
+mo_TSN(x, ...)
 
-mo_taxonomy(x)
+mo_gramstain(x, language = NULL, ...)
+
+mo_property(x, property = "fullname", language = NULL, ...)
+
+mo_taxonomy(x, ...)
 }
 \arguments{
 \item{x}{any (vector of) text that can be coerced to a valid microorganism code with \code{\link{as.mo}}}
 
-\item{Becker}{a logical to indicate whether \emph{Staphylococci} should be categorised into Coagulase Negative \emph{Staphylococci} ("CoNS") and Coagulase Positive \emph{Staphylococci} ("CoPS") instead of their own species, according to Karsten Becker \emph{et al.} [1].
-
-  This excludes \emph{Staphylococcus aureus} at default, use \code{Becker = "all"} to also categorise \emph{S. aureus} as "CoPS".}
-
-\item{Lancefield}{a logical to indicate whether beta-haemolytic \emph{Streptococci} should be categorised into Lancefield groups instead of their own species, according to Rebecca C. Lancefield [2]. These \emph{Streptococci} will be categorised in their first group, e.g. \emph{Streptococcus dysgalactiae} will be group C, although officially it was also categorised into groups G and L.
-
-  This excludes \emph{Enterococci} at default (who are in group D), use \code{Lancefield = "all"} to also categorise all \emph{Enterococci} as group D.}
-
 \item{language}{language of the returned text, defaults to English (\code{"en"}) and can also be set with \code{\link{getOption}("AMR_locale")}. Either one of \code{"en"} (English), \code{"de"} (German), \code{"nl"} (Dutch), \code{"es"} (Spanish) or \code{"pt"} (Portuguese).}
+
+\item{...}{other parameters passed on to \code{/link{as.mo}}}
 
 \item{property}{one of the column names of one of the \code{\link{microorganisms}} data set or \code{"shortname"}}
 }
@@ -73,7 +72,11 @@ Use these functions to return a specific property of a microorganism from the \c
 \section{ITIS}{
 
 \if{html}{\figure{itis_logo.jpg}{options: height=60px style=margin-bottom:5px} \cr}
-This \code{AMR} package contains the \strong{complete microbial taxonomic data} (with seven taxonomic ranks - from subkingdom to subspecies) from the publicly available Integrated Taxonomic Information System (ITIS, \url{https://www.itis.gov}). ITIS is a partnership of U.S., Canadian, and Mexican agencies and taxonomic specialists [3]. The complete taxonomic kingdoms Bacteria, Fungi and Protozoa are included in this package, as well as all previously accepted names known to ITIS.
+This package contains the \strong{complete microbial taxonomic data} (with all  seven taxonomic ranks - from subkingdom to subspecies) from the publicly available Integrated Taxonomic Information System (ITIS, \url{https://www.itis.gov}).
+
+The complete taxonomic kingdoms Bacteria, Fungi and Protozoa are included in this package, as well as all previously accepted names known to ITIS. Furthermore, the responsible authors and year of publication are available too. This allows users to use authoritative taxonomic information for their data analyses on any microorganisms, not only human pathogens.
+
+ITIS is a partnership of U.S., Canadian, and Mexican agencies and taxonomic specialists [3].
 }
 
 \section{Source}{
@@ -86,7 +89,7 @@ This \code{AMR} package contains the \strong{complete microbial taxonomic data} 
 }
 
 \examples{
-# All properties
+# All properties of Escherichia coli
 mo_subkingdom("E. coli")      # "Negibacteria"
 mo_phylum("E. coli")          # "Proteobacteria"
 mo_class("E. coli")           # "Gammaproteobacteria"
@@ -100,6 +103,8 @@ mo_shortname("E. coli")       # "E. coli"
 mo_gramstain("E. coli")       # "Gram negative"
 mo_TSN("E. coli")             # 285
 mo_type("E. coli")            # "Bacteria"
+mo_authors("E. coli")         # "Castellani and Chalmers"
+mo_year("E. coli")            # 1919
 
 
 # Abbreviations known in the field

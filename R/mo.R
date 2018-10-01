@@ -27,11 +27,12 @@
 #'
 #'   This excludes \emph{Enterococci} at default (who are in group D), use \code{Lancefield = "all"} to also categorise all \emph{Enterococci} as group D.
 #' @param allow_uncertain a logical to indicate whether empty results should be checked for only a part of the input string. When results are found, a warning will be given about the uncertainty and the result.
+#' @param reference_df a \code{data.frame} to use for extra reference when translating \code{x} to a valid \code{mo}. The first column can be any microbial name, code or ID (used in your analysis or organisation), the second column must be a valid \code{mo} as found in the \code{\link{microorganisms}} data set.
 #' @rdname as.mo
 #' @aliases mo
 #' @keywords mo Becker becker Lancefield lancefield guess
 #' @details
-#' A microbial ID (class: \code{mo}) typically looks like these examples:\cr
+#' A microbial ID from this package (class: \code{mo}) typically looks like these examples:\cr
 #' \preformatted{
 #'   Code                Full name
 #'   ---------------     --------------------------------------
@@ -55,13 +56,17 @@
 #'   \item{Something like \code{"p aer"} will return the ID of \emph{Pseudomonas aeruginosa} and not \emph{Pasteurella aerogenes}}
 #'   \item{Something like \code{"stau"} or \code{"S aur"} will return the ID of \emph{Staphylococcus aureus} and not \emph{Staphylococcus auricularis}}
 #' }
-#' This means that looking up human non-pathogenic microorganisms takes a longer time compares to human pathogenic microorganisms.
+#' This means that looking up human pathogenic microorganisms takes less time than looking up human \strong{non}-pathogenic microorganisms.
 #'
 #' \code{guess_mo} is an alias of \code{as.mo}.
 #' @section ITIS:
 #' \if{html}{\figure{itis_logo.jpg}{options: height=60px style=margin-bottom:5px} \cr}
-#' This \code{AMR} package contains the \strong{complete microbial taxonomic data} (with seven taxonomic ranks - from subkingdom to subspecies) from the publicly available Integrated Taxonomic Information System (ITIS, \url{https://www.itis.gov}). ITIS is a partnership of U.S., Canadian, and Mexican agencies and taxonomic specialists [3]. The complete taxonomic kingdoms Bacteria, Fungi and Protozoa are included in this package, as well as all previously accepted names known to ITIS.
-#  (source as section, so it can be inherited by mo_property:)
+#' This package contains the \strong{complete microbial taxonomic data} (with all  seven taxonomic ranks - from subkingdom to subspecies) from the publicly available Integrated Taxonomic Information System (ITIS, \url{https://www.itis.gov}).
+#'
+#' The complete taxonomic kingdoms Bacteria, Fungi and Protozoa are included in this package, as well as all previously accepted names known to ITIS. Furthermore, the responsible authors and year of publication are available too. This allows users to use authoritative taxonomic information for their data analyses on any microorganisms, not only human pathogens.
+#'
+#' ITIS is a partnership of U.S., Canadian, and Mexican agencies and taxonomic specialists [3].
+#  (source as a section, so it can be inherited by other man pages:)
 #' @section Source:
 #' [1] Becker K \emph{et al.} \strong{Coagulase-Negative Staphylococci}. 2014. Clin Microbiol Rev. 27(4): 870–926. \url{https://dx.doi.org/10.1128/CMR.00109-13}
 #'
@@ -73,7 +78,7 @@
 #' @seealso \code{\link{microorganisms}} for the \code{data.frame} with ITIS content that is being used to determine ID's. \cr
 #' The \code{\link{mo_property}} functions (like \code{\link{mo_genus}}, \code{\link{mo_gramstain}}) to get properties based on the returned code.
 #' @examples
-#' # These examples all return "STAAUR", the ID of S. aureus:
+#' # These examples all return "B_STPHY_AUR", the ID of S. aureus:
 #' as.mo("stau")
 #' as.mo("STAU")
 #' as.mo("staaur")
@@ -123,9 +128,10 @@
 #' df <- df %>%
 #'   mutate(mo = guess_mo(paste(genus, species)))
 #' }
-as.mo <- function(x, Becker = FALSE, Lancefield = FALSE, allow_uncertain = FALSE) {
+as.mo <- function(x, Becker = FALSE, Lancefield = FALSE, allow_uncertain = FALSE, reference_df = NULL) {
   exec_as.mo(x = x, Becker = Becker, Lancefield = Lancefield,
-             allow_uncertain = allow_uncertain, property = "mo")
+             allow_uncertain = allow_uncertain, reference_df = reference_df,
+             property = "mo")
 }
 
 #' @rdname as.mo
@@ -142,7 +148,7 @@ guess_mo <- as.mo
 
 #' @importFrom dplyr %>% pull left_join
 #' @importFrom data.table as.data.table setkey
-exec_as.mo <- function(x, Becker = FALSE, Lancefield = FALSE, allow_uncertain = FALSE, property = "mo") {
+exec_as.mo <- function(x, Becker = FALSE, Lancefield = FALSE, allow_uncertain = FALSE, reference_df = NULL, property = "mo") {
   if (NCOL(x) == 2) {
     # support tidyverse selection like: df %>% select(colA, colB)
     # paste these columns together
@@ -173,8 +179,31 @@ exec_as.mo <- function(x, Becker = FALSE, Lancefield = FALSE, allow_uncertain = 
   MOs_allothers <- NULL # will be set later, if needed
   MOs_old <- NULL # will be set later, if needed
 
+  # defined df to check for
+  if (!is.null(reference_df)) {
+    if (!is.data.frame(reference_df) | NCOL(reference_df) < 2) {
+      stop('`reference_df` must be a data.frame with at least two columns.')
+    }
+    # remove factors, just keep characters
+    suppressWarnings(
+      reference_df[] <- lapply(reference_df, as.character)
+    )
+  }
+
   if (all(x %in% AMR::microorganisms[, property])) {
     # already existing mo
+  } else if (!is.null(reference_df)
+             & all(x %in% reference_df[, 1])
+             & all(reference_df[, 2] %in% AMR::microorganisms$mo)) {
+    # manually defined reference
+    colnames(reference_df)[1] <- "x"
+    colnames(reference_df)[2] <- "mo"
+    suppressWarnings(
+      x <- data.frame(x = x, stringsAsFactors = FALSE) %>%
+        left_join(reference_df, by = "x") %>%
+        left_join(AMR::microorganisms, by = "mo") %>%
+        pull(property)
+    )
   } else if (all(x %in% AMR::microorganisms.certe[, "certe"])) {
     # old Certe codes
     suppressWarnings(
@@ -283,7 +312,7 @@ exec_as.mo <- function(x, Becker = FALSE, Lancefield = FALSE, allow_uncertain = 
       }
 
       # FIRST TRY FULLNAMES AND CODES
-      # if only genus is available, don't select species
+      # if only genus is available, return only genus
       if (all(!c(x[i], x_trimmed[i]) %like% " ")) {
         found <- MOs[tolower(fullname) %in% tolower(c(x_species[i], x_trimmed_species[i])), ..property][[1]]
         if (length(found) > 0) {
@@ -297,6 +326,27 @@ exec_as.mo <- function(x, Becker = FALSE, Lancefield = FALSE, allow_uncertain = 
             x[i] <- found[1L]
             next
           }
+        }
+      }
+
+      # TRY OTHER SOURCES ----
+      if (x_backup[i] %in% AMR::microorganisms.certe[, 1]) {
+        x[i] <- MOs[mo == AMR::microorganisms.certe[AMR::microorganisms.certe[, 1] == x_backup[i], 2], ..property][[1]][1L]
+        next
+      }
+      if (x_backup[i] %in% AMR::microorganisms.umcg[, 1]) {
+        ref_certe <- AMR::microorganisms.umcg[AMR::microorganisms.umcg[, 1] == x_backup[i], 2]
+        ref_mo <- AMR::microorganisms.certe[AMR::microorganisms.certe[, 1] == ref_certe, 2]
+        x[i] <- MOs[mo == ref_mo, ..property][[1]][1L]
+        next
+      }
+      if (x_backup[i] %in% reference_df[, 1]) {
+        ref_mo <- reference_df[reference_df[, 1] == x_backup[i], 2]
+        if (ref_mo %in% MOs[, mo]) {
+          x[i] <- MOs[mo == ref_mo, ..property][[1]][1L]
+          next
+        } else {
+          warning("Value '", x_backup[i], "' was found in reference_df, but '", ref_mo, "' is not a valid MO code.", call. = FALSE)
         }
       }
 
@@ -478,8 +528,10 @@ exec_as.mo <- function(x, Becker = FALSE, Lancefield = FALSE, allow_uncertain = 
         x[i] <- MOs[tsn == found[1, tsn_new], ..property][[1]]
         renamed_note(name_old = found[1, name],
                      name_new = MOs[tsn == found[1, tsn_new], fullname],
-                     authors = found[1, authors],
-                     year = found[1, year])
+                     authors_old = found[1, authors],
+                     authors_new = MOs[tsn == found[1, tsn_new], authors],
+                     year_old = found[1, year],
+                     year_new = MOs[tsn == found[1, tsn_new], year])
         next
       }
 
@@ -496,9 +548,10 @@ exec_as.mo <- function(x, Becker = FALSE, Lancefield = FALSE, allow_uncertain = 
                   call. = FALSE, immediate. = TRUE)
           renamed_note(name_old = found[1, name],
                        name_new = MOs[tsn == found[1, tsn_new], fullname],
-                       authors = found[1, authors],
-                       year = found[1, year])
-
+                       authors_old = found[1, authors],
+                       authors_new = MOs[tsn == found[1, tsn_new], authors],
+                       year_old = found[1, year],
+                       year_new = MOs[tsn == found[1, tsn_new], year])
           next
         }
 
@@ -605,22 +658,28 @@ exec_as.mo <- function(x, Becker = FALSE, Lancefield = FALSE, allow_uncertain = 
     class(x) <- "mo"
     attr(x, 'package') <- 'AMR'
     attr(x, 'ITIS') <- TRUE
-  } else if (property == "tsn") {
+  } else if (property %in% c("tsn", "year")) {
     x <- as.integer(x)
   }
 
   x
 }
 
-renamed_note <- function(name_old, name_new, authors, year) {
-  msg <- paste0("Note: '", name_old, "' was renamed to '", name_new, "'")
-  if (!authors %in% c("", NA)) {
-    msg <- paste0(msg, " by ", authors)
-  }
-  if (!year %in% c("", NA)) {
-    msg <- paste0(msg, " in ", year)
-  }
-  base::message(msg)
+#' @importFrom dplyr case_when
+renamed_note <- function(name_old, name_new,
+                         authors_old = "", authors_new = "",
+                         year_old = "", year_new = "") {
+  authorship_old <- case_when(
+    !authors_old %in% c("", NA) & !year_old %in% c("", NA) ~ paste0(" (", authors_old, ", ", year_old, ")"),
+    !authors_old %in% c("", NA) ~ paste0(" (", authors_old, ")"),
+    !year_old %in% c("", NA) ~ paste0(" (", year_old, ")"),
+    TRUE ~ "")
+  authorship_new <- case_when(
+    !authors_new %in% c("", NA) & !year_new %in% c("", NA) ~ paste0(" (", authors_new, ", ", year_new, ")"),
+    !authors_new %in% c("", NA) ~ paste0(" (", authors_new, ")"),
+    !year_new %in% c("", NA) ~ paste0(" (", year_new, ")"),
+    TRUE ~ "")
+  base::message(paste0("Note: '", name_old, "'", authorship_old, " was renamed '", name_new, "'", authorship_new))
 }
 
 #' @exportMethod print.mo

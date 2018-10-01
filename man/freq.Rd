@@ -4,7 +4,6 @@
 \alias{freq}
 \alias{frequency_tbl}
 \alias{top_freq}
-\alias{diff.frequency_tbl}
 \alias{print.frequency_tbl}
 \title{Frequency table}
 \usage{
@@ -17,8 +16,6 @@ freq(x, ..., sort.count = TRUE, nmax = getOption("max.print.freq"),
   quote = FALSE, sep = " ")
 
 top_freq(f, n)
-
-\method{diff}{frequency_tbl}(x, y, ...)
 
 \method{print}{frequency_tbl}(x, nmax = getOption("max.print.freq",
   default = 15), ...)

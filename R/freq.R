@@ -106,7 +106,7 @@
 #' # print a histogram of numeric values
 #' septic_patients %>%
 #'   freq(age) %>%
-#'   hist()  # prettier: ggplot(septic_patients, aes(age)) + geom_histogram()
+#'   hist()
 #'
 #' # or print all points to a regular plot
 #' septic_patients %>%
@@ -133,6 +133,10 @@
 #' table(septic_patients$gender,
 #'       septic_patients$age) %>%
 #'   freq(sep = " **sep** ")
+#'
+#' # check differences between frequency tables
+#' diff(freq(septic_patients$trim),
+#'      freq(septic_patients$trsu))
 #'
 #' \dontrun{
 #' # send frequency table to clipboard (e.g. for pasting in Excel)
@@ -502,7 +506,7 @@ top_freq <- function(f, n) {
   vect
 }
 
-#' @rdname freq
+#' @noRd
 #' @exportMethod diff.frequency_tbl
 #' @importFrom dplyr %>% full_join mutate
 #' @export
@@ -531,8 +535,15 @@ diff.frequency_tbl <- function(x, y, ...) {
     mutate(
       diff.percent = percent(
         diff / count.x,
-        force_zero = TRUE))
+        force_zero = TRUE)) %>%
+    mutate(diff = ifelse(diff %like% '^-',
+                         diff,
+                         paste0("+", diff)),
+           diff.percent = ifelse(diff.percent %like% '^-',
+                                 diff.percent,
+                                 paste0("+", diff.percent)))
 
+  cat("Differences between frequency tables")
   print(
     knitr::kable(x,
                  format = x.attr$tbl_format,

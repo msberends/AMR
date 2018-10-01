@@ -124,7 +124,7 @@
 #'
 #' A data set containing the complete microbial taxonomy of the kingdoms Bacteria, Fungi and Protozoa. MO codes can be looked up using \code{\link{as.mo}}.
 #' @inheritSection as.mo ITIS
-#' @format A \code{\link{data.frame}} with 18,831 observations and 15 variables:
+#' @format A \code{\link{data.frame}} with 18,833 observations and 16 variables:
 #' \describe{
 #'   \item{\code{mo}}{ID of microorganism}
 #'   \item{\code{tsn}}{Taxonomic Serial Number (TSN), as defined by ITIS}
@@ -140,7 +140,8 @@
 #'   \item{\code{gramstain}}{Gram of microorganism, like \code{"Gram negative"}}
 #'   \item{\code{type}}{Type of microorganism, like \code{"Bacteria"} and \code{"Fungi"}}
 #'   \item{\code{prevalence}}{A rounded integer based on prevalence of the microorganism. Used internally by \code{\link{as.mo}}, otherwise quite meaningless.}
-#'   \item{\code{mo.old}}{The old ID for package versions 0.3.0 and lower.}
+#'   \item{\code{authors}}{Author(s) that published this taxonomic name as found in ITIS, see Source}
+#'   \item{\code{year}}{Year in which the author(s) published this taxonomic name as found in ITIS, see Source}
 #' }
 #' @source [3] Integrated Taxonomic Information System (ITIS) on-line database, \url{https://www.itis.gov}.
 #' @seealso \code{\link{as.mo}} \code{\link{mo_property}} \code{\link{microorganisms.umcg}}

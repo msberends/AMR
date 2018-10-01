@@ -26,11 +26,11 @@ Erwin E.A. Hassing<sup>2</sup>,
 
 ## Contents
 * [Why this package?](#why-this-package)
+  * [ITIS](#itis)
 * [How to get it?](#how-to-get-it)
   * [Install from CRAN](#install-from-cran)
   * [Install from GitHub](#install-from-github)
 * [How to use it?](#how-to-use-it)
-  * [ITIS](#itis)
   * [New classes](#new-classes)
   * [Overwrite/force resistance based on EUCAST rules](#overwriteforce-resistance-based-on-eucast-rules)
   * [Other (microbial) epidemiological functions](#other-microbial-epidemiological-functions)
@@ -73,6 +73,15 @@ The `AMR` package basically does four important things:
      * 2,000 blood culture isolates from anonymised septic patients between 2001 and 2017 in the Northern Netherlands
      * Results of 40 antibiotics (each antibiotic in its own column) with a total of 38,414 antimicrobial results
      * Real and genuine data
+     
+### ITIS
+<img src="man/figures/itis_logo.jpg" height="100px">
+
+This package contains the **complete microbial taxonomic data** (with all  seven taxonomic ranks - from subkingdom to subspecies) from the publicly available Integrated Taxonomic Information System (ITIS, https://www.itis.gov). 
+
+The complete taxonomic kingdoms Bacteria, Fungi and Protozoa are included in this package, as well as all previously accepted names known to ITIS. This allows users to use authoritative taxonomic information for their data analyses on any microorganisms, not only human pathogens.
+
+ITIS is a partnership of U.S., Canadian, and Mexican agencies and taxonomic specialists.
 
 ## How to get it?
 All stable versions of this package [are published on CRAN](http://cran.r-project.org/package=AMR), the official R network with a peer-reviewed submission process.
@@ -95,9 +104,9 @@ This is the latest **development version**. Although it may contain bugfixes and
 
 Development Test | Result | Reference
 --- | :---: | ---
-Works on Linux and macOS | [![Travis_Build](https://travis-ci.org/msberends/AMR.svg?branch=master)](https://travis-ci.org/msberends/AMR) | Checked by Travis CI, GmbH [[ref 1]](https://travis-ci.org/msberends/AMR) 
-Works on Windows | [![AppVeyor_Build](https://ci.appveyor.com/api/projects/status/github/msberends/AMR?branch=master&svg=true)](https://ci.appveyor.com/project/msberends/AMR) | Checked by Appveyor Systems Inc. [[ref 2]](https://ci.appveyor.com/project/msberends/AMR)
-Syntax lines checked | [![Code_Coverage](https://codecov.io/gh/msberends/AMR/branch/master/graph/badge.svg)](https://codecov.io/gh/msberends/AMR) | Checked by Codecov LLC [[ref 3]](https://codecov.io/gh/msberends/AMR)
+All functions checked on Linux and macOS | [![Travis_Build](https://travis-ci.org/msberends/AMR.svg?branch=master)](https://travis-ci.org/msberends/AMR) | Travis CI, GmbH [[ref 1]](https://travis-ci.org/msberends/AMR) 
+All functions checked on Windows | [![AppVeyor_Build](https://ci.appveyor.com/api/projects/status/github/msberends/AMR?branch=master&svg=true)](https://ci.appveyor.com/project/msberends/AMR) | Appveyor Systems Inc. [[ref 2]](https://ci.appveyor.com/project/msberends/AMR)
+Percentage of syntax lines checked | [![Code_Coverage](https://codecov.io/gh/msberends/AMR/branch/master/graph/badge.svg)](https://codecov.io/gh/msberends/AMR) | Codecov LLC [[ref 3]](https://codecov.io/gh/msberends/AMR)
 
 If so, try it with:
 ```r
@@ -118,15 +127,6 @@ library(AMR)
 # For a list of functions:
 help(package = "AMR")
 ```
-
-## ITIS
-<img src="man/figures/itis_logo.jpg" height="100px">
-
-This `AMR` package contains the **complete microbial taxonomic data** (with all  seven taxonomic ranks - from subkingdom to subspecies) from the publicly available Integrated Taxonomic Information System (ITIS, https://www.itis.gov). 
-
-The complete taxonomic kingdoms Bacteria, Fungi and Protozoa are included in this package, as well as all previously accepted names known to ITIS. This allows users to use authoritative taxonomic information for their data analyses on any microorganisms, not only human pathogens.
-
-ITIS is a partnership of U.S., Canadian, and Mexican agencies and taxonomic specialists.
 
 ### New classes
 This package contains two new S3 classes: `mic` for MIC values (e.g. from Vitek or Phoenix) and `rsi` for antimicrobial drug interpretations (i.e. S, I and R). Both are actually ordered factors under the hood (an MIC of `2` being higher than `<=1` but lower than `>=32`, and for class `rsi` factors are ordered as `S < I < R`). 
@@ -154,9 +154,8 @@ plot(septic_patients$cipr)
 
 ![example_1_rsi](man/figures/rsi_example1.png)
 
-<<img src="https://github.com/tidyverse/dplyr/blob/master/man/figures/logo.png" height="50px"> <img src="https://github.com/tidyverse/ggplot2/blob/master/man/figures/logo.png" height="50px">
-
 Or use the `ggplot2` and `dplyr` packages to create more appealing plots:
+
 ```r
 library(dplyr)
 library(ggplot2)

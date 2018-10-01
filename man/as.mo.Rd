@@ -7,12 +7,13 @@
 \alias{guess_mo}
 \title{Transform to microorganism ID}
 \usage{
-as.mo(x, Becker = FALSE, Lancefield = FALSE, allow_uncertain = FALSE)
+as.mo(x, Becker = FALSE, Lancefield = FALSE, allow_uncertain = FALSE,
+  reference_df = NULL)
 
 is.mo(x)
 
 guess_mo(x, Becker = FALSE, Lancefield = FALSE,
-  allow_uncertain = FALSE)
+  allow_uncertain = FALSE, reference_df = NULL)
 }
 \arguments{
 \item{x}{a character vector or a \code{data.frame} with one or two columns}
@@ -26,6 +27,8 @@ guess_mo(x, Becker = FALSE, Lancefield = FALSE,
   This excludes \emph{Enterococci} at default (who are in group D), use \code{Lancefield = "all"} to also categorise all \emph{Enterococci} as group D.}
 
 \item{allow_uncertain}{a logical to indicate whether empty results should be checked for only a part of the input string. When results are found, a warning will be given about the uncertainty and the result.}
+
+\item{reference_df}{a \code{data.frame} to use for extra reference when translating \code{x} to a valid \code{mo}. The first column can be any microbial name, code or ID (used in your analysis or organisation), the second column must be a valid \code{mo} as found in the \code{\link{microorganisms}} data set.}
 }
 \value{
 Character (vector) with class \code{"mo"}. Unknown values will return \code{NA}.
@@ -34,7 +37,7 @@ Character (vector) with class \code{"mo"}. Unknown values will return \code{NA}.
 Use this function to determine a valid microorganism ID (\code{mo}). Determination is done using Artificial Intelligence (AI) and the complete taxonomic kingdoms \emph{Bacteria}, \emph{Fungi} and \emph{Protozoa} (see Source), so the input can be almost anything: a full name (like \code{"Staphylococcus aureus"}), an abbreviated name (like \code{"S. aureus"}), an abbreviation known in the field (like \code{"MRSA"}), or just a genus. You could also \code{\link{select}} a genus and species column, zie Examples.
 }
 \details{
-A microbial ID (class: \code{mo}) typically looks like these examples:\cr
+A microbial ID from this package (class: \code{mo}) typically looks like these examples:\cr
 \preformatted{
   Code                Full name
   ---------------     --------------------------------------
@@ -58,14 +61,18 @@ This function uses Artificial Intelligence (AI) to help getting more logical res
   \item{Something like \code{"p aer"} will return the ID of \emph{Pseudomonas aeruginosa} and not \emph{Pasteurella aerogenes}}
   \item{Something like \code{"stau"} or \code{"S aur"} will return the ID of \emph{Staphylococcus aureus} and not \emph{Staphylococcus auricularis}}
 }
-This means that looking up human non-pathogenic microorganisms takes a longer time compares to human pathogenic microorganisms.
+This means that looking up human pathogenic microorganisms takes less time than looking up human \strong{non}-pathogenic microorganisms.
 
 \code{guess_mo} is an alias of \code{as.mo}.
 }
 \section{ITIS}{
 
 \if{html}{\figure{itis_logo.jpg}{options: height=60px style=margin-bottom:5px} \cr}
-This \code{AMR} package contains the \strong{complete microbial taxonomic data} (with seven taxonomic ranks - from subkingdom to subspecies) from the publicly available Integrated Taxonomic Information System (ITIS, \url{https://www.itis.gov}). ITIS is a partnership of U.S., Canadian, and Mexican agencies and taxonomic specialists [3]. The complete taxonomic kingdoms Bacteria, Fungi and Protozoa are included in this package, as well as all previously accepted names known to ITIS.
+This package contains the \strong{complete microbial taxonomic data} (with all  seven taxonomic ranks - from subkingdom to subspecies) from the publicly available Integrated Taxonomic Information System (ITIS, \url{https://www.itis.gov}).
+
+The complete taxonomic kingdoms Bacteria, Fungi and Protozoa are included in this package, as well as all previously accepted names known to ITIS. Furthermore, the responsible authors and year of publication are available too. This allows users to use authoritative taxonomic information for their data analyses on any microorganisms, not only human pathogens.
+
+ITIS is a partnership of U.S., Canadian, and Mexican agencies and taxonomic specialists [3].
 }
 
 \section{Source}{
@@ -78,7 +85,7 @@ This \code{AMR} package contains the \strong{complete microbial taxonomic data} 
 }
 
 \examples{
-# These examples all return "STAAUR", the ID of S. aureus:
+# These examples all return "B_STPHY_AUR", the ID of S. aureus:
 as.mo("stau")
 as.mo("STAU")
 as.mo("staaur")

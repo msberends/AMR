@@ -4,7 +4,7 @@
 \name{microorganisms}
 \alias{microorganisms}
 \title{Data set with taxonomic data from ITIS}
-\format{A \code{\link{data.frame}} with 18,831 observations and 15 variables:
+\format{A \code{\link{data.frame}} with 18,833 observations and 16 variables:
 \describe{
   \item{\code{mo}}{ID of microorganism}
   \item{\code{tsn}}{Taxonomic Serial Number (TSN), as defined by ITIS}
@@ -20,7 +20,8 @@
   \item{\code{gramstain}}{Gram of microorganism, like \code{"Gram negative"}}
   \item{\code{type}}{Type of microorganism, like \code{"Bacteria"} and \code{"Fungi"}}
   \item{\code{prevalence}}{A rounded integer based on prevalence of the microorganism. Used internally by \code{\link{as.mo}}, otherwise quite meaningless.}
-  \item{\code{mo.old}}{The old ID for package versions 0.3.0 and lower.}
+  \item{\code{authors}}{Author(s) that published this taxonomic name as found in ITIS, see Source}
+  \item{\code{year}}{Year in which the author(s) published this taxonomic name as found in ITIS, see Source}
 }}
 \source{
 [3] Integrated Taxonomic Information System (ITIS) on-line database, \url{https://www.itis.gov}.
@@ -34,7 +35,11 @@ A data set containing the complete microbial taxonomy of the kingdoms Bacteria, 
 \section{ITIS}{
 
 \if{html}{\figure{itis_logo.jpg}{options: height=60px style=margin-bottom:5px} \cr}
-This \code{AMR} package contains the \strong{complete microbial taxonomic data} (with seven taxonomic ranks - from subkingdom to subspecies) from the publicly available Integrated Taxonomic Information System (ITIS, \url{https://www.itis.gov}). ITIS is a partnership of U.S., Canadian, and Mexican agencies and taxonomic specialists [3]. The complete taxonomic kingdoms Bacteria, Fungi and Protozoa are included in this package, as well as all previously accepted names known to ITIS.
+This package contains the \strong{complete microbial taxonomic data} (with all  seven taxonomic ranks - from subkingdom to subspecies) from the publicly available Integrated Taxonomic Information System (ITIS, \url{https://www.itis.gov}).
+
+The complete taxonomic kingdoms Bacteria, Fungi and Protozoa are included in this package, as well as all previously accepted names known to ITIS. Furthermore, the responsible authors and year of publication are available too. This allows users to use authoritative taxonomic information for their data analyses on any microorganisms, not only human pathogens.
+
+ITIS is a partnership of U.S., Canadian, and Mexican agencies and taxonomic specialists [3].
 }
 
 \seealso{
