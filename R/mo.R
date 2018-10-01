@@ -192,6 +192,13 @@ exec_as.mo <- function(x, Becker = FALSE, Lancefield = FALSE, allow_uncertain = 
 
   if (all(x %in% AMR::microorganisms[, property])) {
     # already existing mo
+  } else if (all(x %in% AMR::microorganisms[, "mo"])) {
+    # existing mo codes
+    suppressWarnings(
+      x <- data.frame(mo = x, stringsAsFactors = FALSE) %>%
+        left_join(AMR::microorganisms, by = "mo") %>%
+        pull(property)
+    )
   } else if (!is.null(reference_df)
              & all(x %in% reference_df[, 1])
              & all(reference_df[, 2] %in% AMR::microorganisms$mo)) {
@@ -653,7 +660,7 @@ exec_as.mo <- function(x, Becker = FALSE, Lancefield = FALSE, allow_uncertain = 
     class(x) <- "mo"
     attr(x, 'package') <- 'AMR'
     attr(x, 'ITIS') <- TRUE
-  } else if (property %in% c("tsn", "year")) {
+  } else if (property == "tsn") {
     x <- as.integer(x)
   }
 
