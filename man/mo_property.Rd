@@ -12,8 +12,7 @@
 \alias{mo_class}
 \alias{mo_phylum}
 \alias{mo_subkingdom}
-\alias{mo_authors}
-\alias{mo_year}
+\alias{mo_ref}
 \alias{mo_type}
 \alias{mo_TSN}
 \alias{mo_gramstain}
@@ -40,9 +39,7 @@ mo_phylum(x, ...)
 
 mo_subkingdom(x, ...)
 
-mo_authors(x, ...)
-
-mo_year(x, ...)
+mo_ref(x, ...)
 
 mo_type(x, language = NULL, ...)
 
@@ -103,8 +100,7 @@ mo_shortname("E. coli")       # "E. coli"
 mo_gramstain("E. coli")       # "Gram negative"
 mo_TSN("E. coli")             # 285
 mo_type("E. coli")            # "Bacteria"
-mo_authors("E. coli")         # "Castellani and Chalmers"
-mo_year("E. coli")            # 1919
+mo_ref("E. coli")             # "Castellani and Chalmers, 1919"
 
 
 # Abbreviations known in the field

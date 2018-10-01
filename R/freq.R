@@ -517,6 +517,12 @@ diff.frequency_tbl <- function(x, y, ...) {
     stop("Both x and y must be a frequency table.")
   }
 
+  cat("Differences between frequency tables")
+  if (identical(x, y)) {
+    cat("\n\nNo differences found.\n")
+    return(invisible())
+  }
+
   x.attr <- attributes(x)$opt
 
   # only keep item and count
@@ -543,12 +549,11 @@ diff.frequency_tbl <- function(x, y, ...) {
                                  diff.percent,
                                  paste0("+", diff.percent)))
 
-  cat("Differences between frequency tables")
   print(
     knitr::kable(x,
                  format = x.attr$tbl_format,
                  col.names = c("Item", "Count #1", "Count #2", "Difference", "Diff. percent"),
-                 align = "lrrrr",
+                 align = paste0(x.attr$column_align[1], "rrrr"),
                  padding = 1)
   )
 }

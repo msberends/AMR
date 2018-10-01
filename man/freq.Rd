@@ -119,7 +119,7 @@ years <- format(years)
 # print a histogram of numeric values
 septic_patients \%>\%
   freq(age) \%>\%
-  hist()  # prettier: ggplot(septic_patients, aes(age)) + geom_histogram()
+  hist()
 
 # or print all points to a regular plot
 septic_patients \%>\%
@@ -146,6 +146,10 @@ identical(septic_patients \%>\%
 table(septic_patients$gender,
       septic_patients$age) \%>\%
   freq(sep = " **sep** ")
+
+# check differences between frequency tables
+diff(freq(septic_patients$trim),
+     freq(septic_patients$trsu))
 
 \dontrun{
 # send frequency table to clipboard (e.g. for pasting in Excel)

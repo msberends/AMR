@@ -4,7 +4,7 @@
 \name{microorganisms}
 \alias{microorganisms}
 \title{Data set with taxonomic data from ITIS}
-\format{A \code{\link{data.frame}} with 18,833 observations and 16 variables:
+\format{A \code{\link{data.frame}} with 18,833 observations and 15 variables:
 \describe{
   \item{\code{mo}}{ID of microorganism}
   \item{\code{tsn}}{Taxonomic Serial Number (TSN), as defined by ITIS}
@@ -20,8 +20,7 @@
   \item{\code{gramstain}}{Gram of microorganism, like \code{"Gram negative"}}
   \item{\code{type}}{Type of microorganism, like \code{"Bacteria"} and \code{"Fungi"}}
   \item{\code{prevalence}}{A rounded integer based on prevalence of the microorganism. Used internally by \code{\link{as.mo}}, otherwise quite meaningless.}
-  \item{\code{authors}}{Author(s) that published this taxonomic name as found in ITIS, see Source}
-  \item{\code{year}}{Year in which the author(s) published this taxonomic name as found in ITIS, see Source}
+  \item{\code{ref}}{Author(s) and year of concerning publication as found in ITIS, see Source}
 }}
 \source{
 [3] Integrated Taxonomic Information System (ITIS) on-line database, \url{https://www.itis.gov}.

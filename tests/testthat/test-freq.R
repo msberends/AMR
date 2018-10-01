@@ -112,5 +112,19 @@ test_that("frequency table works", {
   expect_error(septic_patients %>% freq(peni, oxac, clox, amox, amcl,
                                         ampi, pita, czol, cfep, cfur))
 
+  # run diff
+  expect_output(print(
+    diff(freq(septic_patients$amcl),
+         freq(septic_patients$amox))
+  ))
+  expect_output(print(
+    diff(freq(septic_patients$age),
+         freq(septic_patients$age)) # same
+  ))
+  expect_error(print(
+    diff(freq(septic_patients$amcl),
+         "Just a string") # not a freq tbl
+  ))
+
 })
 

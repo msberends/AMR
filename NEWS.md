@@ -6,7 +6,7 @@
   * Taxonomic names: `mo_phylum`, `mo_class`, `mo_order`, `mo_family`, `mo_genus`, `mo_species`, `mo_subspecies`
   * Semantic names: `mo_fullname`, `mo_shortname`
   * Microbial properties: `mo_type`, `mo_gramstain`
-  * Author information: `mo_author`, `mo_year`
+  * Author and year: `mo_ref`
   
   They also come with support for German, Dutch, French, Italian, Spanish and Portuguese:
   ```r
@@ -20,11 +20,11 @@
   # [1] "Streptococcus grupo A"
   ```
   
-  Furthermore, old taxonomic names will give a note about the current taxonomic name:
+  Furthermore, former taxonomic names will give a note about the current taxonomic name:
   ```r
-  mo_gramstain("Escherichia blattae")
+  mo_gramstain("Esc blattae")
   # Note: 'Escherichia blattae' (Burgess et al., 1973) was renamed 'Shimwellia blattae' (Priest and Barker, 2010)
-  # [1] "Gram negative
+  # [1] "Gram negative"
   ```
 * Functions `count_R`, `count_IR`, `count_I`, `count_SI` and `count_S` to selectively count resistant or susceptible isolates
   * Extra function `count_df` (which works like `portion_df`) to get all counts of S, I and R of a data set with antibiotic columns, with support for grouped variables

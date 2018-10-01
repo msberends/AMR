@@ -45,8 +45,7 @@
 #' mo_gramstain("E. coli")       # "Gram negative"
 #' mo_TSN("E. coli")             # 285
 #' mo_type("E. coli")            # "Bacteria"
-#' mo_authors("E. coli")         # "Castellani and Chalmers"
-#' mo_year("E. coli")            # 1919
+#' mo_ref("E. coli")             # "Castellani and Chalmers, 1919"
 #'
 #'
 #' # Abbreviations known in the field
@@ -199,14 +198,8 @@ mo_subkingdom <- function(x, ...) {
 
 #' @rdname mo_property
 #' @export
-mo_authors <- function(x, ...) {
-  mo_validate(x = x, property = "authors", ...)
-}
-
-#' @rdname mo_property
-#' @export
-mo_year <- function(x, ...) {
-  mo_validate(x = x, property = "year", ...)
+mo_ref <- function(x, ...) {
+  mo_validate(x = x, property = "ref", ...)
 }
 
 #' @rdname mo_property

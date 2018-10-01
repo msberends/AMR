@@ -244,13 +244,11 @@ exec_as.mo <- function(x, Becker = FALSE, Lancefield = FALSE, allow_uncertain = 
     x <- gsub(" ", ".*", x, fixed = TRUE)
     # add start en stop regex
     x <- paste0('^', x, '$')
-    x_withspaces_all <- x_withspaces
     x_withspaces_start <- paste0('^', x_withspaces)
     x_withspaces <- paste0('^', x_withspaces, '$')
 
     # cat(paste0('x                  "', x, '"\n'))
     # cat(paste0('x_species          "', x_species, '"\n'))
-    # cat(paste0('x_withspaces_all   "', x_withspaces_all, '"\n'))
     # cat(paste0('x_withspaces_start "', x_withspaces_start, '"\n'))
     # cat(paste0('x_withspaces       "', x_withspaces, '"\n'))
     # cat(paste0('x_backup           "', x_backup, '"\n'))
@@ -522,16 +520,15 @@ exec_as.mo <- function(x, Becker = FALSE, Lancefield = FALSE, allow_uncertain = 
         MOs_old <- as.data.table(AMR::microorganisms.old)
         setkey(MOs_old, name, tsn_new)
       }
-      found <- MOs_old[tolower(name) == tolower(x_backup[i]) |
-                         tsn == x_trimmed[i],]
+      found <- MOs_old[tolower(name) == tolower(x_backup[i])
+                       | tsn == x_trimmed[i]
+                       | name %like% x_withspaces[i],]
       if (NROW(found) > 0) {
         x[i] <- MOs[tsn == found[1, tsn_new], ..property][[1]]
         renamed_note(name_old = found[1, name],
                      name_new = MOs[tsn == found[1, tsn_new], fullname],
-                     authors_old = found[1, authors],
-                     authors_new = MOs[tsn == found[1, tsn_new], authors],
-                     year_old = found[1, year],
-                     year_new = MOs[tsn == found[1, tsn_new], year])
+                     ref_old = found[1, ref],
+                     ref_new = MOs[tsn == found[1, tsn_new], ref])
         next
       }
 
@@ -548,10 +545,8 @@ exec_as.mo <- function(x, Becker = FALSE, Lancefield = FALSE, allow_uncertain = 
                   call. = FALSE, immediate. = TRUE)
           renamed_note(name_old = found[1, name],
                        name_new = MOs[tsn == found[1, tsn_new], fullname],
-                       authors_old = found[1, authors],
-                       authors_new = MOs[tsn == found[1, tsn_new], authors],
-                       year_old = found[1, year],
-                       year_new = MOs[tsn == found[1, tsn_new], year])
+                       ref_old = found[1, ref],
+                       ref_new = MOs[tsn == found[1, tsn_new], ref])
           next
         }
 
@@ -666,20 +661,18 @@ exec_as.mo <- function(x, Becker = FALSE, Lancefield = FALSE, allow_uncertain = 
 }
 
 #' @importFrom dplyr case_when
-renamed_note <- function(name_old, name_new,
-                         authors_old = "", authors_new = "",
-                         year_old = "", year_new = "") {
-  authorship_old <- case_when(
-    !authors_old %in% c("", NA) & !year_old %in% c("", NA) ~ paste0(" (", authors_old, ", ", year_old, ")"),
-    !authors_old %in% c("", NA) ~ paste0(" (", authors_old, ")"),
-    !year_old %in% c("", NA) ~ paste0(" (", year_old, ")"),
-    TRUE ~ "")
-  authorship_new <- case_when(
-    !authors_new %in% c("", NA) & !year_new %in% c("", NA) ~ paste0(" (", authors_new, ", ", year_new, ")"),
-    !authors_new %in% c("", NA) ~ paste0(" (", authors_new, ")"),
-    !year_new %in% c("", NA) ~ paste0(" (", year_new, ")"),
-    TRUE ~ "")
-  base::message(paste0("Note: '", name_old, "'", authorship_old, " was renamed '", name_new, "'", authorship_new))
+renamed_note <- function(name_old, name_new, ref_old = "", ref_new = "") {
+  if (!is.na(ref_old)) {
+    ref_old <- paste0(" (", ref_old, ")")
+  } else {
+    ref_old <- ""
+  }
+  if (!is.na(ref_new)) {
+    ref_new <- paste0(" (", ref_new, ")")
+  } else {
+    ref_new <- ""
+  }
+  base::message(paste0("Note: '", name_old, "'", ref_old, " was renamed '", name_new, "'", ref_new))
 }
 
 #' @exportMethod print.mo

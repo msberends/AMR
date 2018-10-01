@@ -158,4 +158,14 @@ test_that("as.mo works", {
   expect_equal(suppressWarnings(as.character(as.mo("esco extra_text", allow_uncertain = TRUE))), "B_ESCHR_COL")
   expect_warning(as.mo("esco extra_text", allow_uncertain = TRUE))
 
+  # predefined reference_df
+  expect_equal(as.character(as.mo("TestingOwnID",
+                                  reference_df = data.frame(a = "TestingOwnID", b = "B_ESCHR_COL"))),
+               "B_ESCHR_COL")
+  expect_equal(as.character(as.mo(c("TestingOwnID", "E. coli"),
+                                  reference_df = data.frame(a = "TestingOwnID", b = "B_ESCHR_COL"))),
+               c("B_ESCHR_COL", "B_ESCHR_COL"))
+  expect_warning(as.character(as.mo("TestingOwnID",
+                                  reference_df = NULL)))
+
 })
