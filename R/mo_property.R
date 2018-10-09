@@ -22,7 +22,7 @@
 #' @param x any (vector of) text that can be coerced to a valid microorganism code with \code{\link{as.mo}}
 #' @param property one of the column names of one of the \code{\link{microorganisms}} data set or \code{"shortname"}
 #' @param language language of the returned text, defaults to English (\code{"en"}) and can also be set with \code{\link{getOption}("AMR_locale")}. Either one of \code{"en"} (English), \code{"de"} (German), \code{"nl"} (Dutch), \code{"es"} (Spanish) or \code{"pt"} (Portuguese).
-#' @param ... other parameters passed on to \code{/link{as.mo}}
+#' @param ... other parameters passed on to \code{\link{as.mo}}
 #' @inheritSection as.mo ITIS
 #' @inheritSection as.mo Source
 #' @rdname mo_property

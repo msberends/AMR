@@ -58,6 +58,7 @@
 #' @importFrom grDevices boxplot.stats
 #' @importFrom dplyr %>% select pull n_distinct group_by arrange desc mutate summarise n_distinct tibble
 #' @importFrom utils browseVignettes installed.packages
+#' @importFrom hms is.hms
 #' @keywords summary summarise frequency freq
 #' @rdname freq
 #' @name freq
@@ -366,7 +367,7 @@ frequency_tbl <- function(x,
   }
 
   formatdates <- "%e %B %Y" # = d mmmm yyyy
-  if (any(class(x) == 'hms')) {
+  if (is.hms(x)) {
     x <- x %>% as.POSIXlt()
     formatdates <- "%H:%M:%S"
   }

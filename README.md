@@ -3,7 +3,7 @@
 
 This R package was created for academic research by PhD students of the Faculty of Medical Sciences of the [University of Groningen](https://www.rug.nl) and the Medical Microbiology & Infection Prevention (MMBI) department of the [University Medical Center Groningen (UMCG)](https://www.umcg.nl).
 
-:arrow_forward: Get it with `install.packages("AMR")` or see below for other possibilities. Read all changes and new functions in [NEWS.md](NEWS.md).
+:arrow_forward: Get it with `install.packages("AMR")` or see below for other possibilities. Read all changes and new functions in **[NEWS.md](https://github.com/msberends/AMR/blob/master/NEWS.md)**.
 
 ## Authors
 <a href="https://orcid.org/0000-0001-7620-1800"><img src="https://cran.r-project.org/web/orcid.svg" height="16px"></a> Matthijs S. Berends<sup>1,2,a</sup>,
@@ -29,6 +29,7 @@ Erwin E.A. Hassing<sup>2</sup>,
   * [ITIS](#itis)
 * [How to get it?](#how-to-get-it)
   * [Install from CRAN](#install-from-cran)
+  * [Install from Zenodo](#install-from-zenodo)
   * [Install from GitHub](#install-from-github)
 * [How to use it?](#how-to-use-it)
   * [New classes](#new-classes)
@@ -80,9 +81,36 @@ The `AMR` package basically does four important things:
 
 This package contains the **complete microbial taxonomic data** (with all  seven taxonomic ranks - from subkingdom to subspecies) from the publicly available Integrated Taxonomic Information System (ITIS, https://www.itis.gov). 
 
-The complete taxonomic kingdoms Bacteria, Fungi and Protozoa are included in this package, as well as all previously accepted names known to ITIS. This allows users to use authoritative taxonomic information for their data analyses on any microorganisms, not only human pathogens.
+All (sub)species from the taxonomic kingdoms Bacteria, Fungi and Protozoa are included in this package, as well as all previously accepted names known to ITIS. Furthermore, the responsible authors and year of publication are available. This allows users to use authoritative taxonomic information for their data analysis on any microorganism, not only human pathogens.
 
 ITIS is a partnership of U.S., Canadian, and Mexican agencies and taxonomic specialists.
+
+**Get a note when a species was renamed**
+```r
+mo_shortname("Chlamydia psittaci")
+# Note: 'Chlamydia psittaci' (Page, 1968) was renamed 'Chlamydophila psittaci' (Everett et al., 1999)
+# [1] "C. psittaci"
+```
+
+**Get any property from the entire taxonomic tree for all included species**
+```r
+mo_class("E. coli")
+# [1] "Gammaproteobacteria"
+
+mo_family("E. coli")
+# [1] "Enterobacteriaceae"
+
+mo_ref("E. coli")
+# [1] "Castellani and Chalmers, 1919"
+```
+
+**Do not get mistaken - the package only includes microorganisms**
+```r
+mo_phylum("C. elegans")
+# [1] "Cyanobacteria"                   # Bacteria?!
+mo_fullname("C. elegans")
+# [1] "Chroococcus limneticus elegans"  # Because a microorganism was found 
+```
 
 ## How to get it?
 All stable versions of this package [are published on CRAN](http://cran.r-project.org/package=AMR), the official R network with a peer-reviewed submission process.
@@ -99,6 +127,11 @@ All stable versions of this package [are published on CRAN](http://cran.r-projec
 - <img src="https://cran.r-project.org/favicon.ico" alt="R favicon" height="20px"> Install in R directly:
   - `install.packages("AMR")`
 
+### Install from Zenodo
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.1305355.svg)](https://doi.org/10.5281/zenodo.1305355)
+
+This package was also published on Zenodo (stable releases only): https://doi.org/10.5281/zenodo.1305355
+
 ### Install from GitHub
 
 This is the latest **development version**. Although it may contain bugfixes and even new functions compared to the latest released version on CRAN, it is also subject to change and may be unstable or behave unexpectedly. Always consider this a beta version. All below 'badges' should be green:
@@ -114,11 +147,6 @@ If so, try it with:
 install.packages("devtools") 
 devtools::install_github("msberends/AMR")
 ```
-
-### Install from Zenodo
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.1305355.svg)](https://doi.org/10.5281/zenodo.1305355)
-
-This package was also published on Zenodo: https://doi.org/10.5281/zenodo.1305355
 
 ## How to use it?
 ```r

@@ -63,7 +63,7 @@
 #' \if{html}{\figure{itis_logo.jpg}{options: height=60px style=margin-bottom:5px} \cr}
 #' This package contains the \strong{complete microbial taxonomic data} (with all  seven taxonomic ranks - from subkingdom to subspecies) from the publicly available Integrated Taxonomic Information System (ITIS, \url{https://www.itis.gov}).
 #'
-#' The complete taxonomic kingdoms Bacteria, Fungi and Protozoa are included in this package, as well as all previously accepted names known to ITIS. Furthermore, the responsible authors and year of publication are available too. This allows users to use authoritative taxonomic information for their data analyses on any microorganisms, not only human pathogens.
+#' All (sub)species from the taxonomic kingdoms Bacteria, Fungi and Protozoa are included in this package, as well as all previously accepted names known to ITIS. Furthermore, the responsible authors and year of publication are available. This allows users to use authoritative taxonomic information for their data analysis on any microorganism, not only human pathogens.
 #'
 #' ITIS is a partnership of U.S., Canadian, and Mexican agencies and taxonomic specialists [3].
 #  (source as a section, so it can be inherited by other man pages:)

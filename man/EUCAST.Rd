@@ -36,7 +36,7 @@ interpretive_reading(...)
 \arguments{
 \item{tbl}{table with antibiotic columns, like e.g. \code{amox} and \code{amcl}}
 
-\item{col_mo}{column name of the bacteria ID in \code{tbl} - values of this column should be present in \code{microorganisms$mo}, see \code{\link{microorganisms}}}
+\item{col_mo}{column name of the microbial ID in \code{tbl} - values in this column should be present in \code{microorganisms$mo}, see \code{\link{microorganisms}}}
 
 \item{info}{print progress}
 
@@ -121,11 +121,12 @@ Abbrevations of the column containing antibiotics:
 
 \examples{
 a <- EUCAST_rules(septic_patients)
-a <- data.frame(mo = c("STAAUR",  # Staphylococcus aureus
-                       "ENCFAE",  # Enterococcus faecalis
-                       "ESCCOL",  # Escherichia coli
-                       "KLEPNE",  # Klebsiella pneumoniae
-                       "PSEAER"), # Pseudomonas aeruginosa
+
+a <- data.frame(mo = c("Staphylococcus aureus",
+                       "Enterococcus faecalis",
+                       "Escherichia coli",
+                       "Klebsiella pneumoniae",
+                       "Pseudomonas aeruginosa"),
                 vanc = "-",       # Vancomycin
                 amox = "-",       # Amoxicillin
                 coli = "-",       # Colistin
@@ -134,7 +135,7 @@ a <- data.frame(mo = c("STAAUR",  # Staphylococcus aureus
                 stringsAsFactors = FALSE)
 a
 
-b <- EUCAST_rules(a)
+b <- EUCAST_rules(a) # 11 results will be forced as R due to intrinsic resistance
 b
 }
 \keyword{eucast}

@@ -1,4 +1,12 @@
-# 0.4.0
+# 0.4.0.90xx (latest development version)
+
+#### New
+
+#### Changed
+* Check for `hms::is.hms` in frequency tables
+* Removed diacritics from all authors (columns `microorganisms$ref` and `microorganisms.old$ref`) to comply with CRAN policy to only allow ASCII characters
+
+# 0.4.0 (latest stable release)
 
 #### New
 * The data set `microorganisms` now contains **all microbial taxonomic data from ITIS** (kingdoms Bacteria, Fungi and Protozoa), the Integrated Taxonomy Information System, available via https://itis.gov. The data set now contains more than 18,000 microorganisms with all known bacteria, fungi and protozoa according ITIS with genus, species, subspecies, family, order, class, phylum and subkingdom. The new data set `microorganisms.old` contains all previously known taxonomic names from those kingdoms.
