@@ -182,7 +182,7 @@ exec_as.mo <- function(x, Becker = FALSE, Lancefield = FALSE, allow_uncertain = 
   # defined df to check for
   if (!is.null(reference_df)) {
     if (!is.data.frame(reference_df) | NCOL(reference_df) < 2) {
-      stop('`reference_df` must be a data.frame with at least two columns.')
+      stop('`reference_df` must be a data.frame with at least two columns.', call. = FALSE)
     }
     # remove factors, just keep characters
     suppressWarnings(

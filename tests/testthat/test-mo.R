@@ -165,7 +165,15 @@ test_that("as.mo works", {
   expect_equal(as.character(as.mo(c("TestingOwnID", "E. coli"),
                                   reference_df = data.frame(a = "TestingOwnID", b = "B_ESCHR_COL"))),
                c("B_ESCHR_COL", "B_ESCHR_COL"))
-  expect_warning(as.character(as.mo("TestingOwnID",
-                                  reference_df = NULL)))
+  expect_warning(as.mo("TestingOwnID", reference_df = NULL))
+  expect_error(as.mo("E. coli", reference_df = data.frame(a = "TestingOwnID")))
+
+  # combination of existing mo and certe
+  expect_identical(as.character(as.mo(c("B_ESCHR_COL", "ESCCOL"))),
+                   c("B_ESCHR_COL", "B_ESCHR_COL"))
+
+  # TSN of prevalent and non prevalent ones
+  expect_equal(mo_TSN(c("Gomphosphaeria aponina delicatula", "Escherichia coli")),
+                   c(717, 285))
 
 })

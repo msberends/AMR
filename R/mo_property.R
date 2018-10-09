@@ -231,16 +231,7 @@ mo_property <- function(x, property = 'fullname', language = NULL, ...) {
     stop("invalid property: '", property, "' - use a column name of the `microorganisms` data set")
   }
 
-  # this will give a warning if x cannot be coerced
-  res <- exec_as.mo(x = x, Becker = Becker, Lancefield = Lancefield, property = property)
-
-  if (property != "tsn") {
-    res[x %in% c("", NA) | res %in% c("", NA, "(no MO)")] <- ""
-    if (property %in% c("fullname", "shortname", "genus", "species", "subspecies", "type", "gramstain")) {
-      res <- mo_translate(res, language = language)
-    }
-  }
-  res
+  mo_translate(mo_validate(x = x, property = property, ...), language = language)
 }
 
 #' @rdname mo_property

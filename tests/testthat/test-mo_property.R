@@ -12,6 +12,7 @@ test_that("mo_property works", {
   expect_equal(mo_fullname("E. coli"), "Escherichia coli")
   expect_equal(mo_type("E. coli", language = "en"), "Bacteria")
   expect_equal(mo_gramstain("E. coli", language = "en"), "Gram negative")
+  expect_equal(mo_TSN("E. coli"), 285)
   expect_equal(class(mo_taxonomy("E. coli")), "list")
   expect_equal(names(mo_taxonomy("E. coli")), c("subkingdom", "phylum", "class", "order",
                                                 "family", "genus", "species", "subspecies"))
@@ -41,5 +42,15 @@ test_that("mo_property works", {
   expect_output(print(mo_gramstain("E. coli", language = "fr")))
 
   expect_error(mo_gramstain("E. coli", language = "UNKNOWN"))
+
+  # manual property function
+  expect_error(mo_property("E. coli", property = c("tsn", "fullname")))
+  expect_error(mo_property("E. coli", property = "UNKNOWN"))
+  expect_identical(mo_property("E. coli", property = "fullname"),
+                   mo_fullname("E. coli"))
+  expect_identical(mo_property("E. coli", property = "genus"),
+                   mo_genus("E. coli"))
+  expect_identical(mo_property("E. coli", property = "species"),
+                   mo_species("E. coli"))
 
 })
