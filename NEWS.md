@@ -5,6 +5,11 @@
 #### Changed
 * Check for `hms::is.hms` in frequency tables
 * Removed diacritics from all authors (columns `microorganisms$ref` and `microorganisms.old$ref`) to comply with CRAN policy to only allow ASCII characters
+* Fix for `mo_property` not working properly
+
+#### Other
+* Updated vignettes to comply with README
+
 
 # 0.4.0 (latest stable release)
 
