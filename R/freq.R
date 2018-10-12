@@ -336,6 +336,13 @@ frequency_tbl <- function(x,
     header <- header %>% paste0(markdown_line, '\nLongest:   ', x %>% base::nchar() %>% base::max(na.rm = TRUE))
   }
 
+  if (NROW(x) > 0 & any(class(x) == "difftime")) {
+    header <- header %>% paste0('\n')
+    header <- header %>% paste(markdown_line, '\nUnits:    ', attributes(x)$units)
+    x <- as.double(x)
+    # after this, the numeric header continues
+  }
+
   if (NROW(x) > 0 & any(class(x) %in% c('double', 'integer', 'numeric', 'raw', 'single'))) {
     # right align number
     Tukey_five <- stats::fivenum(x, na.rm = TRUE)
@@ -351,7 +358,7 @@ frequency_tbl <- function(x,
     outlier_length <- length(boxplot.stats(x)$out)
     header <- header %>% paste0(markdown_line, '\nOutliers:  ', outlier_length)
     if (outlier_length > 0) {
-      header <- header %>% paste0(' (unique: ', boxplot.stats(x)$out %>% n_distinct(), ')')
+      header <- header %>% paste0(' (unique count: ', boxplot.stats(x)$out %>% n_distinct(), ')')
     }
   }
   if (NROW(x) > 0 & any(class(x) == "rsi")) {

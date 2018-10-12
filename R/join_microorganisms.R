@@ -4,14 +4,15 @@
 #' @rdname join
 #' @name join
 #' @aliases join inner_join
-#' @param x existing table to join, also supports character vectors
-#' @param by a variable to join by - could be a column name of \code{x} with values that exist in \code{microorganisms$mo} (like \code{by = "bacteria_id"}), or another column in \code{\link{microorganisms}} (but then it should be named, like \code{by = c("my_genus_species" = "fullname")})
+#' @param x existing table to join, or character vector
+#' @param by a variable to join by - if left empty will search for a column with class \code{mo} (created with \code{\link{as.mo}}) or will be \code{"mo"} if that column name exists in \code{x}, could otherwise be a column name of \code{x} with values that exist in \code{microorganisms$mo} (like \code{by = "bacteria_id"}), or another column in \code{\link{microorganisms}} (but then it should be named, like \code{by = c("my_genus_species" = "fullname")})
 #' @param suffix if there are non-joined duplicate variables in \code{x} and \code{y}, these suffixes will be added to the output to disambiguate them. Should be a character vector of length 2.
 #' @param ... other parameters to pass on to \code{dplyr::\link[dplyr]{join}}.
-#' @details As opposed to the \code{\link[dplyr]{join}} functions of \code{dplyr}, characters vectors are supported and at default existing columns will get a suffix \code{"2"} and the newly joined columns will not get a suffix. See \code{\link[dplyr]{join}} for more information.
+#' @details \strong{Note:} As opposed to the \code{\link[dplyr]{join}} functions of \code{dplyr}, characters vectors are supported and at default existing columns will get a suffix \code{"2"} and the newly joined columns will not get a suffix. See \code{\link[dplyr]{join}} for more information.
 #' @export
 #' @examples
-#' left_join_microorganisms("STAAUR")
+#' left_join_microorganisms(as.mo("K. pneumoniae"))
+#' left_join_microorganisms("B_KLBSL_PNE")
 #'
 #' library(dplyr)
 #' septic_patients %>% left_join_microorganisms()
@@ -19,130 +20,117 @@
 #' df <- data.frame(date = seq(from = as.Date("2018-01-01"),
 #'                             to = as.Date("2018-01-07"),
 #'                             by = 1),
-#'                  bacteria_id = c("STAAUR", "STAAUR", "STAAUR", "STAAUR",
-#'                                  "ESCCOL", "ESCCOL", "ESCCOL"),
+#'                  bacteria = as.mo(c("S. aureus", "MRSA", "MSSA", "STAAUR",
+#'                                     "E. coli", "E. coli", "E. coli")),
 #'                  stringsAsFactors = FALSE)
 #' colnames(df)
-#' df2 <- left_join_microorganisms(df, "bacteria_id")
-#' colnames(df2)
-inner_join_microorganisms <- function(x, by = 'mo', suffix = c("2", ""), ...) {
-  if (!any(class(x) %in% c("data.frame", "matrix"))) {
-    x <- data.frame(mo = as.character(x), stringsAsFactors = FALSE)
-  }
-  # no name set to `by` parameter
-  if (is.null(names(by))) {
-    joinby <- colnames(AMR::microorganisms)[1]
-    names(joinby) <- by
-  } else {
-    joinby <- by
-  }
+#' df_joined <- left_join_microorganisms(df, "bacteria")
+#' colnames(df_joined)
+inner_join_microorganisms <- function(x, by = NULL, suffix = c("2", ""), ...) {
+  checked <- joins_check_df(x, by)
+  x <- checked$x
+  by <- checked$by
   join <- suppressWarnings(
-    dplyr::inner_join(x = x, y = AMR::microorganisms, by = joinby, suffix = suffix, ...)
+    dplyr::inner_join(x = x, y = AMR::microorganisms, by = by, suffix = suffix, ...)
   )
   if (nrow(join) > nrow(x)) {
-    warning('the newly joined tbl contains ', nrow(join) - nrow(x), ' rows more that its original')
+    warning('The newly joined tbl contains ', nrow(join) - nrow(x), ' rows more that its original.')
   }
   join
 }
 
 #' @rdname join
 #' @export
-left_join_microorganisms <- function(x, by = 'mo', suffix = c("2", ""), ...) {
-  if (!any(class(x) %in% c("data.frame", "matrix"))) {
-    x <- data.frame(mo = as.character(x), stringsAsFactors = FALSE)
-  }
-  # no name set to `by` parameter
-  if (is.null(names(by))) {
-    joinby <- colnames(AMR::microorganisms)[1]
-    names(joinby) <- by
-  } else {
-    joinby <- by
-  }
+left_join_microorganisms <- function(x, by = NULL, suffix = c("2", ""), ...) {
+  checked <- joins_check_df(x, by)
+  x <- checked$x
+  by <- checked$by
   join <- suppressWarnings(
-    dplyr::left_join(x = x, y = AMR::microorganisms, by = joinby, suffix = suffix, ...)
+    dplyr::left_join(x = x, y = AMR::microorganisms, by = by, suffix = suffix, ...)
   )
   if (nrow(join) > nrow(x)) {
-    warning('the newly joined tbl contains ', nrow(join) - nrow(x), ' rows more that its original')
+    warning('The newly joined tbl contains ', nrow(join) - nrow(x), ' rows more that its original.')
   }
   join
 }
 
 #' @rdname join
 #' @export
-right_join_microorganisms <- function(x, by = 'mo', suffix = c("2", ""), ...) {
-  if (!any(class(x) %in% c("data.frame", "matrix"))) {
-    x <- data.frame(mo = as.character(x), stringsAsFactors = FALSE)
-  }
-  # no name set to `by` parameter
-  if (is.null(names(by))) {
-    joinby <- colnames(AMR::microorganisms)[1]
-    names(joinby) <- by
-  } else {
-    joinby <- by
-  }
+right_join_microorganisms <- function(x, by = NULL, suffix = c("2", ""), ...) {
+  checked <- joins_check_df(x, by)
+  x <- checked$x
+  by <- checked$by
   join <- suppressWarnings(
-    dplyr::right_join(x = x, y = AMR::microorganisms, by = joinby, suffix = suffix, ...)
+    dplyr::right_join(x = x, y = AMR::microorganisms, by = by, suffix = suffix, ...)
   )
   if (nrow(join) > nrow(x)) {
-    warning('the newly joined tbl contains ', nrow(join) - nrow(x), ' rows more that its original')
+    warning('The newly joined tbl contains ', nrow(join) - nrow(x), ' rows more that its original.')
   }
   join
 }
 
 #' @rdname join
 #' @export
-full_join_microorganisms <- function(x, by = 'mo', suffix = c("2", ""), ...) {
-  if (!any(class(x) %in% c("data.frame", "matrix"))) {
-    x <- data.frame(mo = as.character(x), stringsAsFactors = FALSE)
-  }
-  # no name set to `by` parameter
-  if (is.null(names(by))) {
-    joinby <- colnames(AMR::microorganisms)[1]
-    names(joinby) <- by
-  } else {
-    joinby <- by
-  }
+full_join_microorganisms <- function(x, by = NULL, suffix = c("2", ""), ...) {
+  checked <- joins_check_df(x, by)
+  x <- checked$x
+  by <- checked$by
   join <- suppressWarnings(
-    dplyr::full_join(x = x, y = AMR::microorganisms, by = joinby, suffix = suffix, ...)
+    dplyr::full_join(x = x, y = AMR::microorganisms, by = by, suffix = suffix, ...)
   )
   if (nrow(join) > nrow(x)) {
-    warning('the newly joined tbl contains ', nrow(join) - nrow(x), ' rows more that its original')
+    warning('The newly joined tbl contains ', nrow(join) - nrow(x), ' rows more that its original.')
   }
   join
 }
 
 #' @rdname join
 #' @export
-semi_join_microorganisms <- function(x, by = 'mo', ...) {
-  if (!any(class(x) %in% c("data.frame", "matrix"))) {
-    x <- data.frame(mo = as.character(x), stringsAsFactors = FALSE)
-  }
-  # no name set to `by` parameter
-  if (is.null(names(by))) {
-    joinby <- colnames(AMR::microorganisms)[1]
-    names(joinby) <- by
-  } else {
-    joinby <- by
-  }
+semi_join_microorganisms <- function(x, by = NULL, ...) {
+  checked <- joins_check_df(x, by)
+  x <- checked$x
+  by <- checked$by
   suppressWarnings(
-    dplyr::semi_join(x = x, y = AMR::microorganisms, by = joinby, ...)
+    dplyr::semi_join(x = x, y = AMR::microorganisms, by = by, ...)
   )
 }
 
 #' @rdname join
 #' @export
-anti_join_microorganisms <- function(x, by = 'mo', ...) {
+anti_join_microorganisms <- function(x, by = NULL, ...) {
+  checked <- joins_check_df(x, by)
+  x <- checked$x
+  by <- checked$by
+  suppressWarnings(
+    dplyr::anti_join(x = x, y = AMR::microorganisms, by = by, ...)
+  )
+}
+
+joins_check_df <- function(x, by) {
   if (!any(class(x) %in% c("data.frame", "matrix"))) {
     x <- data.frame(mo = as.character(x), stringsAsFactors = FALSE)
+    if (is.null(by)) {
+      by <- "mo"
+    }
   }
-  # no name set to `by` parameter
+  if (is.null(by)) {
+    # search for column with class `mo` and return first one found
+    by <- colnames(x)[lapply(x, is.mo) == TRUE][1]
+    if (is.na(by)) {
+      if ("mo" %in% colnames(x)) {
+        by <- "mo"
+      } else {
+        stop("Cannot join - no column found with name or class  `mo`.", call. = FALSE)
+      }
+    }
+    message('Joining, by = "', by, '"') # message same as dplyr::join functions
+  }
   if (is.null(names(by))) {
     joinby <- colnames(AMR::microorganisms)[1]
     names(joinby) <- by
   } else {
     joinby <- by
   }
-  suppressWarnings(
-    dplyr::anti_join(x = x, y = AMR::microorganisms, by = joinby, ...)
-  )
+  list(x = x,
+       by = joinby)
 }

@@ -68,11 +68,11 @@ test_that("portions works", {
   expect_error(portion_S("test", as_percent = "test"))
 
   # check too low amount of isolates
-  expect_identical(portion_R(septic_patients$amox, minimum = nrow(septic_patients) + 1),
+  expect_identical(suppressWarnings(portion_R(septic_patients$amox, minimum = nrow(septic_patients) + 1)),
                    NA)
-  expect_identical(portion_I(septic_patients$amox, minimum = nrow(septic_patients) + 1),
+  expect_identical(suppressWarnings(portion_I(septic_patients$amox, minimum = nrow(septic_patients) + 1)),
                    NA)
-  expect_identical(portion_S(septic_patients$amox, minimum = nrow(septic_patients) + 1),
+  expect_identical(suppressWarnings(portion_S(septic_patients$amox, minimum = nrow(septic_patients) + 1)),
                    NA)
 
   # warning for speed loss

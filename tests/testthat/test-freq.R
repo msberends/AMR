@@ -43,6 +43,11 @@ test_that("frequency table works", {
   # list
   expect_output(print(freq(list(age = septic_patients$age))))
   expect_output(print(freq(list(age = septic_patients$age, gender = septic_patients$gender))))
+  # difftime
+  expect_output(suppressWarnings(print(
+    freq(difftime(Sys.time(),
+                  Sys.time() - runif(5, min = 0, max = 60 * 60 * 24),
+                  units = "hours")))))
 
   library(dplyr)
   expect_output(septic_patients %>% select(1:2) %>% freq() %>% print())
@@ -119,7 +124,7 @@ test_that("frequency table works", {
   ))
   expect_output(print(
     diff(freq(septic_patients$age),
-         freq(septic_patients$age)) # same
+         freq(septic_patients$age)) # "No differences found."
   ))
   expect_error(print(
     diff(freq(septic_patients$amcl),

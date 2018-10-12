@@ -1,11 +1,23 @@
 # 0.4.0.90xx (latest development version)
 
 #### New
+* Function `count_all` to get all available isolates (that like all `portion_*` and `count_*` functions also supports `summarise` and `group_by`), the old `n_rsi` is now an alias of `count_all`
 
 #### Changed
+* Fix for `portion_*(..., as_percent = TRUE)` when minimal amount of isolates would not be met
+* Using `portion_*` functions now throws a warning when total available isolate is below parameter `minimum`
+* `as.mo` will not set package name as attribute anymore
 * Check for `hms::is.hms` in frequency tables
 * Removed diacritics from all authors (columns `microorganisms$ref` and `microorganisms.old$ref`) to comply with CRAN policy to only allow ASCII characters
 * Fix for `mo_property` not working properly
+* Support for class `difftime` in frequency tables
+* Support for named vectors of class `mo`, useful for `top_freq()`
+* AI improvements for `as.mo`:
+  * `"CRS"` -> *Stenotrophomonas maltophilia*
+  * `"CRSM"` -> *Stenotrophomonas maltophilia*
+  * `"MSSA"` -> *Staphylococcus aureus*
+  * `"MSSE"` -> *Staphylococcus epidermidis*
+* Fix for `join` functions
 
 #### Other
 * Updated vignettes to comply with README

@@ -507,10 +507,10 @@ EUCAST_rules <- function(tbl,
   # overig
   edit_rsi(to = 'R',
            rows = which(tbl$genus %in% c('Leuconostoc', 'Pediococcus')),
-           cols = c(vanc, teic))
+           cols = glycopeptides)
   edit_rsi(to = 'R',
            rows = which(tbl$genus == 'Lactobacillus'),
-           cols = c(vanc, teic))
+           cols = glycopeptides)
   edit_rsi(to = 'R',
            rows = which(tbl$fullname %like% '^Clostridium (ramosum|innocuum)'),
            cols = vanc)

@@ -68,7 +68,7 @@ At default, the names of antibiotics will be shown on the plots using \code{\lin
 
 \code{scale_y_percent} transforms the y axis to a 0 to 100\% range using \code{\link[ggplot2]{scale_continuous}}.
 
-\code{scale_rsi_colours} sets colours to the bars: green for S, yellow for I and red for R, using \code{\link[ggplot2]{scale_colour_brewer}}.
+\code{scale_rsi_colours} sets colours to the bars: green for S, yellow for I and red for R, using \code{\link[ggplot2]{scale_brewer}}.
 
 \code{theme_rsi} is a \code{ggplot \link[ggplot2]{theme}} with minimal distraction.
 

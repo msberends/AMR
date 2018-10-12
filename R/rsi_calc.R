@@ -107,12 +107,15 @@ rsi_calc <- function(...,
 
   total <- length(x) - sum(is.na(x))
   if (total < minimum) {
-    return(NA)
+    warning("Introducing NA: only ", total, " results available (minimum set to ", minimum, ").", call. = FALSE)
+    result <- NA
+  } else {
+    result <- found / total
   }
 
   if (as_percent == TRUE) {
-    percent(found / total, force_zero = TRUE)
+    percent(result, force_zero = TRUE)
   } else {
-    found / total
+    result
   }
 }

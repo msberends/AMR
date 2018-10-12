@@ -272,12 +272,14 @@ exec_as.mo <- function(x, Becker = FALSE, Lancefield = FALSE, allow_uncertain = 
       # translate known trivial abbreviations to genus + species ----
       if (!is.na(x_trimmed[i])) {
         if (toupper(x_trimmed[i]) == 'MRSA'
+            | toupper(x_trimmed[i]) == 'MSSA'
             | toupper(x_trimmed[i]) == 'VISA'
             | toupper(x_trimmed[i]) == 'VRSA') {
           x[i] <- MOs[mo == 'B_STPHY_AUR', ..property][[1]][1L]
           next
         }
-        if (toupper(x_trimmed[i]) == 'MRSE') {
+        if (toupper(x_trimmed[i]) == 'MRSE'
+            | toupper(x_trimmed[i]) == 'MSSE') {
           x[i] <- MOs[mo == 'B_STPHY_EPI', ..property][[1]][1L]
           next
         }
@@ -288,6 +290,12 @@ exec_as.mo <- function(x, Becker = FALSE, Lancefield = FALSE, allow_uncertain = 
         if (toupper(x_trimmed[i]) == 'MRPA') {
           # multi resistant P. aeruginosa
           x[i] <- MOs[mo == 'B_PDMNS_AER', ..property][[1]][1L]
+          next
+        }
+        if (toupper(x_trimmed[i]) == 'CRS'
+            | toupper(x_trimmed[i]) == 'CRSM') {
+          # co-trim resistant S. maltophilia
+          x[i] <- MOs[mo == 'B_STNTR_MAL', ..property][[1]][1L]
           next
         }
         if (toupper(x_trimmed[i]) %in% c('PISP', 'PRSP', 'VISP', 'VRSP')) {
@@ -578,7 +586,7 @@ exec_as.mo <- function(x, Becker = FALSE, Lancefield = FALSE, allow_uncertain = 
 
   failures <- failures[!failures %in% c(NA, NULL, NaN)]
   if (length(failures) > 0) {
-    warning("These ", length(failures) , " values could not be coerced (try again with allow_uncertain = TRUE):\n",
+    warning("These ", length(failures) , " values could not be coerced (try again with allow_uncertain = TRUE): ",
             paste('"', unique(failures), '"', sep = "", collapse = ', '),
             ".",
             call. = FALSE)
@@ -658,8 +666,6 @@ exec_as.mo <- function(x, Becker = FALSE, Lancefield = FALSE, allow_uncertain = 
 
   if (property == "mo") {
     class(x) <- "mo"
-    attr(x, 'package') <- 'AMR'
-    attr(x, 'ITIS') <- TRUE
   } else if (property == "tsn") {
     x <- as.integer(x)
   }
@@ -667,7 +673,6 @@ exec_as.mo <- function(x, Becker = FALSE, Lancefield = FALSE, allow_uncertain = 
   x
 }
 
-#' @importFrom dplyr case_when
 renamed_note <- function(name_old, name_new, ref_old = "", ref_new = "") {
   if (!is.na(ref_old)) {
     ref_old <- paste0(" (", ref_old, ")")
@@ -687,7 +692,10 @@ renamed_note <- function(name_old, name_new, ref_old = "", ref_new = "") {
 #' @noRd
 print.mo <- function(x, ...) {
   cat("Class 'mo'\n")
-  print.default(as.character(x), quote = FALSE)
+  x_names <- names(x)
+  x <- as.character(x)
+  names(x) <- x_names
+  print.default(x, quote = FALSE)
 }
 
 #' @exportMethod as.data.frame.mo

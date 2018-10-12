@@ -7,6 +7,8 @@
 \alias{count_I}
 \alias{count_SI}
 \alias{count_S}
+\alias{count_all}
+\alias{n_rsi}
 \alias{count_df}
 \title{Count isolates}
 \source{
@@ -23,11 +25,15 @@ count_SI(...)
 
 count_S(...)
 
+count_all(...)
+
+n_rsi(...)
+
 count_df(data, translate_ab = getOption("get_antibiotic_names",
   "official"))
 }
 \arguments{
-\item{...}{one or more vectors (or columns) with antibiotic interpretations. They will be transformed internally with \code{\link{as.rsi}} if needed. Use multiple columns to calculate (the lack of) co-resistance: the probability where one of two drugs have a resistant or susceptible result. See Examples.}
+\item{...}{one or more vectors (or columns) with antibiotic interpretations. They will be transformed internally with \code{\link{as.rsi}} if needed.}
 
 \item{data}{a \code{data.frame} containing columns with class \code{rsi} (see \code{\link{as.rsi}})}
 
@@ -42,9 +48,9 @@ These functions can be used to count resistant/susceptible microbial isolates. A
 \code{count_R} and \code{count_IR} can be used to count resistant isolates, \code{count_S} and \code{count_SI} can be used to count susceptible isolates.\cr
 }
 \details{
-\strong{Remember that you should filter your table to let it contain only first isolates!} Use \code{\link{first_isolate}} to determine them in your data set.
-
 These functions are meant to count isolates. Use the \code{\link{portion}_*} functions to calculate microbial resistance.
+
+\code{n_rsi} is an alias of \code{count_all}. They can be used to count all available isolates, i.e. where all input antibiotics have an available result (S, I or R). Their use is equal to \code{\link{n_distinct}}. Their function is equal to \code{count_S(...) + count_IR(...)}.
 
 \code{count_df} takes any variable from \code{data} that has an \code{"rsi"} class (created with \code{\link{as.rsi}}) and counts the amounts of R, I and S. The resulting \emph{tidy data} (see Source) \code{data.frame} will have three rows (S/I/R) and a column for each variable with class \code{"rsi"}.
 }
@@ -60,6 +66,10 @@ count_IR(septic_patients$amox)
 count_S(septic_patients$amox)
 count_SI(septic_patients$amox)
 
+# Count all available isolates
+count_all(septic_patients$amox)
+n_rsi(septic_patients$amox)
+
 # Since n_rsi counts available isolates, you can
 # calculate back to count e.g. non-susceptible isolates.
 # This results in the same:
@@ -69,24 +79,25 @@ portion_IR(septic_patients$amox) * n_rsi(septic_patients$amox)
 library(dplyr)
 septic_patients \%>\%
   group_by(hospital_id) \%>\%
-  summarise(R = count_R(cipr),
-            I = count_I(cipr),
-            S = count_S(cipr),
-            n = n_rsi(cipr), # the actual total; sum of all three
-            total = n())     # NOT the amount of tested isolates!
+  summarise(R  = count_R(cipr),
+            I  = count_I(cipr),
+            S  = count_S(cipr),
+            n1 = count_all(cipr), # the actual total; sum of all three
+            n2 = n_rsi(cipr),     # same - analogous to n_distinct
+            total = n())          # NOT the amount of tested isolates!
 
 # Count co-resistance between amoxicillin/clav acid and gentamicin,
 # so we can see that combination therapy does a lot more than mono therapy.
 # Please mind that `portion_S` calculates percentages right away instead.
-count_S(septic_patients$amcl)   # S = 1056 (67.3\%)
-n_rsi(septic_patients$amcl)     # n = 1570
+count_S(septic_patients$amcl)   # S = 1057 (67.1\%)
+count_all(septic_patients$amcl) # n = 1576
 
-count_S(septic_patients$gent)   # S = 1363 (74.0\%)
-n_rsi(septic_patients$gent)     # n = 1842
+count_S(septic_patients$gent)   # S = 1372 (74.0\%)
+count_all(septic_patients$gent) # n = 1855
 
 with(septic_patients,
-     count_S(amcl, gent))       # S = 1385 (92.1\%)
-with(septic_patients,           # n = 1504
+     count_S(amcl, gent))       # S = 1396 (92.0\%)
+with(septic_patients,           # n = 1517
      n_rsi(amcl, gent))
 
 # Get portions S/I/R immediately of all rsi columns
@@ -102,8 +113,7 @@ septic_patients \%>\%
 
 }
 \seealso{
-\code{\link{portion}_*} to calculate microbial resistance and susceptibility.\cr
-\code{\link{n_rsi}} to count all cases where antimicrobial results are available.
+\code{\link{portion}_*} to calculate microbial resistance and susceptibility.
 }
 \keyword{antibiotics}
 \keyword{isolate}

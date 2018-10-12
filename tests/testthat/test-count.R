@@ -10,8 +10,13 @@ test_that("counts work", {
   expect_equal(count_S(septic_patients$amox) + count_I(septic_patients$amox),
                count_SI(septic_patients$amox))
 
+  library(dplyr)
   expect_equal(septic_patients %>% count_S(amcl), 1057)
   expect_equal(septic_patients %>% count_S(amcl, gent), 1396)
+  expect_equal(septic_patients %>% count_all(amcl, gent), 1517)
+  expect_identical(septic_patients %>% count_all(amcl, gent),
+                   septic_patients %>% count_S(amcl, gent) +
+                     septic_patients %>% count_IR(amcl, gent))
 
   # count of cases
   expect_equal(septic_patients %>%

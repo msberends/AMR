@@ -11,22 +11,22 @@
 \alias{anti_join_microorganisms}
 \title{Join a table with \code{microorganisms}}
 \usage{
-inner_join_microorganisms(x, by = "mo", suffix = c("2", ""), ...)
+inner_join_microorganisms(x, by = NULL, suffix = c("2", ""), ...)
 
-left_join_microorganisms(x, by = "mo", suffix = c("2", ""), ...)
+left_join_microorganisms(x, by = NULL, suffix = c("2", ""), ...)
 
-right_join_microorganisms(x, by = "mo", suffix = c("2", ""), ...)
+right_join_microorganisms(x, by = NULL, suffix = c("2", ""), ...)
 
-full_join_microorganisms(x, by = "mo", suffix = c("2", ""), ...)
+full_join_microorganisms(x, by = NULL, suffix = c("2", ""), ...)
 
-semi_join_microorganisms(x, by = "mo", ...)
+semi_join_microorganisms(x, by = NULL, ...)
 
-anti_join_microorganisms(x, by = "mo", ...)
+anti_join_microorganisms(x, by = NULL, ...)
 }
 \arguments{
-\item{x}{existing table to join, also supports character vectors}
+\item{x}{existing table to join, or character vector}
 
-\item{by}{a variable to join by - could be a column name of \code{x} with values that exist in \code{microorganisms$mo} (like \code{by = "bacteria_id"}), or another column in \code{\link{microorganisms}} (but then it should be named, like \code{by = c("my_genus_species" = "fullname")})}
+\item{by}{a variable to join by - if left empty will search for a column with class \code{mo} (created with \code{\link{as.mo}}) or will be \code{"mo"} if that column name exists in \code{x}, could otherwise be a column name of \code{x} with values that exist in \code{microorganisms$mo} (like \code{by = "bacteria_id"}), or another column in \code{\link{microorganisms}} (but then it should be named, like \code{by = c("my_genus_species" = "fullname")})}
 
 \item{suffix}{if there are non-joined duplicate variables in \code{x} and \code{y}, these suffixes will be added to the output to disambiguate them. Should be a character vector of length 2.}
 
@@ -36,10 +36,11 @@ anti_join_microorganisms(x, by = "mo", ...)
 Join the dataset \code{\link{microorganisms}} easily to an existing table or character vector.
 }
 \details{
-As opposed to the \code{\link[dplyr]{join}} functions of \code{dplyr}, characters vectors are supported and at default existing columns will get a suffix \code{"2"} and the newly joined columns will not get a suffix. See \code{\link[dplyr]{join}} for more information.
+\strong{Note:} As opposed to the \code{\link[dplyr]{join}} functions of \code{dplyr}, characters vectors are supported and at default existing columns will get a suffix \code{"2"} and the newly joined columns will not get a suffix. See \code{\link[dplyr]{join}} for more information.
 }
 \examples{
-left_join_microorganisms("STAAUR")
+left_join_microorganisms(as.mo("K. pneumoniae"))
+left_join_microorganisms("B_KLBSL_PNE")
 
 library(dplyr)
 septic_patients \%>\% left_join_microorganisms()
@@ -47,10 +48,10 @@ septic_patients \%>\% left_join_microorganisms()
 df <- data.frame(date = seq(from = as.Date("2018-01-01"),
                             to = as.Date("2018-01-07"),
                             by = 1),
-                 bacteria_id = c("STAAUR", "STAAUR", "STAAUR", "STAAUR",
-                                 "ESCCOL", "ESCCOL", "ESCCOL"),
+                 bacteria = as.mo(c("S. aureus", "MRSA", "MSSA", "STAAUR",
+                                    "E. coli", "E. coli", "E. coli")),
                  stringsAsFactors = FALSE)
 colnames(df)
-df2 <- left_join_microorganisms(df, "bacteria_id")
-colnames(df2)
+df_joined <- left_join_microorganisms(df, "bacteria")
+colnames(df_joined)
 }
