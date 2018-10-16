@@ -12,9 +12,9 @@ rsi(ab1, ab2 = NULL, interpretation = "IR", minimum = 30,
 
 \item{interpretation}{antimicrobial interpretation to check for}
 
-\item{minimum}{minimal amount of available isolates. Any number lower than \code{minimum} will return \code{NA} with a warning. The default number of \code{30} isolates is advised by the Clinical and Laboratory Standards Institute (CLSI) as best practice, see Source.}
+\item{minimum}{the minimal amount of available isolates. Any number lower than \code{minimum} will return \code{NA} with a warning. The default number of \code{30} isolates is advised by the Clinical and Laboratory Standards Institute (CLSI) as best practice, see Source.}
 
-\item{as_percent}{logical to indicate whether the output must be returned as a hundred fold with \% sign (a character). A value of \code{0.123456} will then be returned as \code{"12.3\%"}.}
+\item{as_percent}{a logical to indicate whether the output must be returned as a hundred fold with \% sign (a character). A value of \code{0.123456} will then be returned as \code{"12.3\%"}.}
 
 \item{...}{deprecated parameters to support usage on older versions}
 }

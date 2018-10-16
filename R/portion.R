@@ -22,10 +22,11 @@
 #'
 #' \code{portion_R} and \code{portion_IR} can be used to calculate resistance, \code{portion_S} and \code{portion_SI} can be used to calculate susceptibility.\cr
 #' @param ... one or more vectors (or columns) with antibiotic interpretations. They will be transformed internally with \code{\link{as.rsi}} if needed. Use multiple columns to calculate (the lack of) co-resistance: the probability where one of two drugs have a resistant or susceptible result. See Examples.
-#' @param minimum minimal amount of available isolates. Any number lower than \code{minimum} will return \code{NA} with a warning. The default number of \code{30} isolates is advised by the Clinical and Laboratory Standards Institute (CLSI) as best practice, see Source.
-#' @param as_percent logical to indicate whether the output must be returned as a hundred fold with \% sign (a character). A value of \code{0.123456} will then be returned as \code{"12.3\%"}.
+#' @param minimum the minimal amount of available isolates. Any number lower than \code{minimum} will return \code{NA} with a warning. The default number of \code{30} isolates is advised by the Clinical and Laboratory Standards Institute (CLSI) as best practice, see Source.
+#' @param as_percent a logical to indicate whether the output must be returned as a hundred fold with \% sign (a character). A value of \code{0.123456} will then be returned as \code{"12.3\%"}.
 #' @param data a \code{data.frame} containing columns with class \code{rsi} (see \code{\link{as.rsi}})
 #' @param translate_ab a column name of the \code{\link{antibiotics}} data set to translate the antibiotic abbreviations to, using \code{\link{abname}}. This can be set with \code{\link{getOption}("get_antibiotic_names")}.
+#' @param combine_IR a logical to indicate whether all values of I and R must be merged into one, so the output only consists of S vs. IR (susceptible vs. non-susceptible)
 #' @details \strong{Remember that you should filter your table to let it contain only first isolates!} Use \code{\link{first_isolate}} to determine them in your data set.
 #'
 #' These functions are not meant to count isolates, but to calculate the portion of resistance/susceptibility. If a column has been transformed with \code{\link{as.rsi}}, just use e.g. \code{isolates[isolates == "R"]} to get the resistant ones. You could then calculate the \code{\link{length}} of it.
@@ -200,7 +201,8 @@ portion_S <- function(...,
 portion_df <- function(data,
                        translate_ab = getOption("get_antibiotic_names", "official"),
                        minimum = 30,
-                       as_percent = FALSE) {
+                       as_percent = FALSE,
+                       combine_IR = FALSE) {
 
   if (!"data.frame" %in% class(data)) {
     stop("`portion_df` must be called on a data.frame")
@@ -223,27 +225,43 @@ portion_df <- function(data,
     mutate(Interpretation = "S") %>%
     select(Interpretation, everything())
 
-  resI <- summarise_if(.tbl = data,
-                       .predicate = is.rsi,
-                       .funs = portion_I,
-                       minimum = minimum,
-                       as_percent = as_percent) %>%
-    mutate(Interpretation = "I") %>%
-    select(Interpretation, everything())
+  if (combine_IR == FALSE) {
+    resI <- summarise_if(.tbl = data,
+                         .predicate = is.rsi,
+                         .funs = portion_I,
+                         minimum = minimum,
+                         as_percent = as_percent) %>%
+      mutate(Interpretation = "I") %>%
+      select(Interpretation, everything())
 
-  resR <- summarise_if(.tbl = data,
-                       .predicate = is.rsi,
-                       .funs = portion_R,
-                       minimum = minimum,
-                       as_percent = as_percent) %>%
-    mutate(Interpretation = "R") %>%
-    select(Interpretation, everything())
+    resR <- summarise_if(.tbl = data,
+                         .predicate = is.rsi,
+                         .funs = portion_R,
+                         minimum = minimum,
+                         as_percent = as_percent) %>%
+      mutate(Interpretation = "R") %>%
+      select(Interpretation, everything())
 
-  data.groups <- group_vars(data)
+    data.groups <- group_vars(data)
 
-  res <- bind_rows(resS, resI, resR) %>%
-    mutate(Interpretation = factor(Interpretation, levels = c("R", "I", "S"), ordered = TRUE)) %>%
-    tidyr::gather(Antibiotic, Value, -Interpretation, -data.groups)
+    res <- bind_rows(resS, resI, resR) %>%
+      mutate(Interpretation = factor(Interpretation, levels = c("R", "I", "S"), ordered = TRUE)) %>%
+      tidyr::gather(Antibiotic, Value, -Interpretation, -data.groups)
+  } else {
+    resIR <- summarise_if(.tbl = data,
+                          .predicate = is.rsi,
+                          .funs = portion_IR,
+                          minimum = minimum,
+                          as_percent = as_percent) %>%
+      mutate(Interpretation = "IR") %>%
+      select(Interpretation, everything())
+
+    data.groups <- group_vars(data)
+
+    res <- bind_rows(resS, resIR) %>%
+      mutate(Interpretation = factor(Interpretation, levels = c("IR", "S"), ordered = TRUE)) %>%
+      tidyr::gather(Antibiotic, Value, -Interpretation, -data.groups)
+  }
 
   if (!translate_ab == FALSE) {
     if (!tolower(translate_ab) %in% tolower(colnames(AMR::antibiotics))) {

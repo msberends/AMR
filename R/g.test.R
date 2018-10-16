@@ -217,8 +217,15 @@ g.test <- function(x,
   }
   names(STATISTIC) <- "X-squared"
   names(PARAMETER) <- "df"
-  if (any(E < 5) && is.finite(PARAMETER))
-    warning("G-statistic approximation may be incorrect")
+  # if (any(E < 5) && is.finite(PARAMETER))
+  #   warning("G-statistic approximation may be incorrect")
+
+  # suggest fisher.test when total is < 1000 (John McDonald, Handbook of Biological Statistics, 2014)
+  if (sum(x, na.rm = TRUE) < 1000 && is.finite(PARAMETER)) {
+    warning("G-statistic approximation may be incorrect, consider Fisher's Exact test")
+  } else if (any(E < 5) && is.finite(PARAMETER)) {
+    warning("G-statistic approximation may be incorrect, consider Fisher's Exact test")
+  }
   structure(list(statistic = STATISTIC, parameter = PARAMETER,
                  p.value = PVAL, method = METHOD, data.name = DNAME,
                  observed = x, expected = E, residuals = (x - E)/sqrt(E),

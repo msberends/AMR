@@ -30,7 +30,7 @@ count_all(...)
 n_rsi(...)
 
 count_df(data, translate_ab = getOption("get_antibiotic_names",
-  "official"))
+  "official"), combine_IR = FALSE)
 }
 \arguments{
 \item{...}{one or more vectors (or columns) with antibiotic interpretations. They will be transformed internally with \code{\link{as.rsi}} if needed.}
@@ -38,6 +38,8 @@ count_df(data, translate_ab = getOption("get_antibiotic_names",
 \item{data}{a \code{data.frame} containing columns with class \code{rsi} (see \code{\link{as.rsi}})}
 
 \item{translate_ab}{a column name of the \code{\link{antibiotics}} data set to translate the antibiotic abbreviations to, using \code{\link{abname}}. This can be set with \code{\link{getOption}("get_antibiotic_names")}.}
+
+\item{combine_IR}{a logical to indicate whether all values of I and R must be merged into one, so the output only consists of S vs. IR (susceptible vs. non-susceptible)}
 }
 \value{
 Integer

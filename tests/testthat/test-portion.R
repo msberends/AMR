@@ -117,6 +117,12 @@ test_that("old rsi works", {
       septic_patients$amox %>% portion_I(),
       septic_patients$amox %>% portion_R())
   )
+  expect_equal(
+    septic_patients %>% select(amox) %>% portion_df(combine_IR = TRUE) %>% pull(Value),
+    c(septic_patients$amox %>% portion_S(),
+      septic_patients$amox %>% portion_IR())
+  )
+
 
 })
 

@@ -26,18 +26,20 @@ portion_SI(..., minimum = 30, as_percent = FALSE)
 portion_S(..., minimum = 30, as_percent = FALSE)
 
 portion_df(data, translate_ab = getOption("get_antibiotic_names",
-  "official"), minimum = 30, as_percent = FALSE)
+  "official"), minimum = 30, as_percent = FALSE, combine_IR = FALSE)
 }
 \arguments{
 \item{...}{one or more vectors (or columns) with antibiotic interpretations. They will be transformed internally with \code{\link{as.rsi}} if needed. Use multiple columns to calculate (the lack of) co-resistance: the probability where one of two drugs have a resistant or susceptible result. See Examples.}
 
-\item{minimum}{minimal amount of available isolates. Any number lower than \code{minimum} will return \code{NA} with a warning. The default number of \code{30} isolates is advised by the Clinical and Laboratory Standards Institute (CLSI) as best practice, see Source.}
+\item{minimum}{the minimal amount of available isolates. Any number lower than \code{minimum} will return \code{NA} with a warning. The default number of \code{30} isolates is advised by the Clinical and Laboratory Standards Institute (CLSI) as best practice, see Source.}
 
-\item{as_percent}{logical to indicate whether the output must be returned as a hundred fold with \% sign (a character). A value of \code{0.123456} will then be returned as \code{"12.3\%"}.}
+\item{as_percent}{a logical to indicate whether the output must be returned as a hundred fold with \% sign (a character). A value of \code{0.123456} will then be returned as \code{"12.3\%"}.}
 
 \item{data}{a \code{data.frame} containing columns with class \code{rsi} (see \code{\link{as.rsi}})}
 
 \item{translate_ab}{a column name of the \code{\link{antibiotics}} data set to translate the antibiotic abbreviations to, using \code{\link{abname}}. This can be set with \code{\link{getOption}("get_antibiotic_names")}.}
+
+\item{combine_IR}{a logical to indicate whether all values of I and R must be merged into one, so the output only consists of S vs. IR (susceptible vs. non-susceptible)}
 }
 \value{
 Double or, when \code{as_percent = TRUE}, a character.

@@ -4,6 +4,7 @@
 * Function `count_all` to get all available isolates (that like all `portion_*` and `count_*` functions also supports `summarise` and `group_by`), the old `n_rsi` is now an alias of `count_all`
 
 #### Changed
+* Added parameter `combine_IR` (TRUE/FALSE) to functions `portion_df` and `count_df`, to indicate that all values of I and R must be merged into one, so the output only consists of S vs. IR (susceptible vs. non-susceptible)
 * Fix for `portion_*(..., as_percent = TRUE)` when minimal amount of isolates would not be met
 * Using `portion_*` functions now throws a warning when total available isolate is below parameter `minimum`
 * `as.mo` will not set package name as attribute anymore
@@ -18,6 +19,7 @@
   * `"MSSA"` -> *Staphylococcus aureus*
   * `"MSSE"` -> *Staphylococcus epidermidis*
 * Fix for `join` functions
+* In `g.test`, when `sum(x)` is below 1000, suggest Fisher's Exact Test
 
 #### Other
 * Updated vignettes to comply with README
