@@ -202,7 +202,7 @@ Adjust it with any parameter you know from the `ggplot2` package:
 septic_patients %>%
   select(amox, nitr, fosf, trim, cipr) %>%
   ggplot_rsi(datalabels = FALSE, 
-             width = 0.5, colour = "black", size = 1, linetype = 2, alpha = 0.25)
+             width = 0.5, colour = "purple", size = 1, linetype = 2, alpha = 0.5)
 ```
 
 ![example_3_rsi](man/figures/rsi_example3.png)
@@ -224,6 +224,41 @@ septic_patients %>%
 ![example_4_rsi](man/figures/rsi_example4.png)
 
 You could use this to group on anything in your plots: Gram stain, age (group), genus, geographic location, et cetera.
+
+Is there a significant difference between hospital A and D when it comes to Fosfomycin?
+```r
+check_A_and_D <- septic_patients %>%
+  filter(hospital_id %in% c("A", "D")) %>% # filter on only hospitals A and D
+  select(hospital_id, fosf) %>%            # select the hospitals and fosfomycin
+  group_by(hospital_id) %>%
+  count_df(combine_IR = TRUE) %>%          # count all isolates per group (hospital_id)
+  tidyr::spread(hospital_id, Value) %>%    # transform output so A and D are columns
+  select(A, D) %>%                         # and select these only
+  as.matrix()                              # transform to good old matrix for fisher.test
+
+check_A_and_D
+#       A  D
+# [1,] 24 33
+# [2,] 25 77
+```
+
+Total sum is lower than 1,000 so we'd prefer a [Fisher's exact test](https://en.wikipedia.org/wiki/Fisher%27s_exact_test), not a [*G*-test](https://en.wikipedia.org/wiki/G-test) (or its formerly used equivalent, the famous [Chi<sup>2</sup> test](https://en.wikipedia.org/wiki/Chi-squared_test)):
+```
+fisher.test(check_A_and_D)
+# 
+# 	Fisher's Exact Test for Count Data
+# 
+# data:  .
+# p-value = 0.03104
+# alternative hypothesis: true odds ratio is not equal to 1
+# 95 percent confidence interval:
+#  1.054283 4.735995
+# sample estimates:
+# odds ratio 
+#   2.228006 
+```
+
+Well, there you go!
 
 #### MIC
 

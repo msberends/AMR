@@ -16,7 +16,7 @@ is.rsi.eligible(x)
 \item{x}{vector}
 }
 \value{
-Ordered factor with new class \code{rsi} and new attribute \code{package}
+Ordered factor with new class \code{rsi}
 }
 \description{
 This transforms a vector to a new class \code{rsi}, which is an ordered factor with levels \code{S < I < R}. Invalid antimicrobial interpretations will be translated as \code{NA} with a warning.

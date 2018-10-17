@@ -2,18 +2,18 @@ context("count.R")
 
 test_that("counts work", {
   # amox resistance in `septic_patients`
-  expect_equal(count_R(septic_patients$amox), 662)
+  expect_equal(count_R(septic_patients$amox), 683)
   expect_equal(count_I(septic_patients$amox), 3)
-  expect_equal(count_S(septic_patients$amox), 335)
+  expect_equal(count_S(septic_patients$amox), 486)
   expect_equal(count_R(septic_patients$amox) + count_I(septic_patients$amox),
                count_IR(septic_patients$amox))
   expect_equal(count_S(septic_patients$amox) + count_I(septic_patients$amox),
                count_SI(septic_patients$amox))
 
   library(dplyr)
-  expect_equal(septic_patients %>% count_S(amcl), 1057)
-  expect_equal(septic_patients %>% count_S(amcl, gent), 1396)
-  expect_equal(septic_patients %>% count_all(amcl, gent), 1517)
+  expect_equal(septic_patients %>% count_S(amcl), 1291)
+  expect_equal(septic_patients %>% count_S(amcl, gent), 1609)
+  expect_equal(septic_patients %>% count_all(amcl, gent), 1747)
   expect_identical(septic_patients %>% count_all(amcl, gent),
                    septic_patients %>% count_S(amcl, gent) +
                      septic_patients %>% count_IR(amcl, gent))

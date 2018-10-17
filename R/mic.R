@@ -22,7 +22,7 @@
 #' @rdname as.mic
 #' @param x vector
 #' @param na.rm a logical indicating whether missing values should be removed
-#' @return Ordered factor with new class \code{mic} and new attribute \code{package}
+#' @return Ordered factor with new class \code{mic}
 #' @keywords mic
 #' @export
 #' @importFrom dplyr %>%
@@ -148,11 +148,8 @@ as.mic <- function(x, na.rm = FALSE) {
               list_missing, call. = FALSE)
     }
 
-    x <- factor(x = x,
-                levels = lvls,
-                ordered = TRUE)
+    x <- factor(x, levels = lvls, ordered = TRUE)
     class(x) <- c('mic', 'ordered', 'factor')
-    attr(x, 'package') <- 'AMR'
     x
   }
 }

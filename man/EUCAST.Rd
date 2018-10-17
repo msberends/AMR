@@ -3,14 +3,23 @@
 \name{EUCAST_rules}
 \alias{EUCAST_rules}
 \alias{interpretive_reading}
-\title{EUCAST expert rules}
+\title{EUCAST rules}
 \source{
-EUCAST Expert Rules Version 2.0: \cr
-  Leclercq et al. \strong{EUCAST expert rules in antimicrobial susceptibility testing.} \emph{Clin Microbiol Infect.} 2013;19(2):141-60. \cr
-  \url{https://doi.org/10.1111/j.1469-0691.2011.03703.x} \cr
-  \cr
-  EUCAST Expert Rules Version 3.1 (Intrinsic Resistance and Exceptional Phenotypes Tables): \cr
-  \url{http://www.eucast.org/fileadmin/src/media/PDFs/EUCAST_files/Expert_Rules/Expert_rules_intrinsic_exceptional_V3.1.pdf}
+\itemize{
+    \item{
+      EUCAST Expert Rules. Version 2.0, 2012. \cr
+      Leclercq et al. \strong{EUCAST expert rules in antimicrobial susceptibility testing.} \emph{Clin Microbiol Infect.} 2013;19(2):141-60. \cr
+      \url{https://doi.org/10.1111/j.1469-0691.2011.03703.x}
+    }
+    \item{
+      EUCAST Expert Rules, Intrinsic Resistance and Exceptional Phenotypes Tables. Version 3.1, 2016.  \cr
+      \url{http://www.eucast.org/fileadmin/src/media/PDFs/EUCAST_files/Expert_Rules/Expert_rules_intrinsic_exceptional_V3.1.pdf}
+    }
+    \item{
+      EUCAST Breakpoint tables for interpretation of MICs and zone diameters. Version 8.1, 2018. \cr
+      \url{http://www.eucast.org/fileadmin/src/media/PDFs/EUCAST_files/Breakpoint_tables/v_8.1_Breakpoint_Tables.xlsx}
+    }
+  }
 }
 \usage{
 EUCAST_rules(tbl, col_mo = "mo", info = TRUE, amcl = "amcl",
@@ -25,11 +34,11 @@ EUCAST_rules(tbl, col_mo = "mo", info = TRUE, amcl = "amcl",
   line = "line", mero = "mero", mezl = "mezl", mino = "mino",
   moxi = "moxi", nali = "nali", neom = "neom", neti = "neti",
   nitr = "nitr", norf = "norf", novo = "novo", oflo = "oflo",
-  peni = "peni", pita = "pita", poly = "poly", pris = "pris",
-  qida = "qida", rifa = "rifa", roxi = "roxi", siso = "siso",
-  teic = "teic", tetr = "tetr", tica = "tica", tige = "tige",
-  tobr = "tobr", trim = "trim", trsu = "trsu", vanc = "vanc",
-  col_bactid = "bactid")
+  oxac = "oxac", peni = "peni", pita = "pita", poly = "poly",
+  pris = "pris", qida = "qida", rifa = "rifa", roxi = "roxi",
+  siso = "siso", teic = "teic", tetr = "tetr", tica = "tica",
+  tige = "tige", tobr = "tobr", trim = "trim", trsu = "trsu",
+  vanc = "vanc", col_bactid = "bactid", verbose = FALSE)
 
 interpretive_reading(...)
 }
@@ -40,9 +49,11 @@ interpretive_reading(...)
 
 \item{info}{print progress}
 
-\item{amcl, amik, amox, ampi, azit, azlo, aztr, cefa, cfep, cfot, cfox, cfra, cfta, cftr, cfur, chlo, cipr, clar, clin, clox, coli, czol, dapt, doxy, erta, eryt, fosf, fusi, gent, imip, kana, levo, linc, line, mero, mezl, mino, moxi, nali, neom, neti, nitr, norf, novo, oflo, peni, pita, poly, pris, qida, rifa, roxi, siso, teic, tetr, tica, tige, tobr, trim, trsu, vanc}{column name of an antibiotic. Use \code{NA} to skip a column, like \code{tica = NA}. Non-existing columns will anyway be skipped. See the Antibiotics section for an explanation of the abbreviations.}
+\item{amcl, amik, amox, ampi, azit, azlo, aztr, cefa, cfep, cfot, cfox, cfra, cfta, cftr, cfur, chlo, cipr, clar, clin, clox, coli, czol, dapt, doxy, erta, eryt, fosf, fusi, gent, imip, kana, levo, linc, line, mero, mezl, mino, moxi, nali, neom, neti, nitr, norf, novo, oflo, oxac, peni, pita, poly, pris, qida, rifa, roxi, siso, teic, tetr, tica, tige, tobr, trim, trsu, vanc}{column name of an antibiotic. Use \code{NA} to skip a column, like \code{tica = NA}. Non-existing columns will anyway be skipped. See the Antibiotics section for an explanation of the abbreviations.}
 
 \item{col_bactid}{Deprecated. Use \code{col_mo} instead.}
+
+\item{verbose}{a logical to indicate whether extensive info should be printed to the console about which rows and columns are effected with their old and new values}
 
 \item{...}{parameters that are passed on to \code{EUCAST_rules}}
 }
@@ -50,13 +61,13 @@ interpretive_reading(...)
 table with edited variables of antibiotics.
 }
 \description{
-Apply expert rules (like intrinsic resistance), as defined by the European Committee on Antimicrobial Susceptibility Testing (EUCAST, \url{http://eucast.org}), see \emph{Source}.
+Apply susceptibility rules as defined by the European Committee on Antimicrobial Susceptibility Testing (EUCAST, \url{http://eucast.org}), see \emph{Source}. This includes (1) expert rules, (2) intrinsic resistance and (3) inferred resistance as defined in their breakpoint tables.
 }
 \section{Antibiotics}{
 
 Abbrevations of the column containing antibiotics:
 
- \strong{amcl}: amoxicillin and beta-lactamase inhibitor (\emph{J01CR02}),
+ \strong{amcl}: amoxicillin+clavulanic acid (\emph{J01CR02}),
  \strong{amik}: amikacin (\emph{J01GB06}),
  \strong{amox}: amoxicillin (\emph{J01CA04}),
  \strong{ampi}: ampicillin (\emph{J01CA01}),
@@ -85,7 +96,7 @@ Abbrevations of the column containing antibiotics:
  \strong{fosf}: fosfomycin (\emph{J01XX01}),
  \strong{fusi}: fusidic acid (\emph{J01XC01}),
  \strong{gent}: gentamicin (\emph{J01GB03}),
- \strong{imip}: imipenem and cilastatin (\emph{J01DH51}),
+ \strong{imip}: imipenem (\emph{J01DH51}),
  \strong{kana}: kanamycin (\emph{J01GB04}),
  \strong{levo}: levofloxacin (\emph{J01MA12}),
  \strong{linc}: lincomycin (\emph{J01FF02}),
@@ -101,8 +112,8 @@ Abbrevations of the column containing antibiotics:
  \strong{norf}: norfloxacin (\emph{J01MA06}),
  \strong{novo}: novobiocin (an ATCvet code: \emph{QJ01XX95}),
  \strong{oflo}: ofloxacin (\emph{J01MA01}),
- \strong{peni}: penicillins, combinations with other antibacterials (\emph{J01RA01}),
- \strong{pita}: piperacillin and beta-lactamase inhibitor (\emph{J01CR05}),
+ \strong{peni}: penicillin (\emph{J01RA01}),
+ \strong{pita}: piperacillin+tazobactam (\emph{J01CR05}),
  \strong{poly}: polymyxin B (\emph{J01XB02}),
  \strong{pris}: pristinamycin (\emph{J01FG01}),
  \strong{qida}: quinupristin/dalfopristin (\emph{J01FG02}),

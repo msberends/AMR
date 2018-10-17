@@ -186,7 +186,7 @@
 #' Data set with 2000 blood culture isolates of septic patients
 #'
 #' An anonymised data set containing 2,000 microbial blood culture isolates with their full antibiograms found in septic patients in 4 different hospitals in the Netherlands, between 2001 and 2017. It is true, genuine data. This \code{data.frame} can be used to practice AMR analysis. For examples, press F1.
-#' @format A \code{\link{tibble}} with 2,000 observations and 49 variables:
+#' @format A \code{\link{data.frame}} with 2,000 observations and 49 variables:
 #' \describe{
 #'   \item{\code{date}}{date of receipt at the laboratory}
 #'   \item{\code{hospital_id}}{ID of the hospital, from A to D}
@@ -199,7 +199,6 @@
 #'   \item{\code{mo}}{ID of microorganism, see \code{\link{microorganisms}}}
 #'   \item{\code{peni:rifa}}{40 different antibiotics with class \code{rsi} (see \code{\link{as.rsi}}); these column names occur in \code{\link{antibiotics}} data set and can be translated with \code{\link{abname}}}
 #' }
-# source MOLIS (LIS of Certe) - \url{https://www.certe.nl}
 #' @examples
 #' # ----------- #
 #' # PREPARATION #

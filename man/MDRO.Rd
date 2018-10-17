@@ -175,7 +175,7 @@ When \code{country} will be left blank, guidelines will be taken from EUCAST Exp
 
 Abbrevations of the column containing antibiotics:
 
- \strong{amcl}: amoxicillin and beta-lactamase inhibitor (\emph{J01CR02}),
+ \strong{amcl}: amoxicillin+clavulanic acid (\emph{J01CR02}),
  \strong{amik}: amikacin (\emph{J01GB06}),
  \strong{amox}: amoxicillin (\emph{J01CA04}),
  \strong{ampi}: ampicillin (\emph{J01CA01}),
@@ -204,7 +204,7 @@ Abbrevations of the column containing antibiotics:
  \strong{fosf}: fosfomycin (\emph{J01XX01}),
  \strong{fusi}: fusidic acid (\emph{J01XC01}),
  \strong{gent}: gentamicin (\emph{J01GB03}),
- \strong{imip}: imipenem and cilastatin (\emph{J01DH51}),
+ \strong{imip}: imipenem (\emph{J01DH51}),
  \strong{kana}: kanamycin (\emph{J01GB04}),
  \strong{levo}: levofloxacin (\emph{J01MA12}),
  \strong{linc}: lincomycin (\emph{J01FF02}),
@@ -220,8 +220,8 @@ Abbrevations of the column containing antibiotics:
  \strong{norf}: norfloxacin (\emph{J01MA06}),
  \strong{novo}: novobiocin (an ATCvet code: \emph{QJ01XX95}),
  \strong{oflo}: ofloxacin (\emph{J01MA01}),
- \strong{peni}: penicillins, combinations with other antibacterials (\emph{J01RA01}),
- \strong{pita}: piperacillin and beta-lactamase inhibitor (\emph{J01CR05}),
+ \strong{peni}: penicillin (\emph{J01RA01}),
+ \strong{pita}: piperacillin+tazobactam (\emph{J01CR05}),
  \strong{poly}: polymyxin B (\emph{J01XB02}),
  \strong{pris}: pristinamycin (\emph{J01FG01}),
  \strong{qida}: quinupristin/dalfopristin (\emph{J01FG02}),

@@ -22,7 +22,7 @@
 #' @rdname as.rsi
 #' @param x vector
 #' @details The function \code{is.rsi.eligible} returns \code{TRUE} when a columns contains only valid antimicrobial interpretations (S and/or I and/or R), and \code{FALSE} otherwise.
-#' @return Ordered factor with new class \code{rsi} and new attribute \code{package}
+#' @return Ordered factor with new class \code{rsi}
 #' @keywords rsi
 #' @export
 #' @importFrom dplyr %>%
@@ -81,9 +81,8 @@ as.rsi <- function(x) {
               list_missing, call. = FALSE)
     }
 
-    x <- x %>% factor(levels = c("S", "I", "R"), ordered = TRUE)
+    x <- factor(x, levels = c("S", "I", "R"), ordered = TRUE)
     class(x) <- c('rsi', 'ordered', 'factor')
-    attr(x, 'package') <- 'AMR'
     x
   }
 }

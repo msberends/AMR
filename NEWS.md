@@ -4,13 +4,21 @@
 * Function `count_all` to get all available isolates (that like all `portion_*` and `count_*` functions also supports `summarise` and `group_by`), the old `n_rsi` is now an alias of `count_all`
 
 #### Changed
+* Big changes to the `EUCAST_rules` function:
+  * It now also applies rules from the EUCAST 'Breakpoint tables for bacteria', version 8.1, 2018, http://www.eucast.org/clinical_breakpoints/ (see Source of the function)
+  * There's better error handling when rules cannot be applied (i.e. new values could not be inserted)
+  * A new `verbose` parameter can be set to `TRUE` to get very specific messages about which columns and rows were affected
+  * The amount of affected values will now only be measured once per row/column combination
+  * Data set `septic_patients` now reflects these changes
 * Added parameter `combine_IR` (TRUE/FALSE) to functions `portion_df` and `count_df`, to indicate that all values of I and R must be merged into one, so the output only consists of S vs. IR (susceptible vs. non-susceptible)
 * Fix for `portion_*(..., as_percent = TRUE)` when minimal amount of isolates would not be met
 * Using `portion_*` functions now throws a warning when total available isolate is below parameter `minimum`
-* `as.mo` will not set package name as attribute anymore
+* Functions `as.mo`, `as.rsi` and `as.mic` will not set package name as attribute anymore
+* Data set `septic_patients` is now a `data.frame`, not a tibble anymore
 * Check for `hms::is.hms` in frequency tables
 * Removed diacritics from all authors (columns `microorganisms$ref` and `microorganisms.old$ref`) to comply with CRAN policy to only allow ASCII characters
 * Fix for `mo_property` not working properly
+* Fix for `EUCAST_rules` where some Streptococci would become ceftazidime R in EUCAST rule 4.5
 * Support for class `difftime` in frequency tables
 * Support for named vectors of class `mo`, useful for `top_freq()`
 * AI improvements for `as.mo`:
@@ -22,6 +30,7 @@
 * In `g.test`, when `sum(x)` is below 1000, suggest Fisher's Exact Test
 
 #### Other
+* New dependency on package `crayon`, to support formatted text in the console
 * Updated vignettes to comply with README
 
 

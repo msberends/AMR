@@ -4,7 +4,7 @@
 \name{septic_patients}
 \alias{septic_patients}
 \title{Data set with 2000 blood culture isolates of septic patients}
-\format{A \code{\link{tibble}} with 2,000 observations and 49 variables:
+\format{A \code{\link{data.frame}} with 2,000 observations and 49 variables:
 \describe{
   \item{\code{date}}{date of receipt at the laboratory}
   \item{\code{hospital_id}}{ID of the hospital, from A to D}
