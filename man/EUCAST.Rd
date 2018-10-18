@@ -22,7 +22,8 @@
   }
 }
 \usage{
-EUCAST_rules(tbl, col_mo = "mo", info = TRUE, amcl = "amcl",
+EUCAST_rules(tbl, col_mo = "mo", info = TRUE,
+  rules = c("breakpoints", "expert", "other", "all"), amcl = "amcl",
   amik = "amik", amox = "amox", ampi = "ampi", azit = "azit",
   azlo = "azlo", aztr = "aztr", cefa = "cefa", cfep = "cfep",
   cfot = "cfot", cfox = "cfox", cfra = "cfra", cfta = "cfta",
@@ -49,7 +50,9 @@ interpretive_reading(...)
 
 \item{info}{print progress}
 
-\item{amcl, amik, amox, ampi, azit, azlo, aztr, cefa, cfep, cfot, cfox, cfra, cfta, cftr, cfur, chlo, cipr, clar, clin, clox, coli, czol, dapt, doxy, erta, eryt, fosf, fusi, gent, imip, kana, levo, linc, line, mero, mezl, mino, moxi, nali, neom, neti, nitr, norf, novo, oflo, oxac, peni, pita, poly, pris, qida, rifa, roxi, siso, teic, tetr, tica, tige, tobr, trim, trsu, vanc}{column name of an antibiotic. Use \code{NA} to skip a column, like \code{tica = NA}. Non-existing columns will anyway be skipped. See the Antibiotics section for an explanation of the abbreviations.}
+\item{rules}{a character vector that specifies which rules should be applied - one or more of \code{c("breakpoints", "expert", "other", "all")}}
+
+\item{amcl, amik, amox, ampi, azit, azlo, aztr, cefa, cfep, cfot, cfox, cfra, cfta, cftr, cfur, chlo, cipr, clar, clin, clox, coli, czol, dapt, doxy, erta, eryt, fosf, fusi, gent, imip, kana, levo, linc, line, mero, mezl, mino, moxi, nali, neom, neti, nitr, norf, novo, oflo, oxac, peni, pita, poly, pris, qida, rifa, roxi, siso, teic, tetr, tica, tige, tobr, trim, trsu, vanc}{column name of an antibiotic, see Details}
 
 \item{col_bactid}{Deprecated. Use \code{col_mo} instead.}
 
@@ -58,14 +61,17 @@ interpretive_reading(...)
 \item{...}{parameters that are passed on to \code{EUCAST_rules}}
 }
 \value{
-table with edited variables of antibiotics.
+Value of parameter \code{tbl}, possibly with edited values of antibiotics.
 }
 \description{
 Apply susceptibility rules as defined by the European Committee on Antimicrobial Susceptibility Testing (EUCAST, \url{http://eucast.org}), see \emph{Source}. This includes (1) expert rules, (2) intrinsic resistance and (3) inferred resistance as defined in their breakpoint tables.
 }
+\details{
+To define antibiotics column names, input a text or use \code{NA} to skip a column (e.g. \code{tica = NA}). Non-existing columns will anyway be skipped with a warning. See the Antibiotics section for an explanation of the abbreviations.
+}
 \section{Antibiotics}{
 
-Abbrevations of the column containing antibiotics:
+Abbrevations of the column containing antibiotics in the form: \strong{abbreviation}: generic name (\emph{ATC code})
 
  \strong{amcl}: amoxicillin+clavulanic acid (\emph{J01CR02}),
  \strong{amik}: amikacin (\emph{J01GB06}),
@@ -143,11 +149,27 @@ a <- data.frame(mo = c("Staphylococcus aureus",
                 coli = "-",       # Colistin
                 cfta = "-",       # Ceftazidime
                 cfur = "-",       # Cefuroxime
+                peni = "S",       # Benzylpenicillin
+                cfox = "S",       # Cefoxitin
                 stringsAsFactors = FALSE)
-a
 
-b <- EUCAST_rules(a) # 11 results will be forced as R due to intrinsic resistance
+a
+#                       mo vanc amox coli cfta cfur peni cfox
+# 1  Staphylococcus aureus    -    -    -    -    -    S    S
+# 2  Enterococcus faecalis    -    -    -    -    -    S    S
+# 3       Escherichia coli    -    -    -    -    -    S    S
+# 4  Klebsiella pneumoniae    -    -    -    -    -    S    S
+# 5 Pseudomonas aeruginosa    -    -    -    -    -    S    S
+
+b <- EUCAST_rules(a) # 18 results are forced as R or S
+
 b
+#                       mo vanc amox coli cfta cfur peni cfox
+# 1  Staphylococcus aureus    -    S    R    R    S    S    S
+# 2  Enterococcus faecalis    -    -    R    R    R    S    R
+# 3       Escherichia coli    R    -    -    -    -    R    S
+# 4  Klebsiella pneumoniae    R    R    -    -    -    R    S
+# 5 Pseudomonas aeruginosa    R    R    -    -    R    R    R
 }
 \keyword{eucast}
 \keyword{interpretive}

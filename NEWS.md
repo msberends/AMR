@@ -5,9 +5,10 @@
 
 #### Changed
 * Big changes to the `EUCAST_rules` function:
-  * It now also applies rules from the EUCAST 'Breakpoint tables for bacteria', version 8.1, 2018, http://www.eucast.org/clinical_breakpoints/ (see Source of the function)
-  * There's better error handling when rules cannot be applied (i.e. new values could not be inserted)
-  * A new `verbose` parameter can be set to `TRUE` to get very specific messages about which columns and rows were affected
+  * Now also applies rules from the EUCAST 'Breakpoint tables for bacteria', version 8.1, 2018, http://www.eucast.org/clinical_breakpoints/ (see Source of the function)
+  * New parameter `rules` to specify which rules should be applied (expert rules, breakpoints, others or all)
+  * New parameter `verbose` which can be set to `TRUE` to get very specific messages about which columns and rows were affected
+  * Better error handling when rules cannot be applied (i.e. new values could not be inserted)
   * The amount of affected values will now only be measured once per row/column combination
   * Data set `septic_patients` now reflects these changes
 * Added parameter `combine_IR` (TRUE/FALSE) to functions `portion_df` and `count_df`, to indicate that all values of I and R must be merged into one, so the output only consists of S vs. IR (susceptible vs. non-susceptible)

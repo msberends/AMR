@@ -280,37 +280,40 @@ plot(mic_data)
 ### Overwrite/force resistance based on EUCAST rules
 This is also called *interpretive reading*.
 ```r
-before <- data.frame(bact = c("STAAUR",  # Staphylococcus aureus
-                                "ENCFAE",  # Enterococcus faecalis
-                                "ESCCOL",  # Escherichia coli
-                                "KLEPNE",  # Klebsiella pneumoniae
-                                "PSEAER"), # Pseudomonas aeruginosa
-                     vanc = "-",           # Vancomycin
-                     amox = "-",           # Amoxicillin
-                     coli = "-",           # Colistin
-                     cfta = "-",           # Ceftazidime
-                     cfur = "-",           # Cefuroxime
-                     stringsAsFactors = FALSE)
-before
-#   bact   vanc amox coli cfta cfur
-# 1 STAAUR    -    -    -    -    -
-# 2 ENCFAE    -    -    -    -    -
-# 3 ESCCOL    -    -    -    -    -
-# 4 KLEPNE    -    -    -    -    -
-# 5 PSEAER    -    -    -    -    -
+a <- data.frame(mo = c("Staphylococcus aureus",
+                       "Enterococcus faecalis",
+                       "Escherichia coli",
+                       "Klebsiella pneumoniae",
+                       "Pseudomonas aeruginosa"),
+                vanc = "-",       # Vancomycin
+                amox = "-",       # Amoxicillin
+                coli = "-",       # Colistin
+                cfta = "-",       # Ceftazidime
+                cfur = "-",       # Cefuroxime
+                peni = "S",       # Benzylpenicillin
+                cfox = "S",       # Cefoxitin
+                stringsAsFactors = FALSE)
+                
+a
+#                       mo vanc amox coli cfta cfur peni cfox
+# 1  Staphylococcus aureus    -    -    -    -    -    S    S
+# 2  Enterococcus faecalis    -    -    -    -    -    S    S
+# 3       Escherichia coli    -    -    -    -    -    S    S
+# 4  Klebsiella pneumoniae    -    -    -    -    -    S    S
+# 5 Pseudomonas aeruginosa    -    -    -    -    -    S    S
 
-# Now apply those rules; just need a column with bacteria IDs and antibiotic results:
-after <- EUCAST_rules(before, col_mo = "bact")
-after
-#   bact   vanc amox coli cfta cfur
-# 1 STAAUR    -    -    R    R    -
-# 2 ENCFAE    -    -    R    R    R
-# 3 ESCCOL    R    -    -    -    -
-# 4 KLEPNE    R    R    -    -    -
-# 5 PSEAER    R    R    -    -    R
+b <- EUCAST_rules(a) # 18 results are forced as R or S
+
+b
+#                       mo vanc amox coli cfta cfur peni cfox
+# 1  Staphylococcus aureus    -    S    R    R    S    S    S
+# 2  Enterococcus faecalis    -    -    R    R    R    S    R
+# 3       Escherichia coli    R    -    -    -    -    R    S
+# 4  Klebsiella pneumoniae    R    R    -    -    -    R    S
+# 5 Pseudomonas aeruginosa    R    R    -    -    R    R    R
 ```
 
-Bacteria IDs can be retrieved with the `guess_mo` function. It uses any type of info about a microorganism as input. For example, all these will return value `STAAUR`, the ID of *S. aureus*:
+Bacteria IDs can be retrieved with the `guess_mo` function. It uses any type of info about a microorganism as input. For example, all these will return value `B_STPHY_AUR`, the ID of *S. aureus*:
 ```r
 guess_mo("stau")
 guess_mo("STAU")
@@ -319,6 +322,7 @@ guess_mo("S. aureus")
 guess_mo("S aureus")
 guess_mo("Staphylococcus aureus")
 guess_mo("MRSA") # Methicillin Resistant S. aureus
+guess_mo("MSSA") # Methicillin Susceptible S. aureus
 guess_mo("VISA") # Vancomycin Intermediate S. aureus
 guess_mo("VRSA") # Vancomycin Resistant S. aureus
 ```
@@ -359,32 +363,32 @@ Factors sort on item by default:
 ```r
 septic_patients %>% freq(hospital_id)
 # Frequency table of `hospital_id` 
-# Class:     factor
-# Length:    2000 (of which NA: 0 = 0.0%)
+# Class:     factor (numeric)
+# Length:    2000 (of which NA: 0 = 0.00%)
 # Unique:    4
 # 
 #      Item    Count   Percent   Cum. Count   Cum. Percent   (Factor Level)
 # ---  -----  ------  --------  -----------  -------------  ---------------
-# 1    A         319     16.0%          319          16.0%                1
-# 2    B         661     33.1%          980          49.0%                2
-# 3    C         256     12.8%         1236          61.8%                3
-# 4    D         764     38.2%         2000         100.0%                4
+# 1    A         321     16.1%          321          16.1%                1
+# 2    B         663     33.1%          984          49.2%                2
+# 3    C         254     12.7%         1238          61.9%                3
+# 4    D         762     38.1%         2000         100.0%                4
 ```
 
 This can be changed with the `sort.count` parameter:
 ```r
 septic_patients %>% freq(hospital_id, sort.count = TRUE)
 # Frequency table of `hospital_id` 
-# Class:     factor
-# Length:    2000 (of which NA: 0 = 0.0%)
+# Class:     factor (numeric)
+# Length:    2000 (of which NA: 0 = 0.00%)
 # Unique:    4
 # 
 #      Item    Count   Percent   Cum. Count   Cum. Percent   (Factor Level)
 # ---  -----  ------  --------  -----------  -------------  ---------------
-# 1    D         764     38.2%          764          38.2%                4
-# 2    B         661     33.1%         1425          71.2%                2
-# 3    A         319     16.0%         1744          87.2%                1
-# 4    C         256     12.8%         2000         100.0%                3
+# 1    D         762     38.1%          762          38.1%                4
+# 2    B         663     33.1%         1425          71.2%                2
+# 3    A         321     16.1%         1746          87.3%                1
+# 4    C         254     12.7%         2000         100.0%                3
 ```
 
 All other types, like numbers, characters and dates, sort on count by default:
@@ -397,7 +401,7 @@ septic_patients %>% freq(date)
 # 
 # Oldest:    2 January 2002
 # Newest:    28 December 2017 (+5839)
-# Median:    7 Augustus 2009 (~48%)
+# Median:    31 July 2009 (~47%)
 # 
 #      Item          Count   Percent   Cum. Count   Cum. Percent
 # ---  -----------  ------  --------  -----------  -------------
@@ -408,14 +412,14 @@ septic_patients %>% freq(date)
 # 5    2015-11-19        7      0.4%           41           2.1%
 # 6    2005-12-22        6      0.3%           47           2.4%
 # 7    2015-10-12        6      0.3%           53           2.6%
-# 8    2002-05-16        5      0.2%           58           2.9%
-# 9    2004-02-02        5      0.2%           63           3.1%
-# 10   2004-02-18        5      0.2%           68           3.4%
-# 11   2005-08-16        5      0.2%           73           3.6%
-# 12   2005-09-01        5      0.2%           78           3.9%
-# 13   2006-06-29        5      0.2%           83           4.2%
-# 14   2007-08-10        5      0.2%           88           4.4%
-# 15   2008-08-29        5      0.2%           93           4.7%
+# 8    2002-02-27        5      0.2%           58           2.9%
+# 9    2003-10-20        5      0.2%           63           3.1%
+# 10   2004-02-02        5      0.2%           68           3.4%
+# 11   2004-02-18        5      0.2%           73           3.6%
+# 12   2004-06-22        5      0.2%           78           3.9%
+# 13   2004-12-01        5      0.2%           83           4.2%
+# 14   2005-08-16        5      0.2%           88           4.4%
+# 15   2005-09-01        5      0.2%           93           4.7%
 # [ reached getOption("max.print.freq") -- omitted 1136 entries, n = 1907 (95.3%) ]
 ```
 For numeric values, some extra descriptive statistics will be calculated:
@@ -423,26 +427,26 @@ For numeric values, some extra descriptive statistics will be calculated:
 freq(runif(n = 10, min = 1, max = 5))
 # Frequency table  
 # Class:     numeric
-# Length:    10 (of which NA: 0 = 0.0%)
+# Length:    10 (of which NA: 0 = 0.00%)
 # Unique:    10
 # 
-# Mean:      3.4
-# Std. dev.: 1.3 (CV: 0.38, MAD: 1.3)
-# Five-Num:  1.6 | 2.0 | 3.9 | 4.7 | 4.8 (IQR: 2.7, CQV: 0.4)
+# Mean:      3.1
+# Std. dev.: 1.3 (CV: 0.43, MAD: 1.8)
+# Five-Num:  1.3 | 1.7 | 3.2 | 4.3 | 5.0 (IQR: 2.6, CQV: 0.43)
 # Outliers:  0
 # 
 #           Item   Count   Percent   Cum. Count   Cum. Percent
 # ---  ---------  ------  --------  -----------  -------------
-# 1     1.568997       1     10.0%            1          10.0%
-# 2     1.993575       1     10.0%            2          20.0%
-# 3     2.022348       1     10.0%            3          30.0%
-# 4     2.236038       1     10.0%            4          40.0%
-# 5     3.579828       1     10.0%            5          50.0%
-# 6     4.178081       1     10.0%            6          60.0%
-# 7     4.394818       1     10.0%            7          70.0%
-# 8     4.689871       1     10.0%            8          80.0%
-# 9     4.698626       1     10.0%            9          90.0%
-# 10    4.751488       1     10.0%           10         100.0%
+# 1     1.271079       1     10.0%            1          10.0%
+# 2     1.333975       1     10.0%            2          20.0%
+# 3     1.714946       1     10.0%            3          30.0%
+# 4     2.751871       1     10.0%            4          40.0%
+# 5     3.090140       1     10.0%            5          50.0%
+# 6     3.260850       1     10.0%            6          60.0%
+# 7     3.824105       1     10.0%            7          70.0%
+# 8     4.278028       1     10.0%            8          80.0%
+# 9     4.436265       1     10.0%            9          90.0%
+# 10    4.996694       1     10.0%           10         100.0%
 # 
 # Warning message:
 # All observations are unique. 
@@ -457,15 +461,17 @@ Data sets to work with antibiotics and bacteria properties.
 ```r
 # Data set with complete taxonomic trees from ITIS, containing of 
 # the three kingdoms Bacteria, Fungi and Protozoa
-microorganisms    # A tibble: 18,831 x 15
-
-# Data set with 2000 random blood culture isolates from anonymised
-# septic patients between 2001 and 2017 in 5 Dutch hospitals
-septic_patients   # A tibble: 2,000 x 49
+microorganisms     # data.frame: 18,833 x 15
+microorganisms.old # data.frame: 2,383 x 4
 
 # Data set with ATC antibiotics codes, official names, trade names 
 # and DDDs (oral and parenteral)
-antibiotics       # A tibble: 423 x 18
+antibiotics       #  data.frame: 423 x 18
+
+# Data set with 2000 random blood culture isolates from anonymised
+# septic patients between 2001 and 2017 in 5 Dutch hospitals
+septic_patients    # data.frame: 2,000 x 49
+
 ```
 
 ## Benchmarks
@@ -501,7 +507,7 @@ microbenchmark(A = as.mo("stau"),
 #     F 10.69445 10.73852 10.80334 10.79596 10.86856 10.97465    10
 ```
 
-The more an input value resembles a full name, the faster the result will be found. In the table above, all measurements are in milliseconds, tested on a quite regular Linux server from 2007 with 2 GB RAM. A value of 10.8 milliseconds means it can roughly determine 93 different input values per second. It case of 36.2 milliseconds, this is only 28 input values per second.
+The more an input value resembles a full name, the faster the result will be found. In the table above, all measurements are in milliseconds, tested on a quite regular Linux server from 2007 with 2 GB RAM. A value of 10.8 milliseconds means it will roughly determine 93 different (unique) input values per second. It case of 36.2 milliseconds, this is only 28 input values per second.
 
 To improve speed, the `as.mo` function also takes into account the prevalence of human pathogenic microorganisms. The downside is of course that less prevalent microorganisms will be determined far less faster. See this example for the ID of *Burkholderia nodosa* (`B_BRKHL_NOD`):
 
@@ -523,7 +529,7 @@ microbenchmark(B = as.mo("burnod"),
 ```
 (Note: `A` is missing here, because `as.mo("buno")` returns `F_BUELL_NOT`: the ID of the fungus *Buellia notabilis*)
 
-That takes up to 12 times as much time! A value of 190.4 milliseconds means it can only determine 5 different input values per second. We can conclude that looking up arbitrary codes of less prevalent microorganisms is the worst way to go, in terms of calculation performance.
+That takes up to 12 times as much time! A value of 190.4 milliseconds means it can only determine ~5 different input values per second. We can conclude that looking up arbitrary codes of less prevalent microorganisms is the worst way to go, in terms of calculation performance.
 
 To relieve this pitfall and further improve performance, two important calculations take almost no time at all: **repetive results** and **already precalculated results**.
 

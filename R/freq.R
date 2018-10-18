@@ -59,6 +59,7 @@
 #' @importFrom dplyr %>% select pull n_distinct group_by arrange desc mutate summarise n_distinct tibble
 #' @importFrom utils browseVignettes installed.packages
 #' @importFrom hms is.hms
+#' @importFrom crayon red silver
 #' @keywords summary summarise frequency freq
 #' @rdname freq
 #' @name freq
@@ -321,13 +322,24 @@ frequency_tbl <- function(x,
   } else {
     header <- header %>% paste0(markdown_line, 'Class:     ', class(x) %>% rev() %>% paste(collapse = " > "))
     if (!mode(x) %in% class(x)) {
-      header <- header %>% paste0(" (", mode(x), ")")
+      header <- header %>% paste0(silver(paste0(" (", mode(x), ")")))
+    }
+  }
+
+  NAs_to_red <- function(x) {
+    if (!x %in% c("0", "0.00%")) {
+      red(x)
+    } else {
+      x
     }
   }
 
   header <- header %>% paste0(markdown_line, '\nLength:    ', (NAs %>% length() + x %>% length()) %>% format(),
-                              ' (of which NA: ', NAs %>% length() %>% format(),
-                              ' = ', (NAs %>% length() / (NAs %>% length() + x %>% length())) %>% percent(force_zero = TRUE, round = digits) %>% sub('NaN', '0', ., fixed = TRUE), ')')
+                              ' (of which NA: ', NAs %>% length() %>% format() %>% NAs_to_red(),
+                              ' = ', (NAs %>% length() / (NAs %>% length() + x %>% length())) %>%
+                                percent(force_zero = TRUE, round = digits) %>%
+                                sub('NaN', '0', ., fixed = TRUE) %>%
+                                NAs_to_red(), ')')
   header <- header %>% paste0(markdown_line, '\nUnique:    ', x %>% n_distinct() %>% format())
 
   if (NROW(x) > 0 & any(class(x) == "character")) {
@@ -570,6 +582,7 @@ diff.frequency_tbl <- function(x, y, ...) {
 #' @exportMethod print.frequency_tbl
 #' @importFrom knitr kable
 #' @importFrom dplyr n_distinct
+#' @importFrom crayon bold
 #' @export
 print.frequency_tbl <- function(x, nmax = getOption("max.print.freq", default = 15), ...) {
 
@@ -602,7 +615,13 @@ print.frequency_tbl <- function(x, nmax = getOption("max.print.freq", default = 
     }
   }
 
-  cat("Frequency table", title, "\n")
+  title <- paste("Frequency table", title)
+
+  if (opt$tbl_format == "pandoc") {
+    title <- bold(title) # only bold in regular printing
+  }
+
+  cat(title, "\n")
 
   if (!is.null(opt$header)) {
     cat(opt$header)
