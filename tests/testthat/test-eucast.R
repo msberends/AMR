@@ -73,6 +73,6 @@ test_that("EUCAST rules work", {
       , info = FALSE))$amox,
     "S")
 
-  expect_message(suppressWarnings(EUCAST_rules(septic_patients, verbose = TRUE)))
+  expect_output(suppressWarnings(EUCAST_rules(septic_patients, verbose = TRUE)))
 
 })

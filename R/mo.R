@@ -173,6 +173,8 @@ exec_as.mo <- function(x, Becker = FALSE, Lancefield = FALSE, allow_uncertain = 
   x_input <- x
   # only check the uniques, which is way faster
   x <- unique(x)
+  # remove empty values (to later fill them in again)
+  x <- x[!is.na(x) & !is.null(x) & !identical(x, "")]
 
   MOs <- NULL # will be set later, if needed
   MOs_mostprevalent <- NULL # will be set later, if needed
@@ -263,9 +265,15 @@ exec_as.mo <- function(x, Becker = FALSE, Lancefield = FALSE, allow_uncertain = 
     # cat(paste0('x_trimmed_species  "', x_trimmed_species, '"\n'))
 
     for (i in 1:length(x)) {
-      if (identical(x_trimmed[i], "") | is.na(x_trimmed[i])) {
+      if (identical(x_trimmed[i], "")) {
         # empty values
-        x[i] <- NA
+        x[i] <- NA_character_
+        next
+      }
+      if (nchar(x_trimmed[i]) < 3) {
+        # fewer than 3 chars, add as failure
+        x[i] <- NA_character_
+        failures <- c(failures, x_backup[i])
         next
       }
 
@@ -586,7 +594,7 @@ exec_as.mo <- function(x, Becker = FALSE, Lancefield = FALSE, allow_uncertain = 
 
   failures <- failures[!failures %in% c(NA, NULL, NaN)]
   if (length(failures) > 0) {
-    warning("These ", length(failures) , " values could not be coerced (try again with allow_uncertain = TRUE): ",
+    warning("These ", length(failures) , " values could not be coerced: ",
             paste('"', unique(failures), '"', sep = "", collapse = ', '),
             ".",
             call. = FALSE)
@@ -653,8 +661,12 @@ exec_as.mo <- function(x, Becker = FALSE, Lancefield = FALSE, allow_uncertain = 
     x[x == MOs[mo == 'B_STRPTC_SAL', ..property][[1]][1L]] <- MOs[mo == 'B_STRPTC_GRK', ..property][[1]][1L]
   }
 
+  x_input_unique <- unique(x_input)
+  # fill in empty values again
+  x[is.na(x_input_unique) | is.null(x_input_unique) | identical(x_input_unique, "")] <- NA
+
   # left join the found results to the original input values (x_input)
-  df_found <- data.frame(input = as.character(unique(x_input)),
+  df_found <- data.frame(input = as.character(x_input_unique),
                          found = x,
                          stringsAsFactors = FALSE)
   df_input <- data.frame(input = as.character(x_input),

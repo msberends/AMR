@@ -56,12 +56,12 @@ interpretive_reading(...)
 
 \item{col_bactid}{Deprecated. Use \code{col_mo} instead.}
 
-\item{verbose}{a logical to indicate whether extensive info should be printed to the console about which rows and columns are effected with their old and new values}
+\item{verbose}{a logical to indicate whether extensive info should be returned as a \code{data.frame} with info about which rows and columns are effected}
 
 \item{...}{parameters that are passed on to \code{EUCAST_rules}}
 }
 \value{
-Value of parameter \code{tbl}, possibly with edited values of antibiotics.
+The input of \code{tbl}, possibly with edited values of antibiotics. Or, if \code{verbose = TRUE}, a \code{data.frame} with verbose info.
 }
 \description{
 Apply susceptibility rules as defined by the European Committee on Antimicrobial Susceptibility Testing (EUCAST, \url{http://eucast.org}), see \emph{Source}. This includes (1) expert rules, (2) intrinsic resistance and (3) inferred resistance as defined in their breakpoint tables.

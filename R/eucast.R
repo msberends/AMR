@@ -25,7 +25,7 @@
 #' @param rules a character vector that specifies which rules should be applied - one or more of \code{c("breakpoints", "expert", "other", "all")}
 #' @param amcl,amik,amox,ampi,azit,azlo,aztr,cefa,cfep,cfot,cfox,cfra,cfta,cftr,cfur,chlo,cipr,clar,clin,clox,coli,czol,dapt,doxy,erta,eryt,fosf,fusi,gent,imip,kana,levo,linc,line,mero,mezl,mino,moxi,nali,neom,neti,nitr,norf,novo,oflo,oxac,peni,pita,poly,pris,qida,rifa,roxi,siso,teic,tetr,tica,tige,tobr,trim,trsu,vanc column name of an antibiotic, see Details
 #' @param col_bactid Deprecated. Use \code{col_mo} instead.
-#' @param verbose a logical to indicate whether extensive info should be printed to the console about which rows and columns are effected with their old and new values
+#' @param verbose a logical to indicate whether extensive info should be returned as a \code{data.frame} with info about which rows and columns are effected
 #' @param ... parameters that are passed on to \code{EUCAST_rules}
 #' @details To define antibiotics column names, input a text or use \code{NA} to skip a column (e.g. \code{tica = NA}). Non-existing columns will anyway be skipped with a warning. See the Antibiotics section for an explanation of the abbreviations.
 #' @section Antibiotics:
@@ -97,7 +97,7 @@
 #' @export
 #' @importFrom dplyr %>% select pull mutate_at vars
 #' @importFrom crayon bold bgGreen bgYellow bgRed black green blue
-#' @return Value of parameter \code{tbl}, possibly with edited values of antibiotics.
+#' @return The input of \code{tbl}, possibly with edited values of antibiotics. Or, if \code{verbose = TRUE}, a \code{data.frame} with verbose info.
 #' @source
 #'   \itemize{
 #'     \item{
@@ -325,7 +325,14 @@ EUCAST_rules <- function(tbl,
 
   amount_changed <- 0
   amount_affected_rows <- integer(0)
-  verbose_info <- ""
+  verbose_info <- data.frame(rule_type = character(0),
+                             rule_set = character(0),
+                             force_to = character(0),
+                             found = integer(0),
+                             changed = integer(0),
+                             target_columns = integer(0),
+                             target_rows = integer(0),
+                             stringsAsFactors = FALSE)
 
   # helper function for editing the table
   edit_rsi <- function(to, rule, rows, cols) {
@@ -354,13 +361,15 @@ EUCAST_rules <- function(tbl,
       changed_results <<- changed_results + sum(before != after, na.rm = TRUE) # will be reset at start of every rule
 
       if (verbose == TRUE) {
-        verbose_info <<- paste0(verbose_info,
-                                "\n\nRule Type: ", rule[1],
-                                "\nRule Set:  ", rule[2],
-                                "\nEffect:    Set to '", to, "' (",
-                                length(before), " found, ", sum(before != after, na.rm = TRUE), " changed): ",
-                                "cols '", paste(cols, collapse = "', '"),
-                                "' of rows ", paste(rows, collapse = ", "))
+        verbose_new <- data.frame(rule_type = rule[1],
+                                  rule_set = rule[2],
+                                  force_to = to,
+                                  found = length(before),
+                                  changed = sum(before != after, na.rm = TRUE),
+                                  stringsAsFactors = FALSE)
+        verbose_new$target_columns <- list(unname(cols))
+        verbose_new$target_rows <- list(unname(rows))
+        verbose_info <<- rbind(verbose_info, verbose_new)
       }
     }
   }
@@ -1649,8 +1658,8 @@ EUCAST_rules <- function(tbl,
              amount_changed %>% format(big.mark = ","), 'test results.\n\n'))
   }
 
-  if (verbose_info != "") {
-    message("Verbose information:", verbose_info)
+  if (verbose == TRUE) {
+    return(verbose_info)
   }
 
   tbl_original

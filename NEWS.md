@@ -11,6 +11,8 @@
   * Better error handling when rules cannot be applied (i.e. new values could not be inserted)
   * The amount of affected values will now only be measured once per row/column combination
   * Data set `septic_patients` now reflects these changes
+* Empty values as input for `as.mo` will be processed faster
+* Fewer than 3 characters as input for `as.mo` will return NA
 * Added parameter `combine_IR` (TRUE/FALSE) to functions `portion_df` and `count_df`, to indicate that all values of I and R must be merged into one, so the output only consists of S vs. IR (susceptible vs. non-susceptible)
 * Fix for `portion_*(..., as_percent = TRUE)` when minimal amount of isolates would not be met
 * Using `portion_*` functions now throws a warning when total available isolate is below parameter `minimum`
