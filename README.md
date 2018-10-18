@@ -243,12 +243,12 @@ check_A_and_D
 ```
 
 Total sum is lower than 1,000 so we'd prefer a [Fisher's exact test](https://en.wikipedia.org/wiki/Fisher%27s_exact_test), not a [*G*-test](https://en.wikipedia.org/wiki/G-test) (or its formerly used equivalent, the famous [Chi<sup>2</sup> test](https://en.wikipedia.org/wiki/Chi-squared_test)):
-```
+```r
 fisher.test(check_A_and_D)
 # 
 # 	Fisher's Exact Test for Count Data
 # 
-# data:  .
+# data:  check_A_and_D
 # p-value = 0.03104
 # alternative hypothesis: true odds ratio is not equal to 1
 # 95 percent confidence interval:
