@@ -407,22 +407,22 @@ EUCAST_rules <- function(tbl,
     cat("Rules by the European Committee on Antimicrobial Susceptibility Testing (EUCAST)\n")
   }
 
-  # since ampicillin ^= amoxicillin, get the first from the latter
+  # since ampicillin ^= amoxicillin, get the first from the latter (not in original table)
   if (!is.na(ampi) & !is.na(amox)) {
-    rule_group <- "Ampicillin susceptibility"
-    rule <- "Get ampicillin results from amoxicillin where ampicillin is missing"
-    edit_rsi(to = 'S',
-             rule = c(rule_group, rule),
-             rows = which(tbl[, amox] == 'S' & !tbl[, ampi] %in% c("S", "I", "R")),
-             cols = ampi)
-    edit_rsi(to = 'I',
-             rule = c(rule_group, rule),
-             rows = which(tbl[, amox] == 'I' & !tbl[, ampi] %in% c("S", "I", "R")),
-             cols = ampi)
-    edit_rsi(to = 'R',
-             rule = c(rule_group, rule),
-             rows = which(tbl[, amox] == 'R' & !tbl[, ampi] %in% c("S", "I", "R")),
-             cols = ampi)
+    if (verbose == TRUE) {
+      cat("\n VERBOSE: transforming",
+          length(which(tbl[, amox] == "S" & !tbl[, ampi] %in% c("S", "I", "R"))),
+          "empty ampicillin fields to 'S' based on amoxicillin.")
+      cat("\n VERBOSE: transforming",
+          length(which(tbl[, amox] == "I" & !tbl[, ampi] %in% c("S", "I", "R"))),
+          "empty ampicillin fields to 'I' based on amoxicillin.")
+      cat("\n VERBOSE: transforming",
+          length(which(tbl[, amox] == "R" & !tbl[, ampi] %in% c("S", "I", "R"))),
+          "empty ampicillin fields to 'R' based on amoxicillin.\n")
+    }
+    tbl[which(tbl[, amox] == "S" & !tbl[, ampi] %in% c("S", "I", "R")), ampi] <- "S"
+    tbl[which(tbl[, amox] == "I" & !tbl[, ampi] %in% c("S", "I", "R")), ampi] <- "I"
+    tbl[which(tbl[, amox] == "R" & !tbl[, ampi] %in% c("S", "I", "R")), ampi] <- "R"
   }
 
   if (any(c("all", "breakpoints") %in% rules)) {
@@ -1651,11 +1651,22 @@ EUCAST_rules <- function(tbl,
   # }
 
   if (info == TRUE) {
+    if (verbose == TRUE) {
+      wouldve <- "would have "
+    } else {
+      wouldve <- ""
+    }
+    if (amount_changed == 0) {
+      colour <- green
+    } else {
+      colour <- blue
+    }
     cat(bold('\n=> EUCAST rules affected',
              amount_affected_rows %>% length() %>% format(big.mark = ","),
              'out of', nrow(tbl_original) %>% format(big.mark = ","),
-             'rows -- changed',
-             amount_changed %>% format(big.mark = ","), 'test results.\n\n'))
+             'rows ->',
+             colour(paste0(wouldve, 'changed'),
+                    amount_changed %>% format(big.mark = ","), 'test results.\n\n')))
   }
 
   if (verbose == TRUE) {
