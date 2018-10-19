@@ -19,7 +19,8 @@
 * Using `portion_*` functions now throws a warning when total available isolate is below parameter `minimum`
 * Functions `as.mo`, `as.rsi` and `as.mic` will not set package name as attribute anymore
 * Data set `septic_patients` is now a `data.frame`, not a tibble anymore
-* Check for `hms::is.hms` in frequency tables
+* Check for `hms::is.hms` in frequency tables (`freq()`)
+* New parameter `header` for frequency tables to turn them off (default when `markdown = TRUE`)
 * Removed diacritics from all authors (columns `microorganisms$ref` and `microorganisms.old$ref`) to comply with CRAN policy to only allow ASCII characters
 * Fix for `mo_property` not working properly
 * Fix for `EUCAST_rules` where some Streptococci would become ceftazidime R in EUCAST rule 4.5

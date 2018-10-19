@@ -23,17 +23,18 @@
 #' @param ... up to nine different columns of \code{x} when \code{x} is a \code{data.frame} or \code{tibble}, to calculate frequencies from - see Examples
 #' @param sort.count sort on count, i.e. frequencies. This will be \code{TRUE} at default for everything except for factors.
 #' @param nmax number of row to print. The default, \code{15}, uses \code{\link{getOption}("max.print.freq")}. Use \code{nmax = 0}, \code{nmax = Inf}, \code{nmax = NULL} or \code{nmax = NA} to print all rows.
-#' @param na.rm a logical value indicating whether \code{NA} values should be removed from the frequency table. The header will always print the amount of \code{NA}s.
+#' @param na.rm a logical value indicating whether \code{NA} values should be removed from the frequency table. The header_txt will always print the amount of \code{NA}s.
 #' @param row.names a logical value indicating whether row indices should be printed as \code{1:nrow(x)}
 #' @param markdown print table in markdown format (this forces \code{nmax = NA})
-#' @param digits how many significant digits are to be used for numeric values in the header (not for the items themselves, that depends on \code{\link{getOption}("digits")})
+#' @param digits how many significant digits are to be used for numeric values in the header_txt (not for the items themselves, that depends on \code{\link{getOption}("digits")})
 #' @param quote a logical value indicating whether or not strings should be printed with surrounding quotes
+#' @param header a logical value indicating whether an informative header should be printed
 #' @param sep a character string to separate the terms when selecting multiple columns
 #' @param f a frequency table
 #' @param n number of top \emph{n} items to return, use -n for the bottom \emph{n} items. It will include more than \code{n} rows if there are ties.
 #' @details Frequency tables (or frequency distributions) are summaries of the distribution of values in a sample. With the `freq` function, you can create univariate frequency tables. Multiple variables will be pasted into one variable, so it forces a univariate distribution. This package also has a vignette available to explain the use of this function further, run \code{browseVignettes("AMR")} to read it.
 #'
-#' For numeric values of any class, these additional values will all be calculated with \code{na.rm = TRUE} and shown into the header:
+#' For numeric values of any class, these additional values will all be calculated with \code{na.rm = TRUE} and shown into the header_txt:
 #' \itemize{
 #'   \item{Mean, using \code{\link[base]{mean}}}
 #'   \item{Standard Deviation, using \code{\link[stats]{sd}}}
@@ -45,7 +46,7 @@
 #'   \item{Outliers (total count and unique count), using \code{\link[grDevices]{boxplot.stats}}}
 #' }
 #'
-#' For dates and times of any class, these additional values will be calculated with \code{na.rm = TRUE} and shown into the header:
+#' For dates and times of any class, these additional values will be calculated with \code{na.rm = TRUE} and shown into the header_txt:
 #' \itemize{
 #'   \item{Oldest, using \code{\link{min}}}
 #'   \item{Newest, using \code{\link{max}}, with difference between newest and oldest}
@@ -156,6 +157,7 @@ frequency_tbl <- function(x,
                           markdown = FALSE,
                           digits = 2,
                           quote = FALSE,
+                          header = !markdown,
                           sep = " ") {
 
   mult.columns <- 0
@@ -309,7 +311,7 @@ frequency_tbl <- function(x,
     sort.count <- FALSE
   }
 
-  header <- character(0)
+  header_txt <- character(0)
 
   markdown_line <- ''
   if (markdown == TRUE) {
@@ -318,11 +320,11 @@ frequency_tbl <- function(x,
   x_align <- 'l'
 
   if (mult.columns > 0) {
-    header <- header %>% paste0(markdown_line, 'Columns:   ', mult.columns)
+    header_txt <- header_txt %>% paste0(markdown_line, 'Columns:   ', mult.columns)
   } else {
-    header <- header %>% paste0(markdown_line, 'Class:     ', class(x) %>% rev() %>% paste(collapse = " > "))
+    header_txt <- header_txt %>% paste0(markdown_line, 'Class:     ', class(x) %>% rev() %>% paste(collapse = " > "))
     if (!mode(x) %in% class(x)) {
-      header <- header %>% paste0(silver(paste0(" (", mode(x), ")")))
+      header_txt <- header_txt %>% paste0(silver(paste0(" (", mode(x), ")")))
     }
   }
 
@@ -334,53 +336,53 @@ frequency_tbl <- function(x,
     }
   }
 
-  header <- header %>% paste0(markdown_line, '\nLength:    ', (NAs %>% length() + x %>% length()) %>% format(),
+  header_txt <- header_txt %>% paste0(markdown_line, '\nLength:    ', (NAs %>% length() + x %>% length()) %>% format(),
                               ' (of which NA: ', NAs %>% length() %>% format() %>% NAs_to_red(),
                               ' = ', (NAs %>% length() / (NAs %>% length() + x %>% length())) %>%
                                 percent(force_zero = TRUE, round = digits) %>%
                                 sub('NaN', '0', ., fixed = TRUE) %>%
                                 NAs_to_red(), ')')
-  header <- header %>% paste0(markdown_line, '\nUnique:    ', x %>% n_distinct() %>% format())
+  header_txt <- header_txt %>% paste0(markdown_line, '\nUnique:    ', x %>% n_distinct() %>% format())
 
   if (NROW(x) > 0 & any(class(x) == "character")) {
-    header <- header %>% paste0('\n')
-    header <- header %>% paste0(markdown_line, '\nShortest:  ', x %>% base::nchar() %>% base::min(na.rm = TRUE))
-    header <- header %>% paste0(markdown_line, '\nLongest:   ', x %>% base::nchar() %>% base::max(na.rm = TRUE))
+    header_txt <- header_txt %>% paste0('\n')
+    header_txt <- header_txt %>% paste0(markdown_line, '\nShortest:  ', x %>% base::nchar() %>% base::min(na.rm = TRUE))
+    header_txt <- header_txt %>% paste0(markdown_line, '\nLongest:   ', x %>% base::nchar() %>% base::max(na.rm = TRUE))
   }
 
   if (NROW(x) > 0 & any(class(x) == "difftime")) {
-    header <- header %>% paste0('\n')
-    header <- header %>% paste(markdown_line, '\nUnits:    ', attributes(x)$units)
+    header_txt <- header_txt %>% paste0('\n')
+    header_txt <- header_txt %>% paste(markdown_line, '\nUnits:    ', attributes(x)$units)
     x <- as.double(x)
-    # after this, the numeric header continues
+    # after this, the numeric header_txt continues
   }
 
   if (NROW(x) > 0 & any(class(x) %in% c('double', 'integer', 'numeric', 'raw', 'single'))) {
     # right align number
     Tukey_five <- stats::fivenum(x, na.rm = TRUE)
     x_align <- 'r'
-    header <- header %>% paste0('\n')
-    header <- header %>% paste(markdown_line, '\nMean:     ', x %>% base::mean(na.rm = TRUE) %>% format(digits = digits))
-    header <- header %>% paste0(markdown_line, '\nStd. dev.: ', x %>% stats::sd(na.rm = TRUE) %>% format(digits = digits),
+    header_txt <- header_txt %>% paste0('\n')
+    header_txt <- header_txt %>% paste(markdown_line, '\nMean:     ', x %>% base::mean(na.rm = TRUE) %>% format(digits = digits))
+    header_txt <- header_txt %>% paste0(markdown_line, '\nStd. dev.: ', x %>% stats::sd(na.rm = TRUE) %>% format(digits = digits),
                                 ' (CV: ', x %>% cv(na.rm = TRUE) %>% format(digits = digits),
                                 ', MAD: ', x %>% stats::mad(na.rm = TRUE) %>% format(digits = digits), ')')
-    header <- header %>% paste0(markdown_line, '\nFive-Num:  ', Tukey_five %>% format(digits = digits) %>% trimws() %>% paste(collapse = ' | '),
+    header_txt <- header_txt %>% paste0(markdown_line, '\nFive-Num:  ', Tukey_five %>% format(digits = digits) %>% trimws() %>% paste(collapse = ' | '),
                                 ' (IQR: ', (Tukey_five[4] - Tukey_five[2]) %>% format(digits = digits),
                                 ', CQV: ', x %>% cqv(na.rm = TRUE) %>% format(digits = digits), ')')
     outlier_length <- length(boxplot.stats(x)$out)
-    header <- header %>% paste0(markdown_line, '\nOutliers:  ', outlier_length)
+    header_txt <- header_txt %>% paste0(markdown_line, '\nOutliers:  ', outlier_length)
     if (outlier_length > 0) {
-      header <- header %>% paste0(' (unique count: ', boxplot.stats(x)$out %>% n_distinct(), ')')
+      header_txt <- header_txt %>% paste0(' (unique count: ', boxplot.stats(x)$out %>% n_distinct(), ')')
     }
   }
   if (NROW(x) > 0 & any(class(x) == "rsi")) {
-    header <- header %>% paste0('\n')
+    header_txt <- header_txt %>% paste0('\n')
     cnt_S <- sum(x == "S")
     cnt_I <- sum(x == "I")
     cnt_R <- sum(x == "R")
-    header <- header %>% paste(markdown_line, '\n%IR:      ',
+    header_txt <- header_txt %>% paste(markdown_line, '\n%IR:      ',
                                ((cnt_I + cnt_R) / sum(!is.na(x))) %>% percent(force_zero = TRUE, round = digits))
-    header <- header %>% paste0(markdown_line, '\nRatio SIR: 1.0 : ',
+    header_txt <- header_txt %>% paste0(markdown_line, '\nRatio SIR: 1.0 : ',
                                 (cnt_I / cnt_S) %>% format(digits = 1, nsmall = 1), " : ",
                                 (cnt_R / cnt_S) %>% format(digits = 1, nsmall = 1))
   }
@@ -391,7 +393,7 @@ frequency_tbl <- function(x,
     formatdates <- "%H:%M:%S"
   }
   if (NROW(x) > 0 & any(class(x) %in% c('Date', 'POSIXct', 'POSIXlt'))) {
-    header <- header %>% paste0('\n')
+    header_txt <- header_txt %>% paste0('\n')
     mindate <- x %>% min(na.rm = TRUE)
     maxdate <- x %>% max(na.rm = TRUE)
     maxdate_days <- difftime(maxdate, mindate, units = 'auto') %>% as.double()
@@ -400,16 +402,16 @@ frequency_tbl <- function(x,
 
     if (formatdates == "%H:%M:%S") {
       # hms
-      header <- header %>% paste0(markdown_line, '\nEarliest:  ', mindate %>% format(formatdates) %>% trimws())
-      header <- header %>% paste0(markdown_line, '\nLatest:    ', maxdate %>% format(formatdates) %>% trimws(),
+      header_txt <- header_txt %>% paste0(markdown_line, '\nEarliest:  ', mindate %>% format(formatdates) %>% trimws())
+      header_txt <- header_txt %>% paste0(markdown_line, '\nLatest:    ', maxdate %>% format(formatdates) %>% trimws(),
                                   ' (+', difftime(maxdate, mindate, units = 'mins') %>% as.double() %>% format(digits = digits), ' min.)')
     } else {
       # other date formats
-      header <- header %>% paste0(markdown_line, '\nOldest:    ', mindate %>% format(formatdates) %>% trimws())
-      header <- header %>% paste0(markdown_line, '\nNewest:    ', maxdate %>% format(formatdates) %>% trimws(),
+      header_txt <- header_txt %>% paste0(markdown_line, '\nOldest:    ', mindate %>% format(formatdates) %>% trimws())
+      header_txt <- header_txt %>% paste0(markdown_line, '\nNewest:    ', maxdate %>% format(formatdates) %>% trimws(),
                                   ' (+', difftime(maxdate, mindate, units = 'auto') %>% as.double() %>% format(digits = digits), ')')
     }
-    header <- header %>% paste0(markdown_line, '\nMedian:    ', mediandate %>% format(formatdates) %>% trimws(),
+    header_txt <- header_txt %>% paste0(markdown_line, '\nMedian:    ', mediandate %>% format(formatdates) %>% trimws(),
                                 ' (~', percent(median_days / maxdate_days, round = 0), ')')
   }
   if (any(class(x) == 'POSIXlt')) {
@@ -493,6 +495,7 @@ frequency_tbl <- function(x,
   attr(df, 'opt') <- list(data = x.name,
                           vars = cols,
                           header = header,
+                          header_txt = header_txt,
                           row_names = row.names,
                           column_names = column_names,
                           column_align = column_align,
@@ -621,10 +624,11 @@ print.frequency_tbl <- function(x, nmax = getOption("max.print.freq", default = 
     title <- bold(title) # only bold in regular printing
   }
 
-  cat(title, "\n")
-
-  if (!is.null(opt$header)) {
-    cat(opt$header)
+  if (opt$header == TRUE) {
+    cat(title, "\n")
+    if (!is.null(opt$header_txt)) {
+      cat(opt$header_txt)
+    }
   }
 
   if (NROW(x) == 0) {
