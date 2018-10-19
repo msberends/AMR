@@ -4,7 +4,7 @@
 \name{microorganisms.certe}
 \alias{microorganisms.certe}
 \title{Translation table for Certe}
-\format{A \code{\link{tibble}} with 2,664 observations and 2 variables:
+\format{A \code{\link{tibble}} with 2,665 observations and 2 variables:
 \describe{
   \item{\code{certe}}{Code of microorganism according to Certe MMB}
   \item{\code{mo}}{Code of microorganism in \code{\link{microorganisms}}}

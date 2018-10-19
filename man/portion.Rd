@@ -15,15 +15,20 @@
 Wickham H. \strong{Tidy Data.} The Journal of Statistical Software, vol. 59, 2014. \url{http://vita.had.co.nz/papers/tidy-data.html}
 }
 \usage{
-portion_R(..., minimum = 30, as_percent = FALSE)
+portion_R(..., minimum = 30, as_percent = FALSE,
+  also_single_tested = FALSE)
 
-portion_IR(..., minimum = 30, as_percent = FALSE)
+portion_IR(..., minimum = 30, as_percent = FALSE,
+  also_single_tested = FALSE)
 
-portion_I(..., minimum = 30, as_percent = FALSE)
+portion_I(..., minimum = 30, as_percent = FALSE,
+  also_single_tested = FALSE)
 
-portion_SI(..., minimum = 30, as_percent = FALSE)
+portion_SI(..., minimum = 30, as_percent = FALSE,
+  also_single_tested = FALSE)
 
-portion_S(..., minimum = 30, as_percent = FALSE)
+portion_S(..., minimum = 30, as_percent = FALSE,
+  also_single_tested = FALSE)
 
 portion_df(data, translate_ab = getOption("get_antibiotic_names",
   "official"), minimum = 30, as_percent = FALSE, combine_IR = FALSE)
@@ -34,6 +39,8 @@ portion_df(data, translate_ab = getOption("get_antibiotic_names",
 \item{minimum}{the minimal amount of available isolates. Any number lower than \code{minimum} will return \code{NA} with a warning. The default number of \code{30} isolates is advised by the Clinical and Laboratory Standards Institute (CLSI) as best practice, see Source.}
 
 \item{as_percent}{a logical to indicate whether the output must be returned as a hundred fold with \% sign (a character). A value of \code{0.123456} will then be returned as \code{"12.3\%"}.}
+
+\item{also_single_tested}{a logical to indicate whether (in combination therapies) also observations should be included where not all antibiotics were tested, but at least one of the tested antibiotics contains a target interpretation (e.g. S in case of \code{portion_S} and R in case of \code{portion_R}). \strong{This would lead to selection bias in almost all cases.}}
 
 \item{data}{a \code{data.frame} containing columns with class \code{rsi} (see \code{\link{as.rsi}})}
 

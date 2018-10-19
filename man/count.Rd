@@ -15,15 +15,15 @@
 Wickham H. \strong{Tidy Data.} The Journal of Statistical Software, vol. 59, 2014. \url{http://vita.had.co.nz/papers/tidy-data.html}
 }
 \usage{
-count_R(...)
+count_R(..., also_single_tested = FALSE)
 
-count_IR(...)
+count_IR(..., also_single_tested = FALSE)
 
-count_I(...)
+count_I(..., also_single_tested = FALSE)
 
-count_SI(...)
+count_SI(..., also_single_tested = FALSE)
 
-count_S(...)
+count_S(..., also_single_tested = FALSE)
 
 count_all(...)
 
@@ -34,6 +34,8 @@ count_df(data, translate_ab = getOption("get_antibiotic_names",
 }
 \arguments{
 \item{...}{one or more vectors (or columns) with antibiotic interpretations. They will be transformed internally with \code{\link{as.rsi}} if needed.}
+
+\item{also_single_tested}{a logical to indicate whether (in combination therapies) also observations should be included where not all antibiotics were tested, but at least one of the tested antibiotics contains a target interpretation (e.g. S in case of \code{portion_S} and R in case of \code{portion_R}). \strong{This would lead to selection bias in almost all cases.}}
 
 \item{data}{a \code{data.frame} containing columns with class \code{rsi} (see \code{\link{as.rsi}})}
 

@@ -361,15 +361,20 @@ EUCAST_rules <- function(tbl,
       changed_results <<- changed_results + sum(before != after, na.rm = TRUE) # will be reset at start of every rule
 
       if (verbose == TRUE) {
-        verbose_new <- data.frame(rule_type = rule[1],
-                                  rule_set = rule[2],
-                                  force_to = to,
-                                  found = length(before),
-                                  changed = sum(before != after, na.rm = TRUE),
-                                  stringsAsFactors = FALSE)
-        verbose_new$target_columns <- list(unname(cols))
-        verbose_new$target_rows <- list(unname(rows))
-        verbose_info <<- rbind(verbose_info, verbose_new)
+        for (i in 1:length(cols)) {
+          # add new row for every affected column
+          verbose_new <- data.frame(rule_type = rule[1],
+                                    rule_set = rule[2],
+                                    force_to = to,
+                                    found = length(before),
+                                    changed = sum(before != after, na.rm = TRUE),
+                                    target_column = cols[i],
+                                    stringsAsFactors = FALSE)
+          verbose_new$target_rows <- list(unname(rows))
+          rownames(verbose_new) <- NULL
+          verbose_info <<- rbind(verbose_info, verbose_new)
+        }
+
       }
     }
   }
@@ -410,15 +415,15 @@ EUCAST_rules <- function(tbl,
   # since ampicillin ^= amoxicillin, get the first from the latter (not in original table)
   if (!is.na(ampi) & !is.na(amox)) {
     if (verbose == TRUE) {
-      cat("\n VERBOSE: transforming",
-          length(which(tbl[, amox] == "S" & !tbl[, ampi] %in% c("S", "I", "R"))),
-          "empty ampicillin fields to 'S' based on amoxicillin.")
-      cat("\n VERBOSE: transforming",
-          length(which(tbl[, amox] == "I" & !tbl[, ampi] %in% c("S", "I", "R"))),
-          "empty ampicillin fields to 'I' based on amoxicillin.")
-      cat("\n VERBOSE: transforming",
-          length(which(tbl[, amox] == "R" & !tbl[, ampi] %in% c("S", "I", "R"))),
-          "empty ampicillin fields to 'R' based on amoxicillin.\n")
+      cat(bgGreen("\n VERBOSE: transforming",
+                  length(which(tbl[, amox] == "S" & !tbl[, ampi] %in% c("S", "I", "R"))),
+                  "empty ampicillin fields to 'S' based on amoxicillin. "))
+      cat(bgGreen("\n VERBOSE: transforming",
+                  length(which(tbl[, amox] == "I" & !tbl[, ampi] %in% c("S", "I", "R"))),
+                  "empty ampicillin fields to 'I' based on amoxicillin. "))
+      cat(bgGreen("\n VERBOSE: transforming",
+                  length(which(tbl[, amox] == "R" & !tbl[, ampi] %in% c("S", "I", "R"))),
+                  "empty ampicillin fields to 'R' based on amoxicillin. \n"))
     }
     tbl[which(tbl[, amox] == "S" & !tbl[, ampi] %in% c("S", "I", "R")), ampi] <- "S"
     tbl[which(tbl[, amox] == "I" & !tbl[, ampi] %in% c("S", "I", "R")), ampi] <- "I"

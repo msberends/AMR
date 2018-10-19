@@ -92,56 +92,61 @@
 #'   group_by(hospital_id) %>%
 #'   count_df(translate = FALSE)
 #'
-count_R <- function(...) {
+count_R <- function(..., also_single_tested = FALSE) {
   rsi_calc(...,
            type = "R",
            include_I = FALSE,
            minimum = 0,
            as_percent = FALSE,
+           also_single_tested = FALSE,
            only_count = TRUE)
 }
 
 #' @rdname count
 #' @export
-count_IR <- function(...) {
+count_IR <- function(..., also_single_tested = FALSE) {
   rsi_calc(...,
            type = "R",
            include_I = TRUE,
            minimum = 0,
            as_percent = FALSE,
+           also_single_tested = FALSE,
            only_count = TRUE)
 }
 
 #' @rdname count
 #' @export
-count_I <- function(...) {
+count_I <- function(..., also_single_tested = FALSE) {
   rsi_calc(...,
            type = "I",
            include_I = FALSE,
            minimum = 0,
            as_percent = FALSE,
+           also_single_tested = FALSE,
            only_count = TRUE)
 }
 
 #' @rdname count
 #' @export
-count_SI <- function(...) {
+count_SI <- function(..., also_single_tested = FALSE) {
   rsi_calc(...,
            type = "S",
            include_I = TRUE,
            minimum = 0,
            as_percent = FALSE,
+           also_single_tested = FALSE,
            only_count = TRUE)
 }
 
 #' @rdname count
 #' @export
-count_S <- function(...) {
+count_S <- function(..., also_single_tested = FALSE) {
   rsi_calc(...,
            type = "S",
            include_I = FALSE,
            minimum = 0,
            as_percent = FALSE,
+           also_single_tested = FALSE,
            only_count = TRUE)
 }
 

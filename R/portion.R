@@ -24,6 +24,7 @@
 #' @param ... one or more vectors (or columns) with antibiotic interpretations. They will be transformed internally with \code{\link{as.rsi}} if needed. Use multiple columns to calculate (the lack of) co-resistance: the probability where one of two drugs have a resistant or susceptible result. See Examples.
 #' @param minimum the minimal amount of available isolates. Any number lower than \code{minimum} will return \code{NA} with a warning. The default number of \code{30} isolates is advised by the Clinical and Laboratory Standards Institute (CLSI) as best practice, see Source.
 #' @param as_percent a logical to indicate whether the output must be returned as a hundred fold with \% sign (a character). A value of \code{0.123456} will then be returned as \code{"12.3\%"}.
+#' @param also_single_tested a logical to indicate whether (in combination therapies) also observations should be included where not all antibiotics were tested, but at least one of the tested antibiotics contains a target interpretation (e.g. S in case of \code{portion_S} and R in case of \code{portion_R}). \strong{This would lead to selection bias in almost all cases.}
 #' @param data a \code{data.frame} containing columns with class \code{rsi} (see \code{\link{as.rsi}})
 #' @param translate_ab a column name of the \code{\link{antibiotics}} data set to translate the antibiotic abbreviations to, using \code{\link{abname}}. This can be set with \code{\link{getOption}("get_antibiotic_names")}.
 #' @param combine_IR a logical to indicate whether all values of I and R must be merged into one, so the output only consists of S vs. IR (susceptible vs. non-susceptible)
@@ -134,12 +135,14 @@
 #' }
 portion_R <- function(...,
                       minimum = 30,
-                      as_percent = FALSE) {
+                      as_percent = FALSE,
+                      also_single_tested = FALSE) {
   rsi_calc(...,
            type = "R",
            include_I = FALSE,
            minimum = minimum,
            as_percent = as_percent,
+           also_single_tested = also_single_tested,
            only_count = FALSE)
 }
 
@@ -147,12 +150,14 @@ portion_R <- function(...,
 #' @export
 portion_IR <- function(...,
                        minimum = 30,
-                       as_percent = FALSE) {
+                       as_percent = FALSE,
+                       also_single_tested = FALSE) {
   rsi_calc(...,
            type = "R",
            include_I = TRUE,
            minimum = minimum,
            as_percent = as_percent,
+           also_single_tested = also_single_tested,
            only_count = FALSE)
 }
 
@@ -160,12 +165,14 @@ portion_IR <- function(...,
 #' @export
 portion_I <- function(...,
                       minimum = 30,
-                      as_percent = FALSE) {
+                      as_percent = FALSE,
+                      also_single_tested = FALSE) {
   rsi_calc(...,
            type = "I",
            include_I = FALSE,
            minimum = minimum,
            as_percent = as_percent,
+           also_single_tested = also_single_tested,
            only_count = FALSE)
 }
 
@@ -173,12 +180,14 @@ portion_I <- function(...,
 #' @export
 portion_SI <- function(...,
                        minimum = 30,
-                       as_percent = FALSE) {
+                       as_percent = FALSE,
+                       also_single_tested = FALSE) {
   rsi_calc(...,
            type = "S",
            include_I = TRUE,
            minimum = minimum,
            as_percent = as_percent,
+           also_single_tested = also_single_tested,
            only_count = FALSE)
 }
 
@@ -186,12 +195,14 @@ portion_SI <- function(...,
 #' @export
 portion_S <- function(...,
                       minimum = 30,
-                      as_percent = FALSE) {
+                      as_percent = FALSE,
+                      also_single_tested = FALSE) {
   rsi_calc(...,
            type = "S",
            include_I = FALSE,
            minimum = minimum,
            as_percent = as_percent,
+           also_single_tested = also_single_tested,
            only_count = FALSE)
 }
 

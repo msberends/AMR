@@ -17,6 +17,9 @@ test_that("portions works", {
   expect_equal(septic_patients %>% portion_S(amcl, gent),
                0.9210074,
                tolerance = 0.001)
+  expect_equal(septic_patients %>% portion_S(amcl, gent, also_single_tested = TRUE),
+               0.9239669,
+               tolerance = 0.001)
 
   # amcl+genta susceptibility around 92.1%
   expect_equal(suppressWarnings(rsi(septic_patients$amcl,
@@ -66,6 +69,7 @@ test_that("portions works", {
   expect_error(portion_I("test", as_percent = "test"))
   expect_error(portion_S("test", minimum = "test"))
   expect_error(portion_S("test", as_percent = "test"))
+  expect_error(portion_S("test", also_single_tested = "test"))
 
   # check too low amount of isolates
   expect_identical(suppressWarnings(portion_R(septic_patients$amox, minimum = nrow(septic_patients) + 1)),

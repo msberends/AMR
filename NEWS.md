@@ -11,10 +11,11 @@
   * Better error handling when rules cannot be applied (i.e. new values could not be inserted)
   * The amount of affected values will now only be measured once per row/column combination
   * Data set `septic_patients` now reflects these changes
-* Empty values as input for `as.mo` will be processed faster
+* Tremendous speed improvement for `as.mo` (and consequently all `mo_*` functions), as empty values wil be ignored a priori
 * Fewer than 3 characters as input for `as.mo` will return NA
 * Added parameter `combine_IR` (TRUE/FALSE) to functions `portion_df` and `count_df`, to indicate that all values of I and R must be merged into one, so the output only consists of S vs. IR (susceptible vs. non-susceptible)
 * Fix for `portion_*(..., as_percent = TRUE)` when minimal amount of isolates would not be met
+* Added parameter `also_single_tested` for `portion_*` and `count_*` functions to also include cases where not all antibiotics were tested but at least one of the tested antibiotics includes the target antimicribial interpretation, see `?portion`
 * Using `portion_*` functions now throws a warning when total available isolate is below parameter `minimum`
 * Functions `as.mo`, `as.rsi` and `as.mic` will not set package name as attribute anymore
 * Data set `septic_patients` is now a `data.frame`, not a tibble anymore

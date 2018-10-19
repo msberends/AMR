@@ -175,7 +175,7 @@
 #' Translation table for Certe
 #'
 #' A data set containing all bacteria codes of Certe MMB. These codes can be joined to data with an ID from \code{\link{microorganisms}$mo} (using \code{\link{left_join_microorganisms}}). GLIMS codes can also be translated to valid \code{MO}s with \code{\link{guess_mo}}.
-#' @format A \code{\link{tibble}} with 2,664 observations and 2 variables:
+#' @format A \code{\link{tibble}} with 2,665 observations and 2 variables:
 #' \describe{
 #'   \item{\code{certe}}{Code of microorganism according to Certe MMB}
 #'   \item{\code{mo}}{Code of microorganism in \code{\link{microorganisms}}}

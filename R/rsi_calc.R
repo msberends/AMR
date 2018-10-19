@@ -16,12 +16,13 @@
 # GNU General Public License for more details.                         #
 # ==================================================================== #
 
-#' @importFrom dplyr %>% pull
+#' @importFrom dplyr %>% pull all_vars any_vars filter_all funs mutate_all
 rsi_calc <- function(...,
                      type,
                      include_I,
                      minimum,
                      as_percent,
+                     also_single_tested,
                      only_count) {
 
   if (!is.logical(include_I)) {
@@ -32,6 +33,9 @@ rsi_calc <- function(...,
   }
   if (!is.logical(as_percent)) {
     stop('`as_percent` must be logical', call. = FALSE)
+  }
+  if (!is.logical(also_single_tested)) {
+    stop('`also_single_tested` must be logical', call. = FALSE)
   }
 
   dots_df <- ...elt(1) # it needs this evaluation
@@ -67,23 +71,53 @@ rsi_calc <- function(...,
   }
 
   print_warning <- FALSE
-  # check integrity of columns: force rsi class
+
+  type_trans <- as.integer(as.rsi(type))
+  type_others <- setdiff(1:3, type_trans)
+
   if (is.data.frame(x)) {
+    rsi_integrity_check <- character(0)
     for (i in 1:ncol(x)) {
+      # check integrity of columns: force rsi class
       if (!is.rsi(x %>% pull(i))) {
-        x[, i] <- as.rsi(x[, i])
+        rsi_integrity_check <- c(rsi_integrity_check, x %>% pull(i) %>% as.character())
+        x[, i] <- suppressWarnings(as.rsi(x[, i])) # warning will be given later
         print_warning <- TRUE
       }
       x[, i] <- x %>% pull(i) %>% as.integer()
     }
-    x <- apply(X = x,
-               MARGIN = 1,
-               FUN = min)
+    if (length(rsi_integrity_check) > 0) {
+      # this will give a warning for invalid results, of all input columns (so only 1 warning)
+      rsi_integrity_check <- as.rsi(rsi_integrity_check)
+    }
+
+    if (include_I == TRUE) {
+      x <- x %>% mutate_all(funs(ifelse(. == 2, type_trans, .)))
+    }
+
+    if (also_single_tested == TRUE) {
+      # THE CHANCE THAT AT LEAST ONE RESULT IS type
+      found <- x %>% filter_all(any_vars(. == type_trans)) %>% nrow()
+      # THE CHANCE THAT AT LEAST ONE RESULT IS type OR ALL ARE TESTED
+      total <- found + x %>% filter_all(all_vars(. %in% type_others)) %>% nrow()
+    } else {
+      x <- apply(X = x,
+                 MARGIN = 1,
+                 FUN = min)
+      found <- sum(as.integer(x) == type_trans, na.rm = TRUE)
+      total <- length(x) - sum(is.na(x))
+    }
   } else {
     if (!is.rsi(x)) {
       x <- as.rsi(x)
       print_warning <- TRUE
     }
+    x <- as.integer(x)
+    if (include_I == TRUE) {
+      x[x == 2] <- type_trans
+    }
+    found <- sum(x == type_trans, na.rm = TRUE)
+    total <- length(x) - sum(is.na(x))
   }
 
   if (print_warning == TRUE) {
@@ -91,21 +125,10 @@ rsi_calc <- function(...,
             call. = FALSE)
   }
 
-  if (type == "S") {
-    found <- sum(as.integer(x) <= 1 + include_I, na.rm = TRUE)
-  } else if (type == "I") {
-    found <- sum(as.integer(x) == 2, na.rm = TRUE)
-  } else if (type == "R") {
-    found <- sum(as.integer(x) >= 3 - include_I, na.rm = TRUE)
-  } else {
-    stop("invalid type")
-  }
-
   if (only_count == TRUE) {
     return(found)
   }
 
-  total <- length(x) - sum(is.na(x))
   if (total < minimum) {
     warning("Introducing NA: only ", total, " results available (minimum set to ", minimum, ").", call. = FALSE)
     result <- NA

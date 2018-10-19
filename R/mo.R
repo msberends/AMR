@@ -195,7 +195,7 @@ exec_as.mo <- function(x, Becker = FALSE, Lancefield = FALSE, allow_uncertain = 
   if (all(x %in% AMR::microorganisms[, property])) {
     # already existing mo
   } else if (all(x %in% AMR::microorganisms[, "mo"])) {
-    # existing mo codes
+    # existing mo codes when not looking for property "mo"
     suppressWarnings(
       x <- data.frame(mo = x, stringsAsFactors = FALSE) %>%
         left_join(AMR::microorganisms, by = "mo") %>%
@@ -661,13 +661,12 @@ exec_as.mo <- function(x, Becker = FALSE, Lancefield = FALSE, allow_uncertain = 
     x[x == MOs[mo == 'B_STRPTC_SAL', ..property][[1]][1L]] <- MOs[mo == 'B_STRPTC_GRK', ..property][[1]][1L]
   }
 
-  x_input_unique <- unique(x_input)
-  # fill in empty values again
-  x[is.na(x_input_unique) | is.null(x_input_unique) | identical(x_input_unique, "")] <- NA
+  # comply to x, which is also unique and without empty values
+  x_input_unique_nonempty <- unique(x_input[!is.na(x_input) & !is.null(x_input) & !identical(x_input, "")])
 
   # left join the found results to the original input values (x_input)
-  df_found <- data.frame(input = as.character(x_input_unique),
-                         found = x,
+  df_found <- data.frame(input = as.character(x_input_unique_nonempty),
+                         found = as.character(x),
                          stringsAsFactors = FALSE)
   df_input <- data.frame(input = as.character(x_input),
                          stringsAsFactors = FALSE)
