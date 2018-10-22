@@ -23,10 +23,10 @@
 #' @param ... up to nine different columns of \code{x} when \code{x} is a \code{data.frame} or \code{tibble}, to calculate frequencies from - see Examples
 #' @param sort.count sort on count, i.e. frequencies. This will be \code{TRUE} at default for everything except for factors.
 #' @param nmax number of row to print. The default, \code{15}, uses \code{\link{getOption}("max.print.freq")}. Use \code{nmax = 0}, \code{nmax = Inf}, \code{nmax = NULL} or \code{nmax = NA} to print all rows.
-#' @param na.rm a logical value indicating whether \code{NA} values should be removed from the frequency table. The header_txt will always print the amount of \code{NA}s.
+#' @param na.rm a logical value indicating whether \code{NA} values should be removed from the frequency table. The header will always print the amount of \code{NA}s.
 #' @param row.names a logical value indicating whether row indices should be printed as \code{1:nrow(x)}
-#' @param markdown print table in markdown format (this forces \code{nmax = NA})
-#' @param digits how many significant digits are to be used for numeric values in the header_txt (not for the items themselves, that depends on \code{\link{getOption}("digits")})
+#' @param markdown a logical value indicating whether the frequency table should be printed in markdown format. This will print all rows and is default behaviour in non-interactive R sessions (like when knitting RMarkdown files).
+#' @param digits how many significant digits are to be used for numeric values in the header (not for the items themselves, that depends on \code{\link{getOption}("digits")})
 #' @param quote a logical value indicating whether or not strings should be printed with surrounding quotes
 #' @param header a logical value indicating whether an informative header should be printed
 #' @param sep a character string to separate the terms when selecting multiple columns
@@ -34,7 +34,7 @@
 #' @param n number of top \emph{n} items to return, use -n for the bottom \emph{n} items. It will include more than \code{n} rows if there are ties.
 #' @details Frequency tables (or frequency distributions) are summaries of the distribution of values in a sample. With the `freq` function, you can create univariate frequency tables. Multiple variables will be pasted into one variable, so it forces a univariate distribution. This package also has a vignette available to explain the use of this function further, run \code{browseVignettes("AMR")} to read it.
 #'
-#' For numeric values of any class, these additional values will all be calculated with \code{na.rm = TRUE} and shown into the header_txt:
+#' For numeric values of any class, these additional values will all be calculated with \code{na.rm = TRUE} and shown into the header:
 #' \itemize{
 #'   \item{Mean, using \code{\link[base]{mean}}}
 #'   \item{Standard Deviation, using \code{\link[stats]{sd}}}
@@ -46,7 +46,7 @@
 #'   \item{Outliers (total count and unique count), using \code{\link[grDevices]{boxplot.stats}}}
 #' }
 #'
-#' For dates and times of any class, these additional values will be calculated with \code{na.rm = TRUE} and shown into the header_txt:
+#' For dates and times of any class, these additional values will be calculated with \code{na.rm = TRUE} and shown into the header:
 #' \itemize{
 #'   \item{Oldest, using \code{\link{min}}}
 #'   \item{Newest, using \code{\link{max}}, with difference between newest and oldest}
@@ -140,21 +140,13 @@
 #' # check differences between frequency tables
 #' diff(freq(septic_patients$trim),
 #'      freq(septic_patients$trsu))
-#'
-#' \dontrun{
-#' # send frequency table to clipboard (e.g. for pasting in Excel)
-#' septic_patients %>%
-#'   freq(age) %>%
-#'   format() %>%       # this will format the percentages
-#'   clipboard_export()
-#' }
 frequency_tbl <- function(x,
                           ...,
                           sort.count = TRUE,
                           nmax = getOption("max.print.freq"),
                           na.rm = TRUE,
                           row.names = TRUE,
-                          markdown = FALSE,
+                          markdown = !interactive(),
                           digits = 2,
                           quote = FALSE,
                           header = !markdown,
@@ -201,17 +193,14 @@ frequency_tbl <- function(x,
       cols <- NULL
     }
   } else if (any(class(x) == 'table')) {
-    if (!"tidyr" %in% rownames(installed.packages())) {
-      stop('transformation from `table` to frequency table requires the tidyr package.', call. = FALSE)
-    }
-    x <- x %>%
-      as.data.frame(stringsAsFactors = FALSE) %>%
-      # paste first two columns
-      tidyr::unite(col = "Pasted", 1:2, sep = sep, remove = TRUE)
-    x <- rep(x %>% pull(Pasted), x %>% pull(Freq))
+    x <- as.data.frame(x, stringsAsFactors = FALSE)
+    # now this DF contains 3 columns: the 2 vars and a Freq column
+    # paste the first 2 cols and repeat them Freq times:
+    x <- rep(x = do.call(paste, c(x[colnames(x)[1:2]], sep = sep)),
+              times = x$Freq)
     x.name <- "a `table` object"
     cols <- NULL
-    mult.columns <- 2
+    #mult.columns <- 2
   } else {
     x.name <- NULL
     cols <- NULL
@@ -221,74 +210,8 @@ frequency_tbl <- function(x,
     if (ncol(x) == 1 & any(class(x) == 'data.frame')) {
       x <- x %>% pull(1)
     } else if (ncol(x) < 10) {
-
       mult.columns <- ncol(x)
-
-      colnames(x) <- LETTERS[1:ncol(x)]
-      if (ncol(x) == 2) {
-        x$total <- paste(x$A %>% as.character(),
-                         x$B %>% as.character(),
-                         sep = sep)
-      } else if (ncol(x) == 3) {
-        x$total <- paste(x$A %>% as.character(),
-                         x$B %>% as.character(),
-                         x$C %>% as.character(),
-                         sep = sep)
-      } else if (ncol(x) == 4) {
-        x$total <- paste(x$A %>% as.character(),
-                         x$B %>% as.character(),
-                         x$C %>% as.character(),
-                         x$D %>% as.character(),
-                         sep = sep)
-      } else if (ncol(x) == 5) {
-        x$total <- paste(x$A %>% as.character(),
-                         x$B %>% as.character(),
-                         x$C %>% as.character(),
-                         x$D %>% as.character(),
-                         x$E %>% as.character(),
-                         sep = sep)
-      } else if (ncol(x) == 6) {
-        x$total <- paste(x$A %>% as.character(),
-                         x$B %>% as.character(),
-                         x$C %>% as.character(),
-                         x$D %>% as.character(),
-                         x$E %>% as.character(),
-                         x$F %>% as.character(),
-                         sep = sep)
-      } else if (ncol(x) == 7) {
-        x$total <- paste(x$A %>% as.character(),
-                         x$B %>% as.character(),
-                         x$C %>% as.character(),
-                         x$D %>% as.character(),
-                         x$E %>% as.character(),
-                         x$F %>% as.character(),
-                         x$G %>% as.character(),
-                         sep = sep)
-      } else if (ncol(x) == 8) {
-        x$total <- paste(x$A %>% as.character(),
-                         x$B %>% as.character(),
-                         x$C %>% as.character(),
-                         x$D %>% as.character(),
-                         x$E %>% as.character(),
-                         x$F %>% as.character(),
-                         x$G %>% as.character(),
-                         x$H %>% as.character(),
-                         sep = sep)
-      } else if (ncol(x) == 9) {
-        x$total <- paste(x$A %>% as.character(),
-                         x$B %>% as.character(),
-                         x$C %>% as.character(),
-                         x$D %>% as.character(),
-                         x$E %>% as.character(),
-                         x$F %>% as.character(),
-                         x$G %>% as.character(),
-                         x$H %>% as.character(),
-                         x$I %>% as.character(),
-                         sep = sep)
-      }
-
-      x <- x$total
-
+      x <- do.call(paste, c(x[colnames(x)], sep = sep))
     } else {
       stop('A maximum of 9 columns can be analysed at the same time.', call. = FALSE)
     }
@@ -585,7 +508,7 @@ diff.frequency_tbl <- function(x, y, ...) {
 #' @exportMethod print.frequency_tbl
 #' @importFrom knitr kable
 #' @importFrom dplyr n_distinct
-#' @importFrom crayon bold
+#' @importFrom crayon bold silver
 #' @export
 print.frequency_tbl <- function(x, nmax = getOption("max.print.freq", default = 15), ...) {
 
@@ -629,6 +552,9 @@ print.frequency_tbl <- function(x, nmax = getOption("max.print.freq", default = 
     if (!is.null(opt$header_txt)) {
       cat(opt$header_txt)
     }
+  } else if (opt$tbl_format == "markdown") {
+    # do print title as caption in markdown
+    cat("\n", title, sep = "")
   }
 
   if (NROW(x) == 0) {
@@ -671,6 +597,9 @@ print.frequency_tbl <- function(x, nmax = getOption("max.print.freq", default = 
                     ' (',
                     (x.unprinted / (x.unprinted + x.printed)) %>% percent(force_zero = TRUE),
                     ') ]\n', sep = '')
+    if (opt$tbl_format == "pandoc") {
+      footer <- silver(footer) # only silver in regular printing
+    }
   } else {
     footer <- NULL
   }

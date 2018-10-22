@@ -13,7 +13,10 @@ test_that("abname works", {
 
   expect_error(abname("AMOX", to = c(1:3)))
   expect_error(abname("AMOX", to = "test"))
-  expect_warning(abname("TEST
+  expect_warning(abname("NOTEXISTING
        "))
   expect_warning(abname("AMOX or GENT"))
+
+  # this one is being found with as.atc internally
+  expect_equal(abname("flu_clox123"), "Flucloxacillin")
 })

@@ -3,15 +3,17 @@
 
 This R package was created for academic research by PhD students of the Faculty of Medical Sciences of the [University of Groningen](https://www.rug.nl) and the Medical Microbiology & Infection Prevention (MMBI) department of the [University Medical Center Groningen (UMCG)](https://www.umcg.nl).
 
-:arrow_forward: Get it with `install.packages("AMR")` or see below for other possibilities. Read all changes and new functions in **[NEWS.md](https://github.com/msberends/AMR/blob/master/NEWS.md)**.
+:arrow_forward: Get it with `install.packages("AMR")` or see below for other possibilities.
+
+:arrow_forward: Read the [changelog here](https://github.com/msberends/AMR/blob/master/NEWS.md).
 
 ## Authors
-<a href="https://orcid.org/0000-0001-7620-1800"><img src="https://cran.r-project.org/web/orcid.svg" height="16px"></a> Matthijs S. Berends<sup>1,2,a</sup>,
-<a href="https://orcid.org/0000-0001-5809-5995"><img src="https://cran.r-project.org/web/orcid.svg" height="16px"></a> Christian F. Luz<sup>1,a</sup>,
+Matthijs S. Berends <a href="https://orcid.org/0000-0001-7620-1800"><img src="https://cran.r-project.org/web/orcid.svg" height="16px"></a> <sup>1,2,a</sup>,
+Christian F. Luz <a href="https://orcid.org/0000-0001-5809-5995"><img src="https://cran.r-project.org/web/orcid.svg" height="16px"></a> <sup>1,a</sup>,
 Erwin E.A. Hassing<sup>2</sup>,
-<a href="https://orcid.org/0000-0003-1241-1328"><img src="https://cran.r-project.org/web/orcid.svg" height="16px"></a> Corinna Glasner<sup>1,b</sup>,
-<a href="https://orcid.org/0000-0003-4881-038X"><img src="https://cran.r-project.org/web/orcid.svg" height="16px"></a> Alex W. Friedrich<sup>1,b</sup>,
-<a href="https://orcid.org/0000-0003-1634-0010"><img src="https://cran.r-project.org/web/orcid.svg" height="16px"></a> Bhanu Sinha<sup>1,b</sup>
+Corinna Glasner <a href="https://orcid.org/0000-0003-1241-1328"><img src="https://cran.r-project.org/web/orcid.svg" height="16px"></a> <sup>1,b</sup>,
+Alex W. Friedrich <a href="https://orcid.org/0000-0003-4881-038X"><img src="https://cran.r-project.org/web/orcid.svg" height="16px"></a> <sup>1,b</sup>,
+Bhanu Sinha <a href="https://orcid.org/0000-0003-1634-0010"><img src="https://cran.r-project.org/web/orcid.svg" height="16px"></a> <sup>1,b</sup>
   
 <sup>1</sup> Department of Medical Microbiology, University of Groningen, University Medical Center Groningen, Groningen, the Netherlands - [rug.nl](http://www.rug.nl) [umcg.nl](http://www.umcg.nl)<br>
 <sup>2</sup> Certe Medical Diagnostics & Advice, Groningen, the Netherlands - [certe.nl](http://www.certe.nl)<br>

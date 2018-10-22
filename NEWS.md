@@ -17,25 +17,29 @@
 * Fix for `portion_*(..., as_percent = TRUE)` when minimal amount of isolates would not be met
 * Added parameter `also_single_tested` for `portion_*` and `count_*` functions to also include cases where not all antibiotics were tested but at least one of the tested antibiotics includes the target antimicribial interpretation, see `?portion`
 * Using `portion_*` functions now throws a warning when total available isolate is below parameter `minimum`
-* Functions `as.mo`, `as.rsi` and `as.mic` will not set package name as attribute anymore
+* Functions `as.mo`, `as.rsi`, `as.mic` and `as.atc` will not set package name as attribute anymore
 * Data set `septic_patients` is now a `data.frame`, not a tibble anymore
 * Check for `hms::is.hms` in frequency tables (`freq()`)
 * New parameter `header` for frequency tables to turn them off (default when `markdown = TRUE`)
+* Freq now prints in markdown at default in non-interactive sessions
 * Removed diacritics from all authors (columns `microorganisms$ref` and `microorganisms.old$ref`) to comply with CRAN policy to only allow ASCII characters
 * Fix for `mo_property` not working properly
 * Fix for `EUCAST_rules` where some Streptococci would become ceftazidime R in EUCAST rule 4.5
 * Support for class `difftime` in frequency tables
 * Support for named vectors of class `mo`, useful for `top_freq()`
+* `ggplot_rsi` and `scale_y_percent` have `breaks` parameter
 * AI improvements for `as.mo`:
   * `"CRS"` -> *Stenotrophomonas maltophilia*
   * `"CRSM"` -> *Stenotrophomonas maltophilia*
   * `"MSSA"` -> *Staphylococcus aureus*
   * `"MSSE"` -> *Staphylococcus epidermidis*
 * Fix for `join` functions
-* In `g.test`, when `sum(x)` is below 1000, suggest Fisher's Exact Test
+* In `g.test`, when `sum(x)` is below 1000 or any of the expected values is below 5, Fisher's Exact Test will be suggested
+* `ab_name` will try to fall back on `as.atc` when no results are found
 
 #### Other
 * New dependency on package `crayon`, to support formatted text in the console
+* Dependency `tidyr` is now mandatory (went to `Import` field) since `portion_df` and `count_df` rely on it
 * Updated vignettes to comply with README
 
 

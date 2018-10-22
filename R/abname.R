@@ -133,18 +133,19 @@ abname <- function(abcode,
       abcode[i] <- abx[which(abx[,from] == abcode[i]),] %>% pull(to) %>% .[1]
     }
 
-    # when nothing found, try first chars of official name
-    # if (is.na(abcode[i])) {
-    #   abcode[i] <- antibiotics %>%
-    #     filter(official %like% paste0('^', abcode.bak[i])) %>%
-    #     pull(to) %>%
-    #     .[1]
-    #   next
-    # }
-
     if (is.na(abcode[i]) | length(abcode[i] == 0)) {
-      abcode[i] <- abcode.bak[i]
-      warning('Code "', abcode.bak[i], '" not found in antibiotics list.', call. = FALSE)
+      # try as.atc
+      try(suppressWarnings(
+        abcode[i] <- as.atc(abcode[i])
+      ), silent = TRUE)
+      if (is.na(abcode[i])) {
+        # still not found
+        abcode[i] <- abcode.bak[i]
+        warning('Code "', abcode.bak[i], '" not found in antibiotics list.', call. = FALSE)
+      } else {
+        # fill in the found ATC code
+        abcode[i] <- abname(abcode[i], from = "atc", to = to)
+      }
     }
   }
 

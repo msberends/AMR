@@ -33,6 +33,7 @@ In the ATC classification system, the active substances are classified in a hier
 as.atc("J01FA01")
 as.atc("Erythromycin")
 as.atc("eryt")
+as.atc("   eryt 123")
 as.atc("ERYT")
 as.atc("ERY")
 as.atc("Erythrocin") # Trade name

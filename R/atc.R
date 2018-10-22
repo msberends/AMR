@@ -37,6 +37,7 @@
 #' as.atc("J01FA01")
 #' as.atc("Erythromycin")
 #' as.atc("eryt")
+#' as.atc("   eryt 123")
 #' as.atc("ERYT")
 #' as.atc("ERY")
 #' as.atc("Erythrocin") # Trade name
@@ -50,6 +51,10 @@
 as.atc <- function(x) {
 
   x.new <- rep(NA_character_, length(x))
+  x <- trimws(x, which = "both")
+  # keep only a-z when it's not an ATC code
+  x[!x %like% "[A-Z][0-9]{2}[A-Z]{2}[0-9]{2}"] <- gsub("[^a-zA-Z]+", "", x[!x %like% "[A-Z][0-9]{2}[A-Z]{2}[0-9]{2}"])
+
   x.bak <- x
   x <- unique(x[!is.na(x)])
   failures <- character(0)
@@ -64,7 +69,7 @@ as.atc <- function(x) {
       x.new[is.na(x.new) & x.bak == x[i]] <- found[1L]
     }
 
-    # try ATC in code form, even if it does not exist in the antibiotics data set YET
+    # try ATC in ATC code form, even if it does not exist in the antibiotics data set YET
     if (length(found) == 0 & x[i] %like% '[A-Z][0-9][0-9][A-Z][A-Z][0-9][0-9]') {
       warning("ATC code ", x[i], " is not yet in the `antibiotics` data set.")
       fail <- FALSE
@@ -134,7 +139,6 @@ as.atc <- function(x) {
             call. = FALSE)
   }
   class(x.new) <- "atc"
-  attr(x.new, 'package') <- 'AMR'
   x.new
 }
 

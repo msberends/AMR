@@ -9,12 +9,12 @@
 \usage{
 frequency_tbl(x, ..., sort.count = TRUE,
   nmax = getOption("max.print.freq"), na.rm = TRUE, row.names = TRUE,
-  markdown = FALSE, digits = 2, quote = FALSE, header = !markdown,
-  sep = " ")
+  markdown = !interactive(), digits = 2, quote = FALSE,
+  header = !markdown, sep = " ")
 
 freq(x, ..., sort.count = TRUE, nmax = getOption("max.print.freq"),
-  na.rm = TRUE, row.names = TRUE, markdown = FALSE, digits = 2,
-  quote = FALSE, header = !markdown, sep = " ")
+  na.rm = TRUE, row.names = TRUE, markdown = !interactive(),
+  digits = 2, quote = FALSE, header = !markdown, sep = " ")
 
 top_freq(f, n)
 
@@ -30,13 +30,13 @@ top_freq(f, n)
 
 \item{nmax}{number of row to print. The default, \code{15}, uses \code{\link{getOption}("max.print.freq")}. Use \code{nmax = 0}, \code{nmax = Inf}, \code{nmax = NULL} or \code{nmax = NA} to print all rows.}
 
-\item{na.rm}{a logical value indicating whether \code{NA} values should be removed from the frequency table. The header_txt will always print the amount of \code{NA}s.}
+\item{na.rm}{a logical value indicating whether \code{NA} values should be removed from the frequency table. The header will always print the amount of \code{NA}s.}
 
 \item{row.names}{a logical value indicating whether row indices should be printed as \code{1:nrow(x)}}
 
-\item{markdown}{print table in markdown format (this forces \code{nmax = NA})}
+\item{markdown}{a logical value indicating whether the frequency table should be printed in markdown format. This will print all rows and is default behaviour in non-interactive R sessions (like when knitting RMarkdown files).}
 
-\item{digits}{how many significant digits are to be used for numeric values in the header_txt (not for the items themselves, that depends on \code{\link{getOption}("digits")})}
+\item{digits}{how many significant digits are to be used for numeric values in the header (not for the items themselves, that depends on \code{\link{getOption}("digits")})}
 
 \item{quote}{a logical value indicating whether or not strings should be printed with surrounding quotes}
 
@@ -57,7 +57,7 @@ Create a frequency table of a vector with items or a data frame. Supports quasiq
 \details{
 Frequency tables (or frequency distributions) are summaries of the distribution of values in a sample. With the `freq` function, you can create univariate frequency tables. Multiple variables will be pasted into one variable, so it forces a univariate distribution. This package also has a vignette available to explain the use of this function further, run \code{browseVignettes("AMR")} to read it.
 
-For numeric values of any class, these additional values will all be calculated with \code{na.rm = TRUE} and shown into the header_txt:
+For numeric values of any class, these additional values will all be calculated with \code{na.rm = TRUE} and shown into the header:
 \itemize{
   \item{Mean, using \code{\link[base]{mean}}}
   \item{Standard Deviation, using \code{\link[stats]{sd}}}
@@ -69,7 +69,7 @@ For numeric values of any class, these additional values will all be calculated 
   \item{Outliers (total count and unique count), using \code{\link[grDevices]{boxplot.stats}}}
 }
 
-For dates and times of any class, these additional values will be calculated with \code{na.rm = TRUE} and shown into the header_txt:
+For dates and times of any class, these additional values will be calculated with \code{na.rm = TRUE} and shown into the header:
 \itemize{
   \item{Oldest, using \code{\link{min}}}
   \item{Newest, using \code{\link{max}}, with difference between newest and oldest}
@@ -153,14 +153,6 @@ table(septic_patients$gender,
 # check differences between frequency tables
 diff(freq(septic_patients$trim),
      freq(septic_patients$trsu))
-
-\dontrun{
-# send frequency table to clipboard (e.g. for pasting in Excel)
-septic_patients \%>\%
-  freq(age) \%>\%
-  format() \%>\%       # this will format the percentages
-  clipboard_export()
-}
 }
 \keyword{freq}
 \keyword{frequency}
