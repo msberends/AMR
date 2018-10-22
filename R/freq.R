@@ -543,8 +543,11 @@ print.frequency_tbl <- function(x, nmax = getOption("max.print.freq", default = 
 
   title <- paste("Frequency table", title)
 
+  # bold title
   if (opt$tbl_format == "pandoc") {
-    title <- bold(title) # only bold in regular printing
+    title <- bold(title)
+  } else if (opt$tbl_format == "markdown") {
+   title <- paste0("**", title, "**")
   }
 
   if (opt$header == TRUE) {
