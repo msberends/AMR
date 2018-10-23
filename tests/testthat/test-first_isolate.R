@@ -119,10 +119,17 @@ test_that("first isolates work", {
 
   # errors
   expect_error(first_isolate("date", "patient_id", col_mo = "mo"))
-  expect_error(first_isolate(septic_patients))
   expect_error(first_isolate(septic_patients,
                              col_date = "non-existing col",
                              col_mo = "mo"))
+
+  # look for columns itself
+  expect_message(first_isolate(septic_patients))
+  expect_message(first_isolate(septic_patients %>%
+                                 mutate(mo = as.character(mo)) %>%
+                                 left_join_microorganisms(),
+                               col_genus = "genus",
+                               col_species = "species"))
 
   # if mo is not an mo class, result should be the same
   expect_identical(septic_patients %>%

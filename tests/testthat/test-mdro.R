@@ -20,7 +20,7 @@ test_that("MDRO works", {
 
   # septic_patients should have these finding using Dutch guidelines
   expect_equal(outcome %>% freq() %>% pull(count),
-               c(2, 14)) # 2 unconfirmed, 14 positive
+               c(1167, 817, 14, 2)) # 1167 not eval., 817 neg, 14 pos, 2 unconfirmed
 
   expect_equal(BRMO(septic_patients, info = FALSE), MDRO(septic_patients, "nl", info = FALSE))
 

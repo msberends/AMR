@@ -10,11 +10,12 @@
 frequency_tbl(x, ..., sort.count = TRUE,
   nmax = getOption("max.print.freq"), na.rm = TRUE, row.names = TRUE,
   markdown = !interactive(), digits = 2, quote = FALSE,
-  header = !markdown, sep = " ")
+  header = !markdown, na = "<NA>", sep = " ")
 
 freq(x, ..., sort.count = TRUE, nmax = getOption("max.print.freq"),
   na.rm = TRUE, row.names = TRUE, markdown = !interactive(),
-  digits = 2, quote = FALSE, header = !markdown, sep = " ")
+  digits = 2, quote = FALSE, header = !markdown, na = "<NA>",
+  sep = " ")
 
 top_freq(f, n)
 
@@ -30,7 +31,7 @@ top_freq(f, n)
 
 \item{nmax}{number of row to print. The default, \code{15}, uses \code{\link{getOption}("max.print.freq")}. Use \code{nmax = 0}, \code{nmax = Inf}, \code{nmax = NULL} or \code{nmax = NA} to print all rows.}
 
-\item{na.rm}{a logical value indicating whether \code{NA} values should be removed from the frequency table. The header will always print the amount of \code{NA}s.}
+\item{na.rm}{a logical value indicating whether \code{NA} values should be removed from the frequency table. The header (if set) will always print the amount of \code{NA}s.}
 
 \item{row.names}{a logical value indicating whether row indices should be printed as \code{1:nrow(x)}}
 
@@ -41,6 +42,8 @@ top_freq(f, n)
 \item{quote}{a logical value indicating whether or not strings should be printed with surrounding quotes}
 
 \item{header}{a logical value indicating whether an informative header should be printed}
+
+\item{na}{a character string to should be used to show empty (\code{NA}) values (only useful when \code{na.rm = FALSE})}
 
 \item{sep}{a character string to separate the terms when selecting multiple columns}
 

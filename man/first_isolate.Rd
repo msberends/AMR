@@ -7,22 +7,23 @@
 Methodology of this function is based on: \strong{M39 Analysis and Presentation of Cumulative Antimicrobial Susceptibility Test Data, 4th Edition}, 2014, \emph{Clinical and Laboratory Standards Institute (CLSI)}. \url{https://clsi.org/standards/products/microbiology/documents/m39/}.
 }
 \usage{
-first_isolate(tbl, col_date, col_patient_id, col_mo = NA,
-  col_testcode = NA, col_specimen = NA, col_icu = NA,
-  col_keyantibiotics = NA, episode_days = 365,
-  testcodes_exclude = "", icu_exclude = FALSE, filter_specimen = NA,
-  output_logical = TRUE, type = "keyantibiotics", ignore_I = TRUE,
-  points_threshold = 2, info = TRUE, col_bactid = NA,
-  col_genus = NA, col_species = NA)
+first_isolate(tbl, col_date = NULL, col_patient_id = NULL,
+  col_mo = NULL, col_testcode = NULL, col_specimen = NULL,
+  col_icu = NULL, col_keyantibiotics = NULL, episode_days = 365,
+  testcodes_exclude = NULL, icu_exclude = FALSE,
+  filter_specimen = NULL, output_logical = TRUE,
+  type = "keyantibiotics", ignore_I = TRUE, points_threshold = 2,
+  info = TRUE, col_bactid = NULL, col_genus = NULL,
+  col_species = NULL)
 }
 \arguments{
 \item{tbl}{a \code{data.frame} containing isolates.}
 
-\item{col_date}{column name of the result date (or date that is was received on the lab)}
+\item{col_date}{column name of the result date (or date that is was received on the lab), defaults to the first column of class \code{Date}}
 
-\item{col_patient_id}{column name of the unique IDs of the patients}
+\item{col_patient_id}{column name of the unique IDs of the patients, defaults to the first column that starts with 'patient' (case insensitive)}
 
-\item{col_mo}{column name of the unique IDs of the microorganisms, see \code{\link{mo}}. If this column has another class than \code{"mo"}, values will be coerced using \code{\link{as.mo}}.}
+\item{col_mo}{column name of the unique IDs of the microorganisms (see \code{\link{mo}}), defaults to the first column of class \code{mo}. If this column has another class than \code{"mo"}, values will be coerced using \code{\link{as.mo}}.}
 
 \item{col_testcode}{column name of the test codes. Use \code{col_testcode = NA} to \strong{not} exclude certain test codes (like test codes for screening). In that case \code{testcodes_exclude} will be ignored. Supports tidyverse-like quotation.}
 

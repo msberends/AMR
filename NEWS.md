@@ -17,17 +17,20 @@
 * Fix for `portion_*(..., as_percent = TRUE)` when minimal amount of isolates would not be met
 * Added parameter `also_single_tested` for `portion_*` and `count_*` functions to also include cases where not all antibiotics were tested but at least one of the tested antibiotics includes the target antimicribial interpretation, see `?portion`
 * Using `portion_*` functions now throws a warning when total available isolate is below parameter `minimum`
-* Functions `as.mo`, `as.rsi`, `as.mic` and `as.atc` will not set package name as attribute anymore
+* Functions `as.mo`, `as.rsi`, `as.mic`, `as.atc` and `freq` will not set package name as attribute anymore
+* Frequency tables - `freq()`:
+  * Check for `hms::is.hms` in frequency tables (`freq()`)
+  * Now prints in markdown at default in non-interactive sessions
+  * No longer adds the factor level column and sorts factors on count again
+  * Gained `na` parameter, to choose with character to print for empty values
+  * Support for class `difftime`
+  * New parameter `header` to turn it off (default when `markdown = TRUE`)
+* `first_isolate` now tries to find columns to use as input when parameters are left blank
+* Improvement for MDRO algorithm
 * Data set `septic_patients` is now a `data.frame`, not a tibble anymore
-* Check for `hms::is.hms` in frequency tables (`freq()`)
-* New parameter `header` for frequency tables to turn them off (default when `markdown = TRUE`)
-* Freq now prints in markdown at default in non-interactive sessions
-* Freq no longer add the factor level column and sorts factors on count again
 * Removed diacritics from all authors (columns `microorganisms$ref` and `microorganisms.old$ref`) to comply with CRAN policy to only allow ASCII characters
-* Freq gained `na` parameter, to choose with character to print for empty values
 * Fix for `mo_property` not working properly
 * Fix for `EUCAST_rules` where some Streptococci would become ceftazidime R in EUCAST rule 4.5
-* Support for class `difftime` in frequency tables
 * Support for named vectors of class `mo`, useful for `top_freq()`
 * `ggplot_rsi` and `scale_y_percent` have `breaks` parameter
 * AI improvements for `as.mo`:

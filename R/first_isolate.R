@@ -20,9 +20,9 @@
 #'
 #' Determine first (weighted) isolates of all microorganisms of every patient per episode and (if needed) per specimen type.
 #' @param tbl a \code{data.frame} containing isolates.
-#' @param col_date column name of the result date (or date that is was received on the lab)
-#' @param col_patient_id column name of the unique IDs of the patients
-#' @param col_mo column name of the unique IDs of the microorganisms, see \code{\link{mo}}. If this column has another class than \code{"mo"}, values will be coerced using \code{\link{as.mo}}.
+#' @param col_date column name of the result date (or date that is was received on the lab), defaults to the first column of class \code{Date}
+#' @param col_patient_id column name of the unique IDs of the patients, defaults to the first column that starts with 'patient' (case insensitive)
+#' @param col_mo column name of the unique IDs of the microorganisms (see \code{\link{mo}}), defaults to the first column of class \code{mo}. If this column has another class than \code{"mo"}, values will be coerced using \code{\link{as.mo}}.
 #' @param col_testcode column name of the test codes. Use \code{col_testcode = NA} to \strong{not} exclude certain test codes (like test codes for screening). In that case \code{testcodes_exclude} will be ignored. Supports tidyverse-like quotation.
 #' @param col_specimen column name of the specimen type or group
 #' @param col_icu column name of the logicals (\code{TRUE}/\code{FALSE}) whether a ward or department is an Intensive Care Unit (ICU)
@@ -125,34 +125,55 @@
 #'                 col_keyantibiotics = 'keyab')
 #' }
 first_isolate <- function(tbl,
-                          col_date,
-                          col_patient_id,
-                          col_mo = NA,
-                          col_testcode = NA,
-                          col_specimen = NA,
-                          col_icu = NA,
-                          col_keyantibiotics = NA,
+                          col_date = NULL,
+                          col_patient_id = NULL,
+                          col_mo = NULL,
+                          col_testcode = NULL,
+                          col_specimen = NULL,
+                          col_icu = NULL,
+                          col_keyantibiotics = NULL,
                           episode_days = 365,
-                          testcodes_exclude = '',
+                          testcodes_exclude = NULL,
                           icu_exclude = FALSE,
-                          filter_specimen = NA,
+                          filter_specimen = NULL,
                           output_logical = TRUE,
                           type = "keyantibiotics",
                           ignore_I = TRUE,
                           points_threshold = 2,
                           info = TRUE,
-                          col_bactid = NA,
-                          col_genus = NA,
-                          col_species = NA) {
+                          col_bactid = NULL,
+                          col_genus = NULL,
+                          col_species = NULL) {
 
-  if (!is.na(col_bactid)) {
+  if (!is.data.frame(tbl)) {
+    stop("`tbl` must be a data frame.", call. = FALSE)
+  }
+
+  # try to find columns based on type
+  # -- mo
+  if (!is.null(col_bactid)) {
     col_mo <- col_bactid
     warning("Use of `col_bactid` is deprecated. Use `col_mo` instead.")
+  } else if (is.null(col_mo) & "mo" %in% lapply(tbl, class)) {
+    col_mo <- colnames(tbl)[lapply(tbl, class) == "mo"]
+    message("NOTE: Using column `", col_mo, "` as input for `col_mo`.")
   }
+  # -- date
+  if (is.null(col_date) & "Date" %in% lapply(tbl, class)) {
+    col_date <- colnames(tbl)[lapply(tbl, class) == "Date"]
+    message("NOTE: Using column `", col_date, "` as input for `col_date`.")
+  }
+  # -- patient id
+  if (is.null(col_patient_id) & any(colnames(tbl) %like% "^patient")) {
+    col_patient_id <- colnames(tbl)[colnames(tbl) %like% "^patient"][1]
+    message("NOTE: Using column `", col_patient_id, "` as input for `col_patient_id`.")
+  }
+
   # bactid OR genus+species must be available
-  if (is.na(col_mo) & (is.na(col_genus) | is.na(col_species))) {
+  if (is.null(col_mo) & (is.null(col_genus) | is.null(col_species))) {
     stop('`col_mo` or both `col_genus` and `col_species` must be available.')
   }
+
 
   # check if columns exist
   check_columns_existance <- function(column, tblname = tbl) {
@@ -160,7 +181,7 @@ first_isolate <- function(tbl,
       stop('Please check tbl for existance.')
     }
 
-    if (!is.na(column)) {
+    if (!is.null(column)) {
       if (!(column %in% colnames(tblname))) {
         stop('Column `', column, '` not found.')
       }
@@ -176,7 +197,7 @@ first_isolate <- function(tbl,
   check_columns_existance(col_icu)
   check_columns_existance(col_keyantibiotics)
 
-  if (!is.na(col_mo)) {
+  if (!is.null(col_mo)) {
     if (!tbl %>% pull(col_mo) %>% is.mo()) {
       tbl[, col_mo] <- as.mo(tbl[, col_mo])
     }
@@ -186,41 +207,37 @@ first_isolate <- function(tbl,
     col_species <- "species"
   }
 
-  if (is.na(col_testcode)) {
-    testcodes_exclude <- NA
+  if (is.null(col_testcode)) {
+    testcodes_exclude <- NULL
   }
   # remove testcodes
-  if (!is.na(testcodes_exclude[1]) & testcodes_exclude[1] != '' & info == TRUE) {
+  if (!is.null(testcodes_exclude) & info == TRUE) {
     cat('[Criteria] Excluded test codes:\n', toString(testcodes_exclude), '\n')
   }
 
-  if (is.na(col_icu)) {
+  if (is.null(col_icu)) {
     icu_exclude <- FALSE
   } else {
     tbl <- tbl %>%
       mutate(col_icu = tbl %>% pull(col_icu) %>% as.logical())
   }
 
-  if (is.na(col_specimen)) {
-    filter_specimen <- ''
+  if (is.null(col_specimen)) {
+    filter_specimen <- NULL
   }
 
   # filter on specimen group and keyantibiotics when they are filled in
-  if (!is.na(filter_specimen) & filter_specimen != '') {
+  if (!is.null(filter_specimen)) {
     check_columns_existance(col_specimen, tbl)
     if (info == TRUE) {
       cat('[Criteria] Excluded other than specimen group \'', filter_specimen, '\'\n', sep = '')
     }
-  } else {
-    filter_specimen <- ''
   }
-  if (col_keyantibiotics %in% c(NA, '')) {
-    col_keyantibiotics <- ''
-  } else {
+  if (!is.null(col_keyantibiotics)) {
     tbl <- tbl %>% mutate(key_ab = tbl %>% pull(col_keyantibiotics))
   }
 
-  if (is.na(testcodes_exclude[1])) {
+  if (is.null(testcodes_exclude)) {
     testcodes_exclude <- ''
   }
 
@@ -234,10 +251,10 @@ first_isolate <- function(tbl,
     mutate(species = if_else(is.na(species) | species == "(no MO)", "", species),
            genus = if_else(is.na(genus) | genus == "(no MO)", "", genus))
 
-  if (filter_specimen == '') {
-
+  if (is.null(filter_specimen)) {
+    # not filtering on specimen
     if (icu_exclude == FALSE) {
-      if (info == TRUE & !is.na(col_icu)) {
+      if (info == TRUE & !is.null(col_icu)) {
         cat('[Criteria] Included isolates from ICU.\n')
       }
       tbl <- tbl %>%
@@ -267,9 +284,9 @@ first_isolate <- function(tbl,
     }
 
   } else {
-    # sort on specimen and only analyse these row to save time
+    # filtering on specimen and only analyse these row to save time
     if (icu_exclude == FALSE) {
-      if (info == TRUE & !is.na(col_icu)) {
+      if (info == TRUE & !is.null(col_icu)) {
         cat('[Criteria] Included isolates from ICU.\n')
       }
       tbl <- tbl %>%
@@ -344,7 +361,7 @@ first_isolate <- function(tbl,
                                0))
 
   weighted.notice <- ''
-  if (col_keyantibiotics != '') {
+  if (!is.null(col_keyantibiotics)) {
     weighted.notice <- 'weighted '
     if (info == TRUE) {
       if (type == 'keyantibiotics') {
@@ -402,7 +419,7 @@ first_isolate <- function(tbl,
   # first one as TRUE
   all_first[row.start, 'real_first_isolate'] <- TRUE
   # no tests that should be included, or ICU
-  if (!is.na(col_testcode)) {
+  if (!is.null(col_testcode)) {
     all_first[which(all_first[, col_testcode] %in% tolower(testcodes_exclude)), 'real_first_isolate'] <- FALSE
   }
   if (icu_exclude == TRUE) {
