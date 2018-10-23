@@ -9,7 +9,7 @@ gitlab:
     # - R CMD build . --no-build-vignettes --no-manual
     # - PKG_FILE_NAME=$(ls -1t *.tar.gz | head -n 1)
     # - R CMD check "${PKG_FILE_NAME}" --no-manual --as-cran
-    - R -e "install.packages('backports', 'curl', 'crayon', 'data', 'dplyr', 'hms', 'knitr', 'rlang', 'rvest', 'tidyr', 'xml2', 'covr', 'ggplot2', 'rmarkdown', 'rstudioapi', 'testthat')"
+    - R -e "install.packages(c('backports', 'curl', 'crayon', 'data', 'dplyr', 'hms', 'knitr', 'rlang', 'rvest', 'tidyr', 'xml2', 'covr', 'ggplot2', 'rmarkdown', 'rstudioapi', 'testthat'))"
     - R CMD build . --no-build-vignettes --no-manual
     - PKG_FILE_NAME=$(ls -1t *.tar.gz | head -n 1)
     - R CMD check "${PKG_FILE_NAME}" --no-build-vignettes --no-manual --as-cran
