@@ -67,13 +67,7 @@
 #'   # get bacteria properties like genus and species
 #'   left_join_microorganisms("mo") %>%
 #'   # calculate first isolates
-#'   mutate(first_isolate =
-#'            first_isolate(.,
-#'                          "date",
-#'                          "patient_id",
-#'                          "mo",
-#'                          col_specimen = NA,
-#'                          col_icu = NA)) %>%
+#'   mutate(first_isolate = first_isolate(.)) %>%
 #'   # filter on first E. coli isolates
 #'   filter(genus == "Escherichia",
 #'          species == "coli",

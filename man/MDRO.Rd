@@ -7,7 +7,7 @@
 \alias{EUCAST_exceptional_phenotypes}
 \title{Determine multidrug-resistant organisms (MDRO)}
 \usage{
-MDRO(tbl, country = NULL, col_mo = "mo", info = TRUE,
+MDRO(tbl, country = NULL, col_mo = NULL, info = TRUE,
   amcl = "amcl", amik = "amik", amox = "amox", ampi = "ampi",
   azit = "azit", aztr = "aztr", cefa = "cefa", cfra = "cfra",
   cfep = "cfep", cfot = "cfot", cfox = "cfox", cfta = "cfta",
@@ -22,8 +22,7 @@ MDRO(tbl, country = NULL, col_mo = "mo", info = TRUE,
   peni = "peni", pita = "pita", poly = "poly", qida = "qida",
   rifa = "rifa", roxi = "roxi", siso = "siso", teic = "teic",
   tetr = "tetr", tica = "tica", tige = "tige", tobr = "tobr",
-  trim = "trim", trsu = "trsu", vanc = "vanc",
-  col_bactid = "bactid")
+  trim = "trim", trsu = "trsu", vanc = "vanc", col_bactid = NULL)
 
 BRMO(tbl, country = "nl", ...)
 

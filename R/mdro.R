@@ -329,11 +329,6 @@ MDRO <- function(tbl,
       & rowSums(tbl[, aminoglycosides] == 'R', na.rm = TRUE) >= 1
       & rowSums(tbl[, fluoroquinolones] == 'R', na.rm = TRUE) >= 1
     ), 'MDRO'] <- 4
-    a <<- tbl[which(
-      tbl$family == 'Enterobacteriaceae'
-      & rowSums(tbl[, aminoglycosides] == 'R', na.rm = TRUE) >= 1
-      & rowSums(tbl[, fluoroquinolones] == 'R', na.rm = TRUE) >= 1
-    ), ]
     tbl[which(
       tbl$family == 'Enterobacteriaceae'
       & rowSums(tbl[, carbapenems] == 'R', na.rm = TRUE) >= 1

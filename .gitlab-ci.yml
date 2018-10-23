@@ -1,6 +1,10 @@
-image: jangorecki/r-base-dev
+# from https://stackoverflow.com/questions/51866926
+image: rocker/r-base
 test:
-  script:
+   script:
+    - apt-get update
+    - apt-get install --yes --no-install-recommends r-cran-testthat r-cran-devtools
+    - R -e "devtools::install_deps()"
     - R CMD build . --no-build-vignettes --no-manual
     - PKG_FILE_NAME=$(ls -1t *.tar.gz | head -n 1)
-    - R CMD check "${PKG_FILE_NAME}" --no-build-vignettes --no-manual --as-cran 
+    - R CMD check "${PKG_FILE_NAME}" --no-build-vignettes --no-manual
