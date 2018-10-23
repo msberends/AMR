@@ -3,6 +3,7 @@
 image: rocker/r-base
 gitlab:
    script:
+    - atp-get update
     - apt-get install --yes libssl-dev libcurl4-openssl-dev libxml2-dev
     - R -e "install.packages(c('backports', 'curl', 'crayon', 'data', 'dplyr', 'hms', 'knitr', 'rlang', 'rvest', 'tidyr', 'xml2', 'covr', 'ggplot2', 'rmarkdown', 'rstudioapi', 'testthat'))"
     - R CMD build . --no-build-vignettes --no-manual
