@@ -23,12 +23,13 @@
 #' @param ... up to nine different columns of \code{x} when \code{x} is a \code{data.frame} or \code{tibble}, to calculate frequencies from - see Examples
 #' @param sort.count sort on count, i.e. frequencies. This will be \code{TRUE} at default for everything except for factors.
 #' @param nmax number of row to print. The default, \code{15}, uses \code{\link{getOption}("max.print.freq")}. Use \code{nmax = 0}, \code{nmax = Inf}, \code{nmax = NULL} or \code{nmax = NA} to print all rows.
-#' @param na.rm a logical value indicating whether \code{NA} values should be removed from the frequency table. The header will always print the amount of \code{NA}s.
+#' @param na.rm a logical value indicating whether \code{NA} values should be removed from the frequency table. The header (if set) will always print the amount of \code{NA}s.
 #' @param row.names a logical value indicating whether row indices should be printed as \code{1:nrow(x)}
 #' @param markdown a logical value indicating whether the frequency table should be printed in markdown format. This will print all rows and is default behaviour in non-interactive R sessions (like when knitting RMarkdown files).
 #' @param digits how many significant digits are to be used for numeric values in the header (not for the items themselves, that depends on \code{\link{getOption}("digits")})
 #' @param quote a logical value indicating whether or not strings should be printed with surrounding quotes
 #' @param header a logical value indicating whether an informative header should be printed
+#' @param na a character string to should be used to show empty (\code{NA}) values (only useful when \code{na.rm = FALSE})
 #' @param sep a character string to separate the terms when selecting multiple columns
 #' @param f a frequency table
 #' @param n number of top \emph{n} items to return, use -n for the bottom \emph{n} items. It will include more than \code{n} rows if there are ties.
@@ -150,6 +151,7 @@ frequency_tbl <- function(x,
                           digits = 2,
                           quote = FALSE,
                           header = !markdown,
+                          na = "<NA>",
                           sep = " ") {
 
   mult.columns <- 0
@@ -197,7 +199,7 @@ frequency_tbl <- function(x,
     # now this DF contains 3 columns: the 2 vars and a Freq column
     # paste the first 2 cols and repeat them Freq times:
     x <- rep(x = do.call(paste, c(x[colnames(x)[1:2]], sep = sep)),
-              times = x$Freq)
+             times = x$Freq)
     x.name <- "a `table` object"
     cols <- NULL
     #mult.columns <- 2
@@ -229,9 +231,8 @@ frequency_tbl <- function(x,
     class(x) <- x_class
   }
 
-  if (missing(sort.count) & 'factor' %in% class(x)) {
-    # sort on factor level at default when x is a factor and sort.count is not set
-    sort.count <- FALSE
+  if (sort.count == FALSE & 'factor' %in% class(x)) {
+    # warning("Sorting a factor sorts on factor level, not necessarily alphabetically.", call. = FALSE)
   }
 
   header_txt <- character(0)
@@ -260,11 +261,11 @@ frequency_tbl <- function(x,
   }
 
   header_txt <- header_txt %>% paste0(markdown_line, '\nLength:    ', (NAs %>% length() + x %>% length()) %>% format(),
-                              ' (of which NA: ', NAs %>% length() %>% format() %>% NAs_to_red(),
-                              ' = ', (NAs %>% length() / (NAs %>% length() + x %>% length())) %>%
-                                percent(force_zero = TRUE, round = digits) %>%
-                                sub('NaN', '0', ., fixed = TRUE) %>%
-                                NAs_to_red(), ')')
+                                      ' (of which NA: ', NAs %>% length() %>% format() %>% NAs_to_red(),
+                                      ' = ', (NAs %>% length() / (NAs %>% length() + x %>% length())) %>%
+                                        percent(force_zero = TRUE, round = digits) %>%
+                                        sub('NaN', '0', ., fixed = TRUE) %>%
+                                        NAs_to_red(), ')')
   header_txt <- header_txt %>% paste0(markdown_line, '\nUnique:    ', x %>% n_distinct() %>% format())
 
   if (NROW(x) > 0 & any(class(x) == "character")) {
@@ -287,11 +288,11 @@ frequency_tbl <- function(x,
     header_txt <- header_txt %>% paste0('\n')
     header_txt <- header_txt %>% paste(markdown_line, '\nMean:     ', x %>% base::mean(na.rm = TRUE) %>% format(digits = digits))
     header_txt <- header_txt %>% paste0(markdown_line, '\nStd. dev.: ', x %>% stats::sd(na.rm = TRUE) %>% format(digits = digits),
-                                ' (CV: ', x %>% cv(na.rm = TRUE) %>% format(digits = digits),
-                                ', MAD: ', x %>% stats::mad(na.rm = TRUE) %>% format(digits = digits), ')')
+                                        ' (CV: ', x %>% cv(na.rm = TRUE) %>% format(digits = digits),
+                                        ', MAD: ', x %>% stats::mad(na.rm = TRUE) %>% format(digits = digits), ')')
     header_txt <- header_txt %>% paste0(markdown_line, '\nFive-Num:  ', Tukey_five %>% format(digits = digits) %>% trimws() %>% paste(collapse = ' | '),
-                                ' (IQR: ', (Tukey_five[4] - Tukey_five[2]) %>% format(digits = digits),
-                                ', CQV: ', x %>% cqv(na.rm = TRUE) %>% format(digits = digits), ')')
+                                        ' (IQR: ', (Tukey_five[4] - Tukey_five[2]) %>% format(digits = digits),
+                                        ', CQV: ', x %>% cqv(na.rm = TRUE) %>% format(digits = digits), ')')
     outlier_length <- length(boxplot.stats(x)$out)
     header_txt <- header_txt %>% paste0(markdown_line, '\nOutliers:  ', outlier_length)
     if (outlier_length > 0) {
@@ -300,14 +301,14 @@ frequency_tbl <- function(x,
   }
   if (NROW(x) > 0 & any(class(x) == "rsi")) {
     header_txt <- header_txt %>% paste0('\n')
-    cnt_S <- sum(x == "S")
-    cnt_I <- sum(x == "I")
-    cnt_R <- sum(x == "R")
+    cnt_S <- sum(x == "S", na.rm = TRUE)
+    cnt_I <- sum(x == "I", na.rm = TRUE)
+    cnt_R <- sum(x == "R", na.rm = TRUE)
     header_txt <- header_txt %>% paste(markdown_line, '\n%IR:      ',
-                               ((cnt_I + cnt_R) / sum(!is.na(x))) %>% percent(force_zero = TRUE, round = digits))
+                                       ((cnt_I + cnt_R) / sum(!is.na(x), na.rm = TRUE)) %>% percent(force_zero = TRUE, round = digits))
     header_txt <- header_txt %>% paste0(markdown_line, '\nRatio SIR: 1.0 : ',
-                                (cnt_I / cnt_S) %>% format(digits = 1, nsmall = 1), " : ",
-                                (cnt_R / cnt_S) %>% format(digits = 1, nsmall = 1))
+                                        (cnt_I / cnt_S) %>% format(digits = 1, nsmall = 1), " : ",
+                                        (cnt_R / cnt_S) %>% format(digits = 1, nsmall = 1))
   }
 
   formatdates <- "%e %B %Y" # = d mmmm yyyy
@@ -327,15 +328,15 @@ frequency_tbl <- function(x,
       # hms
       header_txt <- header_txt %>% paste0(markdown_line, '\nEarliest:  ', mindate %>% format(formatdates) %>% trimws())
       header_txt <- header_txt %>% paste0(markdown_line, '\nLatest:    ', maxdate %>% format(formatdates) %>% trimws(),
-                                  ' (+', difftime(maxdate, mindate, units = 'mins') %>% as.double() %>% format(digits = digits), ' min.)')
+                                          ' (+', difftime(maxdate, mindate, units = 'mins') %>% as.double() %>% format(digits = digits), ' min.)')
     } else {
       # other date formats
       header_txt <- header_txt %>% paste0(markdown_line, '\nOldest:    ', mindate %>% format(formatdates) %>% trimws())
       header_txt <- header_txt %>% paste0(markdown_line, '\nNewest:    ', maxdate %>% format(formatdates) %>% trimws(),
-                                  ' (+', difftime(maxdate, mindate, units = 'auto') %>% as.double() %>% format(digits = digits), ')')
+                                          ' (+', difftime(maxdate, mindate, units = 'auto') %>% as.double() %>% format(digits = digits), ')')
     }
     header_txt <- header_txt %>% paste0(markdown_line, '\nMedian:    ', mediandate %>% format(formatdates) %>% trimws(),
-                                ' (~', percent(median_days / maxdate_days, round = 0), ')')
+                                        ' (~', percent(median_days / maxdate_days, round = 0), ')')
   }
   if (any(class(x) == 'POSIXlt')) {
     x <- x %>% format(formatdates)
@@ -354,23 +355,14 @@ frequency_tbl <- function(x,
   }
 
   # create table with counts and percentages
-  column_names <- c('Item', 'Count', 'Percent', 'Cum. Count', 'Cum. Percent', '(Factor Level)')
-  column_names_df <- c('item', 'count', 'percent', 'cum_count', 'cum_percent', 'factor_level')
+  column_names <- c('Item', 'Count', 'Percent', 'Cum. Count', 'Cum. Percent')
+  column_names_df <- c('item', 'count', 'percent', 'cum_count', 'cum_percent')
 
-  if (any(class(x) == 'factor')) {
-    df <- tibble(item = x,
-                         fctlvl = x %>% as.integer()) %>%
-      group_by(item, fctlvl)
-    column_align <- c('l', 'r', 'r', 'r', 'r', 'r')
-  } else {
-    df <- tibble(item = x) %>%
-      group_by(item)
-    # strip factor lvl from col names
-    column_names <- column_names[1:length(column_names) - 1]
-    column_names_df <- column_names_df[1:length(column_names_df) - 1]
-    column_align <- c(x_align, 'r', 'r', 'r', 'r')
-  }
-  df <- df %>% summarise(count = n())
+
+  df <- tibble(item = x) %>%
+    group_by(item) %>%
+    summarise(count = n())
+  column_align <- c(x_align, 'r', 'r', 'r', 'r')
 
   if (df$item %>% paste(collapse = ',') %like% '\033') {
     # remove escape char
@@ -382,11 +374,7 @@ frequency_tbl <- function(x,
   if (sort.count == TRUE) {
     df <- df %>% arrange(desc(count), item)
   } else {
-    if (any(class(x) == 'factor')) {
-      df <- df %>% arrange(fctlvl, item)
-    } else {
-      df <- df %>% arrange(item)
-    }
+    df <- df %>% arrange(item)
   }
 
   if (quote == TRUE) {
@@ -399,15 +387,7 @@ frequency_tbl <- function(x,
   df$cum_count <- base::cumsum(df$count)
   df$cum_percent <- df$cum_count / base::sum(df$count, na.rm = TRUE)
 
-  if (any(class(x) == 'factor')) {
-    # put factor last
-    df <- df %>% select(item, count, percent, cum_count, cum_percent, fctlvl)
-  }
-
   colnames(df) <- column_names_df
-
-  class(df) <- c('frequency_tbl', class(df))
-  attr(df, 'package') <- 'AMR'
 
   if (markdown == TRUE) {
     tbl_format <- 'markdown'
@@ -415,18 +395,19 @@ frequency_tbl <- function(x,
     tbl_format <- 'pandoc'
   }
 
-  attr(df, 'opt') <- list(data = x.name,
-                          vars = cols,
-                          header = header,
-                          header_txt = header_txt,
-                          row_names = row.names,
-                          column_names = column_names,
-                          column_align = column_align,
-                          tbl_format = tbl_format,
-                          nmax = nmax,
-                          nmax.set = nmax.set)
-
-  df
+  structure(.Data = df,
+            class = c('frequency_tbl', class(df)),
+            opt = list(data = x.name,
+                       vars = cols,
+                       header = header,
+                       header_txt = header_txt,
+                       row_names = row.names,
+                       column_names = column_names,
+                       column_align = column_align,
+                       tbl_format = tbl_format,
+                       na = na,
+                       nmax = nmax,
+                       nmax.set = nmax.set))
 }
 
 #' @rdname freq
@@ -547,7 +528,7 @@ print.frequency_tbl <- function(x, nmax = getOption("max.print.freq", default = 
   if (opt$tbl_format == "pandoc") {
     title <- bold(title)
   } else if (opt$tbl_format == "markdown") {
-   title <- paste0("**", title, "**")
+    title <- paste0("**", title, "**")
   }
 
   if (opt$header == TRUE) {
@@ -571,7 +552,10 @@ print.frequency_tbl <- function(x, nmax = getOption("max.print.freq", default = 
 
   # save old NA setting for kable
   opt.old <- options()$knitr.kable.NA
-  options(knitr.kable.NA = "<NA>")
+  if (is.null(opt$na)) {
+    opt$na <- "<NA>"
+  }
+  options(knitr.kable.NA = opt$na)
 
   if (nrow(x) > opt$nmax & opt$tbl_format != "markdown") {
 
@@ -615,6 +599,10 @@ print.frequency_tbl <- function(x, nmax = getOption("max.print.freq", default = 
   x$cum_count <- format(x$cum_count)
   x$cum_percent <- percent(x$cum_percent, force_zero = TRUE)
 
+  if (opt$tbl_format == "markdown") {
+    cat("\n\n")
+  }
+
   print(
     knitr::kable(x,
                  format = opt$tbl_format,
@@ -628,7 +616,11 @@ print.frequency_tbl <- function(x, nmax = getOption("max.print.freq", default = 
     cat(footer)
   }
 
-  cat('\n')
+  if (opt$tbl_format == "markdown") {
+    cat("\n\n")
+  } else {
+    cat('\n')
+  }
 
   # reset old kable setting
   options(knitr.kable.NA = opt.old)

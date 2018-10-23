@@ -22,7 +22,9 @@
 * Check for `hms::is.hms` in frequency tables (`freq()`)
 * New parameter `header` for frequency tables to turn them off (default when `markdown = TRUE`)
 * Freq now prints in markdown at default in non-interactive sessions
+* Freq no longer add the factor level column and sorts factors on count again
 * Removed diacritics from all authors (columns `microorganisms$ref` and `microorganisms.old$ref`) to comply with CRAN policy to only allow ASCII characters
+* Freq gained `na` parameter, to choose with character to print for empty values
 * Fix for `mo_property` not working properly
 * Fix for `EUCAST_rules` where some Streptococci would become ceftazidime R in EUCAST rule 4.5
 * Support for class `difftime` in frequency tables
