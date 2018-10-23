@@ -1,10 +1,15 @@
 # from https://stackoverflow.com/questions/51866926
+# and https://github.com/jangorecki/r.gitlab.ci
 image: rocker/r-base
 gitlab:
    script:
-    - apt-get update
-    - apt-get install --yes --no-install-recommends r-cran-testthat r-cran-devtools
-    - R -e "devtools::install_deps(dependencies = TRUE)"
+    # - apt-get update
+    # - apt-get install --yes --no-install-recommends r-cran-testthat r-cran-devtools
+    # - R -e "devtools::install_deps(dependencies = TRUE)"
+    # - R CMD build . --no-build-vignettes --no-manual
+    # - PKG_FILE_NAME=$(ls -1t *.tar.gz | head -n 1)
+    # - R CMD check "${PKG_FILE_NAME}" --no-manual --as-cran
+    - R -e "install.packages('backports', 'curl', 'crayon', 'data', 'dplyr', 'hms', 'knitr', 'rlang', 'rvest', 'tidyr', 'xml2', 'covr', 'ggplot2', 'rmarkdown', 'rstudioapi', 'testthat')"
     - R CMD build . --no-build-vignettes --no-manual
     - PKG_FILE_NAME=$(ls -1t *.tar.gz | head -n 1)
-    - R CMD check "${PKG_FILE_NAME}" --no-manual --as-cran
+    - R CMD check "${PKG_FILE_NAME}" --no-build-vignettes --no-manual --as-cran
