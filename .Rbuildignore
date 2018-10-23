@@ -1,7 +1,8 @@
 ^.*\.Rproj$
 ^\.Rproj\.user$
 .travis.yml
+appveyor.yml
+.gitlab-ci.yml
 .zenodo.json
-^cran-comments\.md$
-^appveyor\.yml$
 _noinclude
+^cran-comments\.md$

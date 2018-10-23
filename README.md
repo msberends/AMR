@@ -5,7 +5,7 @@ This R package was created for academic research by PhD students of the Faculty 
 
 :arrow_forward: Get it with `install.packages("AMR")` or see below for other possibilities.
 
-:arrow_forward: Read the [changelog here](https://github.com/msberends/AMR/blob/master/NEWS.md).
+:arrow_forward: Read the [changelog here](https://gitlab.com/msberends/AMR/blob/master/NEWS.md).
 
 ## Authors
 Matthijs S. Berends <a href="https://orcid.org/0000-0001-7620-1800"><img src="https://cran.r-project.org/web/orcid.svg" height="16px"></a> <sup>1,2,a</sup>,
@@ -32,7 +32,7 @@ Bhanu Sinha <a href="https://orcid.org/0000-0003-1634-0010"><img src="https://cr
 * [How to get it?](#how-to-get-it)
   * [Install from CRAN](#install-from-cran)
   * [Install from Zenodo](#install-from-zenodo)
-  * [Install from GitHub](#install-from-github)
+  * [Install from GitLab](#install-from-gitlab)
 * [How to use it?](#how-to-use-it)
   * [New classes](#new-classes)
   * [Overwrite/force resistance based on EUCAST rules](#overwriteforce-resistance-based-on-eucast-rules)
@@ -134,20 +134,20 @@ All stable versions of this package [are published on CRAN](http://cran.r-projec
 
 This package was also published on Zenodo (stable releases only): https://doi.org/10.5281/zenodo.1305355
 
-### Install from GitHub
+### Install from GitLab
 
 This is the latest **development version**. Although it may contain bugfixes and even new functions compared to the latest released version on CRAN, it is also subject to change and may be unstable or behave unexpectedly. Always consider this a beta version. All below 'badges' should be green:
 
 Development Test | Result | Reference
 --- | :---: | ---
-All functions checked on Linux and macOS | [![Travis_Build](https://travis-ci.org/msberends/AMR.svg?branch=master)](https://travis-ci.org/msberends/AMR) | Travis CI, GmbH [[ref 1]](https://travis-ci.org/msberends/AMR) 
-All functions checked on Windows | [![AppVeyor_Build](https://ci.appveyor.com/api/projects/status/github/msberends/AMR?branch=master&svg=true)](https://ci.appveyor.com/project/msberends/AMR) | Appveyor Systems Inc. [[ref 2]](https://ci.appveyor.com/project/msberends/AMR)
-Percentage of syntax lines checked | [![Code_Coverage](https://codecov.io/gh/msberends/AMR/branch/master/graph/badge.svg)](https://codecov.io/gh/msberends/AMR) | Codecov LLC [[ref 3]](https://codecov.io/gh/msberends/AMR)
+All functions checked on Linux and macOS | [(click view)](https://gitlab.com/msberends/AMR/pipelines) | GitLab [[ref 1]](https://gitlab.com/msberends/AMR/pipelines) 
+All functions checked on Windows | [![AppVeyor_Build](https://ci.appveyor.com/api/projects/status/gitlab/msberends/AMR?branch=master&svg=true)](https://ci.appveyor.com/project/msberends/amr-svxon) | Appveyor Systems Inc. [[ref 2]](https://ci.appveyor.com/project/msberends/amr-svxon)
+Percentage of syntax lines checked | [![Code_Coverage](https://codecov.io/gl/msberends/AMR/branch/master/graph/badge.svg)](https://codecov.io/gl/msberends/AMR) | Codecov LLC [[ref 3]](https://codecov.io/gl/msberends/AMR)
 
 If so, try it with:
 ```r
 install.packages("devtools") 
-devtools::install_github("msberends/AMR")
+devtools::install_git("https://gitlab.com/msberends/AMR")
 ```
 
 ## How to use it?
@@ -558,9 +558,8 @@ microbenchmark(A = mo_species("aureus"),
 Of course, when running `mo_phylum("Firmicutes")` the function has zero knowledge about the actual microorganism, namely *S. aureus*. But since the result would be `"Firmicutes"` too, there is no point in calculating the result. And since this package 'knows' all phyla of all known microorganisms (according to ITIS), it can just return the initial value immediately.
 
 ## Copyright
-[![License](https://img.shields.io/github/license/msberends/AMR.svg?colorB=3679BC)](https://github.com/msberends/AMR/blob/master/LICENSE)
 
-This R package is licensed under the [GNU General Public License (GPL) v2.0](https://github.com/msberends/AMR/blob/master/LICENSE). In a nutshell, this means that this package:
+This R package is licensed under the [GNU General Public License (GPL) v2.0](https://gitlab.com/msberends/AMR/blob/master/LICENSE). In a nutshell, this means that this package:
 
 - May be used for commercial purposes
 

@@ -1,5 +1,5 @@
 Package: AMR
-Version: 0.4.0.9006
+Version: 0.4.0.9007
 Date: 2018-10-23
 Title: Antimicrobial Resistance Analysis
 Authors@R: c(
@@ -62,8 +62,8 @@ Suggests:
     rstudioapi,
     testthat (>= 1.0.2)
 VignetteBuilder: knitr
-URL: https://github.com/msberends/AMR
-BugReports: https://github.com/msberends/AMR/issues
+URL: https://gitlab.com/msberends/AMR
+BugReports: https://gitlab.com/msberends/AMR/issues
 License: GPL-2 | file LICENSE
 Encoding: UTF-8
 LazyData: true

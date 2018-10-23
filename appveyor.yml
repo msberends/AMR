@@ -25,15 +25,6 @@ environment:
   - R_VERSION: release
   - R_VERSION: devel
 
-notifications:
-- provider: Email
-  to: m.s.berends@umcg.nl
-  subject: 'AppVeyor: status changed'
-  message: The status of https://ci.appveyor.com/project/msberends/amr has changed.
-  on_build_success: false
-  on_build_failure: false
-  on_build_status_changed: true
-
 build_script:
   - travis-tool.sh install_deps
 

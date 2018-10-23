@@ -1,6 +1,7 @@
 # 0.4.0.90xx (latest development version)
 
 #### New
+* Repository moved to GitLab: https://gitlab.com/msberends/AMR
 * Function `count_all` to get all available isolates (that like all `portion_*` and `count_*` functions also supports `summarise` and `group_by`), the old `n_rsi` is now an alias of `count_all`
 
 #### Changed
