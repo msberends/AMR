@@ -13,7 +13,7 @@ R 3.3:
     script:
     - apt-get update
     # install dependencies for package
-    - apt-get install --yes --no-install-recommends libxml2 libssl-dev libcurl4-openssl-dev zlib1g-dev
+    - apt-get install --yes --no-install-recommends libxml2-dev libssl-dev libcurl4-openssl-dev zlib1g-dev
     - R -e 'install.packages(c("devtools", "testthat"))'
     - R -e 'devtools::install_deps(dependencies = c("Depends", "Imports", "Suggests"))'
     # remove vignettes folder and get VignetteBuilder field out of DESCRIPTION file
@@ -29,7 +29,7 @@ R 3.4:
     script:
     - apt-get update
     # install dependencies for package
-    - apt-get install --yes --no-install-recommends libxml2 libssl-dev libcurl4-openssl-dev zlib1g-dev
+    - apt-get install --yes --no-install-recommends libxml2-dev libssl-dev libcurl4-openssl-dev zlib1g-dev
     - R -e 'install.packages(c("devtools", "testthat"))'
     - R -e 'devtools::install_deps(dependencies = c("Depends", "Imports", "Suggests"))'
     # remove vignettes folder and get VignetteBuilder field out of DESCRIPTION file
@@ -45,7 +45,7 @@ R 3.5:
     script:
     - apt-get update
     # install dependencies for package
-    - apt-get install --yes --no-install-recommends libxml2 libssl-dev libcurl4-openssl-dev zlib1g-dev
+    - apt-get install --yes --no-install-recommends libxml2-dev libssl-dev libcurl4-openssl-dev zlib1g-dev
     - R -e 'install.packages(c("devtools", "testthat"))'
     - R -e 'devtools::install_deps(dependencies = c("Depends", "Imports", "Suggests"))'
     # remove vignettes folder and get VignetteBuilder field out of DESCRIPTION file
