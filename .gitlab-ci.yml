@@ -79,7 +79,7 @@ R latest:
     
     
 R devel:
-    image: rocker/r-ver:3.5 # rocker/r-base
+    image: rocker/r-ver:devel # rocker/r-base
     stage: build
     allow_failure: true
     script:
