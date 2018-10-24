@@ -36,8 +36,7 @@ osx_job:
 
 
 coverage_job:
-    stage:
-    - deploy
+    stage: deploy
     script:
     # update code coverage
     - apt-get install --yes git
