@@ -1,13 +1,15 @@
 # from https://stackoverflow.com/questions/51866926
 # and https://github.com/jangorecki/r.gitlab.ci
 
-image: rocker/r-base
+# https://hub.docker.com/r/rocker/
+# image: rocker/r-base
 
 stages:
     - build
     - deploy
 
-linux_job:
+R 3.3:
+    image: rocker/r-ver:3.3 # rocker/r-base
     stage: build
     script:
     - apt-get update
@@ -20,12 +22,14 @@ linux_job:
     - R CMD build . --no-build-vignettes --no-manual
     - PKG_FILE_NAME=$(ls -1t *.tar.gz | head -n 1)
     - R CMD check "${PKG_FILE_NAME}" --no-build-vignettes --no-manual --as-cran
-
-osx_job:
+    
+R 3.4:
+    image: rocker/r-ver:3.4 # rocker/r-base
     stage: build
-    tags:
-    - osx
     script:
+    - apt-get update
+    # install dependencies for package
+    - apt-get install --yes --no-install-recommends r-cran-xml2 r-cran-testthat r-cran-devtools
     - R -e 'devtools::install_deps(dependencies = c("Depends", "Imports", "Suggests"))'
     # remove vignettes folder and get VignetteBuilder field out of DESCRIPTION file
     - rm -rf vignettes
@@ -33,7 +37,21 @@ osx_job:
     - R CMD build . --no-build-vignettes --no-manual
     - PKG_FILE_NAME=$(ls -1t *.tar.gz | head -n 1)
     - R CMD check "${PKG_FILE_NAME}" --no-build-vignettes --no-manual --as-cran
-
+    
+R 3.5:
+    image: rocker/r-ver:3.5 # rocker/r-base
+    stage: build
+    script:
+    - apt-get update
+    # install dependencies for package
+    - apt-get install --yes --no-install-recommends r-cran-xml2 r-cran-testthat r-cran-devtools
+    - R -e 'devtools::install_deps(dependencies = c("Depends", "Imports", "Suggests"))'
+    # remove vignettes folder and get VignetteBuilder field out of DESCRIPTION file
+    - rm -rf vignettes
+    - R -e 'd <- read.dcf("DESCRIPTION"); d[, colnames(d) == "VignetteBuilder"] <- NA; write.dcf(d, "DESCRIPTION")'
+    - R CMD build . --no-build-vignettes --no-manual
+    - PKG_FILE_NAME=$(ls -1t *.tar.gz | head -n 1)
+    - R CMD check "${PKG_FILE_NAME}" --no-build-vignettes --no-manual --as-cran
 
 coverage_job:
     stage: deploy
