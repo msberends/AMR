@@ -14,7 +14,8 @@ R 3.3:
     script:
     - apt-get update
     # install dependencies for package
-    - apt-get install --yes --no-install-recommends r-cran-xml2 r-cran-testthat r-cran-devtools
+    - apt-get install --yes --no-install-recommends libxml2
+    - R -e 'install.packages(c("devtools", "testthat"))'
     - R -e 'devtools::install_deps(dependencies = c("Depends", "Imports", "Suggests"))'
     # remove vignettes folder and get VignetteBuilder field out of DESCRIPTION file
     - rm -rf vignettes
@@ -29,7 +30,8 @@ R 3.4:
     script:
     - apt-get update
     # install dependencies for package
-    - apt-get install --yes --no-install-recommends r-cran-xml2 r-cran-testthat r-cran-devtools
+    - apt-get install --yes --no-install-recommends libxml2
+    - R -e 'install.packages(c("devtools", "testthat"))'
     - R -e 'devtools::install_deps(dependencies = c("Depends", "Imports", "Suggests"))'
     # remove vignettes folder and get VignetteBuilder field out of DESCRIPTION file
     - rm -rf vignettes
@@ -44,7 +46,8 @@ R 3.5:
     script:
     - apt-get update
     # install dependencies for package
-    - apt-get install --yes --no-install-recommends r-cran-xml2 r-cran-testthat r-cran-devtools
+    - apt-get install --yes --no-install-recommends libxml2
+    - R -e 'install.packages(c("devtools", "testthat"))'
     - R -e 'devtools::install_deps(dependencies = c("Depends", "Imports", "Suggests"))'
     # remove vignettes folder and get VignetteBuilder field out of DESCRIPTION file
     - rm -rf vignettes
