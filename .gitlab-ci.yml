@@ -4,13 +4,13 @@
 image: rocker/r-base
 
 stages:
-  - build
-  - deploy
+    - build
+    - deploy
 
 linux job:
-  stage:
+    stage:
     - build
-   script:
+    script:
     - apt-get update
     # install dependencies for package
     - apt-get install --yes --no-install-recommends r-cran-xml2 r-cran-testthat r-cran-devtools
@@ -23,11 +23,11 @@ linux job:
     - R CMD check "${PKG_FILE_NAME}" --no-build-vignettes --no-manual --as-cran
 
 osx job:
-  stage:
+    stage:
     - build
-  tags:
+    tags:
     - osx
-  script:
+    script:
     - R -e 'devtools::install_deps(dependencies = c("Depends", "Imports", "Suggests"))'
     # remove vignettes folder and get VignetteBuilder field out of DESCRIPTION file
     - rm -rf vignettes
@@ -38,10 +38,10 @@ osx job:
 
 
 coverage job:
-  stage:
+    stage:
     - deploy
-  script:
+    script:
     # update code coverage
     - apt-get install --yes git
     - R -e "covr::codecov(token = '50ffa0aa-fee0-4f8b-a11d-8c7edc6d32ca')"
-  when: on_success
+    when: on_success
