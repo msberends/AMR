@@ -7,7 +7,7 @@ stages:
     - build
     - deploy
 
-linux job:
+linux_job:
     stage:
     - build
     script:
@@ -22,7 +22,7 @@ linux job:
     - PKG_FILE_NAME=$(ls -1t *.tar.gz | head -n 1)
     - R CMD check "${PKG_FILE_NAME}" --no-build-vignettes --no-manual --as-cran
 
-osx job:
+osx_job:
     stage:
     - build
     tags:
@@ -37,7 +37,7 @@ osx job:
     - R CMD check "${PKG_FILE_NAME}" --no-build-vignettes --no-manual --as-cran
 
 
-coverage job:
+coverage_job:
     stage:
     - deploy
     script:
