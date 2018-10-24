@@ -8,8 +8,7 @@ stages:
     - deploy
 
 linux_job:
-    stage:
-    - build
+    stage: build
     script:
     - apt-get update
     # install dependencies for package
@@ -23,8 +22,7 @@ linux_job:
     - R CMD check "${PKG_FILE_NAME}" --no-build-vignettes --no-manual --as-cran
 
 osx_job:
-    stage:
-    - build
+    stage: build
     tags:
     - osx
     script:
