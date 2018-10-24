@@ -13,9 +13,10 @@ R 3.3:
     script:
     - apt-get update
     # install dependencies for package
-    - apt-get install --yes --no-install-recommends libxml2-dev libssl-dev libcurl4-openssl-dev zlib1g-dev
-    - R -e 'install.packages(c("devtools", "testthat"))'
+     - apt-get install --yes --no-install-recommends libxml2-dev libssl-dev libcurl4-openssl-dev zlib1g-dev
+    - R -e 'install.packages(c("devtools", "rlang"))'
     - R -e 'devtools::install_deps(dependencies = c("Depends", "Imports", "Suggests"))'
+    - R -e 'print(as.data.frame(installed.packages(), row.names = FALSE)[, c("Package", "Version")])''
     # remove vignettes folder and get VignetteBuilder field out of DESCRIPTION file
     - rm -rf vignettes
     - R -e 'd <- read.dcf("DESCRIPTION"); d[, colnames(d) == "VignetteBuilder"] <- NA; write.dcf(d, "DESCRIPTION")'
@@ -30,8 +31,9 @@ R 3.4:
     - apt-get update
     # install dependencies for package
     - apt-get install --yes --no-install-recommends libxml2-dev libssl-dev libcurl4-openssl-dev zlib1g-dev
-    - R -e 'install.packages(c("devtools", "testthat"))'
+    - R -e 'install.packages("devtools")'
     - R -e 'devtools::install_deps(dependencies = c("Depends", "Imports", "Suggests"))'
+    - R -e 'print(as.data.frame(installed.packages(), row.names = FALSE)[, c("Package", "Version")])''
     # remove vignettes folder and get VignetteBuilder field out of DESCRIPTION file
     - rm -rf vignettes
     - R -e 'd <- read.dcf("DESCRIPTION"); d[, colnames(d) == "VignetteBuilder"] <- NA; write.dcf(d, "DESCRIPTION")'
@@ -46,8 +48,9 @@ R 3.5:
     - apt-get update
     # install dependencies for package
     - apt-get install --yes --no-install-recommends libxml2-dev libssl-dev libcurl4-openssl-dev zlib1g-dev
-    - R -e 'install.packages(c("devtools", "testthat"))'
+    - R -e 'install.packages("devtools")'
     - R -e 'devtools::install_deps(dependencies = c("Depends", "Imports", "Suggests"))'
+    - R -e 'print(as.data.frame(installed.packages(), row.names = FALSE)[, c("Package", "Version")])''
     # remove vignettes folder and get VignetteBuilder field out of DESCRIPTION file
     - rm -rf vignettes
     - R -e 'd <- read.dcf("DESCRIPTION"); d[, colnames(d) == "VignetteBuilder"] <- NA; write.dcf(d, "DESCRIPTION")'
