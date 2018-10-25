@@ -8,8 +8,8 @@ stages:
     - build
     - deploy
 
-R 3.3:
-    image: rocker/r-ver:3.3 # rocker/r-base
+R 3:
+    image: rocker/r-ver:3 # rocker/r-base
     stage: build
     allow_failure: true
     script:
@@ -63,6 +63,7 @@ R 3.5:
 R latest:
     image: rocker/r-ver:latest # rocker/r-base
     stage: build
+    allow_failure: true
     script:
     - apt-get update
     # install dependencies for package
