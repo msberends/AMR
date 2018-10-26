@@ -25,6 +25,7 @@ R 3:
     - R CMD build . --no-build-vignettes --no-manual
     - PKG_FILE_NAME=$(ls -1t *.tar.gz | head -n 1)
     - R CMD check "${PKG_FILE_NAME}" --no-build-vignettes --no-manual --as-cran
+    - R -e 'covr::codecovr(token = "50ffa0aa-fee0-4f8b-a11d-8c7edc6d32ca")'
     
 R 3.4:
     image: rocker/r-ver:3.4 # rocker/r-base
@@ -80,7 +81,6 @@ R latest:
     - PKG_FILE_NAME=$(ls -1t *.tar.gz | head -n 1)
     - R CMD check "${PKG_FILE_NAME}" --no-build-vignettes --no-manual --as-cran
     
-    
 R devel:
     image: rocker/r-ver:devel # rocker/r-base
     stage: build
@@ -100,11 +100,7 @@ R devel:
     - R CMD check "${PKG_FILE_NAME}" --no-build-vignettes --no-manual --as-cran
 
 coverage_job:
-    image: rocker/r-ver:3
+    # image: rocker/r-ver:3
     stage: deploy
     script:
-    # update code coverage
-    - apt-get install --yes git
-    - R -e "install.packages('covr')"
-    - R -e "covr::codecov(token = '50ffa0aa-fee0-4f8b-a11d-8c7edc6d32ca')"
-    when: on_success
+    - echo "future packaging part"
