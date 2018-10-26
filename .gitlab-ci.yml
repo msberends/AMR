@@ -26,7 +26,7 @@ R 3:
     - PKG_FILE_NAME=$(ls -1t *.tar.gz | head -n 1)
     - R CMD check "${PKG_FILE_NAME}" --no-build-vignettes --no-manual --as-cran
     # code coverage
-    - apt-get install —-yes git
+    - apt-get install --yes git
     - R -e 'covr::codecovr(token = "50ffa0aa-fee0-4f8b-a11d-8c7edc6d32ca")'
     
 R 3.4:
