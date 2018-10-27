@@ -28,6 +28,11 @@ R 3:
     # code coverage
     - apt-get install --yes git
     - R -e 'covr::codecov(token = "50ffa0aa-fee0-4f8b-a11d-8c7edc6d32ca")'
+    artifacts:
+      paths:
+      - '*.Rcheck/*'
+      name: '$CI_COMMIT_REF_NAME'
+      expire_in: '1 month'
     
 R 3.4:
     image: rocker/r-ver:3.4 # rocker/r-base
