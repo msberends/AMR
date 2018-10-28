@@ -33,12 +33,6 @@ R 3:
       - '*.Rcheck/*'
       name: 'Latest Rcheck log'
       expire_in: '1 month'
-    artifacts:
-      paths:
-      - '/*_*.zip'
-      - '/*_*.tar.gz'
-      name: 'Latest built package'
-      expire_in: '1 year'
       
 R 3.4:
     image: rocker/r-ver:3.4 # rocker/r-base
