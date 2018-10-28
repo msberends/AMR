@@ -38,7 +38,7 @@ R 3:
       - '/*_*.zip'
       - '/*_*.tar.gz'
       name: 'Latest built package'
-      expires_in: '1 year'
+      expire_in: '1 year'
       
 R 3.4:
     image: rocker/r-ver:3.4 # rocker/r-base
