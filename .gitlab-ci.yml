@@ -31,7 +31,7 @@ R 3:
     artifacts:
       paths:
       - '*.Rcheck/*'
-      name: '$CI_COMMIT_REF_NAME'
+      name: 'Latest Rcheck log'
       expire_in: '1 month'
     
 R 3.4:
@@ -70,42 +70,39 @@ R 3.5:
     - PKG_FILE_NAME=$(ls -1t *.tar.gz | head -n 1)
     - R CMD check "${PKG_FILE_NAME}" --no-build-vignettes --no-manual --as-cran
     
-R latest:
-    image: rocker/r-ver:latest # rocker/r-base
-    stage: build
-    allow_failure: true
-    script:
-    - apt-get update
+#R latest:
+ #   image: rocker/r-ver:latest # rocker/r-base
+  #  stage: build
+ #   allow_failure: true
+  #  script:
+  #  - apt-get update
     # install dependencies for package
-    - apt-get install --yes --no-install-recommends libxml2-dev libssl-dev libcurl4-openssl-dev zlib1g-dev
-    - R -e 'install.packages("devtools")'
-    - R -e 'devtools::install_deps(dependencies = c("Depends", "Imports", "Suggests"))'
-    - R -e 'print(as.data.frame(installed.packages(), row.names = FALSE)[, c("Package", "Version")])'
+#    - apt-get install --yes --no-install-recommends libxml2-dev libssl-dev libcurl4-openssl-dev zlib1g-dev
+   # - R -e 'install.packages("devtools")'
+  #  - R -e 'devtools::install_deps(dependencies = c("Depends", "Imports", "Suggests"))'
+   # - R -e 'print(as.data.frame(installed.packages(), row.names = FALSE)[, c("Package", "Version")])'
     # remove vignettes folder and get VignetteBuilder field out of DESCRIPTION file
-    - rm -rf vignettes
-    - R -e 'd <- read.dcf("DESCRIPTION"); d[, colnames(d) == "VignetteBuilder"] <- NA; write.dcf(d, "DESCRIPTION")'
-    - R CMD build . --no-build-vignettes --no-manual
-    - PKG_FILE_NAME=$(ls -1t *.tar.gz | head -n 1)
-    - R CMD check "${PKG_FILE_NAME}" --no-build-vignettes --no-manual --as-cran
+ #   - rm -rf vignettes
+   # - R -e 'd <- read.dcf("DESCRIPTION"); d[, colnames(d) == "VignetteBuilder"] <- NA; write.dcf(d, "DESCRIPTION")'
+#    - R CMD build . --no-build-vignettes --no-manual
+   # - PKG_FILE_NAME=$(ls -1t *.tar.gz | head -n 1)
+   # - R CMD check "${PKG_FILE_NAME}" --no-build-vignettes --no-manual --as-cran
     
-R devel:
-    image: rocker/r-ver:devel # rocker/r-base
-    stage: build
-    allow_failure: true
-    script:
-    - apt-get update
+# R devel:
+  #  image: rocker/r-ver:devel # rocker/r-base
+  #  stage: build
+   # allow_failure: true
+  #  script:
+   # - apt-get update
     # install dependencies for package
-    - apt-get install --yes --no-install-recommends libxml2-dev libssl-dev libcurl4-openssl-dev zlib1g-dev
-    - R -e 'install.packages("devtools")'
-    - R -e 'devtools::install_deps(dependencies = c("Depends", "Imports", "Suggests"))'
-    - R -e 'print(as.data.frame(installed.packages(), row.names = FALSE)[, c("Package", "Version")])'
+    #- apt-get install --yes --no-install-recommends libxml2-dev libssl-dev libcurl4-openssl-dev zlib1g-dev
+    #- R -e 'install.packages("devtools")'
+ #   - R -e 'devtools::install_deps(dependencies = c("Depends", "Imports", "Suggests"))'
+    #- R -e 'print(as.data.frame(installed.packages(), row.names = FALSE)[, c("Package", "Version")])'
     # remove vignettes folder and get VignetteBuilder field out of DESCRIPTION file
-    - rm -rf vignettes
-    - R -e 'd <- read.dcf("DESCRIPTION"); d[, colnames(d) == "VignetteBuilder"] <- NA; write.dcf(d, "DESCRIPTION")'
-    - R CMD build . --no-build-vignettes --no-manual
-    - PKG_FILE_NAME=$(ls -1t *.tar.gz | head -n 1)
-    - R CMD check "${PKG_FILE_NAME}" --no-build-vignettes --no-manual --as-cran
-
+    #- rm -rf vignettes
+  #  - R -e 'd <- read.dcf("DESCRIPTION"); d[, colnames(d) == "VignetteBuilder"] <- NA; write.dcf(d, "DESCRIPTION")'
+    
 coverage_job:
     # image: rocker/r-ver:3
     stage: deploy
