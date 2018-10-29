@@ -49,7 +49,7 @@ A microbial ID from this package (class: \code{mo}) typically looks like these e
   |   |    |    ----> subspecies, a 3-4 letter acronym
   |   |     ----> species, a 3-4 letter acronym
   |    ----> genus, a 5-7 letter acronym, mostly without vowels
-   ----> taxonomic kingdom, either Bacteria (B), Fungi (F) or Protozoa (P)
+   ----> taxonomic kingdom, either B (Bacteria), F (Fungi) or P (Protozoa)
 }
 
 Use the \code{\link{mo_property}} functions to get properties based on the returned code, see Examples.

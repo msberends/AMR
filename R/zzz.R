@@ -18,7 +18,7 @@
 
 #' The \code{AMR} Package
 #'
-#' Welcome to the \code{AMR} package. This page gives some additional contact information abount the authors.
+#' Welcome to the \code{AMR} package. This page gives some additional contact information about the authors.
 #' @details
 #' This package was intended to simplify the analysis and prediction of Antimicrobial Resistance (AMR) and work with antibiotic properties by using evidence-based methods.
 #'
@@ -39,11 +39,32 @@
 #' 9700 RB Groningen
 #'
 #' If you have found a bug, please file a new issue at: \cr
-#' \url{https://github.com/msberends/AMR/issues}
+#' \url{https://gitlab.com/msberends/AMR/issues}
 #' @name AMR
 #' @rdname AMR
 NULL
 
 .onLoad <- function(libname, pkgname) {
   backports::import(pkgname)
+}
+
+.onAttach <- function(libname, pkgname) {
+  # save data.tables to improve speed of as.mo:
+  MOs <- data.table::as.data.table(AMR::microorganisms)
+  data.table::setkey(MOs, prevalence, tsn)
+
+  base::assign(x = "MOs",
+         value = MOs,
+         envir = base::as.environment("package:AMR"))
+  base::assign(x = "MOs_mostprevalent",
+         value = MOs[prevalence != 9999,],
+         envir = base::as.environment("package:AMR"))
+  base::assign(x = "MOs_allothers",
+         value = MOs[prevalence == 9999,],
+         envir = base::as.environment("package:AMR"))
+
+  base::assign(x = "MOs_old",
+         value = data.table::as.data.table(AMR::microorganisms.old),
+         envir = base::as.environment("package:AMR"))
+
 }

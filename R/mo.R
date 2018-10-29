@@ -44,7 +44,7 @@
 #'   |   |    |    ----> subspecies, a 3-4 letter acronym
 #'   |   |     ----> species, a 3-4 letter acronym
 #'   |    ----> genus, a 5-7 letter acronym, mostly without vowels
-#'    ----> taxonomic kingdom, either Bacteria (B), Fungi (F) or Protozoa (P)
+#'    ----> taxonomic kingdom, either B (Bacteria), F (Fungi) or P (Protozoa)
 #' }
 #'
 #' Use the \code{\link{mo_property}} functions to get properties based on the returned code, see Examples.
@@ -176,10 +176,11 @@ exec_as.mo <- function(x, Becker = FALSE, Lancefield = FALSE, allow_uncertain = 
   # remove empty values (to later fill them in again)
   x <- x[!is.na(x) & !is.null(x) & !identical(x, "")]
 
-  MOs <- NULL # will be set later, if needed
-  MOs_mostprevalent <- NULL # will be set later, if needed
-  MOs_allothers <- NULL # will be set later, if needed
-  MOs_old <- NULL # will be set later, if needed
+  # These data.tables are available because of .onAttach:
+  #   MOs
+  #   MOs_mostprevalent
+  #   MOs_allothers
+  #   MOs_old
 
   # defined df to check for
   if (!is.null(reference_df)) {
@@ -231,10 +232,6 @@ exec_as.mo <- function(x, Becker = FALSE, Lancefield = FALSE, allow_uncertain = 
         pull(property)
     )
   } else {
-
-    MOs <- as.data.table(AMR::microorganisms)
-    setkey(MOs, prevalence, tsn)
-    MOs_mostprevalent <- MOs[prevalence != 9999,]
 
     x_backup <- trimws(x, which = "both")
     x_species <- paste(x_backup, "species")
@@ -421,17 +418,20 @@ exec_as.mo <- function(x, Becker = FALSE, Lancefield = FALSE, allow_uncertain = 
         next
       }
 
-      # try splitting of characters and then find ID ----
-      # like esco = E. coli, klpn = K. pneumoniae, stau = S. aureus
-      x_split <- x
-      x_length <- nchar(x_trimmed[i])
-      x_split[i] <- paste0(x_trimmed[i] %>% substr(1, x_length / 2) %>% trimws(),
-                           '.* ',
-                           x_trimmed[i] %>% substr((x_length / 2) + 1, x_length) %>% trimws())
-      found <- MOs_mostprevalent[fullname %like% paste0('^', x_split[i]), ..property][[1]]
-      if (length(found) > 0) {
-        x[i] <- found[1L]
-        next
+      # try splitting of characters in the middle and then find ID ----
+      # only when text length is 6 or lower
+      # like esco = E. coli, klpn = K. pneumoniae, stau = S. aureus, staaur = S. aureus
+      if (nchar(x_trimmed[i]) <= 6) {
+        x_split <- x
+        x_length <- nchar(x_trimmed[i])
+        x_split[i] <- paste0(x_trimmed[i] %>% substr(1, x_length / 2) %>% trimws(),
+                             '.* ',
+                             x_trimmed[i] %>% substr((x_length / 2) + 1, x_length) %>% trimws())
+        found <- MOs_mostprevalent[fullname %like% paste0('^', x_split[i]), ..property][[1]]
+        if (length(found) > 0) {
+          x[i] <- found[1L]
+          next
+        }
       }
 
       # try any match with text before and after original search string ----
@@ -450,10 +450,6 @@ exec_as.mo <- function(x, Becker = FALSE, Lancefield = FALSE, allow_uncertain = 
       # }
 
       # THEN TRY ALL OTHERS ----
-      if (is.null(MOs_allothers)) {
-        MOs_allothers <- MOs[prevalence == 9999,]
-      }
-
       found <- MOs_allothers[tolower(fullname) == tolower(x_backup[i]), ..property][[1]]
       # most probable: is exact match in fullname
       if (length(found) > 0) {
@@ -508,17 +504,20 @@ exec_as.mo <- function(x, Becker = FALSE, Lancefield = FALSE, allow_uncertain = 
         next
       }
 
-      # try splitting of characters and then find ID ----
-      # like esco = E. coli, klpn = K. pneumoniae, stau = S. aureus
-      x_split <- x
-      x_length <- nchar(x_trimmed[i])
-      x_split[i] <- paste0(x_trimmed[i] %>% substr(1, x_length / 2) %>% trimws(),
-                           '.* ',
-                           x_trimmed[i] %>% substr((x_length / 2) + 1, x_length) %>% trimws())
-      found <- MOs_allothers[fullname %like% paste0('^', x_split[i]), ..property][[1]]
-      if (length(found) > 0) {
-        x[i] <- found[1L]
-        next
+      # try splitting of characters in the middle and then find ID ----
+      # only when text length is 6 or lower
+      # like esco = E. coli, klpn = K. pneumoniae, stau = S. aureus, staaur = S. aureus
+      if (nchar(x_trimmed[i]) <= 6) {
+        x_split <- x
+        x_length <- nchar(x_trimmed[i])
+        x_split[i] <- paste0(x_trimmed[i] %>% substr(1, x_length / 2) %>% trimws(),
+                             '.* ',
+                             x_trimmed[i] %>% substr((x_length / 2) + 1, x_length) %>% trimws())
+        found <- MOs_allothers[fullname %like% paste0('^', x_split[i]), ..property][[1]]
+        if (length(found) > 0) {
+          x[i] <- found[1L]
+          next
+        }
       }
 
       # # try any match with text before and after original search string ----
@@ -539,10 +538,6 @@ exec_as.mo <- function(x, Becker = FALSE, Lancefield = FALSE, allow_uncertain = 
       # MISCELLANEOUS ----
 
       # look for old taxonomic names ----
-      if (is.null(MOs_old)) {
-        MOs_old <- as.data.table(AMR::microorganisms.old)
-        setkey(MOs_old, name, tsn_new)
-      }
       found <- MOs_old[tolower(name) == tolower(x_backup[i])
                        | tsn == x_trimmed[i]
                        | name %like% x_withspaces[i],]
@@ -604,10 +599,6 @@ exec_as.mo <- function(x, Becker = FALSE, Lancefield = FALSE, allow_uncertain = 
   if (Becker == TRUE | Becker == "all") {
     # See Source. It's this figure:
     # https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4187637/figure/F3/
-    if (is.null(MOs)) {
-      MOs <- as.data.table(AMR::microorganisms)
-      setkey(MOs, prevalence, tsn)
-    }
     MOs_staph <- MOs[genus == "Staphylococcus"]
     setkey(MOs_staph, species)
     CoNS <- MOs_staph[species %in% c("arlettae", "auricularis", "capitis",
@@ -635,10 +626,6 @@ exec_as.mo <- function(x, Becker = FALSE, Lancefield = FALSE, allow_uncertain = 
 
   # Lancefield ----
   if (Lancefield == TRUE | Lancefield == "all") {
-    if (is.null(MOs)) {
-      MOs <- as.data.table(AMR::microorganisms)
-      setkey(MOs, prevalence, tsn)
-    }
     # group A - S. pyogenes
     x[x == MOs[mo == 'B_STRPTC_PYO', ..property][[1]][1L]] <- MOs[mo == 'B_STRPTC_GRA', ..property][[1]][1L]
     # group B - S. agalactiae

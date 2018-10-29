@@ -4,7 +4,7 @@
 \alias{AMR}
 \title{The \code{AMR} Package}
 \description{
-Welcome to the \code{AMR} package. This page gives some additional contact information abount the authors.
+Welcome to the \code{AMR} package. This page gives some additional contact information about the authors.
 }
 \details{
 This package was intended to simplify the analysis and prediction of Antimicrobial Resistance (AMR) and work with antibiotic properties by using evidence-based methods.
@@ -31,6 +31,6 @@ Post Office Box 30001 \cr
 9700 RB Groningen
 
 If you have found a bug, please file a new issue at: \cr
-\url{https://github.com/msberends/AMR/issues}
+\url{https://gitlab.com/msberends/AMR/issues}
 }
 
