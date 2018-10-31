@@ -4,7 +4,7 @@
 \name{microorganisms.umcg}
 \alias{microorganisms.umcg}
 \title{Translation table for UMCG}
-\format{A \code{\link{tibble}} with 1,095 observations and 2 variables:
+\format{A \code{\link{data.frame}} with 1,095 observations and 2 variables:
 \describe{
   \item{\code{umcg}}{Code of microorganism according to UMCG MMB}
   \item{\code{certe}}{Code of microorganism according to Certe MMB}

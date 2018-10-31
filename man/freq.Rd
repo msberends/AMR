@@ -10,12 +10,12 @@
 frequency_tbl(x, ..., sort.count = TRUE,
   nmax = getOption("max.print.freq"), na.rm = TRUE, row.names = TRUE,
   markdown = !interactive(), digits = 2, quote = FALSE,
-  header = !markdown, na = "<NA>", sep = " ")
+  header = !markdown, title = NULL, na = "<NA>", sep = " ")
 
 freq(x, ..., sort.count = TRUE, nmax = getOption("max.print.freq"),
   na.rm = TRUE, row.names = TRUE, markdown = !interactive(),
-  digits = 2, quote = FALSE, header = !markdown, na = "<NA>",
-  sep = " ")
+  digits = 2, quote = FALSE, header = !markdown, title = NULL,
+  na = "<NA>", sep = " ")
 
 top_freq(f, n)
 
@@ -42,6 +42,8 @@ top_freq(f, n)
 \item{quote}{a logical value indicating whether or not strings should be printed with surrounding quotes}
 
 \item{header}{a logical value indicating whether an informative header should be printed}
+
+\item{title}{text to show above frequency table, at default to tries to coerce from the variables passed to \code{x}}
 
 \item{na}{a character string to should be used to show empty (\code{NA}) values (only useful when \code{na.rm = FALSE})}
 

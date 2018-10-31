@@ -3,6 +3,7 @@
 #### New
 * Repository moved to GitLab: https://gitlab.com/msberends/AMR
 * Function `count_all` to get all available isolates (that like all `portion_*` and `count_*` functions also supports `summarise` and `group_by`), the old `n_rsi` is now an alias of `count_all`
+* Data sets `microorganismsDT`, `microorganisms.prevDT`, `microorganisms.unprevDT` and `microorganisms.oldDT` to improve the speed of `as.mo`. They are for reference only, since they are primarily for internal use of `as.mo`.
 
 #### Changed
 * Big changes to the `EUCAST_rules` function:
@@ -10,12 +11,12 @@
   * New parameter `rules` to specify which rules should be applied (expert rules, breakpoints, others or all)
   * New parameter `verbose` which can be set to `TRUE` to get very specific messages about which columns and rows were affected
   * Better error handling when rules cannot be applied (i.e. new values could not be inserted)
-  * The amount of affected values will now only be measured once per row/column combination
+  * The number of affected values will now only be measured once per row/column combination
   * Data set `septic_patients` now reflects these changes
-* Tremendous speed improvement for `as.mo` (and consequently all `mo_*` functions), as empty values wil be ignored a priori
+* Tremendous speed improvement for `as.mo` (and subsequently all `mo_*` functions), as empty values wil be ignored *a priori*
 * Fewer than 3 characters as input for `as.mo` will return NA
 * Added parameter `combine_IR` (TRUE/FALSE) to functions `portion_df` and `count_df`, to indicate that all values of I and R must be merged into one, so the output only consists of S vs. IR (susceptible vs. non-susceptible)
-* Fix for `portion_*(..., as_percent = TRUE)` when minimal amount of isolates would not be met
+* Fix for `portion_*(..., as_percent = TRUE)` when minimal number of isolates would not be met
 * Added parameter `also_single_tested` for `portion_*` and `count_*` functions to also include cases where not all antibiotics were tested but at least one of the tested antibiotics includes the target antimicribial interpretation, see `?portion`
 * Using `portion_*` functions now throws a warning when total available isolate is below parameter `minimum`
 * Functions `as.mo`, `as.rsi`, `as.mic`, `as.atc` and `freq` will not set package name as attribute anymore
@@ -26,6 +27,7 @@
   * Gained `na` parameter, to choose with character to print for empty values
   * Support for class `difftime`
   * New parameter `header` to turn it off (default when `markdown = TRUE`)
+  * New parameter `title` to replace the automatically set title
 * `first_isolate` now tries to find columns to use as input when parameters are left blank
 * Improvement for MDRO algorithm
 * Data set `septic_patients` is now a `data.frame`, not a tibble anymore

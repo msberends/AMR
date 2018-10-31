@@ -4,7 +4,7 @@
 \name{antibiotics}
 \alias{antibiotics}
 \title{Data set with 423 antibiotics}
-\format{A \code{\link{tibble}} with 423 observations and 18 variables:
+\format{A \code{\link{data.frame}} with 423 observations and 18 variables:
 \describe{
   \item{\code{atc}}{ATC code, like \code{J01CR02}}
   \item{\code{certe}}{Certe code, like \code{amcl}}

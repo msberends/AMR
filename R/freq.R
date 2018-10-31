@@ -29,6 +29,7 @@
 #' @param digits how many significant digits are to be used for numeric values in the header (not for the items themselves, that depends on \code{\link{getOption}("digits")})
 #' @param quote a logical value indicating whether or not strings should be printed with surrounding quotes
 #' @param header a logical value indicating whether an informative header should be printed
+#' @param title text to show above frequency table, at default to tries to coerce from the variables passed to \code{x}
 #' @param na a character string to should be used to show empty (\code{NA}) values (only useful when \code{na.rm = FALSE})
 #' @param sep a character string to separate the terms when selecting multiple columns
 #' @param f a frequency table
@@ -151,6 +152,7 @@ frequency_tbl <- function(x,
                           digits = 2,
                           quote = FALSE,
                           header = !markdown,
+                          title = NULL,
                           na = "<NA>",
                           sep = " ") {
 
@@ -395,6 +397,11 @@ frequency_tbl <- function(x,
     tbl_format <- 'pandoc'
   }
 
+  if (!is.null(title)) {
+    x.name <- trimws(gsub("^Frequency table of", "", title[1L], ignore.case = TRUE))
+    cols <- NULL
+  }
+
   structure(.Data = df,
             class = c('frequency_tbl', class(df)),
             opt = list(data = x.name,
@@ -522,7 +529,7 @@ print.frequency_tbl <- function(x, nmax = getOption("max.print.freq", default = 
     }
   }
 
-  title <- paste("Frequency table", title)
+  title <- paste("Frequency table", trimws(title))
 
   # bold title
   if (opt$tbl_format == "pandoc") {

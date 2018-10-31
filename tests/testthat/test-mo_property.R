@@ -53,4 +53,10 @@ test_that("mo_property works", {
   expect_identical(mo_property("E. coli", property = "species"),
                    mo_species("E. coli"))
 
+  # check vector with random values
+  library(dplyr)
+  df_sample <- AMR::microorganisms %>% sample_n(100)
+  expect_identical(df_sample %>% pull(mo) %>% mo_fullname(),
+                   df_sample %>% pull(fullname))
+
 })

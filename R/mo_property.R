@@ -383,7 +383,9 @@ mo_validate <- function(x, property, ...) {
     Lancefield <- FALSE
   }
 
-  if (!all(x %in% AMR::microorganisms[, property]) | Becker %in% c(TRUE, "all") | Lancefield == TRUE) {
+  if (!all(x %in% microorganismsDT[[property]])
+      | Becker %in% c(TRUE, "all")
+      | Lancefield %in% c(TRUE, "all")) {
     exec_as.mo(x, property = property, ...)
   } else {
     x

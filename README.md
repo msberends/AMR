@@ -65,7 +65,7 @@ The `AMR` package basically does four important things:
 
 3. It **analyses the data** with convenient functions that use well-known methods.
 
-   * Calculate the resistance (and even co-resistance) of microbial isolates with the `portion_R`, `portion_IR`, `portion_I`, `portion_SI` and `portion_S` functions. Similarly, the *amount* of isolates can be determined with the `count_R`, `count_IR`, `count_I`, `count_SI` and `count_S` functions. All these functions can be used [with the `dplyr` package](https://dplyr.tidyverse.org/#usage) (e.g. in conjunction with [`summarise`](https://dplyr.tidyverse.org/reference/summarise.html))
+   * Calculate the resistance (and even co-resistance) of microbial isolates with the `portion_R`, `portion_IR`, `portion_I`, `portion_SI` and `portion_S` functions. Similarly, the *number* of isolates can be determined with the `count_R`, `count_IR`, `count_I`, `count_SI` and `count_S` functions. All these functions can be used [with the `dplyr` package](https://dplyr.tidyverse.org/#usage) (e.g. in conjunction with [`summarise`](https://dplyr.tidyverse.org/reference/summarise.html))
    * Plot AMR results with `geom_rsi`, a function made for the `ggplot2` package
    * Predict antimicrobial resistance for the nextcoming years using logistic regression models with the `resistance_predict` function
    * Conduct descriptive statistics to enhance base R: calculate kurtosis, skewness and create frequency tables
@@ -83,7 +83,7 @@ The `AMR` package basically does four important things:
 
 This package contains the **complete microbial taxonomic data** (with all  seven taxonomic ranks - from subkingdom to subspecies) from the publicly available Integrated Taxonomic Information System (ITIS, https://www.itis.gov). 
 
-All (sub)species from the taxonomic kingdoms Bacteria, Fungi and Protozoa are included in this package, as well as all previously accepted names known to ITIS. Furthermore, the responsible authors and year of publication are available. This allows users to use authoritative taxonomic information for their data analysis on any microorganism, not only human pathogens.
+All (sub)species from the **taxonomic kingdoms Bacteria, Fungi and Protozoa are included in this package**, as well as all previously accepted names known to ITIS. Furthermore, the responsible authors and year of publication are available. This **allows users to use authoritative taxonomic information** for their data analysis on any microorganism, not only human pathogens. It also helps to **quickly determine the Gram stain of bacteria**, since all bacteria are classified into subkingdom Negibacteria or Posibacteria.
 
 ITIS is a partnership of U.S., Canadian, and Mexican agencies and taxonomic specialists.
 
@@ -101,6 +101,12 @@ mo_class("E. coli")
 
 mo_family("E. coli")
 # [1] "Enterobacteriaceae"
+
+mo_subkingdom("E. coli")
+# [1] "Negibacteria"
+
+mo_gramstain("E. coli") # based on subkingdom
+# [1] "Gram negative"
 
 mo_ref("E. coli")
 # [1] "Castellani and Chalmers, 1919"
@@ -453,7 +459,7 @@ Using the `microbenchmark` package, we can review the calculation performance of
 library(microbenchmark)
 ```
 
-In the next test, we try to 'coerce' different input values for *Staphylococcus aureus*. The actual result is the same every time: it returns its MO code `B_STAPHY_AUR` (*B* stands for *Bacteria*, the taxonomic kingdom). 
+In the next test, we try to 'coerce' different input values for *Staphylococcus aureus*. The actual result is the same every time: it returns its MO code `B_STPHY_AUR` (*B* stands for *Bacteria*, the taxonomic kingdom). 
 
 But the calculation time differs a lot. Here, the AI effect can be reviewed best:
 
@@ -464,56 +470,61 @@ microbenchmark(A = as.mo("stau"),
                D = as.mo("S.  aureus"),
                E = as.mo("STAAUR"),
                F = as.mo("Staphylococcus aureus"),
+               G = as.mo("B_STPHY_AUR"),
                times = 10,
                unit = "ms")
 # Unit: milliseconds
-#  expr      min       lq     mean   median       uq      max neval
-#     A 36.05088 36.14782 36.65635 36.24466 36.43075 39.78544    10
-#     B 16.43575 16.46885 16.67816 16.66053 16.84858 16.95299    10
-#     C 14.44150 14.52182 16.81197 14.59173 14.67854 36.75244    10
-#     D 14.49765 14.58153 16.71666 14.59414 14.61094 35.50731    10
-#     E 14.45212 14.75146 14.82033 14.85559 14.96433 15.03438    10
-#     F 10.69445 10.73852 10.80334 10.79596 10.86856 10.97465    10
+#  expr       min        lq       mean    median        uq        max neval
+#     A 38.864859 38.923316 42.5410391 39.172790 39.394955  70.512389    10
+#     B 13.912175 14.002899 14.1044062 14.084962 14.254467  14.281845    10
+#     C 11.492663 11.555520 76.6953055 11.652670 11.864149 662.026786    10
+#     D 11.616702 11.683261 12.1807189 11.873159 12.142327  14.761724    10
+#     E 13.761108 14.012048 14.1360584 14.106509 14.293229  14.547522    10
+#     F  6.743735  6.785151  6.8962407  6.871335  7.000961   7.158383    10
+#     G  0.119220  0.137030  0.1411503  0.142512  0.145061   0.176909    10
 ```
 
-The more an input value resembles a full name, the faster the result will be found. In the table above, all measurements are in milliseconds, tested on a quite regular Linux server from 2007 with 2 GB RAM. A value of 10.8 milliseconds means it will roughly determine 93 different (unique) input values per second. It case of 36.2 milliseconds, this is only 28 input values per second.
+In the table above, all measurements are shown in milliseconds (thousands of seconds), tested on a quite regular Linux server from 2007 (Core 2 Duo 2.7 GHz, 2 GB DDR2 RAM). A value of 6.9 milliseconds means it will roughly determine 144 different (unique) input values per second. It case of 39.2 milliseconds, this is only 26 input values per second. The more an input value resembles a full name (like C, D and F), the faster the result will be found. In case of G, the input is already a valid MO code, so it only almost takes no time at all (0.0001 seconds on our server).
 
-To improve speed, the `as.mo` function also takes into account the prevalence of human pathogenic microorganisms. The downside is of course that less prevalent microorganisms will be determined far less faster. See this example for the ID of *Burkholderia nodosa* (`B_BRKHL_NOD`):
+To achieve this speed, the `as.mo` function also takes into account the prevalence of human pathogenic microorganisms. The downside is of course that less prevalent microorganisms will be determined far less faster. See this example for the ID of *Burkholderia nodosa* (`B_BRKHL_NOD`):
 
 ```r
-microbenchmark(B = as.mo("burnod"),
+microbenchmark(A = as.mo("buno"),
+               B = as.mo("burnod"),
                C = as.mo("B. nodosa"),
                D = as.mo("B.  nodosa"),
                E = as.mo("BURNOD"),
                F = as.mo("Burkholderia nodosa"),
+               G = as.mo("B_BRKHL_NOD"),
                times = 10,
                unit = "ms")
 # Unit: milliseconds
-#  expr      min        lq      mean    median        uq       max neval
-#     B 175.9446 176.80440 179.18240 177.00131 177.62021 198.86286    10
-#     C  88.1902  88.57705  89.08851  88.84293  89.15498  91.76621    10
-#     D 110.2641 110.67497 113.66290 111.20534 111.80744 134.44699    10
-#     E 175.0728 177.04235 207.83542 190.38109 200.33448 388.12177    10
-#     F  45.0778  45.31617  52.72430  45.62962  67.85262  70.42250    10
+#  expr        min         lq        mean      median         uq        max neval
+#     A 124.175427 124.474837 125.8610536 125.3750560 126.160945 131.485994    10
+#     B 154.249713 155.364729 160.9077032 156.8738940 157.136183 197.315105    10
+#     C  66.066571  66.162393  66.5538611  66.4488130  66.698077  67.623404    10
+#     D  86.747693  86.918665  90.7831016  87.8149725  89.440982 116.767991    10
+#     E 154.863827 155.208563 162.6535954 158.4062465 168.593785 187.378088    10
+#     F  32.427028  32.638648  32.9929454  32.7860475  32.992813  34.674241    10
+#     G   0.213155   0.216578   0.2369226   0.2338985   0.253734   0.285581    10
 ```
-(Note: `A` is missing here, because `as.mo("buno")` returns `F_BUELL_NOT`: the ID of the fungus *Buellia notabilis*)
 
-That takes up to 12 times as much time! A value of 190.4 milliseconds means it can only determine ~5 different input values per second. We can conclude that looking up arbitrary codes of less prevalent microorganisms is the worst way to go, in terms of calculation performance.
+That takes up to 11 times as much time! A value of 158.4 milliseconds means it can only determine ~6 different input values per second. We can conclude that looking up arbitrary codes of less prevalent microorganisms is the worst way to go, in terms of calculation performance.
 
 To relieve this pitfall and further improve performance, two important calculations take almost no time at all: **repetive results** and **already precalculated results**.
 
 Let's set up 25,000 entries of `"Staphylococcus aureus"` and check its speed:
 ```r
 repetive_results <- rep("Staphylococcus aureus", 25000)
-microbenchmark(A = as.mo(repetive_results),
+microbenchmark(F = as.mo(repetive_results),
                times = 10,
                unit = "ms")
 # Unit: milliseconds
 #  expr      min       lq     mean   median       uq      max neval
-#     A 14.61282  14.6372 14.70817 14.72597 14.76124 14.78498    10
+#     F 12.24381 12.34707 13.84736 12.37689 12.43266 40.36833   100
 ```
 
-So transforming 25,000 times (!) `"Staphylococcus aureus"` only takes 4 ms (0.004 seconds) more than transforming it once. You only lose time on your unique input values.
+So transforming 25,000 times (!) `"Staphylococcus aureus"` only takes 6 ms (0.006 seconds) more than transforming it once. You only lose time on your unique input values.
 
 What about precalculated results? This package also contains helper functions for specific microbial properties, for example `mo_fullname`. It returns the full microbial name (genus, species and possibly subspecies) and uses `as.mo` internally. If the input is however an already precalculated result, it almost doesn't take any time at all (see 'C' below):
 
@@ -524,13 +535,13 @@ microbenchmark(A = mo_fullname("B_STPHY_AUR"),
                times = 10,
                unit = "ms")
 # Unit: milliseconds
-#  expr       min       lq       mean    median        uq       max neval
-#     A 13.548652 13.74588 13.8052969 13.813594 13.881165 14.090969    10
-#     B 15.079781 15.16785 15.3835842 15.374477 15.395115 16.072995    10
-#     C  0.171182  0.18563  0.2306307  0.203413  0.224610  0.492312    10
+#  expr       min        lq       mean     median        uq       max neval
+#     A 11.364086 11.460537 11.5104799 11.4795330 11.524860 11.818263    10
+#     B 11.976454 12.012352 12.1704592 12.0853020 12.210004 12.881737    10
+#     C  0.095823  0.102528  0.1167754  0.1153785  0.132629  0.140661    10
 ```
 
-So going from `mo_fullname("Staphylococcus aureus")` to `"Staphylococcus aureus"` takes 0.0002 seconds - it doesn't even start calculating *if the result would be the same as the expected resulting value*. That goes for all helper functions:
+So going from `mo_fullname("Staphylococcus aureus")` to `"Staphylococcus aureus"` takes 0.0001 seconds - it doesn't even start calculating *if the result would be the same as the expected resulting value*. That goes for all helper functions:
 
 ```r
 microbenchmark(A = mo_species("aureus"),
@@ -545,17 +556,17 @@ microbenchmark(A = mo_species("aureus"),
                unit = "ms")
 # Unit: milliseconds
 #  expr      min       lq      mean    median       uq      max neval
-#     A 0.145270 0.158750 0.1908419 0.1693655 0.218255 0.300528    10
-#     B 0.182985 0.184522 0.2025408 0.1970235 0.209944 0.243328    10
-#     C 0.176280 0.201632 0.2618147 0.2303025 0.339499 0.388249    10
-#     D 0.136890 0.139054 0.1552231 0.1518010 0.168738 0.193042    10
-#     E 0.100921 0.116496 0.1321823 0.1222930 0.129976 0.230477    10
-#     F 0.103017 0.110281 0.1214480 0.1199880 0.124319 0.147506    10
-#     G 0.099246 0.110280 0.1195553 0.1188705 0.125436 0.149741    10
-#     H 0.114331 0.117264 0.1249819 0.1220830 0.129557 0.143385    10
+#     A 0.096801 0.120966 0.1264836 0.1262045 0.135773 0.158192    10
+#     B 0.102807 0.123899 0.1258339 0.1286835 0.132420 0.143245    10
+#     C 0.122503 0.128299 0.1374623 0.1292070 0.139683 0.187315    10
+#     D 0.087372 0.093239 0.1053774 0.1026330 0.113633 0.128299    10
+#     E 0.084020 0.098617 0.1124383 0.1094420 0.113423 0.178515    10
+#     F 0.080667 0.085346 0.1068579 0.1128295 0.115030 0.133537    10
+#     G 0.087443 0.090026 0.1030171 0.0995250 0.106369 0.152325    10
+#     H 0.084648 0.103156 0.1058313 0.1095120 0.112864 0.117265    10
 ```
 
-Of course, when running `mo_phylum("Firmicutes")` the function has zero knowledge about the actual microorganism, namely *S. aureus*. But since the result would be `"Firmicutes"` too, there is no point in calculating the result. And since this package 'knows' all phyla of all known microorganisms (according to ITIS), it can just return the initial value immediately.
+Of course, when running `mo_phylum("Firmicutes")` the function has zero knowledge about the actual microorganism, namely *S. aureus*. But since the result would be `"Firmicutes"` too, there is no point in calculating the result. And because this package 'knows' all phyla of all known microorganisms (according to ITIS), it can just return the initial value immediately.
 
 ## Copyright
 
