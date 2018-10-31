@@ -4,17 +4,11 @@
 
 # how the Docker+R images work: https://hub.docker.com/r/rocker/r-ver/
 
-stages:
-    - build
-    - deploy
-
 variables:
   WARNINGS_ARE_ERRORS: 1
 
 R 3:
-    image: rocker/r-ver:3 # rocker/r-base
-    stage: build
-    allow_failure: false
+    image: rocker/r-ver:3 # test on R v3.*.*
     script:
     - apt-get update
     # install dependencies for package
@@ -27,56 +21,15 @@ R 3:
     - R CMD build . --no-build-vignettes --no-manual
     - PKG_FILE_NAME=$(ls -1t *.tar.gz | head -n 1)
     - R CMD check "${PKG_FILE_NAME}" --no-build-vignettes --no-manual --as-cran
-    - Rscript -e "options()" # to check for variables to circumvent testthat::skip_on_cran
     # code coverage
     - apt-get install --yes git
     - Rscript -e 'cc <- covr::package_coverage(); covr::codecov(coverage = cc, token = "50ffa0aa-fee0-4f8b-a11d-8c7edc6d32ca"); cat("Code coverage:", covr::percent_coverage(cc))'
     coverage: '/Code coverage: \d+\.\d+/'
     artifacts:
       paths:
-      - '*.Rcheck\**\*.log'
-      - '*.Rcheck\**\*.out'
-      - '*.Rcheck\**\*.fail'
-      - '*.Rcheck\**\*.Rout'
+      - '*.Rcheck/*.log'
+      - '*.Rcheck/*.out'
+      - '*.Rcheck/*.fail'
+      - '*.Rcheck/*.Rout'
       name: 'Rcheck log'
       expire_in: '1 month'
-
-R 3.4:
-    image: rocker/r-ver:3.4 # rocker/r-base
-    stage: build
-    allow_failure: true
-    script:
-    - apt-get update
-    # install dependencies for package
-    - apt-get install --yes --no-install-recommends libxml2-dev libssl-dev libcurl4-openssl-dev zlib1g-dev
-    - R -e 'install.packages("devtools")'
-    - R -e 'devtools::install_deps(dependencies = c("Depends", "Imports", "Suggests"))'
-    # remove vignettes folder and get VignetteBuilder field out of DESCRIPTION file
-    - rm -rf vignettes
-    - R -e 'd <- read.dcf("DESCRIPTION"); d[, colnames(d) == "VignetteBuilder"] <- NA; write.dcf(d, "DESCRIPTION")'
-    - R CMD build . --no-build-vignettes --no-manual
-    - PKG_FILE_NAME=$(ls -1t *.tar.gz | head -n 1)
-    - R CMD check "${PKG_FILE_NAME}" --no-build-vignettes --no-manual --as-cran
-
-R 3.5:
-    image: rocker/r-ver:3.5 # rocker/r-base
-    stage: build
-    allow_failure: true
-    script:
-    - apt-get update
-    # install dependencies for package
-    - apt-get install --yes --no-install-recommends libxml2-dev libssl-dev libcurl4-openssl-dev zlib1g-dev
-    - R -e 'install.packages("devtools")'
-    - R -e 'devtools::install_deps(dependencies = c("Depends", "Imports", "Suggests"))'
-    # remove vignettes folder and get VignetteBuilder field out of DESCRIPTION file
-    - rm -rf vignettes
-    - R -e 'd <- read.dcf("DESCRIPTION"); d[, colnames(d) == "VignetteBuilder"] <- NA; write.dcf(d, "DESCRIPTION")'
-    - R CMD build . --no-build-vignettes --no-manual
-    - PKG_FILE_NAME=$(ls -1t *.tar.gz | head -n 1)
-    - R CMD check "${PKG_FILE_NAME}" --no-build-vignettes --no-manual --as-cran
-
-coverage_job:
-    # image: rocker/r-ver:3
-    stage: deploy
-    script:
-    - ls

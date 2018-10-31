@@ -146,7 +146,7 @@ This is the latest **development version**. Although it may contain bugfixes and
 
 Development Test | Result | Reference
 --- | :---: | ---
-All functions checked on Linux and macOS | [![pipeline status](https://gitlab.com/msberends/AMR/badges/master/pipeline.svg)](https://gitlab.com/msberends/AMR/commits/master) | GitLab [[ref 1]](https://gitlab.com/msberends/AMR/pipelines) 
+All functions checked on Linux | [![pipeline status](https://gitlab.com/msberends/AMR/badges/master/pipeline.svg)](https://gitlab.com/msberends/AMR/commits/master) | GitLab CI [[ref 1]](https://gitlab.com/msberends/AMR/pipelines) 
 All functions checked on Windows | [![AppVeyor_Build](https://ci.appveyor.com/api/projects/status/gitlab/msberends/AMR?branch=master&svg=true)](https://ci.appveyor.com/project/msberends/amr-svxon) | Appveyor Systems Inc. [[ref 2]](https://ci.appveyor.com/project/msberends/amr-svxon)
 Percentage of syntax lines checked | [![Code_Coverage](https://codecov.io/gl/msberends/AMR/branch/master/graph/badge.svg)](https://codecov.io/gl/msberends/AMR) | Codecov LLC [[ref 3]](https://codecov.io/gl/msberends/AMR)
 
