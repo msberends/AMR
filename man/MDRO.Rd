@@ -36,7 +36,7 @@ EUCAST_exceptional_phenotypes(tbl, country = "EUCAST", ...)
 
 \item{country}{country code to determine guidelines. EUCAST rules will be used when left empty, see Details. Should be or a code from the \href{https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2#Officially_assigned_code_elements}{list of ISO 3166-1 alpha-2 country codes}. Case-insensitive. Currently supported are \code{de} (Germany) and \code{nl} (the Netherlands).}
 
-\item{col_mo}{column name of the microbial ID in \code{tbl} - values in this column should be present in \code{microorganisms$mo}, see \code{\link{microorganisms}}}
+\item{col_mo}{column name of the unique IDs of the microorganisms (see \code{\link{mo}}), defaults to the first column of class \code{mo}. Values will be coerced using \code{\link{as.mo}}.}
 
 \item{info}{print progress}
 
@@ -160,7 +160,7 @@ EUCAST_exceptional_phenotypes(tbl, country = "EUCAST", ...)
 
 \item{vanc}{column name of an antibiotic, see Details}
 
-\item{col_bactid}{Deprecated. Use \code{col_mo} instead.}
+\item{col_bactid}{deprecated, use \code{col_mo} instead.}
 
 \item{...}{parameters that are passed on to methods}
 }

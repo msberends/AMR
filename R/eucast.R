@@ -20,13 +20,13 @@
 #'
 #' Apply susceptibility rules as defined by the European Committee on Antimicrobial Susceptibility Testing (EUCAST, \url{http://eucast.org}), see \emph{Source}. This includes (1) expert rules, (2) intrinsic resistance and (3) inferred resistance as defined in their breakpoint tables.
 #' @param tbl table with antibiotic columns, like e.g. \code{amox} and \code{amcl}
-#' @param col_mo column name of the microbial ID in \code{tbl} - values in this column should be present in \code{microorganisms$mo}, see \code{\link{microorganisms}}
 #' @param info print progress
 #' @param rules a character vector that specifies which rules should be applied - one or more of \code{c("breakpoints", "expert", "other", "all")}
 #' @param verbose a logical to indicate whether extensive info should be returned as a \code{data.frame} with info about which rows and columns are effected
 #' @param amcl,amik,amox,ampi,azit,azlo,aztr,cefa,cfep,cfot,cfox,cfra,cfta,cftr,cfur,chlo,cipr,clar,clin,clox,coli,czol,dapt,doxy,erta,eryt,fosf,fusi,gent,imip,kana,levo,linc,line,mero,mezl,mino,moxi,nali,neom,neti,nitr,norf,novo,oflo,oxac,peni,pipe,pita,poly,pris,qida,rifa,roxi,siso,teic,tetr,tica,tige,tobr,trim,trsu,vanc column name of an antibiotic, see Details
-#' @param col_bactid Deprecated. Use \code{col_mo} instead.
+#' @param col_bactid deprecated, use \code{col_mo} instead.
 #' @param ... parameters that are passed on to \code{EUCAST_rules}
+#' @inheritParams first_isolate
 #' @details To define antibiotics column names, input a text or use \code{NA} to skip a column (e.g. \code{tica = NA}). Non-existing columns will anyway be skipped with a warning. See the Antibiotics section for an explanation of the abbreviations.
 #' @section Antibiotics:
 #' Abbrevations of the column containing antibiotics in the form: \strong{abbreviation}: generic name (\emph{ATC code})
@@ -140,7 +140,7 @@
 #' # 4  Klebsiella pneumoniae    -    -    -    -    -    S    S
 #' # 5 Pseudomonas aeruginosa    -    -    -    -    -    S    S
 #'
-#' b <- EUCAST_rules(a) # 18 results are forced as R or S
+#' b <- EUCAST_rules(a, "mo") # 18 results are forced as R or S
 #'
 #' b
 #' #                       mo vanc amox coli cfta cfur peni cfox

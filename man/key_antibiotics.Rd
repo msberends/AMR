@@ -20,7 +20,7 @@ key_antibiotics_equal(x, y, type = c("keyantibiotics", "points"),
 \arguments{
 \item{tbl}{table with antibiotics coloms, like \code{amox} and \code{amcl}.}
 
-\item{col_mo}{column name of the unique IDs of the microorganisms (see \code{\link{mo}}), defaults to the first column of class \code{mo}. If this column has another class than \code{"mo"}, values will be coerced using \code{\link{as.mo}}.}
+\item{col_mo}{column name of the unique IDs of the microorganisms (see \code{\link{mo}}), defaults to the first column of class \code{mo}. Values will be coerced using \code{\link{as.mo}}.}
 
 \item{universal_1, universal_2, universal_3, universal_4, universal_5, universal_6}{column names of \strong{broad-spectrum} antibiotics, case-insensitive}
 

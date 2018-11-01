@@ -46,7 +46,7 @@ interpretive_reading(...)
 \arguments{
 \item{tbl}{table with antibiotic columns, like e.g. \code{amox} and \code{amcl}}
 
-\item{col_mo}{column name of the microbial ID in \code{tbl} - values in this column should be present in \code{microorganisms$mo}, see \code{\link{microorganisms}}}
+\item{col_mo}{column name of the unique IDs of the microorganisms (see \code{\link{mo}}), defaults to the first column of class \code{mo}. Values will be coerced using \code{\link{as.mo}}.}
 
 \item{info}{print progress}
 
@@ -56,7 +56,7 @@ interpretive_reading(...)
 
 \item{amcl, amik, amox, ampi, azit, azlo, aztr, cefa, cfep, cfot, cfox, cfra, cfta, cftr, cfur, chlo, cipr, clar, clin, clox, coli, czol, dapt, doxy, erta, eryt, fosf, fusi, gent, imip, kana, levo, linc, line, mero, mezl, mino, moxi, nali, neom, neti, nitr, norf, novo, oflo, oxac, peni, pipe, pita, poly, pris, qida, rifa, roxi, siso, teic, tetr, tica, tige, tobr, trim, trsu, vanc}{column name of an antibiotic, see Details}
 
-\item{col_bactid}{Deprecated. Use \code{col_mo} instead.}
+\item{col_bactid}{deprecated, use \code{col_mo} instead.}
 
 \item{...}{parameters that are passed on to \code{EUCAST_rules}}
 }
@@ -162,7 +162,7 @@ a
 # 4  Klebsiella pneumoniae    -    -    -    -    -    S    S
 # 5 Pseudomonas aeruginosa    -    -    -    -    -    S    S
 
-b <- EUCAST_rules(a) # 18 results are forced as R or S
+b <- EUCAST_rules(a, "mo") # 18 results are forced as R or S
 
 b
 #                       mo vanc amox coli cfta cfur peni cfox

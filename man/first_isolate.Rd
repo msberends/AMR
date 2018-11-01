@@ -23,7 +23,7 @@ first_isolate(tbl, col_date = NULL, col_patient_id = NULL,
 
 \item{col_patient_id}{column name of the unique IDs of the patients, defaults to the first column that starts with 'patient' (case insensitive)}
 
-\item{col_mo}{column name of the unique IDs of the microorganisms (see \code{\link{mo}}), defaults to the first column of class \code{mo}. If this column has another class than \code{"mo"}, values will be coerced using \code{\link{as.mo}}.}
+\item{col_mo}{column name of the unique IDs of the microorganisms (see \code{\link{mo}}), defaults to the first column of class \code{mo}. Values will be coerced using \code{\link{as.mo}}.}
 
 \item{col_testcode}{column name of the test codes. Use \code{col_testcode = NA} to \strong{not} exclude certain test codes (like test codes for screening). In that case \code{testcodes_exclude} will be ignored. Supports tidyverse-like quotation.}
 
