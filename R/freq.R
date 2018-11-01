@@ -658,14 +658,27 @@ as_tibble.frequency_tbl <- function(x, validate = TRUE, ..., rownames = NA) {
 #' @exportMethod hist.frequency_tbl
 #' @export
 #' @importFrom graphics hist
-hist.frequency_tbl <- function(x, ...) {
+hist.frequency_tbl <- function(x, breaks = "Sturges", main = NULL, ...) {
   opt <- attr(x, 'opt')
+  if (!class(x$item) %in% c("numeric", "double", "integer", "Date")) {
+    stop("'x' must be numeric or Date.", call. = FALSE)
+  }
   if (!is.null(opt$vars)) {
     title <- opt$vars
+  } else if (!is.null(opt$data)) {
+    title <- opt$data
   } else {
-    title <- ""
+    title <- "frequency table"
   }
-  hist(as.vector(x), main = paste("Histogram of", title), xlab = title, ...)
+  if (class(x$item) == "Date") {
+    x <- as.Date(as.vector(x), origin = "1970-01-01")
+  } else {
+    x <- as.vector(x)
+  }
+  if (is.null(main)) {
+    main <- paste("Histogram of", title)
+  }
+  hist(x, main = main, xlab = title, ...)
 }
 
 #' @noRd

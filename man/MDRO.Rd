@@ -220,6 +220,7 @@ Abbrevations of the column containing antibiotics in the form: \strong{abbreviat
  \strong{novo}: novobiocin (an ATCvet code: \emph{QJ01XX95}),
  \strong{oflo}: ofloxacin (\emph{J01MA01}),
  \strong{peni}: penicillin (\emph{J01RA01}),
+ \strong{pipe}: piperacillin (\emph{J01CA12}),
  \strong{pita}: piperacillin+tazobactam (\emph{J01CR05}),
  \strong{poly}: polymyxin B (\emph{J01XB02}),
  \strong{pris}: pristinamycin (\emph{J01FG01}),

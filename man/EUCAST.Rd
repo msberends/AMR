@@ -35,11 +35,12 @@ EUCAST_rules(tbl, col_mo = "mo", info = TRUE,
   line = "line", mero = "mero", mezl = "mezl", mino = "mino",
   moxi = "moxi", nali = "nali", neom = "neom", neti = "neti",
   nitr = "nitr", norf = "norf", novo = "novo", oflo = "oflo",
-  oxac = "oxac", peni = "peni", pita = "pita", poly = "poly",
-  pris = "pris", qida = "qida", rifa = "rifa", roxi = "roxi",
-  siso = "siso", teic = "teic", tetr = "tetr", tica = "tica",
-  tige = "tige", tobr = "tobr", trim = "trim", trsu = "trsu",
-  vanc = "vanc", col_bactid = "bactid", verbose = FALSE)
+  oxac = "oxac", peni = "peni", pipe = "pipe", pita = "pita",
+  poly = "poly", pris = "pris", qida = "qida", rifa = "rifa",
+  roxi = "roxi", siso = "siso", teic = "teic", tetr = "tetr",
+  tica = "tica", tige = "tige", tobr = "tobr", trim = "trim",
+  trsu = "trsu", vanc = "vanc", col_bactid = "bactid",
+  verbose = FALSE)
 
 interpretive_reading(...)
 }
@@ -52,7 +53,7 @@ interpretive_reading(...)
 
 \item{rules}{a character vector that specifies which rules should be applied - one or more of \code{c("breakpoints", "expert", "other", "all")}}
 
-\item{amcl, amik, amox, ampi, azit, azlo, aztr, cefa, cfep, cfot, cfox, cfra, cfta, cftr, cfur, chlo, cipr, clar, clin, clox, coli, czol, dapt, doxy, erta, eryt, fosf, fusi, gent, imip, kana, levo, linc, line, mero, mezl, mino, moxi, nali, neom, neti, nitr, norf, novo, oflo, oxac, peni, pita, poly, pris, qida, rifa, roxi, siso, teic, tetr, tica, tige, tobr, trim, trsu, vanc}{column name of an antibiotic, see Details}
+\item{amcl, amik, amox, ampi, azit, azlo, aztr, cefa, cfep, cfot, cfox, cfra, cfta, cftr, cfur, chlo, cipr, clar, clin, clox, coli, czol, dapt, doxy, erta, eryt, fosf, fusi, gent, imip, kana, levo, linc, line, mero, mezl, mino, moxi, nali, neom, neti, nitr, norf, novo, oflo, oxac, peni, pipe, pita, poly, pris, qida, rifa, roxi, siso, teic, tetr, tica, tige, tobr, trim, trsu, vanc}{column name of an antibiotic, see Details}
 
 \item{col_bactid}{Deprecated. Use \code{col_mo} instead.}
 
@@ -119,6 +120,7 @@ Abbrevations of the column containing antibiotics in the form: \strong{abbreviat
  \strong{novo}: novobiocin (an ATCvet code: \emph{QJ01XX95}),
  \strong{oflo}: ofloxacin (\emph{J01MA01}),
  \strong{peni}: penicillin (\emph{J01RA01}),
+ \strong{pipe}: piperacillin (\emph{J01CA12}),
  \strong{pita}: piperacillin+tazobactam (\emph{J01CR05}),
  \strong{poly}: polymyxin B (\emph{J01XB02}),
  \strong{pris}: pristinamycin (\emph{J01FG01}),

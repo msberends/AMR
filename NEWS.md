@@ -13,6 +13,7 @@
   * Better error handling when rules cannot be applied (i.e. new values could not be inserted)
   * The number of affected values will now only be measured once per row/column combination
   * Data set `septic_patients` now reflects these changes
+  * Small fixes to EUCAST clinical breakpoint rules
 * Tremendous speed improvement for `as.mo` (and subsequently all `mo_*` functions), as empty values wil be ignored *a priori*
 * Fewer than 3 characters as input for `as.mo` will return NA
 * Added parameter `combine_IR` (TRUE/FALSE) to functions `portion_df` and `count_df`, to indicate that all values of I and R must be merged into one, so the output only consists of S vs. IR (susceptible vs. non-susceptible)

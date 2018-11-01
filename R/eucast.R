@@ -23,7 +23,7 @@
 #' @param col_mo column name of the microbial ID in \code{tbl} - values in this column should be present in \code{microorganisms$mo}, see \code{\link{microorganisms}}
 #' @param info print progress
 #' @param rules a character vector that specifies which rules should be applied - one or more of \code{c("breakpoints", "expert", "other", "all")}
-#' @param amcl,amik,amox,ampi,azit,azlo,aztr,cefa,cfep,cfot,cfox,cfra,cfta,cftr,cfur,chlo,cipr,clar,clin,clox,coli,czol,dapt,doxy,erta,eryt,fosf,fusi,gent,imip,kana,levo,linc,line,mero,mezl,mino,moxi,nali,neom,neti,nitr,norf,novo,oflo,oxac,peni,pita,poly,pris,qida,rifa,roxi,siso,teic,tetr,tica,tige,tobr,trim,trsu,vanc column name of an antibiotic, see Details
+#' @param amcl,amik,amox,ampi,azit,azlo,aztr,cefa,cfep,cfot,cfox,cfra,cfta,cftr,cfur,chlo,cipr,clar,clin,clox,coli,czol,dapt,doxy,erta,eryt,fosf,fusi,gent,imip,kana,levo,linc,line,mero,mezl,mino,moxi,nali,neom,neti,nitr,norf,novo,oflo,oxac,peni,pipe,pita,poly,pris,qida,rifa,roxi,siso,teic,tetr,tica,tige,tobr,trim,trsu,vanc column name of an antibiotic, see Details
 #' @param col_bactid Deprecated. Use \code{col_mo} instead.
 #' @param verbose a logical to indicate whether extensive info should be returned as a \code{data.frame} with info about which rows and columns are effected
 #' @param ... parameters that are passed on to \code{EUCAST_rules}
@@ -77,6 +77,7 @@
 #'  \strong{novo}: novobiocin (an ATCvet code: \emph{QJ01XX95}),
 #'  \strong{oflo}: ofloxacin (\emph{J01MA01}),
 #'  \strong{peni}: penicillin (\emph{J01RA01}),
+#'  \strong{pipe}: piperacillin (\emph{J01CA12}),
 #'  \strong{pita}: piperacillin+tazobactam (\emph{J01CR05}),
 #'  \strong{poly}: polymyxin B (\emph{J01XB02}),
 #'  \strong{pris}: pristinamycin (\emph{J01FG01}),
@@ -199,6 +200,7 @@ EUCAST_rules <- function(tbl,
                          oflo = 'oflo',
                          oxac = 'oxac',
                          peni = 'peni',
+                         pipe = 'pipe',
                          pita = 'pita',
                          poly = 'poly',
                          pris = 'pris',
@@ -257,8 +259,8 @@ EUCAST_rules <- function(tbl,
                 cfox, cfta, cftr, cfur, chlo, cipr, clar, clin, clox, coli,
                 czol, dapt, doxy, erta, eryt, fosf, fusi, gent, imip, kana,
                 levo, linc, line, mero, mezl, mino, moxi, nali, neom, neti, nitr,
-                novo, norf, oflo, oxac, peni, pita, poly, pris,  qida, rifa, roxi, siso,
-                teic, tetr, tica, tige, tobr, trim, trsu, vanc)
+                novo, norf, oflo, oxac, peni, pipe, pita, poly, pris, qida, rifa,
+                roxi, siso, teic, tetr, tica, tige, tobr, trim, trsu, vanc)
   col.list <- check_available_columns(tbl = tbl, col.list = col.list, info = info)
   amcl <- col.list[amcl]
   amik <- col.list[amik]
@@ -307,6 +309,7 @@ EUCAST_rules <- function(tbl,
   oflo <- col.list[oflo]
   oxac <- col.list[oxac]
   peni <- col.list[peni]
+  pipe <- col.list[pipe]
   pita <- col.list[pita]
   poly <- col.list[poly]
   pris <- col.list[pris]
@@ -404,7 +407,7 @@ EUCAST_rules <- function(tbl,
   cephalosporins <- c(cfep, cfot, cfox, cfra, cfta, cftr, cfur, czol)
   carbapenems <- c(erta, imip, mero)
   aminopenicillins <- c(ampi, amox)
-  ureidopenicillins <- c(pita, azlo, mezl)
+  ureidopenicillins <- c(pipe, pita, azlo, mezl)
   fluoroquinolones <- c(oflo, cipr, norf, levo, moxi)
   all_betalactam <- c(aminopenicillins, ureidopenicillins, cephalosporins, carbapenems, amcl, oxac, clox, peni)
 
@@ -483,7 +486,7 @@ EUCAST_rules <- function(tbl,
                rows = which(tbl$genus == "Staphylococcus"
                             & tbl[, peni] == 'S'
                             & tbl[, cfox] == 'S'),
-               cols = c(ampi, amox, pita, tica))
+               cols = c(ampi, amox, pipe, tica))
       edit_rsi(to = 'S',
                rule = c(rule_group, rule),
                rows = which(tbl$genus == "Staphylococcus"
@@ -503,7 +506,7 @@ EUCAST_rules <- function(tbl,
                rule = c(rule_group, rule),
                rows = which(tbl$fullname %like% "^Staphylococcus saprophyticus"
                             & tbl[, ampi] == 'S'),
-               cols = c(ampi, amox, amcl, pita))
+               cols = c(amox, amcl, pipe, pita))
     }
     if (!is.na(cfox)) {
       # inferred from cefoxitin
@@ -564,11 +567,11 @@ EUCAST_rules <- function(tbl,
       changed_results <- 0
       cat(rule)
     }
-    if (!is.na(peni)) {
+    if (!is.na(ampi)) { # penicillin group
       edit_rsi(to = 'R',
                rule = c(rule_group, rule),
                rows = which(tbl$fullname %like% "^Enterococcus faecium"
-                            & tbl[, peni] == 'R'),
+                            & tbl[, ampi] == 'R'),
                cols = all_betalactam)
     }
     if (!is.na(ampi)) {
@@ -576,17 +579,17 @@ EUCAST_rules <- function(tbl,
                rule = c(rule_group, rule),
                rows = which(tbl$genus == "Enterococcus"
                             & tbl[, ampi] == 'S'),
-               cols = c(amox, amcl, pita))
+               cols = c(amox, amcl, pipe, pita))
       edit_rsi(to = 'I',
                rule = c(rule_group, rule),
                rows = which(tbl$genus == "Enterococcus"
                             & tbl[, ampi] == 'I'),
-               cols = c(amox, amcl, pita))
+               cols = c(amox, amcl, pipe, pita))
       edit_rsi(to = 'R',
                rule = c(rule_group, rule),
                rows = which(tbl$genus == "Enterococcus"
                             & tbl[, ampi] == 'R'),
-               cols = c(amox, amcl, pita))
+               cols = c(amox, amcl, pipe, pita))
     }
     if (!is.na(norf)) {
       edit_rsi(to = 'S',
@@ -678,24 +681,24 @@ EUCAST_rules <- function(tbl,
                rule = c(rule_group, rule),
                rows = which(tbl$fullname %like% "^Streptococcus pneumoniae"
                             & tbl[, peni] == 'S'),
-               cols = c(ampi, amox, amcl, pita))
+               cols = c(ampi, amox, amcl, pipe, pita))
     }
     if (!is.na(ampi)) {
       edit_rsi(to = 'S',
                rule = c(rule_group, rule),
                rows = which(tbl$fullname %like% "^Streptococcus pneumoniae"
                             & tbl[, ampi] == 'S'),
-               cols = c(ampi, amox, amcl, pita))
+               cols = c(amox, amcl, pipe, pita))
       edit_rsi(to = 'I',
                rule = c(rule_group, rule),
                rows = which(tbl$fullname %like% "^Streptococcus pneumoniae"
                             & tbl[, ampi] == 'I'),
-               cols = c(ampi, amox, amcl, pita))
+               cols = c(amox, amcl, pipe, pita))
       edit_rsi(to = 'R',
                rule = c(rule_group, rule),
                rows = which(tbl$fullname %like% "^Streptococcus pneumoniae"
                             & tbl[, ampi] == 'R'),
-               cols = c(ampi, amox, amcl, pita))
+               cols = c(amox, amcl, pipe, pita))
     }
     if (!is.na(norf)) {
       edit_rsi(to = 'S',
@@ -743,22 +746,29 @@ EUCAST_rules <- function(tbl,
                         "intermedius", "mitis", "mutans", "oligofermentans", "oralis",
                         "parasanguinis", "peroris", "pseudopneumoniae", "salivarius",
                         "sanguinis", "sinensis", "sobrinus", "thermophilus", "vestibularis")
+    if (!is.na(peni)) {
+      edit_rsi(to = 'S',
+               rule = c(rule_group, rule),
+               rows = which(tbl$genus == "Streptococcus" & tbl$species %in% viridans_group
+                            & tbl[, peni] == 'S'),
+               cols = c(ampi, amox, amcl, pipe, pita))
+    }
     if (!is.na(ampi)) {
       edit_rsi(to = 'S',
                rule = c(rule_group, rule),
                rows = which(tbl$genus == "Streptococcus" & tbl$species %in% viridans_group
                             & tbl[, ampi] == 'S'),
-               cols = c(ampi, amox, amcl, pita))
+               cols = c(amox, amcl, pipe, pita))
       edit_rsi(to = 'I',
                rule = c(rule_group, rule),
                rows = which(tbl$genus == "Streptococcus" & tbl$species %in% viridans_group
                             & tbl[, ampi] == 'I'),
-               cols = c(ampi, amox, amcl, pita))
+               cols = c(amox, amcl, pipe, pita))
       edit_rsi(to = 'R',
                rule = c(rule_group, rule),
                rows = which(tbl$genus == "Streptococcus" & tbl$species %in% viridans_group
                             & tbl[, ampi] == 'R'),
-               cols = c(ampi, amox, amcl, pita))
+               cols = c(amox, amcl, pipe, pita))
     }
     if (info == TRUE) {
       txt_ok()
@@ -775,17 +785,24 @@ EUCAST_rules <- function(tbl,
                rule = c(rule_group, rule),
                rows = which(tbl$fullname %like% "^Haemophilus influenzae"
                             & tbl[, ampi] == 'S'),
-               cols = c(amox, pita))
+               cols = c(amox, pipe))
       edit_rsi(to = 'I',
                rule = c(rule_group, rule),
                rows = which(tbl$fullname %like% "^Haemophilus influenzae"
                             & tbl[, ampi] == 'I'),
-               cols = c(amox, pita))
+               cols = c(amox, pipe))
       edit_rsi(to = 'R',
                rule = c(rule_group, rule),
                rows = which(tbl$fullname %like% "^Haemophilus influenzae"
                             & tbl[, ampi] == 'R'),
-               cols = c(amox, pita))
+               cols = c(amox, pipe))
+    }
+    if (!is.na(peni)) {
+      edit_rsi(to = 'S',
+               rule = c(rule_group, rule),
+               rows = which(tbl$fullname %like% "^Haemophilus influenzae"
+                            & tbl[, peni] == 'S'),
+               cols = c(ampi, amox, amcl, pipe, pita))
     }
     if (!is.na(amcl)) {
       edit_rsi(to = 'S',
@@ -889,28 +906,28 @@ EUCAST_rules <- function(tbl,
     if (!is.na(peni)) {
       edit_rsi(to = 'S',
                rule = c(rule_group, rule),
-               rows = which((tbl$genus %in% c("Clostridium", "Actinomyces", "Propionibacterium",
-                                              "Bifidobacterium", "Eggerthella", "Eubacterium",
-                                              "Lactobacillus ", "Actinomyces")
-                             | tbl$fullname %like% "^Propionibacterium acnes")
+               rows = which(tbl$genus %in% c("Clostridium", "Actinomyces", "Propionibacterium",
+                                             "Cutibacterium", # new name of Propionibacterium
+                                             "Bifidobacterium", "Eggerthella", "Eubacterium",
+                                             "Lactobacillus ", "Actinomyces")
                             & tbl[, peni] == 'S'),
-               cols = c(ampi, amox, pita, tica))
+               cols = c(ampi, amox, pipe, pita, tica))
       edit_rsi(to = 'I',
                rule = c(rule_group, rule),
-               rows = which((tbl$genus %in% c("Clostridium", "Actinomyces", "Propionibacterium",
-                                              "Bifidobacterium", "Eggerthella", "Eubacterium",
-                                              "Lactobacillus ", "Actinomyces")
-                             | tbl$fullname %like% "^Propionibacterium acnes")
+               rows = which(tbl$genus %in% c("Clostridium", "Actinomyces", "Propionibacterium",
+                                             "Cutibacterium", # new name of Propionibacterium
+                                             "Bifidobacterium", "Eggerthella", "Eubacterium",
+                                             "Lactobacillus ", "Actinomyces")
                             & tbl[, peni] == 'I'),
-               cols = c(ampi, amox, pita, tica))
+               cols = c(ampi, amox, pipe, pita, tica))
       edit_rsi(to = 'R',
                rule = c(rule_group, rule),
-               rows = which((tbl$genus %in% c("Clostridium", "Actinomyces", "Propionibacterium",
-                                              "Bifidobacterium", "Eggerthella", "Eubacterium",
-                                              "Lactobacillus ", "Actinomyces")
-                             | tbl$fullname %like% "^Propionibacterium acnes")
+               rows = which(tbl$genus %in% c("Clostridium", "Actinomyces", "Propionibacterium",
+                                             "Cutibacterium", # new name of Propionibacterium
+                                             "Bifidobacterium", "Eggerthella", "Eubacterium",
+                                             "Lactobacillus ", "Actinomyces")
                             & tbl[, peni] == 'R'),
-               cols = c(ampi, amox, pita, tica))
+               cols = c(ampi, amox, pipe, pita, tica))
     }
     if (info == TRUE) {
       txt_ok()
@@ -928,19 +945,19 @@ EUCAST_rules <- function(tbl,
                rows = which(tbl$genus %in% c("Bacteroides", "Prevotella", "Porphyromonas",
                                              "Fusobacterium", "Bilophila ", "Mobiluncus")
                             & tbl[, peni] == 'S'),
-               cols = c(ampi, amox, pita, tica))
+               cols = c(ampi, amox, pipe, pita, tica))
       edit_rsi(to = 'I',
                rule = c(rule_group, rule),
                rows = which(tbl$genus %in% c("Bacteroides", "Prevotella", "Porphyromonas",
                                              "Fusobacterium", "Bilophila ", "Mobiluncus")
                             & tbl[, peni] == 'I'),
-               cols = c(ampi, amox, pita, tica))
+               cols = c(ampi, amox, pipe, pita, tica))
       edit_rsi(to = 'R',
                rule = c(rule_group, rule),
                rows = which(tbl$genus %in% c("Bacteroides", "Prevotella", "Porphyromonas",
                                              "Fusobacterium", "Bilophila ", "Mobiluncus")
                             & tbl[, peni] == 'R'),
-               cols = c(ampi, amox, pita, tica))
+               cols = c(ampi, amox, pipe, pita, tica))
     }
     if (info == TRUE) {
       txt_ok()
@@ -972,8 +989,8 @@ EUCAST_rules <- function(tbl,
     if (info == TRUE) {
       txt_ok()
     }
-    # Campylobacter jejuni ----
-    rule <- 'Campylobacter jejuni'
+    # Campylobacter jejuni and coli ----
+    rule <- 'Campylobacter jejuni and coli'
     if (info == TRUE) {
       warned <- FALSE
       changed_results <- 0
@@ -982,34 +999,34 @@ EUCAST_rules <- function(tbl,
     if (!is.na(eryt)) {
       edit_rsi(to = 'S',
                rule = c(rule_group, rule),
-               rows = which(tbl$fullname %like% "^Campylobacter jejuni"
+               rows = which(tbl$fullname %like% "^Campylobacter (jejuni|coli)"
                             & tbl[, eryt] == 'S'),
                cols = c(azit, clar))
       edit_rsi(to = 'I',
                rule = c(rule_group, rule),
-               rows = which(tbl$fullname %like% "^Campylobacter jejuni"
+               rows = which(tbl$fullname %like% "^Campylobacter (jejuni|coli)"
                             & tbl[, eryt] == 'I'),
                cols = c(azit, clar))
       edit_rsi(to = 'R',
                rule = c(rule_group, rule),
-               rows = which(tbl$fullname %like% "^Campylobacter jejuni"
+               rows = which(tbl$fullname %like% "^Campylobacter (jejuni|coli)"
                             & tbl[, eryt] == 'R'),
                cols = c(azit, clar))
     }
     if (!is.na(tetr)) {
       edit_rsi(to = 'S',
                rule = c(rule_group, rule),
-               rows = which(tbl$fullname %like% "^Campylobacter jejuni"
+               rows = which(tbl$fullname %like% "^Campylobacter (jejuni|coli)"
                             & tbl[, tetr] == 'S'),
                cols = doxy)
       edit_rsi(to = 'I',
                rule = c(rule_group, rule),
-               rows = which(tbl$fullname %like% "^Campylobacter jejuni"
+               rows = which(tbl$fullname %like% "^Campylobacter (jejuni|coli)"
                             & tbl[, tetr] == 'I'),
                cols = doxy)
       edit_rsi(to = 'R',
                rule = c(rule_group, rule),
-               rows = which(tbl$fullname %like% "^Campylobacter jejuni"
+               rows = which(tbl$fullname %like% "^Campylobacter (jejuni|coli)"
                             & tbl[, tetr] == 'R'),
                cols = doxy)
     }
@@ -1022,6 +1039,23 @@ EUCAST_rules <- function(tbl,
       warned <- FALSE
       changed_results <- 0
       cat(rule)
+    }
+    if (!is.na(norf)) {
+      edit_rsi(to = 'S',
+               rule = c(rule_group, rule),
+               rows = which(tbl$fullname %like% "^Aerococcus (sanguinicola|urinae)"
+                            & tbl[, norf] == 'S'),
+               cols = fluoroquinolones)
+      edit_rsi(to = 'I',
+               rule = c(rule_group, rule),
+               rows = which(tbl$fullname %like% "^Aerococcus (sanguinicola|urinae)"
+                            & tbl[, norf] == 'I'),
+               cols = fluoroquinolones)
+      edit_rsi(to = 'R',
+               rule = c(rule_group, rule),
+               rows = which(tbl$fullname %like% "^Aerococcus (sanguinicola|urinae)"
+                            & tbl[, norf] == 'R'),
+               cols = fluoroquinolones)
     }
     if (!is.na(cipr)) {
       edit_rsi(to = 'S',
@@ -1089,16 +1123,6 @@ EUCAST_rules <- function(tbl,
                rule = c(rule_group, rule),
                rows = which(tbl$fullname %like% "^Kingella kingae"
                             & tbl[, tetr] == 'S'),
-               cols = doxy)
-      edit_rsi(to = 'I',
-               rule = c(rule_group, rule),
-               rows = which(tbl$fullname %like% "^Kingella kingae"
-                            & tbl[, tetr] == 'I'),
-               cols = doxy)
-      edit_rsi(to = 'R',
-               rule = c(rule_group, rule),
-               rows = which(tbl$fullname %like% "^Kingella kingae"
-                            & tbl[, tetr] == 'R'),
                cols = doxy)
     }
     if (info == TRUE) {
@@ -1243,9 +1267,9 @@ EUCAST_rules <- function(tbl,
     # Burkholderia
     edit_rsi(to = 'R',
              rule = c(rule_group, rule),
-             # onder 'Burkholderia cepacia complex' vallen deze species allemaal: PMID 16217180.
+             # the 'Burkholderia cepacia complex' are all these species: (PMID 16217180)
              rows = which(tbl$fullname %like% '^Burkholderia (cepacia|multivorans|cenocepacia|stabilis|vietnamiensis|dolosa|ambifaria|anthina|pyrrocinia|ubonensis)'),
-             cols = c(aminopenicillins, amcl, tica, pita, czol, cfot, cftr, aztr, erta, cipr, chlo, aminoglycosides, trim, fosf, polymyxins))
+             cols = c(aminopenicillins, amcl, tica, pipe, pita, czol, cfot, cftr, aztr, erta, cipr, chlo, aminoglycosides, trim, fosf, polymyxins))
     # Elizabethkingia
     edit_rsi(to = 'R',
              rule = c(rule_group, rule),
@@ -1255,7 +1279,7 @@ EUCAST_rules <- function(tbl,
     edit_rsi(to = 'R',
              rule = c(rule_group, rule),
              rows = which(tbl$fullname %like% '^Ochrobactrum anthropi'),
-             cols = c(aminopenicillins, amcl, tica, pita, czol, cfot, cftr, cfta, cfep, aztr, erta))
+             cols = c(aminopenicillins, amcl, tica, pipe, pita, czol, cfot, cftr, cfta, cfep, aztr, erta))
     # Pseudomonas
     edit_rsi(to = 'R',
              rule = c(rule_group, rule),
@@ -1265,7 +1289,7 @@ EUCAST_rules <- function(tbl,
     edit_rsi(to = 'R',
              rule = c(rule_group, rule),
              rows = which(tbl$fullname %like% '^Stenotrophomonas maltophilia'),
-             cols = c(aminopenicillins, amcl, tica, pita, czol, cfot, cftr, cfta, aztr, erta, imip, mero, aminoglycosides, trim, fosf, tetr))
+             cols = c(aminopenicillins, amcl, tica, pipe, pita, czol, cfot, cftr, cfta, aztr, erta, imip, mero, aminoglycosides, trim, fosf, tetr))
     if (info == TRUE) {
       txt_ok()
     }
@@ -1430,13 +1454,13 @@ EUCAST_rules <- function(tbl,
       cat(rule)
     }
     # rule 9.3
-    if (!is.na(tica) & !is.na(pita)) {
+    if (!is.na(tica) & !is.na(pipe)) {
       edit_rsi(to = 'R',
                rule = c(rule_group, rule),
                rows = which(tbl$family == 'Enterobacteriaceae'
                             & tbl[, tica] == 'R'
-                            & tbl[, pita] == 'S'),
-               cols = pita)
+                            & tbl[, pipe] == 'S'),
+               cols = pipe)
     }
     if (info == TRUE) {
       txt_ok()
@@ -1456,7 +1480,7 @@ EUCAST_rules <- function(tbl,
     #          rule = c(rule_group, rule),
     #          rows = which(tbl$fullname %like% '^Haemophilus influenza'
     #                       & tbl[, ampi] == 'R'),
-    #          cols = c(ampi, amox, amcl, pita, cfur))
+    #          cols = c(ampi, amox, amcl, pipe, pita, cfur))
     # }
     if (info == TRUE) {
       txt_ok()
@@ -1602,6 +1626,21 @@ EUCAST_rules <- function(tbl,
     if (info == TRUE) {
       txt_ok()
     }
+    rule <- 'Non-EUCAST: piperacillin = R where piperacillin/tazobactam = R'
+    if (info == TRUE) {
+      warned <- FALSE
+      changed_results <- 0
+      cat(rule)
+    }
+    if (!is.na(pita)) {
+      edit_rsi(to = 'R',
+               rule = c(rule_group, rule),
+               rows = which(tbl[, pita] == 'R'),
+               cols = pipe)
+    }
+    if (info == TRUE) {
+      txt_ok()
+    }
     rule <- 'Non-EUCAST: trimethoprim = R where trimethoprim/sulfa = R'
     if (info == TRUE) {
       warned <- FALSE
@@ -1623,11 +1662,26 @@ EUCAST_rules <- function(tbl,
       changed_results <- 0
       cat(rule)
     }
-    if (!is.na(amcl)) {
+    if (!is.na(ampi)) {
       edit_rsi(to = 'S',
                rule = c(rule_group, rule),
                rows = which(tbl[, ampi] == 'S'),
                cols = amcl)
+    }
+    if (info == TRUE) {
+      txt_ok()
+    }
+    rule <- 'Non-EUCAST: piperacillin/tazobactam = S where piperacillin = S'
+    if (info == TRUE) {
+      warned <- FALSE
+      changed_results <- 0
+      cat(rule)
+    }
+    if (!is.na(pipe)) {
+      edit_rsi(to = 'S',
+               rule = c(rule_group, rule),
+               rows = which(tbl[, pipe] == 'S'),
+               cols = pita)
     }
     if (info == TRUE) {
       txt_ok()
@@ -1638,7 +1692,7 @@ EUCAST_rules <- function(tbl,
       changed_results <- 0
       cat(rule)
     }
-    if (!is.na(trsu)) {
+    if (!is.na(trim)) {
       edit_rsi(to = 'S',
                rule = c(rule_group, rule),
                rows = which(tbl[, trim] == 'S'),
