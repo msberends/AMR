@@ -23,9 +23,9 @@
 #' @param col_mo column name of the microbial ID in \code{tbl} - values in this column should be present in \code{microorganisms$mo}, see \code{\link{microorganisms}}
 #' @param info print progress
 #' @param rules a character vector that specifies which rules should be applied - one or more of \code{c("breakpoints", "expert", "other", "all")}
+#' @param verbose a logical to indicate whether extensive info should be returned as a \code{data.frame} with info about which rows and columns are effected
 #' @param amcl,amik,amox,ampi,azit,azlo,aztr,cefa,cfep,cfot,cfox,cfra,cfta,cftr,cfur,chlo,cipr,clar,clin,clox,coli,czol,dapt,doxy,erta,eryt,fosf,fusi,gent,imip,kana,levo,linc,line,mero,mezl,mino,moxi,nali,neom,neti,nitr,norf,novo,oflo,oxac,peni,pipe,pita,poly,pris,qida,rifa,roxi,siso,teic,tetr,tica,tige,tobr,trim,trsu,vanc column name of an antibiotic, see Details
 #' @param col_bactid Deprecated. Use \code{col_mo} instead.
-#' @param verbose a logical to indicate whether extensive info should be returned as a \code{data.frame} with info about which rows and columns are effected
 #' @param ... parameters that are passed on to \code{EUCAST_rules}
 #' @details To define antibiotics column names, input a text or use \code{NA} to skip a column (e.g. \code{tica = NA}). Non-existing columns will anyway be skipped with a warning. See the Antibiotics section for an explanation of the abbreviations.
 #' @section Antibiotics:
@@ -97,7 +97,7 @@
 #' @rdname EUCAST
 #' @export
 #' @importFrom dplyr %>% select pull mutate_at vars
-#' @importFrom crayon bold bgGreen bgYellow bgRed black green blue
+#' @importFrom crayon bold bgGreen bgYellow bgRed black green blue italic
 #' @return The input of \code{tbl}, possibly with edited values of antibiotics. Or, if \code{verbose = TRUE}, a \code{data.frame} with verbose info.
 #' @source
 #'   \itemize{
@@ -150,9 +150,10 @@
 #' # 4  Klebsiella pneumoniae    R    R    -    -    -    R    S
 #' # 5 Pseudomonas aeruginosa    R    R    -    -    R    R    R
 EUCAST_rules <- function(tbl,
-                         col_mo = 'mo',
+                         col_mo = NULL,
                          info = TRUE,
                          rules = c("breakpoints", "expert", "other", "all"),
+                         verbose = FALSE,
                          amcl = 'amcl',
                          amik = 'amik',
                          amox = 'amox',
@@ -216,22 +217,31 @@ EUCAST_rules <- function(tbl,
                          trim = 'trim',
                          trsu = 'trsu',
                          vanc = 'vanc',
-                         col_bactid = 'bactid',
-                         verbose = FALSE) {
+                         col_bactid = NULL) {
 
   EUCAST_VERSION_BREAKPOINTS <- "8.1, 2018"
   EUCAST_VERSION_EXPERT_RULES <- "3.1, 2016"
 
-  if (col_bactid %in% colnames(tbl)) {
+  if (!is.data.frame(tbl)) {
+    stop("`tbl` must be a data frame.", call. = FALSE)
+  }
+
+  # try to find columns based on type
+  # -- mo
+  if (!is.null(col_bactid)) {
     col_mo <- col_bactid
     warning("Use of `col_bactid` is deprecated. Use `col_mo` instead.")
-  }
-  if (!col_mo %in% colnames(tbl)) {
-    stop('Column ', col_mo, ' not found.', call. = FALSE)
+  } else if (is.null(col_mo) & "mo" %in% lapply(tbl, class)) {
+    col_mo <- colnames(tbl)[lapply(tbl, class) == "mo"]
+    message("NOTE: Using column `", col_mo, "` as input for `col_mo`.")
   }
 
   if (!all(rules %in% c("breakpoints", "expert", "other", "all"))) {
     stop("Parameter `rules` must be one or more of:  'breakpoints', 'expert', 'other', 'all'.")
+  }
+
+  if (is.null(col_mo)) {
+    stop("Parameter `col_mo` must be set")
   }
 
   warned <- FALSE
@@ -474,7 +484,7 @@ EUCAST_rules <- function(tbl,
       txt_ok()
     }
     # Staphylococcus ----
-    rule <- 'Staphylococcus'
+    rule <- italic('Staphylococcus')
     if (info == TRUE) {
       warned <- FALSE
       changed_results <- 0
@@ -561,7 +571,7 @@ EUCAST_rules <- function(tbl,
       txt_ok()
     }
     # Enterococcus ----
-    rule <- 'Enterococcus'
+    rule <- italic('Enterococcus')
     if (info == TRUE) {
       warned <- FALSE
       changed_results <- 0
@@ -611,8 +621,8 @@ EUCAST_rules <- function(tbl,
     if (info == TRUE) {
       txt_ok()
     }
-    # Streptococcus A, B, C, G----
-    rule <- 'Streptococcus A, B, C, G'
+    # Streptococcus groups A, B, C, G----
+    rule <- paste(italic('Streptococcus'), 'groups A, B, C, G')
     if (info == TRUE) {
       warned <- FALSE
       changed_results <- 0
@@ -670,7 +680,7 @@ EUCAST_rules <- function(tbl,
       txt_ok()
     }
     # Streptococcus pneumoniae ----
-    rule <- 'Streptococcus pneumoniae'
+    rule <- italic('Streptococcus pneumoniae')
     if (info == TRUE) {
       warned <- FALSE
       changed_results <- 0
@@ -774,7 +784,7 @@ EUCAST_rules <- function(tbl,
       txt_ok()
     }
     # Haemophilus influenzae ----
-    rule <- 'Haemophilus influenzae'
+    rule <- italic('Haemophilus influenzae')
     if (info == TRUE) {
       warned <- FALSE
       changed_results <- 0
@@ -839,7 +849,7 @@ EUCAST_rules <- function(tbl,
       txt_ok()
     }
     # Moraxella catarrhalis ----
-    rule <- 'Moraxella catarrhalis'
+    rule <- italic('Moraxella catarrhalis')
     if (info == TRUE) {
       warned <- FALSE
       changed_results <- 0
@@ -963,7 +973,7 @@ EUCAST_rules <- function(tbl,
       txt_ok()
     }
     # Pasteurella multocida ----
-    rule <- 'Pasteurella multocida'
+    rule <- italic('Pasteurella multocida')
     if (info == TRUE) {
       warned <- FALSE
       changed_results <- 0
@@ -990,7 +1000,7 @@ EUCAST_rules <- function(tbl,
       txt_ok()
     }
     # Campylobacter jejuni and coli ----
-    rule <- 'Campylobacter jejuni and coli'
+    rule <- paste(italic('Campylobacter jejuni'), 'and', italic('C. coli'))
     if (info == TRUE) {
       warned <- FALSE
       changed_results <- 0
@@ -1034,7 +1044,7 @@ EUCAST_rules <- function(tbl,
       txt_ok()
     }
     # Aerococcus sanguinicola/urinae ----
-    rule <- 'Aerococcus sanguinicola/urinae'
+    rule <- paste(italic('Aerococcus sanguinicola'), 'and', italic('A. urinae'))
     if (info == TRUE) {
       warned <- FALSE
       changed_results <- 0
@@ -1078,7 +1088,7 @@ EUCAST_rules <- function(tbl,
       txt_ok()
     }
     # Kingella kingae ----
-    rule <- 'Kingella kingae'
+    rule <- italic('Kingella kingae')
     if (info == TRUE) {
       warned <- FALSE
       changed_results <- 0
@@ -1140,7 +1150,7 @@ EUCAST_rules <- function(tbl,
     rule_group <- "Expert Rules"
 
     # Table 1: Intrinsic resistance in Enterobacteriaceae ----
-    rule <- 'Table 1:  Intrinsic resistance in Enterobacteriaceae'
+    rule <- paste('Table 1:  Intrinsic resistance in', italic('Enterobacteriaceae'))
     if (info == TRUE) {
       warned <- FALSE
       changed_results <- 0

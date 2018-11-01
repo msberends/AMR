@@ -13,6 +13,7 @@
   * Better error handling when rules cannot be applied (i.e. new values could not be inserted)
   * The number of affected values will now only be measured once per row/column combination
   * Data set `septic_patients` now reflects these changes
+  * Added parameter `pipe` for piperacillin (J01CA12), also to the `MDRO` function
   * Small fixes to EUCAST clinical breakpoint rules
 * Tremendous speed improvement for `as.mo` (and subsequently all `mo_*` functions), as empty values wil be ignored *a priori*
 * Fewer than 3 characters as input for `as.mo` will return NA
@@ -22,11 +23,11 @@
 * Using `portion_*` functions now throws a warning when total available isolate is below parameter `minimum`
 * Functions `as.mo`, `as.rsi`, `as.mic`, `as.atc` and `freq` will not set package name as attribute anymore
 * Frequency tables - `freq()`:
-  * Check for `hms::is.hms` in frequency tables (`freq()`)
+  * Check for `hms::is.hms`
   * Now prints in markdown at default in non-interactive sessions
   * No longer adds the factor level column and sorts factors on count again
-  * Gained `na` parameter, to choose with character to print for empty values
   * Support for class `difftime`
+  * New parameter `na`, to choose with character to print for empty values
   * New parameter `header` to turn it off (default when `markdown = TRUE`)
   * New parameter `title` to replace the automatically set title
 * `first_isolate` now tries to find columns to use as input when parameters are left blank

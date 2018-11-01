@@ -2,8 +2,7 @@ context("eucast.R")
 
 test_that("EUCAST rules work", {
 
-  expect_error(EUCAST_rules(septic_patients, col_mo = "Non-existing"))
-
+  expect_error(suppressWarnings(EUCAST_rules(septic_patients, col_mo = "Non-existing")))
 
   expect_identical(colnames(septic_patients),
                    colnames(suppressWarnings(EUCAST_rules(septic_patients))))
@@ -18,8 +17,8 @@ test_that("EUCAST rules work", {
                          "ENTAER"), # Enterobacter aerogenes
                   amox = "R",       # Amoxicillin
                   stringsAsFactors = FALSE)
-  expect_identical(suppressWarnings(EUCAST_rules(a, info = FALSE)), b)
-  expect_identical(suppressWarnings(interpretive_reading(a, info = TRUE)), b)
+  expect_identical(suppressWarnings(EUCAST_rules(a, "mo", info = FALSE)), b)
+  expect_identical(suppressWarnings(interpretive_reading(a, "mo", info = TRUE)), b)
 
   a <- data.frame(mo = c("STAAUR",  # Staphylococcus aureus
                          "STCGRA"), # Streptococcus pyognenes (Lancefield Group A)
@@ -29,18 +28,18 @@ test_that("EUCAST rules work", {
                          "STCGRA"), # Streptococcus pyognenes (Lancefield Group A)
                   coli = "R",       # Colistin
                   stringsAsFactors = FALSE)
-  expect_equal(suppressWarnings(EUCAST_rules(a, info = FALSE)), b)
+  expect_equal(suppressWarnings(EUCAST_rules(a, "mo", info = FALSE)), b)
 
-  # pita must be R in Enterobacteriaceae when tica is R
+  # piperacillin must be R in Enterobacteriaceae when tica is R
   library(dplyr)
   expect_equal(suppressWarnings(
     septic_patients %>%
       mutate(tica = as.rsi("R"),
-             pita = as.rsi("S")) %>%
+             pipe = as.rsi("S")) %>%
       EUCAST_rules(col_mo = "mo") %>%
       left_join_microorganisms() %>%
       filter(family == "Enterobacteriaceae") %>%
-      pull(pita) %>%
+      pull(pipe) %>%
       unique() %>%
       as.character()),
     "R")

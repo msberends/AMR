@@ -198,11 +198,10 @@ first_isolate <- function(tbl,
   check_columns_existance(col_keyantibiotics)
 
   if (!is.null(col_mo)) {
-    if (!tbl %>% pull(col_mo) %>% is.mo()) {
-      tbl[, col_mo] <- as.mo(tbl[, col_mo])
-    }
     # join to microorganisms data set
-    tbl <- tbl %>% left_join_microorganisms(by = col_mo)
+    tbl <- tbl %>%
+      mutate_at(vars(col_mo), as.mo) %>%
+      left_join_microorganisms(by = col_mo)
     col_genus <- "genus"
     col_species <- "species"
   }

@@ -19,10 +19,11 @@ MDRO(tbl, country = NULL, col_mo = NULL, info = TRUE,
   line = "line", mero = "mero", metr = "metr", mino = "mino",
   moxi = "moxi", nali = "nali", neom = "neom", neti = "neti",
   nitr = "nitr", novo = "novo", norf = "norf", oflo = "oflo",
-  peni = "peni", pita = "pita", poly = "poly", qida = "qida",
-  rifa = "rifa", roxi = "roxi", siso = "siso", teic = "teic",
-  tetr = "tetr", tica = "tica", tige = "tige", tobr = "tobr",
-  trim = "trim", trsu = "trsu", vanc = "vanc", col_bactid = NULL)
+  peni = "peni", pipe = "pipe", pita = "pita", poly = "poly",
+  qida = "qida", rifa = "rifa", roxi = "roxi", siso = "siso",
+  teic = "teic", tetr = "tetr", tica = "tica", tige = "tige",
+  tobr = "tobr", trim = "trim", trsu = "trsu", vanc = "vanc",
+  col_bactid = NULL)
 
 BRMO(tbl, country = "nl", ...)
 
@@ -128,6 +129,8 @@ EUCAST_exceptional_phenotypes(tbl, country = "EUCAST", ...)
 \item{oflo}{column name of an antibiotic, see Details}
 
 \item{peni}{column name of an antibiotic, see Details}
+
+\item{pipe}{column name of an antibiotic, see Details}
 
 \item{pita}{column name of an antibiotic, see Details}
 

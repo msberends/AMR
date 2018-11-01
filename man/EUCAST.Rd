@@ -22,25 +22,24 @@
   }
 }
 \usage{
-EUCAST_rules(tbl, col_mo = "mo", info = TRUE,
-  rules = c("breakpoints", "expert", "other", "all"), amcl = "amcl",
-  amik = "amik", amox = "amox", ampi = "ampi", azit = "azit",
-  azlo = "azlo", aztr = "aztr", cefa = "cefa", cfep = "cfep",
-  cfot = "cfot", cfox = "cfox", cfra = "cfra", cfta = "cfta",
-  cftr = "cftr", cfur = "cfur", chlo = "chlo", cipr = "cipr",
-  clar = "clar", clin = "clin", clox = "clox", coli = "coli",
-  czol = "czol", dapt = "dapt", doxy = "doxy", erta = "erta",
-  eryt = "eryt", fosf = "fosf", fusi = "fusi", gent = "gent",
-  imip = "imip", kana = "kana", levo = "levo", linc = "linc",
-  line = "line", mero = "mero", mezl = "mezl", mino = "mino",
-  moxi = "moxi", nali = "nali", neom = "neom", neti = "neti",
-  nitr = "nitr", norf = "norf", novo = "novo", oflo = "oflo",
-  oxac = "oxac", peni = "peni", pipe = "pipe", pita = "pita",
-  poly = "poly", pris = "pris", qida = "qida", rifa = "rifa",
-  roxi = "roxi", siso = "siso", teic = "teic", tetr = "tetr",
-  tica = "tica", tige = "tige", tobr = "tobr", trim = "trim",
-  trsu = "trsu", vanc = "vanc", col_bactid = "bactid",
-  verbose = FALSE)
+EUCAST_rules(tbl, col_mo = NULL, info = TRUE,
+  rules = c("breakpoints", "expert", "other", "all"), verbose = FALSE,
+  amcl = "amcl", amik = "amik", amox = "amox", ampi = "ampi",
+  azit = "azit", azlo = "azlo", aztr = "aztr", cefa = "cefa",
+  cfep = "cfep", cfot = "cfot", cfox = "cfox", cfra = "cfra",
+  cfta = "cfta", cftr = "cftr", cfur = "cfur", chlo = "chlo",
+  cipr = "cipr", clar = "clar", clin = "clin", clox = "clox",
+  coli = "coli", czol = "czol", dapt = "dapt", doxy = "doxy",
+  erta = "erta", eryt = "eryt", fosf = "fosf", fusi = "fusi",
+  gent = "gent", imip = "imip", kana = "kana", levo = "levo",
+  linc = "linc", line = "line", mero = "mero", mezl = "mezl",
+  mino = "mino", moxi = "moxi", nali = "nali", neom = "neom",
+  neti = "neti", nitr = "nitr", norf = "norf", novo = "novo",
+  oflo = "oflo", oxac = "oxac", peni = "peni", pipe = "pipe",
+  pita = "pita", poly = "poly", pris = "pris", qida = "qida",
+  rifa = "rifa", roxi = "roxi", siso = "siso", teic = "teic",
+  tetr = "tetr", tica = "tica", tige = "tige", tobr = "tobr",
+  trim = "trim", trsu = "trsu", vanc = "vanc", col_bactid = NULL)
 
 interpretive_reading(...)
 }
@@ -53,11 +52,11 @@ interpretive_reading(...)
 
 \item{rules}{a character vector that specifies which rules should be applied - one or more of \code{c("breakpoints", "expert", "other", "all")}}
 
+\item{verbose}{a logical to indicate whether extensive info should be returned as a \code{data.frame} with info about which rows and columns are effected}
+
 \item{amcl, amik, amox, ampi, azit, azlo, aztr, cefa, cfep, cfot, cfox, cfra, cfta, cftr, cfur, chlo, cipr, clar, clin, clox, coli, czol, dapt, doxy, erta, eryt, fosf, fusi, gent, imip, kana, levo, linc, line, mero, mezl, mino, moxi, nali, neom, neti, nitr, norf, novo, oflo, oxac, peni, pipe, pita, poly, pris, qida, rifa, roxi, siso, teic, tetr, tica, tige, tobr, trim, trsu, vanc}{column name of an antibiotic, see Details}
 
 \item{col_bactid}{Deprecated. Use \code{col_mo} instead.}
-
-\item{verbose}{a logical to indicate whether extensive info should be returned as a \code{data.frame} with info about which rows and columns are effected}
 
 \item{...}{parameters that are passed on to \code{EUCAST_rules}}
 }
