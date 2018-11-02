@@ -153,7 +153,7 @@ Percentage of syntax lines checked | [![Code_Coverage](https://codecov.io/gl/msb
 If so, try it with:
 ```r
 install.packages("devtools") 
-devtools::install_git("https://gitlab.com/msberends/AMR")
+devtools::install_gitlab("msberends/AMR")
 ```
 
 ## How to use it?

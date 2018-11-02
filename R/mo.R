@@ -320,6 +320,18 @@ exec_as.mo <- function(x, Becker = FALSE, Lancefield = FALSE, allow_uncertain = 
           x[i] <- microorganismsDT[mo == 'B_STPHY_CPS', ..property][[1]][1L]
           next
         }
+        if (tolower(x[i]) %like% '^gram[ -]+nega.*'
+            | tolower(x_trimmed[i]) %like% '^gram[ -]+nega.*') {
+          # coerce S. coagulase positive
+          x[i] <- microorganismsDT[mo == 'B_GRAMN', ..property][[1]][1L]
+          next
+        }
+        if (tolower(x[i]) %like% '^gram[ -]+posi.*'
+            | tolower(x_trimmed[i]) %like% '^gram[ -]+posi.*') {
+          # coerce S. coagulase positive
+          x[i] <- microorganismsDT[mo == 'B_GRAMP', ..property][[1]][1L]
+          next
+        }
       }
 
       # FIRST TRY FULLNAMES AND CODES
@@ -404,6 +416,22 @@ exec_as.mo <- function(x, Becker = FALSE, Lancefield = FALSE, allow_uncertain = 
         next
       }
 
+
+      # try splitting of characters in the middle and then find ID ----
+      # only when text length is 6 or lower
+      # like esco = E. coli, klpn = K. pneumoniae, stau = S. aureus, staaur = S. aureus
+      if (nchar(x_trimmed[i]) <= 6) {
+        x_length <- nchar(x_trimmed[i])
+        x[i] <- paste0(x_trimmed[i] %>% substr(1, x_length / 2),
+                       '.* ',
+                       x_trimmed[i] %>% substr((x_length / 2) + 1, x_length))
+        found <- microorganisms.prevDT[fullname %like% paste0('^', x[i]), ..property][[1]]
+        if (length(found) > 0) {
+          x[i] <- found[1L]
+          next
+        }
+      }
+
       # try fullname without start and stop regex, to also find subspecies ----
       # like "K. pneu rhino" -> "Klebsiella pneumoniae (rhinoscleromatis)" = KLEPNERH
       found <- microorganisms.prevDT[fullname %like% x_withspaces_start[i], ..property][[1]]
@@ -411,37 +439,6 @@ exec_as.mo <- function(x, Becker = FALSE, Lancefield = FALSE, allow_uncertain = 
         x[i] <- found[1L]
         next
       }
-
-      # try splitting of characters in the middle and then find ID ----
-      # only when text length is 6 or lower
-      # like esco = E. coli, klpn = K. pneumoniae, stau = S. aureus, staaur = S. aureus
-      if (nchar(x_trimmed[i]) <= 6) {
-        x_split <- x
-        x_length <- nchar(x_trimmed[i])
-        x_split[i] <- paste0(x_trimmed[i] %>% substr(1, x_length / 2) %>% trimws(),
-                             '.* ',
-                             x_trimmed[i] %>% substr((x_length / 2) + 1, x_length) %>% trimws())
-        found <- microorganisms.prevDT[fullname %like% paste0('^', x_split[i]), ..property][[1]]
-        if (length(found) > 0) {
-          x[i] <- found[1L]
-          next
-        }
-      }
-
-      # try any match with text before and after original search string ----
-      # so "negative rods" will be "GNR"
-      # if (x_trimmed[i] %like% "^Gram") {
-      #   x_trimmed[i] <- gsub("^Gram", "", x_trimmed[i], ignore.case = TRUE)
-      #   # remove leading and trailing spaces again
-      #   x_trimmed[i] <- trimws(x_trimmed[i], which = "both")
-      # }
-      # if (!is.na(x_trimmed[i])) {
-      #   found <- microorganisms.prevDT[fullname %like% x_trimmed[i], ..property][[1]]
-      #   if (length(found) > 0) {
-      #     x[i] <- found[1L]
-      #     next
-      #   }
-      # }
 
       # THEN TRY ALL OTHERS ----
       found <- microorganisms.unprevDT[tolower(fullname) == tolower(x_backup[i]), ..property][[1]]
@@ -490,6 +487,21 @@ exec_as.mo <- function(x, Becker = FALSE, Lancefield = FALSE, allow_uncertain = 
         next
       }
 
+      # try splitting of characters in the middle and then find ID ----
+      # only when text length is 6 or lower
+      # like esco = E. coli, klpn = K. pneumoniae, stau = S. aureus, staaur = S. aureus
+      if (nchar(x_trimmed[i]) <= 6) {
+        x_length <- nchar(x_trimmed[i])
+        x[i] <- paste0(x_trimmed[i] %>% substr(1, x_length / 2),
+                       '.* ',
+                       x_trimmed[i] %>% substr((x_length / 2) + 1, x_length))
+        found <- microorganisms.unprevDT[fullname %like% paste0('^', x[i]), ..property][[1]]
+        if (length(found) > 0) {
+          x[i] <- found[1L]
+          next
+        }
+      }
+
       # try fullname without start and stop regex, to also find subspecies ----
       # like "K. pneu rhino" -> "Klebsiella pneumoniae (rhinoscleromatis)" = KLEPNERH
       found <- microorganisms.unprevDT[fullname %like% x_withspaces_start[i], ..property][[1]]
@@ -497,37 +509,6 @@ exec_as.mo <- function(x, Becker = FALSE, Lancefield = FALSE, allow_uncertain = 
         x[i] <- found[1L]
         next
       }
-
-      # try splitting of characters in the middle and then find ID ----
-      # only when text length is 6 or lower
-      # like esco = E. coli, klpn = K. pneumoniae, stau = S. aureus, staaur = S. aureus
-      if (nchar(x_trimmed[i]) <= 6) {
-        x_split <- x
-        x_length <- nchar(x_trimmed[i])
-        x_split[i] <- paste0(x_trimmed[i] %>% substr(1, x_length / 2) %>% trimws(),
-                             '.* ',
-                             x_trimmed[i] %>% substr((x_length / 2) + 1, x_length) %>% trimws())
-        found <- microorganisms.unprevDT[fullname %like% paste0('^', x_split[i]), ..property][[1]]
-        if (length(found) > 0) {
-          x[i] <- found[1L]
-          next
-        }
-      }
-
-      # # try any match with text before and after original search string ----
-      # # so "negative rods" will be "GNR"
-      # if (x_trimmed[i] %like% "^Gram") {
-      #   x_trimmed[i] <- gsub("^Gram", "", x_trimmed[i], ignore.case = TRUE)
-      #   # remove leading and trailing spaces again
-      #   x_trimmed[i] <- trimws(x_trimmed[i], which = "both")
-      # }
-      # if (!is.na(x_trimmed[i])) {
-      #   found <- microorganisms.unprevDT[fullname %like% x_trimmed[i], ..property][[1]]
-      #   if (length(found) > 0) {
-      #     x[i] <- found[1L]
-      #     next
-      #   }
-      # }
 
       # MISCELLANEOUS ----
 

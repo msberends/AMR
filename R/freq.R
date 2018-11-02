@@ -62,7 +62,7 @@
 #' @importFrom dplyr %>% select pull n_distinct group_by arrange desc mutate summarise n_distinct tibble
 #' @importFrom utils browseVignettes installed.packages
 #' @importFrom hms is.hms
-#' @importFrom crayon red silver
+#' @importFrom crayon red green silver
 #' @keywords summary summarise frequency freq
 #' @rdname freq
 #' @name freq
@@ -254,20 +254,16 @@ frequency_tbl <- function(x,
     }
   }
 
-  NAs_to_red <- function(x) {
-    if (!x %in% c("0", "0.00%")) {
-      red(x)
-    } else {
-      x
-    }
+  na_txt <- paste0(NAs %>% length() %>% format(), ' = ',
+                   (NAs %>% length() / (NAs %>% length() + x %>% length())) %>% percent(force_zero = TRUE, round = digits) %>%
+                     sub('NaN', '0', ., fixed = TRUE))
+  if (!na_txt %like% "^0 =") {
+    na_txt <- red(na_txt)
+  } else {
+    na_txt <- green(na_txt)
   }
-
   header_txt <- header_txt %>% paste0(markdown_line, '\nLength:    ', (NAs %>% length() + x %>% length()) %>% format(),
-                                      ' (of which NA: ', NAs %>% length() %>% format() %>% NAs_to_red(),
-                                      ' = ', (NAs %>% length() / (NAs %>% length() + x %>% length())) %>%
-                                        percent(force_zero = TRUE, round = digits) %>%
-                                        sub('NaN', '0', ., fixed = TRUE) %>%
-                                        NAs_to_red(), ')')
+                                      ' (of which NA: ', na_txt, ')')
   header_txt <- header_txt %>% paste0(markdown_line, '\nUnique:    ', x %>% n_distinct() %>% format())
 
   if (NROW(x) > 0 & any(class(x) == "character")) {
@@ -304,13 +300,13 @@ frequency_tbl <- function(x,
   if (NROW(x) > 0 & any(class(x) == "rsi")) {
     header_txt <- header_txt %>% paste0('\n')
     cnt_S <- sum(x == "S", na.rm = TRUE)
-    cnt_I <- sum(x == "I", na.rm = TRUE)
-    cnt_R <- sum(x == "R", na.rm = TRUE)
+    cnt_IR <- sum(x %in% c("I", "R"), na.rm = TRUE)
     header_txt <- header_txt %>% paste(markdown_line, '\n%IR:      ',
-                                       ((cnt_I + cnt_R) / sum(!is.na(x), na.rm = TRUE)) %>% percent(force_zero = TRUE, round = digits))
-    header_txt <- header_txt %>% paste0(markdown_line, '\nRatio SIR: 1.0 : ',
-                                        (cnt_I / cnt_S) %>% format(digits = 1, nsmall = 1), " : ",
-                                        (cnt_R / cnt_S) %>% format(digits = 1, nsmall = 1))
+                                       (cnt_IR / sum(!is.na(x), na.rm = TRUE)) %>% percent(force_zero = TRUE, round = digits),
+                                       paste0('(ratio S : IR = 1.0 : ', (cnt_IR / cnt_S) %>% format(digits = 1, nsmall = 1), ")"))
+    if (NROW(x) < 30) {
+      header_txt <- header_txt %>% paste(markdown_line, red('\nToo few isolates for reliable resistance interpretation.'))
+    }
   }
 
   formatdates <- "%e %B %Y" # = d mmmm yyyy
@@ -535,7 +531,7 @@ print.frequency_tbl <- function(x, nmax = getOption("max.print.freq", default = 
   if (opt$tbl_format == "pandoc") {
     title <- bold(title)
   } else if (opt$tbl_format == "markdown") {
-    title <- paste0("**", title, "**")
+    title <- paste0("\n**", title, "**")
   }
 
   if (opt$header == TRUE) {
@@ -607,7 +603,7 @@ print.frequency_tbl <- function(x, nmax = getOption("max.print.freq", default = 
   x$cum_percent <- percent(x$cum_percent, force_zero = TRUE)
 
   if (opt$tbl_format == "markdown") {
-    cat("\n\n")
+    cat("\n")
   }
 
   print(
