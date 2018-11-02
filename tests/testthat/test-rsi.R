@@ -19,4 +19,17 @@ test_that("rsi works", {
                                                "Sum IR" = "1",
                                                "-Sum R" = "1",
                                                "-Sum I" = "0"))
+
+  expect_identical(as.logical(lapply(septic_patients, is.rsi.eligible)),
+                   rep(FALSE, length(septic_patients)))
+
+  library(dplyr)
+  # 40 rsi columns
+  expect_identical(septic_patients %>%
+                     mutate_at(vars(peni:rifa), as.character) %>%
+                     lapply(is.rsi.eligible) %>%
+                     as.logical() %>%
+                     sum(),
+                   40)
+
 })

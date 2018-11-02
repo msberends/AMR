@@ -44,6 +44,7 @@
   * `"MSSA"` -> *Staphylococcus aureus*
   * `"MSSE"` -> *Staphylococcus epidermidis*
 * Fix for `join` functions
+* Speed improvement for `is.rsi.eligible`, now 15-20 times faster
 * In `g.test`, when `sum(x)` is below 1000 or any of the expected values is below 5, Fisher's Exact Test will be suggested
 * `ab_name` will try to fall back on `as.atc` when no results are found
 

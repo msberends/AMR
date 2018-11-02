@@ -49,7 +49,7 @@ The `AMR` package basically does four important things:
 
 1. It **cleanses existing data**, by transforming it to reproducible and profound *classes*, making the most efficient use of R. These functions all use artificial intelligence to guess results that you would expect:
 
-   * Use `as.mo` to get an ID of a microorganism. The IDs are human readable for the trained eye - the ID of *Klebsiella pneumoniae* is "B_KLBSL_PNE" (B stands for Bacteria) and the ID of *S. aureus* is "B_STPHY_AUR". The function takes almost any text as input that looks like the name or code of a microorganism like "E. coli", "esco" and "esccol". Even `as.mo("MRSA")` will return the ID of *S. aureus*. Moreover, it can group all coagulase negative and positive *Staphylococci*, and can transform *Streptococci* into Lancefield groups. To find bacteria based on your input, it uses Artificial Intelligence to look up values in the included ITIS data, consisting of more than 18,000 microorganisms.
+   * Use `as.mo` to get an ID of a microorganism. The IDs are human readable for the trained eye - the ID of *Klebsiella pneumoniae* is "B_KLBSL_PNE" (B stands for Bacteria) and the ID of *S. aureus* is "B_STPHY_AUR". The function takes almost any text as input that looks like the name or code of a microorganism like "E. coli", "esco" and "esccol". Even `as.mo("MRSA")` will return the ID of *S. aureus*. Moreover, it can group all coagulase negative and positive *Staphylococci*, and can transform *Streptococci* into Lancefield groups. To find bacteria based on your input, it uses Artificial Intelligence to look up values in the included ITIS data, consisting of more than 18,000 microorganisms. It is *very* fast, see [Benchmarks](#benchmarks).
    * Use `as.rsi` to transform values to valid antimicrobial results. It produces just S, I or R based on your input and warns about invalid values. Even values like "<=0.002; S" (combined MIC/RSI) will result in "S".
    * Use `as.mic` to cleanse your MIC values. It produces a so-called factor (called *ordinal* in SPSS) with valid MIC values as levels. A value like "<=0.002; S" (combined MIC/RSI) will result in "<=0.002".
    * Use `as.atc` to get the ATC code of an antibiotic as defined by the WHO. This package contains a database with most LIS codes, official names, DDDs and even trade names of antibiotics. For example, the values "Furabid", "Furadantin", "nitro" all return the ATC code of Nitrofurantoine.
@@ -513,20 +513,43 @@ That takes up to 11 times as much time! A value of 158.4 milliseconds means it c
 
 To relieve this pitfall and further improve performance, two important calculations take almost no time at all: **repetive results** and **already precalculated results**.
 
-Let's set up 25,000 entries of `"Staphylococcus aureus"` and check its speed:
+Repetive results mean that unique values are present more than once. Unique values will only be calculated once by `as.mo`.  We will use `mo_fullname` for this test - a helper function that returns the full microbial name (genus, species and possibly subspecies) and uses `as.mo` internally.
 ```r
-repetive_results <- rep("Staphylococcus aureus", 25000)
-microbenchmark(F = as.mo(repetive_results),
+library(dplyr)
+# take 500,000 random MO codes from the septic_patients data set
+x = septic_patients %>%
+  sample_n(500000, replace = TRUE) %>%
+  pull(mo)
+  
+# got the right length?
+length(x)
+# [1] 500000
+
+# and how many unique values do we have?
+n_distinct(x)
+# [1] 96
+
+# only 96, but distributed in 500,000 results. now let's see:
+microbenchmark(X = mo_fullname(x),
                times = 10,
                unit = "ms")
 # Unit: milliseconds
 #  expr      min       lq     mean   median       uq      max neval
-#     F 12.24381 12.34707 13.84736 12.37689 12.43266 40.36833   100
+#     X 114.9342 117.1076 129.6448 120.2047 131.5005 168.6371    10
 ```
 
-So transforming 25,000 times (!) `"Staphylococcus aureus"` only takes 6 ms (0.006 seconds) more than transforming it once. You only lose time on your unique input values.
+So transforming 500,000 values (!) of 96 unique values only takes 0.12 seconds (120 ms). You only lose time on your unique input values.
 
-What about precalculated results? This package also contains helper functions for specific microbial properties, for example `mo_fullname`. It returns the full microbial name (genus, species and possibly subspecies) and uses `as.mo` internally. If the input is however an already precalculated result, it almost doesn't take any time at all (see 'C' below):
+Results of a tenfold - 5,000,000 values:
+```r
+# Unit: milliseconds
+#  expr      min       lq     mean   median       uq      max neval
+#     X 882.9045 901.3011 1001.677 940.3421 1168.088 1226.846    10
+```
+
+Even the full names of 5 *Million* values are calculated within a second.
+
+What about precalculated results? If the input is an already precalculated result of a helper function like `mo_fullname`, it almost doesn't take any time at all (see 'C' below):
 
 ```r
 microbenchmark(A = mo_fullname("B_STPHY_AUR"),
