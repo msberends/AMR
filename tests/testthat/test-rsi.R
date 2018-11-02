@@ -25,11 +25,11 @@ test_that("rsi works", {
 
   library(dplyr)
   # 40 rsi columns
-  expect_identical(septic_patients %>%
-                     mutate_at(vars(peni:rifa), as.character) %>%
-                     lapply(is.rsi.eligible) %>%
-                     as.logical() %>%
-                     sum(),
-                   40)
+  expect_equal(septic_patients %>%
+                 mutate_at(vars(peni:rifa), as.character) %>%
+                 lapply(is.rsi.eligible) %>%
+                 as.logical() %>%
+                 sum(),
+               40)
 
 })
