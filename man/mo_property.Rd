@@ -19,15 +19,15 @@
 \alias{mo_taxonomy}
 \title{Property of a microorganism}
 \usage{
-mo_fullname(x, language = NULL, ...)
+mo_fullname(x, language = get_locale(), ...)
 
-mo_shortname(x, language = NULL, ...)
+mo_shortname(x, language = get_locale(), ...)
 
-mo_subspecies(x, language = NULL, ...)
+mo_subspecies(x, language = get_locale(), ...)
 
-mo_species(x, language = NULL, ...)
+mo_species(x, language = get_locale(), ...)
 
-mo_genus(x, language = NULL, ...)
+mo_genus(x, language = get_locale(), ...)
 
 mo_family(x, ...)
 
@@ -41,20 +41,20 @@ mo_subkingdom(x, ...)
 
 mo_ref(x, ...)
 
-mo_type(x, language = NULL, ...)
+mo_type(x, language = get_locale(), ...)
 
 mo_TSN(x, ...)
 
-mo_gramstain(x, language = NULL, ...)
+mo_gramstain(x, language = get_locale(), ...)
 
-mo_property(x, property = "fullname", language = NULL, ...)
+mo_property(x, property = "fullname", language = get_locale(), ...)
 
 mo_taxonomy(x, ...)
 }
 \arguments{
 \item{x}{any (vector of) text that can be coerced to a valid microorganism code with \code{\link{as.mo}}}
 
-\item{language}{language of the returned text, defaults to English (\code{"en"}) and can also be set with \code{\link{getOption}("AMR_locale")}. Either one of \code{"en"} (English), \code{"de"} (German), \code{"nl"} (Dutch), \code{"es"} (Spanish) or \code{"pt"} (Portuguese).}
+\item{language}{language of the returned text, defaults to system language (see \code{\link{get_locale}}) and can also be set with \code{\link{getOption}("AMR_locale")}.}
 
 \item{...}{other parameters passed on to \code{\link{as.mo}}}
 
@@ -66,6 +66,11 @@ A \code{list} (in case of \code{mo_taxonomy}) or a \code{character} otherwise
 \description{
 Use these functions to return a specific property of a microorganism from the \code{\link{microorganisms}} data set. All input values will be evaluated internally with \code{\link{as.mo}}.
 }
+\section{Supported languages}{
+
+Supported languages are \code{"en"} (English), \code{"de"} (German), \code{"nl"} (Dutch), \code{"es"} (Spanish), \code{"it"} (Italian), \code{"fr"} (French), and \code{"pt"} (Portuguese).
+}
+
 \section{ITIS}{
 
 \if{html}{\figure{itis_logo.jpg}{options: height=60px style=margin-bottom:5px} \cr}

@@ -21,8 +21,9 @@
 #' Use these functions to return a specific property of a microorganism from the \code{\link{microorganisms}} data set. All input values will be evaluated internally with \code{\link{as.mo}}.
 #' @param x any (vector of) text that can be coerced to a valid microorganism code with \code{\link{as.mo}}
 #' @param property one of the column names of one of the \code{\link{microorganisms}} data set or \code{"shortname"}
-#' @param language language of the returned text, defaults to English (\code{"en"}) and can also be set with \code{\link{getOption}("AMR_locale")}. Either one of \code{"en"} (English), \code{"de"} (German), \code{"nl"} (Dutch), \code{"es"} (Spanish) or \code{"pt"} (Portuguese).
+#' @param language language of the returned text, defaults to system language (see \code{\link{get_locale}}) and can also be set with \code{\link{getOption}("AMR_locale")}.
 #' @param ... other parameters passed on to \code{\link{as.mo}}
+#' @inheritSection get_locale Supported languages
 #' @inheritSection as.mo ITIS
 #' @inheritSection as.mo Source
 #' @rdname mo_property
@@ -98,7 +99,7 @@
 #'
 #' # Complete taxonomy up to Subkingdom, returns a list
 #' mo_taxonomy("E. coli")
-mo_fullname <- function(x, language = NULL, ...) {
+mo_fullname <- function(x, language = get_locale(), ...) {
   x <- mo_validate(x = x, property = "fullname", ...)
   mo_translate(x, language = language)
 }
@@ -106,7 +107,7 @@ mo_fullname <- function(x, language = NULL, ...) {
 #' @rdname mo_property
 #' @importFrom dplyr %>% left_join mutate pull
 #' @export
-mo_shortname <- function(x, language = NULL, ...) {
+mo_shortname <- function(x, language = get_locale(), ...) {
   dots <- list(...)
   Becker <- dots$Becker
   if (is.null(Becker)) {
@@ -119,9 +120,13 @@ mo_shortname <- function(x, language = NULL, ...) {
   if (Becker %in% c(TRUE, "all") | Lancefield == TRUE) {
     res1 <- AMR::as.mo(x, Becker = FALSE, Lancefield = FALSE, reference_df = dots$reference_df)
     res2 <- suppressWarnings(AMR::as.mo(res1, ...))
-    res2_fullname <- mo_fullname(res2)
-    res2_fullname[res2_fullname %like% "\\(CoNS\\)"] <- "CoNS"
-    res2_fullname[res2_fullname %like% "\\(CoPS\\)"] <- "CoPS"
+    res2_fullname <- mo_fullname(res2, language = language)
+    res2_fullname[res2_fullname %like% " \\(CoNS\\)"] <- "CoNS"
+    res2_fullname[res2_fullname %like% " \\(CoPS\\)"] <- "CoPS"
+    res2_fullname[res2_fullname %like% " \\(KNS\\)"] <- "KNS"
+    res2_fullname[res2_fullname %like% " \\(KPS\\)"] <- "KPS"
+    res2_fullname[res2_fullname %like% " \\(CNS\\)"] <- "CNS"
+    res2_fullname[res2_fullname %like% " \\(CPS\\)"] <- "CPS"
     res2_fullname <- gsub("Streptococcus (group|Gruppe|gruppe|groep|grupo|gruppo|groupe) (.)",
                           "G\\2S",
                           res2_fullname) # turn "Streptococcus group A" and "Streptococcus grupo A" to "GAS"
@@ -150,19 +155,19 @@ mo_shortname <- function(x, language = NULL, ...) {
 
 #' @rdname mo_property
 #' @export
-mo_subspecies <- function(x, language = NULL, ...) {
+mo_subspecies <- function(x, language = get_locale(), ...) {
   mo_translate(mo_validate(x = x, property = "subspecies", ...), language = language)
 }
 
 #' @rdname mo_property
 #' @export
-mo_species <- function(x, language = NULL, ...) {
+mo_species <- function(x, language = get_locale(), ...) {
   mo_translate(mo_validate(x = x, property = "species", ...), language = language)
 }
 
 #' @rdname mo_property
 #' @export
-mo_genus <- function(x, language = NULL, ...) {
+mo_genus <- function(x, language = get_locale(), ...) {
   mo_translate(mo_validate(x = x, property = "genus", ...), language = language)
 }
 
@@ -204,7 +209,7 @@ mo_ref <- function(x, ...) {
 
 #' @rdname mo_property
 #' @export
-mo_type <- function(x, language = NULL, ...) {
+mo_type <- function(x, language = get_locale(), ...) {
   mo_translate(mo_validate(x = x, property = "type", ...), language = language)
 }
 
@@ -216,14 +221,14 @@ mo_TSN  <- function(x, ...) {
 
 #' @rdname mo_property
 #' @export
-mo_gramstain <- function(x, language = NULL, ...) {
+mo_gramstain <- function(x, language = get_locale(), ...) {
   mo_translate(mo_validate(x = x, property = "gramstain", ...), language = language)
 }
 
 #' @rdname mo_property
 #' @importFrom data.table data.table as.data.table setkey
 #' @export
-mo_property <- function(x, property = 'fullname', language = NULL, ...) {
+mo_property <- function(x, property = 'fullname', language = get_locale(), ...) {
   if (length(property) != 1L) {
     stop("'property' must be of length 1.")
   }
@@ -251,9 +256,7 @@ mo_taxonomy <- function(x, ...) {
 #' @importFrom dplyr %>% case_when
 mo_translate <- function(x, language) {
   if (is.null(language)) {
-    language <- getOption("AMR_locale", default = "en")[1L]
-  } else {
-    language <- tolower(language[1L])
+    return(x)
   }
   if (language %in% c("en", "")) {
     return(x)
@@ -270,6 +273,10 @@ mo_translate <- function(x, language) {
       gsub("Coagulase Negative Staphylococcus","Koagulase-negative Staphylococcus", ., fixed = TRUE) %>%
       gsub("Coagulase Positive Staphylococcus","Koagulase-positive Staphylococcus", ., fixed = TRUE) %>%
       gsub("Beta-haemolytic Streptococcus",    "Beta-h\u00e4molytischer Streptococcus", ., fixed = TRUE) %>%
+      gsub("unknown Gram negatives",           "unbekannte Gramnegativen", ., fixed = TRUE) %>%
+      gsub("unknown Gram positives",           "unbekannte Grampositiven", ., fixed = TRUE) %>%
+      gsub("(CoNS)",           "(KNS)", ., fixed = TRUE) %>%
+      gsub("(CoPS)",           "(KPS)", ., fixed = TRUE) %>%
       gsub("(no MO)",          "(kein MO)", ., fixed = TRUE) %>%
       gsub("Gram negative",    "Gramnegativ", ., fixed = TRUE) %>%
       gsub("Gram positive",    "Grampositiv", ., fixed = TRUE) %>%
@@ -287,7 +294,11 @@ mo_translate <- function(x, language) {
       gsub("Coagulase Negative Staphylococcus","Coagulase-negatieve Staphylococcus", ., fixed = TRUE) %>%
       gsub("Coagulase Positive Staphylococcus","Coagulase-positieve Staphylococcus", ., fixed = TRUE) %>%
       gsub("Beta-haemolytic Streptococcus",    "Beta-hemolytische Streptococcus", ., fixed = TRUE) %>%
+      gsub("unknown Gram negatives",           "onbekende Gram-negatieven", ., fixed = TRUE) %>%
+      gsub("unknown Gram positives",           "onbekende Gram-positieven", ., fixed = TRUE) %>%
       gsub("(no MO)",          "(geen MO)", ., fixed = TRUE) %>%
+      gsub("(CoNS)",           "(CNS)", ., fixed = TRUE) %>%
+      gsub("(CoPS)",           "(CPS)", ., fixed = TRUE) %>%
       gsub("Gram negative",    "Gram-negatief", ., fixed = TRUE) %>%
       gsub("Gram positive",    "Gram-positief", ., fixed = TRUE) %>%
       gsub("Bacteria",         "Bacteri\u00ebn", ., fixed = TRUE) %>%
@@ -304,6 +315,8 @@ mo_translate <- function(x, language) {
       gsub("Coagulase Negative Staphylococcus","Staphylococcus coagulasa negativo", ., fixed = TRUE) %>%
       gsub("Coagulase Positive Staphylococcus","Staphylococcus coagulasa positivo", ., fixed = TRUE) %>%
       gsub("Beta-haemolytic Streptococcus",    "Streptococcus Beta-hemol\u00edtico", ., fixed = TRUE) %>%
+      gsub("unknown Gram negatives",           "Gram negativos desconocidos", ., fixed = TRUE) %>%
+      gsub("unknown Gram positives",           "Gram positivos desconocidos", ., fixed = TRUE) %>%
       gsub("(no MO)",          "(sin MO)", ., fixed = TRUE) %>%
       gsub("Gram negative",    "Gram negativo", ., fixed = TRUE) %>%
       gsub("Gram positive",    "Gram positivo", ., fixed = TRUE) %>%
@@ -316,28 +329,13 @@ mo_translate <- function(x, language) {
       gsub("([([ ]*?)group",   "\\1grupo", .) %>%
       gsub("([([ ]*?)Group",   "\\1Grupo", .),
 
-    # Portuguese
-    language == "pt" ~ x %>%
-      gsub("Coagulase Negative Staphylococcus","Staphylococcus coagulase negativo", ., fixed = TRUE) %>%
-      gsub("Coagulase Positive Staphylococcus","Staphylococcus coagulase positivo", ., fixed = TRUE) %>%
-      gsub("Beta-haemolytic Streptococcus",    "Streptococcus Beta-hemol\u00edtico", ., fixed = TRUE) %>%
-      gsub("(no MO)",          "(sem MO)", ., fixed = TRUE) %>%
-      gsub("Gram negative",    "Gram negativo", ., fixed = TRUE) %>%
-      gsub("Gram positive",    "Gram positivo", ., fixed = TRUE) %>%
-      gsub("Bacteria",         "Bact\u00e9rias", ., fixed = TRUE) %>%
-      gsub("Fungi",            "Fungos", ., fixed = TRUE) %>%
-      gsub("Protozoa",         "Protozo\u00e1rios", ., fixed = TRUE) %>%
-      gsub("biogroup",         "biogrupo", ., fixed = TRUE) %>%
-      gsub("biotype",          "bi\u00f3tipo", ., fixed = TRUE) %>%
-      gsub("vegetative",       "vegetativo", ., fixed = TRUE) %>%
-      gsub("([([ ]*?)group",   "\\1grupo", .) %>%
-      gsub("([([ ]*?)Group",   "\\1Grupo", .),
-
     # Italian
     language == "it" ~ x %>%
       gsub("Coagulase Negative Staphylococcus","Staphylococcus negativo coagulasi", ., fixed = TRUE) %>%
       gsub("Coagulase Positive Staphylococcus","Staphylococcus positivo coagulasi", ., fixed = TRUE) %>%
       gsub("Beta-haemolytic Streptococcus",    "Streptococcus Beta-emolitico", ., fixed = TRUE) %>%
+      gsub("unknown Gram negatives",           "Gram negativi sconosciuti", ., fixed = TRUE) %>%
+      gsub("unknown Gram positives",           "Gram positivi sconosciuti", ., fixed = TRUE) %>%
       gsub("(no MO)",          "(non MO)", ., fixed = TRUE) %>%
       gsub("Gram negative",    "Gram negativo", ., fixed = TRUE) %>%
       gsub("Gram positive",    "Gram positivo", ., fixed = TRUE) %>%
@@ -355,6 +353,8 @@ mo_translate <- function(x, language) {
       gsub("Coagulase Negative Staphylococcus","Staphylococcus \u00e0 coagulase n\u00e9gative", ., fixed = TRUE) %>%
       gsub("Coagulase Positive Staphylococcus","Staphylococcus \u00e0 coagulase positif", ., fixed = TRUE) %>%
       gsub("Beta-haemolytic Streptococcus",    "Streptococcus B\u00eata-h\u00e9molytique", ., fixed = TRUE) %>%
+      gsub("unknown Gram negatives",           "Gram n\u00e9gatifs inconnus", ., fixed = TRUE) %>%
+      gsub("unknown Gram positives",           "Gram positifs inconnus", ., fixed = TRUE) %>%
       gsub("(no MO)",          "(pas MO)", ., fixed = TRUE) %>%
       gsub("Gram negative",    "Gram n\u00e9gatif", ., fixed = TRUE) %>%
       gsub("Gram positive",    "Gram positif", ., fixed = TRUE) %>%
@@ -365,7 +365,26 @@ mo_translate <- function(x, language) {
       # gsub("biotype",          "biotype", ., fixed = TRUE) %>%
       gsub("vegetative",       "v\u00e9g\u00e9tatif", ., fixed = TRUE) %>%
       gsub("([([ ]*?)group",   "\\1groupe", .) %>%
-      gsub("([([ ]*?)Group",   "\\1Groupe", .)
+      gsub("([([ ]*?)Group",   "\\1Groupe", .),
+
+    # Portuguese
+    language == "pt" ~ x %>%
+      gsub("Coagulase Negative Staphylococcus","Staphylococcus coagulase negativo", ., fixed = TRUE) %>%
+      gsub("Coagulase Positive Staphylococcus","Staphylococcus coagulase positivo", ., fixed = TRUE) %>%
+      gsub("Beta-haemolytic Streptococcus",    "Streptococcus Beta-hemol\u00edtico", ., fixed = TRUE) %>%
+      gsub("unknown Gram negatives",           "Gram negativos desconhecidos", ., fixed = TRUE) %>%
+      gsub("unknown Gram positives",           "Gram positivos desconhecidos", ., fixed = TRUE) %>%
+      gsub("(no MO)",          "(sem MO)", ., fixed = TRUE) %>%
+      gsub("Gram negative",    "Gram negativo", ., fixed = TRUE) %>%
+      gsub("Gram positive",    "Gram positivo", ., fixed = TRUE) %>%
+      gsub("Bacteria",         "Bact\u00e9rias", ., fixed = TRUE) %>%
+      gsub("Fungi",            "Fungos", ., fixed = TRUE) %>%
+      gsub("Protozoa",         "Protozo\u00e1rios", ., fixed = TRUE) %>%
+      gsub("biogroup",         "biogrupo", ., fixed = TRUE) %>%
+      gsub("biotype",          "bi\u00f3tipo", ., fixed = TRUE) %>%
+      gsub("vegetative",       "vegetativo", ., fixed = TRUE) %>%
+      gsub("([([ ]*?)group",   "\\1grupo", .) %>%
+      gsub("([([ ]*?)Group",   "\\1Grupo", .)
 
   )
 

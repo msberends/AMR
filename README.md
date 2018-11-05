@@ -60,7 +60,7 @@ The `AMR` package basically does four important things:
    * Use `first_isolate` to identify the first isolates of every patient [using guidelines from the CLSI](https://clsi.org/standards/products/microbiology/documents/m39/) (Clinical and Laboratory Standards Institute).
      * You can also identify first *weighted* isolates of every patient, an adjusted version of the CLSI guideline. This takes into account key antibiotics of every strain and compares them.
    * Use `MDRO` (abbreviation of Multi Drug Resistant Organisms) to check your isolates for exceptional resistance with country-specific guidelines or EUCAST rules. Currently, national guidelines for Germany and the Netherlands are supported.
-   * The data set `microorganisms` contains the complete taxonomic tree of more than 18,000 microorganisms (bacteria, fungi/yeasts and protozoa). Furthermore, the colloquial name and Gram stain are available, which enables resistance analysis of e.g. different antibiotics per Gram stain. The package also contains functions to look up values in this data set like `mo_genus`, `mo_family`, `mo_gramstain` or even `mo_phylum`. As they use `as.mo` internally, they also use artificial intelligence. For example, `mo_genus("MRSA")` and `mo_genus("S. aureus")` will both return `"Staphylococcus"`. They also come with support for German, Dutch, French, Italian, Spanish and Portuguese. These functions can be used to add new variables to your data.
+   * The data set `microorganisms` contains the complete taxonomic tree of more than 18,000 microorganisms (bacteria, fungi/yeasts and protozoa). Furthermore, the colloquial name and Gram stain are available, which enables resistance analysis of e.g. different antibiotics per Gram stain. The package also contains functions to look up values in this data set like `mo_genus`, `mo_family`, `mo_gramstain` or even `mo_phylum`. As they use `as.mo` internally, they also use artificial intelligence. For example, `mo_genus("MRSA")` and `mo_genus("S. aureus")` will both return `"Staphylococcus"`. They also come with support for German, Dutch, Spanish, Italian, French and Portuguese. These functions can be used to add new variables to your data.
    * The data set `antibiotics` contains the ATC code, LIS codes, official name, trivial name and DDD of both oral and parenteral administration. It also contains a total of 298 trade names. Use functions like `ab_name` and `ab_tradenames` to look up values. The `ab_*` functions use `as.atc` internally so they support AI to guess your expected result. For example, `ab_name("Fluclox")`, `ab_name("Floxapen")` and `ab_name("J01CF05")` will all return `"Flucloxacillin"`. These functions can again be used to add new variables to your data.
 
 3. It **analyses the data** with convenient functions that use well-known methods.
@@ -474,17 +474,17 @@ microbenchmark(A = as.mo("stau"),
                times = 10,
                unit = "ms")
 # Unit: milliseconds
-#  expr       min        lq       mean    median        uq        max neval
-#     A 38.864859 38.923316 42.5410391 39.172790 39.394955  70.512389    10
-#     B 13.912175 14.002899 14.1044062 14.084962 14.254467  14.281845    10
-#     C 11.492663 11.555520 76.6953055 11.652670 11.864149 662.026786    10
-#     D 11.616702 11.683261 12.1807189 11.873159 12.142327  14.761724    10
-#     E 13.761108 14.012048 14.1360584 14.106509 14.293229  14.547522    10
-#     F  6.743735  6.785151  6.8962407  6.871335  7.000961   7.158383    10
-#     G  0.119220  0.137030  0.1411503  0.142512  0.145061   0.176909    10
+#  expr       min        lq       mean     median        uq       max neval
+#     A 34.745551 34.798630 35.2596102 34.8994810 35.258325 38.067062    10
+#     B  7.095386  7.125348  7.2219948  7.1613865  7.240377  7.495857    10
+#     C 11.677114 11.733826 11.8304789 11.7715050 11.843756 12.317559    10
+#     D 11.694435 11.730054 11.9859313 11.8775585 12.206371 12.750016    10
+#     E  7.044402  7.117387  7.2271630  7.1923610  7.246104  7.742396    10
+#     F  6.642326  6.778446  6.8988042  6.8753165  6.923577  7.513945    10
+#     G  0.106788  0.131023  0.1351229  0.1357725  0.144014  0.146458    10
 ```
 
-In the table above, all measurements are shown in milliseconds (thousands of seconds), tested on a quite regular Linux server from 2007 (Core 2 Duo 2.7 GHz, 2 GB DDR2 RAM). A value of 6.9 milliseconds means it will roughly determine 144 different (unique) input values per second. It case of 39.2 milliseconds, this is only 26 input values per second. The more an input value resembles a full name (like C, D and F), the faster the result will be found. In case of G, the input is already a valid MO code, so it only almost takes no time at all (0.0001 seconds on our server).
+In the table above, all measurements are shown in milliseconds (thousands of seconds), tested on a quite regular Linux server from 2007 (Core 2 Duo 2.7 GHz, 2 GB DDR2 RAM). A value of 6.9 milliseconds means it will roughly determine 144 input values per second. It case of 39.2 milliseconds, this is only 26 input values per second. The more an input value resembles a full name (like C, D and F), the faster the result will be found. In case of G, the input is already a valid MO code, so it only almost takes no time at all (0.0001 seconds on our server).
 
 To achieve this speed, the `as.mo` function also takes into account the prevalence of human pathogenic microorganisms. The downside is of course that less prevalent microorganisms will be determined far less faster. See this example for the ID of *Burkholderia nodosa* (`B_BRKHL_NOD`):
 
@@ -590,6 +590,26 @@ microbenchmark(A = mo_species("aureus"),
 ```
 
 Of course, when running `mo_phylum("Firmicutes")` the function has zero knowledge about the actual microorganism, namely *S. aureus*. But since the result would be `"Firmicutes"` too, there is no point in calculating the result. And because this package 'knows' all phyla of all known microorganisms (according to ITIS), it can just return the initial value immediately.
+
+When the system language is non-English and supported by this `AMR` package, some functions take a little while longer:
+```r
+mo_fullname("CoNS", language = "en") # or just mo_fullname("CoNS") on an English system
+# "Coagulase Negative Staphylococcus (CoNS)"
+
+mo_fullname("CoNS", language = "fr") # or just mo_fullname("CoNS") on a French system
+# "Staphylococcus à coagulase négative (CoNS)"
+
+microbenchmark(A = mo_fullname("CoNS", language = "en"),
+               B = mo_fullname("CoNS", language = "fr"),
+               times = 10,
+               unit = "ms")
+# Unit: milliseconds
+#  expr       min       lq      mean    median        uq       max neval
+#     A  6.080733  6.33684  6.467129  6.493773  6.593926  6.963666    10
+#     B 14.076651 14.10452 14.446035 14.315893 14.636918 15.254106    10
+```
+
+Currently supported are German, Dutch, Spanish, Italian, French and Portuguese.
 
 ## Copyright
 

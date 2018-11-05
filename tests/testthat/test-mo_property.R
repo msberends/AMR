@@ -21,7 +21,7 @@ test_that("mo_property works", {
 
   expect_equal(mo_shortname("MRSA"), "S. aureus")
   expect_equal(mo_shortname("MRSA", Becker = TRUE), "S. aureus")
-  expect_equal(mo_shortname("MRSA", Becker = "all"), "CoPS")
+  expect_equal(mo_shortname("MRSA", Becker = "all", language = "en"), "CoPS")
   expect_equal(mo_shortname("S. aga"), "S. agalactiae")
   expect_equal(mo_shortname("S. aga", Lancefield = TRUE), "GBS")
 
