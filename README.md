@@ -599,14 +599,24 @@ mo_fullname("CoNS", language = "en") # or just mo_fullname("CoNS") on an English
 mo_fullname("CoNS", language = "fr") # or just mo_fullname("CoNS") on a French system
 # "Staphylococcus à coagulase négative (CoNS)"
 
-microbenchmark(A = mo_fullname("CoNS", language = "en"),
-               B = mo_fullname("CoNS", language = "fr"),
+microbenchmark(en = mo_fullname("CoNS", language = "en"),
+               de = mo_fullname("CoNS", language = "de"),
+               nl = mo_fullname("CoNS", language = "nl"),
+               es = mo_fullname("CoNS", language = "es"),
+               it = mo_fullname("CoNS", language = "it"),
+               fr = mo_fullname("CoNS", language = "fr"),
+               pt = mo_fullname("CoNS", language = "pt"),
                times = 10,
                unit = "ms")
 # Unit: milliseconds
-#  expr       min       lq      mean    median        uq       max neval
-#     A  6.080733  6.33684  6.467129  6.493773  6.593926  6.963666    10
-#     B 14.076651 14.10452 14.446035 14.315893 14.636918 15.254106    10
+#  expr       min       lq      mean    median        uq      max neval
+#    en  6.093583  6.51724  6.555105  6.562986  6.630663  6.99698   100
+#    de 13.934874 14.35137 16.891587 14.462210 14.764658 43.63956   100
+#    nl 13.900092 14.34729 15.943268 14.424565 14.581535 43.76283   100
+#    es 13.833813 14.34596 14.574783 14.439757 14.653994 17.49168   100
+#    it 13.811883 14.36621 15.179060 14.453515 14.812359 43.64284   100
+#    fr 13.798683 14.37019 16.344731 14.468775 14.697610 48.62923   100
+#    pt 13.789674 14.36244 15.706321 14.443772 14.679905 44.76701   100
 ```
 
 Currently supported are German, Dutch, Spanish, Italian, French and Portuguese.
