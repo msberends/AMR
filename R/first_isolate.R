@@ -155,12 +155,12 @@ first_isolate <- function(tbl,
     col_mo <- col_bactid
     warning("Use of `col_bactid` is deprecated. Use `col_mo` instead.")
   } else if (is.null(col_mo) & "mo" %in% lapply(tbl, class)) {
-    col_mo <- colnames(tbl)[lapply(tbl, class) == "mo"]
+    col_mo <- colnames(tbl)[lapply(tbl, class) == "mo"][1]
     message("NOTE: Using column `", col_mo, "` as input for `col_mo`.")
   }
   # -- date
   if (is.null(col_date) & "Date" %in% lapply(tbl, class)) {
-    col_date <- colnames(tbl)[lapply(tbl, class) == "Date"]
+    col_date <- colnames(tbl)[lapply(tbl, class) == "Date"][1]
     message("NOTE: Using column `", col_date, "` as input for `col_date`.")
   }
   # -- patient id

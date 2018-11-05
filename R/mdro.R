@@ -114,7 +114,7 @@ MDRO <- function(tbl,
     col_mo <- col_bactid
     warning("Use of `col_bactid` is deprecated. Use `col_mo` instead.")
   } else if (is.null(col_mo) & "mo" %in% lapply(tbl, class)) {
-    col_mo <- colnames(tbl)[lapply(tbl, class) == "mo"]
+    col_mo <- colnames(tbl)[lapply(tbl, class) == "mo"][1]
     message("NOTE: Using column `", col_mo, "` as input for `col_mo`.")
   } else if (!col_mo %in% colnames(tbl)) {
     stop('Column ', col_mo, ' not found.', call. = FALSE)
