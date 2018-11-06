@@ -61,6 +61,9 @@ test_that("frequency table works", {
   expect_output(septic_patients %>% select(1:9) %>% freq() %>% print())
   expect_output(print(freq(septic_patients$age), nmax = 20))
 
+  # grouping variable
+  expect_output(print(septic_patients %>% group_by(gender) %>% freq(hospital_id)))
+
   # top 5
   expect_equal(
     septic_patients %>%

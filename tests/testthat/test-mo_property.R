@@ -56,7 +56,7 @@ test_that("mo_property works", {
   # check vector with random values
   library(dplyr)
   df_sample <- AMR::microorganisms %>% sample_n(100)
-  expect_identical(df_sample %>% pull(mo) %>% mo_fullname(),
+  expect_identical(df_sample %>% pull(mo) %>% mo_fullname(language = "en"),
                    df_sample %>% pull(fullname))
 
 })

@@ -25,6 +25,12 @@
 * Using `portion_*` functions now throws a warning when total available isolate is below parameter `minimum`
 * Functions `as.mo`, `as.rsi`, `as.mic`, `as.atc` and `freq` will not set package name as attribute anymore
 * Frequency tables - `freq()`:
+  * Support for grouping variables, test with:
+    ```r
+    septic_patients %>% 
+      group_by(hospital_id) %>% 
+      freq(gender)
+    ```
   * Check for `hms::is.hms`
   * Now prints in markdown at default in non-interactive sessions
   * No longer adds the factor level column and sorts factors on count again

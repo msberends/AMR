@@ -19,9 +19,9 @@
 #' Frequency table
 #'
 #' Create a frequency table of a vector with items or a data frame. Supports quasiquotation and markdown for reports. \code{top_freq} can be used to get the top/bottom \emph{n} items of a frequency table, with counts as names.
-#' @param x vector of any class or a \code{\link{data.frame}}, \code{\link{tibble}} or \code{\link{table}}
+#' @param x vector of any class or a \code{\link{data.frame}}, \code{\link{tibble}} (may contain a grouping variable) or \code{\link{table}}
 #' @param ... up to nine different columns of \code{x} when \code{x} is a \code{data.frame} or \code{tibble}, to calculate frequencies from - see Examples
-#' @param sort.count sort on count, i.e. frequencies. This will be \code{TRUE} at default for everything except for factors.
+#' @param sort.count sort on count, i.e. frequencies. This will be \code{TRUE} at default for everything except when using grouping variables.
 #' @param nmax number of row to print. The default, \code{15}, uses \code{\link{getOption}("max.print.freq")}. Use \code{nmax = 0}, \code{nmax = Inf}, \code{nmax = NULL} or \code{nmax = NA} to print all rows.
 #' @param na.rm a logical value indicating whether \code{NA} values should be removed from the frequency table. The header (if set) will always print the amount of \code{NA}s.
 #' @param row.names a logical value indicating whether row indices should be printed as \code{1:nrow(x)}
@@ -59,8 +59,8 @@
 #' The function \code{top_freq} uses \code{\link[dplyr]{top_n}} internally and will include more than \code{n} rows if there are ties.
 #' @importFrom stats fivenum sd mad
 #' @importFrom grDevices boxplot.stats
-#' @importFrom dplyr %>% select pull n_distinct group_by arrange desc mutate summarise n_distinct tibble
-#' @importFrom utils browseVignettes installed.packages
+#' @importFrom dplyr %>% arrange arrange_at desc funs group_by mutate mutate_at n_distinct pull select summarise tibble ungroup vars
+#' @importFrom utils browseVignettes
 #' @importFrom hms is.hms
 #' @importFrom crayon red green silver
 #' @keywords summary summarise frequency freq
@@ -77,7 +77,7 @@
 #' septic_patients$hospital_id %>% freq()
 #' septic_patients[, "hospital_id"] %>% freq()
 #' septic_patients %>% freq("hospital_id")
-#' septic_patients %>% freq(hospital_id)  #<- easiest to remember when you're used to tidyverse
+#' septic_patients %>% freq(hospital_id)  #<- easiest to remember (tidyverse)
 #'
 #' # you could also use `select` or `pull` to get your variables
 #' septic_patients %>%
@@ -90,6 +90,11 @@
 #'   left_join_microorganisms %>%
 #'   filter(hospital_id == "A") %>%
 #'   freq(genus, species)
+#'
+#' # group a variable and analyse another
+#' septic_patients %>%
+#'   group_by(hospital_id) %>%
+#'   freq(gender)
 #'
 #' # get top 10 bugs of hospital A as a vector
 #' septic_patients %>%
@@ -157,6 +162,8 @@ frequency_tbl <- function(x,
                           sep = " ") {
 
   mult.columns <- 0
+  x.group = character(0)
+  df <- NULL
 
   x.name <- NULL
   cols <- NULL
@@ -174,6 +181,12 @@ frequency_tbl <- function(x,
   }
 
   if (any(class(x) == 'data.frame')) {
+    x.group <- group_vars(x)
+    if (length(x.group) > 1) {
+      x.group <- x.group[1L]
+      warning("freq supports one grouping variable, only `", x.group, "` will be kept.", call. = FALSE)
+    }
+
     if (is.null(x.name)) {
       x.name <- deparse(substitute(x))
     }
@@ -187,6 +200,27 @@ frequency_tbl <- function(x,
       cols <- as.character(dots)
       if (!all(cols %in% colnames(x))) {
         stop("one or more columns not found: `", paste(cols, collapse = "`, `"), '`', call. = FALSE)
+      }
+      if (length(x.group) > 0) {
+        x.group_cols <- c(x.group, cols)
+        df <- x %>%
+          group_by_at(vars(x.group_cols)) %>%
+          summarise(count = n())
+        if (!missing(sort.count)) {
+          if (sort.count == TRUE) {
+            df <- df %>% arrange_at(c(x.group, "count"), desc)
+          }
+        }
+        df <- df %>%
+          mutate(cum_count = cumsum(count))
+
+        df.topleft <- df[1, 1]
+        df <- df %>%
+          ungroup() %>%
+          # do not repeat group labels
+          mutate_at(vars(x.group), funs(ifelse(lag(.) == ., "", .)))
+        df[1, 1] <- df.topleft
+        colnames(df)[1:2] <- c("group", "item")
       }
       if (length(cols) > 0) {
         x <- x[, cols]
@@ -233,10 +267,9 @@ frequency_tbl <- function(x,
     class(x) <- x_class
   }
 
-  if (sort.count == FALSE & 'factor' %in% class(x)) {
-    # warning("Sorting a factor sorts on factor level, not necessarily alphabetically.", call. = FALSE)
-  }
-
+  # if (sort.count == FALSE & 'factor' %in% class(x)) {
+  #   warning("Sorting a factor sorts on factor level, not necessarily alphabetically.", call. = FALSE)
+  # }
   header_txt <- character(0)
 
   markdown_line <- ''
@@ -352,15 +385,27 @@ frequency_tbl <- function(x,
     nmax <- length(x)
   }
 
-  # create table with counts and percentages
   column_names <- c('Item', 'Count', 'Percent', 'Cum. Count', 'Cum. Percent')
   column_names_df <- c('item', 'count', 'percent', 'cum_count', 'cum_percent')
-
-
-  df <- tibble(item = x) %>%
-    group_by(item) %>%
-    summarise(count = n())
   column_align <- c(x_align, 'r', 'r', 'r', 'r')
+
+  if (is.null(df)) {
+    # create table with counts and percentages
+    df <- tibble(item = x) %>%
+      group_by(item) %>%
+      summarise(count = n())
+
+    # sort according to setting
+    if (sort.count == TRUE) {
+      df <- df %>% arrange(desc(count), item)
+    } else {
+      df <- df %>% arrange(item)
+    }
+  } else {
+    column_names <- c("Group", column_names)
+    column_names_df <-c("group", column_names_df)
+    column_align <- c("l", column_align)
+  }
 
   if (df$item %>% paste(collapse = ',') %like% '\033') {
     # remove escape char
@@ -368,24 +413,24 @@ frequency_tbl <- function(x,
     df <- df %>% mutate(item = item %>% gsub('\033', ' ', ., fixed = TRUE))
   }
 
-  # sort according to setting
-  if (sort.count == TRUE) {
-    df <- df %>% arrange(desc(count), item)
-  } else {
-    df <- df %>% arrange(item)
-  }
-
   if (quote == TRUE) {
     df$item <- paste0('"', df$item, '"')
+    if (length(x.group) != 0) {
+      df$group <- paste0('"', df$group, '"')
+    }
   }
 
   df <- as.data.frame(df, stringsAsFactors = FALSE)
 
   df$percent <- df$count / base::sum(df$count, na.rm = TRUE)
-  df$cum_count <- base::cumsum(df$count)
+  if (length(x.group) == 0) {
+    df$cum_count <- base::cumsum(df$count)
+  }
   df$cum_percent <- df$cum_count / base::sum(df$count, na.rm = TRUE)
-
-  colnames(df) <- column_names_df
+  if (length(x.group) != 0) {
+    # sort columns
+    df <- df[, column_names_df]
+  }
 
   if (markdown == TRUE) {
     tbl_format <- 'markdown'
@@ -394,14 +439,15 @@ frequency_tbl <- function(x,
   }
 
   if (!is.null(title)) {
-    x.name <- trimws(gsub("^Frequency table of", "", title[1L], ignore.case = TRUE))
-    cols <- NULL
+    title <- trimws(gsub("^Frequency table of", "", title[1L], ignore.case = TRUE))
   }
 
   structure(.Data = df,
             class = c('frequency_tbl', class(df)),
-            opt = list(data = x.name,
+            opt = list(title = title,
+                       data = x.name,
                        vars = cols,
+                       group_var = x.group,
                        header = header,
                        header_txt = header_txt,
                        row_names = row.names,
@@ -502,14 +548,25 @@ print.frequency_tbl <- function(x, nmax = getOption("max.print.freq", default = 
     opt$vars <- NULL
   }
 
-  if (!is.null(opt$data) & !is.null(opt$vars)) {
-    title <- paste0("of `", paste0(opt$vars, collapse = "` and `"), "` from ", opt$data)
-  } else if (!is.null(opt$data) & is.null(opt$vars)) {
-    title <- paste("of", opt$data)
-  } else if (is.null(opt$data) & !is.null(opt$vars)) {
-    title <- paste0("of `", paste0(opt$vars, collapse = "` and `"), "`")
+  if (is.null(opt$title)) {
+    if (!is.null(opt$data) & !is.null(opt$vars)) {
+      title <- paste0("`", paste0(opt$vars, collapse = "` and `"), "` from ", opt$data)
+    } else if (!is.null(opt$data) & is.null(opt$vars)) {
+      title <- opt$data
+    } else if (is.null(opt$data) & !is.null(opt$vars)) {
+      title <- paste0("`", paste0(opt$vars, collapse = "` and `"), "`")
+    } else {
+      title <- ""
+    }
+    if (title != "" & length(opt$group_var) != 0) {
+      group_var <- paste0("(grouped by `", opt$group_var, "`)")
+      if (opt$tbl_format == "pandoc") {
+        group_var <- silver(group_var)
+      }
+      title <- paste(title, group_var)
+    }
   } else {
-    title <- ""
+    title <- opt$title
   }
 
   if (!missing(nmax)) {
@@ -525,7 +582,11 @@ print.frequency_tbl <- function(x, nmax = getOption("max.print.freq", default = 
     }
   }
 
-  title <- paste("Frequency table", trimws(title))
+  if (trimws(title) == "") {
+    title <- "Frequency table"
+  } else {
+    title <- paste("Frequency table of", trimws(title))
+  }
 
   # bold title
   if (opt$tbl_format == "pandoc") {

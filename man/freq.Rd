@@ -23,11 +23,11 @@ top_freq(f, n)
   default = 15), ...)
 }
 \arguments{
-\item{x}{vector of any class or a \code{\link{data.frame}}, \code{\link{tibble}} or \code{\link{table}}}
+\item{x}{vector of any class or a \code{\link{data.frame}}, \code{\link{tibble}} (may contain a grouping variable) or \code{\link{table}}}
 
 \item{...}{up to nine different columns of \code{x} when \code{x} is a \code{data.frame} or \code{tibble}, to calculate frequencies from - see Examples}
 
-\item{sort.count}{sort on count, i.e. frequencies. This will be \code{TRUE} at default for everything except for factors.}
+\item{sort.count}{sort on count, i.e. frequencies. This will be \code{TRUE} at default for everything except when using grouping variables.}
 
 \item{nmax}{number of row to print. The default, \code{15}, uses \code{\link{getOption}("max.print.freq")}. Use \code{nmax = 0}, \code{nmax = Inf}, \code{nmax = NULL} or \code{nmax = NA} to print all rows.}
 
@@ -93,7 +93,7 @@ freq(septic_patients[, "hospital_id"])
 septic_patients$hospital_id \%>\% freq()
 septic_patients[, "hospital_id"] \%>\% freq()
 septic_patients \%>\% freq("hospital_id")
-septic_patients \%>\% freq(hospital_id)  #<- easiest to remember when you're used to tidyverse
+septic_patients \%>\% freq(hospital_id)  #<- easiest to remember (tidyverse)
 
 # you could also use `select` or `pull` to get your variables
 septic_patients \%>\%
@@ -106,6 +106,11 @@ septic_patients \%>\%
   left_join_microorganisms \%>\%
   filter(hospital_id == "A") \%>\%
   freq(genus, species)
+
+# group a variable and analyse another
+septic_patients \%>\%
+  group_by(hospital_id) \%>\%
+  freq(gender)
 
 # get top 10 bugs of hospital A as a vector
 septic_patients \%>\%
