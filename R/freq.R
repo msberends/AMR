@@ -59,7 +59,7 @@
 #' The function \code{top_freq} uses \code{\link[dplyr]{top_n}} internally and will include more than \code{n} rows if there are ties.
 #' @importFrom stats fivenum sd mad
 #' @importFrom grDevices boxplot.stats
-#' @importFrom dplyr %>% arrange arrange_at desc funs group_by mutate mutate_at n_distinct pull select summarise tibble ungroup vars
+#' @importFrom dplyr %>% arrange arrange_at desc filter_at funs group_by mutate mutate_at n_distinct pull select summarise tibble ungroup vars all_vars
 #' @importFrom utils browseVignettes
 #' @importFrom hms is.hms
 #' @importFrom crayon red green silver
@@ -206,6 +206,9 @@ frequency_tbl <- function(x,
         df <- x %>%
           group_by_at(vars(x.group_cols)) %>%
           summarise(count = n())
+        if (na.rm == TRUE) {
+          df <- df %>% filter_at(vars(cols), all_vars(!is.na(.)))
+        }
         if (!missing(sort.count)) {
           if (sort.count == TRUE) {
             df <- df %>% arrange_at(c(x.group, "count"), desc)

@@ -63,6 +63,8 @@ test_that("frequency table works", {
 
   # grouping variable
   expect_output(print(septic_patients %>% group_by(gender) %>% freq(hospital_id)))
+  expect_output(print(septic_patients %>% group_by(gender) %>% freq(amox, quote = TRUE)))
+  expect_output(print(septic_patients %>% group_by(gender) %>% freq(amox, markdown = TRUE)))
 
   # top 5
   expect_equal(

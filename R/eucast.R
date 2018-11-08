@@ -97,7 +97,7 @@
 #' @rdname EUCAST
 #' @export
 #' @importFrom dplyr %>% select pull mutate_at vars
-#' @importFrom crayon bold bgGreen bgYellow bgRed black green blue italic
+#' @importFrom crayon bold bgGreen bgYellow bgRed black green blue italic strip_style
 #' @return The input of \code{tbl}, possibly with edited values of antibiotics. Or, if \code{verbose = TRUE}, a \code{data.frame} with verbose info.
 #' @source
 #'   \itemize{
@@ -376,8 +376,8 @@ EUCAST_rules <- function(tbl,
       if (verbose == TRUE) {
         for (i in 1:length(cols)) {
           # add new row for every affected column
-          verbose_new <- data.frame(rule_type = rule[1],
-                                    rule_set = rule[2],
+          verbose_new <- data.frame(rule_type = strip_style(rule[1]),
+                                    rule_set = strip_style(rule[2]),
                                     force_to = to,
                                     found = length(before),
                                     changed = sum(before != after, na.rm = TRUE),
