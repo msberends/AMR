@@ -1,6 +1,7 @@
 context("mo_property.R")
 
 test_that("mo_property works", {
+  expect_equal(mo_kingdom("E. coli"), "Bacteria")
   expect_equal(mo_subkingdom("E. coli"), "Negibacteria")
   expect_equal(mo_phylum("E. coli"), "Proteobacteria")
   expect_equal(mo_class("E. coli"), "Gammaproteobacteria")

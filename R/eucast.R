@@ -1730,12 +1730,12 @@ EUCAST_rules <- function(tbl,
     } else {
       colour <- blue
     }
-    cat(bold('\n=> EUCAST rules affected',
+    cat(bold(paste('\n=> EUCAST rules', paste0(wouldve, 'affected'),
              amount_affected_rows %>% length() %>% format(big.mark = ","),
              'out of', nrow(tbl_original) %>% format(big.mark = ","),
              'rows ->',
              colour(paste0(wouldve, 'changed'),
-                    amount_changed %>% format(big.mark = ","), 'test results.\n\n')))
+                    amount_changed %>% format(big.mark = ","), 'test results.\n\n'))))
   }
 
   if (verbose == TRUE) {

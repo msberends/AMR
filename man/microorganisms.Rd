@@ -17,8 +17,8 @@
   \item{\code{class}}{Taxonomic class of the microorganism as found in ITIS, see Source}
   \item{\code{phylum}}{Taxonomic phylum of the microorganism as found in ITIS, see Source}
   \item{\code{subkingdom}}{Taxonomic subkingdom of the microorganism as found in ITIS, see Source}
+  \item{\code{kingdom}}{Taxonomic kingdom of the microorganism as found in ITIS, see Source}
   \item{\code{gramstain}}{Gram of microorganism, like \code{"Gram negative"}}
-  \item{\code{type}}{Type of microorganism, like \code{"Bacteria"} and \code{"Fungi"}}
   \item{\code{prevalence}}{An integer based on estimated prevalence of the microorganism in humans. Used internally by \code{\link{as.mo}}, otherwise quite meaningless. It has a value of 25 for manually added items and a value of 1000 for all unprevalent microorganisms whose genus was somewhere in the top 250 (with another species).}
   \item{\code{ref}}{Author(s) and year of concerning publication as found in ITIS, see Source}
 }}
@@ -34,9 +34,9 @@ A data set containing the complete microbial taxonomy of the kingdoms Bacteria, 
 \section{ITIS}{
 
 \if{html}{\figure{itis_logo.jpg}{options: height=60px style=margin-bottom:5px} \cr}
-This package contains the \strong{complete microbial taxonomic data} (with all  seven taxonomic ranks - from subkingdom to subspecies) from the publicly available Integrated Taxonomic Information System (ITIS, \url{https://www.itis.gov}).
+This package contains the \strong{complete microbial taxonomic data} (with all eight taxonomic ranks - from kingdom to subspecies) from the publicly available Integrated Taxonomic Information System (ITIS, \url{https://www.itis.gov}).
 
-All (sub)species from the \strong{taxonomic kingdoms Bacteria, Fungi and Protozoa are included in this package}, as well as all previously accepted names known to ITIS. Furthermore, the responsible authors and year of publication are available. This allows users to use authoritative taxonomic information for their data analysis on any microorganism, not only human pathogens. It also helps to quickly determine the Gram stain of bacteria, since all bacteria are classified into subkingdom Negibacteria or Posibacteria.
+All (sub)species from \strong{the taxonomic kingdoms Bacteria, Fungi and Protozoa are included in this package}, as well as all previously accepted names known to ITIS. Furthermore, the responsible authors and year of publication are available. This allows users to use authoritative taxonomic information for their data analysis on any microorganism, not only human pathogens. It also helps to quickly determine the Gram stain of bacteria, since all bacteria are classified into subkingdom Negibacteria or Posibacteria.
 
 ITIS is a partnership of U.S., Canadian, and Mexican agencies and taxonomic specialists [3].
 }

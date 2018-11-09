@@ -12,10 +12,13 @@
 \alias{mo_class}
 \alias{mo_phylum}
 \alias{mo_subkingdom}
-\alias{mo_ref}
+\alias{mo_kingdom}
 \alias{mo_type}
-\alias{mo_TSN}
 \alias{mo_gramstain}
+\alias{mo_TSN}
+\alias{mo_ref}
+\alias{mo_authors}
+\alias{mo_year}
 \alias{mo_taxonomy}
 \title{Property of a microorganism}
 \usage{
@@ -39,32 +42,50 @@ mo_phylum(x, ...)
 
 mo_subkingdom(x, ...)
 
-mo_ref(x, ...)
+mo_kingdom(x, ...)
 
 mo_type(x, language = get_locale(), ...)
 
-mo_TSN(x, ...)
-
 mo_gramstain(x, language = get_locale(), ...)
 
-mo_property(x, property = "fullname", language = get_locale(), ...)
+mo_TSN(x, ...)
+
+mo_ref(x, ...)
+
+mo_authors(x, ...)
+
+mo_year(x, ...)
 
 mo_taxonomy(x, ...)
+
+mo_property(x, property = "fullname", language = get_locale(), ...)
 }
 \arguments{
 \item{x}{any (vector of) text that can be coerced to a valid microorganism code with \code{\link{as.mo}}}
 
-\item{language}{language of the returned text, defaults to system language (see \code{\link{get_locale}}) and can also be set with \code{\link{getOption}("AMR_locale")}.}
+\item{language}{language of the returned text, defaults to system language (see \code{\link{get_locale}}) and can also be set with \code{\link{getOption}("AMR_locale")}. Use \code{language = NULL} or \code{language = ""} to prevent translation.}
 
 \item{...}{other parameters passed on to \code{\link{as.mo}}}
 
 \item{property}{one of the column names of one of the \code{\link{microorganisms}} data set or \code{"shortname"}}
 }
 \value{
-A \code{list} (in case of \code{mo_taxonomy}) or a \code{character} otherwise
+\itemize{
+  \item{An \code{integer} in case of \code{mo_TSN} and \code{mo_year}}
+  \item{A \code{list} in case of \code{mo_taxonomy}}
+  \item{A \code{character} in all other cases}
+}
 }
 \description{
 Use these functions to return a specific property of a microorganism from the \code{\link{microorganisms}} data set. All input values will be evaluated internally with \code{\link{as.mo}}.
+}
+\details{
+All functions will return the most recently known taxonomic property according to ITIS, except for \code{mo_ref}, \code{mo_authors} and \code{mo_year}. This leads to the following results:
+\itemize{
+  \item{\code{mo_fullname("Chlamydia psittaci")} will return \code{"Chlamydophila psittaci"} (with a warning about the renaming)}
+  \item{\code{mo_ref("Chlamydia psittaci")} will return \code{"Page, 1968"} (with a warning about the renaming)}
+  \item{\code{mo_ref("Chlamydophila psittaci")} will return \code{"Everett et al., 1999"} (without a warning)}
+}
 }
 \section{Supported languages}{
 
@@ -74,9 +95,9 @@ Supported languages are \code{"en"} (English), \code{"de"} (German), \code{"nl"}
 \section{ITIS}{
 
 \if{html}{\figure{itis_logo.jpg}{options: height=60px style=margin-bottom:5px} \cr}
-This package contains the \strong{complete microbial taxonomic data} (with all  seven taxonomic ranks - from subkingdom to subspecies) from the publicly available Integrated Taxonomic Information System (ITIS, \url{https://www.itis.gov}).
+This package contains the \strong{complete microbial taxonomic data} (with all eight taxonomic ranks - from kingdom to subspecies) from the publicly available Integrated Taxonomic Information System (ITIS, \url{https://www.itis.gov}).
 
-All (sub)species from the \strong{taxonomic kingdoms Bacteria, Fungi and Protozoa are included in this package}, as well as all previously accepted names known to ITIS. Furthermore, the responsible authors and year of publication are available. This allows users to use authoritative taxonomic information for their data analysis on any microorganism, not only human pathogens. It also helps to quickly determine the Gram stain of bacteria, since all bacteria are classified into subkingdom Negibacteria or Posibacteria.
+All (sub)species from \strong{the taxonomic kingdoms Bacteria, Fungi and Protozoa are included in this package}, as well as all previously accepted names known to ITIS. Furthermore, the responsible authors and year of publication are available. This allows users to use authoritative taxonomic information for their data analysis on any microorganism, not only human pathogens. It also helps to quickly determine the Gram stain of bacteria, since all bacteria are classified into subkingdom Negibacteria or Posibacteria.
 
 ITIS is a partnership of U.S., Canadian, and Mexican agencies and taxonomic specialists [3].
 }
@@ -92,6 +113,8 @@ ITIS is a partnership of U.S., Canadian, and Mexican agencies and taxonomic spec
 
 \examples{
 # All properties of Escherichia coli
+## taxonomic properties
+mo_kingdom("E. coli")         # "Bacteria"
 mo_subkingdom("E. coli")      # "Negibacteria"
 mo_phylum("E. coli")          # "Proteobacteria"
 mo_class("E. coli")           # "Gammaproteobacteria"
@@ -100,12 +123,20 @@ mo_family("E. coli")          # "Enterobacteriaceae"
 mo_genus("E. coli")           # "Escherichia"
 mo_species("E. coli")         # "coli"
 mo_subspecies("E. coli")      # NA
+mo_TSN("E. coli")             # 285 (Taxonomic Serial Number)
+
+## colloquial properties
 mo_fullname("E. coli")        # "Escherichia coli"
 mo_shortname("E. coli")       # "E. coli"
+
+## other properties
 mo_gramstain("E. coli")       # "Gram negative"
-mo_TSN("E. coli")             # 285
-mo_type("E. coli")            # "Bacteria"
+mo_type("E. coli")            # "Bacteria" (equal to kingdom)
+
+## scientific reference
 mo_ref("E. coli")             # "Castellani and Chalmers, 1919"
+mo_authors("E. coli")         # "Castellani and Chalmers"
+mo_year("E. coli")            # 1919
 
 
 # Abbreviations known in the field
@@ -137,16 +168,18 @@ mo_shortname("S. epi", Becker = TRUE)     # "CoNS"
 mo_fullname("S. pyo")                     # "Streptococcus pyogenes"
 mo_fullname("S. pyo", Lancefield = TRUE)  # "Streptococcus group A"
 mo_shortname("S. pyo")                    # "S. pyogenes"
-mo_shortname("S. pyo", Lancefield = TRUE) # "GAS"
+mo_shortname("S. pyo", Lancefield = TRUE) # "GAS" ('Group A streptococci')
 
 
-# Language support for German, Dutch, Spanish and Portuguese
-mo_type("E. coli", language = "de")       # "Bakterium"
-mo_type("E. coli", language = "nl")       # "Bacterie"
-mo_type("E. coli", language = "es")       # "Bakteria"
+# Language support for German, Dutch, Spanish, Portuguese, Italian and French
 mo_gramstain("E. coli", language = "de")  # "Gramnegativ"
 mo_gramstain("E. coli", language = "nl")  # "Gram-negatief"
 mo_gramstain("E. coli", language = "es")  # "Gram negativo"
+
+# mo_type is equal to mo_kingdom, but mo_kingdom will remain official
+mo_kingdom("E. coli")                     # "Bacteria" on a German system
+mo_type("E. coli")                        # "Bakterien" on a German system
+mo_type("E. coli")                        # "Bacteria" on an English system
 
 mo_fullname("S. pyogenes",
             Lancefield = TRUE,
@@ -156,7 +189,7 @@ mo_fullname("S. pyogenes",
             language = "nl")              # "Streptococcus groep A"
 
 
-# Complete taxonomy up to Subkingdom, returns a list
+# Get a list with the complete taxonomy (subkingdom to subspecies)
 mo_taxonomy("E. coli")
 }
 \seealso{

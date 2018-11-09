@@ -6,6 +6,7 @@
 * Function `get_locale` to determine language for language-dependent output for some `mo_*` functions. This is now the default value for their `language` parameter, by which the system language will be used at default.
 * Data sets `microorganismsDT`, `microorganisms.prevDT`, `microorganisms.unprevDT` and `microorganisms.oldDT` to improve the speed of `as.mo`. They are for reference only, since they are primarily for internal use of `as.mo`.
 * Function `read_4D` to read from the 4D database of the MMB department of the UMCG
+* Functions `mo_authors` and `mo_year` to get specific values about the scientific reference of a taxonomic entry
 
 #### Changed
 * Big changes to the `EUCAST_rules` function:
@@ -17,6 +18,7 @@
   * Data set `septic_patients` now reflects these changes
   * Added parameter `pipe` for piperacillin (J01CA12), also to the `MDRO` function
   * Small fixes to EUCAST clinical breakpoint rules
+* Added column `kingdom` to the microorganisms data set, and function `mo_kingdom` to look up values
 * Tremendous speed improvement for `as.mo` (and subsequently all `mo_*` functions), as empty values wil be ignored *a priori*
 * Fewer than 3 characters as input for `as.mo` will return NA
 * Added parameter `combine_IR` (TRUE/FALSE) to functions `portion_df` and `count_df`, to indicate that all values of I and R must be merged into one, so the output only consists of S vs. IR (susceptible vs. non-susceptible)

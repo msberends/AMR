@@ -69,9 +69,9 @@
 #' \code{guess_mo} is an alias of \code{as.mo}.
 #' @section ITIS:
 #' \if{html}{\figure{itis_logo.jpg}{options: height=60px style=margin-bottom:5px} \cr}
-#' This package contains the \strong{complete microbial taxonomic data} (with all  seven taxonomic ranks - from subkingdom to subspecies) from the publicly available Integrated Taxonomic Information System (ITIS, \url{https://www.itis.gov}).
+#' This package contains the \strong{complete microbial taxonomic data} (with all eight taxonomic ranks - from kingdom to subspecies) from the publicly available Integrated Taxonomic Information System (ITIS, \url{https://www.itis.gov}).
 #'
-#' All (sub)species from the \strong{taxonomic kingdoms Bacteria, Fungi and Protozoa are included in this package}, as well as all previously accepted names known to ITIS. Furthermore, the responsible authors and year of publication are available. This allows users to use authoritative taxonomic information for their data analysis on any microorganism, not only human pathogens. It also helps to quickly determine the Gram stain of bacteria, since all bacteria are classified into subkingdom Negibacteria or Posibacteria.
+#' All (sub)species from \strong{the taxonomic kingdoms Bacteria, Fungi and Protozoa are included in this package}, as well as all previously accepted names known to ITIS. Furthermore, the responsible authors and year of publication are available. This allows users to use authoritative taxonomic information for their data analysis on any microorganism, not only human pathogens. It also helps to quickly determine the Gram stain of bacteria, since all bacteria are classified into subkingdom Negibacteria or Posibacteria.
 #'
 #' ITIS is a partnership of U.S., Canadian, and Mexican agencies and taxonomic specialists [3].
 #'
@@ -517,7 +517,14 @@ exec_as.mo <- function(x, Becker = FALSE, Lancefield = FALSE, allow_uncertain = 
                                     | tsn == x_trimmed[i]
                                     | name %like% x_withspaces[i],]
       if (NROW(found) > 0) {
-        x[i] <- microorganismsDT[tsn == found[1, tsn_new], ..property][[1]]
+        # when property is "ref" (which is the case in mo_ref, mo_authors and mo_year), return the old value, so:
+        # mo_ref("Chlamydia psittaci) = "Page, 1968" (with warning)
+        # mo_ref("Chlamydophila psittaci) = "Everett et al., 1999"
+        if (property == "ref") {
+          x[i] <- found[1, ref]
+        } else {
+          x[i] <- microorganismsDT[tsn == found[1, tsn_new], ..property][[1]]
+        }
         renamed_note(name_old = found[1, name],
                      name_new = microorganismsDT[tsn == found[1, tsn_new], fullname],
                      ref_old = found[1, ref],
@@ -532,7 +539,11 @@ exec_as.mo <- function(x, Becker = FALSE, Lancefield = FALSE, allow_uncertain = 
                                       | name %like% x_withspaces_start[i]
                                       | name %like% x[i],]
         if (NROW(found) > 0) {
-          x[i] <- microorganismsDT[tsn == found[1, tsn_new], ..property][[1]]
+          if (property == "ref") {
+            x[i] <- found[1, ref]
+          } else {
+            x[i] <- microorganismsDT[tsn == found[1, tsn_new], ..property][[1]]
+          }
           warning("Uncertain interpretation: '",
                   x_backup[i], "' -> '", found[1, name], "'",
                   call. = FALSE, immediate. = TRUE)

@@ -81,9 +81,9 @@ The `AMR` package basically does four important things:
 ### ITIS
 <img src="man/figures/itis_logo.jpg" height="100px">
 
-This package contains the **complete microbial taxonomic data** (with all  seven taxonomic ranks - from subkingdom to subspecies) from the publicly available Integrated Taxonomic Information System (ITIS, https://www.itis.gov). 
+This package contains the **complete microbial taxonomic data** (with all eight taxonomic ranks - from kingdom to subspecies) from the publicly available Integrated Taxonomic Information System (ITIS, https://www.itis.gov). 
 
-All (sub)species from the **taxonomic kingdoms Bacteria, Fungi and Protozoa are included in this package**, as well as all previously accepted names known to ITIS. Furthermore, the responsible authors and year of publication are available. This allows users to use authoritative taxonomic information for their data analysis on any microorganism, not only human pathogens. It also helps to quickly determine the Gram stain of bacteria, since all bacteria are classified into subkingdom Negibacteria or Posibacteria.
+All (sub)species from **the taxonomic kingdoms Bacteria, Fungi and Protozoa are included in this package**, as well as all previously accepted names known to ITIS. Furthermore, the responsible authors and year of publication are available. This allows users to use authoritative taxonomic information for their data analysis on any microorganism, not only human pathogens. It also helps to quickly determine the Gram stain of bacteria, since all bacteria are classified into subkingdom Negibacteria or Posibacteria.
 
 ITIS is a partnership of U.S., Canadian, and Mexican agencies and taxonomic specialists.
 
@@ -575,18 +575,20 @@ microbenchmark(A = mo_species("aureus"),
                F = mo_class("Bacilli"),
                G = mo_phylum("Firmicutes"),
                H = mo_subkingdom("Posibacteria"),
+               I = mo_kingdom("Bacteria"),
                times = 10,
                unit = "ms")
 # Unit: milliseconds
 #  expr      min       lq      mean    median       uq      max neval
-#     A 0.096801 0.120966 0.1264836 0.1262045 0.135773 0.158192    10
-#     B 0.102807 0.123899 0.1258339 0.1286835 0.132420 0.143245    10
-#     C 0.122503 0.128299 0.1374623 0.1292070 0.139683 0.187315    10
-#     D 0.087372 0.093239 0.1053774 0.1026330 0.113633 0.128299    10
-#     E 0.084020 0.098617 0.1124383 0.1094420 0.113423 0.178515    10
-#     F 0.080667 0.085346 0.1068579 0.1128295 0.115030 0.133537    10
-#     G 0.087443 0.090026 0.1030171 0.0995250 0.106369 0.152325    10
-#     H 0.084648 0.103156 0.1058313 0.1095120 0.112864 0.117265    10
+#     A 0.105181 0.121314 0.1478538 0.1465265 0.166711 0.211409    10
+#     B 0.132558 0.146388 0.1584278 0.1499835 0.164895 0.208477    10
+#     C 0.135492 0.160355 0.2341847 0.1884665 0.348857 0.395931    10
+#     D 0.109650 0.115727 0.1270481 0.1264130 0.128648 0.168317    10
+#     E 0.081574 0.096940 0.0992582 0.0980915 0.101479 0.120477    10
+#     F 0.081575 0.088489 0.0988463 0.0989650 0.103365 0.126482    10
+#     G 0.091981 0.095333 0.1043568 0.1001530 0.111327 0.129625    10
+#     H 0.092610 0.093169 0.1009135 0.0985455 0.101828 0.120406    10
+#     I 0.087371 0.091213 0.1069758 0.0941815 0.109302 0.192831    10
 ```
 
 Of course, when running `mo_phylum("Firmicutes")` the function has zero knowledge about the actual microorganism, namely *S. aureus*. But since the result would be `"Firmicutes"` too, there is no point in calculating the result. And because this package 'knows' all phyla of all known microorganisms (according to ITIS), it can just return the initial value immediately.

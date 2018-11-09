@@ -137,8 +137,8 @@
 #'   \item{\code{class}}{Taxonomic class of the microorganism as found in ITIS, see Source}
 #'   \item{\code{phylum}}{Taxonomic phylum of the microorganism as found in ITIS, see Source}
 #'   \item{\code{subkingdom}}{Taxonomic subkingdom of the microorganism as found in ITIS, see Source}
+#'   \item{\code{kingdom}}{Taxonomic kingdom of the microorganism as found in ITIS, see Source}
 #'   \item{\code{gramstain}}{Gram of microorganism, like \code{"Gram negative"}}
-#'   \item{\code{type}}{Type of microorganism, like \code{"Bacteria"} and \code{"Fungi"}}
 #'   \item{\code{prevalence}}{An integer based on estimated prevalence of the microorganism in humans. Used internally by \code{\link{as.mo}}, otherwise quite meaningless. It has a value of 25 for manually added items and a value of 1000 for all unprevalent microorganisms whose genus was somewhere in the top 250 (with another species).}
 #'   \item{\code{ref}}{Author(s) and year of concerning publication as found in ITIS, see Source}
 #' }
@@ -248,7 +248,7 @@
 # # Renew data:
 # microorganismsDT <- data.table::as.data.table(AMR::microorganisms)
 # # sort on (1) bacteria, (2) fungi, (3) protozoa and then human pathogenic prevalence and then TSN:
-# data.table::setkey(microorganismsDT, type, prevalence, fullname)
+# data.table::setkey(microorganismsDT, kingdom, prevalence, fullname)
 # microorganisms.prevDT <- microorganismsDT[prevalence == 9999,]
 # microorganisms.unprevDT <- microorganismsDT[prevalence != 9999,]
 # microorganisms.oldDT <- data.table::as.data.table(AMR::microorganisms.old)
