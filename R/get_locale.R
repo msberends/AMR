@@ -31,19 +31,23 @@ get_locale <- function() {
   }
   lang <- Sys.getlocale("LC_COLLATE")
   # grepl with case = FALSE is faster than like
-  if (grepl("(English|en_)", lang, ignore.case = FALSE)) {
+  if (grepl("^(English|en_|EN_)", lang, ignore.case = FALSE)) {
+    # as first option to optimise speed
     "en"
-  } else if (grepl("(German|Deutsch|de_)", lang, ignore.case = FALSE)) {
+  } else if (grepl("^(German|Deutsch|de_|DE_)", lang, ignore.case = FALSE)) {
     "de"
-  } else if (grepl("(Dutch|Nederlands|nl_)", lang, ignore.case = FALSE)) {
+  } else if (grepl("^(Dutch|Nederlands|nl_|NL_)", lang, ignore.case = FALSE)) {
     "nl"
-  } else if (grepl("(Spanish|Espa.ol|es_)", lang, ignore.case = FALSE)) {
+  } else if (grepl("^(Spanish|Espa.ol|es_|ES_)", lang, ignore.case = FALSE)) {
     "es"
-  } else if (grepl("(Italian|Italiano|it_)", lang, ignore.case = FALSE)) {
+  } else if (grepl("^(Italian|Italiano|it_|IT_)", lang, ignore.case = FALSE)) {
     "it"
-  } else if (grepl("(French|Fran.ais|fr_)", lang, ignore.case = FALSE)) {
+  } else if (grepl("^(French|Fran.ais|fr_|FR_)", lang, ignore.case = FALSE)) {
     "fr"
-  } else if (grepl("(Portuguese|Portugu.s|pt_)", lang, ignore.case = FALSE)) {
+  } else if (grepl("^(Portuguese|Portugu.s|pt_|PT_)", lang, ignore.case = FALSE)) {
     "pt"
+  } else {
+    # other language, set to English
+    "en"
   }
 }
