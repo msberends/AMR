@@ -47,7 +47,7 @@ get_locale <- function() {
   } else if (grepl("^(Portuguese|Portugu.s|pt_|PT_)", lang, ignore.case = FALSE)) {
     "pt"
   } else {
-    # other language, set to English
+    # other language -> set to English
     "en"
   }
 }

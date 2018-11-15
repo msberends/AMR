@@ -5,7 +5,7 @@
 * Function `count_all` to get all available isolates (that like all `portion_*` and `count_*` functions also supports `summarise` and `group_by`), the old `n_rsi` is now an alias of `count_all`
 * Function `get_locale` to determine language for language-dependent output for some `mo_*` functions. This is now the default value for their `language` parameter, by which the system language will be used at default.
 * Data sets `microorganismsDT`, `microorganisms.prevDT`, `microorganisms.unprevDT` and `microorganisms.oldDT` to improve the speed of `as.mo`. They are for reference only, since they are primarily for internal use of `as.mo`.
-* Function `read_4D` to read from the 4D database of the MMB department of the UMCG
+* Function `read.4D` to read from the 4D database of the MMB department of the UMCG
 * Functions `mo_authors` and `mo_year` to get specific values about the scientific reference of a taxonomic entry
 
 #### Changed
@@ -57,6 +57,7 @@
 * Speed improvement for `is.rsi.eligible`, now 15-20 times faster
 * In `g.test`, when `sum(x)` is below 1000 or any of the expected values is below 5, Fisher's Exact Test will be suggested
 * `ab_name` will try to fall back on `as.atc` when no results are found
+* Removed the addin to view data sets
 
 #### Other
 * New dependency on package `crayon`, to support formatted text in the console

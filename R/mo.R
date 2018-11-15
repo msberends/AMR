@@ -181,7 +181,7 @@ exec_as.mo <- function(x, Becker = FALSE, Lancefield = FALSE, allow_uncertain = 
     x[is.null(x)] <- NA
 
     # support tidyverse selection like: df %>% select(colA)
-    if (!is.vector(x)) {
+    if (!is.vector(x) & !is.null(dim(x))) {
       x <- pull(x, 1)
     }
   }
@@ -360,9 +360,15 @@ exec_as.mo <- function(x, Becker = FALSE, Lancefield = FALSE, allow_uncertain = 
         # next
       }
       if (x_backup[i] %in% AMR::microorganisms.umcg[, 1]) {
-        ref_certe <- AMR::microorganisms.umcg[AMR::microorganisms.umcg[, 1] == x_backup[i], 2]
-        ref_mo <- AMR::microorganisms.certe[AMR::microorganisms.certe[, 1] == ref_certe, 2]
-        x[i] <- microorganismsDT[mo == ref_mo, ..property][[1]][1L]
+        mo_umcg <- AMR::microorganisms.umcg[AMR::microorganisms.umcg[, 1] == x_backup[i], 2]
+        mo_found <- AMR::microorganisms.certe[AMR::microorganisms.certe[, 1] == mo_umcg, 2]
+        if (length(mo_found) == 0) {
+          # not found
+          x[i] <- NA_character_
+          failures <- c(failures, x_backup[i])
+        } else {
+          x[i] <- microorganismsDT[mo == mo_found, ..property][[1]][1L]
+        }
         next
       }
       if (x_backup[i] %in% reference_df[, 1]) {
@@ -575,7 +581,7 @@ exec_as.mo <- function(x, Becker = FALSE, Lancefield = FALSE, allow_uncertain = 
 
   failures <- failures[!failures %in% c(NA, NULL, NaN)]
   if (length(failures) > 0) {
-    warning("These ", length(failures) , " values could not be coerced: ",
+    warning("These ", length(failures) , " values could not be coerced to a valid MO code: ",
             paste('"', unique(failures), '"', sep = "", collapse = ', '),
             ".",
             call. = FALSE)

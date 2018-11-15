@@ -26,24 +26,6 @@ addin_insert_like <- function() {
   rstudioapi::insertText(" %like% ")
 }
 
-#  No export, no Rd
-#' @importFrom utils View
-addin_open_antibiotics <- function() {
-  View(antibiotics)
-}
-
-#  No export, no Rd
-#' @importFrom utils View
-addin_open_microorganisms <- function() {
-  View(microorganisms)
-}
-
-#  No export, no Rd
-#' @importFrom utils View
-addin_open_septic_patients <- function() {
-  View(septic_patients)
-}
-
 # No export, no Rd
 percent <- function(x, round = 1, force_zero = FALSE, ...) {
   val <- base::round(x * 100, digits = round)

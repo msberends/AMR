@@ -18,11 +18,15 @@
 
 #' Read data from 4D database
 #'
-#' This function is only useful for the MMB department of the UMCG. Use this function to \strong{import data by just defining the \code{file} parameter}. It will automatically transform birth dates and calculate patients age, translate the data set to English, transform the \code{mo} with \code{\link{as.mo}} and transform all antimicrobial columns with \code{\link{as.rsi}}.
+#' This function is only useful for the MMB department of the UMCG. Use this function to \strong{import data by just defining the \code{file} parameter}. It will automatically transform birth dates and calculate patients age, translate the column names to English, transform the \code{mo} with \code{\link{as.mo}} and transform all antimicrobial columns with \code{\link{as.rsi}}.
 #' @inheritParams utils::read.table
+#' @param info a logical to indicate whether info about the import should be printed, defaults to \code{TRUE} in interactive sessions
+#' @details Column names will be transformed, but the original column names are set as a "label" attribute and can be seen in e.g. RStudio Viewer.
 #' @export
-read_4D <- function(file,
+read.4D <- function(file,
+                    info = interactive(),
                     header = TRUE,
+                    row.names = NULL,
                     sep = "\t",
                     quote = "\"'",
                     dec = ",",
@@ -36,7 +40,11 @@ read_4D <- function(file,
                     fileEncoding = "UTF-8",
                     encoding = "UTF-8") {
 
+  if (info == TRUE) {
+    message("Importing data... ", appendLF = FALSE)
+  }
   data_4D <- utils::read.table(file = file,
+                               row.names = row.names,
                                header = header,
                                sep = sep,
                                quote = quote,
@@ -57,7 +65,7 @@ read_4D <- function(file,
     posixlt <- as.POSIXlt(date_regular)
     # born after today will be born 100 years ago
     # based on https://stackoverflow.com/a/3312971/4575331
-    posixlt[date_regular > Sys.Date()]$year <- posixlt[date_regular > Sys.Date()]$year - 100
+    posixlt[date_regular > Sys.Date() & !is.na(posixlt)]$year <- posixlt[date_regular > Sys.Date() & !is.na(posixlt)]$year - 100
     as.Date(posixlt)
   }
   to_age_4D <- function(from, to) {
@@ -69,6 +77,15 @@ read_4D <- function(file,
     ifelse(to_lt$mon < from_lt$mon |
              (to_lt$mon == from_lt$mon & to_lt$mday < from_lt$mday),
            age - 1, age)
+  }
+
+  if (info == TRUE) {
+    message("OK\nTransforming column names... ", appendLF = FALSE)
+  }
+  if ("row.names" %in% colnames(data_4D) & all(is.na(data_4D[, ncol(data_4D)]))) {
+    # remove first column name "row.names" and remove last empty column
+    colnames(data_4D) <- c(colnames(data_4D)[2:ncol(data_4D)], "_skip_last")
+    data_4D <- data_4D[, -ncol(data_4D)]
   }
 
   colnames(data_4D) <- tolower(colnames(data_4D))
@@ -91,6 +108,10 @@ read_4D <- function(file,
   # order of columns
   data_4D <- data_4D[, cols_wanted]
 
+  # backup original column names
+  colnames.bak <- toupper(colnames(data_4D))
+  colnames.bak[colnames.bak == "AGE"] <- NULL
+
   # rename of columns
   colnames(data_4D) <- gsub("patientnr", "patient_id", colnames(data_4D), fixed = TRUE)
   colnames(data_4D) <- gsub("gebdatum", "date_birth", colnames(data_4D), fixed = TRUE)
@@ -104,6 +125,9 @@ read_4D <- function(file,
   colnames(data_4D) <- gsub("mat", "specimen_group", colnames(data_4D), fixed = TRUE)
   colnames(data_4D) <- gsub("mocode", "mo", colnames(data_4D), fixed = TRUE)
 
+  if (info == TRUE) {
+    message("OK\nTransforming dates and age... ", appendLF = FALSE)
+  }
   if ("date_birth" %in% colnames(data_4D)) {
     data_4D$date_birth <- to_date_4D(data_4D$date_birth)
 
@@ -117,6 +141,10 @@ read_4D <- function(file,
   if ("gender" %in% colnames(data_4D)) {
     data_4D$gender[data_4D$gender == "V"] <- "F"
   }
+
+  if (info == TRUE) {
+    message("OK\nTransforming MO codes... ", appendLF = FALSE)
+  }
   if ("mo" %in% colnames(data_4D)) {
     data_4D$mo <- as.mo(data_4D$mo)
     # column right of mo is:
@@ -127,6 +155,18 @@ read_4D <- function(file,
       # transform those to rsi:
       data_4D <- suppressWarnings(mutate_at(data_4D, vars(drug1:drug_last), as.rsi))
     }
+  }
+
+  # set original column names as label (can be seen in RStudio Viewer)
+  if (info == TRUE) {
+    message("OK\nSetting original column names as label... ", appendLF = FALSE)
+  }
+  for (i in 1:ncol(data_4D)) {
+    attr(data_4D[, i], "label") <- colnames.bak[i]
+  }
+
+  if (info == TRUE) {
+    message("OK")
   }
 
   data_4D

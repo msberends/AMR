@@ -49,6 +49,7 @@
 #'
 #' \code{ggplot_rsi} is a wrapper around all above functions that uses data as first input. This makes it possible to use this function after a pipe (\code{\%>\%}). See Examples.
 #' @rdname ggplot_rsi
+#' @importFrom utils installed.packages
 #' @export
 #' @examples
 #' library(dplyr)
