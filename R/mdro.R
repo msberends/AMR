@@ -22,13 +22,13 @@
 #' @param tbl table with antibiotic columns, like e.g. \code{amox} and \code{amcl}
 #' @param country country code to determine guidelines. EUCAST rules will be used when left empty, see Details. Should be or a code from the \href{https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2#Officially_assigned_code_elements}{list of ISO 3166-1 alpha-2 country codes}. Case-insensitive. Currently supported are \code{de} (Germany) and \code{nl} (the Netherlands).
 #' @param info print progress
-#' @inheritParams EUCAST_rules
+#' @inheritParams eucast_rules
 #' @param metr column name of an antibiotic. Use \code{NA} to skip a column, like \code{tica = NA}. Non-existing columns will anyway be skipped. See the Antibiotics section for an explanation of the abbreviations.
 #' @param ... parameters that are passed on to methods
-#' @inheritSection EUCAST_rules Antibiotics
+#' @inheritSection eucast_rules Antibiotics
 #' @details When \code{country} will be left blank, guidelines will be taken from EUCAST Expert Rules Version 3.1 "Intrinsic Resistance and Exceptional Phenotypes Tables" (\url{http://www.eucast.org/fileadmin/src/media/PDFs/EUCAST_files/Expert_Rules/Expert_rules_intrinsic_exceptional_V3.1.pdf}).
-#' @return Ordered factor with levels \code{Unknown < Negative < Unconfirmed < Positive}.
-#' @rdname MDRO
+#' @return Ordered factor with levels \code{Negative < Positive, unconfirmed < Positive}.
+#' @rdname mdro
 #' @importFrom dplyr %>%
 #' @importFrom crayon red blue
 #' @export
@@ -36,9 +36,9 @@
 #' library(dplyr)
 #'
 #' septic_patients %>%
-#'   mutate(EUCAST = MDRO(.),
-#'          BRMO = BRMO(.))
-MDRO <- function(tbl,
+#'   mutate(EUCAST = mdro(.),
+#'          BRMO = brmo(.))
+mdro <- function(tbl,
                  country = NULL,
                  col_mo = NULL,
                  info = TRUE,
@@ -129,8 +129,8 @@ MDRO <- function(tbl,
     country <- 'EUCAST'
   }
   country <- trimws(country)
-  if (country != 'EUCAST' & !country %like% '^[a-z]{2}$') {
-    stop('This is not a valid ISO 3166-1 alpha-2 country code: "', country, '". Please see ?MDRO.', call. = FALSE)
+  if (tolower(country) != 'eucast' & !country %like% '^[a-z]{2}$') {
+    stop('This is not a valid ISO 3166-1 alpha-2 country code: "', country, '". Please see ?mdro.', call. = FALSE)
   }
 
   # create list and make country code case-independent
@@ -152,9 +152,9 @@ MDRO <- function(tbl,
     guideline$name <- 'WIP-Richtlijn BRMO'
     guideline$version <- 'Revision of December 2017'
     guideline$source <- 'https://www.rivm.nl/Documenten_en_publicaties/Professioneel_Praktisch/Richtlijnen/Infectieziekten/WIP_Richtlijnen/WIP_Richtlijnen/Ziekenhuizen/WIP_richtlijn_BRMO_Bijzonder_Resistente_Micro_Organismen_ZKH'
-  # add here more countries like this:
-  # } else if (country$code == 'xx') {
-  #   country$name <- 'country name'
+    # add here more countries like this:
+    # } else if (country$code == 'xx') {
+    #   country$name <- 'country name'
   } else {
     stop('This country code is currently unsupported: ', guideline$country$code, call. = FALSE)
   }
@@ -243,10 +243,17 @@ MDRO <- function(tbl,
   fluoroquinolones <- c(oflo, cipr, levo, moxi)
 
   # helper function for editing the table
-  trans_tbl <- function(to, rows, cols) {
+  trans_tbl <- function(to, rows, cols, any_all) {
     cols <- cols[!is.na(cols)]
     if (length(rows) > 0 & length(cols) > 0) {
-      col_filter <- which(tbl[, cols] == 'R')
+      if (any_all == "any") {
+        col_filter <- which(tbl[, cols] == 'R')
+      } else if (any_all == "all") {
+        col_filter <- tbl %>%
+          mutate(index = 1:nrow(.)) %>%
+          filter_at(vars(cols), all_vars(. == "R")) %>%
+          pull((index))
+      }
       rows <- rows[rows %in% col_filter]
       tbl[rows, 'MDRO'] <<- to
     }
@@ -265,52 +272,66 @@ MDRO <- function(tbl,
   if (guideline$country$code == 'eucast') {
     # EUCAST ------------------------------------------------------------------
     # Table 5
-    trans_tbl(4,
+    trans_tbl(3,
               which(tbl$family == 'Enterobacteriaceae'
                     | tbl$fullname %like% '^Pseudomonas aeruginosa'
                     | tbl$genus == 'Acinetobacter'),
-              coli)
-    trans_tbl(4,
+              coli,
+              "all")
+    trans_tbl(3,
               which(tbl$fullname %like% '^Salmonella Typhi'),
-              c(carbapenems, fluoroquinolones))
-    trans_tbl(4,
+              c(carbapenems, fluoroquinolones),
+              "any")
+    trans_tbl(3,
               which(tbl$fullname %like% '^Haemophilus influenzae'),
-              c(cephalosporins_3rd, carbapenems, fluoroquinolones))
-    trans_tbl(4,
+              c(cephalosporins_3rd, carbapenems, fluoroquinolones),
+              "any")
+    trans_tbl(3,
               which(tbl$fullname %like% '^Moraxella catarrhalis'),
-              c(cephalosporins_3rd, fluoroquinolones))
-    trans_tbl(4,
+              c(cephalosporins_3rd, fluoroquinolones),
+              "any")
+    trans_tbl(3,
               which(tbl$fullname %like% '^Neisseria meningitidis'),
-              c(cephalosporins_3rd, fluoroquinolones))
-    trans_tbl(4,
+              c(cephalosporins_3rd, fluoroquinolones),
+              "any")
+    trans_tbl(3,
               which(tbl$fullname %like% '^Neisseria gonorrhoeae'),
-              azit)
+              azit,
+              "any")
     # Table 6
-    trans_tbl(4,
+    trans_tbl(3,
               which(tbl$fullname %like% '^Staphylococcus (aureus|epidermidis|coagulase negatief|hominis|haemolyticus|intermedius|pseudointermedius)'),
-              c(vanc, teic, dapt, line, qida, tige))
-    trans_tbl(4,
+              c(vanc, teic, dapt, line, qida, tige),
+              "any")
+    trans_tbl(3,
               which(tbl$genus == 'Corynebacterium'),
-              c(vanc, teic, dapt, line, qida, tige))
-    trans_tbl(4,
+              c(vanc, teic, dapt, line, qida, tige),
+              "any")
+    trans_tbl(3,
               which(tbl$fullname %like% '^Streptococcus pneumoniae'),
-              c(carbapenems, vanc, teic, dapt, line, qida, tige, rifa))
-    trans_tbl(4, # Sr. groups A/B/C/G
+              c(carbapenems, vanc, teic, dapt, line, qida, tige, rifa),
+              "any")
+    trans_tbl(3, # Sr. groups A/B/C/G
               which(tbl$fullname %like% '^Streptococcus (pyogenes|agalactiae|equisimilis|equi|zooepidemicus|dysgalactiae|anginosus)'),
-              c(peni, cephalosporins, vanc, teic, dapt, line, qida, tige))
-    trans_tbl(4,
+              c(peni, cephalosporins, vanc, teic, dapt, line, qida, tige),
+              "any")
+    trans_tbl(3,
               which(tbl$genus == 'Enterococcus'),
-              c(dapt, line, tige, teic))
-    trans_tbl(4,
+              c(dapt, line, tige, teic),
+              "any")
+    trans_tbl(3,
               which(tbl$fullname %like% '^Enterococcus faecalis'),
-              c(ampi, amox))
+              c(ampi, amox),
+              "any")
     # Table 7
-    trans_tbl(4,
+    trans_tbl(3,
               which(tbl$genus == 'Bacteroides'),
-              metr)
-    trans_tbl(4,
+              metr,
+              "any")
+    trans_tbl(3,
               which(tbl$fullname %like% '^Clostridium difficile'),
-              c(metr, vanc))
+              c(metr, vanc),
+              "any")
   }
 
   if (guideline$country$code == 'de') {
@@ -325,112 +346,88 @@ MDRO <- function(tbl,
     carbapenems <- carbapenems[!is.na(carbapenems)]
 
     # Table 1
-    tbl[which(
-      tbl$family == 'Enterobacteriaceae'
-      & rowSums(tbl[, aminoglycosides] == 'R', na.rm = TRUE) >= 1
-      & rowSums(tbl[, fluoroquinolones] == 'R', na.rm = TRUE) >= 1
-    ), 'MDRO'] <- 4
-    tbl[which(
-      tbl$family == 'Enterobacteriaceae'
-      & rowSums(tbl[, carbapenems] == 'R', na.rm = TRUE) >= 1
-    ), 'MDRO'] <- 3
-    # rest is negative
-    tbl[which(
-      tbl$family == 'Enterobacteriaceae'
-      & tbl$MDRO == 1
-    ), 'MDRO'] <- 2
+    trans_tbl(3,
+              which(tbl$family == 'Enterobacteriaceae'),
+              c(aminoglycosides, fluoroquinolones),
+              "all")
+
+    trans_tbl(2,
+              which(tbl$family == 'Enterobacteriaceae'),
+              c(carbapenems),
+              "any")
 
     # Table 2
-    tbl[which(
-      tbl$genus == 'Acinetobacter'
-      & rowSums(tbl[, carbapenems] == 'R', na.rm = TRUE) >= 1
-    ), 'MDRO'] <- 3
-    tbl[which(
-      tbl$genus == 'Acinetobacter'
-      & rowSums(tbl[, aminoglycosides] == 'R', na.rm = TRUE) >= 1
-      & rowSums(tbl[, fluoroquinolones] == 'R', na.rm = TRUE) >= 1
-    ), 'MDRO'] <- 4
-    # rest of Acinetobacter is negative
-    tbl[which(
-      tbl$genus == 'Acinetobacter'
-      & tbl$MDRO == 1
-    ), 'MDRO'] <- 2
+    trans_tbl(2,
+              which(tbl$genus == 'Acinetobacter'),
+              c(carbapenems),
+              "any")
+    trans_tbl(3,
+              which(tbl$genus == 'Acinetobacter'),
+              c(aminoglycosides, fluoroquinolones),
+              "all")
 
-    tbl[which(
-      tbl$fullname %like% 'Stenotrophomonas maltophilia'
-      & tbl[, trsu] == 'R'
-    ), 'MDRO'] <- 4
-    # rest of Stenotrophomonas is negative
-    tbl[which(
-      tbl$fullname %like% 'Stenotrophomonas maltophilia'
-      & tbl$MDRO == 1
-    ), 'MDRO'] <- 2
+    trans_tbl(3,
+              which(tbl$fullname %like% '^Stenotrophomonas maltophilia'),
+              trsu,
+              "all")
 
-    tbl <- tbl %>% mutate(
-      psae = 0,
-      psae = ifelse(mero == "R" | imip == "R", psae + 1, psae),
-      psae = ifelse(gent == "R" & tobr == "R", psae + 1, psae),
-      psae = ifelse(cipr == "R", psae + 1, psae),
-      psae = ifelse(cfta == "R", psae + 1, psae),
-      psae = ifelse(pita == "R", psae + 1, psae),
-      psae = ifelse(is.na(psae), 0, psae)
-    )
+    if (!is.na(mero) & !is.na(imip)
+        & !is.na(gent) & !is.na(tobr)
+        & !is.na(cipr)
+        & !is.na(cfta)
+        & !is.na(pita) ) {
+      tbl <- tbl %>% mutate(
+        psae = 0,
+        psae = ifelse(mero == "R" | imip == "R", psae + 1, psae),
+        psae = ifelse(gent == "R" & tobr == "R", psae + 1, psae),
+        psae = ifelse(cipr == "R", psae + 1, psae),
+        psae = ifelse(cfta == "R", psae + 1, psae),
+        psae = ifelse(pita == "R", psae + 1, psae),
+        psae = ifelse(is.na(psae), 0, psae)
+      )
+    } else {
+      tbl$psae <- 0
+    }
     tbl[which(
       tbl$fullname %like% 'Pseudomonas aeruginosa'
       & tbl$psae >= 3
-    ), 'MDRO'] <- 4
-    # rest of Pseudomonas is negative
-    tbl[which(
-      tbl$fullname %like% 'Pseudomonas aeruginosa'
-      & tbl$MDRO == 1
-    ), 'MDRO'] <- 2
+    ), 'MDRO'] <- 3
 
     # Table 3
-    tbl[which(
-      tbl$fullname %like% 'Streptococcus pneumoniae'
-      & tbl[, peni] == 'R'
-    ), 'MDRO'] <- 4
-    tbl[which(
-      tbl$fullname %like% 'Streptococcus pneumoniae'
-      & tbl[, vanc] == 'R'
-    ), 'MDRO'] <- 4
-    # rest of Streptococcus pneumoniae is negative
-    tbl[which(
-      tbl$fullname %like% 'Streptococcus pneumoniae'
-      & tbl$MDRO == 1
-    ), 'MDRO'] <- 2
-
-    tbl[which(
-      tbl$fullname %like% 'Enterococcus faecium'
-      &  rowSums(tbl[, c(peni, vanc)] == 'R', na.rm = TRUE) >= 1
-    ), 'MDRO'] <- 4
-    # rest of Enterococcus faecium is negative
-    tbl[which(
-      tbl$fullname %like% 'Enterococcus faecium'
-      & tbl$MDRO == 1
-    ), 'MDRO'] <- 2
+    trans_tbl(3,
+              which(tbl$fullname %like% 'Streptococcus pneumoniae'),
+              peni,
+              "all")
+    trans_tbl(3,
+              which(tbl$fullname %like% 'Streptococcus pneumoniae'),
+              vanc,
+              "all")
+    trans_tbl(3,
+              which(tbl$fullname %like% 'Enterococcus faecium'),
+              c(peni, vanc),
+              "all")
   }
 
   factor(x =  tbl$MDRO,
-         levels = c(1:4),
-         labels = c('Not evaluated', 'Negative', 'Unconfirmed', 'Positive'),
+         levels = 1:3,
+         labels = c('Negative', 'Positive, unconfirmed', 'Positive'),
          ordered = TRUE)
 }
 
-#' @rdname MDRO
+#' @rdname mdro
 #' @export
-BRMO <- function(tbl, country = "nl", ...) {
-  MDRO(tbl = tbl, country = "nl", ...)
+brmo <- function(..., country = "nl") {
+  mdro(..., country = "nl")
 }
 
-#' @rdname MDRO
+#' @rdname mdro
 #' @export
-MRGN <- function(tbl, country = "de", ...) {
-  MDRO(tbl = tbl, country = "de", ...)
+mrgn <- function(tbl, country = "de", ...) {
+  mdro(tbl = tbl, country = "de", ...)
 }
 
-#' @rdname MDRO
+#' @rdname mdro
 #' @export
-EUCAST_exceptional_phenotypes <- function(tbl, country = "EUCAST", ...) {
-  MDRO(tbl = tbl, country = "EUCAST", ...)
+eucast_exceptional_phenotypes <- function(tbl, country = "EUCAST", ...) {
+  mdro(tbl = tbl, country = "EUCAST", ...)
 }

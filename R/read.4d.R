@@ -110,7 +110,7 @@ read.4D <- function(file,
 
   # backup original column names
   colnames.bak <- toupper(colnames(data_4D))
-  colnames.bak[colnames.bak == "AGE"] <- NULL
+  colnames.bak[colnames.bak == "AGE"] <- NA_character_
 
   # rename of columns
   colnames(data_4D) <- gsub("patientnr", "patient_id", colnames(data_4D), fixed = TRUE)
@@ -162,8 +162,17 @@ read.4D <- function(file,
     message("OK\nSetting original column names as label... ", appendLF = FALSE)
   }
   for (i in 1:ncol(data_4D)) {
-    attr(data_4D[, i], "label") <- colnames.bak[i]
+    if (!is.na(colnames.bak[i])) {
+      attr(data_4D[, i], "label") <- colnames.bak[i]
+    }
   }
+
+  if (info == TRUE) {
+    message("OK\nSetting query as label to data.frame... ", appendLF = FALSE)
+  }
+  qry <- readLines(con <- file(file, open="r"))[1]
+  close(con)
+  attr(data_4D, "label") <- qry
 
   if (info == TRUE) {
     message("OK")

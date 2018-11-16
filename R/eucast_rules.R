@@ -25,7 +25,7 @@
 #' @param verbose a logical to indicate whether extensive info should be returned as a \code{data.frame} with info about which rows and columns are effected
 #' @param amcl,amik,amox,ampi,azit,azlo,aztr,cefa,cfep,cfot,cfox,cfra,cfta,cftr,cfur,chlo,cipr,clar,clin,clox,coli,czol,dapt,doxy,erta,eryt,fosf,fusi,gent,imip,kana,levo,linc,line,mero,mezl,mino,moxi,nali,neom,neti,nitr,norf,novo,oflo,oxac,peni,pipe,pita,poly,pris,qida,rifa,roxi,siso,teic,tetr,tica,tige,tobr,trim,trsu,vanc column name of an antibiotic, see Details
 #' @param col_bactid deprecated, use \code{col_mo} instead.
-#' @param ... parameters that are passed on to \code{EUCAST_rules}
+#' @param ... parameters that are passed on to \code{eucast_rules}
 #' @inheritParams first_isolate
 #' @details To define antibiotics column names, input a text or use \code{NA} to skip a column (e.g. \code{tica = NA}). Non-existing columns will anyway be skipped with a warning. See the Antibiotics section for an explanation of the abbreviations.
 #' @section Antibiotics:
@@ -94,7 +94,7 @@
 #'  \strong{trsu}: sulfamethoxazole and trimethoprim (\emph{J01EE01}),
 #'  \strong{vanc}: vancomycin (\emph{J01XA01}).
 #' @keywords interpretive eucast reading resistance
-#' @rdname EUCAST
+#' @rdname eucast_rules
 #' @export
 #' @importFrom dplyr %>% select pull mutate_at vars
 #' @importFrom crayon bold bgGreen bgYellow bgRed black green blue italic strip_style
@@ -116,7 +116,7 @@
 #'     }
 #'   }
 #' @examples
-#' a <- EUCAST_rules(septic_patients)
+#' a <- eucast_rules(septic_patients)
 #'
 #' a <- data.frame(mo = c("Staphylococcus aureus",
 #'                        "Enterococcus faecalis",
@@ -140,7 +140,7 @@
 #' # 4  Klebsiella pneumoniae    -    -    -    -    -    S    S
 #' # 5 Pseudomonas aeruginosa    -    -    -    -    -    S    S
 #'
-#' b <- EUCAST_rules(a, "mo") # 18 results are forced as R or S
+#' b <- eucast_rules(a, "mo") # 18 results are forced as R or S
 #'
 #' b
 #' #                       mo vanc amox coli cfta cfur peni cfox
@@ -149,7 +149,7 @@
 #' # 3       Escherichia coli    R    -    -    -    -    R    S
 #' # 4  Klebsiella pneumoniae    R    R    -    -    -    R    S
 #' # 5 Pseudomonas aeruginosa    R    R    -    -    R    R    R
-EUCAST_rules <- function(tbl,
+eucast_rules <- function(tbl,
                          col_mo = NULL,
                          info = TRUE,
                          rules = c("breakpoints", "expert", "other", "all"),
@@ -1745,8 +1745,16 @@ EUCAST_rules <- function(tbl,
   tbl_original
 }
 
-#' @rdname EUCAST
+#' @rdname eucast_rules
+#' @export
+EUCAST_rules <- function(...) {
+  .Deprecated("eucast_rules")
+  eucast_rules(...)
+}
+
+#' @rdname eucast_rules
 #' @export
 interpretive_reading <- function(...) {
-  EUCAST_rules(...)
+  .Deprecated("eucast_rules")
+  eucast_rules(...)
 }

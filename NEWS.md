@@ -9,14 +9,16 @@
 * Functions `mo_authors` and `mo_year` to get specific values about the scientific reference of a taxonomic entry
 
 #### Changed
-* Big changes to the `EUCAST_rules` function:
+* Functions `MDRO`, `BRMO`, `MRGN` and `EUCAST_exceptional_phenotypes` were renamed to `mdro`, `brmo`, `mrgn` and `eucast_exceptional_phenotypes`
+* `EUCAST_rules` was renamed to `eucast_rules`, the old function still exists as a deprecated function
+* Big changes to the `eucast_rules` function:
   * Now also applies rules from the EUCAST 'Breakpoint tables for bacteria', version 8.1, 2018, http://www.eucast.org/clinical_breakpoints/ (see Source of the function)
   * New parameter `rules` to specify which rules should be applied (expert rules, breakpoints, others or all)
   * New parameter `verbose` which can be set to `TRUE` to get very specific messages about which columns and rows were affected
   * Better error handling when rules cannot be applied (i.e. new values could not be inserted)
   * The number of affected values will now only be measured once per row/column combination
   * Data set `septic_patients` now reflects these changes
-  * Added parameter `pipe` for piperacillin (J01CA12), also to the `MDRO` function
+  * Added parameter `pipe` for piperacillin (J01CA12), also to the `mdro` function
   * Small fixes to EUCAST clinical breakpoint rules
 * Added column `kingdom` to the microorganisms data set, and function `mo_kingdom` to look up values
 * Tremendous speed improvement for `as.mo` (and subsequently all `mo_*` functions), as empty values wil be ignored *a priori*
@@ -41,11 +43,11 @@
   * New parameter `header` to turn it off (default when `markdown = TRUE`)
   * New parameter `title` to replace the automatically set title
 * `first_isolate` now tries to find columns to use as input when parameters are left blank
-* Improvement for MDRO algorithm
+* Improvement for MDRO algorithm (function `mdro`)
 * Data set `septic_patients` is now a `data.frame`, not a tibble anymore
 * Removed diacritics from all authors (columns `microorganisms$ref` and `microorganisms.old$ref`) to comply with CRAN policy to only allow ASCII characters
 * Fix for `mo_property` not working properly
-* Fix for `EUCAST_rules` where some Streptococci would become ceftazidime R in EUCAST rule 4.5
+* Fix for `eucast_rules` where some Streptococci would become ceftazidime R in EUCAST rule 4.5
 * Support for named vectors of class `mo`, useful for `top_freq()`
 * `ggplot_rsi` and `scale_y_percent` have `breaks` parameter
 * AI improvements for `as.mo`:

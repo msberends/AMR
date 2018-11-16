@@ -1,11 +1,11 @@
-context("eucast.R")
+context("eucast_rules.R")
 
 test_that("EUCAST rules work", {
 
-  expect_error(suppressWarnings(EUCAST_rules(septic_patients, col_mo = "Non-existing")))
+  expect_error(suppressWarnings(eucast_rules(septic_patients, col_mo = "Non-existing")))
 
   expect_identical(colnames(septic_patients),
-                   colnames(suppressWarnings(EUCAST_rules(septic_patients))))
+                   colnames(suppressWarnings(eucast_rules(septic_patients))))
 
   a <- data.frame(mo = c("KLEPNE",  # Klebsiella pneumoniae
                          "PSEAER",  # Pseudomonas aeruginosa
@@ -17,7 +17,8 @@ test_that("EUCAST rules work", {
                          "ENTAER"), # Enterobacter aerogenes
                   amox = "R",       # Amoxicillin
                   stringsAsFactors = FALSE)
-  expect_identical(suppressWarnings(EUCAST_rules(a, "mo", info = FALSE)), b)
+  expect_identical(suppressWarnings(eucast_rules(a, "mo", info = FALSE)), b)
+  expect_identical(suppressWarnings(eucast_rules(a, "mo", info = TRUE)), b)
   expect_identical(suppressWarnings(interpretive_reading(a, "mo", info = TRUE)), b)
 
   a <- data.frame(mo = c("STAAUR",  # Staphylococcus aureus
@@ -28,7 +29,7 @@ test_that("EUCAST rules work", {
                          "STCGRA"), # Streptococcus pyognenes (Lancefield Group A)
                   coli = "R",       # Colistin
                   stringsAsFactors = FALSE)
-  expect_equal(suppressWarnings(EUCAST_rules(a, "mo", info = FALSE)), b)
+  expect_equal(suppressWarnings(eucast_rules(a, "mo", info = FALSE)), b)
 
   # piperacillin must be R in Enterobacteriaceae when tica is R
   library(dplyr)
@@ -36,7 +37,7 @@ test_that("EUCAST rules work", {
     septic_patients %>%
       mutate(tica = as.rsi("R"),
              pipe = as.rsi("S")) %>%
-      EUCAST_rules(col_mo = "mo") %>%
+      eucast_rules(col_mo = "mo") %>%
       left_join_microorganisms() %>%
       filter(family == "Enterobacteriaceae") %>%
       pull(pipe) %>%
@@ -51,12 +52,12 @@ test_that("EUCAST rules work", {
                 eryt,
                 azit = as.rsi("R"),
                 clar = as.rsi("R")) %>%
-      EUCAST_rules(col_mo = "mo") %>%
+      eucast_rules(col_mo = "mo") %>%
       pull(clar))
   b <-   suppressWarnings(
     septic_patients %>%
       select(mo, eryt) %>%
-      EUCAST_rules(col_mo = "mo") %>%
+      eucast_rules(col_mo = "mo") %>%
       pull(eryt))
 
   expect_identical(a[!is.na(b)],
@@ -64,7 +65,7 @@ test_that("EUCAST rules work", {
 
   # amox is inferred by benzylpenicillin in Kingella kingae
   expect_equal(
-    as.list(EUCAST_rules(
+    as.list(eucast_rules(
       data.frame(mo = as.mo("Kingella kingae"),
                  peni = "S",
                  amox = "-",
@@ -72,6 +73,6 @@ test_that("EUCAST rules work", {
       , info = FALSE))$amox,
     "S")
 
-  expect_output(suppressWarnings(EUCAST_rules(septic_patients, verbose = TRUE)))
+  expect_output(suppressWarnings(eucast_rules(septic_patients, verbose = TRUE)))
 
 })
