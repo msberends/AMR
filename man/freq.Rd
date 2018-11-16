@@ -20,7 +20,7 @@ freq(x, ..., sort.count = TRUE, nmax = getOption("max.print.freq"),
 top_freq(f, n)
 
 \method{print}{frequency_tbl}(x, nmax = getOption("max.print.freq",
-  default = 15), ...)
+  default = 15), markdown = !nteractive(), header = !markdown, ...)
 }
 \arguments{
 \item{x}{vector of any class or a \code{\link{data.frame}}, \code{\link{tibble}} (may contain a grouping variable) or \code{\link{table}}}

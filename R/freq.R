@@ -544,7 +544,7 @@ diff.frequency_tbl <- function(x, y, ...) {
 #' @importFrom crayon bold silver
 #' @export
 print.frequency_tbl <- function(x, nmax = getOption("max.print.freq", default = 15),
-                                markdown = !nteractive(), header = !markdown, ...) {
+                                markdown = !interactive(), header = !markdown, ...) {
 
   opt <- attr(x, 'opt')
 
