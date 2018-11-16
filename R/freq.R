@@ -543,7 +543,8 @@ diff.frequency_tbl <- function(x, y, ...) {
 #' @importFrom dplyr n_distinct
 #' @importFrom crayon bold silver
 #' @export
-print.frequency_tbl <- function(x, nmax = getOption("max.print.freq", default = 15), ...) {
+print.frequency_tbl <- function(x, nmax = getOption("max.print.freq", default = 15),
+                                markdown = !nteractive(), header = !markdown, ...) {
 
   opt <- attr(x, 'opt')
 
@@ -583,6 +584,12 @@ print.frequency_tbl <- function(x, nmax = getOption("max.print.freq", default = 
     } else {
       opt$tbl_format <- "pandoc"
     }
+  }
+  if (!missing(markdown)) {
+    opt$tbl_format <- "markdown"
+  }
+  if (!missing(header)) {
+    opt$header <- header
   }
 
   if (trimws(title) == "") {
