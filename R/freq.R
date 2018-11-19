@@ -679,11 +679,10 @@ print.frequency_tbl <- function(x, nmax = getOption("max.print.freq", default = 
     footer <- NULL
   }
 
-  if (any(class(x$item) %in% c('double', 'integer', 'numeric', 'raw', 'single'))) {
-    x$item <- format(x$item)
-  }
   if ("item" %in% colnames(x)) {
-    x$item <- format(x$item)
+    if (any(class(x$item) %in% c('double', 'integer', 'numeric', 'raw', 'single'))) {
+      x$item <- format(x$item)
+    }
   } else {
     opt$column_names <- opt$column_names[!opt$column_names == "Item"]
   }
