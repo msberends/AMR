@@ -54,7 +54,7 @@ top_freq(f, n)
 \item{n}{number of top \emph{n} items to return, use -n for the bottom \emph{n} items. It will include more than \code{n} rows if there are ties.}
 }
 \value{
-A \code{data.frame} with an additional class \code{"frequency_tbl"}
+A \code{data.frame} (with an additional class \code{"frequency_tbl"}) with five columns: \code{item}, \code{count}, \code{percent}, \code{cum_count} and \code{cum_percent}.
 }
 \description{
 Create a frequency table of a vector with items or a data frame. Supports quasiquotation and markdown for reports. \code{top_freq} can be used to get the top/bottom \emph{n} items of a frequency table, with counts as names.
@@ -95,11 +95,13 @@ septic_patients[, "hospital_id"] \%>\% freq()
 septic_patients \%>\% freq("hospital_id")
 septic_patients \%>\% freq(hospital_id)  #<- easiest to remember (tidyverse)
 
+
 # you could also use `select` or `pull` to get your variables
 septic_patients \%>\%
   filter(hospital_id == "A") \%>\%
   select(mo) \%>\%
   freq()
+
 
 # multiple selected variables will be pasted together
 septic_patients \%>\%
@@ -107,10 +109,12 @@ septic_patients \%>\%
   filter(hospital_id == "A") \%>\%
   freq(genus, species)
 
+
 # group a variable and analyse another
 septic_patients \%>\%
   group_by(hospital_id) \%>\%
   freq(gender)
+
 
 # get top 10 bugs of hospital A as a vector
 septic_patients \%>\%
@@ -118,31 +122,38 @@ septic_patients \%>\%
   freq(mo) \%>\%
   top_freq(10)
 
+
 # save frequency table to an object
 years <- septic_patients \%>\%
   mutate(year = format(date, "\%Y")) \%>\%
   freq(year)
 
+
 # show only the top 5
 years \%>\% print(nmax = 5)
 
+
 # save to an object with formatted percentages
 years <- format(years)
+
 
 # print a histogram of numeric values
 septic_patients \%>\%
   freq(age) \%>\%
   hist()
 
+
 # or print all points to a regular plot
 septic_patients \%>\%
   freq(age) \%>\%
   plot()
 
+
 # transform to a data.frame or tibble
 septic_patients \%>\%
   freq(age) \%>\%
   as.data.frame()
+
 
 # or transform (back) to a vector
 septic_patients \%>\%
@@ -155,10 +166,22 @@ identical(septic_patients \%>\%
             sort(),
           sort(septic_patients$age)) # TRUE
 
-# it also supports `table` objects:
+
+# it also supports `table` objects
 table(septic_patients$gender,
       septic_patients$age) \%>\%
   freq(sep = " **sep** ")
+
+
+# only get selected columns
+septic_patients \%>\%
+  freq(hospital_id) \%>\%
+  select(item, percent)
+
+septic_patients \%>\%
+  freq(hospital_id) \%>\%
+  select(-count, -cum_count)
+
 
 # check differences between frequency tables
 diff(freq(septic_patients$trim),

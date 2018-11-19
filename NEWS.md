@@ -35,6 +35,12 @@
       group_by(hospital_id) %>% 
       freq(gender)
     ```
+  * Support for (un)selecting columns:
+    ```r
+    septic_patients %>% 
+      freq(hospital_id) %>% 
+      select(-count, -cum_count) # only get item, percent, cum_percent
+    ```
   * Check for `hms::is.hms`
   * Now prints in markdown at default in non-interactive sessions
   * No longer adds the factor level column and sorts factors on count again
@@ -43,7 +49,7 @@
   * New parameter `header` to turn it off (default when `markdown = TRUE`)
   * New parameter `title` to replace the automatically set title
 * `first_isolate` now tries to find columns to use as input when parameters are left blank
-* Improvement for MDRO algorithm (function `mdro`)
+* Improvements for MDRO algorithm (function `mdro`)
 * Data set `septic_patients` is now a `data.frame`, not a tibble anymore
 * Removed diacritics from all authors (columns `microorganisms$ref` and `microorganisms.old$ref`) to comply with CRAN policy to only allow ASCII characters
 * Fix for `mo_property` not working properly

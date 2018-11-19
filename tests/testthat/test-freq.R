@@ -11,6 +11,8 @@ test_that("frequency table works", {
   expect_equal(nrow(freq(septic_patients$date)),
                length(unique(septic_patients$date)))
 
+  expect_output(print(septic_patients %>% freq(age)))
+  expect_output(print(septic_patients %>% freq(age, nmax = 5)))
   expect_output(print(septic_patients %>% freq(age, nmax = Inf)))
   expect_output(print(freq(septic_patients$age, nmax = Inf)))
   expect_output(print(freq(septic_patients$age, nmax = NA)))
@@ -122,6 +124,12 @@ test_that("frequency table works", {
   expect_error(septic_patients %>% select(1:10) %>% freq())
   expect_error(septic_patients %>% freq(peni, oxac, clox, amox, amcl,
                                         ampi, pita, czol, cfep, cfur))
+
+  # (un)select columns
+  expect_equal(septic_patients %>% freq(hospital_id) %>% select(item) %>% ncol(),
+               1)
+  expect_equal(septic_patients %>% freq(hospital_id) %>% select(-item) %>% ncol(),
+               4)
 
   # run diff
   expect_output(print(

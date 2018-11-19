@@ -41,7 +41,7 @@ read.4D <- function(file,
                     encoding = "UTF-8") {
 
   if (info == TRUE) {
-    message("Importing data... ", appendLF = FALSE)
+    message("Importing ", file, "... ", appendLF = FALSE)
   }
   data_4D <- utils::read.table(file = file,
                                row.names = row.names,
