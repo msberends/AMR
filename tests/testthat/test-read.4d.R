@@ -18,7 +18,7 @@ test_that("read 4D works", {
   tf <- tempfile()
   write.table(test1, file = tf, quote = F, sep = "\t")
 
-  x <- read.4D(tf, skip = 0)
+  x <- read.4D(tf, skip = 0, info = TRUE)
   unlink(tf)
 
   expect_equal(ncol(x), 11)

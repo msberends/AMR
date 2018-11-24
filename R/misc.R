@@ -28,12 +28,24 @@ addin_insert_like <- function() {
 
 # No export, no Rd
 percent <- function(x, round = 1, force_zero = FALSE, ...) {
-  val <- base::round(x * 100, digits = round)
-  if (force_zero == TRUE & any(val == as.integer(val) & !is.na(val))) {
-    val[val == as.integer(val)] <- paste0(val[val == as.integer(val)], ".", strrep(0, round))
+
+  # https://stackoverflow.com/a/12688836/4575331
+  round2 <- function(x, n) (trunc((abs(x) * 10 ^ n) + 0.5) / 10 ^ n) * sign(x)
+
+  val <- round2(x, round + 2) # round up 0.5
+  val <- round(x = val * 100, digits = round) # remove floating point error
+
+  if (force_zero == TRUE) {
+    if (any(val == as.integer(val) & !is.na(val))) {
+      # add zeroes to all integers
+      val[val == as.integer(as.character(val))] <- paste0(val[val == as.integer(val)], ".", strrep(0, round))
+    }
+    # add extra zeroes if needed
+    val_decimals <- nchar(gsub(".*[.](.*)", "\\1", as.character(val)))
+    val[val_decimals < round] <- paste0(val[val_decimals < round], strrep(0, max(0, round - val_decimals)))
   }
   pct <- base::paste0(val, "%")
-  pct[pct == "NA%"] <- NA_character_
+  pct[pct %in% c("NA%", "NaN%")] <- NA_character_
   pct
 }
 

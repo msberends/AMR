@@ -23,6 +23,13 @@
 * Added column `kingdom` to the microorganisms data set, and function `mo_kingdom` to look up values
 * Tremendous speed improvement for `as.mo` (and subsequently all `mo_*` functions), as empty values wil be ignored *a priori*
 * Fewer than 3 characters as input for `as.mo` will return NA
+* Function `as.mo` (and all `mo_*` wrappers) now supports genus abbreviations with "species" attached
+  ```r
+  as.mo("E. species")        # B_ESCHR
+  mo_fullname("E. spp.")     # "Escherichia species"
+  as.mo("S. spp")            # B_STPHY
+  mo_fullname("S. species")  # "Staphylococcus species"
+  ```
 * Added parameter `combine_IR` (TRUE/FALSE) to functions `portion_df` and `count_df`, to indicate that all values of I and R must be merged into one, so the output only consists of S vs. IR (susceptible vs. non-susceptible)
 * Fix for `portion_*(..., as_percent = TRUE)` when minimal number of isolates would not be met
 * Added parameter `also_single_tested` for `portion_*` and `count_*` functions to also include cases where not all antibiotics were tested but at least one of the tested antibiotics includes the target antimicribial interpretation, see `?portion`
@@ -45,9 +52,9 @@
   * Now prints in markdown at default in non-interactive sessions
   * No longer adds the factor level column and sorts factors on count again
   * Support for class `difftime`
-  * New parameter `na`, to choose with character to print for empty values
-  * New parameter `header` to turn it off (default when `markdown = TRUE`)
-  * New parameter `title` to replace the automatically set title
+  * New parameter `na`, to choose which character to print for empty values
+  * New parameter `header` to turn the header info off (default when `markdown = TRUE`)
+  * New parameter `title` to manually setbthe title of the frequency table
 * `first_isolate` now tries to find columns to use as input when parameters are left blank
 * Improvements for MDRO algorithm (function `mdro`)
 * Data set `septic_patients` is now a `data.frame`, not a tibble anymore
@@ -66,6 +73,7 @@
 * In `g.test`, when `sum(x)` is below 1000 or any of the expected values is below 5, Fisher's Exact Test will be suggested
 * `ab_name` will try to fall back on `as.atc` when no results are found
 * Removed the addin to view data sets
+* Percentages will now will rounded more logically (e.g. in `freq` function)
 
 #### Other
 * New dependency on package `crayon`, to support formatted text in the console

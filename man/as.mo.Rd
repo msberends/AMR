@@ -58,7 +58,7 @@ This function uses Artificial Intelligence (AI) to help getting fast and logical
 \itemize{
   \item{Taxonomic kingdom: it first searches in bacteria, then fungi, then protozoa}
   \item{Human pathogenic prevalence: it first searches in more prevalent microorganisms, then less prevalent ones}
-  \item{Valid MO codes and full names: it first searches in already valid MO code and genus/species combinations}
+  \item{Valid MO codes and full names: it first searches in already valid MO code and known genus/species combinations}
   \item{Breakdown of input values: from here it starts to breakdown input values to find possible matches}
 }
 
@@ -132,16 +132,15 @@ df$mo <- as.mo(df$microorganism_name)
 library(dplyr)
 df$mo <- df \%>\%
   select(microorganism_name) \%>\%
-  guess_mo()
+  as.mo()
 
 # and can even contain 2 columns, which is convenient for genus/species combinations:
 df$mo <- df \%>\%
   select(genus, species) \%>\%
-  guess_mo()
-
-# same result:
+  as.mo()
+# although this works easier and does the same:
 df <- df \%>\%
-  mutate(mo = guess_mo(paste(genus, species)))
+  mutate(mo = as.mo(paste(genus, species)))
 }
 }
 \seealso{

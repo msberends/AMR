@@ -53,7 +53,7 @@
 #' \itemize{
 #'   \item{Taxonomic kingdom: it first searches in bacteria, then fungi, then protozoa}
 #'   \item{Human pathogenic prevalence: it first searches in more prevalent microorganisms, then less prevalent ones}
-#'   \item{Valid MO codes and full names: it first searches in already valid MO code and genus/species combinations}
+#'   \item{Valid MO codes and full names: it first searches in already valid MO code and known genus/species combinations}
 #'   \item{Breakdown of input values: from here it starts to breakdown input values to find possible matches}
 #' }
 #'
@@ -126,16 +126,15 @@
 #' library(dplyr)
 #' df$mo <- df %>%
 #'   select(microorganism_name) %>%
-#'   guess_mo()
+#'   as.mo()
 #'
 #' # and can even contain 2 columns, which is convenient for genus/species combinations:
 #' df$mo <- df %>%
 #'   select(genus, species) %>%
-#'   guess_mo()
-#'
-#' # same result:
+#'   as.mo()
+#' # although this works easier and does the same:
 #' df <- df %>%
-#'   mutate(mo = guess_mo(paste(genus, species)))
+#'   mutate(mo = as.mo(paste(genus, species)))
 #' }
 as.mo <- function(x, Becker = FALSE, Lancefield = FALSE, allow_uncertain = FALSE, reference_df = NULL) {
   structure(mo_validate(x = x, property = "mo",
@@ -160,11 +159,14 @@ guess_mo <- as.mo
 #' @importFrom data.table data.table as.data.table setkey
 exec_as.mo <- function(x, Becker = FALSE, Lancefield = FALSE, allow_uncertain = FALSE, reference_df = NULL, property = "mo") {
 
-  # These data.tables are available as data sets when the AMR package is loaded:
-  #   microorganismsDT        # this one is sorted by kingdom (B<F<P), prevalence, TSN
-  #   microorganisms.prevDT   # same as microorganismsDT, but with prevalence != 9999
-  #   microorganisms.unprevDT # same as microorganismsDT, but with prevalence == 9999
-  #   microorganisms.oldDT    # old taxonomic names, sorted by name (genus+species), TSN
+  if (!"AMR" %in% base::.packages()) {
+    library("AMR")
+    # These data.tables are available as data sets when the AMR package is loaded:
+    #   microorganismsDT        # this one is sorted by kingdom (B<F<P), prevalence, TSN
+    #   microorganisms.prevDT   # same as microorganismsDT, but with prevalence != 9999
+    #   microorganisms.unprevDT # same as microorganismsDT, but with prevalence == 9999
+    #   microorganisms.oldDT    # old taxonomic names, sorted by name (genus+species), TSN
+  }
 
   if (NCOL(x) == 2) {
     # support tidyverse selection like: df %>% select(colA, colB)
@@ -216,31 +218,35 @@ exec_as.mo <- function(x, Becker = FALSE, Lancefield = FALSE, allow_uncertain = 
     suppressWarnings(
       x <- data.frame(x = x, stringsAsFactors = FALSE) %>%
         left_join(reference_df, by = "x") %>%
-        left_join(AMR::microorganisms, by = "mo") %>%
+        left_join(microorganisms, by = "mo") %>%
         pull(property)
     )
-  } else if (all(toupper(x) %in% AMR::microorganisms.certe[, "certe"])) {
+  } else if (all(toupper(x) %in% microorganisms.certe[, "certe"])) {
     # old Certe codes
-    y <- as.data.table(AMR::microorganisms.certe)[data.table(certe = toupper(x)), on = "certe", ]
+    y <- as.data.table(microorganisms.certe)[data.table(certe = toupper(x)), on = "certe", ]
     x <- microorganismsDT[data.table(mo = y[["mo"]]), on = "mo", ..property][[1]]
 
   } else if (!all(x %in% microorganismsDT[[property]])) {
 
     x_backup <- trimws(x, which = "both")
-    x_species <- paste(x_backup, "species")
+
+    # remove spp and species
+    x <- gsub(" +(spp.?|species)", "", x_backup)
+    x_species <- paste(x, "species")
     # translate to English for supported languages of mo_property
     x <- gsub("(Gruppe|gruppe|groep|grupo|gruppo|groupe)", "group", x)
     # remove 'empty' genus and species values
     x <- gsub("(no MO)", "", x, fixed = TRUE)
-    # remove dots and other non-text in case of "E. coli" except spaces
-    x <- gsub("[^a-zA-Z0-9/ \\-]+", "", x)
+    # remove non-text in case of "E. coli" except dots and spaces
+    x <- gsub("[^.a-zA-Z0-9/ \\-]+", "", x)
+
     # but spaces before and after should be omitted
     x <- trimws(x, which = "both")
     x_trimmed <- x
     x_trimmed_species <- paste(x_trimmed, "species")
-    # replace space by regex sign
-    x_withspaces <- gsub(" ", ".* ", x, fixed = TRUE)
-    x <- gsub(" ", ".*", x, fixed = TRUE)
+    # replace space and dot by regex sign
+    x_withspaces <- gsub("[ .]+", ".* ", x)
+    x <- gsub("[ .]+", ".*", x)
     # add start en stop regex
     x <- paste0('^', x, '$')
     x_withspaces_start <- paste0('^', x_withspaces)
@@ -261,10 +267,28 @@ exec_as.mo <- function(x, Becker = FALSE, Lancefield = FALSE, allow_uncertain = 
         next
       }
       if (nchar(x_trimmed[i]) < 3) {
-        # fewer than 3 chars, add as failure
-        x[i] <- NA_character_
-        failures <- c(failures, x_backup[i])
-        next
+        # check if search term was like "A. species", then return first genus found with ^A
+        if (x_backup[i] %like% "species" | x_backup[i] %like% "spp[.]?") {
+          # get mo code of first hit
+          found <- microorganismsDT[fullname %like% x_withspaces_start[i], mo][[1]]
+          mo_code <- found[1L] %>% strsplit("_") %>% unlist() %>% .[1:2] %>% paste(collapse = "_")
+          found <- microorganismsDT[mo == mo_code, ..property][[1]]
+          # return first genus that begins with x_trimmed, e.g. when "E. spp."
+          if (length(found) > 0) {
+            x[i] <- found[1L]
+            next
+          } else {
+            # fewer than 3 chars, add as failure
+            x[i] <- NA_character_
+            failures <- c(failures, x_backup[i])
+            next
+          }
+        } else {
+          # fewer than 3 chars, add as failure
+          x[i] <- NA_character_
+          failures <- c(failures, x_backup[i])
+          next
+        }
       }
 
       # translate known trivial abbreviations to genus + species ----
@@ -353,15 +377,9 @@ exec_as.mo <- function(x, Becker = FALSE, Lancefield = FALSE, allow_uncertain = 
       }
 
       # TRY OTHER SOURCES ----
-      if (x_backup[i] %in% AMR::microorganisms.certe$certe) {
-        x[i] <- microorganismsDT[mo == AMR::microorganisms.certe[AMR::microorganisms.certe[, 1] == x_backup[i], 2], ..property][[1]][1L]
-        # x[i] <- exec_as.mo(x = AMR::microorganisms.certe[AMR::microorganisms.certe$certe == x_backup[i], "mo"],
-        #                    property = property)
-        # next
-      }
-      if (x_backup[i] %in% AMR::microorganisms.umcg[, 1]) {
-        mo_umcg <- AMR::microorganisms.umcg[AMR::microorganisms.umcg[, 1] == x_backup[i], 2]
-        mo_found <- AMR::microorganisms.certe[AMR::microorganisms.certe[, 1] == mo_umcg, 2]
+      if (x_backup[i] %in% microorganisms.umcg[, 1]) {
+        mo_umcg <- microorganisms.umcg[microorganisms.umcg[, 1] == x_backup[i], 2]
+        mo_found <- microorganisms.certe[microorganisms.certe[, 1] == mo_umcg, 2]
         if (length(mo_found) == 0) {
           # not found
           x[i] <- NA_character_
@@ -371,13 +389,15 @@ exec_as.mo <- function(x, Becker = FALSE, Lancefield = FALSE, allow_uncertain = 
         }
         next
       }
-      if (x_backup[i] %in% reference_df[, 1]) {
-        ref_mo <- reference_df[reference_df[, 1] == x_backup[i], 2]
-        if (ref_mo %in% microorganismsDT[, mo]) {
-          x[i] <- microorganismsDT[mo == ref_mo, ..property][[1]][1L]
-          next
-        } else {
-          warning("Value '", x_backup[i], "' was found in reference_df, but '", ref_mo, "' is not a valid MO code.", call. = FALSE)
+      if (!is.null(reference_df)) {
+        if (x_backup[i] %in% reference_df[, 1]) {
+          ref_mo <- reference_df[reference_df[, 1] == x_backup[i], 2]
+          if (ref_mo %in% microorganismsDT[, mo]) {
+            x[i] <- microorganismsDT[mo == ref_mo, ..property][[1]][1L]
+            next
+          } else {
+            warning("Value '", x_backup[i], "' was found in reference_df, but '", ref_mo, "' is not a valid MO code.", call. = FALSE)
+          }
         }
       }
 

@@ -313,16 +313,22 @@ frequency_tbl <- function(x,
     }
   }
 
-  na_txt <- paste0(NAs %>% length() %>% format(), ' = ',
-                   (NAs %>% length() / (NAs %>% length() + x %>% length())) %>% percent(force_zero = TRUE, round = digits) %>%
-                     sub('NaN', '0', ., fixed = TRUE))
-  if (!na_txt %like% "^0 =") {
-    na_txt <- red(na_txt)
+  if (NROW(x) > 0) {
+    na_txt <- paste0(NAs %>% length() %>% format(), ' = ',
+                     (NAs %>% length() / (NAs %>% length() + x %>% length())) %>% percent(force_zero = TRUE, round = digits) %>%
+                       sub('NaN', '0', ., fixed = TRUE))
+    if (!na_txt %like% "^0 =") {
+      na_txt <- red(na_txt)
+    } else {
+      na_txt <- green(na_txt)
+    }
+    na_txt <- paste0('(of which NA: ', na_txt, ')')
   } else {
-    na_txt <- green(na_txt)
+    na_txt <- ""
   }
+
   header_txt <- header_txt %>% paste0(markdown_line, '\nLength:    ', (NAs %>% length() + x %>% length()) %>% format(),
-                                      ' (of which NA: ', na_txt, ')')
+                                      ' ', na_txt)
   header_txt <- header_txt %>% paste0(markdown_line, '\nUnique:    ', x %>% n_distinct() %>% format())
 
   if (NROW(x) > 0 & any(class(x) == "character")) {
@@ -592,7 +598,12 @@ print.frequency_tbl <- function(x, nmax = getOption("max.print.freq", default = 
       }
       title <- paste(title, group_var)
     }
-    title <- paste("Frequency table of", trimws(title))
+    title <- trimws(title)
+    if (title == "") {
+      title <- "Frequency table"
+    } else {
+      title <- paste("Frequency table of", trimws(title))
+    }
   } else {
     title <- opt$title
   }

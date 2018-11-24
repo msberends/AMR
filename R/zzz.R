@@ -47,28 +47,3 @@ NULL
 .onLoad <- function(libname, pkgname) {
   backports::import(pkgname)
 }
-
-.onAttach <- function(libname, pkgname) {
-  # save data.tables to improve speed of as.mo:
-
-  # microorganismsDT <- data.table::as.data.table(AMR::microorganisms)
-  # microorganisms.oldDT <- data.table::as.data.table(AMR::microorganisms.old)
-  #
-  # data.table::setkey(microorganismsDT, prevalence, tsn)
-  # data.table::setkey(microorganisms.oldDT, tsn, name)
-
-  base::assign(x = "microorganismsDT",
-               value = microorganismsDT,
-               envir = base::as.environment("package:AMR"))
-  base::assign(x = "microorganisms.prevDT",
-               value = microorganismsDT[prevalence != 9999,],
-               envir = base::as.environment("package:AMR"))
-  base::assign(x = "microorganisms.unprevDT",
-               value = microorganismsDT[prevalence == 9999,],
-               envir = base::as.environment("package:AMR"))
-
-  base::assign(x = "microorganisms.oldDT",
-               value = microorganisms.oldDT,
-               envir = base::as.environment("package:AMR"))
-
-}

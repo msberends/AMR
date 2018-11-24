@@ -195,6 +195,11 @@ test_that("as.mo works", {
 
   # TSN of prevalent and non prevalent ones
   expect_equal(mo_TSN(c("Gomphosphaeria aponina delicatula", "Escherichia coli")),
-                   c(717, 285))
+               c(717, 285))
+
+  expect_equal(mo_fullname(c("E. spp.",
+                             "E. spp",
+                             "E. species")),
+               rep("Escherichia species", 3))
 
 })

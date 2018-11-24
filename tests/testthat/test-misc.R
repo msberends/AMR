@@ -5,6 +5,9 @@ test_that("percentages works", {
   expect_equal(percent(0.5), "50%")
   expect_equal(percent(0.500, force_zero = TRUE), "50.0%")
   expect_equal(percent(0.1234), "12.3%")
+  # round up 0.5
+  expect_equal(percent(0.0054), "0.5%")
+  expect_equal(percent(0.0055), "0.6%")
 })
 
 test_that("size format works", {

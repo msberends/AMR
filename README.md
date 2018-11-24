@@ -347,10 +347,8 @@ key_antibiotics(...)
 # Selection of first isolates of any patient
 first_isolate(...)
 
-# Calculate resistance levels of antibiotics, can be used with `summarise` (dplyr)
-rsi(...)
 # Predict resistance levels of antibiotics
-rsi_predict(...)
+resistance_predict(...)
 
 # Get name of antibiotic by ATC code
 abname(...)
