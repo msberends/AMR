@@ -14,3 +14,4 @@ _noinclude
 vignettes/*.R
 .DS_Store
 ^cran-comments\.md$
+^CRAN-RELEASE$

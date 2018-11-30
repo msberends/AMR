@@ -1,4 +1,5 @@
-# 0.4.0.90xx (latest development version)
+# 0.5.0
+**Published on CRAN: 2018-12-01**
 
 #### New
 * Repository moved to GitLab: https://gitlab.com/msberends/AMR
@@ -81,7 +82,8 @@
 * Updated vignettes to comply with README
 
 
-# 0.4.0 (latest stable release)
+# 0.4.0
+**Published on CRAN: 2018-10-01**
 
 #### New
 * The data set `microorganisms` now contains **all microbial taxonomic data from ITIS** (kingdoms Bacteria, Fungi and Protozoa), the Integrated Taxonomy Information System, available via https://itis.gov. The data set now contains more than 18,000 microorganisms with all known bacteria, fungi and protozoa according ITIS with genus, species, subspecies, family, order, class, phylum and subkingdom. The new data set `microorganisms.old` contains all previously known taxonomic names from those kingdoms.
