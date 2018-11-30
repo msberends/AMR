@@ -337,7 +337,7 @@ frequency_tbl <- function(x,
     header_txt <- header_txt %>% paste0(markdown_line, '\nLongest:   ', x %>% base::nchar() %>% base::max(na.rm = TRUE))
   }
 
-  if (NROW(x) > 0 & any(class(x) == "difftime")) {
+  if (NROW(x) > 0 & any(class(x) == "difftime") & !is.hms(x)) {
     header_txt <- header_txt %>% paste0('\n')
     header_txt <- header_txt %>% paste(markdown_line, '\nUnits:    ', attributes(x)$units)
     x <- as.double(x)

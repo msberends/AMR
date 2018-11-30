@@ -13,11 +13,14 @@ R 3:
     - apt-get update
     # install dependencies for package
     - apt-get install --yes --no-install-recommends libxml2-dev libssl-dev libcurl4-openssl-dev zlib1g-dev
-    - R -e 'install.packages(c("devtools", "rlang"))'
-    - R -e 'devtools::install_deps(dependencies = c("Depends", "Imports", "Suggests"), repos = "https://cran.rstudio.com")'
+    - Rscript -e 'install.packages(c("devtools", "rlang"))'
+    - Rscript -e 'devtools::install_deps(dependencies = c("Depends", "Imports", "Suggests"), repos = "https://cran.rstudio.com")'
     # remove vignettes folder and get VignetteBuilder field out of DESCRIPTION file
     - rm -rf vignettes
-    - R -e 'd <- read.dcf("DESCRIPTION"); d[, colnames(d) == "VignetteBuilder"] <- NA; write.dcf(d, "DESCRIPTION")'
+    - Rscript -e 'd <- read.dcf("DESCRIPTION"); d[, colnames(d) == "VignetteBuilder"] <- NA; write.dcf(d, "DESCRIPTION")'
+    # set environmental variable
+    - Rscript -e 'Sys.setenv(NOT_CRAN = "true")'
+    # build package
     - R CMD build . --no-build-vignettes --no-manual
     - PKG_FILE_NAME=$(ls -1t *.tar.gz | head -n 1)
     - R CMD check "${PKG_FILE_NAME}" --no-build-vignettes --no-manual --as-cran

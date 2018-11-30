@@ -73,6 +73,10 @@ test_that("EUCAST rules work", {
       , info = FALSE))$amox,
     "S")
 
+  # also test norf
+  expect_output(suppressWarnings(eucast_rules(septic_patients %>% mutate(norf = "S", nali = "S"))))
+
+  # check verbose output
   expect_output(suppressWarnings(eucast_rules(septic_patients, verbose = TRUE)))
 
 })

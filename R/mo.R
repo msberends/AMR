@@ -192,7 +192,7 @@ exec_as.mo <- function(x, Becker = FALSE, Lancefield = FALSE, allow_uncertain = 
   x_input <- x
   # only check the uniques, which is way faster
   x <- unique(x)
-  # remove empty values (to later fill them in again)
+  # remove empty values (to later fill them in again with NAs)
   x <- x[!is.na(x) & !is.null(x) & !identical(x, "")]
 
   # defined df to check for
@@ -270,26 +270,23 @@ exec_as.mo <- function(x, Becker = FALSE, Lancefield = FALSE, allow_uncertain = 
         # check if search term was like "A. species", then return first genus found with ^A
         if (x_backup[i] %like% "species" | x_backup[i] %like% "spp[.]?") {
           # get mo code of first hit
-          found <- microorganismsDT[fullname %like% x_withspaces_start[i], mo][[1]]
-          mo_code <- found[1L] %>% strsplit("_") %>% unlist() %>% .[1:2] %>% paste(collapse = "_")
-          found <- microorganismsDT[mo == mo_code, ..property][[1]]
-          # return first genus that begins with x_trimmed, e.g. when "E. spp."
+          found <- microorganismsDT[fullname %like% x_withspaces_start[i], mo]
           if (length(found) > 0) {
-            x[i] <- found[1L]
-            next
-          } else {
-            # fewer than 3 chars, add as failure
-            x[i] <- NA_character_
-            failures <- c(failures, x_backup[i])
-            next
+            mo_code <- found[1L] %>% strsplit("_") %>% unlist() %>% .[1:2] %>% paste(collapse = "_")
+            found <- microorganismsDT[mo == mo_code, ..property][[1]]
+            # return first genus that begins with x_trimmed, e.g. when "E. spp."
+            if (length(found) > 0) {
+              x[i] <- found[1L]
+              next
+            }
           }
-        } else {
-          # fewer than 3 chars, add as failure
-          x[i] <- NA_character_
-          failures <- c(failures, x_backup[i])
-          next
         }
+        # fewer than 3 chars and not looked for species, add as failure
+        x[i] <- NA_character_
+        failures <- c(failures, x_backup[i])
+        next
       }
+
 
       # translate known trivial abbreviations to genus + species ----
       if (!is.na(x_trimmed[i])) {
@@ -377,9 +374,16 @@ exec_as.mo <- function(x, Becker = FALSE, Lancefield = FALSE, allow_uncertain = 
       }
 
       # TRY OTHER SOURCES ----
+      if (toupper(x_backup[i]) %in% microorganisms.certe[, 1]) {
+        mo_found <- microorganisms.certe[toupper(x_backup[i]) == microorganisms.certe[, 1], 2][1L]
+        if (length(mo_found) > 0) {
+          x[i] <- microorganismsDT[mo == mo_found, ..property][[1]][1L]
+          next
+        }
+      }
       if (x_backup[i] %in% microorganisms.umcg[, 1]) {
         mo_umcg <- microorganisms.umcg[microorganisms.umcg[, 1] == x_backup[i], 2]
-        mo_found <- microorganisms.certe[microorganisms.certe[, 1] == mo_umcg, 2]
+        mo_found <- microorganisms.certe[microorganisms.certe[, 1] == mo_umcg, 2][1L]
         if (length(mo_found) == 0) {
           # not found
           x[i] <- NA_character_

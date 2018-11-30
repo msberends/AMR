@@ -77,6 +77,9 @@ test_that("as.mo works", {
   # too few characters
   expect_warning(as.mo("ab"))
 
+  expect_equal(suppressWarnings(as.character(as.mo(c("Qq species", "", "CRS", "K. pneu rhino", "esco")))),
+               c(NA_character_, NA_character_, "B_STNTR_MAL", "B_KLBSL_PNE_RHI", "B_ESCHR_COL"))
+
   # check for Becker classification
   expect_identical(as.character(guess_mo("S. epidermidis", Becker = FALSE)), "B_STPHY_EPI")
   expect_identical(as.character(guess_mo("S. epidermidis", Becker = TRUE)),  "B_STPHY_CNS")
@@ -201,5 +204,10 @@ test_that("as.mo works", {
                              "E. spp",
                              "E. species")),
                rep("Escherichia species", 3))
+
+  # from different sources
+  expect_equal(as.character(as.mo(
+    c("PRTMIR", "bclcer", "B_ESCHR_COL"))),
+    c("B_PROTS_MIR", "B_BCLLS_CER", "B_ESCHR_COL"))
 
 })
