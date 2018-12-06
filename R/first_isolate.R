@@ -164,8 +164,8 @@ first_isolate <- function(tbl,
     message("NOTE: Using column `", col_date, "` as input for `col_date`.")
   }
   # -- patient id
-  if (is.null(col_patient_id) & any(colnames(tbl) %like% "^patient")) {
-    col_patient_id <- colnames(tbl)[colnames(tbl) %like% "^patient"][1]
+  if (is.null(col_patient_id) & any(colnames(tbl) %like% "^(patient|patid)")) {
+    col_patient_id <- colnames(tbl)[colnames(tbl) %like% "^(patient|patid)"][1]
     message("NOTE: Using column `", col_patient_id, "` as input for `col_patient_id`.")
   }
 

@@ -137,10 +137,10 @@
 #'   mutate(mo = as.mo(paste(genus, species)))
 #' }
 as.mo <- function(x, Becker = FALSE, Lancefield = FALSE, allow_uncertain = FALSE, reference_df = NULL) {
-  structure(mo_validate(x = x, property = "mo",
-                        Becker = Becker, Lancefield = Lancefield,
-                        allow_uncertain = allow_uncertain, reference_df = reference_df),
-            class = "mo")
+  mo <- mo_validate(x = x, property = "mo",
+                    Becker = Becker, Lancefield = Lancefield,
+                    allow_uncertain = allow_uncertain, reference_df = reference_df)
+  structure(.Data = mo, class = "mo")
 }
 
 #' @rdname as.mo
@@ -155,9 +155,12 @@ is.mo <- function(x) {
 #' @export
 guess_mo <- as.mo
 
-#' @importFrom dplyr %>% pull left_join
+#' @importFrom dplyr %>% pull left_join n_distinct
 #' @importFrom data.table data.table as.data.table setkey
-exec_as.mo <- function(x, Becker = FALSE, Lancefield = FALSE, allow_uncertain = FALSE, reference_df = NULL, property = "mo") {
+#' @importFrom crayon magenta red italic
+exec_as.mo <- function(x, Becker = FALSE, Lancefield = FALSE,
+                       allow_uncertain = FALSE, reference_df = NULL,
+                       property = "mo", clear_options = TRUE) {
 
   if (!"AMR" %in% base::.packages()) {
     library("AMR")
@@ -166,6 +169,11 @@ exec_as.mo <- function(x, Becker = FALSE, Lancefield = FALSE, allow_uncertain = 
     #   microorganisms.prevDT   # same as microorganismsDT, but with prevalence != 9999
     #   microorganisms.unprevDT # same as microorganismsDT, but with prevalence == 9999
     #   microorganisms.oldDT    # old taxonomic names, sorted by name (genus+species), TSN
+  }
+
+  if (clear_options == TRUE) {
+    options(mo_failures = NULL)
+    options(mo_renamed = NULL)
   }
 
   if (NCOL(x) == 2) {
@@ -231,10 +239,10 @@ exec_as.mo <- function(x, Becker = FALSE, Lancefield = FALSE, allow_uncertain = 
     x_backup <- trimws(x, which = "both")
 
     # remove spp and species
-    x <- gsub(" +(spp.?|species)", "", x_backup)
+    x <- trimws(gsub(" +(spp.?|ssp.?|subsp.?|species)", " ", x_backup, ignore.case = TRUE), which = "both")
     x_species <- paste(x, "species")
     # translate to English for supported languages of mo_property
-    x <- gsub("(Gruppe|gruppe|groep|grupo|gruppo|groupe)", "group", x)
+    x <- gsub("(Gruppe|gruppe|groep|grupo|gruppo|groupe)", "group", x, ignore.case = TRUE)
     # remove 'empty' genus and species values
     x <- gsub("(no MO)", "", x, fixed = TRUE)
     # remove non-text in case of "E. coli" except dots and spaces
@@ -244,6 +252,9 @@ exec_as.mo <- function(x, Becker = FALSE, Lancefield = FALSE, allow_uncertain = 
     x <- trimws(x, which = "both")
     x_trimmed <- x
     x_trimmed_species <- paste(x_trimmed, "species")
+    x_trimmed_without_group <- gsub(" group$", "", x_trimmed, ignore.case = TRUE)
+    # remove last part from "-" or "/"
+    x_trimmed_without_group <- gsub("(.*)[-/].*", "\\1", x_trimmed_without_group)
     # replace space and dot by regex sign
     x_withspaces <- gsub("[ .]+", ".* ", x)
     x <- gsub("[ .]+", ".*", x)
@@ -252,13 +263,14 @@ exec_as.mo <- function(x, Becker = FALSE, Lancefield = FALSE, allow_uncertain = 
     x_withspaces_start <- paste0('^', x_withspaces)
     x_withspaces <- paste0('^', x_withspaces, '$')
 
-    # cat(paste0('x                  "', x, '"\n'))
-    # cat(paste0('x_species          "', x_species, '"\n'))
-    # cat(paste0('x_withspaces_start "', x_withspaces_start, '"\n'))
-    # cat(paste0('x_withspaces       "', x_withspaces, '"\n'))
-    # cat(paste0('x_backup           "', x_backup, '"\n'))
-    # cat(paste0('x_trimmed          "', x_trimmed, '"\n'))
-    # cat(paste0('x_trimmed_species  "', x_trimmed_species, '"\n'))
+    # cat(paste0('x                       "', x, '"\n'))
+    # cat(paste0('x_species               "', x_species, '"\n'))
+    # cat(paste0('x_withspaces_start      "', x_withspaces_start, '"\n'))
+    # cat(paste0('x_withspaces            "', x_withspaces, '"\n'))
+    # cat(paste0('x_backup                "', x_backup, '"\n'))
+    # cat(paste0('x_trimmed               "', x_trimmed, '"\n'))
+    # cat(paste0('x_trimmed_species       "', x_trimmed_species, '"\n'))
+    # cat(paste0('x_trimmed_without_group "', x_trimmed_without_group, '"\n'))
 
     for (i in 1:length(x)) {
       if (identical(x_trimmed[i], "")) {
@@ -302,7 +314,8 @@ exec_as.mo <- function(x, Becker = FALSE, Lancefield = FALSE, allow_uncertain = 
           x[i] <- microorganismsDT[mo == 'B_STPHY_EPI', ..property][[1]][1L]
           next
         }
-        if (toupper(x_trimmed[i]) == 'VRE') {
+        if (toupper(x_trimmed[i]) == "VRE"
+            | x_trimmed[i] %like% '(enterococci|enterokok|enterococo)[a-z]*?$')  {
           x[i] <- microorganismsDT[mo == 'B_ENTRC', ..property][[1]][1L]
           next
         }
@@ -323,7 +336,18 @@ exec_as.mo <- function(x, Becker = FALSE, Lancefield = FALSE, allow_uncertain = 
           next
         }
         if (toupper(x_trimmed[i]) %like% '^G[ABCDFGHK]S$') {
-          x[i] <- microorganismsDT[mo == gsub("G([ABCDFGHK])S", "B_STRPTC_GR\\1", x_trimmed[i]), ..property][[1]][1L]
+          # Streptococci, like GBS = Group B Streptococci (B_STRPTC_GRB)
+          x[i] <- microorganismsDT[mo == gsub("G([ABCDFGHK])S", "B_STRPTC_GR\\1", x_trimmed[i], ignore.case = TRUE), ..property][[1]][1L]
+          next
+        }
+        if (toupper(x_trimmed[i]) %like% '(streptococc|streptokok).* [ABCDFGHK]$') {
+          # Streptococci in different languages, like "estreptococos grupo B"
+          x[i] <- microorganismsDT[mo == gsub(".*(streptococ|streptokok|estreptococ).* ([ABCDFGHK])$", "B_STRPTC_GR\\2", x_trimmed[i], ignore.case = TRUE), ..property][[1]][1L]
+          next
+        }
+        if (toupper(x_trimmed[i]) %like% 'group [ABCDFGHK] (streptococ|streptokok|estreptococ)') {
+          # Streptococci in different languages, like "Group A Streptococci"
+          x[i] <- microorganismsDT[mo == gsub(".*group ([ABCDFGHK]) (streptococ|streptokok|estreptococ).*", "B_STRPTC_GR\\1", x_trimmed[i], ignore.case = TRUE), ..property][[1]][1L]
           next
         }
         # CoNS/CoPS in different languages (support for German, Dutch, Spanish, Portuguese) ----
@@ -341,16 +365,22 @@ exec_as.mo <- function(x, Becker = FALSE, Lancefield = FALSE, allow_uncertain = 
           x[i] <- microorganismsDT[mo == 'B_STPHY_CPS', ..property][[1]][1L]
           next
         }
-        if (tolower(x[i]) %like% '^gram[ -]+nega.*'
-            | tolower(x_trimmed[i]) %like% '^gram[ -]+nega.*') {
+        if (tolower(x[i]) %like% 'gram[ -]?neg.*'
+            | tolower(x_trimmed[i]) %like% 'gram[ -]?neg.*') {
           # coerce S. coagulase positive
           x[i] <- microorganismsDT[mo == 'B_GRAMN', ..property][[1]][1L]
           next
         }
-        if (tolower(x[i]) %like% '^gram[ -]+posi.*'
-            | tolower(x_trimmed[i]) %like% '^gram[ -]+posi.*') {
+        if (tolower(x[i]) %like% 'gram[ -]?pos.*'
+            | tolower(x_trimmed[i]) %like% 'gram[ -]?pos.*') {
           # coerce S. coagulase positive
           x[i] <- microorganismsDT[mo == 'B_GRAMP', ..property][[1]][1L]
+          next
+        }
+        if (grepl("[sS]almonella [A-Z][a-z]+ ?.*", x_trimmed[i])) {
+          # Salmonella with capital letter species like "Salmonella Goettingen" - they're all S. enterica
+          x[i] <- microorganismsDT[mo == 'B_SLMNL_ENT', ..property][[1]][1L]
+          base::message(magenta(paste0("Note: ", italic(x_trimmed[i]), " is a subspecies of ", italic("Salmonella enterica"), " (B_SLMNL_ENT)")))
           next
         }
       }
@@ -424,6 +454,12 @@ exec_as.mo <- function(x, Becker = FALSE, Lancefield = FALSE, allow_uncertain = 
         x[i] <- found[1L]
         next
       }
+      found <- microorganisms.prevDT[tolower(fullname) == tolower(x_trimmed_without_group[i]), ..property][[1]]
+      if (length(found) > 0) {
+        x[i] <- found[1L]
+        next
+      }
+
 
       # try any match keeping spaces ----
       found <- microorganisms.prevDT[fullname %like% x_withspaces[i], ..property][[1]]
@@ -495,28 +531,29 @@ exec_as.mo <- function(x, Becker = FALSE, Lancefield = FALSE, allow_uncertain = 
         x[i] <- found[1L]
         next
       }
-
+      found <- microorganisms.unprevDT[tolower(fullname) == tolower(x_trimmed_without_group[i]), ..property][[1]]
+      if (length(found) > 0) {
+        x[i] <- found[1L]
+        next
+      }
       # try any match keeping spaces ----
       found <- microorganisms.unprevDT[fullname %like% x_withspaces[i], ..property][[1]]
       if (length(found) > 0) {
         x[i] <- found[1L]
         next
       }
-
       # try any match keeping spaces, not ending with $ ----
       found <- microorganisms.unprevDT[fullname %like% x_withspaces_start[i], ..property][[1]]
       if (length(found) > 0) {
         x[i] <- found[1L]
         next
       }
-
       # try any match diregarding spaces ----
       found <- microorganisms.unprevDT[fullname %like% x[i], ..property][[1]]
-      if (length(found) > 0) {
+      if (length(found) > 0 & nchar(x_trimmed[i]) >= 6) {
         x[i] <- found[1L]
         next
       }
-
       # try splitting of characters in the middle and then find ID ----
       # only when text length is 6 or lower
       # like esco = E. coli, klpn = K. pneumoniae, stau = S. aureus, staaur = S. aureus
@@ -568,15 +605,15 @@ exec_as.mo <- function(x, Becker = FALSE, Lancefield = FALSE, allow_uncertain = 
         found <- microorganisms.oldDT[name %like% x_withspaces[i]
                                       | name %like% x_withspaces_start[i]
                                       | name %like% x[i],]
-        if (NROW(found) > 0) {
+        if (NROW(found) > 0 & nchar(x_trimmed[i]) >= 6) {
           if (property == "ref") {
             x[i] <- found[1, ref]
           } else {
             x[i] <- microorganismsDT[tsn == found[1, tsn_new], ..property][[1]]
           }
-          warning("Uncertain interpretation: '",
-                  x_backup[i], "' -> '", found[1, name], "'",
-                  call. = FALSE, immediate. = TRUE)
+          warning(red(paste0("UNCERTAIN - '",
+                             x_backup[i], "' -> ", italic(found[1, name]))),
+                             call. = FALSE, immediate. = TRUE)
           renamed_note(name_old = found[1, name],
                        name_new = microorganismsDT[tsn == found[1, tsn_new], fullname],
                        ref_old = found[1, ref],
@@ -584,14 +621,38 @@ exec_as.mo <- function(x, Becker = FALSE, Lancefield = FALSE, allow_uncertain = 
           next
         }
 
-        # (2) try to strip off one element and check the remains
-        x_strip <- x_backup[i] %>% strsplit(" ") %>% unlist()
-        x_strip <- x_strip[1:length(x_strip) - 1]
-        x[i] <- suppressWarnings(suppressMessages(as.mo(x_strip)))
+        # (2) strip values between brackets ----
+        found <- microorganismsDT[fullname %like% gsub("( [(].*[)]) ", " ", x_withspaces[i])
+                                  | fullname %like% gsub("( [(].*[)]) ", " ", x_backup[i])
+                                  | fullname %like% gsub("( [(].*[)]) ", " ", x[i]),]
+        if (NROW(found) > 0 & nchar(x_trimmed[i]) >= 6) {
+          x[i] <- found[1, ..property][[1]]
+          warning(red(paste0("UNCERTAIN - '",
+                             x_backup[i], "' -> ", italic(found[1, fullname][[1]]), " (", found[1, mo][[1]], ")")),
+                             call. = FALSE, immediate. = TRUE)
+          next
+        }
+
+        # (3) try to strip off one element and check the remains ----
+        look_for_part <- function(z) {
+          x_strip <- z %>% strsplit(" ") %>% unlist()
+          if (length(x_strip) > 1 & nchar(x_trimmed[i]) >= 6) {
+            for (i in 1:(length(x_strip) - 1)) {
+              x_strip_collapsed <- paste(x_strip[1:(length(x_strip) - i)], collapse = " ")
+              found <- suppressMessages(suppressWarnings(exec_as.mo(x_strip_collapsed, clear_options = FALSE)))
+              if (!is.na(found)) {
+                found <- microorganismsDT[mo == found, ..property][[1]]
+                warning(red(paste0("UNCERTAIN - '",
+                                   z, "' -> ", italic(microorganismsDT[mo == found[1L], fullname][[1]]), " (", found[1L], ")")),
+                                   call. = FALSE, immediate. = TRUE)
+                return(found[1L])
+              }
+            }
+          }
+          return(NA_character_)
+        }
+        x[i] <- look_for_part(x_backup[i])
         if (!is.na(x[i])) {
-          warning("Uncertain interpretation: '",
-                  x_backup[i], "' -> '", microorganismsDT[mo == x[i], fullname], "' (", x[i], ")",
-                  call. = FALSE, immediate. = TRUE)
           next
         }
       }
@@ -605,10 +666,16 @@ exec_as.mo <- function(x, Becker = FALSE, Lancefield = FALSE, allow_uncertain = 
 
   failures <- failures[!failures %in% c(NA, NULL, NaN)]
   if (length(failures) > 0) {
-    warning("These ", length(failures) , " values could not be coerced to a valid MO code: ",
-            paste('"', unique(failures), '"', sep = "", collapse = ', '),
-            ".",
-            call. = FALSE)
+    options(mo_failures = sort(unique(failures)))
+    if (n_distinct(failures) > 25) {
+      warning(n_distinct(failures), " different values could not be coerced to a valid MO code. See mo_failures() to review them.",
+              call. = FALSE)
+    } else {
+      warning("These ", length(failures) , " values could not be coerced to a valid MO code: ",
+              paste('"', unique(failures), '"', sep = "", collapse = ', '),
+              ". See mo_failures() to review them.",
+              call. = FALSE)
+    }
   }
 
   # Becker ----
@@ -687,6 +754,7 @@ exec_as.mo <- function(x, Becker = FALSE, Lancefield = FALSE, allow_uncertain = 
   x
 }
 
+#' @importFrom crayon blue
 renamed_note <- function(name_old, name_new, ref_old = "", ref_new = "") {
   if (!is.na(ref_old)) {
     ref_old <- paste0(" (", ref_old, ")")
@@ -698,7 +766,11 @@ renamed_note <- function(name_old, name_new, ref_old = "", ref_new = "") {
   } else {
     ref_new <- ""
   }
-  base::message(paste0("Note: '", name_old, "'", ref_old, " was renamed '", name_new, "'", ref_new))
+  msg <- paste0("'", name_old, "'", ref_old, " was renamed '", name_new, "'", ref_new)
+  msg_plain <- paste0(name_old, ref_old, " -> ", name_new, ref_new)
+  msg_plain <- c(getOption("mo_renamed", character(0)), msg_plain)
+  options(mo_renamed = sort(msg_plain))
+  base::message(blue(paste("Note:", msg)))
 }
 
 #' @exportMethod print.mo
@@ -732,4 +804,22 @@ as.data.frame.mo <- function (x, ...) {
 #' @noRd
 pull.mo <- function(.data, ...) {
   pull(as.data.frame(.data), ...)
+}
+
+#' Vector of failed coercion attempts
+#'
+#' Returns a vector of all failed attempts to coerce values to a valid MO code with \code{\link{as.mo}}.
+#' @seealso \code{\link{as.mo}}
+#' @export
+mo_failures <- function() {
+  getOption("mo_failures")
+}
+
+#' Vector of taxonomic renamed items
+#'
+#' Returns a vector of all renamed items of the last coercion to valid MO codes with \code{\link{as.mo}}.
+#' @seealso \code{\link{as.mo}}
+#' @export
+mo_renamed <- function() {
+  getOption("mo_renamed")
 }

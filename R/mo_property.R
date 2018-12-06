@@ -461,6 +461,15 @@ mo_validate <- function(x, property, ...) {
     Lancefield <- FALSE
   }
 
+  if (!"AMR" %in% base::.packages()) {
+    library("AMR")
+    # These data.tables are available as data sets when the AMR package is loaded:
+    #   microorganismsDT        # this one is sorted by kingdom (B<F<P), prevalence, TSN
+    #   microorganisms.prevDT   # same as microorganismsDT, but with prevalence != 9999
+    #   microorganisms.unprevDT # same as microorganismsDT, but with prevalence == 9999
+    #   microorganisms.oldDT    # old taxonomic names, sorted by name (genus+species), TSN
+  }
+
   if (!all(x %in% microorganismsDT[[property]])
       | Becker %in% c(TRUE, "all")
       | Lancefield %in% c(TRUE, "all")) {

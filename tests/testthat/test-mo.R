@@ -210,4 +210,14 @@ test_that("as.mo works", {
     c("PRTMIR", "bclcer", "B_ESCHR_COL"))),
     c("B_PROTS_MIR", "B_BCLLS_CER", "B_ESCHR_COL"))
 
+  # hard to find
+  expect_equal(as.character(suppressWarnings(as.mo(
+    c("Microbacterium paraoxidans",
+      "Streptococcus suis (bovis gr)",
+      "Raoultella (here some text) terrigena"), allow_uncertain = TRUE))),
+    c("B_MCRBC", "B_STRPTC_SUI", "B_RLTLL_TER"))
+
+  # Salmonella (City) are all actually Salmonella enterica spp (City)
+  expect_equal(as.character(suppressMessages(as.mo("Salmonella Goettingen", allow_uncertain = TRUE))),
+               "B_SLMNL_ENT")
 })

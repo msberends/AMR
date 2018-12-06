@@ -1,5 +1,19 @@
-# 0.5.0
-**Published on CRAN: 2018-12-01**
+# 0.5.0.90xx (latest development version)
+
+#### New
+* Function `mo_failures` to review values that could not be coerced to a valid MO code, using `as.mo`. This latter function will now only show a maximum of 25 uncoerced values.
+
+#### Changed
+* Improvements for `as.mo`:
+  * Finds better results when input is in other languages
+  * Better handling for subspecies
+  * Better handling for *Salmonellae*
+* Function `first_isolate` will now use a column named like "patid" for the patient ID, when this parameter was left blank
+
+
+
+# 0.5.0 (latest stable release)
+**Published on CRAN: 2018-11-30**
 
 #### New
 * Repository moved to GitLab: https://gitlab.com/msberends/AMR
