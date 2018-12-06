@@ -3,11 +3,8 @@
 # and https://docs.gitlab.com/ce/ci/yaml/README.html
 
 # how the Docker+R images work: https://hub.docker.com/r/rocker/r-ver/
-
 R 3:
     image: rocker/r-ver:3 # test on R v3.*.*
-    variables:
-    - WARNINGS_ARE_ERRORS: 0
     script:
     - apt-get update
     # install dependencies for package
