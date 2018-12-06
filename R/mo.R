@@ -380,7 +380,7 @@ exec_as.mo <- function(x, Becker = FALSE, Lancefield = FALSE,
         if (grepl("[sS]almonella [A-Z][a-z]+ ?.*", x_trimmed[i])) {
           # Salmonella with capital letter species like "Salmonella Goettingen" - they're all S. enterica
           x[i] <- microorganismsDT[mo == 'B_SLMNL_ENT', ..property][[1]][1L]
-          base::message(magenta(paste0("Note: ", italic(x_trimmed[i]), " is a subspecies of ", italic("Salmonella enterica"), " (B_SLMNL_ENT)")))
+          base::message(magenta(paste0("Note: ", italic(x_trimmed[i]), " will be considered a subspecies of ", italic("Salmonella enterica"), " (B_SLMNL_ENT)")))
           next
         }
       }
@@ -595,7 +595,8 @@ exec_as.mo <- function(x, Becker = FALSE, Lancefield = FALSE,
         renamed_note(name_old = found[1, name],
                      name_new = microorganismsDT[tsn == found[1, tsn_new], fullname],
                      ref_old = found[1, ref],
-                     ref_new = microorganismsDT[tsn == found[1, tsn_new], ref])
+                     ref_new = microorganismsDT[tsn == found[1, tsn_new], ref],
+                     mo = microorganismsDT[tsn == found[1, tsn_new], mo])
         next
       }
 
@@ -607,6 +608,9 @@ exec_as.mo <- function(x, Becker = FALSE, Lancefield = FALSE,
                                       | name %like% x[i],]
         if (NROW(found) > 0 & nchar(x_trimmed[i]) >= 6) {
           if (property == "ref") {
+            # when property is "ref" (which is the case in mo_ref, mo_authors and mo_year), return the old value, so:
+            # mo_ref("Chlamydia psittaci) = "Page, 1968" (with warning)
+            # mo_ref("Chlamydophila psittaci) = "Everett et al., 1999"
             x[i] <- found[1, ref]
           } else {
             x[i] <- microorganismsDT[tsn == found[1, tsn_new], ..property][[1]]
@@ -617,7 +621,8 @@ exec_as.mo <- function(x, Becker = FALSE, Lancefield = FALSE,
           renamed_note(name_old = found[1, name],
                        name_new = microorganismsDT[tsn == found[1, tsn_new], fullname],
                        ref_old = found[1, ref],
-                       ref_new = microorganismsDT[tsn == found[1, tsn_new], ref])
+                       ref_new = microorganismsDT[tsn == found[1, tsn_new], ref],
+                       mo = microorganismsDT[tsn == found[1, tsn_new], mo])
           next
         }
 
@@ -754,8 +759,8 @@ exec_as.mo <- function(x, Becker = FALSE, Lancefield = FALSE,
   x
 }
 
-#' @importFrom crayon blue
-renamed_note <- function(name_old, name_new, ref_old = "", ref_new = "") {
+#' @importFrom crayon blue italic
+renamed_note <- function(name_old, name_new, ref_old = "", ref_new = "", mo = "") {
   if (!is.na(ref_old)) {
     ref_old <- paste0(" (", ref_old, ")")
   } else {
@@ -766,7 +771,13 @@ renamed_note <- function(name_old, name_new, ref_old = "", ref_new = "") {
   } else {
     ref_new <- ""
   }
-  msg <- paste0("'", name_old, "'", ref_old, " was renamed '", name_new, "'", ref_new)
+  if (!is.na(mo)) {
+    mo <- paste0(" (", mo, ")")
+  } else {
+    mo <- ""
+  }
+  msg <- paste0(italic(name_old), ref_old, " was renamed ", italic(name_new), ref_new, mo)
+  msg <- gsub("et al.", italic("et al."), msg)
   msg_plain <- paste0(name_old, ref_old, " -> ", name_new, ref_new)
   msg_plain <- c(getOption("mo_renamed", character(0)), msg_plain)
   options(mo_renamed = sort(msg_plain))
