@@ -21,7 +21,7 @@ test_that("mic works", {
   plot(as.mic(c(1, 2, 4, 8)))
   print(as.mic(c(1, 2, 4, 8)))
 
-  expect_equal(summary(as.mic(c(2, 8))), c("Mode" = 'mic',
+  expect_equal(summary(as.mic(c(2, 8))), c("Class" = "mic",
                                            "<NA>" = "0",
                                            "Min." = "2",
                                            "Max." = "8"))

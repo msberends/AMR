@@ -51,7 +51,7 @@ percent <- function(x, round = 1, force_zero = FALSE, ...) {
 
 check_available_columns <- function(tbl, col.list, info = TRUE) {
   # check columns
-  col.list <- col.list[!is.na(col.list)]
+  col.list <- col.list[!is.na(col.list) & !is.null(col.list)]
   names(col.list) <- col.list
   col.list.bak <- col.list
   # are they available as upper case or lower case then?

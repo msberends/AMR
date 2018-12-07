@@ -36,8 +36,12 @@ plot(rsi_data)    # for percentages
 barplot(rsi_data) # for frequencies
 freq(rsi_data)    # frequency table with informative header
 
-# fastest way to transform all columns with already valid AB results to class `rsi`:
+# using dplyr's mutate
 library(dplyr)
+septic_patients \%>\%
+  mutate_at(vars(peni:rifa), as.rsi)
+
+# fastest way to transform all columns with already valid AB results to class `rsi`:
 septic_patients \%>\%
   mutate_if(is.rsi.eligible,
             as.rsi)

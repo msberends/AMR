@@ -57,7 +57,7 @@ interpretive_reading(...)
 
 \item{verbose}{a logical to indicate whether extensive info should be returned as a \code{data.frame} with info about which rows and columns are effected}
 
-\item{amcl, amik, amox, ampi, azit, azlo, aztr, cefa, cfep, cfot, cfox, cfra, cfta, cftr, cfur, chlo, cipr, clar, clin, clox, coli, czol, dapt, doxy, erta, eryt, fosf, fusi, gent, imip, kana, levo, linc, line, mero, mezl, mino, moxi, nali, neom, neti, nitr, norf, novo, oflo, oxac, peni, pipe, pita, poly, pris, qida, rifa, roxi, siso, teic, tetr, tica, tige, tobr, trim, trsu, vanc}{column name of an antibiotic, see Details}
+\item{amcl, amik, amox, ampi, azit, azlo, aztr, cefa, cfep, cfot, cfox, cfra, cfta, cftr, cfur, chlo, cipr, clar, clin, clox, coli, czol, dapt, doxy, erta, eryt, fosf, fusi, gent, imip, kana, levo, linc, line, mero, mezl, mino, moxi, nali, neom, neti, nitr, norf, novo, oflo, oxac, peni, pipe, pita, poly, pris, qida, rifa, roxi, siso, teic, tetr, tica, tige, tobr, trim, trsu, vanc}{column name of an antibiotic, see Antibiotics}
 
 \item{col_bactid}{deprecated, use \code{col_mo} instead.}
 
@@ -69,10 +69,9 @@ The input of \code{tbl}, possibly with edited values of antibiotics. Or, if \cod
 \description{
 Apply susceptibility rules as defined by the European Committee on Antimicrobial Susceptibility Testing (EUCAST, \url{http://eucast.org}), see \emph{Source}. This includes (1) expert rules, (2) intrinsic resistance and (3) inferred resistance as defined in their breakpoint tables.
 }
-\details{
-To define antibiotics column names, input a text or use \code{NA} to skip a column (e.g. \code{tica = NA}). Non-existing columns will anyway be skipped with a warning. See the Antibiotics section for an explanation of the abbreviations.
-}
 \section{Antibiotics}{
+
+To define antibiotics column names, input a text (case-insensitive) or use \code{NULL} to skip a column (e.g. \code{tica = NULL}). Non-existing columns will anyway be skipped with a warning.
 
 Abbrevations of the column containing antibiotics in the form: \strong{abbreviation}: generic name (\emph{ATC code})
 

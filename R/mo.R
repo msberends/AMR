@@ -26,7 +26,7 @@
 #' @param Lancefield a logical to indicate whether beta-haemolytic \emph{Streptococci} should be categorised into Lancefield groups instead of their own species, according to Rebecca C. Lancefield [2]. These \emph{Streptococci} will be categorised in their first group, e.g. \emph{Streptococcus dysgalactiae} will be group C, although officially it was also categorised into groups G and L.
 #'
 #'   This excludes \emph{Enterococci} at default (who are in group D), use \code{Lancefield = "all"} to also categorise all \emph{Enterococci} as group D.
-#' @param allow_uncertain a logical to indicate whether empty results should be checked for only a part of the input string. When results are found, a warning will be given about the uncertainty and the result.
+#' @param allow_uncertain a logical to indicate whether the input should be checked for less possible results, see Details
 #' @param reference_df a \code{data.frame} to use for extra reference when translating \code{x} to a valid \code{mo}. The first column can be any microbial name, code or ID (used in your analysis or organisation), the second column must be a valid \code{mo} as found in the \code{\link{microorganisms}} data set.
 #' @rdname as.mo
 #' @aliases mo
@@ -34,11 +34,11 @@
 #' @details
 #' A microbial ID from this package (class: \code{mo}) typically looks like these examples:\cr
 #' \preformatted{
-#'   Code                Full name
-#'   ---------------     --------------------------------------
-#'   B_KLBSL             Klebsiella
-#'   B_KLBSL_PNE         Klebsiella pneumoniae
-#'   B_KLBSL_PNE_RHI     Klebsiella pneumoniae rhinoscleromatis
+#'   Code              Full name
+#'   ---------------   --------------------------------------
+#'   B_KLBSL           Klebsiella
+#'   B_KLBSL_PNE       Klebsiella pneumoniae
+#'   B_KLBSL_PNE_RHI   Klebsiella pneumoniae rhinoscleromatis
 #'   |   |    |   |
 #'   |   |    |   |
 #'   |   |    |    ----> subspecies, a 3-4 letter acronym
@@ -57,7 +57,7 @@
 #'   \item{Breakdown of input values: from here it starts to breakdown input values to find possible matches}
 #' }
 #'
-#' A couple of effects because of these rules
+#' A couple of effects because of these rules:
 #' \itemize{
 #'   \item{\code{"E. coli"} will return the ID of \emph{Escherichia coli} and not \emph{Entamoeba coli}, although the latter would alphabetically come first}
 #'   \item{\code{"H. influenzae"} will return the ID of \emph{Haemophilus influenzae} and not \emph{Haematobacter influenzae} for the same reason}
@@ -65,6 +65,13 @@
 #'   \item{Something like \code{"stau"} or \code{"S aur"} will return the ID of \emph{Staphylococcus aureus} and not \emph{Staphylococcus auricularis}}
 #' }
 #' This means that looking up human pathogenic microorganisms takes less time than looking up human \strong{non}-pathogenic microorganisms.
+#'
+#' When using \code{allow_uncertain = TRUE} (which is the default setting), it will use additional rules if all previous AI rules failed to get valid results. Examples:
+#' \itemize{
+#'   \item{\code{"Streptococcus group B (known as S. agalactiae)"}. The text between brackets will be removed and a warning will be thrown that the result \emph{Streptococcus group B} (\code{B_STRPTC_GRB}) needs review.}
+#'   \item{\code{"S. aureus - please mind: MRSA"}. The last word will be stripped, after which the function will try to find a match. If it does not, the second last word will be stripped, etc. Again, a warning will be thrown that the result \emph{Staphylococcus aureus} (\code{B_STPHY_AUR}) needs review.}
+#'   \item{\code{"D. spartina"}. This is the abbreviation of an old taxonomic name: \emph{Didymosphaeria spartinae} (the last "e" was missing from the input). This fungus was renamed to \emph{Leptosphaeria obiones}, so a warning will be thrown that this result (\code{F_LPTSP_OBI}) needs review.}
+#' }
 #'
 #' \code{guess_mo} is an alias of \code{as.mo}.
 #' @section ITIS:
@@ -94,6 +101,7 @@
 #' as.mo("S. aureus")
 #' as.mo("S aureus")
 #' as.mo("Staphylococcus aureus")
+#' as.mo("Staphylococcus aureus (MRSA)")
 #' as.mo("MRSA") # Methicillin Resistant S. aureus
 #' as.mo("VISA") # Vancomycin Intermediate S. aureus
 #' as.mo("VRSA") # Vancomycin Resistant S. aureus
@@ -136,7 +144,7 @@
 #' df <- df %>%
 #'   mutate(mo = as.mo(paste(genus, species)))
 #' }
-as.mo <- function(x, Becker = FALSE, Lancefield = FALSE, allow_uncertain = FALSE, reference_df = NULL) {
+as.mo <- function(x, Becker = FALSE, Lancefield = FALSE, allow_uncertain = TRUE, reference_df = NULL) {
   mo <- mo_validate(x = x, property = "mo",
                     Becker = Becker, Lancefield = Lancefield,
                     allow_uncertain = allow_uncertain, reference_df = reference_df)
@@ -155,11 +163,11 @@ is.mo <- function(x) {
 #' @export
 guess_mo <- as.mo
 
-#' @importFrom dplyr %>% pull left_join n_distinct
+#' @importFrom dplyr %>% pull left_join n_distinct progress_estimated
 #' @importFrom data.table data.table as.data.table setkey
 #' @importFrom crayon magenta red italic
 exec_as.mo <- function(x, Becker = FALSE, Lancefield = FALSE,
-                       allow_uncertain = FALSE, reference_df = NULL,
+                       allow_uncertain = TRUE, reference_df = NULL,
                        property = "mo", clear_options = TRUE) {
 
   if (!"AMR" %in% base::.packages()) {
@@ -272,7 +280,12 @@ exec_as.mo <- function(x, Becker = FALSE, Lancefield = FALSE,
     # cat(paste0('x_trimmed_species       "', x_trimmed_species, '"\n'))
     # cat(paste0('x_trimmed_without_group "', x_trimmed_without_group, '"\n'))
 
+    progress <- progress_estimated(n = length(x), min_time = 3)
+
     for (i in 1:length(x)) {
+
+      progress$tick()$print()
+
       if (identical(x_trimmed[i], "")) {
         # empty values
         x[i] <- NA_character_
@@ -615,8 +628,8 @@ exec_as.mo <- function(x, Becker = FALSE, Lancefield = FALSE,
           } else {
             x[i] <- microorganismsDT[tsn == found[1, tsn_new], ..property][[1]]
           }
-          warning(red(paste0("UNCERTAIN - '",
-                             x_backup[i], "' -> ", italic(found[1, name]))),
+          warning(red(paste0('UNCERTAIN - "',
+                             x_backup[i], '" -> ', italic(found[1, name]))),
                              call. = FALSE, immediate. = TRUE)
           renamed_note(name_old = found[1, name],
                        name_new = microorganismsDT[tsn == found[1, tsn_new], fullname],
@@ -627,13 +640,17 @@ exec_as.mo <- function(x, Becker = FALSE, Lancefield = FALSE,
         }
 
         # (2) strip values between brackets ----
-        found <- microorganismsDT[fullname %like% gsub("( [(].*[)]) ", " ", x_withspaces[i])
-                                  | fullname %like% gsub("( [(].*[)]) ", " ", x_backup[i])
-                                  | fullname %like% gsub("( [(].*[)]) ", " ", x[i]),]
+        x_backup_stripped <- gsub("( [(].*[)])", "", x_backup[i])
+        x_backup_stripped <- trimws(gsub("  ", " ", x_backup_stripped, fixed = TRUE))
+        x_species_stripped <- gsub("( [(].*[)])", "", x_species[i])
+        x_species_stripped <- trimws(gsub("  ", " ", x_species_stripped, fixed = TRUE))
+
+        found <- microorganismsDT[fullname %like% x_backup_stripped
+                                  | fullname %like% x_species_stripped,]
         if (NROW(found) > 0 & nchar(x_trimmed[i]) >= 6) {
           x[i] <- found[1, ..property][[1]]
-          warning(red(paste0("UNCERTAIN - '",
-                             x_backup[i], "' -> ", italic(found[1, fullname][[1]]), " (", found[1, mo][[1]], ")")),
+          warning(red(paste0('UNCERTAIN - "',
+                             x_backup[i], '" -> ', italic(found[1, fullname][[1]]), " (", found[1, mo][[1]], ")")),
                              call. = FALSE, immediate. = TRUE)
           next
         }
@@ -647,8 +664,8 @@ exec_as.mo <- function(x, Becker = FALSE, Lancefield = FALSE,
               found <- suppressMessages(suppressWarnings(exec_as.mo(x_strip_collapsed, clear_options = FALSE)))
               if (!is.na(found)) {
                 found <- microorganismsDT[mo == found, ..property][[1]]
-                warning(red(paste0("UNCERTAIN - '",
-                                   z, "' -> ", italic(microorganismsDT[mo == found[1L], fullname][[1]]), " (", found[1L], ")")),
+                warning(red(paste0('UNCERTAIN - "',
+                                   z, '" -> ', italic(microorganismsDT[mo == found[1L], fullname][[1]]), " (", found[1L], ")")),
                                    call. = FALSE, immediate. = TRUE)
                 return(found[1L])
               }
@@ -793,6 +810,21 @@ print.mo <- function(x, ...) {
   x <- as.character(x)
   names(x) <- x_names
   print.default(x, quote = FALSE)
+}
+
+#' @exportMethod summary.mo
+#' @export
+#' @noRd
+summary.mo <- function(object, ...) {
+  # unique and top 1-3
+  x <- object
+  top_3 <- unname(top_freq(freq(x), 3))
+  c("Class" = "mo",
+    "<NA>" = length(x[is.na(x)]),
+    "Unique" = dplyr::n_distinct(x[!is.na(x)]),
+    "#1" = top_3[1],
+    "#2" = top_3[2],
+    "#3" = top_3[3])
 }
 
 #' @exportMethod as.data.frame.mo

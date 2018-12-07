@@ -2,14 +2,20 @@
 
 #### New
 * Function `mo_failures` to review values that could not be coerced to a valid MO code, using `as.mo`. This latter function will now only show a maximum of 25 uncoerced values.
+* Function `mo_renamed` to get a list of all returned values from `as.mo` that have had taxonomic renaming
 
 #### Changed
 * Improvements for `as.mo`:
   * Finds better results when input is in other languages
   * Better handling for subspecies
   * Better handling for *Salmonellae*
+  * There will be looked for uncertain results at default - these results will be returned with a informative warning
+  * Extended manual text about algorithms
 * Function `first_isolate` will now use a column named like "patid" for the patient ID, when this parameter was left blank
-
+* Reduce false positives for `is.rsi.eligible`
+* Summaries of class `mo` will now return the top 3 and the unique count, e.g. using `summary(mo)`
+* Small text updates to summaries of class `rsi` and `mic`
+* Function `as.mo` now prints a progress bar when it takes more than 3 seconds the get results
 
 
 # 0.5.0 (latest stable release)

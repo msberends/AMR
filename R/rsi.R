@@ -39,14 +39,20 @@
 #' barplot(rsi_data) # for frequencies
 #' freq(rsi_data)    # frequency table with informative header
 #'
-#' # fastest way to transform all columns with already valid AB results to class `rsi`:
+#' # using dplyr's mutate
 #' library(dplyr)
+#' septic_patients %>%
+#'   mutate_at(vars(peni:rifa), as.rsi)
+#'
+#' # fastest way to transform all columns with already valid AB results to class `rsi`:
 #' septic_patients %>%
 #'   mutate_if(is.rsi.eligible,
 #'             as.rsi)
 as.rsi <- function(x) {
   if (is.rsi(x)) {
     x
+  } else if (identical(levels(x), c("S", "I", "R"))) {
+    structure(x, class = c('rsi', 'ordered', 'factor'))
   } else {
 
     x <- x %>% unlist()
@@ -102,14 +108,15 @@ is.rsi.eligible <- function(x) {
       | is.numeric(x)
       | is.mo(x)
       | identical(class(x), "Date")
-      | identical(levels(x), c("S", "I", "R"))) {
+      | is.rsi(x)) {
     # no transformation needed
     FALSE
   } else {
     # check all but a-z
-    x <- unique(gsub("[^RSIrsi]+", "", unique(x)))
-    all(x %in% c("R", "I", "S", "", NA_character_)) &
-      !all(x %in% c("", NA_character_))
+    y <- unique(gsub("[^RSIrsi]+", "", unique(x)))
+    !all(y %in% c("", NA_character_)) &
+      all(y %in% c("R", "I", "S", "", NA_character_)) &
+      max(nchar(as.character(x)), na.rm = TRUE) < 8
   }
 }
 
@@ -128,7 +135,7 @@ print.rsi <- function(x, ...) {
 summary.rsi <- function(object, ...) {
   x <- object
   c(
-    "Mode" = 'rsi',
+    "Class" = 'rsi',
     "<NA>" = sum(is.na(x)),
     "Sum S" = sum(x == "S", na.rm = TRUE),
     "Sum IR" = sum(x %in% c("I", "R"), na.rm = TRUE),

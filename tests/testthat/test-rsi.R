@@ -13,7 +13,7 @@ test_that("rsi works", {
 
   expect_equal(suppressWarnings(as.logical(as.rsi("INVALID VALUE"))), NA)
 
-  expect_equal(summary(as.rsi(c("S", "R"))), c("Mode" = 'rsi',
+  expect_equal(summary(as.rsi(c("S", "R"))), c("Class" = "rsi",
                                                "<NA>" = "0",
                                                "Sum S" = "1",
                                                "Sum IR" = "1",

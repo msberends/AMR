@@ -200,12 +200,12 @@ summary.mic <- function(object, ...) {
   n_total <- x %>% length()
   x <- x[!is.na(x)]
   n <- x %>% length()
-  lst <- c('mic',
-           n_total - n,
-           sort(x)[1] %>% as.character(),
-           sort(x)[n] %>% as.character())
-  names(lst) <- c("Mode", "<NA>", "Min.", "Max.")
-  lst
+  c(
+    "Class" = 'mic',
+    "<NA>" = n_total - n,
+    "Min." = sort(x)[1] %>% as.character(),
+    "Max." = sort(x)[n] %>% as.character()
+  )
 }
 
 #' @exportMethod plot.mic

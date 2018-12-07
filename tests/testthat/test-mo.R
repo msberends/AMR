@@ -214,10 +214,10 @@ test_that("as.mo works", {
   expect_equal(as.character(suppressWarnings(as.mo(
     c("Microbacterium paraoxidans",
       "Streptococcus suis (bovis gr)",
-      "Raoultella (here some text) terrigena"), allow_uncertain = TRUE))),
+      "Raoultella (here some text) terrigena")))),
     c("B_MCRBC", "B_STRPTC_SUI", "B_RLTLL_TER"))
 
   # Salmonella (City) are all actually Salmonella enterica spp (City)
-  expect_equal(as.character(suppressMessages(as.mo("Salmonella Goettingen", allow_uncertain = TRUE))),
+  expect_equal(as.character(suppressMessages(as.mo("Salmonella Goettingen"))),
                "B_SLMNL_ENT")
 })

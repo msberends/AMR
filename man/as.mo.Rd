@@ -7,13 +7,13 @@
 \alias{guess_mo}
 \title{Transform to microorganism ID}
 \usage{
-as.mo(x, Becker = FALSE, Lancefield = FALSE, allow_uncertain = FALSE,
+as.mo(x, Becker = FALSE, Lancefield = FALSE, allow_uncertain = TRUE,
   reference_df = NULL)
 
 is.mo(x)
 
 guess_mo(x, Becker = FALSE, Lancefield = FALSE,
-  allow_uncertain = FALSE, reference_df = NULL)
+  allow_uncertain = TRUE, reference_df = NULL)
 }
 \arguments{
 \item{x}{a character vector or a \code{data.frame} with one or two columns}
@@ -26,7 +26,7 @@ guess_mo(x, Becker = FALSE, Lancefield = FALSE,
 
   This excludes \emph{Enterococci} at default (who are in group D), use \code{Lancefield = "all"} to also categorise all \emph{Enterococci} as group D.}
 
-\item{allow_uncertain}{a logical to indicate whether empty results should be checked for only a part of the input string. When results are found, a warning will be given about the uncertainty and the result.}
+\item{allow_uncertain}{a logical to indicate whether the input should be checked for less possible results, see Details}
 
 \item{reference_df}{a \code{data.frame} to use for extra reference when translating \code{x} to a valid \code{mo}. The first column can be any microbial name, code or ID (used in your analysis or organisation), the second column must be a valid \code{mo} as found in the \code{\link{microorganisms}} data set.}
 }
@@ -39,11 +39,11 @@ Use this function to determine a valid microorganism ID (\code{mo}). Determinati
 \details{
 A microbial ID from this package (class: \code{mo}) typically looks like these examples:\cr
 \preformatted{
-  Code                Full name
-  ---------------     --------------------------------------
-  B_KLBSL             Klebsiella
-  B_KLBSL_PNE         Klebsiella pneumoniae
-  B_KLBSL_PNE_RHI     Klebsiella pneumoniae rhinoscleromatis
+  Code              Full name
+  ---------------   --------------------------------------
+  B_KLBSL           Klebsiella
+  B_KLBSL_PNE       Klebsiella pneumoniae
+  B_KLBSL_PNE_RHI   Klebsiella pneumoniae rhinoscleromatis
   |   |    |   |
   |   |    |   |
   |   |    |    ----> subspecies, a 3-4 letter acronym
@@ -62,7 +62,7 @@ This function uses Artificial Intelligence (AI) to help getting fast and logical
   \item{Breakdown of input values: from here it starts to breakdown input values to find possible matches}
 }
 
-A couple of effects because of these rules
+A couple of effects because of these rules:
 \itemize{
   \item{\code{"E. coli"} will return the ID of \emph{Escherichia coli} and not \emph{Entamoeba coli}, although the latter would alphabetically come first}
   \item{\code{"H. influenzae"} will return the ID of \emph{Haemophilus influenzae} and not \emph{Haematobacter influenzae} for the same reason}
@@ -70,6 +70,13 @@ A couple of effects because of these rules
   \item{Something like \code{"stau"} or \code{"S aur"} will return the ID of \emph{Staphylococcus aureus} and not \emph{Staphylococcus auricularis}}
 }
 This means that looking up human pathogenic microorganisms takes less time than looking up human \strong{non}-pathogenic microorganisms.
+
+When using \code{allow_uncertain = TRUE} (which is the default setting), it will use additional rules if all previous AI rules failed to get valid results. Examples:
+\itemize{
+  \item{\code{"Streptococcus group B (known as S. agalactiae)"}. The text between brackets will be removed and a warning will be thrown that the result \emph{Streptococcus group B} (\code{B_STRPTC_GRB}) needs review.}
+  \item{\code{"S. aureus - please mind: MRSA"}. The last word will be stripped, after which the function will try to find a match. If it does not, the second last word will be stripped, etc. Again, a warning will be thrown that the result \emph{Staphylococcus aureus} (\code{B_STPHY_AUR}) needs review.}
+  \item{\code{"D. spartina"}. This is the abbreviation of an old taxonomic name: \emph{Didymosphaeria spartinae} (the last "e" was missing from the input). This fungus was renamed to \emph{Leptosphaeria obiones}, so a warning will be thrown that this result (\code{F_LPTSP_OBI}) needs review.}
+}
 
 \code{guess_mo} is an alias of \code{as.mo}.
 }
@@ -100,6 +107,7 @@ as.mo("staaur")
 as.mo("S. aureus")
 as.mo("S aureus")
 as.mo("Staphylococcus aureus")
+as.mo("Staphylococcus aureus (MRSA)")
 as.mo("MRSA") # Methicillin Resistant S. aureus
 as.mo("VISA") # Vancomycin Intermediate S. aureus
 as.mo("VRSA") # Vancomycin Resistant S. aureus

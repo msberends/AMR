@@ -40,125 +40,125 @@ eucast_exceptional_phenotypes(tbl, country = "EUCAST", ...)
 
 \item{info}{print progress}
 
-\item{amcl}{column name of an antibiotic, see Details}
+\item{amcl}{column name of an antibiotic, see Antibiotics}
 
-\item{amik}{column name of an antibiotic, see Details}
+\item{amik}{column name of an antibiotic, see Antibiotics}
 
-\item{amox}{column name of an antibiotic, see Details}
+\item{amox}{column name of an antibiotic, see Antibiotics}
 
-\item{ampi}{column name of an antibiotic, see Details}
+\item{ampi}{column name of an antibiotic, see Antibiotics}
 
-\item{azit}{column name of an antibiotic, see Details}
+\item{azit}{column name of an antibiotic, see Antibiotics}
 
-\item{aztr}{column name of an antibiotic, see Details}
+\item{aztr}{column name of an antibiotic, see Antibiotics}
 
-\item{cefa}{column name of an antibiotic, see Details}
+\item{cefa}{column name of an antibiotic, see Antibiotics}
 
-\item{cfra}{column name of an antibiotic, see Details}
+\item{cfra}{column name of an antibiotic, see Antibiotics}
 
-\item{cfep}{column name of an antibiotic, see Details}
+\item{cfep}{column name of an antibiotic, see Antibiotics}
 
-\item{cfot}{column name of an antibiotic, see Details}
+\item{cfot}{column name of an antibiotic, see Antibiotics}
 
-\item{cfox}{column name of an antibiotic, see Details}
+\item{cfox}{column name of an antibiotic, see Antibiotics}
 
-\item{cfta}{column name of an antibiotic, see Details}
+\item{cfta}{column name of an antibiotic, see Antibiotics}
 
-\item{cftr}{column name of an antibiotic, see Details}
+\item{cftr}{column name of an antibiotic, see Antibiotics}
 
-\item{cfur}{column name of an antibiotic, see Details}
+\item{cfur}{column name of an antibiotic, see Antibiotics}
 
-\item{chlo}{column name of an antibiotic, see Details}
+\item{chlo}{column name of an antibiotic, see Antibiotics}
 
-\item{cipr}{column name of an antibiotic, see Details}
+\item{cipr}{column name of an antibiotic, see Antibiotics}
 
-\item{clar}{column name of an antibiotic, see Details}
+\item{clar}{column name of an antibiotic, see Antibiotics}
 
-\item{clin}{column name of an antibiotic, see Details}
+\item{clin}{column name of an antibiotic, see Antibiotics}
 
-\item{clox}{column name of an antibiotic, see Details}
+\item{clox}{column name of an antibiotic, see Antibiotics}
 
-\item{coli}{column name of an antibiotic, see Details}
+\item{coli}{column name of an antibiotic, see Antibiotics}
 
-\item{czol}{column name of an antibiotic, see Details}
+\item{czol}{column name of an antibiotic, see Antibiotics}
 
-\item{dapt}{column name of an antibiotic, see Details}
+\item{dapt}{column name of an antibiotic, see Antibiotics}
 
-\item{doxy}{column name of an antibiotic, see Details}
+\item{doxy}{column name of an antibiotic, see Antibiotics}
 
-\item{erta}{column name of an antibiotic, see Details}
+\item{erta}{column name of an antibiotic, see Antibiotics}
 
-\item{eryt}{column name of an antibiotic, see Details}
+\item{eryt}{column name of an antibiotic, see Antibiotics}
 
-\item{fosf}{column name of an antibiotic, see Details}
+\item{fosf}{column name of an antibiotic, see Antibiotics}
 
-\item{fusi}{column name of an antibiotic, see Details}
+\item{fusi}{column name of an antibiotic, see Antibiotics}
 
-\item{gent}{column name of an antibiotic, see Details}
+\item{gent}{column name of an antibiotic, see Antibiotics}
 
-\item{imip}{column name of an antibiotic, see Details}
+\item{imip}{column name of an antibiotic, see Antibiotics}
 
-\item{kana}{column name of an antibiotic, see Details}
+\item{kana}{column name of an antibiotic, see Antibiotics}
 
-\item{levo}{column name of an antibiotic, see Details}
+\item{levo}{column name of an antibiotic, see Antibiotics}
 
-\item{linc}{column name of an antibiotic, see Details}
+\item{linc}{column name of an antibiotic, see Antibiotics}
 
-\item{line}{column name of an antibiotic, see Details}
+\item{line}{column name of an antibiotic, see Antibiotics}
 
-\item{mero}{column name of an antibiotic, see Details}
+\item{mero}{column name of an antibiotic, see Antibiotics}
 
-\item{metr}{column name of an antibiotic. Use \code{NA} to skip a column, like \code{tica = NA}. Non-existing columns will anyway be skipped. See the Antibiotics section for an explanation of the abbreviations.}
+\item{metr}{column name of an antibiotic, see Antibiotics}
 
-\item{mino}{column name of an antibiotic, see Details}
+\item{mino}{column name of an antibiotic, see Antibiotics}
 
-\item{moxi}{column name of an antibiotic, see Details}
+\item{moxi}{column name of an antibiotic, see Antibiotics}
 
-\item{nali}{column name of an antibiotic, see Details}
+\item{nali}{column name of an antibiotic, see Antibiotics}
 
-\item{neom}{column name of an antibiotic, see Details}
+\item{neom}{column name of an antibiotic, see Antibiotics}
 
-\item{neti}{column name of an antibiotic, see Details}
+\item{neti}{column name of an antibiotic, see Antibiotics}
 
-\item{nitr}{column name of an antibiotic, see Details}
+\item{nitr}{column name of an antibiotic, see Antibiotics}
 
-\item{novo}{column name of an antibiotic, see Details}
+\item{novo}{column name of an antibiotic, see Antibiotics}
 
-\item{norf}{column name of an antibiotic, see Details}
+\item{norf}{column name of an antibiotic, see Antibiotics}
 
-\item{oflo}{column name of an antibiotic, see Details}
+\item{oflo}{column name of an antibiotic, see Antibiotics}
 
-\item{peni}{column name of an antibiotic, see Details}
+\item{peni}{column name of an antibiotic, see Antibiotics}
 
-\item{pipe}{column name of an antibiotic, see Details}
+\item{pipe}{column name of an antibiotic, see Antibiotics}
 
-\item{pita}{column name of an antibiotic, see Details}
+\item{pita}{column name of an antibiotic, see Antibiotics}
 
-\item{poly}{column name of an antibiotic, see Details}
+\item{poly}{column name of an antibiotic, see Antibiotics}
 
-\item{qida}{column name of an antibiotic, see Details}
+\item{qida}{column name of an antibiotic, see Antibiotics}
 
-\item{rifa}{column name of an antibiotic, see Details}
+\item{rifa}{column name of an antibiotic, see Antibiotics}
 
-\item{roxi}{column name of an antibiotic, see Details}
+\item{roxi}{column name of an antibiotic, see Antibiotics}
 
-\item{siso}{column name of an antibiotic, see Details}
+\item{siso}{column name of an antibiotic, see Antibiotics}
 
-\item{teic}{column name of an antibiotic, see Details}
+\item{teic}{column name of an antibiotic, see Antibiotics}
 
-\item{tetr}{column name of an antibiotic, see Details}
+\item{tetr}{column name of an antibiotic, see Antibiotics}
 
-\item{tica}{column name of an antibiotic, see Details}
+\item{tica}{column name of an antibiotic, see Antibiotics}
 
-\item{tige}{column name of an antibiotic, see Details}
+\item{tige}{column name of an antibiotic, see Antibiotics}
 
-\item{tobr}{column name of an antibiotic, see Details}
+\item{tobr}{column name of an antibiotic, see Antibiotics}
 
-\item{trim}{column name of an antibiotic, see Details}
+\item{trim}{column name of an antibiotic, see Antibiotics}
 
-\item{trsu}{column name of an antibiotic, see Details}
+\item{trsu}{column name of an antibiotic, see Antibiotics}
 
-\item{vanc}{column name of an antibiotic, see Details}
+\item{vanc}{column name of an antibiotic, see Antibiotics}
 
 \item{col_bactid}{deprecated, use \code{col_mo} instead.}
 
@@ -174,6 +174,8 @@ Determine which isolates are multidrug-resistant organisms (MDRO) according to c
 When \code{country} will be left blank, guidelines will be taken from EUCAST Expert Rules Version 3.1 "Intrinsic Resistance and Exceptional Phenotypes Tables" (\url{http://www.eucast.org/fileadmin/src/media/PDFs/EUCAST_files/Expert_Rules/Expert_rules_intrinsic_exceptional_V3.1.pdf}).
 }
 \section{Antibiotics}{
+
+To define antibiotics column names, input a text (case-insensitive) or use \code{NULL} to skip a column (e.g. \code{tica = NULL}). Non-existing columns will anyway be skipped with a warning.
 
 Abbrevations of the column containing antibiotics in the form: \strong{abbreviation}: generic name (\emph{ATC code})
 
