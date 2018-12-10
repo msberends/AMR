@@ -10,17 +10,22 @@
 frequency_tbl(x, ..., sort.count = TRUE,
   nmax = getOption("max.print.freq"), na.rm = TRUE, row.names = TRUE,
   markdown = !interactive(), digits = 2, quote = FALSE,
-  header = !markdown, title = NULL, na = "<NA>", sep = " ")
+  header = !markdown, title = NULL, na = "<NA>", sep = " ",
+  decimal.mark = getOption("OutDec"), big.mark = ifelse(decimal.mark !=
+  ",", ",", "."))
 
 freq(x, ..., sort.count = TRUE, nmax = getOption("max.print.freq"),
   na.rm = TRUE, row.names = TRUE, markdown = !interactive(),
   digits = 2, quote = FALSE, header = !markdown, title = NULL,
-  na = "<NA>", sep = " ")
+  na = "<NA>", sep = " ", decimal.mark = getOption("OutDec"),
+  big.mark = ifelse(decimal.mark != ",", ",", "."))
 
 top_freq(f, n)
 
 \method{print}{frequency_tbl}(x, nmax = getOption("max.print.freq",
-  default = 15), markdown = !interactive(), header = !markdown, ...)
+  default = 15), markdown = !interactive(), header = !markdown,
+  decimal.mark = getOption("OutDec"), big.mark = ifelse(decimal.mark !=
+  ",", ",", "."), ...)
 }
 \arguments{
 \item{x}{vector of any class or a \code{\link{data.frame}}, \code{\link{tibble}} (may contain a grouping variable) or \code{\link{table}}}
@@ -48,6 +53,14 @@ top_freq(f, n)
 \item{na}{a character string to should be used to show empty (\code{NA}) values (only useful when \code{na.rm = FALSE})}
 
 \item{sep}{a character string to separate the terms when selecting multiple columns}
+
+\item{decimal.mark}{%
+    used for prettying (longish) numerical and complex sequences.
+    Passed to \code{\link{prettyNum}}: that help page explains the details.}
+
+\item{big.mark}{%
+    used for prettying (longish) numerical and complex sequences.
+    Passed to \code{\link{prettyNum}}: that help page explains the details.}
 
 \item{f}{a frequency table}
 

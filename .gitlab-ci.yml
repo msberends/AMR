@@ -5,6 +5,7 @@
 # how the Docker+R images work: https://hub.docker.com/r/rocker/r-ver/
 R 3:
     image: rocker/r-ver:3 # test on R v3.*.*
+    allow_failure: true
     script:
     - apt-get update
     # install dependencies for package
@@ -14,13 +15,15 @@ R 3:
     # remove vignettes folder and get VignetteBuilder field out of DESCRIPTION file
     - rm -rf vignettes
     - Rscript -e 'd <- read.dcf("DESCRIPTION"); d[, colnames(d) == "VignetteBuilder"] <- NA; write.dcf(d, "DESCRIPTION")'
+    # set environmental variable
+    - Rscript -e 'Sys.setenv(NOT_CRAN = "true")'
     # build package
     - R CMD build . --no-build-vignettes --no-manual
     - PKG_FILE_NAME=$(ls -1t *.tar.gz | head -n 1)
     - R CMD check "${PKG_FILE_NAME}" --no-build-vignettes --no-manual --as-cran
     # code coverage
     - apt-get install --yes git
-    - Rscript -e "cc <- covr::package_coverage(); covr::codecov(coverage = cc, token = '50ffa0aa-fee0-4f8b-a11d-8c7edc6d32ca'); cat('Code coverage:', covr::percent_coverage(cc))"
+    - Rscript -e 'cc <- covr::package_coverage(); covr::codecov(coverage = cc, token = "50ffa0aa-fee0-4f8b-a11d-8c7edc6d32ca"); cat("Code coverage:", covr::percent_coverage(cc))'
     coverage: '/Code coverage: \d+\.\d+/'
     artifacts:
       paths:

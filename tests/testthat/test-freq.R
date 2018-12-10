@@ -26,8 +26,9 @@ test_that("frequency table works", {
   expect_output(print(freq(septic_patients$age, markdown = TRUE, title = "TITLE")))
 
   # character
-  expect_output(print(freq(septic_patients$mo)))
   expect_output(suppressWarnings(print(freq(microorganisms$fullname))))
+  # mo
+  expect_output(print(freq(septic_patients$mo)))
   # integer
   expect_output(print(freq(septic_patients$age)))
   # date

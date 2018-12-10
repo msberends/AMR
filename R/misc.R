@@ -27,7 +27,10 @@ addin_insert_like <- function() {
 }
 
 # No export, no Rd
-percent <- function(x, round = 1, force_zero = FALSE, ...) {
+percent <- function(x, round = 1, force_zero = FALSE, decimal.mark = getOption("OutDec"), ...) {
+
+  decimal.mark.options <- getOption("OutDec")
+  options(OutDec = ".")
 
   # https://stackoverflow.com/a/12688836/4575331
   round2 <- function(x, n) (trunc((abs(x) * 10 ^ n) + 0.5) / 10 ^ n) * sign(x)
@@ -46,6 +49,10 @@ percent <- function(x, round = 1, force_zero = FALSE, ...) {
   }
   pct <- base::paste0(val, "%")
   pct[pct %in% c("NA%", "NaN%")] <- NA_character_
+  if (decimal.mark != ".") {
+    pct <- gsub(".", decimal.mark, pct, fixed = TRUE)
+  }
+  options(OutDec = decimal.mark.options)
   pct
 }
 

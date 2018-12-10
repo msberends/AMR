@@ -9,13 +9,17 @@
   * Finds better results when input is in other languages
   * Better handling for subspecies
   * Better handling for *Salmonellae*
-  * There will be looked for uncertain results at default - these results will be returned with a informative warning
-  * Extended manual text about algorithms
+  * There will be looked for uncertain results at default - these results will be returned with an informative warning
+  * Manual now contains more info about the algorithms
+  * Progress bar will be shown when it takes more than 3 seconds to get results
 * Function `first_isolate` will now use a column named like "patid" for the patient ID, when this parameter was left blank
 * Reduce false positives for `is.rsi.eligible`
 * Summaries of class `mo` will now return the top 3 and the unique count, e.g. using `summary(mo)`
 * Small text updates to summaries of class `rsi` and `mic`
-* Function `as.mo` now prints a progress bar when it takes more than 3 seconds the get results
+* Frequency tables (`freq` function):
+  * Added header info for class `mo` to show unique count of families, genera and species
+  * Now honours the `decimal.mark` setting, which just like `format` defaults to `getOption("OutDec")`
+  * The new `big.mark` parameter will at default be `","` when `decimal.mark = "."` and `"."` otherwise
 
 
 # 0.5.0 (latest stable release)
