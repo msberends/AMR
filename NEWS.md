@@ -12,6 +12,9 @@
   * There will be looked for uncertain results at default - these results will be returned with an informative warning
   * Manual now contains more info about the algorithms
   * Progress bar will be shown when it takes more than 3 seconds to get results
+* Function `first_isolate`:
+  * Will now use a column named like "patid" for the patient ID (parameter `col_patientid`), when this parameter was left blank
+  * Will now use a column named like "key(...)ab" or "key(...)antibiotics" for the key antibiotics (parameter `col_keyantibiotics`), when this parameter was left blank
 * Function `first_isolate` will now use a column named like "patid" for the patient ID, when this parameter was left blank
 * Reduce false positives for `is.rsi.eligible`
 * Summaries of class `mo` will now return the top 3 and the unique count, e.g. using `summary(mo)`

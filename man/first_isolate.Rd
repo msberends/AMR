@@ -21,7 +21,7 @@ first_isolate(tbl, col_date = NULL, col_patient_id = NULL,
 
 \item{col_date}{column name of the result date (or date that is was received on the lab), defaults to the first column of class \code{Date}}
 
-\item{col_patient_id}{column name of the unique IDs of the patients, defaults to the first column that starts with 'patient' (case insensitive)}
+\item{col_patient_id}{column name of the unique IDs of the patients, defaults to the first column that starts with 'patient' or 'patid' (case insensitive)}
 
 \item{col_mo}{column name of the unique IDs of the microorganisms (see \code{\link{mo}}), defaults to the first column of class \code{mo}. Values will be coerced using \code{\link{as.mo}}.}
 
@@ -31,7 +31,7 @@ first_isolate(tbl, col_date = NULL, col_patient_id = NULL,
 
 \item{col_icu}{column name of the logicals (\code{TRUE}/\code{FALSE}) whether a ward or department is an Intensive Care Unit (ICU)}
 
-\item{col_keyantibiotics}{column name of the key antibiotics to determine first \emph{weighted} isolates, see \code{\link{key_antibiotics}}. Supports tidyverse-like quotation.}
+\item{col_keyantibiotics}{column name of the key antibiotics to determine first \emph{weighted} isolates, see \code{\link{key_antibiotics}}. Supports tidyverse-like quotation. Defaults to the first column that starts with 'key' followed by 'ab' or 'antibiotics' (case insensitive). Use \code{col_keyantibiotics = FALSE} to prevent this.}
 
 \item{episode_days}{episode in days after which a genus/species combination will be determined as 'first isolate' again}
 

@@ -21,12 +21,12 @@
 #' Determine first (weighted) isolates of all microorganisms of every patient per episode and (if needed) per specimen type.
 #' @param tbl a \code{data.frame} containing isolates.
 #' @param col_date column name of the result date (or date that is was received on the lab), defaults to the first column of class \code{Date}
-#' @param col_patient_id column name of the unique IDs of the patients, defaults to the first column that starts with 'patient' (case insensitive)
+#' @param col_patient_id column name of the unique IDs of the patients, defaults to the first column that starts with 'patient' or 'patid' (case insensitive)
 #' @param col_mo column name of the unique IDs of the microorganisms (see \code{\link{mo}}), defaults to the first column of class \code{mo}. Values will be coerced using \code{\link{as.mo}}.
 #' @param col_testcode column name of the test codes. Use \code{col_testcode = NA} to \strong{not} exclude certain test codes (like test codes for screening). In that case \code{testcodes_exclude} will be ignored. Supports tidyverse-like quotation.
 #' @param col_specimen column name of the specimen type or group
 #' @param col_icu column name of the logicals (\code{TRUE}/\code{FALSE}) whether a ward or department is an Intensive Care Unit (ICU)
-#' @param col_keyantibiotics column name of the key antibiotics to determine first \emph{weighted} isolates, see \code{\link{key_antibiotics}}. Supports tidyverse-like quotation.
+#' @param col_keyantibiotics column name of the key antibiotics to determine first \emph{weighted} isolates, see \code{\link{key_antibiotics}}. Supports tidyverse-like quotation. Defaults to the first column that starts with 'key' followed by 'ab' or 'antibiotics' (case insensitive). Use \code{col_keyantibiotics = FALSE} to prevent this.
 #' @param episode_days episode in days after which a genus/species combination will be determined as 'first isolate' again
 #' @param testcodes_exclude character vector with test codes that should be excluded (case-insensitive)
 #' @param icu_exclude logical whether ICU isolates should be excluded
@@ -158,20 +158,44 @@ first_isolate <- function(tbl,
     col_mo <- colnames(tbl)[lapply(tbl, class) == "mo"][1]
     message("NOTE: Using column `", col_mo, "` as input for `col_mo`.")
   }
+
   # -- date
-  if (is.null(col_date) & "Date" %in% lapply(tbl, class)) {
-    col_date <- colnames(tbl)[lapply(tbl, class) == "Date"][1]
-    message("NOTE: Using column `", col_date, "` as input for `col_date`.")
+  if (is.null(col_date)) {
+    for (i in 1:ncol(tbl)) {
+      if ("Date" %in% class(tbl %>% pull(i)) | "POSIXct" %in% class(tbl %>% pull(i))) {
+        col_date <- colnames(tbl)[i]
+        message("NOTE: Using column `", col_date, "` as input for `col_date`.")
+        break
+      }
+    }
   }
+  if (is.null(col_date)) {
+    stop("`col_date` must be set.", call. = FALSE)
+  }
+  # convert to Date
+  tbl[, col_date] <- as.Date(tbl[, col_date])
+
   # -- patient id
   if (is.null(col_patient_id) & any(colnames(tbl) %like% "^(patient|patid)")) {
     col_patient_id <- colnames(tbl)[colnames(tbl) %like% "^(patient|patid)"][1]
     message("NOTE: Using column `", col_patient_id, "` as input for `col_patient_id`.")
   }
+  if (is.null(col_patient_id)) {
+    stop("`col_patient_id` must be set.", call. = FALSE)
+  }
 
-  # bactid OR genus+species must be available
+  # -- key antibiotics
+  if (is.null(col_keyantibiotics) & any(colnames(tbl) %like% "^key.*(ab|antibiotics)")) {
+    col_keyantibiotics <- colnames(tbl)[colnames(tbl) %like% "^key.*(ab|antibiotics)"][1]
+    message("NOTE: Using column `", col_keyantibiotics, "` as input for `col_keyantibiotics`.")
+  }
+  if (isFALSE(col_keyantibiotics)) {
+    col_keyantibiotics <- NULL
+  }
+
+  # col_mo OR col_genus+col_species must be available
   if (is.null(col_mo) & (is.null(col_genus) | is.null(col_species))) {
-    stop('`col_mo` or both `col_genus` and `col_species` must be available.')
+    stop("`col_mo` or both `col_genus` and `col_species` must be set.", call. = FALSE)
   }
 
 

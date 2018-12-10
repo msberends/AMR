@@ -11,7 +11,7 @@ R 3:
     # install dependencies for package
     - apt-get install --yes --no-install-recommends libxml2-dev libssl-dev libcurl4-openssl-dev zlib1g-dev
     - Rscript -e 'install.packages(c("devtools", "rlang"))'
-    - Rscript -e 'devtools::install_deps(dependencies = c("Depends", "Imports", "Suggests"), repos = "https://cran.rstudio.com")'
+    - Rscript -e 'devtools::install_dev_deps(repos = "https://cran.rstudio.com")'
     # remove vignettes folder and get VignetteBuilder field out of DESCRIPTION file
     - rm -rf vignettes
     - Rscript -e 'd <- read.dcf("DESCRIPTION"); d[, colnames(d) == "VignetteBuilder"] <- NA; write.dcf(d, "DESCRIPTION")'
