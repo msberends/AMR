@@ -275,7 +275,8 @@ mo_year <- function(x, ...) {
 #' @export
 mo_taxonomy <- function(x, ...) {
   x <- AMR::as.mo(x, ...)
-  base::list(subkingdom = mo_subkingdom(x),
+  base::list(kingdom = mo_kingdom(x),
+             subkingdom = mo_subkingdom(x),
              phylum = mo_phylum(x),
              class = mo_class(x),
              order = mo_order(x),

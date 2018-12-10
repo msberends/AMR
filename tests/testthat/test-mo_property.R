@@ -15,10 +15,12 @@ test_that("mo_property works", {
   expect_equal(mo_gramstain("E. coli", language = "en"), "Gram negative")
   expect_equal(mo_TSN("E. coli"), 285)
   expect_equal(class(mo_taxonomy("E. coli")), "list")
-  expect_equal(names(mo_taxonomy("E. coli")), c("subkingdom", "phylum", "class", "order",
+  expect_equal(names(mo_taxonomy("E. coli")), c("kingdom", "subkingdom", "phylum", "class", "order",
                                                 "family", "genus", "species", "subspecies"))
 
   expect_equal(mo_ref("E. coli"), "Castellani and Chalmers, 1919")
+  expect_equal(mo_authors("E. coli"), "Castellani and Chalmers")
+  expect_equal(mo_year("E. coli"), 1919)
 
   expect_equal(mo_shortname("MRSA"), "S. aureus")
   expect_equal(mo_shortname("MRSA", Becker = TRUE), "S. aureus")
