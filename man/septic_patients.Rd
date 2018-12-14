@@ -12,9 +12,9 @@
   \item{\code{ward_clinical}}{logical to determine if ward is a regular clinical ward}
   \item{\code{ward_outpatient}}{logical to determine if ward is an outpatient clinic}
   \item{\code{age}}{age of the patient}
-  \item{\code{sex}}{sex of the patient}
+  \item{\code{gender}}{gender of the patient}
   \item{\code{patient_id}}{ID of the patient, first 10 characters of an SHA hash containing irretrievable information}
-  \item{\code{mo}}{ID of microorganism, see \code{\link{microorganisms}}}
+  \item{\code{mo}}{ID of microorganism created with \code{\link{as.mo}}, see also \code{\link{microorganisms}}}
   \item{\code{peni:rifa}}{40 different antibiotics with class \code{rsi} (see \code{\link{as.rsi}}); these column names occur in \code{\link{antibiotics}} data set and can be translated with \code{\link{abname}}}
 }}
 \usage{

@@ -43,7 +43,7 @@
 #' count_R(septic_patients$amox)
 #' count_IR(septic_patients$amox)
 #'
-#' # Or susceptibile isolates
+#' # Or susceptible isolates
 #' count_S(septic_patients$amox)
 #' count_SI(septic_patients$amox)
 #'

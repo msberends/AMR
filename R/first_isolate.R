@@ -205,10 +205,6 @@ first_isolate <- function(tbl,
       stop('Please check tbl for existance.')
     }
 
-    if (is.na(column)) {
-      column <- NULL
-    }
-
     if (!is.null(column)) {
       if (!(column %in% colnames(tblname))) {
         stop('Column `', column, '` not found.')

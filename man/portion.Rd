@@ -155,7 +155,7 @@ my_table \%>\%
 }
 }
 \seealso{
-\code{\link[AMR]{count}_*} to count resistant and susceptibile isolates.
+\code{\link[AMR]{count}_*} to count resistant and susceptible isolates.
 }
 \keyword{antibiotics}
 \keyword{isolate}

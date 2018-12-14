@@ -52,7 +52,7 @@
 #' @source \strong{M39 Analysis and Presentation of Cumulative Antimicrobial Susceptibility Test Data, 4th Edition}, 2014, \emph{Clinical and Laboratory Standards Institute (CLSI)}. \url{https://clsi.org/standards/products/microbiology/documents/m39/}.
 #'
 #' Wickham H. \strong{Tidy Data.} The Journal of Statistical Software, vol. 59, 2014. \url{http://vita.had.co.nz/papers/tidy-data.html}
-#' @seealso \code{\link[AMR]{count}_*} to count resistant and susceptibile isolates.
+#' @seealso \code{\link[AMR]{count}_*} to count resistant and susceptible isolates.
 #' @keywords resistance susceptibility rsi_df rsi antibiotics isolate isolates
 #' @return Double or, when \code{as_percent = TRUE}, a character.
 #' @rdname portion

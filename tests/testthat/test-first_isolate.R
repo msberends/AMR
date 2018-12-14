@@ -17,10 +17,11 @@ test_that("first isolates work", {
     suppressWarnings(
       sum(
         first_isolate(tbl = septic_patients %>% mutate(keyab = key_antibiotics(.)),
-                      col_date = "date",
-                      col_patient_id = "patient_id",
-                      col_mo = "mo",
-                      col_keyantibiotics = "keyab",
+                      # let syntax determine these automatically:
+                      # col_date = "date",
+                      # col_patient_id = "patient_id",
+                      # col_mo = "mo",
+                      # col_keyantibiotics = "keyab",
                       type = "keyantibiotics",
                       info = TRUE),
         na.rm = TRUE)),
