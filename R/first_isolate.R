@@ -172,8 +172,8 @@ first_isolate <- function(tbl,
   if (is.null(col_date)) {
     stop("`col_date` must be set.", call. = FALSE)
   }
-  # convert to Date
-  tbl[, col_date] <- as.Date(tbl[, col_date])
+  # convert to Date (pipes for supporting tibbles too)
+  tbl[, col_date] <- tbl %>% pull(col_date) %>% as.Date()
 
   # -- patient id
   if (is.null(col_patient_id) & any(colnames(tbl) %like% "^(patient|patid)")) {

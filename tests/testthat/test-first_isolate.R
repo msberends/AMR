@@ -26,6 +26,20 @@ test_that("first isolates work", {
                       info = TRUE),
         na.rm = TRUE)),
     1411)
+  # should be same for tibbles
+  expect_equal(
+    suppressWarnings(
+      sum(
+        first_isolate(tbl = septic_patients %>% dplyr::as_tibble() %>% mutate(keyab = key_antibiotics(.)),
+                      # let syntax determine these automatically:
+                      # col_date = "date",
+                      # col_patient_id = "patient_id",
+                      # col_mo = "mo",
+                      # col_keyantibiotics = "keyab",
+                      type = "keyantibiotics",
+                      info = TRUE),
+        na.rm = TRUE)),
+    1411)
   # and 1435 when not ignoring I
   expect_equal(
     suppressWarnings(
