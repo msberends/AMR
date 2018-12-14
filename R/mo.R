@@ -622,12 +622,12 @@ exec_as.mo <- function(x, Becker = FALSE, Lancefield = FALSE,
       # check for uncertain results ----
       if (allow_uncertain == TRUE) {
 
-        uncertain_fn <- function(x_backup, x_trimmed, x_withspaces, x_withspaces_start) {
+        uncertain_fn <- function(a.x_backup, b.x_trimmed, c.x_withspaces, d.x_withspaces_start, e.x) {
           # (1) look again for old taxonomic names, now for G. species ----
-          found <- microorganisms.oldDT[name %like% x_withspaces
-                                        | name %like% x_withspaces_start
-                                        | name %like% x,]
-          if (NROW(found) > 0 & nchar(x_trimmed) >= 6) {
+          found <- microorganisms.oldDT[name %like% c.x_withspaces
+                                        | name %like% d.x_withspaces_start
+                                        | name %like% e.x,]
+          if (NROW(found) > 0 & nchar(b.x_trimmed) >= 6) {
             if (property == "ref") {
               # when property is "ref" (which is the case in mo_ref, mo_authors and mo_year), return the old value, so:
               # mo_ref("Chlamydia psittaci) = "Page, 1968" (with warning)
@@ -637,7 +637,7 @@ exec_as.mo <- function(x, Becker = FALSE, Lancefield = FALSE,
               x <- microorganismsDT[tsn == found[1, tsn_new], ..property][[1]]
             }
             warning(red(paste0('UNCERTAIN - "',
-                               x_backup, '" -> ', italic(found[1, name]))),
+                               a.x_backup, '" -> ', italic(found[1, name]))),
                     call. = FALSE, immediate. = FALSE)
             notes <<- c(notes,
                         renamed_note(name_old = found[1, name],
@@ -649,39 +649,38 @@ exec_as.mo <- function(x, Becker = FALSE, Lancefield = FALSE,
           }
 
           # (2) strip values between brackets ----
-          x_backup_stripped <- gsub("( [(].*[)])", "", x_backup)
-          x_backup_stripped <- trimws(gsub("  ", " ", x_backup_stripped, fixed = TRUE))
-          found <- suppressMessages(suppressWarnings(exec_as.mo(x_backup_stripped, clear_options = FALSE)))
-          if (!is.na(found) & nchar(x_trimmed) >= 6) {
+          a.x_backup_stripped <- gsub("( [(].*[)])", "", a.x_backup)
+          a.x_backup_stripped <- trimws(gsub("  ", " ", a.x_backup_stripped, fixed = TRUE))
+          found <- suppressMessages(suppressWarnings(exec_as.mo(a.x_backup_stripped, clear_options = FALSE, allow_uncertain = FALSE)))
+          if (!is.na(found) & nchar(b.x_trimmed) >= 6) {
             found <- microorganismsDT[mo == found, ..property][[1]]
             warning(red(paste0('UNCERTAIN - "',
-                               x_backup, '" -> ', italic(microorganismsDT[mo == found[1L], fullname][[1]]), " (", found[1L], ")")),
+                               a.x_backup, '" -> ', italic(microorganismsDT[mo == found[1L], fullname][[1]]), " (", found[1L], ")")),
                     call. = FALSE, immediate. = FALSE)
             return(found[1L])
           }
 
           # (3) try to strip off one element and check the remains ----
-          look_for_part <- function(z) {
-            x_strip <- z %>% strsplit(" ") %>% unlist()
-            if (length(x_strip) > 1 & nchar(x_trimmed) >= 6) {
-              for (i in 1:(length(x_strip) - 1)) {
-                x_strip_collapsed <- paste(x_strip[1:(length(x_strip) - i)], collapse = " ")
-                found <- suppressMessages(suppressWarnings(exec_as.mo(x_strip_collapsed, clear_options = FALSE)))
-                if (!is.na(found)) {
-                  found <- microorganismsDT[mo == found, ..property][[1]]
-                  warning(red(paste0('UNCERTAIN - "',
-                                     z, '" -> ', italic(microorganismsDT[mo == found[1L], fullname][[1]]), " (", found[1L], ")")),
-                          call. = FALSE, immediate. = FALSE)
-                  return(found[1L])
-                }
+          x_strip <- a.x_backup %>% strsplit(" ") %>% unlist()
+          if (length(x_strip) > 1 & nchar(b.x_trimmed) >= 6) {
+            for (i in 1:(length(x_strip) - 1)) {
+              x_strip_collapsed <- paste(x_strip[1:(length(x_strip) - i)], collapse = " ")
+              found <- suppressMessages(suppressWarnings(exec_as.mo(x_strip_collapsed, clear_options = FALSE, allow_uncertain = FALSE)))
+              if (!is.na(found)) {
+                found <- microorganismsDT[mo == found, ..property][[1]]
+                warning(red(paste0('UNCERTAIN - "',
+                                   a.x_backup, '" -> ', italic(microorganismsDT[mo == found[1L], fullname][[1]]), " (", found[1L], ")")),
+                        call. = FALSE, immediate. = FALSE)
+                return(found[1L])
               }
             }
-            return(NA_character_)
           }
-          return(look_for_part(x_backup))
+
+          # didn't found in uncertain results too
+          return(NA_character_)
         }
 
-        x[i] <- uncertain_fn(x_backup[i], x_trimmed[i], x_withspaces[i], x_withspaces_start[i])
+        x[i] <- uncertain_fn(x_backup[i], x_trimmed[i], x_withspaces[i], x_withspaces_start[i], x[i])
         if (!is.na(x[i])) {
           next
         }
@@ -701,10 +700,11 @@ exec_as.mo <- function(x, Becker = FALSE, Lancefield = FALSE,
       warning(n_distinct(failures), " different values could not be coerced to a valid MO code. See mo_failures() to review them.",
               call. = FALSE)
     } else {
-      warning("These ", length(failures) , " values could not be coerced to a valid MO code: ",
-              paste('"', unique(failures), '"', sep = "", collapse = ', '),
-              ". See mo_failures() to review them.",
-              call. = FALSE)
+      warning(red(paste0("These ", length(failures) , " values could not be coerced to a valid MO code: ",
+                         paste('"', unique(failures), '"', sep = "", collapse = ', '),
+                         ". See mo_failures() to review them.")),
+              call. = FALSE,
+              immediate. = FALSE)
     }
   }
 
