@@ -12,6 +12,7 @@
   * There will be looked for uncertain results at default - these results will be returned with an informative warning
   * Manual now contains more info about the algorithms
   * Progress bar will be shown when it takes more than 3 seconds to get results
+  * Support for formatted console text
 * Function `first_isolate`:
   * Will now use a column named like "patid" for the patient ID (parameter `col_patientid`), when this parameter was left blank
   * Will now use a column named like "key(...)ab" or "key(...)antibiotics" for the key antibiotics (parameter `col_keyantibiotics`), when this parameter was left blank
