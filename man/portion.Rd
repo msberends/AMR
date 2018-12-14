@@ -59,7 +59,7 @@ These functions can be used to calculate the (co-)resistance of microbial isolat
 \details{
 \strong{Remember that you should filter your table to let it contain only first isolates!} Use \code{\link{first_isolate}} to determine them in your data set.
 
-These functions are not meant to count isolates, but to calculate the portion of resistance/susceptibility. If a column has been transformed with \code{\link{as.rsi}}, just use e.g. \code{isolates[isolates == "R"]} to get the resistant ones. You could then calculate the \code{\link{length}} of it.
+These functions are not meant to count isolates, but to calculate the portion of resistance/susceptibility. Use the \code{\link[AMR]{count}} functions to count isolates. \emph{Low counts can infuence the outcome - these \code{portion} functions may camouflage this, since they only return the portion albeit being dependent on the \code{minimum} parameter.}
 
 \code{portion_df} takes any variable from \code{data} that has an \code{"rsi"} class (created with \code{\link{as.rsi}}) and calculates the portions R, I and S. The resulting \emph{tidy data} (see Source) \code{data.frame} will have three rows (S/I/R) and a column for each variable with class \code{"rsi"}.
 

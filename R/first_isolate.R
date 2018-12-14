@@ -23,10 +23,10 @@
 #' @param col_date column name of the result date (or date that is was received on the lab), defaults to the first column of class \code{Date}
 #' @param col_patient_id column name of the unique IDs of the patients, defaults to the first column that starts with 'patient' or 'patid' (case insensitive)
 #' @param col_mo column name of the unique IDs of the microorganisms (see \code{\link{mo}}), defaults to the first column of class \code{mo}. Values will be coerced using \code{\link{as.mo}}.
-#' @param col_testcode column name of the test codes. Use \code{col_testcode = NA} to \strong{not} exclude certain test codes (like test codes for screening). In that case \code{testcodes_exclude} will be ignored. Supports tidyverse-like quotation.
+#' @param col_testcode column name of the test codes. Use \code{col_testcode = NULL} to \strong{not} exclude certain test codes (like test codes for screening). In that case \code{testcodes_exclude} will be ignored.
 #' @param col_specimen column name of the specimen type or group
 #' @param col_icu column name of the logicals (\code{TRUE}/\code{FALSE}) whether a ward or department is an Intensive Care Unit (ICU)
-#' @param col_keyantibiotics column name of the key antibiotics to determine first \emph{weighted} isolates, see \code{\link{key_antibiotics}}. Supports tidyverse-like quotation. Defaults to the first column that starts with 'key' followed by 'ab' or 'antibiotics' (case insensitive). Use \code{col_keyantibiotics = FALSE} to prevent this.
+#' @param col_keyantibiotics column name of the key antibiotics to determine first \emph{weighted} isolates, see \code{\link{key_antibiotics}}. Defaults to the first column that starts with 'key' followed by 'ab' or 'antibiotics' (case insensitive). Use \code{col_keyantibiotics = FALSE} to prevent this.
 #' @param episode_days episode in days after which a genus/species combination will be determined as 'first isolate' again
 #' @param testcodes_exclude character vector with test codes that should be excluded (case-insensitive)
 #' @param icu_exclude logical whether ICU isolates should be excluded
@@ -187,7 +187,7 @@ first_isolate <- function(tbl,
   # -- key antibiotics
   if (is.null(col_keyantibiotics) & any(colnames(tbl) %like% "^key.*(ab|antibiotics)")) {
     col_keyantibiotics <- colnames(tbl)[colnames(tbl) %like% "^key.*(ab|antibiotics)"][1]
-    message("NOTE: Using column `", col_keyantibiotics, "` as input for `col_keyantibiotics`.")
+    message("NOTE: Using column `", col_keyantibiotics, "` as input for `col_keyantibiotics`. Use col_keyantibiotics = FALSE to prevent this.")
   }
   if (isFALSE(col_keyantibiotics)) {
     col_keyantibiotics <- NULL
@@ -203,6 +203,10 @@ first_isolate <- function(tbl,
   check_columns_existance <- function(column, tblname = tbl) {
     if (NROW(tblname) <= 1 | NCOL(tblname) <= 1) {
       stop('Please check tbl for existance.')
+    }
+
+    if (is.na(column)) {
+      column <- NULL
     }
 
     if (!is.null(column)) {

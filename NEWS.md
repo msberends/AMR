@@ -15,6 +15,7 @@
 * Function `first_isolate`:
   * Will now use a column named like "patid" for the patient ID (parameter `col_patientid`), when this parameter was left blank
   * Will now use a column named like "key(...)ab" or "key(...)antibiotics" for the key antibiotics (parameter `col_keyantibiotics`), when this parameter was left blank
+* A note to the manual pages of the `portion` functions, that low counts can infuence the outcome and that the `portion` functions may camouflage this, since they only return the portion (albeit being dependent on the `minimum` parameter)
 * Function `mo_taxonomy` now contains the kingdom too
 * Function `first_isolate` will now use a column named like "patid" for the patient ID, when this parameter was left blank
 * Reduce false positives for `is.rsi.eligible`

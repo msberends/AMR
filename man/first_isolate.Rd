@@ -25,13 +25,13 @@ first_isolate(tbl, col_date = NULL, col_patient_id = NULL,
 
 \item{col_mo}{column name of the unique IDs of the microorganisms (see \code{\link{mo}}), defaults to the first column of class \code{mo}. Values will be coerced using \code{\link{as.mo}}.}
 
-\item{col_testcode}{column name of the test codes. Use \code{col_testcode = NA} to \strong{not} exclude certain test codes (like test codes for screening). In that case \code{testcodes_exclude} will be ignored. Supports tidyverse-like quotation.}
+\item{col_testcode}{column name of the test codes. Use \code{col_testcode = NULL} to \strong{not} exclude certain test codes (like test codes for screening). In that case \code{testcodes_exclude} will be ignored.}
 
 \item{col_specimen}{column name of the specimen type or group}
 
 \item{col_icu}{column name of the logicals (\code{TRUE}/\code{FALSE}) whether a ward or department is an Intensive Care Unit (ICU)}
 
-\item{col_keyantibiotics}{column name of the key antibiotics to determine first \emph{weighted} isolates, see \code{\link{key_antibiotics}}. Supports tidyverse-like quotation. Defaults to the first column that starts with 'key' followed by 'ab' or 'antibiotics' (case insensitive). Use \code{col_keyantibiotics = FALSE} to prevent this.}
+\item{col_keyantibiotics}{column name of the key antibiotics to determine first \emph{weighted} isolates, see \code{\link{key_antibiotics}}. Defaults to the first column that starts with 'key' followed by 'ab' or 'antibiotics' (case insensitive). Use \code{col_keyantibiotics = FALSE} to prevent this.}
 
 \item{episode_days}{episode in days after which a genus/species combination will be determined as 'first isolate' again}
 
