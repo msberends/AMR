@@ -316,7 +316,7 @@ frequency_tbl <- function(x,
     }
   }
 
-  if (NROW(x) > 0) {
+  if ((length(NAs) + length(x) > 0) > 0) {
     na_txt <- paste0(NAs %>% length() %>% format(decimal.mark = decimal.mark, big.mark = big.mark), ' = ',
                      (NAs %>% length() / (NAs %>% length() + x %>% length())) %>% percent(force_zero = TRUE, round = digits, decimal.mark = decimal.mark) %>%
                        sub('NaN', '0', ., fixed = TRUE))

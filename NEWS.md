@@ -25,6 +25,7 @@
   * Added header info for class `mo` to show unique count of families, genera and species
   * Now honours the `decimal.mark` setting, which just like `format` defaults to `getOption("OutDec")`
   * The new `big.mark` parameter will at default be `","` when `decimal.mark = "."` and `"."` otherwise
+  * Fix for header text where all observations are `NA`
 
 
 # 0.5.0 (latest stable release)
