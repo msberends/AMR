@@ -3,6 +3,8 @@
 #### New
 * Function `mo_failures` to review values that could not be coerced to a valid MO code, using `as.mo`. This latter function will now only show a maximum of 25 uncoerced values.
 * Function `mo_renamed` to get a list of all returned values from `as.mo` that have had taxonomic renaming
+* Function `age` to calculate the (patients) age in years
+* Function `age_groups` to split ages into custom or predefined groups (like children or elderly). This allows for easier antimicrobial resistance per age group.
 
 #### Changed
 * Improvements for `as.mo`:
@@ -16,7 +18,7 @@
 * Function `first_isolate`:
   * Will now use a column named like "patid" for the patient ID (parameter `col_patientid`), when this parameter was left blank
   * Will now use a column named like "key(...)ab" or "key(...)antibiotics" for the key antibiotics (parameter `col_keyantibiotics`), when this parameter was left blank
-* A note to the manual pages of the `portion` functions, that low counts can infuence the outcome and that the `portion` functions may camouflage this, since they only return the portion (albeit being dependent on the `minimum` parameter)
+* A note to the manual pages of the `portion` functions, that low counts can influence the outcome and that the `portion` functions may camouflage this, since they only return the portion (albeit being dependent on the `minimum` parameter)
 * Function `mo_taxonomy` now contains the kingdom too
 * Function `first_isolate` will now use a column named like "patid" for the patient ID, when this parameter was left blank
 * Reduce false positives for `is.rsi.eligible`

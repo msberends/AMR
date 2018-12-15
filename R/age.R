@@ -1,0 +1,147 @@
+# ==================================================================== #
+# TITLE                                                                #
+# Antimicrobial Resistance (AMR) Analysis                              #
+#                                                                      #
+# AUTHORS                                                              #
+# Berends MS (m.s.berends@umcg.nl), Luz CF (c.f.luz@umcg.nl)           #
+#                                                                      #
+# LICENCE                                                              #
+# This program is free software; you can redistribute it and/or modify #
+# it under the terms of the GNU General Public License version 2.0,    #
+# as published by the Free Software Foundation.                        #
+#                                                                      #
+# This program is distributed in the hope that it will be useful,      #
+# but WITHOUT ANY WARRANTY; without even the implied warranty of       #
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the        #
+# GNU General Public License for more details.                         #
+# ==================================================================== #
+
+#' Age in years of individuals
+#'
+#' Calculates age in years based on a reference date, which is the sytem time at default.
+#' @param x date(s) - will be coerced with \code{\link{as.POSIXlt}}
+#' @param y reference date(s) - defaults to \code{\link{Sys.Date}} - will be coerced with \code{\link{as.POSIXlt}}
+#' @return Integer (no decimals)
+#' @seealso age_groups
+#' @importFrom dplyr if_else
+#' @export
+age <- function(x, y = Sys.Date()) {
+  if (length(x) != length(y)) {
+    if (length(y) == 1) {
+      y <- rep(y, length(x))
+    } else {
+      stop("`x` and `y` must be of same length, or `y` must be of length 1.")
+    }
+  }
+  x <- base::as.POSIXlt(x)
+  y <- base::as.POSIXlt(y)
+  if (any(y < x)) {
+    stop("`y` cannot be lower (older) than `x`.")
+  }
+  years_gap <- y$year - x$year
+  # from https://stackoverflow.com/a/25450756/4575331
+  ages <- if_else(y$mon < x$mon | (y$mon == x$mon & y$mday < x$mday),
+         as.integer(years_gap - 1),
+         as.integer(years_gap))
+  if (any(ages > 120)) {
+    warning("Some ages are >120.")
+  }
+  ages
+}
+
+#' Split ages in age groups
+#'
+#' Splits ages into groups defined by the \code{split} parameter.
+#' @param x age, e.g. calculated with \code{\link{age}}
+#' @param split_at values to split \code{x}, defaults to 0-11, 12-24, 26-54, 55-74 and 75+. See Details.
+#' @details To split ages, the input can be:
+#' \itemize{
+#'   \item{A numeric vector. A vector of \code{c(10, 20)} will split on 0-9, 10-19 and 20+. A value of only \code{50} will split on 0-49 and 50+.
+#'         The default is to split on young children (0-11), youth (12-24), young adults (26-54), middle-aged adults (55-74) and elderly (75+).}
+#'   \item{A character:}
+#'     \itemize{
+#'       \item{\code{"children"}, equivalent of: \code{c(0, 1, 2, 4, 6, 13, 18)}. This will split on 0, 1, 2-3, 4-5, 6-12, 13-17 and 18+.}
+#'       \item{\code{"elderly"} or \code{"seniors"}, equivalent: of \code{c(65, 75, 85, 95)}. This will split on 0-64, 65-74, 75-84, 85-94 and 95+.}
+#'       \item{\code{"fives"}, equivalent: of \code{1:20 * 5}. This will split on 0-4, 5-9, 10-14, 15-19 and so forth.}
+#'       \item{\code{"tens"}, equivalent: of \code{1:10 * 10}. This will split on 0-9, 10-19, 20-29 and so forth.}
+#'     }
+#' }
+#' @return Ordered \code{\link{factor}}
+#' @seealso age
+#' @export
+#' @examples
+#' ages <- c(3, 8, 16, 54, 31, 76, 101, 43, 21)
+#'
+#' # split on 0-49 and 50+
+#' age_groups(ages, 50)
+#'
+#' # split on 0-20, 21-49 and 50+
+#' age_groups(ages, c(21, 50))
+#'
+#' # split on every ten years
+#' age_groups(ages, 1:10 * 10)
+#' age_groups(ages, "tens")
+#'
+#' # split on every five years
+#' age_groups(ages, 1:20 * 5)
+#' age_groups(ages, "fives")
+#'
+#' # split on children
+#' age_groups(ages, "children")
+#'
+#' # resistance of ciprofloxacine per age group
+#' septic_patients %>%
+#'   mutate(first_isolate = first_isolate(.)) %>%
+#'   filter(first_isolate == TRUE,
+#'          mo == as.mo("E. coli")) %>%
+#'   group_by(age_group = age_groups(age)) %>%
+#'   select(age_group,
+#'          cipr) %>%
+#'   ggplot_rsi(x = "age_group")
+age_groups <- function(x, split_at = c(12, 25, 55, 75)) {
+  if (is.character(split_at)) {
+    if (split_at %like% "^child") {
+      split_at <- c(0, 1, 2, 4, 6, 13, 18)
+    }
+    if (split_at %like% "^elder" | split_at %like% "^senior") {
+      split_at <-  c(65, 75, 85, 95)
+    }
+    if (split_at %like% "fives") {
+      split_at <- 1:20 * 5
+    }
+    if (split_at %like% "^tens") {
+      split_at <- 1:10 * 10
+    }
+  }
+  if (!is.numeric(x) | !is.numeric(split_at)) {
+    stop("`x` and `split_at` must both be numeric.")
+  }
+  split_at <- sort(unique(split_at))
+  if (!split_at[1] == 0) {
+    split_at <- c(0, split_at)
+  }
+  if (length(split_at) == 1) {
+    # only 0 available
+    stop("invalid value for `split_at`.")
+  }
+
+  # turn input values to 'split_at' indices
+  y <- x
+  for (i in 1:length(split_at)) {
+    y[x >= split_at[i]] <- i
+  }
+
+  # create labels
+  labs <- split_at
+  for (i in 2:length(labs)) {
+    if (split_at[i - 1] == split_at[i] - 1) {
+      labs[i - 1] <- split_at[i - 1]
+    } else {
+      labs[i - 1] <- paste0(split_at[i - 1], "-", split_at[i] - 1)
+    }
+  }
+  # last category
+  labs[length(labs)] <- paste0(split_at[length(split_at)], "+")
+
+  factor(labs[y], levels = labs, ordered = TRUE)
+}

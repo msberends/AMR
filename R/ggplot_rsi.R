@@ -86,6 +86,17 @@
 #'              size = 1,
 #'              linetype = 2,
 #'              alpha = 0.25)
+#'
+#' # resistance of ciprofloxacine per age group
+#' septic_patients %>%
+#'   mutate(first_isolate = first_isolate(.)) %>%
+#'   filter(first_isolate == TRUE,
+#'          mo == as.mo("E. coli")) %>%
+#'   # `age_group` is also a function of this package:
+#'   group_by(age_group = age_groups(age)) %>%
+#'   select(age_group,
+#'          cipr) %>%
+#'   ggplot_rsi(x = "age_group")
 #' \donttest{
 #'
 #' # for colourblind mode, use divergent colours from the viridis package:
