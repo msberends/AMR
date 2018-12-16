@@ -6,21 +6,21 @@
 # Berends MS (m.s.berends@umcg.nl), Luz CF (c.f.luz@umcg.nl)           #
 #                                                                      #
 # LICENCE                                                              #
-# This program is free software; you can redistribute it and/or modify #
+# This package is free software; you can redistribute it and/or modify #
 # it under the terms of the GNU General Public License version 2.0,    #
 # as published by the Free Software Foundation.                        #
 #                                                                      #
-# This program is distributed in the hope that it will be useful,      #
+# This R package is distributed in the hope that it will be useful,    #
 # but WITHOUT ANY WARRANTY; without even the implied warranty of       #
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the        #
-# GNU General Public License for more details.                         #
+# GNU General Public License version 2.0 for more details.             #
 # ==================================================================== #
 
 #' The \code{AMR} Package
 #'
 #' Welcome to the \code{AMR} package. This page gives some additional contact information about the authors.
 #' @details
-#' This package was intended to simplify the analysis and prediction of Antimicrobial Resistance (AMR) and work with antibiotic properties by using evidence-based methods.
+#' This package was intended to simplify the analysis and prediction of Antimicrobial Resistance (AMR) and ti work with antibiotic properties by using evidence-based methods.
 #'
 #' This package was created for academic research by PhD students of the Faculty of Medical Sciences of the University of Groningen and the Medical Microbiology & Infection Prevention (MMBI) department of the University Medical Center Groningen (UMCG).
 #' @section Authors:

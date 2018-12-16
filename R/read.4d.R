@@ -6,19 +6,19 @@
 # Berends MS (m.s.berends@umcg.nl), Luz CF (c.f.luz@umcg.nl)           #
 #                                                                      #
 # LICENCE                                                              #
-# This program is free software; you can redistribute it and/or modify #
+# This package is free software; you can redistribute it and/or modify #
 # it under the terms of the GNU General Public License version 2.0,    #
 # as published by the Free Software Foundation.                        #
 #                                                                      #
-# This program is distributed in the hope that it will be useful,      #
+# This R package is distributed in the hope that it will be useful,    #
 # but WITHOUT ANY WARRANTY; without even the implied warranty of       #
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the        #
-# GNU General Public License for more details.                         #
+# GNU General Public License version 2.0 for more details.             #
 # ==================================================================== #
 
 #' Read data from 4D database
 #'
-#' This function is only useful for the MMB department of the UMCG. Use this function to \strong{import data by just defining the \code{file} parameter}. It will automatically transform birth dates and calculate patients age, translate the column names to English, transform the \code{mo} with \code{\link{as.mo}} and transform all antimicrobial columns with \code{\link{as.rsi}}.
+#' This function is only useful for the MMB department of the UMCG. Use this function to \strong{import data by just defining the \code{file} parameter}. It will automatically transform birth dates and calculate patients age, translate the column names to English, transform the MO codes with \code{\link{as.mo}} and transform all antimicrobial columns with \code{\link{as.rsi}}.
 #' @inheritParams utils::read.table
 #' @param info a logical to indicate whether info about the import should be printed, defaults to \code{TRUE} in interactive sessions
 #' @details Column names will be transformed, but the original column names are set as a "label" attribute and can be seen in e.g. RStudio Viewer.
@@ -59,7 +59,7 @@ read.4D <- function(file,
                                fileEncoding = fileEncoding,
                                encoding = encoding)
 
-  # helper functions
+  # helper function for dates
   to_date_4D <- function(x) {
     date_regular <- as.Date(x, format = "%d-%m-%y")
     posixlt <- as.POSIXlt(date_regular)
@@ -67,16 +67,6 @@ read.4D <- function(file,
     # based on https://stackoverflow.com/a/3312971/4575331
     posixlt[date_regular > Sys.Date() & !is.na(posixlt)]$year <- posixlt[date_regular > Sys.Date() & !is.na(posixlt)]$year - 100
     as.Date(posixlt)
-  }
-  to_age_4D <- function(from, to) {
-    from_lt = as.POSIXlt(from)
-    to_lt = as.POSIXlt(to)
-
-    age = to_lt$year - from_lt$year
-
-    ifelse(to_lt$mon < from_lt$mon |
-             (to_lt$mon == from_lt$mon & to_lt$mday < from_lt$mday),
-           age - 1, age)
   }
 
   if (info == TRUE) {
@@ -136,7 +126,7 @@ read.4D <- function(file,
     data_4D$date_received <- to_date_4D(data_4D$date_received)
   }
   if ("age" %in% colnames(data_4D)) {
-    data_4D$age <- to_age_4D(data_4D$date_birth, data_4D$date_received)
+    data_4D$age <- age(data_4D$date_birth, data_4D$date_received)
   }
   if ("gender" %in% colnames(data_4D)) {
     data_4D$gender[data_4D$gender == "V"] <- "F"

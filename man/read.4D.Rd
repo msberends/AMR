@@ -117,7 +117,7 @@ read.4D(file, info = interactive(), header = TRUE, row.names = NULL,
   }
 }
 \description{
-This function is only useful for the MMB department of the UMCG. Use this function to \strong{import data by just defining the \code{file} parameter}. It will automatically transform birth dates and calculate patients age, translate the column names to English, transform the \code{mo} with \code{\link{as.mo}} and transform all antimicrobial columns with \code{\link{as.rsi}}.
+This function is only useful for the MMB department of the UMCG. Use this function to \strong{import data by just defining the \code{file} parameter}. It will automatically transform birth dates and calculate patients age, translate the column names to English, transform the MO codes with \code{\link{as.mo}} and transform all antimicrobial columns with \code{\link{as.rsi}}.
 }
 \details{
 Column names will be transformed, but the original column names are set as a "label" attribute and can be seen in e.g. RStudio Viewer.

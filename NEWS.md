@@ -4,7 +4,7 @@
 * Function `mo_failures` to review values that could not be coerced to a valid MO code, using `as.mo`. This latter function will now only show a maximum of 25 uncoerced values.
 * Function `mo_renamed` to get a list of all returned values from `as.mo` that have had taxonomic renaming
 * Function `age` to calculate the (patients) age in years
-* Function `age_groups` to split ages into custom or predefined groups (like children or elderly). This allows for easier antimicrobial resistance per age group.
+* Function `age_groups` to split ages into custom or predefined groups (like children or elderly). This allows for easier demographic antimicrobial resistance analysis (per age group).
 
 #### Changed
 * Improvements for `as.mo`:
@@ -29,7 +29,10 @@
   * Now honours the `decimal.mark` setting, which just like `format` defaults to `getOption("OutDec")`
   * The new `big.mark` parameter will at default be `","` when `decimal.mark = "."` and `"."` otherwise
   * Fix for header text where all observations are `NA`
+* Function `scale_y_percent` now has the `limits` parameter
 
+#### Other
+* Updated licence text to emphasise GPL 2.0 and that this is an R package.
 
 # 0.5.0 (latest stable release)
 **Published on CRAN: 2018-11-30**

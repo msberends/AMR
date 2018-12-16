@@ -6,14 +6,14 @@
 # Berends MS (m.s.berends@umcg.nl), Luz CF (c.f.luz@umcg.nl)           #
 #                                                                      #
 # LICENCE                                                              #
-# This program is free software; you can redistribute it and/or modify #
+# This package is free software; you can redistribute it and/or modify #
 # it under the terms of the GNU General Public License version 2.0,    #
 # as published by the Free Software Foundation.                        #
 #                                                                      #
-# This program is distributed in the hope that it will be useful,      #
+# This R package is distributed in the hope that it will be useful,    #
 # but WITHOUT ANY WARRANTY; without even the implied warranty of       #
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the        #
-# GNU General Public License for more details.                         #
+# GNU General Public License version 2.0 for more details.             #
 # ==================================================================== #
 
 #' Age in years of individuals
@@ -49,7 +49,7 @@ age <- function(x, y = Sys.Date()) {
   ages
 }
 
-#' Split ages in age groups
+#' Split ages into age groups
 #'
 #' Splits ages into groups defined by the \code{split} parameter.
 #' @param x age, e.g. calculated with \code{\link{age}}
@@ -61,33 +61,36 @@ age <- function(x, y = Sys.Date()) {
 #'   \item{A character:}
 #'     \itemize{
 #'       \item{\code{"children"}, equivalent of: \code{c(0, 1, 2, 4, 6, 13, 18)}. This will split on 0, 1, 2-3, 4-5, 6-12, 13-17 and 18+.}
-#'       \item{\code{"elderly"} or \code{"seniors"}, equivalent: of \code{c(65, 75, 85, 95)}. This will split on 0-64, 65-74, 75-84, 85-94 and 95+.}
-#'       \item{\code{"fives"}, equivalent: of \code{1:20 * 5}. This will split on 0-4, 5-9, 10-14, 15-19 and so forth.}
-#'       \item{\code{"tens"}, equivalent: of \code{1:10 * 10}. This will split on 0-9, 10-19, 20-29 and so forth.}
+#'       \item{\code{"elderly"} or \code{"seniors"}, equivalent of: \code{c(65, 75, 85, 95)}. This will split on 0-64, 65-74, 75-84, 85-94 and 95+.}
+#'       \item{\code{"fives"}, equivalent of: \code{1:20 * 5}. This will split on 0-4, 5-9, 10-14, 15-19 and so forth.}
+#'       \item{\code{"tens"}, equivalent of: \code{1:10 * 10}. This will split on 0-9, 10-19, 20-29 and so forth.}
 #'     }
 #' }
+#' @keywords age_group age
 #' @return Ordered \code{\link{factor}}
 #' @seealso age
 #' @export
 #' @examples
 #' ages <- c(3, 8, 16, 54, 31, 76, 101, 43, 21)
 #'
-#' # split on 0-49 and 50+
+#' # split into 0-49 and 50+
 #' age_groups(ages, 50)
 #'
-#' # split on 0-20, 21-49 and 50+
-#' age_groups(ages, c(21, 50))
+#' # split into 0-19, 20-49 and 50+
+#' age_groups(ages, c(20, 50))
 #'
-#' # split on every ten years
+#' # split into groups of ten years
 #' age_groups(ages, 1:10 * 10)
-#' age_groups(ages, "tens")
+#' age_groups(ages, split_at = "tens")
 #'
-#' # split on every five years
+#' # split into groups of five years
 #' age_groups(ages, 1:20 * 5)
-#' age_groups(ages, "fives")
+#' age_groups(ages, split_at = "fives")
 #'
-#' # split on children
+#' # split specifically for children
 #' age_groups(ages, "children")
+#' # same:
+#' age_groups(ages, c(1, 2, 4, 6, 13, 17))
 #'
 #' # resistance of ciprofloxacine per age group
 #' library(dplyr)
@@ -101,20 +104,18 @@ age <- function(x, y = Sys.Date()) {
 #'   ggplot_rsi(x = "age_group")
 age_groups <- function(x, split_at = c(12, 25, 55, 75)) {
   if (is.character(split_at)) {
-    split_at <- split_at[1]
+    split_at <- split_at[1L]
     if (split_at %like% "^child") {
       split_at <- c(0, 1, 2, 4, 6, 13, 18)
-    }
-    if (split_at %like% "^elder" | split_at %like% "^senior") {
+    } else if (split_at %like% "^(elder|senior)") {
       split_at <-  c(65, 75, 85, 95)
-    }
-    if (split_at %like% "fives") {
+    } else if (split_at %like% "^five") {
       split_at <- 1:20 * 5
-    }
-    if (split_at %like% "^tens") {
+    } else if (split_at %like% "^ten") {
       split_at <- 1:10 * 10
     }
   }
+  split_at <- as.integer(split_at)
   if (!is.numeric(x) | !is.numeric(split_at)) {
     stop("`x` and `split_at` must both be numeric.")
   }
@@ -129,19 +130,14 @@ age_groups <- function(x, split_at = c(12, 25, 55, 75)) {
 
   # turn input values to 'split_at' indices
   y <- x
+  labs <- split_at
   for (i in 1:length(split_at)) {
     y[x >= split_at[i]] <- i
+    # create labels
+      # when age group consists of only one age
+      labs[i - 1] <- paste0(unique(c(split_at[i - 1], split_at[i] - 1)), collapse = "-")
   }
 
-  # create labels
-  labs <- split_at
-  for (i in 2:length(labs)) {
-    if (split_at[i - 1] == split_at[i] - 1) {
-      labs[i - 1] <- split_at[i - 1]
-    } else {
-      labs[i - 1] <- paste0(split_at[i - 1], "-", split_at[i] - 1)
-    }
-  }
   # last category
   labs[length(labs)] <- paste0(split_at[length(split_at)], "+")
 

@@ -6,14 +6,14 @@
 # Berends MS (m.s.berends@umcg.nl), Luz CF (c.f.luz@umcg.nl)           #
 #                                                                      #
 # LICENCE                                                              #
-# This program is free software; you can redistribute it and/or modify #
+# This package is free software; you can redistribute it and/or modify #
 # it under the terms of the GNU General Public License version 2.0,    #
 # as published by the Free Software Foundation.                        #
 #                                                                      #
-# This program is distributed in the hope that it will be useful,      #
+# This R package is distributed in the hope that it will be useful,    #
 # but WITHOUT ANY WARRANTY; without even the implied warranty of       #
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the        #
-# GNU General Public License for more details.                         #
+# GNU General Public License version 2.0 for more details.             #
 # ==================================================================== #
 
 #' AMR bar plots with \code{ggplot}
@@ -24,6 +24,7 @@
 #' @param x variable to show on x axis, either \code{"Antibiotic"} (default) or \code{"Interpretation"} or a grouping variable
 #' @param fill variable to categorise using the plots legend, either \code{"Antibiotic"} (default) or \code{"Interpretation"} or a grouping variable
 #' @param breaks numeric vector of positions
+#' @param limits numeric vector of length two providing limits of the scale, use \code{NA} to refer to the existing minimum or maximum
 #' @param facet variable to split plots by, either \code{"Interpretation"} (default) or \code{"Antibiotic"} or a grouping variable
 #' @param translate_ab a column name of the \code{\link{antibiotics}} data set to translate the antibiotic abbreviations into, using \code{\link{abname}}. Default behaviour is to translate to official names according to the WHO. Use \code{translate_ab = FALSE} to disable translation.
 #' @param fun function to transform \code{data}, either \code{\link{count_df}} (default) or \code{\link{portion_df}}
@@ -150,6 +151,7 @@ ggplot_rsi <- function(data,
                        # params = list(),
                        facet = NULL,
                        breaks = seq(0, 1, 0.1),
+                       limits = NULL,
                        translate_ab = "official",
                        fun = count_df,
                        nrow = NULL,
@@ -203,7 +205,7 @@ ggplot_rsi <- function(data,
   if (fun_name == "portion_df"
       | (fun_name == "count_df" & position == "fill")) {
     # portions, so use y scale with percentage
-    p <- p + scale_y_percent(breaks = breaks)
+    p <- p + scale_y_percent(breaks = breaks, limits = limits)
   }
 
   if (fun_name == "count_df" & datalabels == TRUE) {
@@ -295,9 +297,10 @@ facet_rsi <- function(facet = c("Interpretation", "Antibiotic"), nrow = NULL) {
 
 #' @rdname ggplot_rsi
 #' @export
-scale_y_percent <- function(breaks = seq(0, 1, 0.1)) {
+scale_y_percent <- function(breaks = seq(0, 1, 0.1), limits = NULL) {
   ggplot2::scale_y_continuous(breaks = breaks,
-                              labels = percent(breaks))
+                              labels = percent(breaks),
+                              limits = limits)
 }
 
 #' @rdname ggplot_rsi

@@ -2,7 +2,7 @@
 % Please edit documentation in R/age.R
 \name{age_groups}
 \alias{age_groups}
-\title{Split ages in age groups}
+\title{Split ages into age groups}
 \usage{
 age_groups(x, split_at = c(12, 25, 55, 75))
 }
@@ -25,31 +25,33 @@ To split ages, the input can be:
   \item{A character:}
     \itemize{
       \item{\code{"children"}, equivalent of: \code{c(0, 1, 2, 4, 6, 13, 18)}. This will split on 0, 1, 2-3, 4-5, 6-12, 13-17 and 18+.}
-      \item{\code{"elderly"} or \code{"seniors"}, equivalent: of \code{c(65, 75, 85, 95)}. This will split on 0-64, 65-74, 75-84, 85-94 and 95+.}
-      \item{\code{"fives"}, equivalent: of \code{1:20 * 5}. This will split on 0-4, 5-9, 10-14, 15-19 and so forth.}
-      \item{\code{"tens"}, equivalent: of \code{1:10 * 10}. This will split on 0-9, 10-19, 20-29 and so forth.}
+      \item{\code{"elderly"} or \code{"seniors"}, equivalent of: \code{c(65, 75, 85, 95)}. This will split on 0-64, 65-74, 75-84, 85-94 and 95+.}
+      \item{\code{"fives"}, equivalent of: \code{1:20 * 5}. This will split on 0-4, 5-9, 10-14, 15-19 and so forth.}
+      \item{\code{"tens"}, equivalent of: \code{1:10 * 10}. This will split on 0-9, 10-19, 20-29 and so forth.}
     }
 }
 }
 \examples{
 ages <- c(3, 8, 16, 54, 31, 76, 101, 43, 21)
 
-# split on 0-49 and 50+
+# split into 0-49 and 50+
 age_groups(ages, 50)
 
-# split on 0-20, 21-49 and 50+
-age_groups(ages, c(21, 50))
+# split into 0-19, 20-49 and 50+
+age_groups(ages, c(20, 50))
 
-# split on every ten years
+# split into groups of ten years
 age_groups(ages, 1:10 * 10)
-age_groups(ages, "tens")
+age_groups(ages, split_at = "tens")
 
-# split on every five years
+# split into groups of five years
 age_groups(ages, 1:20 * 5)
-age_groups(ages, "fives")
+age_groups(ages, split_at = "fives")
 
-# split on children
+# split specifically for children
 age_groups(ages, "children")
+# same:
+age_groups(ages, c(1, 2, 4, 6, 13, 17))
 
 # resistance of ciprofloxacine per age group
 library(dplyr)
@@ -65,3 +67,5 @@ septic_patients \%>\%
 \seealso{
 age
 }
+\keyword{age}
+\keyword{age_group}

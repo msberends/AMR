@@ -12,8 +12,8 @@
 \usage{
 ggplot_rsi(data, position = NULL, x = "Antibiotic",
   fill = "Interpretation", facet = NULL, breaks = seq(0, 1, 0.1),
-  translate_ab = "official", fun = count_df, nrow = NULL,
-  datalabels = TRUE, datalabels.size = 3,
+  limits = NULL, translate_ab = "official", fun = count_df,
+  nrow = NULL, datalabels = TRUE, datalabels.size = 3,
   datalabels.colour = "grey15", ...)
 
 geom_rsi(position = NULL, x = c("Antibiotic", "Interpretation"),
@@ -22,7 +22,7 @@ geom_rsi(position = NULL, x = c("Antibiotic", "Interpretation"),
 
 facet_rsi(facet = c("Interpretation", "Antibiotic"), nrow = NULL)
 
-scale_y_percent(breaks = seq(0, 1, 0.1))
+scale_y_percent(breaks = seq(0, 1, 0.1), limits = NULL)
 
 scale_rsi_colours()
 
@@ -43,6 +43,8 @@ labels_rsi_count(position = NULL, x = "Antibiotic",
 \item{facet}{variable to split plots by, either \code{"Interpretation"} (default) or \code{"Antibiotic"} or a grouping variable}
 
 \item{breaks}{numeric vector of positions}
+
+\item{limits}{numeric vector of length two providing limits of the scale, use \code{NA} to refer to the existing minimum or maximum}
 
 \item{translate_ab}{a column name of the \code{\link{antibiotics}} data set to translate the antibiotic abbreviations into, using \code{\link{abname}}. Default behaviour is to translate to official names according to the WHO. Use \code{translate_ab = FALSE} to disable translation.}
 
