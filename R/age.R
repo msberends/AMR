@@ -90,6 +90,7 @@ age <- function(x, y = Sys.Date()) {
 #' age_groups(ages, "children")
 #'
 #' # resistance of ciprofloxacine per age group
+#' library(dplyr)
 #' septic_patients %>%
 #'   mutate(first_isolate = first_isolate(.)) %>%
 #'   filter(first_isolate == TRUE,
@@ -100,6 +101,7 @@ age <- function(x, y = Sys.Date()) {
 #'   ggplot_rsi(x = "age_group")
 age_groups <- function(x, split_at = c(12, 25, 55, 75)) {
   if (is.character(split_at)) {
+    split_at <- split_at[1]
     if (split_at %like% "^child") {
       split_at <- c(0, 1, 2, 4, 6, 13, 18)
     }
