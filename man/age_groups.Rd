@@ -52,6 +52,7 @@ age_groups(ages, "fives")
 age_groups(ages, "children")
 
 # resistance of ciprofloxacine per age group
+library(dplyr)
 septic_patients \%>\%
   mutate(first_isolate = first_isolate(.)) \%>\%
   filter(first_isolate == TRUE,
