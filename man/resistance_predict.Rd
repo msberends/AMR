@@ -89,11 +89,11 @@ septic_patients \%>\%
 if (!require(ggplot2)) {
 
   data <- septic_patients \%>\%
-    filter(mo == "ESCCOL") \%>\%
+    filter(mo == as.mo("E. coli")) \%>\%
     resistance_predict(col_ab = "amox",
-                      col_date = "date",
-                      info = FALSE,
-                      minimum = 15)
+                       col_date = "date",
+                       info = FALSE,
+                        minimum = 15)
 
   ggplot(data,
          aes(x = year)) +

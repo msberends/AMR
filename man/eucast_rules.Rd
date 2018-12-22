@@ -40,7 +40,7 @@ eucast_rules(tbl, col_mo = NULL, info = TRUE,
   pita = "pita", poly = "poly", pris = "pris", qida = "qida",
   rifa = "rifa", roxi = "roxi", siso = "siso", teic = "teic",
   tetr = "tetr", tica = "tica", tige = "tige", tobr = "tobr",
-  trim = "trim", trsu = "trsu", vanc = "vanc", col_bactid = NULL)
+  trim = "trim", trsu = "trsu", vanc = "vanc")
 
 EUCAST_rules(...)
 
@@ -58,8 +58,6 @@ interpretive_reading(...)
 \item{verbose}{a logical to indicate whether extensive info should be returned as a \code{data.frame} with info about which rows and columns are effected}
 
 \item{amcl, amik, amox, ampi, azit, azlo, aztr, cefa, cfep, cfot, cfox, cfra, cfta, cftr, cfur, chlo, cipr, clar, clin, clox, coli, czol, dapt, doxy, erta, eryt, fosf, fusi, gent, imip, kana, levo, linc, line, mero, mezl, mino, moxi, nali, neom, neti, nitr, norf, novo, oflo, oxac, peni, pipe, pita, poly, pris, qida, rifa, roxi, siso, teic, tetr, tica, tige, tobr, trim, trsu, vanc}{column name of an antibiotic, see Antibiotics}
-
-\item{col_bactid}{deprecated, use \code{col_mo} instead.}
 
 \item{...}{parameters that are passed on to \code{eucast_rules}}
 }

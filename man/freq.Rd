@@ -10,15 +10,16 @@
 frequency_tbl(x, ..., sort.count = TRUE,
   nmax = getOption("max.print.freq"), na.rm = TRUE, row.names = TRUE,
   markdown = !interactive(), digits = 2, quote = FALSE,
-  header = !markdown, title = NULL, na = "<NA>", sep = " ",
-  decimal.mark = getOption("OutDec"), big.mark = ifelse(decimal.mark !=
-  ",", ",", "."))
+  header = !markdown, title = NULL, na = "<NA>", droplevels = TRUE,
+  sep = " ", decimal.mark = getOption("OutDec"),
+  big.mark = ifelse(decimal.mark != ",", ",", "."))
 
 freq(x, ..., sort.count = TRUE, nmax = getOption("max.print.freq"),
   na.rm = TRUE, row.names = TRUE, markdown = !interactive(),
   digits = 2, quote = FALSE, header = !markdown, title = NULL,
-  na = "<NA>", sep = " ", decimal.mark = getOption("OutDec"),
-  big.mark = ifelse(decimal.mark != ",", ",", "."))
+  na = "<NA>", droplevels = TRUE, sep = " ",
+  decimal.mark = getOption("OutDec"), big.mark = ifelse(decimal.mark !=
+  ",", ",", "."))
 
 top_freq(f, n)
 
@@ -51,6 +52,8 @@ top_freq(f, n)
 \item{title}{text to show above frequency table, at default to tries to coerce from the variables passed to \code{x}}
 
 \item{na}{a character string to should be used to show empty (\code{NA}) values (only useful when \code{na.rm = FALSE})}
+
+\item{droplevels}{a logical value indicating whether in factors empty levels should be dropped}
 
 \item{sep}{a character string to separate the terms when selecting multiple columns}
 
@@ -94,6 +97,7 @@ For dates and times of any class, these additional values will be calculated wit
   \item{Median, using \code{\link[stats]{median}}, with percentage since oldest}
 }
 
+In factors, all factor levels that are not existing in the input data will be dropped.
 
 The function \code{top_freq} uses \code{\link[dplyr]{top_n}} internally and will include more than \code{n} rows if there are ties.
 }

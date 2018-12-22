@@ -4,12 +4,12 @@
 \alias{age}
 \title{Age in years of individuals}
 \usage{
-age(x, y = Sys.Date())
+age(x, reference = Sys.Date())
 }
 \arguments{
-\item{x}{date(s) - will be coerced with \code{\link{as.POSIXlt}}}
+\item{x}{date(s), will be coerced with \code{\link{as.POSIXlt}}}
 
-\item{y}{reference date(s) - defaults to \code{\link{Sys.Date}} - will be coerced with \code{\link{as.POSIXlt}}}
+\item{reference}{reference date(s) (defaults to today), will be coerced with \code{\link{as.POSIXlt}}}
 }
 \value{
 Integer (no decimals)
@@ -18,5 +18,5 @@ Integer (no decimals)
 Calculates age in years based on a reference date, which is the sytem time at default.
 }
 \seealso{
-age_groups
+\code{\link{age_groups}} to splits age into groups
 }

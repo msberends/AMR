@@ -21,8 +21,8 @@ context("mdro.R")
 test_that("mdro works", {
   library(dplyr)
 
-  expect_error(suppressWarnings(mdro(septic_patients, "invalid", col_bactid = "mo", info = TRUE)))
-  expect_error(suppressWarnings(mdro(septic_patients, "fr", col_bactid = "mo", info = TRUE)))
+  expect_error(suppressWarnings(mdro(septic_patients, "invalid", col_mo = "mo", info = TRUE)))
+  expect_error(suppressWarnings(mdro(septic_patients, "fr", info = TRUE)))
   expect_error(suppressWarnings(mdro(septic_patients, country = c("de", "nl"), info = TRUE)))
   expect_error(suppressWarnings(mdro(septic_patients, col_mo = "invalid", info = TRUE)))
 

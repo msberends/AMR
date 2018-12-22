@@ -23,57 +23,6 @@
 #' @keywords internal
 #' @name AMR-deprecated
 #' @rdname AMR-deprecated
-as.bactid <- function(...) {
-  .Deprecated("as.mo", package = "AMR")
-  as.mo(...)
-}
-
-#' @rdname AMR-deprecated
-#' @export
-is.bactid <- function(...) {
-  .Deprecated(new = "is.mo", package = "AMR")
-  is.mo(...)
-}
-
-#' @rdname AMR-deprecated
-#' @export
-guess_bactid <- function(...) {
-  .Deprecated(new = "guess_mo", package = "AMR")
-  guess_mo(...)
-}
-
-#' @exportMethod print.bactid
-#' @export
-#' @noRd
-print.bactid <- function(x, ...) {
-  cat("Class 'bactid'\n")
-  print.default(as.character(x), quote = FALSE)
-}
-
-#' @exportMethod as.data.frame.bactid
-#' @export
-#' @noRd
-as.data.frame.bactid <- function (x, ...) {
-  # same as as.data.frame.character but with removed stringsAsFactors
-  nm <- paste(deparse(substitute(x), width.cutoff = 500L),
-              collapse = " ")
-  if (!"nm" %in% names(list(...))) {
-    as.data.frame.vector(x, ..., nm = nm)
-  } else {
-    as.data.frame.vector(x, ...)
-  }
-}
-
-#' @exportMethod pull.bactid
-#' @export
-#' @importFrom dplyr pull
-#' @noRd
-pull.bactid <- function(.data, ...) {
-  pull(as.data.frame(.data), ...)
-}
-
-#' @rdname AMR-deprecated
-#' @export
 ratio <- function(x, ratio) {
   .Deprecated(package = "AMR")
 

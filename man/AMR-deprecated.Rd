@@ -2,18 +2,9 @@
 % Please edit documentation in R/deprecated.R
 \name{AMR-deprecated}
 \alias{AMR-deprecated}
-\alias{as.bactid}
-\alias{is.bactid}
-\alias{guess_bactid}
 \alias{ratio}
 \title{Deprecated functions}
 \usage{
-as.bactid(...)
-
-is.bactid(...)
-
-guess_bactid(...)
-
 ratio(x, ratio)
 }
 \description{

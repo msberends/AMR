@@ -73,7 +73,7 @@ rsi_calc <- function(...,
   print_warning <- FALSE
 
   type_trans <- as.integer(as.rsi(type))
-  type_others <- setdiff(1:3, type_trans)
+  type_others <- base::setdiff(1:3, type_trans)
 
   if (is.data.frame(x)) {
     rsi_integrity_check <- character(0)

@@ -154,9 +154,7 @@ as.mo <- function(x, Becker = FALSE, Lancefield = FALSE, allow_uncertain = TRUE,
 #' @rdname as.mo
 #' @export
 is.mo <- function(x) {
-  # bactid for older releases
-  # remove when is.bactid will be removed
-  identical(class(x), "mo") | identical(class(x), "bactid")
+  identical(class(x), "mo")
 }
 
 #' @rdname as.mo

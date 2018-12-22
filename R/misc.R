@@ -27,13 +27,17 @@ addin_insert_like <- function() {
 }
 
 # No export, no Rd
+# works exactly like round(), but rounds `round(0.55, 1)` as 0.6
+round2 <- function(x, digits = 0) {
+  # https://stackoverflow.com/a/12688836/4575331
+  (trunc((abs(x) * 10 ^ digits) + 0.5) / 10 ^ digits) * sign(x)
+}
+
+# No export, no Rd
 percent <- function(x, round = 1, force_zero = FALSE, decimal.mark = getOption("OutDec"), ...) {
 
   decimal.mark.options <- getOption("OutDec")
   options(OutDec = ".")
-
-  # https://stackoverflow.com/a/12688836/4575331
-  round2 <- function(x, n) (trunc((abs(x) * 10 ^ n) + 0.5) / 10 ^ n) * sign(x)
 
   val <- round2(x, round + 2) # round up 0.5
   val <- round(x = val * 100, digits = round) # remove floating point error

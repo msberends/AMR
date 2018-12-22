@@ -5,14 +5,13 @@
 \alias{key_antibiotics_equal}
 \title{Key antibiotics for first \emph{weighted} isolates}
 \usage{
-key_antibiotics(tbl, col_mo = "mo", universal_1 = "amox",
+key_antibiotics(tbl, col_mo = NULL, universal_1 = "amox",
   universal_2 = "amcl", universal_3 = "cfur", universal_4 = "pita",
   universal_5 = "cipr", universal_6 = "trsu", GramPos_1 = "vanc",
   GramPos_2 = "teic", GramPos_3 = "tetr", GramPos_4 = "eryt",
   GramPos_5 = "oxac", GramPos_6 = "rifa", GramNeg_1 = "gent",
   GramNeg_2 = "tobr", GramNeg_3 = "coli", GramNeg_4 = "cfot",
-  GramNeg_5 = "cfta", GramNeg_6 = "mero", warnings = TRUE,
-  col_bactid = "bactid")
+  GramNeg_5 = "cfta", GramNeg_6 = "mero", warnings = TRUE, ...)
 
 key_antibiotics_equal(x, y, type = c("keyantibiotics", "points"),
   ignore_I = TRUE, points_threshold = 2, info = FALSE)
@@ -30,7 +29,7 @@ key_antibiotics_equal(x, y, type = c("keyantibiotics", "points"),
 
 \item{warnings}{give warning about missing antibiotic columns, they will anyway be ignored}
 
-\item{col_bactid}{(deprecated, use \code{col_mo} instead)}
+\item{...}{other parameters passed on to function}
 
 \item{x, y}{characters to compare}
 
@@ -71,18 +70,15 @@ The function \code{key_antibiotics} returns a character vector with 12 antibioti
 \examples{
 # septic_patients is a dataset available in the AMR package
 ?septic_patients
-my_patients <- septic_patients
-
 library(dplyr)
 # set key antibiotics to a new variable
-my_patients <- my_patients \%>\%
+my_patients <- septic_patients \%>\%
   mutate(keyab = key_antibiotics(.)) \%>\%
   mutate(
     # now calculate first isolates
-    first_regular = first_isolate(., "date", "patient_id", "mo"),
+    first_regular = first_isolate(., col_keyantibiotics = FALSE),
     # and first WEIGHTED isolates
-    first_weighted = first_isolate(., "date", "patient_id", "mo",
-                                   col_keyantibiotics = "keyab")
+    first_weighted = first_isolate(., col_keyantibiotics = "keyab")
   )
 
 # Check the difference, in this data set it results in 7\% more isolates:
@@ -95,7 +91,7 @@ strainA <- "SSSRR.S.R..S"
 strainB <- "SSSIRSSSRSSS"
 
 key_antibiotics_equal(strainA, strainB)
-# TRUE, because I is ignored (as are missing values)
+# TRUE, because I is ignored (as well as missing values)
 
 key_antibiotics_equal(strainA, strainB, ignore_I = FALSE)
 # FALSE, because I is not ignored and so the 4th value differs

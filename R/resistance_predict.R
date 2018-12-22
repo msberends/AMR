@@ -44,7 +44,7 @@
 #' @rdname resistance_predict
 #' @export
 #' @importFrom stats predict glm lm
-#' @importFrom dplyr %>% pull mutate group_by_at summarise filter n_distinct arrange case_when
+#' @importFrom dplyr %>% pull mutate mutate_at n group_by_at summarise filter filter_at all_vars n_distinct arrange case_when
 # @importFrom tidyr spread
 #' @examples
 #' \dontrun{
@@ -83,11 +83,11 @@
 #' if (!require(ggplot2)) {
 #'
 #'   data <- septic_patients %>%
-#'     filter(mo == "ESCCOL") %>%
+#'     filter(mo == as.mo("E. coli")) %>%
 #'     resistance_predict(col_ab = "amox",
-#'                       col_date = "date",
-#'                       info = FALSE,
-#'                       minimum = 15)
+#'                        col_date = "date",
+#'                        info = FALSE,
+#'                         minimum = 15)
 #'
 #'   ggplot(data,
 #'          aes(x = year)) +
@@ -137,9 +137,10 @@ resistance_predict <- function(tbl,
     tbl[, col_ab] <- gsub('I', 'R', tbl %>% pull(col_ab))
   }
 
-  if (!tbl %>% pull(col_ab) %>% is.rsi()) {
-    tbl[, col_ab] <- tbl %>% pull(col_ab) %>% as.rsi()
-  }
+  tbl <- tbl %>% 
+    mutate_at(col_ab, as.rsi) %>%
+    filter_at(col_ab, all_vars(!is.na(.)))
+  tbl[, col_ab] <- droplevels(tbl[, col_ab])
 
   year <- function(x) {
     if (all(grepl('^[0-9]{4}$', x))) {

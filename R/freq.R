@@ -31,6 +31,7 @@
 #' @param header a logical value indicating whether an informative header should be printed
 #' @param title text to show above frequency table, at default to tries to coerce from the variables passed to \code{x}
 #' @param na a character string to should be used to show empty (\code{NA}) values (only useful when \code{na.rm = FALSE})
+#' @param droplevels a logical value indicating whether in factors empty levels should be dropped
 #' @param sep a character string to separate the terms when selecting multiple columns
 #' @inheritParams base::format
 #' @param f a frequency table
@@ -56,11 +57,12 @@
 #'   \item{Median, using \code{\link[stats]{median}}, with percentage since oldest}
 #' }
 #'
+#' In factors, all factor levels that are not existing in the input data will be dropped.
 #'
 #' The function \code{top_freq} uses \code{\link[dplyr]{top_n}} internally and will include more than \code{n} rows if there are ties.
 #' @importFrom stats fivenum sd mad
 #' @importFrom grDevices boxplot.stats
-#' @importFrom dplyr %>% arrange arrange_at desc filter_at funs group_by mutate mutate_at n_distinct pull select summarise tibble ungroup vars all_vars
+#' @importFrom dplyr %>% arrange arrange_at desc filter_at funs group_by mutate mutate_at n n_distinct pull select summarise tibble ungroup vars all_vars
 #' @importFrom utils browseVignettes
 #' @importFrom hms is.hms
 #' @importFrom crayon red green silver
@@ -183,6 +185,7 @@ frequency_tbl <- function(x,
                           header = !markdown,
                           title = NULL,
                           na = "<NA>",
+                          droplevels = TRUE,
                           sep = " ",
                           decimal.mark = getOption("OutDec"),
                           big.mark = ifelse(decimal.mark != ",", ",", ".")) {
@@ -190,23 +193,23 @@ frequency_tbl <- function(x,
   mult.columns <- 0
   x.group = character(0)
   df <- NULL
-
+  # x_haslevels <- !is.null(levels(x))
   x.name <- NULL
   cols <- NULL
-  if (any(class(x) == 'list')) {
+  if (any(class(x) == "list")) {
     cols <- names(x)
     x <- as.data.frame(x, stringsAsFactors = FALSE)
     x.name <- "a list"
-  } else if (any(class(x) == 'matrix')) {
+  } else if (any(class(x) == "matrix")) {
     x <- as.data.frame(x, stringsAsFactors = FALSE)
     x.name <- "a matrix"
     cols <- colnames(x)
-    if (all(cols %like% 'V[0-9]')) {
+    if (all(cols %like% "V[0-9]")) {
       cols <- NULL
     }
   }
 
-  if (any(class(x) == 'data.frame')) {
+  if (any(class(x) == "data.frame")) {
     x.group <- group_vars(x)
     if (length(x.group) > 1) {
       x.group <- x.group[1L]
@@ -225,13 +228,18 @@ frequency_tbl <- function(x,
     if (ndots < 10) {
       cols <- as.character(dots)
       if (!all(cols %in% colnames(x))) {
-        stop("one or more columns not found: `", paste(cols, collapse = "`, `"), '`', call. = FALSE)
+        stop("one or more columns not found: `", paste(cols, collapse = "`, `"), "`", call. = FALSE)
       }
       if (length(x.group) > 0) {
         x.group_cols <- c(x.group, cols)
-        df <- x %>%
-          group_by_at(vars(x.group_cols)) %>%
-          summarise(count = n())
+        # if (droplevels == TRUE) {
+        #   x <- x %>% mutate_at(vars(x.group_cols), droplevels)
+        # }
+        suppressWarnings(
+          df <- x %>%
+            group_by_at(vars(x.group_cols)) %>%
+            summarise(count = n())
+        )
         if (na.rm == TRUE) {
           df <- df %>% filter_at(vars(cols), all_vars(!is.na(.)))
         }
@@ -250,16 +258,21 @@ frequency_tbl <- function(x,
           mutate_at(vars(x.group), funs(ifelse(lag(.) == ., "", .)))
         df[1, 1] <- df.topleft
         colnames(df)[1:2] <- c("group", "item")
+
+        if (!is.null(levels(df$item)) & droplevels == TRUE) {
+          # is factor
+          df <- df %>% filter(count != 0)
+        }
       }
       if (length(cols) > 0) {
         x <- x[, cols]
       }
     } else if (ndots >= 10) {
-      stop('A maximum of 9 columns can be analysed at the same time.', call. = FALSE)
+      stop("A maximum of 9 columns can be analysed at the same time.", call. = FALSE)
     } else {
       cols <- NULL
     }
-  } else if (any(class(x) == 'table')) {
+  } else if (any(class(x) == "table")) {
     x <- as.data.frame(x, stringsAsFactors = FALSE)
     # now this DF contains 3 columns: the 2 vars and a Freq column
     # paste the first 2 cols and repeat them Freq times:
@@ -274,18 +287,18 @@ frequency_tbl <- function(x,
   }
 
   if (!is.null(ncol(x))) {
-    if (ncol(x) == 1 & any(class(x) == 'data.frame')) {
+    if (ncol(x) == 1 & any(class(x) == "data.frame")) {
       x <- x %>% pull(1)
     } else if (ncol(x) < 10) {
       mult.columns <- ncol(x)
       x <- do.call(paste, c(x[colnames(x)], sep = sep))
     } else {
-      stop('A maximum of 9 columns can be analysed at the same time.', call. = FALSE)
+      stop("A maximum of 9 columns can be analysed at the same time.", call. = FALSE)
     }
   }
 
   if (mult.columns > 1) {
-    NAs <- x[is.na(x) | x == trimws(strrep('NA ', mult.columns))]
+    NAs <- x[is.na(x) | x == trimws(strrep("NA ", mult.columns))]
   } else {
     NAs <- x[is.na(x)]
   }
@@ -296,91 +309,109 @@ frequency_tbl <- function(x,
     class(x) <- x_class
   }
 
-  # if (sort.count == FALSE & 'factor' %in% class(x)) {
-  #   warning("Sorting a factor sorts on factor level, not necessarily alphabetically.", call. = FALSE)
-  # }
   header_txt <- character(0)
 
-  markdown_line <- ''
+  markdown_line <- ""
   if (markdown == TRUE) {
-    markdown_line <- '\n'
+    markdown_line <- "\n"
   }
-  x_align <- 'l'
+  x_align <- "l"
 
   if (mult.columns > 0) {
-    header_txt <- header_txt %>% paste0(markdown_line, 'Columns:   ', mult.columns)
+    header_txt <- header_txt %>% paste0(markdown_line, "Columns:   ", mult.columns)
   } else {
-    header_txt <- header_txt %>% paste0(markdown_line, 'Class:     ', class(x) %>% rev() %>% paste(collapse = " > "))
+    header_txt <- header_txt %>% paste0(markdown_line, "Class:     ", class(x) %>% rev() %>% paste(collapse = " > "))
     if (!mode(x) %in% class(x)) {
       header_txt <- header_txt %>% paste0(silver(paste0(" (", mode(x), ")")))
     }
   }
 
   if ((length(NAs) + length(x) > 0) > 0) {
-    na_txt <- paste0(NAs %>% length() %>% format(decimal.mark = decimal.mark, big.mark = big.mark), ' = ',
+    na_txt <- paste0(NAs %>% length() %>% format(decimal.mark = decimal.mark, big.mark = big.mark), " = ",
                      (NAs %>% length() / (NAs %>% length() + x %>% length())) %>% percent(force_zero = TRUE, round = digits, decimal.mark = decimal.mark) %>%
-                       sub('NaN', '0', ., fixed = TRUE))
+                       sub("NaN", "0", ., fixed = TRUE))
     if (!na_txt %like% "^0 =") {
       na_txt <- red(na_txt)
     } else {
       na_txt <- green(na_txt)
     }
-    na_txt <- paste0('(of which NA: ', na_txt, ')')
+    na_txt <- paste0("(of which NA: ", na_txt, ")")
   } else {
     na_txt <- ""
   }
 
-  header_txt <- header_txt %>% paste0(markdown_line, '\nLength:    ', (NAs %>% length() + x %>% length()) %>% format(decimal.mark = decimal.mark, big.mark = big.mark),
-                                      ' ', na_txt)
-  header_txt <- header_txt %>% paste0(markdown_line, '\nUnique:    ', x %>% n_distinct() %>% format(decimal.mark = decimal.mark, big.mark = big.mark))
+  if (!is.null(levels(x))) {
+    n_levels <- x %>% levels() %>% length()
+    n_levels_empty <- n_levels - x %>% droplevels() %>% levels() %>% length()
+    n_levels_list <- levels(x)
+    if (n_levels > 5) {
+      n_levels_list <- c(n_levels_list[1:5], "...")
+    }
+    if (is.ordered(x)) {
+      n_levels_list <- paste0(levels(x), collapse = " < ")
+    } else {
+      n_levels_list <- paste0(levels(x), collapse = ", ")
+    }
+
+    header_txt <- header_txt %>% paste0(markdown_line, "\nLevels:    ", n_levels_list)
+    # drop levels of non-existing factor values,
+    # since dplyr >= 0.8.0 does not do this anymore in group_by
+    if (droplevels == TRUE) {
+      x <- droplevels(x)
+    }
+  }
+
+  header_txt <- header_txt %>% paste0(markdown_line, "\nLength:    ", (NAs %>% length() + x %>% length()) %>% format(decimal.mark = decimal.mark, big.mark = big.mark),
+                                      " ", na_txt)
+  header_txt <- header_txt %>% paste0(markdown_line, "\nUnique:    ", x %>% n_distinct() %>% format(decimal.mark = decimal.mark, big.mark = big.mark))
 
   if (NROW(x) > 0 & any(class(x) == "character")) {
-    header_txt <- header_txt %>% paste0('\n')
-    header_txt <- header_txt %>% paste0(markdown_line, '\nShortest:  ', x %>% base::nchar() %>% base::min(na.rm = TRUE) %>% format(decimal.mark = decimal.mark, big.mark = big.mark))
-    header_txt <- header_txt %>% paste0(markdown_line, '\nLongest:   ', x %>% base::nchar() %>% base::max(na.rm = TRUE) %>% format(decimal.mark = decimal.mark, big.mark = big.mark))
+    header_txt <- header_txt %>% paste0("\n")
+    header_txt <- header_txt %>% paste0(markdown_line, "\nShortest:  ", x %>% base::nchar() %>% base::min(na.rm = TRUE) %>% format(decimal.mark = decimal.mark, big.mark = big.mark))
+    header_txt <- header_txt %>% paste0(markdown_line, "\nLongest:   ", x %>% base::nchar() %>% base::max(na.rm = TRUE) %>% format(decimal.mark = decimal.mark, big.mark = big.mark))
   }
 
   if (NROW(x) > 0 & any(class(x) == "mo")) {
-    header_txt <- header_txt %>% paste0('\n')
-    header_txt <- header_txt %>% paste0(markdown_line, '\nFamilies:  ', x %>% mo_family() %>% n_distinct() %>% format(decimal.mark = decimal.mark, big.mark = big.mark))
-    header_txt <- header_txt %>% paste0(markdown_line, '\nGenera:    ', x %>% mo_genus() %>% n_distinct() %>% format(decimal.mark = decimal.mark, big.mark = big.mark))
-    header_txt <- header_txt %>% paste0(markdown_line, '\nSpecies:   ', x %>% mo_species() %>% n_distinct() %>% format(decimal.mark = decimal.mark, big.mark = big.mark))
+    header_txt <- header_txt %>% paste0("\n")
+    header_txt <- header_txt %>% paste0(markdown_line, "\nFamilies:  ", x %>% mo_family() %>% n_distinct() %>% format(decimal.mark = decimal.mark, big.mark = big.mark))
+    header_txt <- header_txt %>% paste0(markdown_line, "\nGenera:    ", x %>% mo_genus() %>% n_distinct() %>% format(decimal.mark = decimal.mark, big.mark = big.mark))
+    header_txt <- header_txt %>% paste0(markdown_line, "\nSpecies:   ", x %>% mo_species() %>% n_distinct() %>% format(decimal.mark = decimal.mark, big.mark = big.mark))
   }
 
   if (NROW(x) > 0 & any(class(x) == "difftime") & !is.hms(x)) {
-    header_txt <- header_txt %>% paste0('\n')
-    header_txt <- header_txt %>% paste(markdown_line, '\nUnits:    ', attributes(x)$units)
+    header_txt <- header_txt %>% paste0("\n")
+    header_txt <- header_txt %>% paste(markdown_line, "\nUnits:    ", attributes(x)$units)
     x <- as.double(x)
     # after this, the numeric header_txt continues
   }
 
-  if (NROW(x) > 0 & any(class(x) %in% c('double', 'integer', 'numeric', 'raw', 'single'))) {
+  if (NROW(x) > 0 & any(class(x) %in% c("double", "integer", "numeric", "raw", "single"))) {
     # right align number
     Tukey_five <- stats::fivenum(x, na.rm = TRUE)
-    x_align <- 'r'
-    header_txt <- header_txt %>% paste0('\n')
-    header_txt <- header_txt %>% paste(markdown_line, '\nMean:     ', x %>% base::mean(na.rm = TRUE) %>% format(digits = digits, decimal.mark = decimal.mark, big.mark = big.mark))
-    header_txt <- header_txt %>% paste0(markdown_line, '\nStd. dev.: ', x %>% stats::sd(na.rm = TRUE) %>% format(digits = digits, decimal.mark = decimal.mark, big.mark = big.mark),
-                                        ' (CV: ', x %>% cv(na.rm = TRUE) %>% format(digits = digits, decimal.mark = decimal.mark, big.mark = big.mark),
-                                        ', MAD: ', x %>% stats::mad(na.rm = TRUE) %>% format(digits = digits, decimal.mark = decimal.mark, big.mark = big.mark), ')')
-    header_txt <- header_txt %>% paste0(markdown_line, '\nFive-Num:  ', Tukey_five %>% format(digits = digits, decimal.mark = decimal.mark, big.mark = big.mark) %>% trimws() %>% paste(collapse = ' | '),
-                                        ' (IQR: ', (Tukey_five[4] - Tukey_five[2]) %>% format(digits = digits, decimal.mark = decimal.mark, big.mark = big.mark),
-                                        ', CQV: ', x %>% cqv(na.rm = TRUE) %>% format(digits = digits, decimal.mark = decimal.mark, big.mark = big.mark), ')')
+    x_align <- "r"
+    header_txt <- header_txt %>% paste0("\n")
+    header_txt <- header_txt %>% paste(markdown_line, "\nMean:     ", x %>% base::mean(na.rm = TRUE) %>% format(digits = digits, decimal.mark = decimal.mark, big.mark = big.mark))
+    header_txt <- header_txt %>% paste0(markdown_line, "\nStd. dev.: ", x %>% stats::sd(na.rm = TRUE) %>% format(digits = digits, decimal.mark = decimal.mark, big.mark = big.mark),
+                                        " (CV: ", x %>% cv(na.rm = TRUE) %>% format(digits = digits, decimal.mark = decimal.mark, big.mark = big.mark),
+                                        ", MAD: ", x %>% stats::mad(na.rm = TRUE) %>% format(digits = digits, decimal.mark = decimal.mark, big.mark = big.mark), ")")
+    header_txt <- header_txt %>% paste0(markdown_line, "\nFive-Num:  ", Tukey_five %>% format(digits = digits, decimal.mark = decimal.mark, big.mark = big.mark) %>% trimws() %>% paste(collapse = " | "),
+                                        " (IQR: ", (Tukey_five[4] - Tukey_five[2]) %>% format(digits = digits, decimal.mark = decimal.mark, big.mark = big.mark),
+                                        ", CQV: ", x %>% cqv(na.rm = TRUE) %>% format(digits = digits, decimal.mark = decimal.mark, big.mark = big.mark), ")")
     outlier_length <- length(boxplot.stats(x)$out)
-    header_txt <- header_txt %>% paste0(markdown_line, '\nOutliers:  ', outlier_length)
+    header_txt <- header_txt %>% paste0(markdown_line, "\nOutliers:  ", outlier_length)
     if (outlier_length > 0) {
-      header_txt <- header_txt %>% paste0(' (unique count: ', boxplot.stats(x)$out %>% n_distinct(), ')')
+      header_txt <- header_txt %>% paste0(" (unique count: ", boxplot.stats(x)$out %>% n_distinct(), ")")
     }
   }
   if (NROW(x) > 0 & any(class(x) == "rsi")) {
-    header_txt <- header_txt %>% paste0('\n')
+    header_txt <- header_txt %>% paste0("\n")
     cnt_S <- sum(x == "S", na.rm = TRUE)
     cnt_IR <- sum(x %in% c("I", "R"), na.rm = TRUE)
-    header_txt <- header_txt %>% paste(markdown_line, '\n%IR:      ',
+    header_txt <- header_txt %>% paste(markdown_line, "\n%IR:      ",
                                        (cnt_IR / sum(!is.na(x), na.rm = TRUE)) %>% percent(force_zero = TRUE, round = digits, decimal.mark = decimal.mark),
-                                       paste0('(ratio S : IR = 1.0 : ', (cnt_IR / cnt_S) %>% format(digits = 1, nsmall = 1, decimal.mark = decimal.mark, big.mark = big.mark), ")"))
+                                       paste0("(ratio S : IR = 1.0 : ", (cnt_IR / cnt_S) %>% format(digits = 1, nsmall = 1, decimal.mark = decimal.mark, big.mark = big.mark), ")"))
     if (NROW(x) < 30) {
-      header_txt <- header_txt %>% paste(markdown_line, red('\nToo few isolates for reliable resistance interpretation.'))
+      header_txt <- header_txt %>% paste(markdown_line, red("\nToo few isolates for reliable resistance interpretation."))
     }
   }
 
@@ -389,29 +420,29 @@ frequency_tbl <- function(x,
     x <- x %>% as.POSIXlt()
     formatdates <- "%H:%M:%S"
   }
-  if (NROW(x) > 0 & any(class(x) %in% c('Date', 'POSIXct', 'POSIXlt'))) {
-    header_txt <- header_txt %>% paste0('\n')
+  if (NROW(x) > 0 & any(class(x) %in% c("Date", "POSIXct", "POSIXlt"))) {
+    header_txt <- header_txt %>% paste0("\n")
     mindate <- x %>% min(na.rm = TRUE)
     maxdate <- x %>% max(na.rm = TRUE)
-    maxdate_days <- difftime(maxdate, mindate, units = 'auto') %>% as.double()
+    maxdate_days <- difftime(maxdate, mindate, units = "auto") %>% as.double()
     mediandate <- x %>% median(na.rm = TRUE)
-    median_days <- difftime(mediandate, mindate, units = 'auto') %>% as.double()
+    median_days <- difftime(mediandate, mindate, units = "auto") %>% as.double()
 
     if (formatdates == "%H:%M:%S") {
       # hms
-      header_txt <- header_txt %>% paste0(markdown_line, '\nEarliest:  ', mindate %>% format(formatdates) %>% trimws())
-      header_txt <- header_txt %>% paste0(markdown_line, '\nLatest:    ', maxdate %>% format(formatdates) %>% trimws(),
-                                          ' (+', difftime(maxdate, mindate, units = 'mins') %>% as.double() %>% format(digits = digits, decimal.mark = decimal.mark, big.mark = big.mark), ' min.)')
+      header_txt <- header_txt %>% paste0(markdown_line, "\nEarliest:  ", mindate %>% format(formatdates) %>% trimws())
+      header_txt <- header_txt %>% paste0(markdown_line, "\nLatest:    ", maxdate %>% format(formatdates) %>% trimws(),
+                                          " (+", difftime(maxdate, mindate, units = "mins") %>% as.double() %>% format(digits = digits, decimal.mark = decimal.mark, big.mark = big.mark), " min.)")
     } else {
       # other date formats
-      header_txt <- header_txt %>% paste0(markdown_line, '\nOldest:    ', mindate %>% format(formatdates) %>% trimws())
-      header_txt <- header_txt %>% paste0(markdown_line, '\nNewest:    ', maxdate %>% format(formatdates) %>% trimws(),
-                                          ' (+', difftime(maxdate, mindate, units = 'auto') %>% as.double() %>% format(digits = digits, decimal.mark = decimal.mark, big.mark = big.mark), ')')
+      header_txt <- header_txt %>% paste0(markdown_line, "\nOldest:    ", mindate %>% format(formatdates) %>% trimws())
+      header_txt <- header_txt %>% paste0(markdown_line, "\nNewest:    ", maxdate %>% format(formatdates) %>% trimws(),
+                                          " (+", difftime(maxdate, mindate, units = "auto") %>% as.double() %>% format(digits = digits, decimal.mark = decimal.mark, big.mark = big.mark), ")")
     }
-    header_txt <- header_txt %>% paste0(markdown_line, '\nMedian:    ', mediandate %>% format(formatdates) %>% trimws(),
-                                        ' (~', percent(median_days / maxdate_days, round = 0, decimal.mark = decimal.mark), ')')
+    header_txt <- header_txt %>% paste0(markdown_line, "\nMedian:    ", mediandate %>% format(formatdates) %>% trimws(),
+                                        " (~", percent(median_days / maxdate_days, round = 0, decimal.mark = decimal.mark), ")")
   }
-  if (any(class(x) == 'POSIXlt')) {
+  if (any(class(x) == "POSIXlt")) {
     x <- x %>% format(formatdates)
   }
 
@@ -427,9 +458,9 @@ frequency_tbl <- function(x,
     nmax <- length(x)
   }
 
-  column_names <- c('Item', 'Count', 'Percent', 'Cum. Count', 'Cum. Percent')
-  column_names_df <- c('item', 'count', 'percent', 'cum_count', 'cum_percent')
-  column_align <- c(x_align, 'r', 'r', 'r', 'r')
+  column_names <- c("Item", "Count", "Percent", "Cum. Count", "Cum. Percent")
+  column_names_df <- c("item", "count", "percent", "cum_count", "cum_percent")
+  column_align <- c(x_align, "r", "r", "r", "r")
 
   if (is.null(df)) {
     # create table with counts and percentages
@@ -449,10 +480,10 @@ frequency_tbl <- function(x,
     column_align <- c("l", column_align)
   }
 
-  if (df$item %>% paste(collapse = ',') %like% '\033') {
+  if (df$item %>% paste(collapse = ",") %like% "\033") {
     # remove escape char
     # see https://en.wikipedia.org/wiki/Escape_character#ASCII_escape_character
-    df <- df %>% mutate(item = item %>% gsub('\033', ' ', ., fixed = TRUE))
+    df <- df %>% mutate(item = item %>% gsub("\033", " ", ., fixed = TRUE))
   }
 
   if (quote == TRUE) {
@@ -475,9 +506,9 @@ frequency_tbl <- function(x,
   }
 
   if (markdown == TRUE) {
-    tbl_format <- 'markdown'
+    tbl_format <- "markdown"
   } else {
-    tbl_format <- 'pandoc'
+    tbl_format <- "pandoc"
   }
 
   if (!is.null(title)) {
@@ -485,7 +516,7 @@ frequency_tbl <- function(x,
   }
 
   structure(.Data = df,
-            class = c('frequency_tbl', class(df)),
+            class = c("frequency_tbl", class(df)),
             opt = list(title = title,
                        data = x.name,
                        vars = cols,
@@ -511,11 +542,11 @@ freq <- frequency_tbl
 #' @export
 #' @importFrom dplyr top_n pull
 top_freq <- function(f, n) {
-  if (!'frequency_tbl' %in% class(f)) {
-    stop('top_freq can only be applied to frequency tables', call. = FALSE)
+  if (!"frequency_tbl" %in% class(f)) {
+    stop("top_freq can only be applied to frequency tables", call. = FALSE)
   }
   if (!is.numeric(n) | length(n) != 1L) {
-    stop('For top_freq, `nmax` must be a number of length 1', call. = FALSE)
+    stop("For top_freq, `nmax` must be a number of length 1", call. = FALSE)
   }
   top <- f %>% top_n(n, count)
   vect <- top %>% pull(item)
@@ -562,10 +593,10 @@ diff.frequency_tbl <- function(x, y, ...) {
       diff.percent = percent(
         diff / count.x,
         force_zero = TRUE)) %>%
-    mutate(diff = ifelse(diff %like% '^-',
+    mutate(diff = ifelse(diff %like% "^-",
                          diff,
                          paste0("+", diff)),
-           diff.percent = ifelse(diff.percent %like% '^-',
+           diff.percent = ifelse(diff.percent %like% "^-",
                                  diff.percent,
                                  paste0("+", diff.percent)))
 
@@ -590,7 +621,7 @@ print.frequency_tbl <- function(x, nmax = getOption("max.print.freq", default = 
                                 big.mark = ifelse(decimal.mark != ",", ",", "."),
                                 ...) {
 
-  opt <- attr(x, 'opt')
+  opt <- attr(x, "opt")
 
   if (length(opt$vars) == 0) {
     opt$vars <- NULL
@@ -666,7 +697,7 @@ print.frequency_tbl <- function(x, nmax = getOption("max.print.freq", default = 
   }
 
   if (NROW(x) == 0) {
-    cat('\n\nNo observations.\n')
+    cat("\n\nNo observations.\n")
     return(invisible())
   }
 
@@ -680,7 +711,7 @@ print.frequency_tbl <- function(x, nmax = getOption("max.print.freq", default = 
   if (nrow(x) > opt$nmax & opt$tbl_format != "markdown") {
 
     x.rows <- nrow(x)
-    x.unprinted <- base::sum(x[(opt$nmax + 1):nrow(x), 'count'], na.rm = TRUE)
+    x.unprinted <- base::sum(x[(opt$nmax + 1):nrow(x), "count"], na.rm = TRUE)
     x.printed <- base::sum(x$count) - x.unprinted
 
     if (opt$nmax.set == TRUE) {
@@ -692,18 +723,18 @@ print.frequency_tbl <- function(x, nmax = getOption("max.print.freq", default = 
     x <- x[1:nmax,]
 
     if (opt$nmax.set == TRUE) {
-      footer <- paste('[ reached `nmax = ', opt$nmax, '`', sep = '')
+      footer <- paste("[ reached `nmax = ", opt$nmax, "`", sep = "")
     } else {
       footer <- '[ reached getOption("max.print.freq")'
     }
     footer <- paste(footer,
-                    ' -- omitted ',
+                    " -- omitted ",
                     format(x.rows - opt$nmax, big.mark = opt$big.mark),
-                    ' entries, n = ',
+                    " entries, n = ",
                     format(x.unprinted, big.mark = opt$big.mark),
-                    ' (',
+                    " (",
                     (x.unprinted / (x.unprinted + x.printed)) %>% percent(force_zero = TRUE, decimal.mark = opt$decimal.mark),
-                    ') ]\n', sep = '')
+                    ") ]\n", sep = "")
     if (opt$tbl_format == "pandoc") {
       footer <- silver(footer) # only silver in regular printing
     }
@@ -712,7 +743,7 @@ print.frequency_tbl <- function(x, nmax = getOption("max.print.freq", default = 
   }
 
   if ("item" %in% colnames(x)) {
-    if (any(class(x$item) %in% c('double', 'integer', 'numeric', 'raw', 'single'))) {
+    if (any(class(x$item) %in% c("double", "integer", "numeric", "raw", "single"))) {
       x$item <- format(x$item, decimal.mark = opt$decimal.mark, big.mark = opt$big.mark)
     }
   } else {
@@ -720,7 +751,7 @@ print.frequency_tbl <- function(x, nmax = getOption("max.print.freq", default = 
   }
   if ("count" %in% colnames(x)) {
     if (all(x$count == 1)) {
-      warning('All observations are unique.', call. = FALSE)
+      warning("All observations are unique.", call. = FALSE)
     }
     x$count <- format(x$count, decimal.mark = opt$decimal.mark, big.mark = opt$big.mark)
   } else {
@@ -762,7 +793,7 @@ print.frequency_tbl <- function(x, nmax = getOption("max.print.freq", default = 
   if (opt$tbl_format == "markdown") {
     cat("\n\n")
   } else {
-    cat('\n')
+    cat("\n")
   }
 
   # reset old kable setting
@@ -775,8 +806,8 @@ print.frequency_tbl <- function(x, nmax = getOption("max.print.freq", default = 
 #' @exportMethod as.data.frame.frequency_tbl
 #' @export
 as.data.frame.frequency_tbl <- function(x, ...) {
-  attr(x, 'package') <- NULL
-  attr(x, 'opt') <- NULL
+  attr(x, "package") <- NULL
+  attr(x, "opt") <- NULL
   as.data.frame.data.frame(x, ...)
 }
 
@@ -785,8 +816,8 @@ as.data.frame.frequency_tbl <- function(x, ...) {
 #' @export
 #' @importFrom dplyr as_tibble
 as_tibble.frequency_tbl <- function(x, validate = TRUE, ..., rownames = NA) {
-  attr(x, 'package') <- NULL
-  attr(x, 'opt') <- NULL
+  attr(x, "package") <- NULL
+  attr(x, "opt") <- NULL
   as_tibble(x = as.data.frame(x), validate = validate, ..., rownames = rownames)
 }
 
@@ -794,10 +825,10 @@ as_tibble.frequency_tbl <- function(x, validate = TRUE, ..., rownames = NA) {
 #' @exportMethod hist.frequency_tbl
 #' @export
 #' @importFrom graphics hist
-hist.frequency_tbl <- function(x, breaks = "Sturges", main = NULL, ...) {
-  opt <- attr(x, 'opt')
+hist.frequency_tbl <- function(x, breaks = "Sturges", main = NULL, xlab = NULL, ...) {
+  opt <- attr(x, "opt")
   if (!class(x$item) %in% c("numeric", "double", "integer", "Date")) {
-    stop("'x' must be numeric or Date.", call. = FALSE)
+    stop("`x` must be numeric or Date.", call. = FALSE)
   }
   if (!is.null(opt$vars)) {
     title <- opt$vars
@@ -814,14 +845,17 @@ hist.frequency_tbl <- function(x, breaks = "Sturges", main = NULL, ...) {
   if (is.null(main)) {
     main <- paste("Histogram of", title)
   }
-  hist(x, main = main, xlab = title, ...)
+  if (is.null(xlab)) {
+    xlab <- title
+  }
+  hist(x, main = main, xlab = xlab, breaks = breaks, ...)
 }
 
 #' @noRd
 #' @exportMethod plot.frequency_tbl
 #' @export
 plot.frequency_tbl <- function(x, y, ...) {
-  opt <- attr(x, 'opt')
+  opt <- attr(x, "opt")
   if (!is.null(opt$vars)) {
     title <- opt$vars
   } else {
@@ -841,7 +875,7 @@ as.vector.frequency_tbl <- function(x, mode = "any") {
 #' @exportMethod format.frequency_tbl
 #' @export
 format.frequency_tbl <- function(x, digits = 1, ...) {
-  opt <- attr(x, 'opt')
+  opt <- attr(x, "opt")
   if (opt$nmax.set == TRUE) {
     nmax <- opt$nmax
   } else {

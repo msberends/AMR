@@ -1,10 +1,25 @@
 # 0.5.0.90xx (latest development version)
 
 #### New
+* **BREAKING**: removed deprecated functions, parameters and references to 'bactid'. Use `as.mo` to identify an MO code.
+* Support for `dplyr` version 0.8.0
 * Function `mo_failures` to review values that could not be coerced to a valid MO code, using `as.mo`. This latter function will now only show a maximum of 25 uncoerced values.
 * Function `mo_renamed` to get a list of all returned values from `as.mo` that have had taxonomic renaming
 * Function `age` to calculate the (patients) age in years
-* Function `age_groups` to split ages into custom or predefined groups (like children or elderly). This allows for easier demographic antimicrobial resistance analysis (per age group).
+* Function `age_groups` to split ages into custom or predefined groups (like children or elderly). This allows for easier demographic antimicrobial resistance analysis per age group.
+* Functions `filter_first_isolate` and `filter_first_weighted_isolate()` to shorten and fasten filtering on data sets with antimicrobial results, e.g.:
+  ```r
+  septic_patients %>% filter_first_isolate()
+  # or
+  filter_first_isolate(septic_patients)
+  ```
+  is the same as:
+  ```r
+  septic_patients %>%
+    mutate(only_firsts = first_isolate(septic_patients, ...)) %>%
+    filter(only_firsts == TRUE) %>%
+    select(-only_firsts)
+  ```
 
 #### Changed
 * Improvements for `as.mo`:
@@ -18,6 +33,8 @@
 * Function `first_isolate`:
   * Will now use a column named like "patid" for the patient ID (parameter `col_patientid`), when this parameter was left blank
   * Will now use a column named like "key(...)ab" or "key(...)antibiotics" for the key antibiotics (parameter `col_keyantibiotics`), when this parameter was left blank
+  * Removed parameter `output_logical`, the function will now always return a logical value
+  * Renamed parameter `filter_specimen` to `specimen_group`, although using `filter_specimen` will still work
 * A note to the manual pages of the `portion` functions, that low counts can influence the outcome and that the `portion` functions may camouflage this, since they only return the portion (albeit being dependent on the `minimum` parameter)
 * Function `mo_taxonomy` now contains the kingdom too
 * Function `first_isolate` will now use a column named like "patid" for the patient ID, when this parameter was left blank
@@ -29,7 +46,11 @@
   * Now honours the `decimal.mark` setting, which just like `format` defaults to `getOption("OutDec")`
   * The new `big.mark` parameter will at default be `","` when `decimal.mark = "."` and `"."` otherwise
   * Fix for header text where all observations are `NA`
+  * New parameter `droplevels` to exclude empty factor levels when input is a factor
+  * Factor levels will be in header when present
 * Function `scale_y_percent` now has the `limits` parameter
+* Automatic parameter filling for `mdro`, `key_antibiotics` and `eucast_rules`
+* Updated examples for resistance prediction (`resistance_predict` function)
 
 #### Other
 * Updated licence text to emphasise GPL 2.0 and that this is an R package.

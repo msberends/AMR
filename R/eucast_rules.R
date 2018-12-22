@@ -24,7 +24,6 @@
 #' @param rules a character vector that specifies which rules should be applied - one or more of \code{c("breakpoints", "expert", "other", "all")}
 #' @param verbose a logical to indicate whether extensive info should be returned as a \code{data.frame} with info about which rows and columns are effected
 #' @param amcl,amik,amox,ampi,azit,azlo,aztr,cefa,cfep,cfot,cfox,cfra,cfta,cftr,cfur,chlo,cipr,clar,clin,clox,coli,czol,dapt,doxy,erta,eryt,fosf,fusi,gent,imip,kana,levo,linc,line,mero,mezl,mino,moxi,nali,neom,neti,nitr,norf,novo,oflo,oxac,peni,pipe,pita,poly,pris,qida,rifa,roxi,siso,teic,tetr,tica,tige,tobr,trim,trsu,vanc column name of an antibiotic, see Antibiotics
-#' @param col_bactid deprecated, use \code{col_mo} instead.
 #' @param ... parameters that are passed on to \code{eucast_rules}
 #' @inheritParams first_isolate
 #' @section Antibiotics:
@@ -217,8 +216,7 @@ eucast_rules <- function(tbl,
                          tobr = 'tobr',
                          trim = 'trim',
                          trsu = 'trsu',
-                         vanc = 'vanc',
-                         col_bactid = NULL) {
+                         vanc = 'vanc') {
 
   EUCAST_VERSION_BREAKPOINTS <- "8.1, 2018"
   EUCAST_VERSION_EXPERT_RULES <- "3.1, 2016"
@@ -229,12 +227,12 @@ eucast_rules <- function(tbl,
 
   # try to find columns based on type
   # -- mo
-  if (!is.null(col_bactid)) {
-    col_mo <- col_bactid
-    warning("Use of `col_bactid` is deprecated. Use `col_mo` instead.")
-  } else if (is.null(col_mo) & "mo" %in% lapply(tbl, class)) {
-    col_mo <- colnames(tbl)[lapply(tbl, class) == "mo"]
-    message("NOTE: Using column `", col_mo, "` as input for `col_mo`.")
+  if (is.null(col_mo) & "mo" %in% lapply(tbl, class)) {
+    col_mo <- colnames(tbl)[lapply(tbl, class) == "mo"][1]
+    message(blue(paste0("NOTE: Using column `", bold(col_mo), "` as input for `col_mo`.")))
+  }
+  if (is.null(col_mo)) {
+    stop("`col_mo` must be set.", call. = FALSE)
   }
 
   if (!all(rules %in% c("breakpoints", "expert", "other", "all"))) {
@@ -1731,12 +1729,14 @@ eucast_rules <- function(tbl,
     } else {
       colour <- blue
     }
+    decimal.mark <- getOption("OutDec")
+    big.mark <- ifelse(decimal.mark != ",", ",", ".")
     cat(bold(paste('\n=> EUCAST rules', paste0(wouldve, 'affected'),
-             amount_affected_rows %>% length() %>% format(big.mark = ","),
-             'out of', nrow(tbl_original) %>% format(big.mark = ","),
+             amount_affected_rows %>% length() %>% format(big.mark = big.mark, decimal.mark = decimal.mark),
+             'out of', nrow(tbl_original) %>% format(big.mark = big.mark, decimal.mark = decimal.mark),
              'rows ->',
              colour(paste0(wouldve, 'changed'),
-                    amount_changed %>% format(big.mark = ","), 'test results.\n\n'))))
+                    amount_changed %>% format(big.mark = big.mark, decimal.mark = decimal.mark), 'test results.\n\n'))))
   }
 
   if (verbose == TRUE) {

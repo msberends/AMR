@@ -26,6 +26,7 @@
 #' @param GramPos_1,GramPos_2,GramPos_3,GramPos_4,GramPos_5,GramPos_6 column names of antibiotics for \strong{Gram positives}, case-insensitive
 #' @param GramNeg_1,GramNeg_2,GramNeg_3,GramNeg_4,GramNeg_5,GramNeg_6 column names of antibiotics for \strong{Gram negatives}, case-insensitive
 #' @param warnings give warning about missing antibiotic columns, they will anyway be ignored
+#' @param ... other parameters passed on to function
 #' @details The function \code{key_antibiotics} returns a character vector with 12 antibiotic results for every isolate. These isolates can then be compared using \code{key_antibiotics_equal}, to check if two isolates have generally the same antibiogram. Missing and invalid values are replaced with a dot (\code{"."}). The \code{\link{first_isolate}} function only uses this function on the same microbial species from the same patient. Using this, an MRSA will be included after a susceptible \emph{S. aureus} (MSSA) found within the same episode (see \code{episode} parameter of \code{\link{first_isolate}}). Without key antibiotic comparison it wouldn't.
 #'
 #'   At default, the antibiotics that are used for \strong{Gram positive bacteria} are (colum names): \cr
@@ -40,22 +41,21 @@
 #' @rdname key_antibiotics
 #' @export
 #' @importFrom dplyr %>% mutate if_else
+#' @importFrom crayon blue bold
 #' @seealso \code{\link{first_isolate}}
 #' @examples
 #' # septic_patients is a dataset available in the AMR package
 #' ?septic_patients
-#' my_patients <- septic_patients
-#'
+
 #' library(dplyr)
 #' # set key antibiotics to a new variable
-#' my_patients <- my_patients %>%
+#' my_patients <- septic_patients %>%
 #'   mutate(keyab = key_antibiotics(.)) %>%
 #'   mutate(
 #'     # now calculate first isolates
-#'     first_regular = first_isolate(., "date", "patient_id", "mo"),
+#'     first_regular = first_isolate(., col_keyantibiotics = FALSE),
 #'     # and first WEIGHTED isolates
-#'     first_weighted = first_isolate(., "date", "patient_id", "mo",
-#'                                    col_keyantibiotics = "keyab")
+#'     first_weighted = first_isolate(., col_keyantibiotics = "keyab")
 #'   )
 #'
 #' # Check the difference, in this data set it results in 7% more isolates:
@@ -68,12 +68,12 @@
 #' strainB <- "SSSIRSSSRSSS"
 #'
 #' key_antibiotics_equal(strainA, strainB)
-#' # TRUE, because I is ignored (as are missing values)
+#' # TRUE, because I is ignored (as well as missing values)
 #'
 #' key_antibiotics_equal(strainA, strainB, ignore_I = FALSE)
 #' # FALSE, because I is not ignored and so the 4th value differs
 key_antibiotics <- function(tbl,
-                            col_mo = "mo",
+                            col_mo = NULL,
                             universal_1 = "amox",
                             universal_2 = "amcl",
                             universal_3 = "cfur",
@@ -93,14 +93,16 @@ key_antibiotics <- function(tbl,
                             GramNeg_5 = "cfta",
                             GramNeg_6 = "mero",
                             warnings = TRUE,
-                            col_bactid = "bactid") {
+                            ...) {
 
-  if (col_bactid %in% colnames(tbl)) {
-    col_mo <- col_bactid
-    warning("Use of `col_bactid` is deprecated. Use `col_mo` instead.")
+  # try to find columns based on type
+  # -- mo
+  if (is.null(col_mo) & "mo" %in% lapply(tbl, class)) {
+    col_mo <- colnames(tbl)[lapply(tbl, class) == "mo"][1]
+    message(blue(paste0("NOTE: Using column `", bold(col_mo), "` as input for `col_mo`.")))
   }
-  if (!col_mo %in% colnames(tbl)) {
-    stop('Column ', col_mo, ' not found.', call. = FALSE)
+  if (is.null(col_mo)) {
+    stop("`col_mo` must be set.", call. = FALSE)
   }
 
   # check columns
@@ -140,13 +142,11 @@ key_antibiotics <- function(tbl,
                     GramNeg_4, GramNeg_5, GramNeg_6)
   gram_negative <- gram_negative[!is.na(gram_negative)]
 
-  if (!tbl %>% pull(col_mo) %>% is.mo()) {
-    tbl[, col_mo] <- as.mo(tbl[, col_mo])
-  }
-  # join microorganisms
-  tbl <- tbl %>% left_join_microorganisms(col_mo)
-
-  tbl$key_ab <- NA_character_
+  # join to microorganisms data set
+  tbl <- tbl %>%
+    mutate_at(vars(col_mo), as.mo) %>%
+    left_join_microorganisms(by = col_mo) %>%
+    mutate(key_ab = NA_character_)
 
   # Gram +
   tbl <- tbl %>% mutate(key_ab =

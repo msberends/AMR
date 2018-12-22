@@ -19,7 +19,7 @@
 context("first_isolate.R")
 
 test_that("first isolates work", {
-  # septic_patients contains 1331 out of 2000 first isolates
+  # septic_patients contains 1315 out of 2000 first isolates
   expect_equal(
     sum(
       first_isolate(tbl = septic_patients,
@@ -139,16 +139,15 @@ test_that("first isolates work", {
                    mutate(first = first_isolate(., "date", "patient_id",
                                                 col_mo = "mo",
                                                 col_specimen = "specimen",
-                                                filter_specimen = "something_unexisting",
-                                                output_logical = FALSE)))
+                                                filter_specimen = "something_unexisting")))
 
   # printing of exclusion message
   expect_output(septic_patients %>%
-                            first_isolate(col_date = "date",
-                                          col_mo = "mo",
-                                          col_patient_id = "patient_id",
-                                          col_testcode = "gender",
-                                          testcodes_exclude = "M"))
+                  first_isolate(col_date = "date",
+                                col_mo = "mo",
+                                col_patient_id = "patient_id",
+                                col_testcode = "gender",
+                                testcodes_exclude = "M"))
 
   # errors
   expect_error(first_isolate("date", "patient_id", col_mo = "mo"))
@@ -158,18 +157,16 @@ test_that("first isolates work", {
 
   # look for columns itself
   expect_message(first_isolate(septic_patients))
-  expect_message(first_isolate(septic_patients %>%
-                                 mutate(mo = as.character(mo)) %>%
-                                 left_join_microorganisms(),
-                               col_genus = "genus",
-                               col_species = "species"))
+  expect_error(first_isolate(septic_patients %>%
+                               mutate(mo = as.character(mo)) %>%
+                               left_join_microorganisms()))
 
   # if mo is not an mo class, result should be the same
   expect_identical(septic_patients %>%
-                   mutate(mo = as.character(mo)) %>%
-                   first_isolate(col_date = "date",
-                                 col_mo = "mo",
-                                 col_patient_id = "patient_id"),
+                     mutate(mo = as.character(mo)) %>%
+                     first_isolate(col_date = "date",
+                                   col_mo = "mo",
+                                   col_patient_id = "patient_id"),
                    septic_patients %>%
                      first_isolate(col_date = "date",
                                    col_mo = "mo",

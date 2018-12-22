@@ -19,28 +19,28 @@
 #' Age in years of individuals
 #'
 #' Calculates age in years based on a reference date, which is the sytem time at default.
-#' @param x date(s) - will be coerced with \code{\link{as.POSIXlt}}
-#' @param y reference date(s) - defaults to \code{\link{Sys.Date}} - will be coerced with \code{\link{as.POSIXlt}}
+#' @param x date(s), will be coerced with \code{\link{as.POSIXlt}}
+#' @param reference reference date(s) (defaults to today), will be coerced with \code{\link{as.POSIXlt}}
 #' @return Integer (no decimals)
-#' @seealso age_groups
+#' @seealso \code{\link{age_groups}} to splits age into groups
 #' @importFrom dplyr if_else
 #' @export
-age <- function(x, y = Sys.Date()) {
-  if (length(x) != length(y)) {
-    if (length(y) == 1) {
-      y <- rep(y, length(x))
+age <- function(x, reference = Sys.Date()) {
+  if (length(x) != length(reference)) {
+    if (length(reference) == 1) {
+      reference <- rep(reference, length(x))
     } else {
-      stop("`x` and `y` must be of same length, or `y` must be of length 1.")
+      stop("`x` and `reference` must be of same length, or `reference` must be of length 1.")
     }
   }
   x <- base::as.POSIXlt(x)
-  y <- base::as.POSIXlt(y)
-  if (any(y < x)) {
-    stop("`y` cannot be lower (older) than `x`.")
+  reference <- base::as.POSIXlt(reference)
+  if (any(reference < x)) {
+    stop("`reference` cannot be lower (older) than `x`.")
   }
-  years_gap <- y$year - x$year
+  years_gap <- reference$year - x$year
   # from https://stackoverflow.com/a/25450756/4575331
-  ages <- if_else(y$mon < x$mon | (y$mon == x$mon & y$mday < x$mday),
+  ages <- if_else(reference$mon < x$mon | (reference$mon == x$mon & reference$mday < x$mday),
          as.integer(years_gap - 1),
          as.integer(years_gap))
   if (any(ages > 120)) {
@@ -51,9 +51,9 @@ age <- function(x, y = Sys.Date()) {
 
 #' Split ages into age groups
 #'
-#' Splits ages into groups defined by the \code{split} parameter.
+#' Split ages into age groups defined by the \code{split} parameter. This allows for easier demographic (antimicrobial resistance) analysis.
 #' @param x age, e.g. calculated with \code{\link{age}}
-#' @param split_at values to split \code{x}, defaults to 0-11, 12-24, 26-54, 55-74 and 75+. See Details.
+#' @param split_at values to split \code{x} at, defaults to age groups 0-11, 12-24, 26-54, 55-74 and 75+. See Details.
 #' @details To split ages, the input can be:
 #' \itemize{
 #'   \item{A numeric vector. A vector of \code{c(10, 20)} will split on 0-9, 10-19 and 20+. A value of only \code{50} will split on 0-49 and 50+.
@@ -68,7 +68,7 @@ age <- function(x, y = Sys.Date()) {
 #' }
 #' @keywords age_group age
 #' @return Ordered \code{\link{factor}}
-#' @seealso age
+#' @seealso \code{\link{age}} to determine ages based on one or more reference dates
 #' @export
 #' @examples
 #' ages <- c(3, 8, 16, 54, 31, 76, 101, 43, 21)

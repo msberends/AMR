@@ -9,13 +9,13 @@ age_groups(x, split_at = c(12, 25, 55, 75))
 \arguments{
 \item{x}{age, e.g. calculated with \code{\link{age}}}
 
-\item{split_at}{values to split \code{x}, defaults to 0-11, 12-24, 26-54, 55-74 and 75+. See Details.}
+\item{split_at}{values to split \code{x} at, defaults to age groups 0-11, 12-24, 26-54, 55-74 and 75+. See Details.}
 }
 \value{
 Ordered \code{\link{factor}}
 }
 \description{
-Splits ages into groups defined by the \code{split} parameter.
+Split ages into age groups defined by the \code{split} parameter. This allows for easier demographic (antimicrobial resistance) analysis.
 }
 \details{
 To split ages, the input can be:
@@ -65,7 +65,7 @@ septic_patients \%>\%
   ggplot_rsi(x = "age_group")
 }
 \seealso{
-age
+\code{\link{age}} to determine ages based on one or more reference dates
 }
 \keyword{age}
 \keyword{age_group}

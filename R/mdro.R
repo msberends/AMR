@@ -30,7 +30,7 @@
 #' @return Ordered factor with levels \code{Negative < Positive, unconfirmed < Positive}.
 #' @rdname mdro
 #' @importFrom dplyr %>%
-#' @importFrom crayon red blue
+#' @importFrom crayon red blue bold
 #' @export
 #' @examples
 #' library(dplyr)
@@ -101,8 +101,7 @@ mdro <- function(tbl,
                  tobr = 'tobr',
                  trim = 'trim',
                  trsu = 'trsu',
-                 vanc = 'vanc',
-                 col_bactid = NULL) {
+                 vanc = 'vanc') {
 
   if (!is.data.frame(tbl)) {
     stop("`tbl` must be a data frame.", call. = FALSE)
@@ -110,14 +109,12 @@ mdro <- function(tbl,
 
   # try to find columns based on type
   # -- mo
-  if (!is.null(col_bactid)) {
-    col_mo <- col_bactid
-    warning("Use of `col_bactid` is deprecated. Use `col_mo` instead.")
-  } else if (is.null(col_mo) & "mo" %in% lapply(tbl, class)) {
+  if (is.null(col_mo) & "mo" %in% lapply(tbl, class)) {
     col_mo <- colnames(tbl)[lapply(tbl, class) == "mo"][1]
-    message("NOTE: Using column `", col_mo, "` as input for `col_mo`.")
-  } else if (!col_mo %in% colnames(tbl)) {
-    stop('Column ', col_mo, ' not found.', call. = FALSE)
+    message(blue(paste0("NOTE: Using column `", bold(col_mo), "` as input for `col_mo`.")))
+  }
+  if (is.null(col_mo)) {
+    stop("`col_mo` must be set.", call. = FALSE)
   }
 
   # strip whitespaces
@@ -259,11 +256,8 @@ mdro <- function(tbl,
     }
   }
 
-  if (!tbl %>% pull(col_mo) %>% is.mo()) {
-    tbl[, col_mo] <- as.mo(tbl[, col_mo])
-  }
-
   tbl <- tbl %>%
+    mutate_at(vars(col_mo), as.mo) %>%
     # join to microorganisms data set
     left_join_microorganisms(by = col_mo) %>%
     # add unconfirmed to where genus is available

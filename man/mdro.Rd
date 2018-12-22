@@ -22,8 +22,7 @@ mdro(tbl, country = NULL, col_mo = NULL, info = TRUE,
   peni = "peni", pipe = "pipe", pita = "pita", poly = "poly",
   qida = "qida", rifa = "rifa", roxi = "roxi", siso = "siso",
   teic = "teic", tetr = "tetr", tica = "tica", tige = "tige",
-  tobr = "tobr", trim = "trim", trsu = "trsu", vanc = "vanc",
-  col_bactid = NULL)
+  tobr = "tobr", trim = "trim", trsu = "trsu", vanc = "vanc")
 
 brmo(..., country = "nl")
 
@@ -159,8 +158,6 @@ eucast_exceptional_phenotypes(tbl, country = "EUCAST", ...)
 \item{trsu}{column name of an antibiotic, see Antibiotics}
 
 \item{vanc}{column name of an antibiotic, see Antibiotics}
-
-\item{col_bactid}{deprecated, use \code{col_mo} instead.}
 
 \item{...}{parameters that are passed on to methods}
 }

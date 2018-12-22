@@ -2,6 +2,8 @@
 % Please edit documentation in R/first_isolate.R
 \name{first_isolate}
 \alias{first_isolate}
+\alias{filter_first_isolate}
+\alias{filter_first_weighted_isolate}
 \title{Determine first (weighted) isolates}
 \source{
 Methodology of this function is based on: \strong{M39 Analysis and Presentation of Cumulative Antimicrobial Susceptibility Test Data, 4th Edition}, 2014, \emph{Clinical and Laboratory Standards Institute (CLSI)}. \url{https://clsi.org/standards/products/microbiology/documents/m39/}.
@@ -11,10 +13,15 @@ first_isolate(tbl, col_date = NULL, col_patient_id = NULL,
   col_mo = NULL, col_testcode = NULL, col_specimen = NULL,
   col_icu = NULL, col_keyantibiotics = NULL, episode_days = 365,
   testcodes_exclude = NULL, icu_exclude = FALSE,
-  filter_specimen = NULL, output_logical = TRUE,
-  type = "keyantibiotics", ignore_I = TRUE, points_threshold = 2,
-  info = TRUE, col_bactid = NULL, col_genus = NULL,
-  col_species = NULL)
+  specimen_group = NULL, type = "keyantibiotics", ignore_I = TRUE,
+  points_threshold = 2, info = TRUE, ...)
+
+filter_first_isolate(tbl, col_date = NULL, col_patient_id = NULL,
+  col_mo = NULL, ...)
+
+filter_first_weighted_isolate(tbl, col_date = NULL,
+  col_patient_id = NULL, col_mo = NULL, col_keyantibiotics = NULL,
+  ...)
 }
 \arguments{
 \item{tbl}{a \code{data.frame} containing isolates.}
@@ -37,11 +44,9 @@ first_isolate(tbl, col_date = NULL, col_patient_id = NULL,
 
 \item{testcodes_exclude}{character vector with test codes that should be excluded (case-insensitive)}
 
-\item{icu_exclude}{logical whether ICU isolates should be excluded}
+\item{icu_exclude}{logical whether ICU isolates should be excluded (rows with value \code{TRUE} in column \code{col_icu})}
 
-\item{filter_specimen}{specimen group or type that should be excluded}
-
-\item{output_logical}{return output as \code{logical} (will else be the values \code{0} or \code{1})}
+\item{specimen_group}{value in column \code{col_specimen} to filter on}
 
 \item{type}{type to determine weighed isolates; can be \code{"keyantibiotics"} or \code{"points"}, see Details}
 
@@ -51,21 +56,34 @@ first_isolate(tbl, col_date = NULL, col_patient_id = NULL,
 
 \item{info}{print progress}
 
-\item{col_bactid}{(deprecated, use \code{col_mo} instead)}
-
-\item{col_genus}{(deprecated, use \code{col_mo} instead) column name of the genus of the microorganisms}
-
-\item{col_species}{(deprecated, use \code{col_mo} instead) column name of the species of the microorganisms}
+\item{...}{parameters passed on to the \code{first_isolate} function}
 }
 \value{
-A vector to add to table, see Examples.
+Logical vector
 }
 \description{
 Determine first (weighted) isolates of all microorganisms of every patient per episode and (if needed) per specimen type.
 }
 \details{
 \strong{WHY THIS IS SO IMPORTANT} \cr
-    To conduct an analysis of antimicrobial resistance, you should only include the first isolate of every patient per episode \href{https://www.ncbi.nlm.nih.gov/pubmed/17304462}{[1]}. If you would not do this, you could easily get an overestimate or underestimate of the resistance of an antibiotic. Imagine that a patient was admitted with an MRSA and that it was found in 5 different blood cultures the following week. The resistance percentage of oxacillin of all \emph{S. aureus} isolates would be overestimated, because you included this MRSA more than once. It would be \href{https://en.wikipedia.org/wiki/Selection_bias}{selection bias}.
+To conduct an analysis of antimicrobial resistance, you should only include the first isolate of every patient per episode \href{https://www.ncbi.nlm.nih.gov/pubmed/17304462}{[1]}. If you would not do this, you could easily get an overestimate or underestimate of the resistance of an antibiotic. Imagine that a patient was admitted with an MRSA and that it was found in 5 different blood cultures the following week. The resistance percentage of oxacillin of all \emph{S. aureus} isolates would be overestimated, because you included this MRSA more than once. It would be \href{https://en.wikipedia.org/wiki/Selection_bias}{selection bias}.
+
+The function \code{filter_first_isolate} is essentially equal to:
+\preformatted{
+ tbl \%>\%
+   mutate(only_firsts = first_isolate(tbl, ...)) \%>\%
+   filter(only_firsts == TRUE) \%>\%
+   select(-only_firsts)
+}
+The function \code{filter_first_weighted_isolate} is essentially equal to:
+\preformatted{
+ tbl \%>\%
+   mutate(keyab = key_antibiotics(.)) \%>\%
+   mutate(only_weighted_firsts = first_isolate(tbl,
+                                               col_keyantibiotics = "keyab", ...)) \%>\%
+   filter(only_weighted_firsts == TRUE) \%>\%
+   select(-only_weighted_firsts)
+}
 }
 \section{Key antibiotics}{
 
@@ -83,20 +101,29 @@ Determine first (weighted) isolates of all microorganisms of every patient per e
 ?septic_patients
 
 library(dplyr)
-my_patients <- septic_patients \%>\%
+# Filter on first isolates:
+septic_patients \%>\%
   mutate(first_isolate = first_isolate(.,
                                        col_date = "date",
                                        col_patient_id = "patient_id",
-                                       col_mo = "mo"))
+                                       col_mo = "mo")) \%>\%
+  filter(first_isolate == TRUE)
+
+# Which can be shortened to:
+septic_patients \%>\%
+  filter_first_isolate()
+# or for first weighted isolates:
+septic_patients \%>\%
+  filter_first_weighted_isolate()
 
 # Now let's see if first isolates matter:
-A <- my_patients \%>\%
+A <- septic_patients \%>\%
   group_by(hospital_id) \%>\%
   summarise(count = n_rsi(gent),            # gentamicin availability
             resistance = portion_IR(gent))  # gentamicin resistance
 
-B <- my_patients \%>\%
-  filter(first_isolate == TRUE) \%>\%         # the 1st isolate filter
+B <- septic_patients \%>\%
+  filter_first_weighted_isolate() \%>\%       # the 1st isolate filter
   group_by(hospital_id) \%>\%
   summarise(count = n_rsi(gent),            # gentamicin availability
             resistance = portion_IR(gent))  # gentamicin resistance
@@ -105,6 +132,7 @@ B <- my_patients \%>\%
 # B is more reliable because every isolate is only counted once.
 # Gentamicin resitance in hospital D appears to be 5.4\% higher than
 # when you (erroneously) would have used all isolates!
+
 
 ## OTHER EXAMPLES:
 
@@ -122,29 +150,29 @@ tbl$first_isolate_weighed <-
 
 tbl$first_blood_isolate <-
   first_isolate(tbl,
-                filter_specimen = 'Blood')
+                specimen_group = 'Blood')
 
 tbl$first_blood_isolate_weighed <-
   first_isolate(tbl,
-                filter_specimen = 'Blood',
+                specimen_group = 'Blood',
                 col_keyantibiotics = 'keyab')
 
 tbl$first_urine_isolate <-
   first_isolate(tbl,
-                filter_specimen = 'Urine')
+                specimen_group = 'Urine')
 
 tbl$first_urine_isolate_weighed <-
   first_isolate(tbl,
-                filter_specimen = 'Urine',
+                specimen_group = 'Urine',
                 col_keyantibiotics = 'keyab')
 
 tbl$first_resp_isolate <-
   first_isolate(tbl,
-                filter_specimen = 'Respiratory')
+                specimen_group = 'Respiratory')
 
 tbl$first_resp_isolate_weighed <-
   first_isolate(tbl,
-                filter_specimen = 'Respiratory',
+                specimen_group = 'Respiratory',
                 col_keyantibiotics = 'keyab')
 }
 }
