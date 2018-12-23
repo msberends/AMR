@@ -8,4 +8,4 @@ appveyor.yml
 _noinclude
 ^cran-comments\.md$
 git.sh
-pages
+public
