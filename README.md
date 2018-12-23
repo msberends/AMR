@@ -13,7 +13,7 @@ Christian F. Luz <a href="https://orcid.org/0000-0001-5809-5995"><img src="https
 Erwin E.A. Hassing<sup>2</sup>,
 Corinna Glasner <a href="https://orcid.org/0000-0003-1241-1328"><img src="https://cran.r-project.org/web/orcid.svg" height="16px"></a> <sup>1,b</sup>,
 Alex W. Friedrich <a href="https://orcid.org/0000-0003-4881-038X"><img src="https://cran.r-project.org/web/orcid.svg" height="16px"></a> <sup>1,b</sup>,
-Bhanu Sinha <a href="https://orcid.org/0000-0003-1634-0010"><img src="https://cran.r-project.org/web/orcid.svg" height="16px"></a> <sup>1,b</sup>
+Bhanu N.M. Sinha <a href="https://orcid.org/0000-0003-1634-0010"><img src="https://cran.r-project.org/web/orcid.svg" height="16px"></a> <sup>1,b</sup>
   
 <sup>1</sup> Department of Medical Microbiology, University of Groningen, University Medical Center Groningen, Groningen, the Netherlands - [rug.nl](http://www.rug.nl) [umcg.nl](http://www.umcg.nl)<br>
 <sup>2</sup> Certe Medical Diagnostics & Advice, Groningen, the Netherlands - [certe.nl](http://www.certe.nl)<br>

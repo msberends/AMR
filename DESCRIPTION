@@ -16,7 +16,7 @@ Authors@R: c(
         role = c("aut", "rev"),
         comment = c(ORCID = "0000-0001-5809-5995")),
     person(
-        given = c("Erwin", "E.A."),
+        given = c("Erwin", "E.", "A."),
         family = "Hassing",
         email = "e.hassing@certe.nl",
         role = "ctb"),
@@ -33,7 +33,7 @@ Authors@R: c(
         role = "ths",
         comment = c(ORCID = "0000-0003-4881-038X")),
     person(
-        given = "Bhanu",
+        given = c("Bhanu", "N.", "M."),
         family = "Sinha",
         email = "b.sinha@umcg.nl",
         role = "ths",
