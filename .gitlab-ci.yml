@@ -9,8 +9,8 @@ R 3:
       - apt-get update
       # install dependencies for package
       - apt-get install --yes --no-install-recommends libxml2-dev libssl-dev libcurl4-openssl-dev zlib1g-dev
-      - Rscript -e 'install.packages(c("devtools", "rlang"), repos = 'https://cran.rstudio.com', type = 'binary')'
-      - Rscript -e 'devtools::install_dev_deps(repos = "https://cran.rstudio.com", type = 'binary')'
+      - Rscript -e 'install.packages(c("devtools", "rlang"), repos = "https://cran.rstudio.com")'
+      - Rscript -e 'devtools::install_dev_deps(repos = "https://cran.rstudio.com")'
       # remove vignettes folder and get VignetteBuilder field out of DESCRIPTION file
       - rm -rf vignettes
       - Rscript -e 'd <- read.dcf("DESCRIPTION"); d[, colnames(d) == "VignetteBuilder"] <- NA; write.dcf(d, "DESCRIPTION")'
@@ -35,8 +35,8 @@ pages:
   image: debian:buster-slim
   script:
     - apt-get update && apt-get -y install libxml2-dev libssl-dev libcurl4-openssl-dev pandoc r-base
-    - Rscript -e "install.packages(c('pkgdown', 'devtools'), repos = 'http://cran.rstudio.com', type = 'binary')"
-    - Rscript -e "devtools::install_dev_deps(repos = 'https://cran.rstudio.com', type = 'binary')"
+    - Rscript -e "install.packages(c('pkgdown', 'devtools'), repos = 'https://cran.rstudio.com')"
+    - Rscript -e "devtools::install_dev_deps(repos = 'https://cran.rstudio.com')"
     - Rscript -e "devtools::install(build = TRUE, upgrade = FALSE)"
     - R -e "pkgdown::build_site()"
   artifacts:
