@@ -1,7 +1,6 @@
 # from https://stackoverflow.com/questions/51866926
 # and https://github.com/jangorecki/r.gitlab.ci
 # and https://docs.gitlab.com/ce/ci/yaml/README.html
-
 # how the Docker+R images work: https://hub.docker.com/r/rocker/r-ver/
 R 3:
     image: rocker/r-ver:3 # test on R v3.*.*
@@ -40,6 +39,7 @@ pages:
     - apt-get update && apt-get -y install libxml2-dev libssl-dev libcurl4-openssl-dev pandoc r-base
     - Rscript -e "install.packages(c('pkgdown', 'devtools'), repos = 'http://cran.rstudio.com')"
     - Rscript -e "devtools::install_dev_deps(repos = 'https://cran.rstudio.com')"
+    - Rscript -e "devtools::build()"
     - R -e "pkgdown::build_site()"
   artifacts:
     paths:
