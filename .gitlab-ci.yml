@@ -34,13 +34,11 @@ R 3:
       name: 'Rcheck log'
       expire_in: '1 month'
 
-before_script:
+pages:
   image: debian:buster-slim
   script:
     - apt-get update && apt-get -y install pandoc r-base
     - Rscript -e "install.packages('pkgdown', repos = 'http://cran.rstudio.com')"
-
-pages:
     - R -e "pkgdown::build_site()"
   artifacts:
     paths:
