@@ -38,7 +38,8 @@ pages:
   image: debian:buster-slim
   script:
     - apt-get update && apt-get -y install libxml2-dev libssl-dev libcurl4-openssl-dev pandoc r-base
-    - Rscript -e "install.packages('pkgdown', repos = 'http://cran.rstudio.com')"
+    - Rscript -e "install.packages(c('pkgdown', 'devtools'), repos = 'http://cran.rstudio.com')"
+    - Rscript -e "devtools::install_dev_deps(repos = 'https://cran.rstudio.com')"
     - R -e "pkgdown::build_site()"
   artifacts:
     paths:
