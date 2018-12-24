@@ -29,7 +29,7 @@ R 3:
       paths:
         - '*.Rcheck/*.log'
         - '*.Rcheck/*.out'
-        - '*.Rcheck/*.fail'
+        # - '*.Rcheck/*.fail'
         - '*.Rcheck/*.Rout'
       name: 'Rcheck log'
       expire_in: '1 month'
@@ -37,7 +37,7 @@ R 3:
 pages:
   image: debian:buster-slim
   script:
-    - apt-get update && apt-get -y install pandoc r-base
+    - apt-get update && apt-get -y install libxml2-dev libssl-dev libcurl4-openssl-dev pandoc r-base
     - Rscript -e "install.packages('pkgdown', repos = 'http://cran.rstudio.com')"
     - R -e "pkgdown::build_site()"
   artifacts:
