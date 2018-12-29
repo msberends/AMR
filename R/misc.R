@@ -27,10 +27,15 @@ addin_insert_like <- function() {
 }
 
 # No export, no Rd
-# works exactly like round(), but rounds `round(0.55, 1)` as 0.6
-round2 <- function(x, digits = 0) {
+# works exactly like round(), but rounds `round(44.55, 1)` as 44.6 instead of 44.5 and adds decimal zeroes until `digits` is reached
+round2 <- function(x, digits = 0, force_zero = TRUE) {
   # https://stackoverflow.com/a/12688836/4575331
-  (trunc((abs(x) * 10 ^ digits) + 0.5) / 10 ^ digits) * sign(x)
+  val <- (trunc((abs(x) * 10 ^ digits) + 0.5) / 10 ^ digits) * sign(x)
+  if (digits > 0 & force_zero == TRUE) {
+    val[val != as.integer(val)] <- paste0(val[val != as.integer(val)],
+                                          strrep("0", max(0, digits - nchar(gsub(".*[.](.*)$", "\\1", val[val != as.integer(val)])))))
+  }
+  val
 }
 
 # No export, no Rd
@@ -39,7 +44,7 @@ percent <- function(x, round = 1, force_zero = FALSE, decimal.mark = getOption("
   decimal.mark.options <- getOption("OutDec")
   options(OutDec = ".")
 
-  val <- round2(x, round + 2) # round up 0.5
+  val <- round2(x, round + 2, force_zero = FALSE) # round up 0.5
   val <- round(x = val * 100, digits = round) # remove floating point error
 
   if (force_zero == TRUE) {

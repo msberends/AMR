@@ -61,6 +61,9 @@ as.mic <- function(x, na.rm = FALSE) {
     x <- gsub('[^0-9]+$', '', x)
     # remove last zeroes
     x <- gsub('([.].?)0+$', '\\1', x)
+    x <- gsub('(.*[.])0+$', '\\10', x)
+    # remove ending .0 again
+    x <- gsub('[.]+0$', '', x)
     # force to be character
     x <- as.character(x)
 
@@ -182,6 +185,15 @@ as.numeric.mic <- function(x, ...) {
   as.numeric(gsub('(<|=|>)+', '', as.character(x)))
 }
 
+#' @exportMethod droplevels.mic
+#' @export
+#' @noRd
+droplevels.mic <- function(x, exclude = if(anyNA(levels(x))) NULL else NA, ...) {
+  x <- droplevels.factor(x, exclude = exclude, ...)
+  class(x) <- c('mic', 'ordered', 'factor')
+  x
+}
+
 #' @exportMethod print.mic
 #' @export
 #' @importFrom dplyr %>% tibble group_by summarise pull
@@ -230,11 +242,10 @@ barplot.mic <- function(height, ...) {
 #' @importFrom graphics barplot axis
 #' @importFrom dplyr %>% group_by summarise
 create_barplot_mic <- function(x, x_name, ...) {
-  data <- data.frame(mic = x, cnt = 1) %>%
+  data <- data.frame(mic = droplevels(x), cnt = 1) %>%
     group_by(mic) %>%
-    summarise(cnt = sum(cnt)) %>%
-    droplevels()
-  barplot(table(droplevels(x)),
+    summarise(cnt = sum(cnt))
+  barplot(table(droplevels.factor(x)),
           ylab = 'Frequency',
           xlab = 'MIC value',
           main = paste('MIC values of', x_name),

@@ -4,6 +4,7 @@
 \alias{freq}
 \alias{frequency_tbl}
 \alias{top_freq}
+\alias{header}
 \alias{print.frequency_tbl}
 \title{Frequency table}
 \usage{
@@ -23,6 +24,8 @@ freq(x, ..., sort.count = TRUE, nmax = getOption("max.print.freq"),
 
 top_freq(f, n)
 
+header(f, property = NULL)
+
 \method{print}{frequency_tbl}(x, nmax = getOption("max.print.freq",
   default = 15), markdown = !interactive(), header = !markdown,
   decimal.mark = getOption("OutDec"), big.mark = ifelse(decimal.mark !=
@@ -41,7 +44,7 @@ top_freq(f, n)
 
 \item{row.names}{a logical value indicating whether row indices should be printed as \code{1:nrow(x)}}
 
-\item{markdown}{a logical value indicating whether the frequency table should be printed in markdown format. This will print all rows and is default behaviour in non-interactive R sessions (like when knitting RMarkdown files).}
+\item{markdown}{a logical value indicating whether the frequency table should be printed in markdown format. This will print all rows (except when \code{nmax} is defined) and is default behaviour in non-interactive R sessions (like when knitting RMarkdown files).}
 
 \item{digits}{how many significant digits are to be used for numeric values in the header (not for the items themselves, that depends on \code{\link{getOption}("digits")})}
 
@@ -68,6 +71,8 @@ top_freq(f, n)
 \item{f}{a frequency table}
 
 \item{n}{number of top \emph{n} items to return, use -n for the bottom \emph{n} items. It will include more than \code{n} rows if there are ties.}
+
+\item{property}{property in header to return this value directly}
 }
 \value{
 A \code{data.frame} (with an additional class \code{"frequency_tbl"}) with five columns: \code{item}, \code{count}, \code{percent}, \code{cum_count} and \code{cum_percent}.

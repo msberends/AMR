@@ -31,7 +31,7 @@ test_that("frequency table works", {
 
   expect_output(print(septic_patients %>% freq(age)))
   expect_output(print(septic_patients %>% freq(age, nmax = 5)))
-  expect_output(print(septic_patients %>% freq(age, nmax = Inf)))
+  expect_output(print(septic_patients %>% freq(age, nmax = Inf, markdown = FALSE)))
   expect_output(print(freq(septic_patients$age, nmax = Inf)))
   expect_output(print(freq(septic_patients$age, nmax = NA)))
   expect_output(print(freq(septic_patients$age, nmax = NULL)))

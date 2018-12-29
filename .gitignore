@@ -1,3 +1,5 @@
+Meta
+doc
 .Rproj.user
 .Rhistory
 .RData
@@ -13,6 +15,5 @@ _noinclude
 *.dll
 vignettes/*.R
 .DS_Store
-^cran-comments\.md$
 ^CRAN-RELEASE$
 git.sh

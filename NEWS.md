@@ -1,8 +1,11 @@
-# 0.5.0.90xx (latest development version)
+# AMR 0.5.0.90xx
+**Note: this is the development version, which will eventually be released as AMR 0.6.0.**
 
 #### New
 * **BREAKING**: removed deprecated functions, parameters and references to 'bactid'. Use `as.mo` to identify an MO code.
-* Support for `dplyr` version 0.8.0
+* New website: https://msberends.gitlab.io/AMR (built with the great [`pkgdown`](https://pkgdown.r-lib.org/))
+  * Contains the complete manual of this package and all of its functions with an explanation of their parameters
+* Support for [`dplyr`](https://dplyr.tidyverse.org) version 0.8.0
 * Function `mo_failures` to review values that could not be coerced to a valid MO code, using `as.mo`. This latter function will now only show a maximum of 25 uncoerced values.
 * Function `mo_renamed` to get a list of all returned values from `as.mo` that have had taxonomic renaming
 * Function `age` to calculate the (patients) age in years
@@ -13,7 +16,7 @@
   # or
   filter_first_isolate(septic_patients)
   ```
-  is the same as:
+  is equal to:
   ```r
   septic_patients %>%
     mutate(only_firsts = first_isolate(septic_patients, ...)) %>%
@@ -42,21 +45,22 @@
 * Summaries of class `mo` will now return the top 3 and the unique count, e.g. using `summary(mo)`
 * Small text updates to summaries of class `rsi` and `mic`
 * Frequency tables (`freq` function):
+  * Header info is now available as a list, with the `header` function
   * Added header info for class `mo` to show unique count of families, genera and species
   * Now honours the `decimal.mark` setting, which just like `format` defaults to `getOption("OutDec")`
   * The new `big.mark` parameter will at default be `","` when `decimal.mark = "."` and `"."` otherwise
   * Fix for header text where all observations are `NA`
   * New parameter `droplevels` to exclude empty factor levels when input is a factor
-  * Factor levels will be in header when present
-* Function `scale_y_percent` now has the `limits` parameter
+  * Factor levels will be in header when present in input data
+* Function `scale_y_percent` now contains the `limits` parameter
 * Automatic parameter filling for `mdro`, `key_antibiotics` and `eucast_rules`
 * Updated examples for resistance prediction (`resistance_predict` function)
+* Fix for `as.mic` to support more values ending in (several) zeroes
 
 #### Other
 * Updated licence text to emphasise GPL 2.0 and that this is an R package.
 
-# 0.5.0 (latest stable release)
-**Published on CRAN: 2018-11-30**
+# AMR 0.5.0
 
 #### New
 * Repository moved to GitLab: https://gitlab.com/msberends/AMR
@@ -139,8 +143,7 @@
 * Updated vignettes to comply with README
 
 
-# 0.4.0
-**Published on CRAN: 2018-10-01**
+# AMR 0.4.0
 
 #### New
 * The data set `microorganisms` now contains **all microbial taxonomic data from ITIS** (kingdoms Bacteria, Fungi and Protozoa), the Integrated Taxonomy Information System, available via https://itis.gov. The data set now contains more than 18,000 microorganisms with all known bacteria, fungi and protozoa according ITIS with genus, species, subspecies, family, order, class, phylum and subkingdom. The new data set `microorganisms.old` contains all previously known taxonomic names from those kingdoms.
@@ -251,8 +254,7 @@
 #### Other
 * More unit tests to ensure better integrity of functions
 
-# 0.3.0
-**Published on CRAN: 2018-08-14**
+# AMR 0.3.0
 
 #### New
 * **BREAKING**: `rsi_df` was removed in favour of new functions `portion_R`, `portion_IR`, `portion_I`, `portion_SI` and `portion_S` to selectively calculate resistance or susceptibility. These functions are 20 to 30 times faster than the old `rsi` function. The old function still works, but is deprecated.
@@ -322,8 +324,7 @@
   * Windows: https://ci.appveyor.com/project/msberends/amr
 * Added thesis advisors to DESCRIPTION file
 
-# 0.2.0
-**Published on CRAN: 2018-05-03**
+# AMR 0.2.0
 
 #### New
 * Full support for Windows, Linux and macOS
@@ -359,8 +360,7 @@
 * Added build tests for Linux and macOS using Travis CI (https://travis-ci.org/msberends/AMR)
 * Added line coverage checking using CodeCov (https://codecov.io/gh/msberends/AMR/tree/master/R)
 
-# 0.1.1
-**Published on CRAN: 2018-03-14**
+# AMR 0.1.1
 
 * `EUCAST_rules` applies for amoxicillin even if ampicillin is missing
 * Edited column names to comply with GLIMS, the laboratory information system
@@ -368,7 +368,6 @@
 * Renamed 'Daily Defined Dose' to 'Defined Daily Dose'
 * Added barplots for `rsi` and `mic` classes
 
-# 0.1.0
-**Published on CRAN: 2018-02-22**
+# AMR 0.1.0
 
 * First submission to CRAN.

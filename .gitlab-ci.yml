@@ -38,7 +38,8 @@ pages:
     - Rscript -e "install.packages(c('pkgdown', 'devtools'), repos = 'https://cran.rstudio.com')"
     - Rscript -e "devtools::install_dev_deps(repos = 'https://cran.rstudio.com')"
     - Rscript -e "devtools::install(build = TRUE, upgrade = FALSE)"
-    - R -e "pkgdown::build_site()"
+    # - R -e "pkgdown::build_favicon()"
+    - R -e "pkgdown::build_site(examples = FALSE)"
   artifacts:
     paths:
       - public

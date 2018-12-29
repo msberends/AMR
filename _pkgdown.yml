@@ -1,0 +1,110 @@
+url: https://msberends.gitlab.io
+
+title: 'AMR (for R)'
+
+navbar:
+  title: 'AMR (for R)'
+  left:
+    - text: 'Home'
+      icon: 'fa-home'
+      href: 'index.html'
+    - text: 'Get Started'
+      icon: 'fa-directions'
+      href: 'articles/AMR.html'
+    - text: 'Manual'
+      icon: 'fa-book-open'
+      href: 'reference/'
+    - text: 'Authors'
+      icon: 'fa-users'
+      href: 'authors.html'
+    - text: 'Changelog'
+      icon: 'far fa-newspaper'
+      href: 'news/'
+    - text: 'Source Code'
+      icon: 'fab fa-gitlab'
+      href: 'https://gitlab.com/msberends/AMR'
+  right:
+    - text: 'Licence'
+      icon: 'fa-book'
+      href: 'LICENSE-text.html'
+
+reference:
+- title: Cleaning your data
+  desc: >
+    Functions for cleaning and optimising your data, to be able
+    to add variables later on (like taxonomic properties) or to
+    fix and extend antibiotic interpretations by applying EUCAST rules.
+  contents:
+  - starts_with("as.")
+  - '`eucast_rules`'
+  - '`read.4D`'
+- title: Adding variables to your data
+  desc: >
+    Functions to add new data to existing data, like the determination
+    of first isolates,
+  contents:
+  - '`first_isolate`'
+  - '`mdro`'
+  - '`key_antibiotics`'
+  - '`mo_property`'
+  - '`ab_property`'
+  - '`atc_property`'
+  - '`abname`'
+  - '`age`'
+  - '`age_groups`'
+  - '`p.symbol`'
+  - '`join`'
+- title: Analysing your data
+  desc: >
+    Functions for conducting AMR analysis
+  contents:
+  - '`count`'
+  - '`portion`'
+  - '`freq`'
+  - '`g.test`'
+  - '`ggplot_rsi`'
+  - '`kurtosis`'
+  - '`resistance_predict`'
+  - '`rsi`'
+  - '`skewness`'
+- title: Included data sets
+  desc: >
+    References for microorganisms and antibiotics, and even a
+    genuine data set with isolates from septic patients.
+  contents:
+  - '`antibiotics`'
+  - '`microorganisms`'
+  - '`septic_patients`'
+  - '`microorganisms.certe`'
+  - '`microorganisms.old`'
+  - '`microorganisms.umcg`'
+  - '`supplementary_data`'
+- title: Other
+  desc: ~
+  contents:
+  - '`get_locale`'
+  - '`like`'
+  - '`mo_failures`'
+  - '`mo_renamed`'
+
+authors:
+  Matthijs S. Berends:
+    href: https://www.rug.nl/staff/m.s.berends/
+  Christian F. Luz:
+    href: https://www.rug.nl/staff/c.f.luz/
+  Corinna Glasner:
+    href: https://www.rug.nl/staff/c.glasner/
+  Alex W. Friedrich:
+    href: https://www.rug.nl/staff/a.w.friedrich/
+  Bhanu N. M. Sinha:
+    href: https://www.rug.nl/staff/b.sinha/
+
+template:
+  assets: pkgdown/logos
+  params:
+    noindex: false
+    bootswatch: flatly
+    docsearch:
+      # using algolia.com
+      api_key: 'f737050abfd4d726c63938e18f8c496e'
+      index_name: 'amr'

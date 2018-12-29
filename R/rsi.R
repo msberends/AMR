@@ -129,6 +129,15 @@ print.rsi <- function(x, ...) {
   print(as.character(x), quote = FALSE)
 }
 
+#' @exportMethod droplevels.rsi
+#' @export
+#' @noRd
+droplevels.rsi <- function(x, exclude = if(anyNA(levels(x))) NULL else NA, ...) {
+  x <- droplevels.factor(x, exclude = exclude, ...)
+  class(x) <- c('rsi', 'ordered', 'factor')
+  x
+}
+
 #' @exportMethod summary.rsi
 #' @export
 #' @noRd
@@ -152,13 +161,16 @@ summary.rsi <- function(object, ...) {
 plot.rsi <- function(x, ...) {
   x_name <- deparse(substitute(x))
 
-  data <- data.frame(x = x,
-                     y = 1,
-                     stringsAsFactors = TRUE) %>%
-    group_by(x) %>%
-    summarise(n = sum(y)) %>%
-    filter(!is.na(x)) %>%
-    mutate(s = round((n / sum(n)) * 100, 1))
+  suppressWarnings(
+    data <- data.frame(x = x,
+                       y = 1,
+                       stringsAsFactors = TRUE) %>%
+      group_by(x) %>%
+      summarise(n = sum(y)) %>%
+      filter(!is.na(x)) %>%
+      mutate(s = round((n / sum(n)) * 100, 1))
+  )
+
   data$x <- factor(data$x, levels = c('S', 'I', 'R'), ordered = TRUE)
 
   ymax <- if_else(max(data$s) > 95, 105, 100)
@@ -193,10 +205,12 @@ barplot.rsi <- function(height, ...) {
   x <- height
   x_name <- deparse(substitute(height))
 
-  data <- data.frame(rsi = x, cnt = 1) %>%
-    group_by(rsi) %>%
-    summarise(cnt = sum(cnt)) %>%
-    droplevels()
+  suppressWarnings(
+    data <- data.frame(rsi = x, cnt = 1) %>%
+      group_by(rsi) %>%
+      summarise(cnt = sum(cnt)) %>%
+      droplevels()
+  )
 
   barplot(table(x),
           col = c('green3', 'orange2', 'red3'),

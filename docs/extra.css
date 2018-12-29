@@ -1,0 +1,54 @@
+/* Supports icons for brand using font-awesome */
+.fab {
+    font-family: "Font Awesome 5 Brands" !important;
+}
+
+/* make colour darker and better readable for links */
+code a, pre a,
+code a:hover, pre a:hover {
+  color: #128f76;
+}
+a,
+a:hover {
+  color: #128f76;
+}
+
+/* syntax font */
+pre, code {
+    font-family: 'Courier New';
+    font-size: 100% !important;
+    font-weight: bold;
+    background-color: transparent;
+}
+li, p {
+    line-height: 1.5;
+}
+
+/* new <help> element with dotted underline */
+help {
+  border-bottom: 1px dotted;
+  cursor: help;
+}
+
+/* replace 'Developers' with 'Authors' */
+.developers h2 {
+    display: none;
+}
+.developers:before {
+    content: 'Authors';
+    font-size: 1.5em;
+}
+
+/* hide version label */
+.version.label {
+  display: none;
+}
+
+/* more space between icon and text in top menu */
+#navbar .fa,
+#navbar .fab,
+#navbar .fal,
+#navbar .far,
+#navbar .fas {
+  margin-right: 5px;
+}
