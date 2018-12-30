@@ -19,6 +19,10 @@
 # https://r-posts.com/gitlab-ci-for-r-package-development/
 
 image: rocker/r-base
+before_script:
+  - apt-get update
+  # install dependencies for package
+  - apt-get -y install libxml2-dev libssl-dev libcurl4-openssl-dev zlib1g-dev
 
 stages:
   - setup
