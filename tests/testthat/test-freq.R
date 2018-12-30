@@ -47,6 +47,8 @@ test_that("frequency table works", {
   expect_output(suppressWarnings(print(freq(microorganisms$fullname))))
   # mo
   expect_output(print(freq(septic_patients$mo)))
+  # rsi
+  expect_output(print(freq(septic_patients$amox)))
   # integer
   expect_output(print(freq(septic_patients$age)))
   # date

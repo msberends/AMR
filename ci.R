@@ -21,7 +21,7 @@ install_if_needed <- function(package_to_install) {
 
   if(length(package_path) == 0){
     # Only install if not present
-    install.packages(package_to_install)
+    install.packages(package_to_install, repos = "https://cran.rstudio.com/")
   }
 }
 
@@ -32,6 +32,7 @@ ci_setup <- function() {
 
 ci_check <- function() {
   install_if_needed("devtools")
+  install_if_needed("roxygen2")
   devtools::check()
 }
 
