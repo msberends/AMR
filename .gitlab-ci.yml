@@ -57,7 +57,7 @@ coverage:
 
 pages:
   stage: deploy
-   dependencies:
+  dependencies:
     - setup
   when: on_success
   only:
