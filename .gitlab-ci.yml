@@ -2,44 +2,51 @@
 # and https://github.com/jangorecki/r.gitlab.ci
 # and https://docs.gitlab.com/ce/ci/yaml/README.html
 # how the Docker+R images work: https://hub.docker.com/r/rocker/r-ver/
+
+stages:
+  - build
+  - deploy
+
+image: rocker/r-ver:3 # test on R v3.*.*
+
+before_script:
+  - apt-get update
+  # install dependencies for package
+  - apt-get install --yes --no-install-recommends libxml2-dev libssl-dev libcurl4-openssl-dev zlib1g-dev pandoc
+  - Rscript -e 'install.packages(c("devtools", "rlang"), repos = "https://cran.rstudio.com")'
+  - Rscript -e 'devtools::install_dev_deps(repos = "https://cran.rstudio.com")'
+
 R 3:
-    image: rocker/r-ver:3 # test on R v3.*.*
-    allow_failure: true
-    script:
-      - apt-get update
-      # install dependencies for package
-      - apt-get install --yes --no-install-recommends libxml2-dev libssl-dev libcurl4-openssl-dev zlib1g-dev
-      - Rscript -e 'install.packages(c("devtools", "rlang"), repos = "https://cran.rstudio.com")'
-      - Rscript -e 'devtools::install_dev_deps(repos = "https://cran.rstudio.com")'
-      # remove vignettes folder and get VignetteBuilder field out of DESCRIPTION file
-      - rm -rf vignettes
-      - Rscript -e 'd <- read.dcf("DESCRIPTION"); d[, colnames(d) == "VignetteBuilder"] <- NA; write.dcf(d, "DESCRIPTION")'
-      # build package
-      - R CMD build . --no-build-vignettes --no-manual
-      - PKG_FILE_NAME=$(ls -1t *.tar.gz | head -n 1)
-      - R CMD check "${PKG_FILE_NAME}" --no-build-vignettes --no-manual --as-cran
-      # code coverage
-      - apt-get install --yes git
-      - Rscript -e 'cc <- covr::package_coverage(); covr::codecov(coverage = cc, token = "50ffa0aa-fee0-4f8b-a11d-8c7edc6d32ca"); cat("Code coverage:", covr::percent_coverage(cc))'
-    coverage: '/Code coverage: \d+\.\d+/'
-    artifacts:
-      paths:
-        - '*.Rcheck/*.log'
-        - '*.Rcheck/*.out'
-        # - '*.Rcheck/*.fail'
-        - '*.Rcheck/*.Rout'
-      name: 'Rcheck log'
-      expire_in: '1 month'
+  stage: build
+  allow_failure: true
+  script:
+    # remove vignettes folder and get VignetteBuilder field out of DESCRIPTION file
+    - rm -rf vignettes
+    - Rscript -e 'd <- read.dcf("DESCRIPTION"); d[, colnames(d) == "VignetteBuilder"] <- NA; write.dcf(d, "DESCRIPTION")'
+    # build package
+    - R CMD build . --no-build-vignettes --no-manual
+    - PKG_FILE_NAME=$(ls -1t *.tar.gz | head -n 1)
+    - R CMD check "${PKG_FILE_NAME}" --no-build-vignettes --no-manual --as-cran
+    # code coverage
+    - apt-get install --yes git
+    - Rscript -e 'cc <- covr::package_coverage(); covr::codecov(coverage = cc, token = "50ffa0aa-fee0-4f8b-a11d-8c7edc6d32ca"); cat("Code coverage:", covr::percent_coverage(cc))'
+  coverage: '/Code coverage: \d+\.\d+/'
+  artifacts:
+    paths:
+      - '*.Rcheck/*.log'
+      - '*.Rcheck/*.out'
+      # - '*.Rcheck/*.fail'
+      - '*.Rcheck/*.Rout'
+    name: 'Rcheck log'
+    expire_in: '1 month'
 
 pages:
-  image: debian:buster-slim
+  stage: deploy
   script:
-    - apt-get update && apt-get -y install libxml2-dev libssl-dev libcurl4-openssl-dev pandoc r-base
-    - Rscript -e "install.packages(c('pkgdown', 'devtools'), repos = 'https://cran.rstudio.com')"
-    - Rscript -e "devtools::install_dev_deps(repos = 'https://cran.rstudio.com')"
+    - Rscript -e "install.packages('pkgdown', repos = 'https://cran.rstudio.com')"
     - Rscript -e "devtools::install(build = TRUE, upgrade = FALSE)"
     # - R -e "pkgdown::build_favicon()"
-    - R -e "pkgdown::build_site(examples = FALSE)"
+    - R -e "pkgdown::build_site(examples = FALSE, override = list(destination = 'public'))"
   artifacts:
     paths:
       - public
