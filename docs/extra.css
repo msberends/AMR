@@ -1,3 +1,11 @@
+/* class for footer */
+.university {
+    background-image: url(logo_rug.png);
+    height: 40px;
+    background-size: 160px;
+    background-repeat: no-repeat;
+}
+
 /* Supports icons for brand using font-awesome */
 .fab {
     font-family: "Font Awesome 5 Brands" !important;

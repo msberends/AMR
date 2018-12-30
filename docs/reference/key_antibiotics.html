@@ -163,7 +163,7 @@
 
     <div class="ref-description">
     
-    <p>These function can be used to determine first isolates (see <code><a href='first_isolate.html'>first_isolate</a></code>). Using key antibiotics to determine first isolates is more reliable than without key antibiotics. These selected isolates will then be called first <em>weighted</em> isolates.</p>
+    <p>These function can be used to determine first isolates (see <code>first_isolate</code>). Using key antibiotics to determine first isolates is more reliable than without key antibiotics. These selected isolates will then be called first <em>weighted</em> isolates.</p>
     
     </div>
 
@@ -187,7 +187,7 @@
     </tr>
     <tr>
       <th>col_mo</th>
-      <td><p>column name of the unique IDs of the microorganisms (see <code><a href='as.mo.html'>mo</a></code>), defaults to the first column of class <code>mo</code>. Values will be coerced using <code><a href='as.mo.html'>as.mo</a></code>.</p></td>
+      <td><p>column name of the unique IDs of the microorganisms (see <code>mo</code>), defaults to the first column of class <code>mo</code>. Values will be coerced using <code>as.mo</code>.</p></td>
     </tr>
     <tr>
       <th>universal_1, universal_2, universal_3, universal_4, universal_5, universal_6</th>
@@ -233,7 +233,7 @@
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>The function <code>key_antibiotics</code> returns a character vector with 12 antibiotic results for every isolate. These isolates can then be compared using <code>key_antibiotics_equal</code>, to check if two isolates have generally the same antibiogram. Missing and invalid values are replaced with a dot (<code>"."</code>). The <code><a href='first_isolate.html'>first_isolate</a></code> function only uses this function on the same microbial species from the same patient. Using this, an MRSA will be included after a susceptible <em>S. aureus</em> (MSSA) found within the same episode (see <code>episode</code> parameter of <code><a href='first_isolate.html'>first_isolate</a></code>). Without key antibiotic comparison it wouldn't.</p>
+    <p>The function <code>key_antibiotics</code> returns a character vector with 12 antibiotic results for every isolate. These isolates can then be compared using <code>key_antibiotics_equal</code>, to check if two isolates have generally the same antibiogram. Missing and invalid values are replaced with a dot (<code>"."</code>). The <code>first_isolate</code> function only uses this function on the same microbial species from the same patient. Using this, an MRSA will be included after a susceptible <em>S. aureus</em> (MSSA) found within the same episode (see <code>episode</code> parameter of <code>first_isolate</code>). Without key antibiotic comparison it wouldn't.</p>
 <p>At default, the antibiotics that are used for <strong>Gram positive bacteria</strong> are (colum names): <br />
   <code>"amox"</code>, <code>"amcl"</code>, <code>"cfur"</code>, <code>"pita"</code>, <code>"cipr"</code>, <code>"trsu"</code> (until here is universal), <code>"vanc"</code>, <code>"teic"</code>, <code>"tetr"</code>, <code>"eryt"</code>, <code>"oxac"</code>, <code>"rifa"</code>.</p>
 <p>At default, the antibiotics that are used for <strong>Gram negative bacteria</strong> are (colum names): <br />
@@ -251,7 +251,7 @@
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><code><a href='first_isolate.html'>first_isolate</a></code></p></div>
+    <div class='dont-index'><p><code>first_isolate</code></p></div>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
@@ -261,12 +261,12 @@
 <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>dplyr</span>)
 <span class='co'># set key antibiotics to a new variable</span>
 <span class='no'>my_patients</span> <span class='kw'>&lt;-</span> <span class='no'>septic_patients</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='http://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span>(<span class='kw'>keyab</span> <span class='kw'>=</span> <span class='fu'>key_antibiotics</span>(<span class='no'>.</span>)) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='http://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span>(
+  <span class='fu'><a href='https://www.rdocumentation.org/packages/dplyr/topics/mutate'>mutate</a></span>(<span class='kw'>keyab</span> <span class='kw'>=</span> <span class='fu'>key_antibiotics</span>(<span class='no'>.</span>)) <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='https://www.rdocumentation.org/packages/dplyr/topics/mutate'>mutate</a></span>(
     <span class='co'># now calculate first isolates</span>
-    <span class='kw'>first_regular</span> <span class='kw'>=</span> <span class='fu'><a href='first_isolate.html'>first_isolate</a></span>(<span class='no'>.</span>, <span class='kw'>col_keyantibiotics</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>),
+    <span class='kw'>first_regular</span> <span class='kw'>=</span> <span class='fu'>first_isolate</span>(<span class='no'>.</span>, <span class='kw'>col_keyantibiotics</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>),
     <span class='co'># and first WEIGHTED isolates</span>
-    <span class='kw'>first_weighted</span> <span class='kw'>=</span> <span class='fu'><a href='first_isolate.html'>first_isolate</a></span>(<span class='no'>.</span>, <span class='kw'>col_keyantibiotics</span> <span class='kw'>=</span> <span class='st'>"keyab"</span>)
+    <span class='kw'>first_weighted</span> <span class='kw'>=</span> <span class='fu'>first_isolate</span>(<span class='no'>.</span>, <span class='kw'>col_keyantibiotics</span> <span class='kw'>=</span> <span class='st'>"keyab"</span>)
   )
 
 <span class='co'># Check the difference, in this data set it results in 7% more isolates:</span>

@@ -203,7 +203,7 @@
     </tr>
     <tr>
       <th>col_mo</th>
-      <td><p>column name of the unique IDs of the microorganisms (see <code><a href='as.mo.html'>mo</a></code>), defaults to the first column of class <code>mo</code>. Values will be coerced using <code><a href='as.mo.html'>as.mo</a></code>.</p></td>
+      <td><p>column name of the unique IDs of the microorganisms (see <code>mo</code>), defaults to the first column of class <code>mo</code>. Values will be coerced using <code>as.mo</code>.</p></td>
     </tr>
     <tr>
       <th>info</th>
@@ -537,7 +537,7 @@
 <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>dplyr</span>)
 
 <span class='no'>septic_patients</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='http://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span>(<span class='kw'>EUCAST</span> <span class='kw'>=</span> <span class='fu'>mdro</span>(<span class='no'>.</span>),
+  <span class='fu'><a href='https://www.rdocumentation.org/packages/dplyr/topics/mutate'>mutate</a></span>(<span class='kw'>EUCAST</span> <span class='kw'>=</span> <span class='fu'>mdro</span>(<span class='no'>.</span>),
          <span class='kw'>BRMO</span> <span class='kw'>=</span> <span class='fu'>brmo</span>(<span class='no'>.</span>))
 <span class='co'># }</span></pre>
   </div>

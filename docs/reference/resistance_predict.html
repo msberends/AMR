@@ -240,7 +240,7 @@
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p>The <code><a href='portion.html'>portion</a></code> function to calculate resistance, <br /> <code><a href='https://www.rdocumentation.org/packages/stats/topics/lm'>lm</a></code> <code><a href='https://www.rdocumentation.org/packages/stats/topics/glm'>glm</a></code></p></div>
+    <div class='dont-index'><p>The <code>portion</code> function to calculate resistance, <br /> <code><a href='https://www.rdocumentation.org/packages/stats/topics/lm'>lm</a></code> <code><a href='https://www.rdocumentation.org/packages/stats/topics/glm'>glm</a></code></p></div>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
@@ -252,7 +252,7 @@
 <span class='co'># or use dplyr so you can actually read it:</span>
 <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>dplyr</span>)
 <span class='no'>tbl</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='http://dplyr.tidyverse.org/reference/filter.html'>filter</a></span>(<span class='no'>first_isolate</span> <span class='kw'>==</span> <span class='fl'>TRUE</span>,
+  <span class='fu'><a href='https://www.rdocumentation.org/packages/dplyr/topics/filter'>filter</a></span>(<span class='no'>first_isolate</span> <span class='kw'>==</span> <span class='fl'>TRUE</span>,
          <span class='no'>genus</span> <span class='kw'>==</span> <span class='st'>"Haemophilus"</span>) <span class='kw'>%&gt;%</span>
   <span class='fu'>resistance_predict</span>(<span class='no'>amcl</span>, <span class='no'>date</span>)
 <span class='co'># }</span><span class='co'># NOT RUN {</span>
@@ -261,11 +261,11 @@
 <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>dplyr</span>)
 <span class='no'>septic_patients</span> <span class='kw'>%&gt;%</span>
   <span class='co'># get bacteria properties like genus and species</span>
-  <span class='fu'><a href='join.html'>left_join_microorganisms</a></span>(<span class='st'>"mo"</span>) <span class='kw'>%&gt;%</span>
+  <span class='fu'>left_join_microorganisms</span>(<span class='st'>"mo"</span>) <span class='kw'>%&gt;%</span>
   <span class='co'># calculate first isolates</span>
-  <span class='fu'><a href='http://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span>(<span class='kw'>first_isolate</span> <span class='kw'>=</span> <span class='fu'><a href='first_isolate.html'>first_isolate</a></span>(<span class='no'>.</span>)) <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='https://www.rdocumentation.org/packages/dplyr/topics/mutate'>mutate</a></span>(<span class='kw'>first_isolate</span> <span class='kw'>=</span> <span class='fu'>first_isolate</span>(<span class='no'>.</span>)) <span class='kw'>%&gt;%</span>
   <span class='co'># filter on first E. coli isolates</span>
-  <span class='fu'><a href='http://dplyr.tidyverse.org/reference/filter.html'>filter</a></span>(<span class='no'>genus</span> <span class='kw'>==</span> <span class='st'>"Escherichia"</span>,
+  <span class='fu'><a href='https://www.rdocumentation.org/packages/dplyr/topics/filter'>filter</a></span>(<span class='no'>genus</span> <span class='kw'>==</span> <span class='st'>"Escherichia"</span>,
          <span class='no'>species</span> <span class='kw'>==</span> <span class='st'>"coli"</span>,
          <span class='no'>first_isolate</span> <span class='kw'>==</span> <span class='fl'>TRUE</span>) <span class='kw'>%&gt;%</span>
   <span class='co'># predict resistance of cefotaxime for next years</span>
@@ -279,7 +279,7 @@
 <span class='kw'>if</span> (!<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>require</a></span>(<span class='no'>ggplot2</span>)) {
 
   <span class='no'>data</span> <span class='kw'>&lt;-</span> <span class='no'>septic_patients</span> <span class='kw'>%&gt;%</span>
-    <span class='fu'><a href='http://dplyr.tidyverse.org/reference/filter.html'>filter</a></span>(<span class='no'>mo</span> <span class='kw'>==</span> <span class='fu'><a href='as.mo.html'>as.mo</a></span>(<span class='st'>"E. coli"</span>)) <span class='kw'>%&gt;%</span>
+    <span class='fu'><a href='https://www.rdocumentation.org/packages/dplyr/topics/filter'>filter</a></span>(<span class='no'>mo</span> <span class='kw'>==</span> <span class='fu'>as.mo</span>(<span class='st'>"E. coli"</span>)) <span class='kw'>%&gt;%</span>
     <span class='fu'>resistance_predict</span>(<span class='kw'>col_ab</span> <span class='kw'>=</span> <span class='st'>"amox"</span>,
                        <span class='kw'>col_date</span> <span class='kw'>=</span> <span class='st'>"date"</span>,
                        <span class='kw'>info</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,

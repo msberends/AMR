@@ -163,7 +163,7 @@
 
     <div class="ref-description">
     
-    <p>Use this function to determine the ATC code of one or more antibiotics. The data set <code><a href='antibiotics.html'>antibiotics</a></code> will be searched for abbreviations, official names and trade names.</p>
+    <p>Use this function to determine the ATC code of one or more antibiotics. The data set <code>antibiotics</code> will be searched for abbreviations, official names and trade names.</p>
     
     </div>
 
@@ -188,13 +188,13 @@
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>Use the <code><a href='ab_property.html'>ab_property</a></code> functions to get properties based on the returned ATC code, see Examples.</p>
+    <p>Use the <code>ab_property</code> functions to get properties based on the returned ATC code, see Examples.</p>
 <p>In the ATC classification system, the active substances are classified in a hierarchy with five different levels.  The system has fourteen main anatomical/pharmacological groups or 1st levels. Each ATC main group is divided into 2nd levels which could be either pharmacological or therapeutic groups.  The 3rd and 4th levels are chemical, pharmacological or therapeutic subgroups and the 5th level is the chemical substance.  The 2nd, 3rd and 4th levels are often used to identify pharmacological subgroups when that is considered more appropriate than therapeutic or chemical subgroups.
   Source: <a href='https://www.whocc.no/atc/structure_and_principles/'>https://www.whocc.no/atc/structure_and_principles/</a></p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><code><a href='antibiotics.html'>antibiotics</a></code> for the dataframe that is being used to determine ATCs.</p></div>
+    <div class='dont-index'><p><code>antibiotics</code> for the dataframe that is being used to determine ATCs.</p></div>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
@@ -212,8 +212,8 @@
 
 <span class='co'># Use ab_* functions to get a specific property based on an ATC code</span>
 <span class='no'>Cipro</span> <span class='kw'>&lt;-</span> <span class='fu'>as.atc</span>(<span class='st'>"cipro"</span>) <span class='co'># returns `J01MA02`</span>
-<span class='fu'><a href='ab_property.html'>ab_official</a></span>(<span class='no'>Cipro</span>)       <span class='co'># returns "Ciprofloxacin"</span>
-<span class='fu'><a href='ab_property.html'>ab_umcg</a></span>(<span class='no'>Cipro</span>)           <span class='co'># returns "CIPR", the code used in the UMCG</span>
+<span class='fu'>ab_official</span>(<span class='no'>Cipro</span>)       <span class='co'># returns "Ciprofloxacin"</span>
+<span class='fu'>ab_umcg</span>(<span class='no'>Cipro</span>)           <span class='co'># returns "CIPR", the code used in the UMCG</span>
 <span class='co'># }</span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
