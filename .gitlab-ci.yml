@@ -63,7 +63,7 @@ pages:
   stage: deploy
   dependencies:
     - setup
-  when: on_success
+  when: always
   only:
     - master
   script:

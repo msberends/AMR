@@ -38,6 +38,7 @@ ci_check <- function() {
 
 ci_coverage <- function() {
   install_if_needed("covr")
+  devtools::install()
   cc <- covr::package_coverage(type = c("tests", "examples"))
   covr::codecov(coverage = cc, token = "50ffa0aa-fee0-4f8b-a11d-8c7edc6d32ca")
   cat("Code coverage:", covr::percent_coverage(cc))
