@@ -10,30 +10,35 @@ We created this package for academic research at the Faculty of Medical Sciences
 
 This package is ready-to-use for a professional environment by specialists in the following fields:
 
-* Medical Microbiology
+Medical Microbiology:
+
   * Epidemiologists (both clinical microbiological and research)
   * Research Microbiologists
   * Biomedical Researchers
   * Research Pharmacologists
   
-* Veterinary Microbiology
+Veterinary Microbiology:
+
   * Research Veterinarians
   * Veterinary Epidemiologists
   * Biomedical Researchers
 
-* Microbial Ecology
+Microbial Ecology:
+
   * Soil Microbiologists
   * Extremophile Researchers
   * Astrobiologists
 
-* Other specialists in any of the above fields:
+Other specialists in any of the above fields:
+
   * Data Scientists/Data Analysts
   * Biotechnologists
   * Biochemists
   * Geneticists
   * Molecular Biologists/Microbiologists
 
-* Developers
+Developers:
+
   * Package developers for R 
   * Software developers
   * Web application developers

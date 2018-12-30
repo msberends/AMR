@@ -16,54 +16,33 @@
 # GNU General Public License version 2.0 for more details.             #
 # ==================================================================== #
 
-# https://r-posts.com/gitlab-ci-for-r-package-development/
+install_if_needed <- function(package_to_install) {
+  package_path <- find.package(package_to_install, quiet = TRUE)
 
-image: rocker/r-base
+  if(length(package_path) == 0){
+    # Only install if not present
+    install.packages(package_to_install)
+  }
+}
 
-stages:
-  - setup
-  - test
-  - deploy
+ci_setup <- function() {
+  install_if_needed("packrat")
+  packrat::restore()
+}
 
-cache:
-  # Ommit key to use the same cache across all pipelines and branches
-  key: "$CI_COMMIT_REF_SLUG"
-  paths:
-    - packrat/lib/
+ci_check <- function() {
+  install_if_needed("devtools")
+  devtools::check()
+}
 
-setup:
-  stage: setup
-  script:
-    - R -e 'source("ci.R"); ci_setup()'
+ci_coverage <- function() {
+  install_if_needed("covr")
+  cc <- covr::package_coverage(type = c("tests", "examples"))
+  covr::codecov(coverage = cc, token = "50ffa0aa-fee0-4f8b-a11d-8c7edc6d32ca")
+  cat("Code coverage:", covr::percent_coverage(cc))
+}
 
-check:
-  stage: test
-  dependencies:
-    - setup
-  when: on_success
-  script:
-    - R -e 'source("ci.R"); ci_check()'
-
-coverage:
-  stage: test
-  dependencies:
-    - setup
-  when: on_success
-  only:
-    - master
-  script:
-    - R -e 'source("ci.R"); ci_coverage()'
-  coverage: '/Code coverage: \d+\.\d+/'
-
-pages:
-  stage: deploy
-   dependencies:
-    - setup
-  when: on_success
-  only:
-    - master
-  script:
-    - R -e 'source("ci.R"); ci_pages()'
-  artifacts:
-    paths:
-      - public
+ci_pages <- function() {
+  install_if_needed("pkgdown")
+  pkgdown::build_site(examples = FALSE, override = list(destination = "public"))
+}

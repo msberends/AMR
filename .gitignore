@@ -15,5 +15,8 @@ _noinclude
 *.dll
 vignettes/*.R
 .DS_Store
+.Rprofile
 ^CRAN-RELEASE$
 git.sh
+packrat/lib*/
+packrat/src/
