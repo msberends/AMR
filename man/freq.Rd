@@ -54,7 +54,7 @@ header(f, property = NULL)
 
 \item{title}{text to show above frequency table, at default to tries to coerce from the variables passed to \code{x}}
 
-\item{na}{a character string to should be used to show empty (\code{NA}) values (only useful when \code{na.rm = FALSE})}
+\item{na}{a character string that should be used to show empty (\code{NA}) values (only useful when \code{na.rm = FALSE})}
 
 \item{droplevels}{a logical value indicating whether in factors empty levels should be dropped}
 
@@ -78,7 +78,8 @@ header(f, property = NULL)
 A \code{data.frame} (with an additional class \code{"frequency_tbl"}) with five columns: \code{item}, \code{count}, \code{percent}, \code{cum_count} and \code{cum_percent}.
 }
 \description{
-Create a frequency table of a vector with items or a data frame. Supports quasiquotation and markdown for reports. \code{top_freq} can be used to get the top/bottom \emph{n} items of a frequency table, with counts as names.
+Create a frequency table of a vector with items or a data frame. Supports quasiquotation and markdown for reports. The best practice is: \code{data \%>\% freq(var)}.\cr
+\code{top_freq} can be used to get the top/bottom \emph{n} items of a frequency table, with counts as names.
 }
 \details{
 Frequency tables (or frequency distributions) are summaries of the distribution of values in a sample. With the `freq` function, you can create univariate frequency tables. Multiple variables will be pasted into one variable, so it forces a univariate distribution. This package also has a vignette available to explain the use of this function further, run \code{browseVignettes("AMR")} to read it.

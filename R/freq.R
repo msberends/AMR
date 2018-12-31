@@ -18,7 +18,8 @@
 
 #' Frequency table
 #'
-#' Create a frequency table of a vector with items or a data frame. Supports quasiquotation and markdown for reports. \code{top_freq} can be used to get the top/bottom \emph{n} items of a frequency table, with counts as names.
+#' Create a frequency table of a vector with items or a data frame. Supports quasiquotation and markdown for reports. The best practice is: \code{data \%>\% freq(var)}.\cr
+#' \code{top_freq} can be used to get the top/bottom \emph{n} items of a frequency table, with counts as names.
 #' @param x vector of any class or a \code{\link{data.frame}}, \code{\link{tibble}} (may contain a grouping variable) or \code{\link{table}}
 #' @param ... up to nine different columns of \code{x} when \code{x} is a \code{data.frame} or \code{tibble}, to calculate frequencies from - see Examples
 #' @param sort.count sort on count, i.e. frequencies. This will be \code{TRUE} at default for everything except when using grouping variables.
@@ -30,7 +31,7 @@
 #' @param quote a logical value indicating whether or not strings should be printed with surrounding quotes
 #' @param header a logical value indicating whether an informative header should be printed
 #' @param title text to show above frequency table, at default to tries to coerce from the variables passed to \code{x}
-#' @param na a character string to should be used to show empty (\code{NA}) values (only useful when \code{na.rm = FALSE})
+#' @param na a character string that should be used to show empty (\code{NA}) values (only useful when \code{na.rm = FALSE})
 #' @param droplevels a logical value indicating whether in factors empty levels should be dropped
 #' @param sep a character string to separate the terms when selecting multiple columns
 #' @inheritParams base::format
