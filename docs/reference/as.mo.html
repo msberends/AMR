@@ -198,7 +198,7 @@
     </tr>
     <tr>
       <th>reference_df</th>
-      <td><p>a <code>data.frame</code> to use for extra reference when translating <code>x</code> to a valid <code>mo</code>. The first column can be any microbial name, code or ID (used in your analysis or organisation), the second column must be a valid <code>mo</code> as found in the <code>microorganisms</code> data set.</p></td>
+      <td><p>a <code>data.frame</code> to use for extra reference when translating <code>x</code> to a valid <code>mo</code>. The first column can be any microbial name, code or ID (used in your analysis or organisation), the second column must be a valid <code>mo</code> as found in the <code><a href='microorganisms.html'>microorganisms</a></code> data set.</p></td>
     </tr>
     </table>
     
@@ -221,7 +221,7 @@
   |    ----&gt; genus, a 5-7 letter acronym, mostly without vowels
    ----&gt; taxonomic kingdom, either B (Bacteria), F (Fungi) or P (Protozoa)
 </pre>
-    <p>Use the <code>mo_property</code> functions to get properties based on the returned code, see Examples.</p>
+    <p>Use the <code><a href='mo_property.html'>mo_property</a></code> functions to get properties based on the returned code, see Examples.</p>
 <p>This function uses Artificial Intelligence (AI) to help getting fast and logical results. It tries to find matches in this order:</p><ul>
 <li><p>Taxonomic kingdom: it first searches in bacteria, then fungi, then protozoa</p></li>
 <li><p>Human pathogenic prevalence: it first searches in more prevalent microorganisms, then less prevalent ones</p></li>
@@ -258,8 +258,8 @@ This package contains the <strong>complete microbial taxonomic data</strong> (wi
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><code>microorganisms</code> for the <code>data.frame</code> with ITIS content that is being used to determine ID's. <br />
-The <code>mo_property</code> functions (like <code>mo_genus</code>, <code>mo_gramstain</code>) to get properties based on the returned code.</p></div>
+    <div class='dont-index'><p><code><a href='microorganisms.html'>microorganisms</a></code> for the <code>data.frame</code> with ITIS content that is being used to determine ID's. <br />
+The <code><a href='mo_property.html'>mo_property</a></code> functions (like <code><a href='mo_property.html'>mo_genus</a></code>, <code><a href='mo_property.html'>mo_gramstain</a></code>) to get properties based on the returned code.</p></div>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
@@ -291,10 +291,10 @@ The <code>mo_property</code> functions (like <code>mo_genus</code>, <code>mo_gra
 
 <span class='co'># Use mo_* functions to get a specific property based on `mo`</span>
 <span class='no'>Ecoli</span> <span class='kw'>&lt;-</span> <span class='fu'>as.mo</span>(<span class='st'>"E. coli"</span>)     <span class='co'># returns `B_ESCHR_COL`</span>
-<span class='fu'>mo_genus</span>(<span class='no'>Ecoli</span>)               <span class='co'># returns "Escherichia"</span>
-<span class='fu'>mo_gramstain</span>(<span class='no'>Ecoli</span>)           <span class='co'># returns "Gram negative"</span>
+<span class='fu'><a href='mo_property.html'>mo_genus</a></span>(<span class='no'>Ecoli</span>)               <span class='co'># returns "Escherichia"</span>
+<span class='fu'><a href='mo_property.html'>mo_gramstain</a></span>(<span class='no'>Ecoli</span>)           <span class='co'># returns "Gram negative"</span>
 <span class='co'># but it uses as.mo internally too, so you could also just use:</span>
-<span class='fu'>mo_genus</span>(<span class='st'>"E. coli"</span>)           <span class='co'># returns "Escherichia"</span>
+<span class='fu'><a href='mo_property.html'>mo_genus</a></span>(<span class='st'>"E. coli"</span>)           <span class='co'># returns "Escherichia"</span>
 
 
 <span class='co'># }</span><span class='co'># NOT RUN {</span>
@@ -303,16 +303,16 @@ The <code>mo_property</code> functions (like <code>mo_genus</code>, <code>mo_gra
 <span class='co'># the select function of tidyverse is also supported:</span>
 <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>dplyr</span>)
 <span class='no'>df</span>$<span class='no'>mo</span> <span class='kw'>&lt;-</span> <span class='no'>df</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='https://www.rdocumentation.org/packages/dplyr/topics/select'>select</a></span>(<span class='no'>microorganism_name</span>) <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='http://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='no'>microorganism_name</span>) <span class='kw'>%&gt;%</span>
   <span class='fu'>as.mo</span>()
 
 <span class='co'># and can even contain 2 columns, which is convenient for genus/species combinations:</span>
 <span class='no'>df</span>$<span class='no'>mo</span> <span class='kw'>&lt;-</span> <span class='no'>df</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='https://www.rdocumentation.org/packages/dplyr/topics/select'>select</a></span>(<span class='no'>genus</span>, <span class='no'>species</span>) <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='http://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='no'>genus</span>, <span class='no'>species</span>) <span class='kw'>%&gt;%</span>
   <span class='fu'>as.mo</span>()
 <span class='co'># although this works easier and does the same:</span>
 <span class='no'>df</span> <span class='kw'>&lt;-</span> <span class='no'>df</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='https://www.rdocumentation.org/packages/dplyr/topics/mutate'>mutate</a></span>(<span class='kw'>mo</span> <span class='kw'>=</span> <span class='fu'>as.mo</span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/paste'>paste</a></span>(<span class='no'>genus</span>, <span class='no'>species</span>)))
+  <span class='fu'><a href='http://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span>(<span class='kw'>mo</span> <span class='kw'>=</span> <span class='fu'>as.mo</span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/paste'>paste</a></span>(<span class='no'>genus</span>, <span class='no'>species</span>)))
 <span class='co'># }</span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

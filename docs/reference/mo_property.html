@@ -163,19 +163,19 @@
 
     <div class="ref-description">
     
-    <p>Use these functions to return a specific property of a microorganism from the <code>microorganisms</code> data set. All input values will be evaluated internally with <code>as.mo</code>.</p>
+    <p>Use these functions to return a specific property of a microorganism from the <code><a href='microorganisms.html'>microorganisms</a></code> data set. All input values will be evaluated internally with <code><a href='as.mo.html'>as.mo</a></code>.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>mo_fullname</span>(<span class='no'>x</span>, <span class='kw'>language</span> <span class='kw'>=</span> <span class='fu'>get_locale</span>(), <span class='no'>...</span>)
+    <pre class="usage"><span class='fu'>mo_fullname</span>(<span class='no'>x</span>, <span class='kw'>language</span> <span class='kw'>=</span> <span class='fu'><a href='get_locale.html'>get_locale</a></span>(), <span class='no'>...</span>)
 
-<span class='fu'>mo_shortname</span>(<span class='no'>x</span>, <span class='kw'>language</span> <span class='kw'>=</span> <span class='fu'>get_locale</span>(), <span class='no'>...</span>)
+<span class='fu'>mo_shortname</span>(<span class='no'>x</span>, <span class='kw'>language</span> <span class='kw'>=</span> <span class='fu'><a href='get_locale.html'>get_locale</a></span>(), <span class='no'>...</span>)
 
-<span class='fu'>mo_subspecies</span>(<span class='no'>x</span>, <span class='kw'>language</span> <span class='kw'>=</span> <span class='fu'>get_locale</span>(), <span class='no'>...</span>)
+<span class='fu'>mo_subspecies</span>(<span class='no'>x</span>, <span class='kw'>language</span> <span class='kw'>=</span> <span class='fu'><a href='get_locale.html'>get_locale</a></span>(), <span class='no'>...</span>)
 
-<span class='fu'>mo_species</span>(<span class='no'>x</span>, <span class='kw'>language</span> <span class='kw'>=</span> <span class='fu'>get_locale</span>(), <span class='no'>...</span>)
+<span class='fu'>mo_species</span>(<span class='no'>x</span>, <span class='kw'>language</span> <span class='kw'>=</span> <span class='fu'><a href='get_locale.html'>get_locale</a></span>(), <span class='no'>...</span>)
 
-<span class='fu'>mo_genus</span>(<span class='no'>x</span>, <span class='kw'>language</span> <span class='kw'>=</span> <span class='fu'>get_locale</span>(), <span class='no'>...</span>)
+<span class='fu'>mo_genus</span>(<span class='no'>x</span>, <span class='kw'>language</span> <span class='kw'>=</span> <span class='fu'><a href='get_locale.html'>get_locale</a></span>(), <span class='no'>...</span>)
 
 <span class='fu'>mo_family</span>(<span class='no'>x</span>, <span class='no'>...</span>)
 
@@ -189,9 +189,9 @@
 
 <span class='fu'>mo_kingdom</span>(<span class='no'>x</span>, <span class='no'>...</span>)
 
-<span class='fu'>mo_type</span>(<span class='no'>x</span>, <span class='kw'>language</span> <span class='kw'>=</span> <span class='fu'>get_locale</span>(), <span class='no'>...</span>)
+<span class='fu'>mo_type</span>(<span class='no'>x</span>, <span class='kw'>language</span> <span class='kw'>=</span> <span class='fu'><a href='get_locale.html'>get_locale</a></span>(), <span class='no'>...</span>)
 
-<span class='fu'>mo_gramstain</span>(<span class='no'>x</span>, <span class='kw'>language</span> <span class='kw'>=</span> <span class='fu'>get_locale</span>(), <span class='no'>...</span>)
+<span class='fu'>mo_gramstain</span>(<span class='no'>x</span>, <span class='kw'>language</span> <span class='kw'>=</span> <span class='fu'><a href='get_locale.html'>get_locale</a></span>(), <span class='no'>...</span>)
 
 <span class='fu'>mo_TSN</span>(<span class='no'>x</span>, <span class='no'>...</span>)
 
@@ -203,26 +203,26 @@
 
 <span class='fu'>mo_taxonomy</span>(<span class='no'>x</span>, <span class='no'>...</span>)
 
-<span class='fu'>mo_property</span>(<span class='no'>x</span>, <span class='kw'>property</span> <span class='kw'>=</span> <span class='st'>"fullname"</span>, <span class='kw'>language</span> <span class='kw'>=</span> <span class='fu'>get_locale</span>(), <span class='no'>...</span>)</pre>
+<span class='fu'>mo_property</span>(<span class='no'>x</span>, <span class='kw'>property</span> <span class='kw'>=</span> <span class='st'>"fullname"</span>, <span class='kw'>language</span> <span class='kw'>=</span> <span class='fu'><a href='get_locale.html'>get_locale</a></span>(), <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>x</th>
-      <td><p>any (vector of) text that can be coerced to a valid microorganism code with <code>as.mo</code></p></td>
+      <td><p>any (vector of) text that can be coerced to a valid microorganism code with <code><a href='as.mo.html'>as.mo</a></code></p></td>
     </tr>
     <tr>
       <th>language</th>
-      <td><p>language of the returned text, defaults to system language (see <code>get_locale</code>) and can also be set with <code><a href='https://www.rdocumentation.org/packages/base/topics/options'>getOption</a>("AMR_locale")</code>. Use <code>language = NULL</code> or <code>language = ""</code> to prevent translation.</p></td>
+      <td><p>language of the returned text, defaults to system language (see <code><a href='get_locale.html'>get_locale</a></code>) and can also be set with <code><a href='https://www.rdocumentation.org/packages/base/topics/options'>getOption</a>("AMR_locale")</code>. Use <code>language = NULL</code> or <code>language = ""</code> to prevent translation.</p></td>
     </tr>
     <tr>
       <th>...</th>
-      <td><p>other parameters passed on to <code>as.mo</code></p></td>
+      <td><p>other parameters passed on to <code><a href='as.mo.html'>as.mo</a></code></p></td>
     </tr>
     <tr>
       <th>property</th>
-      <td><p>one of the column names of one of the <code>microorganisms</code> data set or <code>"shortname"</code></p></td>
+      <td><p>one of the column names of one of the <code><a href='microorganisms.html'>microorganisms</a></code> data set or <code>"shortname"</code></p></td>
     </tr>
     </table>
     
@@ -266,7 +266,7 @@ This package contains the <strong>complete microbial taxonomic data</strong> (wi
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><code>microorganisms</code></p></div>
+    <div class='dont-index'><p><code><a href='microorganisms.html'>microorganisms</a></code></p></div>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>

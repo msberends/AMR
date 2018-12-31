@@ -180,8 +180,8 @@
   <dt><code>age</code></dt><dd><p>age of the patient</p></dd>
   <dt><code>gender</code></dt><dd><p>gender of the patient</p></dd>
   <dt><code>patient_id</code></dt><dd><p>ID of the patient, first 10 characters of an SHA hash containing irretrievable information</p></dd>
-  <dt><code>mo</code></dt><dd><p>ID of microorganism created with <code>as.mo</code>, see also <code>microorganisms</code></p></dd>
-  <dt><code>peni:rifa</code></dt><dd><p>40 different antibiotics with class <code>rsi</code> (see <code>as.rsi</code>); these column names occur in <code>antibiotics</code> data set and can be translated with <code>abname</code></p></dd>
+  <dt><code>mo</code></dt><dd><p>ID of microorganism created with <code><a href='as.mo.html'>as.mo</a></code>, see also <code><a href='microorganisms.html'>microorganisms</a></code></p></dd>
+  <dt><code>peni:rifa</code></dt><dd><p>40 different antibiotics with class <code>rsi</code> (see <code><a href='as.rsi.html'>as.rsi</a></code>); these column names occur in <code><a href='antibiotics.html'>antibiotics</a></code> data set and can be translated with <code><a href='abname.html'>abname</a></code></p></dd>
 </dl>
     
 
@@ -199,7 +199,7 @@
 
 <span class='co'># Add first isolates to our data set:</span>
 <span class='no'>my_data</span> <span class='kw'>&lt;-</span> <span class='no'>my_data</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='https://www.rdocumentation.org/packages/dplyr/topics/mutate'>mutate</a></span>(<span class='kw'>first_isolates</span> <span class='kw'>=</span> <span class='fu'>first_isolate</span>(<span class='no'>my_data</span>, <span class='st'>"date"</span>, <span class='st'>"patient_id"</span>, <span class='st'>"mo"</span>))
+  <span class='fu'><a href='http://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span>(<span class='kw'>first_isolates</span> <span class='kw'>=</span> <span class='fu'><a href='first_isolate.html'>first_isolate</a></span>(<span class='no'>my_data</span>, <span class='st'>"date"</span>, <span class='st'>"patient_id"</span>, <span class='st'>"mo"</span>))
 
 <span class='co'># -------- #</span>
 <span class='co'># ANALYSIS #</span>
@@ -209,22 +209,22 @@
 <span class='co'>#     and numbers (n) of E. coli, divided by hospital:</span>
 
 <span class='no'>my_data</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='https://www.rdocumentation.org/packages/dplyr/topics/filter'>filter</a></span>(<span class='no'>mo</span> <span class='kw'>==</span> <span class='fu'>guess_mo</span>(<span class='st'>"E. coli"</span>),
+  <span class='fu'><a href='http://dplyr.tidyverse.org/reference/filter.html'>filter</a></span>(<span class='no'>mo</span> <span class='kw'>==</span> <span class='fu'><a href='as.mo.html'>guess_mo</a></span>(<span class='st'>"E. coli"</span>),
          <span class='no'>first_isolates</span> <span class='kw'>==</span> <span class='fl'>TRUE</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='https://www.rdocumentation.org/packages/dplyr/topics/group_by'>group_by</a></span>(<span class='no'>hospital_id</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='https://www.rdocumentation.org/packages/dplyr/topics/summarise'>summarise</a></span>(<span class='kw'>n</span> <span class='kw'>=</span> <span class='fu'>n_rsi</span>(<span class='no'>amox</span>),
-            <span class='kw'>p</span> <span class='kw'>=</span> <span class='fu'>portion_IR</span>(<span class='no'>amox</span>))
+  <span class='fu'><a href='http://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span>(<span class='no'>hospital_id</span>) <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='http://dplyr.tidyverse.org/reference/summarise.html'>summarise</a></span>(<span class='kw'>n</span> <span class='kw'>=</span> <span class='fu'><a href='count.html'>n_rsi</a></span>(<span class='no'>amox</span>),
+            <span class='kw'>p</span> <span class='kw'>=</span> <span class='fu'><a href='portion.html'>portion_IR</a></span>(<span class='no'>amox</span>))
 
 
 <span class='co'># 2. Get the amoxicillin/clavulanic acid resistance</span>
 <span class='co'>#    percentages of E. coli, trend over the years:</span>
 
 <span class='no'>my_data</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='https://www.rdocumentation.org/packages/dplyr/topics/filter'>filter</a></span>(<span class='no'>mo</span> <span class='kw'>==</span> <span class='fu'>guess_mo</span>(<span class='st'>"E. coli"</span>),
+  <span class='fu'><a href='http://dplyr.tidyverse.org/reference/filter.html'>filter</a></span>(<span class='no'>mo</span> <span class='kw'>==</span> <span class='fu'><a href='as.mo.html'>guess_mo</a></span>(<span class='st'>"E. coli"</span>),
          <span class='no'>first_isolates</span> <span class='kw'>==</span> <span class='fl'>TRUE</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='https://www.rdocumentation.org/packages/dplyr/topics/group_by'>group_by</a></span>(<span class='kw'>year</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/format'>format</a></span>(<span class='no'>date</span>, <span class='st'>"%Y"</span>)) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='https://www.rdocumentation.org/packages/dplyr/topics/summarise'>summarise</a></span>(<span class='kw'>n</span> <span class='kw'>=</span> <span class='fu'>n_rsi</span>(<span class='no'>amcl</span>),
-            <span class='kw'>p</span> <span class='kw'>=</span> <span class='fu'>portion_IR</span>(<span class='no'>amcl</span>, <span class='kw'>minimum</span> <span class='kw'>=</span> <span class='fl'>20</span>))
+  <span class='fu'><a href='http://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span>(<span class='kw'>year</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/format'>format</a></span>(<span class='no'>date</span>, <span class='st'>"%Y"</span>)) <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='http://dplyr.tidyverse.org/reference/summarise.html'>summarise</a></span>(<span class='kw'>n</span> <span class='kw'>=</span> <span class='fu'><a href='count.html'>n_rsi</a></span>(<span class='no'>amcl</span>),
+            <span class='kw'>p</span> <span class='kw'>=</span> <span class='fu'><a href='portion.html'>portion_IR</a></span>(<span class='no'>amcl</span>, <span class='kw'>minimum</span> <span class='kw'>=</span> <span class='fl'>20</span>))
 <span class='co'># }</span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

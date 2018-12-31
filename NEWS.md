@@ -2,15 +2,15 @@
 **Note: this is the development version, which will eventually be released as AMR 0.6.0.**
 
 #### New
-* **BREAKING**: removed deprecated functions, parameters and references to 'bactid'. Use `as.mo` to identify an MO code.
+* **BREAKING**: removed deprecated functions, parameters and references to 'bactid'. Use `as.mo()` to identify an MO code.
 * New website: https://msberends.gitlab.io/AMR (built with the great [`pkgdown`](https://pkgdown.r-lib.org/))
   * Contains the complete manual of this package and all of its functions with an explanation of their parameters
 * Support for [`dplyr`](https://dplyr.tidyverse.org) version 0.8.0
-* Function `mo_failures` to review values that could not be coerced to a valid MO code, using `as.mo`. This latter function will now only show a maximum of 25 uncoerced values.
-* Function `mo_renamed` to get a list of all returned values from `as.mo` that have had taxonomic renaming
-* Function `age` to calculate the (patients) age in years
-* Function `age_groups` to split ages into custom or predefined groups (like children or elderly). This allows for easier demographic antimicrobial resistance analysis per age group.
-* Functions `filter_first_isolate` and `filter_first_weighted_isolate()` to shorten and fasten filtering on data sets with antimicrobial results, e.g.:
+* Function `mo_failures()` to review values that could not be coerced to a valid MO code, using `as.mo()`. This latter function will now only show a maximum of 25 uncoerced values.
+* Function `mo_renamed()` to get a list of all returned values from `as.mo()` that have had taxonomic renaming
+* Function `age()` to calculate the (patients) age in years
+* Function `age_groups()` to split ages into custom or predefined groups (like children or elderly). This allows for easier demographic antimicrobial resistance analysis per age group.
+* Functions `filter_first_isolate()` and `filter_first_weighted_isolate()` to shorten and fasten filtering on data sets with antimicrobial results, e.g.:
   ```r
   septic_patients %>% filter_first_isolate()
   # or
@@ -25,7 +25,8 @@
   ```
 
 #### Changed
-* Improvements for `as.mo`:
+* Fixed a critical bug in `eucast_rules()` where some rules that depend on previous applied rules would not be applied adequately
+* Improvements for `as.mo()`:
   * Finds better results when input is in other languages
   * Better handling for subspecies
   * Better handling for *Salmonellae*
@@ -33,18 +34,18 @@
   * Manual now contains more info about the algorithms
   * Progress bar will be shown when it takes more than 3 seconds to get results
   * Support for formatted console text
-* Function `first_isolate`:
+* Function `first_isolate()`:
+  * Fixed a bug where distances between dates would not be calculated right - in the `septic_patients` data set this yielded a difference of 0.15% more isolates
   * Will now use a column named like "patid" for the patient ID (parameter `col_patientid`), when this parameter was left blank
-  * Will now use a column named like "key(...)ab" or "key(...)antibiotics" for the key antibiotics (parameter `col_keyantibiotics`), when this parameter was left blank
+  * Will now use a column named like "key(...)ab" or "key(...)antibiotics" for the key antibiotics (parameter `col_keyantibiotics()`), when this parameter was left blank
   * Removed parameter `output_logical`, the function will now always return a logical value
   * Renamed parameter `filter_specimen` to `specimen_group`, although using `filter_specimen` will still work
 * A note to the manual pages of the `portion` functions, that low counts can influence the outcome and that the `portion` functions may camouflage this, since they only return the portion (albeit being dependent on the `minimum` parameter)
-* Function `mo_taxonomy` now contains the kingdom too
-* Function `first_isolate` will now use a column named like "patid" for the patient ID, when this parameter was left blank
-* Reduce false positives for `is.rsi.eligible`
+* Function `mo_taxonomy()` now contains the kingdom too
+* Reduce false positives for `is.rsi.eligible()`
 * Summaries of class `mo` will now return the top 3 and the unique count, e.g. using `summary(mo)`
 * Small text updates to summaries of class `rsi` and `mic`
-* Frequency tables (`freq` function):
+* Frequency tables (`freq()` function):
   * Header info is now available as a list, with the `header` function
   * Added header info for class `mo` to show unique count of families, genera and species
   * Now honours the `decimal.mark` setting, which just like `format` defaults to `getOption("OutDec")`
@@ -52,10 +53,10 @@
   * Fix for header text where all observations are `NA`
   * New parameter `droplevels` to exclude empty factor levels when input is a factor
   * Factor levels will be in header when present in input data
-* Function `scale_y_percent` now contains the `limits` parameter
-* Automatic parameter filling for `mdro`, `key_antibiotics` and `eucast_rules`
-* Updated examples for resistance prediction (`resistance_predict` function)
-* Fix for `as.mic` to support more values ending in (several) zeroes
+* Function `scale_y_percent()` now contains the `limits` parameter
+* Automatic parameter filling for `mdro()`, `key_antibiotics()` and `eucast_rules()`
+* Updated examples for resistance prediction (`resistance_predict()` function)
+* Fix for `as.mic()` to support more values ending in (several) zeroes
 
 #### Other
 * Updated licence text to emphasise GPL 2.0 and that this is an R package.

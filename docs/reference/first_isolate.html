@@ -198,7 +198,7 @@
     </tr>
     <tr>
       <th>col_mo</th>
-      <td><p>column name of the unique IDs of the microorganisms (see <code>mo</code>), defaults to the first column of class <code>mo</code>. Values will be coerced using <code>as.mo</code>.</p></td>
+      <td><p>column name of the unique IDs of the microorganisms (see <code><a href='as.mo.html'>mo</a></code>), defaults to the first column of class <code>mo</code>. Values will be coerced using <code><a href='as.mo.html'>as.mo</a></code>.</p></td>
     </tr>
     <tr>
       <th>col_testcode</th>
@@ -214,7 +214,7 @@
     </tr>
     <tr>
       <th>col_keyantibiotics</th>
-      <td><p>column name of the key antibiotics to determine first <em>weighted</em> isolates, see <code>key_antibiotics</code>. Defaults to the first column that starts with 'key' followed by 'ab' or 'antibiotics' (case insensitive). Use <code>col_keyantibiotics = FALSE</code> to prevent this.</p></td>
+      <td><p>column name of the key antibiotics to determine first <em>weighted</em> isolates, see <code><a href='key_antibiotics.html'>key_antibiotics</a></code>. Defaults to the first column that starts with 'key' followed by 'ab' or 'antibiotics' (case insensitive). Use <code>col_keyantibiotics = FALSE</code> to prevent this.</p></td>
     </tr>
     <tr>
       <th>episode_days</th>
@@ -291,7 +291,7 @@ To conduct an analysis of antimicrobial resistance, you should only include the 
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><code>key_antibiotics</code></p></div>
+    <div class='dont-index'><p><code><a href='key_antibiotics.html'>key_antibiotics</a></code></p></div>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
@@ -302,11 +302,11 @@ To conduct an analysis of antimicrobial resistance, you should only include the 
 <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>dplyr</span>)
 <span class='co'># Filter on first isolates:</span>
 <span class='no'>septic_patients</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='https://www.rdocumentation.org/packages/dplyr/topics/mutate'>mutate</a></span>(<span class='kw'>first_isolate</span> <span class='kw'>=</span> <span class='fu'>first_isolate</span>(<span class='no'>.</span>,
+  <span class='fu'><a href='http://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span>(<span class='kw'>first_isolate</span> <span class='kw'>=</span> <span class='fu'>first_isolate</span>(<span class='no'>.</span>,
                                        <span class='kw'>col_date</span> <span class='kw'>=</span> <span class='st'>"date"</span>,
                                        <span class='kw'>col_patient_id</span> <span class='kw'>=</span> <span class='st'>"patient_id"</span>,
                                        <span class='kw'>col_mo</span> <span class='kw'>=</span> <span class='st'>"mo"</span>)) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='https://www.rdocumentation.org/packages/dplyr/topics/filter'>filter</a></span>(<span class='no'>first_isolate</span> <span class='kw'>==</span> <span class='fl'>TRUE</span>)
+  <span class='fu'><a href='http://dplyr.tidyverse.org/reference/filter.html'>filter</a></span>(<span class='no'>first_isolate</span> <span class='kw'>==</span> <span class='fl'>TRUE</span>)
 
 <span class='co'># Which can be shortened to:</span>
 <span class='no'>septic_patients</span> <span class='kw'>%&gt;%</span>
@@ -317,15 +317,15 @@ To conduct an analysis of antimicrobial resistance, you should only include the 
 
 <span class='co'># Now let's see if first isolates matter:</span>
 <span class='no'>A</span> <span class='kw'>&lt;-</span> <span class='no'>septic_patients</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='https://www.rdocumentation.org/packages/dplyr/topics/group_by'>group_by</a></span>(<span class='no'>hospital_id</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='https://www.rdocumentation.org/packages/dplyr/topics/summarise'>summarise</a></span>(<span class='kw'>count</span> <span class='kw'>=</span> <span class='fu'>n_rsi</span>(<span class='no'>gent</span>),            <span class='co'># gentamicin availability</span>
-            <span class='kw'>resistance</span> <span class='kw'>=</span> <span class='fu'>portion_IR</span>(<span class='no'>gent</span>))  <span class='co'># gentamicin resistance</span>
+  <span class='fu'><a href='http://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span>(<span class='no'>hospital_id</span>) <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='http://dplyr.tidyverse.org/reference/summarise.html'>summarise</a></span>(<span class='kw'>count</span> <span class='kw'>=</span> <span class='fu'><a href='count.html'>n_rsi</a></span>(<span class='no'>gent</span>),            <span class='co'># gentamicin availability</span>
+            <span class='kw'>resistance</span> <span class='kw'>=</span> <span class='fu'><a href='portion.html'>portion_IR</a></span>(<span class='no'>gent</span>))  <span class='co'># gentamicin resistance</span>
 
 <span class='no'>B</span> <span class='kw'>&lt;-</span> <span class='no'>septic_patients</span> <span class='kw'>%&gt;%</span>
   <span class='fu'>filter_first_weighted_isolate</span>() <span class='kw'>%&gt;%</span>       <span class='co'># the 1st isolate filter</span>
-  <span class='fu'><a href='https://www.rdocumentation.org/packages/dplyr/topics/group_by'>group_by</a></span>(<span class='no'>hospital_id</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='https://www.rdocumentation.org/packages/dplyr/topics/summarise'>summarise</a></span>(<span class='kw'>count</span> <span class='kw'>=</span> <span class='fu'>n_rsi</span>(<span class='no'>gent</span>),            <span class='co'># gentamicin availability</span>
-            <span class='kw'>resistance</span> <span class='kw'>=</span> <span class='fu'>portion_IR</span>(<span class='no'>gent</span>))  <span class='co'># gentamicin resistance</span>
+  <span class='fu'><a href='http://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span>(<span class='no'>hospital_id</span>) <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='http://dplyr.tidyverse.org/reference/summarise.html'>summarise</a></span>(<span class='kw'>count</span> <span class='kw'>=</span> <span class='fu'><a href='count.html'>n_rsi</a></span>(<span class='no'>gent</span>),            <span class='co'># gentamicin availability</span>
+            <span class='kw'>resistance</span> <span class='kw'>=</span> <span class='fu'><a href='portion.html'>portion_IR</a></span>(<span class='no'>gent</span>))  <span class='co'># gentamicin resistance</span>
 
 <span class='co'># Have a look at A and B.</span>
 <span class='co'># B is more reliable because every isolate is only counted once.</span>
@@ -337,7 +337,7 @@ To conduct an analysis of antimicrobial resistance, you should only include the 
 
 <span class='co'># }</span><span class='co'># NOT RUN {</span>
 <span class='co'># set key antibiotics to a new variable</span>
-<span class='no'>tbl</span>$<span class='no'>keyab</span> <span class='kw'>&lt;-</span> <span class='fu'>key_antibiotics</span>(<span class='no'>tbl</span>)
+<span class='no'>tbl</span>$<span class='no'>keyab</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='key_antibiotics.html'>key_antibiotics</a></span>(<span class='no'>tbl</span>)
 
 <span class='no'>tbl</span>$<span class='no'>first_isolate</span> <span class='kw'>&lt;-</span>
   <span class='fu'>first_isolate</span>(<span class='no'>tbl</span>)

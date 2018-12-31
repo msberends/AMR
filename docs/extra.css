@@ -28,8 +28,22 @@ pre, code {
     font-weight: bold;
     background-color: transparent;
 }
+pre {
+  font-size: 90% !important;
+}
 li, p {
     line-height: 1.5;
+}
+
+/* slightly smaller blockquote */
+blockquote {
+    font-size: 98%;
+}
+
+/* 2nd list in navigation should be smaller */
+#tocnav li li {
+  font-size: 90%;
+  margin-left: 5px;
 }
 
 /* new <help> element with dotted underline */
@@ -59,4 +73,19 @@ help {
 #navbar .far,
 #navbar .fas {
   margin-right: 5px;
+}
+
+/* tables */
+.table {
+  font-size: 90%;
+}
+.table td {
+  padding: 4px !important;
+}
+thead {
+    border-top: 2px solid black;
+    border-bottom: 2px solid black;
+}
+tbody {
+    border-bottom: 2px solid black;
 }

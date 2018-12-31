@@ -348,7 +348,7 @@ eucast_rules <- function(tbl,
 
   # helper function for editing the table
   edit_rsi <- function(to, rule, rows, cols) {
-    cols <- cols[!is.na(cols)]
+    cols <- unique(cols[!is.na(cols)])
     if (length(rows) > 0 & length(cols) > 0) {
       before <- as.character(unlist(as.list(tbl_original[rows, cols])))
       tryCatch(
@@ -367,6 +367,10 @@ eucast_rules <- function(tbl,
           stop(e, call. = FALSE)
         }
       )
+      suppressMessages(
+        suppressWarnings(
+          tbl[rows, cols] <<- to
+      ))
       after <- as.character(unlist(as.list(tbl_original[rows, cols])))
       amount_changed <<- amount_changed + sum(before != after, na.rm = TRUE)
       amount_affected_rows <<- unique(c(amount_affected_rows, rows))
@@ -404,27 +408,14 @@ eucast_rules <- function(tbl,
   # join to microorganisms data set
   tbl <- tbl %>%
     mutate_at(vars(col_mo), as.mo) %>%
-    left_join_microorganisms(by = col_mo, suffix = c("_oldcols", ""))
-
-  # antibiotic classes
-  aminoglycosides <- c(tobr, gent, kana, neom, neti, siso)
-  tetracyclines <- c(doxy, mino, tetr) # since EUCAST v3.1 tige(cycline) is set apart
-  polymyxins <- c(poly, coli)
-  macrolides <- c(eryt, azit, roxi, clar) # since EUCAST v3.1 clinda is set apart
-  glycopeptides <- c(vanc, teic)
-  streptogramins <- c(qida, pris) # should officially also be quinupristin/dalfopristin
-  cephalosporins <- c(cfep, cfot, cfox, cfra, cfta, cftr, cfur, czol)
-  carbapenems <- c(erta, imip, mero)
-  aminopenicillins <- c(ampi, amox)
-  ureidopenicillins <- c(pipe, pita, azlo, mezl)
-  fluoroquinolones <- c(oflo, cipr, norf, levo, moxi)
-  all_betalactam <- c(aminopenicillins, ureidopenicillins, cephalosporins, carbapenems, amcl, oxac, clox, peni)
+    left_join_microorganisms(by = col_mo, suffix = c("_oldcols", "")) %>%
+    as.data.frame(stringsAsFactors = FALSE)
 
   if (info == TRUE) {
-    cat("Rules by the European Committee on Antimicrobial Susceptibility Testing (EUCAST)\n")
+    cat("\nRules by the European Committee on Antimicrobial Susceptibility Testing (EUCAST)\n")
   }
 
-  # since ampicillin ^= amoxicillin, get the first from the latter (not in original table)
+  # since ampicillin ^= amoxicillin, get the first from the latter (not in original EUCAST table)
   if (!is.na(ampi) & !is.na(amox)) {
     if (verbose == TRUE) {
       cat(bgGreen("\n VERBOSE: transforming",
@@ -440,7 +431,25 @@ eucast_rules <- function(tbl,
     tbl[which(tbl[, amox] == "S" & !tbl[, ampi] %in% c("S", "I", "R")), ampi] <- "S"
     tbl[which(tbl[, amox] == "I" & !tbl[, ampi] %in% c("S", "I", "R")), ampi] <- "I"
     tbl[which(tbl[, amox] == "R" & !tbl[, ampi] %in% c("S", "I", "R")), ampi] <- "R"
+  } else if (is.na(ampi) & !is.na(amox)) {
+    # ampicillin column is missing, but amoxicillin is available
+    message(blue(paste0("NOTE: Using column `", bold(amox), "` as input for ampicillin (J01CA01) since many EUCAST rules depend on it.")))
+    ampi <- amox
   }
+
+  # antibiotic classes
+  aminoglycosides <- c(tobr, gent, kana, neom, neti, siso)
+  tetracyclines <- c(doxy, mino, tetr) # since EUCAST v3.1 tige(cycline) is set apart
+  polymyxins <- c(poly, coli)
+  macrolides <- c(eryt, azit, roxi, clar) # since EUCAST v3.1 clinda is set apart
+  glycopeptides <- c(vanc, teic)
+  streptogramins <- c(qida, pris) # should officially also be quinupristin/dalfopristin
+  cephalosporins <- c(cfep, cfot, cfox, cfra, cfta, cftr, cfur, czol)
+  carbapenems <- c(erta, imip, mero)
+  aminopenicillins <- c(ampi, amox)
+  ureidopenicillins <- c(pipe, pita, azlo, mezl)
+  fluoroquinolones <- c(oflo, cipr, norf, levo, moxi)
+  all_betalactam <- c(aminopenicillins, ureidopenicillins, cephalosporins, carbapenems, amcl, oxac, clox, peni)
 
   if (any(c("all", "breakpoints") %in% rules)) {
     # BREAKPOINTS -------------------------------------------------------------

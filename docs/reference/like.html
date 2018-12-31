@@ -228,9 +228,9 @@
 <span class='co'># get frequencies of bacteria whose name start with 'Ent' or 'ent'</span>
 <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>dplyr</span>)
 <span class='no'>septic_patients</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'>left_join_microorganisms</span>() <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='https://www.rdocumentation.org/packages/dplyr/topics/filter'>filter</a></span>(<span class='no'>genus</span> <span class='kw'>%like%</span> <span class='st'>'^ent'</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'>freq</span>(<span class='no'>genus</span>, <span class='no'>species</span>)
+  <span class='fu'><a href='join.html'>left_join_microorganisms</a></span>() <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='http://dplyr.tidyverse.org/reference/filter.html'>filter</a></span>(<span class='no'>genus</span> <span class='kw'>%like%</span> <span class='st'>'^ent'</span>) <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='freq.html'>freq</a></span>(<span class='no'>genus</span>, <span class='no'>species</span>)
 <span class='co'># }</span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

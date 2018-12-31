@@ -380,7 +380,7 @@ first_isolate <- function(tbl,
     )
   }
 
-  # suppress warnings because dplyr want us to use library(dplyr) when using filter(row_number())
+  # suppress warnings because dplyr wants us to use library(dplyr) when using filter(row_number())
   suppressWarnings(
     scope.size <- tbl %>%
       filter(
@@ -391,17 +391,46 @@ first_isolate <- function(tbl,
       nrow()
   )
 
+  identify_new_year = function(x, episode_days) {
+    # I asked on StackOverflow:
+    # https://stackoverflow.com/questions/42122245/filter-one-row-every-year
+    if (length(x) == 1) {
+      return(TRUE)
+    }
+    indices = integer(0)
+    start = x[1]
+    ind = 1
+    indices[ind] = ind
+    for (i in 2:length(x)) {
+      if (as.numeric(x[i] - start >= episode_days)) {
+        ind = ind + 1
+        indices[ind] = i
+        start = x[i]
+      }
+    }
+    result <- rep(FALSE, length(x))
+    result[indices] <- TRUE
+    return(result)
+  }
+
   # Analysis of first isolate ----
   all_first <- tbl %>%
     mutate(other_pat_or_mo = if_else(patient_id == lag(patient_id)
                                      & genus == lag(genus)
                                      & species == lag(species),
                                      FALSE,
-                                     TRUE),
-           days_diff = 0) %>%
-    mutate(days_diff = if_else(other_pat_or_mo == FALSE,
-                               (date_lab - lag(date_lab)) + lag(days_diff),
-                               0))
+                                     TRUE)) %>% #,
+    #        days_diff = 0) %>%
+    # mutate(days_diff = if_else(other_pat_or_mo == FALSE,
+    #                            as.integer((date_lab - lag(date_lab)) + lag(days_diff)),
+    #                            as.integer(0))) %>%
+    # mutate(r = days_diff) %>%
+    group_by_at(vars(patient_id,
+                     genus,
+                     species)) %>%
+    mutate(more_than_episode_ago = identify_new_year(x = date_lab,
+                                                     episode_days = episode_days)) %>%
+    ungroup()
 
   weighted.notice <- ''
   if (!is.null(col_keyantibiotics)) {
@@ -436,13 +465,12 @@ first_isolate <- function(tbl,
               between(row_number(), row.start, row.end)
               & genus != ""
               & species != ""
-              & (other_pat_or_mo
-                 | days_diff >= episode_days
-                 | key_ab_other),
+              & (other_pat_or_mo | more_than_episode_ago | key_ab_other),
               TRUE,
               FALSE))
     )
   } else {
+    # no key antibiotics
     # suppress warnings because dplyr want us to use library(dplyr) when using filter(row_number())
     suppressWarnings(
       all_first <- all_first %>%
@@ -452,8 +480,7 @@ first_isolate <- function(tbl,
               between(row_number(), row.start, row.end)
               & genus != ""
               & species != ""
-              & (other_pat_or_mo
-                 | days_diff >= episode_days),
+              & (other_pat_or_mo | more_than_episode_ago),
               TRUE,
               FALSE))
     )

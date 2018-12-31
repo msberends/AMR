@@ -192,7 +192,7 @@
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><code>as.mic</code></p></div>
+    <div class='dont-index'><p><code><a href='as.mic.html'>as.mic</a></code></p></div>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
@@ -206,16 +206,16 @@
 
 <span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/plot'>plot</a></span>(<span class='no'>rsi_data</span>)    <span class='co'># for percentages</span>
 <span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/barplot'>barplot</a></span>(<span class='no'>rsi_data</span>) <span class='co'># for frequencies</span>
-<span class='fu'>freq</span>(<span class='no'>rsi_data</span>)    <span class='co'># frequency table with informative header</span>
+<span class='fu'><a href='freq.html'>freq</a></span>(<span class='no'>rsi_data</span>)    <span class='co'># frequency table with informative header</span>
 
 <span class='co'># using dplyr's mutate</span>
 <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>dplyr</span>)
 <span class='no'>septic_patients</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='https://www.rdocumentation.org/packages/dplyr/topics/summarise_all'>mutate_at</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/dplyr/topics/vars'>vars</a></span>(<span class='no'>peni</span>:<span class='no'>rifa</span>), <span class='no'>as.rsi</span>)
+  <span class='fu'><a href='http://dplyr.tidyverse.org/reference/summarise_all.html'>mutate_at</a></span>(<span class='fu'><a href='http://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='no'>peni</span>:<span class='no'>rifa</span>), <span class='no'>as.rsi</span>)
 
 <span class='co'># fastest way to transform all columns with already valid AB results to class `rsi`:</span>
 <span class='no'>septic_patients</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='https://www.rdocumentation.org/packages/dplyr/topics/summarise_all'>mutate_if</a></span>(<span class='no'>is.rsi.eligible</span>,
+  <span class='fu'><a href='http://dplyr.tidyverse.org/reference/summarise_all.html'>mutate_if</a></span>(<span class='no'>is.rsi.eligible</span>,
             <span class='no'>as.rsi</span>)
 <span class='co'># }</span></pre>
   </div>

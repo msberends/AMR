@@ -573,9 +573,9 @@ format_header <- function(x, markdown = FALSE, decimal.mark = ".", big.mark = ",
       n_levels_list <- c(n_levels_list[1:5], "...")
     }
     if (header$ordered == TRUE) {
-      n_levels_list <- paste0(header$levels, collapse = " < ")
+      n_levels_list <- paste0(n_levels_list, collapse = " < ")
     } else {
-      n_levels_list <- paste0(header$levels, collapse = ", ")
+      n_levels_list <- paste0(n_levels_list, collapse = ", ")
     }
     header$levels <- n_levels_list
     header <- header[names(header) != "ordered"]
@@ -824,7 +824,7 @@ print.frequency_tbl <- function(x,
     }
   } else if (opt$tbl_format == "markdown") {
     # do print title as caption in markdown
-    cat("\n", title, sep = "")
+    cat("\n", title, "  ", sep = "") # two trailing spaces for markdown
   }
 
   if (NROW(x) == 0) {

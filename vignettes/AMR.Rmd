@@ -6,8 +6,10 @@ output:
     toc: true
 vignette: >
   %\VignetteIndexEntry{The AMR package - How to conduct AMR analysis}
-  %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
+  %\VignetteEngine{knitr::rmarkdown}
+editor_options: 
+  chunk_output_type: console
 ---
 
 ```{r setup, include = FALSE, results = 'markup'}
@@ -15,7 +17,253 @@ knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#"
 )
+# set to original language (English)
+Sys.setlocale(locale = "C")
 ```
 
+**Note:** values on this page will be regenerated with every website update since it is written in [RMarkdown](https://rmarkdown.rstudio.com/), so actual results will change over time. However, the methodology remains unchanged. This page was generated on `r format(Sys.Date(), "%d %B %Y")`.
 
-This page will soon be updated.
+# Introduction
+(work in progress)
+
+# Tutorial
+For this tutorial, we will create fake demonstration data to work with. 
+
+You can skip to [Cleaning the data](#cleaning-the-data) if you already have your own data ready. If you start your analysis, try to make the structure of your data generally look like this:
+
+```{r example table, echo = FALSE, results = 'asis'}
+knitr::kable(dplyr::tibble(date = Sys.Date(),
+                           patient_id = c("abcd", "abcd", "efgh"),
+                           mo = "Escherichia coli", 
+                           amox = c("S", "S", "R"),
+                           cipr = c("S", "R", "S")), 
+             align = "c")
+``` 
+
+## Needed R packages
+As with many uses in R, we need some additional packages for AMR analysis. The most important one is [`dplyr`](https://dplyr.tidyverse.org/), which tremendously improves the way we work with data - it allows for a very natural way of writing syntaxes in R. Another important dependency is [`ggplot2`](https://ggplot2.tidyverse.org/). This package can be used to create beautiful plots in R.
+
+Our `AMR` package depends on these packages and even extends their use and functions. 
+
+```{r lib packages, message = FALSE}
+library(dplyr)   # the data science package
+library(AMR)     # this package, to simplify and automate AMR analysis
+library(ggplot2) # for appealing plots
+```
+
+## Creation of data
+We will create some fake example data to use for analysis. For antimicrobial resistance analysis, we need at least: a patients ID, name or code of a microorganism, a date and antimicrobial results (an antibiogram). It could also include a specimen type (e.g. to filter on blood or urine), the ward type (e.g. to filter on ICUs). 
+
+With additional columns (like a hospital name, the patients gender of even [well-defined] clinical properties) you can do a comparative analysis, as this tutorial will demonstrate too.
+
+#### Patients
+To start with patients, we need a unique list of patients. 
+
+```{r create patients}
+patients <- unlist(lapply(LETTERS, paste0, 1:10))
+```
+
+The `LETTERS` object is available in R - it's a vector with 26 characters: `A` to `Z`. The `patients` object we just created is now a vector of length `r length(patients)`, with values (patient IDs) varying from ``r patients[1]`` to ``r patients[length(patients)]``.
+
+#### Dates
+Let's pretend that our data consists of blood cultures isolates from 1 January 2010 until 1 January 2018. 
+
+```{r create dates}
+dates <- seq(as.Date("2010-01-01"), as.Date("2018-01-01"), by = "day")
+```
+
+This `dates` object now contains all days in our date range.
+
+#### Microorganisms
+For this tutorial, we will uses four different microorganisms: *Escherichia coli*, *Staphylococcus aureus*, *Streptococcus pneumoniae*, and *Klebsiella pneumoniae*:
+
+```{r mo}
+bacteria <- c("Escherichia coli", "Staphylococcus aureus",
+              "Streptococcus pneumoniae", "Klebsiella pneumoniae")
+```
+
+#### Other variables
+For completeness, we can also add the patients gender, the hospital where the patients was admitted and all valid antibmicrobial results:
+
+```{r create other}
+genders <- c("M", "F")
+hospitals <- c("Hospital A", "Hospital B", "Hospital C", "Hospital D")
+ab_interpretations <- c("S", "I", "R")
+```
+
+#### Put everything together
+
+Using the `sample()` function, we can randomly select items from all objects we defined earlier. To let our fake data reflect reality a bit, we will also approximately define the probabilities of bacteria and the antibiotic results with the `prob` parameter.
+
+```{r merge data}
+data <- data.frame(date = sample(dates, 5000, replace = TRUE),
+                   patient_id = sample(patients, 5000, replace = TRUE),
+                   # gender - add slightly more men:
+                   gender = sample(genders, 5000, replace = TRUE, prob = c(0.55, 0.45)),
+                   hospital = sample(hospitals, 5000, replace = TRUE),
+                   bacteria = sample(bacteria, 5000, replace = TRUE, prob = c(0.50, 0.25, 0.15, 0.10)),
+                   amox = sample(ab_interpretations, 5000, replace = TRUE, prob = c(0.6, 0.05, 0.35)),
+                   amcl = sample(ab_interpretations, 5000, replace = TRUE, prob = c(0.75, 0.1, 0.15)),
+                   cipr = sample(ab_interpretations, 5000, replace = TRUE, prob = c(0.8, 0, 0.2)),
+                   gent = sample(ab_interpretations, 5000, replace = TRUE, prob = c(0.92, 0, 0.07))
+                   )
+```
+
+The resulting data set contains 5,000 blood culture isolates. With the `head()` function we can preview the first 6 values of this data set:
+```{r preview data set 1, echo = TRUE, results = 'hide'}
+head(data)
+```
+
+```{r preview data set 2, echo = FALSE, results = 'asis'}
+knitr::kable(head(data), align = "c")
+```
+
+Now, let's start the cleaning and the analysis!
+
+## Cleaning the data
+Use the frequency table function `freq()` to look specifically for unique values in any variable. For example, for the `gender` variable:
+
+```{r freq gender 1, echo = TRUE, results = 'hide'}
+data %>% freq(gender) # this would be the same: freq(data$gender)
+```
+
+```{r freq gender 2, echo = FALSE, results = 'markup'}
+data %>% freq(gender, markdown = FALSE, header = TRUE)
+```
+
+So, we can draw at least two conclusions immediately. From a data scientist perspective, the data looks clean: only values `M` and `F`. From a researcher perspective: there are slightly more men. Nothing we didn't already know.
+
+The data is already quite clean, but we still need to transform some variables. The `bacteria` column now consists of text, and we want to add more variables based on microbial IDs later on. So, we will transform this column to valid IDs. The `mutate` function of the dplyr package makes this really easy:
+```{r transform mo 1}
+data <- data %>%
+  mutate(bacteria = as.mo(bacteria))
+```
+
+We also want to transform the antibiotics, because in real life data we don't know if they are really clean. The `as.rsi()` function ensures reliability and reproducibility in these kind of variables. The `mutate_at()` will run the `as.rsi()` function on defined variables:
+
+```{r transform abx}
+data <- data %>%
+  mutate_at(vars(amox:cipr), as.rsi)
+```
+
+Finally, we will apply [EUCAST rules](http://www.eucast.org/expert_rules_and_intrinsic_resistance/) on our antimicrobial results. In Europe, most medical microbiological laboratories already apply these rules. Our package features their latest insights on intrinsic resistance and exceptional phenotypes. Moreover, the `eucast_rules()` function can also apply additional rules, like forcing <help title="ATC: J01CA01">ampicillin</help> = R when <help title="ATC: J01CR02">amoxicillin/clavulanic acid</help> = R.
+
+Because the amoxicillin (column `amox`) and amoxicillin/clavulanic acid (column `amcl`) in our data were generated randomly, some rows will undoubtedly contain amox = S and amcl = R, which is technically impossible. The `eucast_rules()` fixes this:
+
+```{r eucast, warning = FALSE, message = FALSE}
+data <- eucast_rules(data, col_mo = "bacteria")
+```
+
+## Adding new variables
+Now we have the microbial ID, we can add some taxonomic properties:
+
+```{r new taxo}
+data <- data %>% 
+  mutate(gramstain = mo_gramstain(bacteria),
+         family = mo_family(bacteria))
+```
+
+### First isolates
+We also need to know which isolates we can *actually* use for analysis.
+
+To conduct an analysis of antimicrobial resistance, you [must only include the first isolate of every patient per episode](https://www.ncbi.nlm.nih.gov/pubmed/17304462). If you would not do this, you could easily get an overestimate or underestimate of the resistance of an antibiotic. Imagine that a patient was admitted with an MRSA and that it was found in 5 different blood cultures the following weeks (yes, some countries like the Netherlands have these blood drawing policies). The resistance percentage of oxacillin of all \emph{S. aureus} isolates would be overestimated, because you included this MRSA more than once. It would clearly be \href{https://en.wikipedia.org/wiki/Selection_bias}{selection bias}.
+
+The Clinical and Laboratory Standards Institute (CLSI) appoints this as follows:
+
+> *(...) When preparing a cumulative antibiogram to guide clinical decisions about empirical antimicrobial therapy of initial infections, **only the first isolate of a given species per patient, per analysis period (eg, one year) should be included, irrespective of body site, antimicrobial susceptibility profile, or other phenotypical characteristics (eg, biotype)**. The first isolate is easily identified, and cumulative antimicrobial susceptibility test data prepared using the first isolate are generally comparable to cumulative antimicrobial susceptibility test data calculated by other methods, providing duplicate isolates are excluded.*
+Chapter 6.4, M39-A4 Analysis and Presentation of Cumulative Antimicrobial Susceptibility Test Data, 4th Edition. CLSI, 2014. https://clsi.org/standards/products/microbiology/documents/m39/
+
+This `AMR` package includes this methodology with the `first_isolate()` function. It adopts the episode of a year (can be changed by user) and it starts counting days after every selected isolate. This new variable can easily be added to our data:
+```{r 1st isolate}
+data <- data %>% 
+  mutate(first = first_isolate(.))
+```
+
+So only `r AMR:::percent(sum(data$first) / nrow(data))` is suitable for resistance analysis! We can now filter on is with the `filter()` function, also from the `dplyr` package:
+
+```{r 1st isolate filter}
+data_1st <- data %>% 
+  filter(first == TRUE)
+```
+
+For future use, the above two syntaxes can be shortened with the `filter_first_isolate()` function:
+```{r 1st isolate filter 2, results = 'hide', message = FALSE}
+data_1st <- data %>% 
+  filter_first_isolate()
+```
+
+### First *weighted* isolates
+We made a slight twist to the CLSI algorithm, to take into account antimicrobial results. Imagine this data, sorted on date:
+
+```{r, echo = FALSE, message = FALSE, warning = FALSE, results = 'asis'}
+weighted_df <- data %>%
+  filter(bacteria == as.mo("E. coli")) %>% 
+  # only most prevalent patient
+  filter(patient_id == top_freq(freq(., patient_id), 1)[1]) %>% 
+  arrange(date) %>%
+  select(date, patient_id, bacteria, amox:gent, first) %>% 
+  # maximum of 10 rows
+  .[1:min(10, nrow(.)),] %>% 
+  mutate(isolate = row_number()) %>% 
+  select(isolate, everything())
+
+weighted_df %>% 
+  knitr::kable(align = "c")
+```
+
+Only `r sum(weighted_df$first)` isolates are marked as 'first' according to CLSI guideline. But when reviewing the antibiogram, it is obvious that some isolates are absolutely different strains and show be included too. This is why we weigh isolates, based on their antibiogram. The `key_antibiotics()` function adds a vector with 18 key antibiotics: 6 broad spectrum ones, 6 small spectrum for Gram negatives and 6 small spectrum for Gram positives. These can be defined by the user.
+
+If a column exists with a name like 'key(...)ab' the `first_isolate()` function will automatically use it and determine the first weighted isolates. Mind the NOTEs in below output: 
+
+```{r 1st weighted}
+data <- data %>% 
+  mutate(keyab = key_antibiotics(.)) %>% 
+  mutate(first_weighted = first_isolate(.))
+```
+
+```{r, echo = FALSE, message = FALSE, warning = FALSE, results = 'asis'}
+weighted_df2 <- data %>%
+  filter(bacteria == as.mo("E. coli")) %>% 
+  # only most prevalent patient
+  filter(patient_id == top_freq(freq(., patient_id), 1)[1]) %>% 
+  arrange(date) %>%
+  select(date, patient_id, bacteria, amox:gent, first, first_weighted) %>% 
+  # maximum of 10 rows
+  .[1:min(10, nrow(.)),] %>% 
+  mutate(isolate = row_number()) %>% 
+  select(isolate, everything())
+
+weighted_df2 %>% 
+  knitr::kable(align = "c")
+```
+
+Instead of `r sum(weighted_df$first)`, now `r sum(weighted_df2$first_weighted)` isolates are flagged. In total, `r AMR:::percent(sum(data$first_weighted) / nrow(data))` of all isolates are marked 'first weighted' - `r AMR:::percent((sum(data$first_weighted) / nrow(data)) - (sum(data$first) / nrow(data)))` more than when using the CLSI guideline. In real life, this novel algorithm will yield 5-10% more isolates than the classic CLSI guideline.
+
+As with `filter_first_isolate()`, there's a shortcut for this new algorithm too:
+```{r 1st isolate filter 3, results = 'hide', message = FALSE, warning = FALSE}
+data_1st <- data %>% 
+  filter_first_weighted_isolate()
+```
+
+So we end up with `r format(nrow(data_1st), big.mark = ",")` isolates for analysis. 
+
+We can remove unneeded columns:
+```{r}
+data_1st <- data_1st %>% 
+  select(-first, -keyab)
+```
+
+Now our data looks like:
+
+```{r preview data set 3, echo = TRUE, results = 'hide'}
+head(data_1st)
+```
+
+```{r preview data set 4, echo = FALSE, results = 'asis'}
+knitr::kable(head(data_1st), align = "c")
+```
+
+Time for the analysis!
+
+## Analysing the data
+(work in progress)
