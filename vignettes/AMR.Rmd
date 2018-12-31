@@ -67,8 +67,8 @@ The `LETTERS` object is available in R - it's a vector with 26 characters: `A` t
 
 ```{r create gender}
 patients_table <- data.frame(patient_id = patients,
-                             gender = c(strrep("M", 135),
-                                        strrep("F", 125)))
+                             gender = c(rep("M", 135),
+                                        rep("F", 125)))
 ```
 
 The first 135 patient IDs are now male, the other 125 are female.

@@ -305,44 +305,222 @@ top_freq can be used to get the top/bottom n items of a frequency table, with co
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><span class='co'># NOT RUN {</span>
-<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>dplyr</span>)
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>dplyr</span>)
 
 <span class='co'># this all gives the same result:</span>
-<span class='fu'>freq</span>(<span class='no'>septic_patients</span>$<span class='no'>hospital_id</span>)
-<span class='fu'>freq</span>(<span class='no'>septic_patients</span>[, <span class='st'>"hospital_id"</span>])
-<span class='no'>septic_patients</span>$<span class='no'>hospital_id</span> <span class='kw'>%&gt;%</span> <span class='fu'>freq</span>()
-<span class='no'>septic_patients</span>[, <span class='st'>"hospital_id"</span>] <span class='kw'>%&gt;%</span> <span class='fu'>freq</span>()
-<span class='no'>septic_patients</span> <span class='kw'>%&gt;%</span> <span class='fu'>freq</span>(<span class='st'>"hospital_id"</span>)
-<span class='no'>septic_patients</span> <span class='kw'>%&gt;%</span> <span class='fu'>freq</span>(<span class='no'>hospital_id</span>)  <span class='co'>#&lt;- easiest to remember (tidyverse)</span>
-
+<span class='fu'>freq</span>(<span class='no'>septic_patients</span>$<span class='no'>hospital_id</span>)</div><div class='output co'>#&gt; 
+#&gt; 
+#&gt; **Frequency table**  
+#&gt; 
+#&gt; 
+#&gt; |   |Item | Count| Percent| Cum. Count| Cum. Percent|
+#&gt; |:--|:----|-----:|-------:|----------:|------------:|
+#&gt; |1  |D    |   762|   38.1%|        762|        38.1%|
+#&gt; |2  |B    |   663|   33.2%|      1,425|        71.3%|
+#&gt; |3  |A    |   321|   16.1%|      1,746|        87.3%|
+#&gt; |4  |C    |   254|   12.7%|      2,000|       100.0%|
+#&gt; 
+#&gt; </div><div class='input'><span class='fu'>freq</span>(<span class='no'>septic_patients</span>[, <span class='st'>"hospital_id"</span>])</div><div class='output co'>#&gt; 
+#&gt; 
+#&gt; **Frequency table**  
+#&gt; 
+#&gt; 
+#&gt; |   |Item | Count| Percent| Cum. Count| Cum. Percent|
+#&gt; |:--|:----|-----:|-------:|----------:|------------:|
+#&gt; |1  |D    |   762|   38.1%|        762|        38.1%|
+#&gt; |2  |B    |   663|   33.2%|      1,425|        71.3%|
+#&gt; |3  |A    |   321|   16.1%|      1,746|        87.3%|
+#&gt; |4  |C    |   254|   12.7%|      2,000|       100.0%|
+#&gt; 
+#&gt; </div><div class='input'><span class='no'>septic_patients</span>$<span class='no'>hospital_id</span> <span class='kw'>%&gt;%</span> <span class='fu'>freq</span>()</div><div class='output co'>#&gt; 
+#&gt; 
+#&gt; **Frequency table**  
+#&gt; 
+#&gt; 
+#&gt; |   |Item | Count| Percent| Cum. Count| Cum. Percent|
+#&gt; |:--|:----|-----:|-------:|----------:|------------:|
+#&gt; |1  |D    |   762|   38.1%|        762|        38.1%|
+#&gt; |2  |B    |   663|   33.2%|      1,425|        71.3%|
+#&gt; |3  |A    |   321|   16.1%|      1,746|        87.3%|
+#&gt; |4  |C    |   254|   12.7%|      2,000|       100.0%|
+#&gt; 
+#&gt; </div><div class='input'><span class='no'>septic_patients</span>[, <span class='st'>"hospital_id"</span>] <span class='kw'>%&gt;%</span> <span class='fu'>freq</span>()</div><div class='output co'>#&gt; 
+#&gt; 
+#&gt; **Frequency table**  
+#&gt; 
+#&gt; 
+#&gt; |   |Item | Count| Percent| Cum. Count| Cum. Percent|
+#&gt; |:--|:----|-----:|-------:|----------:|------------:|
+#&gt; |1  |D    |   762|   38.1%|        762|        38.1%|
+#&gt; |2  |B    |   663|   33.2%|      1,425|        71.3%|
+#&gt; |3  |A    |   321|   16.1%|      1,746|        87.3%|
+#&gt; |4  |C    |   254|   12.7%|      2,000|       100.0%|
+#&gt; 
+#&gt; </div><div class='input'><span class='no'>septic_patients</span> <span class='kw'>%&gt;%</span> <span class='fu'>freq</span>(<span class='st'>"hospital_id"</span>)</div><div class='output co'>#&gt; 
+#&gt; 
+#&gt; **Frequency table of `hospital_id`**  
+#&gt; 
+#&gt; 
+#&gt; |   |Item | Count| Percent| Cum. Count| Cum. Percent|
+#&gt; |:--|:----|-----:|-------:|----------:|------------:|
+#&gt; |1  |D    |   762|   38.1%|        762|        38.1%|
+#&gt; |2  |B    |   663|   33.2%|      1,425|        71.3%|
+#&gt; |3  |A    |   321|   16.1%|      1,746|        87.3%|
+#&gt; |4  |C    |   254|   12.7%|      2,000|       100.0%|
+#&gt; 
+#&gt; </div><div class='input'><span class='no'>septic_patients</span> <span class='kw'>%&gt;%</span> <span class='fu'>freq</span>(<span class='no'>hospital_id</span>)  <span class='co'>#&lt;- easiest to remember (tidyverse)</span></div><div class='output co'>#&gt; 
+#&gt; 
+#&gt; **Frequency table of `hospital_id`**  
+#&gt; 
+#&gt; 
+#&gt; |   |Item | Count| Percent| Cum. Count| Cum. Percent|
+#&gt; |:--|:----|-----:|-------:|----------:|------------:|
+#&gt; |1  |D    |   762|   38.1%|        762|        38.1%|
+#&gt; |2  |B    |   663|   33.2%|      1,425|        71.3%|
+#&gt; |3  |A    |   321|   16.1%|      1,746|        87.3%|
+#&gt; |4  |C    |   254|   12.7%|      2,000|       100.0%|
+#&gt; 
+#&gt; </div><div class='input'>
 
 <span class='co'># you could also use `select` or `pull` to get your variables</span>
 <span class='no'>septic_patients</span> <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='http://dplyr.tidyverse.org/reference/filter.html'>filter</a></span>(<span class='no'>hospital_id</span> <span class='kw'>==</span> <span class='st'>"A"</span>) <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='http://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='no'>mo</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'>freq</span>()
-
+  <span class='fu'>freq</span>()</div><div class='output co'>#&gt; 
+#&gt; 
+#&gt; **Frequency table**  
+#&gt; 
+#&gt; 
+#&gt; |   |Item         | Count| Percent| Cum. Count| Cum. Percent|
+#&gt; |:--|:------------|-----:|-------:|----------:|------------:|
+#&gt; |1  |B_ESCHR_COL  |    62|   19.3%|         62|        19.3%|
+#&gt; |2  |B_STPHY_EPI  |    46|   14.3%|        108|        33.6%|
+#&gt; |3  |B_STPHY_CNS  |    38|   11.8%|        146|        45.5%|
+#&gt; |4  |B_STPHY_AUR  |    35|   10.9%|        181|        56.4%|
+#&gt; |5  |B_STPHY_HOM  |    25|    7.8%|        206|        64.2%|
+#&gt; |6  |B_STRPTC_PNE |    12|    3.7%|        218|        67.9%|
+#&gt; |7  |B_PROTS_MIR  |    11|    3.4%|        229|        71.3%|
+#&gt; |8  |B_ENTRC_FAE  |    10|    3.1%|        239|        74.5%|
+#&gt; |9  |B_KLBSL_PNE  |     8|    2.5%|        247|        76.9%|
+#&gt; |10 |B_STRPTC_PYO |     7|    2.2%|        254|        79.1%|
+#&gt; |11 |B_BCTRD_FRA  |     5|    1.6%|        259|        80.7%|
+#&gt; |12 |B_KLBSL_OXY  |     5|    1.6%|        264|        82.2%|
+#&gt; |13 |B_STRPTC     |     5|    1.6%|        269|        83.8%|
+#&gt; |14 |B_ENTRC_IUM  |     4|    1.2%|        273|        85.0%|
+#&gt; |15 |B_STRPTC_MIT |     4|    1.2%|        277|        86.3%|
+#&gt; |16 |B_CRYNB      |     3|    0.9%|        280|        87.2%|
+#&gt; |17 |B_PDMNS_AER  |     3|    0.9%|        283|        88.2%|
+#&gt; |18 |B_STPHY_CAP  |     3|    0.9%|        286|        89.1%|
+#&gt; |19 |B_STRPTC_DYS |     3|    0.9%|        289|        90.0%|
+#&gt; |20 |F_CANDD_GLB  |     3|    0.9%|        292|        91.0%|
+#&gt; |21 |B_ACNTB      |     2|    0.6%|        294|        91.6%|
+#&gt; |22 |B_ENTRB_CLO  |     2|    0.6%|        296|        92.2%|
+#&gt; |23 |B_HMPHL_INF  |     2|    0.6%|        298|        92.8%|
+#&gt; |24 |B_MCRCCC     |     2|    0.6%|        300|        93.5%|
+#&gt; |25 |B_PROTS_VUL  |     2|    0.6%|        302|        94.1%|
+#&gt; |26 |B_SERRT_MAR  |     2|    0.6%|        304|        94.7%|
+#&gt; |27 |B_STPHY_COH  |     2|    0.6%|        306|        95.3%|
+#&gt; |28 |B_STRPTC_BOV |     2|    0.6%|        308|        96.0%|
+#&gt; |29 |B_AMYCS_ODO  |     1|    0.3%|        309|        96.3%|
+#&gt; |30 |B_ARCCC_URI  |     1|    0.3%|        310|        96.6%|
+#&gt; |31 |B_CTRDM_PER  |     1|    0.3%|        311|        96.9%|
+#&gt; |32 |B_CTRDM_SEP  |     1|    0.3%|        312|        97.2%|
+#&gt; |33 |B_STPHY_SCH  |     1|    0.3%|        313|        97.5%|
+#&gt; |34 |B_STRPTC_AGA |     1|    0.3%|        314|        97.8%|
+#&gt; |35 |B_STRPTC_EQU |     1|    0.3%|        315|        98.1%|
+#&gt; |36 |B_STRPTC_GRA |     1|    0.3%|        316|        98.4%|
+#&gt; |37 |B_STRPTC_GRB |     1|    0.3%|        317|        98.8%|
+#&gt; |38 |B_STRPTC_SAN |     1|    0.3%|        318|        99.1%|
+#&gt; |39 |B_VLLNL_PAR  |     1|    0.3%|        319|        99.4%|
+#&gt; |40 |F_CANDD_ALB  |     1|    0.3%|        320|        99.7%|
+#&gt; |41 |F_CANDD_TRO  |     1|    0.3%|        321|       100.0%|
+#&gt; 
+#&gt; </div><div class='input'>
 
 <span class='co'># multiple selected variables will be pasted together</span>
 <span class='no'>septic_patients</span> <span class='kw'>%&gt;%</span>
   <span class='no'>left_join_microorganisms</span> <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='http://dplyr.tidyverse.org/reference/filter.html'>filter</a></span>(<span class='no'>hospital_id</span> <span class='kw'>==</span> <span class='st'>"A"</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'>freq</span>(<span class='no'>genus</span>, <span class='no'>species</span>)
-
+  <span class='fu'>freq</span>(<span class='no'>genus</span>, <span class='no'>species</span>)</div><div class='output co'>#&gt; <span class='message'>Joining, by = "mo"</span></div><div class='output co'>#&gt; 
+#&gt; 
+#&gt; **Frequency table of `genus` and `species`**  
+#&gt; 
+#&gt; 
+#&gt; |   |Item                              | Count| Percent| Cum. Count| Cum. Percent|
+#&gt; |:--|:---------------------------------|-----:|-------:|----------:|------------:|
+#&gt; |1  |Escherichia coli                  |    62|   19.3%|         62|        19.3%|
+#&gt; |2  |Staphylococcus epidermidis        |    46|   14.3%|        108|        33.6%|
+#&gt; |3  |Staphylococcus coagulase negative |    38|   11.8%|        146|        45.5%|
+#&gt; |4  |Staphylococcus aureus             |    35|   10.9%|        181|        56.4%|
+#&gt; |5  |Staphylococcus hominis            |    25|    7.8%|        206|        64.2%|
+#&gt; |6  |Streptococcus pneumoniae          |    12|    3.7%|        218|        67.9%|
+#&gt; |7  |Proteus mirabilis                 |    11|    3.4%|        229|        71.3%|
+#&gt; |8  |Enterococcus faecalis             |    10|    3.1%|        239|        74.5%|
+#&gt; |9  |Klebsiella pneumoniae             |     8|    2.5%|        247|        76.9%|
+#&gt; |10 |Streptococcus pyogenes            |     7|    2.2%|        254|        79.1%|
+#&gt; |11 |Bacteroides fragilis              |     5|    1.6%|        259|        80.7%|
+#&gt; |12 |Klebsiella oxytoca                |     5|    1.6%|        264|        82.2%|
+#&gt; |13 |Streptococcus species             |     5|    1.6%|        269|        83.8%|
+#&gt; |14 |Enterococcus faecium              |     4|    1.2%|        273|        85.0%|
+#&gt; |15 |Streptococcus mitis               |     4|    1.2%|        277|        86.3%|
+#&gt; |16 |Candida glabrata                  |     3|    0.9%|        280|        87.2%|
+#&gt; |17 |Corynebacterium species           |     3|    0.9%|        283|        88.2%|
+#&gt; |18 |Pseudomonas aeruginosa            |     3|    0.9%|        286|        89.1%|
+#&gt; |19 |Staphylococcus capitis            |     3|    0.9%|        289|        90.0%|
+#&gt; |20 |Streptococcus dysgalactiae        |     3|    0.9%|        292|        91.0%|
+#&gt; |21 |Acinetobacter species             |     2|    0.6%|        294|        91.6%|
+#&gt; |22 |Enterobacter cloacae              |     2|    0.6%|        296|        92.2%|
+#&gt; |23 |Haemophilus influenzae            |     2|    0.6%|        298|        92.8%|
+#&gt; |24 |Micrococcus species               |     2|    0.6%|        300|        93.5%|
+#&gt; |25 |Proteus vulgaris                  |     2|    0.6%|        302|        94.1%|
+#&gt; |26 |Serratia marcescens               |     2|    0.6%|        304|        94.7%|
+#&gt; |27 |Staphylococcus cohnii             |     2|    0.6%|        306|        95.3%|
+#&gt; |28 |Streptococcus bovis               |     2|    0.6%|        308|        96.0%|
+#&gt; |29 |Actinomyces odontolyticus         |     1|    0.3%|        309|        96.3%|
+#&gt; |30 |Aerococcus urinae                 |     1|    0.3%|        310|        96.6%|
+#&gt; |31 |Candida albicans                  |     1|    0.3%|        311|        96.9%|
+#&gt; |32 |Candida tropicalis                |     1|    0.3%|        312|        97.2%|
+#&gt; |33 |Clostridium perfringens           |     1|    0.3%|        313|        97.5%|
+#&gt; |34 |Clostridium septicum              |     1|    0.3%|        314|        97.8%|
+#&gt; |35 |Staphylococcus schleiferi         |     1|    0.3%|        315|        98.1%|
+#&gt; |36 |Streptococcus agalactiae          |     1|    0.3%|        316|        98.4%|
+#&gt; |37 |Streptococcus equi                |     1|    0.3%|        317|        98.8%|
+#&gt; |38 |Streptococcus group A             |     1|    0.3%|        318|        99.1%|
+#&gt; |39 |Streptococcus group B             |     1|    0.3%|        319|        99.4%|
+#&gt; |40 |Streptococcus sanguinis           |     1|    0.3%|        320|        99.7%|
+#&gt; |41 |Veillonella parvula               |     1|    0.3%|        321|       100.0%|
+#&gt; 
+#&gt; </div><div class='input'>
 
 <span class='co'># group a variable and analyse another</span>
 <span class='no'>septic_patients</span> <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='http://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span>(<span class='no'>hospital_id</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'>freq</span>(<span class='no'>gender</span>)
-
+  <span class='fu'>freq</span>(<span class='no'>gender</span>)</div><div class='output co'>#&gt; 
+#&gt; 
+#&gt; **Frequency table of `gender` (grouped by `hospital_id`)**  
+#&gt; 
+#&gt; 
+#&gt; |   |Group |Item | Count| Percent| Cum. Count| Cum. Percent|
+#&gt; |:--|:-----|:----|-----:|-------:|----------:|------------:|
+#&gt; |1  |1     |F    |   148|    7.4%|        148|         7.4%|
+#&gt; |2  |      |M    |   173|    8.7%|        321|        16.1%|
+#&gt; |3  |2     |F    |   332|   16.6%|        332|        16.6%|
+#&gt; |4  |      |M    |   331|   16.6%|        663|        33.2%|
+#&gt; |5  |3     |F    |   121|    6.1%|        121|         6.1%|
+#&gt; |6  |      |M    |   133|    6.7%|        254|        12.7%|
+#&gt; |7  |4     |F    |   368|   18.4%|        368|        18.4%|
+#&gt; |8  |      |M    |   394|   19.7%|        762|        38.1%|
+#&gt; 
+#&gt; </div><div class='input'>
 
 <span class='co'># get top 10 bugs of hospital A as a vector</span>
 <span class='no'>septic_patients</span> <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='http://dplyr.tidyverse.org/reference/filter.html'>filter</a></span>(<span class='no'>hospital_id</span> <span class='kw'>==</span> <span class='st'>"A"</span>) <span class='kw'>%&gt;%</span>
   <span class='fu'>freq</span>(<span class='no'>mo</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'>top_freq</span>(<span class='fl'>10</span>)
-
+  <span class='fu'>top_freq</span>(<span class='fl'>10</span>)</div><div class='output co'>#&gt;             62             46             38             35             25 
+#&gt;  "B_ESCHR_COL"  "B_STPHY_EPI"  "B_STPHY_CNS"  "B_STPHY_AUR"  "B_STPHY_HOM" 
+#&gt;             12             11             10              8              7 
+#&gt; "B_STRPTC_PNE"  "B_PROTS_MIR"  "B_ENTRC_FAE"  "B_KLBSL_PNE" "B_STRPTC_PYO" </div><div class='input'>
 
 <span class='co'># save frequency table to an object</span>
 <span class='no'>years</span> <span class='kw'>&lt;-</span> <span class='no'>septic_patients</span> <span class='kw'>%&gt;%</span>
@@ -351,8 +529,22 @@ top_freq can be used to get the top/bottom n items of a frequency table, with co
 
 
 <span class='co'># show only the top 5</span>
-<span class='no'>years</span> <span class='kw'>%&gt;%</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/print'>print</a></span>(<span class='kw'>nmax</span> <span class='kw'>=</span> <span class='fl'>5</span>)
-
+<span class='no'>years</span> <span class='kw'>%&gt;%</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/print'>print</a></span>(<span class='kw'>nmax</span> <span class='kw'>=</span> <span class='fl'>5</span>)</div><div class='output co'>#&gt; 
+#&gt; 
+#&gt; **Frequency table of `year`**  
+#&gt; 
+#&gt; 
+#&gt; |   |Item | Count| Percent| Cum. Count| Cum. Percent|
+#&gt; |:--|:----|-----:|-------:|----------:|------------:|
+#&gt; |1  |2017 |   168|    8.4%|        168|         8.4%|
+#&gt; |2  |2004 |   167|    8.4%|        335|        16.8%|
+#&gt; |3  |2016 |   143|    7.2%|        478|        23.9%|
+#&gt; |4  |2002 |   136|    6.8%|        614|        30.7%|
+#&gt; |5  |2003 |   135|    6.8%|        749|        37.5%|
+#&gt; 
+#&gt; (omitted 11 entries, n = 1,251 [62.6%])
+#&gt; 
+#&gt; </div><div class='input'>
 
 <span class='co'># save to an object with formatted percentages</span>
 <span class='no'>years</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/format'>format</a></span>(<span class='no'>years</span>)
@@ -361,53 +553,372 @@ top_freq can be used to get the top/bottom n items of a frequency table, with co
 <span class='co'># print a histogram of numeric values</span>
 <span class='no'>septic_patients</span> <span class='kw'>%&gt;%</span>
   <span class='fu'>freq</span>(<span class='no'>age</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/hist'>hist</a></span>()
-
+  <span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/hist'>hist</a></span>()</div><div class='img'><img src='freq-1.png' alt='' width='700' height='433' /></div><div class='input'>
 
 <span class='co'># or print all points to a regular plot</span>
 <span class='no'>septic_patients</span> <span class='kw'>%&gt;%</span>
   <span class='fu'>freq</span>(<span class='no'>age</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/plot'>plot</a></span>()
-
+  <span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/plot'>plot</a></span>()</div><div class='img'><img src='freq-2.png' alt='' width='700' height='433' /></div><div class='input'>
 
 <span class='co'># transform to a data.frame or tibble</span>
 <span class='no'>septic_patients</span> <span class='kw'>%&gt;%</span>
   <span class='fu'>freq</span>(<span class='no'>age</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/as.data.frame'>as.data.frame</a></span>()
-
+  <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/as.data.frame'>as.data.frame</a></span>()</div><div class='output co'>#&gt;    item count percent cum_count cum_percent
+#&gt; 1    83   102  0.0510       102      0.0510
+#&gt; 2    80    75  0.0375       177      0.0885
+#&gt; 3    75    72  0.0360       249      0.1245
+#&gt; 4    79    72  0.0360       321      0.1605
+#&gt; 5    78    70  0.0350       391      0.1955
+#&gt; 6    76    65  0.0325       456      0.2280
+#&gt; 7    82    62  0.0310       518      0.2590
+#&gt; 8    86    61  0.0305       579      0.2895
+#&gt; 9    81    58  0.0290       637      0.3185
+#&gt; 10   87    57  0.0285       694      0.3470
+#&gt; 11   74    54  0.0270       748      0.3740
+#&gt; 12   73    53  0.0265       801      0.4005
+#&gt; 13   77    52  0.0260       853      0.4265
+#&gt; 14   67    51  0.0255       904      0.4520
+#&gt; 15   88    51  0.0255       955      0.4775
+#&gt; 16   70    50  0.0250      1005      0.5025
+#&gt; 17   69    49  0.0245      1054      0.5270
+#&gt; 18   71    47  0.0235      1101      0.5505
+#&gt; 19   72    45  0.0225      1146      0.5730
+#&gt; 20   65    43  0.0215      1189      0.5945
+#&gt; 21   66    42  0.0210      1231      0.6155
+#&gt; 22   85    42  0.0210      1273      0.6365
+#&gt; 23   68    41  0.0205      1314      0.6570
+#&gt; 24   47    39  0.0195      1353      0.6765
+#&gt; 25   90    35  0.0175      1388      0.6940
+#&gt; 26   89    34  0.0170      1422      0.7110
+#&gt; 27   84    33  0.0165      1455      0.7275
+#&gt; 28   62    32  0.0160      1487      0.7435
+#&gt; 29   59    31  0.0155      1518      0.7590
+#&gt; 30   64    31  0.0155      1549      0.7745
+#&gt; 31   57    29  0.0145      1578      0.7890
+#&gt; 32   63    28  0.0140      1606      0.8030
+#&gt; 33   51    27  0.0135      1633      0.8165
+#&gt; 34   52    25  0.0125      1658      0.8290
+#&gt; 35   60    25  0.0125      1683      0.8415
+#&gt; 36   53    23  0.0115      1706      0.8530
+#&gt; 37   58    23  0.0115      1729      0.8645
+#&gt; 38   50    22  0.0110      1751      0.8755
+#&gt; 39   56    21  0.0105      1772      0.8860
+#&gt; 40   45    20  0.0100      1792      0.8960
+#&gt; 41   55    17  0.0085      1809      0.9045
+#&gt; 42   61    17  0.0085      1826      0.9130
+#&gt; 43   93    16  0.0080      1842      0.9210
+#&gt; 44   43    15  0.0075      1857      0.9285
+#&gt; 45   44    13  0.0065      1870      0.9350
+#&gt; 46   46    13  0.0065      1883      0.9415
+#&gt; 47   41    10  0.0050      1893      0.9465
+#&gt; 48   48    10  0.0050      1903      0.9515
+#&gt; 49   30     9  0.0045      1912      0.9560
+#&gt; 50   54     9  0.0045      1921      0.9605
+#&gt; 51   92     9  0.0045      1930      0.9650
+#&gt; 52   91     8  0.0040      1938      0.9690
+#&gt; 53   42     7  0.0035      1945      0.9725
+#&gt; 54   38     6  0.0030      1951      0.9755
+#&gt; 55   94     6  0.0030      1957      0.9785
+#&gt; 56   20     4  0.0020      1961      0.9805
+#&gt; 57   39     4  0.0020      1965      0.9825
+#&gt; 58   49     4  0.0020      1969      0.9845
+#&gt; 59   19     3  0.0015      1972      0.9860
+#&gt; 60   29     3  0.0015      1975      0.9875
+#&gt; 61   33     3  0.0015      1978      0.9890
+#&gt; 62   37     3  0.0015      1981      0.9905
+#&gt; 63   40     3  0.0015      1984      0.9920
+#&gt; 64   18     2  0.0010      1986      0.9930
+#&gt; 65   24     2  0.0010      1988      0.9940
+#&gt; 66   31     2  0.0010      1990      0.9950
+#&gt; 67   36     2  0.0010      1992      0.9960
+#&gt; 68   97     2  0.0010      1994      0.9970
+#&gt; 69   14     1  0.0005      1995      0.9975
+#&gt; 70   22     1  0.0005      1996      0.9980
+#&gt; 71   32     1  0.0005      1997      0.9985
+#&gt; 72   34     1  0.0005      1998      0.9990
+#&gt; 73   35     1  0.0005      1999      0.9995
+#&gt; 74   95     1  0.0005      2000      1.0000</div><div class='input'>
 
 <span class='co'># or transform (back) to a vector</span>
 <span class='no'>septic_patients</span> <span class='kw'>%&gt;%</span>
   <span class='fu'>freq</span>(<span class='no'>age</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/vector'>as.vector</a></span>()
-
+  <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/vector'>as.vector</a></span>()</div><div class='output co'>#&gt;    [1] 83 83 83 83 83 83 83 83 83 83 83 83 83 83 83 83 83 83 83 83 83 83 83 83
+#&gt;   [25] 83 83 83 83 83 83 83 83 83 83 83 83 83 83 83 83 83 83 83 83 83 83 83 83
+#&gt;   [49] 83 83 83 83 83 83 83 83 83 83 83 83 83 83 83 83 83 83 83 83 83 83 83 83
+#&gt;   [73] 83 83 83 83 83 83 83 83 83 83 83 83 83 83 83 83 83 83 83 83 83 83 83 83
+#&gt;   [97] 83 83 83 83 83 83 80 80 80 80 80 80 80 80 80 80 80 80 80 80 80 80 80 80
+#&gt;  [121] 80 80 80 80 80 80 80 80 80 80 80 80 80 80 80 80 80 80 80 80 80 80 80 80
+#&gt;  [145] 80 80 80 80 80 80 80 80 80 80 80 80 80 80 80 80 80 80 80 80 80 80 80 80
+#&gt;  [169] 80 80 80 80 80 80 80 80 80 75 75 75 75 75 75 75 75 75 75 75 75 75 75 75
+#&gt;  [193] 75 75 75 75 75 75 75 75 75 75 75 75 75 75 75 75 75 75 75 75 75 75 75 75
+#&gt;  [217] 75 75 75 75 75 75 75 75 75 75 75 75 75 75 75 75 75 75 75 75 75 75 75 75
+#&gt;  [241] 75 75 75 75 75 75 75 75 75 79 79 79 79 79 79 79 79 79 79 79 79 79 79 79
+#&gt;  [265] 79 79 79 79 79 79 79 79 79 79 79 79 79 79 79 79 79 79 79 79 79 79 79 79
+#&gt;  [289] 79 79 79 79 79 79 79 79 79 79 79 79 79 79 79 79 79 79 79 79 79 79 79 79
+#&gt;  [313] 79 79 79 79 79 79 79 79 79 78 78 78 78 78 78 78 78 78 78 78 78 78 78 78
+#&gt;  [337] 78 78 78 78 78 78 78 78 78 78 78 78 78 78 78 78 78 78 78 78 78 78 78 78
+#&gt;  [361] 78 78 78 78 78 78 78 78 78 78 78 78 78 78 78 78 78 78 78 78 78 78 78 78
+#&gt;  [385] 78 78 78 78 78 78 78 76 76 76 76 76 76 76 76 76 76 76 76 76 76 76 76 76
+#&gt;  [409] 76 76 76 76 76 76 76 76 76 76 76 76 76 76 76 76 76 76 76 76 76 76 76 76
+#&gt;  [433] 76 76 76 76 76 76 76 76 76 76 76 76 76 76 76 76 76 76 76 76 76 76 76 76
+#&gt;  [457] 82 82 82 82 82 82 82 82 82 82 82 82 82 82 82 82 82 82 82 82 82 82 82 82
+#&gt;  [481] 82 82 82 82 82 82 82 82 82 82 82 82 82 82 82 82 82 82 82 82 82 82 82 82
+#&gt;  [505] 82 82 82 82 82 82 82 82 82 82 82 82 82 82 86 86 86 86 86 86 86 86 86 86
+#&gt;  [529] 86 86 86 86 86 86 86 86 86 86 86 86 86 86 86 86 86 86 86 86 86 86 86 86
+#&gt;  [553] 86 86 86 86 86 86 86 86 86 86 86 86 86 86 86 86 86 86 86 86 86 86 86 86
+#&gt;  [577] 86 86 86 81 81 81 81 81 81 81 81 81 81 81 81 81 81 81 81 81 81 81 81 81
+#&gt;  [601] 81 81 81 81 81 81 81 81 81 81 81 81 81 81 81 81 81 81 81 81 81 81 81 81
+#&gt;  [625] 81 81 81 81 81 81 81 81 81 81 81 81 81 87 87 87 87 87 87 87 87 87 87 87
+#&gt;  [649] 87 87 87 87 87 87 87 87 87 87 87 87 87 87 87 87 87 87 87 87 87 87 87 87
+#&gt;  [673] 87 87 87 87 87 87 87 87 87 87 87 87 87 87 87 87 87 87 87 87 87 87 74 74
+#&gt;  [697] 74 74 74 74 74 74 74 74 74 74 74 74 74 74 74 74 74 74 74 74 74 74 74 74
+#&gt;  [721] 74 74 74 74 74 74 74 74 74 74 74 74 74 74 74 74 74 74 74 74 74 74 74 74
+#&gt;  [745] 74 74 74 74 73 73 73 73 73 73 73 73 73 73 73 73 73 73 73 73 73 73 73 73
+#&gt;  [769] 73 73 73 73 73 73 73 73 73 73 73 73 73 73 73 73 73 73 73 73 73 73 73 73
+#&gt;  [793] 73 73 73 73 73 73 73 73 73 77 77 77 77 77 77 77 77 77 77 77 77 77 77 77
+#&gt;  [817] 77 77 77 77 77 77 77 77 77 77 77 77 77 77 77 77 77 77 77 77 77 77 77 77
+#&gt;  [841] 77 77 77 77 77 77 77 77 77 77 77 77 77 67 67 67 67 67 67 67 67 67 67 67
+#&gt;  [865] 67 67 67 67 67 67 67 67 67 67 67 67 67 67 67 67 67 67 67 67 67 67 67 67
+#&gt;  [889] 67 67 67 67 67 67 67 67 67 67 67 67 67 67 67 67 88 88 88 88 88 88 88 88
+#&gt;  [913] 88 88 88 88 88 88 88 88 88 88 88 88 88 88 88 88 88 88 88 88 88 88 88 88
+#&gt;  [937] 88 88 88 88 88 88 88 88 88 88 88 88 88 88 88 88 88 88 88 70 70 70 70 70
+#&gt;  [961] 70 70 70 70 70 70 70 70 70 70 70 70 70 70 70 70 70 70 70 70 70 70 70 70
+#&gt;  [985] 70 70 70 70 70 70 70 70 70 70 70 70 70 70 70 70 70 70 70 70 70 69 69 69
+#&gt; [1009] 69 69 69 69 69 69 69 69 69 69 69 69 69 69 69 69 69 69 69 69 69 69 69 69
+#&gt; [1033] 69 69 69 69 69 69 69 69 69 69 69 69 69 69 69 69 69 69 69 69 69 69 71 71
+#&gt; [1057] 71 71 71 71 71 71 71 71 71 71 71 71 71 71 71 71 71 71 71 71 71 71 71 71
+#&gt; [1081] 71 71 71 71 71 71 71 71 71 71 71 71 71 71 71 71 71 71 71 71 71 72 72 72
+#&gt; [1105] 72 72 72 72 72 72 72 72 72 72 72 72 72 72 72 72 72 72 72 72 72 72 72 72
+#&gt; [1129] 72 72 72 72 72 72 72 72 72 72 72 72 72 72 72 72 72 72 65 65 65 65 65 65
+#&gt; [1153] 65 65 65 65 65 65 65 65 65 65 65 65 65 65 65 65 65 65 65 65 65 65 65 65
+#&gt; [1177] 65 65 65 65 65 65 65 65 65 65 65 65 65 66 66 66 66 66 66 66 66 66 66 66
+#&gt; [1201] 66 66 66 66 66 66 66 66 66 66 66 66 66 66 66 66 66 66 66 66 66 66 66 66
+#&gt; [1225] 66 66 66 66 66 66 66 85 85 85 85 85 85 85 85 85 85 85 85 85 85 85 85 85
+#&gt; [1249] 85 85 85 85 85 85 85 85 85 85 85 85 85 85 85 85 85 85 85 85 85 85 85 85
+#&gt; [1273] 85 68 68 68 68 68 68 68 68 68 68 68 68 68 68 68 68 68 68 68 68 68 68 68
+#&gt; [1297] 68 68 68 68 68 68 68 68 68 68 68 68 68 68 68 68 68 68 47 47 47 47 47 47
+#&gt; [1321] 47 47 47 47 47 47 47 47 47 47 47 47 47 47 47 47 47 47 47 47 47 47 47 47
+#&gt; [1345] 47 47 47 47 47 47 47 47 47 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90
+#&gt; [1369] 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 89 89 89 89
+#&gt; [1393] 89 89 89 89 89 89 89 89 89 89 89 89 89 89 89 89 89 89 89 89 89 89 89 89
+#&gt; [1417] 89 89 89 89 89 89 84 84 84 84 84 84 84 84 84 84 84 84 84 84 84 84 84 84
+#&gt; [1441] 84 84 84 84 84 84 84 84 84 84 84 84 84 84 84 62 62 62 62 62 62 62 62 62
+#&gt; [1465] 62 62 62 62 62 62 62 62 62 62 62 62 62 62 62 62 62 62 62 62 62 62 62 59
+#&gt; [1489] 59 59 59 59 59 59 59 59 59 59 59 59 59 59 59 59 59 59 59 59 59 59 59 59
+#&gt; [1513] 59 59 59 59 59 59 64 64 64 64 64 64 64 64 64 64 64 64 64 64 64 64 64 64
+#&gt; [1537] 64 64 64 64 64 64 64 64 64 64 64 64 64 57 57 57 57 57 57 57 57 57 57 57
+#&gt; [1561] 57 57 57 57 57 57 57 57 57 57 57 57 57 57 57 57 57 57 63 63 63 63 63 63
+#&gt; [1585] 63 63 63 63 63 63 63 63 63 63 63 63 63 63 63 63 63 63 63 63 63 63 51 51
+#&gt; [1609] 51 51 51 51 51 51 51 51 51 51 51 51 51 51 51 51 51 51 51 51 51 51 51 51
+#&gt; [1633] 51 52 52 52 52 52 52 52 52 52 52 52 52 52 52 52 52 52 52 52 52 52 52 52
+#&gt; [1657] 52 52 60 60 60 60 60 60 60 60 60 60 60 60 60 60 60 60 60 60 60 60 60 60
+#&gt; [1681] 60 60 60 53 53 53 53 53 53 53 53 53 53 53 53 53 53 53 53 53 53 53 53 53
+#&gt; [1705] 53 53 58 58 58 58 58 58 58 58 58 58 58 58 58 58 58 58 58 58 58 58 58 58
+#&gt; [1729] 58 50 50 50 50 50 50 50 50 50 50 50 50 50 50 50 50 50 50 50 50 50 50 56
+#&gt; [1753] 56 56 56 56 56 56 56 56 56 56 56 56 56 56 56 56 56 56 56 56 45 45 45 45
+#&gt; [1777] 45 45 45 45 45 45 45 45 45 45 45 45 45 45 45 45 55 55 55 55 55 55 55 55
+#&gt; [1801] 55 55 55 55 55 55 55 55 55 61 61 61 61 61 61 61 61 61 61 61 61 61 61 61
+#&gt; [1825] 61 61 93 93 93 93 93 93 93 93 93 93 93 93 93 93 93 93 43 43 43 43 43 43
+#&gt; [1849] 43 43 43 43 43 43 43 43 43 44 44 44 44 44 44 44 44 44 44 44 44 44 46 46
+#&gt; [1873] 46 46 46 46 46 46 46 46 46 46 46 41 41 41 41 41 41 41 41 41 41 48 48 48
+#&gt; [1897] 48 48 48 48 48 48 48 30 30 30 30 30 30 30 30 30 54 54 54 54 54 54 54 54
+#&gt; [1921] 54 92 92 92 92 92 92 92 92 92 91 91 91 91 91 91 91 91 42 42 42 42 42 42
+#&gt; [1945] 42 38 38 38 38 38 38 94 94 94 94 94 94 20 20 20 20 39 39 39 39 49 49 49
+#&gt; [1969] 49 19 19 19 29 29 29 33 33 33 37 37 37 40 40 40 18 18 24 24 31 31 36 36
+#&gt; [1993] 97 97 14 22 32 34 35 95</div><div class='input'>
 <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/identical'>identical</a></span>(<span class='no'>septic_patients</span> <span class='kw'>%&gt;%</span>
             <span class='fu'>freq</span>(<span class='no'>age</span>) <span class='kw'>%&gt;%</span>
             <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/vector'>as.vector</a></span>() <span class='kw'>%&gt;%</span>
             <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/sort'>sort</a></span>(),
-          <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/sort'>sort</a></span>(<span class='no'>septic_patients</span>$<span class='no'>age</span>)) <span class='co'># TRUE</span>
-
+          <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/sort'>sort</a></span>(<span class='no'>septic_patients</span>$<span class='no'>age</span>)) <span class='co'># TRUE</span></div><div class='output co'>#&gt; [1] TRUE</div><div class='input'>
 
 <span class='co'># it also supports `table` objects</span>
 <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/table'>table</a></span>(<span class='no'>septic_patients</span>$<span class='no'>gender</span>,
       <span class='no'>septic_patients</span>$<span class='no'>age</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'>freq</span>(<span class='kw'>sep</span> <span class='kw'>=</span> <span class='st'>" **sep** "</span>)
-
+  <span class='fu'>freq</span>(<span class='kw'>sep</span> <span class='kw'>=</span> <span class='st'>" **sep** "</span>)</div><div class='output co'>#&gt; 
+#&gt; 
+#&gt; **Frequency table of a `table` object**  
+#&gt; 
+#&gt; 
+#&gt; |    |Item         | Count| Percent| Cum. Count| Cum. Percent|
+#&gt; |:---|:------------|-----:|-------:|----------:|------------:|
+#&gt; |1   |F **sep** 83 |    55|    2.8%|         55|         2.8%|
+#&gt; |2   |M **sep** 78 |    51|    2.6%|        106|         5.3%|
+#&gt; |3   |M **sep** 83 |    47|    2.4%|        153|         7.7%|
+#&gt; |4   |M **sep** 82 |    43|    2.2%|        196|         9.8%|
+#&gt; |5   |M **sep** 79 |    42|    2.1%|        238|        11.9%|
+#&gt; |6   |F **sep** 80 |    41|    2.1%|        279|        14.0%|
+#&gt; |7   |F **sep** 76 |    39|    2.0%|        318|        15.9%|
+#&gt; |8   |F **sep** 75 |    38|    1.9%|        356|        17.8%|
+#&gt; |9   |F **sep** 86 |    38|    1.9%|        394|        19.7%|
+#&gt; |10  |M **sep** 71 |    35|    1.8%|        429|        21.5%|
+#&gt; |11  |M **sep** 75 |    34|    1.7%|        463|        23.2%|
+#&gt; |12  |M **sep** 77 |    34|    1.7%|        497|        24.9%|
+#&gt; |13  |M **sep** 80 |    34|    1.7%|        531|        26.6%|
+#&gt; |14  |F **sep** 81 |    33|    1.7%|        564|        28.2%|
+#&gt; |15  |M **sep** 88 |    31|    1.6%|        595|        29.8%|
+#&gt; |16  |F **sep** 79 |    30|    1.5%|        625|        31.3%|
+#&gt; |17  |M **sep** 74 |    30|    1.5%|        655|        32.8%|
+#&gt; |18  |M **sep** 87 |    30|    1.5%|        685|        34.3%|
+#&gt; |19  |F **sep** 65 |    29|    1.5%|        714|        35.7%|
+#&gt; |20  |M **sep** 73 |    29|    1.5%|        743|        37.2%|
+#&gt; |21  |M **sep** 69 |    28|    1.4%|        771|        38.6%|
+#&gt; |22  |M **sep** 72 |    28|    1.4%|        799|        40.0%|
+#&gt; |23  |F **sep** 67 |    27|    1.4%|        826|        41.3%|
+#&gt; |24  |F **sep** 87 |    27|    1.4%|        853|        42.7%|
+#&gt; |25  |M **sep** 76 |    26|    1.3%|        879|        44.0%|
+#&gt; |26  |F **sep** 66 |    25|    1.3%|        904|        45.2%|
+#&gt; |27  |F **sep** 70 |    25|    1.3%|        929|        46.5%|
+#&gt; |28  |M **sep** 70 |    25|    1.3%|        954|        47.7%|
+#&gt; |29  |M **sep** 81 |    25|    1.3%|        979|        49.0%|
+#&gt; |30  |F **sep** 47 |    24|    1.2%|      1,003|        50.1%|
+#&gt; |31  |F **sep** 73 |    24|    1.2%|      1,027|        51.4%|
+#&gt; |32  |F **sep** 74 |    24|    1.2%|      1,051|        52.6%|
+#&gt; |33  |M **sep** 67 |    24|    1.2%|      1,075|        53.8%|
+#&gt; |34  |M **sep** 86 |    23|    1.2%|      1,098|        54.9%|
+#&gt; |35  |F **sep** 89 |    22|    1.1%|      1,120|        56.0%|
+#&gt; |36  |M **sep** 68 |    22|    1.1%|      1,142|        57.1%|
+#&gt; |37  |M **sep** 85 |    22|    1.1%|      1,164|        58.2%|
+#&gt; |38  |F **sep** 69 |    21|    1.1%|      1,185|        59.3%|
+#&gt; |39  |M **sep** 62 |    21|    1.1%|      1,206|        60.3%|
+#&gt; |40  |F **sep** 85 |    20|    1.0%|      1,226|        61.3%|
+#&gt; |41  |F **sep** 88 |    20|    1.0%|      1,246|        62.3%|
+#&gt; |42  |F **sep** 90 |    20|    1.0%|      1,266|        63.3%|
+#&gt; |43  |M **sep** 64 |    20|    1.0%|      1,286|        64.3%|
+#&gt; |44  |F **sep** 68 |    19|    1.0%|      1,305|        65.3%|
+#&gt; |45  |F **sep** 78 |    19|    1.0%|      1,324|        66.2%|
+#&gt; |46  |F **sep** 82 |    19|    1.0%|      1,343|        67.2%|
+#&gt; |47  |F **sep** 45 |    18|    0.9%|      1,361|        68.1%|
+#&gt; |48  |F **sep** 60 |    18|    0.9%|      1,379|        69.0%|
+#&gt; |49  |F **sep** 77 |    18|    0.9%|      1,397|        69.9%|
+#&gt; |50  |F **sep** 84 |    18|    0.9%|      1,415|        70.8%|
+#&gt; |51  |M **sep** 51 |    18|    0.9%|      1,433|        71.7%|
+#&gt; |52  |M **sep** 52 |    18|    0.9%|      1,451|        72.6%|
+#&gt; |53  |F **sep** 57 |    17|    0.9%|      1,468|        73.4%|
+#&gt; |54  |F **sep** 72 |    17|    0.9%|      1,485|        74.3%|
+#&gt; |55  |M **sep** 66 |    17|    0.9%|      1,502|        75.1%|
+#&gt; |56  |F **sep** 58 |    16|    0.8%|      1,518|        75.9%|
+#&gt; |57  |F **sep** 59 |    16|    0.8%|      1,534|        76.7%|
+#&gt; |58  |M **sep** 56 |    16|    0.8%|      1,550|        77.5%|
+#&gt; |59  |M **sep** 47 |    15|    0.8%|      1,565|        78.3%|
+#&gt; |60  |M **sep** 59 |    15|    0.8%|      1,580|        79.0%|
+#&gt; |61  |M **sep** 84 |    15|    0.8%|      1,595|        79.8%|
+#&gt; |62  |M **sep** 90 |    15|    0.8%|      1,610|        80.5%|
+#&gt; |63  |F **sep** 63 |    14|    0.7%|      1,624|        81.2%|
+#&gt; |64  |M **sep** 53 |    14|    0.7%|      1,638|        81.9%|
+#&gt; |65  |M **sep** 63 |    14|    0.7%|      1,652|        82.6%|
+#&gt; |66  |M **sep** 65 |    14|    0.7%|      1,666|        83.3%|
+#&gt; |67  |M **sep** 61 |    13|    0.7%|      1,679|        84.0%|
+#&gt; |68  |F **sep** 50 |    12|    0.6%|      1,691|        84.6%|
+#&gt; |69  |F **sep** 71 |    12|    0.6%|      1,703|        85.2%|
+#&gt; |70  |M **sep** 57 |    12|    0.6%|      1,715|        85.8%|
+#&gt; |71  |M **sep** 89 |    12|    0.6%|      1,727|        86.4%|
+#&gt; |72  |M **sep** 93 |    12|    0.6%|      1,739|        87.0%|
+#&gt; |73  |F **sep** 62 |    11|    0.6%|      1,750|        87.5%|
+#&gt; |74  |F **sep** 64 |    11|    0.6%|      1,761|        88.1%|
+#&gt; |75  |M **sep** 50 |    10|    0.5%|      1,771|        88.6%|
+#&gt; |76  |F **sep** 43 |     9|    0.5%|      1,780|        89.0%|
+#&gt; |77  |F **sep** 46 |     9|    0.5%|      1,789|        89.5%|
+#&gt; |78  |F **sep** 51 |     9|    0.5%|      1,798|        89.9%|
+#&gt; |79  |F **sep** 53 |     9|    0.5%|      1,807|        90.4%|
+#&gt; |80  |F **sep** 55 |     9|    0.5%|      1,816|        90.8%|
+#&gt; |81  |M **sep** 30 |     9|    0.5%|      1,825|        91.3%|
+#&gt; |82  |F **sep** 44 |     8|    0.4%|      1,833|        91.7%|
+#&gt; |83  |M **sep** 55 |     8|    0.4%|      1,841|        92.1%|
+#&gt; |84  |F **sep** 41 |     7|    0.4%|      1,848|        92.4%|
+#&gt; |85  |F **sep** 48 |     7|    0.4%|      1,855|        92.8%|
+#&gt; |86  |F **sep** 52 |     7|    0.4%|      1,862|        93.1%|
+#&gt; |87  |M **sep** 58 |     7|    0.4%|      1,869|        93.5%|
+#&gt; |88  |M **sep** 60 |     7|    0.4%|      1,876|        93.8%|
+#&gt; |89  |F **sep** 92 |     6|    0.3%|      1,882|        94.1%|
+#&gt; |90  |M **sep** 43 |     6|    0.3%|      1,888|        94.4%|
+#&gt; |91  |F **sep** 38 |     5|    0.3%|      1,893|        94.7%|
+#&gt; |92  |F **sep** 42 |     5|    0.3%|      1,898|        94.9%|
+#&gt; |93  |F **sep** 56 |     5|    0.3%|      1,903|        95.2%|
+#&gt; |94  |M **sep** 44 |     5|    0.3%|      1,908|        95.4%|
+#&gt; |95  |M **sep** 54 |     5|    0.3%|      1,913|        95.7%|
+#&gt; |96  |F **sep** 20 |     4|    0.2%|      1,917|        95.9%|
+#&gt; |97  |F **sep** 54 |     4|    0.2%|      1,921|        96.1%|
+#&gt; |98  |F **sep** 61 |     4|    0.2%|      1,925|        96.3%|
+#&gt; |99  |F **sep** 91 |     4|    0.2%|      1,929|        96.5%|
+#&gt; |100 |F **sep** 93 |     4|    0.2%|      1,933|        96.7%|
+#&gt; |101 |F **sep** 94 |     4|    0.2%|      1,937|        96.9%|
+#&gt; |102 |M **sep** 46 |     4|    0.2%|      1,941|        97.1%|
+#&gt; |103 |M **sep** 91 |     4|    0.2%|      1,945|        97.3%|
+#&gt; |104 |F **sep** 39 |     3|    0.2%|      1,948|        97.4%|
+#&gt; |105 |M **sep** 19 |     3|    0.2%|      1,951|        97.6%|
+#&gt; |106 |M **sep** 33 |     3|    0.2%|      1,954|        97.7%|
+#&gt; |107 |M **sep** 41 |     3|    0.2%|      1,957|        97.9%|
+#&gt; |108 |M **sep** 48 |     3|    0.2%|      1,960|        98.0%|
+#&gt; |109 |M **sep** 92 |     3|    0.2%|      1,963|        98.2%|
+#&gt; |110 |F **sep** 31 |     2|    0.1%|      1,965|        98.3%|
+#&gt; |111 |F **sep** 49 |     2|    0.1%|      1,967|        98.4%|
+#&gt; |112 |M **sep** 18 |     2|    0.1%|      1,969|        98.5%|
+#&gt; |113 |M **sep** 24 |     2|    0.1%|      1,971|        98.6%|
+#&gt; |114 |M **sep** 29 |     2|    0.1%|      1,973|        98.7%|
+#&gt; |115 |M **sep** 36 |     2|    0.1%|      1,975|        98.8%|
+#&gt; |116 |M **sep** 37 |     2|    0.1%|      1,977|        98.9%|
+#&gt; |117 |M **sep** 40 |     2|    0.1%|      1,979|        99.0%|
+#&gt; |118 |M **sep** 42 |     2|    0.1%|      1,981|        99.1%|
+#&gt; |119 |M **sep** 45 |     2|    0.1%|      1,983|        99.2%|
+#&gt; |120 |M **sep** 49 |     2|    0.1%|      1,985|        99.3%|
+#&gt; |121 |M **sep** 94 |     2|    0.1%|      1,987|        99.4%|
+#&gt; |122 |M **sep** 97 |     2|    0.1%|      1,989|        99.5%|
+#&gt; |123 |F **sep** 22 |     1|    0.1%|      1,990|        99.5%|
+#&gt; |124 |F **sep** 29 |     1|    0.1%|      1,991|        99.6%|
+#&gt; |125 |F **sep** 34 |     1|    0.1%|      1,992|        99.6%|
+#&gt; |126 |F **sep** 35 |     1|    0.1%|      1,993|        99.7%|
+#&gt; |127 |F **sep** 37 |     1|    0.1%|      1,994|        99.7%|
+#&gt; |128 |F **sep** 40 |     1|    0.1%|      1,995|        99.8%|
+#&gt; |129 |M **sep** 14 |     1|    0.1%|      1,996|        99.8%|
+#&gt; |130 |M **sep** 32 |     1|    0.1%|      1,997|        99.9%|
+#&gt; |131 |M **sep** 38 |     1|    0.1%|      1,998|        99.9%|
+#&gt; |132 |M **sep** 39 |     1|    0.1%|      1,999|       100.0%|
+#&gt; |133 |M **sep** 95 |     1|    0.1%|      2,000|       100.0%|
+#&gt; 
+#&gt; </div><div class='input'>
 
 <span class='co'># only get selected columns</span>
 <span class='no'>septic_patients</span> <span class='kw'>%&gt;%</span>
   <span class='fu'>freq</span>(<span class='no'>hospital_id</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='http://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='no'>item</span>, <span class='no'>percent</span>)
-
+  <span class='fu'><a href='http://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='no'>item</span>, <span class='no'>percent</span>)</div><div class='output co'>#&gt; 
+#&gt; 
+#&gt; **Frequency table of `hospital_id`**  
+#&gt; 
+#&gt; 
+#&gt; |   |Item | Percent|
+#&gt; |:--|:----|-------:|
+#&gt; |1  |D    |   38.1%|
+#&gt; |2  |B    |   33.2%|
+#&gt; |3  |A    |   16.1%|
+#&gt; |4  |C    |   12.7%|
+#&gt; 
+#&gt; </div><div class='input'>
 <span class='no'>septic_patients</span> <span class='kw'>%&gt;%</span>
   <span class='fu'>freq</span>(<span class='no'>hospital_id</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='http://dplyr.tidyverse.org/reference/select.html'>select</a></span>(-<span class='no'>count</span>, -<span class='no'>cum_count</span>)
-
+  <span class='fu'><a href='http://dplyr.tidyverse.org/reference/select.html'>select</a></span>(-<span class='no'>count</span>, -<span class='no'>cum_count</span>)</div><div class='output co'>#&gt; 
+#&gt; 
+#&gt; **Frequency table of `hospital_id`**  
+#&gt; 
+#&gt; 
+#&gt; |   |Item | Percent| Cum. Percent|
+#&gt; |:--|:----|-------:|------------:|
+#&gt; |1  |D    |   38.1%|        38.1%|
+#&gt; |2  |B    |   33.2%|        71.3%|
+#&gt; |3  |A    |   16.1%|        87.3%|
+#&gt; |4  |C    |   12.7%|       100.0%|
+#&gt; 
+#&gt; </div><div class='input'>
 
 <span class='co'># check differences between frequency tables</span>
 <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/diff'>diff</a></span>(<span class='fu'>freq</span>(<span class='no'>septic_patients</span>$<span class='no'>trim</span>),
-     <span class='fu'>freq</span>(<span class='no'>septic_patients</span>$<span class='no'>trsu</span>))
-<span class='co'># }</span></pre>
+     <span class='fu'>freq</span>(<span class='no'>septic_patients</span>$<span class='no'>trsu</span>))</div><div class='output co'>#&gt; Differences between frequency tables
+#&gt; 
+#&gt; |Item | Count #1| Count #2| Difference| Diff. percent|
+#&gt; |:----|--------:|--------:|----------:|-------------:|
+#&gt; |S    |      918|     1392|       +474|        +51.6%|
+#&gt; |R    |      571|      361|       -210|        -36.8%|
+#&gt; |I    |       10|        6|         -4|        -40.0%|</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

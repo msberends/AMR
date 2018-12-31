@@ -201,36 +201,28 @@
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><span class='co'># NOT RUN {</span>
-<span class='fu'>abname</span>(<span class='st'>"AMCL"</span>)
-<span class='co'># "Amoxicillin and beta-lactamase inhibitor"</span>
+    <pre class="examples"><div class='input'><span class='fu'>abname</span>(<span class='st'>"AMCL"</span>)</div><div class='output co'>#&gt; [1] "Amoxicillin and beta-lactamase inhibitor"</div><div class='input'><span class='co'># "Amoxicillin and beta-lactamase inhibitor"</span>
 
 <span class='co'># It is quite flexible at default (having `from = "guess"`)</span>
-<span class='fu'>abname</span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"amox"</span>, <span class='st'>"J01CA04"</span>, <span class='st'>"Trimox"</span>, <span class='st'>"dispermox"</span>, <span class='st'>"Amoxil"</span>))
-<span class='co'># "Amoxicillin" "Amoxicillin" "Amoxicillin" "Amoxicillin" "Amoxicillin"</span>
+<span class='fu'>abname</span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"amox"</span>, <span class='st'>"J01CA04"</span>, <span class='st'>"Trimox"</span>, <span class='st'>"dispermox"</span>, <span class='st'>"Amoxil"</span>))</div><div class='output co'>#&gt; [1] "Amoxicillin" "Amoxicillin" "Amoxicillin" "Amoxicillin" "Amoxicillin"</div><div class='input'><span class='co'># "Amoxicillin" "Amoxicillin" "Amoxicillin" "Amoxicillin" "Amoxicillin"</span>
 
 <span class='co'># Multiple antibiotics can be combined with "+".</span>
 <span class='co'># The second antibiotic will be set to lower case when `tolower` was not set:</span>
-<span class='fu'>abname</span>(<span class='st'>"AMCL+GENT"</span>, <span class='kw'>textbetween</span> <span class='kw'>=</span> <span class='st'>"/"</span>)
-<span class='co'># "amoxicillin and enzyme inhibitor/gentamicin"</span>
+<span class='fu'>abname</span>(<span class='st'>"AMCL+GENT"</span>, <span class='kw'>textbetween</span> <span class='kw'>=</span> <span class='st'>"/"</span>)</div><div class='output co'>#&gt; [1] "Amoxicillin and beta-lactamase inhibitor/gentamicin"</div><div class='input'><span class='co'># "amoxicillin and enzyme inhibitor/gentamicin"</span>
 
-<span class='fu'>abname</span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"AMCL"</span>, <span class='st'>"GENT"</span>))
-<span class='co'># "Amoxicillin and beta-lactamase inhibitor" "Gentamicin"</span>
+<span class='fu'>abname</span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"AMCL"</span>, <span class='st'>"GENT"</span>))</div><div class='output co'>#&gt; [1] "Amoxicillin and beta-lactamase inhibitor"
+#&gt; [2] "Gentamicin"                              </div><div class='input'><span class='co'># "Amoxicillin and beta-lactamase inhibitor" "Gentamicin"</span>
 
-<span class='fu'>abname</span>(<span class='st'>"AMCL"</span>, <span class='kw'>to</span> <span class='kw'>=</span> <span class='st'>"trivial_nl"</span>)
-<span class='co'># "Amoxicilline/clavulaanzuur"</span>
+<span class='fu'>abname</span>(<span class='st'>"AMCL"</span>, <span class='kw'>to</span> <span class='kw'>=</span> <span class='st'>"trivial_nl"</span>)</div><div class='output co'>#&gt; [1] "Amoxicilline/clavulaanzuur"</div><div class='input'><span class='co'># "Amoxicilline/clavulaanzuur"</span>
 
-<span class='fu'>abname</span>(<span class='st'>"AMCL"</span>, <span class='kw'>to</span> <span class='kw'>=</span> <span class='st'>"atc"</span>)
-<span class='co'># "J01CR02"</span>
+<span class='fu'>abname</span>(<span class='st'>"AMCL"</span>, <span class='kw'>to</span> <span class='kw'>=</span> <span class='st'>"atc"</span>)</div><div class='output co'>#&gt; [1] "J01CR02"</div><div class='input'><span class='co'># "J01CR02"</span>
 
 <span class='co'># specific codes for University Medical Center Groningen (UMCG):</span>
-<span class='fu'>abname</span>(<span class='st'>"J01CR02"</span>, <span class='kw'>from</span> <span class='kw'>=</span> <span class='st'>"atc"</span>, <span class='kw'>to</span> <span class='kw'>=</span> <span class='st'>"umcg"</span>)
-<span class='co'># "AMCL"</span>
+<span class='fu'>abname</span>(<span class='st'>"J01CR02"</span>, <span class='kw'>from</span> <span class='kw'>=</span> <span class='st'>"atc"</span>, <span class='kw'>to</span> <span class='kw'>=</span> <span class='st'>"umcg"</span>)</div><div class='output co'>#&gt; [1] "AMCL"</div><div class='input'><span class='co'># "AMCL"</span>
 
 <span class='co'># specific codes for Certe:</span>
-<span class='fu'>abname</span>(<span class='st'>"J01CR02"</span>, <span class='kw'>from</span> <span class='kw'>=</span> <span class='st'>"atc"</span>, <span class='kw'>to</span> <span class='kw'>=</span> <span class='st'>"certe"</span>)
-<span class='co'># "amcl"</span>
-<span class='co'># }</span></pre>
+<span class='fu'>abname</span>(<span class='st'>"J01CR02"</span>, <span class='kw'>from</span> <span class='kw'>=</span> <span class='st'>"atc"</span>, <span class='kw'>to</span> <span class='kw'>=</span> <span class='st'>"certe"</span>)</div><div class='output co'>#&gt; [1] "amcl"</div><div class='input'># "amcl"
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

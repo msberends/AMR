@@ -255,7 +255,7 @@
   <span class='fu'><a href='http://dplyr.tidyverse.org/reference/filter.html'>filter</a></span>(<span class='no'>first_isolate</span> <span class='kw'>==</span> <span class='fl'>TRUE</span>,
          <span class='no'>genus</span> <span class='kw'>==</span> <span class='st'>"Haemophilus"</span>) <span class='kw'>%&gt;%</span>
   <span class='fu'>resistance_predict</span>(<span class='no'>amcl</span>, <span class='no'>date</span>)
-<span class='co'># }</span><span class='co'># NOT RUN {</span>
+<span class='co'># }</span><div class='input'>
 
 <span class='co'># real live example:</span>
 <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>dplyr</span>)
@@ -273,8 +273,56 @@
                      <span class='kw'>col_date</span> <span class='kw'>=</span> <span class='st'>"date"</span>,
                      <span class='kw'>year_max</span> <span class='kw'>=</span> <span class='fl'>2025</span>,
                      <span class='kw'>preserve_measurements</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-                     <span class='kw'>minimum</span> <span class='kw'>=</span> <span class='fl'>0</span>)
-
+                     <span class='kw'>minimum</span> <span class='kw'>=</span> <span class='fl'>0</span>)</div><div class='output co'>#&gt; <span class='message'><span style='color: #0000BB;'>NOTE: Using column `</span><span style='color: #0000BB;font-weight: bold;'>mo</span><span style='color: #0000BB;'>` as input for `col_mo`.</span><span></span></div><div class='output co'>#&gt; <span class='message'></span><span style='color: #0000BB;'>NOTE: Using column `</span><span style='color: #0000BB;font-weight: bold;'>date</span><span style='color: #0000BB;'>` as input for `col_date`.</span><span></span></div><div class='output co'>#&gt; <span class='message'></span><span style='color: #0000BB;'>NOTE: Using column `</span><span style='color: #0000BB;font-weight: bold;'>patient_id</span><span style='color: #0000BB;'>` as input for `col_patient_id`.</span><span></span></div><div class='output co'>#&gt; <span class='message'>=&gt; Found </span><span style='font-weight: bold;'>1,317 first isolates</span><span> (65.9% of total)</span></div><div class='output co'>#&gt; 
+#&gt; Logistic regression model (logit) with binomial distribution
+#&gt; ------------------------------------------------------------
+#&gt; 
+#&gt; Call:
+#&gt; glm(formula = cbind(R, S) ~ year, family = binomial)
+#&gt; 
+#&gt; Deviance Residuals: 
+#&gt;     Min       1Q   Median       3Q      Max  
+#&gt; -1.0751  -0.4675  -0.2840  -0.1530   1.5028  
+#&gt; 
+#&gt; Coefficients:
+#&gt;              Estimate Std. Error z value Pr(&gt;|z|)  
+#&gt; (Intercept) -686.7518   342.1219  -2.007   0.0447 *
+#&gt; year           0.3393     0.1698   1.998   0.0457 *
+#&gt; ---
+#&gt; Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+#&gt; 
+#&gt; (Dispersion parameter for binomial family taken to be 1)
+#&gt; 
+#&gt;     Null deviance: 13.5547  on 15  degrees of freedom
+#&gt; Residual deviance:  6.8145  on 14  degrees of freedom
+#&gt; AIC: 19.128
+#&gt; 
+#&gt; Number of Fisher Scoring iterations: 6
+#&gt; </div><div class='output co'>#&gt;    year      value     se_min    se_max observations   observed    estimated
+#&gt; 1  2002 0.00000000         NA        NA           12 0.00000000 0.0005265096
+#&gt; 2  2003 0.00000000         NA        NA           13 0.00000000 0.0007390158
+#&gt; 3  2004 0.00000000         NA        NA           12 0.00000000 0.0010372031
+#&gt; 4  2005 0.00000000         NA        NA           15 0.00000000 0.0014555316
+#&gt; 5  2006 0.00000000         NA        NA           16 0.00000000 0.0020422369
+#&gt; 6  2007 0.00000000         NA        NA           17 0.00000000 0.0028647568
+#&gt; 7  2008 0.00000000         NA        NA           17 0.00000000 0.0040172166
+#&gt; 8  2009 0.00000000         NA        NA           18 0.00000000 0.0056306802
+#&gt; 9  2010 0.00000000         NA        NA           13 0.00000000 0.0078870391
+#&gt; 10 2011 0.04761905         NA        NA           21 0.04761905 0.0110375429
+#&gt; 11 2012 0.00000000         NA        NA           10 0.00000000 0.0154269569
+#&gt; 12 2013 0.00000000         NA        NA           13 0.00000000 0.0215239636
+#&gt; 13 2014 0.00000000         NA        NA           19 0.00000000 0.0299572977
+#&gt; 14 2015 0.14285714         NA        NA           14 0.14285714 0.0415545799
+#&gt; 15 2016 0.04761905         NA        NA           21 0.04761905 0.0573759332
+#&gt; 16 2017 0.05000000         NA        NA           20 0.05000000 0.0787262663
+#&gt; 17 2018 0.10711851 0.03829468 0.1759423           NA         NA 0.1071185079
+#&gt; 18 2019 0.14414813 0.03838570 0.2499106           NA         NA 0.1441481336
+#&gt; 19 2020 0.19123682 0.03582031 0.3466533           NA         NA 0.1912368226
+#&gt; 20 2021 0.24922848 0.03244999 0.4660070           NA         NA 0.2492284792
+#&gt; 21 2022 0.31789357 0.03249431 0.6032928           NA         NA 0.3178935725
+#&gt; 22 2023 0.39551054 0.04249603 0.7485251           NA         NA 0.3955105423
+#&gt; 23 2024 0.47877663 0.06981495 0.8877383           NA         NA 0.4787766284
+#&gt; 24 2025 0.56323896 0.11983506 1.0000000           NA         NA 0.5632389556</div><div class='input'>
 <span class='co'># create nice plots with ggplot</span>
 <span class='kw'>if</span> (!<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>require</a></span>(<span class='no'>ggplot2</span>)) {
 
@@ -300,8 +348,7 @@
          <span class='kw'>y</span> <span class='kw'>=</span> <span class='st'>"%IR"</span>,
          <span class='kw'>x</span> <span class='kw'>=</span> <span class='st'>"Year"</span>) +
     <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggtheme.html'>theme_minimal</a></span>(<span class='kw'>base_size</span> <span class='kw'>=</span> <span class='fl'>13</span>)
-}
-<span class='co'># }</span></pre>
+}</div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

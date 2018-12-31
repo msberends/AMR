@@ -231,28 +231,18 @@ count_R and count_IR can be used to count resistant isolates, count_S and count_
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><span class='co'># NOT RUN {</span>
-<span class='co'># septic_patients is a data set available in the AMR package. It is true, genuine data.</span>
-?<span class='no'>septic_patients</span>
-
+    <pre class="examples"><div class='input'><span class='co'># septic_patients is a data set available in the AMR package. It is true, genuine data.</span>
+?<span class='no'>septic_patients</span></div><div class='output co'>#&gt; <span class='message'>Rendering development documentation for 'septic_patients'</span></div><div class='input'>
 <span class='co'># Count resistant isolates</span>
-<span class='fu'>count_R</span>(<span class='no'>septic_patients</span>$<span class='no'>amox</span>)
-<span class='fu'>count_IR</span>(<span class='no'>septic_patients</span>$<span class='no'>amox</span>)
-
+<span class='fu'>count_R</span>(<span class='no'>septic_patients</span>$<span class='no'>amox</span>)</div><div class='output co'>#&gt; [1] 683</div><div class='input'><span class='fu'>count_IR</span>(<span class='no'>septic_patients</span>$<span class='no'>amox</span>)</div><div class='output co'>#&gt; [1] 686</div><div class='input'>
 <span class='co'># Or susceptible isolates</span>
-<span class='fu'>count_S</span>(<span class='no'>septic_patients</span>$<span class='no'>amox</span>)
-<span class='fu'>count_SI</span>(<span class='no'>septic_patients</span>$<span class='no'>amox</span>)
-
+<span class='fu'>count_S</span>(<span class='no'>septic_patients</span>$<span class='no'>amox</span>)</div><div class='output co'>#&gt; [1] 486</div><div class='input'><span class='fu'>count_SI</span>(<span class='no'>septic_patients</span>$<span class='no'>amox</span>)</div><div class='output co'>#&gt; [1] 489</div><div class='input'>
 <span class='co'># Count all available isolates</span>
-<span class='fu'>count_all</span>(<span class='no'>septic_patients</span>$<span class='no'>amox</span>)
-<span class='fu'>n_rsi</span>(<span class='no'>septic_patients</span>$<span class='no'>amox</span>)
-
+<span class='fu'>count_all</span>(<span class='no'>septic_patients</span>$<span class='no'>amox</span>)</div><div class='output co'>#&gt; [1] 1172</div><div class='input'><span class='fu'>n_rsi</span>(<span class='no'>septic_patients</span>$<span class='no'>amox</span>)</div><div class='output co'>#&gt; [1] 1172</div><div class='input'>
 <span class='co'># Since n_rsi counts available isolates, you can</span>
 <span class='co'># calculate back to count e.g. non-susceptible isolates.</span>
 <span class='co'># This results in the same:</span>
-<span class='fu'>count_IR</span>(<span class='no'>septic_patients</span>$<span class='no'>amox</span>)
-<span class='fu'><a href='portion.html'>portion_IR</a></span>(<span class='no'>septic_patients</span>$<span class='no'>amox</span>) * <span class='fu'>n_rsi</span>(<span class='no'>septic_patients</span>$<span class='no'>amox</span>)
-
+<span class='fu'>count_IR</span>(<span class='no'>septic_patients</span>$<span class='no'>amox</span>)</div><div class='output co'>#&gt; [1] 686</div><div class='input'><span class='fu'><a href='portion.html'>portion_IR</a></span>(<span class='no'>septic_patients</span>$<span class='no'>amox</span>) * <span class='fu'>n_rsi</span>(<span class='no'>septic_patients</span>$<span class='no'>amox</span>)</div><div class='output co'>#&gt; [1] 686</div><div class='input'>
 <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>dplyr</span>)
 <span class='no'>septic_patients</span> <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='http://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span>(<span class='no'>hospital_id</span>) <span class='kw'>%&gt;%</span>
@@ -261,34 +251,50 @@ count_R and count_IR can be used to count resistant isolates, count_S and count_
             <span class='kw'>S</span>  <span class='kw'>=</span> <span class='fu'>count_S</span>(<span class='no'>cipr</span>),
             <span class='kw'>n1</span> <span class='kw'>=</span> <span class='fu'>count_all</span>(<span class='no'>cipr</span>), <span class='co'># the actual total; sum of all three</span>
             <span class='kw'>n2</span> <span class='kw'>=</span> <span class='fu'>n_rsi</span>(<span class='no'>cipr</span>),     <span class='co'># same - analogous to n_distinct</span>
-            <span class='kw'>total</span> <span class='kw'>=</span> <span class='fu'><a href='http://dplyr.tidyverse.org/reference/n.html'>n</a></span>())          <span class='co'># NOT the amount of tested isolates!</span>
-
+            <span class='kw'>total</span> <span class='kw'>=</span> <span class='fu'><a href='http://dplyr.tidyverse.org/reference/n.html'>n</a></span>())          <span class='co'># NOT the amount of tested isolates!</span></div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 4 x 7</span><span>
+#&gt;   hospital_id     R     I     S    n1    n2 total
+#&gt;   </span><span style='color: #949494;font-style: italic;'>&lt;fct&gt;</span><span>       </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span>
+#&gt; </span><span style='color: #BCBCBC;'>1</span><span> A              26     3   178   207   207   321
+#&gt; </span><span style='color: #BCBCBC;'>2</span><span> B              85    35   379   499   499   663
+#&gt; </span><span style='color: #BCBCBC;'>3</span><span> C              41    22   139   202   202   254
+#&gt; </span><span style='color: #BCBCBC;'>4</span><span> D              76     9   416   501   501   762</div><div class='input'>
 <span class='co'># Count co-resistance between amoxicillin/clav acid and gentamicin,</span>
 <span class='co'># so we can see that combination therapy does a lot more than mono therapy.</span>
 <span class='co'># Please mind that `portion_S` calculates percentages right away instead.</span>
-<span class='fu'>count_S</span>(<span class='no'>septic_patients</span>$<span class='no'>amcl</span>)   <span class='co'># S = 1057 (67.1%)</span>
-<span class='fu'>count_all</span>(<span class='no'>septic_patients</span>$<span class='no'>amcl</span>) <span class='co'># n = 1576</span>
-
-<span class='fu'>count_S</span>(<span class='no'>septic_patients</span>$<span class='no'>gent</span>)   <span class='co'># S = 1372 (74.0%)</span>
-<span class='fu'>count_all</span>(<span class='no'>septic_patients</span>$<span class='no'>gent</span>) <span class='co'># n = 1855</span>
-
+<span class='fu'>count_S</span>(<span class='no'>septic_patients</span>$<span class='no'>amcl</span>)   <span class='co'># S = 1057 (67.1%)</span></div><div class='output co'>#&gt; [1] 1291</div><div class='input'><span class='fu'>count_all</span>(<span class='no'>septic_patients</span>$<span class='no'>amcl</span>) <span class='co'># n = 1576</span></div><div class='output co'>#&gt; [1] 1828</div><div class='input'>
+<span class='fu'>count_S</span>(<span class='no'>septic_patients</span>$<span class='no'>gent</span>)   <span class='co'># S = 1372 (74.0%)</span></div><div class='output co'>#&gt; [1] 1372</div><div class='input'><span class='fu'>count_all</span>(<span class='no'>septic_patients</span>$<span class='no'>gent</span>) <span class='co'># n = 1855</span></div><div class='output co'>#&gt; [1] 1855</div><div class='input'>
 <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/with'>with</a></span>(<span class='no'>septic_patients</span>,
-     <span class='fu'>count_S</span>(<span class='no'>amcl</span>, <span class='no'>gent</span>))       <span class='co'># S = 1396 (92.0%)</span>
-<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/with'>with</a></span>(<span class='no'>septic_patients</span>,           <span class='co'># n = 1517</span>
-     <span class='fu'>n_rsi</span>(<span class='no'>amcl</span>, <span class='no'>gent</span>))
-
+     <span class='fu'>count_S</span>(<span class='no'>amcl</span>, <span class='no'>gent</span>))       <span class='co'># S = 1396 (92.0%)</span></div><div class='output co'>#&gt; [1] 1609</div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/with'>with</a></span>(<span class='no'>septic_patients</span>,           <span class='co'># n = 1517</span>
+     <span class='fu'>n_rsi</span>(<span class='no'>amcl</span>, <span class='no'>gent</span>))</div><div class='output co'>#&gt; [1] 1747</div><div class='input'>
 <span class='co'># Get portions S/I/R immediately of all rsi columns</span>
 <span class='no'>septic_patients</span> <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='http://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='no'>amox</span>, <span class='no'>cipr</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'>count_df</span>(<span class='kw'>translate</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
-
+  <span class='fu'>count_df</span>(<span class='kw'>translate</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</div><div class='output co'>#&gt;   Interpretation Antibiotic Value
+#&gt; 1              S       amox   486
+#&gt; 2              I       amox     3
+#&gt; 3              R       amox   683
+#&gt; 4              S       cipr  1112
+#&gt; 5              I       cipr    69
+#&gt; 6              R       cipr   228</div><div class='input'>
 <span class='co'># It also supports grouping variables</span>
 <span class='no'>septic_patients</span> <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='http://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='no'>hospital_id</span>, <span class='no'>amox</span>, <span class='no'>cipr</span>) <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='http://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span>(<span class='no'>hospital_id</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'>count_df</span>(<span class='kw'>translate</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
-
-<span class='co'># }</span></pre>
+  <span class='fu'>count_df</span>(<span class='kw'>translate</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</div><div class='output co'>#&gt; </span><span style='color: #949494;'># A tibble: 24 x 4</span><span>
+#&gt;    Interpretation hospital_id Antibiotic Value
+#&gt;    </span><span style='color: #949494;font-style: italic;'>&lt;ord&gt;</span><span>          </span><span style='color: #949494;font-style: italic;'>&lt;fct&gt;</span><span>       </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>      </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span>
+#&gt; </span><span style='color: #BCBCBC;'> 1</span><span> S              A           amox          63
+#&gt; </span><span style='color: #BCBCBC;'> 2</span><span> S              B           amox         141
+#&gt; </span><span style='color: #BCBCBC;'> 3</span><span> S              C           amox          59
+#&gt; </span><span style='color: #BCBCBC;'> 4</span><span> S              D           amox         223
+#&gt; </span><span style='color: #BCBCBC;'> 5</span><span> I              A           amox           0
+#&gt; </span><span style='color: #BCBCBC;'> 6</span><span> I              B           amox           1
+#&gt; </span><span style='color: #BCBCBC;'> 7</span><span> I              C           amox           0
+#&gt; </span><span style='color: #BCBCBC;'> 8</span><span> I              D           amox           2
+#&gt; </span><span style='color: #BCBCBC;'> 9</span><span> R              A           amox          87
+#&gt; </span><span style='color: #BCBCBC;'>10</span><span> R              B           amox         231
+#&gt; </span><span style='color: #949494;'># ... with 14 more rows</span><span></div><div class='input'>
+</div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

@@ -230,22 +230,21 @@
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><span class='co'># NOT RUN {</span>
-<span class='co'># What's the ATC of amoxicillin?</span>
-<span class='fu'><a href='as.atc.html'>guess_atc</a></span>(<span class='st'>"Amoxicillin"</span>)
-<span class='co'># [1] "J01CA04"</span>
+    <pre class="examples"><div class='input'><span class='co'># What's the ATC of amoxicillin?</span>
+<span class='fu'><a href='as.atc.html'>guess_atc</a></span>(<span class='st'>"Amoxicillin"</span>)</div><div class='output co'>#&gt; Class 'atc'
+#&gt; [1] J01CA04</div><div class='input'><span class='co'># [1] "J01CA04"</span>
 
 <span class='co'># oral DDD (Defined Daily Dose) of amoxicillin</span>
-<span class='fu'>atc_property</span>(<span class='st'>"J01CA04"</span>, <span class='st'>"DDD"</span>, <span class='st'>"O"</span>)
-<span class='co'># parenteral DDD (Defined Daily Dose) of amoxicillin</span>
-<span class='fu'>atc_property</span>(<span class='st'>"J01CA04"</span>, <span class='st'>"DDD"</span>, <span class='st'>"P"</span>)
-
-<span class='fu'>atc_property</span>(<span class='st'>"J01CA04"</span>, <span class='kw'>property</span> <span class='kw'>=</span> <span class='st'>"groups"</span>) <span class='co'># search hierarchical groups of amoxicillin</span>
-<span class='co'># [1] "ANTIINFECTIVES FOR SYSTEMIC USE"</span>
-<span class='co'># [2] "ANTIBACTERIALS FOR SYSTEMIC USE"</span>
-<span class='co'># [3] "BETA-LACTAM ANTIBACTERIALS, PENICILLINS"</span>
-<span class='co'># [4] "Penicillins with extended spectrum"</span>
-<span class='co'># }</span></pre>
+<span class='fu'>atc_property</span>(<span class='st'>"J01CA04"</span>, <span class='st'>"DDD"</span>, <span class='st'>"O"</span>)</div><div class='output co'>#&gt; [1] 1.5</div><div class='input'><span class='co'># parenteral DDD (Defined Daily Dose) of amoxicillin</span>
+<span class='fu'>atc_property</span>(<span class='st'>"J01CA04"</span>, <span class='st'>"DDD"</span>, <span class='st'>"P"</span>)</div><div class='output co'>#&gt; [1] 3</div><div class='input'>
+<span class='fu'>atc_property</span>(<span class='st'>"J01CA04"</span>, <span class='kw'>property</span> <span class='kw'>=</span> <span class='st'>"groups"</span>) <span class='co'># search hierarchical groups of amoxicillin</span></div><div class='output co'>#&gt; [1] "ANTIINFECTIVES FOR SYSTEMIC USE"        
+#&gt; [2] "ANTIBACTERIALS FOR SYSTEMIC USE"        
+#&gt; [3] "BETA-LACTAM ANTIBACTERIALS, PENICILLINS"
+#&gt; [4] "Penicillins with extended spectrum"     </div><div class='input'># [1] "ANTIINFECTIVES FOR SYSTEMIC USE"
+# [2] "ANTIBACTERIALS FOR SYSTEMIC USE"
+# [3] "BETA-LACTAM ANTIBACTERIALS, PENICILLINS"
+# [4] "Penicillins with extended spectrum"
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

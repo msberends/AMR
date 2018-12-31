@@ -205,39 +205,43 @@
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><span class='co'># NOT RUN {</span>
-<span class='no'>ages</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>3</span>, <span class='fl'>8</span>, <span class='fl'>16</span>, <span class='fl'>54</span>, <span class='fl'>31</span>, <span class='fl'>76</span>, <span class='fl'>101</span>, <span class='fl'>43</span>, <span class='fl'>21</span>)
+    <pre class="examples"><div class='input'><span class='no'>ages</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>3</span>, <span class='fl'>8</span>, <span class='fl'>16</span>, <span class='fl'>54</span>, <span class='fl'>31</span>, <span class='fl'>76</span>, <span class='fl'>101</span>, <span class='fl'>43</span>, <span class='fl'>21</span>)
 
 <span class='co'># split into 0-49 and 50+</span>
-<span class='fu'>age_groups</span>(<span class='no'>ages</span>, <span class='fl'>50</span>)
-
+<span class='fu'>age_groups</span>(<span class='no'>ages</span>, <span class='fl'>50</span>)</div><div class='output co'>#&gt; [1] 0-49 0-49 0-49 50+  0-49 50+  50+  0-49 0-49
+#&gt; Levels: 0-49 &lt; 50+</div><div class='input'>
 <span class='co'># split into 0-19, 20-49 and 50+</span>
-<span class='fu'>age_groups</span>(<span class='no'>ages</span>, <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>20</span>, <span class='fl'>50</span>))
-
+<span class='fu'>age_groups</span>(<span class='no'>ages</span>, <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>20</span>, <span class='fl'>50</span>))</div><div class='output co'>#&gt; [1] 0-19  0-19  0-19  50+   20-49 50+   50+   20-49 20-49
+#&gt; Levels: 0-19 &lt; 20-49 &lt; 50+</div><div class='input'>
 <span class='co'># split into groups of ten years</span>
-<span class='fu'>age_groups</span>(<span class='no'>ages</span>, <span class='fl'>1</span>:<span class='fl'>10</span> * <span class='fl'>10</span>)
-<span class='fu'>age_groups</span>(<span class='no'>ages</span>, <span class='kw'>split_at</span> <span class='kw'>=</span> <span class='st'>"tens"</span>)
-
+<span class='fu'>age_groups</span>(<span class='no'>ages</span>, <span class='fl'>1</span>:<span class='fl'>10</span> * <span class='fl'>10</span>)</div><div class='output co'>#&gt; [1] 0-9   0-9   10-19 50-59 30-39 70-79 100+  40-49 20-29
+#&gt; 11 Levels: 0-9 &lt; 10-19 &lt; 20-29 &lt; 30-39 &lt; 40-49 &lt; 50-59 &lt; 60-69 &lt; ... &lt; 100+</div><div class='input'><span class='fu'>age_groups</span>(<span class='no'>ages</span>, <span class='kw'>split_at</span> <span class='kw'>=</span> <span class='st'>"tens"</span>)</div><div class='output co'>#&gt; [1] 0-9   0-9   10-19 50-59 30-39 70-79 100+  40-49 20-29
+#&gt; 11 Levels: 0-9 &lt; 10-19 &lt; 20-29 &lt; 30-39 &lt; 40-49 &lt; 50-59 &lt; 60-69 &lt; ... &lt; 100+</div><div class='input'>
 <span class='co'># split into groups of five years</span>
-<span class='fu'>age_groups</span>(<span class='no'>ages</span>, <span class='fl'>1</span>:<span class='fl'>20</span> * <span class='fl'>5</span>)
-<span class='fu'>age_groups</span>(<span class='no'>ages</span>, <span class='kw'>split_at</span> <span class='kw'>=</span> <span class='st'>"fives"</span>)
-
+<span class='fu'>age_groups</span>(<span class='no'>ages</span>, <span class='fl'>1</span>:<span class='fl'>20</span> * <span class='fl'>5</span>)</div><div class='output co'>#&gt; [1] 0-4   5-9   15-19 50-54 30-34 75-79 100+  40-44 20-24
+#&gt; 21 Levels: 0-4 &lt; 5-9 &lt; 10-14 &lt; 15-19 &lt; 20-24 &lt; 25-29 &lt; 30-34 &lt; ... &lt; 100+</div><div class='input'><span class='fu'>age_groups</span>(<span class='no'>ages</span>, <span class='kw'>split_at</span> <span class='kw'>=</span> <span class='st'>"fives"</span>)</div><div class='output co'>#&gt; [1] 0-4   5-9   15-19 50-54 30-34 75-79 100+  40-44 20-24
+#&gt; 21 Levels: 0-4 &lt; 5-9 &lt; 10-14 &lt; 15-19 &lt; 20-24 &lt; 25-29 &lt; 30-34 &lt; ... &lt; 100+</div><div class='input'>
 <span class='co'># split specifically for children</span>
-<span class='fu'>age_groups</span>(<span class='no'>ages</span>, <span class='st'>"children"</span>)
-<span class='co'># same:</span>
-<span class='fu'>age_groups</span>(<span class='no'>ages</span>, <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>1</span>, <span class='fl'>2</span>, <span class='fl'>4</span>, <span class='fl'>6</span>, <span class='fl'>13</span>, <span class='fl'>17</span>))
-
+<span class='fu'>age_groups</span>(<span class='no'>ages</span>, <span class='st'>"children"</span>)</div><div class='output co'>#&gt; [1] 2-3   6-12  13-17 18+   18+   18+   18+   18+   18+  
+#&gt; Levels: 0 &lt; 1 &lt; 2-3 &lt; 4-5 &lt; 6-12 &lt; 13-17 &lt; 18+</div><div class='input'><span class='co'># same:</span>
+<span class='fu'>age_groups</span>(<span class='no'>ages</span>, <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>1</span>, <span class='fl'>2</span>, <span class='fl'>4</span>, <span class='fl'>6</span>, <span class='fl'>13</span>, <span class='fl'>17</span>))</div><div class='output co'>#&gt; [1] 2-3   6-12  13-16 17+   17+   17+   17+   17+   17+  
+#&gt; Levels: 0 &lt; 1 &lt; 2-3 &lt; 4-5 &lt; 6-12 &lt; 13-16 &lt; 17+</div><div class='input'>
 <span class='co'># resistance of ciprofloxacine per age group</span>
-<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>dplyr</span>)
-<span class='no'>septic_patients</span> <span class='kw'>%&gt;%</span>
+<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>dplyr</span>)</div><div class='output co'>#&gt; <span class='message'></span>
+#&gt; <span class='message'>Attaching package: ‘dplyr’</span></div><div class='output co'>#&gt; <span class='message'>The following object is masked from ‘package:testthat’:</span>
+#&gt; <span class='message'></span>
+#&gt; <span class='message'>    matches</span></div><div class='output co'>#&gt; <span class='message'>The following objects are masked from ‘package:stats’:</span>
+#&gt; <span class='message'></span>
+#&gt; <span class='message'>    filter, lag</span></div><div class='output co'>#&gt; <span class='message'>The following objects are masked from ‘package:base’:</span>
+#&gt; <span class='message'></span>
+#&gt; <span class='message'>    intersect, setdiff, setequal, union</span></div><div class='input'><span class='no'>septic_patients</span> <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='http://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span>(<span class='kw'>first_isolate</span> <span class='kw'>=</span> <span class='fu'><a href='first_isolate.html'>first_isolate</a></span>(<span class='no'>.</span>)) <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='http://dplyr.tidyverse.org/reference/filter.html'>filter</a></span>(<span class='no'>first_isolate</span> <span class='kw'>==</span> <span class='fl'>TRUE</span>,
          <span class='no'>mo</span> <span class='kw'>==</span> <span class='fu'><a href='as.mo.html'>as.mo</a></span>(<span class='st'>"E. coli"</span>)) <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='http://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span>(<span class='kw'>age_group</span> <span class='kw'>=</span> <span class='fu'>age_groups</span>(<span class='no'>age</span>)) <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='http://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='no'>age_group</span>,
          <span class='no'>cipr</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='ggplot_rsi.html'>ggplot_rsi</a></span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='st'>"age_group"</span>)
-<span class='co'># }</span></pre>
+  <span class='fu'><a href='ggplot_rsi.html'>ggplot_rsi</a></span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='st'>"age_group"</span>)</div><div class='output co'>#&gt; <span class='message'><span style='color: #0000BB;'>NOTE: Using column `</span><span style='color: #0000BB;font-weight: bold;'>mo</span><span style='color: #0000BB;'>` as input for `col_mo`.</span><span></span></div><div class='output co'>#&gt; <span class='message'></span><span style='color: #0000BB;'>NOTE: Using column `</span><span style='color: #0000BB;font-weight: bold;'>date</span><span style='color: #0000BB;'>` as input for `col_date`.</span><span></span></div><div class='output co'>#&gt; <span class='message'></span><span style='color: #0000BB;'>NOTE: Using column `</span><span style='color: #0000BB;font-weight: bold;'>patient_id</span><span style='color: #0000BB;'>` as input for `col_patient_id`.</span><span></span></div><div class='output co'>#&gt; <span class='message'>=&gt; Found </span><span style='font-weight: bold;'>1,317 first isolates</span><span> (65.9% of total)</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Removed 3 rows containing missing values (geom_bar).</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Removed 3 rows containing missing values (geom_text).</span></div><div class='img'><img src='age_groups-1.png' alt='' width='700' height='433' /></div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

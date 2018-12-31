@@ -194,17 +194,25 @@
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><span class='co'># NOT RUN {</span>
-<span class='no'>mic_data</span> <span class='kw'>&lt;-</span> <span class='fu'>as.mic</span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"&gt;=32"</span>, <span class='st'>"1.0"</span>, <span class='st'>"1"</span>, <span class='st'>"1.00"</span>, <span class='fl'>8</span>, <span class='st'>"&lt;=0.128"</span>, <span class='st'>"8"</span>, <span class='st'>"16"</span>, <span class='st'>"16"</span>))
-<span class='fu'>is.mic</span>(<span class='no'>mic_data</span>)
-
+    <pre class="examples"><div class='input'><span class='no'>mic_data</span> <span class='kw'>&lt;-</span> <span class='fu'>as.mic</span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"&gt;=32"</span>, <span class='st'>"1.0"</span>, <span class='st'>"1"</span>, <span class='st'>"1.00"</span>, <span class='fl'>8</span>, <span class='st'>"&lt;=0.128"</span>, <span class='st'>"8"</span>, <span class='st'>"16"</span>, <span class='st'>"16"</span>))
+<span class='fu'>is.mic</span>(<span class='no'>mic_data</span>)</div><div class='output co'>#&gt; [1] TRUE</div><div class='input'>
 <span class='co'># this can also coerce combined MIC/RSI values:</span>
-<span class='fu'>as.mic</span>(<span class='st'>"&lt;=0.002; S"</span>) <span class='co'># will return &lt;=0.002</span>
-
-<span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/plot'>plot</a></span>(<span class='no'>mic_data</span>)
-<span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/barplot'>barplot</a></span>(<span class='no'>mic_data</span>)
-<span class='fu'><a href='freq.html'>freq</a></span>(<span class='no'>mic_data</span>)
-<span class='co'># }</span></pre>
+<span class='fu'>as.mic</span>(<span class='st'>"&lt;=0.002; S"</span>) <span class='co'># will return &lt;=0.002</span></div><div class='output co'>#&gt; Class 'mic'
+#&gt; [1] &lt;=0.002</div><div class='input'>
+<span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/plot'>plot</a></span>(<span class='no'>mic_data</span>)</div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/barplot'>barplot</a></span>(<span class='no'>mic_data</span>)</div><div class='img'><img src='as.mic-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'><a href='freq.html'>freq</a></span>(<span class='no'>mic_data</span>)</div><div class='output co'>#&gt; 
+#&gt; 
+#&gt; **Frequency table**  
+#&gt; 
+#&gt; 
+#&gt; |   |Item    | Count| Percent| Cum. Count| Cum. Percent|
+#&gt; |:--|:-------|-----:|-------:|----------:|------------:|
+#&gt; |1  |1       |     3|   33.3%|          3|        33.3%|
+#&gt; |2  |8       |     2|   22.2%|          5|        55.6%|
+#&gt; |3  |16      |     2|   22.2%|          7|        77.8%|
+#&gt; |4  |&lt;=0.128 |     1|   11.1%|          8|        88.9%|
+#&gt; |5  |&gt;=32    |     1|   11.1%|          9|       100.0%|
+#&gt; 
+#&gt; </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
