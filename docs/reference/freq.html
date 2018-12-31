@@ -47,7 +47,8 @@
   <script src="../extra.js"></script>
 <meta property="og:title" content="Frequency table — freq" />
 
-<meta property="og:description" content="Create a frequency table of a vector with items or a data frame. Supports quasiquotation and markdown for reports. top_freq can be used to get the top/bottom n items of a frequency table, with counts as names." />
+<meta property="og:description" content="Create a frequency table of a vector with items or a data frame. Supports quasiquotation and markdown for reports. The best practice is: data %&amp;gt;% freq(var).
+top_freq can be used to get the top/bottom n items of a frequency table, with counts as names." />
 
 <meta property="og:image" content="https://msberends.gitlab.io/logo.png" />
 <meta name="twitter:card" content="summary" />
@@ -163,7 +164,8 @@
 
     <div class="ref-description">
     
-    <p>Create a frequency table of a vector with items or a data frame. Supports quasiquotation and markdown for reports. <code>top_freq</code> can be used to get the top/bottom <em>n</em> items of a frequency table, with counts as names.</p>
+    <p>Create a frequency table of a vector with items or a data frame. Supports quasiquotation and markdown for reports. The best practice is: <code>data %&gt;% freq(var)</code>.<br />
+<code>top_freq</code> can be used to get the top/bottom <em>n</em> items of a frequency table, with counts as names.</p>
     
     </div>
 
@@ -240,7 +242,7 @@
     </tr>
     <tr>
       <th>na</th>
-      <td><p>a character string to should be used to show empty (<code>NA</code>) values (only useful when <code>na.rm = FALSE</code>)</p></td>
+      <td><p>a character string that should be used to show empty (<code>NA</code>) values (only useful when <code>na.rm = FALSE</code>)</p></td>
     </tr>
     <tr>
       <th>droplevels</th>

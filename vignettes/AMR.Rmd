@@ -66,9 +66,9 @@ patients <- unlist(lapply(LETTERS, paste0, 1:10))
 The `LETTERS` object is available in R - it's a vector with 26 characters: `A` to `Z`. The `patients` object we just created is now a vector of length `r length(patients)`, with values (patient IDs) varying from ``r patients[1]`` to ``r patients[length(patients)]``. Now we we also set the gender of our patients, by putting the ID and the gender in a table:
 
 ```{r create gender}
-patients_table <- data.frame(patients,
+patients_table <- data.frame(patient_id = patients,
                              gender = c(strrep("M", 135),
-                                        strrep("F", 125))
+                                        strrep("F", 125)))
 ```
 
 The first 135 patient IDs are now male, the other 125 are female.
