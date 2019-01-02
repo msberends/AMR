@@ -2,18 +2,21 @@
 # TITLE                                                                #
 # Antimicrobial Resistance (AMR) Analysis                              #
 #                                                                      #
-# AUTHORS                                                              #
-# Berends MS (m.s.berends@umcg.nl), Luz CF (c.f.luz@umcg.nl)           #
+# SOURCE                                                               #
+# https://gitlab.com/msberends/AMR                                     #
 #                                                                      #
 # LICENCE                                                              #
-# This package is free software; you can redistribute it and/or modify #
-# it under the terms of the GNU General Public License version 2.0,    #
-# as published by the Free Software Foundation.                        #
+# (c) 2019 Berends MS (m.s.berends@umcg.nl), Luz CF (c.f.luz@umcg.nl)  #
 #                                                                      #
-# This R package is distributed in the hope that it will be useful,    #
-# but WITHOUT ANY WARRANTY; without even the implied warranty of       #
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the        #
-# GNU General Public License version 2.0 for more details.             #
+# This R package is free software; you can freely use and distribute   #
+# it for both personal and commercial purposes under the terms of the  #
+# GNU General Public License version 2.0 (GNU GPL-2), as published by  #
+# the Free Software Foundation.                                        #
+#                                                                      #
+# This R package was created for academic research and was publicly    #
+# released in the hope that it will be useful, but it comes WITHOUT    #
+# ANY WARRANTY OR LIABILITY.                                           #
+# Visit our website for more info: https://msberends.gitab.io/AMR.     #
 # ==================================================================== #
 
 #' Frequency table
@@ -73,6 +76,7 @@
 #' @name freq
 #' @return A \code{data.frame} (with an additional class \code{"frequency_tbl"}) with five columns: \code{item}, \code{count}, \code{percent}, \code{cum_count} and \code{cum_percent}.
 #' @export
+#' @inheritSection AMR Read more on our website!
 #' @examples
 #' library(dplyr)
 #'
@@ -812,7 +816,7 @@ print.frequency_tbl <- function(x,
   if (opt$tbl_format == "pandoc") {
     title <- bold(title)
   } else if (opt$tbl_format == "markdown") {
-    title <- paste0("\n**", title, "**")
+    title <- paste0("\n**", title, "**  ") # two space for newline
   }
 
   if (opt$header == TRUE) {
@@ -825,7 +829,7 @@ print.frequency_tbl <- function(x,
     }
   } else if (opt$tbl_format == "markdown") {
     # do print title as caption in markdown
-    cat("\n", title, "  ", sep = "") # two trailing spaces for markdown
+    cat("\n", title, sep = "") # two trailing spaces for markdown
   }
 
   if (NROW(x) == 0) {
@@ -837,6 +841,11 @@ print.frequency_tbl <- function(x,
   opt.old <- options()$knitr.kable.NA
   if (is.null(opt$na)) {
     opt$na <- "<NA>"
+  }
+  if (opt$tbl_format == "markdown") {
+    # no HTML tags
+    opt$na <- gsub("<", "(", opt$na, fixed = TRUE)
+    opt$na <- gsub(">", ")", opt$na, fixed = TRUE)
   }
   options(knitr.kable.NA = opt$na)
 

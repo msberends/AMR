@@ -2,18 +2,21 @@
 # TITLE                                                                #
 # Antimicrobial Resistance (AMR) Analysis                              #
 #                                                                      #
-# AUTHORS                                                              #
-# Berends MS (m.s.berends@umcg.nl), Luz CF (c.f.luz@umcg.nl)           #
+# SOURCE                                                               #
+# https://gitlab.com/msberends/AMR                                     #
 #                                                                      #
 # LICENCE                                                              #
-# This package is free software; you can redistribute it and/or modify #
-# it under the terms of the GNU General Public License version 2.0,    #
-# as published by the Free Software Foundation.                        #
+# (c) 2019 Berends MS (m.s.berends@umcg.nl), Luz CF (c.f.luz@umcg.nl)  #
 #                                                                      #
-# This R package is distributed in the hope that it will be useful,    #
-# but WITHOUT ANY WARRANTY; without even the implied warranty of       #
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the        #
-# GNU General Public License version 2.0 for more details.             #
+# This R package is free software; you can freely use and distribute   #
+# it for both personal and commercial purposes under the terms of the  #
+# GNU General Public License version 2.0 (GNU GPL-2), as published by  #
+# the Free Software Foundation.                                        #
+#                                                                      #
+# This R package was created for academic research and was publicly    #
+# released in the hope that it will be useful, but it comes WITHOUT    #
+# ANY WARRANTY OR LIABILITY.                                           #
+# Visit our website for more info: https://msberends.gitab.io/AMR.     #
 # ==================================================================== #
 
 #' Transform to microorganism ID
@@ -74,14 +77,7 @@
 #' }
 #'
 #' \code{guess_mo} is an alias of \code{as.mo}.
-#' @section ITIS:
-#' \if{html}{\figure{itis_logo.jpg}{options: height=60px style=margin-bottom:5px} \cr}
-#' This package contains the \strong{complete microbial taxonomic data} (with all nine taxonomic ranks - from kingdom to subspecies) from the publicly available Integrated Taxonomic Information System (ITIS, \url{https://www.itis.gov}).
-#'
-#' All (sub)species from \strong{the taxonomic kingdoms Bacteria, Fungi and Protozoa are included in this package}, as well as all previously accepted names known to ITIS. Furthermore, the responsible authors and year of publication are available. This allows users to use authoritative taxonomic information for their data analysis on any microorganism, not only human pathogens. It also helps to quickly determine the Gram stain of bacteria, since all bacteria are classified into subkingdom Negibacteria or Posibacteria.
-#'
-#' ITIS is a partnership of U.S., Canadian, and Mexican agencies and taxonomic specialists [3].
-#'
+#' @inheritSection itis ITIS
 #  (source as a section, so it can be inherited by other man pages)
 #' @section Source:
 #' [1] Becker K \emph{et al.} \strong{Coagulase-Negative Staphylococci}. 2014. Clin Microbiol Rev. 27(4): 870–926. \url{https://dx.doi.org/10.1128/CMR.00109-13}
@@ -93,6 +89,7 @@
 #' @return Character (vector) with class \code{"mo"}. Unknown values will return \code{NA}.
 #' @seealso \code{\link{microorganisms}} for the \code{data.frame} with ITIS content that is being used to determine ID's. \cr
 #' The \code{\link{mo_property}} functions (like \code{\link{mo_genus}}, \code{\link{mo_gramstain}}) to get properties based on the returned code.
+#' @inheritSection AMR Read more on our website!
 #' @examples
 #' # These examples all return "B_STPHY_AUR", the ID of S. aureus:
 #' as.mo("stau")

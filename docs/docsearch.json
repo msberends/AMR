@@ -2,21 +2,21 @@
   "index_name": "amr",
   "start_urls": [
     {
-      "url": "https://msberends.gitlab.io/index.html",
+      "url": "https://msberends.gitlab.io/AMR/index.html",
       "selectors_key": "homepage",
       "tags": [
         "homepage"
       ]
     },
     {
-      "url": "https://msberends.gitlab.io/reference",
+      "url": "https://msberends.gitlab.io/AMR/reference",
       "selectors_key": "reference",
       "tags": [
         "reference"
       ]
     },
     {
-      "url": "https://msberends.gitlab.io/articles",
+      "url": "https://msberends.gitlab.io/AMR/articles",
       "selectors_key": "articles",
       "tags": [
         "articles"
@@ -30,7 +30,7 @@
     "/articles/index.html"
   ],
   "sitemap_urls": [
-    "https://msberends.gitlab.io/sitemap.xml"
+    "https://msberends.gitlab.io/AMR/sitemap.xml"
   ],
   "selectors": {
     "homepage": {

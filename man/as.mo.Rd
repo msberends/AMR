@@ -80,6 +80,15 @@ When using \code{allow_uncertain = TRUE} (which is the default setting), it will
 
 \code{guess_mo} is an alias of \code{as.mo}.
 }
+\section{Source}{
+
+[1] Becker K \emph{et al.} \strong{Coagulase-Negative Staphylococci}. 2014. Clin Microbiol Rev. 27(4): 870–926. \url{https://dx.doi.org/10.1128/CMR.00109-13}
+
+[2] Lancefield RC \strong{A serological differentiation of human and other groups of hemolytic streptococci}. 1933. J Exp Med. 57(4): 571–95. \url{https://dx.doi.org/10.1084/jem.57.4.571}
+
+[3] Integrated Taxonomic Information System (ITIS). Retrieved September 2018. \url{http://www.itis.gov}
+}
+
 \section{ITIS}{
 
 \if{html}{\figure{itis_logo.jpg}{options: height=60px style=margin-bottom:5px} \cr}
@@ -90,13 +99,10 @@ All (sub)species from \strong{the taxonomic kingdoms Bacteria, Fungi and Protozo
 ITIS is a partnership of U.S., Canadian, and Mexican agencies and taxonomic specialists [3].
 }
 
-\section{Source}{
+\section{Read more on our website!}{
 
-[1] Becker K \emph{et al.} \strong{Coagulase-Negative Staphylococci}. 2014. Clin Microbiol Rev. 27(4): 870–926. \url{https://dx.doi.org/10.1128/CMR.00109-13}
-
-[2] Lancefield RC \strong{A serological differentiation of human and other groups of hemolytic streptococci}. 1933. J Exp Med. 57(4): 571–95. \url{https://dx.doi.org/10.1084/jem.57.4.571}
-
-[3] Integrated Taxonomic Information System (ITIS). Retrieved September 2018. \url{http://www.itis.gov}
+\if{html}{\figure{logo.png}{options: height=40px style=margin-bottom:5px} \cr}
+On our website \url{https://msberends.gitlab.io/AMR} you can find \href{https://msberends.gitlab.io/AMR/articles/AMR.html}{a omprehensive tutorial} about how to conduct AMR analysis and find \href{https://msberends.gitlab.io/AMR/reference}{the complete documentation of all functions}, which reads a lot easier than in R.
 }
 
 \examples{

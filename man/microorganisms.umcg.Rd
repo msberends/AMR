@@ -15,6 +15,12 @@ microorganisms.umcg
 \description{
 A data set containing all bacteria codes of UMCG MMB. These codes can be joined to data with an ID from \code{\link{microorganisms}$mo} (using \code{\link{left_join_microorganisms}}). GLIMS codes can also be translated to valid \code{MO}s with \code{\link{guess_mo}}.
 }
+\section{Read more on our website!}{
+
+\if{html}{\figure{logo.png}{options: height=40px style=margin-bottom:5px} \cr}
+On our website \url{https://msberends.gitlab.io/AMR} you can find \href{https://msberends.gitlab.io/AMR/articles/AMR.html}{a omprehensive tutorial} about how to conduct AMR analysis and find \href{https://msberends.gitlab.io/AMR/reference}{the complete documentation of all functions}, which reads a lot easier than in R.
+}
+
 \seealso{
 \code{\link{as.mo}} \code{\link{microorganisms.certe}} \code{\link{microorganisms}}
 }

@@ -81,6 +81,12 @@ At default, the names of antibiotics will be shown on the plots using \code{\lin
 
 \code{ggplot_rsi} is a wrapper around all above functions that uses data as first input. This makes it possible to use this function after a pipe (\code{\%>\%}). See Examples.
 }
+\section{Read more on our website!}{
+
+\if{html}{\figure{logo.png}{options: height=40px style=margin-bottom:5px} \cr}
+On our website \url{https://msberends.gitlab.io/AMR} you can find \href{https://msberends.gitlab.io/AMR/articles/AMR.html}{a omprehensive tutorial} about how to conduct AMR analysis and find \href{https://msberends.gitlab.io/AMR/reference}{the complete documentation of all functions}, which reads a lot easier than in R.
+}
+
 \examples{
 library(dplyr)
 library(ggplot2)

@@ -24,6 +24,12 @@ This transforms a vector to a new class \code{rsi}, which is an ordered factor w
 \details{
 The function \code{is.rsi.eligible} returns \code{TRUE} when a columns contains only valid antimicrobial interpretations (S and/or I and/or R), and \code{FALSE} otherwise.
 }
+\section{Read more on our website!}{
+
+\if{html}{\figure{logo.png}{options: height=40px style=margin-bottom:5px} \cr}
+On our website \url{https://msberends.gitlab.io/AMR} you can find \href{https://msberends.gitlab.io/AMR/articles/AMR.html}{a omprehensive tutorial} about how to conduct AMR analysis and find \href{https://msberends.gitlab.io/AMR/reference}{the complete documentation of all functions}, which reads a lot easier than in R.
+}
+
 \examples{
 rsi_data <- as.rsi(c(rep("S", 474), rep("I", 36), rep("R", 370)))
 rsi_data <- as.rsi(c(rep("S", 474), rep("I", 36), rep("R", 370), "A", "B", "C"))

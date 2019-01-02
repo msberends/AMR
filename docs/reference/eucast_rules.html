@@ -49,7 +49,7 @@
 
 <meta property="og:description" content="Apply susceptibility rules as defined by the European Committee on Antimicrobial Susceptibility Testing (EUCAST, http://eucast.org), see Source. This includes (1) expert rules, (2) intrinsic resistance and (3) inferred resistance as defined in their breakpoint tables." />
 
-<meta property="og:image" content="https://msberends.gitlab.io/logo.png" />
+<meta property="og:image" content="https://msberends.gitlab.io/AMR/logo.png" />
 <meta name="twitter:card" content="summary" />
 
 
@@ -80,7 +80,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.0.9008</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.0.9009</span>
       </span>
     </div>
 
@@ -93,12 +93,65 @@
     Home
   </a>
 </li>
-<li>
-  <a href="../articles/AMR.html">
-    <span class="fa fa-directions"></span>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    <span class="fa fa-question-circle"></span>
      
-    Get Started
+    How to
+     
+    <span class="caret"></span>
   </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="../articles/AMR.html">
+        <span class="fa fa-directions"></span>
+         
+        Conduct AMR analysis
+      </a>
+    </li>
+    <li>
+      <a href="../articles/Predict.html">
+        <span class="fa fa-dice"></span>
+         
+        Predict antimicrobial resistance
+      </a>
+    </li>
+    <li>
+      <a href="../articles/EUCAST.html">
+        <span class="fa fa-exchange-alt"></span>
+         
+        Apply EUCAST rules
+      </a>
+    </li>
+    <li>
+      <a href="../articles/mo_property.html">
+        <span class="fa fa-bug"></span>
+         
+        Get properties of a microorganism
+      </a>
+    </li>
+    <li>
+      <a href="../articles/ab_property.html">
+        <span class="fa fa-capsules"></span>
+         
+        Get properties of an antibiotic
+      </a>
+    </li>
+    <li>
+      <a href="../articles/freq.html">
+        <span class="fa fa-sort-amount-down"></span>
+         
+        Create frequency tables
+      </a>
+    </li>
+    <li>
+      <a href="../articles/G_test.html">
+        <span class="fa fa-clipboard-check"></span>
+         
+        Use the G-test
+      </a>
+    </li>
+  </ul>
 </li>
 <li>
   <a href="../reference/">
@@ -121,17 +174,17 @@
     Changelog
   </a>
 </li>
-<li>
+      </ul>
+      
+      <ul class="nav navbar-nav navbar-right">
+        <li>
   <a href="https://gitlab.com/msberends/AMR">
     <span class="fab fa fab fa-gitlab"></span>
      
     Source Code
   </a>
 </li>
-      </ul>
-      
-      <ul class="nav navbar-nav navbar-right">
-        <li>
+<li>
   <a href="../LICENSE-text.html">
     <span class="fa fa-book"></span>
      
@@ -307,51 +360,17 @@
  <strong>trsu</strong>: sulfamethoxazole and trimethoprim (<em>J01EE01</em>),
  <strong>vanc</strong>: vancomycin (<em>J01XA01</em>).</p>
     
+    <h2 class="hasAnchor" id="read-more-on-our-website-"><a class="anchor" href="#read-more-on-our-website-"></a>Read more on our website!</h2>
+
+    
+    <p><img src='figures/logo.png' height=40px style=margin-bottom:5px /> <br />
+On our website <a href='https://msberends.gitlab.io/AMR'>https://msberends.gitlab.io/AMR</a> you can find <a href='https://msberends.gitlab.io/AMR/articles/AMR.html'>a omprehensive tutorial</a> about how to conduct AMR analysis and find <a href='https://msberends.gitlab.io/AMR/reference'>the complete documentation of all functions</a>, which reads a lot easier than in R.</p>
+    
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='no'>a</span> <span class='kw'>&lt;-</span> <span class='fu'>eucast_rules</span>(<span class='no'>septic_patients</span>)</div><div class='output co'>#&gt; <span class='message'><span style='color: #0000BB;'>NOTE: Using column `</span><span style='color: #0000BB;font-weight: bold;'>mo</span><span style='color: #0000BB;'>` as input for `col_mo`.</span><span></span></div><div class='output co'>#&gt; <span class='warning'>Warning: These columns do not exist and will be ignored: azlo, aztr, cefa, cfra, clar, dapt, erta, fusi, levo, linc, mezl, mino, nali, neom, neti, novo, norf, oflo, pipe, poly, pris, qida, roxi, siso, tica.</span>
-#&gt; <span class='warning'>THIS MAY STRONGLY INFLUENCE THE OUTCOME.</span></div><div class='output co'>#&gt; 
-#&gt; Rules by the European Committee on Antimicrobial Susceptibility Testing (EUCAST)
-#&gt; </span><span style='font-weight: bold;'>
-#&gt; EUCAST Clinical Breakpoints (v8.1, 2018)
-#&gt; </span><span>Enterobacteriales (Order)</span><span style='color: #00BB00;'> (no changes)
-#&gt; </span><span style='font-style: italic;'>Staphylococcus</span><span style='color: #00BB00;'> (no changes)
-#&gt; </span><span style='font-style: italic;'>Enterococcus</span><span style='color: #00BB00;'> (no changes)
-#&gt; </span><span style='font-style: italic;'>Streptococcus</span><span> groups A, B, C, G</span><span style='color: #00BB00;'> (no changes)
-#&gt; </span><span style='font-style: italic;'>Streptococcus pneumoniae</span><span style='color: #00BB00;'> (no changes)
-#&gt; </span><span>Viridans group streptococci</span><span style='color: #00BB00;'> (no changes)
-#&gt; </span><span style='font-style: italic;'>Haemophilus influenzae</span><span style='color: #00BB00;'> (no changes)
-#&gt; </span><span style='font-style: italic;'>Moraxella catarrhalis</span><span style='color: #00BB00;'> (no changes)
-#&gt; </span><span>Anaerobic Gram positives</span><span style='color: #00BB00;'> (no changes)
-#&gt; </span><span>Anaerobic Gram negatives</span><span style='color: #00BB00;'> (no changes)
-#&gt; </span><span style='font-style: italic;'>Pasteurella multocida</span><span style='color: #00BB00;'> (no changes)
-#&gt; </span><span style='font-style: italic;'>Campylobacter jejuni</span><span> and </span><span style='font-style: italic;'>C. coli</span><span style='color: #00BB00;'> (no changes)
-#&gt; </span><span style='font-style: italic;'>Aerococcus sanguinicola</span><span> and </span><span style='font-style: italic;'>A. urinae</span><span style='color: #00BB00;'> (no changes)
-#&gt; </span><span style='font-style: italic;'>Kingella kingae</span><span style='color: #00BB00;'> (no changes)
-#&gt; </span><span style='font-weight: bold;'>
-#&gt; EUCAST Expert Rules, Intrinsic Resistance and Exceptional Phenotypes (v3.1, 2016)
-#&gt; </span><span>Table 1:  Intrinsic resistance in </span><span style='font-style: italic;'>Enterobacteriaceae</span><span style='color: #00BB00;'> (no changes)
-#&gt; </span><span>Table 2:  Intrinsic resistance in non-fermentative Gram-negative bacteria</span><span style='color: #00BB00;'> (no changes)
-#&gt; </span><span>Table 3:  Intrinsic resistance in other Gram-negative bacteria</span><span style='color: #00BB00;'> (no changes)
-#&gt; </span><span>Table 4:  Intrinsic resistance in Gram-positive bacteria</span><span style='color: #00BB00;'> (no changes)
-#&gt; </span><span>Table 8:  Interpretive rules for B-lactam agents and Gram-positive cocci</span><span style='color: #00BB00;'> (no changes)
-#&gt; </span><span>Table 9:  Interpretive rules for B-lactam agents and Gram-negative rods</span><span style='color: #00BB00;'> (no changes)
-#&gt; </span><span>Table 10: Interpretive rules for B-lactam agents and other Gram-negative bacteria</span><span style='color: #00BB00;'> (no changes)
-#&gt; </span><span>Table 11: Interpretive rules for macrolides, lincosamides, and streptogramins</span><span style='color: #00BB00;'> (no changes)
-#&gt; </span><span>Table 12: Interpretive rules for aminoglycosides</span><span style='color: #00BB00;'> (no changes)
-#&gt; </span><span>Table 13: Interpretive rules for quinolones</span><span style='color: #00BB00;'> (no changes)
-#&gt; </span><span style='font-weight: bold;'>
-#&gt; Other rules
-#&gt; </span><span>Non-EUCAST: ampicillin = R where amoxicillin/clav acid = R</span><span style='color: #00BB00;'> (no changes)
-#&gt; </span><span>Non-EUCAST: piperacillin = R where piperacillin/tazobactam = R</span><span style='color: #00BB00;'> (no changes)
-#&gt; </span><span>Non-EUCAST: trimethoprim = R where trimethoprim/sulfa = R</span><span style='color: #00BB00;'> (no changes)
-#&gt; </span><span>Non-EUCAST: amoxicillin/clav acid = S where ampicillin = S</span><span style='color: #00BB00;'> (no changes)
-#&gt; </span><span>Non-EUCAST: piperacillin/tazobactam = S where piperacillin = S</span><span style='color: #00BB00;'> (no changes)
-#&gt; </span><span>Non-EUCAST: trimethoprim/sulfa = S where trimethoprim = S</span><span style='color: #00BB00;'> (no changes)
-#&gt; </span><span style='font-weight: bold;'>
-#&gt; =&gt; EUCAST rules affected 1,980 out of 2,000 rows -&gt; </span><span style='color: #00BB00;font-weight: bold;'>changed 0 test results.
-#&gt; 
-#&gt; </span><span></div><div class='input'>
+    <pre class="examples"><span class='co'># NOT RUN {</span>
+<span class='no'>a</span> <span class='kw'>&lt;-</span> <span class='fu'>eucast_rules</span>(<span class='no'>septic_patients</span>)
+
 <span class='no'>a</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/data.frame'>data.frame</a></span>(<span class='kw'>mo</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"Staphylococcus aureus"</span>,
                        <span class='st'>"Enterococcus faecalis"</span>,
                        <span class='st'>"Escherichia coli"</span>,
@@ -366,72 +385,24 @@
                 <span class='kw'>cfox</span> <span class='kw'>=</span> <span class='st'>"S"</span>,       <span class='co'># Cefoxitin</span>
                 <span class='kw'>stringsAsFactors</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
 
-<span class='no'>a</span></div><div class='output co'>#&gt;                       mo vanc amox coli cfta cfur peni cfox
-#&gt; 1  Staphylococcus aureus    -    -    -    -    -    S    S
-#&gt; 2  Enterococcus faecalis    -    -    -    -    -    S    S
-#&gt; 3       Escherichia coli    -    -    -    -    -    S    S
-#&gt; 4  Klebsiella pneumoniae    -    -    -    -    -    S    S
-#&gt; 5 Pseudomonas aeruginosa    -    -    -    -    -    S    S</div><div class='input'><span class='co'>#                       mo vanc amox coli cfta cfur peni cfox</span>
+<span class='no'>a</span>
+<span class='co'>#                       mo vanc amox coli cfta cfur peni cfox</span>
 <span class='co'># 1  Staphylococcus aureus    -    -    -    -    -    S    S</span>
 <span class='co'># 2  Enterococcus faecalis    -    -    -    -    -    S    S</span>
 <span class='co'># 3       Escherichia coli    -    -    -    -    -    S    S</span>
 <span class='co'># 4  Klebsiella pneumoniae    -    -    -    -    -    S    S</span>
 <span class='co'># 5 Pseudomonas aeruginosa    -    -    -    -    -    S    S</span>
 
-<span class='no'>b</span> <span class='kw'>&lt;-</span> <span class='fu'>eucast_rules</span>(<span class='no'>a</span>, <span class='st'>"mo"</span>) <span class='co'># 18 results are forced as R or S</span></div><div class='output co'>#&gt; <span class='warning'>Warning: These columns do not exist and will be ignored: amcl, amik, ampi, azit, azlo, aztr, cefa, cfra, cfep, cfot, cftr, chlo, cipr, clar, clin, clox, czol, dapt, doxy, erta, eryt, fosf, fusi, gent, imip, kana, levo, linc, line, mero, mezl, mino, moxi, nali, neom, neti, nitr, novo, norf, oflo, oxac, pipe, pita, poly, pris, qida, rifa, roxi, siso, teic, tetr, tica, tige, tobr, trim, trsu.</span>
-#&gt; <span class='warning'>THIS MAY STRONGLY INFLUENCE THE OUTCOME.</span></div><div class='output co'>#&gt; 
-#&gt; Rules by the European Committee on Antimicrobial Susceptibility Testing (EUCAST)</div><div class='output co'>#&gt; <span class='message'></span><span style='color: #0000BB;'>NOTE: Using column `</span><span style='color: #0000BB;font-weight: bold;'>amox</span><span style='color: #0000BB;'>` as input for ampicillin (J01CA01) since many EUCAST rules depend on it.</span><span></span></div><div class='output co'>#&gt; </span><span style='font-weight: bold;'>
-#&gt; EUCAST Clinical Breakpoints (v8.1, 2018)
-#&gt; </span><span>Enterobacteriales (Order)</span><span style='color: #00BB00;'> (no changes)
-#&gt; </span><span style='font-style: italic;'>Staphylococcus</span><span style='color: #0000BB;'> (2 changes)
-#&gt; </span><span style='font-style: italic;'>Enterococcus</span><span style='color: #00BB00;'> (no changes)
-#&gt; </span><span style='font-style: italic;'>Streptococcus</span><span> groups A, B, C, G</span><span style='color: #00BB00;'> (no changes)
-#&gt; </span><span style='font-style: italic;'>Streptococcus pneumoniae</span><span style='color: #00BB00;'> (no changes)
-#&gt; </span><span>Viridans group streptococci</span><span style='color: #00BB00;'> (no changes)
-#&gt; </span><span style='font-style: italic;'>Haemophilus influenzae</span><span style='color: #00BB00;'> (no changes)
-#&gt; </span><span style='font-style: italic;'>Moraxella catarrhalis</span><span style='color: #00BB00;'> (no changes)
-#&gt; </span><span>Anaerobic Gram positives</span><span style='color: #00BB00;'> (no changes)
-#&gt; </span><span>Anaerobic Gram negatives</span><span style='color: #00BB00;'> (no changes)
-#&gt; </span><span style='font-style: italic;'>Pasteurella multocida</span><span style='color: #00BB00;'> (no changes)
-#&gt; </span><span style='font-style: italic;'>Campylobacter jejuni</span><span> and </span><span style='font-style: italic;'>C. coli</span><span style='color: #00BB00;'> (no changes)
-#&gt; </span><span style='font-style: italic;'>Aerococcus sanguinicola</span><span> and </span><span style='font-style: italic;'>A. urinae</span><span style='color: #00BB00;'> (no changes)
-#&gt; </span><span style='font-style: italic;'>Kingella kingae</span><span style='color: #00BB00;'> (no changes)
-#&gt; </span><span style='font-weight: bold;'>
-#&gt; EUCAST Expert Rules, Intrinsic Resistance and Exceptional Phenotypes (v3.1, 2016)
-#&gt; </span><span>Table 1:  Intrinsic resistance in </span><span style='font-style: italic;'>Enterobacteriaceae</span><span style='color: #0000BB;'> (5 changes)
-#&gt; </span><span>Table 2:  Intrinsic resistance in non-fermentative Gram-negative bacteria</span><span style='color: #0000BB;'> (5 changes)
-#&gt; </span><span>Table 3:  Intrinsic resistance in other Gram-negative bacteria</span><span style='color: #00BB00;'> (no changes)
-#&gt; </span><span>Table 4:  Intrinsic resistance in Gram-positive bacteria</span><span style='color: #0000BB;'> (6 changes)
-#&gt; </span><span>Table 8:  Interpretive rules for B-lactam agents and Gram-positive cocci</span><span style='color: #00BB00;'> (no changes)
-#&gt; </span><span>Table 9:  Interpretive rules for B-lactam agents and Gram-negative rods</span><span style='color: #00BB00;'> (no changes)
-#&gt; </span><span>Table 10: Interpretive rules for B-lactam agents and other Gram-negative bacteria</span><span style='color: #00BB00;'> (no changes)
-#&gt; </span><span>Table 11: Interpretive rules for macrolides, lincosamides, and streptogramins</span><span style='color: #00BB00;'> (no changes)
-#&gt; </span><span>Table 12: Interpretive rules for aminoglycosides</span><span style='color: #00BB00;'> (no changes)
-#&gt; </span><span>Table 13: Interpretive rules for quinolones</span><span style='color: #00BB00;'> (no changes)
-#&gt; </span><span style='font-weight: bold;'>
-#&gt; Other rules
-#&gt; </span><span>Non-EUCAST: ampicillin = R where amoxicillin/clav acid = R</span><span style='color: #00BB00;'> (no changes)
-#&gt; </span><span>Non-EUCAST: piperacillin = R where piperacillin/tazobactam = R</span><span style='color: #00BB00;'> (no changes)
-#&gt; </span><span>Non-EUCAST: trimethoprim = R where trimethoprim/sulfa = R</span><span style='color: #00BB00;'> (no changes)
-#&gt; </span><span>Non-EUCAST: amoxicillin/clav acid = S where ampicillin = S</span><span style='color: #00BB00;'> (no changes)
-#&gt; </span><span>Non-EUCAST: piperacillin/tazobactam = S where piperacillin = S</span><span style='color: #00BB00;'> (no changes)
-#&gt; </span><span>Non-EUCAST: trimethoprim/sulfa = S where trimethoprim = S</span><span style='color: #00BB00;'> (no changes)
-#&gt; </span><span style='font-weight: bold;'>
-#&gt; =&gt; EUCAST rules affected 5 out of 5 rows -&gt; </span><span style='color: #0000BB;font-weight: bold;'>changed 18 test results.
-#&gt; 
-#&gt; </span><span></div><div class='input'>
-<span class='no'>b</span></div><div class='output co'>#&gt;                       mo vanc amox coli cfta cfur peni cfox
-#&gt; 1  Staphylococcus aureus    -    S    R    R    S    S    S
-#&gt; 2  Enterococcus faecalis    -    -    R    R    R    S    R
-#&gt; 3       Escherichia coli    R    -    -    -    -    R    S
-#&gt; 4  Klebsiella pneumoniae    R    R    -    -    -    R    S
-#&gt; 5 Pseudomonas aeruginosa    R    R    -    -    R    R    R</div><div class='input'>#                       mo vanc amox coli cfta cfur peni cfox
-# 1  Staphylococcus aureus    -    S    R    R    S    S    S
-# 2  Enterococcus faecalis    -    -    R    R    R    S    R
-# 3       Escherichia coli    R    -    -    -    -    R    S
-# 4  Klebsiella pneumoniae    R    R    -    -    -    R    S
-# 5 Pseudomonas aeruginosa    R    R    -    -    R    R    R
-</div></span></pre>
+<span class='no'>b</span> <span class='kw'>&lt;-</span> <span class='fu'>eucast_rules</span>(<span class='no'>a</span>, <span class='st'>"mo"</span>) <span class='co'># 18 results are forced as R or S</span>
+
+<span class='no'>b</span>
+<span class='co'>#                       mo vanc amox coli cfta cfur peni cfox</span>
+<span class='co'># 1  Staphylococcus aureus    -    S    R    R    S    S    S</span>
+<span class='co'># 2  Enterococcus faecalis    -    -    R    R    R    S    R</span>
+<span class='co'># 3       Escherichia coli    R    -    -    -    -    R    S</span>
+<span class='co'># 4  Klebsiella pneumoniae    R    R    -    -    -    R    S</span>
+<span class='co'># 5 Pseudomonas aeruginosa    R    R    -    -    R    R    R</span>
+<span class='co'># }</span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -443,6 +414,8 @@
       <li><a href="#value">Value</a></li>
 
       <li><a href="#antibiotics">Antibiotics</a></li>
+
+      <li><a href="#read-more-on-our-website-">Read more on our website!</a></li>
       
       <li><a href="#examples">Examples</a></li>
     </ul>

@@ -1,0 +1,24 @@
+---
+title: "How to use the *G*-test"
+author: "Matthijs S. Berends"
+output: 
+  rmarkdown::html_vignette:
+    toc: true
+vignette: >
+  %\VignetteIndexEntry{How to use the G-test}
+  %\VignetteEncoding{UTF-8}
+  %\VignetteEngine{knitr::rmarkdown}
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r setup, include = FALSE, results = 'markup'}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#"
+)
+# set to original language (English)
+Sys.setlocale(locale = "C")
+```
+
+*(will be available soon - in the meanwhile, please read about [this *G*-test in the manual](./reference/g.test.html))*

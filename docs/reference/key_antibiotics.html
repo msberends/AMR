@@ -49,7 +49,7 @@
 
 <meta property="og:description" content="These function can be used to determine first isolates (see first_isolate). Using key antibiotics to determine first isolates is more reliable than without key antibiotics. These selected isolates will then be called first weighted isolates." />
 
-<meta property="og:image" content="https://msberends.gitlab.io/logo.png" />
+<meta property="og:image" content="https://msberends.gitlab.io/AMR/logo.png" />
 <meta name="twitter:card" content="summary" />
 
 
@@ -80,7 +80,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.0.9008</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.0.9009</span>
       </span>
     </div>
 
@@ -93,12 +93,65 @@
     Home
   </a>
 </li>
-<li>
-  <a href="../articles/AMR.html">
-    <span class="fa fa-directions"></span>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    <span class="fa fa-question-circle"></span>
      
-    Get Started
+    How to
+     
+    <span class="caret"></span>
   </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="../articles/AMR.html">
+        <span class="fa fa-directions"></span>
+         
+        Conduct AMR analysis
+      </a>
+    </li>
+    <li>
+      <a href="../articles/Predict.html">
+        <span class="fa fa-dice"></span>
+         
+        Predict antimicrobial resistance
+      </a>
+    </li>
+    <li>
+      <a href="../articles/EUCAST.html">
+        <span class="fa fa-exchange-alt"></span>
+         
+        Apply EUCAST rules
+      </a>
+    </li>
+    <li>
+      <a href="../articles/mo_property.html">
+        <span class="fa fa-bug"></span>
+         
+        Get properties of a microorganism
+      </a>
+    </li>
+    <li>
+      <a href="../articles/ab_property.html">
+        <span class="fa fa-capsules"></span>
+         
+        Get properties of an antibiotic
+      </a>
+    </li>
+    <li>
+      <a href="../articles/freq.html">
+        <span class="fa fa-sort-amount-down"></span>
+         
+        Create frequency tables
+      </a>
+    </li>
+    <li>
+      <a href="../articles/G_test.html">
+        <span class="fa fa-clipboard-check"></span>
+         
+        Use the G-test
+      </a>
+    </li>
+  </ul>
 </li>
 <li>
   <a href="../reference/">
@@ -121,17 +174,17 @@
     Changelog
   </a>
 </li>
-<li>
+      </ul>
+      
+      <ul class="nav navbar-nav navbar-right">
+        <li>
   <a href="https://gitlab.com/msberends/AMR">
     <span class="fab fa fab fa-gitlab"></span>
      
     Source Code
   </a>
 </li>
-      </ul>
-      
-      <ul class="nav navbar-nav navbar-right">
-        <li>
+<li>
   <a href="../LICENSE-text.html">
     <span class="fa fa-book"></span>
      
@@ -249,34 +302,47 @@
 <p><strong>2. Using</strong> <code>type = "points"</code> <strong>and parameter</strong> <code>points_threshold</code> <br />
     A difference from I to S|R (or vice versa) means 0.5 points, a difference from S to R (or vice versa) means 1 point. When the sum of points exceeds <code>points_threshold</code>, an isolate will be (re)selected as a first weighted isolate.</p>
     
+    <h2 class="hasAnchor" id="read-more-on-our-website-"><a class="anchor" href="#read-more-on-our-website-"></a>Read more on our website!</h2>
+
+    
+    <p><img src='figures/logo.png' height=40px style=margin-bottom:5px /> <br />
+On our website <a href='https://msberends.gitlab.io/AMR'>https://msberends.gitlab.io/AMR</a> you can find <a href='https://msberends.gitlab.io/AMR/articles/AMR.html'>a omprehensive tutorial</a> about how to conduct AMR analysis and find <a href='https://msberends.gitlab.io/AMR/reference'>the complete documentation of all functions</a>, which reads a lot easier than in R.</p>
+    
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><code><a href='first_isolate.html'>first_isolate</a></code></p></div>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># septic_patients is a dataset available in the AMR package</span>
-?<span class='no'>septic_patients</span></div><div class='output co'>#&gt; <span class='message'>Rendering development documentation for 'septic_patients'</span></div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>dplyr</span>)
+    <pre class="examples"><span class='co'># NOT RUN {</span>
+<span class='co'># septic_patients is a dataset available in the AMR package</span>
+?<span class='no'>septic_patients</span>
+<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>dplyr</span>)
 <span class='co'># set key antibiotics to a new variable</span>
 <span class='no'>my_patients</span> <span class='kw'>&lt;-</span> <span class='no'>septic_patients</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='http://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span>(<span class='kw'>keyab</span> <span class='kw'>=</span> <span class='fu'>key_antibiotics</span>(<span class='no'>.</span>)) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='http://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span>(
+  <span class='fu'><a href='https://www.rdocumentation.org/packages/dplyr/topics/mutate'>mutate</a></span>(<span class='kw'>keyab</span> <span class='kw'>=</span> <span class='fu'>key_antibiotics</span>(<span class='no'>.</span>)) <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='https://www.rdocumentation.org/packages/dplyr/topics/mutate'>mutate</a></span>(
     <span class='co'># now calculate first isolates</span>
     <span class='kw'>first_regular</span> <span class='kw'>=</span> <span class='fu'><a href='first_isolate.html'>first_isolate</a></span>(<span class='no'>.</span>, <span class='kw'>col_keyantibiotics</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>),
     <span class='co'># and first WEIGHTED isolates</span>
     <span class='kw'>first_weighted</span> <span class='kw'>=</span> <span class='fu'><a href='first_isolate.html'>first_isolate</a></span>(<span class='no'>.</span>, <span class='kw'>col_keyantibiotics</span> <span class='kw'>=</span> <span class='st'>"keyab"</span>)
-  )</div><div class='output co'>#&gt; <span class='message'><span style='color: #0000BB;'>NOTE: Using column `</span><span style='color: #0000BB;font-weight: bold;'>mo</span><span style='color: #0000BB;'>` as input for `col_mo`.</span><span></span></div><div class='output co'>#&gt; <span class='message'></span><span style='color: #0000BB;'>NOTE: Using column `</span><span style='color: #0000BB;font-weight: bold;'>mo</span><span style='color: #0000BB;'>` as input for `col_mo`.</span><span></span></div><div class='output co'>#&gt; <span class='message'></span><span style='color: #0000BB;'>NOTE: Using column `</span><span style='color: #0000BB;font-weight: bold;'>date</span><span style='color: #0000BB;'>` as input for `col_date`.</span><span></span></div><div class='output co'>#&gt; <span class='message'></span><span style='color: #0000BB;'>NOTE: Using column `</span><span style='color: #0000BB;font-weight: bold;'>patient_id</span><span style='color: #0000BB;'>` as input for `col_patient_id`.</span><span></span></div><div class='output co'>#&gt; <span class='message'>=&gt; Found </span><span style='font-weight: bold;'>1,317 first isolates</span><span> (65.9% of total)</span></div><div class='output co'>#&gt; <span class='message'></span><span style='color: #0000BB;'>NOTE: Using column `</span><span style='color: #0000BB;font-weight: bold;'>mo</span><span style='color: #0000BB;'>` as input for `col_mo`.</span><span></span></div><div class='output co'>#&gt; <span class='message'></span><span style='color: #0000BB;'>NOTE: Using column `</span><span style='color: #0000BB;font-weight: bold;'>date</span><span style='color: #0000BB;'>` as input for `col_date`.</span><span></span></div><div class='output co'>#&gt; <span class='message'></span><span style='color: #0000BB;'>NOTE: Using column `</span><span style='color: #0000BB;font-weight: bold;'>patient_id</span><span style='color: #0000BB;'>` as input for `col_patient_id`.</span><span></span></div><div class='output co'>#&gt; [Criterion] Inclusion based on key antibiotics, ignoring I.</div><div class='output co'>#&gt; <span class='message'>=&gt; Found </span><span style='font-weight: bold;'>1,413 first weighted isolates</span><span> (70.7% of total)</span></div><div class='input'>
+  )
+
 <span class='co'># Check the difference, in this data set it results in 7% more isolates:</span>
-<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/sum'>sum</a></span>(<span class='no'>my_patients</span>$<span class='no'>first_regular</span>, <span class='kw'>na.rm</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; [1] 1317</div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/sum'>sum</a></span>(<span class='no'>my_patients</span>$<span class='no'>first_weighted</span>, <span class='kw'>na.rm</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; [1] 1413</div><div class='input'>
+<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/sum'>sum</a></span>(<span class='no'>my_patients</span>$<span class='no'>first_regular</span>, <span class='kw'>na.rm</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/sum'>sum</a></span>(<span class='no'>my_patients</span>$<span class='no'>first_weighted</span>, <span class='kw'>na.rm</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+
 
 <span class='co'># output of the `key_antibiotics` function could be like this:</span>
 <span class='no'>strainA</span> <span class='kw'>&lt;-</span> <span class='st'>"SSSRR.S.R..S"</span>
 <span class='no'>strainB</span> <span class='kw'>&lt;-</span> <span class='st'>"SSSIRSSSRSSS"</span>
 
-<span class='fu'>key_antibiotics_equal</span>(<span class='no'>strainA</span>, <span class='no'>strainB</span>)</div><div class='output co'>#&gt; [1] TRUE</div><div class='input'><span class='co'># TRUE, because I is ignored (as well as missing values)</span>
+<span class='fu'>key_antibiotics_equal</span>(<span class='no'>strainA</span>, <span class='no'>strainB</span>)
+<span class='co'># TRUE, because I is ignored (as well as missing values)</span>
 
-<span class='fu'>key_antibiotics_equal</span>(<span class='no'>strainA</span>, <span class='no'>strainB</span>, <span class='kw'>ignore_I</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</div><div class='output co'>#&gt; [1] FALSE</div><div class='input'># FALSE, because I is not ignored and so the 4th value differs
-</div></span></pre>
+<span class='fu'>key_antibiotics_equal</span>(<span class='no'>strainA</span>, <span class='no'>strainB</span>, <span class='kw'>ignore_I</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
+<span class='co'># FALSE, because I is not ignored and so the 4th value differs</span>
+<span class='co'># }</span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -286,6 +352,8 @@
       <li><a href="#details">Details</a></li>
 
       <li><a href="#key-antibiotics">Key antibiotics</a></li>
+
+      <li><a href="#read-more-on-our-website-">Read more on our website!</a></li>
 
       <li><a href="#see-also">See also</a></li>
       

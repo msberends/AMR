@@ -52,6 +52,12 @@ rsi_predict(tbl, col_ab, col_date, year_min = NULL, year_max = NULL,
 \description{
 Create a prediction model to predict antimicrobial resistance for the next years on statistical solid ground. Standard errors (SE) will be returned as columns \code{se_min} and \code{se_max}. See Examples for a real live example.
 }
+\section{Read more on our website!}{
+
+\if{html}{\figure{logo.png}{options: height=40px style=margin-bottom:5px} \cr}
+On our website \url{https://msberends.gitlab.io/AMR} you can find \href{https://msberends.gitlab.io/AMR/articles/AMR.html}{a omprehensive tutorial} about how to conduct AMR analysis and find \href{https://msberends.gitlab.io/AMR/reference}{the complete documentation of all functions}, which reads a lot easier than in R.
+}
+
 \examples{
 \dontrun{
 # use it with base R:

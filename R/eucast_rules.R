@@ -2,18 +2,21 @@
 # TITLE                                                                #
 # Antimicrobial Resistance (AMR) Analysis                              #
 #                                                                      #
-# AUTHORS                                                              #
-# Berends MS (m.s.berends@umcg.nl), Luz CF (c.f.luz@umcg.nl)           #
+# SOURCE                                                               #
+# https://gitlab.com/msberends/AMR                                     #
 #                                                                      #
 # LICENCE                                                              #
-# This package is free software; you can redistribute it and/or modify #
-# it under the terms of the GNU General Public License version 2.0,    #
-# as published by the Free Software Foundation.                        #
+# (c) 2019 Berends MS (m.s.berends@umcg.nl), Luz CF (c.f.luz@umcg.nl)  #
 #                                                                      #
-# This R package is distributed in the hope that it will be useful,    #
-# but WITHOUT ANY WARRANTY; without even the implied warranty of       #
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the        #
-# GNU General Public License version 2.0 for more details.             #
+# This R package is free software; you can freely use and distribute   #
+# it for both personal and commercial purposes under the terms of the  #
+# GNU General Public License version 2.0 (GNU GPL-2), as published by  #
+# the Free Software Foundation.                                        #
+#                                                                      #
+# This R package was created for academic research and was publicly    #
+# released in the hope that it will be useful, but it comes WITHOUT    #
+# ANY WARRANTY OR LIABILITY.                                           #
+# Visit our website for more info: https://msberends.gitab.io/AMR.     #
 # ==================================================================== #
 
 #' EUCAST rules
@@ -115,6 +118,7 @@
 #'       \url{http://www.eucast.org/fileadmin/src/media/PDFs/EUCAST_files/Breakpoint_tables/v_8.1_Breakpoint_Tables.xlsx}
 #'     }
 #'   }
+#' @inheritSection AMR Read more on our website!
 #' @examples
 #' a <- eucast_rules(septic_patients)
 #'

@@ -49,7 +49,7 @@
 
 <meta property="og:description" content="Use this function to determine a valid microorganism ID (mo). Determination is done using Artificial Intelligence (AI) and the complete taxonomic kingdoms Bacteria, Fungi and Protozoa (see Source), so the input can be almost anything: a full name (like &quot;Staphylococcus aureus&quot;), an abbreviated name (like &quot;S. aureus&quot;), an abbreviation known in the field (like &quot;MRSA&quot;), or just a genus. You could also select a genus and species column, zie Examples." />
 
-<meta property="og:image" content="https://msberends.gitlab.io/logo.png" />
+<meta property="og:image" content="https://msberends.gitlab.io/AMR/logo.png" />
 <meta name="twitter:card" content="summary" />
 
 
@@ -80,7 +80,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.0.9008</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.0.9009</span>
       </span>
     </div>
 
@@ -93,12 +93,65 @@
     Home
   </a>
 </li>
-<li>
-  <a href="../articles/AMR.html">
-    <span class="fa fa-directions"></span>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    <span class="fa fa-question-circle"></span>
      
-    Get Started
+    How to
+     
+    <span class="caret"></span>
   </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="../articles/AMR.html">
+        <span class="fa fa-directions"></span>
+         
+        Conduct AMR analysis
+      </a>
+    </li>
+    <li>
+      <a href="../articles/Predict.html">
+        <span class="fa fa-dice"></span>
+         
+        Predict antimicrobial resistance
+      </a>
+    </li>
+    <li>
+      <a href="../articles/EUCAST.html">
+        <span class="fa fa-exchange-alt"></span>
+         
+        Apply EUCAST rules
+      </a>
+    </li>
+    <li>
+      <a href="../articles/mo_property.html">
+        <span class="fa fa-bug"></span>
+         
+        Get properties of a microorganism
+      </a>
+    </li>
+    <li>
+      <a href="../articles/ab_property.html">
+        <span class="fa fa-capsules"></span>
+         
+        Get properties of an antibiotic
+      </a>
+    </li>
+    <li>
+      <a href="../articles/freq.html">
+        <span class="fa fa-sort-amount-down"></span>
+         
+        Create frequency tables
+      </a>
+    </li>
+    <li>
+      <a href="../articles/G_test.html">
+        <span class="fa fa-clipboard-check"></span>
+         
+        Use the G-test
+      </a>
+    </li>
+  </ul>
 </li>
 <li>
   <a href="../reference/">
@@ -121,17 +174,17 @@
     Changelog
   </a>
 </li>
-<li>
+      </ul>
+      
+      <ul class="nav navbar-nav navbar-right">
+        <li>
   <a href="https://gitlab.com/msberends/AMR">
     <span class="fab fa fab fa-gitlab"></span>
      
     Source Code
   </a>
 </li>
-      </ul>
-      
-      <ul class="nav navbar-nav navbar-right">
-        <li>
+<li>
   <a href="../LICENSE-text.html">
     <span class="fa fa-book"></span>
      
@@ -241,6 +294,13 @@
 </ul>
     <p><code>guess_mo</code> is an alias of <code>as.mo</code>.</p>
     
+    <h2 class="hasAnchor" id="source"><a class="anchor" href="#source"></a>Source</h2>
+
+    
+    <p>[1] Becker K <em>et al.</em> <strong>Coagulase-Negative Staphylococci</strong>. 2014. Clin Microbiol Rev. 27(4): 870–926. <a href='https://dx.doi.org/10.1128/CMR.00109-13'>https://dx.doi.org/10.1128/CMR.00109-13</a></p>
+<p>[2] Lancefield RC <strong>A serological differentiation of human and other groups of hemolytic streptococci</strong>. 1933. J Exp Med. 57(4): 571–95. <a href='https://dx.doi.org/10.1084/jem.57.4.571'>https://dx.doi.org/10.1084/jem.57.4.571</a></p>
+<p>[3] Integrated Taxonomic Information System (ITIS). Retrieved September 2018. <a href='http://www.itis.gov'>http://www.itis.gov</a></p>
+    
     <h2 class="hasAnchor" id="itis"><a class="anchor" href="#itis"></a>ITIS</h2>
 
     
@@ -249,12 +309,11 @@ This package contains the <strong>complete microbial taxonomic data</strong> (wi
 <p>All (sub)species from <strong>the taxonomic kingdoms Bacteria, Fungi and Protozoa are included in this package</strong>, as well as all previously accepted names known to ITIS. Furthermore, the responsible authors and year of publication are available. This allows users to use authoritative taxonomic information for their data analysis on any microorganism, not only human pathogens. It also helps to quickly determine the Gram stain of bacteria, since all bacteria are classified into subkingdom Negibacteria or Posibacteria.</p>
 <p>ITIS is a partnership of U.S., Canadian, and Mexican agencies and taxonomic specialists [3].</p>
     
-    <h2 class="hasAnchor" id="source"><a class="anchor" href="#source"></a>Source</h2>
+    <h2 class="hasAnchor" id="read-more-on-our-website-"><a class="anchor" href="#read-more-on-our-website-"></a>Read more on our website!</h2>
 
     
-    <p>[1] Becker K <em>et al.</em> <strong>Coagulase-Negative Staphylococci</strong>. 2014. Clin Microbiol Rev. 27(4): 870–926. <a href='https://dx.doi.org/10.1128/CMR.00109-13'>https://dx.doi.org/10.1128/CMR.00109-13</a></p>
-<p>[2] Lancefield RC <strong>A serological differentiation of human and other groups of hemolytic streptococci</strong>. 1933. J Exp Med. 57(4): 571–95. <a href='https://dx.doi.org/10.1084/jem.57.4.571'>https://dx.doi.org/10.1084/jem.57.4.571</a></p>
-<p>[3] Integrated Taxonomic Information System (ITIS). Retrieved September 2018. <a href='http://www.itis.gov'>http://www.itis.gov</a></p>
+    <p><img src='figures/logo.png' height=40px style=margin-bottom:5px /> <br />
+On our website <a href='https://msberends.gitlab.io/AMR'>https://msberends.gitlab.io/AMR</a> you can find <a href='https://msberends.gitlab.io/AMR/articles/AMR.html'>a omprehensive tutorial</a> about how to conduct AMR analysis and find <a href='https://msberends.gitlab.io/AMR/reference'>the complete documentation of all functions</a>, which reads a lot easier than in R.</p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
@@ -263,52 +322,56 @@ The <code><a href='mo_property.html'>mo_property</a></code> functions (like <cod
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># These examples all return "B_STPHY_AUR", the ID of S. aureus:</span>
-<span class='fu'>as.mo</span>(<span class='st'>"stau"</span>)</div><div class='output co'>#&gt; Class 'mo'
-#&gt; [1] B_STPHY_AUR</div><div class='input'><span class='fu'>as.mo</span>(<span class='st'>"STAU"</span>)</div><div class='output co'>#&gt; Class 'mo'
-#&gt; [1] B_STPHY_AUR</div><div class='input'><span class='fu'>as.mo</span>(<span class='st'>"staaur"</span>)</div><div class='output co'>#&gt; Class 'mo'
-#&gt; [1] B_STPHY_AUR</div><div class='input'><span class='fu'>as.mo</span>(<span class='st'>"S. aureus"</span>)</div><div class='output co'>#&gt; Class 'mo'
-#&gt; [1] B_STPHY_AUR</div><div class='input'><span class='fu'>as.mo</span>(<span class='st'>"S aureus"</span>)</div><div class='output co'>#&gt; Class 'mo'
-#&gt; [1] B_STPHY_AUR</div><div class='input'><span class='fu'>as.mo</span>(<span class='st'>"Staphylococcus aureus"</span>)</div><div class='output co'>#&gt; Class 'mo'
-#&gt; [1] B_STPHY_AUR</div><div class='input'><span class='fu'>as.mo</span>(<span class='st'>"Staphylococcus aureus (MRSA)"</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: <span style='color: #BB0000;'>UNCERTAIN - "Staphylococcus aureus (MRSA)" -&gt; </span><span style='color: #BB0000;font-style: italic;'>Staphylococcus aureus</span><span style='color: #BB0000;'> (B_STPHY_AUR)</span><span></span></div><div class='output co'>#&gt; Class 'mo'
-#&gt; [1] B_STPHY_AUR</div><div class='input'><span class='fu'>as.mo</span>(<span class='st'>"MRSA"</span>) <span class='co'># Methicillin Resistant S. aureus</span></div><div class='output co'>#&gt; Class 'mo'
-#&gt; [1] B_STPHY_AUR</div><div class='input'><span class='fu'>as.mo</span>(<span class='st'>"VISA"</span>) <span class='co'># Vancomycin Intermediate S. aureus</span></div><div class='output co'>#&gt; Class 'mo'
-#&gt; [1] B_STPHY_AUR</div><div class='input'><span class='fu'>as.mo</span>(<span class='st'>"VRSA"</span>) <span class='co'># Vancomycin Resistant S. aureus</span></div><div class='output co'>#&gt; Class 'mo'
-#&gt; [1] B_STPHY_AUR</div><div class='input'><span class='fu'>as.mo</span>(<span class='fl'>369</span>)    <span class='co'># Search on TSN (Taxonomic Serial Number), a unique identifier</span></div><div class='output co'>#&gt; Class 'mo'
-#&gt; [1] B_STPHY_AUR</div><div class='input'>              <span class='co'># for the Integrated Taxonomic Information System (ITIS)</span>
+    <pre class="examples"><span class='co'># NOT RUN {</span>
+<span class='co'># These examples all return "B_STPHY_AUR", the ID of S. aureus:</span>
+<span class='fu'>as.mo</span>(<span class='st'>"stau"</span>)
+<span class='fu'>as.mo</span>(<span class='st'>"STAU"</span>)
+<span class='fu'>as.mo</span>(<span class='st'>"staaur"</span>)
+<span class='fu'>as.mo</span>(<span class='st'>"S. aureus"</span>)
+<span class='fu'>as.mo</span>(<span class='st'>"S aureus"</span>)
+<span class='fu'>as.mo</span>(<span class='st'>"Staphylococcus aureus"</span>)
+<span class='fu'>as.mo</span>(<span class='st'>"Staphylococcus aureus (MRSA)"</span>)
+<span class='fu'>as.mo</span>(<span class='st'>"MRSA"</span>) <span class='co'># Methicillin Resistant S. aureus</span>
+<span class='fu'>as.mo</span>(<span class='st'>"VISA"</span>) <span class='co'># Vancomycin Intermediate S. aureus</span>
+<span class='fu'>as.mo</span>(<span class='st'>"VRSA"</span>) <span class='co'># Vancomycin Resistant S. aureus</span>
+<span class='fu'>as.mo</span>(<span class='fl'>369</span>)    <span class='co'># Search on TSN (Taxonomic Serial Number), a unique identifier</span>
+              <span class='co'># for the Integrated Taxonomic Information System (ITIS)</span>
 
-<span class='fu'>as.mo</span>(<span class='st'>"Streptococcus group A"</span>)</div><div class='output co'>#&gt; Class 'mo'
-#&gt; [1] B_STRPTC_GRA</div><div class='input'><span class='fu'>as.mo</span>(<span class='st'>"GAS"</span>) <span class='co'># Group A Streptococci</span></div><div class='output co'>#&gt; Class 'mo'
-#&gt; [1] B_STRPTC_GRA</div><div class='input'><span class='fu'>as.mo</span>(<span class='st'>"GBS"</span>) <span class='co'># Group B Streptococci</span></div><div class='output co'>#&gt; Class 'mo'
-#&gt; [1] B_STRPTC_GRB</div><div class='input'>
+<span class='fu'>as.mo</span>(<span class='st'>"Streptococcus group A"</span>)
+<span class='fu'>as.mo</span>(<span class='st'>"GAS"</span>) <span class='co'># Group A Streptococci</span>
+<span class='fu'>as.mo</span>(<span class='st'>"GBS"</span>) <span class='co'># Group B Streptococci</span>
+
 <span class='co'># guess_mo is an alias of as.mo and works the same</span>
-<span class='fu'>guess_mo</span>(<span class='st'>"S. epidermidis"</span>)                 <span class='co'># will remain species: B_STPHY_EPI</span></div><div class='output co'>#&gt; Class 'mo'
-#&gt; [1] B_STPHY_EPI</div><div class='input'><span class='fu'>guess_mo</span>(<span class='st'>"S. epidermidis"</span>, <span class='kw'>Becker</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)  <span class='co'># will not remain species: B_STPHY_CNS</span></div><div class='output co'>#&gt; Class 'mo'
-#&gt; [1] B_STPHY_CNS</div><div class='input'>
-<span class='fu'>guess_mo</span>(<span class='st'>"S. pyogenes"</span>)                    <span class='co'># will remain species: B_STRPTC_PYO</span></div><div class='output co'>#&gt; Class 'mo'
-#&gt; [1] B_STRPTC_PYO</div><div class='input'><span class='fu'>guess_mo</span>(<span class='st'>"S. pyogenes"</span>, <span class='kw'>Lancefield</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>) <span class='co'># will not remain species: B_STRPTC_GRA</span></div><div class='output co'>#&gt; Class 'mo'
-#&gt; [1] B_STRPTC_GRA</div><div class='input'>
+<span class='fu'>guess_mo</span>(<span class='st'>"S. epidermidis"</span>)                 <span class='co'># will remain species: B_STPHY_EPI</span>
+<span class='fu'>guess_mo</span>(<span class='st'>"S. epidermidis"</span>, <span class='kw'>Becker</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)  <span class='co'># will not remain species: B_STPHY_CNS</span>
+
+<span class='fu'>guess_mo</span>(<span class='st'>"S. pyogenes"</span>)                    <span class='co'># will remain species: B_STRPTC_PYO</span>
+<span class='fu'>guess_mo</span>(<span class='st'>"S. pyogenes"</span>, <span class='kw'>Lancefield</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>) <span class='co'># will not remain species: B_STRPTC_GRA</span>
+
 <span class='co'># Use mo_* functions to get a specific property based on `mo`</span>
 <span class='no'>Ecoli</span> <span class='kw'>&lt;-</span> <span class='fu'>as.mo</span>(<span class='st'>"E. coli"</span>)     <span class='co'># returns `B_ESCHR_COL`</span>
-<span class='fu'><a href='mo_property.html'>mo_genus</a></span>(<span class='no'>Ecoli</span>)               <span class='co'># returns "Escherichia"</span></div><div class='output co'>#&gt; [1] "Escherichia"</div><div class='input'><span class='fu'><a href='mo_property.html'>mo_gramstain</a></span>(<span class='no'>Ecoli</span>)           <span class='co'># returns "Gram negative"</span></div><div class='output co'>#&gt; [1] "Gram-negatief"</div><div class='input'><span class='co'># but it uses as.mo internally too, so you could also just use:</span>
-<span class='fu'><a href='mo_property.html'>mo_genus</a></span>(<span class='st'>"E. coli"</span>)           <span class='co'># returns "Escherichia"</span></div><div class='output co'>#&gt; [1] "Escherichia"</div><div class='input'>
+<span class='fu'><a href='mo_property.html'>mo_genus</a></span>(<span class='no'>Ecoli</span>)               <span class='co'># returns "Escherichia"</span>
+<span class='fu'><a href='mo_property.html'>mo_gramstain</a></span>(<span class='no'>Ecoli</span>)           <span class='co'># returns "Gram negative"</span>
+<span class='co'># but it uses as.mo internally too, so you could also just use:</span>
+<span class='fu'><a href='mo_property.html'>mo_genus</a></span>(<span class='st'>"E. coli"</span>)           <span class='co'># returns "Escherichia"</span>
 
-</div></span><span class='co'># NOT RUN {</span>
+
+<span class='co'># }</span><span class='co'># NOT RUN {</span>
 <span class='no'>df</span>$<span class='no'>mo</span> <span class='kw'>&lt;-</span> <span class='fu'>as.mo</span>(<span class='no'>df</span>$<span class='no'>microorganism_name</span>)
 
 <span class='co'># the select function of tidyverse is also supported:</span>
 <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>dplyr</span>)
 <span class='no'>df</span>$<span class='no'>mo</span> <span class='kw'>&lt;-</span> <span class='no'>df</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='http://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='no'>microorganism_name</span>) <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='https://www.rdocumentation.org/packages/dplyr/topics/select'>select</a></span>(<span class='no'>microorganism_name</span>) <span class='kw'>%&gt;%</span>
   <span class='fu'>as.mo</span>()
 
 <span class='co'># and can even contain 2 columns, which is convenient for genus/species combinations:</span>
 <span class='no'>df</span>$<span class='no'>mo</span> <span class='kw'>&lt;-</span> <span class='no'>df</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='http://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='no'>genus</span>, <span class='no'>species</span>) <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='https://www.rdocumentation.org/packages/dplyr/topics/select'>select</a></span>(<span class='no'>genus</span>, <span class='no'>species</span>) <span class='kw'>%&gt;%</span>
   <span class='fu'>as.mo</span>()
 <span class='co'># although this works easier and does the same:</span>
 <span class='no'>df</span> <span class='kw'>&lt;-</span> <span class='no'>df</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='http://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span>(<span class='kw'>mo</span> <span class='kw'>=</span> <span class='fu'>as.mo</span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/paste'>paste</a></span>(<span class='no'>genus</span>, <span class='no'>species</span>)))
+  <span class='fu'><a href='https://www.rdocumentation.org/packages/dplyr/topics/mutate'>mutate</a></span>(<span class='kw'>mo</span> <span class='kw'>=</span> <span class='fu'>as.mo</span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/paste'>paste</a></span>(<span class='no'>genus</span>, <span class='no'>species</span>)))
 <span class='co'># }</span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
@@ -320,9 +383,11 @@ The <code><a href='mo_property.html'>mo_property</a></code> functions (like <cod
 
       <li><a href="#details">Details</a></li>
 
+      <li><a href="#source">Source</a></li>
+
       <li><a href="#itis">ITIS</a></li>
 
-      <li><a href="#source">Source</a></li>
+      <li><a href="#read-more-on-our-website-">Read more on our website!</a></li>
 
       <li><a href="#see-also">See also</a></li>
       

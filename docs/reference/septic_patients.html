@@ -47,9 +47,9 @@
   <script src="../extra.js"></script>
 <meta property="og:title" content="Data set with 2000 blood culture isolates of septic patients — septic_patients" />
 
-<meta property="og:description" content="An anonymised data set containing 2,000 microbial blood culture isolates with their full antibiograms found in septic patients in 4 different hospitals in the Netherlands, between 2001 and 2017. It is true, genuine data. This data.frame can be used to practice AMR analysis. For examples, press F1." />
+<meta property="og:description" content="An anonymised data set containing 2,000 microbial blood culture isolates with their full antibiograms found in septic patients in 4 different hospitals in the Netherlands, between 2001 and 2017. It is true, genuine data. This data.frame can be used to practice AMR analysis. For examples, please read the tutorial on our website." />
 
-<meta property="og:image" content="https://msberends.gitlab.io/logo.png" />
+<meta property="og:image" content="https://msberends.gitlab.io/AMR/logo.png" />
 <meta name="twitter:card" content="summary" />
 
 
@@ -80,7 +80,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.0.9008</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.0.9009</span>
       </span>
     </div>
 
@@ -93,12 +93,65 @@
     Home
   </a>
 </li>
-<li>
-  <a href="../articles/AMR.html">
-    <span class="fa fa-directions"></span>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    <span class="fa fa-question-circle"></span>
      
-    Get Started
+    How to
+     
+    <span class="caret"></span>
   </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="../articles/AMR.html">
+        <span class="fa fa-directions"></span>
+         
+        Conduct AMR analysis
+      </a>
+    </li>
+    <li>
+      <a href="../articles/Predict.html">
+        <span class="fa fa-dice"></span>
+         
+        Predict antimicrobial resistance
+      </a>
+    </li>
+    <li>
+      <a href="../articles/EUCAST.html">
+        <span class="fa fa-exchange-alt"></span>
+         
+        Apply EUCAST rules
+      </a>
+    </li>
+    <li>
+      <a href="../articles/mo_property.html">
+        <span class="fa fa-bug"></span>
+         
+        Get properties of a microorganism
+      </a>
+    </li>
+    <li>
+      <a href="../articles/ab_property.html">
+        <span class="fa fa-capsules"></span>
+         
+        Get properties of an antibiotic
+      </a>
+    </li>
+    <li>
+      <a href="../articles/freq.html">
+        <span class="fa fa-sort-amount-down"></span>
+         
+        Create frequency tables
+      </a>
+    </li>
+    <li>
+      <a href="../articles/G_test.html">
+        <span class="fa fa-clipboard-check"></span>
+         
+        Use the G-test
+      </a>
+    </li>
+  </ul>
 </li>
 <li>
   <a href="../reference/">
@@ -121,17 +174,17 @@
     Changelog
   </a>
 </li>
-<li>
+      </ul>
+      
+      <ul class="nav navbar-nav navbar-right">
+        <li>
   <a href="https://gitlab.com/msberends/AMR">
     <span class="fab fa fab fa-gitlab"></span>
      
     Source Code
   </a>
 </li>
-      </ul>
-      
-      <ul class="nav navbar-nav navbar-right">
-        <li>
+<li>
   <a href="../LICENSE-text.html">
     <span class="fa fa-book"></span>
      
@@ -163,7 +216,7 @@
 
     <div class="ref-description">
     
-    <p>An anonymised data set containing 2,000 microbial blood culture isolates with their full antibiograms found in septic patients in 4 different hospitals in the Netherlands, between 2001 and 2017. It is true, genuine data. This <code>data.frame</code> can be used to practice AMR analysis. For examples, press F1.</p>
+    <p>An anonymised data set containing 2,000 microbial blood culture isolates with their full antibiograms found in septic patients in 4 different hospitals in the Netherlands, between 2001 and 2017. It is true, genuine data. This <code>data.frame</code> can be used to practice AMR analysis. For examples, please read <a href='https://msberends.gitlab.io/AMR/articles/AMR.html'>the tutorial on our website</a>.</p>
     
     </div>
 
@@ -184,77 +237,22 @@
   <dt><code>peni:rifa</code></dt><dd><p>40 different antibiotics with class <code>rsi</code> (see <code><a href='as.rsi.html'>as.rsi</a></code>); these column names occur in <code><a href='antibiotics.html'>antibiotics</a></code> data set and can be translated with <code><a href='abname.html'>abname</a></code></p></dd>
 </dl>
     
+    <h2 class="hasAnchor" id="read-more-on-our-website-"><a class="anchor" href="#read-more-on-our-website-"></a>Read more on our website!</h2>
 
-    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># ----------- #</span>
-<span class='co'># PREPARATION #</span>
-<span class='co'># ----------- #</span>
+    
+    <p><img src='figures/logo.png' height=40px style=margin-bottom:5px /> <br />
+On our website <a href='https://msberends.gitlab.io/AMR'>https://msberends.gitlab.io/AMR</a> you can find <a href='https://msberends.gitlab.io/AMR/articles/AMR.html'>a omprehensive tutorial</a> about how to conduct AMR analysis and find <a href='https://msberends.gitlab.io/AMR/reference'>the complete documentation of all functions</a>, which reads a lot easier than in R.</p>
+    
 
-<span class='co'># Save this example data set to an object, so we can edit it:</span>
-<span class='no'>my_data</span> <span class='kw'>&lt;-</span> <span class='no'>septic_patients</span>
-
-<span class='co'># load the dplyr package to make data science A LOT easier</span>
-<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>dplyr</span>)
-
-<span class='co'># Add first isolates to our data set:</span>
-<span class='no'>my_data</span> <span class='kw'>&lt;-</span> <span class='no'>my_data</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='http://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span>(<span class='kw'>first_isolates</span> <span class='kw'>=</span> <span class='fu'><a href='first_isolate.html'>first_isolate</a></span>(<span class='no'>my_data</span>, <span class='st'>"date"</span>, <span class='st'>"patient_id"</span>, <span class='st'>"mo"</span>))</div><div class='output co'>#&gt; <span class='message'>=&gt; Found <span style='font-weight: bold;'>1,317 first isolates</span><span> (65.9% of total)</span></div><div class='input'>
-<span class='co'># -------- #</span>
-<span class='co'># ANALYSIS #</span>
-<span class='co'># -------- #</span>
-
-<span class='co'># 1. Get the amoxicillin resistance percentages (p)</span>
-<span class='co'>#     and numbers (n) of E. coli, divided by hospital:</span>
-
-<span class='no'>my_data</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='http://dplyr.tidyverse.org/reference/filter.html'>filter</a></span>(<span class='no'>mo</span> <span class='kw'>==</span> <span class='fu'><a href='as.mo.html'>guess_mo</a></span>(<span class='st'>"E. coli"</span>),
-         <span class='no'>first_isolates</span> <span class='kw'>==</span> <span class='fl'>TRUE</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='http://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span>(<span class='no'>hospital_id</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='http://dplyr.tidyverse.org/reference/summarise.html'>summarise</a></span>(<span class='kw'>n</span> <span class='kw'>=</span> <span class='fu'><a href='count.html'>n_rsi</a></span>(<span class='no'>amox</span>),
-            <span class='kw'>p</span> <span class='kw'>=</span> <span class='fu'><a href='portion.html'>portion_IR</a></span>(<span class='no'>amox</span>))</div><div class='output co'>#&gt; <span class='warning'>Warning: Introducing NA: only 19 results available (minimum set to 30).</span></div><div class='output co'>#&gt; </span><span style='color: #949494;'># A tibble: 4 x 3</span><span>
-#&gt;   hospital_id     n      p
-#&gt;   </span><span style='color: #949494;font-style: italic;'>&lt;fct&gt;</span><span>       </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span>  </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>
-#&gt; </span><span style='color: #BCBCBC;'>1</span><span> A              19 </span><span style='color: #BB0000;'>NA</span><span>    
-#&gt; </span><span style='color: #BCBCBC;'>2</span><span> B              65  0.477
-#&gt; </span><span style='color: #BCBCBC;'>3</span><span> C              35  0.543
-#&gt; </span><span style='color: #BCBCBC;'>4</span><span> D              94  0.5  </div><div class='input'>
-
-<span class='co'># 2. Get the amoxicillin/clavulanic acid resistance</span>
-<span class='co'>#    percentages of E. coli, trend over the years:</span>
-
-<span class='no'>my_data</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='http://dplyr.tidyverse.org/reference/filter.html'>filter</a></span>(<span class='no'>mo</span> <span class='kw'>==</span> <span class='fu'><a href='as.mo.html'>guess_mo</a></span>(<span class='st'>"E. coli"</span>),
-         <span class='no'>first_isolates</span> <span class='kw'>==</span> <span class='fl'>TRUE</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='http://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span>(<span class='kw'>year</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/format'>format</a></span>(<span class='no'>date</span>, <span class='st'>"%Y"</span>)) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='http://dplyr.tidyverse.org/reference/summarise.html'>summarise</a></span>(<span class='kw'>n</span> <span class='kw'>=</span> <span class='fu'><a href='count.html'>n_rsi</a></span>(<span class='no'>amcl</span>),
-            <span class='kw'>p</span> <span class='kw'>=</span> <span class='fu'><a href='portion.html'>portion_IR</a></span>(<span class='no'>amcl</span>, <span class='kw'>minimum</span> <span class='kw'>=</span> <span class='fl'>20</span>))</div><div class='output co'>#&gt; <span class='warning'>Warning: Introducing NA: only 13 results available (minimum set to 20).</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Introducing NA: only 14 results available (minimum set to 20).</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Introducing NA: only 13 results available (minimum set to 20).</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Introducing NA: only 15 results available (minimum set to 20).</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Introducing NA: only 16 results available (minimum set to 20).</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Introducing NA: only 17 results available (minimum set to 20).</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Introducing NA: only 17 results available (minimum set to 20).</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Introducing NA: only 18 results available (minimum set to 20).</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Introducing NA: only 13 results available (minimum set to 20).</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Introducing NA: only 10 results available (minimum set to 20).</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Introducing NA: only 13 results available (minimum set to 20).</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Introducing NA: only 14 results available (minimum set to 20).</span></div><div class='output co'>#&gt; </span><span style='color: #949494;'># A tibble: 16 x 3</span><span>
-#&gt;    year      n       p
-#&gt;    </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span>   </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>
-#&gt; </span><span style='color: #BCBCBC;'> 1</span><span> 2002     13 </span><span style='color: #BB0000;'>NA</span><span>     
-#&gt; </span><span style='color: #BCBCBC;'> 2</span><span> 2003     14 </span><span style='color: #BB0000;'>NA</span><span>     
-#&gt; </span><span style='color: #BCBCBC;'> 3</span><span> 2004     13 </span><span style='color: #BB0000;'>NA</span><span>     
-#&gt; </span><span style='color: #BCBCBC;'> 4</span><span> 2005     15 </span><span style='color: #BB0000;'>NA</span><span>     
-#&gt; </span><span style='color: #BCBCBC;'> 5</span><span> 2006     16 </span><span style='color: #BB0000;'>NA</span><span>     
-#&gt; </span><span style='color: #BCBCBC;'> 6</span><span> 2007     17 </span><span style='color: #BB0000;'>NA</span><span>     
-#&gt; </span><span style='color: #BCBCBC;'> 7</span><span> 2008     17 </span><span style='color: #BB0000;'>NA</span><span>     
-#&gt; </span><span style='color: #BCBCBC;'> 8</span><span> 2009     18 </span><span style='color: #BB0000;'>NA</span><span>     
-#&gt; </span><span style='color: #BCBCBC;'> 9</span><span> 2010     13 </span><span style='color: #BB0000;'>NA</span><span>     
-#&gt; </span><span style='color: #BCBCBC;'>10</span><span> 2011     21  0.095</span><span style='text-decoration: underline;'>2</span><span>
-#&gt; </span><span style='color: #BCBCBC;'>11</span><span> 2012     10 </span><span style='color: #BB0000;'>NA</span><span>     
-#&gt; </span><span style='color: #BCBCBC;'>12</span><span> 2013     13 </span><span style='color: #BB0000;'>NA</span><span>     
-#&gt; </span><span style='color: #BCBCBC;'>13</span><span> 2014     20  0.2   
-#&gt; </span><span style='color: #BCBCBC;'>14</span><span> 2015     14 </span><span style='color: #BB0000;'>NA</span><span>     
-#&gt; </span><span style='color: #BCBCBC;'>15</span><span> 2016     21  0.190 
-#&gt; </span><span style='color: #BCBCBC;'>16</span><span> 2017     20  0.4   </div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       
       <li><a href="#format">Format</a></li>
-      
-      <li><a href="#examples">Examples</a></li>
-    </ul>
+
+      <li><a href="#read-more-on-our-website-">Read more on our website!</a></li>
+          </ul>
 
   </div>
 </div>

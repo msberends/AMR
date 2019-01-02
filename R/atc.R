@@ -2,20 +2,22 @@
 # TITLE                                                                #
 # Antimicrobial Resistance (AMR) Analysis                              #
 #                                                                      #
-# AUTHORS                                                              #
-# Berends MS (m.s.berends@umcg.nl), Luz CF (c.f.luz@umcg.nl)           #
+# SOURCE                                                               #
+# https://gitlab.com/msberends/AMR                                     #
 #                                                                      #
 # LICENCE                                                              #
-# This package is free software; you can redistribute it and/or modify #
-# it under the terms of the GNU General Public License version 2.0,    #
-# as published by the Free Software Foundation.                        #
+# (c) 2019 Berends MS (m.s.berends@umcg.nl), Luz CF (c.f.luz@umcg.nl)  #
 #                                                                      #
-# This R package is distributed in the hope that it will be useful,    #
-# but WITHOUT ANY WARRANTY; without even the implied warranty of       #
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the        #
-# GNU General Public License version 2.0 for more details.             #
+# This R package is free software; you can freely use and distribute   #
+# it for both personal and commercial purposes under the terms of the  #
+# GNU General Public License version 2.0 (GNU GPL-2), as published by  #
+# the Free Software Foundation.                                        #
+#                                                                      #
+# This R package was created for academic research and was publicly    #
+# released in the hope that it will be useful, but it comes WITHOUT    #
+# ANY WARRANTY OR LIABILITY.                                           #
+# Visit our website for more info: https://msberends.gitab.io/AMR.     #
 # ==================================================================== #
-
 
 #' Transform to ATC code
 #'
@@ -32,6 +34,7 @@
 #'   Source: \url{https://www.whocc.no/atc/structure_and_principles/}
 #' @return Character (vector) with class \code{"act"}. Unknown values will return \code{NA}.
 #' @seealso \code{\link{antibiotics}} for the dataframe that is being used to determine ATCs.
+#' @inheritSection AMR Read more on our website!
 #' @examples
 #' # These examples all return "J01FA01", the ATC code of Erythromycin:
 #' as.atc("J01FA01")

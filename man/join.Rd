@@ -38,6 +38,12 @@ Join the dataset \code{\link{microorganisms}} easily to an existing table or cha
 \details{
 \strong{Note:} As opposed to the \code{\link[dplyr]{join}} functions of \code{dplyr}, characters vectors are supported and at default existing columns will get a suffix \code{"2"} and the newly joined columns will not get a suffix. See \code{\link[dplyr]{join}} for more information.
 }
+\section{Read more on our website!}{
+
+\if{html}{\figure{logo.png}{options: height=40px style=margin-bottom:5px} \cr}
+On our website \url{https://msberends.gitlab.io/AMR} you can find \href{https://msberends.gitlab.io/AMR/articles/AMR.html}{a omprehensive tutorial} about how to conduct AMR analysis and find \href{https://msberends.gitlab.io/AMR/reference}{the complete documentation of all functions}, which reads a lot easier than in R.
+}
+
 \examples{
 left_join_microorganisms(as.mo("K. pneumoniae"))
 left_join_microorganisms("B_KLBSL_PNE")

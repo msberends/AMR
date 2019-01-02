@@ -1,126 +1,147 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://msberends.gitlab.io/index.html</loc>
+    <loc>https://msberends.gitlab.io/AMR/index.html</loc>
   </url>
   <url>
-    <loc>https://msberends.gitlab.io/reference/AMR-deprecated.html</loc>
+    <loc>https://msberends.gitlab.io/AMR/reference/AMR-deprecated.html</loc>
   </url>
   <url>
-    <loc>https://msberends.gitlab.io/reference/AMR.html</loc>
+    <loc>https://msberends.gitlab.io/AMR/reference/AMR.html</loc>
   </url>
   <url>
-    <loc>https://msberends.gitlab.io/reference/ab_property.html</loc>
+    <loc>https://msberends.gitlab.io/AMR/reference/ab_property.html</loc>
   </url>
   <url>
-    <loc>https://msberends.gitlab.io/reference/abname.html</loc>
+    <loc>https://msberends.gitlab.io/AMR/reference/abname.html</loc>
   </url>
   <url>
-    <loc>https://msberends.gitlab.io/reference/age.html</loc>
+    <loc>https://msberends.gitlab.io/AMR/reference/age.html</loc>
   </url>
   <url>
-    <loc>https://msberends.gitlab.io/reference/age_groups.html</loc>
+    <loc>https://msberends.gitlab.io/AMR/reference/age_groups.html</loc>
   </url>
   <url>
-    <loc>https://msberends.gitlab.io/reference/antibiotics.html</loc>
+    <loc>https://msberends.gitlab.io/AMR/reference/antibiotics.html</loc>
   </url>
   <url>
-    <loc>https://msberends.gitlab.io/reference/as.atc.html</loc>
+    <loc>https://msberends.gitlab.io/AMR/reference/as.atc.html</loc>
   </url>
   <url>
-    <loc>https://msberends.gitlab.io/reference/as.mic.html</loc>
+    <loc>https://msberends.gitlab.io/AMR/reference/as.mic.html</loc>
   </url>
   <url>
-    <loc>https://msberends.gitlab.io/reference/as.mo.html</loc>
+    <loc>https://msberends.gitlab.io/AMR/reference/as.mo.html</loc>
   </url>
   <url>
-    <loc>https://msberends.gitlab.io/reference/as.rsi.html</loc>
+    <loc>https://msberends.gitlab.io/AMR/reference/as.rsi.html</loc>
   </url>
   <url>
-    <loc>https://msberends.gitlab.io/reference/atc_property.html</loc>
+    <loc>https://msberends.gitlab.io/AMR/reference/atc_property.html</loc>
   </url>
   <url>
-    <loc>https://msberends.gitlab.io/reference/count.html</loc>
+    <loc>https://msberends.gitlab.io/AMR/reference/count.html</loc>
   </url>
   <url>
-    <loc>https://msberends.gitlab.io/reference/eucast_rules.html</loc>
+    <loc>https://msberends.gitlab.io/AMR/reference/eucast_rules.html</loc>
   </url>
   <url>
-    <loc>https://msberends.gitlab.io/reference/first_isolate.html</loc>
+    <loc>https://msberends.gitlab.io/AMR/reference/first_isolate.html</loc>
   </url>
   <url>
-    <loc>https://msberends.gitlab.io/reference/freq.html</loc>
+    <loc>https://msberends.gitlab.io/AMR/reference/freq.html</loc>
   </url>
   <url>
-    <loc>https://msberends.gitlab.io/reference/g.test.html</loc>
+    <loc>https://msberends.gitlab.io/AMR/reference/g.test.html</loc>
   </url>
   <url>
-    <loc>https://msberends.gitlab.io/reference/get_locale.html</loc>
+    <loc>https://msberends.gitlab.io/AMR/reference/get_locale.html</loc>
   </url>
   <url>
-    <loc>https://msberends.gitlab.io/reference/ggplot_rsi.html</loc>
+    <loc>https://msberends.gitlab.io/AMR/reference/ggplot_rsi.html</loc>
   </url>
   <url>
-    <loc>https://msberends.gitlab.io/reference/join.html</loc>
+    <loc>https://msberends.gitlab.io/AMR/reference/itis.html</loc>
   </url>
   <url>
-    <loc>https://msberends.gitlab.io/reference/key_antibiotics.html</loc>
+    <loc>https://msberends.gitlab.io/AMR/reference/join.html</loc>
   </url>
   <url>
-    <loc>https://msberends.gitlab.io/reference/kurtosis.html</loc>
+    <loc>https://msberends.gitlab.io/AMR/reference/key_antibiotics.html</loc>
   </url>
   <url>
-    <loc>https://msberends.gitlab.io/reference/like.html</loc>
+    <loc>https://msberends.gitlab.io/AMR/reference/kurtosis.html</loc>
   </url>
   <url>
-    <loc>https://msberends.gitlab.io/reference/mdro.html</loc>
+    <loc>https://msberends.gitlab.io/AMR/reference/like.html</loc>
   </url>
   <url>
-    <loc>https://msberends.gitlab.io/reference/microorganisms.html</loc>
+    <loc>https://msberends.gitlab.io/AMR/reference/mdro.html</loc>
   </url>
   <url>
-    <loc>https://msberends.gitlab.io/reference/microorganisms.certe.html</loc>
+    <loc>https://msberends.gitlab.io/AMR/reference/microorganisms.html</loc>
   </url>
   <url>
-    <loc>https://msberends.gitlab.io/reference/microorganisms.old.html</loc>
+    <loc>https://msberends.gitlab.io/AMR/reference/microorganisms.certe.html</loc>
   </url>
   <url>
-    <loc>https://msberends.gitlab.io/reference/microorganisms.umcg.html</loc>
+    <loc>https://msberends.gitlab.io/AMR/reference/microorganisms.old.html</loc>
   </url>
   <url>
-    <loc>https://msberends.gitlab.io/reference/mo_failures.html</loc>
+    <loc>https://msberends.gitlab.io/AMR/reference/microorganisms.umcg.html</loc>
   </url>
   <url>
-    <loc>https://msberends.gitlab.io/reference/mo_property.html</loc>
+    <loc>https://msberends.gitlab.io/AMR/reference/mo_failures.html</loc>
   </url>
   <url>
-    <loc>https://msberends.gitlab.io/reference/mo_renamed.html</loc>
+    <loc>https://msberends.gitlab.io/AMR/reference/mo_property.html</loc>
   </url>
   <url>
-    <loc>https://msberends.gitlab.io/reference/p.symbol.html</loc>
+    <loc>https://msberends.gitlab.io/AMR/reference/mo_renamed.html</loc>
   </url>
   <url>
-    <loc>https://msberends.gitlab.io/reference/portion.html</loc>
+    <loc>https://msberends.gitlab.io/AMR/reference/p.symbol.html</loc>
   </url>
   <url>
-    <loc>https://msberends.gitlab.io/reference/read.4D.html</loc>
+    <loc>https://msberends.gitlab.io/AMR/reference/portion.html</loc>
   </url>
   <url>
-    <loc>https://msberends.gitlab.io/reference/resistance_predict.html</loc>
+    <loc>https://msberends.gitlab.io/AMR/reference/read.4D.html</loc>
   </url>
   <url>
-    <loc>https://msberends.gitlab.io/reference/rsi.html</loc>
+    <loc>https://msberends.gitlab.io/AMR/reference/resistance_predict.html</loc>
   </url>
   <url>
-    <loc>https://msberends.gitlab.io/reference/septic_patients.html</loc>
+    <loc>https://msberends.gitlab.io/AMR/reference/rsi.html</loc>
   </url>
   <url>
-    <loc>https://msberends.gitlab.io/reference/skewness.html</loc>
+    <loc>https://msberends.gitlab.io/AMR/reference/septic_patients.html</loc>
   </url>
   <url>
-    <loc>https://msberends.gitlab.io/reference/supplementary_data.html</loc>
+    <loc>https://msberends.gitlab.io/AMR/reference/skewness.html</loc>
   </url>
   <url>
-    <loc>https://msberends.gitlab.io/articles/AMR.html</loc>
+    <loc>https://msberends.gitlab.io/AMR/reference/supplementary_data.html</loc>
+  </url>
+  <url>
+    <loc>https://msberends.gitlab.io/AMR/articles/AMR.html</loc>
+  </url>
+  <url>
+    <loc>https://msberends.gitlab.io/AMR/articles/EUCAST.html</loc>
+  </url>
+  <url>
+    <loc>https://msberends.gitlab.io/AMR/articles/G_test.html</loc>
+  </url>
+  <url>
+    <loc>https://msberends.gitlab.io/AMR/articles/Predict.html</loc>
+  </url>
+  <url>
+    <loc>https://msberends.gitlab.io/AMR/articles/ab_property.html</loc>
+  </url>
+  <url>
+    <loc>https://msberends.gitlab.io/AMR/articles/freq.html</loc>
+  </url>
+  <url>
+    <loc>https://msberends.gitlab.io/AMR/articles/mo_property.html</loc>
   </url>
 </urlset>

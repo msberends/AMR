@@ -49,7 +49,7 @@
 
 <meta property="og:description" content="Use these functions to create bar plots for antimicrobial resistance analysis. All functions rely on internal ggplot functions." />
 
-<meta property="og:image" content="https://msberends.gitlab.io/logo.png" />
+<meta property="og:image" content="https://msberends.gitlab.io/AMR/logo.png" />
 <meta name="twitter:card" content="summary" />
 
 
@@ -80,7 +80,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.0.9008</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.0.9009</span>
       </span>
     </div>
 
@@ -93,12 +93,65 @@
     Home
   </a>
 </li>
-<li>
-  <a href="../articles/AMR.html">
-    <span class="fa fa-directions"></span>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    <span class="fa fa-question-circle"></span>
      
-    Get Started
+    How to
+     
+    <span class="caret"></span>
   </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="../articles/AMR.html">
+        <span class="fa fa-directions"></span>
+         
+        Conduct AMR analysis
+      </a>
+    </li>
+    <li>
+      <a href="../articles/Predict.html">
+        <span class="fa fa-dice"></span>
+         
+        Predict antimicrobial resistance
+      </a>
+    </li>
+    <li>
+      <a href="../articles/EUCAST.html">
+        <span class="fa fa-exchange-alt"></span>
+         
+        Apply EUCAST rules
+      </a>
+    </li>
+    <li>
+      <a href="../articles/mo_property.html">
+        <span class="fa fa-bug"></span>
+         
+        Get properties of a microorganism
+      </a>
+    </li>
+    <li>
+      <a href="../articles/ab_property.html">
+        <span class="fa fa-capsules"></span>
+         
+        Get properties of an antibiotic
+      </a>
+    </li>
+    <li>
+      <a href="../articles/freq.html">
+        <span class="fa fa-sort-amount-down"></span>
+         
+        Create frequency tables
+      </a>
+    </li>
+    <li>
+      <a href="../articles/G_test.html">
+        <span class="fa fa-clipboard-check"></span>
+         
+        Use the G-test
+      </a>
+    </li>
+  </ul>
 </li>
 <li>
   <a href="../reference/">
@@ -121,17 +174,17 @@
     Changelog
   </a>
 </li>
-<li>
+      </ul>
+      
+      <ul class="nav navbar-nav navbar-right">
+        <li>
   <a href="https://gitlab.com/msberends/AMR">
     <span class="fab fa fab fa-gitlab"></span>
      
     Source Code
   </a>
 </li>
-      </ul>
-      
-      <ul class="nav navbar-nav navbar-right">
-        <li>
+<li>
   <a href="../LICENSE-text.html">
     <span class="fa fa-book"></span>
      
@@ -163,7 +216,7 @@
 
     <div class="ref-description">
     
-    <p>Use these functions to create bar plots for antimicrobial resistance analysis. All functions rely on internal <code><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></code> functions.</p>
+    <p>Use these functions to create bar plots for antimicrobial resistance analysis. All functions rely on internal <code><a href='https://www.rdocumentation.org/packages/ggplot2/topics/ggplot'>ggplot</a></code> functions.</p>
     
     </div>
 
@@ -254,97 +307,112 @@
     <p>At default, the names of antibiotics will be shown on the plots using <code><a href='abname.html'>abname</a></code>. This can be set with the option <code>get_antibiotic_names</code> (a logical value), so change it e.g. to <code>FALSE</code> with <code><a href='https://www.rdocumentation.org/packages/base/topics/options'>options(get_antibiotic_names = FALSE)</a></code>.</p>
 <p><strong>The functions</strong><br />
 <code>geom_rsi</code> will take any variable from the data that has an <code>rsi</code> class (created with <code><a href='as.rsi.html'>as.rsi</a></code>) using <code>fun</code> (<code><a href='count.html'>count_df</a></code> at default, can also be <code><a href='portion.html'>portion_df</a></code>) and will plot bars with the percentage R, I and S. The default behaviour is to have the bars stacked and to have the different antibiotics on the x axis.</p>
-<p><code>facet_rsi</code> creates 2d plots (at default based on S/I/R) using <code><a href='https://ggplot2.tidyverse.org/reference/facet_wrap.html'>facet_wrap</a></code>.</p>
+<p><code>facet_rsi</code> creates 2d plots (at default based on S/I/R) using <code><a href='https://www.rdocumentation.org/packages/ggplot2/topics/facet_wrap'>facet_wrap</a></code>.</p>
 <p><code>scale_y_percent</code> transforms the y axis to a 0 to 100% range using <code>scale_continuous</code>.</p>
 <p><code>scale_rsi_colours</code> sets colours to the bars: green for S, yellow for I and red for R, using <code>scale_brewer</code>.</p>
-<p><code>theme_rsi</code> is a <code>ggplot <a href='https://ggplot2.tidyverse.org/reference/theme.html'>theme</a></code> with minimal distraction.</p>
+<p><code>theme_rsi</code> is a <code>ggplot <a href='https://www.rdocumentation.org/packages/ggplot2/topics/theme'>theme</a></code> with minimal distraction.</p>
 <p><code>labels_rsi_count</code> print datalabels on the bars with percentage and amount of isolates using <code><a href='https://ggplot2.tidyverse.org/reference/geom_text.html'>geom_text</a></code></p>
 <p><code>ggplot_rsi</code> is a wrapper around all above functions that uses data as first input. This makes it possible to use this function after a pipe (<code>%&gt;%</code>). See Examples.</p>
     
+    <h2 class="hasAnchor" id="read-more-on-our-website-"><a class="anchor" href="#read-more-on-our-website-"></a>Read more on our website!</h2>
+
+    
+    <p><img src='figures/logo.png' height=40px style=margin-bottom:5px /> <br />
+On our website <a href='https://msberends.gitlab.io/AMR'>https://msberends.gitlab.io/AMR</a> you can find <a href='https://msberends.gitlab.io/AMR/articles/AMR.html'>a omprehensive tutorial</a> about how to conduct AMR analysis and find <a href='https://msberends.gitlab.io/AMR/reference'>the complete documentation of all functions</a>, which reads a lot easier than in R.</p>
+    
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>dplyr</span>)
+    <pre class="examples"><span class='co'># NOT RUN {</span>
+<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>dplyr</span>)
 <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>ggplot2</span>)
 
 <span class='co'># get antimicrobial results for drugs against a UTI:</span>
-<span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span>(<span class='no'>septic_patients</span> <span class='kw'>%&gt;%</span> <span class='fu'><a href='http://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='no'>amox</span>, <span class='no'>nitr</span>, <span class='no'>fosf</span>, <span class='no'>trim</span>, <span class='no'>cipr</span>)) +
-  <span class='fu'>geom_rsi</span>()</div><div class='img'><img src='ggplot_rsi-1.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='fu'><a href='https://www.rdocumentation.org/packages/ggplot2/topics/ggplot'>ggplot</a></span>(<span class='no'>septic_patients</span> <span class='kw'>%&gt;%</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/dplyr/topics/select'>select</a></span>(<span class='no'>amox</span>, <span class='no'>nitr</span>, <span class='no'>fosf</span>, <span class='no'>trim</span>, <span class='no'>cipr</span>)) +
+  <span class='fu'>geom_rsi</span>()
+
 <span class='co'># prettify the plot using some additional functions:</span>
 <span class='no'>df</span> <span class='kw'>&lt;-</span> <span class='no'>septic_patients</span>[, <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"amox"</span>, <span class='st'>"nitr"</span>, <span class='st'>"fosf"</span>, <span class='st'>"trim"</span>, <span class='st'>"cipr"</span>)]
-<span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span>(<span class='no'>df</span>) +
+<span class='fu'><a href='https://www.rdocumentation.org/packages/ggplot2/topics/ggplot'>ggplot</a></span>(<span class='no'>df</span>) +
   <span class='fu'>geom_rsi</span>() +
   <span class='fu'>scale_y_percent</span>() +
   <span class='fu'>scale_rsi_colours</span>() +
   <span class='fu'>labels_rsi_count</span>() +
-  <span class='fu'>theme_rsi</span>()</div><div class='img'><img src='ggplot_rsi-2.png' alt='' width='700' height='433' /></div><div class='input'>
+  <span class='fu'>theme_rsi</span>()
+
 <span class='co'># or better yet, simplify this using the wrapper function - a single command:</span>
 <span class='no'>septic_patients</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='http://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='no'>amox</span>, <span class='no'>nitr</span>, <span class='no'>fosf</span>, <span class='no'>trim</span>, <span class='no'>cipr</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'>ggplot_rsi</span>()</div><div class='img'><img src='ggplot_rsi-3.png' alt='' width='700' height='433' /></div><div class='input'>
+  <span class='fu'><a href='https://www.rdocumentation.org/packages/dplyr/topics/select'>select</a></span>(<span class='no'>amox</span>, <span class='no'>nitr</span>, <span class='no'>fosf</span>, <span class='no'>trim</span>, <span class='no'>cipr</span>) <span class='kw'>%&gt;%</span>
+  <span class='fu'>ggplot_rsi</span>()
+
 <span class='co'># get only portions and no counts:</span>
 <span class='no'>septic_patients</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='http://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='no'>amox</span>, <span class='no'>nitr</span>, <span class='no'>fosf</span>, <span class='no'>trim</span>, <span class='no'>cipr</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'>ggplot_rsi</span>(<span class='kw'>fun</span> <span class='kw'>=</span> <span class='no'>portion_df</span>)</div><div class='img'><img src='ggplot_rsi-4.png' alt='' width='700' height='433' /></div><div class='input'>
+  <span class='fu'><a href='https://www.rdocumentation.org/packages/dplyr/topics/select'>select</a></span>(<span class='no'>amox</span>, <span class='no'>nitr</span>, <span class='no'>fosf</span>, <span class='no'>trim</span>, <span class='no'>cipr</span>) <span class='kw'>%&gt;%</span>
+  <span class='fu'>ggplot_rsi</span>(<span class='kw'>fun</span> <span class='kw'>=</span> <span class='no'>portion_df</span>)
+
 <span class='co'># add other ggplot2 parameters as you like:</span>
 <span class='no'>septic_patients</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='http://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='no'>amox</span>, <span class='no'>nitr</span>, <span class='no'>fosf</span>, <span class='no'>trim</span>, <span class='no'>cipr</span>) <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='https://www.rdocumentation.org/packages/dplyr/topics/select'>select</a></span>(<span class='no'>amox</span>, <span class='no'>nitr</span>, <span class='no'>fosf</span>, <span class='no'>trim</span>, <span class='no'>cipr</span>) <span class='kw'>%&gt;%</span>
   <span class='fu'>ggplot_rsi</span>(<span class='kw'>width</span> <span class='kw'>=</span> <span class='fl'>0.5</span>,
              <span class='kw'>colour</span> <span class='kw'>=</span> <span class='st'>"black"</span>,
              <span class='kw'>size</span> <span class='kw'>=</span> <span class='fl'>1</span>,
              <span class='kw'>linetype</span> <span class='kw'>=</span> <span class='fl'>2</span>,
-             <span class='kw'>alpha</span> <span class='kw'>=</span> <span class='fl'>0.25</span>)</div><div class='img'><img src='ggplot_rsi-5.png' alt='' width='700' height='433' /></div><div class='input'>
+             <span class='kw'>alpha</span> <span class='kw'>=</span> <span class='fl'>0.25</span>)
+
 <span class='co'># resistance of ciprofloxacine per age group</span>
 <span class='no'>septic_patients</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='http://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span>(<span class='kw'>first_isolate</span> <span class='kw'>=</span> <span class='fu'><a href='first_isolate.html'>first_isolate</a></span>(<span class='no'>.</span>)) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='http://dplyr.tidyverse.org/reference/filter.html'>filter</a></span>(<span class='no'>first_isolate</span> <span class='kw'>==</span> <span class='fl'>TRUE</span>,
+  <span class='fu'><a href='https://www.rdocumentation.org/packages/dplyr/topics/mutate'>mutate</a></span>(<span class='kw'>first_isolate</span> <span class='kw'>=</span> <span class='fu'><a href='first_isolate.html'>first_isolate</a></span>(<span class='no'>.</span>)) <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='https://www.rdocumentation.org/packages/dplyr/topics/filter'>filter</a></span>(<span class='no'>first_isolate</span> <span class='kw'>==</span> <span class='fl'>TRUE</span>,
          <span class='no'>mo</span> <span class='kw'>==</span> <span class='fu'><a href='as.mo.html'>as.mo</a></span>(<span class='st'>"E. coli"</span>)) <span class='kw'>%&gt;%</span>
   <span class='co'># `age_group` is also a function of this package:</span>
-  <span class='fu'><a href='http://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span>(<span class='kw'>age_group</span> <span class='kw'>=</span> <span class='fu'><a href='age_groups.html'>age_groups</a></span>(<span class='no'>age</span>)) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='http://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='no'>age_group</span>,
+  <span class='fu'><a href='https://www.rdocumentation.org/packages/dplyr/topics/group_by'>group_by</a></span>(<span class='kw'>age_group</span> <span class='kw'>=</span> <span class='fu'><a href='age_groups.html'>age_groups</a></span>(<span class='no'>age</span>)) <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='https://www.rdocumentation.org/packages/dplyr/topics/select'>select</a></span>(<span class='no'>age_group</span>,
          <span class='no'>cipr</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'>ggplot_rsi</span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='st'>"age_group"</span>)</div><div class='output co'>#&gt; <span class='message'><span style='color: #0000BB;'>NOTE: Using column `</span><span style='color: #0000BB;font-weight: bold;'>mo</span><span style='color: #0000BB;'>` as input for `col_mo`.</span><span></span></div><div class='output co'>#&gt; <span class='message'></span><span style='color: #0000BB;'>NOTE: Using column `</span><span style='color: #0000BB;font-weight: bold;'>date</span><span style='color: #0000BB;'>` as input for `col_date`.</span><span></span></div><div class='output co'>#&gt; <span class='message'></span><span style='color: #0000BB;'>NOTE: Using column `</span><span style='color: #0000BB;font-weight: bold;'>patient_id</span><span style='color: #0000BB;'>` as input for `col_patient_id`.</span><span></span></div><div class='output co'>#&gt; <span class='message'>=&gt; Found </span><span style='font-weight: bold;'>1,317 first isolates</span><span> (65.9% of total)</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Removed 3 rows containing missing values (geom_bar).</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Removed 3 rows containing missing values (geom_text).</span></div><div class='img'><img src='ggplot_rsi-6.png' alt='' width='700' height='433' /></div></span><div class='input'>
+  <span class='fu'>ggplot_rsi</span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='st'>"age_group"</span>)
+<span class='co'># }</span><span class='co'># NOT RUN {</span>
 <span class='co'># for colourblind mode, use divergent colours from the viridis package:</span>
 <span class='no'>septic_patients</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='http://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='no'>amox</span>, <span class='no'>nitr</span>, <span class='no'>fosf</span>, <span class='no'>trim</span>, <span class='no'>cipr</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'>ggplot_rsi</span>() + <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/scale_viridis.html'>scale_fill_viridis_d</a></span>()</div><div class='output co'>#&gt; <span class='message'>Scale for 'fill' is already present. Adding another scale for 'fill', which</span>
-#&gt; <span class='message'>will replace the existing scale.</span></div><div class='img'><img src='ggplot_rsi-7.png' alt='' width='700' height='433' /></div><div class='input'>
+  <span class='fu'><a href='https://www.rdocumentation.org/packages/dplyr/topics/select'>select</a></span>(<span class='no'>amox</span>, <span class='no'>nitr</span>, <span class='no'>fosf</span>, <span class='no'>trim</span>, <span class='no'>cipr</span>) <span class='kw'>%&gt;%</span>
+  <span class='fu'>ggplot_rsi</span>() + <span class='fu'><a href='https://www.rdocumentation.org/packages/ggplot2/topics/scale_viridis'>scale_fill_viridis_d</a></span>()
+
 
 <span class='co'># it also supports groups (don't forget to use the group var on `x` or `facet`):</span>
 <span class='no'>septic_patients</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='http://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='no'>hospital_id</span>, <span class='no'>amox</span>, <span class='no'>nitr</span>, <span class='no'>fosf</span>, <span class='no'>trim</span>, <span class='no'>cipr</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='http://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span>(<span class='no'>hospital_id</span>) <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='https://www.rdocumentation.org/packages/dplyr/topics/select'>select</a></span>(<span class='no'>hospital_id</span>, <span class='no'>amox</span>, <span class='no'>nitr</span>, <span class='no'>fosf</span>, <span class='no'>trim</span>, <span class='no'>cipr</span>) <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='https://www.rdocumentation.org/packages/dplyr/topics/group_by'>group_by</a></span>(<span class='no'>hospital_id</span>) <span class='kw'>%&gt;%</span>
   <span class='fu'>ggplot_rsi</span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='no'>hospital_id</span>,
              <span class='kw'>facet</span> <span class='kw'>=</span> <span class='no'>Antibiotic</span>,
              <span class='kw'>nrow</span> <span class='kw'>=</span> <span class='fl'>1</span>) +
-  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/labs.html'>labs</a></span>(<span class='kw'>title</span> <span class='kw'>=</span> <span class='st'>"AMR of Anti-UTI Drugs Per Hospital"</span>,
-       <span class='kw'>x</span> <span class='kw'>=</span> <span class='st'>"Hospital"</span>)</div><div class='output co'>#&gt; <span class='error'>Error in ggplot_rsi(., x = hospital_id, facet = Antibiotic, nrow = 1): object 'hospital_id' not found</span></div><div class='input'>
+  <span class='fu'><a href='https://www.rdocumentation.org/packages/ggplot2/topics/labs'>labs</a></span>(<span class='kw'>title</span> <span class='kw'>=</span> <span class='st'>"AMR of Anti-UTI Drugs Per Hospital"</span>,
+       <span class='kw'>x</span> <span class='kw'>=</span> <span class='st'>"Hospital"</span>)
+
 <span class='co'># genuine analysis: check 2 most prevalent microorganisms</span>
 <span class='no'>septic_patients</span> <span class='kw'>%&gt;%</span>
   <span class='co'># create new bacterial ID's, with all CoNS under the same group (Becker et al.)</span>
-  <span class='fu'><a href='http://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span>(<span class='kw'>mo</span> <span class='kw'>=</span> <span class='fu'><a href='as.mo.html'>as.mo</a></span>(<span class='no'>mo</span>, <span class='kw'>Becker</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)) <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='https://www.rdocumentation.org/packages/dplyr/topics/mutate'>mutate</a></span>(<span class='kw'>mo</span> <span class='kw'>=</span> <span class='fu'><a href='as.mo.html'>as.mo</a></span>(<span class='no'>mo</span>, <span class='kw'>Becker</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)) <span class='kw'>%&gt;%</span>
   <span class='co'># filter on top three bacterial ID's</span>
-  <span class='fu'><a href='http://dplyr.tidyverse.org/reference/filter.html'>filter</a></span>(<span class='no'>mo</span> <span class='kw'>%in%</span> <span class='fu'><a href='freq.html'>top_freq</a></span>(<span class='fu'><a href='freq.html'>freq</a></span>(<span class='no'>.</span>$<span class='no'>mo</span>), <span class='fl'>3</span>)) <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='https://www.rdocumentation.org/packages/dplyr/topics/filter'>filter</a></span>(<span class='no'>mo</span> <span class='kw'>%in%</span> <span class='fu'><a href='freq.html'>top_freq</a></span>(<span class='fu'><a href='freq.html'>freq</a></span>(<span class='no'>.</span>$<span class='no'>mo</span>), <span class='fl'>3</span>)) <span class='kw'>%&gt;%</span>
   <span class='co'># determine first isolates</span>
-  <span class='fu'><a href='http://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span>(<span class='kw'>first_isolate</span> <span class='kw'>=</span> <span class='fu'><a href='first_isolate.html'>first_isolate</a></span>(<span class='no'>.</span>,
+  <span class='fu'><a href='https://www.rdocumentation.org/packages/dplyr/topics/mutate'>mutate</a></span>(<span class='kw'>first_isolate</span> <span class='kw'>=</span> <span class='fu'><a href='first_isolate.html'>first_isolate</a></span>(<span class='no'>.</span>,
                                        <span class='kw'>col_date</span> <span class='kw'>=</span> <span class='st'>"date"</span>,
                                        <span class='kw'>col_patient_id</span> <span class='kw'>=</span> <span class='st'>"patient_id"</span>,
                                        <span class='kw'>col_mo</span> <span class='kw'>=</span> <span class='st'>"mo"</span>)) <span class='kw'>%&gt;%</span>
   <span class='co'># filter on first isolates</span>
-  <span class='fu'><a href='http://dplyr.tidyverse.org/reference/filter.html'>filter</a></span>(<span class='no'>first_isolate</span> <span class='kw'>==</span> <span class='fl'>TRUE</span>) <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='https://www.rdocumentation.org/packages/dplyr/topics/filter'>filter</a></span>(<span class='no'>first_isolate</span> <span class='kw'>==</span> <span class='fl'>TRUE</span>) <span class='kw'>%&gt;%</span>
   <span class='co'># get short MO names (like "E. coli")</span>
-  <span class='fu'><a href='http://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span>(<span class='kw'>mo</span> <span class='kw'>=</span> <span class='fu'><a href='mo_property.html'>mo_shortname</a></span>(<span class='no'>mo</span>, <span class='kw'>Becker</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)) <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='https://www.rdocumentation.org/packages/dplyr/topics/mutate'>mutate</a></span>(<span class='kw'>mo</span> <span class='kw'>=</span> <span class='fu'><a href='mo_property.html'>mo_shortname</a></span>(<span class='no'>mo</span>, <span class='kw'>Becker</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)) <span class='kw'>%&gt;%</span>
   <span class='co'># select this short name and some antiseptic drugs</span>
-  <span class='fu'><a href='http://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='no'>mo</span>, <span class='no'>cfur</span>, <span class='no'>gent</span>, <span class='no'>cipr</span>) <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='https://www.rdocumentation.org/packages/dplyr/topics/select'>select</a></span>(<span class='no'>mo</span>, <span class='no'>cfur</span>, <span class='no'>gent</span>, <span class='no'>cipr</span>) <span class='kw'>%&gt;%</span>
   <span class='co'># group by MO</span>
-  <span class='fu'><a href='http://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span>(<span class='no'>mo</span>) <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='https://www.rdocumentation.org/packages/dplyr/topics/group_by'>group_by</a></span>(<span class='no'>mo</span>) <span class='kw'>%&gt;%</span>
   <span class='co'># plot the thing, putting MOs on the facet</span>
   <span class='fu'>ggplot_rsi</span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='no'>Antibiotic</span>,
              <span class='kw'>facet</span> <span class='kw'>=</span> <span class='no'>mo</span>,
              <span class='kw'>translate_ab</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
              <span class='kw'>nrow</span> <span class='kw'>=</span> <span class='fl'>1</span>) +
-  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/labs.html'>labs</a></span>(<span class='kw'>title</span> <span class='kw'>=</span> <span class='st'>"AMR of Top Three Microorganisms In Blood Culture Isolates"</span>,
+  <span class='fu'><a href='https://www.rdocumentation.org/packages/ggplot2/topics/labs'>labs</a></span>(<span class='kw'>title</span> <span class='kw'>=</span> <span class='st'>"AMR of Top Three Microorganisms In Blood Culture Isolates"</span>,
        <span class='kw'>subtitle</span> <span class='kw'>=</span> <span class='st'>"Only First Isolates, CoNS grouped according to Becker et al. (2014)"</span>,
-       <span class='kw'>x</span> <span class='kw'>=</span> <span class='st'>"Microorganisms"</span>)</div><div class='output co'>#&gt; <span class='message'>=&gt; Found <span style='font-weight: bold;'>782 first isolates</span><span> (59.9% of total)</span></div><div class='output co'>#&gt; <span class='error'>Error in ggplot_rsi(., x = Antibiotic, facet = mo, translate_ab = FALSE,     nrow = 1): object 'Antibiotic' not found</span></div></span></pre>
+       <span class='kw'>x</span> <span class='kw'>=</span> <span class='st'>"Microorganisms"</span>)
+<span class='co'># }</span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -352,6 +420,8 @@
       <li><a href="#arguments">Arguments</a></li>
       
       <li><a href="#details">Details</a></li>
+
+      <li><a href="#read-more-on-our-website-">Read more on our website!</a></li>
       
       <li><a href="#examples">Examples</a></li>
     </ul>

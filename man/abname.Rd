@@ -25,6 +25,12 @@ Convert antibiotic codes to a (trivial) antibiotic name or ATC code, or vice ver
 \details{
 \strong{The \code{\link{ab_property}} functions are faster and more concise}, but do not support concatenated strings, like \code{abname("AMCL+GENT"}.
 }
+\section{Read more on our website!}{
+
+\if{html}{\figure{logo.png}{options: height=40px style=margin-bottom:5px} \cr}
+On our website \url{https://msberends.gitlab.io/AMR} you can find \href{https://msberends.gitlab.io/AMR/articles/AMR.html}{a omprehensive tutorial} about how to conduct AMR analysis and find \href{https://msberends.gitlab.io/AMR/reference}{the complete documentation of all functions}, which reads a lot easier than in R.
+}
+
 \examples{
 abname("AMCL")
 # "Amoxicillin and beta-lactamase inhibitor"

@@ -5,6 +5,7 @@
 * **BREAKING**: removed deprecated functions, parameters and references to 'bactid'. Use `as.mo()` to identify an MO code.
 * New website: https://msberends.gitlab.io/AMR (built with the great [`pkgdown`](https://pkgdown.r-lib.org/))
   * Contains the complete manual of this package and all of its functions with an explanation of their parameters
+  * Contains a comprehensive tutorial about how to conduct antimicrobial resistance analysis
 * Support for [`dplyr`](https://dplyr.tidyverse.org) version 0.8.0
 * Function `mo_failures()` to review values that could not be coerced to a valid MO code, using `as.mo()`. This latter function will now only show a maximum of 25 uncoerced values.
 * Function `mo_renamed()` to get a list of all returned values from `as.mo()` that have had taxonomic renaming
@@ -23,6 +24,7 @@
     filter(only_firsts == TRUE) %>%
     select(-only_firsts)
   ```
+* New vignettes about how to conduct AMR analysis, predict antimicrobial resistance, use the *G*-test and more. These are also available (and even easier readable) on our website: https://msberends.gitlab.io/AMR.
 
 #### Changed
 * Fixed a critical bug in `eucast_rules()` where some rules that depend on previous applied rules would not be applied adequately

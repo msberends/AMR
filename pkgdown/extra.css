@@ -1,3 +1,26 @@
+/*
+# ==================================================================== #
+# TITLE                                                                #
+# Antimicrobial Resistance (AMR) Analysis                              #
+#                                                                      #
+# SOURCE                                                               #
+# https://gitlab.com/msberends/AMR                                     #
+#                                                                      #
+# LICENCE                                                              #
+# (c) 2019 Berends MS (m.s.berends@umcg.nl), Luz CF (c.f.luz@umcg.nl)  #
+#                                                                      #
+# This R package is free software; you can freely use and distribute   #
+# it for both personal and commercial purposes under the terms of the  #
+# GNU General Public License version 2.0 (GNU GPL-2), as published by  #
+# the Free Software Foundation.                                        #
+#                                                                      #
+# This R package was created for academic research and was publicly    #
+# released in the hope that it will be useful, but it comes WITHOUT    #
+# ANY WARRANTY OR LIABILITY.                                           #
+# Visit our website for more info: https://msberends.gitab.io/AMR.     #
+# ==================================================================== #
+*/
+
 /* class for footer */
 .university {
     background-image: url(logo_rug.png);
@@ -11,13 +34,26 @@
     font-family: "Font Awesome 5 Brands" !important;
 }
 
-/* make colour darker and better readable for links */
-code a, pre a,
-code a:hover, pre a:hover {
-  color: #128f76;
+/* Remove the 'Read more on our website!' part from the manual pages */
+#read-more-on-our-website-,
+#read-more-on-our-website- + p,
+li a[href="#read-more-on-our-website-"] {
+    display: none;
 }
-a,
-a:hover {
+
+/* make colour darker and better readable for links */
+code a, code a:hover, code a:focus,
+pre a, pre a:hover, pre a:focus,
+a, a:hover, a:focus {
+  /* do not set colour to element without href attribute, they aren't links! */
+  color: black;
+}
+a[href], a[href]:hover, a[href]:focus,
+code a[href], code a[href]:hover, code a[href]:focus,
+pre a[href], pre a[href]:hover, pre a[href]:focus,
+a code[href], a code[href]:hover, a code[href]:focus,
+a pre[href], a pre[href]:hover, a pre[href]:focus {
+  /* adjusted colour for all real links; having href attribute */
   color: #128f76;
 }
 
@@ -73,6 +109,11 @@ help {
 #navbar .far,
 #navbar .fas {
   margin-right: 5px;
+}
+#navbar li.dropdown li .fa {
+  font-size: 120%;
+  width: 24px;
+  text-align: center;
 }
 
 /* tables */

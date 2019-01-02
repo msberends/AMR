@@ -79,6 +79,12 @@ The old \code{\link{rsi}} function is still available for backwards compatibilit
   And so on.
 }
 }
+\section{Read more on our website!}{
+
+\if{html}{\figure{logo.png}{options: height=40px style=margin-bottom:5px} \cr}
+On our website \url{https://msberends.gitlab.io/AMR} you can find \href{https://msberends.gitlab.io/AMR/articles/AMR.html}{a omprehensive tutorial} about how to conduct AMR analysis and find \href{https://msberends.gitlab.io/AMR/reference}{the complete documentation of all functions}, which reads a lot easier than in R.
+}
+
 \examples{
 # septic_patients is a data set available in the AMR package. It is true, genuine data.
 ?septic_patients

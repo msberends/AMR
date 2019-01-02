@@ -21,4 +21,10 @@ microorganisms.oldDT
 \description{
 These \code{\link{data.table}s} are transformed from the \code{\link{microorganisms}} and \code{\link{microorganisms}} data sets to improve speed of \code{\link{as.mo}}. They are meant for internal use only, and are only mentioned here for reference.
 }
+\section{Read more on our website!}{
+
+\if{html}{\figure{logo.png}{options: height=40px style=margin-bottom:5px} \cr}
+On our website \url{https://msberends.gitlab.io/AMR} you can find \href{https://msberends.gitlab.io/AMR/articles/AMR.html}{a omprehensive tutorial} about how to conduct AMR analysis and find \href{https://msberends.gitlab.io/AMR/reference}{the complete documentation of all functions}, which reads a lot easier than in R.
+}
+
 \keyword{datasets}

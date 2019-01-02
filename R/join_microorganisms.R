@@ -2,18 +2,21 @@
 # TITLE                                                                #
 # Antimicrobial Resistance (AMR) Analysis                              #
 #                                                                      #
-# AUTHORS                                                              #
-# Berends MS (m.s.berends@umcg.nl), Luz CF (c.f.luz@umcg.nl)           #
+# SOURCE                                                               #
+# https://gitlab.com/msberends/AMR                                     #
 #                                                                      #
 # LICENCE                                                              #
-# This package is free software; you can redistribute it and/or modify #
-# it under the terms of the GNU General Public License version 2.0,    #
-# as published by the Free Software Foundation.                        #
+# (c) 2019 Berends MS (m.s.berends@umcg.nl), Luz CF (c.f.luz@umcg.nl)  #
 #                                                                      #
-# This R package is distributed in the hope that it will be useful,    #
-# but WITHOUT ANY WARRANTY; without even the implied warranty of       #
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the        #
-# GNU General Public License version 2.0 for more details.             #
+# This R package is free software; you can freely use and distribute   #
+# it for both personal and commercial purposes under the terms of the  #
+# GNU General Public License version 2.0 (GNU GPL-2), as published by  #
+# the Free Software Foundation.                                        #
+#                                                                      #
+# This R package was created for academic research and was publicly    #
+# released in the hope that it will be useful, but it comes WITHOUT    #
+# ANY WARRANTY OR LIABILITY.                                           #
+# Visit our website for more info: https://msberends.gitab.io/AMR.     #
 # ==================================================================== #
 
 #' Join a table with \code{microorganisms}
@@ -27,6 +30,7 @@
 #' @param suffix if there are non-joined duplicate variables in \code{x} and \code{y}, these suffixes will be added to the output to disambiguate them. Should be a character vector of length 2.
 #' @param ... other parameters to pass on to \code{dplyr::\link[dplyr]{join}}.
 #' @details \strong{Note:} As opposed to the \code{\link[dplyr]{join}} functions of \code{dplyr}, characters vectors are supported and at default existing columns will get a suffix \code{"2"} and the newly joined columns will not get a suffix. See \code{\link[dplyr]{join}} for more information.
+#' @inheritSection AMR Read more on our website!
 #' @export
 #' @examples
 #' left_join_microorganisms(as.mo("K. pneumoniae"))

@@ -49,7 +49,7 @@
 
 <meta property="og:description" content="Use this function to determine the ATC code of one or more antibiotics. The data set antibiotics will be searched for abbreviations, official names and trade names." />
 
-<meta property="og:image" content="https://msberends.gitlab.io/logo.png" />
+<meta property="og:image" content="https://msberends.gitlab.io/AMR/logo.png" />
 <meta name="twitter:card" content="summary" />
 
 
@@ -80,7 +80,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.0.9008</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.0.9009</span>
       </span>
     </div>
 
@@ -93,12 +93,65 @@
     Home
   </a>
 </li>
-<li>
-  <a href="../articles/AMR.html">
-    <span class="fa fa-directions"></span>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    <span class="fa fa-question-circle"></span>
      
-    Get Started
+    How to
+     
+    <span class="caret"></span>
   </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="../articles/AMR.html">
+        <span class="fa fa-directions"></span>
+         
+        Conduct AMR analysis
+      </a>
+    </li>
+    <li>
+      <a href="../articles/Predict.html">
+        <span class="fa fa-dice"></span>
+         
+        Predict antimicrobial resistance
+      </a>
+    </li>
+    <li>
+      <a href="../articles/EUCAST.html">
+        <span class="fa fa-exchange-alt"></span>
+         
+        Apply EUCAST rules
+      </a>
+    </li>
+    <li>
+      <a href="../articles/mo_property.html">
+        <span class="fa fa-bug"></span>
+         
+        Get properties of a microorganism
+      </a>
+    </li>
+    <li>
+      <a href="../articles/ab_property.html">
+        <span class="fa fa-capsules"></span>
+         
+        Get properties of an antibiotic
+      </a>
+    </li>
+    <li>
+      <a href="../articles/freq.html">
+        <span class="fa fa-sort-amount-down"></span>
+         
+        Create frequency tables
+      </a>
+    </li>
+    <li>
+      <a href="../articles/G_test.html">
+        <span class="fa fa-clipboard-check"></span>
+         
+        Use the G-test
+      </a>
+    </li>
+  </ul>
 </li>
 <li>
   <a href="../reference/">
@@ -121,17 +174,17 @@
     Changelog
   </a>
 </li>
-<li>
+      </ul>
+      
+      <ul class="nav navbar-nav navbar-right">
+        <li>
   <a href="https://gitlab.com/msberends/AMR">
     <span class="fab fa fab fa-gitlab"></span>
      
     Source Code
   </a>
 </li>
-      </ul>
-      
-      <ul class="nav navbar-nav navbar-right">
-        <li>
+<li>
   <a href="../LICENSE-text.html">
     <span class="fa fa-book"></span>
      
@@ -192,26 +245,35 @@
 <p>In the ATC classification system, the active substances are classified in a hierarchy with five different levels.  The system has fourteen main anatomical/pharmacological groups or 1st levels. Each ATC main group is divided into 2nd levels which could be either pharmacological or therapeutic groups.  The 3rd and 4th levels are chemical, pharmacological or therapeutic subgroups and the 5th level is the chemical substance.  The 2nd, 3rd and 4th levels are often used to identify pharmacological subgroups when that is considered more appropriate than therapeutic or chemical subgroups.
   Source: <a href='https://www.whocc.no/atc/structure_and_principles/'>https://www.whocc.no/atc/structure_and_principles/</a></p>
     
+    <h2 class="hasAnchor" id="read-more-on-our-website-"><a class="anchor" href="#read-more-on-our-website-"></a>Read more on our website!</h2>
+
+    
+    <p><img src='figures/logo.png' height=40px style=margin-bottom:5px /> <br />
+On our website <a href='https://msberends.gitlab.io/AMR'>https://msberends.gitlab.io/AMR</a> you can find <a href='https://msberends.gitlab.io/AMR/articles/AMR.html'>a omprehensive tutorial</a> about how to conduct AMR analysis and find <a href='https://msberends.gitlab.io/AMR/reference'>the complete documentation of all functions</a>, which reads a lot easier than in R.</p>
+    
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><code><a href='antibiotics.html'>antibiotics</a></code> for the dataframe that is being used to determine ATCs.</p></div>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># These examples all return "J01FA01", the ATC code of Erythromycin:</span>
-<span class='fu'>as.atc</span>(<span class='st'>"J01FA01"</span>)</div><div class='output co'>#&gt; Class 'atc'
-#&gt; [1] J01FA01</div><div class='input'><span class='fu'>as.atc</span>(<span class='st'>"Erythromycin"</span>)</div><div class='output co'>#&gt; Class 'atc'
-#&gt; [1] J01FA01</div><div class='input'><span class='fu'>as.atc</span>(<span class='st'>"eryt"</span>)</div><div class='output co'>#&gt; Class 'atc'
-#&gt; [1] J01FA01</div><div class='input'><span class='fu'>as.atc</span>(<span class='st'>"   eryt 123"</span>)</div><div class='output co'>#&gt; Class 'atc'
-#&gt; [1] J01FA01</div><div class='input'><span class='fu'>as.atc</span>(<span class='st'>"ERYT"</span>)</div><div class='output co'>#&gt; Class 'atc'
-#&gt; [1] J01FA01</div><div class='input'><span class='fu'>as.atc</span>(<span class='st'>"ERY"</span>)</div><div class='output co'>#&gt; Class 'atc'
-#&gt; [1] J01FA01</div><div class='input'><span class='fu'>as.atc</span>(<span class='st'>"Erythrocin"</span>) <span class='co'># Trade name</span></div><div class='output co'>#&gt; Class 'atc'
-#&gt; [1] J01FA01</div><div class='input'><span class='fu'>as.atc</span>(<span class='st'>"Eryzole"</span>)    <span class='co'># Trade name</span></div><div class='output co'>#&gt; Class 'atc'
-#&gt; [1] J01FA01</div><div class='input'><span class='fu'>as.atc</span>(<span class='st'>"Pediamycin"</span>) <span class='co'># Trade name</span></div><div class='output co'>#&gt; Class 'atc'
-#&gt; [1] J01FA01</div><div class='input'>
+    <pre class="examples"><span class='co'># NOT RUN {</span>
+<span class='co'># These examples all return "J01FA01", the ATC code of Erythromycin:</span>
+<span class='fu'>as.atc</span>(<span class='st'>"J01FA01"</span>)
+<span class='fu'>as.atc</span>(<span class='st'>"Erythromycin"</span>)
+<span class='fu'>as.atc</span>(<span class='st'>"eryt"</span>)
+<span class='fu'>as.atc</span>(<span class='st'>"   eryt 123"</span>)
+<span class='fu'>as.atc</span>(<span class='st'>"ERYT"</span>)
+<span class='fu'>as.atc</span>(<span class='st'>"ERY"</span>)
+<span class='fu'>as.atc</span>(<span class='st'>"Erythrocin"</span>) <span class='co'># Trade name</span>
+<span class='fu'>as.atc</span>(<span class='st'>"Eryzole"</span>)    <span class='co'># Trade name</span>
+<span class='fu'>as.atc</span>(<span class='st'>"Pediamycin"</span>) <span class='co'># Trade name</span>
+
 <span class='co'># Use ab_* functions to get a specific property based on an ATC code</span>
 <span class='no'>Cipro</span> <span class='kw'>&lt;-</span> <span class='fu'>as.atc</span>(<span class='st'>"cipro"</span>) <span class='co'># returns `J01MA02`</span>
-<span class='fu'><a href='ab_property.html'>ab_official</a></span>(<span class='no'>Cipro</span>)       <span class='co'># returns "Ciprofloxacin"</span></div><div class='output co'>#&gt; [1] "Ciprofloxacin"</div><div class='input'><span class='fu'><a href='ab_property.html'>ab_umcg</a></span>(<span class='no'>Cipro</span>)           <span class='co'># returns "CIPR", the code used in the UMCG</span></div><div class='output co'>#&gt; [1] "CIPR"</div></pre>
+<span class='fu'><a href='ab_property.html'>ab_official</a></span>(<span class='no'>Cipro</span>)       <span class='co'># returns "Ciprofloxacin"</span>
+<span class='fu'><a href='ab_property.html'>ab_umcg</a></span>(<span class='no'>Cipro</span>)           <span class='co'># returns "CIPR", the code used in the UMCG</span>
+<span class='co'># }</span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -221,6 +283,8 @@
       <li><a href="#value">Value</a></li>
 
       <li><a href="#details">Details</a></li>
+
+      <li><a href="#read-more-on-our-website-">Read more on our website!</a></li>
 
       <li><a href="#see-also">See also</a></li>
       

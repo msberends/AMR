@@ -30,6 +30,12 @@ All (sub)species from \strong{the taxonomic kingdoms Bacteria, Fungi and Protozo
 ITIS is a partnership of U.S., Canadian, and Mexican agencies and taxonomic specialists [3].
 }
 
+\section{Read more on our website!}{
+
+\if{html}{\figure{logo.png}{options: height=40px style=margin-bottom:5px} \cr}
+On our website \url{https://msberends.gitlab.io/AMR} you can find \href{https://msberends.gitlab.io/AMR/articles/AMR.html}{a omprehensive tutorial} about how to conduct AMR analysis and find \href{https://msberends.gitlab.io/AMR/reference}{the complete documentation of all functions}, which reads a lot easier than in R.
+}
+
 \seealso{
 \code{\link{as.mo}} \code{\link{mo_property}} \code{\link{microorganisms}}
 }

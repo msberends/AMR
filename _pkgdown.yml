@@ -2,21 +2,24 @@
 # TITLE                                                                #
 # Antimicrobial Resistance (AMR) Analysis                              #
 #                                                                      #
-# AUTHORS                                                              #
-# Berends MS (m.s.berends@umcg.nl), Luz CF (c.f.luz@umcg.nl)           #
+# SOURCE                                                               #
+# https://gitlab.com/msberends/AMR                                     #
 #                                                                      #
 # LICENCE                                                              #
-# This package is free software; you can redistribute it and/or modify #
-# it under the terms of the GNU General Public License version 2.0,    #
-# as published by the Free Software Foundation.                        #
+# (c) 2019 Berends MS (m.s.berends@umcg.nl), Luz CF (c.f.luz@umcg.nl)  #
 #                                                                      #
-# This R package is distributed in the hope that it will be useful,    #
-# but WITHOUT ANY WARRANTY; without even the implied warranty of       #
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the        #
-# GNU General Public License version 2.0 for more details.             #
+# This R package is free software; you can freely use and distribute   #
+# it for both personal and commercial purposes under the terms of the  #
+# GNU General Public License version 2.0 (GNU GPL-2), as published by  #
+# the Free Software Foundation.                                        #
+#                                                                      #
+# This R package was created for academic research and was publicly    #
+# released in the hope that it will be useful, but it comes WITHOUT    #
+# ANY WARRANTY OR LIABILITY.                                           #
+# Visit our website for more info: https://msberends.gitab.io/AMR.     #
 # ==================================================================== #
 
-url: https://msberends.gitlab.io
+url: https://msberends.gitlab.io/AMR
 
 title: 'AMR (for R)'
 
@@ -26,9 +29,30 @@ navbar:
     - text: 'Home'
       icon: 'fa-home'
       href: 'index.html'
-    - text: 'Get Started'
-      icon: 'fa-directions'
-      href: 'articles/AMR.html'
+    - text: 'How to'
+      icon: 'fa-question-circle'
+      menu:
+      - text: 'Conduct AMR analysis'
+        icon: 'fa-directions'
+        href: 'articles/AMR.html'
+      - text: 'Predict antimicrobial resistance'
+        icon: 'fa-dice'
+        href: 'articles/Predict.html'
+      - text: 'Apply EUCAST rules'
+        icon: 'fa-exchange-alt'
+        href: 'articles/EUCAST.html'
+      - text: 'Get properties of a microorganism'
+        icon: 'fa-bug'
+        href: 'articles/mo_property.html'
+      - text: 'Get properties of an antibiotic'
+        icon: 'fa-capsules'
+        href: 'articles/ab_property.html'
+      - text: 'Create frequency tables'
+        icon: 'fa-sort-amount-down'
+        href: 'articles/freq.html'
+      - text: 'Use the G-test'
+        icon: 'fa-clipboard-check'
+        href: 'articles/G_test.html'
     - text: 'Manual'
       icon: 'fa-book-open'
       href: 'reference/'
@@ -38,10 +62,10 @@ navbar:
     - text: 'Changelog'
       icon: 'far fa-newspaper'
       href: 'news/'
+  right:
     - text: 'Source Code'
       icon: 'fab fa-gitlab'
       href: 'https://gitlab.com/msberends/AMR'
-  right:
     - text: 'Licence'
       icon: 'fa-book'
       href: 'LICENSE-text.html'
@@ -51,7 +75,7 @@ reference:
   desc: >
     Functions for cleaning and optimising your data, to be able
     to add variables later on (like taxonomic properties) or to
-    fix and extend antibiotic interpretations by applying EUCAST rules.
+    fix and extend antibiotic interpretations by applying [EUCAST rules](http://www.eucast.org/expert_rules_and_intrinsic_resistance/).
   contents:
   - starts_with("as.")
   - '`eucast_rules`'
@@ -118,7 +142,7 @@ authors:
     href: https://www.rug.nl/staff/b.sinha/
 
 template:
-  assets: pkgdown/logos
+  assets: pkgdown/logos # use logos in this folder
   params:
     noindex: false
     bootswatch: flatly

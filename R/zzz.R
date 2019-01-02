@@ -2,18 +2,21 @@
 # TITLE                                                                #
 # Antimicrobial Resistance (AMR) Analysis                              #
 #                                                                      #
-# AUTHORS                                                              #
-# Berends MS (m.s.berends@umcg.nl), Luz CF (c.f.luz@umcg.nl)           #
+# SOURCE                                                               #
+# https://gitlab.com/msberends/AMR                                     #
 #                                                                      #
 # LICENCE                                                              #
-# This package is free software; you can redistribute it and/or modify #
-# it under the terms of the GNU General Public License version 2.0,    #
-# as published by the Free Software Foundation.                        #
+# (c) 2019 Berends MS (m.s.berends@umcg.nl), Luz CF (c.f.luz@umcg.nl)  #
 #                                                                      #
-# This R package is distributed in the hope that it will be useful,    #
-# but WITHOUT ANY WARRANTY; without even the implied warranty of       #
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the        #
-# GNU General Public License version 2.0 for more details.             #
+# This R package is free software; you can freely use and distribute   #
+# it for both personal and commercial purposes under the terms of the  #
+# GNU General Public License version 2.0 (GNU GPL-2), as published by  #
+# the Free Software Foundation.                                        #
+#                                                                      #
+# This R package was created for academic research and was publicly    #
+# released in the hope that it will be useful, but it comes WITHOUT    #
+# ANY WARRANTY OR LIABILITY.                                           #
+# Visit our website for more info: https://msberends.gitab.io/AMR.     #
 # ==================================================================== #
 
 #' The \code{AMR} Package
@@ -23,8 +26,11 @@
 #' This package was intended to simplify the analysis and prediction of Antimicrobial Resistance (AMR) and ti work with antibiotic properties by using evidence-based methods.
 #'
 #' This package was created for academic research by PhD students of the Faculty of Medical Sciences of the University of Groningen and the Medical Microbiology & Infection Prevention (MMBI) department of the University Medical Center Groningen (UMCG).
+#' @section Read more on our website!:
+#' \if{html}{\figure{logo.png}{options: height=40px style=margin-bottom:5px} \cr}
+#' On our website \url{https://msberends.gitlab.io/AMR} you can find \href{https://msberends.gitlab.io/AMR/articles/AMR.html}{a omprehensive tutorial} about how to conduct AMR analysis and find \href{https://msberends.gitlab.io/AMR/reference}{the complete documentation of all functions}, which reads a lot easier than in R.
 #' @section Authors:
-#' Matthijs S. Berends[1,2] Christian F. Luz[1], Erwin E.A. Hassing[2],  Corinna Glasner[1],  Alex W. Friedrich[1],  Bhanu Sinha[1] \cr
+#' Matthijs S. Berends[1,2] Christian F. Luz[1], Erwin E.A. Hassing[2],  Corinna Glasner[1],  Alex W. Friedrich[1],  Bhanu N.M. Sinha[1] \cr
 #'
 #' [1] Department of Medical Microbiology, University of Groningen, University Medical Center Groningen, Groningen, the Netherlands - \url{rug.nl} \url{umcg.nl} \cr
 #' [2] Certe Medical Diagnostics & Advice, Groningen, the Netherlands - \url{certe.nl}

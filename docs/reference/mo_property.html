@@ -49,7 +49,7 @@
 
 <meta property="og:description" content="Use these functions to return a specific property of a microorganism from the microorganisms data set. All input values will be evaluated internally with as.mo." />
 
-<meta property="og:image" content="https://msberends.gitlab.io/logo.png" />
+<meta property="og:image" content="https://msberends.gitlab.io/AMR/logo.png" />
 <meta name="twitter:card" content="summary" />
 
 
@@ -80,7 +80,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.0.9008</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.0.9009</span>
       </span>
     </div>
 
@@ -93,12 +93,65 @@
     Home
   </a>
 </li>
-<li>
-  <a href="../articles/AMR.html">
-    <span class="fa fa-directions"></span>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    <span class="fa fa-question-circle"></span>
      
-    Get Started
+    How to
+     
+    <span class="caret"></span>
   </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="../articles/AMR.html">
+        <span class="fa fa-directions"></span>
+         
+        Conduct AMR analysis
+      </a>
+    </li>
+    <li>
+      <a href="../articles/Predict.html">
+        <span class="fa fa-dice"></span>
+         
+        Predict antimicrobial resistance
+      </a>
+    </li>
+    <li>
+      <a href="../articles/EUCAST.html">
+        <span class="fa fa-exchange-alt"></span>
+         
+        Apply EUCAST rules
+      </a>
+    </li>
+    <li>
+      <a href="../articles/mo_property.html">
+        <span class="fa fa-bug"></span>
+         
+        Get properties of a microorganism
+      </a>
+    </li>
+    <li>
+      <a href="../articles/ab_property.html">
+        <span class="fa fa-capsules"></span>
+         
+        Get properties of an antibiotic
+      </a>
+    </li>
+    <li>
+      <a href="../articles/freq.html">
+        <span class="fa fa-sort-amount-down"></span>
+         
+        Create frequency tables
+      </a>
+    </li>
+    <li>
+      <a href="../articles/G_test.html">
+        <span class="fa fa-clipboard-check"></span>
+         
+        Use the G-test
+      </a>
+    </li>
+  </ul>
 </li>
 <li>
   <a href="../reference/">
@@ -121,17 +174,17 @@
     Changelog
   </a>
 </li>
-<li>
+      </ul>
+      
+      <ul class="nav navbar-nav navbar-right">
+        <li>
   <a href="https://gitlab.com/msberends/AMR">
     <span class="fab fa fab fa-gitlab"></span>
      
     Source Code
   </a>
 </li>
-      </ul>
-      
-      <ul class="nav navbar-nav navbar-right">
-        <li>
+<li>
   <a href="../LICENSE-text.html">
     <span class="fa fa-book"></span>
      
@@ -264,73 +317,99 @@ This package contains the <strong>complete microbial taxonomic data</strong> (wi
 <p>[2] Lancefield RC <strong>A serological differentiation of human and other groups of hemolytic streptococci</strong>. 1933. J Exp Med. 57(4): 571–95. <a href='https://dx.doi.org/10.1084/jem.57.4.571'>https://dx.doi.org/10.1084/jem.57.4.571</a></p>
 <p>[3] Integrated Taxonomic Information System (ITIS). Retrieved September 2018. <a href='http://www.itis.gov'>http://www.itis.gov</a></p>
     
+    <h2 class="hasAnchor" id="read-more-on-our-website-"><a class="anchor" href="#read-more-on-our-website-"></a>Read more on our website!</h2>
+
+    
+    <p><img src='figures/logo.png' height=40px style=margin-bottom:5px /> <br />
+On our website <a href='https://msberends.gitlab.io/AMR'>https://msberends.gitlab.io/AMR</a> you can find <a href='https://msberends.gitlab.io/AMR/articles/AMR.html'>a omprehensive tutorial</a> about how to conduct AMR analysis and find <a href='https://msberends.gitlab.io/AMR/reference'>the complete documentation of all functions</a>, which reads a lot easier than in R.</p>
+    
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><code><a href='microorganisms.html'>microorganisms</a></code></p></div>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># All properties of Escherichia coli</span>
+    <pre class="examples"><span class='co'># NOT RUN {</span>
+<span class='co'># All properties of Escherichia coli</span>
 <span class='co'>## taxonomic properties</span>
-<span class='fu'>mo_kingdom</span>(<span class='st'>"E. coli"</span>)         <span class='co'># "Bacteria"</span></div><div class='output co'>#&gt; [1] "Bacteria"</div><div class='input'><span class='fu'>mo_subkingdom</span>(<span class='st'>"E. coli"</span>)      <span class='co'># "Negibacteria"</span></div><div class='output co'>#&gt; [1] "Negibacteria"</div><div class='input'><span class='fu'>mo_phylum</span>(<span class='st'>"E. coli"</span>)          <span class='co'># "Proteobacteria"</span></div><div class='output co'>#&gt; [1] "Proteobacteria"</div><div class='input'><span class='fu'>mo_class</span>(<span class='st'>"E. coli"</span>)           <span class='co'># "Gammaproteobacteria"</span></div><div class='output co'>#&gt; [1] "Gammaproteobacteria"</div><div class='input'><span class='fu'>mo_order</span>(<span class='st'>"E. coli"</span>)           <span class='co'># "Enterobacteriales"</span></div><div class='output co'>#&gt; [1] "Enterobacteriales"</div><div class='input'><span class='fu'>mo_family</span>(<span class='st'>"E. coli"</span>)          <span class='co'># "Enterobacteriaceae"</span></div><div class='output co'>#&gt; [1] "Enterobacteriaceae"</div><div class='input'><span class='fu'>mo_genus</span>(<span class='st'>"E. coli"</span>)           <span class='co'># "Escherichia"</span></div><div class='output co'>#&gt; [1] "Escherichia"</div><div class='input'><span class='fu'>mo_species</span>(<span class='st'>"E. coli"</span>)         <span class='co'># "coli"</span></div><div class='output co'>#&gt; [1] "coli"</div><div class='input'><span class='fu'>mo_subspecies</span>(<span class='st'>"E. coli"</span>)      <span class='co'># NA</span></div><div class='output co'>#&gt; [1] NA</div><div class='input'><span class='fu'>mo_TSN</span>(<span class='st'>"E. coli"</span>)             <span class='co'># 285 (Taxonomic Serial Number)</span></div><div class='output co'>#&gt; [1] 285</div><div class='input'>
+<span class='fu'>mo_kingdom</span>(<span class='st'>"E. coli"</span>)         <span class='co'># "Bacteria"</span>
+<span class='fu'>mo_subkingdom</span>(<span class='st'>"E. coli"</span>)      <span class='co'># "Negibacteria"</span>
+<span class='fu'>mo_phylum</span>(<span class='st'>"E. coli"</span>)          <span class='co'># "Proteobacteria"</span>
+<span class='fu'>mo_class</span>(<span class='st'>"E. coli"</span>)           <span class='co'># "Gammaproteobacteria"</span>
+<span class='fu'>mo_order</span>(<span class='st'>"E. coli"</span>)           <span class='co'># "Enterobacteriales"</span>
+<span class='fu'>mo_family</span>(<span class='st'>"E. coli"</span>)          <span class='co'># "Enterobacteriaceae"</span>
+<span class='fu'>mo_genus</span>(<span class='st'>"E. coli"</span>)           <span class='co'># "Escherichia"</span>
+<span class='fu'>mo_species</span>(<span class='st'>"E. coli"</span>)         <span class='co'># "coli"</span>
+<span class='fu'>mo_subspecies</span>(<span class='st'>"E. coli"</span>)      <span class='co'># NA</span>
+<span class='fu'>mo_TSN</span>(<span class='st'>"E. coli"</span>)             <span class='co'># 285 (Taxonomic Serial Number)</span>
+
 <span class='co'>## colloquial properties</span>
-<span class='fu'>mo_fullname</span>(<span class='st'>"E. coli"</span>)        <span class='co'># "Escherichia coli"</span></div><div class='output co'>#&gt; [1] "Escherichia coli"</div><div class='input'><span class='fu'>mo_shortname</span>(<span class='st'>"E. coli"</span>)       <span class='co'># "E. coli"</span></div><div class='output co'>#&gt; [1] "E. coli"</div><div class='input'>
+<span class='fu'>mo_fullname</span>(<span class='st'>"E. coli"</span>)        <span class='co'># "Escherichia coli"</span>
+<span class='fu'>mo_shortname</span>(<span class='st'>"E. coli"</span>)       <span class='co'># "E. coli"</span>
+
 <span class='co'>## other properties</span>
-<span class='fu'>mo_gramstain</span>(<span class='st'>"E. coli"</span>)       <span class='co'># "Gram negative"</span></div><div class='output co'>#&gt; [1] "Gram-negatief"</div><div class='input'><span class='fu'>mo_type</span>(<span class='st'>"E. coli"</span>)            <span class='co'># "Bacteria" (equal to kingdom)</span></div><div class='output co'>#&gt; [1] "Bacteriën"</div><div class='input'>
+<span class='fu'>mo_gramstain</span>(<span class='st'>"E. coli"</span>)       <span class='co'># "Gram negative"</span>
+<span class='fu'>mo_type</span>(<span class='st'>"E. coli"</span>)            <span class='co'># "Bacteria" (equal to kingdom)</span>
+
 <span class='co'>## scientific reference</span>
-<span class='fu'>mo_ref</span>(<span class='st'>"E. coli"</span>)             <span class='co'># "Castellani and Chalmers, 1919"</span></div><div class='output co'>#&gt; [1] "Castellani and Chalmers, 1919"</div><div class='input'><span class='fu'>mo_authors</span>(<span class='st'>"E. coli"</span>)         <span class='co'># "Castellani and Chalmers"</span></div><div class='output co'>#&gt; [1] "Castellani and Chalmers"</div><div class='input'><span class='fu'>mo_year</span>(<span class='st'>"E. coli"</span>)            <span class='co'># 1919</span></div><div class='output co'>#&gt; [1] 1919</div><div class='input'>
+<span class='fu'>mo_ref</span>(<span class='st'>"E. coli"</span>)             <span class='co'># "Castellani and Chalmers, 1919"</span>
+<span class='fu'>mo_authors</span>(<span class='st'>"E. coli"</span>)         <span class='co'># "Castellani and Chalmers"</span>
+<span class='fu'>mo_year</span>(<span class='st'>"E. coli"</span>)            <span class='co'># 1919</span>
+
 
 <span class='co'># Abbreviations known in the field</span>
-<span class='fu'>mo_genus</span>(<span class='st'>"MRSA"</span>)              <span class='co'># "Staphylococcus"</span></div><div class='output co'>#&gt; [1] "Staphylococcus"</div><div class='input'><span class='fu'>mo_species</span>(<span class='st'>"MRSA"</span>)            <span class='co'># "aureus"</span></div><div class='output co'>#&gt; [1] "aureus"</div><div class='input'><span class='fu'>mo_shortname</span>(<span class='st'>"MRSA"</span>)          <span class='co'># "S. aureus"</span></div><div class='output co'>#&gt; [1] "S. aureus"</div><div class='input'><span class='fu'>mo_gramstain</span>(<span class='st'>"MRSA"</span>)          <span class='co'># "Gram positive"</span></div><div class='output co'>#&gt; [1] "Gram-positief"</div><div class='input'>
-<span class='fu'>mo_genus</span>(<span class='st'>"VISA"</span>)              <span class='co'># "Staphylococcus"</span></div><div class='output co'>#&gt; [1] "Staphylococcus"</div><div class='input'><span class='fu'>mo_species</span>(<span class='st'>"VISA"</span>)            <span class='co'># "aureus"</span></div><div class='output co'>#&gt; [1] "aureus"</div><div class='input'>
+<span class='fu'>mo_genus</span>(<span class='st'>"MRSA"</span>)              <span class='co'># "Staphylococcus"</span>
+<span class='fu'>mo_species</span>(<span class='st'>"MRSA"</span>)            <span class='co'># "aureus"</span>
+<span class='fu'>mo_shortname</span>(<span class='st'>"MRSA"</span>)          <span class='co'># "S. aureus"</span>
+<span class='fu'>mo_gramstain</span>(<span class='st'>"MRSA"</span>)          <span class='co'># "Gram positive"</span>
+
+<span class='fu'>mo_genus</span>(<span class='st'>"VISA"</span>)              <span class='co'># "Staphylococcus"</span>
+<span class='fu'>mo_species</span>(<span class='st'>"VISA"</span>)            <span class='co'># "aureus"</span>
+
 
 <span class='co'># Known subspecies</span>
-<span class='fu'>mo_genus</span>(<span class='st'>"doylei"</span>)            <span class='co'># "Campylobacter"</span></div><div class='output co'>#&gt; <span class='warning'>Warning: <span style='color: #BB0000;'>These 1 values could not be coerced to a valid MO code: "doylei". See mo_failures() to review them.</span><span></span></div><div class='output co'>#&gt; [1] NA</div><div class='input'><span class='fu'>mo_species</span>(<span class='st'>"doylei"</span>)          <span class='co'># "jejuni"</span></div><div class='output co'>#&gt; <span class='warning'>Warning: </span><span style='color: #BB0000;'>These 1 values could not be coerced to a valid MO code: "doylei". See mo_failures() to review them.</span><span></span></div><div class='output co'>#&gt; [1] NA</div><div class='input'><span class='fu'>mo_fullname</span>(<span class='st'>"doylei"</span>)         <span class='co'># "Campylobacter jejuni doylei"</span></div><div class='output co'>#&gt; <span class='warning'>Warning: </span><span style='color: #BB0000;'>These 1 values could not be coerced to a valid MO code: "doylei". See mo_failures() to review them.</span><span></span></div><div class='output co'>#&gt; [1] NA</div><div class='input'>
-<span class='fu'>mo_fullname</span>(<span class='st'>"K. pneu rh"</span>)     <span class='co'># "Klebsiella pneumoniae rhinoscleromatis"</span></div><div class='output co'>#&gt; [1] "Klebsiella pneumoniae rhinoscleromatis"</div><div class='input'><span class='fu'>mo_shortname</span>(<span class='st'>"K. pneu rh"</span>)    <span class='co'># "K. pneumoniae"</span></div><div class='output co'>#&gt; [1] "K. pneumoniae"</div><div class='input'>
+<span class='fu'>mo_genus</span>(<span class='st'>"doylei"</span>)            <span class='co'># "Campylobacter"</span>
+<span class='fu'>mo_species</span>(<span class='st'>"doylei"</span>)          <span class='co'># "jejuni"</span>
+<span class='fu'>mo_fullname</span>(<span class='st'>"doylei"</span>)         <span class='co'># "Campylobacter jejuni doylei"</span>
+
+<span class='fu'>mo_fullname</span>(<span class='st'>"K. pneu rh"</span>)     <span class='co'># "Klebsiella pneumoniae rhinoscleromatis"</span>
+<span class='fu'>mo_shortname</span>(<span class='st'>"K. pneu rh"</span>)    <span class='co'># "K. pneumoniae"</span>
+
 
 <span class='co'># Becker classification, see ?as.mo</span>
-<span class='fu'>mo_fullname</span>(<span class='st'>"S. epi"</span>)                     <span class='co'># "Staphylococcus epidermidis"</span></div><div class='output co'>#&gt; [1] "Staphylococcus epidermidis"</div><div class='input'><span class='fu'>mo_fullname</span>(<span class='st'>"S. epi"</span>, <span class='kw'>Becker</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)      <span class='co'># "Coagulase Negative Staphylococcus (CoNS)"</span></div><div class='output co'>#&gt; [1] "Coagulase-negatieve Staphylococcus (CNS)"</div><div class='input'><span class='fu'>mo_shortname</span>(<span class='st'>"S. epi"</span>)                    <span class='co'># "S. epidermidis"</span></div><div class='output co'>#&gt; [1] "S. epidermidis"</div><div class='input'><span class='fu'>mo_shortname</span>(<span class='st'>"S. epi"</span>, <span class='kw'>Becker</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)     <span class='co'># "CoNS"</span></div><div class='output co'>#&gt; [1] "CNS"</div><div class='input'>
+<span class='fu'>mo_fullname</span>(<span class='st'>"S. epi"</span>)                     <span class='co'># "Staphylococcus epidermidis"</span>
+<span class='fu'>mo_fullname</span>(<span class='st'>"S. epi"</span>, <span class='kw'>Becker</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)      <span class='co'># "Coagulase Negative Staphylococcus (CoNS)"</span>
+<span class='fu'>mo_shortname</span>(<span class='st'>"S. epi"</span>)                    <span class='co'># "S. epidermidis"</span>
+<span class='fu'>mo_shortname</span>(<span class='st'>"S. epi"</span>, <span class='kw'>Becker</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)     <span class='co'># "CoNS"</span>
+
 <span class='co'># Lancefield classification, see ?as.mo</span>
-<span class='fu'>mo_fullname</span>(<span class='st'>"S. pyo"</span>)                     <span class='co'># "Streptococcus pyogenes"</span></div><div class='output co'>#&gt; [1] "Streptococcus pyogenes"</div><div class='input'><span class='fu'>mo_fullname</span>(<span class='st'>"S. pyo"</span>, <span class='kw'>Lancefield</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)  <span class='co'># "Streptococcus group A"</span></div><div class='output co'>#&gt; [1] "Streptococcus groep A"</div><div class='input'><span class='fu'>mo_shortname</span>(<span class='st'>"S. pyo"</span>)                    <span class='co'># "S. pyogenes"</span></div><div class='output co'>#&gt; [1] "S. pyogenes"</div><div class='input'><span class='fu'>mo_shortname</span>(<span class='st'>"S. pyo"</span>, <span class='kw'>Lancefield</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>) <span class='co'># "GAS" ('Group A streptococci')</span></div><div class='output co'>#&gt; [1] "GAS"</div><div class='input'>
+<span class='fu'>mo_fullname</span>(<span class='st'>"S. pyo"</span>)                     <span class='co'># "Streptococcus pyogenes"</span>
+<span class='fu'>mo_fullname</span>(<span class='st'>"S. pyo"</span>, <span class='kw'>Lancefield</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)  <span class='co'># "Streptococcus group A"</span>
+<span class='fu'>mo_shortname</span>(<span class='st'>"S. pyo"</span>)                    <span class='co'># "S. pyogenes"</span>
+<span class='fu'>mo_shortname</span>(<span class='st'>"S. pyo"</span>, <span class='kw'>Lancefield</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>) <span class='co'># "GAS" ('Group A streptococci')</span>
+
 
 <span class='co'># Language support for German, Dutch, Spanish, Portuguese, Italian and French</span>
-<span class='fu'>mo_gramstain</span>(<span class='st'>"E. coli"</span>, <span class='kw'>language</span> <span class='kw'>=</span> <span class='st'>"de"</span>)  <span class='co'># "Gramnegativ"</span></div><div class='output co'>#&gt; [1] "Gramnegativ"</div><div class='input'><span class='fu'>mo_gramstain</span>(<span class='st'>"E. coli"</span>, <span class='kw'>language</span> <span class='kw'>=</span> <span class='st'>"nl"</span>)  <span class='co'># "Gram-negatief"</span></div><div class='output co'>#&gt; [1] "Gram-negatief"</div><div class='input'><span class='fu'>mo_gramstain</span>(<span class='st'>"E. coli"</span>, <span class='kw'>language</span> <span class='kw'>=</span> <span class='st'>"es"</span>)  <span class='co'># "Gram negativo"</span></div><div class='output co'>#&gt; [1] "Gram negativo"</div><div class='input'>
+<span class='fu'>mo_gramstain</span>(<span class='st'>"E. coli"</span>, <span class='kw'>language</span> <span class='kw'>=</span> <span class='st'>"de"</span>)  <span class='co'># "Gramnegativ"</span>
+<span class='fu'>mo_gramstain</span>(<span class='st'>"E. coli"</span>, <span class='kw'>language</span> <span class='kw'>=</span> <span class='st'>"nl"</span>)  <span class='co'># "Gram-negatief"</span>
+<span class='fu'>mo_gramstain</span>(<span class='st'>"E. coli"</span>, <span class='kw'>language</span> <span class='kw'>=</span> <span class='st'>"es"</span>)  <span class='co'># "Gram negativo"</span>
+
 <span class='co'># mo_type is equal to mo_kingdom, but mo_kingdom will remain official</span>
-<span class='fu'>mo_kingdom</span>(<span class='st'>"E. coli"</span>)                     <span class='co'># "Bacteria" on a German system</span></div><div class='output co'>#&gt; [1] "Bacteria"</div><div class='input'><span class='fu'>mo_type</span>(<span class='st'>"E. coli"</span>)                        <span class='co'># "Bakterien" on a German system</span></div><div class='output co'>#&gt; [1] "Bacteriën"</div><div class='input'><span class='fu'>mo_type</span>(<span class='st'>"E. coli"</span>)                        <span class='co'># "Bacteria" on an English system</span></div><div class='output co'>#&gt; [1] "Bacteriën"</div><div class='input'>
+<span class='fu'>mo_kingdom</span>(<span class='st'>"E. coli"</span>)                     <span class='co'># "Bacteria" on a German system</span>
+<span class='fu'>mo_type</span>(<span class='st'>"E. coli"</span>)                        <span class='co'># "Bakterien" on a German system</span>
+<span class='fu'>mo_type</span>(<span class='st'>"E. coli"</span>)                        <span class='co'># "Bacteria" on an English system</span>
+
 <span class='fu'>mo_fullname</span>(<span class='st'>"S. pyogenes"</span>,
             <span class='kw'>Lancefield</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-            <span class='kw'>language</span> <span class='kw'>=</span> <span class='st'>"de"</span>)              <span class='co'># "Streptococcus Gruppe A"</span></div><div class='output co'>#&gt; [1] "Streptococcus Gruppe A"</div><div class='input'><span class='fu'>mo_fullname</span>(<span class='st'>"S. pyogenes"</span>,
+            <span class='kw'>language</span> <span class='kw'>=</span> <span class='st'>"de"</span>)              <span class='co'># "Streptococcus Gruppe A"</span>
+<span class='fu'>mo_fullname</span>(<span class='st'>"S. pyogenes"</span>,
             <span class='kw'>Lancefield</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-            <span class='kw'>language</span> <span class='kw'>=</span> <span class='st'>"nl"</span>)              <span class='co'># "Streptococcus groep A"</span></div><div class='output co'>#&gt; [1] "Streptococcus groep A"</div><div class='input'>
+            <span class='kw'>language</span> <span class='kw'>=</span> <span class='st'>"nl"</span>)              <span class='co'># "Streptococcus groep A"</span>
+
 
 <span class='co'># Get a list with the complete taxonomy (subkingdom to subspecies)</span>
-<span class='fu'>mo_taxonomy</span>(<span class='st'>"E. coli"</span>)</div><div class='output co'>#&gt; $kingdom
-#&gt; [1] "Bacteria"
-#&gt; 
-#&gt; $subkingdom
-#&gt; [1] "Negibacteria"
-#&gt; 
-#&gt; $phylum
-#&gt; [1] "Proteobacteria"
-#&gt; 
-#&gt; $class
-#&gt; [1] "Gammaproteobacteria"
-#&gt; 
-#&gt; $order
-#&gt; [1] "Enterobacteriales"
-#&gt; 
-#&gt; $family
-#&gt; [1] "Enterobacteriaceae"
-#&gt; 
-#&gt; $genus
-#&gt; [1] "Escherichia"
-#&gt; 
-#&gt; $species
-#&gt; [1] "coli"
-#&gt; 
-#&gt; $subspecies
-#&gt; [1] NA
-#&gt; </div></span></pre>
+<span class='fu'>mo_taxonomy</span>(<span class='st'>"E. coli"</span>)
+<span class='co'># }</span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -346,6 +425,8 @@ This package contains the <strong>complete microbial taxonomic data</strong> (wi
       <li><a href="#itis">ITIS</a></li>
 
       <li><a href="#source">Source</a></li>
+
+      <li><a href="#read-more-on-our-website-">Read more on our website!</a></li>
 
       <li><a href="#see-also">See also</a></li>
       

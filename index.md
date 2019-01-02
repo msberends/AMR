@@ -54,7 +54,7 @@ It will be downloaded and installed automatically.
 
 ### Get started
 
-To find out how to conduct AMR analysis, please [continue reading here to get started](./articles/AMR.html) or click the button 'Get Started' in the top menu.
+To find out how to conduct AMR analysis, please [continue reading here to get started](./articles/AMR.html) or click the links in the 'How to' menu.
 
 ### Short introduction
 

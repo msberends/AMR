@@ -2,18 +2,21 @@
 # TITLE                                                                #
 # Antimicrobial Resistance (AMR) Analysis                              #
 #                                                                      #
-# AUTHORS                                                              #
-# Berends MS (m.s.berends@umcg.nl), Luz CF (c.f.luz@umcg.nl)           #
+# SOURCE                                                               #
+# https://gitlab.com/msberends/AMR                                     #
 #                                                                      #
 # LICENCE                                                              #
-# This package is free software; you can redistribute it and/or modify #
-# it under the terms of the GNU General Public License version 2.0,    #
-# as published by the Free Software Foundation.                        #
+# (c) 2019 Berends MS (m.s.berends@umcg.nl), Luz CF (c.f.luz@umcg.nl)  #
 #                                                                      #
-# This R package is distributed in the hope that it will be useful,    #
-# but WITHOUT ANY WARRANTY; without even the implied warranty of       #
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the        #
-# GNU General Public License version 2.0 for more details.             #
+# This R package is free software; you can freely use and distribute   #
+# it for both personal and commercial purposes under the terms of the  #
+# GNU General Public License version 2.0 (GNU GPL-2), as published by  #
+# the Free Software Foundation.                                        #
+#                                                                      #
+# This R package was created for academic research and was publicly    #
+# released in the hope that it will be useful, but it comes WITHOUT    #
+# ANY WARRANTY OR LIABILITY.                                           #
+# Visit our website for more info: https://msberends.gitab.io/AMR.     #
 # ==================================================================== #
 
 #' Data set with 423 antibiotics
@@ -41,6 +44,7 @@
 #'   \item{\code{useful_grampositive}}{\code{FALSE} if not useful according to EUCAST, \code{NA} otherwise (see Source)}
 #' }
 #' @source - World Health Organization: \url{https://www.whocc.no/atc_ddd_index/} \cr - EUCAST - Expert rules intrinsic exceptional V3.1 \cr - MOLIS (LIS of Certe): \url{https://www.certe.nl} \cr - GLIMS (LIS of UMCG): \url{https://www.umcg.nl}
+#' @inheritSection AMR Read more on our website!
 #' @seealso \code{\link{microorganisms}}
 # use this later to further fill AMR::antibiotics
 # drug <- "Ciprofloxacin"
@@ -123,7 +127,7 @@
 #' Data set with taxonomic data from ITIS
 #'
 #' A data set containing the complete microbial taxonomy of the kingdoms Bacteria, Fungi and Protozoa. MO codes can be looked up using \code{\link{as.mo}}.
-#' @inheritSection as.mo ITIS
+#' @inheritSection itis ITIS
 #' @format A \code{\link{data.frame}} with 18,833 observations and 15 variables:
 #' \describe{
 #'   \item{\code{mo}}{ID of microorganism}
@@ -143,6 +147,7 @@
 #'   \item{\code{ref}}{Author(s) and year of concerning publication as found in ITIS, see Source}
 #' }
 #' @source [3] Integrated Taxonomic Information System (ITIS) on-line database, \url{https://www.itis.gov}.
+#' @inheritSection AMR Read more on our website!
 #' @seealso \code{\link{as.mo}} \code{\link{mo_property}} \code{\link{microorganisms.umcg}}
 "microorganisms"
 
@@ -158,6 +163,7 @@
 #'   \item{\code{ref}}{Author(s) and year of concerning publication as found in ITIS, see Source}
 #' }
 #' @source [3] Integrated Taxonomic Information System (ITIS) on-line database, \url{https://www.itis.gov}.
+#' @inheritSection AMR Read more on our website!
 #' @seealso \code{\link{as.mo}} \code{\link{mo_property}} \code{\link{microorganisms}}
 "microorganisms.old"
 
@@ -169,6 +175,7 @@
 #'   \item{\code{umcg}}{Code of microorganism according to UMCG MMB}
 #'   \item{\code{certe}}{Code of microorganism according to Certe MMB}
 #' }
+#' @inheritSection AMR Read more on our website!
 #' @seealso \code{\link{as.mo}} \code{\link{microorganisms.certe}} \code{\link{microorganisms}}
 "microorganisms.umcg"
 
@@ -180,12 +187,13 @@
 #'   \item{\code{certe}}{Code of microorganism according to Certe MMB}
 #'   \item{\code{mo}}{Code of microorganism in \code{\link{microorganisms}}}
 #' }
+#' @inheritSection AMR Read more on our website!
 #' @seealso \code{\link{as.mo}} \code{\link{microorganisms}}
 "microorganisms.certe"
 
 #' Data set with 2000 blood culture isolates of septic patients
 #'
-#' An anonymised data set containing 2,000 microbial blood culture isolates with their full antibiograms found in septic patients in 4 different hospitals in the Netherlands, between 2001 and 2017. It is true, genuine data. This \code{data.frame} can be used to practice AMR analysis. For examples, press F1.
+#' An anonymised data set containing 2,000 microbial blood culture isolates with their full antibiograms found in septic patients in 4 different hospitals in the Netherlands, between 2001 and 2017. It is true, genuine data. This \code{data.frame} can be used to practice AMR analysis. For examples, please read \href{https://msberends.gitlab.io/AMR/articles/AMR.html}{the tutorial on our website}.
 #' @format A \code{\link{data.frame}} with 2,000 observations and 49 variables:
 #' \describe{
 #'   \item{\code{date}}{date of receipt at the laboratory}
@@ -199,45 +207,7 @@
 #'   \item{\code{mo}}{ID of microorganism created with \code{\link{as.mo}}, see also \code{\link{microorganisms}}}
 #'   \item{\code{peni:rifa}}{40 different antibiotics with class \code{rsi} (see \code{\link{as.rsi}}); these column names occur in \code{\link{antibiotics}} data set and can be translated with \code{\link{abname}}}
 #' }
-#' @examples
-#' # ----------- #
-#' # PREPARATION #
-#' # ----------- #
-#'
-#' # Save this example data set to an object, so we can edit it:
-#' my_data <- septic_patients
-#'
-#' # load the dplyr package to make data science A LOT easier
-#' library(dplyr)
-#'
-#' # Add first isolates to our data set:
-#' my_data <- my_data %>%
-#'   mutate(first_isolates = first_isolate(my_data, "date", "patient_id", "mo"))
-#'
-#' # -------- #
-#' # ANALYSIS #
-#' # -------- #
-#'
-#' # 1. Get the amoxicillin resistance percentages (p)
-#' #     and numbers (n) of E. coli, divided by hospital:
-#'
-#' my_data %>%
-#'   filter(mo == guess_mo("E. coli"),
-#'          first_isolates == TRUE) %>%
-#'   group_by(hospital_id) %>%
-#'   summarise(n = n_rsi(amox),
-#'             p = portion_IR(amox))
-#'
-#'
-#' # 2. Get the amoxicillin/clavulanic acid resistance
-#' #    percentages of E. coli, trend over the years:
-#'
-#' my_data %>%
-#'   filter(mo == guess_mo("E. coli"),
-#'          first_isolates == TRUE) %>%
-#'   group_by(year = format(date, "%Y")) %>%
-#'   summarise(n = n_rsi(amcl),
-#'             p = portion_IR(amcl, minimum = 20))
+#' @inheritSection AMR Read more on our website!
 "septic_patients"
 
 #' Supplementary Data
@@ -245,6 +215,7 @@
 #' These \code{\link{data.table}s} are transformed from the \code{\link{microorganisms}} and \code{\link{microorganisms}} data sets to improve speed of \code{\link{as.mo}}. They are meant for internal use only, and are only mentioned here for reference.
 #' @rdname supplementary_data
 #' @name supplementary_data
+#' @inheritSection AMR Read more on our website!
 # # Renew data:
 # microorganismsDT <- data.table::as.data.table(AMR::microorganisms)
 # # sort on (1) bacteria, (2) fungi, (3) protozoa and then human pathogenic prevalence and then TSN:

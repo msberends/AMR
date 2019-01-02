@@ -1,0 +1,169 @@
+---
+title: "How to create frequency tables"
+author: "Matthijs S. Berends"
+output: 
+  rmarkdown::html_vignette:
+    toc: true
+    toc_depth: 3
+vignette: >
+  %\VignetteIndexEntry{How to create frequency tables}
+  %\VignetteEncoding{UTF-8}
+  %\VignetteEngine{knitr::rmarkdown}
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r setup, include = FALSE, results = 'asis'}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#",
+  results = 'asis',
+  fig.width = 7.5,
+  fig.height = 4.5
+)
+# set to original language (English)
+Sys.setlocale(locale = "C")
+library(dplyr)
+library(AMR)
+```
+
+## Introduction
+
+Frequency tables (or frequency distributions) are summaries of the distribution of values in a sample. With the `freq` function, you can create univariate frequency tables. Multiple variables will be pasted into one variable, so it forces a univariate distribution. We take the `septic_patients` dataset (included in this AMR package) as example.
+
+## Frequencies of one variable
+
+To only show and quickly review the content of one variable, you can just select this variable in various ways. Let's say we want to get the frequencies of the `gender` variable of the `septic_patients` dataset:
+```{r, echo = TRUE}
+septic_patients %>% freq(gender)
+```
+This immediately shows the class of the variable, its length and availability (i.e. the amount of `NA`), the amount of unique values and (most importantly) that among septic patients men are more prevalent than women.
+
+## Frequencies of more than one variable
+
+Multiple variables will be pasted into one variable to review individual cases, keeping a univariate frequency table.
+
+For illustration, we could add some more variables to the `septic_patients` dataset to learn about bacterial properties:
+```{r, echo = TRUE, results = 'hide'}
+my_patients <- septic_patients %>% left_join_microorganisms()
+```
+Now all variables of the `microorganisms` dataset have been joined to the `septic_patients` dataset. The `microorganisms` dataset consists of the following variables:
+```{r, echo = TRUE, results = 'markup'}
+colnames(microorganisms)
+```
+
+If we compare the dimensions between the old and new dataset, we can see that these `r ncol(my_patients) - ncol(septic_patients)` variables were added:
+```{r, echo = TRUE, results = 'markup'}
+dim(septic_patients)
+dim(my_patients)
+```
+
+So now the `genus` and `species` variables are available. A frequency table of these combined variables can be created like this:
+```{r, echo = TRUE}
+my_patients %>%
+  freq(genus, species, nmax = 15)
+```
+
+## Frequencies of numeric values
+
+Frequency tables can be created of any input.
+
+In case of numeric values (like integers, doubles, etc.) additional descriptive statistics will be calculated and shown into the header:
+
+```{r, echo = TRUE}
+# # get age distribution of unique patients
+septic_patients %>% 
+  distinct(patient_id, .keep_all = TRUE) %>% 
+  freq(age, nmax = 5, header = TRUE)
+```
+
+So the following properties are determined, where `NA` values are always ignored:
+
+* **Mean**
+
+* **Standard deviation**
+
+* **Coefficient of variation** (CV), the standard deviation divided by the mean
+
+* **Five numbers of Tukey** (min, Q1, median, Q3, max)
+
+* **Coefficient of quartile variation** (CQV, sometimes called coefficient of dispersion), calculated as (Q3 - Q1) / (Q3 + Q1) using quantile with `type = 6` as quantile algorithm to comply with SPSS standards
+
+* **Outliers** (total count and unique count)
+
+So for example, the above frequency table quickly shows the median age of patients being `r my_patients %>% distinct(patient_id, .keep_all = TRUE) %>% pull(age) %>% median(na.rm = TRUE)`.
+
+## Frequencies of factors
+
+To sort frequencies of factors on factor level instead of item count, use the `sort.count` parameter. 
+
+`sort.count` is `TRUE` by default. Compare this default behaviour...
+
+```{r, echo = TRUE}
+septic_patients %>%
+  freq(hospital_id)
+```
+
+... with this, where items are now sorted on count:
+
+```{r, echo = TRUE}
+septic_patients %>%
+  freq(hospital_id, sort.count = FALSE)
+```
+
+All classes will be printed into the header (default is `FALSE` when using markdown like this document). Variables with the new `rsi` class of this AMR package are actually ordered factors and have three classes (look at `Class` in the header):
+
+```{r, echo = TRUE}
+septic_patients %>%
+  freq(amox, header = TRUE)
+```
+
+## Frequencies of dates
+
+Frequencies of dates will show the oldest and newest date in the data, and the amount of days between them:
+
+```{r, echo = TRUE}
+septic_patients %>%
+  freq(date, nmax = 5, header = TRUE)
+```
+
+## Assigning a frequency table to an object
+
+A frequency table is actaually a regular `data.frame`, with the exception that it contains an additional class.
+
+```{r, echo = TRUE}
+my_df <- septic_patients %>% freq(age)
+class(my_df)
+```
+
+Because of this additional class, a frequency table prints like the examples above. But the object itself contains the complete table without a row limitation:
+
+```{r, echo = TRUE}
+dim(my_df)
+```
+
+## Additional parameters
+
+### Parameter `na.rm`
+With the `na.rm` parameter (defaults to `TRUE`, but they will always be shown into the header), you can include `NA` values in the frequency table:
+
+```{r, echo = TRUE}
+septic_patients %>%
+  freq(amox, na.rm = FALSE)
+```
+
+### Parameter `row.names`
+The default frequency tables shows row indices. To remove them, use `row.names = FALSE`:
+
+```{r, echo = TRUE}
+septic_patients %>%
+  freq(hospital_id, row.names = FALSE)
+```
+
+### Parameter `markdown`
+The `markdown` parameter is `TRUE` at default in non-interactive sessions, like in reports created with R Markdown. This will always print all rows, unless `nmax` is set.
+
+```{r, echo = TRUE}
+septic_patients %>%
+  freq(hospital_id, markdown = TRUE)
+```
