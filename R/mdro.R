@@ -46,66 +46,66 @@ mdro <- function(tbl,
                  country = NULL,
                  col_mo = NULL,
                  info = TRUE,
-                 amcl = 'amcl',
-                 amik = 'amik',
-                 amox = 'amox',
-                 ampi = 'ampi',
-                 azit = 'azit',
-                 aztr = 'aztr',
-                 cefa = 'cefa',
-                 cfra = 'cfra',
-                 cfep = 'cfep',
-                 cfot = 'cfot',
-                 cfox = 'cfox',
-                 cfta = 'cfta',
-                 cftr = 'cftr',
-                 cfur = 'cfur',
-                 chlo = 'chlo',
-                 cipr = 'cipr',
-                 clar = 'clar',
-                 clin = 'clin',
-                 clox = 'clox',
-                 coli = 'coli',
-                 czol = 'czol',
-                 dapt = 'dapt',
-                 doxy = 'doxy',
-                 erta = 'erta',
-                 eryt = 'eryt',
-                 fosf = 'fosf',
-                 fusi = 'fusi',
-                 gent = 'gent',
-                 imip = 'imip',
-                 kana = 'kana',
-                 levo = 'levo',
-                 linc = 'linc',
-                 line = 'line',
-                 mero = 'mero',
-                 metr = 'metr',
-                 mino = 'mino',
-                 moxi = 'moxi',
-                 nali = 'nali',
-                 neom = 'neom',
-                 neti = 'neti',
-                 nitr = 'nitr',
-                 novo = 'novo',
-                 norf = 'norf',
-                 oflo = 'oflo',
-                 peni = 'peni',
-                 pipe = 'pipe',
-                 pita = 'pita',
-                 poly = 'poly',
-                 qida = 'qida',
-                 rifa = 'rifa',
-                 roxi = 'roxi',
-                 siso = 'siso',
-                 teic = 'teic',
-                 tetr = 'tetr',
-                 tica = 'tica',
-                 tige = 'tige',
-                 tobr = 'tobr',
-                 trim = 'trim',
-                 trsu = 'trsu',
-                 vanc = 'vanc') {
+                 amcl = guess_ab(),
+                 amik = guess_ab(),
+                 amox = guess_ab(),
+                 ampi = guess_ab(),
+                 azit = guess_ab(),
+                 aztr = guess_ab(),
+                 cefa = guess_ab(),
+                 cfra = guess_ab(),
+                 cfep = guess_ab(),
+                 cfot = guess_ab(),
+                 cfox = guess_ab(),
+                 cfta = guess_ab(),
+                 cftr = guess_ab(),
+                 cfur = guess_ab(),
+                 chlo = guess_ab(),
+                 cipr = guess_ab(),
+                 clar = guess_ab(),
+                 clin = guess_ab(),
+                 clox = guess_ab(),
+                 coli = guess_ab(),
+                 czol = guess_ab(),
+                 dapt = guess_ab(),
+                 doxy = guess_ab(),
+                 erta = guess_ab(),
+                 eryt = guess_ab(),
+                 fosf = guess_ab(),
+                 fusi = guess_ab(),
+                 gent = guess_ab(),
+                 imip = guess_ab(),
+                 kana = guess_ab(),
+                 levo = guess_ab(),
+                 linc = guess_ab(),
+                 line = guess_ab(),
+                 mero = guess_ab(),
+                 metr = guess_ab(),
+                 mino = guess_ab(),
+                 moxi = guess_ab(),
+                 nali = guess_ab(),
+                 neom = guess_ab(),
+                 neti = guess_ab(),
+                 nitr = guess_ab(),
+                 novo = guess_ab(),
+                 norf = guess_ab(),
+                 oflo = guess_ab(),
+                 peni = guess_ab(),
+                 pipe = guess_ab(),
+                 pita = guess_ab(),
+                 poly = guess_ab(),
+                 qida = guess_ab(),
+                 rifa = guess_ab(),
+                 roxi = guess_ab(),
+                 siso = guess_ab(),
+                 teic = guess_ab(),
+                 tetr = guess_ab(),
+                 tica = guess_ab(),
+                 tige = guess_ab(),
+                 tobr = guess_ab(),
+                 trim = guess_ab(),
+                 trsu = guess_ab(),
+                 vanc = guess_ab()) {
 
   if (!is.data.frame(tbl)) {
     stop("`tbl` must be a data frame.", call. = FALSE)
@@ -169,12 +169,77 @@ mdro <- function(tbl,
   }
 
   # check columns
+  if (identical(amcl, as.name("guess_ab"))) { amcl <- guess_ab(tbl, "amcl", verbose = info) }
+  if (identical(amik, as.name("guess_ab"))) { amik <- guess_ab(tbl, "amik", verbose = info) }
+  if (identical(amox, as.name("guess_ab"))) { amox <- guess_ab(tbl, "amox", verbose = info) }
+  if (identical(ampi, as.name("guess_ab"))) { ampi <- guess_ab(tbl, "ampi", verbose = info) }
+  if (identical(azit, as.name("guess_ab"))) { azit <- guess_ab(tbl, "azit", verbose = info) }
+  if (identical(aztr, as.name("guess_ab"))) { aztr <- guess_ab(tbl, "aztr", verbose = info) }
+  if (identical(cefa, as.name("guess_ab"))) { cefa <- guess_ab(tbl, "cefa", verbose = info) }
+  if (identical(cfra, as.name("guess_ab"))) { cfra <- guess_ab(tbl, "cfra", verbose = info) }
+  if (identical(cfep, as.name("guess_ab"))) { cfep <- guess_ab(tbl, "cfep", verbose = info) }
+  if (identical(cfot, as.name("guess_ab"))) { cfot <- guess_ab(tbl, "cfot", verbose = info) }
+  if (identical(cfox, as.name("guess_ab"))) { cfox <- guess_ab(tbl, "cfox", verbose = info) }
+  if (identical(cfta, as.name("guess_ab"))) { cfta <- guess_ab(tbl, "cfta", verbose = info) }
+  if (identical(cftr, as.name("guess_ab"))) { cftr <- guess_ab(tbl, "cftr", verbose = info) }
+  if (identical(cfur, as.name("guess_ab"))) { cfur <- guess_ab(tbl, "cfur", verbose = info) }
+  if (identical(chlo, as.name("guess_ab"))) { chlo <- guess_ab(tbl, "chlo", verbose = info) }
+  if (identical(cipr, as.name("guess_ab"))) { cipr <- guess_ab(tbl, "cipr", verbose = info) }
+  if (identical(clar, as.name("guess_ab"))) { clar <- guess_ab(tbl, "clar", verbose = info) }
+  if (identical(clin, as.name("guess_ab"))) { clin <- guess_ab(tbl, "clin", verbose = info) }
+  if (identical(clox, as.name("guess_ab"))) { clox <- guess_ab(tbl, "clox", verbose = info) }
+  if (identical(coli, as.name("guess_ab"))) { coli <- guess_ab(tbl, "coli", verbose = info) }
+  if (identical(czol, as.name("guess_ab"))) { czol <- guess_ab(tbl, "czol", verbose = info) }
+  if (identical(dapt, as.name("guess_ab"))) { dapt <- guess_ab(tbl, "dapt", verbose = info) }
+  if (identical(doxy, as.name("guess_ab"))) { doxy <- guess_ab(tbl, "doxy", verbose = info) }
+  if (identical(erta, as.name("guess_ab"))) { erta <- guess_ab(tbl, "erta", verbose = info) }
+  if (identical(eryt, as.name("guess_ab"))) { eryt <- guess_ab(tbl, "eryt", verbose = info) }
+  if (identical(fosf, as.name("guess_ab"))) { fosf <- guess_ab(tbl, "fosf", verbose = info) }
+  if (identical(fusi, as.name("guess_ab"))) { fusi <- guess_ab(tbl, "fusi", verbose = info) }
+  if (identical(gent, as.name("guess_ab"))) { gent <- guess_ab(tbl, "gent", verbose = info) }
+  if (identical(imip, as.name("guess_ab"))) { imip <- guess_ab(tbl, "imip", verbose = info) }
+  if (identical(kana, as.name("guess_ab"))) { kana <- guess_ab(tbl, "kana", verbose = info) }
+  if (identical(levo, as.name("guess_ab"))) { levo <- guess_ab(tbl, "levo", verbose = info) }
+  if (identical(linc, as.name("guess_ab"))) { linc <- guess_ab(tbl, "linc", verbose = info) }
+  if (identical(line, as.name("guess_ab"))) { line <- guess_ab(tbl, "line", verbose = info) }
+  if (identical(mero, as.name("guess_ab"))) { mero <- guess_ab(tbl, "mero", verbose = info) }
+  if (identical(metr, as.name("guess_ab"))) { metr <- guess_ab(tbl, "metr", verbose = info) }
+  if (identical(mino, as.name("guess_ab"))) { mino <- guess_ab(tbl, "mino", verbose = info) }
+  if (identical(moxi, as.name("guess_ab"))) { moxi <- guess_ab(tbl, "moxi", verbose = info) }
+  if (identical(nali, as.name("guess_ab"))) { nali <- guess_ab(tbl, "nali", verbose = info) }
+  if (identical(neom, as.name("guess_ab"))) { neom <- guess_ab(tbl, "neom", verbose = info) }
+  if (identical(neti, as.name("guess_ab"))) { neti <- guess_ab(tbl, "neti", verbose = info) }
+  if (identical(nitr, as.name("guess_ab"))) { nitr <- guess_ab(tbl, "nitr", verbose = info) }
+  if (identical(novo, as.name("guess_ab"))) { novo <- guess_ab(tbl, "novo", verbose = info) }
+  if (identical(norf, as.name("guess_ab"))) { norf <- guess_ab(tbl, "norf", verbose = info) }
+  if (identical(oflo, as.name("guess_ab"))) { oflo <- guess_ab(tbl, "oflo", verbose = info) }
+  if (identical(peni, as.name("guess_ab"))) { peni <- guess_ab(tbl, "peni", verbose = info) }
+  if (identical(pipe, as.name("guess_ab"))) { pipe <- guess_ab(tbl, "pipe", verbose = info) }
+  if (identical(pita, as.name("guess_ab"))) { pita <- guess_ab(tbl, "pita", verbose = info) }
+  if (identical(poly, as.name("guess_ab"))) { poly <- guess_ab(tbl, "poly", verbose = info) }
+  if (identical(qida, as.name("guess_ab"))) { qida <- guess_ab(tbl, "qida", verbose = info) }
+  if (identical(rifa, as.name("guess_ab"))) { rifa <- guess_ab(tbl, "rifa", verbose = info) }
+  if (identical(roxi, as.name("guess_ab"))) { roxi <- guess_ab(tbl, "roxi", verbose = info) }
+  if (identical(siso, as.name("guess_ab"))) { siso <- guess_ab(tbl, "siso", verbose = info) }
+  if (identical(teic, as.name("guess_ab"))) { teic <- guess_ab(tbl, "teic", verbose = info) }
+  if (identical(tetr, as.name("guess_ab"))) { tetr <- guess_ab(tbl, "tetr", verbose = info) }
+  if (identical(tica, as.name("guess_ab"))) { tica <- guess_ab(tbl, "tica", verbose = info) }
+  if (identical(tige, as.name("guess_ab"))) { tige <- guess_ab(tbl, "tige", verbose = info) }
+  if (identical(tobr, as.name("guess_ab"))) { tobr <- guess_ab(tbl, "tobr", verbose = info) }
+  if (identical(trim, as.name("guess_ab"))) { trim <- guess_ab(tbl, "trim", verbose = info) }
+  if (identical(trsu, as.name("guess_ab"))) { trsu <- guess_ab(tbl, "trsu", verbose = info) }
+  if (identical(vanc, as.name("guess_ab"))) { vanc <- guess_ab(tbl, "vanc", verbose = info) }
   col.list <- c(amcl, amik, amox, ampi, azit, aztr, cefa, cfra, cfep, cfot,
                 cfox, cfta, cftr, cfur, chlo, cipr, clar, clin, clox, coli,
                 czol, dapt, doxy, erta, eryt, fosf, fusi, gent, imip, kana,
-                levo, linc, line, mero, metr, mino, moxi, nali, neom, neti, nitr,
-                novo, norf, oflo, peni, pita, poly, qida, rifa, roxi, siso,
-                teic, tetr, tica, tige, tobr, trim, trsu, vanc)
+                levo, linc, line, mero, metr, mino, moxi, nali, neom, neti,
+                nitr, novo, norf, oflo, peni, pipe, pita, poly, qida, rifa,
+                roxi, siso, teic, tetr, tica, tige, tobr, trim, trsu, vanc)
+  if (length(col.list) < 60) {
+    warning('Some columns do not exist -- THIS MAY STRONGLY INFLUENCE THE OUTCOME.',
+            immediate. = TRUE,
+            call. = FALSE)
+  }
   col.list <- check_available_columns(tbl = tbl, col.list = col.list, info = info)
   amcl <- col.list[amcl]
   amik <- col.list[amik]
@@ -221,6 +286,7 @@ mdro <- function(tbl,
   norf <- col.list[norf]
   oflo <- col.list[oflo]
   peni <- col.list[peni]
+  pipe <- col.list[pipe]
   pita <- col.list[pita]
   poly <- col.list[poly]
   qida <- col.list[qida]

@@ -25,22 +25,27 @@
 \usage{
 eucast_rules(tbl, col_mo = NULL, info = TRUE,
   rules = c("breakpoints", "expert", "other", "all"), verbose = FALSE,
-  amcl = "amcl", amik = "amik", amox = "amox", ampi = "ampi",
-  azit = "azit", azlo = "azlo", aztr = "aztr", cefa = "cefa",
-  cfep = "cfep", cfot = "cfot", cfox = "cfox", cfra = "cfra",
-  cfta = "cfta", cftr = "cftr", cfur = "cfur", chlo = "chlo",
-  cipr = "cipr", clar = "clar", clin = "clin", clox = "clox",
-  coli = "coli", czol = "czol", dapt = "dapt", doxy = "doxy",
-  erta = "erta", eryt = "eryt", fosf = "fosf", fusi = "fusi",
-  gent = "gent", imip = "imip", kana = "kana", levo = "levo",
-  linc = "linc", line = "line", mero = "mero", mezl = "mezl",
-  mino = "mino", moxi = "moxi", nali = "nali", neom = "neom",
-  neti = "neti", nitr = "nitr", norf = "norf", novo = "novo",
-  oflo = "oflo", oxac = "oxac", peni = "peni", pipe = "pipe",
-  pita = "pita", poly = "poly", pris = "pris", qida = "qida",
-  rifa = "rifa", roxi = "roxi", siso = "siso", teic = "teic",
-  tetr = "tetr", tica = "tica", tige = "tige", tobr = "tobr",
-  trim = "trim", trsu = "trsu", vanc = "vanc")
+  amcl = guess_ab(), amik = guess_ab(), amox = guess_ab(),
+  ampi = guess_ab(), azit = guess_ab(), azlo = guess_ab(),
+  aztr = guess_ab(), cefa = guess_ab(), cfep = guess_ab(),
+  cfot = guess_ab(), cfox = guess_ab(), cfra = guess_ab(),
+  cfta = guess_ab(), cftr = guess_ab(), cfur = guess_ab(),
+  chlo = guess_ab(), cipr = guess_ab(), clar = guess_ab(),
+  clin = guess_ab(), clox = guess_ab(), coli = guess_ab(),
+  czol = guess_ab(), dapt = guess_ab(), doxy = guess_ab(),
+  erta = guess_ab(), eryt = guess_ab(), fosf = guess_ab(),
+  fusi = guess_ab(), gent = guess_ab(), imip = guess_ab(),
+  kana = guess_ab(), levo = guess_ab(), linc = guess_ab(),
+  line = guess_ab(), mero = guess_ab(), mezl = guess_ab(),
+  mino = guess_ab(), moxi = guess_ab(), nali = guess_ab(),
+  neom = guess_ab(), neti = guess_ab(), nitr = guess_ab(),
+  norf = guess_ab(), novo = guess_ab(), oflo = guess_ab(),
+  oxac = guess_ab(), peni = guess_ab(), pipe = guess_ab(),
+  pita = guess_ab(), poly = guess_ab(), pris = guess_ab(),
+  qida = guess_ab(), rifa = guess_ab(), roxi = guess_ab(),
+  siso = guess_ab(), teic = guess_ab(), tetr = guess_ab(),
+  tica = guess_ab(), tige = guess_ab(), tobr = guess_ab(),
+  trim = guess_ab(), trsu = guess_ab(), vanc = guess_ab())
 
 EUCAST_rules(...)
 
@@ -69,7 +74,7 @@ Apply susceptibility rules as defined by the European Committee on Antimicrobial
 }
 \section{Antibiotics}{
 
-To define antibiotics column names, input a text (case-insensitive) or use \code{NULL} to skip a column (e.g. \code{tica = NULL}). Non-existing columns will anyway be skipped with a warning.
+To define antibiotics column names, leave as it is to determine it automatically with \code{\link{guess_ab}} or input a text (case-insensitive) or use \code{NULL} to skip a column (e.g. \code{tica = NULL}). Non-existing columns will anyway be skipped with a warning.
 
 Abbrevations of the column containing antibiotics in the form: \strong{abbreviation}: generic name (\emph{ATC code})
 

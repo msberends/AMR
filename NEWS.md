@@ -7,6 +7,7 @@
   * Contains the complete manual of this package and all of its functions with an explanation of their parameters
   * Contains a comprehensive tutorial about how to conduct antimicrobial resistance analysis
 * Support for [`dplyr`](https://dplyr.tidyverse.org) version 0.8.0
+* Function `guess_ab` to find an antibiotic column in a table
 * Function `mo_failures()` to review values that could not be coerced to a valid MO code, using `as.mo()`. This latter function will now only show a maximum of 25 uncoerced values.
 * Function `mo_renamed()` to get a list of all returned values from `as.mo()` that have had taxonomic renaming
 * Function `age()` to calculate the (patients) age in years

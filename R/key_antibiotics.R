@@ -78,24 +78,24 @@
 #' # FALSE, because I is not ignored and so the 4th value differs
 key_antibiotics <- function(tbl,
                             col_mo = NULL,
-                            universal_1 = "amox",
-                            universal_2 = "amcl",
-                            universal_3 = "cfur",
-                            universal_4 = "pita",
-                            universal_5 = "cipr",
-                            universal_6 = "trsu",
-                            GramPos_1 = "vanc",
-                            GramPos_2 = "teic",
-                            GramPos_3 = "tetr",
-                            GramPos_4 = "eryt",
-                            GramPos_5 = "oxac",
-                            GramPos_6 = "rifa",
-                            GramNeg_1 = "gent",
-                            GramNeg_2 = "tobr",
-                            GramNeg_3 = "coli",
-                            GramNeg_4 = "cfot",
-                            GramNeg_5 = "cfta",
-                            GramNeg_6 = "mero",
+                            universal_1 = guess_ab(tbl, "amox"),
+                            universal_2 = guess_ab(tbl, "amcl"),
+                            universal_3 = guess_ab(tbl, "cfur"),
+                            universal_4 = guess_ab(tbl, "pita"),
+                            universal_5 = guess_ab(tbl, "cipr"),
+                            universal_6 = guess_ab(tbl, "trsu"),
+                            GramPos_1 = guess_ab(tbl, "vanc"),
+                            GramPos_2 = guess_ab(tbl, "teic"),
+                            GramPos_3 = guess_ab(tbl, "tetr"),
+                            GramPos_4 = guess_ab(tbl, "eryt"),
+                            GramPos_5 = guess_ab(tbl, "oxac"),
+                            GramPos_6 = guess_ab(tbl, "rifa"),
+                            GramNeg_1 = guess_ab(tbl, "gent"),
+                            GramNeg_2 = guess_ab(tbl, "tobr"),
+                            GramNeg_3 = guess_ab(tbl, "coli"),
+                            GramNeg_4 = guess_ab(tbl, "cfot"),
+                            GramNeg_5 = guess_ab(tbl, "cfta"),
+                            GramNeg_6 = guess_ab(tbl, "mero"),
                             warnings = TRUE,
                             ...) {
 
@@ -114,6 +114,7 @@ key_antibiotics <- function(tbl,
                 GramPos_1, GramPos_2, GramPos_3, GramPos_4, GramPos_5, GramPos_6,
                 GramNeg_1, GramNeg_2, GramNeg_3, GramNeg_4, GramNeg_5, GramNeg_6)
   col.list <- check_available_columns(tbl = tbl, col.list = col.list, info = warnings)
+  print(col.list)
   universal_1 <- col.list[universal_1]
   universal_2 <- col.list[universal_2]
   universal_3 <- col.list[universal_3]
@@ -139,18 +140,21 @@ key_antibiotics <- function(tbl,
   gram_positive = c(universal,
                     GramPos_1, GramPos_2, GramPos_3,
                     GramPos_4, GramPos_5, GramPos_6)
-  gram_positive <- gram_positive[!is.na(gram_positive)]
+  gram_positive <- gram_positive[!is.null(gram_positive)]
 
   gram_negative = c(universal,
                     GramNeg_1, GramNeg_2, GramNeg_3,
                     GramNeg_4, GramNeg_5, GramNeg_6)
-  gram_negative <- gram_negative[!is.na(gram_negative)]
+  gram_negative <- gram_negative[!is.null(gram_negative)]
 
   # join to microorganisms data set
   tbl <- tbl %>%
     mutate_at(vars(col_mo), as.mo) %>%
     left_join_microorganisms(by = col_mo) %>%
     mutate(key_ab = NA_character_)
+
+  print(as.character(gram_positive))
+  print(gram_negative)
 
   # Gram +
   tbl <- tbl %>% mutate(key_ab =

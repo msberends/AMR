@@ -42,7 +42,13 @@ test_that("mdro works", {
   expect_equal(outcome %>% freq() %>% pull(count),
                c(1989, 9, 2)) # 1989 neg, 9 pos, 2 unconfirmed
 
-  expect_equal(brmo(septic_patients, info = FALSE), mdro(septic_patients, "nl", info = FALSE))
+  expect_equal(
+    suppressWarnings(
+      brmo(septic_patients, info = FALSE)),
+    suppressWarnings(
+      mdro(septic_patients, "nl", info = FALSE)
+    )
+  )
 
   # still working on German guidelines
   expect_error(suppressWarnings(mrgn(septic_patients, info = TRUE)))

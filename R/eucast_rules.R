@@ -30,7 +30,7 @@
 #' @param ... parameters that are passed on to \code{eucast_rules}
 #' @inheritParams first_isolate
 #' @section Antibiotics:
-#' To define antibiotics column names, input a text (case-insensitive) or use \code{NULL} to skip a column (e.g. \code{tica = NULL}). Non-existing columns will anyway be skipped with a warning.
+#' To define antibiotics column names, leave as it is to determine it automatically with \code{\link{guess_ab}} or input a text (case-insensitive) or use \code{NULL} to skip a column (e.g. \code{tica = NULL}). Non-existing columns will anyway be skipped with a warning.
 #'
 #' Abbrevations of the column containing antibiotics in the form: \strong{abbreviation}: generic name (\emph{ATC code})
 #'
@@ -158,69 +158,69 @@ eucast_rules <- function(tbl,
                          info = TRUE,
                          rules = c("breakpoints", "expert", "other", "all"),
                          verbose = FALSE,
-                         amcl = 'amcl',
-                         amik = 'amik',
-                         amox = 'amox',
-                         ampi = 'ampi',
-                         azit = 'azit',
-                         azlo = 'azlo',
-                         aztr = 'aztr',
-                         cefa = 'cefa',
-                         cfep = 'cfep',
-                         cfot = 'cfot',
-                         cfox = 'cfox',
-                         cfra = 'cfra',
-                         cfta = 'cfta',
-                         cftr = 'cftr',
-                         cfur = 'cfur',
-                         chlo = 'chlo',
-                         cipr = 'cipr',
-                         clar = 'clar',
-                         clin = 'clin',
-                         clox = 'clox',
-                         coli = 'coli',
-                         czol = 'czol',
-                         dapt = 'dapt',
-                         doxy = 'doxy',
-                         erta = 'erta',
-                         eryt = 'eryt',
-                         fosf = 'fosf',
-                         fusi = 'fusi',
-                         gent = 'gent',
-                         imip = 'imip',
-                         kana = 'kana',
-                         levo = 'levo',
-                         linc = 'linc',
-                         line = 'line',
-                         mero = 'mero',
-                         mezl = 'mezl',
-                         mino = 'mino',
-                         moxi = 'moxi',
-                         nali = 'nali',
-                         neom = 'neom',
-                         neti = 'neti',
-                         nitr = 'nitr',
-                         norf = 'norf',
-                         novo = 'novo',
-                         oflo = 'oflo',
-                         oxac = 'oxac',
-                         peni = 'peni',
-                         pipe = 'pipe',
-                         pita = 'pita',
-                         poly = 'poly',
-                         pris = 'pris',
-                         qida = 'qida',
-                         rifa = 'rifa',
-                         roxi = 'roxi',
-                         siso = 'siso',
-                         teic = 'teic',
-                         tetr = 'tetr',
-                         tica = 'tica',
-                         tige = 'tige',
-                         tobr = 'tobr',
-                         trim = 'trim',
-                         trsu = 'trsu',
-                         vanc = 'vanc') {
+                         amcl = guess_ab(),
+                         amik = guess_ab(),
+                         amox = guess_ab(),
+                         ampi = guess_ab(),
+                         azit = guess_ab(),
+                         azlo = guess_ab(),
+                         aztr = guess_ab(),
+                         cefa = guess_ab(),
+                         cfep = guess_ab(),
+                         cfot = guess_ab(),
+                         cfox = guess_ab(),
+                         cfra = guess_ab(),
+                         cfta = guess_ab(),
+                         cftr = guess_ab(),
+                         cfur = guess_ab(),
+                         chlo = guess_ab(),
+                         cipr = guess_ab(),
+                         clar = guess_ab(),
+                         clin = guess_ab(),
+                         clox = guess_ab(),
+                         coli = guess_ab(),
+                         czol = guess_ab(),
+                         dapt = guess_ab(),
+                         doxy = guess_ab(),
+                         erta = guess_ab(),
+                         eryt = guess_ab(),
+                         fosf = guess_ab(),
+                         fusi = guess_ab(),
+                         gent = guess_ab(),
+                         imip = guess_ab(),
+                         kana = guess_ab(),
+                         levo = guess_ab(),
+                         linc = guess_ab(),
+                         line = guess_ab(),
+                         mero = guess_ab(),
+                         mezl = guess_ab(),
+                         mino = guess_ab(),
+                         moxi = guess_ab(),
+                         nali = guess_ab(),
+                         neom = guess_ab(),
+                         neti = guess_ab(),
+                         nitr = guess_ab(),
+                         norf = guess_ab(),
+                         novo = guess_ab(),
+                         oflo = guess_ab(),
+                         oxac = guess_ab(),
+                         peni = guess_ab(),
+                         pipe = guess_ab(),
+                         pita = guess_ab(),
+                         poly = guess_ab(),
+                         pris = guess_ab(),
+                         qida = guess_ab(),
+                         rifa = guess_ab(),
+                         roxi = guess_ab(),
+                         siso = guess_ab(),
+                         teic = guess_ab(),
+                         tetr = guess_ab(),
+                         tica = guess_ab(),
+                         tige = guess_ab(),
+                         tobr = guess_ab(),
+                         trim = guess_ab(),
+                         trsu = guess_ab(),
+                         vanc = guess_ab()) {
 
   EUCAST_VERSION_BREAKPOINTS <- "8.1, 2018"
   EUCAST_VERSION_EXPERT_RULES <- "3.1, 2016"
@@ -268,12 +268,80 @@ eucast_rules <- function(tbl,
   }
 
   # check columns
+  if (identical(amcl, as.name("guess_ab"))) { amcl <- guess_ab(tbl, "amcl", verbose = verbose) }
+  if (identical(amik, as.name("guess_ab"))) { amik <- guess_ab(tbl, "amik", verbose = verbose) }
+  if (identical(amox, as.name("guess_ab"))) { amox <- guess_ab(tbl, "amox", verbose = verbose) }
+  if (identical(ampi, as.name("guess_ab"))) { ampi <- guess_ab(tbl, "ampi", verbose = verbose) }
+  if (identical(azit, as.name("guess_ab"))) { azit <- guess_ab(tbl, "azit", verbose = verbose) }
+  if (identical(azlo, as.name("guess_ab"))) { azlo <- guess_ab(tbl, "azlo", verbose = verbose) }
+  if (identical(aztr, as.name("guess_ab"))) { aztr <- guess_ab(tbl, "aztr", verbose = verbose) }
+  if (identical(cefa, as.name("guess_ab"))) { cefa <- guess_ab(tbl, "cefa", verbose = verbose) }
+  if (identical(cfep, as.name("guess_ab"))) { cfep <- guess_ab(tbl, "cfep", verbose = verbose) }
+  if (identical(cfot, as.name("guess_ab"))) { cfot <- guess_ab(tbl, "cfot", verbose = verbose) }
+  if (identical(cfox, as.name("guess_ab"))) { cfox <- guess_ab(tbl, "cfox", verbose = verbose) }
+  if (identical(cfra, as.name("guess_ab"))) { cfra <- guess_ab(tbl, "cfra", verbose = verbose) }
+  if (identical(cfta, as.name("guess_ab"))) { cfta <- guess_ab(tbl, "cfta", verbose = verbose) }
+  if (identical(cftr, as.name("guess_ab"))) { cftr <- guess_ab(tbl, "cftr", verbose = verbose) }
+  if (identical(cfur, as.name("guess_ab"))) { cfur <- guess_ab(tbl, "cfur", verbose = verbose) }
+  if (identical(chlo, as.name("guess_ab"))) { chlo <- guess_ab(tbl, "chlo", verbose = verbose) }
+  if (identical(cipr, as.name("guess_ab"))) { cipr <- guess_ab(tbl, "cipr", verbose = verbose) }
+  if (identical(clar, as.name("guess_ab"))) { clar <- guess_ab(tbl, "clar", verbose = verbose) }
+  if (identical(clin, as.name("guess_ab"))) { clin <- guess_ab(tbl, "clin", verbose = verbose) }
+  if (identical(clox, as.name("guess_ab"))) { clox <- guess_ab(tbl, "clox", verbose = verbose) }
+  if (identical(coli, as.name("guess_ab"))) { coli <- guess_ab(tbl, "coli", verbose = verbose) }
+  if (identical(czol, as.name("guess_ab"))) { czol <- guess_ab(tbl, "czol", verbose = verbose) }
+  if (identical(dapt, as.name("guess_ab"))) { dapt <- guess_ab(tbl, "dapt", verbose = verbose) }
+  if (identical(doxy, as.name("guess_ab"))) { doxy <- guess_ab(tbl, "doxy", verbose = verbose) }
+  if (identical(erta, as.name("guess_ab"))) { erta <- guess_ab(tbl, "erta", verbose = verbose) }
+  if (identical(eryt, as.name("guess_ab"))) { eryt <- guess_ab(tbl, "eryt", verbose = verbose) }
+  if (identical(fosf, as.name("guess_ab"))) { fosf <- guess_ab(tbl, "fosf", verbose = verbose) }
+  if (identical(fusi, as.name("guess_ab"))) { fusi <- guess_ab(tbl, "fusi", verbose = verbose) }
+  if (identical(gent, as.name("guess_ab"))) { gent <- guess_ab(tbl, "gent", verbose = verbose) }
+  if (identical(imip, as.name("guess_ab"))) { imip <- guess_ab(tbl, "imip", verbose = verbose) }
+  if (identical(kana, as.name("guess_ab"))) { kana <- guess_ab(tbl, "kana", verbose = verbose) }
+  if (identical(levo, as.name("guess_ab"))) { levo <- guess_ab(tbl, "levo", verbose = verbose) }
+  if (identical(linc, as.name("guess_ab"))) { linc <- guess_ab(tbl, "linc", verbose = verbose) }
+  if (identical(line, as.name("guess_ab"))) { line <- guess_ab(tbl, "line", verbose = verbose) }
+  if (identical(mero, as.name("guess_ab"))) { mero <- guess_ab(tbl, "mero", verbose = verbose) }
+  if (identical(mezl, as.name("guess_ab"))) { mezl <- guess_ab(tbl, "mezl", verbose = verbose) }
+  if (identical(mino, as.name("guess_ab"))) { mino <- guess_ab(tbl, "mino", verbose = verbose) }
+  if (identical(moxi, as.name("guess_ab"))) { moxi <- guess_ab(tbl, "moxi", verbose = verbose) }
+  if (identical(nali, as.name("guess_ab"))) { nali <- guess_ab(tbl, "nali", verbose = verbose) }
+  if (identical(neom, as.name("guess_ab"))) { neom <- guess_ab(tbl, "neom", verbose = verbose) }
+  if (identical(neti, as.name("guess_ab"))) { neti <- guess_ab(tbl, "neti", verbose = verbose) }
+  if (identical(nitr, as.name("guess_ab"))) { nitr <- guess_ab(tbl, "nitr", verbose = verbose) }
+  if (identical(norf, as.name("guess_ab"))) { norf <- guess_ab(tbl, "norf", verbose = verbose) }
+  if (identical(novo, as.name("guess_ab"))) { novo <- guess_ab(tbl, "novo", verbose = verbose) }
+  if (identical(oflo, as.name("guess_ab"))) { oflo <- guess_ab(tbl, "oflo", verbose = verbose) }
+  if (identical(oxac, as.name("guess_ab"))) { oxac <- guess_ab(tbl, "oxac", verbose = verbose) }
+  if (identical(peni, as.name("guess_ab"))) { peni <- guess_ab(tbl, "peni", verbose = verbose) }
+  if (identical(pipe, as.name("guess_ab"))) { pipe <- guess_ab(tbl, "pipe", verbose = verbose) }
+  if (identical(pita, as.name("guess_ab"))) { pita <- guess_ab(tbl, "pita", verbose = verbose) }
+  if (identical(poly, as.name("guess_ab"))) { poly <- guess_ab(tbl, "poly", verbose = verbose) }
+  if (identical(pris, as.name("guess_ab"))) { pris <- guess_ab(tbl, "pris", verbose = verbose) }
+  if (identical(qida, as.name("guess_ab"))) { qida <- guess_ab(tbl, "qida", verbose = verbose) }
+  if (identical(rifa, as.name("guess_ab"))) { rifa <- guess_ab(tbl, "rifa", verbose = verbose) }
+  if (identical(roxi, as.name("guess_ab"))) { roxi <- guess_ab(tbl, "roxi", verbose = verbose) }
+  if (identical(siso, as.name("guess_ab"))) { siso <- guess_ab(tbl, "siso", verbose = verbose) }
+  if (identical(teic, as.name("guess_ab"))) { teic <- guess_ab(tbl, "teic", verbose = verbose) }
+  if (identical(tetr, as.name("guess_ab"))) { tetr <- guess_ab(tbl, "tetr", verbose = verbose) }
+  if (identical(tica, as.name("guess_ab"))) { tica <- guess_ab(tbl, "tica", verbose = verbose) }
+  if (identical(tige, as.name("guess_ab"))) { tige <- guess_ab(tbl, "tige", verbose = verbose) }
+  if (identical(tobr, as.name("guess_ab"))) { tobr <- guess_ab(tbl, "tobr", verbose = verbose) }
+  if (identical(trim, as.name("guess_ab"))) { trim <- guess_ab(tbl, "trim", verbose = verbose) }
+  if (identical(trsu, as.name("guess_ab"))) { trsu <- guess_ab(tbl, "trsu", verbose = verbose) }
+  if (identical(vanc, as.name("guess_ab"))) { vanc <- guess_ab(tbl, "vanc", verbose = verbose) }
   col.list <- c(amcl, amik, amox, ampi, azit, azlo, aztr, cefa, cfra, cfep, cfot,
                 cfox, cfta, cftr, cfur, chlo, cipr, clar, clin, clox, coli,
                 czol, dapt, doxy, erta, eryt, fosf, fusi, gent, imip, kana,
                 levo, linc, line, mero, mezl, mino, moxi, nali, neom, neti, nitr,
                 novo, norf, oflo, oxac, peni, pipe, pita, poly, pris, qida, rifa,
                 roxi, siso, teic, tetr, tica, tige, tobr, trim, trsu, vanc)
+  if (length(col.list) < 63) {
+    warning('Some columns do not exist -- THIS MAY STRONGLY INFLUENCE THE OUTCOME.',
+            immediate. = TRUE,
+            call. = FALSE)
+  }
   col.list <- check_available_columns(tbl = tbl, col.list = col.list, info = info)
   amcl <- col.list[amcl]
   amik <- col.list[amik]
@@ -339,8 +407,8 @@ eucast_rules <- function(tbl,
   trsu <- col.list[trsu]
   vanc <- col.list[vanc]
 
-  amount_changed <- 0
-  amount_affected_rows <- integer(0)
+  number_changed <- 0
+  number_affected_rows <- integer(0)
   verbose_info <- data.frame(rule_type = character(0),
                              rule_set = character(0),
                              force_to = character(0),
@@ -352,7 +420,7 @@ eucast_rules <- function(tbl,
 
   # helper function for editing the table
   edit_rsi <- function(to, rule, rows, cols) {
-    cols <- unique(cols[!is.na(cols)])
+    cols <- unique(cols[!is.na(cols) & !is.null(cols)])
     if (length(rows) > 0 & length(cols) > 0) {
       before <- as.character(unlist(as.list(tbl_original[rows, cols])))
       tryCatch(
@@ -376,8 +444,8 @@ eucast_rules <- function(tbl,
           tbl[rows, cols] <<- to
       ))
       after <- as.character(unlist(as.list(tbl_original[rows, cols])))
-      amount_changed <<- amount_changed + sum(before != after, na.rm = TRUE)
-      amount_affected_rows <<- unique(c(amount_affected_rows, rows))
+      number_changed <<- number_changed + sum(before != after, na.rm = TRUE)
+      number_affected_rows <<- unique(c(number_affected_rows, rows))
       changed_results <<- changed_results + sum(before != after, na.rm = TRUE) # will be reset at start of every rule
 
       if (verbose == TRUE) {
@@ -399,7 +467,7 @@ eucast_rules <- function(tbl,
     }
   }
   na.rm <- function(col) {
-    if (is.na(col)) {
+    if (is.null(col)) {
       ""
     } else {
       col
@@ -420,7 +488,7 @@ eucast_rules <- function(tbl,
   }
 
   # since ampicillin ^= amoxicillin, get the first from the latter (not in original EUCAST table)
-  if (!is.na(ampi) & !is.na(amox)) {
+  if (!is.null(ampi) & !is.null(amox)) {
     if (verbose == TRUE) {
       cat(bgGreen("\n VERBOSE: transforming",
                   length(which(tbl[, amox] == "S" & !tbl[, ampi] %in% c("S", "I", "R"))),
@@ -435,7 +503,7 @@ eucast_rules <- function(tbl,
     tbl[which(tbl[, amox] == "S" & !tbl[, ampi] %in% c("S", "I", "R")), ampi] <- "S"
     tbl[which(tbl[, amox] == "I" & !tbl[, ampi] %in% c("S", "I", "R")), ampi] <- "I"
     tbl[which(tbl[, amox] == "R" & !tbl[, ampi] %in% c("S", "I", "R")), ampi] <- "R"
-  } else if (is.na(ampi) & !is.na(amox)) {
+  } else if (is.null(ampi) & !is.null(amox)) {
     # ampicillin column is missing, but amoxicillin is available
     message(blue(paste0("NOTE: Using column `", bold(amox), "` as input for ampicillin (J01CA01) since many EUCAST rules depend on it.")))
     ampi <- amox
@@ -471,21 +539,21 @@ eucast_rules <- function(tbl,
       cat(rule)
     }
 
-    if (!is.na(ampi)) {
+    if (!is.null(ampi)) {
       edit_rsi(to = 'S',
                rule = c(rule_group, rule),
                rows = which(tbl$order == 'Enterobacteriales'
                             & tbl[, ampi] == 'S'),
                cols = amox)
     }
-    if (!is.na(ampi)) {
+    if (!is.null(ampi)) {
       edit_rsi(to = 'I',
                rule = c(rule_group, rule),
                rows = which(tbl$order == 'Enterobacteriales'
                             & tbl[, ampi] == 'I'),
                cols = amox)
     }
-    if (!is.na(ampi)) {
+    if (!is.null(ampi)) {
       edit_rsi(to = 'R',
                rule = c(rule_group, rule),
                rows = which(tbl$order == 'Enterobacteriales'
@@ -502,7 +570,7 @@ eucast_rules <- function(tbl,
       changed_results <- 0
       cat(rule)
     }
-    if (!is.na(peni) & !is.na(cfox)) {
+    if (!is.null(peni) & !is.null(cfox)) {
       edit_rsi(to = 'S',
                rule = c(rule_group, rule),
                rows = which(tbl$genus == "Staphylococcus"
@@ -516,21 +584,21 @@ eucast_rules <- function(tbl,
                             & tbl[, cfox] == 'S'),
                cols = c(oxac, clox))
     }
-    if (!is.na(cfox)) {
+    if (!is.null(cfox)) {
       edit_rsi(to = 'R',
                rule = c(rule_group, rule),
                rows = which(tbl$genus == "Staphylococcus"
                             & tbl[, cfox] == 'R'),
                cols = all_betalactam)
     }
-    if (!is.na(ampi)) {
+    if (!is.null(ampi)) {
       edit_rsi(to = 'S',
                rule = c(rule_group, rule),
                rows = which(tbl$fullname %like% "^Staphylococcus saprophyticus"
                             & tbl[, ampi] == 'S'),
                cols = c(amox, amcl, pipe, pita))
     }
-    if (!is.na(cfox)) {
+    if (!is.null(cfox)) {
       # inferred from cefoxitin
       edit_rsi(to = 'S',
                rule = c(rule_group, rule),
@@ -548,14 +616,14 @@ eucast_rules <- function(tbl,
                             & tbl[, cfox] == 'R'),
                cols = c(carbapenems, cephalosporins[cephalosporins != na.rm(cfta)]))
     }
-    if (!is.na(norf)) {
+    if (!is.null(norf)) {
       edit_rsi(to = 'S',
                rule = c(rule_group, rule),
                rows = which(tbl$genus == "Staphylococcus"
                             & tbl[, norf] == 'S'),
                cols = c(cipr, levo, moxi, oflo))
     }
-    if (!is.na(eryt)) {
+    if (!is.null(eryt)) {
       edit_rsi(to = 'S',
                rule = c(rule_group, rule),
                rows = which(tbl$genus == "Staphylococcus"
@@ -572,7 +640,7 @@ eucast_rules <- function(tbl,
                             & tbl[, eryt] == 'R'),
                cols = c(azit, clar, roxi))
     }
-    if (!is.na(tetr)) {
+    if (!is.null(tetr)) {
       edit_rsi(to = 'S',
                rule = c(rule_group, rule),
                rows = which(tbl$genus == "Staphylococcus"
@@ -589,14 +657,14 @@ eucast_rules <- function(tbl,
       changed_results <- 0
       cat(rule)
     }
-    if (!is.na(ampi)) { # penicillin group
+    if (!is.null(ampi)) { # penicillin group
       edit_rsi(to = 'R',
                rule = c(rule_group, rule),
                rows = which(tbl$fullname %like% "^Enterococcus faecium"
                             & tbl[, ampi] == 'R'),
                cols = all_betalactam)
     }
-    if (!is.na(ampi)) {
+    if (!is.null(ampi)) {
       edit_rsi(to = 'S',
                rule = c(rule_group, rule),
                rows = which(tbl$genus == "Enterococcus"
@@ -613,7 +681,7 @@ eucast_rules <- function(tbl,
                             & tbl[, ampi] == 'R'),
                cols = c(amox, amcl, pipe, pita))
     }
-    if (!is.na(norf)) {
+    if (!is.null(norf)) {
       edit_rsi(to = 'S',
                rule = c(rule_group, rule),
                rows = which(tbl$genus == "Enterococcus"
@@ -640,7 +708,7 @@ eucast_rules <- function(tbl,
       changed_results <- 0
       cat(rule)
     }
-    if (!is.na(peni)) {
+    if (!is.null(peni)) {
       edit_rsi(to = 'S',
                rule = c(rule_group, rule),
                rows = which(tbl$fullname %like% "^Streptococcus (pyogenes|agalactiae|dysgalactiae|group A|group B|group C|group G)"
@@ -657,14 +725,14 @@ eucast_rules <- function(tbl,
                             & tbl[, peni] == 'R'),
                cols = c(aminopenicillins, ureidopenicillins, cephalosporins, carbapenems, clox, amcl))
     }
-    if (!is.na(norf)) {
+    if (!is.null(norf)) {
       edit_rsi(to = 'S',
                rule = c(rule_group, rule),
                rows = which(tbl$fullname %like% "^Streptococcus (pyogenes|agalactiae|dysgalactiae|group A|group B|group C|group G)"
                             & tbl[, norf] == 'S'),
                cols = c(levo, moxi))
     }
-    if (!is.na(eryt)) {
+    if (!is.null(eryt)) {
       edit_rsi(to = 'S',
                rule = c(rule_group, rule),
                rows = which(tbl$fullname %like% "^Streptococcus (pyogenes|agalactiae|dysgalactiae|group A|group B|group C|group G)"
@@ -681,7 +749,7 @@ eucast_rules <- function(tbl,
                             & tbl[, eryt] == 'R'),
                cols = c(azit, clar, roxi))
     }
-    if (!is.na(tetr)) {
+    if (!is.null(tetr)) {
       edit_rsi(to = 'S',
                rule = c(rule_group, rule),
                rows = which(tbl$fullname %like% "^Streptococcus (pyogenes|agalactiae|dysgalactiae|group A|group B|group C|group G)"
@@ -698,14 +766,14 @@ eucast_rules <- function(tbl,
       changed_results <- 0
       cat(rule)
     }
-    if (!is.na(peni)) {
+    if (!is.null(peni)) {
       edit_rsi(to = 'S',
                rule = c(rule_group, rule),
                rows = which(tbl$fullname %like% "^Streptococcus pneumoniae"
                             & tbl[, peni] == 'S'),
                cols = c(ampi, amox, amcl, pipe, pita))
     }
-    if (!is.na(ampi)) {
+    if (!is.null(ampi)) {
       edit_rsi(to = 'S',
                rule = c(rule_group, rule),
                rows = which(tbl$fullname %like% "^Streptococcus pneumoniae"
@@ -722,14 +790,14 @@ eucast_rules <- function(tbl,
                             & tbl[, ampi] == 'R'),
                cols = c(amox, amcl, pipe, pita))
     }
-    if (!is.na(norf)) {
+    if (!is.null(norf)) {
       edit_rsi(to = 'S',
                rule = c(rule_group, rule),
                rows = which(tbl$fullname %like% "^Streptococcus pneumoniae"
                             & tbl[, norf] == 'S'),
                cols = c(levo, moxi))
     }
-    if (!is.na(eryt)) {
+    if (!is.null(eryt)) {
       edit_rsi(to = 'S',
                rule = c(rule_group, rule),
                rows = which(tbl$fullname %like% "^Streptococcus pneumoniae"
@@ -746,7 +814,7 @@ eucast_rules <- function(tbl,
                             & tbl[, eryt] == 'R'),
                cols = c(azit, clar, roxi))
     }
-    if (!is.na(tetr)) {
+    if (!is.null(tetr)) {
       edit_rsi(to = 'S',
                rule = c(rule_group, rule),
                rows = which(tbl$fullname %like% "^Streptococcus pneumoniae"
@@ -768,14 +836,14 @@ eucast_rules <- function(tbl,
                         "intermedius", "mitis", "mutans", "oligofermentans", "oralis",
                         "parasanguinis", "peroris", "pseudopneumoniae", "salivarius",
                         "sanguinis", "sinensis", "sobrinus", "thermophilus", "vestibularis")
-    if (!is.na(peni)) {
+    if (!is.null(peni)) {
       edit_rsi(to = 'S',
                rule = c(rule_group, rule),
                rows = which(tbl$genus == "Streptococcus" & tbl$species %in% viridans_group
                             & tbl[, peni] == 'S'),
                cols = c(ampi, amox, amcl, pipe, pita))
     }
-    if (!is.na(ampi)) {
+    if (!is.null(ampi)) {
       edit_rsi(to = 'S',
                rule = c(rule_group, rule),
                rows = which(tbl$genus == "Streptococcus" & tbl$species %in% viridans_group
@@ -802,7 +870,7 @@ eucast_rules <- function(tbl,
       changed_results <- 0
       cat(rule)
     }
-    if (!is.na(ampi)) {
+    if (!is.null(ampi)) {
       edit_rsi(to = 'S',
                rule = c(rule_group, rule),
                rows = which(tbl$fullname %like% "^Haemophilus influenzae"
@@ -819,14 +887,14 @@ eucast_rules <- function(tbl,
                             & tbl[, ampi] == 'R'),
                cols = c(amox, pipe))
     }
-    if (!is.na(peni)) {
+    if (!is.null(peni)) {
       edit_rsi(to = 'S',
                rule = c(rule_group, rule),
                rows = which(tbl$fullname %like% "^Haemophilus influenzae"
                             & tbl[, peni] == 'S'),
                cols = c(ampi, amox, amcl, pipe, pita))
     }
-    if (!is.na(amcl)) {
+    if (!is.null(amcl)) {
       edit_rsi(to = 'S',
                rule = c(rule_group, rule),
                rows = which(tbl$fullname %like% "^Haemophilus influenzae"
@@ -843,14 +911,14 @@ eucast_rules <- function(tbl,
                             & tbl[, amcl] == 'R'),
                cols = pita)
     }
-    if (!is.na(nali)) {
+    if (!is.null(nali)) {
       edit_rsi(to = 'S',
                rule = c(rule_group, rule),
                rows = which(tbl$fullname %like% "^Haemophilus influenzae"
                             & tbl[, nali] == 'S'),
                cols = c(cipr, levo, moxi, oflo))
     }
-    if (!is.na(tetr)) {
+    if (!is.null(tetr)) {
       edit_rsi(to = 'S',
                rule = c(rule_group, rule),
                rows = which(tbl$fullname %like% "^Haemophilus influenzae"
@@ -867,7 +935,7 @@ eucast_rules <- function(tbl,
       changed_results <- 0
       cat(rule)
     }
-    if (!is.na(amcl)) {
+    if (!is.null(amcl)) {
       edit_rsi(to = 'S',
                rule = c(rule_group, rule),
                rows = which(tbl$fullname %like% "^Moraxella catarrhalis"
@@ -884,14 +952,14 @@ eucast_rules <- function(tbl,
                             & tbl[, amcl] == 'R'),
                cols = pita)
     }
-    if (!is.na(nali)) {
+    if (!is.null(nali)) {
       edit_rsi(to = 'S',
                rule = c(rule_group, rule),
                rows = which(tbl$fullname %like% "^Moraxella catarrhalis"
                             & tbl[, nali] == 'S'),
                cols = c(cipr, levo, moxi, oflo))
     }
-    if (!is.na(eryt)) {
+    if (!is.null(eryt)) {
       edit_rsi(to = 'S',
                rule = c(rule_group, rule),
                rows = which(tbl$fullname %like% "^Moraxella catarrhalis"
@@ -908,7 +976,7 @@ eucast_rules <- function(tbl,
                             & tbl[, eryt] == 'R'),
                cols = c(azit, clar, roxi))
     }
-    if (!is.na(tetr)) {
+    if (!is.null(tetr)) {
       edit_rsi(to = 'S',
                rule = c(rule_group, rule),
                rows = which(tbl$fullname %like% "^Moraxella catarrhalis"
@@ -925,7 +993,7 @@ eucast_rules <- function(tbl,
       changed_results <- 0
       cat(rule)
     }
-    if (!is.na(peni)) {
+    if (!is.null(peni)) {
       edit_rsi(to = 'S',
                rule = c(rule_group, rule),
                rows = which(tbl$genus %in% c("Clostridium", "Actinomyces", "Propionibacterium",
@@ -961,7 +1029,7 @@ eucast_rules <- function(tbl,
       changed_results <- 0
       cat(rule)
     }
-    if (!is.na(peni)) {
+    if (!is.null(peni)) {
       edit_rsi(to = 'S',
                rule = c(rule_group, rule),
                rows = which(tbl$genus %in% c("Bacteroides", "Prevotella", "Porphyromonas",
@@ -991,7 +1059,7 @@ eucast_rules <- function(tbl,
       changed_results <- 0
       cat(rule)
     }
-    if (!is.na(peni)) {
+    if (!is.null(peni)) {
       edit_rsi(to = 'S',
                rule = c(rule_group, rule),
                rows = which(tbl$fullname %like% "^Pasteurella multocida"
@@ -1018,7 +1086,7 @@ eucast_rules <- function(tbl,
       changed_results <- 0
       cat(rule)
     }
-    if (!is.na(eryt)) {
+    if (!is.null(eryt)) {
       edit_rsi(to = 'S',
                rule = c(rule_group, rule),
                rows = which(tbl$fullname %like% "^Campylobacter (jejuni|coli)"
@@ -1035,7 +1103,7 @@ eucast_rules <- function(tbl,
                             & tbl[, eryt] == 'R'),
                cols = c(azit, clar))
     }
-    if (!is.na(tetr)) {
+    if (!is.null(tetr)) {
       edit_rsi(to = 'S',
                rule = c(rule_group, rule),
                rows = which(tbl$fullname %like% "^Campylobacter (jejuni|coli)"
@@ -1062,7 +1130,7 @@ eucast_rules <- function(tbl,
       changed_results <- 0
       cat(rule)
     }
-    if (!is.na(norf)) {
+    if (!is.null(norf)) {
       edit_rsi(to = 'S',
                rule = c(rule_group, rule),
                rows = which(tbl$fullname %like% "^Aerococcus (sanguinicola|urinae)"
@@ -1079,7 +1147,7 @@ eucast_rules <- function(tbl,
                             & tbl[, norf] == 'R'),
                cols = fluoroquinolones)
     }
-    if (!is.na(cipr)) {
+    if (!is.null(cipr)) {
       edit_rsi(to = 'S',
                rule = c(rule_group, rule),
                rows = which(tbl$fullname %like% "^Aerococcus (sanguinicola|urinae)"
@@ -1106,7 +1174,7 @@ eucast_rules <- function(tbl,
       changed_results <- 0
       cat(rule)
     }
-    if (!is.na(peni)) {
+    if (!is.null(peni)) {
       edit_rsi(to = 'S',
                rule = c(rule_group, rule),
                rows = which(tbl$fullname %like% "^Kingella kingae"
@@ -1123,7 +1191,7 @@ eucast_rules <- function(tbl,
                             & tbl[, peni] == 'R'),
                cols = c(ampi, amox))
     }
-    if (!is.na(eryt)) {
+    if (!is.null(eryt)) {
       edit_rsi(to = 'S',
                rule = c(rule_group, rule),
                rows = which(tbl$fullname %like% "^Kingella kingae"
@@ -1140,7 +1208,7 @@ eucast_rules <- function(tbl,
                             & tbl[, eryt] == 'R'),
                cols = c(azit, clar))
     }
-    if (!is.na(tetr)) {
+    if (!is.null(tetr)) {
       edit_rsi(to = 'S',
                rule = c(rule_group, rule),
                rows = which(tbl$fullname %like% "^Kingella kingae"
@@ -1442,7 +1510,7 @@ eucast_rules <- function(tbl,
       cat(rule)
     }
     # rule 8.3
-    if (!is.na(peni)) {
+    if (!is.null(peni)) {
       edit_rsi(to = 'S',
                rule = c(rule_group, rule),
                rows = which(tbl$fullname %like% '^Streptococcus (pyogenes|agalactiae|dysgalactiae|group A|group B|group C|group G)'
@@ -1450,14 +1518,14 @@ eucast_rules <- function(tbl,
                cols = c(aminopenicillins, cephalosporins, carbapenems))
     }
     # rule 8.6
-    if (!is.na(ampi)) {
+    if (!is.null(ampi)) {
       edit_rsi(to = 'R',
                rule = c(rule_group, rule),
                rows = which(tbl$genus == 'Enterococcus'
                             & tbl[, ampi] == 'R'),
                cols = c(ureidopenicillins, carbapenems))
     }
-    if (!is.na(amox)) {
+    if (!is.null(amox)) {
       edit_rsi(to = 'R',
                rule = c(rule_group, rule),
                rows = which(tbl$genus == 'Enterococcus'
@@ -1476,7 +1544,7 @@ eucast_rules <- function(tbl,
       cat(rule)
     }
     # rule 9.3
-    if (!is.na(tica) & !is.na(pipe)) {
+    if (!is.null(tica) & !is.null(pipe)) {
       edit_rsi(to = 'R',
                rule = c(rule_group, rule),
                rows = which(tbl$family == 'Enterobacteriaceae'
@@ -1496,7 +1564,7 @@ eucast_rules <- function(tbl,
       cat(rule)
     }
     # rule 10.2
-    # if (!is.na(ampi)) {
+    # if (!is.null(ampi)) {
     # you should know first if the are B-lactamase positive, so do not run for now
     # edit_rsi(to = 'R',
     #          rule = c(rule_group, rule),
@@ -1516,7 +1584,7 @@ eucast_rules <- function(tbl,
       cat(rule)
     }
     # rule 11.1
-    if (!is.na(eryt)) {
+    if (!is.null(eryt)) {
       edit_rsi(to = 'S',
                rule = c(rule_group, rule),
                rows = which(tbl[, eryt] == 'S'),
@@ -1542,7 +1610,7 @@ eucast_rules <- function(tbl,
       cat(rule)
     }
     # rule 12.2
-    if (!is.na(tobr)) {
+    if (!is.null(tobr)) {
       edit_rsi(to = 'R',
                rule = c(rule_group, rule),
                rows = which(tbl$genus == 'Staphylococcus'
@@ -1550,7 +1618,7 @@ eucast_rules <- function(tbl,
                cols = c(kana, amik))
     }
     # rule 12.3
-    if (!is.na(gent)) {
+    if (!is.null(gent)) {
       edit_rsi(to = 'R',
                rule = c(rule_group, rule),
                rows = which(tbl$genus == 'Staphylococcus'
@@ -1558,7 +1626,7 @@ eucast_rules <- function(tbl,
                cols = aminoglycosides)
     }
     # rule 12.8
-    if (!is.na(gent) & !is.na(tobr)) {
+    if (!is.null(gent) & !is.null(tobr)) {
       edit_rsi(to = 'R',
                rule = c(rule_group, rule),
                rows = which(tbl$family == 'Enterobacteriaceae'
@@ -1567,7 +1635,7 @@ eucast_rules <- function(tbl,
                cols = gent)
     }
     # rule 12.9
-    if (!is.na(gent) & !is.na(tobr)) {
+    if (!is.null(gent) & !is.null(tobr)) {
       edit_rsi(to = 'R',
                rule = c(rule_group, rule),
                rows = which(tbl$family == 'Enterobacteriaceae'
@@ -1588,7 +1656,7 @@ eucast_rules <- function(tbl,
       cat(rule)
     }
     # rule 13.2
-    if (!is.na(moxi)) {
+    if (!is.null(moxi)) {
       edit_rsi(to = 'R',
                rule = c(rule_group, rule),
                rows = which(tbl$genus == 'Staphylococcus'
@@ -1596,7 +1664,7 @@ eucast_rules <- function(tbl,
                cols = fluoroquinolones)
     }
     # rule 13.4
-    if (!is.na(moxi)) {
+    if (!is.null(moxi)) {
       edit_rsi(to = 'R',
                rule = c(rule_group, rule),
                rows = which(tbl$fullname %like% '^Streptococcus pneumoniae'
@@ -1604,7 +1672,7 @@ eucast_rules <- function(tbl,
                cols = fluoroquinolones)
     }
     # rule 13.5
-    if (!is.na(cipr)) {
+    if (!is.null(cipr)) {
       edit_rsi(to = 'R',
                rule = c(rule_group, rule),
                rows = which(tbl$family == 'Enterobacteriaceae'
@@ -1612,7 +1680,7 @@ eucast_rules <- function(tbl,
                cols = fluoroquinolones)
     }
     # rule 13.8
-    if (!is.na(cipr)) {
+    if (!is.null(cipr)) {
       edit_rsi(to = 'R',
                rule = c(rule_group, rule),
                rows = which(tbl$fullname %like% '^Neisseria gonorrhoeae'
@@ -1639,7 +1707,7 @@ eucast_rules <- function(tbl,
       changed_results <- 0
       cat(rule)
     }
-    if (!is.na(amcl)) {
+    if (!is.null(amcl)) {
       edit_rsi(to = 'R',
                rule = c(rule_group, rule),
                rows = which(tbl[, amcl] == 'R'),
@@ -1654,7 +1722,7 @@ eucast_rules <- function(tbl,
       changed_results <- 0
       cat(rule)
     }
-    if (!is.na(pita)) {
+    if (!is.null(pita)) {
       edit_rsi(to = 'R',
                rule = c(rule_group, rule),
                rows = which(tbl[, pita] == 'R'),
@@ -1669,7 +1737,7 @@ eucast_rules <- function(tbl,
       changed_results <- 0
       cat(rule)
     }
-    if (!is.na(trsu)) {
+    if (!is.null(trsu)) {
       edit_rsi(to = 'R',
                rule = c(rule_group, rule),
                rows = which(tbl[, trsu] == 'R'),
@@ -1684,7 +1752,7 @@ eucast_rules <- function(tbl,
       changed_results <- 0
       cat(rule)
     }
-    if (!is.na(ampi)) {
+    if (!is.null(ampi)) {
       edit_rsi(to = 'S',
                rule = c(rule_group, rule),
                rows = which(tbl[, ampi] == 'S'),
@@ -1699,7 +1767,7 @@ eucast_rules <- function(tbl,
       changed_results <- 0
       cat(rule)
     }
-    if (!is.na(pipe)) {
+    if (!is.null(pipe)) {
       edit_rsi(to = 'S',
                rule = c(rule_group, rule),
                rows = which(tbl[, pipe] == 'S'),
@@ -1714,7 +1782,7 @@ eucast_rules <- function(tbl,
       changed_results <- 0
       cat(rule)
     }
-    if (!is.na(trim)) {
+    if (!is.null(trim)) {
       edit_rsi(to = 'S',
                rule = c(rule_group, rule),
                rows = which(tbl[, trim] == 'S'),
@@ -1737,7 +1805,7 @@ eucast_rules <- function(tbl,
     } else {
       wouldve <- ""
     }
-    if (amount_changed == 0) {
+    if (number_changed == 0) {
       colour <- green
     } else {
       colour <- blue
@@ -1745,11 +1813,11 @@ eucast_rules <- function(tbl,
     decimal.mark <- getOption("OutDec")
     big.mark <- ifelse(decimal.mark != ",", ",", ".")
     cat(bold(paste('\n=> EUCAST rules', paste0(wouldve, 'affected'),
-             amount_affected_rows %>% length() %>% format(big.mark = big.mark, decimal.mark = decimal.mark),
+             number_affected_rows %>% length() %>% format(big.mark = big.mark, decimal.mark = decimal.mark),
              'out of', nrow(tbl_original) %>% format(big.mark = big.mark, decimal.mark = decimal.mark),
              'rows ->',
              colour(paste0(wouldve, 'changed'),
-                    amount_changed %>% format(big.mark = big.mark, decimal.mark = decimal.mark), 'test results.\n\n'))))
+                    number_changed %>% format(big.mark = big.mark, decimal.mark = decimal.mark), 'test results.\n\n'))))
   }
 
   if (verbose == TRUE) {

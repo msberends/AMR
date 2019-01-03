@@ -86,12 +86,14 @@ test_that("EUCAST rules work", {
 
   # amox is inferred by benzylpenicillin in Kingella kingae
   expect_equal(
-    as.list(eucast_rules(
-      data.frame(mo = as.mo("Kingella kingae"),
-                 peni = "S",
-                 amox = "-",
-                 stringsAsFactors = FALSE)
-      , info = FALSE))$amox,
+    suppressWarnings(
+      as.list(eucast_rules(
+        data.frame(mo = as.mo("Kingella kingae"),
+                   peni = "S",
+                   amox = "-",
+                   stringsAsFactors = FALSE)
+        , info = FALSE))$amox
+    ),
     "S")
 
   # also test norf

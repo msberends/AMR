@@ -5,13 +5,17 @@
 \alias{key_antibiotics_equal}
 \title{Key antibiotics for first \emph{weighted} isolates}
 \usage{
-key_antibiotics(tbl, col_mo = NULL, universal_1 = "amox",
-  universal_2 = "amcl", universal_3 = "cfur", universal_4 = "pita",
-  universal_5 = "cipr", universal_6 = "trsu", GramPos_1 = "vanc",
-  GramPos_2 = "teic", GramPos_3 = "tetr", GramPos_4 = "eryt",
-  GramPos_5 = "oxac", GramPos_6 = "rifa", GramNeg_1 = "gent",
-  GramNeg_2 = "tobr", GramNeg_3 = "coli", GramNeg_4 = "cfot",
-  GramNeg_5 = "cfta", GramNeg_6 = "mero", warnings = TRUE, ...)
+key_antibiotics(tbl, col_mo = NULL, universal_1 = guess_ab(tbl,
+  "amox"), universal_2 = guess_ab(tbl, "amcl"),
+  universal_3 = guess_ab(tbl, "cfur"), universal_4 = guess_ab(tbl,
+  "pita"), universal_5 = guess_ab(tbl, "cipr"),
+  universal_6 = guess_ab(tbl, "trsu"), GramPos_1 = guess_ab(tbl,
+  "vanc"), GramPos_2 = guess_ab(tbl, "teic"), GramPos_3 = guess_ab(tbl,
+  "tetr"), GramPos_4 = guess_ab(tbl, "eryt"), GramPos_5 = guess_ab(tbl,
+  "oxac"), GramPos_6 = guess_ab(tbl, "rifa"), GramNeg_1 = guess_ab(tbl,
+  "gent"), GramNeg_2 = guess_ab(tbl, "tobr"), GramNeg_3 = guess_ab(tbl,
+  "coli"), GramNeg_4 = guess_ab(tbl, "cfot"), GramNeg_5 = guess_ab(tbl,
+  "cfta"), GramNeg_6 = guess_ab(tbl, "mero"), warnings = TRUE, ...)
 
 key_antibiotics_equal(x, y, type = c("keyantibiotics", "points"),
   ignore_I = TRUE, points_threshold = 2, info = FALSE)

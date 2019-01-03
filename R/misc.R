@@ -80,7 +80,7 @@ check_available_columns <- function(tbl, col.list, info = TRUE) {
     } else if (tolower(col.list[i]) %in% colnames(tbl)) {
       col.list[i] <- tolower(col.list[i])
     } else if (!col.list[i] %in% colnames(tbl)) {
-      col.list[i] <- NA
+      col.list[i] <- NULL
     }
   }
   if (!all(col.list %in% colnames(tbl))) {
