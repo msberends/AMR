@@ -13,6 +13,7 @@
 ^doc$
 ^docs$
 ^git.sh$
+^gitmerge.sh$
 ^index\.md$
 ^Meta$
 ^packrat/

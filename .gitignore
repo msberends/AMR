@@ -18,5 +18,6 @@ vignettes/*.R
 .Rprofile
 ^CRAN-RELEASE$
 git.sh
+gitmerge.sh
 packrat/lib*/
 packrat/src/

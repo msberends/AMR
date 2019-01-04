@@ -35,7 +35,8 @@
 #' @examples
 #' # Get a note when a species was renamed
 #' mo_shortname("Chlamydia psittaci")
-#' # Note: 'Chlamydia psittaci' (Page, 1968) was renamed 'Chlamydophila psittaci' (Everett et al., 1999)
+#' # Note: 'Chlamydia psittaci' (Page, 1968) was renamed 
+#' #       'Chlamydophila psittaci' (Everett et al., 1999)
 #' # [1] "C. psittaci"
 #'
 #' # Get any property from the entire taxonomic tree for all included species

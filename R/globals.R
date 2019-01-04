@@ -20,6 +20,11 @@
 # ==================================================================== #
 
 globalVariables(c(".",
+                  "atc", 
+                  "certe",
+                  "official", 
+                  "trade_name",
+                  "umcg",
                   "..property",
                   "antibiotic",
                   "Antibiotic",
