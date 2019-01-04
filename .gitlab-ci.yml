@@ -35,15 +35,15 @@ before_script:
   - apt-get update
   # install dependencies for package
   - apt-get -y install libxml2-dev libssl-dev libcurl4-openssl-dev zlib1g-dev pandoc r-base
+  - mkdir installed_deps
+  - Rscript -e '.libPaths <- c("installed_deps", .libPatgs())'
   - Rscript -e 'install.packages(c("devtools", "rlang"), repos = "https://cran.rstudio.com")'
   - Rscript -e 'devtools::install_dev_deps(repos = "https://cran.rstudio.com")'
 
 cache:
   key: "$CI_COMMIT_REF_SLUG"
   paths:
-    - /usr/local/lib/R/site-library/ 
-    - /usr/lib/R/site-library/
-    - /usr/lib/R/library/
+    - installed_deps/
 
 R 3:
   stage: build
