@@ -41,8 +41,9 @@ before_script:
 cache:
   key: "$CI_COMMIT_REF_SLUG"
   paths:
-    - /usr/local/lib/R/*
-    - /usr/lib/R/*
+    - /usr/local/lib/R/site-library/ 
+    - /usr/lib/R/site-library/
+    - /usr/lib/R/library/
 
 R 3:
   stage: build
@@ -56,6 +57,7 @@ R 3:
     - PKG_FILE_NAME=$(ls -1t *.tar.gz | head -n 1)
     - R CMD check "${PKG_FILE_NAME}" --no-build-vignettes --no-manual --as-cran
     - Rscript -e 'print(.libPaths())'
+    - ls -lh /usr/local/lib/R/site-library
   artifacts:
     paths:
       - '*.Rcheck/*'
