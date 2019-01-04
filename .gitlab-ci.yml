@@ -36,7 +36,7 @@ before_script:
   # install dependencies for package
   - apt-get -y install libxml2-dev libssl-dev libcurl4-openssl-dev zlib1g-dev pandoc r-base
   - mkdir installed_deps
-  - Rscript -e '.libPaths <- c("installed_deps", .libPaths())'
+  - Rscript -e '.libPaths("installed_deps")'
   - Rscript -e 'install.packages(c("devtools", "rlang"), repos = "https://cran.rstudio.com")'
   - Rscript -e 'devtools::install_dev_deps(repos = "https://cran.rstudio.com")'
 
@@ -56,8 +56,6 @@ R 3:
     - R CMD build . --no-build-vignettes --no-manual
     - PKG_FILE_NAME=$(ls -1t *.tar.gz | head -n 1)
     - R CMD check "${PKG_FILE_NAME}" --no-build-vignettes --no-manual --as-cran
-    - Rscript -e 'print(.libPaths())'
-    - ls -lh /usr/local/lib/R/site-library
   artifacts:
     paths:
       - '*.Rcheck/*'
