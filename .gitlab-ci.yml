@@ -33,9 +33,9 @@ stages:
 image: debian:buster-slim
 
 before_script:
-  - apt-get update
+  - apt-get -q update
   # install dependencies for packages
-  - apt-get -y install libxml2-dev libssl-dev libcurl4-openssl-dev zlib1g-dev pandoc r-base
+  - apt-get -y -q install libxml2-dev libssl-dev libcurl4-openssl-dev zlib1g-dev pandoc r-base
   # cache R packages
   - mkdir -p installed_deps
   - echo 'R_LIBS="installed_deps"' > .Renviron
@@ -57,8 +57,8 @@ R 3:
   allow_failure: true
   script:
     # remove vignettes folder and get VignetteBuilder field out of DESCRIPTION file
-    #- rm -rf vignettes
-    #- Rscript -e 'd <- read.dcf("DESCRIPTION"); d[, colnames(d) == "VignetteBuilder"] <- NA; write.dcf(d, "DESCRIPTION")'
+    - rm -rf vignettes
+    - Rscript -e 'd <- read.dcf("DESCRIPTION"); d[, colnames(d) == "VignetteBuilder"] <- NA; write.dcf(d, "DESCRIPTION")'
     # build package
     - R CMD build . --no-build-vignettes --no-manual
     - PKG_FILE_NAME=$(ls -1t *.tar.gz | head -n 1)
