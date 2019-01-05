@@ -1,5 +1,7 @@
 ^.*\.Rproj$
 ^\.gitlab-ci\.yml$
+^\.gitlab-ci\.R$
+^\.Renviron$
 ^\.Rprofile$
 ^\.Rproj\.user$
 ^\.travis\.yml$
@@ -7,7 +9,6 @@
 ^_noinclude$
 ^_pkgdown\.yml$
 ^appveyor\.yml$
-^ci.R$
 ^cran-comments\.md$
 ^CRAN-RELEASE$
 ^doc$
@@ -17,6 +18,5 @@
 ^index\.md$
 ^installed_deps$
 ^Meta$
-^packrat/
 ^pkgdown$
 ^public$

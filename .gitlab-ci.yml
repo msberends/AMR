@@ -29,16 +29,23 @@ stages:
   - test
   - deploy
 
-image: debian:buster-slim
+image: debian:stretch-slim
 
 before_script:
   - apt-get update
-  # install dependencies for package
+  # install dependencies for packages
   - apt-get -y install libxml2-dev libssl-dev libcurl4-openssl-dev zlib1g-dev pandoc r-base
-  - mkdir installed_deps
-  - Rscript -e '.libPaths("installed_deps")'
-  - Rscript -e 'install.packages(c("devtools", "rlang"), repos = "https://cran.rstudio.com")'
-  - Rscript -e 'devtools::install_dev_deps(repos = "https://cran.rstudio.com")'
+  # cache R packages
+  - mkdir -p installed_deps
+  - echo 'R_LIBS="installed_deps"' > .Renviron
+  - echo 'R_LIBS_USER="installed_deps"' >> .Renviron
+  - echo 'R_LIBS_SITE="installed_deps"' >> .Renviron
+  - Rscript -e '.libPaths()'
+  # install missing and outdated packages
+  - Rscript -e 'source(".gitlab-ci.R")'
+  - Rscript -e 'gl_update_pkg_all(repos = "https://cran.rstudio.com", quiet = TRUE, install_pkgdown = TRUE)'
+  #- Rscript -e 'install.packages(c("devtools", "rlang"), repos = "https://cran.rstudio.com", quiet = TRUE)'
+  #- Rscript -e 'devtools::install_dev_deps(repos = "https://cran.rstudio.com", quiet = TRUE)'
 
 cache:
   key: "$CI_COMMIT_REF_SLUG"
@@ -50,8 +57,8 @@ R 3:
   allow_failure: true
   script:
     # remove vignettes folder and get VignetteBuilder field out of DESCRIPTION file
-    - rm -rf vignettes
-    - Rscript -e 'd <- read.dcf("DESCRIPTION"); d[, colnames(d) == "VignetteBuilder"] <- NA; write.dcf(d, "DESCRIPTION")'
+    #- rm -rf vignettes
+    #- Rscript -e 'd <- read.dcf("DESCRIPTION"); d[, colnames(d) == "VignetteBuilder"] <- NA; write.dcf(d, "DESCRIPTION")'
     # build package
     - R CMD build . --no-build-vignettes --no-manual
     - PKG_FILE_NAME=$(ls -1t *.tar.gz | head -n 1)
@@ -79,7 +86,7 @@ pages:
   only:
     - master
   script:
-    - Rscript -e "install.packages('pkgdown', repos = 'https://cran.rstudio.com')"
+    #- Rscript -e "install.packages('pkgdown', repos = 'https://cran.rstudio.com')"
     - Rscript -e "devtools::install(build = TRUE, upgrade = FALSE)"
     - R -e "pkgdown::build_site(examples = FALSE, override = list(destination = 'public'))"
   artifacts:
