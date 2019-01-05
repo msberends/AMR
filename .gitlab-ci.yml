@@ -33,9 +33,9 @@ stages:
 image: debian:buster-slim
 
 before_script:
-  - apt-get -qq update
+  - apt-get update -qq
   # install dependencies for packages
-  - apt-get -y -qq install locales libxml2-dev libssl-dev libcurl4-openssl-dev zlib1g-dev pandoc r-base
+  - apt-get -y install -qq locales libxml2-dev libssl-dev libcurl4-openssl-dev zlib1g-dev pandoc r-base
   # set R system language
   - echo "LC_ALL=en_US.UTF-8" >> /etc/environment
   - echo "en_US.UTF-8 UTF-8" >> /etc/locale.gen
@@ -46,8 +46,10 @@ before_script:
   - echo 'R_LIBS="installed_deps"' > .Renviron
   - echo 'R_LIBS_USER="installed_deps"' >> .Renviron
   - echo 'R_LIBS_SITE="installed_deps"' >> .Renviron
+  - echo 'LANGUAGE="en_US.utf8"' >> .Renviron
   #- Rscript -e '.libPaths()'
   # install missing and outdated packages
+  - Rscript -e 'sessionInfo()'
   - Rscript -e 'source(".gitlab-ci.R"); gl_update_pkg_all(repos = "https://cran.rstudio.com", quiet = TRUE, install_pkgdown = TRUE)'
 
 cache:
@@ -66,7 +68,8 @@ R 3:
  #   - R CMD build . --no-build-vignettes --no-manual
     - R CMD build . --no-manual
     - PKG_FILE_NAME=$(ls -1t *.tar.gz | head -n 1)
-    - R CMD check "${PKG_FILE_NAME}" --no-build-vignettes --no-manual --as-cran
+#    - R CMD check "${PKG_FILE_NAME}" --no-build-vignettes --no-manual --as-cran
+    - R CMD check "${PKG_FILE_NAME}" --no-manual --as-cran
   artifacts:
     paths:
       - '*.Rcheck/*'
