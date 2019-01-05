@@ -175,8 +175,8 @@
 </h1></div>
 <p><em>(<help title="Too Long, Didn't Read">TLDR</help> - to find out how to conduct AMR analysis, please <a href="./articles/AMR.html">continue reading here to get started</a>.</em></p>
 <hr>
-<p><code>AMR</code> is a free and open-source <a href="https://www.r-project.org">R package</a> to simplify the analysis and prediction of <strong>Antimicrobial Resistance (AMR)</strong> and to work with antibiotic properties by using evidence-based methods.</p>
-<p>We created this package for academic research at the Faculty of Medical Sciences of the University of Groningen and the Medical Microbiology &amp; Infection Prevention (MMBI) department of the University Medical Center Groningen (UMCG). We released this under the GNU General Public Licence v2.0 (GPL-2) which makes it free for everybody to use and distribute, for personal and commercial use, but it may <strong>not</strong> be used for patent purposes. Read further about our GPL-2 licence <a href="./LICENSE-text.html">here</a>.</p>
+<p><code>AMR</code> is a free and open-source <a href="https://www.r-project.org">R package</a> to simplify the analysis and prediction of Antimicrobial Resistance (AMR) and to work with microbial and antimicrobial properties by using evidence-based methods.</p>
+<p>We created this package for academic research at the Faculty of Medical Sciences of the University of Groningen and the Medical Microbiology &amp; Infection Prevention (MMBI) department of the University Medical Center Groningen (UMCG). This R package is free software; you can freely use and distribute it for both personal and commercial (but <strong>not</strong> patent) purposes under the terms of the GNU General Public License version 2.0 (GPL-2), as published by the Free Software Foundation. Read further about our GPL-2 licence <a href="./LICENSE-text.html">here</a>.</p>
 <p>This package is ready-to-use for a professional environment by specialists in the following fields:</p>
 <p>Medical Microbiology:</p>
 <ul>
@@ -214,7 +214,7 @@
 <div id="get-this-package" class="section level3">
 <h3 class="hasAnchor">
 <a href="#get-this-package" class="anchor"></a>Get this package</h3>
-<p>This package is available on the official R network. Install this package in R with:</p>
+<p>This package is available on the official R network (CRAN). Install this package in R with:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/install.packages">install.packages</a></span>(<span class="st">"AMR"</span>)</code></pre></div>
 <p>It will be downloaded and installed automatically.</p>
 </div>
@@ -257,7 +257,7 @@
 <li>It <strong>analyses the data</strong> with convenient functions that use well-known methods.</li>
 </ol>
 <ul>
-<li>Calculate the resistance (and even co-resistance) of microbial isolates with the <code><a href="reference/portion.html">portion_R()</a></code>, <code><a href="reference/portion.html">portion_IR()</a></code>, <code><a href="reference/portion.html">portion_I()</a></code>, <code><a href="reference/portion.html">portion_SI()</a></code> and <code><a href="reference/portion.html">portion_S()</a></code> functions. Similarly, the <em>number</em> of isolates can be determined with the <code><a href="reference/count.html">count_R()</a></code>, <code><a href="reference/count.html">count_IR()</a></code>, <code><a href="reference/count.html">count_I()</a></code>, <code><a href="reference/count.html">count_SI()</a></code> and <code><a href="reference/count.html">count_S()</a></code> functions. All these functions can be used <a href="https://dplyr.tidyverse.org/#usage">with the <code>dplyr</code> package</a> (e.g. in conjunction with <a href="https://dplyr.tidyverse.org/reference/summarise.html"><code>summarise</code></a>)</li>
+<li>Calculate the resistance (and even co-resistance) of microbial isolates with the <code><a href="reference/portion.html">portion_R()</a></code>, <code><a href="reference/portion.html">portion_IR()</a></code>, <code><a href="reference/portion.html">portion_I()</a></code>, <code><a href="reference/portion.html">portion_SI()</a></code> and <code><a href="reference/portion.html">portion_S()</a></code> functions. Similarly, the <em>number</em> of isolates can be determined with the <code><a href="reference/count.html">count_R()</a></code>, <code><a href="reference/count.html">count_IR()</a></code>, <code><a href="reference/count.html">count_I()</a></code>, <code><a href="reference/count.html">count_SI()</a></code> and <code><a href="reference/count.html">count_S()</a></code> functions. All these functions can be used with the <code>dplyr</code> package (e.g. in conjunction with <code>summarise()</code>)</li>
 <li>Plot AMR results with <code><a href="reference/ggplot_rsi.html">geom_rsi()</a></code>, a function made for the <code>ggplot2</code> package</li>
 <li>Predict antimicrobial resistance for the nextcoming years using logistic regression models with the <code><a href="reference/resistance_predict.html">resistance_predict()</a></code> function</li>
 <li>Conduct descriptive statistics to enhance base R: calculate <code><a href="reference/kurtosis.html">kurtosis()</a></code>, <code><a href="reference/skewness.html">skewness()</a></code> and create frequency tables with <code><a href="reference/freq.html">freq()</a></code>

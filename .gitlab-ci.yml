@@ -19,23 +19,18 @@
 # Visit our website for more info: https://msberends.gitab.io/AMR.     #
 # ==================================================================== #
 
-# from https://stackoverflow.com/questions/51866926
-# and https://github.com/jangorecki/r.gitlab.ci
-# and https://docs.gitlab.com/ce/ci/yaml/README.html
-# how the Docker+R images work: https://hub.docker.com/r/rocker/r-ver/
-
 stages:
   - build
   - test
   - deploy
 
-# stretch only contains R 3.3
+# debian stretch only contains R 3.3...
 image: debian:buster-slim
 
 before_script:
   - apt-get update -qq
   # install dependencies for packages
-  - apt-get -y install -qq locales libxml2-dev libssl-dev libcurl4-openssl-dev zlib1g-dev pandoc r-base
+  - apt-get install -qq locales libxml2-dev libssl-dev libcurl4-openssl-dev zlib1g-dev pandoc r-base
   # set R system language
   - echo "LC_ALL=en_US.UTF-8" >> /etc/environment
   - echo "en_US.UTF-8 UTF-8" >> /etc/locale.gen
@@ -47,8 +42,11 @@ before_script:
   - echo 'R_LIBS_USER="installed_deps"' >> .Renviron
   - echo 'R_LIBS_SITE="installed_deps"' >> .Renviron
   - echo 'LANGUAGE="en_US.utf8"' >> .Renviron
+  - echo 'LANG="en_US.utf8"' >> .Renviron
+  - echo 'LANGUAGE="en_US.utf8"' > ~/.Renviron
   #- Rscript -e '.libPaths()'
   # install missing and outdated packages
+  - Rscript -e 'Sys.setlocale("LC_ALL", "en_US.UTF-8"); sessionInfo()'
   - Rscript -e 'sessionInfo()'
   - Rscript -e 'source(".gitlab-ci.R"); gl_update_pkg_all(repos = "https://cran.rstudio.com", quiet = TRUE, install_pkgdown = TRUE)'
 

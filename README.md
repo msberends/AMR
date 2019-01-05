@@ -2,11 +2,9 @@
 
 *NOTE: the original source code is on GitLab (https://gitlab.com/msberends/AMR), so you can report a bug at https://gitlab.com/msberends/AMR/issues. There is a mirror repository on GitHub (https://github.com/msberends/AMR). As the mirror process is automated by GitLab, both repositories always contain the latest changes.*
 
-----
-
 ## Development source
 
-This is the **development source** of `AMR`, a free and open-source [R package](https://www.r-project.org) to simplify the analysis and prediction of Antimicrobial Resistance (AMR) and to work with antibiotic properties by using evidence-based methods.
+This is the **development source** of `AMR`, a free and open-source [R package](https://www.r-project.org) to simplify the analysis and prediction of Antimicrobial Resistance (AMR) and to work with microbial and antimicrobial properties by using evidence-based methods.
 
 **Not a developer? Then our website https://msberends.gitlab.io/AMR is probably a better place to read about this package.** It contains documentation about all of the included functions and also a comprehensive tutorial about how to conduct AMR analysis.
 

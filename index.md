@@ -4,9 +4,10 @@
 
 ----
 
-`AMR` is a free and open-source [R package](https://www.r-project.org) to simplify the analysis and prediction of **Antimicrobial Resistance (AMR)** and to work with antibiotic properties by using evidence-based methods.
+`AMR` is a free and open-source [R package](https://www.r-project.org) to simplify the analysis and prediction of Antimicrobial Resistance (AMR) and to work with microbial and antimicrobial properties by using evidence-based methods.
 
-We created this package for academic research at the Faculty of Medical Sciences of the University of Groningen and the Medical Microbiology & Infection Prevention (MMBI) department of the University Medical Center Groningen (UMCG). We released this under the GNU General Public Licence v2.0 (GPL-2) which makes it free for everybody to use and distribute, for personal and commercial use, but it may **not** be used for patent purposes. Read further about our GPL-2 licence [here](./LICENSE-text.html).
+We created this package for academic research at the Faculty of Medical Sciences of the University of Groningen and the Medical Microbiology & Infection Prevention (MMBI) department of the University Medical Center Groningen (UMCG).
+This R package is free software; you can freely use and distribute it for both personal and commercial (but **not** patent) purposes under the terms of the GNU General Public License version 2.0 (GPL-2), as published by the Free Software Foundation. Read further about our GPL-2 licence [here](./LICENSE-text.html).
 
 This package is ready-to-use for a professional environment by specialists in the following fields:
 
@@ -45,7 +46,8 @@ Developers:
 
 ### Get this package
 
-This package is available on the official R network. Install this package in R with:
+This package is available on the official R network (CRAN). Install this package in R with:
+
 ```r
 install.packages("AMR")
 ```
@@ -84,7 +86,7 @@ The `AMR` package basically does four important things:
 
 3. It **analyses the data** with convenient functions that use well-known methods.
 
-   * Calculate the resistance (and even co-resistance) of microbial isolates with the `portion_R()`, `portion_IR()`, `portion_I()`, `portion_SI()` and `portion_S()` functions. Similarly, the *number* of isolates can be determined with the `count_R()`, `count_IR()`, `count_I()`, `count_SI()` and `count_S()` functions. All these functions can be used [with the `dplyr` package](https://dplyr.tidyverse.org/#usage) (e.g. in conjunction with [`summarise`](https://dplyr.tidyverse.org/reference/summarise.html))
+   * Calculate the resistance (and even co-resistance) of microbial isolates with the `portion_R()`, `portion_IR()`, `portion_I()`, `portion_SI()` and `portion_S()` functions. Similarly, the *number* of isolates can be determined with the `count_R()`, `count_IR()`, `count_I()`, `count_SI()` and `count_S()` functions. All these functions can be used with the `dplyr` package (e.g. in conjunction with `summarise()`)
    * Plot AMR results with `geom_rsi()`, a function made for the `ggplot2` package
    * Predict antimicrobial resistance for the nextcoming years using logistic regression models with the `resistance_predict()` function
    * Conduct descriptive statistics to enhance base R: calculate `kurtosis()`, `skewness()` and create frequency tables with `freq()`
