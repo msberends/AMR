@@ -25,7 +25,7 @@ stages:
   - deploy
 
 # debian stretch only contains R 3.3...
-#image: debian:buster-slim
+image: debian:buster-slim
 
 before_script:
   - apt-get update -qq
@@ -54,31 +54,13 @@ cache:
   paths:
     - installed_deps/
 
-R-latest:
-  image: rocker/r-ver:latest
+R:
   stage: build
   allow_failure: true
   script:
     # remove vignettes folder and get VignetteBuilder field out of DESCRIPTION file
     - rm -rf vignettes
     - Rscript -e 'd <- read.dcf("DESCRIPTION"); d[, colnames(d) == "VignetteBuilder"] <- NA; write.dcf(d, "DESCRIPTION")'
-    # build package
-    - R CMD build . --no-build-vignettes --no-manual
-    - PKG_FILE_NAME=$(ls -1t *.tar.gz | head -n 1)
-    - R CMD check "${PKG_FILE_NAME}" --no-build-vignettes --no-manual --as-cran
-  artifacts:
-    paths:
-      - '*.Rcheck/*'
-    expire_in: '1 month'
-
-R-devel:
-  image: rocker/r-ver:devel    
-  stage: build
-  allow_failure: true
-  script:
-    # remove vignettes folder and get VignetteBuilder field out of DESCRIPTION file
-    - rm -rf vignettes
-    - Rscript -e 'd <- read.dcf("DESCRIPTION"); d[, colnames(d) == "VignetteBuilder"] <- NA; write.dcf(d, "DESCRIPTION"$
     # build package
     - R CMD build . --no-build-vignettes --no-manual
     - PKG_FILE_NAME=$(ls -1t *.tar.gz | head -n 1)
