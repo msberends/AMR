@@ -43,8 +43,7 @@ before_script:
   - echo 'R_LIBS_SITE="installed_deps"' >> .Renviron
   #- Rscript -e '.libPaths()'
   # install missing and outdated packages
-  - Rscript -e 'source(".gitlab-ci.R")'
-  - Rscript -e 'gl_update_pkg_all(repos = "https://cran.rstudio.com", quiet = TRUE, install_pkgdown = TRUE)'
+  - Rscript -e 'source(".gitlab-ci.R"); gl_update_pkg_all(repos = "https://cran.rstudio.com", quiet = TRUE, install_pkgdown = TRUE)'
   #- Rscript -e 'install.packages(c("devtools", "rlang"), repos = "https://cran.rstudio.com", quiet = TRUE)'
   #- Rscript -e 'devtools::install_dev_deps(repos = "https://cran.rstudio.com", quiet = TRUE)'
 
