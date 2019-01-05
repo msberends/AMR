@@ -31,7 +31,7 @@ gl_update_pkg_all <- function(repos = "https://cran.rstudio.com",
   update.packages(ask = FALSE, repos = repos, quiet = quiet)
 
   install_if_needed(pkg = "devtools", repos = repos, quiet = quiet)
-  if (install_pkgdown = TRUE) {
+  if (install_pkgdown == TRUE) {
     install_if_needed(pkg = "pkgdown", repos = repos, quiet = quiet)
   }
 

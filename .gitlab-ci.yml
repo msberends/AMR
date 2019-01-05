@@ -29,7 +29,8 @@ stages:
   - test
   - deploy
 
-image: debian:stretch-slim
+# stretch only contains R 3.3
+image: debian:buster-slim
 
 before_script:
   - apt-get update
@@ -40,7 +41,7 @@ before_script:
   - echo 'R_LIBS="installed_deps"' > .Renviron
   - echo 'R_LIBS_USER="installed_deps"' >> .Renviron
   - echo 'R_LIBS_SITE="installed_deps"' >> .Renviron
-  - Rscript -e '.libPaths()'
+  #- Rscript -e '.libPaths()'
   # install missing and outdated packages
   - Rscript -e 'source(".gitlab-ci.R")'
   - Rscript -e 'gl_update_pkg_all(repos = "https://cran.rstudio.com", quiet = TRUE, install_pkgdown = TRUE)'
