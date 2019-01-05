@@ -25,7 +25,7 @@ stages:
   - deploy
 
 # debian stretch only contains R 3.3...
-image: debian:buster-slim
+#image: debian:buster-slim
 
 before_script:
   - apt-get update -qq
@@ -41,11 +41,12 @@ before_script:
   - echo 'R_LIBS="installed_deps"' > .Renviron
   - echo 'R_LIBS_USER="installed_deps"' >> .Renviron
   - echo 'R_LIBS_SITE="installed_deps"' >> .Renviron
+  # set language
   - echo 'LANGUAGE="en_US.utf8"' >> .Renviron
+  - echo 'LANG="en_US.utf8"' >> .Renviron
   - echo 'LANGUAGE="en_US.utf8"' > ~/.Renviron
-  #- Rscript -e '.libPaths()'
-  # install missing and outdated packages
   - Rscript -e 'sessionInfo()'
+  # install missing and outdated packages
   - Rscript -e 'source(".gitlab-ci.R"); gl_update_pkg_all(repos = "https://cran.rstudio.com", quiet = TRUE, install_pkgdown = TRUE)'
 
 cache:
@@ -53,7 +54,8 @@ cache:
   paths:
     - installed_deps/
 
-R 3:
+R-release:
+  image: rocker/r-ver:release
   stage: build
   allow_failure: true
   script:
@@ -67,7 +69,6 @@ R 3:
   artifacts:
     paths:
       - '*.Rcheck/*'
-    name: 'Rcheck log'
     expire_in: '1 month'
 
 coverage:
