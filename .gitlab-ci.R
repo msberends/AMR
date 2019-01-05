@@ -37,7 +37,7 @@ gl_update_pkg_all <- function(repos = "https://cran.rstudio.com",
 
   devtools::install_dev_deps(repos = repos, quiet = quiet, upgrade = TRUE)
 
-  cat("\nINSTALLED:\n\n")
+  cat("INSTALLED:\n")
   instld <- as.data.frame(installed.packages())
   rownames(instld) <- NULL
   print(instld[, c("Package", "Version")])

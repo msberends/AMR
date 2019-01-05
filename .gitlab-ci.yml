@@ -33,14 +33,14 @@ stages:
 image: debian:buster-slim
 
 before_script:
-  - apt-get -q update
+  - apt-get -qq update
   # install dependencies for packages
-  - apt-get -y -q install libxml2-dev libssl-dev libcurl4-openssl-dev zlib1g-dev pandoc r-base
+  - apt-get -y -qq install locales libxml2-dev libssl-dev libcurl4-openssl-dev zlib1g-dev pandoc r-base
   # set R system language
   - echo "LC_ALL=en_US.UTF-8" >> /etc/environment
   - echo "en_US.UTF-8 UTF-8" >> /etc/locale.gen
   - echo "LANG=en_US.UTF-8" > /etc/locale.conf
-  - locale-gen en_US.UTF-8
+  - locale-gen
   # cache R packages
   - mkdir -p installed_deps
   - echo 'R_LIBS="installed_deps"' > .Renviron
@@ -49,8 +49,6 @@ before_script:
   #- Rscript -e '.libPaths()'
   # install missing and outdated packages
   - Rscript -e 'source(".gitlab-ci.R"); gl_update_pkg_all(repos = "https://cran.rstudio.com", quiet = TRUE, install_pkgdown = TRUE)'
-  #- Rscript -e 'install.packages(c("devtools", "rlang"), repos = "https://cran.rstudio.com", quiet = TRUE)'
-  #- Rscript -e 'devtools::install_dev_deps(repos = "https://cran.rstudio.com", quiet = TRUE)'
 
 cache:
   key: "$CI_COMMIT_REF_SLUG"
@@ -62,10 +60,11 @@ R 3:
   allow_failure: true
   script:
     # remove vignettes folder and get VignetteBuilder field out of DESCRIPTION file
-    - rm -rf vignettes
-    - Rscript -e 'd <- read.dcf("DESCRIPTION"); d[, colnames(d) == "VignetteBuilder"] <- NA; write.dcf(d, "DESCRIPTION")'
+ #   - rm -rf vignettes
+ #   - Rscript -e 'd <- read.dcf("DESCRIPTION"); d[, colnames(d) == "VignetteBuilder"] <- NA; write.dcf(d, "DESCRIPTION")'
     # build package
-    - R CMD build . --no-build-vignettes --no-manual
+ #   - R CMD build . --no-build-vignettes --no-manual
+    - R CMD build . --no-manual
     - PKG_FILE_NAME=$(ls -1t *.tar.gz | head -n 1)
     - R CMD check "${PKG_FILE_NAME}" --no-build-vignettes --no-manual --as-cran
   artifacts:
