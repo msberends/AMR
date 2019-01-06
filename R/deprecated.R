@@ -46,3 +46,10 @@ ratio <- function(x, ratio) {
   }
   sum(x, na.rm = TRUE) * (ratio / sum(ratio, na.rm = TRUE))
 }
+
+#' @rdname AMR-deprecated
+#' @exported
+guess_mo <- function(...) {
+  .Deprecated(new = "as.mo", package = "AMR")
+  as.mo(...)
+}

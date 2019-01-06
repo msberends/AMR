@@ -28,6 +28,7 @@
 * New vignettes about how to conduct AMR analysis, predict antimicrobial resistance, use the *G*-test and more. These are also available (and even easier readable) on our website: https://msberends.gitlab.io/AMR.
 
 #### Changed
+* Function `guess_mo()` is now deprecated in favour of `as.mo()` and will be remover in future versions
 * Fixed a critical bug in `eucast_rules()` where some rules that depend on previous applied rules would not be applied adequately
 * Improvements for `as.mo()`:
   * Finds better results when input is in other languages

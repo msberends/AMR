@@ -71,6 +71,12 @@ navbar:
       href: 'LICENSE-text.html'
 
 reference:
+- title: Backround information
+  desc: >
+    Some pages about our package and its external sources.
+  contents:
+  - 'AMR'
+  - itis
 - title: Cleaning your data
   desc: >
     Functions for cleaning and optimising your data, to be able
@@ -79,6 +85,7 @@ reference:
   contents:
   - starts_with("as.")
   - '`eucast_rules`'
+  - '`guess_ab`'
   - '`read.4D`'
 - title: Adding variables to your data
   desc: >

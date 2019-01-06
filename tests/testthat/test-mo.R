@@ -102,36 +102,36 @@ test_that("as.mo works", {
                c(NA_character_, NA_character_, "B_STNTR_MAL", "B_KLBSL_PNE_RHI", "B_ESCHR_COL"))
 
   # check for Becker classification
-  expect_identical(as.character(guess_mo("S. epidermidis", Becker = FALSE)), "B_STPHY_EPI")
-  expect_identical(as.character(guess_mo("S. epidermidis", Becker = TRUE)),  "B_STPHY_CNS")
-  expect_identical(as.character(guess_mo("STAEPI",         Becker = TRUE)),  "B_STPHY_CNS")
-  expect_identical(as.character(guess_mo("S. intermedius", Becker = FALSE)), "B_STRPTC_INT") # Strep (!) intermedius
-  expect_identical(as.character(guess_mo("Sta intermedius",Becker = FALSE)), "B_STPHY_INT")
-  expect_identical(as.character(guess_mo("Sta intermedius",Becker = TRUE)),  "B_STPHY_CPS")
-  expect_identical(as.character(guess_mo("STAINT",         Becker = TRUE)),  "B_STPHY_CPS")
+  expect_identical(as.character(as.mo("S. epidermidis", Becker = FALSE)), "B_STPHY_EPI")
+  expect_identical(as.character(as.mo("S. epidermidis", Becker = TRUE)),  "B_STPHY_CNS")
+  expect_identical(as.character(as.mo("STAEPI",         Becker = TRUE)),  "B_STPHY_CNS")
+  expect_identical(as.character(as.mo("S. intermedius", Becker = FALSE)), "B_STRPTC_INT") # Strep (!) intermedius
+  expect_identical(as.character(as.mo("Sta intermedius",Becker = FALSE)), "B_STPHY_INT")
+  expect_identical(as.character(as.mo("Sta intermedius",Becker = TRUE)),  "B_STPHY_CPS")
+  expect_identical(as.character(as.mo("STAINT",         Becker = TRUE)),  "B_STPHY_CPS")
   # aureus must only be influenced if Becker = "all"
-  expect_identical(as.character(guess_mo("STAAUR", Becker = FALSE)), "B_STPHY_AUR")
-  expect_identical(as.character(guess_mo("STAAUR", Becker = TRUE)),  "B_STPHY_AUR")
-  expect_identical(as.character(guess_mo("STAAUR", Becker = "all")), "B_STPHY_CPS")
+  expect_identical(as.character(as.mo("STAAUR", Becker = FALSE)), "B_STPHY_AUR")
+  expect_identical(as.character(as.mo("STAAUR", Becker = TRUE)),  "B_STPHY_AUR")
+  expect_identical(as.character(as.mo("STAAUR", Becker = "all")), "B_STPHY_CPS")
 
   # check for Lancefield classification
-  expect_identical(as.character(guess_mo("S. pyogenes", Lancefield = FALSE)),    "B_STRPTC_PYO")
-  expect_identical(as.character(guess_mo("S. pyogenes", Lancefield = TRUE)),     "B_STRPTC_GRA")
-  expect_identical(as.character(guess_mo("STCPYO",      Lancefield = TRUE)),     "B_STRPTC_GRA") # group A
-  expect_identical(as.character(guess_mo("S. agalactiae",  Lancefield = FALSE)), "B_STRPTC_AGA")
-  expect_identical(as.character(guess_mo("S. agalactiae",  Lancefield = TRUE)),  "B_STRPTC_GRB") # group B
-  expect_identical(as.character(guess_mo("S. equisimilis", Lancefield = FALSE)), "B_STRPTC_DYS_EQU")
-  expect_identical(as.character(guess_mo("S. equisimilis", Lancefield = TRUE)),  "B_STRPTC_GRC") # group C
+  expect_identical(as.character(as.mo("S. pyogenes", Lancefield = FALSE)),    "B_STRPTC_PYO")
+  expect_identical(as.character(as.mo("S. pyogenes", Lancefield = TRUE)),     "B_STRPTC_GRA")
+  expect_identical(as.character(as.mo("STCPYO",      Lancefield = TRUE)),     "B_STRPTC_GRA") # group A
+  expect_identical(as.character(as.mo("S. agalactiae",  Lancefield = FALSE)), "B_STRPTC_AGA")
+  expect_identical(as.character(as.mo("S. agalactiae",  Lancefield = TRUE)),  "B_STRPTC_GRB") # group B
+  expect_identical(as.character(as.mo("S. equisimilis", Lancefield = FALSE)), "B_STRPTC_DYS_EQU")
+  expect_identical(as.character(as.mo("S. equisimilis", Lancefield = TRUE)),  "B_STRPTC_GRC") # group C
   # Enterococci must only be influenced if Lancefield = "all"
-  expect_identical(as.character(guess_mo("E. faecium", Lancefield = FALSE)),     "B_ENTRC_IUM")
-  expect_identical(as.character(guess_mo("E. faecium", Lancefield = TRUE)),      "B_ENTRC_IUM")
-  expect_identical(as.character(guess_mo("E. faecium", Lancefield = "all")),     "B_STRPTC_GRD") # group D
-  expect_identical(as.character(guess_mo("S. anginosus",   Lancefield = FALSE)), "B_STRPTC_ANG")
-  expect_identical(as.character(guess_mo("S. anginosus",   Lancefield = TRUE)),  "B_STRPTC_GRF") # group F
-  expect_identical(as.character(guess_mo("S. sanguinis",   Lancefield = FALSE)), "B_STRPTC_SAN")
-  expect_identical(as.character(guess_mo("S. sanguinis",   Lancefield = TRUE)),  "B_STRPTC_GRH") # group H
-  expect_identical(as.character(guess_mo("S. salivarius",  Lancefield = FALSE)), "B_STRPTC_SAL")
-  expect_identical(as.character(guess_mo("S. salivarius",  Lancefield = TRUE)),  "B_STRPTC_GRK") # group K
+  expect_identical(as.character(as.mo("E. faecium", Lancefield = FALSE)),     "B_ENTRC_IUM")
+  expect_identical(as.character(as.mo("E. faecium", Lancefield = TRUE)),      "B_ENTRC_IUM")
+  expect_identical(as.character(as.mo("E. faecium", Lancefield = "all")),     "B_STRPTC_GRD") # group D
+  expect_identical(as.character(as.mo("S. anginosus",   Lancefield = FALSE)), "B_STRPTC_ANG")
+  expect_identical(as.character(as.mo("S. anginosus",   Lancefield = TRUE)),  "B_STRPTC_GRF") # group F
+  expect_identical(as.character(as.mo("S. sanguinis",   Lancefield = FALSE)), "B_STRPTC_SAN")
+  expect_identical(as.character(as.mo("S. sanguinis",   Lancefield = TRUE)),  "B_STRPTC_GRH") # group H
+  expect_identical(as.character(as.mo("S. salivarius",  Lancefield = FALSE)), "B_STRPTC_SAL")
+  expect_identical(as.character(as.mo("S. salivarius",  Lancefield = TRUE)),  "B_STRPTC_GRK") # group K
 
   library(dplyr)
 
@@ -166,7 +166,7 @@ test_that("as.mo works", {
 
   # helper function
   expect_identical(as.mo("B_ESCHR_COL"),
-                   guess_mo("B_ESCHR_COL"))
+                   as.mo("B_ESCHR_COL"))
 
   # test pull
   expect_equal(nrow(septic_patients %>% mutate(mo = as.mo(mo))),

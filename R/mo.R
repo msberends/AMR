@@ -76,7 +76,6 @@
 #'   \item{\code{"D. spartina"}. This is the abbreviation of an old taxonomic name: \emph{Didymosphaeria spartinae} (the last "e" was missing from the input). This fungus was renamed to \emph{Leptosphaeria obiones}, so a warning will be thrown that this result (\code{F_LPTSP_OBI}) needs review.}
 #' }
 #'
-#' \code{guess_mo} is an alias of \code{as.mo}.
 #' @inheritSection itis ITIS
 #  (source as a section, so it can be inherited by other man pages)
 #' @section Source:
@@ -109,12 +108,11 @@
 #' as.mo("GAS") # Group A Streptococci
 #' as.mo("GBS") # Group B Streptococci
 #'
-#' # guess_mo is an alias of as.mo and works the same
-#' guess_mo("S. epidermidis")                 # will remain species: B_STPHY_EPI
-#' guess_mo("S. epidermidis", Becker = TRUE)  # will not remain species: B_STPHY_CNS
+#' as.mo("S. epidermidis")                 # will remain species: B_STPHY_EPI
+#' as.mo("S. epidermidis", Becker = TRUE)  # will not remain species: B_STPHY_CNS
 #'
-#' guess_mo("S. pyogenes")                    # will remain species: B_STRPTC_PYO
-#' guess_mo("S. pyogenes", Lancefield = TRUE) # will not remain species: B_STRPTC_GRA
+#' as.mo("S. pyogenes")                    # will remain species: B_STRPTC_PYO
+#' as.mo("S. pyogenes", Lancefield = TRUE) # will not remain species: B_STRPTC_GRA
 #'
 #' # Use mo_* functions to get a specific property based on `mo`
 #' Ecoli <- as.mo("E. coli")     # returns `B_ESCHR_COL`
@@ -153,10 +151,6 @@ as.mo <- function(x, Becker = FALSE, Lancefield = FALSE, allow_uncertain = TRUE,
 is.mo <- function(x) {
   identical(class(x), "mo")
 }
-
-#' @rdname as.mo
-#' @export
-guess_mo <- as.mo
 
 #' @importFrom dplyr %>% pull left_join n_distinct progress_estimated
 #' @importFrom data.table data.table as.data.table setkey
