@@ -30,7 +30,7 @@ image: debian:buster-slim
 before_script:
   - apt-get update -qq
   # install dependencies for packages
-  - apt-get install locales libxml2-dev libssl-dev libcurl4-openssl-dev zlib1g-dev pandoc pandoc-citeproc r-base
+  - apt-get install -y locales libxml2-dev libssl-dev libcurl4-openssl-dev zlib1g-dev pandoc pandoc-citeproc r-base >> /dev/null/
   # set R system language
   - echo "LC_ALL=en_US.UTF-8" >> /etc/environment
   - echo "en_US.UTF-8 UTF-8" >> /etc/locale.gen
