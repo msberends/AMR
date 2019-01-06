@@ -4,16 +4,12 @@
 \alias{as.mo}
 \alias{mo}
 \alias{is.mo}
-\alias{guess_mo}
 \title{Transform to microorganism ID}
 \usage{
 as.mo(x, Becker = FALSE, Lancefield = FALSE, allow_uncertain = TRUE,
   reference_df = NULL)
 
 is.mo(x)
-
-guess_mo(x, Becker = FALSE, Lancefield = FALSE,
-  allow_uncertain = TRUE, reference_df = NULL)
 }
 \arguments{
 \item{x}{a character vector or a \code{data.frame} with one or two columns}
@@ -77,8 +73,6 @@ When using \code{allow_uncertain = TRUE} (which is the default setting), it will
   \item{\code{"S. aureus - please mind: MRSA"}. The last word will be stripped, after which the function will try to find a match. If it does not, the second last word will be stripped, etc. Again, a warning will be thrown that the result \emph{Staphylococcus aureus} (\code{B_STPHY_AUR}) needs review.}
   \item{\code{"D. spartina"}. This is the abbreviation of an old taxonomic name: \emph{Didymosphaeria spartinae} (the last "e" was missing from the input). This fungus was renamed to \emph{Leptosphaeria obiones}, so a warning will be thrown that this result (\code{F_LPTSP_OBI}) needs review.}
 }
-
-\code{guess_mo} is an alias of \code{as.mo}.
 }
 \section{Source}{
 
@@ -124,12 +118,11 @@ as.mo("Streptococcus group A")
 as.mo("GAS") # Group A Streptococci
 as.mo("GBS") # Group B Streptococci
 
-# guess_mo is an alias of as.mo and works the same
-guess_mo("S. epidermidis")                 # will remain species: B_STPHY_EPI
-guess_mo("S. epidermidis", Becker = TRUE)  # will not remain species: B_STPHY_CNS
+as.mo("S. epidermidis")                 # will remain species: B_STPHY_EPI
+as.mo("S. epidermidis", Becker = TRUE)  # will not remain species: B_STPHY_CNS
 
-guess_mo("S. pyogenes")                    # will remain species: B_STRPTC_PYO
-guess_mo("S. pyogenes", Lancefield = TRUE) # will not remain species: B_STRPTC_GRA
+as.mo("S. pyogenes")                    # will remain species: B_STRPTC_PYO
+as.mo("S. pyogenes", Lancefield = TRUE) # will not remain species: B_STRPTC_GRA
 
 # Use mo_* functions to get a specific property based on `mo`
 Ecoli <- as.mo("E. coli")     # returns `B_ESCHR_COL`

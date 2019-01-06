@@ -48,7 +48,7 @@ ratio <- function(x, ratio) {
 }
 
 #' @rdname AMR-deprecated
-#' @exported
+#' @export
 guess_mo <- function(...) {
   .Deprecated(new = "as.mo", package = "AMR")
   as.mo(...)

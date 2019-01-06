@@ -3,9 +3,12 @@
 \name{AMR-deprecated}
 \alias{AMR-deprecated}
 \alias{ratio}
+\alias{guess_mo}
 \title{Deprecated functions}
 \usage{
 ratio(x, ratio)
+
+guess_mo(...)
 }
 \description{
 These functions are \link{Deprecated}. They will be removed in a future release. Using the functions will give a warning with the name of the function it has been replaced by.
