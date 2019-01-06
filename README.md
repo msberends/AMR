@@ -18,7 +18,7 @@ Bhanu N.M. Sinha <a href="https://orcid.org/0000-0003-1634-0010"><img src="https
   
 <sup>1</sup> Department of Medical Microbiology, University of Groningen, University Medical Center Groningen, Groningen, the Netherlands - [rug.nl](http://www.rug.nl) [umcg.nl](http://www.umcg.nl)<br>
 <sup>2</sup> Certe Medical Diagnostics & Advice, Groningen, the Netherlands - [certe.nl](http://www.certe.nl)<br>
-<sup>a</sup> R package author and thesis dissertant<br>
+<sup>a</sup> Thesis dissertant<br>
 <sup>b</sup> Thesis advisor
 
 <a href="https://www.rug.nl"><img src="man/figures/logo_rug.png" height="60px"></a>
@@ -33,7 +33,7 @@ All stable versions of this package [are published on CRAN](https://CRAN.R-proje
 ### Install from CRAN
 [![CRAN_Badge](https://www.r-pkg.org/badges/version/AMR)](https://CRAN.R-project.org/package=AMR) [![CRAN_Downloads](https://cranlogs.r-pkg.org/badges/grand-total/AMR)](https://CRAN.R-project.org/package=AMR)
 
-(Note: Downloads measured only by [cran.rstudio.com](https://cran.rstudio.com/package=AMR), this excludes e.g. the official [cran.r-project.org](https://cran.r-project.org/package=AMR))
+(Note: Downloads measured only by cran.rstudio.com, this excludes e.g. the official [cran.r-project.org](https://cran.r-project.org/package=AMR))
 
 - <img src="http://www.rstudio.com/favicon.ico" alt="RStudio favicon" height="20px"> Install using [RStudio](http://www.rstudio.com) (recommended):
   - Click on `Tools` and then `Install Packages...`
