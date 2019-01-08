@@ -127,7 +127,7 @@
 #' Data set with taxonomic data from ITIS
 #'
 #' A data set containing the complete microbial taxonomy of the kingdoms Bacteria, Fungi and Protozoa. MO codes can be looked up using \code{\link{as.mo}}.
-#' @inheritSection itis ITIS
+#' @inheritSection ITIS ITIS
 #' @format A \code{\link{data.frame}} with 18,833 observations and 15 variables:
 #' \describe{
 #'   \item{\code{mo}}{ID of microorganism}

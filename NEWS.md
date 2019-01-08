@@ -28,9 +28,13 @@
 * New vignettes about how to conduct AMR analysis, predict antimicrobial resistance, use the *G*-test and more. These are also available (and even easier readable) on our website: https://msberends.gitlab.io/AMR.
 
 #### Changed
-* Function `guess_mo()` is now deprecated in favour of `as.mo()` and will be remover in future versions
-* Fixed a critical bug in `eucast_rules()` where some rules that depend on previous applied rules would not be applied adequately
+* Function `eucast_rules()`:
+  * Updated EUCAST Clinical breakpoints to [version 9.0 of 1 January 2019](http://www.eucast.org/clinical_breakpoints/)
+  * Fixed a critical bug where some rules that depend on previous applied rules would not be applied adequately
+  * Emphasised in manual that penicillin is meant as benzylpenicillin (ATC [J01CE01](https://www.whocc.no/atc_ddd_index/?code=J01CE01))
+* Function `guess_mo()` is now deprecated in favour of `as.mo()` and will be removed in future versions
 * Improvements for `as.mo()`:
+  * Fix for vector containing only empty values
   * Finds better results when input is in other languages
   * Better handling for subspecies
   * Better handling for *Salmonellae*

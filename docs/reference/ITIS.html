@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Pattern Matching — like • AMR (for R)</title>
+<title>ITIS: Integrated Taxonomic Information System — ITIS • AMR (for R)</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -45,9 +45,9 @@
 
   <link href="../extra.css" rel="stylesheet">
   <script src="../extra.js"></script>
-<meta property="og:title" content="Pattern Matching — like" />
+<meta property="og:title" content="ITIS: Integrated Taxonomic Information System — ITIS" />
 
-<meta property="og:description" content="Convenient wrapper around grep to match a pattern: a %like% b. It always returns a logical vector and is always case-insensitive. Also, pattern (b) can be as long as x (a) to compare items of each index in both vectors." />
+<meta property="og:description" content="All taxonomic names of all microorganisms are included in this package, using the authoritative Integrated Taxonomic Information System (ITIS)." />
 
 <meta property="og:image" content="https://msberends.gitlab.io/AMR/logo.png" />
 <meta name="twitter:card" content="summary" />
@@ -209,53 +209,25 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Pattern Matching</h1>
+    <h1>ITIS: Integrated Taxonomic Information System</h1>
     
-    <div class="hidden name"><code>like.Rd</code></div>
+    <div class="hidden name"><code>ITIS.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Convenient wrapper around <code><a href='https://www.rdocumentation.org/packages/base/topics/grep'>grep</a></code> to match a pattern: <code>a %like% b</code>. It always returns a <code>logical</code> vector and is always case-insensitive. Also, <code>pattern</code> (<code>b</code>) can be as long as <code>x</code> (<code>a</code>) to compare items of each index in both vectors.</p>
+    <p>All taxonomic names of all microorganisms are included in this package, using the authoritative Integrated Taxonomic Information System (ITIS).</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>like</span>(<span class='no'>x</span>, <span class='no'>pattern</span>)
+        
+    <h2 class="hasAnchor" id="itis"><a class="anchor" href="#itis"></a>ITIS</h2>
 
-<span class='no'>x</span> <span class='kw'>%like%</span> <span class='no'>pattern</span></pre>
     
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
-    <table class="ref-arguments">
-    <colgroup><col class="name" /><col class="desc" /></colgroup>
-    <tr>
-      <th>x</th>
-      <td><p>a character vector where matches are sought, or an
-    object which can be coerced by <code>as.character</code> to a character
-    vector.  <a href='https://www.rdocumentation.org/packages/base/topics/LongVectors'>Long vectors</a> are supported.</p></td>
-    </tr>
-    <tr>
-      <th>pattern</th>
-      <td><p>character string containing a <a href='https://www.rdocumentation.org/packages/base/topics/regex'>regular expression</a>
-    (or character string for <code>fixed = TRUE</code>) to be matched
-    in the given character vector.  Coerced by
-    <code><a href='https://www.rdocumentation.org/packages/base/topics/character'>as.character</a></code> to a character string if possible.  If a
-    character vector of length 2 or more is supplied, the first element
-    is used with a warning.  Missing values are allowed except for
-    <code>regexpr</code> and <code>gregexpr</code>.</p></td>
-    </tr>
-    </table>
-    
-    <h2 class="hasAnchor" id="source"><a class="anchor" href="#source"></a>Source</h2>
-
-    <p>Idea from the <a href='https://github.com/Rdatatable/data.table/blob/master/R/like.R'><code>like</code> function from the <code>data.table</code> package</a>, but made it case insensitive at default and let it support multiple patterns.</p>
-    
-    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
-
-    <p>A <code>logical</code> vector</p>
-    
-    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
-
-    <p>Using RStudio? This function can also be inserted from the Addins menu and can have its own Keyboard Shortcut like Ctrl+Shift+L or Cmd+Shift+L (see Tools &gt; Modify Keyboard Shortcuts...).</p>
+    <p><img src='figures/itis_logo.jpg' height=60px style=margin-bottom:5px /> <br />
+This package contains the <strong>complete microbial taxonomic data</strong> (with all nine taxonomic ranks - from kingdom to subspecies) from the publicly available Integrated Taxonomic Information System (ITIS, <a href='https://www.itis.gov'>https://www.itis.gov</a>).</p>
+<p>All (sub)species from <strong>the taxonomic kingdoms Bacteria, Fungi and Protozoa are included in this package</strong>, as well as all previously accepted names known to ITIS. Furthermore, the responsible authors and year of publication are available. This allows users to use authoritative taxonomic information for their data analysis on any microorganism, not only human pathogens. It also helps to quickly determine the Gram stain of bacteria, since all bacteria are classified into subkingdom Negibacteria or Posibacteria.</p>
+<p>ITIS is a partnership of U.S., Canadian, and Mexican agencies and taxonomic specialists [3].</p>
     
     <h2 class="hasAnchor" id="read-more-on-our-website-"><a class="anchor" href="#read-more-on-our-website-"></a>Read more on our website!</h2>
 
@@ -263,49 +235,45 @@
     <p><img src='figures/logo.png' height=40px style=margin-bottom:5px /> <br />
 On our website <a href='https://msberends.gitlab.io/AMR'>https://msberends.gitlab.io/AMR</a> you can find <a href='https://msberends.gitlab.io/AMR/articles/AMR.html'>a omprehensive tutorial</a> about how to conduct AMR analysis and find <a href='https://msberends.gitlab.io/AMR/reference'>the complete documentation of all functions</a>, which reads a lot easier than in R.</p>
     
-    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
-
-    <div class='dont-index'><p><code><a href='https://www.rdocumentation.org/packages/base/topics/grep'>grep</a></code></p></div>
-    
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><span class='co'># NOT RUN {</span>
-<span class='co'># simple test</span>
-<span class='no'>a</span> <span class='kw'>&lt;-</span> <span class='st'>"This is a test"</span>
-<span class='no'>b</span> <span class='kw'>&lt;-</span> <span class='st'>"TEST"</span>
-<span class='no'>a</span> <span class='kw'>%like%</span> <span class='no'>b</span>
-<span class='co'>#&gt; TRUE</span>
-<span class='no'>b</span> <span class='kw'>%like%</span> <span class='no'>a</span>
-<span class='co'>#&gt; FALSE</span>
+<span class='co'># Get a note when a species was renamed</span>
+<span class='fu'><a href='mo_property.html'>mo_shortname</a></span>(<span class='st'>"Chlamydia psittaci"</span>)
+<span class='co'># Note: 'Chlamydia psittaci' (Page, 1968) was renamed</span>
+<span class='co'>#       'Chlamydophila psittaci' (Everett et al., 1999)</span>
+<span class='co'># [1] "C. psittaci"</span>
 
-<span class='co'># also supports multiple patterns, length must be equal to x</span>
-<span class='no'>a</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"Test case"</span>, <span class='st'>"Something different"</span>, <span class='st'>"Yet another thing"</span>)
-<span class='no'>b</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"case"</span>, <span class='st'>"diff"</span>, <span class='st'>"yet"</span>)
-<span class='no'>a</span> <span class='kw'>%like%</span> <span class='no'>b</span>
-<span class='co'>#&gt; TRUE TRUE TRUE</span>
+<span class='co'># Get any property from the entire taxonomic tree for all included species</span>
+<span class='fu'><a href='mo_property.html'>mo_class</a></span>(<span class='st'>"E. coli"</span>)
+<span class='co'># [1] "Gammaproteobacteria"</span>
 
-<span class='co'># get frequencies of bacteria whose name start with 'Ent' or 'ent'</span>
-<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>dplyr</span>)
-<span class='no'>septic_patients</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='join.html'>left_join_microorganisms</a></span>() <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span>(<span class='no'>genus</span> <span class='kw'>%like%</span> <span class='st'>'^ent'</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='freq.html'>freq</a></span>(<span class='no'>genus</span>, <span class='no'>species</span>)
+<span class='fu'><a href='mo_property.html'>mo_family</a></span>(<span class='st'>"E. coli"</span>)
+<span class='co'># [1] "Enterobacteriaceae"</span>
+
+<span class='fu'><a href='mo_property.html'>mo_subkingdom</a></span>(<span class='st'>"E. coli"</span>)
+<span class='co'># [1] "Negibacteria"</span>
+
+<span class='fu'><a href='mo_property.html'>mo_gramstain</a></span>(<span class='st'>"E. coli"</span>) <span class='co'># based on subkingdom</span>
+<span class='co'># [1] "Gram negative"</span>
+
+<span class='fu'><a href='mo_property.html'>mo_ref</a></span>(<span class='st'>"E. coli"</span>)
+<span class='co'># [1] "Castellani and Chalmers, 1919"</span>
+
+<span class='co'># Do not get mistaken - the package only includes microorganisms</span>
+<span class='fu'><a href='mo_property.html'>mo_phylum</a></span>(<span class='st'>"C. elegans"</span>)
+<span class='co'># [1] "Cyanobacteria"                   # Bacteria?!</span>
+<span class='fu'><a href='mo_property.html'>mo_fullname</a></span>(<span class='st'>"C. elegans"</span>)
+<span class='co'># [1] "Chroococcus limneticus elegans"  # Because a microorganism was found</span>
 <span class='co'># }</span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
-      <li><a href="#arguments">Arguments</a></li>
       
-      <li><a href="#source">Source</a></li>
-
-      <li><a href="#value">Value</a></li>
-
-      <li><a href="#details">Details</a></li>
+      <li><a href="#itis">ITIS</a></li>
 
       <li><a href="#read-more-on-our-website-">Read more on our website!</a></li>
-
-      <li><a href="#see-also">See also</a></li>
       
       <li><a href="#examples">Examples</a></li>
     </ul>

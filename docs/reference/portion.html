@@ -217,7 +217,7 @@ portion_R and portion_IR can be used to calculate resistance, portion_S and port
 
     <div class="ref-description">
     
-    <p>These functions can be used to calculate the (co-)resistance of microbial isolates (i.e. percentage S, SI, I, IR or R). All functions support quasiquotation with pipes, can be used in <code>dplyr</code>s <code><a href='http://dplyr.tidyverse.org/reference/summarise.html'>summarise</a></code> and support grouped variables, see <em>Examples</em>.</p>
+    <p>These functions can be used to calculate the (co-)resistance of microbial isolates (i.e. percentage S, SI, I, IR or R). All functions support quasiquotation with pipes, can be used in <code>dplyr</code>s <code><a href='https://dplyr.tidyverse.org/reference/summarise.html'>summarise</a></code> and support grouped variables, see <em>Examples</em>.</p>
 <p><code>portion_R</code> and <code>portion_IR</code> can be used to calculate resistance, <code>portion_S</code> and <code>portion_SI</code> can be used to calculate susceptibility.<br /></p>
     
     </div>
@@ -333,17 +333,17 @@ On our website <a href='https://msberends.gitlab.io/AMR'>https://msberends.gitla
 <span class='no'>septic_patients</span> <span class='kw'>%&gt;%</span> <span class='fu'>portion_SI</span>(<span class='no'>amox</span>)
 
 <span class='no'>septic_patients</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='http://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span>(<span class='no'>hospital_id</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='http://dplyr.tidyverse.org/reference/summarise.html'>summarise</a></span>(<span class='kw'>p</span> <span class='kw'>=</span> <span class='fu'>portion_S</span>(<span class='no'>cipr</span>),
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span>(<span class='no'>hospital_id</span>) <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/summarise.html'>summarise</a></span>(<span class='kw'>p</span> <span class='kw'>=</span> <span class='fu'>portion_S</span>(<span class='no'>cipr</span>),
             <span class='kw'>n</span> <span class='kw'>=</span> <span class='fu'><a href='count.html'>n_rsi</a></span>(<span class='no'>cipr</span>)) <span class='co'># n_rsi works like n_distinct in dplyr</span>
 
 <span class='no'>septic_patients</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='http://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span>(<span class='no'>hospital_id</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='http://dplyr.tidyverse.org/reference/summarise.html'>summarise</a></span>(<span class='kw'>R</span> <span class='kw'>=</span> <span class='fu'>portion_R</span>(<span class='no'>cipr</span>, <span class='kw'>as_percent</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>),
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span>(<span class='no'>hospital_id</span>) <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/summarise.html'>summarise</a></span>(<span class='kw'>R</span> <span class='kw'>=</span> <span class='fu'>portion_R</span>(<span class='no'>cipr</span>, <span class='kw'>as_percent</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>),
             <span class='kw'>I</span> <span class='kw'>=</span> <span class='fu'>portion_I</span>(<span class='no'>cipr</span>, <span class='kw'>as_percent</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>),
             <span class='kw'>S</span> <span class='kw'>=</span> <span class='fu'>portion_S</span>(<span class='no'>cipr</span>, <span class='kw'>as_percent</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>),
             <span class='kw'>n</span> <span class='kw'>=</span> <span class='fu'><a href='count.html'>n_rsi</a></span>(<span class='no'>cipr</span>), <span class='co'># works like n_distinct in dplyr</span>
-            <span class='kw'>total</span> <span class='kw'>=</span> <span class='fu'><a href='http://dplyr.tidyverse.org/reference/n.html'>n</a></span>())     <span class='co'># NOT the amount of tested isolates!</span>
+            <span class='kw'>total</span> <span class='kw'>=</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/n.html'>n</a></span>())     <span class='co'># NOT the amount of tested isolates!</span>
 
 <span class='co'># Calculate co-resistance between amoxicillin/clav acid and gentamicin,</span>
 <span class='co'># so we can see that combination therapy does a lot more than mono therapy:</span>
@@ -358,8 +358,8 @@ On our website <a href='https://msberends.gitlab.io/AMR'>https://msberends.gitla
 
 
 <span class='no'>septic_patients</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='http://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span>(<span class='no'>hospital_id</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='http://dplyr.tidyverse.org/reference/summarise.html'>summarise</a></span>(<span class='kw'>cipro_p</span> <span class='kw'>=</span> <span class='fu'>portion_S</span>(<span class='no'>cipr</span>, <span class='kw'>as_percent</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>),
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span>(<span class='no'>hospital_id</span>) <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/summarise.html'>summarise</a></span>(<span class='kw'>cipro_p</span> <span class='kw'>=</span> <span class='fu'>portion_S</span>(<span class='no'>cipr</span>, <span class='kw'>as_percent</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>),
             <span class='kw'>cipro_n</span> <span class='kw'>=</span> <span class='fu'><a href='count.html'>count_all</a></span>(<span class='no'>cipr</span>),
             <span class='kw'>genta_p</span> <span class='kw'>=</span> <span class='fu'>portion_S</span>(<span class='no'>gent</span>, <span class='kw'>as_percent</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>),
             <span class='kw'>genta_n</span> <span class='kw'>=</span> <span class='fu'><a href='count.html'>count_all</a></span>(<span class='no'>gent</span>),
@@ -368,22 +368,22 @@ On our website <a href='https://msberends.gitlab.io/AMR'>https://msberends.gitla
 
 <span class='co'># Get portions S/I/R immediately of all rsi columns</span>
 <span class='no'>septic_patients</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='http://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='no'>amox</span>, <span class='no'>cipr</span>) <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='no'>amox</span>, <span class='no'>cipr</span>) <span class='kw'>%&gt;%</span>
   <span class='fu'>portion_df</span>(<span class='kw'>translate</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
 
 <span class='co'># It also supports grouping variables</span>
 <span class='no'>septic_patients</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='http://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='no'>hospital_id</span>, <span class='no'>amox</span>, <span class='no'>cipr</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='http://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span>(<span class='no'>hospital_id</span>) <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='no'>hospital_id</span>, <span class='no'>amox</span>, <span class='no'>cipr</span>) <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span>(<span class='no'>hospital_id</span>) <span class='kw'>%&gt;%</span>
   <span class='fu'>portion_df</span>(<span class='kw'>translate</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
 
 
 <span class='co'># }</span><span class='co'># NOT RUN {</span>
 <span class='co'># calculate current empiric combination therapy of Helicobacter gastritis:</span>
 <span class='no'>my_table</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='http://dplyr.tidyverse.org/reference/filter.html'>filter</a></span>(<span class='no'>first_isolate</span> <span class='kw'>==</span> <span class='fl'>TRUE</span>,
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span>(<span class='no'>first_isolate</span> <span class='kw'>==</span> <span class='fl'>TRUE</span>,
          <span class='no'>genus</span> <span class='kw'>==</span> <span class='st'>"Helicobacter"</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='http://dplyr.tidyverse.org/reference/summarise.html'>summarise</a></span>(<span class='kw'>p</span> <span class='kw'>=</span> <span class='fu'>portion_S</span>(<span class='no'>amox</span>, <span class='no'>metr</span>),  <span class='co'># amoxicillin with metronidazole</span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/summarise.html'>summarise</a></span>(<span class='kw'>p</span> <span class='kw'>=</span> <span class='fu'>portion_S</span>(<span class='no'>amox</span>, <span class='no'>metr</span>),  <span class='co'># amoxicillin with metronidazole</span>
             <span class='kw'>n</span> <span class='kw'>=</span> <span class='fu'><a href='count.html'>count_all</a></span>(<span class='no'>amox</span>, <span class='no'>metr</span>))
 <span class='co'># }</span></pre>
   </div>

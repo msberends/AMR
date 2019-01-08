@@ -59,7 +59,7 @@ a pre[href], a pre[href]:hover, a pre[href]:focus {
 
 /* syntax font */
 pre, code {
-    font-family: 'Courier New';
+    font-family: 'Courier New', monospace;
     font-size: 100% !important;
     font-weight: bold;
     background-color: transparent;
@@ -100,6 +100,15 @@ help {
 /* hide version label */
 .version.label {
   display: none;
+}
+
+/* Date of vignettes */
+.template-article .date:before {
+    content: 'Last updated: ';
+}
+.template-article .date {
+    font-size: 14px;
+    padding-top: 40px;
 }
 
 /* more space between icon and text in top menu */

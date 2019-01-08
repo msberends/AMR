@@ -33,7 +33,7 @@
 #'   \item{\code{mo_ref("Chlamydophila psittaci")} will return \code{"Everett et al., 1999"} (without a warning)}
 #' }
 #' @inheritSection get_locale Supported languages
-#' @inheritSection itis ITIS
+#' @inheritSection ITIS ITIS
 #' @inheritSection as.mo Source
 #' @rdname mo_property
 #' @name mo_property
@@ -480,6 +480,12 @@ mo_validate <- function(x, property, ...) {
       | Lancefield %in% c(TRUE, "all")) {
     exec_as.mo(x, property = property, ...)
   } else {
-    x
+    if (property == "mo") {
+      return(structure(x, class = "mo"))
+    } else if (property == "tsn") {
+      return(as.integer(x))
+    } else {
+      return(x)
+    }
   }
 }

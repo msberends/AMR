@@ -1,6 +1,7 @@
 ---
 title: "How to create frequency tables"
 author: "Matthijs S. Berends"
+date: '`r format(Sys.Date(), "%d %B %Y")`'
 output: 
   rmarkdown::html_vignette:
     toc: true

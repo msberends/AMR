@@ -76,7 +76,7 @@
 #'   \item{\code{"D. spartina"}. This is the abbreviation of an old taxonomic name: \emph{Didymosphaeria spartinae} (the last "e" was missing from the input). This fungus was renamed to \emph{Leptosphaeria obiones}, so a warning will be thrown that this result (\code{F_LPTSP_OBI}) needs review.}
 #' }
 #'
-#' @inheritSection itis ITIS
+#' @inheritSection ITIS ITIS
 #  (source as a section, so it can be inherited by other man pages)
 #' @section Source:
 #' [1] Becker K \emph{et al.} \strong{Coagulase-Negative Staphylococci}. 2014. Clin Microbiol Rev. 27(4): 870–926. \url{https://dx.doi.org/10.1128/CMR.00109-13}
@@ -211,8 +211,16 @@ exec_as.mo <- function(x, Becker = FALSE, Lancefield = FALSE,
       reference_df[] <- lapply(reference_df, as.character)
     )
   }
-
-  if (all(x %in% microorganismsDT[["mo"]])) {
+  if (all(identical(trimws(x_input), "") | is.na(x_input))) {
+    # all empty
+    if (property == "mo") {
+      return(structure(rep(NA_character_, length(x_input)), class = "mo"))
+    } else if (property == "tsn") {
+      return(rep(NA_integer_, length(x_input)))
+    } else {
+      return(rep(NA_character_, length(x_input)))
+    }
+  } else if (all(x %in% microorganismsDT[["mo"]])) {
     # existing mo codes when not looking for property "mo", like mo_genus("B_ESCHR_COL")
     x <- microorganismsDT[data.table(mo = x), on = "mo", ..property][[1]]
   } else if (!is.null(reference_df)
@@ -665,6 +673,16 @@ exec_as.mo <- function(x, Becker = FALSE, Lancefield = FALSE,
             }
           }
 
+          # (4) not yet implemented taxonomic changes in ITIS
+          found <- suppressMessages(suppressWarnings(exec_as.mo(temp_changes(b.x_trimmed), clear_options = FALSE, allow_uncertain = FALSE)))
+          if (!is.na(found)) {
+            found <- microorganismsDT[mo == found, ..property][[1]]
+            warning(red(paste0('UNCERTAIN - "',
+                               a.x_backup, '" -> ', italic(microorganismsDT[mo == found[1L], fullname][[1]]), " (", found[1L], ")")),
+                    call. = FALSE, immediate. = FALSE)
+            return(found[1L])
+          }
+
           # didn't found in uncertain results too
           return(NA_character_)
         }
@@ -778,6 +796,10 @@ exec_as.mo <- function(x, Becker = FALSE, Lancefield = FALSE,
   }
 
   x
+}
+
+temp_changes <- function(x) {
+  x[x %like% 'Cutibacterium'] <- gsub('Cutibacterium', 'Propionibacterium', x[x %like% 'Cutibacterium'])
 }
 
 #' @importFrom crayon blue italic

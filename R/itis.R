@@ -30,12 +30,12 @@
 #'
 #' ITIS is a partnership of U.S., Canadian, and Mexican agencies and taxonomic specialists [3].
 #' @inheritSection AMR Read more on our website!
-#' @name itis
-#' @rdname itis
+#' @name ITIS
+#' @rdname ITIS
 #' @examples
 #' # Get a note when a species was renamed
 #' mo_shortname("Chlamydia psittaci")
-#' # Note: 'Chlamydia psittaci' (Page, 1968) was renamed 
+#' # Note: 'Chlamydia psittaci' (Page, 1968) was renamed
 #' #       'Chlamydophila psittaci' (Everett et al., 1999)
 #' # [1] "C. psittaci"
 #'

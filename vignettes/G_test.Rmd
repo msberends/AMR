@@ -1,6 +1,7 @@
 ---
 title: "How to use the *G*-test"
 author: "Matthijs S. Berends"
+date: '`r format(Sys.Date(), "%d %B %Y")`'
 output: 
   rmarkdown::html_vignette:
     toc: true
@@ -21,4 +22,4 @@ knitr::opts_chunk$set(
 Sys.setlocale(locale = "C")
 ```
 
-*(will be available soon - in the meanwhile, please read about [this *G*-test in the manual](./reference/g.test.html))*
+*(will be available soon - in the meanwhile, please read about [this *G*-test in the manual](./../reference/g.test.html))*

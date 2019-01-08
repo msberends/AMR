@@ -1,6 +1,7 @@
 ---
 title: "How to get properties of a microorganism"
 author: "Matthijs S. Berends"
+date: '`r format(Sys.Date(), "%d %B %Y")`'
 output: 
   rmarkdown::html_vignette:
     toc: true
