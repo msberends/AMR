@@ -64,7 +64,9 @@ To find out how to conduct AMR analysis, please [continue reading here to get st
 
 This package contains the **complete microbial taxonomic data** (with all nine taxonomic ranks - from kingdom to subspecies) from the publicly available Integrated Taxonomic Information System (ITIS, https://www.itis.gov). 
 
-All (sub)species from **the taxonomic kingdoms Bacteria, Fungi and Protozoa are included in this package**, as well as all previously accepted names known to ITIS. Furthermore, the responsible authors and year of publication are available. This allows users to use authoritative taxonomic information for their data analysis on any microorganism, not only human pathogens. It also helps to quickly determine the Gram stain of bacteria, since all bacteria are classified into subkingdom Negibacteria or Posibacteria. ITIS is a partnership of U.S., Canadian, and Mexican agencies and taxonomic specialists.
+All (sub)species from **the taxonomic kingdoms Bacteria, Fungi and Protozoa are included in this package**, as well as all previously accepted names known to ITIS. Furthermore, the responsible authors and year of publication are available. This allows users to use authoritative taxonomic information for their data analysis on any microorganism, not only human pathogens. It also helps to quickly determine the Gram stain of bacteria, since all bacteria are classified into subkingdom Negibacteria or Posibacteria. 
+
+Read more about ITIS [in our manual](./reference/ITIS.html).
 
 The `AMR` package basically does four important things:
 

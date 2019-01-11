@@ -53,6 +53,9 @@ navbar:
       - text: 'Use the G-test'
         icon: 'fa-clipboard-check'
         href: 'articles/G_test.html'
+      - text: 'Other: benchmarks'
+        icon: 'fa-shipping-fast'
+        href: 'articles/benchmarks.html'
     - text: 'Manual'
       icon: 'fa-book-open'
       href: 'reference/'
@@ -73,7 +76,8 @@ navbar:
 reference:
 - title: 'Background information'
   desc: >
-    Some pages about our package and its external sources.
+    Some pages about our package and its external sources. Be sure to read our [How To's](./../articles/index.html)
+    for more information about how to work with functions in this package.
   contents:
   - '`AMR`'
   - '`ITIS`'
@@ -85,7 +89,7 @@ reference:
   contents:
   - starts_with("as.")
   - '`eucast_rules`'
-  - '`guess_ab`'
+  - '`guess_ab_col`'
   - '`read.4D`'
 - title: 'Adding variables to your data'
   desc: >
@@ -129,7 +133,10 @@ reference:
   - '`microorganisms.umcg`'
   - '`supplementary_data`'
 - title: Other
-  desc: ~
+  desc: >
+    These functions are mostly for internal use, but some of
+    them may also be suitable for your analysis. Especially the
+    'like' function can be useful: `if (x %like% y) {...}`.
   contents:
   - '`get_locale`'
   - '`like`'

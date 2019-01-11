@@ -48,7 +48,7 @@ age <- function(x, reference = Sys.Date()) {
          as.integer(years_gap - 1),
          as.integer(years_gap))
   if (any(ages > 120)) {
-    warning("Some ages are >120.")
+    warning("Some ages are > 120.")
   }
   ages
 }

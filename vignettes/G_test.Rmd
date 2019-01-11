@@ -18,8 +18,6 @@ knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#"
 )
-# set to original language (English)
-Sys.setlocale(locale = "C")
 ```
 
 *(will be available soon - in the meanwhile, please read about [this *G*-test in the manual](./../reference/g.test.html))*

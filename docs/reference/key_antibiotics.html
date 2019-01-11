@@ -151,6 +151,13 @@
         Use the G-test
       </a>
     </li>
+    <li>
+      <a href="../articles/benchmarks.html">
+        <span class="fa fa-shipping-fast"></span>
+         
+        Other: benchmarks
+      </a>
+    </li>
   </ul>
 </li>
 <li>
@@ -220,17 +227,20 @@
     
     </div>
 
-    <pre class="usage"><span class='fu'>key_antibiotics</span>(<span class='no'>tbl</span>, <span class='kw'>col_mo</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>universal_1</span> <span class='kw'>=</span> <span class='fu'><a href='guess_ab.html'>guess_ab</a></span>(<span class='no'>tbl</span>,
-  <span class='st'>"amox"</span>), <span class='kw'>universal_2</span> <span class='kw'>=</span> <span class='fu'><a href='guess_ab.html'>guess_ab</a></span>(<span class='no'>tbl</span>, <span class='st'>"amcl"</span>),
-  <span class='kw'>universal_3</span> <span class='kw'>=</span> <span class='fu'><a href='guess_ab.html'>guess_ab</a></span>(<span class='no'>tbl</span>, <span class='st'>"cfur"</span>), <span class='kw'>universal_4</span> <span class='kw'>=</span> <span class='fu'><a href='guess_ab.html'>guess_ab</a></span>(<span class='no'>tbl</span>,
-  <span class='st'>"pita"</span>), <span class='kw'>universal_5</span> <span class='kw'>=</span> <span class='fu'><a href='guess_ab.html'>guess_ab</a></span>(<span class='no'>tbl</span>, <span class='st'>"cipr"</span>),
-  <span class='kw'>universal_6</span> <span class='kw'>=</span> <span class='fu'><a href='guess_ab.html'>guess_ab</a></span>(<span class='no'>tbl</span>, <span class='st'>"trsu"</span>), <span class='kw'>GramPos_1</span> <span class='kw'>=</span> <span class='fu'><a href='guess_ab.html'>guess_ab</a></span>(<span class='no'>tbl</span>,
-  <span class='st'>"vanc"</span>), <span class='kw'>GramPos_2</span> <span class='kw'>=</span> <span class='fu'><a href='guess_ab.html'>guess_ab</a></span>(<span class='no'>tbl</span>, <span class='st'>"teic"</span>), <span class='kw'>GramPos_3</span> <span class='kw'>=</span> <span class='fu'><a href='guess_ab.html'>guess_ab</a></span>(<span class='no'>tbl</span>,
-  <span class='st'>"tetr"</span>), <span class='kw'>GramPos_4</span> <span class='kw'>=</span> <span class='fu'><a href='guess_ab.html'>guess_ab</a></span>(<span class='no'>tbl</span>, <span class='st'>"eryt"</span>), <span class='kw'>GramPos_5</span> <span class='kw'>=</span> <span class='fu'><a href='guess_ab.html'>guess_ab</a></span>(<span class='no'>tbl</span>,
-  <span class='st'>"oxac"</span>), <span class='kw'>GramPos_6</span> <span class='kw'>=</span> <span class='fu'><a href='guess_ab.html'>guess_ab</a></span>(<span class='no'>tbl</span>, <span class='st'>"rifa"</span>), <span class='kw'>GramNeg_1</span> <span class='kw'>=</span> <span class='fu'><a href='guess_ab.html'>guess_ab</a></span>(<span class='no'>tbl</span>,
-  <span class='st'>"gent"</span>), <span class='kw'>GramNeg_2</span> <span class='kw'>=</span> <span class='fu'><a href='guess_ab.html'>guess_ab</a></span>(<span class='no'>tbl</span>, <span class='st'>"tobr"</span>), <span class='kw'>GramNeg_3</span> <span class='kw'>=</span> <span class='fu'><a href='guess_ab.html'>guess_ab</a></span>(<span class='no'>tbl</span>,
-  <span class='st'>"coli"</span>), <span class='kw'>GramNeg_4</span> <span class='kw'>=</span> <span class='fu'><a href='guess_ab.html'>guess_ab</a></span>(<span class='no'>tbl</span>, <span class='st'>"cfot"</span>), <span class='kw'>GramNeg_5</span> <span class='kw'>=</span> <span class='fu'><a href='guess_ab.html'>guess_ab</a></span>(<span class='no'>tbl</span>,
-  <span class='st'>"cfta"</span>), <span class='kw'>GramNeg_6</span> <span class='kw'>=</span> <span class='fu'><a href='guess_ab.html'>guess_ab</a></span>(<span class='no'>tbl</span>, <span class='st'>"mero"</span>), <span class='kw'>warnings</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>...</span>)
+    <pre class="usage"><span class='fu'>key_antibiotics</span>(<span class='no'>tbl</span>, <span class='kw'>col_mo</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>universal_1</span> <span class='kw'>=</span> <span class='fu'><a href='guess_ab_col.html'>guess_ab_col</a></span>(<span class='no'>tbl</span>,
+  <span class='st'>"amox"</span>), <span class='kw'>universal_2</span> <span class='kw'>=</span> <span class='fu'><a href='guess_ab_col.html'>guess_ab_col</a></span>(<span class='no'>tbl</span>, <span class='st'>"amcl"</span>),
+  <span class='kw'>universal_3</span> <span class='kw'>=</span> <span class='fu'><a href='guess_ab_col.html'>guess_ab_col</a></span>(<span class='no'>tbl</span>, <span class='st'>"cfur"</span>),
+  <span class='kw'>universal_4</span> <span class='kw'>=</span> <span class='fu'><a href='guess_ab_col.html'>guess_ab_col</a></span>(<span class='no'>tbl</span>, <span class='st'>"pita"</span>),
+  <span class='kw'>universal_5</span> <span class='kw'>=</span> <span class='fu'><a href='guess_ab_col.html'>guess_ab_col</a></span>(<span class='no'>tbl</span>, <span class='st'>"cipr"</span>),
+  <span class='kw'>universal_6</span> <span class='kw'>=</span> <span class='fu'><a href='guess_ab_col.html'>guess_ab_col</a></span>(<span class='no'>tbl</span>, <span class='st'>"trsu"</span>),
+  <span class='kw'>GramPos_1</span> <span class='kw'>=</span> <span class='fu'><a href='guess_ab_col.html'>guess_ab_col</a></span>(<span class='no'>tbl</span>, <span class='st'>"vanc"</span>), <span class='kw'>GramPos_2</span> <span class='kw'>=</span> <span class='fu'><a href='guess_ab_col.html'>guess_ab_col</a></span>(<span class='no'>tbl</span>,
+  <span class='st'>"teic"</span>), <span class='kw'>GramPos_3</span> <span class='kw'>=</span> <span class='fu'><a href='guess_ab_col.html'>guess_ab_col</a></span>(<span class='no'>tbl</span>, <span class='st'>"tetr"</span>),
+  <span class='kw'>GramPos_4</span> <span class='kw'>=</span> <span class='fu'><a href='guess_ab_col.html'>guess_ab_col</a></span>(<span class='no'>tbl</span>, <span class='st'>"eryt"</span>), <span class='kw'>GramPos_5</span> <span class='kw'>=</span> <span class='fu'><a href='guess_ab_col.html'>guess_ab_col</a></span>(<span class='no'>tbl</span>,
+  <span class='st'>"oxac"</span>), <span class='kw'>GramPos_6</span> <span class='kw'>=</span> <span class='fu'><a href='guess_ab_col.html'>guess_ab_col</a></span>(<span class='no'>tbl</span>, <span class='st'>"rifa"</span>),
+  <span class='kw'>GramNeg_1</span> <span class='kw'>=</span> <span class='fu'><a href='guess_ab_col.html'>guess_ab_col</a></span>(<span class='no'>tbl</span>, <span class='st'>"gent"</span>), <span class='kw'>GramNeg_2</span> <span class='kw'>=</span> <span class='fu'><a href='guess_ab_col.html'>guess_ab_col</a></span>(<span class='no'>tbl</span>,
+  <span class='st'>"tobr"</span>), <span class='kw'>GramNeg_3</span> <span class='kw'>=</span> <span class='fu'><a href='guess_ab_col.html'>guess_ab_col</a></span>(<span class='no'>tbl</span>, <span class='st'>"coli"</span>),
+  <span class='kw'>GramNeg_4</span> <span class='kw'>=</span> <span class='fu'><a href='guess_ab_col.html'>guess_ab_col</a></span>(<span class='no'>tbl</span>, <span class='st'>"cfot"</span>), <span class='kw'>GramNeg_5</span> <span class='kw'>=</span> <span class='fu'><a href='guess_ab_col.html'>guess_ab_col</a></span>(<span class='no'>tbl</span>,
+  <span class='st'>"cfta"</span>), <span class='kw'>GramNeg_6</span> <span class='kw'>=</span> <span class='fu'><a href='guess_ab_col.html'>guess_ab_col</a></span>(<span class='no'>tbl</span>, <span class='st'>"mero"</span>), <span class='kw'>warnings</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>...</span>)
 
 <span class='fu'>key_antibiotics_equal</span>(<span class='no'>x</span>, <span class='no'>y</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"keyantibiotics"</span>, <span class='st'>"points"</span>),
   <span class='kw'>ignore_I</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>points_threshold</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>info</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
@@ -248,15 +258,15 @@
     </tr>
     <tr>
       <th>universal_1, universal_2, universal_3, universal_4, universal_5, universal_6</th>
-      <td><p>column names of <strong>broad-spectrum</strong> antibiotics, case-insensitive</p></td>
+      <td><p>column names of <strong>broad-spectrum</strong> antibiotics, case-insensitive. At default, the columns containing these antibiotics will be guessed with <code><a href='guess_ab_col.html'>guess_ab_col</a></code>.</p></td>
     </tr>
     <tr>
       <th>GramPos_1, GramPos_2, GramPos_3, GramPos_4, GramPos_5, GramPos_6</th>
-      <td><p>column names of antibiotics for <strong>Gram positives</strong>, case-insensitive</p></td>
+      <td><p>column names of antibiotics for <strong>Gram positives</strong>, case-insensitive. At default, the columns containing these antibiotics will be guessed with <code><a href='guess_ab_col.html'>guess_ab_col</a></code>.</p></td>
     </tr>
     <tr>
       <th>GramNeg_1, GramNeg_2, GramNeg_3, GramNeg_4, GramNeg_5, GramNeg_6</th>
-      <td><p>column names of antibiotics for <strong>Gram negatives</strong>, case-insensitive</p></td>
+      <td><p>column names of antibiotics for <strong>Gram negatives</strong>, case-insensitive. At default, the columns containing these antibiotics will be guessed with <code><a href='guess_ab_col.html'>guess_ab_col</a></code>.</p></td>
     </tr>
     <tr>
       <th>warnings</th>
@@ -290,7 +300,7 @@
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>The function <code>key_antibiotics</code> returns a character vector with 12 antibiotic results for every isolate. These isolates can then be compared using <code>key_antibiotics_equal</code>, to check if two isolates have generally the same antibiogram. Missing and invalid values are replaced with a dot (<code>"."</code>). The <code><a href='first_isolate.html'>first_isolate</a></code> function only uses this function on the same microbial species from the same patient. Using this, an MRSA will be included after a susceptible <em>S. aureus</em> (MSSA) found within the same episode (see <code>episode</code> parameter of <code><a href='first_isolate.html'>first_isolate</a></code>). Without key antibiotic comparison it wouldn't.</p>
+    <p>The function <code>key_antibiotics</code> returns a character vector with 12 antibiotic results for every isolate. These isolates can then be compared using <code>key_antibiotics_equal</code>, to check if two isolates have generally the same antibiogram. Missing and invalid values are replaced with a dot (<code>"."</code>). The <code><a href='first_isolate.html'>first_isolate</a></code> function only uses this function on the same microbial species from the same patient. Using this, an MRSA will be included after a susceptible <em>S. aureus</em> (MSSA) found within the same episode (see <code>episode</code> parameter of <code><a href='first_isolate.html'>first_isolate</a></code>). Without key antibiotic comparison it would not.</p>
 <p>At default, the antibiotics that are used for <strong>Gram positive bacteria</strong> are (colum names): <br />
   <code>"amox"</code>, <code>"amcl"</code>, <code>"cfur"</code>, <code>"pita"</code>, <code>"cipr"</code>, <code>"trsu"</code> (until here is universal), <code>"vanc"</code>, <code>"teic"</code>, <code>"tetr"</code>, <code>"eryt"</code>, <code>"oxac"</code>, <code>"rifa"</code>.</p>
 <p>At default, the antibiotics that are used for <strong>Gram negative bacteria</strong> are (colum names): <br />

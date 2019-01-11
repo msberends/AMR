@@ -151,6 +151,13 @@
         Use the G-test
       </a>
     </li>
+    <li>
+      <a href="../articles/benchmarks.html">
+        <span class="fa fa-shipping-fast"></span>
+         
+        Other: benchmarks
+      </a>
+    </li>
   </ul>
 </li>
 <li>
@@ -270,11 +277,11 @@ On our website <a href='https://msberends.gitlab.io/AMR'>https://msberends.gitla
 <span class='co'># using dplyr's mutate</span>
 <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>dplyr</span>)
 <span class='no'>septic_patients</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/summarise_all.html'>mutate_at</a></span>(<span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='no'>peni</span>:<span class='no'>rifa</span>), <span class='no'>as.rsi</span>)
+  <span class='fu'><a href='https://www.rdocumentation.org/packages/dplyr/topics/summarise_all'>mutate_at</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/dplyr/topics/vars'>vars</a></span>(<span class='no'>peni</span>:<span class='no'>rifa</span>), <span class='no'>as.rsi</span>)
 
 <span class='co'># fastest way to transform all columns with already valid AB results to class `rsi`:</span>
 <span class='no'>septic_patients</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/summarise_all.html'>mutate_if</a></span>(<span class='no'>is.rsi.eligible</span>,
+  <span class='fu'><a href='https://www.rdocumentation.org/packages/dplyr/topics/summarise_all'>mutate_if</a></span>(<span class='no'>is.rsi.eligible</span>,
             <span class='no'>as.rsi</span>)
 <span class='co'># }</span></pre>
   </div>

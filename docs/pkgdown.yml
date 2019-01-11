@@ -7,6 +7,7 @@ articles:
   G_test: G_test.html
   Predict: Predict.html
   ab_property: ab_property.html
+  benchmarks: benchmarks.html
   freq: freq.html
   mo_property: mo_property.html
 urls:

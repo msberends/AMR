@@ -152,6 +152,13 @@ count_R and count_IR can be used to count resistant isolates, count_S and count_
         Use the G-test
       </a>
     </li>
+    <li>
+      <a href="../articles/benchmarks.html">
+        <span class="fa fa-shipping-fast"></span>
+         
+        Other: benchmarks
+      </a>
+    </li>
   </ul>
 </li>
 <li>
@@ -275,7 +282,7 @@ count_R and count_IR can be used to count resistant isolates, count_S and count_
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>These functions are meant to count isolates. Use the <code><a href='portion.html'>portion</a>_*</code> functions to calculate microbial resistance.</p>
-<p><code>n_rsi</code> is an alias of <code>count_all</code>. They can be used to count all available isolates, i.e. where all input antibiotics have an available result (S, I or R). Their use is equal to <code><a href='https://dplyr.tidyverse.org/reference/n_distinct.html'>n_distinct</a></code>. Their function is equal to <code>count_S(...) + count_IR(...)</code>.</p>
+<p><code>n_rsi</code> is an alias of <code>count_all</code>. They can be used to count all available isolates, i.e. where all input antibiotics have an available result (S, I or R). Their use is equal to <code><a href='https://www.rdocumentation.org/packages/dplyr/topics/n_distinct'>n_distinct</a></code>. Their function is equal to <code>count_S(...) + count_IR(...)</code>.</p>
 <p><code>count_df</code> takes any variable from <code>data</code> that has an <code>"rsi"</code> class (created with <code><a href='as.rsi.html'>as.rsi</a></code>) and counts the amounts of R, I and S. The resulting <em>tidy data</em> (see Source) <code>data.frame</code> will have three rows (S/I/R) and a column for each variable with class <code>"rsi"</code>.</p>
     
     <h2 class="hasAnchor" id="read-more-on-our-website-"><a class="anchor" href="#read-more-on-our-website-"></a>Read more on our website!</h2>
@@ -314,13 +321,13 @@ On our website <a href='https://msberends.gitlab.io/AMR'>https://msberends.gitla
 
 <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>dplyr</span>)
 <span class='no'>septic_patients</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span>(<span class='no'>hospital_id</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/summarise.html'>summarise</a></span>(<span class='kw'>R</span>  <span class='kw'>=</span> <span class='fu'>count_R</span>(<span class='no'>cipr</span>),
+  <span class='fu'><a href='https://www.rdocumentation.org/packages/dplyr/topics/group_by'>group_by</a></span>(<span class='no'>hospital_id</span>) <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='https://www.rdocumentation.org/packages/dplyr/topics/summarise'>summarise</a></span>(<span class='kw'>R</span>  <span class='kw'>=</span> <span class='fu'>count_R</span>(<span class='no'>cipr</span>),
             <span class='kw'>I</span>  <span class='kw'>=</span> <span class='fu'>count_I</span>(<span class='no'>cipr</span>),
             <span class='kw'>S</span>  <span class='kw'>=</span> <span class='fu'>count_S</span>(<span class='no'>cipr</span>),
             <span class='kw'>n1</span> <span class='kw'>=</span> <span class='fu'>count_all</span>(<span class='no'>cipr</span>), <span class='co'># the actual total; sum of all three</span>
             <span class='kw'>n2</span> <span class='kw'>=</span> <span class='fu'>n_rsi</span>(<span class='no'>cipr</span>),     <span class='co'># same - analogous to n_distinct</span>
-            <span class='kw'>total</span> <span class='kw'>=</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/n.html'>n</a></span>())          <span class='co'># NOT the amount of tested isolates!</span>
+            <span class='kw'>total</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/dplyr/topics/n'>n</a></span>())          <span class='co'># NOT the amount of tested isolates!</span>
 
 <span class='co'># Count co-resistance between amoxicillin/clav acid and gentamicin,</span>
 <span class='co'># so we can see that combination therapy does a lot more than mono therapy.</span>
@@ -338,13 +345,13 @@ On our website <a href='https://msberends.gitlab.io/AMR'>https://msberends.gitla
 
 <span class='co'># Get portions S/I/R immediately of all rsi columns</span>
 <span class='no'>septic_patients</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='no'>amox</span>, <span class='no'>cipr</span>) <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='https://www.rdocumentation.org/packages/dplyr/topics/select'>select</a></span>(<span class='no'>amox</span>, <span class='no'>cipr</span>) <span class='kw'>%&gt;%</span>
   <span class='fu'>count_df</span>(<span class='kw'>translate</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
 
 <span class='co'># It also supports grouping variables</span>
 <span class='no'>septic_patients</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='no'>hospital_id</span>, <span class='no'>amox</span>, <span class='no'>cipr</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span>(<span class='no'>hospital_id</span>) <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='https://www.rdocumentation.org/packages/dplyr/topics/select'>select</a></span>(<span class='no'>hospital_id</span>, <span class='no'>amox</span>, <span class='no'>cipr</span>) <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='https://www.rdocumentation.org/packages/dplyr/topics/group_by'>group_by</a></span>(<span class='no'>hospital_id</span>) <span class='kw'>%&gt;%</span>
   <span class='fu'>count_df</span>(<span class='kw'>translate</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
 
 <span class='co'># }</span></pre>

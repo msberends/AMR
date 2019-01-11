@@ -8,26 +8,36 @@
 \title{Determine multidrug-resistant organisms (MDRO)}
 \usage{
 mdro(tbl, country = NULL, col_mo = NULL, info = TRUE,
-  amcl = guess_ab(), amik = guess_ab(), amox = guess_ab(),
-  ampi = guess_ab(), azit = guess_ab(), aztr = guess_ab(),
-  cefa = guess_ab(), cfra = guess_ab(), cfep = guess_ab(),
-  cfot = guess_ab(), cfox = guess_ab(), cfta = guess_ab(),
-  cftr = guess_ab(), cfur = guess_ab(), chlo = guess_ab(),
-  cipr = guess_ab(), clar = guess_ab(), clin = guess_ab(),
-  clox = guess_ab(), coli = guess_ab(), czol = guess_ab(),
-  dapt = guess_ab(), doxy = guess_ab(), erta = guess_ab(),
-  eryt = guess_ab(), fosf = guess_ab(), fusi = guess_ab(),
-  gent = guess_ab(), imip = guess_ab(), kana = guess_ab(),
-  levo = guess_ab(), linc = guess_ab(), line = guess_ab(),
-  mero = guess_ab(), metr = guess_ab(), mino = guess_ab(),
-  moxi = guess_ab(), nali = guess_ab(), neom = guess_ab(),
-  neti = guess_ab(), nitr = guess_ab(), novo = guess_ab(),
-  norf = guess_ab(), oflo = guess_ab(), peni = guess_ab(),
-  pipe = guess_ab(), pita = guess_ab(), poly = guess_ab(),
-  qida = guess_ab(), rifa = guess_ab(), roxi = guess_ab(),
-  siso = guess_ab(), teic = guess_ab(), tetr = guess_ab(),
-  tica = guess_ab(), tige = guess_ab(), tobr = guess_ab(),
-  trim = guess_ab(), trsu = guess_ab(), vanc = guess_ab())
+  amcl = guess_ab_col(), amik = guess_ab_col(),
+  amox = guess_ab_col(), ampi = guess_ab_col(),
+  azit = guess_ab_col(), aztr = guess_ab_col(),
+  cefa = guess_ab_col(), cfra = guess_ab_col(),
+  cfep = guess_ab_col(), cfot = guess_ab_col(),
+  cfox = guess_ab_col(), cfta = guess_ab_col(),
+  cftr = guess_ab_col(), cfur = guess_ab_col(),
+  chlo = guess_ab_col(), cipr = guess_ab_col(),
+  clar = guess_ab_col(), clin = guess_ab_col(),
+  clox = guess_ab_col(), coli = guess_ab_col(),
+  czol = guess_ab_col(), dapt = guess_ab_col(),
+  doxy = guess_ab_col(), erta = guess_ab_col(),
+  eryt = guess_ab_col(), fosf = guess_ab_col(),
+  fusi = guess_ab_col(), gent = guess_ab_col(),
+  imip = guess_ab_col(), kana = guess_ab_col(),
+  levo = guess_ab_col(), linc = guess_ab_col(),
+  line = guess_ab_col(), mero = guess_ab_col(),
+  metr = guess_ab_col(), mino = guess_ab_col(),
+  moxi = guess_ab_col(), nali = guess_ab_col(),
+  neom = guess_ab_col(), neti = guess_ab_col(),
+  nitr = guess_ab_col(), novo = guess_ab_col(),
+  norf = guess_ab_col(), oflo = guess_ab_col(),
+  peni = guess_ab_col(), pipe = guess_ab_col(),
+  pita = guess_ab_col(), poly = guess_ab_col(),
+  qida = guess_ab_col(), rifa = guess_ab_col(),
+  roxi = guess_ab_col(), siso = guess_ab_col(),
+  teic = guess_ab_col(), tetr = guess_ab_col(),
+  tica = guess_ab_col(), tige = guess_ab_col(),
+  tobr = guess_ab_col(), trim = guess_ab_col(),
+  trsu = guess_ab_col(), vanc = guess_ab_col())
 
 brmo(..., country = "nl")
 
@@ -177,7 +187,7 @@ When \code{country} will be left blank, guidelines will be taken from EUCAST Exp
 }
 \section{Antibiotics}{
 
-To define antibiotics column names, leave as it is to determine it automatically with \code{\link{guess_ab}} or input a text (case-insensitive) or use \code{NULL} to skip a column (e.g. \code{tica = NULL}). Non-existing columns will anyway be skipped with a warning.
+To define antibiotics column names, leave as it is to determine it automatically with \code{\link{guess_ab_col}} or input a text (case-insensitive) or use \code{NULL} to skip a column (e.g. \code{tica = NULL}). Non-existing columns will anyway be skipped with a warning.
 
 Abbrevations of the column containing antibiotics in the form: \strong{abbreviation}: generic name (\emph{ATC code})
 

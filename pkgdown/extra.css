@@ -50,6 +50,7 @@ a, a:hover, a:focus {
 }
 a[href], a[href]:hover, a[href]:focus,
 code a[href], code a[href]:hover, code a[href]:focus,
+a[href] code, a[href] code:hover, a[href] code:focus,
 pre a[href], pre a[href]:hover, pre a[href]:focus,
 a code[href], a code[href]:hover, a code[href]:focus,
 a pre[href], a pre[href]:hover, a pre[href]:focus {
@@ -138,4 +139,10 @@ thead {
 }
 tbody {
     border-bottom: 2px solid black;
+}
+table a:not(.btn), .table a:not(.btn) {
+    text-decoration: inherit;
+}
+table a:not(.btn):hover, .table a:not(.btn):hover {
+    text-decoration: underline;
 }

@@ -64,7 +64,7 @@
     <loc>https://msberends.gitlab.io/AMR/reference/ggplot_rsi.html</loc>
   </url>
   <url>
-    <loc>https://msberends.gitlab.io/AMR/reference/guess_ab.html</loc>
+    <loc>https://msberends.gitlab.io/AMR/reference/guess_ab_col.html</loc>
   </url>
   <url>
     <loc>https://msberends.gitlab.io/AMR/reference/join.html</loc>
@@ -140,6 +140,9 @@
   </url>
   <url>
     <loc>https://msberends.gitlab.io/AMR/articles/ab_property.html</loc>
+  </url>
+  <url>
+    <loc>https://msberends.gitlab.io/AMR/articles/benchmarks.html</loc>
   </url>
   <url>
     <loc>https://msberends.gitlab.io/AMR/articles/freq.html</loc>

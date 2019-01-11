@@ -21,18 +21,28 @@
 
 #' Guess antibiotic column
 #'
-#' This tries to find a column name in a data set based on information from the \code{\link{antibiotics}} data set.
+#' This tries to find a column name in a data set based on information from the \code{\link{antibiotics}} data set. You can look for an antibiotic (trade) of abbreviation and it will search the data for any column containing a name or ATC code of that antibiotic.
 #' @param tbl a \code{data.frame}
 #' @param col a character to look for
 #' @param verbose a logical to indicate whether additional info should be printed
 #' @importFrom dplyr %>% select filter_all any_vars
 #' @export
 #' @inheritSection AMR Read more on our website!
-# @examples
-#
-guess_ab <- function(tbl = NULL, col = NULL, verbose = FALSE) {
+#' @examples
+#' df <- data.frame(amox = "S",
+#'                  tetr = "R")
+#'
+#' guess_ab_col(df, "amoxicillin")
+#' # [1] "amox"
+#' guess_ab_col(df, "J01AA07") # ATC code of Tetracycline
+#' # [1] "tetr"
+#'
+#' guess_ab_col(df, "J01AA07", verbose = TRUE)
+#' # using column `tetr` for col "J01AA07"
+#' # [1] "tetr"
+guess_ab_col <- function(tbl = NULL, col = NULL, verbose = FALSE) {
   if (is.null(tbl) & is.null(col)) {
-    return(as.name("guess_ab"))
+    return(as.name("guess_ab_col"))
   }
   #stop("This function should not be called directly.")
   if (length(col) > 1) {
@@ -42,35 +52,58 @@ guess_ab <- function(tbl = NULL, col = NULL, verbose = FALSE) {
   if (!is.data.frame(tbl)) {
     stop("`tbl` must be a data.frame")
   }
+
   tbl_names <- colnames(tbl)
+  if (col %in% tbl_names) {
+    return(col)
+  }
   ab_result <- antibiotics %>%
     select(atc:trade_name) %>%
-    filter_all(any_vars(tolower(.) == tolower(col)))
-  if (nrow(ab_result) > 1) {
-    # get most likely one
-    if (col %in% ab_result$atc) {
-      ab_result <- ab_result %>% filter(atc == col)
-    } else if (col %in% ab_result$certe) {
-      ab_result <- ab_result %>% filter(certe == col)
-    } else if (col %in% ab_result$umcg) {
-      ab_result <- ab_result %>% filter(umcg == col)
-    } else if (col %in% ab_result$umcg) {
-      ab_result <- ab_result %>% filter(official == col)
-    } else {
-      ab_result <- ab_result[1,]
-    }
+    filter_all(any_vars(tolower(.) == tolower(col))) %>%
+    filter_all(any_vars(. %in% tbl_names))
+
+  if (nrow(ab_result) == 0 & nchar(col) > 4) {
+    # use like when col >= 5 characters
+    ab_result <- antibiotics %>%
+      select(atc:trade_name) %>%
+      filter_all(any_vars(tolower(.) %like% tolower(col))) %>%
+      filter_all(any_vars(. %in% tbl_names))
   }
-  tbl_result <- tbl_names[tbl_names %in% ab_result]
-  if (length(tbl_result) > 1) {
-    tbl_result <- tbl_result[1]
-    warning('using column `', tbl_result, '` for col "', col, '"', call. = FALSE)
-  } else if (length(tbl_result) == 0) {
+
+  if (nrow(ab_result) > 1) {
+    # looking more and more for reliable hit
+    ab_result_1 <- ab_result %>% filter(tolower(atc) == tolower(col))
+    if (nrow(ab_result_1) == 0) {
+      ab_result_1 <- ab_result %>% filter(tolower(certe) == tolower(col))
+    }
+    if (nrow(ab_result_1) == 0) {
+      ab_result_1 <- ab_result %>% filter(tolower(umcg) == tolower(col))
+    }
+    if (nrow(ab_result_1) == 0) {
+      ab_result_1 <- ab_result %>% filter(tolower(official) == tolower(col))
+    }
+    if (nrow(ab_result_1) == 0) {
+      ab_result_1 <- ab_result[1, ]
+    }
+    ab_result <- ab_result_1
+  }
+
+  if (length(ab_result) == 0) {
     if (verbose == TRUE) {
       message('no result found for col "', col, '"')
     }
     return(NULL)
-  } else if (verbose == TRUE) {
-    message('using column `', tbl_result, '` for col "', col, '"')
+  } else {
+    result <- tbl_names[tbl_names %in% ab_result]
+    if (length(result) == 0) {
+      if (verbose == TRUE) {
+        message('no result found for col "', col, '"')
+      }
+      return(NULL)
+    }
+    if (verbose == TRUE) {
+      message('using column `', result, '` for col "', col, '"')
+    }
+    return(result)
   }
-  tbl_result
 }

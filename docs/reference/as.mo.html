@@ -151,6 +151,13 @@
         Use the G-test
       </a>
     </li>
+    <li>
+      <a href="../articles/benchmarks.html">
+        <span class="fa fa-shipping-fast"></span>
+         
+        Other: benchmarks
+      </a>
+    </li>
   </ul>
 </li>
 <li>
@@ -357,16 +364,16 @@ The <code><a href='mo_property.html'>mo_property</a></code> functions (like <cod
 <span class='co'># the select function of tidyverse is also supported:</span>
 <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>dplyr</span>)
 <span class='no'>df</span>$<span class='no'>mo</span> <span class='kw'>&lt;-</span> <span class='no'>df</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='no'>microorganism_name</span>) <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='https://www.rdocumentation.org/packages/dplyr/topics/select'>select</a></span>(<span class='no'>microorganism_name</span>) <span class='kw'>%&gt;%</span>
   <span class='fu'>as.mo</span>()
 
 <span class='co'># and can even contain 2 columns, which is convenient for genus/species combinations:</span>
 <span class='no'>df</span>$<span class='no'>mo</span> <span class='kw'>&lt;-</span> <span class='no'>df</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='no'>genus</span>, <span class='no'>species</span>) <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='https://www.rdocumentation.org/packages/dplyr/topics/select'>select</a></span>(<span class='no'>genus</span>, <span class='no'>species</span>) <span class='kw'>%&gt;%</span>
   <span class='fu'>as.mo</span>()
 <span class='co'># although this works easier and does the same:</span>
 <span class='no'>df</span> <span class='kw'>&lt;-</span> <span class='no'>df</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span>(<span class='kw'>mo</span> <span class='kw'>=</span> <span class='fu'>as.mo</span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/paste'>paste</a></span>(<span class='no'>genus</span>, <span class='no'>species</span>)))
+  <span class='fu'><a href='https://www.rdocumentation.org/packages/dplyr/topics/mutate'>mutate</a></span>(<span class='kw'>mo</span> <span class='kw'>=</span> <span class='fu'>as.mo</span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/paste'>paste</a></span>(<span class='no'>genus</span>, <span class='no'>species</span>)))
 <span class='co'># }</span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
