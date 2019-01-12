@@ -44,7 +44,7 @@
 #'
 #' It is also possible to do a \emph{G}-test of independence with more than two nominal variables. For example, Jackson et al. (2013) also had data for children under 3, so you could do an analysis of old vs. young, thigh vs. arm, and reaction vs. no reaction, all analyzed together.
 #'
-#' Fisher's exact test (\code{\link{fisher.test}}) is more accurate than the \emph{G}-test of independence when the expected numbers are small, so it is recommend to only use the \emph{G}-test if your total sample size is greater than 1000.
+#' Fisher's exact test (\code{\link{fisher.test}}) is an \strong{exact} test, where the \emph{G}-test is still only an \strong{approximation}. For any 2x2 table, Fisher's Exact test may be slower but will still run in seconds, even if the sum of your observations is multiple millions.
 #'
 #' The \emph{G}-test of independence is an alternative to the chi-square test of independence (\code{\link{chisq.test}}), and they will give approximately the same results.
 #' @section How the test works:
@@ -155,6 +155,9 @@ g.test <- function(x,
     nc <- as.integer(ncol(x))
     if (is.na(nr) || is.na(nc) || is.na(nr * nc))
       stop("invalid nrow(x) or ncol(x)", domain = NA)
+    # add fisher.test suggestion
+    if (nr == 2 && nc == 2)
+      warning("`fisher.test()` is always more reliable for 2x2 tables and although must slower, often only takes seconds.")
     sr <- rowSums(x)
     sc <- colSums(x)
     E <- outer(sr, sc, "*")/n
@@ -221,15 +224,9 @@ g.test <- function(x,
   }
   names(STATISTIC) <- "X-squared"
   names(PARAMETER) <- "df"
-  # if (any(E < 5) && is.finite(PARAMETER))
-  #   warning("G-statistic approximation may be incorrect")
+  if (any(E < 5) && is.finite(PARAMETER))
+    warning("G-statistic approximation may be incorrect due to E < 5")
 
-  # suggest fisher.test when total is < 1000 (John McDonald, Handbook of Biological Statistics, 2014)
-  if (sum(x, na.rm = TRUE) < 1000 && is.finite(PARAMETER)) {
-    warning("G-statistic approximation may be incorrect, consider Fisher's Exact test")
-  } else if (any(E < 5) && is.finite(PARAMETER)) {
-    warning("G-statistic approximation may be incorrect, consider Fisher's Exact test")
-  }
   structure(list(statistic = STATISTIC, parameter = PARAMETER,
                  p.value = PVAL, method = METHOD, data.name = DNAME,
                  observed = x, expected = E, residuals = (x - E)/sqrt(E),

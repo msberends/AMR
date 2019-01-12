@@ -306,7 +306,7 @@
     
     <p>Use the <em>G</em>-test of independence when you have two nominal variables, each with two or more possible values. You want to know whether the proportions for one variable are different among values of the other variable.</p>
 <p>It is also possible to do a <em>G</em>-test of independence with more than two nominal variables. For example, Jackson et al. (2013) also had data for children under 3, so you could do an analysis of old vs. young, thigh vs. arm, and reaction vs. no reaction, all analyzed together.</p>
-<p>Fisher's exact test (<code><a href='https://www.rdocumentation.org/packages/stats/topics/fisher.test'>fisher.test</a></code>) is more accurate than the <em>G</em>-test of independence when the expected numbers are small, so it is recommend to only use the <em>G</em>-test if your total sample size is greater than 1000.</p>
+<p>Fisher's exact test (<code><a href='https://www.rdocumentation.org/packages/stats/topics/fisher.test'>fisher.test</a></code>) is an <strong>exact</strong> test, where the <em>G</em>-test is still only an <strong>approximation</strong>. For any 2x2 table, Fisher's Exact test may be slower but will still run in seconds, even if the sum of your observations is multiple millions.</p>
 <p>The <em>G</em>-test of independence is an alternative to the chi-square test of independence (<code><a href='https://www.rdocumentation.org/packages/stats/topics/chisq.test'>chisq.test</a></code>), and they will give approximately the same results.</p>
     
     <h2 class="hasAnchor" id="how-the-test-works"><a class="anchor" href="#how-the-test-works"></a>How the test works</h2>

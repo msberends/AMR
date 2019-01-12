@@ -20,7 +20,7 @@ Split ages into age groups defined by the \code{split} parameter. This allows fo
 \details{
 To split ages, the input can be:
 \itemize{
-  \item{A numeric vector. A vector of \code{c(10, 20)} will split on 0-9, 10-19 and 20+. A value of only \code{50} will split on 0-49 and 50+.
+  \item{A numeric vector. A vector of e.g. \code{c(10, 20)} will split on 0-9, 10-19 and 20+. A value of only \code{50} will split on 0-49 and 50+.
         The default is to split on young children (0-11), youth (12-24), young adults (26-54), middle-aged adults (55-74) and elderly (75+).}
   \item{A character:}
     \itemize{

@@ -78,7 +78,7 @@ Use the \emph{G}-test of independence when you have two nominal variables, each 
 
 It is also possible to do a \emph{G}-test of independence with more than two nominal variables. For example, Jackson et al. (2013) also had data for children under 3, so you could do an analysis of old vs. young, thigh vs. arm, and reaction vs. no reaction, all analyzed together.
 
-Fisher's exact test (\code{\link{fisher.test}}) is more accurate than the \emph{G}-test of independence when the expected numbers are small, so it is recommend to only use the \emph{G}-test if your total sample size is greater than 1000.
+Fisher's exact test (\code{\link{fisher.test}}) is an \strong{exact} test, where the \emph{G}-test is still only an \strong{approximation}. For any 2x2 table, Fisher's Exact test may be slower but will still run in seconds, even if the sum of your observations is multiple millions.
 
 The \emph{G}-test of independence is an alternative to the chi-square test of independence (\code{\link{chisq.test}}), and they will give approximately the same results.
 }

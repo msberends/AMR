@@ -47,7 +47,7 @@
   <script src="../extra.js"></script>
 <meta property="og:title" content="Age in years of individuals — age" />
 
-<meta property="og:description" content="Calculates age in years based on a reference date, which is the sytem time at default." />
+<meta property="og:description" content="Calculates age in years based on a reference date, which is the sytem date at default." />
 
 <meta property="og:image" content="https://msberends.gitlab.io/AMR/logo.png" />
 <meta name="twitter:card" content="summary" />
@@ -223,7 +223,7 @@
 
     <div class="ref-description">
     
-    <p>Calculates age in years based on a reference date, which is the sytem time at default.</p>
+    <p>Calculates age in years based on a reference date, which is the sytem date at default.</p>
     
     </div>
 
@@ -238,7 +238,7 @@
     </tr>
     <tr>
       <th>reference</th>
-      <td><p>reference date(s) (defaults to today), will be coerced with <code><a href='https://www.rdocumentation.org/packages/base/topics/as.POSIXlt'>as.POSIXlt</a></code></p></td>
+      <td><p>reference date(s) (defaults to today), will be coerced with <code><a href='https://www.rdocumentation.org/packages/base/topics/as.POSIXlt'>as.POSIXlt</a></code> and cannot be lower than <code>x</code></p></td>
     </tr>
     </table>
     
@@ -254,7 +254,7 @@ On our website <a href='https://msberends.gitlab.io/AMR'>https://msberends.gitla
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><code><a href='age_groups.html'>age_groups</a></code> to splits age into groups</p></div>
+    <div class='dont-index'><p><code><a href='age_groups.html'>age_groups</a></code> to split age into age groups</p></div>
     
 
   </div>

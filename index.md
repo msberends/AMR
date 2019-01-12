@@ -22,7 +22,6 @@ Veterinary Microbiology:
 
   * Research Veterinarians
   * Veterinary Epidemiologists
-  * Biomedical Researchers
 
 Microbial Ecology:
 
@@ -42,7 +41,7 @@ Developers:
 
   * Package developers for R 
   * Software developers
-  * Web application developers
+  * Web application / Shiny developers
 
 ### Get this package
 
@@ -64,7 +63,7 @@ To find out how to conduct AMR analysis, please [continue reading here to get st
 
 This package contains the **complete microbial taxonomic data** (with all nine taxonomic ranks - from kingdom to subspecies) from the publicly available Integrated Taxonomic Information System (ITIS, https://www.itis.gov). 
 
-All (sub)species from **the taxonomic kingdoms Bacteria, Fungi and Protozoa are included in this package**, as well as all previously accepted names known to ITIS. Furthermore, the responsible authors and year of publication are available. This allows users to use authoritative taxonomic information for their data analysis on any microorganism, not only human pathogens. It also helps to quickly determine the Gram stain of bacteria, since all bacteria are classified into subkingdom Negibacteria or Posibacteria. 
+All ~20,000 (sub)species from **the taxonomic kingdoms Bacteria, Fungi and Protozoa are included in this package**, as well as all ~2,500 previously accepted names known to ITIS. Furthermore, the responsible authors and year of publication are available. This allows users to use authoritative taxonomic information for their data analysis on any microorganism, not only human pathogens. It also helps to quickly determine the Gram stain of bacteria, since all bacteria are classified into subkingdom Negibacteria or Posibacteria. 
 
 Read more about ITIS [in our manual](./reference/ITIS.html).
 

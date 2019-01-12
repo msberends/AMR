@@ -21,11 +21,11 @@
 
 #' Age in years of individuals
 #'
-#' Calculates age in years based on a reference date, which is the sytem time at default.
+#' Calculates age in years based on a reference date, which is the sytem date at default.
 #' @param x date(s), will be coerced with \code{\link{as.POSIXlt}}
-#' @param reference reference date(s) (defaults to today), will be coerced with \code{\link{as.POSIXlt}}
+#' @param reference reference date(s) (defaults to today), will be coerced with \code{\link{as.POSIXlt}} and cannot be lower than \code{x}
 #' @return Integer (no decimals)
-#' @seealso \code{\link{age_groups}} to splits age into groups
+#' @seealso \code{\link{age_groups}} to split age into age groups
 #' @importFrom dplyr if_else
 #' @inheritSection AMR Read more on our website!
 #' @export
@@ -45,8 +45,8 @@ age <- function(x, reference = Sys.Date()) {
   years_gap <- reference$year - x$year
   # from https://stackoverflow.com/a/25450756/4575331
   ages <- if_else(reference$mon < x$mon | (reference$mon == x$mon & reference$mday < x$mday),
-         as.integer(years_gap - 1),
-         as.integer(years_gap))
+                  as.integer(years_gap - 1),
+                  as.integer(years_gap))
   if (any(ages > 120)) {
     warning("Some ages are > 120.")
   }
@@ -60,7 +60,7 @@ age <- function(x, reference = Sys.Date()) {
 #' @param split_at values to split \code{x} at, defaults to age groups 0-11, 12-24, 26-54, 55-74 and 75+. See Details.
 #' @details To split ages, the input can be:
 #' \itemize{
-#'   \item{A numeric vector. A vector of \code{c(10, 20)} will split on 0-9, 10-19 and 20+. A value of only \code{50} will split on 0-49 and 50+.
+#'   \item{A numeric vector. A vector of e.g. \code{c(10, 20)} will split on 0-9, 10-19 and 20+. A value of only \code{50} will split on 0-49 and 50+.
 #'         The default is to split on young children (0-11), youth (12-24), young adults (26-54), middle-aged adults (55-74) and elderly (75+).}
 #'   \item{A character:}
 #'     \itemize{
@@ -139,8 +139,7 @@ age_groups <- function(x, split_at = c(12, 25, 55, 75)) {
   for (i in 1:length(split_at)) {
     y[x >= split_at[i]] <- i
     # create labels
-      # when age group consists of only one age
-      labs[i - 1] <- paste0(unique(c(split_at[i - 1], split_at[i] - 1)), collapse = "-")
+    labs[i - 1] <- paste0(unique(c(split_at[i - 1], split_at[i] - 1)), collapse = "-")
   }
 
   # last category

@@ -1,6 +1,6 @@
 Package: AMR
 Version: 0.5.0.9009
-Date: 2019-01-11
+Date: 2019-01-12
 Title: Antimicrobial Resistance Analysis
 Authors@R: c(
     person(

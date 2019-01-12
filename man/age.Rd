@@ -9,13 +9,13 @@ age(x, reference = Sys.Date())
 \arguments{
 \item{x}{date(s), will be coerced with \code{\link{as.POSIXlt}}}
 
-\item{reference}{reference date(s) (defaults to today), will be coerced with \code{\link{as.POSIXlt}}}
+\item{reference}{reference date(s) (defaults to today), will be coerced with \code{\link{as.POSIXlt}} and cannot be lower than \code{x}}
 }
 \value{
 Integer (no decimals)
 }
 \description{
-Calculates age in years based on a reference date, which is the sytem time at default.
+Calculates age in years based on a reference date, which is the sytem date at default.
 }
 \section{Read more on our website!}{
 
@@ -24,5 +24,5 @@ On our website \url{https://msberends.gitlab.io/AMR} you can find \href{https://
 }
 
 \seealso{
-\code{\link{age_groups}} to splits age into groups
+\code{\link{age_groups}} to split age into age groups
 }

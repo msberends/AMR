@@ -48,10 +48,12 @@ test_that("G-test works", {
   x <- as.data.frame(
     matrix(data = round(runif(4) * 100000, 0),
            ncol = 2,
-
            byrow = TRUE)
   )
-  expect_lt(g.test(x)$p.value,
+ 
+  # fisher.test() is always better for 2x2 tables:
+  expect_warning(g.test(x))
+  expect_lt(suppressWarnings(g.test(x)$p.value),
             1)
 
   expect_warning(g.test(x = c(772, 1611, 737),
