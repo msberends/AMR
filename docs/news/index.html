@@ -232,13 +232,13 @@
 <li>New website: <a href="https://msberends.gitlab.io/AMR" class="uri">https://msberends.gitlab.io/AMR</a> (built with the great <a href="https://pkgdown.r-lib.org/"><code>pkgdown</code></a>)</li>
 <li>Contains the complete manual of this package and all of its functions with an explanation of their parameters</li>
 <li>Contains a comprehensive tutorial about how to conduct antimicrobial resistance analysis</li>
-<li>Support for <a href="https://dplyr.tidyverse.org"><code>dplyr</code></a> version 0.8.0</li>
-<li>Function <code>guess_ab_col</code> to find an antibiotic column in a table</li>
+<li>Support for the upcoming <a href="https://dplyr.tidyverse.org"><code>dplyr</code></a> version 0.8.0</li>
+<li>Function <code><a href="../reference/guess_ab_col.html">guess_ab_col()</a></code> to find an antibiotic column in a table</li>
 <li>Function <code><a href="../reference/mo_failures.html">mo_failures()</a></code> to review values that could not be coerced to a valid MO code, using <code><a href="../reference/as.mo.html">as.mo()</a></code>. This latter function will now only show a maximum of 25 uncoerced values.</li>
 <li>Function <code><a href="../reference/mo_renamed.html">mo_renamed()</a></code> to get a list of all returned values from <code><a href="../reference/as.mo.html">as.mo()</a></code> that have had taxonomic renaming</li>
 <li>Function <code><a href="../reference/age.html">age()</a></code> to calculate the (patients) age in years</li>
 <li>Function <code><a href="../reference/age_groups.html">age_groups()</a></code> to split ages into custom or predefined groups (like children or elderly). This allows for easier demographic antimicrobial resistance analysis per age group.</li>
-<li>Functions <code><a href="../reference/first_isolate.html">filter_first_isolate()</a></code> and <code><a href="../reference/first_isolate.html">filter_first_weighted_isolate()</a></code> to shorten and fasten filtering on data sets with antimicrobial results, e.g.: <code>r   septic_patients %&gt;% filter_first_isolate()   # or   filter_first_isolate(septic_patients)</code> is equal to: <code>r   septic_patients %&gt;% mutate(only_firsts = first_isolate(septic_patients, ...)) %&gt;% filter(only_firsts == TRUE) %&gt;% select(-only_firsts)</code>
+<li>Functions <code><a href="../reference/first_isolate.html">filter_first_isolate()</a></code> and <code><a href="../reference/first_isolate.html">filter_first_weighted_isolate()</a></code> to shorten and fasten filtering on data sets with antimicrobial results, e.g.: <code>r   septic_patients %&gt;% filter_first_isolate(...)   # or   filter_first_isolate(septic_patients, ...)</code> is equal to: <code>r   septic_patients %&gt;% mutate(only_firsts = first_isolate(septic_patients, ...)) %&gt;% filter(only_firsts == TRUE) %&gt;% select(-only_firsts)</code>
 </li>
 <li>New vignettes about how to conduct AMR analysis, predict antimicrobial resistance, use the <em>G</em>-test and more. These are also available (and even easier readable) on our website: <a href="https://msberends.gitlab.io/AMR" class="uri">https://msberends.gitlab.io/AMR</a>.</li>
 </ul>

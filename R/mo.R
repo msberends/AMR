@@ -711,7 +711,7 @@ exec_as.mo <- function(x, Becker = FALSE, Lancefield = FALSE,
                          paste('"', unique(failures), '"', sep = "", collapse = ', '),
                          ". See mo_failures() to review them.")),
               call. = FALSE,
-              immediate. = FALSE)
+              immediate. = TRUE) # thus will always be shown, even if >= warnings
     }
   }
 
