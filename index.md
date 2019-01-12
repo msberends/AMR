@@ -59,6 +59,8 @@ To find out how to conduct AMR analysis, please [continue reading here to get st
 
 ### Short introduction
 
+#### Taxonomic reference data
+
 <img src="man/figures/itis_logo.jpg" height="60px">
 
 This package contains the **complete microbial taxonomic data** (with all nine taxonomic ranks - from kingdom to subspecies) from the publicly available Integrated Taxonomic Information System (ITIS, https://www.itis.gov). 
@@ -67,11 +69,13 @@ All ~20,000 (sub)species from **the taxonomic kingdoms Bacteria, Fungi and Proto
 
 Read more about ITIS [in our manual](./reference/ITIS.html).
 
+#### Overview of functions
+
 The `AMR` package basically does four important things:
 
 1. It **cleanses existing data**, by transforming it to reproducible and profound *classes*, making the most efficient use of R. These functions all use artificial intelligence to guess results that you would expect:
 
-   * Use `as.mo()` to get an ID of a microorganism. The IDs are human readable for the trained eye - the ID of *Klebsiella pneumoniae* is "B_KLBSL_PNE" (B stands for Bacteria) and the ID of *S. aureus* is "B_STPHY_AUR". The function takes almost any text as input that looks like the name or code of a microorganism like "E. coli", "esco" and "esccol". Even `as.mo("MRSA")` will return the ID of *S. aureus*. Moreover, it can group all coagulase negative and positive *Staphylococci*, and can transform *Streptococci* into Lancefield groups. To find bacteria based on your input, it uses Artificial Intelligence to look up values in the included ITIS data, consisting of more than 18,000 microorganisms. 
+   * Use `as.mo()` to get an ID of a microorganism. The IDs are human readable for the trained eye - the ID of *Klebsiella pneumoniae* is "B_KLBSL_PNE" (B stands for Bacteria) and the ID of *S. aureus* is "B_STPHY_AUR". The function takes almost any text as input that looks like the name or code of a microorganism like "E. coli", "esco" or "esccol" and tries to find expected results using artificial intelligence (AI) on the included ITIS data set, consisting of almost 20,000 microorganisms. It is *very* fast, please see our [benchmarks](./articles/benchmarks.html). Moreover, it can group *Staphylococci* into coagulase negative and positive (CoNS and CoPS, see [source](./reference/as.mo.html#source)) and can categorise *Streptococci* into Lancefield groups (like beta-haemolytic *Streptococcus* Group B, [source](./reference/as.mo.html#source)).
    * Use `as.rsi()` to transform values to valid antimicrobial results. It produces just S, I or R based on your input and warns about invalid values. Even values like "<=0.002; S" (combined MIC/RSI) will result in "S".
    * Use `as.mic()` to cleanse your MIC values. It produces a so-called factor (called *ordinal* in SPSS) with valid MIC values as levels. A value like "<=0.002; S" (combined MIC/RSI) will result in "<=0.002".
    * Use `as.atc()` to get the ATC code of an antibiotic as defined by the WHO. This package contains a database with most LIS codes, official names, DDDs and even trade names of antibiotics. For example, the values "Furabid", "Furadantin", "nitro" all return the ATC code of Nitrofurantoine.
@@ -100,7 +104,9 @@ The `AMR` package basically does four important things:
      * Results of 40 antibiotics (each antibiotic in its own column) with a total of 38,414 antimicrobial results
      * Real and genuine data
 
-----
+#### Partners
+
+The development of this package is part of, related to, or made possible by:
 
 <a href="https://www.rug.nl"><img src="./logo_rug.png" height="60px"></a>
 <a href="https://www.umcg.nl"><img src="./logo_umcg.png" height="60px"></a>

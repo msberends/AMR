@@ -21,7 +21,7 @@
 
 #' Guess antibiotic column
 #'
-#' This tries to find a column name in a data set based on information from the \code{\link{antibiotics}} data set. You can look for an antibiotic (trade) of abbreviation and it will search the data for any column containing a name or ATC code of that antibiotic.
+#' This tries to find a column name in a data set based on information from the \code{\link{antibiotics}} data set. You can look for an antibiotic (trade) name or abbreviation and it will search the \code{data.frame} for any column containing a name or ATC code of that antibiotic.
 #' @param tbl a \code{data.frame}
 #' @param col a character to look for
 #' @param verbose a logical to indicate whether additional info should be printed

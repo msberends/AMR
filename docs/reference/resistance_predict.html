@@ -253,11 +253,11 @@
     </tr>
     <tr>
       <th>year_min</th>
-      <td><p>lowest year to use in the prediction model, dafaults the lowest year in <code>col_date</code></p></td>
+      <td><p>lowest year to use in the prediction model, dafaults to the lowest year in <code>col_date</code></p></td>
     </tr>
     <tr>
       <th>year_max</th>
-      <td><p>highest year to use in the prediction model, defaults to 15 years after today</p></td>
+      <td><p>highest year to use in the prediction model, defaults to 10 years after today</p></td>
     </tr>
     <tr>
       <th>year_every</th>
@@ -273,15 +273,15 @@
     </tr>
     <tr>
       <th>I_as_R</th>
-      <td><p>treat <code>I</code> as <code>R</code></p></td>
+      <td><p>a logical to indicate whether values <code>I</code> should be treated as <code>R</code></p></td>
     </tr>
     <tr>
       <th>preserve_measurements</th>
-      <td><p>logical to indicate whether predictions of years that are actually available in the data should be overwritten with the original data. The standard errors of those years will be <code>NA</code>.</p></td>
+      <td><p>a logical to indicate whether predictions of years that are actually available in the data should be overwritten by the original data. The standard errors of those years will be <code>NA</code>.</p></td>
     </tr>
     <tr>
       <th>info</th>
-      <td><p>print textual analysis with the name and <code><a href='https://www.rdocumentation.org/packages/base/topics/summary'>summary</a></code> of the model.</p></td>
+      <td><p>a logical to indicate whether textual analysis should be printed with the name and <code><a href='https://www.rdocumentation.org/packages/base/topics/summary'>summary</a></code> of the statistical model.</p></td>
     </tr>
     </table>
     
@@ -290,11 +290,11 @@
     <p><code>data.frame</code> with columns:</p><ul>
 <li><p><code>year</code></p></li>
 <li><p><code>value</code>, the same as <code>estimated</code> when <code>preserve_measurements = FALSE</code>, and a combination of <code>observed</code> and <code>estimated</code> otherwise</p></li>
-<li><p><code>se_min</code>, the lower bound of the standard error with a minimum of <code>0</code></p></li>
-<li><p><code>se_max</code> the upper bound of the standard error with a maximum of <code>1</code></p></li>
-<li><p><code>observations</code>, the total number of observations, i.e. S + I + R</p></li>
-<li><p><code>observed</code>, the original observed values</p></li>
-<li><p><code>estimated</code>, the estimated values, calculated by the model</p></li>
+<li><p><code>se_min</code>, the lower bound of the standard error with a minimum of <code>0</code> (so the standard error will never go below 0%)</p></li>
+<li><p><code>se_max</code> the upper bound of the standard error with a maximum of <code>1</code> (so the standard error will never go above 100%)</p></li>
+<li><p><code>observations</code>, the total number of available observations in that year, i.e. S + I + R</p></li>
+<li><p><code>observed</code>, the original observed resistant percentages</p></li>
+<li><p><code>estimated</code>, the estimated resistant percentages, calculated by the model</p></li>
 </ul>
 
     

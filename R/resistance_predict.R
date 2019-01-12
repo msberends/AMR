@@ -25,23 +25,23 @@
 #' @inheritParams first_isolate
 #' @param col_ab column name of \code{tbl} with antimicrobial interpretations (\code{R}, \code{I} and \code{S})
 #' @param col_date column name of the date, will be used to calculate years if this column doesn't consist of years already
-#' @param year_min lowest year to use in the prediction model, dafaults the lowest year in \code{col_date}
-#' @param year_max highest year to use in the prediction model, defaults to 15 years after today
+#' @param year_min lowest year to use in the prediction model, dafaults to the lowest year in \code{col_date}
+#' @param year_max highest year to use in the prediction model, defaults to 10 years after today
 #' @param year_every unit of sequence between lowest year found in the data and \code{year_max}
 #' @param minimum minimal amount of available isolates per year to include. Years containing less observations will be estimated by the model.
 #' @param model the statistical model of choice. Valid values are \code{"binomial"} (or \code{"binom"} or \code{"logit"}) or \code{"loglin"} or \code{"linear"} (or \code{"lin"}).
-#' @param I_as_R treat \code{I} as \code{R}
-#' @param preserve_measurements logical to indicate whether predictions of years that are actually available in the data should be overwritten with the original data. The standard errors of those years will be \code{NA}.
-#' @param info print textual analysis with the name and \code{\link{summary}} of the model.
+#' @param I_as_R a logical to indicate whether values \code{I} should be treated as \code{R}
+#' @param preserve_measurements a logical to indicate whether predictions of years that are actually available in the data should be overwritten by the original data. The standard errors of those years will be \code{NA}.
+#' @param info a logical to indicate whether textual analysis should be printed with the name and \code{\link{summary}} of the statistical model.
 #' @return \code{data.frame} with columns:
 #' \itemize{
 #'   \item{\code{year}}
 #'   \item{\code{value}, the same as \code{estimated} when \code{preserve_measurements = FALSE}, and a combination of \code{observed} and \code{estimated} otherwise}
-#'   \item{\code{se_min}, the lower bound of the standard error with a minimum of \code{0}}
-#'   \item{\code{se_max} the upper bound of the standard error with a maximum of \code{1}}
-#'   \item{\code{observations}, the total number of observations, i.e. S + I + R}
-#'   \item{\code{observed}, the original observed values}
-#'   \item{\code{estimated}, the estimated values, calculated by the model}
+#'   \item{\code{se_min}, the lower bound of the standard error with a minimum of \code{0} (so the standard error will never go below 0\%)}
+#'   \item{\code{se_max} the upper bound of the standard error with a maximum of \code{1} (so the standard error will never go above 100\%)}
+#'   \item{\code{observations}, the total number of available observations in that year, i.e. S + I + R}
+#'   \item{\code{observed}, the original observed resistant percentages}
+#'   \item{\code{estimated}, the estimated resistant percentages, calculated by the model}
 #' }
 #' @seealso The \code{\link{portion}} function to calculate resistance, \cr \code{\link{lm}} \code{\link{glm}}
 #' @rdname resistance_predict
@@ -182,7 +182,7 @@ resistance_predict <- function(tbl,
     year_min <- max(year_min, year_lowest, na.rm = TRUE)
   }
   if (is.null(year_max)) {
-    year_max <- year(Sys.Date()) + 15
+    year_max <- year(Sys.Date()) + 10
   }
 
   years_predict <- seq(from = year_min, to = year_max, by = year_every)
