@@ -34,6 +34,7 @@
 #' @param I_as_R a logical to indicate whether values \code{I} should be treated as \code{R}
 #' @param preserve_measurements a logical to indicate whether predictions of years that are actually available in the data should be overwritten by the original data. The standard errors of those years will be \code{NA}.
 #' @param info a logical to indicate whether textual analysis should be printed with the name and \code{\link{summary}} of the statistical model.
+#' @param main title of the plot
 #' @return \code{data.frame} with extra class \code{"resistance_predict"} with columns:
 #' \itemize{
 #'   \item{\code{year}}
@@ -48,7 +49,7 @@
 #' @rdname resistance_predict
 #' @export
 #' @importFrom stats predict glm lm
-#' @importFrom dplyr %>% pull mutate mutate_at n group_by_at summarise filter filter_at all_vars n_distinct arrange case_when n_groups
+#' @importFrom dplyr %>% pull mutate mutate_at n group_by_at summarise filter filter_at all_vars n_distinct arrange case_when n_groups transmute
 #' @inheritSection AMR Read more on our website!
 #' @examples
 #' x <- resistance_predict(septic_patients, col_ab = "amox", year_min = 2010)

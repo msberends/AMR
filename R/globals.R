@@ -19,12 +19,20 @@
 # Visit our website for more info: https://msberends.gitab.io/AMR.     #
 # ==================================================================== #
 
+
+
+
 globalVariables(c(".",
-                  "atc", 
+                  "atc",
                   "certe",
-                  "official", 
+                  "official",
                   "trade_name",
                   "umcg",
+                  'se_min',
+                  'se_max',
+                  'labs',
+                  'transmute',
+                  'observed',
                   "..property",
                   "antibiotic",
                   "Antibiotic",

@@ -50,6 +50,8 @@ ggplot_rsi_predict(x, main = paste("Resistance prediction of",
       single plotting structure, function or \emph{any \R object with a
         \code{plot} method} can be provided.}
 
+\item{main}{title of the plot}
+
 \item{...}{parameters passed on to the \code{first_isolate} function}
 }
 \value{
