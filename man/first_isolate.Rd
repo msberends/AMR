@@ -26,7 +26,7 @@ filter_first_weighted_isolate(tbl, col_date = NULL,
 \arguments{
 \item{tbl}{a \code{data.frame} containing isolates.}
 
-\item{col_date}{column name of the result date (or date that is was received on the lab), defaults to the first column of class \code{Date}}
+\item{col_date}{column name of the result date (or date that is was received on the lab), defaults to the first column of with a date class}
 
 \item{col_patient_id}{column name of the unique IDs of the patients, defaults to the first column that starts with 'patient' or 'patid' (case insensitive)}
 

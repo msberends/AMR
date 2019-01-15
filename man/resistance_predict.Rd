@@ -3,23 +3,32 @@
 \name{resistance_predict}
 \alias{resistance_predict}
 \alias{rsi_predict}
+\alias{plot.resistance_predict}
+\alias{ggplot_rsi_predict}
 \title{Predict antimicrobial resistance}
 \usage{
-resistance_predict(tbl, col_ab, col_date, year_min = NULL,
+resistance_predict(tbl, col_ab, col_date = NULL, year_min = NULL,
   year_max = NULL, year_every = 1, minimum = 30,
   model = "binomial", I_as_R = TRUE, preserve_measurements = TRUE,
   info = TRUE)
 
-rsi_predict(tbl, col_ab, col_date, year_min = NULL, year_max = NULL,
-  year_every = 1, minimum = 30, model = "binomial", I_as_R = TRUE,
-  preserve_measurements = TRUE, info = TRUE)
+rsi_predict(tbl, col_ab, col_date = NULL, year_min = NULL,
+  year_max = NULL, year_every = 1, minimum = 30,
+  model = "binomial", I_as_R = TRUE, preserve_measurements = TRUE,
+  info = TRUE)
+
+\method{plot}{resistance_predict}(x,
+  main = paste("Resistance prediction of", attributes(x)$ab), ...)
+
+ggplot_rsi_predict(x, main = paste("Resistance prediction of",
+  attributes(x)$ab), ...)
 }
 \arguments{
 \item{tbl}{a \code{data.frame} containing isolates.}
 
 \item{col_ab}{column name of \code{tbl} with antimicrobial interpretations (\code{R}, \code{I} and \code{S})}
 
-\item{col_date}{column name of the date, will be used to calculate years if this column doesn't consist of years already}
+\item{col_date}{column name of the date, will be used to calculate years if this column doesn't consist of years already, defaults to the first column of with a date class}
 
 \item{year_min}{lowest year to use in the prediction model, dafaults to the lowest year in \code{col_date}}
 
@@ -29,16 +38,22 @@ rsi_predict(tbl, col_ab, col_date, year_min = NULL, year_max = NULL,
 
 \item{minimum}{minimal amount of available isolates per year to include. Years containing less observations will be estimated by the model.}
 
-\item{model}{the statistical model of choice. Valid values are \code{"binomial"} (or \code{"binom"} or \code{"logit"}) or \code{"loglin"} or \code{"linear"} (or \code{"lin"}).}
+\item{model}{the statistical model of choice. Valid values are \code{"binomial"} (or \code{"binom"} or \code{"logit"}) or \code{"loglin"} (or \code{"poisson"}) or \code{"linear"} (or \code{"lin"}).}
 
 \item{I_as_R}{a logical to indicate whether values \code{I} should be treated as \code{R}}
 
 \item{preserve_measurements}{a logical to indicate whether predictions of years that are actually available in the data should be overwritten by the original data. The standard errors of those years will be \code{NA}.}
 
 \item{info}{a logical to indicate whether textual analysis should be printed with the name and \code{\link{summary}} of the statistical model.}
+
+\item{x}{the coordinates of points in the plot. Alternatively, a
+      single plotting structure, function or \emph{any \R object with a
+        \code{plot} method} can be provided.}
+
+\item{...}{parameters passed on to the \code{first_isolate} function}
 }
 \value{
-\code{data.frame} with columns:
+\code{data.frame} with extra class \code{"resistance_predict"} with columns:
 \itemize{
   \item{\code{year}}
   \item{\code{value}, the same as \code{estimated} when \code{preserve_measurements = FALSE}, and a combination of \code{observed} and \code{estimated} otherwise}
@@ -59,39 +74,20 @@ On our website \url{https://msberends.gitlab.io/AMR} you can find \href{https://
 }
 
 \examples{
-\dontrun{
-# use it with base R:
-resistance_predict(tbl = tbl[which(first_isolate == TRUE & genus == "Haemophilus"),],
-                   col_ab = "amcl", col_date = "date")
+x <- resistance_predict(septic_patients, col_ab = "amox", year_min = 2010)
+plot(x)
+ggplot_rsi_predict(x)
 
-# or use dplyr so you can actually read it:
+# use dplyr so you can actually read it:
 library(dplyr)
-tbl \%>\%
-  filter(first_isolate == TRUE,
-         genus == "Haemophilus") \%>\%
-  resistance_predict(amcl, date)
-}
+x <- septic_patients \%>\%
+  filter_first_isolate() \%>\%
+  filter(mo_genus(mo) == "Staphylococcus") \%>\%
+  resistance_predict("peni")
+plot(x)
 
 
-# real live example:
-library(dplyr)
-septic_patients \%>\%
-  # get bacteria properties like genus and species
-  left_join_microorganisms("mo") \%>\%
-  # calculate first isolates
-  mutate(first_isolate = first_isolate(.)) \%>\%
-  # filter on first E. coli isolates
-  filter(genus == "Escherichia",
-         species == "coli",
-         first_isolate == TRUE) \%>\%
-  # predict resistance of cefotaxime for next years
-  resistance_predict(col_ab = "cfot",
-                     col_date = "date",
-                     year_max = 2025,
-                     preserve_measurements = TRUE,
-                     minimum = 0)
-
-# create nice plots with ggplot
+# create nice plots with ggplot yourself
 if (!require(ggplot2)) {
 
   data <- septic_patients \%>\%
@@ -99,7 +95,7 @@ if (!require(ggplot2)) {
     resistance_predict(col_ab = "amox",
                        col_date = "date",
                        info = FALSE,
-                        minimum = 15)
+                       minimum = 15)
 
   ggplot(data,
          aes(x = year)) +

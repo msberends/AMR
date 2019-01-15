@@ -32,6 +32,11 @@ test_that("prediction of rsi works", {
   # amox resistance will increase according to data set `septic_patients`
   expect_true(amox_R[3] < amox_R[20])
 
+  x <- resistance_predict(septic_patients, col_ab = "amox", year_min = 2010)
+  plot(x)
+  ggplot_rsi_predict(x)
+  expect_error(ggplot_rsi_predict(septic_patients))
+
   library(dplyr)
 
   expect_output(rsi_predict(tbl = filter(septic_patients, mo == "B_ESCHR_COL"),

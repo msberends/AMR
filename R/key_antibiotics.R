@@ -101,9 +101,8 @@ key_antibiotics <- function(tbl,
 
   # try to find columns based on type
   # -- mo
-  if (is.null(col_mo) & "mo" %in% lapply(tbl, class)) {
-    col_mo <- colnames(tbl)[lapply(tbl, class) == "mo"][1]
-    message(blue(paste0("NOTE: Using column `", bold(col_mo), "` as input for `col_mo`.")))
+  if (is.null(col_mo)) {
+    col_mo <- search_type_in_df(tbl = tbl, type = "mo")
   }
   if (is.null(col_mo)) {
     stop("`col_mo` must be set.", call. = FALSE)
@@ -114,7 +113,6 @@ key_antibiotics <- function(tbl,
                 GramPos_1, GramPos_2, GramPos_3, GramPos_4, GramPos_5, GramPos_6,
                 GramNeg_1, GramNeg_2, GramNeg_3, GramNeg_4, GramNeg_5, GramNeg_6)
   col.list <- check_available_columns(tbl = tbl, col.list = col.list, info = warnings)
-  print(col.list)
   universal_1 <- col.list[universal_1]
   universal_2 <- col.list[universal_2]
   universal_3 <- col.list[universal_3]

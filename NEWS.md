@@ -12,6 +12,12 @@
 * Function `mo_renamed()` to get a list of all returned values from `as.mo()` that have had taxonomic renaming
 * Function `age()` to calculate the (patients) age in years
 * Function `age_groups()` to split ages into custom or predefined groups (like children or elderly). This allows for easier demographic antimicrobial resistance analysis per age group.
+* Function `ggplot_rsi_predict()` as well as the base R `plot()` function can now be used for resistance prediction calculated with `resistance_predict()`:
+  ```r
+  x <- resistance_predict(septic_patients, col_ab = "amox")
+  plot(x)
+  ggplot_rsi_predict(x)
+  ```
 * Functions `filter_first_isolate()` and `filter_first_weighted_isolate()` to shorten and fasten filtering on data sets with antimicrobial results, e.g.:
   ```r
   septic_patients %>% filter_first_isolate(...)

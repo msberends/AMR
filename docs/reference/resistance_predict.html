@@ -227,14 +227,22 @@
     
     </div>
 
-    <pre class="usage"><span class='fu'>resistance_predict</span>(<span class='no'>tbl</span>, <span class='no'>col_ab</span>, <span class='no'>col_date</span>, <span class='kw'>year_min</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+    <pre class="usage"><span class='fu'>resistance_predict</span>(<span class='no'>tbl</span>, <span class='no'>col_ab</span>, <span class='kw'>col_date</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>year_min</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>year_max</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>year_every</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>minimum</span> <span class='kw'>=</span> <span class='fl'>30</span>,
   <span class='kw'>model</span> <span class='kw'>=</span> <span class='st'>"binomial"</span>, <span class='kw'>I_as_R</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>preserve_measurements</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
   <span class='kw'>info</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
 
-<span class='fu'>rsi_predict</span>(<span class='no'>tbl</span>, <span class='no'>col_ab</span>, <span class='no'>col_date</span>, <span class='kw'>year_min</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>year_max</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>year_every</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>minimum</span> <span class='kw'>=</span> <span class='fl'>30</span>, <span class='kw'>model</span> <span class='kw'>=</span> <span class='st'>"binomial"</span>, <span class='kw'>I_as_R</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>preserve_measurements</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>info</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
+<span class='fu'>rsi_predict</span>(<span class='no'>tbl</span>, <span class='no'>col_ab</span>, <span class='kw'>col_date</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>year_min</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>year_max</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>year_every</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>minimum</span> <span class='kw'>=</span> <span class='fl'>30</span>,
+  <span class='kw'>model</span> <span class='kw'>=</span> <span class='st'>"binomial"</span>, <span class='kw'>I_as_R</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>preserve_measurements</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>info</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+
+<span class='co'># S3 method for resistance_predict</span>
+<span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/plot'>plot</a></span>(<span class='no'>x</span>,
+  <span class='kw'>main</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/paste'>paste</a></span>(<span class='st'>"Resistance prediction of"</span>, <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/attributes'>attributes</a></span>(<span class='no'>x</span>)$<span class='no'>ab</span>), <span class='no'>...</span>)
+
+<span class='fu'>ggplot_rsi_predict</span>(<span class='no'>x</span>, <span class='kw'>main</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/paste'>paste</a></span>(<span class='st'>"Resistance prediction of"</span>,
+  <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/attributes'>attributes</a></span>(<span class='no'>x</span>)$<span class='no'>ab</span>), <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -249,7 +257,7 @@
     </tr>
     <tr>
       <th>col_date</th>
-      <td><p>column name of the date, will be used to calculate years if this column doesn't consist of years already</p></td>
+      <td><p>column name of the date, will be used to calculate years if this column doesn't consist of years already, defaults to the first column of with a date class</p></td>
     </tr>
     <tr>
       <th>year_min</th>
@@ -269,7 +277,7 @@
     </tr>
     <tr>
       <th>model</th>
-      <td><p>the statistical model of choice. Valid values are <code>"binomial"</code> (or <code>"binom"</code> or <code>"logit"</code>) or <code>"loglin"</code> or <code>"linear"</code> (or <code>"lin"</code>).</p></td>
+      <td><p>the statistical model of choice. Valid values are <code>"binomial"</code> (or <code>"binom"</code> or <code>"logit"</code>) or <code>"loglin"</code> (or <code>"poisson"</code>) or <code>"linear"</code> (or <code>"lin"</code>).</p></td>
     </tr>
     <tr>
       <th>I_as_R</th>
@@ -283,11 +291,21 @@
       <th>info</th>
       <td><p>a logical to indicate whether textual analysis should be printed with the name and <code><a href='https://www.rdocumentation.org/packages/base/topics/summary'>summary</a></code> of the statistical model.</p></td>
     </tr>
+    <tr>
+      <th>x</th>
+      <td><p>the coordinates of points in the plot. Alternatively, a
+      single plotting structure, function or <em>any <span style="R">R</span> object with a
+        <code>plot</code> method</em> can be provided.</p></td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td><p>parameters passed on to the <code>first_isolate</code> function</p></td>
+    </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p><code>data.frame</code> with columns:</p><ul>
+    <p><code>data.frame</code> with extra class <code>"resistance_predict"</code> with columns:</p><ul>
 <li><p><code>year</code></p></li>
 <li><p><code>value</code>, the same as <code>estimated</code> when <code>preserve_measurements = FALSE</code>, and a combination of <code>observed</code> and <code>estimated</code> otherwise</p></li>
 <li><p><code>se_min</code>, the lower bound of the standard error with a minimum of <code>0</code> (so the standard error will never go below 0%)</p></li>
@@ -311,37 +329,20 @@ On our website <a href='https://msberends.gitlab.io/AMR'>https://msberends.gitla
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><span class='co'># NOT RUN {</span>
-<span class='co'># use it with base R:</span>
-<span class='fu'>resistance_predict</span>(<span class='kw'>tbl</span> <span class='kw'>=</span> <span class='no'>tbl</span>[<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/which'>which</a></span>(<span class='no'>first_isolate</span> <span class='kw'>==</span> <span class='fl'>TRUE</span> <span class='kw'>&amp;</span> <span class='no'>genus</span> <span class='kw'>==</span> <span class='st'>"Haemophilus"</span>),],
-                   <span class='kw'>col_ab</span> <span class='kw'>=</span> <span class='st'>"amcl"</span>, <span class='kw'>col_date</span> <span class='kw'>=</span> <span class='st'>"date"</span>)
+<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'>resistance_predict</span>(<span class='no'>septic_patients</span>, <span class='kw'>col_ab</span> <span class='kw'>=</span> <span class='st'>"amox"</span>, <span class='kw'>year_min</span> <span class='kw'>=</span> <span class='fl'>2010</span>)
+<span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/plot'>plot</a></span>(<span class='no'>x</span>)
+<span class='fu'>ggplot_rsi_predict</span>(<span class='no'>x</span>)
 
-<span class='co'># or use dplyr so you can actually read it:</span>
+<span class='co'># use dplyr so you can actually read it:</span>
 <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>dplyr</span>)
-<span class='no'>tbl</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span>(<span class='no'>first_isolate</span> <span class='kw'>==</span> <span class='fl'>TRUE</span>,
-         <span class='no'>genus</span> <span class='kw'>==</span> <span class='st'>"Haemophilus"</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'>resistance_predict</span>(<span class='no'>amcl</span>, <span class='no'>date</span>)
-<span class='co'># }</span><span class='co'># NOT RUN {</span>
+<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='no'>septic_patients</span> <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='first_isolate.html'>filter_first_isolate</a></span>() <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span>(<span class='fu'><a href='mo_property.html'>mo_genus</a></span>(<span class='no'>mo</span>) <span class='kw'>==</span> <span class='st'>"Staphylococcus"</span>) <span class='kw'>%&gt;%</span>
+  <span class='fu'>resistance_predict</span>(<span class='st'>"peni"</span>)
+<span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/plot'>plot</a></span>(<span class='no'>x</span>)
 
-<span class='co'># real live example:</span>
-<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>dplyr</span>)
-<span class='no'>septic_patients</span> <span class='kw'>%&gt;%</span>
-  <span class='co'># get bacteria properties like genus and species</span>
-  <span class='fu'><a href='join.html'>left_join_microorganisms</a></span>(<span class='st'>"mo"</span>) <span class='kw'>%&gt;%</span>
-  <span class='co'># calculate first isolates</span>
-  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span>(<span class='kw'>first_isolate</span> <span class='kw'>=</span> <span class='fu'><a href='first_isolate.html'>first_isolate</a></span>(<span class='no'>.</span>)) <span class='kw'>%&gt;%</span>
-  <span class='co'># filter on first E. coli isolates</span>
-  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span>(<span class='no'>genus</span> <span class='kw'>==</span> <span class='st'>"Escherichia"</span>,
-         <span class='no'>species</span> <span class='kw'>==</span> <span class='st'>"coli"</span>,
-         <span class='no'>first_isolate</span> <span class='kw'>==</span> <span class='fl'>TRUE</span>) <span class='kw'>%&gt;%</span>
-  <span class='co'># predict resistance of cefotaxime for next years</span>
-  <span class='fu'>resistance_predict</span>(<span class='kw'>col_ab</span> <span class='kw'>=</span> <span class='st'>"cfot"</span>,
-                     <span class='kw'>col_date</span> <span class='kw'>=</span> <span class='st'>"date"</span>,
-                     <span class='kw'>year_max</span> <span class='kw'>=</span> <span class='fl'>2025</span>,
-                     <span class='kw'>preserve_measurements</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-                     <span class='kw'>minimum</span> <span class='kw'>=</span> <span class='fl'>0</span>)
 
-<span class='co'># create nice plots with ggplot</span>
+<span class='co'># create nice plots with ggplot yourself</span>
 <span class='kw'>if</span> (!<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>require</a></span>(<span class='no'>ggplot2</span>)) {
 
   <span class='no'>data</span> <span class='kw'>&lt;-</span> <span class='no'>septic_patients</span> <span class='kw'>%&gt;%</span>
@@ -349,7 +350,7 @@ On our website <a href='https://msberends.gitlab.io/AMR'>https://msberends.gitla
     <span class='fu'>resistance_predict</span>(<span class='kw'>col_ab</span> <span class='kw'>=</span> <span class='st'>"amox"</span>,
                        <span class='kw'>col_date</span> <span class='kw'>=</span> <span class='st'>"date"</span>,
                        <span class='kw'>info</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-                        <span class='kw'>minimum</span> <span class='kw'>=</span> <span class='fl'>15</span>)
+                       <span class='kw'>minimum</span> <span class='kw'>=</span> <span class='fl'>15</span>)
 
   <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span>(<span class='no'>data</span>,
          <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='no'>year</span>)) +

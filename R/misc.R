@@ -123,3 +123,48 @@ size_humanreadable <- function(bytes, decimals = 1) {
   out <- paste(sprintf(paste0("%.", decimals, "f"), bytes / (1024 ^ factor)), size[factor + 1])
   out
 }
+
+#' @importFrom crayon blue bold
+#' @importFrom dplyr %>% pull
+search_type_in_df <- function(tbl, type) {
+  # try to find columns based on type
+  found <- NULL
+
+  # -- mo
+  if (type == "mo") {
+    if ("mo" %in% lapply(tbl, class)) {
+      found <- colnames(tbl)[lapply(tbl, class) == "mo"][1]
+    }
+  }
+  # -- key antibiotics
+  if (type == "keyantibiotics") {
+    if (any(colnames(tbl) %like% "^key.*(ab|antibiotics)")) {
+      found <- colnames(tbl)[colnames(tbl) %like% "^key.*(ab|antibiotics)"][1]
+    }
+  }
+  # -- date
+  if (type == "date") {
+    for (i in 1:ncol(tbl)) {
+      if ("Date" %in% class(tbl %>% pull(i)) | "POSIXct" %in% class(tbl %>% pull(i))) {
+        found <- colnames(tbl)[i]
+        break
+      }
+    }
+
+  }
+  # -- patient id
+  if (type == "patient_id") {
+    if (any(colnames(tbl) %like% "^(patient|patid)")) {
+      found <- colnames(tbl)[colnames(tbl) %like% "^(patient|patid)"][1]
+    }
+  }
+
+  if (!is.null(found)) {
+    msg <- paste0("NOTE: Using column `", bold(found), "` as input for `col_", type, "`.")
+    if (type == "keyantibiotics") {
+      msg <- paste(msg, "Use", bold("col_keyantibiotics = FALSE"), "to prevent this.")
+    }
+    message(blue(msg))
+  }
+  found
+}

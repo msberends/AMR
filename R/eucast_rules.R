@@ -231,9 +231,8 @@ eucast_rules <- function(tbl,
 
   # try to find columns based on type
   # -- mo
-  if (is.null(col_mo) & "mo" %in% lapply(tbl, class)) {
-    col_mo <- colnames(tbl)[lapply(tbl, class) == "mo"][1]
-    message(blue(paste0("NOTE: Using column `", bold(col_mo), "` as input for `col_mo`.")))
+  if (is.null(col_mo)) {
+    col_mo <- search_type_in_df(tbl = tbl, type = "mo")
   }
   if (is.null(col_mo)) {
     stop("`col_mo` must be set.", call. = FALSE)

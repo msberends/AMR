@@ -23,7 +23,7 @@
 #'
 #' Determine first (weighted) isolates of all microorganisms of every patient per episode and (if needed) per specimen type.
 #' @param tbl a \code{data.frame} containing isolates.
-#' @param col_date column name of the result date (or date that is was received on the lab), defaults to the first column of class \code{Date}
+#' @param col_date column name of the result date (or date that is was received on the lab), defaults to the first column of with a date class
 #' @param col_patient_id column name of the unique IDs of the patients, defaults to the first column that starts with 'patient' or 'patid' (case insensitive)
 #' @param col_mo column name of the unique IDs of the microorganisms (see \code{\link{mo}}), defaults to the first column of class \code{mo}. Values will be coerced using \code{\link{as.mo}}.
 #' @param col_testcode column name of the test codes. Use \code{col_testcode = NULL} to \strong{not} exclude certain test codes (like test codes for screening). In that case \code{testcodes_exclude} will be ignored.
@@ -187,9 +187,8 @@ first_isolate <- function(tbl,
 
   # try to find columns based on type
   # -- mo
-  if (is.null(col_mo) & "mo" %in% lapply(tbl, class)) {
-    col_mo <- colnames(tbl)[lapply(tbl, class) == "mo"][1]
-    message(blue(paste0("NOTE: Using column `", bold(col_mo), "` as input for `col_mo`.")))
+  if (is.null(col_mo)) {
+    col_mo <- search_type_in_df(tbl = tbl, type = "mo")
   }
   if (is.null(col_mo)) {
     stop("`col_mo` must be set.", call. = FALSE)
@@ -197,33 +196,25 @@ first_isolate <- function(tbl,
 
   # -- date
   if (is.null(col_date)) {
-    for (i in 1:ncol(tbl)) {
-      if ("Date" %in% class(tbl %>% pull(i)) | "POSIXct" %in% class(tbl %>% pull(i))) {
-        col_date <- colnames(tbl)[i]
-        message(blue(paste0("NOTE: Using column `", bold(col_date), "` as input for `col_date`.")))
-        break
-      }
-    }
+    col_date <- search_type_in_df(tbl = tbl, type = "date")
   }
   if (is.null(col_date)) {
     stop("`col_date` must be set.", call. = FALSE)
   }
-  # convert to Date (pipes for supporting tibbles too)
+  # convert to Date (pipes/pull for supporting tibbles too)
   tbl[, col_date] <- tbl %>% pull(col_date) %>% as.Date()
 
   # -- patient id
-  if (is.null(col_patient_id) & any(colnames(tbl) %like% "^(patient|patid)")) {
-    col_patient_id <- colnames(tbl)[colnames(tbl) %like% "^(patient|patid)"][1]
-    message(blue(paste0("NOTE: Using column `", bold(col_patient_id), "` as input for `col_patient_id`.")))
+  if (is.null(col_patient_id)) {
+    col_patient_id <- search_type_in_df(tbl = tbl, type = "patient_id")
   }
   if (is.null(col_patient_id)) {
     stop("`col_patient_id` must be set.", call. = FALSE)
   }
 
   # -- key antibiotics
-  if (is.null(col_keyantibiotics) & any(colnames(tbl) %like% "^key.*(ab|antibiotics)")) {
-    col_keyantibiotics <- colnames(tbl)[colnames(tbl) %like% "^key.*(ab|antibiotics)"][1]
-    message(blue(paste0("NOTE: Using column `", bold(col_keyantibiotics), "` as input for `col_keyantibiotics`. Use ", bold("col_keyantibiotics = FALSE"), " to prevent this.")))
+  if (is.null(col_keyantibiotics)) {
+    col_keyantibiotics <- search_type_in_df(tbl = tbl, type = "keyantibiotics")
   }
   if (isFALSE(col_keyantibiotics)) {
     col_keyantibiotics <- NULL
