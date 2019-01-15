@@ -335,9 +335,9 @@ ggplot_rsi_predict <- function(x, main = paste("Resistance prediction of", attri
       ggplot2::geom_col() +
       ggplot2::geom_errorbar(ggplot2::aes(ymin = se_min, ymax = se_max)) +
       scale_y_percent() +
-      labs(title = main,
-           y = paste0("Percentage (", ylab, ")"),
-           x = "Year",
-           caption = paste0("(model: ", attributes(x)$model_title, ")"))
+      ggplot2::labs(title = main,
+                    y = paste0("Percentage (", ylab, ")"),
+                    x = "Year",
+                    caption = paste0("(model: ", attributes(x)$model_title, ")"))
   )
 }
