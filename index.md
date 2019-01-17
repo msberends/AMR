@@ -45,13 +45,13 @@ Developers:
 
 ### Get this package
 
-This package is available on the official R network (CRAN). Install this package in R with:
+This package is available on the official R network (CRAN), which has a peer-reviewed submission process. Install this package in R with:
 
 ```r
 install.packages("AMR")
 ```
 
-It will be downloaded and installed automatically.
+It will be downloaded and installed automatically. For RStudio, click on menu *Tools* > *Install Packages...*, then type in "AMR" and press <kbd>Install</kbd>.
 
 ### Get started
 

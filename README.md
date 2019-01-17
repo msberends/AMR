@@ -1,12 +1,13 @@
 # `AMR` (for R) <img src="man/figures/logo.png" align="right" height="120px" />
 
-*NOTE: the original source code is on GitLab (https://gitlab.com/msberends/AMR), so you can report a bug at https://gitlab.com/msberends/AMR/issues. There is a mirror repository on GitHub (https://github.com/msberends/AMR). As the mirror process is automated by GitLab, both repositories always contain the latest changes.*
+### Not a developer? Then please visit our website [https://msberends.gitlab.io/AMR](https://msberends.gitlab.io/AMR) to read about this package.
+**It contains documentation about all of the included functions and also a comprehensive tutorial about how to conduct AMR analysis.**
 
 ## Development source
 
-This is the **development source** of `AMR`, a free and open-source [R package](https://www.r-project.org) to simplify the analysis and prediction of Antimicrobial Resistance (AMR) and to work with microbial and antimicrobial properties by using evidence-based methods.
+*NOTE: the original source code is on GitLab (https://gitlab.com/msberends/AMR), so you can report a bug at https://gitlab.com/msberends/AMR/issues. There is a mirror repository on GitHub (https://github.com/msberends/AMR). As the mirror process is automated by GitLab, both repositories always contain the latest changes.*
 
-**Not a developer? Then our website https://msberends.gitlab.io/AMR is probably a better place to read about this package.** It contains documentation about all of the included functions and also a comprehensive tutorial about how to conduct AMR analysis.
+This is the **development source** of `AMR`, a free and open-source [R package](https://www.r-project.org) to simplify the analysis and prediction of Antimicrobial Resistance (AMR) and to work with microbial and antimicrobial properties by using evidence-based methods.
 
 ## Authors
 Matthijs S. Berends <a href="https://orcid.org/0000-0001-7620-1800"><img src="https://cran.r-project.org/web/orcid.svg" height="16px"></a> <sup>1,2,a</sup>,

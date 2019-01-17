@@ -7,12 +7,12 @@
   * Contains the complete manual of this package and all of its functions with an explanation of their parameters
   * Contains a comprehensive tutorial about how to conduct antimicrobial resistance analysis
 * Support for the upcoming [`dplyr`](https://dplyr.tidyverse.org) version 0.8.0
-* Function `guess_ab_col()` to find an antibiotic column in a table
-* Function `mo_failures()` to review values that could not be coerced to a valid MO code, using `as.mo()`. This latter function will now only show a maximum of 25 uncoerced values.
-* Function `mo_renamed()` to get a list of all returned values from `as.mo()` that have had taxonomic renaming
-* Function `age()` to calculate the (patients) age in years
-* Function `age_groups()` to split ages into custom or predefined groups (like children or elderly). This allows for easier demographic antimicrobial resistance analysis per age group.
-* Function `ggplot_rsi_predict()` as well as the base R `plot()` function can now be used for resistance prediction calculated with `resistance_predict()`:
+* New function `guess_ab_col()` to find an antibiotic column in a table
+* New function `mo_failures()` to review values that could not be coerced to a valid MO code, using `as.mo()`. This latter function will now only show a maximum of 25 uncoerced values.
+* New function `mo_renamed()` to get a list of all returned values from `as.mo()` that have had taxonomic renaming
+* New function `age()` to calculate the (patients) age in years
+* New function `age_groups()` to split ages into custom or predefined groups (like children or elderly). This allows for easier demographic antimicrobial resistance analysis per age group.
+* New function `ggplot_rsi_predict()` as well as the base R `plot()` function can now be used for resistance prediction calculated with `resistance_predict()`:
   ```r
   x <- resistance_predict(septic_patients, col_ab = "amox")
   plot(x)
@@ -66,7 +66,8 @@
   * The new `big.mark` parameter will at default be `","` when `decimal.mark = "."` and `"."` otherwise
   * Fix for header text where all observations are `NA`
   * New parameter `droplevels` to exclude empty factor levels when input is a factor
-  * Factor levels will be in header when present in input data
+  * Factor levels will be in header when present in input data (maximum of 5)
+  * Fix for using `select()` on frequency tables
 * Function `scale_y_percent()` now contains the `limits` parameter
 * Automatic parameter filling for `mdro()`, `key_antibiotics()` and `eucast_rules()`
 * Updated examples for resistance prediction (`resistance_predict()` function)

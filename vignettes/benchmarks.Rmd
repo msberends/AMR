@@ -29,6 +29,7 @@ Using the `microbenchmark` package, we can review the calculation performance of
 
 ```r
 library(microbenchmark)
+library(AMR)
 ```
 
 In the next test, we try to 'coerce' different input values for *Staphylococcus aureus*. The actual result is the same every time: it returns its MO code `B_STPHY_AUR` (*B* stands for *Bacteria*, the taxonomic kingdom). 

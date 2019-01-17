@@ -965,6 +965,14 @@ as.data.frame.frequency_tbl <- function(x, ...) {
   as.data.frame.data.frame(x, ...)
 }
 
+#' @exportMethod select.frequency_tbl
+#' @export
+#' @importFrom dplyr select
+#' @noRd
+select.frequency_tbl <- function(.data, ...) {
+  select(as.data.frame(.data), ...)
+}
+
 #' @noRd
 #' @exportMethod as_tibble.frequency_tbl
 #' @export
