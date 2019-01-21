@@ -316,18 +316,21 @@ exec_as.mo <- function(x, Becker = FALSE, Lancefield = FALSE,
         next
       }
 
+      # no nonsense text
+      if (toupper(x_trimmed[i]) %in% c('OTHER', 'NONE', 'UNKNOWN')) {
+        x[i] <- NA_character_
+        failures <- c(failures, x_backup[i])
+        next
+      }
+
 
       # translate known trivial abbreviations to genus + species ----
       if (!is.na(x_trimmed[i])) {
-        if (toupper(x_trimmed[i]) == 'MRSA'
-            | toupper(x_trimmed[i]) == 'MSSA'
-            | toupper(x_trimmed[i]) == 'VISA'
-            | toupper(x_trimmed[i]) == 'VRSA') {
+        if (toupper(x_trimmed[i]) %in% c('MRSA', 'MSSA', 'VISA', 'VRSA')) {
           x[i] <- microorganismsDT[mo == 'B_STPHY_AUR', ..property][[1]][1L]
           next
         }
-        if (toupper(x_trimmed[i]) == 'MRSE'
-            | toupper(x_trimmed[i]) == 'MSSE') {
+        if (toupper(x_trimmed[i]) %in% c('MRSE', 'MSSE')) {
           x[i] <- microorganismsDT[mo == 'B_STPHY_EPI', ..property][[1]][1L]
           next
         }
@@ -508,7 +511,7 @@ exec_as.mo <- function(x, Becker = FALSE, Lancefield = FALSE,
       }
 
       # try fullname without start and stop regex, to also find subspecies ----
-      # like "K. pneu rhino" -> "Klebsiella pneumoniae (rhinoscleromatis)" = KLEPNERH
+      # like "K. pneu rhino" >> "Klebsiella pneumoniae (rhinoscleromatis)" = KLEPNERH
       found <- microorganisms.prevDT[fullname %like% x_withspaces_start[i], ..property][[1]]
       if (length(found) > 0) {
         x[i] <- found[1L]
@@ -579,7 +582,7 @@ exec_as.mo <- function(x, Becker = FALSE, Lancefield = FALSE,
       }
 
       # try fullname without start and stop regex, to also find subspecies ----
-      # like "K. pneu rhino" -> "Klebsiella pneumoniae (rhinoscleromatis)" = KLEPNERH
+      # like "K. pneu rhino" >> "Klebsiella pneumoniae (rhinoscleromatis)" = KLEPNERH
       found <- microorganisms.unprevDT[fullname %like% x_withspaces_start[i], ..property][[1]]
       if (length(found) > 0) {
         x[i] <- found[1L]
@@ -627,8 +630,8 @@ exec_as.mo <- function(x, Becker = FALSE, Lancefield = FALSE,
             } else {
               x <- microorganismsDT[tsn == found[1, tsn_new], ..property][[1]]
             }
-            warning(red(paste0('UNCERTAIN - "',
-                               a.x_backup, '" -> ', italic(found[1, name]))),
+            warning(red(paste0('(UNCERTAIN) "',
+                               a.x_backup, '" >> ', italic(found[1, name]), " (TSN ", found[1, tsn], ")")),
                     call. = FALSE, immediate. = FALSE)
             notes <<- c(notes,
                         renamed_note(name_old = found[1, name],
@@ -644,9 +647,10 @@ exec_as.mo <- function(x, Becker = FALSE, Lancefield = FALSE,
           a.x_backup_stripped <- trimws(gsub("  ", " ", a.x_backup_stripped, fixed = TRUE))
           found <- suppressMessages(suppressWarnings(exec_as.mo(a.x_backup_stripped, clear_options = FALSE, allow_uncertain = FALSE)))
           if (!is.na(found) & nchar(b.x_trimmed) >= 6) {
+            found_result <- found
             found <- microorganismsDT[mo == found, ..property][[1]]
-            warning(red(paste0('UNCERTAIN - "',
-                               a.x_backup, '" -> ', italic(microorganismsDT[mo == found[1L], fullname][[1]]), " (", found[1L], ")")),
+            warning(red(paste0('(UNCERTAIN) "',
+                               a.x_backup, '" >> ', italic(microorganismsDT[mo == found_result[1L], fullname][[1]]), " (", found_result[1L], ")")),
                     call. = FALSE, immediate. = FALSE)
             return(found[1L])
           }
@@ -658,9 +662,10 @@ exec_as.mo <- function(x, Becker = FALSE, Lancefield = FALSE,
               x_strip_collapsed <- paste(x_strip[1:(length(x_strip) - i)], collapse = " ")
               found <- suppressMessages(suppressWarnings(exec_as.mo(x_strip_collapsed, clear_options = FALSE, allow_uncertain = FALSE)))
               if (!is.na(found)) {
+                found_result <- found
                 found <- microorganismsDT[mo == found, ..property][[1]]
-                warning(red(paste0('UNCERTAIN - "',
-                                   a.x_backup, '" -> ', italic(microorganismsDT[mo == found[1L], fullname][[1]]), " (", found[1L], ")")),
+                warning(red(paste0('(UNCERTAIN) "',
+                                   a.x_backup, '" >> ', italic(microorganismsDT[mo == found_result[1L], fullname][[1]]), " (", found_result[1L], ")")),
                         call. = FALSE, immediate. = FALSE)
                 return(found[1L])
               }
@@ -668,11 +673,12 @@ exec_as.mo <- function(x, Becker = FALSE, Lancefield = FALSE,
           }
 
           # (4) not yet implemented taxonomic changes in ITIS
-          found <- suppressMessages(suppressWarnings(exec_as.mo(temp_changes(b.x_trimmed), clear_options = FALSE, allow_uncertain = FALSE)))
+          found <- suppressMessages(suppressWarnings(exec_as.mo(TEMPORARY_TAXONOMY(b.x_trimmed), clear_options = FALSE, allow_uncertain = FALSE)))
           if (!is.na(found)) {
+            found_result <- found
             found <- microorganismsDT[mo == found, ..property][[1]]
-            warning(red(paste0('UNCERTAIN - "',
-                               a.x_backup, '" -> ', italic(microorganismsDT[mo == found[1L], fullname][[1]]), " (", found[1L], ")")),
+            warning(red(paste0('(UNCERTAIN) "',
+                               a.x_backup, '" >> ', italic(microorganismsDT[mo == found_result[1L], fullname][[1]]), " (", found_result[1L], ")")),
                     call. = FALSE, immediate. = FALSE)
             return(found[1L])
           }
@@ -697,16 +703,18 @@ exec_as.mo <- function(x, Becker = FALSE, Lancefield = FALSE,
   failures <- failures[!failures %in% c(NA, NULL, NaN)]
   if (length(failures) > 0) {
     options(mo_failures = sort(unique(failures)))
-    if (n_distinct(failures) > 25) {
-      warning(n_distinct(failures), " different values could not be coerced to a valid MO code. See mo_failures() to review them.",
-              call. = FALSE)
-    } else {
-      warning(red(paste0("These ", length(failures) , " values could not be coerced to a valid MO code: ",
-                         paste('"', unique(failures), '"', sep = "", collapse = ', '),
-                         ". See mo_failures() to review them.")),
-              call. = FALSE,
-              immediate. = TRUE) # thus will always be shown, even if >= warnings
+    plural <- ""
+    if (n_distinct(failures) > 1) {
+      plural <- "s"
     }
+    msg <- paste0("\n", n_distinct(failures), " unique value", plural, " could not be coerced to a valid MO code")
+    if (n_distinct(failures) <= 10) {
+      msg <- paste0(msg, ": ", paste('"', unique(failures), '"', sep = "", collapse = ', '))
+    }
+    msg <- paste0(msg,  ". Use mo_failures() to review failured input.")
+    warning(red(msg),
+            call. = FALSE,
+            immediate. = TRUE) # thus will always be shown, even if >= warnings
   }
 
   # Becker ----
@@ -792,8 +800,9 @@ exec_as.mo <- function(x, Becker = FALSE, Lancefield = FALSE,
   x
 }
 
-temp_changes <- function(x) {
+TEMPORARY_TAXONOMY <- function(x) {
   x[x %like% 'Cutibacterium'] <- gsub('Cutibacterium', 'Propionibacterium', x[x %like% 'Cutibacterium'])
+  x
 }
 
 #' @importFrom crayon blue italic
@@ -815,7 +824,7 @@ renamed_note <- function(name_old, name_new, ref_old = "", ref_new = "", mo = ""
   }
   msg <- paste0(italic(name_old), ref_old, " was renamed ", italic(name_new), ref_new, mo)
   msg <- gsub("et al.", italic("et al."), msg)
-  msg_plain <- paste0(name_old, ref_old, " -> ", name_new, ref_new)
+  msg_plain <- paste0(name_old, ref_old, " >> ", name_new, ref_new)
   msg_plain <- c(getOption("mo_renamed", character(0)), msg_plain)
   options(mo_renamed = sort(msg_plain))
   return(blue(paste("Note:", msg)))

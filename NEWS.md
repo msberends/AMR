@@ -9,7 +9,7 @@
 * New functions `set_mo_source()` and `get_mo_source()` to use your own predefined MO codes as input for `as.mo()` and consequently all `mo_*` functions
 * Support for the upcoming [`dplyr`](https://dplyr.tidyverse.org) version 0.8.0
 * New function `guess_ab_col()` to find an antibiotic column in a table
-* New function `mo_failures()` to review values that could not be coerced to a valid MO code, using `as.mo()`. This latter function will now only show a maximum of 25 uncoerced values.
+* New function `mo_failures()` to review values that could not be coerced to a valid MO code, using `as.mo()`. This latter function will now only show a maximum of 10 uncoerced values and will refer to `mo_failures()`.
 * New function `mo_renamed()` to get a list of all returned values from `as.mo()` that have had taxonomic renaming
 * New function `age()` to calculate the (patients) age in years
 * New function `age_groups()` to split ages into custom or predefined groups (like children or elderly). This allows for easier demographic antimicrobial resistance analysis per age group.
