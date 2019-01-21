@@ -194,7 +194,7 @@ test_that("as.mo works", {
   expect_equal(suppressMessages(as.character(as.mo("Escherichia blattae"))), "B_SHMWL_BLA")
   # - Didymosphaeria spartinae (unprevalent)
   expect_warning(suppressMessages(as.mo("D spartin", allow_uncertain = TRUE)))
-  # - was renames to Leptosphaeria obiones
+  # - was renamed to Leptosphaeria obiones
   expect_equal(suppressWarnings(suppressMessages(as.character(as.mo("D spartin", allow_uncertain = TRUE)))),
                                 "F_LPTSP_OBI")
 
@@ -205,15 +205,15 @@ test_that("as.mo works", {
 
   # predefined reference_df
   expect_equal(as.character(as.mo("TestingOwnID",
-                                  reference_df = data.frame(a = "TestingOwnID", b = "B_ESCHR_COL"))),
+                                  reference_df = data.frame(mycol = "TestingOwnID", mo = "B_ESCHR_COL"))),
                "B_ESCHR_COL")
   expect_equal(as.character(as.mo(c("TestingOwnID", "E. coli"),
-                                  reference_df = data.frame(a = "TestingOwnID", b = "B_ESCHR_COL"))),
+                                  reference_df = data.frame(mycol = "TestingOwnID", mo = "B_ESCHR_COL"))),
                c("B_ESCHR_COL", "B_ESCHR_COL"))
   expect_warning(as.mo("TestingOwnID", reference_df = NULL))
-  expect_error(as.mo("E. coli", reference_df = data.frame(a = "TestingOwnID")))
+  expect_error(as.mo("E. coli", reference_df = data.frame(mycol = "TestingOwnID")))
 
-  # combination of existing mo and certe
+  # combination of existing mo and other code
   expect_identical(as.character(as.mo(c("B_ESCHR_COL", "ESCCOL"))),
                    c("B_ESCHR_COL", "B_ESCHR_COL"))
 

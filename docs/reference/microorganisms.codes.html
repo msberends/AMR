@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Articles • AMR (for R)</title>
+<title>Translation table for microorganism codes — microorganisms.codes • AMR (for R)</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -45,7 +45,9 @@
 
   <link href="../extra.css" rel="stylesheet">
   <script src="../extra.js"></script>
-<meta property="og:title" content="Articles" />
+<meta property="og:title" content="Translation table for microorganism codes — microorganisms.codes" />
+
+<meta property="og:description" content="A data set containing commonly used codes for microorganisms. Define your own with set_mo_source." />
 
 <meta property="og:image" content="https://msberends.gitlab.io/AMR/logo.png" />
 <meta name="twitter:card" content="summary" />
@@ -65,7 +67,7 @@
   </head>
 
   <body>
-    <div class="container template-article-index">
+    <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -214,24 +216,49 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-      <h1>Articles</h1>
+    <h1>Translation table for microorganism codes</h1>
+    
+    <div class="hidden name"><code>microorganisms.codes.Rd</code></div>
     </div>
 
-    <div class="section ">
-      <h3>All vignettes</h3>
-      <p class="section-desc"></p>
-
-      <ul>
-        <li><a href="AMR.html">How to conduct AMR analysis</a></li>
-        <li><a href="EUCAST.html">How to apply EUCAST rules</a></li>
-        <li><a href="G_test.html">How to use the *G*-test</a></li>
-        <li><a href="Predict.html">How to predict antimicrobial resistance</a></li>
-        <li><a href="ab_property.html">How to get properties of an antibiotic</a></li>
-        <li><a href="benchmarks.html">Benchmarks</a></li>
-        <li><a href="freq.html">How to create frequency tables</a></li>
-        <li><a href="mo_property.html">How to get properties of a microorganism</a></li>
-      </ul>
+    <div class="ref-description">
+    
+    <p>A data set containing commonly used codes for microorganisms. Define your own with <code><a href='mo_source.html'>set_mo_source</a></code>.</p>
+    
     </div>
+
+    <pre class="usage"><span class='no'>microorganisms.codes</span></pre>
+        
+    <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
+
+    <p>A <code><a href='https://www.rdocumentation.org/packages/base/topics/data.frame'>data.frame</a></code> with 3,303 observations and 2 variables:</p><dl class='dl-horizontal'>
+  <dt><code>certe</code></dt><dd><p>Commonly used code of a microorganism</p></dd>
+  <dt><code>mo</code></dt><dd><p>Code of microorganism in <code><a href='microorganisms.html'>microorganisms</a></code></p></dd>
+</dl>
+    
+    <h2 class="hasAnchor" id="read-more-on-our-website-"><a class="anchor" href="#read-more-on-our-website-"></a>Read more on our website!</h2>
+
+    
+    <p><img src='figures/logo.png' height=40px style=margin-bottom:5px /> <br />
+On our website <a href='https://msberends.gitlab.io/AMR'>https://msberends.gitlab.io/AMR</a> you can find <a href='https://msberends.gitlab.io/AMR/articles/AMR.html'>a omprehensive tutorial</a> about how to conduct AMR analysis and find <a href='https://msberends.gitlab.io/AMR/reference'>the complete documentation of all functions</a>, which reads a lot easier than in R.</p>
+    
+    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
+
+    <div class='dont-index'><p><code><a href='as.mo.html'>as.mo</a></code> <code><a href='microorganisms.html'>microorganisms</a></code></p></div>
+    
+
+  </div>
+  <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
+    <h2>Contents</h2>
+    <ul class="nav nav-pills nav-stacked">
+      
+      <li><a href="#format">Format</a></li>
+
+      <li><a href="#read-more-on-our-website-">Read more on our website!</a></li>
+
+      <li><a href="#see-also">See also</a></li>
+          </ul>
+
   </div>
 </div>
 

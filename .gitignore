@@ -20,5 +20,6 @@ vignettes/*.R
 ^CRAN-RELEASE$
 git_premaster.sh
 git_merge.sh
+git_siteonly.sh
 packrat/lib*/
 packrat/src/

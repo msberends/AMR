@@ -6,6 +6,7 @@
 * New website: https://msberends.gitlab.io/AMR (built with the great [`pkgdown`](https://pkgdown.r-lib.org/))
   * Contains the complete manual of this package and all of its functions with an explanation of their parameters
   * Contains a comprehensive tutorial about how to conduct antimicrobial resistance analysis
+* New functions `set_mo_source()` and `get_mo_source()` to use your own predefined MO codes as input for `as.mo()` and consequently all `mo_*` functions
 * Support for the upcoming [`dplyr`](https://dplyr.tidyverse.org) version 0.8.0
 * New function `guess_ab_col()` to find an antibiotic column in a table
 * New function `mo_failures()` to review values that could not be coerced to a valid MO code, using `as.mo()`. This latter function will now only show a maximum of 25 uncoerced values.
@@ -55,6 +56,7 @@
   * Removed parameter `output_logical`, the function will now always return a logical value
   * Renamed parameter `filter_specimen` to `specimen_group`, although using `filter_specimen` will still work
 * A note to the manual pages of the `portion` functions, that low counts can influence the outcome and that the `portion` functions may camouflage this, since they only return the portion (albeit being dependent on the `minimum` parameter)
+* Merged data sets `microorganisms.certe` and `microorganisms.umcg` into `microorganisms.codes`
 * Function `mo_taxonomy()` now contains the kingdom too
 * Reduce false positives for `is.rsi.eligible()`
 * Summaries of class `mo` will now return the top 3 and the unique count, e.g. using `summary(mo)`

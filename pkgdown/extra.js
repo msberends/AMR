@@ -29,11 +29,19 @@ $('head').append('<!-- Updated Font Awesome library --><link rel="stylesheet" hr
 
 // Edit footer
 $( document ).ready(function() {
+
+  // redirect to GitLab
+  var url_old = window.location.href;
+  var url_new = url_old.replace("github", "gitlab");
+  if (url_old != url_new) {
+    window.location.replace(url);
+  }
+
   $('footer').html('<p>' +
                    $('footer .copyright p').html().replace("Developed by",
-                                                           "<code>AMR</code> (for R). Developed at the University of Groningen.<br>Authors:") +
+                                                           '<code>AMR</code> (for R). Developed at the <a href="https://www.rug.nl" target="_blank">University of Groningen</a>.<br>Authors:') +
                    '</p>');
-  //$('footer').prepend("<div class='university'/>");
+  $('footer').addClass("university");
 
   // Edit title of manual
   $('.template-reference-index h1').text('Manual');

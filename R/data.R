@@ -148,7 +148,7 @@
 #' }
 #' @source [3] Integrated Taxonomic Information System (ITIS) on-line database, \url{https://www.itis.gov}.
 #' @inheritSection AMR Read more on our website!
-#' @seealso \code{\link{as.mo}} \code{\link{mo_property}} \code{\link{microorganisms.umcg}}
+#' @seealso \code{\link{as.mo}} \code{\link{mo_property}} \code{\link{microorganisms.codes}}
 "microorganisms"
 
 #' Data set with old taxonomic data from ITIS
@@ -167,29 +167,17 @@
 #' @seealso \code{\link{as.mo}} \code{\link{mo_property}} \code{\link{microorganisms}}
 "microorganisms.old"
 
-#' Translation table for UMCG
+#' Translation table for microorganism codes
 #'
-#' A data set containing all bacteria codes of UMCG MMB. These codes can be joined to data with an ID from \code{\link{microorganisms}$mo} (using \code{\link{left_join_microorganisms}}). GLIMS codes can also be translated to valid \code{MO}s with \code{\link{guess_mo}}.
-#' @format A \code{\link{data.frame}} with 1,095 observations and 2 variables:
+#' A data set containing commonly used codes for microorganisms. Define your own with \code{\link{set_mo_source}}.
+#' @format A \code{\link{data.frame}} with 3,303 observations and 2 variables:
 #' \describe{
-#'   \item{\code{umcg}}{Code of microorganism according to UMCG MMB}
-#'   \item{\code{certe}}{Code of microorganism according to Certe MMB}
-#' }
-#' @inheritSection AMR Read more on our website!
-#' @seealso \code{\link{as.mo}} \code{\link{microorganisms.certe}} \code{\link{microorganisms}}
-"microorganisms.umcg"
-
-#' Translation table for Certe
-#'
-#' A data set containing all bacteria codes of Certe MMB. These codes can be joined to data with an ID from \code{\link{microorganisms}$mo} (using \code{\link{left_join_microorganisms}}). GLIMS codes can also be translated to valid \code{MO}s with \code{\link{guess_mo}}.
-#' @format A \code{\link{data.frame}} with 2,665 observations and 2 variables:
-#' \describe{
-#'   \item{\code{certe}}{Code of microorganism according to Certe MMB}
+#'   \item{\code{certe}}{Commonly used code of a microorganism}
 #'   \item{\code{mo}}{Code of microorganism in \code{\link{microorganisms}}}
 #' }
 #' @inheritSection AMR Read more on our website!
 #' @seealso \code{\link{as.mo}} \code{\link{microorganisms}}
-"microorganisms.certe"
+"microorganisms.codes"
 
 #' Data set with 2000 blood culture isolates of septic patients
 #'

@@ -7,7 +7,7 @@
 \title{Transform to microorganism ID}
 \usage{
 as.mo(x, Becker = FALSE, Lancefield = FALSE, allow_uncertain = TRUE,
-  reference_df = NULL)
+  reference_df = get_mo_source())
 
 is.mo(x)
 }
@@ -24,7 +24,7 @@ is.mo(x)
 
 \item{allow_uncertain}{a logical to indicate whether the input should be checked for less possible results, see Details}
 
-\item{reference_df}{a \code{data.frame} to use for extra reference when translating \code{x} to a valid \code{mo}. The first column can be any microbial name, code or ID (used in your analysis or organisation), the second column must be a valid \code{mo} as found in the \code{\link{microorganisms}} data set.}
+\item{reference_df}{a \code{data.frame} to use for extra reference when translating \code{x} to a valid \code{mo}. See \code{\link{set_mo_source}} and \code{\link{get_mo_source}} to automate the usage of your own codes (e.g. used in your analysis or organisation).}
 }
 \value{
 Character (vector) with class \code{"mo"}. Unknown values will return \code{NA}.

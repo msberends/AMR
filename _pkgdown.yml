@@ -19,7 +19,7 @@
 # Visit our website for more info: https://msberends.gitab.io/AMR.     #
 # ==================================================================== #
 
-url: https://msberends.gitlab.io/AMR
+url: 'https://msberends.gitlab.io/AMR'
 
 title: 'AMR (for R)'
 
@@ -74,74 +74,77 @@ navbar:
       href: 'LICENSE-text.html'
 
 reference:
-- title: 'Background information'
-  desc: >
-    Some pages about our package and its external sources. Be sure to read our [How To's](./../articles/index.html)
-    for more information about how to work with functions in this package.
-  contents:
-  - '`AMR`'
-  - '`ITIS`'
-- title: 'Cleaning your data'
-  desc: >
-    Functions for cleaning and optimising your data, to be able
-    to add variables later on (like taxonomic properties) or to
-    fix and extend antibiotic interpretations by applying [EUCAST rules](http://www.eucast.org/expert_rules_and_intrinsic_resistance/).
-  contents:
-  - starts_with("as.")
-  - '`eucast_rules`'
-  - '`guess_ab_col`'
-  - '`read.4D`'
-- title: 'Adding variables to your data'
-  desc: >
-    Functions to add new data to existing data, like the determination
-    of first isolates,
-  contents:
-  - '`first_isolate`'
-  - '`mdro`'
-  - '`key_antibiotics`'
-  - '`mo_property`'
-  - '`ab_property`'
-  - '`atc_property`'
-  - '`abname`'
-  - '`age`'
-  - '`age_groups`'
-  - '`p.symbol`'
-  - '`join`'
-- title: 'Analysing your data'
-  desc: >
-    Functions for conducting AMR analysis
-  contents:
-  - '`count`'
-  - '`portion`'
-  - '`freq`'
-  - '`g.test`'
-  - '`ggplot_rsi`'
-  - '`kurtosis`'
-  - '`resistance_predict`'
-  - '`rsi`'
-  - '`skewness`'
-- title: 'Included data sets'
-  desc: >
-    References for microorganisms and antibiotics, and even a
-    genuine data set with isolates from septic patients.
-  contents:
-  - '`antibiotics`'
-  - '`microorganisms`'
-  - '`septic_patients`'
-  - '`microorganisms.certe`'
-  - '`microorganisms.old`'
-  - '`microorganisms.umcg`'
-  - '`supplementary_data`'
-- title: Other
-  desc: >
-    These functions are mostly for internal use, but some of
-    them may also be suitable for your analysis. Especially the
-    'like' function can be useful: `if (x %like% y) {...}`.
-  contents:
-  - '`get_locale`'
-  - '`like`'
-  - '`mo_failures`'
-  - '`mo_renamed`'
+  - title: 'Background information'
+    desc: >
+      Some pages about our package and its external sources. Be sure to read our [How To's](./../articles/index.html)
+      for more information about how to work with functions in this package.
+    contents:
+    - '`AMR`'
+    - '`ITIS`'
+  - title: 'Cleaning your data'
+    desc: >
+      Functions for cleaning and optimising your data, to be able to add
+      variables later on (like taxonomic properties) or to fix and extend
+      antibiotic interpretations by applying [EUCAST rules](http://www.eucast.org/expert_rules_and_intrinsic_resistance/).
+    contents:
+    - starts_with("as.")
+    - '`mo_source`'
+    - '`eucast_rules`'
+    - '`guess_ab_col`'
+    - '`read.4D`'
+  - title: 'Adding variables to your data'
+    desc: >
+      Functions to add new data to existing data, like the determination
+      of first isolates, multi-drug resistant microorganisms (MDRO), getting
+      properties of microorganisms or antibiotics and determining the age of
+      patients or divide ages into age groups.
+    contents:
+    - '`first_isolate`'
+    - '`mdro`'
+    - '`key_antibiotics`'
+    - '`mo_property`'
+    - '`ab_property`'
+    - '`atc_property`'
+    - '`abname`'
+    - '`age`'
+    - '`age_groups`'
+    - '`p.symbol`'
+    - '`join`'
+  - title: 'Analysing your data'
+    desc: >
+      Functions for conducting AMR analysis, like counting isolates, calculating
+      resistance or susceptibility, creating frequency tables or make plots.
+    contents:
+    - '`count`'
+    - '`portion`'
+    - '`freq`'
+    - '`g.test`'
+    - '`ggplot_rsi`'
+    - '`kurtosis`'
+    - '`resistance_predict`'
+    - '`rsi`'
+    - '`skewness`'
+  - title: 'Included data sets'
+    desc: >
+      References for microorganisms and antibiotics, and even a
+      genuine data set with isolates from septic patients.
+    contents:
+    - '`antibiotics`'
+    - '`microorganisms`'
+    - '`septic_patients`'
+    - '`microorganisms.codes`'
+    - '`microorganisms.old`'
+    - '`supplementary_data`'
+  - title: Other
+    desc: >
+      These functions are mostly for internal use, but some of
+      them may also be suitable for your analysis. Especially the
+      'like' function can be useful: `if (x %like% y) {...}`.
+    contents:
+    - '`get_locale`'
+    - '`like`'
+    - '`mo_failures`'
+    - '`mo_renamed`'
 
 authors:
   Matthijs S. Berends:

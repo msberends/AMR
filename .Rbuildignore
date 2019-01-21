@@ -15,6 +15,7 @@
 ^docs$
 ^git_merge\.sh$
 ^git_premaster\.sh$
+^git_siteonly\.sh$
 ^index\.md$
 ^installed_deps$
 ^Meta$

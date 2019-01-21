@@ -17,6 +17,7 @@ Medical Microbiology:
   * Research Microbiologists
   * Biomedical Researchers
   * Research Pharmacologists
+  * Data Scientists / Data Analysts
   
 Veterinary Microbiology:
 
@@ -28,14 +29,6 @@ Microbial Ecology:
   * Soil Microbiologists
   * Extremophile Researchers
   * Astrobiologists
-
-Other specialists in any of the above fields:
-
-  * Data Scientists/Data Analysts
-  * Biotechnologists
-  * Biochemists
-  * Geneticists
-  * Molecular Biologists/Microbiologists
 
 Developers:
 
@@ -51,7 +44,7 @@ This package is available on the official R network (CRAN), which has a peer-rev
 install.packages("AMR")
 ```
 
-It will be downloaded and installed automatically. For RStudio, click on menu *Tools* > *Install Packages...*, then type in "AMR" and press <kbd>Install</kbd>.
+It will be downloaded and installed automatically. For RStudio, click on the menu *Tools* > *Install Packages...* and then type in "AMR" and press <kbd>Install</kbd>.
 
 ### Get started
 

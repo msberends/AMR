@@ -30,7 +30,7 @@
 #'
 #'   This excludes \emph{Enterococci} at default (who are in group D), use \code{Lancefield = "all"} to also categorise all \emph{Enterococci} as group D.
 #' @param allow_uncertain a logical to indicate whether the input should be checked for less possible results, see Details
-#' @param reference_df a \code{data.frame} to use for extra reference when translating \code{x} to a valid \code{mo}. The first column can be any microbial name, code or ID (used in your analysis or organisation), the second column must be a valid \code{mo} as found in the \code{\link{microorganisms}} data set.
+#' @param reference_df a \code{data.frame} to use for extra reference when translating \code{x} to a valid \code{mo}. See \code{\link{set_mo_source}} and \code{\link{get_mo_source}} to automate the usage of your own codes (e.g. used in your analysis or organisation).
 #' @rdname as.mo
 #' @aliases mo
 #' @keywords mo Becker becker Lancefield lancefield guess
@@ -139,7 +139,7 @@
 #' df <- df %>%
 #'   mutate(mo = as.mo(paste(genus, species)))
 #' }
-as.mo <- function(x, Becker = FALSE, Lancefield = FALSE, allow_uncertain = TRUE, reference_df = NULL) {
+as.mo <- function(x, Becker = FALSE, Lancefield = FALSE, allow_uncertain = TRUE, reference_df = get_mo_source()) {
   mo <- mo_validate(x = x, property = "mo",
                     Becker = Becker, Lancefield = Lancefield,
                     allow_uncertain = allow_uncertain, reference_df = reference_df)
@@ -152,11 +152,11 @@ is.mo <- function(x) {
   identical(class(x), "mo")
 }
 
-#' @importFrom dplyr %>% pull left_join n_distinct progress_estimated
+#' @importFrom dplyr %>% pull left_join n_distinct progress_estimated filter
 #' @importFrom data.table data.table as.data.table setkey
 #' @importFrom crayon magenta red italic
 exec_as.mo <- function(x, Becker = FALSE, Lancefield = FALSE,
-                       allow_uncertain = TRUE, reference_df = NULL,
+                       allow_uncertain = TRUE, reference_df = get_mo_source(),
                        property = "mo", clear_options = TRUE) {
 
   if (!"AMR" %in% base::.packages()) {
@@ -206,11 +206,16 @@ exec_as.mo <- function(x, Becker = FALSE, Lancefield = FALSE,
     if (!is.data.frame(reference_df) | NCOL(reference_df) < 2) {
       stop('`reference_df` must be a data.frame with at least two columns.', call. = FALSE)
     }
-    # remove factors, just keep characters
+    if (!"mo" %in% colnames(reference_df)) {
+      stop("`reference_df` must contain a column `mo` with values from the 'microorganisms' data set.", call. = FALSE)
+    }
+    reference_df <- reference_df %>% filter(!is.na(mo))
+    # # remove factors, just keep characters
     suppressWarnings(
       reference_df[] <- lapply(reference_df, as.character)
     )
   }
+
   if (all(identical(trimws(x_input), "") | is.na(x_input))) {
     # all empty
     if (property == "mo") {
@@ -220,24 +225,25 @@ exec_as.mo <- function(x, Becker = FALSE, Lancefield = FALSE,
     } else {
       return(rep(NA_character_, length(x_input)))
     }
-  } else if (all(x %in% microorganismsDT[["mo"]])) {
-    # existing mo codes when not looking for property "mo", like mo_genus("B_ESCHR_COL")
-    x <- microorganismsDT[data.table(mo = x), on = "mo", ..property][[1]]
-  } else if (!is.null(reference_df)
-             & all(x %in% reference_df[, 1])
-             & all(reference_df[, 2] %in% microorganismsDT[["mo"]])) {
-    # manually defined reference
+
+  } else if (all(x %in% reference_df[, 1])
+             & all(reference_df[, "mo"] %in% microorganismsDT[["mo"]])) {
+    # all in reference df
     colnames(reference_df)[1] <- "x"
-    colnames(reference_df)[2] <- "mo"
     suppressWarnings(
       x <- data.frame(x = x, stringsAsFactors = FALSE) %>%
         left_join(reference_df, by = "x") %>%
         left_join(microorganisms, by = "mo") %>%
         pull(property)
     )
-  } else if (all(toupper(x) %in% microorganisms.certe[, "certe"])) {
-    # old Certe codes
-    y <- as.data.table(microorganisms.certe)[data.table(certe = toupper(x)), on = "certe", ]
+
+  } else if (all(x %in% microorganismsDT[["mo"]])) {
+    # existing mo codes when not looking for property "mo", like mo_genus("B_ESCHR_COL")
+    x <- microorganismsDT[data.table(mo = x), on = "mo", ..property][[1]]
+
+  } else if (all(toupper(x) %in% microorganisms.codes[, "code"])) {
+    # commonly used MO codes
+    y <- as.data.table(microorganisms.codes)[data.table(code = toupper(x)), on = "code", ]
     x <- microorganismsDT[data.table(mo = y[["mo"]]), on = "mo", ..property][[1]]
 
   } else if (!all(x %in% microorganismsDT[[property]])) {
@@ -419,28 +425,16 @@ exec_as.mo <- function(x, Becker = FALSE, Lancefield = FALSE,
       }
 
       # TRY OTHER SOURCES ----
-      if (toupper(x_backup[i]) %in% microorganisms.certe[, 1]) {
-        mo_found <- microorganisms.certe[toupper(x_backup[i]) == microorganisms.certe[, 1], 2][1L]
+      if (toupper(x_backup[i]) %in% microorganisms.codes[, 1]) {
+        mo_found <- microorganisms.codes[toupper(x_backup[i]) == microorganisms.codes[, 1], "mo"][1L]
         if (length(mo_found) > 0) {
           x[i] <- microorganismsDT[mo == mo_found, ..property][[1]][1L]
           next
         }
       }
-      if (x_backup[i] %in% microorganisms.umcg[, 1]) {
-        mo_umcg <- microorganisms.umcg[microorganisms.umcg[, 1] == x_backup[i], 2]
-        mo_found <- microorganisms.certe[microorganisms.certe[, 1] == mo_umcg, 2][1L]
-        if (length(mo_found) == 0) {
-          # not found
-          x[i] <- NA_character_
-          failures <- c(failures, x_backup[i])
-        } else {
-          x[i] <- microorganismsDT[mo == mo_found, ..property][[1]][1L]
-        }
-        next
-      }
       if (!is.null(reference_df)) {
         if (x_backup[i] %in% reference_df[, 1]) {
-          ref_mo <- reference_df[reference_df[, 1] == x_backup[i], 2]
+          ref_mo <- reference_df[reference_df[, 1] == x_backup[i], "mo"]
           if (ref_mo %in% microorganismsDT[, mo]) {
             x[i] <- microorganismsDT[mo == ref_mo, ..property][[1]][1L]
             next

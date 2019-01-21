@@ -23,22 +23,22 @@
 
 /* class for footer */
 .university {
-    background-image: url(logo_rug.png);
-    height: 40px;
-    background-size: 160px;
-    background-repeat: no-repeat;
+  background-image: url(logo_rug.png);
+  background-size: 200px;
+  background-repeat: no-repeat;
+  background-position: center right;
 }
 
 /* Supports icons for brand using font-awesome */
 .fab {
-    font-family: "Font Awesome 5 Brands" !important;
+  font-family: "Font Awesome 5 Brands" !important;
 }
 
 /* Remove the 'Read more on our website!' part from the manual pages */
 #read-more-on-our-website-,
 #read-more-on-our-website- + p,
 li a[href="#read-more-on-our-website-"] {
-    display: none;
+  display: none;
 }
 
 /* make colour darker and better readable for links */
@@ -60,21 +60,33 @@ a pre[href], a pre[href]:hover, a pre[href]:focus {
 
 /* syntax font */
 pre, code {
-    font-family: 'Courier New', monospace;
-    font-size: 100% !important;
-    font-weight: bold;
-    background-color: transparent;
+  font-family: 'Courier New', monospace;
+  font-size: 100% !important;
+  font-weight: bold;
+  background-color: transparent;
 }
 pre {
   font-size: 90% !important;
 }
+kbd {
+  display: inline-block;
+  padding: 0 4px;
+  box-shadow: 1px 1px 1px #2c3e50;
+  margin: 2px;
+  font-size: small;
+  vertical-align: text-bottom;
+  color: #2c3e50;
+  background: #eee;
+  font-weight: bold;
+}
+
 li, p {
-    line-height: 1.5;
+  line-height: 1.5;
 }
 
 /* slightly smaller blockquote */
 blockquote {
-    font-size: 98%;
+  font-size: 98%;
 }
 
 /* 2nd list in navigation should be smaller */
@@ -91,11 +103,11 @@ help {
 
 /* replace 'Developers' with 'Authors' */
 .developers h2 {
-    display: none;
+  display: none;
 }
 .developers:before {
-    content: 'Authors';
-    font-size: 1.5em;
+  content: 'Authors';
+  font-size: 1.5em;
 }
 
 /* hide version label */
@@ -105,11 +117,11 @@ help {
 
 /* Date of vignettes */
 .template-article .date:before {
-    content: 'Last updated: ';
+  content: 'Last updated: ';
 }
 .template-article .date {
-    font-size: 14px;
-    padding-top: 40px;
+  font-size: 14px;
+  padding-top: 40px;
 }
 
 /* more space between icon and text in top menu */
@@ -134,15 +146,21 @@ help {
   padding: 4px !important;
 }
 thead {
-    border-top: 2px solid black;
-    border-bottom: 2px solid black;
+  border-top: 2px solid black;
+  border-bottom: 2px solid black;
 }
-tbody {
-    border-bottom: 2px solid black;
+thead ~ tbody {
+  /* only when it has a header */
+  border-bottom: 2px solid black;
 }
 table a:not(.btn), .table a:not(.btn) {
-    text-decoration: inherit;
+  text-decoration: inherit;
 }
 table a:not(.btn):hover, .table a:not(.btn):hover {
-    text-decoration: underline;
+  text-decoration: underline;
+}
+
+.template-reference-index h2 ~ p {
+  font-size: 110%;
+  /* font-weight: bold; */
 }

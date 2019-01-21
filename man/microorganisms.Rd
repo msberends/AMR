@@ -48,6 +48,6 @@ On our website \url{https://msberends.gitlab.io/AMR} you can find \href{https://
 }
 
 \seealso{
-\code{\link{as.mo}} \code{\link{mo_property}} \code{\link{microorganisms.umcg}}
+\code{\link{as.mo}} \code{\link{mo_property}} \code{\link{microorganisms.codes}}
 }
 \keyword{datasets}

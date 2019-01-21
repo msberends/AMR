@@ -85,13 +85,10 @@
     <loc>https://msberends.gitlab.io/AMR/reference/microorganisms.html</loc>
   </url>
   <url>
-    <loc>https://msberends.gitlab.io/AMR/reference/microorganisms.certe.html</loc>
+    <loc>https://msberends.gitlab.io/AMR/reference/microorganisms.codes.html</loc>
   </url>
   <url>
     <loc>https://msberends.gitlab.io/AMR/reference/microorganisms.old.html</loc>
-  </url>
-  <url>
-    <loc>https://msberends.gitlab.io/AMR/reference/microorganisms.umcg.html</loc>
   </url>
   <url>
     <loc>https://msberends.gitlab.io/AMR/reference/mo_failures.html</loc>
@@ -101,6 +98,9 @@
   </url>
   <url>
     <loc>https://msberends.gitlab.io/AMR/reference/mo_renamed.html</loc>
+  </url>
+  <url>
+    <loc>https://msberends.gitlab.io/AMR/reference/mo_source.html</loc>
   </url>
   <url>
     <loc>https://msberends.gitlab.io/AMR/reference/p.symbol.html</loc>

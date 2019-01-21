@@ -78,7 +78,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.0.9010</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.0.9011</span>
       </span>
     </div>
 
@@ -235,6 +235,7 @@
 <li>Contains a comprehensive tutorial about how to conduct antimicrobial resistance analysis</li>
 </ul>
 </li>
+<li>New functions <code><a href="../reference/mo_source.html">set_mo_source()</a></code> and <code><a href="../reference/mo_source.html">get_mo_source()</a></code> to use your own predefined MO codes as input for <code><a href="../reference/as.mo.html">as.mo()</a></code> and consequently all <code>mo_*</code> functions</li>
 <li>Support for the upcoming <a href="https://dplyr.tidyverse.org"><code>dplyr</code></a> version 0.8.0</li>
 <li>New function <code><a href="../reference/guess_ab_col.html">guess_ab_col()</a></code> to find an antibiotic column in a table</li>
 <li>New function <code><a href="../reference/mo_failures.html">mo_failures()</a></code> to review values that could not be coerced to a valid MO code, using <code><a href="../reference/as.mo.html">as.mo()</a></code>. This latter function will now only show a maximum of 25 uncoerced values.</li>
@@ -297,6 +298,8 @@
 </ul>
 </li>
 <li>A note to the manual pages of the <code>portion</code> functions, that low counts can influence the outcome and that the <code>portion</code> functions may camouflage this, since they only return the portion (albeit being dependent on the <code>minimum</code> parameter)</li>
+<li>Merged data sets <code>microorganisms.certe</code> and <code>microorganisms.umcg</code> into <code>microorganisms.codes</code>
+</li>
 <li>Function <code><a href="../reference/mo_property.html">mo_taxonomy()</a></code> now contains the kingdom too</li>
 <li>Reduce false positives for <code><a href="../reference/as.rsi.html">is.rsi.eligible()</a></code>
 </li>
