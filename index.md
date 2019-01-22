@@ -101,8 +101,8 @@ The `AMR` package basically does four important things:
 
 The development of this package is part of, related to, or made possible by:
 
-<a href="https://www.rug.nl"><img src="./logo_rug.png" height="60px"></a>
-<a href="https://www.umcg.nl"><img src="./logo_umcg.png" height="60px"></a>
-<a href="https://www.certe.nl"><img src="./logo_certe.png" height="60px"></a>
-<a href="http://www.eurhealth-1health.eu"><img src="./logo_eh1h.png" height="60px"></a>
-<a href="http://www.eurhealth-1health.eu"><img src="./logo_interreg.png" height="60px"></a>
+<a href="https://www.rug.nl"><img src="./logo_rug.png" height="50px"></a>
+<a href="https://www.umcg.nl"><img src="./logo_umcg.png" height="50px"></a>
+<a href="https://www.certe.nl"><img src="./logo_certe.png" height="50px"></a>
+<a href="http://www.eurhealth-1health.eu"><img src="./logo_eh1h.png" height="50px"></a>
+<a href="http://www.eurhealth-1health.eu"><img src="./logo_interreg.png" height="50px"></a>

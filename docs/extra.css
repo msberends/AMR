@@ -22,11 +22,16 @@
 */
 
 /* class for footer */
-.university {
-  background-image: url(logo_rug.png);
-  background-size: 200px;
-  background-repeat: no-repeat;
-  background-position: center right;
+.footer_logo {
+    float: right;
+    height: 43px;
+    margin-top: 2px;
+}
+@media only screen and (max-width: 992px) {
+  .footer_logo {
+      float: left;
+      margin-top: 15px;
+  }
 }
 
 /* Supports icons for brand using font-awesome */
