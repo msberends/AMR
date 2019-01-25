@@ -165,7 +165,20 @@ table a:not(.btn):hover, .table a:not(.btn):hover {
   text-decoration: underline;
 }
 
+/* text below header in manual overview */
 .template-reference-index h2 ~ p {
   font-size: 110%;
   /* font-weight: bold; */
+}
+
+/* logos on index page */
+.logo_img {
+  display: inline-block;
+}
+.logo_txt {
+  display: inline;
+  font-size: 125%;
+  vertical-align: middle;
+  color: black;
+  font-weight: bold;
 }

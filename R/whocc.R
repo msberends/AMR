@@ -19,40 +19,22 @@
 # Visit our website for more info: https://msberends.gitab.io/AMR.     #
 # ==================================================================== #
 
-context("age.R")
-
-test_that("age works", {
-  expect_equal(age(x = c("1980-01-01", "1985-01-01", "1990-01-01"),
-                   reference = "2019-01-01"),
-               c(39, 34, 29))
-
-  expect_error(age(x = c("1980-01-01", "1985-01-01", "1990-01-01"),
-                   reference = c("2019-01-01", "2019-01-01")))
-
-  expect_warning(age(x = c("1980-01-01", "1985-01-01", "1990-01-01"),
-                   reference = "1975-01-01"))
-
-  expect_warning(age(x = c("1800-01-01", "1805-01-01", "1810-01-01"),
-                     reference = "2019-01-01"))
-})
-
-test_that("age_groups works", {
-  ages <- c(3, 8, 16, 54, 31, 76, 101, 43, 21)
-
-  expect_equal(length(unique(age_groups(ages, 50))),
-               2)
-  expect_equal(length(unique(age_groups(ages, c(50, 60)))),
-               3)
-  expect_identical(class(age_groups(ages, "child")),
-                   c("ordered", "factor"))
-
-  expect_identical(class(age_groups(ages, "elderly")),
-                   c("ordered", "factor"))
-
-  expect_identical(class(age_groups(ages, "tens")),
-                   c("ordered", "factor"))
-
-  expect_identical(class(age_groups(ages, "fives")),
-                   c("ordered", "factor"))
-
-})
+#' WHO Collaborating Centre for Drug Statistics Methodology
+#'
+#' All antimicrobial drugs and their official names, ATC codes, ATC groups and defined daily dose (DDD) are included in this package, using the WHO Collaborating Centre for Drug Statistics Methodology.
+#' @section WHOCC:
+#' \if{html}{\figure{logo_who.png}{options: height=60px style=margin-bottom:5px} \cr}
+#' This package contains \strong{all ~500 antimicrobial drugs and their Anatomical Therapeutic Chemical (ATC) codes, ATC groups and Defined Daily Dose (DDD)} from the World Health Organization Collaborating Centre for Drug Statistics Methodology (WHOCC, \url{https://www.whocc.no}) and the Pharmaceuticals Community Register of the European Commission (\url{http://ec.europa.eu/health/documents/community-register/html/atc.htm}).
+#'
+#' These have become the gold standard for international drug utilisation monitoring and research.
+#'
+#' The WHOCC is located in Oslo at the Norwegian Institute of Public Health and funded by the Norwegian government. The European Commission is the executive of the European Union and promotes its general interest.
+#' @inheritSection AMR Read more on our website!
+#' @name WHOCC
+#' @rdname WHOCC
+#' @examples
+#' as.atc("meropenem")
+#' ab_name("J01DH02")
+#'
+#' ab_tradenames("flucloxacillin")
+NULL

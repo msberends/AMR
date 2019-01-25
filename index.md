@@ -52,15 +52,23 @@ To find out how to conduct AMR analysis, please [continue reading here to get st
 
 ### Short introduction
 
-#### Taxonomic reference data
+#### Microbial (taxonomic) reference data
 
-<img src="man/figures/itis_logo.jpg" height="60px">
+<img src="man/figures/logo_itis.jpg" height="60px">
 
 This package contains the **complete microbial taxonomic data** (with all nine taxonomic ranks - from kingdom to subspecies) from the publicly available Integrated Taxonomic Information System (ITIS, https://www.itis.gov). 
 
-All ~20,000 (sub)species from **the taxonomic kingdoms Bacteria, Fungi and Protozoa are included in this package**, as well as all ~2,500 previously accepted names known to ITIS. Furthermore, the responsible authors and year of publication are available. This allows users to use authoritative taxonomic information for their data analysis on any microorganism, not only human pathogens. It also helps to quickly determine the Gram stain of bacteria, since all bacteria are classified into subkingdom Negibacteria or Posibacteria. 
+All ~20,000 (sub)species from **the taxonomic kingdoms Bacteria, Fungi and Protozoa are included in this package**, as well as all their ~2,500 previously accepted names known to ITIS. Furthermore, the responsible authors and year of publication are available. This allows users to use authoritative taxonomic information for their data analysis on any microorganism, not only human pathogens. It also helps to quickly determine the Gram stain of bacteria, since all bacteria are classified into subkingdom Negibacteria or Posibacteria. 
 
-Read more about ITIS [in our manual](./reference/ITIS.html).
+Read more about the data from ITIS [in our manual](./reference/ITIS.html).
+
+#### Antimicrobial reference data
+
+<div><img src="reference/figures/logo_who.png" height="75px" class="logo_img"><p class="logo_txt">WHO Collaborating Centre for Drug Statistics Methodology</p></div>
+
+This package contains **all ~500 antimicrobial drugs and their Anatomical Therapeutic Chemical (ATC) codes, ATC groups and Defined Daily Dose (DDD)** from the World Health Organization Collaborating Centre for Drug Statistics Methodology (WHOCC, https://www.whocc.no) and the [Pharmaceuticals Community Register of the European Commission](http://ec.europa.eu/health/documents/community-register/html/atc.htm).
+
+Read more about the data from WHOCC [in our manual](./reference/WHOCC.html).
 
 #### Overview of functions
 

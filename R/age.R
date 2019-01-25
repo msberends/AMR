@@ -29,6 +29,9 @@
 #' @importFrom dplyr if_else
 #' @inheritSection AMR Read more on our website!
 #' @export
+#' @examples
+#' df <- data.frame(birth_date = Sys.Date() - runif(100) * 25000)
+#' df$age <- age(df$birth_date)
 age <- function(x, reference = Sys.Date()) {
   if (length(x) != length(reference)) {
     if (length(reference) == 1) {
@@ -39,17 +42,21 @@ age <- function(x, reference = Sys.Date()) {
   }
   x <- base::as.POSIXlt(x)
   reference <- base::as.POSIXlt(reference)
-  if (any(reference < x)) {
-    stop("`reference` cannot be lower (older) than `x`.")
-  }
-  years_gap <- reference$year - x$year
+
   # from https://stackoverflow.com/a/25450756/4575331
+  years_gap <- reference$year - x$year
   ages <- if_else(reference$mon < x$mon | (reference$mon == x$mon & reference$mday < x$mday),
                   as.integer(years_gap - 1),
                   as.integer(years_gap))
-  if (any(ages > 120)) {
+
+  if (any(ages < 0, na.rm = TRUE)) {
+    warning("NAs introduced for ages below 0.")
+    ages[ages < 0] <- NA_integer_
+  }
+  if (any(ages > 120, na.rm = TRUE)) {
     warning("Some ages are > 120.")
   }
+
   ages
 }
 

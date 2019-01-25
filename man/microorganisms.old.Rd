@@ -3,7 +3,7 @@
 \docType{data}
 \name{microorganisms.old}
 \alias{microorganisms.old}
-\title{Data set with old taxonomic data from ITIS}
+\title{Data set with previously accepted taxonomic names}
 \format{A \code{\link{data.frame}} with 2,383 observations and 4 variables:
 \describe{
   \item{\code{tsn}}{Old Taxonomic Serial Number (TSN), as defined by ITIS}
@@ -22,10 +22,10 @@ A data set containing old (previously valid or accepted) taxonomic names accordi
 }
 \section{ITIS}{
 
-\if{html}{\figure{itis_logo.jpg}{options: height=60px style=margin-bottom:5px} \cr}
+\if{html}{\figure{logo_itis.jpg}{options: height=60px style=margin-bottom:5px} \cr}
 This package contains the \strong{complete microbial taxonomic data} (with all nine taxonomic ranks - from kingdom to subspecies) from the publicly available Integrated Taxonomic Information System (ITIS, \url{https://www.itis.gov}).
 
-All ~20,000 (sub)species from \strong{the taxonomic kingdoms Bacteria, Fungi and Protozoa are included in this package}, as well as all ~2,500 previously accepted names known to ITIS. Furthermore, the responsible authors and year of publication are available. This allows users to use authoritative taxonomic information for their data analysis on any microorganism, not only human pathogens. It also helps to quickly determine the Gram stain of bacteria, since all bacteria are classified into subkingdom Negibacteria or Posibacteria.
+All ~20,000 (sub)species from \strong{the taxonomic kingdoms Bacteria, Fungi and Protozoa are included in this package}, as well as all their ~2,500 previously accepted names known to ITIS. Furthermore, the responsible authors and year of publication are available. This allows users to use authoritative taxonomic information for their data analysis on any microorganism, not only human pathogens. It also helps to quickly determine the Gram stain of bacteria, since all bacteria are classified into subkingdom Negibacteria or Posibacteria.
 
 ITIS is a partnership of U.S., Canadian, and Mexican agencies and taxonomic specialists [3].
 }

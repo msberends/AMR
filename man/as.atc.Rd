@@ -28,6 +28,16 @@ Use the \code{\link{ab_property}} functions to get properties based on the retur
 In the ATC classification system, the active substances are classified in a hierarchy with five different levels.  The system has fourteen main anatomical/pharmacological groups or 1st levels. Each ATC main group is divided into 2nd levels which could be either pharmacological or therapeutic groups.  The 3rd and 4th levels are chemical, pharmacological or therapeutic subgroups and the 5th level is the chemical substance.  The 2nd, 3rd and 4th levels are often used to identify pharmacological subgroups when that is considered more appropriate than therapeutic or chemical subgroups.
   Source: \url{https://www.whocc.no/atc/structure_and_principles/}
 }
+\section{WHOCC}{
+
+\if{html}{\figure{logo_who.png}{options: height=60px style=margin-bottom:5px} \cr}
+This package contains \strong{all ~500 antimicrobial drugs and their Anatomical Therapeutic Chemical (ATC) codes, ATC groups and Defined Daily Dose (DDD)} from the World Health Organization Collaborating Centre for Drug Statistics Methodology (WHOCC, \url{https://www.whocc.no}) and the Pharmaceuticals Community Register of the European Commission (\url{http://ec.europa.eu/health/documents/community-register/html/atc.htm}).
+
+These have become the gold standard for international drug utilisation monitoring and research.
+
+The WHOCC is located in Oslo at the Norwegian Institute of Public Health and funded by the Norwegian government. The European Commission is the executive of the European Union and promotes its general interest.
+}
+
 \section{Read more on our website!}{
 
 \if{html}{\figure{logo.png}{options: height=40px style=margin-bottom:5px} \cr}

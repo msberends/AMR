@@ -124,7 +124,6 @@ read.4D <- function(file,
   }
   if ("date_birth" %in% colnames(data_4D)) {
     data_4D$date_birth <- to_date_4D(data_4D$date_birth)
-
   }
   if ("date_received" %in% colnames(data_4D)) {
     data_4D$date_received <- to_date_4D(data_4D$date_received)

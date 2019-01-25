@@ -35,6 +35,8 @@
 * New vignettes about how to conduct AMR analysis, predict antimicrobial resistance, use the *G*-test and more. These are also available (and even easier readable) on our website: https://msberends.gitlab.io/AMR.
 
 #### Changed
+* Added 65 antibiotics to the `antibiotics` data set, from the [Pharmaceuticals Community Register](http://ec.europa.eu/health/documents/community-register/html/atc.htm) of the European Commission
+* Removed columns `atc_group1_nl` and `atc_group2_nl` from the `antibiotics` data set
 * Function `eucast_rules()`:
   * Updated EUCAST Clinical breakpoints to [version 9.0 of 1 January 2019](http://www.eucast.org/clinical_breakpoints/)
   * Fixed a critical bug where some rules that depend on previous applied rules would not be applied adequately
@@ -49,6 +51,7 @@
   * Manual now contains more info about the algorithms
   * Progress bar will be shown when it takes more than 3 seconds to get results
   * Support for formatted console text
+  * Console will return the percentage of uncoercable input
 * Function `first_isolate()`:
   * Fixed a bug where distances between dates would not be calculated right - in the `septic_patients` data set this yielded a difference of 0.15% more isolates
   * Will now use a column named like "patid" for the patient ID (parameter `col_patientid`), when this parameter was left blank

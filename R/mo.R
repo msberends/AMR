@@ -707,7 +707,11 @@ exec_as.mo <- function(x, Becker = FALSE, Lancefield = FALSE,
     if (n_distinct(failures) > 1) {
       plural <- "s"
     }
-    msg <- paste0("\n", n_distinct(failures), " unique value", plural, " could not be coerced to a valid MO code")
+    total_failures <- length(x_input[x_input %in% failures & !x_input %in% c(NA, NULL, NaN)])
+    total_n <- length(x_input[!x_input %in% c(NA, NULL, NaN)])
+    msg <- paste0("\n", n_distinct(failures), " unique value", plural,
+                  " (^= ", percent(total_failures / total_n, round = 1, force_zero = TRUE),
+                  ") could not be coerced to a valid MO code")
     if (n_distinct(failures) <= 10) {
       msg <- paste0(msg, ": ", paste('"', unique(failures), '"', sep = "", collapse = ', '))
     }

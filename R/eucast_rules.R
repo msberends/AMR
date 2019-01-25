@@ -222,7 +222,7 @@ eucast_rules <- function(tbl,
                          trsu = guess_ab_col(),
                          vanc = guess_ab_col()) {
 
-  EUCAST_VERSION_BREAKPOINTS <- "8.1, 2018"
+  EUCAST_VERSION_BREAKPOINTS <- "9.0, 2019"
   EUCAST_VERSION_EXPERT_RULES <- "3.1, 2016"
 
   if (!is.data.frame(tbl)) {

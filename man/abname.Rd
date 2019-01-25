@@ -25,6 +25,16 @@ Convert antibiotic codes to a (trivial) antibiotic name or ATC code, or vice ver
 \details{
 \strong{The \code{\link{ab_property}} functions are faster and more concise}, but do not support concatenated strings, like \code{abname("AMCL+GENT"}.
 }
+\section{WHOCC}{
+
+\if{html}{\figure{logo_who.png}{options: height=60px style=margin-bottom:5px} \cr}
+This package contains \strong{all ~500 antimicrobial drugs and their Anatomical Therapeutic Chemical (ATC) codes, ATC groups and Defined Daily Dose (DDD)} from the World Health Organization Collaborating Centre for Drug Statistics Methodology (WHOCC, \url{https://www.whocc.no}) and the Pharmaceuticals Community Register of the European Commission (\url{http://ec.europa.eu/health/documents/community-register/html/atc.htm}).
+
+These have become the gold standard for international drug utilisation monitoring and research.
+
+The WHOCC is located in Oslo at the Norwegian Institute of Public Health and funded by the Norwegian government. The European Commission is the executive of the European Union and promotes its general interest.
+}
+
 \section{Read more on our website!}{
 
 \if{html}{\figure{logo.png}{options: height=40px style=margin-bottom:5px} \cr}

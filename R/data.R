@@ -19,10 +19,10 @@
 # Visit our website for more info: https://msberends.gitab.io/AMR.     #
 # ==================================================================== #
 
-#' Data set with 423 antibiotics
+#' Data set with ~500 antibiotics
 #'
 #' A data set containing all antibiotics with a J0 code and some other antimicrobial agents, with their DDDs. Except for trade names and abbreviations, all properties were downloaded from the WHO, see Source.
-#' @format A \code{\link{data.frame}} with 423 observations and 18 variables:
+#' @format A \code{\link{data.frame}} with 488 observations and 16 variables:
 #' \describe{
 #'   \item{\code{atc}}{ATC code, like \code{J01CR02}}
 #'   \item{\code{certe}}{Certe code, like \code{amcl}}
@@ -38,12 +38,14 @@
 #'   \item{\code{iv_units}}{Units of \code{iv_ddd}}
 #'   \item{\code{atc_group1}}{ATC group, like \code{"Macrolides, lincosamides and streptogramins"}}
 #'   \item{\code{atc_group2}}{Subgroup of \code{atc_group1}, like \code{"Macrolides"}}
-#'   \item{\code{atc_group1_nl}}{ATC group in Dutch, like \code{"Macroliden, lincosamiden en streptograminen"}}
-#'   \item{\code{atc_group2_nl}}{Subgroup of \code{atc_group1} in Dutch, like \code{"Macroliden"}}
 #'   \item{\code{useful_gramnegative}}{\code{FALSE} if not useful according to EUCAST, \code{NA} otherwise (see Source)}
 #'   \item{\code{useful_grampositive}}{\code{FALSE} if not useful according to EUCAST, \code{NA} otherwise (see Source)}
 #' }
-#' @source - World Health Organization: \url{https://www.whocc.no/atc_ddd_index/} \cr - EUCAST - Expert rules intrinsic exceptional V3.1 \cr - MOLIS (LIS of Certe): \url{https://www.certe.nl} \cr - GLIMS (LIS of UMCG): \url{https://www.umcg.nl}
+#' @source - World Health Organization (WHO) Collaborating Centre for Drug Statistics Methodology: \url{https://www.whocc.no/atc_ddd_index/}
+#'
+#' EUCAST Expert Rules, Intrinsic Resistance and Exceptional Phenotypes Tables. Version 3.1, 2016: \url{http://www.eucast.org/fileadmin/src/media/PDFs/EUCAST_files/Expert_Rules/Expert_rules_intrinsic_exceptional_V3.1.pdf}
+#'
+#' European Commission Public Health PHARMACEUTICALS - COMMUNITY REGISTER: \url{http://ec.europa.eu/health/documents/community-register/html/atc.htm}
 #' @inheritSection AMR Read more on our website!
 #' @seealso \code{\link{microorganisms}}
 # use this later to further fill AMR::antibiotics
@@ -124,9 +126,9 @@
 #
 "antibiotics"
 
-#' Data set with taxonomic data from ITIS
+#' Data set with ~20,000 microorganisms
 #'
-#' A data set containing the complete microbial taxonomy of the kingdoms Bacteria, Fungi and Protozoa. MO codes can be looked up using \code{\link{as.mo}}.
+#' A data set containing the complete microbial taxonomy of the kingdoms Bacteria, Fungi and Protozoa from ITIS. MO codes can be looked up using \code{\link{as.mo}}.
 #' @inheritSection ITIS ITIS
 #' @format A \code{\link{data.frame}} with 18,833 observations and 15 variables:
 #' \describe{
@@ -146,12 +148,12 @@
 #'   \item{\code{prevalence}}{An integer based on estimated prevalence of the microorganism in humans. Used internally by \code{\link{as.mo}}, otherwise quite meaningless. It has a value of 25 for manually added items and a value of 1000 for all unprevalent microorganisms whose genus was somewhere in the top 250 (with another species).}
 #'   \item{\code{ref}}{Author(s) and year of concerning publication as found in ITIS, see Source}
 #' }
-#' @source [3] Integrated Taxonomic Information System (ITIS) on-line database, \url{https://www.itis.gov}.
+#' @source Integrated Taxonomic Information System (ITIS) public online database, \url{https://www.itis.gov}.
 #' @inheritSection AMR Read more on our website!
 #' @seealso \code{\link{as.mo}} \code{\link{mo_property}} \code{\link{microorganisms.codes}}
 "microorganisms"
 
-#' Data set with old taxonomic data from ITIS
+#' Data set with previously accepted taxonomic names
 #'
 #' A data set containing old (previously valid or accepted) taxonomic names according to ITIS. This data set is used internally by \code{\link{as.mo}}.
 #' @inheritSection as.mo ITIS
@@ -179,7 +181,7 @@
 #' @seealso \code{\link{as.mo}} \code{\link{microorganisms}}
 "microorganisms.codes"
 
-#' Data set with 2000 blood culture isolates of septic patients
+#' Data set with 2,000 blood culture isolates from septic patients
 #'
 #' An anonymised data set containing 2,000 microbial blood culture isolates with their full antibiograms found in septic patients in 4 different hospitals in the Netherlands, between 2001 and 2017. It is true, genuine data. This \code{data.frame} can be used to practice AMR analysis. For examples, please read \href{https://msberends.gitlab.io/AMR/articles/AMR.html}{the tutorial on our website}.
 #' @format A \code{\link{data.frame}} with 2,000 observations and 49 variables:

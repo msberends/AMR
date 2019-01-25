@@ -29,6 +29,7 @@
 #' @details \strong{The \code{\link{ab_property}} functions are faster and more concise}, but do not support concatenated strings, like \code{abname("AMCL+GENT"}.
 #' @keywords ab antibiotics
 #' @source \code{\link{antibiotics}}
+#' @inheritSection WHOCC WHOCC
 #' @export
 #' @importFrom dplyr %>% pull
 #' @inheritSection AMR Read more on our website!

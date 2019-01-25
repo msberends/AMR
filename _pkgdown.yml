@@ -81,6 +81,7 @@ reference:
     contents:
     - '`AMR`'
     - '`ITIS`'
+    - '`WHOCC`'
   - title: 'Cleaning your data'
     desc: >
       Functions for cleaning and optimising your data, to be able to add

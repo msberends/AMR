@@ -23,6 +23,10 @@ Calculates age in years based on a reference date, which is the sytem date at de
 On our website \url{https://msberends.gitlab.io/AMR} you can find \href{https://msberends.gitlab.io/AMR/articles/AMR.html}{a omprehensive tutorial} about how to conduct AMR analysis and find \href{https://msberends.gitlab.io/AMR/reference}{the complete documentation of all functions}, which reads a lot easier than in R.
 }
 
+\examples{
+df <- data.frame(birth_date = Sys.Date() - runif(100) * 25000)
+df$age <- age(df$birth_date)
+}
 \seealso{
 \code{\link{age_groups}} to split age into age groups
 }

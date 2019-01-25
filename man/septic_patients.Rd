@@ -3,7 +3,7 @@
 \docType{data}
 \name{septic_patients}
 \alias{septic_patients}
-\title{Data set with 2000 blood culture isolates of septic patients}
+\title{Data set with 2,000 blood culture isolates from septic patients}
 \format{A \code{\link{data.frame}} with 2,000 observations and 49 variables:
 \describe{
   \item{\code{date}}{date of receipt at the laboratory}

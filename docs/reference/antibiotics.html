@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Data set with 423 antibiotics — antibiotics • AMR (for R)</title>
+<title>Data set with ~500 antibiotics — antibiotics • AMR (for R)</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -45,7 +45,7 @@
 
   <link href="../extra.css" rel="stylesheet">
   <script src="../extra.js"></script>
-<meta property="og:title" content="Data set with 423 antibiotics — antibiotics" />
+<meta property="og:title" content="Data set with ~500 antibiotics — antibiotics" />
 
 <meta property="og:description" content="A data set containing all antibiotics with a J0 code and some other antimicrobial agents, with their DDDs. Except for trade names and abbreviations, all properties were downloaded from the WHO, see Source." />
 
@@ -80,7 +80,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.0.9009</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.0.9012</span>
       </span>
     </div>
 
@@ -216,7 +216,7 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Data set with 423 antibiotics</h1>
+    <h1>Data set with ~500 antibiotics</h1>
     
     <div class="hidden name"><code>antibiotics.Rd</code></div>
     </div>
@@ -231,7 +231,7 @@
         
     <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
 
-    <p>A <code><a href='https://www.rdocumentation.org/packages/base/topics/data.frame'>data.frame</a></code> with 423 observations and 18 variables:</p><dl class='dl-horizontal'>
+    <p>A <code><a href='https://www.rdocumentation.org/packages/base/topics/data.frame'>data.frame</a></code> with 488 observations and 16 variables:</p><dl class='dl-horizontal'>
   <dt><code>atc</code></dt><dd><p>ATC code, like <code>J01CR02</code></p></dd>
   <dt><code>certe</code></dt><dd><p>Certe code, like <code>amcl</code></p></dd>
   <dt><code>umcg</code></dt><dd><p>UMCG code, like <code>AMCL</code></p></dd>
@@ -246,15 +246,15 @@
   <dt><code>iv_units</code></dt><dd><p>Units of <code>iv_ddd</code></p></dd>
   <dt><code>atc_group1</code></dt><dd><p>ATC group, like <code>"Macrolides, lincosamides and streptogramins"</code></p></dd>
   <dt><code>atc_group2</code></dt><dd><p>Subgroup of <code>atc_group1</code>, like <code>"Macrolides"</code></p></dd>
-  <dt><code>atc_group1_nl</code></dt><dd><p>ATC group in Dutch, like <code>"Macroliden, lincosamiden en streptograminen"</code></p></dd>
-  <dt><code>atc_group2_nl</code></dt><dd><p>Subgroup of <code>atc_group1</code> in Dutch, like <code>"Macroliden"</code></p></dd>
   <dt><code>useful_gramnegative</code></dt><dd><p><code>FALSE</code> if not useful according to EUCAST, <code>NA</code> otherwise (see Source)</p></dd>
   <dt><code>useful_grampositive</code></dt><dd><p><code>FALSE</code> if not useful according to EUCAST, <code>NA</code> otherwise (see Source)</p></dd>
 </dl>
     
     <h2 class="hasAnchor" id="source"><a class="anchor" href="#source"></a>Source</h2>
 
-    <p>- World Health Organization: <a href='https://www.whocc.no/atc_ddd_index/'>https://www.whocc.no/atc_ddd_index/</a> <br /> - EUCAST - Expert rules intrinsic exceptional V3.1 <br /> - MOLIS (LIS of Certe): <a href='https://www.certe.nl'>https://www.certe.nl</a> <br /> - GLIMS (LIS of UMCG): <a href='https://www.umcg.nl'>https://www.umcg.nl</a></p>
+    <p>- World Health Organization (WHO) Collaborating Centre for Drug Statistics Methodology: <a href='https://www.whocc.no/atc_ddd_index/'>https://www.whocc.no/atc_ddd_index/</a></p>
+<p>EUCAST Expert Rules, Intrinsic Resistance and Exceptional Phenotypes Tables. Version 3.1, 2016: <a href='http://www.eucast.org/fileadmin/src/media/PDFs/EUCAST_files/Expert_Rules/Expert_rules_intrinsic_exceptional_V3.1.pdf'>http://www.eucast.org/fileadmin/src/media/PDFs/EUCAST_files/Expert_Rules/Expert_rules_intrinsic_exceptional_V3.1.pdf</a></p>
+<p>European Commission Public Health PHARMACEUTICALS - COMMUNITY REGISTER: <a href='http://ec.europa.eu/health/documents/community-register/html/atc.htm'>http://ec.europa.eu/health/documents/community-register/html/atc.htm</a></p>
     
     <h2 class="hasAnchor" id="read-more-on-our-website-"><a class="anchor" href="#read-more-on-our-website-"></a>Read more on our website!</h2>
 

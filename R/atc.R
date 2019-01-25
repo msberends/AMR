@@ -26,6 +26,7 @@
 #' @rdname as.atc
 #' @aliases atc
 #' @keywords atc
+#' @inheritSection WHOCC WHOCC
 #' @export
 #' @importFrom dplyr %>% filter slice pull
 #' @details Use the \code{\link{ab_property}} functions to get properties based on the returned ATC code, see Examples.
