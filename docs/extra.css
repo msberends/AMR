@@ -23,15 +23,18 @@
 
 /* class for footer */
 .footer_logo {
-    float: right;
-    height: 43px;
-    margin-top: 2px;
+  float: right;
+  height: 43px;
+  margin-top: 2px;
 }
 @media only screen and (max-width: 992px) {
   .footer_logo {
-      float: left;
-      margin-top: 15px;
+    float: left;
+    margin-top: 15px;
   }
+}
+footer p {
+  display: inline-block;
 }
 
 /* Supports icons for brand using font-awesome */

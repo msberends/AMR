@@ -39,9 +39,8 @@ $( document ).ready(function() {
       '<p>' + $('footer .copyright p').html().replace(
         "Developed by",
         '<code>AMR</code> (for R). Developed at the <a href="https://www.rug.nl" target="_blank">University of Groningen</a>.<br>Authors:') + '</p>' +
-      '<a href="https://www.rug.nl" target="_blank"><img src="./logo_rug.png" class="footer_logo"></a>' +
+      '<a href="https://www.rug.nl" target="_blank"><img src="../../AMR/logo_rug.png" class="footer_logo"></a>' +
     '</div>');
-  $('footer').addClass("university");
 
   // Edit title of manual
   $('.template-reference-index h1').text('Manual');
