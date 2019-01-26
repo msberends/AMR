@@ -229,8 +229,6 @@
 
     <pre class="usage"><span class='fu'>as.atc</span>(<span class='no'>x</span>)
 
-<span class='fu'>guess_atc</span>(<span class='no'>x</span>)
-
 <span class='fu'>is.atc</span>(<span class='no'>x</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -286,8 +284,8 @@ On our website <a href='https://msberends.gitlab.io/AMR'>https://msberends.gitla
 
 <span class='co'># Use ab_* functions to get a specific property based on an ATC code</span>
 <span class='no'>Cipro</span> <span class='kw'>&lt;-</span> <span class='fu'>as.atc</span>(<span class='st'>"cipro"</span>) <span class='co'># returns `J01MA02`</span>
-<span class='fu'><a href='AMR-deprecated.html'>ab_official</a></span>(<span class='no'>Cipro</span>)       <span class='co'># returns "Ciprofloxacin"</span>
-<span class='fu'><a href='AMR-deprecated.html'>ab_umcg</a></span>(<span class='no'>Cipro</span>)           <span class='co'># returns "CIPR", the code used in the UMCG</span>
+<span class='fu'><a href='atc_property.html'>atc_official</a></span>(<span class='no'>Cipro</span>)      <span class='co'># returns "Ciprofloxacin"</span>
+<span class='fu'><a href='atc_property.html'>atc_umcg</a></span>(<span class='no'>Cipro</span>)          <span class='co'># returns "CIPR", the code used in the UMCG</span>
 <span class='co'># }</span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

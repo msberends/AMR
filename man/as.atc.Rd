@@ -3,13 +3,10 @@
 \name{as.atc}
 \alias{as.atc}
 \alias{atc}
-\alias{guess_atc}
 \alias{is.atc}
 \title{Transform to ATC code}
 \usage{
 as.atc(x)
-
-guess_atc(x)
 
 is.atc(x)
 }
@@ -58,8 +55,8 @@ as.atc("Pediamycin") # Trade name
 
 # Use ab_* functions to get a specific property based on an ATC code
 Cipro <- as.atc("cipro") # returns `J01MA02`
-ab_official(Cipro)       # returns "Ciprofloxacin"
-ab_umcg(Cipro)           # returns "CIPR", the code used in the UMCG
+atc_official(Cipro)      # returns "Ciprofloxacin"
+atc_umcg(Cipro)          # returns "CIPR", the code used in the UMCG
 }
 \seealso{
 \code{\link{antibiotics}} for the dataframe that is being used to determine ATCs.

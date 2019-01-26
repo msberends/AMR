@@ -50,8 +50,8 @@
 #'
 #' # Use ab_* functions to get a specific property based on an ATC code
 #' Cipro <- as.atc("cipro") # returns `J01MA02`
-#' ab_official(Cipro)       # returns "Ciprofloxacin"
-#' ab_umcg(Cipro)           # returns "CIPR", the code used in the UMCG
+#' atc_official(Cipro)      # returns "Ciprofloxacin"
+#' atc_umcg(Cipro)          # returns "CIPR", the code used in the UMCG
 as.atc <- function(x) {
 
   x.new <- rep(NA_character_, length(x))
@@ -146,7 +146,7 @@ as.atc <- function(x) {
   x.new
 }
 
-#' @rdname as.atc
+#' @rdname AMR-deprecated
 #' @export
 guess_atc <- as.atc
 
