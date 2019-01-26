@@ -104,8 +104,8 @@ reference:
     - '`mdro`'
     - '`key_antibiotics`'
     - '`mo_property`'
-    - '`ab_property`'
     - '`atc_property`'
+    - '`atc_online_property`'
     - '`abname`'
     - '`age`'
     - '`age_groups`'
@@ -146,6 +146,8 @@ reference:
     - '`like`'
     - '`mo_failures`'
     - '`mo_renamed`'
+    - '`ab_property`'
+
 
 authors:
   Matthijs S. Berends:

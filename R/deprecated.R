@@ -21,7 +21,7 @@
 
 #' Deprecated functions
 #'
-#' These functions are \link{Deprecated}. They will be removed in a future release. Using the functions will give a warning with the name of the function it has been replaced by.
+#' These functions are so-called '\link{Deprecated}'. They will be removed in a future release. Using the functions will give a warning with the name of the function it has been replaced by (if there is one).
 #' @inheritSection AMR Read more on our website!
 #' @export
 #' @keywords internal
@@ -52,4 +52,60 @@ ratio <- function(x, ratio) {
 guess_mo <- function(...) {
   .Deprecated(new = "as.mo", package = "AMR")
   as.mo(...)
+}
+
+#' @rdname AMR-deprecated
+#' @export
+ab_property <- function(...) {
+  .Deprecated(new = "atc_property", package = "AMR")
+  atc_property(...)
+}
+
+#' @rdname AMR-deprecated
+#' @export
+ab_atc <- function(...) {
+  .Deprecated(new = "as.atc", package = "AMR")
+  as.atc(...)
+}
+
+#' @rdname AMR-deprecated
+#' @export
+ab_official <- function(...) {
+  .Deprecated(new = "atc_official", package = "AMR")
+  atc_official(...)
+}
+
+#' @rdname AMR-deprecated
+#' @export
+ab_name <- function(...) {
+  .Deprecated(new = "atc_name", package = "AMR")
+  atc_name(...)
+}
+
+#' @rdname AMR-deprecated
+#' @export
+ab_trivial_nl <- function(...) {
+  .Deprecated(new = "atc_trivial_nl", package = "AMR")
+  atc_trivial_nl(...)
+}
+
+#' @rdname AMR-deprecated
+#' @export
+ab_certe <- function(...) {
+  .Deprecated(new = "atc_certe", package = "AMR")
+  atc_certe(...)
+}
+
+#' @rdname AMR-deprecated
+#' @export
+ab_umcg <- function(...) {
+  .Deprecated(new = "atc_umcg", package = "AMR")
+  atc_umcg(...)
+}
+
+#' @rdname AMR-deprecated
+#' @export
+ab_tradenames <- function(...) {
+  .Deprecated(new = "atc_tradenames", package = "AMR")
+  atc_tradenames(...)
 }

@@ -16,9 +16,6 @@
     <loc>https://msberends.gitlab.io/AMR/reference/WHOCC.html</loc>
   </url>
   <url>
-    <loc>https://msberends.gitlab.io/AMR/reference/ab_property.html</loc>
-  </url>
-  <url>
     <loc>https://msberends.gitlab.io/AMR/reference/abname.html</loc>
   </url>
   <url>
@@ -41,6 +38,9 @@
   </url>
   <url>
     <loc>https://msberends.gitlab.io/AMR/reference/as.rsi.html</loc>
+  </url>
+  <url>
+    <loc>https://msberends.gitlab.io/AMR/reference/atc_online.html</loc>
   </url>
   <url>
     <loc>https://msberends.gitlab.io/AMR/reference/atc_property.html</loc>

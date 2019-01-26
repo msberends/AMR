@@ -9,7 +9,7 @@ Welcome to the \code{AMR} package. This page gives some additional contact infor
 \details{
 This package was intended to simplify the analysis and prediction of Antimicrobial Resistance (AMR) and to work with microbial and antimicrobial properties by using evidence-based methods.
 
-This package was created for academic research by PhD students of the Faculty of Medical Sciences of the University of Groningen and the Medical Microbiology & Infection Prevention (MMBI) department of the University Medical Center Groningen (UMCG).
+This package was created for both academic research and routine analysis by PhD students of the Faculty of Medical Sciences of the University of Groningen and the Medical Microbiology & Infection Prevention (MMBI) department of the University Medical Center Groningen (UMCG).
 }
 \section{Read more on our website!}{
 

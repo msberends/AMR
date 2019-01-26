@@ -178,7 +178,7 @@
       <h1>Benchmarks</h1>
                         <h4 class="author">Matthijs S. Berends</h4>
             
-            <h4 class="date">25 January 2019</h4>
+            <h4 class="date">26 January 2019</h4>
       
       
       <div class="hidden name"><code>benchmarks.Rmd</code></div>
@@ -240,15 +240,15 @@
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(dplyr)</a>
 <a class="sourceLine" id="cb4-2" data-line-number="2"><span class="co"># take 500,000 random MO codes from the septic_patients data set</span></a>
 <a class="sourceLine" id="cb4-3" data-line-number="3">x =<span class="st"> </span>septic_patients <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb4-4" data-line-number="4"><span class="st">  </span><span class="kw"><a href="https://www.rdocumentation.org/packages/dplyr/topics/sample">sample_n</a></span>(<span class="dv">500000</span>, <span class="dt">replace =</span> <span class="ot">TRUE</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb4-5" data-line-number="5"><span class="st">  </span><span class="kw"><a href="https://www.rdocumentation.org/packages/dplyr/topics/pull">pull</a></span>(mo)</a>
+<a class="sourceLine" id="cb4-4" data-line-number="4"><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/sample.html">sample_n</a></span>(<span class="dv">500000</span>, <span class="dt">replace =</span> <span class="ot">TRUE</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb4-5" data-line-number="5"><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/pull.html">pull</a></span>(mo)</a>
 <a class="sourceLine" id="cb4-6" data-line-number="6">  </a>
 <a class="sourceLine" id="cb4-7" data-line-number="7"><span class="co"># got the right length?</span></a>
 <a class="sourceLine" id="cb4-8" data-line-number="8"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/length">length</a></span>(x)</a>
 <a class="sourceLine" id="cb4-9" data-line-number="9"><span class="co"># [1] 500000</span></a>
 <a class="sourceLine" id="cb4-10" data-line-number="10"></a>
 <a class="sourceLine" id="cb4-11" data-line-number="11"><span class="co"># and how many unique values do we have?</span></a>
-<a class="sourceLine" id="cb4-12" data-line-number="12"><span class="kw"><a href="https://www.rdocumentation.org/packages/dplyr/topics/n_distinct">n_distinct</a></span>(x)</a>
+<a class="sourceLine" id="cb4-12" data-line-number="12"><span class="kw"><a href="https://dplyr.tidyverse.org/reference/n_distinct.html">n_distinct</a></span>(x)</a>
 <a class="sourceLine" id="cb4-13" data-line-number="13"><span class="co"># [1] 96</span></a>
 <a class="sourceLine" id="cb4-14" data-line-number="14"></a>
 <a class="sourceLine" id="cb4-15" data-line-number="15"><span class="co"># only 96, but distributed in 500,000 results. now let's see:</span></a>

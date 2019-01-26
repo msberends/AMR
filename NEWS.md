@@ -3,6 +3,17 @@
 
 #### New
 * **BREAKING**: removed deprecated functions, parameters and references to 'bactid'. Use `as.mo()` to identify an MO code.
+* All `ab_*` functions are deprecated and replaced by `atc_*` functions:
+  ```r
+  ab_property -> atc_property()
+  ab_name -> atc_name()
+  ab_official -> atc_official()
+  ab_trivial_nl -> atc_trivial_nl()
+  ab_certe -> atc_certe()
+  ab_umcg -> atc_umcg()
+  ab_tradenames -> atc_tradenames()
+  ```
+  These functions use `as.atc()` internally. The old `atc_property` has been renamed `atc_online_property()`. This is done for two reasons: firstly, not all ATC codes are of antibiotics (ab) but can also be of antivirals or antifungals. Secondly, the input must have class `atc` or must be coerable to this class. Properties of these classes should start with the same class name, analogous to `as.mo()` and e.g. `mo_genus`.
 * New website: https://msberends.gitlab.io/AMR (built with the great [`pkgdown`](https://pkgdown.r-lib.org/))
   * Contains the complete manual of this package and all of its functions with an explanation of their parameters
   * Contains a comprehensive tutorial about how to conduct antimicrobial resistance analysis
@@ -37,6 +48,8 @@
 #### Changed
 * Added 65 antibiotics to the `antibiotics` data set, from the [Pharmaceuticals Community Register](http://ec.europa.eu/health/documents/community-register/html/atc.htm) of the European Commission
 * Removed columns `atc_group1_nl` and `atc_group2_nl` from the `antibiotics` data set
+* Function `atc_ddd` has been renamed `atc_online_ddd()`
+* Function `atc_groups` has been renamed `atc_online_groups()`
 * Function `eucast_rules()`:
   * Updated EUCAST Clinical breakpoints to [version 9.0 of 1 January 2019](http://www.eucast.org/clinical_breakpoints/)
   * Fixed a critical bug where some rules that depend on previous applied rules would not be applied adequately

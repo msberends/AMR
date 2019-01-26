@@ -1,4 +1,4 @@
-# `AMR` (for R) <img src="man/figures/logo.png" align="right" height="120px" />
+# `AMR` (for R) <img src="./logo.png" align="right" height="120px" />
 
 *(<help title="Too Long, Didn't Read">TLDR</help> - to find out how to conduct AMR analysis, please [continue reading here to get started](./articles/AMR.html).*
 
@@ -6,12 +6,24 @@
 
 `AMR` is a free and open-source [R package](https://www.r-project.org) to simplify the analysis and prediction of Antimicrobial Resistance (AMR) and to work with microbial and antimicrobial properties by using evidence-based methods.
 
-We created this package for academic research at the Faculty of Medical Sciences of the University of Groningen and the Medical Microbiology & Infection Prevention (MMBI) department of the University Medical Center Groningen (UMCG).
-This R package is free software; you can freely use and distribute it for both personal and commercial (but **not** patent) purposes under the terms of the GNU General Public License version 2.0 (GPL-2), as published by the Free Software Foundation. Read further about our GPL-2 licence [here](./LICENSE-text.html).
+We created this package for both academic research and routine analysis at the Faculty of Medical Sciences of the University of Groningen and the Medical Microbiology & Infection Prevention (MMBI) department of the University Medical Center Groningen (UMCG).
+This R package is actively maintained and free software; you can freely use and distribute it for both personal and commercial (but **not** patent) purposes under the terms of the GNU General Public Licence version 2.0 (GPL-2), as published by the Free Software Foundation. Read the full licence [here](./LICENSE-text.html).
+
+This package can be used for:
+
+  * Calculating antimicrobial resistance
+  * Predicting antimicrobial resistance using regression models
+  * Getting properties for any microorganism (like Gram stain, species, genus or family)
+  * Getting properties for any antibiotic (like name, ATC code, defined daily dose or trade name)
+  * Plotting antimicrobial resistance
+  * Determining first isolates to be used for AMR analysis
+  * Applying EUCAST rules
+  * Determining multi-drug resistance organisms (MDRO)
+  * Descriptive statistics: frequency tables, kurtosis and skewness
 
 This package is ready-to-use for a professional environment by specialists in the following fields:
 
-Medical Microbiology:
+Medical Microbiology
 
   * Epidemiologists (both clinical microbiological and research)
   * Research Microbiologists
@@ -19,18 +31,18 @@ Medical Microbiology:
   * Research Pharmacologists
   * Data Scientists / Data Analysts
   
-Veterinary Microbiology:
+Veterinary Microbiology
 
   * Research Veterinarians
   * Veterinary Epidemiologists
 
-Microbial Ecology:
+Microbial Ecology
 
   * Soil Microbiologists
   * Extremophile Researchers
   * Astrobiologists
 
-Developers:
+Developers
 
   * Package developers for R 
   * Software developers

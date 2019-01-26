@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Properties of an ATC code — atc_property • AMR (for R)</title>
+<title>Property of an antibiotic — atc_property • AMR (for R)</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -45,9 +45,9 @@
 
   <link href="../extra.css" rel="stylesheet">
   <script src="../extra.js"></script>
-<meta property="og:title" content="Properties of an ATC code — atc_property" />
+<meta property="og:title" content="Property of an antibiotic — atc_property" />
 
-<meta property="og:description" content="Gets data from the WHO to determine properties of an ATC (e.g. an antibiotic) like name, defined daily dose (DDD) or standard unit.  This function requires an internet connection." />
+<meta property="og:description" content="Use these functions to return a specific property of an antibiotic from the antibiotics data set, based on their ATC code. Get such a code with as.atc." />
 
 <meta property="og:image" content="https://msberends.gitlab.io/AMR/logo.png" />
 <meta name="twitter:card" content="summary" />
@@ -216,95 +216,71 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Properties of an ATC code</h1>
+    <h1>Property of an antibiotic</h1>
     
     <div class="hidden name"><code>atc_property.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Gets data from the WHO to determine properties of an ATC (e.g. an antibiotic) like name, defined daily dose (DDD) or standard unit. <br /> <strong>This function requires an internet connection.</strong></p>
+    <p>Use these functions to return a specific property of an antibiotic from the <code><a href='antibiotics.html'>antibiotics</a></code> data set, based on their ATC code. Get such a code with <code><a href='as.atc.html'>as.atc</a></code>.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>atc_property</span>(<span class='no'>atc_code</span>, <span class='no'>property</span>, <span class='kw'>administration</span> <span class='kw'>=</span> <span class='st'>"O"</span>,
-  <span class='kw'>url</span> <span class='kw'>=</span> <span class='st'>"https://www.whocc.no/atc_ddd_index/?code=%s&amp;showdescription=no"</span>)
+    <pre class="usage"><span class='fu'>atc_property</span>(<span class='no'>x</span>, <span class='kw'>property</span> <span class='kw'>=</span> <span class='st'>"official"</span>)
 
-<span class='fu'>atc_groups</span>(<span class='no'>atc_code</span>, <span class='no'>...</span>)
+<span class='fu'>atc_official</span>(<span class='no'>x</span>, <span class='kw'>language</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)
 
-<span class='fu'>atc_ddd</span>(<span class='no'>atc_code</span>, <span class='no'>...</span>)</pre>
+<span class='fu'>atc_name</span>(<span class='no'>x</span>, <span class='kw'>language</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)
+
+<span class='fu'>atc_trivial_nl</span>(<span class='no'>x</span>)
+
+<span class='fu'>atc_certe</span>(<span class='no'>x</span>)
+
+<span class='fu'>atc_umcg</span>(<span class='no'>x</span>)
+
+<span class='fu'>atc_tradenames</span>(<span class='no'>x</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>atc_code</th>
-      <td><p>a character or character vector with ATC code(s) of antibiotic(s)</p></td>
+      <th>x</th>
+      <td><p>a (vector of a) valid <code><a href='as.atc.html'>atc</a></code> code or any text that can be coerced to a valid atc with <code><a href='as.atc.html'>as.atc</a></code></p></td>
     </tr>
     <tr>
       <th>property</th>
-      <td><p>property of an ATC code. Valid values are <code>"ATC"</code>, <code>"Name"</code>, <code>"DDD"</code>, <code>"U"</code> (<code>"unit"</code>), <code>"Adm.R"</code>, <code>"Note"</code> and <code>groups</code>. For this last option, all hierarchical groups of an ATC code will be returned, see Examples.</p></td>
+      <td><p>one of the column names of one of the <code><a href='antibiotics.html'>antibiotics</a></code> data set, like <code>"atc"</code> and <code>"official"</code></p></td>
     </tr>
     <tr>
-      <th>administration</th>
-      <td><p>type of administration when using <code>property = "Adm.R"</code>, see Details</p></td>
-    </tr>
-    <tr>
-      <th>url</th>
-      <td><p>url of website of the WHO. The sign <code>%s</code> can be used as a placeholder for ATC codes.</p></td>
-    </tr>
-    <tr>
-      <th>...</th>
-      <td><p>parameters to pass on to <code>atc_property</code></p></td>
+      <th>language</th>
+      <td><p>language of the returned text, defaults to English (<code>"en"</code>) and can be set with <code><a href='https://www.rdocumentation.org/packages/base/topics/options'>getOption</a>("AMR_locale")</code>. Either one of <code>"en"</code> (English) or <code>"nl"</code> (Dutch).</p></td>
     </tr>
     </table>
     
-    <h2 class="hasAnchor" id="source"><a class="anchor" href="#source"></a>Source</h2>
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p><a href='https://www.whocc.no/atc_ddd_alterations__cumulative/ddd_alterations/abbrevations/'>https://www.whocc.no/atc_ddd_alterations__cumulative/ddd_alterations/abbrevations/</a></p>
+    <p>A vector of values. In case of <code>atc_tradenames</code>, if <code>x</code> is of length one, a vector will be returned. Otherwise a <code><a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a></code>, with <code>x</code> as names.</p>
     
-    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+    <h2 class="hasAnchor" id="read-more-on-our-website-"><a class="anchor" href="#read-more-on-our-website-"></a>Read more on our website!</h2>
 
-    <p>Options for parameter <code>administration</code>:</p><ul>
-<li><p><code>"Implant"</code> = Implant</p></li>
-<li><p><code>"Inhal"</code> = Inhalation</p></li>
-<li><p><code>"Instill"</code> = Instillation</p></li>
-<li><p><code>"N"</code> = nasal</p></li>
-<li><p><code>"O"</code> = oral</p></li>
-<li><p><code>"P"</code> = parenteral</p></li>
-<li><p><code>"R"</code> = rectal</p></li>
-<li><p><code>"SL"</code> = sublingual/buccal</p></li>
-<li><p><code>"TD"</code> = transdermal</p></li>
-<li><p><code>"V"</code> = vaginal</p></li>
-</ul>
-    <p>Abbreviations of return values when using <code>property = "U"</code> (unit):</p><ul>
-<li><p><code>"g"</code> = gram</p></li>
-<li><p><code>"mg"</code> = milligram</p></li>
-<li><p><code>"mcg"</code> = microgram</p></li>
-<li><p><code>"U"</code> = unit</p></li>
-<li><p><code>"TU"</code> = thousand units</p></li>
-<li><p><code>"MU"</code> = million units</p></li>
-<li><p><code>"mmol"</code> = millimole</p></li>
-<li><p><code>"ml"</code> = milliliter (e.g. eyedrops)</p></li>
-</ul>
+    
+    <p><img src='figures/logo.png' height=40px style=margin-bottom:5px /> <br />
+On our website <a href='https://msberends.gitlab.io/AMR'>https://msberends.gitlab.io/AMR</a> you can find <a href='https://msberends.gitlab.io/AMR/articles/AMR.html'>a omprehensive tutorial</a> about how to conduct AMR analysis and find <a href='https://msberends.gitlab.io/AMR/reference'>the complete documentation of all functions</a>, which reads a lot easier than in R.</p>
+    
+    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
+
+    <div class='dont-index'><p><code><a href='antibiotics.html'>antibiotics</a></code></p></div>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><span class='co'># NOT RUN {</span>
-<span class='co'># What's the ATC of amoxicillin?</span>
-<span class='fu'><a href='as.atc.html'>guess_atc</a></span>(<span class='st'>"Amoxicillin"</span>)
-<span class='co'># [1] "J01CA04"</span>
-
-<span class='co'># oral DDD (Defined Daily Dose) of amoxicillin</span>
-<span class='fu'>atc_property</span>(<span class='st'>"J01CA04"</span>, <span class='st'>"DDD"</span>, <span class='st'>"O"</span>)
-<span class='co'># parenteral DDD (Defined Daily Dose) of amoxicillin</span>
-<span class='fu'>atc_property</span>(<span class='st'>"J01CA04"</span>, <span class='st'>"DDD"</span>, <span class='st'>"P"</span>)
-
-<span class='fu'>atc_property</span>(<span class='st'>"J01CA04"</span>, <span class='kw'>property</span> <span class='kw'>=</span> <span class='st'>"groups"</span>) <span class='co'># search hierarchical groups of amoxicillin</span>
-<span class='co'># [1] "ANTIINFECTIVES FOR SYSTEMIC USE"</span>
-<span class='co'># [2] "ANTIBACTERIALS FOR SYSTEMIC USE"</span>
-<span class='co'># [3] "BETA-LACTAM ANTIBACTERIALS, PENICILLINS"</span>
-<span class='co'># [4] "Penicillins with extended spectrum"</span>
+<span class='fu'><a href='as.atc.html'>as.atc</a></span>(<span class='st'>"amcl"</span>)         <span class='co'># J01CR02</span>
+<span class='fu'>atc_name</span>(<span class='st'>"amcl"</span>)        <span class='co'># Amoxicillin and beta-lactamase inhibitor</span>
+<span class='fu'>atc_name</span>(<span class='st'>"amcl"</span>, <span class='st'>"nl"</span>)  <span class='co'># Amoxicilline met enzymremmer</span>
+<span class='fu'>atc_trivial_nl</span>(<span class='st'>"amcl"</span>)  <span class='co'># Amoxicilline/clavulaanzuur</span>
+<span class='fu'>atc_certe</span>(<span class='st'>"amcl"</span>)       <span class='co'># amcl</span>
+<span class='fu'>atc_umcg</span>(<span class='st'>"amcl"</span>)        <span class='co'># AMCL</span>
 <span class='co'># }</span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
@@ -312,9 +288,11 @@
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
       
-      <li><a href="#source">Source</a></li>
+      <li><a href="#value">Value</a></li>
 
-      <li><a href="#details">Details</a></li>
+      <li><a href="#read-more-on-our-website-">Read more on our website!</a></li>
+
+      <li><a href="#see-also">See also</a></li>
       
       <li><a href="#examples">Examples</a></li>
     </ul>

@@ -4,14 +4,38 @@
 \alias{AMR-deprecated}
 \alias{ratio}
 \alias{guess_mo}
+\alias{ab_property}
+\alias{ab_atc}
+\alias{ab_official}
+\alias{ab_name}
+\alias{ab_trivial_nl}
+\alias{ab_certe}
+\alias{ab_umcg}
+\alias{ab_tradenames}
 \title{Deprecated functions}
 \usage{
 ratio(x, ratio)
 
 guess_mo(...)
+
+ab_property(...)
+
+ab_atc(...)
+
+ab_official(...)
+
+ab_name(...)
+
+ab_trivial_nl(...)
+
+ab_certe(...)
+
+ab_umcg(...)
+
+ab_tradenames(...)
 }
 \description{
-These functions are \link{Deprecated}. They will be removed in a future release. Using the functions will give a warning with the name of the function it has been replaced by.
+These functions are so-called '\link{Deprecated}'. They will be removed in a future release. Using the functions will give a warning with the name of the function it has been replaced by (if there is one).
 }
 \section{Read more on our website!}{
 

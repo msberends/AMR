@@ -71,7 +71,7 @@ pre, code {
   font-family: 'Courier New', monospace;
   font-size: 100% !important;
   font-weight: bold;
-  background-color: transparent;
+  background-color: #f4f4f4;
 }
 pre {
   font-size: 90% !important;
@@ -84,7 +84,7 @@ kbd {
   font-size: small;
   vertical-align: text-bottom;
   color: #2c3e50;
-  background: #eee;
+  background: #eeeeee;
   font-weight: bold;
 }
 
