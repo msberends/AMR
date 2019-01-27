@@ -19,7 +19,7 @@
 # Visit our website for more info: https://msberends.gitab.io/AMR.     #
 # ==================================================================== #
 
-#' WHO Collaborating Centre for Drug Statistics Methodology
+#' WHOCC: WHO Collaborating Centre for Drug Statistics Methodology
 #'
 #' All antimicrobial drugs and their official names, ATC codes, ATC groups and defined daily dose (DDD) are included in this package, using the WHO Collaborating Centre for Drug Statistics Methodology.
 #' @section WHOCC:
@@ -34,7 +34,7 @@
 #' @rdname WHOCC
 #' @examples
 #' as.atc("meropenem")
-#' ab_name("J01DH02")
+#' atc_name("J01DH02")
 #'
-#' ab_tradenames("flucloxacillin")
+#' atc_tradenames("flucloxacillin")
 NULL

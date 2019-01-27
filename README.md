@@ -1,4 +1,4 @@
-# `AMR` (for R) <img src="man/figures/logo.png" align="right" height="120px" />
+# `AMR` (for R) <img src="docs/logo.png" align="right" height="120px" />
 
 ### Not a developer? Then please visit our website [https://msberends.gitlab.io/AMR](https://msberends.gitlab.io/AMR) to read about this package.
 **It contains documentation about all of the included functions and also a comprehensive tutorial about how to conduct AMR analysis.**
@@ -22,11 +22,11 @@ Bhanu N.M. Sinha <a href="https://orcid.org/0000-0003-1634-0010"><img src="https
 <sup>a</sup> Thesis dissertant<br>
 <sup>b</sup> Thesis advisor
 
-<a href="https://www.rug.nl"><img src="man/figures/logo_rug.png" height="60px"></a>
-<a href="https://www.umcg.nl"><img src="man/figures/logo_umcg.png" height="60px"></a>
-<a href="https://www.certe.nl"><img src="man/figures/logo_certe.png" height="60px"></a>
-<a href="http://www.eurhealth-1health.eu"><img src="man/figures/logo_eh1h.png" height="60px"></a>
-<a href="http://www.eurhealth-1health.eu"><img src="man/figures/logo_interreg.png" height="60px"></a>
+<a href="https://www.rug.nl"><img src="docs/logo_rug.png" height="60px"></a>
+<a href="https://www.umcg.nl"><img src="docs/logo_umcg.png" height="60px"></a>
+<a href="https://www.certe.nl"><img src="docs/logo_certe.png" height="60px"></a>
+<a href="http://www.eurhealth-1health.eu"><img src="docs/logo_eh1h.png" height="60px"></a>
+<a href="http://www.eurhealth-1health.eu"><img src="docs/logo_interreg.png" height="60px"></a>
 
 ## How to get this package
 All stable versions of this package [are published on CRAN](https://CRAN.R-project.org/package=AMR), the official R network with a peer-reviewed submission process.

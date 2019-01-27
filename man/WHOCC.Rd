@@ -2,7 +2,7 @@
 % Please edit documentation in R/whocc.R
 \name{WHOCC}
 \alias{WHOCC}
-\title{WHO Collaborating Centre for Drug Statistics Methodology}
+\title{WHOCC: WHO Collaborating Centre for Drug Statistics Methodology}
 \description{
 All antimicrobial drugs and their official names, ATC codes, ATC groups and defined daily dose (DDD) are included in this package, using the WHO Collaborating Centre for Drug Statistics Methodology.
 }
@@ -24,7 +24,7 @@ On our website \url{https://msberends.gitlab.io/AMR} you can find \href{https://
 
 \examples{
 as.atc("meropenem")
-ab_name("J01DH02")
+atc_name("J01DH02")
 
-ab_tradenames("flucloxacillin")
+atc_tradenames("flucloxacillin")
 }

@@ -27,6 +27,9 @@ stages:
 # debian stretch only contains R 3.3...
 image: debian:buster-slim
 
+variables:
+  WARNINGS_ARE_ERRORS: 1
+
 before_script:
   - apt-get update -qq
   # install dependencies for packages
