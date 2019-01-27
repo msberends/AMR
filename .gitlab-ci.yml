@@ -59,7 +59,9 @@ cache:
 
 R:
   stage: build
-  allow_failure: true
+  allow_failure: false
+  variables:
+    WARNINGS_ARE_ERRORS: 1
   script:
     # remove vignettes folder and get VignetteBuilder field out of DESCRIPTION file
     - rm -rf vignettes
