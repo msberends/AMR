@@ -56,9 +56,6 @@
 #' @export
 #' @rdname atc_online
 #' @importFrom dplyr %>% progress_estimated
-#' @importFrom xml2 read_html
-#' @importFrom rvest html_children html_node html_nodes html_table
-#' @importFrom curl nslookup
 #' @source \url{https://www.whocc.no/atc_ddd_alterations__cumulative/ddd_alterations/abbrevations/}
 #' @examples
 #' \donttest{
@@ -94,7 +91,7 @@ atc_online_property <- function(atc_code,
     !is.null(curl::nslookup(url, error = FALSE))
   }
   # check for connection using the ATC of amoxicillin
-  if (!has_internet(url = url)) {
+  if (!curl::has_internet(url = url)) {
     message("The URL could not be reached.")
     return(rep(NA, length(atc_code)))
   }
