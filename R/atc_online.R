@@ -19,7 +19,7 @@
 # Visit our website for more info: https://msberends.gitab.io/AMR.     #
 # ==================================================================== #
 
-#' Properties of an ATC code
+#' Get ATC properties from WHOCC website
 #'
 #' Gets data from the WHO to determine properties of an ATC (e.g. an antibiotic) like name, defined daily dose (DDD) or standard unit. \cr \strong{This function requires an internet connection.}
 #' @param atc_code a character or character vector with ATC code(s) of antibiotic(s)
@@ -77,6 +77,10 @@ atc_online_property <- function(atc_code,
                                 property,
                                 administration = 'O',
                                 url = 'https://www.whocc.no/atc_ddd_index/?code=%s&showdescription=no') {
+
+  if (!all(c("curl", "rvest", "xml2") %in% rownames(installed.packages()))) {
+    stop("Packages 'xml2', 'rvest' and 'curl' are required for this function")
+  }
 
   # check active network interface, from https://stackoverflow.com/a/5078002/4575331
   has_internet <- function(url) {

@@ -8,7 +8,7 @@
 \alias{scale_rsi_colours}
 \alias{theme_rsi}
 \alias{labels_rsi_count}
-\title{AMR bar plots with \code{ggplot}}
+\title{AMR plots with \code{ggplot2}}
 \usage{
 ggplot_rsi(data, position = NULL, x = "Antibiotic",
   fill = "Interpretation", facet = NULL, breaks = seq(0, 1, 0.1),

@@ -19,7 +19,7 @@
 # Visit our website for more info: https://msberends.gitab.io/AMR.     #
 # ==================================================================== #
 
-#' AMR bar plots with \code{ggplot}
+#' AMR plots with \code{ggplot2}
 #'
 #' Use these functions to create bar plots for antimicrobial resistance analysis. All functions rely on internal \code{\link[ggplot2]{ggplot}} functions.
 #' @param data a \code{data.frame} with column(s) of class \code{"rsi"} (see \code{\link{as.rsi}})

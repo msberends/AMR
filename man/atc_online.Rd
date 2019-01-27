@@ -4,7 +4,7 @@
 \alias{atc_online_property}
 \alias{atc_online_groups}
 \alias{atc_online_ddd}
-\title{Properties of an ATC code}
+\title{Get ATC properties from WHOCC website}
 \source{
 \url{https://www.whocc.no/atc_ddd_alterations__cumulative/ddd_alterations/abbrevations/}
 }
