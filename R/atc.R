@@ -146,16 +146,11 @@ as.atc <- function(x) {
   x.new
 }
 
-#' @rdname AMR-deprecated
-#' @export
-guess_atc <- as.atc
-
 #' @rdname as.atc
 #' @export
 is.atc <- function(x) {
   identical(class(x), "atc")
 }
-
 
 #' @exportMethod print.atc
 #' @export

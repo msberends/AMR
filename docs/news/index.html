@@ -253,16 +253,14 @@
 <ul>
 <li>Added 65 antibiotics to the <code>antibiotics</code> data set, from the <a href="http://ec.europa.eu/health/documents/community-register/html/atc.htm">Pharmaceuticals Community Register</a> of the European Commission</li>
 <li>Removed columns <code>atc_group1_nl</code> and <code>atc_group2_nl</code> from the <code>antibiotics</code> data set</li>
-<li>Function <code>atc_ddd</code> has been renamed <code><a href="../reference/atc_online.html">atc_online_ddd()</a></code>
-</li>
-<li>Function <code>atc_groups</code> has been renamed <code><a href="../reference/atc_online.html">atc_online_groups()</a></code>
-</li>
+<li>Functions <code><a href="../reference/AMR-deprecated.html">atc_ddd()</a></code> and <code><a href="../reference/AMR-deprecated.html">atc_groups()</a></code> have been renamed <code><a href="../reference/atc_online.html">atc_online_ddd()</a></code> and <code><a href="../reference/atc_online.html">atc_online_groups()</a></code>. The old function are deprecated and will be removed in a future version.</li>
+<li>Function <code><a href="../reference/AMR-deprecated.html">guess_mo()</a></code> is now deprecated in favour of <code><a href="../reference/as.mo.html">as.mo()</a></code> and will be removed in future versions</li>
+<li>Function <code><a href="../reference/AMR-deprecated.html">guess_atc()</a></code> is now deprecated in favour of <code><a href="../reference/as.atc.html">as.atc()</a></code> and will be removed in future versions</li>
 <li>Function <code><a href="../reference/eucast_rules.html">eucast_rules()</a></code>:</li>
 <li>Updated EUCAST Clinical breakpoints to <a href="http://www.eucast.org/clinical_breakpoints/">version 9.0 of 1 January 2019</a>
 </li>
 <li>Fixed a critical bug where some rules that depend on previous applied rules would not be applied adequately</li>
 <li>Emphasised in manual that penicillin is meant as benzylpenicillin (ATC <a href="https://www.whocc.no/atc_ddd_index/?code=J01CE01">J01CE01</a>)</li>
-<li>Function <code><a href="../reference/AMR-deprecated.html">guess_mo()</a></code> is now deprecated in favour of <code><a href="../reference/as.mo.html">as.mo()</a></code> and will be removed in future versions</li>
 <li>Improvements for <code><a href="../reference/as.mo.html">as.mo()</a></code>:</li>
 <li>Fix for vector containing only empty values</li>
 <li>Finds better results when input is in other languages</li>

@@ -56,6 +56,13 @@ guess_mo <- function(...) {
 
 #' @rdname AMR-deprecated
 #' @export
+guess_atc <- function(...) {
+  .Deprecated(new = "as.atc", package = "AMR")
+  as.atc(...)
+}
+
+#' @rdname AMR-deprecated
+#' @export
 ab_property <- function(...) {
   .Deprecated(new = "atc_property", package = "AMR")
   atc_property(...)
@@ -109,3 +116,18 @@ ab_tradenames <- function(...) {
   .Deprecated(new = "atc_tradenames", package = "AMR")
   atc_tradenames(...)
 }
+
+#' @rdname AMR-deprecated
+#' @export
+atc_ddd <- function(...) {
+  .Deprecated(new = "atc_online_ddd", package = "AMR")
+  atc_online_ddd(...)
+}
+
+#' @rdname AMR-deprecated
+#' @export
+atc_groups <- function(...) {
+  .Deprecated(new = "atc_online_groups", package = "AMR")
+  atc_online_groups(...)
+}
+
