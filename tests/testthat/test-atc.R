@@ -21,15 +21,15 @@
 
 context("atc.R")
 
-test_that("guess_atc works", {
-  expect_equal(as.character(guess_atc(c("J01FA01",
-                           "Erythromycin",
-                           "eryt",
-                           "ERYT",
-                           "ERY",
-                           "Erythrocin",
-                           "Eryzole",
-                           "Pediamycin"))),
+test_that("as.atc works", {
+  expect_equal(suppressWarnings(as.character(guess_atc(c("J01FA01",
+                                                         "Erythromycin",
+                                                         "eryt",
+                                                         "ERYT",
+                                                         "ERY",
+                                                         "Erythrocin",
+                                                         "Eryzole",
+                                                         "Pediamycin")))),
                rep("J01FA01", 8))
 
   expect_identical(class(as.atc("amox")), "atc")

@@ -92,6 +92,12 @@ test_that("frequency table works", {
   expect_output(print(septic_patients %>% group_by(gender) %>% freq(amox, quote = TRUE)))
   expect_output(print(septic_patients %>% group_by(gender) %>% freq(amox, markdown = TRUE)))
 
+  # quasiquotation
+  expect_output(print(septic_patients %>% freq(mo_genus(mo))))
+  expect_output(print(septic_patients %>% freq(mo, mo_genus(mo))))
+  expect_output(print(septic_patients %>% group_by(gender) %>% freq(mo_genus(mo))))
+  expect_output(print(septic_patients %>% group_by(gender) %>% freq(mo, mo_genus(mo))))
+
   # top 5
   expect_equal(
     septic_patients %>%

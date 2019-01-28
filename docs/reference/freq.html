@@ -47,7 +47,7 @@
   <script src="../extra.js"></script>
 <meta property="og:title" content="Frequency table — freq" />
 
-<meta property="og:description" content="Create a frequency table of a vector with items or a data frame. Supports quasiquotation and markdown for reports. The best practice is: data %&amp;gt;% freq(var).
+<meta property="og:description" content="Create a frequency table of a vector with items or a data.frame. Supports quasiquotation and markdown for reports. Best practice is: data %&amp;gt;% freq(var).
 top_freq can be used to get the top/bottom n items of a frequency table, with counts as names." />
 
 <meta property="og:image" content="https://msberends.gitlab.io/AMR/logo.png" />
@@ -81,7 +81,7 @@ top_freq can be used to get the top/bottom n items of a frequency table, with co
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.0.9012</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.0.9014</span>
       </span>
     </div>
 
@@ -224,7 +224,7 @@ top_freq can be used to get the top/bottom n items of a frequency table, with co
 
     <div class="ref-description">
     
-    <p>Create a frequency table of a vector with items or a data frame. Supports quasiquotation and markdown for reports. The best practice is: <code>data %&gt;% freq(var)</code>.<br />
+    <p>Create a frequency table of a vector with items or a <code>data.frame</code>. Supports quasiquotation and markdown for reports. Best practice is: <code>data %&gt;% freq(var)</code>.<br />
 <code>top_freq</code> can be used to get the top/bottom <em>n</em> items of a frequency table, with counts as names.</p>
     
     </div>
@@ -262,7 +262,7 @@ top_freq can be used to get the top/bottom n items of a frequency table, with co
     </tr>
     <tr>
       <th>...</th>
-      <td><p>up to nine different columns of <code>x</code> when <code>x</code> is a <code>data.frame</code> or <code>tibble</code>, to calculate frequencies from - see Examples</p></td>
+      <td><p>up to nine different columns of <code>x</code> when <code>x</code> is a <code>data.frame</code> or <code>tibble</code>, to calculate frequencies from - see Examples. Also supports quasiquotion.</p></td>
     </tr>
     <tr>
       <th>sort.count</th>
@@ -393,8 +393,11 @@ On our website <a href='https://msberends.gitlab.io/AMR'>https://msberends.gitla
 <span class='co'># multiple selected variables will be pasted together</span>
 <span class='no'>septic_patients</span> <span class='kw'>%&gt;%</span>
   <span class='no'>left_join_microorganisms</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span>(<span class='no'>hospital_id</span> <span class='kw'>==</span> <span class='st'>"A"</span>) <span class='kw'>%&gt;%</span>
   <span class='fu'>freq</span>(<span class='no'>genus</span>, <span class='no'>species</span>)
+
+<span class='co'># functions as quasiquotation are also supported</span>
+<span class='no'>septic_patients</span> <span class='kw'>%&gt;%</span>
+  <span class='fu'>freq</span>(<span class='fu'><a href='mo_property.html'>mo_genus</a></span>(<span class='no'>mo</span>), <span class='fu'><a href='mo_property.html'>mo_species</a></span>(<span class='no'>mo</span>))
 
 
 <span class='co'># group a variable and analyse another</span>

@@ -48,7 +48,7 @@
 #### Changed
 * Added 65 antibiotics to the `antibiotics` data set, from the [Pharmaceuticals Community Register](http://ec.europa.eu/health/documents/community-register/html/atc.htm) of the European Commission
 * Removed columns `atc_group1_nl` and `atc_group2_nl` from the `antibiotics` data set
-* Functions `atc_ddd()` and `atc_groups()` have been renamed `atc_online_ddd()` and `atc_online_groups()`. The old function are deprecated and will be removed in a future version.
+* Functions `atc_ddd()` and `atc_groups()` have been renamed `atc_online_ddd()` and `atc_online_groups()`. The old functions are deprecated and will be removed in a future version.
 * Function `guess_mo()` is now deprecated in favour of `as.mo()` and will be removed in future versions
 * Function `guess_atc()` is now deprecated in favour of `as.atc()` and will be removed in future versions
 * Function `eucast_rules()`:
@@ -78,6 +78,22 @@
 * Summaries of class `mo` will now return the top 3 and the unique count, e.g. using `summary(mo)`
 * Small text updates to summaries of class `rsi` and `mic`
 * Frequency tables (`freq()` function):
+  * Support for tidyverse quasiquotation! So now you can create frequency tables of function outcomes:
+    ```r
+    # Determine genus of microorganisms (mo) in `septic_patients` data set:
+    # OLD WAY
+    septic_patients %>%
+      mutate(genus = mo_genus(mo)) %>%
+      freq(genus)
+    # NEW WAY
+    septic_patients %>% 
+      freq(mo_genus(mo))
+    
+    # Even supports grouping variables:
+    septic_patients %>%
+      group_by(gender) %>% 
+      freq(mo_genus(mo))
+    ```
   * Header info is now available as a list, with the `header` function
   * Added header info for class `mo` to show unique count of families, genera and species
   * Now honours the `decimal.mark` setting, which just like `format` defaults to `getOption("OutDec")`

@@ -21,10 +21,10 @@
 
 #' Frequency table
 #'
-#' Create a frequency table of a vector with items or a data frame. Supports quasiquotation and markdown for reports. The best practice is: \code{data \%>\% freq(var)}.\cr
+#' Create a frequency table of a vector with items or a \code{data.frame}. Supports quasiquotation and markdown for reports. Best practice is: \code{data \%>\% freq(var)}.\cr
 #' \code{top_freq} can be used to get the top/bottom \emph{n} items of a frequency table, with counts as names.
 #' @param x vector of any class or a \code{\link{data.frame}}, \code{\link{tibble}} (may contain a grouping variable) or \code{\link{table}}
-#' @param ... up to nine different columns of \code{x} when \code{x} is a \code{data.frame} or \code{tibble}, to calculate frequencies from - see Examples
+#' @param ... up to nine different columns of \code{x} when \code{x} is a \code{data.frame} or \code{tibble}, to calculate frequencies from - see Examples. Also supports quasiquotion.
 #' @param sort.count sort on count, i.e. frequencies. This will be \code{TRUE} at default for everything except when using grouping variables.
 #' @param nmax number of row to print. The default, \code{15}, uses \code{\link{getOption}("max.print.freq")}. Use \code{nmax = 0}, \code{nmax = Inf}, \code{nmax = NULL} or \code{nmax = NA} to print all rows.
 #' @param na.rm a logical value indicating whether \code{NA} values should be removed from the frequency table. The header (if set) will always print the amount of \code{NA}s.
@@ -67,10 +67,11 @@
 #' The function \code{top_freq} uses \code{\link[dplyr]{top_n}} internally and will include more than \code{n} rows if there are ties.
 #' @importFrom stats fivenum sd mad
 #' @importFrom grDevices boxplot.stats
-#' @importFrom dplyr %>% arrange arrange_at desc filter_at funs group_by mutate mutate_at n n_distinct pull select summarise tibble ungroup vars all_vars
+#' @importFrom dplyr %>% arrange arrange_at bind_cols desc filter_at funs group_by mutate mutate_at n n_distinct pull select summarise tibble ungroup vars all_vars
 #' @importFrom utils browseVignettes
 #' @importFrom hms is.hms
 #' @importFrom crayon red green silver
+#' @importFrom rlang enquos eval_tidy as_name
 #' @keywords summary summarise frequency freq
 #' @rdname freq
 #' @name freq
@@ -99,8 +100,11 @@
 #' # multiple selected variables will be pasted together
 #' septic_patients %>%
 #'   left_join_microorganisms %>%
-#'   filter(hospital_id == "A") %>%
 #'   freq(genus, species)
+#'
+#' # functions as quasiquotation are also supported
+#' septic_patients %>%
+#'   freq(mo_genus(mo), mo_species(mo))
 #'
 #'
 #' # group a variable and analyse another
@@ -216,11 +220,6 @@ frequency_tbl <- function(x,
   }
 
   if (any(class(x) == "data.frame")) {
-    x.group <- group_vars(x)
-    if (length(x.group) > 1) {
-      x.group <- x.group[1L]
-      warning("freq supports one grouping variable, only `", x.group, "` will be kept.", call. = FALSE)
-    }
 
     if (is.null(x.name)) {
       x.name <- deparse(substitute(x))
@@ -228,56 +227,88 @@ frequency_tbl <- function(x,
     if (x.name == ".") {
       x.name <- NULL
     }
-    dots <- base::eval(base::substitute(base::alist(...)))
-    ndots <- length(dots)
 
-    if (ndots < 10) {
-      cols <- as.character(dots)
-      if (!all(cols %in% colnames(x))) {
-        stop("one or more columns not found: `", paste(cols, collapse = "`, `"), "`", call. = FALSE)
-      }
-      if (length(x.group) > 0) {
-        x.group_cols <- c(x.group, cols)
-        # if (droplevels == TRUE) {
-        #   x <- x %>% mutate_at(vars(x.group_cols), droplevels)
-        # }
-        suppressWarnings(
-          df <- x %>%
-            group_by_at(vars(x.group_cols)) %>%
-            summarise(count = n())
-        )
-        if (na.rm == TRUE) {
-          df <- df %>% filter_at(vars(cols), all_vars(!is.na(.)))
-        }
-        if (!missing(sort.count)) {
-          if (sort.count == TRUE) {
-            df <- df %>% arrange_at(c(x.group, "count"), desc)
-          }
-        }
-        df <- df %>%
-          mutate(cum_count = cumsum(count))
-
-        df.topleft <- df[1, 1]
-        df <- df %>%
-          ungroup() %>%
-          # do not repeat group labels
-          mutate_at(vars(x.group), funs(ifelse(lag(.) == ., "", .)))
-        df[1, 1] <- df.topleft
-        colnames(df)[1:2] <- c("group", "item")
-
-        if (!is.null(levels(df$item)) & droplevels == TRUE) {
-          # is factor
-          df <- df %>% filter(count != 0)
-        }
-      }
-      if (length(cols) > 0) {
-        x <- x[, cols]
-      }
-    } else if (ndots >= 10) {
-      stop("A maximum of 9 columns can be analysed at the same time.", call. = FALSE)
-    } else {
-      cols <- NULL
+    x.group <- group_vars(x)
+    if (length(x.group) > 1) {
+      x.group <- x.group[1L]
+      warning("freq supports one grouping variable, only `", x.group, "` will be kept.", call. = FALSE)
     }
+
+    user_exprs <- enquos(...)
+
+    if (length(user_exprs) > 0) {
+      new_list <- list(0)
+
+      for (i in 1:length(user_exprs)) {
+        new_list[[i]] <- eval_tidy(user_exprs[[i]], data = x)
+        this_name <- try( as_name(user_exprs[[i]]) , silent = TRUE)
+        if (class(this_name) == "try-error") {
+          this_name <- paste0("V", i)
+        }
+        cols <- c(cols, this_name)
+      }
+
+      if (length(new_list) == 1 & length(x.group) == 0) {
+        # is now character
+        x <- new_list[[1]]
+        df <- NULL
+        cols <- NULL
+      } else {
+        # create data frame
+        df <- as.data.frame(new_list, col.names = paste0("V", 1:length(new_list)), stringsAsFactors = FALSE)
+      }
+    } else {
+      # complete data frame
+      df <- x
+    }
+
+    # support grouping variables
+    if (length(x.group) > 0) {
+      x.group_cols <- c(x.group, cols)
+      x <- bind_cols(x, df)
+      # if (droplevels == TRUE) {
+      #   x <- x %>% mutate_at(vars(x.group_cols), droplevels)
+      # }
+      suppressWarnings(
+        df <- x %>%
+          group_by_at(vars(x.group_cols)) %>%
+          summarise(count = n())
+      )
+      if (na.rm == TRUE) {
+        df <- df %>% filter_at(vars(x.group_cols), all_vars(!is.na(.)))
+      }
+      if (!missing(sort.count)) {
+        if (sort.count == TRUE) {
+          df <- df %>% arrange_at(c(x.group_cols, "count"), desc)
+        }
+      }
+      df <- df %>%
+        mutate(cum_count = cumsum(count))
+
+      df.topleft <- df[1, 1]
+      df <- df %>%
+        ungroup() %>%
+        # do not repeat group labels
+        mutate_at(vars(x.group), funs(ifelse(lag(.) == ., "", .)))
+      df[1, 1] <- df.topleft
+      colnames(df)[1:2] <- c("group", "item")
+
+      if (!is.null(levels(df$item)) & droplevels == TRUE) {
+        # is factor
+        df <- df %>% filter(count != 0)
+      }
+    } else {
+      if (!is.null(df)) {
+        # no groups, multiple values like: septic_patients %>% freq(mo, mo_genus(mo))
+        x <- df
+        df <- NULL
+        cols <- NULL
+      }
+    }
+    if (length(cols) > 0 & is.data.frame(x)) {
+      x <- x[, cols]
+    }
+
   } else if (any(class(x) == "table")) {
     x <- as.data.frame(x, stringsAsFactors = FALSE)
     # now this DF contains 3 columns: the 2 vars and a Freq column
@@ -286,7 +317,7 @@ frequency_tbl <- function(x,
              times = x$Freq)
     x.name <- "a `table` object"
     cols <- NULL
-    #mult.columns <- 2
+    # mult.columns <- 2
   } else {
     x.name <- NULL
     cols <- NULL

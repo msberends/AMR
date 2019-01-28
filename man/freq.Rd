@@ -34,7 +34,7 @@ header(f, property = NULL)
 \arguments{
 \item{x}{vector of any class or a \code{\link{data.frame}}, \code{\link{tibble}} (may contain a grouping variable) or \code{\link{table}}}
 
-\item{...}{up to nine different columns of \code{x} when \code{x} is a \code{data.frame} or \code{tibble}, to calculate frequencies from - see Examples}
+\item{...}{up to nine different columns of \code{x} when \code{x} is a \code{data.frame} or \code{tibble}, to calculate frequencies from - see Examples. Also supports quasiquotion.}
 
 \item{sort.count}{sort on count, i.e. frequencies. This will be \code{TRUE} at default for everything except when using grouping variables.}
 
@@ -78,7 +78,7 @@ header(f, property = NULL)
 A \code{data.frame} (with an additional class \code{"frequency_tbl"}) with five columns: \code{item}, \code{count}, \code{percent}, \code{cum_count} and \code{cum_percent}.
 }
 \description{
-Create a frequency table of a vector with items or a data frame. Supports quasiquotation and markdown for reports. The best practice is: \code{data \%>\% freq(var)}.\cr
+Create a frequency table of a vector with items or a \code{data.frame}. Supports quasiquotation and markdown for reports. Best practice is: \code{data \%>\% freq(var)}.\cr
 \code{top_freq} can be used to get the top/bottom \emph{n} items of a frequency table, with counts as names.
 }
 \details{
@@ -135,8 +135,11 @@ septic_patients \%>\%
 # multiple selected variables will be pasted together
 septic_patients \%>\%
   left_join_microorganisms \%>\%
-  filter(hospital_id == "A") \%>\%
   freq(genus, species)
+
+# functions as quasiquotation are also supported
+septic_patients \%>\%
+  freq(mo_genus(mo), mo_species(mo))
 
 
 # group a variable and analyse another
