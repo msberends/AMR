@@ -3,6 +3,9 @@
 
 #### New
 * **BREAKING**: removed deprecated functions, parameters and references to 'bactid'. Use `as.mo()` to identify an MO code.
+* Support for data from [WHONET](https://whonet.org/) and [EARS-Net](https://ecdc.europa.eu/en/about-us/partnerships-and-networks/disease-and-laboratory-networks/ears-net) (European Antimicrobial Resistance Surveillance Network):
+  * Exported files from WHONET can be read and used in this package. For functions like `first_isolate()` and `eucast_rules()`, all parameters will be filled in automatically.
+  * This package now knows all antibiotic abbrevations by EARS-Net (which are also being used by WHONET) - the `antibiotics` data set now contains a column `ears_net`.
 * All `ab_*` functions are deprecated and replaced by `atc_*` functions:
   ```r
   ab_property -> atc_property()
@@ -75,10 +78,11 @@
 * Merged data sets `microorganisms.certe` and `microorganisms.umcg` into `microorganisms.codes`
 * Function `mo_taxonomy()` now contains the kingdom too
 * Reduce false positives for `is.rsi.eligible()`
+* New colours for `scale_rsi_colours()`
 * Summaries of class `mo` will now return the top 3 and the unique count, e.g. using `summary(mo)`
 * Small text updates to summaries of class `rsi` and `mic`
 * Frequency tables (`freq()` function):
-  * Support for tidyverse quasiquotation! So now you can create frequency tables of function outcomes:
+  * Support for tidyverse quasiquotation! Now you can create frequency tables of function outcomes:
     ```r
     # Determine genus of microorganisms (mo) in `septic_patients` data set:
     # OLD WAY

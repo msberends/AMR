@@ -220,6 +220,14 @@ first_isolate <- function(tbl,
     col_keyantibiotics <- NULL
   }
 
+  # -- specimen
+  if (is.null(col_specimen)) {
+    col_specimen <- search_type_in_df(tbl = tbl, type = "specimen")
+  }
+  if (isFALSE(col_specimen)) {
+    col_specimen <- NULL
+  }
+
   # check if columns exist
   check_columns_existance <- function(column, tblname = tbl) {
     if (NROW(tblname) <= 1 | NCOL(tblname) <= 1) {

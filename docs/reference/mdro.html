@@ -80,7 +80,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.0.9012</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.0.9015</span>
       </span>
     </div>
 
@@ -114,6 +114,13 @@
         <span class="fa fa-dice"></span>
          
         Predict antimicrobial resistance
+      </a>
+    </li>
+    <li>
+      <a href="../articles/WHONET.html">
+        <span class="fa fa-globe-americas"></span>
+         
+        Work with WHONET data
       </a>
     </li>
     <li>
@@ -618,7 +625,7 @@ On our website <a href='https://msberends.gitlab.io/AMR'>https://msberends.gitla
 <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>dplyr</span>)
 
 <span class='no'>septic_patients</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span>(<span class='kw'>EUCAST</span> <span class='kw'>=</span> <span class='fu'>mdro</span>(<span class='no'>.</span>),
+  <span class='fu'><a href='https://www.rdocumentation.org/packages/dplyr/topics/mutate'>mutate</a></span>(<span class='kw'>EUCAST</span> <span class='kw'>=</span> <span class='fu'>mdro</span>(<span class='no'>.</span>),
          <span class='kw'>BRMO</span> <span class='kw'>=</span> <span class='fu'>brmo</span>(<span class='no'>.</span>))
 <span class='co'># }</span></pre>
   </div>

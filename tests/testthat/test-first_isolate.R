@@ -160,7 +160,7 @@ test_that("first isolates work", {
 
   # look for columns itself
   expect_message(first_isolate(septic_patients))
-  expect_error(first_isolate(septic_patients %>%
+  expect_message(first_isolate(septic_patients %>%
                                mutate(mo = as.character(mo)) %>%
                                left_join_microorganisms()))
 

@@ -60,10 +60,15 @@ as.atc <- function(x) {
   x[!x %like% "[A-Z][0-9]{2}[A-Z]{2}[0-9]{2}"] <- gsub("[^a-zA-Z]+", "", x[!x %like% "[A-Z][0-9]{2}[A-Z]{2}[0-9]{2}"])
 
   x.bak <- x
-  x <- unique(x[!is.na(x)])
+  x <- unique(x)
   failures <- character(0)
 
   for (i in 1:length(x)) {
+    if (is.na(x[i]) | is.null(x[i]) | identical(x[i], "")) {
+      x.new[i] <- x[i]
+      next
+    }
+
     fail <- TRUE
 
     # first try atc
@@ -78,6 +83,13 @@ as.atc <- function(x) {
       warning("ATC code ", x[i], " is not yet in the `antibiotics` data set.")
       fail <- FALSE
       x.new[is.na(x.new) & x.bak == x[i]] <- x[i]
+    }
+
+    # try abbreviation of EARS-Net/WHONET
+    found <- AMR::antibiotics[which(tolower(AMR::antibiotics$ears_net) == tolower(x[i])),]$atc
+    if (length(found) > 0) {
+      fail <- FALSE
+      x.new[is.na(x.new) & x.bak == x[i]] <- found[1L]
     }
 
     # try abbreviation of certe and glims

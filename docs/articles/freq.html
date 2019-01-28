@@ -40,7 +40,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.0.9012</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.0.9015</span>
       </span>
     </div>
 
@@ -74,6 +74,13 @@
         <span class="fa fa-dice"></span>
          
         Predict antimicrobial resistance
+      </a>
+    </li>
+    <li>
+      <a href="../articles/WHONET.html">
+        <span class="fa fa-globe-americas"></span>
+         
+        Work with WHONET data
       </a>
     </li>
     <li>
@@ -178,7 +185,7 @@
       <h1>How to create frequency tables</h1>
                         <h4 class="author">Matthijs S. Berends</h4>
             
-            <h4 class="date">26 January 2019</h4>
+            <h4 class="date">28 January 2019</h4>
       
       
       <div class="hidden name"><code>freq.Rmd</code></div>
@@ -197,7 +204,7 @@
 <a href="#frequencies-of-one-variable" class="anchor"></a>Frequencies of one variable</h2>
 <p>To only show and quickly review the content of one variable, you can just select this variable in various ways. Let’s say we want to get the frequencies of the <code>gender</code> variable of the <code>septic_patients</code> dataset:</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1">septic_patients <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="../reference/freq.html">freq</a></span>(gender)</a></code></pre></div>
-<p><strong>Frequency table of <code>gender</code></strong></p>
+<p><strong>Frequency table</strong></p>
 <table class="table">
 <thead><tr class="header">
 <th align="left"></th>
@@ -248,7 +255,7 @@
 <p>So now the <code>genus</code> and <code>species</code> variables are available. A frequency table of these combined variables can be created like this:</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1">my_patients <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb5-2" data-line-number="2"><span class="st">  </span><span class="kw"><a href="../reference/freq.html">freq</a></span>(genus, species, <span class="dt">nmax =</span> <span class="dv">15</span>)</a></code></pre></div>
-<p><strong>Frequency table of <code>genus</code> and <code>species</code></strong></p>
+<p><strong>Frequency table</strong></p>
 <table class="table">
 <thead><tr class="header">
 <th align="left"></th>
@@ -392,7 +399,7 @@
 <a class="sourceLine" id="cb6-2" data-line-number="2">septic_patients <span class="op">%&gt;%</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb6-3" data-line-number="3"><span class="st">  </span><span class="kw">distinct</span>(patient_id, <span class="dt">.keep_all =</span> <span class="ot">TRUE</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb6-4" data-line-number="4"><span class="st">  </span><span class="kw"><a href="../reference/freq.html">freq</a></span>(age, <span class="dt">nmax =</span> <span class="dv">5</span>, <span class="dt">header =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
-<p><strong>Frequency table of <code>age</code></strong><br>
+<p><strong>Frequency table</strong><br>
 Class: numeric<br>
 Length: 981 (of which NA: 0 = 0.00%)<br>
 Unique: 73</p>
@@ -471,7 +478,7 @@ Outliers: 15 (unique count: 12)</p>
 <p><code>sort.count</code> is <code>TRUE</code> by default. Compare this default behaviour…</p>
 <div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1">septic_patients <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb7-2" data-line-number="2"><span class="st">  </span><span class="kw"><a href="../reference/freq.html">freq</a></span>(hospital_id)</a></code></pre></div>
-<p><strong>Frequency table of <code>hospital_id</code></strong></p>
+<p><strong>Frequency table</strong></p>
 <table class="table">
 <thead><tr class="header">
 <th align="left"></th>
@@ -519,7 +526,7 @@ Outliers: 15 (unique count: 12)</p>
 <p>… with this, where items are now sorted on count:</p>
 <div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1">septic_patients <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb8-2" data-line-number="2"><span class="st">  </span><span class="kw"><a href="../reference/freq.html">freq</a></span>(hospital_id, <span class="dt">sort.count =</span> <span class="ot">FALSE</span>)</a></code></pre></div>
-<p><strong>Frequency table of <code>hospital_id</code></strong></p>
+<p><strong>Frequency table</strong></p>
 <table class="table">
 <thead><tr class="header">
 <th align="left"></th>
@@ -567,7 +574,7 @@ Outliers: 15 (unique count: 12)</p>
 <p>All classes will be printed into the header (default is <code>FALSE</code> when using markdown like this document). Variables with the new <code>rsi</code> class of this AMR package are actually ordered factors and have three classes (look at <code>Class</code> in the header):</p>
 <div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" data-line-number="1">septic_patients <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb9-2" data-line-number="2"><span class="st">  </span><span class="kw"><a href="../reference/freq.html">freq</a></span>(amox, <span class="dt">header =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
-<p><strong>Frequency table of <code>amox</code></strong><br>
+<p><strong>Frequency table</strong><br>
 Class: factor &gt; ordered &gt; rsi (numeric)<br>
 Levels: S &lt; I &lt; R<br>
 Length: 2,000 (of which NA: 828 = 41.40%)<br>
@@ -616,7 +623,7 @@ Unique: 3</p>
 <p>Frequencies of dates will show the oldest and newest date in the data, and the amount of days between them:</p>
 <div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" data-line-number="1">septic_patients <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb10-2" data-line-number="2"><span class="st">  </span><span class="kw"><a href="../reference/freq.html">freq</a></span>(date, <span class="dt">nmax =</span> <span class="dv">5</span>, <span class="dt">header =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
-<p><strong>Frequency table of <code>date</code></strong><br>
+<p><strong>Frequency table</strong><br>
 Class: Date (numeric)<br>
 Length: 2,000 (of which NA: 0 = 0.00%)<br>
 Unique: 1,140</p>
@@ -698,7 +705,7 @@ Median: 31 July 2009 (47.39%)</p>
 <p>With the <code>na.rm</code> parameter (defaults to <code>TRUE</code>, but they will always be shown into the header), you can include <code>NA</code> values in the frequency table:</p>
 <div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" data-line-number="1">septic_patients <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb13-2" data-line-number="2"><span class="st">  </span><span class="kw"><a href="../reference/freq.html">freq</a></span>(amox, <span class="dt">na.rm =</span> <span class="ot">FALSE</span>)</a></code></pre></div>
-<p><strong>Frequency table of <code>amox</code></strong></p>
+<p><strong>Frequency table</strong></p>
 <table class="table">
 <thead><tr class="header">
 <th align="left"></th>
@@ -751,7 +758,7 @@ Median: 31 July 2009 (47.39%)</p>
 <p>The default frequency tables shows row indices. To remove them, use <code>row.names = FALSE</code>:</p>
 <div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" data-line-number="1">septic_patients <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb14-2" data-line-number="2"><span class="st">  </span><span class="kw"><a href="../reference/freq.html">freq</a></span>(hospital_id, <span class="dt">row.names =</span> <span class="ot">FALSE</span>)</a></code></pre></div>
-<p><strong>Frequency table of <code>hospital_id</code></strong></p>
+<p><strong>Frequency table</strong></p>
 <table class="table">
 <thead><tr class="header">
 <th align="left">Item</th>
@@ -799,7 +806,7 @@ Median: 31 July 2009 (47.39%)</p>
 <p>The <code>markdown</code> parameter is <code>TRUE</code> at default in non-interactive sessions, like in reports created with R Markdown. This will always print all rows, unless <code>nmax</code> is set.</p>
 <div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" data-line-number="1">septic_patients <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb15-2" data-line-number="2"><span class="st">  </span><span class="kw"><a href="../reference/freq.html">freq</a></span>(hospital_id, <span class="dt">markdown =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
-<p><strong>Frequency table of <code>hospital_id</code></strong></p>
+<p><strong>Frequency table</strong></p>
 <table class="table">
 <thead><tr class="header">
 <th align="left"></th>

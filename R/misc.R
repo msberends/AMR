@@ -130,11 +130,18 @@ search_type_in_df <- function(tbl, type) {
   # try to find columns based on type
   found <- NULL
 
+  colnames(tbl) <- trimws(colnames(tbl))
+
   # -- mo
   if (type == "mo") {
     if ("mo" %in% lapply(tbl, class)) {
       found <- colnames(tbl)[lapply(tbl, class) == "mo"][1]
+    } else if (any(colnames(tbl) %like% "^(mo|microorganism|organism|bacteria)")) {
+      found <- colnames(tbl)[colnames(tbl) %like% "^(mo|microorganism|organism|bacteria)"][1]
+    } else if (any(colnames(tbl) %like% "species")) {
+      found <- colnames(tbl)[colnames(tbl) %like% "species"][1]
     }
+
   }
   # -- key antibiotics
   if (type == "keyantibiotics") {
@@ -154,15 +161,23 @@ search_type_in_df <- function(tbl, type) {
   }
   # -- patient id
   if (type == "patient_id") {
-    if (any(colnames(tbl) %like% "^(patient|patid)")) {
-      found <- colnames(tbl)[colnames(tbl) %like% "^(patient|patid)"][1]
+    if (any(colnames(tbl) %like% "^(identification |patient|patid)")) {
+      found <- colnames(tbl)[colnames(tbl) %like% "^(identification |patient|patid)"][1]
+    }
+  }
+  # -- specimen
+  if (type == "specimen") {
+    if (any(colnames(tbl) %like% "(specimen type)")) {
+      found <- colnames(tbl)[colnames(tbl) %like% "(specimen type)"][1]
+    } else if (any(colnames(tbl) %like% "^(specimen)")) {
+      found <- colnames(tbl)[colnames(tbl) %like% "^(specimen)"][1]
     }
   }
 
   if (!is.null(found)) {
     msg <- paste0("NOTE: Using column `", bold(found), "` as input for `col_", type, "`.")
-    if (type == "keyantibiotics") {
-      msg <- paste(msg, "Use", bold("col_keyantibiotics = FALSE"), "to prevent this.")
+    if (type %in% c("keyantibiotics", "specimen")) {
+      msg <- paste(msg, "Use", bold(paste0("col_", type), " = FALSE"), "to prevent this.")
     }
     message(blue(msg))
   }

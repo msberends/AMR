@@ -78,7 +78,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.0.9014</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.0.9015</span>
       </span>
     </div>
 
@@ -112,6 +112,13 @@
         <span class="fa fa-dice"></span>
          
         Predict antimicrobial resistance
+      </a>
+    </li>
+    <li>
+      <a href="../articles/WHONET.html">
+        <span class="fa fa-globe-americas"></span>
+         
+        Work with WHONET data
       </a>
     </li>
     <li>
@@ -229,6 +236,12 @@
 <ul>
 <li>
 <strong>BREAKING</strong>: removed deprecated functions, parameters and references to ‘bactid’. Use <code><a href="../reference/as.mo.html">as.mo()</a></code> to identify an MO code.</li>
+<li>Support for data from <a href="https://whonet.org/">WHONET</a> and <a href="https://ecdc.europa.eu/en/about-us/partnerships-and-networks/disease-and-laboratory-networks/ears-net">EARS-Net</a> (European Antimicrobial Resistance Surveillance Network):
+<ul>
+<li>Exported files from WHONET can be read and used in this package. For functions like <code><a href="../reference/first_isolate.html">first_isolate()</a></code> and <code><a href="../reference/eucast_rules.html">eucast_rules()</a></code>, all parameters will be filled in automatically.</li>
+<li>This package now knows all antibiotic abbrevations by EARS-Net (which are also being used by WHONET) - the <code>antibiotics</code> data set now contains a column <code>ears_net</code>.</li>
+</ul>
+</li>
 <li>
 <p>All <code>ab_*</code> functions are deprecated and replaced by <code>atc_*</code> functions:</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1">ab_property -&gt;<span class="st"> </span><span class="kw"><a href="../reference/atc_property.html">atc_property</a></span>()</a>
@@ -318,6 +331,8 @@ These functions use <code><a href="../reference/as.atc.html">as.atc()</a></code>
 <li>Function <code><a href="../reference/mo_property.html">mo_taxonomy()</a></code> now contains the kingdom too</li>
 <li>Reduce false positives for <code><a href="../reference/as.rsi.html">is.rsi.eligible()</a></code>
 </li>
+<li>New colours for <code><a href="../reference/ggplot_rsi.html">scale_rsi_colours()</a></code>
+</li>
 <li>Summaries of class <code>mo</code> will now return the top 3 and the unique count, e.g. using <code><a href="https://www.rdocumentation.org/packages/base/topics/summary">summary(mo)</a></code>
 </li>
 <li>Small text updates to summaries of class <code>rsi</code> and <code>mic</code>
@@ -325,7 +340,7 @@ These functions use <code><a href="../reference/as.atc.html">as.atc()</a></code>
 <li>Frequency tables (<code><a href="../reference/freq.html">freq()</a></code> function):
 <ul>
 <li>
-<p>Support for tidyverse quasiquotation! So now you can create frequency tables of function outcomes:</p>
+<p>Support for tidyverse quasiquotation! Now you can create frequency tables of function outcomes:</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="co"># Determine genus of microorganisms (mo) in `septic_patients` data set:</span></a>
 <a class="sourceLine" id="cb5-2" data-line-number="2"><span class="co"># OLD WAY</span></a>
 <a class="sourceLine" id="cb5-3" data-line-number="3">septic_patients <span class="op">%&gt;%</span></a>
@@ -776,7 +791,7 @@ These functions use <code><a href="../reference/as.atc.html">as.atc()</a></code>
 <ul>
 <li>Full support for Windows, Linux and macOS</li>
 <li>Full support for old R versions, only R-3.0.0 (April 2013) or later is needed (needed packages may have other dependencies)</li>
-<li>Function <code>n_rsi</code> to count cases where antibiotic test results were available, to be used in conjunction with <code><a href="https://dplyr.tidyverse.org/reference/summarise.html">dplyr::summarise</a></code>, see ?rsi</li>
+<li>Function <code>n_rsi</code> to count cases where antibiotic test results were available, to be used in conjunction with <code><a href="https://www.rdocumentation.org/packages/dplyr/topics/summarise">dplyr::summarise</a></code>, see ?rsi</li>
 <li>Function <code>guess_bactid</code> to <strong>determine the ID</strong> of a microorganism based on genus/species or known abbreviations like MRSA</li>
 <li>Function <code>guess_atc</code> to <strong>determine the ATC</strong> of an antibiotic based on name, trade name, or known abbreviations</li>
 <li>Function <code>freq</code> to create <strong>frequency tables</strong>, with additional info in a header</li>

@@ -4,7 +4,7 @@
 
 ----
 
-`AMR` is a free and open-source [R package](https://www.r-project.org) to simplify the analysis and prediction of Antimicrobial Resistance (AMR) and to work with microbial and antimicrobial properties by using evidence-based methods.
+`AMR` is a free and open-source [R package](https://www.r-project.org) to simplify the analysis and prediction of Antimicrobial Resistance (AMR) and to work with microbial and antimicrobial properties by using evidence-based methods. It supports any table format, including WHONET/EARS-Net data.
 
 We created this package for both academic research and routine analysis at the Faculty of Medical Sciences of the University of Groningen and the Medical Microbiology & Infection Prevention (MMBI) department of the University Medical Center Groningen (UMCG).
 This R package is actively maintained and free software; you can freely use and distribute it for both personal and commercial (but **not** patent) purposes under the terms of the GNU General Public Licence version 2.0 (GPL-2), as published by the Free Software Foundation. Read the full licence [here](./LICENSE-text.html).
@@ -48,7 +48,7 @@ Developers
   * Software developers
   * Web application / Shiny developers
 
-### Get this package
+## Get this package
 
 This package is available on the official R network (CRAN), which has a peer-reviewed submission process. Install this package in R with:
 
@@ -58,11 +58,34 @@ install.packages("AMR")
 
 It will be downloaded and installed automatically. For RStudio, click on the menu *Tools* > *Install Packages...* and then type in "AMR" and press <kbd>Install</kbd>.
 
-### Get started
+
+The latest and unpublished development version can be installed with (precaution: may be unstable):
+```r
+install.packages("devtools")
+devtools::install_gitlab("msberends/AMR")
+```
+
+## Get started
 
 To find out how to conduct AMR analysis, please [continue reading here to get started](./articles/AMR.html) or click the links in the 'How to' menu.
 
-### Short introduction
+## Short introduction
+
+#### WHONET / EARS-Net
+
+<img src="./whonet.png">
+
+We support data (exported files) from WHONET. The `AMR` package contains a data set `antibiotics` which also contains all EARS-Net antibiotic abbreviations. Furthermore, when using WHONET data as input for analysis all input parameters will be set automatically.
+
+Read our tutorial about [how to work with WHONET data here](./articles/WHONET.html).
+
+#### Antimicrobial reference data
+
+<div><img src="reference/figures/logo_who.png" height="75px" class="logo_img"><p class="logo_txt">WHO Collaborating Centre for Drug Statistics Methodology</p></div>
+
+This package contains **all ~500 antimicrobial drugs** and their Anatomical Therapeutic Chemical (ATC) codes, ATC groups and Defined Daily Dose (DDD) from the World Health Organization Collaborating Centre for Drug Statistics Methodology (WHOCC, https://www.whocc.no) and the [Pharmaceuticals Community Register of the European Commission](http://ec.europa.eu/health/documents/community-register/html/atc.htm).
+
+Read more about the data from WHOCC [in our manual](./reference/WHOCC.html).
 
 #### Microbial (taxonomic) reference data
 
@@ -73,14 +96,6 @@ This package contains the **complete microbial taxonomic data** (with all nine t
 All ~20,000 (sub)species from **the taxonomic kingdoms Bacteria, Fungi and Protozoa are included in this package**, as well as all their ~2,500 previously accepted names known to ITIS. Furthermore, the responsible authors and year of publication are available. This allows users to use authoritative taxonomic information for their data analysis on any microorganism, not only human pathogens. It also helps to quickly determine the Gram stain of bacteria, since ITIS honours the taxonomic branching order of bacterial phyla according to Cavalier-Smith (2002), which defines that all bacteria are classified into either subkingdom Negibacteria or subkingdom Posibacteria. 
 
 Read more about the data from ITIS [in our manual](./reference/ITIS.html).
-
-#### Antimicrobial reference data
-
-<div><img src="reference/figures/logo_who.png" height="75px" class="logo_img"><p class="logo_txt">WHO Collaborating Centre for Drug Statistics Methodology</p></div>
-
-This package contains **all ~500 antimicrobial drugs** and their Anatomical Therapeutic Chemical (ATC) codes, ATC groups and Defined Daily Dose (DDD) from the World Health Organization Collaborating Centre for Drug Statistics Methodology (WHOCC, https://www.whocc.no) and the [Pharmaceuticals Community Register of the European Commission](http://ec.europa.eu/health/documents/community-register/html/atc.htm).
-
-Read more about the data from WHOCC [in our manual](./reference/WHOCC.html).
 
 #### Overview of functions
 

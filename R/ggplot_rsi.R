@@ -313,8 +313,8 @@ scale_y_percent <- function(breaks = seq(0, 1, 0.1), limits = NULL) {
 #' @rdname ggplot_rsi
 #' @export
 scale_rsi_colours <- function() {
-  ggplot2::scale_fill_brewer(palette = "RdYlGn")
-  #ggplot2::scale_fill_gradient2(low = "#d5613e", mid = "#ae5ac0", high = "#7daf44")
+  #ggplot2::scale_fill_brewer(palette = "RdYlGn")
+  ggplot2::scale_fill_manual(values = c("#b22222", "#ae9c20", "#7cfc00"))
 }
 
 #' @rdname ggplot_rsi

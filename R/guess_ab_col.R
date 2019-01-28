@@ -21,7 +21,7 @@
 
 #' Guess antibiotic column
 #'
-#' This tries to find a column name in a data set based on information from the \code{\link{antibiotics}} data set. You can look for an antibiotic (trade) name or abbreviation and it will search the \code{data.frame} for any column containing a name or ATC code of that antibiotic.
+#' This tries to find a column name in a data set based on information from the \code{\link{antibiotics}} data set. Also supports WHONET abbreviations. You can look for an antibiotic (trade) name or abbreviation and it will search the \code{data.frame} for any column containing a name or ATC code of that antibiotic.
 #' @param tbl a \code{data.frame}
 #' @param col a character to look for
 #' @param verbose a logical to indicate whether additional info should be printed
@@ -40,6 +40,16 @@
 #' guess_ab_col(df, "J01AA07", verbose = TRUE)
 #' # using column `tetr` for col "J01AA07"
 #' # [1] "tetr"
+#'
+#' # WHONET codes
+#' df <- data.frame(AMP_ND10 = "R",
+#'                  AMC_ED20 = "S")
+#' guess_ab_col(df, "ampicillin")
+#' # [1] "AMP_ND10"
+#' guess_ab_col(df, "J01CR02")
+#' # [1] "AMC_ED20"
+#' guess_ab_col(df, as.atc("augmentin"))
+#' # [1] "AMC_ED20"
 guess_ab_col <- function(tbl = NULL, col = NULL, verbose = FALSE) {
   if (is.null(tbl) & is.null(col)) {
     return(as.name("guess_ab_col"))
@@ -54,6 +64,11 @@ guess_ab_col <- function(tbl = NULL, col = NULL, verbose = FALSE) {
   }
 
   tbl_names <- colnames(tbl)
+  tbl_names_stripped <- colnames(tbl) %>%
+    strsplit("_") %>%
+    lapply(function(x) {x[1]}) %>%
+    unlist()
+
   if (col %in% tbl_names) {
     return(col)
   }
@@ -68,6 +83,15 @@ guess_ab_col <- function(tbl = NULL, col = NULL, verbose = FALSE) {
       select(atc:trade_name) %>%
       filter_all(any_vars(tolower(.) %like% tolower(col))) %>%
       filter_all(any_vars(. %in% tbl_names))
+  }
+
+  # WHONET
+  if (nrow(ab_result) == 0) {
+    # use like when col >= 5 characters
+    ab_result <- antibiotics %>%
+      select(atc:trade_name) %>%
+      filter_all(any_vars(tolower(.) == tolower(col))) %>%
+      filter_all(any_vars(. %in% tbl_names_stripped))
   }
 
   if (nrow(ab_result) > 1) {
@@ -95,6 +119,9 @@ guess_ab_col <- function(tbl = NULL, col = NULL, verbose = FALSE) {
     return(NULL)
   } else {
     result <- tbl_names[tbl_names %in% ab_result]
+    if (length(result) == 0) {
+      result <- tbl_names[tbl_names_stripped %in% ab_result]
+    }
     if (length(result) == 0) {
       if (verbose == TRUE) {
         message('no result found for col "', col, '"')

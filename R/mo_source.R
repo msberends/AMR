@@ -107,11 +107,7 @@ set_mo_source <- function(path) {
     if (!"readxl" %in% utils::installed.packages()) {
       stop("Install the 'readxl' package first.")
     }
-    if (path %like% '[.]xlsx$') {
-      df <- readxl::read_xlsx(path)
-    } else {
-      df <- readxl::read_xls(path)
-    }
+    df <- readxl::read_excel(path)
 
   } else {
     # try comma first

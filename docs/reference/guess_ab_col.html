@@ -47,7 +47,7 @@
   <script src="../extra.js"></script>
 <meta property="og:title" content="Guess antibiotic column — guess_ab_col" />
 
-<meta property="og:description" content="This tries to find a column name in a data set based on information from the antibiotics data set. You can look for an antibiotic (trade) name or abbreviation and it will search the data.frame for any column containing a name or ATC code of that antibiotic." />
+<meta property="og:description" content="This tries to find a column name in a data set based on information from the antibiotics data set. Also supports WHONET abbreviations. You can look for an antibiotic (trade) name or abbreviation and it will search the data.frame for any column containing a name or ATC code of that antibiotic." />
 
 <meta property="og:image" content="https://msberends.gitlab.io/AMR/logo.png" />
 <meta name="twitter:card" content="summary" />
@@ -80,7 +80,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.0.9012</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.0.9015</span>
       </span>
     </div>
 
@@ -114,6 +114,13 @@
         <span class="fa fa-dice"></span>
          
         Predict antimicrobial resistance
+      </a>
+    </li>
+    <li>
+      <a href="../articles/WHONET.html">
+        <span class="fa fa-globe-americas"></span>
+         
+        Work with WHONET data
       </a>
     </li>
     <li>
@@ -223,7 +230,7 @@
 
     <div class="ref-description">
     
-    <p>This tries to find a column name in a data set based on information from the <code><a href='antibiotics.html'>antibiotics</a></code> data set. You can look for an antibiotic (trade) name or abbreviation and it will search the <code>data.frame</code> for any column containing a name or ATC code of that antibiotic.</p>
+    <p>This tries to find a column name in a data set based on information from the <code><a href='antibiotics.html'>antibiotics</a></code> data set. Also supports WHONET abbreviations. You can look for an antibiotic (trade) name or abbreviation and it will search the <code>data.frame</code> for any column containing a name or ATC code of that antibiotic.</p>
     
     </div>
 
@@ -266,6 +273,16 @@ On our website <a href='https://msberends.gitlab.io/AMR'>https://msberends.gitla
 <span class='fu'>guess_ab_col</span>(<span class='no'>df</span>, <span class='st'>"J01AA07"</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
 <span class='co'># using column `tetr` for col "J01AA07"</span>
 <span class='co'># [1] "tetr"</span>
+
+<span class='co'># WHONET codes</span>
+<span class='no'>df</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/data.frame'>data.frame</a></span>(<span class='kw'>AMP_ND10</span> <span class='kw'>=</span> <span class='st'>"R"</span>,
+                 <span class='kw'>AMC_ED20</span> <span class='kw'>=</span> <span class='st'>"S"</span>)
+<span class='fu'>guess_ab_col</span>(<span class='no'>df</span>, <span class='st'>"ampicillin"</span>)
+<span class='co'># [1] "AMP_ND10"</span>
+<span class='fu'>guess_ab_col</span>(<span class='no'>df</span>, <span class='st'>"J01CR02"</span>)
+<span class='co'># [1] "AMC_ED20"</span>
+<span class='fu'>guess_ab_col</span>(<span class='no'>df</span>, <span class='fu'><a href='as.atc.html'>as.atc</a></span>(<span class='st'>"augmentin"</span>))
+<span class='co'># [1] "AMC_ED20"</span>
 <span class='co'># }</span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

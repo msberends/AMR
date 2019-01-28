@@ -33,4 +33,13 @@ test_that("guess_ab_col works", {
                "tetr")
   expect_equal(guess_ab_col(septic_patients, "TETR"),
                "tetr")
+
+  df <- data.frame(AMP_ND10 = "R",
+                   AMC_ED20 = "S")
+  expect_equal(guess_ab_col(df, "ampicillin"),
+               "AMP_ND10")
+  expect_equal(guess_ab_col(df, "J01CR02"),
+               "AMC_ED20")
+  expect_equal(guess_ab_col(df, as.atc("augmentin")),
+               "AMC_ED20")
 })

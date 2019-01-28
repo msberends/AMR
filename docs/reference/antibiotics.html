@@ -80,7 +80,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.0.9013</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.0.9015</span>
       </span>
     </div>
 
@@ -114,6 +114,13 @@
         <span class="fa fa-dice"></span>
          
         Predict antimicrobial resistance
+      </a>
+    </li>
+    <li>
+      <a href="../articles/WHONET.html">
+        <span class="fa fa-globe-americas"></span>
+         
+        Work with WHONET data
       </a>
     </li>
     <li>
@@ -231,8 +238,9 @@
         
     <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
 
-    <p>A <code><a href='https://www.rdocumentation.org/packages/base/topics/data.frame'>data.frame</a></code> with 488 observations and 16 variables:</p><dl class='dl-horizontal'>
-  <dt><code>atc</code></dt><dd><p>ATC code, like <code>J01CR02</code></p></dd>
+    <p>A <code><a href='https://www.rdocumentation.org/packages/base/topics/data.frame'>data.frame</a></code> with 488 observations and 17 variables:</p><dl class='dl-horizontal'>
+  <dt><code>atc</code></dt><dd><p>ATC code (Anatomical Therapeutic Chemical), like <code>J01CR02</code></p></dd>
+  <dt><code>ears_net</code></dt><dd><p>EARS-Net code (European Antimicrobial Resistance Surveillance Network), like <code>AMC</code></p></dd>
   <dt><code>certe</code></dt><dd><p>Certe code, like <code>amcl</code></p></dd>
   <dt><code>umcg</code></dt><dd><p>UMCG code, like <code>AMCL</code></p></dd>
   <dt><code>abbr</code></dt><dd><p>Abbreviation as used by many countries, used internally by <code><a href='as.atc.html'>as.atc</a></code></p></dd>
@@ -253,6 +261,7 @@
     <h2 class="hasAnchor" id="source"><a class="anchor" href="#source"></a>Source</h2>
 
     <p>- World Health Organization (WHO) Collaborating Centre for Drug Statistics Methodology: <a href='https://www.whocc.no/atc_ddd_index/'>https://www.whocc.no/atc_ddd_index/</a></p>
+<p>Table antibiotic coding EARSS (from WHONET 5.3): <a href='http://www.madsonline.dk/Tutorials/landskoder_antibiotika_WM.pdf'>http://www.madsonline.dk/Tutorials/landskoder_antibiotika_WM.pdf</a></p>
 <p>EUCAST Expert Rules, Intrinsic Resistance and Exceptional Phenotypes Tables. Version 3.1, 2016: <a href='http://www.eucast.org/fileadmin/src/media/PDFs/EUCAST_files/Expert_Rules/Expert_rules_intrinsic_exceptional_V3.1.pdf'>http://www.eucast.org/fileadmin/src/media/PDFs/EUCAST_files/Expert_Rules/Expert_rules_intrinsic_exceptional_V3.1.pdf</a></p>
 <p>European Commission Public Health PHARMACEUTICALS - COMMUNITY REGISTER: <a href='http://ec.europa.eu/health/documents/community-register/html/atc.htm'>http://ec.europa.eu/health/documents/community-register/html/atc.htm</a></p>
     

@@ -42,7 +42,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.0.9014</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.0.9015</span>
       </span>
     </div>
 
@@ -76,6 +76,13 @@
         <span class="fa fa-dice"></span>
          
         Predict antimicrobial resistance
+      </a>
+    </li>
+    <li>
+      <a href="articles/WHONET.html">
+        <span class="fa fa-globe-americas"></span>
+         
+        Work with WHONET data
       </a>
     </li>
     <li>
@@ -182,7 +189,7 @@
 </h1></div>
 <p><em>(<help title="Too Long, Didn't Read">TLDR</help> - to find out how to conduct AMR analysis, please <a href="./articles/AMR.html">continue reading here to get started</a>.</em></p>
 <hr>
-<p><code>AMR</code> is a free and open-source <a href="https://www.r-project.org">R package</a> to simplify the analysis and prediction of Antimicrobial Resistance (AMR) and to work with microbial and antimicrobial properties by using evidence-based methods.</p>
+<p><code>AMR</code> is a free and open-source <a href="https://www.r-project.org">R package</a> to simplify the analysis and prediction of Antimicrobial Resistance (AMR) and to work with microbial and antimicrobial properties by using evidence-based methods. It supports any table format, including WHONET/EARS-Net data.</p>
 <p>We created this package for both academic research and routine analysis at the Faculty of Medical Sciences of the University of Groningen and the Medical Microbiology &amp; Infection Prevention (MMBI) department of the University Medical Center Groningen (UMCG). This R package is actively maintained and free software; you can freely use and distribute it for both personal and commercial (but <strong>not</strong> patent) purposes under the terms of the GNU General Public Licence version 2.0 (GPL-2), as published by the Free Software Foundation. Read the full licence <a href="./LICENSE-text.html">here</a>.</p>
 <p>This package can be used for:</p>
 <ul>
@@ -222,28 +229,30 @@
 <li>Software developers</li>
 <li>Web application / Shiny developers</li>
 </ul>
-<div id="get-this-package" class="section level3">
-<h3 class="hasAnchor">
-<a href="#get-this-package" class="anchor"></a>Get this package</h3>
+<div id="get-this-package" class="section level2">
+<h2 class="hasAnchor">
+<a href="#get-this-package" class="anchor"></a>Get this package</h2>
 <p>This package is available on the official R network (CRAN), which has a peer-reviewed submission process. Install this package in R with:</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/install.packages">install.packages</a></span>(<span class="st">"AMR"</span>)</a></code></pre></div>
 <p>It will be downloaded and installed automatically. For RStudio, click on the menu <em>Tools</em> &gt; <em>Install Packages…</em> and then type in “AMR” and press <kbd>Install</kbd>.</p>
+<p>The latest and unpublished development version can be installed with (precaution: may be unstable):</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/install.packages">install.packages</a></span>(<span class="st">"devtools"</span>)</a>
+<a class="sourceLine" id="cb2-2" data-line-number="2">devtools<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/devtools/topics/reexports">install_gitlab</a></span>(<span class="st">"msberends/AMR"</span>)</a></code></pre></div>
 </div>
-<div id="get-started" class="section level3">
-<h3 class="hasAnchor">
-<a href="#get-started" class="anchor"></a>Get started</h3>
+<div id="get-started" class="section level2">
+<h2 class="hasAnchor">
+<a href="#get-started" class="anchor"></a>Get started</h2>
 <p>To find out how to conduct AMR analysis, please <a href="./articles/AMR.html">continue reading here to get started</a> or click the links in the ‘How to’ menu.</p>
 </div>
-<div id="short-introduction" class="section level3">
-<h3 class="hasAnchor">
-<a href="#short-introduction" class="anchor"></a>Short introduction</h3>
-<div id="microbial-taxonomic-reference-data" class="section level4">
+<div id="short-introduction" class="section level2">
+<h2 class="hasAnchor">
+<a href="#short-introduction" class="anchor"></a>Short introduction</h2>
+<div id="whonet-ears-net" class="section level4">
 <h4 class="hasAnchor">
-<a href="#microbial-taxonomic-reference-data" class="anchor"></a>Microbial (taxonomic) reference data</h4>
-<p><img src="reference/figures/logo_itis.jpg" height="60px"></p>
-<p>This package contains the <strong>complete microbial taxonomic data</strong> (with all nine taxonomic ranks - from kingdom to subspecies) from the publicly available Integrated Taxonomic Information System (ITIS, <a href="https://www.itis.gov" class="uri">https://www.itis.gov</a>).</p>
-<p>All ~20,000 (sub)species from <strong>the taxonomic kingdoms Bacteria, Fungi and Protozoa are included in this package</strong>, as well as all their ~2,500 previously accepted names known to ITIS. Furthermore, the responsible authors and year of publication are available. This allows users to use authoritative taxonomic information for their data analysis on any microorganism, not only human pathogens. It also helps to quickly determine the Gram stain of bacteria, since ITIS honours the taxonomic branching order of bacterial phyla according to Cavalier-Smith (2002), which defines that all bacteria are classified into either subkingdom Negibacteria or subkingdom Posibacteria.</p>
-<p>Read more about the data from ITIS <a href="./reference/ITIS.html">in our manual</a>.</p>
+<a href="#whonet-ears-net" class="anchor"></a>WHONET / EARS-Net</h4>
+<p><img src="./whonet.png"></p>
+<p>We support data (exported files) from WHONET. The <code>AMR</code> package contains a data set <code>antibiotics</code> which also contains all EARS-Net antibiotic abbreviations. Furthermore, when using WHONET data as input for analysis all input parameters will be set automatically.</p>
+<p>Read our tutorial about <a href="./articles/WHONET.html">how to work with WHONET data here</a>.</p>
 </div>
 <div id="antimicrobial-reference-data" class="section level4">
 <h4 class="hasAnchor">
@@ -253,6 +262,14 @@
 </div>
 <p>This package contains <strong>all ~500 antimicrobial drugs</strong> and their Anatomical Therapeutic Chemical (ATC) codes, ATC groups and Defined Daily Dose (DDD) from the World Health Organization Collaborating Centre for Drug Statistics Methodology (WHOCC, <a href="https://www.whocc.no" class="uri">https://www.whocc.no</a>) and the <a href="http://ec.europa.eu/health/documents/community-register/html/atc.htm">Pharmaceuticals Community Register of the European Commission</a>.</p>
 <p>Read more about the data from WHOCC <a href="./reference/WHOCC.html">in our manual</a>.</p>
+</div>
+<div id="microbial-taxonomic-reference-data" class="section level4">
+<h4 class="hasAnchor">
+<a href="#microbial-taxonomic-reference-data" class="anchor"></a>Microbial (taxonomic) reference data</h4>
+<p><img src="reference/figures/logo_itis.jpg" height="60px"></p>
+<p>This package contains the <strong>complete microbial taxonomic data</strong> (with all nine taxonomic ranks - from kingdom to subspecies) from the publicly available Integrated Taxonomic Information System (ITIS, <a href="https://www.itis.gov" class="uri">https://www.itis.gov</a>).</p>
+<p>All ~20,000 (sub)species from <strong>the taxonomic kingdoms Bacteria, Fungi and Protozoa are included in this package</strong>, as well as all their ~2,500 previously accepted names known to ITIS. Furthermore, the responsible authors and year of publication are available. This allows users to use authoritative taxonomic information for their data analysis on any microorganism, not only human pathogens. It also helps to quickly determine the Gram stain of bacteria, since ITIS honours the taxonomic branching order of bacterial phyla according to Cavalier-Smith (2002), which defines that all bacteria are classified into either subkingdom Negibacteria or subkingdom Posibacteria.</p>
+<p>Read more about the data from ITIS <a href="./reference/ITIS.html">in our manual</a>.</p>
 </div>
 <div id="overview-of-functions" class="section level4">
 <h4 class="hasAnchor">

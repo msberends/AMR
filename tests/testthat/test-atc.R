@@ -22,7 +22,7 @@
 context("atc.R")
 
 test_that("as.atc works", {
-  expect_equal(suppressWarnings(as.character(guess_atc(c("J01FA01",
+  expect_equal(suppressWarnings(as.character(as.atc(c("J01FA01",
                                                          "Erythromycin",
                                                          "eryt",
                                                          "ERYT",
@@ -44,5 +44,9 @@ test_that("as.atc works", {
   # first 5 chars of official name
   expect_equal(as.character(as.atc(c("nitro", "cipro"))),
                c("J01XE01", "J01MA02"))
+
+  # EARS-Net
+  expect_equal(as.character(as.atc("AMX")),
+               "J01CA04")
 
 })

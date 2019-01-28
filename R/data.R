@@ -22,9 +22,10 @@
 #' Data set with ~500 antibiotics
 #'
 #' A data set containing all antibiotics with a J0 code and some other antimicrobial agents, with their DDDs. Except for trade names and abbreviations, all properties were downloaded from the WHO, see Source.
-#' @format A \code{\link{data.frame}} with 488 observations and 16 variables:
+#' @format A \code{\link{data.frame}} with 488 observations and 17 variables:
 #' \describe{
-#'   \item{\code{atc}}{ATC code, like \code{J01CR02}}
+#'   \item{\code{atc}}{ATC code (Anatomical Therapeutic Chemical), like \code{J01CR02}}
+#'   \item{\code{ears_net}}{EARS-Net code (European Antimicrobial Resistance Surveillance Network), like \code{AMC}}
 #'   \item{\code{certe}}{Certe code, like \code{amcl}}
 #'   \item{\code{umcg}}{UMCG code, like \code{AMCL}}
 #'   \item{\code{abbr}}{Abbreviation as used by many countries, used internally by \code{\link{as.atc}}}
@@ -42,6 +43,8 @@
 #'   \item{\code{useful_grampositive}}{\code{FALSE} if not useful according to EUCAST, \code{NA} otherwise (see Source)}
 #' }
 #' @source - World Health Organization (WHO) Collaborating Centre for Drug Statistics Methodology: \url{https://www.whocc.no/atc_ddd_index/}
+#'
+#' Table antibiotic coding EARSS (from WHONET 5.3): \url{http://www.madsonline.dk/Tutorials/landskoder_antibiotika_WM.pdf}
 #'
 #' EUCAST Expert Rules, Intrinsic Resistance and Exceptional Phenotypes Tables. Version 3.1, 2016: \url{http://www.eucast.org/fileadmin/src/media/PDFs/EUCAST_files/Expert_Rules/Expert_rules_intrinsic_exceptional_V3.1.pdf}
 #'
