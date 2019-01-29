@@ -41,8 +41,9 @@ This package comes with an [example data set `WHONET`](./reference/WHONET.html).
 First, load the relevant packages if you did not yet did this. I use the tidyverse for all of my analyses. All of them. If you don't know it yet, I suggest you read about it on their website: https://www.tidyverse.org/.
 
 ```{r, message = FALSE}
-library(tidyverse)
-library(AMR)
+library(dplyr)   # part of tidyverse
+library(ggplot2) # part of tidyverse
+library(AMR)     # this package
 ```
 
 We will have to transform some variables to simplify and automate the analysis:
