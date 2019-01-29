@@ -360,7 +360,7 @@ To conduct an analysis of antimicrobial resistance, you should only include the 
 
     
     <p><img src='figures/logo.png' height=40px style=margin-bottom:5px /> <br />
-On our website <a href='https://msberends.gitlab.io/AMR'>https://msberends.gitlab.io/AMR</a> you can find <a href='https://msberends.gitlab.io/AMR/articles/AMR.html'>a omprehensive tutorial</a> about how to conduct AMR analysis and find <a href='https://msberends.gitlab.io/AMR/reference'>the complete documentation of all functions</a>, which reads a lot easier than in R.</p>
+On our website <a href='https://msberends.gitlab.io/AMR'>https://msberends.gitlab.io/AMR</a> you can find <a href='https://msberends.gitlab.io/AMR/articles/AMR.html'>a comprehensive tutorial</a> about how to conduct AMR analysis, the <a href='https://msberends.gitlab.io/AMR/reference'>complete documentation of all functions</a> (which reads a lot easier than here in R) and <a href='https://msberends.gitlab.io/AMR/articles/WHONET.html'>an example analysis using WHONET data</a>.</p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
@@ -375,11 +375,11 @@ On our website <a href='https://msberends.gitlab.io/AMR'>https://msberends.gitla
 <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>dplyr</span>)
 <span class='co'># Filter on first isolates:</span>
 <span class='no'>septic_patients</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='https://www.rdocumentation.org/packages/dplyr/topics/mutate'>mutate</a></span>(<span class='kw'>first_isolate</span> <span class='kw'>=</span> <span class='fu'>first_isolate</span>(<span class='no'>.</span>,
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span>(<span class='kw'>first_isolate</span> <span class='kw'>=</span> <span class='fu'>first_isolate</span>(<span class='no'>.</span>,
                                        <span class='kw'>col_date</span> <span class='kw'>=</span> <span class='st'>"date"</span>,
                                        <span class='kw'>col_patient_id</span> <span class='kw'>=</span> <span class='st'>"patient_id"</span>,
                                        <span class='kw'>col_mo</span> <span class='kw'>=</span> <span class='st'>"mo"</span>)) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='https://www.rdocumentation.org/packages/dplyr/topics/filter'>filter</a></span>(<span class='no'>first_isolate</span> <span class='kw'>==</span> <span class='fl'>TRUE</span>)
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span>(<span class='no'>first_isolate</span> <span class='kw'>==</span> <span class='fl'>TRUE</span>)
 
 <span class='co'># Which can be shortened to:</span>
 <span class='no'>septic_patients</span> <span class='kw'>%&gt;%</span>
@@ -390,14 +390,14 @@ On our website <a href='https://msberends.gitlab.io/AMR'>https://msberends.gitla
 
 <span class='co'># Now let's see if first isolates matter:</span>
 <span class='no'>A</span> <span class='kw'>&lt;-</span> <span class='no'>septic_patients</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='https://www.rdocumentation.org/packages/dplyr/topics/group_by'>group_by</a></span>(<span class='no'>hospital_id</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='https://www.rdocumentation.org/packages/dplyr/topics/summarise'>summarise</a></span>(<span class='kw'>count</span> <span class='kw'>=</span> <span class='fu'><a href='count.html'>n_rsi</a></span>(<span class='no'>gent</span>),            <span class='co'># gentamicin availability</span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span>(<span class='no'>hospital_id</span>) <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/summarise.html'>summarise</a></span>(<span class='kw'>count</span> <span class='kw'>=</span> <span class='fu'><a href='count.html'>n_rsi</a></span>(<span class='no'>gent</span>),            <span class='co'># gentamicin availability</span>
             <span class='kw'>resistance</span> <span class='kw'>=</span> <span class='fu'><a href='portion.html'>portion_IR</a></span>(<span class='no'>gent</span>))  <span class='co'># gentamicin resistance</span>
 
 <span class='no'>B</span> <span class='kw'>&lt;-</span> <span class='no'>septic_patients</span> <span class='kw'>%&gt;%</span>
   <span class='fu'>filter_first_weighted_isolate</span>() <span class='kw'>%&gt;%</span>       <span class='co'># the 1st isolate filter</span>
-  <span class='fu'><a href='https://www.rdocumentation.org/packages/dplyr/topics/group_by'>group_by</a></span>(<span class='no'>hospital_id</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='https://www.rdocumentation.org/packages/dplyr/topics/summarise'>summarise</a></span>(<span class='kw'>count</span> <span class='kw'>=</span> <span class='fu'><a href='count.html'>n_rsi</a></span>(<span class='no'>gent</span>),            <span class='co'># gentamicin availability</span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span>(<span class='no'>hospital_id</span>) <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/summarise.html'>summarise</a></span>(<span class='kw'>count</span> <span class='kw'>=</span> <span class='fu'><a href='count.html'>n_rsi</a></span>(<span class='no'>gent</span>),            <span class='co'># gentamicin availability</span>
             <span class='kw'>resistance</span> <span class='kw'>=</span> <span class='fu'><a href='portion.html'>portion_IR</a></span>(<span class='no'>gent</span>))  <span class='co'># gentamicin resistance</span>
 
 <span class='co'># Have a look at A and B.</span>

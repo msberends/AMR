@@ -23,4 +23,54 @@ knitr::opts_chunk$set(
 )
 ```
 
-*(will be available soon)*
+# Import of data
+
+This tutorial assumes you already imported the WHONET data with e.g. the [`readxl` package](https://readxl.tidyverse.org/). In RStudio, this can be done using the menu button 'Import Dataset' in the tab 'Environment'. Choose the option 'From Excel' and select your exported file. Make sure date fields are imported correctly.
+
+An example syntax could look like this:
+
+```{r, eval = FALSE}
+library(readxl)
+data <- read_excel(path = "path/to/your/file.xlsx")
+```
+
+This package comes with an [example data set `WHONET`](./reference/WHONET.html). We will use it for this analysis.
+
+# Preparation
+
+First, load the relevant packages if you did not yet did this. I use the tidyverse for all of my analyses. All of them. If you don't know it yet, I suggest you read about it on their website: https://www.tidyverse.org/.
+
+```{r, message = FALSE}
+library(tidyverse)
+library(AMR)
+```
+
+We will have to transform some variables to simplify and automate the analysis:
+
+* Microorganisms should be transformed to our own microorganism IDs (called an `mo`) using [the ITIS reference data set](./reference/ITIS.html), which contains all ~20,000 microorganisms from the taxonomic kingdoms Bacteria, Fungi and Protozoa. We do the tranformation with `as.mo()`.
+* Antimicrobial results or interpretations have to be clean and valid. In other words, they should only contain values `"S"`, `"I"` or `"R"`. That is exactly where the `as.rsi()` function is for.
+
+```{r}
+# transform variables
+data <- WHONET %>%
+  # get microbial ID based on given organism
+  mutate(mo = as.mo(Organism)) %>% 
+  # transform everything from "AMP_ND10" to "CIP_EE" to the new `rsi` class
+  mutate_at(vars(AMP_ND10:CIP_EE), as.rsi)
+```
+
+No errors or warnings, so all values are transformed succesfully. Let's check it though, with a couple of frequency tables:
+
+```{r, results = 'asis'}
+# our newly created `mo` variable
+data %>% freq(mo, nmax = 10)
+
+# our transformed antibiotic columns
+# amoxicillin/clavulanic acid (J01CR02) as an example
+data %>% freq(AMC_ND2)
+```
+
+# Analysis
+
+*(more will be available soon)*
+

@@ -152,7 +152,10 @@ search_type_in_df <- function(tbl, type) {
   # -- date
   if (type == "date") {
     for (i in 1:ncol(tbl)) {
-      if ("Date" %in% class(tbl %>% pull(i)) | "POSIXct" %in% class(tbl %>% pull(i))) {
+      if (any(colnames(tbl) %like% "^(Specimen date)")) {
+        # WHONET support
+        found <- colnames(tbl)[colnames(tbl) %like% "^(Specimen date)"][1]
+      } else if ("Date" %in% class(tbl %>% pull(i)) | "POSIXct" %in% class(tbl %>% pull(i))) {
         found <- colnames(tbl)[i]
         break
       }

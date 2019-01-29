@@ -261,7 +261,7 @@
 
     
     <p><img src='figures/logo.png' height=40px style=margin-bottom:5px /> <br />
-On our website <a href='https://msberends.gitlab.io/AMR'>https://msberends.gitlab.io/AMR</a> you can find <a href='https://msberends.gitlab.io/AMR/articles/AMR.html'>a omprehensive tutorial</a> about how to conduct AMR analysis and find <a href='https://msberends.gitlab.io/AMR/reference'>the complete documentation of all functions</a>, which reads a lot easier than in R.</p>
+On our website <a href='https://msberends.gitlab.io/AMR'>https://msberends.gitlab.io/AMR</a> you can find <a href='https://msberends.gitlab.io/AMR/articles/AMR.html'>a comprehensive tutorial</a> about how to conduct AMR analysis, the <a href='https://msberends.gitlab.io/AMR/reference'>complete documentation of all functions</a> (which reads a lot easier than here in R) and <a href='https://msberends.gitlab.io/AMR/articles/WHONET.html'>an example analysis using WHONET data</a>.</p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
@@ -284,11 +284,11 @@ On our website <a href='https://msberends.gitlab.io/AMR'>https://msberends.gitla
 <span class='co'># using dplyr's mutate</span>
 <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>dplyr</span>)
 <span class='no'>septic_patients</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='https://www.rdocumentation.org/packages/dplyr/topics/summarise_all'>mutate_at</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/dplyr/topics/vars'>vars</a></span>(<span class='no'>peni</span>:<span class='no'>rifa</span>), <span class='no'>as.rsi</span>)
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/summarise_all.html'>mutate_at</a></span>(<span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='no'>peni</span>:<span class='no'>rifa</span>), <span class='no'>as.rsi</span>)
 
 <span class='co'># fastest way to transform all columns with already valid AB results to class `rsi`:</span>
 <span class='no'>septic_patients</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='https://www.rdocumentation.org/packages/dplyr/topics/summarise_all'>mutate_if</a></span>(<span class='no'>is.rsi.eligible</span>,
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/summarise_all.html'>mutate_if</a></span>(<span class='no'>is.rsi.eligible</span>,
             <span class='no'>as.rsi</span>)
 <span class='co'># }</span></pre>
   </div>

@@ -7,7 +7,7 @@
 `AMR` is a free and open-source [R package](https://www.r-project.org) to simplify the analysis and prediction of Antimicrobial Resistance (AMR) and to work with microbial and antimicrobial properties by using evidence-based methods. It supports any table format, including WHONET/EARS-Net data.
 
 We created this package for both academic research and routine analysis at the Faculty of Medical Sciences of the University of Groningen and the Medical Microbiology & Infection Prevention (MMBI) department of the University Medical Center Groningen (UMCG).
-This R package is actively maintained and free software; you can freely use and distribute it for both personal and commercial (but **not** patent) purposes under the terms of the GNU General Public Licence version 2.0 (GPL-2), as published by the Free Software Foundation. Read the full licence [here](./LICENSE-text.html).
+This R package is actively maintained and free software; you can freely use and distribute it for both personal and commercial (but **not** patent) purposes under the terms of the GNU General Public License version 2.0 (GPL-2), as published by the Free Software Foundation. Read the full license [here](./LICENSE-text.html).
 
 This package can be used for:
 
@@ -18,7 +18,7 @@ This package can be used for:
   * Plotting antimicrobial resistance
   * Determining first isolates to be used for AMR analysis
   * Applying EUCAST rules
-  * Determining multi-drug resistance organisms (MDRO)
+  * Determining multi-drug resistant organisms (MDRO)
   * Descriptive statistics: frequency tables, kurtosis and skewness
 
 This package is ready-to-use for a professional environment by specialists in the following fields:
@@ -75,7 +75,7 @@ To find out how to conduct AMR analysis, please [continue reading here to get st
 
 <img src="./whonet.png">
 
-We support data (exported files) from WHONET. The `AMR` package contains a data set `antibiotics` which also contains all EARS-Net antibiotic abbreviations. Furthermore, when using WHONET data as input for analysis all input parameters will be set automatically.
+We support WHONET and EARS-Net data. Exported files from WHONET can be imported into R and can be analysed easily using this package. For education purposes, we created an [example data set `WHONET`](./reference/WHONET.html) with the exact same structure and a WHONET export file. Furthermore, this package also contains a [data set `antibiotics`](./reference/antibiotics.html) with all EARS-Net antibiotic abbreviations. When using WHONET data as input for analysis, all input parameters will be set automatically.
 
 Read our tutorial about [how to work with WHONET data here](./articles/WHONET.html).
 
@@ -101,7 +101,7 @@ Read more about the data from ITIS [in our manual](./reference/ITIS.html).
 
 The `AMR` package basically does four important things:
 
-1. It **cleanses existing data**, by transforming it to reproducible and profound *classes*, making the most efficient use of R. These functions all use artificial intelligence to guess results that you would expect:
+1. It **cleanses existing data** by providing new *classes* for microoganisms, antibiotics and antimicrobial results (both S/I/R and MIC). With this package, you learn R everything about microbiology that is needed for analysis. These functions all use artificial intelligence to guess results that you would expect:
 
    * Use `as.mo()` to get an ID of a microorganism. The IDs are human readable for the trained eye - the ID of *Klebsiella pneumoniae* is "B_KLBSL_PNE" (B stands for Bacteria) and the ID of *S. aureus* is "B_STPHY_AUR". The function takes almost any text as input that looks like the name or code of a microorganism like "E. coli", "esco" or "esccol" and tries to find expected results using artificial intelligence (AI) on the included ITIS data set, consisting of almost 20,000 microorganisms. It is *very* fast, please see our [benchmarks](./articles/benchmarks.html). Moreover, it can group *Staphylococci* into coagulase negative and positive (CoNS and CoPS, see [source](./reference/as.mo.html#source)) and can categorise *Streptococci* into Lancefield groups (like beta-haemolytic *Streptococcus* Group B, [source](./reference/as.mo.html#source)).
    * Use `as.rsi()` to transform values to valid antimicrobial results. It produces just S, I or R based on your input and warns about invalid values. Even values like "<=0.002; S" (combined MIC/RSI) will result in "S".
@@ -114,8 +114,8 @@ The `AMR` package basically does four important things:
    * Use `first_isolate()` to identify the first isolates of every patient [using guidelines from the CLSI](https://clsi.org/standards/products/microbiology/documents/m39/) (Clinical and Laboratory Standards Institute).
      * You can also identify first *weighted* isolates of every patient, an adjusted version of the CLSI guideline. This takes into account key antibiotics of every strain and compares them.
    * Use `mdro()` (abbreviation of Multi Drug Resistant Organisms) to check your isolates for exceptional resistance with country-specific guidelines or EUCAST rules. Currently, national guidelines for Germany and the Netherlands are supported.
-   * The data set `microorganisms` contains the complete taxonomic tree of more than 18,000 microorganisms (bacteria, fungi/yeasts and protozoa). Furthermore, the colloquial name and Gram stain are available, which enables resistance analysis of e.g. different antibiotics per Gram stain. The package also contains functions to look up values in this data set like `mo_genus()`, `mo_family()`, `mo_gramstain()` or even `mo_phylum()`. As they use `as.mo()` internally, they also use artificial intelligence. For example, `mo_genus("MRSA")` and `mo_genus("S. aureus")` will both return `"Staphylococcus"`. They also come with support for German, Dutch, Spanish, Italian, French and Portuguese. These functions can be used to add new variables to your data.
-   * The data set `antibiotics` contains the ATC code, LIS codes, official name, trivial name and DDD of both oral and parenteral administration. It also contains a total of 298 trade names. Use functions like `ab_name()` and `ab_tradenames()` to look up values. The `ab_*` functions use `as.atc()` internally so they support AI to guess your expected result. For example, `ab_name("Fluclox")`, `ab_name("Floxapen")` and `ab_name("J01CF05")` will all return `"Flucloxacillin"`. These functions can again be used to add new variables to your data.
+   * The [data set `microorganisms`](./reference/microorganisms.html) contains the complete taxonomic tree of almost 20,000 microorganisms (bacteria, fungi/yeasts and protozoa). Furthermore, the colloquial name and Gram stain are available, which enables resistance analysis of e.g. different antibiotics per Gram stain. The package also contains functions to look up values in this data set like `mo_genus()`, `mo_family()`, `mo_gramstain()` or even `mo_phylum()`. As they use `as.mo()` internally, they also use artificial intelligence. For example, `mo_genus("MRSA")` and `mo_genus("S. aureus")` will both return `"Staphylococcus"`. They also come with support for German, Dutch, Spanish, Italian, French and Portuguese. These functions can be used to add new variables to your data.
+   * The [data set `antibiotics`](./reference/antibiotics.html) contains almost 500 antimicrobial drugs with their ATC code, EARS-Net code, common LIS codes, official name, trivial name and DDD of both oral and parenteral administration. It also contains hundreds of trade names. Use functions like `atc_name()` and `atc_tradenames()` to look up values. The `atc_*` functions use `as.atc()` internally so they support AI to guess your expected result. For example, `atc_name("Fluclox")`, `atc_name("Floxapen")` and `atc_name("J01CF05")` will all return `"Flucloxacillin"`. These functions can again be used to add new variables to your data.
 
 3. It **analyses the data** with convenient functions that use well-known methods.
 
@@ -126,8 +126,8 @@ The `AMR` package basically does four important things:
 
 4. It **teaches the user** how to use all the above actions.
 
-   * The package contains extensive help pages with many examples.
-   * It also contains an example data set called `septic_patients`. This data set contains:
+   * Aside from this website with many tutorials, the package itself contains extensive help pages with many examples for all functions.
+   * It also contains an [example data set called `septic_patients`](.reference/septic_patients.html). This data set contains:
      * 2,000 blood culture isolates from anonymised septic patients between 2001 and 2017 in the Northern Netherlands
      * Results of 40 antibiotics (each antibiotic in its own column) with a total of 38,414 antimicrobial results
      * Real and genuine data

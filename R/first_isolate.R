@@ -206,7 +206,14 @@ first_isolate <- function(tbl,
 
   # -- patient id
   if (is.null(col_patient_id)) {
+    if (all(c("First name", "Last name", "Sex", "Identification number") %in% colnames(tbl))) {
+      # WHONET support
+      tbl <- tbl %>% mutate(patient_id = paste(`First name`, `Last name`, Sex))
+      col_patient_id <- "patient_id"
+      message(blue(paste0("NOTE: Using combined columns ", bold("`First name`, `Last name` and `Sex`"), " as input for `col_patient_id`.")))
+    } else {
     col_patient_id <- search_type_in_df(tbl = tbl, type = "patient_id")
+    }
   }
   if (is.null(col_patient_id)) {
     stop("`col_patient_id` must be set.", call. = FALSE)

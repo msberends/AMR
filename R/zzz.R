@@ -21,19 +21,34 @@
 
 #' The \code{AMR} Package
 #'
-#' Welcome to the \code{AMR} package. This page gives some additional contact information about the authors.
+#' Welcome to the \code{AMR} package.
 #' @details
-#' This package was intended to simplify the analysis and prediction of Antimicrobial Resistance (AMR) and to work with microbial and antimicrobial properties by using evidence-based methods.
+#' \code{AMR} is a free and open-source R package to simplify the analysis and prediction of Antimicrobial Resistance (AMR) and to work with microbial and antimicrobial properties by using evidence-based methods. It supports any table format, including WHONET/EARS-Net data.
 #'
-#' This package was created for both academic research and routine analysis by PhD students of the Faculty of Medical Sciences of the University of Groningen and the Medical Microbiology & Infection Prevention (MMBI) department of the University Medical Center Groningen (UMCG).
-#' @section Read more on our website!:
-#' \if{html}{\figure{logo.png}{options: height=40px style=margin-bottom:5px} \cr}
-#' On our website \url{https://msberends.gitlab.io/AMR} you can find \href{https://msberends.gitlab.io/AMR/articles/AMR.html}{a omprehensive tutorial} about how to conduct AMR analysis and find \href{https://msberends.gitlab.io/AMR/reference}{the complete documentation of all functions}, which reads a lot easier than in R.
+#' We created this package for both academic research and routine analysis at the Faculty of Medical Sciences of the University of Groningen and the Medical Microbiology & Infection Prevention (MMBI) department of the University Medical Center Groningen (UMCG). This R package is actively maintained and free software; you can freely use and distribute it for both personal and commercial (but not patent) purposes under the terms of the GNU General Public License version 2.0 (GPL-2), as published by the Free Software Foundation.
+#'
+#' This package can be used for:
+#' \itemize{
+#'   \item{Calculating antimicrobial resistance}
+#'   \item{Predicting antimicrobial resistance using regression models}
+#'   \item{Getting properties for any microorganism (like Gram stain, species, genus or family)}
+#'   \item{Getting properties for any antibiotic (like name, ATC code, defined daily dose or trade name)}
+#'   \item{Plotting antimicrobial resistance}
+#'   \item{Determining first isolates to be used for AMR analysis}
+#'   \item{Applying EUCAST rules}
+#'   \item{Determining multi-drug resistance organisms (MDRO)}
+#'   \item{Descriptive statistics: frequency tables, kurtosis and skewness}
+#' }
 #' @section Authors:
 #' Matthijs S. Berends[1,2] Christian F. Luz[1], Erwin E.A. Hassing[2],  Corinna Glasner[1],  Alex W. Friedrich[1],  Bhanu N.M. Sinha[1] \cr
 #'
 #' [1] Department of Medical Microbiology, University of Groningen, University Medical Center Groningen, Groningen, the Netherlands - \url{rug.nl} \url{umcg.nl} \cr
 #' [2] Certe Medical Diagnostics & Advice, Groningen, the Netherlands - \url{certe.nl}
+
+#' @section Read more on our website!:
+#' \if{html}{\figure{logo.png}{options: height=40px style=margin-bottom:5px} \cr}
+#' On our website \url{https://msberends.gitlab.io/AMR} you can find \href{https://msberends.gitlab.io/AMR/articles/AMR.html}{a comprehensive tutorial} about how to conduct AMR analysis, the \href{https://msberends.gitlab.io/AMR/reference}{complete documentation of all functions} (which reads a lot easier than here in R) and \href{https://msberends.gitlab.io/AMR/articles/WHONET.html}{an example analysis using WHONET data}.
+
 #' @section Contact us:
 #' For suggestions, comments or questions, please contact us at:
 #'

@@ -71,7 +71,7 @@
 #' @importFrom utils browseVignettes
 #' @importFrom hms is.hms
 #' @importFrom crayon red green silver
-#' @importFrom rlang enquos eval_tidy as_name
+#' @importFrom rlang enquos eval_tidy as_label
 #' @keywords summary summarise frequency freq
 #' @rdname freq
 #' @name freq
@@ -206,6 +206,7 @@ frequency_tbl <- function(x,
   # x_haslevels <- !is.null(levels(x))
   x.name <- NULL
   cols <- NULL
+  cols.names <- NULL
   if (any(class(x) == "list")) {
     cols <- names(x)
     x <- as.data.frame(x, stringsAsFactors = FALSE)
@@ -224,9 +225,19 @@ frequency_tbl <- function(x,
     if (is.null(x.name)) {
       x.name <- deparse(substitute(x))
     }
-    if (x.name == ".") {
-      x.name <- NULL
+    if (x.name %like% "(%>%)") {
+      x.name <- x.name %>% strsplit("%>%", fixed = TRUE) %>% unlist() %>% .[1] %>% trimws()
     }
+    if (x.name == ".") {
+      x.name <- "a data.frame"
+    }
+    x.name <- paste0("`", x.name, "`")
+    x.name.dims <- x %>%
+      dim() %>%
+      format(decimal.mark = decimal.mark, big.mark = big.mark) %>%
+      trimws() %>%
+      paste(collapse = " x ")
+    x.name <- paste0(x.name, " (", x.name.dims, ")")
 
     x.group <- group_vars(x)
     if (length(x.group) > 1) {
@@ -238,24 +249,19 @@ frequency_tbl <- function(x,
 
     if (length(user_exprs) > 0) {
       new_list <- list(0)
-
       for (i in 1:length(user_exprs)) {
         new_list[[i]] <- eval_tidy(user_exprs[[i]], data = x)
-        this_name <- try( as_name(user_exprs[[i]]) , silent = TRUE)
-        if (class(this_name) == "try-error") {
-          this_name <- paste0("V", i)
-        }
-        cols <- c(cols, this_name)
+        cols <- c(cols, as_label(user_exprs[[i]]))
       }
 
       if (length(new_list) == 1 & length(x.group) == 0) {
         # is now character
         x <- new_list[[1]]
         df <- NULL
-        cols <- NULL
       } else {
         # create data frame
-        df <- as.data.frame(new_list, col.names = paste0("V", 1:length(new_list)), stringsAsFactors = FALSE)
+        df <- as.data.frame(new_list, col.names = cols, stringsAsFactors = FALSE)
+        cols.names <- colnames(df)
       }
     } else {
       # complete data frame
@@ -264,7 +270,7 @@ frequency_tbl <- function(x,
 
     # support grouping variables
     if (length(x.group) > 0) {
-      x.group_cols <- c(x.group, cols)
+      x.group_cols <- c(x.group, cols.names)
       x <- bind_cols(x, df)
       # if (droplevels == TRUE) {
       #   x <- x %>% mutate_at(vars(x.group_cols), droplevels)
@@ -302,11 +308,10 @@ frequency_tbl <- function(x,
         # no groups, multiple values like: septic_patients %>% freq(mo, mo_genus(mo))
         x <- df
         df <- NULL
-        cols <- NULL
       }
     }
     if (length(cols) > 0 & is.data.frame(x)) {
-      x <- x[, cols]
+      x <- x[, cols.names]
     }
 
   } else if (any(class(x) == "table")) {
@@ -328,6 +333,7 @@ frequency_tbl <- function(x,
       x <- x %>% pull(1)
     } else if (ncol(x) < 10) {
       mult.columns <- ncol(x)
+      # paste old columns together
       x <- do.call(paste, c(x[colnames(x)], sep = sep))
     } else {
       stop("A maximum of 9 columns can be analysed at the same time.", call. = FALSE)

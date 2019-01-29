@@ -42,13 +42,14 @@
 #'   \item{\code{useful_gramnegative}}{\code{FALSE} if not useful according to EUCAST, \code{NA} otherwise (see Source)}
 #'   \item{\code{useful_grampositive}}{\code{FALSE} if not useful according to EUCAST, \code{NA} otherwise (see Source)}
 #' }
-#' @source - World Health Organization (WHO) Collaborating Centre for Drug Statistics Methodology: \url{https://www.whocc.no/atc_ddd_index/}
+#' @source World Health Organization (WHO) Collaborating Centre for Drug Statistics Methodology: \url{https://www.whocc.no/atc_ddd_index/}
 #'
 #' Table antibiotic coding EARSS (from WHONET 5.3): \url{http://www.madsonline.dk/Tutorials/landskoder_antibiotika_WM.pdf}
 #'
 #' EUCAST Expert Rules, Intrinsic Resistance and Exceptional Phenotypes Tables. Version 3.1, 2016: \url{http://www.eucast.org/fileadmin/src/media/PDFs/EUCAST_files/Expert_Rules/Expert_rules_intrinsic_exceptional_V3.1.pdf}
 #'
 #' European Commission Public Health PHARMACEUTICALS - COMMUNITY REGISTER: \url{http://ec.europa.eu/health/documents/community-register/html/atc.htm}
+#' @inheritSection WHOCC WHOCC
 #' @inheritSection AMR Read more on our website!
 #' @seealso \code{\link{microorganisms}}
 # use this later to further fill AMR::antibiotics
@@ -202,6 +203,41 @@
 #' }
 #' @inheritSection AMR Read more on our website!
 "septic_patients"
+
+#' Data set with 500 isolates - WHONET example
+#'
+#' This example data set has the exact same structure as an export file from WHONET. Such files can be used with this package, as this example data set shows. The data itself was based on our \code{\link{septic_patients}} data set.
+#' @format A \code{\link{data.frame}} with 500 observations and 53 variables:
+#' \describe{
+#'   \item{\code{Identification number}}{ID of the sample}
+#'   \item{\code{Specimen number}}{ID of the specimen}
+#'   \item{\code{Organism}}{Microorganisms, can be coerced with \code{\link{as.mo}}}
+#'   \item{\code{Country}}{Country of origin}
+#'   \item{\code{Laboratory}}{Name of laboratory}
+#'   \item{\code{Last name}}{Last name of patient}
+#'   \item{\code{First name}}{Initial of patient}
+#'   \item{\code{Sex}}{Gender of patient}
+#'   \item{\code{Age}}{Age of patient}
+#'   \item{\code{Age category}}{Age group, can also be looked up using \code{\link{age_groups}}}
+#'   \item{\code{Date of admission}}{Date of hospital admission}
+#'   \item{\code{Specimen date}}{Date when specimen was received at laboratory}
+#'   \item{\code{Specimen type}}{Specimen type or group}
+#'   \item{\code{Specimen type (Numeric)}}{Translation of \code{"Specimen type"}}
+#'   \item{\code{Reason}}{Reason of request with Differential Diagnosis}
+#'   \item{\code{Isolate number}}{ID of isolate}
+#'   \item{\code{Organism type}}{Type of microorganism, can also be looked up using \code{\link{mo_type}}}
+#'   \item{\code{Serotype}}{Serotype of microorganism}
+#'   \item{\code{Beta-lactamase}}{Microorganism produces beta-lactamase?}
+#'   \item{\code{ESBL}}{Microorganism produces extended spectrum beta-lactamase?}
+#'   \item{\code{Carbapenemase}}{Microorganism produces carbapenemase?}
+#'   \item{\code{MRSA screening test}}{Microorganism is possible MRSA?}
+#'   \item{\code{Inducible clindamycin resistance}}{Clindamycin can be induced?}
+#'   \item{\code{Comment}}{Other comments}
+#'   \item{\code{Date of data entry}}{Date this data was entered in WHONET}
+#'   \item{\code{AMP_ND10:CIP_EE}}{27 different antibiotics. You can lookup the abbreviatons in the \code{\link{antibiotics}} data set, or use e.g. \code{\link{atc_name}("AMP")} to get the official name immediately.}
+#' }
+#' @inheritSection AMR Read more on our website!
+"WHONET"
 
 #' Supplementary Data
 #'

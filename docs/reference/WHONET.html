@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Data set with 2,000 blood culture isolates from septic patients — septic_patients • AMR (for R)</title>
+<title>Data set with 500 isolates - WHONET example — WHONET • AMR (for R)</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -45,9 +45,9 @@
 
   <link href="../extra.css" rel="stylesheet">
   <script src="../extra.js"></script>
-<meta property="og:title" content="Data set with 2,000 blood culture isolates from septic patients — septic_patients" />
+<meta property="og:title" content="Data set with 500 isolates - WHONET example — WHONET" />
 
-<meta property="og:description" content="An anonymised data set containing 2,000 microbial blood culture isolates with their full antibiograms found in septic patients in 4 different hospitals in the Netherlands, between 2001 and 2017. It is true, genuine data. This data.frame can be used to practice AMR analysis. For examples, please read the tutorial on our website." />
+<meta property="og:description" content="This example data set has the exact same structure as an export file from WHONET. Such files can be used with this package, as this example data set shows. The data itself was based on our septic_patients data set." />
 
 <meta property="og:image" content="https://msberends.gitlab.io/AMR/logo.png" />
 <meta name="twitter:card" content="summary" />
@@ -223,32 +223,48 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Data set with 2,000 blood culture isolates from septic patients</h1>
+    <h1>Data set with 500 isolates - WHONET example</h1>
     
-    <div class="hidden name"><code>septic_patients.Rd</code></div>
+    <div class="hidden name"><code>WHONET.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>An anonymised data set containing 2,000 microbial blood culture isolates with their full antibiograms found in septic patients in 4 different hospitals in the Netherlands, between 2001 and 2017. It is true, genuine data. This <code>data.frame</code> can be used to practice AMR analysis. For examples, please read <a href='https://msberends.gitlab.io/AMR/articles/AMR.html'>the tutorial on our website</a>.</p>
+    <p>This example data set has the exact same structure as an export file from WHONET. Such files can be used with this package, as this example data set shows. The data itself was based on our <code><a href='septic_patients.html'>septic_patients</a></code> data set.</p>
     
     </div>
 
-    <pre class="usage"><span class='no'>septic_patients</span></pre>
+    <pre class="usage"><span class='no'>WHONET</span></pre>
         
     <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
 
-    <p>A <code><a href='https://www.rdocumentation.org/packages/base/topics/data.frame'>data.frame</a></code> with 2,000 observations and 49 variables:</p><dl class='dl-horizontal'>
-  <dt><code>date</code></dt><dd><p>date of receipt at the laboratory</p></dd>
-  <dt><code>hospital_id</code></dt><dd><p>ID of the hospital, from A to D</p></dd>
-  <dt><code>ward_icu</code></dt><dd><p>logical to determine if ward is an intensive care unit</p></dd>
-  <dt><code>ward_clinical</code></dt><dd><p>logical to determine if ward is a regular clinical ward</p></dd>
-  <dt><code>ward_outpatient</code></dt><dd><p>logical to determine if ward is an outpatient clinic</p></dd>
-  <dt><code>age</code></dt><dd><p>age of the patient</p></dd>
-  <dt><code>gender</code></dt><dd><p>gender of the patient</p></dd>
-  <dt><code>patient_id</code></dt><dd><p>ID of the patient, first 10 characters of an SHA hash containing irretrievable information</p></dd>
-  <dt><code>mo</code></dt><dd><p>ID of microorganism created with <code><a href='as.mo.html'>as.mo</a></code>, see also <code><a href='microorganisms.html'>microorganisms</a></code></p></dd>
-  <dt><code>peni:rifa</code></dt><dd><p>40 different antibiotics with class <code>rsi</code> (see <code><a href='as.rsi.html'>as.rsi</a></code>); these column names occur in <code><a href='antibiotics.html'>antibiotics</a></code> data set and can be translated with <code><a href='abname.html'>abname</a></code></p></dd>
+    <p>A <code><a href='https://www.rdocumentation.org/packages/base/topics/data.frame'>data.frame</a></code> with 500 observations and 53 variables:</p><dl class='dl-horizontal'>
+  <dt><code>Identification number</code></dt><dd><p>ID of the sample</p></dd>
+  <dt><code>Specimen number</code></dt><dd><p>ID of the specimen</p></dd>
+  <dt><code>Organism</code></dt><dd><p>Microorganisms, can be coerced with <code><a href='as.mo.html'>as.mo</a></code></p></dd>
+  <dt><code>Country</code></dt><dd><p>Country of origin</p></dd>
+  <dt><code>Laboratory</code></dt><dd><p>Name of laboratory</p></dd>
+  <dt><code>Last name</code></dt><dd><p>Last name of patient</p></dd>
+  <dt><code>First name</code></dt><dd><p>Initial of patient</p></dd>
+  <dt><code>Sex</code></dt><dd><p>Gender of patient</p></dd>
+  <dt><code>Age</code></dt><dd><p>Age of patient</p></dd>
+  <dt><code>Age category</code></dt><dd><p>Age group, can also be looked up using <code><a href='age_groups.html'>age_groups</a></code></p></dd>
+  <dt><code>Date of admission</code></dt><dd><p>Date of hospital admission</p></dd>
+  <dt><code>Specimen date</code></dt><dd><p>Date when specimen was received at laboratory</p></dd>
+  <dt><code>Specimen type</code></dt><dd><p>Specimen type or group</p></dd>
+  <dt><code>Specimen type (Numeric)</code></dt><dd><p>Translation of <code>"Specimen type"</code></p></dd>
+  <dt><code>Reason</code></dt><dd><p>Reason of request with Differential Diagnosis</p></dd>
+  <dt><code>Isolate number</code></dt><dd><p>ID of isolate</p></dd>
+  <dt><code>Organism type</code></dt><dd><p>Type of microorganism, can also be looked up using <code><a href='mo_property.html'>mo_type</a></code></p></dd>
+  <dt><code>Serotype</code></dt><dd><p>Serotype of microorganism</p></dd>
+  <dt><code>Beta-lactamase</code></dt><dd><p>Microorganism produces beta-lactamase?</p></dd>
+  <dt><code>ESBL</code></dt><dd><p>Microorganism produces extended spectrum beta-lactamase?</p></dd>
+  <dt><code>Carbapenemase</code></dt><dd><p>Microorganism produces carbapenemase?</p></dd>
+  <dt><code>MRSA screening test</code></dt><dd><p>Microorganism is possible MRSA?</p></dd>
+  <dt><code>Inducible clindamycin resistance</code></dt><dd><p>Clindamycin can be induced?</p></dd>
+  <dt><code>Comment</code></dt><dd><p>Other comments</p></dd>
+  <dt><code>Date of data entry</code></dt><dd><p>Date this data was entered in WHONET</p></dd>
+  <dt><code>AMP_ND10:CIP_EE</code></dt><dd><p>27 different antibiotics. You can lookup the abbreviatons in the <code><a href='antibiotics.html'>antibiotics</a></code> data set, or use e.g. <code><a href='atc_property.html'>atc_name</a>("AMP")</code> to get the official name immediately.</p></dd>
 </dl>
     
     <h2 class="hasAnchor" id="read-more-on-our-website-"><a class="anchor" href="#read-more-on-our-website-"></a>Read more on our website!</h2>
