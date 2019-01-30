@@ -50,7 +50,9 @@ Developers
 
 ## Get this package
 
-This package is available on the official R network (CRAN), which has a peer-reviewed submission process. Install this package in R with:
+#### Latest released version
+
+This package is available [on the official R network (CRAN)](https://cran.r-project.org/package=AMR), which has a peer-reviewed submission process. Install this package in R with:
 
 ```r
 install.packages("AMR")
@@ -58,6 +60,7 @@ install.packages("AMR")
 
 It will be downloaded and installed automatically. For RStudio, click on the menu *Tools* > *Install Packages...* and then type in "AMR" and press <kbd>Install</kbd>.
 
+#### Latest development version
 
 The latest and unpublished development version can be installed with (precaution: may be unstable):
 ```r

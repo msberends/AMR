@@ -251,6 +251,12 @@ frequency_tbl <- function(x,
       new_list <- list(0)
       for (i in 1:length(user_exprs)) {
         new_list[[i]] <- eval_tidy(user_exprs[[i]], data = x)
+        if (length(new_list[[i]]) == 1) {
+          if (is.character(new_list[[i]]) & new_list[[i]] %in% colnames(x)) {
+            # support septic_patients %>% freq("hospital_id")
+            new_list[[i]] <- x %>% pull(new_list[[i]])
+          }
+        }
         cols <- c(cols, as_label(user_exprs[[i]]))
       }
 
