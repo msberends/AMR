@@ -192,7 +192,7 @@ frequency_tbl <- function(x,
                           markdown = !interactive(),
                           digits = 2,
                           quote = FALSE,
-                          header = !markdown,
+                          header = TRUE,
                           title = NULL,
                           na = "<NA>",
                           droplevels = TRUE,
@@ -203,7 +203,6 @@ frequency_tbl <- function(x,
   mult.columns <- 0
   x.group = character(0)
   df <- NULL
-  # x_haslevels <- !is.null(levels(x))
   x.name <- NULL
   cols <- NULL
   cols.names <- NULL
@@ -229,9 +228,10 @@ frequency_tbl <- function(x,
       x.name <- x.name %>% strsplit("%>%", fixed = TRUE) %>% unlist() %>% .[1] %>% trimws()
     }
     if (x.name == ".") {
-      x.name <- "a data.frame"
+      x.name <- "a `data.frame`"
+    } else {
+      x.name <- paste0("`", x.name, "`")
     }
-    x.name <- paste0("`", x.name, "`")
     x.name.dims <- x %>%
       dim() %>%
       format(decimal.mark = decimal.mark, big.mark = big.mark) %>%
@@ -545,6 +545,10 @@ format_header <- function(x, markdown = FALSE, decimal.mark = ".", big.mark = ",
   newline <-"\n"
   if (markdown == TRUE) {
     newline <- "  \n"
+    # no colours in markdown
+    silver <- function(x) x
+    green <- function(x) x
+    red <- function(x) x
   }
 
   header <- header(x)
@@ -682,10 +686,10 @@ format_header <- function(x, markdown = FALSE, decimal.mark = ".", big.mark = ",
 #' @importFrom dplyr top_n pull
 top_freq <- function(f, n) {
   if (!"frequency_tbl" %in% class(f)) {
-    stop("top_freq can only be applied to frequency tables", call. = FALSE)
+    stop("`top_freq` can only be applied to frequency tables", call. = FALSE)
   }
   if (!is.numeric(n) | length(n) != 1L) {
-    stop("For top_freq, `nmax` must be a number of length 1", call. = FALSE)
+    stop("For `top_freq`, 'n' must be a number of length 1", call. = FALSE)
   }
   top <- f %>% top_n(n, count)
   vect <- top %>% pull(item)
@@ -699,6 +703,9 @@ top_freq <- function(f, n) {
 #' @rdname freq
 #' @export
 header <- function(f, property = NULL) {
+  if (!"frequency_tbl" %in% class(f)) {
+    stop("`header` can only be applied to frequency tables", call. = FALSE)
+  }
   if (is.null(property)) {
     attributes(f)$header
   } else {
@@ -770,7 +777,7 @@ diff.frequency_tbl <- function(x, y, ...) {
 print.frequency_tbl <- function(x,
                                 nmax = getOption("max.print.freq", default = 15),
                                 markdown = !interactive(),
-                                header = !markdown,
+                                header = TRUE,
                                 decimal.mark = getOption("OutDec"),
                                 big.mark = ifelse(decimal.mark != ",", ",", "."),
                                 ...) {
@@ -837,10 +844,6 @@ print.frequency_tbl <- function(x,
   if (!missing(markdown)) {
     if (markdown == TRUE) {
       opt$tbl_format <- "markdown"
-      if (missing(header)) {
-        # default header off for markdown
-        header <- FALSE
-      }
     } else {
       opt$tbl_format <- "pandoc"
     }
@@ -862,7 +865,8 @@ print.frequency_tbl <- function(x,
       if (is.null(opt$digits)) {
         opt$digits <- 2
       }
-      cat(format_header(x, digits = opt$digits, markdown = markdown, decimal.mark = decimal.mark, big.mark = big.mark))
+      cat(format_header(x, digits = opt$digits, markdown = (opt$tbl_format == "markdown"),
+                        decimal.mark = decimal.mark, big.mark = big.mark))
     }
   } else if (opt$tbl_format == "markdown") {
     # do print title as caption in markdown

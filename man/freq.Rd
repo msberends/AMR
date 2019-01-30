@@ -11,13 +11,13 @@
 frequency_tbl(x, ..., sort.count = TRUE,
   nmax = getOption("max.print.freq"), na.rm = TRUE, row.names = TRUE,
   markdown = !interactive(), digits = 2, quote = FALSE,
-  header = !markdown, title = NULL, na = "<NA>", droplevels = TRUE,
+  header = TRUE, title = NULL, na = "<NA>", droplevels = TRUE,
   sep = " ", decimal.mark = getOption("OutDec"),
   big.mark = ifelse(decimal.mark != ",", ",", "."))
 
 freq(x, ..., sort.count = TRUE, nmax = getOption("max.print.freq"),
   na.rm = TRUE, row.names = TRUE, markdown = !interactive(),
-  digits = 2, quote = FALSE, header = !markdown, title = NULL,
+  digits = 2, quote = FALSE, header = TRUE, title = NULL,
   na = "<NA>", droplevels = TRUE, sep = " ",
   decimal.mark = getOption("OutDec"), big.mark = ifelse(decimal.mark !=
   ",", ",", "."))
@@ -27,7 +27,7 @@ top_freq(f, n)
 header(f, property = NULL)
 
 \method{print}{frequency_tbl}(x, nmax = getOption("max.print.freq",
-  default = 15), markdown = !interactive(), header = !markdown,
+  default = 15), markdown = !interactive(), header = TRUE,
   decimal.mark = getOption("OutDec"), big.mark = ifelse(decimal.mark !=
   ",", ",", "."), ...)
 }

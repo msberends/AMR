@@ -239,13 +239,13 @@ top_freq can be used to get the top/bottom n items of a frequency table, with co
     <pre class="usage"><span class='fu'>frequency_tbl</span>(<span class='no'>x</span>, <span class='no'>...</span>, <span class='kw'>sort.count</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
   <span class='kw'>nmax</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/options'>getOption</a></span>(<span class='st'>"max.print.freq"</span>), <span class='kw'>na.rm</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>row.names</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
   <span class='kw'>markdown</span> <span class='kw'>=</span> !<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/interactive'>interactive</a></span>(), <span class='kw'>digits</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>quote</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>header</span> <span class='kw'>=</span> !<span class='no'>markdown</span>, <span class='kw'>title</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>na</span> <span class='kw'>=</span> <span class='st'>"&lt;NA&gt;"</span>, <span class='kw'>droplevels</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>header</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>title</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>na</span> <span class='kw'>=</span> <span class='st'>"&lt;NA&gt;"</span>, <span class='kw'>droplevels</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
   <span class='kw'>sep</span> <span class='kw'>=</span> <span class='st'>" "</span>, <span class='kw'>decimal.mark</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/options'>getOption</a></span>(<span class='st'>"OutDec"</span>),
   <span class='kw'>big.mark</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/ifelse'>ifelse</a></span>(<span class='no'>decimal.mark</span> <span class='kw'>!=</span> <span class='st'>","</span>, <span class='st'>","</span>, <span class='st'>"."</span>))
 
 <span class='fu'>freq</span>(<span class='no'>x</span>, <span class='no'>...</span>, <span class='kw'>sort.count</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>nmax</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/options'>getOption</a></span>(<span class='st'>"max.print.freq"</span>),
   <span class='kw'>na.rm</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>row.names</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>markdown</span> <span class='kw'>=</span> !<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/interactive'>interactive</a></span>(),
-  <span class='kw'>digits</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>quote</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>header</span> <span class='kw'>=</span> !<span class='no'>markdown</span>, <span class='kw'>title</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>digits</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>quote</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>header</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>title</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>na</span> <span class='kw'>=</span> <span class='st'>"&lt;NA&gt;"</span>, <span class='kw'>droplevels</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>sep</span> <span class='kw'>=</span> <span class='st'>" "</span>,
   <span class='kw'>decimal.mark</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/options'>getOption</a></span>(<span class='st'>"OutDec"</span>), <span class='kw'>big.mark</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/ifelse'>ifelse</a></span>(<span class='no'>decimal.mark</span> <span class='kw'>!=</span>
   <span class='st'>","</span>, <span class='st'>","</span>, <span class='st'>"."</span>))
@@ -256,7 +256,7 @@ top_freq can be used to get the top/bottom n items of a frequency table, with co
 
 <span class='co'># S3 method for frequency_tbl</span>
 <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/print'>print</a></span>(<span class='no'>x</span>, <span class='kw'>nmax</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/options'>getOption</a></span>(<span class='st'>"max.print.freq"</span>,
-  <span class='kw'>default</span> <span class='kw'>=</span> <span class='fl'>15</span>), <span class='kw'>markdown</span> <span class='kw'>=</span> !<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/interactive'>interactive</a></span>(), <span class='kw'>header</span> <span class='kw'>=</span> !<span class='no'>markdown</span>,
+  <span class='kw'>default</span> <span class='kw'>=</span> <span class='fl'>15</span>), <span class='kw'>markdown</span> <span class='kw'>=</span> !<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/interactive'>interactive</a></span>(), <span class='kw'>header</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
   <span class='kw'>decimal.mark</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/options'>getOption</a></span>(<span class='st'>"OutDec"</span>), <span class='kw'>big.mark</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/ifelse'>ifelse</a></span>(<span class='no'>decimal.mark</span> <span class='kw'>!=</span>
   <span class='st'>","</span>, <span class='st'>","</span>, <span class='st'>"."</span>), <span class='no'>...</span>)</pre>
     
@@ -368,7 +368,7 @@ top_freq can be used to get the top/bottom n items of a frequency table, with co
 <li><p>Median, using <code><a href='https://www.rdocumentation.org/packages/stats/topics/median'>median</a></code>, with percentage since oldest</p></li>
 </ul>
     <p>In factors, all factor levels that are not existing in the input data will be dropped.</p>
-<p>The function <code>top_freq</code> uses <code><a href='https://dplyr.tidyverse.org/reference/top_n.html'>top_n</a></code> internally and will include more than <code>n</code> rows if there are ties.</p>
+<p>The function <code>top_freq</code> uses <code><a href='https://www.rdocumentation.org/packages/dplyr/topics/top_n'>top_n</a></code> internally and will include more than <code>n</code> rows if there are ties.</p>
     
     <h2 class="hasAnchor" id="read-more-on-our-website-"><a class="anchor" href="#read-more-on-our-website-"></a>Read more on our website!</h2>
 
@@ -392,8 +392,8 @@ On our website <a href='https://msberends.gitlab.io/AMR'>https://msberends.gitla
 
 <span class='co'># you could also use `select` or `pull` to get your variables</span>
 <span class='no'>septic_patients</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span>(<span class='no'>hospital_id</span> <span class='kw'>==</span> <span class='st'>"A"</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='no'>mo</span>) <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='https://www.rdocumentation.org/packages/dplyr/topics/filter'>filter</a></span>(<span class='no'>hospital_id</span> <span class='kw'>==</span> <span class='st'>"A"</span>) <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='https://www.rdocumentation.org/packages/dplyr/topics/select'>select</a></span>(<span class='no'>mo</span>) <span class='kw'>%&gt;%</span>
   <span class='fu'>freq</span>()
 
 
@@ -409,20 +409,20 @@ On our website <a href='https://msberends.gitlab.io/AMR'>https://msberends.gitla
 
 <span class='co'># group a variable and analyse another</span>
 <span class='no'>septic_patients</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span>(<span class='no'>hospital_id</span>) <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='https://www.rdocumentation.org/packages/dplyr/topics/group_by'>group_by</a></span>(<span class='no'>hospital_id</span>) <span class='kw'>%&gt;%</span>
   <span class='fu'>freq</span>(<span class='no'>gender</span>)
 
 
 <span class='co'># get top 10 bugs of hospital A as a vector</span>
 <span class='no'>septic_patients</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span>(<span class='no'>hospital_id</span> <span class='kw'>==</span> <span class='st'>"A"</span>) <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='https://www.rdocumentation.org/packages/dplyr/topics/filter'>filter</a></span>(<span class='no'>hospital_id</span> <span class='kw'>==</span> <span class='st'>"A"</span>) <span class='kw'>%&gt;%</span>
   <span class='fu'>freq</span>(<span class='no'>mo</span>) <span class='kw'>%&gt;%</span>
   <span class='fu'>top_freq</span>(<span class='fl'>10</span>)
 
 
 <span class='co'># save frequency table to an object</span>
 <span class='no'>years</span> <span class='kw'>&lt;-</span> <span class='no'>septic_patients</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span>(<span class='kw'>year</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/format'>format</a></span>(<span class='no'>date</span>, <span class='st'>"%Y"</span>)) <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='https://www.rdocumentation.org/packages/dplyr/topics/mutate'>mutate</a></span>(<span class='kw'>year</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/format'>format</a></span>(<span class='no'>date</span>, <span class='st'>"%Y"</span>)) <span class='kw'>%&gt;%</span>
   <span class='fu'>freq</span>(<span class='no'>year</span>)
 
 
@@ -473,11 +473,11 @@ On our website <a href='https://msberends.gitlab.io/AMR'>https://msberends.gitla
 <span class='co'># only get selected columns</span>
 <span class='no'>septic_patients</span> <span class='kw'>%&gt;%</span>
   <span class='fu'>freq</span>(<span class='no'>hospital_id</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='no'>item</span>, <span class='no'>percent</span>)
+  <span class='fu'><a href='https://www.rdocumentation.org/packages/dplyr/topics/select'>select</a></span>(<span class='no'>item</span>, <span class='no'>percent</span>)
 
 <span class='no'>septic_patients</span> <span class='kw'>%&gt;%</span>
   <span class='fu'>freq</span>(<span class='no'>hospital_id</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span>(-<span class='no'>count</span>, -<span class='no'>cum_count</span>)
+  <span class='fu'><a href='https://www.rdocumentation.org/packages/dplyr/topics/select'>select</a></span>(-<span class='no'>count</span>, -<span class='no'>cum_count</span>)
 
 
 <span class='co'># check differences between frequency tables</span>

@@ -99,6 +99,7 @@
       freq(mo_genus(mo))
     ```
   * Header info is now available as a list, with the `header` function
+  * The parameter `header` is now set to `TRUE` at default, even for markdown
   * Added header info for class `mo` to show unique count of families, genera and species
   * Now honours the `decimal.mark` setting, which just like `format` defaults to `getOption("OutDec")`
   * The new `big.mark` parameter will at default be `","` when `decimal.mark = "."` and `"."` otherwise
