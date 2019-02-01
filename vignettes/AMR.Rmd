@@ -25,7 +25,7 @@ knitr::opts_chunk$set(
 
 **Note:** values on this page will change with every website update since they are based on randomly created values and the page was written in [RMarkdown](https://rmarkdown.rstudio.com/). However, the methodology remains unchanged. This page was generated on `r format(Sys.Date(), "%d %B %Y")`.
 
-## Introduction
+# Introduction
 
 For this tutorial, we will create fake demonstration data to work with. 
 
@@ -54,12 +54,12 @@ library(AMR)
 # install.packages(c("tidyverse", "AMR"))
 ```
 
-## Creation of data
+# Creation of data
 We will create some fake example data to use for analysis. For antimicrobial resistance analysis, we need at least: a patient ID, name or code of a microorganism, a date and antimicrobial results (an antibiogram). It could also include a specimen type (e.g. to filter on blood or urine), the ward type (e.g. to filter on ICUs). 
 
 With additional columns (like a hospital name, the patients gender of even [well-defined] clinical properties) you can do a comparative analysis, as this tutorial will demonstrate too.
 
-#### Patients
+## Patients
 To start with patients, we need a unique list of patients. 
 
 ```{r create patients}
@@ -76,7 +76,7 @@ patients_table <- data.frame(patient_id = patients,
 
 The first 135 patient IDs are now male, the other 125 are female.
 
-#### Dates
+## Dates
 Let's pretend that our data consists of blood cultures isolates from 1 January 2010 until 1 January 2018. 
 
 ```{r create dates}
@@ -93,7 +93,7 @@ bacteria <- c("Escherichia coli", "Staphylococcus aureus",
               "Streptococcus pneumoniae", "Klebsiella pneumoniae")
 ```
 
-#### Other variables
+## Other variables
 For completeness, we can also add the hospital where the patients was admitted and we need to define valid antibmicrobial results for our randomisation:
 
 ```{r create other}
@@ -101,7 +101,7 @@ hospitals <- c("Hospital A", "Hospital B", "Hospital C", "Hospital D")
 ab_interpretations <- c("S", "I", "R")
 ```
 
-#### Put everything together
+## Put everything together
 
 Using the `sample()` function, we can randomly select items from all objects we defined earlier. To let our fake data reflect reality a bit, we will also approximately define the probabilities of bacteria and the antibiotic results with the `prob` parameter.
 
@@ -134,7 +134,7 @@ knitr::kable(head(data), align = "c")
 
 Now, let's start the cleaning and the analysis!
 
-## Cleaning the data
+# Cleaning the data
 Use the frequency table function `freq()` to look specifically for unique values in any variable. For example, for the `gender` variable:
 
 ```{r freq gender 1, eval = FALSE}
@@ -168,7 +168,7 @@ Because the amoxicillin (column `amox`) and amoxicillin/clavulanic acid (column 
 data <- eucast_rules(data, col_mo = "bacteria")
 ```
 
-## Adding new variables
+# Adding new variables
 Now that we have the microbial ID, we can add some taxonomic properties:
 
 ```{r new taxo}
@@ -178,7 +178,7 @@ data <- data %>%
          species = mo_species(bacteria))
 ```
 
-### First isolates
+## First isolates
 We also need to know which isolates we can *actually* use for analysis.
 
 To conduct an analysis of antimicrobial resistance, you must [only include the first isolate of every patient per episode](https://www.ncbi.nlm.nih.gov/pubmed/17304462) (Hindler *et al.*, Clin Infect Dis. 2007). If you would not do this, you could easily get an overestimate or underestimate of the resistance of an antibiotic. Imagine that a patient was admitted with an MRSA and that it was found in 5 different blood cultures the following weeks (yes, some countries like the Netherlands have these blood drawing policies). The resistance percentage of oxacillin of all \emph{S. aureus} isolates would be overestimated, because you included this MRSA more than once. It would clearly be [selection bias](https://en.wikipedia.org/wiki/Selection_bias).
@@ -194,7 +194,7 @@ data <- data %>%
   mutate(first = first_isolate(.))
 ```
 
-So only `r AMR:::percent(sum(data$first) / nrow(data))` is suitable for resistance analysis! We can now filter on is with the `filter()` function, also from the `dplyr` package:
+So only `r AMR:::percent(sum(data$first) / nrow(data))` is suitable for resistance analysis! We can now filter on it with the `filter()` function, also from the `dplyr` package:
 
 ```{r 1st isolate filter}
 data_1st <- data %>% 
@@ -207,7 +207,7 @@ data_1st <- data %>%
   filter_first_isolate()
 ```
 
-### First *weighted* isolates
+## First *weighted* isolates
 We made a slight twist to the CLSI algorithm, to take into account the antimicrobial susceptibility profile. Imagine this data, sorted on date:
 
 ```{r, echo = FALSE, message = FALSE, warning = FALSE, results = 'asis'}
@@ -226,7 +226,7 @@ weighted_df %>%
   knitr::kable(align = "c")
 ```
 
-Only `r sum(weighted_df$first)` isolates are marked as 'first' according to CLSI guideline. But when reviewing the antibiogram, it is obvious that some isolates are absolutely different strains and show be included too. This is why we weigh isolates, based on their antibiogram. The `key_antibiotics()` function adds a vector with 18 key antibiotics: 6 broad spectrum ones, 6 small spectrum for Gram negatives and 6 small spectrum for Gram positives. These can be defined by the user.
+Only `r sum(weighted_df$first)` isolates are marked as 'first' according to CLSI guideline. But when reviewing the antibiogram, it is obvious that some isolates are absolutely different strains and should be included too. This is why we weigh isolates, based on their antibiogram. The `key_antibiotics()` function adds a vector with 18 key antibiotics: 6 broad spectrum ones, 6 small spectrum for Gram negatives and 6 small spectrum for Gram positives. These can be defined by the user.
 
 If a column exists with a name like 'key(...)ab' the `first_isolate()` function will automatically use it and determine the first weighted isolates. Mind the NOTEs in below output: 
 
@@ -252,7 +252,7 @@ weighted_df2 %>%
   knitr::kable(align = "c")
 ```
 
-Instead of `r sum(weighted_df$first)`, now `r sum(weighted_df2$first_weighted)` isolates are flagged. In total, `r AMR:::percent(sum(data$first_weighted) / nrow(data))` of all isolates are marked 'first weighted' - `r AMR:::percent((sum(data$first_weighted) / nrow(data)) -- (sum(data$first) / nrow(data)))` more than when using the CLSI guideline. In real life, this novel algorithm will yield 5-10% more isolates than the classic CLSI guideline.
+Instead of `r sum(weighted_df$first)`, now `r sum(weighted_df2$first_weighted)` isolates are flagged. In total, `r AMR:::percent(sum(data$first_weighted) / nrow(data))` of all isolates are marked 'first weighted' - `r AMR:::percent((sum(data$first_weighted) / nrow(data)) - (sum(data$first) / nrow(data)))` more than when using the CLSI guideline. In real life, this novel algorithm will yield 5-10% more isolates than the classic CLSI guideline.
 
 As with `filter_first_isolate()`, there's a shortcut for this new algorithm too:
 ```{r 1st isolate filter 3, results = 'hide', message = FALSE, warning = FALSE}
@@ -280,8 +280,9 @@ knitr::kable(head(data_1st), align = "c")
 
 Time for the analysis!
 
-## Analysing the data
+# Analysing the data
 You might want to start by getting an idea of how the data is distributed. It's an important start, because it also decides how you will continue your analysis. 
+
 ## Dispersion of species
 To just get an idea how the species are distributed, create a frequency table with our `freq()` function. We created the `genus` and `species` column earlier based on the microbial ID. With `paste()`, we can concatenate them together.
 
@@ -301,7 +302,7 @@ data_1st %>%
   freq(genus, species, header = TRUE)
 ```
 
-### Resistance percentages
+## Resistance percentages
 
 The functions `portion_R`, `portion_RI`, `portion_I`, `portion_IS` and `portion_S` can be used to determine the portion of a specific antimicrobial outcome. They can be used on their own:
 
@@ -371,7 +372,7 @@ data_1st %>%
   geom_col(position = "dodge2")
 ```
 
-### Plots
+## Plots
 To show results in plots, most R users would nowadays use the `ggplot2` package. This package lets you create plots in layers. You can read more about it [on their website](https://ggplot2.tidyverse.org/). A quick example would look like these syntaxes:
 
 ```{r plot 2, eval = FALSE}
@@ -433,7 +434,7 @@ data_1st %>%
   coord_flip()
 ```
 
-### Using an independence test to compare resistance
+## Independence test
 
 The next example uses the included `septic_patients`, which is an anonymised data set containing 2,000 microbial blood culture isolates with their full antibiograms found in septic patients in 4 different hospitals in the Netherlands, between 2001 and 2017. It is true, genuine data. This `data.frame` can be used to practice AMR analysis.
 

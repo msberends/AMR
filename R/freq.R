@@ -610,7 +610,13 @@ format_header <- function(x, markdown = FALSE, decimal.mark = ".", big.mark = ",
 
   # class and mode
   if (is.null(header$columns)) {
+    if (markdown == TRUE) {
+      header$class <- paste0("`", header$class, "`")
+    }
     if (!header$mode %in% header$class) {
+      if (markdown == TRUE) {
+        header$mode <- paste0("`", header$mode, "`")
+      }
       header$class <- header$class %>% rev() %>% paste(collapse = " > ") %>% paste0(silver(paste0(" (", header$mode, ")")))
     } else {
       header$class <- header$class %>% rev() %>% paste(collapse = " > ")

@@ -79,20 +79,12 @@ atc_online_property <- function(atc_code,
     stop("Packages 'xml2', 'rvest' and 'curl' are required for this function")
   }
 
-  # check active network interface, from https://stackoverflow.com/a/5078002/4575331
-  has_internet <- function(url) {
-    # extract host from given url
-    # https://www.whocc.no/atc_ddd_index/ -> www.whocc.no
-    url <- url %>%
-      gsub("^(http://|https://)", "", .) %>%
-      strsplit('/', fixed = TRUE) %>%
-      unlist() %>%
-      .[1]
-    !is.null(curl::nslookup(url, error = FALSE))
+  if (!all(atc_code %in% AMR::antibiotics)) {
+    atc_code <- as.character(as.atc(atc_code))
   }
-  # check for connection using the ATC of amoxicillin
-  if (!curl::has_internet(url = url)) {
-    message("The URL could not be reached.")
+
+  if (!curl::has_internet()) {
+    message("There appears to be no internet connection.")
     return(rep(NA, length(atc_code)))
   }
 
