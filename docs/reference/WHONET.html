@@ -241,7 +241,7 @@
     <p>A <code><a href='https://www.rdocumentation.org/packages/base/topics/data.frame'>data.frame</a></code> with 500 observations and 53 variables:</p><dl class='dl-horizontal'>
   <dt><code>Identification number</code></dt><dd><p>ID of the sample</p></dd>
   <dt><code>Specimen number</code></dt><dd><p>ID of the specimen</p></dd>
-  <dt><code>Organism</code></dt><dd><p>Microorganisms, can be coerced with <code><a href='as.mo.html'>as.mo</a></code></p></dd>
+  <dt><code>Organism</code></dt><dd><p>Name of the microorganism. Before analysis, you should transform this to a valid microbial class, using <code><a href='as.mo.html'>as.mo</a></code>.</p></dd>
   <dt><code>Country</code></dt><dd><p>Country of origin</p></dd>
   <dt><code>Laboratory</code></dt><dd><p>Name of laboratory</p></dd>
   <dt><code>Last name</code></dt><dd><p>Last name of patient</p></dd>
@@ -264,7 +264,7 @@
   <dt><code>Inducible clindamycin resistance</code></dt><dd><p>Clindamycin can be induced?</p></dd>
   <dt><code>Comment</code></dt><dd><p>Other comments</p></dd>
   <dt><code>Date of data entry</code></dt><dd><p>Date this data was entered in WHONET</p></dd>
-  <dt><code>AMP_ND10:CIP_EE</code></dt><dd><p>27 different antibiotics. You can lookup the abbreviatons in the <code><a href='antibiotics.html'>antibiotics</a></code> data set, or use e.g. <code><a href='atc_property.html'>atc_name</a>("AMP")</code> to get the official name immediately.</p></dd>
+  <dt><code>AMP_ND10:CIP_EE</code></dt><dd><p>27 different antibiotics. You can lookup the abbreviatons in the <code><a href='antibiotics.html'>antibiotics</a></code> data set, or use e.g. <code><a href='atc_property.html'>atc_name</a>("AMP")</code> to get the official name immediately. Before analysis, you should transform this to a valid antibiotic class, using <code><a href='as.rsi.html'>as.rsi</a></code>.</p></dd>
 </dl>
     
     <h2 class="hasAnchor" id="read-more-on-our-website-"><a class="anchor" href="#read-more-on-our-website-"></a>Read more on our website!</h2>

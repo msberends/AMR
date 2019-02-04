@@ -77,7 +77,7 @@
 * A note to the manual pages of the `portion` functions, that low counts can influence the outcome and that the `portion` functions may camouflage this, since they only return the portion (albeit being dependent on the `minimum` parameter)
 * Merged data sets `microorganisms.certe` and `microorganisms.umcg` into `microorganisms.codes`
 * Function `mo_taxonomy()` now contains the kingdom too
-* Reduce false positives for `is.rsi.eligible()`
+* Reduce false positives for `is.rsi.eligible()` using the new `threshold` parameter
 * New colours for `scale_rsi_colours()`
 * Summaries of class `mo` will now return the top 3 and the unique count, e.g. using `summary(mo)`
 * Small text updates to summaries of class `rsi` and `mic`

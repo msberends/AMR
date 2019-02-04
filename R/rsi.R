@@ -24,6 +24,7 @@
 #' This transforms a vector to a new class \code{rsi}, which is an ordered factor with levels \code{S < I < R}. Invalid antimicrobial interpretations will be translated as \code{NA} with a warning.
 #' @rdname as.rsi
 #' @param x vector
+#' @param threshold maximum fraction of \code{x} that is allowed to fail transformation, see Examples
 #' @details The function \code{is.rsi.eligible} returns \code{TRUE} when a columns contains only valid antimicrobial interpretations (S and/or I and/or R), and \code{FALSE} otherwise.
 #' @return Ordered factor with new class \code{rsi}
 #' @keywords rsi
@@ -48,10 +49,15 @@
 #' septic_patients %>%
 #'   mutate_at(vars(peni:rifa), as.rsi)
 #'
+#'
 #' # fastest way to transform all columns with already valid AB results to class `rsi`:
 #' septic_patients %>%
 #'   mutate_if(is.rsi.eligible,
 #'             as.rsi)
+#'
+#' # default threshold of `is.rsi.eligible` is 5%.
+#' is.rsi.eligible(WHONET$`First name`) # fails, >80% is invalid
+#' is.rsi.eligible(WHONET$`First name`, threhold = 0.9) # succeeds
 as.rsi <- function(x) {
   if (is.rsi(x)) {
     x
@@ -99,28 +105,37 @@ as.rsi <- function(x) {
 
 #' @rdname as.rsi
 #' @export
-#' @importFrom dplyr %>%
 is.rsi <- function(x) {
-  class(x) %>% identical(c('rsi', 'ordered', 'factor'))
+  identical(class(x),
+            c('rsi', 'ordered', 'factor'))
 }
 
 #' @rdname as.rsi
 #' @export
-#' @importFrom dplyr %>%
-is.rsi.eligible <- function(x) {
-  if (is.logical(x)
-      | is.numeric(x)
-      | is.mo(x)
-      | identical(class(x), "Date")
-      | is.rsi(x)) {
+is.rsi.eligible <- function(x, threshold = 0.05) {
+  if (NCOL(x) > 1) {
+    stop('`x` must be a one-dimensional vector.')
+  }
+  if (any(c("logical",
+            "numeric",
+            "integer",
+            "mo",
+            "Date",
+            "POSIXct",
+            "rsi",
+            "raw",
+            "hms")
+          %in% class(x))) {
     # no transformation needed
     FALSE
   } else {
-    # check all but a-z
-    y <- unique(gsub("[^RSIrsi]+", "", unique(x)))
-    !all(y %in% c("", NA_character_)) &
-      all(y %in% c("R", "I", "S", "", NA_character_)) &
-      max(nchar(as.character(x)), na.rm = TRUE) < 8
+    x <- x[!is.na(x) & !is.null(x) & !identical(x, "")]
+    if (length(x) == 0) {
+      return(FALSE)
+    }
+    checked <- suppressWarnings(as.rsi(x))
+    outcome <- sum(is.na(checked)) / length(x)
+    outcome <= threshold
   }
 }
 

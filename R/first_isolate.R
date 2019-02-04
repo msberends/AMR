@@ -381,7 +381,7 @@ first_isolate <- function(tbl,
 
   if (abs(row.start) == Inf | abs(row.end) == Inf) {
     if (info == TRUE) {
-      message('No isolates found.')
+      message(paste("=> Found", bold("no isolates")))
     }
     # NAs where genus is unavailable
     return(tbl %>%

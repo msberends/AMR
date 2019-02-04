@@ -10,10 +10,12 @@ as.rsi(x)
 
 is.rsi(x)
 
-is.rsi.eligible(x)
+is.rsi.eligible(x, threshold = 0.05)
 }
 \arguments{
 \item{x}{vector}
+
+\item{threshold}{maximum fraction of \code{x} that is allowed to fail transformation, see Examples}
 }
 \value{
 Ordered factor with new class \code{rsi}
@@ -47,10 +49,15 @@ library(dplyr)
 septic_patients \%>\%
   mutate_at(vars(peni:rifa), as.rsi)
 
+
 # fastest way to transform all columns with already valid AB results to class `rsi`:
 septic_patients \%>\%
   mutate_if(is.rsi.eligible,
             as.rsi)
+
+# default threshold of `is.rsi.eligible` is 5\%.
+is.rsi.eligible(WHONET$`First name`) # fails, >80\% is invalid
+is.rsi.eligible(WHONET$`First name`, threhold = 0.9) # succeeds
 }
 \seealso{
 \code{\link{as.mic}}

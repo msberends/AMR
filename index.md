@@ -6,13 +6,16 @@
 
 `AMR` is a free and open-source [R package](https://www.r-project.org) to simplify the analysis and prediction of Antimicrobial Resistance (AMR) and to work with microbial and antimicrobial properties by using evidence-based methods. It supports any table format, including WHONET/EARS-Net data.
 
+After installing this package, R knows almost all ~20.000 microorganisms and ~500 antibiotics by name and code, and knows all about valid RSI and MIC values.
+
 We created this package for both academic research and routine analysis at the Faculty of Medical Sciences of the University of Groningen and the Medical Microbiology & Infection Prevention (MMBI) department of the University Medical Center Groningen (UMCG).
 This R package is actively maintained and free software; you can freely use and distribute it for both personal and commercial (but **not** patent) purposes under the terms of the GNU General Public License version 2.0 (GPL-2), as published by the Free Software Foundation. Read the full license [here](./LICENSE-text.html).
 
 This package can be used for:
 
   * Calculating antimicrobial resistance
-  * Predicting antimicrobial resistance using regression models
+  * Predicting empiric susceptibility of both mono therapy and combination therapy
+  * Predicting future antimicrobial resistance using regression models
   * Getting properties for any microorganism (like Gram stain, species, genus or family)
   * Getting properties for any antibiotic (like name, ATC code, defined daily dose or trade name)
   * Plotting antimicrobial resistance
@@ -104,7 +107,7 @@ Read more about the data from ITIS [in our manual](./reference/ITIS.html).
 
 The `AMR` package basically does four important things:
 
-1. It **cleanses existing data** by providing new *classes* for microoganisms, antibiotics and antimicrobial results (both S/I/R and MIC). With this package, you learn R everything about microbiology that is needed for analysis. These functions all use artificial intelligence to guess results that you would expect:
+1. It **cleanses existing data** by providing new *classes* for microoganisms, antibiotics and antimicrobial results (both S/I/R and MIC). By installing this package, you teach R everything about microbiology that is needed for analysis. These functions all use artificial intelligence to guess results that you would expect:
 
    * Use `as.mo()` to get an ID of a microorganism. The IDs are human readable for the trained eye - the ID of *Klebsiella pneumoniae* is "B_KLBSL_PNE" (B stands for Bacteria) and the ID of *S. aureus* is "B_STPHY_AUR". The function takes almost any text as input that looks like the name or code of a microorganism like "E. coli", "esco" or "esccol" and tries to find expected results using artificial intelligence (AI) on the included ITIS data set, consisting of almost 20,000 microorganisms. It is *very* fast, please see our [benchmarks](./articles/benchmarks.html). Moreover, it can group *Staphylococci* into coagulase negative and positive (CoNS and CoPS, see [source](./reference/as.mo.html#source)) and can categorise *Streptococci* into Lancefield groups (like beta-haemolytic *Streptococcus* Group B, [source](./reference/as.mo.html#source)).
    * Use `as.rsi()` to transform values to valid antimicrobial results. It produces just S, I or R based on your input and warns about invalid values. Even values like "<=0.002; S" (combined MIC/RSI) will result in "S".

@@ -211,7 +211,7 @@
 #' \describe{
 #'   \item{\code{Identification number}}{ID of the sample}
 #'   \item{\code{Specimen number}}{ID of the specimen}
-#'   \item{\code{Organism}}{Microorganisms, can be coerced with \code{\link{as.mo}}}
+#'   \item{\code{Organism}}{Name of the microorganism. Before analysis, you should transform this to a valid microbial class, using \code{\link{as.mo}}.}
 #'   \item{\code{Country}}{Country of origin}
 #'   \item{\code{Laboratory}}{Name of laboratory}
 #'   \item{\code{Last name}}{Last name of patient}
@@ -234,7 +234,7 @@
 #'   \item{\code{Inducible clindamycin resistance}}{Clindamycin can be induced?}
 #'   \item{\code{Comment}}{Other comments}
 #'   \item{\code{Date of data entry}}{Date this data was entered in WHONET}
-#'   \item{\code{AMP_ND10:CIP_EE}}{27 different antibiotics. You can lookup the abbreviatons in the \code{\link{antibiotics}} data set, or use e.g. \code{\link{atc_name}("AMP")} to get the official name immediately.}
+#'   \item{\code{AMP_ND10:CIP_EE}}{27 different antibiotics. You can lookup the abbreviatons in the \code{\link{antibiotics}} data set, or use e.g. \code{\link{atc_name}("AMP")} to get the official name immediately. Before analysis, you should transform this to a valid antibiotic class, using \code{\link{as.rsi}}.}
 #' }
 #' @inheritSection AMR Read more on our website!
 "WHONET"
