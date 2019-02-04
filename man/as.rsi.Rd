@@ -57,7 +57,7 @@ septic_patients \%>\%
 
 # default threshold of `is.rsi.eligible` is 5\%.
 is.rsi.eligible(WHONET$`First name`) # fails, >80\% is invalid
-is.rsi.eligible(WHONET$`First name`, threhold = 0.9) # succeeds
+is.rsi.eligible(WHONET$`First name`, threshold = 0.9) # succeeds
 }
 \seealso{
 \code{\link{as.mic}}
