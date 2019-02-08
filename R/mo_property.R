@@ -248,7 +248,11 @@ mo_gramstain <- function(x, language = get_locale(), ...) {
 #' @rdname mo_property
 #' @export
 mo_TSN  <- function(x, ...) {
-  mo_validate(x = x, property = "tsn", ...)
+  res <- mo_validate(x = x, property = "tsn", ...)
+  if (any(is.na(res))) {
+    warning("Some results do not have a TSN, because they are missing from ITIS and were added manually. See ?microorganisms.")
+  }
+  res
 }
 
 #' @rdname mo_property

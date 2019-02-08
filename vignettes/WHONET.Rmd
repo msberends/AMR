@@ -48,7 +48,7 @@ library(AMR)     # this package
 
 We will have to transform some variables to simplify and automate the analysis:
 
-* Microorganisms should be transformed to our own microorganism IDs (called an `mo`) using [the ITIS reference data set](./reference/ITIS.html), which contains all ~20,000 microorganisms from the taxonomic kingdoms Bacteria, Fungi and Protozoa. We do the tranformation with `as.mo()`.
+* Microorganisms should be transformed to our own microorganism IDs (called an `mo`) using [the ITIS reference data set](./reference/ITIS.html), which contains all ~20,000 microorganisms from the taxonomic kingdoms Bacteria, Fungi and Protozoa. We do the tranformation with `as.mo()`. This function also recognises almost all WHONET abbreviations of microorganisms.
 * Antimicrobial results or interpretations have to be clean and valid. In other words, they should only contain values `"S"`, `"I"` or `"R"`. That is exactly where the `as.rsi()` function is for.
 
 ```{r}

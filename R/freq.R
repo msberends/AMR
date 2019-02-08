@@ -228,7 +228,7 @@ frequency_tbl <- function(x,
       x.name <- x.name %>% strsplit("%>%", fixed = TRUE) %>% unlist() %>% .[1] %>% trimws()
     }
     if (x.name == ".") {
-      x.name <- "a `data.frame`"
+      x.name <- "a data.frame"
     } else {
       x.name <- paste0("`", x.name, "`")
     }
@@ -797,11 +797,30 @@ print.frequency_tbl <- function(x,
   opt <- attr(x, "opt")
   opt$header_txt <- header(x)
 
+  dots <- list(...)
+  if ("markdown" %in% names(dots)) {
+    if (dots$markdown == TRUE) {
+      opt$tbl_format <- "markdown"
+    } else {
+      opt$tbl_format <- "pandoc"
+    }
+  }
+  if (!missing(markdown)) {
+    if (markdown == TRUE) {
+      opt$tbl_format <- "markdown"
+    } else {
+      opt$tbl_format <- "pandoc"
+    }
+  }
+
   if (length(opt$vars) == 0) {
     opt$vars <- NULL
   }
 
   if (is.null(opt$title)) {
+    if (isTRUE(opt$data %like% "^a data.frame") & opt$tbl_format == "markdown") {
+      opt$data <- gsub("data.frame", "`data.frame`", opt$data, fixed = TRUE)
+    }
     if (!is.null(opt$data) & !is.null(opt$vars)) {
       title <- paste0("`", paste0(opt$vars, collapse = "` and `"), "` from ", opt$data)
     } else if (!is.null(opt$data) & is.null(opt$vars)) {
@@ -844,21 +863,6 @@ print.frequency_tbl <- function(x,
   }
   if (!missing(big.mark)) {
     opt$big.mark <- big.mark
-  }
-  dots <- list(...)
-  if ("markdown" %in% names(dots)) {
-    if (dots$markdown == TRUE) {
-      opt$tbl_format <- "markdown"
-    } else {
-      opt$tbl_format <- "pandoc"
-    }
-  }
-  if (!missing(markdown)) {
-    if (markdown == TRUE) {
-      opt$tbl_format <- "markdown"
-    } else {
-      opt$tbl_format <- "pandoc"
-    }
   }
   if (!missing(header)) {
     opt$header <- header

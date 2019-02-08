@@ -23,8 +23,8 @@ context("portion.R")
 
 test_that("portions works", {
   # amox resistance in `septic_patients`
-  expect_equal(portion_R(septic_patients$amox), 0.5827645, tolerance = 0.0001)
-  expect_equal(portion_I(septic_patients$amox), 0.0025597, tolerance = 0.0001)
+  expect_equal(portion_R(septic_patients$amox), 0.5557364, tolerance = 0.0001)
+  expect_equal(portion_I(septic_patients$amox), 0.002441009, tolerance = 0.0001)
   expect_equal(1 - portion_R(septic_patients$amox) - portion_I(septic_patients$amox),
                portion_S(septic_patients$amox))
   expect_equal(portion_R(septic_patients$amox) + portion_I(septic_patients$amox),
@@ -33,20 +33,20 @@ test_that("portions works", {
                portion_SI(septic_patients$amox))
 
   expect_equal(septic_patients %>% portion_S(amcl),
-               0.7062363,
-               tolerance = 0.001)
+               0.7142097,
+               tolerance = 0.0001)
   expect_equal(septic_patients %>% portion_S(amcl, gent),
-               0.9210074,
-               tolerance = 0.001)
+               0.9232481,
+               tolerance = 0.0001)
   expect_equal(septic_patients %>% portion_S(amcl, gent, also_single_tested = TRUE),
-               0.9239669,
-               tolerance = 0.001)
+               0.926045,
+               tolerance = 0.0001)
 
-  # amcl+genta susceptibility around 92.1%
+  # amcl+genta susceptibility around 92.3%
   expect_equal(suppressWarnings(rsi(septic_patients$amcl,
                                     septic_patients$gent,
                                     interpretation = "S")),
-               0.9210074,
+               0.9232481,
                tolerance = 0.000001)
 
   # percentages
@@ -81,7 +81,7 @@ test_that("portions works", {
                                     septic_patients$gent)))
   expect_equal(suppressWarnings(n_rsi(as.character(septic_patients$amcl,
                                                    septic_patients$gent))),
-               1828)
+               1879)
 
   # check for errors
   expect_error(portion_IR("test", minimum = "test"))
@@ -109,15 +109,15 @@ test_that("portions works", {
 
 test_that("old rsi works", {
   # amox resistance in `septic_patients` should be around 58.53%
-  expect_equal(suppressWarnings(rsi(septic_patients$amox)), 0.5853, tolerance = 0.0001)
-  expect_equal(suppressWarnings(rsi(septic_patients$amox, interpretation = "S")), 1 - 0.5853, tolerance = 0.0001)
+  expect_equal(suppressWarnings(rsi(septic_patients$amox)), 0.5581774, tolerance = 0.0001)
+  expect_equal(suppressWarnings(rsi(septic_patients$amox, interpretation = "S")), 1 - 0.5581774, tolerance = 0.0001)
 
-  # pita+genta susceptibility around 98.09%
+  # pita+genta susceptibility around 95.3%
   expect_equal(suppressWarnings(rsi(septic_patients$pita,
                                     septic_patients$gent,
                                     interpretation = "S",
                                     info = TRUE)),
-               0.9498886,
+               0.9526814,
                tolerance = 0.0001)
 
   # count of cases

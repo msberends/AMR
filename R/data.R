@@ -134,7 +134,7 @@
 #'
 #' A data set containing the complete microbial taxonomy of the kingdoms Bacteria, Fungi and Protozoa from ITIS. MO codes can be looked up using \code{\link{as.mo}}.
 #' @inheritSection ITIS ITIS
-#' @format A \code{\link{data.frame}} with 18,833 observations and 15 variables:
+#' @format A \code{\link{data.frame}} with 19,456 observations and 15 variables:
 #' \describe{
 #'   \item{\code{mo}}{ID of microorganism}
 #'   \item{\code{tsn}}{Taxonomic Serial Number (TSN), as defined by ITIS}
@@ -153,6 +153,17 @@
 #'   \item{\code{ref}}{Author(s) and year of concerning publication as found in ITIS, see Source}
 #' }
 #' @source Integrated Taxonomic Information System (ITIS) public online database, \url{https://www.itis.gov}.
+#' @details Manually added were:
+#' \itemize{
+#'   \item{605 species of Aspergillus (as Aspergillus misses from ITIS, list from https://en.wikipedia.org/wiki/List_of_Aspergillus_species on 2019-02-05)}
+#'   \item{23 species of Trichophyton (as Trichophyton misses from ITIS, list from https://en.wikipedia.org/wiki/Trichophyton on 2019-02-05)}
+#'   \item{9 species of Streptococcus (beta haemolytic groups A, B, C, D, F, G, H, K and unspecified)}
+#'   \item{2 species of Straphylococcus (coagulase-negative [CoNS] and coagulase-positive [CoPS])}
+#'   \item{1 species of Candida (C. glabrata)}
+#'   \item{2 other undefined (unknown Gram negatives and unknown Gram positives)}
+#' }
+#'
+#' These manual entries have no Taxonomic Serial Number (TSN), so can be looked up with \code{filter(microorganisms, is.na(tsn)}.
 #' @inheritSection AMR Read more on our website!
 #' @seealso \code{\link{as.mo}} \code{\link{mo_property}} \code{\link{microorganisms.codes}}
 "microorganisms"
@@ -175,12 +186,13 @@
 
 #' Translation table for microorganism codes
 #'
-#' A data set containing commonly used codes for microorganisms. Define your own with \code{\link{set_mo_source}}.
-#' @format A \code{\link{data.frame}} with 3,303 observations and 2 variables:
+#' A data set containing commonly used codes for microorganisms, from laboratory systems and WHONET. Define your own with \code{\link{set_mo_source}}.
+#' @format A \code{\link{data.frame}} with 4,731 observations and 2 variables:
 #' \describe{
 #'   \item{\code{certe}}{Commonly used code of a microorganism}
-#'   \item{\code{mo}}{Code of microorganism in \code{\link{microorganisms}}}
+#'   \item{\code{mo}}{ID of the microorganism in the \code{\link{microorganisms}} data set}
 #' }
+#' @inheritSection ITIS ITIS
 #' @inheritSection AMR Read more on our website!
 #' @seealso \code{\link{as.mo}} \code{\link{microorganisms}}
 "microorganisms.codes"
@@ -246,17 +258,21 @@
 #' @name supplementary_data
 #' @inheritSection AMR Read more on our website!
 # # Renew data:
+# # sorted on (1) bacteria, (2) fungi, (3) protozoa and then human pathogenic prevalence and then TSN:
 # microorganismsDT <- data.table::as.data.table(AMR::microorganisms)
-# # sort on (1) bacteria, (2) fungi, (3) protozoa and then human pathogenic prevalence and then TSN:
 # data.table::setkey(microorganismsDT, kingdom, prevalence, fullname)
-# microorganisms.prevDT <- microorganismsDT[prevalence == 9999,]
-# microorganisms.unprevDT <- microorganismsDT[prevalence != 9999,]
+# microorganisms.prevDT <- microorganismsDT[prevalence != 9999,]
+# microorganisms.unprevDT <- microorganismsDT[prevalence == 9999,]
 # microorganisms.oldDT <- data.table::as.data.table(AMR::microorganisms.old)
 # data.table::setkey(microorganisms.oldDT, tsn, name)
-# devtools::use_data(microorganismsDT, overwrite = TRUE)
-# devtools::use_data(microorganisms.prevDT, overwrite = TRUE)
-# devtools::use_data(microorganisms.unprevDT, overwrite = TRUE)
-# devtools::use_data(microorganisms.oldDT, overwrite = TRUE)
+# usethis::use_data(microorganismsDT, overwrite = TRUE)
+# usethis::use_data(microorganisms.prevDT, overwrite = TRUE)
+# usethis::use_data(microorganisms.unprevDT, overwrite = TRUE)
+# usethis::use_data(microorganisms.oldDT, overwrite = TRUE)
+# rm(microorganismsDT)
+# rm(microorganisms.prevDT)
+# rm(microorganisms.unprevDT)
+# rm(microorganisms.oldDT)
 "microorganismsDT"
 
 #' @rdname supplementary_data

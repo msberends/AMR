@@ -4,12 +4,21 @@
 \alias{as.mo}
 \alias{mo}
 \alias{is.mo}
+\alias{mo_failures}
+\alias{mo_uncertainties}
+\alias{mo_renamed}
 \title{Transform to microorganism ID}
 \usage{
 as.mo(x, Becker = FALSE, Lancefield = FALSE, allow_uncertain = TRUE,
   reference_df = get_mo_source())
 
 is.mo(x)
+
+mo_failures()
+
+mo_uncertainties()
+
+mo_renamed()
 }
 \arguments{
 \item{x}{a character vector or a \code{data.frame} with one or two columns}
@@ -52,7 +61,7 @@ Use the \code{\link{mo_property}} functions to get properties based on the retur
 
 This function uses Artificial Intelligence (AI) to help getting fast and logical results. It tries to find matches in this order:
 \itemize{
-  \item{Taxonomic kingdom: it first searches in bacteria, then fungi, then protozoa}
+  \item{Taxonomic kingdom: it first searches in Bacteria, then Fungi, then Protozoa}
   \item{Human pathogenic prevalence: it first searches in more prevalent microorganisms, then less prevalent ones}
   \item{Valid MO codes and full names: it first searches in already valid MO code and known genus/species combinations}
   \item{Breakdown of input values: from here it starts to breakdown input values to find possible matches}
@@ -67,12 +76,29 @@ A couple of effects because of these rules:
 }
 This means that looking up human pathogenic microorganisms takes less time than looking up human \strong{non}-pathogenic microorganisms.
 
-When using \code{allow_uncertain = TRUE} (which is the default setting), it will use additional rules if all previous AI rules failed to get valid results. Examples:
+\strong{UNCERTAIN RESULTS} \cr
+When using \code{allow_uncertain = TRUE} (which is the default setting), it will use additional rules if all previous AI rules failed to get valid results. These are:
+\itemize{
+  \item{It tries to look for previously accepted (but now invalid) taxonomic names}
+  \item{It strips off values between brackets and the brackets itself, and re-evaluates the input with all previous rules}
+  \item{It strips off words from the end one by one and re-evaluates the input with all previous rules}
+  \item{It strips off words from the start one by one and re-evaluates the input with all previous rules}
+  \item{It tries to look for some manual changes which are not yet published to the ITIS database (like \emph{Propionibacterium} not yet being \emph{Cutibacterium})}
+}
+
+Examples:
 \itemize{
   \item{\code{"Streptococcus group B (known as S. agalactiae)"}. The text between brackets will be removed and a warning will be thrown that the result \emph{Streptococcus group B} (\code{B_STRPTC_GRB}) needs review.}
   \item{\code{"S. aureus - please mind: MRSA"}. The last word will be stripped, after which the function will try to find a match. If it does not, the second last word will be stripped, etc. Again, a warning will be thrown that the result \emph{Staphylococcus aureus} (\code{B_STPHY_AUR}) needs review.}
   \item{\code{"D. spartina"}. This is the abbreviation of an old taxonomic name: \emph{Didymosphaeria spartinae} (the last "e" was missing from the input). This fungus was renamed to \emph{Leptosphaeria obiones}, so a warning will be thrown that this result (\code{F_LPTSP_OBI}) needs review.}
+  \item{\code{"Fluoroquinolone-resistant Neisseria gonorrhoeae"}. The first word will be stripped, after which the function will try to find a match. A warning will be thrown that the result \emph{Neisseria gonorrhoeae} (\code{B_NESSR_GON}) needs review.}
 }
+
+Use \code{mo_failures()} to get a vector with all values that could not be coerced to a valid value.
+
+Use \code{mo_uncertainties()} to get a vector with all values that were coerced to a valid value, but with uncertainty.
+
+Use \code{mo_renamed()} to get a vector with all values that could be coerced based on an old, previously accepted taxonomic name.
 }
 \section{Source}{
 

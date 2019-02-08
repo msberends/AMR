@@ -221,10 +221,10 @@ test_that("as.mo works", {
   expect_equal(mo_TSN(c("Gomphosphaeria aponina delicatula", "Escherichia coli")),
                c(717, 285))
 
-  expect_equal(mo_fullname(c("E. spp.",
-                             "E. spp",
-                             "E. species")),
-               rep("Escherichia species", 3))
+  # expect_equal(mo_fullname(c("E. spp.",
+  #                            "E. spp",
+  #                            "E. species")),
+  #              rep("Escherichia species", 3))
 
   # from different sources
   expect_equal(as.character(as.mo(

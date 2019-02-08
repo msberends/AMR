@@ -54,7 +54,7 @@
 #'
 #' This function uses Artificial Intelligence (AI) to help getting fast and logical results. It tries to find matches in this order:
 #' \itemize{
-#'   \item{Taxonomic kingdom: it first searches in bacteria, then fungi, then protozoa}
+#'   \item{Taxonomic kingdom: it first searches in Bacteria, then Fungi, then Protozoa}
 #'   \item{Human pathogenic prevalence: it first searches in more prevalent microorganisms, then less prevalent ones}
 #'   \item{Valid MO codes and full names: it first searches in already valid MO code and known genus/species combinations}
 #'   \item{Breakdown of input values: from here it starts to breakdown input values to find possible matches}
@@ -69,12 +69,29 @@
 #' }
 #' This means that looking up human pathogenic microorganisms takes less time than looking up human \strong{non}-pathogenic microorganisms.
 #'
-#' When using \code{allow_uncertain = TRUE} (which is the default setting), it will use additional rules if all previous AI rules failed to get valid results. Examples:
+#' \strong{UNCERTAIN RESULTS} \cr
+#' When using \code{allow_uncertain = TRUE} (which is the default setting), it will use additional rules if all previous AI rules failed to get valid results. These are:
+#' \itemize{
+#'   \item{It tries to look for previously accepted (but now invalid) taxonomic names}
+#'   \item{It strips off values between brackets and the brackets itself, and re-evaluates the input with all previous rules}
+#'   \item{It strips off words from the end one by one and re-evaluates the input with all previous rules}
+#'   \item{It strips off words from the start one by one and re-evaluates the input with all previous rules}
+#'   \item{It tries to look for some manual changes which are not yet published to the ITIS database (like \emph{Propionibacterium} not yet being \emph{Cutibacterium})}
+#' }
+#'
+#' Examples:
 #' \itemize{
 #'   \item{\code{"Streptococcus group B (known as S. agalactiae)"}. The text between brackets will be removed and a warning will be thrown that the result \emph{Streptococcus group B} (\code{B_STRPTC_GRB}) needs review.}
 #'   \item{\code{"S. aureus - please mind: MRSA"}. The last word will be stripped, after which the function will try to find a match. If it does not, the second last word will be stripped, etc. Again, a warning will be thrown that the result \emph{Staphylococcus aureus} (\code{B_STPHY_AUR}) needs review.}
 #'   \item{\code{"D. spartina"}. This is the abbreviation of an old taxonomic name: \emph{Didymosphaeria spartinae} (the last "e" was missing from the input). This fungus was renamed to \emph{Leptosphaeria obiones}, so a warning will be thrown that this result (\code{F_LPTSP_OBI}) needs review.}
+#'   \item{\code{"Fluoroquinolone-resistant Neisseria gonorrhoeae"}. The first word will be stripped, after which the function will try to find a match. A warning will be thrown that the result \emph{Neisseria gonorrhoeae} (\code{B_NESSR_GON}) needs review.}
 #' }
+#'
+#' Use \code{mo_failures()} to get a vector with all values that could not be coerced to a valid value.
+#'
+#' Use \code{mo_uncertainties()} to get a vector with all values that were coerced to a valid value, but with uncertainty.
+#'
+#' Use \code{mo_renamed()} to get a vector with all values that could be coerced based on an old, previously accepted taxonomic name.
 #'
 #' @inheritSection ITIS ITIS
 #  (source as a section, so it can be inherited by other man pages)
@@ -154,7 +171,7 @@ is.mo <- function(x) {
 
 #' @importFrom dplyr %>% pull left_join n_distinct progress_estimated filter
 #' @importFrom data.table data.table as.data.table setkey
-#' @importFrom crayon magenta red italic
+#' @importFrom crayon magenta red silver italic has_color
 exec_as.mo <- function(x, Becker = FALSE, Lancefield = FALSE,
                        allow_uncertain = TRUE, reference_df = get_mo_source(),
                        property = "mo", clear_options = TRUE) {
@@ -170,6 +187,7 @@ exec_as.mo <- function(x, Becker = FALSE, Lancefield = FALSE,
 
   if (clear_options == TRUE) {
     options(mo_failures = NULL)
+    options(mo_uncertainties = NULL)
     options(mo_renamed = NULL)
   }
 
@@ -194,6 +212,7 @@ exec_as.mo <- function(x, Becker = FALSE, Lancefield = FALSE,
   }
 
   notes <- character(0)
+  uncertainties <- character(0)
   failures <- character(0)
   x_input <- x
   # only check the uniques, which is way faster
@@ -251,7 +270,7 @@ exec_as.mo <- function(x, Becker = FALSE, Lancefield = FALSE,
     x_backup <- trimws(x, which = "both")
 
     # remove spp and species
-    x <- trimws(gsub(" +(spp.?|ssp.?|subsp.?|species)", " ", x_backup, ignore.case = TRUE), which = "both")
+    x <- trimws(gsub(" +(spp.?|ssp.?|sp.? |ss ?.?|subsp.?|subspecies|biovar |serovar |species)", " ", x_backup, ignore.case = TRUE), which = "both")
     x_species <- paste(x, "species")
     # translate to English for supported languages of mo_property
     x <- gsub("(Gruppe|gruppe|groep|grupo|gruppo|groupe)", "group", x, ignore.case = TRUE)
@@ -259,6 +278,14 @@ exec_as.mo <- function(x, Becker = FALSE, Lancefield = FALSE,
     x <- gsub("(no MO)", "", x, fixed = TRUE)
     # remove non-text in case of "E. coli" except dots and spaces
     x <- gsub("[^.a-zA-Z0-9/ \\-]+", "", x)
+    # replace minus by a space
+    x <- gsub("-+", " ", x)
+    # replace hemolytic by haemolytic
+    x <- gsub("ha?emoly", "haemoly", x)
+    # place minus back in streptococci
+    x <- gsub("(alpha|beta|gamma) haemoly", "\\1-haemolytic", x)
+    # remove genus as first word
+    x <- gsub("^Genus ", "", x)
 
     # but spaces before and after should be omitted
     x <- trimws(x, which = "both")
@@ -272,13 +299,13 @@ exec_as.mo <- function(x, Becker = FALSE, Lancefield = FALSE,
     x <- gsub("[ .]+", ".*", x)
     # add start en stop regex
     x <- paste0('^', x, '$')
-    x_withspaces_start <- paste0('^', x_withspaces)
-    x_withspaces <- paste0('^', x_withspaces, '$')
+    x_withspaces_start_only <- paste0('^', x_withspaces)
+    x_withspaces_start_end <- paste0('^', x_withspaces, '$')
 
     # cat(paste0('x                       "', x, '"\n'))
     # cat(paste0('x_species               "', x_species, '"\n'))
-    # cat(paste0('x_withspaces_start      "', x_withspaces_start, '"\n'))
-    # cat(paste0('x_withspaces            "', x_withspaces, '"\n'))
+    # cat(paste0('x_withspaces_start_only "', x_withspaces_start_only, '"\n'))
+    # cat(paste0('x_withspaces_start_end  "', x_withspaces_start_end, '"\n'))
     # cat(paste0('x_backup                "', x_backup, '"\n'))
     # cat(paste0('x_trimmed               "', x_trimmed, '"\n'))
     # cat(paste0('x_trimmed_species       "', x_trimmed_species, '"\n'))
@@ -290,16 +317,17 @@ exec_as.mo <- function(x, Becker = FALSE, Lancefield = FALSE,
 
       progress$tick()$print()
 
-      if (identical(x_trimmed[i], "")) {
-        # empty values
+      if (tolower(x_trimmed[i]) %in% c("", "xxx", "other", "none", "unknown")) {
+        # empty and nonsense values, ignore without warning ("xxx" is WHONET code for 'no growth')
         x[i] <- NA_character_
         next
       }
-      if (nchar(x_trimmed[i]) < 3) {
+
+      if (nchar(gsub("[^a-zA-Z]", "", x_trimmed[i])) < 3) {
         # check if search term was like "A. species", then return first genus found with ^A
-        if (x_backup[i] %like% "species" | x_backup[i] %like% "spp[.]?") {
+        if (x_backup[i] %like% "[a-z]+ species" | x_backup[i] %like% "[a-z] spp[.]?") {
           # get mo code of first hit
-          found <- microorganismsDT[fullname %like% x_withspaces_start[i], mo]
+          found <- microorganismsDT[fullname %like% x_withspaces_start_only[i], mo]
           if (length(found) > 0) {
             mo_code <- found[1L] %>% strsplit("_") %>% unlist() %>% .[1:2] %>% paste(collapse = "_")
             found <- microorganismsDT[mo == mo_code, ..property][[1]]
@@ -316,13 +344,12 @@ exec_as.mo <- function(x, Becker = FALSE, Lancefield = FALSE,
         next
       }
 
-      # no nonsense text
-      if (toupper(x_trimmed[i]) %in% c('OTHER', 'NONE', 'UNKNOWN')) {
+      if (x_trimmed[i] %like% "virus") {
+        # there is no fullname like virus, so don't try to coerce it
         x[i] <- NA_character_
         failures <- c(failures, x_backup[i])
         next
       }
-
 
       # translate known trivial abbreviations to genus + species ----
       if (!is.na(x_trimmed[i])) {
@@ -337,6 +364,10 @@ exec_as.mo <- function(x, Becker = FALSE, Lancefield = FALSE,
         if (toupper(x_trimmed[i]) == "VRE"
             | x_trimmed[i] %like% '(enterococci|enterokok|enterococo)[a-z]*?$')  {
           x[i] <- microorganismsDT[mo == 'B_ENTRC', ..property][[1]][1L]
+          next
+        }
+        if (toupper(x_trimmed[i]) %in% c('EHEC', 'EPEC', 'EIEC', 'STEC', 'ATEC')) {
+          x[i] <- microorganismsDT[mo == 'B_ESCHR_COL', ..property][[1]][1L]
           next
         }
         if (toupper(x_trimmed[i]) == 'MRPA') {
@@ -398,13 +429,25 @@ exec_as.mo <- function(x, Becker = FALSE, Lancefield = FALSE,
           next
         }
         if (grepl("[sS]almonella [A-Z][a-z]+ ?.*", x_trimmed[i])) {
-          # Salmonella with capital letter species like "Salmonella Goettingen" - they're all S. enterica
-          x[i] <- microorganismsDT[mo == 'B_SLMNL_ENT', ..property][[1]][1L]
-          notes <- c(notes,
-                     magenta(paste0("Note: ", italic(x_trimmed[i]),
-                                    " was considered (a subspecies of) ",
-                                    italic("Salmonella enterica"),
-                                    " (B_SLMNL_ENT)")))
+          if (x_trimmed[i] %like% "Salmonella group") {
+            # Salmonella Group A to Z, just return S. species for now
+            x[i] <- microorganismsDT[mo == 'B_SLMNL', ..property][[1]][1L]
+            notes <- c(notes,
+                       magenta(paste0("Note: ",
+                                      italic("Salmonella"), " ", trimws(gsub("Salmonella", "", x_trimmed[i])),
+                                      " was considered ",
+                                      italic("Salmonella species"),
+                                      " (B_SLMNL)")))
+          } else {
+            # Salmonella with capital letter species like "Salmonella Goettingen" - they're all S. enterica
+            x[i] <- microorganismsDT[mo == 'B_SLMNL_ENT', ..property][[1]][1L]
+            notes <- c(notes,
+                       magenta(paste0("Note: ",
+                                      italic("Salmonella"), " ", trimws(gsub("Salmonella", "", x_trimmed[i])),
+                                      " was considered a subspecies of ",
+                                      italic("Salmonella enterica"),
+                                      " (B_SLMNL_ENT)")))
+          }
           next
         }
       }
@@ -417,14 +460,14 @@ exec_as.mo <- function(x, Becker = FALSE, Lancefield = FALSE,
           x[i] <- found[1L]
           next
         }
-        if (nchar(x_trimmed[i]) > 4) {
-          # not when abbr is esco, stau, klpn, etc.
-          found <- microorganismsDT[tolower(fullname) %like% gsub(" ", ".*", x_trimmed_species[i], fixed = TRUE), ..property][[1]]
+        if (nchar(x_trimmed[i]) >= 6) {
+          found <- microorganismsDT[tolower(fullname) %like% paste0(x_withspaces_start_only[i], "[a-z]+ species"), ..property][[1]]
           if (length(found) > 0) {
             x[i] <- found[1L]
             next
           }
         }
+        # rest of genus only is in allow_uncertain part.
       }
 
       # TRY OTHER SOURCES ----
@@ -472,28 +515,26 @@ exec_as.mo <- function(x, Becker = FALSE, Lancefield = FALSE,
         next
       }
 
-
       # try any match keeping spaces ----
-      found <- microorganisms.prevDT[fullname %like% x_withspaces[i], ..property][[1]]
-      if (length(found) > 0) {
+      found <- microorganisms.prevDT[fullname %like% x_withspaces_start_end[i], ..property][[1]]
+      if (length(found) > 0 & nchar(x_trimmed[i]) >= 6) {
         x[i] <- found[1L]
         next
       }
 
       # try any match keeping spaces, not ending with $ ----
-      found <- microorganisms.prevDT[fullname %like% x_withspaces_start[i], ..property][[1]]
-      if (length(found) > 0) {
+      found <- microorganisms.prevDT[fullname %like% x_withspaces_start_only[i], ..property][[1]]
+      if (length(found) > 0 & nchar(x_trimmed[i]) >= 6) {
         x[i] <- found[1L]
         next
       }
 
       # try any match diregarding spaces ----
       found <- microorganisms.prevDT[fullname %like% x[i], ..property][[1]]
-      if (length(found) > 0) {
+      if (length(found) > 0 & nchar(x_trimmed[i]) >= 6) {
         x[i] <- found[1L]
         next
       }
-
 
       # try splitting of characters in the middle and then find ID ----
       # only when text length is 6 or lower
@@ -512,7 +553,7 @@ exec_as.mo <- function(x, Becker = FALSE, Lancefield = FALSE,
 
       # try fullname without start and stop regex, to also find subspecies ----
       # like "K. pneu rhino" >> "Klebsiella pneumoniae (rhinoscleromatis)" = KLEPNERH
-      found <- microorganisms.prevDT[fullname %like% x_withspaces_start[i], ..property][[1]]
+      found <- microorganisms.prevDT[fullname %like% x_withspaces_start_only[i], ..property][[1]]
       if (length(found) > 0) {
         x[i] <- found[1L]
         next
@@ -549,13 +590,13 @@ exec_as.mo <- function(x, Becker = FALSE, Lancefield = FALSE,
         next
       }
       # try any match keeping spaces ----
-      found <- microorganisms.unprevDT[fullname %like% x_withspaces[i], ..property][[1]]
+      found <- microorganisms.unprevDT[fullname %like% x_withspaces_start_end[i], ..property][[1]]
       if (length(found) > 0) {
         x[i] <- found[1L]
         next
       }
       # try any match keeping spaces, not ending with $ ----
-      found <- microorganisms.unprevDT[fullname %like% x_withspaces_start[i], ..property][[1]]
+      found <- microorganisms.unprevDT[fullname %like% x_withspaces_start_only[i], ..property][[1]]
       if (length(found) > 0) {
         x[i] <- found[1L]
         next
@@ -583,7 +624,7 @@ exec_as.mo <- function(x, Becker = FALSE, Lancefield = FALSE,
 
       # try fullname without start and stop regex, to also find subspecies ----
       # like "K. pneu rhino" >> "Klebsiella pneumoniae (rhinoscleromatis)" = KLEPNERH
-      found <- microorganisms.unprevDT[fullname %like% x_withspaces_start[i], ..property][[1]]
+      found <- microorganisms.unprevDT[fullname %like% x_withspaces_start_only[i], ..property][[1]]
       if (length(found) > 0) {
         x[i] <- found[1L]
         next
@@ -594,7 +635,7 @@ exec_as.mo <- function(x, Becker = FALSE, Lancefield = FALSE,
       # look for old taxonomic names ----
       found <- microorganisms.oldDT[tolower(name) == tolower(x_backup[i])
                                     | tsn == x_trimmed[i]
-                                    | name %like% x_withspaces[i],]
+                                    | name %like% x_withspaces_start_end[i],]
       if (NROW(found) > 0) {
         # when property is "ref" (which is the case in mo_ref, mo_authors and mo_year), return the old value, so:
         # mo_ref("Chlamydia psittaci) = "Page, 1968" (with warning)
@@ -604,22 +645,36 @@ exec_as.mo <- function(x, Becker = FALSE, Lancefield = FALSE,
         } else {
           x[i] <- microorganismsDT[tsn == found[1, tsn_new], ..property][[1]]
         }
-        notes <- c(notes,
-                   renamed_note(name_old = found[1, name],
-                                name_new = microorganismsDT[tsn == found[1, tsn_new], fullname],
-                                ref_old = found[1, ref],
-                                ref_new = microorganismsDT[tsn == found[1, tsn_new], ref],
-                                mo = microorganismsDT[tsn == found[1, tsn_new], mo]))
+        was_renamed(name_old = found[1, name],
+                    name_new = microorganismsDT[tsn == found[1, tsn_new], fullname],
+                    ref_old = found[1, ref],
+                    ref_new = microorganismsDT[tsn == found[1, tsn_new], ref],
+                    mo = microorganismsDT[tsn == found[1, tsn_new], mo])
         next
       }
 
       # check for uncertain results ----
       if (allow_uncertain == TRUE) {
 
-        uncertain_fn <- function(a.x_backup, b.x_trimmed, c.x_withspaces, d.x_withspaces_start, e.x) {
-          # (1) look again for old taxonomic names, now for G. species ----
-          found <- microorganisms.oldDT[name %like% c.x_withspaces
-                                        | name %like% d.x_withspaces_start
+        uncertain_fn <- function(a.x_backup, b.x_trimmed, c.x_withspaces_start_end, d.x_withspaces_start_only, e.x) {
+
+          # (1) look for genus only, part of name ----
+          if (nchar(b.x_trimmed) > 4 & !b.x_trimmed %like% " ") {
+            if (!grepl("^[A-Z][a-z]+", b.x_trimmed, ignore.case = FALSE)) {
+              # not when input is like Genustext, because then Neospora would lead to Actinokineospora
+              found <- microorganismsDT[tolower(fullname) %like% paste(b.x_trimmed, "species"), ..property][[1]]
+              if (length(found) > 0) {
+                x[i] <- found[1L]
+                uncertainties <<- c(uncertainties,
+                                    paste0("'", a.x_backup, "' >> ", microorganismsDT[mo == found[1L], fullname][[1]], " (", found[1L], ")"))
+                return(x)
+              }
+            }
+          }
+
+          # (2) look again for old taxonomic names, now for G. species ----
+          found <- microorganisms.oldDT[name %like% c.x_withspaces_start_end
+                                        | name %like% d.x_withspaces_start_only
                                         | name %like% e.x,]
           if (NROW(found) > 0 & nchar(b.x_trimmed) >= 6) {
             if (property == "ref") {
@@ -630,32 +685,29 @@ exec_as.mo <- function(x, Becker = FALSE, Lancefield = FALSE,
             } else {
               x <- microorganismsDT[tsn == found[1, tsn_new], ..property][[1]]
             }
-            warning(red(paste0('(UNCERTAIN) "',
-                               a.x_backup, '" >> ', italic(found[1, name]), " (TSN ", found[1, tsn], ")")),
-                    call. = FALSE, immediate. = FALSE)
-            notes <<- c(notes,
-                        renamed_note(name_old = found[1, name],
-                                     name_new = microorganismsDT[tsn == found[1, tsn_new], fullname],
-                                     ref_old = found[1, ref],
-                                     ref_new = microorganismsDT[tsn == found[1, tsn_new], ref],
-                                     mo = microorganismsDT[tsn == found[1, tsn_new], mo]))
+            was_renamed(name_old = found[1, name],
+                        name_new = microorganismsDT[tsn == found[1, tsn_new], fullname],
+                        ref_old = found[1, ref],
+                        ref_new = microorganismsDT[tsn == found[1, tsn_new], ref],
+                        mo = microorganismsDT[tsn == found[1, tsn_new], mo])
+            uncertainties <<- c(uncertainties,
+                                paste0("'", a.x_backup, "' >> ", found[1, name], " (TSN ", found[1, tsn], ")"))
             return(x)
           }
 
-          # (2) strip values between brackets ----
+          # (3) strip values between brackets ----
           a.x_backup_stripped <- gsub("( [(].*[)])", "", a.x_backup)
           a.x_backup_stripped <- trimws(gsub("  ", " ", a.x_backup_stripped, fixed = TRUE))
           found <- suppressMessages(suppressWarnings(exec_as.mo(a.x_backup_stripped, clear_options = FALSE, allow_uncertain = FALSE)))
           if (!is.na(found) & nchar(b.x_trimmed) >= 6) {
             found_result <- found
             found <- microorganismsDT[mo == found, ..property][[1]]
-            warning(red(paste0('(UNCERTAIN) "',
-                               a.x_backup, '" >> ', italic(microorganismsDT[mo == found_result[1L], fullname][[1]]), " (", found_result[1L], ")")),
-                    call. = FALSE, immediate. = FALSE)
+            uncertainties <<- c(uncertainties,
+                                paste0("'", a.x_backup, "' >> ", microorganismsDT[mo == found_result[1L], fullname][[1]], " (", found_result[1L], ")"))
             return(found[1L])
           }
 
-          # (3) try to strip off one element and check the remains ----
+          # (4) try to strip off one element from end and check the remains ----
           x_strip <- a.x_backup %>% strsplit(" ") %>% unlist()
           if (length(x_strip) > 1 & nchar(b.x_trimmed) >= 6) {
             for (i in 1:(length(x_strip) - 1)) {
@@ -664,22 +716,39 @@ exec_as.mo <- function(x, Becker = FALSE, Lancefield = FALSE,
               if (!is.na(found)) {
                 found_result <- found
                 found <- microorganismsDT[mo == found, ..property][[1]]
-                warning(red(paste0('(UNCERTAIN) "',
-                                   a.x_backup, '" >> ', italic(microorganismsDT[mo == found_result[1L], fullname][[1]]), " (", found_result[1L], ")")),
-                        call. = FALSE, immediate. = FALSE)
+                uncertainties <<- c(uncertainties,
+                                    paste0("'", a.x_backup, "' >> ", microorganismsDT[mo == found_result[1L], fullname][[1]], " (", found_result[1L], ")"))
                 return(found[1L])
               }
             }
           }
 
-          # (4) not yet implemented taxonomic changes in ITIS
+          # (5) try to strip off one element from start and check the remains ----
+          x_strip <- a.x_backup %>% strsplit(" ") %>% unlist()
+          if (length(x_strip) > 1 & nchar(b.x_trimmed) >= 6) {
+            for (i in 2:(length(x_strip))) {
+              x_strip_collapsed <- paste(x_strip[i:length(x_strip)], collapse = " ")
+              found <- suppressMessages(suppressWarnings(exec_as.mo(x_strip_collapsed, clear_options = FALSE, allow_uncertain = FALSE)))
+              if (!is.na(found)) {
+                found_result <- found
+                found <- microorganismsDT[mo == found, ..property][[1]]
+                uncertainties <<- c(uncertainties,
+                                    paste0("'", a.x_backup, "' >> ", microorganismsDT[mo == found_result[1L], fullname][[1]], " (", found_result[1L], ")"))
+                return(found[1L])
+              }
+            }
+          }
+
+          # (6) not yet implemented taxonomic changes in ITIS ----
           found <- suppressMessages(suppressWarnings(exec_as.mo(TEMPORARY_TAXONOMY(b.x_trimmed), clear_options = FALSE, allow_uncertain = FALSE)))
           if (!is.na(found)) {
             found_result <- found
             found <- microorganismsDT[mo == found, ..property][[1]]
-            warning(red(paste0('(UNCERTAIN) "',
-                               a.x_backup, '" >> ', italic(microorganismsDT[mo == found_result[1L], fullname][[1]]), " (", found_result[1L], ")")),
+            warning(silver(paste0('Guessed with uncertainty: "',
+                                  a.x_backup, '" >> ', italic(microorganismsDT[mo == found_result[1L], fullname][[1]]), " (", found_result[1L], ")")),
                     call. = FALSE, immediate. = FALSE)
+            uncertainties <<- c(uncertainties,
+                                paste0('"', a.x_backup, '" >> ', microorganismsDT[mo == found_result[1L], fullname][[1]], " (", found_result[1L], ")"))
             return(found[1L])
           }
 
@@ -687,7 +756,7 @@ exec_as.mo <- function(x, Becker = FALSE, Lancefield = FALSE,
           return(NA_character_)
         }
 
-        x[i] <- uncertain_fn(x_backup[i], x_trimmed[i], x_withspaces[i], x_withspaces_start[i], x[i])
+        x[i] <- uncertain_fn(x_backup[i], x_trimmed[i], x_withspaces_start_end[i], x_withspaces_start_only[i], x[i])
         if (!is.na(x[i])) {
           next
         }
@@ -696,26 +765,39 @@ exec_as.mo <- function(x, Becker = FALSE, Lancefield = FALSE,
       # not found ----
       x[i] <- NA_character_
       failures <- c(failures, x_backup[i])
-
     }
   }
 
+  # failures
   failures <- failures[!failures %in% c(NA, NULL, NaN)]
   if (length(failures) > 0) {
     options(mo_failures = sort(unique(failures)))
-    plural <- ""
+    plural <- c("value", "it")
     if (n_distinct(failures) > 1) {
-      plural <- "s"
+      plural <- c("values", "them")
     }
     total_failures <- length(x_input[x_input %in% failures & !x_input %in% c(NA, NULL, NaN)])
     total_n <- length(x_input[!x_input %in% c(NA, NULL, NaN)])
-    msg <- paste0("\n", n_distinct(failures), " unique value", plural,
+    msg <- paste0("\n", n_distinct(failures), " unique ", plural[1],
                   " (^= ", percent(total_failures / total_n, round = 1, force_zero = TRUE),
                   ") could not be coerced to a valid MO code")
     if (n_distinct(failures) <= 10) {
       msg <- paste0(msg, ": ", paste('"', unique(failures), '"', sep = "", collapse = ', '))
     }
-    msg <- paste0(msg,  ". Use mo_failures() to review failured input.")
+    msg <- paste0(msg,  ". Use mo_failures() to review ", plural[2], ".")
+    warning(red(msg),
+            call. = FALSE,
+            immediate. = TRUE) # thus will always be shown, even if >= warnings
+  }
+  # uncertainties
+  if (length(uncertainties) > 0) {
+    options(mo_uncertainties = sort(unique(uncertainties)))
+    plural <- c("value", "it")
+    if (n_distinct(failures) > 1) {
+      plural <- c("values", "them")
+    }
+    msg <- paste0("\nResults of ", n_distinct(uncertainties), " input ", plural[1],
+                  " guessed with uncertainty. Use mo_uncertainties() to review ", plural[2], ".")
     warning(red(msg),
             call. = FALSE,
             immediate. = TRUE) # thus will always be shown, even if >= warnings
@@ -774,6 +856,9 @@ exec_as.mo <- function(x, Becker = FALSE, Lancefield = FALSE,
     x[x == microorganismsDT[mo == 'B_STRPTC_SAL', ..property][[1]][1L]] <- microorganismsDT[mo == 'B_STRPTC_GRK', ..property][[1]][1L]
   }
 
+
+  # Wrap up ----------------------------------------------------------------
+
   # comply to x, which is also unique and without empty values
   x_input_unique_nonempty <- unique(x_input[!is.na(x_input) & !is.null(x_input) & !identical(x_input, "")])
 
@@ -794,10 +879,15 @@ exec_as.mo <- function(x, Becker = FALSE, Lancefield = FALSE,
     x <- as.integer(x)
   }
 
-  if (length(notes > 0)) {
+  if (length(mo_renamed()) > 0) {
+    if (has_color()) {
+      notes <- getOption("mo_renamed")
+    } else {
+      notes <- mo_renamed()
+    }
     notes <- sort(notes)
     for (i in 1:length(notes)) {
-      base::message(notes[i])
+      base::message(blue(paste("Note:", notes[i])))
     }
   }
 
@@ -810,7 +900,7 @@ TEMPORARY_TAXONOMY <- function(x) {
 }
 
 #' @importFrom crayon blue italic
-renamed_note <- function(name_old, name_new, ref_old = "", ref_new = "", mo = "") {
+was_renamed <- function(name_old, name_new, ref_old = "", ref_new = "", mo = "") {
   if (!is.na(ref_old)) {
     ref_old <- paste0(" (", ref_old, ")")
   } else {
@@ -828,10 +918,7 @@ renamed_note <- function(name_old, name_new, ref_old = "", ref_new = "", mo = ""
   }
   msg <- paste0(italic(name_old), ref_old, " was renamed ", italic(name_new), ref_new, mo)
   msg <- gsub("et al.", italic("et al."), msg)
-  msg_plain <- paste0(name_old, ref_old, " >> ", name_new, ref_new)
-  msg_plain <- c(getOption("mo_renamed", character(0)), msg_plain)
-  options(mo_renamed = sort(msg_plain))
-  return(blue(paste("Note:", msg)))
+  options(mo_renamed = sort(msg))
 }
 
 #' @exportMethod print.mo
@@ -882,20 +969,20 @@ pull.mo <- function(.data, ...) {
   pull(as.data.frame(.data), ...)
 }
 
-#' Vector of failed coercion attempts
-#'
-#' Returns a vector of all failed attempts to coerce values to a valid MO code with \code{\link{as.mo}}.
-#' @seealso \code{\link{as.mo}}
+#' @rdname as.mo
 #' @export
 mo_failures <- function() {
   getOption("mo_failures")
 }
 
-#' Vector of taxonomic renamed items
-#'
-#' Returns a vector of all renamed items of the last coercion to valid MO codes with \code{\link{as.mo}}.
-#' @seealso \code{\link{as.mo}}
+#' @rdname as.mo
+#' @export
+mo_uncertainties <- function() {
+  getOption("mo_uncertainties")
+}
+
+#' @rdname as.mo
 #' @export
 mo_renamed <- function() {
-  getOption("mo_renamed")
+  strip_style(gsub("was renamed", ">>", getOption("mo_renamed"), fixed = TRUE))
 }

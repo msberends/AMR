@@ -71,14 +71,14 @@ interpretive_reading(...)
 
 \item{rules}{a character vector that specifies which rules should be applied - one or more of \code{c("breakpoints", "expert", "other", "all")}}
 
-\item{verbose}{a logical to indicate whether extensive info should be returned as a \code{data.frame} with info about which rows and columns are effected}
+\item{verbose}{a logical to indicate whether extensive info should be returned as a \code{data.frame} with info about which rows and columns are effected. It runs all EUCAST rules, but will not be applied to an output - only an informative \code{data.frame} with changes will be returned as output.}
 
 \item{amcl, amik, amox, ampi, azit, azlo, aztr, cefa, cfep, cfot, cfox, cfra, cfta, cftr, cfur, chlo, cipr, clar, clin, clox, coli, czol, dapt, doxy, erta, eryt, fosf, fusi, gent, imip, kana, levo, linc, line, mero, mezl, mino, moxi, nali, neom, neti, nitr, norf, novo, oflo, oxac, peni, pipe, pita, poly, pris, qida, rifa, roxi, siso, teic, tetr, tica, tige, tobr, trim, trsu, vanc}{column name of an antibiotic, see Antibiotics}
 
 \item{...}{parameters that are passed on to \code{eucast_rules}}
 }
 \value{
-The input of \code{tbl}, possibly with edited values of antibiotics. Or, if \code{verbose = TRUE}, a \code{data.frame} with verbose info.
+The input of \code{tbl}, possibly with edited values of antibiotics. Or, if \code{verbose = TRUE}, a \code{data.frame} with all original and new values of the affected bug-drug combinations.
 }
 \description{
 Apply susceptibility rules as defined by the European Committee on Antimicrobial Susceptibility Testing (EUCAST, \url{http://eucast.org}), see \emph{Source}. This includes (1) expert rules, (2) intrinsic resistance and (3) inferred resistance as defined in their breakpoint tables.
@@ -184,7 +184,9 @@ a
 # 4  Klebsiella pneumoniae    -    -    -    -    -    S    S
 # 5 Pseudomonas aeruginosa    -    -    -    -    -    S    S
 
-b <- eucast_rules(a, "mo") # 18 results are forced as R or S
+
+# apply EUCAST rules: 18 results are forced as R or S
+b <- eucast_rules(a)
 
 b
 #                       mo vanc amox coli cfta cfur peni cfox
@@ -193,6 +195,11 @@ b
 # 3       Escherichia coli    R    -    -    -    -    R    S
 # 4  Klebsiella pneumoniae    R    R    -    -    -    R    S
 # 5 Pseudomonas aeruginosa    R    R    -    -    R    R    R
+
+
+# do not apply EUCAST rules, but rather get a a data.frame
+# with 18 rows, containing all details about the transformations:
+c <- eucast_rules(a, verbose = TRUE)
 }
 \keyword{eucast}
 \keyword{interpretive}

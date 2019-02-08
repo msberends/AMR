@@ -8,7 +8,7 @@
 \alias{microorganisms.unprevDT}
 \alias{microorganisms.oldDT}
 \title{Supplementary Data}
-\format{An object of class \code{data.table} (inherits from \code{data.frame}) with 18833 rows and 15 columns.}
+\format{An object of class \code{data.table} (inherits from \code{data.frame}) with 19456 rows and 15 columns.}
 \usage{
 microorganismsDT
 

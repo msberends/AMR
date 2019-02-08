@@ -27,6 +27,10 @@
   height: 43px;
   margin-top: 2px;
 }
+.partner_logo {
+  width: 19%;
+  min-width: 125px;
+}
 @media only screen and (max-width: 992px) {
   .footer_logo {
     float: left;

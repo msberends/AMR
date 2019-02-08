@@ -6,6 +6,7 @@
 * Support for data from [WHONET](https://whonet.org/) and [EARS-Net](https://ecdc.europa.eu/en/about-us/partnerships-and-networks/disease-and-laboratory-networks/ears-net) (European Antimicrobial Resistance Surveillance Network):
   * Exported files from WHONET can be read and used in this package. For functions like `first_isolate()` and `eucast_rules()`, all parameters will be filled in automatically.
   * This package now knows all antibiotic abbrevations by EARS-Net (which are also being used by WHONET) - the `antibiotics` data set now contains a column `ears_net`.
+  * The function `as.mo()` now knows all WHONET species abbreviations too, because more than 1,600 microbial abbreviations were added to the `microorganisms.codes` data set.
 * All `ab_*` functions are deprecated and replaced by `atc_*` functions:
   ```r
   ab_property -> atc_property()
@@ -24,6 +25,7 @@
 * Support for the upcoming [`dplyr`](https://dplyr.tidyverse.org) version 0.8.0
 * New function `guess_ab_col()` to find an antibiotic column in a table
 * New function `mo_failures()` to review values that could not be coerced to a valid MO code, using `as.mo()`. This latter function will now only show a maximum of 10 uncoerced values and will refer to `mo_failures()`.
+* New function `mo_uncertainties()` to review values that could be coerced to a valid MO code using `as.mo()`, but with uncertainty.
 * New function `mo_renamed()` to get a list of all returned values from `as.mo()` that have had taxonomic renaming
 * New function `age()` to calculate the (patients) age in years
 * New function `age_groups()` to split ages into custom or predefined groups (like children or elderly). This allows for easier demographic antimicrobial resistance analysis per age group.
@@ -46,23 +48,27 @@
     filter(only_firsts == TRUE) %>%
     select(-only_firsts)
   ```
+* New function `availability()` to check the number of available (non-empty) results in a `data.frame`
 * New vignettes about how to conduct AMR analysis, predict antimicrobial resistance, use the *G*-test and more. These are also available (and even easier readable) on our website: https://msberends.gitlab.io/AMR.
 
 #### Changed
+* Function `eucast_rules()`:
+  * Updated EUCAST Clinical breakpoints to [version 9.0 of 1 January 2019](http://www.eucast.org/clinical_breakpoints/), the data set `septic_patients` now reflects these changes
+  * Fixed a critical bug where some rules that depend on previous applied rules would not be applied adequately
+  * Emphasised in manual that penicillin is meant as benzylpenicillin (ATC [J01CE01](https://www.whocc.no/atc_ddd_index/?code=J01CE01))
+  * New info is returned when running this function, stating exactly what has been changed or added. Use `eucast_rules(..., verbose = TRUE)` to get a data set with all changed per bug and drug combination.
+* Added 605 *Aspergillus* species and 23 *Trichophyton* species to the `microorganisms` data set
 * Added 65 antibiotics to the `antibiotics` data set, from the [Pharmaceuticals Community Register](http://ec.europa.eu/health/documents/community-register/html/atc.htm) of the European Commission
 * Removed columns `atc_group1_nl` and `atc_group2_nl` from the `antibiotics` data set
 * Functions `atc_ddd()` and `atc_groups()` have been renamed `atc_online_ddd()` and `atc_online_groups()`. The old functions are deprecated and will be removed in a future version.
 * Function `guess_mo()` is now deprecated in favour of `as.mo()` and will be removed in future versions
 * Function `guess_atc()` is now deprecated in favour of `as.atc()` and will be removed in future versions
-* Function `eucast_rules()`:
-  * Updated EUCAST Clinical breakpoints to [version 9.0 of 1 January 2019](http://www.eucast.org/clinical_breakpoints/)
-  * Fixed a critical bug where some rules that depend on previous applied rules would not be applied adequately
-  * Emphasised in manual that penicillin is meant as benzylpenicillin (ATC [J01CE01](https://www.whocc.no/atc_ddd_index/?code=J01CE01))
 * Improvements for `as.mo()`:
   * Fix for vector containing only empty values
   * Finds better results when input is in other languages
   * Better handling for subspecies
   * Better handling for *Salmonellae*
+  * Understanding of highly virulent *E. coli* strains like EIEC, EPEC and STEC
   * There will be looked for uncertain results at default - these results will be returned with an informative warning
   * Manual now contains more info about the algorithms
   * Progress bar will be shown when it takes more than 3 seconds to get results

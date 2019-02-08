@@ -4,17 +4,27 @@
 \name{microorganisms.codes}
 \alias{microorganisms.codes}
 \title{Translation table for microorganism codes}
-\format{A \code{\link{data.frame}} with 3,303 observations and 2 variables:
+\format{A \code{\link{data.frame}} with 4,731 observations and 2 variables:
 \describe{
   \item{\code{certe}}{Commonly used code of a microorganism}
-  \item{\code{mo}}{Code of microorganism in \code{\link{microorganisms}}}
+  \item{\code{mo}}{ID of the microorganism in the \code{\link{microorganisms}} data set}
 }}
 \usage{
 microorganisms.codes
 }
 \description{
-A data set containing commonly used codes for microorganisms. Define your own with \code{\link{set_mo_source}}.
+A data set containing commonly used codes for microorganisms, from laboratory systems and WHONET. Define your own with \code{\link{set_mo_source}}.
 }
+\section{ITIS}{
+
+\if{html}{\figure{logo_itis.jpg}{options: height=60px style=margin-bottom:5px} \cr}
+This package contains the \strong{complete microbial taxonomic data} (with all nine taxonomic ranks - from kingdom to subspecies) from the publicly available Integrated Taxonomic Information System (ITIS, \url{https://www.itis.gov}).
+
+All ~20,000 (sub)species from \strong{the taxonomic kingdoms Bacteria, Fungi and Protozoa are included in this package}, as well as all their ~2,500 previously accepted names known to ITIS. Furthermore, the responsible authors and year of publication are available. This allows users to use authoritative taxonomic information for their data analysis on any microorganism, not only human pathogens. It also helps to quickly determine the Gram stain of bacteria, since ITIS honours the taxonomic branching order of bacterial phyla according to Cavalier-Smith (2002), which defines that all bacteria are classified into either subkingdom Negibacteria or subkingdom Posibacteria.
+
+ITIS is a partnership of U.S., Canadian, and Mexican agencies and taxonomic specialists [3].
+}
+
 \section{Read more on our website!}{
 
 \if{html}{\figure{logo.png}{options: height=40px style=margin-bottom:5px} \cr}

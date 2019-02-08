@@ -6,7 +6,7 @@
 
 `AMR` is a free and open-source [R package](https://www.r-project.org) to simplify the analysis and prediction of Antimicrobial Resistance (AMR) and to work with microbial and antimicrobial properties by using evidence-based methods. It supports any table format, including WHONET/EARS-Net data.
 
-After installing this package, R knows almost all ~20.000 microorganisms and ~500 antibiotics by name and code, and knows all about valid RSI and MIC values.
+After installing this package, R knows almost all ~20,000 microorganisms and ~500 antibiotics by name and code, and knows all about valid RSI and MIC values.
 
 We created this package for both academic research and routine analysis at the Faculty of Medical Sciences of the University of Groningen and the Medical Microbiology & Infection Prevention (MMBI) department of the University Medical Center Groningen (UMCG).
 This R package is actively maintained and free software; you can freely use and distribute it for both personal and commercial (but **not** patent) purposes under the terms of the GNU General Public License version 2.0 (GPL-2), as published by the Free Software Foundation. Read the full license [here](./LICENSE-text.html).
@@ -81,7 +81,7 @@ To find out how to conduct AMR analysis, please [continue reading here to get st
 
 <img src="./whonet.png">
 
-We support WHONET and EARS-Net data. Exported files from WHONET can be imported into R and can be analysed easily using this package. For education purposes, we created an [example data set `WHONET`](./reference/WHONET.html) with the exact same structure and a WHONET export file. Furthermore, this package also contains a [data set `antibiotics`](./reference/antibiotics.html) with all EARS-Net antibiotic abbreviations. When using WHONET data as input for analysis, all input parameters will be set automatically.
+We support WHONET and EARS-Net data. Exported files from WHONET can be imported into R and can be analysed easily using this package. For education purposes, we created an [example data set `WHONET`](./reference/WHONET.html) with the exact same structure and a WHONET export file. Furthermore, this package also contains a [data set `antibiotics`](./reference/antibiotics.html) with all EARS-Net antibiotic abbreviations, and knows almost all WHONET abbreviations for microorganisms. When using WHONET data as input for analysis, all input parameters will be set automatically.
 
 Read our tutorial about [how to work with WHONET data here](./articles/WHONET.html).
 
@@ -133,17 +133,20 @@ The `AMR` package basically does four important things:
 4. It **teaches the user** how to use all the above actions.
 
    * Aside from this website with many tutorials, the package itself contains extensive help pages with many examples for all functions.
-   * It also contains an [example data set called `septic_patients`](.reference/septic_patients.html). This data set contains:
-     * 2,000 blood culture isolates from anonymised septic patients between 2001 and 2017 in the Northern Netherlands
-     * Results of 40 antibiotics (each antibiotic in its own column) with a total of 38,414 antimicrobial results
-     * Real and genuine data
+   * The package also contains example data sets:
+     * The [`septic_patients` data set](.reference/septic_patients.html). This data set contains:
+       * 2,000 blood culture isolates from anonymised septic patients between 2001 and 2017 in the Northern Netherlands
+       * Results of 40 antibiotics (each antibiotic in its own column) with a total ~40,000 antimicrobial results
+       * Real and genuine data
+     * The [`WHONET` data set](.reference/WHONET.html). This data set only contains fake data, but with the exact same structure as files exported by WHONET. Read more about WHONET [on its tutorial page](./articles/WHONET.html).
+    
 
 #### Partners
 
 The development of this package is part of, related to, or made possible by:
 
-<a href="https://www.rug.nl"><img src="./logo_rug.png" height="50px"></a>
-<a href="https://www.umcg.nl"><img src="./logo_umcg.png" height="50px"></a>
-<a href="https://www.certe.nl"><img src="./logo_certe.png" height="50px"></a>
-<a href="http://www.eurhealth-1health.eu"><img src="./logo_eh1h.png" height="50px"></a>
-<a href="http://www.eurhealth-1health.eu"><img src="./logo_interreg.png" height="50px"></a>
+<a href="https://www.rug.nl"><img src="./logo_rug.png" class="partner_logo"></a>
+<a href="https://www.umcg.nl"><img src="./logo_umcg.png" class="partner_logo"></a>
+<a href="https://www.certe.nl"><img src="./logo_certe.png" class="partner_logo"></a>
+<a href="http://www.eurhealth-1health.eu"><img src="./logo_eh1h.png" class="partner_logo"></a>
+<a href="http://www.eurhealth-1health.eu"><img src="./logo_interreg.png" class="partner_logo"></a>

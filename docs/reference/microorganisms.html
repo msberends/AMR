@@ -80,7 +80,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.0.9016</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.0.9017</span>
       </span>
     </div>
 
@@ -238,7 +238,7 @@
         
     <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
 
-    <p>A <code><a href='https://www.rdocumentation.org/packages/base/topics/data.frame'>data.frame</a></code> with 18,833 observations and 15 variables:</p><dl class='dl-horizontal'>
+    <p>A <code><a href='https://www.rdocumentation.org/packages/base/topics/data.frame'>data.frame</a></code> with 19,456 observations and 15 variables:</p><dl class='dl-horizontal'>
   <dt><code>mo</code></dt><dd><p>ID of microorganism</p></dd>
   <dt><code>tsn</code></dt><dd><p>Taxonomic Serial Number (TSN), as defined by ITIS</p></dd>
   <dt><code>genus</code></dt><dd><p>Taxonomic genus of the microorganism as found in ITIS, see Source</p></dd>
@@ -259,6 +259,18 @@
     <h2 class="hasAnchor" id="source"><a class="anchor" href="#source"></a>Source</h2>
 
     <p>Integrated Taxonomic Information System (ITIS) public online database, <a href='https://www.itis.gov'>https://www.itis.gov</a>.</p>
+    
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p>Manually added were:</p><ul>
+<li><p>605 species of Aspergillus (as Aspergillus misses from ITIS, list from https://en.wikipedia.org/wiki/List_of_Aspergillus_species on 2019-02-05)</p></li>
+<li><p>23 species of Trichophyton (as Trichophyton misses from ITIS, list from https://en.wikipedia.org/wiki/Trichophyton on 2019-02-05)</p></li>
+<li><p>9 species of Streptococcus (beta haemolytic groups A, B, C, D, F, G, H, K and unspecified)</p></li>
+<li><p>2 species of Straphylococcus (coagulase-negative [CoNS] and coagulase-positive [CoPS])</p></li>
+<li><p>1 species of Candida (C. glabrata)</p></li>
+<li><p>2 other undefined (unknown Gram negatives and unknown Gram positives)</p></li>
+</ul>
+    <p>These manual entries have no Taxonomic Serial Number (TSN), so can be looked up with <code>filter(microorganisms, is.na(tsn)</code>.</p>
     
     <h2 class="hasAnchor" id="itis"><a class="anchor" href="#itis"></a>ITIS</h2>
 
@@ -287,6 +299,8 @@ On our website <a href='https://msberends.gitlab.io/AMR'>https://msberends.gitla
       <li><a href="#format">Format</a></li>
 
       <li><a href="#source">Source</a></li>
+
+      <li><a href="#details">Details</a></li>
 
       <li><a href="#itis">ITIS</a></li>
 

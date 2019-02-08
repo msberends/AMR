@@ -294,7 +294,7 @@
     </tr>
     <tr>
       <th>verbose</th>
-      <td><p>a logical to indicate whether extensive info should be returned as a <code>data.frame</code> with info about which rows and columns are effected</p></td>
+      <td><p>a logical to indicate whether extensive info should be returned as a <code>data.frame</code> with info about which rows and columns are effected. It runs all EUCAST rules, but will not be applied to an output - only an informative <code>data.frame</code> with changes will be returned as output.</p></td>
     </tr>
     <tr>
       <th>amcl, amik, amox, ampi, azit, azlo, aztr, cefa, cfep, cfot, cfox, cfra, cfta, cftr, cfur, chlo, cipr, clar, clin, clox, coli, czol, dapt, doxy, erta, eryt, fosf, fusi, gent, imip, kana, levo, linc, line, mero, mezl, mino, moxi, nali, neom, neti, nitr, norf, novo, oflo, oxac, peni, pipe, pita, poly, pris, qida, rifa, roxi, siso, teic, tetr, tica, tige, tobr, trim, trsu, vanc</th>
@@ -320,7 +320,7 @@
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>The input of <code>tbl</code>, possibly with edited values of antibiotics. Or, if <code>verbose = TRUE</code>, a <code>data.frame</code> with verbose info.</p>
+    <p>The input of <code>tbl</code>, possibly with edited values of antibiotics. Or, if <code>verbose = TRUE</code>, a <code>data.frame</code> with all original and new values of the affected bug-drug combinations.</p>
     
     <h2 class="hasAnchor" id="antibiotics"><a class="anchor" href="#antibiotics"></a>Antibiotics</h2>
 
@@ -423,7 +423,9 @@ On our website <a href='https://msberends.gitlab.io/AMR'>https://msberends.gitla
 <span class='co'># 4  Klebsiella pneumoniae    -    -    -    -    -    S    S</span>
 <span class='co'># 5 Pseudomonas aeruginosa    -    -    -    -    -    S    S</span>
 
-<span class='no'>b</span> <span class='kw'>&lt;-</span> <span class='fu'>eucast_rules</span>(<span class='no'>a</span>, <span class='st'>"mo"</span>) <span class='co'># 18 results are forced as R or S</span>
+
+<span class='co'># apply EUCAST rules: 18 results are forced as R or S</span>
+<span class='no'>b</span> <span class='kw'>&lt;-</span> <span class='fu'>eucast_rules</span>(<span class='no'>a</span>)
 
 <span class='no'>b</span>
 <span class='co'>#                       mo vanc amox coli cfta cfur peni cfox</span>
@@ -432,6 +434,11 @@ On our website <a href='https://msberends.gitlab.io/AMR'>https://msberends.gitla
 <span class='co'># 3       Escherichia coli    R    -    -    -    -    R    S</span>
 <span class='co'># 4  Klebsiella pneumoniae    R    R    -    -    -    R    S</span>
 <span class='co'># 5 Pseudomonas aeruginosa    R    R    -    -    R    R    R</span>
+
+
+<span class='co'># do not apply EUCAST rules, but rather get a a data.frame</span>
+<span class='co'># with 18 rows, containing all details about the transformations:</span>
+<span class='no'>c</span> <span class='kw'>&lt;-</span> <span class='fu'>eucast_rules</span>(<span class='no'>a</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
 <span class='co'># }</span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

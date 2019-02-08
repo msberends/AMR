@@ -119,6 +119,7 @@ reference:
       Functions for conducting AMR analysis, like counting isolates, calculating
       resistance or susceptibility, creating frequency tables or make plots.
     contents:
+    - '`availability`'
     - '`count`'
     - '`portion`'
     - '`freq`'
@@ -148,8 +149,6 @@ reference:
     contents:
     - '`get_locale`'
     - '`like`'
-    - '`mo_failures`'
-    - '`mo_renamed`'
     - '`ab_property`'
 
 

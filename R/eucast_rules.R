@@ -25,7 +25,7 @@
 #' @param tbl table with antibiotic columns, like e.g. \code{amox} and \code{amcl}
 #' @param info print progress
 #' @param rules a character vector that specifies which rules should be applied - one or more of \code{c("breakpoints", "expert", "other", "all")}
-#' @param verbose a logical to indicate whether extensive info should be returned as a \code{data.frame} with info about which rows and columns are effected
+#' @param verbose a logical to indicate whether extensive info should be returned as a \code{data.frame} with info about which rows and columns are effected. It runs all EUCAST rules, but will not be applied to an output - only an informative \code{data.frame} with changes will be returned as output.
 #' @param amcl,amik,amox,ampi,azit,azlo,aztr,cefa,cfep,cfot,cfox,cfra,cfta,cftr,cfur,chlo,cipr,clar,clin,clox,coli,czol,dapt,doxy,erta,eryt,fosf,fusi,gent,imip,kana,levo,linc,line,mero,mezl,mino,moxi,nali,neom,neti,nitr,norf,novo,oflo,oxac,peni,pipe,pita,poly,pris,qida,rifa,roxi,siso,teic,tetr,tica,tige,tobr,trim,trsu,vanc column name of an antibiotic, see Antibiotics
 #' @param ... parameters that are passed on to \code{eucast_rules}
 #' @inheritParams first_isolate
@@ -101,7 +101,7 @@
 #' @export
 #' @importFrom dplyr %>% select pull mutate_at vars
 #' @importFrom crayon bold bgGreen bgYellow bgRed black green blue italic strip_style
-#' @return The input of \code{tbl}, possibly with edited values of antibiotics. Or, if \code{verbose = TRUE}, a \code{data.frame} with verbose info.
+#' @return The input of \code{tbl}, possibly with edited values of antibiotics. Or, if \code{verbose = TRUE}, a \code{data.frame} with all original and new values of the affected bug-drug combinations.
 #' @source
 #'   \itemize{
 #'     \item{
@@ -144,7 +144,9 @@
 #' # 4  Klebsiella pneumoniae    -    -    -    -    -    S    S
 #' # 5 Pseudomonas aeruginosa    -    -    -    -    -    S    S
 #'
-#' b <- eucast_rules(a, "mo") # 18 results are forced as R or S
+#'
+#' # apply EUCAST rules: 18 results are forced as R or S
+#' b <- eucast_rules(a)
 #'
 #' b
 #' #                       mo vanc amox coli cfta cfur peni cfox
@@ -153,6 +155,11 @@
 #' # 3       Escherichia coli    R    -    -    -    -    R    S
 #' # 4  Klebsiella pneumoniae    R    R    -    -    -    R    S
 #' # 5 Pseudomonas aeruginosa    R    R    -    -    R    R    R
+#'
+#'
+#' # do not apply EUCAST rules, but rather get a a data.frame
+#' # with 18 rows, containing all details about the transformations:
+#' c <- eucast_rules(a, verbose = TRUE)
 eucast_rules <- function(tbl,
                          col_mo = NULL,
                          info = TRUE,
@@ -406,22 +413,31 @@ eucast_rules <- function(tbl,
   trsu <- col.list[trsu]
   vanc <- col.list[vanc]
 
-  number_changed <- 0
+  number_added_S <- 0
+  number_added_I <- 0
+  number_added_R <- 0
+  number_changed_to_S <- 0
+  number_changed_to_I <- 0
+  number_changed_to_R <- 0
+
   number_affected_rows <- integer(0)
-  verbose_info <- data.frame(rule_type = character(0),
-                             rule_set = character(0),
-                             force_to = character(0),
-                             found = integer(0),
-                             changed = integer(0),
-                             target_columns = integer(0),
-                             target_rows = integer(0),
+  verbose_info <- data.frame(row = integer(0),
+                             col = character(0),
+                             mo = character(0),
+                             mo_fullname = character(0),
+                             old = character(0),
+                             new = character(0),
+                             rule_source = character(0),
+                             rule_group = character(0),
                              stringsAsFactors = FALSE)
 
   # helper function for editing the table
   edit_rsi <- function(to, rule, rows, cols) {
     cols <- unique(cols[!is.na(cols) & !is.null(cols)])
     if (length(rows) > 0 & length(cols) > 0) {
+      before_df <- tbl_original
       before <- as.character(unlist(as.list(tbl_original[rows, cols])))
+
       tryCatch(
         # insert into original table
         tbl_original[rows, cols] <<- to,
@@ -442,29 +458,81 @@ eucast_rules <- function(tbl,
         suppressWarnings(
           tbl[rows, cols] <<- to
       ))
+
       after <- as.character(unlist(as.list(tbl_original[rows, cols])))
-      number_changed <<- number_changed + sum(before != after, na.rm = TRUE)
+
+      tbl[rows, cols] <<- tbl_original[rows, cols]
+
+      number_newly_added_S <- sum(!before %in% c("S", "I", "R") & after == "S", na.rm = TRUE)
+      number_newly_added_I <- sum(!before %in% c("S", "I", "R") & after == "I", na.rm = TRUE)
+      number_newly_added_R <- sum(!before %in% c("S", "I", "R") & after == "R", na.rm = TRUE)
+      number_newly_changed_to_S <- sum(before %in% c("I", "R") & after == "S", na.rm = TRUE)
+      number_newly_changed_to_I <- sum(before %in% c("S", "R") & after == "I", na.rm = TRUE)
+      number_newly_changed_to_R <- sum(before %in% c("S", "I") & after == "R", na.rm = TRUE)
+
+      # totals
+      number_added_S <<- number_added_S + number_newly_added_S
+      number_added_I <<- number_added_I + number_newly_added_I
+      number_added_R <<- number_added_R + number_newly_added_R
+      number_changed_to_S <<- number_changed_to_S + number_newly_changed_to_S
+      number_changed_to_I <<- number_changed_to_I + number_newly_changed_to_I
+      number_changed_to_R <<- number_changed_to_R + number_newly_changed_to_R
       number_affected_rows <<- unique(c(number_affected_rows, rows))
-      changed_results <<- changed_results + sum(before != after, na.rm = TRUE) # will be reset at start of every rule
+
+      # will be reset at start of every rule
+      changed_results <<- changed_results +
+        number_newly_added_S +
+        number_newly_added_I +
+        number_newly_added_R +
+        number_newly_changed_to_S +
+        number_newly_changed_to_I +
+        number_newly_changed_to_R
 
       if (verbose == TRUE) {
-        for (i in 1:length(cols)) {
-          # add new row for every affected column
-          verbose_new <- data.frame(rule_type = strip_style(rule[1]),
-                                    rule_set = strip_style(rule[2]),
-                                    force_to = to,
-                                    found = length(before),
-                                    changed = sum(before != after, na.rm = TRUE),
-                                    target_column = cols[i],
-                                    stringsAsFactors = FALSE)
-          verbose_new$target_rows <- list(unname(rows))
-          rownames(verbose_new) <- NULL
-          verbose_info <<- rbind(verbose_info, verbose_new)
+        for (r in 1:length(rows)) {
+          for (c in 1:length(cols)) {
+            old <- before_df[rows[r], cols[c]]
+            new <- tbl[rows[r], cols[c]]
+            if (!identical(old, new)) {
+              verbose_new <- data.frame(row = rows[r],
+                                        col = cols[c],
+                                        mo = tbl_original[rows[r], col_mo],
+                                        mo_fullname = "",
+                                        old = old,
+                                        new = new,
+                                        rule_source = strip_style(rule[1]),
+                                        rule_group = strip_style(rule[2]),
+                                        stringsAsFactors = FALSE)
+              verbose_info <<- rbind(verbose_info, verbose_new)
+            }
+          }
         }
+        # verbose_new <- data.frame(row = integer(0),
+        #                           col = character(0),
+        #                           old = character(0),
+        #                           new = character(0),
+        #                           rule_source = character(0),
+        #                           rule_group = character(0),
+        #                           stringsAsFactors = FALSE)
+        # a <<- rule
+        # for (i in 1:length(cols)) {
+        #   # add new row for every affected column
+        #   verbose_new <- data.frame(rule_type = strip_style(rule[1]),
+        #                             rule_set = strip_style(rule[2]),
+        #                             force_to = to,
+        #                             found = length(before),
+        #                             changed = sum(before != after, na.rm = TRUE),
+        #                             target_column = cols[i],
+        #                             stringsAsFactors = FALSE)
+        #   verbose_new$target_rows <- list(unname(rows))
+        #   rownames(verbose_new) <- NULL
+        #   verbose_info <<- rbind(verbose_info, verbose_new)
+        # }
 
       }
     }
   }
+
   na.rm <- function(col) {
     if (is.null(col)) {
       ""
@@ -489,15 +557,15 @@ eucast_rules <- function(tbl,
   # since ampicillin ^= amoxicillin, get the first from the latter (not in original EUCAST table)
   if (!is.null(ampi) & !is.null(amox)) {
     if (verbose == TRUE) {
-      cat(bgGreen("\n VERBOSE: transforming",
-                  length(which(tbl[, amox] == "S" & !tbl[, ampi] %in% c("S", "I", "R"))),
-                  "empty ampicillin fields to 'S' based on amoxicillin. "))
-      cat(bgGreen("\n VERBOSE: transforming",
-                  length(which(tbl[, amox] == "I" & !tbl[, ampi] %in% c("S", "I", "R"))),
-                  "empty ampicillin fields to 'I' based on amoxicillin. "))
-      cat(bgGreen("\n VERBOSE: transforming",
-                  length(which(tbl[, amox] == "R" & !tbl[, ampi] %in% c("S", "I", "R"))),
-                  "empty ampicillin fields to 'R' based on amoxicillin. \n"))
+      cat("\n VERBOSE: transforming",
+          length(which(tbl[, amox] == "S" & !tbl[, ampi] %in% c("S", "I", "R"))),
+          "empty ampicillin fields to 'S' based on amoxicillin. ")
+      cat("\n VERBOSE: transforming",
+          length(which(tbl[, amox] == "I" & !tbl[, ampi] %in% c("S", "I", "R"))),
+          "empty ampicillin fields to 'I' based on amoxicillin. ")
+      cat("\n VERBOSE: transforming",
+          length(which(tbl[, amox] == "R" & !tbl[, ampi] %in% c("S", "I", "R"))),
+          "empty ampicillin fields to 'R' based on amoxicillin. \n")
     }
     tbl[which(tbl[, amox] == "S" & !tbl[, ampi] %in% c("S", "I", "R")), ampi] <- "S"
     tbl[which(tbl[, amox] == "I" & !tbl[, ampi] %in% c("S", "I", "R")), ampi] <- "I"
@@ -1804,22 +1872,46 @@ eucast_rules <- function(tbl,
     } else {
       wouldve <- ""
     }
-    if (number_changed == 0) {
-      colour <- green
+    if (sum(number_added_S, number_added_I, number_added_R,
+            number_changed_to_S, number_changed_to_I, number_changed_to_R,
+            na.rm = TRUE) == 0) {
+      colour <- green # is function
     } else {
-      colour <- blue
+      colour <- blue # is function
     }
     decimal.mark <- getOption("OutDec")
     big.mark <- ifelse(decimal.mark != ",", ",", ".")
+    formatnr <- function(x) {
+      format(x, big.mark = big.mark, decimal.mark = decimal.mark)
+    }
     cat(bold(paste('\n=> EUCAST rules', paste0(wouldve, 'affected'),
-             number_affected_rows %>% length() %>% format(big.mark = big.mark, decimal.mark = decimal.mark),
-             'out of', nrow(tbl_original) %>% format(big.mark = big.mark, decimal.mark = decimal.mark),
-             'rows ->',
-             colour(paste0(wouldve, 'changed'),
-                    number_changed %>% format(big.mark = big.mark, decimal.mark = decimal.mark), 'test results.\n\n'))))
+             number_affected_rows %>% length() %>% formatnr(),
+             'out of', nrow(tbl_original) %>% formatnr(),
+             'rows\n')))
+    total_added <- number_added_S + number_added_I + number_added_R
+    total_changed <- number_changed_to_S + number_changed_to_I + number_changed_to_R
+    cat(colour(paste0("   -> ", wouldve, "added ",
+                      bold(formatnr(total_added), "test results"),
+                      if(total_added > 0)
+                        paste0(" (", formatnr(number_added_S), " as S; ",
+                               formatnr(number_added_I), " as I; ",
+                               formatnr(number_added_R), " as R)"),
+                      "\n")))
+    cat(colour(paste0("   -> ", wouldve, "changed ",
+                      bold(formatnr(total_changed), "test results"),
+                      if(total_changed > 0)
+                        paste0(" (", formatnr(number_changed_to_S), " to S; ",
+                               formatnr(number_changed_to_I), " to I; ",
+                               formatnr(number_changed_to_R), " to R)"),
+                      "\n")))
   }
 
   if (verbose == TRUE) {
+    suppressWarnings(
+      suppressMessages(
+        verbose_info$mo_fullname <- mo_fullname(verbose_info$mo)
+      )
+    )
     return(verbose_info)
   }
 
