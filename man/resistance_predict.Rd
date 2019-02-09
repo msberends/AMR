@@ -38,7 +38,7 @@ ggplot_rsi_predict(x, main = paste("Resistance prediction of",
 
 \item{minimum}{minimal amount of available isolates per year to include. Years containing less observations will be estimated by the model.}
 
-\item{model}{the statistical model of choice. Valid values are \code{"binomial"} (or \code{"binom"} or \code{"logit"}) or \code{"loglin"} (or \code{"poisson"}) or \code{"linear"} (or \code{"lin"}).}
+\item{model}{the statistical model of choice. Defaults to a generalised linear regression model with binomial distribution, assuming that a period of zero resistance was followed by a period of increasing resistance leading slowly to more and more resistance. See Details for valid options.}
 
 \item{I_as_R}{a logical to indicate whether values \code{I} should be treated as \code{R}}
 
@@ -68,6 +68,14 @@ ggplot_rsi_predict(x, main = paste("Resistance prediction of",
 }
 \description{
 Create a prediction model to predict antimicrobial resistance for the next years on statistical solid ground. Standard errors (SE) will be returned as columns \code{se_min} and \code{se_max}. See Examples for a real live example.
+}
+\details{
+Valid options for the statistical model are:
+\itemize{
+  \item{\code{"binomial"} or \code{"binom"} or \code{"logit"}: a generalised linear regression model with binomial distribution}
+  \item{\code{"loglin"} or \code{"poisson"}: a generalised log-linear regression model with poisson distribution}
+  \item{\code{"lin"} or \code{"linear"}: a linear regression model}
+}
 }
 \section{Read more on our website!}{
 

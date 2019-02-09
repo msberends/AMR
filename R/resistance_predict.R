@@ -30,11 +30,17 @@
 #' @param year_max highest year to use in the prediction model, defaults to 10 years after today
 #' @param year_every unit of sequence between lowest year found in the data and \code{year_max}
 #' @param minimum minimal amount of available isolates per year to include. Years containing less observations will be estimated by the model.
-#' @param model the statistical model of choice. Valid values are \code{"binomial"} (or \code{"binom"} or \code{"logit"}) or \code{"loglin"} (or \code{"poisson"}) or \code{"linear"} (or \code{"lin"}).
+#' @param model the statistical model of choice. Defaults to a generalised linear regression model with binomial distribution, assuming that a period of zero resistance was followed by a period of increasing resistance leading slowly to more and more resistance. See Details for valid options.
 #' @param I_as_R a logical to indicate whether values \code{I} should be treated as \code{R}
 #' @param preserve_measurements a logical to indicate whether predictions of years that are actually available in the data should be overwritten by the original data. The standard errors of those years will be \code{NA}.
 #' @param info a logical to indicate whether textual analysis should be printed with the name and \code{\link{summary}} of the statistical model.
 #' @param main title of the plot
+#' @details Valid options for the statistical model are:
+#' \itemize{
+#'   \item{\code{"binomial"} or \code{"binom"} or \code{"logit"}: a generalised linear regression model with binomial distribution}
+#'   \item{\code{"loglin"} or \code{"poisson"}: a generalised log-linear regression model with poisson distribution}
+#'   \item{\code{"lin"} or \code{"linear"}: a linear regression model}
+#' }
 #' @return \code{data.frame} with extra class \code{"resistance_predict"} with columns:
 #' \itemize{
 #'   \item{\code{year}}
@@ -306,7 +312,9 @@ plot.resistance_predict <- function(x, main = paste("Resistance prediction of", 
        ylab = paste0("Percentage (", ylab, ")"),
        xlab = "Year",
        main = main,
-       sub = paste0("(model: ", attributes(x)$model_title, ")"))
+       sub = paste0("(n = ", sum(x$observations, na.rm = TRUE),
+                    ", model: ", attributes(x)$model_title, ")"),
+       cex.sub = 0.75)
 
   axis(side = 2, at = seq(0, 1, 0.1), labels = paste0(0:10 * 10, "%"))
 
@@ -332,12 +340,13 @@ ggplot_rsi_predict <- function(x, main = paste("Resistance prediction of", attri
   }
   suppressWarnings(
     ggplot2::ggplot(x, ggplot2::aes(x = year, y = value)) +
-      ggplot2::geom_col() +
-      ggplot2::geom_errorbar(ggplot2::aes(ymin = se_min, ymax = se_max)) +
-      scale_y_percent() +
+      ggplot2::geom_point(size = 2) +
+      ggplot2::geom_errorbar(ggplot2::aes(ymin = se_min, ymax = se_max), na.rm = TRUE, width = 0.5) +
+      scale_y_percent(limits = c(0, 1)) +
       ggplot2::labs(title = main,
                     y = paste0("Percentage (", ylab, ")"),
                     x = "Year",
-                    caption = paste0("(model: ", attributes(x)$model_title, ")"))
+                    caption = paste0("(n = ", sum(x$observations, na.rm = TRUE),
+                                     ", model: ", attributes(x)$model_title, ")"))
   )
 }

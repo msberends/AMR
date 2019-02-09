@@ -64,6 +64,9 @@ as.rsi <- function(x) {
   } else if (identical(levels(x), c("S", "I", "R"))) {
     structure(x, class = c('rsi', 'ordered', 'factor'))
   } else {
+    if (mic_like(x) > 0.5) {
+      warning("`as.rsi` is intended to clean antimicrobial interpretations - not to interpret MIC values.", call. = FALSE)
+    }
 
     x <- x %>% unlist()
     x.bak <- x
@@ -101,6 +104,14 @@ as.rsi <- function(x) {
     class(x) <- c('rsi', 'ordered', 'factor')
     x
   }
+}
+
+mic_like <- function(x) {
+  mic <- x %>%
+    gsub("[^0-9.,]+", "", .) %>%
+    unique()
+  mic_valid <- suppressWarnings(as.mic(mic))
+  sum(!is.na(mic_valid)) / length(mic)
 }
 
 #' @rdname as.rsi

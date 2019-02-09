@@ -40,7 +40,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.0.9016</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.0.9017</span>
       </span>
     </div>
 
@@ -185,7 +185,7 @@
       <h1>How to predict antimicrobial resistance</h1>
                         <h4 class="author">Matthijs S. Berends</h4>
             
-            <h4 class="date">08 February 2019</h4>
+            <h4 class="date">09 February 2019</h4>
       
       
       <div class="hidden name"><code>Predict.Rmd</code></div>
@@ -194,10 +194,166 @@
 
     
     
-<p><em>(will be available soon)</em></p>
+<div id="needed-r-packages" class="section level2">
+<h2 class="hasAnchor">
+<a href="#needed-r-packages" class="anchor"></a>Needed R packages</h2>
+<p>As with many uses in R, we need some additional packages for AMR analysis. Our package works closely together with the <a href="https://www.tidyverse.org">tidyverse packages</a> <a href="https://dplyr.tidyverse.org/"><code>dplyr</code></a> and <a href="https://ggplot2.tidyverse.org"><code>ggplot2</code></a> by <a href="https://www.linkedin.com/in/hadleywickham/">Dr Hadley Wickham</a>. The tidyverse tremendously improves the way we conduct data science - it allows for a very natural way of writing syntaxes and creating beautiful plots in R.</p>
+<p>Our <code>AMR</code> package depends on these packages and even extends their use and functions.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(dplyr)</a>
+<a class="sourceLine" id="cb1-2" data-line-number="2"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(ggplot2)</a>
+<a class="sourceLine" id="cb1-3" data-line-number="3"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(AMR)</a>
+<a class="sourceLine" id="cb1-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb1-5" data-line-number="5"><span class="co"># (if not yet installed, install with:)</span></a>
+<a class="sourceLine" id="cb1-6" data-line-number="6"><span class="co"># install.packages(c("tidyverse", "AMR"))</span></a></code></pre></div>
+</div>
+<div id="prediction-analysis" class="section level2">
+<h2 class="hasAnchor">
+<a href="#prediction-analysis" class="anchor"></a>Prediction analysis</h2>
+<p>Our package contains a function <code><a href="../reference/resistance_predict.html">resistance_predict()</a></code>, which takes the same input as functions for <a href="./articles/AMR.html">other AMR analysis</a>. Based on a date column, it calculates cases per year and uses a regression model to predict antimicrobial resistance.</p>
+<p>It is basically as easy as:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="co"># resistance prediction of piperacillin/tazobactam (pita):</span></a>
+<a class="sourceLine" id="cb2-2" data-line-number="2"><span class="kw"><a href="../reference/resistance_predict.html">resistance_predict</a></span>(<span class="dt">tbl =</span> septic_patients, <span class="dt">col_date =</span> <span class="st">"date"</span>, <span class="dt">col_ab =</span> <span class="st">"pita"</span>)</a>
+<a class="sourceLine" id="cb2-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb2-4" data-line-number="4"><span class="co"># or:</span></a>
+<a class="sourceLine" id="cb2-5" data-line-number="5">septic_patients <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb2-6" data-line-number="6"><span class="st">  </span><span class="kw"><a href="../reference/resistance_predict.html">resistance_predict</a></span>(<span class="dt">col_ab =</span> <span class="st">"pita"</span>)</a>
+<a class="sourceLine" id="cb2-7" data-line-number="7"></a>
+<a class="sourceLine" id="cb2-8" data-line-number="8"><span class="co"># to bind it to object 'predict_pita' for example:</span></a>
+<a class="sourceLine" id="cb2-9" data-line-number="9">predict_pita &lt;-<span class="st"> </span>septic_patients <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb2-10" data-line-number="10"><span class="st">  </span><span class="kw"><a href="../reference/resistance_predict.html">resistance_predict</a></span>(<span class="dt">col_ab =</span> <span class="st">"pita"</span>)</a></code></pre></div>
+<pre><code># NOTE: Using column `date` as input for `col_date`.
+# 
+# Logistic regression model (logit) with binomial distribution
+# ------------------------------------------------------------
+# 
+# Call:
+# glm(formula = df_matrix ~ year, family = binomial)
+# 
+# Deviance Residuals: 
+#     Min       1Q   Median       3Q      Max  
+# -2.9224  -1.3120   0.0170   0.7586   3.1932  
+# 
+# Coefficients:
+#               Estimate Std. Error z value Pr(&gt;|z|)    
+# (Intercept) -222.92857   45.93922  -4.853 1.22e-06 ***
+# year           0.10994    0.02284   4.814 1.48e-06 ***
+# ---
+# Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+# 
+# (Dispersion parameter for binomial family taken to be 1)
+# 
+#     Null deviance: 59.794  on 14  degrees of freedom
+# Residual deviance: 35.191  on 13  degrees of freedom
+# AIC: 93.464
+# 
+# Number of Fisher Scoring iterations: 4</code></pre>
+<p>The function will look for a data column itself if <code>col_date</code> is not set. The result is nothing more than a <code>data.frame</code>, containing the years, number of observations, actual observed resistance, the estimated resistance and the standard error below and above the estimation:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1">predict_pita</a>
+<a class="sourceLine" id="cb4-2" data-line-number="2"><span class="co">#    year      value    se_min    se_max observations   observed  estimated</span></a>
+<a class="sourceLine" id="cb4-3" data-line-number="3"><span class="co"># 1  2003 0.06250000        NA        NA           32 0.06250000 0.06177594</span></a>
+<a class="sourceLine" id="cb4-4" data-line-number="4"><span class="co"># 2  2004 0.08536585        NA        NA           82 0.08536585 0.06846343</span></a>
+<a class="sourceLine" id="cb4-5" data-line-number="5"><span class="co"># 3  2005 0.10000000        NA        NA           60 0.10000000 0.07581637</span></a>
+<a class="sourceLine" id="cb4-6" data-line-number="6"><span class="co"># 4  2006 0.05084746        NA        NA           59 0.05084746 0.08388789</span></a>
+<a class="sourceLine" id="cb4-7" data-line-number="7"><span class="co"># 5  2007 0.12121212        NA        NA           66 0.12121212 0.09273250</span></a>
+<a class="sourceLine" id="cb4-8" data-line-number="8"><span class="co"># 6  2008 0.04166667        NA        NA           72 0.04166667 0.10240539</span></a>
+<a class="sourceLine" id="cb4-9" data-line-number="9"><span class="co"># 7  2009 0.01639344        NA        NA           61 0.01639344 0.11296163</span></a>
+<a class="sourceLine" id="cb4-10" data-line-number="10"><span class="co"># 8  2010 0.09433962        NA        NA           53 0.09433962 0.12445516</span></a>
+<a class="sourceLine" id="cb4-11" data-line-number="11"><span class="co"># 9  2011 0.18279570        NA        NA           93 0.18279570 0.13693759</span></a>
+<a class="sourceLine" id="cb4-12" data-line-number="12"><span class="co"># 10 2012 0.30769231        NA        NA           65 0.30769231 0.15045682</span></a>
+<a class="sourceLine" id="cb4-13" data-line-number="13"><span class="co"># 11 2013 0.08620690        NA        NA           58 0.08620690 0.16505550</span></a>
+<a class="sourceLine" id="cb4-14" data-line-number="14"><span class="co"># 12 2014 0.15254237        NA        NA           59 0.15254237 0.18076926</span></a>
+<a class="sourceLine" id="cb4-15" data-line-number="15"><span class="co"># 13 2015 0.27272727        NA        NA           55 0.27272727 0.19762493</span></a>
+<a class="sourceLine" id="cb4-16" data-line-number="16"><span class="co"># 14 2016 0.25000000        NA        NA           84 0.25000000 0.21563859</span></a>
+<a class="sourceLine" id="cb4-17" data-line-number="17"><span class="co"># 15 2017 0.16279070        NA        NA           86 0.16279070 0.23481370</span></a>
+<a class="sourceLine" id="cb4-18" data-line-number="18"><span class="co"># 16 2018 0.25513926 0.2228376 0.2874409           NA         NA 0.25513926</span></a>
+<a class="sourceLine" id="cb4-19" data-line-number="19"><span class="co"># 17 2019 0.27658825 0.2386811 0.3144954           NA         NA 0.27658825</span></a>
+<a class="sourceLine" id="cb4-20" data-line-number="20"><span class="co"># 18 2020 0.29911630 0.2551715 0.3430611           NA         NA 0.29911630</span></a>
+<a class="sourceLine" id="cb4-21" data-line-number="21"><span class="co"># 19 2021 0.32266085 0.2723340 0.3729877           NA         NA 0.32266085</span></a>
+<a class="sourceLine" id="cb4-22" data-line-number="22"><span class="co"># 20 2022 0.34714076 0.2901847 0.4040968           NA         NA 0.34714076</span></a>
+<a class="sourceLine" id="cb4-23" data-line-number="23"><span class="co"># 21 2023 0.37245666 0.3087318 0.4361815           NA         NA 0.37245666</span></a>
+<a class="sourceLine" id="cb4-24" data-line-number="24"><span class="co"># 22 2024 0.39849187 0.3279750 0.4690088           NA         NA 0.39849187</span></a>
+<a class="sourceLine" id="cb4-25" data-line-number="25"><span class="co"># 23 2025 0.42511415 0.3479042 0.5023241           NA         NA 0.42511415</span></a>
+<a class="sourceLine" id="cb4-26" data-line-number="26"><span class="co"># 24 2026 0.45217796 0.3684992 0.5358568           NA         NA 0.45217796</span></a>
+<a class="sourceLine" id="cb4-27" data-line-number="27"><span class="co"># 25 2027 0.47952757 0.3897276 0.5693275           NA         NA 0.47952757</span></a>
+<a class="sourceLine" id="cb4-28" data-line-number="28"><span class="co"># 26 2028 0.50700045 0.4115444 0.6024565           NA         NA 0.50700045</span></a>
+<a class="sourceLine" id="cb4-29" data-line-number="29"><span class="co"># 27 2029 0.53443111 0.4338908 0.6349714           NA         NA 0.53443111</span></a></code></pre></div>
+<p>The function <code>plot</code> is available in base R, and can be extended by other packages to depend the output based on the type of input. We extended its function to cope with resistance predictions:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/graphics/topics/plot">plot</a></span>(predict_pita)</a></code></pre></div>
+<p><img src="Predict_files/figure-html/unnamed-chunk-4-1.png" width="720"></p>
+<p>We also support the <code>ggplot2</code> package with the function <code><a href="../reference/resistance_predict.html">ggplot_rsi_predict()</a></code>:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(ggplot2)</a>
+<a class="sourceLine" id="cb6-2" data-line-number="2"><span class="kw"><a href="../reference/resistance_predict.html">ggplot_rsi_predict</a></span>(predict_pita)</a>
+<a class="sourceLine" id="cb6-3" data-line-number="3"><span class="co"># Warning: Removed 15 rows containing missing values (geom_errorbar).</span></a></code></pre></div>
+<p><img src="Predict_files/figure-html/unnamed-chunk-5-1.png" width="720"></p>
+<div id="choosing-the-right-model" class="section level3">
+<h3 class="hasAnchor">
+<a href="#choosing-the-right-model" class="anchor"></a>Choosing the right model</h3>
+<p>Resistance is not easily predicted; if we look at vancomycin resistance in Gram positives, the spread (i.e. standard error) is enormous:</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1">septic_patients <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb7-2" data-line-number="2"><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span>(<span class="kw"><a href="../reference/mo_property.html">mo_gramstain</a></span>(mo) <span class="op">==</span><span class="st"> "Gram positive"</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb7-3" data-line-number="3"><span class="st">  </span><span class="kw"><a href="../reference/resistance_predict.html">resistance_predict</a></span>(<span class="dt">col_ab =</span> <span class="st">"vanc"</span>, <span class="dt">year_min =</span> <span class="dv">2010</span>, <span class="dt">info =</span> <span class="ot">FALSE</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb7-4" data-line-number="4"><span class="st">  </span><span class="kw"><a href="https://www.rdocumentation.org/packages/graphics/topics/plot">plot</a></span>()</a>
+<a class="sourceLine" id="cb7-5" data-line-number="5"><span class="co"># </span><span class="al">NOTE</span><span class="co">: Using column `date` as input for `col_date`.</span></a></code></pre></div>
+<p><img src="Predict_files/figure-html/unnamed-chunk-6-1.png" width="720"></p>
+<p>Vancomycin resistance could be 100% in ten years, but might also stay around 0%.</p>
+<p>You can define the model with the <code>model</code> parameter. The default model is a generalised linear regression model using a binomial distribution, assuming that a period of zero resistance was followed by a period of increasing resistance leading slowly to more and more resistance.</p>
+<p>Valid values are:</p>
+<table class="table">
+<colgroup>
+<col width="32%">
+<col width="25%">
+<col width="42%">
+</colgroup>
+<thead><tr class="header">
+<th>Input values</th>
+<th>Function used by R</th>
+<th>Type of model</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td>
+<code>"binomial"</code> or <code>"binom"</code> or <code>"logit"</code>
+</td>
+<td><code><a href="https://www.rdocumentation.org/packages/stats/topics/glm">glm(..., family = binomial)</a></code></td>
+<td>Generalised linear model with binomial distribution</td>
+</tr>
+<tr class="even">
+<td>
+<code>"loglin"</code> or <code>"poisson"</code>
+</td>
+<td><code><a href="https://www.rdocumentation.org/packages/stats/topics/glm">glm(..., family = poisson)</a></code></td>
+<td>Generalised linear model with poisson distribution</td>
+</tr>
+<tr class="odd">
+<td>
+<code>"lin"</code> or <code>"linear"</code>
+</td>
+<td><code><a href="https://www.rdocumentation.org/packages/stats/topics/lm">lm()</a></code></td>
+<td>Linear model</td>
+</tr>
+</tbody>
+</table>
+<p>For the vancomycin resistance in Gram positive bacteria, a linear model might be more appropriate since no (left half of a) binomial distribution is to be expected based on observed years:</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1">septic_patients <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb8-2" data-line-number="2"><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span>(<span class="kw"><a href="../reference/mo_property.html">mo_gramstain</a></span>(mo) <span class="op">==</span><span class="st"> "Gram positive"</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb8-3" data-line-number="3"><span class="st">  </span><span class="kw"><a href="../reference/resistance_predict.html">resistance_predict</a></span>(<span class="dt">col_ab =</span> <span class="st">"vanc"</span>, <span class="dt">year_min =</span> <span class="dv">2010</span>, <span class="dt">info =</span> <span class="ot">FALSE</span>, <span class="dt">model =</span> <span class="st">"linear"</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb8-4" data-line-number="4"><span class="st">  </span><span class="kw"><a href="https://www.rdocumentation.org/packages/graphics/topics/plot">plot</a></span>()</a>
+<a class="sourceLine" id="cb8-5" data-line-number="5"><span class="co"># </span><span class="al">NOTE</span><span class="co">: Using column `date` as input for `col_date`.</span></a></code></pre></div>
+<p><img src="Predict_files/figure-html/unnamed-chunk-7-1.png" width="720"></p>
+<p>This seems more likely, doesn’t it?</p>
+</div>
+</div>
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
+        <div id="tocnav">
+      <h2 class="hasAnchor">
+<a href="#tocnav" class="anchor"></a>Contents</h2>
+      <ul class="nav nav-pills nav-stacked">
+<li><a href="#needed-r-packages">Needed R packages</a></li>
+      <li><a href="#prediction-analysis">Prediction analysis</a></li>
+      </ul>
+</div>
       </div>
 
 </div>

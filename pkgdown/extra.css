@@ -21,6 +21,16 @@
 # ==================================================================== #
 */
 
+/* R for Data Science (r4ds) */
+#r4ds a {
+  display: inline;
+}
+#r4ds * {
+  text-align: center;
+  display: block;
+  margin: 0 auto;
+}
+
 /* class for footer */
 .footer_logo {
   float: right;

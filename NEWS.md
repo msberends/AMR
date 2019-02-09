@@ -87,6 +87,7 @@
 * New colours for `scale_rsi_colours()`
 * Summaries of class `mo` will now return the top 3 and the unique count, e.g. using `summary(mo)`
 * Small text updates to summaries of class `rsi` and `mic`
+* Function `as.rsi()` now gives a warning when inputting MIC values
 * Frequency tables (`freq()` function):
   * Support for tidyverse quasiquotation! Now you can create frequency tables of function outcomes:
     ```r
