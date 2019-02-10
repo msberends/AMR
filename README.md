@@ -1,4 +1,5 @@
-# `AMR` (for R) <img src="man/figures/logo.png" align="right" height="120px" />
+# AMR (for R)
+<img src="man/figures/logo.png" align="right" height="120px" />
 
 ### Not a developer? Then please visit our website [https://msberends.gitlab.io/AMR](https://msberends.gitlab.io/AMR) to read about this package.
 **It contains documentation about all of the included functions and also a comprehensive tutorial about how to conduct AMR analysis.**
