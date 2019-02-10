@@ -35,7 +35,7 @@ before_script:
   # install dependencies for packages
   - apt-get install -y wget locales libxml2-dev libssl-dev libcurl4-openssl-dev zlib1g-dev r-base > /dev/null
   # recent pandoc
-  - wget https://github.com/jgm/pandoc/releases/download/2.6/pandoc-2.6-1-amd64.deb
+  - wget --quiet https://github.com/jgm/pandoc/releases/download/2.6/pandoc-2.6-1-amd64.deb
   - dpkg -i pandoc*.deb
   - rm pandoc*.deb
   # set R system language
