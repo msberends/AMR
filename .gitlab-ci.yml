@@ -33,7 +33,11 @@ variables:
 before_script:
   - apt-get update -qq
   # install dependencies for packages
-  - apt-get install -y locales libxml2-dev libssl-dev libcurl4-openssl-dev zlib1g-dev pandoc pandoc-citeproc r-base > /dev/null
+  - apt-get install -y locales libxml2-dev libssl-dev libcurl4-openssl-dev zlib1g-dev r-base > /dev/null
+  # recent pandoc
+  - wget https://github.com/jgm/pandoc/releases/download/2.6/pandoc-2.6-1-amd64.deb
+  - dpkg -i pandoc*.deb
+  - rm pandoc*.deb
   # set R system language
   - echo "LC_ALL=en_US.UTF-8" >> /etc/environment
   - echo "en_US.UTF-8 UTF-8" >> /etc/locale.gen
