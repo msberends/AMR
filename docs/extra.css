@@ -23,12 +23,12 @@
 
 /* R for Data Science (r4ds) */
 #r4ds a {
-  display: inline;
+  display: inline-flex;
+  align-items: center;
+  text-align: right;
 }
-#r4ds * {
-  text-align: center;
-  display: block;
-  margin: 0 auto;
+#r4ds img {
+  margin-left: 10px;
 }
 
 /* class for footer */

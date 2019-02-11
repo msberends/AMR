@@ -14,7 +14,7 @@ This R package is actively maintained and free software; you can freely use and 
 This package can be used for:
 
   * Calculating antimicrobial resistance
-  * Calculating empiric susceptibility of both mono therapy and combination therapy
+  * Calculating empirical susceptibility of both mono therapy and combination therapy
   * Predicting future antimicrobial resistance using regression models
   * Getting properties for any microorganism (like Gram stain, species, genus or family)
   * Getting properties for any antibiotic (like name, ATC code, defined daily dose or trade name)

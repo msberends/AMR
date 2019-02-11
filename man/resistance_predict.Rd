@@ -21,7 +21,7 @@ rsi_predict(tbl, col_ab, col_date = NULL, year_min = NULL,
   main = paste("Resistance prediction of", attributes(x)$ab), ...)
 
 ggplot_rsi_predict(x, main = paste("Resistance prediction of",
-  attributes(x)$ab), ...)
+  attributes(x)$ab), ribbon = TRUE, ...)
 }
 \arguments{
 \item{tbl}{a \code{data.frame} containing isolates.}
@@ -53,6 +53,8 @@ ggplot_rsi_predict(x, main = paste("Resistance prediction of",
 \item{main}{title of the plot}
 
 \item{...}{parameters passed on to the \code{first_isolate} function}
+
+\item{ribbon}{a logical to indicate whether a ribbon should be shown (default) or error bars}
 }
 \value{
 \code{data.frame} with extra class \code{"resistance_predict"} with columns:
@@ -65,6 +67,7 @@ ggplot_rsi_predict(x, main = paste("Resistance prediction of",
   \item{\code{observed}, the original observed resistant percentages}
   \item{\code{estimated}, the estimated resistant percentages, calculated by the model}
 }
+Furthermore, the model itself is available as an attribute: \code{attributes(x)$model}, see Examples.
 }
 \description{
 Create a prediction model to predict antimicrobial resistance for the next years on statistical solid ground. Standard errors (SE) will be returned as columns \code{se_min} and \code{se_max}. See Examples for a real live example.
@@ -97,7 +100,12 @@ x <- septic_patients \%>\%
 plot(x)
 
 
-# create nice plots with ggplot yourself
+# get the model from the object
+mymodel <- attributes(x)$model
+summary(mymodel)
+
+
+# create nice plots with ggplot2 yourself
 if (!require(ggplot2)) {
 
   data <- septic_patients \%>\%

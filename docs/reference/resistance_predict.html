@@ -110,7 +110,7 @@
       </a>
     </li>
     <li>
-      <a href="../articles/Predict.html">
+      <a href="../articles/resistance_predict.html">
         <span class="fa fa-dice"></span>
          
         Predict antimicrobial resistance
@@ -131,14 +131,14 @@
       </a>
     </li>
     <li>
-      <a href="../articles/mo_property.html">
+      <a href="../reference/mo_property.html">
         <span class="fa fa-bug"></span>
          
         Get properties of a microorganism
       </a>
     </li>
     <li>
-      <a href="../articles/ab_property.html">
+      <a href="../reference/atc_property.html">
         <span class="fa fa-capsules"></span>
          
         Get properties of an antibiotic
@@ -249,7 +249,7 @@
   <span class='kw'>main</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/paste'>paste</a></span>(<span class='st'>"Resistance prediction of"</span>, <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/attributes'>attributes</a></span>(<span class='no'>x</span>)$<span class='no'>ab</span>), <span class='no'>...</span>)
 
 <span class='fu'>ggplot_rsi_predict</span>(<span class='no'>x</span>, <span class='kw'>main</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/paste'>paste</a></span>(<span class='st'>"Resistance prediction of"</span>,
-  <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/attributes'>attributes</a></span>(<span class='no'>x</span>)$<span class='no'>ab</span>), <span class='no'>...</span>)</pre>
+  <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/attributes'>attributes</a></span>(<span class='no'>x</span>)$<span class='no'>ab</span>), <span class='kw'>ribbon</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -284,7 +284,7 @@
     </tr>
     <tr>
       <th>model</th>
-      <td><p>the statistical model of choice. Valid values are <code>"binomial"</code> (or <code>"binom"</code> or <code>"logit"</code>) or <code>"loglin"</code> (or <code>"poisson"</code>) or <code>"linear"</code> (or <code>"lin"</code>).</p></td>
+      <td><p>the statistical model of choice. Defaults to a generalised linear regression model with binomial distribution, assuming that a period of zero resistance was followed by a period of increasing resistance leading slowly to more and more resistance. See Details for valid options.</p></td>
     </tr>
     <tr>
       <th>I_as_R</th>
@@ -312,6 +312,10 @@
       <th>...</th>
       <td><p>parameters passed on to the <code>first_isolate</code> function</p></td>
     </tr>
+    <tr>
+      <th>ribbon</th>
+      <td><p>a logical to indicate whether a ribbon should be shown (default) or error bars</p></td>
+    </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
@@ -324,8 +328,15 @@
 <li><p><code>observations</code>, the total number of available observations in that year, i.e. S + I + R</p></li>
 <li><p><code>observed</code>, the original observed resistant percentages</p></li>
 <li><p><code>estimated</code>, the estimated resistant percentages, calculated by the model</p></li>
-</ul>
+</ul><p>Furthermore, the model itself is available as an attribute: <code>attributes(x)$model</code>, see Examples.</p>
+    
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
+    <p>Valid options for the statistical model are:</p><ul>
+<li><p><code>"binomial"</code> or <code>"binom"</code> or <code>"logit"</code>: a generalised linear regression model with binomial distribution</p></li>
+<li><p><code>"loglin"</code> or <code>"poisson"</code>: a generalised log-linear regression model with poisson distribution</p></li>
+<li><p><code>"lin"</code> or <code>"linear"</code>: a linear regression model</p></li>
+</ul>
     
     <h2 class="hasAnchor" id="read-more-on-our-website-"><a class="anchor" href="#read-more-on-our-website-"></a>Read more on our website!</h2>
 
@@ -348,36 +359,41 @@ On our website <a href='https://msberends.gitlab.io/AMR'>https://msberends.gitla
 <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>dplyr</span>)
 <span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='no'>septic_patients</span> <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='first_isolate.html'>filter_first_isolate</a></span>() <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span>(<span class='fu'><a href='mo_property.html'>mo_genus</a></span>(<span class='no'>mo</span>) <span class='kw'>==</span> <span class='st'>"Staphylococcus"</span>) <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='https://www.rdocumentation.org/packages/dplyr/topics/filter'>filter</a></span>(<span class='fu'><a href='mo_property.html'>mo_genus</a></span>(<span class='no'>mo</span>) <span class='kw'>==</span> <span class='st'>"Staphylococcus"</span>) <span class='kw'>%&gt;%</span>
   <span class='fu'>resistance_predict</span>(<span class='st'>"peni"</span>)
 <span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/plot'>plot</a></span>(<span class='no'>x</span>)
 
 
-<span class='co'># create nice plots with ggplot yourself</span>
+<span class='co'># get the model from the object</span>
+<span class='no'>mymodel</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/attributes'>attributes</a></span>(<span class='no'>x</span>)$<span class='no'>model</span>
+<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/summary'>summary</a></span>(<span class='no'>mymodel</span>)
+
+
+<span class='co'># create nice plots with ggplot2 yourself</span>
 <span class='kw'>if</span> (!<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>require</a></span>(<span class='no'>ggplot2</span>)) {
 
   <span class='no'>data</span> <span class='kw'>&lt;-</span> <span class='no'>septic_patients</span> <span class='kw'>%&gt;%</span>
-    <span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span>(<span class='no'>mo</span> <span class='kw'>==</span> <span class='fu'><a href='as.mo.html'>as.mo</a></span>(<span class='st'>"E. coli"</span>)) <span class='kw'>%&gt;%</span>
+    <span class='fu'><a href='https://www.rdocumentation.org/packages/dplyr/topics/filter'>filter</a></span>(<span class='no'>mo</span> <span class='kw'>==</span> <span class='fu'><a href='as.mo.html'>as.mo</a></span>(<span class='st'>"E. coli"</span>)) <span class='kw'>%&gt;%</span>
     <span class='fu'>resistance_predict</span>(<span class='kw'>col_ab</span> <span class='kw'>=</span> <span class='st'>"amox"</span>,
                        <span class='kw'>col_date</span> <span class='kw'>=</span> <span class='st'>"date"</span>,
                        <span class='kw'>info</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
                        <span class='kw'>minimum</span> <span class='kw'>=</span> <span class='fl'>15</span>)
 
-  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span>(<span class='no'>data</span>,
-         <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='no'>year</span>)) +
-    <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_bar.html'>geom_col</a></span>(<span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span>(<span class='kw'>y</span> <span class='kw'>=</span> <span class='no'>value</span>),
+  <span class='fu'><a href='https://www.rdocumentation.org/packages/ggplot2/topics/ggplot'>ggplot</a></span>(<span class='no'>data</span>,
+         <span class='fu'><a href='https://www.rdocumentation.org/packages/ggplot2/topics/aes'>aes</a></span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='no'>year</span>)) +
+    <span class='fu'><a href='https://www.rdocumentation.org/packages/ggplot2/topics/geom_bar'>geom_col</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/ggplot2/topics/aes'>aes</a></span>(<span class='kw'>y</span> <span class='kw'>=</span> <span class='no'>value</span>),
              <span class='kw'>fill</span> <span class='kw'>=</span> <span class='st'>"grey75"</span>) +
-    <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_linerange.html'>geom_errorbar</a></span>(<span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span>(<span class='kw'>ymin</span> <span class='kw'>=</span> <span class='no'>se_min</span>,
+    <span class='fu'><a href='https://www.rdocumentation.org/packages/ggplot2/topics/geom_linerange'>geom_errorbar</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/ggplot2/topics/aes'>aes</a></span>(<span class='kw'>ymin</span> <span class='kw'>=</span> <span class='no'>se_min</span>,
                       <span class='kw'>ymax</span> <span class='kw'>=</span> <span class='no'>se_max</span>),
                   <span class='kw'>colour</span> <span class='kw'>=</span> <span class='st'>"grey50"</span>) +
-    <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/scale_continuous.html'>scale_y_continuous</a></span>(<span class='kw'>limits</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>0</span>, <span class='fl'>1</span>),
+    <span class='fu'><a href='https://www.rdocumentation.org/packages/ggplot2/topics/scale_continuous'>scale_y_continuous</a></span>(<span class='kw'>limits</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>0</span>, <span class='fl'>1</span>),
                        <span class='kw'>breaks</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/seq'>seq</a></span>(<span class='fl'>0</span>, <span class='fl'>1</span>, <span class='fl'>0.1</span>),
                        <span class='kw'>labels</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/paste'>paste0</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/seq'>seq</a></span>(<span class='fl'>0</span>, <span class='fl'>100</span>, <span class='fl'>10</span>), <span class='st'>"%"</span>)) +
-    <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/labs.html'>labs</a></span>(<span class='kw'>title</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/expression'>expression</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/paste'>paste</a></span>(<span class='st'>"Forecast of amoxicillin resistance in "</span>,
+    <span class='fu'><a href='https://www.rdocumentation.org/packages/ggplot2/topics/labs'>labs</a></span>(<span class='kw'>title</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/expression'>expression</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/paste'>paste</a></span>(<span class='st'>"Forecast of amoxicillin resistance in "</span>,
                                   <span class='fu'><a href='https://www.rdocumentation.org/packages/grDevices/topics/plotmath'>italic</a></span>(<span class='st'>"E. coli"</span>))),
          <span class='kw'>y</span> <span class='kw'>=</span> <span class='st'>"%IR"</span>,
          <span class='kw'>x</span> <span class='kw'>=</span> <span class='st'>"Year"</span>) +
-    <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggtheme.html'>theme_minimal</a></span>(<span class='kw'>base_size</span> <span class='kw'>=</span> <span class='fl'>13</span>)
+    <span class='fu'><a href='https://www.rdocumentation.org/packages/ggplot2/topics/ggtheme'>theme_minimal</a></span>(<span class='kw'>base_size</span> <span class='kw'>=</span> <span class='fl'>13</span>)
 }
 <span class='co'># }</span></pre>
   </div>
@@ -387,6 +403,8 @@ On our website <a href='https://msberends.gitlab.io/AMR'>https://msberends.gitla
       <li><a href="#arguments">Arguments</a></li>
       
       <li><a href="#value">Value</a></li>
+
+      <li><a href="#details">Details</a></li>
 
       <li><a href="#read-more-on-our-website-">Read more on our website!</a></li>
 

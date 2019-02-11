@@ -34,15 +34,19 @@ $( document ).ready(function() {
     window.location.replace(url_new);
   }
 
-  $('#sidebar').prepend(
-    '<div id="r4ds">' +
-    '  <a href="https://r4ds.had.co.nz/">' +
-    '    <img src="../../AMR/cover_r4ds.png" width="25%">' +
-    '  </a>' +
-    '  <p>Learn R reading this great book!</p>' +
-    '  <p>Or read it free online: <a href="https://r4ds.had.co.nz/" target="_blank">r4ds.co.nz</a>.</p>' +
-    '  <hr>' +
-    '</div>');
+  // PR for 'R for Data Science' on How To pages
+  if ($(".template-article").length > 0) {
+     $('#sidebar').prepend(
+      '<div id="r4ds">' +
+      '  <a href="https://r4ds.had.co.nz/">Learn R reading this great book: R for Data Science.' +
+      '    <br>' +
+      '    <br>' +
+      '    Click to read it online - it was published for free.' +
+      '    <img src="../../AMR/cover_r4ds.png" height="100px">' +
+      '  </a>     ' +
+      '  <hr>' +
+      '</div>');
+  }
 
   $('footer').html(
     '<div>' +

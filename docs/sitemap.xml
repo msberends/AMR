@@ -139,13 +139,10 @@
     <loc>https://msberends.gitlab.io/AMR/articles/G_test.html</loc>
   </url>
   <url>
-    <loc>https://msberends.gitlab.io/AMR/articles/Predict.html</loc>
-  </url>
-  <url>
     <loc>https://msberends.gitlab.io/AMR/articles/WHONET.html</loc>
   </url>
   <url>
-    <loc>https://msberends.gitlab.io/AMR/articles/ab_property.html</loc>
+    <loc>https://msberends.gitlab.io/AMR/articles/atc_property.html</loc>
   </url>
   <url>
     <loc>https://msberends.gitlab.io/AMR/articles/benchmarks.html</loc>
@@ -155,5 +152,8 @@
   </url>
   <url>
     <loc>https://msberends.gitlab.io/AMR/articles/mo_property.html</loc>
+  </url>
+  <url>
+    <loc>https://msberends.gitlab.io/AMR/articles/resistance_predict.html</loc>
   </url>
 </urlset>

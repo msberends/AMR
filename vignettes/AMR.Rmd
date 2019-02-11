@@ -17,9 +17,9 @@ editor_options:
 ```{r setup, include = FALSE, results = 'markup'}
 knitr::opts_chunk$set(
   collapse = TRUE,
-  comment = "#",
+  comment = "#>",
   fig.width = 7.5,
-  fig.height = 4.5
+  fig.height = 5
 )
 ```
 
@@ -106,14 +106,21 @@ ab_interpretations <- c("S", "I", "R")
 Using the `sample()` function, we can randomly select items from all objects we defined earlier. To let our fake data reflect reality a bit, we will also approximately define the probabilities of bacteria and the antibiotic results with the `prob` parameter.
 
 ```{r merge data}
-data <- data.frame(date = sample(dates, 5000, replace = TRUE),
-                   patient_id = sample(patients, 5000, replace = TRUE),
-                   hospital = sample(hospitals, 5000, replace = TRUE, prob = c(0.30, 0.35, 0.15, 0.20)),
-                   bacteria = sample(bacteria, 5000, replace = TRUE, prob = c(0.50, 0.25, 0.15, 0.10)),
-                   amox = sample(ab_interpretations, 5000, replace = TRUE, prob = c(0.60, 0.05, 0.35)),
-                   amcl = sample(ab_interpretations, 5000, replace = TRUE, prob = c(0.75, 0.10, 0.15)),
-                   cipr = sample(ab_interpretations, 5000, replace = TRUE, prob = c(0.80, 0.00, 0.20)),
-                   gent = sample(ab_interpretations, 5000, replace = TRUE, prob = c(0.92, 0.00, 0.08))
+sample_size <- 20000
+data <- data.frame(date = sample(dates, size = sample_size, replace = TRUE),
+                   patient_id = sample(patients, size = sample_size, replace = TRUE),
+                   hospital = sample(hospitals, size = sample_size, replace = TRUE,
+                                     prob = c(0.30, 0.35, 0.15, 0.20)),
+                   bacteria = sample(bacteria, size = sample_size, replace = TRUE,
+                                     prob = c(0.50, 0.25, 0.15, 0.10)),
+                   amox = sample(ab_interpretations, size = sample_size, replace = TRUE,
+                                 prob = c(0.60, 0.05, 0.35)),
+                   amcl = sample(ab_interpretations, size = sample_size, replace = TRUE,
+                                 prob = c(0.75, 0.10, 0.15)),
+                   cipr = sample(ab_interpretations, size = sample_size, replace = TRUE,
+                                 prob = c(0.80, 0.00, 0.20)),
+                   gent = sample(ab_interpretations, size = sample_size, replace = TRUE,
+                                 prob = c(0.92, 0.00, 0.08))
                    )
 ```
 
@@ -124,6 +131,7 @@ data <- data %>% left_join(patients_table)
 ```
 
 The resulting data set contains 5,000 blood culture isolates. With the `head()` function we can preview the first 6 values of this data set:
+
 ```{r preview data set 1, eval = FALSE}
 head(data)
 ```
@@ -148,6 +156,7 @@ data %>% freq(gender, markdown = FALSE, header = TRUE)
 So, we can draw at least two conclusions immediately. From a data scientist perspective, the data looks clean: only values `M` and `F`. From a researcher perspective: there are slightly more men. Nothing we didn't already know.
 
 The data is already quite clean, but we still need to transform some variables. The `bacteria` column now consists of text, and we want to add more variables based on microbial IDs later on. So, we will transform this column to valid IDs. The `mutate()` function of the `dplyr` package makes this really easy:
+
 ```{r transform mo 1}
 data <- data %>%
   mutate(bacteria = as.mo(bacteria))
@@ -202,6 +211,7 @@ data_1st <- data %>%
 ```
 
 For future use, the above two syntaxes can be shortened with the `filter_first_isolate()` function:
+
 ```{r 1st isolate filter 2, eval = FALSE}
 data_1st <- data %>% 
   filter_first_isolate()
@@ -263,6 +273,7 @@ data_1st <- data %>%
 So we end up with `r format(nrow(data_1st), big.mark = ",")` isolates for analysis. 
 
 We can remove unneeded columns:
+
 ```{r}
 data_1st <- data_1st %>% 
   select(-c(first, keyab))
@@ -359,6 +370,7 @@ data_1st %>%
 ```
 
 To make a transition to the next part, let's see how this difference could be plotted:
+
 ```{r plot 1}
 data_1st %>% 
   group_by(genus) %>% 
@@ -391,6 +403,7 @@ ggplot(a_data_set,
 ```
 
 The `AMR` package contains functions to extend this `ggplot2` package, for example `geom_rsi()`. It automatically transforms data with `count_df()` or `portion_df()` and show results in stacked bars. Its simplest and shortest example:
+
 ```{r plot 3}
 ggplot(data_1st) +
   geom_rsi(translate_ab = FALSE)
@@ -424,6 +437,7 @@ ggplot(data_1st %>% group_by(genus)) +
 ```
 
 To simplify this, we also created the `ggplot_rsi()` function, which combines almost all above functions:
+
 ```{r plot 5}
 data_1st %>% 
   group_by(genus) %>%

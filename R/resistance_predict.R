@@ -35,6 +35,7 @@
 #' @param preserve_measurements a logical to indicate whether predictions of years that are actually available in the data should be overwritten by the original data. The standard errors of those years will be \code{NA}.
 #' @param info a logical to indicate whether textual analysis should be printed with the name and \code{\link{summary}} of the statistical model.
 #' @param main title of the plot
+#' @param ribbon a logical to indicate whether a ribbon should be shown (default) or error bars
 #' @details Valid options for the statistical model are:
 #' \itemize{
 #'   \item{\code{"binomial"} or \code{"binom"} or \code{"logit"}: a generalised linear regression model with binomial distribution}
@@ -51,6 +52,7 @@
 #'   \item{\code{observed}, the original observed resistant percentages}
 #'   \item{\code{estimated}, the estimated resistant percentages, calculated by the model}
 #' }
+#' Furthermore, the model itself is available as an attribute: \code{attributes(x)$model}, see Examples.
 #' @seealso The \code{\link{portion}} function to calculate resistance, \cr \code{\link{lm}} \code{\link{glm}}
 #' @rdname resistance_predict
 #' @export
@@ -71,7 +73,12 @@
 #' plot(x)
 #'
 #'
-#' # create nice plots with ggplot yourself
+#' # get the model from the object
+#' mymodel <- attributes(x)$model
+#' summary(mymodel)
+#'
+#'
+#' # create nice plots with ggplot2 yourself
 #' if (!require(ggplot2)) {
 #'
 #'   data <- septic_patients %>%
@@ -295,8 +302,8 @@ rsi_predict <- resistance_predict
 
 #' @exportMethod plot.mic
 #' @export
-#' @importFrom dplyr %>% group_by summarise
-#' @importFrom graphics plot axis arrows
+#' @importFrom dplyr filter
+#' @importFrom graphics plot axis arrows points
 #' @rdname resistance_predict
 plot.resistance_predict <- function(x, main = paste("Resistance prediction of", attributes(x)$ab), ...) {
   if (attributes(x)$I_as_R == TRUE) {
@@ -316,18 +323,30 @@ plot.resistance_predict <- function(x, main = paste("Resistance prediction of", 
                     ", model: ", attributes(x)$model_title, ")"),
        cex.sub = 0.75)
 
+
   axis(side = 2, at = seq(0, 1, 0.1), labels = paste0(0:10 * 10, "%"))
 
-  # arrows hack: https://stackoverflow.com/a/22037078/4575331
+  # hack for error bars: https://stackoverflow.com/a/22037078/4575331
   arrows(x0 = x$year,
          y0 = x$se_min,
          x1 = x$year,
-         y1 = x$se_max, length = 0.05, angle = 90, code = 3)
+         y1 = x$se_max,
+         length = 0.05, angle = 90, code = 3, lwd = 1.5)
+
+  # overlay grey points for prediction
+  points(x = filter(x, is.na(observations))$year,
+         y = filter(x, is.na(observations))$value,
+         pch = 19,
+         col = "grey40")
 }
 
 #' @rdname resistance_predict
+#' @importFrom dplyr filter
 #' @export
-ggplot_rsi_predict <- function(x, main = paste("Resistance prediction of", attributes(x)$ab), ...) {
+ggplot_rsi_predict <- function(x,
+                               main = paste("Resistance prediction of", attributes(x)$ab),
+                               ribbon = TRUE,
+                               ...) {
 
   if (!"resistance_predict" %in% class(x)) {
     stop("`x` must be a resistance prediction model created with resistance_predict().")
@@ -338,15 +357,26 @@ ggplot_rsi_predict <- function(x, main = paste("Resistance prediction of", attri
   } else {
     ylab <- "%R"
   }
-  suppressWarnings(
-    ggplot2::ggplot(x, ggplot2::aes(x = year, y = value)) +
-      ggplot2::geom_point(size = 2) +
-      ggplot2::geom_errorbar(ggplot2::aes(ymin = se_min, ymax = se_max), na.rm = TRUE, width = 0.5) +
-      scale_y_percent(limits = c(0, 1)) +
-      ggplot2::labs(title = main,
-                    y = paste0("Percentage (", ylab, ")"),
-                    x = "Year",
-                    caption = paste0("(n = ", sum(x$observations, na.rm = TRUE),
-                                     ", model: ", attributes(x)$model_title, ")"))
-  )
+
+  p <- ggplot2::ggplot(x, ggplot2::aes(x = year, y = value)) +
+    ggplot2::geom_point(data = filter(x, !is.na(observations)),
+                        size = 2) +
+    scale_y_percent(limits = c(0, 1)) +
+    ggplot2::labs(title = main,
+                  y = paste0("Percentage (", ylab, ")"),
+                  x = "Year",
+                  caption = paste0("(n = ", sum(x$observations, na.rm = TRUE),
+                                   ", model: ", attributes(x)$model_title, ")"))
+
+  if (ribbon == TRUE) {
+    p <- p + ggplot2::geom_ribbon(ggplot2::aes(ymin = se_min, ymax = se_max), alpha = 0.25)
+  } else {
+    p <- p + ggplot2::geom_errorbar(ggplot2::aes(ymin = se_min, ymax = se_max), na.rm = TRUE, width = 0.5)
+  }
+  p <- p +
+    # overlay grey points for prediction
+    ggplot2::geom_point(data = filter(x, is.na(observations)),
+                        size = 2,
+                        colour = "grey40")
+  p
 }
