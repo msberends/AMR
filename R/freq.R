@@ -564,8 +564,16 @@ format_header <- function(x, markdown = FALSE, decimal.mark = ".", big.mark = ",
   # FORMATTING
   # rsi
   if (has_length == TRUE & any(x_class == "rsi")) {
+    if (header$count_S < header$count_IR) {
+      ratio <- paste0(green(1), ":", red(format(header$count_IR / header$count_S,
+                                                digits = 1, nsmall = 1, decimal.mark = decimal.mark, big.mark = big.mark)))
+    } else {
+      ratio <- paste0(green(format(header$count_S / header$count_IR,
+                                   digits = 1, nsmall = 1, decimal.mark = decimal.mark, big.mark = big.mark)),
+                      ":", red(1))
+    }
     header$`%IR` <- paste((header$count_IR / header$length) %>% percent(force_zero = TRUE, round = digits, decimal.mark = decimal.mark),
-                          paste0("(ratio S : IR = 1.0 : ", (header$count_IR / header$count_S) %>% format(digits = 1, nsmall = 1, decimal.mark = decimal.mark, big.mark = big.mark), ")"))
+                          paste0("(ratio ", ratio, ")"))
     header <- header[!names(header) %in% c("count_S", "count_IR")]
   }
   # dates
@@ -872,11 +880,20 @@ print.frequency_tbl <- function(x,
   if (opt$tbl_format == "pandoc") {
     title <- bold(title)
   } else if (opt$tbl_format == "markdown") {
-    title <- paste0("\n**", title, "**  ") # two space for newline
+    title <- paste0("\n\n**", title, "**  ") # two space for newline
+  }
+
+  cat(title, "\n\n")
+
+  if (NROW(x) == 0) {
+    cat("No observations.\n")
+    if (opt$tbl_format == "markdown") {
+      cat("\n")
+    }
+    return(invisible())
   }
 
   if (opt$header == TRUE) {
-    cat(title, "\n")
     if (!is.null(opt$header_txt)) {
       if (is.null(opt$digits)) {
         opt$digits <- 2
@@ -884,14 +901,6 @@ print.frequency_tbl <- function(x,
       cat(format_header(x, digits = opt$digits, markdown = (opt$tbl_format == "markdown"),
                         decimal.mark = decimal.mark, big.mark = big.mark))
     }
-  } else if (opt$tbl_format == "markdown") {
-    # do print title as caption in markdown
-    cat("\n", title, sep = "") # two trailing spaces for markdown
-  }
-
-  if (NROW(x) == 0) {
-    cat("\n\nNo observations.\n")
-    return(invisible())
   }
 
   # save old NA setting for kable
