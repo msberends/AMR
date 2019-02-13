@@ -38,9 +38,9 @@ $( document ).ready(function() {
   if ($(".template-article").length > 0) {
      $('#sidebar').prepend(
       '<div id="r4ds">' +
-      '  <a href="https://r4ds.had.co.nz/">Learn R reading this great book: R for Data Science.' +
-      '    <br>' +
-      '    <br>' +
+      '  <a target="_blank" href="https://r4ds.had.co.nz/">' +
+      '    Learn R reading this great book: R for Data Science.' +
+      '    <br><br>' +
       '    Click to read it online - it was published for free.' +
       '    <img src="../../AMR/cover_r4ds.png" height="100px">' +
       '  </a>     ' +

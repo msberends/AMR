@@ -352,6 +352,14 @@ frequency_tbl <- function(x,
     NAs <- x[is.na(x)]
   }
 
+  if (mult.columns > 0) {
+    header_list <- list(columns = mult.columns)
+  } else {
+    header_list <- list(class = class(x),
+                        mode = mode(x))
+  }
+  header_list$length <- length(x)
+
   if (na.rm == TRUE) {
     x_class <- class(x)
     x <- x[!x %in% NAs]
@@ -364,13 +372,6 @@ frequency_tbl <- function(x,
   }
   x_align <- "l"
 
-  if (mult.columns > 0) {
-    header_list <- list(columns = mult.columns)
-  } else {
-    header_list <- list(class = class(x),
-                        mode = mode(x))
-  }
-
   if (!is.null(levels(x))) {
     header_list$levels <- levels(x)
     header_list$ordered <- is.ordered(x)
@@ -381,7 +382,6 @@ frequency_tbl <- function(x,
     }
   }
 
-  header_list$length <- length(x)
   header_list$na_length <- length(NAs)
   header_list$unique <- n_distinct(x)
 
@@ -559,7 +559,7 @@ format_header <- function(x, markdown = FALSE, decimal.mark = ".", big.mark = ",
 
   header <- header(x)
   x_class <- header$class
-  has_length <- header$length + header$na_length > 0
+  has_length <- header$length > 0
 
   # FORMATTING
   # rsi
@@ -633,23 +633,25 @@ format_header <- function(x, markdown = FALSE, decimal.mark = ".", big.mark = ",
   }
   # levels
   if (!is.null(header$levels)) {
-    n_levels <- header$levels %>% length()
-    n_levels_list <- header$levels
-    if (n_levels > 5) {
-      n_levels_list <- c(n_levels_list[1:5], "...")
+    if (markdown == TRUE) {
+      header$levels <- paste0("`", header$levels, "`")
     }
     if (header$ordered == TRUE) {
-      n_levels_list <- paste0(n_levels_list, collapse = " < ")
+      levels_text <- paste0(header$levels, collapse = " < ")
     } else {
-      n_levels_list <- paste0(n_levels_list, collapse = ", ")
+      levels_text <- paste0(header$levels, collapse = ", ")
     }
-    header$levels <- n_levels_list
+    if (nchar(levels_text) > 70) {
+      # levels text wider than half the console
+      levels_text <- paste0(substr(levels_text, 1, 70 - 3), "...")
+    }
+    header$levels <- paste0(length(header$levels), ": ", levels_text)
     header <- header[names(header) != "ordered"]
   }
   # length and NAs
   if (has_length == TRUE) {
     na_txt <- paste0(header$na_length %>% format(decimal.mark = decimal.mark, big.mark = big.mark), " = ",
-                     (header$na_length / (header$na_length + header$length)) %>% percent(force_zero = TRUE, round = digits, decimal.mark = decimal.mark) %>%
+                     (header$na_length / header$length) %>% percent(force_zero = TRUE, round = digits, decimal.mark = decimal.mark) %>%
                        sub("NaN", "0", ., fixed = TRUE))
     if (!na_txt %like% "^0 =") {
       na_txt <- red(na_txt)
@@ -660,7 +662,7 @@ format_header <- function(x, markdown = FALSE, decimal.mark = ".", big.mark = ",
   } else {
     na_txt <- ""
   }
-  header$length <- paste((header$na_length + header$length) %>% format(decimal.mark = decimal.mark, big.mark = big.mark),
+  header$length <- paste(format(header$length, decimal.mark = decimal.mark, big.mark = big.mark),
                          na_txt)
   header <- header[names(header) != "na_length"]
 
