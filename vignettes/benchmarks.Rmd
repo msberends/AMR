@@ -25,9 +25,9 @@ knitr::opts_chunk$set(
 
 One of the most important features of this package is the complete microbial taxonomic database, supplied by ITIS (https://www.itis.gov). We created a function `as.mo()` that transforms any user input value to a valid microbial ID by using AI (Artificial Intelligence) and based on the taxonomic tree of ITIS. 
 
-Using the `microbenchmark` package, we can review the calculation performance of this function.
+Using the `microbenchmark` package, we can review the calculation performance of this function. Its function `microbenchmark()` calculates different input expressions independently of each others and runs every expression 100 times.
 
-```r
+```{r, eval = FALSE}
 library(microbenchmark)
 library(AMR)
 ```
@@ -36,53 +36,65 @@ In the next test, we try to 'coerce' different input values for *Staphylococcus 
 
 But the calculation time differs a lot. Here, the AI effect can be reviewed best:
 
-```r
-microbenchmark(A = as.mo("stau"),
-               B = as.mo("staaur"),
-               C = as.mo("S. aureus"),
-               D = as.mo("S.  aureus"),
-               E = as.mo("STAAUR"),
-               F = as.mo("Staphylococcus aureus"),
-               G = as.mo("B_STPHY_AUR"),
-               times = 10,
-               unit = "ms")
+```{r, eval = FALSE}
+benchmark <- microbenchmark(as.mo("sau"),
+                            as.mo("stau"),
+                            as.mo("staaur"),
+                            as.mo("S. aureus"),
+                            as.mo("S.  aureus"),
+                            as.mo("STAAUR"),
+                            as.mo("Staphylococcus aureus"),
+                            as.mo("B_STPHY_AUR"))
+print(benchmark, unit = "ms")
 # Unit: milliseconds
-#  expr       min        lq       mean     median        uq       max neval
-#     A 34.745551 34.798630 35.2596102 34.8994810 35.258325 38.067062    10
-#     B  7.095386  7.125348  7.2219948  7.1613865  7.240377  7.495857    10
-#     C 11.677114 11.733826 11.8304789 11.7715050 11.843756 12.317559    10
-#     D 11.694435 11.730054 11.9859313 11.8775585 12.206371 12.750016    10
-#     E  7.044402  7.117387  7.2271630  7.1923610  7.246104  7.742396    10
-#     F  6.642326  6.778446  6.8988042  6.8753165  6.923577  7.513945    10
-#     G  0.106788  0.131023  0.1351229  0.1357725  0.144014  0.146458    10
+#                            expr       min        lq       mean     median         uq       max neval
+#                    as.mo("sau") 18.983141 19.121148 19.9676944 19.1967505 19.2871260 38.635012   100
+#                   as.mo("stau") 37.503863 37.692049 38.9856547 37.8244335 37.9851040 57.576107   100
+#                 as.mo("staaur") 18.945427 19.122579 19.6392560 19.2241285 19.3536140 38.687672   100
+#              as.mo("S. aureus") 15.305229 15.471103 16.3477096 15.5545630 15.6689280 36.363005   100
+#             as.mo("S.  aureus") 15.308232 15.469881 16.5269706 15.5506870 15.6277560 42.155292   100
+#                 as.mo("STAAUR") 18.984049 19.117166 19.6104597 19.2219285 19.3161095 38.638783   100
+#  as.mo("Staphylococcus aureus")  8.103546  8.198285  8.6422018  8.2636915  8.3200535 27.002527   100
+#            as.mo("B_STPHY_AUR")  0.156236  0.196779  0.2017926  0.2035535  0.2115505  0.241861   100
+
+par(mar = c(5, 15, 4, 2)) # set more space for left margin text (15)
+boxplot(benchmark, horizontal = TRUE, las = 1, unit = "ms", log = FALSE, xlab = "", ylim = c(0, 200),
+        main = expression(paste("Benchmark of ", italic("Staphylococcus aureus"))))
 ```
 
-In the table above, all measurements are shown in milliseconds (thousands of seconds), tested on a quite regular Linux server from 2007 (Core 2 Duo 2.7 GHz, 2 GB DDR2 RAM). A value of 6.9 milliseconds means it will roughly determine 144 input values per second. It case of 39.2 milliseconds, this is only 26 input values per second. The more an input value resembles a full name (like C, D and F), the faster the result will be found. In case of G, the input is already a valid MO code, so it only almost takes no time at all (0.0001 seconds on our server).
+![](../reference/figures/benchmark_1.png)
+
+In the table above, all measurements are shown in milliseconds (thousands of seconds), tested on a quite regular Linux server from 2007 (Core 2 Duo 2.7 GHz, 2 GB DDR2 RAM). A value of 8 milliseconds means it can determine 125 input values per second. It case of 40 milliseconds, this is only 25 input values per second. The more an input value resembles a full name, the faster the result will be found. In case of `as.mo("B_STPHY_AUR")`, the input is already a valid MO code, so it only almost takes no time at all (0.0002 seconds on our server).
 
 To achieve this speed, the `as.mo` function also takes into account the prevalence of human pathogenic microorganisms. The downside is of course that less prevalent microorganisms will be determined far less faster. See this example for the ID of *Burkholderia nodosa* (`B_BRKHL_NOD`):
 
-```r
-microbenchmark(A = as.mo("buno"),
-               B = as.mo("burnod"),
-               C = as.mo("B. nodosa"),
-               D = as.mo("B.  nodosa"),
-               E = as.mo("BURNOD"),
-               F = as.mo("Burkholderia nodosa"),
-               G = as.mo("B_BRKHL_NOD"),
-               times = 10,
-               unit = "ms")
+```{r, eval = FALSE}
+benchmark <- microbenchmark(as.mo("buno"),
+                            as.mo("burnod"),
+                            as.mo("B. nodosa"),
+                            as.mo("B.  nodosa"),
+                            as.mo("BURNOD"),
+                            as.mo("Burkholderia nodosa"),
+                            as.mo("B_BRKHL_NOD"))
+print(benchmark, unit = "ms")
+
 # Unit: milliseconds
-#  expr        min         lq        mean      median         uq        max neval
-#     A 124.175427 124.474837 125.8610536 125.3750560 126.160945 131.485994    10
-#     B 154.249713 155.364729 160.9077032 156.8738940 157.136183 197.315105    10
-#     C  66.066571  66.162393  66.5538611  66.4488130  66.698077  67.623404    10
-#     D  86.747693  86.918665  90.7831016  87.8149725  89.440982 116.767991    10
-#     E 154.863827 155.208563 162.6535954 158.4062465 168.593785 187.378088    10
-#     F  32.427028  32.638648  32.9929454  32.7860475  32.992813  34.674241    10
-#     G   0.213155   0.216578   0.2369226   0.2338985   0.253734   0.285581    10
+#                          expr        min          lq        mean      median          uq       max neval
+#                 as.mo("buno") 125.141333 125.8553210 129.5727691 126.3899910 127.0954925 194.51985   100
+#               as.mo("burnod") 142.300359 144.1611750 147.0642288 144.6074960 145.5243025 176.91649   100
+#            as.mo("B. nodosa")  81.530132  81.9360840  83.3915418  82.1852770  82.6848870 102.63184   100
+#           as.mo("B.  nodosa")  81.109547  81.9836805  84.7595894  82.3437825  82.8282705 110.67036   100
+#               as.mo("BURNOD") 143.163527 143.9134485 148.7192688 144.5582580 145.7489115 314.92070   100
+#  as.mo("Burkholderia nodosa")  36.226325  36.5499000  37.1309929  36.6581540  36.7551985  56.25597   100
+#          as.mo("B_BRKHL_NOD")   0.172509   0.3038455   0.4806591   0.3078265   0.3121215  19.16173   100
+
+boxplot(benchmark, horizontal = TRUE, las = 1, unit = "ms", log = FALSE, xlab = "", ylim = c(0, 200),
+        main = expression(paste("Benchmark of ", italic("Burkholderia nodosa"))))
 ```
 
-That takes up to 11 times as much time! A value of 158.4 milliseconds means it can only determine ~6 different input values per second. We can conclude that looking up arbitrary codes of less prevalent microorganisms is the worst way to go, in terms of calculation performance.
+![](../reference/figures/benchmark_2.png)
+
+That takes up to 8 times as much time! A value of 145 milliseconds means it can only determine ~7 different input values per second. We can conclude that looking up arbitrary codes of less prevalent microorganisms is the worst way to go, in terms of calculation performance.
 
 To relieve this pitfall and further improve performance, two important calculations take almost no time at all: **repetitive results** and **already precalculated results**.
 
@@ -90,7 +102,7 @@ To relieve this pitfall and further improve performance, two important calculati
 
 Repetitive results mean that unique values are present more than once. Unique values will only be calculated once by `as.mo()`.  We will use `mo_fullname()` for this test - a helper function that returns the full microbial name (genus, species and possibly subspecies) and uses `as.mo()` internally.
 
-```r
+```{r, eval = FALSE}
 library(dplyr)
 # take 500,000 random MO codes from the septic_patients data set
 x = septic_patients %>%
@@ -118,19 +130,19 @@ So transforming 500,000 values (!) of 96 unique values only takes 0.12 seconds (
 
 Results of a tenfold - 5,000,000 values:
 
-```r
+```{r, eval = FALSE}
 # Unit: milliseconds
 #  expr      min       lq     mean   median       uq      max neval
 #     X 882.9045 901.3011 1001.677 940.3421 1168.088 1226.846    10
 ```
 
-Even the full names of 5 *Million* values are calculated within a second.
+Even determining the full names of 5 *Million* values is done within a second.
 
 ### Precalculated results
 
 What about precalculated results? If the input is an already precalculated result of a helper function like `mo_fullname()`, it almost doesn't take any time at all (see 'C' below):
 
-```r
+```{r, eval = FALSE}
 microbenchmark(A = mo_fullname("B_STPHY_AUR"),
                B = mo_fullname("S. aureus"),
                C = mo_fullname("Staphylococcus aureus"),
@@ -145,7 +157,7 @@ microbenchmark(A = mo_fullname("B_STPHY_AUR"),
 
 So going from `mo_fullname("Staphylococcus aureus")` to `"Staphylococcus aureus"` takes 0.0001 seconds - it doesn't even start calculating *if the result would be the same as the expected resulting value*. That goes for all helper functions:
 
-```r
+```{r, eval = FALSE}
 microbenchmark(A = mo_species("aureus"),
                B = mo_genus("Staphylococcus"),
                C = mo_fullname("Staphylococcus aureus"),
@@ -176,7 +188,7 @@ Of course, when running `mo_phylum("Firmicutes")` the function has zero knowledg
 
 When the system language is non-English and supported by this `AMR` package, some functions take a little while longer:
 
-```r
+```{r, eval = FALSE}
 mo_fullname("CoNS", language = "en") # or just mo_fullname("CoNS") on an English system
 # "Coagulase Negative Staphylococcus (CoNS)"
 

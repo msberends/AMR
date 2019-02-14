@@ -70,7 +70,7 @@
       </a>
     </li>
     <li>
-      <a href="../articles/Predict.html">
+      <a href="../articles/resistance_predict.html">
         <span class="fa fa-dice"></span>
          
         Predict antimicrobial resistance
@@ -91,14 +91,14 @@
       </a>
     </li>
     <li>
-      <a href="../articles/mo_property.html">
+      <a href="../reference/mo_property.html">
         <span class="fa fa-bug"></span>
          
         Get properties of a microorganism
       </a>
     </li>
     <li>
-      <a href="../articles/ab_property.html">
+      <a href="../reference/atc_property.html">
         <span class="fa fa-capsules"></span>
          
         Get properties of an antibiotic
@@ -185,7 +185,7 @@
       <h1>How to work with WHONET data</h1>
                         <h4 class="author">Matthijs S. Berends</h4>
             
-            <h4 class="date">09 February 2019</h4>
+            <h4 class="date">14 February 2019</h4>
       
       
       <div class="hidden name"><code>WHONET.Rmd</code></div>
@@ -199,33 +199,33 @@
 <a href="#import-of-data" class="anchor"></a>Import of data</h1>
 <p>This tutorial assumes you already imported the WHONET data with e.g. the <a href="https://readxl.tidyverse.org/"><code>readxl</code> package</a>. In RStudio, this can be done using the menu button ‘Import Dataset’ in the tab ‘Environment’. Choose the option ‘From Excel’ and select your exported file. Make sure date fields are imported correctly.</p>
 <p>An example syntax could look like this:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(readxl)</a>
-<a class="sourceLine" id="cb1-2" data-line-number="2">data &lt;-<span class="st"> </span><span class="kw"><a href="https://readxl.tidyverse.org/reference/read_excel.html">read_excel</a></span>(<span class="dt">path =</span> <span class="st">"path/to/your/file.xlsx"</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(readxl)</a>
+<a class="sourceLine" id="cb1-2" title="2">data &lt;-<span class="st"> </span><span class="kw"><a href="https://readxl.tidyverse.org/reference/read_excel.html">read_excel</a></span>(<span class="dt">path =</span> <span class="st">"path/to/your/file.xlsx"</span>)</a></code></pre></div>
 <p>This package comes with an <a href="./reference/WHONET.html">example data set <code>WHONET</code></a>. We will use it for this analysis.</p>
 </div>
 <div id="preparation" class="section level1">
 <h1 class="hasAnchor">
 <a href="#preparation" class="anchor"></a>Preparation</h1>
 <p>First, load the relevant packages if you did not yet did this. I use the tidyverse for all of my analyses. All of them. If you don’t know it yet, I suggest you read about it on their website: <a href="https://www.tidyverse.org/" class="uri">https://www.tidyverse.org/</a>.</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(dplyr)   <span class="co"># part of tidyverse</span></a>
-<a class="sourceLine" id="cb2-2" data-line-number="2"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(ggplot2) <span class="co"># part of tidyverse</span></a>
-<a class="sourceLine" id="cb2-3" data-line-number="3"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(AMR)     <span class="co"># this package</span></a></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(dplyr)   <span class="co"># part of tidyverse</span></a>
+<a class="sourceLine" id="cb2-2" title="2"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(ggplot2) <span class="co"># part of tidyverse</span></a>
+<a class="sourceLine" id="cb2-3" title="3"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(AMR)     <span class="co"># this package</span></a></code></pre></div>
 <p>We will have to transform some variables to simplify and automate the analysis:</p>
 <ul>
 <li>Microorganisms should be transformed to our own microorganism IDs (called an <code>mo</code>) using <a href="./reference/ITIS.html">the ITIS reference data set</a>, which contains all ~20,000 microorganisms from the taxonomic kingdoms Bacteria, Fungi and Protozoa. We do the tranformation with <code><a href="../reference/as.mo.html">as.mo()</a></code>. This function also recognises almost all WHONET abbreviations of microorganisms.</li>
 <li>Antimicrobial results or interpretations have to be clean and valid. In other words, they should only contain values <code>"S"</code>, <code>"I"</code> or <code>"R"</code>. That is exactly where the <code><a href="../reference/as.rsi.html">as.rsi()</a></code> function is for.</li>
 </ul>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="co"># transform variables</span></a>
-<a class="sourceLine" id="cb3-2" data-line-number="2">data &lt;-<span class="st"> </span>WHONET <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb3-3" data-line-number="3"><span class="st">  </span><span class="co"># get microbial ID based on given organism</span></a>
-<a class="sourceLine" id="cb3-4" data-line-number="4"><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(<span class="dt">mo =</span> <span class="kw"><a href="../reference/as.mo.html">as.mo</a></span>(Organism)) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb3-5" data-line-number="5"><span class="st">  </span><span class="co"># transform everything from "AMP_ND10" to "CIP_EE" to the new `rsi` class</span></a>
-<a class="sourceLine" id="cb3-6" data-line-number="6"><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/summarise_all.html">mutate_at</a></span>(<span class="kw"><a href="https://dplyr.tidyverse.org/reference/vars.html">vars</a></span>(AMP_ND10<span class="op">:</span>CIP_EE), as.rsi)</a></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" title="1"><span class="co"># transform variables</span></a>
+<a class="sourceLine" id="cb3-2" title="2">data &lt;-<span class="st"> </span>WHONET <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb3-3" title="3"><span class="st">  </span><span class="co"># get microbial ID based on given organism</span></a>
+<a class="sourceLine" id="cb3-4" title="4"><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(<span class="dt">mo =</span> <span class="kw"><a href="../reference/as.mo.html">as.mo</a></span>(Organism)) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb3-5" title="5"><span class="st">  </span><span class="co"># transform everything from "AMP_ND10" to "CIP_EE" to the new `rsi` class</span></a>
+<a class="sourceLine" id="cb3-6" title="6"><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/summarise_all.html">mutate_at</a></span>(<span class="kw"><a href="https://dplyr.tidyverse.org/reference/vars.html">vars</a></span>(AMP_ND10<span class="op">:</span>CIP_EE), as.rsi)</a></code></pre></div>
 <p>No errors or warnings, so all values are transformed succesfully. Let’s check it though, with a couple of frequency tables:</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="co"># our newly created `mo` variable</span></a>
-<a class="sourceLine" id="cb4-2" data-line-number="2">data <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="../reference/freq.html">freq</a></span>(mo, <span class="dt">nmax =</span> <span class="dv">10</span>)</a></code></pre></div>
-<p><strong>Frequency table of <code>mo</code> from a <code>data.frame</code> (500 x 54)</strong><br>
-Class: <code>mo</code> (<code>character</code>)<br>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" title="1"><span class="co"># our newly created `mo` variable</span></a>
+<a class="sourceLine" id="cb4-2" title="2">data <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="../reference/freq.html">freq</a></span>(mo, <span class="dt">nmax =</span> <span class="dv">10</span>)</a></code></pre></div>
+<p><strong>Frequency table of <code>mo</code> from a <code>data.frame</code> (500 x 54)</strong></p>
+<p>Class: <code>mo</code> (<code>character</code>)<br>
 Length: 500 (of which NA: 0 = 0.00%)<br>
 Unique: 39</p>
 <p>Families: 9<br>
@@ -324,16 +324,16 @@ Species: 36</p>
 </tbody>
 </table>
 <p>(omitted 29 entries, n = 57 [11.4%])</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1"></a>
-<a class="sourceLine" id="cb5-2" data-line-number="2"><span class="co"># our transformed antibiotic columns</span></a>
-<a class="sourceLine" id="cb5-3" data-line-number="3"><span class="co"># amoxicillin/clavulanic acid (J01CR02) as an example</span></a>
-<a class="sourceLine" id="cb5-4" data-line-number="4">data <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="../reference/freq.html">freq</a></span>(AMC_ND2)</a></code></pre></div>
-<p><strong>Frequency table of <code>AMC_ND2</code> from a <code>data.frame</code> (500 x 54)</strong><br>
-Class: <code>factor</code> &gt; <code>ordered</code> &gt; <code>rsi</code> (<code>numeric</code>)<br>
-Levels: S &lt; I &lt; R<br>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" title="1"></a>
+<a class="sourceLine" id="cb5-2" title="2"><span class="co"># our transformed antibiotic columns</span></a>
+<a class="sourceLine" id="cb5-3" title="3"><span class="co"># amoxicillin/clavulanic acid (J01CR02) as an example</span></a>
+<a class="sourceLine" id="cb5-4" title="4">data <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="../reference/freq.html">freq</a></span>(AMC_ND2)</a></code></pre></div>
+<p><strong>Frequency table of <code>AMC_ND2</code> from a <code>data.frame</code> (500 x 54)</strong></p>
+<p>Class: <code>factor</code> &gt; <code>ordered</code> &gt; <code>rsi</code> (<code>numeric</code>)<br>
 Length: 500 (of which NA: 19 = 3.80%)<br>
+Levels: 3: <code>S</code> &lt; <code>I</code> &lt; <code>R</code><br>
 Unique: 3</p>
-<p>%IR: 25.99% (ratio S : IR = 1.0 : 0.4)</p>
+<p>%IR: 25.00% (ratio 2.8:1)</p>
 <table class="table">
 <thead><tr class="header">
 <th align="left"></th>

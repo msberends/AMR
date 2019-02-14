@@ -667,16 +667,17 @@ format_header <- function(x, markdown = FALSE, decimal.mark = ".", big.mark = ",
   header <- header[names(header) != "na_length"]
 
   # format all numeric values
-  header <- lapply(header, function(x)
-    if (is.numeric(x))
+  header <- lapply(header, function(x) {
+    if (is.numeric(x)) {
       if (any(x < 1000)) {
         format(round2(x, digits = digits), decimal.mark = decimal.mark, big.mark = big.mark)
       } else {
         format(x, digits = digits, decimal.mark = decimal.mark, big.mark = big.mark)
       }
-    else
+    } else {
       x
-    )
+    }
+  })
 
   # numeric values
   if (has_length == TRUE & any(x_class %in% c("double", "integer", "numeric", "raw", "single"))) {
