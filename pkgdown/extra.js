@@ -56,6 +56,20 @@ $( document ).ready(function() {
       '<a href="https://www.rug.nl" target="_blank"><img src="../../AMR/logo_rug.png" class="footer_logo"></a>' +
     '</div>');
 
+  // doctoral titles of authors
+  function doct_tit(x) {
+    if (typeof(x) != "undefined") {
+      x = x.replace("Corinna", "Dr Corinna");
+      x = x.replace("Alex", "Prof Dr Alex");
+      x = x.replace("Bhanu", "Prof Dr Bhanu");
+      x = x.replace(/Author, thesis advisor/g, "Doctoral advisor");
+    }
+    return(x);
+  }
+  $(".template-authors").html(doct_tit($(".template-authors").html()));
+  $(".developers").html(doct_tit($(".developers").html()));
+  $("footer").html(doct_tit($("footer").html()));
+
   // Edit title of manual
   $('.template-reference-index h1').text('Manual');
 });

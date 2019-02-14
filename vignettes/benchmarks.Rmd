@@ -1,7 +1,7 @@
 ---
 title: "Benchmarks"
 author: "Matthijs S. Berends"
-date: '`r format(Sys.Date(), "%d %B %Y")`'
+date: "14 February 2019"
 output: 
   rmarkdown::html_vignette:
     toc: true

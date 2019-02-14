@@ -4,12 +4,14 @@
 
 ----
 
-`AMR` is a free and open-source [R package](https://www.r-project.org) to simplify the analysis and prediction of Antimicrobial Resistance (AMR) and to work with microbial and antimicrobial properties by using evidence-based methods. It supports any table format, including WHONET/EARS-Net data.
+`AMR` is a free and open-source [R package](https://www.r-project.org) to simplify the analysis and prediction of Antimicrobial Resistance (AMR) and to work with microbial and antimicrobial properties by using evidence-based methods. It supports any data format, including WHONET/EARS-Net data.
 
 After installing this package, R knows almost all ~20,000 microorganisms and ~500 antibiotics by name and code, and knows all about valid RSI and MIC values.
 
-We created this package for both academic research and routine analysis at the Faculty of Medical Sciences of the University of Groningen and the Medical Microbiology & Infection Prevention (MMBI) department of the University Medical Center Groningen (UMCG).
-This R package is actively maintained and free software; you can freely use and distribute it for both personal and commercial (but **not** patent) purposes under the terms of the GNU General Public License version 2.0 (GPL-2), as published by the Free Software Foundation. Read the full license [here](./LICENSE-text.html).
+**Used to SPSS?** Read our [tutorial on how to import data from SPSS, SAS or Stata](./articles/SPSS.html) and learn in which ways R outclasses any of these statistical packages.
+
+We created this package for both academic research and routine analysis at the Faculty of Medical Sciences of the University of Groningen, the Netherlands, and the Medical Microbiology & Infection Prevention (MMBI) department of the University Medical Center Groningen (UMCG).
+This R package is actively maintained and is free software; you can freely use and distribute it for both personal and commercial (but **not** patent) purposes under the terms of the GNU General Public License version 2.0 (GPL-2), as published by the Free Software Foundation. Read the full license [here](./LICENSE-text.html).
 
 This package can be used for:
 

@@ -79,6 +79,10 @@ a pre[href], a pre[href]:hover, a pre[href]:focus {
   /* adjusted colour for all real links; having href attribute */
   color: #128f76;
 }
+.ot, .dv {
+  /* numbers and TRUE/FALSE */
+  color: slategray;
+}
 
 /* syntax font */
 pre, code {
