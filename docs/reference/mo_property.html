@@ -80,7 +80,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.0.9017</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.0.9018</span>
       </span>
     </div>
 
@@ -267,8 +267,6 @@
 
 <span class='fu'>mo_gramstain</span>(<span class='no'>x</span>, <span class='kw'>language</span> <span class='kw'>=</span> <span class='fu'><a href='get_locale.html'>get_locale</a></span>(), <span class='no'>...</span>)
 
-<span class='fu'>mo_TSN</span>(<span class='no'>x</span>, <span class='no'>...</span>)
-
 <span class='fu'>mo_ref</span>(<span class='no'>x</span>, <span class='no'>...</span>)
 
 <span class='fu'>mo_authors</span>(<span class='no'>x</span>, <span class='no'>...</span>)
@@ -304,7 +302,7 @@
 
     
 <ul>
-<li><p>An <code>integer</code> in case of <code>mo_TSN</code> and <code>mo_year</code></p></li>
+<li><p>An <code>integer</code> in case of <code>mo_year</code></p></li>
 <li><p>A <code>list</code> in case of <code>mo_taxonomy</code></p></li>
 <li><p>A <code>character</code> in all other cases</p></li>
 </ul>
@@ -362,7 +360,6 @@ On our website <a href='https://msberends.gitlab.io/AMR'>https://msberends.gitla
 <span class='fu'>mo_genus</span>(<span class='st'>"E. coli"</span>)           <span class='co'># "Escherichia"</span>
 <span class='fu'>mo_species</span>(<span class='st'>"E. coli"</span>)         <span class='co'># "coli"</span>
 <span class='fu'>mo_subspecies</span>(<span class='st'>"E. coli"</span>)      <span class='co'># NA</span>
-<span class='fu'>mo_TSN</span>(<span class='st'>"E. coli"</span>)             <span class='co'># 285 (Taxonomic Serial Number)</span>
 
 <span class='co'>## colloquial properties</span>
 <span class='fu'>mo_fullname</span>(<span class='st'>"E. coli"</span>)        <span class='co'># "Escherichia coli"</span>

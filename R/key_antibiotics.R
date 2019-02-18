@@ -43,7 +43,7 @@
 #' @inheritSection first_isolate Key antibiotics
 #' @rdname key_antibiotics
 #' @export
-#' @importFrom dplyr %>% mutate if_else
+#' @importFrom dplyr %>% mutate if_else pull
 #' @importFrom crayon blue bold
 #' @seealso \code{\link{first_isolate}}
 #' @inheritSection AMR Read more on our website!
@@ -149,7 +149,8 @@ key_antibiotics <- function(tbl,
   tbl <- tbl %>%
     mutate_at(vars(col_mo), as.mo) %>%
     left_join_microorganisms(by = col_mo) %>%
-    mutate(key_ab = NA_character_)
+    mutate(key_ab = NA_character_,
+           gramstain = mo_gramstain(pull(., col_mo)))
 
   # Gram +
   tbl <- tbl %>% mutate(key_ab =

@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Data set with ~20,000 microorganisms — microorganisms • AMR (for R)</title>
+<title>Data set with ~60,000 microorganisms — microorganisms • AMR (for R)</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -45,9 +45,9 @@
 
   <link href="../extra.css" rel="stylesheet">
   <script src="../extra.js"></script>
-<meta property="og:title" content="Data set with ~20,000 microorganisms — microorganisms" />
+<meta property="og:title" content="Data set with ~60,000 microorganisms — microorganisms" />
 
-<meta property="og:description" content="A data set containing the complete microbial taxonomy of the kingdoms Bacteria, Fungi and Protozoa from ITIS. MO codes can be looked up using as.mo." />
+<meta property="og:description" content="A data set containing the microbial taxonomy of six kingdoms from the Catalogue of Life. MO codes can be looked up using as.mo." />
 
 <meta property="og:image" content="https://msberends.gitlab.io/AMR/logo.png" />
 <meta name="twitter:card" content="summary" />
@@ -80,7 +80,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.0.9017</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.0.9018</span>
       </span>
     </div>
 
@@ -230,14 +230,14 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Data set with ~20,000 microorganisms</h1>
+    <h1>Data set with ~60,000 microorganisms</h1>
     
     <div class="hidden name"><code>microorganisms.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>A data set containing the complete microbial taxonomy of the kingdoms Bacteria, Fungi and Protozoa from ITIS. MO codes can be looked up using <code><a href='as.mo.html'>as.mo</a></code>.</p>
+    <p>A data set containing the microbial taxonomy of six kingdoms from the Catalogue of Life. MO codes can be looked up using <code><a href='as.mo.html'>as.mo</a></code>.</p>
     
     </div>
 
@@ -245,9 +245,9 @@
         
     <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
 
-    <p>A <code><a href='https://www.rdocumentation.org/packages/base/topics/data.frame'>data.frame</a></code> with 19,456 observations and 15 variables:</p><dl class='dl-horizontal'>
+    <p>A <code><a href='https://www.rdocumentation.org/packages/base/topics/data.frame'>data.frame</a></code> with 56,659 observations and 15 variables:</p><dl class='dl-horizontal'>
   <dt><code>mo</code></dt><dd><p>ID of microorganism</p></dd>
-  <dt><code>tsn</code></dt><dd><p>Taxonomic Serial Number (TSN), as defined by ITIS</p></dd>
+  <dt><code>col_id</code></dt><dd><p>Catalogue of Life ID</p></dd>
   <dt><code>genus</code></dt><dd><p>Taxonomic genus of the microorganism as found in ITIS, see Source</p></dd>
   <dt><code>species</code></dt><dd><p>Taxonomic species of the microorganism as found in ITIS, see Source</p></dd>
   <dt><code>subspecies</code></dt><dd><p>Taxonomic subspecies of the microorganism as found in ITIS, see Source</p></dd>
@@ -270,14 +270,10 @@
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>Manually added were:</p><ul>
-<li><p>605 species of Aspergillus (as Aspergillus misses from ITIS, list from https://en.wikipedia.org/wiki/List_of_Aspergillus_species on 2019-02-05)</p></li>
-<li><p>23 species of Trichophyton (as Trichophyton misses from ITIS, list from https://en.wikipedia.org/wiki/Trichophyton on 2019-02-05)</p></li>
-<li><p>9 species of Streptococcus (beta haemolytic groups A, B, C, D, F, G, H, K and unspecified)</p></li>
-<li><p>2 species of Straphylococcus (coagulase-negative [CoNS] and coagulase-positive [CoPS])</p></li>
-<li><p>1 species of Candida (C. glabrata)</p></li>
+<li><p>9 species of <em>Streptococcus</em> (beta haemolytic groups A, B, C, D, F, G, H, K and unspecified)</p></li>
+<li><p>2 species of <em>Staphylococcus</em> (coagulase-negative [CoNS] and coagulase-positive [CoPS])</p></li>
 <li><p>2 other undefined (unknown Gram negatives and unknown Gram positives)</p></li>
 </ul>
-    <p>These manual entries have no Taxonomic Serial Number (TSN), so can be looked up with <code>filter(microorganisms, is.na(tsn)</code>.</p>
     
     <h2 class="hasAnchor" id="itis"><a class="anchor" href="#itis"></a>ITIS</h2>
 

@@ -15,7 +15,6 @@
 \alias{mo_kingdom}
 \alias{mo_type}
 \alias{mo_gramstain}
-\alias{mo_TSN}
 \alias{mo_ref}
 \alias{mo_authors}
 \alias{mo_year}
@@ -48,8 +47,6 @@ mo_type(x, language = get_locale(), ...)
 
 mo_gramstain(x, language = get_locale(), ...)
 
-mo_TSN(x, ...)
-
 mo_ref(x, ...)
 
 mo_authors(x, ...)
@@ -71,7 +68,7 @@ mo_property(x, property = "fullname", language = get_locale(), ...)
 }
 \value{
 \itemize{
-  \item{An \code{integer} in case of \code{mo_TSN} and \code{mo_year}}
+  \item{An \code{integer} in case of \code{mo_year}}
   \item{A \code{list} in case of \code{mo_taxonomy}}
   \item{A \code{character} in all other cases}
 }
@@ -129,7 +126,6 @@ mo_family("E. coli")          # "Enterobacteriaceae"
 mo_genus("E. coli")           # "Escherichia"
 mo_species("E. coli")         # "coli"
 mo_subspecies("E. coli")      # NA
-mo_TSN("E. coli")             # 285 (Taxonomic Serial Number)
 
 ## colloquial properties
 mo_fullname("E. coli")        # "Escherichia coli"

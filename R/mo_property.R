@@ -38,7 +38,7 @@
 #' @rdname mo_property
 #' @name mo_property
 #' @return \itemize{
-#'   \item{An \code{integer} in case of \code{mo_TSN} and \code{mo_year}}
+#'   \item{An \code{integer} in case of \code{mo_year}}
 #'   \item{A \code{list} in case of \code{mo_taxonomy}}
 #'   \item{A \code{character} in all other cases}
 #' }
@@ -57,7 +57,6 @@
 #' mo_genus("E. coli")           # "Escherichia"
 #' mo_species("E. coli")         # "coli"
 #' mo_subspecies("E. coli")      # NA
-#' mo_TSN("E. coli")             # 285 (Taxonomic Serial Number)
 #'
 #' ## colloquial properties
 #' mo_fullname("E. coli")        # "Escherichia coli"
@@ -242,17 +241,15 @@ mo_type <- function(x, language = get_locale(), ...) {
 #' @rdname mo_property
 #' @export
 mo_gramstain <- function(x, language = get_locale(), ...) {
-  mo_translate(mo_validate(x = x, property = "gramstain", ...), language = language)
-}
-
-#' @rdname mo_property
-#' @export
-mo_TSN  <- function(x, ...) {
-  res <- mo_validate(x = x, property = "tsn", ...)
-  if (any(is.na(res))) {
-    warning("Some results do not have a TSN, because they are missing from ITIS and were added manually. See ?microorganisms.")
-  }
-  res
+  x.bak <- x
+  x <- mo_phylum(x, ...)
+  x[x %in% c("Actinobacteria",
+             "Chloroflexi",
+             "Firmicutes",
+             "Tenericutes")] <- "Gram positive"
+  x[x != "Gram positive"] <- "Gram negative"
+  x[mo_kingdom(x.bak) != "Bacteria"] <- NA_character_
+  mo_translate(x, language = language)
 }
 
 #' @rdname mo_property
@@ -284,7 +281,6 @@ mo_year <- function(x, ...) {
 mo_taxonomy <- function(x, ...) {
   x <- AMR::as.mo(x, ...)
   base::list(kingdom = mo_kingdom(x),
-             subkingdom = mo_subkingdom(x),
              phylum = mo_phylum(x),
              class = mo_class(x),
              order = mo_order(x),
@@ -472,11 +468,7 @@ mo_validate <- function(x, property, ...) {
 
   if (!"AMR" %in% base::.packages()) {
     library("AMR")
-    # These data.tables are available as data sets when the AMR package is loaded:
-    #   microorganismsDT        # this one is sorted by kingdom (B<F<P), prevalence, TSN
-    #   microorganisms.prevDT   # same as microorganismsDT, but with prevalence != 9999
-    #   microorganisms.unprevDT # same as microorganismsDT, but with prevalence == 9999
-    #   microorganisms.oldDT    # old taxonomic names, sorted by name (genus+species), TSN
+    # check onLoad() in R/zzz.R: data tables are created there.
   }
 
   if (!all(x %in% microorganismsDT[[property]])
@@ -486,8 +478,6 @@ mo_validate <- function(x, property, ...) {
   } else {
     if (property == "mo") {
       return(structure(x, class = "mo"))
-    } else if (property == "tsn") {
-      return(as.integer(x))
     } else {
       return(x)
     }

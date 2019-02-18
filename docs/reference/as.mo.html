@@ -80,7 +80,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.0.9017</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.0.9018</span>
       </span>
     </div>
 
@@ -296,7 +296,8 @@
   |   |    |    ----&gt; subspecies, a 3-4 letter acronym
   |   |     ----&gt; species, a 3-4 letter acronym
   |    ----&gt; genus, a 5-7 letter acronym, mostly without vowels
-   ----&gt; taxonomic kingdom, either B (Bacteria), F (Fungi) or P (Protozoa)
+   ----&gt; taxonomic kingdom: A (Archaea), B (Bacteria), C (Chromista),
+                            F (Fungi), P (Protozoa) or V (Viruses)
 </pre>
     <p>Use the <code><a href='mo_property.html'>mo_property</a></code> functions to get properties based on the returned code, see Examples.</p>
 <p>This function uses Artificial Intelligence (AI) to help getting fast and logical results. It tries to find matches in this order:</p><ul>
@@ -320,7 +321,7 @@ When using <code>allow_uncertain = TRUE</code> (which is the default setting), i
 <li><p>It tries to look for some manual changes which are not yet published to the ITIS database (like <em>Propionibacterium</em> not yet being <em>Cutibacterium</em>)</p></li>
 </ul>
     <p>Examples:</p><ul>
-<li><p><code>"Streptococcus group B (known as S. agalactiae)"</code>. The text between brackets will be removed and a warning will be thrown that the result <em>Streptococcus group B</em> (<code>B_STRPTC_GRB</code>) needs review.</p></li>
+<li><p><code>"Streptococcus group B (known as S. agalactiae)"</code>. The text between brackets will be removed and a warning will be thrown that the result <em>Streptococcus group B</em> (<code>B_STRPT_GRB</code>) needs review.</p></li>
 <li><p><code>"S. aureus - please mind: MRSA"</code>. The last word will be stripped, after which the function will try to find a match. If it does not, the second last word will be stripped, etc. Again, a warning will be thrown that the result <em>Staphylococcus aureus</em> (<code>B_STPHY_AUR</code>) needs review.</p></li>
 <li><p><code>"D. spartina"</code>. This is the abbreviation of an old taxonomic name: <em>Didymosphaeria spartinae</em> (the last "e" was missing from the input). This fungus was renamed to <em>Leptosphaeria obiones</em>, so a warning will be thrown that this result (<code>F_LPTSP_OBI</code>) needs review.</p></li>
 <li><p><code>"Fluoroquinolone-resistant Neisseria gonorrhoeae"</code>. The first word will be stripped, after which the function will try to find a match. A warning will be thrown that the result <em>Neisseria gonorrhoeae</em> (<code>B_NESSR_GON</code>) needs review.</p></li>
@@ -369,8 +370,6 @@ The <code><a href='mo_property.html'>mo_property</a></code> functions (like <cod
 <span class='fu'>as.mo</span>(<span class='st'>"MRSA"</span>) <span class='co'># Methicillin Resistant S. aureus</span>
 <span class='fu'>as.mo</span>(<span class='st'>"VISA"</span>) <span class='co'># Vancomycin Intermediate S. aureus</span>
 <span class='fu'>as.mo</span>(<span class='st'>"VRSA"</span>) <span class='co'># Vancomycin Resistant S. aureus</span>
-<span class='fu'>as.mo</span>(<span class='fl'>369</span>)    <span class='co'># Search on TSN (Taxonomic Serial Number), a unique identifier</span>
-              <span class='co'># for the Integrated Taxonomic Information System (ITIS)</span>
 
 <span class='fu'>as.mo</span>(<span class='st'>"Streptococcus group A"</span>)
 <span class='fu'>as.mo</span>(<span class='st'>"GAS"</span>) <span class='co'># Group A Streptococci</span>
@@ -379,8 +378,8 @@ The <code><a href='mo_property.html'>mo_property</a></code> functions (like <cod
 <span class='fu'>as.mo</span>(<span class='st'>"S. epidermidis"</span>)                 <span class='co'># will remain species: B_STPHY_EPI</span>
 <span class='fu'>as.mo</span>(<span class='st'>"S. epidermidis"</span>, <span class='kw'>Becker</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)  <span class='co'># will not remain species: B_STPHY_CNS</span>
 
-<span class='fu'>as.mo</span>(<span class='st'>"S. pyogenes"</span>)                    <span class='co'># will remain species: B_STRPTC_PYO</span>
-<span class='fu'>as.mo</span>(<span class='st'>"S. pyogenes"</span>, <span class='kw'>Lancefield</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>) <span class='co'># will not remain species: B_STRPTC_GRA</span>
+<span class='fu'>as.mo</span>(<span class='st'>"S. pyogenes"</span>)                    <span class='co'># will remain species: B_STRPT_PYO</span>
+<span class='fu'>as.mo</span>(<span class='st'>"S. pyogenes"</span>, <span class='kw'>Lancefield</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>) <span class='co'># will not remain species: B_STRPT_GRA</span>
 
 <span class='co'># Use mo_* functions to get a specific property based on `mo`</span>
 <span class='no'>Ecoli</span> <span class='kw'>&lt;-</span> <span class='fu'>as.mo</span>(<span class='st'>"E. coli"</span>)     <span class='co'># returns `B_ESCHR_COL`</span>

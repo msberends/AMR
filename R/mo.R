@@ -47,7 +47,8 @@
 #'   |   |    |    ----> subspecies, a 3-4 letter acronym
 #'   |   |     ----> species, a 3-4 letter acronym
 #'   |    ----> genus, a 5-7 letter acronym, mostly without vowels
-#'    ----> taxonomic kingdom, either B (Bacteria), F (Fungi) or P (Protozoa)
+#'    ----> taxonomic kingdom: A (Archaea), B (Bacteria), C (Chromista),
+#'                             F (Fungi), P (Protozoa) or V (Viruses)
 #' }
 #'
 #' Use the \code{\link{mo_property}} functions to get properties based on the returned code, see Examples.
@@ -81,7 +82,7 @@
 #'
 #' Examples:
 #' \itemize{
-#'   \item{\code{"Streptococcus group B (known as S. agalactiae)"}. The text between brackets will be removed and a warning will be thrown that the result \emph{Streptococcus group B} (\code{B_STRPTC_GRB}) needs review.}
+#'   \item{\code{"Streptococcus group B (known as S. agalactiae)"}. The text between brackets will be removed and a warning will be thrown that the result \emph{Streptococcus group B} (\code{B_STRPT_GRB}) needs review.}
 #'   \item{\code{"S. aureus - please mind: MRSA"}. The last word will be stripped, after which the function will try to find a match. If it does not, the second last word will be stripped, etc. Again, a warning will be thrown that the result \emph{Staphylococcus aureus} (\code{B_STPHY_AUR}) needs review.}
 #'   \item{\code{"D. spartina"}. This is the abbreviation of an old taxonomic name: \emph{Didymosphaeria spartinae} (the last "e" was missing from the input). This fungus was renamed to \emph{Leptosphaeria obiones}, so a warning will be thrown that this result (\code{F_LPTSP_OBI}) needs review.}
 #'   \item{\code{"Fluoroquinolone-resistant Neisseria gonorrhoeae"}. The first word will be stripped, after which the function will try to find a match. A warning will be thrown that the result \emph{Neisseria gonorrhoeae} (\code{B_NESSR_GON}) needs review.}
@@ -118,8 +119,6 @@
 #' as.mo("MRSA") # Methicillin Resistant S. aureus
 #' as.mo("VISA") # Vancomycin Intermediate S. aureus
 #' as.mo("VRSA") # Vancomycin Resistant S. aureus
-#' as.mo(369)    # Search on TSN (Taxonomic Serial Number), a unique identifier
-#'               # for the Integrated Taxonomic Information System (ITIS)
 #'
 #' as.mo("Streptococcus group A")
 #' as.mo("GAS") # Group A Streptococci
@@ -128,8 +127,8 @@
 #' as.mo("S. epidermidis")                 # will remain species: B_STPHY_EPI
 #' as.mo("S. epidermidis", Becker = TRUE)  # will not remain species: B_STPHY_CNS
 #'
-#' as.mo("S. pyogenes")                    # will remain species: B_STRPTC_PYO
-#' as.mo("S. pyogenes", Lancefield = TRUE) # will not remain species: B_STRPTC_GRA
+#' as.mo("S. pyogenes")                    # will remain species: B_STRPT_PYO
+#' as.mo("S. pyogenes", Lancefield = TRUE) # will not remain species: B_STRPT_GRA
 #'
 #' # Use mo_* functions to get a specific property based on `mo`
 #' Ecoli <- as.mo("E. coli")     # returns `B_ESCHR_COL`
@@ -178,11 +177,7 @@ exec_as.mo <- function(x, Becker = FALSE, Lancefield = FALSE,
 
   if (!"AMR" %in% base::.packages()) {
     library("AMR")
-    # These data.tables are available as data sets when the AMR package is loaded:
-    #   microorganismsDT        # this one is sorted by kingdom (B<F<P), prevalence, TSN
-    #   microorganisms.prevDT   # same as microorganismsDT, but with prevalence != 9999
-    #   microorganisms.unprevDT # same as microorganismsDT, but with prevalence == 9999
-    #   microorganisms.oldDT    # old taxonomic names, sorted by name (genus+species), TSN
+    # check onLoad() in R/zzz.R: data tables are created there.
   }
 
   if (clear_options == TRUE) {
@@ -220,6 +215,17 @@ exec_as.mo <- function(x, Becker = FALSE, Lancefield = FALSE,
   # remove empty values (to later fill them in again with NAs)
   x <- x[!is.na(x) & !is.null(x) & !identical(x, "")]
 
+
+  # conversion v0.5.0 to v0.6.0, remove for v0.7.0
+  x <- gsub("B_STRPTC", "B_STRPT", x)
+  x <- gsub("B_STRPT_EQUI", "B_STRPT_EQU", x)
+  x <- gsub("B_PDMNS", "B_PSDMN", x)
+  x <- gsub("B_CTRDM", "B_CLSTR", x)
+  x <- gsub("F_CANDD_GLB", "F_CANDD_GLA", x)
+  x <- gsub("F_CANDD_LUS", "F_CANDD", x)
+  x <- gsub("B_FCTRM", "B_FSBCT", x)
+
+
   # defined df to check for
   if (!is.null(reference_df)) {
     if (!is.data.frame(reference_df) | NCOL(reference_df) < 2) {
@@ -239,8 +245,6 @@ exec_as.mo <- function(x, Becker = FALSE, Lancefield = FALSE,
     # all empty
     if (property == "mo") {
       return(structure(rep(NA_character_, length(x_input)), class = "mo"))
-    } else if (property == "tsn") {
-      return(rep(NA_integer_, length(x_input)))
     } else {
       return(rep(NA_character_, length(x_input)))
     }
@@ -283,7 +287,7 @@ exec_as.mo <- function(x, Becker = FALSE, Lancefield = FALSE,
     # replace hemolytic by haemolytic
     x <- gsub("ha?emoly", "haemoly", x)
     # place minus back in streptococci
-    x <- gsub("(alpha|beta|gamma) haemoly", "\\1-haemolytic", x)
+    x <- gsub("(alpha|beta|gamma) ha?emoly", "\\1-haemoly", x)
     # remove genus as first word
     x <- gsub("^Genus ", "", x)
 
@@ -372,7 +376,7 @@ exec_as.mo <- function(x, Becker = FALSE, Lancefield = FALSE,
         }
         if (toupper(x_trimmed[i]) == 'MRPA') {
           # multi resistant P. aeruginosa
-          x[i] <- microorganismsDT[mo == 'B_PDMNS_AER', ..property][[1]][1L]
+          x[i] <- microorganismsDT[mo == 'B_PSDMN_AER', ..property][[1]][1L]
           next
         }
         if (toupper(x_trimmed[i]) == 'CRS'
@@ -383,22 +387,22 @@ exec_as.mo <- function(x, Becker = FALSE, Lancefield = FALSE,
         }
         if (toupper(x_trimmed[i]) %in% c('PISP', 'PRSP', 'VISP', 'VRSP')) {
           # peni I, peni R, vanco I, vanco R: S. pneumoniae
-          x[i] <- microorganismsDT[mo == 'B_STRPTC_PNE', ..property][[1]][1L]
+          x[i] <- microorganismsDT[mo == 'B_STRPT_PNE', ..property][[1]][1L]
           next
         }
         if (toupper(x_trimmed[i]) %like% '^G[ABCDFGHK]S$') {
-          # Streptococci, like GBS = Group B Streptococci (B_STRPTC_GRB)
-          x[i] <- microorganismsDT[mo == gsub("G([ABCDFGHK])S", "B_STRPTC_GR\\1", x_trimmed[i], ignore.case = TRUE), ..property][[1]][1L]
+          # Streptococci, like GBS = Group B Streptococci (B_STRPT_GRB)
+          x[i] <- microorganismsDT[mo == gsub("G([ABCDFGHK])S", "B_STRPT_GR\\1", x_trimmed[i], ignore.case = TRUE), ..property][[1]][1L]
           next
         }
         if (toupper(x_trimmed[i]) %like% '(streptococc|streptokok).* [ABCDFGHK]$') {
           # Streptococci in different languages, like "estreptococos grupo B"
-          x[i] <- microorganismsDT[mo == gsub(".*(streptococ|streptokok|estreptococ).* ([ABCDFGHK])$", "B_STRPTC_GR\\2", x_trimmed[i], ignore.case = TRUE), ..property][[1]][1L]
+          x[i] <- microorganismsDT[mo == gsub(".*(streptococ|streptokok|estreptococ).* ([ABCDFGHK])$", "B_STRPT_GR\\2", x_trimmed[i], ignore.case = TRUE), ..property][[1]][1L]
           next
         }
         if (toupper(x_trimmed[i]) %like% 'group [ABCDFGHK] (streptococ|streptokok|estreptococ)') {
           # Streptococci in different languages, like "Group A Streptococci"
-          x[i] <- microorganismsDT[mo == gsub(".*group ([ABCDFGHK]) (streptococ|streptokok|estreptococ).*", "B_STRPTC_GR\\1", x_trimmed[i], ignore.case = TRUE), ..property][[1]][1L]
+          x[i] <- microorganismsDT[mo == gsub(".*group ([ABCDFGHK]) (streptococ|streptokok|estreptococ).*", "B_STRPT_GR\\1", x_trimmed[i], ignore.case = TRUE), ..property][[1]][1L]
           next
         }
         # CoNS/CoPS in different languages (support for German, Dutch, Spanish, Portuguese) ----
@@ -490,15 +494,72 @@ exec_as.mo <- function(x, Becker = FALSE, Lancefield = FALSE,
         }
       }
 
-      # TRY FIRST THOUSAND MOST PREVALENT IN HUMAN INFECTIONS ----
-      found <- microorganisms.prevDT[tolower(fullname) %in% tolower(c(x_backup[i], x_trimmed[i])), ..property][[1]]
+      # FIRST TRY SUPERPREVALENT IN HUMAN INFECTIONS ----
+      found <- microorganisms.superprevDT[tolower(fullname) %in% tolower(c(x_backup[i], x_trimmed[i])), ..property][[1]]
       # most probable: is exact match in fullname
       if (length(found) > 0) {
         x[i] <- found[1L]
         next
       }
-      found <- microorganisms.prevDT[tsn == x_trimmed[i], ..property][[1]]
-      # is a valid TSN
+      found <- microorganisms.superprevDT[mo == toupper(x_backup[i]), ..property][[1]]
+      # is a valid mo
+      if (length(found) > 0) {
+        x[i] <- found[1L]
+        next
+      }
+      found <- microorganisms.superprevDT[tolower(fullname) == tolower(x_trimmed_without_group[i]), ..property][[1]]
+      if (length(found) > 0) {
+        x[i] <- found[1L]
+        next
+      }
+
+      # try any match keeping spaces ----
+      found <- microorganisms.superprevDT[fullname %like% x_withspaces_start_end[i], ..property][[1]]
+      if (length(found) > 0 & nchar(x_trimmed[i]) >= 6) {
+        x[i] <- found[1L]
+        next
+      }
+
+      # try any match keeping spaces, not ending with $ ----
+      found <- microorganisms.superprevDT[fullname %like% x_withspaces_start_only[i], ..property][[1]]
+      if (length(found) > 0 & nchar(x_trimmed[i]) >= 6) {
+        x[i] <- found[1L]
+        next
+      }
+
+      # try any match diregarding spaces ----
+      found <- microorganisms.superprevDT[fullname %like% x[i], ..property][[1]]
+      if (length(found) > 0 & nchar(x_trimmed[i]) >= 6) {
+        x[i] <- found[1L]
+        next
+      }
+
+      # try splitting of characters in the middle and then find ID ----
+      # only when text length is 6 or lower
+      # like esco = E. coli, klpn = K. pneumoniae, stau = S. aureus, staaur = S. aureus
+      if (nchar(x_trimmed[i]) <= 6) {
+        x_length <- nchar(x_trimmed[i])
+        x[i] <- paste0(x_trimmed[i] %>% substr(1, x_length / 2),
+                       '.* ',
+                       x_trimmed[i] %>% substr((x_length / 2) + 1, x_length))
+        found <- microorganisms.superprevDT[fullname %like% paste0('^', x[i]), ..property][[1]]
+        if (length(found) > 0) {
+          x[i] <- found[1L]
+          next
+        }
+      }
+
+      # try fullname without start and stop regex, to also find subspecies ----
+      # like "K. pneu rhino" >> "Klebsiella pneumoniae (rhinoscleromatis)" = KLEPNERH
+      found <- microorganisms.superprevDT[fullname %like% x_withspaces_start_only[i], ..property][[1]]
+      if (length(found) > 0) {
+        x[i] <- found[1L]
+        next
+      }
+
+      # TRY PREVALENT IN HUMAN INFECTIONS ----
+      found <- microorganisms.prevDT[tolower(fullname) %in% tolower(c(x_backup[i], x_trimmed[i])), ..property][[1]]
+      # most probable: is exact match in fullname
       if (length(found) > 0) {
         x[i] <- found[1L]
         next
@@ -559,7 +620,7 @@ exec_as.mo <- function(x, Becker = FALSE, Lancefield = FALSE,
         next
       }
 
-      # THEN TRY ALL OTHERS ----
+      # THEN UNPREVALENT IN HUMAN INFECTIONS ----
       found <- microorganisms.unprevDT[tolower(fullname) == tolower(x_backup[i]), ..property][[1]]
       # most probable: is exact match in fullname
       if (length(found) > 0) {
@@ -568,12 +629,6 @@ exec_as.mo <- function(x, Becker = FALSE, Lancefield = FALSE,
       }
       found <- microorganisms.unprevDT[tolower(fullname) == tolower(x_trimmed[i]), ..property][[1]]
       # most probable: is exact match in fullname
-      if (length(found) > 0) {
-        x[i] <- found[1L]
-        next
-      }
-      found <- microorganisms.unprevDT[tsn == x_trimmed[i], ..property][[1]]
-      # is a valid TSN
       if (length(found) > 0) {
         x[i] <- found[1L]
         next
@@ -633,23 +688,23 @@ exec_as.mo <- function(x, Becker = FALSE, Lancefield = FALSE,
       # MISCELLANEOUS ----
 
       # look for old taxonomic names ----
-      found <- microorganisms.oldDT[tolower(name) == tolower(x_backup[i])
-                                    | tsn == x_trimmed[i]
-                                    | name %like% x_withspaces_start_end[i],]
+      found <- microorganisms.oldDT[tolower(fullname) == tolower(x_backup[i])
+                                    | fullname %like% x_withspaces_start_end[i],]
       if (NROW(found) > 0) {
+        col_id_new <- found[1, col_id_new]
         # when property is "ref" (which is the case in mo_ref, mo_authors and mo_year), return the old value, so:
         # mo_ref("Chlamydia psittaci) = "Page, 1968" (with warning)
         # mo_ref("Chlamydophila psittaci) = "Everett et al., 1999"
         if (property == "ref") {
           x[i] <- found[1, ref]
         } else {
-          x[i] <- microorganismsDT[tsn == found[1, tsn_new], ..property][[1]]
+          x[i] <- microorganismsDT[col_id == found[1, col_id_new], ..property][[1]]
         }
-        was_renamed(name_old = found[1, name],
-                    name_new = microorganismsDT[tsn == found[1, tsn_new], fullname],
+        was_renamed(name_old = found[1, fullname],
+                    name_new = microorganismsDT[col_id == found[1, col_id_new], fullname],
                     ref_old = found[1, ref],
-                    ref_new = microorganismsDT[tsn == found[1, tsn_new], ref],
-                    mo = microorganismsDT[tsn == found[1, tsn_new], mo])
+                    ref_new = microorganismsDT[col_id == found[1, col_id_new], ref],
+                    mo = microorganismsDT[col_id == found[1, col_id_new], mo])
         next
       }
 
@@ -673,9 +728,9 @@ exec_as.mo <- function(x, Becker = FALSE, Lancefield = FALSE,
           }
 
           # (2) look again for old taxonomic names, now for G. species ----
-          found <- microorganisms.oldDT[name %like% c.x_withspaces_start_end
-                                        | name %like% d.x_withspaces_start_only
-                                        | name %like% e.x,]
+          found <- microorganisms.oldDT[fullname %like% c.x_withspaces_start_end
+                                        | fullname %like% d.x_withspaces_start_only
+                                        | fullname %like% e.x,]
           if (NROW(found) > 0 & nchar(b.x_trimmed) >= 6) {
             if (property == "ref") {
               # when property is "ref" (which is the case in mo_ref, mo_authors and mo_year), return the old value, so:
@@ -683,15 +738,15 @@ exec_as.mo <- function(x, Becker = FALSE, Lancefield = FALSE,
               # mo_ref("Chlamydophila psittaci) = "Everett et al., 1999"
               x <- found[1, ref]
             } else {
-              x <- microorganismsDT[tsn == found[1, tsn_new], ..property][[1]]
+              x <- microorganismsDT[col_id == found[1, col_id_new], ..property][[1]]
             }
-            was_renamed(name_old = found[1, name],
-                        name_new = microorganismsDT[tsn == found[1, tsn_new], fullname],
+            was_renamed(name_old = found[1, fullname],
+                        name_new = microorganismsDT[col_id == found[1, col_id_new], fullname],
                         ref_old = found[1, ref],
-                        ref_new = microorganismsDT[tsn == found[1, tsn_new], ref],
-                        mo = microorganismsDT[tsn == found[1, tsn_new], mo])
+                        ref_new = microorganismsDT[col_id == found[1, col_id_new], ref],
+                        mo = microorganismsDT[col_id == found[1, col_id_new], mo])
             uncertainties <<- c(uncertainties,
-                                paste0("'", a.x_backup, "' >> ", found[1, name], " (TSN ", found[1, tsn], ")"))
+                                paste0("'", a.x_backup, "' >> ", found[1, fullname], " (Catalogue of Life ID ", found[1, col_id], ")"))
             return(x)
           }
 
@@ -835,25 +890,25 @@ exec_as.mo <- function(x, Becker = FALSE, Lancefield = FALSE,
   # Lancefield ----
   if (Lancefield == TRUE | Lancefield == "all") {
     # group A - S. pyogenes
-    x[x == microorganismsDT[mo == 'B_STRPTC_PYO', ..property][[1]][1L]] <- microorganismsDT[mo == 'B_STRPTC_GRA', ..property][[1]][1L]
+    x[x == microorganismsDT[mo == 'B_STRPT_PYO', ..property][[1]][1L]] <- microorganismsDT[mo == 'B_STRPT_GRA', ..property][[1]][1L]
     # group B - S. agalactiae
-    x[x == microorganismsDT[mo == 'B_STRPTC_AGA', ..property][[1]][1L]] <- microorganismsDT[mo == 'B_STRPTC_GRB', ..property][[1]][1L]
+    x[x == microorganismsDT[mo == 'B_STRPT_AGA', ..property][[1]][1L]] <- microorganismsDT[mo == 'B_STRPT_GRB', ..property][[1]][1L]
     # group C
     S_groupC <- microorganismsDT %>% filter(genus == "Streptococcus",
                                             species %in% c("equisimilis", "equi",
                                                            "zooepidemicus", "dysgalactiae")) %>%
       pull(property)
-    x[x %in% S_groupC] <- microorganismsDT[mo == 'B_STRPTC_GRC', ..property][[1]][1L]
+    x[x %in% S_groupC] <- microorganismsDT[mo == 'B_STRPT_GRC', ..property][[1]][1L]
     if (Lancefield == "all") {
       # all Enterococci
-      x[x %like% "^(Enterococcus|B_ENTRC)"] <- microorganismsDT[mo == 'B_STRPTC_GRD', ..property][[1]][1L]
+      x[x %like% "^(Enterococcus|B_ENTRC)"] <- microorganismsDT[mo == 'B_STRPT_GRD', ..property][[1]][1L]
     }
     # group F - S. anginosus
-    x[x == microorganismsDT[mo == 'B_STRPTC_ANG', ..property][[1]][1L]] <- microorganismsDT[mo == 'B_STRPTC_GRF', ..property][[1]][1L]
+    x[x == microorganismsDT[mo == 'B_STRPT_ANG', ..property][[1]][1L]] <- microorganismsDT[mo == 'B_STRPT_GRF', ..property][[1]][1L]
     # group H - S. sanguinis
-    x[x == microorganismsDT[mo == 'B_STRPTC_SAN', ..property][[1]][1L]] <- microorganismsDT[mo == 'B_STRPTC_GRH', ..property][[1]][1L]
+    x[x == microorganismsDT[mo == 'B_STRPT_SAN', ..property][[1]][1L]] <- microorganismsDT[mo == 'B_STRPT_GRH', ..property][[1]][1L]
     # group K - S. salivarius
-    x[x == microorganismsDT[mo == 'B_STRPTC_SAL', ..property][[1]][1L]] <- microorganismsDT[mo == 'B_STRPTC_GRK', ..property][[1]][1L]
+    x[x == microorganismsDT[mo == 'B_STRPT_SAL', ..property][[1]][1L]] <- microorganismsDT[mo == 'B_STRPT_GRK', ..property][[1]][1L]
   }
 
 
@@ -875,8 +930,6 @@ exec_as.mo <- function(x, Becker = FALSE, Lancefield = FALSE,
 
   if (property == "mo") {
     class(x) <- "mo"
-  } else if (property == "tsn") {
-    x <- as.integer(x)
   }
 
   if (length(mo_renamed()) > 0) {

@@ -4,12 +4,12 @@
 \name{microorganisms.old}
 \alias{microorganisms.old}
 \title{Data set with previously accepted taxonomic names}
-\format{A \code{\link{data.frame}} with 2,383 observations and 4 variables:
+\format{A \code{\link{data.frame}} with 14,506 observations and 4 variables:
 \describe{
-  \item{\code{tsn}}{Old Taxonomic Serial Number (TSN), as defined by ITIS}
-  \item{\code{name}}{Old taxonomic name of the microorganism as found in ITIS, see Source}
-  \item{\code{tsn_new}}{New Taxonomic Serial Number (TSN), as defined by ITIS}
-  \item{\code{ref}}{Author(s) and year of concerning publication as found in ITIS, see Source}
+  \item{\code{col_id}}{Catalogue of Life ID}
+  \item{\code{tsn_new}}{New Catalogue of Life ID}
+  \item{\code{fullname}}{Old taxonomic name of the microorganism as found in the CoL, see Source}
+  \item{\code{ref}}{Author(s) and year of concerning publication as found in the CoL, see Source}
 }}
 \source{
 [3] Integrated Taxonomic Information System (ITIS) on-line database, \url{https://www.itis.gov}.

@@ -54,7 +54,8 @@ A microbial ID from this package (class: \code{mo}) typically looks like these e
   |   |    |    ----> subspecies, a 3-4 letter acronym
   |   |     ----> species, a 3-4 letter acronym
   |    ----> genus, a 5-7 letter acronym, mostly without vowels
-   ----> taxonomic kingdom, either B (Bacteria), F (Fungi) or P (Protozoa)
+   ----> taxonomic kingdom: A (Archaea), B (Bacteria), C (Chromista),
+                            F (Fungi), P (Protozoa) or V (Viruses)
 }
 
 Use the \code{\link{mo_property}} functions to get properties based on the returned code, see Examples.
@@ -88,7 +89,7 @@ When using \code{allow_uncertain = TRUE} (which is the default setting), it will
 
 Examples:
 \itemize{
-  \item{\code{"Streptococcus group B (known as S. agalactiae)"}. The text between brackets will be removed and a warning will be thrown that the result \emph{Streptococcus group B} (\code{B_STRPTC_GRB}) needs review.}
+  \item{\code{"Streptococcus group B (known as S. agalactiae)"}. The text between brackets will be removed and a warning will be thrown that the result \emph{Streptococcus group B} (\code{B_STRPT_GRB}) needs review.}
   \item{\code{"S. aureus - please mind: MRSA"}. The last word will be stripped, after which the function will try to find a match. If it does not, the second last word will be stripped, etc. Again, a warning will be thrown that the result \emph{Staphylococcus aureus} (\code{B_STPHY_AUR}) needs review.}
   \item{\code{"D. spartina"}. This is the abbreviation of an old taxonomic name: \emph{Didymosphaeria spartinae} (the last "e" was missing from the input). This fungus was renamed to \emph{Leptosphaeria obiones}, so a warning will be thrown that this result (\code{F_LPTSP_OBI}) needs review.}
   \item{\code{"Fluoroquinolone-resistant Neisseria gonorrhoeae"}. The first word will be stripped, after which the function will try to find a match. A warning will be thrown that the result \emph{Neisseria gonorrhoeae} (\code{B_NESSR_GON}) needs review.}
@@ -137,8 +138,6 @@ as.mo("Staphylococcus aureus (MRSA)")
 as.mo("MRSA") # Methicillin Resistant S. aureus
 as.mo("VISA") # Vancomycin Intermediate S. aureus
 as.mo("VRSA") # Vancomycin Resistant S. aureus
-as.mo(369)    # Search on TSN (Taxonomic Serial Number), a unique identifier
-              # for the Integrated Taxonomic Information System (ITIS)
 
 as.mo("Streptococcus group A")
 as.mo("GAS") # Group A Streptococci
@@ -147,8 +146,8 @@ as.mo("GBS") # Group B Streptococci
 as.mo("S. epidermidis")                 # will remain species: B_STPHY_EPI
 as.mo("S. epidermidis", Becker = TRUE)  # will not remain species: B_STPHY_CNS
 
-as.mo("S. pyogenes")                    # will remain species: B_STRPTC_PYO
-as.mo("S. pyogenes", Lancefield = TRUE) # will not remain species: B_STRPTC_GRA
+as.mo("S. pyogenes")                    # will remain species: B_STRPT_PYO
+as.mo("S. pyogenes", Lancefield = TRUE) # will not remain species: B_STRPT_GRA
 
 # Use mo_* functions to get a specific property based on `mo`
 Ecoli <- as.mo("E. coli")     # returns `B_ESCHR_COL`

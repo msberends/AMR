@@ -130,14 +130,14 @@
 #
 "antibiotics"
 
-#' Data set with ~20,000 microorganisms
+#' Data set with ~60,000 microorganisms
 #'
-#' A data set containing the complete microbial taxonomy of the kingdoms Bacteria, Fungi and Protozoa from ITIS. MO codes can be looked up using \code{\link{as.mo}}.
+#' A data set containing the microbial taxonomy of six kingdoms from the Catalogue of Life. MO codes can be looked up using \code{\link{as.mo}}.
 #' @inheritSection ITIS ITIS
-#' @format A \code{\link{data.frame}} with 19,456 observations and 15 variables:
+#' @format A \code{\link{data.frame}} with 56,659 observations and 15 variables:
 #' \describe{
 #'   \item{\code{mo}}{ID of microorganism}
-#'   \item{\code{tsn}}{Taxonomic Serial Number (TSN), as defined by ITIS}
+#'   \item{\code{col_id}}{Catalogue of Life ID}
 #'   \item{\code{genus}}{Taxonomic genus of the microorganism as found in ITIS, see Source}
 #'   \item{\code{species}}{Taxonomic species of the microorganism as found in ITIS, see Source}
 #'   \item{\code{subspecies}}{Taxonomic subspecies of the microorganism as found in ITIS, see Source}
@@ -155,15 +155,10 @@
 #' @source Integrated Taxonomic Information System (ITIS) public online database, \url{https://www.itis.gov}.
 #' @details Manually added were:
 #' \itemize{
-#'   \item{605 species of Aspergillus (as Aspergillus misses from ITIS, list from https://en.wikipedia.org/wiki/List_of_Aspergillus_species on 2019-02-05)}
-#'   \item{23 species of Trichophyton (as Trichophyton misses from ITIS, list from https://en.wikipedia.org/wiki/Trichophyton on 2019-02-05)}
-#'   \item{9 species of Streptococcus (beta haemolytic groups A, B, C, D, F, G, H, K and unspecified)}
-#'   \item{2 species of Straphylococcus (coagulase-negative [CoNS] and coagulase-positive [CoPS])}
-#'   \item{1 species of Candida (C. glabrata)}
+#'   \item{9 species of \emph{Streptococcus} (beta haemolytic groups A, B, C, D, F, G, H, K and unspecified)}
+#'   \item{2 species of \emph{Staphylococcus} (coagulase-negative [CoNS] and coagulase-positive [CoPS])}
 #'   \item{2 other undefined (unknown Gram negatives and unknown Gram positives)}
 #' }
-#'
-#' These manual entries have no Taxonomic Serial Number (TSN), so can be looked up with \code{filter(microorganisms, is.na(tsn)}.
 #' @inheritSection AMR Read more on our website!
 #' @seealso \code{\link{as.mo}} \code{\link{mo_property}} \code{\link{microorganisms.codes}}
 "microorganisms"
@@ -172,12 +167,12 @@
 #'
 #' A data set containing old (previously valid or accepted) taxonomic names according to ITIS. This data set is used internally by \code{\link{as.mo}}.
 #' @inheritSection as.mo ITIS
-#' @format A \code{\link{data.frame}} with 2,383 observations and 4 variables:
+#' @format A \code{\link{data.frame}} with 14,506 observations and 4 variables:
 #' \describe{
-#'   \item{\code{tsn}}{Old Taxonomic Serial Number (TSN), as defined by ITIS}
-#'   \item{\code{name}}{Old taxonomic name of the microorganism as found in ITIS, see Source}
-#'   \item{\code{tsn_new}}{New Taxonomic Serial Number (TSN), as defined by ITIS}
-#'   \item{\code{ref}}{Author(s) and year of concerning publication as found in ITIS, see Source}
+#'   \item{\code{col_id}}{Catalogue of Life ID}
+#'   \item{\code{tsn_new}}{New Catalogue of Life ID}
+#'   \item{\code{fullname}}{Old taxonomic name of the microorganism as found in the CoL, see Source}
+#'   \item{\code{ref}}{Author(s) and year of concerning publication as found in the CoL, see Source}
 #' }
 #' @source [3] Integrated Taxonomic Information System (ITIS) on-line database, \url{https://www.itis.gov}.
 #' @inheritSection AMR Read more on our website!
@@ -250,36 +245,3 @@
 #' }
 #' @inheritSection AMR Read more on our website!
 "WHONET"
-
-#' Supplementary Data
-#'
-#' These \code{\link{data.table}s} are transformed from the \code{\link{microorganisms}} and \code{\link{microorganisms}} data sets to improve speed of \code{\link{as.mo}}. They are meant for internal use only, and are only mentioned here for reference.
-#' @rdname supplementary_data
-#' @name supplementary_data
-#' @inheritSection AMR Read more on our website!
-# # Renew data:
-# # sorted on (1) bacteria, (2) fungi, (3) protozoa and then human pathogenic prevalence and then TSN:
-# microorganismsDT <- data.table::as.data.table(AMR::microorganisms)
-# data.table::setkey(microorganismsDT, kingdom, prevalence, fullname)
-# microorganisms.prevDT <- microorganismsDT[prevalence != 9999,]
-# microorganisms.unprevDT <- microorganismsDT[prevalence == 9999,]
-# microorganisms.oldDT <- data.table::as.data.table(AMR::microorganisms.old)
-# data.table::setkey(microorganisms.oldDT, tsn, name)
-# usethis::use_data(microorganismsDT, overwrite = TRUE)
-# usethis::use_data(microorganisms.prevDT, overwrite = TRUE)
-# usethis::use_data(microorganisms.unprevDT, overwrite = TRUE)
-# usethis::use_data(microorganisms.oldDT, overwrite = TRUE)
-# rm(microorganismsDT)
-# rm(microorganisms.prevDT)
-# rm(microorganisms.unprevDT)
-# rm(microorganisms.oldDT)
-"microorganismsDT"
-
-#' @rdname supplementary_data
-"microorganisms.prevDT"
-
-#' @rdname supplementary_data
-"microorganisms.unprevDT"
-
-#' @rdname supplementary_data
-"microorganisms.oldDT"

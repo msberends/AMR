@@ -41,27 +41,25 @@ test_that("as.mo works", {
   expect_equal(as.character(as.mo("Klebsiella")), "B_KLBSL")
   expect_equal(as.character(as.mo("K. pneu rhino")), "B_KLBSL_PNE_RHI") # K. pneumoniae subspp. rhinoscleromatis
   expect_equal(as.character(as.mo("Bartonella")), "B_BRTNL")
-  expect_equal(as.character(as.mo("C. difficile")), "B_CTRDM_DIF")
+  expect_equal(as.character(as.mo("C. difficile")), "B_CLSTR_DIF")
   expect_equal(as.character(as.mo("L. pneumophila")), "B_LGNLL_PNE")
-  expect_equal(as.character(as.mo("Strepto")), "B_STRPTC")
-  expect_equal(as.character(as.mo("Streptococcus")), "B_STRPTC") # not Peptostreptoccus
+  expect_equal(as.character(as.mo("Strepto")), "B_STRPT")
+  expect_equal(as.character(as.mo("Streptococcus")), "B_STRPT") # not Peptostreptoccus
 
-  expect_equal(as.character(as.mo(c("GAS", "GBS"))), c("B_STRPTC_GRA", "B_STRPTC_GRB"))
+  expect_equal(as.character(as.mo(c("GAS", "GBS"))), c("B_STRPT_GRA", "B_STRPT_GRB"))
 
-  expect_equal(as.character(as.mo("S. pyo")), "B_STRPTC_PYO") # not Actinomyces pyogenes
-
-  expect_equal(as.character(as.mo("P. aer")), "B_PDMNS_AER") # not Pasteurella aerogenes
+  expect_equal(as.character(as.mo("S. pyo")), "B_STRPT_PYO") # not Actinomyces pyogenes
 
   # GLIMS
   expect_equal(as.character(as.mo("bctfgr")), "B_BCTRD_FRA")
 
   expect_equal(as.character(as.mo("MRSE")), "B_STPHY_EPI")
   expect_equal(as.character(as.mo("VRE")), "B_ENTRC")
-  expect_equal(as.character(as.mo("MRPA")), "B_PDMNS_AER")
-  expect_equal(as.character(as.mo("PISP")), "B_STRPTC_PNE")
-  expect_equal(as.character(as.mo("PRSP")), "B_STRPTC_PNE")
-  expect_equal(as.character(as.mo("VISP")), "B_STRPTC_PNE")
-  expect_equal(as.character(as.mo("VRSP")), "B_STRPTC_PNE")
+  expect_equal(as.character(as.mo("MRPA")), "B_PSDMN_AER")
+  expect_equal(as.character(as.mo("PISP")), "B_STRPT_PNE")
+  expect_equal(as.character(as.mo("PRSP")), "B_STRPT_PNE")
+  expect_equal(as.character(as.mo("VISP")), "B_STRPT_PNE")
+  expect_equal(as.character(as.mo("VRSP")), "B_STRPT_PNE")
 
   expect_equal(as.character(as.mo("CNS")), "B_STPHY_CNS")
   expect_equal(as.character(as.mo("CoNS")), "B_STPHY_CNS")
@@ -85,13 +83,11 @@ test_that("as.mo works", {
   # unprevalent MO
   expect_identical(
     as.character(
-      as.mo(c("buno",
-              "BUNO",
-              "burnod",
+      as.mo(c("burnod",
               "B. nodosa",
               "B nodosa",
               "Burkholderia nodosa"))),
-    rep("B_BRKHL_NOD", 6))
+    rep("B_BRKHL_NOD", 4))
 
   # empty values
   expect_identical(as.character(as.mo(c("", NA, NaN))), rep(NA_character_, 3))
@@ -105,7 +101,7 @@ test_that("as.mo works", {
   expect_identical(as.character(as.mo("S. epidermidis", Becker = FALSE)), "B_STPHY_EPI")
   expect_identical(as.character(as.mo("S. epidermidis", Becker = TRUE)),  "B_STPHY_CNS")
   expect_identical(as.character(as.mo("STAEPI",         Becker = TRUE)),  "B_STPHY_CNS")
-  expect_identical(as.character(as.mo("S. intermedius", Becker = FALSE)), "B_STRPTC_INT") # Strep (!) intermedius
+  expect_identical(as.character(as.mo("S. intermedius", Becker = FALSE)), "B_STPHY_INT")
   expect_identical(as.character(as.mo("Sta intermedius",Becker = FALSE)), "B_STPHY_INT")
   expect_identical(as.character(as.mo("Sta intermedius",Becker = TRUE)),  "B_STPHY_CPS")
   expect_identical(as.character(as.mo("STAINT",         Becker = TRUE)),  "B_STPHY_CPS")
@@ -115,23 +111,23 @@ test_that("as.mo works", {
   expect_identical(as.character(as.mo("STAAUR", Becker = "all")), "B_STPHY_CPS")
 
   # check for Lancefield classification
-  expect_identical(as.character(as.mo("S. pyogenes", Lancefield = FALSE)),    "B_STRPTC_PYO")
-  expect_identical(as.character(as.mo("S. pyogenes", Lancefield = TRUE)),     "B_STRPTC_GRA")
-  expect_identical(as.character(as.mo("STCPYO",      Lancefield = TRUE)),     "B_STRPTC_GRA") # group A
-  expect_identical(as.character(as.mo("S. agalactiae",  Lancefield = FALSE)), "B_STRPTC_AGA")
-  expect_identical(as.character(as.mo("S. agalactiae",  Lancefield = TRUE)),  "B_STRPTC_GRB") # group B
-  expect_identical(as.character(as.mo("S. equisimilis", Lancefield = FALSE)), "B_STRPTC_DYS_EQU")
-  expect_identical(as.character(as.mo("S. equisimilis", Lancefield = TRUE)),  "B_STRPTC_GRC") # group C
+  expect_identical(as.character(as.mo("S. pyogenes", Lancefield = FALSE)),    "B_STRPT_PYO")
+  expect_identical(as.character(as.mo("S. pyogenes", Lancefield = TRUE)),     "B_STRPT_GRA")
+  expect_identical(as.character(as.mo("STCPYO",      Lancefield = TRUE)),     "B_STRPT_GRA") # group A
+  expect_identical(as.character(as.mo("S. agalactiae",  Lancefield = FALSE)), "B_STRPT_AGA")
+  expect_identical(as.character(as.mo("S. agalactiae",  Lancefield = TRUE)),  "B_STRPT_GRB") # group B
+  expect_identical(as.character(as.mo("S. equisimilis", Lancefield = FALSE)), "B_STRPT_DYS_EQU")
+  expect_identical(as.character(as.mo("S. equisimilis", Lancefield = TRUE)),  "B_STRPT_GRC") # group C
   # Enterococci must only be influenced if Lancefield = "all"
   expect_identical(as.character(as.mo("E. faecium", Lancefield = FALSE)),     "B_ENTRC_IUM")
   expect_identical(as.character(as.mo("E. faecium", Lancefield = TRUE)),      "B_ENTRC_IUM")
-  expect_identical(as.character(as.mo("E. faecium", Lancefield = "all")),     "B_STRPTC_GRD") # group D
-  expect_identical(as.character(as.mo("S. anginosus",   Lancefield = FALSE)), "B_STRPTC_ANG")
-  expect_identical(as.character(as.mo("S. anginosus",   Lancefield = TRUE)),  "B_STRPTC_GRF") # group F
-  expect_identical(as.character(as.mo("S. sanguinis",   Lancefield = FALSE)), "B_STRPTC_SAN")
-  expect_identical(as.character(as.mo("S. sanguinis",   Lancefield = TRUE)),  "B_STRPTC_GRH") # group H
-  expect_identical(as.character(as.mo("S. salivarius",  Lancefield = FALSE)), "B_STRPTC_SAL")
-  expect_identical(as.character(as.mo("S. salivarius",  Lancefield = TRUE)),  "B_STRPTC_GRK") # group K
+  expect_identical(as.character(as.mo("E. faecium", Lancefield = "all")),     "B_STRPT_GRD") # group D
+  expect_identical(as.character(as.mo("S. anginosus",   Lancefield = FALSE)), "B_STRPT_ANG")
+  expect_identical(as.character(as.mo("S. anginosus",   Lancefield = TRUE)),  "B_STRPT_GRF") # group F
+  expect_identical(as.character(as.mo("S. sanguinis",   Lancefield = FALSE)), "B_STRPT_SAN")
+  expect_identical(as.character(as.mo("S. sanguinis",   Lancefield = TRUE)),  "B_STRPT_GRH") # group H
+  expect_identical(as.character(as.mo("S. salivarius",  Lancefield = FALSE)), "B_STRPT_SAL")
+  expect_identical(as.character(as.mo("S. salivarius",  Lancefield = TRUE)),  "B_STRPT_GRK") # group K
 
   library(dplyr)
 
@@ -164,10 +160,6 @@ test_that("as.mo works", {
   # print
   expect_output(print(as.mo(c("B_ESCHR_COL", NA))))
 
-  # helper function
-  expect_identical(as.mo("B_ESCHR_COL"),
-                   as.mo("B_ESCHR_COL"))
-
   # test pull
   expect_equal(nrow(septic_patients %>% mutate(mo = as.mo(mo))),
                2000)
@@ -192,11 +184,11 @@ test_that("as.mo works", {
 
   # check old names
   expect_equal(suppressMessages(as.character(as.mo("Escherichia blattae"))), "B_SHMWL_BLA")
-  # - Didymosphaeria spartinae (unprevalent)
-  expect_warning(suppressMessages(as.mo("D spartin", allow_uncertain = TRUE)))
-  # - was renamed to Leptosphaeria obiones
-  expect_equal(suppressWarnings(suppressMessages(as.character(as.mo("D spartin", allow_uncertain = TRUE)))),
-                                "F_LPTSP_OBI")
+  # # - Didymosphaeria spartinae (unprevalent)
+  # expect_warning(suppressMessages(as.mo("D spartin", allow_uncertain = TRUE)))
+  # # - was renamed to Leptosphaeria obiones
+  # expect_equal(suppressWarnings(suppressMessages(as.character(as.mo("D spartin", allow_uncertain = TRUE)))),
+  #                               "F_LPTSP_OBI")
 
   # check uncertain names
   expect_equal(suppressWarnings(as.character(as.mo("esco extra_text", allow_uncertain = FALSE))), NA_character_)
@@ -217,10 +209,6 @@ test_that("as.mo works", {
   expect_identical(as.character(as.mo(c("B_ESCHR_COL", "ESCCOL"))),
                    c("B_ESCHR_COL", "B_ESCHR_COL"))
 
-  # TSN of prevalent and non prevalent ones
-  expect_equal(mo_TSN(c("Gomphosphaeria aponina delicatula", "Escherichia coli")),
-               c(717, 285))
-
   # expect_equal(mo_fullname(c("E. spp.",
   #                            "E. spp",
   #                            "E. species")),
@@ -236,7 +224,7 @@ test_that("as.mo works", {
     c("Microbacterium paraoxidans",
       "Streptococcus suis (bovis gr)",
       "Raoultella (here some text) terrigena")))),
-    c("B_MCRBC", "B_STRPTC_SUI", "B_RLTLL_TER"))
+    c("B_MCRBC", "B_STRPT_SUI", "B_RLTLL_TER"))
 
   # Salmonella (City) are all actually Salmonella enterica spp (City)
   expect_equal(as.character(suppressMessages(as.mo("Salmonella Goettingen"))),

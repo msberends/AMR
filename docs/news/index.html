@@ -78,7 +78,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.0.9017</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.0.9018</span>
       </span>
     </div>
 
@@ -237,12 +237,27 @@
 <a href="#amr-05090xx" class="anchor"></a>AMR 0.5.0.90xx<small> Unreleased </small>
 </h1>
 <p><strong>Note: this is the development version, which will eventually be released as AMR 0.6.0.</strong></p>
+<p><strong>New website!</strong></p>
+<p>We’ve got a new website: <a href="https://msberends.gitlab.io/AMR/">https://msberends.gitlab.io/AMR</a> (built with the great <a href="https://pkgdown.r-lib.org/"><code>pkgdown</code></a>)</p>
+<ul>
+<li>Contains the complete manual of this package and all of its functions with an explanation of their parameters</li>
+<li>Contains a comprehensive tutorial about how to conduct antimicrobial resistance analysis, import data from WHONET or SPSS and many more.</li>
+</ul>
 <div id="new" class="section level4">
 <h4 class="hasAnchor">
 <a href="#new" class="anchor"></a>New</h4>
 <ul>
 <li>
 <strong>BREAKING</strong>: removed deprecated functions, parameters and references to ‘bactid’. Use <code><a href="../reference/as.mo.html">as.mo()</a></code> to identify an MO code.</li>
+<li>Catalogue of Life (CoL) inclusion for data about microorganisms, which also contains all ITIS data we used previously. The <code>microorganisms</code> data set now contains:
+<ul>
+<li>Almost 60,000 species from six different kingdoms</li>
+<li>Almost 15,000 previously accepted names which are now taxonomic ‘synonyms’</li>
+<li>All (sub)species from the kingdoms Archaea, Bacteria, Chromista, Protozoa and Viruses</li>
+<li>All (sub)species from the orders Eurotiales, Saccharomycetales and Onygenales of the kingdom Fungi. The complete taxonomy of this kingdom has more than 130,000 species. The orders we included contains at least all memebers of the families <em>Candida</em>, <em>Aspergillus</em> and <em>Trichophyton</em>.</li>
+<li>Due to this change, the ID of <em>Streptococcus</em> was changed from <code>B_STRPTC</code> to <code>B_STRPT</code>.</li>
+</ul>
+</li>
 <li>Support for data from <a href="https://whonet.org/">WHONET</a> and <a href="https://ecdc.europa.eu/en/about-us/partnerships-and-networks/disease-and-laboratory-networks/ears-net">EARS-Net</a> (European Antimicrobial Resistance Surveillance Network):
 <ul>
 <li>Exported files from WHONET can be read and used in this package. For functions like <code><a href="../reference/first_isolate.html">first_isolate()</a></code> and <code><a href="../reference/eucast_rules.html">eucast_rules()</a></code>, all parameters will be filled in automatically.</li>
@@ -260,12 +275,6 @@
 <a class="sourceLine" id="cb1-6" title="6">ab_umcg -&gt;<span class="st"> </span><span class="kw"><a href="../reference/atc_property.html">atc_umcg</a></span>()</a>
 <a class="sourceLine" id="cb1-7" title="7">ab_tradenames -&gt;<span class="st"> </span><span class="kw"><a href="../reference/atc_property.html">atc_tradenames</a></span>()</a></code></pre></div>
 These functions use <code><a href="../reference/as.atc.html">as.atc()</a></code> internally. The old <code>atc_property</code> has been renamed <code><a href="../reference/atc_online.html">atc_online_property()</a></code>. This is done for two reasons: firstly, not all ATC codes are of antibiotics (ab) but can also be of antivirals or antifungals. Secondly, the input must have class <code>atc</code> or must be coerable to this class. Properties of these classes should start with the same class name, analogous to <code><a href="../reference/as.mo.html">as.mo()</a></code> and e.g. <code>mo_genus</code>.</li>
-<li>New website: <a href="https://msberends.gitlab.io/AMR" class="uri">https://msberends.gitlab.io/AMR</a> (built with the great <a href="https://pkgdown.r-lib.org/"><code>pkgdown</code></a>)
-<ul>
-<li>Contains the complete manual of this package and all of its functions with an explanation of their parameters</li>
-<li>Contains a comprehensive tutorial about how to conduct antimicrobial resistance analysis</li>
-</ul>
-</li>
 <li>New functions <code><a href="../reference/mo_source.html">set_mo_source()</a></code> and <code><a href="../reference/mo_source.html">get_mo_source()</a></code> to use your own predefined MO codes as input for <code><a href="../reference/as.mo.html">as.mo()</a></code> and consequently all <code>mo_*</code> functions</li>
 <li>Support for the upcoming <a href="https://dplyr.tidyverse.org"><code>dplyr</code></a> version 0.8.0</li>
 <li>New function <code><a href="../reference/guess_ab_col.html">guess_ab_col()</a></code> to find an antibiotic column in a table</li>
@@ -308,7 +317,7 @@ These functions use <code><a href="../reference/as.atc.html">as.atc()</a></code>
 <li>New info is returned when running this function, stating exactly what has been changed or added. Use <code><a href="../reference/eucast_rules.html">eucast_rules(..., verbose = TRUE)</a></code> to get a data set with all changed per bug and drug combination.</li>
 </ul>
 </li>
-<li>Added 605 <em>Aspergillus</em> species and 23 <em>Trichophyton</em> species to the <code>microorganisms</code> data set</li>
+<li>Removed data sets <code>microorganisms.oldDT</code>, <code>microorganisms.prevDT</code>, <code>microorganisms.unprevDT</code> and <code>microorganismsDT</code> since they were no longer needed and only contained info already available in the <code>microorganisms</code> data set</li>
 <li>Added 65 antibiotics to the <code>antibiotics</code> data set, from the <a href="http://ec.europa.eu/health/documents/community-register/html/atc.htm">Pharmaceuticals Community Register</a> of the European Commission</li>
 <li>Removed columns <code>atc_group1_nl</code> and <code>atc_group2_nl</code> from the <code>antibiotics</code> data set</li>
 <li>Functions <code><a href="../reference/AMR-deprecated.html">atc_ddd()</a></code> and <code><a href="../reference/AMR-deprecated.html">atc_groups()</a></code> have been renamed <code><a href="../reference/atc_online.html">atc_online_ddd()</a></code> and <code><a href="../reference/atc_online.html">atc_online_groups()</a></code>. The old functions are deprecated and will be removed in a future version.</li>

@@ -65,6 +65,69 @@
 #' @rdname AMR
 NULL
 
+#' @importFrom dplyr mutate
+#' @importFrom data.table as.data.table setkey
 .onLoad <- function(libname, pkgname) {
+  # get new functions not available in older versions of R
   backports::import(pkgname)
+
+  # register data
+  if (!all(c("microorganismsDT",
+             "microorganisms.prevDT",
+             "microorganisms.unprevDT",
+             "microorganisms.oldDT") %in% ls(envir = asNamespace("AMR")))) {
+
+    # packageStartupMessage("Loading taxonomic database...", appendLF = FALSE)
+
+    microorganismsDT <- AMR::microorganisms %>%
+      mutate(prevalent = ifelse(phylum %in% c("Proteobacteria",
+                                              "Firmicutes",
+                                              "Actinobacteria",
+                                              "Bacteroidetes")
+                                | genus %in% c("Candida",
+                                               "Aspergillus",
+                                               "Trichophyton",
+                                               "Giardia",
+                                               "Dientamoeba",
+                                               "Entamoeba"),
+                                0,
+                                1),
+             superprevalent = ifelse(
+               # most important Gram negatives
+               class == "Gammaproteobacteria"
+               # Streptococci and Staphylococci
+               | order %in% c("Lactobacillales",
+                              "Bacillales"),
+               0,
+               1)) %>%
+      as.data.table()
+    setkey(microorganismsDT, kingdom, superprevalent, prevalent, fullname)
+    microorganisms.superprevDT <- microorganismsDT[superprevalent == 0,]
+    microorganisms.prevDT <- microorganismsDT[superprevalent == 1 & prevalent == 0,]
+    microorganisms.unprevDT <- microorganismsDT[superprevalent == 1 & prevalent == 1,]
+    microorganisms.oldDT <- as.data.table(AMR::microorganisms.old)
+    setkey(microorganisms.oldDT, col_id, fullname)
+
+    assign(x = "microorganismsDT",
+           value = microorganismsDT,
+           envir = asNamespace("AMR"))
+
+    assign(x = "microorganisms.superprevDT",
+           value = microorganisms.superprevDT,
+           envir = asNamespace("AMR"))
+
+    assign(x = "microorganisms.prevDT",
+           value = microorganisms.prevDT,
+           envir = asNamespace("AMR"))
+
+    assign(x = "microorganisms.unprevDT",
+           value = microorganisms.unprevDT,
+           envir = asNamespace("AMR"))
+
+    assign(x = "microorganisms.oldDT",
+           value = microorganisms.oldDT,
+           envir = asNamespace("AMR"))
+
+    # packageStartupMessage("OK.", appendLF = TRUE)
+  }
 }

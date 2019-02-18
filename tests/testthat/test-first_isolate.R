@@ -22,7 +22,7 @@
 context("first_isolate.R")
 
 test_that("first isolates work", {
-  # septic_patients contains 1317 out of 2000 first isolates
+  # first isolates
   expect_equal(
     sum(
       first_isolate(tbl = septic_patients,
@@ -31,9 +31,9 @@ test_that("first isolates work", {
                     col_mo = "mo",
                     info = TRUE),
       na.rm = TRUE),
-    1317)
+    1274)
 
-  # septic_patients contains 1413 out of 2000 first *weighted* isolates
+  # first *weighted* isolates
   expect_equal(
     suppressWarnings(
       sum(
@@ -46,7 +46,7 @@ test_that("first isolates work", {
                       type = "keyantibiotics",
                       info = TRUE),
         na.rm = TRUE)),
-    1413)
+    1369)
   # should be same for tibbles
   expect_equal(
     suppressWarnings(
@@ -60,8 +60,8 @@ test_that("first isolates work", {
                       type = "keyantibiotics",
                       info = TRUE),
         na.rm = TRUE)),
-    1413)
-  # and 1436 when not ignoring I
+    1369)
+  # when not ignoring I
   expect_equal(
     suppressWarnings(
       sum(
@@ -74,8 +74,8 @@ test_that("first isolates work", {
                       type = "keyantibiotics",
                       info = TRUE),
         na.rm = TRUE)),
-    1436)
-  # and 1417 when using points
+    1392)
+  # when using points
   expect_equal(
     suppressWarnings(
       sum(
@@ -87,9 +87,9 @@ test_that("first isolates work", {
                       type = "points",
                       info = TRUE),
         na.rm = TRUE)),
-    1417)
+    1372)
 
-  # septic_patients contains 1163 out of 2000 first non-ICU isolates
+  # first non-ICU isolates
   expect_equal(
     sum(
       first_isolate(septic_patients,
@@ -100,7 +100,7 @@ test_that("first isolates work", {
                     info = TRUE,
                     icu_exclude = TRUE),
       na.rm = TRUE),
-    1163)
+    1129)
 
   # set 1500 random observations to be of specimen type 'Urine'
   random_rows <- sample(x = 1:2000, size = 1500, replace = FALSE)

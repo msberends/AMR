@@ -548,6 +548,7 @@ eucast_rules <- function(tbl,
   tbl <- tbl %>%
     mutate_at(vars(col_mo), as.mo) %>%
     left_join_microorganisms(by = col_mo, suffix = c("_oldcols", "")) %>%
+    mutate(gramstain = mo_gramstain(pull(., col_mo))) %>%
     as.data.frame(stringsAsFactors = FALSE)
 
   if (info == TRUE) {

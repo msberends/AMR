@@ -23,31 +23,29 @@ context("mo_property.R")
 
 test_that("mo_property works", {
   expect_equal(mo_kingdom("E. coli"), "Bacteria")
-  expect_equal(mo_subkingdom("E. coli"), "Negibacteria")
   expect_equal(mo_phylum("E. coli"), "Proteobacteria")
   expect_equal(mo_class("E. coli"), "Gammaproteobacteria")
   expect_equal(mo_order("E. coli"), "Enterobacteriales")
   expect_equal(mo_family("E. coli"), "Enterobacteriaceae")
   expect_equal(mo_genus("E. coli"), "Escherichia")
   expect_equal(mo_species("E. coli"), "coli")
-  expect_equal(mo_subspecies("E. coli"), NA_character_)
+  expect_equal(mo_subspecies("E. coli"), "")
   expect_equal(mo_fullname("E. coli"), "Escherichia coli")
   expect_equal(mo_type("E. coli", language = "en"), "Bacteria")
   expect_equal(mo_gramstain("E. coli", language = "en"), "Gram negative")
-  expect_equal(mo_TSN("E. coli"), 285)
   expect_equal(class(mo_taxonomy("E. coli")), "list")
-  expect_equal(names(mo_taxonomy("E. coli")), c("kingdom", "subkingdom", "phylum", "class", "order",
+  expect_equal(names(mo_taxonomy("E. coli")), c("kingdom", "phylum", "class", "order",
                                                 "family", "genus", "species", "subspecies"))
 
-  expect_equal(mo_ref("E. coli"), "Castellani and Chalmers, 1919")
-  expect_equal(mo_authors("E. coli"), "Castellani and Chalmers")
+  expect_equal(mo_ref("E. coli"), "(Migula, 1895) Castellani and Chalmers, 1919")
+  expect_equal(mo_authors("E. coli"), "(Migula) Castellani and Chalmers")
   expect_equal(mo_year("E. coli"), 1919)
 
   expect_equal(mo_shortname("MRSA"), "S. aureus")
   expect_equal(mo_shortname("MRSA", Becker = TRUE), "S. aureus")
   expect_equal(mo_shortname("MRSA", Becker = "all", language = "en"), "CoPS")
-  expect_equal(mo_shortname("S. aga"), "S. agalactiae")
-  expect_equal(mo_shortname("S. aga", Lancefield = TRUE), "GBS")
+  expect_equal(mo_shortname("S. agalac"), "S. agalactiae")
+  expect_equal(mo_shortname("S. agalac", Lancefield = TRUE), "GBS")
 
   # test integrity
   MOs <- AMR::microorganisms

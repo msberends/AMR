@@ -1,8 +1,21 @@
 # AMR 0.5.0.90xx
 **Note: this is the development version, which will eventually be released as AMR 0.6.0.**
 
+**New website!**
+
+We've got a new website: [https://msberends.gitlab.io/AMR](https://msberends.gitlab.io/AMR/) (built with the great [`pkgdown`](https://pkgdown.r-lib.org/))
+
+* Contains the complete manual of this package and all of its functions with an explanation of their parameters
+* Contains a comprehensive tutorial about how to conduct antimicrobial resistance analysis, import data from WHONET or SPSS and many more.
+
 #### New
 * **BREAKING**: removed deprecated functions, parameters and references to 'bactid'. Use `as.mo()` to identify an MO code.
+* Catalogue of Life (CoL) inclusion for data about microorganisms, which also contains all ITIS data we used previously. The `microorganisms` data set now contains:
+  * Almost 60,000 species from six different kingdoms
+  * Almost 15,000 previously accepted names which are now taxonomic 'synonyms'
+  * All (sub)species from the kingdoms Archaea, Bacteria, Chromista, Protozoa and Viruses
+  * All (sub)species from the orders Eurotiales, Saccharomycetales and Onygenales of the kingdom Fungi. The complete taxonomy of this kingdom has more than 130,000 species. The orders we included contains at least all memebers of the families *Candida*, *Aspergillus* and *Trichophyton*.
+  * Due to this change, the ID of *Streptococcus* was changed from `B_STRPTC` to `B_STRPT`.
 * Support for data from [WHONET](https://whonet.org/) and [EARS-Net](https://ecdc.europa.eu/en/about-us/partnerships-and-networks/disease-and-laboratory-networks/ears-net) (European Antimicrobial Resistance Surveillance Network):
   * Exported files from WHONET can be read and used in this package. For functions like `first_isolate()` and `eucast_rules()`, all parameters will be filled in automatically.
   * This package now knows all antibiotic abbrevations by EARS-Net (which are also being used by WHONET) - the `antibiotics` data set now contains a column `ears_net`.
@@ -18,9 +31,6 @@
   ab_tradenames -> atc_tradenames()
   ```
   These functions use `as.atc()` internally. The old `atc_property` has been renamed `atc_online_property()`. This is done for two reasons: firstly, not all ATC codes are of antibiotics (ab) but can also be of antivirals or antifungals. Secondly, the input must have class `atc` or must be coerable to this class. Properties of these classes should start with the same class name, analogous to `as.mo()` and e.g. `mo_genus`.
-* New website: https://msberends.gitlab.io/AMR (built with the great [`pkgdown`](https://pkgdown.r-lib.org/))
-  * Contains the complete manual of this package and all of its functions with an explanation of their parameters
-  * Contains a comprehensive tutorial about how to conduct antimicrobial resistance analysis
 * New functions `set_mo_source()` and `get_mo_source()` to use your own predefined MO codes as input for `as.mo()` and consequently all `mo_*` functions
 * Support for the upcoming [`dplyr`](https://dplyr.tidyverse.org) version 0.8.0
 * New function `guess_ab_col()` to find an antibiotic column in a table
@@ -57,7 +67,7 @@
   * Fixed a critical bug where some rules that depend on previous applied rules would not be applied adequately
   * Emphasised in manual that penicillin is meant as benzylpenicillin (ATC [J01CE01](https://www.whocc.no/atc_ddd_index/?code=J01CE01))
   * New info is returned when running this function, stating exactly what has been changed or added. Use `eucast_rules(..., verbose = TRUE)` to get a data set with all changed per bug and drug combination.
-* Added 605 *Aspergillus* species and 23 *Trichophyton* species to the `microorganisms` data set
+* Removed data sets `microorganisms.oldDT`, `microorganisms.prevDT`, `microorganisms.unprevDT` and `microorganismsDT` since they were no longer needed and only contained info already available in the `microorganisms` data set
 * Added 65 antibiotics to the `antibiotics` data set, from the [Pharmaceuticals Community Register](http://ec.europa.eu/health/documents/community-register/html/atc.htm) of the European Commission
 * Removed columns `atc_group1_nl` and `atc_group2_nl` from the `antibiotics` data set
 * Functions `atc_ddd()` and `atc_groups()` have been renamed `atc_online_ddd()` and `atc_online_groups()`. The old functions are deprecated and will be removed in a future version.
