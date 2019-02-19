@@ -11,7 +11,6 @@
 \alias{mo_order}
 \alias{mo_class}
 \alias{mo_phylum}
-\alias{mo_subkingdom}
 \alias{mo_kingdom}
 \alias{mo_type}
 \alias{mo_gramstain}
@@ -19,6 +18,7 @@
 \alias{mo_authors}
 \alias{mo_year}
 \alias{mo_taxonomy}
+\alias{mo_url}
 \title{Property of a microorganism}
 \usage{
 mo_fullname(x, language = get_locale(), ...)
@@ -39,8 +39,6 @@ mo_class(x, ...)
 
 mo_phylum(x, ...)
 
-mo_subkingdom(x, ...)
-
 mo_kingdom(x, ...)
 
 mo_type(x, language = get_locale(), ...)
@@ -54,6 +52,8 @@ mo_authors(x, ...)
 mo_year(x, ...)
 
 mo_taxonomy(x, ...)
+
+mo_url(x, ...)
 
 mo_property(x, property = "fullname", language = get_locale(), ...)
 }
@@ -77,26 +77,39 @@ mo_property(x, property = "fullname", language = get_locale(), ...)
 Use these functions to return a specific property of a microorganism from the \code{\link{microorganisms}} data set. All input values will be evaluated internally with \code{\link{as.mo}}.
 }
 \details{
-All functions will return the most recently known taxonomic property according to ITIS, except for \code{mo_ref}, \code{mo_authors} and \code{mo_year}. This leads to the following results:
+All functions will return the most recently known taxonomic property according to the Catalogue of Life, except for \code{mo_ref}, \code{mo_authors} and \code{mo_year}. This leads to the following results:
 \itemize{
   \item{\code{mo_fullname("Chlamydia psittaci")} will return \code{"Chlamydophila psittaci"} (with a warning about the renaming)}
   \item{\code{mo_ref("Chlamydia psittaci")} will return \code{"Page, 1968"} (with a warning about the renaming)}
   \item{\code{mo_ref("Chlamydophila psittaci")} will return \code{"Everett et al., 1999"} (without a warning)}
 }
+
+The Gram stain - \code{mo_gramstain()} - will be determined on the taxonomic kingdom and phylum. According to Cavalier-Smith (2002) who defined subkingdoms Negibacteria and Posibacteria, only these phyla are Posibacteria: Actinobacteria, Chloroflexi, Firmicutes and Tenericutes (ref: \url{https://itis.gov/servlet/SingleRpt/SingleRpt?search_topic=TSN&search_value=956097}). These bacteria are considered Gram positive - all other bacteria are considered Gram negative. Species outside the kingdom of Bacteria will return a value \code{NA}.
+
+The function \code{mo_url()} will return the direct URL to the species in the Catalogue of Life.
 }
 \section{Supported languages}{
 
 Supported languages are \code{"en"} (English), \code{"de"} (German), \code{"nl"} (Dutch), \code{"es"} (Spanish), \code{"it"} (Italian), \code{"fr"} (French), and \code{"pt"} (Portuguese).
 }
 
-\section{ITIS}{
+\section{Catalogue of Life}{
 
-\if{html}{\figure{logo_itis.jpg}{options: height=60px style=margin-bottom:5px} \cr}
-This package contains the \strong{complete microbial taxonomic data} (with all nine taxonomic ranks - from kingdom to subspecies) from the publicly available Integrated Taxonomic Information System (ITIS, \url{https://www.itis.gov}).
+\if{html}{\figure{logo_col.png}{options: height=60px style=margin-bottom:5px} \cr}
+This package contains the complete taxonomic tree of almost all microorganisms from the authoritative and comprehensive Catalogue of Life (\url{http://www.catalogueoflife.org}). This data is updated annually - check the included version with \code{\link{catalogue_of_life_version}}.
 
-All ~20,000 (sub)species from \strong{the taxonomic kingdoms Bacteria, Fungi and Protozoa are included in this package}, as well as all their ~2,500 previously accepted names known to ITIS. Furthermore, the responsible authors and year of publication are available. This allows users to use authoritative taxonomic information for their data analysis on any microorganism, not only human pathogens. It also helps to quickly determine the Gram stain of bacteria, since ITIS honours the taxonomic branching order of bacterial phyla according to Cavalier-Smith (2002), which defines that all bacteria are classified into either subkingdom Negibacteria or subkingdom Posibacteria.
+Included are:
+\itemize{
+  \item{All ~55,000 (sub)species from the kingdoms of Archaea, Bacteria, Protozoa and Viruses}
+  \item{All ~3,000 (sub)species from these orders of the kingdom of Fungi: Eurotiales, Onygenales, Pneumocystales, Saccharomycetales and Schizosaccharomycetales. The kingdom of Fungi is a very large taxon with almost 300,000 different species, of which most are not microbial. Including everything tremendously slows down our algortihms, and not all fungi fit the scope of this package. By only including the aforementioned taxonomic orders, the most relevant species are covered (like genera \emph{Aspergillus}, \emph{Candida}, \emph{Pneumocystis}, \emph{Saccharomyces} and \emph{Trichophyton}).}
+  \item{All ~15,000 previously accepted names of (sub)species that have been taxonomically renamed}
+  \item{The complete taxonomic tree of all included (sub)species: from kingdom to subspecies}
+  \item{The responsible author(s) and year of scientific publication}
+}
 
-ITIS is a partnership of U.S., Canadian, and Mexican agencies and taxonomic specialists [3].
+The Catalogue of Life (\url{http://www.catalogueoflife.org}) is the most comprehensive and authoritative global index of species currently available. It holds essential information on the names, relationships and distributions of over 1.6 million species. The Catalogue of Life is used to support the major biodiversity and conservation information services such as the Global Biodiversity Information Facility (GBIF), Encyclopedia of Life (EoL) and the International Union for Conservation of Nature Red List. It is recognised by the Convention on Biological Diversity as a significant component of the Global Taxonomy Initiative and a contribution to Target 1 of the Global Strategy for Plant Conservation.
+
+The syntax used to transform the original data to a cleansed R format, can be found here: \url{https://gitlab.com/msberends/AMR/blob/master/reproduction_of_microorganisms.R}.
 }
 
 \section{Source}{
@@ -105,7 +118,7 @@ ITIS is a partnership of U.S., Canadian, and Mexican agencies and taxonomic spec
 
 [2] Lancefield RC \strong{A serological differentiation of human and other groups of hemolytic streptococci}. 1933. J Exp Med. 57(4): 571–95. \url{https://dx.doi.org/10.1084/jem.57.4.571}
 
-[3] Integrated Taxonomic Information System (ITIS). Retrieved September 2018. \url{http://www.itis.gov}
+[3] Catalogue of Life: Annual Checklist (public online database), \url{www.catalogueoflife.org}.
 }
 
 \section{Read more on our website!}{
@@ -118,14 +131,13 @@ On our website \url{https://msberends.gitlab.io/AMR} you can find \href{https://
 # All properties of Escherichia coli
 ## taxonomic properties
 mo_kingdom("E. coli")         # "Bacteria"
-mo_subkingdom("E. coli")      # "Negibacteria"
 mo_phylum("E. coli")          # "Proteobacteria"
 mo_class("E. coli")           # "Gammaproteobacteria"
 mo_order("E. coli")           # "Enterobacteriales"
 mo_family("E. coli")          # "Enterobacteriaceae"
 mo_genus("E. coli")           # "Escherichia"
 mo_species("E. coli")         # "coli"
-mo_subspecies("E. coli")      # NA
+mo_subspecies("E. coli")      # ""
 
 ## colloquial properties
 mo_fullname("E. coli")        # "Escherichia coli"

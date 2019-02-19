@@ -97,13 +97,20 @@ Read more about the data from WHOCC [in our manual](./reference/WHOCC.html).
 
 #### Microbial (taxonomic) reference data
 
-<img src="man/figures/logo_itis.jpg" height="60px">
+<img src="man/figures/logo_col.png" height="60px">
 
-This package contains the **complete microbial taxonomic data** (with all nine taxonomic ranks - from kingdom to subspecies) from the publicly available Integrated Taxonomic Information System (ITIS, https://www.itis.gov). 
+This package contains the complete taxonomic tree of almost all microorganisms from the authoritative and comprehensive Catalogue of Life ([www.catalogueoflife.org](http://www.catalogueoflife.org)). This data is updated annually - check the included version with `catalogue_of_life_version()`.
 
-All ~20,000 (sub)species from **the taxonomic kingdoms Bacteria, Fungi and Protozoa are included in this package**, as well as all their ~2,500 previously accepted names known to ITIS. Furthermore, the responsible authors and year of publication are available. This allows users to use authoritative taxonomic information for their data analysis on any microorganism, not only human pathogens. It also helps to quickly determine the Gram stain of bacteria, since ITIS honours the taxonomic branching order of bacterial phyla according to Cavalier-Smith (2002), which defines that all bacteria are classified into either subkingdom Negibacteria or subkingdom Posibacteria. 
+Included are:
 
-Read more about the data from ITIS [in our manual](./reference/ITIS.html).
+* All ~55,000 species from the kingdoms of Archaea, Bacteria, Protozoa and Viruses
+* All ~3,000 (sub)species from these orders of the kingdom of Fungi: Eurotiales, Onygenales, Pneumocystales, Saccharomycetales and Schizosaccharomycetales. The kingdom of Fungi is a very large taxon with almost 300,000 different species, of which most are not microbial. Including everything tremendously slows down our algortihms, and not all fungi fit the scope of this package. By only including the aforementioned taxonomic orders, the most relevant species are covered (like genera *Aspergillus*, *Candida*, *Pneumocystis*, *Saccharomyces* and *Trichophyton*).
+* All ~15,000 previously accepted names of species that have been taxonomically renamed
+* The responsible author(s) and year of scientific publication
+
+The Catalogue of Life ([www.catalogueoflife.org](http://www.catalogueoflife.org)) is the most comprehensive and authoritative global index of species currently available. It holds essential information on the names, relationships and distributions of over 1.6 million species. The Catalogue of Life is used to support the major biodiversity and conservation information services such as the Global Biodiversity Information Facility (GBIF), Encyclopedia of Life (EoL) and the International Union for Conservation of Nature Red List. It is recognised by the Convention on Biological Diversity as a significant component of the Global Taxonomy Initiative and a contribution to Target 1 of the Global Strategy for Plant Conservation.
+
+Read more about the data from the Catalogue of Life [in our manual](./reference/catalogue_of_life.html).
 
 #### Overview of functions
 

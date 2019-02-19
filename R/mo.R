@@ -77,7 +77,7 @@
 #'   \item{It strips off values between brackets and the brackets itself, and re-evaluates the input with all previous rules}
 #'   \item{It strips off words from the end one by one and re-evaluates the input with all previous rules}
 #'   \item{It strips off words from the start one by one and re-evaluates the input with all previous rules}
-#'   \item{It tries to look for some manual changes which are not yet published to the ITIS database (like \emph{Propionibacterium} not yet being \emph{Cutibacterium})}
+#'   \item{It tries to look for some manual changes which are not yet published to the Catalogue of Life (like \emph{Propionibacterium} not yet being \emph{Cutibacterium})}
 #' }
 #'
 #' Examples:
@@ -94,17 +94,17 @@
 #'
 #' Use \code{mo_renamed()} to get a vector with all values that could be coerced based on an old, previously accepted taxonomic name.
 #'
-#' @inheritSection ITIS ITIS
+#' @inheritSection catalogue_of_life Catalogue of Life
 #  (source as a section, so it can be inherited by other man pages)
 #' @section Source:
 #' [1] Becker K \emph{et al.} \strong{Coagulase-Negative Staphylococci}. 2014. Clin Microbiol Rev. 27(4): 870–926. \url{https://dx.doi.org/10.1128/CMR.00109-13}
 #'
 #' [2] Lancefield RC \strong{A serological differentiation of human and other groups of hemolytic streptococci}. 1933. J Exp Med. 57(4): 571–95. \url{https://dx.doi.org/10.1084/jem.57.4.571}
 #'
-#' [3] Integrated Taxonomic Information System (ITIS). Retrieved September 2018. \url{http://www.itis.gov}
+#' [3] Catalogue of Life: Annual Checklist (public online database), \url{www.catalogueoflife.org}.
 #' @export
 #' @return Character (vector) with class \code{"mo"}. Unknown values will return \code{NA}.
-#' @seealso \code{\link{microorganisms}} for the \code{data.frame} with ITIS content that is being used to determine ID's. \cr
+#' @seealso \code{\link{microorganisms}} for the \code{data.frame} that is being used to determine ID's. \cr
 #' The \code{\link{mo_property}} functions (like \code{\link{mo_genus}}, \code{\link{mo_gramstain}}) to get properties based on the returned code.
 #' @inheritSection AMR Read more on our website!
 #' @examples
@@ -216,15 +216,15 @@ exec_as.mo <- function(x, Becker = FALSE, Lancefield = FALSE,
   x <- x[!is.na(x) & !is.null(x) & !identical(x, "")]
 
 
-  # conversion v0.5.0 to v0.6.0, remove for v0.7.0
-  x <- gsub("B_STRPTC", "B_STRPT", x)
-  x <- gsub("B_STRPT_EQUI", "B_STRPT_EQU", x)
-  x <- gsub("B_PDMNS", "B_PSDMN", x)
-  x <- gsub("B_CTRDM", "B_CLSTR", x)
-  x <- gsub("F_CANDD_GLB", "F_CANDD_GLA", x)
-  x <- gsub("F_CANDD_LUS", "F_CANDD", x)
-  x <- gsub("B_FCTRM", "B_FSBCT", x)
-
+  # conversion of old MO codes from v0.5.0 (ITIS) to later versions (Catalogue of Life)
+  if (any(x %like% "^[BFP]_[A-Z]{3,7}")) {
+    leftpart <- gsub("^([BFP]_[A-Z]{3,7}).*", "\\1", x)
+    if (any(leftpart %in% names(mo_codes_v0.5.0))) {
+      rightpart <- gsub("^[BFP]_[A-Z]{3,7}(.*)", "\\1", x)
+      leftpart <- mo_codes_v0.5.0[leftpart]
+      x[!is.na(leftpart)] <- paste0(leftpart[!is.na(leftpart)], rightpart[!is.na(leftpart)])
+    }
+  }
 
   # defined df to check for
   if (!is.null(reference_df)) {

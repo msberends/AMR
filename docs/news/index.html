@@ -249,13 +249,13 @@
 <ul>
 <li>
 <strong>BREAKING</strong>: removed deprecated functions, parameters and references to ‘bactid’. Use <code><a href="../reference/as.mo.html">as.mo()</a></code> to identify an MO code.</li>
-<li>Catalogue of Life (CoL) inclusion for data about microorganisms, which also contains all ITIS data we used previously. The <code>microorganisms</code> data set now contains:
+<li>Catalogue of Life as a new taxonomic source for data about microorganisms, which also contains all ITIS data we used previously. The <code>microorganisms</code> data set now contains:
 <ul>
-<li>Almost 60,000 species from six different kingdoms</li>
-<li>Almost 15,000 previously accepted names which are now taxonomic ‘synonyms’</li>
-<li>All (sub)species from the kingdoms Archaea, Bacteria, Chromista, Protozoa and Viruses</li>
-<li>All (sub)species from the orders Eurotiales, Saccharomycetales and Onygenales of the kingdom Fungi. The complete taxonomy of this kingdom has more than 130,000 species. The orders we included contains at least all memebers of the families <em>Candida</em>, <em>Aspergillus</em> and <em>Trichophyton</em>.</li>
-<li>Due to this change, the ID of <em>Streptococcus</em> was changed from <code>B_STRPTC</code> to <code>B_STRPT</code>.</li>
+<li>All ~55,000 species from the kingdoms of Archaea, Bacteria, Protozoa and Viruses</li>
+<li>All ~3,000 (sub)species from these orders of the kingdom of Fungi: Eurotiales, Onygenales, Pneumocystales, Saccharomycetales and Schizosaccharomycetales. The kingdom of Fungi is a very large taxon with almost 300,000 different species, of which most are not microbial. Including everything tremendously slows down our algortihms, and not all fungi fit the scope of this package. By only including the aforementioned taxonomic orders, the most relevant species are covered (like genera <em>Aspergillus</em>, <em>Candida</em>, <em>Pneumocystis</em>, <em>Saccharomyces</em> and <em>Trichophyton</em>).</li>
+<li>All ~15,000 previously accepted names of species that have been taxonomically renamed</li>
+<li>The responsible author(s) and year of scientific publication</li>
+<li>Due to this change, some <code>mo</code> codes changed (e.g. <em>Streptococcus</em> changed from <code>B_STRPTC</code> to <code>B_STRPT</code>). A translation table is used internally to support older microorganism IDs, so users will not notice this difference.</li>
 </ul>
 </li>
 <li>Support for data from <a href="https://whonet.org/">WHONET</a> and <a href="https://ecdc.europa.eu/en/about-us/partnerships-and-networks/disease-and-laboratory-networks/ears-net">EARS-Net</a> (European Antimicrobial Resistance Surveillance Network):

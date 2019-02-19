@@ -10,9 +10,6 @@
     <loc>https://msberends.gitlab.io/AMR/reference/AMR.html</loc>
   </url>
   <url>
-    <loc>https://msberends.gitlab.io/AMR/reference/ITIS.html</loc>
-  </url>
-  <url>
     <loc>https://msberends.gitlab.io/AMR/reference/WHOCC.html</loc>
   </url>
   <url>
@@ -50,6 +47,12 @@
   </url>
   <url>
     <loc>https://msberends.gitlab.io/AMR/reference/availability.html</loc>
+  </url>
+  <url>
+    <loc>https://msberends.gitlab.io/AMR/reference/catalogue_of_life.html</loc>
+  </url>
+  <url>
+    <loc>https://msberends.gitlab.io/AMR/reference/catalogue_of_life_version.html</loc>
   </url>
   <url>
     <loc>https://msberends.gitlab.io/AMR/reference/count.html</loc>

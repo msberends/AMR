@@ -84,7 +84,7 @@ When using \code{allow_uncertain = TRUE} (which is the default setting), it will
   \item{It strips off values between brackets and the brackets itself, and re-evaluates the input with all previous rules}
   \item{It strips off words from the end one by one and re-evaluates the input with all previous rules}
   \item{It strips off words from the start one by one and re-evaluates the input with all previous rules}
-  \item{It tries to look for some manual changes which are not yet published to the ITIS database (like \emph{Propionibacterium} not yet being \emph{Cutibacterium})}
+  \item{It tries to look for some manual changes which are not yet published to the Catalogue of Life (like \emph{Propionibacterium} not yet being \emph{Cutibacterium})}
 }
 
 Examples:
@@ -107,17 +107,26 @@ Use \code{mo_renamed()} to get a vector with all values that could be coerced ba
 
 [2] Lancefield RC \strong{A serological differentiation of human and other groups of hemolytic streptococci}. 1933. J Exp Med. 57(4): 571–95. \url{https://dx.doi.org/10.1084/jem.57.4.571}
 
-[3] Integrated Taxonomic Information System (ITIS). Retrieved September 2018. \url{http://www.itis.gov}
+[3] Catalogue of Life: Annual Checklist (public online database), \url{www.catalogueoflife.org}.
 }
 
-\section{ITIS}{
+\section{Catalogue of Life}{
 
-\if{html}{\figure{logo_itis.jpg}{options: height=60px style=margin-bottom:5px} \cr}
-This package contains the \strong{complete microbial taxonomic data} (with all nine taxonomic ranks - from kingdom to subspecies) from the publicly available Integrated Taxonomic Information System (ITIS, \url{https://www.itis.gov}).
+\if{html}{\figure{logo_col.png}{options: height=60px style=margin-bottom:5px} \cr}
+This package contains the complete taxonomic tree of almost all microorganisms from the authoritative and comprehensive Catalogue of Life (\url{http://www.catalogueoflife.org}). This data is updated annually - check the included version with \code{\link{catalogue_of_life_version}}.
 
-All ~20,000 (sub)species from \strong{the taxonomic kingdoms Bacteria, Fungi and Protozoa are included in this package}, as well as all their ~2,500 previously accepted names known to ITIS. Furthermore, the responsible authors and year of publication are available. This allows users to use authoritative taxonomic information for their data analysis on any microorganism, not only human pathogens. It also helps to quickly determine the Gram stain of bacteria, since ITIS honours the taxonomic branching order of bacterial phyla according to Cavalier-Smith (2002), which defines that all bacteria are classified into either subkingdom Negibacteria or subkingdom Posibacteria.
+Included are:
+\itemize{
+  \item{All ~55,000 (sub)species from the kingdoms of Archaea, Bacteria, Protozoa and Viruses}
+  \item{All ~3,000 (sub)species from these orders of the kingdom of Fungi: Eurotiales, Onygenales, Pneumocystales, Saccharomycetales and Schizosaccharomycetales. The kingdom of Fungi is a very large taxon with almost 300,000 different species, of which most are not microbial. Including everything tremendously slows down our algortihms, and not all fungi fit the scope of this package. By only including the aforementioned taxonomic orders, the most relevant species are covered (like genera \emph{Aspergillus}, \emph{Candida}, \emph{Pneumocystis}, \emph{Saccharomyces} and \emph{Trichophyton}).}
+  \item{All ~15,000 previously accepted names of (sub)species that have been taxonomically renamed}
+  \item{The complete taxonomic tree of all included (sub)species: from kingdom to subspecies}
+  \item{The responsible author(s) and year of scientific publication}
+}
 
-ITIS is a partnership of U.S., Canadian, and Mexican agencies and taxonomic specialists [3].
+The Catalogue of Life (\url{http://www.catalogueoflife.org}) is the most comprehensive and authoritative global index of species currently available. It holds essential information on the names, relationships and distributions of over 1.6 million species. The Catalogue of Life is used to support the major biodiversity and conservation information services such as the Global Biodiversity Information Facility (GBIF), Encyclopedia of Life (EoL) and the International Union for Conservation of Nature Red List. It is recognised by the Convention on Biological Diversity as a significant component of the Global Taxonomy Initiative and a contribution to Target 1 of the Global Strategy for Plant Conservation.
+
+The syntax used to transform the original data to a cleansed R format, can be found here: \url{https://gitlab.com/msberends/AMR/blob/master/reproduction_of_microorganisms.R}.
 }
 
 \section{Read more on our website!}{
@@ -176,7 +185,7 @@ df <- df \%>\%
 }
 }
 \seealso{
-\code{\link{microorganisms}} for the \code{data.frame} with ITIS content that is being used to determine ID's. \cr
+\code{\link{microorganisms}} for the \code{data.frame} that is being used to determine ID's. \cr
 The \code{\link{mo_property}} functions (like \code{\link{mo_genus}}, \code{\link{mo_gramstain}}) to get properties based on the returned code.
 }
 \keyword{Becker}

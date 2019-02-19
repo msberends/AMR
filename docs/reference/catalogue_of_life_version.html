@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Translation table for microorganism codes — microorganisms.codes • AMR (for R)</title>
+<title>Version info of included Catalogue of Life — catalogue_of_life_version • AMR (for R)</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -45,9 +45,9 @@
 
   <link href="../extra.css" rel="stylesheet">
   <script src="../extra.js"></script>
-<meta property="og:title" content="Translation table for microorganism codes — microorganisms.codes" />
+<meta property="og:title" content="Version info of included Catalogue of Life — catalogue_of_life_version" />
 
-<meta property="og:description" content="A data set containing commonly used codes for microorganisms, from laboratory systems and WHONET. Define your own with set_mo_source." />
+<meta property="og:description" content="Version info of included Catalogue of Life" />
 
 <meta property="og:image" content="https://msberends.gitlab.io/AMR/logo.png" />
 <meta name="twitter:card" content="summary" />
@@ -230,31 +230,24 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Translation table for microorganism codes</h1>
+    <h1>Version info of included Catalogue of Life</h1>
     
-    <div class="hidden name"><code>microorganisms.codes.Rd</code></div>
+    <div class="hidden name"><code>catalogue_of_life_version.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>A data set containing commonly used codes for microorganisms, from laboratory systems and WHONET. Define your own with <code><a href='mo_source.html'>set_mo_source</a></code>.</p>
+    <p>Version info of included Catalogue of Life</p>
     
     </div>
 
-    <pre class="usage"><span class='no'>microorganisms.codes</span></pre>
+    <pre class="usage"><span class='fu'>catalogue_of_life_version</span>()</pre>
         
-    <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
-
-    <p>A <code><a href='https://www.rdocumentation.org/packages/base/topics/data.frame'>data.frame</a></code> with 4,731 observations and 2 variables:</p><dl class='dl-horizontal'>
-  <dt><code>certe</code></dt><dd><p>Commonly used code of a microorganism</p></dd>
-  <dt><code>mo</code></dt><dd><p>ID of the microorganism in the <code><a href='microorganisms.html'>microorganisms</a></code> data set</p></dd>
-</dl>
-    
     <h2 class="hasAnchor" id="catalogue-of-life"><a class="anchor" href="#catalogue-of-life"></a>Catalogue of Life</h2>
 
     
     <p><img src='figures/logo_col.png' height=60px style=margin-bottom:5px /> <br />
-This package contains the complete taxonomic tree of almost all microorganisms from the authoritative and comprehensive Catalogue of Life (<a href='http://www.catalogueoflife.org'>http://www.catalogueoflife.org</a>). This data is updated annually - check the included version with <code><a href='catalogue_of_life_version.html'>catalogue_of_life_version</a></code>.</p>
+This package contains the complete taxonomic tree of almost all microorganisms from the authoritative and comprehensive Catalogue of Life (<a href='http://www.catalogueoflife.org'>http://www.catalogueoflife.org</a>). This data is updated annually - check the included version with <code>catalogue_of_life_version</code>.</p>
 <p>Included are:</p><ul>
 <li><p>All ~55,000 (sub)species from the kingdoms of Archaea, Bacteria, Protozoa and Viruses</p></li>
 <li><p>All ~3,000 (sub)species from these orders of the kingdom of Fungi: Eurotiales, Onygenales, Pneumocystales, Saccharomycetales and Schizosaccharomycetales. The kingdom of Fungi is a very large taxon with almost 300,000 different species, of which most are not microbial. Including everything tremendously slows down our algortihms, and not all fungi fit the scope of this package. By only including the aforementioned taxonomic orders, the most relevant species are covered (like genera <em>Aspergillus</em>, <em>Candida</em>, <em>Pneumocystis</em>, <em>Saccharomyces</em> and <em>Trichophyton</em>).</p></li>
@@ -265,15 +258,9 @@ This package contains the complete taxonomic tree of almost all microorganisms f
     <p>The Catalogue of Life (<a href='http://www.catalogueoflife.org'>http://www.catalogueoflife.org</a>) is the most comprehensive and authoritative global index of species currently available. It holds essential information on the names, relationships and distributions of over 1.6 million species. The Catalogue of Life is used to support the major biodiversity and conservation information services such as the Global Biodiversity Information Facility (GBIF), Encyclopedia of Life (EoL) and the International Union for Conservation of Nature Red List. It is recognised by the Convention on Biological Diversity as a significant component of the Global Taxonomy Initiative and a contribution to Target 1 of the Global Strategy for Plant Conservation.</p>
 <p>The syntax used to transform the original data to a cleansed R format, can be found here: <a href='https://gitlab.com/msberends/AMR/blob/master/reproduction_of_microorganisms.R'>https://gitlab.com/msberends/AMR/blob/master/reproduction_of_microorganisms.R</a>.</p>
     
-    <h2 class="hasAnchor" id="read-more-on-our-website-"><a class="anchor" href="#read-more-on-our-website-"></a>Read more on our website!</h2>
-
-    
-    <p><img src='figures/logo.png' height=40px style=margin-bottom:5px /> <br />
-On our website <a href='https://msberends.gitlab.io/AMR'>https://msberends.gitlab.io/AMR</a> you can find <a href='https://msberends.gitlab.io/AMR/articles/AMR.html'>a comprehensive tutorial</a> about how to conduct AMR analysis, the <a href='https://msberends.gitlab.io/AMR/reference'>complete documentation of all functions</a> (which reads a lot easier than here in R) and <a href='https://msberends.gitlab.io/AMR/articles/WHONET.html'>an example analysis using WHONET data</a>.</p>
-    
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><code><a href='as.mo.html'>as.mo</a></code> <code><a href='microorganisms.html'>microorganisms</a></code></p></div>
+    <div class='dont-index'><p><code><a href='microorganisms.html'>microorganisms</a></code></p></div>
     
 
   </div>
@@ -281,11 +268,7 @@ On our website <a href='https://msberends.gitlab.io/AMR'>https://msberends.gitla
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       
-      <li><a href="#format">Format</a></li>
-
       <li><a href="#catalogue-of-life">Catalogue of Life</a></li>
-
-      <li><a href="#read-more-on-our-website-">Read more on our website!</a></li>
 
       <li><a href="#see-also">See also</a></li>
           </ul>

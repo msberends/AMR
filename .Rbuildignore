@@ -21,3 +21,4 @@
 ^Meta$
 ^pkgdown$
 ^public$
+^reproduction.*R$

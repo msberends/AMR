@@ -192,7 +192,7 @@
       <h1>How to create frequency tables</h1>
                         <h4 class="author">Matthijs S. Berends</h4>
             
-            <h4 class="date">18 February 2019</h4>
+            <h4 class="date">20 February 2019</h4>
       
       
       <div class="hidden name"><code>freq.Rmd</code></div>
@@ -258,16 +258,16 @@ Longest: 1</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/colnames">colnames</a></span>(microorganisms)</a>
 <a class="sourceLine" id="cb3-2" title="2"><span class="co">#  [1] "mo"         "col_id"     "fullname"   "kingdom"    "phylum"    </span></a>
 <a class="sourceLine" id="cb3-3" title="3"><span class="co">#  [6] "class"      "order"      "family"     "genus"      "species"   </span></a>
-<a class="sourceLine" id="cb3-4" title="4"><span class="co"># [11] "subspecies" "rank"       "ref"</span></a></code></pre></div>
-<p>If we compare the dimensions between the old and new dataset, we can see that these 12 variables were added:</p>
+<a class="sourceLine" id="cb3-4" title="4"><span class="co"># [11] "subspecies" "rank"       "ref"        "species_id"</span></a></code></pre></div>
+<p>If we compare the dimensions between the old and new dataset, we can see that these 13 variables were added:</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/dim">dim</a></span>(septic_patients)</a>
 <a class="sourceLine" id="cb4-2" title="2"><span class="co"># [1] 2000   49</span></a>
 <a class="sourceLine" id="cb4-3" title="3"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/dim">dim</a></span>(my_patients)</a>
-<a class="sourceLine" id="cb4-4" title="4"><span class="co"># [1] 2000   61</span></a></code></pre></div>
+<a class="sourceLine" id="cb4-4" title="4"><span class="co"># [1] 2000   62</span></a></code></pre></div>
 <p>So now the <code>genus</code> and <code>species</code> variables are available. A frequency table of these combined variables can be created like this:</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" title="1">my_patients <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb5-2" title="2"><span class="st">  </span><span class="kw"><a href="../reference/freq.html">freq</a></span>(genus, species, <span class="dt">nmax =</span> <span class="dv">15</span>)</a></code></pre></div>
-<p><strong>Frequency table of <code>genus</code> and <code>species</code> from a <code>data.frame</code> (2,000 x 61)</strong></p>
+<p><strong>Frequency table of <code>genus</code> and <code>species</code> from a <code>data.frame</code> (2,000 x 62)</strong></p>
 <p>Columns: 2<br>
 Length: 2,000 (of which NA: 0 = 0.00%)<br>
 Unique: 95</p>

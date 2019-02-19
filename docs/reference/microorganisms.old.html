@@ -47,7 +47,7 @@
   <script src="../extra.js"></script>
 <meta property="og:title" content="Data set with previously accepted taxonomic names — microorganisms.old" />
 
-<meta property="og:description" content="A data set containing old (previously valid or accepted) taxonomic names according to ITIS. This data set is used internally by as.mo." />
+<meta property="og:description" content="A data set containing old (previously valid or accepted) taxonomic names according to the Catalogue of Life. This data set is used internally by as.mo." />
 
 <meta property="og:image" content="https://msberends.gitlab.io/AMR/logo.png" />
 <meta name="twitter:card" content="summary" />
@@ -237,7 +237,7 @@
 
     <div class="ref-description">
     
-    <p>A data set containing old (previously valid or accepted) taxonomic names according to ITIS. This data set is used internally by <code><a href='as.mo.html'>as.mo</a></code>.</p>
+    <p>A data set containing old (previously valid or accepted) taxonomic names according to the Catalogue of Life. This data set is used internally by <code><a href='as.mo.html'>as.mo</a></code>.</p>
     
     </div>
 
@@ -248,21 +248,28 @@
     <p>A <code><a href='https://www.rdocumentation.org/packages/base/topics/data.frame'>data.frame</a></code> with 14,506 observations and 4 variables:</p><dl class='dl-horizontal'>
   <dt><code>col_id</code></dt><dd><p>Catalogue of Life ID</p></dd>
   <dt><code>tsn_new</code></dt><dd><p>New Catalogue of Life ID</p></dd>
-  <dt><code>fullname</code></dt><dd><p>Old taxonomic name of the microorganism as found in the CoL, see Source</p></dd>
-  <dt><code>ref</code></dt><dd><p>Author(s) and year of concerning publication as found in the CoL, see Source</p></dd>
+  <dt><code>fullname</code></dt><dd><p>Old taxonomic name of the microorganism</p></dd>
+  <dt><code>ref</code></dt><dd><p>Author(s) and year of concerning scientific publication</p></dd>
 </dl>
     
     <h2 class="hasAnchor" id="source"><a class="anchor" href="#source"></a>Source</h2>
 
-    <p>[3] Integrated Taxonomic Information System (ITIS) on-line database, <a href='https://www.itis.gov'>https://www.itis.gov</a>.</p>
+    <p>[3] Catalogue of Life: Annual Checklist (public online database), <a href='www.catalogueoflife.org'>www.catalogueoflife.org</a>.</p>
     
-    <h2 class="hasAnchor" id="itis"><a class="anchor" href="#itis"></a>ITIS</h2>
+    <h2 class="hasAnchor" id="catalogue-of-life"><a class="anchor" href="#catalogue-of-life"></a>Catalogue of Life</h2>
 
     
-    <p><img src='figures/logo_itis.jpg' height=60px style=margin-bottom:5px /> <br />
-This package contains the <strong>complete microbial taxonomic data</strong> (with all nine taxonomic ranks - from kingdom to subspecies) from the publicly available Integrated Taxonomic Information System (ITIS, <a href='https://www.itis.gov'>https://www.itis.gov</a>).</p>
-<p>All ~20,000 (sub)species from <strong>the taxonomic kingdoms Bacteria, Fungi and Protozoa are included in this package</strong>, as well as all their ~2,500 previously accepted names known to ITIS. Furthermore, the responsible authors and year of publication are available. This allows users to use authoritative taxonomic information for their data analysis on any microorganism, not only human pathogens. It also helps to quickly determine the Gram stain of bacteria, since ITIS honours the taxonomic branching order of bacterial phyla according to Cavalier-Smith (2002), which defines that all bacteria are classified into either subkingdom Negibacteria or subkingdom Posibacteria.</p>
-<p>ITIS is a partnership of U.S., Canadian, and Mexican agencies and taxonomic specialists [3].</p>
+    <p><img src='figures/logo_col.png' height=60px style=margin-bottom:5px /> <br />
+This package contains the complete taxonomic tree of almost all microorganisms from the authoritative and comprehensive Catalogue of Life (<a href='http://www.catalogueoflife.org'>http://www.catalogueoflife.org</a>). This data is updated annually - check the included version with <code><a href='catalogue_of_life_version.html'>catalogue_of_life_version</a></code>.</p>
+<p>Included are:</p><ul>
+<li><p>All ~55,000 (sub)species from the kingdoms of Archaea, Bacteria, Protozoa and Viruses</p></li>
+<li><p>All ~3,000 (sub)species from these orders of the kingdom of Fungi: Eurotiales, Onygenales, Pneumocystales, Saccharomycetales and Schizosaccharomycetales. The kingdom of Fungi is a very large taxon with almost 300,000 different species, of which most are not microbial. Including everything tremendously slows down our algortihms, and not all fungi fit the scope of this package. By only including the aforementioned taxonomic orders, the most relevant species are covered (like genera <em>Aspergillus</em>, <em>Candida</em>, <em>Pneumocystis</em>, <em>Saccharomyces</em> and <em>Trichophyton</em>).</p></li>
+<li><p>All ~15,000 previously accepted names of (sub)species that have been taxonomically renamed</p></li>
+<li><p>The complete taxonomic tree of all included (sub)species: from kingdom to subspecies</p></li>
+<li><p>The responsible author(s) and year of scientific publication</p></li>
+</ul>
+    <p>The Catalogue of Life (<a href='http://www.catalogueoflife.org'>http://www.catalogueoflife.org</a>) is the most comprehensive and authoritative global index of species currently available. It holds essential information on the names, relationships and distributions of over 1.6 million species. The Catalogue of Life is used to support the major biodiversity and conservation information services such as the Global Biodiversity Information Facility (GBIF), Encyclopedia of Life (EoL) and the International Union for Conservation of Nature Red List. It is recognised by the Convention on Biological Diversity as a significant component of the Global Taxonomy Initiative and a contribution to Target 1 of the Global Strategy for Plant Conservation.</p>
+<p>The syntax used to transform the original data to a cleansed R format, can be found here: <a href='https://gitlab.com/msberends/AMR/blob/master/reproduction_of_microorganisms.R'>https://gitlab.com/msberends/AMR/blob/master/reproduction_of_microorganisms.R</a>.</p>
     
     <h2 class="hasAnchor" id="read-more-on-our-website-"><a class="anchor" href="#read-more-on-our-website-"></a>Read more on our website!</h2>
 
@@ -284,7 +291,7 @@ On our website <a href='https://msberends.gitlab.io/AMR'>https://msberends.gitla
 
       <li><a href="#source">Source</a></li>
 
-      <li><a href="#itis">ITIS</a></li>
+      <li><a href="#catalogue-of-life">Catalogue of Life</a></li>
 
       <li><a href="#read-more-on-our-website-">Read more on our website!</a></li>
 

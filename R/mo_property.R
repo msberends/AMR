@@ -26,14 +26,18 @@
 #' @param property one of the column names of one of the \code{\link{microorganisms}} data set or \code{"shortname"}
 #' @param language language of the returned text, defaults to system language (see \code{\link{get_locale}}) and can also be set with \code{\link{getOption}("AMR_locale")}. Use \code{language = NULL} or \code{language = ""} to prevent translation.
 #' @param ... other parameters passed on to \code{\link{as.mo}}
-#' @details All functions will return the most recently known taxonomic property according to ITIS, except for \code{mo_ref}, \code{mo_authors} and \code{mo_year}. This leads to the following results:
+#' @details All functions will return the most recently known taxonomic property according to the Catalogue of Life, except for \code{mo_ref}, \code{mo_authors} and \code{mo_year}. This leads to the following results:
 #' \itemize{
 #'   \item{\code{mo_fullname("Chlamydia psittaci")} will return \code{"Chlamydophila psittaci"} (with a warning about the renaming)}
 #'   \item{\code{mo_ref("Chlamydia psittaci")} will return \code{"Page, 1968"} (with a warning about the renaming)}
 #'   \item{\code{mo_ref("Chlamydophila psittaci")} will return \code{"Everett et al., 1999"} (without a warning)}
 #' }
+#'
+#' The Gram stain - \code{mo_gramstain()} - will be determined on the taxonomic kingdom and phylum. According to Cavalier-Smith (2002) who defined subkingdoms Negibacteria and Posibacteria, only these phyla are Posibacteria: Actinobacteria, Chloroflexi, Firmicutes and Tenericutes (ref: \url{https://itis.gov/servlet/SingleRpt/SingleRpt?search_topic=TSN&search_value=956097}). These bacteria are considered Gram positive - all other bacteria are considered Gram negative. Species outside the kingdom of Bacteria will return a value \code{NA}.
+#'
+#' The function \code{mo_url()} will return the direct URL to the species in the Catalogue of Life.
 #' @inheritSection get_locale Supported languages
-#' @inheritSection ITIS ITIS
+#' @inheritSection catalogue_of_life Catalogue of Life
 #' @inheritSection as.mo Source
 #' @rdname mo_property
 #' @name mo_property
@@ -49,14 +53,13 @@
 #' # All properties of Escherichia coli
 #' ## taxonomic properties
 #' mo_kingdom("E. coli")         # "Bacteria"
-#' mo_subkingdom("E. coli")      # "Negibacteria"
 #' mo_phylum("E. coli")          # "Proteobacteria"
 #' mo_class("E. coli")           # "Gammaproteobacteria"
 #' mo_order("E. coli")           # "Enterobacteriales"
 #' mo_family("E. coli")          # "Enterobacteriaceae"
 #' mo_genus("E. coli")           # "Escherichia"
 #' mo_species("E. coli")         # "coli"
-#' mo_subspecies("E. coli")      # NA
+#' mo_subspecies("E. coli")      # ""
 #'
 #' ## colloquial properties
 #' mo_fullname("E. coli")        # "Escherichia coli"
@@ -222,12 +225,6 @@ mo_phylum <- function(x, ...) {
 
 #' @rdname mo_property
 #' @export
-mo_subkingdom <- function(x, ...) {
-  mo_validate(x = x, property = "subkingdom", ...)
-}
-
-#' @rdname mo_property
-#' @export
 mo_kingdom <- function(x, ...) {
   mo_validate(x = x, property = "kingdom", ...)
 }
@@ -289,6 +286,15 @@ mo_taxonomy <- function(x, ...) {
              species = mo_species(x),
              subspecies = mo_subspecies(x))
 }
+
+#' @rdname mo_property
+#' @export
+mo_url <- function(x, ...) {
+  u <- mo_validate(x = x, property = "species_id", ...)
+  u[u != ""] <- paste0(catalogue_of_life$url, "/details/species/id/", u)
+  u
+}
+
 
 #' @rdname mo_property
 #' @importFrom data.table data.table as.data.table setkey

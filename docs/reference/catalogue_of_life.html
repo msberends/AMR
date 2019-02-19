@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Translation table for microorganism codes — microorganisms.codes • AMR (for R)</title>
+<title>The Catalogue of Life — catalogue_of_life • AMR (for R)</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -45,9 +45,9 @@
 
   <link href="../extra.css" rel="stylesheet">
   <script src="../extra.js"></script>
-<meta property="og:title" content="Translation table for microorganism codes — microorganisms.codes" />
+<meta property="og:title" content="The Catalogue of Life — catalogue_of_life" />
 
-<meta property="og:description" content="A data set containing commonly used codes for microorganisms, from laboratory systems and WHONET. Define your own with set_mo_source." />
+<meta property="og:description" content="This package contains the complete taxonomic tree of almost all microorganisms from the authoritative and comprehensive Catalogue of Life." />
 
 <meta property="og:image" content="https://msberends.gitlab.io/AMR/logo.png" />
 <meta name="twitter:card" content="summary" />
@@ -230,26 +230,18 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Translation table for microorganism codes</h1>
+    <h1>The Catalogue of Life</h1>
     
-    <div class="hidden name"><code>microorganisms.codes.Rd</code></div>
+    <div class="hidden name"><code>catalogue_of_life.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>A data set containing commonly used codes for microorganisms, from laboratory systems and WHONET. Define your own with <code><a href='mo_source.html'>set_mo_source</a></code>.</p>
+    <p>This package contains the complete taxonomic tree of almost all microorganisms from the authoritative and comprehensive Catalogue of Life.</p>
     
     </div>
 
-    <pre class="usage"><span class='no'>microorganisms.codes</span></pre>
         
-    <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
-
-    <p>A <code><a href='https://www.rdocumentation.org/packages/base/topics/data.frame'>data.frame</a></code> with 4,731 observations and 2 variables:</p><dl class='dl-horizontal'>
-  <dt><code>certe</code></dt><dd><p>Commonly used code of a microorganism</p></dd>
-  <dt><code>mo</code></dt><dd><p>ID of the microorganism in the <code><a href='microorganisms.html'>microorganisms</a></code> data set</p></dd>
-</dl>
-    
     <h2 class="hasAnchor" id="catalogue-of-life"><a class="anchor" href="#catalogue-of-life"></a>Catalogue of Life</h2>
 
     
@@ -271,24 +263,49 @@ This package contains the complete taxonomic tree of almost all microorganisms f
     <p><img src='figures/logo.png' height=40px style=margin-bottom:5px /> <br />
 On our website <a href='https://msberends.gitlab.io/AMR'>https://msberends.gitlab.io/AMR</a> you can find <a href='https://msberends.gitlab.io/AMR/articles/AMR.html'>a comprehensive tutorial</a> about how to conduct AMR analysis, the <a href='https://msberends.gitlab.io/AMR/reference'>complete documentation of all functions</a> (which reads a lot easier than here in R) and <a href='https://msberends.gitlab.io/AMR/articles/WHONET.html'>an example analysis using WHONET data</a>.</p>
     
-    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><code><a href='as.mo.html'>as.mo</a></code> <code><a href='microorganisms.html'>microorganisms</a></code></p></div>
-    
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><span class='co'># NOT RUN {</span>
+<span class='co'># Get version info of included data set</span>
+<span class='fu'><a href='catalogue_of_life_version.html'>catalogue_of_life_version</a></span>()
 
+
+<span class='co'># Get a note when a species was renamed</span>
+<span class='fu'><a href='mo_property.html'>mo_shortname</a></span>(<span class='st'>"Chlamydia psittaci"</span>)
+<span class='co'># Note: 'Chlamydia psittaci' (Page, 1968) was renamed</span>
+<span class='co'>#       'Chlamydophila psittaci' (Everett et al., 1999)</span>
+<span class='co'># [1] "C. psittaci"</span>
+
+<span class='co'># Get any property from the entire taxonomic tree for all included species</span>
+<span class='fu'><a href='mo_property.html'>mo_class</a></span>(<span class='st'>"E. coli"</span>)
+<span class='co'># [1] "Gammaproteobacteria"</span>
+
+<span class='fu'><a href='mo_property.html'>mo_family</a></span>(<span class='st'>"E. coli"</span>)
+<span class='co'># [1] "Enterobacteriaceae"</span>
+
+<span class='fu'><a href='mo_property.html'>mo_gramstain</a></span>(<span class='st'>"E. coli"</span>) <span class='co'># based on kingdom and phylum, see ?mo_gramstain</span>
+<span class='co'># [1] "Gram negative"</span>
+
+<span class='fu'><a href='mo_property.html'>mo_ref</a></span>(<span class='st'>"E. coli"</span>)
+<span class='co'># [1] "Castellani et al., 1919"</span>
+
+<span class='co'># Do not get mistaken - the package only includes microorganisms</span>
+<span class='fu'><a href='mo_property.html'>mo_phylum</a></span>(<span class='st'>"C. elegans"</span>)
+<span class='co'># [1] "Cyanobacteria"                   # Bacteria?!</span>
+<span class='fu'><a href='mo_property.html'>mo_fullname</a></span>(<span class='st'>"C. elegans"</span>)
+<span class='co'># [1] "Chroococcus limneticus elegans"  # Because a microorganism was found</span>
+<span class='co'># }</span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       
-      <li><a href="#format">Format</a></li>
-
       <li><a href="#catalogue-of-life">Catalogue of Life</a></li>
 
       <li><a href="#read-more-on-our-website-">Read more on our website!</a></li>
-
-      <li><a href="#see-also">See also</a></li>
-          </ul>
+      
+      <li><a href="#examples">Examples</a></li>
+    </ul>
 
   </div>
 </div>

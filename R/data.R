@@ -133,26 +133,25 @@
 #' Data set with ~60,000 microorganisms
 #'
 #' A data set containing the microbial taxonomy of six kingdoms from the Catalogue of Life. MO codes can be looked up using \code{\link{as.mo}}.
-#' @inheritSection ITIS ITIS
-#' @format A \code{\link{data.frame}} with 56,659 observations and 15 variables:
+#' @inheritSection catalogue_of_life Catalogue of Life
+#' @format A \code{\link{data.frame}} with 56,672 observations and 14 variables:
 #' \describe{
-#'   \item{\code{mo}}{ID of microorganism}
+#'   \item{\code{mo}}{ID of microorganism as used by this package}
 #'   \item{\code{col_id}}{Catalogue of Life ID}
-#'   \item{\code{genus}}{Taxonomic genus of the microorganism as found in ITIS, see Source}
-#'   \item{\code{species}}{Taxonomic species of the microorganism as found in ITIS, see Source}
-#'   \item{\code{subspecies}}{Taxonomic subspecies of the microorganism as found in ITIS, see Source}
 #'   \item{\code{fullname}}{Full name, like \code{"Echerichia coli"}}
-#'   \item{\code{family}}{Taxonomic family of the microorganism as found in ITIS, see Source}
-#'   \item{\code{order}}{Taxonomic order of the microorganism as found in ITIS, see Source}
-#'   \item{\code{class}}{Taxonomic class of the microorganism as found in ITIS, see Source}
-#'   \item{\code{phylum}}{Taxonomic phylum of the microorganism as found in ITIS, see Source}
-#'   \item{\code{subkingdom}}{Taxonomic subkingdom of the microorganism as found in ITIS, see Source}
-#'   \item{\code{kingdom}}{Taxonomic kingdom of the microorganism as found in ITIS, see Source}
-#'   \item{\code{gramstain}}{Gram of microorganism, like \code{"Gram negative"}}
-#'   \item{\code{prevalence}}{An integer based on estimated prevalence of the microorganism in humans. Used internally by \code{\link{as.mo}}, otherwise quite meaningless. It has a value of 25 for manually added items and a value of 1000 for all unprevalent microorganisms whose genus was somewhere in the top 250 (with another species).}
-#'   \item{\code{ref}}{Author(s) and year of concerning publication as found in ITIS, see Source}
+#'   \item{\code{kingdom}}{Taxonomic kingdom of the microorganism}
+#'   \item{\code{phylum}}{Taxonomic phylum of the microorganism}
+#'   \item{\code{class}}{Taxonomic class of the microorganism}
+#'   \item{\code{order}}{Taxonomic order of the microorganism}
+#'   \item{\code{family}}{Taxonomic family of the microorganism}
+#'   \item{\code{genus}}{Taxonomic genus of the microorganism}
+#'   \item{\code{species}}{Taxonomic species of the microorganism}
+#'   \item{\code{subspecies}}{Taxonomic subspecies of the microorganism}
+#'   \item{\code{rank}}{Taxonomic rank of the microorganism, like \code{"species"} or \code{"genus"}}
+#'   \item{\code{ref}}{Author(s) and year of concerning scientific publication}
+#'   \item{\code{species_id}}{ID of the species as used by the Catalogue of Life}
 #' }
-#' @source Integrated Taxonomic Information System (ITIS) public online database, \url{https://www.itis.gov}.
+#' @source Catalogue of Life: Annual Checklist (public online database), \url{www.catalogueoflife.org}.
 #' @details Manually added were:
 #' \itemize{
 #'   \item{9 species of \emph{Streptococcus} (beta haemolytic groups A, B, C, D, F, G, H, K and unspecified)}
@@ -160,21 +159,37 @@
 #'   \item{2 other undefined (unknown Gram negatives and unknown Gram positives)}
 #' }
 #' @inheritSection AMR Read more on our website!
-#' @seealso \code{\link{as.mo}} \code{\link{mo_property}} \code{\link{microorganisms.codes}}
+#' @seealso \code{\link{as.mo}}, \code{\link{mo_property}}, \code{\link{microorganisms.codes}}
 "microorganisms"
+
+catalogue_of_life <- list(
+  version = "Catalogue of Life: 2018 Annual Checklist",
+  url = "http://www.catalogueoflife.org/annual-checklist/2018"
+)
+
+#' Version info of included Catalogue of Life
+#' @seealso \code{\link{microorganisms}}
+#' @inheritSection catalogue_of_life Catalogue of Life
+#' @export
+catalogue_of_life_version <- function() {
+  list(version = catalogue_of_life$version,
+       url = catalogue_of_life$url,
+       no_of_species = nrow(AMR::microorganisms),
+       no_of_synonyms = nrow(AMR::microorganisms.old))
+}
 
 #' Data set with previously accepted taxonomic names
 #'
-#' A data set containing old (previously valid or accepted) taxonomic names according to ITIS. This data set is used internally by \code{\link{as.mo}}.
-#' @inheritSection as.mo ITIS
+#' A data set containing old (previously valid or accepted) taxonomic names according to the Catalogue of Life. This data set is used internally by \code{\link{as.mo}}.
+#' @inheritSection catalogue_of_life Catalogue of Life
 #' @format A \code{\link{data.frame}} with 14,506 observations and 4 variables:
 #' \describe{
 #'   \item{\code{col_id}}{Catalogue of Life ID}
 #'   \item{\code{tsn_new}}{New Catalogue of Life ID}
-#'   \item{\code{fullname}}{Old taxonomic name of the microorganism as found in the CoL, see Source}
-#'   \item{\code{ref}}{Author(s) and year of concerning publication as found in the CoL, see Source}
+#'   \item{\code{fullname}}{Old taxonomic name of the microorganism}
+#'   \item{\code{ref}}{Author(s) and year of concerning scientific publication}
 #' }
-#' @source [3] Integrated Taxonomic Information System (ITIS) on-line database, \url{https://www.itis.gov}.
+#' @source [3] Catalogue of Life: Annual Checklist (public online database), \url{www.catalogueoflife.org}.
 #' @inheritSection AMR Read more on our website!
 #' @seealso \code{\link{as.mo}} \code{\link{mo_property}} \code{\link{microorganisms}}
 "microorganisms.old"
@@ -187,7 +202,7 @@
 #'   \item{\code{certe}}{Commonly used code of a microorganism}
 #'   \item{\code{mo}}{ID of the microorganism in the \code{\link{microorganisms}} data set}
 #' }
-#' @inheritSection ITIS ITIS
+#' @inheritSection catalogue_of_life Catalogue of Life
 #' @inheritSection AMR Read more on our website!
 #' @seealso \code{\link{as.mo}} \code{\link{microorganisms}}
 "microorganisms.codes"
