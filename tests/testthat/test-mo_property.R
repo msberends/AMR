@@ -37,8 +37,8 @@ test_that("mo_property works", {
   expect_equal(names(mo_taxonomy("E. coli")), c("kingdom", "phylum", "class", "order",
                                                 "family", "genus", "species", "subspecies"))
 
-  expect_equal(mo_ref("E. coli"), "(Migula, 1895) Castellani and Chalmers, 1919")
-  expect_equal(mo_authors("E. coli"), "(Migula) Castellani and Chalmers")
+  expect_equal(mo_ref("E. coli"), "Castellani and Chalmers, 1919")
+  expect_equal(mo_authors("E. coli"), "Castellani and Chalmers")
   expect_equal(mo_year("E. coli"), 1919)
 
   expect_equal(mo_shortname("MRSA"), "S. aureus")
