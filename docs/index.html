@@ -197,11 +197,12 @@
 <p><em>(<help title="Too Long, Didn't Read">TLDR</help> - to find out how to conduct AMR analysis, please <a href="./articles/AMR.html">continue reading here to get started</a>.</em></p>
 <hr>
 <p><code>AMR</code> is a free and open-source <a href="https://www.r-project.org">R package</a> to simplify the analysis and prediction of Antimicrobial Resistance (AMR) and to work with microbial and antimicrobial properties by using evidence-based methods. It supports any data format, including WHONET/EARS-Net data.</p>
-<p>After installing this package, R knows almost all ~20,000 microorganisms and ~500 antibiotics by name and code, and knows all about valid RSI and MIC values.</p>
+<p>After installing this package, R knows almost all ~60,000 microorganisms and ~500 antibiotics by name and code, and knows all about valid RSI and MIC values.</p>
 <p><strong>Used to SPSS?</strong> Read our <a href="./articles/SPSS.html">tutorial on how to import data from SPSS, SAS or Stata</a> and learn in which ways R outclasses any of these statistical packages.</p>
 <p>We created this package for both academic research and routine analysis at the Faculty of Medical Sciences of the University of Groningen, the Netherlands, and the Medical Microbiology &amp; Infection Prevention (MMBI) department of the University Medical Center Groningen (UMCG). This R package is actively maintained and is free software; you can freely use and distribute it for both personal and commercial (but <strong>not</strong> patent) purposes under the terms of the GNU General Public License version 2.0 (GPL-2), as published by the Free Software Foundation. Read the full license <a href="./LICENSE-text.html">here</a>.</p>
 <p>This package can be used for:</p>
 <ul>
+<li>Reference for microorganisms, since it contains allmost all 60,000 microbial species of the Catalogue of Life</li>
 <li>Calculating antimicrobial resistance</li>
 <li>Calculating empirical susceptibility of both mono therapy and combination therapy</li>
 <li>Predicting future antimicrobial resistance using regression models</li>
@@ -252,7 +253,7 @@
 <div id="latest-development-version" class="section level4">
 <h4 class="hasAnchor">
 <a href="#latest-development-version" class="anchor"></a>Latest development version</h4>
-<p>The latest and unpublished development version can be installed with (precaution: may be unstable):</p>
+<p>The latest and unpublished development version can be installed with (<strong>precaution: may be unstable</strong>):</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/install.packages">install.packages</a></span>(<span class="st">"devtools"</span>)</a>
 <a class="sourceLine" id="cb2-2" title="2">devtools<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/devtools/topics/reexports">install_gitlab</a></span>(<span class="st">"msberends/AMR"</span>)</a></code></pre></div>
 </div>
@@ -265,12 +266,22 @@
 <div id="short-introduction" class="section level2">
 <h2 class="hasAnchor">
 <a href="#short-introduction" class="anchor"></a>Short introduction</h2>
-<div id="whonet--ears-net" class="section level4">
+<div id="microbial-taxonomic-reference-data" class="section level4">
 <h4 class="hasAnchor">
-<a href="#whonet--ears-net" class="anchor"></a>WHONET / EARS-Net</h4>
-<p><img src="./whonet.png"></p>
-<p>We support WHONET and EARS-Net data. Exported files from WHONET can be imported into R and can be analysed easily using this package. For education purposes, we created an <a href="./reference/WHONET.html">example data set <code>WHONET</code></a> with the exact same structure as a WHONET export file. Furthermore, this package also contains a <a href="./reference/antibiotics.html">data set <code>antibiotics</code></a> with all EARS-Net antibiotic abbreviations, and knows almost all WHONET abbreviations for microorganisms. When using WHONET data as input for analysis, all input parameters will be set automatically.</p>
-<p>Read our tutorial about <a href="./articles/WHONET.html">how to work with WHONET data here</a>.</p>
+<a href="#microbial-taxonomic-reference-data" class="anchor"></a>Microbial (taxonomic) reference data</h4>
+<p><img src="reference/figures/logo_col.png"></p>
+<p>This package contains the complete taxonomic tree of almost all microorganisms from the authoritative and comprehensive Catalogue of Life (<a href="http://www.catalogueoflife.org">www.catalogueoflife.org</a>).</p>
+<p>Included are:</p>
+<ul>
+<li>All ~55,000 species from the kingdoms of Archaea, Bacteria, Protozoa and Viruses</li>
+<li>All ~3,000 (sub)species from these orders of the kingdom of Fungi: Eurotiales, Onygenales, Pneumocystales, Saccharomycetales and Schizosaccharomycetales. The kingdom of Fungi is a very large taxon with almost 300,000 different species, of which most are not microbial. Including everything tremendously slows down our algortihms, and not all fungi fit the scope of this package. By only including the aforementioned taxonomic orders, the most relevant species are covered (like genera <em>Aspergillus</em>, <em>Candida</em>, <em>Pneumocystis</em>, <em>Saccharomyces</em> and <em>Trichophyton</em>).</li>
+<li>All ~15,000 previously accepted names of included species that have been taxonomically renamed</li>
+<li>The responsible author(s) and year of scientific publication</li>
+</ul>
+<p>This data is updated annually - check the included version with <code><a href="reference/catalogue_of_life_version.html">catalogue_of_life_version()</a></code>.</p>
+<p><strong>About</strong></p>
+<p>The Catalogue of Life (<a href="http://www.catalogueoflife.org">www.catalogueoflife.org</a>) is the most comprehensive and authoritative global index of species currently available. It holds essential information on the names, relationships and distributions of over 1.6 million species. The Catalogue of Life is used to support the major biodiversity and conservation information services such as the Global Biodiversity Information Facility (GBIF), Encyclopedia of Life (EoL) and the International Union for Conservation of Nature Red List. It is recognised by the Convention on Biological Diversity as a significant component of the Global Taxonomy Initiative and a contribution to Target 1 of the Global Strategy for Plant Conservation.</p>
+<p>Read more about the data from the Catalogue of Life <a href="./reference/catalogue_of_life.html">in our manual</a>.</p>
 </div>
 <div id="antimicrobial-reference-data" class="section level4">
 <h4 class="hasAnchor">
@@ -281,20 +292,12 @@
 <p>This package contains <strong>all ~500 antimicrobial drugs</strong> and their Anatomical Therapeutic Chemical (ATC) codes, ATC groups and Defined Daily Dose (DDD) from the World Health Organization Collaborating Centre for Drug Statistics Methodology (WHOCC, <a href="https://www.whocc.no" class="uri">https://www.whocc.no</a>) and the <a href="http://ec.europa.eu/health/documents/community-register/html/atc.htm">Pharmaceuticals Community Register of the European Commission</a>.</p>
 <p>Read more about the data from WHOCC <a href="./reference/WHOCC.html">in our manual</a>.</p>
 </div>
-<div id="microbial-taxonomic-reference-data" class="section level4">
+<div id="whonet--ears-net" class="section level4">
 <h4 class="hasAnchor">
-<a href="#microbial-taxonomic-reference-data" class="anchor"></a>Microbial (taxonomic) reference data</h4>
-<p><img src="reference/figures/logo_col.png" height="60px"></p>
-<p>This package contains the complete taxonomic tree of almost all microorganisms from the authoritative and comprehensive Catalogue of Life (<a href="http://www.catalogueoflife.org">www.catalogueoflife.org</a>). This data is updated annually - check the included version with <code><a href="reference/catalogue_of_life_version.html">catalogue_of_life_version()</a></code>.</p>
-<p>Included are:</p>
-<ul>
-<li>All ~55,000 species from the kingdoms of Archaea, Bacteria, Protozoa and Viruses</li>
-<li>All ~3,000 (sub)species from these orders of the kingdom of Fungi: Eurotiales, Onygenales, Pneumocystales, Saccharomycetales and Schizosaccharomycetales. The kingdom of Fungi is a very large taxon with almost 300,000 different species, of which most are not microbial. Including everything tremendously slows down our algortihms, and not all fungi fit the scope of this package. By only including the aforementioned taxonomic orders, the most relevant species are covered (like genera <em>Aspergillus</em>, <em>Candida</em>, <em>Pneumocystis</em>, <em>Saccharomyces</em> and <em>Trichophyton</em>).</li>
-<li>All ~15,000 previously accepted names of species that have been taxonomically renamed</li>
-<li>The responsible author(s) and year of scientific publication</li>
-</ul>
-<p>The Catalogue of Life (<a href="http://www.catalogueoflife.org">www.catalogueoflife.org</a>) is the most comprehensive and authoritative global index of species currently available. It holds essential information on the names, relationships and distributions of over 1.6 million species. The Catalogue of Life is used to support the major biodiversity and conservation information services such as the Global Biodiversity Information Facility (GBIF), Encyclopedia of Life (EoL) and the International Union for Conservation of Nature Red List. It is recognised by the Convention on Biological Diversity as a significant component of the Global Taxonomy Initiative and a contribution to Target 1 of the Global Strategy for Plant Conservation.</p>
-<p>Read more about the data from the Catalogue of Life <a href="./reference/catalogue_of_life.html">in our manual</a>.</p>
+<a href="#whonet--ears-net" class="anchor"></a>WHONET / EARS-Net</h4>
+<p><img src="./whonet.png"></p>
+<p>We support WHONET and EARS-Net data. Exported files from WHONET can be imported into R and can be analysed easily using this package. For education purposes, we created an <a href="./reference/WHONET.html">example data set <code>WHONET</code></a> with the exact same structure as a WHONET export file. Furthermore, this package also contains a <a href="./reference/antibiotics.html">data set <code>antibiotics</code></a> with all EARS-Net antibiotic abbreviations, and knows almost all WHONET abbreviations for microorganisms. When using WHONET data as input for analysis, all input parameters will be set automatically.</p>
+<p>Read our tutorial about <a href="./articles/WHONET.html">how to work with WHONET data here</a>.</p>
 </div>
 <div id="overview-of-functions" class="section level4">
 <h4 class="hasAnchor">

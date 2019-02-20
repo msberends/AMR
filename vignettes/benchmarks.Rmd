@@ -27,7 +27,7 @@ One of the most important features of this package is the complete microbial tax
 
 Using the `microbenchmark` package, we can review the calculation performance of this function. Its function `microbenchmark()` runs different input expressions independently of each other and measures their time-to-result.
 
-```{r}
+```{r, message = FALSE}
 library(microbenchmark)
 library(AMR)
 ```
@@ -51,7 +51,7 @@ print(S.aureus, unit = "ms")
 
 In the table above, all measurements are shown in milliseconds (thousands of seconds). A value of 10 milliseconds means it can determine 100 input values per second. It case of 50 milliseconds, this is only 20 input values per second. The more an input value resembles a full name, the faster the result will be found. In case of `as.mo("B_STPHY_AUR")`, the input is already a valid MO code, so it only almost takes no time at all (`r as.integer(min(S.aureus$time, na.rm = TRUE) / 1000)` millionths of seconds).
 
-To achieve this speed, the `as.mo` function also takes into account the prevalence of human pathogenic microorganisms. The downside is of course that less prevalent microorganisms will be determined far less faster. See this example for the ID of *Mycoplasma leonicaptivi* (`B_MYCPL_LEO`), a bug probably never found before in humans:
+To achieve this speed, the `as.mo` function also takes into account the prevalence of human pathogenic microorganisms. The downside is of course that less prevalent microorganisms will be determined less fast. See this example for the ID of *Mycoplasma leonicaptivi* (`B_MYCPL_LEO`), a bug probably never found before in humans:
 
 ```{r}
 M.leonicaptivi <- microbenchmark(as.mo("myle"),
@@ -75,7 +75,6 @@ max_y_axis <- max(S.aureus$time, M.leonicaptivi$time, na.rm = TRUE) / 1e6
 
 boxplot(S.aureus, horizontal = TRUE, las = 1, unit = "ms", log = FALSE, xlab = "", ylim = c(0, max_y_axis),
         main = expression(paste("Benchmark of ", italic("Staphylococcus aureus"))))
-
 boxplot(M.leonicaptivi, horizontal = TRUE, las = 1, unit = "ms", log = FALSE, xlab = "", ylim = c(0, max_y_axis),
         main = expression(paste("Benchmark of ", italic("Mycoplasma leonicaptivi"))))
 ```
@@ -86,7 +85,7 @@ To relieve this pitfall and further improve performance, two important calculati
 
 Repetitive results mean that unique values are present more than once. Unique values will only be calculated once by `as.mo()`. We will use `mo_fullname()` for this test - a helper function that returns the full microbial name (genus, species and possibly subspecies) which uses `as.mo()` internally.
 
-```{r}
+```{r, message = FALSE}
 library(dplyr)
 # take 500,000 random MO codes from the septic_patients data set
 x = septic_patients %>%
@@ -138,7 +137,7 @@ Of course, when running `mo_phylum("Firmicutes")` the function has zero knowledg
 
 ### Results in other languages
 
-When the system language is non-English and supported by this `AMR` package, some functions take a little while longer:
+When the system language is non-English and supported by this `AMR` package, some functions will have a translated result. This almost does't take extra time:
 
 ```{r}
 mo_fullname("CoNS", language = "en") # or just mo_fullname("CoNS") on an English system

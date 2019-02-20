@@ -6,7 +6,7 @@
 
 `AMR` is a free and open-source [R package](https://www.r-project.org) to simplify the analysis and prediction of Antimicrobial Resistance (AMR) and to work with microbial and antimicrobial properties by using evidence-based methods. It supports any data format, including WHONET/EARS-Net data.
 
-After installing this package, R knows almost all ~20,000 microorganisms and ~500 antibiotics by name and code, and knows all about valid RSI and MIC values.
+After installing this package, R knows almost all ~60,000 microorganisms and ~500 antibiotics by name and code, and knows all about valid RSI and MIC values.
 
 **Used to SPSS?** Read our [tutorial on how to import data from SPSS, SAS or Stata](./articles/SPSS.html) and learn in which ways R outclasses any of these statistical packages.
 
@@ -15,6 +15,7 @@ This R package is actively maintained and is free software; you can freely use a
 
 This package can be used for:
 
+  * Reference for microorganisms, since it contains allmost all 60,000 microbial species of the Catalogue of Life
   * Calculating antimicrobial resistance
   * Calculating empirical susceptibility of both mono therapy and combination therapy
   * Predicting future antimicrobial resistance using regression models
@@ -67,7 +68,7 @@ It will be downloaded and installed automatically. For RStudio, click on the men
 
 #### Latest development version
 
-The latest and unpublished development version can be installed with (precaution: may be unstable):
+The latest and unpublished development version can be installed with (**precaution: may be unstable**):
 ```r
 install.packages("devtools")
 devtools::install_gitlab("msberends/AMR")
@@ -79,13 +80,27 @@ To find out how to conduct AMR analysis, please [continue reading here to get st
 
 ## Short introduction
 
-#### WHONET / EARS-Net
+#### Microbial (taxonomic) reference data
 
-<img src="./whonet.png">
+<img src="man/figures/logo_col.png">
 
-We support WHONET and EARS-Net data. Exported files from WHONET can be imported into R and can be analysed easily using this package. For education purposes, we created an [example data set `WHONET`](./reference/WHONET.html) with the exact same structure as a WHONET export file. Furthermore, this package also contains a [data set `antibiotics`](./reference/antibiotics.html) with all EARS-Net antibiotic abbreviations, and knows almost all WHONET abbreviations for microorganisms. When using WHONET data as input for analysis, all input parameters will be set automatically.
+This package contains the complete taxonomic tree of almost all microorganisms from the authoritative and comprehensive Catalogue of Life ([www.catalogueoflife.org](http://www.catalogueoflife.org)).
 
-Read our tutorial about [how to work with WHONET data here](./articles/WHONET.html).
+Included are:
+
+* All ~55,000 species from the kingdoms of Archaea, Bacteria, Protozoa and Viruses
+* All ~3,000 (sub)species from these orders of the kingdom of Fungi: Eurotiales, Onygenales, Pneumocystales, Saccharomycetales and Schizosaccharomycetales.
+  The kingdom of Fungi is a very large taxon with almost 300,000 different species, of which most are not microbial. Including everything tremendously slows down our algortihms, and not all fungi fit the scope of this package. By only including the aforementioned taxonomic orders, the most relevant species are covered (like genera *Aspergillus*, *Candida*, *Pneumocystis*, *Saccharomyces* and *Trichophyton*).
+* All ~15,000 previously accepted names of included species that have been taxonomically renamed
+* The responsible author(s) and year of scientific publication
+
+This data is updated annually - check the included version with `catalogue_of_life_version()`.
+
+**About**
+
+The Catalogue of Life ([www.catalogueoflife.org](http://www.catalogueoflife.org)) is the most comprehensive and authoritative global index of species currently available. It holds essential information on the names, relationships and distributions of over 1.6 million species. The Catalogue of Life is used to support the major biodiversity and conservation information services such as the Global Biodiversity Information Facility (GBIF), Encyclopedia of Life (EoL) and the International Union for Conservation of Nature Red List. It is recognised by the Convention on Biological Diversity as a significant component of the Global Taxonomy Initiative and a contribution to Target 1 of the Global Strategy for Plant Conservation.
+
+Read more about the data from the Catalogue of Life [in our manual](./reference/catalogue_of_life.html).
 
 #### Antimicrobial reference data
 
@@ -95,22 +110,13 @@ This package contains **all ~500 antimicrobial drugs** and their Anatomical Ther
 
 Read more about the data from WHOCC [in our manual](./reference/WHOCC.html).
 
-#### Microbial (taxonomic) reference data
+#### WHONET / EARS-Net
 
-<img src="man/figures/logo_col.png" height="60px">
+<img src="./whonet.png">
 
-This package contains the complete taxonomic tree of almost all microorganisms from the authoritative and comprehensive Catalogue of Life ([www.catalogueoflife.org](http://www.catalogueoflife.org)). This data is updated annually - check the included version with `catalogue_of_life_version()`.
+We support WHONET and EARS-Net data. Exported files from WHONET can be imported into R and can be analysed easily using this package. For education purposes, we created an [example data set `WHONET`](./reference/WHONET.html) with the exact same structure as a WHONET export file. Furthermore, this package also contains a [data set `antibiotics`](./reference/antibiotics.html) with all EARS-Net antibiotic abbreviations, and knows almost all WHONET abbreviations for microorganisms. When using WHONET data as input for analysis, all input parameters will be set automatically.
 
-Included are:
-
-* All ~55,000 species from the kingdoms of Archaea, Bacteria, Protozoa and Viruses
-* All ~3,000 (sub)species from these orders of the kingdom of Fungi: Eurotiales, Onygenales, Pneumocystales, Saccharomycetales and Schizosaccharomycetales. The kingdom of Fungi is a very large taxon with almost 300,000 different species, of which most are not microbial. Including everything tremendously slows down our algortihms, and not all fungi fit the scope of this package. By only including the aforementioned taxonomic orders, the most relevant species are covered (like genera *Aspergillus*, *Candida*, *Pneumocystis*, *Saccharomyces* and *Trichophyton*).
-* All ~15,000 previously accepted names of species that have been taxonomically renamed
-* The responsible author(s) and year of scientific publication
-
-The Catalogue of Life ([www.catalogueoflife.org](http://www.catalogueoflife.org)) is the most comprehensive and authoritative global index of species currently available. It holds essential information on the names, relationships and distributions of over 1.6 million species. The Catalogue of Life is used to support the major biodiversity and conservation information services such as the Global Biodiversity Information Facility (GBIF), Encyclopedia of Life (EoL) and the International Union for Conservation of Nature Red List. It is recognised by the Convention on Biological Diversity as a significant component of the Global Taxonomy Initiative and a contribution to Target 1 of the Global Strategy for Plant Conservation.
-
-Read more about the data from the Catalogue of Life [in our manual](./reference/catalogue_of_life.html).
+Read our tutorial about [how to work with WHONET data here](./articles/WHONET.html).
 
 #### Overview of functions
 

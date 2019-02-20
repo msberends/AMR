@@ -24,7 +24,7 @@ Included are:
 \itemize{
   \item{All ~55,000 (sub)species from the kingdoms of Archaea, Bacteria, Protozoa and Viruses}
   \item{All ~3,000 (sub)species from these orders of the kingdom of Fungi: Eurotiales, Onygenales, Pneumocystales, Saccharomycetales and Schizosaccharomycetales. The kingdom of Fungi is a very large taxon with almost 300,000 different species, of which most are not microbial. Including everything tremendously slows down our algortihms, and not all fungi fit the scope of this package. By only including the aforementioned taxonomic orders, the most relevant species are covered (like genera \emph{Aspergillus}, \emph{Candida}, \emph{Pneumocystis}, \emph{Saccharomyces} and \emph{Trichophyton}).}
-  \item{All ~15,000 previously accepted names of (sub)species that have been taxonomically renamed}
+  \item{All ~15,000 previously accepted names of inckuded (sub)species that have been taxonomically renamed}
   \item{The complete taxonomic tree of all included (sub)species: from kingdom to subspecies}
   \item{The responsible author(s) and year of scientific publication}
 }
