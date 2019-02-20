@@ -15,7 +15,7 @@ This R package is actively maintained and is free software; you can freely use a
 
 This package can be used for:
 
-  * Reference for microorganisms, since it contains allmost all 60,000 microbial species of the Catalogue of Life
+  * Reference for microorganisms, since it contains almost all 60,000 microbial (sub)species from the [Catalogue of Life](http://www.catalogueoflife.org)
   * Calculating antimicrobial resistance
   * Calculating empirical susceptibility of both mono therapy and combination therapy
   * Predicting future antimicrobial resistance using regression models
@@ -66,6 +66,8 @@ install.packages("AMR")
 
 It will be downloaded and installed automatically. For RStudio, click on the menu *Tools* > *Install Packages...* and then type in "AMR" and press <kbd>Install</kbd>.
 
+*Note:* Not all functions on this website may be available in this latest release. To use all functions and data sets mentioned on this website, install the latest development version.
+
 #### Latest development version
 
 The latest and unpublished development version can be installed with (**precaution: may be unstable**):
@@ -88,17 +90,21 @@ This package contains the complete taxonomic tree of almost all microorganisms f
 
 Included are:
 
-* All ~55,000 species from the kingdoms of Archaea, Bacteria, Protozoa and Viruses
+* All ~55,000 (sub)species from the kingdoms of Archaea, Bacteria, Protozoa and Viruses
+
 * All ~3,000 (sub)species from these orders of the kingdom of Fungi: Eurotiales, Onygenales, Pneumocystales, Saccharomycetales and Schizosaccharomycetales.
-  The kingdom of Fungi is a very large taxon with almost 300,000 different species, of which most are not microbial. Including everything tremendously slows down our algortihms, and not all fungi fit the scope of this package. By only including the aforementioned taxonomic orders, the most relevant species are covered (like genera *Aspergillus*, *Candida*, *Pneumocystis*, *Saccharomyces* and *Trichophyton*).
-* All ~15,000 previously accepted names of included species that have been taxonomically renamed
+
+  The kingdom of Fungi is a very large taxon with almost 300,000 different (sub)species, of which most are not microbial (but rather macroscopic, like mushrooms). Because of this, not all fungi fit the scope of this package and including everything would tremendously slow down our algorithms too. By only including the aforementioned taxonomic orders, the most relevant (sub)species are covered (like all species of *Aspergillus*, *Candida*, *Pneumocystis*, *Saccharomyces* and *Trichophyton*).
+
+* All ~15,000 previously accepted names of included (sub)species that have been taxonomically renamed
+
 * The responsible author(s) and year of scientific publication
 
 This data is updated annually - check the included version with `catalogue_of_life_version()`.
 
-**About**
+**About the Catalogue of Life**
 
-The Catalogue of Life ([www.catalogueoflife.org](http://www.catalogueoflife.org)) is the most comprehensive and authoritative global index of species currently available. It holds essential information on the names, relationships and distributions of over 1.6 million species. The Catalogue of Life is used to support the major biodiversity and conservation information services such as the Global Biodiversity Information Facility (GBIF), Encyclopedia of Life (EoL) and the International Union for Conservation of Nature Red List. It is recognised by the Convention on Biological Diversity as a significant component of the Global Taxonomy Initiative and a contribution to Target 1 of the Global Strategy for Plant Conservation.
+The [Catalogue of Life](http://www.catalogueoflife.org) is the most comprehensive and authoritative global index of species currently available. It holds essential information on the names, relationships and distributions of over 1.6 million species. The Catalogue of Life is used to support the major biodiversity and conservation information services such as the Global Biodiversity Information Facility (GBIF), Encyclopedia of Life (EoL) and the International Union for Conservation of Nature Red List. It is recognised by the Convention on Biological Diversity as a significant component of the Global Taxonomy Initiative and a contribution to Target 1 of the Global Strategy for Plant Conservation.
 
 Read more about the data from the Catalogue of Life [in our manual](./reference/catalogue_of_life.html).
 
