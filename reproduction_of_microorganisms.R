@@ -4,7 +4,9 @@
 
 # unzip and extract taxon.tab, then:
 taxon <- data.table::fread("taxon.tab")
-# result is over 3.7M rows
+# result is over 3.7M rows:
+library(dplyr)
+library(AMR)
 taxon %>% freq(kingdom)
 #      Item             Count   Percent   Cum. Count   Cum. Percent
 # ---  ----------  ----------  --------  -----------  -------------
@@ -127,6 +129,7 @@ MOs <- MOs %>%
                                  sep = "_")))) %>%
   mutate(mo = ifelse(duplicated(.$mo), paste0(mo, "1"), mo)) %>%
   select(mo, everything(), -abbr_genus, -abbr_species, -abbr_subspecies)
+
 
 # everything distinct?
 sum(duplicated(MOs$mo))

@@ -75,6 +75,9 @@ test_that("mo_property works", {
   expect_identical(mo_property("E. coli", property = "species"),
                    mo_species("E. coli"))
 
+  expect_identical(suppressWarnings(mo_ref("Chlamydia psittaci")), "Page, 1968")
+  expect_identical(mo_ref("Chlamydophila psittaci"), "Everett et al., 1999")
+
   # check vector with random values
   #library(dplyr)
   #df_sample <- AMR::microorganisms %>% sample_n(100)

@@ -35,6 +35,7 @@ test_that("as.mo works", {
   expect_equal(as.character(as.mo("Escherichia  coli")), "B_ESCHR_COL")
   expect_equal(as.character(as.mo("Escherichia  species")), "B_ESCHR")
   expect_equal(as.character(as.mo("Escherichia")), "B_ESCHR")
+  expect_equal(as.character(as.mo("Esch spp.")), "B_ESCHR")
   expect_equal(as.character(as.mo(" B_ESCHR_COL ")), "B_ESCHR_COL")
   expect_equal(as.character(as.mo("e coli")), "B_ESCHR_COL") # not Campylobacter
   expect_equal(as.character(as.mo("klpn")), "B_KLBSL_PNE")
@@ -45,6 +46,7 @@ test_that("as.mo works", {
   expect_equal(as.character(as.mo("L. pneumophila")), "B_LGNLL_PNE")
   expect_equal(as.character(as.mo("Strepto")), "B_STRPT")
   expect_equal(as.character(as.mo("Streptococcus")), "B_STRPT") # not Peptostreptoccus
+  expect_equal(as.character(as.mo("B_STRPTC")), "B_STRPT") # old MO code (<=v0.5.0)
 
   expect_equal(as.character(as.mo(c("GAS", "GBS"))), c("B_STRPT_GRA", "B_STRPT_GRB"))
 
@@ -80,6 +82,10 @@ test_that("as.mo works", {
               "MRSA",
               "VISA"))),
     rep("B_STPHY_AUR", 8))
+  expect_identical(
+    as.character(
+      as.mo(c('EHEC', 'EPEC', 'EIEC', 'STEC', 'ATEC'))),
+    rep("B_ESCHR_COL", 5))
   # unprevalent MO
   expect_identical(
     as.character(
@@ -116,6 +122,7 @@ test_that("as.mo works", {
   expect_identical(as.character(as.mo("STCPYO",      Lancefield = TRUE)),     "B_STRPT_GRA") # group A
   expect_identical(as.character(as.mo("S. agalactiae",  Lancefield = FALSE)), "B_STRPT_AGA")
   expect_identical(as.character(as.mo("S. agalactiae",  Lancefield = TRUE)),  "B_STRPT_GRB") # group B
+  expect_identical(as.character(suppressWarnings(as.mo("estreptococos grupo B"))), "B_STRPT_GRB")
   expect_identical(as.character(as.mo("S. equisimilis", Lancefield = FALSE)), "B_STRPT_DYS_EQU")
   expect_identical(as.character(as.mo("S. equisimilis", Lancefield = TRUE)),  "B_STRPT_GRC") # group C
   # Enterococci must only be influenced if Lancefield = "all"
@@ -229,4 +236,13 @@ test_that("as.mo works", {
   # Salmonella (City) are all actually Salmonella enterica spp (City)
   expect_equal(as.character(suppressMessages(as.mo("Salmonella Goettingen"))),
                "B_SLMNL_ENT")
+  expect_equal(as.character(as.mo("Salmonella Group A")), "B_SLMNL")
+
+  # no virusses
+  expect_warning(as.mo("Virus"))
+
+  # summary
+  expect_equal(length(summary(septic_patients$mo)), 6)
+
+  expect_warning(as.mo("Cutibacterium"))
 })

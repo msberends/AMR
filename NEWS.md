@@ -11,10 +11,14 @@ We've got a new website: [https://msberends.gitlab.io/AMR](https://msberends.git
 #### New
 * **BREAKING**: removed deprecated functions, parameters and references to 'bactid'. Use `as.mo()` to identify an MO code.
 * Catalogue of Life as a new taxonomic source for data about microorganisms, which also contains all ITIS data we used previously. The `microorganisms` data set now contains:
-  * All ~55,000 species from the kingdoms of Archaea, Bacteria, Protozoa and Viruses
-  * All ~3,000 (sub)species from these orders of the kingdom of Fungi: Eurotiales, Onygenales, Pneumocystales, Saccharomycetales and Schizosaccharomycetales. The kingdom of Fungi is a very large taxon with almost 300,000 different species, of which most are not microbial. Including everything tremendously slows down our algortihms, and not all fungi fit the scope of this package. By only including the aforementioned taxonomic orders, the most relevant species are covered (like genera *Aspergillus*, *Candida*, *Pneumocystis*, *Saccharomyces* and *Trichophyton*).
-  * All ~15,000 previously accepted names of species that have been taxonomically renamed
+  * All ~55,000 (sub)species from the kingdoms of Archaea, Bacteria, Protozoa and Viruses
+  * All ~3,000 (sub)species from these orders of the kingdom of Fungi: Eurotiales, Onygenales, Pneumocystales, Saccharomycetales and Schizosaccharomycetales.
+  
+    The kingdom of Fungi is a very large taxon with almost 300,000 different (sub)species, of which most are not microbial (but rather macroscopic, like mushrooms). Because of this, not all fungi fit the scope of this package and including everything would tremendously slow down our algorithms too. By only including the aforementioned taxonomic orders, the most relevant (sub)species are covered (like all species of *Aspergillus*, *Candida*, *Pneumocystis*, *Saccharomyces* and *Trichophyton*).
+  * All ~15,000 previously accepted names of included (sub)species that have been taxonomically renamed
   * The responsible author(s) and year of scientific publication
+  
+  This data is updated annually - check the included version with `catalogue_of_life_version()`.
   * Due to this change, some `mo` codes changed (e.g. *Streptococcus* changed from `B_STRPTC` to `B_STRPT`). A translation table is  used internally to support older microorganism IDs, so users will not notice this difference.
 * Support for data from [WHONET](https://whonet.org/) and [EARS-Net](https://ecdc.europa.eu/en/about-us/partnerships-and-networks/disease-and-laboratory-networks/ears-net) (European Antimicrobial Resistance Surveillance Network):
   * Exported files from WHONET can be read and used in this package. For functions like `first_isolate()` and `eucast_rules()`, all parameters will be filled in automatically.

@@ -372,7 +372,7 @@ exec_as.mo <- function(x, Becker = FALSE, Lancefield = FALSE,
           x[i] <- microorganismsDT[mo == 'B_ENTRC', ..property][[1]][1L]
           next
         }
-        if (toupper(x_trimmed[i]) %in% c('EHEC', 'EPEC', 'EIEC', 'STEC', 'ATEC')) {
+        if (toupper(x_trimmed[i]) %in% c("EHEC", "EPEC", "EIEC", "STEC", "ATEC")) {
           x[i] <- microorganismsDT[mo == 'B_ESCHR_COL', ..property][[1]][1L]
           next
         }
@@ -614,8 +614,8 @@ exec_as.mo <- function(x, Becker = FALSE, Lancefield = FALSE,
       if (NROW(found) > 0) {
         col_id_new <- found[1, col_id_new]
         # when property is "ref" (which is the case in mo_ref, mo_authors and mo_year), return the old value, so:
-        # mo_ref("Chlamydia psittaci) = "Page, 1968" (with warning)
-        # mo_ref("Chlamydophila psittaci) = "Everett et al., 1999"
+        # mo_ref("Chlamydia psittaci") = "Page, 1968" (with warning)
+        # mo_ref("Chlamydophila psittaci") = "Everett et al., 1999"
         if (property == "ref") {
           x[i] <- found[1, ref]
         } else {
@@ -632,7 +632,7 @@ exec_as.mo <- function(x, Becker = FALSE, Lancefield = FALSE,
       # check for uncertain results ----
       if (allow_uncertain == TRUE) {
 
-        uncertain_fn <- function(a.x_backup, b.x_trimmed, c.x_withspaces_start_end, d.x_withspaces_start_only, e.x) {
+        uncertain_fn <- function(a.x_backup, b.x_trimmed, c.x_withspaces_start_end, d.x_withspaces_start_only) {
 
           # (1) look for genus only, part of name ----
           if (nchar(b.x_trimmed) > 4 & !b.x_trimmed %like% " ") {
@@ -650,8 +650,7 @@ exec_as.mo <- function(x, Becker = FALSE, Lancefield = FALSE,
 
           # (2) look again for old taxonomic names, now for G. species ----
           found <- microorganisms.oldDT[fullname %like% c.x_withspaces_start_end
-                                        | fullname %like% d.x_withspaces_start_only
-                                        | fullname %like% e.x,]
+                                        | fullname %like% d.x_withspaces_start_only]
           if (NROW(found) > 0 & nchar(b.x_trimmed) >= 6) {
             if (property == "ref") {
               # when property is "ref" (which is the case in mo_ref, mo_authors and mo_year), return the old value, so:
@@ -715,7 +714,7 @@ exec_as.mo <- function(x, Becker = FALSE, Lancefield = FALSE,
             }
           }
 
-          # (6) not yet implemented taxonomic changes in ITIS ----
+          # (6) not yet implemented taxonomic changes in Catalogue of Life ----
           found <- suppressMessages(suppressWarnings(exec_as.mo(TEMPORARY_TAXONOMY(b.x_trimmed), clear_options = FALSE, allow_uncertain = FALSE)))
           if (!is.na(found)) {
             found_result <- found
@@ -732,7 +731,7 @@ exec_as.mo <- function(x, Becker = FALSE, Lancefield = FALSE,
           return(NA_character_)
         }
 
-        x[i] <- uncertain_fn(x_backup[i], x_trimmed[i], x_withspaces_start_end[i], x_withspaces_start_only[i], x[i])
+        x[i] <- uncertain_fn(x_backup[i], x_trimmed[i], x_withspaces_start_end[i], x_withspaces_start_only[i])
         if (!is.na(x[i])) {
           next
         }
