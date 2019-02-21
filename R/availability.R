@@ -24,6 +24,7 @@
 #' Easy check for availability of columns in a data set. This makes it easy to get an idea of which antibiotic combination can be used for calculation with e.g. \code{\link{portion_IR}}.
 #' @param tbl a \code{data.frame} or \code{list}
 #' @return \code{data.frame} with column names of \code{tbl} as row names and columns: \code{percent_IR}, \code{count}, \code{percent}, \code{visual_availability}.
+#' @inheritSection AMR Read more on our website!
 #' @export
 #' @examples
 #' availability(septic_patients)

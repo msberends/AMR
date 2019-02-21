@@ -125,7 +125,7 @@
 #'             language = "nl")              # "Streptococcus groep A"
 #'
 #'
-#' # Get a list with the complete taxonomy (subkingdom to subspecies)
+#' # Get a list with the complete taxonomy (kingdom to subspecies)
 #' mo_taxonomy("E. coli")
 mo_fullname <- function(x, language = get_locale(), ...) {
   x <- mo_validate(x = x, property = "fullname", ...)

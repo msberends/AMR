@@ -304,11 +304,13 @@ exec_as.mo <- function(x, Becker = FALSE, Lancefield = FALSE,
     # add start en stop regex
     x <- paste0('^', x, '$')
     x_withspaces_start_only <- paste0('^', x_withspaces)
+    x_withspaces_end_only <- paste0(x_withspaces, '$')
     x_withspaces_start_end <- paste0('^', x_withspaces, '$')
 
     # cat(paste0('x                       "', x, '"\n'))
     # cat(paste0('x_species               "', x_species, '"\n'))
     # cat(paste0('x_withspaces_start_only "', x_withspaces_start_only, '"\n'))
+    # cat(paste0('x_withspaces_end_only   "', x_withspaces_end_only, '"\n'))
     # cat(paste0('x_withspaces_start_end  "', x_withspaces_start_end, '"\n'))
     # cat(paste0('x_backup                "', x_backup, '"\n'))
     # cat(paste0('x_trimmed               "', x_trimmed, '"\n'))
@@ -494,194 +496,113 @@ exec_as.mo <- function(x, Becker = FALSE, Lancefield = FALSE,
         }
       }
 
-      # FIRST TRY SUPERPREVALENT IN HUMAN INFECTIONS ----
-      found <- microorganisms.superprevDT[tolower(fullname) %in% tolower(c(x_backup[i], x_trimmed[i])), ..property][[1]]
-      # most probable: is exact match in fullname
-      if (length(found) > 0) {
-        x[i] <- found[1L]
-        next
-      }
-      found <- microorganisms.superprevDT[mo == toupper(x_backup[i]), ..property][[1]]
-      # is a valid mo
-      if (length(found) > 0) {
-        x[i] <- found[1L]
-        next
-      }
-      found <- microorganisms.superprevDT[tolower(fullname) == tolower(x_trimmed_without_group[i]), ..property][[1]]
-      if (length(found) > 0) {
-        x[i] <- found[1L]
-        next
-      }
+      check_per_prevalence <- function(data_to_check,
+                                       a.x_backup,
+                                       b.x_trimmed,
+                                       c.x_trimmed_without_group,
+                                       d.x_withspaces_start_end,
+                                       e.x_withspaces_start_only,
+                                       f.x_withspaces_end_only) {
 
-      # try any match keeping spaces ----
-      found <- microorganisms.superprevDT[fullname %like% x_withspaces_start_end[i], ..property][[1]]
-      if (length(found) > 0 & nchar(x_trimmed[i]) >= 6) {
-        x[i] <- found[1L]
-        next
-      }
-
-      # try any match keeping spaces, not ending with $ ----
-      found <- microorganisms.superprevDT[fullname %like% x_withspaces_start_only[i], ..property][[1]]
-      if (length(found) > 0 & nchar(x_trimmed[i]) >= 6) {
-        x[i] <- found[1L]
-        next
-      }
-
-      # try any match diregarding spaces ----
-      found <- microorganisms.superprevDT[fullname %like% x[i], ..property][[1]]
-      if (length(found) > 0 & nchar(x_trimmed[i]) >= 6) {
-        x[i] <- found[1L]
-        next
-      }
-
-      # try splitting of characters in the middle and then find ID ----
-      # only when text length is 6 or lower
-      # like esco = E. coli, klpn = K. pneumoniae, stau = S. aureus, staaur = S. aureus
-      if (nchar(x_trimmed[i]) <= 6) {
-        x_length <- nchar(x_trimmed[i])
-        x[i] <- paste0(x_trimmed[i] %>% substr(1, x_length / 2),
-                       '.* ',
-                       x_trimmed[i] %>% substr((x_length / 2) + 1, x_length))
-        found <- microorganisms.superprevDT[fullname %like% paste0('^', x[i]), ..property][[1]]
+        found <- data_to_check[tolower(fullname) %in% tolower(c(a.x_backup, b.x_trimmed)), ..property][[1]]
+        # most probable: is exact match in fullname
         if (length(found) > 0) {
-          x[i] <- found[1L]
-          next
+          return(found[1L])
         }
-      }
 
-      # try fullname without start and stop regex, to also find subspecies ----
-      # like "K. pneu rhino" >> "Klebsiella pneumoniae (rhinoscleromatis)" = KLEPNERH
-      found <- microorganisms.superprevDT[fullname %like% x_withspaces_start_only[i], ..property][[1]]
-      if (length(found) > 0) {
-        x[i] <- found[1L]
-        next
-      }
-
-      # TRY PREVALENT IN HUMAN INFECTIONS ----
-      found <- microorganisms.prevDT[tolower(fullname) %in% tolower(c(x_backup[i], x_trimmed[i])), ..property][[1]]
-      # most probable: is exact match in fullname
-      if (length(found) > 0) {
-        x[i] <- found[1L]
-        next
-      }
-      found <- microorganisms.prevDT[mo == toupper(x_backup[i]), ..property][[1]]
-      # is a valid mo
-      if (length(found) > 0) {
-        x[i] <- found[1L]
-        next
-      }
-      found <- microorganisms.prevDT[tolower(fullname) == tolower(x_trimmed_without_group[i]), ..property][[1]]
-      if (length(found) > 0) {
-        x[i] <- found[1L]
-        next
-      }
-
-      # try any match keeping spaces ----
-      found <- microorganisms.prevDT[fullname %like% x_withspaces_start_end[i], ..property][[1]]
-      if (length(found) > 0 & nchar(x_trimmed[i]) >= 6) {
-        x[i] <- found[1L]
-        next
-      }
-
-      # try any match keeping spaces, not ending with $ ----
-      found <- microorganisms.prevDT[fullname %like% x_withspaces_start_only[i], ..property][[1]]
-      if (length(found) > 0 & nchar(x_trimmed[i]) >= 6) {
-        x[i] <- found[1L]
-        next
-      }
-
-      # try any match diregarding spaces ----
-      found <- microorganisms.prevDT[fullname %like% x[i], ..property][[1]]
-      if (length(found) > 0 & nchar(x_trimmed[i]) >= 6) {
-        x[i] <- found[1L]
-        next
-      }
-
-      # try splitting of characters in the middle and then find ID ----
-      # only when text length is 6 or lower
-      # like esco = E. coli, klpn = K. pneumoniae, stau = S. aureus, staaur = S. aureus
-      if (nchar(x_trimmed[i]) <= 6) {
-        x_length <- nchar(x_trimmed[i])
-        x[i] <- paste0(x_trimmed[i] %>% substr(1, x_length / 2),
-                       '.* ',
-                       x_trimmed[i] %>% substr((x_length / 2) + 1, x_length))
-        found <- microorganisms.prevDT[fullname %like% paste0('^', x[i]), ..property][[1]]
+        found <- data_to_check[mo == toupper(a.x_backup), ..property][[1]]
+        # is a valid mo
         if (length(found) > 0) {
-          x[i] <- found[1L]
-          next
+          return(found[1L])
         }
+        found <- data_to_check[tolower(fullname) == tolower(c.x_trimmed_without_group), ..property][[1]]
+        if (length(found) > 0) {
+          return(found[1L])
+        }
+
+        # try any match keeping spaces ----
+        found <- data_to_check[fullname %like% d.x_withspaces_start_end, ..property][[1]]
+        if (length(found) > 0 & nchar(b.x_trimmed) >= 6) {
+          return(found[1L])
+        }
+
+        # try any match keeping spaces, not ending with $ ----
+        found <- data_to_check[fullname %like% paste0(trimws(e.x_withspaces_start_only), " "), ..property][[1]]
+        if (length(found) > 0) {
+          return(found[1L])
+        }
+        found <- data_to_check[fullname %like% e.x_withspaces_start_only, ..property][[1]]
+        if (length(found) > 0 & nchar(b.x_trimmed) >= 6) {
+          return(found[1L])
+        }
+
+        # try any match keeping spaces, not start with ^ ----
+        found <- data_to_check[fullname %like% paste0(" ", trimws(f.x_withspaces_end_only)), ..property][[1]]
+        if (length(found) > 0) {
+          return(found[1L])
+        }
+        found <- data_to_check[fullname %like% f.x_withspaces_end_only, ..property][[1]]
+        if (length(found) > 0 & nchar(b.x_trimmed) >= 6) {
+          return(found[1L])
+        }
+
+        # try splitting of characters in the middle and then find ID ----
+        # only when text length is 6 or lower
+        # like esco = E. coli, klpn = K. pneumoniae, stau = S. aureus, staaur = S. aureus
+        if (nchar(b.x_trimmed) <= 6) {
+          x_length <- nchar(b.x_trimmed)
+          x_split <- paste0("^",
+                            b.x_trimmed %>% substr(1, x_length / 2),
+                            '.* ',
+                            b.x_trimmed %>% substr((x_length / 2) + 1, x_length))
+          found <- data_to_check[fullname %like% x_split, ..property][[1]]
+          if (length(found) > 0) {
+            return(found[1L])
+          }
+        }
+
+        # try fullname without start and without nchar limit of >= 6 ----
+        # like "K. pneu rhino" >> "Klebsiella pneumoniae (rhinoscleromatis)" = KLEPNERH
+        found <- data_to_check[fullname %like% e.x_withspaces_start_only, ..property][[1]]
+        if (length(found) > 0) {
+          return(found[1L])
+        }
+
+        # didn't found any
+        return(NA_character_)
       }
 
-      # try fullname without start and stop regex, to also find subspecies ----
-      # like "K. pneu rhino" >> "Klebsiella pneumoniae (rhinoscleromatis)" = KLEPNERH
-      found <- microorganisms.prevDT[fullname %like% x_withspaces_start_only[i], ..property][[1]]
-      if (length(found) > 0) {
-        x[i] <- found[1L]
+      # FIRST TRY VERY PREVALENT IN HUMAN INFECTIONS ----
+      x[i] <- check_per_prevalence(data_to_check = microorganismsDT[prevalence == 1],
+                                   a.x_backup = x_backup[i],
+                                   b.x_trimmed = x_trimmed[i],
+                                   c.x_trimmed_without_group = x_trimmed_without_group[i],
+                                   d.x_withspaces_start_end = x_withspaces_start_end[i],
+                                   e.x_withspaces_start_only = x_withspaces_start_only[i],
+                                   f.x_withspaces_end_only = x_withspaces_end_only[i])
+      if (!is.na(x[i])) {
         next
       }
-
+      # THEN TRY PREVALENT IN HUMAN INFECTIONS ----
+      x[i] <- check_per_prevalence(data_to_check = microorganismsDT[prevalence == 2],
+                                   a.x_backup = x_backup[i],
+                                   b.x_trimmed = x_trimmed[i],
+                                   c.x_trimmed_without_group = x_trimmed_without_group[i],
+                                   d.x_withspaces_start_end = x_withspaces_start_end[i],
+                                   e.x_withspaces_start_only = x_withspaces_start_only[i],
+                                   f.x_withspaces_end_only = x_withspaces_end_only[i])
+      if (!is.na(x[i])) {
+        next
+      }
       # THEN UNPREVALENT IN HUMAN INFECTIONS ----
-      found <- microorganisms.unprevDT[tolower(fullname) == tolower(x_backup[i]), ..property][[1]]
-      # most probable: is exact match in fullname
-      if (length(found) > 0) {
-        x[i] <- found[1L]
-        next
-      }
-      found <- microorganisms.unprevDT[tolower(fullname) == tolower(x_trimmed[i]), ..property][[1]]
-      # most probable: is exact match in fullname
-      if (length(found) > 0) {
-        x[i] <- found[1L]
-        next
-      }
-      found <- microorganisms.unprevDT[mo == toupper(x_backup[i]), ..property][[1]]
-      # is a valid mo
-      if (length(found) > 0) {
-        x[i] <- found[1L]
-        next
-      }
-      found <- microorganisms.unprevDT[tolower(fullname) == tolower(x_trimmed_without_group[i]), ..property][[1]]
-      if (length(found) > 0) {
-        x[i] <- found[1L]
-        next
-      }
-      # try any match keeping spaces ----
-      found <- microorganisms.unprevDT[fullname %like% x_withspaces_start_end[i], ..property][[1]]
-      if (length(found) > 0) {
-        x[i] <- found[1L]
-        next
-      }
-      # try any match keeping spaces, not ending with $ ----
-      found <- microorganisms.unprevDT[fullname %like% x_withspaces_start_only[i], ..property][[1]]
-      if (length(found) > 0) {
-        x[i] <- found[1L]
-        next
-      }
-      # try any match diregarding spaces ----
-      found <- microorganisms.unprevDT[fullname %like% x[i], ..property][[1]]
-      if (length(found) > 0 & nchar(x_trimmed[i]) >= 6) {
-        x[i] <- found[1L]
-        next
-      }
-      # try splitting of characters in the middle and then find ID ----
-      # only when text length is 6 or lower
-      # like esco = E. coli, klpn = K. pneumoniae, stau = S. aureus, staaur = S. aureus
-      if (nchar(x_trimmed[i]) <= 6) {
-        x_length <- nchar(x_trimmed[i])
-        x[i] <- paste0(x_trimmed[i] %>% substr(1, x_length / 2),
-                       '.* ',
-                       x_trimmed[i] %>% substr((x_length / 2) + 1, x_length))
-        found <- microorganisms.unprevDT[fullname %like% paste0('^', x[i]), ..property][[1]]
-        if (length(found) > 0) {
-          x[i] <- found[1L]
-          next
-        }
-      }
-
-      # try fullname without start and stop regex, to also find subspecies ----
-      # like "K. pneu rhino" >> "Klebsiella pneumoniae (rhinoscleromatis)" = KLEPNERH
-      found <- microorganisms.unprevDT[fullname %like% x_withspaces_start_only[i], ..property][[1]]
-      if (length(found) > 0) {
-        x[i] <- found[1L]
+      x[i] <- check_per_prevalence(data_to_check = microorganismsDT[prevalence == 3],
+                                   a.x_backup = x_backup[i],
+                                   b.x_trimmed = x_trimmed[i],
+                                   c.x_trimmed_without_group = x_trimmed_without_group[i],
+                                   d.x_withspaces_start_end = x_withspaces_start_end[i],
+                                   e.x_withspaces_start_only = x_withspaces_start_only[i],
+                                   f.x_withspaces_end_only = x_withspaces_end_only[i])
+      if (!is.na(x[i])) {
         next
       }
 

@@ -123,7 +123,6 @@ The syntax used to transform the original data to a cleansed R format, can be fo
 
 \section{Read more on our website!}{
 
-\if{html}{\figure{logo.png}{options: height=40px style=margin-bottom:5px} \cr}
 On our website \url{https://msberends.gitlab.io/AMR} you can find \href{https://msberends.gitlab.io/AMR/articles/AMR.html}{a comprehensive tutorial} about how to conduct AMR analysis, the \href{https://msberends.gitlab.io/AMR/reference}{complete documentation of all functions} (which reads a lot easier than here in R) and \href{https://msberends.gitlab.io/AMR/articles/WHONET.html}{an example analysis using WHONET data}.
 }
 
@@ -203,7 +202,7 @@ mo_fullname("S. pyogenes",
             language = "nl")              # "Streptococcus groep A"
 
 
-# Get a list with the complete taxonomy (subkingdom to subspecies)
+# Get a list with the complete taxonomy (kingdom to subspecies)
 mo_taxonomy("E. coli")
 }
 \seealso{

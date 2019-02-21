@@ -170,6 +170,7 @@ catalogue_of_life <- list(
 #' Version info of included Catalogue of Life
 #' @seealso \code{\link{microorganisms}}
 #' @inheritSection catalogue_of_life Catalogue of Life
+#' @inheritSection AMR Read more on our website!
 #' @export
 catalogue_of_life_version <- function() {
   list(version = catalogue_of_life$version,

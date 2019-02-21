@@ -24,7 +24,7 @@ Sys.setlocale(locale = "C")
 
 ## SPSS / SAS / Stata
 
-SPSS (Statistical Package for the Social Sciences) is probably the most well-known software package for statistical analysis. SPSS is easier to learn than R, because in SPSS you only have to click a menu to run parts of your analysis. Because of its user-friendlyness, it is taught at universities and particularly useful for students who are new to statistics. From my experience, I would guess that pretty much all (bio)medical students know it at the time they graduate. SAS and Stata are statistical packages popular in big industries.
+SPSS (Statistical Package for the Social Sciences) is probably the most well-known software package for statistical analysis. SPSS is easier to learn than R, because in SPSS you only have to click a menu to run parts of your analysis. Because of its user-friendliness, it is taught at universities and particularly useful for students who are new to statistics. From my experience, I would guess that pretty much all (bio)medical students know it at the time they graduate. SAS and Stata are comparable statistical packages popular in big industries.
 
 ## Compared to R
 

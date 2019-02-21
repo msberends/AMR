@@ -56,6 +56,7 @@
 #' @export
 #' @rdname atc_online
 #' @importFrom dplyr %>% progress_estimated
+#' @inheritSection AMR Read more on our website!
 #' @source \url{https://www.whocc.no/atc_ddd_alterations__cumulative/ddd_alterations/abbrevations/}
 #' @examples
 #' \donttest{

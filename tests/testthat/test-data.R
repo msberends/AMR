@@ -55,3 +55,8 @@ test_that("data sets are valid", {
                      as.data.frame(stringsAsFactors = FALSE))
 
 })
+
+test_that("creation of data sets are valid", {
+  # run the code
+  .onLoad()
+})

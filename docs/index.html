@@ -211,7 +211,7 @@
 <li>Getting properties for any antibiotic (like name, ATC code, defined daily dose or trade name)</li>
 <li>Plotting antimicrobial resistance</li>
 <li>Determining first isolates to be used for AMR analysis</li>
-<li>Applying EUCAST rules</li>
+<li>Applying EUCAST expert rules (not the translation from MIC to RSI values)</li>
 <li>Determining multi-drug resistant organisms (MDRO)</li>
 <li>Descriptive statistics: frequency tables, kurtosis and skewness</li>
 </ul>
@@ -321,7 +321,7 @@
 <li>
 <p>It <strong>enhances existing data</strong> and <strong>adds new data</strong> from data sets included in this package.</p>
 <ul>
-<li>Use <code><a href="reference/eucast_rules.html">eucast_rules()</a></code> to apply <a href="http://www.eucast.org/expert_rules_and_intrinsic_resistance/">EUCAST expert rules to isolates</a>.</li>
+<li>Use <code><a href="reference/eucast_rules.html">eucast_rules()</a></code> to apply <a href="http://www.eucast.org/expert_rules_and_intrinsic_resistance/">EUCAST expert rules to isolates</a> (not the translation from MIC to RSI values).</li>
 <li>Use <code><a href="reference/first_isolate.html">first_isolate()</a></code> to identify the first isolates of every patient <a href="https://clsi.org/standards/products/microbiology/documents/m39/">using guidelines from the CLSI</a> (Clinical and Laboratory Standards Institute).
 <ul>
 <li>You can also identify first <em>weighted</em> isolates of every patient, an adjusted version of the CLSI guideline. This takes into account key antibiotics of every strain and compares them.</li>
