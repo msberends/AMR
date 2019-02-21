@@ -61,4 +61,6 @@ test_that("creation of data sets is valid", {
   DT <- make_DT()
   expect_lt(nrow(DT[prevalence == 1]), nrow(DT[prevalence == 2]))
   expect_lt(nrow(DT[prevalence == 2]), nrow(DT[prevalence == 3]))
+  old <- make_trans_tbl()
+  expect_gt(length(old), 0)
 })
