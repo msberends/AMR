@@ -56,7 +56,3 @@ test_that("data sets are valid", {
 
 })
 
-test_that("creation of data sets are valid", {
-  # run the code
-  .onLoad()
-})
