@@ -1,5 +1,6 @@
 % AMR (for R)
 
+# `AMR` (for R)
 <img src="man/figures/logo.png" align="right" height="120px" />
 
 ### Not a developer? Then please visit our website [https://msberends.gitlab.io/AMR](https://msberends.gitlab.io/AMR) to read about this package.
@@ -58,7 +59,7 @@ Development Test | Result | Reference
 --- | :---: | ---
 All functions checked on Linux | [![pipeline status](https://gitlab.com/msberends/AMR/badges/master/pipeline.svg)](https://gitlab.com/msberends/AMR/commits/master) | GitLab CI [[ref 1]](https://gitlab.com/msberends/AMR) 
 All functions checked on Windows | [![AppVeyor_Build](https://ci.appveyor.com/api/projects/status/gitlab/msberends/AMR?branch=master&svg=true)](https://ci.appveyor.com/project/msberends/amr-svxon) | Appveyor Systems Inc. [[ref 2]](https://ci.appveyor.com/project/msberends/amr-svxon)
-Percentage of syntax lines checked | [![Code_Coverage](https://codecov.io/gl/msberends/AMR/branch/master/graph/badge.svg)](https://codecov.io/gl/msberends/AMR) | Codecov LLC [[ref 3]](https://codecov.io/gl/msberends/AMR)
+Percentage of syntax lines checked | [![Code_Coverage](https://codecov.io/gl/msberends/AMR/branch/master/graph/badge.svg)](https://codecov.io/gl/msberends/AMR) [![Code_Coverage](https://gitlab.com/msberends/AMR/badges/master/coverage.svg)](https://codecov.io/gl/msberends/AMR) | Codecov LLC [[ref 3]](https://codecov.io/gl/msberends/AMR)
 
 If so, try it with:
 ```r
