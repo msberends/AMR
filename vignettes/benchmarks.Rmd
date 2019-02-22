@@ -48,12 +48,11 @@ S.aureus <- microbenchmark(as.mo("sau"),
                            as.mo("S.  aureus"),
                            as.mo("STAAUR"),
                            as.mo("Staphylococcus aureus"),
-                           as.mo("B_STPHY_AUR"),
                            times = 10)
-print(S.aureus, unit = "ms", signif = 2)
+print(S.aureus, unit = "ms", signif = 3)
 ```
 
-In the table above, all measurements are shown in milliseconds (thousands of seconds). A value of 10 milliseconds means it can determine 100 input values per second. It case of 50 milliseconds, this is only 20 input values per second. The more an input value resembles a full name, the faster the result will be found. In case of `as.mo("B_STPHY_AUR")`, the input is already a valid MO code, so it only almost takes no time at all (`r as.integer(S.aureus %>% filter(expr == 'as.mo("B_STPHY_AUR")') %>% pull(time) %>% median(na.rm = TRUE) / 1000)` millionths of a second).
+In the table above, all measurements are shown in milliseconds (thousands of seconds). A value of 10 milliseconds means it can determine 100 input values per second. It case of 50 milliseconds, this is only 20 input values per second. The more an input value resembles a full name, the faster the result will be found.
 
 To achieve this speed, the `as.mo` function also takes into account the prevalence of human pathogenic microorganisms. The downside is of course that less prevalent microorganisms will be determined less fast. See this example for the ID of *Mycoplasma leonicaptivi* (`B_MYCPL_LEO`), a bug probably never found before in humans:
 
@@ -64,26 +63,30 @@ M.leonicaptivi <- microbenchmark(as.mo("myle"),
                                  as.mo("M.  leonicaptivi"),
                                  as.mo("MYCLEO"),
                                  as.mo("Mycoplasma leonicaptivi"),
-                                 as.mo("B_MYCPL_LEO"),
                                  times = 10)
-print(M.leonicaptivi, unit = "ms", signif = 2)
+print(M.leonicaptivi, unit = "ms", signif = 3)
 ```
 
-That takes `r round(mean(M.leonicaptivi$time, na.rm = TRUE) / mean(S.aureus$time, na.rm = TRUE), 1)` times as much time on average! A value of 100 milliseconds means it can only determine ~10 different input values per second. We can conclude that looking up arbitrary codes of less prevalent microorganisms is the worst way to go, in terms of calculation performance:
+That takes `r round(mean(M.leonicaptivi$time, na.rm = TRUE) / mean(S.aureus$time, na.rm = TRUE), 1)` times as much time on average! A value of 100 milliseconds means it can only determine ~10 different input values per second. We can conclude that looking up arbitrary codes of less prevalent microorganisms is the worst way to go, in terms of calculation performance.
+
+In the figure below, we compare *Escherichia coli* (which is very common) with *Prevotella brevis* (which is moderately common) and with *Mycoplasma leonicaptivi* (which is very uncommon):
 
 ```{r}
 par(mar = c(5, 16, 4, 2)) # set more space for left margin text (16)
 
-# highest value on y axis
-max_y_axis <- max(S.aureus$time, M.leonicaptivi$time, na.rm = TRUE) / 1e6
-
-boxplot(S.aureus, horizontal = TRUE, las = 1, unit = "ms", log = FALSE, xlab = "", ylim = c(0, max_y_axis),
-        main = expression(paste("Benchmark of ", italic("Staphylococcus aureus"))))
-boxplot(M.leonicaptivi, horizontal = TRUE, las = 1, unit = "ms", log = FALSE, xlab = "", ylim = c(0, max_y_axis),
-        main = expression(paste("Benchmark of ", italic("Mycoplasma leonicaptivi"))))
+boxplot(microbenchmark(as.mo("M. leonicaptivi"),
+                       as.mo("Mycoplasma leonicaptivi"),
+                       as.mo("P. brevis"),
+                       as.mo("Prevotella brevis"),
+                       as.mo("E. coli"),
+                       as.mo("Escherichia coli"),
+                       times = 50),
+        horizontal = TRUE, las = 1, unit = "s", log = FALSE,
+        xlab = "", ylab = "Time in seconds",
+        main = "Benchmarks per prevalence")
 ```
 
-To relieve this pitfall and further improve performance, two important calculations take almost no time at all: **repetitive results** and **already precalculated results**.
+Uncommon microorganisms take a lot more time than common microorganisms. To relieve this pitfall and further improve performance, two important calculations take almost no time at all: **repetitive results** and **already precalculated results**.
 
 ### Repetitive results
 

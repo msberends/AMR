@@ -256,13 +256,14 @@
 <p>All ~3,000 (sub)species from these orders of the kingdom of Fungi: Eurotiales, Onygenales, Pneumocystales, Saccharomycetales and Schizosaccharomycetales.</p>
 The kingdom of Fungi is a very large taxon with almost 300,000 different (sub)species, of which most are not microbial (but rather macroscopic, like mushrooms). Because of this, not all fungi fit the scope of this package and including everything would tremendously slow down our algorithms too. By only including the aforementioned taxonomic orders, the most relevant (sub)species are covered (like all species of <em>Aspergillus</em>, <em>Candida</em>, <em>Pneumocystis</em>, <em>Saccharomyces</em> and <em>Trichophyton</em>).</li>
 <li>All ~15,000 previously accepted names of included (sub)species that have been taxonomically renamed</li>
-<li><p>The responsible author(s) and year of scientific publication</p></li>
-</ul>
-This data is updated annually - check the included version with <code><a href="../reference/catalogue_of_life_version.html">catalogue_of_life_version()</a></code>.
-<ul>
+<li>
+<p>The responsible author(s) and year of scientific publication</p>
+This data is updated annually - check the included version with <code><a href="../reference/catalogue_of_life_version.html">catalogue_of_life_version()</a></code>.</li>
 <li>Due to this change, some <code>mo</code> codes changed (e.g. <em>Streptococcus</em> changed from <code>B_STRPTC</code> to <code>B_STRPT</code>). A translation table is used internally to support older microorganism IDs, so users will not notice this difference.</li>
 </ul>
 </li>
+<li>New function <code><a href="../reference/mo_property.html">mo_rank()</a></code> for the taxonomic rank (genus, species, infraspecies, etc.)</li>
+<li>New function <code><a href="../reference/mo_property.html">mo_url()</a></code> to get the URL to the Catalogue of Life</li>
 <li>Support for data from <a href="https://whonet.org/">WHONET</a> and <a href="https://ecdc.europa.eu/en/about-us/partnerships-and-networks/disease-and-laboratory-networks/ears-net">EARS-Net</a> (European Antimicrobial Resistance Surveillance Network):
 <ul>
 <li>Exported files from WHONET can be read and used in this package. For functions like <code><a href="../reference/first_isolate.html">first_isolate()</a></code> and <code><a href="../reference/eucast_rules.html">eucast_rules()</a></code>, all parameters will be filled in automatically.</li>

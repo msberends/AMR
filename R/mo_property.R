@@ -26,6 +26,7 @@
 #' @param property one of the column names of one of the \code{\link{microorganisms}} data set or \code{"shortname"}
 #' @param language language of the returned text, defaults to system language (see \code{\link{get_locale}}) and can also be set with \code{\link{getOption}("AMR_locale")}. Use \code{language = NULL} or \code{language = ""} to prevent translation.
 #' @param ... other parameters passed on to \code{\link{as.mo}}
+#' @param open browse the URL using \code{\link[utils]{browseURL}}
 #' @details All functions will return the most recently known taxonomic property according to the Catalogue of Life, except for \code{mo_ref}, \code{mo_authors} and \code{mo_year}. This leads to the following results:
 #' \itemize{
 #'   \item{\code{mo_fullname("Chlamydia psittaci")} will return \code{"Chlamydophila psittaci"} (with a warning about the renaming)}
@@ -44,14 +45,14 @@
 #' @return \itemize{
 #'   \item{An \code{integer} in case of \code{mo_year}}
 #'   \item{A \code{list} in case of \code{mo_taxonomy}}
+#'   \item{A named \code{character} in case of \code{mo_url}}
 #'   \item{A \code{character} in all other cases}
 #' }
 #' @export
 #' @seealso \code{\link{microorganisms}}
 #' @inheritSection AMR Read more on our website!
 #' @examples
-#' # All properties of Escherichia coli
-#' ## taxonomic properties
+#' ## taxonomic tree
 #' mo_kingdom("E. coli")         # "Bacteria"
 #' mo_phylum("E. coli")          # "Proteobacteria"
 #' mo_class("E. coli")           # "Gammaproteobacteria"
@@ -68,10 +69,12 @@
 #' ## other properties
 #' mo_gramstain("E. coli")       # "Gram negative"
 #' mo_type("E. coli")            # "Bacteria" (equal to kingdom)
+#' mo_rank("E. coli")            # "species"
+#' mo_url("E. coli")             # get the direct url to the Catalogue of Life
 #'
 #' ## scientific reference
-#' mo_ref("E. coli")             # "Castellani and Chalmers, 1919"
-#' mo_authors("E. coli")         # "Castellani and Chalmers"
+#' mo_ref("E. coli")             # "Castellani et al., 1919"
+#' mo_authors("E. coli")         # "Castellani et al."
 #' mo_year("E. coli")            # 1919
 #'
 #'
@@ -107,7 +110,7 @@
 #' mo_shortname("S. pyo", Lancefield = TRUE) # "GAS" ('Group A streptococci')
 #'
 #'
-#' # Language support for German, Dutch, Spanish, Portuguese, Italian and French
+#' # language support for German, Dutch, Spanish, Portuguese, Italian and French
 #' mo_gramstain("E. coli", language = "de")  # "Gramnegativ"
 #' mo_gramstain("E. coli", language = "nl")  # "Gram-negatief"
 #' mo_gramstain("E. coli", language = "es")  # "Gram negativo"
@@ -125,7 +128,7 @@
 #'             language = "nl")              # "Streptococcus groep A"
 #'
 #'
-#' # Get a list with the complete taxonomy (kingdom to subspecies)
+#' # get a list with the complete taxonomy (kingdom to subspecies)
 #' mo_taxonomy("E. coli")
 mo_fullname <- function(x, language = get_locale(), ...) {
   x <- mo_validate(x = x, property = "fullname", ...)
@@ -259,9 +262,9 @@ mo_ref <- function(x, ...) {
 #' @export
 mo_authors <- function(x, ...) {
   x <- mo_validate(x = x, property = "ref", ...)
-  # remove last 4 digits and presumably the comma and space that preceed them
+  # remove last 4 digits and presumably the comma and space that preceeds them
   x[!is.na(x)] <- gsub(",? ?[0-9]{4}", "", x[!is.na(x)])
-  x
+  suppressWarnings(x)
 }
 
 #' @rdname mo_property
@@ -270,7 +273,13 @@ mo_year <- function(x, ...) {
   x <- mo_validate(x = x, property = "ref", ...)
   # get last 4 digits
   x[!is.na(x)] <- gsub(".*([0-9]{4})$", "\\1", x[!is.na(x)])
-  as.integer(x)
+  suppressWarnings(as.integer(x))
+}
+
+#' @rdname mo_property
+#' @export
+mo_rank <- function(x, ...) {
+  mo_validate(x = x, property = "rank", ...)
 }
 
 #' @rdname mo_property
@@ -288,10 +297,18 @@ mo_taxonomy <- function(x, ...) {
 }
 
 #' @rdname mo_property
+#' @importFrom utils browseURL
 #' @export
-mo_url <- function(x, ...) {
+mo_url <- function(x, open = FALSE, ...) {
   u <- mo_validate(x = x, property = "species_id", ...)
   u[u != ""] <- paste0(catalogue_of_life$url, "/details/species/id/", u)
+  names(u) <- mo_fullname(x = x, ... =  ...)
+  if (open == TRUE) {
+    if (length(u) > 1) {
+      warning("only the first URL will be opened, as `browseURL` only suports one string.")
+    }
+    browseURL(u[1L])
+  }
   u
 }
 

@@ -2,8 +2,8 @@
 # Data retrieved from Encyclopaedia of Life:
 # https://opendata.eol.org/dataset/catalogue-of-life/
 
-# unzip and extract taxon.tab, then:
-taxon <- data.table::fread("taxon.tab")
+# unzip and extract taxon.tab (around 1.5 GB), then:
+taxon <- data.table::fread("Downloads/taxon.tab")
 # result is over 3.7M rows:
 library(dplyr)
 library(AMR)
@@ -29,25 +29,45 @@ MOs <- taxon %>%
     !taxonRank %in% c("kingdom", "phylum", "superfamily", "class", "order", "family"),
     # not all fungi: Aspergillus, Candida, Trichphyton and Pneumocystis are the most important,
     # so only keep these orders from the fungi:
-    !(kingdom == "Fungi" & !order %in% c("Eurotiales", "Saccharomycetales", "Schizosaccharomycetales", "Onygenales", "Pneumocystales"))) %>%
+    !(kingdom == "Fungi" & !order %in% c("Eurotiales", "Saccharomycetales", "Schizosaccharomycetales", "Tremellales", "Onygenales", "Pneumocystales"))) %>%
   # remove text if it contains 'Not assigned' like phylum in viruses
   mutate_all(funs(gsub("Not assigned", "", .))) %>%
-  # only latest ref, not original authors
-  mutate(scientificNameAuthorship = trimws(gsub(".*[)] ", "", scientificNameAuthorship)),
-         scientificNameAuthorship = ifelse(grepl(" emend[. ]", scientificNameAuthorship, ignore.case = TRUE),
-                                           gsub("(.*)emend[. ]+(.*)", "\\2", scientificNameAuthorship, ignore.case = TRUE),
-                                           scientificNameAuthorship),
-         scientificNameAuthorship = gsub(".", "", scientificNameAuthorship, fixed = TRUE),
-         scientificNameAuthorship = gsub(",? et al", " et al.", scientificNameAuthorship, fixed = FALSE, ignore.case = TRUE),
-         scientificNameAuthorship = gsub("[()]", "", scientificNameAuthorship),
-         # year always preceded by comma
-         scientificNameAuthorship = gsub(" ([0-9]{4})$", ", \\1", scientificNameAuthorship),
-         scientificNameAuthorship = gsub(",,", ",", scientificNameAuthorship, fixed = TRUE),
-         # only first author with *et al.*
-         scientificNameAuthorship = gsub(",.*,", " et al.,", scientificNameAuthorship),
-         scientificNameAuthorship = gsub(" (and|&) .*,", " et al.,", scientificNameAuthorship),
-         scientificNameAuthorship = gsub(", [^0-9]+", ", ", scientificNameAuthorship),
-         scientificNameAuthorship = gsub(", $", "", scientificNameAuthorship)
+  # Transform 'Smith, Jones, 2011' to 'Smith et al., 2011':
+  mutate(authors2 = iconv(scientificNameAuthorship, from = "UTF-8", to = "ASCII//TRANSLIT"),
+         # remove leading and trailing brackets
+         authors2 = gsub("^[(](.*)[)]$", "\\1", authors2),
+         # only take part after brackets if there's a name
+         authors2 = ifelse(grepl(".*[)] [a-zA-Z]+.*", authors2),
+                           gsub(".*[)] (.*)", "\\1", authors2),
+                           authors2),
+         # get year from last 4 digits
+         lastyear = as.integer(gsub(".*([0-9]{4})$", "\\1", authors2)),
+         # can never be later than now
+         lastyear = ifelse(lastyear > as.integer(format(Sys.Date(), "%Y")),
+                           NA,
+                           lastyear),
+         # get authors without last year
+         authors = gsub("(.*)[0-9]{4}$", "\\1", authors2),
+         # remove nonsense characters from names
+         authors = gsub("[^a-zA-Z,'& -]", "", authors),
+         # remove trailing and leading spaces
+         authors = trimws(authors),
+         # only keep first author and replace all others by 'et al'
+         authors = gsub("(,| and| &| ex| emend\\.?) .*", " et al.", authors),
+         # et al. always with ending dot
+         authors = gsub(" et al\\.?", " et al.", authors),
+         authors = gsub(" ?,$", "", authors),
+         # don't start with 'sensu' or 'ehrenb'
+         authors = gsub("^(sensu|Ehrenb.?) ", "", authors, ignore.case = TRUE),
+         # no initials, only surname
+         authors = gsub("^([A-Z]+ )+", "", authors, ignore.case = FALSE),
+         # combine author and year if year is available
+         ref = ifelse(!is.na(lastyear),
+                      paste0(authors, ", ", lastyear),
+                      authors),
+         # fix beginning and ending
+         ref = gsub(", $", "", ref),
+         ref = gsub("^, ", "", ref)
   )
 
 # remove non-ASCII characters (not allowed by CRAN)
@@ -58,7 +78,7 @@ MOs <- MOs %>%
 # split old taxonomic names - they refer to a new `taxonID` with `acceptedNameUsageID`
 MOs.old <- MOs %>%
   filter(!is.na(acceptedNameUsageID),
-         scientificNameAuthorship != "") %>%
+         ref != "") %>%
   transmute(col_id = taxonID,
             col_id_new = acceptedNameUsageID,
             fullname =
@@ -66,9 +86,9 @@ MOs.old <- MOs %>%
                 gsub("(.*)[(].*", "\\1",
                      stringr::str_replace(
                        string = scientificName,
-                       pattern = stringr::fixed(scientificNameAuthorship),
+                       pattern = stringr::fixed(ref),
                        replacement = ""))),
-            ref = scientificNameAuthorship) %>%
+            ref = ref) %>%
   filter(!is.na(fullname)) %>%
   distinct(fullname, .keep_all = TRUE) %>%
   arrange(col_id)
@@ -88,7 +108,7 @@ MOs <- MOs %>%
             species = specificEpithet,
             subspecies = infraspecificEpithet,
             rank = taxonRank,
-            ref = scientificNameAuthorship,
+            ref = ref,
             species_id = gsub(".*/([a-f0-9]+)", "\\1", furtherInformationURL)) %>%
   distinct(fullname, .keep_all = TRUE) %>%
   filter(!grepl("unassigned", fullname, ignore.case = TRUE))
@@ -254,6 +274,7 @@ class(MOs$mo) <- "mo"
 
 saveRDS(MOs, "microorganisms.rds")
 saveRDS(MOs.old, "microorganisms.old.rds")
+
 # on the server:
 # usethis::use_data(microorganisms, overwrite = TRUE)
 # usethis::use_data(microorganisms.old, overwrite = TRUE)

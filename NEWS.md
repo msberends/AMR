@@ -18,8 +18,10 @@ We've got a new website: [https://msberends.gitlab.io/AMR](https://msberends.git
   * All ~15,000 previously accepted names of included (sub)species that have been taxonomically renamed
   * The responsible author(s) and year of scientific publication
   
-  This data is updated annually - check the included version with `catalogue_of_life_version()`.
+    This data is updated annually - check the included version with `catalogue_of_life_version()`.
   * Due to this change, some `mo` codes changed (e.g. *Streptococcus* changed from `B_STRPTC` to `B_STRPT`). A translation table is  used internally to support older microorganism IDs, so users will not notice this difference.
+* New function `mo_rank()` for the taxonomic rank (genus, species, infraspecies, etc.)
+* New function `mo_url()` to get the URL to the Catalogue of Life
 * Support for data from [WHONET](https://whonet.org/) and [EARS-Net](https://ecdc.europa.eu/en/about-us/partnerships-and-networks/disease-and-laboratory-networks/ears-net) (European Antimicrobial Resistance Surveillance Network):
   * Exported files from WHONET can be read and used in this package. For functions like `first_isolate()` and `eucast_rules()`, all parameters will be filled in automatically.
   * This package now knows all antibiotic abbrevations by EARS-Net (which are also being used by WHONET) - the `antibiotics` data set now contains a column `ears_net`.

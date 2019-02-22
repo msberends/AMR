@@ -134,7 +134,7 @@
 #'
 #' A data set containing the microbial taxonomy of six kingdoms from the Catalogue of Life. MO codes can be looked up using \code{\link{as.mo}}.
 #' @inheritSection catalogue_of_life Catalogue of Life
-#' @format A \code{\link{data.frame}} with 56,672 observations and 14 variables:
+#' @format A \code{\link{data.frame}} with 57,158 observations and 14 variables:
 #' \describe{
 #'   \item{\code{mo}}{ID of microorganism as used by this package}
 #'   \item{\code{col_id}}{Catalogue of Life ID}
@@ -163,6 +163,7 @@
 "microorganisms"
 
 catalogue_of_life <- list(
+  year = 2018,
   version = "Catalogue of Life: 2018 Annual Checklist",
   url = "http://www.catalogueoflife.org/annual-checklist/2018"
 )
@@ -175,6 +176,8 @@ catalogue_of_life <- list(
 catalogue_of_life_version <- function() {
   list(version = catalogue_of_life$version,
        url = catalogue_of_life$url,
+       # annual release always somewhere in March
+       is_latest_annual_release = Sys.Date() < as.Date(paste0(catalogue_of_life$year + 1, "-04-01")),
        no_of_species = nrow(AMR::microorganisms),
        no_of_synonyms = nrow(AMR::microorganisms.old))
 }
@@ -183,7 +186,7 @@ catalogue_of_life_version <- function() {
 #'
 #' A data set containing old (previously valid or accepted) taxonomic names according to the Catalogue of Life. This data set is used internally by \code{\link{as.mo}}.
 #' @inheritSection catalogue_of_life Catalogue of Life
-#' @format A \code{\link{data.frame}} with 14,506 observations and 4 variables:
+#' @format A \code{\link{data.frame}} with 14,487 observations and 4 variables:
 #' \describe{
 #'   \item{\code{col_id}}{Catalogue of Life ID}
 #'   \item{\code{tsn_new}}{New Catalogue of Life ID}

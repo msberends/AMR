@@ -271,9 +271,11 @@
 
 <span class='fu'>mo_year</span>(<span class='no'>x</span>, <span class='no'>...</span>)
 
+<span class='fu'>mo_rank</span>(<span class='no'>x</span>, <span class='no'>...</span>)
+
 <span class='fu'>mo_taxonomy</span>(<span class='no'>x</span>, <span class='no'>...</span>)
 
-<span class='fu'>mo_url</span>(<span class='no'>x</span>, <span class='no'>...</span>)
+<span class='fu'>mo_url</span>(<span class='no'>x</span>, <span class='kw'>open</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>...</span>)
 
 <span class='fu'>mo_property</span>(<span class='no'>x</span>, <span class='kw'>property</span> <span class='kw'>=</span> <span class='st'>"fullname"</span>, <span class='kw'>language</span> <span class='kw'>=</span> <span class='fu'><a href='get_locale.html'>get_locale</a></span>(), <span class='no'>...</span>)</pre>
     
@@ -293,6 +295,10 @@
       <td><p>other parameters passed on to <code><a href='as.mo.html'>as.mo</a></code></p></td>
     </tr>
     <tr>
+      <th>open</th>
+      <td><p>browse the URL using <code><a href='https://www.rdocumentation.org/packages/utils/topics/browseURL'>browseURL</a></code></p></td>
+    </tr>
+    <tr>
       <th>property</th>
       <td><p>one of the column names of one of the <code><a href='microorganisms.html'>microorganisms</a></code> data set or <code>"shortname"</code></p></td>
     </tr>
@@ -304,6 +310,7 @@
 <ul>
 <li><p>An <code>integer</code> in case of <code>mo_year</code></p></li>
 <li><p>A <code>list</code> in case of <code>mo_taxonomy</code></p></li>
+<li><p>A named <code>character</code> in case of <code>mo_url</code></p></li>
 <li><p>A <code>character</code> in all other cases</p></li>
 </ul>
 
@@ -330,7 +337,7 @@
 This package contains the complete taxonomic tree of almost all microorganisms from the authoritative and comprehensive Catalogue of Life (<a href='http://www.catalogueoflife.org'>http://www.catalogueoflife.org</a>). This data is updated annually - check the included version with <code><a href='catalogue_of_life_version.html'>catalogue_of_life_version</a></code>.</p>
 <p>Included are:</p><ul>
 <li><p>All ~55,000 (sub)species from the kingdoms of Archaea, Bacteria, Protozoa and Viruses</p></li>
-<li><p>All ~3,000 (sub)species from these orders of the kingdom of Fungi: Eurotiales, Onygenales, Pneumocystales, Saccharomycetales and Schizosaccharomycetales. The kingdom of Fungi is a very large taxon with almost 300,000 different (sub)species, of which most are not microbial (but rather macroscopic, like mushrooms). Because of this, not all fungi fit the scope of this package and including everything would tremendously slow down our algorithms too. By only including the aforementioned taxonomic orders, the most relevant (sub)species are covered (like all species of <em>Aspergillus</em>, <em>Candida</em>, <em>Pneumocystis</em>, <em>Saccharomyces</em> and <em>Trichophyton</em>).</p></li>
+<li><p>All ~3,500 (sub)species from these orders of the kingdom of Fungi: Eurotiales, Onygenales, Pneumocystales, Saccharomycetales, Schizosaccharomycetales and Tremellales. The kingdom of Fungi is a very large taxon with almost 300,000 different (sub)species, of which most are not microbial (but rather macroscopic, like mushrooms). Because of this, not all fungi fit the scope of this package and including everything would tremendously slow down our algorithms too. By only including the aforementioned taxonomic orders, the most relevant fungi are covered (like all species of <em>Aspergillus</em>, <em>Candida</em>, <em>Cryptococcus</em>, <em>Histplasma</em>, <em>Pneumocystis</em>, <em>Saccharomyces</em> and <em>Trichophyton</em>).</p></li>
 <li><p>All ~15,000 previously accepted names of included (sub)species that have been taxonomically renamed</p></li>
 <li><p>The complete taxonomic tree of all included (sub)species: from kingdom to subspecies</p></li>
 <li><p>The responsible author(s) and year of scientific publication</p></li>
@@ -357,8 +364,7 @@ This package contains the complete taxonomic tree of almost all microorganisms f
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><span class='co'># NOT RUN {</span>
-<span class='co'># All properties of Escherichia coli</span>
-<span class='co'>## taxonomic properties</span>
+<span class='co'>## taxonomic tree</span>
 <span class='fu'>mo_kingdom</span>(<span class='st'>"E. coli"</span>)         <span class='co'># "Bacteria"</span>
 <span class='fu'>mo_phylum</span>(<span class='st'>"E. coli"</span>)          <span class='co'># "Proteobacteria"</span>
 <span class='fu'>mo_class</span>(<span class='st'>"E. coli"</span>)           <span class='co'># "Gammaproteobacteria"</span>
@@ -375,10 +381,12 @@ This package contains the complete taxonomic tree of almost all microorganisms f
 <span class='co'>## other properties</span>
 <span class='fu'>mo_gramstain</span>(<span class='st'>"E. coli"</span>)       <span class='co'># "Gram negative"</span>
 <span class='fu'>mo_type</span>(<span class='st'>"E. coli"</span>)            <span class='co'># "Bacteria" (equal to kingdom)</span>
+<span class='fu'>mo_rank</span>(<span class='st'>"E. coli"</span>)            <span class='co'># "species"</span>
+<span class='fu'>mo_url</span>(<span class='st'>"E. coli"</span>)             <span class='co'># get the direct url to the Catalogue of Life</span>
 
 <span class='co'>## scientific reference</span>
-<span class='fu'>mo_ref</span>(<span class='st'>"E. coli"</span>)             <span class='co'># "Castellani and Chalmers, 1919"</span>
-<span class='fu'>mo_authors</span>(<span class='st'>"E. coli"</span>)         <span class='co'># "Castellani and Chalmers"</span>
+<span class='fu'>mo_ref</span>(<span class='st'>"E. coli"</span>)             <span class='co'># "Castellani et al., 1919"</span>
+<span class='fu'>mo_authors</span>(<span class='st'>"E. coli"</span>)         <span class='co'># "Castellani et al."</span>
 <span class='fu'>mo_year</span>(<span class='st'>"E. coli"</span>)            <span class='co'># 1919</span>
 
 
@@ -414,7 +422,7 @@ This package contains the complete taxonomic tree of almost all microorganisms f
 <span class='fu'>mo_shortname</span>(<span class='st'>"S. pyo"</span>, <span class='kw'>Lancefield</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>) <span class='co'># "GAS" ('Group A streptococci')</span>
 
 
-<span class='co'># Language support for German, Dutch, Spanish, Portuguese, Italian and French</span>
+<span class='co'># language support for German, Dutch, Spanish, Portuguese, Italian and French</span>
 <span class='fu'>mo_gramstain</span>(<span class='st'>"E. coli"</span>, <span class='kw'>language</span> <span class='kw'>=</span> <span class='st'>"de"</span>)  <span class='co'># "Gramnegativ"</span>
 <span class='fu'>mo_gramstain</span>(<span class='st'>"E. coli"</span>, <span class='kw'>language</span> <span class='kw'>=</span> <span class='st'>"nl"</span>)  <span class='co'># "Gram-negatief"</span>
 <span class='fu'>mo_gramstain</span>(<span class='st'>"E. coli"</span>, <span class='kw'>language</span> <span class='kw'>=</span> <span class='st'>"es"</span>)  <span class='co'># "Gram negativo"</span>
@@ -432,7 +440,7 @@ This package contains the complete taxonomic tree of almost all microorganisms f
             <span class='kw'>language</span> <span class='kw'>=</span> <span class='st'>"nl"</span>)              <span class='co'># "Streptococcus groep A"</span>
 
 
-<span class='co'># Get a list with the complete taxonomy (kingdom to subspecies)</span>
+<span class='co'># get a list with the complete taxonomy (kingdom to subspecies)</span>
 <span class='fu'>mo_taxonomy</span>(<span class='st'>"E. coli"</span>)
 <span class='co'># }</span></pre>
   </div>

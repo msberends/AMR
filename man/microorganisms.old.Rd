@@ -4,7 +4,7 @@
 \name{microorganisms.old}
 \alias{microorganisms.old}
 \title{Data set with previously accepted taxonomic names}
-\format{A \code{\link{data.frame}} with 14,506 observations and 4 variables:
+\format{A \code{\link{data.frame}} with 14,487 observations and 4 variables:
 \describe{
   \item{\code{col_id}}{Catalogue of Life ID}
   \item{\code{tsn_new}}{New Catalogue of Life ID}
@@ -28,7 +28,7 @@ This package contains the complete taxonomic tree of almost all microorganisms f
 Included are:
 \itemize{
   \item{All ~55,000 (sub)species from the kingdoms of Archaea, Bacteria, Protozoa and Viruses}
-  \item{All ~3,000 (sub)species from these orders of the kingdom of Fungi: Eurotiales, Onygenales, Pneumocystales, Saccharomycetales and Schizosaccharomycetales. The kingdom of Fungi is a very large taxon with almost 300,000 different (sub)species, of which most are not microbial (but rather macroscopic, like mushrooms). Because of this, not all fungi fit the scope of this package and including everything would tremendously slow down our algorithms too. By only including the aforementioned taxonomic orders, the most relevant (sub)species are covered (like all species of \emph{Aspergillus}, \emph{Candida}, \emph{Pneumocystis}, \emph{Saccharomyces} and \emph{Trichophyton}).}
+  \item{All ~3,500 (sub)species from these orders of the kingdom of Fungi: Eurotiales, Onygenales, Pneumocystales, Saccharomycetales, Schizosaccharomycetales and Tremellales. The kingdom of Fungi is a very large taxon with almost 300,000 different (sub)species, of which most are not microbial (but rather macroscopic, like mushrooms). Because of this, not all fungi fit the scope of this package and including everything would tremendously slow down our algorithms too. By only including the aforementioned taxonomic orders, the most relevant fungi are covered (like all species of \emph{Aspergillus}, \emph{Candida}, \emph{Cryptococcus}, \emph{Histplasma}, \emph{Pneumocystis}, \emph{Saccharomyces} and \emph{Trichophyton}).}
   \item{All ~15,000 previously accepted names of included (sub)species that have been taxonomically renamed}
   \item{The complete taxonomic tree of all included (sub)species: from kingdom to subspecies}
   \item{The responsible author(s) and year of scientific publication}

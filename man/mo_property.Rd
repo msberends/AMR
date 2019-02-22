@@ -17,6 +17,7 @@
 \alias{mo_ref}
 \alias{mo_authors}
 \alias{mo_year}
+\alias{mo_rank}
 \alias{mo_taxonomy}
 \alias{mo_url}
 \title{Property of a microorganism}
@@ -51,9 +52,11 @@ mo_authors(x, ...)
 
 mo_year(x, ...)
 
+mo_rank(x, ...)
+
 mo_taxonomy(x, ...)
 
-mo_url(x, ...)
+mo_url(x, open = FALSE, ...)
 
 mo_property(x, property = "fullname", language = get_locale(), ...)
 }
@@ -64,12 +67,15 @@ mo_property(x, property = "fullname", language = get_locale(), ...)
 
 \item{...}{other parameters passed on to \code{\link{as.mo}}}
 
+\item{open}{browse the URL using \code{\link[utils]{browseURL}}}
+
 \item{property}{one of the column names of one of the \code{\link{microorganisms}} data set or \code{"shortname"}}
 }
 \value{
 \itemize{
   \item{An \code{integer} in case of \code{mo_year}}
   \item{A \code{list} in case of \code{mo_taxonomy}}
+  \item{A named \code{character} in case of \code{mo_url}}
   \item{A \code{character} in all other cases}
 }
 }
@@ -101,7 +107,7 @@ This package contains the complete taxonomic tree of almost all microorganisms f
 Included are:
 \itemize{
   \item{All ~55,000 (sub)species from the kingdoms of Archaea, Bacteria, Protozoa and Viruses}
-  \item{All ~3,000 (sub)species from these orders of the kingdom of Fungi: Eurotiales, Onygenales, Pneumocystales, Saccharomycetales and Schizosaccharomycetales. The kingdom of Fungi is a very large taxon with almost 300,000 different (sub)species, of which most are not microbial (but rather macroscopic, like mushrooms). Because of this, not all fungi fit the scope of this package and including everything would tremendously slow down our algorithms too. By only including the aforementioned taxonomic orders, the most relevant (sub)species are covered (like all species of \emph{Aspergillus}, \emph{Candida}, \emph{Pneumocystis}, \emph{Saccharomyces} and \emph{Trichophyton}).}
+  \item{All ~3,500 (sub)species from these orders of the kingdom of Fungi: Eurotiales, Onygenales, Pneumocystales, Saccharomycetales, Schizosaccharomycetales and Tremellales. The kingdom of Fungi is a very large taxon with almost 300,000 different (sub)species, of which most are not microbial (but rather macroscopic, like mushrooms). Because of this, not all fungi fit the scope of this package and including everything would tremendously slow down our algorithms too. By only including the aforementioned taxonomic orders, the most relevant fungi are covered (like all species of \emph{Aspergillus}, \emph{Candida}, \emph{Cryptococcus}, \emph{Histplasma}, \emph{Pneumocystis}, \emph{Saccharomyces} and \emph{Trichophyton}).}
   \item{All ~15,000 previously accepted names of included (sub)species that have been taxonomically renamed}
   \item{The complete taxonomic tree of all included (sub)species: from kingdom to subspecies}
   \item{The responsible author(s) and year of scientific publication}
@@ -127,8 +133,7 @@ On our website \url{https://msberends.gitlab.io/AMR} you can find \href{https://
 }
 
 \examples{
-# All properties of Escherichia coli
-## taxonomic properties
+## taxonomic tree
 mo_kingdom("E. coli")         # "Bacteria"
 mo_phylum("E. coli")          # "Proteobacteria"
 mo_class("E. coli")           # "Gammaproteobacteria"
@@ -145,10 +150,12 @@ mo_shortname("E. coli")       # "E. coli"
 ## other properties
 mo_gramstain("E. coli")       # "Gram negative"
 mo_type("E. coli")            # "Bacteria" (equal to kingdom)
+mo_rank("E. coli")            # "species"
+mo_url("E. coli")             # get the direct url to the Catalogue of Life
 
 ## scientific reference
-mo_ref("E. coli")             # "Castellani and Chalmers, 1919"
-mo_authors("E. coli")         # "Castellani and Chalmers"
+mo_ref("E. coli")             # "Castellani et al., 1919"
+mo_authors("E. coli")         # "Castellani et al."
 mo_year("E. coli")            # 1919
 
 
@@ -184,7 +191,7 @@ mo_shortname("S. pyo")                    # "S. pyogenes"
 mo_shortname("S. pyo", Lancefield = TRUE) # "GAS" ('Group A streptococci')
 
 
-# Language support for German, Dutch, Spanish, Portuguese, Italian and French
+# language support for German, Dutch, Spanish, Portuguese, Italian and French
 mo_gramstain("E. coli", language = "de")  # "Gramnegativ"
 mo_gramstain("E. coli", language = "nl")  # "Gram-negatief"
 mo_gramstain("E. coli", language = "es")  # "Gram negativo"
@@ -202,7 +209,7 @@ mo_fullname("S. pyogenes",
             language = "nl")              # "Streptococcus groep A"
 
 
-# Get a list with the complete taxonomy (kingdom to subspecies)
+# get a list with the complete taxonomy (kingdom to subspecies)
 mo_taxonomy("E. coli")
 }
 \seealso{
