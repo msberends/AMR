@@ -52,7 +52,7 @@ S.aureus <- microbenchmark(as.mo("sau"),
 print(S.aureus, unit = "ms", signif = 3)
 ```
 
-In the table above, all measurements are shown in milliseconds (thousands of seconds). A value of 10 milliseconds means it can determine 100 input values per second. It case of 50 milliseconds, this is only 20 input values per second. The more an input value resembles a full name, the faster the result will be found.
+In the table above, all measurements are shown in milliseconds (thousands of seconds). A value of 10 milliseconds means it can determine 100 input values per second. It case of 50 milliseconds, this is only 20 input values per second. The second input is the only one that has to be looked up thoroughly. All the others are known codes (the first is a WHONET code) or common laboratory codes, or common full organism names like the last one. 
 
 To achieve this speed, the `as.mo` function also takes into account the prevalence of human pathogenic microorganisms. The downside is of course that less prevalent microorganisms will be determined less fast. See this example for the ID of *Mycoplasma leonicaptivi* (`B_MYCPL_LEO`), a bug probably never found before in humans:
 

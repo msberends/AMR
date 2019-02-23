@@ -210,6 +210,7 @@ exec_as.mo <- function(x, Becker = FALSE, Lancefield = FALSE,
   uncertainties <- character(0)
   failures <- character(0)
   x_input <- x
+  # already strip leading and trailing spaces
   x <- trimws(x, which = "both")
   # only check the uniques, which is way faster
   x <- unique(x)
@@ -218,6 +219,7 @@ exec_as.mo <- function(x, Becker = FALSE, Lancefield = FALSE,
 
   # conversion of old MO codes from v0.5.0 (ITIS) to later versions (Catalogue of Life)
   if (any(x %like% "^[BFP]_[A-Z]{3,7}")) {
+    print("is any")
     leftpart <- gsub("^([BFP]_[A-Z]{3,7}).*", "\\1", x)
     if (any(leftpart %in% names(mo_codes_v0.5.0))) {
       rightpart <- gsub("^[BFP]_[A-Z]{3,7}(.*)", "\\1", x)
@@ -241,8 +243,8 @@ exec_as.mo <- function(x, Becker = FALSE, Lancefield = FALSE,
     )
   }
 
+  # all empty
   if (all(identical(trimws(x_input), "") | is.na(x_input))) {
-    # all empty
     if (property == "mo") {
       return(structure(rep(NA_character_, length(x_input)), class = "mo"))
     } else {
@@ -264,6 +266,11 @@ exec_as.mo <- function(x, Becker = FALSE, Lancefield = FALSE,
     # existing mo codes when not looking for property "mo", like mo_genus("B_ESCHR_COL")
     x <- microorganismsDT[data.table(mo = x), on = "mo", ..property][[1]]
 
+  } else if (all(x %in% microorganismsDT[prevalence == 1, "fullname"][[1]])) {
+    # we need special treatment for prevalent full names, they are likely!
+    # e.g. as.mo("Staphylococcus aureus")
+    x <- microorganismsDT[prevalence == 1][data.table(fullname = x), on = "fullname", ..property][[1]]
+
   } else if (all(toupper(x) %in% microorganisms.codes[, "code"])) {
     # commonly used MO codes
     y <- as.data.table(microorganisms.codes)[data.table(code = toupper(x)), on = "code", ]
@@ -271,7 +278,7 @@ exec_as.mo <- function(x, Becker = FALSE, Lancefield = FALSE,
 
   } else if (!all(x %in% microorganismsDT[[property]])) {
 
-    x_backup <- x # trimws(x, which = "both")
+    x_backup <- x
 
     # remove spp and species
     x <- trimws(gsub(" +(spp.?|ssp.?|sp.? |ss ?.?|subsp.?|subspecies|biovar |serovar |species)", " ", x_backup, ignore.case = TRUE), which = "both")
@@ -517,11 +524,6 @@ exec_as.mo <- function(x, Becker = FALSE, Lancefield = FALSE,
           return(found[1L])
         }
 
-        # found <- data_to_check[mo == toupper(a.x_backup), ..property][[1]]
-        # # is a valid mo
-        # if (length(found) > 0) {
-        #   return(found[1L])
-        # }
         found <- data_to_check[tolower(fullname) == tolower(c.x_trimmed_without_group), ..property][[1]]
         if (length(found) > 0) {
           return(found[1L])
