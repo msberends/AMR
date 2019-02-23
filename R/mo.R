@@ -219,7 +219,6 @@ exec_as.mo <- function(x, Becker = FALSE, Lancefield = FALSE,
 
   # conversion of old MO codes from v0.5.0 (ITIS) to later versions (Catalogue of Life)
   if (any(x %like% "^[BFP]_[A-Z]{3,7}")) {
-    print("is any")
     leftpart <- gsub("^([BFP]_[A-Z]{3,7}).*", "\\1", x)
     if (any(leftpart %in% names(mo_codes_v0.5.0))) {
       rightpart <- gsub("^[BFP]_[A-Z]{3,7}(.*)", "\\1", x)
@@ -267,9 +266,12 @@ exec_as.mo <- function(x, Becker = FALSE, Lancefield = FALSE,
     x <- microorganismsDT[data.table(mo = x), on = "mo", ..property][[1]]
 
   } else if (all(x %in% microorganismsDT[prevalence == 1, "fullname"][[1]])) {
-    # we need special treatment for prevalent full names, they are likely!
+    # we need special treatment for very prevalent full names, they are likely!
     # e.g. as.mo("Staphylococcus aureus")
     x <- microorganismsDT[prevalence == 1][data.table(fullname = x), on = "fullname", ..property][[1]]
+  } else if (all(x %in% microorganismsDT[prevalence == 2, "fullname"][[1]])) {
+    # same for common full names, they are also likely
+    x <- microorganismsDT[prevalence == 2][data.table(fullname = x), on = "fullname", ..property][[1]]
 
   } else if (all(toupper(x) %in% microorganisms.codes[, "code"])) {
     # commonly used MO codes

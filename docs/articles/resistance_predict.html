@@ -305,9 +305,7 @@
 <a class="sourceLine" id="cb8-2" title="2"><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span>(<span class="kw"><a href="../reference/mo_property.html">mo_gramstain</a></span>(mo) <span class="op">==</span><span class="st"> "Gram positive"</span>) <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb8-3" title="3"><span class="st">  </span><span class="kw"><a href="../reference/resistance_predict.html">resistance_predict</a></span>(<span class="dt">col_ab =</span> <span class="st">"vanc"</span>, <span class="dt">year_min =</span> <span class="dv">2010</span>, <span class="dt">info =</span> <span class="ot">FALSE</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb8-4" title="4"><span class="st">  </span><span class="kw"><a href="../reference/resistance_predict.html">ggplot_rsi_predict</a></span>()</a>
-<a class="sourceLine" id="cb8-5" title="5"><span class="co">#&gt; [1] "is any"</span></a>
-<a class="sourceLine" id="cb8-6" title="6"><span class="co">#&gt; [1] "is any"</span></a>
-<a class="sourceLine" id="cb8-7" title="7"><span class="co">#&gt; </span><span class="al">NOTE</span><span class="co">: Using column `date` as input for `col_date`.</span></a></code></pre></div>
+<a class="sourceLine" id="cb8-5" title="5"><span class="co">#&gt; </span><span class="al">NOTE</span><span class="co">: Using column `date` as input for `col_date`.</span></a></code></pre></div>
 <p><img src="resistance_predict_files/figure-html/unnamed-chunk-6-1.png" width="720"></p>
 <p>Vancomycin resistance could be 100% in ten years, but might also stay around 0%.</p>
 <p>You can define the model with the <code>model</code> parameter. The default model is a generalised linear regression model using a binomial distribution, assuming that a period of zero resistance was followed by a period of increasing resistance leading slowly to more and more resistance.</p>
@@ -352,9 +350,7 @@
 <a class="sourceLine" id="cb9-2" title="2"><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span>(<span class="kw"><a href="../reference/mo_property.html">mo_gramstain</a></span>(mo) <span class="op">==</span><span class="st"> "Gram positive"</span>) <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb9-3" title="3"><span class="st">  </span><span class="kw"><a href="../reference/resistance_predict.html">resistance_predict</a></span>(<span class="dt">col_ab =</span> <span class="st">"vanc"</span>, <span class="dt">year_min =</span> <span class="dv">2010</span>, <span class="dt">info =</span> <span class="ot">FALSE</span>, <span class="dt">model =</span> <span class="st">"linear"</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb9-4" title="4"><span class="st">  </span><span class="kw"><a href="../reference/resistance_predict.html">ggplot_rsi_predict</a></span>()</a>
-<a class="sourceLine" id="cb9-5" title="5"><span class="co">#&gt; [1] "is any"</span></a>
-<a class="sourceLine" id="cb9-6" title="6"><span class="co">#&gt; [1] "is any"</span></a>
-<a class="sourceLine" id="cb9-7" title="7"><span class="co">#&gt; </span><span class="al">NOTE</span><span class="co">: Using column `date` as input for `col_date`.</span></a></code></pre></div>
+<a class="sourceLine" id="cb9-5" title="5"><span class="co">#&gt; </span><span class="al">NOTE</span><span class="co">: Using column `date` as input for `col_date`.</span></a></code></pre></div>
 <p><img src="resistance_predict_files/figure-html/unnamed-chunk-7-1.png" width="720"></p>
 <p>This seems more likely, doesn’t it?</p>
 <p>The model itself is also available from the object, as an <code>attribute</code>:</p>
