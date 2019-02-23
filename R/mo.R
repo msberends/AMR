@@ -84,7 +84,6 @@
 #' \itemize{
 #'   \item{\code{"Streptococcus group B (known as S. agalactiae)"}. The text between brackets will be removed and a warning will be thrown that the result \emph{Streptococcus group B} (\code{B_STRPT_GRB}) needs review.}
 #'   \item{\code{"S. aureus - please mind: MRSA"}. The last word will be stripped, after which the function will try to find a match. If it does not, the second last word will be stripped, etc. Again, a warning will be thrown that the result \emph{Staphylococcus aureus} (\code{B_STPHY_AUR}) needs review.}
-#'   \item{\code{"D. spartina"}. This is the abbreviation of an old taxonomic name: \emph{Didymosphaeria spartinae} (the last "e" was missing from the input). This fungus was renamed to \emph{Leptosphaeria obiones}, so a warning will be thrown that this result (\code{F_LPTSP_OBI}) needs review.}
 #'   \item{\code{"Fluoroquinolone-resistant Neisseria gonorrhoeae"}. The first word will be stripped, after which the function will try to find a match. A warning will be thrown that the result \emph{Neisseria gonorrhoeae} (\code{B_NESSR_GON}) needs review.}
 #' }
 #'
@@ -156,6 +155,7 @@
 #'   mutate(mo = as.mo(paste(genus, species)))
 #' }
 as.mo <- function(x, Becker = FALSE, Lancefield = FALSE, allow_uncertain = TRUE, reference_df = get_mo_source()) {
+  # will be checked for mo class in validation
   mo <- mo_validate(x = x, property = "mo",
                     Becker = Becker, Lancefield = Lancefield,
                     allow_uncertain = allow_uncertain, reference_df = reference_df)
@@ -170,7 +170,7 @@ is.mo <- function(x) {
 
 #' @importFrom dplyr %>% pull left_join n_distinct progress_estimated filter
 #' @importFrom data.table data.table as.data.table setkey
-#' @importFrom crayon magenta red silver italic has_color
+#' @importFrom crayon magenta red blue silver italic has_color
 exec_as.mo <- function(x, Becker = FALSE, Lancefield = FALSE,
                        allow_uncertain = TRUE, reference_df = get_mo_source(),
                        property = "mo", clear_options = TRUE) {
@@ -210,11 +210,11 @@ exec_as.mo <- function(x, Becker = FALSE, Lancefield = FALSE,
   uncertainties <- character(0)
   failures <- character(0)
   x_input <- x
+  x <- trimws(x, which = "both")
   # only check the uniques, which is way faster
   x <- unique(x)
   # remove empty values (to later fill them in again with NAs)
   x <- x[!is.na(x) & !is.null(x) & !identical(x, "")]
-
 
   # conversion of old MO codes from v0.5.0 (ITIS) to later versions (Catalogue of Life)
   if (any(x %like% "^[BFP]_[A-Z]{3,7}")) {
@@ -271,7 +271,7 @@ exec_as.mo <- function(x, Becker = FALSE, Lancefield = FALSE,
 
   } else if (!all(x %in% microorganismsDT[[property]])) {
 
-    x_backup <- trimws(x, which = "both")
+    x_backup <- x # trimws(x, which = "both")
 
     # remove spp and species
     x <- trimws(gsub(" +(spp.?|ssp.?|sp.? |ss ?.?|subsp.?|subspecies|biovar |serovar |species)", " ", x_backup, ignore.case = TRUE), which = "both")
@@ -322,6 +322,13 @@ exec_as.mo <- function(x, Becker = FALSE, Lancefield = FALSE,
     for (i in 1:length(x)) {
 
       progress$tick()$print()
+
+      found <- microorganismsDT[mo == toupper(x_backup[i]), ..property][[1]]
+      # is a valid MO code
+      if (length(found) > 0) {
+        x[i] <- found[1L]
+        next
+      }
 
       if (tolower(x_trimmed[i]) %in% c("", "xxx", "other", "none", "unknown")) {
         # empty and nonsense values, ignore without warning ("xxx" is WHONET code for 'no growth')
@@ -510,11 +517,11 @@ exec_as.mo <- function(x, Becker = FALSE, Lancefield = FALSE,
           return(found[1L])
         }
 
-        found <- data_to_check[mo == toupper(a.x_backup), ..property][[1]]
-        # is a valid mo
-        if (length(found) > 0) {
-          return(found[1L])
-        }
+        # found <- data_to_check[mo == toupper(a.x_backup), ..property][[1]]
+        # # is a valid mo
+        # if (length(found) > 0) {
+        #   return(found[1L])
+        # }
         found <- data_to_check[tolower(fullname) == tolower(c.x_trimmed_without_group), ..property][[1]]
         if (length(found) > 0) {
           return(found[1L])
@@ -872,7 +879,7 @@ TEMPORARY_TAXONOMY <- function(x) {
   x
 }
 
-#' @importFrom crayon blue italic
+#' @importFrom crayon italic
 was_renamed <- function(name_old, name_new, ref_old = "", ref_new = "", mo = "") {
   if (!is.na(ref_old)) {
     ref_old <- paste0(" (", ref_old, ")")

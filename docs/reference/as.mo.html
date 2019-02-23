@@ -323,7 +323,6 @@ When using <code>allow_uncertain = TRUE</code> (which is the default setting), i
     <p>Examples:</p><ul>
 <li><p><code>"Streptococcus group B (known as S. agalactiae)"</code>. The text between brackets will be removed and a warning will be thrown that the result <em>Streptococcus group B</em> (<code>B_STRPT_GRB</code>) needs review.</p></li>
 <li><p><code>"S. aureus - please mind: MRSA"</code>. The last word will be stripped, after which the function will try to find a match. If it does not, the second last word will be stripped, etc. Again, a warning will be thrown that the result <em>Staphylococcus aureus</em> (<code>B_STPHY_AUR</code>) needs review.</p></li>
-<li><p><code>"D. spartina"</code>. This is the abbreviation of an old taxonomic name: <em>Didymosphaeria spartinae</em> (the last "e" was missing from the input). This fungus was renamed to <em>Leptosphaeria obiones</em>, so a warning will be thrown that this result (<code>F_LPTSP_OBI</code>) needs review.</p></li>
 <li><p><code>"Fluoroquinolone-resistant Neisseria gonorrhoeae"</code>. The first word will be stripped, after which the function will try to find a match. A warning will be thrown that the result <em>Neisseria gonorrhoeae</em> (<code>B_NESSR_GON</code>) needs review.</p></li>
 </ul>
     <p>Use <code>mo_failures()</code> to get a vector with all values that could not be coerced to a valid value.</p>
