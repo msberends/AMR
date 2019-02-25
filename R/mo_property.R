@@ -494,7 +494,7 @@ mo_validate <- function(x, property, ...) {
     # check onLoad() in R/zzz.R: data tables are created there.
   }
 
-  if (!all(x %in% microorganismsDT[[property]])
+  if (!all(x %in% microorganismsDT[, ..property][[1]])
       | Becker %in% c(TRUE, "all")
       | Lancefield %in% c(TRUE, "all")) {
     exec_as.mo(x, property = property, ...)

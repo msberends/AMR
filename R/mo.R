@@ -56,7 +56,7 @@
 #' This function uses Artificial Intelligence (AI) to help getting fast and logical results. It tries to find matches in this order:
 #' \itemize{
 #'   \item{Taxonomic kingdom: it first searches in Bacteria, then Fungi, then Protozoa}
-#'   \item{Human pathogenic prevalence: it first searches in more prevalent microorganisms, then less prevalent ones}
+#'   \item{Human pathogenic prevalence: it first searches in more prevalent microorganisms, then less prevalent ones (see section \emph{Microbial prevalence of pathogens in humans})}
 #'   \item{Valid MO codes and full names: it first searches in already valid MO code and known genus/species combinations}
 #'   \item{Breakdown of input values: from here it starts to breakdown input values to find possible matches}
 #' }
@@ -93,6 +93,17 @@
 #'
 #' Use \code{mo_renamed()} to get a vector with all values that could be coerced based on an old, previously accepted taxonomic name.
 #'
+#' @section Microbial prevalence of pathogens in humans:
+#' The artificial intelligence takes into account microbial prevalence of pathogens in humans. It uses three groups and every (sub)species is in the group it matches first. These groups are:
+#' \itemize{
+#'   \item{1 (most prevalent): class is Gammaproteobacteria \strong{or} genus is one of: \emph{Enterococcus}, \emph{Staphylococcus}, \emph{Streptococcus}.}
+#'   \item{2: phylum is one of: Proteobacteria, Firmicutes, Actinobacteria, Sarcomastigophora \strong{or} genus is one of: \emph{Aspergillus}, \emph{Bacteroides}, \emph{Candida}, \emph{Capnocytophaga}, \emph{Chryseobacterium}, \emph{Cryptococcus}, \emph{Elisabethkingia}, \emph{Flavobacterium}, \emph{Fusobacterium}, \emph{Giardia}, \emph{Leptotrichia}, \emph{Mycoplasma}, \emph{Prevotella}, \emph{Rhodotorula}, \emph{Treponema}, \emph{Trichophyton}.}
+#'   \item{3 (least prevalent): all others.}
+#' }
+#'
+#' Group 1 contains all common Gram negatives, like all Enterobacteriaceae and e.g. \emph{Pseudomonas} and \emph{Legionella}.
+#'
+#' Group 2 probably contains all microbial pathogens ever found in humans.
 #' @inheritSection catalogue_of_life Catalogue of Life
 #  (source as a section, so it can be inherited by other man pages)
 #' @section Source:
@@ -251,7 +262,7 @@ exec_as.mo <- function(x, Becker = FALSE, Lancefield = FALSE,
     }
 
   } else if (all(x %in% reference_df[, 1])
-             & all(reference_df[, "mo"] %in% microorganismsDT[["mo"]])) {
+             & all(reference_df[, "mo"] %in% microorganismsDT[, "mo"][[1]])) {
     # all in reference df
     colnames(reference_df)[1] <- "x"
     suppressWarnings(
@@ -261,7 +272,7 @@ exec_as.mo <- function(x, Becker = FALSE, Lancefield = FALSE,
         pull(property)
     )
 
-  } else if (all(x %in% microorganismsDT[["mo"]])) {
+  } else if (all(x %in% microorganismsDT[, "mo"][[1]])) {
     # existing mo codes when not looking for property "mo", like mo_genus("B_ESCHR_COL")
     x <- microorganismsDT[data.table(mo = x), on = "mo", ..property][[1]]
 
@@ -278,7 +289,7 @@ exec_as.mo <- function(x, Becker = FALSE, Lancefield = FALSE,
     y <- as.data.table(microorganisms.codes)[data.table(code = toupper(x)), on = "code", ]
     x <- microorganismsDT[data.table(mo = y[["mo"]]), on = "mo", ..property][[1]]
 
-  } else if (!all(x %in% microorganismsDT[[property]])) {
+  } else if (!all(x %in% microorganismsDT[, ..property][[1]])) {
 
     x_backup <- x
 

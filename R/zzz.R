@@ -50,18 +50,28 @@ make_DT <- function() {
   microorganismsDT <- AMR::microorganisms %>%
     mutate(prevalence = case_when(
       class == "Gammaproteobacteria"
-      | order %in% c("Lactobacillales", "Bacillales")
+      | genus %in% c("Enterococcus", "Staphylococcus", "Streptococcus")
       ~ 1,
       phylum %in% c("Proteobacteria",
                     "Firmicutes",
                     "Actinobacteria",
-                    "Bacteroidetes")
-      | genus %in% c("Candida",
-                     "Aspergillus",
-                     "Trichophyton",
+                    "Sarcomastigophora")
+      | genus %in% c("Aspergillus",
+                     "Bacteroides",
+                     "Candida",
+                     "Capnocytophaga",
+                     "Chryseobacterium",
+                     "Cryptococcus",
+                     "Elisabethkingia",
+                     "Flavobacterium",
+                     "Fusobacterium",
                      "Giardia",
-                     "Dientamoeba",
-                     "Entamoeba")
+                     "Leptotrichia",
+                     "Mycoplasma",
+                     "Prevotella",
+                     "Rhodotorula",
+                     "Treponema",
+                     "Trichophyton")
       ~ 2,
       TRUE ~ 3
     )) %>%
@@ -74,7 +84,7 @@ make_DT <- function() {
 }
 
 make_trans_tbl <- function() {
-# conversion of old MO codes from v0.5.0 (ITIS) to later versions (Catalogue of Life)
+  # conversion of old MO codes from v0.5.0 (ITIS) to later versions (Catalogue of Life)
   c(B_ACHRMB = "B_ACHRM", B_ANNMA = "B_ACTNS", B_ACLLS = "B_ALCYC",
     B_AHNGM = "B_ARCHN", B_ARMTM = "B_ARMTMN", B_ARTHRS = "B_ARTHR",
     B_APHLS = "B_AZRHZP", B_BRCHA = "B_BRCHY", B_BCTRM = "B_BRVBCT",
