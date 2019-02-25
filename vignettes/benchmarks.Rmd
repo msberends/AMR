@@ -44,9 +44,9 @@ But the calculation time differs a lot. Here, the AI effect can be reviewed best
 S.aureus <- microbenchmark(as.mo("sau"),
                            as.mo("stau"),
                            as.mo("staaur"),
+                           as.mo("STAAUR"),
                            as.mo("S. aureus"),
                            as.mo("S.  aureus"),
-                           as.mo("STAAUR"),
                            as.mo("Staphylococcus aureus"),
                            times = 10)
 print(S.aureus, unit = "ms", signif = 3)
@@ -54,32 +54,31 @@ print(S.aureus, unit = "ms", signif = 3)
 
 In the table above, all measurements are shown in milliseconds (thousands of seconds). A value of 10 milliseconds means it can determine 100 input values per second. It case of 50 milliseconds, this is only 20 input values per second. The second input is the only one that has to be looked up thoroughly. All the others are known codes (the first is a WHONET code) or common laboratory codes, or common full organism names like the last one. 
 
-To achieve this speed, the `as.mo` function also takes into account the prevalence of human pathogenic microorganisms. The downside is of course that less prevalent microorganisms will be determined less fast. See this example for the ID of *Mycoplasma leonicaptivi* (`B_MYCPL_LEO`), a bug probably never found before in humans:
+To achieve this speed, the `as.mo` function also takes into account the prevalence of human pathogenic microorganisms. The downside is of course that less prevalent microorganisms will be determined less fast. See this example for the ID of *Thermus islandicus* (`B_THERMS_ISL`), a bug probably never found before in humans:
 
 ```{r}
-M.leonicaptivi <- microbenchmark(as.mo("myle"),
-                                 as.mo("mycleo"),
-                                 as.mo("M. leonicaptivi"),
-                                 as.mo("M.  leonicaptivi"),
-                                 as.mo("MYCLEO"),
-                                 as.mo("Mycoplasma leonicaptivi"),
+T.islandicus <- microbenchmark(as.mo("theisl"),
+                                 as.mo("THEISL"),
+                                 as.mo("T. islandicus"),
+                                 as.mo("T.  islandicus"),
+                                 as.mo("Thermus islandicus"),
                                  times = 10)
-print(M.leonicaptivi, unit = "ms", signif = 3)
+print(T.islandicus, unit = "ms", signif = 3)
 ```
 
-That takes `r round(mean(M.leonicaptivi$time, na.rm = TRUE) / mean(S.aureus$time, na.rm = TRUE), 1)` times as much time on average! A value of 100 milliseconds means it can only determine ~10 different input values per second. We can conclude that looking up arbitrary codes of less prevalent microorganisms is the worst way to go, in terms of calculation performance.
+That takes `r round(mean(T.islandicus$time, na.rm = TRUE) / mean(S.aureus$time, na.rm = TRUE), 1)` times as much time on average. A value of 100 milliseconds means it can only determine ~10 different input values per second. We can conclude that looking up arbitrary codes of less prevalent microorganisms is the worst way to go, in terms of calculation performance. Full names (like *Thermus islandicus*) are almost fast - these are the most probable input from most data sets.
 
-In the figure below, we compare *Escherichia coli* (which is very common) with *Prevotella brevis* (which is moderately common) and with *Mycoplasma leonicaptivi* (which is very uncommon):
+In the figure below, we compare *Escherichia coli* (which is very common) with *Prevotella brevis* (which is moderately common) and with *Thermus islandicus* (which is very uncommon):
 
 ```{r}
 par(mar = c(5, 16, 4, 2)) # set more space for left margin text (16)
 
-boxplot(microbenchmark(as.mo("M. leonicaptivi"),
-                       as.mo("Mycoplasma leonicaptivi"),
-                       as.mo("P. brevis"),
+boxplot(microbenchmark(as.mo("Thermus islandicus"),
                        as.mo("Prevotella brevis"),
-                       as.mo("E. coli"),
                        as.mo("Escherichia coli"),
+                       as.mo("T. islandicus"),
+                       as.mo("P. brevis"),
+                       as.mo("E. coli"),
                        times = 50),
         horizontal = TRUE, las = 1, unit = "s", log = FALSE,
         xlab = "", ylab = "Time in seconds",
@@ -94,12 +93,18 @@ Repetitive results mean that unique values are present more than once. Unique va
 
 ```{r, message = FALSE}
 library(dplyr)
-# take 500,000 random MO codes from the septic_patients data set
-x = septic_patients %>%
-  sample_n(500000, replace = TRUE) %>%
-  pull(mo)
+# take all MO codes from the septic_patients data set
+x <- septic_patients$mo %>%
+  # keep only the unique ones
+  unique() %>%
+  # pick 50 of them at random
+  sample(50) %>%
+  # paste that 10,000 times
+  rep(10000) %>%
+  # scramble it
+  sample()
   
-# got the right length?
+# got indeed 50 times 10,000 = half a million?
 length(x)
 
 # and how many unique values do we have?
@@ -111,7 +116,7 @@ run_it <- microbenchmark(mo_fullname(x),
 print(run_it, unit = "ms", signif = 3)
 ```
 
-So transforming 500,000 values (!) of `r n_distinct(x)` unique values only takes `r round(median(run_it$time, na.rm = TRUE) / 1e9, 2)` seconds (`r as.integer(median(run_it$time, na.rm = TRUE) / 1e6)` ms). You only lose time on your unique input values.
+So transforming 500,000 values (!!) of `r n_distinct(x)` unique values only takes `r round(median(run_it$time, na.rm = TRUE) / 1e9, 2)` seconds (`r as.integer(median(run_it$time, na.rm = TRUE) / 1e6)` ms). You only lose time on your unique input values.
 
 ### Precalculated results
 

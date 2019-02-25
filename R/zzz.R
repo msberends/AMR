@@ -30,6 +30,10 @@
     microorganisms.oldDT <- as.data.table(AMR::microorganisms.old)
     setkey(microorganisms.oldDT, col_id, fullname)
 
+    assign(x = "microorganisms",
+           value = make(),
+           envir = asNamespace("AMR"))
+
     assign(x = "microorganismsDT",
            value = make_DT(),
            envir = asNamespace("AMR"))
@@ -45,9 +49,8 @@
 }
 
 #' @importFrom dplyr mutate case_when
-#' @importFrom data.table as.data.table setkey
-make_DT <- function() {
-  microorganismsDT <- AMR::microorganisms %>%
+make <- function() {
+  AMR::microorganisms %>%
     mutate(prevalence = case_when(
       class == "Gammaproteobacteria"
       | genus %in% c("Enterococcus", "Staphylococcus", "Streptococcus")
@@ -71,11 +74,16 @@ make_DT <- function() {
                      "Prevotella",
                      "Rhodotorula",
                      "Treponema",
-                     "Trichophyton")
+                     "Trichophyton",
+                     "Ureaplasma")
       ~ 2,
       TRUE ~ 3
-    )) %>%
-    as.data.table()
+    ))
+}
+
+#' @importFrom data.table as.data.table setkey
+make_DT <- function() {
+  microorganismsDT <- as.data.table(make())
   setkey(microorganismsDT,
          kingdom,
          prevalence,

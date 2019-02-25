@@ -97,7 +97,7 @@
 #' The artificial intelligence takes into account microbial prevalence of pathogens in humans. It uses three groups and every (sub)species is in the group it matches first. These groups are:
 #' \itemize{
 #'   \item{1 (most prevalent): class is Gammaproteobacteria \strong{or} genus is one of: \emph{Enterococcus}, \emph{Staphylococcus}, \emph{Streptococcus}.}
-#'   \item{2: phylum is one of: Proteobacteria, Firmicutes, Actinobacteria, Sarcomastigophora \strong{or} genus is one of: \emph{Aspergillus}, \emph{Bacteroides}, \emph{Candida}, \emph{Capnocytophaga}, \emph{Chryseobacterium}, \emph{Cryptococcus}, \emph{Elisabethkingia}, \emph{Flavobacterium}, \emph{Fusobacterium}, \emph{Giardia}, \emph{Leptotrichia}, \emph{Mycoplasma}, \emph{Prevotella}, \emph{Rhodotorula}, \emph{Treponema}, \emph{Trichophyton}.}
+#'   \item{2: phylum is one of: Proteobacteria, Firmicutes, Actinobacteria, Sarcomastigophora \strong{or} genus is one of: \emph{Aspergillus}, \emph{Bacteroides}, \emph{Candida}, \emph{Capnocytophaga}, \emph{Chryseobacterium}, \emph{Cryptococcus}, \emph{Elisabethkingia}, \emph{Flavobacterium}, \emph{Fusobacterium}, \emph{Giardia}, \emph{Leptotrichia}, \emph{Mycoplasma}, \emph{Prevotella}, \emph{Rhodotorula}, \emph{Treponema}, \emph{Trichophyton}, \emph{Ureaplasma}.}
 #'   \item{3 (least prevalent): all others.}
 #' }
 #'
@@ -167,10 +167,9 @@
 #' }
 as.mo <- function(x, Becker = FALSE, Lancefield = FALSE, allow_uncertain = TRUE, reference_df = get_mo_source()) {
   # will be checked for mo class in validation
-  mo <- mo_validate(x = x, property = "mo",
-                    Becker = Becker, Lancefield = Lancefield,
-                    allow_uncertain = allow_uncertain, reference_df = reference_df)
-  structure(.Data = mo, class = "mo")
+  mo_validate(x = x, property = "mo",
+              Becker = Becker, Lancefield = Lancefield,
+              allow_uncertain = allow_uncertain, reference_df = reference_df)
 }
 
 #' @rdname as.mo
@@ -229,7 +228,7 @@ exec_as.mo <- function(x, Becker = FALSE, Lancefield = FALSE,
   x <- x[!is.na(x) & !is.null(x) & !identical(x, "")]
 
   # conversion of old MO codes from v0.5.0 (ITIS) to later versions (Catalogue of Life)
-  if (any(x %like% "^[BFP]_[A-Z]{3,7}")) {
+  if (any(x %like% "^[BFP]_[A-Z]{3,7}") & !all(x %in% microorganisms$mo)) {
     leftpart <- gsub("^([BFP]_[A-Z]{3,7}).*", "\\1", x)
     if (any(leftpart %in% names(mo_codes_v0.5.0))) {
       rightpart <- gsub("^[BFP]_[A-Z]{3,7}(.*)", "\\1", x)
@@ -256,40 +255,52 @@ exec_as.mo <- function(x, Becker = FALSE, Lancefield = FALSE,
   # all empty
   if (all(identical(trimws(x_input), "") | is.na(x_input))) {
     if (property == "mo") {
-      return(structure(rep(NA_character_, length(x_input)), class = "mo"))
+      return(structure(rep(NA_character_, length(x_input)),
+                       class = "mo"))
     } else {
       return(rep(NA_character_, length(x_input)))
     }
 
   } else if (all(x %in% reference_df[, 1])
-             & all(reference_df[, "mo"] %in% microorganismsDT[, "mo"][[1]])) {
+             & all(reference_df[, "mo"] %in% AMR::microorganisms$mo)) {
     # all in reference df
     colnames(reference_df)[1] <- "x"
     suppressWarnings(
       x <- data.frame(x = x, stringsAsFactors = FALSE) %>%
         left_join(reference_df, by = "x") %>%
-        left_join(microorganisms, by = "mo") %>%
+        left_join(AMR::microorganisms, by = "mo") %>%
         pull(property)
     )
 
-  } else if (all(x %in% microorganismsDT[, "mo"][[1]])) {
+  } else if (all(x %in% AMR::microorganisms$mo)) {
     # existing mo codes when not looking for property "mo", like mo_genus("B_ESCHR_COL")
-    x <- microorganismsDT[data.table(mo = x), on = "mo", ..property][[1]]
+    y <- microorganismsDT[prevalence == 1][data.table(mo = x), on = "mo", ..property][[1]]
+    if (any(is.na(y))) {
+      y[is.na(y)] <- microorganismsDT[prevalence == 2][data.table(mo = x[is.na(y)]), on = "mo", ..property][[1]]
+    }
+    if (any(is.na(y))) {
+      y[is.na(y)] <- microorganismsDT[prevalence == 3][data.table(mo = x[is.na(y)]), on = "mo", ..property][[1]]
+    }
+    x <- y
 
-  } else if (all(x %in% microorganismsDT[prevalence == 1, "fullname"][[1]])) {
+  } else if (all(x %in% AMR::microorganisms$fullname)) {
     # we need special treatment for very prevalent full names, they are likely!
     # e.g. as.mo("Staphylococcus aureus")
-    x <- microorganismsDT[prevalence == 1][data.table(fullname = x), on = "fullname", ..property][[1]]
-  } else if (all(x %in% microorganismsDT[prevalence == 2, "fullname"][[1]])) {
-    # same for common full names, they are also likely
-    x <- microorganismsDT[prevalence == 2][data.table(fullname = x), on = "fullname", ..property][[1]]
+    y <- microorganismsDT[prevalence == 1][data.table(fullname = x), on = "fullname", ..property][[1]]
+    if (any(is.na(y))) {
+      y[is.na(y)] <- microorganismsDT[prevalence == 2][data.table(fullname = x[is.na(y)]), on = "fullname", ..property][[1]]
+    }
+    if (any(is.na(y))) {
+      y[is.na(y)] <- microorganismsDT[prevalence == 3][data.table(fullname = x[is.na(y)]), on = "fullname", ..property][[1]]
+    }
+    x <- y
 
-  } else if (all(toupper(x) %in% microorganisms.codes[, "code"])) {
+  } else if (all(toupper(x) %in% AMR::microorganisms.codes$code)) {
     # commonly used MO codes
-    y <- as.data.table(microorganisms.codes)[data.table(code = toupper(x)), on = "code", ]
+    y <- as.data.table(AMR::microorganisms.codes)[data.table(code = toupper(x)), on = "code", ]
     x <- microorganismsDT[data.table(mo = y[["mo"]]), on = "mo", ..property][[1]]
 
-  } else if (!all(x %in% microorganismsDT[, ..property][[1]])) {
+  } else if (!all(x %in% AMR::microorganisms[, property])) {
 
     x_backup <- x
 
@@ -504,8 +515,8 @@ exec_as.mo <- function(x, Becker = FALSE, Lancefield = FALSE,
       }
 
       # TRY OTHER SOURCES ----
-      if (toupper(x_backup[i]) %in% microorganisms.codes[, 1]) {
-        mo_found <- microorganisms.codes[toupper(x_backup[i]) == microorganisms.codes[, 1], "mo"][1L]
+      if (toupper(x_backup[i]) %in% AMR::microorganisms.codes[, 1]) {
+        mo_found <- AMR::microorganisms.codes[toupper(x_backup[i]) == AMR::microorganisms.codes[, 1], "mo"][1L]
         if (length(mo_found) > 0) {
           x[i] <- microorganismsDT[mo == mo_found, ..property][[1]][1L]
           next
