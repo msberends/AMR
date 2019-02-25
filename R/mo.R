@@ -166,6 +166,21 @@
 #'   mutate(mo = as.mo(paste(genus, species)))
 #' }
 as.mo <- function(x, Becker = FALSE, Lancefield = FALSE, allow_uncertain = TRUE, reference_df = get_mo_source()) {
+  if (all(x %in% AMR::microorganisms$fullname)
+      & isFALSE(Becker)
+      & isFALSE(Lancefield)
+      & is.null(reference_df)) {
+    # we need special treatment for very prevalent full names, they are likely!
+    # e.g. as.mo("Staphylococcus aureus")
+    y <- microorganismsDT[prevalence == 1][data.table(fullname = x), on = "fullname", "mo"][[1]]
+    if (any(is.na(y))) {
+      y[is.na(y)] <- microorganismsDT[prevalence == 2][data.table(fullname = x[is.na(y)]), on = "fullname", "mo"][[1]]
+    }
+    if (any(is.na(y))) {
+      y[is.na(y)] <- microorganismsDT[prevalence == 3][data.table(fullname = x[is.na(y)]), on = "fullname", "mo"][[1]]
+    }
+    return(y)
+  }
   # will be checked for mo class in validation
   mo_validate(x = x, property = "mo",
               Becker = Becker, Lancefield = Lancefield,
