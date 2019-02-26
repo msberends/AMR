@@ -71,3 +71,24 @@
 #' mo_fullname("C. elegans")
 #' # [1] "Chroococcus limneticus elegans"  # Because a microorganism was found
 NULL
+
+#' Version info of included Catalogue of Life
+#'
+#' This function returns a list with info about the included data from the Catalogue of Life. It also shows if the included version is their latest annual release. The Catalogue of Life releases their annual release in March each year.
+#' @seealso \code{\link{microorganisms}}
+#' @inheritSection catalogue_of_life Catalogue of Life
+#' @inheritSection AMR Read more on our website!
+#' @export
+#' @examples
+#' library(dplyr)
+#' microorganisms %>% freq(kingdom)
+#' microorganisms %>% group_by(kingdom) %>% freq(phylum, nmax = NULL)
+catalogue_of_life_version <- function() {
+  # see the `catalogue_of_life` list in R/data.R
+  list(version = catalogue_of_life$version,
+       url = catalogue_of_life$url,
+       # annual release always somewhere in March
+       is_latest_annual_release = Sys.Date() < as.Date(paste0(catalogue_of_life$year + 1, "-04-01")),
+       n_species = nrow(AMR::microorganisms),
+       n_synonyms = nrow(AMR::microorganisms.old))
+}

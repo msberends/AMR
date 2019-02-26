@@ -132,7 +132,7 @@
 #' mo_taxonomy("E. coli")
 mo_fullname <- function(x, language = get_locale(), ...) {
   x <- mo_validate(x = x, property = "fullname", ...)
-  mo_translate(x, language = language)
+  translate(x, language = language)
 }
 
 #' @rdname mo_property
@@ -148,46 +148,64 @@ mo_shortname <- function(x, language = get_locale(), ...) {
   if (is.null(Lancefield)) {
     Lancefield <- FALSE
   }
-  if (Becker %in% c(TRUE, "all") | Lancefield == TRUE) {
-    res1 <- AMR::as.mo(x, Becker = FALSE, Lancefield = FALSE, reference_df = dots$reference_df)
-    res2 <- suppressWarnings(AMR::as.mo(res1, ...))
-    res2_fullname <- mo_fullname(res2, language = language)
-    res2_fullname[res2_fullname %like% " \\(CoNS\\)"] <- "CoNS"
-    res2_fullname[res2_fullname %like% " \\(CoPS\\)"] <- "CoPS"
-    res2_fullname[res2_fullname %like% " \\(KNS\\)"] <- "KNS"
-    res2_fullname[res2_fullname %like% " \\(KPS\\)"] <- "KPS"
-    res2_fullname[res2_fullname %like% " \\(CNS\\)"] <- "CNS"
-    res2_fullname[res2_fullname %like% " \\(CPS\\)"] <- "CPS"
-    res2_fullname <- gsub("Streptococcus (group|Gruppe|gruppe|groep|grupo|gruppo|groupe) (.)",
-                          "G\\2S",
-                          res2_fullname) # turn "Streptococcus group A" and "Streptococcus grupo A" to "GAS"
-    res2_fullname_vector <- res2_fullname[res2_fullname == mo_fullname(res1)]
-    res2_fullname[res2_fullname == mo_fullname(res1)] <- paste0(substr(mo_genus(res2_fullname_vector), 1, 1),
-                                                                ". ",
-                                                                suppressWarnings(mo_species(res2_fullname_vector)))
-    if (sum(res1 == res2, na.rm = TRUE) > 0) {
-      res1[res1 == res2] <- paste0(substr(mo_genus(res1[res1 == res2]), 1, 1),
-                                   ". ",
-                                   suppressWarnings(mo_species(res1[res1 == res2])))
-    }
-    res1[res1 != res2] <- res2_fullname
-    result <- as.character(res1)
-  } else {
-    x <- AMR::as.mo(x, ...)
-    suppressWarnings(
-      result <- data.frame(mo = x) %>%
-        left_join(AMR::microorganisms, by = "mo") %>%
-        mutate(shortname = ifelse(!is.na(genus) & !is.na(species), paste0(substr(genus, 1, 1), ". ", species), NA_character_)) %>%
-        pull(shortname)
-    )
+
+  shorten <- function(x) {
+    # easiest: no transformations needed
+    x <- mo_fullname(x, language = "en")
+    # shorten for the ones that have a space: shorten first word and write out second word
+    shorten_these <- x %like% " " & !x %like% "Streptococcus group "
+    x[shorten_these] <- paste0(substr(x[shorten_these], 1, 1),
+                              ". ",
+                              x[shorten_these] %>%
+                                strsplit(" ", fixed = TRUE) %>%
+                                unlist() %>%
+                                .[2])
+    x
   }
-  mo_translate(result, language = language)
+
+  if (isFALSE(Becker) & isFALSE(Lancefield)) {
+    result <- shorten(x)
+
+  } else {
+    # get result without transformations
+    res1 <- AMR::as.mo(x, Becker = FALSE, Lancefield = FALSE, reference_df = dots$reference_df)
+    # and result with transformations
+    res2 <- suppressWarnings(AMR::as.mo(res1, ...))
+    if (res1 == res2
+        & !res1 %like% "^B_STRPT_GR") {
+      result <- shorten(x)
+    } else {
+      res2_fullname <- mo_fullname(res2, language = language)
+      res2_fullname[res2_fullname %like% " \\(CoNS\\)"] <- "CoNS"
+      res2_fullname[res2_fullname %like% " \\(CoPS\\)"] <- "CoPS"
+      res2_fullname[res2_fullname %like% " \\(KNS\\)"] <- "KNS"
+      res2_fullname[res2_fullname %like% " \\(KPS\\)"] <- "KPS"
+      res2_fullname[res2_fullname %like% " \\(CNS\\)"] <- "CNS"
+      res2_fullname[res2_fullname %like% " \\(CPS\\)"] <- "CPS"
+      res2_fullname <- gsub("Streptococcus (group|Gruppe|gruppe|groep|grupo|gruppo|groupe) (.)",
+                            "G\\2S",
+                            res2_fullname) # turn "Streptococcus group A" and "Streptococcus grupo A" to "GAS"
+      res2_fullname_vector <- res2_fullname[res2_fullname == mo_fullname(res1)]
+      res2_fullname[res2_fullname == mo_fullname(res1)] <- paste0(substr(mo_genus(res2_fullname_vector), 1, 1),
+                                                                  ". ",
+                                                                  suppressWarnings(mo_species(res2_fullname_vector)))
+      if (sum(res1 == res2, na.rm = TRUE) > 0) {
+        res1[res1 == res2] <- paste0(substr(mo_genus(res1[res1 == res2]), 1, 1),
+                                     ". ",
+                                     suppressWarnings(mo_species(res1[res1 == res2])))
+      }
+      res1[res1 != res2] <- res2_fullname
+      result <- as.character(res1)
+    }
+  }
+
+  translate(result, language = language)
 }
 
 #' @rdname mo_property
 #' @export
 mo_subspecies <- function(x, language = get_locale(), ...) {
-  mo_translate(mo_validate(x = x, property = "subspecies", ...), language = language)
+  translate(validate(x = x, property = "subspecies", ...), language = language)
 }
 
 #' @rdname mo_property

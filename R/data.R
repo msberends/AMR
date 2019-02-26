@@ -168,20 +168,6 @@ catalogue_of_life <- list(
   url = "http://www.catalogueoflife.org/annual-checklist/2018"
 )
 
-#' Version info of included Catalogue of Life
-#' @seealso \code{\link{microorganisms}}
-#' @inheritSection catalogue_of_life Catalogue of Life
-#' @inheritSection AMR Read more on our website!
-#' @export
-catalogue_of_life_version <- function() {
-  list(version = catalogue_of_life$version,
-       url = catalogue_of_life$url,
-       # annual release always somewhere in March
-       is_latest_annual_release = Sys.Date() < as.Date(paste0(catalogue_of_life$year + 1, "-04-01")),
-       no_of_species = nrow(AMR::microorganisms),
-       no_of_synonyms = nrow(AMR::microorganisms.old))
-}
-
 #' Data set with previously accepted taxonomic names
 #'
 #' A data set containing old (previously valid or accepted) taxonomic names according to the Catalogue of Life. This data set is used internally by \code{\link{as.mo}}.

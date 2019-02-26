@@ -12,13 +12,11 @@ We've got a new website: [https://msberends.gitlab.io/AMR](https://msberends.git
 * **BREAKING**: removed deprecated functions, parameters and references to 'bactid'. Use `as.mo()` to identify an MO code.
 * Catalogue of Life as a new taxonomic source for data about microorganisms, which also contains all ITIS data we used previously. The `microorganisms` data set now contains:
   * All ~55,000 (sub)species from the kingdoms of Archaea, Bacteria, Protozoa and Viruses
-  * All ~3,000 (sub)species from these orders of the kingdom of Fungi: Eurotiales, Onygenales, Pneumocystales, Saccharomycetales and Schizosaccharomycetales.
-  
-    The kingdom of Fungi is a very large taxon with almost 300,000 different (sub)species, of which most are not microbial (but rather macroscopic, like mushrooms). Because of this, not all fungi fit the scope of this package and including everything would tremendously slow down our algorithms too. By only including the aforementioned taxonomic orders, the most relevant (sub)species are covered (like all species of *Aspergillus*, *Candida*, *Pneumocystis*, *Saccharomyces* and *Trichophyton*).
+  * All ~3,000 (sub)species from these orders of the kingdom of Fungi: Eurotiales, Onygenales, Pneumocystales, Saccharomycetales and Schizosaccharomycetales (covering at least like all species of *Aspergillus*, *Candida*, *Pneumocystis*, *Saccharomyces* and *Trichophyton*)
   * All ~15,000 previously accepted names of included (sub)species that have been taxonomically renamed
   * The responsible author(s) and year of scientific publication
   
-    This data is updated annually - check the included version with `catalogue_of_life_version()`.
+    This data is updated annually - check the included version with the new function `catalogue_of_life_version()`.
   * Due to this change, some `mo` codes changed (e.g. *Streptococcus* changed from `B_STRPTC` to `B_STRPT`). A translation table is  used internally to support older microorganism IDs, so users will not notice this difference.
 * New function `mo_rank()` for the taxonomic rank (genus, species, infraspecies, etc.)
 * New function `mo_url()` to get the URL to the Catalogue of Life
@@ -86,7 +84,7 @@ We've got a new website: [https://msberends.gitlab.io/AMR](https://msberends.git
   * Better handling for *Salmonellae*
   * Understanding of highly virulent *E. coli* strains like EIEC, EPEC and STEC
   * There will be looked for uncertain results at default - these results will be returned with an informative warning
-  * Manual now contains more info about the algorithms
+  * Manual (help page) now contains more info about the algorithms
   * Progress bar will be shown when it takes more than 3 seconds to get results
   * Support for formatted console text
   * Console will return the percentage of uncoercable input

@@ -47,7 +47,7 @@
   <script src="../extra.js"></script>
 <meta property="og:title" content="Version info of included Catalogue of Life — catalogue_of_life_version" />
 
-<meta property="og:description" content="Version info of included Catalogue of Life" />
+<meta property="og:description" content="This function returns a list with info about the included data from the Catalogue of Life. It also shows if the included version is their latest annual release. The Catalogue of Life releases their annual release in March each year." />
 
 <meta property="og:image" content="https://msberends.gitlab.io/AMR/logo.png" />
 <meta name="twitter:card" content="summary" />
@@ -80,7 +80,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.0.9018</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.0.9019</span>
       </span>
     </div>
 
@@ -237,7 +237,7 @@
 
     <div class="ref-description">
     
-    <p>Version info of included Catalogue of Life</p>
+    <p>This function returns a list with info about the included data from the Catalogue of Life. It also shows if the included version is their latest annual release. The Catalogue of Life releases their annual release in March each year.</p>
     
     </div>
 
@@ -268,6 +268,12 @@ This package contains the complete taxonomic tree of almost all microorganisms f
     <div class='dont-index'><p><code><a href='microorganisms.html'>microorganisms</a></code></p></div>
     
 
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><span class='co'># NOT RUN {</span>
+<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>dplyr</span>)
+<span class='no'>microorganisms</span> <span class='kw'>%&gt;%</span> <span class='fu'><a href='freq.html'>freq</a></span>(<span class='no'>kingdom</span>)
+<span class='no'>microorganisms</span> <span class='kw'>%&gt;%</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span>(<span class='no'>kingdom</span>) <span class='kw'>%&gt;%</span> <span class='fu'><a href='freq.html'>freq</a></span>(<span class='no'>phylum</span>, <span class='kw'>nmax</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)
+<span class='co'># }</span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -278,7 +284,9 @@ This package contains the complete taxonomic tree of almost all microorganisms f
       <li><a href="#read-more-on-our-website-">Read more on our website!</a></li>
 
       <li><a href="#see-also">See also</a></li>
-          </ul>
+      
+      <li><a href="#examples">Examples</a></li>
+    </ul>
 
   </div>
 </div>

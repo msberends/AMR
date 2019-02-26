@@ -116,6 +116,7 @@ MOs <- MOs %>%
 # only old names of species that are in MOs:
 MOs.old <- MOs.old %>% filter(col_id_new %in% MOs$col_id)
 
+# add abbreviations so we can easily know which ones are which ones
 MOs <- MOs %>%
   group_by(kingdom) %>%
   # abbreviations may be same for genera between kingdoms,
@@ -147,7 +148,12 @@ MOs <- MOs %>%
                                  abbr_species,
                                  abbr_subspecies,
                                  sep = "_")))) %>%
-  mutate(mo = ifelse(duplicated(.$mo), paste0(mo, "1"), mo)) %>%
+  mutate(mo = ifelse(duplicated(.$mo),
+                     paste0(mo, "1"),
+                     mo),
+         fullname = ifelse(fullname == "",
+                           trimws(paste(genus, species, subspecies),
+                                  fullname))) %>%
   select(mo, everything(), -abbr_genus, -abbr_species, -abbr_subspecies)
 
 

@@ -166,7 +166,12 @@
 #'   mutate(mo = as.mo(paste(genus, species)))
 #' }
 as.mo <- function(x, Becker = FALSE, Lancefield = FALSE, allow_uncertain = TRUE, reference_df = get_mo_source()) {
-  if (all(x %in% AMR::microorganisms$fullname)
+  if (all(x %in% AMR::microorganisms$mo)
+      & isFALSE(Becker)
+      & isFALSE(Lancefield)
+      & is.null(reference_df)) {
+    y <- x
+  } else if (all(x %in% AMR::microorganisms$fullname)
       & isFALSE(Becker)
       & isFALSE(Lancefield)
       & is.null(reference_df)) {
@@ -179,12 +184,13 @@ as.mo <- function(x, Becker = FALSE, Lancefield = FALSE, allow_uncertain = TRUE,
     if (any(is.na(y))) {
       y[is.na(y)] <- microorganismsDT[prevalence == 3][data.table(fullname = x[is.na(y)]), on = "fullname", "mo"][[1]]
     }
-    return(y)
+  } else {
+    # will be checked for mo class in validation and uses exec_as.mo internally if necessary
+    y <- mo_validate(x = x, property = "mo",
+                     Becker = Becker, Lancefield = Lancefield,
+                     allow_uncertain = allow_uncertain, reference_df = reference_df)
   }
-  # will be checked for mo class in validation
-  mo_validate(x = x, property = "mo",
-              Becker = Becker, Lancefield = Lancefield,
-              allow_uncertain = allow_uncertain, reference_df = reference_df)
+  structure(.Data = y, class = "mo")
 }
 
 #' @rdname as.mo
@@ -891,6 +897,7 @@ exec_as.mo <- function(x, Becker = FALSE, Lancefield = FALSE,
                          stringsAsFactors = FALSE)
   df_input <- data.frame(input = as.character(x_input),
                          stringsAsFactors = FALSE)
+
   x <- df_input %>%
     left_join(df_found,
               by = "input") %>%
