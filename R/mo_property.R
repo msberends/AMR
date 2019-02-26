@@ -132,7 +132,7 @@
 #' mo_taxonomy("E. coli")
 mo_fullname <- function(x, language = get_locale(), ...) {
   x <- mo_validate(x = x, property = "fullname", ...)
-  translate(x, language = language)
+  mo_translate(x, language = language)
 }
 
 #' @rdname mo_property
@@ -199,13 +199,13 @@ mo_shortname <- function(x, language = get_locale(), ...) {
     }
   }
 
-  translate(result, language = language)
+  mo_translate(result, language = language)
 }
 
 #' @rdname mo_property
 #' @export
 mo_subspecies <- function(x, language = get_locale(), ...) {
-  translate(validate(x = x, property = "subspecies", ...), language = language)
+  mo_translate(mo_validate(x = x, property = "subspecies", ...), language = language)
 }
 
 #' @rdname mo_property
