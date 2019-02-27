@@ -78,10 +78,17 @@ test_that("mo_property works", {
   expect_identical(suppressWarnings(mo_ref("Chlamydia psittaci")), "Page, 1968")
   expect_identical(mo_ref("Chlamydophila psittaci"), "Everett et al., 1999")
 
-  # check vector with random values
-  #library(dplyr)
-  #df_sample <- AMR::microorganisms %>% sample_n(100)
-  #expect_identical(df_sample %>% pull(mo) %>% mo_fullname(language = "en"),
-  #                 df_sample %>% pull(fullname))
+
+  # outcome of mo_fullname must always return the fullname from the data set
+  library(dplyr)
+  a <- microorganisms %>%
+    transmute(mo,
+              # fullname from the original data:
+              f1 = fullname,
+              # newly created fullname based on MO code:
+              f2 = mo_fullname(mo, language = "en")) %>%
+    filter(f1 != f2)
+
+  expect_equal(nrow(a), 0)
 
 })

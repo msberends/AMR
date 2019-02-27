@@ -28,26 +28,26 @@ test_that("EUCAST rules work", {
   expect_identical(colnames(septic_patients),
                    colnames(suppressWarnings(eucast_rules(septic_patients))))
 
-  a <- data.frame(mo = c("KLEPNE",  # Klebsiella pneumoniae
-                         "PSEAER",  # Pseudomonas aeruginosa
-                         "ENTAER"), # Enterobacter aerogenes
+  a <- data.frame(mo = c("Klebsiella pneumoniae",
+                         "Pseudomonas aeruginosa",
+                         "Enterobacter aerogenes"),
                   amox = "-",           # Amoxicillin
                   stringsAsFactors = FALSE)
-  b <- data.frame(mo = c("KLEPNE",  # Klebsiella pneumoniae
-                         "PSEAER",  # Pseudomonas aeruginosa
-                         "ENTAER"), # Enterobacter aerogenes
+  b <- data.frame(mo = c("Klebsiella pneumoniae",
+                         "Pseudomonas aeruginosa",
+                         "Enterobacter aerogenes"),
                   amox = "R",       # Amoxicillin
                   stringsAsFactors = FALSE)
   expect_identical(suppressWarnings(eucast_rules(a, "mo", info = FALSE)), b)
   expect_identical(suppressWarnings(eucast_rules(a, "mo", info = TRUE)), b)
   expect_identical(suppressWarnings(interpretive_reading(a, "mo", info = TRUE)), b)
 
-  a <- data.frame(mo = c("STAAUR",  # Staphylococcus aureus
-                         "STCGRA"), # Streptococcus pyognenes (Lancefield Group A)
+  a <- data.frame(mo = c("Staphylococcus aureus",
+                         "Streptococcus group A"),
                   coli = "-",       # Colistin
                   stringsAsFactors = FALSE)
-  b <- data.frame(mo = c("STAAUR",  # Staphylococcus aureus
-                         "STCGRA"), # Streptococcus pyognenes (Lancefield Group A)
+  b <- data.frame(mo = c("Staphylococcus aureus",
+                         "Streptococcus group A"),
                   coli = "R",       # Colistin
                   stringsAsFactors = FALSE)
   expect_equal(suppressWarnings(eucast_rules(a, "mo", info = FALSE)), b)
