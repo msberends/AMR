@@ -78,7 +78,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.0.9018</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.0.9019</span>
       </span>
     </div>
 
@@ -252,13 +252,11 @@
 <li>Catalogue of Life as a new taxonomic source for data about microorganisms, which also contains all ITIS data we used previously. The <code>microorganisms</code> data set now contains:
 <ul>
 <li>All ~55,000 (sub)species from the kingdoms of Archaea, Bacteria, Protozoa and Viruses</li>
-<li>
-<p>All ~3,000 (sub)species from these orders of the kingdom of Fungi: Eurotiales, Onygenales, Pneumocystales, Saccharomycetales and Schizosaccharomycetales.</p>
-The kingdom of Fungi is a very large taxon with almost 300,000 different (sub)species, of which most are not microbial (but rather macroscopic, like mushrooms). Because of this, not all fungi fit the scope of this package and including everything would tremendously slow down our algorithms too. By only including the aforementioned taxonomic orders, the most relevant (sub)species are covered (like all species of <em>Aspergillus</em>, <em>Candida</em>, <em>Pneumocystis</em>, <em>Saccharomyces</em> and <em>Trichophyton</em>).</li>
+<li>All ~3,000 (sub)species from these orders of the kingdom of Fungi: Eurotiales, Onygenales, Pneumocystales, Saccharomycetales and Schizosaccharomycetales (covering at least like all species of <em>Aspergillus</em>, <em>Candida</em>, <em>Pneumocystis</em>, <em>Saccharomyces</em> and <em>Trichophyton</em>)</li>
 <li>All ~15,000 previously accepted names of included (sub)species that have been taxonomically renamed</li>
 <li>
 <p>The responsible author(s) and year of scientific publication</p>
-This data is updated annually - check the included version with <code><a href="../reference/catalogue_of_life_version.html">catalogue_of_life_version()</a></code>.</li>
+This data is updated annually - check the included version with the new function <code><a href="../reference/catalogue_of_life_version.html">catalogue_of_life_version()</a></code>.</li>
 <li>Due to this change, some <code>mo</code> codes changed (e.g. <em>Streptococcus</em> changed from <code>B_STRPTC</code> to <code>B_STRPT</code>). A translation table is used internally to support older microorganism IDs, so users will not notice this difference.</li>
 </ul>
 </li>
@@ -338,7 +336,7 @@ These functions use <code><a href="../reference/as.atc.html">as.atc()</a></code>
 </li>
 <li>Understanding of highly virulent <em>E. coli</em> strains like EIEC, EPEC and STEC</li>
 <li>There will be looked for uncertain results at default - these results will be returned with an informative warning</li>
-<li>Manual now contains more info about the algorithms</li>
+<li>Manual (help page) now contains more info about the algorithms</li>
 <li>Progress bar will be shown when it takes more than 3 seconds to get results</li>
 <li>Support for formatted console text</li>
 <li>Console will return the percentage of uncoercable input</li>

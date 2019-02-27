@@ -47,7 +47,7 @@
   <script src="../extra.js"></script>
 <meta property="og:title" content="Transform to microorganism ID — as.mo" />
 
-<meta property="og:description" content="Use this function to determine a valid microorganism ID (mo). Determination is done using Artificial Intelligence (AI) and the complete taxonomic kingdoms Bacteria, Fungi and Protozoa (see Source), so the input can be almost anything: a full name (like &quot;Staphylococcus aureus&quot;), an abbreviated name (like &quot;S. aureus&quot;), an abbreviation known in the field (like &quot;MRSA&quot;), or just a genus. You could also select a genus and species column, zie Examples." />
+<meta property="og:description" content="Use this function to determine a valid microorganism ID (mo). Determination is done using Artificial Intelligence (AI) and the complete taxonomic kingdoms Archaea, Bacteria, Protozoa, Viruses and most microbial species from the kingdom Fungi (see Source), so the input can be almost anything: a full name (like &quot;Staphylococcus aureus&quot;), an abbreviated name (like &quot;S. aureus&quot;), an abbreviation known in the field (like &quot;MRSA&quot;), or just a genus. You could also select a genus and species column, zie Examples." />
 
 <meta property="og:image" content="https://msberends.gitlab.io/AMR/logo.png" />
 <meta name="twitter:card" content="summary" />
@@ -237,7 +237,7 @@
 
     <div class="ref-description">
     
-    <p>Use this function to determine a valid microorganism ID (<code>mo</code>). Determination is done using Artificial Intelligence (AI) and the complete taxonomic kingdoms <em>Bacteria</em>, <em>Fungi</em> and <em>Protozoa</em> (see Source), so the input can be almost anything: a full name (like <code>"Staphylococcus aureus"</code>), an abbreviated name (like <code>"S. aureus"</code>), an abbreviation known in the field (like <code>"MRSA"</code>), or just a genus. You could also <code>select</code> a genus and species column, zie Examples.</p>
+    <p>Use this function to determine a valid microorganism ID (<code>mo</code>). Determination is done using Artificial Intelligence (AI) and the complete taxonomic kingdoms Archaea, Bacteria, Protozoa, Viruses and most microbial species from the kingdom Fungi (see Source), so the input can be almost anything: a full name (like <code>"Staphylococcus aureus"</code>), an abbreviated name (like <code>"S. aureus"</code>), an abbreviation known in the field (like <code>"MRSA"</code>), or just a genus. You could also <code>select</code> a genus and species column, zie Examples.</p>
     
     </div>
 
@@ -309,7 +309,6 @@
     <p>A couple of effects because of these rules:</p><ul>
 <li><p><code>"E. coli"</code> will return the ID of <em>Escherichia coli</em> and not <em>Entamoeba coli</em>, although the latter would alphabetically come first</p></li>
 <li><p><code>"H. influenzae"</code> will return the ID of <em>Haemophilus influenzae</em> and not <em>Haematobacter influenzae</em> for the same reason</p></li>
-<li><p>Something like <code>"p aer"</code> will return the ID of <em>Pseudomonas aeruginosa</em> and not <em>Pasteurella aerogenes</em></p></li>
 <li><p>Something like <code>"stau"</code> or <code>"S aur"</code> will return the ID of <em>Staphylococcus aureus</em> and not <em>Staphylococcus auricularis</em></p></li>
 </ul><p>This means that looking up human pathogenic microorganisms takes less time than looking up human <strong>non</strong>-pathogenic microorganisms.</p>
 <p><strong>UNCERTAIN RESULTS</strong> <br />
@@ -318,7 +317,7 @@ When using <code>allow_uncertain = TRUE</code> (which is the default setting), i
 <li><p>It strips off values between brackets and the brackets itself, and re-evaluates the input with all previous rules</p></li>
 <li><p>It strips off words from the end one by one and re-evaluates the input with all previous rules</p></li>
 <li><p>It strips off words from the start one by one and re-evaluates the input with all previous rules</p></li>
-<li><p>It tries to look for some manual changes which are not yet published to the Catalogue of Life (like <em>Propionibacterium</em> not yet being <em>Cutibacterium</em>)</p></li>
+<li><p>It tries to look for some manual changes which are not (yet) published to the Catalogue of Life (like <em>Propionibacterium</em> being <em>Cutibacterium</em>)</p></li>
 </ul>
     <p>Examples:</p><ul>
 <li><p><code>"Streptococcus group B (known as S. agalactiae)"</code>. The text between brackets will be removed and a warning will be thrown that the result <em>Streptococcus group B</em> (<code>B_STRPT_GRB</code>) needs review.</p></li>
@@ -326,7 +325,7 @@ When using <code>allow_uncertain = TRUE</code> (which is the default setting), i
 <li><p><code>"Fluoroquinolone-resistant Neisseria gonorrhoeae"</code>. The first word will be stripped, after which the function will try to find a match. A warning will be thrown that the result <em>Neisseria gonorrhoeae</em> (<code>B_NESSR_GON</code>) needs review.</p></li>
 </ul>
     <p>Use <code>mo_failures()</code> to get a vector with all values that could not be coerced to a valid value.</p>
-<p>Use <code>mo_uncertainties()</code> to get a vector with all values that were coerced to a valid value, but with uncertainty.</p>
+<p>Use <code>mo_uncertainties()</code> to get info about all values that were coerced to a valid value, but with uncertainty.</p>
 <p>Use <code>mo_renamed()</code> to get a vector with all values that could be coerced based on an old, previously accepted taxonomic name.</p>
     
     <h2 class="hasAnchor" id="microbial-prevalence-of-pathogens-in-humans"><a class="anchor" href="#microbial-prevalence-of-pathogens-in-humans"></a>Microbial prevalence of pathogens in humans</h2>
@@ -345,16 +344,16 @@ When using <code>allow_uncertain = TRUE</code> (which is the default setting), i
     
     <p>[1] Becker K <em>et al.</em> <strong>Coagulase-Negative Staphylococci</strong>. 2014. Clin Microbiol Rev. 27(4): 870–926. <a href='https://dx.doi.org/10.1128/CMR.00109-13'>https://dx.doi.org/10.1128/CMR.00109-13</a></p>
 <p>[2] Lancefield RC <strong>A serological differentiation of human and other groups of hemolytic streptococci</strong>. 1933. J Exp Med. 57(4): 571–95. <a href='https://dx.doi.org/10.1084/jem.57.4.571'>https://dx.doi.org/10.1084/jem.57.4.571</a></p>
-<p>[3] Catalogue of Life: Annual Checklist (public online database), <a href='www.catalogueoflife.org'>www.catalogueoflife.org</a>.</p>
+<p>[3] Catalogue of Life: Annual Checklist (public online taxonomic database), <a href='www.catalogueoflife.org'>www.catalogueoflife.org</a> (check included annual version with <code><a href='catalogue_of_life_version.html'>catalogue_of_life_version</a>()</code>).</p>
     
     <h2 class="hasAnchor" id="catalogue-of-life"><a class="anchor" href="#catalogue-of-life"></a>Catalogue of Life</h2>
 
     
     <p><img src='figures/logo_col.png' height=60px style=margin-bottom:5px /> <br />
-This package contains the complete taxonomic tree of almost all microorganisms from the authoritative and comprehensive Catalogue of Life (<a href='http://www.catalogueoflife.org'>http://www.catalogueoflife.org</a>). This data is updated annually - check the included version with <code><a href='catalogue_of_life_version.html'>catalogue_of_life_version</a></code>.</p>
+This package contains the complete taxonomic tree of almost all microorganisms from the authoritative and comprehensive Catalogue of Life (<a href='http://www.catalogueoflife.org'>http://www.catalogueoflife.org</a>). This data is updated annually - check the included version with <code><a href='catalogue_of_life_version.html'>catalogue_of_life_version</a>()</code>.</p>
 <p>Included are:</p><ul>
 <li><p>All ~55,000 (sub)species from the kingdoms of Archaea, Bacteria, Protozoa and Viruses</p></li>
-<li><p>All ~3,500 (sub)species from these orders of the kingdom of Fungi: Eurotiales, Onygenales, Pneumocystales, Saccharomycetales, Schizosaccharomycetales and Tremellales. The kingdom of Fungi is a very large taxon with almost 300,000 different (sub)species, of which most are not microbial (but rather macroscopic, like mushrooms). Because of this, not all fungi fit the scope of this package and including everything would tremendously slow down our algorithms too. By only including the aforementioned taxonomic orders, the most relevant fungi are covered (like all species of <em>Aspergillus</em>, <em>Candida</em>, <em>Cryptococcus</em>, <em>Histplasma</em>, <em>Pneumocystis</em>, <em>Saccharomyces</em> and <em>Trichophyton</em>).</p></li>
+<li><p>All ~3,500 (sub)species from these orders of the kingdom of Fungi: Eurotiales, Onygenales, Pneumocystales, Saccharomycetales, Schizosaccharomycetales and Tremellales. This covers the most relevant microbial fungi (like all species of <em>Aspergillus</em>, <em>Candida</em>, <em>Cryptococcus</em>, <em>Histplasma</em>, <em>Pneumocystis</em>, <em>Saccharomyces</em> and <em>Trichophyton</em>).</p></li>
 <li><p>All ~15,000 previously accepted names of included (sub)species that have been taxonomically renamed</p></li>
 <li><p>The complete taxonomic tree of all included (sub)species: from kingdom to subspecies</p></li>
 <li><p>The responsible author(s) and year of scientific publication</p></li>

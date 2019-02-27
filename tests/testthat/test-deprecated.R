@@ -30,4 +30,17 @@ test_that("deprecated functions work", {
   expect_identical(suppressWarnings(ratio(c(772, 1611, 737), ratio = "1:2:1")), c(780, 1560,  780))
   expect_identical(suppressWarnings(ratio(c(1752, 1895), ratio = c(1, 1))), c(1823.5, 1823.5))
 
+  expect_warning(guess_mo("esco"))
+  expect_warning(guess_atc("amox"))
+  expect_warning(ab_property("amox"))
+  expect_warning(ab_atc("amox"))
+  expect_warning(ab_official("amox"))
+  expect_warning(ab_name("amox"))
+  expect_warning(ab_trivial_nl("amox"))
+  expect_warning(ab_certe("amox"))
+  expect_warning(ab_umcg("amox"))
+  expect_warning(ab_tradenames("amox"))
+  expect_warning(atc_ddd("amox"))
+  expect_warning(atc_groups("amox"))
+
 })

@@ -256,10 +256,10 @@
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>The reference file can be a text file seperated with commas (CSV) or pipes, an Excel file (old 'xls' format or new 'xlsx' format) or an R object file (extension '.rds'). To use an Excel file, you need to have the <code>readxl</code> package installed.</p>
+    <p>The reference file can be a text file seperated with commas (CSV) or tabs or pipes, an Excel file (either 'xls' or 'xlsx' format) or an R object file (extension '.rds'). To use an Excel file, you need to have the <code>readxl</code> package installed.</p>
 <p><code>set_mo_source</code> will check the file for validity: it must be a <code>data.frame</code>, must have a column named <code>"mo"</code> which contains values from <code>microorganisms$mo</code> and must have a reference column with your own defined values. If all tests pass, <code>set_mo_source</code> will read the file into R and export it to <code>"~/.mo_source.rds"</code>. This compressed data file will then be used at default for MO determination (function <code><a href='as.mo.html'>as.mo</a></code> and consequently all <code>mo_*</code> functions like <code><a href='mo_property.html'>mo_genus</a></code> and <code><a href='mo_property.html'>mo_gramstain</a></code>). The location of the original file will be saved as option with <code><a href='https://www.rdocumentation.org/packages/base/topics/options'>options</a>(mo_source = path)</code>. Its timestamp will be saved with <code><a href='https://www.rdocumentation.org/packages/base/topics/options'>options</a>(mo_source_datetime = ...)</code>.</p>
 <p><code>get_mo_source</code> will return the data set by reading <code>"~/.mo_source.rds"</code> with <code><a href='https://www.rdocumentation.org/packages/base/topics/readRDS'>readRDS</a></code>. If the original file has changed (the file defined with <code>path</code>), it will call <code>set_mo_source</code> to update the data file automatically.</p>
-<p>Reading an Excel file (<code>.xlsx</code>) with only one row has a size of 8-9 kB. The compressed file will have a size of 0.1 kB and can be read by <code>get_mo_source</code> in only a couple of microseconds (a millionth of a second).</p>
+<p>Reading an Excel file (<code>.xlsx</code>) with only one row has a size of 8-9 kB. The compressed file used by this package will have a size of 0.1 kB and can be read by <code>get_mo_source</code> in only a couple of microseconds (a millionth of a second).</p>
     
     <h2 class="hasAnchor" id="read-more-on-our-website-"><a class="anchor" href="#read-more-on-our-website-"></a>Read more on our website!</h2>
 
@@ -268,34 +268,33 @@
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"># NOT RUN {
-# imagine this Excel file (mo codes looked up in `microorganisms` data set):
-#            A                B
-# 1  our code            mo
-# 2  lab_mo_ecoli        B_ESCHR_COL
-# 3  lab_mo_kpneumoniae  B_KLBSL_PNE
+    <pre class="examples"><span class='co'># NOT RUN {</span>
+<span class='co'># imagine this Excel file (mo codes looked up in `microorganisms` data set):</span>
+<span class='co'>#            A                B</span>
+<span class='co'># 1  our code            mo</span>
+<span class='co'># 2  lab_mo_ecoli        B_ESCHR_COL</span>
+<span class='co'># 3  lab_mo_kpneumoniae  B_KLBSL_PNE</span>
 
-# 1. We save it as 'home/me/ourcodes.xlsx'
+<span class='co'># 1. We save it as 'home/me/ourcodes.xlsx'</span>
 
-# 2. We use it for input:
-set_mo_source("C:\path\ourcodes.xlsx")
-#> Created mo_source file '~/.mo_source.rds' from 'home/me/ourcodes.xlsx'.
+<span class='co'># 2. We use it for input:</span>
+<span class='fu'>set_mo_source</span>(<span class='st'>"home/me/ourcodes.xlsx"</span>)
+<span class='co'>#&gt; Created mo_source file '~/.mo_source.rds' from 'home/me/ourcodes.xlsx'.</span>
 
-# 3. And use it in our functions:
-as.mo("lab_mo_ecoli")
-#> B_ESCHR_COL
+<span class='co'># 3. And use it in our functions:</span>
+<span class='fu'><a href='as.mo.html'>as.mo</a></span>(<span class='st'>"lab_mo_ecoli"</span>)
+<span class='co'>#&gt; B_ESCHR_COL</span>
 
-mo_genus("lab_mo_kpneumoniae")
-#> "Klebsiella"
+<span class='fu'><a href='mo_property.html'>mo_genus</a></span>(<span class='st'>"lab_mo_kpneumoniae"</span>)
+<span class='co'>#&gt; "Klebsiella"</span>
 
-# 4. It will look for changes itself:
-# (add new row to the Excel file and save it)
+<span class='co'># 4. It will look for changes itself:</span>
+<span class='co'># (add new row to the Excel file and save it)</span>
 
-mo_genus("lab_mo_kpneumoniae")
-#> Updated mo_source file '~/.mo_source.rds' from 'home/me/ourcodes.xlsx'.
-#> "Klebsiella"
-# }
-</pre>
+<span class='fu'><a href='mo_property.html'>mo_genus</a></span>(<span class='st'>"lab_mo_kpneumoniae"</span>)
+<span class='co'>#&gt; Updated mo_source file '~/.mo_source.rds' from 'home/me/ourcodes.xlsx'.</span>
+<span class='co'>#&gt; "Klebsiella"</span>
+<span class='co'># }</span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

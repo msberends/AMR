@@ -21,7 +21,7 @@
 
 #' Transform to microorganism ID
 #'
-#' Use this function to determine a valid microorganism ID (\code{mo}). Determination is done using Artificial Intelligence (AI) and the complete taxonomic kingdoms \emph{Bacteria}, \emph{Fungi} and \emph{Protozoa} (see Source), so the input can be almost anything: a full name (like \code{"Staphylococcus aureus"}), an abbreviated name (like \code{"S. aureus"}), an abbreviation known in the field (like \code{"MRSA"}), or just a genus. You could also \code{\link{select}} a genus and species column, zie Examples.
+#' Use this function to determine a valid microorganism ID (\code{mo}). Determination is done using Artificial Intelligence (AI) and the complete taxonomic kingdoms Archaea, Bacteria, Protozoa, Viruses and most microbial species from the kingdom Fungi (see Source), so the input can be almost anything: a full name (like \code{"Staphylococcus aureus"}), an abbreviated name (like \code{"S. aureus"}), an abbreviation known in the field (like \code{"MRSA"}), or just a genus. You could also \code{\link{select}} a genus and species column, zie Examples.
 #' @param x a character vector or a \code{data.frame} with one or two columns
 #' @param Becker a logical to indicate whether \emph{Staphylococci} should be categorised into Coagulase Negative \emph{Staphylococci} ("CoNS") and Coagulase Positive \emph{Staphylococci} ("CoPS") instead of their own species, according to Karsten Becker \emph{et al.} [1].
 #'
@@ -65,7 +65,6 @@
 #' \itemize{
 #'   \item{\code{"E. coli"} will return the ID of \emph{Escherichia coli} and not \emph{Entamoeba coli}, although the latter would alphabetically come first}
 #'   \item{\code{"H. influenzae"} will return the ID of \emph{Haemophilus influenzae} and not \emph{Haematobacter influenzae} for the same reason}
-#'   \item{Something like \code{"p aer"} will return the ID of \emph{Pseudomonas aeruginosa} and not \emph{Pasteurella aerogenes}}
 #'   \item{Something like \code{"stau"} or \code{"S aur"} will return the ID of \emph{Staphylococcus aureus} and not \emph{Staphylococcus auricularis}}
 #' }
 #' This means that looking up human pathogenic microorganisms takes less time than looking up human \strong{non}-pathogenic microorganisms.
@@ -77,7 +76,7 @@
 #'   \item{It strips off values between brackets and the brackets itself, and re-evaluates the input with all previous rules}
 #'   \item{It strips off words from the end one by one and re-evaluates the input with all previous rules}
 #'   \item{It strips off words from the start one by one and re-evaluates the input with all previous rules}
-#'   \item{It tries to look for some manual changes which are not yet published to the Catalogue of Life (like \emph{Propionibacterium} not yet being \emph{Cutibacterium})}
+#'   \item{It tries to look for some manual changes which are not (yet) published to the Catalogue of Life (like \emph{Propionibacterium} being \emph{Cutibacterium})}
 #' }
 #'
 #' Examples:
@@ -89,7 +88,7 @@
 #'
 #' Use \code{mo_failures()} to get a vector with all values that could not be coerced to a valid value.
 #'
-#' Use \code{mo_uncertainties()} to get a vector with all values that were coerced to a valid value, but with uncertainty.
+#' Use \code{mo_uncertainties()} to get info about all values that were coerced to a valid value, but with uncertainty.
 #'
 #' Use \code{mo_renamed()} to get a vector with all values that could be coerced based on an old, previously accepted taxonomic name.
 #'
@@ -111,7 +110,7 @@
 #'
 #' [2] Lancefield RC \strong{A serological differentiation of human and other groups of hemolytic streptococci}. 1933. J Exp Med. 57(4): 571–95. \url{https://dx.doi.org/10.1084/jem.57.4.571}
 #'
-#' [3] Catalogue of Life: Annual Checklist (public online database), \url{www.catalogueoflife.org}.
+#' [3] Catalogue of Life: Annual Checklist (public online taxonomic database), \url{www.catalogueoflife.org} (check included annual version with \code{\link{catalogue_of_life_version}()}).
 #' @export
 #' @return Character (vector) with class \code{"mo"}. Unknown values will return \code{NA}.
 #' @seealso \code{\link{microorganisms}} for the \code{data.frame} that is being used to determine ID's. \cr
@@ -238,7 +237,9 @@ exec_as.mo <- function(x, Becker = FALSE, Lancefield = FALSE,
   }
 
   notes <- character(0)
-  uncertainties <- character(0)
+  uncertainties <- data.frame(input = character(0),
+                              fullname = character(0),
+                              mo = character(0))
   failures <- character(0)
   x_input <- x
   # already strip leading and trailing spaces
@@ -695,8 +696,10 @@ exec_as.mo <- function(x, Becker = FALSE, Lancefield = FALSE,
               found <- microorganismsDT[tolower(fullname) %like% paste(b.x_trimmed, "species"), ..property][[1]]
               if (length(found) > 0) {
                 x[i] <- found[1L]
-                uncertainties <<- c(uncertainties,
-                                    paste0("'", a.x_backup, "' >> ", microorganismsDT[mo == found[1L], fullname][[1]], " (", found[1L], ")"))
+                uncertainties <<- rbind(uncertainties,
+                                        data.frame(input = a.x_backup,
+                                                   fullname = microorganismsDT[mo == found[1L], fullname][[1]],
+                                                   mo = found[1L]))
                 return(x)
               }
             }
@@ -719,8 +722,10 @@ exec_as.mo <- function(x, Becker = FALSE, Lancefield = FALSE,
                         ref_old = found[1, ref],
                         ref_new = microorganismsDT[col_id == found[1, col_id_new], ref],
                         mo = microorganismsDT[col_id == found[1, col_id_new], mo])
-            uncertainties <<- c(uncertainties,
-                                paste0("'", a.x_backup, "' >> ", found[1, fullname], " (Catalogue of Life ID ", found[1, col_id], ")"))
+            uncertainties <<- rbind(uncertainties,
+                                    data.frame(input = a.x_backup,
+                                               fullname = found[1, fullname],
+                                               mo = paste("CoL", found[1, col_id])))
             return(x)
           }
 
@@ -731,8 +736,10 @@ exec_as.mo <- function(x, Becker = FALSE, Lancefield = FALSE,
           if (!is.na(found) & nchar(b.x_trimmed) >= 6) {
             found_result <- found
             found <- microorganismsDT[mo == found, ..property][[1]]
-            uncertainties <<- c(uncertainties,
-                                paste0("'", a.x_backup, "' >> ", microorganismsDT[mo == found_result[1L], fullname][[1]], " (", found_result[1L], ")"))
+            uncertainties <<- rbind(uncertainties,
+                                    data.frame(input = a.x_backup,
+                                               fullname = microorganismsDT[mo == found_result[1L], fullname][[1]],
+                                               mo = found_result[1L]))
             return(found[1L])
           }
 
@@ -745,8 +752,10 @@ exec_as.mo <- function(x, Becker = FALSE, Lancefield = FALSE,
               if (!is.na(found)) {
                 found_result <- found
                 found <- microorganismsDT[mo == found, ..property][[1]]
-                uncertainties <<- c(uncertainties,
-                                    paste0("'", a.x_backup, "' >> ", microorganismsDT[mo == found_result[1L], fullname][[1]], " (", found_result[1L], ")"))
+                uncertainties <<- rbind(uncertainties,
+                                        data.frame(input = a.x_backup,
+                                                   fullname = microorganismsDT[mo == found_result[1L], fullname][[1]],
+                                                   mo = found_result[1L]))
                 return(found[1L])
               }
             }
@@ -761,8 +770,10 @@ exec_as.mo <- function(x, Becker = FALSE, Lancefield = FALSE,
               if (!is.na(found)) {
                 found_result <- found
                 found <- microorganismsDT[mo == found, ..property][[1]]
-                uncertainties <<- c(uncertainties,
-                                    paste0("'", a.x_backup, "' >> ", microorganismsDT[mo == found_result[1L], fullname][[1]], " (", found_result[1L], ")"))
+                uncertainties <<- rbind(uncertainties,
+                                        data.frame(input = a.x_backup,
+                                                   fullname = microorganismsDT[mo == found_result[1L], fullname][[1]],
+                                                   mo = found_result[1L]))
                 return(found[1L])
               }
             }
@@ -773,11 +784,10 @@ exec_as.mo <- function(x, Becker = FALSE, Lancefield = FALSE,
           if (!is.na(found)) {
             found_result <- found
             found <- microorganismsDT[mo == found, ..property][[1]]
-            warning(silver(paste0('Guessed with uncertainty: "',
-                                  a.x_backup, '" >> ', italic(microorganismsDT[mo == found_result[1L], fullname][[1]]), " (", found_result[1L], ")")),
-                    call. = FALSE, immediate. = FALSE)
-            uncertainties <<- c(uncertainties,
-                                paste0('"', a.x_backup, '" >> ', microorganismsDT[mo == found_result[1L], fullname][[1]], " (", found_result[1L], ")"))
+            uncertainties <<- rbind(uncertainties,
+                                    data.frame(input = a.x_backup,
+                                               fullname = microorganismsDT[mo == found_result[1L], fullname][[1]],
+                                               mo = found_result[1L]))
             return(found[1L])
           }
 
@@ -799,7 +809,7 @@ exec_as.mo <- function(x, Becker = FALSE, Lancefield = FALSE,
 
   # failures
   failures <- failures[!failures %in% c(NA, NULL, NaN)]
-  if (length(failures) > 0) {
+  if (length(failures) > 0 & clear_options == TRUE) {
     options(mo_failures = sort(unique(failures)))
     plural <- c("value", "it")
     if (n_distinct(failures) > 1) {
@@ -807,7 +817,7 @@ exec_as.mo <- function(x, Becker = FALSE, Lancefield = FALSE,
     }
     total_failures <- length(x_input[x_input %in% failures & !x_input %in% c(NA, NULL, NaN)])
     total_n <- length(x_input[!x_input %in% c(NA, NULL, NaN)])
-    msg <- paste0("\n", n_distinct(failures), " unique ", plural[1],
+    msg <- paste0("\n", nr2char(n_distinct(failures)), " unique input ", plural[1],
                   " (^= ", percent(total_failures / total_n, round = 1, force_zero = TRUE),
                   ") could not be coerced to a valid MO code")
     if (n_distinct(failures) <= 10) {
@@ -819,14 +829,15 @@ exec_as.mo <- function(x, Becker = FALSE, Lancefield = FALSE,
             immediate. = TRUE) # thus will always be shown, even if >= warnings
   }
   # uncertainties
-  if (length(uncertainties) > 0) {
-    options(mo_uncertainties = sort(unique(uncertainties)))
+  if (NROW(uncertainties) > 0 & clear_options == TRUE) {
+    options(mo_uncertainties = as.list(distinct(uncertainties, input, .keep_all = TRUE)))
+
     plural <- c("value", "it")
-    if (n_distinct(failures) > 1) {
+    if (NROW(uncertainties) > 1) {
       plural <- c("values", "them")
     }
-    msg <- paste0("\nResults of ", n_distinct(uncertainties), " input ", plural[1],
-                  " guessed with uncertainty. Use mo_uncertainties() to review ", plural[2], ".")
+    msg <- paste0("\nResults of ", nr2char(NROW(uncertainties)), " input ", plural[1],
+                  " was guessed with uncertainty. Use mo_uncertainties() to review ", plural[2], ".")
     warning(red(msg),
             call. = FALSE,
             immediate. = TRUE) # thus will always be shown, even if >= warnings
@@ -961,6 +972,7 @@ print.mo <- function(x, ...) {
 }
 
 #' @exportMethod summary.mo
+#' @importFrom dplyr n_distinct
 #' @export
 #' @noRd
 summary.mo <- function(object, ...) {
@@ -969,7 +981,7 @@ summary.mo <- function(object, ...) {
   top_3 <- unname(top_freq(freq(x), 3))
   c("Class" = "mo",
     "<NA>" = length(x[is.na(x)]),
-    "Unique" = dplyr::n_distinct(x[!is.na(x)]),
+    "Unique" = n_distinct(x[!is.na(x)]),
     "#1" = top_3[1],
     "#2" = top_3[2],
     "#3" = top_3[3])
@@ -978,7 +990,7 @@ summary.mo <- function(object, ...) {
 #' @exportMethod as.data.frame.mo
 #' @export
 #' @noRd
-as.data.frame.mo <- function (x, ...) {
+as.data.frame.mo <- function(x, ...) {
   # same as as.data.frame.character but with removed stringsAsFactors, since it will be class "mo"
   nm <- paste(deparse(substitute(x), width.cutoff = 500L),
               collapse = " ")
@@ -1004,13 +1016,31 @@ mo_failures <- function() {
 }
 
 #' @rdname as.mo
+#' @importFrom crayon italic
 #' @export
 mo_uncertainties <- function() {
-  getOption("mo_uncertainties")
+  df <- as.data.frame(getOption("mo_uncertainties"))
+  msg <- ""
+  for (i in 1:nrow(df)) {
+    msg <- paste(msg,
+                 paste0('"', df[i, "input"], '" -> ', italic(df[i, "fullname"]), " (", df[i, "mo"], ")"),
+                 sep = "\n")
+  }
+  cat(paste0(bold("Results guessed with uncertainty:"), msg))
 }
 
 #' @rdname as.mo
 #' @export
 mo_renamed <- function() {
-  strip_style(gsub("was renamed", ">>", getOption("mo_renamed"), fixed = TRUE))
+  strip_style(gsub("was renamed", "->", getOption("mo_renamed"), fixed = TRUE))
+}
+
+nr2char <- function(x) {
+  if (x %in% c(1:10)) {
+    v <- c("one" = 1, "two" = 2, "three" = 3, "four" = 4, "five" = 5,
+           "six" = 6, "seven" = 7, "eight" = 8, "nine" = 9, "ten" = 10)
+    names(v[x])
+  } else {
+    x
+  }
 }

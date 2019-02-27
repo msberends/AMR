@@ -26,13 +26,13 @@
 #' @rdname mo_source
 #' @name mo_source
 #' @aliases set_mo_source get_mo_source
-#' @details The reference file can be a text file seperated with commas (CSV) or pipes, an Excel file (old 'xls' format or new 'xlsx' format) or an R object file (extension '.rds'). To use an Excel file, you need to have the \code{readxl} package installed.
+#' @details The reference file can be a text file seperated with commas (CSV) or tabs or pipes, an Excel file (either 'xls' or 'xlsx' format) or an R object file (extension '.rds'). To use an Excel file, you need to have the \code{readxl} package installed.
 #'
 #' \code{set_mo_source} will check the file for validity: it must be a \code{data.frame}, must have a column named \code{"mo"} which contains values from \code{microorganisms$mo} and must have a reference column with your own defined values. If all tests pass, \code{set_mo_source} will read the file into R and export it to \code{"~/.mo_source.rds"}. This compressed data file will then be used at default for MO determination (function \code{\link{as.mo}} and consequently all \code{mo_*} functions like \code{\link{mo_genus}} and \code{\link{mo_gramstain}}). The location of the original file will be saved as option with \code{\link{options}(mo_source = path)}. Its timestamp will be saved with \code{\link{options}(mo_source_datetime = ...)}.
 #'
 #' \code{get_mo_source} will return the data set by reading \code{"~/.mo_source.rds"} with \code{\link{readRDS}}. If the original file has changed (the file defined with \code{path}), it will call \code{set_mo_source} to update the data file automatically.
 #'
-#' Reading an Excel file (\code{.xlsx}) with only one row has a size of 8-9 kB. The compressed file will have a size of 0.1 kB and can be read by \code{get_mo_source} in only a couple of microseconds (a millionth of a second).
+#' Reading an Excel file (\code{.xlsx}) with only one row has a size of 8-9 kB. The compressed file used by this package will have a size of 0.1 kB and can be read by \code{get_mo_source} in only a couple of microseconds (a millionth of a second).
 #' @importFrom dplyr select everything
 #' @export
 #' @inheritSection AMR Read more on our website!
@@ -48,7 +48,7 @@
 #' # 1. We save it as 'home/me/ourcodes.xlsx'
 #'
 #' # 2. We use it for input:
-#' set_mo_source("C:\path\ourcodes.xlsx")
+#' set_mo_source("home/me/ourcodes.xlsx")
 #' #> Created mo_source file '~/.mo_source.rds' from 'home/me/ourcodes.xlsx'.
 #'
 #' # 3. And use it in our functions:
@@ -109,11 +109,20 @@ set_mo_source <- function(path) {
     }
     df <- readxl::read_excel(path)
 
+  } else if (path %like% '[.]tsv$') {
+    df <- utils::read.table(header = TRUE, sep = "\t", stringsAsFactors = FALSE)
+
   } else {
     # try comma first
     try(
       df <- utils::read.table(header = TRUE, sep = ",", stringsAsFactors = FALSE),
       silent = TRUE)
+    if (!is_valid(df)) {
+      # try tab
+      try(
+        df <- utils::read.table(header = TRUE, sep = "\t", stringsAsFactors = FALSE),
+        silent = TRUE)
+    }
     if (!is_valid(df)) {
       # try pipe
       try(

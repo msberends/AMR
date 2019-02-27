@@ -58,9 +58,16 @@ test_that("data sets are valid", {
 
 
 test_that("creation of data sets is valid", {
+  df <- make()
+  expect_lt(nrow(df[which(df$prevalence == 1), ]), nrow(df[which(df$prevalence == 2), ]))
+  expect_lt(nrow(df[which(df$prevalence == 2), ]), nrow(df[which(df$prevalence == 3), ]))
   DT <- make_DT()
   expect_lt(nrow(DT[prevalence == 1]), nrow(DT[prevalence == 2]))
   expect_lt(nrow(DT[prevalence == 2]), nrow(DT[prevalence == 3]))
   old <- make_trans_tbl()
   expect_gt(length(old), 0)
+})
+
+test_that("CoL version info works", {
+ expect_equal(class(catalogue_of_life_version()), "list")
 })

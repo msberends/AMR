@@ -39,7 +39,7 @@ mo_renamed()
 Character (vector) with class \code{"mo"}. Unknown values will return \code{NA}.
 }
 \description{
-Use this function to determine a valid microorganism ID (\code{mo}). Determination is done using Artificial Intelligence (AI) and the complete taxonomic kingdoms \emph{Bacteria}, \emph{Fungi} and \emph{Protozoa} (see Source), so the input can be almost anything: a full name (like \code{"Staphylococcus aureus"}), an abbreviated name (like \code{"S. aureus"}), an abbreviation known in the field (like \code{"MRSA"}), or just a genus. You could also \code{\link{select}} a genus and species column, zie Examples.
+Use this function to determine a valid microorganism ID (\code{mo}). Determination is done using Artificial Intelligence (AI) and the complete taxonomic kingdoms Archaea, Bacteria, Protozoa, Viruses and most microbial species from the kingdom Fungi (see Source), so the input can be almost anything: a full name (like \code{"Staphylococcus aureus"}), an abbreviated name (like \code{"S. aureus"}), an abbreviation known in the field (like \code{"MRSA"}), or just a genus. You could also \code{\link{select}} a genus and species column, zie Examples.
 }
 \details{
 A microbial ID from this package (class: \code{mo}) typically looks like these examples:\cr
@@ -72,7 +72,6 @@ A couple of effects because of these rules:
 \itemize{
   \item{\code{"E. coli"} will return the ID of \emph{Escherichia coli} and not \emph{Entamoeba coli}, although the latter would alphabetically come first}
   \item{\code{"H. influenzae"} will return the ID of \emph{Haemophilus influenzae} and not \emph{Haematobacter influenzae} for the same reason}
-  \item{Something like \code{"p aer"} will return the ID of \emph{Pseudomonas aeruginosa} and not \emph{Pasteurella aerogenes}}
   \item{Something like \code{"stau"} or \code{"S aur"} will return the ID of \emph{Staphylococcus aureus} and not \emph{Staphylococcus auricularis}}
 }
 This means that looking up human pathogenic microorganisms takes less time than looking up human \strong{non}-pathogenic microorganisms.
@@ -84,7 +83,7 @@ When using \code{allow_uncertain = TRUE} (which is the default setting), it will
   \item{It strips off values between brackets and the brackets itself, and re-evaluates the input with all previous rules}
   \item{It strips off words from the end one by one and re-evaluates the input with all previous rules}
   \item{It strips off words from the start one by one and re-evaluates the input with all previous rules}
-  \item{It tries to look for some manual changes which are not yet published to the Catalogue of Life (like \emph{Propionibacterium} not yet being \emph{Cutibacterium})}
+  \item{It tries to look for some manual changes which are not (yet) published to the Catalogue of Life (like \emph{Propionibacterium} being \emph{Cutibacterium})}
 }
 
 Examples:
@@ -96,7 +95,7 @@ Examples:
 
 Use \code{mo_failures()} to get a vector with all values that could not be coerced to a valid value.
 
-Use \code{mo_uncertainties()} to get a vector with all values that were coerced to a valid value, but with uncertainty.
+Use \code{mo_uncertainties()} to get info about all values that were coerced to a valid value, but with uncertainty.
 
 Use \code{mo_renamed()} to get a vector with all values that could be coerced based on an old, previously accepted taxonomic name.
 }
@@ -120,18 +119,18 @@ Group 2 probably contains all microbial pathogens ever found in humans.
 
 [2] Lancefield RC \strong{A serological differentiation of human and other groups of hemolytic streptococci}. 1933. J Exp Med. 57(4): 571–95. \url{https://dx.doi.org/10.1084/jem.57.4.571}
 
-[3] Catalogue of Life: Annual Checklist (public online database), \url{www.catalogueoflife.org}.
+[3] Catalogue of Life: Annual Checklist (public online taxonomic database), \url{www.catalogueoflife.org} (check included annual version with \code{\link{catalogue_of_life_version}()}).
 }
 
 \section{Catalogue of Life}{
 
 \if{html}{\figure{logo_col.png}{options: height=60px style=margin-bottom:5px} \cr}
-This package contains the complete taxonomic tree of almost all microorganisms from the authoritative and comprehensive Catalogue of Life (\url{http://www.catalogueoflife.org}). This data is updated annually - check the included version with \code{\link{catalogue_of_life_version}}.
+This package contains the complete taxonomic tree of almost all microorganisms from the authoritative and comprehensive Catalogue of Life (\url{http://www.catalogueoflife.org}). This data is updated annually - check the included version with \code{\link{catalogue_of_life_version}()}.
 
 Included are:
 \itemize{
   \item{All ~55,000 (sub)species from the kingdoms of Archaea, Bacteria, Protozoa and Viruses}
-  \item{All ~3,500 (sub)species from these orders of the kingdom of Fungi: Eurotiales, Onygenales, Pneumocystales, Saccharomycetales, Schizosaccharomycetales and Tremellales. The kingdom of Fungi is a very large taxon with almost 300,000 different (sub)species, of which most are not microbial (but rather macroscopic, like mushrooms). Because of this, not all fungi fit the scope of this package and including everything would tremendously slow down our algorithms too. By only including the aforementioned taxonomic orders, the most relevant fungi are covered (like all species of \emph{Aspergillus}, \emph{Candida}, \emph{Cryptococcus}, \emph{Histplasma}, \emph{Pneumocystis}, \emph{Saccharomyces} and \emph{Trichophyton}).}
+  \item{All ~3,500 (sub)species from these orders of the kingdom of Fungi: Eurotiales, Onygenales, Pneumocystales, Saccharomycetales, Schizosaccharomycetales and Tremellales. This covers the most relevant microbial fungi (like all species of \emph{Aspergillus}, \emph{Candida}, \emph{Cryptococcus}, \emph{Histplasma}, \emph{Pneumocystis}, \emph{Saccharomyces} and \emph{Trichophyton}).}
   \item{All ~15,000 previously accepted names of included (sub)species that have been taxonomically renamed}
   \item{The complete taxonomic tree of all included (sub)species: from kingdom to subspecies}
   \item{The responsible author(s) and year of scientific publication}
