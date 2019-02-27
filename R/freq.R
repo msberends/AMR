@@ -682,7 +682,7 @@ format_header <- function(x, markdown = FALSE, decimal.mark = ".", big.mark = ",
   # numeric values
   if (has_length == TRUE & any(x_class %in% c("double", "integer", "numeric", "raw", "single"))) {
     header$sd <- paste0(header$sd, " (CV: ", header$cv, ", MAD: ", header$mad, ")")
-    header$fivenum <- paste0(paste(header$fivenum, collapse = " | "), " (IQR: ", header$IQR, ", CQV: ", header$cqv, ")")
+    header$fivenum <- paste0(paste(trimws(header$fivenum), collapse = " | "), " (IQR: ", header$IQR, ", CQV: ", header$cqv, ")")
     header$outliers_total <- paste0(header$outliers_total, " (unique count: ", header$outliers_unique, ")")
     header <- header[!names(header) %in% c("cv", "mad", "IQR", "cqv", "outliers_unique")]
   }

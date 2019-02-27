@@ -28,6 +28,7 @@
   if (!all(c("microorganismsDT", "microorganisms.oldDT") %in% ls(envir = asNamespace("AMR")))) {
 
     microorganisms.oldDT <- as.data.table(AMR::microorganisms.old)
+    microorganisms.oldDT$fullname_lower <- tolower(microorganisms.oldDT$fullname)
     setkey(microorganisms.oldDT, col_id, fullname)
 
     assign(x = "microorganisms",
@@ -84,6 +85,7 @@ make <- function() {
 #' @importFrom data.table as.data.table setkey
 make_DT <- function() {
   microorganismsDT <- as.data.table(make())
+  microorganismsDT$fullname_lower <- tolower(microorganismsDT$fullname)
   setkey(microorganismsDT,
          kingdom,
          prevalence,

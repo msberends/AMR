@@ -165,30 +165,44 @@
 #'   mutate(mo = as.mo(paste(genus, species)))
 #' }
 as.mo <- function(x, Becker = FALSE, Lancefield = FALSE, allow_uncertain = TRUE, reference_df = get_mo_source()) {
+  if (!"AMR" %in% base::.packages()) {
+    library("AMR")
+    # check onLoad() in R/zzz.R: data tables are created there.
+  }
+
   if (all(x %in% AMR::microorganisms$mo)
       & isFALSE(Becker)
       & isFALSE(Lancefield)
       & is.null(reference_df)) {
     y <- x
-  } else if (all(x %in% AMR::microorganisms$fullname)
-      & isFALSE(Becker)
-      & isFALSE(Lancefield)
-      & is.null(reference_df)) {
-    # we need special treatment for very prevalent full names, they are likely!
+
+  } else if (all(tolower(x) %in% microorganismsDT$fullname_lower)
+             & isFALSE(Becker)
+             & isFALSE(Lancefield)
+             & is.null(reference_df)) {
+    # we need special treatment for very prevalent full names, they are likely! (case insensitive)
     # e.g. as.mo("Staphylococcus aureus")
-    y <- microorganismsDT[prevalence == 1][data.table(fullname = x), on = "fullname", "mo"][[1]]
+    y <- microorganismsDT[prevalence == 1][data.table(fullname_lower = tolower(x)),
+                                           on = "fullname_lower",
+                                           "mo"][[1]]
     if (any(is.na(y))) {
-      y[is.na(y)] <- microorganismsDT[prevalence == 2][data.table(fullname = x[is.na(y)]), on = "fullname", "mo"][[1]]
+      y[is.na(y)] <- microorganismsDT[prevalence == 2][data.table(fullname_lower = tolower(x[is.na(y)])),
+                                                       on = "fullname_lower",
+                                                       "mo"][[1]]
     }
     if (any(is.na(y))) {
-      y[is.na(y)] <- microorganismsDT[prevalence == 3][data.table(fullname = x[is.na(y)]), on = "fullname", "mo"][[1]]
+      y[is.na(y)] <- microorganismsDT[prevalence == 3][data.table(fullname_lower = tolower(x[is.na(y)])),
+                                                       on = "fullname_lower",
+                                                       "mo"][[1]]
     }
+
   } else {
     # will be checked for mo class in validation and uses exec_as.mo internally if necessary
     y <- mo_validate(x = x, property = "mo",
                      Becker = Becker, Lancefield = Lancefield,
                      allow_uncertain = allow_uncertain, reference_df = reference_df)
   }
+
   structure(.Data = y, class = "mo")
 }
 
@@ -198,7 +212,7 @@ is.mo <- function(x) {
   identical(class(x), "mo")
 }
 
-#' @importFrom dplyr %>% pull left_join n_distinct progress_estimated filter
+#' @importFrom dplyr %>% pull left_join n_distinct progress_estimated filter distinct
 #' @importFrom data.table data.table as.data.table setkey
 #' @importFrom crayon magenta red blue silver italic has_color
 exec_as.mo <- function(x, Becker = FALSE, Lancefield = FALSE,
@@ -298,22 +312,30 @@ exec_as.mo <- function(x, Becker = FALSE, Lancefield = FALSE,
     # existing mo codes when not looking for property "mo", like mo_genus("B_ESCHR_COL")
     y <- microorganismsDT[prevalence == 1][data.table(mo = x), on = "mo", ..property][[1]]
     if (any(is.na(y))) {
-      y[is.na(y)] <- microorganismsDT[prevalence == 2][data.table(mo = x[is.na(y)]), on = "mo", ..property][[1]]
+      y[is.na(y)] <- microorganismsDT[prevalence == 2][data.table(mo = x[is.na(y)]),
+                                                       on = "mo",
+                                                       ..property][[1]]
     }
     if (any(is.na(y))) {
-      y[is.na(y)] <- microorganismsDT[prevalence == 3][data.table(mo = x[is.na(y)]), on = "mo", ..property][[1]]
+      y[is.na(y)] <- microorganismsDT[prevalence == 3][data.table(mo = x[is.na(y)]),
+                                                       on = "mo",
+                                                       ..property][[1]]
     }
     x <- y
 
-  } else if (all(x %in% AMR::microorganisms$fullname)) {
+  } else if (all(tolower(x) %in% microorganismsDT$fullname_lower)) {
     # we need special treatment for very prevalent full names, they are likely!
     # e.g. as.mo("Staphylococcus aureus")
-    y <- microorganismsDT[prevalence == 1][data.table(fullname = x), on = "fullname", ..property][[1]]
+    y <- microorganismsDT[prevalence == 1][data.table(fullname_lower = tolower(x)), on = "fullname_lower", ..property][[1]]
     if (any(is.na(y))) {
-      y[is.na(y)] <- microorganismsDT[prevalence == 2][data.table(fullname = x[is.na(y)]), on = "fullname", ..property][[1]]
+      y[is.na(y)] <- microorganismsDT[prevalence == 2][data.table(fullname_lower = tolower(x[is.na(y)])),
+                                                       on = "fullname_lower",
+                                                       ..property][[1]]
     }
     if (any(is.na(y))) {
-      y[is.na(y)] <- microorganismsDT[prevalence == 3][data.table(fullname = x[is.na(y)]), on = "fullname", ..property][[1]]
+      y[is.na(y)] <- microorganismsDT[prevalence == 3][data.table(fullname_lower = tolower(x[is.na(y)])),
+                                                       on = "fullname_lower",
+                                                       ..property][[1]]
     }
     x <- y
 
@@ -521,13 +543,13 @@ exec_as.mo <- function(x, Becker = FALSE, Lancefield = FALSE,
       # FIRST TRY FULLNAMES AND CODES
       # if only genus is available, return only genus
       if (all(!c(x[i], x_trimmed[i]) %like% " ")) {
-        found <- microorganismsDT[tolower(fullname) %in% tolower(c(x_species[i], x_trimmed_species[i])), ..property][[1]]
+        found <- microorganismsDT[fullname_lower %in% tolower(c(x_species[i], x_trimmed_species[i])), ..property][[1]]
         if (length(found) > 0) {
           x[i] <- found[1L]
           next
         }
         if (nchar(x_trimmed[i]) >= 6) {
-          found <- microorganismsDT[tolower(fullname) %like% paste0(x_withspaces_start_only[i], "[a-z]+ species"), ..property][[1]]
+          found <- microorganismsDT[fullname_lower %like% paste0(x_withspaces_start_only[i], "[a-z]+ species"), ..property][[1]]
           if (length(found) > 0) {
             x[i] <- found[1L]
             next
@@ -564,13 +586,13 @@ exec_as.mo <- function(x, Becker = FALSE, Lancefield = FALSE,
                                        e.x_withspaces_start_only,
                                        f.x_withspaces_end_only) {
 
-        found <- data_to_check[tolower(fullname) %in% tolower(c(a.x_backup, b.x_trimmed)), ..property][[1]]
+        found <- data_to_check[fullname_lower %in% tolower(c(a.x_backup, b.x_trimmed)), ..property][[1]]
         # most probable: is exact match in fullname
         if (length(found) > 0) {
           return(found[1L])
         }
 
-        found <- data_to_check[tolower(fullname) == tolower(c.x_trimmed_without_group), ..property][[1]]
+        found <- data_to_check[fullname_lower == tolower(c.x_trimmed_without_group), ..property][[1]]
         if (length(found) > 0) {
           return(found[1L])
         }
@@ -664,7 +686,7 @@ exec_as.mo <- function(x, Becker = FALSE, Lancefield = FALSE,
       # MISCELLANEOUS ----
 
       # look for old taxonomic names ----
-      found <- microorganisms.oldDT[tolower(fullname) == tolower(x_backup[i])
+      found <- microorganisms.oldDT[fullname_lower == tolower(x_backup[i])
                                     | fullname %like% x_withspaces_start_end[i],]
       if (NROW(found) > 0) {
         col_id_new <- found[1, col_id_new]
@@ -693,7 +715,7 @@ exec_as.mo <- function(x, Becker = FALSE, Lancefield = FALSE,
           if (nchar(b.x_trimmed) > 4 & !b.x_trimmed %like% " ") {
             if (!grepl("^[A-Z][a-z]+", b.x_trimmed, ignore.case = FALSE)) {
               # not when input is like Genustext, because then Neospora would lead to Actinokineospora
-              found <- microorganismsDT[tolower(fullname) %like% paste(b.x_trimmed, "species"), ..property][[1]]
+              found <- microorganismsDT[fullname_lower %like% paste(b.x_trimmed, "species"), ..property][[1]]
               if (length(found) > 0) {
                 x[i] <- found[1L]
                 uncertainties <<- rbind(uncertainties,
