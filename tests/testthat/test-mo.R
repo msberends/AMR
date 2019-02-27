@@ -46,6 +46,8 @@ test_that("as.mo works", {
   expect_equal(as.character(as.mo("L. pneumophila")), "B_LGNLL_PNE")
   expect_equal(as.character(as.mo("Strepto")), "B_STRPT")
   expect_equal(as.character(as.mo("Streptococcus")), "B_STRPT") # not Peptostreptoccus
+  expect_equal(as.character(as.mo("Estreptococos grupo B")), "B_STRPT_GRB")
+  expect_equal(as.character(as.mo("Group B Streptococci")), "B_STRPT_GRB")
   expect_equal(as.character(as.mo("B_STRPTC")), "B_STRPT") # old MO code (<=v0.5.0)
 
   expect_equal(as.character(as.mo(c("GAS", "GBS"))), c("B_STRPT_GRA", "B_STRPT_GRB"))

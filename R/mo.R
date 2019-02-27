@@ -474,49 +474,49 @@ exec_as.mo <- function(x, Becker = FALSE, Lancefield = FALSE,
           x[i] <- microorganismsDT[mo == 'B_STRPT_PNE', ..property][[1]][1L]
           next
         }
-        if (toupper(x_trimmed[i]) %like% '^G[ABCDFGHK]S$') {
+        if (x_trimmed[i] %like% '^G[ABCDFGHK]S$') {
           # Streptococci, like GBS = Group B Streptococci (B_STRPT_GRB)
           x[i] <- microorganismsDT[mo == gsub("G([ABCDFGHK])S", "B_STRPT_GR\\1", x_trimmed[i], ignore.case = TRUE), ..property][[1]][1L]
           next
         }
-        if (toupper(x_trimmed[i]) %like% '(streptococc|streptokok).* [ABCDFGHK]$') {
+        if (x_trimmed[i] %like% '(streptococ|streptokok).* [ABCDFGHK]$') {
           # Streptococci in different languages, like "estreptococos grupo B"
           x[i] <- microorganismsDT[mo == gsub(".*(streptococ|streptokok|estreptococ).* ([ABCDFGHK])$", "B_STRPT_GR\\2", x_trimmed[i], ignore.case = TRUE), ..property][[1]][1L]
           next
         }
-        if (toupper(x_trimmed[i]) %like% 'group [ABCDFGHK] (streptococ|streptokok|estreptococ)') {
+        if (x_trimmed[i] %like% 'group [ABCDFGHK] (streptococ|streptokok|estreptococ)') {
           # Streptococci in different languages, like "Group A Streptococci"
           x[i] <- microorganismsDT[mo == gsub(".*group ([ABCDFGHK]) (streptococ|streptokok|estreptococ).*", "B_STRPT_GR\\1", x_trimmed[i], ignore.case = TRUE), ..property][[1]][1L]
           next
         }
         # CoNS/CoPS in different languages (support for German, Dutch, Spanish, Portuguese) ----
-        if (tolower(x[i]) %like% '[ck]oagulas[ea] negatie?[vf]'
-            | tolower(x_trimmed[i]) %like% '[ck]oagulas[ea] negatie?[vf]'
-            | tolower(x[i]) %like% '[ck]o?ns[^a-z]?$') {
+        if (x[i] %like% '[ck]oagulas[ea] negatie?[vf]'
+            | x_trimmed[i] %like% '[ck]oagulas[ea] negatie?[vf]'
+            | x[i] %like% '[ck]o?ns[^a-z]?$') {
           # coerce S. coagulase negative
           x[i] <- microorganismsDT[mo == 'B_STPHY_CNS', ..property][[1]][1L]
           next
         }
-        if (tolower(x[i]) %like% '[ck]oagulas[ea] positie?[vf]'
-            | tolower(x_trimmed[i]) %like% '[ck]oagulas[ea] positie?[vf]'
-            | tolower(x[i]) %like% '[ck]o?ps[^a-z]?$') {
+        if (x[i] %like% '[ck]oagulas[ea] positie?[vf]'
+            | x_trimmed[i] %like% '[ck]oagulas[ea] positie?[vf]'
+            | x[i] %like% '[ck]o?ps[^a-z]?$') {
           # coerce S. coagulase positive
           x[i] <- microorganismsDT[mo == 'B_STPHY_CPS', ..property][[1]][1L]
           next
         }
-        if (tolower(x[i]) %like% 'gram[ -]?neg.*'
-            | tolower(x_trimmed[i]) %like% 'gram[ -]?neg.*') {
+        if (x[i] %like% 'gram[ -]?neg.*'
+            | x_trimmed[i] %like% 'gram[ -]?neg.*') {
           # coerce S. coagulase positive
           x[i] <- microorganismsDT[mo == 'B_GRAMN', ..property][[1]][1L]
           next
         }
-        if (tolower(x[i]) %like% 'gram[ -]?pos.*'
-            | tolower(x_trimmed[i]) %like% 'gram[ -]?pos.*') {
+        if (x[i] %like% 'gram[ -]?pos.*'
+            | x_trimmed[i] %like% 'gram[ -]?pos.*') {
           # coerce S. coagulase positive
           x[i] <- microorganismsDT[mo == 'B_GRAMP', ..property][[1]][1L]
           next
         }
-        if (grepl("[sS]almonella [A-Z][a-z]+ ?.*", x_trimmed[i])) {
+        if (grepl("[sS]almonella [A-Z][a-z]+ ?.*", x_trimmed[i], ignore.case = FALSE)) {
           if (x_trimmed[i] %like% "Salmonella group") {
             # Salmonella Group A to Z, just return S. species for now
             x[i] <- microorganismsDT[mo == 'B_SLMNL', ..property][[1]][1L]
