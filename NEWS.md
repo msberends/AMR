@@ -13,6 +13,7 @@ We've got a new website: [https://msberends.gitlab.io/AMR](https://msberends.git
 * Catalogue of Life as a new taxonomic source for data about microorganisms, which also contains all ITIS data we used previously. The `microorganisms` data set now contains:
   * All ~55,000 (sub)species from the kingdoms of Archaea, Bacteria, Protozoa and Viruses
   * All ~3,000 (sub)species from these orders of the kingdom of Fungi: Eurotiales, Onygenales, Pneumocystales, Saccharomycetales and Schizosaccharomycetales (covering at least like all species of *Aspergillus*, *Candida*, *Pneumocystis*, *Saccharomyces* and *Trichophyton*)
+  * All ~2,000 (sub)species from ~100 other relevant genera, from the kingdoms of Animalia and Plantae (like *Strongyloides* and *Taenia*)
   * All ~15,000 previously accepted names of included (sub)species that have been taxonomically renamed
   * The responsible author(s) and year of scientific publication
   

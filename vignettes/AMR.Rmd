@@ -315,7 +315,7 @@ data_1st %>%
 
 ## Resistance percentages
 
-The functions `portion_R`, `portion_RI`, `portion_I`, `portion_IS` and `portion_S` can be used to determine the portion of a specific antimicrobial outcome. They can be used on their own:
+The functions `portion_R()`, `portion_RI()`, `portion_I()`, `portion_IS()` and `portion_S()` can be used to determine the portion of a specific antimicrobial outcome. They can be used on their own:
 
 ```{r}
 data_1st %>% portion_IR(amox)
@@ -351,21 +351,21 @@ data_1st %>%
   knitr::kable(align = "c", big.mark = ",")
 ```
 
-These functions can also be used to get the portion of multiple antibiotics, to calculate co-resistance very easily:
+These functions can also be used to get the portion of multiple antibiotics, to calculate empiric susceptibility of combination therapies very easily:
 
 ```{r, eval = FALSE}
 data_1st %>% 
   group_by(genus) %>% 
-  summarise(amoxicillin = portion_S(amcl),
+  summarise(amoxiclav = portion_S(amcl),
             gentamicin = portion_S(gent),
-            "amox + gent" = portion_S(amcl, gent))
+            amoxiclav_genta = portion_S(amcl, gent))
 ```
 ```{r, echo = FALSE}
 data_1st %>% 
   group_by(genus) %>% 
-  summarise(amoxicillin = portion_S(amcl),
+  summarise(amoxiclav = portion_S(amcl),
             gentamicin = portion_S(gent),
-            "amox + gent" = portion_S(amcl, gent)) %>% 
+            amoxiclav_genta = portion_S(amcl, gent)) %>% 
   knitr::kable(align = "c", big.mark = ",")
 ```
 
@@ -374,9 +374,9 @@ To make a transition to the next part, let's see how this difference could be pl
 ```{r plot 1}
 data_1st %>% 
   group_by(genus) %>% 
-  summarise("1. Amoxicillin" = portion_S(amcl),
+  summarise("1. Amoxi/clav" = portion_S(amcl),
             "2. Gentamicin" = portion_S(gent),
-            "3. Amox + gent" = portion_S(amcl, gent)) %>% 
+            "3. Amoxi/clav + gent" = portion_S(amcl, gent)) %>% 
   tidyr::gather("Antibiotic", "S", -genus) %>%
   ggplot(aes(x = genus,
              y = S,
@@ -397,9 +397,9 @@ ggplot(data = a_data_set,
        x = "My X axis",
        y = "My Y axis")
 
-ggplot(a_data_set,
-       aes(year, value) +
-  geom_bar()
+# or as short as:
+ggplot(a_data_set) +
+  geom_bar(aes(year))
 ```
 
 The `AMR` package contains functions to extend this `ggplot2` package, for example `geom_rsi()`. It automatically transforms data with `count_df()` or `portion_df()` and show results in stacked bars. Its simplest and shortest example:

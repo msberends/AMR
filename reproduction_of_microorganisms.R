@@ -23,13 +23,29 @@ MOs <- taxon %>%
   # tibble for future transformations
   as_tibble() %>%
   filter(
-    # we only want all microorganisms and viruses
-    !kingdom %in% c("Animalia", "Plantae"),
-    # and no entries above genus - they all already have a taxonomic tree
-    !taxonRank %in% c("kingdom", "phylum", "superfamily", "class", "order", "family"),
-    # not all fungi: Aspergillus, Candida, Trichphyton and Pneumocystis are the most important,
-    # so only keep these orders from the fungi:
-    !(kingdom == "Fungi" & !order %in% c("Eurotiales", "Saccharomycetales", "Schizosaccharomycetales", "Tremellales", "Onygenales", "Pneumocystales"))) %>%
+    (
+      # we only want all microorganisms and viruses
+      !kingdom %in% c("Animalia", "Plantae")
+      # and no entries above genus - they all already have a taxonomic tree
+      & !taxonRank %in% c("kingdom", "phylum", "superfamily", "class", "order", "family")
+      # not all fungi: Aspergillus, Candida, Trichphyton and Pneumocystis are the most important,
+      # so only keep these orders from the fungi:
+      & !(kingdom == "Fungi"
+          & !order %in% c("Eurotiales", "Saccharomycetales", "Schizosaccharomycetales", "Tremellales", "Onygenales", "Pneumocystales"))
+    )
+    # or the genus has to be one of the genera we found in our hospitals last decades
+    | genus %in% c("Absidia", "Acremonium", "Actinotignum", "Alternaria", "Anaerosalibacter", "Ancylostoma", "Anisakis", "Apophysomyces",
+                   "Arachnia", "Ascaris", "Aureobacterium", "Aureobasidium", "Balantidum", "Bilophilia", "Branhamella", "Brochontrix",
+                   "Brugia", "Calymmatobacterium", "Catabacter", "Cdc", "Chilomastix", "Chryseomonas", "Cladophialophora", "Cladosporium",
+                   "Clonorchis", "Cordylobia", "Curvularia", "Demodex", "Dermatobia", "Diphyllobothrium", "Dracunculus", "Echinococcus",
+                   "Enterobius", "Euascomycetes", "Exophiala", "Fasciola", "Fusarium", "Hendersonula", "Hymenolepis", "Kloeckera",
+                   "Koserella", "Larva", "Leishmania", "Lelliottia", "Loa", "Lumbricus", "Malassezia", "Metagonimus", "Molonomonas",
+                   "Mucor", "Nattrassia", "Necator", "Novospingobium", "Onchocerca", "Opistorchis", "Paragonimus", "Paramyxovirus",
+                   "Pediculus", "Phoma", "Phthirus", "Pityrosporum", "Pseudallescheria", "Pulex", "Rhizomucor", "Rhizopus", "Rhodotorula",
+                   "Salinococcus", "Sanguibacteroides", "Schistosoma", "Scopulariopsis", "Scytalidium", "Sporobolomyces", "Stomatococcus",
+                   "Strongyloides", "Syncephalastraceae", "Taenia", "Torulopsis", "Trichinella", "Trichobilharzia", "Trichomonas",
+                   "Trichosporon", "Trichuris", "Trypanosoma", "Wuchereria")
+  ) %>%
   # remove text if it contains 'Not assigned' like phylum in viruses
   mutate_all(funs(gsub("Not assigned", "", .))) %>%
   # Transform 'Smith, Jones, 2011' to 'Smith et al., 2011':
@@ -143,7 +159,11 @@ MOs <- MOs %>%
   ungroup() %>%
   # remove trailing underscores
   mutate(mo = gsub("_+$", "",
-                   toupper(paste(substr(kingdom, 1, 1),
+                   toupper(paste(ifelse(kingdom == "Animalia",
+                                        "AN",
+                                        ifelse(kingdom == "Plantae",
+                                               "PL",
+                                               substr(kingdom, 1, 1))),
                                  abbr_genus,
                                  abbr_species,
                                  abbr_subspecies,
@@ -152,13 +172,10 @@ MOs <- MOs %>%
                      paste0(mo, "1"),
                      mo),
          fullname = ifelse(fullname == "",
-                           trimws(paste(genus, species, subspecies),
-                                  fullname))) %>%
+                           trimws(paste(genus, species, subspecies)),
+                           fullname)) %>%
   select(mo, everything(), -abbr_genus, -abbr_species, -abbr_subspecies)
 
-
-# everything distinct?
-sum(duplicated(MOs$mo))
 
 # add non-taxonomic entries
 MOs <- MOs %>%
@@ -273,6 +290,10 @@ MOs <- MOs %>%
                stringsAsFactors = FALSE)
   )
 
+
+# everything distinct?
+sum(duplicated(MOs$mo))
+
 # save it
 MOs <- as.data.frame(MOs %>% arrange(mo), stringsAsFactors = FALSE)
 MOs.old <- as.data.frame(MOs.old, stringsAsFactors = FALSE)
@@ -282,5 +303,7 @@ saveRDS(MOs, "microorganisms.rds")
 saveRDS(MOs.old, "microorganisms.old.rds")
 
 # on the server:
-# usethis::use_data(microorganisms, overwrite = TRUE)
-# usethis::use_data(microorganisms.old, overwrite = TRUE)
+usethis::use_data(microorganisms, overwrite = TRUE)
+usethis::use_data(microorganisms.old, overwrite = TRUE)
+rm(microorganisms)
+rm(microorganisms.old)

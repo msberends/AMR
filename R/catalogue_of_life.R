@@ -23,13 +23,16 @@
 #'
 #' This package contains the complete taxonomic tree of almost all microorganisms from the authoritative and comprehensive Catalogue of Life.
 #' @section Catalogue of Life:
-#' \if{html}{\figure{logo_col.png}{options: height=60px style=margin-bottom:5px} \cr}
-#' This package contains the complete taxonomic tree of almost all microorganisms from the authoritative and comprehensive Catalogue of Life (\url{http://www.catalogueoflife.org}). This data is updated annually - check the included version with \code{\link{catalogue_of_life_version}()}.
+#' \if{html}{\figure{logo_col.png}{options: height=40px style=margin-bottom:5px} \cr}
+#' This package contains the complete taxonomic tree of almost all microorganisms (~60,000 species) from the authoritative and comprehensive Catalogue of Life (\url{http://www.catalogueoflife.org}). The Catalogue of Life is the most comprehensive and authoritative global index of species currently available.
 #'
+#' \link[=catalogue_of_life]{Click here} for more information about the included taxa. The Catalogue of Life releases updates annually; check which version was included in this package with \code{\link{catalogue_of_life_version}()}.
+#' @section Included taxa:
 #' Included are:
 #' \itemize{
 #'   \item{All ~55,000 (sub)species from the kingdoms of Archaea, Bacteria, Protozoa and Viruses}
-#'   \item{All ~3,500 (sub)species from these orders of the kingdom of Fungi: Eurotiales, Onygenales, Pneumocystales, Saccharomycetales, Schizosaccharomycetales and Tremellales. This covers the most relevant microbial fungi (like all species of \emph{Aspergillus}, \emph{Candida}, \emph{Cryptococcus}, \emph{Histplasma}, \emph{Pneumocystis}, \emph{Saccharomyces} and \emph{Trichophyton}).}
+#'   \item{All ~3,500 (sub)species from these orders of the kingdom of Fungi: Eurotiales, Onygenales, Pneumocystales, Saccharomycetales, Schizosaccharomycetales and Tremellales. The kingdom of Fungi is a very large taxon with almost 300,000 different (sub)species, of which most are not microbial (but rather macroscopic, like mushrooms). Because of this, not all fungi fit the scope of this package and including everything would tremendously slow down our algorithms too. By only including the aforementioned taxonomic orders, the most relevant fungi are covered (like all species of \emph{Aspergillus}, \emph{Candida}, \emph{Cryptococcus}, \emph{Histplasma}, \emph{Pneumocystis}, \emph{Saccharomyces} and \emph{Trichophyton}).}
+#'   \item{All ~2,000 (sub)species from ~100 other relevant genera, from the kingdoms of Animalia and Plantae (like \emph{Strongyloides} and \emph{Taenia})}
 #'   \item{All ~15,000 previously accepted names of included (sub)species that have been taxonomically renamed}
 #'   \item{The complete taxonomic tree of all included (sub)species: from kingdom to subspecies}
 #'   \item{The responsible author(s) and year of scientific publication}

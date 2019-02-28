@@ -47,12 +47,13 @@
 #'   |   |    |    ----> subspecies, a 3-4 letter acronym
 #'   |   |     ----> species, a 3-4 letter acronym
 #'   |    ----> genus, a 5-7 letter acronym, mostly without vowels
-#'    ----> taxonomic kingdom: A (Archaea), B (Bacteria), C (Chromista),
-#'                             F (Fungi), P (Protozoa) or V (Viruses)
+#'    ----> taxonomic kingdom: A (Archaea), AN (Animalia), B (Bacteria), C (Chromista),
+#'                             F (Fungi), P (Protozoa), PL (Plantae) or V (Viruses)
 #' }
 #'
 #' Use the \code{\link{mo_property}} functions to get properties based on the returned code, see Examples.
 #'
+#' \strong{Artificial Intelligence} \cr
 #' This function uses Artificial Intelligence (AI) to help getting fast and logical results. It tries to find matches in this order:
 #' \itemize{
 #'   \item{Taxonomic kingdom: it first searches in Bacteria, then Fungi, then Protozoa}
@@ -67,9 +68,9 @@
 #'   \item{\code{"H. influenzae"} will return the ID of \emph{Haemophilus influenzae} and not \emph{Haematobacter influenzae} for the same reason}
 #'   \item{Something like \code{"stau"} or \code{"S aur"} will return the ID of \emph{Staphylococcus aureus} and not \emph{Staphylococcus auricularis}}
 #' }
-#' This means that looking up human pathogenic microorganisms takes less time than looking up human \strong{non}-pathogenic microorganisms.
+#' This means that looking up human pathogenic microorganisms takes less time than looking up human non-pathogenic microorganisms.
 #'
-#' \strong{UNCERTAIN RESULTS} \cr
+#' \strong{Uncertain results} \cr
 #' When using \code{allow_uncertain = TRUE} (which is the default setting), it will use additional rules if all previous AI rules failed to get valid results. These are:
 #' \itemize{
 #'   \item{It tries to look for previously accepted (but now invalid) taxonomic names}
@@ -88,11 +89,11 @@
 #'
 #' Use \code{mo_failures()} to get a vector with all values that could not be coerced to a valid value.
 #'
-#' Use \code{mo_uncertainties()} to get info about all values that were coerced to a valid value, but with uncertainty.
+#' Use \code{mo_uncertainties()} to get a data.frame with all values that were coerced to a valid value, but with uncertainty.
 #'
 #' Use \code{mo_renamed()} to get a vector with all values that could be coerced based on an old, previously accepted taxonomic name.
 #'
-#' @section Microbial prevalence of pathogens in humans:
+#' \strong{Microbial prevalence of pathogens in humans} \cr
 #' The artificial intelligence takes into account microbial prevalence of pathogens in humans. It uses three groups and every (sub)species is in the group it matches first. These groups are:
 #' \itemize{
 #'   \item{1 (most prevalent): class is Gammaproteobacteria \strong{or} genus is one of: \emph{Enterococcus}, \emph{Staphylococcus}, \emph{Streptococcus}.}
@@ -102,7 +103,7 @@
 #'
 #' Group 1 contains all common Gram negatives, like all Enterobacteriaceae and e.g. \emph{Pseudomonas} and \emph{Legionella}.
 #'
-#' Group 2 probably contains all microbial pathogens ever found in humans.
+#' Group 2 probably contains all other microbial pathogens ever found in humans.
 #' @inheritSection catalogue_of_life Catalogue of Life
 #  (source as a section, so it can be inherited by other man pages)
 #' @section Source:
@@ -618,10 +619,6 @@ exec_as.mo <- function(x, Becker = FALSE, Lancefield = FALSE,
         if (length(found) > 0) {
           return(found[1L])
         }
-        found <- data_to_check[fullname %like% f.x_withspaces_end_only, ..property][[1]]
-        if (length(found) > 0 & nchar(b.x_trimmed) >= 6) {
-          return(found[1L])
-        }
 
         # try splitting of characters in the middle and then find ID ----
         # only when text length is 6 or lower
@@ -709,7 +706,7 @@ exec_as.mo <- function(x, Becker = FALSE, Lancefield = FALSE,
       # check for uncertain results ----
       if (allow_uncertain == TRUE) {
 
-        uncertain_fn <- function(a.x_backup, b.x_trimmed, c.x_withspaces_start_end, d.x_withspaces_start_only) {
+        uncertain_fn <- function(a.x_backup, b.x_trimmed, c.x_withspaces_start_end, d.x_withspaces_start_only, f.x_withspaces_end_only) {
 
           # (1) look for genus only, part of name ----
           if (nchar(b.x_trimmed) > 4 & !b.x_trimmed %like% " ") {
@@ -719,7 +716,8 @@ exec_as.mo <- function(x, Becker = FALSE, Lancefield = FALSE,
               if (length(found) > 0) {
                 x[i] <- found[1L]
                 uncertainties <<- rbind(uncertainties,
-                                        data.frame(input = a.x_backup,
+                                        data.frame(uncertainty = 2,
+                                                   input = a.x_backup,
                                                    fullname = microorganismsDT[mo == found[1L], fullname][[1]],
                                                    mo = found[1L]))
                 return(x)
@@ -745,27 +743,42 @@ exec_as.mo <- function(x, Becker = FALSE, Lancefield = FALSE,
                         ref_new = microorganismsDT[col_id == found[1, col_id_new], ref],
                         mo = microorganismsDT[col_id == found[1, col_id_new], mo])
             uncertainties <<- rbind(uncertainties,
-                                    data.frame(input = a.x_backup,
+                                    data.frame(uncertainty = 1,
+                                               input = a.x_backup,
                                                fullname = found[1, fullname],
                                                mo = paste("CoL", found[1, col_id])))
             return(x)
           }
 
-          # (3) strip values between brackets ----
-          a.x_backup_stripped <- gsub("( [(].*[)])", "", a.x_backup)
-          a.x_backup_stripped <- trimws(gsub("  ", " ", a.x_backup_stripped, fixed = TRUE))
-          found <- suppressMessages(suppressWarnings(exec_as.mo(a.x_backup_stripped, clear_options = FALSE, allow_uncertain = FALSE)))
-          if (!is.na(found) & nchar(b.x_trimmed) >= 6) {
+          # (3) not yet implemented taxonomic changes in Catalogue of Life ----
+          found <- suppressMessages(suppressWarnings(exec_as.mo(TEMPORARY_TAXONOMY(b.x_trimmed), clear_options = FALSE, allow_uncertain = FALSE)))
+          if (!is.na(found)) {
             found_result <- found
             found <- microorganismsDT[mo == found, ..property][[1]]
             uncertainties <<- rbind(uncertainties,
-                                    data.frame(input = a.x_backup,
+                                    data.frame(uncertainty = 1,
+                                               input = a.x_backup,
                                                fullname = microorganismsDT[mo == found_result[1L], fullname][[1]],
                                                mo = found_result[1L]))
             return(found[1L])
           }
 
-          # (4) try to strip off one element from end and check the remains ----
+          # (4) strip values between brackets ----
+          a.x_backup_stripped <- gsub("( *[(].*[)] *)", " ", a.x_backup)
+          a.x_backup_stripped <- trimws(gsub(" +", " ", a.x_backup_stripped))
+          found <- suppressMessages(suppressWarnings(exec_as.mo(a.x_backup_stripped, clear_options = FALSE, allow_uncertain = FALSE)))
+          if (!is.na(found) & nchar(b.x_trimmed) >= 6) {
+            found_result <- found
+            found <- microorganismsDT[mo == found, ..property][[1]]
+            uncertainties <<- rbind(uncertainties,
+                                    data.frame(uncertainty = 2,
+                                               input = a.x_backup,
+                                               fullname = microorganismsDT[mo == found_result[1L], fullname][[1]],
+                                               mo = found_result[1L]))
+            return(found[1L])
+          }
+
+          # (5) try to strip off one element from end and check the remains ----
           x_strip <- a.x_backup %>% strsplit(" ") %>% unlist()
           if (length(x_strip) > 1 & nchar(b.x_trimmed) >= 6) {
             for (i in 1:(length(x_strip) - 1)) {
@@ -775,7 +788,8 @@ exec_as.mo <- function(x, Becker = FALSE, Lancefield = FALSE,
                 found_result <- found
                 found <- microorganismsDT[mo == found, ..property][[1]]
                 uncertainties <<- rbind(uncertainties,
-                                        data.frame(input = a.x_backup,
+                                        data.frame(uncertainty = 2,
+                                                   input = a.x_backup,
                                                    fullname = microorganismsDT[mo == found_result[1L], fullname][[1]],
                                                    mo = found_result[1L]))
                 return(found[1L])
@@ -783,7 +797,7 @@ exec_as.mo <- function(x, Becker = FALSE, Lancefield = FALSE,
             }
           }
 
-          # (5) try to strip off one element from start and check the remains ----
+          # (6) try to strip off one element from start and check the remains ----
           x_strip <- a.x_backup %>% strsplit(" ") %>% unlist()
           if (length(x_strip) > 1 & nchar(b.x_trimmed) >= 6) {
             for (i in 2:(length(x_strip))) {
@@ -793,7 +807,8 @@ exec_as.mo <- function(x, Becker = FALSE, Lancefield = FALSE,
                 found_result <- found
                 found <- microorganismsDT[mo == found, ..property][[1]]
                 uncertainties <<- rbind(uncertainties,
-                                        data.frame(input = a.x_backup,
+                                        data.frame(uncertainty = 3,
+                                                   input = a.x_backup,
                                                    fullname = microorganismsDT[mo == found_result[1L], fullname][[1]],
                                                    mo = found_result[1L]))
                 return(found[1L])
@@ -801,13 +816,14 @@ exec_as.mo <- function(x, Becker = FALSE, Lancefield = FALSE,
             }
           }
 
-          # (6) not yet implemented taxonomic changes in Catalogue of Life ----
-          found <- suppressMessages(suppressWarnings(exec_as.mo(TEMPORARY_TAXONOMY(b.x_trimmed), clear_options = FALSE, allow_uncertain = FALSE)))
-          if (!is.na(found)) {
-            found_result <- found
-            found <- microorganismsDT[mo == found, ..property][[1]]
+          # (7) part of a name (very unlikely match) ----
+          found <- microorganismsDT[fullname %like% f.x_withspaces_end_only]
+          if (nrow(found) > 0) {
+            found_result <- found[["mo"]]
+            found <- microorganismsDT[mo == found_result[1L], ..property][[1]]
             uncertainties <<- rbind(uncertainties,
-                                    data.frame(input = a.x_backup,
+                                    data.frame(uncertainty = 3,
+                                               input = a.x_backup,
                                                fullname = microorganismsDT[mo == found_result[1L], fullname][[1]],
                                                mo = found_result[1L]))
             return(found[1L])
@@ -817,7 +833,7 @@ exec_as.mo <- function(x, Becker = FALSE, Lancefield = FALSE,
           return(NA_character_)
         }
 
-        x[i] <- uncertain_fn(x_backup[i], x_trimmed[i], x_withspaces_start_end[i], x_withspaces_start_only[i])
+        x[i] <- uncertain_fn(x_backup[i], x_trimmed[i], x_withspaces_start_end[i], x_withspaces_start_only[i], x_withspaces_end_only[i])
         if (!is.na(x[i])) {
           next
         }
@@ -1041,20 +1057,53 @@ mo_failures <- function() {
 #' @importFrom crayon italic
 #' @export
 mo_uncertainties <- function() {
-  df <- as.data.frame(getOption("mo_uncertainties"))
+  structure(.Data = as.data.frame(getOption("mo_uncertainties"), stringsAsFactors = FALSE),
+            class = c("mo_uncertainties", "data.frame"))
+}
+
+#' @exportMethod print.mo_uncertainties
+#' @importFrom crayon green yellow red bgGreen bgYellow bgRed
+#' @export
+#' @noRd
+print.mo_uncertainties <- function(x, ...) {
+  cat(paste0(bold(nrow(x), "unique result(s) guessed with uncertainty:"),
+             "\n(1 = ", green("renamed"),
+             ", 2 = ", yellow("uncertain"),
+             ", 3 = ", red("very uncertain"), ")\n"))
+
   msg <- ""
-  for (i in 1:nrow(df)) {
+  for (i in 1:nrow(x)) {
+    if (x[i, "uncertainty"] == 1) {
+      colour1 <- green
+      colour2 <- bgGreen
+    } else if (x[i, "uncertainty"] == 2) {
+      colour1 <- yellow
+      colour2 <- bgYellow
+    } else {
+      colour1 <- red
+      colour2 <- bgRed
+    }
     msg <- paste(msg,
-                 paste0('"', df[i, "input"], '" -> ', italic(df[i, "fullname"]), " (", df[i, "mo"], ")"),
+                 paste0("[", colour2(paste0(" ", x[i, "uncertainty"], " ")), '] - "', x[i, "input"], '" -> ',
+                        colour1(paste0(italic(x[i, "fullname"]), " (", x[i, "mo"], ")"))),
                  sep = "\n")
   }
-  cat(paste0(bold("Results guessed with uncertainty:"), msg))
+  cat(msg)
 }
 
 #' @rdname as.mo
 #' @export
 mo_renamed <- function() {
-  strip_style(gsub("was renamed", "->", getOption("mo_renamed"), fixed = TRUE))
+  structure(.Data = strip_style(gsub("was renamed", "->", getOption("mo_renamed"), fixed = TRUE)),
+            class = c("mo_renamed", "character"))
+}
+
+#' @exportMethod print.mo_renamed
+#' @importFrom crayon blue
+#' @export
+#' @noRd
+print.mo_renamed <- function(x, ...) {
+  cat(blue(paste(getOption("mo_renamed"), collapse = "\n")))
 }
 
 nr2char <- function(x) {

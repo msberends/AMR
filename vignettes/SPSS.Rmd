@@ -38,17 +38,17 @@ As said, SPSS is easier to learn than R. But SPSS, SAS and Stata come with major
   
 * **R is extremely flexible.**
 
-  Because you write the syntax yourself, you can do anything you want. The flexibility in transforming, gathering, grouping, summarising and drawing plots is endless - with SPSS, SAS or Stata you are bound to their algorithms and styles. It may be a bit flexible, but you can never create that very specific publication-ready plot without using other (paid) software.
+  Because you write the syntax yourself, you can do anything you want. The flexibility in transforming, gathering, grouping, summarising and drawing plots is endless - with SPSS, SAS or Stata you are bound to their algorithms and styles. They may be a bit flexible, but you can probably never create that very specific publication-ready plot without using other (paid) software.
   
 * **R can be easily automated.**
 
   Over the last years, [R Markdown](https://rmarkdown.rstudio.com/) has really made an interesting development. With R Markdown, you can very easily reproduce your reports, whether it's to Word, Powerpoint, a website, a PDF document or just the raw data to Excel. I use this a lot to generate monthly reports automatically. Just write the code once and enjoy the automatically updated reports at any interval you like.
   
-  For an even more professional environment, you could create [Shiny apps](https://shiny.rstudio.com/): live manipulation of data using a custom made website. The webdesign knowledge needed (Javascript, CSS, HTML) is almost *zero*.
+  For an even more professional environment, you could create [Shiny apps](https://shiny.rstudio.com/): live manipulation of data using a custom made website. The webdesign knowledge needed (JavaScript, CSS, HTML) is almost *zero*.
   
 * **R has a huge community.**
 
-  Many R users just ask questions on website like [stackoverflow.com](https://stackoverflow.com), the largest online community for programmers. At the time of writing, around [275,000 R questions](https://stackoverflow.com/questions/tagged/r?sort=votes) have been asked on this platform (which covers questions and answer for any programming language). In my own experience, most questions are answered within a couple of minutes.
+  Many R users just ask questions on websites like [StackOverflow.com](https://stackoverflow.com), the largest online community for programmers. At the time of writing, more than [275,000 R-related questions](https://stackoverflow.com/questions/tagged/r?sort=votes) have already been asked on this platform (which covers questions and answers for any programming language). In my own experience, most questions are answered within a couple of minutes.
   
 * **R understands any data type, including SPSS/SAS/Stata.**
 

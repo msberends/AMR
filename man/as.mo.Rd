@@ -54,12 +54,13 @@ A microbial ID from this package (class: \code{mo}) typically looks like these e
   |   |    |    ----> subspecies, a 3-4 letter acronym
   |   |     ----> species, a 3-4 letter acronym
   |    ----> genus, a 5-7 letter acronym, mostly without vowels
-   ----> taxonomic kingdom: A (Archaea), B (Bacteria), C (Chromista),
-                            F (Fungi), P (Protozoa) or V (Viruses)
+   ----> taxonomic kingdom: A (Archaea), AN (Animalia), B (Bacteria), C (Chromista),
+                            F (Fungi), P (Protozoa), PL (Plantae) or V (Viruses)
 }
 
 Use the \code{\link{mo_property}} functions to get properties based on the returned code, see Examples.
 
+\strong{Artificial Intelligence} \cr
 This function uses Artificial Intelligence (AI) to help getting fast and logical results. It tries to find matches in this order:
 \itemize{
   \item{Taxonomic kingdom: it first searches in Bacteria, then Fungi, then Protozoa}
@@ -74,9 +75,9 @@ A couple of effects because of these rules:
   \item{\code{"H. influenzae"} will return the ID of \emph{Haemophilus influenzae} and not \emph{Haematobacter influenzae} for the same reason}
   \item{Something like \code{"stau"} or \code{"S aur"} will return the ID of \emph{Staphylococcus aureus} and not \emph{Staphylococcus auricularis}}
 }
-This means that looking up human pathogenic microorganisms takes less time than looking up human \strong{non}-pathogenic microorganisms.
+This means that looking up human pathogenic microorganisms takes less time than looking up human non-pathogenic microorganisms.
 
-\strong{UNCERTAIN RESULTS} \cr
+\strong{Uncertain results} \cr
 When using \code{allow_uncertain = TRUE} (which is the default setting), it will use additional rules if all previous AI rules failed to get valid results. These are:
 \itemize{
   \item{It tries to look for previously accepted (but now invalid) taxonomic names}
@@ -95,12 +96,11 @@ Examples:
 
 Use \code{mo_failures()} to get a vector with all values that could not be coerced to a valid value.
 
-Use \code{mo_uncertainties()} to get info about all values that were coerced to a valid value, but with uncertainty.
+Use \code{mo_uncertainties()} to get a data.frame with all values that were coerced to a valid value, but with uncertainty.
 
 Use \code{mo_renamed()} to get a vector with all values that could be coerced based on an old, previously accepted taxonomic name.
-}
-\section{Microbial prevalence of pathogens in humans}{
 
+\strong{Microbial prevalence of pathogens in humans} \cr
 The artificial intelligence takes into account microbial prevalence of pathogens in humans. It uses three groups and every (sub)species is in the group it matches first. These groups are:
 \itemize{
   \item{1 (most prevalent): class is Gammaproteobacteria \strong{or} genus is one of: \emph{Enterococcus}, \emph{Staphylococcus}, \emph{Streptococcus}.}
@@ -110,9 +110,8 @@ The artificial intelligence takes into account microbial prevalence of pathogens
 
 Group 1 contains all common Gram negatives, like all Enterobacteriaceae and e.g. \emph{Pseudomonas} and \emph{Legionella}.
 
-Group 2 probably contains all microbial pathogens ever found in humans.
+Group 2 probably contains all other microbial pathogens ever found in humans.
 }
-
 \section{Source}{
 
 [1] Becker K \emph{et al.} \strong{Coagulase-Negative Staphylococci}. 2014. Clin Microbiol Rev. 27(4): 870–926. \url{https://dx.doi.org/10.1128/CMR.00109-13}
@@ -124,21 +123,10 @@ Group 2 probably contains all microbial pathogens ever found in humans.
 
 \section{Catalogue of Life}{
 
-\if{html}{\figure{logo_col.png}{options: height=60px style=margin-bottom:5px} \cr}
-This package contains the complete taxonomic tree of almost all microorganisms from the authoritative and comprehensive Catalogue of Life (\url{http://www.catalogueoflife.org}). This data is updated annually - check the included version with \code{\link{catalogue_of_life_version}()}.
+\if{html}{\figure{logo_col.png}{options: height=40px style=margin-bottom:5px} \cr}
+This package contains the complete taxonomic tree of almost all microorganisms (~60,000 species) from the authoritative and comprehensive Catalogue of Life (\url{http://www.catalogueoflife.org}). The Catalogue of Life is the most comprehensive and authoritative global index of species currently available.
 
-Included are:
-\itemize{
-  \item{All ~55,000 (sub)species from the kingdoms of Archaea, Bacteria, Protozoa and Viruses}
-  \item{All ~3,500 (sub)species from these orders of the kingdom of Fungi: Eurotiales, Onygenales, Pneumocystales, Saccharomycetales, Schizosaccharomycetales and Tremellales. This covers the most relevant microbial fungi (like all species of \emph{Aspergillus}, \emph{Candida}, \emph{Cryptococcus}, \emph{Histplasma}, \emph{Pneumocystis}, \emph{Saccharomyces} and \emph{Trichophyton}).}
-  \item{All ~15,000 previously accepted names of included (sub)species that have been taxonomically renamed}
-  \item{The complete taxonomic tree of all included (sub)species: from kingdom to subspecies}
-  \item{The responsible author(s) and year of scientific publication}
-}
-
-The Catalogue of Life (\url{http://www.catalogueoflife.org}) is the most comprehensive and authoritative global index of species currently available. It holds essential information on the names, relationships and distributions of over 1.6 million species. The Catalogue of Life is used to support the major biodiversity and conservation information services such as the Global Biodiversity Information Facility (GBIF), Encyclopedia of Life (EoL) and the International Union for Conservation of Nature Red List. It is recognised by the Convention on Biological Diversity as a significant component of the Global Taxonomy Initiative and a contribution to Target 1 of the Global Strategy for Plant Conservation.
-
-The syntax used to transform the original data to a cleansed R format, can be found here: \url{https://gitlab.com/msberends/AMR/blob/master/reproduction_of_microorganisms.R}.
+\link[=catalogue_of_life]{Click here} for more information about the included taxa. The Catalogue of Life releases updates annually; check which version was included in this package with \code{\link{catalogue_of_life_version}()}.
 }
 
 \section{Read more on our website!}{

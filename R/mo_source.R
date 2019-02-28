@@ -21,7 +21,9 @@
 
 #' Use predefined reference data set
 #'
-#' These functions can be used to predefine your own reference to be used in \code{\link{as.mo}} and consequently all \code{mo_*} functions like \code{\link{mo_genus}} and \code{\link{mo_gramstain}}.
+#' @description These functions can be used to predefine your own reference to be used in \code{\link{as.mo}} and consequently all \code{mo_*} functions like \code{\link{mo_genus}} and \code{\link{mo_gramstain}}.
+#'
+#' This is \strong{the fastest way} to have your organisation (or analysis) specific codes picked up and translated by this package.
 #' @param path location of your reference file, see Details
 #' @rdname mo_source
 #' @name mo_source
@@ -33,45 +35,71 @@
 #' \code{get_mo_source} will return the data set by reading \code{"~/.mo_source.rds"} with \code{\link{readRDS}}. If the original file has changed (the file defined with \code{path}), it will call \code{set_mo_source} to update the data file automatically.
 #'
 #' Reading an Excel file (\code{.xlsx}) with only one row has a size of 8-9 kB. The compressed file used by this package will have a size of 0.1 kB and can be read by \code{get_mo_source} in only a couple of microseconds (a millionth of a second).
+#' @section How it works:
+#' Imagine this data on a sheet of an Excel file (mo codes were looked up in the `microorganisms` data set). The first column contains the organisation specific codes, the second column contains an MO code from this package:
+#' \preformatted{
+#'   |         A          |      B      |
+#' --|--------------------|-------------|
+#' 1 | Organisation XYZ   | mo          |
+#' 2 | lab_mo_ecoli       | B_ESCHR_COL |
+#' 3 | lab_mo_kpneumoniae | B_KLBSL_PNE |
+#' 4 |                    |             |
+#' }
+#'
+#' We save it as \code{'home/me/ourcodes.xlsx'}. Now we have to set it as a source:
+#' \preformatted{
+#' set_mo_source("home/me/ourcodes.xlsx")
+#' # Created mo_source file '~/.mo_source.rds' from 'home/me/ourcodes.xlsx'.
+#' }
+#'
+#' It has now created a file "~/.mo_source.rds" with the contents of our Excel file. It it an R specific format with great compression.
+#'
+#' And now we can use it in our functions:
+#' \preformatted{
+#' as.mo("lab_mo_ecoli")
+#' # B_ESCHR_COL
+#'
+#' mo_genus("lab_mo_kpneumoniae")
+#' # "Klebsiella"
+#' }
+#'
+#' If we edit the Excel file to, let's say, this:
+#' \preformatted{
+#'   |         A          |      B      |
+#' --|--------------------|-------------|
+#' 1 | Organisation XYZ   | mo          |
+#' 2 | lab_mo_ecoli       | B_ESCHR_COL |
+#' 3 | lab_mo_kpneumoniae | B_KLBSL_PNE |
+#' 4 | lab_Staph_aureus   | B_STPHY_AUR |
+#' 5 |                    |             |
+#' }
+#'
+#' ...any new usage of an MO function in this package will update your data:
+#' \preformatted{
+#' as.mo("lab_mo_ecoli")
+#' # Updated mo_source file '~/.mo_source.rds' from 'home/me/ourcodes.xlsx'.
+#' # B_ESCHR_COL
+#'
+#' mo_genus("lab_Staph_aureus")
+#' # "Staphylococcus"
+#' }
+#'
+#' To remove the reference completely, just use any of these:
+#' \preformatted{
+#' set_mo_source("")
+#' set_mo_source(NULL)
+#' # Removed mo_source file '~/.mo_source.rds'.
+#' }
 #' @importFrom dplyr select everything
 #' @export
 #' @inheritSection AMR Read more on our website!
-#' @examples
-#' \dontrun{
-#'
-#' # imagine this Excel file (mo codes looked up in `microorganisms` data set):
-#' #            A                B
-#' # 1  our code            mo
-#' # 2  lab_mo_ecoli        B_ESCHR_COL
-#' # 3  lab_mo_kpneumoniae  B_KLBSL_PNE
-#'
-#' # 1. We save it as 'home/me/ourcodes.xlsx'
-#'
-#' # 2. We use it for input:
-#' set_mo_source("home/me/ourcodes.xlsx")
-#' #> Created mo_source file '~/.mo_source.rds' from 'home/me/ourcodes.xlsx'.
-#'
-#' # 3. And use it in our functions:
-#' as.mo("lab_mo_ecoli")
-#' #> B_ESCHR_COL
-#'
-#' mo_genus("lab_mo_kpneumoniae")
-#' #> "Klebsiella"
-#'
-#' # 4. It will look for changes itself:
-#' # (add new row to the Excel file and save it)
-#'
-#' mo_genus("lab_mo_kpneumoniae")
-#' #> Updated mo_source file '~/.mo_source.rds' from 'home/me/ourcodes.xlsx'.
-#' #> "Klebsiella"
-#' }
 set_mo_source <- function(path) {
 
   if (!is.character(path) | length(path) > 1) {
     stop("`path` must be a character of length 1.")
   }
 
-  if (path == "") {
+  if (path %in% c(NULL, "")) {
     options(mo_source = NULL)
     options(mo_source_timestamp = NULL)
     if (file.exists("~/.mo_source.rds")) {

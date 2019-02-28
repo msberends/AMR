@@ -260,13 +260,17 @@ mo_type <- function(x, language = get_locale(), ...) {
 #' @export
 mo_gramstain <- function(x, language = get_locale(), ...) {
   x.bak <- x
-  x <- mo_phylum(x, ...)
-  x[x %in% c("Actinobacteria",
-             "Chloroflexi",
-             "Firmicutes",
-             "Tenericutes")] <- "Gram positive"
+  x.mo <- as.mo(x, ...)
+  x.phylum <- mo_phylum(x.mo)
+  x[x.phylum %in% c("Actinobacteria",
+                    "Chloroflexi",
+                    "Firmicutes",
+                    "Tenericutes")] <- "Gram positive"
   x[x != "Gram positive"] <- "Gram negative"
-  x[mo_kingdom(x.bak) != "Bacteria"] <- NA_character_
+  x[mo_kingdom(x.mo) != "Bacteria"] <- NA_character_
+  x[x.mo == "B_GRAMP"] <- "Gram positive"
+  x[x.mo == "B_GRAMN"] <- "Gram negative"
+
   mo_translate(x, language = language)
 }
 

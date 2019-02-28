@@ -89,7 +89,7 @@ Uncommon microorganisms take a lot more time than common microorganisms. To reli
 
 ### Repetitive results
 
-Repetitive results mean that unique values are present more than once. Unique values will only be calculated once by `as.mo()`. We will use `mo_fullname()` for this test - a helper function that returns the full microbial name (genus, species and possibly subspecies) which uses `as.mo()` internally.
+Repetitive results are unique values that are present more than once. Unique values will only be calculated once by `as.mo()`. We will use `mo_fullname()` for this test - a helper function that returns the full microbial name (genus, species and possibly subspecies) which uses `as.mo()` internally.
 
 ```{r, message = FALSE}
 library(dplyr)

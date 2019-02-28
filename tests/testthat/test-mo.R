@@ -193,11 +193,7 @@ test_that("as.mo works", {
 
   # check old names
   expect_equal(suppressMessages(as.character(as.mo("Escherichia blattae"))), "B_SHMWL_BLA")
-  # # - Didymosphaeria spartinae (unprevalent)
-  # expect_warning(suppressMessages(as.mo("D spartin", allow_uncertain = TRUE)))
-  # # - was renamed to Leptosphaeria obiones
-  # expect_equal(suppressWarnings(suppressMessages(as.character(as.mo("D spartin", allow_uncertain = TRUE)))),
-  #                               "F_LPTSP_OBI")
+  print(mo_renamed())
 
   # check uncertain names
   expect_equal(suppressWarnings(as.character(as.mo("esco extra_text", allow_uncertain = FALSE))), NA_character_)
@@ -234,6 +230,7 @@ test_that("as.mo works", {
       "Streptococcus suis (bovis gr)",
       "Raoultella (here some text) terrigena")))),
     c("B_MCRBC", "B_STRPT_SUI", "B_RLTLL_TER"))
+  print(mo_uncertainties())
 
   # Salmonella (City) are all actually Salmonella enterica spp (City)
   expect_equal(as.character(suppressMessages(as.mo("Salmonella Goettingen"))),

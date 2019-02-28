@@ -47,7 +47,8 @@
   <script src="../extra.js"></script>
 <meta property="og:title" content="Use predefined reference data set — mo_source" />
 
-<meta property="og:description" content="These functions can be used to predefine your own reference to be used in as.mo and consequently all mo_* functions like mo_genus and mo_gramstain." />
+<meta property="og:description" content="These functions can be used to predefine your own reference to be used in as.mo and consequently all mo_* functions like mo_genus and mo_gramstain.
+This is the fastest way to have your organisation (or analysis) specific codes picked up and translated by this package." />
 
 <meta property="og:image" content="https://msberends.gitlab.io/AMR/logo.png" />
 <meta name="twitter:card" content="summary" />
@@ -80,7 +81,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.0.9019</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.0.9020</span>
       </span>
     </div>
 
@@ -238,6 +239,7 @@
     <div class="ref-description">
     
     <p>These functions can be used to predefine your own reference to be used in <code><a href='as.mo.html'>as.mo</a></code> and consequently all <code>mo_*</code> functions like <code><a href='mo_property.html'>mo_genus</a></code> and <code><a href='mo_property.html'>mo_gramstain</a></code>.</p>
+<p>This is <strong>the fastest way</strong> to have your organisation (or analysis) specific codes picked up and translated by this package.</p>
     
     </div>
 
@@ -261,40 +263,56 @@
 <p><code>get_mo_source</code> will return the data set by reading <code>"~/.mo_source.rds"</code> with <code><a href='https://www.rdocumentation.org/packages/base/topics/readRDS'>readRDS</a></code>. If the original file has changed (the file defined with <code>path</code>), it will call <code>set_mo_source</code> to update the data file automatically.</p>
 <p>Reading an Excel file (<code>.xlsx</code>) with only one row has a size of 8-9 kB. The compressed file used by this package will have a size of 0.1 kB and can be read by <code>get_mo_source</code> in only a couple of microseconds (a millionth of a second).</p>
     
+    <h2 class="hasAnchor" id="how-it-works"><a class="anchor" href="#how-it-works"></a>How it works</h2>
+
+    
+    <p>Imagine this data on a sheet of an Excel file (mo codes were looked up in the `microorganisms` data set). The first column contains the organisation specific codes, the second column contains an MO code from this package:</p><pre>
+  |         A          |      B      |
+--|--------------------|-------------|
+1 | Organisation XYZ   | mo          |
+2 | lab_mo_ecoli       | B_ESCHR_COL |
+3 | lab_mo_kpneumoniae | B_KLBSL_PNE |
+4 |                    |             |
+</pre>
+    <p>We save it as <code>'home/me/ourcodes.xlsx'</code>. Now we have to set it as a source:</p><pre>
+set_mo_source("home/me/ourcodes.xlsx")
+# Created mo_source file '~/.mo_source.rds' from 'home/me/ourcodes.xlsx'.
+</pre>
+    <p>It has now created a file "~/.mo_source.rds" with the contents of our Excel file. It it an R specific format with great compression.</p>
+<p>And now we can use it in our functions:</p><pre>
+as.mo("lab_mo_ecoli")
+# B_ESCHR_COL
+    mo_genus("lab_mo_kpneumoniae")
+# "Klebsiella"
+</pre>
+    <p>If we edit the Excel file to, let's say, this:</p><pre>
+  |         A          |      B      |
+--|--------------------|-------------|
+1 | Organisation XYZ   | mo          |
+2 | lab_mo_ecoli       | B_ESCHR_COL |
+3 | lab_mo_kpneumoniae | B_KLBSL_PNE |
+4 | lab_Staph_aureus   | B_STPHY_AUR |
+5 |                    |             |
+</pre>
+    <p>...any new usage of an MO function in this package will update your data:</p><pre>
+as.mo("lab_mo_ecoli")
+# Updated mo_source file '~/.mo_source.rds' from 'home/me/ourcodes.xlsx'.
+# B_ESCHR_COL
+    mo_genus("lab_Staph_aureus")
+# "Staphylococcus"
+</pre>
+    <p>To remove the reference completely, just use any of these:</p><pre>
+set_mo_source("")
+set_mo_source(NULL)
+# Removed mo_source file '~/.mo_source.rds'.
+</pre>
+    
     <h2 class="hasAnchor" id="read-more-on-our-website-"><a class="anchor" href="#read-more-on-our-website-"></a>Read more on our website!</h2>
 
     
     <p>On our website <a href='https://msberends.gitlab.io/AMR'>https://msberends.gitlab.io/AMR</a> you can find <a href='https://msberends.gitlab.io/AMR/articles/AMR.html'>a comprehensive tutorial</a> about how to conduct AMR analysis, the <a href='https://msberends.gitlab.io/AMR/reference'>complete documentation of all functions</a> (which reads a lot easier than here in R) and <a href='https://msberends.gitlab.io/AMR/articles/WHONET.html'>an example analysis using WHONET data</a>.</p>
     
 
-    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><span class='co'># NOT RUN {</span>
-<span class='co'># imagine this Excel file (mo codes looked up in `microorganisms` data set):</span>
-<span class='co'>#            A                B</span>
-<span class='co'># 1  our code            mo</span>
-<span class='co'># 2  lab_mo_ecoli        B_ESCHR_COL</span>
-<span class='co'># 3  lab_mo_kpneumoniae  B_KLBSL_PNE</span>
-
-<span class='co'># 1. We save it as 'home/me/ourcodes.xlsx'</span>
-
-<span class='co'># 2. We use it for input:</span>
-<span class='fu'>set_mo_source</span>(<span class='st'>"home/me/ourcodes.xlsx"</span>)
-<span class='co'>#&gt; Created mo_source file '~/.mo_source.rds' from 'home/me/ourcodes.xlsx'.</span>
-
-<span class='co'># 3. And use it in our functions:</span>
-<span class='fu'><a href='as.mo.html'>as.mo</a></span>(<span class='st'>"lab_mo_ecoli"</span>)
-<span class='co'>#&gt; B_ESCHR_COL</span>
-
-<span class='fu'><a href='mo_property.html'>mo_genus</a></span>(<span class='st'>"lab_mo_kpneumoniae"</span>)
-<span class='co'>#&gt; "Klebsiella"</span>
-
-<span class='co'># 4. It will look for changes itself:</span>
-<span class='co'># (add new row to the Excel file and save it)</span>
-
-<span class='fu'><a href='mo_property.html'>mo_genus</a></span>(<span class='st'>"lab_mo_kpneumoniae"</span>)
-<span class='co'>#&gt; Updated mo_source file '~/.mo_source.rds' from 'home/me/ourcodes.xlsx'.</span>
-<span class='co'>#&gt; "Klebsiella"</span>
-<span class='co'># }</span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -303,10 +321,10 @@
       
       <li><a href="#details">Details</a></li>
 
+      <li><a href="#how-it-works">How it works</a></li>
+
       <li><a href="#read-more-on-our-website-">Read more on our website!</a></li>
-      
-      <li><a href="#examples">Examples</a></li>
-    </ul>
+          </ul>
 
   </div>
 </div>

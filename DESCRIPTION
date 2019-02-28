@@ -1,6 +1,6 @@
 Package: AMR
-Version: 0.5.0.9019
-Date: 2019-02-27
+Version: 0.5.0.9020
+Date: 2019-02-28
 Title: Antimicrobial Resistance Analysis
 Authors@R: c(
     person(
@@ -52,7 +52,7 @@ Imports:
     hms,
     knitr (>= 1.0.0),
     microbenchmark,
-    rlang (>= 0.2.0),
+    rlang (>= 0.3.1),
     tidyr (>= 0.7.0)
 Suggests:
     covr (>= 3.0.1),
