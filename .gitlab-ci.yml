@@ -64,6 +64,7 @@ R:
   variables:
     WARNINGS_ARE_ERRORS: 1
   script:
+    - export WARNINGS_ARE_ERRORS=1
     # remove vignettes folder and get VignetteBuilder field out of DESCRIPTION file
     - rm -rf vignettes
     - Rscript -e 'd <- read.dcf("DESCRIPTION"); d[, colnames(d) == "VignetteBuilder"] <- NA; write.dcf(d, "DESCRIPTION")'
@@ -81,6 +82,7 @@ coverage:
   allow_failure: true
   when: on_success
   only:
+    - premaster
     - master
   script:
   - apt-get install --yes git

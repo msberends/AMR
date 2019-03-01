@@ -278,12 +278,15 @@ This is the fastest way to have your organisation (or analysis) specific codes p
 set_mo_source("home/me/ourcodes.xlsx")
 # Created mo_source file '~/.mo_source.rds' from 'home/me/ourcodes.xlsx'.
 </pre>
-    <p>It has now created a file "~/.mo_source.rds" with the contents of our Excel file. It it an R specific format with great compression.</p>
+    <p>It has now created a file "~/.mo_source.rds" with the contents of our Excel file, but only the first column with foreign values and the 'mo' column will be kept.</p>
 <p>And now we can use it in our functions:</p><pre>
 as.mo("lab_mo_ecoli")
-# B_ESCHR_COL
+[1] B_ESCHR_COL
     mo_genus("lab_mo_kpneumoniae")
-# "Klebsiella"
+[1] "Klebsiella"
+    # other input values still work too
+as.mo(c("Escherichia coli", "E. coli", "lab_mo_ecoli"))
+[1] B_ESCHR_COL  B_ESCHR_COL  B_ESCHR_COL
 </pre>
     <p>If we edit the Excel file to, let's say, this:</p><pre>
   |         A          |      B      |
@@ -297,9 +300,9 @@ as.mo("lab_mo_ecoli")
     <p>...any new usage of an MO function in this package will update your data:</p><pre>
 as.mo("lab_mo_ecoli")
 # Updated mo_source file '~/.mo_source.rds' from 'home/me/ourcodes.xlsx'.
-# B_ESCHR_COL
+[1] B_ESCHR_COL
     mo_genus("lab_Staph_aureus")
-# "Staphylococcus"
+[1] "Staphylococcus"
 </pre>
     <p>To remove the reference completely, just use any of these:</p><pre>
 set_mo_source("")

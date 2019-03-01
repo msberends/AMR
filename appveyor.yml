@@ -55,8 +55,8 @@ on_failure:
   - 7z a failure.zip *.Rcheck\*
   - appveyor PushArtifact failure.zip
 
-on_success:
-  - Rscript -e "library(covr); cc <- package_coverage(); codecov(coverage = cc, token = '50ffa0aa-fee0-4f8b-a11d-8c7edc6d32ca'); cat('Code coverage:', percent_coverage(cc))"
+#on_success:
+#  - Rscript -e "library(covr); cc <- package_coverage(); codecov(coverage = cc, token = '50ffa0aa-fee0-4f8b-a11d-8c7edc6d32ca'); cat('Code coverage:', percent_coverage(cc))"
 
 artifacts:
   - path: '*.Rcheck\**\*.log'

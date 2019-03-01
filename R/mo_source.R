@@ -52,15 +52,19 @@
 #' # Created mo_source file '~/.mo_source.rds' from 'home/me/ourcodes.xlsx'.
 #' }
 #'
-#' It has now created a file "~/.mo_source.rds" with the contents of our Excel file. It it an R specific format with great compression.
+#' It has now created a file "~/.mo_source.rds" with the contents of our Excel file, but only the first column with foreign values and the 'mo' column will be kept.
 #'
 #' And now we can use it in our functions:
 #' \preformatted{
 #' as.mo("lab_mo_ecoli")
-#' # B_ESCHR_COL
+#' [1] B_ESCHR_COL
 #'
 #' mo_genus("lab_mo_kpneumoniae")
-#' # "Klebsiella"
+#' [1] "Klebsiella"
+#'
+#' # other input values still work too
+#' as.mo(c("Escherichia coli", "E. coli", "lab_mo_ecoli"))
+#' [1] B_ESCHR_COL  B_ESCHR_COL  B_ESCHR_COL
 #' }
 #'
 #' If we edit the Excel file to, let's say, this:
@@ -78,10 +82,10 @@
 #' \preformatted{
 #' as.mo("lab_mo_ecoli")
 #' # Updated mo_source file '~/.mo_source.rds' from 'home/me/ourcodes.xlsx'.
-#' # B_ESCHR_COL
+#' [1] B_ESCHR_COL
 #'
 #' mo_genus("lab_Staph_aureus")
-#' # "Staphylococcus"
+#' [1] "Staphylococcus"
 #' }
 #'
 #' To remove the reference completely, just use any of these:
@@ -119,7 +123,9 @@ set_mo_source <- function(path) {
       valid <- FALSE
     } else if (!"mo" %in% colnames(df)) {
       valid <- FALSE
-    } else if (!all(df$mo %in% AMR::microorganisms$mo)) {
+    } else if (all(as.data.frame(df)[, 1] == "")) {
+      valid <- FALSE
+    } else if (!all(df$mo %in% c("", AMR::microorganisms$mo))) {
       valid <- FALSE
     } else if (NCOL(df) < 2) {
       valid <- FALSE
@@ -163,9 +169,11 @@ set_mo_source <- function(path) {
     stop("File must contain a column with self-defined values and a reference column `mo` with valid values from the `microorganisms` data set.")
   }
 
+  # keep only first two columns, second must be mo
   if (colnames(df)[1] == "mo") {
-    # put mo to the end
-    df <- df %>% select(-"mo", everything(), "mo")
+    df <- df[, c(2, 1)]
+  } else {
+    df <- df[, c(1, 2)]
   }
 
   df <- as.data.frame(df, stringAsFactors = FALSE)

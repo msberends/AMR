@@ -117,6 +117,7 @@
 #' @seealso \code{\link{microorganisms}} for the \code{data.frame} that is being used to determine ID's. \cr
 #' The \code{\link{mo_property}} functions (like \code{\link{mo_genus}}, \code{\link{mo_gramstain}}) to get properties based on the returned code.
 #' @inheritSection AMR Read more on our website!
+#' @importFrom dplyr %>% pull left_join
 #' @examples
 #' # These examples all return "B_STPHY_AUR", the ID of S. aureus:
 #' as.mo("stau")
@@ -171,16 +172,28 @@ as.mo <- function(x, Becker = FALSE, Lancefield = FALSE, allow_uncertain = TRUE,
     # check onLoad() in R/zzz.R: data tables are created there.
   }
 
-  if (all(x %in% AMR::microorganisms$mo)
+  if (deparse(substitute(reference_df)) == "get_mo_source()"
       & isFALSE(Becker)
       & isFALSE(Lancefield)
-      & is.null(reference_df)) {
+      & !is.null(reference_df)
+      & all(x %in% reference_df[,1])) {
+    # has valid own reference_df
+    # (data.table not faster here)
+    colnames(reference_df)[1] <- "x"
+    suppressWarnings(
+      y <- data.frame(x = x, stringsAsFactors = FALSE) %>%
+        left_join(reference_df, by = "x") %>%
+        pull("mo")
+    )
+
+  } else if (all(x %in% AMR::microorganisms$mo)
+      & isFALSE(Becker)
+      & isFALSE(Lancefield)) {
     y <- x
 
   } else if (all(tolower(x) %in% microorganismsDT$fullname_lower)
              & isFALSE(Becker)
-             & isFALSE(Lancefield)
-             & is.null(reference_df)) {
+             & isFALSE(Lancefield)) {
     # we need special treatment for very prevalent full names, they are likely! (case insensitive)
     # e.g. as.mo("Staphylococcus aureus")
     y <- microorganismsDT[prevalence == 1][data.table(fullname_lower = tolower(x)),
