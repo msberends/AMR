@@ -78,11 +78,18 @@ We've got a new website: [https://msberends.gitlab.io/AMR](https://msberends.git
 * Functions `atc_ddd()` and `atc_groups()` have been renamed `atc_online_ddd()` and `atc_online_groups()`. The old functions are deprecated and will be removed in a future version.
 * Function `guess_mo()` is now deprecated in favour of `as.mo()` and will be removed in future versions
 * Function `guess_atc()` is now deprecated in favour of `as.atc()` and will be removed in future versions
-* Improvements for `as.mo()`:
+* Improvements for `as.mo()`:\
+  * Incoercible results will now be considered 'unknown', MO code `UNKNOWN`. Properties of these will be translated on foreign systems in all language already previously supported: German, Dutch, French, Italian, Spanish and Portuguese:
+  ```r
+  mo_genus("qwerty", language = "es")
+  # Warning: 
+  # one unique value (^= 100.0%) could not be coerced and is considered 'unknown': "qwerty". Use mo_failures() to review it.
+  #> [1] "(género desconocido)"
+  ```
   * Fix for vector containing only empty values
   * Finds better results when input is in other languages
   * Better handling for subspecies
-  * Better handling for *Salmonellae*
+  * Better handling for *Salmonellae*, especially the 'city like' serovars like *Salmonella London*
   * Understanding of highly virulent *E. coli* strains like EIEC, EPEC and STEC
   * There will be looked for uncertain results at default - these results will be returned with an informative warning
   * Manual (help page) now contains more info about the algorithms
@@ -102,7 +109,9 @@ We've got a new website: [https://msberends.gitlab.io/AMR](https://msberends.git
 * New colours for `scale_rsi_colours()`
 * Summaries of class `mo` will now return the top 3 and the unique count, e.g. using `summary(mo)`
 * Small text updates to summaries of class `rsi` and `mic`
-* Function `as.rsi()` now gives a warning when inputting MIC values
+* Function `as.rsi()`:
+  * Now gives a warning when inputting MIC values
+  * Now accepts high and low resistance: `"HIGH S"` will return `S`
 * Frequency tables (`freq()` function):
   * Support for tidyverse quasiquotation! Now you can create frequency tables of function outcomes:
     ```r

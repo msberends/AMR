@@ -328,12 +328,19 @@ These functions use <code><a href="../reference/as.atc.html">as.atc()</a></code>
 <li>Functions <code><a href="../reference/AMR-deprecated.html">atc_ddd()</a></code> and <code><a href="../reference/AMR-deprecated.html">atc_groups()</a></code> have been renamed <code><a href="../reference/atc_online.html">atc_online_ddd()</a></code> and <code><a href="../reference/atc_online.html">atc_online_groups()</a></code>. The old functions are deprecated and will be removed in a future version.</li>
 <li>Function <code><a href="../reference/AMR-deprecated.html">guess_mo()</a></code> is now deprecated in favour of <code><a href="../reference/as.mo.html">as.mo()</a></code> and will be removed in future versions</li>
 <li>Function <code><a href="../reference/AMR-deprecated.html">guess_atc()</a></code> is now deprecated in favour of <code><a href="../reference/as.atc.html">as.atc()</a></code> and will be removed in future versions</li>
-<li>Improvements for <code><a href="../reference/as.mo.html">as.mo()</a></code>:
+<li>Improvements for <code><a href="../reference/as.mo.html">as.mo()</a></code>:\
+<ul>
+<li>Incoercible results will now be considered ‘unknown’, MO code <code>UNKNOWN</code>. Properties of these will be translated on foreign systems in all language already previously supported: German, Dutch, French, Italian, Spanish and Portuguese:</li>
+</ul>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" title="1"><span class="kw"><a href="../reference/mo_property.html">mo_genus</a></span>(<span class="st">"qwerty"</span>, <span class="dt">language =</span> <span class="st">"es"</span>)</a>
+<a class="sourceLine" id="cb5-2" title="2"><span class="co"># Warning: </span></a>
+<a class="sourceLine" id="cb5-3" title="3"><span class="co"># one unique value (^= 100.0%) could not be coerced and is considered 'unknown': "qwerty". Use mo_failures() to review it.</span></a>
+<a class="sourceLine" id="cb5-4" title="4"><span class="co">#&gt; [1] "(género desconocido)"</span></a></code></pre></div>
 <ul>
 <li>Fix for vector containing only empty values</li>
 <li>Finds better results when input is in other languages</li>
 <li>Better handling for subspecies</li>
-<li>Better handling for <em>Salmonellae</em>
+<li>Better handling for <em>Salmonellae</em>, especially the ‘city like’ serovars like <em>Salmonella London</em>
 </li>
 <li>Understanding of highly virulent <em>E. coli</em> strains like EIEC, EPEC and STEC</li>
 <li>There will be looked for uncertain results at default - these results will be returned with an informative warning</li>
@@ -363,24 +370,30 @@ These functions use <code><a href="../reference/as.atc.html">as.atc()</a></code>
 </li>
 <li>Small text updates to summaries of class <code>rsi</code> and <code>mic</code>
 </li>
-<li>Function <code><a href="../reference/as.rsi.html">as.rsi()</a></code> now gives a warning when inputting MIC values</li>
+<li>Function <code><a href="../reference/as.rsi.html">as.rsi()</a></code>:
+<ul>
+<li>Now gives a warning when inputting MIC values</li>
+<li>Now accepts high and low resistance: <code>"HIGH S"</code> will return <code>S</code>
+</li>
+</ul>
+</li>
 <li>Frequency tables (<code><a href="../reference/freq.html">freq()</a></code> function):
 <ul>
 <li>
 <p>Support for tidyverse quasiquotation! Now you can create frequency tables of function outcomes:</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" title="1"><span class="co"># Determine genus of microorganisms (mo) in `septic_patients` data set:</span></a>
-<a class="sourceLine" id="cb5-2" title="2"><span class="co"># OLD WAY</span></a>
-<a class="sourceLine" id="cb5-3" title="3">septic_patients <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb5-4" title="4"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">genus =</span> <span class="kw"><a href="../reference/mo_property.html">mo_genus</a></span>(mo)) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb5-5" title="5"><span class="st">  </span><span class="kw"><a href="../reference/freq.html">freq</a></span>(genus)</a>
-<a class="sourceLine" id="cb5-6" title="6"><span class="co"># NEW WAY</span></a>
-<a class="sourceLine" id="cb5-7" title="7">septic_patients <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb5-8" title="8"><span class="st">  </span><span class="kw"><a href="../reference/freq.html">freq</a></span>(<span class="kw"><a href="../reference/mo_property.html">mo_genus</a></span>(mo))</a>
-<a class="sourceLine" id="cb5-9" title="9"></a>
-<a class="sourceLine" id="cb5-10" title="10"><span class="co"># Even supports grouping variables:</span></a>
-<a class="sourceLine" id="cb5-11" title="11">septic_patients <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb5-12" title="12"><span class="st">  </span><span class="kw">group_by</span>(gender) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb5-13" title="13"><span class="st">  </span><span class="kw"><a href="../reference/freq.html">freq</a></span>(<span class="kw"><a href="../reference/mo_property.html">mo_genus</a></span>(mo))</a></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" title="1"><span class="co"># Determine genus of microorganisms (mo) in `septic_patients` data set:</span></a>
+<a class="sourceLine" id="cb6-2" title="2"><span class="co"># OLD WAY</span></a>
+<a class="sourceLine" id="cb6-3" title="3">septic_patients <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb6-4" title="4"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">genus =</span> <span class="kw"><a href="../reference/mo_property.html">mo_genus</a></span>(mo)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb6-5" title="5"><span class="st">  </span><span class="kw"><a href="../reference/freq.html">freq</a></span>(genus)</a>
+<a class="sourceLine" id="cb6-6" title="6"><span class="co"># NEW WAY</span></a>
+<a class="sourceLine" id="cb6-7" title="7">septic_patients <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb6-8" title="8"><span class="st">  </span><span class="kw"><a href="../reference/freq.html">freq</a></span>(<span class="kw"><a href="../reference/mo_property.html">mo_genus</a></span>(mo))</a>
+<a class="sourceLine" id="cb6-9" title="9"></a>
+<a class="sourceLine" id="cb6-10" title="10"><span class="co"># Even supports grouping variables:</span></a>
+<a class="sourceLine" id="cb6-11" title="11">septic_patients <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb6-12" title="12"><span class="st">  </span><span class="kw">group_by</span>(gender) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb6-13" title="13"><span class="st">  </span><span class="kw"><a href="../reference/freq.html">freq</a></span>(<span class="kw"><a href="../reference/mo_property.html">mo_genus</a></span>(mo))</a></code></pre></div>
 </li>
 <li>Header info is now available as a list, with the <code>header</code> function</li>
 <li>The parameter <code>header</code> is now set to <code>TRUE</code> at default, even for markdown</li>
@@ -454,10 +467,10 @@ These functions use <code><a href="../reference/as.atc.html">as.atc()</a></code>
 <li>Fewer than 3 characters as input for <code>as.mo</code> will return NA</li>
 <li>
 <p>Function <code>as.mo</code> (and all <code>mo_*</code> wrappers) now supports genus abbreviations with “species” attached</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" title="1"><span class="kw"><a href="../reference/as.mo.html">as.mo</a></span>(<span class="st">"E. species"</span>)        <span class="co"># B_ESCHR</span></a>
-<a class="sourceLine" id="cb6-2" title="2"><span class="kw"><a href="../reference/mo_property.html">mo_fullname</a></span>(<span class="st">"E. spp."</span>)     <span class="co"># "Escherichia species"</span></a>
-<a class="sourceLine" id="cb6-3" title="3"><span class="kw"><a href="../reference/as.mo.html">as.mo</a></span>(<span class="st">"S. spp"</span>)            <span class="co"># B_STPHY</span></a>
-<a class="sourceLine" id="cb6-4" title="4"><span class="kw"><a href="../reference/mo_property.html">mo_fullname</a></span>(<span class="st">"S. species"</span>)  <span class="co"># "Staphylococcus species"</span></a></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" title="1"><span class="kw"><a href="../reference/as.mo.html">as.mo</a></span>(<span class="st">"E. species"</span>)        <span class="co"># B_ESCHR</span></a>
+<a class="sourceLine" id="cb7-2" title="2"><span class="kw"><a href="../reference/mo_property.html">mo_fullname</a></span>(<span class="st">"E. spp."</span>)     <span class="co"># "Escherichia species"</span></a>
+<a class="sourceLine" id="cb7-3" title="3"><span class="kw"><a href="../reference/as.mo.html">as.mo</a></span>(<span class="st">"S. spp"</span>)            <span class="co"># B_STPHY</span></a>
+<a class="sourceLine" id="cb7-4" title="4"><span class="kw"><a href="../reference/mo_property.html">mo_fullname</a></span>(<span class="st">"S. species"</span>)  <span class="co"># "Staphylococcus species"</span></a></code></pre></div>
 </li>
 <li>Added parameter <code>combine_IR</code> (TRUE/FALSE) to functions <code>portion_df</code> and <code>count_df</code>, to indicate that all values of I and R must be merged into one, so the output only consists of S vs. IR (susceptible vs. non-susceptible)</li>
 <li>Fix for <code>portion_*(..., as_percent = TRUE)</code> when minimal number of isolates would not be met</li>
@@ -470,15 +483,15 @@ These functions use <code><a href="../reference/as.atc.html">as.atc()</a></code>
 <ul>
 <li>
 <p>Support for grouping variables, test with:</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" title="1">septic_patients <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb7-2" title="2"><span class="st">  </span><span class="kw">group_by</span>(hospital_id) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb7-3" title="3"><span class="st">  </span><span class="kw"><a href="../reference/freq.html">freq</a></span>(gender)</a></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" title="1">septic_patients <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb8-2" title="2"><span class="st">  </span><span class="kw">group_by</span>(hospital_id) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb8-3" title="3"><span class="st">  </span><span class="kw"><a href="../reference/freq.html">freq</a></span>(gender)</a></code></pre></div>
 </li>
 <li>
 <p>Support for (un)selecting columns:</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" title="1">septic_patients <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb8-2" title="2"><span class="st">  </span><span class="kw"><a href="../reference/freq.html">freq</a></span>(hospital_id) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb8-3" title="3"><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>count, <span class="op">-</span>cum_count) <span class="co"># only get item, percent, cum_percent</span></a></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" title="1">septic_patients <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb9-2" title="2"><span class="st">  </span><span class="kw"><a href="../reference/freq.html">freq</a></span>(hospital_id) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb9-3" title="3"><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>count, <span class="op">-</span>cum_count) <span class="co"># only get item, percent, cum_percent</span></a></code></pre></div>
 </li>
 <li>Check for <code><a href="https://www.rdocumentation.org/packages/hms/topics/hms">hms::is.hms</a></code>
 </li>
@@ -558,18 +571,18 @@ These functions use <code><a href="../reference/as.atc.html">as.atc()</a></code>
 </li>
 </ul>
 <p>They also come with support for German, Dutch, French, Italian, Spanish and Portuguese:</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" title="1"><span class="kw"><a href="../reference/mo_property.html">mo_gramstain</a></span>(<span class="st">"E. coli"</span>)</a>
-<a class="sourceLine" id="cb9-2" title="2"><span class="co"># [1] "Gram negative"</span></a>
-<a class="sourceLine" id="cb9-3" title="3"><span class="kw"><a href="../reference/mo_property.html">mo_gramstain</a></span>(<span class="st">"E. coli"</span>, <span class="dt">language =</span> <span class="st">"de"</span>) <span class="co"># German</span></a>
-<a class="sourceLine" id="cb9-4" title="4"><span class="co"># [1] "Gramnegativ"</span></a>
-<a class="sourceLine" id="cb9-5" title="5"><span class="kw"><a href="../reference/mo_property.html">mo_gramstain</a></span>(<span class="st">"E. coli"</span>, <span class="dt">language =</span> <span class="st">"es"</span>) <span class="co"># Spanish</span></a>
-<a class="sourceLine" id="cb9-6" title="6"><span class="co"># [1] "Gram negativo"</span></a>
-<a class="sourceLine" id="cb9-7" title="7"><span class="kw"><a href="../reference/mo_property.html">mo_fullname</a></span>(<span class="st">"S. group A"</span>, <span class="dt">language =</span> <span class="st">"pt"</span>) <span class="co"># Portuguese</span></a>
-<a class="sourceLine" id="cb9-8" title="8"><span class="co"># [1] "Streptococcus grupo A"</span></a></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" title="1"><span class="kw"><a href="../reference/mo_property.html">mo_gramstain</a></span>(<span class="st">"E. coli"</span>)</a>
+<a class="sourceLine" id="cb10-2" title="2"><span class="co"># [1] "Gram negative"</span></a>
+<a class="sourceLine" id="cb10-3" title="3"><span class="kw"><a href="../reference/mo_property.html">mo_gramstain</a></span>(<span class="st">"E. coli"</span>, <span class="dt">language =</span> <span class="st">"de"</span>) <span class="co"># German</span></a>
+<a class="sourceLine" id="cb10-4" title="4"><span class="co"># [1] "Gramnegativ"</span></a>
+<a class="sourceLine" id="cb10-5" title="5"><span class="kw"><a href="../reference/mo_property.html">mo_gramstain</a></span>(<span class="st">"E. coli"</span>, <span class="dt">language =</span> <span class="st">"es"</span>) <span class="co"># Spanish</span></a>
+<a class="sourceLine" id="cb10-6" title="6"><span class="co"># [1] "Gram negativo"</span></a>
+<a class="sourceLine" id="cb10-7" title="7"><span class="kw"><a href="../reference/mo_property.html">mo_fullname</a></span>(<span class="st">"S. group A"</span>, <span class="dt">language =</span> <span class="st">"pt"</span>) <span class="co"># Portuguese</span></a>
+<a class="sourceLine" id="cb10-8" title="8"><span class="co"># [1] "Streptococcus grupo A"</span></a></code></pre></div>
 <p>Furthermore, former taxonomic names will give a note about the current taxonomic name:</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" title="1"><span class="kw"><a href="../reference/mo_property.html">mo_gramstain</a></span>(<span class="st">"Esc blattae"</span>)</a>
-<a class="sourceLine" id="cb10-2" title="2"><span class="co"># Note: 'Escherichia blattae' (Burgess et al., 1973) was renamed 'Shimwellia blattae' (Priest and Barker, 2010)</span></a>
-<a class="sourceLine" id="cb10-3" title="3"><span class="co"># [1] "Gram negative"</span></a></code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" title="1"><span class="kw"><a href="../reference/mo_property.html">mo_gramstain</a></span>(<span class="st">"Esc blattae"</span>)</a>
+<a class="sourceLine" id="cb11-2" title="2"><span class="co"># Note: 'Escherichia blattae' (Burgess et al., 1973) was renamed 'Shimwellia blattae' (Priest and Barker, 2010)</span></a>
+<a class="sourceLine" id="cb11-3" title="3"><span class="co"># [1] "Gram negative"</span></a></code></pre></div>
 </li>
 <li>Functions <code>count_R</code>, <code>count_IR</code>, <code>count_I</code>, <code>count_SI</code> and <code>count_S</code> to selectively count resistant or susceptible isolates
 <ul>
@@ -580,18 +593,18 @@ These functions use <code><a href="../reference/as.atc.html">as.atc()</a></code>
 </li>
 <li>
 <p>Functions <code>as.mo</code> and <code>is.mo</code> as replacements for <code>as.bactid</code> and <code>is.bactid</code> (since the <code>microoganisms</code> data set not only contains bacteria). These last two functions are deprecated and will be removed in a future release. The <code>as.mo</code> function determines microbial IDs using Artificial Intelligence (AI):</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" title="1"><span class="kw"><a href="../reference/as.mo.html">as.mo</a></span>(<span class="st">"E. coli"</span>)</a>
-<a class="sourceLine" id="cb11-2" title="2"><span class="co"># [1] B_ESCHR_COL</span></a>
-<a class="sourceLine" id="cb11-3" title="3"><span class="kw"><a href="../reference/as.mo.html">as.mo</a></span>(<span class="st">"MRSA"</span>)</a>
-<a class="sourceLine" id="cb11-4" title="4"><span class="co"># [1] B_STPHY_AUR</span></a>
-<a class="sourceLine" id="cb11-5" title="5"><span class="kw"><a href="../reference/as.mo.html">as.mo</a></span>(<span class="st">"S group A"</span>)</a>
-<a class="sourceLine" id="cb11-6" title="6"><span class="co"># [1] B_STRPTC_GRA</span></a></code></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" title="1"><span class="kw"><a href="../reference/as.mo.html">as.mo</a></span>(<span class="st">"E. coli"</span>)</a>
+<a class="sourceLine" id="cb12-2" title="2"><span class="co"># [1] B_ESCHR_COL</span></a>
+<a class="sourceLine" id="cb12-3" title="3"><span class="kw"><a href="../reference/as.mo.html">as.mo</a></span>(<span class="st">"MRSA"</span>)</a>
+<a class="sourceLine" id="cb12-4" title="4"><span class="co"># [1] B_STPHY_AUR</span></a>
+<a class="sourceLine" id="cb12-5" title="5"><span class="kw"><a href="../reference/as.mo.html">as.mo</a></span>(<span class="st">"S group A"</span>)</a>
+<a class="sourceLine" id="cb12-6" title="6"><span class="co"># [1] B_STRPTC_GRA</span></a></code></pre></div>
 <p>And with great speed too - on a quite regular Linux server from 2007 it takes us less than 0.02 seconds to transform 25,000 items:</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" title="1">thousands_of_E_colis &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/rep">rep</a></span>(<span class="st">"E. coli"</span>, <span class="dv">25000</span>)</a>
-<a class="sourceLine" id="cb12-2" title="2">microbenchmark<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/microbenchmark/topics/microbenchmark">microbenchmark</a></span>(<span class="kw"><a href="../reference/as.mo.html">as.mo</a></span>(thousands_of_E_colis), <span class="dt">unit =</span> <span class="st">"s"</span>)</a>
-<a class="sourceLine" id="cb12-3" title="3"><span class="co"># Unit: seconds</span></a>
-<a class="sourceLine" id="cb12-4" title="4"><span class="co">#         min       median         max  neval</span></a>
-<a class="sourceLine" id="cb12-5" title="5"><span class="co">#  0.01817717  0.01843957  0.03878077    100</span></a></code></pre></div>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" title="1">thousands_of_E_colis &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/rep">rep</a></span>(<span class="st">"E. coli"</span>, <span class="dv">25000</span>)</a>
+<a class="sourceLine" id="cb13-2" title="2">microbenchmark<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/microbenchmark/topics/microbenchmark">microbenchmark</a></span>(<span class="kw"><a href="../reference/as.mo.html">as.mo</a></span>(thousands_of_E_colis), <span class="dt">unit =</span> <span class="st">"s"</span>)</a>
+<a class="sourceLine" id="cb13-3" title="3"><span class="co"># Unit: seconds</span></a>
+<a class="sourceLine" id="cb13-4" title="4"><span class="co">#         min       median         max  neval</span></a>
+<a class="sourceLine" id="cb13-5" title="5"><span class="co">#  0.01817717  0.01843957  0.03878077    100</span></a></code></pre></div>
 </li>
 <li>Added parameter <code>reference_df</code> for <code>as.mo</code>, so users can supply their own microbial IDs, name or codes as a reference table</li>
 <li>Renamed all previous references to <code>bactid</code> to <code>mo</code>, like:
@@ -619,12 +632,12 @@ These functions use <code><a href="../reference/as.atc.html">as.atc()</a></code>
 <li>Added three antimicrobial agents to the <code>antibiotics</code> data set: Terbinafine (D01BA02), Rifaximin (A07AA11) and Isoconazole (D01AC05)</li>
 <li>
 <p>Added 163 trade names to the <code>antibiotics</code> data set, it now contains 298 different trade names in total, e.g.:</p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" title="1"><span class="kw"><a href="../reference/AMR-deprecated.html">ab_official</a></span>(<span class="st">"Bactroban"</span>)</a>
-<a class="sourceLine" id="cb13-2" title="2"><span class="co"># [1] "Mupirocin"</span></a>
-<a class="sourceLine" id="cb13-3" title="3"><span class="kw"><a href="../reference/AMR-deprecated.html">ab_name</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"Bactroban"</span>, <span class="st">"Amoxil"</span>, <span class="st">"Zithromax"</span>, <span class="st">"Floxapen"</span>))</a>
-<a class="sourceLine" id="cb13-4" title="4"><span class="co"># [1] "Mupirocin" "Amoxicillin" "Azithromycin" "Flucloxacillin"</span></a>
-<a class="sourceLine" id="cb13-5" title="5"><span class="kw"><a href="../reference/AMR-deprecated.html">ab_atc</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"Bactroban"</span>, <span class="st">"Amoxil"</span>, <span class="st">"Zithromax"</span>, <span class="st">"Floxapen"</span>))</a>
-<a class="sourceLine" id="cb13-6" title="6"><span class="co"># [1] "R01AX06" "J01CA04" "J01FA10" "J01CF05"</span></a></code></pre></div>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" title="1"><span class="kw"><a href="../reference/AMR-deprecated.html">ab_official</a></span>(<span class="st">"Bactroban"</span>)</a>
+<a class="sourceLine" id="cb14-2" title="2"><span class="co"># [1] "Mupirocin"</span></a>
+<a class="sourceLine" id="cb14-3" title="3"><span class="kw"><a href="../reference/AMR-deprecated.html">ab_name</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"Bactroban"</span>, <span class="st">"Amoxil"</span>, <span class="st">"Zithromax"</span>, <span class="st">"Floxapen"</span>))</a>
+<a class="sourceLine" id="cb14-4" title="4"><span class="co"># [1] "Mupirocin" "Amoxicillin" "Azithromycin" "Flucloxacillin"</span></a>
+<a class="sourceLine" id="cb14-5" title="5"><span class="kw"><a href="../reference/AMR-deprecated.html">ab_atc</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"Bactroban"</span>, <span class="st">"Amoxil"</span>, <span class="st">"Zithromax"</span>, <span class="st">"Floxapen"</span>))</a>
+<a class="sourceLine" id="cb14-6" title="6"><span class="co"># [1] "R01AX06" "J01CA04" "J01FA10" "J01CF05"</span></a></code></pre></div>
 </li>
 <li>For <code>first_isolate</code>, rows will be ignored when there’s no species available</li>
 <li>Function <code>ratio</code> is now deprecated and will be removed in a future release, as it is not really the scope of this package</li>
@@ -635,13 +648,13 @@ These functions use <code><a href="../reference/as.atc.html">as.atc()</a></code>
 </li>
 <li>
 <p>Support for quasiquotation in the functions series <code>count_*</code> and <code>portions_*</code>, and <code>n_rsi</code>. This allows to check for more than 2 vectors or columns.</p>
-<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" title="1">septic_patients <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>(amox, cipr) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="../reference/count.html">count_IR</a></span>()</a>
-<a class="sourceLine" id="cb14-2" title="2"><span class="co"># which is the same as:</span></a>
-<a class="sourceLine" id="cb14-3" title="3">septic_patients <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="../reference/count.html">count_IR</a></span>(amox, cipr)</a>
-<a class="sourceLine" id="cb14-4" title="4"></a>
-<a class="sourceLine" id="cb14-5" title="5">septic_patients <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="../reference/portion.html">portion_S</a></span>(amcl)</a>
-<a class="sourceLine" id="cb14-6" title="6">septic_patients <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="../reference/portion.html">portion_S</a></span>(amcl, gent)</a>
-<a class="sourceLine" id="cb14-7" title="7">septic_patients <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="../reference/portion.html">portion_S</a></span>(amcl, gent, pita)</a></code></pre></div>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" title="1">septic_patients <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>(amox, cipr) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="../reference/count.html">count_IR</a></span>()</a>
+<a class="sourceLine" id="cb15-2" title="2"><span class="co"># which is the same as:</span></a>
+<a class="sourceLine" id="cb15-3" title="3">septic_patients <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="../reference/count.html">count_IR</a></span>(amox, cipr)</a>
+<a class="sourceLine" id="cb15-4" title="4"></a>
+<a class="sourceLine" id="cb15-5" title="5">septic_patients <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="../reference/portion.html">portion_S</a></span>(amcl)</a>
+<a class="sourceLine" id="cb15-6" title="6">septic_patients <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="../reference/portion.html">portion_S</a></span>(amcl, gent)</a>
+<a class="sourceLine" id="cb15-7" title="7">septic_patients <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="../reference/portion.html">portion_S</a></span>(amcl, gent, pita)</a></code></pre></div>
 </li>
 <li>Edited <code>ggplot_rsi</code> and <code>geom_rsi</code> so they can cope with <code>count_df</code>. The new <code>fun</code> parameter has value <code>portion_df</code> at default, but can be set to <code>count_df</code>.</li>
 <li>Fix for <code>ggplot_rsi</code> when the <code>ggplot2</code> package was not loaded</li>
@@ -655,12 +668,12 @@ These functions use <code><a href="../reference/as.atc.html">as.atc()</a></code>
 </li>
 <li>
 <p>Support for types (classes) list and matrix for <code>freq</code></p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" title="1">my_matrix =<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/with">with</a></span>(septic_patients, <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/matrix">matrix</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(age, gender), <span class="dt">ncol =</span> <span class="dv">2</span>))</a>
-<a class="sourceLine" id="cb15-2" title="2"><span class="kw"><a href="../reference/freq.html">freq</a></span>(my_matrix)</a></code></pre></div>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb16-1" title="1">my_matrix =<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/with">with</a></span>(septic_patients, <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/matrix">matrix</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(age, gender), <span class="dt">ncol =</span> <span class="dv">2</span>))</a>
+<a class="sourceLine" id="cb16-2" title="2"><span class="kw"><a href="../reference/freq.html">freq</a></span>(my_matrix)</a></code></pre></div>
 <p>For lists, subsetting is possible:</p>
-<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb16-1" title="1">my_list =<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(<span class="dt">age =</span> septic_patients<span class="op">$</span>age, <span class="dt">gender =</span> septic_patients<span class="op">$</span>gender)</a>
-<a class="sourceLine" id="cb16-2" title="2">my_list <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="../reference/freq.html">freq</a></span>(age)</a>
-<a class="sourceLine" id="cb16-3" title="3">my_list <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="../reference/freq.html">freq</a></span>(gender)</a></code></pre></div>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb17-1" title="1">my_list =<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(<span class="dt">age =</span> septic_patients<span class="op">$</span>age, <span class="dt">gender =</span> septic_patients<span class="op">$</span>gender)</a>
+<a class="sourceLine" id="cb17-2" title="2">my_list <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="../reference/freq.html">freq</a></span>(age)</a>
+<a class="sourceLine" id="cb17-3" title="3">my_list <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="../reference/freq.html">freq</a></span>(gender)</a></code></pre></div>
 </li>
 </ul>
 </div>

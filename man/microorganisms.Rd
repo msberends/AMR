@@ -4,7 +4,7 @@
 \name{microorganisms}
 \alias{microorganisms}
 \title{Data set with ~60,000 microorganisms}
-\format{A \code{\link{data.frame}} with 57,158 observations and 14 variables:
+\format{A \code{\link{data.frame}} with 59,985 observations and 15 variables:
 \describe{
   \item{\code{mo}}{ID of microorganism as used by this package}
   \item{\code{col_id}}{Catalogue of Life ID}
@@ -20,6 +20,7 @@
   \item{\code{rank}}{Taxonomic rank of the microorganism, like \code{"species"} or \code{"genus"}}
   \item{\code{ref}}{Author(s) and year of concerning scientific publication}
   \item{\code{species_id}}{ID of the species as used by the Catalogue of Life}
+  \item{\code{prevalence}}{Prevalence of the microorganism, see \code{?as.mo}}
 }}
 \source{
 Catalogue of Life: Annual Checklist (public online database), \url{www.catalogueoflife.org}.

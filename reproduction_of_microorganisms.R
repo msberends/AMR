@@ -86,6 +86,9 @@ MOs <- taxon %>%
          ref = gsub("^, ", "", ref)
   )
 
+# remove the HUGE file
+rm(taxon)
+
 # remove non-ASCII characters (not allowed by CRAN)
 MOs <- MOs %>%
   lapply(iconv, from = "UTF-8", to = "ASCII//TRANSLIT") %>%
@@ -180,6 +183,52 @@ MOs <- MOs %>%
 # add non-taxonomic entries
 MOs <- MOs %>%
   bind_rows(
+    # Unknowns
+    MOs %>%
+      .[1,] %>%
+      mutate(mo = "UNKNOWN",
+             col_id = NA_integer_,
+             fullname = "(unknown name)",
+             kingdom = "(unknown kingdom)",
+             phylum = "(unknown phylum)",
+             class = "(unknown class)",
+             order = "(unknown order)",
+             family = "(unknown family)",
+             genus = "(unknown genus)",
+             species = "(unknown species)",
+             subspecies = "(unknown subspecies)",
+             rank = "(unknown rank)",
+             ref = NA_character_,
+             # kingdom Bacteria:
+             species_id = "36bea735613185bbd9ce135fb0d9382c"),
+    data.frame(mo = "B_GRAMN",
+               col_id = NA_integer_,
+               fullname = "(unknown Gram negatives)",
+               kingdom = "Bacteria",
+               phylum = "(unknown phylum)",
+               class = "(unknown class)",
+               order = "(unknown order)",
+               family = "(unknown family)",
+               genus = "(unknown Gram negatives)",
+               species = "(unknown species)",
+               subspecies = "(unknown subspecies)",
+               rank = "species",
+               ref = NA_character_,
+               stringsAsFactors = FALSE),
+    data.frame(mo = "B_GRAMP",
+               col_id = NA_integer_,
+               fullname = "(unknown Gram positives)",
+               kingdom = "Bacteria",
+               phylum = "(unknown phylum)",
+               class = "(unknown class)",
+               order = "(unknown order)",
+               family = "(unknown family)",
+               genus = "(unknown Gram positives)",
+               species = "(unknown species)",
+               subspecies = "(unknown subspecies)",
+               rank = "species",
+               ref = NA_character_,
+               stringsAsFactors = FALSE),
     # CoNS
     MOs %>%
       filter(genus == "Staphylococcus", species == "epidermidis") %>% .[1,] %>%
@@ -258,41 +307,13 @@ MOs <- MOs %>%
              col_id = NA_integer_,
              species = "beta-haemolytic" ,
              fullname = "Beta-haemolytic Streptococcus",
-             ref = NA_character_),
-    # unknowns
-    data.frame(mo = "B_GRAMN",
-               col_id = NA_integer_,
-               fullname = "(unknown Gram negatives)",
-               kingdom = "Bacteria",
-               phylum = NA_character_,
-               class = NA_character_,
-               order = NA_character_,
-               family = NA_character_,
-               genus = "(unknown Gram negatives)",
-               species = NA_character_,
-               subspecies = NA_character_,
-               rank = "species",
-               ref = NA_character_,
-               stringsAsFactors = FALSE),
-    data.frame(mo = "B_GRAMP",
-               col_id = NA_integer_,
-               fullname = "(unknown Gram positives)",
-               kingdom = "Bacteria",
-               phylum = NA_character_,
-               class = NA_character_,
-               order = NA_character_,
-               family = NA_character_,
-               genus = "(unknown Gram positives)",
-               species = NA_character_,
-               subspecies = NA_character_,
-               rank = "species",
-               ref = NA_character_,
-               stringsAsFactors = FALSE)
+             ref = NA_character_)
   )
 
 
 # everything distinct?
 sum(duplicated(MOs$mo))
+colnames(MOs)
 
 # save it
 MOs <- as.data.frame(MOs %>% arrange(mo), stringsAsFactors = FALSE)

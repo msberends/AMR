@@ -103,7 +103,7 @@ test_that("as.mo works", {
   expect_warning(as.mo("ab"))
 
   expect_equal(suppressWarnings(as.character(as.mo(c("Qq species", "", "CRS", "K. pneu rhino", "esco")))),
-               c(NA_character_, NA_character_, "B_STNTR_MAL", "B_KLBSL_PNE_RHI", "B_ESCHR_COL"))
+               c("UNKNOWN", NA_character_, "B_STNTR_MAL", "B_KLBSL_PNE_RHI", "B_ESCHR_COL"))
 
   # check for Becker classification
   expect_identical(as.character(as.mo("S. epidermidis", Becker = FALSE)), "B_STPHY_EPI")
@@ -196,7 +196,7 @@ test_that("as.mo works", {
   print(mo_renamed())
 
   # check uncertain names
-  expect_equal(suppressWarnings(as.character(as.mo("esco extra_text", allow_uncertain = FALSE))), NA_character_)
+  expect_equal(suppressWarnings(as.character(as.mo("esco extra_text", allow_uncertain = FALSE))), "UNKNOWN")
   expect_equal(suppressWarnings(as.character(as.mo("esco extra_text", allow_uncertain = TRUE))), "B_ESCHR_COL")
   expect_warning(as.mo("esco extra_text", allow_uncertain = TRUE))
 

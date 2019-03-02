@@ -55,6 +55,7 @@ make <- function() {
     mutate(prevalence = case_when(
       class == "Gammaproteobacteria"
       | genus %in% c("Enterococcus", "Staphylococcus", "Streptococcus")
+      | mo == "UNKNOWN"
       ~ 1,
       phylum %in% c("Proteobacteria",
                     "Firmicutes",

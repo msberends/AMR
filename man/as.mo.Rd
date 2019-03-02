@@ -58,6 +58,8 @@ A microbial ID from this package (class: \code{mo}) typically looks like these e
                             F (Fungi), P (Protozoa), PL (Plantae) or V (Viruses)
 }
 
+Values that cannot be coered will be considered 'unknown' and have an MO code \code{UNKNOWN}.
+
 Use the \code{\link{mo_property}} functions to get properties based on the returned code, see Examples.
 
 \strong{Artificial Intelligence} \cr

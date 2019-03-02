@@ -76,6 +76,9 @@ as.rsi <- function(x) {
     x <- gsub(' +', '', x)
     # remove all MIC-like values: numbers, operators and periods
     x <- gsub('[0-9.,;:<=>]+', '', x)
+    # remove everything between brackets, and 'high' and 'low'
+    x <- gsub("([(].*[)])", "", x)
+    x <- gsub("(high|low)", "", x, ignore.case = TRUE)
     # disallow more than 3 characters
     x[nchar(x) > 3] <- NA
     # set to capitals

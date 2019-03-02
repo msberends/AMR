@@ -364,7 +364,7 @@ mo_translate <- function(x, language) {
   }
 
   x_tobetranslated <- grepl(x = x,
-                            pattern = "(Coagulase Negative Staphylococcus|Coagulase Positive Staphylococcus|Beta-haemolytic Streptococcus|unknown Gram negatives|unknown Gram positives|CoNS|CoPS|no MO|Gram negative|Gram positive|Bacteria|Fungi|Protozoa|biogroup|biotype|vegetative|group|Group)")
+                            pattern = "(Coagulase Negative Staphylococcus|Coagulase Positive Staphylococcus|Beta-haemolytic Streptococcus|unknown Gram negatives|unknown Gram positives|unknown name|unknown kingdom|unknown phylum|unknown class|unknown order|unknown family|unknown genus|unknown species|unknown subspecies|unknown rank|CoNS|CoPS|Gram negative|Gram positive|Bacteria|Fungi|Protozoa|biogroup|biotype|vegetative|group|Group)")
 
   if (sum(x_tobetranslated, na.rm = TRUE) == 0) {
     return(x)
@@ -379,9 +379,18 @@ mo_translate <- function(x, language) {
       gsub("Beta-haemolytic Streptococcus",    "Beta-h\u00e4molytischer Streptococcus", ., fixed = TRUE) %>%
       gsub("unknown Gram negatives",           "unbekannte Gramnegativen", ., fixed = TRUE) %>%
       gsub("unknown Gram positives",           "unbekannte Grampositiven", ., fixed = TRUE) %>%
+      gsub("unknown name",                     "unbekannte Name", ., fixed = TRUE) %>%
+      gsub("unknown kingdom",                  "unbekanntes Reich", ., fixed = TRUE) %>%
+      gsub("unknown phylum",                   "unbekannter Stamm", ., fixed = TRUE) %>%
+      gsub("unknown class",                    "unbekannte Klasse", ., fixed = TRUE) %>%
+      gsub("unknown order",                    "unbekannte Ordnung", ., fixed = TRUE) %>%
+      gsub("unknown family",                   "unbekannte Familie", ., fixed = TRUE) %>%
+      gsub("unknown genus",                    "unbekannte Gattung", ., fixed = TRUE) %>%
+      gsub("unknown species",                  "unbekannte Art", ., fixed = TRUE) %>%
+      gsub("unknown subspecies",               "unbekannte Unterart", ., fixed = TRUE) %>%
+      gsub("unknown rank",                     "unbekannter Rang", ., fixed = TRUE) %>%
       gsub("(CoNS)",           "(KNS)", ., fixed = TRUE) %>%
       gsub("(CoPS)",           "(KPS)", ., fixed = TRUE) %>%
-      gsub("(no MO)",          "(kein MO)", ., fixed = TRUE) %>%
       gsub("Gram negative",    "Gramnegativ", ., fixed = TRUE) %>%
       gsub("Gram positive",    "Grampositiv", ., fixed = TRUE) %>%
       gsub("Bacteria",         "Bakterien", ., fixed = TRUE) %>%
@@ -401,7 +410,16 @@ mo_translate <- function(x, language) {
       gsub("Beta-haemolytic Streptococcus",    "Beta-hemolytische Streptococcus", ., fixed = TRUE) %>%
       gsub("unknown Gram negatives",           "onbekende Gram-negatieven", ., fixed = TRUE) %>%
       gsub("unknown Gram positives",           "onbekende Gram-positieven", ., fixed = TRUE) %>%
-      gsub("(no MO)",          "(geen MO)", ., fixed = TRUE) %>%
+      gsub("unknown name",                     "onbekende naam", ., fixed = TRUE) %>%
+      gsub("unknown kingdom",                  "onbekend koninkrijk", ., fixed = TRUE) %>%
+      gsub("unknown phylum",                   "onbekende fylum", ., fixed = TRUE) %>%
+      gsub("unknown class",                    "onbekende klasse", ., fixed = TRUE) %>%
+      gsub("unknown order",                    "onbekende orde", ., fixed = TRUE) %>%
+      gsub("unknown family",                   "onbekende familie", ., fixed = TRUE) %>%
+      gsub("unknown genus",                    "onbekend geslacht", ., fixed = TRUE) %>%
+      gsub("unknown species",                  "onbekende soort", ., fixed = TRUE) %>%
+      gsub("unknown subspecies",               "onbekende ondersoort", ., fixed = TRUE) %>%
+      gsub("unknown rank",                     "onbekende rang", ., fixed = TRUE) %>%
       gsub("(CoNS)",           "(CNS)", ., fixed = TRUE) %>%
       gsub("(CoPS)",           "(CPS)", ., fixed = TRUE) %>%
       gsub("Gram negative",    "Gram-negatief", ., fixed = TRUE) %>%
@@ -423,7 +441,16 @@ mo_translate <- function(x, language) {
       gsub("Beta-haemolytic Streptococcus",    "Streptococcus Beta-hemol\u00edtico", ., fixed = TRUE) %>%
       gsub("unknown Gram negatives",           "Gram negativos desconocidos", ., fixed = TRUE) %>%
       gsub("unknown Gram positives",           "Gram positivos desconocidos", ., fixed = TRUE) %>%
-      gsub("(no MO)",          "(sin MO)", ., fixed = TRUE) %>%
+      gsub("unknown name",                     "nombre desconocido", ., fixed = TRUE) %>%
+      gsub("unknown kingdom",                  "reino desconocido", ., fixed = TRUE) %>%
+      gsub("unknown phylum",                   "filo desconocido", ., fixed = TRUE) %>%
+      gsub("unknown class",                    "clase desconocida", ., fixed = TRUE) %>%
+      gsub("unknown order",                    "orden desconocido", ., fixed = TRUE) %>%
+      gsub("unknown family",                   "familia desconocida", ., fixed = TRUE) %>%
+      gsub("unknown genus",                    "g\u00e9nero desconocido", ., fixed = TRUE) %>%
+      gsub("unknown species",                  "especie desconocida", ., fixed = TRUE) %>%
+      gsub("unknown subspecies",               "subespecie desconocida", ., fixed = TRUE) %>%
+      gsub("unknown rank",                     "rango desconocido", ., fixed = TRUE) %>%
       gsub("Gram negative",    "Gram negativo", ., fixed = TRUE) %>%
       gsub("Gram positive",    "Gram positivo", ., fixed = TRUE) %>%
       gsub("Bacteria",         "Bacterias", ., fixed = TRUE) %>%
@@ -443,7 +470,16 @@ mo_translate <- function(x, language) {
       gsub("Beta-haemolytic Streptococcus",    "Streptococcus Beta-emolitico", ., fixed = TRUE) %>%
       gsub("unknown Gram negatives",           "Gram negativi sconosciuti", ., fixed = TRUE) %>%
       gsub("unknown Gram positives",           "Gram positivi sconosciuti", ., fixed = TRUE) %>%
-      gsub("(no MO)",          "(non MO)", ., fixed = TRUE) %>%
+      gsub("unknown name",                     "nome sconosciuto", ., fixed = TRUE) %>%
+      gsub("unknown kingdom",                  "regno sconosciuto", ., fixed = TRUE) %>%
+      gsub("unknown phylum",                   "phylum sconosciuto", ., fixed = TRUE) %>%
+      gsub("unknown class",                    "classe sconosciuta", ., fixed = TRUE) %>%
+      gsub("unknown order",                    "ordine sconosciuto", ., fixed = TRUE) %>%
+      gsub("unknown family",                   "famiglia sconosciuta", ., fixed = TRUE) %>%
+      gsub("unknown genus",                    "genere sconosciuto", ., fixed = TRUE) %>%
+      gsub("unknown species",                  "specie sconosciute", ., fixed = TRUE) %>%
+      gsub("unknown subspecies",               "sottospecie sconosciute", ., fixed = TRUE) %>%
+      gsub("unknown rank",                     "grado sconosciuto", ., fixed = TRUE) %>%
       gsub("Gram negative",    "Gram negativo", ., fixed = TRUE) %>%
       gsub("Gram positive",    "Gram positivo", ., fixed = TRUE) %>%
       gsub("Bacteria",         "Batteri", ., fixed = TRUE) %>%
@@ -462,7 +498,16 @@ mo_translate <- function(x, language) {
       gsub("Beta-haemolytic Streptococcus",    "Streptococcus B\u00eata-h\u00e9molytique", ., fixed = TRUE) %>%
       gsub("unknown Gram negatives",           "Gram n\u00e9gatifs inconnus", ., fixed = TRUE) %>%
       gsub("unknown Gram positives",           "Gram positifs inconnus", ., fixed = TRUE) %>%
-      gsub("(no MO)",          "(pas MO)", ., fixed = TRUE) %>%
+      gsub("unknown name",                     "nom inconnu", ., fixed = TRUE) %>%
+      gsub("unknown kingdom",                  "r\u00e8gme inconnu", ., fixed = TRUE) %>%
+      gsub("unknown phylum",                   "embranchement inconnu", ., fixed = TRUE) %>%
+      gsub("unknown class",                    "classe inconnue", ., fixed = TRUE) %>%
+      gsub("unknown order",                    "ordre inconnu", ., fixed = TRUE) %>%
+      gsub("unknown family",                   "famille inconnue", ., fixed = TRUE) %>%
+      gsub("unknown genus",                    "genre inconnu", ., fixed = TRUE) %>%
+      gsub("unknown species",                  "esp\u00e8ce inconnue", ., fixed = TRUE) %>%
+      gsub("unknown subspecies",               "sous-esp\u00e8ce inconnue", ., fixed = TRUE) %>%
+      gsub("unknown rank",                     "rang inconnu", ., fixed = TRUE) %>%
       gsub("Gram negative",    "Gram n\u00e9gatif", ., fixed = TRUE) %>%
       gsub("Gram positive",    "Gram positif", ., fixed = TRUE) %>%
       gsub("Bacteria",         "Bact\u00e9ries", ., fixed = TRUE) %>%
@@ -482,7 +527,16 @@ mo_translate <- function(x, language) {
       gsub("Beta-haemolytic Streptococcus",    "Streptococcus Beta-hemol\u00edtico", ., fixed = TRUE) %>%
       gsub("unknown Gram negatives",           "Gram negativos desconhecidos", ., fixed = TRUE) %>%
       gsub("unknown Gram positives",           "Gram positivos desconhecidos", ., fixed = TRUE) %>%
-      gsub("(no MO)",          "(sem MO)", ., fixed = TRUE) %>%
+      gsub("unknown name",                     "nome desconhecido", ., fixed = TRUE) %>%
+      gsub("unknown kingdom",                  "reino desconhecido", ., fixed = TRUE) %>%
+      gsub("unknown phylum",                   "filo desconhecido", ., fixed = TRUE) %>%
+      gsub("unknown class",                    "classe desconhecida", ., fixed = TRUE) %>%
+      gsub("unknown order",                    "ordem desconhecido", ., fixed = TRUE) %>%
+      gsub("unknown family",                   "fam\u00edlia desconhecida", ., fixed = TRUE) %>%
+      gsub("unknown genus",                    "g\u00eanero desconhecido", ., fixed = TRUE) %>%
+      gsub("unknown species",                  "esp\u00e9cies desconhecida", ., fixed = TRUE) %>%
+      gsub("unknown subspecies",               "subesp\u00e9cies desconhecida", ., fixed = TRUE) %>%
+      gsub("unknown rank",                     "classifica\u00e7\u00e3o desconhecido", ., fixed = TRUE) %>%
       gsub("Gram negative",    "Gram negativo", ., fixed = TRUE) %>%
       gsub("Gram positive",    "Gram positivo", ., fixed = TRUE) %>%
       gsub("Bacteria",         "Bact\u00e9rias", ., fixed = TRUE) %>%

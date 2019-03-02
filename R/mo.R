@@ -51,6 +51,8 @@
 #'                             F (Fungi), P (Protozoa), PL (Plantae) or V (Viruses)
 #' }
 #'
+#' Values that cannot be coered will be considered 'unknown' and have an MO code \code{UNKNOWN}.
+#'
 #' Use the \code{\link{mo_property}} functions to get properties based on the returned code, see Examples.
 #'
 #' \strong{Artificial Intelligence} \cr
@@ -275,7 +277,8 @@ exec_as.mo <- function(x, Becker = FALSE, Lancefield = FALSE,
   # only check the uniques, which is way faster
   x <- unique(x)
   # remove empty values (to later fill them in again with NAs)
-  x <- x[!is.na(x) & !is.null(x) & !identical(x, "")]
+  # ("xxx" is WHONET code for 'no growth')
+  x <- x[!is.na(x) & !is.null(x) & !identical(x, "") & !identical(x, "xxx")]
 
   # conversion of old MO codes from v0.5.0 (ITIS) to later versions (Catalogue of Life)
   if (any(x %like% "^[BFP]_[A-Z]{3,7}") & !all(x %in% microorganisms$mo)) {
@@ -367,8 +370,6 @@ exec_as.mo <- function(x, Becker = FALSE, Lancefield = FALSE,
     x_species <- paste(x, "species")
     # translate to English for supported languages of mo_property
     x <- gsub("(Gruppe|gruppe|groep|grupo|gruppo|groupe)", "group", x, ignore.case = TRUE)
-    # remove 'empty' genus and species values
-    x <- gsub("(no MO)", "", x, fixed = TRUE)
     # remove non-text in case of "E. coli" except dots and spaces
     x <- gsub("[^.a-zA-Z0-9/ \\-]+", "", x)
     # replace minus by a space
@@ -419,9 +420,14 @@ exec_as.mo <- function(x, Becker = FALSE, Lancefield = FALSE,
         next
       }
 
-      if (tolower(x_trimmed[i]) %in% c("", "xxx", "other", "none", "unknown")) {
-        # empty and nonsense values, ignore without warning ("xxx" is WHONET code for 'no growth')
+      if (any(x_trimmed[i] %in% c(NA, ""))) {
         x[i] <- NA_character_
+        next
+      }
+
+      if (tolower(x_trimmed[i]) %in% c("xxx", "other", "none", "unknown")) {
+        # empty and nonsense values, ignore without warning
+        x[i] <- microorganismsDT[mo == "UNKNOWN", ..property][[1]]
         next
       }
 
@@ -441,14 +447,14 @@ exec_as.mo <- function(x, Becker = FALSE, Lancefield = FALSE,
           }
         }
         # fewer than 3 chars and not looked for species, add as failure
-        x[i] <- NA_character_
+        x[i] <- microorganismsDT[mo == "UNKNOWN", ..property][[1]]
         failures <- c(failures, x_backup[i])
         next
       }
 
       if (x_trimmed[i] %like% "virus") {
         # there is no fullname like virus, so don't try to coerce it
-        x[i] <- NA_character_
+        x[i] <- microorganismsDT[mo == "UNKNOWN", ..property][[1]]
         failures <- c(failures, x_backup[i])
         next
       }
@@ -667,7 +673,7 @@ exec_as.mo <- function(x, Becker = FALSE, Lancefield = FALSE,
                                    d.x_withspaces_start_end = x_withspaces_start_end[i],
                                    e.x_withspaces_start_only = x_withspaces_start_only[i],
                                    f.x_withspaces_end_only = x_withspaces_end_only[i])
-      if (!is.na(x[i])) {
+      if (!empty_result(x[i])) {
         next
       }
       # THEN TRY PREVALENT IN HUMAN INFECTIONS ----
@@ -678,7 +684,7 @@ exec_as.mo <- function(x, Becker = FALSE, Lancefield = FALSE,
                                    d.x_withspaces_start_end = x_withspaces_start_end[i],
                                    e.x_withspaces_start_only = x_withspaces_start_only[i],
                                    f.x_withspaces_end_only = x_withspaces_end_only[i])
-      if (!is.na(x[i])) {
+      if (!empty_result(x[i])) {
         next
       }
       # THEN UNPREVALENT IN HUMAN INFECTIONS ----
@@ -689,7 +695,7 @@ exec_as.mo <- function(x, Becker = FALSE, Lancefield = FALSE,
                                    d.x_withspaces_start_end = x_withspaces_start_end[i],
                                    e.x_withspaces_start_only = x_withspaces_start_only[i],
                                    f.x_withspaces_end_only = x_withspaces_end_only[i])
-      if (!is.na(x[i])) {
+      if (!empty_result(x[i])) {
         next
       }
 
@@ -765,7 +771,7 @@ exec_as.mo <- function(x, Becker = FALSE, Lancefield = FALSE,
 
           # (3) not yet implemented taxonomic changes in Catalogue of Life ----
           found <- suppressMessages(suppressWarnings(exec_as.mo(TEMPORARY_TAXONOMY(b.x_trimmed), clear_options = FALSE, allow_uncertain = FALSE)))
-          if (!is.na(found)) {
+          if (!empty_result(found)) {
             found_result <- found
             found <- microorganismsDT[mo == found, ..property][[1]]
             uncertainties <<- rbind(uncertainties,
@@ -780,7 +786,7 @@ exec_as.mo <- function(x, Becker = FALSE, Lancefield = FALSE,
           a.x_backup_stripped <- gsub("( *[(].*[)] *)", " ", a.x_backup)
           a.x_backup_stripped <- trimws(gsub(" +", " ", a.x_backup_stripped))
           found <- suppressMessages(suppressWarnings(exec_as.mo(a.x_backup_stripped, clear_options = FALSE, allow_uncertain = FALSE)))
-          if (!is.na(found) & nchar(b.x_trimmed) >= 6) {
+          if (!empty_result(found) & nchar(b.x_trimmed) >= 6) {
             found_result <- found
             found <- microorganismsDT[mo == found, ..property][[1]]
             uncertainties <<- rbind(uncertainties,
@@ -797,7 +803,7 @@ exec_as.mo <- function(x, Becker = FALSE, Lancefield = FALSE,
             for (i in 1:(length(x_strip) - 1)) {
               x_strip_collapsed <- paste(x_strip[1:(length(x_strip) - i)], collapse = " ")
               found <- suppressMessages(suppressWarnings(exec_as.mo(x_strip_collapsed, clear_options = FALSE, allow_uncertain = FALSE)))
-              if (!is.na(found)) {
+              if (!empty_result(found)) {
                 found_result <- found
                 found <- microorganismsDT[mo == found, ..property][[1]]
                 uncertainties <<- rbind(uncertainties,
@@ -816,7 +822,7 @@ exec_as.mo <- function(x, Becker = FALSE, Lancefield = FALSE,
             for (i in 2:(length(x_strip))) {
               x_strip_collapsed <- paste(x_strip[i:length(x_strip)], collapse = " ")
               found <- suppressMessages(suppressWarnings(exec_as.mo(x_strip_collapsed, clear_options = FALSE, allow_uncertain = FALSE)))
-              if (!is.na(found)) {
+              if (!empty_result(found)) {
                 found_result <- found
                 found <- microorganismsDT[mo == found, ..property][[1]]
                 uncertainties <<- rbind(uncertainties,
@@ -833,13 +839,15 @@ exec_as.mo <- function(x, Becker = FALSE, Lancefield = FALSE,
           found <- microorganismsDT[fullname %like% f.x_withspaces_end_only]
           if (nrow(found) > 0) {
             found_result <- found[["mo"]]
-            found <- microorganismsDT[mo == found_result[1L], ..property][[1]]
-            uncertainties <<- rbind(uncertainties,
-                                    data.frame(uncertainty = 3,
-                                               input = a.x_backup,
-                                               fullname = microorganismsDT[mo == found_result[1L], fullname][[1]],
-                                               mo = found_result[1L]))
-            return(found[1L])
+            if (!empty_result(found_result)) {
+              found <- microorganismsDT[mo == found_result[1L], ..property][[1]]
+              uncertainties <<- rbind(uncertainties,
+                                      data.frame(uncertainty = 3,
+                                                 input = a.x_backup,
+                                                 fullname = microorganismsDT[mo == found_result[1L], fullname][[1]],
+                                                 mo = found_result[1L]))
+              return(found[1L])
+            }
           }
 
           # didn't found in uncertain results too
@@ -847,13 +855,13 @@ exec_as.mo <- function(x, Becker = FALSE, Lancefield = FALSE,
         }
 
         x[i] <- uncertain_fn(x_backup[i], x_trimmed[i], x_withspaces_start_end[i], x_withspaces_start_only[i], x_withspaces_end_only[i])
-        if (!is.na(x[i])) {
+        if (!empty_result(x[i])) {
           next
         }
       }
 
       # not found ----
-      x[i] <- NA_character_
+      x[i] <- microorganismsDT[mo == "UNKNOWN", ..property][[1]]
       failures <- c(failures, x_backup[i])
     }
   }
@@ -862,15 +870,15 @@ exec_as.mo <- function(x, Becker = FALSE, Lancefield = FALSE,
   failures <- failures[!failures %in% c(NA, NULL, NaN)]
   if (length(failures) > 0 & clear_options == TRUE) {
     options(mo_failures = sort(unique(failures)))
-    plural <- c("value", "it")
+    plural <- c("value", "it", "is")
     if (n_distinct(failures) > 1) {
-      plural <- c("values", "them")
+      plural <- c("values", "them", "are")
     }
     total_failures <- length(x_input[x_input %in% failures & !x_input %in% c(NA, NULL, NaN)])
     total_n <- length(x_input[!x_input %in% c(NA, NULL, NaN)])
-    msg <- paste0("\n", nr2char(n_distinct(failures)), " unique input ", plural[1],
+    msg <- paste0("\n", nr2char(n_distinct(failures)), " unique ", plural[1],
                   " (^= ", percent(total_failures / total_n, round = 1, force_zero = TRUE),
-                  ") could not be coerced to a valid MO code")
+                  ") could not be coerced and ", plural[3], " considered 'unknown'")
     if (n_distinct(failures) <= 10) {
       msg <- paste0(msg, ": ", paste('"', unique(failures), '"', sep = "", collapse = ', '))
     }
@@ -887,7 +895,7 @@ exec_as.mo <- function(x, Becker = FALSE, Lancefield = FALSE,
     if (NROW(uncertainties) > 1) {
       plural <- c("values", "them")
     }
-    msg <- paste0("\nResults of ", nr2char(NROW(uncertainties)), " input ", plural[1],
+    msg <- paste0("\nResults of ", nr2char(NROW(uncertainties)), " ", plural[1],
                   " was guessed with uncertainty. Use mo_uncertainties() to review ", plural[2], ".")
     warning(red(msg),
             call. = FALSE,
@@ -951,7 +959,7 @@ exec_as.mo <- function(x, Becker = FALSE, Lancefield = FALSE,
   # Wrap up ----------------------------------------------------------------
 
   # comply to x, which is also unique and without empty values
-  x_input_unique_nonempty <- unique(x_input[!is.na(x_input) & !is.null(x_input) & !identical(x_input, "")])
+  x_input_unique_nonempty <- unique(x_input[!is.na(x_input) & !is.null(x_input) & !identical(x_input, "") & !identical(x_input, "xxx")])
 
   # left join the found results to the original input values (x_input)
   df_found <- data.frame(input = as.character(x_input_unique_nonempty),
@@ -982,6 +990,10 @@ exec_as.mo <- function(x, Becker = FALSE, Lancefield = FALSE,
   }
 
   x
+}
+
+empty_result <- function(x) {
+  x %in% c(NA, "UNKNOWN")
 }
 
 TEMPORARY_TAXONOMY <- function(x) {
