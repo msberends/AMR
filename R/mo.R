@@ -174,14 +174,26 @@ as.mo <- function(x, Becker = FALSE, Lancefield = FALSE, allow_uncertain = TRUE,
     # check onLoad() in R/zzz.R: data tables are created there.
   }
 
-  if (deparse(substitute(reference_df)) == "get_mo_source()"
+  if (mo_source_isvalid(reference_df)
       & isFALSE(Becker)
       & isFALSE(Lancefield)
       & !is.null(reference_df)
-      & all(x %in% reference_df[,1])) {
+      & all(x %in% reference_df[,1][[1]])) {
+
     # has valid own reference_df
     # (data.table not faster here)
+    reference_df <- reference_df %>% filter(!is.na(mo))
+    # keep only first two columns, second must be mo
+    if (colnames(reference_df)[1] == "mo") {
+      reference_df <- reference_df[, c(2, 1)]
+    } else {
+      reference_df <- reference_df[, c(1, 2)]
+    }
     colnames(reference_df)[1] <- "x"
+    # remove factors, just keep characters
+    suppressWarnings(
+      reference_df[] <- lapply(reference_df, as.character)
+    )
     suppressWarnings(
       y <- data.frame(x = x, stringsAsFactors = FALSE) %>%
         left_join(reference_df, by = "x") %>%
@@ -277,8 +289,12 @@ exec_as.mo <- function(x, Becker = FALSE, Lancefield = FALSE,
   # only check the uniques, which is way faster
   x <- unique(x)
   # remove empty values (to later fill them in again with NAs)
-  # ("xxx" is WHONET code for 'no growth')
-  x <- x[!is.na(x) & !is.null(x) & !identical(x, "") & !identical(x, "xxx")]
+  # ("xxx" is WHONET code for 'no growth' and "con" is WHONET code for 'contamination')
+  x <- x[!is.na(x)
+         & !is.null(x)
+         & !identical(x, "")
+         & !identical(x, "xxx")
+         & !identical(x, "con")]
 
   # conversion of old MO codes from v0.5.0 (ITIS) to later versions (Catalogue of Life)
   if (any(x %like% "^[BFP]_[A-Z]{3,7}") & !all(x %in% microorganisms$mo)) {
@@ -292,14 +308,18 @@ exec_as.mo <- function(x, Becker = FALSE, Lancefield = FALSE,
 
   # defined df to check for
   if (!is.null(reference_df)) {
-    if (!is.data.frame(reference_df) | NCOL(reference_df) < 2) {
-      stop('`reference_df` must be a data.frame with at least two columns.', call. = FALSE)
-    }
-    if (!"mo" %in% colnames(reference_df)) {
+    if (!mo_source_isvalid(reference_df)) {
       stop("`reference_df` must contain a column `mo` with values from the 'microorganisms' data set.", call. = FALSE)
     }
     reference_df <- reference_df %>% filter(!is.na(mo))
-    # # remove factors, just keep characters
+    # keep only first two columns, second must be mo
+    if (colnames(reference_df)[1] == "mo") {
+      reference_df <- reference_df[, c(2, 1)]
+    } else {
+      reference_df <- reference_df[, c(1, 2)]
+    }
+    colnames(reference_df)[1] <- "x"
+    # remove factors, just keep characters
     suppressWarnings(
       reference_df[] <- lapply(reference_df, as.character)
     )
@@ -314,8 +334,7 @@ exec_as.mo <- function(x, Becker = FALSE, Lancefield = FALSE,
       return(rep(NA_character_, length(x_input)))
     }
 
-  } else if (all(x %in% reference_df[, 1])
-             & all(reference_df[, "mo"] %in% AMR::microorganisms$mo)) {
+  } else if (all(x %in% reference_df[, 1][[1]])) {
     # all in reference df
     colnames(reference_df)[1] <- "x"
     suppressWarnings(
@@ -420,12 +439,12 @@ exec_as.mo <- function(x, Becker = FALSE, Lancefield = FALSE,
         next
       }
 
-      if (any(x_trimmed[i] %in% c(NA, ""))) {
+      if (any(x_trimmed[i] %in% c(NA, "", "xxx", "con"))) {
         x[i] <- NA_character_
         next
       }
 
-      if (tolower(x_trimmed[i]) %in% c("xxx", "other", "none", "unknown")) {
+      if (tolower(x_trimmed[i]) %in% c("other", "none", "unknown")) {
         # empty and nonsense values, ignore without warning
         x[i] <- microorganismsDT[mo == "UNKNOWN", ..property][[1]]
         next
@@ -959,7 +978,11 @@ exec_as.mo <- function(x, Becker = FALSE, Lancefield = FALSE,
   # Wrap up ----------------------------------------------------------------
 
   # comply to x, which is also unique and without empty values
-  x_input_unique_nonempty <- unique(x_input[!is.na(x_input) & !is.null(x_input) & !identical(x_input, "") & !identical(x_input, "xxx")])
+  x_input_unique_nonempty <- unique(x_input[!is.na(x_input)
+                                            & !is.null(x_input)
+                                            & !identical(x_input, "")
+                                            & !identical(x_input, "xxx")
+                                            & !identical(x_input, "con")])
 
   # left join the found results to the original input values (x_input)
   df_found <- data.frame(input = as.character(x_input_unique_nonempty),

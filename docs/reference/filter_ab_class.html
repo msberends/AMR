@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Data set with 2,000 blood culture isolates from septic patients — septic_patients • AMR (for R)</title>
+<title>Filter on antibiotic class — filter_ab_class • AMR (for R)</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -45,9 +45,9 @@
 
   <link href="../extra.css" rel="stylesheet">
   <script src="../extra.js"></script>
-<meta property="og:title" content="Data set with 2,000 blood culture isolates from septic patients — septic_patients" />
+<meta property="og:title" content="Filter on antibiotic class — filter_ab_class" />
 
-<meta property="og:description" content="An anonymised data set containing 2,000 microbial blood culture isolates with their full antibiograms found in septic patients in 4 different hospitals in the Netherlands, between 2001 and 2017. It is true, genuine data. This data.frame can be used to practice AMR analysis. For examples, please read the tutorial on our website." />
+<meta property="og:description" content="Filter on specific antibiotic variables based on their class (ATC groups)." />
 
 <meta property="og:image" content="https://msberends.gitlab.io/AMR/logo.png" />
 <meta name="twitter:card" content="summary" />
@@ -230,49 +230,106 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Data set with 2,000 blood culture isolates from septic patients</h1>
+    <h1>Filter on antibiotic class</h1>
     
-    <div class="hidden name"><code>septic_patients.Rd</code></div>
+    <div class="hidden name"><code>filter_ab_class.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>An anonymised data set containing 2,000 microbial blood culture isolates with their full antibiograms found in septic patients in 4 different hospitals in the Netherlands, between 2001 and 2017. It is true, genuine data. This <code>data.frame</code> can be used to practice AMR analysis. For examples, please read <a href='https://msberends.gitlab.io/AMR/articles/AMR.html'>the tutorial on our website</a>.</p>
+    <p>Filter on specific antibiotic variables based on their class (ATC groups).</p>
     
     </div>
 
-    <pre class="usage"><span class='no'>septic_patients</span></pre>
-        
-    <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
+    <pre class="usage"><span class='fu'>filter_ab_class</span>(<span class='no'>tbl</span>, <span class='no'>ab_class</span>, <span class='kw'>result</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>scope</span> <span class='kw'>=</span> <span class='st'>"any"</span>, <span class='no'>...</span>)
 
-    <p>A <code><a href='https://www.rdocumentation.org/packages/base/topics/data.frame'>data.frame</a></code> with 2,000 observations and 49 variables:</p><dl class='dl-horizontal'>
-  <dt><code>date</code></dt><dd><p>date of receipt at the laboratory</p></dd>
-  <dt><code>hospital_id</code></dt><dd><p>ID of the hospital, from A to D</p></dd>
-  <dt><code>ward_icu</code></dt><dd><p>logical to determine if ward is an intensive care unit</p></dd>
-  <dt><code>ward_clinical</code></dt><dd><p>logical to determine if ward is a regular clinical ward</p></dd>
-  <dt><code>ward_outpatient</code></dt><dd><p>logical to determine if ward is an outpatient clinic</p></dd>
-  <dt><code>age</code></dt><dd><p>age of the patient</p></dd>
-  <dt><code>gender</code></dt><dd><p>gender of the patient</p></dd>
-  <dt><code>patient_id</code></dt><dd><p>ID of the patient, first 10 characters of an SHA hash containing irretrievable information</p></dd>
-  <dt><code>mo</code></dt><dd><p>ID of microorganism created with <code><a href='as.mo.html'>as.mo</a></code>, see also <code><a href='microorganisms.html'>microorganisms</a></code></p></dd>
-  <dt><code>peni:rifa</code></dt><dd><p>40 different antibiotics with class <code>rsi</code> (see <code><a href='as.rsi.html'>as.rsi</a></code>); these column names occur in <code><a href='antibiotics.html'>antibiotics</a></code> data set and can be translated with <code><a href='abname.html'>abname</a></code></p></dd>
-</dl>
-    
-    <h2 class="hasAnchor" id="read-more-on-our-website-"><a class="anchor" href="#read-more-on-our-website-"></a>Read more on our website!</h2>
+<span class='fu'>filter_aminoglycosides</span>(<span class='no'>tbl</span>, <span class='kw'>result</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>scope</span> <span class='kw'>=</span> <span class='st'>"any"</span>, <span class='no'>...</span>)
 
+<span class='fu'>filter_carbapenems</span>(<span class='no'>tbl</span>, <span class='kw'>result</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>scope</span> <span class='kw'>=</span> <span class='st'>"any"</span>, <span class='no'>...</span>)
+
+<span class='fu'>filter_cephalosporins</span>(<span class='no'>tbl</span>, <span class='kw'>result</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>scope</span> <span class='kw'>=</span> <span class='st'>"any"</span>, <span class='no'>...</span>)
+
+<span class='fu'>filter_1st_cephalosporins</span>(<span class='no'>tbl</span>, <span class='kw'>result</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>scope</span> <span class='kw'>=</span> <span class='st'>"any"</span>, <span class='no'>...</span>)
+
+<span class='fu'>filter_2nd_cephalosporins</span>(<span class='no'>tbl</span>, <span class='kw'>result</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>scope</span> <span class='kw'>=</span> <span class='st'>"any"</span>, <span class='no'>...</span>)
+
+<span class='fu'>filter_3rd_cephalosporins</span>(<span class='no'>tbl</span>, <span class='kw'>result</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>scope</span> <span class='kw'>=</span> <span class='st'>"any"</span>, <span class='no'>...</span>)
+
+<span class='fu'>filter_4th_cephalosporins</span>(<span class='no'>tbl</span>, <span class='kw'>result</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>scope</span> <span class='kw'>=</span> <span class='st'>"any"</span>, <span class='no'>...</span>)
+
+<span class='fu'>filter_fluoroquinolones</span>(<span class='no'>tbl</span>, <span class='kw'>result</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>scope</span> <span class='kw'>=</span> <span class='st'>"any"</span>, <span class='no'>...</span>)
+
+<span class='fu'>filter_glycopeptides</span>(<span class='no'>tbl</span>, <span class='kw'>result</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>scope</span> <span class='kw'>=</span> <span class='st'>"any"</span>, <span class='no'>...</span>)
+
+<span class='fu'>filter_macrolides</span>(<span class='no'>tbl</span>, <span class='kw'>result</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>scope</span> <span class='kw'>=</span> <span class='st'>"any"</span>, <span class='no'>...</span>)
+
+<span class='fu'>filter_tetracyclines</span>(<span class='no'>tbl</span>, <span class='kw'>result</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>scope</span> <span class='kw'>=</span> <span class='st'>"any"</span>, <span class='no'>...</span>)</pre>
     
-    <p>On our website <a href='https://msberends.gitlab.io/AMR'>https://msberends.gitlab.io/AMR</a> you can find <a href='https://msberends.gitlab.io/AMR/articles/AMR.html'>a comprehensive tutorial</a> about how to conduct AMR analysis, the <a href='https://msberends.gitlab.io/AMR/reference'>complete documentation of all functions</a> (which reads a lot easier than here in R) and <a href='https://msberends.gitlab.io/AMR/articles/WHONET.html'>an example analysis using WHONET data</a>.</p>
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>tbl</th>
+      <td><p>a data set</p></td>
+    </tr>
+    <tr>
+      <th>ab_class</th>
+      <td><p>an antimicrobial class, like <code>"carbapenems"</code></p></td>
+    </tr>
+    <tr>
+      <th>result</th>
+      <td><p>an antibiotic result: S, I or R (or a combination of more of them)</p></td>
+    </tr>
+    <tr>
+      <th>scope</th>
+      <td><p>the scope to check which variables to check, can be <code>"any"</code> (default) or <code>"all"</code></p></td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td><p>parameters passed on to <code><a href='https://dplyr.tidyverse.org/reference/filter_all.html'>filter_at</a></code></p></td>
+    </tr>
+    </table>
+    
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p>The <code><code>antibiotics</code></code> data set will be searched for <code>ab_class</code> in the columns <code>atc_group1</code> and <code>atc_group2</code> (case-insensitive). Next, <code>tbl</code> will be checked for column names with a value in any abbreviations, codes or official names found in the <code>antibiotics</code> data set.</p>
     
 
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><span class='co'># NOT RUN {</span>
+<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>dplyr</span>)
+
+<span class='co'># filter on isolates that have any result for any aminoglycoside</span>
+<span class='no'>septic_patients</span> <span class='kw'>%&gt;%</span> <span class='fu'>filter_aminoglycosides</span>()
+
+<span class='co'># this is essentially the same as:</span>
+<span class='no'>septic_patients</span> <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter_all.html'>filter_at</a></span>(<span class='kw'>.vars</span> <span class='kw'>=</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"gent"</span>, <span class='st'>"tobr"</span>, <span class='st'>"amik"</span>, <span class='st'>"kana"</span>)),
+            <span class='kw'>.vars_predicate</span> <span class='kw'>=</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/all_vars.html'>any_vars</a></span>(<span class='no'>.</span> <span class='kw'>%in%</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"S"</span>, <span class='st'>"I"</span>, <span class='st'>"R"</span>)))
+
+
+<span class='co'># filter on isolates that show resistance to ANY aminoglycoside</span>
+<span class='no'>septic_patients</span> <span class='kw'>%&gt;%</span> <span class='fu'>filter_aminoglycosides</span>(<span class='st'>"R"</span>)
+
+<span class='co'># filter on isolates that show resistance to ALL aminoglycosides</span>
+<span class='no'>septic_patients</span> <span class='kw'>%&gt;%</span> <span class='fu'>filter_aminoglycosides</span>(<span class='st'>"R"</span>, <span class='st'>"all"</span>)
+
+<span class='co'># filter on isolates that show resistance to</span>
+<span class='co'># any aminoglycoside and any fluoroquinolone</span>
+<span class='no'>septic_patients</span> <span class='kw'>%&gt;%</span>
+  <span class='fu'>filter_aminoglycosides</span>(<span class='st'>"R"</span>, <span class='st'>"any"</span>) <span class='kw'>%&gt;%</span>
+  <span class='fu'>filter_fluoroquinolones</span>(<span class='st'>"R"</span>, <span class='st'>"any"</span>)
+<span class='co'># }</span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
+      <li><a href="#arguments">Arguments</a></li>
       
-      <li><a href="#format">Format</a></li>
-
-      <li><a href="#read-more-on-our-website-">Read more on our website!</a></li>
-          </ul>
+      <li><a href="#details">Details</a></li>
+      
+      <li><a href="#examples">Examples</a></li>
+    </ul>
 
   </div>
 </div>

@@ -117,22 +117,6 @@ set_mo_source <- function(path) {
     stop("File not found: ", path)
   }
 
-  is_valid <- function(df) {
-    valid <- TRUE
-    if (!is.data.frame(df)) {
-      valid <- FALSE
-    } else if (!"mo" %in% colnames(df)) {
-      valid <- FALSE
-    } else if (all(as.data.frame(df)[, 1] == "")) {
-      valid <- FALSE
-    } else if (!all(df$mo %in% c("", AMR::microorganisms$mo))) {
-      valid <- FALSE
-    } else if (NCOL(df) < 2) {
-      valid <- FALSE
-    }
-    valid
-  }
-
   if (path %like% '[.]rds$') {
     df <- readRDS(path)
 
@@ -151,13 +135,13 @@ set_mo_source <- function(path) {
     try(
       df <- utils::read.table(header = TRUE, sep = ",", stringsAsFactors = FALSE),
       silent = TRUE)
-    if (!is_valid(df)) {
+    if (!mo_source_isvalid(df)) {
       # try tab
       try(
         df <- utils::read.table(header = TRUE, sep = "\t", stringsAsFactors = FALSE),
         silent = TRUE)
     }
-    if (!is_valid(df)) {
+    if (!mo_source_isvalid(df)) {
       # try pipe
       try(
         df <- utils::read.table(header = TRUE, sep = "|", stringsAsFactors = FALSE),
@@ -165,9 +149,11 @@ set_mo_source <- function(path) {
     }
   }
 
-  if (!is_valid(df)) {
+  if (!mo_source_isvalid(df)) {
     stop("File must contain a column with self-defined values and a reference column `mo` with valid values from the `microorganisms` data set.")
   }
+
+  df <- df %>% filter(!is.na(mo))
 
   # keep only first two columns, second must be mo
   if (colnames(df)[1] == "mo") {
@@ -212,4 +198,23 @@ get_mo_source <- function() {
   }
 
   readRDS("~/.mo_source.rds")
+}
+
+mo_source_isvalid <- function(x) {
+  if (deparse(substitute(x)) == "get_mo_source()") {
+    return(TRUE)
+  }
+  if (identical(x, get_mo_source())) {
+    return(TRUE)
+  }
+  if (is.null(x)) {
+    return(TRUE)
+  }
+  if (!is.data.frame(x)) {
+    return(FALSE)
+  }
+  if (!"mo" %in% colnames(x)) {
+    return(FALSE)
+  }
+  all(x$mo %in% c("", AMR::microorganisms$mo))
 }
