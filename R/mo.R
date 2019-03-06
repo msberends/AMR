@@ -21,7 +21,7 @@
 
 #' Transform to microorganism ID
 #'
-#' Use this function to determine a valid microorganism ID (\code{mo}). Determination is done using Artificial Intelligence (AI) and the complete taxonomic kingdoms Archaea, Bacteria, Protozoa, Viruses and most microbial species from the kingdom Fungi (see Source), so the input can be almost anything: a full name (like \code{"Staphylococcus aureus"}), an abbreviated name (like \code{"S. aureus"}), an abbreviation known in the field (like \code{"MRSA"}), or just a genus. You could also \code{\link{select}} a genus and species column, zie Examples.
+#' Use this function to determine a valid microorganism ID (\code{mo}). Determination is done using intelligent rules and the complete taxonomic kingdoms Archaea, Bacteria, Protozoa, Viruses and most microbial species from the kingdom Fungi (see Source), so the input can be almost anything: a full name (like \code{"Staphylococcus aureus"}), an abbreviated name (like \code{"S. aureus"}), an abbreviation known in the field (like \code{"MRSA"}), or just a genus. You could also \code{\link{select}} a genus and species column, zie Examples.
 #' @param x a character vector or a \code{data.frame} with one or two columns
 #' @param Becker a logical to indicate whether \emph{Staphylococci} should be categorised into Coagulase Negative \emph{Staphylococci} ("CoNS") and Coagulase Positive \emph{Staphylococci} ("CoPS") instead of their own species, according to Karsten Becker \emph{et al.} [1].
 #'
@@ -55,8 +55,8 @@
 #'
 #' Use the \code{\link{mo_property}} functions to get properties based on the returned code, see Examples.
 #'
-#' \strong{Artificial Intelligence} \cr
-#' This function uses Artificial Intelligence (AI) to help getting fast and logical results. It tries to find matches in this order:
+#' \strong{Intelligent rules} \cr
+#' This function uses intelligent rules to help getting fast and logical results. It tries to find matches in this order:
 #' \itemize{
 #'   \item{Taxonomic kingdom: it first searches in Bacteria, then Fungi, then Protozoa}
 #'   \item{Human pathogenic prevalence: it first searches in more prevalent microorganisms, then less prevalent ones (see section \emph{Microbial prevalence of pathogens in humans})}
@@ -73,7 +73,7 @@
 #' This means that looking up human pathogenic microorganisms takes less time than looking up human non-pathogenic microorganisms.
 #'
 #' \strong{Uncertain results} \cr
-#' When using \code{allow_uncertain = TRUE} (which is the default setting), it will use additional rules if all previous AI rules failed to get valid results. These are:
+#' When using \code{allow_uncertain = TRUE} (which is the default setting), it will use additional rules if all previous rules failed to get valid results. These are:
 #' \itemize{
 #'   \item{It tries to look for previously accepted (but now invalid) taxonomic names}
 #'   \item{It strips off values between brackets and the brackets itself, and re-evaluates the input with all previous rules}
@@ -96,7 +96,7 @@
 #' Use \code{mo_renamed()} to get a vector with all values that could be coerced based on an old, previously accepted taxonomic name.
 #'
 #' \strong{Microbial prevalence of pathogens in humans} \cr
-#' The artificial intelligence takes into account microbial prevalence of pathogens in humans. It uses three groups and every (sub)species is in the group it matches first. These groups are:
+#' The intelligent rules takes into account microbial prevalence of pathogens in humans. It uses three groups and every (sub)species is in the group it matches first. These groups are:
 #' \itemize{
 #'   \item{1 (most prevalent): class is Gammaproteobacteria \strong{or} genus is one of: \emph{Enterococcus}, \emph{Staphylococcus}, \emph{Streptococcus}.}
 #'   \item{2: phylum is one of: Proteobacteria, Firmicutes, Actinobacteria, Sarcomastigophora \strong{or} genus is one of: \emph{Aspergillus}, \emph{Bacteroides}, \emph{Candida}, \emph{Capnocytophaga}, \emph{Chryseobacterium}, \emph{Cryptococcus}, \emph{Elisabethkingia}, \emph{Flavobacterium}, \emph{Fusobacterium}, \emph{Giardia}, \emph{Leptotrichia}, \emph{Mycoplasma}, \emph{Prevotella}, \emph{Rhodotorula}, \emph{Treponema}, \emph{Trichophyton}, \emph{Ureaplasma}.}
@@ -326,7 +326,7 @@ exec_as.mo <- function(x, Becker = FALSE, Lancefield = FALSE,
   }
 
   # all empty
-  if (all(identical(trimws(x_input), "") | is.na(x_input))) {
+  if (all(identical(trimws(x_input), "") | is.na(x_input) | length(x) == 0)) {
     if (property == "mo") {
       return(structure(rep(NA_character_, length(x_input)),
                        class = "mo"))

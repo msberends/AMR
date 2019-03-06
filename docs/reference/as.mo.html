@@ -47,7 +47,7 @@
   <script src="../extra.js"></script>
 <meta property="og:title" content="Transform to microorganism ID — as.mo" />
 
-<meta property="og:description" content="Use this function to determine a valid microorganism ID (mo). Determination is done using Artificial Intelligence (AI) and the complete taxonomic kingdoms Archaea, Bacteria, Protozoa, Viruses and most microbial species from the kingdom Fungi (see Source), so the input can be almost anything: a full name (like &quot;Staphylococcus aureus&quot;), an abbreviated name (like &quot;S. aureus&quot;), an abbreviation known in the field (like &quot;MRSA&quot;), or just a genus. You could also select a genus and species column, zie Examples." />
+<meta property="og:description" content="Use this function to determine a valid microorganism ID (mo). Determination is done using intelligent rules and the complete taxonomic kingdoms Archaea, Bacteria, Protozoa, Viruses and most microbial species from the kingdom Fungi (see Source), so the input can be almost anything: a full name (like &quot;Staphylococcus aureus&quot;), an abbreviated name (like &quot;S. aureus&quot;), an abbreviation known in the field (like &quot;MRSA&quot;), or just a genus. You could also select a genus and species column, zie Examples." />
 
 <meta property="og:image" content="https://msberends.gitlab.io/AMR/logo.png" />
 <meta name="twitter:card" content="summary" />
@@ -237,7 +237,7 @@
 
     <div class="ref-description">
     
-    <p>Use this function to determine a valid microorganism ID (<code>mo</code>). Determination is done using Artificial Intelligence (AI) and the complete taxonomic kingdoms Archaea, Bacteria, Protozoa, Viruses and most microbial species from the kingdom Fungi (see Source), so the input can be almost anything: a full name (like <code>"Staphylococcus aureus"</code>), an abbreviated name (like <code>"S. aureus"</code>), an abbreviation known in the field (like <code>"MRSA"</code>), or just a genus. You could also <code>select</code> a genus and species column, zie Examples.</p>
+    <p>Use this function to determine a valid microorganism ID (<code>mo</code>). Determination is done using intelligent rules and the complete taxonomic kingdoms Archaea, Bacteria, Protozoa, Viruses and most microbial species from the kingdom Fungi (see Source), so the input can be almost anything: a full name (like <code>"Staphylococcus aureus"</code>), an abbreviated name (like <code>"S. aureus"</code>), an abbreviation known in the field (like <code>"MRSA"</code>), or just a genus. You could also <code>select</code> a genus and species column, zie Examples.</p>
     
     </div>
 
@@ -301,8 +301,8 @@
 </pre>
     <p>Values that cannot be coered will be considered 'unknown' and have an MO code <code>UNKNOWN</code>.</p>
 <p>Use the <code><a href='mo_property.html'>mo_property</a></code> functions to get properties based on the returned code, see Examples.</p>
-<p><strong>Artificial Intelligence</strong> <br />
-This function uses Artificial Intelligence (AI) to help getting fast and logical results. It tries to find matches in this order:</p><ul>
+<p><strong>Intelligent rules</strong> <br />
+This function uses intelligent rules to help getting fast and logical results. It tries to find matches in this order:</p><ul>
 <li><p>Taxonomic kingdom: it first searches in Bacteria, then Fungi, then Protozoa</p></li>
 <li><p>Human pathogenic prevalence: it first searches in more prevalent microorganisms, then less prevalent ones (see section <em>Microbial prevalence of pathogens in humans</em>)</p></li>
 <li><p>Valid MO codes and full names: it first searches in already valid MO code and known genus/species combinations</p></li>
@@ -314,7 +314,7 @@ This function uses Artificial Intelligence (AI) to help getting fast and logical
 <li><p>Something like <code>"stau"</code> or <code>"S aur"</code> will return the ID of <em>Staphylococcus aureus</em> and not <em>Staphylococcus auricularis</em></p></li>
 </ul><p>This means that looking up human pathogenic microorganisms takes less time than looking up human non-pathogenic microorganisms.</p>
 <p><strong>Uncertain results</strong> <br />
-When using <code>allow_uncertain = TRUE</code> (which is the default setting), it will use additional rules if all previous AI rules failed to get valid results. These are:</p><ul>
+When using <code>allow_uncertain = TRUE</code> (which is the default setting), it will use additional rules if all previous rules failed to get valid results. These are:</p><ul>
 <li><p>It tries to look for previously accepted (but now invalid) taxonomic names</p></li>
 <li><p>It strips off values between brackets and the brackets itself, and re-evaluates the input with all previous rules</p></li>
 <li><p>It strips off words from the end one by one and re-evaluates the input with all previous rules</p></li>
@@ -330,7 +330,7 @@ When using <code>allow_uncertain = TRUE</code> (which is the default setting), i
 <p>Use <code>mo_uncertainties()</code> to get a data.frame with all values that were coerced to a valid value, but with uncertainty.</p>
 <p>Use <code>mo_renamed()</code> to get a vector with all values that could be coerced based on an old, previously accepted taxonomic name.</p>
 <p><strong>Microbial prevalence of pathogens in humans</strong> <br />
-The artificial intelligence takes into account microbial prevalence of pathogens in humans. It uses three groups and every (sub)species is in the group it matches first. These groups are:</p><ul>
+The intelligent rules takes into account microbial prevalence of pathogens in humans. It uses three groups and every (sub)species is in the group it matches first. These groups are:</p><ul>
 <li><p>1 (most prevalent): class is Gammaproteobacteria <strong>or</strong> genus is one of: <em>Enterococcus</em>, <em>Staphylococcus</em>, <em>Streptococcus</em>.</p></li>
 <li><p>2: phylum is one of: Proteobacteria, Firmicutes, Actinobacteria, Sarcomastigophora <strong>or</strong> genus is one of: <em>Aspergillus</em>, <em>Bacteroides</em>, <em>Candida</em>, <em>Capnocytophaga</em>, <em>Chryseobacterium</em>, <em>Cryptococcus</em>, <em>Elisabethkingia</em>, <em>Flavobacterium</em>, <em>Fusobacterium</em>, <em>Giardia</em>, <em>Leptotrichia</em>, <em>Mycoplasma</em>, <em>Prevotella</em>, <em>Rhodotorula</em>, <em>Treponema</em>, <em>Trichophyton</em>, <em>Ureaplasma</em>.</p></li>
 <li><p>3 (least prevalent): all others.</p></li>

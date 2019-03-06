@@ -611,7 +611,7 @@ These functions use <code><a href="../reference/as.atc.html">as.atc()</a></code>
 <li>Function <code>is.rsi.eligible</code> to check for columns that have valid antimicrobial results, but do not have the <code>rsi</code> class yet. Transform the columns of your raw data with: <code>data %&gt;% mutate_if(is.rsi.eligible, as.rsi)</code>
 </li>
 <li>
-<p>Functions <code>as.mo</code> and <code>is.mo</code> as replacements for <code>as.bactid</code> and <code>is.bactid</code> (since the <code>microoganisms</code> data set not only contains bacteria). These last two functions are deprecated and will be removed in a future release. The <code>as.mo</code> function determines microbial IDs using Artificial Intelligence (AI):</p>
+<p>Functions <code>as.mo</code> and <code>is.mo</code> as replacements for <code>as.bactid</code> and <code>is.bactid</code> (since the <code>microoganisms</code> data set not only contains bacteria). These last two functions are deprecated and will be removed in a future release. The <code>as.mo</code> function determines microbial IDs using intelligent rules:</p>
 <div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" title="1"><span class="kw"><a href="../reference/as.mo.html">as.mo</a></span>(<span class="st">"E. coli"</span>)</a>
 <a class="sourceLine" id="cb14-2" title="2"><span class="co"># [1] B_ESCHR_COL</span></a>
 <a class="sourceLine" id="cb14-3" title="3"><span class="kw"><a href="../reference/as.mo.html">as.mo</a></span>(<span class="st">"MRSA"</span>)</a>

@@ -192,7 +192,7 @@
       <h1>How to import data from SPSS / SAS / Stata</h1>
                         <h4 class="author">Matthijs S. Berends</h4>
             
-            <h4 class="date">14 February 2019</h4>
+            <h4 class="date">06 March 2019</h4>
       
       
       <div class="hidden name"><code>SPSS.Rmd</code></div>
@@ -214,7 +214,7 @@
 <li>
 <p><strong>R is highly modular.</strong></p>
 <p>The <a href="https://cran.r-project.org/web/packages/">official R network (CRAN)</a> features almost 14,000 packages at the time of writing, our <code>AMR</code> package being one of them. All these packages were peer-reviewed before publication. Aside from this official channel, there are also developers who choose not to submit to CRAN, but rather keep it on their own public repository, like GitLab or GitHub. So there may even be a lot more than 14,000 packages out there.</p>
-<p>Bottomline is, you can really extend it yourself or ask somebody to do this for you. Take for example our <code>AMR</code> package. SPSS, SAS and Stata will never know what a valid MIC value is (so data might not be clean) or what the Gram stain of <em>E. coli</em> is. Or the fact that all species of <em>Klebiella</em> are resistant to amoxicillin.</p>
+<p>Bottom line is, you can really extend it yourself or ask somebody to do this for you. Take for example our <code>AMR</code> package. Among other things, it adds reliable reference data to R to help you with the data cleaning and analysis. SPSS, SAS and Stata will never know what a valid MIC value is or what the Gram stain of <em>E. coli</em> is. Or that all species of <em>Klebiella</em> are resistant to amoxicillin and that Floxapen<sup>®</sup> is a trade name of flucloxacillin. These facts and properties are often needed to clean existing data, which would be very inconvenient in a software package without reliable reference data. See below for a demonstration.</p>
 </li>
 <li>
 <p><strong>R is extremely flexible.</strong></p>
@@ -241,6 +241,38 @@
 </li>
 </ul>
 <p>If you sometimes write syntaxes in SPSS to run a complete analysis or to ‘automate’ some of your work, you should perhaps do this in R. You will notice that writing syntaxes in R is a lot more nifty and clever than in SPSS.</p>
+<p>To demonstrate the first point:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1"><span class="co"># not all values are valid MIC values:</span></a>
+<a class="sourceLine" id="cb1-2" title="2"><span class="kw"><a href="../reference/as.mic.html">as.mic</a></span>(<span class="fl">0.125</span>)</a>
+<a class="sourceLine" id="cb1-3" title="3"><span class="co">#&gt; Class 'mic'</span></a>
+<a class="sourceLine" id="cb1-4" title="4"><span class="co">#&gt; [1] 0.125</span></a>
+<a class="sourceLine" id="cb1-5" title="5"><span class="kw"><a href="../reference/as.mic.html">as.mic</a></span>(<span class="st">"testvalue"</span>)</a>
+<a class="sourceLine" id="cb1-6" title="6"><span class="co">#&gt; Class 'mic'</span></a>
+<a class="sourceLine" id="cb1-7" title="7"><span class="co">#&gt; [1] &lt;NA&gt;</span></a>
+<a class="sourceLine" id="cb1-8" title="8"></a>
+<a class="sourceLine" id="cb1-9" title="9"><span class="co"># the Gram stain is avaiable for all bacteria:</span></a>
+<a class="sourceLine" id="cb1-10" title="10"><span class="kw"><a href="../reference/mo_property.html">mo_gramstain</a></span>(<span class="st">"E. coli"</span>)</a>
+<a class="sourceLine" id="cb1-11" title="11"><span class="co">#&gt; [1] "Gram negative"</span></a>
+<a class="sourceLine" id="cb1-12" title="12"></a>
+<a class="sourceLine" id="cb1-13" title="13"><span class="co"># Klebsiella is intrinsic resistant to amoxicllin, according to EUCAST:</span></a>
+<a class="sourceLine" id="cb1-14" title="14">klebsiella_test &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/data.frame">data.frame</a></span>(<span class="dt">mo =</span> <span class="st">"klebsiella"</span>, </a>
+<a class="sourceLine" id="cb1-15" title="15">                              <span class="dt">amox =</span> <span class="st">"S"</span>,</a>
+<a class="sourceLine" id="cb1-16" title="16">                              <span class="dt">stringsAsFactors =</span> <span class="ot">FALSE</span>)</a>
+<a class="sourceLine" id="cb1-17" title="17">klebsiella_test</a>
+<a class="sourceLine" id="cb1-18" title="18"><span class="co">#&gt;           mo amox</span></a>
+<a class="sourceLine" id="cb1-19" title="19"><span class="co">#&gt; 1 klebsiella    S</span></a>
+<a class="sourceLine" id="cb1-20" title="20"><span class="kw"><a href="../reference/eucast_rules.html">eucast_rules</a></span>(klebsiella_test, <span class="dt">info =</span> <span class="ot">FALSE</span>)</a>
+<a class="sourceLine" id="cb1-21" title="21"><span class="co">#&gt;           mo amox</span></a>
+<a class="sourceLine" id="cb1-22" title="22"><span class="co">#&gt; 1 klebsiella    R</span></a>
+<a class="sourceLine" id="cb1-23" title="23"></a>
+<a class="sourceLine" id="cb1-24" title="24"><span class="co"># hundreds of trade names can be translated to an ATC or name:</span></a>
+<a class="sourceLine" id="cb1-25" title="25"><span class="kw"><a href="../reference/atc_property.html">atc_name</a></span>(<span class="st">"floxapen"</span>)</a>
+<a class="sourceLine" id="cb1-26" title="26"><span class="co">#&gt; [1] "Flucloxacillin"</span></a>
+<a class="sourceLine" id="cb1-27" title="27"><span class="kw"><a href="../reference/as.atc.html">as.atc</a></span>(<span class="st">"floxapen"</span>)</a>
+<a class="sourceLine" id="cb1-28" title="28"><span class="co">#&gt; Class 'atc'</span></a>
+<a class="sourceLine" id="cb1-29" title="29"><span class="co">#&gt; [1] J01CF05</span></a>
+<a class="sourceLine" id="cb1-30" title="30"><span class="kw"><a href="../reference/atc_property.html">atc_tradenames</a></span>(<span class="st">"floxapen"</span>)</a>
+<a class="sourceLine" id="cb1-31" title="31"><span class="co">#&gt; [1] "Flopen"    "Floxapen"  "Fluclox"   "Sesamol"   "Softapen"  "Staphylex"</span></a></code></pre></div>
 </div>
 <div id="import-data-from-spsssasstata" class="section level2">
 <h2 class="hasAnchor">
@@ -248,105 +280,105 @@
 <div id="rstudio" class="section level3">
 <h3 class="hasAnchor">
 <a href="#rstudio" class="anchor"></a>RStudio</h3>
-<p>To work with R, probably the best option is to use <a href="https://www.rstudio.com/products/rstudio/">RStudio</a>. It is an open-source and free desktop environment which not only allows you to run R code, but also supports project management, version management, package management and convenient import menu to work with other data sources. You can also run <a href="https://www.rstudio.com/products/rstudio/">RStudio Server</a>, which is nothing less than the complete RStudio software available as a website (e.g. in your corporate network or at home).</p>
+<p>To work with R, probably the best option is to use <a href="https://www.rstudio.com/products/rstudio/">RStudio</a>. It is an open-source and free desktop environment which not only allows you to run R code, but also supports project management, version management, package management and convenient import menus to work with other data sources. You can also run <a href="https://www.rstudio.com/products/rstudio/">RStudio Server</a>, which is nothing less than the complete RStudio software available as a website (e.g. in your corporate network or at home).</p>
 <p>To import a data file, just click <em>Import Dataset</em> in the Environment tab:</p>
-<p><img src="../import1.png"></p>
+<p><img src="https://gitlab.com/msberends/AMR/raw/master/docs/import1.png"></p>
 <p>If additional packages are needed, RStudio will ask you if they should be installed on beforehand.</p>
 <p>In the the window that opens, you can define all options (parameters) that should be used for import and you’re ready to go:</p>
-<p><img src="../import2.png"></p>
+<p><img src="https://gitlab.com/msberends/AMR/raw/master/docs/import2.png"></p>
 <p>If you want named variables to be imported as factors so it resembles SPSS more, use <code><a href="https://haven.tidyverse.org/reference/as_factor.html">as_factor()</a></code>.</p>
 <p>The difference is this:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1">SPSS_data</a>
-<a class="sourceLine" id="cb1-2" title="2"><span class="co"># # A tibble: 4,203 x 4</span></a>
-<a class="sourceLine" id="cb1-3" title="3"><span class="co">#     v001 sex       status    statusage</span></a>
-<a class="sourceLine" id="cb1-4" title="4"><span class="co">#    &lt;dbl&gt; &lt;dbl+lbl&gt; &lt;dbl+lbl&gt;     &lt;dbl&gt;</span></a>
-<a class="sourceLine" id="cb1-5" title="5"><span class="co">#  1 10002 1         1              76.6</span></a>
-<a class="sourceLine" id="cb1-6" title="6"><span class="co">#  2 10004 0         1              59.1</span></a>
-<a class="sourceLine" id="cb1-7" title="7"><span class="co">#  3 10005 1         1              54.5</span></a>
-<a class="sourceLine" id="cb1-8" title="8"><span class="co">#  4 10006 1         1              54.1</span></a>
-<a class="sourceLine" id="cb1-9" title="9"><span class="co">#  5 10007 1         1              57.7</span></a>
-<a class="sourceLine" id="cb1-10" title="10"><span class="co">#  6 10008 1         1              62.8</span></a>
-<a class="sourceLine" id="cb1-11" title="11"><span class="co">#  7 10010 0         1              63.7</span></a>
-<a class="sourceLine" id="cb1-12" title="12"><span class="co">#  8 10011 1         1              73.1</span></a>
-<a class="sourceLine" id="cb1-13" title="13"><span class="co">#  9 10017 1         1              56.7</span></a>
-<a class="sourceLine" id="cb1-14" title="14"><span class="co"># 10 10018 0         1              66.6</span></a>
-<a class="sourceLine" id="cb1-15" title="15"><span class="co"># # … with 4,193 more rows</span></a>
-<a class="sourceLine" id="cb1-16" title="16"></a>
-<a class="sourceLine" id="cb1-17" title="17"><span class="kw">as_factor</span>(SPSS_data)</a>
-<a class="sourceLine" id="cb1-18" title="18"><span class="co"># # A tibble: 4,203 x 4</span></a>
-<a class="sourceLine" id="cb1-19" title="19"><span class="co">#     v001 sex    status statusage</span></a>
-<a class="sourceLine" id="cb1-20" title="20"><span class="co">#    &lt;dbl&gt; &lt;fct&gt;  &lt;fct&gt;      &lt;dbl&gt;</span></a>
-<a class="sourceLine" id="cb1-21" title="21"><span class="co">#  1 10002 Male   alive       76.6</span></a>
-<a class="sourceLine" id="cb1-22" title="22"><span class="co">#  2 10004 Female alive       59.1</span></a>
-<a class="sourceLine" id="cb1-23" title="23"><span class="co">#  3 10005 Male   alive       54.5</span></a>
-<a class="sourceLine" id="cb1-24" title="24"><span class="co">#  4 10006 Male   alive       54.1</span></a>
-<a class="sourceLine" id="cb1-25" title="25"><span class="co">#  5 10007 Male   alive       57.7</span></a>
-<a class="sourceLine" id="cb1-26" title="26"><span class="co">#  6 10008 Male   alive       62.8</span></a>
-<a class="sourceLine" id="cb1-27" title="27"><span class="co">#  7 10010 Female alive       63.7</span></a>
-<a class="sourceLine" id="cb1-28" title="28"><span class="co">#  8 10011 Male   alive       73.1</span></a>
-<a class="sourceLine" id="cb1-29" title="29"><span class="co">#  9 10017 Male   alive       56.7</span></a>
-<a class="sourceLine" id="cb1-30" title="30"><span class="co"># 10 10018 Female alive       66.6</span></a>
-<a class="sourceLine" id="cb1-31" title="31"><span class="co"># # … with 4,193 more rows</span></a></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" title="1">SPSS_data</a>
+<a class="sourceLine" id="cb2-2" title="2"><span class="co"># # A tibble: 4,203 x 4</span></a>
+<a class="sourceLine" id="cb2-3" title="3"><span class="co">#     v001 sex       status    statusage</span></a>
+<a class="sourceLine" id="cb2-4" title="4"><span class="co">#    &lt;dbl&gt; &lt;dbl+lbl&gt; &lt;dbl+lbl&gt;     &lt;dbl&gt;</span></a>
+<a class="sourceLine" id="cb2-5" title="5"><span class="co">#  1 10002 1         1              76.6</span></a>
+<a class="sourceLine" id="cb2-6" title="6"><span class="co">#  2 10004 0         1              59.1</span></a>
+<a class="sourceLine" id="cb2-7" title="7"><span class="co">#  3 10005 1         1              54.5</span></a>
+<a class="sourceLine" id="cb2-8" title="8"><span class="co">#  4 10006 1         1              54.1</span></a>
+<a class="sourceLine" id="cb2-9" title="9"><span class="co">#  5 10007 1         1              57.7</span></a>
+<a class="sourceLine" id="cb2-10" title="10"><span class="co">#  6 10008 1         1              62.8</span></a>
+<a class="sourceLine" id="cb2-11" title="11"><span class="co">#  7 10010 0         1              63.7</span></a>
+<a class="sourceLine" id="cb2-12" title="12"><span class="co">#  8 10011 1         1              73.1</span></a>
+<a class="sourceLine" id="cb2-13" title="13"><span class="co">#  9 10017 1         1              56.7</span></a>
+<a class="sourceLine" id="cb2-14" title="14"><span class="co"># 10 10018 0         1              66.6</span></a>
+<a class="sourceLine" id="cb2-15" title="15"><span class="co"># # … with 4,193 more rows</span></a>
+<a class="sourceLine" id="cb2-16" title="16"></a>
+<a class="sourceLine" id="cb2-17" title="17"><span class="kw">as_factor</span>(SPSS_data)</a>
+<a class="sourceLine" id="cb2-18" title="18"><span class="co"># # A tibble: 4,203 x 4</span></a>
+<a class="sourceLine" id="cb2-19" title="19"><span class="co">#     v001 sex    status statusage</span></a>
+<a class="sourceLine" id="cb2-20" title="20"><span class="co">#    &lt;dbl&gt; &lt;fct&gt;  &lt;fct&gt;      &lt;dbl&gt;</span></a>
+<a class="sourceLine" id="cb2-21" title="21"><span class="co">#  1 10002 Male   alive       76.6</span></a>
+<a class="sourceLine" id="cb2-22" title="22"><span class="co">#  2 10004 Female alive       59.1</span></a>
+<a class="sourceLine" id="cb2-23" title="23"><span class="co">#  3 10005 Male   alive       54.5</span></a>
+<a class="sourceLine" id="cb2-24" title="24"><span class="co">#  4 10006 Male   alive       54.1</span></a>
+<a class="sourceLine" id="cb2-25" title="25"><span class="co">#  5 10007 Male   alive       57.7</span></a>
+<a class="sourceLine" id="cb2-26" title="26"><span class="co">#  6 10008 Male   alive       62.8</span></a>
+<a class="sourceLine" id="cb2-27" title="27"><span class="co">#  7 10010 Female alive       63.7</span></a>
+<a class="sourceLine" id="cb2-28" title="28"><span class="co">#  8 10011 Male   alive       73.1</span></a>
+<a class="sourceLine" id="cb2-29" title="29"><span class="co">#  9 10017 Male   alive       56.7</span></a>
+<a class="sourceLine" id="cb2-30" title="30"><span class="co"># 10 10018 Female alive       66.6</span></a>
+<a class="sourceLine" id="cb2-31" title="31"><span class="co"># # … with 4,193 more rows</span></a></code></pre></div>
 </div>
 <div id="base-r" class="section level3">
 <h3 class="hasAnchor">
 <a href="#base-r" class="anchor"></a>Base R</h3>
 <p>To import data from SPSS, SAS or Stata, you can use the <a href="https://haven.tidyverse.org/">great <code>haven</code> package</a> yourself:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" title="1"><span class="co"># download and install the latest version:</span></a>
-<a class="sourceLine" id="cb2-2" title="2"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/install.packages">install.packages</a></span>(<span class="st">"haven"</span>)</a>
-<a class="sourceLine" id="cb2-3" title="3"><span class="co"># load the package you just installed:</span></a>
-<a class="sourceLine" id="cb2-4" title="4"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(haven) </a></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" title="1"><span class="co"># download and install the latest version:</span></a>
+<a class="sourceLine" id="cb3-2" title="2"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/install.packages">install.packages</a></span>(<span class="st">"haven"</span>)</a>
+<a class="sourceLine" id="cb3-3" title="3"><span class="co"># load the package you just installed:</span></a>
+<a class="sourceLine" id="cb3-4" title="4"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(haven) </a></code></pre></div>
 <p>You can now import files as follows:</p>
 <div id="spss" class="section level4">
 <h4 class="hasAnchor">
 <a href="#spss" class="anchor"></a>SPSS</h4>
 <p>To read files from SPSS into R:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" title="1"><span class="co"># read any SPSS file based on file extension (best way):</span></a>
-<a class="sourceLine" id="cb3-2" title="2"><span class="kw"><a href="https://haven.tidyverse.org/reference/read_spss.html">read_spss</a></span>(<span class="dt">file =</span> <span class="st">"path/to/file"</span>)</a>
-<a class="sourceLine" id="cb3-3" title="3"></a>
-<a class="sourceLine" id="cb3-4" title="4"><span class="co"># read .sav or .zsav file:</span></a>
-<a class="sourceLine" id="cb3-5" title="5"><span class="kw"><a href="https://haven.tidyverse.org/reference/read_spss.html">read_sav</a></span>(<span class="dt">file =</span> <span class="st">"path/to/file"</span>)</a>
-<a class="sourceLine" id="cb3-6" title="6"></a>
-<a class="sourceLine" id="cb3-7" title="7"><span class="co"># read .por file:</span></a>
-<a class="sourceLine" id="cb3-8" title="8"><span class="kw"><a href="https://haven.tidyverse.org/reference/read_spss.html">read_por</a></span>(<span class="dt">file =</span> <span class="st">"path/to/file"</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" title="1"><span class="co"># read any SPSS file based on file extension (best way):</span></a>
+<a class="sourceLine" id="cb4-2" title="2"><span class="kw"><a href="https://haven.tidyverse.org/reference/read_spss.html">read_spss</a></span>(<span class="dt">file =</span> <span class="st">"path/to/file"</span>)</a>
+<a class="sourceLine" id="cb4-3" title="3"></a>
+<a class="sourceLine" id="cb4-4" title="4"><span class="co"># read .sav or .zsav file:</span></a>
+<a class="sourceLine" id="cb4-5" title="5"><span class="kw"><a href="https://haven.tidyverse.org/reference/read_spss.html">read_sav</a></span>(<span class="dt">file =</span> <span class="st">"path/to/file"</span>)</a>
+<a class="sourceLine" id="cb4-6" title="6"></a>
+<a class="sourceLine" id="cb4-7" title="7"><span class="co"># read .por file:</span></a>
+<a class="sourceLine" id="cb4-8" title="8"><span class="kw"><a href="https://haven.tidyverse.org/reference/read_spss.html">read_por</a></span>(<span class="dt">file =</span> <span class="st">"path/to/file"</span>)</a></code></pre></div>
 <p>Do not forget about <code><a href="https://haven.tidyverse.org/reference/as_factor.html">as_factor()</a></code>, as mentioned above.</p>
 <p>To export your R objects to the SPSS file format:</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" title="1"><span class="co"># save as .sav file:</span></a>
-<a class="sourceLine" id="cb4-2" title="2"><span class="kw"><a href="https://haven.tidyverse.org/reference/read_spss.html">write_sav</a></span>(<span class="dt">data =</span> yourdata, <span class="dt">path =</span> <span class="st">"path/to/file"</span>)</a>
-<a class="sourceLine" id="cb4-3" title="3"></a>
-<a class="sourceLine" id="cb4-4" title="4"><span class="co"># save as compressed .zsav file:</span></a>
-<a class="sourceLine" id="cb4-5" title="5"><span class="kw"><a href="https://haven.tidyverse.org/reference/read_spss.html">write_sav</a></span>(<span class="dt">data =</span> yourdata, <span class="dt">path =</span> <span class="st">"path/to/file"</span>, <span class="dt">compress =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" title="1"><span class="co"># save as .sav file:</span></a>
+<a class="sourceLine" id="cb5-2" title="2"><span class="kw"><a href="https://haven.tidyverse.org/reference/read_spss.html">write_sav</a></span>(<span class="dt">data =</span> yourdata, <span class="dt">path =</span> <span class="st">"path/to/file"</span>)</a>
+<a class="sourceLine" id="cb5-3" title="3"></a>
+<a class="sourceLine" id="cb5-4" title="4"><span class="co"># save as compressed .zsav file:</span></a>
+<a class="sourceLine" id="cb5-5" title="5"><span class="kw"><a href="https://haven.tidyverse.org/reference/read_spss.html">write_sav</a></span>(<span class="dt">data =</span> yourdata, <span class="dt">path =</span> <span class="st">"path/to/file"</span>, <span class="dt">compress =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
 </div>
 <div id="sas" class="section level4">
 <h4 class="hasAnchor">
 <a href="#sas" class="anchor"></a>SAS</h4>
 <p>To read files from SAS into R:</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" title="1"><span class="co"># read .sas7bdat + .sas7bcat files:</span></a>
-<a class="sourceLine" id="cb5-2" title="2"><span class="kw"><a href="https://haven.tidyverse.org/reference/read_sas.html">read_sas</a></span>(<span class="dt">data_file =</span> <span class="st">"path/to/file"</span>, <span class="dt">catalog_file =</span> <span class="ot">NULL</span>)</a>
-<a class="sourceLine" id="cb5-3" title="3"></a>
-<a class="sourceLine" id="cb5-4" title="4"><span class="co"># read SAS transport files (version 5 and version 8):</span></a>
-<a class="sourceLine" id="cb5-5" title="5"><span class="kw"><a href="https://haven.tidyverse.org/reference/read_xpt.html">read_xpt</a></span>(<span class="dt">file =</span> <span class="st">"path/to/file"</span>)</a></code></pre></div>
-<p>To export your R objects to the SAS file format:</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" title="1"><span class="co"># save as regular SAS file:</span></a>
-<a class="sourceLine" id="cb6-2" title="2"><span class="kw"><a href="https://haven.tidyverse.org/reference/read_sas.html">write_sas</a></span>(<span class="dt">data =</span> yourdata, <span class="dt">path =</span> <span class="st">"path/to/file"</span>)</a>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" title="1"><span class="co"># read .sas7bdat + .sas7bcat files:</span></a>
+<a class="sourceLine" id="cb6-2" title="2"><span class="kw"><a href="https://haven.tidyverse.org/reference/read_sas.html">read_sas</a></span>(<span class="dt">data_file =</span> <span class="st">"path/to/file"</span>, <span class="dt">catalog_file =</span> <span class="ot">NULL</span>)</a>
 <a class="sourceLine" id="cb6-3" title="3"></a>
-<a class="sourceLine" id="cb6-4" title="4"><span class="co"># the SAS transport format is an open format </span></a>
-<a class="sourceLine" id="cb6-5" title="5"><span class="co"># (required for submission of the data to the FDA)</span></a>
-<a class="sourceLine" id="cb6-6" title="6"><span class="kw"><a href="https://haven.tidyverse.org/reference/read_xpt.html">write_xpt</a></span>(<span class="dt">data =</span> yourdata, <span class="dt">path =</span> <span class="st">"path/to/file"</span>, <span class="dt">version =</span> <span class="dv">8</span>)</a></code></pre></div>
+<a class="sourceLine" id="cb6-4" title="4"><span class="co"># read SAS transport files (version 5 and version 8):</span></a>
+<a class="sourceLine" id="cb6-5" title="5"><span class="kw"><a href="https://haven.tidyverse.org/reference/read_xpt.html">read_xpt</a></span>(<span class="dt">file =</span> <span class="st">"path/to/file"</span>)</a></code></pre></div>
+<p>To export your R objects to the SAS file format:</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" title="1"><span class="co"># save as regular SAS file:</span></a>
+<a class="sourceLine" id="cb7-2" title="2"><span class="kw"><a href="https://haven.tidyverse.org/reference/read_sas.html">write_sas</a></span>(<span class="dt">data =</span> yourdata, <span class="dt">path =</span> <span class="st">"path/to/file"</span>)</a>
+<a class="sourceLine" id="cb7-3" title="3"></a>
+<a class="sourceLine" id="cb7-4" title="4"><span class="co"># the SAS transport format is an open format </span></a>
+<a class="sourceLine" id="cb7-5" title="5"><span class="co"># (required for submission of the data to the FDA)</span></a>
+<a class="sourceLine" id="cb7-6" title="6"><span class="kw"><a href="https://haven.tidyverse.org/reference/read_xpt.html">write_xpt</a></span>(<span class="dt">data =</span> yourdata, <span class="dt">path =</span> <span class="st">"path/to/file"</span>, <span class="dt">version =</span> <span class="dv">8</span>)</a></code></pre></div>
 </div>
 <div id="stata" class="section level4">
 <h4 class="hasAnchor">
 <a href="#stata" class="anchor"></a>Stata</h4>
 <p>To read files from Stata into R:</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" title="1"><span class="co"># read .dta file:</span></a>
-<a class="sourceLine" id="cb7-2" title="2"><span class="kw"><a href="https://haven.tidyverse.org/reference/read_dta.html">read_stata</a></span>(<span class="dt">file =</span> <span class="st">"/path/to/file"</span>)</a>
-<a class="sourceLine" id="cb7-3" title="3"></a>
-<a class="sourceLine" id="cb7-4" title="4"><span class="co"># works exactly the same:</span></a>
-<a class="sourceLine" id="cb7-5" title="5"><span class="kw"><a href="https://haven.tidyverse.org/reference/read_dta.html">read_dta</a></span>(<span class="dt">file =</span> <span class="st">"/path/to/file"</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" title="1"><span class="co"># read .dta file:</span></a>
+<a class="sourceLine" id="cb8-2" title="2"><span class="kw"><a href="https://haven.tidyverse.org/reference/read_dta.html">read_stata</a></span>(<span class="dt">file =</span> <span class="st">"/path/to/file"</span>)</a>
+<a class="sourceLine" id="cb8-3" title="3"></a>
+<a class="sourceLine" id="cb8-4" title="4"><span class="co"># works exactly the same:</span></a>
+<a class="sourceLine" id="cb8-5" title="5"><span class="kw"><a href="https://haven.tidyverse.org/reference/read_dta.html">read_dta</a></span>(<span class="dt">file =</span> <span class="st">"/path/to/file"</span>)</a></code></pre></div>
 <p>To export your R objects to the Stata file format:</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" title="1"><span class="co"># save as .dta file, Stata version 14:</span></a>
-<a class="sourceLine" id="cb8-2" title="2"><span class="co"># (supports Stata v8 until v15 at the time of writing)</span></a>
-<a class="sourceLine" id="cb8-3" title="3"><span class="kw"><a href="https://haven.tidyverse.org/reference/read_dta.html">write_dta</a></span>(<span class="dt">data =</span> yourdata, <span class="dt">path =</span> <span class="st">"/path/to/file"</span>, <span class="dt">version =</span> <span class="dv">14</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" title="1"><span class="co"># save as .dta file, Stata version 14:</span></a>
+<a class="sourceLine" id="cb9-2" title="2"><span class="co"># (supports Stata v8 until v15 at the time of writing)</span></a>
+<a class="sourceLine" id="cb9-3" title="3"><span class="kw"><a href="https://haven.tidyverse.org/reference/read_dta.html">write_dta</a></span>(<span class="dt">data =</span> yourdata, <span class="dt">path =</span> <span class="st">"/path/to/file"</span>, <span class="dt">version =</span> <span class="dv">14</span>)</a></code></pre></div>
 </div>
 </div>
 </div>

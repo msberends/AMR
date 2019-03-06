@@ -23,7 +23,7 @@ knitr::opts_chunk$set(
 )
 ```
 
-One of the most important features of this package is the complete microbial taxonomic database, supplied by the [Catalogue of Life](http://catalogueoflife.org). We created a function `as.mo()` that transforms any user input value to a valid microbial ID by using AI (Artificial Intelligence) combined with the taxonomic tree of Catalogue of Life.
+One of the most important features of this package is the complete microbial taxonomic database, supplied by the [Catalogue of Life](http://catalogueoflife.org). We created a function `as.mo()` that transforms any user input value to a valid microbial ID by using intelligent rules combined with the taxonomic tree of Catalogue of Life.
 
 Using the `microbenchmark` package, we can review the calculation performance of this function. Its function `microbenchmark()` runs different input expressions independently of each other and measures their time-to-result.
 
@@ -38,7 +38,7 @@ library(AMR)
 
 In the next test, we try to 'coerce' different input values for *Staphylococcus aureus*. The actual result is the same every time: it returns its MO code `B_STPHY_AUR` (*B* stands for *Bacteria*, the taxonomic kingdom). 
 
-But the calculation time differs a lot. Here, the AI effect can be reviewed best:
+But the calculation time differs a lot:
 
 ```{r}
 S.aureus <- microbenchmark(as.mo("sau"),

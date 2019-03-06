@@ -128,6 +128,7 @@ reference:
     - '`availability`'
     - '`count`'
     - '`portion`'
+    - '`filter_ab_class`'
     - '`freq`'
     - '`g.test`'
     - '`ggplot_rsi`'

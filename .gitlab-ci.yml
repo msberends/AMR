@@ -95,7 +95,6 @@ pages:
   only:
     - master
   script:
-    #- Rscript -e "install.packages('pkgdown', repos = 'https://cran.rstudio.com')"
     - Rscript -e "devtools::install(build = TRUE, upgrade = FALSE)"
     - R -e "pkgdown::build_site(examples = FALSE, lazy = TRUE, override = list(destination = 'public'))"
   artifacts:
