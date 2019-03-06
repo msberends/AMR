@@ -54,7 +54,7 @@ filter_tetracyclines(tbl, result = NULL, scope = "any", ...)
 Filter on specific antibiotic variables based on their class (ATC groups).
 }
 \details{
-The \code{\code{antibiotics}} data set will be searched for \code{ab_class} in the columns \code{atc_group1} and \code{atc_group2} (case-insensitive). Next, \code{tbl} will be checked for column names with a value in any abbreviations, codes or official names found in the \code{antibiotics} data set.
+The \code{\link{antibiotics}} data set will be searched for \code{ab_class} in the columns \code{atc_group1} and \code{atc_group2} (case-insensitive). Next, \code{tbl} will be checked for column names with a value in any abbreviations, codes or official names found in the \code{antibiotics} data set.
 }
 \examples{
 library(dplyr)
@@ -80,3 +80,5 @@ septic_patients \%>\%
   filter_aminoglycosides("R", "any") \%>\%
   filter_fluoroquinolones("R", "any")
 }
+\keyword{fillter_class}
+\keyword{filter}

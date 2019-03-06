@@ -27,8 +27,9 @@
 #' @param result an antibiotic result: S, I or R (or a combination of more of them)
 #' @param scope the scope to check which variables to check, can be \code{"any"} (default) or \code{"all"}
 #' @param ... parameters passed on to \code{\link[dplyr]{filter_at}}
-#' @details The \code{\code{antibiotics}} data set will be searched for \code{ab_class} in the columns \code{atc_group1} and \code{atc_group2} (case-insensitive). Next, \code{tbl} will be checked for column names with a value in any abbreviations, codes or official names found in the \code{antibiotics} data set.
+#' @details The \code{\link{antibiotics}} data set will be searched for \code{ab_class} in the columns \code{atc_group1} and \code{atc_group2} (case-insensitive). Next, \code{tbl} will be checked for column names with a value in any abbreviations, codes or official names found in the \code{antibiotics} data set.
 #' @rdname filter_ab_class
+#' @keywords filter fillter_class
 #' @importFrom dplyr filter_at %>% select vars any_vars all_vars
 #' @importFrom crayon bold blue
 #' @export
@@ -89,7 +90,7 @@ filter_ab_class <- function(tbl,
       scope_fn <- all_vars
     }
     message(blue(paste0("Filtering on ", atc_groups, ": ", scope, " of ",
-                        paste(bold(vars_df), collapse = scope_txt), operator, toString(result))))
+                        paste(bold(paste0("`", vars_df, "`")), collapse = scope_txt), operator, toString(result))))
     tbl %>%
       filter_at(.vars = vars(vars_df),
                 .vars_predicate = scope_fn(. %in% result),

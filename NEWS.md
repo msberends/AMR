@@ -19,12 +19,34 @@ We've got a new website: [https://msberends.gitlab.io/AMR](https://msberends.git
   
     This data is updated annually - check the included version with the new function `catalogue_of_life_version()`.
   * Due to this change, some `mo` codes changed (e.g. *Streptococcus* changed from `B_STRPTC` to `B_STRPT`). A translation table is  used internally to support older microorganism IDs, so users will not notice this difference.
-* New function `mo_rank()` for the taxonomic rank (genus, species, infraspecies, etc.)
-* New function `mo_url()` to get the URL to the Catalogue of Life
+  * New function `mo_rank()` for the taxonomic rank (genus, species, infraspecies, etc.)
+  * New function `mo_url()` to get the direct URL of a species from the Catalogue of Life
 * Support for data from [WHONET](https://whonet.org/) and [EARS-Net](https://ecdc.europa.eu/en/about-us/partnerships-and-networks/disease-and-laboratory-networks/ears-net) (European Antimicrobial Resistance Surveillance Network):
   * Exported files from WHONET can be read and used in this package. For functions like `first_isolate()` and `eucast_rules()`, all parameters will be filled in automatically.
   * This package now knows all antibiotic abbrevations by EARS-Net (which are also being used by WHONET) - the `antibiotics` data set now contains a column `ears_net`.
   * The function `as.mo()` now knows all WHONET species abbreviations too, because more than 1,600 microbial abbreviations were added to the `microorganisms.codes` data set.
+* New filters for antimicrobial classes. Use these functions to filter isolates on results in one of more antibiotics from a specific class:
+  ```r
+  filter_aminoglycosides()
+  filter_carbapenems()
+  filter_cephalosporins()
+  filter_1st_cephalosporins()
+  filter_2nd_cephalosporins()
+  filter_3rd_cephalosporins()
+  filter_4th_cephalosporins()
+  filter_fluoroquinolones()
+  filter_glycopeptides()
+  filter_macrolides()
+  filter_tetracyclines()
+  ```
+  The `antibiotics` data set will be searched, after which the input data will be checked for column names with a value in any abbreviations, codes or official names found in the `antibiotics` data set.
+  For example:
+  ```r
+  septic_patients %>% filter_glycopeptides(result = "R")
+  # Filtering on glycopeptide antibacterials: any of `vanc` or `teic` is R
+  septic_patients %>% filter_glycopeptides(result = "R", scope = "all")
+  # Filtering on glycopeptide antibacterials: all of `vanc` and `teic` is R
+  ```
 * All `ab_*` functions are deprecated and replaced by `atc_*` functions:
   ```r
   ab_property -> atc_property()
