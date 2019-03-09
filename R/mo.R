@@ -122,6 +122,7 @@
 #' @importFrom dplyr %>% pull left_join
 #' @examples
 #' # These examples all return "B_STPHY_AUR", the ID of S. aureus:
+#' as.mo("sau") # WHONET code
 #' as.mo("stau")
 #' as.mo("STAU")
 #' as.mo("staaur")
@@ -598,6 +599,7 @@ exec_as.mo <- function(x, Becker = FALSE, Lancefield = FALSE,
       }
 
       # TRY OTHER SOURCES ----
+      # WHONET and other common LIS codes
       if (toupper(x_backup[i]) %in% AMR::microorganisms.codes[, 1]) {
         mo_found <- AMR::microorganisms.codes[toupper(x_backup[i]) == AMR::microorganisms.codes[, 1], "mo"][1L]
         if (length(mo_found) > 0) {
@@ -606,6 +608,7 @@ exec_as.mo <- function(x, Becker = FALSE, Lancefield = FALSE,
         }
       }
       if (!is.null(reference_df)) {
+        # self-defined reference
         if (x_backup[i] %in% reference_df[, 1]) {
           ref_mo <- reference_df[reference_df[, 1] == x_backup[i], "mo"]
           if (ref_mo %in% microorganismsDT[, mo]) {
@@ -615,6 +618,13 @@ exec_as.mo <- function(x, Becker = FALSE, Lancefield = FALSE,
             warning("Value '", x_backup[i], "' was found in reference_df, but '", ref_mo, "' is not a valid MO code.", call. = FALSE)
           }
         }
+      }
+
+      # allow no codes less than 4 characters long, was already checked for WHONET above
+      if (nchar(x_trimmed[i]) < 4) {
+        x[i] <- microorganismsDT[mo == "UNKNOWN", ..property][[1]]
+        failures <- c(failures, x_backup[i])
+        next
       }
 
       check_per_prevalence <- function(data_to_check,

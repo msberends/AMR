@@ -138,6 +138,7 @@ On our website \url{https://msberends.gitlab.io/AMR} you can find \href{https://
 
 \examples{
 # These examples all return "B_STPHY_AUR", the ID of S. aureus:
+as.mo("sau") # WHONET code
 as.mo("stau")
 as.mo("STAU")
 as.mo("staaur")

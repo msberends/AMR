@@ -32,15 +32,15 @@ mo_species(x, language = get_locale(), ...)
 
 mo_genus(x, language = get_locale(), ...)
 
-mo_family(x, ...)
+mo_family(x, language = get_locale(), ...)
 
-mo_order(x, ...)
+mo_order(x, language = get_locale(), ...)
 
-mo_class(x, ...)
+mo_class(x, language = get_locale(), ...)
 
-mo_phylum(x, ...)
+mo_phylum(x, language = get_locale(), ...)
 
-mo_kingdom(x, ...)
+mo_kingdom(x, language = get_locale(), ...)
 
 mo_type(x, language = get_locale(), ...)
 
@@ -54,7 +54,7 @@ mo_year(x, ...)
 
 mo_rank(x, ...)
 
-mo_taxonomy(x, ...)
+mo_taxonomy(x, language = get_locale(), ...)
 
 mo_url(x, open = FALSE, ...)
 

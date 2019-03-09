@@ -222,32 +222,32 @@ mo_genus <- function(x, language = get_locale(), ...) {
 
 #' @rdname mo_property
 #' @export
-mo_family <- function(x, ...) {
-  mo_validate(x = x, property = "family", ...)
+mo_family <- function(x, language = get_locale(), ...) {
+  mo_translate(mo_validate(x = x, property = "family", ...), language = language)
 }
 
 #' @rdname mo_property
 #' @export
-mo_order <- function(x, ...) {
-  mo_validate(x = x, property = "order", ...)
+mo_order <- function(x, language = get_locale(), ...) {
+  mo_translate(mo_validate(x = x, property = "order", ...), language = language)
 }
 
 #' @rdname mo_property
 #' @export
-mo_class <- function(x, ...) {
-  mo_validate(x = x, property = "class", ...)
+mo_class <- function(x, language = get_locale(), ...) {
+  mo_translate(mo_validate(x = x, property = "class", ...), language = language)
 }
 
 #' @rdname mo_property
 #' @export
-mo_phylum <- function(x, ...) {
-  mo_validate(x = x, property = "phylum", ...)
+mo_phylum <- function(x, language = get_locale(), ...) {
+  mo_translate(mo_validate(x = x, property = "phylum", ...), language = language)
 }
 
 #' @rdname mo_property
 #' @export
-mo_kingdom <- function(x, ...) {
-  mo_validate(x = x, property = "kingdom", ...)
+mo_kingdom <- function(x, language = get_locale(), ...) {
+  mo_translate(mo_validate(x = x, property = "kingdom", ...), language = language)
 }
 
 #' @rdname mo_property
@@ -306,16 +306,16 @@ mo_rank <- function(x, ...) {
 
 #' @rdname mo_property
 #' @export
-mo_taxonomy <- function(x, ...) {
+mo_taxonomy <- function(x, language = get_locale(),  ...) {
   x <- AMR::as.mo(x, ...)
-  base::list(kingdom = mo_kingdom(x),
-             phylum = mo_phylum(x),
-             class = mo_class(x),
-             order = mo_order(x),
-             family = mo_family(x),
-             genus = mo_genus(x),
-             species = mo_species(x),
-             subspecies = mo_subspecies(x))
+  base::list(kingdom = mo_kingdom(x, language = language),
+             phylum = mo_phylum(x, language = language),
+             class = mo_class(x, language = language),
+             order = mo_order(x, language = language),
+             family = mo_family(x, language = language),
+             genus = mo_genus(x, language = language),
+             species = mo_species(x, language = language),
+             subspecies = mo_subspecies(x, language = language))
 }
 
 #' @rdname mo_property
