@@ -188,7 +188,7 @@ catalogue_of_life <- list(
 #' Translation table for microorganism codes
 #'
 #' A data set containing commonly used codes for microorganisms, from laboratory systems and WHONET. Define your own with \code{\link{set_mo_source}}.
-#' @format A \code{\link{data.frame}} with 4,731 observations and 2 variables:
+#' @format A \code{\link{data.frame}} with 5,171 observations and 2 variables:
 #' \describe{
 #'   \item{\code{certe}}{Commonly used code of a microorganism}
 #'   \item{\code{mo}}{ID of the microorganism in the \code{\link{microorganisms}} data set}

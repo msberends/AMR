@@ -80,10 +80,11 @@ test_that("as.mo works", {
               "staaur",
               "S. aureus",
               "S aureus",
+              "Sthafilokkockus aureeuzz",
               "Staphylococcus aureus",
               "MRSA",
               "VISA"))),
-    rep("B_STPHY_AUR", 8))
+    rep("B_STPHY_AUR", 9))
   expect_identical(
     as.character(
       as.mo(c('EHEC', 'EPEC', 'EIEC', 'STEC', 'ATEC'))),
@@ -229,7 +230,7 @@ test_that("as.mo works", {
     c("Microbacterium paraoxidans",
       "Streptococcus suis (bovis gr)",
       "Raoultella (here some text) terrigena")))),
-    c("B_MCRBC", "B_STRPT_SUI", "B_RLTLL_TER"))
+    c("B_MCRBC_PAR", "B_STRPT_SUI", "B_RLTLL_TER"))
   print(mo_uncertainties())
 
   # Salmonella (City) are all actually Salmonella enterica spp (City)

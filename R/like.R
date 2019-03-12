@@ -56,7 +56,7 @@ like <- function(x, pattern) {
   if (length(pattern) > 1) {
     if (length(x) != length(pattern)) {
       pattern <- pattern[1]
-      warning('only the first element of argument `pattern` used for `%like%`', call. = FALSE)
+      warning('only the first element of argument `pattern` used for `%like%`', call. = TRUE)
     } else {
       # x and pattern are of same length, so items with each other
       res <- vector(length = length(pattern))

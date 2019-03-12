@@ -25,28 +25,25 @@
   backports::import(pkgname)
 
   # register data
-  if (!all(c("microorganismsDT", "microorganisms.oldDT") %in% ls(envir = asNamespace("AMR")))) {
+  microorganisms.oldDT <- as.data.table(AMR::microorganisms.old)
+  microorganisms.oldDT$fullname_lower <- tolower(microorganisms.oldDT$fullname)
+  setkey(microorganisms.oldDT, col_id, fullname)
 
-    microorganisms.oldDT <- as.data.table(AMR::microorganisms.old)
-    microorganisms.oldDT$fullname_lower <- tolower(microorganisms.oldDT$fullname)
-    setkey(microorganisms.oldDT, col_id, fullname)
+  assign(x = "microorganisms",
+         value = make(),
+         envir = asNamespace("AMR"))
 
-    assign(x = "microorganisms",
-           value = make(),
-           envir = asNamespace("AMR"))
+  assign(x = "microorganismsDT",
+         value = make_DT(),
+         envir = asNamespace("AMR"))
 
-    assign(x = "microorganismsDT",
-           value = make_DT(),
-           envir = asNamespace("AMR"))
+  assign(x = "microorganisms.oldDT",
+         value = microorganisms.oldDT,
+         envir = asNamespace("AMR"))
 
-    assign(x = "microorganisms.oldDT",
-           value = microorganisms.oldDT,
-           envir = asNamespace("AMR"))
-
-    assign(x = "mo_codes_v0.5.0",
-           value = make_trans_tbl(),
-           envir = asNamespace("AMR"))
-  }
+  assign(x = "mo_codes_v0.5.0",
+         value = make_trans_tbl(),
+         envir = asNamespace("AMR"))
 }
 
 #' @importFrom dplyr mutate case_when
@@ -88,8 +85,8 @@ make_DT <- function() {
   microorganismsDT <- as.data.table(make())
   microorganismsDT$fullname_lower <- tolower(microorganismsDT$fullname)
   setkey(microorganismsDT,
-         kingdom,
          prevalence,
+         kingdom,
          fullname)
   microorganismsDT
 }

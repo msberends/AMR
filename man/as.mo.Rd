@@ -31,7 +31,7 @@ mo_renamed()
 
   This excludes \emph{Enterococci} at default (who are in group D), use \code{Lancefield = "all"} to also categorise all \emph{Enterococci} as group D.}
 
-\item{allow_uncertain}{a logical to indicate whether the input should be checked for less possible results, see Details}
+\item{allow_uncertain}{a logical (\code{TRUE} or \code{FALSE}) or a value between 0 and 3 to indicate whether the input should be checked for less possible results, see Details}
 
 \item{reference_df}{a \code{data.frame} to use for extra reference when translating \code{x} to a valid \code{mo}. See \code{\link{set_mo_source}} and \code{\link{get_mo_source}} to automate the usage of your own codes (e.g. used in your analysis or organisation).}
 }
@@ -39,7 +39,7 @@ mo_renamed()
 Character (vector) with class \code{"mo"}. Unknown values will return \code{NA}.
 }
 \description{
-Use this function to determine a valid microorganism ID (\code{mo}). Determination is done using intelligent rules and the complete taxonomic kingdoms Archaea, Bacteria, Protozoa, Viruses and most microbial species from the kingdom Fungi (see Source), so the input can be almost anything: a full name (like \code{"Staphylococcus aureus"}), an abbreviated name (like \code{"S. aureus"}), an abbreviation known in the field (like \code{"MRSA"}), or just a genus. You could also \code{\link{select}} a genus and species column, zie Examples.
+Use this function to determine a valid microorganism ID (\code{mo}). Determination is done using intelligent rules and the complete taxonomic kingdoms Bacteria, Chromista, Protozoa, Archaea, Viruses, and most microbial species from the kingdom Fungi (see Source). The input can be almost anything: a full name (like \code{"Staphylococcus aureus"}), an abbreviated name (like \code{"S. aureus"}), an abbreviation known in the field (like \code{"MRSA"}), or just a genus. Please see Examples.
 }
 \details{
 A microbial ID from this package (class: \code{mo}) typically looks like these examples:\cr
@@ -65,9 +65,9 @@ Use the \code{\link{mo_property}} functions to get properties based on the retur
 \strong{Intelligent rules} \cr
 This function uses intelligent rules to help getting fast and logical results. It tries to find matches in this order:
 \itemize{
-  \item{Taxonomic kingdom: it first searches in Bacteria, then Fungi, then Protozoa}
-  \item{Human pathogenic prevalence: it first searches in more prevalent microorganisms, then less prevalent ones (see section \emph{Microbial prevalence of pathogens in humans})}
   \item{Valid MO codes and full names: it first searches in already valid MO code and known genus/species combinations}
+  \item{Human pathogenic prevalence: it first searches in more prevalent microorganisms, then less prevalent ones (see \emph{Microbial prevalence of pathogens in humans} below)}
+  \item{Taxonomic kingdom: it first searches in Bacteria/Chromista, then Fungi, then Protozoa, then Viruses}
   \item{Breakdown of input values: from here it starts to breakdown input values to find possible matches}
 }
 
@@ -80,14 +80,18 @@ A couple of effects because of these rules:
 This means that looking up human pathogenic microorganisms takes less time than looking up human non-pathogenic microorganisms.
 
 \strong{Uncertain results} \cr
-When using \code{allow_uncertain = TRUE} (which is the default setting), it will use additional rules if all previous rules failed to get valid results. These are:
+The algorithm can additionally use three different levels of uncertainty to guess valid results. The default is \code{allow_uncertain = TRUE}, which is uqual to uncertainty level 2. Using \code{allow_uncertain = FALSE} will skip all of these additional rules:
 \itemize{
-  \item{It tries to look for previously accepted (but now invalid) taxonomic names}
-  \item{It strips off values between brackets and the brackets itself, and re-evaluates the input with all previous rules}
-  \item{It strips off words from the end one by one and re-evaluates the input with all previous rules}
-  \item{It strips off words from the start one by one and re-evaluates the input with all previous rules}
-  \item{It tries to look for some manual changes which are not (yet) published to the Catalogue of Life (like \emph{Propionibacterium} being \emph{Cutibacterium})}
+  \item{(uncertainty level 1): It tries to look for only matching genera}
+  \item{(uncertainty level 1): It tries to look for previously accepted (but now invalid) taxonomic names}
+  \item{(uncertainty level 1): It tries to look for some manual changes which are not (yet) published to the Catalogue of Life (like \emph{Propionibacterium} being \emph{Cutibacterium})}
+  \item{(uncertainty level 2): It strips off values between brackets and the brackets itself, and re-evaluates the input with all previous rules}
+  \item{(uncertainty level 2): It strips off words from the end one by one and re-evaluates the input with all previous rules}
+  \item{(uncertainty level 3): It strips off words from the start one by one and re-evaluates the input with all previous rules}
+  \item{(uncertainty level 3): It tries any part of the name}
 }
+
+You can also use e.g. \code{as.mo(..., allow_uncertain = 1)} to only allow up to level 1 uncertainty.
 
 Examples:
 \itemize{
@@ -103,7 +107,7 @@ Use \code{mo_uncertainties()} to get a data.frame with all values that were coer
 Use \code{mo_renamed()} to get a vector with all values that could be coerced based on an old, previously accepted taxonomic name.
 
 \strong{Microbial prevalence of pathogens in humans} \cr
-The intelligent rules takes into account microbial prevalence of pathogens in humans. It uses three groups and every (sub)species is in the group it matches first. These groups are:
+The intelligent rules takes into account microbial prevalence of pathogens in humans. It uses three groups and all (sub)species are in only one group. These groups are:
 \itemize{
   \item{1 (most prevalent): class is Gammaproteobacteria \strong{or} genus is one of: \emph{Enterococcus}, \emph{Staphylococcus}, \emph{Streptococcus}.}
   \item{2: phylum is one of: Proteobacteria, Firmicutes, Actinobacteria, Sarcomastigophora \strong{or} genus is one of: \emph{Aspergillus}, \emph{Bacteroides}, \emph{Candida}, \emph{Capnocytophaga}, \emph{Chryseobacterium}, \emph{Cryptococcus}, \emph{Elisabethkingia}, \emph{Flavobacterium}, \emph{Fusobacterium}, \emph{Giardia}, \emph{Leptotrichia}, \emph{Mycoplasma}, \emph{Prevotella}, \emph{Rhodotorula}, \emph{Treponema}, \emph{Trichophyton}, \emph{Ureaplasma}.}
@@ -146,6 +150,7 @@ as.mo("S. aureus")
 as.mo("S aureus")
 as.mo("Staphylococcus aureus")
 as.mo("Staphylococcus aureus (MRSA)")
+as.mo("Sthafilokkockus aaureuz") # handles incorrect spelling
 as.mo("MRSA") # Methicillin Resistant S. aureus
 as.mo("VISA") # Vancomycin Intermediate S. aureus
 as.mo("VRSA") # Vancomycin Resistant S. aureus

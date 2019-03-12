@@ -47,7 +47,7 @@
   <script src="../extra.js"></script>
 <meta property="og:title" content="Transform to microorganism ID — as.mo" />
 
-<meta property="og:description" content="Use this function to determine a valid microorganism ID (mo). Determination is done using intelligent rules and the complete taxonomic kingdoms Archaea, Bacteria, Protozoa, Viruses and most microbial species from the kingdom Fungi (see Source), so the input can be almost anything: a full name (like &quot;Staphylococcus aureus&quot;), an abbreviated name (like &quot;S. aureus&quot;), an abbreviation known in the field (like &quot;MRSA&quot;), or just a genus. You could also select a genus and species column, zie Examples." />
+<meta property="og:description" content="Use this function to determine a valid microorganism ID (mo). Determination is done using intelligent rules and the complete taxonomic kingdoms Bacteria, Chromista, Protozoa, Archaea, Viruses, and most microbial species from the kingdom Fungi (see Source). The input can be almost anything: a full name (like &quot;Staphylococcus aureus&quot;), an abbreviated name (like &quot;S. aureus&quot;), an abbreviation known in the field (like &quot;MRSA&quot;), or just a genus. Please see Examples." />
 
 <meta property="og:image" content="https://msberends.gitlab.io/AMR/logo.png" />
 <meta name="twitter:card" content="summary" />
@@ -80,7 +80,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.0.9021</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.0.9022</span>
       </span>
     </div>
 
@@ -237,7 +237,7 @@
 
     <div class="ref-description">
     
-    <p>Use this function to determine a valid microorganism ID (<code>mo</code>). Determination is done using intelligent rules and the complete taxonomic kingdoms Archaea, Bacteria, Protozoa, Viruses and most microbial species from the kingdom Fungi (see Source), so the input can be almost anything: a full name (like <code>"Staphylococcus aureus"</code>), an abbreviated name (like <code>"S. aureus"</code>), an abbreviation known in the field (like <code>"MRSA"</code>), or just a genus. You could also <code>select</code> a genus and species column, zie Examples.</p>
+    <p>Use this function to determine a valid microorganism ID (<code>mo</code>). Determination is done using intelligent rules and the complete taxonomic kingdoms Bacteria, Chromista, Protozoa, Archaea, Viruses, and most microbial species from the kingdom Fungi (see Source). The input can be almost anything: a full name (like <code>"Staphylococcus aureus"</code>), an abbreviated name (like <code>"S. aureus"</code>), an abbreviation known in the field (like <code>"MRSA"</code>), or just a genus. Please see Examples.</p>
     
     </div>
 
@@ -271,7 +271,7 @@
     </tr>
     <tr>
       <th>allow_uncertain</th>
-      <td><p>a logical to indicate whether the input should be checked for less possible results, see Details</p></td>
+      <td><p>a logical (<code>TRUE</code> or <code>FALSE</code>) or a value between 0 and 3 to indicate whether the input should be checked for less possible results, see Details</p></td>
     </tr>
     <tr>
       <th>reference_df</th>
@@ -303,9 +303,9 @@
 <p>Use the <code><a href='mo_property.html'>mo_property</a></code> functions to get properties based on the returned code, see Examples.</p>
 <p><strong>Intelligent rules</strong> <br />
 This function uses intelligent rules to help getting fast and logical results. It tries to find matches in this order:</p><ul>
-<li><p>Taxonomic kingdom: it first searches in Bacteria, then Fungi, then Protozoa</p></li>
-<li><p>Human pathogenic prevalence: it first searches in more prevalent microorganisms, then less prevalent ones (see section <em>Microbial prevalence of pathogens in humans</em>)</p></li>
 <li><p>Valid MO codes and full names: it first searches in already valid MO code and known genus/species combinations</p></li>
+<li><p>Human pathogenic prevalence: it first searches in more prevalent microorganisms, then less prevalent ones (see <em>Microbial prevalence of pathogens in humans</em> below)</p></li>
+<li><p>Taxonomic kingdom: it first searches in Bacteria/Chromista, then Fungi, then Protozoa, then Viruses</p></li>
 <li><p>Breakdown of input values: from here it starts to breakdown input values to find possible matches</p></li>
 </ul>
     <p>A couple of effects because of these rules:</p><ul>
@@ -314,14 +314,17 @@ This function uses intelligent rules to help getting fast and logical results. I
 <li><p>Something like <code>"stau"</code> or <code>"S aur"</code> will return the ID of <em>Staphylococcus aureus</em> and not <em>Staphylococcus auricularis</em></p></li>
 </ul><p>This means that looking up human pathogenic microorganisms takes less time than looking up human non-pathogenic microorganisms.</p>
 <p><strong>Uncertain results</strong> <br />
-When using <code>allow_uncertain = TRUE</code> (which is the default setting), it will use additional rules if all previous rules failed to get valid results. These are:</p><ul>
-<li><p>It tries to look for previously accepted (but now invalid) taxonomic names</p></li>
-<li><p>It strips off values between brackets and the brackets itself, and re-evaluates the input with all previous rules</p></li>
-<li><p>It strips off words from the end one by one and re-evaluates the input with all previous rules</p></li>
-<li><p>It strips off words from the start one by one and re-evaluates the input with all previous rules</p></li>
-<li><p>It tries to look for some manual changes which are not (yet) published to the Catalogue of Life (like <em>Propionibacterium</em> being <em>Cutibacterium</em>)</p></li>
+The algorithm can additionally use three different levels of uncertainty to guess valid results. The default is <code>allow_uncertain = TRUE</code>, which is uqual to uncertainty level 2. Using <code>allow_uncertain = FALSE</code> will skip all of these additional rules:</p><ul>
+<li><p>(uncertainty level 1): It tries to look for only matching genera</p></li>
+<li><p>(uncertainty level 1): It tries to look for previously accepted (but now invalid) taxonomic names</p></li>
+<li><p>(uncertainty level 1): It tries to look for some manual changes which are not (yet) published to the Catalogue of Life (like <em>Propionibacterium</em> being <em>Cutibacterium</em>)</p></li>
+<li><p>(uncertainty level 2): It strips off values between brackets and the brackets itself, and re-evaluates the input with all previous rules</p></li>
+<li><p>(uncertainty level 2): It strips off words from the end one by one and re-evaluates the input with all previous rules</p></li>
+<li><p>(uncertainty level 3): It strips off words from the start one by one and re-evaluates the input with all previous rules</p></li>
+<li><p>(uncertainty level 3): It tries any part of the name</p></li>
 </ul>
-    <p>Examples:</p><ul>
+    <p>You can also use e.g. <code>as.mo(..., allow_uncertain = 1)</code> to only allow up to level 1 uncertainty.</p>
+<p>Examples:</p><ul>
 <li><p><code>"Streptococcus group B (known as S. agalactiae)"</code>. The text between brackets will be removed and a warning will be thrown that the result <em>Streptococcus group B</em> (<code>B_STRPT_GRB</code>) needs review.</p></li>
 <li><p><code>"S. aureus - please mind: MRSA"</code>. The last word will be stripped, after which the function will try to find a match. If it does not, the second last word will be stripped, etc. Again, a warning will be thrown that the result <em>Staphylococcus aureus</em> (<code>B_STPHY_AUR</code>) needs review.</p></li>
 <li><p><code>"Fluoroquinolone-resistant Neisseria gonorrhoeae"</code>. The first word will be stripped, after which the function will try to find a match. A warning will be thrown that the result <em>Neisseria gonorrhoeae</em> (<code>B_NESSR_GON</code>) needs review.</p></li>
@@ -330,7 +333,7 @@ When using <code>allow_uncertain = TRUE</code> (which is the default setting), i
 <p>Use <code>mo_uncertainties()</code> to get a data.frame with all values that were coerced to a valid value, but with uncertainty.</p>
 <p>Use <code>mo_renamed()</code> to get a vector with all values that could be coerced based on an old, previously accepted taxonomic name.</p>
 <p><strong>Microbial prevalence of pathogens in humans</strong> <br />
-The intelligent rules takes into account microbial prevalence of pathogens in humans. It uses three groups and every (sub)species is in the group it matches first. These groups are:</p><ul>
+The intelligent rules takes into account microbial prevalence of pathogens in humans. It uses three groups and all (sub)species are in only one group. These groups are:</p><ul>
 <li><p>1 (most prevalent): class is Gammaproteobacteria <strong>or</strong> genus is one of: <em>Enterococcus</em>, <em>Staphylococcus</em>, <em>Streptococcus</em>.</p></li>
 <li><p>2: phylum is one of: Proteobacteria, Firmicutes, Actinobacteria, Sarcomastigophora <strong>or</strong> genus is one of: <em>Aspergillus</em>, <em>Bacteroides</em>, <em>Candida</em>, <em>Capnocytophaga</em>, <em>Chryseobacterium</em>, <em>Cryptococcus</em>, <em>Elisabethkingia</em>, <em>Flavobacterium</em>, <em>Fusobacterium</em>, <em>Giardia</em>, <em>Leptotrichia</em>, <em>Mycoplasma</em>, <em>Prevotella</em>, <em>Rhodotorula</em>, <em>Treponema</em>, <em>Trichophyton</em>, <em>Ureaplasma</em>.</p></li>
 <li><p>3 (least prevalent): all others.</p></li>
@@ -374,6 +377,7 @@ The <code><a href='mo_property.html'>mo_property</a></code> functions (like <cod
 <span class='fu'>as.mo</span>(<span class='st'>"S aureus"</span>)
 <span class='fu'>as.mo</span>(<span class='st'>"Staphylococcus aureus"</span>)
 <span class='fu'>as.mo</span>(<span class='st'>"Staphylococcus aureus (MRSA)"</span>)
+<span class='fu'>as.mo</span>(<span class='st'>"Sthafilokkockus aaureuz"</span>) <span class='co'># handles incorrect spelling</span>
 <span class='fu'>as.mo</span>(<span class='st'>"MRSA"</span>) <span class='co'># Methicillin Resistant S. aureus</span>
 <span class='fu'>as.mo</span>(<span class='st'>"VISA"</span>) <span class='co'># Vancomycin Intermediate S. aureus</span>
 <span class='fu'>as.mo</span>(<span class='st'>"VRSA"</span>) <span class='co'># Vancomycin Resistant S. aureus</span>

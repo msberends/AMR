@@ -24,7 +24,7 @@ We've got a new website: [https://msberends.gitlab.io/AMR](https://msberends.git
 * Support for data from [WHONET](https://whonet.org/) and [EARS-Net](https://ecdc.europa.eu/en/about-us/partnerships-and-networks/disease-and-laboratory-networks/ears-net) (European Antimicrobial Resistance Surveillance Network):
   * Exported files from WHONET can be read and used in this package. For functions like `first_isolate()` and `eucast_rules()`, all parameters will be filled in automatically.
   * This package now knows all antibiotic abbrevations by EARS-Net (which are also being used by WHONET) - the `antibiotics` data set now contains a column `ears_net`.
-  * The function `as.mo()` now knows all WHONET species abbreviations too, because more than 1,600 microbial abbreviations were added to the `microorganisms.codes` data set.
+  * The function `as.mo()` now knows all WHONET species abbreviations too, because almost 2,000 microbial abbreviations were added to the `microorganisms.codes` data set.
 * New filters for antimicrobial classes. Use these functions to filter isolates on results in one of more antibiotics from a specific class:
   ```r
   filter_aminoglycosides()
@@ -100,8 +100,29 @@ We've got a new website: [https://msberends.gitlab.io/AMR](https://msberends.git
 * Functions `atc_ddd()` and `atc_groups()` have been renamed `atc_online_ddd()` and `atc_online_groups()`. The old functions are deprecated and will be removed in a future version.
 * Function `guess_mo()` is now deprecated in favour of `as.mo()` and will be removed in future versions
 * Function `guess_atc()` is now deprecated in favour of `as.atc()` and will be removed in future versions
-* Improvements for `as.mo()`:\
-  * Incoercible results will now be considered 'unknown', MO code `UNKNOWN`. Properties of these will be translated on foreign systems in all language already previously supported: German, Dutch, French, Italian, Spanish and Portuguese:
+* Improvements for `as.mo()`:
+  * Now handles incorrect spelling like `i` instead of `y` and `f` instead of `ph`:
+  ```r
+  # mo_fullname() uses as.mo() internally
+  
+  mo_fullname("Sthafilokockus aaureuz")
+  #> [1] "Staphylococcus aureus"
+  
+  mo_fullname("S. klossi")
+  #> [1] "Staphylococcus kloosii"
+  ```
+  * Uncertainty of the algorithm is now divided into four levels, 0 to 3, where the default `allow_uncertain = TRUE` is equal to uncertainty level 2. Run `?as.mo` for more info about these levels.
+  ```r
+  # equal:
+  as.mo(..., allow_uncertain = TRUE)
+  as.mo(..., allow_uncertain = 2)
+  
+  # also equal:
+  as.mo(..., allow_uncertain = FALSE)
+  as.mo(..., allow_uncertain = 0)
+  ```
+  Using `as.mo(..., allow_uncertain = 3)` could lead to very unreliable results.
+  * Incoercible results will now be considered 'unknown', MO code `UNKNOWN`. On foreign systems, properties of these will be translated to all languages already previously supported: German, Dutch, French, Italian, Spanish and Portuguese:
   ```r
   mo_genus("qwerty", language = "es")
   # Warning: 
@@ -164,6 +185,7 @@ We've got a new website: [https://msberends.gitlab.io/AMR](https://msberends.git
 * Automatic parameter filling for `mdro()`, `key_antibiotics()` and `eucast_rules()`
 * Updated examples for resistance prediction (`resistance_predict()` function)
 * Fix for `as.mic()` to support more values ending in (several) zeroes
+* if using different lengths of pattern and x in `%like%`, it will now return the call
 
 #### Other
 * Updated licence text to emphasise GPL 2.0 and that this is an R package.
