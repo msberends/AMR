@@ -99,5 +99,6 @@ globalVariables(c(".",
                   "umcg",
                   "value",
                   "Value",
+                  "x",
                   "y",
                   "year"))
