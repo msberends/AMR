@@ -25,11 +25,11 @@ Bhanu N.M. Sinha <a href="https://orcid.org/0000-0003-1634-0010"><img src="https
 <sup>a</sup> Thesis dissertant<br>
 <sup>b</sup> Thesis advisor
 
-<a href="https://www.rug.nl"><img src="pkgdown/logos/logo_rug.png" height="60px"></a>
-<a href="https://www.umcg.nl"><img src="pkgdown/logos/logo_umcg.png" height="60px"></a>
-<a href="https://www.certe.nl"><img src="pkgdown/logos/logo_certe.png" height="60px"></a>
-<a href="http://www.eurhealth-1health.eu"><img src="pkgdown/logos/logo_eh1h.png" height="60px"></a>
-<a href="http://www.eurhealth-1health.eu"><img src="pkgdown/logos/logo_interreg.png" height="60px"></a>
+<a href="https://www.rug.nl"><img src="man/figures/logo_rug.png" height="60px"></a>
+<a href="https://www.umcg.nl"><img src="man/figures/logo_umcg.png" height="60px"></a>
+<a href="https://www.certe.nl"><img src="man/figures/logo_certe.png" height="60px"></a>
+<a href="http://www.eurhealth-1health.eu"><img src="man/figures/logo_eh1h.png" height="60px"></a>
+<a href="http://www.eurhealth-1health.eu"><img src="man/figures/logo_interreg.png" height="60px"></a>
 
 ## How to get this package
 All stable versions of this package [are published on CRAN](https://CRAN.R-project.org/package=AMR), the official R network with a peer-reviewed submission process.

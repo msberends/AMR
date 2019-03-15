@@ -99,6 +99,8 @@
 #' @inheritSection AMR Read more on our website!
 set_mo_source <- function(path) {
 
+  file_location <- path.expand('~/mo_source.rds')
+
   if (!is.character(path) | length(path) > 1) {
     stop("`path` must be a character of length 1.")
   }
@@ -106,9 +108,9 @@ set_mo_source <- function(path) {
   if (path %in% c(NULL, "")) {
     options(mo_source = NULL)
     options(mo_source_timestamp = NULL)
-    if (file.exists("~/.mo_source.rds")) {
-      unlink("~/.mo_source.rds")
-      message("Removed mo_source file '~/.mo_source.rds'.")
+    if (file.exists(file_location)) {
+      unlink(file_location)
+      message("Removed mo_source file '", file_location, "'.")
     }
     return(invisible())
   }
@@ -165,23 +167,22 @@ set_mo_source <- function(path) {
   df <- as.data.frame(df, stringAsFactors = FALSE)
 
   # success
-  if (file.exists("~/.mo_source.rds")) {
+  if (file.exists(file_location)) {
     action <- "Updated"
   } else {
     action <- "Created"
   }
-  saveRDS(df, "~/.mo_source.rds")
+  saveRDS(df, file_location)
   options(mo_source = path)
   options(mo_source_timestamp = as.character(file.info(path)$mtime))
-  message(action, " mo_source file '~/.mo_source.rds' from '", path, "'.")
+  message(action, " mo_source file '", file_location, "' from '", path, "'.")
 }
 
 #' @rdname mo_source
 #' @export
 get_mo_source <- function() {
-
   if (is.null(getOption("mo_source", NULL))) {
-    return(NULL)
+    NULL
   } else {
     old_time <- as.POSIXct(getOption("mo_source_timestamp"))
     new_time <- as.POSIXct(as.character(file.info(getOption("mo_source", ""))$mtime))
@@ -195,9 +196,9 @@ get_mo_source <- function() {
       # set updated source
       set_mo_source(getOption("mo_source"))
     }
+    file_location <- path.expand('~/mo_source.rds')
+    readRDS(file_location)
   }
-
-  readRDS("~/.mo_source.rds")
 }
 
 mo_source_isvalid <- function(x) {

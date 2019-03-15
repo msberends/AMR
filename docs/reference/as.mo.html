@@ -80,7 +80,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.0.9022</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.0.9023</span>
       </span>
     </div>
 
@@ -242,7 +242,7 @@
     </div>
 
     <pre class="usage"><span class='fu'>as.mo</span>(<span class='no'>x</span>, <span class='kw'>Becker</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>Lancefield</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>allow_uncertain</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>reference_df</span> <span class='kw'>=</span> <span class='fu'><a href='mo_source.html'>get_mo_source</a></span>())
+  <span class='kw'>reference_df</span> <span class='kw'>=</span> <span class='fu'><a href='mo_source.html'>get_mo_source</a></span>(), <span class='no'>...</span>)
 
 <span class='fu'>is.mo</span>(<span class='no'>x</span>)
 
@@ -250,7 +250,9 @@
 
 <span class='fu'>mo_uncertainties</span>()
 
-<span class='fu'>mo_renamed</span>()</pre>
+<span class='fu'>mo_renamed</span>()
+
+<span class='fu'>clean_mo_history</span>()</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -277,6 +279,10 @@
       <th>reference_df</th>
       <td><p>a <code>data.frame</code> to use for extra reference when translating <code>x</code> to a valid <code>mo</code>. See <code><a href='mo_source.html'>set_mo_source</a></code> and <code><a href='mo_source.html'>get_mo_source</a></code> to automate the usage of your own codes (e.g. used in your analysis or organisation).</p></td>
     </tr>
+    <tr>
+      <th>...</th>
+      <td><p>other parameters passed on to functions</p></td>
+    </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
@@ -285,7 +291,8 @@
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>A microbial ID from this package (class: <code>mo</code>) typically looks like these examples:<br /></p><pre>
+    <p><strong>General info</strong> <br />
+A microbial ID from this package (class: <code>mo</code>) typically looks like these examples:<br /></p><pre>
   Code              Full name
   ---------------   --------------------------------------
   B_KLBSL           Klebsiella
@@ -300,7 +307,8 @@
                             F (Fungi), P (Protozoa), PL (Plantae) or V (Viruses)
 </pre>
     <p>Values that cannot be coered will be considered 'unknown' and have an MO code <code>UNKNOWN</code>.</p>
-<p>Use the <code><a href='mo_property.html'>mo_property</a></code> functions to get properties based on the returned code, see Examples.</p>
+<p>Use the <code><a href='mo_property.html'>mo_property</a>_*</code> functions to get properties based on the returned code, see Examples.</p>
+<p>All IDs that are found with zero uncertainty are saved to a local file (<code>"~/.Rhistory_mo"</code>) to improve speed for every next time. Use <code>clean_mo_history()</code> to delete this file, which resets the algorithms. Only previous results will be used from this version of the <code>AMR</code> package, since the taxonomic tree may change in the future for any organism.</p>
 <p><strong>Intelligent rules</strong> <br />
 This function uses intelligent rules to help getting fast and logical results. It tries to find matches in this order:</p><ul>
 <li><p>Valid MO codes and full names: it first searches in already valid MO code and known genus/species combinations</p></li>

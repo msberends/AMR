@@ -147,7 +147,7 @@ reference:
     - '`WHONET`'
     - '`microorganisms.codes`'
     - '`microorganisms.old`'
-  - title: Other
+  - title: Other functions
     desc: >
       These functions are mostly for internal use, but some of
       them may also be suitable for your analysis. Especially the
@@ -155,7 +155,13 @@ reference:
     contents:
     - '`get_locale`'
     - '`like`'
-    - '`ab_property`'
+  - title: Deprecated functions
+    desc: >
+      These functions are deprecated, meaning that they still
+      work but show a warning with every use and will be removed
+      in a future version.
+    contents:
+    - '`AMR-deprecated`'
 
 authors:
   Matthijs S. Berends:

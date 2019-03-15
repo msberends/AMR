@@ -19,57 +19,16 @@
 # Visit our website for more info: https://msberends.gitab.io/AMR.     #
 # ==================================================================== #
 
-# Download script file from GitHub
-init:
-  ps: |
-        $ErrorActionPreference = "Stop"
-        Invoke-WebRequest https://raw.githubusercontent.com/krlmlr/r-appveyor/master/scripts/appveyor-tool.ps1 -OutFile "..\appveyor-tool.ps1"
-        Import-Module '..\appveyor-tool.ps1'
+context("mo_history.R")
 
-install:
-  ps: Bootstrap
+test_that("mo_history works", {
+  clean_mo_history()
+  expect_equal(read_mo_history(force = TRUE),
+               NULL)
 
-cache:
-  - C:\RLibrary
-
-# Adapt as necessary starting from here
-
-environment:
-  R_ARCH: x64
-  GCC_PATH: mingw_64
-  WARNINGS_ARE_ERRORS: 1
-  PKGTYPE: win.binary
-  # USE_RTOOLS: true
-
-  matrix:
-  - R_VERSION: release
-  - R_VERSION: devel
-
-build_script:
-  - travis-tool.sh install_deps
-
-test_script:
-  - travis-tool.sh run_tests
-
-on_failure:
-  - 7z a failure.zip *.Rcheck\*
-  - appveyor PushArtifact failure.zip
-
-artifacts:
-  - path: '*.Rcheck\**\*.log'
-    name: Logs
-
-  - path: '*.Rcheck\**\*.out'
-    name: Logs
-
-  - path: '*.Rcheck\**\*.fail'
-    name: Logs
-
-  - path: '*.Rcheck\**\*.Rout'
-    name: Logs
-
-  - path: '\*_*.tar.gz'
-    name: Bits
-
-  - path: '\*_*.zip'
-    name: Bits
+  set_mo_history("testsubject", "B_ESCHR_COL", force = TRUE)
+  expect_equal(get_mo_history("testsubject", force = TRUE),
+               "B_ESCHR_COL")
+  expect_equal(colnames(read_mo_history(force = TRUE)),
+               c("x", "mo"))
+})

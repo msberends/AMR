@@ -78,7 +78,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.0.9022</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.0.9023</span>
       </span>
     </div>
 
@@ -349,8 +349,8 @@ These functions use <code><a href="../reference/as.atc.html">as.atc()</a></code>
 <li>Function <code><a href="../reference/AMR-deprecated.html">guess_atc()</a></code> is now deprecated in favour of <code><a href="../reference/as.atc.html">as.atc()</a></code> and will be removed in future versions</li>
 <li>Improvements for <code><a href="../reference/as.mo.html">as.mo()</a></code>:
 <ul>
-<li>Now handles incorrect spelling like <code>i</code> instead of <code>y</code> and <code>f</code> instead of <code>ph</code>:</li>
-</ul>
+<li>
+<p>Now handles incorrect spelling, like <code>i</code> instead of <code>y</code> and <code>f</code> instead of <code>ph</code>:</p>
 <div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" title="1"><span class="co"># mo_fullname() uses as.mo() internally</span></a>
 <a class="sourceLine" id="cb7-2" title="2"></a>
 <a class="sourceLine" id="cb7-3" title="3"><span class="kw"><a href="../reference/mo_property.html">mo_fullname</a></span>(<span class="st">"Sthafilokockus aaureuz"</span>)</a>
@@ -358,9 +358,9 @@ These functions use <code><a href="../reference/as.atc.html">as.atc()</a></code>
 <a class="sourceLine" id="cb7-5" title="5"></a>
 <a class="sourceLine" id="cb7-6" title="6"><span class="kw"><a href="../reference/mo_property.html">mo_fullname</a></span>(<span class="st">"S. klossi"</span>)</a>
 <a class="sourceLine" id="cb7-7" title="7"><span class="co">#&gt; [1] "Staphylococcus kloosii"</span></a></code></pre></div>
-<ul>
-<li>Uncertainty of the algorithm is now divided into four levels, 0 to 3, where the default <code>allow_uncertain = TRUE</code> is equal to uncertainty level 2. Run <code><a href="../reference/as.mo.html">?as.mo</a></code> for more info about these levels.</li>
-</ul>
+</li>
+<li>
+<p>Uncertainty of the algorithm is now divided into four levels, 0 to 3, where the default <code>allow_uncertain = TRUE</code> is equal to uncertainty level 2. Run <code><a href="../reference/as.mo.html">?as.mo</a></code> for more info about these levels.</p>
 <div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" title="1"><span class="co"># equal:</span></a>
 <a class="sourceLine" id="cb8-2" title="2"><span class="kw"><a href="../reference/as.mo.html">as.mo</a></span>(..., <span class="dt">allow_uncertain =</span> <span class="ot">TRUE</span>)</a>
 <a class="sourceLine" id="cb8-3" title="3"><span class="kw"><a href="../reference/as.mo.html">as.mo</a></span>(..., <span class="dt">allow_uncertain =</span> <span class="dv">2</span>)</a>
@@ -368,15 +368,15 @@ These functions use <code><a href="../reference/as.atc.html">as.atc()</a></code>
 <a class="sourceLine" id="cb8-5" title="5"><span class="co"># also equal:</span></a>
 <a class="sourceLine" id="cb8-6" title="6"><span class="kw"><a href="../reference/as.mo.html">as.mo</a></span>(..., <span class="dt">allow_uncertain =</span> <span class="ot">FALSE</span>)</a>
 <a class="sourceLine" id="cb8-7" title="7"><span class="kw"><a href="../reference/as.mo.html">as.mo</a></span>(..., <span class="dt">allow_uncertain =</span> <span class="dv">0</span>)</a></code></pre></div>
-Using <code><a href="../reference/as.mo.html">as.mo(..., allow_uncertain = 3)</a></code> could lead to very unreliable results.
-<ul>
-<li>Incoercible results will now be considered ‘unknown’, MO code <code>UNKNOWN</code>. On foreign systems, properties of these will be translated to all languages already previously supported: German, Dutch, French, Italian, Spanish and Portuguese:</li>
-</ul>
+Using <code><a href="../reference/as.mo.html">as.mo(..., allow_uncertain = 3)</a></code> could lead to very unreliable results.</li>
+<li>All microbial IDs that are found with zero uncertainty are now saved to a local file <code>~/.Rhistory_mo</code>. Use the new function <code><a href="../reference/as.mo.html">clean_mo_history()</a></code> to delete this file, which resets the algorithms.</li>
+<li>
+<p>Incoercible results will now be considered ‘unknown’, MO code <code>UNKNOWN</code>. On foreign systems, properties of these will be translated to all languages already previously supported: German, Dutch, French, Italian, Spanish and Portuguese:</p>
 <div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" title="1"><span class="kw"><a href="../reference/mo_property.html">mo_genus</a></span>(<span class="st">"qwerty"</span>, <span class="dt">language =</span> <span class="st">"es"</span>)</a>
 <a class="sourceLine" id="cb9-2" title="2"><span class="co"># Warning: </span></a>
 <a class="sourceLine" id="cb9-3" title="3"><span class="co"># one unique value (^= 100.0%) could not be coerced and is considered 'unknown': "qwerty". Use mo_failures() to review it.</span></a>
 <a class="sourceLine" id="cb9-4" title="4"><span class="co">#&gt; [1] "(género desconocido)"</span></a></code></pre></div>
-<ul>
+</li>
 <li>Fix for vector containing only empty values</li>
 <li>Finds better results when input is in other languages</li>
 <li>Better handling for subspecies</li>

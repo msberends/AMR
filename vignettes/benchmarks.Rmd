@@ -49,7 +49,7 @@ S.aureus <- microbenchmark(as.mo("sau"),
                            as.mo("S.  aureus"),
                            as.mo("Staphylococcus aureus"),
                            times = 10)
-print(S.aureus, unit = "ms", signif = 3)
+print(S.aureus, unit = "ms", signif = 2)
 ```
 
 In the table above, all measurements are shown in milliseconds (thousands of seconds). A value of 5 milliseconds means it can determine 200 input values per second. It case of 100 milliseconds, this is only 10 input values per second. The second input is the only one that has to be looked up thoroughly. All the others are known codes (the first one is a WHONET code) or common laboratory codes, or common full organism names like the last one. Full organism names are always preferred.
@@ -58,12 +58,12 @@ To achieve this speed, the `as.mo` function also takes into account the prevalen
 
 ```{r}
 T.islandicus <- microbenchmark(as.mo("theisl"),
-                                 as.mo("THEISL"),
-                                 as.mo("T. islandicus"),
-                                 as.mo("T.  islandicus"),
-                                 as.mo("Thermus islandicus"),
-                                 times = 10)
-print(T.islandicus, unit = "ms", signif = 3)
+                               as.mo("THEISL"),
+                               as.mo("T. islandicus"),
+                               as.mo("T.  islandicus"),
+                               as.mo("Thermus islandicus"),
+                               times = 10)
+print(T.islandicus, unit = "ms", signif = 2)
 ```
 
 That takes `r round(mean(T.islandicus$time, na.rm = TRUE) / mean(S.aureus$time, na.rm = TRUE), 1)` times as much time on average. A value of 100 milliseconds means it can only determine ~10 different input values per second. We can conclude that looking up arbitrary codes of less prevalent microorganisms is the worst way to go, in terms of calculation performance. Full names (like *Thermus islandicus*) are almost fast - these are the most probable input from most data sets.
@@ -79,13 +79,33 @@ boxplot(microbenchmark(as.mo("Thermus islandicus"),
                        as.mo("T. islandicus"),
                        as.mo("P. brevis"),
                        as.mo("E. coli"),
-                       times = 50),
+                       times = 10),
         horizontal = TRUE, las = 1, unit = "s", log = FALSE,
-        xlab = "", ylab = "Time in seconds",
+        xlab = "", ylab = "Time in seconds", ylim = c(0, 0.5),
         main = "Benchmarks per prevalence")
 ```
 
-Uncommon microorganisms take a lot more time than common microorganisms. To relieve this pitfall and further improve performance, two important calculations take almost no time at all: **repetitive results** and **already precalculated results**.
+In reality, the `as.mo()` functions **learns from its own output to speed up determinations for next times**. In above figure, this effect was disabled to show the difference with the boxplot below - when you would use `as.mo()` yourself:
+
+```{r, echo = FALSE}
+clean_mo_history()
+par(mar = c(5, 16, 4, 2))
+boxplot(microbenchmark(
+  'as.mo("Thermus islandicus")' = as.mo("Thermus islandicus", force_mo_history = TRUE),
+  'as.mo("Prevotella brevis")' = as.mo("Prevotella brevis", force_mo_history = TRUE),
+  'as.mo("Escherichia coli")' = as.mo("Escherichia coli", force_mo_history = TRUE),
+  'as.mo("T. islandicus")' = as.mo("T. islandicus", force_mo_history = TRUE),
+  'as.mo("P. brevis")' = as.mo("P. brevis", force_mo_history = TRUE),
+  'as.mo("E. coli")' = as.mo("E. coli", force_mo_history = TRUE),
+  times = 10),
+        horizontal = TRUE, las = 1, unit = "s", log = FALSE,
+        xlab = "", ylab = "Time in seconds", ylim = c(0, 0.5),
+        main = "Benchmarks per prevalence")
+```
+
+The highest outliers are the first times. All next determinations were done in only thousands of seconds.
+
+Still, uncommon microorganisms take a lot more time than common microorganisms, especially the first time. To relieve this pitfall and further improve performance, two important calculations take almost no time at all: **repetitive results** and **already precalculated results**.
 
 ### Repetitive results
 

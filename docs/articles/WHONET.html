@@ -40,7 +40,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.0.9021</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.0.9023</span>
       </span>
     </div>
 
@@ -192,7 +192,7 @@
       <h1>How to work with WHONET data</h1>
                         <h4 class="author">Matthijs S. Berends</h4>
             
-            <h4 class="date">05 March 2019</h4>
+            <h4 class="date">15 March 2019</h4>
       
       
       <div class="hidden name"><code>WHONET.Rmd</code></div>
@@ -227,17 +227,17 @@
 <a class="sourceLine" id="cb3-3" title="3"><span class="st">  </span><span class="co"># get microbial ID based on given organism</span></a>
 <a class="sourceLine" id="cb3-4" title="4"><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(<span class="dt">mo =</span> <span class="kw"><a href="../reference/as.mo.html">as.mo</a></span>(Organism)) <span class="op">%&gt;%</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb3-5" title="5"><span class="st">  </span><span class="co"># transform everything from "AMP_ND10" to "CIP_EE" to the new `rsi` class</span></a>
-<a class="sourceLine" id="cb3-6" title="6"><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/summarise_all.html">mutate_at</a></span>(<span class="kw"><a href="https://dplyr.tidyverse.org/reference/vars.html">vars</a></span>(AMP_ND10<span class="op">:</span>CIP_EE), as.rsi)</a></code></pre></div>
+<a class="sourceLine" id="cb3-6" title="6"><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/mutate_all.html">mutate_at</a></span>(<span class="kw"><a href="https://dplyr.tidyverse.org/reference/vars.html">vars</a></span>(AMP_ND10<span class="op">:</span>CIP_EE), as.rsi)</a></code></pre></div>
 <p>No errors or warnings, so all values are transformed succesfully. Let’s check it though, with a couple of frequency tables:</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" title="1"><span class="co"># our newly created `mo` variable</span></a>
 <a class="sourceLine" id="cb4-2" title="2">data <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="../reference/freq.html">freq</a></span>(mo, <span class="dt">nmax =</span> <span class="dv">10</span>)</a></code></pre></div>
 <p><strong>Frequency table of <code>mo</code> from a <code>data.frame</code> (500 x 54)</strong></p>
 <p>Class: <code>mo</code> (<code>character</code>)<br>
 Length: 500 (of which NA: 0 = 0.00%)<br>
-Unique: 39</p>
-<p>Families: 9<br>
-Genera: 16<br>
-Species: 36</p>
+Unique: 37</p>
+<p>Families: 10<br>
+Genera: 17<br>
+Species: 35</p>
 <table class="table">
 <thead><tr class="header">
 <th align="left"></th>
@@ -258,7 +258,7 @@ Species: 36</p>
 </tr>
 <tr class="even">
 <td align="left">2</td>
-<td align="left">B_STPHY_CNS</td>
+<td align="left">B_STPHY</td>
 <td align="right">74</td>
 <td align="right">14.8%</td>
 <td align="right">319</td>
@@ -314,23 +314,23 @@ Species: 36</p>
 </tr>
 <tr class="odd">
 <td align="left">9</td>
-<td align="left">B_ENTRB_CLO</td>
-<td align="right">5</td>
-<td align="right">1.0%</td>
-<td align="right">439</td>
-<td align="right">87.8%</td>
+<td align="left">B_STRPT</td>
+<td align="right">8</td>
+<td align="right">1.6%</td>
+<td align="right">442</td>
+<td align="right">88.4%</td>
 </tr>
 <tr class="even">
 <td align="left">10</td>
-<td align="left">B_ENTRC</td>
-<td align="right">4</td>
-<td align="right">0.8%</td>
-<td align="right">443</td>
-<td align="right">88.6%</td>
+<td align="left">B_ENTRB_CLO</td>
+<td align="right">5</td>
+<td align="right">1.0%</td>
+<td align="right">447</td>
+<td align="right">89.4%</td>
 </tr>
 </tbody>
 </table>
-<p>(omitted 29 entries, n = 57 [11.4%])</p>
+<p>(omitted 27 entries, n = 53 [10.6%])</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" title="1"></a>
 <a class="sourceLine" id="cb5-2" title="2"><span class="co"># our transformed antibiotic columns</span></a>
 <a class="sourceLine" id="cb5-3" title="3"><span class="co"># amoxicillin/clavulanic acid (J01CR02) as an example</span></a>

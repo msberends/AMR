@@ -101,34 +101,35 @@ We've got a new website: [https://msberends.gitlab.io/AMR](https://msberends.git
 * Function `guess_mo()` is now deprecated in favour of `as.mo()` and will be removed in future versions
 * Function `guess_atc()` is now deprecated in favour of `as.atc()` and will be removed in future versions
 * Improvements for `as.mo()`:
-  * Now handles incorrect spelling like `i` instead of `y` and `f` instead of `ph`:
-  ```r
-  # mo_fullname() uses as.mo() internally
-  
-  mo_fullname("Sthafilokockus aaureuz")
-  #> [1] "Staphylococcus aureus"
-  
-  mo_fullname("S. klossi")
-  #> [1] "Staphylococcus kloosii"
-  ```
+  * Now handles incorrect spelling, like `i` instead of `y` and `f` instead of `ph`:
+    ```r
+    # mo_fullname() uses as.mo() internally
+    
+    mo_fullname("Sthafilokockus aaureuz")
+    #> [1] "Staphylococcus aureus"
+    
+    mo_fullname("S. klossi")
+    #> [1] "Staphylococcus kloosii"
+    ```
   * Uncertainty of the algorithm is now divided into four levels, 0 to 3, where the default `allow_uncertain = TRUE` is equal to uncertainty level 2. Run `?as.mo` for more info about these levels.
-  ```r
-  # equal:
-  as.mo(..., allow_uncertain = TRUE)
-  as.mo(..., allow_uncertain = 2)
-  
-  # also equal:
-  as.mo(..., allow_uncertain = FALSE)
-  as.mo(..., allow_uncertain = 0)
-  ```
-  Using `as.mo(..., allow_uncertain = 3)` could lead to very unreliable results.
+    ```r
+    # equal:
+    as.mo(..., allow_uncertain = TRUE)
+    as.mo(..., allow_uncertain = 2)
+    
+    # also equal:
+    as.mo(..., allow_uncertain = FALSE)
+    as.mo(..., allow_uncertain = 0)
+    ```
+    Using `as.mo(..., allow_uncertain = 3)` could lead to very unreliable results.
+  * All microbial IDs that are found with zero uncertainty are now saved to a local file `~/.Rhistory_mo`. Use the new function `clean_mo_history()` to delete this file, which resets the algorithms.
   * Incoercible results will now be considered 'unknown', MO code `UNKNOWN`. On foreign systems, properties of these will be translated to all languages already previously supported: German, Dutch, French, Italian, Spanish and Portuguese:
-  ```r
-  mo_genus("qwerty", language = "es")
-  # Warning: 
-  # one unique value (^= 100.0%) could not be coerced and is considered 'unknown': "qwerty". Use mo_failures() to review it.
-  #> [1] "(género desconocido)"
-  ```
+    ```r
+    mo_genus("qwerty", language = "es")
+    # Warning: 
+    # one unique value (^= 100.0%) could not be coerced and is considered 'unknown': "qwerty". Use mo_failures() to review it.
+    #> [1] "(género desconocido)"
+    ```
   * Fix for vector containing only empty values
   * Finds better results when input is in other languages
   * Better handling for subspecies

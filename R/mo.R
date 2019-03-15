@@ -31,10 +31,12 @@
 #'   This excludes \emph{Enterococci} at default (who are in group D), use \code{Lancefield = "all"} to also categorise all \emph{Enterococci} as group D.
 #' @param allow_uncertain a logical (\code{TRUE} or \code{FALSE}) or a value between 0 and 3 to indicate whether the input should be checked for less possible results, see Details
 #' @param reference_df a \code{data.frame} to use for extra reference when translating \code{x} to a valid \code{mo}. See \code{\link{set_mo_source}} and \code{\link{get_mo_source}} to automate the usage of your own codes (e.g. used in your analysis or organisation).
+#' @param ... other parameters passed on to functions
 #' @rdname as.mo
 #' @aliases mo
 #' @keywords mo Becker becker Lancefield lancefield guess
 #' @details
+#' \strong{General info} \cr
 #' A microbial ID from this package (class: \code{mo}) typically looks like these examples:\cr
 #' \preformatted{
 #'   Code              Full name
@@ -53,7 +55,9 @@
 #'
 #' Values that cannot be coered will be considered 'unknown' and have an MO code \code{UNKNOWN}.
 #'
-#' Use the \code{\link{mo_property}} functions to get properties based on the returned code, see Examples.
+#' Use the \code{\link{mo_property}_*} functions to get properties based on the returned code, see Examples.
+#'
+#' All IDs that are found with zero uncertainty are saved to a local file (\code{"~/.Rhistory_mo"}) to improve speed for every next time. Use \code{clean_mo_history()} to delete this file, which resets the algorithms. Only previous results will be used from this version of the \code{AMR} package, since the taxonomic tree may change in the future for any organism.
 #'
 #' \strong{Intelligent rules} \cr
 #' This function uses intelligent rules to help getting fast and logical results. It tries to find matches in this order:
@@ -174,11 +178,13 @@
 #' df <- df %>%
 #'   mutate(mo = as.mo(paste(genus, species)))
 #' }
-as.mo <- function(x, Becker = FALSE, Lancefield = FALSE, allow_uncertain = TRUE, reference_df = get_mo_source()) {
+as.mo <- function(x, Becker = FALSE, Lancefield = FALSE, allow_uncertain = TRUE, reference_df = get_mo_source(), ...) {
   if (!"AMR" %in% base::.packages()) {
     library("AMR")
     # check onLoad() in R/zzz.R: data tables are created there.
   }
+
+  mo_hist <- get_mo_history(x, force = isTRUE(list(...)$force_mo_history))
 
   if (mo_source_isvalid(reference_df)
       & isFALSE(Becker)
@@ -211,6 +217,13 @@ as.mo <- function(x, Becker = FALSE, Lancefield = FALSE, allow_uncertain = TRUE,
              & isFALSE(Lancefield)) {
     y <- x
 
+
+  } else if (sum(is.na(mo_hist)) == 0
+             & isFALSE(Becker)
+             & isFALSE(Lancefield)) {
+    # check previously found results
+    y <- mo_hist
+
   } else if (all(tolower(x) %in% microorganismsDT$fullname_lower)
              & isFALSE(Becker)
              & isFALSE(Lancefield)) {
@@ -229,13 +242,22 @@ as.mo <- function(x, Becker = FALSE, Lancefield = FALSE, allow_uncertain = TRUE,
                                                        on = "fullname_lower",
                                                        "mo"][[1]]
     }
+    # save them too
+    mo_hist <- read_mo_history(force = isTRUE(list(...)$force_mo_history))
+    if (any(!x %in% mo_hist$x)) {
+      for (i in 1:length(y)) {
+        set_mo_history(x[i], y[i], force = isTRUE(list(...)$force_mo_history))
+      }
+    }
 
-  } else {
-    # will be checked for mo class in validation and uses exec_as.mo internally if necessary
-    y <- mo_validate(x = x, property = "mo",
-                     Becker = Becker, Lancefield = Lancefield,
-                     allow_uncertain = allow_uncertain, reference_df = reference_df)
-  }
+    } else {
+      # will be checked for mo class in validation and uses exec_as.mo internally if necessary
+      y <- mo_validate(x = x, property = "mo",
+                       Becker = Becker, Lancefield = Lancefield,
+                       allow_uncertain = allow_uncertain, reference_df = reference_df,
+                       force_mo_history = isTRUE(list(...)$force_mo_history))
+    }
+
 
   structure(.Data = y, class = "mo")
 }
@@ -249,9 +271,14 @@ is.mo <- function(x) {
 #' @importFrom dplyr %>% pull left_join n_distinct progress_estimated filter distinct
 #' @importFrom data.table data.table as.data.table setkey
 #' @importFrom crayon magenta red blue silver italic has_color
-exec_as.mo <- function(x, Becker = FALSE, Lancefield = FALSE,
-                       allow_uncertain = TRUE, reference_df = get_mo_source(),
-                       property = "mo", clear_options = TRUE) {
+exec_as.mo <- function(x,
+                       Becker = FALSE,
+                       Lancefield = FALSE,
+                       allow_uncertain = TRUE,
+                       reference_df = get_mo_source(),
+                       property = "mo",
+                       clear_options = TRUE,
+                       force_mo_history = FALSE) {
 
   if (!"AMR" %in% base::.packages()) {
     library("AMR")
@@ -412,7 +439,7 @@ exec_as.mo <- function(x, Becker = FALSE, Lancefield = FALSE,
     # replace hemolytic by haemolytic
     x <- gsub("ha?emoly", "haemoly", x)
     # place minus back in streptococci
-    x <- gsub("(alpha|beta|gamma) ha?emoly", "\\1-haemoly", x)
+    x <- gsub("(alpha|beta|gamma).?ha?emoly", "\\1-haemoly", x)
     # remove genus as first word
     x <- gsub("^Genus ", "", x)
     # allow characters that resemble others
@@ -458,6 +485,13 @@ exec_as.mo <- function(x, Becker = FALSE, Lancefield = FALSE,
 
       progress$tick()$print()
 
+      found <- microorganismsDT[mo == get_mo_history(x_backup[i], force = force_mo_history), ..property][[1]]
+      # previously found result
+      if (length(found) > 0) {
+        x[i] <- found[1L]
+        next
+      }
+
       found <- microorganismsDT[mo == toupper(x_backup[i]), ..property][[1]]
       # is a valid MO code
       if (length(found) > 0) {
@@ -469,6 +503,9 @@ exec_as.mo <- function(x, Becker = FALSE, Lancefield = FALSE,
       # most probable: is exact match in fullname
       if (length(found) > 0) {
         x[i] <- found[1L]
+        if (property == "mo") {
+          set_mo_history(x_backup[i], x[i], force = force_mo_history)
+        }
         next
       }
 
@@ -494,6 +531,9 @@ exec_as.mo <- function(x, Becker = FALSE, Lancefield = FALSE,
             # return first genus that begins with x_trimmed, e.g. when "E. spp."
             if (length(found) > 0) {
               x[i] <- found[1L]
+              if (property == "mo") {
+                set_mo_history(x_backup[i], x[i], force = force_mo_history)
+              }
               next
             }
           }
@@ -515,50 +555,80 @@ exec_as.mo <- function(x, Becker = FALSE, Lancefield = FALSE,
       if (!is.na(x_trimmed[i])) {
         if (toupper(x_backup_without_spp[i]) %in% c('MRSA', 'MSSA', 'VISA', 'VRSA')) {
           x[i] <- microorganismsDT[mo == 'B_STPHY_AUR', ..property][[1]][1L]
+          if (property == "mo") {
+            set_mo_history(x_backup[i], x[i], force = force_mo_history)
+          }
           next
         }
         if (toupper(x_backup_without_spp[i]) %in% c('MRSE', 'MSSE')) {
           x[i] <- microorganismsDT[mo == 'B_STPHY_EPI', ..property][[1]][1L]
+          if (property == "mo") {
+            set_mo_history(x_backup[i], x[i], force = force_mo_history)
+          }
           next
         }
         if (toupper(x_backup_without_spp[i]) == "VRE"
             | x_backup_without_spp[i] %like% '(enterococci|enterokok|enterococo)[a-z]*?$')  {
           x[i] <- microorganismsDT[mo == 'B_ENTRC', ..property][[1]][1L]
+          if (property == "mo") {
+            set_mo_history(x_backup[i], x[i], force = force_mo_history)
+          }
           next
         }
         if (toupper(x_backup_without_spp[i]) %in% c("EHEC", "EPEC", "EIEC", "STEC", "ATEC")) {
           x[i] <- microorganismsDT[mo == 'B_ESCHR_COL', ..property][[1]][1L]
+          if (property == "mo") {
+            set_mo_history(x_backup[i], x[i], force = force_mo_history)
+          }
           next
         }
         if (toupper(x_backup_without_spp[i]) == 'MRPA') {
           # multi resistant P. aeruginosa
           x[i] <- microorganismsDT[mo == 'B_PSDMN_AER', ..property][[1]][1L]
+          if (property == "mo") {
+            set_mo_history(x_backup[i], x[i], force = force_mo_history)
+          }
           next
         }
         if (toupper(x_backup_without_spp[i]) == 'CRS'
             | toupper(x_backup_without_spp[i]) == 'CRSM') {
           # co-trim resistant S. maltophilia
           x[i] <- microorganismsDT[mo == 'B_STNTR_MAL', ..property][[1]][1L]
+          if (property == "mo") {
+            set_mo_history(x_backup[i], x[i], force = force_mo_history)
+          }
           next
         }
         if (toupper(x_backup_without_spp[i]) %in% c('PISP', 'PRSP', 'VISP', 'VRSP')) {
           # peni I, peni R, vanco I, vanco R: S. pneumoniae
           x[i] <- microorganismsDT[mo == 'B_STRPT_PNE', ..property][[1]][1L]
+          if (property == "mo") {
+            set_mo_history(x_backup[i], x[i], force = force_mo_history)
+          }
           next
         }
         if (x_backup_without_spp[i] %like% '^G[ABCDFGHK]S$') {
           # Streptococci, like GBS = Group B Streptococci (B_STRPT_GRB)
           x[i] <- microorganismsDT[mo == gsub("G([ABCDFGHK])S", "B_STRPT_GR\\1", x_backup_without_spp[i], ignore.case = TRUE), ..property][[1]][1L]
+          if (property == "mo") {
+            set_mo_history(x_backup[i], x[i], force = force_mo_history)
+          }
           next
         }
         if (x_backup_without_spp[i] %like% '(streptococ|streptokok).* [ABCDFGHK]$') {
           # Streptococci in different languages, like "estreptococos grupo B"
           x[i] <- microorganismsDT[mo == gsub(".*(streptococ|streptokok|estreptococ).* ([ABCDFGHK])$", "B_STRPT_GR\\2", x_backup_without_spp[i], ignore.case = TRUE), ..property][[1]][1L]
+          if (property == "mo") {
+            set_mo_history(x_backup[i], x[i], force = force_mo_history)
+          }
           next
         }
         if (x_backup_without_spp[i] %like% 'group [ABCDFGHK] (streptococ|streptokok|estreptococ)') {
           # Streptococci in different languages, like "Group A Streptococci"
           x[i] <- microorganismsDT[mo == gsub(".*group ([ABCDFGHK]) (streptococ|streptokok|estreptococ).*", "B_STRPT_GR\\1", x_backup_without_spp[i], ignore.case = TRUE), ..property][[1]][1L]
+          if (property == "mo") {
+            set_mo_history(x_backup[i], x[i], force = force_mo_history)
+          }
           next
         }
         # CoNS/CoPS in different languages (support for German, Dutch, Spanish, Portuguese) ----
@@ -567,6 +637,9 @@ exec_as.mo <- function(x, Becker = FALSE, Lancefield = FALSE,
             | x_backup_without_spp[i] %like% '[ck]o?ns[^a-z]?$') {
           # coerce S. coagulase negative
           x[i] <- microorganismsDT[mo == 'B_STPHY_CNS', ..property][[1]][1L]
+          if (property == "mo") {
+            set_mo_history(x_backup[i], x[i], force = force_mo_history)
+          }
           next
         }
         if (x_backup_without_spp[i] %like% '[ck]oagulas[ea] positie?[vf]'
@@ -574,24 +647,38 @@ exec_as.mo <- function(x, Becker = FALSE, Lancefield = FALSE,
             | x_backup_without_spp[i] %like% '[ck]o?ps[^a-z]?$') {
           # coerce S. coagulase positive
           x[i] <- microorganismsDT[mo == 'B_STPHY_CPS', ..property][[1]][1L]
+          if (property == "mo") {
+            set_mo_history(x_backup[i], x[i], force = force_mo_history)
+          }
           next
         }
         if (x_backup_without_spp[i] %like% 'gram[ -]?neg.*'
+            | x_backup_without_spp[i] %like% 'negatie?[vf]'
             | x_trimmed[i] %like% 'gram[ -]?neg.*') {
           # coerce Gram negatives
           x[i] <- microorganismsDT[mo == 'B_GRAMN', ..property][[1]][1L]
+          if (property == "mo") {
+            set_mo_history(x_backup[i], x[i], force = force_mo_history)
+          }
           next
         }
         if (x_backup_without_spp[i] %like% 'gram[ -]?pos.*'
+            | x_backup_without_spp[i] %like% 'positie?[vf]'
             | x_trimmed[i] %like% 'gram[ -]?pos.*') {
           # coerce Gram positives
           x[i] <- microorganismsDT[mo == 'B_GRAMP', ..property][[1]][1L]
+          if (property == "mo") {
+            set_mo_history(x_backup[i], x[i], force = force_mo_history)
+          }
           next
         }
         if (grepl("[sS]almonella [A-Z][a-z]+ ?.*", x_backup_without_spp[i], ignore.case = FALSE)) {
           if (x_backup_without_spp[i] %like% "Salmonella group") {
             # Salmonella Group A to Z, just return S. species for now
             x[i] <- microorganismsDT[mo == 'B_SLMNL', ..property][[1]][1L]
+            if (property == "mo") {
+              set_mo_history(x_backup[i], x[i], force = force_mo_history)
+            }
             options(mo_renamed = c(getOption("mo_renamed"),
                                    magenta(paste0("Note: ",
                                                   italic("Salmonella"), " ", trimws(gsub("Salmonella", "", x_backup_without_spp[i])),
@@ -601,6 +688,9 @@ exec_as.mo <- function(x, Becker = FALSE, Lancefield = FALSE,
           } else {
             # Salmonella with capital letter species like "Salmonella Goettingen" - they're all S. enterica
             x[i] <- microorganismsDT[mo == 'B_SLMNL_ENT', ..property][[1]][1L]
+            if (property == "mo") {
+              set_mo_history(x_backup[i], x[i], force = force_mo_history)
+            }
             options(mo_renamed = c(getOption("mo_renamed"),
                                    magenta(paste0("Note: ",
                                                   italic("Salmonella"), " ", trimws(gsub("Salmonella", "", x_backup_without_spp[i])),
@@ -618,12 +708,18 @@ exec_as.mo <- function(x, Becker = FALSE, Lancefield = FALSE,
         found <- microorganismsDT[fullname_lower %in% tolower(c(x_species[i], x_trimmed_species[i])), ..property][[1]]
         if (length(found) > 0) {
           x[i] <- found[1L]
+          if (property == "mo") {
+            set_mo_history(x_backup[i], x[i], force = force_mo_history)
+          }
           next
         }
         if (nchar(x_backup_without_spp[i]) >= 6) {
-          found <- microorganismsDT[fullname_lower %like% paste0("^", x_backup_without_spp[i], "[a-z]+"), ..property][[1]]
+          found <- microorganismsDT[fullname_lower %like% paste0("^", unregex(x_backup_without_spp[i]), "[a-z]+"), ..property][[1]]
           if (length(found) > 0) {
             x[i] <- found[1L]
+            if (property == "mo") {
+              set_mo_history(x_backup[i], x[i], force = force_mo_history)
+            }
             next
           }
         }
@@ -636,6 +732,9 @@ exec_as.mo <- function(x, Becker = FALSE, Lancefield = FALSE,
         mo_found <- AMR::microorganisms.codes[toupper(x_backup[i]) == AMR::microorganisms.codes[, 1], "mo"][1L]
         if (length(mo_found) > 0) {
           x[i] <- microorganismsDT[mo == mo_found, ..property][[1]][1L]
+          if (property == "mo") {
+            set_mo_history(x_backup[i], x[i], force = force_mo_history)
+          }
           next
         }
       }
@@ -737,6 +836,9 @@ exec_as.mo <- function(x, Becker = FALSE, Lancefield = FALSE,
                                    f.x_withspaces_end_only = x_withspaces_end_only[i],
                                    g.x_backup_without_spp =  x_backup_without_spp[i])
       if (!empty_result(x[i])) {
+        if (property == "mo") {
+          set_mo_history(x_backup[i], x[i], force = force_mo_history)
+        }
         next
       }
       # THEN TRY PREVALENT IN HUMAN INFECTIONS ----
@@ -749,6 +851,9 @@ exec_as.mo <- function(x, Becker = FALSE, Lancefield = FALSE,
                                    f.x_withspaces_end_only = x_withspaces_end_only[i],
                                    g.x_backup_without_spp =  x_backup_without_spp[i])
       if (!empty_result(x[i])) {
+        if (property == "mo") {
+          set_mo_history(x_backup[i], x[i], force = force_mo_history)
+        }
         next
       }
       # THEN UNPREVALENT IN HUMAN INFECTIONS ----
@@ -761,6 +866,9 @@ exec_as.mo <- function(x, Becker = FALSE, Lancefield = FALSE,
                                    f.x_withspaces_end_only = x_withspaces_end_only[i],
                                    g.x_backup_without_spp =  x_backup_without_spp[i])
       if (!empty_result(x[i])) {
+        if (property == "mo") {
+          set_mo_history(x_backup[i], x[i], force = force_mo_history)
+        }
         next
       }
 
@@ -784,16 +892,19 @@ exec_as.mo <- function(x, Becker = FALSE, Lancefield = FALSE,
                     ref_old = found[1, ref],
                     ref_new = microorganismsDT[col_id == found[1, col_id_new], ref],
                     mo = microorganismsDT[col_id == found[1, col_id_new], mo])
+        if (property == "mo") {
+          set_mo_history(x_backup[i], x[i], force = force_mo_history)
+        }
         next
       }
 
       # check for uncertain results ----
       uncertain_fn <- function(a.x_backup,
-b.x_trimmed,
- c.x_withspaces_start_end,
-d.x_withspaces_start_only,
- f.x_withspaces_end_only,
-g.x_backup_without_spp) {
+                               b.x_trimmed,
+                               c.x_withspaces_start_end,
+                               d.x_withspaces_start_only,
+                               f.x_withspaces_end_only,
+                               g.x_backup_without_spp) {
 
         if (allow_uncertain == 0) {
           # do not allow uncertainties
@@ -936,14 +1047,14 @@ g.x_backup_without_spp) {
       }
       x[i] <- uncertain_fn(x_backup[i],
                            x_trimmed[i],
-													 x_withspaces_start_end[i],
+                           x_withspaces_start_end[i],
                            x_withspaces_start_only[i],
                            x_withspaces_end_only[i],
                            x_backup_without_spp[i])
       if (!empty_result(x[i])) {
+        # no set_mo_history here; these are uncertain
         next
       }
-
 
       # not found ----
       x[i] <- microorganismsDT[mo == "UNKNOWN", ..property][[1]]
@@ -1231,4 +1342,8 @@ nr2char <- function(x) {
   } else {
     x
   }
+}
+
+unregex <- function(x) {
+  gsub("[^a-zA-Z0-9 -]", "", x)
 }

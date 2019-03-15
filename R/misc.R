@@ -75,7 +75,9 @@ check_available_columns <- function(tbl, col.list, info = TRUE) {
   col.list.bak <- col.list
   # are they available as upper case or lower case then?
   for (i in 1:length(col.list)) {
-    if (toupper(col.list[i]) %in% colnames(tbl)) {
+    if (is.null(col.list[i]) | isTRUE(is.na(col.list[i]))) {
+      col.list[i] <- NULL
+    } else if (toupper(col.list[i]) %in% colnames(tbl)) {
       col.list[i] <- toupper(col.list[i])
     } else if (tolower(col.list[i]) %in% colnames(tbl)) {
       col.list[i] <- tolower(col.list[i])
@@ -124,7 +126,7 @@ size_humanreadable <- function(bytes, decimals = 1) {
   out
 }
 
-#' @importFrom crayon blue bold
+#' @importFrom crayon blue bold red
 #' @importFrom dplyr %>% pull
 search_type_in_df <- function(tbl, type) {
   # try to find columns based on type
@@ -151,16 +153,22 @@ search_type_in_df <- function(tbl, type) {
   }
   # -- date
   if (type == "date") {
-    for (i in 1:ncol(tbl)) {
-      if (any(colnames(tbl) %like% "^(Specimen date)")) {
-        # WHONET support
-        found <- colnames(tbl)[colnames(tbl) %like% "^(Specimen date)"][1]
-      } else if ("Date" %in% class(tbl %>% pull(i)) | "POSIXct" %in% class(tbl %>% pull(i))) {
-        found <- colnames(tbl)[i]
-        break
+    if (any(colnames(tbl) %like% "^(specimen date|specimen_date|spec_date)")) {
+      # WHONET support
+      found <- colnames(tbl)[colnames(tbl) %like% "^(specimen date|specimen_date|spec_date)"][1]
+      if (!any(class(tbl %>% pull(found)) %in% c("Date", "POSIXct"))) {
+        stop(red(paste0("ERROR: Found column `", bold(found), "` to be used as input for `col_", type,
+                        "`, but this column contains no valid dates. Transform its values to valid dates first.")),
+             call. = FALSE)
+      }
+    } else {
+      for (i in 1:ncol(tbl)) {
+        if (any(class(tbl %>% pull(i)) %in% c("Date", "POSIXct"))) {
+          found <- colnames(tbl)[i]
+          break
+        }
       }
     }
-
   }
   # -- patient id
   if (type == "patient_id") {
@@ -170,8 +178,8 @@ search_type_in_df <- function(tbl, type) {
   }
   # -- specimen
   if (type == "specimen") {
-    if (any(colnames(tbl) %like% "(specimen type)")) {
-      found <- colnames(tbl)[colnames(tbl) %like% "(specimen type)"][1]
+    if (any(colnames(tbl) %like% "(specimen type|spec_type)")) {
+      found <- colnames(tbl)[colnames(tbl) %like% "(specimen type|spec_type)"][1]
     } else if (any(colnames(tbl) %like% "^(specimen)")) {
       found <- colnames(tbl)[colnames(tbl) %like% "^(specimen)"][1]
     }
