@@ -30,5 +30,5 @@ test_that("mo_history works", {
   expect_equal(get_mo_history("testsubject", force = TRUE),
                "B_ESCHR_COL")
   expect_equal(colnames(read_mo_history(force = TRUE)),
-               c("x", "mo"))
+               c("x", "mo", "package_version"))
 })

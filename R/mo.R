@@ -57,7 +57,8 @@
 #'
 #' Use the \code{\link{mo_property}_*} functions to get properties based on the returned code, see Examples.
 #'
-#' All IDs that are found with zero uncertainty are saved to a local file (\code{"~/.Rhistory_mo"}) to improve speed for every next time. Use \code{clean_mo_history()} to delete this file, which resets the algorithms. Only previous results will be used from this version of the \code{AMR} package, since the taxonomic tree may change in the future for any organism.
+#' \strong{Self-learning algoritm} \cr
+#' The \code{as.mo()} function gains experience from previously determined microbial IDs and learns from it. This drastically improves both speed and reliability. Use \code{clean_mo_history()} to reset the algorithms. Only experience from your current \code{AMR} package version is used. This is done because in the future the taxonomic tree (which is included in this package) may change for any organism and it consequently has to rebuild its knowledge. Usually, any guess after the first try runs 90-95\% faster than the first try. The algorithm saves its previous findings to \code{~/.Rhistory_mo}.
 #'
 #' \strong{Intelligent rules} \cr
 #' This function uses intelligent rules to help getting fast and logical results. It tries to find matches in this order:
@@ -218,7 +219,7 @@ as.mo <- function(x, Becker = FALSE, Lancefield = FALSE, allow_uncertain = TRUE,
     y <- x
 
 
-  } else if (sum(is.na(mo_hist)) == 0
+  } else if (!any(is.na(mo_hist))
              & isFALSE(Becker)
              & isFALSE(Lancefield)) {
     # check previously found results
@@ -242,13 +243,8 @@ as.mo <- function(x, Becker = FALSE, Lancefield = FALSE, allow_uncertain = TRUE,
                                                        on = "fullname_lower",
                                                        "mo"][[1]]
     }
-    # save them too
-    mo_hist <- read_mo_history(force = isTRUE(list(...)$force_mo_history))
-    if (any(!x %in% mo_hist$x)) {
-      for (i in 1:length(y)) {
-        set_mo_history(x[i], y[i], force = isTRUE(list(...)$force_mo_history))
-      }
-    }
+    # save them to history
+    set_mo_history(x, y, force = isTRUE(list(...)$force_mo_history))
 
     } else {
       # will be checked for mo class in validation and uses exec_as.mo internally if necessary
@@ -271,13 +267,16 @@ is.mo <- function(x) {
 #' @importFrom dplyr %>% pull left_join n_distinct progress_estimated filter distinct
 #' @importFrom data.table data.table as.data.table setkey
 #' @importFrom crayon magenta red blue silver italic has_color
+# param property a column name of AMR::microorganisms
+# param initial_search logical - is FALSE when coming from uncertain tries, which uses exec_as.mo internally too
+# param force_mo_history logical - whether found result must be saved with set_mo_history (default FALSE on non-interactive sessions)
 exec_as.mo <- function(x,
                        Becker = FALSE,
                        Lancefield = FALSE,
                        allow_uncertain = TRUE,
                        reference_df = get_mo_source(),
                        property = "mo",
-                       clear_options = TRUE,
+                       initial_search = TRUE,
                        force_mo_history = FALSE) {
 
   if (!"AMR" %in% base::.packages()) {
@@ -285,7 +284,7 @@ exec_as.mo <- function(x,
     # check onLoad() in R/zzz.R: data tables are created there.
   }
 
-  if (clear_options == TRUE) {
+  if (initial_search == TRUE) {
     options(mo_failures = NULL)
     options(mo_uncertainties = NULL)
     options(mo_renamed = NULL)
@@ -401,6 +400,10 @@ exec_as.mo <- function(x,
     }
     x <- y
 
+  } else if (all(x %in% read_mo_history(force = force_mo_history)$x)) {
+    # previously found code
+    x <- microorganismsDT[data.table(mo = get_mo_history(x, force = force_mo_history)), on = "mo", ..property][[1]]
+
   } else if (all(tolower(x) %in% microorganismsDT$fullname_lower)) {
     # we need special treatment for very prevalent full names, they are likely!
     # e.g. as.mo("Staphylococcus aureus")
@@ -420,6 +423,9 @@ exec_as.mo <- function(x,
   } else if (all(toupper(x) %in% AMR::microorganisms.codes$code)) {
     # commonly used MO codes
     y <- as.data.table(AMR::microorganisms.codes)[data.table(code = toupper(x)), on = "code", ]
+    # save them to history
+    set_mo_history(x, y$mo, force = force_mo_history)
+
     x <- microorganismsDT[data.table(mo = y[["mo"]]), on = "mo", ..property][[1]]
 
   } else if (!all(x %in% AMR::microorganisms[, property])) {
@@ -503,7 +509,7 @@ exec_as.mo <- function(x,
       # most probable: is exact match in fullname
       if (length(found) > 0) {
         x[i] <- found[1L]
-        if (property == "mo") {
+        if (property == "mo" & initial_search == TRUE) {
           set_mo_history(x_backup[i], x[i], force = force_mo_history)
         }
         next
@@ -517,6 +523,9 @@ exec_as.mo <- function(x,
       if (tolower(x_backup_without_spp[i]) %in% c("other", "none", "unknown")) {
         # empty and nonsense values, ignore without warning
         x[i] <- microorganismsDT[mo == "UNKNOWN", ..property][[1]]
+        if (property == "mo" & initial_search == TRUE) {
+          set_mo_history(x_backup[i], x[i], force = force_mo_history)
+        }
         next
       }
 
@@ -531,7 +540,7 @@ exec_as.mo <- function(x,
             # return first genus that begins with x_trimmed, e.g. when "E. spp."
             if (length(found) > 0) {
               x[i] <- found[1L]
-              if (property == "mo") {
+              if (property == "mo" & initial_search == TRUE) {
                 set_mo_history(x_backup[i], x[i], force = force_mo_history)
               }
               next
@@ -541,6 +550,9 @@ exec_as.mo <- function(x,
         # fewer than 3 chars and not looked for species, add as failure
         x[i] <- microorganismsDT[mo == "UNKNOWN", ..property][[1]]
         failures <- c(failures, x_backup[i])
+        if (property == "mo" & initial_search == TRUE) {
+          set_mo_history(x_backup[i], x[i], force = force_mo_history)
+        }
         next
       }
 
@@ -548,6 +560,9 @@ exec_as.mo <- function(x,
         # there is no fullname like virus, so don't try to coerce it
         x[i] <- microorganismsDT[mo == "UNKNOWN", ..property][[1]]
         failures <- c(failures, x_backup[i])
+        if (property == "mo" & initial_search == TRUE) {
+          set_mo_history(x_backup[i], x[i], force = force_mo_history)
+        }
         next
       }
 
@@ -555,14 +570,14 @@ exec_as.mo <- function(x,
       if (!is.na(x_trimmed[i])) {
         if (toupper(x_backup_without_spp[i]) %in% c('MRSA', 'MSSA', 'VISA', 'VRSA')) {
           x[i] <- microorganismsDT[mo == 'B_STPHY_AUR', ..property][[1]][1L]
-          if (property == "mo") {
+          if (property == "mo" & initial_search == TRUE) {
             set_mo_history(x_backup[i], x[i], force = force_mo_history)
           }
           next
         }
         if (toupper(x_backup_without_spp[i]) %in% c('MRSE', 'MSSE')) {
           x[i] <- microorganismsDT[mo == 'B_STPHY_EPI', ..property][[1]][1L]
-          if (property == "mo") {
+          if (property == "mo" & initial_search == TRUE) {
             set_mo_history(x_backup[i], x[i], force = force_mo_history)
           }
           next
@@ -570,14 +585,14 @@ exec_as.mo <- function(x,
         if (toupper(x_backup_without_spp[i]) == "VRE"
             | x_backup_without_spp[i] %like% '(enterococci|enterokok|enterococo)[a-z]*?$')  {
           x[i] <- microorganismsDT[mo == 'B_ENTRC', ..property][[1]][1L]
-          if (property == "mo") {
+          if (property == "mo" & initial_search == TRUE) {
             set_mo_history(x_backup[i], x[i], force = force_mo_history)
           }
           next
         }
         if (toupper(x_backup_without_spp[i]) %in% c("EHEC", "EPEC", "EIEC", "STEC", "ATEC")) {
           x[i] <- microorganismsDT[mo == 'B_ESCHR_COL', ..property][[1]][1L]
-          if (property == "mo") {
+          if (property == "mo" & initial_search == TRUE) {
             set_mo_history(x_backup[i], x[i], force = force_mo_history)
           }
           next
@@ -585,7 +600,7 @@ exec_as.mo <- function(x,
         if (toupper(x_backup_without_spp[i]) == 'MRPA') {
           # multi resistant P. aeruginosa
           x[i] <- microorganismsDT[mo == 'B_PSDMN_AER', ..property][[1]][1L]
-          if (property == "mo") {
+          if (property == "mo" & initial_search == TRUE) {
             set_mo_history(x_backup[i], x[i], force = force_mo_history)
           }
           next
@@ -594,7 +609,7 @@ exec_as.mo <- function(x,
             | toupper(x_backup_without_spp[i]) == 'CRSM') {
           # co-trim resistant S. maltophilia
           x[i] <- microorganismsDT[mo == 'B_STNTR_MAL', ..property][[1]][1L]
-          if (property == "mo") {
+          if (property == "mo" & initial_search == TRUE) {
             set_mo_history(x_backup[i], x[i], force = force_mo_history)
           }
           next
@@ -602,7 +617,7 @@ exec_as.mo <- function(x,
         if (toupper(x_backup_without_spp[i]) %in% c('PISP', 'PRSP', 'VISP', 'VRSP')) {
           # peni I, peni R, vanco I, vanco R: S. pneumoniae
           x[i] <- microorganismsDT[mo == 'B_STRPT_PNE', ..property][[1]][1L]
-          if (property == "mo") {
+          if (property == "mo" & initial_search == TRUE) {
             set_mo_history(x_backup[i], x[i], force = force_mo_history)
           }
           next
@@ -610,7 +625,7 @@ exec_as.mo <- function(x,
         if (x_backup_without_spp[i] %like% '^G[ABCDFGHK]S$') {
           # Streptococci, like GBS = Group B Streptococci (B_STRPT_GRB)
           x[i] <- microorganismsDT[mo == gsub("G([ABCDFGHK])S", "B_STRPT_GR\\1", x_backup_without_spp[i], ignore.case = TRUE), ..property][[1]][1L]
-          if (property == "mo") {
+          if (property == "mo" & initial_search == TRUE) {
             set_mo_history(x_backup[i], x[i], force = force_mo_history)
           }
           next
@@ -618,7 +633,7 @@ exec_as.mo <- function(x,
         if (x_backup_without_spp[i] %like% '(streptococ|streptokok).* [ABCDFGHK]$') {
           # Streptococci in different languages, like "estreptococos grupo B"
           x[i] <- microorganismsDT[mo == gsub(".*(streptococ|streptokok|estreptococ).* ([ABCDFGHK])$", "B_STRPT_GR\\2", x_backup_without_spp[i], ignore.case = TRUE), ..property][[1]][1L]
-          if (property == "mo") {
+          if (property == "mo" & initial_search == TRUE) {
             set_mo_history(x_backup[i], x[i], force = force_mo_history)
           }
           next
@@ -626,7 +641,7 @@ exec_as.mo <- function(x,
         if (x_backup_without_spp[i] %like% 'group [ABCDFGHK] (streptococ|streptokok|estreptococ)') {
           # Streptococci in different languages, like "Group A Streptococci"
           x[i] <- microorganismsDT[mo == gsub(".*group ([ABCDFGHK]) (streptococ|streptokok|estreptococ).*", "B_STRPT_GR\\1", x_backup_without_spp[i], ignore.case = TRUE), ..property][[1]][1L]
-          if (property == "mo") {
+          if (property == "mo" & initial_search == TRUE) {
             set_mo_history(x_backup[i], x[i], force = force_mo_history)
           }
           next
@@ -637,7 +652,7 @@ exec_as.mo <- function(x,
             | x_backup_without_spp[i] %like% '[ck]o?ns[^a-z]?$') {
           # coerce S. coagulase negative
           x[i] <- microorganismsDT[mo == 'B_STPHY_CNS', ..property][[1]][1L]
-          if (property == "mo") {
+          if (property == "mo" & initial_search == TRUE) {
             set_mo_history(x_backup[i], x[i], force = force_mo_history)
           }
           next
@@ -647,7 +662,7 @@ exec_as.mo <- function(x,
             | x_backup_without_spp[i] %like% '[ck]o?ps[^a-z]?$') {
           # coerce S. coagulase positive
           x[i] <- microorganismsDT[mo == 'B_STPHY_CPS', ..property][[1]][1L]
-          if (property == "mo") {
+          if (property == "mo" & initial_search == TRUE) {
             set_mo_history(x_backup[i], x[i], force = force_mo_history)
           }
           next
@@ -657,7 +672,7 @@ exec_as.mo <- function(x,
             | x_trimmed[i] %like% 'gram[ -]?neg.*') {
           # coerce Gram negatives
           x[i] <- microorganismsDT[mo == 'B_GRAMN', ..property][[1]][1L]
-          if (property == "mo") {
+          if (property == "mo" & initial_search == TRUE) {
             set_mo_history(x_backup[i], x[i], force = force_mo_history)
           }
           next
@@ -667,7 +682,7 @@ exec_as.mo <- function(x,
             | x_trimmed[i] %like% 'gram[ -]?pos.*') {
           # coerce Gram positives
           x[i] <- microorganismsDT[mo == 'B_GRAMP', ..property][[1]][1L]
-          if (property == "mo") {
+          if (property == "mo" & initial_search == TRUE) {
             set_mo_history(x_backup[i], x[i], force = force_mo_history)
           }
           next
@@ -676,7 +691,7 @@ exec_as.mo <- function(x,
           if (x_backup_without_spp[i] %like% "Salmonella group") {
             # Salmonella Group A to Z, just return S. species for now
             x[i] <- microorganismsDT[mo == 'B_SLMNL', ..property][[1]][1L]
-            if (property == "mo") {
+            if (property == "mo" & initial_search == TRUE) {
               set_mo_history(x_backup[i], x[i], force = force_mo_history)
             }
             options(mo_renamed = c(getOption("mo_renamed"),
@@ -688,7 +703,7 @@ exec_as.mo <- function(x,
           } else {
             # Salmonella with capital letter species like "Salmonella Goettingen" - they're all S. enterica
             x[i] <- microorganismsDT[mo == 'B_SLMNL_ENT', ..property][[1]][1L]
-            if (property == "mo") {
+            if (property == "mo" & initial_search == TRUE) {
               set_mo_history(x_backup[i], x[i], force = force_mo_history)
             }
             options(mo_renamed = c(getOption("mo_renamed"),
@@ -708,7 +723,7 @@ exec_as.mo <- function(x,
         found <- microorganismsDT[fullname_lower %in% tolower(c(x_species[i], x_trimmed_species[i])), ..property][[1]]
         if (length(found) > 0) {
           x[i] <- found[1L]
-          if (property == "mo") {
+          if (property == "mo" & initial_search == TRUE) {
             set_mo_history(x_backup[i], x[i], force = force_mo_history)
           }
           next
@@ -717,7 +732,7 @@ exec_as.mo <- function(x,
           found <- microorganismsDT[fullname_lower %like% paste0("^", unregex(x_backup_without_spp[i]), "[a-z]+"), ..property][[1]]
           if (length(found) > 0) {
             x[i] <- found[1L]
-            if (property == "mo") {
+            if (property == "mo" & initial_search == TRUE) {
               set_mo_history(x_backup[i], x[i], force = force_mo_history)
             }
             next
@@ -732,7 +747,7 @@ exec_as.mo <- function(x,
         mo_found <- AMR::microorganisms.codes[toupper(x_backup[i]) == AMR::microorganisms.codes[, 1], "mo"][1L]
         if (length(mo_found) > 0) {
           x[i] <- microorganismsDT[mo == mo_found, ..property][[1]][1L]
-          if (property == "mo") {
+          if (property == "mo" & initial_search == TRUE) {
             set_mo_history(x_backup[i], x[i], force = force_mo_history)
           }
           next
@@ -755,6 +770,9 @@ exec_as.mo <- function(x,
       if (nchar(x_backup_without_spp[i]) < 4) {
         x[i] <- microorganismsDT[mo == "UNKNOWN", ..property][[1]]
         failures <- c(failures, x_backup[i])
+        if (property == "mo" & initial_search == TRUE) {
+          set_mo_history(x_backup[i], x[i], force = force_mo_history)
+        }
         next
       }
 
@@ -836,7 +854,7 @@ exec_as.mo <- function(x,
                                    f.x_withspaces_end_only = x_withspaces_end_only[i],
                                    g.x_backup_without_spp =  x_backup_without_spp[i])
       if (!empty_result(x[i])) {
-        if (property == "mo") {
+        if (property == "mo" & initial_search == TRUE) {
           set_mo_history(x_backup[i], x[i], force = force_mo_history)
         }
         next
@@ -851,7 +869,7 @@ exec_as.mo <- function(x,
                                    f.x_withspaces_end_only = x_withspaces_end_only[i],
                                    g.x_backup_without_spp =  x_backup_without_spp[i])
       if (!empty_result(x[i])) {
-        if (property == "mo") {
+        if (property == "mo" & initial_search == TRUE) {
           set_mo_history(x_backup[i], x[i], force = force_mo_history)
         }
         next
@@ -866,7 +884,7 @@ exec_as.mo <- function(x,
                                    f.x_withspaces_end_only = x_withspaces_end_only[i],
                                    g.x_backup_without_spp =  x_backup_without_spp[i])
       if (!empty_result(x[i])) {
-        if (property == "mo") {
+        if (property == "mo" & initial_search == TRUE) {
           set_mo_history(x_backup[i], x[i], force = force_mo_history)
         }
         next
@@ -892,7 +910,7 @@ exec_as.mo <- function(x,
                     ref_old = found[1, ref],
                     ref_new = microorganismsDT[col_id == found[1, col_id_new], ref],
                     mo = microorganismsDT[col_id == found[1, col_id_new], mo])
-        if (property == "mo") {
+        if (property == "mo" & initial_search == TRUE) {
           set_mo_history(x_backup[i], x[i], force = force_mo_history)
         }
         next
@@ -938,7 +956,7 @@ exec_as.mo <- function(x,
           }
 
           # (2) not yet implemented taxonomic changes in Catalogue of Life ----
-          found <- suppressMessages(suppressWarnings(exec_as.mo(TEMPORARY_TAXONOMY(b.x_trimmed), clear_options = FALSE, allow_uncertain = FALSE)))
+          found <- suppressMessages(suppressWarnings(exec_as.mo(TEMPORARY_TAXONOMY(b.x_trimmed), initial_search = FALSE, allow_uncertain = FALSE)))
           if (!empty_result(found)) {
             found_result <- found
             found <- microorganismsDT[mo == found, ..property][[1]]
@@ -972,7 +990,7 @@ exec_as.mo <- function(x,
           # (4) strip values between brackets ----
           a.x_backup_stripped <- gsub("( *[(].*[)] *)", " ", a.x_backup)
           a.x_backup_stripped <- trimws(gsub(" +", " ", a.x_backup_stripped))
-          found <- suppressMessages(suppressWarnings(exec_as.mo(a.x_backup_stripped, clear_options = FALSE, allow_uncertain = FALSE)))
+          found <- suppressMessages(suppressWarnings(exec_as.mo(a.x_backup_stripped, initial_search = FALSE, allow_uncertain = FALSE)))
           if (!empty_result(found) & nchar(g.x_backup_without_spp) >= 6) {
             found_result <- found
             found <- microorganismsDT[mo == found, ..property][[1]]
@@ -990,7 +1008,7 @@ exec_as.mo <- function(x,
             for (i in 1:(length(x_strip) - 1)) {
               x_strip_collapsed <- paste(x_strip[1:(length(x_strip) - i)], collapse = " ")
               if (nchar(x_strip_collapsed) >= 4) {
-                found <- suppressMessages(suppressWarnings(exec_as.mo(x_strip_collapsed, clear_options = FALSE, allow_uncertain = FALSE)))
+                found <- suppressMessages(suppressWarnings(exec_as.mo(x_strip_collapsed, initial_search = FALSE, allow_uncertain = FALSE)))
                 if (!empty_result(found)) {
                   found_result <- found
                   found <- microorganismsDT[mo == found, ..property][[1]]
@@ -1012,7 +1030,7 @@ exec_as.mo <- function(x,
           if (length(x_strip) > 1 & nchar(g.x_backup_without_spp) >= 6) {
             for (i in 2:(length(x_strip))) {
               x_strip_collapsed <- paste(x_strip[i:length(x_strip)], collapse = " ")
-              found <- suppressMessages(suppressWarnings(exec_as.mo(x_strip_collapsed, clear_options = FALSE, allow_uncertain = FALSE)))
+              found <- suppressMessages(suppressWarnings(exec_as.mo(x_strip_collapsed, initial_search = FALSE, allow_uncertain = FALSE)))
               if (!empty_result(found)) {
                 found_result <- found
                 found <- microorganismsDT[mo == found, ..property][[1]]
@@ -1059,12 +1077,15 @@ exec_as.mo <- function(x,
       # not found ----
       x[i] <- microorganismsDT[mo == "UNKNOWN", ..property][[1]]
       failures <- c(failures, x_backup[i])
+      if (property == "mo" & initial_search == TRUE) {
+        set_mo_history(x_backup[i], x[i], force = force_mo_history)
+      }
     }
   }
 
-  # failures
-  failures <- failures[!failures %in% c(NA, NULL, NaN)]
-  if (length(failures) > 0 & clear_options == TRUE) {
+  # handling failures ----
+  failures <- x_input[x == "UNKNOWN"] # failures[!failures %in% c(NA, NULL, NaN)]
+  if (length(failures) > 0 & initial_search == TRUE) {
     options(mo_failures = sort(unique(failures)))
     plural <- c("value", "it", "was")
     if (n_distinct(failures) > 1) {
@@ -1083,8 +1104,8 @@ exec_as.mo <- function(x,
             call. = FALSE,
             immediate. = TRUE) # thus will always be shown, even if >= warnings
   }
-  # uncertainties
-  if (NROW(uncertainties) > 0 & clear_options == TRUE) {
+  # handling uncertainties ----
+  if (NROW(uncertainties) > 0 & initial_search == TRUE) {
     options(mo_uncertainties = as.list(distinct(uncertainties, input, .keep_all = TRUE)))
 
     plural <- c("value", "it")

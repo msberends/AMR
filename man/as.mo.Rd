@@ -68,7 +68,8 @@ Values that cannot be coered will be considered 'unknown' and have an MO code \c
 
 Use the \code{\link{mo_property}_*} functions to get properties based on the returned code, see Examples.
 
-All IDs that are found with zero uncertainty are saved to a local file (\code{"~/.Rhistory_mo"}) to improve speed for every next time. Use \code{clean_mo_history()} to delete this file, which resets the algorithms. Only previous results will be used from this version of the \code{AMR} package, since the taxonomic tree may change in the future for any organism.
+\strong{Self-learning algoritm} \cr
+The \code{as.mo()} function gains experience from previously determined microbial IDs and learns from it. This drastically improves both speed and reliability. Use \code{clean_mo_history()} to reset the algorithms. Only experience from your current \code{AMR} package version is used. This is done because in the future the taxonomic tree (which is included in this package) may change for any organism and it consequently has to rebuild its knowledge. Usually, any guess after the first try runs 90-95\% faster than the first try. The algorithm saves its previous findings to \code{~/.Rhistory_mo}.
 
 \strong{Intelligent rules} \cr
 This function uses intelligent rules to help getting fast and logical results. It tries to find matches in this order:

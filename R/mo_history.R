@@ -20,17 +20,22 @@
 # ==================================================================== #
 
 # print successful as.mo coercions to file, not uncertain ones
-#' @importFrom dplyr %>% filter
+#' @importFrom dplyr distinct
 set_mo_history <- function(x, mo, force = FALSE) {
   file_location <- base::path.expand('~/.Rhistory_mo')
-  if ((base::interactive() & mo != "UNKNOWN") | force == TRUE) {
+  if (base::interactive() | force == TRUE) {
     mo_hist <- read_mo_history(force = force)
-    if (NROW(mo_hist[base::which(mo_hist$x == x & mo_hist$package_version == utils::packageVersion("AMR")),]) == 0) {
-      base::write(x = c(x, mo, base::as.character(utils::packageVersion("AMR"))),
-                  file = file_location,
-                  ncolumns = 3,
-                  append = TRUE,
-                  sep = "\t")
+    df <- distinct(data.frame(x, mo, stringsAsFactors = FALSE), x, .keep_all = TRUE)
+    x <- df$x
+    mo <- df$mo
+    for (i in 1:length(x)) {
+      if (NROW(mo_hist[base::which(mo_hist$x == x[i] & mo_hist$package_version == utils::packageVersion("AMR")),]) == 0) {
+        base::write(x = c(x[i], mo[i], base::as.character(utils::packageVersion("AMR"))),
+                    file = file_location,
+                    ncolumns = 3,
+                    append = TRUE,
+                    sep = "\t")
+      }
     }
   }
   return(base::invisible())
@@ -47,6 +52,7 @@ get_mo_history <- function(x, force = FALSE) {
   }
 }
 
+#' @importFrom dplyr %>% filter distinct
 read_mo_history <- function(force = FALSE) {
   file_location <- base::path.expand('~/.Rhistory_mo')
   if (!base::file.exists(file_location) | (!base::interactive() & force == FALSE)) {
@@ -58,9 +64,11 @@ read_mo_history <- function(force = FALSE) {
                                  col.names = c("x", "mo", "package_version"),
                                  stringsAsFactors = FALSE)
   # Below: filter on current package version.
-  # Future fullnames may even be replaced by new taxonomic names, so new versions of
+  # Even current fullnames may be replaced by new taxonomic names, so new versions of
   # the Catalogue of Life must not lead to data corruption.
-  file_read[base::which(file_read$package_version == utils::packageVersion("AMR")), c("x", "mo")]
+  file_read %>%
+    filter(package_version == utils::packageVersion("AMR")) %>%
+    distinct(x, mo, .keep_all = TRUE)
 }
 
 #' @rdname as.mo
