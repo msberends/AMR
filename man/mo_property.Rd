@@ -67,7 +67,7 @@ mo_property(x, property = "fullname", language = get_locale(), ...)
 
 \item{...}{other parameters passed on to \code{\link{as.mo}}}
 
-\item{open}{browse the URL using \code{\link[utils]{browseURL}}}
+\item{open}{browse the URL using \code{\link[utils]{browseURL}()}}
 
 \item{property}{one of the column names of one of the \code{\link{microorganisms}} data set or \code{"shortname"}}
 }
@@ -90,9 +90,9 @@ All functions will return the most recently known taxonomic property according t
   \item{\code{mo_ref("Chlamydophila psittaci")} will return \code{"Everett et al., 1999"} (without a warning)}
 }
 
-The Gram stain - \code{mo_gramstain()} - will be determined on the taxonomic kingdom and phylum. According to Cavalier-Smith (2002) who defined subkingdoms Negibacteria and Posibacteria, only these phyla are Posibacteria: Actinobacteria, Chloroflexi, Firmicutes and Tenericutes (ref: \url{https://itis.gov/servlet/SingleRpt/SingleRpt?search_topic=TSN&search_value=956097}). These bacteria are considered Gram positive - all other bacteria are considered Gram negative. Species outside the kingdom of Bacteria will return a value \code{NA}.
+The Gram stain - \code{mo_gramstain()} - will be determined on the taxonomic kingdom and phylum. According to Cavalier-Smith (2002) who defined subkingdoms Negibacteria and Posibacteria, only these phyla are Posibacteria: Actinobacteria, Chloroflexi, Firmicutes and Tenericutes. These bacteria are considered Gram positive - all other bacteria are considered Gram negative. Species outside the kingdom of Bacteria will return a value \code{NA}.
 
-The function \code{mo_url()} will return the direct URL to the species in the Catalogue of Life.
+The function \code{mo_url()} will return the direct URL to the online database entry, which also shows the scientific reference of the concerned species.
 }
 \section{Supported languages}{
 
@@ -169,7 +169,7 @@ mo_shortname("K. pneu rh")    # "K. pneumoniae"
 
 # Becker classification, see ?as.mo
 mo_fullname("S. epi")                     # "Staphylococcus epidermidis"
-mo_fullname("S. epi", Becker = TRUE)      # "Coagulase Negative Staphylococcus (CoNS)"
+mo_fullname("S. epi", Becker = TRUE)      # "Coagulase-negative Staphylococcus (CoNS)"
 mo_shortname("S. epi")                    # "S. epidermidis"
 mo_shortname("S. epi", Becker = TRUE)     # "CoNS"
 

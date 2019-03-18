@@ -20,15 +20,21 @@
 # ==================================================================== #
 
 # print successful as.mo coercions to file, not uncertain ones
-#' @importFrom dplyr distinct
+#' @importFrom dplyr %>% distinct filter
 set_mo_history <- function(x, mo, force = FALSE) {
   file_location <- base::path.expand('~/.Rhistory_mo')
   if (base::interactive() | force == TRUE) {
     mo_hist <- read_mo_history(force = force)
-    df <- distinct(data.frame(x, mo, stringsAsFactors = FALSE), x, .keep_all = TRUE)
-    x <- df$x
+    df <- data.frame(x, mo, stringsAsFactors = FALSE) %>%
+      distinct(x, .keep_all = TRUE) %>%
+      filter(!is.na(x) & !is.na(mo))
+    if (nrow(df) == 0) {
+      return(base::invisible())
+    }
+    x <- toupper(df$x)
     mo <- df$mo
     for (i in 1:length(x)) {
+      # save package version too, as both the as.mo() algorithm and the reference data set may change
       if (NROW(mo_hist[base::which(mo_hist$x == x[i] & mo_hist$package_version == utils::packageVersion("AMR")),]) == 0) {
         base::write(x = c(x[i], mo[i], base::as.character(utils::packageVersion("AMR"))),
                     file = file_location,
@@ -46,7 +52,7 @@ get_mo_history <- function(x, force = FALSE) {
   if (base::is.null(file_read)) {
     NA
   } else {
-    data.frame(x, stringsAsFactors = FALSE) %>%
+    data.frame(x = toupper(x), stringsAsFactors = FALSE) %>%
       left_join(file_read, by = "x") %>%
       pull(mo)
   }

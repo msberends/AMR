@@ -3,8 +3,8 @@
 \docType{data}
 \name{microorganisms}
 \alias{microorganisms}
-\title{Data set with ~60,000 microorganisms}
-\format{A \code{\link{data.frame}} with 59,985 observations and 15 variables:
+\title{Data set with ~65,000 microorganisms}
+\format{A \code{\link{data.frame}} with 65,629 observations and 16 variables:
 \describe{
   \item{\code{mo}}{ID of microorganism as used by this package}
   \item{\code{col_id}}{Catalogue of Life ID}
@@ -20,10 +20,13 @@
   \item{\code{rank}}{Taxonomic rank of the microorganism, like \code{"species"} or \code{"genus"}}
   \item{\code{ref}}{Author(s) and year of concerning scientific publication}
   \item{\code{species_id}}{ID of the species as used by the Catalogue of Life}
+  \item{\code{source}}{Either \code{"CoL"}, \code{"DSMZ"} (see source) or "manually added"}
   \item{\code{prevalence}}{Prevalence of the microorganism, see \code{?as.mo}}
 }}
 \source{
-Catalogue of Life: Annual Checklist (public online database), \url{www.catalogueoflife.org}.
+Catalogue of Life: Annual Checklist (public online taxonomic database), \url{www.catalogueoflife.org} (check included annual version with \code{\link{catalogue_of_life_version}()}).
+
+Leibniz Institute DSMZ-German Collection of Microorganisms and Cell Cultures, Germany, Prokaryotic Nomenclature Up-to-Date, \url{http://www.dsmz.de/bacterial-diversity/prokaryotic-nomenclature-up-to-date} (check included version with \code{\link{catalogue_of_life_version}()}).
 }
 \usage{
 microorganisms
@@ -36,9 +39,17 @@ Manually added were:
 \itemize{
   \item{9 species of \emph{Streptococcus} (beta haemolytic groups A, B, C, D, F, G, H, K and unspecified)}
   \item{2 species of \emph{Staphylococcus} (coagulase-negative [CoNS] and coagulase-positive [CoPS])}
-  \item{2 other undefined (unknown Gram negatives and unknown Gram positives)}
+  \item{3 other undefined (unknown, unknown Gram negatives and unknown Gram positives)}
+  \item{8,830 species from the DSMZ (Deutsche Sammlung von Mikroorganismen und Zellkulturen) that are not in the Catalogue of Life}
 }
 }
+\section{About the records from DSMZ (see source)}{
+
+Names of prokaryotes are defined as being validly published by the International Code of Nomenclature of Bacteria. Validly published are all names which are included in the Approved Lists of Bacterial Names and the names subsequently published in the International Journal of Systematic Bacteriology (IJSB) and, from January 2000, in the International Journal of Systematic and Evolutionary Microbiology (IJSEM) as original articles or in the validation lists.
+
+From: \url{https://www.dsmz.de/support/bacterial-nomenclature-up-to-date-downloads/readme.html}
+}
+
 \section{Catalogue of Life}{
 
 \if{html}{\figure{logo_col.png}{options: height=40px style=margin-bottom:5px} \cr}

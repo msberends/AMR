@@ -47,7 +47,7 @@
   <script src="../extra.js"></script>
 <meta property="og:title" content="Transform to microorganism ID — as.mo" />
 
-<meta property="og:description" content="Use this function to determine a valid microorganism ID (mo). Determination is done using intelligent rules and the complete taxonomic kingdoms Bacteria, Chromista, Protozoa, Archaea, Viruses, and most microbial species from the kingdom Fungi (see Source). The input can be almost anything: a full name (like &quot;Staphylococcus aureus&quot;), an abbreviated name (like &quot;S. aureus&quot;), an abbreviation known in the field (like &quot;MRSA&quot;), or just a genus. Please see Examples." />
+<meta property="og:description" content="Use this function to determine a valid microorganism ID (mo). Determination is done using intelligent rules and the complete taxonomic kingdoms Bacteria, Chromista, Protozoa, Archaea and most microbial species from the kingdom Fungi (see Source). The input can be almost anything: a full name (like &quot;Staphylococcus aureus&quot;), an abbreviated name (like &quot;S. aureus&quot;), an abbreviation known in the field (like &quot;MRSA&quot;), or just a genus. Please see Examples." />
 
 <meta property="og:image" content="https://msberends.gitlab.io/AMR/logo.png" />
 <meta name="twitter:card" content="summary" />
@@ -80,7 +80,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.0.9023</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.0.9024</span>
       </span>
     </div>
 
@@ -237,7 +237,7 @@
 
     <div class="ref-description">
     
-    <p>Use this function to determine a valid microorganism ID (<code>mo</code>). Determination is done using intelligent rules and the complete taxonomic kingdoms Bacteria, Chromista, Protozoa, Archaea, Viruses, and most microbial species from the kingdom Fungi (see Source). The input can be almost anything: a full name (like <code>"Staphylococcus aureus"</code>), an abbreviated name (like <code>"S. aureus"</code>), an abbreviation known in the field (like <code>"MRSA"</code>), or just a genus. Please see Examples.</p>
+    <p>Use this function to determine a valid microorganism ID (<code>mo</code>). Determination is done using intelligent rules and the complete taxonomic kingdoms Bacteria, Chromista, Protozoa, Archaea and most microbial species from the kingdom Fungi (see Source). The input can be almost anything: a full name (like <code>"Staphylococcus aureus"</code>), an abbreviated name (like <code>"S. aureus"</code>), an abbreviation known in the field (like <code>"MRSA"</code>), or just a genus. Please see Examples.</p>
     
     </div>
 
@@ -263,7 +263,7 @@
     </tr>
     <tr>
       <th>Becker</th>
-      <td><p>a logical to indicate whether <em>Staphylococci</em> should be categorised into Coagulase Negative <em>Staphylococci</em> ("CoNS") and Coagulase Positive <em>Staphylococci</em> ("CoPS") instead of their own species, according to Karsten Becker <em>et al.</em> [1].</p>
+      <td><p>a logical to indicate whether <em>Staphylococci</em> should be categorised into Coagulase Negative <em>Staphylococci</em> ("CoNS") and Coagulase Positive <em>Staphylococci</em> ("CoPS") instead of their own species, according to Karsten Becker <em>et al.</em> [1]. Note that this does not include species that were newly named after this publication.</p>
 <p>This excludes <em>Staphylococcus aureus</em> at default, use <code>Becker = "all"</code> to also categorise <em>S. aureus</em> as "CoPS".</p></td>
     </tr>
     <tr>
@@ -304,17 +304,18 @@ A microbial ID from this package (class: <code>mo</code>) typically looks like t
   |   |     ----&gt; species, a 3-4 letter acronym
   |    ----&gt; genus, a 5-7 letter acronym, mostly without vowels
    ----&gt; taxonomic kingdom: A (Archaea), AN (Animalia), B (Bacteria), C (Chromista),
-                            F (Fungi), P (Protozoa), PL (Plantae) or V (Viruses)
+                            F (Fungi), P (Protozoa) or PL (Plantae)
 </pre>
     <p>Values that cannot be coered will be considered 'unknown' and have an MO code <code>UNKNOWN</code>.</p>
 <p>Use the <code><a href='mo_property.html'>mo_property</a>_*</code> functions to get properties based on the returned code, see Examples.</p>
+<p>The algorithm uses data from the Catalogue of Life (see below) and from one other source (see <code><a href='microorganisms.html'>?microorganisms</a></code>).</p>
 <p><strong>Self-learning algoritm</strong> <br />
 The <code>as.mo()</code> function gains experience from previously determined microbial IDs and learns from it. This drastically improves both speed and reliability. Use <code>clean_mo_history()</code> to reset the algorithms. Only experience from your current <code>AMR</code> package version is used. This is done because in the future the taxonomic tree (which is included in this package) may change for any organism and it consequently has to rebuild its knowledge. Usually, any guess after the first try runs 90-95% faster than the first try. The algorithm saves its previous findings to <code>~/.Rhistory_mo</code>.</p>
 <p><strong>Intelligent rules</strong> <br />
 This function uses intelligent rules to help getting fast and logical results. It tries to find matches in this order:</p><ul>
 <li><p>Valid MO codes and full names: it first searches in already valid MO code and known genus/species combinations</p></li>
 <li><p>Human pathogenic prevalence: it first searches in more prevalent microorganisms, then less prevalent ones (see <em>Microbial prevalence of pathogens in humans</em> below)</p></li>
-<li><p>Taxonomic kingdom: it first searches in Bacteria/Chromista, then Fungi, then Protozoa, then Viruses</p></li>
+<li><p>Taxonomic kingdom: it first searches in Bacteria/Chromista, then Fungi, then Protozoa</p></li>
 <li><p>Breakdown of input values: from here it starts to breakdown input values to find possible matches</p></li>
 </ul>
     <p>A couple of effects because of these rules:</p><ul>
@@ -326,7 +327,6 @@ This function uses intelligent rules to help getting fast and logical results. I
 The algorithm can additionally use three different levels of uncertainty to guess valid results. The default is <code>allow_uncertain = TRUE</code>, which is uqual to uncertainty level 2. Using <code>allow_uncertain = FALSE</code> will skip all of these additional rules:</p><ul>
 <li><p>(uncertainty level 1): It tries to look for only matching genera</p></li>
 <li><p>(uncertainty level 1): It tries to look for previously accepted (but now invalid) taxonomic names</p></li>
-<li><p>(uncertainty level 1): It tries to look for some manual changes which are not (yet) published to the Catalogue of Life (like <em>Propionibacterium</em> being <em>Cutibacterium</em>)</p></li>
 <li><p>(uncertainty level 2): It strips off values between brackets and the brackets itself, and re-evaluates the input with all previous rules</p></li>
 <li><p>(uncertainty level 2): It strips off words from the end one by one and re-evaluates the input with all previous rules</p></li>
 <li><p>(uncertainty level 3): It strips off words from the start one by one and re-evaluates the input with all previous rules</p></li>
@@ -391,6 +391,12 @@ The <code><a href='mo_property.html'>mo_property</a></code> functions (like <cod
 <span class='fu'>as.mo</span>(<span class='st'>"VISA"</span>) <span class='co'># Vancomycin Intermediate S. aureus</span>
 <span class='fu'>as.mo</span>(<span class='st'>"VRSA"</span>) <span class='co'># Vancomycin Resistant S. aureus</span>
 
+<span class='co'># Dyslexia is no problem - these all work:</span>
+<span class='fu'>as.mo</span>(<span class='st'>"Ureaplasma urealyticum"</span>)
+<span class='fu'>as.mo</span>(<span class='st'>"Ureaplasma urealyticus"</span>)
+<span class='fu'>as.mo</span>(<span class='st'>"Ureaplasmium urealytica"</span>)
+<span class='fu'>as.mo</span>(<span class='st'>"Ureaplazma urealitycium"</span>)
+
 <span class='fu'>as.mo</span>(<span class='st'>"Streptococcus group A"</span>)
 <span class='fu'>as.mo</span>(<span class='st'>"GAS"</span>) <span class='co'># Group A Streptococci</span>
 <span class='fu'>as.mo</span>(<span class='st'>"GBS"</span>) <span class='co'># Group B Streptococci</span>
@@ -401,13 +407,9 @@ The <code><a href='mo_property.html'>mo_property</a></code> functions (like <cod
 <span class='fu'>as.mo</span>(<span class='st'>"S. pyogenes"</span>)                    <span class='co'># will remain species: B_STRPT_PYO</span>
 <span class='fu'>as.mo</span>(<span class='st'>"S. pyogenes"</span>, <span class='kw'>Lancefield</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>) <span class='co'># will not remain species: B_STRPT_GRA</span>
 
-<span class='co'># Use mo_* functions to get a specific property based on `mo`</span>
-<span class='no'>Ecoli</span> <span class='kw'>&lt;-</span> <span class='fu'>as.mo</span>(<span class='st'>"E. coli"</span>)     <span class='co'># returns `B_ESCHR_COL`</span>
-<span class='fu'><a href='mo_property.html'>mo_genus</a></span>(<span class='no'>Ecoli</span>)               <span class='co'># returns "Escherichia"</span>
-<span class='fu'><a href='mo_property.html'>mo_gramstain</a></span>(<span class='no'>Ecoli</span>)           <span class='co'># returns "Gram negative"</span>
-<span class='co'># but it uses as.mo internally too, so you could also just use:</span>
+<span class='co'># All mo_* functions use as.mo() internally too (see ?mo_property):</span>
 <span class='fu'><a href='mo_property.html'>mo_genus</a></span>(<span class='st'>"E. coli"</span>)           <span class='co'># returns "Escherichia"</span>
-
+<span class='fu'><a href='mo_property.html'>mo_gramstain</a></span>(<span class='st'>"E. coli"</span>)       <span class='co'># returns "Gram negative"#'</span>
 
 <span class='co'># }</span><span class='co'># NOT RUN {</span>
 <span class='no'>df</span>$<span class='no'>mo</span> <span class='kw'>&lt;-</span> <span class='fu'>as.mo</span>(<span class='no'>df</span>$<span class='no'>microorganism_name</span>)

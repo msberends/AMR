@@ -150,7 +150,7 @@ mdro <- function(tbl,
   } else if (guideline$country$code == 'nl') {
     guideline$country$name <- 'The Netherlands'
     guideline$name <- 'WIP-Richtlijn BRMO'
-    guideline$version <- 'Revision of December 2017'
+    guideline$version <- 'Revision as of December 2017'
     guideline$source <- 'https://www.rivm.nl/Documenten_en_publicaties/Professioneel_Praktisch/Richtlijnen/Infectieziekten/WIP_Richtlijnen/WIP_Richtlijnen/Ziekenhuizen/WIP_richtlijn_BRMO_Bijzonder_Resistente_Micro_Organismen_ZKH'
     # add here more countries like this:
     # } else if (country$code == 'xx') {

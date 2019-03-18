@@ -244,5 +244,4 @@ test_that("as.mo works", {
   # summary
   expect_equal(length(summary(septic_patients$mo)), 6)
 
-  expect_warning(as.mo("Cutibacterium"))
 })

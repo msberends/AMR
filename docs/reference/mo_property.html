@@ -80,7 +80,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.0.9023</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.0.9024</span>
       </span>
     </div>
 
@@ -296,7 +296,7 @@
     </tr>
     <tr>
       <th>open</th>
-      <td><p>browse the URL using <code><a href='https://www.rdocumentation.org/packages/utils/topics/browseURL'>browseURL</a></code></p></td>
+      <td><p>browse the URL using <code><a href='https://www.rdocumentation.org/packages/utils/topics/browseURL'>browseURL</a>()</code></p></td>
     </tr>
     <tr>
       <th>property</th>
@@ -322,8 +322,8 @@
 <li><p><code>mo_ref("Chlamydia psittaci")</code> will return <code>"Page, 1968"</code> (with a warning about the renaming)</p></li>
 <li><p><code>mo_ref("Chlamydophila psittaci")</code> will return <code>"Everett et al., 1999"</code> (without a warning)</p></li>
 </ul>
-    <p>The Gram stain - <code>mo_gramstain()</code> - will be determined on the taxonomic kingdom and phylum. According to Cavalier-Smith (2002) who defined subkingdoms Negibacteria and Posibacteria, only these phyla are Posibacteria: Actinobacteria, Chloroflexi, Firmicutes and Tenericutes (ref: <a href='https://itis.gov/servlet/SingleRpt/SingleRpt?search_topic=TSN&amp;search_value=956097'>https://itis.gov/servlet/SingleRpt/SingleRpt?search_topic=TSN&amp;search_value=956097</a>). These bacteria are considered Gram positive - all other bacteria are considered Gram negative. Species outside the kingdom of Bacteria will return a value <code>NA</code>.</p>
-<p>The function <code>mo_url()</code> will return the direct URL to the species in the Catalogue of Life.</p>
+    <p>The Gram stain - <code>mo_gramstain()</code> - will be determined on the taxonomic kingdom and phylum. According to Cavalier-Smith (2002) who defined subkingdoms Negibacteria and Posibacteria, only these phyla are Posibacteria: Actinobacteria, Chloroflexi, Firmicutes and Tenericutes. These bacteria are considered Gram positive - all other bacteria are considered Gram negative. Species outside the kingdom of Bacteria will return a value <code>NA</code>.</p>
+<p>The function <code>mo_url()</code> will return the direct URL to the online database entry, which also shows the scientific reference of the concerned species.</p>
     
     <h2 class="hasAnchor" id="supported-languages"><a class="anchor" href="#supported-languages"></a>Supported languages</h2>
 
@@ -403,7 +403,7 @@ This package contains the complete taxonomic tree of almost all microorganisms (
 
 <span class='co'># Becker classification, see ?as.mo</span>
 <span class='fu'>mo_fullname</span>(<span class='st'>"S. epi"</span>)                     <span class='co'># "Staphylococcus epidermidis"</span>
-<span class='fu'>mo_fullname</span>(<span class='st'>"S. epi"</span>, <span class='kw'>Becker</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)      <span class='co'># "Coagulase Negative Staphylococcus (CoNS)"</span>
+<span class='fu'>mo_fullname</span>(<span class='st'>"S. epi"</span>, <span class='kw'>Becker</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)      <span class='co'># "Coagulase-negative Staphylococcus (CoNS)"</span>
 <span class='fu'>mo_shortname</span>(<span class='st'>"S. epi"</span>)                    <span class='co'># "S. epidermidis"</span>
 <span class='fu'>mo_shortname</span>(<span class='st'>"S. epi"</span>, <span class='kw'>Becker</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)     <span class='co'># "CoNS"</span>
 

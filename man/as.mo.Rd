@@ -26,7 +26,7 @@ clean_mo_history()
 \arguments{
 \item{x}{a character vector or a \code{data.frame} with one or two columns}
 
-\item{Becker}{a logical to indicate whether \emph{Staphylococci} should be categorised into Coagulase Negative \emph{Staphylococci} ("CoNS") and Coagulase Positive \emph{Staphylococci} ("CoPS") instead of their own species, according to Karsten Becker \emph{et al.} [1].
+\item{Becker}{a logical to indicate whether \emph{Staphylococci} should be categorised into Coagulase Negative \emph{Staphylococci} ("CoNS") and Coagulase Positive \emph{Staphylococci} ("CoPS") instead of their own species, according to Karsten Becker \emph{et al.} [1]. Note that this does not include species that were newly named after this publication.
 
   This excludes \emph{Staphylococcus aureus} at default, use \code{Becker = "all"} to also categorise \emph{S. aureus} as "CoPS".}
 
@@ -44,7 +44,7 @@ clean_mo_history()
 Character (vector) with class \code{"mo"}. Unknown values will return \code{NA}.
 }
 \description{
-Use this function to determine a valid microorganism ID (\code{mo}). Determination is done using intelligent rules and the complete taxonomic kingdoms Bacteria, Chromista, Protozoa, Archaea, Viruses, and most microbial species from the kingdom Fungi (see Source). The input can be almost anything: a full name (like \code{"Staphylococcus aureus"}), an abbreviated name (like \code{"S. aureus"}), an abbreviation known in the field (like \code{"MRSA"}), or just a genus. Please see Examples.
+Use this function to determine a valid microorganism ID (\code{mo}). Determination is done using intelligent rules and the complete taxonomic kingdoms Bacteria, Chromista, Protozoa, Archaea and most microbial species from the kingdom Fungi (see Source). The input can be almost anything: a full name (like \code{"Staphylococcus aureus"}), an abbreviated name (like \code{"S. aureus"}), an abbreviation known in the field (like \code{"MRSA"}), or just a genus. Please see Examples.
 }
 \details{
 \strong{General info} \cr
@@ -61,12 +61,14 @@ A microbial ID from this package (class: \code{mo}) typically looks like these e
   |   |     ----> species, a 3-4 letter acronym
   |    ----> genus, a 5-7 letter acronym, mostly without vowels
    ----> taxonomic kingdom: A (Archaea), AN (Animalia), B (Bacteria), C (Chromista),
-                            F (Fungi), P (Protozoa), PL (Plantae) or V (Viruses)
+                            F (Fungi), P (Protozoa) or PL (Plantae)
 }
 
 Values that cannot be coered will be considered 'unknown' and have an MO code \code{UNKNOWN}.
 
 Use the \code{\link{mo_property}_*} functions to get properties based on the returned code, see Examples.
+
+The algorithm uses data from the Catalogue of Life (see below) and from one other source (see \code{?microorganisms}).
 
 \strong{Self-learning algoritm} \cr
 The \code{as.mo()} function gains experience from previously determined microbial IDs and learns from it. This drastically improves both speed and reliability. Use \code{clean_mo_history()} to reset the algorithms. Only experience from your current \code{AMR} package version is used. This is done because in the future the taxonomic tree (which is included in this package) may change for any organism and it consequently has to rebuild its knowledge. Usually, any guess after the first try runs 90-95\% faster than the first try. The algorithm saves its previous findings to \code{~/.Rhistory_mo}.
@@ -76,7 +78,7 @@ This function uses intelligent rules to help getting fast and logical results. I
 \itemize{
   \item{Valid MO codes and full names: it first searches in already valid MO code and known genus/species combinations}
   \item{Human pathogenic prevalence: it first searches in more prevalent microorganisms, then less prevalent ones (see \emph{Microbial prevalence of pathogens in humans} below)}
-  \item{Taxonomic kingdom: it first searches in Bacteria/Chromista, then Fungi, then Protozoa, then Viruses}
+  \item{Taxonomic kingdom: it first searches in Bacteria/Chromista, then Fungi, then Protozoa}
   \item{Breakdown of input values: from here it starts to breakdown input values to find possible matches}
 }
 
@@ -93,7 +95,6 @@ The algorithm can additionally use three different levels of uncertainty to gues
 \itemize{
   \item{(uncertainty level 1): It tries to look for only matching genera}
   \item{(uncertainty level 1): It tries to look for previously accepted (but now invalid) taxonomic names}
-  \item{(uncertainty level 1): It tries to look for some manual changes which are not (yet) published to the Catalogue of Life (like \emph{Propionibacterium} being \emph{Cutibacterium})}
   \item{(uncertainty level 2): It strips off values between brackets and the brackets itself, and re-evaluates the input with all previous rules}
   \item{(uncertainty level 2): It strips off words from the end one by one and re-evaluates the input with all previous rules}
   \item{(uncertainty level 3): It strips off words from the start one by one and re-evaluates the input with all previous rules}
@@ -164,6 +165,12 @@ as.mo("MRSA") # Methicillin Resistant S. aureus
 as.mo("VISA") # Vancomycin Intermediate S. aureus
 as.mo("VRSA") # Vancomycin Resistant S. aureus
 
+# Dyslexia is no problem - these all work:
+as.mo("Ureaplasma urealyticum")
+as.mo("Ureaplasma urealyticus")
+as.mo("Ureaplasmium urealytica")
+as.mo("Ureaplazma urealitycium")
+
 as.mo("Streptococcus group A")
 as.mo("GAS") # Group A Streptococci
 as.mo("GBS") # Group B Streptococci
@@ -174,13 +181,9 @@ as.mo("S. epidermidis", Becker = TRUE)  # will not remain species: B_STPHY_CNS
 as.mo("S. pyogenes")                    # will remain species: B_STRPT_PYO
 as.mo("S. pyogenes", Lancefield = TRUE) # will not remain species: B_STRPT_GRA
 
-# Use mo_* functions to get a specific property based on `mo`
-Ecoli <- as.mo("E. coli")     # returns `B_ESCHR_COL`
-mo_genus(Ecoli)               # returns "Escherichia"
-mo_gramstain(Ecoli)           # returns "Gram negative"
-# but it uses as.mo internally too, so you could also just use:
+# All mo_* functions use as.mo() internally too (see ?mo_property):
 mo_genus("E. coli")           # returns "Escherichia"
-
+mo_gramstain("E. coli")       # returns "Gram negative"#'
 
 \dontrun{
 df$mo <- as.mo(df$microorganism_name)

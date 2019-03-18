@@ -1,13 +1,23 @@
-# Catalogue of Life
-# Data retrieved from Encyclopaedia of Life:
-# https://opendata.eol.org/dataset/catalogue-of-life/
+# Reproduction of the `microorganisms` data set
 
-# unzip and extract taxon.tab (around 1.5 GB), then:
-taxon <- data.table::fread("Downloads/taxon.tab")
-# result is over 3.7M rows:
+# Data retrieved from the Catalogue of Life (CoL) through the Encyclopaedia of Life:
+# https://opendata.eol.org/dataset/catalogue-of-life/
+# (download the resource file with a name like "Catalogue of Life yyyy-mm-dd")
+# and from the Leibniz Institute DSMZ-German Collection of Microorganisms and Cell Cultures
+# https://www.dsmz.de/support/bacterial-nomenclature-up-to-date-downloads.html
+# (download the latest "Complete List" as xlsx file)
+
 library(dplyr)
 library(AMR)
-taxon %>% freq(kingdom)
+
+# unzip and extract taxon.tab (around 1.5 GB) from the CoL archive, then:
+data_col <- data.table::fread("Downloads/taxon.tab")
+
+# read the xlsx file from DSMZ (only around 2.5 MB):
+data_dsmz <- readxl::read_xlsx("Downloads/DSMZ_bactnames.xlsx")
+
+# the CoL data is over 3.7M rows:
+data_col %>% freq(kingdom)
 #      Item             Count   Percent   Cum. Count   Cum. Percent
 # ---  ----------  ----------  --------  -----------  -------------
 # 1    Animalia     2,225,627     59.1%    2,225,627          59.1%
@@ -19,21 +29,81 @@ taxon %>% freq(kingdom)
 # 7    Viruses          3,827      0.1%    3,764,675         100.0%
 # 8    Archaea            610      0.0%    3,765,285         100.0%
 
-MOs <- taxon %>%
-  # tibble for future transformations
+# clean data_col
+data_col <- data_col %>%
   as_tibble() %>%
+  select(col_id = taxonID,
+         col_id_new = acceptedNameUsageID,
+         fullname = scientificName,
+         kingdom,
+         phylum,
+         class,
+         order,
+         family,
+         genus,
+         species = specificEpithet,
+         subspecies = infraspecificEpithet,
+         rank = taxonRank,
+         ref = scientificNameAuthorship,
+         species_id = furtherInformationURL)
+data_col$source <- "CoL"
+
+# clean data_dsmz
+data_dsmz <- data_dsmz %>%
+  as_tibble() %>%
+  transmute(col_id = NA_integer_,
+            col_id_new = NA_integer_,
+            fullname = "",
+            # kingdom = "",
+            # phylum = "",
+            # class = "",
+            # order = "",
+            # family = "",
+            genus = ifelse(is.na(GENUS), "", GENUS),
+            species = ifelse(is.na(SPECIES), "", SPECIES),
+            subspecies = ifelse(is.na(SUBSPECIES), "", SUBSPECIES),
+            rank = ifelse(species == "", "genus", "species"),
+            ref = AUTHORS,
+            species_id = as.character(RECORD_NO),
+            source = "DSMZ")
+
+# DSMZ only contains genus/(sub)species, try to find taxonomic properties based on genus and data_col
+ref_taxonomy <- data_col %>%
+  filter(genus %in% data_dsmz$genus,
+         family != "") %>%
+  distinct(genus, .keep_all = TRUE) %>%
+  select(kingdom, phylum, class, order, family, genus)
+
+data_dsmz <- data_dsmz %>%
+  left_join(ref_taxonomy, by = "genus") %>%
+  mutate(kingdom = "Bacteria",
+         phylum = ifelse(is.na(phylum), "(unknown phylum)", phylum),
+         class = ifelse(is.na(class), "(unknown class)", class),
+         order = ifelse(is.na(order), "(unknown order)", order),
+         family = ifelse(is.na(family), "(unknown family)", family),
+  )
+
+# combine everything
+data_total <- data_col %>%
+  bind_rows(data_dsmz)
+
+rm(data_col)
+rm(data_dsmz)
+rm(ref_taxonomy)
+
+MOs <- data_total %>%
   filter(
     (
       # we only want all microorganisms and viruses
       !kingdom %in% c("Animalia", "Plantae")
-      # and no entries above genus - they all already have a taxonomic tree
-      & !taxonRank %in% c("kingdom", "phylum", "superfamily", "class", "order", "family")
-      # not all fungi: Aspergillus, Candida, Trichphyton and Pneumocystis are the most important,
+      # and no entries above genus level - all species already have a taxonomic tree
+      & !rank %in% c("kingdom", "phylum", "superfamily", "class", "order", "family")
+      # and not all fungi: Aspergillus, Candida, Trichphyton and Pneumocystis are the most important,
       # so only keep these orders from the fungi:
       & !(kingdom == "Fungi"
           & !order %in% c("Eurotiales", "Saccharomycetales", "Schizosaccharomycetales", "Tremellales", "Onygenales", "Pneumocystales"))
     )
-    # or the genus has to be one of the genera we found in our hospitals last decades
+    # or the genus has to be one of the genera we found in our hospitals last decades (Northern Netherlands, 2002-2018)
     | genus %in% c("Absidia", "Acremonium", "Actinotignum", "Alternaria", "Anaerosalibacter", "Ancylostoma", "Anisakis", "Apophysomyces",
                    "Arachnia", "Ascaris", "Aureobacterium", "Aureobasidium", "Balantidum", "Bilophilia", "Branhamella", "Brochontrix",
                    "Brugia", "Calymmatobacterium", "Catabacter", "Cdc", "Chilomastix", "Chryseomonas", "Cladophialophora", "Cladosporium",
@@ -47,9 +117,11 @@ MOs <- taxon %>%
                    "Trichosporon", "Trichuris", "Trypanosoma", "Wuchereria")
   ) %>%
   # remove text if it contains 'Not assigned' like phylum in viruses
-  mutate_all(funs(gsub("Not assigned", "", .))) %>%
-  # Transform 'Smith, Jones, 2011' to 'Smith et al., 2011':
-  mutate(authors2 = iconv(scientificNameAuthorship, from = "UTF-8", to = "ASCII//TRANSLIT"),
+  mutate_all(~gsub("Not assigned", "", .))
+
+MOs <- MOs %>%
+  # Only keep first author, e.g. transform 'Smith, Jones, 2011' to 'Smith et al., 2011':
+  mutate(authors2 = iconv(ref, from = "UTF-8", to = "ASCII//TRANSLIT"),
          # remove leading and trailing brackets
          authors2 = gsub("^[(](.*)[)]$", "\\1", authors2),
          # only take part after brackets if there's a name
@@ -69,7 +141,7 @@ MOs <- taxon %>%
          # remove trailing and leading spaces
          authors = trimws(authors),
          # only keep first author and replace all others by 'et al'
-         authors = gsub("(,| and| &| ex| emend\\.?) .*", " et al.", authors),
+         authors = gsub("(,| and| et| &| ex| emend\\.?) .*", " et al.", authors),
          # et al. always with ending dot
          authors = gsub(" et al\\.?", " et al.", authors),
          authors = gsub(" ?,$", "", authors),
@@ -86,60 +158,66 @@ MOs <- taxon %>%
          ref = gsub("^, ", "", ref)
   )
 
-# remove the HUGE file
-rm(taxon)
-
-# remove non-ASCII characters (not allowed by CRAN)
+# Remove non-ASCII characters (these are not allowed by CRAN)
 MOs <- MOs %>%
   lapply(iconv, from = "UTF-8", to = "ASCII//TRANSLIT") %>%
   as_tibble(stringsAsFactors = FALSE)
 
-# split old taxonomic names - they refer to a new `taxonID` with `acceptedNameUsageID`
+# Split old taxonomic names - they refer in the original data to a new `taxonID` with `acceptedNameUsageID`
 MOs.old <- MOs %>%
-  filter(!is.na(acceptedNameUsageID),
-         ref != "") %>%
-  transmute(col_id = taxonID,
-            col_id_new = acceptedNameUsageID,
+  filter(!is.na(col_id_new),
+         ref != "",
+         source != "DSMZ") %>%
+  transmute(col_id,
+            col_id_new,
             fullname =
               trimws(
                 gsub("(.*)[(].*", "\\1",
                      stringr::str_replace(
-                       string = scientificName,
-                       pattern = stringr::fixed(ref),
+                       string = fullname,
+                       pattern = stringr::fixed(authors2),
                        replacement = ""))),
-            ref = ref) %>%
+            ref) %>%
   filter(!is.na(fullname)) %>%
   distinct(fullname, .keep_all = TRUE) %>%
   arrange(col_id)
 
 MOs <- MOs %>%
-  filter(is.na(acceptedNameUsageID)) %>%
-  transmute(col_id = taxonID,
+  filter(is.na(col_id_new) | source == "DSMZ") %>%
+  transmute(col_id,
             fullname = trimws(ifelse(kingdom == "Viruses",
-                                     paste(specificEpithet, infraspecificEpithet),
-                                     paste(genus, specificEpithet, infraspecificEpithet))),
+                                     gsub(":", "", ifelse(trimws(paste(species, subspecies)) == "", genus, paste(species, subspecies))),
+                                     paste(genus, species, subspecies))),
             kingdom,
             phylum,
             class,
             order,
             family,
             genus = gsub(":", "", genus),
-            species = specificEpithet,
-            subspecies = infraspecificEpithet,
-            rank = taxonRank,
-            ref = ref,
-            species_id = gsub(".*/([a-f0-9]+)", "\\1", furtherInformationURL)) %>%
-  distinct(fullname, .keep_all = TRUE) %>%
+            species,
+            subspecies,
+            rank,
+            ref,
+            species_id = gsub(".*/([a-f0-9]+)", "\\1", species_id),
+            source) %>%
+  #distinct(fullname, .keep_all = TRUE) %>%
   filter(!grepl("unassigned", fullname, ignore.case = TRUE))
 
-# only old names of species that are in MOs:
+# Keep only old names of species that are in MOs:
 MOs.old <- MOs.old %>% filter(col_id_new %in% MOs$col_id)
 
-# add abbreviations so we can easily know which ones are which ones
+# Filter out the DSMZ records that were renamed and are now in MOs.old
+MOs <- MOs %>%
+  filter(!(source == "DSMZ" & fullname %in% MOs.old$fullname),
+         !(source == "DSMZ" & fullname %in% (MOs %>% filter(source == "CoL") %>% pull(fullname)))) %>%
+  distinct(fullname, .keep_all = TRUE)
+
+# Add abbreviations so we can easily know which ones are which ones.
+# These will become valid and unique microbial IDs for the AMR package.
 MOs <- MOs %>%
   group_by(kingdom) %>%
   # abbreviations may be same for genera between kingdoms,
-  # because each abbreviation starts with the the first character of the kingdom
+  # because each abbreviation starts with the the first character(s) of the kingdom
   mutate(abbr_genus = abbreviate(genus,
                                  minlength = 5,
                                  use.classes = TRUE,
@@ -162,21 +240,21 @@ MOs <- MOs %>%
   ungroup() %>%
   # remove trailing underscores
   mutate(mo = gsub("_+$", "",
-                   toupper(paste(ifelse(kingdom == "Animalia",
-                                        "AN",
-                                        ifelse(kingdom == "Plantae",
-                                               "PL",
-                                               substr(kingdom, 1, 1))),
+                   toupper(paste(ifelse(kingdom %in% c("Animalia", "Plantae"),
+                                        substr(kingdom, 1, 2),
+                                        substr(kingdom, 1, 1)),
                                  abbr_genus,
                                  abbr_species,
                                  abbr_subspecies,
                                  sep = "_")))) %>%
   mutate(mo = ifelse(duplicated(.$mo),
+                     # these one or two must be unique too
                      paste0(mo, "1"),
                      mo),
          fullname = ifelse(fullname == "",
                            trimws(paste(genus, species, subspecies)),
                            fullname)) %>%
+  # put `mo` in front, followed by the rest
   select(mo, everything(), -abbr_genus, -abbr_species, -abbr_subspecies)
 
 
@@ -184,23 +262,22 @@ MOs <- MOs %>%
 MOs <- MOs %>%
   bind_rows(
     # Unknowns
-    MOs %>%
-      .[1,] %>%
-      mutate(mo = "UNKNOWN",
-             col_id = NA_integer_,
-             fullname = "(unknown name)",
-             kingdom = "(unknown kingdom)",
-             phylum = "(unknown phylum)",
-             class = "(unknown class)",
-             order = "(unknown order)",
-             family = "(unknown family)",
-             genus = "(unknown genus)",
-             species = "(unknown species)",
-             subspecies = "(unknown subspecies)",
-             rank = "(unknown rank)",
-             ref = NA_character_,
-             # kingdom Bacteria:
-             species_id = "36bea735613185bbd9ce135fb0d9382c"),
+    data.frame(mo = "UNKNOWN",
+               col_id = NA_integer_,
+               fullname = "(unknown name)",
+               kingdom = "(unknown kingdom)",
+               phylum = "(unknown phylum)",
+               class = "(unknown class)",
+               order = "(unknown order)",
+               family = "(unknown family)",
+               genus = "(unknown genus)",
+               species = "(unknown species)",
+               subspecies = "(unknown subspecies)",
+               rank = "(unknown rank)",
+               ref = NA_character_,
+               species_id = "",
+               source = "manually added",
+               stringsAsFactors = FALSE),
     data.frame(mo = "B_GRAMN",
                col_id = NA_integer_,
                fullname = "(unknown Gram negatives)",
@@ -214,6 +291,8 @@ MOs <- MOs %>%
                subspecies = "(unknown subspecies)",
                rank = "species",
                ref = NA_character_,
+               species_id = "",
+               source = "manually added",
                stringsAsFactors = FALSE),
     data.frame(mo = "B_GRAMP",
                col_id = NA_integer_,
@@ -228,78 +307,96 @@ MOs <- MOs %>%
                subspecies = "(unknown subspecies)",
                rank = "species",
                ref = NA_character_,
+               species_id = "",
+               source = "manually added",
                stringsAsFactors = FALSE),
     # CoNS
     MOs %>%
       filter(genus == "Staphylococcus", species == "epidermidis") %>% .[1,] %>%
       mutate(mo = gsub("EPI", "CNS", mo),
              col_id = NA_integer_,
-             species = "coagulase negative",
-             fullname = "Coagulase Negative Staphylococcus (CoNS)",
-             ref = NA_character_),
+             species = "coagulase-negative",
+             fullname = "Coagulase-negative Staphylococcus (CoNS)",
+             ref = NA_character_,
+             species_id = "",
+             source = "manually added"),
     # CoPS
     MOs %>%
       filter(genus == "Staphylococcus", species == "epidermidis") %>% .[1,] %>%
       mutate(mo = gsub("EPI", "CPS", mo),
              col_id = NA_integer_,
-             species = "coagulase positive",
-             fullname = "Coagulase Positive Staphylococcus (CoPS)",
-             ref = NA_character_),
+             species = "coagulase-positive",
+             fullname = "Coagulase-positive Staphylococcus (CoPS)",
+             ref = NA_character_,
+             species_id = "",
+             source = "manually added"),
     # Streptococci groups A, B, C, F, H, K
     MOs %>%
-      filter(genus == "Streptococcus", species == "agalactiae") %>% .[1,] %>%
-      mutate(mo = gsub("AGA", "GRA", mo),
-             col_id = NA_integer_,
+      filter(genus == "Streptococcus", species == "pyogenes") %>% .[1,] %>%
+      # we can keep all other details, since S. pyogenes is the only member of group A
+      mutate(mo = gsub("PYO", "GRA", mo),
              species = "group A" ,
              fullname = "Streptococcus group A"),
     MOs %>%
-      filter(genus == "Streptococcus", species == "dysgalactiae") %>% .[1,] %>%
-      mutate(mo = gsub("DYS", "GRB", mo),
-             col_id = NA_integer_,
+      filter(genus == "Streptococcus", species == "agalactiae") %>% .[1,] %>%
+      # we can keep all other details, since S. agalactiae is the only member of group B
+      mutate(mo = gsub("AGA", "GRB", mo),
              species = "group B" ,
              fullname = "Streptococcus group B"),
     MOs %>%
-      filter(genus == "Streptococcus", species == "agalactiae") %>% .[1,] %>%
-      mutate(mo = gsub("AGA", "GRC", mo),
+      filter(genus == "Streptococcus", species == "dysgalactiae") %>% .[1,] %>%
+      mutate(mo = gsub("DYS", "GRC", mo),
              col_id = NA_integer_,
              species = "group C" ,
              fullname = "Streptococcus group C",
-             ref = NA_character_),
+             ref = NA_character_,
+             species_id = "",
+             source = "manually added"),
     MOs %>%
       filter(genus == "Streptococcus", species == "agalactiae") %>% .[1,] %>%
       mutate(mo = gsub("AGA", "GRD", mo),
              col_id = NA_integer_,
              species = "group D" ,
              fullname = "Streptococcus group D",
-             ref = NA_character_),
+             ref = NA_character_,
+             species_id = "",
+             source = "manually added"),
     MOs %>%
       filter(genus == "Streptococcus", species == "agalactiae") %>% .[1,] %>%
       mutate(mo = gsub("AGA", "GRF", mo),
              col_id = NA_integer_,
              species = "group F" ,
              fullname = "Streptococcus group F",
-             ref = NA_character_),
+             ref = NA_character_,
+             species_id = "",
+             source = "manually added"),
     MOs %>%
       filter(genus == "Streptococcus", species == "agalactiae") %>% .[1,] %>%
       mutate(mo = gsub("AGA", "GRG", mo),
              col_id = NA_integer_,
-             species = "group F" ,
+             species = "group G" ,
              fullname = "Streptococcus group G",
-             ref = NA_character_),
+             ref = NA_character_,
+             species_id = "",
+             source = "manually added"),
     MOs %>%
       filter(genus == "Streptococcus", species == "agalactiae") %>% .[1,] %>%
       mutate(mo = gsub("AGA", "GRH", mo),
              col_id = NA_integer_,
              species = "group H" ,
              fullname = "Streptococcus group H",
-             ref = NA_character_),
+             ref = NA_character_,
+             species_id = "",
+             source = "manually added"),
     MOs %>%
       filter(genus == "Streptococcus", species == "agalactiae") %>% .[1,] %>%
       mutate(mo = gsub("AGA", "GRK", mo),
              col_id = NA_integer_,
              species = "group K" ,
              fullname = "Streptococcus group K",
-             ref = NA_character_),
+             ref = NA_character_,
+             species_id = "",
+             source = "manually added"),
     # Beta haemolytic Streptococci
     MOs %>%
       filter(genus == "Streptococcus", species == "agalactiae") %>% .[1,] %>%
@@ -307,7 +404,9 @@ MOs <- MOs %>%
              col_id = NA_integer_,
              species = "beta-haemolytic" ,
              fullname = "Beta-haemolytic Streptococcus",
-             ref = NA_character_)
+             ref = NA_character_,
+             species_id = "",
+             source = "manually added")
   )
 
 
@@ -328,3 +427,4 @@ usethis::use_data(microorganisms, overwrite = TRUE)
 usethis::use_data(microorganisms.old, overwrite = TRUE)
 rm(microorganisms)
 rm(microorganisms.old)
+# and update the year in R/data.R

@@ -130,11 +130,11 @@
 #
 "antibiotics"
 
-#' Data set with ~60,000 microorganisms
+#' Data set with ~65,000 microorganisms
 #'
 #' A data set containing the microbial taxonomy of six kingdoms from the Catalogue of Life. MO codes can be looked up using \code{\link{as.mo}}.
 #' @inheritSection catalogue_of_life Catalogue of Life
-#' @format A \code{\link{data.frame}} with 59,985 observations and 15 variables:
+#' @format A \code{\link{data.frame}} with 65,629 observations and 16 variables:
 #' \describe{
 #'   \item{\code{mo}}{ID of microorganism as used by this package}
 #'   \item{\code{col_id}}{Catalogue of Life ID}
@@ -150,30 +150,40 @@
 #'   \item{\code{rank}}{Taxonomic rank of the microorganism, like \code{"species"} or \code{"genus"}}
 #'   \item{\code{ref}}{Author(s) and year of concerning scientific publication}
 #'   \item{\code{species_id}}{ID of the species as used by the Catalogue of Life}
+#'   \item{\code{source}}{Either \code{"CoL"}, \code{"DSMZ"} (see source) or "manually added"}
 #'   \item{\code{prevalence}}{Prevalence of the microorganism, see \code{?as.mo}}
 #' }
-#' @source Catalogue of Life: Annual Checklist (public online database), \url{www.catalogueoflife.org}.
 #' @details Manually added were:
 #' \itemize{
 #'   \item{9 species of \emph{Streptococcus} (beta haemolytic groups A, B, C, D, F, G, H, K and unspecified)}
 #'   \item{2 species of \emph{Staphylococcus} (coagulase-negative [CoNS] and coagulase-positive [CoPS])}
-#'   \item{2 other undefined (unknown Gram negatives and unknown Gram positives)}
+#'   \item{3 other undefined (unknown, unknown Gram negatives and unknown Gram positives)}
+#'   \item{8,830 species from the DSMZ (Deutsche Sammlung von Mikroorganismen und Zellkulturen) that are not in the Catalogue of Life}
 #' }
+#' @section About the records from DSMZ (see source):
+#' Names of prokaryotes are defined as being validly published by the International Code of Nomenclature of Bacteria. Validly published are all names which are included in the Approved Lists of Bacterial Names and the names subsequently published in the International Journal of Systematic Bacteriology (IJSB) and, from January 2000, in the International Journal of Systematic and Evolutionary Microbiology (IJSEM) as original articles or in the validation lists.
+#'
+#' From: \url{https://www.dsmz.de/support/bacterial-nomenclature-up-to-date-downloads/readme.html}
+#' @source Catalogue of Life: Annual Checklist (public online taxonomic database), \url{www.catalogueoflife.org} (check included annual version with \code{\link{catalogue_of_life_version}()}).
+#'
+#' Leibniz Institute DSMZ-German Collection of Microorganisms and Cell Cultures, Germany, Prokaryotic Nomenclature Up-to-Date, \url{http://www.dsmz.de/bacterial-diversity/prokaryotic-nomenclature-up-to-date} (check included version with \code{\link{catalogue_of_life_version}()}).
 #' @inheritSection AMR Read more on our website!
 #' @seealso \code{\link{as.mo}}, \code{\link{mo_property}}, \code{\link{microorganisms.codes}}
 "microorganisms"
 
 catalogue_of_life <- list(
   year = 2018,
-  version = "Catalogue of Life: 2018 Annual Checklist",
-  url = "http://www.catalogueoflife.org/annual-checklist/2018"
+  version = "Catalogue of Life: {year} Annual Checklist",
+  url_CoL = "http://www.catalogueoflife.org/annual-checklist/{year}/",
+  url_DSMZ = "https://www.dsmz.de/microorganisms/pnu/bacterial_nomenclature_info_mm.php",
+  yearmonth_DSMZ = "February 2019"
 )
 
 #' Data set with previously accepted taxonomic names
 #'
 #' A data set containing old (previously valid or accepted) taxonomic names according to the Catalogue of Life. This data set is used internally by \code{\link{as.mo}}.
 #' @inheritSection catalogue_of_life Catalogue of Life
-#' @format A \code{\link{data.frame}} with 17,069 observations and 4 variables:
+#' @format A \code{\link{data.frame}} with 16,911 observations and 4 variables:
 #' \describe{
 #'   \item{\code{col_id}}{Catalogue of Life ID}
 #'   \item{\code{tsn_new}}{New Catalogue of Life ID}

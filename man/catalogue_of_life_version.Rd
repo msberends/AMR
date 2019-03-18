@@ -6,11 +6,16 @@
 \usage{
 catalogue_of_life_version()
 }
+\value{
+a \code{list}, invisibly
+}
 \description{
-This function returns a list with info about the included data from the Catalogue of Life. It also shows if the included version is their latest annual release. The Catalogue of Life releases their annual release in March each year.
+This function returns information about the included data from the Catalogue of Life. It also shows if the included version is their latest annual release. The Catalogue of Life releases their annual release in March each year.
 }
 \details{
 The list item \code{is_latest_annual_release} is based on the system date.
+
+For DSMZ, see \code{?microorganisms}.
 }
 \section{Catalogue of Life}{
 
