@@ -4,13 +4,15 @@
 \alias{availability}
 \title{Check availability of columns}
 \usage{
-availability(tbl)
+availability(tbl, width = NULL)
 }
 \arguments{
 \item{tbl}{a \code{data.frame} or \code{list}}
+
+\item{width}{number of characters to present the visual availability, defaults to filling the width of the console}
 }
 \value{
-\code{data.frame} with column names of \code{tbl} as row names and columns: \code{percent_IR}, \code{count}, \code{percent}, \code{visual_availability}.
+\code{data.frame} with column names of \code{tbl} as row names
 }
 \description{
 Easy check for availability of columns in a data set. This makes it easy to get an idea of which antibiotic combination can be used for calculation with e.g. \code{\link{portion_IR}}.

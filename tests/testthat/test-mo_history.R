@@ -37,7 +37,7 @@ test_that("mo_history works", {
                               force = TRUE),
                "B_ESCHR_COL")
 
-  expect_equal(as.character(as.mo("testsubject", allow_uncertain = TRUE)), "B_ESCHR_COL")
+  expect_equal(as.character(as.mo("testsubject", force_mo_history = TRUE)), "B_ESCHR_COL")
 
   expect_equal(colnames(read_mo_history(force = TRUE)),
                c("x", "mo", "uncertainty_level", "package_version"))

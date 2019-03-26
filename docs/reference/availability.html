@@ -80,7 +80,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.0.9023</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.0.9025</span>
       </span>
     </div>
 
@@ -241,7 +241,7 @@
     
     </div>
 
-    <pre class="usage"><span class='fu'>availability</span>(<span class='no'>tbl</span>)</pre>
+    <pre class="usage"><span class='fu'>availability</span>(<span class='no'>tbl</span>, <span class='kw'>width</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -250,11 +250,15 @@
       <th>tbl</th>
       <td><p>a <code>data.frame</code> or <code>list</code></p></td>
     </tr>
+    <tr>
+      <th>width</th>
+      <td><p>number of characters to present the visual availability, defaults to filling the width of the console</p></td>
+    </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p><code>data.frame</code> with column names of <code>tbl</code> as row names and columns: <code>percent_IR</code>, <code>count</code>, <code>percent</code>, <code>visual_availability</code>.</p>
+    <p><code>data.frame</code> with column names of <code>tbl</code> as row names</p>
     
     <h2 class="hasAnchor" id="read-more-on-our-website-"><a class="anchor" href="#read-more-on-our-website-"></a>Read more on our website!</h2>
 
