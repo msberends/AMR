@@ -69,5 +69,6 @@ test_that("creation of data sets is valid", {
 })
 
 test_that("CoL version info works", {
- expect_equal(class(catalogue_of_life_version()), "list")
+ expect_identical(class(catalogue_of_life_version()),
+                  c("catalogue_of_life_version", "list"))
 })
