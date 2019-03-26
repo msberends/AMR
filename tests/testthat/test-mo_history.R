@@ -22,13 +22,23 @@
 context("mo_history.R")
 
 test_that("mo_history works", {
-  clean_mo_history()
+  clean_mo_history(force = TRUE)
   expect_equal(read_mo_history(force = TRUE),
                NULL)
 
-  set_mo_history("testsubject", "B_ESCHR_COL", force = TRUE)
-  expect_equal(get_mo_history("testsubject", force = TRUE),
+  expect_equal(as.character(suppressWarnings(as.mo("testsubject"))), "UNKNOWN")
+
+  set_mo_history("testsubject", "B_ESCHR_COL",
+                 uncertainty_level = translate_allow_uncertain(TRUE),
+                 force = TRUE)
+
+  expect_equal(get_mo_history("testsubject",
+                              uncertainty_level = translate_allow_uncertain(TRUE),
+                              force = TRUE),
                "B_ESCHR_COL")
+
+  expect_equal(as.character(suppressWarnings(as.mo("testsubject"))), "B_ESCHR_COL")
+
   expect_equal(colnames(read_mo_history(force = TRUE)),
-               c("x", "mo", "package_version"))
+               c("x", "mo", "uncertainty_level", "package_version"))
 })

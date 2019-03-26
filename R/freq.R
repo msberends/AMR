@@ -417,9 +417,9 @@ frequency_tbl <- function(x,
     header_list$outliers_unique <- n_distinct(boxplot.stats(x)$out)
   }
 
-  if (NROW(x) > 0 & any(class(x) == "rsi")) {
-    header_list$count_S <- sum(x == "S", na.rm = TRUE)
-    header_list$count_IR <- sum(x %in% c("I", "R"), na.rm = TRUE)
+  if (any(class(x) == "rsi")) {
+    header_list$count_S <- max(0, sum(x == "S", na.rm = TRUE), na.rm = TRUE)
+    header_list$count_IR <- max(0, sum(x %in% c("I", "R"), na.rm = TRUE), na.rm = TRUE)
   }
 
   formatdates <- "%e %B %Y" # = d mmmm yyyy
@@ -564,18 +564,14 @@ format_header <- function(x, markdown = FALSE, decimal.mark = ".", big.mark = ",
   # FORMATTING
   # rsi
   if (has_length == TRUE & any(x_class == "rsi")) {
-    if (header$count_S < header$count_IR) {
-      ratio <- paste0(green(1), ":", red(format(header$count_IR / header$count_S,
-                                                digits = 1, nsmall = 1, decimal.mark = decimal.mark, big.mark = big.mark)))
-    } else {
-      ratio <- paste0(green(format(header$count_S / header$count_IR,
-                                   digits = 1, nsmall = 1, decimal.mark = decimal.mark, big.mark = big.mark)),
-                      ":", red(1))
+    ab <- tryCatch(atc_name(attributes(x)$opt$vars), error = function(e) NA)
+    if (!is.na(ab)) {
+      header$drug <- ab[1L]
     }
-    header$`%IR` <- paste((header$count_IR / header$length) %>% percent(force_zero = TRUE, round = digits, decimal.mark = decimal.mark),
-                          paste0("(ratio ", ratio, ")"))
-    header <- header[!names(header) %in% c("count_S", "count_IR")]
+    header$`%IR` <- percent(header$count_IR / (header$count_S + header$count_IR),
+                            force_zero = TRUE, round = digits, decimal.mark = decimal.mark)
   }
+  header <- header[!names(header) %in% c("count_S", "count_IR")]
   # dates
   if (!is.null(header$date_format)) {
     if (header$date_format == "%H:%M:%S") {

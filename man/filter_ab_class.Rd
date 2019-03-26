@@ -13,7 +13,7 @@
 \alias{filter_glycopeptides}
 \alias{filter_macrolides}
 \alias{filter_tetracyclines}
-\title{Filter on antibiotic class}
+\title{Filter isolates on result in antibiotic class}
 \usage{
 filter_ab_class(tbl, ab_class, result = NULL, scope = "any", ...)
 
@@ -42,7 +42,7 @@ filter_tetracyclines(tbl, result = NULL, scope = "any", ...)
 \arguments{
 \item{tbl}{a data set}
 
-\item{ab_class}{an antimicrobial class, like \code{"carbapenems"}}
+\item{ab_class}{an antimicrobial class, like \code{"carbapenems"}. More specifically, this should be a text that can be found in a 4th level ATC group (chemical subgroup) or a 5th level ATC group (chemical substance), please see \href{https://www.whocc.no/atc/structure_and_principles/}{this explanation on the WHOCC website}.}
 
 \item{result}{an antibiotic result: S, I or R (or a combination of more of them)}
 
@@ -51,7 +51,7 @@ filter_tetracyclines(tbl, result = NULL, scope = "any", ...)
 \item{...}{parameters passed on to \code{\link[dplyr]{filter_at}}}
 }
 \description{
-Filter on specific antibiotic variables based on their class (ATC groups).
+Filter isolates on results in specific antibiotic variables based on their class (ATC groups). This makes it easy to get a list of isolates that were tested for e.g. any aminoglycoside.
 }
 \details{
 The \code{\link{antibiotics}} data set will be searched for \code{ab_class} in the columns \code{atc_group1} and \code{atc_group2} (case-insensitive). Next, \code{tbl} will be checked for column names with a value in any abbreviations, codes or official names found in the \code{antibiotics} data set.
@@ -77,8 +77,14 @@ septic_patients \%>\% filter_aminoglycosides("R", "all")
 # filter on isolates that show resistance to
 # any aminoglycoside and any fluoroquinolone
 septic_patients \%>\%
-  filter_aminoglycosides("R", "any") \%>\%
-  filter_fluoroquinolones("R", "any")
+  filter_aminoglycosides("R") \%>\%
+  filter_fluoroquinolones("R")
+
+# filter on isolates that show resistance to
+# all aminoglycosides and all fluoroquinolones
+septic_patients \%>\%
+  filter_aminoglycosides("R", "all") \%>\%
+  filter_fluoroquinolones("R", "all")
 }
 \keyword{fillter_class}
 \keyword{filter}

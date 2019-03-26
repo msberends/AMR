@@ -47,7 +47,7 @@
   <script src="../extra.js"></script>
 <meta property="og:title" content="Calculate resistance of isolates — portion" />
 
-<meta property="og:description" content="These functions can be used to calculate the (co-)resistance of microbial isolates (i.e. percentage S, SI, I, IR or R). All functions support quasiquotation with pipes, can be used in dplyrs summarise and support grouped variables, see Examples.
+<meta property="og:description" content="These functions can be used to calculate the (co-)resistance of microbial isolates (i.e. percentage of S, SI, I, IR or R). All functions support quasiquotation with pipes, can be used in dplyrs summarise and support grouped variables, see Examples.
 portion_R and portion_IR can be used to calculate resistance, portion_S and portion_SI can be used to calculate susceptibility." />
 
 <meta property="og:image" content="https://msberends.gitlab.io/AMR/logo.png" />
@@ -81,7 +81,7 @@ portion_R and portion_IR can be used to calculate resistance, portion_S and port
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.0.9023</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.0.9025</span>
       </span>
     </div>
 
@@ -238,7 +238,7 @@ portion_R and portion_IR can be used to calculate resistance, portion_S and port
 
     <div class="ref-description">
     
-    <p>These functions can be used to calculate the (co-)resistance of microbial isolates (i.e. percentage S, SI, I, IR or R). All functions support quasiquotation with pipes, can be used in <code>dplyr</code>s <code><a href='https://dplyr.tidyverse.org/reference/summarise.html'>summarise</a></code> and support grouped variables, see <em>Examples</em>.</p>
+    <p>These functions can be used to calculate the (co-)resistance of microbial isolates (i.e. percentage of S, SI, I, IR or R). All functions support quasiquotation with pipes, can be used in <code>dplyr</code>s <code><a href='https://dplyr.tidyverse.org/reference/summarise.html'>summarise</a></code> and support grouped variables, see <em>Examples</em>.</p>
 <p><code>portion_R</code> and <code>portion_IR</code> can be used to calculate resistance, <code>portion_S</code> and <code>portion_SI</code> can be used to calculate susceptibility.<br /></p>
     
     </div>
@@ -270,7 +270,7 @@ portion_R and portion_IR can be used to calculate resistance, portion_S and port
     </tr>
     <tr>
       <th>minimum</th>
-      <td><p>the minimal amount of available isolates. Any number lower than <code>minimum</code> will return <code>NA</code> with a warning. The default number of <code>30</code> isolates is advised by the Clinical and Laboratory Standards Institute (CLSI) as best practice, see Source.</p></td>
+      <td><p>the minimum allowed number of available (tested) isolates. Any isolate count lower than <code>minimum</code> will return <code>NA</code> with a warning. The default number of <code>30</code> isolates is advised by the Clinical and Laboratory Standards Institute (CLSI) as best practice, see Source.</p></td>
     </tr>
     <tr>
       <th>as_percent</th>
@@ -311,14 +311,14 @@ portion_R and portion_IR can be used to calculate resistance, portion_S and port
 <p>The old <code><a href='rsi.html'>rsi</a></code> function is still available for backwards compatibility but is deprecated.
     <br /><br />
   To calculate the probability (<em>p</em>) of susceptibility of one antibiotic, we use this formula:
-  <div style="text-align: center"><img src='figures/mono_therapy.png' alt='' /></div>
+  <div style="text-align: center;"><img src='figures/combi_therapy_2.png' alt='' /></div>
   To calculate the probability (<em>p</em>) of susceptibility of more antibiotics (i.e. combination therapy), we need to check whether one of them has a susceptible result (as numerator) and count all cases where all antibiotics were tested (as denominator). <br />
   <br />
   For two antibiotics:
-  <div style="text-align: center"><img src='figures/combi_therapy_2.png' alt='' /></div>
+  <div style="text-align: center;"><img src='figures/combi_therapy_2.png' alt='' /></div>
   <br />
   For three antibiotics:
-  <div style="text-align: center"><img src='figures/combi_therapy_3.png' alt='' /></div>
+  <div style="text-align: center;"><img src='figures/combi_therapy_2.png' alt='' /></div>
   <br />
   And so on.</p>
     
@@ -362,8 +362,9 @@ portion_R and portion_IR can be used to calculate resistance, portion_S and port
   <span class='fu'><a href='https://dplyr.tidyverse.org/reference/summarise.html'>summarise</a></span>(<span class='kw'>R</span> <span class='kw'>=</span> <span class='fu'>portion_R</span>(<span class='no'>cipr</span>, <span class='kw'>as_percent</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>),
             <span class='kw'>I</span> <span class='kw'>=</span> <span class='fu'>portion_I</span>(<span class='no'>cipr</span>, <span class='kw'>as_percent</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>),
             <span class='kw'>S</span> <span class='kw'>=</span> <span class='fu'>portion_S</span>(<span class='no'>cipr</span>, <span class='kw'>as_percent</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>),
-            <span class='kw'>n</span> <span class='kw'>=</span> <span class='fu'><a href='count.html'>n_rsi</a></span>(<span class='no'>cipr</span>), <span class='co'># works like n_distinct in dplyr</span>
-            <span class='kw'>total</span> <span class='kw'>=</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/n.html'>n</a></span>())     <span class='co'># NOT the amount of tested isolates!</span>
+            <span class='kw'>n1</span> <span class='kw'>=</span> <span class='fu'><a href='count.html'>count_all</a></span>(<span class='no'>cipr</span>), <span class='co'># the actual total; sum of all three</span>
+            <span class='kw'>n2</span> <span class='kw'>=</span> <span class='fu'><a href='count.html'>n_rsi</a></span>(<span class='no'>cipr</span>),     <span class='co'># same - analogous to n_distinct</span>
+            <span class='kw'>total</span> <span class='kw'>=</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/n.html'>n</a></span>())          <span class='co'># NOT the number of tested isolates!</span>
 
 <span class='co'># Calculate co-resistance between amoxicillin/clav acid and gentamicin,</span>
 <span class='co'># so we can see that combination therapy does a lot more than mono therapy:</span>

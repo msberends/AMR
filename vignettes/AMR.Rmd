@@ -315,7 +315,7 @@ data_1st %>%
 
 ## Resistance percentages
 
-The functions `portion_R()`, `portion_RI()`, `portion_I()`, `portion_IS()` and `portion_S()` can be used to determine the portion of a specific antimicrobial outcome. They can be used on their own:
+The functions `portion_S()`, `portion_SI()`, `portion_I()`, `portion_IR()` and `portion_R()` can be used to determine the portion of a specific antimicrobial outcome. They can be used on their own:
 
 ```{r}
 data_1st %>% portion_IR(amox)

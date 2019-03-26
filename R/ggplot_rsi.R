@@ -164,9 +164,7 @@ ggplot_rsi <- function(data,
                        datalabels.colour = "grey15",
                        ...) {
 
-  if (!"ggplot2" %in% rownames(installed.packages())) {
-    stop('this function requires the ggplot2 package.', call. = FALSE)
-  }
+  stopifnot_installed_package("ggplot2")
 
   fun_name <- deparse(substitute(fun))
   if (!fun_name %in% c("portion_df", "count_df")) {
@@ -235,6 +233,8 @@ geom_rsi <- function(position = NULL,
                      fun = count_df,
                      ...)  {
 
+  stopifnot_installed_package("ggplot2")
+
   fun_name <- deparse(substitute(fun))
   if (!fun_name %in% c("portion_df", "count_df", "fun")) {
     stop("`fun` must be portion_df or count_df")
@@ -279,6 +279,8 @@ geom_rsi <- function(position = NULL,
 #' @export
 facet_rsi <- function(facet = c("Interpretation", "Antibiotic"), nrow = NULL) {
 
+  stopifnot_installed_package("ggplot2")
+
    facet <- facet[1]
 
   # we work with aes_string later on
@@ -302,6 +304,8 @@ facet_rsi <- function(facet = c("Interpretation", "Antibiotic"), nrow = NULL) {
 #' @rdname ggplot_rsi
 #' @export
 scale_y_percent <- function(breaks = seq(0, 1, 0.1), limits = NULL) {
+  stopifnot_installed_package("ggplot2")
+
   if (all(breaks[breaks != 0] > 1)) {
     breaks <- breaks / 100
   }
@@ -313,6 +317,7 @@ scale_y_percent <- function(breaks = seq(0, 1, 0.1), limits = NULL) {
 #' @rdname ggplot_rsi
 #' @export
 scale_rsi_colours <- function() {
+  stopifnot_installed_package("ggplot2")
   #ggplot2::scale_fill_brewer(palette = "RdYlGn")
   ggplot2::scale_fill_manual(values = c("#b22222", "#ae9c20", "#7cfc00"))
 }
@@ -320,6 +325,7 @@ scale_rsi_colours <- function() {
 #' @rdname ggplot_rsi
 #' @export
 theme_rsi <- function() {
+  stopifnot_installed_package("ggplot2")
   ggplot2::theme_minimal() +
     ggplot2::theme(panel.grid.major.x = ggplot2::element_blank(),
                    panel.grid.minor = ggplot2::element_blank(),
@@ -332,6 +338,7 @@ labels_rsi_count <- function(position = NULL,
                              x = "Antibiotic",
                              datalabels.size = 3,
                              datalabels.colour = "grey15") {
+  stopifnot_installed_package("ggplot2")
   if (is.null(position)) {
     position <- "fill"
   }
@@ -357,3 +364,4 @@ getlbls <- function(data) {
                         " (n=", Value, ")")) %>%
     mutate(lbl = ifelse(lbl == "0.0% (n=0)", "", lbl))
 }
+

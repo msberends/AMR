@@ -446,6 +446,8 @@ mo_translate <- function(x, language) {
 
     # Spanish
     language == "es" ~ x[x_tobetranslated] %>%
+      # not 'negativa'
+      # https://www.sciencedirect.com/science/article/pii/S0123939215000739
       gsub("Coagulase-negative Staphylococcus","Staphylococcus coagulasa negativo", ., fixed = TRUE) %>%
       gsub("Coagulase-positive Staphylococcus","Staphylococcus coagulasa positivo", ., fixed = TRUE) %>%
       gsub("Beta-haemolytic Streptococcus",    "Streptococcus Beta-hemol\u00edtico", ., fixed = TRUE) %>%
@@ -461,6 +463,8 @@ mo_translate <- function(x, language) {
       gsub("unknown species",                  "especie desconocida", ., fixed = TRUE) %>%
       gsub("unknown subspecies",               "subespecie desconocida", ., fixed = TRUE) %>%
       gsub("unknown rank",                     "rango desconocido", ., fixed = TRUE) %>%
+      gsub("(CoNS)",           "(SCN)", ., fixed = TRUE) %>%
+      gsub("(CoPS)",           "(SCP)", ., fixed = TRUE) %>%
       gsub("Gram negative",    "Gram negativo", ., fixed = TRUE) %>%
       gsub("Gram positive",    "Gram positivo", ., fixed = TRUE) %>%
       gsub("Bacteria",         "Bacterias", ., fixed = TRUE) %>%
@@ -579,7 +583,12 @@ mo_validate <- function(x, property, ...) {
     # check onLoad() in R/zzz.R: data tables are created there.
   }
 
-  if (!all(x %in% microorganisms[, property])
+  # try to catch an error when inputting an invalid parameter
+  # so the call can be set to FALSE
+  tryCatch(x[1L] %in% AMR::microorganisms[1, property],
+           error = function(e) stop(e$message, call. = FALSE))
+
+  if (!all(x %in% AMR::microorganisms[, property])
       | Becker %in% c(TRUE, "all")
       | Lancefield %in% c(TRUE, "all")) {
     exec_as.mo(x, property = property, ...)

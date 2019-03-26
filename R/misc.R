@@ -194,3 +194,9 @@ search_type_in_df <- function(tbl, type) {
   }
   found
 }
+
+stopifnot_installed_package <- function(package) {
+  if (!package %in% base::rownames(utils::installed.packages())) {
+    stop("this function requires the ", package, " package.", call. = FALSE)
+  }
+}

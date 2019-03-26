@@ -81,10 +81,10 @@ NULL
 #'
 #' This function returns information about the included data from the Catalogue of Life. It also shows if the included version is their latest annual release. The Catalogue of Life releases their annual release in March each year.
 #' @seealso \code{\link{microorganisms}}
-#' @details The list item \code{is_latest_annual_release} is based on the system date.
+#' @details The list item \code{...$catalogue_of_life$is_latest_annual_release} is based on the system date.
 #'
 #' For DSMZ, see \code{?microorganisms}.
-#' @return a \code{list}, invisibly
+#' @return a \code{list}, which prints in pretty format
 #' @inheritSection catalogue_of_life Catalogue of Life
 #' @inheritSection AMR Read more on our website!
 #' @importFrom crayon bold underline
@@ -99,8 +99,8 @@ catalogue_of_life_version <- function() {
   lst <- list(catalogue_of_life =
                 list(version = gsub("{year}", catalogue_of_life$year, catalogue_of_life$version, fixed = TRUE),
                      url = gsub("{year}", catalogue_of_life$year, catalogue_of_life$url_CoL, fixed = TRUE),
-                     # annual release always somewhere in March, so before April is TRUE, FALSE otherwise
-                     is_latest_annual_release = Sys.Date() < as.Date(paste0(catalogue_of_life$year + 1, "-04-01")),
+                     # annual release always somewhere in May, so before June is TRUE, FALSE otherwise
+                     is_latest_annual_release = Sys.Date() < as.Date(paste0(catalogue_of_life$year + 1, "-06-01")),
                      n = nrow(filter(AMR::microorganisms, source == "CoL"))),
               deutsche_sammlung_von_mikroorganismen_und_zellkulturen =
                 list(version = "Prokaryotic Nomenclature Up-to-Date from DSMZ",
@@ -112,7 +112,16 @@ catalogue_of_life_version <- function() {
                   n_total_species = nrow(AMR::microorganisms),
                   n_total_synonyms = nrow(AMR::microorganisms.old)))
 
-  cat(paste0(bold("Included in this package are:\n\n"),
+  structure(.Data = lst,
+            class = c("catalogue_of_life_version", "list"))
+}
+
+#' @exportMethod print.catalogue_of_life_version
+#' @export
+#' @noRd
+print.catalogue_of_life_version <- function(x, ...) {
+  lst <- x
+  cat(paste0(bold("Included in this AMR package are:\n\n"),
              underline(lst$catalogue_of_life$version), "\n",
              "  Available at: ", lst$catalogue_of_life$url, "\n",
              "  Number of included species: ", format(lst$catalogue_of_life$n, big.mark = ","), "\n",
@@ -121,9 +130,7 @@ catalogue_of_life_version <- function() {
                               lst$deutsche_sammlung_von_mikroorganismen_und_zellkulturen$yearmonth, ")")), "\n",
              "  Available at: ", lst$deutsche_sammlung_von_mikroorganismen_und_zellkulturen$url, "\n",
              "  Number of included species: ", format(lst$deutsche_sammlung_von_mikroorganismen_und_zellkulturen$n, big.mark = ","), "\n\n",
-             "Total number of species included:  ", format(lst$total_included$n_total_species, big.mark = ","), "\n",
-             "Total number of synonyms included: ", format(lst$total_included$n_total_synonyms, big.mark = ","), "\n\n",
+             "=> Total number of species included:  ", format(lst$total_included$n_total_species, big.mark = ","), "\n",
+             "=> Total number of synonyms included: ", format(lst$total_included$n_total_synonyms, big.mark = ","), "\n\n",
              "See for more info ?microorganisms and ?catalogue_of_life.\n"))
-
-  return(base::invisible(lst))
 }

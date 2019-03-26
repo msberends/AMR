@@ -21,16 +21,16 @@ mo_uncertainties()
 
 mo_renamed()
 
-clean_mo_history()
+clean_mo_history(...)
 }
 \arguments{
 \item{x}{a character vector or a \code{data.frame} with one or two columns}
 
-\item{Becker}{a logical to indicate whether \emph{Staphylococci} should be categorised into Coagulase Negative \emph{Staphylococci} ("CoNS") and Coagulase Positive \emph{Staphylococci} ("CoPS") instead of their own species, according to Karsten Becker \emph{et al.} [1]. Note that this does not include species that were newly named after this publication.
+\item{Becker}{a logical to indicate whether \emph{Staphylococci} should be categorised into coagulase-negative \emph{Staphylococci} ("CoNS") and coagulase-positive \emph{Staphylococci} ("CoPS") instead of their own species, according to Karsten Becker \emph{et al.} [1,2]. Note that this does not include species that were newly named after these publications, like \emph{S. caeli}.
 
   This excludes \emph{Staphylococcus aureus} at default, use \code{Becker = "all"} to also categorise \emph{S. aureus} as "CoPS".}
 
-\item{Lancefield}{a logical to indicate whether beta-haemolytic \emph{Streptococci} should be categorised into Lancefield groups instead of their own species, according to Rebecca C. Lancefield [2]. These \emph{Streptococci} will be categorised in their first group, e.g. \emph{Streptococcus dysgalactiae} will be group C, although officially it was also categorised into groups G and L.
+\item{Lancefield}{a logical to indicate whether beta-haemolytic \emph{Streptococci} should be categorised into Lancefield groups instead of their own species, according to Rebecca C. Lancefield [3]. These \emph{Streptococci} will be categorised in their first group, e.g. \emph{Streptococcus dysgalactiae} will be group C, although officially it was also categorised into groups G and L.
 
   This excludes \emph{Enterococci} at default (who are in group D), use \code{Lancefield = "all"} to also categorise all \emph{Enterococci} as group D.}
 
@@ -41,7 +41,7 @@ clean_mo_history()
 \item{...}{other parameters passed on to functions}
 }
 \value{
-Character (vector) with class \code{"mo"}. Unknown values will return \code{NA}.
+Character (vector) with class \code{"mo"}
 }
 \description{
 Use this function to determine a valid microorganism ID (\code{mo}). Determination is done using intelligent rules and the complete taxonomic kingdoms Bacteria, Chromista, Protozoa, Archaea and most microbial species from the kingdom Fungi (see Source). The input can be almost anything: a full name (like \code{"Staphylococcus aureus"}), an abbreviated name (like \code{"S. aureus"}), an abbreviation known in the field (like \code{"MRSA"}), or just a genus. Please see Examples.
@@ -60,18 +60,19 @@ A microbial ID from this package (class: \code{mo}) typically looks like these e
   |   |    |    ----> subspecies, a 3-4 letter acronym
   |   |     ----> species, a 3-4 letter acronym
   |    ----> genus, a 5-7 letter acronym, mostly without vowels
-   ----> taxonomic kingdom: A (Archaea), AN (Animalia), B (Bacteria), C (Chromista),
-                            F (Fungi), P (Protozoa) or PL (Plantae)
+   ----> taxonomic kingdom: A (Archaea), AN (Animalia), B (Bacteria),
+                            C (Chromista), F (Fungi), P (Protozoa) or
+                            PL (Plantae)
 }
 
-Values that cannot be coered will be considered 'unknown' and have an MO code \code{UNKNOWN}.
+Values that cannot be coered will be considered 'unknown' and will get the MO code \code{UNKNOWN}.
 
 Use the \code{\link{mo_property}_*} functions to get properties based on the returned code, see Examples.
 
 The algorithm uses data from the Catalogue of Life (see below) and from one other source (see \code{?microorganisms}).
 
 \strong{Self-learning algoritm} \cr
-The \code{as.mo()} function gains experience from previously determined microbial IDs and learns from it. This drastically improves both speed and reliability. Use \code{clean_mo_history()} to reset the algorithms. Only experience from your current \code{AMR} package version is used. This is done because in the future the taxonomic tree (which is included in this package) may change for any organism and it consequently has to rebuild its knowledge. Usually, any guess after the first try runs 90-95\% faster than the first try. The algorithm saves its previous findings to \code{~/.Rhistory_mo}.
+The \code{as.mo()} function gains experience from previously determined microbial IDs and learns from it. This drastically improves both speed and reliability. Use \code{clean_mo_history()} to reset the algorithms. Only experience from your current \code{AMR} package version is used. This is done because in the future the taxonomic tree (which is included in this package) may change for any organism and it consequently has to rebuild its knowledge. Usually, any guess after the first try runs 80-95\% faster than the first try. The algorithm saves its previous findings to \code{~/.Rhistory_mo}.
 
 \strong{Intelligent rules} \cr
 This function uses intelligent rules to help getting fast and logical results. It tries to find matches in this order:
@@ -91,7 +92,7 @@ A couple of effects because of these rules:
 This means that looking up human pathogenic microorganisms takes less time than looking up human non-pathogenic microorganisms.
 
 \strong{Uncertain results} \cr
-The algorithm can additionally use three different levels of uncertainty to guess valid results. The default is \code{allow_uncertain = TRUE}, which is uqual to uncertainty level 2. Using \code{allow_uncertain = FALSE} will skip all of these additional rules:
+The algorithm can additionally use three different levels of uncertainty to guess valid results. The default is \code{allow_uncertain = TRUE}, which is equal to uncertainty level 2. Using \code{allow_uncertain = FALSE} will skip all of these additional rules:
 \itemize{
   \item{(uncertainty level 1): It tries to look for only matching genera}
   \item{(uncertainty level 1): It tries to look for previously accepted (but now invalid) taxonomic names}
@@ -132,9 +133,11 @@ Group 2 probably contains all other microbial pathogens ever found in humans.
 
 [1] Becker K \emph{et al.} \strong{Coagulase-Negative Staphylococci}. 2014. Clin Microbiol Rev. 27(4): 870–926. \url{https://dx.doi.org/10.1128/CMR.00109-13}
 
-[2] Lancefield RC \strong{A serological differentiation of human and other groups of hemolytic streptococci}. 1933. J Exp Med. 57(4): 571–95. \url{https://dx.doi.org/10.1084/jem.57.4.571}
+[2] Becker K \emph{et al.} \strong{Implications of identifying the recently defined members of the S. aureus complex, S. argenteus and S. schweitzeri: A position paper of members of the ESCMID Study Group for staphylococci and Staphylococcal Diseases (ESGS).}. 2019. Clin Microbiol Infect. 2019 Mar 11. \url{https://doi.org/10.1016/j.cmi.2019.02.028}
 
-[3] Catalogue of Life: Annual Checklist (public online taxonomic database), \url{www.catalogueoflife.org} (check included annual version with \code{\link{catalogue_of_life_version}()}).
+[3] Lancefield RC \strong{A serological differentiation of human and other groups of hemolytic streptococci}. 1933. J Exp Med. 57(4): 571–95. \url{https://dx.doi.org/10.1084/jem.57.4.571}
+
+[4] Catalogue of Life: Annual Checklist (public online taxonomic database), \url{www.catalogueoflife.org} (check included annual version with \code{\link{catalogue_of_life_version}()}).
 }
 
 \section{Catalogue of Life}{

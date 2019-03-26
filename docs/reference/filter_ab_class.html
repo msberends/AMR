@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Filter on antibiotic class — filter_ab_class • AMR (for R)</title>
+<title>Filter isolates on result in antibiotic class — filter_ab_class • AMR (for R)</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -45,9 +45,9 @@
 
   <link href="../extra.css" rel="stylesheet">
   <script src="../extra.js"></script>
-<meta property="og:title" content="Filter on antibiotic class — filter_ab_class" />
+<meta property="og:title" content="Filter isolates on result in antibiotic class — filter_ab_class" />
 
-<meta property="og:description" content="Filter on specific antibiotic variables based on their class (ATC groups)." />
+<meta property="og:description" content="Filter isolates on results in specific antibiotic variables based on their class (ATC groups). This makes it easy to get a list of isolates that were tested for e.g. any aminoglycoside." />
 
 <meta property="og:image" content="https://msberends.gitlab.io/AMR/logo.png" />
 <meta name="twitter:card" content="summary" />
@@ -80,7 +80,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.0.9023</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.0.9025</span>
       </span>
     </div>
 
@@ -230,14 +230,14 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Filter on antibiotic class</h1>
+    <h1>Filter isolates on result in antibiotic class</h1>
     
     <div class="hidden name"><code>filter_ab_class.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Filter on specific antibiotic variables based on their class (ATC groups).</p>
+    <p>Filter isolates on results in specific antibiotic variables based on their class (ATC groups). This makes it easy to get a list of isolates that were tested for e.g. any aminoglycoside.</p>
     
     </div>
 
@@ -274,7 +274,7 @@
     </tr>
     <tr>
       <th>ab_class</th>
-      <td><p>an antimicrobial class, like <code>"carbapenems"</code></p></td>
+      <td><p>an antimicrobial class, like <code>"carbapenems"</code>. More specifically, this should be a text that can be found in a 4th level ATC group (chemical subgroup) or a 5th level ATC group (chemical substance), please see <a href='https://www.whocc.no/atc/structure_and_principles/'>this explanation on the WHOCC website</a>.</p></td>
     </tr>
     <tr>
       <th>result</th>
@@ -317,8 +317,14 @@
 <span class='co'># filter on isolates that show resistance to</span>
 <span class='co'># any aminoglycoside and any fluoroquinolone</span>
 <span class='no'>septic_patients</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'>filter_aminoglycosides</span>(<span class='st'>"R"</span>, <span class='st'>"any"</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'>filter_fluoroquinolones</span>(<span class='st'>"R"</span>, <span class='st'>"any"</span>)
+  <span class='fu'>filter_aminoglycosides</span>(<span class='st'>"R"</span>) <span class='kw'>%&gt;%</span>
+  <span class='fu'>filter_fluoroquinolones</span>(<span class='st'>"R"</span>)
+
+<span class='co'># filter on isolates that show resistance to</span>
+<span class='co'># all aminoglycosides and all fluoroquinolones</span>
+<span class='no'>septic_patients</span> <span class='kw'>%&gt;%</span>
+  <span class='fu'>filter_aminoglycosides</span>(<span class='st'>"R"</span>, <span class='st'>"all"</span>) <span class='kw'>%&gt;%</span>
+  <span class='fu'>filter_fluoroquinolones</span>(<span class='st'>"R"</span>, <span class='st'>"all"</span>)
 <span class='co'># }</span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

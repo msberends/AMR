@@ -19,11 +19,11 @@
 # Visit our website for more info: https://msberends.gitab.io/AMR.     #
 # ==================================================================== #
 
-#' Filter on antibiotic class
+#' Filter isolates on result in antibiotic class
 #'
-#' Filter on specific antibiotic variables based on their class (ATC groups).
+#' Filter isolates on results in specific antibiotic variables based on their class (ATC groups). This makes it easy to get a list of isolates that were tested for e.g. any aminoglycoside.
 #' @param tbl a data set
-#' @param ab_class an antimicrobial class, like \code{"carbapenems"}
+#' @param ab_class an antimicrobial class, like \code{"carbapenems"}. More specifically, this should be a text that can be found in a 4th level ATC group (chemical subgroup) or a 5th level ATC group (chemical substance), please see \href{https://www.whocc.no/atc/structure_and_principles/}{this explanation on the WHOCC website}.
 #' @param result an antibiotic result: S, I or R (or a combination of more of them)
 #' @param scope the scope to check which variables to check, can be \code{"any"} (default) or \code{"all"}
 #' @param ... parameters passed on to \code{\link[dplyr]{filter_at}}
@@ -54,8 +54,14 @@
 #' # filter on isolates that show resistance to
 #' # any aminoglycoside and any fluoroquinolone
 #' septic_patients %>%
-#'   filter_aminoglycosides("R", "any") %>%
-#'   filter_fluoroquinolones("R", "any")
+#'   filter_aminoglycosides("R") %>%
+#'   filter_fluoroquinolones("R")
+#'
+#' # filter on isolates that show resistance to
+#' # all aminoglycosides and all fluoroquinolones
+#' septic_patients %>%
+#'   filter_aminoglycosides("R", "all") %>%
+#'   filter_fluoroquinolones("R", "all")
 filter_ab_class <- function(tbl,
                             ab_class,
                             result = NULL,
@@ -65,6 +71,8 @@ filter_ab_class <- function(tbl,
   if (is.null(result)) {
     result <- c("S", "I", "R")
   }
+  # make result = "IR" work too:
+  result <- unlist(strsplit(result, ""))
 
   if (!all(result %in% c("S", "I", "R"))) {
     stop("`result` must be one or more of: S, I, R", call. = FALSE)
@@ -88,12 +96,20 @@ filter_ab_class <- function(tbl,
     } else {
       scope_txt <- " and "
       scope_fn <- all_vars
+      if (length(vars_df) > 1) {
+        operator <- gsub("is", "are", operator)
+      }
     }
-    message(blue(paste0("Filtering on ", atc_groups, ": ", scope, " of ",
+    if (length(vars_df) > 1) {
+      scope <- paste(scope, "of ")
+    } else {
+      scope <- ""
+    }
+    message(blue(paste0("Filtering on ", atc_groups, ": ", scope,
                         paste(bold(paste0("`", vars_df, "`")), collapse = scope_txt), operator, toString(result))))
     tbl %>%
-      filter_at(.vars = vars(vars_df),
-                .vars_predicate = scope_fn(. %in% result),
+      filter_at(vars(vars_df),
+                scope_fn(. %in% result),
                 ...)
   } else {
     warning(paste0("no antibiotics of class ", atc_groups, " found, leaving data unchanged"), call. = FALSE)
@@ -244,7 +260,7 @@ filter_tetracyclines <- function(tbl,
                   ...)
 }
 
-#' @importFrom dplyr %>% filter_at any_vars select
+#' @importFrom dplyr %>% filter_at vars any_vars select
 ab_class_vars <- function(ab_class) {
   ab_vars <- AMR::antibiotics %>%
     filter_at(vars(c("atc_group1", "atc_group2")), any_vars(. %like% ab_class)) %>%
@@ -260,10 +276,23 @@ ab_class_vars <- function(ab_class) {
 
 #' @importFrom dplyr %>% filter pull
 ab_class_atcgroups <- function(ab_class) {
-  AMR::antibiotics %>%
-    filter(atc %in% ab_class_vars(ab_class)) %>%
-    pull("atc_group2") %>%
-    unique() %>%
-    tolower() %>%
-    paste(collapse = "/")
+  ifelse(ab_class %in% c("aminoglycoside",
+                         "carbapenem",
+                         "cephalosporin",
+                         "first-generation cephalosporin",
+                         "second-generation cephalosporin",
+                         "third-generation cephalosporin",
+                         "fourth-generation cephalosporin",
+                         "fluoroquinolone",
+                         "glycopeptide",
+                         "macrolide",
+                         "tetracycline"),
+         paste0(ab_class, "s"),
+         AMR::antibiotics %>%
+           filter(atc %in% ab_class_vars(ab_class)) %>%
+           pull("atc_group2") %>%
+           unique() %>%
+           tolower() %>%
+           paste(collapse = "/")
+  )
 }

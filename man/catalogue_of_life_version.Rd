@@ -7,13 +7,13 @@
 catalogue_of_life_version()
 }
 \value{
-a \code{list}, invisibly
+a \code{list}, which prints in pretty format
 }
 \description{
 This function returns information about the included data from the Catalogue of Life. It also shows if the included version is their latest annual release. The Catalogue of Life releases their annual release in March each year.
 }
 \details{
-The list item \code{is_latest_annual_release} is based on the system date.
+The list item \code{...$catalogue_of_life$is_latest_annual_release} is based on the system date.
 
 For DSMZ, see \code{?microorganisms}.
 }
