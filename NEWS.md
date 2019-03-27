@@ -1,5 +1,4 @@
-# AMR 0.5.0.90xx
-**Note: this is the development version, which will eventually be released as AMR 0.6.0.**
+# AMR 0.6.0
 
 **New website!**
 
@@ -11,7 +10,7 @@ We've got a new website: [https://msberends.gitlab.io/AMR](https://msberends.git
 #### New
 * **BREAKING**: removed deprecated functions, parameters and references to 'bactid'. Use `as.mo()` to identify an MO code.
 * Catalogue of Life as a new taxonomic source for data about microorganisms, which also contains all ITIS data we used previously. The `microorganisms` data set now contains:
-  * All ~55,000 (sub)species from the kingdoms of Archaea, Bacteria, Protozoa and Viruses
+  * All ~55,000 (sub)species from the kingdoms of Archaea, Bacteria and Protozoa
   * All ~3,000 (sub)species from these orders of the kingdom of Fungi: Eurotiales, Onygenales, Pneumocystales, Saccharomycetales and Schizosaccharomycetales (covering at least like all species of *Aspergillus*, *Candida*, *Pneumocystis*, *Saccharomyces* and *Trichophyton*)
   * All ~2,000 (sub)species from ~100 other relevant genera, from the kingdoms of Animalia and Plantae (like *Strongyloides* and *Taenia*)
   * All ~15,000 previously accepted names of included (sub)species that have been taxonomically renamed
@@ -122,7 +121,8 @@ We've got a new website: [https://msberends.gitlab.io/AMR](https://msberends.git
     as.mo(..., allow_uncertain = 0)
     ```
     Using `as.mo(..., allow_uncertain = 3)` could lead to very unreliable results.
-  * All microbial IDs that are found with zero uncertainty are now saved to a local file `~/.Rhistory_mo`. Use the new function `clean_mo_history()` to delete this file, which resets the algorithms.
+  * Implemented the latest publication of Becker *et al.* (2019), for categorising coagulase-negative *Staphylococci*
+  * All microbial IDs that found are now saved to a local file `~/.Rhistory_mo`. Use the new function `clean_mo_history()` to delete this file, which resets the algorithms.
   * Incoercible results will now be considered 'unknown', MO code `UNKNOWN`. On foreign systems, properties of these will be translated to all languages already previously supported: German, Dutch, French, Italian, Spanish and Portuguese:
     ```r
     mo_genus("qwerty", language = "es")

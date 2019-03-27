@@ -42,7 +42,7 @@ $( document ).ready(function() {
       '    Learn R reading this great book: R for Data Science.' +
       '    <br><br>' +
       '    Click to read it online - it was published for free.' +
-      '    <img src="../../AMR/cover_r4ds.png" height="100px">' +
+      '    <img src="https://gitlab.com/msberends/AMR/raw/master/docs/cover_r4ds.png" height="100px">' +
       '  </a>     ' +
       '  <hr>' +
       '</div>');
@@ -53,7 +53,7 @@ $( document ).ready(function() {
       '<p>' + $('footer .copyright p').html().replace(
         "Developed by",
         '<code>AMR</code> (for R). Developed at the <a href="https://www.rug.nl" target="_blank">University of Groningen</a>.<br>Authors:') + '</p>' +
-      '<a href="https://www.rug.nl" target="_blank"><img src="../../AMR/logo_rug.png" class="footer_logo"></a>' +
+      '<a href="https://www.rug.nl" target="_blank"><img src="https://gitlab.com/msberends/AMR/raw/master/docs/logo_rug.png" class="footer_logo"></a>' +
     '</div>');
 
   // doctoral titles of authors

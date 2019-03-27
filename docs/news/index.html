@@ -78,7 +78,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.0.9025</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.6.0</span>
       </span>
     </div>
 
@@ -232,11 +232,10 @@
       
     </div>
 
-    <div id="amr-05090xx" class="section level1">
+    <div id="amr-060" class="section level1">
 <h1 class="page-header">
-<a href="#amr-05090xx" class="anchor"></a>AMR 0.5.0.90xx<small> Unreleased </small>
+<a href="#amr-060" class="anchor"></a>AMR 0.6.0<small> Unreleased </small>
 </h1>
-<p><strong>Note: this is the development version, which will eventually be released as AMR 0.6.0.</strong></p>
 <p><strong>New website!</strong></p>
 <p>We’ve got a new website: <a href="https://msberends.gitlab.io/AMR/">https://msberends.gitlab.io/AMR</a> (built with the great <a href="https://pkgdown.r-lib.org/"><code>pkgdown</code></a>)</p>
 <ul>
@@ -251,7 +250,7 @@
 <strong>BREAKING</strong>: removed deprecated functions, parameters and references to ‘bactid’. Use <code><a href="../reference/as.mo.html">as.mo()</a></code> to identify an MO code.</li>
 <li>Catalogue of Life as a new taxonomic source for data about microorganisms, which also contains all ITIS data we used previously. The <code>microorganisms</code> data set now contains:
 <ul>
-<li>All ~55,000 (sub)species from the kingdoms of Archaea, Bacteria, Protozoa and Viruses</li>
+<li>All ~55,000 (sub)species from the kingdoms of Archaea, Bacteria and Protozoa</li>
 <li>All ~3,000 (sub)species from these orders of the kingdom of Fungi: Eurotiales, Onygenales, Pneumocystales, Saccharomycetales and Schizosaccharomycetales (covering at least like all species of <em>Aspergillus</em>, <em>Candida</em>, <em>Pneumocystis</em>, <em>Saccharomyces</em> and <em>Trichophyton</em>)</li>
 <li>All ~2,000 (sub)species from ~100 other relevant genera, from the kingdoms of Animalia and Plantae (like <em>Strongyloides</em> and <em>Taenia</em>)</li>
 <li>All ~15,000 previously accepted names of included (sub)species that have been taxonomically renamed</li>
@@ -369,7 +368,9 @@ These functions use <code><a href="../reference/as.atc.html">as.atc()</a></code>
 <a class="sourceLine" id="cb8-6" title="6"><span class="kw"><a href="../reference/as.mo.html">as.mo</a></span>(..., <span class="dt">allow_uncertain =</span> <span class="ot">FALSE</span>)</a>
 <a class="sourceLine" id="cb8-7" title="7"><span class="kw"><a href="../reference/as.mo.html">as.mo</a></span>(..., <span class="dt">allow_uncertain =</span> <span class="dv">0</span>)</a></code></pre></div>
 Using <code><a href="../reference/as.mo.html">as.mo(..., allow_uncertain = 3)</a></code> could lead to very unreliable results.</li>
-<li>All microbial IDs that are found with zero uncertainty are now saved to a local file <code>~/.Rhistory_mo</code>. Use the new function <code><a href="../reference/as.mo.html">clean_mo_history()</a></code> to delete this file, which resets the algorithms.</li>
+<li>Implemented the latest publication of Becker <em>et al.</em> (2019), for categorising coagulase-negative <em>Staphylococci</em>
+</li>
+<li>All microbial IDs that found are now saved to a local file <code>~/.Rhistory_mo</code>. Use the new function <code><a href="../reference/as.mo.html">clean_mo_history()</a></code> to delete this file, which resets the algorithms.</li>
 <li>
 <p>Incoercible results will now be considered ‘unknown’, MO code <code>UNKNOWN</code>. On foreign systems, properties of these will be translated to all languages already previously supported: German, Dutch, French, Italian, Spanish and Portuguese:</p>
 <div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" title="1"><span class="kw"><a href="../reference/mo_property.html">mo_genus</a></span>(<span class="st">"qwerty"</span>, <span class="dt">language =</span> <span class="st">"es"</span>)</a>
@@ -948,7 +949,7 @@ Using <code><a href="../reference/as.mo.html">as.mo(..., allow_uncertain = 3)</a
     <div id="tocnav">
       <h2>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
-        <li><a href="#amr-05090xx">0.5.0.90</a></li>
+        <li><a href="#amr-060">0.6.0</a></li>
         <li><a href="#amr-050">0.5.0</a></li>
         <li><a href="#amr-040">0.4.0</a></li>
         <li><a href="#amr-030">0.3.0</a></li>

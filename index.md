@@ -6,7 +6,7 @@
 
 `AMR` is a free and open-source [R package](https://www.r-project.org) to simplify the analysis and prediction of Antimicrobial Resistance (AMR) and to work with microbial and antimicrobial properties by using evidence-based methods. It supports any data format, including WHONET/EARS-Net data.
 
-After installing this package, R knows ~65,000 microorganisms and ~500 antibiotics by name and code, and knows all about valid RSI and MIC values.
+After installing this package, R knows [**~65,000 microorganisms**](./reference/microorganisms.html) and [**~500 antibiotics**](./reference/antibiotics.html) by name and code, and knows all about valid RSI and MIC values.
 
 **Used to SPSS?** Read our [tutorial on how to import data from SPSS, SAS or Stata](./articles/SPSS.html) and learn in which ways R outclasses any of these statistical packages.
 
@@ -90,7 +90,7 @@ This package contains the complete taxonomic tree of almost all microorganisms f
 
 Included are:
 
-* All ~55,000 (sub)species from the kingdoms of Archaea, Bacteria, Protozoa and Viruses
+* All ~55,000 (sub)species from the kingdoms of Archaea, Bacteria and Protozoa
 
 * All ~3,500 (sub)species from these orders of the kingdom of Fungi: Eurotiales, Onygenales, Pneumocystales, Saccharomycetales, Schizosaccharomycetales and Tremellales.
 

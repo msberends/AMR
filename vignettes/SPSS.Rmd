@@ -33,7 +33,7 @@ As said, SPSS is easier to learn than R. But SPSS, SAS and Stata come with major
 
 * **R is highly modular.**
 
-  The [official R network (CRAN)](https://cran.r-project.org/web/packages/) features almost 14,000 packages at the time of writing, our `AMR` package being one of them. All these packages were peer-reviewed before publication. Aside from this official channel, there are also developers who choose not to submit to CRAN, but rather keep it on their own public repository, like GitLab or GitHub. So there may even be a lot more than 14,000 packages out there.
+  The [official R network (CRAN)](https://cran.r-project.org/) features almost 14,000 packages at the time of writing, our `AMR` package being one of them. All these packages were peer-reviewed before publication. Aside from this official channel, there are also developers who choose not to submit to CRAN, but rather keep it on their own public repository, like GitLab or GitHub. So there may even be a lot more than 14,000 packages out there.
   
   Bottom line is, you can really extend it yourself or ask somebody to do this for you. Take for example our `AMR` package. Among other things, it adds reliable reference data to R to help you with the data cleaning and analysis. SPSS, SAS and Stata will never know what a valid MIC value is or what the Gram stain of *E. coli* is. Or that all species of *Klebiella* are resistant to amoxicillin and that Floxapen^&reg;^ is a trade name of flucloxacillin. These facts and properties are often needed to clean existing data, which would be very inconvenient in a software package without reliable reference data. See below for a demonstration.
   
@@ -49,19 +49,19 @@ As said, SPSS is easier to learn than R. But SPSS, SAS and Stata come with major
   
 * **R has a huge community.**
 
-  Many R users just ask questions on websites like [StackOverflow.com](https://stackoverflow.com), the largest online community for programmers. At the time of writing, more than [275,000 R-related questions](https://stackoverflow.com/questions/tagged/r?sort=votes) have already been asked on this platform (which covers questions and answers for any programming language). In my own experience, most questions are answered within a couple of minutes.
+  Many R users just ask questions on websites like [StackOverflow.com](https://stackoverflow.com), the largest online community for programmers. At the time of writing, almost [300,000 R-related questions](https://stackoverflow.com/questions/tagged/r?sort=votes) have already been asked on this platform (which covers questions and answers for any programming language). In my own experience, most questions are answered within a couple of minutes.
   
 * **R understands any data type, including SPSS/SAS/Stata.**
 
-  And that's not vice versa I'm afraid. You can import data from any source into R. As said, from SPSS/SAS/Stata ([link](https://haven.tidyverse.org/)), but also from Excel ([link](https://readxl.tidyverse.org/)), from flat files like CSV, TXT or TSV ([link](https://readr.tidyverse.org/)), or directly from databases or datawarehouses from anywhere on the world ([link](https://dbplyr.tidyverse.org/)). You can even scrape websites to download tables that are live on the internet ([link](https://github.com/hadley/rvest)).
+  And that's not vice versa I'm afraid. You can import data from any source into R. From SPSS, SAS and Stata ([link](https://haven.tidyverse.org/)), from Minitab, Epi Info and EpiData ([link](https://cran.r-project.org/package=foreign)), from Excel ([link](https://readxl.tidyverse.org/)), from flat files like CSV, TXT or TSV ([link](https://readr.tidyverse.org/)), or directly from databases and datawarehouses from anywhere on the world ([link](https://dbplyr.tidyverse.org/)). You can even scrape websites to download tables that are live on the internet ([link](https://github.com/hadley/rvest)).
   
-  And the best part - you can export from R to all data formats as well. So you can import an SPSS file, do your analysis neatly in R and export back to SPSS. Although you might omit that very last step.
+  And the best part - you can export from R to most data formats as well. So you can import an SPSS file, do your analysis neatly in R and export the resulting tables to Excel files.
 
 * **R is completely free and open-source.**
 
   No strings attached. It was created and is being maintained by volunteers who believe that (data) science should be open and publicly available to everybody. SPSS, SAS and Stata are quite expensive. IBM SPSS Staticstics only comes with subscriptions nowadays, varying [between USD 1,300 and USD 8,500](https://www.ibm.com/products/spss-statistics/pricing) per computer *per year*. SAS Analytics Pro costs [around USD 10,000](https://www.sas.com/store/products-solutions/sas-analytics-pro/prodPERSANL.html) per computer. Stata also has a business model with subscription fees, varying [between USD 600 and USD 1,200](https://www.stata.com/order/new/bus/single-user-licenses/dl/) per computer per year, but lower prices come with a limitation of the number of variables you can work with.
   
-  If you are working at a midsized or small company, you can save it tens of thousands of dollars by using R instead of SPSS - gaining even more functions and flexibility. And all R enthousiasts can do as much PR as they want (like I do here), because nobody is officially associated with or affiliated by R. It is really free.
+  If you are working at a midsized or small company, you can save it tens of thousands of dollars by using R instead of e.g. SPSS - gaining even more functions and flexibility. And all R enthousiasts can do as much PR as they want (like I do here), because nobody is officially associated with or affiliated by R. It is really free.
 
 
 If you sometimes write syntaxes in SPSS to run a complete analysis or to 'automate' some of your work, you should perhaps do this in R. You will notice that writing syntaxes in R is a lot more nifty and clever than in SPSS.
@@ -92,10 +92,10 @@ atc_tradenames("floxapen")
 ## Import data from SPSS/SAS/Stata
 
 ### RStudio
-To work with R, probably the best option is to use [RStudio](https://www.rstudio.com/products/rstudio/). It is an open-source and free desktop environment which not only allows you to run R code, but also supports project management, version management, package management and convenient import menus to work with other data sources. You can also run [RStudio Server](https://www.rstudio.com/products/rstudio/), which is nothing less than the complete RStudio software available as a website (e.g. in your corporate network or at home).
+To work with R, probably the best option is to use [RStudio](https://www.rstudio.com/products/rstudio/). It is an open-source and free desktop environment which not only allows you to run R code, but also supports project management, version management, package management and convenient import menus to work with other data sources. You can also install [RStudio Server](https://www.rstudio.com/products/rstudio/) on a private or corporate server, which brings nothing less than the complete RStudio software to you as a website (at home or at work).
 
 To import a data file, just click *Import Dataset* in the Environment tab:
-
+    
 ![](https://gitlab.com/msberends/AMR/raw/master/docs/import1.png)
 
 If additional packages are needed, RStudio will ask you if they should be installed on beforehand.

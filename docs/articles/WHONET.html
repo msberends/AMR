@@ -40,7 +40,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.0.9023</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.6.0</span>
       </span>
     </div>
 
@@ -192,7 +192,7 @@
       <h1>How to work with WHONET data</h1>
                         <h4 class="author">Matthijs S. Berends</h4>
             
-            <h4 class="date">15 March 2019</h4>
+            <h4 class="date">27 March 2019</h4>
       
       
       <div class="hidden name"><code>WHONET.Rmd</code></div>
@@ -234,10 +234,10 @@
 <p><strong>Frequency table of <code>mo</code> from a <code>data.frame</code> (500 x 54)</strong></p>
 <p>Class: <code>mo</code> (<code>character</code>)<br>
 Length: 500 (of which NA: 0 = 0.00%)<br>
-Unique: 37</p>
+Unique: 39</p>
 <p>Families: 10<br>
 Genera: 17<br>
-Species: 35</p>
+Species: 38</p>
 <table class="table">
 <thead><tr class="header">
 <th align="left"></th>
@@ -258,7 +258,7 @@ Species: 35</p>
 </tr>
 <tr class="even">
 <td align="left">2</td>
-<td align="left">B_STPHY</td>
+<td align="left">B_STPHY_CNS</td>
 <td align="right">74</td>
 <td align="right">14.8%</td>
 <td align="right">319</td>
@@ -314,33 +314,34 @@ Species: 35</p>
 </tr>
 <tr class="odd">
 <td align="left">9</td>
-<td align="left">B_STRPT</td>
-<td align="right">8</td>
-<td align="right">1.6%</td>
-<td align="right">442</td>
-<td align="right">88.4%</td>
-</tr>
-<tr class="even">
-<td align="left">10</td>
 <td align="left">B_ENTRB_CLO</td>
 <td align="right">5</td>
 <td align="right">1.0%</td>
-<td align="right">447</td>
-<td align="right">89.4%</td>
+<td align="right">439</td>
+<td align="right">87.8%</td>
+</tr>
+<tr class="even">
+<td align="left">10</td>
+<td align="left">B_ENTRC_COL</td>
+<td align="right">4</td>
+<td align="right">0.8%</td>
+<td align="right">443</td>
+<td align="right">88.6%</td>
 </tr>
 </tbody>
 </table>
-<p>(omitted 27 entries, n = 53 [10.6%])</p>
+<p>(omitted 29 entries, n = 57 [11.4%])</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" title="1"></a>
 <a class="sourceLine" id="cb5-2" title="2"><span class="co"># our transformed antibiotic columns</span></a>
 <a class="sourceLine" id="cb5-3" title="3"><span class="co"># amoxicillin/clavulanic acid (J01CR02) as an example</span></a>
 <a class="sourceLine" id="cb5-4" title="4">data <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="../reference/freq.html">freq</a></span>(AMC_ND2)</a></code></pre></div>
 <p><strong>Frequency table of <code>AMC_ND2</code> from a <code>data.frame</code> (500 x 54)</strong></p>
+<pre><code># Warning: These values could not be coerced to a valid atc: "AMCND".</code></pre>
 <p>Class: <code>factor</code> &gt; <code>ordered</code> &gt; <code>rsi</code> (<code>numeric</code>)<br>
 Length: 500 (of which NA: 19 = 3.80%)<br>
 Levels: 3: <code>S</code> &lt; <code>I</code> &lt; <code>R</code><br>
 Unique: 3</p>
-<p>%IR: 25.00% (ratio 2.8:1)</p>
+<p>%IR: 25.99%</p>
 <table class="table">
 <thead><tr class="header">
 <th align="left"></th>

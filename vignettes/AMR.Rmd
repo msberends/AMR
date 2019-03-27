@@ -23,7 +23,7 @@ knitr::opts_chunk$set(
 )
 ```
 
-**Note:** values on this page will change with every website update since they are based on randomly created values and the page was written in [RMarkdown](https://rmarkdown.rstudio.com/). However, the methodology remains unchanged. This page was generated on `r format(Sys.Date(), "%d %B %Y")`.
+**Note:** values on this page will change with every website update since they are based on randomly created values and the page was written in [R Markdown](https://rmarkdown.rstudio.com/). However, the methodology remains unchanged. This page was generated on `r format(Sys.Date(), "%d %B %Y")`.
 
 # Introduction
 
