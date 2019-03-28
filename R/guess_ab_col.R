@@ -54,7 +54,7 @@ guess_ab_col <- function(tbl = NULL, col = NULL, verbose = FALSE) {
   if (is.null(tbl) & is.null(col)) {
     return(as.name("guess_ab_col"))
   }
-  #stop("This function should not be called directly.")
+
   if (length(col) > 1) {
     warning("argument 'col' has length > 1 and only the first element will be used")
     col <- col[1]
@@ -114,7 +114,7 @@ guess_ab_col <- function(tbl = NULL, col = NULL, verbose = FALSE) {
 
   if (length(ab_result) == 0) {
     if (verbose == TRUE) {
-      message('no result found for col "', col, '"')
+      message('no column found for input "', col, '"')
     }
     return(NULL)
   } else {
@@ -124,7 +124,7 @@ guess_ab_col <- function(tbl = NULL, col = NULL, verbose = FALSE) {
     }
     if (length(result) == 0) {
       if (verbose == TRUE) {
-        message('no result found for col "', col, '"')
+        message('no column found for input "', col, '"')
       }
       return(NULL)
     }

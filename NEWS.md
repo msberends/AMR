@@ -1,3 +1,9 @@
+# AMR 0.6.1
+
+#### Changed
+* Fixed a critical bug when using `eucast_rules()` with `verbose = TRUE`
+* Coercion of microbial IDs are now written to the package namespace instead of the user's home folder, to comply with the CRAN policy
+
 # AMR 0.6.0
 
 **New website!**

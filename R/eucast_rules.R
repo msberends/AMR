@@ -454,10 +454,10 @@ eucast_rules <- function(tbl,
           stop(e, call. = FALSE)
         }
       )
-      suppressMessages(
-        suppressWarnings(
-          tbl[rows, cols] <<- to
-      ))
+      # suppressMessages(
+      #   suppressWarnings(
+      #     tbl[rows, cols] <<- to
+      #   ))
 
       after <- as.character(unlist(as.list(tbl_original[rows, cols])))
 
@@ -489,46 +489,22 @@ eucast_rules <- function(tbl,
         number_newly_changed_to_R
 
       if (verbose == TRUE) {
-        for (r in 1:length(rows)) {
-          for (c in 1:length(cols)) {
-            old <- before_df[rows[r], cols[c]]
-            new <- tbl[rows[r], cols[c]]
-            if (!identical(old, new)) {
-              verbose_new <- data.frame(row = rows[r],
-                                        col = cols[c],
-                                        mo = tbl_original[rows[r], col_mo],
-                                        mo_fullname = "",
-                                        old = old,
-                                        new = new,
-                                        rule_source = strip_style(rule[1]),
-                                        rule_group = strip_style(rule[2]),
-                                        stringsAsFactors = FALSE)
-              verbose_info <<- rbind(verbose_info, verbose_new)
-            }
-          }
+        old <- as.data.frame(tbl_bak, stringsAsFactors = FALSE)[rows,]
+        new <- as.data.frame(tbl, stringsAsFactors = FALSE)[rows,]
+        MOs <- as.data.frame(tbl_original, stringsAsFactors = FALSE)[rows, col_mo][[1]]
+        for (i in 1:length(cols)) {
+          verbose_new <- data.frame(row = rows,
+                                    col = cols[i],
+                                    mo = MOs,
+                                    mo_fullname = "",
+                                    old = as.character(old[, cols[i]]),
+                                    new = as.character(new[, cols[i]]),
+                                    rule_source = strip_style(rule[1]),
+                                    rule_group = strip_style(rule[2]),
+                                    stringsAsFactors = FALSE)
+          colnames(verbose_new) <- c("row", "col", "mo", "mo_fullname", "old", "new", "rule_source", "rule_group")
+          verbose_info <<- rbind(verbose_info, verbose_new)
         }
-        # verbose_new <- data.frame(row = integer(0),
-        #                           col = character(0),
-        #                           old = character(0),
-        #                           new = character(0),
-        #                           rule_source = character(0),
-        #                           rule_group = character(0),
-        #                           stringsAsFactors = FALSE)
-        # a <<- rule
-        # for (i in 1:length(cols)) {
-        #   # add new row for every affected column
-        #   verbose_new <- data.frame(rule_type = strip_style(rule[1]),
-        #                             rule_set = strip_style(rule[2]),
-        #                             force_to = to,
-        #                             found = length(before),
-        #                             changed = sum(before != after, na.rm = TRUE),
-        #                             target_column = cols[i],
-        #                             stringsAsFactors = FALSE)
-        #   verbose_new$target_rows <- list(unname(rows))
-        #   rownames(verbose_new) <- NULL
-        #   verbose_info <<- rbind(verbose_info, verbose_new)
-        # }
-
       }
     }
   }
@@ -543,6 +519,7 @@ eucast_rules <- function(tbl,
 
   # save original table
   tbl_original <- tbl
+  tbl_bak <- tbl
 
   # join to microorganisms data set
   tbl <- tbl %>%
@@ -1886,9 +1863,9 @@ eucast_rules <- function(tbl,
       format(x, big.mark = big.mark, decimal.mark = decimal.mark)
     }
     cat(bold(paste('\n=> EUCAST rules', paste0(wouldve, 'affected'),
-             number_affected_rows %>% length() %>% formatnr(),
-             'out of', nrow(tbl_original) %>% formatnr(),
-             'rows\n')))
+                   number_affected_rows %>% length() %>% formatnr(),
+                   'out of', nrow(tbl_original) %>% formatnr(),
+                   'rows\n')))
     total_added <- number_added_S + number_added_I + number_added_R
     total_changed <- number_changed_to_S + number_changed_to_I + number_changed_to_R
     cat(colour(paste0("   -> ", wouldve, "added ",
@@ -1905,6 +1882,9 @@ eucast_rules <- function(tbl,
                                formatnr(number_changed_to_I), " to I; ",
                                formatnr(number_changed_to_R), " to R)"),
                       "\n")))
+    if (verbose == FALSE) {
+      cat(paste("Use", bold("verbose = TRUE"), "to get a data.frame with all specified edits.\n"))
+    }
   }
 
   if (verbose == TRUE) {
@@ -1913,6 +1893,9 @@ eucast_rules <- function(tbl,
         verbose_info$mo_fullname <- mo_fullname(verbose_info$mo)
       )
     )
+    verbose_info <- verbose_info %>%
+      filter(!is.na(new) & !identical(old, new)) %>%
+      arrange(row)
     return(verbose_info)
   }
 
@@ -1932,3 +1915,4 @@ interpretive_reading <- function(...) {
   .Deprecated("eucast_rules")
   eucast_rules(...)
 }
+
