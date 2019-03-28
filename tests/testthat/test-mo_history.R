@@ -19,26 +19,26 @@
 # Visit our website for more info: https://msberends.gitab.io/AMR.     #
 # ==================================================================== #
 
-context("mo_history.R")
-
-test_that("mo_history works", {
-  clean_mo_history(force = TRUE)
-  expect_equal(read_mo_history(force = TRUE),
-               NULL)
-
-  expect_equal(as.character(suppressWarnings(as.mo("testsubject"))), "UNKNOWN")
-
-  set_mo_history("testsubject", "B_ESCHR_COL",
-                 uncertainty_level = translate_allow_uncertain(TRUE),
-                 force = TRUE)
-
-  expect_equal(get_mo_history("testsubject",
-                              uncertainty_level = translate_allow_uncertain(TRUE),
-                              force = TRUE),
-               "B_ESCHR_COL")
-
-  expect_equal(as.character(as.mo("testsubject", force_mo_history = TRUE)), "B_ESCHR_COL")
-
-  expect_equal(colnames(read_mo_history(force = TRUE)),
-               c("x", "mo", "uncertainty_level", "package_v"))
-})
+# context("mo_history.R")
+#
+# test_that("mo_history works", {
+#   clean_mo_history(force = TRUE)
+#   expect_equal(read_mo_history(force = TRUE),
+#                NULL)
+#
+#   expect_equal(as.character(suppressWarnings(as.mo("testsubject"))), "UNKNOWN")
+#
+#   set_mo_history("testsubject", "B_ESCHR_COL",
+#                  uncertainty_level = translate_allow_uncertain(TRUE),
+#                  force = TRUE)
+#
+#   expect_equal(get_mo_history("testsubject",
+#                               uncertainty_level = translate_allow_uncertain(TRUE),
+#                               force = TRUE),
+#                "B_ESCHR_COL")
+#
+#   expect_equal(as.character(as.mo("testsubject", force_mo_history = TRUE)), "B_ESCHR_COL")
+#
+#   expect_equal(colnames(read_mo_history(force = TRUE)),
+#                c("x", "mo", "uncertainty_level", "package_v"))
+# })
