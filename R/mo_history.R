@@ -37,16 +37,17 @@ set_mo_history <- function(x, mo, uncertainty_level, force = FALSE) {
       if (NROW(mo_hist[base::which(mo_hist$x == x[i] &
                                    mo_hist$uncertainty_level >= uncertainty_level &
                                    mo_hist$package_v == utils::packageVersion("AMR")),]) == 0) {
-        assign(x = "mo_history",
-               value = rbind(mo_hist,
-                             data.frame(
-                               x = x[i],
-                               mo = mo[i],
-                               uncertainty_level = uncertainty_level,
-                               package_v = base::as.character(utils::packageVersion("AMR")),
-                               stringsAsFactors = FALSE)
-                             ),
-               envir = asNamespace("AMR"))
+        tryCatch(
+          assign(x = "mo_history",
+                 value = rbind(mo_hist,
+                               data.frame(
+                                 x = x[i],
+                                 mo = mo[i],
+                                 uncertainty_level = uncertainty_level,
+                                 package_v = base::as.character(utils::packageVersion("AMR")),
+                                 stringsAsFactors = FALSE)),
+                 envir = asNamespace("AMR")),
+          error = function(e) invisible())
       }
     }
   }
@@ -113,9 +114,11 @@ clean_mo_history <- function(...) {
         return(invisible())
       }
     }
-    assign(x = "mo_history",
-           value = NULL,
-           envir = asNamespace("AMR"))
+    tryCatch(
+      assign(x = "mo_history",
+             value = NULL,
+             envir = asNamespace("AMR")),
+      error = function(e) invisible())
     cat(red("History removed."))
   }
 }
