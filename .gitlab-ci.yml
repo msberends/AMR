@@ -60,7 +60,7 @@ R-release:
   image: debian:buster-slim
   allow_failure: false
   script:
-    - apt-get install r-base > /dev/null
+    - apt-get install -y r-base
     - Rscript -e 'sessionInfo()'
     # install missing and outdated packages
     - Rscript -e 'source(".gitlab-ci.R"); gl_update_pkg_all(repos = "https://cran.rstudio.com", quiet = TRUE, install_pkgdown = TRUE)'
@@ -78,7 +78,7 @@ R-release:
 
 R-devel:
   stage: build
-  image: rocker:r-devel
+  image: rocker/r-devel
   allow_failure: true
   script:
     - Rscript -e 'sessionInfo()'
@@ -100,16 +100,14 @@ coverage:
   stage: test
   image: debian:buster-slim
   allow_failure: true
-  script:
-    - apt-get install r-base > /dev/null
-    # install missing and outdated packages
-    - Rscript -e 'source(".gitlab-ci.R"); gl_update_pkg_all(repos = "https://cran.rstudio.com", quiet = TRUE, install_pkgdown = TRUE)'
   when: on_success
   only:
     - premaster
     - master
   script:
-  - apt-get install --yes git
+  - apt-get install --yes git r-base
+  # install missing and outdated packages
+  - Rscript -e 'source(".gitlab-ci.R"); gl_update_pkg_all(repos = "https://cran.rstudio.com", quiet = TRUE, install_pkgdown = TRUE)'
   # codecov token is set in https://gitlab.com/msberends/AMR/settings/ci_cd
   - Rscript -e "cc <- covr::package_coverage(); covr::codecov(coverage = cc, token = '$codecov'); cat('Code coverage:', covr::percent_coverage(cc))"
   coverage: '/Code coverage: \d+\.\d+/'
@@ -117,14 +115,13 @@ coverage:
 pages:
   stage: deploy
   image: debian:buster-slim
-  script:
-    - apt-get install r-base > /dev/null
-    # install missing and outdated packages
-    - Rscript -e 'source(".gitlab-ci.R"); gl_update_pkg_all(repos = "https://cran.rstudio.com", quiet = TRUE, install_pkgdown = TRUE)'
   when: always
   only:
     - master
   script:
+    - apt-get install --yes r-base
+    # install missing and outdated packages
+    - Rscript -e 'source(".gitlab-ci.R"); gl_update_pkg_all(repos = "https://cran.rstudio.com", quiet = TRUE, install_pkgdown = TRUE)'
     - Rscript -e "devtools::install(build = TRUE, upgrade = FALSE)"
     - R -e "pkgdown::build_site(examples = FALSE, lazy = TRUE, override = list(destination = 'public'))"
   artifacts:
