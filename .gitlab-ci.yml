@@ -30,7 +30,7 @@ image: debian:buster-slim
 before_script:
   - apt-get update -qq
   # install dependencies for packages
-  - apt-get install -y wget locales libxml2-dev libssl-dev libcurl4-openssl-dev zlib1g-dev r-base > /dev/null
+  - apt-get install -y wget locales libxml2-dev libssl-dev libcurl4-openssl-dev zlib1g-dev > /dev/null
   # recent pandoc
   - wget --quiet https://github.com/jgm/pandoc/releases/download/2.6/pandoc-2.6-1-amd64.deb
   - dpkg -i pandoc*.deb
@@ -49,19 +49,41 @@ before_script:
   - echo 'LANGUAGE="en_US.utf8"' >> .Renviron
   - echo 'LANG="en_US.utf8"' >> .Renviron
   - echo 'LANGUAGE="en_US.utf8"' > ~/.Renviron
-  - Rscript -e 'sessionInfo()'
-  # install missing and outdated packages
-  - Rscript -e 'source(".gitlab-ci.R"); gl_update_pkg_all(repos = "https://cran.rstudio.com", quiet = TRUE, install_pkgdown = TRUE)'
 
 cache:
   key: "$CI_COMMIT_REF_SLUG"
   paths:
     - installed_deps/
 
-R:
+R-release:
   stage: build
+  image: debian:buster-slim
   allow_failure: false
   script:
+    - apt-get install r-base > /dev/null
+    - Rscript -e 'sessionInfo()'
+    # install missing and outdated packages
+    - Rscript -e 'source(".gitlab-ci.R"); gl_update_pkg_all(repos = "https://cran.rstudio.com", quiet = TRUE, install_pkgdown = TRUE)'
+    # remove vignettes folder and get VignetteBuilder field out of DESCRIPTION file
+    - rm -rf vignettes
+    - Rscript -e 'd <- read.dcf("DESCRIPTION"); d[, colnames(d) == "VignetteBuilder"] <- NA; write.dcf(d, "DESCRIPTION")'
+    # build package
+    - R CMD build . --no-build-vignettes --no-manual
+    - PKG_FILE_NAME=$(ls -1t *.tar.gz | head -n 1)
+    - R CMD check "${PKG_FILE_NAME}" --no-build-vignettes --no-manual --as-cran
+  artifacts:
+    paths:
+      - '*.Rcheck/*'
+    expire_in: '1 month'
+
+R-devel:
+  stage: build
+  image: rocker:r-devel
+  allow_failure: true
+  script:
+    - Rscript -e 'sessionInfo()'
+    # install missing and outdated packages
+    - Rscript -e 'source(".gitlab-ci.R"); gl_update_pkg_all(repos = "https://cran.rstudio.com", quiet = TRUE, install_pkgdown = TRUE)'
     # remove vignettes folder and get VignetteBuilder field out of DESCRIPTION file
     - rm -rf vignettes
     - Rscript -e 'd <- read.dcf("DESCRIPTION"); d[, colnames(d) == "VignetteBuilder"] <- NA; write.dcf(d, "DESCRIPTION")'
@@ -76,7 +98,12 @@ R:
 
 coverage:
   stage: test
+  image: debian:buster-slim
   allow_failure: true
+  script:
+    - apt-get install r-base > /dev/null
+    # install missing and outdated packages
+    - Rscript -e 'source(".gitlab-ci.R"); gl_update_pkg_all(repos = "https://cran.rstudio.com", quiet = TRUE, install_pkgdown = TRUE)'
   when: on_success
   only:
     - premaster
@@ -89,6 +116,11 @@ coverage:
 
 pages:
   stage: deploy
+  image: debian:buster-slim
+  script:
+    - apt-get install r-base > /dev/null
+    # install missing and outdated packages
+    - Rscript -e 'source(".gitlab-ci.R"); gl_update_pkg_all(repos = "https://cran.rstudio.com", quiet = TRUE, install_pkgdown = TRUE)'
   when: always
   only:
     - master

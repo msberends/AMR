@@ -18,8 +18,6 @@ vignettes/*.R
 .DS_Store
 .Rprofile
 ^CRAN-RELEASE$
-git_premaster.sh
-git_merge.sh
-git_siteonly.sh
+git_*.sh
 packrat/lib*/
 packrat/src/
