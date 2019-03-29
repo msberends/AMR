@@ -81,16 +81,16 @@ R-devel:
   image: rocker/r-devel
   allow_failure: true
   script:
-    - Rscript -e 'sessionInfo()'
+    - Rscriptdevel -e 'sessionInfo()'
     # install missing and outdated packages
-    - Rscript -e 'source(".gitlab-ci.R"); gl_update_pkg_all(repos = "https://cran.rstudio.com", quiet = TRUE, install_pkgdown = TRUE)'
+    - Rscriptdevel -e 'source(".gitlab-ci.R"); gl_update_pkg_all(repos = "https://cran.rstudio.com", quiet = TRUE, install_pkgdown = TRUE)'
     # remove vignettes folder and get VignetteBuilder field out of DESCRIPTION file
     - rm -rf vignettes
-    - Rscript -e 'd <- read.dcf("DESCRIPTION"); d[, colnames(d) == "VignetteBuilder"] <- NA; write.dcf(d, "DESCRIPTION")'
+    - Rscriptdevel -e 'd <- read.dcf("DESCRIPTION"); d[, colnames(d) == "VignetteBuilder"] <- NA; write.dcf(d, "DESCRIPTION")'
     # build package
-    - R CMD build . --no-build-vignettes --no-manual
+    - Rdevel CMD build . --no-build-vignettes --no-manual
     - PKG_FILE_NAME=$(ls -1t *.tar.gz | head -n 1)
-    - R CMD check "${PKG_FILE_NAME}" --no-build-vignettes --no-manual --as-cran
+    - Rdevel CMD check "${PKG_FILE_NAME}" --no-build-vignettes --no-manual --as-cran
   artifacts:
     paths:
       - '*.Rcheck/*'

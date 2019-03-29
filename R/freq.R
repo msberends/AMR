@@ -391,9 +391,10 @@ frequency_tbl <- function(x,
   }
 
   if (NROW(x) > 0 & any(class(x) == "mo")) {
-    header_list$families <- x %>% mo_family() %>% n_distinct()
-    header_list$genera <- x %>% mo_genus() %>% n_distinct()
-    header_list$species <- x %>% mo_species() %>% n_distinct()
+    x_mo <- as.mo(x) # do it once for all three
+    header_list$families <- x_mo %>% mo_family() %>% n_distinct()
+    header_list$genera <- x_mo %>% mo_genus() %>% n_distinct()
+    header_list$species <- x_mo %>% mo_species() %>% n_distinct()
   }
 
   if (NROW(x) > 0 & any(class(x) == "difftime") & !is.hms(x)) {
