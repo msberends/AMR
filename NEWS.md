@@ -1,6 +1,11 @@
 # AMR 0.6.1.9001
 **Note: latest development version**
 
+#### Changed
+* Removed deprecated functions `guess_mo()`, `guess_atc()`, `EUCAST_rules()`, `interpretive_reading()`
+* Added more old taxonomic names to the `microorganisms.old` data set, which leads to better results finding when using the `as.mo()` function
+* Frequency tables of microbial IDs speed improvement
+* Removed all hardcoded EUCAST rules and replaced them with a new reference file: `./inst/eucast/eucast.tsv`.
 
 # AMR 0.6.1
 

@@ -16,7 +16,7 @@
 # This R package was created for academic research and was publicly    #
 # released in the hope that it will be useful, but it comes WITHOUT    #
 # ANY WARRANTY OR LIABILITY.                                           #
-# Visit our website for more info: https://msberends.gitab.io/AMR.     #
+# Visit our website for more info: https://msberends.gitlab.io/AMR.    #
 # ==================================================================== #
 
 #' @importFrom data.table as.data.table setkey
@@ -44,6 +44,15 @@
   assign(x = "mo_codes_v0.5.0",
          value = make_trans_tbl(),
          envir = asNamespace("AMR"))
+
+  assign(x = "mo_history",
+         value = data.frame(x = character(0),
+                            mo = character(0),
+                            uncertainty_level = integer(0),
+                            package_v = character(0),
+                            stringsAsFactors = FALSE),
+         envir = asNamespace("AMR"))
+
 }
 
 #' @importFrom dplyr mutate case_when

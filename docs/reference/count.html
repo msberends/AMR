@@ -81,7 +81,7 @@ count_R and count_IR can be used to count resistant isolates, count_S and count_
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.6.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.6.1.9002</span>
       </span>
     </div>
 
@@ -345,15 +345,15 @@ count_R and count_IR can be used to count resistant isolates, count_S and count_
 <span class='co'># Count co-resistance between amoxicillin/clav acid and gentamicin,</span>
 <span class='co'># so we can see that combination therapy does a lot more than mono therapy.</span>
 <span class='co'># Please mind that `portion_S` calculates percentages right away instead.</span>
-<span class='fu'>count_S</span>(<span class='no'>septic_patients</span>$<span class='no'>amcl</span>)   <span class='co'># S = 1057 (67.1%)</span>
-<span class='fu'>count_all</span>(<span class='no'>septic_patients</span>$<span class='no'>amcl</span>) <span class='co'># n = 1576</span>
+<span class='fu'>count_S</span>(<span class='no'>septic_patients</span>$<span class='no'>amcl</span>)   <span class='co'># S = 1342 (71.4%)</span>
+<span class='fu'>count_all</span>(<span class='no'>septic_patients</span>$<span class='no'>amcl</span>) <span class='co'># n = 1879</span>
 
 <span class='fu'>count_S</span>(<span class='no'>septic_patients</span>$<span class='no'>gent</span>)   <span class='co'># S = 1372 (74.0%)</span>
 <span class='fu'>count_all</span>(<span class='no'>septic_patients</span>$<span class='no'>gent</span>) <span class='co'># n = 1855</span>
 
 <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/with'>with</a></span>(<span class='no'>septic_patients</span>,
-     <span class='fu'>count_S</span>(<span class='no'>amcl</span>, <span class='no'>gent</span>))       <span class='co'># S = 1396 (92.0%)</span>
-<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/with'>with</a></span>(<span class='no'>septic_patients</span>,           <span class='co'># n = 1517</span>
+     <span class='fu'>count_S</span>(<span class='no'>amcl</span>, <span class='no'>gent</span>))       <span class='co'># S = 1660 (92.3%)</span>
+<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/with'>with</a></span>(<span class='no'>septic_patients</span>,           <span class='co'># n = 1798</span>
      <span class='fu'>n_rsi</span>(<span class='no'>amcl</span>, <span class='no'>gent</span>))
 
 <span class='co'># Get portions S/I/R immediately of all rsi columns</span>

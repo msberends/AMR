@@ -16,7 +16,7 @@
 # This R package was created for academic research and was publicly    #
 # released in the hope that it will be useful, but it comes WITHOUT    #
 # ANY WARRANTY OR LIABILITY.                                           #
-# Visit our website for more info: https://msberends.gitab.io/AMR.     #
+# Visit our website for more info: https://msberends.gitlab.io/AMR.    #
 # ==================================================================== #
 
 context("data.R")
@@ -27,35 +27,12 @@ test_that("data sets are valid", {
   expect_identical(nrow(microorganisms), length(unique(microorganisms$mo)))
 
   # there should be no diacritics (i.e. non ASCII) characters in the datasets
-  library(dplyr)
-  # check only character variables:
-  test_microorganisms <- microorganisms %>% select_if(is.character) %>% as.data.frame(stringsAsFactors = FALSE)
-  test_microorganisms.old <- microorganisms.old %>% select_if(is.character) %>% as.data.frame(stringsAsFactors = FALSE)
-  test_antibiotics <- antibiotics %>% select_if(is.character) %>% as.data.frame(stringsAsFactors = FALSE)
-  test_septic_patients <- septic_patients %>% select_if(is.character) %>% as.data.frame(stringsAsFactors = FALSE)
-  # and compare them with their transformed version:
-  expect_identical(test_microorganisms,
-                   test_microorganisms %>%
-                     lapply(iconv, from = "UTF-8", to = "ASCII//TRANSLIT") %>%
-                     as.data.frame(stringsAsFactors = FALSE))
-
-  expect_identical(test_microorganisms.old,
-                   test_microorganisms.old %>%
-                     lapply(iconv, from = "UTF-8", to = "ASCII//TRANSLIT") %>%
-                     as.data.frame(stringsAsFactors = FALSE))
-
-  expect_identical(test_antibiotics,
-                   test_antibiotics %>%
-                     lapply(iconv, from = "UTF-8", to = "ASCII//TRANSLIT") %>%
-                     as.data.frame(stringsAsFactors = FALSE))
-
-  expect_identical(test_septic_patients,
-                   test_septic_patients %>%
-                     lapply(iconv, from = "UTF-8", to = "ASCII//TRANSLIT") %>%
-                     as.data.frame(stringsAsFactors = FALSE))
-
+  datasets <- data(package = "AMR", envir = asNamespace("AMR"))$results[, "Item"]
+  for (i in 1:length(datasets)) {
+    dataset <- get(datasets[i], envir = asNamespace("AMR"))
+    expect_identical(dataset_UTF8_to_ASCII(dataset), dataset)
+  }
 })
-
 
 test_that("creation of data sets is valid", {
   df <- make()

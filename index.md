@@ -98,7 +98,7 @@ Included are:
 
 * All ~2,000 (sub)species from ~100 other relevant genera, from the kingdoms of Animalia and Plantae (like *Strongyloides* and *Taenia*)
 
-* All ~15,000 previously accepted names of included (sub)species that have been taxonomically renamed
+* All ~21,000 previously accepted names of included (sub)species that have been taxonomically renamed
 
 * The responsible author(s) and year of scientific publication
 

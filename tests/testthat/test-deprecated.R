@@ -16,7 +16,7 @@
 # This R package was created for academic research and was publicly    #
 # released in the hope that it will be useful, but it comes WITHOUT    #
 # ANY WARRANTY OR LIABILITY.                                           #
-# Visit our website for more info: https://msberends.gitab.io/AMR.     #
+# Visit our website for more info: https://msberends.gitlab.io/AMR.    #
 # ==================================================================== #
 
 context("deprecated.R")
@@ -30,8 +30,6 @@ test_that("deprecated functions work", {
   expect_identical(suppressWarnings(ratio(c(772, 1611, 737), ratio = "1:2:1")), c(780, 1560,  780))
   expect_identical(suppressWarnings(ratio(c(1752, 1895), ratio = c(1, 1))), c(1823.5, 1823.5))
 
-  expect_warning(guess_mo("esco"))
-  expect_warning(guess_atc("amox"))
   expect_warning(ab_property("amox"))
   expect_warning(ab_atc("amox"))
   expect_warning(ab_official("amox"))

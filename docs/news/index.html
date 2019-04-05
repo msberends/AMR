@@ -78,7 +78,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.6.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.6.1.9002</span>
       </span>
     </div>
 
@@ -232,9 +232,40 @@
       
     </div>
 
+    <div id="amr-0619001" class="section level1">
+<h1 class="page-header">
+<a href="#amr-0619001" class="anchor"></a>AMR 0.6.1.9001<small> Unreleased </small>
+</h1>
+<p><strong>Note: latest development version</strong></p>
+<div id="changed" class="section level4">
+<h4 class="hasAnchor">
+<a href="#changed" class="anchor"></a>Changed</h4>
+<ul>
+<li>Removed deprecated functions <code>guess_mo()</code>, <code>guess_atc()</code>, <code>EUCAST_rules()</code>, <code>interpretive_reading()</code>
+</li>
+<li>Added more old taxonomic names to the <code>microorganisms.old</code> data set, which leads to better results finding when using the <code><a href="../reference/as.mo.html">as.mo()</a></code> function</li>
+<li>Frequency tables of microbial IDs speed improvement</li>
+<li>Removed all hardcoded EUCAST rules and replaced them with a new reference file: <code>./inst/eucast/eucast.tsv</code>.</li>
+</ul>
+</div>
+</div>
+    <div id="amr-061" class="section level1">
+<h1 class="page-header">
+<a href="#amr-061" class="anchor"></a>AMR 0.6.1<small> 2019-03-29 </small>
+</h1>
+<div id="changed-1" class="section level4">
+<h4 class="hasAnchor">
+<a href="#changed-1" class="anchor"></a>Changed</h4>
+<ul>
+<li>Fixed a critical bug when using <code><a href="../reference/eucast_rules.html">eucast_rules()</a></code> with <code>verbose = TRUE</code>
+</li>
+<li>Coercion of microbial IDs are now written to the package namespace instead of the user’s home folder, to comply with the CRAN policy</li>
+</ul>
+</div>
+</div>
     <div id="amr-060" class="section level1">
 <h1 class="page-header">
-<a href="#amr-060" class="anchor"></a>AMR 0.6.0<small> Unreleased </small>
+<a href="#amr-060" class="anchor"></a>AMR 0.6.0<small> 2019-03-27 </small>
 </h1>
 <p><strong>New website!</strong></p>
 <p>We’ve got a new website: <a href="https://msberends.gitlab.io/AMR/">https://msberends.gitlab.io/AMR</a> (built with the great <a href="https://pkgdown.r-lib.org/"><code>pkgdown</code></a>)</p>
@@ -328,9 +359,9 @@ These functions use <code><a href="../reference/as.atc.html">as.atc()</a></code>
 <li><p>New vignettes about how to conduct AMR analysis, predict antimicrobial resistance, use the <em>G</em>-test and more. These are also available (and even easier readable) on our website: <a href="https://msberends.gitlab.io/AMR" class="uri">https://msberends.gitlab.io/AMR</a>.</p></li>
 </ul>
 </div>
-<div id="changed" class="section level4">
+<div id="changed-2" class="section level4">
 <h4 class="hasAnchor">
-<a href="#changed" class="anchor"></a>Changed</h4>
+<a href="#changed-2" class="anchor"></a>Changed</h4>
 <ul>
 <li>Function <code><a href="../reference/eucast_rules.html">eucast_rules()</a></code>:
 <ul>
@@ -344,8 +375,8 @@ These functions use <code><a href="../reference/as.atc.html">as.atc()</a></code>
 <li>Added 65 antibiotics to the <code>antibiotics</code> data set, from the <a href="http://ec.europa.eu/health/documents/community-register/html/atc.htm">Pharmaceuticals Community Register</a> of the European Commission</li>
 <li>Removed columns <code>atc_group1_nl</code> and <code>atc_group2_nl</code> from the <code>antibiotics</code> data set</li>
 <li>Functions <code><a href="../reference/AMR-deprecated.html">atc_ddd()</a></code> and <code><a href="../reference/AMR-deprecated.html">atc_groups()</a></code> have been renamed <code><a href="../reference/atc_online.html">atc_online_ddd()</a></code> and <code><a href="../reference/atc_online.html">atc_online_groups()</a></code>. The old functions are deprecated and will be removed in a future version.</li>
-<li>Function <code><a href="../reference/AMR-deprecated.html">guess_mo()</a></code> is now deprecated in favour of <code><a href="../reference/as.mo.html">as.mo()</a></code> and will be removed in future versions</li>
-<li>Function <code><a href="../reference/AMR-deprecated.html">guess_atc()</a></code> is now deprecated in favour of <code><a href="../reference/as.atc.html">as.atc()</a></code> and will be removed in future versions</li>
+<li>Function <code>guess_mo()</code> is now deprecated in favour of <code><a href="../reference/as.mo.html">as.mo()</a></code> and will be removed in future versions</li>
+<li>Function <code>guess_atc()</code> is now deprecated in favour of <code><a href="../reference/as.atc.html">as.atc()</a></code> and will be removed in future versions</li>
 <li>Improvements for <code><a href="../reference/as.mo.html">as.mo()</a></code>:
 <ul>
 <li>
@@ -483,9 +514,9 @@ Using <code><a href="../reference/as.mo.html">as.mo(..., allow_uncertain = 3)</a
 <li>Functions <code>mo_authors</code> and <code>mo_year</code> to get specific values about the scientific reference of a taxonomic entry</li>
 </ul>
 </div>
-<div id="changed-1" class="section level4">
+<div id="changed-3" class="section level4">
 <h4 class="hasAnchor">
-<a href="#changed-1" class="anchor"></a>Changed</h4>
+<a href="#changed-3" class="anchor"></a>Changed</h4>
 <ul>
 <li>Functions <code>MDRO</code>, <code>BRMO</code>, <code>MRGN</code> and <code>EUCAST_exceptional_phenotypes</code> were renamed to <code>mdro</code>, <code>brmo</code>, <code>mrgn</code> and <code>eucast_exceptional_phenotypes</code>
 </li>
@@ -667,9 +698,9 @@ Using <code><a href="../reference/as.mo.html">as.mo(..., allow_uncertain = 3)</a
 <li><p>Renamed <code>septic_patients$sex</code> to <code>septic_patients$gender</code></p></li>
 </ul>
 </div>
-<div id="changed-2" class="section level4">
+<div id="changed-4" class="section level4">
 <h4 class="hasAnchor">
-<a href="#changed-2" class="anchor"></a>Changed</h4>
+<a href="#changed-4" class="anchor"></a>Changed</h4>
 <ul>
 <li>Added three antimicrobial agents to the <code>antibiotics</code> data set: Terbinafine (D01BA02), Rifaximin (A07AA11) and Isoconazole (D01AC05)</li>
 <li>
@@ -804,9 +835,9 @@ Using <code><a href="../reference/as.mo.html">as.mo(..., allow_uncertain = 3)</a
 </li>
 </ul>
 </div>
-<div id="changed-3" class="section level4">
+<div id="changed-5" class="section level4">
 <h4 class="hasAnchor">
-<a href="#changed-3" class="anchor"></a>Changed</h4>
+<a href="#changed-5" class="anchor"></a>Changed</h4>
 <ul>
 <li>Improvements for forecasting with <code>resistance_predict</code> and added more examples</li>
 <li>More antibiotics added as parameters for EUCAST rules</li>
@@ -890,9 +921,9 @@ Using <code><a href="../reference/as.mo.html">as.mo(..., allow_uncertain = 3)</a
 <li>New print format for <code>tibble</code>s and <code>data.table</code>s</li>
 </ul>
 </div>
-<div id="changed-4" class="section level4">
+<div id="changed-6" class="section level4">
 <h4 class="hasAnchor">
-<a href="#changed-4" class="anchor"></a>Changed</h4>
+<a href="#changed-6" class="anchor"></a>Changed</h4>
 <ul>
 <li>Fixed <code>rsi</code> class for vectors that contain only invalid antimicrobial interpretations</li>
 <li>Renamed dataset <code>ablist</code> to <code>antibiotics</code>
@@ -949,6 +980,8 @@ Using <code><a href="../reference/as.mo.html">as.mo(..., allow_uncertain = 3)</a
     <div id="tocnav">
       <h2>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
+        <li><a href="#amr-0619001">0.6.1.9001</a></li>
+        <li><a href="#amr-061">0.6.1</a></li>
         <li><a href="#amr-060">0.6.0</a></li>
         <li><a href="#amr-050">0.5.0</a></li>
         <li><a href="#amr-040">0.4.0</a></li>

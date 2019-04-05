@@ -16,7 +16,7 @@
 # This R package was created for academic research and was publicly    #
 # released in the hope that it will be useful, but it comes WITHOUT    #
 # ANY WARRANTY OR LIABILITY.                                           #
-# Visit our website for more info: https://msberends.gitab.io/AMR.     #
+# Visit our website for more info: https://msberends.gitlab.io/AMR.    #
 # ==================================================================== #
 
 # No export, no Rd
@@ -76,18 +76,18 @@ check_available_columns <- function(tbl, col.list, info = TRUE) {
   # are they available as upper case or lower case then?
   for (i in 1:length(col.list)) {
     if (is.null(col.list[i]) | isTRUE(is.na(col.list[i]))) {
-      col.list[i] <- NULL
+      col.list[i] <- NA
     } else if (toupper(col.list[i]) %in% colnames(tbl)) {
       col.list[i] <- toupper(col.list[i])
     } else if (tolower(col.list[i]) %in% colnames(tbl)) {
       col.list[i] <- tolower(col.list[i])
     } else if (!col.list[i] %in% colnames(tbl)) {
-      col.list[i] <- NULL
+      col.list[i] <- NA
     }
   }
   if (!all(col.list %in% colnames(tbl))) {
     if (info == TRUE) {
-      warning('These columns do not exist and will be ignored: ',
+      warning('Some columns do not exist and will be ignored: ',
               col.list.bak[!(col.list %in% colnames(tbl))] %>% toString(),
               '.\nTHIS MAY STRONGLY INFLUENCE THE OUTCOME.',
               immediate. = TRUE,

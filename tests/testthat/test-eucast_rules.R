@@ -16,12 +16,21 @@
 # This R package was created for academic research and was publicly    #
 # released in the hope that it will be useful, but it comes WITHOUT    #
 # ANY WARRANTY OR LIABILITY.                                           #
-# Visit our website for more info: https://msberends.gitab.io/AMR.     #
+# Visit our website for more info: https://msberends.gitlab.io/AMR.    #
 # ==================================================================== #
 
 context("eucast_rules.R")
 
 test_that("EUCAST rules work", {
+
+  # thoroughly check input table
+  expect_true(file.exists(EUCAST_RULES_FILE_LOCATION))
+  eucast_input_file <- eucast_rules_file()
+  expect_equal(colnames(eucast_input_file),
+               c("if_mo_property", "like_is_one_of", "this_value",
+                 "and_these_antibiotics", "have_these_values",
+                 "then_change_these_antibiotics", "to_value",
+                 "reference.rule", "reference.rule_group"))
 
   expect_error(suppressWarnings(eucast_rules(septic_patients, col_mo = "Non-existing")))
 
@@ -40,7 +49,6 @@ test_that("EUCAST rules work", {
                   stringsAsFactors = FALSE)
   expect_identical(suppressWarnings(eucast_rules(a, "mo", info = FALSE)), b)
   expect_identical(suppressWarnings(eucast_rules(a, "mo", info = TRUE)), b)
-  expect_identical(suppressWarnings(interpretive_reading(a, "mo", info = TRUE)), b)
 
   a <- data.frame(mo = c("Staphylococcus aureus",
                          "Streptococcus group A"),

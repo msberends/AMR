@@ -119,14 +119,14 @@ septic_patients \%>\%
 
 # Calculate co-resistance between amoxicillin/clav acid and gentamicin,
 # so we can see that combination therapy does a lot more than mono therapy:
-septic_patients \%>\% portion_S(amcl)       # S = 67.1\%
-septic_patients \%>\% count_all(amcl)       # n = 1576
+septic_patients \%>\% portion_S(amcl)       # S = 71.4\%
+septic_patients \%>\% count_all(amcl)       # n = 1879
 
 septic_patients \%>\% portion_S(gent)       # S = 74.0\%
 septic_patients \%>\% count_all(gent)       # n = 1855
 
-septic_patients \%>\% portion_S(amcl, gent) # S = 92.0\%
-septic_patients \%>\% count_all(amcl, gent) # n = 1517
+septic_patients \%>\% portion_S(amcl, gent) # S = 92.3\%
+septic_patients \%>\% count_all(amcl, gent) # n = 1798
 
 
 septic_patients \%>\%

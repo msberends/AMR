@@ -16,7 +16,7 @@
 # This R package was created for academic research and was publicly    #
 # released in the hope that it will be useful, but it comes WITHOUT    #
 # ANY WARRANTY OR LIABILITY.                                           #
-# Visit our website for more info: https://msberends.gitab.io/AMR.     #
+# Visit our website for more info: https://msberends.gitlab.io/AMR.    #
 # ==================================================================== #
 
 #' Count isolates
@@ -74,15 +74,15 @@
 #' # Count co-resistance between amoxicillin/clav acid and gentamicin,
 #' # so we can see that combination therapy does a lot more than mono therapy.
 #' # Please mind that `portion_S` calculates percentages right away instead.
-#' count_S(septic_patients$amcl)   # S = 1057 (67.1%)
-#' count_all(septic_patients$amcl) # n = 1576
+#' count_S(septic_patients$amcl)   # S = 1342 (71.4%)
+#' count_all(septic_patients$amcl) # n = 1879
 #'
 #' count_S(septic_patients$gent)   # S = 1372 (74.0%)
 #' count_all(septic_patients$gent) # n = 1855
 #'
 #' with(septic_patients,
-#'      count_S(amcl, gent))       # S = 1396 (92.0%)
-#' with(septic_patients,           # n = 1517
+#'      count_S(amcl, gent))       # S = 1660 (92.3%)
+#' with(septic_patients,           # n = 1798
 #'      n_rsi(amcl, gent))
 #'
 #' # Get portions S/I/R immediately of all rsi columns

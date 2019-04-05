@@ -94,8 +94,8 @@ rm(ref_taxonomy)
 MOs <- data_total %>%
   filter(
     (
-      # we only want all microorganisms and viruses
-      !kingdom %in% c("Animalia", "Plantae")
+      # we only want all MICROorganisms and no viruses
+      !kingdom %in% c("Animalia", "Plantae", "Viruses")
       # and no entries above genus level - all species already have a taxonomic tree
       & !rank %in% c("kingdom", "phylum", "superfamily", "class", "order", "family")
       # and not all fungi: Aspergillus, Candida, Trichphyton and Pneumocystis are the most important,
@@ -115,7 +115,15 @@ MOs <- data_total %>%
                    "Salinococcus", "Sanguibacteroides", "Schistosoma", "Scopulariopsis", "Scytalidium", "Sporobolomyces", "Stomatococcus",
                    "Strongyloides", "Syncephalastraceae", "Taenia", "Torulopsis", "Trichinella", "Trichobilharzia", "Trichomonas",
                    "Trichosporon", "Trichuris", "Trypanosoma", "Wuchereria")
-  ) %>%
+    # or the taxonomic entry is old - the species was renamed
+    | !is.na(col_id_new)
+  )
+
+# filter old taxonomic names so only the ones with an existing reference will be kept
+MOs <- MOs %>%
+  filter(is.na(col_id_new) | (!is.na(col_id_new) & col_id_new %in% MOs$col_id))
+
+MOs <- MOs %>%
   # remove text if it contains 'Not assigned' like phylum in viruses
   mutate_all(~gsub("Not assigned", "", .))
 
@@ -176,7 +184,8 @@ MOs.old <- MOs %>%
                      stringr::str_replace(
                        string = fullname,
                        pattern = stringr::fixed(authors2),
-                       replacement = ""))),
+                       replacement = "")) %>%
+                  gsub(" (var|f|subsp)[.]", "", .)),
             ref) %>%
   filter(!is.na(fullname)) %>%
   distinct(fullname, .keep_all = TRUE) %>%
@@ -185,9 +194,7 @@ MOs.old <- MOs %>%
 MOs <- MOs %>%
   filter(is.na(col_id_new) | source == "DSMZ") %>%
   transmute(col_id,
-            fullname = trimws(ifelse(kingdom == "Viruses",
-                                     gsub(":", "", ifelse(trimws(paste(species, subspecies)) == "", genus, paste(species, subspecies))),
-                                     paste(genus, species, subspecies))),
+            fullname = trimws(paste(genus, species, subspecies)),
             kingdom,
             phylum,
             class,
@@ -202,9 +209,6 @@ MOs <- MOs %>%
             source) %>%
   #distinct(fullname, .keep_all = TRUE) %>%
   filter(!grepl("unassigned", fullname, ignore.case = TRUE))
-
-# Keep only old names of species that are in MOs:
-MOs.old <- MOs.old %>% filter(col_id_new %in% MOs$col_id)
 
 # Filter out the DSMZ records that were renamed and are now in MOs.old
 MOs <- MOs %>%

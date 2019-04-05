@@ -2,8 +2,7 @@
 % Please edit documentation in R/eucast_rules.R
 \name{eucast_rules}
 \alias{eucast_rules}
-\alias{EUCAST_rules}
-\alias{interpretive_reading}
+\alias{eucast_rules_file}
 \title{EUCAST rules}
 \source{
 \itemize{
@@ -21,49 +20,48 @@
       \url{http://www.eucast.org/fileadmin/src/media/PDFs/EUCAST_files/Breakpoint_tables/v_9.0_Breakpoint_Tables.xlsx}
     }
   }
+
+  For editing the reference file (which is available with \code{\link{eucast_rules_file}}), these values can all be used for target antibiotics: aminoglycosides, tetracyclines, polymyxins, macrolides, glycopeptides, streptogramins, cephalosporins, cephalosporins_without_cfta, carbapenems, aminopenicillins, ureidopenicillins, fluoroquinolones, all_betalactams, and all separate four letter codes like amcl. They can be separated by comma: \code{"amcl, fluoroquinolones"}. The mo_property can be any column name from the \code{\link{microorganisms}} data set, or \code{genus_species} or \code{gramstain}. This file contains references to the 'Burkholderia cepacia complex'. The species in this group can be found in: LiPuma JJ, 2015 (PMID 16217180).
 }
 \usage{
-eucast_rules(tbl, col_mo = NULL, info = TRUE,
-  rules = c("breakpoints", "expert", "other", "all"), verbose = FALSE,
-  amcl = guess_ab_col(), amik = guess_ab_col(),
-  amox = guess_ab_col(), ampi = guess_ab_col(),
-  azit = guess_ab_col(), azlo = guess_ab_col(),
-  aztr = guess_ab_col(), cefa = guess_ab_col(),
-  cfep = guess_ab_col(), cfot = guess_ab_col(),
-  cfox = guess_ab_col(), cfra = guess_ab_col(),
-  cfta = guess_ab_col(), cftr = guess_ab_col(),
-  cfur = guess_ab_col(), chlo = guess_ab_col(),
-  cipr = guess_ab_col(), clar = guess_ab_col(),
-  clin = guess_ab_col(), clox = guess_ab_col(),
-  coli = guess_ab_col(), czol = guess_ab_col(),
-  dapt = guess_ab_col(), doxy = guess_ab_col(),
-  erta = guess_ab_col(), eryt = guess_ab_col(),
-  fosf = guess_ab_col(), fusi = guess_ab_col(),
-  gent = guess_ab_col(), imip = guess_ab_col(),
-  kana = guess_ab_col(), levo = guess_ab_col(),
-  linc = guess_ab_col(), line = guess_ab_col(),
-  mero = guess_ab_col(), mezl = guess_ab_col(),
-  mino = guess_ab_col(), moxi = guess_ab_col(),
-  nali = guess_ab_col(), neom = guess_ab_col(),
-  neti = guess_ab_col(), nitr = guess_ab_col(),
-  norf = guess_ab_col(), novo = guess_ab_col(),
-  oflo = guess_ab_col(), oxac = guess_ab_col(),
-  peni = guess_ab_col(), pipe = guess_ab_col(),
-  pita = guess_ab_col(), poly = guess_ab_col(),
-  pris = guess_ab_col(), qida = guess_ab_col(),
-  rifa = guess_ab_col(), roxi = guess_ab_col(),
-  siso = guess_ab_col(), teic = guess_ab_col(),
-  tetr = guess_ab_col(), tica = guess_ab_col(),
-  tige = guess_ab_col(), tobr = guess_ab_col(),
-  trim = guess_ab_col(), trsu = guess_ab_col(),
-  vanc = guess_ab_col())
+eucast_rules(x, col_mo = NULL, info = TRUE, rules = c("breakpoints",
+  "expert", "other", "all"), verbose = FALSE, amcl = guess_ab_col(),
+  amik = guess_ab_col(), amox = guess_ab_col(),
+  ampi = guess_ab_col(), azit = guess_ab_col(),
+  azlo = guess_ab_col(), aztr = guess_ab_col(),
+  cefa = guess_ab_col(), cfep = guess_ab_col(),
+  cfot = guess_ab_col(), cfox = guess_ab_col(),
+  cfra = guess_ab_col(), cfta = guess_ab_col(),
+  cftr = guess_ab_col(), cfur = guess_ab_col(),
+  chlo = guess_ab_col(), cipr = guess_ab_col(),
+  clar = guess_ab_col(), clin = guess_ab_col(),
+  clox = guess_ab_col(), coli = guess_ab_col(),
+  czol = guess_ab_col(), dapt = guess_ab_col(),
+  doxy = guess_ab_col(), erta = guess_ab_col(),
+  eryt = guess_ab_col(), fosf = guess_ab_col(),
+  fusi = guess_ab_col(), gent = guess_ab_col(),
+  imip = guess_ab_col(), kana = guess_ab_col(),
+  levo = guess_ab_col(), linc = guess_ab_col(),
+  line = guess_ab_col(), mero = guess_ab_col(),
+  mezl = guess_ab_col(), mino = guess_ab_col(),
+  moxi = guess_ab_col(), nali = guess_ab_col(),
+  neom = guess_ab_col(), neti = guess_ab_col(),
+  nitr = guess_ab_col(), norf = guess_ab_col(),
+  novo = guess_ab_col(), oflo = guess_ab_col(),
+  oxac = guess_ab_col(), peni = guess_ab_col(),
+  pipe = guess_ab_col(), pita = guess_ab_col(),
+  poly = guess_ab_col(), pris = guess_ab_col(),
+  qida = guess_ab_col(), rifa = guess_ab_col(),
+  roxi = guess_ab_col(), siso = guess_ab_col(),
+  teic = guess_ab_col(), tetr = guess_ab_col(),
+  tica = guess_ab_col(), tige = guess_ab_col(),
+  tobr = guess_ab_col(), trim = guess_ab_col(),
+  trsu = guess_ab_col(), vanc = guess_ab_col(), ...)
 
-EUCAST_rules(...)
-
-interpretive_reading(...)
+eucast_rules_file()
 }
 \arguments{
-\item{tbl}{table with antibiotic columns, like e.g. \code{amox} and \code{amcl}}
+\item{x}{data with antibiotic columns, like e.g. \code{amox} and \code{amcl}}
 
 \item{col_mo}{column name of the unique IDs of the microorganisms (see \code{\link{mo}}), defaults to the first column of class \code{mo}. Values will be coerced using \code{\link{as.mo}}.}
 
@@ -78,10 +76,18 @@ interpretive_reading(...)
 \item{...}{parameters that are passed on to \code{eucast_rules}}
 }
 \value{
-The input of \code{tbl}, possibly with edited values of antibiotics. Or, if \code{verbose = TRUE}, a \code{data.frame} with all original and new values of the affected bug-drug combinations.
+The input of \code{tbl_}, possibly with edited values of antibiotics. Or, if \code{verbose = TRUE}, a \code{data.frame} with all original and new values of the affected bug-drug combinations.
 }
 \description{
 Apply susceptibility rules as defined by the European Committee on Antimicrobial Susceptibility Testing (EUCAST, \url{http://eucast.org}), see \emph{Source}. This includes (1) expert rules, (2) intrinsic resistance and (3) inferred resistance as defined in their breakpoint tables.
+}
+\details{
+The file used for applying all EUCAST rules can be retrieved with \code{\link{eucast_rules_file}()}. It returns an easily readable data set containing all rules. The original TSV file (tab separated file) that is being read by this function can be found when running this command: \cr
+\code{AMR::EUCAST_RULES_FILE_LOCATION} (without brackets).
+
+In the source code it is located under \href{https://gitlab.com/msberends/AMR/blob/master/inst/eucast/eucast_rules.tsv}{\code{./inst/eucast/eucast_rules.tsv}}.
+
+\strong{Note:} When ampicillin (J01CA01) is not available but amoxicillin (J01CA04) is, the latter will be used for all rules where there is a dependency on ampicillin. These drugs are interchangeable when it comes to expression of antimicrobial resistance.
 }
 \section{Antibiotics}{
 

@@ -16,7 +16,7 @@
 # This R package was created for academic research and was publicly    #
 # released in the hope that it will be useful, but it comes WITHOUT    #
 # ANY WARRANTY OR LIABILITY.                                           #
-# Visit our website for more info: https://msberends.gitab.io/AMR.     #
+# Visit our website for more info: https://msberends.gitlab.io/AMR.    #
 # ==================================================================== #
 
 #' Property of a microorganism
@@ -136,7 +136,7 @@ mo_fullname <- function(x, language = get_locale(), ...) {
 }
 
 #' @rdname mo_property
-#' @importFrom dplyr %>% left_join mutate pull
+#' @importFrom dplyr %>% mutate pull
 #' @export
 mo_shortname <- function(x, language = get_locale(), ...) {
   dots <- list(...)
@@ -247,7 +247,12 @@ mo_phylum <- function(x, language = get_locale(), ...) {
 #' @rdname mo_property
 #' @export
 mo_kingdom <- function(x, language = get_locale(), ...) {
-  mo_translate(mo_validate(x = x, property = "kingdom", ...), language = language)
+  kngdm <- mo_validate(x = x, property = "kingdom", ...)
+  if (language != "en") {
+    unknowns <- as.mo(x, ...) == "UNKOWN"
+    kngdm[unknowns] <- mo_translate(kngdm[unknowns], language = language)
+  }
+  kngdm
 }
 
 #' @rdname mo_property
@@ -260,14 +265,14 @@ mo_type <- function(x, language = get_locale(), ...) {
 #' @export
 mo_gramstain <- function(x, language = get_locale(), ...) {
   x.bak <- x
-  x.mo <- as.mo(x, ...)
-  x.phylum <- mo_phylum(x.mo)
+  x.mo <- as.mo(x, language = "en", ...)
+  x.phylum <- mo_phylum(x.mo, language = "en")
   x[x.phylum %in% c("Actinobacteria",
                     "Chloroflexi",
                     "Firmicutes",
                     "Tenericutes")] <- "Gram positive"
   x[x != "Gram positive"] <- "Gram negative"
-  x[mo_kingdom(x.mo) != "Bacteria"] <- NA_character_
+  x[mo_kingdom(x.mo, language = "en") != "Bacteria"] <- NA_character_
   x[x.mo == "B_GRAMP"] <- "Gram positive"
   x[x.mo == "B_GRAMN"] <- "Gram negative"
 

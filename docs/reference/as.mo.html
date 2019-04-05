@@ -80,7 +80,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.6.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.6.1.9002</span>
       </span>
     </div>
 
@@ -311,7 +311,9 @@ A microbial ID from this package (class: <code>mo</code>) typically looks like t
 <p>Use the <code><a href='mo_property.html'>mo_property</a>_*</code> functions to get properties based on the returned code, see Examples.</p>
 <p>The algorithm uses data from the Catalogue of Life (see below) and from one other source (see <code><a href='microorganisms.html'>?microorganisms</a></code>).</p>
 <p><strong>Self-learning algoritm</strong> <br />
-The <code>as.mo()</code> function gains experience from previously determined microbial IDs and learns from it. This drastically improves both speed and reliability. Use <code>clean_mo_history()</code> to reset the algorithms. Only experience from your current <code>AMR</code> package version is used. This is done because in the future the taxonomic tree (which is included in this package) may change for any organism and it consequently has to rebuild its knowledge. Usually, any guess after the first try runs 80-95% faster than the first try. The algorithm saves its previous findings to <code>~/.Rhistory_mo</code>.</p>
+The <code>as.mo()</code> function gains experience from previously determined microbial IDs and learns from it. This drastically improves both speed and reliability. Use <code>clean_mo_history()</code> to reset the algorithms. Only experience from your current <code>AMR</code> package version is used. This is done because in the future the taxonomic tree (which is included in this package) may change for any organism and it consequently has to rebuild its knowledge.</p>
+<p>Usually, any guess after the first try runs 80-95% faster than the first try.</p>
+<p>For now, learning only works per session. If R is closed or terminated, the algorithms reset. This will probably be resolved in a next version.</p>
 <p><strong>Intelligent rules</strong> <br />
 This function uses intelligent rules to help getting fast and logical results. It tries to find matches in this order:</p><ul>
 <li><p>Valid MO codes and full names: it first searches in already valid MO code and known genus/species combinations</p></li>

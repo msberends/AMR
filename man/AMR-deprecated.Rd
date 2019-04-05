@@ -3,8 +3,6 @@
 \name{AMR-deprecated}
 \alias{AMR-deprecated}
 \alias{ratio}
-\alias{guess_mo}
-\alias{guess_atc}
 \alias{ab_property}
 \alias{ab_atc}
 \alias{ab_official}
@@ -18,10 +16,6 @@
 \title{Deprecated functions}
 \usage{
 ratio(x, ratio)
-
-guess_mo(...)
-
-guess_atc(...)
 
 ab_property(...)
 
