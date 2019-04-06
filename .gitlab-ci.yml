@@ -56,7 +56,7 @@ cache:
 
 R-release:
   stage: build
-  allow_failure: false
+  allow_failure: true
   script:
     - Rscript -e 'sessionInfo()'
     # install missing and outdated packages
@@ -69,6 +69,7 @@ R-release:
     - PKG_FILE_NAME=$(ls -1t *.tar.gz | head -n 1)
     - R CMD check "${PKG_FILE_NAME}" --no-build-vignettes --no-manual --as-cran
   artifacts:
+    when: always
     paths:
       - '*.Rcheck/*'
     expire_in: '1 month'
@@ -89,6 +90,7 @@ R-devel:
     - PKG_FILE_NAME=$(ls -1t *.tar.gz | head -n 1)
     - Rdevel CMD check "${PKG_FILE_NAME}" --no-build-vignettes --no-manual --as-cran
   artifacts:
+    when: always
     paths:
       - '*.Rcheck/*'
     expire_in: '1 month'
