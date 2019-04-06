@@ -24,8 +24,7 @@ stages:
   - test
   - deploy
 
-# debian stretch only contains R 3.3...
-image: debian:buster-slim
+image: rocker/r-base
 
 before_script:
   - apt-get update -qq
@@ -57,10 +56,8 @@ cache:
 
 R-release:
   stage: build
-  image: debian:buster-slim
   allow_failure: false
   script:
-    - apt-get install -y r-base
     - Rscript -e 'sessionInfo()'
     # install missing and outdated packages
     - Rscript -e 'source(".gitlab-ci.R"); gl_update_pkg_all(repos = "https://cran.rstudio.com", quiet = TRUE, install_pkgdown = TRUE)'
@@ -98,14 +95,13 @@ R-devel:
 
 coverage:
   stage: test
-  image: debian:buster-slim
   allow_failure: true
   when: on_success
   only:
     - premaster
     - master
   script:
-  - apt-get install --yes git r-base
+  - apt-get install --yes git
   # install missing and outdated packages
   - Rscript -e 'source(".gitlab-ci.R"); gl_update_pkg_all(repos = "https://cran.rstudio.com", quiet = TRUE, install_pkgdown = TRUE)'
   # codecov token is set in https://gitlab.com/msberends/AMR/settings/ci_cd
@@ -114,12 +110,10 @@ coverage:
 
 pages:
   stage: deploy
-  image: debian:buster-slim
   when: always
   only:
     - master
   script:
-    - apt-get install --yes r-base
     # install missing and outdated packages
     - Rscript -e 'source(".gitlab-ci.R"); gl_update_pkg_all(repos = "https://cran.rstudio.com", quiet = TRUE, install_pkgdown = TRUE)'
     - Rscript -e "devtools::install(build = TRUE, upgrade = FALSE)"
