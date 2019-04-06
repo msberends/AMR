@@ -1,6 +1,6 @@
 Package: AMR
 Version: 0.6.1.9002
-Date: 2019-04-05
+Date: 2019-04-06
 Title: Antimicrobial Resistance Analysis
 Authors@R: c(
     person(
@@ -69,4 +69,5 @@ BugReports: https://gitlab.com/msberends/AMR/issues
 License: GPL-2 | file LICENSE
 Encoding: UTF-8
 LazyData: true
+StagedInstall: false
 RoxygenNote: 6.1.1

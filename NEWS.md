@@ -7,6 +7,9 @@
 * Frequency tables of microbial IDs speed improvement
 * Removed all hardcoded EUCAST rules and replaced them with a new reference file: `./inst/eucast/eucast.tsv`.
 
+#### Other
+* Prevented [staged install](https://developer.r-project.org/Blog/public/2019/02/14/staged-install/index.html) in R 3.6.0 and later by adding `StagedInstall: false` to the DESCRIPTION file
+
 # AMR 0.6.1
 
 #### Changed
