@@ -45,13 +45,13 @@
          value = make_trans_tbl(),
          envir = asNamespace("AMR"))
 
-  assign(x = "mo_history",
-         value = data.frame(x = character(0),
-                            mo = character(0),
-                            uncertainty_level = integer(0),
-                            package_v = character(0),
-                            stringsAsFactors = FALSE),
-         envir = asNamespace("AMR"))
+#  assign(x = "mo_history",
+#         value = data.frame(x = character(0),
+#                            mo = character(0),
+#                            uncertainty_level = integer(0),
+#                            package_v = character(0),
+#                            stringsAsFactors = FALSE),
+#         envir = asNamespace("AMR"))
 
 }
 

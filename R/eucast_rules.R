@@ -469,6 +469,7 @@ eucast_rules <- function(x,
           stop(e, call. = FALSE)
         }
       )
+
       tbl_[rows, cols] <<- tbl_original[rows, cols]
 
       after <- as.character(unlist(as.list(tbl_original[rows, cols])))
@@ -574,7 +575,6 @@ eucast_rules <- function(x,
     rule_group_previous <- eucast_rules_df[max(1, i - 1), "reference.rule_group"]
     rule_group_current <- eucast_rules_df[i, "reference.rule_group"]
     rule_group_next <- eucast_rules_df[min(nrow(eucast_rules_df), i + 1), "reference.rule_group"]
-    #no_of_changes <- 0
     if (is.na(eucast_rules_df[i, 4])) {
       rule_text <- paste(eucast_rules_df[i, 6], "=", eucast_rules_df[i, 7])
     } else {

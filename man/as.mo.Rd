@@ -71,13 +71,6 @@ Use the \code{\link{mo_property}_*} functions to get properties based on the ret
 
 The algorithm uses data from the Catalogue of Life (see below) and from one other source (see \code{?microorganisms}).
 
-\strong{Self-learning algoritm} \cr
-The \code{as.mo()} function gains experience from previously determined microbial IDs and learns from it. This drastically improves both speed and reliability. Use \code{clean_mo_history()} to reset the algorithms. Only experience from your current \code{AMR} package version is used. This is done because in the future the taxonomic tree (which is included in this package) may change for any organism and it consequently has to rebuild its knowledge.
-
-Usually, any guess after the first try runs 80-95\% faster than the first try.
-
-For now, learning only works per session. If R is closed or terminated, the algorithms reset. This will probably be resolved in a next version.
-
 \strong{Intelligent rules} \cr
 This function uses intelligent rules to help getting fast and logical results. It tries to find matches in this order:
 \itemize{
