@@ -68,6 +68,6 @@ URL: https://msberends.gitlab.io/AMR, https://gitlab.com/msberends/AMR
 BugReports: https://gitlab.com/msberends/AMR/issues
 License: GPL-2 | file LICENSE
 Encoding: UTF-8
-LazyLoad: true
+LazyData: true
 StagedInstall: false
 RoxygenNote: 6.1.1
