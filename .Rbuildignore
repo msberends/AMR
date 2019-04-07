@@ -13,9 +13,7 @@
 ^CRAN-RELEASE$
 ^doc$
 ^docs$
-^git_merge\.sh$
-^git_premaster\.sh$
-^git_siteonly\.sh$
+^git_.*\.sh$
 ^index\.md$
 ^installed_deps$
 ^Meta$

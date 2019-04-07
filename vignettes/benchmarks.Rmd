@@ -85,9 +85,10 @@ boxplot(microbenchmark(as.mo("Thermus islandicus"),
         main = "Benchmarks per prevalence")
 ```
 
-In reality, the `as.mo()` functions **learns from its own output to speed up determinations for next times**. In above figure, this effect was disabled to show the difference with the boxplot below - when you would use `as.mo()` yourself:
 
-```{r, echo = FALSE}
+```{r, echo = FALSE, eval = FALSE}
+# In reality, the `as.mo()` functions **learns from its own output to speed up determinations for next times**. In above figure, this effect was disabled to show the difference with the boxplot below - when you would use `as.mo()` yourself:
+
 clean_mo_history()
 par(mar = c(5, 16, 4, 2))
 boxplot(microbenchmark(
@@ -101,11 +102,11 @@ boxplot(microbenchmark(
         horizontal = TRUE, las = 1, unit = "s", log = FALSE,
         xlab = "", ylab = "Time in seconds", ylim = c(0, 0.5),
         main = "Benchmarks per prevalence")
+
+# The highest outliers are the first times. All next determinations were done in only thousands of seconds. For now, learning only works per session. If R is closed or terminated, the algorithms reset. This will probably be resolved in a next version.
 ```
 
-The highest outliers are the first times. All next determinations were done in only thousands of seconds. For now, learning only works per session. If R is closed or terminated, the algorithms reset. This will probably be resolved in a next version.
-
-Still, uncommon microorganisms take a lot more time than common microorganisms, especially the first time. To relieve this pitfall and further improve performance, two important calculations take almost no time at all: **repetitive results** and **already precalculated results**.
+Uncommon microorganisms take a lot more time than common microorganisms. To relieve this pitfall and further improve performance, two important calculations take almost no time at all: **repetitive results** and **already precalculated results**.
 
 ### Repetitive results
 
