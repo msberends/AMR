@@ -49,11 +49,6 @@ before_script:
   - echo 'LANG="en_US.utf8"' >> .Renviron
   - echo 'LANGUAGE="en_US.utf8"' > ~/.Renviron
 
-cache:
-  key: "$CI_COMMIT_REF_SLUG"
-  paths:
-    - installed_deps/
-
 R-release:
   stage: build
   allow_failure: true
@@ -73,12 +68,21 @@ R-release:
     paths:
       - '*.Rcheck/*'
     expire_in: '1 month'
+  cache:
+    key: "$CI_COMMIT_REF_SLUG"
+    paths:
+      - installed_deps/
 
 R-devel:
   stage: build
   image: rocker/r-devel
   allow_failure: true
   script:
+    # set language
+    - echo 'LANGUAGE="en_US.utf8"' > .Renviron
+    - echo 'LANG="en_US.utf8"' >> .Renviron
+    - echo 'LANGUAGE="en_US.utf8"' > ~/.Renviron
+    - rm -rf installed_deps
     - Rscriptdevel -e 'sessionInfo()'
     # install missing and outdated packages
     - Rscriptdevel -e 'source(".gitlab-ci.R"); gl_update_pkg_all(repos = "https://cran.rstudio.com", quiet = TRUE, install_pkgdown = TRUE)'
@@ -103,11 +107,11 @@ coverage:
     - premaster
     - master
   script:
-  - apt-get install --yes git
-  # install missing and outdated packages
-  - Rscript -e 'source(".gitlab-ci.R"); gl_update_pkg_all(repos = "https://cran.rstudio.com", quiet = TRUE, install_pkgdown = TRUE)'
-  # codecov token is set in https://gitlab.com/msberends/AMR/settings/ci_cd
-  - Rscript -e "cc <- covr::package_coverage(); covr::codecov(coverage = cc, token = '$codecov'); cat('Code coverage:', covr::percent_coverage(cc))"
+    - apt-get install --yes git
+    # install missing and outdated packages
+    - Rscript -e 'source(".gitlab-ci.R"); gl_update_pkg_all(repos = "https://cran.rstudio.com", quiet = TRUE, install_pkgdown = TRUE)'
+    # codecov token is set in https://gitlab.com/msberends/AMR/settings/ci_cd
+    - Rscript -e "cc <- covr::package_coverage(); covr::codecov(coverage = cc, token = '$codecov'); cat('Code coverage:', covr::percent_coverage(cc))"
   coverage: '/Code coverage: \d+\.\d+/'
 
 pages:
