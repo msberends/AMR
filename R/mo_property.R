@@ -247,10 +247,13 @@ mo_phylum <- function(x, language = get_locale(), ...) {
 #' @rdname mo_property
 #' @export
 mo_kingdom <- function(x, language = get_locale(), ...) {
+  if (all(x %in% AMR::microorganisms$kingdom)) {
+    return(x)
+  }
+  x <- as.mo(x, language = "en", ...)
   kngdm <- mo_validate(x = x, property = "kingdom", ...)
   if (language != "en") {
-    unknowns <- as.mo(x, ...) == "UNKOWN"
-    kngdm[unknowns] <- mo_translate(kngdm[unknowns], language = language)
+    kngdm[x == "UNKNOWN"] <- mo_translate(kngdm[x == "UNKNOWN"], language = language)
   }
   kngdm
 }
@@ -264,7 +267,6 @@ mo_type <- function(x, language = get_locale(), ...) {
 #' @rdname mo_property
 #' @export
 mo_gramstain <- function(x, language = get_locale(), ...) {
-  x.bak <- x
   x.mo <- as.mo(x, language = "en", ...)
   x.phylum <- mo_phylum(x.mo, language = "en")
   x[x.phylum %in% c("Actinobacteria",

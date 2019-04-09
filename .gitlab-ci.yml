@@ -51,7 +51,7 @@ before_script:
 
 R-release:
   stage: build
-  allow_failure: true
+  allow_failure: false
   script:
     - Rscript -e 'sessionInfo()'
     # install missing and outdated packages

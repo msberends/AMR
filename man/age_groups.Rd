@@ -25,9 +25,9 @@ To split ages, the input can be:
   \item{A character:}
     \itemize{
       \item{\code{"children"}, equivalent of: \code{c(0, 1, 2, 4, 6, 13, 18)}. This will split on 0, 1, 2-3, 4-5, 6-12, 13-17 and 18+.}
-      \item{\code{"elderly"} or \code{"seniors"}, equivalent of: \code{c(65, 75, 85, 95)}. This will split on 0-64, 65-74, 75-84, 85-94 and 95+.}
-      \item{\code{"fives"}, equivalent of: \code{1:24 * 5}. This will split on 0-4, 5-9, 10-14, 15-19 and so forth, until 120.}
-      \item{\code{"tens"}, equivalent of: \code{1:12 * 10}. This will split on 0-9, 10-19, 20-29 and so forth, until 120.}
+      \item{\code{"elderly"} or \code{"seniors"}, equivalent of: \code{c(65, 75, 85)}. This will split on 0-64, 65-74, 75-84, 85+.}
+      \item{\code{"fives"}, equivalent of: \code{1:20 * 5}. This will split on 0-4, 5-9, 10-14, ..., 90-94, 95-99, 100+.}
+      \item{\code{"tens"}, equivalent of: \code{1:10 * 10}. This will split on 0-9, 10-19, 20-29, ... 80-89, 90-99, 100+.}
     }
 }
 }
@@ -46,11 +46,11 @@ age_groups(ages, 50)
 age_groups(ages, c(20, 50))
 
 # split into groups of ten years
-age_groups(ages, 1:12 * 10)
+age_groups(ages, 1:10 * 10)
 age_groups(ages, split_at = "tens")
 
 # split into groups of five years
-age_groups(ages, 1:24 * 5)
+age_groups(ages, 1:20 * 5)
 age_groups(ages, split_at = "fives")
 
 # split specifically for children

@@ -250,9 +250,7 @@
 
 <span class='fu'>mo_uncertainties</span>()
 
-<span class='fu'>mo_renamed</span>()
-
-<span class='fu'>clean_mo_history</span>(<span class='no'>...</span>)</pre>
+<span class='fu'>mo_renamed</span>()</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -310,10 +308,6 @@ A microbial ID from this package (class: <code>mo</code>) typically looks like t
     <p>Values that cannot be coered will be considered 'unknown' and will get the MO code <code>UNKNOWN</code>.</p>
 <p>Use the <code><a href='mo_property.html'>mo_property</a>_*</code> functions to get properties based on the returned code, see Examples.</p>
 <p>The algorithm uses data from the Catalogue of Life (see below) and from one other source (see <code><a href='microorganisms.html'>?microorganisms</a></code>).</p>
-<p><strong>Self-learning algoritm</strong> <br />
-The <code>as.mo()</code> function gains experience from previously determined microbial IDs and learns from it. This drastically improves both speed and reliability. Use <code>clean_mo_history()</code> to reset the algorithms. Only experience from your current <code>AMR</code> package version is used. This is done because in the future the taxonomic tree (which is included in this package) may change for any organism and it consequently has to rebuild its knowledge.</p>
-<p>Usually, any guess after the first try runs 80-95% faster than the first try.</p>
-<p>For now, learning only works per session. If R is closed or terminated, the algorithms reset. This will probably be resolved in a next version.</p>
 <p><strong>Intelligent rules</strong> <br />
 This function uses intelligent rules to help getting fast and logical results. It tries to find matches in this order:</p><ul>
 <li><p>Valid MO codes and full names: it first searches in already valid MO code and known genus/species combinations</p></li>
@@ -365,7 +359,7 @@ The intelligent rules takes into account microbial prevalence of pathogens in hu
 
     
     <p><img src='figures/logo_col.png' height=40px style=margin-bottom:5px /> <br />
-This package contains the complete taxonomic tree of almost all microorganisms (~60,000 species) from the authoritative and comprehensive Catalogue of Life (<a href='http://www.catalogueoflife.org'>http://www.catalogueoflife.org</a>). The Catalogue of Life is the most comprehensive and authoritative global index of species currently available.</p>
+This package contains the complete taxonomic tree of almost all microorganisms (~65,000 species) from the authoritative and comprehensive Catalogue of Life (<a href='http://www.catalogueoflife.org'>http://www.catalogueoflife.org</a>). The Catalogue of Life is the most comprehensive and authoritative global index of species currently available.</p>
 <p><a href='catalogue_of_life.html'>Click here</a> for more information about the included taxa. The Catalogue of Life releases updates annually; check which version was included in this package with <code><a href='catalogue_of_life_version.html'>catalogue_of_life_version</a>()</code>.</p>
     
     <h2 class="hasAnchor" id="read-more-on-our-website-"><a class="anchor" href="#read-more-on-our-website-"></a>Read more on our website!</h2>

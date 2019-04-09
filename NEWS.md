@@ -6,6 +6,8 @@
 * Added ~5,000 more old taxonomic names to the `microorganisms.old` data set, which leads to better results finding when using the `as.mo()` function
 * Frequency tables of microbial IDs speed improvement
 * Removed all hardcoded EUCAST rules and replaced them with a new reference file: `./inst/eucast/eucast.tsv`.
+* Added ceftazidim intrinsic resistance to *Streptococci*
+* Changed default settings for `age_groups()`, to let groups of fives and tens end with 100+ instead of 120+.
 
 #### Other
 * Prevented [staged install](https://developer.r-project.org/Blog/public/2019/02/14/staged-install/index.html) in R 3.6.0 and later by adding `StagedInstall: false` to the DESCRIPTION file

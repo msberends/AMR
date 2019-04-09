@@ -147,7 +147,7 @@ genus_species	is	Staphylococcus hominis			cfta	R	Table 04: Intrinsic resistance 
 genus_species	is	Staphylococcus haemolyticus			cfta	R	Table 04: Intrinsic resistance in Gram-positive bacteria	Expert Rules
 genus_species	is	Staphylococcus intermedius			cfta	R	Table 04: Intrinsic resistance in Gram-positive bacteria	Expert Rules
 genus_species	is	Staphylococcus pseudintermedius			cfta	R	Table 04: Intrinsic resistance in Gram-positive bacteria	Expert Rules
-genus	is	Streptococcus			fusi, aminoglycosides	R	Table 04: Intrinsic resistance in Gram-positive bacteria	Expert Rules
+genus	is	Streptococcus			fusi, cfta, aminoglycosides	R	Table 04: Intrinsic resistance in Gram-positive bacteria	Expert Rules
 genus_species	is	Enterococcus faecalis			fusi, cfta, cephalosporins_without_cfta, aminoglycosides, macrolides, clin, qida, trim, trsu	R	Table 04: Intrinsic resistance in Gram-positive bacteria	Expert Rules
 genus_species	is	Enterococcus gallinarum			fusi, cfta, cephalosporins_without_cfta, aminoglycosides, macrolides, clin, qida, vanc, trim, trsu	R	Table 04: Intrinsic resistance in Gram-positive bacteria	Expert Rules
 genus_species	is	Enterococcus casseliflavus			fusi, cfta, cephalosporins_without_cfta, aminoglycosides, macrolides, clin, qida, vanc, trim, trsu	R	Table 04: Intrinsic resistance in Gram-positive bacteria	Expert Rules

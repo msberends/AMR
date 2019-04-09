@@ -243,9 +243,19 @@
 <ul>
 <li>Removed deprecated functions <code>guess_mo()</code>, <code>guess_atc()</code>, <code>EUCAST_rules()</code>, <code>interpretive_reading()</code>
 </li>
-<li>Added more old taxonomic names to the <code>microorganisms.old</code> data set, which leads to better results finding when using the <code><a href="../reference/as.mo.html">as.mo()</a></code> function</li>
+<li>Added ~5,000 more old taxonomic names to the <code>microorganisms.old</code> data set, which leads to better results finding when using the <code><a href="../reference/as.mo.html">as.mo()</a></code> function</li>
 <li>Frequency tables of microbial IDs speed improvement</li>
 <li>Removed all hardcoded EUCAST rules and replaced them with a new reference file: <code>./inst/eucast/eucast.tsv</code>.</li>
+<li>Added ceftazidim intrinsic resistance to <em>Streptococci</em>
+</li>
+<li>Changed default settings for <code><a href="../reference/age_groups.html">age_groups()</a></code>, to let groups of fives and tens end with 100+ instead of 120+.</li>
+</ul>
+</div>
+<div id="other" class="section level4">
+<h4 class="hasAnchor">
+<a href="#other" class="anchor"></a>Other</h4>
+<ul>
+<li>Prevented <a href="https://developer.r-project.org/Blog/public/2019/02/14/staged-install/index.html">staged install</a> in R 3.6.0 and later by adding <code>StagedInstall: false</code> to the DESCRIPTION file</li>
 </ul>
 </div>
 </div>
@@ -401,7 +411,7 @@ These functions use <code><a href="../reference/as.atc.html">as.atc()</a></code>
 Using <code><a href="../reference/as.mo.html">as.mo(..., allow_uncertain = 3)</a></code> could lead to very unreliable results.</li>
 <li>Implemented the latest publication of Becker <em>et al.</em> (2019), for categorising coagulase-negative <em>Staphylococci</em>
 </li>
-<li>All microbial IDs that found are now saved to a local file <code>~/.Rhistory_mo</code>. Use the new function <code><a href="../reference/as.mo.html">clean_mo_history()</a></code> to delete this file, which resets the algorithms.</li>
+<li>All microbial IDs that found are now saved to a local file <code>~/.Rhistory_mo</code>. Use the new function <code>clean_mo_history()</code> to delete this file, which resets the algorithms.</li>
 <li>
 <p>Incoercible results will now be considered ‘unknown’, MO code <code>UNKNOWN</code>. On foreign systems, properties of these will be translated to all languages already previously supported: German, Dutch, French, Italian, Spanish and Portuguese:</p>
 <div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" title="1"><span class="kw"><a href="../reference/mo_property.html">mo_genus</a></span>(<span class="st">"qwerty"</span>, <span class="dt">language =</span> <span class="st">"es"</span>)</a>
@@ -488,9 +498,9 @@ Using <code><a href="../reference/as.mo.html">as.mo(..., allow_uncertain = 3)</a
 <li>if using different lengths of pattern and x in <code>%like%</code>, it will now return the call</li>
 </ul>
 </div>
-<div id="other" class="section level4">
+<div id="other-1" class="section level4">
 <h4 class="hasAnchor">
-<a href="#other" class="anchor"></a>Other</h4>
+<a href="#other-1" class="anchor"></a>Other</h4>
 <ul>
 <li>Updated licence text to emphasise GPL 2.0 and that this is an R package.</li>
 </ul>
@@ -613,9 +623,9 @@ Using <code><a href="../reference/as.mo.html">as.mo(..., allow_uncertain = 3)</a
 <li><p>Percentages will now will rounded more logically (e.g. in <code>freq</code> function)</p></li>
 </ul>
 </div>
-<div id="other-1" class="section level4">
+<div id="other-2" class="section level4">
 <h4 class="hasAnchor">
-<a href="#other-1" class="anchor"></a>Other</h4>
+<a href="#other-2" class="anchor"></a>Other</h4>
 <ul>
 <li>New dependency on package <code>crayon</code>, to support formatted text in the console</li>
 <li>Dependency <code>tidyr</code> is now mandatory (went to <code>Import</code> field) since <code>portion_df</code> and <code>count_df</code> rely on it</li>
@@ -750,9 +760,9 @@ Using <code><a href="../reference/as.mo.html">as.mo(..., allow_uncertain = 3)</a
 </li>
 </ul>
 </div>
-<div id="other-2" class="section level4">
+<div id="other-3" class="section level4">
 <h4 class="hasAnchor">
-<a href="#other-2" class="anchor"></a>Other</h4>
+<a href="#other-3" class="anchor"></a>Other</h4>
 <ul>
 <li>More unit tests to ensure better integrity of functions</li>
 </ul>
@@ -879,9 +889,9 @@ Using <code><a href="../reference/as.mo.html">as.mo(..., allow_uncertain = 3)</a
 <li>Other small fixes</li>
 </ul>
 </div>
-<div id="other-3" class="section level4">
+<div id="other-4" class="section level4">
 <h4 class="hasAnchor">
-<a href="#other-3" class="anchor"></a>Other</h4>
+<a href="#other-4" class="anchor"></a>Other</h4>
 <ul>
 <li>Added integration tests (check if everything works as expected) for all releases of R 3.1 and higher
 <ul>
@@ -941,9 +951,9 @@ Using <code><a href="../reference/as.mo.html">as.mo(..., allow_uncertain = 3)</a
 <li>Functions <code>as.rsi</code> and <code>as.mic</code> now add the package name and version as attributes</li>
 </ul>
 </div>
-<div id="other-4" class="section level4">
+<div id="other-5" class="section level4">
 <h4 class="hasAnchor">
-<a href="#other-4" class="anchor"></a>Other</h4>
+<a href="#other-5" class="anchor"></a>Other</h4>
 <ul>
 <li>Expanded <code>README.md</code> with more examples</li>
 <li>Added <a href="https://orcid.org">ORCID</a> of authors to DESCRIPTION file</li>

@@ -80,7 +80,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.6.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.6.1.9002</span>
       </span>
     </div>
 
@@ -267,9 +267,9 @@
         The default is to split on young children (0-11), youth (12-24), young adults (26-54), middle-aged adults (55-74) and elderly (75+).</p></li>
 <li><p>A character:</p><ul>
 <li><p><code>"children"</code>, equivalent of: <code><a href='https://www.rdocumentation.org/packages/base/topics/c'>c(0, 1, 2, 4, 6, 13, 18)</a></code>. This will split on 0, 1, 2-3, 4-5, 6-12, 13-17 and 18+.</p></li>
-<li><p><code>"elderly"</code> or <code>"seniors"</code>, equivalent of: <code><a href='https://www.rdocumentation.org/packages/base/topics/c'>c(65, 75, 85, 95)</a></code>. This will split on 0-64, 65-74, 75-84, 85-94 and 95+.</p></li>
-<li><p><code>"fives"</code>, equivalent of: <code>1:24 * 5</code>. This will split on 0-4, 5-9, 10-14, 15-19 and so forth, until 120.</p></li>
-<li><p><code>"tens"</code>, equivalent of: <code>1:12 * 10</code>. This will split on 0-9, 10-19, 20-29 and so forth, until 120.</p></li>
+<li><p><code>"elderly"</code> or <code>"seniors"</code>, equivalent of: <code><a href='https://www.rdocumentation.org/packages/base/topics/c'>c(65, 75, 85)</a></code>. This will split on 0-64, 65-74, 75-84, 85+.</p></li>
+<li><p><code>"fives"</code>, equivalent of: <code>1:20 * 5</code>. This will split on 0-4, 5-9, 10-14, ..., 90-94, 95-99, 100+.</p></li>
+<li><p><code>"tens"</code>, equivalent of: <code>1:10 * 10</code>. This will split on 0-9, 10-19, 20-29, ... 80-89, 90-99, 100+.</p></li>
 </ul></li>
 </ul>
     
@@ -294,11 +294,11 @@
 <span class='fu'>age_groups</span>(<span class='no'>ages</span>, <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>20</span>, <span class='fl'>50</span>))
 
 <span class='co'># split into groups of ten years</span>
-<span class='fu'>age_groups</span>(<span class='no'>ages</span>, <span class='fl'>1</span>:<span class='fl'>12</span> * <span class='fl'>10</span>)
+<span class='fu'>age_groups</span>(<span class='no'>ages</span>, <span class='fl'>1</span>:<span class='fl'>10</span> * <span class='fl'>10</span>)
 <span class='fu'>age_groups</span>(<span class='no'>ages</span>, <span class='kw'>split_at</span> <span class='kw'>=</span> <span class='st'>"tens"</span>)
 
 <span class='co'># split into groups of five years</span>
-<span class='fu'>age_groups</span>(<span class='no'>ages</span>, <span class='fl'>1</span>:<span class='fl'>24</span> * <span class='fl'>5</span>)
+<span class='fu'>age_groups</span>(<span class='no'>ages</span>, <span class='fl'>1</span>:<span class='fl'>20</span> * <span class='fl'>5</span>)
 <span class='fu'>age_groups</span>(<span class='no'>ages</span>, <span class='kw'>split_at</span> <span class='kw'>=</span> <span class='st'>"fives"</span>)
 
 <span class='co'># split specifically for children</span>
