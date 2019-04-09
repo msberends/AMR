@@ -25,7 +25,10 @@
 #' @rdname as.rsi
 #' @param x vector
 #' @param threshold maximum fraction of \code{x} that is allowed to fail transformation, see Examples
-#' @details The function \code{is.rsi.eligible} returns \code{TRUE} when a columns contains only valid antimicrobial interpretations (S and/or I and/or R), and \code{FALSE} otherwise.
+#' @details
+#' \strong{NOTE:} This function does not translate MIC values to RSI values. If more than 50\% of the input resembles MIC values, it will warn about this.\cr You can use \code{\link{eucast_rules}} to (1) apply inferred susceptibility and resistance based on results of other antibiotics and (2) apply intrinsic resistance based on taxonomic properties of a microorganism.
+#'
+#' The function \code{is.rsi.eligible} returns \code{TRUE} when a columns contains only valid antimicrobial interpretations (S and/or I and/or R), and \code{FALSE} otherwise.
 #' @return Ordered factor with new class \code{rsi}
 #' @keywords rsi
 #' @export
@@ -64,7 +67,7 @@ as.rsi <- function(x) {
   } else if (identical(levels(x), c("S", "I", "R"))) {
     structure(x, class = c('rsi', 'ordered', 'factor'))
   } else {
-    if (mic_like(x) > 0.5) {
+    if (input_resembles_mic(x) > 0.5) {
       warning("`as.rsi` is intended to clean antimicrobial interpretations - not to interpret MIC values.", call. = FALSE)
     }
 
@@ -109,7 +112,7 @@ as.rsi <- function(x) {
   }
 }
 
-mic_like <- function(x) {
+input_resembles_mic <- function(x) {
   mic <- x %>%
     gsub("[^0-9.,]+", "", .) %>%
     unique()

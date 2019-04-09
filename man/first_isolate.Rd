@@ -68,7 +68,7 @@ Determine first (weighted) isolates of all microorganisms of every patient per e
 \strong{WHY THIS IS SO IMPORTANT} \cr
 To conduct an analysis of antimicrobial resistance, you should only include the first isolate of every patient per episode \href{https://www.ncbi.nlm.nih.gov/pubmed/17304462}{[1]}. If you would not do this, you could easily get an overestimate or underestimate of the resistance of an antibiotic. Imagine that a patient was admitted with an MRSA and that it was found in 5 different blood cultures the following week. The resistance percentage of oxacillin of all \emph{S. aureus} isolates would be overestimated, because you included this MRSA more than once. It would be \href{https://en.wikipedia.org/wiki/Selection_bias}{selection bias}.
 
-The function \code{filter_first_isolate} is essentially equal to:
+The functions \code{filter_first_isolate} and \code{filter_first_weighted_isolate} are helper functions to quickly filter on first isolates. The function \code{filter_first_isolate} is essentially equal to:
 \preformatted{
  tbl \%>\%
    mutate(only_firsts = first_isolate(tbl, ...)) \%>\%
@@ -90,10 +90,10 @@ The function \code{filter_first_weighted_isolate} is essentially equal to:
     There are two ways to determine whether isolates can be included as first \emph{weighted} isolates which will give generally the same results: \cr
 
     \strong{1. Using} \code{type = "keyantibiotics"} \strong{and parameter} \code{ignore_I} \cr
-    Any difference from S to R (or vice versa) will (re)select an isolate as a first weighted isolate. With \code{ignore_I = FALSE}, also differences from I to S|R (or vice versa) will lead to this. This is a reliable method and 30-35 times faster than method 2. \cr
+    Any difference from S to R (or vice versa) will (re)select an isolate as a first weighted isolate. With \code{ignore_I = FALSE}, also differences from I to S|R (or vice versa) will lead to this. This is a reliable method and 30-35 times faster than method 2. Read more about this in the \code{\link{key_antibiotics}} function. \cr
 
     \strong{2. Using} \code{type = "points"} \strong{and parameter} \code{points_threshold} \cr
-    A difference from I to S|R (or vice versa) means 0.5 points, a difference from S to R (or vice versa) means 1 point. When the sum of points exceeds \code{points_threshold}, an isolate will be (re)selected as a first weighted isolate.
+    A difference from I to S|R (or vice versa) means 0.5 points, a difference from S to R (or vice versa) means 1 point. When the sum of points exceeds \code{points_threshold}, which default to \code{2}, an isolate will be (re)selected as a first weighted isolate.
 }
 
 \section{Read more on our website!}{
@@ -135,8 +135,8 @@ B <- septic_patients \%>\%
 
 # Have a look at A and B.
 # B is more reliable because every isolate is only counted once.
-# Gentamicin resitance in hospital D appears to be 5.4\% higher than
-# when you (erroneously) would have used all isolates!
+# Gentamicin resitance in hospital D appears to be 3.1\% higher than
+# when you (erroneously) would have used all isolates for analysis.
 
 
 ## OTHER EXAMPLES:

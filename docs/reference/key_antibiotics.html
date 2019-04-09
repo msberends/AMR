@@ -80,7 +80,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.6.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.6.1.9002</span>
       </span>
     </div>
 
@@ -326,9 +326,9 @@
     
     <p>There are two ways to determine whether isolates can be included as first <em>weighted</em> isolates which will give generally the same results: <br /></p>
 <p><strong>1. Using</strong> <code>type = "keyantibiotics"</code> <strong>and parameter</strong> <code>ignore_I</code> <br />
-    Any difference from S to R (or vice versa) will (re)select an isolate as a first weighted isolate. With <code>ignore_I = FALSE</code>, also differences from I to S|R (or vice versa) will lead to this. This is a reliable method and 30-35 times faster than method 2. <br /></p>
+    Any difference from S to R (or vice versa) will (re)select an isolate as a first weighted isolate. With <code>ignore_I = FALSE</code>, also differences from I to S|R (or vice versa) will lead to this. This is a reliable method and 30-35 times faster than method 2. Read more about this in the <code>key_antibiotics</code> function. <br /></p>
 <p><strong>2. Using</strong> <code>type = "points"</code> <strong>and parameter</strong> <code>points_threshold</code> <br />
-    A difference from I to S|R (or vice versa) means 0.5 points, a difference from S to R (or vice versa) means 1 point. When the sum of points exceeds <code>points_threshold</code>, an isolate will be (re)selected as a first weighted isolate.</p>
+    A difference from I to S|R (or vice versa) means 0.5 points, a difference from S to R (or vice versa) means 1 point. When the sum of points exceeds <code>points_threshold</code>, which default to <code>2</code>, an isolate will be (re)selected as a first weighted isolate.</p>
     
     <h2 class="hasAnchor" id="read-more-on-our-website-"><a class="anchor" href="#read-more-on-our-website-"></a>Read more on our website!</h2>
 

@@ -80,7 +80,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.6.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.6.1.9002</span>
       </span>
     </div>
 
@@ -266,7 +266,8 @@
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>The function <code>is.rsi.eligible</code> returns <code>TRUE</code> when a columns contains only valid antimicrobial interpretations (S and/or I and/or R), and <code>FALSE</code> otherwise.</p>
+    <p><strong>NOTE:</strong> This function does not translate MIC values to RSI values. If more than 50% of the input resembles MIC values, it will warn about this.<br /> You can use <code><a href='eucast_rules.html'>eucast_rules</a></code> to (1) apply inferred susceptibility and resistance based on results of other antibiotics and (2) apply intrinsic resistance based on taxonomic properties of a microorganism.</p>
+<p>The function <code>is.rsi.eligible</code> returns <code>TRUE</code> when a columns contains only valid antimicrobial interpretations (S and/or I and/or R), and <code>FALSE</code> otherwise.</p>
     
     <h2 class="hasAnchor" id="read-more-on-our-website-"><a class="anchor" href="#read-more-on-our-website-"></a>Read more on our website!</h2>
 

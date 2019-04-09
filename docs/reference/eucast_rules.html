@@ -329,7 +329,8 @@
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>The file used for applying all EUCAST rules can be retrieved with <code>eucast_rules_file()</code>. It returns an easily readable data set containing all rules. The original TSV file (tab separated file) that is being read by this function can be found when running this command: <br />
+    <p><strong>NOTE:</strong> This function does not translate MIC values to RSI values. It only applies (1) inferred susceptibility and resistance based on results of other antibiotics and (2) intrinsic resistance based on taxonomic properties of a microorganism.</p>
+<p>The file used for applying all EUCAST rules can be retrieved with <code>eucast_rules_file()</code>. It returns an easily readable data set containing all rules. The original TSV file (tab separated file) that is being read by this function can be found when running this command: <br />
 <code>AMR::EUCAST_RULES_FILE_LOCATION</code> (without brackets).</p>
 <p>In the source code it is located under <a href='https://gitlab.com/msberends/AMR/blob/master/inst/eucast/eucast_rules.tsv'><code>./inst/eucast/eucast_rules.tsv</code></a>.</p>
 <p><strong>Note:</strong> When ampicillin (J01CA01) is not available but amoxicillin (J01CA04) is, the latter will be used for all rules where there is a dependency on ampicillin. These drugs are interchangeable when it comes to expression of antimicrobial resistance.</p>

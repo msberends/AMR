@@ -80,7 +80,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.6.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.6.1.9002</span>
       </span>
     </div>
 
@@ -340,7 +340,7 @@
 
     <p><strong>WHY THIS IS SO IMPORTANT</strong> <br />
 To conduct an analysis of antimicrobial resistance, you should only include the first isolate of every patient per episode <a href='https://www.ncbi.nlm.nih.gov/pubmed/17304462'>[1]</a>. If you would not do this, you could easily get an overestimate or underestimate of the resistance of an antibiotic. Imagine that a patient was admitted with an MRSA and that it was found in 5 different blood cultures the following week. The resistance percentage of oxacillin of all <em>S. aureus</em> isolates would be overestimated, because you included this MRSA more than once. It would be <a href='https://en.wikipedia.org/wiki/Selection_bias'>selection bias</a>.</p>
-<p>The function <code>filter_first_isolate</code> is essentially equal to:</p><pre>
+<p>The functions <code>filter_first_isolate</code> and <code>filter_first_weighted_isolate</code> are helper functions to quickly filter on first isolates. The function <code>filter_first_isolate</code> is essentially equal to:</p><pre>
  tbl %&gt;%
    mutate(only_firsts = first_isolate(tbl, ...)) %&gt;%
    filter(only_firsts == TRUE) %&gt;%
@@ -359,9 +359,9 @@ To conduct an analysis of antimicrobial resistance, you should only include the 
     
     <p>There are two ways to determine whether isolates can be included as first <em>weighted</em> isolates which will give generally the same results: <br /></p>
 <p><strong>1. Using</strong> <code>type = "keyantibiotics"</code> <strong>and parameter</strong> <code>ignore_I</code> <br />
-    Any difference from S to R (or vice versa) will (re)select an isolate as a first weighted isolate. With <code>ignore_I = FALSE</code>, also differences from I to S|R (or vice versa) will lead to this. This is a reliable method and 30-35 times faster than method 2. <br /></p>
+    Any difference from S to R (or vice versa) will (re)select an isolate as a first weighted isolate. With <code>ignore_I = FALSE</code>, also differences from I to S|R (or vice versa) will lead to this. This is a reliable method and 30-35 times faster than method 2. Read more about this in the <code><a href='key_antibiotics.html'>key_antibiotics</a></code> function. <br /></p>
 <p><strong>2. Using</strong> <code>type = "points"</code> <strong>and parameter</strong> <code>points_threshold</code> <br />
-    A difference from I to S|R (or vice versa) means 0.5 points, a difference from S to R (or vice versa) means 1 point. When the sum of points exceeds <code>points_threshold</code>, an isolate will be (re)selected as a first weighted isolate.</p>
+    A difference from I to S|R (or vice versa) means 0.5 points, a difference from S to R (or vice versa) means 1 point. When the sum of points exceeds <code>points_threshold</code>, which default to <code>2</code>, an isolate will be (re)selected as a first weighted isolate.</p>
     
     <h2 class="hasAnchor" id="read-more-on-our-website-"><a class="anchor" href="#read-more-on-our-website-"></a>Read more on our website!</h2>
 
@@ -408,8 +408,8 @@ To conduct an analysis of antimicrobial resistance, you should only include the 
 
 <span class='co'># Have a look at A and B.</span>
 <span class='co'># B is more reliable because every isolate is only counted once.</span>
-<span class='co'># Gentamicin resitance in hospital D appears to be 5.4% higher than</span>
-<span class='co'># when you (erroneously) would have used all isolates!</span>
+<span class='co'># Gentamicin resitance in hospital D appears to be 3.1% higher than</span>
+<span class='co'># when you (erroneously) would have used all isolates for analysis.</span>
 
 
 <span class='co'>## OTHER EXAMPLES:</span>

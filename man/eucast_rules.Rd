@@ -82,6 +82,8 @@ The input of \code{tbl_}, possibly with edited values of antibiotics. Or, if \co
 Apply susceptibility rules as defined by the European Committee on Antimicrobial Susceptibility Testing (EUCAST, \url{http://eucast.org}), see \emph{Source}. This includes (1) expert rules, (2) intrinsic resistance and (3) inferred resistance as defined in their breakpoint tables.
 }
 \details{
+\strong{NOTE:} This function does not translate MIC values to RSI values. It only applies (1) inferred susceptibility and resistance based on results of other antibiotics and (2) intrinsic resistance based on taxonomic properties of a microorganism.
+
 The file used for applying all EUCAST rules can be retrieved with \code{\link{eucast_rules_file}()}. It returns an easily readable data set containing all rules. The original TSV file (tab separated file) that is being read by this function can be found when running this command: \cr
 \code{AMR::EUCAST_RULES_FILE_LOCATION} (without brackets).
 

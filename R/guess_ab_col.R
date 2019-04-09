@@ -26,6 +26,7 @@
 #' @param col a character to look for
 #' @param verbose a logical to indicate whether additional info should be printed
 #' @importFrom dplyr %>% select filter_all any_vars
+#' @importFrom crayon blue
 #' @export
 #' @inheritSection AMR Read more on our website!
 #' @examples
@@ -70,6 +71,9 @@ guess_ab_col <- function(tbl = NULL, col = NULL, verbose = FALSE) {
     unlist()
 
   if (col %in% tbl_names) {
+    if (verbose == TRUE) {
+      message(blue(paste0("NOTE: Using column `", bold(col), "` as input for `", col, "`.")))
+    }
     return(col)
   }
   ab_result <- antibiotics %>%
@@ -77,7 +81,7 @@ guess_ab_col <- function(tbl = NULL, col = NULL, verbose = FALSE) {
     filter_all(any_vars(tolower(.) == tolower(col))) %>%
     filter_all(any_vars(. %in% tbl_names))
 
-  if (nrow(ab_result) == 0 & nchar(col) > 4) {
+  if (nrow(ab_result) == 0 & nchar(col) >= 5) {
     # use like when col >= 5 characters
     ab_result <- antibiotics %>%
       select(atc:trade_name) %>%
@@ -87,14 +91,28 @@ guess_ab_col <- function(tbl = NULL, col = NULL, verbose = FALSE) {
 
   # WHONET
   if (nrow(ab_result) == 0) {
-    # use like when col >= 5 characters
+    # use like for any case
     ab_result <- antibiotics %>%
       select(atc:trade_name) %>%
       filter_all(any_vars(tolower(.) == tolower(col))) %>%
       filter_all(any_vars(. %in% tbl_names_stripped))
   }
 
-  if (nrow(ab_result) > 1) {
+  found_based_on_official_name <- FALSE
+  if (nrow(ab_result) == 0) {
+    # check if first part of official name resembles the columns that's been looking for
+    name <- suppressWarnings(atc_name(col))
+    if (!is.null(name)) {
+      ab_result <-
+        antibiotics %>%
+        filter(official == name) %>%
+        pull(official)
+      ab_result <- tbl_names[tbl_names %like% paste0("^", substr(ab_result, 1, 5))]
+      found_based_on_official_name <- TRUE
+    }
+  }
+
+  if (NROW(ab_result) > 1 & found_based_on_official_name == FALSE) {
     # looking more and more for reliable hit
     ab_result_1 <- ab_result %>% filter(tolower(atc) == tolower(col))
     if (nrow(ab_result_1) == 0) {
@@ -107,6 +125,9 @@ guess_ab_col <- function(tbl = NULL, col = NULL, verbose = FALSE) {
       ab_result_1 <- ab_result %>% filter(tolower(official) == tolower(col))
     }
     if (nrow(ab_result_1) == 0) {
+      ab_result_1 <- ab_result %>% filter(tolower(official) == tolower(col))
+    }
+    if (nrow(ab_result_1) == 0) {
       ab_result_1 <- ab_result[1, ]
     }
     ab_result <- ab_result_1
@@ -114,7 +135,7 @@ guess_ab_col <- function(tbl = NULL, col = NULL, verbose = FALSE) {
 
   if (length(ab_result) == 0) {
     if (verbose == TRUE) {
-      message('no column found for input "', col, '"')
+      message('No column found as input for `', col, '`.')
     }
     return(NULL)
   } else {
@@ -122,14 +143,14 @@ guess_ab_col <- function(tbl = NULL, col = NULL, verbose = FALSE) {
     if (length(result) == 0) {
       result <- tbl_names[tbl_names_stripped %in% ab_result]
     }
-    if (length(result) == 0) {
+    if (length(result) == 0 | length(result) > 1) {
       if (verbose == TRUE) {
-        message('no column found for input "', col, '"')
+        message('No column found as input for `', col, '`.')
       }
       return(NULL)
     }
     if (verbose == TRUE) {
-      message('using column `', result, '` for col "', col, '"')
+      message(blue(paste0("NOTE: Using column `", bold(result), "` as input for `", col, "`.")))
     }
     return(result)
   }

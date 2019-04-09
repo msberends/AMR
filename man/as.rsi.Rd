@@ -24,6 +24,8 @@ Ordered factor with new class \code{rsi}
 This transforms a vector to a new class \code{rsi}, which is an ordered factor with levels \code{S < I < R}. Invalid antimicrobial interpretations will be translated as \code{NA} with a warning.
 }
 \details{
+\strong{NOTE:} This function does not translate MIC values to RSI values. If more than 50\% of the input resembles MIC values, it will warn about this.\cr You can use \code{\link{eucast_rules}} to (1) apply inferred susceptibility and resistance based on results of other antibiotics and (2) apply intrinsic resistance based on taxonomic properties of a microorganism.
+
 The function \code{is.rsi.eligible} returns \code{TRUE} when a columns contains only valid antimicrobial interpretations (S and/or I and/or R), and \code{FALSE} otherwise.
 }
 \section{Read more on our website!}{

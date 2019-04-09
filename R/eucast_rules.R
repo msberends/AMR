@@ -35,6 +35,8 @@ EUCAST_VERSION_EXPERT_RULES <- "3.1, 2016"
 #' @param ... parameters that are passed on to \code{eucast_rules}
 #' @inheritParams first_isolate
 #' @details
+#' \strong{NOTE:} This function does not translate MIC values to RSI values. It only applies (1) inferred susceptibility and resistance based on results of other antibiotics and (2) intrinsic resistance based on taxonomic properties of a microorganism.
+#'
 #' The file used for applying all EUCAST rules can be retrieved with \code{\link{eucast_rules_file}()}. It returns an easily readable data set containing all rules. The original TSV file (tab separated file) that is being read by this function can be found when running this command: \cr
 #' \code{AMR::EUCAST_RULES_FILE_LOCATION} (without brackets).
 #'

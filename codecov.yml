@@ -1,0 +1,16 @@
+codecov:
+  notify:
+    require_ci_to_pass: no
+  ci:
+    - !appveyor # ignore CI builds by AppVeyor
+
+comment: no
+
+coverage:
+  precision: 5
+  round: up
+  range: "0...100"
+  status:
+    project: no
+    patch: no
+    changes: no

@@ -1,6 +1,6 @@
 ^.*\.Rproj$
-^\.gitlab-ci\.yml$
 ^\.gitlab-ci\.R$
+^\.gitlab-ci\.yml$
 ^\.Renviron$
 ^\.Rprofile$
 ^\.Rproj\.user$
@@ -9,6 +9,7 @@
 ^_noinclude$
 ^_pkgdown\.yml$
 ^appveyor\.yml$
+^codecov\.yml$
 ^cran-comments\.md$
 ^CRAN-RELEASE$
 ^doc$

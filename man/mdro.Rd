@@ -37,7 +37,7 @@ mdro(tbl, country = NULL, col_mo = NULL, info = TRUE,
   teic = guess_ab_col(), tetr = guess_ab_col(),
   tica = guess_ab_col(), tige = guess_ab_col(),
   tobr = guess_ab_col(), trim = guess_ab_col(),
-  trsu = guess_ab_col(), vanc = guess_ab_col())
+  trsu = guess_ab_col(), vanc = guess_ab_col(), verbose = FALSE)
 
 brmo(..., country = "nl")
 
@@ -174,6 +174,8 @@ eucast_exceptional_phenotypes(tbl, country = "EUCAST", ...)
 
 \item{vanc}{column name of an antibiotic, see Antibiotics}
 
+\item{verbose}{print additional info: missing antibiotic columns per parameter}
+
 \item{...}{parameters that are passed on to methods}
 }
 \value{
@@ -183,7 +185,7 @@ Ordered factor with levels \code{Negative < Positive, unconfirmed < Positive}.
 Determine which isolates are multidrug-resistant organisms (MDRO) according to country-specific guidelines.
 }
 \details{
-When \code{country} will be left blank, guidelines will be taken from EUCAST Expert Rules Version 3.1 "Intrinsic Resistance and Exceptional Phenotypes Tables" (\url{http://www.eucast.org/fileadmin/src/media/PDFs/EUCAST_files/Expert_Rules/Expert_rules_intrinsic_exceptional_V3.1.pdf}).
+When \code{country} will be left blank, guidelines will be taken from EUCAST Expert Rules Version 3.1 "Intrinsic Resistance and Exceptional Phenotypes Tables" (\href{http://www.eucast.org/fileadmin/src/media/PDFs/EUCAST_files/Expert_Rules/Expert_rules_intrinsic_exceptional_V3.1.pdf}{link}).
 }
 \section{Antibiotics}{
 

@@ -53,4 +53,32 @@ test_that("mdro works", {
   # still working on German guidelines
   expect_error(suppressWarnings(mrgn(septic_patients, info = TRUE)))
 
+  # test Dutch P. aeruginosa MDRO
+  expect_equal(suppressWarnings(
+    as.character(mdro(data.frame(mo = as.mo("P. aeruginosa"),
+                                 cfta = "S",
+                                 cipr = "S",
+                                 mero = "S",
+                                 imip = "S",
+                                 gent = "S",
+                                 tobr = "S",
+                                 pita = "S"),
+                      country = "nl",
+                      col_mo = "mo",
+                      info = FALSE))
+  ), "Negative")
+  expect_equal(suppressWarnings(
+    as.character(mdro(data.frame(mo = as.mo("P. aeruginosa"),
+                                 cefta = "R",
+                                 cipr = "R",
+                                 mero = "R",
+                                 imip = "R",
+                                 gent = "R",
+                                 tobr = "R",
+                                 pita = "R"),
+                      country = "nl",
+                      col_mo = "mo",
+                      info = FALSE))
+  ), "Positive")
+
 })
