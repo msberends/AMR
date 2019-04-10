@@ -666,7 +666,7 @@ format_header <- function(x, markdown = FALSE, decimal.mark = ".", big.mark = ",
   # format all numeric values
   header <- lapply(header, function(x) {
     if (is.numeric(x)) {
-      if (any(x < 1000)) {
+      if (any(x < 1000, na.rm = TRUE)) {
         format(round2(x, digits = digits), decimal.mark = decimal.mark, big.mark = big.mark)
       } else {
         format(x, digits = digits, decimal.mark = decimal.mark, big.mark = big.mark)
@@ -885,8 +885,12 @@ print.frequency_tbl <- function(x,
 
   cat(title, "\n\n")
 
-  if (NROW(x) == 0) {
-    cat("No observations.\n")
+  if (NROW(x) == 0 | isTRUE(all(is.na(x$item)))) {
+    cat("No observations")
+    if (isTRUE(all(is.na(x$item)))) {
+      cat(" - all values are missing (<NA>)")
+    }
+    cat(".\n")
     if (opt$tbl_format == "markdown") {
       cat("\n")
     }
