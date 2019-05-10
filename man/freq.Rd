@@ -215,8 +215,8 @@ septic_patients \%>\%
 
 
 # check differences between frequency tables
-diff(freq(septic_patients$trim),
-     freq(septic_patients$trsu))
+diff(freq(septic_patients$TMP),
+     freq(septic_patients$SXT))
 }
 \keyword{freq}
 \keyword{frequency}

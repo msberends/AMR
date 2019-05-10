@@ -84,6 +84,7 @@ make <- function() {
                      "Treponema",
                      "Trichophyton",
                      "Ureaplasma")
+      | rank %in% c("kingdom", "phylum", "class", "order", "family")
       ~ 2,
       TRUE ~ 3
     ))

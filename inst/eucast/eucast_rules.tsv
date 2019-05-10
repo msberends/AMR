@@ -1,182 +1,182 @@
 if_mo_property	like_is_one_of	this_value	and_these_antibiotics	have_these_values	then_change_these_antibiotics	to_value	reference.rule	reference.rule_group
-order	is	Enterobacteriales	ampi	S	amox	S	Enterobacteriales (Order)	Breakpoints
-order	is	Enterobacteriales	ampi	I	amox	I	Enterobacteriales (Order)	Breakpoints
-order	is	Enterobacteriales	ampi	R	amox	R	Enterobacteriales (Order)	Breakpoints
-genus	is	Staphylococcus	peni, cfox	S	ampi, amox, pipe, tica	S	Staphylococcus	Breakpoints
-genus	is	Staphylococcus	peni, cfox	R, S	oxac, clox	S	Staphylococcus	Breakpoints
-genus	is	Staphylococcus	cfox	R	all_betalactams	R	Staphylococcus	Breakpoints
-genus_species	is	Staphylococcus saprophyticus	ampi	S	amox, amcl, pipe, pita	S	Staphylococcus	Breakpoints
-genus	is	Staphylococcus	cfox	S	carbapenems, cephalosporins_without_cfta	S	Staphylococcus	Breakpoints
-genus	is	Staphylococcus	cfox	I	carbapenems, cephalosporins_without_cfta	I	Staphylococcus	Breakpoints
-genus	is	Staphylococcus	cfox	R	carbapenems, cephalosporins_without_cfta	R	Staphylococcus	Breakpoints
-genus	is	Staphylococcus	norf	S	cipr, levo, moxi, oflo	S	Staphylococcus	Breakpoints
-genus	is	Staphylococcus	eryt	S	azit, clar, roxi	S	Staphylococcus	Breakpoints
-genus	is	Staphylococcus	eryt	I	azit, clar, roxi	I	Staphylococcus	Breakpoints
-genus	is	Staphylococcus	eryt	R	azit, clar, roxi	R	Staphylococcus	Breakpoints
-genus	is	Staphylococcus	tetr	S	doxy, mino	S	Staphylococcus	Breakpoints
-genus_species	is	Enterococcus faecium	ampi	R	all_betalactams	R	Enterococcus	Breakpoints
-genus	is	Enterococcus	ampi	S	amox, amcl, pipe, pita	S	Enterococcus	Breakpoints
-genus	is	Enterococcus	ampi	I	amox, amcl, pipe, pita	I	Enterococcus	Breakpoints
-genus	is	Enterococcus	ampi	R	amox, amcl, pipe, pita	R	Enterococcus	Breakpoints
-genus	is	Enterococcus	norf	S	cipr, levo	S	Enterococcus	Breakpoints
-genus	is	Enterococcus	norf	I	cipr, levo	I	Enterococcus	Breakpoints
-genus	is	Enterococcus	norf	R	cipr, levo	R	Enterococcus	Breakpoints
-genus_species	like	^Streptococcus (pyogenes|agalactiae|dysgalactiae|group A|group B|group C|group G)$	peni	S	aminopenicillins, ureidopenicillins, cephalosporins, carbapenems, clox, amcl	S	Streptococcus groups A, B, C, G	Breakpoints
-genus_species	like	^Streptococcus (pyogenes|agalactiae|dysgalactiae|group A|group B|group C|group G)$	peni	I	aminopenicillins, ureidopenicillins, cephalosporins, carbapenems, clox, amcl	I	Streptococcus groups A, B, C, G	Breakpoints
-genus_species	like	^Streptococcus (pyogenes|agalactiae|dysgalactiae|group A|group B|group C|group G)$	peni	R	aminopenicillins, ureidopenicillins, cephalosporins, carbapenems, clox, amcl	R	Streptococcus groups A, B, C, G	Breakpoints
-genus_species	like	^Streptococcus (pyogenes|agalactiae|dysgalactiae|group A|group B|group C|group G)$	norf	S	levo, moxi	S	Streptococcus groups A, B, C, G	Breakpoints
-genus_species	like	^Streptococcus (pyogenes|agalactiae|dysgalactiae|group A|group B|group C|group G)$	eryt	S	azit, clar, roxi	S	Streptococcus groups A, B, C, G	Breakpoints
-genus_species	like	^Streptococcus (pyogenes|agalactiae|dysgalactiae|group A|group B|group C|group G)$	eryt	I	azit, clar, roxi	I	Streptococcus groups A, B, C, G	Breakpoints
-genus_species	like	^Streptococcus (pyogenes|agalactiae|dysgalactiae|group A|group B|group C|group G)$	eryt	R	azit, clar, roxi	R	Streptococcus groups A, B, C, G	Breakpoints
-genus_species	like	^Streptococcus (pyogenes|agalactiae|dysgalactiae|group A|group B|group C|group G)$	tetr	S	doxy, mino	S	Streptococcus groups A, B, C, G	Breakpoints
-genus_species	is	Streptococcus pneumoniae	peni	S	ampi, amox, amcl, pipe, pita	S	Streptococcus pneumoniae	Breakpoints
-genus_species	is	Streptococcus pneumoniae	ampi	S	amox, amcl, pipe, pita	S	Streptococcus pneumoniae	Breakpoints
-genus_species	is	Streptococcus pneumoniae	ampi	I	amox, amcl, pipe, pita	I	Streptococcus pneumoniae	Breakpoints
-genus_species	is	Streptococcus pneumoniae	ampi	R	amox, amcl, pipe, pita	R	Streptococcus pneumoniae	Breakpoints
-genus_species	is	Streptococcus pneumoniae	norf	S	levo, moxi	S	Streptococcus pneumoniae	Breakpoints
-genus_species	is	Streptococcus pneumoniae	eryt	S	azit, clar, roxi	S	Streptococcus pneumoniae	Breakpoints
-genus_species	is	Streptococcus pneumoniae	eryt	I	azit, clar, roxi	I	Streptococcus pneumoniae	Breakpoints
-genus_species	is	Streptococcus pneumoniae	eryt	R	azit, clar, roxi	R	Streptococcus pneumoniae	Breakpoints
-genus_species	is	Streptococcus pneumoniae	tetr	S	doxy, mino	S	Streptococcus pneumoniae	Breakpoints
-genus_species	like	^Streptococcus (australis|bovis|constellatus|cristatus|gallolyticus|gordonii|infantarius|infantis|mitis|mutans|oligofermentans|oralis|peroris|pseudopneumoniae|salivarius|sinensis|sobrinus|thermophilus|vestibularis|anginosus|equinus|intermedius|parasanguinis|sanguinis)$	peni	S	ampi, amox, amcl, pipe, pita	S	Viridans group streptococci	Breakpoints
-genus_species	like	^Streptococcus (australis|bovis|constellatus|cristatus|gallolyticus|gordonii|infantarius|infantis|mitis|mutans|oligofermentans|oralis|peroris|pseudopneumoniae|salivarius|sinensis|sobrinus|thermophilus|vestibularis|anginosus|equinus|intermedius|parasanguinis|sanguinis)$	ampi	S	amox, amcl, pipe, pita	S	Viridans group streptococci	Breakpoints
-genus_species	like	^Streptococcus (australis|bovis|constellatus|cristatus|gallolyticus|gordonii|infantarius|infantis|mitis|mutans|oligofermentans|oralis|peroris|pseudopneumoniae|salivarius|sinensis|sobrinus|thermophilus|vestibularis|anginosus|equinus|intermedius|parasanguinis|sanguinis)$	ampi	I	amox, amcl, pipe, pita	I	Viridans group streptococci	Breakpoints
-genus_species	like	^Streptococcus (australis|bovis|constellatus|cristatus|gallolyticus|gordonii|infantarius|infantis|mitis|mutans|oligofermentans|oralis|peroris|pseudopneumoniae|salivarius|sinensis|sobrinus|thermophilus|vestibularis|anginosus|equinus|intermedius|parasanguinis|sanguinis)$	ampi	R	amox, amcl, pipe, pita	R	Viridans group streptococci	Breakpoints
-genus_species	is	Haemophilus influenzae	ampi	S	amox, pipe	S	Haemophilus influenzae	Breakpoints
-genus_species	is	^Haemophilus influenzae	ampi	I	amox, pipe	I	Haemophilus influenzae	Breakpoints
-genus_species	is	Haemophilus influenzae	ampi	R	amox, pipe	R	Haemophilus influenzae	Breakpoints
-genus_species	is	Haemophilus influenzae	peni	S	ampi, amox, amcl, pipe, pita	S	Haemophilus influenzae	Breakpoints
-genus_species	is	Haemophilus influenzae	amcl	S	pita	S	Haemophilus influenzae	Breakpoints
-genus_species	is	Haemophilus influenzae	amcl	I	pita	I	Haemophilus influenzae	Breakpoints
-genus_species	is	Haemophilus influenzae	amcl	R	pita	R	Haemophilus influenzae	Breakpoints
-genus_species	is	Haemophilus influenzae	nali	S	cipr, levo, moxi, oflo	S	Haemophilus influenzae	Breakpoints
-genus_species	is	Haemophilus influenzae	tetr	S	doxy, mino	S	Haemophilus influenzae	Breakpoints
-genus_species	is	Moraxella catarrhalis	amcl	S	pita	S	Moraxella catarrhalis	Breakpoints
-genus_species	is	Moraxella catarrhalis	amcl	I	pita	I	Moraxella catarrhalis	Breakpoints
-genus_species	is	Moraxella catarrhalis	amcl	R	pita	R	Moraxella catarrhalis	Breakpoints
-genus_species	is	Moraxella catarrhalis	nali	S	cipr, levo, moxi, oflo	S	Moraxella catarrhalis	Breakpoints
-genus_species	is	Moraxella catarrhalis	eryt	S	azit, clar, roxi	S	Moraxella catarrhalis	Breakpoints
-genus_species	is	Moraxella catarrhalis	eryt	I	azit, clar, roxi	I	Moraxella catarrhalis	Breakpoints
-genus_species	is	Moraxella catarrhalis	eryt	R	azit, clar, roxi	R	Moraxella catarrhalis	Breakpoints
-genus_species	is	Moraxella catarrhalis	tetr	S	doxy, mino	S	Moraxella catarrhalis	Breakpoints
-genus	one_of	Actinomyces, Bifidobacterium, Clostridium, Cutibacterium, Eggerthella, Eubacterium, Lactobacillus , Propionibacterium	peni	S	ampi, amox, pipe, pita, tica	S	Anaerobic Gram positives	Breakpoints
-genus	one_of	Actinomyces, Bifidobacterium, Clostridium, Cutibacterium, Eggerthella, Eubacterium, Lactobacillus , Propionibacterium	peni	I	ampi, amox, pipe, pita, tica	I	Anaerobic Gram positives	Breakpoints
-genus	one_of	Actinomyces, Bifidobacterium, Clostridium, Cutibacterium, Eggerthella, Eubacterium, Lactobacillus , Propionibacterium	peni	R	ampi, amox, pipe, pita, tica	R	Anaerobic Gram positives	Breakpoints
-genus	one_of	Bacteroides, Bilophila , Fusobacterium, Mobiluncus, Porphyromonas, Prevotella	peni	S	ampi, amox, pipe, pita, tica	S	Anaerobic Gram negatives	Breakpoints
-genus	one_of	Bacteroides, Bilophila , Fusobacterium, Mobiluncus, Porphyromonas, Prevotella	peni	I	ampi, amox, pipe, pita, tica	I	Anaerobic Gram negatives	Breakpoints
-genus	one_of	Bacteroides, Bilophila , Fusobacterium, Mobiluncus, Porphyromonas, Prevotella	peni	R	ampi, amox, pipe, pita, tica	R	Anaerobic Gram negatives	Breakpoints
-genus_species	is	Pasteurella multocida	peni	S	ampi, amox	S	Pasteurella multocida	Breakpoints
-genus_species	is	Pasteurella multocida	peni	I	ampi, amox	I	Pasteurella multocida	Breakpoints
-genus_species	is	Pasteurella multocida	peni	R	ampi, amox	R	Pasteurella multocida	Breakpoints
-genus_species	is	Campylobacter coli	eryt	S	azit, clar	S	Campylobacter coli	Breakpoints
-genus_species	is	Campylobacter coli	eryt	I	azit, clar	I	Campylobacter coli	Breakpoints
-genus_species	is	Campylobacter coli	eryt	R	azit, clar	R	Campylobacter coli	Breakpoints
-genus_species	is	Campylobacter coli	tetr	S	doxy	S	Campylobacter coli	Breakpoints
-genus_species	is	Campylobacter coli	tetr	I	doxy	I	Campylobacter coli	Breakpoints
-genus_species	is	Campylobacter coli	tetr	R	doxy	R	Campylobacter coli	Breakpoints
-genus_species	is	Campylobacter jejuni	eryt	S	azit, clar	S	Campylobacter jejuni	Breakpoints
-genus_species	is	Campylobacter jejuni	eryt	I	azit, clar	I	Campylobacter jejuni	Breakpoints
-genus_species	is	Campylobacter jejuni	eryt	R	azit, clar	R	Campylobacter jejuni	Breakpoints
-genus_species	is	Campylobacter jejuni	tetr	S	doxy	S	Campylobacter jejuni	Breakpoints
-genus_species	is	Campylobacter jejuni	tetr	I	doxy	I	Campylobacter jejuni	Breakpoints
-genus_species	is	Campylobacter jejuni	tetr	R	doxy	R	Campylobacter jejuni	Breakpoints
-genus_species	is	Aerococcus sanguinicola	norf	S	fluoroquinolones	S	Aerococcus sanguinicola	Breakpoints
-genus_species	is	Aerococcus sanguinicola	norf	I	fluoroquinolones	I	Aerococcus sanguinicola	Breakpoints
-genus_species	is	Aerococcus sanguinicola	norf	R	fluoroquinolones	R	Aerococcus sanguinicola	Breakpoints
-genus_species	is	Aerococcus sanguinicola	cipr	S	levo	S	Aerococcus sanguinicola	Breakpoints
-genus_species	is	Aerococcus sanguinicola	cipr	I	levo	I	Aerococcus sanguinicola	Breakpoints
-genus_species	is	Aerococcus sanguinicola	cipr	R	levo	R	Aerococcus urinae	Breakpoints
-genus_species	is	Aerococcus urinae	norf	S	fluoroquinolones	S	Aerococcus urinae	Breakpoints
-genus_species	is	Aerococcus urinae	norf	I	fluoroquinolones	I	Aerococcus urinae	Breakpoints
-genus_species	is	Aerococcus urinae	norf	R	fluoroquinolones	R	Aerococcus urinae	Breakpoints
-genus_species	is	Aerococcus urinae	cipr	S	levo	S	Aerococcus urinae	Breakpoints
-genus_species	is	Aerococcus urinae	cipr	I	levo	I	Aerococcus urinae	Breakpoints
-genus_species	is	Aerococcus urinae	cipr	R	levo	R	Aerococcus urinae	Breakpoints
-genus_species	is	Kingella kingae	peni	S	ampi, amox	S	Kingella kingae	Breakpoints
-genus_species	is	Kingella kingae	peni	I	ampi, amox	I	Kingella kingae	Breakpoints
-genus_species	is	Kingella kingae	peni	R	ampi, amox	R	Kingella kingae	Breakpoints
-genus_species	is	Kingella kingae	eryt	S	azit, clar	S	Kingella kingae	Breakpoints
-genus_species	is	Kingella kingae	eryt	I	azit, clar	I	Kingella kingae	Breakpoints
-genus_species	is	Kingella kingae	eryt	R	azit, clar	R	Kingella kingae	Breakpoints
-genus_species	is	Kingella kingae	tetr	S	doxy	S	Kingella kingae	Breakpoints
-family	is	Enterobacteriaceae			peni, glycopeptides, fusi, macrolides, linc, streptogramins, rifa, dapt, line	R	Table 01: Intrinsic resistance in Enterobacteriaceae	Expert Rules
-fullname	like	^Citrobacter (koseri|amalonaticus|sedlakii|farmeri|rodentium)			aminopenicillins, tica	R	Table 01: Intrinsic resistance in Enterobacteriaceae	Expert Rules
-fullname	like	^Citrobacter (freundii|braakii|murliniae|werkmanii|youngae)			aminopenicillins, amcl, czol, cfox	R	Table 01: Intrinsic resistance in Enterobacteriaceae	Expert Rules
-genus_species	is	Enterobacter cloacae			aminopenicillins, amcl, czol, cfox	R	Table 01: Intrinsic resistance in Enterobacteriaceae	Expert Rules
-genus_species	is	Enterobacter aerogenes			aminopenicillins, amcl, czol, cfox	R	Table 01: Intrinsic resistance in Enterobacteriaceae	Expert Rules
-genus_species	is	Escherichia hermanni			aminopenicillins, tica	R	Table 01: Intrinsic resistance in Enterobacteriaceae	Expert Rules
-genus_species	is	Hafnia alvei			aminopenicillins, amcl, czol, cfox	R	Table 01: Intrinsic resistance in Enterobacteriaceae	Expert Rules
-genus	is	Klebsiella			aminopenicillins, tica	R	Table 01: Intrinsic resistance in Enterobacteriaceae	Expert Rules
-genus_species	is	Morganella morganii			aminopenicillins, amcl, czol, tetracyclines, polymyxins, nitr	R	Table 01: Intrinsic resistance in Enterobacteriaceae	Expert Rules
-genus_species	is	Proteus mirabilis			tetracyclines, tige, polymyxins, nitr	R	Table 01: Intrinsic resistance in Enterobacteriaceae	Expert Rules
-genus_species	is	Proteus penneri			aminopenicillins, czol, cfur, tetracyclines, tige, polymyxins, nitr	R	Table 01: Intrinsic resistance in Enterobacteriaceae	Expert Rules
-genus_species	is	Proteus vulgaris			aminopenicillins, czol, cfur, tetracyclines, tige, polymyxins, nitr	R	Table 01: Intrinsic resistance in Enterobacteriaceae	Expert Rules
-genus_species	is	Providencia rettgeri			aminopenicillins, amcl, czol, cfur, tetracyclines, tige, polymyxins, nitr	R	Table 01: Intrinsic resistance in Enterobacteriaceae	Expert Rules
-genus_species	is	Providencia stuartii			aminopenicillins, amcl, czol, cfur, tetracyclines, tige, polymyxins, nitr	R	Table 01: Intrinsic resistance in Enterobacteriaceae	Expert Rules
-genus	is	Raoultella			aminopenicillins, tica	R	Table 01: Intrinsic resistance in Enterobacteriaceae	Expert Rules
-genus_species	is	Serratia marcescens			aminopenicillins, amcl, czol, cfox, cfur, tetracyclines[tetracyclines != na.rm(mino)], polymyxins, nitr	R	Table 01: Intrinsic resistance in Enterobacteriaceae	Expert Rules
-genus_species	is	Yersinia enterocolitica			aminopenicillins, amcl, tica, czol, cfox	R	Table 01: Intrinsic resistance in Enterobacteriaceae	Expert Rules
-genus_species	is	Yersinia pseudotuberculosis			poly, coli	R	Table 01: Intrinsic resistance in Enterobacteriaceae	Expert Rules
-genus	one_of	Achromobacter, Acinetobacter, Alcaligenes, Bordatella, Burkholderia, Elizabethkingia, Flavobacterium, Ochrobactrum, Pseudomonas, Stenotrophomonas			peni, cfox, cfur, glycopeptides, fusi, macrolides, linc, streptogramins, rifa, dapt, line	R	Table 02: Intrinsic resistance in non-fermentative Gram-negative bacteria	Expert Rules
-genus_species	is	Acinetobacter baumannii			aminopenicillins, amcl, czol, cfot, cftr, aztr, erta, trim, fosf, doxy, tetr	R	Table 02: Intrinsic resistance in non-fermentative Gram-negative bacteria	Expert Rules
-genus_species	is	Acinetobacter pittii			aminopenicillins, amcl, czol, cfot, cftr, aztr, erta, trim, fosf, doxy, tetr	R	Table 02: Intrinsic resistance in non-fermentative Gram-negative bacteria	Expert Rules
-genus_species	is	Acinetobacter nosocomialis			aminopenicillins, amcl, czol, cfot, cftr, aztr, erta, trim, fosf, doxy, tetr	R	Table 02: Intrinsic resistance in non-fermentative Gram-negative bacteria	Expert Rules
-genus_species	is	Acinetobacter calcoaceticus			aminopenicillins, amcl, czol, cfot, cftr, aztr, erta, trim, fosf, doxy, tetr	R	Table 02: Intrinsic resistance in non-fermentative Gram-negative bacteria	Expert Rules
-genus_species	is	Achromobacter xylosoxidans			aminopenicillins, czol, cfot, cftr, erta	R	Table 02: Intrinsic resistance in non-fermentative Gram-negative bacteria	Expert Rules
-fullname	like	^Burkholderia (cepacia|multivorans|cenocepacia|stabilis|vietnamiensis|dolosa|ambifaria|anthina|pyrrocinia|ubonensis)			aminopenicillins, amcl, tica, pipe, pita, czol, cfot, cftr, aztr, erta, cipr, chlo, aminoglycosides, trim, fosf, polymyxins	R	Table 02: Intrinsic resistance in non-fermentative Gram-negative bacteria	Expert Rules
-genus_species	is	Elizabethkingia meningoseptica			aminopenicillins, amcl, tica, czol, cfot, cftr, cfta, cfep, aztr, erta, imip, mero, polymyxins	R	Table 02: Intrinsic resistance in non-fermentative Gram-negative bacteria	Expert Rules
-genus_species	is	Ochrobactrum anthropi			aminopenicillins, amcl, tica, pipe, pita, czol, cfot, cftr, cfta, cfep, aztr, erta	R	Table 02: Intrinsic resistance in non-fermentative Gram-negative bacteria	Expert Rules
-genus_species	is	Pseudomonas aeruginosa			aminopenicillins, amcl, czol, cfot, cftr, erta, chlo, kana, neom, trim, trsu, tetracyclines, tige	R	Table 02: Intrinsic resistance in non-fermentative Gram-negative bacteria	Expert Rules
-genus_species	is	Stenotrophomonas maltophilia			aminopenicillins, amcl, tica, pipe, pita, czol, cfot, cftr, cfta, aztr, erta, imip, mero, aminoglycosides, trim, fosf, tetr	R	Table 02: Intrinsic resistance in non-fermentative Gram-negative bacteria	Expert Rules
-genus	one_of	Haemophilus, Moraxella, Neisseria, Campylobacter			glycopeptides, linc, dapt, line	R	Table 03: Intrinsic resistance in other Gram-negative bacteria	Expert Rules
-genus_species	is	Haemophilus influenzae			fusi, streptogramins	R	Table 03: Intrinsic resistance in other Gram-negative bacteria	Expert Rules
-genus_species	is	Moraxella catarrhalis			trim	R	Table 03: Intrinsic resistance in other Gram-negative bacteria	Expert Rules
-genus	is	Neisseria			trim	R	Table 03: Intrinsic resistance in other Gram-negative bacteria	Expert Rules
-genus_species	is	Campylobacter fetus			fusi, streptogramins, trim, nali	R	Table 03: Intrinsic resistance in other Gram-negative bacteria	Expert Rules
-genus_species	is	Campylobacter jejuni			fusi, streptogramins, trim	R	Table 03: Intrinsic resistance in other Gram-negative bacteria	Expert Rules
-genus_species	is	Campylobacter coli			fusi, streptogramins, trim	R	Table 03: Intrinsic resistance in other Gram-negative bacteria	Expert Rules
-gramstain	is	Gram positive			aztr, polymyxins, nali	R	Table 04: Intrinsic resistance in Gram-positive bacteria	Expert Rules
-genus_species	is	Staphylococcus saprophyticus			fusi, cfta, fosf, novo	R	Table 04: Intrinsic resistance in Gram-positive bacteria	Expert Rules
-genus_species	is	Staphylococcus cohnii			cfta, novo	R	Table 04: Intrinsic resistance in Gram-positive bacteria	Expert Rules
-genus_species	is	Staphylococcus xylosus			cfta, novo	R	Table 04: Intrinsic resistance in Gram-positive bacteria	Expert Rules
-genus_species	is	Staphylococcus capitis			cfta, fosf	R	Table 04: Intrinsic resistance in Gram-positive bacteria	Expert Rules
-genus_species	is	Staphylococcus aureus			cfta	R	Table 04: Intrinsic resistance in Gram-positive bacteria	Expert Rules
-genus_species	is	Staphylococcus epidermidis			cfta	R	Table 04: Intrinsic resistance in Gram-positive bacteria	Expert Rules
-genus_species	is	Staphylococcus coagulase-negative			cfta	R	Table 04: Intrinsic resistance in Gram-positive bacteria	Expert Rules
-genus_species	is	Staphylococcus hominis			cfta	R	Table 04: Intrinsic resistance in Gram-positive bacteria	Expert Rules
-genus_species	is	Staphylococcus haemolyticus			cfta	R	Table 04: Intrinsic resistance in Gram-positive bacteria	Expert Rules
-genus_species	is	Staphylococcus intermedius			cfta	R	Table 04: Intrinsic resistance in Gram-positive bacteria	Expert Rules
-genus_species	is	Staphylococcus pseudintermedius			cfta	R	Table 04: Intrinsic resistance in Gram-positive bacteria	Expert Rules
-genus	is	Streptococcus			fusi, cfta, aminoglycosides	R	Table 04: Intrinsic resistance in Gram-positive bacteria	Expert Rules
-genus_species	is	Enterococcus faecalis			fusi, cfta, cephalosporins_without_cfta, aminoglycosides, macrolides, clin, qida, trim, trsu	R	Table 04: Intrinsic resistance in Gram-positive bacteria	Expert Rules
-genus_species	is	Enterococcus gallinarum			fusi, cfta, cephalosporins_without_cfta, aminoglycosides, macrolides, clin, qida, vanc, trim, trsu	R	Table 04: Intrinsic resistance in Gram-positive bacteria	Expert Rules
-genus_species	is	Enterococcus casseliflavus			fusi, cfta, cephalosporins_without_cfta, aminoglycosides, macrolides, clin, qida, vanc, trim, trsu	R	Table 04: Intrinsic resistance in Gram-positive bacteria	Expert Rules
-genus_species	is	Enterococcus faecium			fusi, cfta, cephalosporins_without_cfta, aminoglycosides, macrolides, trim, trsu	R	Table 04: Intrinsic resistance in Gram-positive bacteria	Expert Rules
-genus	is	Corynebacterium			fosf	R	Table 04: Intrinsic resistance in Gram-positive bacteria	Expert Rules
+order	is	Enterobacteriales	AMP	S	AMX	S	Enterobacteriales (Order)	Breakpoints
+order	is	Enterobacteriales	AMP	I	AMX	I	Enterobacteriales (Order)	Breakpoints
+order	is	Enterobacteriales	AMP	R	AMX	R	Enterobacteriales (Order)	Breakpoints
+genus	is	Staphylococcus	PEN, FOX	S	AMP, AMX, PIP, TIC	S	Staphylococcus	Breakpoints
+genus	is	Staphylococcus	PEN, FOX	R, S	OXA, FLC	S	Staphylococcus	Breakpoints
+genus	is	Staphylococcus	FOX	R	all_betalactams	R	Staphylococcus	Breakpoints
+genus_species	is	Staphylococcus saprophyticus	AMP	S	AMX, AMC, PIP, TZP	S	Staphylococcus	Breakpoints
+genus	is	Staphylococcus	FOX	S	carbapenems, cephalosporins_without_CAZ	S	Staphylococcus	Breakpoints
+genus	is	Staphylococcus	FOX	I	carbapenems, cephalosporins_without_CAZ	I	Staphylococcus	Breakpoints
+genus	is	Staphylococcus	FOX	R	carbapenems, cephalosporins_without_CAZ	R	Staphylococcus	Breakpoints
+genus	is	Staphylococcus	NOR	S	CIP, LVX, MFX, OFX	S	Staphylococcus	Breakpoints
+genus	is	Staphylococcus	ERY	S	AZM, CLR, RXT	S	Staphylococcus	Breakpoints
+genus	is	Staphylococcus	ERY	I	AZM, CLR, RXT	I	Staphylococcus	Breakpoints
+genus	is	Staphylococcus	ERY	R	AZM, CLR, RXT	R	Staphylococcus	Breakpoints
+genus	is	Staphylococcus	TCY	S	DOX, MNO	S	Staphylococcus	Breakpoints
+genus_species	is	Enterococcus faecium	AMP	R	all_betalactams	R	Enterococcus	Breakpoints
+genus	is	Enterococcus	AMP	S	AMX, AMC, PIP, TZP	S	Enterococcus	Breakpoints
+genus	is	Enterococcus	AMP	I	AMX, AMC, PIP, TZP	I	Enterococcus	Breakpoints
+genus	is	Enterococcus	AMP	R	AMX, AMC, PIP, TZP	R	Enterococcus	Breakpoints
+genus	is	Enterococcus	NOR	S	CIP, LVX	S	Enterococcus	Breakpoints
+genus	is	Enterococcus	NOR	I	CIP, LVX	I	Enterococcus	Breakpoints
+genus	is	Enterococcus	NOR	R	CIP, LVX	R	Enterococcus	Breakpoints
+genus_species	like	^Streptococcus (pyogenes|agalactiae|dysgalactiae|group A|group B|group C|group G)$	PEN	S	aminopenicillins, ureidopenicillins, cephalosporins_without_CAZ, carbapenems, FLC, AMC	S	Streptococcus groups A, B, C, G	Breakpoints
+genus_species	like	^Streptococcus (pyogenes|agalactiae|dysgalactiae|group A|group B|group C|group G)$	PEN	I	aminopenicillins, ureidopenicillins, cephalosporins_without_CAZ, carbapenems, FLC, AMC	I	Streptococcus groups A, B, C, G	Breakpoints
+genus_species	like	^Streptococcus (pyogenes|agalactiae|dysgalactiae|group A|group B|group C|group G)$	PEN	R	aminopenicillins, ureidopenicillins, cephalosporins_without_CAZ, carbapenems, FLC, AMC	R	Streptococcus groups A, B, C, G	Breakpoints
+genus_species	like	^Streptococcus (pyogenes|agalactiae|dysgalactiae|group A|group B|group C|group G)$	NOR	S	LVX, MFX	S	Streptococcus groups A, B, C, G	Breakpoints
+genus_species	like	^Streptococcus (pyogenes|agalactiae|dysgalactiae|group A|group B|group C|group G)$	ERY	S	AZM, CLR, RXT	S	Streptococcus groups A, B, C, G	Breakpoints
+genus_species	like	^Streptococcus (pyogenes|agalactiae|dysgalactiae|group A|group B|group C|group G)$	ERY	I	AZM, CLR, RXT	I	Streptococcus groups A, B, C, G	Breakpoints
+genus_species	like	^Streptococcus (pyogenes|agalactiae|dysgalactiae|group A|group B|group C|group G)$	ERY	R	AZM, CLR, RXT	R	Streptococcus groups A, B, C, G	Breakpoints
+genus_species	like	^Streptococcus (pyogenes|agalactiae|dysgalactiae|group A|group B|group C|group G)$	TCY	S	DOX, MNO	S	Streptococcus groups A, B, C, G	Breakpoints
+genus_species	is	Streptococcus pneumoniae	PEN	S	AMP, AMX, AMC, PIP, TZP	S	Streptococcus pneumoniae	Breakpoints
+genus_species	is	Streptococcus pneumoniae	AMP	S	AMX, AMC, PIP, TZP	S	Streptococcus pneumoniae	Breakpoints
+genus_species	is	Streptococcus pneumoniae	AMP	I	AMX, AMC, PIP, TZP	I	Streptococcus pneumoniae	Breakpoints
+genus_species	is	Streptococcus pneumoniae	AMP	R	AMX, AMC, PIP, TZP	R	Streptococcus pneumoniae	Breakpoints
+genus_species	is	Streptococcus pneumoniae	NOR	S	LVX, MFX	S	Streptococcus pneumoniae	Breakpoints
+genus_species	is	Streptococcus pneumoniae	ERY	S	AZM, CLR, RXT	S	Streptococcus pneumoniae	Breakpoints
+genus_species	is	Streptococcus pneumoniae	ERY	I	AZM, CLR, RXT	I	Streptococcus pneumoniae	Breakpoints
+genus_species	is	Streptococcus pneumoniae	ERY	R	AZM, CLR, RXT	R	Streptococcus pneumoniae	Breakpoints
+genus_species	is	Streptococcus pneumoniae	TCY	S	DOX, MNO	S	Streptococcus pneumoniae	Breakpoints
+genus_species	like	^Streptococcus (australis|bovis|constellatus|cristatus|gallolyticus|gordonii|infantarius|infantis|mitis|mutans|oligofermentans|oralis|peroris|pseudopneumoniae|salivarius|sinensis|sobrinus|thermophilus|vestibularis|anginosus|equinus|intermedius|parasanguinis|sanguinis)$	PEN	S	AMP, AMX, AMC, PIP, TZP	S	Viridans group streptococci	Breakpoints
+genus_species	like	^Streptococcus (australis|bovis|constellatus|cristatus|gallolyticus|gordonii|infantarius|infantis|mitis|mutans|oligofermentans|oralis|peroris|pseudopneumoniae|salivarius|sinensis|sobrinus|thermophilus|vestibularis|anginosus|equinus|intermedius|parasanguinis|sanguinis)$	AMP	S	AMX, AMC, PIP, TZP	S	Viridans group streptococci	Breakpoints
+genus_species	like	^Streptococcus (australis|bovis|constellatus|cristatus|gallolyticus|gordonii|infantarius|infantis|mitis|mutans|oligofermentans|oralis|peroris|pseudopneumoniae|salivarius|sinensis|sobrinus|thermophilus|vestibularis|anginosus|equinus|intermedius|parasanguinis|sanguinis)$	AMP	I	AMX, AMC, PIP, TZP	I	Viridans group streptococci	Breakpoints
+genus_species	like	^Streptococcus (australis|bovis|constellatus|cristatus|gallolyticus|gordonii|infantarius|infantis|mitis|mutans|oligofermentans|oralis|peroris|pseudopneumoniae|salivarius|sinensis|sobrinus|thermophilus|vestibularis|anginosus|equinus|intermedius|parasanguinis|sanguinis)$	AMP	R	AMX, AMC, PIP, TZP	R	Viridans group streptococci	Breakpoints
+genus_species	is	Haemophilus influenzae	AMP	S	AMX, PIP	S	Haemophilus influenzae	Breakpoints
+genus_species	is	^Haemophilus influenzae	AMP	I	AMX, PIP	I	Haemophilus influenzae	Breakpoints
+genus_species	is	Haemophilus influenzae	AMP	R	AMX, PIP	R	Haemophilus influenzae	Breakpoints
+genus_species	is	Haemophilus influenzae	PEN	S	AMP, AMX, AMC, PIP, TZP	S	Haemophilus influenzae	Breakpoints
+genus_species	is	Haemophilus influenzae	AMC	S	TZP	S	Haemophilus influenzae	Breakpoints
+genus_species	is	Haemophilus influenzae	AMC	I	TZP	I	Haemophilus influenzae	Breakpoints
+genus_species	is	Haemophilus influenzae	AMC	R	TZP	R	Haemophilus influenzae	Breakpoints
+genus_species	is	Haemophilus influenzae	NAL	S	CIP, LVX, MFX, OFX	S	Haemophilus influenzae	Breakpoints
+genus_species	is	Haemophilus influenzae	TCY	S	DOX, MNO	S	Haemophilus influenzae	Breakpoints
+genus_species	is	Moraxella catarrhalis	AMC	S	TZP	S	Moraxella catarrhalis	Breakpoints
+genus_species	is	Moraxella catarrhalis	AMC	I	TZP	I	Moraxella catarrhalis	Breakpoints
+genus_species	is	Moraxella catarrhalis	AMC	R	TZP	R	Moraxella catarrhalis	Breakpoints
+genus_species	is	Moraxella catarrhalis	NAL	S	CIP, LVX, MFX, OFX	S	Moraxella catarrhalis	Breakpoints
+genus_species	is	Moraxella catarrhalis	ERY	S	AZM, CLR, RXT	S	Moraxella catarrhalis	Breakpoints
+genus_species	is	Moraxella catarrhalis	ERY	I	AZM, CLR, RXT	I	Moraxella catarrhalis	Breakpoints
+genus_species	is	Moraxella catarrhalis	ERY	R	AZM, CLR, RXT	R	Moraxella catarrhalis	Breakpoints
+genus_species	is	Moraxella catarrhalis	TCY	S	DOX, MNO	S	Moraxella catarrhalis	Breakpoints
+genus	one_of	Actinomyces, Bifidobacterium, Clostridium, Cutibacterium, Eggerthella, Eubacterium, Lactobacillus, Propionibacterium	PEN	S	AMP, AMX, PIP, TZP, TIC	S	Anaerobic Gram positives	Breakpoints
+genus	one_of	Actinomyces, Bifidobacterium, Clostridium, Cutibacterium, Eggerthella, Eubacterium, Lactobacillus, Propionibacterium	PEN	I	AMP, AMX, PIP, TZP, TIC	I	Anaerobic Gram positives	Breakpoints
+genus	one_of	Actinomyces, Bifidobacterium, Clostridium, Cutibacterium, Eggerthella, Eubacterium, Lactobacillus, Propionibacterium	PEN	R	AMP, AMX, PIP, TZP, TIC	R	Anaerobic Gram positives	Breakpoints
+genus	one_of	Bacteroides, Bilophila , Fusobacterium, Mobiluncus, Porphyromonas, Prevotella	PEN	S	AMP, AMX, PIP, TZP, TIC	S	Anaerobic Gram negatives	Breakpoints
+genus	one_of	Bacteroides, Bilophila , Fusobacterium, Mobiluncus, Porphyromonas, Prevotella	PEN	I	AMP, AMX, PIP, TZP, TIC	I	Anaerobic Gram negatives	Breakpoints
+genus	one_of	Bacteroides, Bilophila , Fusobacterium, Mobiluncus, Porphyromonas, Prevotella	PEN	R	AMP, AMX, PIP, TZP, TIC	R	Anaerobic Gram negatives	Breakpoints
+genus_species	is	Pasteurella multocida	PEN	S	AMP, AMX	S	Pasteurella multocida	Breakpoints
+genus_species	is	Pasteurella multocida	PEN	I	AMP, AMX	I	Pasteurella multocida	Breakpoints
+genus_species	is	Pasteurella multocida	PEN	R	AMP, AMX	R	Pasteurella multocida	Breakpoints
+genus_species	is	Campylobacter coli	ERY	S	AZM, CLR	S	Campylobacter coli	Breakpoints
+genus_species	is	Campylobacter coli	ERY	I	AZM, CLR	I	Campylobacter coli	Breakpoints
+genus_species	is	Campylobacter coli	ERY	R	AZM, CLR	R	Campylobacter coli	Breakpoints
+genus_species	is	Campylobacter coli	TCY	S	DOX	S	Campylobacter coli	Breakpoints
+genus_species	is	Campylobacter coli	TCY	I	DOX	I	Campylobacter coli	Breakpoints
+genus_species	is	Campylobacter coli	TCY	R	DOX	R	Campylobacter coli	Breakpoints
+genus_species	is	Campylobacter jejuni	ERY	S	AZM, CLR	S	Campylobacter jejuni	Breakpoints
+genus_species	is	Campylobacter jejuni	ERY	I	AZM, CLR	I	Campylobacter jejuni	Breakpoints
+genus_species	is	Campylobacter jejuni	ERY	R	AZM, CLR	R	Campylobacter jejuni	Breakpoints
+genus_species	is	Campylobacter jejuni	TCY	S	DOX	S	Campylobacter jejuni	Breakpoints
+genus_species	is	Campylobacter jejuni	TCY	I	DOX	I	Campylobacter jejuni	Breakpoints
+genus_species	is	Campylobacter jejuni	TCY	R	DOX	R	Campylobacter jejuni	Breakpoints
+genus_species	is	Aerococcus sanguinicola	NOR	S	fluoroquinolones	S	Aerococcus sanguinicola	Breakpoints
+genus_species	is	Aerococcus sanguinicola	NOR	I	fluoroquinolones	I	Aerococcus sanguinicola	Breakpoints
+genus_species	is	Aerococcus sanguinicola	NOR	R	fluoroquinolones	R	Aerococcus sanguinicola	Breakpoints
+genus_species	is	Aerococcus sanguinicola	CIP	S	LVX	S	Aerococcus sanguinicola	Breakpoints
+genus_species	is	Aerococcus sanguinicola	CIP	I	LVX	I	Aerococcus sanguinicola	Breakpoints
+genus_species	is	Aerococcus sanguinicola	CIP	R	LVX	R	Aerococcus urinae	Breakpoints
+genus_species	is	Aerococcus urinae	NOR	S	fluoroquinolones	S	Aerococcus urinae	Breakpoints
+genus_species	is	Aerococcus urinae	NOR	I	fluoroquinolones	I	Aerococcus urinae	Breakpoints
+genus_species	is	Aerococcus urinae	NOR	R	fluoroquinolones	R	Aerococcus urinae	Breakpoints
+genus_species	is	Aerococcus urinae	CIP	S	LVX	S	Aerococcus urinae	Breakpoints
+genus_species	is	Aerococcus urinae	CIP	I	LVX	I	Aerococcus urinae	Breakpoints
+genus_species	is	Aerococcus urinae	CIP	R	LVX	R	Aerococcus urinae	Breakpoints
+genus_species	is	Kingella kingae	PEN	S	AMP, AMX	S	Kingella kingae	Breakpoints
+genus_species	is	Kingella kingae	PEN	I	AMP, AMX	I	Kingella kingae	Breakpoints
+genus_species	is	Kingella kingae	PEN	R	AMP, AMX	R	Kingella kingae	Breakpoints
+genus_species	is	Kingella kingae	ERY	S	AZM, CLR	S	Kingella kingae	Breakpoints
+genus_species	is	Kingella kingae	ERY	I	AZM, CLR	I	Kingella kingae	Breakpoints
+genus_species	is	Kingella kingae	ERY	R	AZM, CLR	R	Kingella kingae	Breakpoints
+genus_species	is	Kingella kingae	TCY	S	DOX	S	Kingella kingae	Breakpoints
+family	is	Enterobacteriaceae			PEN, glycopeptides, FUS, macrolides, LIN, streptogramins, RIF, DAP, LNZ	R	Table 01: Intrinsic resistance in Enterobacteriaceae	Expert Rules
+fullname	like	^Citrobacter (koseri|amalonaticus|sedlakii|farmeri|rodentium)			aminopenicillins, TIC	R	Table 01: Intrinsic resistance in Enterobacteriaceae	Expert Rules
+fullname	like	^Citrobacter (freundii|braakii|murliniae|werkmanii|youngae)			aminopenicillins, AMC, CZO, FOX	R	Table 01: Intrinsic resistance in Enterobacteriaceae	Expert Rules
+genus_species	is	Enterobacter cloacae			aminopenicillins, AMC, CZO, FOX	R	Table 01: Intrinsic resistance in Enterobacteriaceae	Expert Rules
+genus_species	is	Enterobacter aerogenes			aminopenicillins, AMC, CZO, FOX	R	Table 01: Intrinsic resistance in Enterobacteriaceae	Expert Rules
+genus_species	is	Escherichia hermanni			aminopenicillins, TIC	R	Table 01: Intrinsic resistance in Enterobacteriaceae	Expert Rules
+genus_species	is	Hafnia alvei			aminopenicillins, AMC, CZO, FOX	R	Table 01: Intrinsic resistance in Enterobacteriaceae	Expert Rules
+genus	is	Klebsiella			aminopenicillins, TIC	R	Table 01: Intrinsic resistance in Enterobacteriaceae	Expert Rules
+genus_species	is	Morganella morganii			aminopenicillins, AMC, CZO, tetracyclines, polymyxins, NIT	R	Table 01: Intrinsic resistance in Enterobacteriaceae	Expert Rules
+genus_species	is	Proteus mirabilis			tetracyclines, TGC, polymyxins, NIT	R	Table 01: Intrinsic resistance in Enterobacteriaceae	Expert Rules
+genus_species	is	Proteus penneri			aminopenicillins, CZO, CXM, tetracyclines, TGC, polymyxins, NIT	R	Table 01: Intrinsic resistance in Enterobacteriaceae	Expert Rules
+genus_species	is	Proteus vulgaris			aminopenicillins, CZO, CXM, tetracyclines, TGC, polymyxins, NIT	R	Table 01: Intrinsic resistance in Enterobacteriaceae	Expert Rules
+genus_species	is	Providencia rettgeri			aminopenicillins, AMC, CZO, CXM, tetracyclines, TGC, polymyxins, NIT	R	Table 01: Intrinsic resistance in Enterobacteriaceae	Expert Rules
+genus_species	is	Providencia stuartii			aminopenicillins, AMC, CZO, CXM, tetracyclines, TGC, polymyxins, NIT	R	Table 01: Intrinsic resistance in Enterobacteriaceae	Expert Rules
+genus	is	Raoultella			aminopenicillins, TIC	R	Table 01: Intrinsic resistance in Enterobacteriaceae	Expert Rules
+genus_species	is	Serratia marcescens			aminopenicillins, AMC, CZO, FOX, CXM, DOX, TCY, polymyxins, NIT	R	Table 01: Intrinsic resistance in Enterobacteriaceae	Expert Rules
+genus_species	is	Yersinia enterocolitica			aminopenicillins, AMC, TIC, CZO, FOX	R	Table 01: Intrinsic resistance in Enterobacteriaceae	Expert Rules
+genus_species	is	Yersinia pseudotuberculosis			poly, COL	R	Table 01: Intrinsic resistance in Enterobacteriaceae	Expert Rules
+genus	one_of	Achromobacter, Acinetobacter, Alcaligenes, Bordatella, Burkholderia, Elizabethkingia, Flavobacterium, Ochrobactrum, Pseudomonas, Stenotrophomonas			PEN, FOX, CXM, glycopeptides, FUS, macrolides, LIN, streptogramins, RIF, DAP, LNZ	R	Table 02: Intrinsic resistance in non-fermentative Gram-negative bacteria	Expert Rules
+genus_species	is	Acinetobacter baumannii			aminopenicillins, AMC, CZO, CTX, CRO, ATM, ETP, TMP, FOS, DOX, TCY	R	Table 02: Intrinsic resistance in non-fermentative Gram-negative bacteria	Expert Rules
+genus_species	is	Acinetobacter pittii			aminopenicillins, AMC, CZO, CTX, CRO, ATM, ETP, TMP, FOS, DOX, TCY	R	Table 02: Intrinsic resistance in non-fermentative Gram-negative bacteria	Expert Rules
+genus_species	is	Acinetobacter nosocomialis			aminopenicillins, AMC, CZO, CTX, CRO, ATM, ETP, TMP, FOS, DOX, TCY	R	Table 02: Intrinsic resistance in non-fermentative Gram-negative bacteria	Expert Rules
+genus_species	is	Acinetobacter calcoaceticus			aminopenicillins, AMC, CZO, CTX, CRO, ATM, ETP, TMP, FOS, DOX, TCY	R	Table 02: Intrinsic resistance in non-fermentative Gram-negative bacteria	Expert Rules
+genus_species	is	Achromobacter xylosoxidans			aminopenicillins, CZO, CTX, CRO, ETP	R	Table 02: Intrinsic resistance in non-fermentative Gram-negative bacteria	Expert Rules
+fullname	like	^Burkholderia (cepacia|multivorans|cenocepacia|stabilis|vietnamiensis|dolosa|ambifaria|anthina|pyrrocinia|ubonensis)			aminopenicillins, AMC, TIC, PIP, TZP, CZO, CTX, CRO, ATM, ETP, CIP, CHL, aminoglycosides, TMP, FOS, polymyxins	R	Table 02: Intrinsic resistance in non-fermentative Gram-negative bacteria	Expert Rules
+genus_species	is	Elizabethkingia meningoseptica			aminopenicillins, AMC, TIC, CZO, CTX, CRO, CAZ, FEP, ATM, ETP, IPM, MEM, polymyxins	R	Table 02: Intrinsic resistance in non-fermentative Gram-negative bacteria	Expert Rules
+genus_species	is	Ochrobactrum anthropi			aminopenicillins, AMC, TIC, PIP, TZP, CZO, CTX, CRO, CAZ, FEP, ATM, ETP	R	Table 02: Intrinsic resistance in non-fermentative Gram-negative bacteria	Expert Rules
+genus_species	is	Pseudomonas aeruginosa			aminopenicillins, AMC, CZO, CTX, CRO, ETP, CHL, KAN, NEO, TMP, SXT, tetracyclines, TGC	R	Table 02: Intrinsic resistance in non-fermentative Gram-negative bacteria	Expert Rules
+genus_species	is	Stenotrophomonas maltophilia			aminopenicillins, AMC, TIC, PIP, TZP, CZO, CTX, CRO, CAZ, ATM, ETP, IPM, MEM, aminoglycosides, TMP, FOS, TCY	R	Table 02: Intrinsic resistance in non-fermentative Gram-negative bacteria	Expert Rules
+genus	one_of	Haemophilus, Moraxella, Neisseria, Campylobacter			glycopeptides, LIN, DAP, LNZ	R	Table 03: Intrinsic resistance in other Gram-negative bacteria	Expert Rules
+genus_species	is	Haemophilus influenzae			FUS, streptogramins	R	Table 03: Intrinsic resistance in other Gram-negative bacteria	Expert Rules
+genus_species	is	Moraxella catarrhalis			TMP	R	Table 03: Intrinsic resistance in other Gram-negative bacteria	Expert Rules
+genus	is	Neisseria			TMP	R	Table 03: Intrinsic resistance in other Gram-negative bacteria	Expert Rules
+genus_species	is	Campylobacter fetus			FUS, streptogramins, TMP, NAL	R	Table 03: Intrinsic resistance in other Gram-negative bacteria	Expert Rules
+genus_species	is	Campylobacter jejuni			FUS, streptogramins, TMP	R	Table 03: Intrinsic resistance in other Gram-negative bacteria	Expert Rules
+genus_species	is	Campylobacter coli			FUS, streptogramins, TMP	R	Table 03: Intrinsic resistance in other Gram-negative bacteria	Expert Rules
+gramstain	is	Gram positive			ATM, polymyxins, NAL	R	Table 04: Intrinsic resistance in Gram-positive bacteria	Expert Rules
+genus_species	is	Staphylococcus saprophyticus			FUS, CAZ, FOS, NOV	R	Table 04: Intrinsic resistance in Gram-positive bacteria	Expert Rules
+genus_species	is	Staphylococcus cohnii			CAZ, NOV	R	Table 04: Intrinsic resistance in Gram-positive bacteria	Expert Rules
+genus_species	is	Staphylococcus xylosus			CAZ, NOV	R	Table 04: Intrinsic resistance in Gram-positive bacteria	Expert Rules
+genus_species	is	Staphylococcus capitis			CAZ, FOS	R	Table 04: Intrinsic resistance in Gram-positive bacteria	Expert Rules
+genus_species	is	Staphylococcus aureus			CAZ	R	Table 04: Intrinsic resistance in Gram-positive bacteria	Expert Rules
+genus_species	is	Staphylococcus epidermidis			CAZ	R	Table 04: Intrinsic resistance in Gram-positive bacteria	Expert Rules
+genus_species	is	Staphylococcus coagulase-negative			CAZ	R	Table 04: Intrinsic resistance in Gram-positive bacteria	Expert Rules
+genus_species	is	Staphylococcus hominis			CAZ	R	Table 04: Intrinsic resistance in Gram-positive bacteria	Expert Rules
+genus_species	is	Staphylococcus haemolyticus			CAZ	R	Table 04: Intrinsic resistance in Gram-positive bacteria	Expert Rules
+genus_species	is	Staphylococcus intermedius			CAZ	R	Table 04: Intrinsic resistance in Gram-positive bacteria	Expert Rules
+genus_species	is	Staphylococcus pseudintermedius			CAZ	R	Table 04: Intrinsic resistance in Gram-positive bacteria	Expert Rules
+genus	is	Streptococcus			FUS, CAZ, aminoglycosides	R	Table 04: Intrinsic resistance in Gram-positive bacteria	Expert Rules
+genus_species	is	Enterococcus faecalis			FUS, CAZ, cephalosporins_without_CAZ, aminoglycosides, macrolides, CLI, QDA, TMP, SXT	R	Table 04: Intrinsic resistance in Gram-positive bacteria	Expert Rules
+genus_species	is	Enterococcus gallinarum			FUS, CAZ, cephalosporins_without_CAZ, aminoglycosides, macrolides, CLI, QDA, VAN, TMP, SXT	R	Table 04: Intrinsic resistance in Gram-positive bacteria	Expert Rules
+genus_species	is	Enterococcus casseliflavus			FUS, CAZ, cephalosporins_without_CAZ, aminoglycosides, macrolides, CLI, QDA, VAN, TMP, SXT	R	Table 04: Intrinsic resistance in Gram-positive bacteria	Expert Rules
+genus_species	is	Enterococcus faecium			FUS, CAZ, cephalosporins_without_CAZ, aminoglycosides, macrolides, TMP, SXT	R	Table 04: Intrinsic resistance in Gram-positive bacteria	Expert Rules
+genus	is	Corynebacterium			FOS	R	Table 04: Intrinsic resistance in Gram-positive bacteria	Expert Rules
 genus_species	is	Listeria monocytogenes			cephalosporins	R	Table 04: Intrinsic resistance in Gram-positive bacteria	Expert Rules
 genus	is	Leuconostoc, Pediococcus			glycopeptides	R	Table 04: Intrinsic resistance in Gram-positive bacteria	Expert Rules
 genus	is	Lactobacillus			glycopeptides	R	Table 04: Intrinsic resistance in Gram-positive bacteria	Expert Rules
-genus_species	is	Clostridium ramosum			vanc	R	Table 04: Intrinsic resistance in Gram-positive bacteria	Expert Rules
-genus_species	is	Clostridium innocuum			vanc	R	Table 04: Intrinsic resistance in Gram-positive bacteria	Expert Rules
-genus_species	like	^Streptococcus (pyogenes|agalactiae|dysgalactiae|group A|group B|group C|group G)	peni	S	aminopenicillins, cephalosporins, carbapenems	S	Table 08: Interpretive rules for B-lactam agents and Gram-positive cocci	Expert Rules
-genus	is	Enterococcus	ampi	R	ureidopenicillins, carbapenems	R	Table 08: Interpretive rules for B-lactam agents and Gram-positive cocci	Expert Rules
-genus	is	Enterococcus	amox	R	ureidopenicillins, carbapenems	R	Table 08: Interpretive rules for B-lactam agents and Gram-positive cocci	Expert Rules
-family	is	Enterobacteriaceae	tica, pipe	R, S	pipe	R	Table 09: Interpretive rules for B-lactam agents and Gram-negative rods	Expert Rules
-genus	is	.*	eryt	S	azit, clar	S	Table 11: Interpretive rules for macrolides, lincosamides, and streptogramins	Expert Rules
-genus	is	.*	eryt	I	azit, clar	I	Table 11: Interpretive rules for macrolides, lincosamides, and streptogramins	Expert Rules
-genus	is	.*	eryt	R	azit, clar	R	Table 11: Interpretive rules for macrolides, lincosamides, and streptogramins	Expert Rules
-genus	is	Staphylococcus	tobr	R	kana, amik	R	Table 12: Interpretive rules for aminoglycosides	Expert Rules
-genus	is	Staphylococcus	gent	R	aminoglycosides	R	Table 12: Interpretive rules for aminoglycosides	Expert Rules
-family	is	Enterobacteriaceae	gent, tobr	I, S	gent	R	Table 12: Interpretive rules for aminoglycosides	Expert Rules
-family	is	Enterobacteriaceae	gent, tobr	R, I	tobr	R	Table 12: Interpretive rules for aminoglycosides	Expert Rules
-genus	is	Staphylococcus	moxi	R	fluoroquinolones	R	Table 13: Interpretive rules for quinolones	Expert Rules
-genus_species	is	Streptococcus pneumoniae	moxi	R	fluoroquinolones	R	Table 13: Interpretive rules for quinolones	Expert Rules
-family	is	Enterobacteriaceae	cipr	R	fluoroquinolones	R	Table 13: Interpretive rules for quinolones	Expert Rules
-genus_species	is	Neisseria gonorrhoeae	cipr	R	fluoroquinolones	R	Table 13: Interpretive rules for quinolones	Expert Rules
-genus	is	.*	amcl	R	ampi, amox	R	Non-EUCAST: ampicillin = R where amoxicillin/clav acid = R	Other rules
-genus	is	.*	pita	R	pipe	R	Non-EUCAST: piperacillin = R where piperacillin/tazobactam = R	Other rules
-genus	is	.*	trsu	R	trim	R	Non-EUCAST: trimethoprim = R where trimethoprim/sulfa = R	Other rules
-genus	is	.*	ampi	S	amcl	S	Non-EUCAST: amoxicillin/clav acid = S where ampicillin = S	Other rules
-genus	is	.*	amox	S	amcl	S	Non-EUCAST: amoxicillin/clav acid = S where ampicillin = S	Other rules
-genus	is	.*	pipe	S	pita	S	Non-EUCAST: piperacillin/tazobactam = S where piperacillin = S	Other rules
-genus	is	.*	trim	S	trsu	S	Non-EUCAST: trimethoprim/sulfa = S where trimethoprim = S	Other rules
+genus_species	is	Clostridium ramosum			VAN	R	Table 04: Intrinsic resistance in Gram-positive bacteria	Expert Rules
+genus_species	is	Clostridium innocuum			VAN	R	Table 04: Intrinsic resistance in Gram-positive bacteria	Expert Rules
+genus_species	like	^Streptococcus (pyogenes|agalactiae|dysgalactiae|group A|group B|group C|group G)	PEN	S	aminopenicillins, cephalosporins_without_CAZ, carbapenems	S	Table 08: Interpretive rules for B-lactam agents and Gram-positive cocci	Expert Rules
+genus	is	Enterococcus	AMP	R	ureidopenicillins, carbapenems	R	Table 08: Interpretive rules for B-lactam agents and Gram-positive cocci	Expert Rules
+genus	is	Enterococcus	AMX	R	ureidopenicillins, carbapenems	R	Table 08: Interpretive rules for B-lactam agents and Gram-positive cocci	Expert Rules
+family	is	Enterobacteriaceae	TIC, PIP	R, S	PIP	R	Table 09: Interpretive rules for B-lactam agents and Gram-negative rods	Expert Rules
+genus	is	.*	ERY	S	AZM, CLR	S	Table 11: Interpretive rules for macrolides, lincosamides, and streptogramins	Expert Rules
+genus	is	.*	ERY	I	AZM, CLR	I	Table 11: Interpretive rules for macrolides, lincosamides, and streptogramins	Expert Rules
+genus	is	.*	ERY	R	AZM, CLR	R	Table 11: Interpretive rules for macrolides, lincosamides, and streptogramins	Expert Rules
+genus	is	Staphylococcus	TOB	R	KAN, amik	R	Table 12: Interpretive rules for aminoglycosides	Expert Rules
+genus	is	Staphylococcus	GEN	R	aminoglycosides	R	Table 12: Interpretive rules for aminoglycosides	Expert Rules
+family	is	Enterobacteriaceae	GEN, TOB	I, S	GEN	R	Table 12: Interpretive rules for aminoglycosides	Expert Rules
+family	is	Enterobacteriaceae	GEN, TOB	R, I	TOB	R	Table 12: Interpretive rules for aminoglycosides	Expert Rules
+genus	is	Staphylococcus	MFX	R	fluoroquinolones	R	Table 13: Interpretive rules for quinolones	Expert Rules
+genus_species	is	Streptococcus pneumoniae	MFX	R	fluoroquinolones	R	Table 13: Interpretive rules for quinolones	Expert Rules
+family	is	Enterobacteriaceae	CIP	R	fluoroquinolones	R	Table 13: Interpretive rules for quinolones	Expert Rules
+genus_species	is	Neisseria gonorrhoeae	CIP	R	fluoroquinolones	R	Table 13: Interpretive rules for quinolones	Expert Rules
+genus	is	.*	AMC	R	AMP, AMX	R	Non-EUCAST: ampicillin = R where amoxicillin/clav acid = R	Other rules
+genus	is	.*	TZP	R	PIP	R	Non-EUCAST: piperacillin = R where piperacillin/tazobactam = R	Other rules
+genus	is	.*	SXT	R	TMP	R	Non-EUCAST: trimethoprim = R where trimethoprim/sulfa = R	Other rules
+genus	is	.*	AMP	S	AMC	S	Non-EUCAST: amoxicillin/clav acid = S where ampicillin = S	Other rules
+genus	is	.*	AMX	S	AMC	S	Non-EUCAST: amoxicillin/clav acid = S where ampicillin = S	Other rules
+genus	is	.*	PIP	S	TZP	S	Non-EUCAST: piperacillin/tazobactam = S where piperacillin = S	Other rules
+genus	is	.*	TMP	S	SXT	S	Non-EUCAST: trimethoprim/sulfa = S where trimethoprim = S	Other rules

@@ -80,7 +80,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.6.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.6.1.9003</span>
       </span>
     </div>
 
@@ -145,7 +145,7 @@
       </a>
     </li>
     <li>
-      <a href="../reference/atc_property.html">
+      <a href="../reference/ab_property.html">
         <span class="fa fa-capsules"></span>
          
         Get properties of an antibiotic
@@ -273,7 +273,7 @@
 
 <span class='fu'>guess_ab_col</span>(<span class='no'>df</span>, <span class='st'>"amoxicillin"</span>)
 <span class='co'># [1] "amox"</span>
-<span class='fu'>guess_ab_col</span>(<span class='no'>df</span>, <span class='st'>"J01AA07"</span>) <span class='co'># ATC code of Tetracycline</span>
+<span class='fu'>guess_ab_col</span>(<span class='no'>df</span>, <span class='st'>"J01AA07"</span>) <span class='co'># ATC code of tetracycline</span>
 <span class='co'># [1] "tetr"</span>
 
 <span class='fu'>guess_ab_col</span>(<span class='no'>df</span>, <span class='st'>"J01AA07"</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
@@ -287,7 +287,7 @@
 <span class='co'># [1] "AMP_ND10"</span>
 <span class='fu'>guess_ab_col</span>(<span class='no'>df</span>, <span class='st'>"J01CR02"</span>)
 <span class='co'># [1] "AMC_ED20"</span>
-<span class='fu'>guess_ab_col</span>(<span class='no'>df</span>, <span class='fu'><a href='as.atc.html'>as.atc</a></span>(<span class='st'>"augmentin"</span>))
+<span class='fu'>guess_ab_col</span>(<span class='no'>df</span>, <span class='fu'><a href='as.ab.html'>as.ab</a></span>(<span class='st'>"augmentin"</span>))
 <span class='co'># [1] "AMC_ED20"</span>
 <span class='co'># }</span></pre>
   </div>

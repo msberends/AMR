@@ -6,19 +6,19 @@
 \title{Key antibiotics for first \emph{weighted} isolates}
 \usage{
 key_antibiotics(tbl, col_mo = NULL, universal_1 = guess_ab_col(tbl,
-  "amox"), universal_2 = guess_ab_col(tbl, "amcl"),
-  universal_3 = guess_ab_col(tbl, "cfur"),
-  universal_4 = guess_ab_col(tbl, "pita"),
-  universal_5 = guess_ab_col(tbl, "cipr"),
-  universal_6 = guess_ab_col(tbl, "trsu"),
-  GramPos_1 = guess_ab_col(tbl, "vanc"), GramPos_2 = guess_ab_col(tbl,
-  "teic"), GramPos_3 = guess_ab_col(tbl, "tetr"),
-  GramPos_4 = guess_ab_col(tbl, "eryt"), GramPos_5 = guess_ab_col(tbl,
-  "oxac"), GramPos_6 = guess_ab_col(tbl, "rifa"),
-  GramNeg_1 = guess_ab_col(tbl, "gent"), GramNeg_2 = guess_ab_col(tbl,
-  "tobr"), GramNeg_3 = guess_ab_col(tbl, "coli"),
-  GramNeg_4 = guess_ab_col(tbl, "cfot"), GramNeg_5 = guess_ab_col(tbl,
-  "cfta"), GramNeg_6 = guess_ab_col(tbl, "mero"), warnings = TRUE, ...)
+  "AMX"), universal_2 = guess_ab_col(tbl, "AMC"),
+  universal_3 = guess_ab_col(tbl, "CXM"),
+  universal_4 = guess_ab_col(tbl, "TZP"),
+  universal_5 = guess_ab_col(tbl, "CIP"),
+  universal_6 = guess_ab_col(tbl, "SXT"), GramPos_1 = guess_ab_col(tbl,
+  "VAN"), GramPos_2 = guess_ab_col(tbl, "TEC"),
+  GramPos_3 = guess_ab_col(tbl, "TCY"), GramPos_4 = guess_ab_col(tbl,
+  "ERY"), GramPos_5 = guess_ab_col(tbl, "OXA"),
+  GramPos_6 = guess_ab_col(tbl, "RIF"), GramNeg_1 = guess_ab_col(tbl,
+  "GEN"), GramNeg_2 = guess_ab_col(tbl, "TOB"),
+  GramNeg_3 = guess_ab_col(tbl, "COL"), GramNeg_4 = guess_ab_col(tbl,
+  "CTX"), GramNeg_5 = guess_ab_col(tbl, "CAZ"),
+  GramNeg_6 = guess_ab_col(tbl, "MEM"), warnings = TRUE, ...)
 
 key_antibiotics_equal(x, y, type = c("keyantibiotics", "points"),
   ignore_I = TRUE, points_threshold = 2, info = FALSE)

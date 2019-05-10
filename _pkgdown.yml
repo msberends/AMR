@@ -53,8 +53,8 @@ navbar:
         href: 'reference/mo_property.html'
       - text: 'Get properties of an antibiotic'
         icon: 'fa-capsules'
-        # href: 'articles/atc_property.html'
-        href: 'reference/atc_property.html'
+        # href: 'articles/ab_property.html'
+        href: 'reference/ab_property.html'
       - text: 'Create frequency tables'
         icon: 'fa-sort-amount-down'
         href: 'articles/freq.html'
@@ -100,6 +100,7 @@ reference:
     - starts_with("as.")
     - '`mo_source`'
     - '`eucast_rules`'
+    - '`rsi_translation`'
     - '`guess_ab_col`'
     - '`read.4D`'
   - title: 'Adding variables to your data'
@@ -113,13 +114,12 @@ reference:
     - '`mdro`'
     - '`key_antibiotics`'
     - '`mo_property`'
-    - '`atc_property`'
-    - '`atc_online_property`'
-    - '`abname`'
+    - '`ab_property`'
     - '`age`'
     - '`age_groups`'
     - '`p.symbol`'
     - '`join`'
+    - '`atc_online_property`'
   - title: 'Analysing your data'
     desc: >
       Functions for conducting AMR analysis, like counting isolates, calculating
@@ -134,7 +134,6 @@ reference:
     - '`ggplot_rsi`'
     - '`kurtosis`'
     - '`resistance_predict`'
-    - '`rsi`'
     - '`skewness`'
   - title: 'Included data sets'
     desc: >

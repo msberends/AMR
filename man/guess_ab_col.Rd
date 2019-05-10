@@ -27,7 +27,7 @@ df <- data.frame(amox = "S",
 
 guess_ab_col(df, "amoxicillin")
 # [1] "amox"
-guess_ab_col(df, "J01AA07") # ATC code of Tetracycline
+guess_ab_col(df, "J01AA07") # ATC code of tetracycline
 # [1] "tetr"
 
 guess_ab_col(df, "J01AA07", verbose = TRUE)
@@ -41,6 +41,6 @@ guess_ab_col(df, "ampicillin")
 # [1] "AMP_ND10"
 guess_ab_col(df, "J01CR02")
 # [1] "AMC_ED20"
-guess_ab_col(df, as.atc("augmentin"))
+guess_ab_col(df, as.ab("augmentin"))
 # [1] "AMC_ED20"
 }

@@ -39,9 +39,9 @@
 #' # filter on isolates that have any result for any aminoglycoside
 #' septic_patients %>% filter_aminoglycosides()
 #'
-#' # this is essentially the same as:
+#' # this is essentially the same as (but without determination of column names):
 #' septic_patients %>%
-#'   filter_at(.vars = vars(c("gent", "tobr", "amik", "kana")),
+#'   filter_at(.vars = vars(c("GEN", "TOB", "AMK", "KAN")),
 #'             .vars_predicate = any_vars(. %in% c("S", "I", "R")))
 #'
 #'
@@ -264,7 +264,8 @@ filter_tetracyclines <- function(tbl,
 ab_class_vars <- function(ab_class) {
   ab_vars <- AMR::antibiotics %>%
     filter_at(vars(c("atc_group1", "atc_group2")), any_vars(. %like% ab_class)) %>%
-    select(atc:trade_name) %>%
+    select(ab:name, abbreviations, synonyms) %>%
+    unlist() %>%
     as.matrix() %>%
     as.character() %>%
     paste(collapse = "|") %>%
@@ -289,7 +290,7 @@ ab_class_atcgroups <- function(ab_class) {
                          "tetracycline"),
          paste0(ab_class, "s"),
          AMR::antibiotics %>%
-           filter(atc %in% ab_class_vars(ab_class)) %>%
+           filter(ab %in% ab_class_vars(ab_class)) %>%
            pull("atc_group2") %>%
            unique() %>%
            tolower() %>%

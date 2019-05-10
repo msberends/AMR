@@ -80,7 +80,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.6.1.9002</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.6.1.9003</span>
       </span>
     </div>
 
@@ -145,7 +145,7 @@
       </a>
     </li>
     <li>
-      <a href="../reference/atc_property.html">
+      <a href="../reference/ab_property.html">
         <span class="fa fa-capsules"></span>
          
         Get properties of an antibiotic
@@ -242,38 +242,7 @@
     </div>
 
     <pre class="usage"><span class='fu'>eucast_rules</span>(<span class='no'>x</span>, <span class='kw'>col_mo</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>info</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>rules</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"breakpoints"</span>,
-  <span class='st'>"expert"</span>, <span class='st'>"other"</span>, <span class='st'>"all"</span>), <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>amcl</span> <span class='kw'>=</span> <span class='fu'><a href='guess_ab_col.html'>guess_ab_col</a></span>(),
-  <span class='kw'>amik</span> <span class='kw'>=</span> <span class='fu'><a href='guess_ab_col.html'>guess_ab_col</a></span>(), <span class='kw'>amox</span> <span class='kw'>=</span> <span class='fu'><a href='guess_ab_col.html'>guess_ab_col</a></span>(),
-  <span class='kw'>ampi</span> <span class='kw'>=</span> <span class='fu'><a href='guess_ab_col.html'>guess_ab_col</a></span>(), <span class='kw'>azit</span> <span class='kw'>=</span> <span class='fu'><a href='guess_ab_col.html'>guess_ab_col</a></span>(),
-  <span class='kw'>azlo</span> <span class='kw'>=</span> <span class='fu'><a href='guess_ab_col.html'>guess_ab_col</a></span>(), <span class='kw'>aztr</span> <span class='kw'>=</span> <span class='fu'><a href='guess_ab_col.html'>guess_ab_col</a></span>(),
-  <span class='kw'>cefa</span> <span class='kw'>=</span> <span class='fu'><a href='guess_ab_col.html'>guess_ab_col</a></span>(), <span class='kw'>cfep</span> <span class='kw'>=</span> <span class='fu'><a href='guess_ab_col.html'>guess_ab_col</a></span>(),
-  <span class='kw'>cfot</span> <span class='kw'>=</span> <span class='fu'><a href='guess_ab_col.html'>guess_ab_col</a></span>(), <span class='kw'>cfox</span> <span class='kw'>=</span> <span class='fu'><a href='guess_ab_col.html'>guess_ab_col</a></span>(),
-  <span class='kw'>cfra</span> <span class='kw'>=</span> <span class='fu'><a href='guess_ab_col.html'>guess_ab_col</a></span>(), <span class='kw'>cfta</span> <span class='kw'>=</span> <span class='fu'><a href='guess_ab_col.html'>guess_ab_col</a></span>(),
-  <span class='kw'>cftr</span> <span class='kw'>=</span> <span class='fu'><a href='guess_ab_col.html'>guess_ab_col</a></span>(), <span class='kw'>cfur</span> <span class='kw'>=</span> <span class='fu'><a href='guess_ab_col.html'>guess_ab_col</a></span>(),
-  <span class='kw'>chlo</span> <span class='kw'>=</span> <span class='fu'><a href='guess_ab_col.html'>guess_ab_col</a></span>(), <span class='kw'>cipr</span> <span class='kw'>=</span> <span class='fu'><a href='guess_ab_col.html'>guess_ab_col</a></span>(),
-  <span class='kw'>clar</span> <span class='kw'>=</span> <span class='fu'><a href='guess_ab_col.html'>guess_ab_col</a></span>(), <span class='kw'>clin</span> <span class='kw'>=</span> <span class='fu'><a href='guess_ab_col.html'>guess_ab_col</a></span>(),
-  <span class='kw'>clox</span> <span class='kw'>=</span> <span class='fu'><a href='guess_ab_col.html'>guess_ab_col</a></span>(), <span class='kw'>coli</span> <span class='kw'>=</span> <span class='fu'><a href='guess_ab_col.html'>guess_ab_col</a></span>(),
-  <span class='kw'>czol</span> <span class='kw'>=</span> <span class='fu'><a href='guess_ab_col.html'>guess_ab_col</a></span>(), <span class='kw'>dapt</span> <span class='kw'>=</span> <span class='fu'><a href='guess_ab_col.html'>guess_ab_col</a></span>(),
-  <span class='kw'>doxy</span> <span class='kw'>=</span> <span class='fu'><a href='guess_ab_col.html'>guess_ab_col</a></span>(), <span class='kw'>erta</span> <span class='kw'>=</span> <span class='fu'><a href='guess_ab_col.html'>guess_ab_col</a></span>(),
-  <span class='kw'>eryt</span> <span class='kw'>=</span> <span class='fu'><a href='guess_ab_col.html'>guess_ab_col</a></span>(), <span class='kw'>fosf</span> <span class='kw'>=</span> <span class='fu'><a href='guess_ab_col.html'>guess_ab_col</a></span>(),
-  <span class='kw'>fusi</span> <span class='kw'>=</span> <span class='fu'><a href='guess_ab_col.html'>guess_ab_col</a></span>(), <span class='kw'>gent</span> <span class='kw'>=</span> <span class='fu'><a href='guess_ab_col.html'>guess_ab_col</a></span>(),
-  <span class='kw'>imip</span> <span class='kw'>=</span> <span class='fu'><a href='guess_ab_col.html'>guess_ab_col</a></span>(), <span class='kw'>kana</span> <span class='kw'>=</span> <span class='fu'><a href='guess_ab_col.html'>guess_ab_col</a></span>(),
-  <span class='kw'>levo</span> <span class='kw'>=</span> <span class='fu'><a href='guess_ab_col.html'>guess_ab_col</a></span>(), <span class='kw'>linc</span> <span class='kw'>=</span> <span class='fu'><a href='guess_ab_col.html'>guess_ab_col</a></span>(),
-  <span class='kw'>line</span> <span class='kw'>=</span> <span class='fu'><a href='guess_ab_col.html'>guess_ab_col</a></span>(), <span class='kw'>mero</span> <span class='kw'>=</span> <span class='fu'><a href='guess_ab_col.html'>guess_ab_col</a></span>(),
-  <span class='kw'>mezl</span> <span class='kw'>=</span> <span class='fu'><a href='guess_ab_col.html'>guess_ab_col</a></span>(), <span class='kw'>mino</span> <span class='kw'>=</span> <span class='fu'><a href='guess_ab_col.html'>guess_ab_col</a></span>(),
-  <span class='kw'>moxi</span> <span class='kw'>=</span> <span class='fu'><a href='guess_ab_col.html'>guess_ab_col</a></span>(), <span class='kw'>nali</span> <span class='kw'>=</span> <span class='fu'><a href='guess_ab_col.html'>guess_ab_col</a></span>(),
-  <span class='kw'>neom</span> <span class='kw'>=</span> <span class='fu'><a href='guess_ab_col.html'>guess_ab_col</a></span>(), <span class='kw'>neti</span> <span class='kw'>=</span> <span class='fu'><a href='guess_ab_col.html'>guess_ab_col</a></span>(),
-  <span class='kw'>nitr</span> <span class='kw'>=</span> <span class='fu'><a href='guess_ab_col.html'>guess_ab_col</a></span>(), <span class='kw'>norf</span> <span class='kw'>=</span> <span class='fu'><a href='guess_ab_col.html'>guess_ab_col</a></span>(),
-  <span class='kw'>novo</span> <span class='kw'>=</span> <span class='fu'><a href='guess_ab_col.html'>guess_ab_col</a></span>(), <span class='kw'>oflo</span> <span class='kw'>=</span> <span class='fu'><a href='guess_ab_col.html'>guess_ab_col</a></span>(),
-  <span class='kw'>oxac</span> <span class='kw'>=</span> <span class='fu'><a href='guess_ab_col.html'>guess_ab_col</a></span>(), <span class='kw'>peni</span> <span class='kw'>=</span> <span class='fu'><a href='guess_ab_col.html'>guess_ab_col</a></span>(),
-  <span class='kw'>pipe</span> <span class='kw'>=</span> <span class='fu'><a href='guess_ab_col.html'>guess_ab_col</a></span>(), <span class='kw'>pita</span> <span class='kw'>=</span> <span class='fu'><a href='guess_ab_col.html'>guess_ab_col</a></span>(),
-  <span class='kw'>poly</span> <span class='kw'>=</span> <span class='fu'><a href='guess_ab_col.html'>guess_ab_col</a></span>(), <span class='kw'>pris</span> <span class='kw'>=</span> <span class='fu'><a href='guess_ab_col.html'>guess_ab_col</a></span>(),
-  <span class='kw'>qida</span> <span class='kw'>=</span> <span class='fu'><a href='guess_ab_col.html'>guess_ab_col</a></span>(), <span class='kw'>rifa</span> <span class='kw'>=</span> <span class='fu'><a href='guess_ab_col.html'>guess_ab_col</a></span>(),
-  <span class='kw'>roxi</span> <span class='kw'>=</span> <span class='fu'><a href='guess_ab_col.html'>guess_ab_col</a></span>(), <span class='kw'>siso</span> <span class='kw'>=</span> <span class='fu'><a href='guess_ab_col.html'>guess_ab_col</a></span>(),
-  <span class='kw'>teic</span> <span class='kw'>=</span> <span class='fu'><a href='guess_ab_col.html'>guess_ab_col</a></span>(), <span class='kw'>tetr</span> <span class='kw'>=</span> <span class='fu'><a href='guess_ab_col.html'>guess_ab_col</a></span>(),
-  <span class='kw'>tica</span> <span class='kw'>=</span> <span class='fu'><a href='guess_ab_col.html'>guess_ab_col</a></span>(), <span class='kw'>tige</span> <span class='kw'>=</span> <span class='fu'><a href='guess_ab_col.html'>guess_ab_col</a></span>(),
-  <span class='kw'>tobr</span> <span class='kw'>=</span> <span class='fu'><a href='guess_ab_col.html'>guess_ab_col</a></span>(), <span class='kw'>trim</span> <span class='kw'>=</span> <span class='fu'><a href='guess_ab_col.html'>guess_ab_col</a></span>(),
-  <span class='kw'>trsu</span> <span class='kw'>=</span> <span class='fu'><a href='guess_ab_col.html'>guess_ab_col</a></span>(), <span class='kw'>vanc</span> <span class='kw'>=</span> <span class='fu'><a href='guess_ab_col.html'>guess_ab_col</a></span>(), <span class='no'>...</span>)
+  <span class='st'>"expert"</span>, <span class='st'>"other"</span>, <span class='st'>"all"</span>), <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>...</span>)
 
 <span class='fu'>eucast_rules_file</span>()</pre>
     
@@ -282,7 +251,7 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>x</th>
-      <td><p>data with antibiotic columns, like e.g. <code>amox</code> and <code>amcl</code></p></td>
+      <td><p>data with antibiotic columns, like e.g. <code>AMX</code> and <code>AMC</code></p></td>
     </tr>
     <tr>
       <th>col_mo</th>
@@ -301,12 +270,8 @@
       <td><p>a logical to indicate whether extensive info should be returned as a <code>data.frame</code> with info about which rows and columns are effected. It runs all EUCAST rules, but will not be applied to an output - only an informative <code>data.frame</code> with changes will be returned as output.</p></td>
     </tr>
     <tr>
-      <th>amcl, amik, amox, ampi, azit, azlo, aztr, cefa, cfep, cfot, cfox, cfra, cfta, cftr, cfur, chlo, cipr, clar, clin, clox, coli, czol, dapt, doxy, erta, eryt, fosf, fusi, gent, imip, kana, levo, linc, line, mero, mezl, mino, moxi, nali, neom, neti, nitr, norf, novo, oflo, oxac, peni, pipe, pita, poly, pris, qida, rifa, roxi, siso, teic, tetr, tica, tige, tobr, trim, trsu, vanc</th>
-      <td><p>column name of an antibiotic, see Antibiotics</p></td>
-    </tr>
-    <tr>
       <th>...</th>
-      <td><p>parameters that are passed on to <code>eucast_rules</code></p></td>
+      <td><p>column name of an antibiotic, see section Antibiotics</p></td>
     </tr>
     </table>
     
@@ -321,7 +286,7 @@
 <li><p>EUCAST Breakpoint tables for interpretation of MICs and zone diameters. Version 9.0, 2019. <br />
       <a href='http://www.eucast.org/fileadmin/src/media/PDFs/EUCAST_files/Breakpoint_tables/v_9.0_Breakpoint_Tables.xlsx'>http://www.eucast.org/fileadmin/src/media/PDFs/EUCAST_files/Breakpoint_tables/v_9.0_Breakpoint_Tables.xlsx</a></p></li>
 </ul>
-    <p>For editing the reference file (which is available with <code>eucast_rules_file</code>), these values can all be used for target antibiotics: aminoglycosides, tetracyclines, polymyxins, macrolides, glycopeptides, streptogramins, cephalosporins, cephalosporins_without_cfta, carbapenems, aminopenicillins, ureidopenicillins, fluoroquinolones, all_betalactams, and all separate four letter codes like amcl. They can be separated by comma: <code>"amcl, fluoroquinolones"</code>. The mo_property can be any column name from the <code><a href='microorganisms.html'>microorganisms</a></code> data set, or <code>genus_species</code> or <code>gramstain</code>. This file contains references to the 'Burkholderia cepacia complex'. The species in this group can be found in: LiPuma JJ, 2015 (PMID 16217180).</p>
+    <p>For editing the reference file (which is available with <code>eucast_rules_file</code>), these values can all be used for target antibiotics: aminoglycosides, tetracyclines, polymyxins, macrolides, glycopeptides, streptogramins, cephalosporins, cephalosporins_without_cfta, carbapenems, aminopenicillins, ureidopenicillins, fluoroquinolones, all_betalactams, and all separate four letter codes like AMC. They can be separated by comma: <code>"AMC, fluoroquinolones"</code>. The mo_property can be any column name from the <code><a href='microorganisms.html'>microorganisms</a></code> data set, or <code>genus_species</code> or <code>gramstain</code>. This file contains references to the 'Burkholderia cepacia complex'. The species in this group can be found in: LiPuma JJ, 2015 (PMID 16217180).</p>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
@@ -329,79 +294,81 @@
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p><strong>NOTE:</strong> This function does not translate MIC values to RSI values. It only applies (1) inferred susceptibility and resistance based on results of other antibiotics and (2) intrinsic resistance based on taxonomic properties of a microorganism.</p>
-<p>The file used for applying all EUCAST rules can be retrieved with <code>eucast_rules_file()</code>. It returns an easily readable data set containing all rules. The original TSV file (tab separated file) that is being read by this function can be found when running this command: <br />
+    <p><strong>Note:</strong> This function does not translate MIC values to RSI values. Use <code><a href='as.rsi.html'>as.rsi</a></code> for that. <br />
+<strong>Note:</strong> When ampicillin (AMP, J01CA01) is not available but amoxicillin (AMX, J01CA04) is, the latter will be used for all rules where there is a dependency on ampicillin. These drugs are interchangeable when it comes to expression of antimicrobial resistance.</p>
+<p>The file used for applying all EUCAST rules can be retrieved with <code>eucast_rules_file()</code>. It returns an easily readable data set containing all rules. The original TSV file (tab separated file) that is being read by <code>eucast_rules()</code> can be found by running this command: <br />
 <code>AMR::EUCAST_RULES_FILE_LOCATION</code> (without brackets).</p>
-<p>In the source code it is located under <a href='https://gitlab.com/msberends/AMR/blob/master/inst/eucast/eucast_rules.tsv'><code>./inst/eucast/eucast_rules.tsv</code></a>.</p>
-<p><strong>Note:</strong> When ampicillin (J01CA01) is not available but amoxicillin (J01CA04) is, the latter will be used for all rules where there is a dependency on ampicillin. These drugs are interchangeable when it comes to expression of antimicrobial resistance.</p>
+<p>In the source code the file containing all rules is located <a href='https://gitlab.com/msberends/AMR/blob/master/inst/eucast/eucast_rules.tsv'>here</a>.</p>
     
     <h2 class="hasAnchor" id="antibiotics"><a class="anchor" href="#antibiotics"></a>Antibiotics</h2>
 
     
-    <p>To define antibiotics column names, leave as it is to determine it automatically with <code><a href='guess_ab_col.html'>guess_ab_col</a></code> or input a text (case-insensitive) or use <code>NULL</code> to skip a column (e.g. <code>tica = NULL</code>). Non-existing columns will anyway be skipped with a warning.</p>
-<p>Abbrevations of the column containing antibiotics in the form: <strong>abbreviation</strong>: generic name (<em>ATC code</em>)</p>
-<p><strong>amcl</strong>: amoxicillin+clavulanic acid (<a href='https://www.whocc.no/atc_ddd_index/?code=J01CR02'>J01CR02</a>),
- <strong>amik</strong>: amikacin (<a href='https://www.whocc.no/atc_ddd_index/?code=J01GB06'>J01GB06</a>),
- <strong>amox</strong>: amoxicillin (<a href='https://www.whocc.no/atc_ddd_index/?code=J01CA04'>J01CA04</a>),
- <strong>ampi</strong>: ampicillin (<a href='https://www.whocc.no/atc_ddd_index/?code=J01CA01'>J01CA01</a>),
- <strong>azit</strong>: azithromycin (<a href='https://www.whocc.no/atc_ddd_index/?code=J01FA10'>J01FA10</a>),
- <strong>azlo</strong>: azlocillin (<a href='https://www.whocc.no/atc_ddd_index/?code=J01CA09'>J01CA09</a>),
- <strong>aztr</strong>: aztreonam (<a href='https://www.whocc.no/atc_ddd_index/?code=J01DF01'>J01DF01</a>),
- <strong>cefa</strong>: cefaloridine (<a href='https://www.whocc.no/atc_ddd_index/?code=J01DB02'>J01DB02</a>),
- <strong>cfep</strong>: cefepime (<a href='https://www.whocc.no/atc_ddd_index/?code=J01DE01'>J01DE01</a>),
- <strong>cfot</strong>: cefotaxime (<a href='https://www.whocc.no/atc_ddd_index/?code=J01DD01'>J01DD01</a>),
- <strong>cfox</strong>: cefoxitin (<a href='https://www.whocc.no/atc_ddd_index/?code=J01DC01'>J01DC01</a>),
- <strong>cfra</strong>: cefradine (<a href='https://www.whocc.no/atc_ddd_index/?code=J01DB09'>J01DB09</a>),
- <strong>cfta</strong>: ceftazidime (<a href='https://www.whocc.no/atc_ddd_index/?code=J01DD02'>J01DD02</a>),
- <strong>cftr</strong>: ceftriaxone (<a href='https://www.whocc.no/atc_ddd_index/?code=J01DD04'>J01DD04</a>),
- <strong>cfur</strong>: cefuroxime (<a href='https://www.whocc.no/atc_ddd_index/?code=J01DC02'>J01DC02</a>),
- <strong>chlo</strong>: chloramphenicol (<a href='https://www.whocc.no/atc_ddd_index/?code=J01BA01'>J01BA01</a>),
- <strong>cipr</strong>: ciprofloxacin (<a href='https://www.whocc.no/atc_ddd_index/?code=J01MA02'>J01MA02</a>),
- <strong>clar</strong>: clarithromycin (<a href='https://www.whocc.no/atc_ddd_index/?code=J01FA09'>J01FA09</a>),
- <strong>clin</strong>: clindamycin (<a href='https://www.whocc.no/atc_ddd_index/?code=J01FF01'>J01FF01</a>),
- <strong>clox</strong>: flucloxacillin (<a href='https://www.whocc.no/atc_ddd_index/?code=J01CF05'>J01CF05</a>),
- <strong>coli</strong>: colistin (<a href='https://www.whocc.no/atc_ddd_index/?code=J01XB01'>J01XB01</a>),
- <strong>czol</strong>: cefazolin (<a href='https://www.whocc.no/atc_ddd_index/?code=J01DB04'>J01DB04</a>),
- <strong>dapt</strong>: daptomycin (<a href='https://www.whocc.no/atc_ddd_index/?code=J01XX09'>J01XX09</a>),
- <strong>doxy</strong>: doxycycline (<a href='https://www.whocc.no/atc_ddd_index/?code=J01AA02'>J01AA02</a>),
- <strong>erta</strong>: ertapenem (<a href='https://www.whocc.no/atc_ddd_index/?code=J01DH03'>J01DH03</a>),
- <strong>eryt</strong>: erythromycin (<a href='https://www.whocc.no/atc_ddd_index/?code=J01FA01'>J01FA01</a>),
- <strong>fosf</strong>: fosfomycin (<a href='https://www.whocc.no/atc_ddd_index/?code=J01XX01'>J01XX01</a>),
- <strong>fusi</strong>: fusidic acid (<a href='https://www.whocc.no/atc_ddd_index/?code=J01XC01'>J01XC01</a>),
- <strong>gent</strong>: gentamicin (<a href='https://www.whocc.no/atc_ddd_index/?code=J01GB03'>J01GB03</a>),
- <strong>imip</strong>: imipenem (<a href='https://www.whocc.no/atc_ddd_index/?code=J01DH51'>J01DH51</a>),
- <strong>kana</strong>: kanamycin (<a href='https://www.whocc.no/atc_ddd_index/?code=J01GB04'>J01GB04</a>),
- <strong>levo</strong>: levofloxacin (<a href='https://www.whocc.no/atc_ddd_index/?code=J01MA12'>J01MA12</a>),
- <strong>linc</strong>: lincomycin (<a href='https://www.whocc.no/atc_ddd_index/?code=J01FF02'>J01FF02</a>),
- <strong>line</strong>: linezolid (<a href='https://www.whocc.no/atc_ddd_index/?code=J01XX08'>J01XX08</a>),
- <strong>mero</strong>: meropenem (<a href='https://www.whocc.no/atc_ddd_index/?code=J01DH02'>J01DH02</a>),
- <strong>mezl</strong>: mezlocillin (<a href='https://www.whocc.no/atc_ddd_index/?code=J01CA10'>J01CA10</a>),
- <strong>mino</strong>: minocycline (<a href='https://www.whocc.no/atc_ddd_index/?code=J01AA08'>J01AA08</a>),
- <strong>moxi</strong>: moxifloxacin (<a href='https://www.whocc.no/atc_ddd_index/?code=J01MA14'>J01MA14</a>),
- <strong>nali</strong>: nalidixic acid (<a href='https://www.whocc.no/atc_ddd_index/?code=J01MB02'>J01MB02</a>),
- <strong>neom</strong>: neomycin (<a href='https://www.whocc.no/atc_ddd_index/?code=J01GB05'>J01GB05</a>),
- <strong>neti</strong>: netilmicin (<a href='https://www.whocc.no/atc_ddd_index/?code=J01GB07'>J01GB07</a>),
- <strong>nitr</strong>: nitrofurantoin (<a href='https://www.whocc.no/atc_ddd_index/?code=J01XE01'>J01XE01</a>),
- <strong>norf</strong>: norfloxacin (<a href='https://www.whocc.no/atc_ddd_index/?code=J01MA06'>J01MA06</a>),
- <strong>novo</strong>: novobiocin (an ATCvet code: <a href='https://www.whocc.no/atc_ddd_index/?code=QJ01XX95'>QJ01XX95</a>),
- <strong>oflo</strong>: ofloxacin (<a href='https://www.whocc.no/atc_ddd_index/?code=J01MA01'>J01MA01</a>),
- <strong>peni</strong>: (benzyl)penicillin (<a href='https://www.whocc.no/atc_ddd_index/?code=J01CE01'>J01CE01</a>),
- <strong>pipe</strong>: piperacillin (<a href='https://www.whocc.no/atc_ddd_index/?code=J01CA12'>J01CA12</a>),
- <strong>pita</strong>: piperacillin+tazobactam (<a href='https://www.whocc.no/atc_ddd_index/?code=J01CR05'>J01CR05</a>),
- <strong>poly</strong>: polymyxin B (<a href='https://www.whocc.no/atc_ddd_index/?code=J01XB02'>J01XB02</a>),
- <strong>pris</strong>: pristinamycin (<a href='https://www.whocc.no/atc_ddd_index/?code=J01FG01'>J01FG01</a>),
- <strong>qida</strong>: quinupristin/dalfopristin (<a href='https://www.whocc.no/atc_ddd_index/?code=J01FG02'>J01FG02</a>),
- <strong>rifa</strong>: rifampicin (<a href='https://www.whocc.no/atc_ddd_index/?code=J04AB02'>J04AB02</a>),
- <strong>roxi</strong>: roxithromycin (<a href='https://www.whocc.no/atc_ddd_index/?code=J01FA06'>J01FA06</a>),
- <strong>siso</strong>: sisomicin (<a href='https://www.whocc.no/atc_ddd_index/?code=J01GB08'>J01GB08</a>),
- <strong>teic</strong>: teicoplanin (<a href='https://www.whocc.no/atc_ddd_index/?code=J01XA02'>J01XA02</a>),
- <strong>tetr</strong>: tetracycline (<a href='https://www.whocc.no/atc_ddd_index/?code=J01AA07'>J01AA07</a>),
- <strong>tica</strong>: ticarcillin (<a href='https://www.whocc.no/atc_ddd_index/?code=J01CA13'>J01CA13</a>),
- <strong>tige</strong>: tigecycline (<a href='https://www.whocc.no/atc_ddd_index/?code=J01AA12'>J01AA12</a>),
- <strong>tobr</strong>: tobramycin (<a href='https://www.whocc.no/atc_ddd_index/?code=J01GB01'>J01GB01</a>),
- <strong>trim</strong>: trimethoprim (<a href='https://www.whocc.no/atc_ddd_index/?code=J01EA01'>J01EA01</a>),
- <strong>trsu</strong>: sulfamethoxazole and trimethoprim (<a href='https://www.whocc.no/atc_ddd_index/?code=J01EE01'>J01EE01</a>),
- <strong>vanc</strong>: vancomycin (<a href='https://www.whocc.no/atc_ddd_index/?code=J01XA01'>J01XA01</a>).</p>
+    <p>To define antibiotics column names, leave as it is to determine it automatically with <code><a href='guess_ab_col.html'>guess_ab_col</a></code> or input a text (case-insensitive), or use <code>NULL</code> to skip a column (e.g. <code>TIC = NULL</code> to skip ticarcillin). Manually defined but non-existing columns will be skipped with a warning.</p>
+<p>Available abbrevations of the column containing antibiotics in the form '<strong>antimicrobial ID</strong>: name (<em>ATC code</em>)':</p>
+<p><strong>AMC</strong>: amoxicillin/clavulanic acid (<a href='https://www.whocc.no/atc_ddd_index/?code=J01CR02'>J01CR02</a>),
+ <strong>AMK</strong>: amikacin (<a href='https://www.whocc.no/atc_ddd_index/?code=J01GB06'>J01GB06</a>),
+ <strong>AMX</strong>: amoxicillin (<a href='https://www.whocc.no/atc_ddd_index/?code=J01CA04'>J01CA04</a>),
+ <strong>AMP</strong>: ampicillin (<a href='https://www.whocc.no/atc_ddd_index/?code=J01CA01'>J01CA01</a>),
+ <strong>AZM</strong>: azithromycin (<a href='https://www.whocc.no/atc_ddd_index/?code=J01FA10'>J01FA10</a>),
+ <strong>AZL</strong>: azlocillin (<a href='https://www.whocc.no/atc_ddd_index/?code=J01CA09'>J01CA09</a>),
+ <strong>ATM</strong>: aztreonam (<a href='https://www.whocc.no/atc_ddd_index/?code=J01DF01'>J01DF01</a>),
+ <strong>RID</strong>: cefaloridine (<a href='https://www.whocc.no/atc_ddd_index/?code=J01DB02'>J01DB02</a>),
+ <strong>FEP</strong>: cefepime (<a href='https://www.whocc.no/atc_ddd_index/?code=J01DE01'>J01DE01</a>),
+ <strong>CTX</strong>: cefotaxime (<a href='https://www.whocc.no/atc_ddd_index/?code=J01DD01'>J01DD01</a>),
+ <strong>FOX</strong>: cefoxitin (<a href='https://www.whocc.no/atc_ddd_index/?code=J01DC01'>J01DC01</a>),
+ <strong>CED</strong>: cefradine (<a href='https://www.whocc.no/atc_ddd_index/?code=J01DB09'>J01DB09</a>),
+ <strong>CAZ</strong>: ceftazidime (<a href='https://www.whocc.no/atc_ddd_index/?code=J01DD02'>J01DD02</a>),
+ <strong>CRO</strong>: ceftriaxone (<a href='https://www.whocc.no/atc_ddd_index/?code=J01DD04'>J01DD04</a>),
+ <strong>CXM</strong>: cefuroxime (<a href='https://www.whocc.no/atc_ddd_index/?code=J01DC02'>J01DC02</a>),
+ <strong>CHL</strong>: chloramphenicol (<a href='https://www.whocc.no/atc_ddd_index/?code=J01BA01'>J01BA01</a>),
+ <strong>CIP</strong>: ciprofloxacin (<a href='https://www.whocc.no/atc_ddd_index/?code=J01MA02'>J01MA02</a>),
+ <strong>CLR</strong>: clarithromycin (<a href='https://www.whocc.no/atc_ddd_index/?code=J01FA09'>J01FA09</a>),
+ <strong>CLI</strong>: clindamycin (<a href='https://www.whocc.no/atc_ddd_index/?code=J01FF01'>J01FF01</a>),
+ <strong>FLC</strong>: flucloxacillin (<a href='https://www.whocc.no/atc_ddd_index/?code=J01CF05'>J01CF05</a>),
+ <strong>COL</strong>: colistin (<a href='https://www.whocc.no/atc_ddd_index/?code=J01XB01'>J01XB01</a>),
+ <strong>CZO</strong>: cefazolin (<a href='https://www.whocc.no/atc_ddd_index/?code=J01DB04'>J01DB04</a>),
+ <strong>DAP</strong>: daptomycin (<a href='https://www.whocc.no/atc_ddd_index/?code=J01XX09'>J01XX09</a>),
+ <strong>DOX</strong>: doxycycline (<a href='https://www.whocc.no/atc_ddd_index/?code=J01AA02'>J01AA02</a>),
+ <strong>ETP</strong>: ertapenem (<a href='https://www.whocc.no/atc_ddd_index/?code=J01DH03'>J01DH03</a>),
+ <strong>ERY</strong>: erythromycin (<a href='https://www.whocc.no/atc_ddd_index/?code=J01FA01'>J01FA01</a>),
+ <strong>FOS</strong>: fosfomycin (<a href='https://www.whocc.no/atc_ddd_index/?code=J01XX01'>J01XX01</a>),
+ <strong>FUS</strong>: fusidic acid (<a href='https://www.whocc.no/atc_ddd_index/?code=J01XC01'>J01XC01</a>),
+ <strong>GEN</strong>: gentamicin (<a href='https://www.whocc.no/atc_ddd_index/?code=J01GB03'>J01GB03</a>),
+ <strong>IPM</strong>: imipenem (<a href='https://www.whocc.no/atc_ddd_index/?code=J01DH51'>J01DH51</a>),
+ <strong>KAN</strong>: kanamycin (<a href='https://www.whocc.no/atc_ddd_index/?code=J01GB04'>J01GB04</a>),
+ <strong>LVX</strong>: levofloxacin (<a href='https://www.whocc.no/atc_ddd_index/?code=J01MA12'>J01MA12</a>),
+ <strong>LIN</strong>: lincomycin (<a href='https://www.whocc.no/atc_ddd_index/?code=J01FF02'>J01FF02</a>),
+ <strong>LNZ</strong>: linezolid (<a href='https://www.whocc.no/atc_ddd_index/?code=J01XX08'>J01XX08</a>),
+ <strong>MEM</strong>: meropenem (<a href='https://www.whocc.no/atc_ddd_index/?code=J01DH02'>J01DH02</a>),
+ <strong>MEZ</strong>: mezlocillin (<a href='https://www.whocc.no/atc_ddd_index/?code=J01CA10'>J01CA10</a>),
+ <strong>MNO</strong>: minocycline (<a href='https://www.whocc.no/atc_ddd_index/?code=J01AA08'>J01AA08</a>),
+ <strong>MFX</strong>: moxifloxacin (<a href='https://www.whocc.no/atc_ddd_index/?code=J01MA14'>J01MA14</a>),
+ <strong>MTR</strong>: metronidazole (<a href='https://www.whocc.no/atc_ddd_index/?code=J01MA14'>J01XD01</a>),
+ <strong>NAL</strong>: nalidixic acid (<a href='https://www.whocc.no/atc_ddd_index/?code=J01MB02'>J01MB02</a>),
+ <strong>NEO</strong>: neomycin (<a href='https://www.whocc.no/atc_ddd_index/?code=J01GB05'>J01GB05</a>),
+ <strong>NET</strong>: netilmicin (<a href='https://www.whocc.no/atc_ddd_index/?code=J01GB07'>J01GB07</a>),
+ <strong>NIT</strong>: nitrofurantoin (<a href='https://www.whocc.no/atc_ddd_index/?code=J01XE01'>J01XE01</a>),
+ <strong>NOR</strong>: norfloxacin (<a href='https://www.whocc.no/atc_ddd_index/?code=J01MA06'>J01MA06</a>),
+ <strong>NOV</strong>: novobiocin (an ATCvet code: <a href='https://www.whocc.no/atc_ddd_index/?code=QJ01XX95'>QJ01XX95</a>),
+ <strong>OFX</strong>: ofloxacin (<a href='https://www.whocc.no/atc_ddd_index/?code=J01MA01'>J01MA01</a>),
+ <strong>OXA</strong>: oxacillin (<a href='https://www.whocc.no/atc_ddd_index/?code=J01MA01'>J01CF04</a>),
+ <strong>PEN</strong>: penicillin G (<a href='https://www.whocc.no/atc_ddd_index/?code=J01CE01'>J01CE01</a>),
+ <strong>PIP</strong>: piperacillin (<a href='https://www.whocc.no/atc_ddd_index/?code=J01CA12'>J01CA12</a>),
+ <strong>TZP</strong>: piperacillin/tazobactam (<a href='https://www.whocc.no/atc_ddd_index/?code=J01CR05'>J01CR05</a>),
+ <strong>PLB</strong>: polymyxin B (<a href='https://www.whocc.no/atc_ddd_index/?code=J01XB02'>J01XB02</a>),
+ <strong>PRI</strong>: pristinamycin (<a href='https://www.whocc.no/atc_ddd_index/?code=J01FG01'>J01FG01</a>),
+ <strong>QDA</strong>: quinupristin/dalfopristin (<a href='https://www.whocc.no/atc_ddd_index/?code=J01FG02'>J01FG02</a>),
+ <strong>RIF</strong>: rifampicin (<a href='https://www.whocc.no/atc_ddd_index/?code=J04AB02'>J04AB02</a>),
+ <strong>RXT</strong>: roxithromycin (<a href='https://www.whocc.no/atc_ddd_index/?code=J01FA06'>J01FA06</a>),
+ <strong>SIS</strong>: sisomicin (<a href='https://www.whocc.no/atc_ddd_index/?code=J01GB08'>J01GB08</a>),
+ <strong>TEC</strong>: teicoplanin (<a href='https://www.whocc.no/atc_ddd_index/?code=J01XA02'>J01XA02</a>),
+ <strong>TCY</strong>: tetracycline (<a href='https://www.whocc.no/atc_ddd_index/?code=J01AA07'>J01AA07</a>),
+ <strong>TIC</strong>: ticarcillin (<a href='https://www.whocc.no/atc_ddd_index/?code=J01CA13'>J01CA13</a>),
+ <strong>TGC</strong>: tigecycline (<a href='https://www.whocc.no/atc_ddd_index/?code=J01AA12'>J01AA12</a>),
+ <strong>TOB</strong>: tobramycin (<a href='https://www.whocc.no/atc_ddd_index/?code=J01GB01'>J01GB01</a>),
+ <strong>TMP</strong>: trimethoprim (<a href='https://www.whocc.no/atc_ddd_index/?code=J01EA01'>J01EA01</a>),
+ <strong>SXT</strong>: trimethoprim/sulfamethoxazole (<a href='https://www.whocc.no/atc_ddd_index/?code=J01EE01'>J01EE01</a>),
+ <strong>VAN</strong>: vancomycin (<a href='https://www.whocc.no/atc_ddd_index/?code=J01XA01'>J01XA01</a>).</p>
     
     <h2 class="hasAnchor" id="read-more-on-our-website-"><a class="anchor" href="#read-more-on-our-website-"></a>Read more on our website!</h2>
 
@@ -418,17 +385,17 @@
                        <span class='st'>"Escherichia coli"</span>,
                        <span class='st'>"Klebsiella pneumoniae"</span>,
                        <span class='st'>"Pseudomonas aeruginosa"</span>),
-                <span class='kw'>vanc</span> <span class='kw'>=</span> <span class='st'>"-"</span>,       <span class='co'># Vancomycin</span>
-                <span class='kw'>amox</span> <span class='kw'>=</span> <span class='st'>"-"</span>,       <span class='co'># Amoxicillin</span>
-                <span class='kw'>coli</span> <span class='kw'>=</span> <span class='st'>"-"</span>,       <span class='co'># Colistin</span>
-                <span class='kw'>cfta</span> <span class='kw'>=</span> <span class='st'>"-"</span>,       <span class='co'># Ceftazidime</span>
-                <span class='kw'>cfur</span> <span class='kw'>=</span> <span class='st'>"-"</span>,       <span class='co'># Cefuroxime</span>
-                <span class='kw'>peni</span> <span class='kw'>=</span> <span class='st'>"S"</span>,       <span class='co'># Benzylpenicillin</span>
-                <span class='kw'>cfox</span> <span class='kw'>=</span> <span class='st'>"S"</span>,       <span class='co'># Cefoxitin</span>
+                <span class='kw'>VAN</span> <span class='kw'>=</span> <span class='st'>"-"</span>,       <span class='co'># Vancomycin</span>
+                <span class='kw'>AMX</span> <span class='kw'>=</span> <span class='st'>"-"</span>,       <span class='co'># Amoxicillin</span>
+                <span class='kw'>COL</span> <span class='kw'>=</span> <span class='st'>"-"</span>,       <span class='co'># Colistin</span>
+                <span class='kw'>CAZ</span> <span class='kw'>=</span> <span class='st'>"-"</span>,       <span class='co'># Ceftazidime</span>
+                <span class='kw'>CXM</span> <span class='kw'>=</span> <span class='st'>"-"</span>,       <span class='co'># Cefuroxime</span>
+                <span class='kw'>PEN</span> <span class='kw'>=</span> <span class='st'>"S"</span>,       <span class='co'># Penicillin G</span>
+                <span class='kw'>FOX</span> <span class='kw'>=</span> <span class='st'>"S"</span>,       <span class='co'># Cefoxitin</span>
                 <span class='kw'>stringsAsFactors</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
 
 <span class='no'>a</span>
-<span class='co'>#                       mo vanc amox coli cfta cfur peni cfox</span>
+<span class='co'>#                       mo  VAN  AMX  COL  CAZ  CXM  PEN  FOX</span>
 <span class='co'># 1  Staphylococcus aureus    -    -    -    -    -    S    S</span>
 <span class='co'># 2  Enterococcus faecalis    -    -    -    -    -    S    S</span>
 <span class='co'># 3       Escherichia coli    -    -    -    -    -    S    S</span>
@@ -440,7 +407,7 @@
 <span class='no'>b</span> <span class='kw'>&lt;-</span> <span class='fu'>eucast_rules</span>(<span class='no'>a</span>)
 
 <span class='no'>b</span>
-<span class='co'>#                       mo vanc amox coli cfta cfur peni cfox</span>
+<span class='co'>#                       mo  VAN  AMX  COL  CAZ  CXM  PEN  FOX</span>
 <span class='co'># 1  Staphylococcus aureus    -    S    R    R    S    S    S</span>
 <span class='co'># 2  Enterococcus faecalis    -    -    R    R    R    S    R</span>
 <span class='co'># 3       Escherichia coli    R    -    -    -    -    R    S</span>

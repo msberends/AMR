@@ -47,7 +47,7 @@
   <script src="../extra.js"></script>
 <meta property="og:title" content="Property of an antibiotic — ab_property" />
 
-<meta property="og:description" content="Use these functions to return a specific property of an antibiotic from the antibiotics data set, based on their ATC code. Get such a code with as.atc." />
+<meta property="og:description" content="Use these functions to return a specific property of an antibiotic from the antibiotics data set. All input values will be evaluated internally with as.ab." />
 
 <meta property="og:image" content="https://msberends.gitlab.io/AMR/logo.png" />
 <meta name="twitter:card" content="summary" />
@@ -80,7 +80,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.0.9012</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.6.1.9003</span>
       </span>
     </div>
 
@@ -110,10 +110,24 @@
       </a>
     </li>
     <li>
-      <a href="../articles/Predict.html">
+      <a href="../articles/resistance_predict.html">
         <span class="fa fa-dice"></span>
          
         Predict antimicrobial resistance
+      </a>
+    </li>
+    <li>
+      <a href="../articles/WHONET.html">
+        <span class="fa fa-globe-americas"></span>
+         
+        Work with WHONET data
+      </a>
+    </li>
+    <li>
+      <a href="../articles/SPSS.html">
+        <span class="fa fa-file-upload"></span>
+         
+        Import data from SPSS/SAS/Stata
       </a>
     </li>
     <li>
@@ -124,14 +138,14 @@
       </a>
     </li>
     <li>
-      <a href="../articles/mo_property.html">
+      <a href="../reference/mo_property.html">
         <span class="fa fa-bug"></span>
          
         Get properties of a microorganism
       </a>
     </li>
     <li>
-      <a href="../articles/ab_property.html">
+      <a href="../reference/ab_property.html">
         <span class="fa fa-capsules"></span>
          
         Get properties of an antibiotic
@@ -223,52 +237,89 @@
 
     <div class="ref-description">
     
-    <p>Use these functions to return a specific property of an antibiotic from the <code><a href='antibiotics.html'>antibiotics</a></code> data set, based on their ATC code. Get such a code with <code><a href='as.atc.html'>as.atc</a></code>.</p>
+    <p>Use these functions to return a specific property of an antibiotic from the <code><a href='antibiotics.html'>antibiotics</a></code> data set. All input values will be evaluated internally with <code><a href='as.ab.html'>as.ab</a></code>.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>ab_property</span>(<span class='no'>x</span>, <span class='kw'>property</span> <span class='kw'>=</span> <span class='st'>"official"</span>)
+    <pre class="usage"><span class='fu'>ab_name</span>(<span class='no'>x</span>, <span class='kw'>language</span> <span class='kw'>=</span> <span class='fu'><a href='translate.html'>get_locale</a></span>(), <span class='kw'>tolower</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>...</span>)
 
-<span class='fu'>ab_atc</span>(<span class='no'>x</span>)
+<span class='fu'>ab_atc</span>(<span class='no'>x</span>, <span class='no'>...</span>)
 
-<span class='fu'>ab_official</span>(<span class='no'>x</span>, <span class='kw'>language</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)
+<span class='fu'>ab_cid</span>(<span class='no'>x</span>, <span class='no'>...</span>)
 
-<span class='fu'>ab_name</span>(<span class='no'>x</span>, <span class='kw'>language</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)
+<span class='fu'>ab_synonyms</span>(<span class='no'>x</span>, <span class='no'>...</span>)
 
-<span class='fu'>ab_trivial_nl</span>(<span class='no'>x</span>)
+<span class='fu'>ab_tradenames</span>(<span class='no'>x</span>, <span class='no'>...</span>)
 
-<span class='fu'>ab_certe</span>(<span class='no'>x</span>)
+<span class='fu'>ab_group</span>(<span class='no'>x</span>, <span class='no'>...</span>)
 
-<span class='fu'>ab_umcg</span>(<span class='no'>x</span>)
+<span class='fu'>ab_atc_group1</span>(<span class='no'>x</span>, <span class='no'>...</span>)
 
-<span class='fu'>ab_tradenames</span>(<span class='no'>x</span>)</pre>
+<span class='fu'>ab_atc_group2</span>(<span class='no'>x</span>, <span class='no'>...</span>)
+
+<span class='fu'>ab_ddd</span>(<span class='no'>x</span>, <span class='kw'>administration</span> <span class='kw'>=</span> <span class='st'>"oral"</span>, <span class='kw'>units</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>...</span>)
+
+<span class='fu'>ab_property</span>(<span class='no'>x</span>, <span class='kw'>property</span> <span class='kw'>=</span> <span class='st'>"name"</span>, <span class='kw'>language</span> <span class='kw'>=</span> <span class='fu'><a href='translate.html'>get_locale</a></span>(), <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>x</th>
-      <td><p>a (vector of a) valid <code><a href='as.atc.html'>atc</a></code> code or any text that can be coerced to a valid atc with <code><a href='as.atc.html'>as.atc</a></code></p></td>
-    </tr>
-    <tr>
-      <th>property</th>
-      <td><p>one of the column names of one of the <code><a href='antibiotics.html'>antibiotics</a></code> data set, like <code>"atc"</code> and <code>"official"</code></p></td>
+      <td><p>any (vector of) text that can be coerced to a valid microorganism code with <code><a href='as.ab.html'>as.ab</a></code></p></td>
     </tr>
     <tr>
       <th>language</th>
-      <td><p>language of the returned text, defaults to English (<code>"en"</code>) and can be set with <code><a href='https://www.rdocumentation.org/packages/base/topics/options'>getOption</a>("AMR_locale")</code>. Either one of <code>"en"</code> (English) or <code>"nl"</code> (Dutch).</p></td>
+      <td><p>language of the returned text, defaults to system language (see <code><a href='translate.html'>get_locale</a></code>) and can also be set with <code><a href='https://www.rdocumentation.org/packages/base/topics/options'>getOption</a>("AMR_locale")</code>. Use <code>language = NULL</code> or <code>language = ""</code> to prevent translation.</p></td>
+    </tr>
+    <tr>
+      <th>tolower</th>
+      <td><p>logical to indicate whether the first character of every output should be transformed to a lower case character. This will lead to e.g. "polymyxin B" and not "polymyxin b".</p></td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td><p>other parameters passed on to <code><a href='as.ab.html'>as.ab</a></code></p></td>
+    </tr>
+    <tr>
+      <th>administration</th>
+      <td><p>way of administration, either <code>"oral"</code> or <code>"iv"</code></p></td>
+    </tr>
+    <tr>
+      <th>units</th>
+      <td><p>a logical to indicate whether the units instead of the DDDs itself must be returned, see Examples</p></td>
+    </tr>
+    <tr>
+      <th>property</th>
+      <td><p>one of the column names of one of the <code><a href='antibiotics.html'>antibiotics</a></code> data set</p></td>
     </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A vector of values. In case of <code>ab_tradenames</code>, if <code>x</code> is of length one, a vector will be returned. Otherwise a <code><a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a></code>, with <code>x</code> as names.</p>
+    
+<ul>
+<li><p>An <code>integer</code> in case of <code>ab_cid</code></p></li>
+<li><p>A named <code>list</code> in case of multiple <code>ab_synonyms</code></p></li>
+<li><p>A <code>double</code> in case of <code>ab_ddd</code></p></li>
+<li><p>A <code>character</code> in all other cases</p></li>
+</ul>
+
+    
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p>All output will be <a href='translate.html'>translate</a>d where possible.</p>
+    
+    <h2 class="hasAnchor" id="source"><a class="anchor" href="#source"></a>Source</h2>
+
+    
+    <p>World Health Organization (WHO) Collaborating Centre for Drug Statistics Methodology: <a href='https://www.whocc.no/atc_ddd_index/'>https://www.whocc.no/atc_ddd_index/</a></p>
+<p>WHONET 2019 software: <a href='http://www.whonet.org/software.html'>http://www.whonet.org/software.html</a></p>
+<p>European Commission Public Health PHARMACEUTICALS - COMMUNITY REGISTER: <a href='http://ec.europa.eu/health/documents/community-register/html/atc.htm'>http://ec.europa.eu/health/documents/community-register/html/atc.htm</a></p>
     
     <h2 class="hasAnchor" id="read-more-on-our-website-"><a class="anchor" href="#read-more-on-our-website-"></a>Read more on our website!</h2>
 
     
-    <p><img src='figures/logo.png' height=40px style=margin-bottom:5px /> <br />
-On our website <a href='https://msberends.gitlab.io/AMR'>https://msberends.gitlab.io/AMR</a> you can find <a href='https://msberends.gitlab.io/AMR/articles/AMR.html'>a omprehensive tutorial</a> about how to conduct AMR analysis and find <a href='https://msberends.gitlab.io/AMR/reference'>the complete documentation of all functions</a>, which reads a lot easier than in R.</p>
+    <p>On our website <a href='https://msberends.gitlab.io/AMR'>https://msberends.gitlab.io/AMR</a> you can find <a href='https://msberends.gitlab.io/AMR/articles/AMR.html'>a comprehensive tutorial</a> about how to conduct AMR analysis, the <a href='https://msberends.gitlab.io/AMR/reference'>complete documentation of all functions</a> (which reads a lot easier than here in R) and <a href='https://msberends.gitlab.io/AMR/articles/WHONET.html'>an example analysis using WHONET data</a>.</p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
@@ -277,12 +328,33 @@ On our website <a href='https://msberends.gitlab.io/AMR'>https://msberends.gitla
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><span class='co'># NOT RUN {</span>
-<span class='fu'>ab_atc</span>(<span class='st'>"amcl"</span>)         <span class='co'># J01CR02</span>
-<span class='fu'>ab_name</span>(<span class='st'>"amcl"</span>)        <span class='co'># Amoxicillin and beta-lactamase inhibitor</span>
-<span class='fu'>ab_name</span>(<span class='st'>"amcl"</span>, <span class='st'>"nl"</span>)  <span class='co'># Amoxicilline met enzymremmer</span>
-<span class='fu'>ab_trivial_nl</span>(<span class='st'>"amcl"</span>)  <span class='co'># Amoxicilline/clavulaanzuur</span>
-<span class='fu'>ab_certe</span>(<span class='st'>"amcl"</span>)       <span class='co'># amcl</span>
-<span class='fu'>ab_umcg</span>(<span class='st'>"amcl"</span>)        <span class='co'># AMCL</span>
+<span class='co'># all properties:</span>
+<span class='fu'>ab_name</span>(<span class='st'>"AMX"</span>)       <span class='co'># "Amoxicillin"</span>
+<span class='fu'>ab_atc</span>(<span class='st'>"AMX"</span>)        <span class='co'># J01CA04 (ATC code from the WHO)</span>
+<span class='fu'>ab_cid</span>(<span class='st'>"AMX"</span>)        <span class='co'># 33613 (Compound ID from PubChem)</span>
+
+<span class='fu'>ab_synonyms</span>(<span class='st'>"AMX"</span>)   <span class='co'># a list with brand names of amoxicillin</span>
+<span class='fu'>ab_tradenames</span>(<span class='st'>"AMX"</span>) <span class='co'># same</span>
+
+<span class='fu'>ab_group</span>(<span class='st'>"AMX"</span>)      <span class='co'># "Beta-lactams/penicillins"</span>
+<span class='fu'>ab_atc_group1</span>(<span class='st'>"AMX"</span>) <span class='co'># "Beta-lactam antibacterials, penicillins"</span>
+<span class='fu'>ab_atc_group2</span>(<span class='st'>"AMX"</span>) <span class='co'># "Penicillins with extended spectrum"</span>
+
+<span class='fu'>ab_name</span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"AMC"</span>, <span class='st'>"PLB"</span>))  <span class='co'># "Amoxicillin/clavulanic acid" "Polymyxin B"</span>
+<span class='fu'>ab_name</span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"AMC"</span>, <span class='st'>"PLB"</span>),
+        <span class='kw'>tolower</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)       <span class='co'># "amoxicillin/clavulanic acid" "polymyxin B"</span>
+
+<span class='fu'>ab_ddd</span>(<span class='st'>"AMX"</span>, <span class='st'>"oral"</span>)               <span class='co'>#  1</span>
+<span class='fu'>ab_ddd</span>(<span class='st'>"AMX"</span>, <span class='st'>"oral"</span>, <span class='kw'>units</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>) <span class='co'># "g"</span>
+<span class='fu'>ab_ddd</span>(<span class='st'>"AMX"</span>, <span class='st'>"iv"</span>)                 <span class='co'>#  1</span>
+<span class='fu'>ab_ddd</span>(<span class='st'>"AMX"</span>, <span class='st'>"iv"</span>, <span class='kw'>units</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)   <span class='co'># "g"</span>
+
+<span class='co'># all ab_* functions use as.ab() internally:</span>
+<span class='fu'>ab_name</span>(<span class='st'>"Fluclox"</span>)   <span class='co'># "Flucloxacillin"</span>
+<span class='fu'>ab_name</span>(<span class='st'>"fluklox"</span>)   <span class='co'># "Flucloxacillin"</span>
+<span class='fu'>ab_name</span>(<span class='st'>"floxapen"</span>)  <span class='co'># "Flucloxacillin"</span>
+<span class='fu'>ab_name</span>(<span class='fl'>21319</span>)       <span class='co'># "Flucloxacillin" (using CID)</span>
+<span class='fu'>ab_name</span>(<span class='st'>"J01CF05"</span>)   <span class='co'># "Flucloxacillin" (using ATC)</span>
 <span class='co'># }</span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
@@ -291,6 +363,10 @@ On our website <a href='https://msberends.gitlab.io/AMR'>https://msberends.gitla
       <li><a href="#arguments">Arguments</a></li>
       
       <li><a href="#value">Value</a></li>
+
+      <li><a href="#details">Details</a></li>
+
+      <li><a href="#source">Source</a></li>
 
       <li><a href="#read-more-on-our-website-">Read more on our website!</a></li>
 

@@ -35,8 +35,8 @@ You can skip to [Cleaning the data](#cleaning-the-data) if you already have your
 knitr::kable(dplyr::tibble(date = Sys.Date(),
                            patient_id = c("abcd", "abcd", "efgh"),
                            mo = "Escherichia coli", 
-                           amox = c("S", "S", "R"),
-                           cipr = c("S", "R", "S")), 
+                           AMX = c("S", "S", "R"),
+                           CIP = c("S", "R", "S")), 
              align = "c")
 ``` 
 
@@ -113,13 +113,13 @@ data <- data.frame(date = sample(dates, size = sample_size, replace = TRUE),
                                      prob = c(0.30, 0.35, 0.15, 0.20)),
                    bacteria = sample(bacteria, size = sample_size, replace = TRUE,
                                      prob = c(0.50, 0.25, 0.15, 0.10)),
-                   amox = sample(ab_interpretations, size = sample_size, replace = TRUE,
+                   AMX = sample(ab_interpretations, size = sample_size, replace = TRUE,
                                  prob = c(0.60, 0.05, 0.35)),
-                   amcl = sample(ab_interpretations, size = sample_size, replace = TRUE,
+                   AMC = sample(ab_interpretations, size = sample_size, replace = TRUE,
                                  prob = c(0.75, 0.10, 0.15)),
-                   cipr = sample(ab_interpretations, size = sample_size, replace = TRUE,
+                   CIP = sample(ab_interpretations, size = sample_size, replace = TRUE,
                                  prob = c(0.80, 0.00, 0.20)),
-                   gent = sample(ab_interpretations, size = sample_size, replace = TRUE,
+                   GEN = sample(ab_interpretations, size = sample_size, replace = TRUE,
                                  prob = c(0.92, 0.00, 0.08))
                    )
 ```
@@ -166,12 +166,12 @@ We also want to transform the antibiotics, because in real life data we don't kn
 
 ```{r transform abx}
 data <- data %>%
-  mutate_at(vars(amox:gent), as.rsi)
+  mutate_at(vars(AMX:GEN), as.rsi)
 ```
 
 Finally, we will apply [EUCAST rules](http://www.eucast.org/expert_rules_and_intrinsic_resistance/) on our antimicrobial results. In Europe, most medical microbiological laboratories already apply these rules. Our package features their latest insights on intrinsic resistance and exceptional phenotypes. Moreover, the `eucast_rules()` function can also apply additional rules, like forcing <help title="ATC: J01CA01">ampicillin</help> = R when <help title="ATC: J01CR02">amoxicillin/clavulanic acid</help> = R.
 
-Because the amoxicillin (column `amox`) and amoxicillin/clavulanic acid (column `amcl`) in our data were generated randomly, some rows will undoubtedly contain amox = S and amcl = R, which is technically impossible. The `eucast_rules()` fixes this:
+Because the amoxicillin (column `AMX`) and amoxicillin/clavulanic acid (column `AMC`) in our data were generated randomly, some rows will undoubtedly contain AMX = S and AMC = R, which is technically impossible. The `eucast_rules()` fixes this:
 
 ```{r eucast, warning = FALSE, message = FALSE}
 data <- eucast_rules(data, col_mo = "bacteria")
@@ -226,7 +226,7 @@ weighted_df <- data %>%
   # only most prevalent patient
   filter(patient_id == top_freq(freq(., patient_id), 1)[1]) %>% 
   arrange(date) %>%
-  select(date, patient_id, bacteria, amox:gent, first) %>% 
+  select(date, patient_id, bacteria, AMX:GEN, first) %>% 
   # maximum of 10 rows
   .[1:min(10, nrow(.)),] %>% 
   mutate(isolate = row_number()) %>% 
@@ -240,7 +240,7 @@ Only `r sum(weighted_df$first)` isolates are marked as 'first' according to CLSI
 
 If a column exists with a name like 'key(...)ab' the `first_isolate()` function will automatically use it and determine the first weighted isolates. Mind the NOTEs in below output: 
 
-```{r 1st weighted}
+```{r 1st weighted, warning = FALSE}
 data <- data %>% 
   mutate(keyab = key_antibiotics(.)) %>% 
   mutate(first_weighted = first_isolate(.))
@@ -252,7 +252,7 @@ weighted_df2 <- data %>%
   # only most prevalent patient
   filter(patient_id == top_freq(freq(., patient_id), 1)[1]) %>% 
   arrange(date) %>%
-  select(date, patient_id, bacteria, amox:gent, first, first_weighted) %>% 
+  select(date, patient_id, bacteria, AMX:GEN, first, first_weighted) %>% 
   # maximum of 10 rows
   .[1:min(10, nrow(.)),] %>% 
   mutate(isolate = row_number()) %>% 
@@ -292,7 +292,7 @@ knitr::kable(head(data_1st), align = "c")
 Time for the analysis!
 
 # Analysing the data
-You might want to start by getting an idea of how the data is distributed. It's an important start, because it also decides how you will continue your analysis. 
+You might want to start by getting an idea of how the data is distributed. It's an important start, because it also decides how you will continue your analysis. Although this package contains a convenient function to make frequency tables, exploratory data analysis (EDA) is not the primary scope of this package. Use a package like [`DataExplorer`](https://cran.r-project.org/package=DataExplorer) for that, or read the free online book [Exploratory Data Analysis with R](https://bookdown.org/rdpeng/exdata/) by Roger D. Peng.
 
 ## Dispersion of species
 To just get an idea how the species are distributed, create a frequency table with our `freq()` function. We created the `genus` and `species` column earlier based on the microbial ID. With `paste()`, we can concatenate them together.
@@ -318,7 +318,7 @@ data_1st %>%
 The functions `portion_S()`, `portion_SI()`, `portion_I()`, `portion_IR()` and `portion_R()` can be used to determine the portion of a specific antimicrobial outcome. They can be used on their own:
 
 ```{r}
-data_1st %>% portion_IR(amox)
+data_1st %>% portion_IR(AMX)
 ```
 
 Or can be used in conjuction with `group_by()` and `summarise()`, both from the `dplyr` package:
@@ -326,12 +326,12 @@ Or can be used in conjuction with `group_by()` and `summarise()`, both from the 
 ```{r, eval = FALSE}
 data_1st %>% 
   group_by(hospital) %>% 
-  summarise(amoxicillin = portion_IR(amox))
+  summarise(amoxicillin = portion_IR(AMX))
 ```
 ```{r, echo = FALSE}
 data_1st %>% 
   group_by(hospital) %>% 
-  summarise(amoxicillin = portion_IR(amox)) %>% 
+  summarise(amoxicillin = portion_IR(AMX)) %>% 
   knitr::kable(align = "c", big.mark = ",")
 ```
 
@@ -340,14 +340,14 @@ Of course it would be very convenient to know the number of isolates responsible
 ```{r, eval = FALSE}
 data_1st %>% 
   group_by(hospital) %>% 
-  summarise(amoxicillin = portion_IR(amox),
-            available = n_rsi(amox))
+  summarise(amoxicillin = portion_IR(AMX),
+            available = n_rsi(AMX))
 ```
 ```{r, echo = FALSE}
 data_1st %>% 
   group_by(hospital) %>% 
-  summarise(amoxicillin = portion_IR(amox),
-            available = n_rsi(amox)) %>% 
+  summarise(amoxicillin = portion_IR(AMX),
+            available = n_rsi(AMX)) %>% 
   knitr::kable(align = "c", big.mark = ",")
 ```
 
@@ -356,16 +356,16 @@ These functions can also be used to get the portion of multiple antibiotics, to 
 ```{r, eval = FALSE}
 data_1st %>% 
   group_by(genus) %>% 
-  summarise(amoxiclav = portion_S(amcl),
-            gentamicin = portion_S(gent),
-            amoxiclav_genta = portion_S(amcl, gent))
+  summarise(amoxiclav = portion_S(AMC),
+            gentamicin = portion_S(GEN),
+            amoxiclav_genta = portion_S(AMC, GEN))
 ```
 ```{r, echo = FALSE}
 data_1st %>% 
   group_by(genus) %>% 
-  summarise(amoxiclav = portion_S(amcl),
-            gentamicin = portion_S(gent),
-            amoxiclav_genta = portion_S(amcl, gent)) %>% 
+  summarise(amoxiclav = portion_S(AMC),
+            gentamicin = portion_S(GEN),
+            amoxiclav_genta = portion_S(AMC, GEN)) %>% 
   knitr::kable(align = "c", big.mark = ",")
 ```
 
@@ -374,9 +374,9 @@ To make a transition to the next part, let's see how this difference could be pl
 ```{r plot 1}
 data_1st %>% 
   group_by(genus) %>% 
-  summarise("1. Amoxi/clav" = portion_S(amcl),
-            "2. Gentamicin" = portion_S(gent),
-            "3. Amoxi/clav + gent" = portion_S(amcl, gent)) %>% 
+  summarise("1. Amoxi/clav" = portion_S(AMC),
+            "2. Gentamicin" = portion_S(GEN),
+            "3. Amoxi/clav + GEN" = portion_S(AMC, GEN)) %>% 
   tidyr::gather("Antibiotic", "S", -genus) %>%
   ggplot(aes(x = genus,
              y = S,
@@ -409,7 +409,7 @@ ggplot(data_1st) +
   geom_rsi(translate_ab = FALSE)
 ```
 
-Omit the `translate_ab = FALSE` to have the antibiotic codes (amox, amcl, cipr, gent) translated to official WHO names (amoxicillin, amoxicillin and betalactamase inhibitor, ciprofloxacin, gentamicin).
+Omit the `translate_ab = FALSE` to have the antibiotic codes (AMX, AMC, CIP, GEN) translated to official WHO names (amoxicillin, amoxicillin and betalactamase inhibitor, ciprofloxacin, gentamicin).
 
 If we group on e.g. the `genus` column and add some additional functions from our package, we can create this:
 
@@ -452,12 +452,12 @@ data_1st %>%
 
 The next example uses the included `septic_patients`, which is an anonymised data set containing 2,000 microbial blood culture isolates with their full antibiograms found in septic patients in 4 different hospitals in the Netherlands, between 2001 and 2017. It is true, genuine data. This `data.frame` can be used to practice AMR analysis.
 
-We will compare the resistance to fosfomycin (column `fosf`) in hospital A and D. The input for the final `fisher.test()` will be this:
+We will compare the resistance to fosfomycin (column `FOS`) in hospital A and D. The input for the final `fisher.test()` will be this:
 
 ```{r, echo = FALSE, results = 'asis'}
 septic_patients %>%
   filter(hospital_id %in% c("A", "D")) %>%
-  select(hospital_id, fosf) %>%
+  select(hospital_id, FOS) %>%
   group_by(hospital_id) %>%
   count_df(combine_IR = TRUE) %>%
   tidyr::spread(hospital_id, Value) %>%
@@ -472,7 +472,7 @@ We can transform the data and apply the test in only a couple of lines:
 ```{r}
 septic_patients %>%
   filter(hospital_id %in% c("A", "D")) %>% # filter on only hospitals A and D
-  select(hospital_id, fosf) %>%            # select the hospitals and fosfomycin
+  select(hospital_id, FOS) %>%             # select the hospitals and fosfomycin
   group_by(hospital_id) %>%                # group on the hospitals
   count_df(combine_IR = TRUE) %>%          # count all isolates per group (hospital_id)
   tidyr::spread(hospital_id, Value) %>%    # transform output so A and D are columns

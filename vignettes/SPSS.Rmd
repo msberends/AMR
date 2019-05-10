@@ -64,7 +64,7 @@ As said, SPSS is easier to learn than R. But SPSS, SAS and Stata come with major
   If you are working at a midsized or small company, you can save it tens of thousands of dollars by using R instead of e.g. SPSS - gaining even more functions and flexibility. And all R enthousiasts can do as much PR as they want (like I do here), because nobody is officially associated with or affiliated by R. It is really free.
 
 
-If you sometimes write syntaxes in SPSS to run a complete analysis or to 'automate' some of your work, you should perhaps do this in R. You will notice that writing syntaxes in R is a lot more nifty and clever than in SPSS.
+If you sometimes write syntaxes in SPSS to run a complete analysis or to 'automate' some of your work, you should perhaps do this in R. You will notice that writing syntaxes in R is a lot more nifty and clever than in SPSS. Still, as working with any statistical package, you will have to have knowledge about what you are doing (statistically) and what you are willing to accomplish.
 
 To demonstrate the first point:
 
@@ -83,10 +83,10 @@ klebsiella_test <- data.frame(mo = "klebsiella",
 klebsiella_test
 eucast_rules(klebsiella_test, info = FALSE)
 
-# hundreds of trade names can be translated to an ATC or name:
-atc_name("floxapen")
-as.atc("floxapen")
-atc_tradenames("floxapen")
+# hundreds of trade names can be translated to a name, trade name or an ATC code:
+ab_name("floxapen")
+ab_tradenames("floxapen")
+ab_atc("floxapen")
 ```
 
 ## Import data from SPSS/SAS/Stata

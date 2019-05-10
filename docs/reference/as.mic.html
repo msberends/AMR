@@ -80,7 +80,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.6.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.6.1.9003</span>
       </span>
     </div>
 
@@ -145,7 +145,7 @@
       </a>
     </li>
     <li>
-      <a href="../reference/atc_property.html">
+      <a href="../reference/ab_property.html">
         <span class="fa fa-capsules"></span>
          
         Get properties of an antibiotic
@@ -262,6 +262,10 @@
 
     <p>Ordered factor with new class <code>mic</code></p>
     
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p>Interpret MIC values as RSI values with <code><a href='as.rsi.html'>as.rsi</a></code>. It supports guidelines from EUCAST and CLSI.</p>
+    
     <h2 class="hasAnchor" id="read-more-on-our-website-"><a class="anchor" href="#read-more-on-our-website-"></a>Read more on our website!</h2>
 
     
@@ -280,6 +284,16 @@
 <span class='co'># this can also coerce combined MIC/RSI values:</span>
 <span class='fu'>as.mic</span>(<span class='st'>"&lt;=0.002; S"</span>) <span class='co'># will return &lt;=0.002</span>
 
+<span class='co'># interpret MIC values</span>
+<span class='fu'><a href='as.rsi.html'>as.rsi</a></span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='fu'>as.mic</span>(<span class='fl'>2</span>),
+       <span class='kw'>mo</span> <span class='kw'>=</span> <span class='fu'><a href='as.mo.html'>as.mo</a></span>(<span class='st'>"S. pneumoniae"</span>),
+       <span class='kw'>ab</span> <span class='kw'>=</span> <span class='st'>"AMX"</span>,
+       <span class='kw'>guideline</span> <span class='kw'>=</span> <span class='st'>"EUCAST"</span>)
+<span class='fu'><a href='as.rsi.html'>as.rsi</a></span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='fu'>as.mic</span>(<span class='fl'>4</span>),
+       <span class='kw'>mo</span> <span class='kw'>=</span> <span class='fu'><a href='as.mo.html'>as.mo</a></span>(<span class='st'>"S. pneumoniae"</span>),
+       <span class='kw'>ab</span> <span class='kw'>=</span> <span class='st'>"AMX"</span>,
+       <span class='kw'>guideline</span> <span class='kw'>=</span> <span class='st'>"EUCAST"</span>)
+
 <span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/plot'>plot</a></span>(<span class='no'>mic_data</span>)
 <span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/barplot'>barplot</a></span>(<span class='no'>mic_data</span>)
 <span class='fu'><a href='freq.html'>freq</a></span>(<span class='no'>mic_data</span>)
@@ -291,6 +305,8 @@
       <li><a href="#arguments">Arguments</a></li>
       
       <li><a href="#value">Value</a></li>
+
+      <li><a href="#details">Details</a></li>
 
       <li><a href="#read-more-on-our-website-">Read more on our website!</a></li>
 

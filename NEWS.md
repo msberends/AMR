@@ -1,9 +1,24 @@
 # AMR 0.6.1.9001
 **Note: latest development version**
 
+#### New
+* Support for translation of disk diffusion and MIC values to RSI values (i.e. antimicrobial interpretations). Supported guidelines are EUCAST (2011 to 2019) and CLSI (2011 to 2019). Use `as.rsi()` on an MIC value (created with `as.mic()`), a disk diffusion value (created with the new `as.disk()`) or on a complete date set containing columns with MIC or disk diffusion values.
+
 #### Changed
-* Removed deprecated functions `guess_mo()`, `guess_atc()`, `EUCAST_rules()`, `interpretive_reading()`
+* Completely reworked the `antibiotics` data set:
+  * All entries now have 3 different identifiers: a human readable EARS-Net code (`ab`, used by ECDC and WHONET), an ATC code (`atc`, used by WHO), and a CID code (`cid`, Compound ID, used by PubChem)
+  * Based on the Compound ID, more than a thousand official brand names have been added from many different countries
+  * All references to antibiotics in our package now use EARS-Net codes, like `AMX` for amoxicillin
+  * Functions `atc_certe`, `ab_umcg` and `atc_trivial_nl` have been removed
+  * All `atc_*` functions are superceded by `ab_*` functions
+  * All output will be translated by using an included, local translation file that can be found after install with:
+    ```r
+    system.file("translations.tsv", package = "AMR")
+    ```
+    Please create an issue in one of our repositories if you want additions in this file.
+* Improved intelligence of looking up antibiotic tables in data set using `guess_ab_col()`
 * Added ~5,000 more old taxonomic names to the `microorganisms.old` data set, which leads to better results finding when using the `as.mo()` function
+* Removed deprecated functions `guess_mo()`, `guess_atc()`, `EUCAST_rules()`, `interpretive_reading()`, `rsi()`
 * Frequency tables of microbial IDs speed improvement
 * Removed all hardcoded EUCAST rules and replaced them with a new reference file: `./inst/eucast/eucast.tsv`.
 * Added ceftazidim intrinsic resistance to *Streptococci*
@@ -11,6 +26,7 @@
 * Fix for `freq()` for when all values are `NA`.
 
 #### Other
+* Support for R 3.6.0
 * Prevented [staged install](https://developer.r-project.org/Blog/public/2019/02/14/staged-install/index.html) in R 3.6.0 and later by adding `StagedInstall: false` to the DESCRIPTION file
 
 # AMR 0.6.1

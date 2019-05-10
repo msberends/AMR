@@ -22,40 +22,33 @@
 context("portion.R")
 
 test_that("portions works", {
-  # amox resistance in `septic_patients`
-  expect_equal(portion_R(septic_patients$amox), 0.5557364, tolerance = 0.0001)
-  expect_equal(portion_I(septic_patients$amox), 0.002441009, tolerance = 0.0001)
-  expect_equal(1 - portion_R(septic_patients$amox) - portion_I(septic_patients$amox),
-               portion_S(septic_patients$amox))
-  expect_equal(portion_R(septic_patients$amox) + portion_I(septic_patients$amox),
-               portion_IR(septic_patients$amox))
-  expect_equal(portion_S(septic_patients$amox) + portion_I(septic_patients$amox),
-               portion_SI(septic_patients$amox))
+  # AMX resistance in `septic_patients`
+  expect_equal(portion_R(septic_patients$AMX), 0.5557364, tolerance = 0.0001)
+  expect_equal(portion_I(septic_patients$AMX), 0.002441009, tolerance = 0.0001)
+  expect_equal(1 - portion_R(septic_patients$AMX) - portion_I(septic_patients$AMX),
+               portion_S(septic_patients$AMX))
+  expect_equal(portion_R(septic_patients$AMX) + portion_I(septic_patients$AMX),
+               portion_IR(septic_patients$AMX))
+  expect_equal(portion_S(septic_patients$AMX) + portion_I(septic_patients$AMX),
+               portion_SI(septic_patients$AMX))
 
-  expect_equal(septic_patients %>% portion_S(amcl),
+  expect_equal(septic_patients %>% portion_S(AMC),
                0.7142097,
                tolerance = 0.0001)
-  expect_equal(septic_patients %>% portion_S(amcl, gent),
+  expect_equal(septic_patients %>% portion_S(AMC, GEN),
                0.9232481,
                tolerance = 0.0001)
-  expect_equal(septic_patients %>% portion_S(amcl, gent, also_single_tested = TRUE),
+  expect_equal(septic_patients %>% portion_S(AMC, GEN, also_single_tested = TRUE),
                0.926045,
                tolerance = 0.0001)
-
-  # amcl+genta susceptibility around 92.3%
-  expect_equal(suppressWarnings(rsi(septic_patients$amcl,
-                                    septic_patients$gent,
-                                    interpretation = "S")),
-               0.9232481,
-               tolerance = 0.000001)
 
   # percentages
   expect_equal(septic_patients %>%
                  group_by(hospital_id) %>%
-                 summarise(R = portion_R(cipr, as_percent = TRUE),
-                           I = portion_I(cipr, as_percent = TRUE),
-                           S = portion_S(cipr, as_percent = TRUE),
-                           n = n_rsi(cipr),
+                 summarise(R = portion_R(CIP, as_percent = TRUE),
+                           I = portion_I(CIP, as_percent = TRUE),
+                           S = portion_S(CIP, as_percent = TRUE),
+                           n = n_rsi(CIP),
                            total = n()) %>%
                  pull(n) %>%
                  sum(),
@@ -64,23 +57,23 @@ test_that("portions works", {
   # count of cases
   expect_equal(septic_patients %>%
                  group_by(hospital_id) %>%
-                 summarise(cipro_p = portion_S(cipr, as_percent = TRUE),
-                           cipro_n = n_rsi(cipr),
-                           genta_p = portion_S(gent, as_percent = TRUE),
-                           genta_n = n_rsi(gent),
-                           combination_p = portion_S(cipr, gent, as_percent = TRUE),
-                           combination_n = n_rsi(cipr, gent)) %>%
+                 summarise(CIPo_p = portion_S(CIP, as_percent = TRUE),
+                           CIPo_n = n_rsi(CIP),
+                           GENa_p = portion_S(GEN, as_percent = TRUE),
+                           GENa_n = n_rsi(GEN),
+                           combination_p = portion_S(CIP, GEN, as_percent = TRUE),
+                           combination_n = n_rsi(CIP, GEN)) %>%
                  pull(combination_n),
                c(202, 488, 201, 499))
 
-  expect_warning(portion_R(as.character(septic_patients$amcl)))
-  expect_warning(portion_S(as.character(septic_patients$amcl)))
-  expect_warning(portion_S(as.character(septic_patients$amcl,
-                                             septic_patients$gent)))
-  expect_warning(n_rsi(as.character(septic_patients$amcl,
-                                    septic_patients$gent)))
-  expect_equal(suppressWarnings(n_rsi(as.character(septic_patients$amcl,
-                                                   septic_patients$gent))),
+  expect_warning(portion_R(as.character(septic_patients$AMC)))
+  expect_warning(portion_S(as.character(septic_patients$AMC)))
+  expect_warning(portion_S(as.character(septic_patients$AMC,
+                                        septic_patients$GEN)))
+  expect_warning(n_rsi(as.character(septic_patients$AMC,
+                                    septic_patients$GEN)))
+  expect_equal(suppressWarnings(n_rsi(as.character(septic_patients$AMC,
+                                                   septic_patients$GEN))),
                1879)
 
   # check for errors
@@ -93,59 +86,29 @@ test_that("portions works", {
   expect_error(portion_S("test", also_single_tested = "test"))
 
   # check too low amount of isolates
-  expect_identical(suppressWarnings(portion_R(septic_patients$amox, minimum = nrow(septic_patients) + 1)),
+  expect_identical(suppressWarnings(portion_R(septic_patients$AMX, minimum = nrow(septic_patients) + 1)),
                    NA)
-  expect_identical(suppressWarnings(portion_I(septic_patients$amox, minimum = nrow(septic_patients) + 1)),
+  expect_identical(suppressWarnings(portion_I(septic_patients$AMX, minimum = nrow(septic_patients) + 1)),
                    NA)
-  expect_identical(suppressWarnings(portion_S(septic_patients$amox, minimum = nrow(septic_patients) + 1)),
+  expect_identical(suppressWarnings(portion_S(septic_patients$AMX, minimum = nrow(septic_patients) + 1)),
                    NA)
 
   # warning for speed loss
-  expect_warning(portion_R(as.character(septic_patients$gent)))
-  expect_warning(portion_I(as.character(septic_patients$gent)))
-  expect_warning(portion_S(septic_patients$amcl, as.character(septic_patients$gent)))
-
-})
-
-test_that("old rsi works", {
-  # amox resistance in `septic_patients` should be around 58.53%
-  expect_equal(suppressWarnings(rsi(septic_patients$amox)), 0.5581774, tolerance = 0.0001)
-  expect_equal(suppressWarnings(rsi(septic_patients$amox, interpretation = "S")), 1 - 0.5581774, tolerance = 0.0001)
-
-  # pita+genta susceptibility around 95.3%
-  expect_equal(suppressWarnings(rsi(septic_patients$pita,
-                                    septic_patients$gent,
-                                    interpretation = "S",
-                                    info = TRUE)),
-               0.9526814,
-               tolerance = 0.0001)
-
-  # count of cases
-  expect_equal(septic_patients %>%
-                 group_by(hospital_id) %>%
-                 summarise(cipro_S = suppressWarnings(rsi(cipr, interpretation = "S",
-                                                          as_percent = TRUE, warning = FALSE)),
-                           cipro_n = n_rsi(cipr),
-                           genta_S = suppressWarnings(rsi(gent, interpretation = "S",
-                                                          as_percent = TRUE, warning = FALSE)),
-                           genta_n = n_rsi(gent),
-                           combination_S = suppressWarnings(rsi(cipr, gent, interpretation = "S",
-                                                                as_percent = TRUE, warning = FALSE)),
-                           combination_n = n_rsi(cipr, gent)) %>%
-                 pull(combination_n),
-               c(202, 488, 201, 499))
+  expect_warning(portion_R(as.character(septic_patients$GEN)))
+  expect_warning(portion_I(as.character(septic_patients$GEN)))
+  expect_warning(portion_S(septic_patients$AMC, as.character(septic_patients$GEN)))
 
   # portion_df
   expect_equal(
-    septic_patients %>% select(amox) %>% portion_df() %>% pull(Value),
-    c(septic_patients$amox %>% portion_S(),
-      septic_patients$amox %>% portion_I(),
-      septic_patients$amox %>% portion_R())
+    septic_patients %>% select(AMX) %>% portion_df() %>% pull(Value),
+    c(septic_patients$AMX %>% portion_S(),
+      septic_patients$AMX %>% portion_I(),
+      septic_patients$AMX %>% portion_R())
   )
   expect_equal(
-    septic_patients %>% select(amox) %>% portion_df(combine_IR = TRUE) %>% pull(Value),
-    c(septic_patients$amox %>% portion_S(),
-      septic_patients$amox %>% portion_IR())
+    septic_patients %>% select(AMX) %>% portion_df(combine_IR = TRUE) %>% pull(Value),
+    c(septic_patients$AMX %>% portion_S(),
+      septic_patients$AMX %>% portion_IR())
   )
 
 

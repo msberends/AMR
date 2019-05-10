@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Transform to ATC code — as.atc • AMR (for R)</title>
+<title>Transform to ATC code — is.ab • AMR (for R)</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -45,7 +45,7 @@
 
   <link href="../extra.css" rel="stylesheet">
   <script src="../extra.js"></script>
-<meta property="og:title" content="Transform to ATC code — as.atc" />
+<meta property="og:title" content="Transform to ATC code — is.ab" />
 
 <meta property="og:description" content="Use this function to determine the ATC code of one or more antibiotics. The data set antibiotics will be searched for abbreviations, official names and trade names." />
 
@@ -80,7 +80,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.6.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.6.1.9003</span>
       </span>
     </div>
 
@@ -145,7 +145,7 @@
       </a>
     </li>
     <li>
-      <a href="../reference/atc_property.html">
+      <a href="../reference/ab_property.html">
         <span class="fa fa-capsules"></span>
          
         Get properties of an antibiotic
@@ -241,7 +241,9 @@
     
     </div>
 
-    <pre class="usage"><span class='fu'>as.atc</span>(<span class='no'>x</span>)
+    <pre class="usage"><span class='fu'>is.ab</span>(<span class='no'>x</span>)
+
+<span class='fu'>as.atc</span>(<span class='no'>x</span>)
 
 <span class='fu'>is.atc</span>(<span class='no'>x</span>)</pre>
     
@@ -260,7 +262,7 @@
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>Use the <code><a href='AMR-deprecated.html'>ab_property</a></code> functions to get properties based on the returned ATC code, see Examples.</p>
+    <p>Use the <code><a href='ab_property.html'>ab_property</a></code> functions to get properties based on the returned ATC code, see Examples.</p>
 <p>In the ATC classification system, the active substances are classified in a hierarchy with five different levels.  The system has fourteen main anatomical/pharmacological groups or 1st levels. Each ATC main group is divided into 2nd levels which could be either pharmacological or therapeutic groups.  The 3rd and 4th levels are chemical, pharmacological or therapeutic subgroups and the 5th level is the chemical substance.  The 2nd, 3rd and 4th levels are often used to identify pharmacological subgroups when that is considered more appropriate than therapeutic or chemical subgroups.
   Source: <a href='https://www.whocc.no/atc/structure_and_principles/'>https://www.whocc.no/atc/structure_and_principles/</a></p>
     
@@ -291,14 +293,6 @@ This package contains <strong>all ~500 antimicrobial drugs</strong> and their An
 <span class='fu'>as.atc</span>(<span class='st'>"   eryt 123"</span>)
 <span class='fu'>as.atc</span>(<span class='st'>"ERYT"</span>)
 <span class='fu'>as.atc</span>(<span class='st'>"ERY"</span>)
-<span class='fu'>as.atc</span>(<span class='st'>"Erythrocin"</span>) <span class='co'># Trade name</span>
-<span class='fu'>as.atc</span>(<span class='st'>"Eryzole"</span>)    <span class='co'># Trade name</span>
-<span class='fu'>as.atc</span>(<span class='st'>"Pediamycin"</span>) <span class='co'># Trade name</span>
-
-<span class='co'># Use ab_* functions to get a specific property based on an ATC code</span>
-<span class='no'>Cipro</span> <span class='kw'>&lt;-</span> <span class='fu'>as.atc</span>(<span class='st'>"cipro"</span>) <span class='co'># returns `J01MA02`</span>
-<span class='fu'><a href='atc_property.html'>atc_official</a></span>(<span class='no'>Cipro</span>)      <span class='co'># returns "Ciprofloxacin"</span>
-<span class='fu'><a href='atc_property.html'>atc_umcg</a></span>(<span class='no'>Cipro</span>)          <span class='co'># returns "CIPR", the code used in the UMCG</span>
 <span class='co'># }</span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

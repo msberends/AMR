@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Data set with ~500 antibiotics — antibiotics • AMR (for R)</title>
+<title>Data set with ~450 antibiotics — antibiotics • AMR (for R)</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -45,9 +45,9 @@
 
   <link href="../extra.css" rel="stylesheet">
   <script src="../extra.js"></script>
-<meta property="og:title" content="Data set with ~500 antibiotics — antibiotics" />
+<meta property="og:title" content="Data set with ~450 antibiotics — antibiotics" />
 
-<meta property="og:description" content="A data set containing all antibiotics with a J0 code and some other antimicrobial agents, with their DDDs. Except for trade names and abbreviations, all properties were downloaded from the WHO, see Source." />
+<meta property="og:description" content="A data set containing all antibiotics. Use as.ab or one of the ab_property functions to retrieve values from this data set. Three identifiers are included in this data set: an antibiotic ID (ab, primarily used in this package) as defined by WHONET/EARS-Net, an ATC code (atc) as defined by the WHO, and a Compound ID (cid) as found in PubChem. Other properties in this data set are derived from one or more of these codes." />
 
 <meta property="og:image" content="https://msberends.gitlab.io/AMR/logo.png" />
 <meta name="twitter:card" content="summary" />
@@ -80,7 +80,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.6.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.6.1.9003</span>
       </span>
     </div>
 
@@ -145,7 +145,7 @@
       </a>
     </li>
     <li>
-      <a href="../reference/atc_property.html">
+      <a href="../reference/ab_property.html">
         <span class="fa fa-capsules"></span>
          
         Get properties of an antibiotic
@@ -230,14 +230,14 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Data set with ~500 antibiotics</h1>
+    <h1>Data set with ~450 antibiotics</h1>
     
     <div class="hidden name"><code>antibiotics.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>A data set containing all antibiotics with a J0 code and some other antimicrobial agents, with their DDDs. Except for trade names and abbreviations, all properties were downloaded from the WHO, see Source.</p>
+    <p>A data set containing all antibiotics. Use <code><a href='as.ab.html'>as.ab</a></code> or one of the <code><a href='ab_property.html'>ab_property</a></code> functions to retrieve values from this data set. Three identifiers are included in this data set: an antibiotic ID (<code>ab</code>, primarily used in this package) as defined by WHONET/EARS-Net, an ATC code (<code>atc</code>) as defined by the WHO, and a Compound ID (<code>cid</code>) as found in PubChem. Other properties in this data set are derived from one or more of these codes.</p>
     
     </div>
 
@@ -245,32 +245,32 @@
         
     <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
 
-    <p>A <code><a href='https://www.rdocumentation.org/packages/base/topics/data.frame'>data.frame</a></code> with 488 observations and 17 variables:</p><dl class='dl-horizontal'>
-  <dt><code>atc</code></dt><dd><p>ATC code (Anatomical Therapeutic Chemical), like <code>J01CR02</code></p></dd>
-  <dt><code>ears_net</code></dt><dd><p>EARS-Net code (European Antimicrobial Resistance Surveillance Network), like <code>AMC</code></p></dd>
-  <dt><code>certe</code></dt><dd><p>Certe code, like <code>amcl</code></p></dd>
-  <dt><code>umcg</code></dt><dd><p>UMCG code, like <code>AMCL</code></p></dd>
-  <dt><code>abbr</code></dt><dd><p>Abbreviation as used by many countries, used internally by <code><a href='as.atc.html'>as.atc</a></code></p></dd>
-  <dt><code>official</code></dt><dd><p>Official name by the WHO, like <code>"Amoxicillin and beta-lactamase inhibitor"</code></p></dd>
-  <dt><code>official_nl</code></dt><dd><p>Official name in the Netherlands, like <code>"Amoxicilline met enzymremmer"</code></p></dd>
-  <dt><code>trivial_nl</code></dt><dd><p>Trivial name in Dutch, like <code>"Amoxicilline/clavulaanzuur"</code></p></dd>
-  <dt><code>trade_name</code></dt><dd><p>Trade name as used by many countries (a total of 294), used internally by <code><a href='as.atc.html'>as.atc</a></code></p></dd>
+    <p>A <code><a href='https://www.rdocumentation.org/packages/base/topics/data.frame'>data.frame</a></code> with 455 observations and 13 variables:</p><dl class='dl-horizontal'>
+  <dt><code>ab</code></dt><dd><p>Antibiotic ID as used in this package (like <code>AMC</code>), using the official EARS-Net (European Antimicrobial Resistance Surveillance Network) codes where available</p></dd>
+  <dt><code>atc</code></dt><dd><p>ATC code (Anatomical Therapeutic Chemical) as defined by the WHOCC, like <code>J01CR02</code></p></dd>
+  <dt><code>cid</code></dt><dd><p>Compound ID as found in PubChem</p></dd>
+  <dt><code>name</code></dt><dd><p>Official name as used by WHONET/EARS-Net or the WHO</p></dd>
+  <dt><code>group</code></dt><dd><p>A short and concise group name, based on WHONET and WHOCC definitions</p></dd>
+  <dt><code>atc_group1</code></dt><dd><p>Official pharmacological subgroup (3rd level ATC code) as defined by the WHOCC, like <code>"Macrolides, lincosamides and streptogramins"</code></p></dd>
+  <dt><code>atc_group2</code></dt><dd><p>Official chemical subgroup (4th level ATC code) as defined by the WHOCC, like <code>"Macrolides"</code></p></dd>
+  <dt><code>abbr</code></dt><dd><p>List of abbreviations as used in many countries, also for antibiotic susceptibility testing (AST)</p></dd>
+  <dt><code>synonyms</code></dt><dd><p>Synonyms (often trade names) of a drug, as found in PubChem based on their compound ID</p></dd>
   <dt><code>oral_ddd</code></dt><dd><p>Defined Daily Dose (DDD), oral treatment</p></dd>
   <dt><code>oral_units</code></dt><dd><p>Units of <code>ddd_units</code></p></dd>
   <dt><code>iv_ddd</code></dt><dd><p>Defined Daily Dose (DDD), parenteral treatment</p></dd>
   <dt><code>iv_units</code></dt><dd><p>Units of <code>iv_ddd</code></p></dd>
-  <dt><code>atc_group1</code></dt><dd><p>ATC group, like <code>"Macrolides, lincosamides and streptogramins"</code></p></dd>
-  <dt><code>atc_group2</code></dt><dd><p>Subgroup of <code>atc_group1</code>, like <code>"Macrolides"</code></p></dd>
-  <dt><code>useful_gramnegative</code></dt><dd><p><code>FALSE</code> if not useful according to EUCAST, <code>NA</code> otherwise (see Source)</p></dd>
-  <dt><code>useful_grampositive</code></dt><dd><p><code>FALSE</code> if not useful according to EUCAST, <code>NA</code> otherwise (see Source)</p></dd>
 </dl>
     
     <h2 class="hasAnchor" id="source"><a class="anchor" href="#source"></a>Source</h2>
 
-    <p>World Health Organization (WHO) Collaborating Centre for Drug Statistics Methodology: <a href='https://www.whocc.no/atc_ddd_index/'>https://www.whocc.no/atc_ddd_index/</a></p>
-<p>Table antibiotic coding EARSS (from WHONET 5.3): <a href='http://www.madsonline.dk/Tutorials/landskoder_antibiotika_WM.pdf'>http://www.madsonline.dk/Tutorials/landskoder_antibiotika_WM.pdf</a></p>
-<p>EUCAST Expert Rules, Intrinsic Resistance and Exceptional Phenotypes Tables. Version 3.1, 2016: <a href='http://www.eucast.org/fileadmin/src/media/PDFs/EUCAST_files/Expert_Rules/Expert_rules_intrinsic_exceptional_V3.1.pdf'>http://www.eucast.org/fileadmin/src/media/PDFs/EUCAST_files/Expert_Rules/Expert_rules_intrinsic_exceptional_V3.1.pdf</a></p>
+    <p>World Health Organization (WHO) Collaborating Centre for Drug Statistics Methodology (WHOCC): <a href='https://www.whocc.no/atc_ddd_index/'>https://www.whocc.no/atc_ddd_index/</a></p>
+<p>WHONET 2019 software: <a href='http://www.whonet.org/software.html'>http://www.whonet.org/software.html</a></p>
 <p>European Commission Public Health PHARMACEUTICALS - COMMUNITY REGISTER: <a href='http://ec.europa.eu/health/documents/community-register/html/atc.htm'>http://ec.europa.eu/health/documents/community-register/html/atc.htm</a></p>
+    
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p>Properties that are based on an ATC code are only available when an ATC is available. These properties are: <code>atc_group1</code>, <code>atc_group2</code>, <code>oral_ddd</code>, <code>oral_units</code>, <code>iv_ddd</code> and <code>iv_units</code></p>
+<p>Synonyms (i.e. trade names) are derived from the Compound ID (<code>cid</code>) and consequently only available where a CID is available.</p>
     
     <h2 class="hasAnchor" id="whocc"><a class="anchor" href="#whocc"></a>WHOCC</h2>
 
@@ -298,6 +298,8 @@ This package contains <strong>all ~500 antimicrobial drugs</strong> and their An
       <li><a href="#format">Format</a></li>
 
       <li><a href="#source">Source</a></li>
+
+      <li><a href="#details">Details</a></li>
 
       <li><a href="#whocc">WHOCC</a></li>
 

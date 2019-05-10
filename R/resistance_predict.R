@@ -60,7 +60,7 @@
 #' @importFrom dplyr %>% pull mutate mutate_at n group_by_at summarise filter filter_at all_vars n_distinct arrange case_when n_groups transmute
 #' @inheritSection AMR Read more on our website!
 #' @examples
-#' x <- resistance_predict(septic_patients, col_ab = "amox", year_min = 2010)
+#' x <- resistance_predict(septic_patients, col_ab = "AMX", year_min = 2010)
 #' plot(x)
 #' ggplot_rsi_predict(x)
 #'
@@ -69,7 +69,7 @@
 #' x <- septic_patients %>%
 #'   filter_first_isolate() %>%
 #'   filter(mo_genus(mo) == "Staphylococcus") %>%
-#'   resistance_predict("peni")
+#'   resistance_predict("PEN")
 #' plot(x)
 #'
 #'
@@ -83,7 +83,7 @@
 #'
 #'   data <- septic_patients %>%
 #'     filter(mo == as.mo("E. coli")) %>%
-#'     resistance_predict(col_ab = "amox",
+#'     resistance_predict(col_ab = "AMX",
 #'                        col_date = "date",
 #'                        info = FALSE,
 #'                        minimum = 15)

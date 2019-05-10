@@ -126,7 +126,7 @@
 #' @section Source:
 #' [1] Becker K \emph{et al.} \strong{Coagulase-Negative Staphylococci}. 2014. Clin Microbiol Rev. 27(4): 870–926. \url{https://dx.doi.org/10.1128/CMR.00109-13}
 #'
-#' [2] Becker K \emph{et al.} \strong{Implications of identifying the recently defined members of the S. aureus complex, S. argenteus and S. schweitzeri: A position paper of members of the ESCMID Study Group for staphylococci and Staphylococcal Diseases (ESGS).}. 2019. Clin Microbiol Infect. 2019 Mar 11. \url{https://doi.org/10.1016/j.cmi.2019.02.028}
+#' [2] Becker K \emph{et al.} \strong{Implications of identifying the recently defined members of the \emph{S. aureus} complex, \emph{S. argenteus} and \emph{S. schweitzeri}: A position paper of members of the ESCMID Study Group for staphylococci and Staphylococcal Diseases (ESGS).} 2019. Clin Microbiol Infect. \url{https://doi.org/10.1016/j.cmi.2019.02.028}
 #'
 #' [3] Lancefield RC \strong{A serological differentiation of human and other groups of hemolytic streptococci}. 1933. J Exp Med. 57(4): 571–95. \url{https://dx.doi.org/10.1084/jem.57.4.571}
 #'
@@ -195,6 +195,8 @@ as.mo <- function(x, Becker = FALSE, Lancefield = FALSE, allow_uncertain = TRUE,
     # check onLoad() in R/zzz.R: data tables are created there.
   }
 
+  x[x == ""] <- NA_character_
+
   uncertainty_level <- translate_allow_uncertain(allow_uncertain)
   mo_hist <- get_mo_history(x, uncertainty_level, force = isTRUE(list(...)$force_mo_history))
 
@@ -261,7 +263,8 @@ as.mo <- function(x, Becker = FALSE, Lancefield = FALSE, allow_uncertain = TRUE,
     y <- mo_validate(x = x, property = "mo",
                      Becker = Becker, Lancefield = Lancefield,
                      allow_uncertain = uncertainty_level, reference_df = reference_df,
-                     force_mo_history = isTRUE(list(...)$force_mo_history))
+                     force_mo_history = isTRUE(list(...)$force_mo_history),
+                     ...)
   }
 
 
@@ -295,6 +298,8 @@ exec_as.mo <- function(x,
     library("AMR")
     # check onLoad() in R/zzz.R: data tables are created there.
   }
+
+  x[x == ""] <- NA_character_
 
   if (initial_search == TRUE) {
     options(mo_failures = NULL)
@@ -548,7 +553,9 @@ exec_as.mo <- function(x,
         next
       }
 
-      if (nchar(gsub("[^a-zA-Z]", "", x_trimmed[i])) < 3) {
+      # check for very small input, but ignore the O antigens of E. coli
+      if (nchar(gsub("[^a-zA-Z]", "", x_trimmed[i])) < 3
+          & !x_backup_without_spp[i] %like% "O?(26|103|104|104|111|121|145|157)") {
         # check if search term was like "A. species", then return first genus found with ^A
         if (x_backup[i] %like% "[a-z]+ species" | x_backup[i] %like% "[a-z] spp[.]?") {
           # get mo code of first hit
@@ -609,7 +616,8 @@ exec_as.mo <- function(x,
           }
           next
         }
-        if (toupper(x_backup_without_spp[i]) %in% c("EHEC", "EPEC", "EIEC", "STEC", "ATEC")) {
+        if (toupper(x_backup_without_spp[i]) %in% c("EHEC", "EPEC", "EIEC", "STEC", "ATEC")
+            | x_backup_without_spp[i] %like% "O?(26|103|104|104|111|121|145|157)") {
           x[i] <- microorganismsDT[mo == 'B_ESCHR_COL', ..property][[1]][1L]
           if (initial_search == TRUE) {
             set_mo_history(x_backup[i], get_mo_code(x[i], property), 0, force = force_mo_history)

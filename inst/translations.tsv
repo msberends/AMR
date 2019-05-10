@@ -1,0 +1,456 @@
+lang	pattern	replacement	fixed	ignore.case
+de	Coagulase-negative Staphylococcus	Koagulase-negative Staphylococcus	FALSE	FALSE
+de	Coagulase-positive Staphylococcus	Koagulase-positive Staphylococcus	FALSE	FALSE
+de	Beta-haemolytic Streptococcus	Beta-hämolytischer Streptococcus	FALSE	FALSE
+de	unknown Gram negatives	unbekannte Gramnegativen	FALSE	FALSE
+de	unknown Gram positives	unbekannte Grampositiven	FALSE	FALSE
+de	unknown name	unbekannte Name	FALSE	FALSE
+de	unknown kingdom	unbekanntes Reich	FALSE	FALSE
+de	unknown phylum	unbekannter Stamm	FALSE	FALSE
+de	unknown class	unbekannte Klasse	FALSE	FALSE
+de	unknown order	unbekannte Ordnung	FALSE	FALSE
+de	unknown family	unbekannte Familie	FALSE	FALSE
+de	unknown genus	unbekannte Gattung	FALSE	FALSE
+de	unknown species	unbekannte Art	FALSE	FALSE
+de	unknown subspecies	unbekannte Unterart	FALSE	FALSE
+de	unknown rank	unbekannter Rang	FALSE	FALSE
+de	(CoNS)	(KNS)	TRUE	FALSE
+de	(CoPS)	(KPS)	TRUE	FALSE
+de	Gram negative	Gramnegativ	FALSE	FALSE
+de	Gram positive	Grampositiv	FALSE	FALSE
+de	Bacteria	Bakterien	FALSE	FALSE
+de	Fungi	Hefen/Pilze	FALSE	FALSE
+de	Protozoa	Protozoen	FALSE	FALSE
+de	biogroup	Biogruppe	FALSE	FALSE
+de	biotype	Biotyp	FALSE	FALSE
+de	vegetative	vegetativ	FALSE	FALSE
+de	([([ ]*?)group	\\1Gruppe	FALSE	FALSE
+de	([([ ]*?)Group	\\1Gruppe	FALSE	FALSE
+nl	Coagulase-negative Staphylococcus	Coagulase-negatieve Staphylococcus	FALSE	FALSE
+nl	Coagulase-positive Staphylococcus	Coagulase-positieve Staphylococcus	FALSE	FALSE
+nl	Beta-haemolytic Streptococcus	Beta-hemolytische Streptococcus	FALSE	FALSE
+nl	unknown Gram negatives	onbekende Gram-negatieven	FALSE	FALSE
+nl	unknown Gram positives	onbekende Gram-positieven	FALSE	FALSE
+nl	unknown name	onbekende naam	FALSE	FALSE
+nl	unknown kingdom	onbekend koninkrijk	FALSE	FALSE
+nl	unknown phylum	onbekend fylum	FALSE	FALSE
+nl	unknown class	onbekende klasse	FALSE	FALSE
+nl	unknown order	onbekende orde	FALSE	FALSE
+nl	unknown family	onbekende familie	FALSE	FALSE
+nl	unknown genus	onbekend geslacht	FALSE	FALSE
+nl	unknown species	onbekende soort	FALSE	FALSE
+nl	unknown subspecies	onbekende ondersoort	FALSE	FALSE
+nl	unknown rank	onbekende rang	FALSE	FALSE
+nl	(CoNS)	(CNS)	TRUE	FALSE
+nl	(CoPS)	(CPS)	TRUE	FALSE
+nl	Gram negative	Gram-negatief	FALSE	FALSE
+nl	Gram positive	Gram-positief	FALSE	FALSE
+nl	Bacteria	Bacteriën	FALSE	FALSE
+nl	Fungi	Schimmels/gisten	FALSE	FALSE
+nl	Protozoa	protozoën	FALSE	FALSE
+nl	biogroup	biogroep	FALSE	FALSE
+nl	vegetative	vegetatief	FALSE	FALSE
+nl	([([ ]*?)group	\\1groep	FALSE	FALSE
+nl	([([ ]*?)Group	\\1Groep	FALSE	FALSE
+es	Coagulase-negative Staphylococcus	Staphylococcus coagulasa negativo	FALSE	FALSE
+es	Coagulase-positive Staphylococcus	Staphylococcus coagulasa positivo	FALSE	FALSE
+es	Beta-haemolytic Streptococcus	Streptococcus Beta-hemolítico	FALSE	FALSE
+es	unknown Gram negatives	Gram negativos desconocidos	FALSE	FALSE
+es	unknown Gram positives	Gram positivos desconocidos	FALSE	FALSE
+es	unknown name	nombre desconocido	FALSE	FALSE
+es	unknown kingdom	reino desconocido	FALSE	FALSE
+es	unknown phylum	filo desconocido	FALSE	FALSE
+es	unknown class	clase desconocida	FALSE	FALSE
+es	unknown order	orden desconocido	FALSE	FALSE
+es	unknown family	familia desconocida	FALSE	FALSE
+es	unknown genus	género desconocido	FALSE	FALSE
+es	unknown species	especie desconocida	FALSE	FALSE
+es	unknown subspecies	subespecie desconocida	FALSE	FALSE
+es	unknown rank	rango desconocido	FALSE	FALSE
+es	(CoNS)	(SCN)	TRUE	FALSE
+es	(CoPS)	(SCP)	TRUE	FALSE
+es	Gram negative	Gram negativo	FALSE	FALSE
+es	Gram positive	Gram positivo	FALSE	FALSE
+es	Bacteria	Bacterias	FALSE	FALSE
+es	Fungi	Hongos	FALSE	FALSE
+es	Protozoa	Protozoarios	FALSE	FALSE
+es	biogroup	biogrupo	FALSE	FALSE
+es	biotype	biotipo	FALSE	FALSE
+es	vegetative	vegetativo	FALSE	FALSE
+es	([([ ]*?)group	\\1grupo	FALSE	FALSE
+es	([([ ]*?)Group	\\1Grupo	FALSE	FALSE
+it	Coagulase-negative Staphylococcus	Staphylococcus negativo coagulasi	FALSE	FALSE
+it	Coagulase-positive Staphylococcus	Staphylococcus positivo coagulasi	FALSE	FALSE
+it	Beta-haemolytic Streptococcus	Streptococcus Beta-emolitico	FALSE	FALSE
+it	unknown Gram negatives	Gram negativi sconosciuti	FALSE	FALSE
+it	unknown Gram positives	Gram positivi sconosciuti	FALSE	FALSE
+it	unknown name	nome sconosciuto	FALSE	FALSE
+it	unknown kingdom	regno sconosciuto	FALSE	FALSE
+it	unknown phylum	phylum sconosciuto	FALSE	FALSE
+it	unknown class	classe sconosciuta	FALSE	FALSE
+it	unknown order	ordine sconosciuto	FALSE	FALSE
+it	unknown family	famiglia sconosciuta	FALSE	FALSE
+it	unknown genus	genere sconosciuto	FALSE	FALSE
+it	unknown species	specie sconosciute	FALSE	FALSE
+it	unknown subspecies	sottospecie sconosciute	FALSE	FALSE
+it	unknown rank	grado sconosciuto	FALSE	FALSE
+it	Gram negative	Gram negativo	FALSE	FALSE
+it	Gram positive	Gram positivo	FALSE	FALSE
+it	Bacteria	Batteri	FALSE	FALSE
+it	Fungi	Fungo	FALSE	FALSE
+it	Protozoa	Protozoi	FALSE	FALSE
+it	biogroup	biogruppo	FALSE	FALSE
+it	biotype	biotipo	FALSE	FALSE
+it	vegetative	vegetativo	FALSE	FALSE
+it	([([ ]*?)group	\\1gruppo	FALSE	FALSE
+it	([([ ]*?)Group	\\1Gruppo	FALSE	FALSE
+fr	Coagulase-negative Staphylococcus	Staphylococcus à coagulase négative	FALSE	FALSE
+fr	Coagulase-positive Staphylococcus	Staphylococcus à coagulase positif	FALSE	FALSE
+fr	Beta-haemolytic Streptococcus	Streptococcus Bêta-hémolytique	FALSE	FALSE
+fr	unknown Gram negatives	Gram négatifs inconnus	FALSE	FALSE
+fr	unknown Gram positives	Gram positifs inconnus	FALSE	FALSE
+fr	unknown name	nom inconnu	FALSE	FALSE
+fr	unknown kingdom	règme inconnu	FALSE	FALSE
+fr	unknown phylum	embranchement inconnu	FALSE	FALSE
+fr	unknown class	classe inconnue	FALSE	FALSE
+fr	unknown order	ordre inconnu	FALSE	FALSE
+fr	unknown family	famille inconnue	FALSE	FALSE
+fr	unknown genus	genre inconnu	FALSE	FALSE
+fr	unknown species	espèce inconnue	FALSE	FALSE
+fr	unknown subspecies	sous-espèce inconnue	FALSE	FALSE
+fr	unknown rank	rang inconnu	FALSE	FALSE
+fr	Gram negative	Gram négatif	FALSE	FALSE
+fr	Gram positive	Gram positif	FALSE	FALSE
+fr	Bacteria	Bactéries	FALSE	FALSE
+fr	Fungi	Champignons	FALSE	FALSE
+fr	Protozoa	Protozoaires	FALSE	FALSE
+fr	biogroup	biogroupe	FALSE	FALSE
+fr	vegetative	végétatif	FALSE	FALSE
+fr	([([ ]*?)group	\\1groupe	FALSE	FALSE
+fr	([([ ]*?)Group	\\1Groupe	FALSE	FALSE
+pt	Coagulase-negative Staphylococcus	Staphylococcus coagulase negativo	FALSE	FALSE
+pt	Coagulase-positive Staphylococcus	Staphylococcus coagulase positivo	FALSE	FALSE
+pt	Beta-haemolytic Streptococcus	Streptococcus Beta-hemolítico	FALSE	FALSE
+pt	unknown Gram negatives	Gram negativos desconhecidos	FALSE	FALSE
+pt	unknown Gram positives	Gram positivos desconhecidos	FALSE	FALSE
+pt	unknown name	nome desconhecido	FALSE	FALSE
+pt	unknown kingdom	reino desconhecido	FALSE	FALSE
+pt	unknown phylum	filo desconhecido	FALSE	FALSE
+pt	unknown class	classe desconhecida	FALSE	FALSE
+pt	unknown order	ordem desconhecido	FALSE	FALSE
+pt	unknown family	família desconhecida	FALSE	FALSE
+pt	unknown genus	gênero desconhecido	FALSE	FALSE
+pt	unknown species	espécies desconhecida	FALSE	FALSE
+pt	unknown subspecies	subespécies desconhecida	FALSE	FALSE
+pt	unknown rank	classificação desconhecido	FALSE	FALSE
+pt	Gram negative	Gram negativo	FALSE	FALSE
+pt	Gram positive	Gram positivo	FALSE	FALSE
+pt	Bacteria	Bactérias	FALSE	FALSE
+pt	Fungi	Fungos	FALSE	FALSE
+pt	Protozoa	Protozoários	FALSE	FALSE
+pt	biogroup	biogrupo	FALSE	FALSE
+pt	biotype	biótipo	FALSE	FALSE
+pt	vegetative	vegetativo	FALSE	FALSE
+pt	([([ ]*?)group	\\1grupo	FALSE	FALSE
+pt	([([ ]*?)Group	\\1Grupo	FALSE	FALSE
+
+nl	4-aminosalicylic acid	aminosalicylzuur
+nl	adefovir dipivoxil	adefovir
+nl	aldesulfone sodium	aldesulfon
+nl	amikacin	amikacine
+nl	amoxicillin	amoxicilline
+nl	amoxicillin and beta-lactamase inhibitor	amoxicilline met enzymremmer
+nl	amphotericin B	amfotericine B
+nl	ampicillin	ampicilline
+nl	ampicillin and beta-lactamase inhibitor	ampicilline met enzymremmer
+nl	ampicillin, combinations	ampicilline, combinatiepreparaten
+nl	anidulafungin	anidulafungine
+nl	anthrax antigen	anthrax-antigeen
+nl	anti-d (rh) immunoglobulin	rhesus(d)immunoglobuline
+nl	azidocillin	azidocilline
+nl	azithromycin	azitromycine
+nl	azlocillin	azlocilline
+nl	bacampicillin	bacampicilline
+nl	bacitracin	bacitracine
+nl	benzathine benzylpenicillin	benzylpenicillinebenzathine
+nl	benzathine phenoxymethylpenicillin	fenoxymethylpenicillinebenzathine
+nl	benzylpenicillin	benzylpenicilline
+nl	botulinum antitoxin	serum tegen botulisme
+nl	brucella antigen	brucella-antigeen
+nl	calcium aminosalicylate	aminosalicylzuur
+nl	capreomycin	capreomycine
+nl	carbenicillin	carbenicilline
+nl	carindacillin	carindacilline
+nl	caspofungin	caspofungine
+nl	cefacetrile	cefacetril
+nl	cefalexin	cefalexine
+nl	cefalotin	cefalotine
+nl	cefamandole	cefamandol
+nl	cefapirin	cefapirine
+nl	cefazedone	cefazedon
+nl	cefazolin	cefazoline
+nl	cefepime	cefepim
+nl	cefixime	cefixim
+nl	cefmenoxime	cefmenoxim
+nl	cefmetazole	cefmetazol
+nl	cefodizime	cefodizim
+nl	cefonicid	cefonicide
+nl	cefoperazone	cefoperazon
+nl	cefoperazone and beta-lactamase inhibitor	cefoperazon combinatiepreparaten
+nl	cefotaxime	cefotaxim
+nl	cefoxitin	cefoxitine
+nl	cefpirome	cefpirom
+nl	cefpodoxime	cefpodoxim
+nl	cefsulodin	cefsulodine
+nl	ceftazidime	ceftazidim
+nl	ceftezole	ceftezol
+nl	ceftizoxime	ceftizoxim
+nl	ceftriaxone	ceftriaxon
+nl	ceftriaxone, combinations	ceftriaxon, combinatiepreparaten
+nl	cefuroxime	cefuroxim
+nl	cefuroxime and metronidazole	cefuroxim met andere antibacteriele middelen
+nl	chloramphenicol	chlooramfenicol
+nl	chlortetracycline	chloortetracycline
+nl	cholera, combinations with typhoid vaccine, inactivated, whole cell	choleravaccin met tyfusvaccin, geinactiveerd, hele cel
+nl	cholera, inactivated, whole cell	cholera, geinactiveerd, hele cel
+nl	cholera, live attenuated	cholera, levend verzwakt
+nl	cinoxacin	cinoxacine
+nl	ciprofloxacin	ciprofloxacine
+nl	clarithromycin	claritromycine
+nl	clavulanic acid	clavulaanzuur
+nl	clindamycin	clindamycine
+nl	clometocillin	clometocilline
+nl	clotrimazole	clotrimazol
+nl	cloxacillin	cloxacilline
+nl	colistin	colistine
+nl	combinations	combinatiepreparaten
+nl	combinations	combinatiepreparaten
+nl	combinations	combinatiepreparaten
+nl	combinations	combinatiepreparaten
+nl	combinations	combinatiepreparaten
+nl	combinations	combinatiepreparaten
+nl	combinations	combinatiepreparaten
+nl	combinations of penicillins	combinatiepreparaten
+nl	combinations of tetracyclines	tetracycline combinatiepreparaten
+nl	cytomegalovirus immunoglobulin	cytomegalie-immunoglobuline
+nl	dapsone	dapson
+nl	daptomycin	daptomycine
+nl	dibekacin	dibekacine
+nl	dicloxacillin	dicloxacilline
+nl	diphtheria antitoxin	serum tegen difterie
+nl	diphtheria immunoglobulin	difterie-immunoglobuline
+nl	diphtheria toxoid	difterietoxoide
+nl	diphtheria-hemophilus influenzae b-pertussis-poliomyelitis-tetanus	difterie-haemophilus-kinkhoest-poliomyelitis-tetanus
+nl	diphtheria-hemophilus influenzae b-pertussis-poliomyelitis-tetanus-hepatitis B	difterie-haemophilus-kinkhoest-polio-tetanus-hepatitis B
+nl	diphtheria-hemophilus influenzae b-pertussis-tetanus-hepatitis B	difterie-haemophilus-kinkhoest-tetanus-hepatitis B
+nl	diphtheria-hepatitis b-pertussis-tetanus	difterie-hepatitis b-kinkhoest-tetanus
+nl	diphtheria-hepatitis b-tetanus	difterie-hepatitis b-tetanus
+nl	diphtheria-pertussis-poliomyelitis-tetanus	difterie-kinkhoest-poliomyelitis-tetanus
+nl	diphtheria-pertussis-poliomyelitis-tetanus-hepatitis B	difterie-kinkhoest-poliomyelitis-tetanus-hepatitis B
+nl	diphtheria-poliomyelitis-tetanus	difterie-poliomyelitis-tetanus
+nl	diphtheria-rubella-tetanus	difterie-rubella-tetanus
+nl	dirithromycin	diritromycine
+nl	econazole	econazol
+nl	encephalitis, japanese, inactivated, whole virus	japanse-encefalitis, geinactiveerd, intact virus
+nl	encephalitis, tick borne immunoglobulin	teken-encephalitis-immunoglobuline
+nl	encephalitis, tick borne, inactivated, whole virus	tekenencefalitis, geinactiveerd, intact virus
+nl	enoxacin	enoxacine
+nl	epicillin	epicilline
+nl	erythromycin	erytromycine
+nl	ethambutol and isoniazid	ethambutol met isoniazide
+nl	fleroxacin	fleroxacine
+nl	flucloxacillin	flucloxacilline
+nl	fluconazole	fluconazol
+nl	flucytosine	fluorocytosine
+nl	flurithromycin	fluritromycine
+nl	fosfomycin	fosfomycine
+nl	fusidic acid	fusidinezuur
+nl	gas-gangrene sera	serum tegen gasgangreen
+nl	gatifloxacin	gatifloxacine
+nl	gemifloxacin	gemifloxacine
+nl	gentamicin	gentamicine
+nl	grepafloxacin	grepafloxacine
+nl	hachimycin	hachimycine
+nl	hemophilus influenzae B and hepatitis B	haemophilus influenzae b-hepatitis B
+nl	hemophilus influenzae B and poliomyelitis	haemophilus influenzae b-poliomyelitis
+nl	hemophilus influenzae B, combinations with pertussis and toxoids	haemophilus influenzae B met kinkhoest en toxoiden
+nl	hemophilus influenzae B, combinations with toxoids	haemophilus influenzae B met toxoiden
+nl	hemophilus influenzae B, purified antigen conjugated	haemophilus influenzae B, gezuiverd geconjugeerd antigeen
+nl	hepatitis A immunoglobulin	hepatitis a-immunoglobuline
+nl	hepatitis A, inactivated, whole virus	hepatitis A, geinactiveerd, intact virus
+nl	hepatitis B immunoglobulin	hepatitis b-immunoglobuline
+nl	hepatitis B, purified antigen	hepatitis B, gezuiverd antigeen
+nl	hetacillin	hetacilline
+nl	imipenem and cilastatin	imipenem met enzymremmer
+nl	immunoglobulins, normal human, for extravascular adm,	immunoglobuline, normaal, extravasculair
+nl	immunoglobulins, normal human, for intravascular adm,	immunoglobuline, normaal, intravasculair
+nl	influenza, inactivated, split virus or surface antigen	influenza, gezuiverd antigeen
+nl	influenza, inactivated, whole virus	influenza, geinactiveerd, intact virus
+nl	inosine pranobex	inosiplex
+nl	isepamicin	isepamicine
+nl	isoconazole	isoconazol
+nl	isoniazid	isoniazide
+nl	isoniazid, combinations	isoniazide, combinatiepreparaten
+nl	itraconazole	itraconazol
+nl	josamycin	josamycine
+nl	kanamycin	kanamycine
+nl	ketoconazole	ketoconazol
+nl	levofloxacin	levofloxacine
+nl	lincomycin	lincomycine
+nl	lomefloxacin	lomefloxacine
+nl	lysozyme	lysozym
+nl	mandelic acid	amandelzuur
+nl	measles immunoglobulin	mazelenimmunoglobuline
+nl	measles, combinations with mumps and rubella, live attenuated	mazelen met bof en rubella, levend verzwakt
+nl	measles, combinations with mumps, live attenuated	mazelen met bof, levend verzwakt
+nl	measles, combinations with mumps, rubella and varicella, live attenuated	mazelen met bof, rubella en varicella, levend verzwakt
+nl	measles, combinations with rubella, live attenuated	mazelen met rubella, levend verzwakt
+nl	measles, live attenuated	mazelen, levend verzwakt
+nl	meningococcus A, purified polysaccharides antigen	meningokok A, gezuiverd polysaccharidenantigeen
+nl	meningococcus A,c, bivalent purified polysaccharides antigen	meningokok, 2 typen, gezuiverd polysaccharidenantigeen
+nl	meningococcus A,c,y,w-135, tetravalent purified polysaccharides antigen	meningokok, 4 typen, gezuiverd polysaccharidenantigeen
+nl	meningococcus B, outer membrane vesicle vaccine	meningokok B, buitenmembraanvaccin
+nl	meningococcus C, purified polysaccharides antigen conjugated	meningokok C, gezuiverd saccharidenantigeen geconjugeerd
+nl	metampicillin	metampicilline
+nl	meticillin	meticilline
+nl	metisazone	metisazon
+nl	metronidazole	metronidazol
+nl	mezlocillin	mezlocilline
+nl	micafungin	micafungine
+nl	miconazole	miconazol
+nl	midecamycin	midecamycine
+nl	miocamycin	miocamycine
+nl	moxifloxacin	moxifloxacine
+nl	mumps immunoglobulin	bofimmunoglobuline
+nl	mumps, live attenuated	bof, levend verzwakt
+nl	mupirocin	mupirocine
+nl	nalidixic acid	nalidixinezuur
+nl	neomycin	neomycine
+nl	netilmicin	netilmicine
+nl	nitrofurantoin	nitrofurantoine
+nl	norfloxacin	norfloxacine
+nl	novobiocin	novobiocine
+nl	nystatin	nystatine
+nl	ofloxacin	ofloxacine
+nl	oleandomycin	oleandomycine
+nl	ornidazole	ornidazol
+nl	other meningococcal monovalent purified polysaccharides antigen	meningokok, 1 type, gezuiverd polysaccaridenantigeen
+nl	other meningococcal polyvalent purified polysaccharides antigen	meningokok, meer typen, gezuiverd polysaccharidenantigeen
+nl	oxacillin	oxacilline
+nl	oxolinic acid	oxolinezuur
+nl	oxytetracycline, combinations	oxytetracycline, combinatiepreparaten
+nl	pazufloxacin	pazufloxacine
+nl	pefloxacin	pefloxacine
+nl	penamecillin	penamecilline
+nl	penicillins, combinations with other antibacterials	penicillines met andere antibacteriele middelen
+nl	pertussis immunoglobulin	kinkhoestimmunoglobuline
+nl	pertussis, inactivated, whole cell	pertussis, geinactiveerd, hele cel
+nl	pertussis, inactivated, whole cell, combinations with toxoids	pertussis, geinactiveerd hele cel, met toxoiden
+nl	pertussis, purified antigen	pertussis, gezuiverd antigeen
+nl	pertussis, purified antigen, combinations with toxoids	pertussis, gezuiverd antigeen, met toxoiden
+nl	pheneticillin	feneticilline
+nl	phenoxymethylpenicillin	fenoxymethylpenicilline
+nl	pipemidic acid	pipemidinezuur
+nl	piperacillin	piperacilline
+nl	piperacillin and beta-lactamase inhibitor	piperacilline met enzymremmer
+nl	piromidic acid	piromidinezuur
+nl	pivampicillin	pivampicilline
+nl	plague, inactivated, whole cell	yersinia pestis, geinactiveerd, hele cel
+nl	pneumococcus, purified polysaccharides antigen	pneumokok, gezuiverd polysaccharidenantigeen
+nl	pneumococcus, purified polysaccharides antigen conjugated	pneumokok, gezuiverd geconjugeerd polysaccharidenantigeen
+nl	poliomyelitis oral, monovalent, live attenuated	poliomyelitis, oraal, 1 type, levend verzwakt
+nl	poliomyelitis oral, trivalent, live attenuated	poliomyelitis, oraal, 3 typen, levend verzwakt
+nl	poliomyelitis, trivalent, inactivated, whole virus	poliomyelitis, 3 typen, geinactiveerd, intact virus
+nl	polymyxin B	polymyxine B
+nl	posaconazole	posaconazol
+nl	pristinamycin	pristinamycine
+nl	procaine benzylpenicillin	benzylpenicillineprocaine
+nl	propicillin	propicilline
+nl	prulifloxacin	prulifloxacine
+nl	quinupristin/dalfopristin	quinupristine/dalfopristine
+nl	rabies immunoglobulin	rabiesimmunoglobuline
+nl	rabies serum	serum tegen rabies
+nl	rabies, inactivated, whole virus	rabies, geinactiveerd, intact virus
+nl	ribostamycin	ribostamycine
+nl	rifabutin	rifabutine
+nl	rifampicin	rifampicine
+nl	rifampicin and isoniazid	rifampicine met isoniazide
+nl	rifampicin, pyrazinamide and isoniazid	rifampicine met pyrazinamide en isoniazide
+nl	rifampicin, pyrazinamide, ethambutol and isoniazid	rifampicine met pyrazinamide, ethambutol en isoniazide
+nl	rifamycin	rifamycine
+nl	rifaximin	rifaximine
+nl	rokitamycin	rokitamycine
+nl	rosoxacin	rosoxacine
+nl	rota virus, live attenuated	rotavirus, levend verzwakt
+nl	roxithromycin	roxitromycine
+nl	rubella immunoglobulin	rubella-immunoglobuline
+nl	rubella, combinations with mumps, live attenuated	rubella met bof, levend verzwakt
+nl	rubella, live attenuated	rubella, levend verzwakt
+nl	rufloxacin	rufloxacine
+nl	sisomicin	sisomicine
+nl	snake venom antiserum	serum tegen slangebeet
+nl	sodium aminosalicylate	aminosalicylzuur,4- (na-zout)
+nl	sparfloxacin	sparfloxacine
+nl	spectinomycin	spectinomycine
+nl	spiramycin	spiramycine
+nl	spiramycin and metronidazole	spiramycine met andere antibacteriele middelen
+nl	staphylococcus immunoglobulin	stafylokokkenimmunoglobuline
+nl	streptoduocin	streptoduocine
+nl	streptomycin	streptomycine
+nl	streptomycin and isoniazid	streptomycine met isoniazide
+nl	sulbenicillin	sulbenicilline
+nl	sulfadiazine and tetroxoprim	sulfadiazine met tetroxoprim
+nl	sulfadiazine and trimethoprim	sulfadiazine met trimethoprim
+nl	sulfadimidine and trimethoprim	sulfadimidine met trimethoprim
+nl	sulfafurazole	sulfafurazol
+nl	sulfaisodimidine	sulfisomidine
+nl	sulfalene	sulfaleen
+nl	sulfamazone	sulfamazon
+nl	sulfamerazine and trimethoprim	sulfamerazine met trimethoprim
+nl	sulfamethizole	sulfamethizol
+nl	sulfamethoxazole	sulfamethoxazol
+nl	sulfamethoxazole and trimethoprim	sulfamethoxazol met trimethoprim
+nl	sulfametoxydiazine	sulfamethoxydiazine
+nl	sulfametrole and trimethoprim	sulfametrol met trimethoprim
+nl	sulfamoxole	sulfamoxol
+nl	sulfamoxole and trimethoprim	sulfamoxol met trimethoprim
+nl	sulfaperin	sulfaperine
+nl	sulfaphenazole	sulfafenazol
+nl	sulfathiazole	sulfathiazol
+nl	sulfathiourea	sulfathioureum
+nl	sulfonamides, combinations with other antibacterials (excl, trimethoprim)	sulfonamiden met andere antibacteriele middelen (exc trim)
+nl	sultamicillin	sultamicilline
+nl	talampicillin	talampicilline
+nl	teicoplanin	teicoplanine
+nl	telithromycin	telitromycine
+nl	temafloxacin	temafloxacine
+nl	temocillin	temocilline
+nl	tenofovir disoproxil	tenofovir
+nl	terizidone	terizidon
+nl	tetanus antitoxin	serum tegen tetanus
+nl	tetanus immunoglobulin	tetanusimmunoglobuline
+nl	tetanus toxoid	tetanustoxoide
+nl	tetanus toxoid, combinations with diphtheria toxoid	tetanustoxoide met difterietoxoide
+nl	tetanus toxoid, combinations with tetanus immunoglobulin	tetanustoxoide met tetanusimmunoglobuline
+nl	thiamphenicol	thiamfenicol
+nl	thiamphenicol, combinations	thiamfenicol combinatiepreparaten
+nl	thioacetazone and isoniazid	thioacetazon met isoniazide
+nl	ticarcillin	ticarcilline
+nl	ticarcillin and beta-lactamase inhibitor	ticarcilline met enzymremmer
+nl	tinidazole	tinidazol
+nl	tobramycin	tobramycine
+nl	troleandomycin	troleandomycine
+nl	trovafloxacin	trovafloxacine
+nl	tuberculosis, live attenuated	bacillus calmette guerin, levend verzwakt
+nl	typhoid, combinations with paratyphi types	buiktyfus met paratyfus-typen
+nl	typhoid, inactivated, whole cell	buiktyfus, geinactiveerd, hele cel
+nl	typhoid, oral, live attenuated	buiktyfus, oraal, levend verzwakt
+nl	typhoid, purified polysaccharide antigen	buiktyfus, gezuiverd polysaccharidenantigeen
+nl	typhoid-hepatitis A	buiktyfus-hepatitis A
+nl	typhus exanthematicus, inactivated, whole cell	vlektyfus, geinactiveerd, hele cel
+nl	vaccinia immunoglobulin	vaccinia-immunoglobuline
+nl	vancomycin	vancomycine
+nl	varicella, live attenuated	varicella, levend verzwakt
+nl	varicella/zoster immunoglobulin	varicella-zoster-immunoglobuline
+nl	voriconazole	voriconazol
+nl	yellow fever, live attenuated	gele koorts, levend verzwakt

@@ -29,14 +29,15 @@
 #' @param breaks numeric vector of positions
 #' @param limits numeric vector of length two providing limits of the scale, use \code{NA} to refer to the existing minimum or maximum
 #' @param facet variable to split plots by, either \code{"Interpretation"} (default) or \code{"Antibiotic"} or a grouping variable
-#' @param translate_ab a column name of the \code{\link{antibiotics}} data set to translate the antibiotic abbreviations into, using \code{\link{abname}}. Default behaviour is to translate to official names according to the WHO. Use \code{translate_ab = FALSE} to disable translation.
+#' @param translate_ab a column name of the \code{\link{antibiotics}} data set to translate the antibiotic abbreviations into, using \code{\link{ab_name}}. Default behaviour is to translate to official names according to the WHO. Use \code{translate_ab = FALSE} to disable translation.
+#' @param language the language used for translation of antibiotic names
 #' @param fun function to transform \code{data}, either \code{\link{count_df}} (default) or \code{\link{portion_df}}
 #' @param nrow (when using \code{facet}) number of rows
 #' @param datalabels show datalabels using \code{labels_rsi_count}, will at default only be shown when \code{fun = count_df}
 #' @param datalabels.size size of the datalabels
 #' @param datalabels.colour colour of the datalabels
 #' @param ... other parameters passed on to \code{geom_rsi}
-#' @details At default, the names of antibiotics will be shown on the plots using \code{\link{abname}}. This can be set with the option \code{get_antibiotic_names} (a logical value), so change it e.g. to \code{FALSE} with \code{options(get_antibiotic_names = FALSE)}.
+#' @details At default, the names of antibiotics will be shown on the plots using \code{\link{ab_name}}. This can be set with the option \code{get_antibiotic_names} (a logical value), so change it e.g. to \code{FALSE} with \code{options(get_antibiotic_names = FALSE)}.
 #'
 #' \strong{The functions}\cr
 #' \code{geom_rsi} will take any variable from the data that has an \code{rsi} class (created with \code{\link{as.rsi}}) using \code{fun} (\code{\link{count_df}} at default, can also be \code{\link{portion_df}}) and will plot bars with the percentage R, I and S. The default behaviour is to have the bars stacked and to have the different antibiotics on the x axis.
@@ -61,11 +62,11 @@
 #' library(ggplot2)
 #'
 #' # get antimicrobial results for drugs against a UTI:
-#' ggplot(septic_patients %>% select(amox, nitr, fosf, trim, cipr)) +
+#' ggplot(septic_patients %>% select(AMX, NIT, FOS, TMP, CIP)) +
 #'   geom_rsi()
 #'
 #' # prettify the plot using some additional functions:
-#' df <- septic_patients[, c("amox", "nitr", "fosf", "trim", "cipr")]
+#' df <- septic_patients[, c("AMX", "NIT", "FOS", "TMP", "CIP")]
 #' ggplot(df) +
 #'   geom_rsi() +
 #'   scale_y_percent() +
@@ -75,17 +76,17 @@
 #'
 #' # or better yet, simplify this using the wrapper function - a single command:
 #' septic_patients %>%
-#'   select(amox, nitr, fosf, trim, cipr) %>%
+#'   select(AMX, NIT, FOS, TMP, CIP) %>%
 #'   ggplot_rsi()
 #'
 #' # get only portions and no counts:
 #' septic_patients %>%
-#'   select(amox, nitr, fosf, trim, cipr) %>%
+#'   select(AMX, NIT, FOS, TMP, CIP) %>%
 #'   ggplot_rsi(fun = portion_df)
 #'
 #' # add other ggplot2 parameters as you like:
 #' septic_patients %>%
-#'   select(amox, nitr, fosf, trim, cipr) %>%
+#'   select(AMX, NIT, FOS, TMP, CIP) %>%
 #'   ggplot_rsi(width = 0.5,
 #'              colour = "black",
 #'              size = 1,
@@ -100,19 +101,19 @@
 #'   # `age_group` is also a function of this package:
 #'   group_by(age_group = age_groups(age)) %>%
 #'   select(age_group,
-#'          cipr) %>%
+#'          CIP) %>%
 #'   ggplot_rsi(x = "age_group")
 #' \donttest{
 #'
 #' # for colourblind mode, use divergent colours from the viridis package:
 #' septic_patients %>%
-#'   select(amox, nitr, fosf, trim, cipr) %>%
+#'   select(AMX, NIT, FOS, TMP, CIP) %>%
 #'   ggplot_rsi() + scale_fill_viridis_d()
 #'
 #'
 #' # it also supports groups (don't forget to use the group var on `x` or `facet`):
 #' septic_patients %>%
-#'   select(hospital_id, amox, nitr, fosf, trim, cipr) %>%
+#'   select(hospital_id, AMX, NIT, FOS, TMP, CIP) %>%
 #'   group_by(hospital_id) %>%
 #'   ggplot_rsi(x = hospital_id,
 #'              facet = Antibiotic,
@@ -136,7 +137,7 @@
 #'   # get short MO names (like "E. coli")
 #'   mutate(mo = mo_shortname(mo, Becker = TRUE)) %>%
 #'   # select this short name and some antiseptic drugs
-#'   select(mo, cfur, gent, cipr) %>%
+#'   select(mo, CXM, GEN, CIP) %>%
 #'   # group by MO
 #'   group_by(mo) %>%
 #'   # plot the thing, putting MOs on the facet
@@ -156,7 +157,8 @@ ggplot_rsi <- function(data,
                        facet = NULL,
                        breaks = seq(0, 1, 0.1),
                        limits = NULL,
-                       translate_ab = "official",
+                       translate_ab = "name",
+                       language = get_locale(),
                        fun = count_df,
                        nrow = NULL,
                        datalabels = TRUE,
@@ -229,7 +231,8 @@ ggplot_rsi <- function(data,
 geom_rsi <- function(position = NULL,
                      x = c("Antibiotic", "Interpretation"),
                      fill = "Interpretation",
-                     translate_ab = "official",
+                     translate_ab = "name",
+                     language = get_locale(),
                      fun = count_df,
                      ...)  {
 
@@ -266,8 +269,6 @@ geom_rsi <- function(position = NULL,
   } else if (tolower(x) %in% tolower(c('SIR', 'RSI', 'interpretation', 'interpretations', 'result'))) {
     x <- "Interpretation"
   }
-
-  options(get_antibiotic_names = translate_ab)
 
   ggplot2::layer(geom = "bar", stat = "identity", position = position,
                  mapping = ggplot2::aes_string(x = x, y = y, fill = fill),

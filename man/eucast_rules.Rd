@@ -21,47 +21,16 @@
     }
   }
 
-  For editing the reference file (which is available with \code{\link{eucast_rules_file}}), these values can all be used for target antibiotics: aminoglycosides, tetracyclines, polymyxins, macrolides, glycopeptides, streptogramins, cephalosporins, cephalosporins_without_cfta, carbapenems, aminopenicillins, ureidopenicillins, fluoroquinolones, all_betalactams, and all separate four letter codes like amcl. They can be separated by comma: \code{"amcl, fluoroquinolones"}. The mo_property can be any column name from the \code{\link{microorganisms}} data set, or \code{genus_species} or \code{gramstain}. This file contains references to the 'Burkholderia cepacia complex'. The species in this group can be found in: LiPuma JJ, 2015 (PMID 16217180).
+  For editing the reference file (which is available with \code{\link{eucast_rules_file}}), these values can all be used for target antibiotics: aminoglycosides, tetracyclines, polymyxins, macrolides, glycopeptides, streptogramins, cephalosporins, cephalosporins_without_cfta, carbapenems, aminopenicillins, ureidopenicillins, fluoroquinolones, all_betalactams, and all separate four letter codes like AMC. They can be separated by comma: \code{"AMC, fluoroquinolones"}. The mo_property can be any column name from the \code{\link{microorganisms}} data set, or \code{genus_species} or \code{gramstain}. This file contains references to the 'Burkholderia cepacia complex'. The species in this group can be found in: LiPuma JJ, 2015 (PMID 16217180).
 }
 \usage{
 eucast_rules(x, col_mo = NULL, info = TRUE, rules = c("breakpoints",
-  "expert", "other", "all"), verbose = FALSE, amcl = guess_ab_col(),
-  amik = guess_ab_col(), amox = guess_ab_col(),
-  ampi = guess_ab_col(), azit = guess_ab_col(),
-  azlo = guess_ab_col(), aztr = guess_ab_col(),
-  cefa = guess_ab_col(), cfep = guess_ab_col(),
-  cfot = guess_ab_col(), cfox = guess_ab_col(),
-  cfra = guess_ab_col(), cfta = guess_ab_col(),
-  cftr = guess_ab_col(), cfur = guess_ab_col(),
-  chlo = guess_ab_col(), cipr = guess_ab_col(),
-  clar = guess_ab_col(), clin = guess_ab_col(),
-  clox = guess_ab_col(), coli = guess_ab_col(),
-  czol = guess_ab_col(), dapt = guess_ab_col(),
-  doxy = guess_ab_col(), erta = guess_ab_col(),
-  eryt = guess_ab_col(), fosf = guess_ab_col(),
-  fusi = guess_ab_col(), gent = guess_ab_col(),
-  imip = guess_ab_col(), kana = guess_ab_col(),
-  levo = guess_ab_col(), linc = guess_ab_col(),
-  line = guess_ab_col(), mero = guess_ab_col(),
-  mezl = guess_ab_col(), mino = guess_ab_col(),
-  moxi = guess_ab_col(), nali = guess_ab_col(),
-  neom = guess_ab_col(), neti = guess_ab_col(),
-  nitr = guess_ab_col(), norf = guess_ab_col(),
-  novo = guess_ab_col(), oflo = guess_ab_col(),
-  oxac = guess_ab_col(), peni = guess_ab_col(),
-  pipe = guess_ab_col(), pita = guess_ab_col(),
-  poly = guess_ab_col(), pris = guess_ab_col(),
-  qida = guess_ab_col(), rifa = guess_ab_col(),
-  roxi = guess_ab_col(), siso = guess_ab_col(),
-  teic = guess_ab_col(), tetr = guess_ab_col(),
-  tica = guess_ab_col(), tige = guess_ab_col(),
-  tobr = guess_ab_col(), trim = guess_ab_col(),
-  trsu = guess_ab_col(), vanc = guess_ab_col(), ...)
+  "expert", "other", "all"), verbose = FALSE, ...)
 
 eucast_rules_file()
 }
 \arguments{
-\item{x}{data with antibiotic columns, like e.g. \code{amox} and \code{amcl}}
+\item{x}{data with antibiotic columns, like e.g. \code{AMX} and \code{AMC}}
 
 \item{col_mo}{column name of the unique IDs of the microorganisms (see \code{\link{mo}}), defaults to the first column of class \code{mo}. Values will be coerced using \code{\link{as.mo}}.}
 
@@ -71,9 +40,7 @@ eucast_rules_file()
 
 \item{verbose}{a logical to indicate whether extensive info should be returned as a \code{data.frame} with info about which rows and columns are effected. It runs all EUCAST rules, but will not be applied to an output - only an informative \code{data.frame} with changes will be returned as output.}
 
-\item{amcl, amik, amox, ampi, azit, azlo, aztr, cefa, cfep, cfot, cfox, cfra, cfta, cftr, cfur, chlo, cipr, clar, clin, clox, coli, czol, dapt, doxy, erta, eryt, fosf, fusi, gent, imip, kana, levo, linc, line, mero, mezl, mino, moxi, nali, neom, neti, nitr, norf, novo, oflo, oxac, peni, pipe, pita, poly, pris, qida, rifa, roxi, siso, teic, tetr, tica, tige, tobr, trim, trsu, vanc}{column name of an antibiotic, see Antibiotics}
-
-\item{...}{parameters that are passed on to \code{eucast_rules}}
+\item{...}{column name of an antibiotic, see section Antibiotics}
 }
 \value{
 The input of \code{tbl_}, possibly with edited values of antibiotics. Or, if \code{verbose = TRUE}, a \code{data.frame} with all original and new values of the affected bug-drug combinations.
@@ -82,83 +49,84 @@ The input of \code{tbl_}, possibly with edited values of antibiotics. Or, if \co
 Apply susceptibility rules as defined by the European Committee on Antimicrobial Susceptibility Testing (EUCAST, \url{http://eucast.org}), see \emph{Source}. This includes (1) expert rules, (2) intrinsic resistance and (3) inferred resistance as defined in their breakpoint tables.
 }
 \details{
-\strong{NOTE:} This function does not translate MIC values to RSI values. It only applies (1) inferred susceptibility and resistance based on results of other antibiotics and (2) intrinsic resistance based on taxonomic properties of a microorganism.
+\strong{Note:} This function does not translate MIC values to RSI values. Use \code{\link{as.rsi}} for that. \cr
+\strong{Note:} When ampicillin (AMP, J01CA01) is not available but amoxicillin (AMX, J01CA04) is, the latter will be used for all rules where there is a dependency on ampicillin. These drugs are interchangeable when it comes to expression of antimicrobial resistance.
 
-The file used for applying all EUCAST rules can be retrieved with \code{\link{eucast_rules_file}()}. It returns an easily readable data set containing all rules. The original TSV file (tab separated file) that is being read by this function can be found when running this command: \cr
+The file used for applying all EUCAST rules can be retrieved with \code{\link{eucast_rules_file}()}. It returns an easily readable data set containing all rules. The original TSV file (tab separated file) that is being read by \code{eucast_rules()} can be found by running this command: \cr
 \code{AMR::EUCAST_RULES_FILE_LOCATION} (without brackets).
 
-In the source code it is located under \href{https://gitlab.com/msberends/AMR/blob/master/inst/eucast/eucast_rules.tsv}{\code{./inst/eucast/eucast_rules.tsv}}.
-
-\strong{Note:} When ampicillin (J01CA01) is not available but amoxicillin (J01CA04) is, the latter will be used for all rules where there is a dependency on ampicillin. These drugs are interchangeable when it comes to expression of antimicrobial resistance.
+In the source code the file containing all rules is located \href{https://gitlab.com/msberends/AMR/blob/master/inst/eucast/eucast_rules.tsv}{here}.
 }
 \section{Antibiotics}{
 
-To define antibiotics column names, leave as it is to determine it automatically with \code{\link{guess_ab_col}} or input a text (case-insensitive) or use \code{NULL} to skip a column (e.g. \code{tica = NULL}). Non-existing columns will anyway be skipped with a warning.
+To define antibiotics column names, leave as it is to determine it automatically with \code{\link{guess_ab_col}} or input a text (case-insensitive), or use \code{NULL} to skip a column (e.g. \code{TIC = NULL} to skip ticarcillin). Manually defined but non-existing columns will be skipped with a warning.
 
-Abbrevations of the column containing antibiotics in the form: \strong{abbreviation}: generic name (\emph{ATC code})
+Available abbrevations of the column containing antibiotics in the form '\strong{antimicrobial ID}: name (\emph{ATC code})':
 
- \strong{amcl}: amoxicillin+clavulanic acid (\href{https://www.whocc.no/atc_ddd_index/?code=J01CR02}{J01CR02}),
- \strong{amik}: amikacin (\href{https://www.whocc.no/atc_ddd_index/?code=J01GB06}{J01GB06}),
- \strong{amox}: amoxicillin (\href{https://www.whocc.no/atc_ddd_index/?code=J01CA04}{J01CA04}),
- \strong{ampi}: ampicillin (\href{https://www.whocc.no/atc_ddd_index/?code=J01CA01}{J01CA01}),
- \strong{azit}: azithromycin (\href{https://www.whocc.no/atc_ddd_index/?code=J01FA10}{J01FA10}),
- \strong{azlo}: azlocillin (\href{https://www.whocc.no/atc_ddd_index/?code=J01CA09}{J01CA09}),
- \strong{aztr}: aztreonam (\href{https://www.whocc.no/atc_ddd_index/?code=J01DF01}{J01DF01}),
- \strong{cefa}: cefaloridine (\href{https://www.whocc.no/atc_ddd_index/?code=J01DB02}{J01DB02}),
- \strong{cfep}: cefepime (\href{https://www.whocc.no/atc_ddd_index/?code=J01DE01}{J01DE01}),
- \strong{cfot}: cefotaxime (\href{https://www.whocc.no/atc_ddd_index/?code=J01DD01}{J01DD01}),
- \strong{cfox}: cefoxitin (\href{https://www.whocc.no/atc_ddd_index/?code=J01DC01}{J01DC01}),
- \strong{cfra}: cefradine (\href{https://www.whocc.no/atc_ddd_index/?code=J01DB09}{J01DB09}),
- \strong{cfta}: ceftazidime (\href{https://www.whocc.no/atc_ddd_index/?code=J01DD02}{J01DD02}),
- \strong{cftr}: ceftriaxone (\href{https://www.whocc.no/atc_ddd_index/?code=J01DD04}{J01DD04}),
- \strong{cfur}: cefuroxime (\href{https://www.whocc.no/atc_ddd_index/?code=J01DC02}{J01DC02}),
- \strong{chlo}: chloramphenicol (\href{https://www.whocc.no/atc_ddd_index/?code=J01BA01}{J01BA01}),
- \strong{cipr}: ciprofloxacin (\href{https://www.whocc.no/atc_ddd_index/?code=J01MA02}{J01MA02}),
- \strong{clar}: clarithromycin (\href{https://www.whocc.no/atc_ddd_index/?code=J01FA09}{J01FA09}),
- \strong{clin}: clindamycin (\href{https://www.whocc.no/atc_ddd_index/?code=J01FF01}{J01FF01}),
- \strong{clox}: flucloxacillin (\href{https://www.whocc.no/atc_ddd_index/?code=J01CF05}{J01CF05}),
- \strong{coli}: colistin (\href{https://www.whocc.no/atc_ddd_index/?code=J01XB01}{J01XB01}),
- \strong{czol}: cefazolin (\href{https://www.whocc.no/atc_ddd_index/?code=J01DB04}{J01DB04}),
- \strong{dapt}: daptomycin (\href{https://www.whocc.no/atc_ddd_index/?code=J01XX09}{J01XX09}),
- \strong{doxy}: doxycycline (\href{https://www.whocc.no/atc_ddd_index/?code=J01AA02}{J01AA02}),
- \strong{erta}: ertapenem (\href{https://www.whocc.no/atc_ddd_index/?code=J01DH03}{J01DH03}),
- \strong{eryt}: erythromycin (\href{https://www.whocc.no/atc_ddd_index/?code=J01FA01}{J01FA01}),
- \strong{fosf}: fosfomycin (\href{https://www.whocc.no/atc_ddd_index/?code=J01XX01}{J01XX01}),
- \strong{fusi}: fusidic acid (\href{https://www.whocc.no/atc_ddd_index/?code=J01XC01}{J01XC01}),
- \strong{gent}: gentamicin (\href{https://www.whocc.no/atc_ddd_index/?code=J01GB03}{J01GB03}),
- \strong{imip}: imipenem (\href{https://www.whocc.no/atc_ddd_index/?code=J01DH51}{J01DH51}),
- \strong{kana}: kanamycin (\href{https://www.whocc.no/atc_ddd_index/?code=J01GB04}{J01GB04}),
- \strong{levo}: levofloxacin (\href{https://www.whocc.no/atc_ddd_index/?code=J01MA12}{J01MA12}),
- \strong{linc}: lincomycin (\href{https://www.whocc.no/atc_ddd_index/?code=J01FF02}{J01FF02}),
- \strong{line}: linezolid (\href{https://www.whocc.no/atc_ddd_index/?code=J01XX08}{J01XX08}),
- \strong{mero}: meropenem (\href{https://www.whocc.no/atc_ddd_index/?code=J01DH02}{J01DH02}),
- \strong{mezl}: mezlocillin (\href{https://www.whocc.no/atc_ddd_index/?code=J01CA10}{J01CA10}),
- \strong{mino}: minocycline (\href{https://www.whocc.no/atc_ddd_index/?code=J01AA08}{J01AA08}),
- \strong{moxi}: moxifloxacin (\href{https://www.whocc.no/atc_ddd_index/?code=J01MA14}{J01MA14}),
- \strong{nali}: nalidixic acid (\href{https://www.whocc.no/atc_ddd_index/?code=J01MB02}{J01MB02}),
- \strong{neom}: neomycin (\href{https://www.whocc.no/atc_ddd_index/?code=J01GB05}{J01GB05}),
- \strong{neti}: netilmicin (\href{https://www.whocc.no/atc_ddd_index/?code=J01GB07}{J01GB07}),
- \strong{nitr}: nitrofurantoin (\href{https://www.whocc.no/atc_ddd_index/?code=J01XE01}{J01XE01}),
- \strong{norf}: norfloxacin (\href{https://www.whocc.no/atc_ddd_index/?code=J01MA06}{J01MA06}),
- \strong{novo}: novobiocin (an ATCvet code: \href{https://www.whocc.no/atc_ddd_index/?code=QJ01XX95}{QJ01XX95}),
- \strong{oflo}: ofloxacin (\href{https://www.whocc.no/atc_ddd_index/?code=J01MA01}{J01MA01}),
- \strong{peni}: (benzyl)penicillin (\href{https://www.whocc.no/atc_ddd_index/?code=J01CE01}{J01CE01}),
- \strong{pipe}: piperacillin (\href{https://www.whocc.no/atc_ddd_index/?code=J01CA12}{J01CA12}),
- \strong{pita}: piperacillin+tazobactam (\href{https://www.whocc.no/atc_ddd_index/?code=J01CR05}{J01CR05}),
- \strong{poly}: polymyxin B (\href{https://www.whocc.no/atc_ddd_index/?code=J01XB02}{J01XB02}),
- \strong{pris}: pristinamycin (\href{https://www.whocc.no/atc_ddd_index/?code=J01FG01}{J01FG01}),
- \strong{qida}: quinupristin/dalfopristin (\href{https://www.whocc.no/atc_ddd_index/?code=J01FG02}{J01FG02}),
- \strong{rifa}: rifampicin (\href{https://www.whocc.no/atc_ddd_index/?code=J04AB02}{J04AB02}),
- \strong{roxi}: roxithromycin (\href{https://www.whocc.no/atc_ddd_index/?code=J01FA06}{J01FA06}),
- \strong{siso}: sisomicin (\href{https://www.whocc.no/atc_ddd_index/?code=J01GB08}{J01GB08}),
- \strong{teic}: teicoplanin (\href{https://www.whocc.no/atc_ddd_index/?code=J01XA02}{J01XA02}),
- \strong{tetr}: tetracycline (\href{https://www.whocc.no/atc_ddd_index/?code=J01AA07}{J01AA07}),
- \strong{tica}: ticarcillin (\href{https://www.whocc.no/atc_ddd_index/?code=J01CA13}{J01CA13}),
- \strong{tige}: tigecycline (\href{https://www.whocc.no/atc_ddd_index/?code=J01AA12}{J01AA12}),
- \strong{tobr}: tobramycin (\href{https://www.whocc.no/atc_ddd_index/?code=J01GB01}{J01GB01}),
- \strong{trim}: trimethoprim (\href{https://www.whocc.no/atc_ddd_index/?code=J01EA01}{J01EA01}),
- \strong{trsu}: sulfamethoxazole and trimethoprim (\href{https://www.whocc.no/atc_ddd_index/?code=J01EE01}{J01EE01}),
- \strong{vanc}: vancomycin (\href{https://www.whocc.no/atc_ddd_index/?code=J01XA01}{J01XA01}).
+ \strong{AMC}: amoxicillin/clavulanic acid (\href{https://www.whocc.no/atc_ddd_index/?code=J01CR02}{J01CR02}),
+ \strong{AMK}: amikacin (\href{https://www.whocc.no/atc_ddd_index/?code=J01GB06}{J01GB06}),
+ \strong{AMX}: amoxicillin (\href{https://www.whocc.no/atc_ddd_index/?code=J01CA04}{J01CA04}),
+ \strong{AMP}: ampicillin (\href{https://www.whocc.no/atc_ddd_index/?code=J01CA01}{J01CA01}),
+ \strong{AZM}: azithromycin (\href{https://www.whocc.no/atc_ddd_index/?code=J01FA10}{J01FA10}),
+ \strong{AZL}: azlocillin (\href{https://www.whocc.no/atc_ddd_index/?code=J01CA09}{J01CA09}),
+ \strong{ATM}: aztreonam (\href{https://www.whocc.no/atc_ddd_index/?code=J01DF01}{J01DF01}),
+ \strong{RID}: cefaloridine (\href{https://www.whocc.no/atc_ddd_index/?code=J01DB02}{J01DB02}),
+ \strong{FEP}: cefepime (\href{https://www.whocc.no/atc_ddd_index/?code=J01DE01}{J01DE01}),
+ \strong{CTX}: cefotaxime (\href{https://www.whocc.no/atc_ddd_index/?code=J01DD01}{J01DD01}),
+ \strong{FOX}: cefoxitin (\href{https://www.whocc.no/atc_ddd_index/?code=J01DC01}{J01DC01}),
+ \strong{CED}: cefradine (\href{https://www.whocc.no/atc_ddd_index/?code=J01DB09}{J01DB09}),
+ \strong{CAZ}: ceftazidime (\href{https://www.whocc.no/atc_ddd_index/?code=J01DD02}{J01DD02}),
+ \strong{CRO}: ceftriaxone (\href{https://www.whocc.no/atc_ddd_index/?code=J01DD04}{J01DD04}),
+ \strong{CXM}: cefuroxime (\href{https://www.whocc.no/atc_ddd_index/?code=J01DC02}{J01DC02}),
+ \strong{CHL}: chloramphenicol (\href{https://www.whocc.no/atc_ddd_index/?code=J01BA01}{J01BA01}),
+ \strong{CIP}: ciprofloxacin (\href{https://www.whocc.no/atc_ddd_index/?code=J01MA02}{J01MA02}),
+ \strong{CLR}: clarithromycin (\href{https://www.whocc.no/atc_ddd_index/?code=J01FA09}{J01FA09}),
+ \strong{CLI}: clindamycin (\href{https://www.whocc.no/atc_ddd_index/?code=J01FF01}{J01FF01}),
+ \strong{FLC}: flucloxacillin (\href{https://www.whocc.no/atc_ddd_index/?code=J01CF05}{J01CF05}),
+ \strong{COL}: colistin (\href{https://www.whocc.no/atc_ddd_index/?code=J01XB01}{J01XB01}),
+ \strong{CZO}: cefazolin (\href{https://www.whocc.no/atc_ddd_index/?code=J01DB04}{J01DB04}),
+ \strong{DAP}: daptomycin (\href{https://www.whocc.no/atc_ddd_index/?code=J01XX09}{J01XX09}),
+ \strong{DOX}: doxycycline (\href{https://www.whocc.no/atc_ddd_index/?code=J01AA02}{J01AA02}),
+ \strong{ETP}: ertapenem (\href{https://www.whocc.no/atc_ddd_index/?code=J01DH03}{J01DH03}),
+ \strong{ERY}: erythromycin (\href{https://www.whocc.no/atc_ddd_index/?code=J01FA01}{J01FA01}),
+ \strong{FOS}: fosfomycin (\href{https://www.whocc.no/atc_ddd_index/?code=J01XX01}{J01XX01}),
+ \strong{FUS}: fusidic acid (\href{https://www.whocc.no/atc_ddd_index/?code=J01XC01}{J01XC01}),
+ \strong{GEN}: gentamicin (\href{https://www.whocc.no/atc_ddd_index/?code=J01GB03}{J01GB03}),
+ \strong{IPM}: imipenem (\href{https://www.whocc.no/atc_ddd_index/?code=J01DH51}{J01DH51}),
+ \strong{KAN}: kanamycin (\href{https://www.whocc.no/atc_ddd_index/?code=J01GB04}{J01GB04}),
+ \strong{LVX}: levofloxacin (\href{https://www.whocc.no/atc_ddd_index/?code=J01MA12}{J01MA12}),
+ \strong{LIN}: lincomycin (\href{https://www.whocc.no/atc_ddd_index/?code=J01FF02}{J01FF02}),
+ \strong{LNZ}: linezolid (\href{https://www.whocc.no/atc_ddd_index/?code=J01XX08}{J01XX08}),
+ \strong{MEM}: meropenem (\href{https://www.whocc.no/atc_ddd_index/?code=J01DH02}{J01DH02}),
+ \strong{MEZ}: mezlocillin (\href{https://www.whocc.no/atc_ddd_index/?code=J01CA10}{J01CA10}),
+ \strong{MNO}: minocycline (\href{https://www.whocc.no/atc_ddd_index/?code=J01AA08}{J01AA08}),
+ \strong{MFX}: moxifloxacin (\href{https://www.whocc.no/atc_ddd_index/?code=J01MA14}{J01MA14}),
+ \strong{MTR}: metronidazole (\href{https://www.whocc.no/atc_ddd_index/?code=J01MA14}{J01XD01}),
+ \strong{NAL}: nalidixic acid (\href{https://www.whocc.no/atc_ddd_index/?code=J01MB02}{J01MB02}),
+ \strong{NEO}: neomycin (\href{https://www.whocc.no/atc_ddd_index/?code=J01GB05}{J01GB05}),
+ \strong{NET}: netilmicin (\href{https://www.whocc.no/atc_ddd_index/?code=J01GB07}{J01GB07}),
+ \strong{NIT}: nitrofurantoin (\href{https://www.whocc.no/atc_ddd_index/?code=J01XE01}{J01XE01}),
+ \strong{NOR}: norfloxacin (\href{https://www.whocc.no/atc_ddd_index/?code=J01MA06}{J01MA06}),
+ \strong{NOV}: novobiocin (an ATCvet code: \href{https://www.whocc.no/atc_ddd_index/?code=QJ01XX95}{QJ01XX95}),
+ \strong{OFX}: ofloxacin (\href{https://www.whocc.no/atc_ddd_index/?code=J01MA01}{J01MA01}),
+ \strong{OXA}: oxacillin (\href{https://www.whocc.no/atc_ddd_index/?code=J01MA01}{J01CF04}),
+ \strong{PEN}: penicillin G (\href{https://www.whocc.no/atc_ddd_index/?code=J01CE01}{J01CE01}),
+ \strong{PIP}: piperacillin (\href{https://www.whocc.no/atc_ddd_index/?code=J01CA12}{J01CA12}),
+ \strong{TZP}: piperacillin/tazobactam (\href{https://www.whocc.no/atc_ddd_index/?code=J01CR05}{J01CR05}),
+ \strong{PLB}: polymyxin B (\href{https://www.whocc.no/atc_ddd_index/?code=J01XB02}{J01XB02}),
+ \strong{PRI}: pristinamycin (\href{https://www.whocc.no/atc_ddd_index/?code=J01FG01}{J01FG01}),
+ \strong{QDA}: quinupristin/dalfopristin (\href{https://www.whocc.no/atc_ddd_index/?code=J01FG02}{J01FG02}),
+ \strong{RIF}: rifampicin (\href{https://www.whocc.no/atc_ddd_index/?code=J04AB02}{J04AB02}),
+ \strong{RXT}: roxithromycin (\href{https://www.whocc.no/atc_ddd_index/?code=J01FA06}{J01FA06}),
+ \strong{SIS}: sisomicin (\href{https://www.whocc.no/atc_ddd_index/?code=J01GB08}{J01GB08}),
+ \strong{TEC}: teicoplanin (\href{https://www.whocc.no/atc_ddd_index/?code=J01XA02}{J01XA02}),
+ \strong{TCY}: tetracycline (\href{https://www.whocc.no/atc_ddd_index/?code=J01AA07}{J01AA07}),
+ \strong{TIC}: ticarcillin (\href{https://www.whocc.no/atc_ddd_index/?code=J01CA13}{J01CA13}),
+ \strong{TGC}: tigecycline (\href{https://www.whocc.no/atc_ddd_index/?code=J01AA12}{J01AA12}),
+ \strong{TOB}: tobramycin (\href{https://www.whocc.no/atc_ddd_index/?code=J01GB01}{J01GB01}),
+ \strong{TMP}: trimethoprim (\href{https://www.whocc.no/atc_ddd_index/?code=J01EA01}{J01EA01}),
+ \strong{SXT}: trimethoprim/sulfamethoxazole (\href{https://www.whocc.no/atc_ddd_index/?code=J01EE01}{J01EE01}),
+ \strong{VAN}: vancomycin (\href{https://www.whocc.no/atc_ddd_index/?code=J01XA01}{J01XA01}).
 }
 
 \section{Read more on our website!}{
@@ -174,17 +142,17 @@ a <- data.frame(mo = c("Staphylococcus aureus",
                        "Escherichia coli",
                        "Klebsiella pneumoniae",
                        "Pseudomonas aeruginosa"),
-                vanc = "-",       # Vancomycin
-                amox = "-",       # Amoxicillin
-                coli = "-",       # Colistin
-                cfta = "-",       # Ceftazidime
-                cfur = "-",       # Cefuroxime
-                peni = "S",       # Benzylpenicillin
-                cfox = "S",       # Cefoxitin
+                VAN = "-",       # Vancomycin
+                AMX = "-",       # Amoxicillin
+                COL = "-",       # Colistin
+                CAZ = "-",       # Ceftazidime
+                CXM = "-",       # Cefuroxime
+                PEN = "S",       # Penicillin G
+                FOX = "S",       # Cefoxitin
                 stringsAsFactors = FALSE)
 
 a
-#                       mo vanc amox coli cfta cfur peni cfox
+#                       mo  VAN  AMX  COL  CAZ  CXM  PEN  FOX
 # 1  Staphylococcus aureus    -    -    -    -    -    S    S
 # 2  Enterococcus faecalis    -    -    -    -    -    S    S
 # 3       Escherichia coli    -    -    -    -    -    S    S
@@ -196,7 +164,7 @@ a
 b <- eucast_rules(a)
 
 b
-#                       mo vanc amox coli cfta cfur peni cfox
+#                       mo  VAN  AMX  COL  CAZ  CXM  PEN  FOX
 # 1  Staphylococcus aureus    -    S    R    R    S    S    S
 # 2  Enterococcus faecalis    -    -    R    R    R    S    R
 # 3       Escherichia coli    R    -    -    -    -    R    S

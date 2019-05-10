@@ -124,14 +124,14 @@ septic_patients \%>\%
 # Now let's see if first isolates matter:
 A <- septic_patients \%>\%
   group_by(hospital_id) \%>\%
-  summarise(count = n_rsi(gent),            # gentamicin availability
-            resistance = portion_IR(gent))  # gentamicin resistance
+  summarise(count = n_rsi(GEN),            # gentamicin availability
+            resistance = portion_IR(GEN))  # gentamicin resistance
 
 B <- septic_patients \%>\%
-  filter_first_weighted_isolate() \%>\%       # the 1st isolate filter
+  filter_first_weighted_isolate() \%>\%      # the 1st isolate filter
   group_by(hospital_id) \%>\%
-  summarise(count = n_rsi(gent),            # gentamicin availability
-            resistance = portion_IR(gent))  # gentamicin resistance
+  summarise(count = n_rsi(GEN),            # gentamicin availability
+            resistance = portion_IR(GEN))  # gentamicin resistance
 
 # Have a look at A and B.
 # B is more reliable because every isolate is only counted once.

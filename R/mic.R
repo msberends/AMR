@@ -25,6 +25,7 @@
 #' @rdname as.mic
 #' @param x vector
 #' @param na.rm a logical indicating whether missing values should be removed
+#' @details Interpret MIC values as RSI values with \code{\link{as.rsi}}. It supports guidelines from EUCAST and CLSI.
 #' @return Ordered factor with new class \code{mic}
 #' @keywords mic
 #' @export
@@ -37,6 +38,16 @@
 #'
 #' # this can also coerce combined MIC/RSI values:
 #' as.mic("<=0.002; S") # will return <=0.002
+#'
+#' # interpret MIC values
+#' as.rsi(x = as.mic(2),
+#'        mo = as.mo("S. pneumoniae"),
+#'        ab = "AMX",
+#'        guideline = "EUCAST")
+#' as.rsi(x = as.mic(4),
+#'        mo = as.mo("S. pneumoniae"),
+#'        ab = "AMX",
+#'        guideline = "EUCAST")
 #'
 #' plot(mic_data)
 #' barplot(mic_data)
@@ -71,11 +82,12 @@ as.mic <- function(x, na.rm = FALSE) {
     # force to be character
     x <- as.character(x)
 
-    # previously unempty values now empty - should return a warning later on
+    ## previously unempty values now empty - should return a warning later on
     x[x.bak != "" & x == ""] <- "invalid"
 
-    # these are alllowed MIC values and will become factor levels
-    lvls <- c("<0.002", "<=0.002", "0.002", ">=0.002", ">0.002",
+    # these are allowed MIC values and will become factor levels
+    lvls <- c("<0.001", "<=0.001", "0.001", ">=0.001", ">0.001",
+              "<0.002", "<=0.002", "0.002", ">=0.002", ">0.002",
               "<0.003", "<=0.003", "0.003", ">=0.003", ">0.003",
               "<0.004", "<=0.004", "0.004", ">=0.004", ">0.004",
               "<0.006", "<=0.006", "0.006", ">=0.006", ">0.006",
@@ -134,11 +146,15 @@ as.mic <- function(x, na.rm = FALSE) {
               "<80", "<=80", "80", ">=80", ">80",
               "<96", "<=96", "96", ">=96", ">96",
               "<128", "<=128", "128", ">=128", ">128",
+              "129",
               "<160", "<=160", "160", ">=160", ">160",
               "<256", "<=256", "256", ">=256", ">256",
+              "257",
               "<320", "<=320", "320", ">=320", ">320",
               "<512", "<=512", "512", ">=512", ">512",
-              "<1024", "<=1024", "1024", ">=1024", ">1024")
+              "513",
+              "<1024", "<=1024", "1024", ">=1024", ">1024",
+              "1025")
 
     na_before <- x[is.na(x) | x == ''] %>% length()
     x[!x %in% lvls] <- NA

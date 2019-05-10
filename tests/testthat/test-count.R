@@ -22,52 +22,52 @@
 context("count.R")
 
 test_that("counts work", {
-  # amox resistance in `septic_patients`
-  expect_equal(count_R(septic_patients$amox), 683)
-  expect_equal(count_I(septic_patients$amox), 3)
-  expect_equal(count_S(septic_patients$amox), 543)
-  expect_equal(count_R(septic_patients$amox) + count_I(septic_patients$amox),
-               count_IR(septic_patients$amox))
-  expect_equal(count_S(septic_patients$amox) + count_I(septic_patients$amox),
-               count_SI(septic_patients$amox))
+  # AMX resistance in `septic_patients`
+  expect_equal(count_R(septic_patients$AMX), 683)
+  expect_equal(count_I(septic_patients$AMX), 3)
+  expect_equal(count_S(septic_patients$AMX), 543)
+  expect_equal(count_R(septic_patients$AMX) + count_I(septic_patients$AMX),
+               count_IR(septic_patients$AMX))
+  expect_equal(count_S(septic_patients$AMX) + count_I(septic_patients$AMX),
+               count_SI(septic_patients$AMX))
 
   library(dplyr)
-  expect_equal(septic_patients %>% count_S(amcl), 1342)
-  expect_equal(septic_patients %>% count_S(amcl, gent), 1660)
-  expect_equal(septic_patients %>% count_all(amcl, gent), 1798)
-  expect_identical(septic_patients %>% count_all(amcl, gent),
-                   septic_patients %>% count_S(amcl, gent) +
-                     septic_patients %>% count_IR(amcl, gent))
+  expect_equal(septic_patients %>% count_S(AMC), 1342)
+  expect_equal(septic_patients %>% count_S(AMC, GEN), 1660)
+  expect_equal(septic_patients %>% count_all(AMC, GEN), 1798)
+  expect_identical(septic_patients %>% count_all(AMC, GEN),
+                   septic_patients %>% count_S(AMC, GEN) +
+                     septic_patients %>% count_IR(AMC, GEN))
 
   # count of cases
   expect_equal(septic_patients %>%
                  group_by(hospital_id) %>%
-                 summarise(cipro = count_S(cipr),
-                           genta = count_S(gent),
-                           combination = count_S(cipr, gent)) %>%
+                 summarise(cipro = count_S(CIP),
+                           genta = count_S(GEN),
+                           combination = count_S(CIP, GEN)) %>%
                  pull(combination),
                c(192, 446, 184, 474))
 
   # count_df
   expect_equal(
-    septic_patients %>% select(amox) %>% count_df() %>% pull(Value),
-    c(septic_patients$amox %>% count_S(),
-      septic_patients$amox %>% count_I(),
-      septic_patients$amox %>% count_R())
+    septic_patients %>% select(AMX) %>% count_df() %>% pull(Value),
+    c(septic_patients$AMX %>% count_S(),
+      septic_patients$AMX %>% count_I(),
+      septic_patients$AMX %>% count_R())
   )
   expect_equal(
-    septic_patients %>% select(amox) %>% count_df(combine_IR = TRUE) %>% pull(Value),
-    c(septic_patients$amox %>% count_S(),
-      septic_patients$amox %>% count_IR())
+    septic_patients %>% select(AMX) %>% count_df(combine_IR = TRUE) %>% pull(Value),
+    c(septic_patients$AMX %>% count_S(),
+      septic_patients$AMX %>% count_IR())
   )
 
   # warning for speed loss
-  expect_warning(count_R(as.character(septic_patients$amcl)))
-  expect_warning(count_I(as.character(septic_patients$amcl)))
-  expect_warning(count_S(as.character(septic_patients$amcl,
-                                      septic_patients$gent)))
-  expect_warning(count_S(septic_patients$amcl,
-                         as.character(septic_patients$gent)))
+  expect_warning(count_R(as.character(septic_patients$AMC)))
+  expect_warning(count_I(as.character(septic_patients$AMC)))
+  expect_warning(count_S(as.character(septic_patients$AMC,
+                                      septic_patients$GEN)))
+  expect_warning(count_S(septic_patients$AMC,
+                         as.character(septic_patients$GEN)))
 
   # check for errors
   expect_error(count_IR("test", minimum = "test"))

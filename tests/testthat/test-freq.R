@@ -51,7 +51,7 @@ test_that("frequency table works", {
   # mo
   expect_output(print(freq(septic_patients$mo)))
   # rsi
-  expect_output(print(freq(septic_patients$amox)))
+  expect_output(print(freq(septic_patients$AMX)))
   # integer
   expect_output(print(freq(septic_patients$age)))
   # date
@@ -61,7 +61,7 @@ test_that("frequency table works", {
   # table
   expect_output(print(freq(table(septic_patients$gender, septic_patients$age))))
   # rsi
-  expect_output(print(freq(septic_patients$amcl)))
+  expect_output(print(freq(septic_patients$AMC)))
   # hms
   expect_output(suppressWarnings(print(freq(hms::as.hms(sample(c(0:86399), 50))))))
   # matrix
@@ -89,8 +89,8 @@ test_that("frequency table works", {
 
   # grouping variable
   expect_output(print(septic_patients %>% group_by(gender) %>% freq(hospital_id)))
-  expect_output(print(septic_patients %>% group_by(gender) %>% freq(amox, quote = TRUE)))
-  expect_output(print(septic_patients %>% group_by(gender) %>% freq(amox, markdown = TRUE)))
+  expect_output(print(septic_patients %>% group_by(gender) %>% freq(AMX, quote = TRUE)))
+  expect_output(print(septic_patients %>% group_by(gender) %>% freq(AMX, markdown = TRUE)))
 
   # quasiquotation
   expect_output(print(septic_patients %>% freq(mo_genus(mo))))
@@ -152,7 +152,7 @@ test_that("frequency table works", {
 
   expect_error(septic_patients %>% freq(nonexisting))
   expect_error(septic_patients %>% select(1:10) %>% freq())
-  expect_error(septic_patients %>% freq(peni, oxac, clox, amox, amcl,
+  expect_error(septic_patients %>% freq(peni, oxac, clox, AMX, AMC,
                                         ampi, pita, czol, cfep, cfur))
 
   # (un)select columns
@@ -163,15 +163,15 @@ test_that("frequency table works", {
 
   # run diff
   expect_output(print(
-    diff(freq(septic_patients$amcl),
-         freq(septic_patients$amox))
+    diff(freq(septic_patients$AMC),
+         freq(septic_patients$AMX))
   ))
   expect_output(print(
     diff(freq(septic_patients$age),
          freq(septic_patients$age)) # "No differences found."
   ))
   expect_error(print(
-    diff(freq(septic_patients$amcl),
+    diff(freq(septic_patients$AMX),
          "Just a string") # not a freq tbl
   ))
 

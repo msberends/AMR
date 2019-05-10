@@ -3,39 +3,30 @@
 \name{AMR-deprecated}
 \alias{AMR-deprecated}
 \alias{ratio}
-\alias{ab_property}
-\alias{ab_atc}
+\alias{abname}
+\alias{atc_property}
+\alias{atc_official}
 \alias{ab_official}
-\alias{ab_name}
-\alias{ab_trivial_nl}
-\alias{ab_certe}
-\alias{ab_umcg}
-\alias{ab_tradenames}
-\alias{atc_ddd}
-\alias{atc_groups}
+\alias{atc_name}
+\alias{atc_trivial_nl}
+\alias{atc_tradenames}
 \title{Deprecated functions}
 \usage{
 ratio(x, ratio)
 
-ab_property(...)
+abname(...)
 
-ab_atc(...)
+atc_property(...)
+
+atc_official(...)
 
 ab_official(...)
 
-ab_name(...)
+atc_name(...)
 
-ab_trivial_nl(...)
+atc_trivial_nl(...)
 
-ab_certe(...)
-
-ab_umcg(...)
-
-ab_tradenames(...)
-
-atc_ddd(...)
-
-atc_groups(...)
+atc_tradenames(...)
 }
 \description{
 These functions are so-called '\link{Deprecated}'. They will be removed in a future release. Using the functions will give a warning with the name of the function it has been replaced by (if there is one).

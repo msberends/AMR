@@ -36,8 +36,9 @@
 #'
 #' The Gram stain - \code{mo_gramstain()} - will be determined on the taxonomic kingdom and phylum. According to Cavalier-Smith (2002) who defined subkingdoms Negibacteria and Posibacteria, only these phyla are Posibacteria: Actinobacteria, Chloroflexi, Firmicutes and Tenericutes. These bacteria are considered Gram positive - all other bacteria are considered Gram negative. Species outside the kingdom of Bacteria will return a value \code{NA}.
 #'
+#' All output will be \link{translate}d where possible.
+#'
 #' The function \code{mo_url()} will return the direct URL to the online database entry, which also shows the scientific reference of the concerned species.
-#' @inheritSection get_locale Supported languages
 #' @inheritSection catalogue_of_life Catalogue of Life
 #' @inheritSection as.mo Source
 #' @rdname mo_property
@@ -70,7 +71,7 @@
 #' mo_gramstain("E. coli")       # "Gram negative"
 #' mo_type("E. coli")            # "Bacteria" (equal to kingdom)
 #' mo_rank("E. coli")            # "species"
-#' mo_url("E. coli")             # get the direct url to the Catalogue of Life
+#' mo_url("E. coli")             # get the direct url to the online database entry
 #'
 #' ## scientific reference
 #' mo_ref("E. coli")             # "Castellani et al., 1919"
@@ -128,11 +129,11 @@
 #'             language = "nl")              # "Streptococcus groep A"
 #'
 #'
-#' # get a list with the complete taxonomy (kingdom to subspecies)
+#' # get a list with the complete taxonomy (from kingdom to subspecies)
 #' mo_taxonomy("E. coli")
 mo_fullname <- function(x, language = get_locale(), ...) {
   x <- mo_validate(x = x, property = "fullname", ...)
-  mo_translate(x, language = language)
+  t(x, language = language)
 }
 
 #' @rdname mo_property
@@ -199,49 +200,49 @@ mo_shortname <- function(x, language = get_locale(), ...) {
     }
   }
 
-  mo_translate(result, language = language)
+  t(result, language = language)
 }
 
 #' @rdname mo_property
 #' @export
 mo_subspecies <- function(x, language = get_locale(), ...) {
-  mo_translate(mo_validate(x = x, property = "subspecies", ...), language = language)
+  t(mo_validate(x = x, property = "subspecies", ...), language = language)
 }
 
 #' @rdname mo_property
 #' @export
 mo_species <- function(x, language = get_locale(), ...) {
-  mo_translate(mo_validate(x = x, property = "species", ...), language = language)
+  t(mo_validate(x = x, property = "species", ...), language = language)
 }
 
 #' @rdname mo_property
 #' @export
 mo_genus <- function(x, language = get_locale(), ...) {
-  mo_translate(mo_validate(x = x, property = "genus", ...), language = language)
+  t(mo_validate(x = x, property = "genus", ...), language = language)
 }
 
 #' @rdname mo_property
 #' @export
 mo_family <- function(x, language = get_locale(), ...) {
-  mo_translate(mo_validate(x = x, property = "family", ...), language = language)
+  t(mo_validate(x = x, property = "family", ...), language = language)
 }
 
 #' @rdname mo_property
 #' @export
 mo_order <- function(x, language = get_locale(), ...) {
-  mo_translate(mo_validate(x = x, property = "order", ...), language = language)
+  t(mo_validate(x = x, property = "order", ...), language = language)
 }
 
 #' @rdname mo_property
 #' @export
 mo_class <- function(x, language = get_locale(), ...) {
-  mo_translate(mo_validate(x = x, property = "class", ...), language = language)
+  t(mo_validate(x = x, property = "class", ...), language = language)
 }
 
 #' @rdname mo_property
 #' @export
 mo_phylum <- function(x, language = get_locale(), ...) {
-  mo_translate(mo_validate(x = x, property = "phylum", ...), language = language)
+  t(mo_validate(x = x, property = "phylum", ...), language = language)
 }
 
 #' @rdname mo_property
@@ -250,10 +251,10 @@ mo_kingdom <- function(x, language = get_locale(), ...) {
   if (all(x %in% AMR::microorganisms$kingdom)) {
     return(x)
   }
-  x <- as.mo(x, language = "en", ...)
+  x <- as.mo(x, ...)
   kngdm <- mo_validate(x = x, property = "kingdom", ...)
   if (language != "en") {
-    kngdm[x == "UNKNOWN"] <- mo_translate(kngdm[x == "UNKNOWN"], language = language)
+    kngdm[x == "UNKNOWN"] <- t(kngdm[x == "UNKNOWN"], language = language)
   }
   kngdm
 }
@@ -261,13 +262,13 @@ mo_kingdom <- function(x, language = get_locale(), ...) {
 #' @rdname mo_property
 #' @export
 mo_type <- function(x, language = get_locale(), ...) {
-  mo_translate(mo_validate(x = x, property = "kingdom", ...), language = language)
+  t(mo_validate(x = x, property = "kingdom", ...), language = language)
 }
 
 #' @rdname mo_property
 #' @export
 mo_gramstain <- function(x, language = get_locale(), ...) {
-  x.mo <- as.mo(x, language = "en", ...)
+  x.mo <- as.mo(x, ...)
   x.phylum <- mo_phylum(x.mo, language = "en")
   x[x.phylum %in% c("Actinobacteria",
                     "Chloroflexi",
@@ -278,7 +279,7 @@ mo_gramstain <- function(x, language = get_locale(), ...) {
   x[x.mo == "B_GRAMP"] <- "Gram positive"
   x[x.mo == "B_GRAMN"] <- "Gram negative"
 
-  mo_translate(x, language = language)
+  t(x, language = language)
 }
 
 #' @rdname mo_property
@@ -363,214 +364,7 @@ mo_property <- function(x, property = 'fullname', language = get_locale(), ...) 
     stop("invalid property: '", property, "' - use a column name of the `microorganisms` data set")
   }
 
-  mo_translate(mo_validate(x = x, property = property, ...), language = language)
-}
-
-#' @importFrom dplyr %>% case_when
-mo_translate <- function(x, language) {
-  if (is.null(language)) {
-    return(x)
-  }
-  if (language %in% c("en", "")) {
-    return(x)
-  }
-
-  supported <- c("en", "de", "nl", "es", "pt", "it", "fr")
-  if (!language %in% supported) {
-    stop("Unsupported language: '", language, "' - use one of: ", paste0("'", sort(supported), "'", collapse = ", "), call. = FALSE)
-  }
-
-  x_tobetranslated <- grepl(x = x,
-                            pattern = "(Coagulase-negative Staphylococcus|Coagulase-positive Staphylococcus|Beta-haemolytic Streptococcus|unknown Gram negatives|unknown Gram positives|unknown name|unknown kingdom|unknown phylum|unknown class|unknown order|unknown family|unknown genus|unknown species|unknown subspecies|unknown rank|CoNS|CoPS|Gram negative|Gram positive|Bacteria|Fungi|Protozoa|biogroup|biotype|vegetative|group|Group)")
-
-  if (sum(x_tobetranslated, na.rm = TRUE) == 0) {
-    return(x)
-  }
-
-  # only translate the ones that need translation
-  x[x_tobetranslated] <- case_when(
-    # German
-    language == "de" ~ x[x_tobetranslated] %>%
-      gsub("Coagulase-negative Staphylococcus","Koagulase-negative Staphylococcus", ., fixed = TRUE) %>%
-      gsub("Coagulase-positive Staphylococcus","Koagulase-positive Staphylococcus", ., fixed = TRUE) %>%
-      gsub("Beta-haemolytic Streptococcus",    "Beta-h\u00e4molytischer Streptococcus", ., fixed = TRUE) %>%
-      gsub("unknown Gram negatives",           "unbekannte Gramnegativen", ., fixed = TRUE) %>%
-      gsub("unknown Gram positives",           "unbekannte Grampositiven", ., fixed = TRUE) %>%
-      gsub("unknown name",                     "unbekannte Name", ., fixed = TRUE) %>%
-      gsub("unknown kingdom",                  "unbekanntes Reich", ., fixed = TRUE) %>%
-      gsub("unknown phylum",                   "unbekannter Stamm", ., fixed = TRUE) %>%
-      gsub("unknown class",                    "unbekannte Klasse", ., fixed = TRUE) %>%
-      gsub("unknown order",                    "unbekannte Ordnung", ., fixed = TRUE) %>%
-      gsub("unknown family",                   "unbekannte Familie", ., fixed = TRUE) %>%
-      gsub("unknown genus",                    "unbekannte Gattung", ., fixed = TRUE) %>%
-      gsub("unknown species",                  "unbekannte Art", ., fixed = TRUE) %>%
-      gsub("unknown subspecies",               "unbekannte Unterart", ., fixed = TRUE) %>%
-      gsub("unknown rank",                     "unbekannter Rang", ., fixed = TRUE) %>%
-      gsub("(CoNS)",           "(KNS)", ., fixed = TRUE) %>%
-      gsub("(CoPS)",           "(KPS)", ., fixed = TRUE) %>%
-      gsub("Gram negative",    "Gramnegativ", ., fixed = TRUE) %>%
-      gsub("Gram positive",    "Grampositiv", ., fixed = TRUE) %>%
-      gsub("Bacteria",         "Bakterien", ., fixed = TRUE) %>%
-      gsub("Fungi",            "Hefen/Pilze", ., fixed = TRUE) %>%
-      gsub("Protozoa",         "Protozoen", ., fixed = TRUE) %>%
-      gsub("biogroup",         "Biogruppe", ., fixed = TRUE) %>%
-      gsub("biotype",          "Biotyp", ., fixed = TRUE) %>%
-      gsub("vegetative",       "vegetativ", ., fixed = TRUE) %>%
-      gsub("([([ ]*?)group",   "\\1Gruppe", .) %>%
-      gsub("([([ ]*?)Group",   "\\1Gruppe", .) %>%
-      iconv(to = "UTF-8"),
-
-    # Dutch
-    language == "nl" ~ x[x_tobetranslated] %>%
-      gsub("Coagulase-negative Staphylococcus","Coagulase-negatieve Staphylococcus", ., fixed = TRUE) %>%
-      gsub("Coagulase-positive Staphylococcus","Coagulase-positieve Staphylococcus", ., fixed = TRUE) %>%
-      gsub("Beta-haemolytic Streptococcus",    "Beta-hemolytische Streptococcus", ., fixed = TRUE) %>%
-      gsub("unknown Gram negatives",           "onbekende Gram-negatieven", ., fixed = TRUE) %>%
-      gsub("unknown Gram positives",           "onbekende Gram-positieven", ., fixed = TRUE) %>%
-      gsub("unknown name",                     "onbekende naam", ., fixed = TRUE) %>%
-      gsub("unknown kingdom",                  "onbekend koninkrijk", ., fixed = TRUE) %>%
-      gsub("unknown phylum",                   "onbekende fylum", ., fixed = TRUE) %>%
-      gsub("unknown class",                    "onbekende klasse", ., fixed = TRUE) %>%
-      gsub("unknown order",                    "onbekende orde", ., fixed = TRUE) %>%
-      gsub("unknown family",                   "onbekende familie", ., fixed = TRUE) %>%
-      gsub("unknown genus",                    "onbekend geslacht", ., fixed = TRUE) %>%
-      gsub("unknown species",                  "onbekende soort", ., fixed = TRUE) %>%
-      gsub("unknown subspecies",               "onbekende ondersoort", ., fixed = TRUE) %>%
-      gsub("unknown rank",                     "onbekende rang", ., fixed = TRUE) %>%
-      gsub("(CoNS)",           "(CNS)", ., fixed = TRUE) %>%
-      gsub("(CoPS)",           "(CPS)", ., fixed = TRUE) %>%
-      gsub("Gram negative",    "Gram-negatief", ., fixed = TRUE) %>%
-      gsub("Gram positive",    "Gram-positief", ., fixed = TRUE) %>%
-      gsub("Bacteria",         "Bacteri\u00ebn", ., fixed = TRUE) %>%
-      gsub("Fungi",            "Schimmels/gisten", ., fixed = TRUE) %>%
-      gsub("Protozoa",         "protozo\u00ebn", ., fixed = TRUE) %>%
-      gsub("biogroup",         "biogroep", ., fixed = TRUE) %>%
-      # gsub("biotype",          "biotype", ., fixed = TRUE) %>%
-      gsub("vegetative",       "vegetatief", ., fixed = TRUE) %>%
-      gsub("([([ ]*?)group",   "\\1groep", .) %>%
-      gsub("([([ ]*?)Group",   "\\1Groep", .) %>%
-      iconv(to = "UTF-8"),
-
-    # Spanish
-    language == "es" ~ x[x_tobetranslated] %>%
-      # not 'negativa'
-      # https://www.sciencedirect.com/science/article/pii/S0123939215000739
-      gsub("Coagulase-negative Staphylococcus","Staphylococcus coagulasa negativo", ., fixed = TRUE) %>%
-      gsub("Coagulase-positive Staphylococcus","Staphylococcus coagulasa positivo", ., fixed = TRUE) %>%
-      gsub("Beta-haemolytic Streptococcus",    "Streptococcus Beta-hemol\u00edtico", ., fixed = TRUE) %>%
-      gsub("unknown Gram negatives",           "Gram negativos desconocidos", ., fixed = TRUE) %>%
-      gsub("unknown Gram positives",           "Gram positivos desconocidos", ., fixed = TRUE) %>%
-      gsub("unknown name",                     "nombre desconocido", ., fixed = TRUE) %>%
-      gsub("unknown kingdom",                  "reino desconocido", ., fixed = TRUE) %>%
-      gsub("unknown phylum",                   "filo desconocido", ., fixed = TRUE) %>%
-      gsub("unknown class",                    "clase desconocida", ., fixed = TRUE) %>%
-      gsub("unknown order",                    "orden desconocido", ., fixed = TRUE) %>%
-      gsub("unknown family",                   "familia desconocida", ., fixed = TRUE) %>%
-      gsub("unknown genus",                    "g\u00e9nero desconocido", ., fixed = TRUE) %>%
-      gsub("unknown species",                  "especie desconocida", ., fixed = TRUE) %>%
-      gsub("unknown subspecies",               "subespecie desconocida", ., fixed = TRUE) %>%
-      gsub("unknown rank",                     "rango desconocido", ., fixed = TRUE) %>%
-      gsub("(CoNS)",           "(SCN)", ., fixed = TRUE) %>%
-      gsub("(CoPS)",           "(SCP)", ., fixed = TRUE) %>%
-      gsub("Gram negative",    "Gram negativo", ., fixed = TRUE) %>%
-      gsub("Gram positive",    "Gram positivo", ., fixed = TRUE) %>%
-      gsub("Bacteria",         "Bacterias", ., fixed = TRUE) %>%
-      gsub("Fungi",            "Hongos", ., fixed = TRUE) %>%
-      gsub("Protozoa",         "Protozoarios", ., fixed = TRUE) %>%
-      gsub("biogroup",         "biogrupo", ., fixed = TRUE) %>%
-      gsub("biotype",          "biotipo", ., fixed = TRUE) %>%
-      gsub("vegetative",       "vegetativo", ., fixed = TRUE) %>%
-      gsub("([([ ]*?)group",   "\\1grupo", .) %>%
-      gsub("([([ ]*?)Group",   "\\1Grupo", .) %>%
-      iconv(to = "UTF-8"),
-
-    # Italian
-    language == "it" ~ x[x_tobetranslated] %>%
-      gsub("Coagulase-negative Staphylococcus","Staphylococcus negativo coagulasi", ., fixed = TRUE) %>%
-      gsub("Coagulase-positive Staphylococcus","Staphylococcus positivo coagulasi", ., fixed = TRUE) %>%
-      gsub("Beta-haemolytic Streptococcus",    "Streptococcus Beta-emolitico", ., fixed = TRUE) %>%
-      gsub("unknown Gram negatives",           "Gram negativi sconosciuti", ., fixed = TRUE) %>%
-      gsub("unknown Gram positives",           "Gram positivi sconosciuti", ., fixed = TRUE) %>%
-      gsub("unknown name",                     "nome sconosciuto", ., fixed = TRUE) %>%
-      gsub("unknown kingdom",                  "regno sconosciuto", ., fixed = TRUE) %>%
-      gsub("unknown phylum",                   "phylum sconosciuto", ., fixed = TRUE) %>%
-      gsub("unknown class",                    "classe sconosciuta", ., fixed = TRUE) %>%
-      gsub("unknown order",                    "ordine sconosciuto", ., fixed = TRUE) %>%
-      gsub("unknown family",                   "famiglia sconosciuta", ., fixed = TRUE) %>%
-      gsub("unknown genus",                    "genere sconosciuto", ., fixed = TRUE) %>%
-      gsub("unknown species",                  "specie sconosciute", ., fixed = TRUE) %>%
-      gsub("unknown subspecies",               "sottospecie sconosciute", ., fixed = TRUE) %>%
-      gsub("unknown rank",                     "grado sconosciuto", ., fixed = TRUE) %>%
-      gsub("Gram negative",    "Gram negativo", ., fixed = TRUE) %>%
-      gsub("Gram positive",    "Gram positivo", ., fixed = TRUE) %>%
-      gsub("Bacteria",         "Batteri", ., fixed = TRUE) %>%
-      gsub("Fungi",            "Fungo", ., fixed = TRUE) %>%
-      gsub("Protozoa",         "Protozoi", ., fixed = TRUE) %>%
-      gsub("biogroup",         "biogruppo", ., fixed = TRUE) %>%
-      gsub("biotype",          "biotipo", ., fixed = TRUE) %>%
-      gsub("vegetative",       "vegetativo", ., fixed = TRUE) %>%
-      gsub("([([ ]*?)group",   "\\1gruppo", .) %>%
-      gsub("([([ ]*?)Group",   "\\1Gruppo", .),
-
-    # French
-    language == "fr" ~ x[x_tobetranslated] %>%
-      gsub("Coagulase-negative Staphylococcus","Staphylococcus \u00e0 coagulase n\u00e9gative", ., fixed = TRUE) %>%
-      gsub("Coagulase-positive Staphylococcus","Staphylococcus \u00e0 coagulase positif", ., fixed = TRUE) %>%
-      gsub("Beta-haemolytic Streptococcus",    "Streptococcus B\u00eata-h\u00e9molytique", ., fixed = TRUE) %>%
-      gsub("unknown Gram negatives",           "Gram n\u00e9gatifs inconnus", ., fixed = TRUE) %>%
-      gsub("unknown Gram positives",           "Gram positifs inconnus", ., fixed = TRUE) %>%
-      gsub("unknown name",                     "nom inconnu", ., fixed = TRUE) %>%
-      gsub("unknown kingdom",                  "r\u00e8gme inconnu", ., fixed = TRUE) %>%
-      gsub("unknown phylum",                   "embranchement inconnu", ., fixed = TRUE) %>%
-      gsub("unknown class",                    "classe inconnue", ., fixed = TRUE) %>%
-      gsub("unknown order",                    "ordre inconnu", ., fixed = TRUE) %>%
-      gsub("unknown family",                   "famille inconnue", ., fixed = TRUE) %>%
-      gsub("unknown genus",                    "genre inconnu", ., fixed = TRUE) %>%
-      gsub("unknown species",                  "esp\u00e8ce inconnue", ., fixed = TRUE) %>%
-      gsub("unknown subspecies",               "sous-esp\u00e8ce inconnue", ., fixed = TRUE) %>%
-      gsub("unknown rank",                     "rang inconnu", ., fixed = TRUE) %>%
-      gsub("Gram negative",    "Gram n\u00e9gatif", ., fixed = TRUE) %>%
-      gsub("Gram positive",    "Gram positif", ., fixed = TRUE) %>%
-      gsub("Bacteria",         "Bact\u00e9ries", ., fixed = TRUE) %>%
-      gsub("Fungi",            "Champignons", ., fixed = TRUE) %>%
-      gsub("Protozoa",         "Protozoaires", ., fixed = TRUE) %>%
-      gsub("biogroup",         "biogroupe", ., fixed = TRUE) %>%
-      # gsub("biotype",          "biotype", ., fixed = TRUE) %>%
-      gsub("vegetative",       "v\u00e9g\u00e9tatif", ., fixed = TRUE) %>%
-      gsub("([([ ]*?)group",   "\\1groupe", .) %>%
-      gsub("([([ ]*?)Group",   "\\1Groupe", .) %>%
-      iconv(to = "UTF-8"),
-
-    # Portuguese
-    language == "pt" ~ x[x_tobetranslated] %>%
-      gsub("Coagulase-negative Staphylococcus","Staphylococcus coagulase negativo", ., fixed = TRUE) %>%
-      gsub("Coagulase-positive Staphylococcus","Staphylococcus coagulase positivo", ., fixed = TRUE) %>%
-      gsub("Beta-haemolytic Streptococcus",    "Streptococcus Beta-hemol\u00edtico", ., fixed = TRUE) %>%
-      gsub("unknown Gram negatives",           "Gram negativos desconhecidos", ., fixed = TRUE) %>%
-      gsub("unknown Gram positives",           "Gram positivos desconhecidos", ., fixed = TRUE) %>%
-      gsub("unknown name",                     "nome desconhecido", ., fixed = TRUE) %>%
-      gsub("unknown kingdom",                  "reino desconhecido", ., fixed = TRUE) %>%
-      gsub("unknown phylum",                   "filo desconhecido", ., fixed = TRUE) %>%
-      gsub("unknown class",                    "classe desconhecida", ., fixed = TRUE) %>%
-      gsub("unknown order",                    "ordem desconhecido", ., fixed = TRUE) %>%
-      gsub("unknown family",                   "fam\u00edlia desconhecida", ., fixed = TRUE) %>%
-      gsub("unknown genus",                    "g\u00eanero desconhecido", ., fixed = TRUE) %>%
-      gsub("unknown species",                  "esp\u00e9cies desconhecida", ., fixed = TRUE) %>%
-      gsub("unknown subspecies",               "subesp\u00e9cies desconhecida", ., fixed = TRUE) %>%
-      gsub("unknown rank",                     "classifica\u00e7\u00e3o desconhecido", ., fixed = TRUE) %>%
-      gsub("Gram negative",    "Gram negativo", ., fixed = TRUE) %>%
-      gsub("Gram positive",    "Gram positivo", ., fixed = TRUE) %>%
-      gsub("Bacteria",         "Bact\u00e9rias", ., fixed = TRUE) %>%
-      gsub("Fungi",            "Fungos", ., fixed = TRUE) %>%
-      gsub("Protozoa",         "Protozo\u00e1rios", ., fixed = TRUE) %>%
-      gsub("biogroup",         "biogrupo", ., fixed = TRUE) %>%
-      gsub("biotype",          "bi\u00f3tipo", ., fixed = TRUE) %>%
-      gsub("vegetative",       "vegetativo", ., fixed = TRUE) %>%
-      gsub("([([ ]*?)group",   "\\1grupo", .) %>%
-      gsub("([([ ]*?)Group",   "\\1Grupo", .) %>%
-      iconv(to = "UTF-8"))
-
-  x
+  t(mo_validate(x = x, property = property, ...), language = language)
 }
 
 mo_validate <- function(x, property, ...) {
@@ -591,7 +385,7 @@ mo_validate <- function(x, property, ...) {
   }
 
   # try to catch an error when inputting an invalid parameter
-  # so the call can be set to FALSE
+  # so the 'call.' can be set to FALSE
   tryCatch(x[1L] %in% AMR::microorganisms[1, property],
            error = function(e) stop(e$message, call. = FALSE))
 

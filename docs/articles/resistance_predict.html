@@ -40,7 +40,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.6.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.6.1.9003</span>
       </span>
     </div>
 
@@ -105,7 +105,7 @@
       </a>
     </li>
     <li>
-      <a href="../reference/atc_property.html">
+      <a href="../reference/ab_property.html">
         <span class="fa fa-capsules"></span>
          
         Get properties of an antibiotic
@@ -192,7 +192,7 @@
       <h1>How to predict antimicrobial resistance</h1>
                         <h4 class="author">Matthijs S. Berends</h4>
             
-            <h4 class="date">27 March 2019</h4>
+            <h4 class="date">10 May 2019</h4>
       
       
       <div class="hidden name"><code>resistance_predict.Rmd</code></div>
@@ -218,16 +218,16 @@
 <a href="#prediction-analysis" class="anchor"></a>Prediction analysis</h2>
 <p>Our package contains a function <code><a href="../reference/resistance_predict.html">resistance_predict()</a></code>, which takes the same input as functions for <a href="./AMR.html">other AMR analysis</a>. Based on a date column, it calculates cases per year and uses a regression model to predict antimicrobial resistance.</p>
 <p>It is basically as easy as:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" title="1"><span class="co"># resistance prediction of piperacillin/tazobactam (pita):</span></a>
-<a class="sourceLine" id="cb2-2" title="2"><span class="kw"><a href="../reference/resistance_predict.html">resistance_predict</a></span>(<span class="dt">tbl =</span> septic_patients, <span class="dt">col_date =</span> <span class="st">"date"</span>, <span class="dt">col_ab =</span> <span class="st">"pita"</span>)</a>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" title="1"><span class="co"># resistance prediction of piperacillin/tazobactam (TZP):</span></a>
+<a class="sourceLine" id="cb2-2" title="2"><span class="kw"><a href="../reference/resistance_predict.html">resistance_predict</a></span>(<span class="dt">tbl =</span> septic_patients, <span class="dt">col_date =</span> <span class="st">"date"</span>, <span class="dt">col_ab =</span> <span class="st">"TZP"</span>)</a>
 <a class="sourceLine" id="cb2-3" title="3"></a>
 <a class="sourceLine" id="cb2-4" title="4"><span class="co"># or:</span></a>
 <a class="sourceLine" id="cb2-5" title="5">septic_patients <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb2-6" title="6"><span class="st">  </span><span class="kw"><a href="../reference/resistance_predict.html">resistance_predict</a></span>(<span class="dt">col_ab =</span> <span class="st">"pita"</span>)</a>
+<a class="sourceLine" id="cb2-6" title="6"><span class="st">  </span><span class="kw"><a href="../reference/resistance_predict.html">resistance_predict</a></span>(<span class="dt">col_ab =</span> <span class="st">"TZP"</span>)</a>
 <a class="sourceLine" id="cb2-7" title="7"></a>
-<a class="sourceLine" id="cb2-8" title="8"><span class="co"># to bind it to object 'predict_pita' for example:</span></a>
-<a class="sourceLine" id="cb2-9" title="9">predict_pita &lt;-<span class="st"> </span>septic_patients <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb2-10" title="10"><span class="st">  </span><span class="kw"><a href="../reference/resistance_predict.html">resistance_predict</a></span>(<span class="dt">col_ab =</span> <span class="st">"pita"</span>)</a></code></pre></div>
+<a class="sourceLine" id="cb2-8" title="8"><span class="co"># to bind it to object 'predict_TZP' for example:</span></a>
+<a class="sourceLine" id="cb2-9" title="9">predict_TZP &lt;-<span class="st"> </span>septic_patients <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb2-10" title="10"><span class="st">  </span><span class="kw"><a href="../reference/resistance_predict.html">resistance_predict</a></span>(<span class="dt">col_ab =</span> <span class="st">"TZP"</span>)</a></code></pre></div>
 <p>The function will look for a date column itself if <code>col_date</code> is not set.</p>
 <p>When running any of these commands, a summary of the regression model will be printed unless using <code><a href="../reference/resistance_predict.html">resistance_predict(..., info = FALSE)</a></code>.</p>
 <pre><code>#&gt; NOTE: Using column `date` as input for `col_date`.
@@ -240,62 +240,62 @@
 #&gt; 
 #&gt; Deviance Residuals: 
 #&gt;     Min       1Q   Median       3Q      Max  
-#&gt; -2.9224  -1.3120   0.0170   0.7586   3.1932  
+#&gt; -2.9203  -1.3066   0.0166   0.7641   3.1984  
 #&gt; 
 #&gt; Coefficients:
 #&gt;               Estimate Std. Error z value Pr(&gt;|z|)    
-#&gt; (Intercept) -222.92857   45.93922  -4.853 1.22e-06 ***
-#&gt; year           0.10994    0.02284   4.814 1.48e-06 ***
+#&gt; (Intercept) -222.51053   45.94675  -4.843 1.28e-06 ***
+#&gt; year           0.10973    0.02284   4.805 1.55e-06 ***
 #&gt; ---
 #&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 #&gt; 
 #&gt; (Dispersion parameter for binomial family taken to be 1)
 #&gt; 
-#&gt;     Null deviance: 59.794  on 14  degrees of freedom
-#&gt; Residual deviance: 35.191  on 13  degrees of freedom
-#&gt; AIC: 93.464
+#&gt;     Null deviance: 59.763  on 14  degrees of freedom
+#&gt; Residual deviance: 35.261  on 13  degrees of freedom
+#&gt; AIC: 93.537
 #&gt; 
 #&gt; Number of Fisher Scoring iterations: 4</code></pre>
 <p>This text is only a printed summary - the actual result (output) of the function is a <code>data.frame</code> containing for each year: the number of observations, the actual observed resistance, the estimated resistance and the standard error below and above the estimation:</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" title="1">predict_pita</a>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" title="1">predict_TZP</a>
 <a class="sourceLine" id="cb4-2" title="2"><span class="co">#&gt;    year      value    se_min    se_max observations   observed  estimated</span></a>
-<a class="sourceLine" id="cb4-3" title="3"><span class="co">#&gt; 1  2003 0.06250000        NA        NA           32 0.06250000 0.06177594</span></a>
-<a class="sourceLine" id="cb4-4" title="4"><span class="co">#&gt; 2  2004 0.08536585        NA        NA           82 0.08536585 0.06846343</span></a>
-<a class="sourceLine" id="cb4-5" title="5"><span class="co">#&gt; 3  2005 0.10000000        NA        NA           60 0.10000000 0.07581637</span></a>
-<a class="sourceLine" id="cb4-6" title="6"><span class="co">#&gt; 4  2006 0.05084746        NA        NA           59 0.05084746 0.08388789</span></a>
-<a class="sourceLine" id="cb4-7" title="7"><span class="co">#&gt; 5  2007 0.12121212        NA        NA           66 0.12121212 0.09273250</span></a>
-<a class="sourceLine" id="cb4-8" title="8"><span class="co">#&gt; 6  2008 0.04166667        NA        NA           72 0.04166667 0.10240539</span></a>
-<a class="sourceLine" id="cb4-9" title="9"><span class="co">#&gt; 7  2009 0.01639344        NA        NA           61 0.01639344 0.11296163</span></a>
-<a class="sourceLine" id="cb4-10" title="10"><span class="co">#&gt; 8  2010 0.09433962        NA        NA           53 0.09433962 0.12445516</span></a>
-<a class="sourceLine" id="cb4-11" title="11"><span class="co">#&gt; 9  2011 0.18279570        NA        NA           93 0.18279570 0.13693759</span></a>
-<a class="sourceLine" id="cb4-12" title="12"><span class="co">#&gt; 10 2012 0.30769231        NA        NA           65 0.30769231 0.15045682</span></a>
-<a class="sourceLine" id="cb4-13" title="13"><span class="co">#&gt; 11 2013 0.08620690        NA        NA           58 0.08620690 0.16505550</span></a>
-<a class="sourceLine" id="cb4-14" title="14"><span class="co">#&gt; 12 2014 0.15254237        NA        NA           59 0.15254237 0.18076926</span></a>
-<a class="sourceLine" id="cb4-15" title="15"><span class="co">#&gt; 13 2015 0.27272727        NA        NA           55 0.27272727 0.19762493</span></a>
-<a class="sourceLine" id="cb4-16" title="16"><span class="co">#&gt; 14 2016 0.25000000        NA        NA           84 0.25000000 0.21563859</span></a>
-<a class="sourceLine" id="cb4-17" title="17"><span class="co">#&gt; 15 2017 0.16279070        NA        NA           86 0.16279070 0.23481370</span></a>
-<a class="sourceLine" id="cb4-18" title="18"><span class="co">#&gt; 16 2018 0.25513926 0.2228376 0.2874409           NA         NA 0.25513926</span></a>
-<a class="sourceLine" id="cb4-19" title="19"><span class="co">#&gt; 17 2019 0.27658825 0.2386811 0.3144954           NA         NA 0.27658825</span></a>
-<a class="sourceLine" id="cb4-20" title="20"><span class="co">#&gt; 18 2020 0.29911630 0.2551715 0.3430611           NA         NA 0.29911630</span></a>
-<a class="sourceLine" id="cb4-21" title="21"><span class="co">#&gt; 19 2021 0.32266085 0.2723340 0.3729877           NA         NA 0.32266085</span></a>
-<a class="sourceLine" id="cb4-22" title="22"><span class="co">#&gt; 20 2022 0.34714076 0.2901847 0.4040968           NA         NA 0.34714076</span></a>
-<a class="sourceLine" id="cb4-23" title="23"><span class="co">#&gt; 21 2023 0.37245666 0.3087318 0.4361815           NA         NA 0.37245666</span></a>
-<a class="sourceLine" id="cb4-24" title="24"><span class="co">#&gt; 22 2024 0.39849187 0.3279750 0.4690088           NA         NA 0.39849187</span></a>
-<a class="sourceLine" id="cb4-25" title="25"><span class="co">#&gt; 23 2025 0.42511415 0.3479042 0.5023241           NA         NA 0.42511415</span></a>
-<a class="sourceLine" id="cb4-26" title="26"><span class="co">#&gt; 24 2026 0.45217796 0.3684992 0.5358568           NA         NA 0.45217796</span></a>
-<a class="sourceLine" id="cb4-27" title="27"><span class="co">#&gt; 25 2027 0.47952757 0.3897276 0.5693275           NA         NA 0.47952757</span></a>
-<a class="sourceLine" id="cb4-28" title="28"><span class="co">#&gt; 26 2028 0.50700045 0.4115444 0.6024565           NA         NA 0.50700045</span></a>
-<a class="sourceLine" id="cb4-29" title="29"><span class="co">#&gt; 27 2029 0.53443111 0.4338908 0.6349714           NA         NA 0.53443111</span></a></code></pre></div>
+<a class="sourceLine" id="cb4-3" title="3"><span class="co">#&gt; 1  2003 0.06250000        NA        NA           32 0.06250000 0.06179057</span></a>
+<a class="sourceLine" id="cb4-4" title="4"><span class="co">#&gt; 2  2004 0.08536585        NA        NA           82 0.08536585 0.06846623</span></a>
+<a class="sourceLine" id="cb4-5" title="5"><span class="co">#&gt; 3  2005 0.10000000        NA        NA           60 0.10000000 0.07580483</span></a>
+<a class="sourceLine" id="cb4-6" title="6"><span class="co">#&gt; 4  2006 0.05084746        NA        NA           59 0.05084746 0.08385921</span></a>
+<a class="sourceLine" id="cb4-7" title="7"><span class="co">#&gt; 5  2007 0.12121212        NA        NA           66 0.12121212 0.09268356</span></a>
+<a class="sourceLine" id="cb4-8" title="8"><span class="co">#&gt; 6  2008 0.04166667        NA        NA           72 0.04166667 0.10233276</span></a>
+<a class="sourceLine" id="cb4-9" title="9"><span class="co">#&gt; 7  2009 0.01639344        NA        NA           61 0.01639344 0.11286156</span></a>
+<a class="sourceLine" id="cb4-10" title="10"><span class="co">#&gt; 8  2010 0.09433962        NA        NA           53 0.09433962 0.12432363</span></a>
+<a class="sourceLine" id="cb4-11" title="11"><span class="co">#&gt; 9  2011 0.18279570        NA        NA           93 0.18279570 0.13677030</span></a>
+<a class="sourceLine" id="cb4-12" title="12"><span class="co">#&gt; 10 2012 0.30769231        NA        NA           65 0.30769231 0.15024926</span></a>
+<a class="sourceLine" id="cb4-13" title="13"><span class="co">#&gt; 11 2013 0.08620690        NA        NA           58 0.08620690 0.16480299</span></a>
+<a class="sourceLine" id="cb4-14" title="14"><span class="co">#&gt; 12 2014 0.15000000        NA        NA           60 0.15000000 0.18046706</span></a>
+<a class="sourceLine" id="cb4-15" title="15"><span class="co">#&gt; 13 2015 0.27272727        NA        NA           55 0.27272727 0.19726831</span></a>
+<a class="sourceLine" id="cb4-16" title="16"><span class="co">#&gt; 14 2016 0.25000000        NA        NA           84 0.25000000 0.21522295</span></a>
+<a class="sourceLine" id="cb4-17" title="17"><span class="co">#&gt; 15 2017 0.16279070        NA        NA           86 0.16279070 0.23433471</span></a>
+<a class="sourceLine" id="cb4-18" title="18"><span class="co">#&gt; 16 2018 0.25459302 0.2223385 0.2868476           NA         NA 0.25459302</span></a>
+<a class="sourceLine" id="cb4-19" title="19"><span class="co">#&gt; 17 2019 0.27597143 0.2381174 0.3138255           NA         NA 0.27597143</span></a>
+<a class="sourceLine" id="cb4-20" title="20"><span class="co">#&gt; 18 2020 0.29842630 0.2545398 0.3423128           NA         NA 0.29842630</span></a>
+<a class="sourceLine" id="cb4-21" title="21"><span class="co">#&gt; 19 2021 0.32189595 0.2716308 0.3721611           NA         NA 0.32189595</span></a>
+<a class="sourceLine" id="cb4-22" title="22"><span class="co">#&gt; 20 2022 0.34630028 0.2894072 0.4031934           NA         NA 0.34630028</span></a>
+<a class="sourceLine" id="cb4-23" title="23"><span class="co">#&gt; 21 2023 0.37154107 0.3078773 0.4352048           NA         NA 0.37154107</span></a>
+<a class="sourceLine" id="cb4-24" title="24"><span class="co">#&gt; 22 2024 0.39750288 0.3270414 0.4679643           NA         NA 0.39750288</span></a>
+<a class="sourceLine" id="cb4-25" title="25"><span class="co">#&gt; 23 2025 0.42405472 0.3468903 0.5012191           NA         NA 0.42405472</span></a>
+<a class="sourceLine" id="cb4-26" title="26"><span class="co">#&gt; 24 2026 0.45105237 0.3674044 0.5347004           NA         NA 0.45105237</span></a>
+<a class="sourceLine" id="cb4-27" title="27"><span class="co">#&gt; 25 2027 0.47834130 0.3885523 0.5681303           NA         NA 0.47834130</span></a>
+<a class="sourceLine" id="cb4-28" title="28"><span class="co">#&gt; 26 2028 0.50576012 0.4102900 0.6012302           NA         NA 0.50576012</span></a>
+<a class="sourceLine" id="cb4-29" title="29"><span class="co">#&gt; 27 2029 0.53314434 0.4325600 0.6337287           NA         NA 0.53314434</span></a></code></pre></div>
 <p>The function <code>plot</code> is available in base R, and can be extended by other packages to depend the output based on the type of input. We extended its function to cope with resistance predictions:</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/graphics/topics/plot">plot</a></span>(predict_pita)</a></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/graphics/topics/plot">plot</a></span>(predict_TZP)</a></code></pre></div>
 <p><img src="resistance_predict_files/figure-html/unnamed-chunk-4-1.png" width="720"></p>
 <p>This is the fastest way to plot the result. It automatically adds the right axes, error bars, titles, number of available observations and type of model.</p>
 <p>We also support the <code>ggplot2</code> package with our custom function <code><a href="../reference/resistance_predict.html">ggplot_rsi_predict()</a></code> to create more appealing plots:</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" title="1"><span class="kw"><a href="../reference/resistance_predict.html">ggplot_rsi_predict</a></span>(predict_pita)</a></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" title="1"><span class="kw"><a href="../reference/resistance_predict.html">ggplot_rsi_predict</a></span>(predict_TZP)</a></code></pre></div>
 <p><img src="resistance_predict_files/figure-html/unnamed-chunk-5-1.png" width="720"></p>
 <div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" title="1"></a>
 <a class="sourceLine" id="cb7-2" title="2"><span class="co"># choose for error bars instead of a ribbon</span></a>
-<a class="sourceLine" id="cb7-3" title="3"><span class="kw"><a href="../reference/resistance_predict.html">ggplot_rsi_predict</a></span>(predict_pita, <span class="dt">ribbon =</span> <span class="ot">FALSE</span>)</a></code></pre></div>
+<a class="sourceLine" id="cb7-3" title="3"><span class="kw"><a href="../reference/resistance_predict.html">ggplot_rsi_predict</a></span>(predict_TZP, <span class="dt">ribbon =</span> <span class="ot">FALSE</span>)</a></code></pre></div>
 <p><img src="resistance_predict_files/figure-html/unnamed-chunk-5-2.png" width="720"></p>
 <div id="choosing-the-right-model" class="section level3">
 <h3 class="hasAnchor">
@@ -303,7 +303,7 @@
 <p>Resistance is not easily predicted; if we look at vancomycin resistance in Gram positives, the spread (i.e. standard error) is enormous:</p>
 <div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" title="1">septic_patients <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb8-2" title="2"><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span>(<span class="kw"><a href="../reference/mo_property.html">mo_gramstain</a></span>(mo) <span class="op">==</span><span class="st"> "Gram positive"</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb8-3" title="3"><span class="st">  </span><span class="kw"><a href="../reference/resistance_predict.html">resistance_predict</a></span>(<span class="dt">col_ab =</span> <span class="st">"vanc"</span>, <span class="dt">year_min =</span> <span class="dv">2010</span>, <span class="dt">info =</span> <span class="ot">FALSE</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb8-3" title="3"><span class="st">  </span><span class="kw"><a href="../reference/resistance_predict.html">resistance_predict</a></span>(<span class="dt">col_ab =</span> <span class="st">"VAN"</span>, <span class="dt">year_min =</span> <span class="dv">2010</span>, <span class="dt">info =</span> <span class="ot">FALSE</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb8-4" title="4"><span class="st">  </span><span class="kw"><a href="../reference/resistance_predict.html">ggplot_rsi_predict</a></span>()</a>
 <a class="sourceLine" id="cb8-5" title="5"><span class="co">#&gt; </span><span class="al">NOTE</span><span class="co">: Using column `date` as input for `col_date`.</span></a></code></pre></div>
 <p><img src="resistance_predict_files/figure-html/unnamed-chunk-6-1.png" width="720"></p>
@@ -348,13 +348,13 @@
 <p>For the vancomycin resistance in Gram positive bacteria, a linear model might be more appropriate since no (left half of a) binomial distribution is to be expected based on the observed years:</p>
 <div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" title="1">septic_patients <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb9-2" title="2"><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span>(<span class="kw"><a href="../reference/mo_property.html">mo_gramstain</a></span>(mo) <span class="op">==</span><span class="st"> "Gram positive"</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb9-3" title="3"><span class="st">  </span><span class="kw"><a href="../reference/resistance_predict.html">resistance_predict</a></span>(<span class="dt">col_ab =</span> <span class="st">"vanc"</span>, <span class="dt">year_min =</span> <span class="dv">2010</span>, <span class="dt">info =</span> <span class="ot">FALSE</span>, <span class="dt">model =</span> <span class="st">"linear"</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb9-3" title="3"><span class="st">  </span><span class="kw"><a href="../reference/resistance_predict.html">resistance_predict</a></span>(<span class="dt">col_ab =</span> <span class="st">"VAN"</span>, <span class="dt">year_min =</span> <span class="dv">2010</span>, <span class="dt">info =</span> <span class="ot">FALSE</span>, <span class="dt">model =</span> <span class="st">"linear"</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb9-4" title="4"><span class="st">  </span><span class="kw"><a href="../reference/resistance_predict.html">ggplot_rsi_predict</a></span>()</a>
 <a class="sourceLine" id="cb9-5" title="5"><span class="co">#&gt; </span><span class="al">NOTE</span><span class="co">: Using column `date` as input for `col_date`.</span></a></code></pre></div>
 <p><img src="resistance_predict_files/figure-html/unnamed-chunk-7-1.png" width="720"></p>
 <p>This seems more likely, doesn’t it?</p>
 <p>The model itself is also available from the object, as an <code>attribute</code>:</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" title="1">model &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/attributes">attributes</a></span>(predict_pita)<span class="op">$</span>model</a>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" title="1">model &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/attributes">attributes</a></span>(predict_TZP)<span class="op">$</span>model</a>
 <a class="sourceLine" id="cb10-2" title="2"></a>
 <a class="sourceLine" id="cb10-3" title="3"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/summary">summary</a></span>(model)<span class="op">$</span>family</a>
 <a class="sourceLine" id="cb10-4" title="4"><span class="co">#&gt; </span></a>
@@ -363,8 +363,8 @@
 <a class="sourceLine" id="cb10-7" title="7"></a>
 <a class="sourceLine" id="cb10-8" title="8"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/summary">summary</a></span>(model)<span class="op">$</span>coefficients</a>
 <a class="sourceLine" id="cb10-9" title="9"><span class="co">#&gt;                 Estimate  Std. Error   z value     Pr(&gt;|z|)</span></a>
-<a class="sourceLine" id="cb10-10" title="10"><span class="co">#&gt; (Intercept) -222.9285736 45.93922388 -4.852685 1.218012e-06</span></a>
-<a class="sourceLine" id="cb10-11" title="11"><span class="co">#&gt; year           0.1099391  0.02283501  4.814500 1.475690e-06</span></a></code></pre></div>
+<a class="sourceLine" id="cb10-10" title="10"><span class="co">#&gt; (Intercept) -222.5105288 45.94675125 -4.842791 1.280277e-06</span></a>
+<a class="sourceLine" id="cb10-11" title="11"><span class="co">#&gt; year           0.1097306  0.02283874  4.804581 1.550761e-06</span></a></code></pre></div>
 </div>
 </div>
   </div>

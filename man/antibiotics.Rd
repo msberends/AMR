@@ -3,33 +3,27 @@
 \docType{data}
 \name{antibiotics}
 \alias{antibiotics}
-\title{Data set with ~500 antibiotics}
-\format{A \code{\link{data.frame}} with 488 observations and 17 variables:
+\title{Data set with ~450 antibiotics}
+\format{A \code{\link{data.frame}} with 455 observations and 13 variables:
 \describe{
-  \item{\code{atc}}{ATC code (Anatomical Therapeutic Chemical), like \code{J01CR02}}
-  \item{\code{ears_net}}{EARS-Net code (European Antimicrobial Resistance Surveillance Network), like \code{AMC}}
-  \item{\code{certe}}{Certe code, like \code{amcl}}
-  \item{\code{umcg}}{UMCG code, like \code{AMCL}}
-  \item{\code{abbr}}{Abbreviation as used by many countries, used internally by \code{\link{as.atc}}}
-  \item{\code{official}}{Official name by the WHO, like \code{"Amoxicillin and beta-lactamase inhibitor"}}
-  \item{\code{official_nl}}{Official name in the Netherlands, like \code{"Amoxicilline met enzymremmer"}}
-  \item{\code{trivial_nl}}{Trivial name in Dutch, like \code{"Amoxicilline/clavulaanzuur"}}
-  \item{\code{trade_name}}{Trade name as used by many countries (a total of 294), used internally by \code{\link{as.atc}}}
+  \item{\code{ab}}{Antibiotic ID as used in this package (like \code{AMC}), using the official EARS-Net (European Antimicrobial Resistance Surveillance Network) codes where available}
+  \item{\code{atc}}{ATC code (Anatomical Therapeutic Chemical) as defined by the WHOCC, like \code{J01CR02}}
+  \item{\code{cid}}{Compound ID as found in PubChem}
+  \item{\code{name}}{Official name as used by WHONET/EARS-Net or the WHO}
+  \item{\code{group}}{A short and concise group name, based on WHONET and WHOCC definitions}
+  \item{\code{atc_group1}}{Official pharmacological subgroup (3rd level ATC code) as defined by the WHOCC, like \code{"Macrolides, lincosamides and streptogramins"}}
+  \item{\code{atc_group2}}{Official chemical subgroup (4th level ATC code) as defined by the WHOCC, like \code{"Macrolides"}}
+  \item{\code{abbr}}{List of abbreviations as used in many countries, also for antibiotic susceptibility testing (AST)}
+  \item{\code{synonyms}}{Synonyms (often trade names) of a drug, as found in PubChem based on their compound ID}
   \item{\code{oral_ddd}}{Defined Daily Dose (DDD), oral treatment}
   \item{\code{oral_units}}{Units of \code{ddd_units}}
   \item{\code{iv_ddd}}{Defined Daily Dose (DDD), parenteral treatment}
   \item{\code{iv_units}}{Units of \code{iv_ddd}}
-  \item{\code{atc_group1}}{ATC group, like \code{"Macrolides, lincosamides and streptogramins"}}
-  \item{\code{atc_group2}}{Subgroup of \code{atc_group1}, like \code{"Macrolides"}}
-  \item{\code{useful_gramnegative}}{\code{FALSE} if not useful according to EUCAST, \code{NA} otherwise (see Source)}
-  \item{\code{useful_grampositive}}{\code{FALSE} if not useful according to EUCAST, \code{NA} otherwise (see Source)}
 }}
 \source{
-World Health Organization (WHO) Collaborating Centre for Drug Statistics Methodology: \url{https://www.whocc.no/atc_ddd_index/}
+World Health Organization (WHO) Collaborating Centre for Drug Statistics Methodology (WHOCC): \url{https://www.whocc.no/atc_ddd_index/}
 
-Table antibiotic coding EARSS (from WHONET 5.3): \url{http://www.madsonline.dk/Tutorials/landskoder_antibiotika_WM.pdf}
-
-EUCAST Expert Rules, Intrinsic Resistance and Exceptional Phenotypes Tables. Version 3.1, 2016: \url{http://www.eucast.org/fileadmin/src/media/PDFs/EUCAST_files/Expert_Rules/Expert_rules_intrinsic_exceptional_V3.1.pdf}
+WHONET 2019 software: \url{http://www.whonet.org/software.html}
 
 European Commission Public Health PHARMACEUTICALS - COMMUNITY REGISTER: \url{http://ec.europa.eu/health/documents/community-register/html/atc.htm}
 }
@@ -37,7 +31,12 @@ European Commission Public Health PHARMACEUTICALS - COMMUNITY REGISTER: \url{htt
 antibiotics
 }
 \description{
-A data set containing all antibiotics with a J0 code and some other antimicrobial agents, with their DDDs. Except for trade names and abbreviations, all properties were downloaded from the WHO, see Source.
+A data set containing all antibiotics. Use \code{\link{as.ab}} or one of the \code{\link{ab_property}} functions to retrieve values from this data set. Three identifiers are included in this data set: an antibiotic ID (\code{ab}, primarily used in this package) as defined by WHONET/EARS-Net, an ATC code (\code{atc}) as defined by the WHO, and a Compound ID (\code{cid}) as found in PubChem. Other properties in this data set are derived from one or more of these codes.
+}
+\details{
+Properties that are based on an ATC code are only available when an ATC is available. These properties are: \code{atc_group1}, \code{atc_group2}, \code{oral_ddd}, \code{oral_units}, \code{iv_ddd} and \code{iv_units}
+
+Synonyms (i.e. trade names) are derived from the Compound ID (\code{cid}) and consequently only available where a CID is available.
 }
 \section{WHOCC}{
 

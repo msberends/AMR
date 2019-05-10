@@ -80,7 +80,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.6.1.9002</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.6.1.9003</span>
       </span>
     </div>
 
@@ -145,7 +145,7 @@
       </a>
     </li>
     <li>
-      <a href="../reference/atc_property.html">
+      <a href="../reference/ab_property.html">
         <span class="fa fa-capsules"></span>
          
         Get properties of an antibiotic
@@ -397,14 +397,14 @@ To conduct an analysis of antimicrobial resistance, you should only include the 
 <span class='co'># Now let's see if first isolates matter:</span>
 <span class='no'>A</span> <span class='kw'>&lt;-</span> <span class='no'>septic_patients</span> <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span>(<span class='no'>hospital_id</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/summarise.html'>summarise</a></span>(<span class='kw'>count</span> <span class='kw'>=</span> <span class='fu'><a href='count.html'>n_rsi</a></span>(<span class='no'>gent</span>),            <span class='co'># gentamicin availability</span>
-            <span class='kw'>resistance</span> <span class='kw'>=</span> <span class='fu'><a href='portion.html'>portion_IR</a></span>(<span class='no'>gent</span>))  <span class='co'># gentamicin resistance</span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/summarise.html'>summarise</a></span>(<span class='kw'>count</span> <span class='kw'>=</span> <span class='fu'><a href='count.html'>n_rsi</a></span>(<span class='no'>GEN</span>),            <span class='co'># gentamicin availability</span>
+            <span class='kw'>resistance</span> <span class='kw'>=</span> <span class='fu'><a href='portion.html'>portion_IR</a></span>(<span class='no'>GEN</span>))  <span class='co'># gentamicin resistance</span>
 
 <span class='no'>B</span> <span class='kw'>&lt;-</span> <span class='no'>septic_patients</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'>filter_first_weighted_isolate</span>() <span class='kw'>%&gt;%</span>       <span class='co'># the 1st isolate filter</span>
+  <span class='fu'>filter_first_weighted_isolate</span>() <span class='kw'>%&gt;%</span>      <span class='co'># the 1st isolate filter</span>
   <span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span>(<span class='no'>hospital_id</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/summarise.html'>summarise</a></span>(<span class='kw'>count</span> <span class='kw'>=</span> <span class='fu'><a href='count.html'>n_rsi</a></span>(<span class='no'>gent</span>),            <span class='co'># gentamicin availability</span>
-            <span class='kw'>resistance</span> <span class='kw'>=</span> <span class='fu'><a href='portion.html'>portion_IR</a></span>(<span class='no'>gent</span>))  <span class='co'># gentamicin resistance</span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/summarise.html'>summarise</a></span>(<span class='kw'>count</span> <span class='kw'>=</span> <span class='fu'><a href='count.html'>n_rsi</a></span>(<span class='no'>GEN</span>),            <span class='co'># gentamicin availability</span>
+            <span class='kw'>resistance</span> <span class='kw'>=</span> <span class='fu'><a href='portion.html'>portion_IR</a></span>(<span class='no'>GEN</span>))  <span class='co'># gentamicin resistance</span>
 
 <span class='co'># Have a look at A and B.</span>
 <span class='co'># B is more reliable because every isolate is only counted once.</span>

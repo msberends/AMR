@@ -62,9 +62,9 @@ library(dplyr)
 # filter on isolates that have any result for any aminoglycoside
 septic_patients \%>\% filter_aminoglycosides()
 
-# this is essentially the same as:
+# this is essentially the same as (but without determination of column names):
 septic_patients \%>\%
-  filter_at(.vars = vars(c("gent", "tobr", "amik", "kana")),
+  filter_at(.vars = vars(c("GEN", "TOB", "AMK", "KAN")),
             .vars_predicate = any_vars(. \%in\% c("S", "I", "R")))
 
 

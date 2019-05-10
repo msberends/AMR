@@ -16,7 +16,7 @@
     <loc>https://msberends.gitlab.io/AMR/reference/WHONET.html</loc>
   </url>
   <url>
-    <loc>https://msberends.gitlab.io/AMR/reference/abname.html</loc>
+    <loc>https://msberends.gitlab.io/AMR/reference/ab_property.html</loc>
   </url>
   <url>
     <loc>https://msberends.gitlab.io/AMR/reference/age.html</loc>
@@ -28,7 +28,13 @@
     <loc>https://msberends.gitlab.io/AMR/reference/antibiotics.html</loc>
   </url>
   <url>
+    <loc>https://msberends.gitlab.io/AMR/reference/as.ab.html</loc>
+  </url>
+  <url>
     <loc>https://msberends.gitlab.io/AMR/reference/as.atc.html</loc>
+  </url>
+  <url>
+    <loc>https://msberends.gitlab.io/AMR/reference/as.disk.html</loc>
   </url>
   <url>
     <loc>https://msberends.gitlab.io/AMR/reference/as.mic.html</loc>
@@ -41,9 +47,6 @@
   </url>
   <url>
     <loc>https://msberends.gitlab.io/AMR/reference/atc_online.html</loc>
-  </url>
-  <url>
-    <loc>https://msberends.gitlab.io/AMR/reference/atc_property.html</loc>
   </url>
   <url>
     <loc>https://msberends.gitlab.io/AMR/reference/availability.html</loc>
@@ -71,9 +74,6 @@
   </url>
   <url>
     <loc>https://msberends.gitlab.io/AMR/reference/g.test.html</loc>
-  </url>
-  <url>
-    <loc>https://msberends.gitlab.io/AMR/reference/get_locale.html</loc>
   </url>
   <url>
     <loc>https://msberends.gitlab.io/AMR/reference/ggplot_rsi.html</loc>
@@ -124,13 +124,16 @@
     <loc>https://msberends.gitlab.io/AMR/reference/resistance_predict.html</loc>
   </url>
   <url>
-    <loc>https://msberends.gitlab.io/AMR/reference/rsi.html</loc>
+    <loc>https://msberends.gitlab.io/AMR/reference/rsi_translation.html</loc>
   </url>
   <url>
     <loc>https://msberends.gitlab.io/AMR/reference/septic_patients.html</loc>
   </url>
   <url>
     <loc>https://msberends.gitlab.io/AMR/reference/skewness.html</loc>
+  </url>
+  <url>
+    <loc>https://msberends.gitlab.io/AMR/reference/translate.html</loc>
   </url>
   <url>
     <loc>https://msberends.gitlab.io/AMR/articles/AMR.html</loc>
@@ -148,7 +151,7 @@
     <loc>https://msberends.gitlab.io/AMR/articles/WHONET.html</loc>
   </url>
   <url>
-    <loc>https://msberends.gitlab.io/AMR/articles/atc_property.html</loc>
+    <loc>https://msberends.gitlab.io/AMR/articles/ab_property.html</loc>
   </url>
   <url>
     <loc>https://msberends.gitlab.io/AMR/articles/benchmarks.html</loc>

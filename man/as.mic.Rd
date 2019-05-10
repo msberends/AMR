@@ -20,6 +20,9 @@ Ordered factor with new class \code{mic}
 \description{
 This transforms a vector to a new class \code{mic}, which is an ordered factor with valid MIC values as levels. Invalid MIC values will be translated as \code{NA} with a warning.
 }
+\details{
+Interpret MIC values as RSI values with \code{\link{as.rsi}}. It supports guidelines from EUCAST and CLSI.
+}
 \section{Read more on our website!}{
 
 On our website \url{https://msberends.gitlab.io/AMR} you can find \href{https://msberends.gitlab.io/AMR/articles/AMR.html}{a comprehensive tutorial} about how to conduct AMR analysis, the \href{https://msberends.gitlab.io/AMR/reference}{complete documentation of all functions} (which reads a lot easier than here in R) and \href{https://msberends.gitlab.io/AMR/articles/WHONET.html}{an example analysis using WHONET data}.
@@ -31,6 +34,16 @@ is.mic(mic_data)
 
 # this can also coerce combined MIC/RSI values:
 as.mic("<=0.002; S") # will return <=0.002
+
+# interpret MIC values
+as.rsi(x = as.mic(2),
+       mo = as.mo("S. pneumoniae"),
+       ab = "AMX",
+       guideline = "EUCAST")
+as.rsi(x = as.mic(4),
+       mo = as.mo("S. pneumoniae"),
+       ab = "AMX",
+       guideline = "EUCAST")
 
 plot(mic_data)
 barplot(mic_data)

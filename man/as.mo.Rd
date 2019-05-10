@@ -127,7 +127,7 @@ Group 2 probably contains all other microbial pathogens ever found in humans.
 
 [1] Becker K \emph{et al.} \strong{Coagulase-Negative Staphylococci}. 2014. Clin Microbiol Rev. 27(4): 870–926. \url{https://dx.doi.org/10.1128/CMR.00109-13}
 
-[2] Becker K \emph{et al.} \strong{Implications of identifying the recently defined members of the S. aureus complex, S. argenteus and S. schweitzeri: A position paper of members of the ESCMID Study Group for staphylococci and Staphylococcal Diseases (ESGS).}. 2019. Clin Microbiol Infect. 2019 Mar 11. \url{https://doi.org/10.1016/j.cmi.2019.02.028}
+[2] Becker K \emph{et al.} \strong{Implications of identifying the recently defined members of the \emph{S. aureus} complex, \emph{S. argenteus} and \emph{S. schweitzeri}: A position paper of members of the ESCMID Study Group for staphylococci and Staphylococcal Diseases (ESGS).} 2019. Clin Microbiol Infect. \url{https://doi.org/10.1016/j.cmi.2019.02.028}
 
 [3] Lancefield RC \strong{A serological differentiation of human and other groups of hemolytic streptococci}. 1933. J Exp Med. 57(4): 571–95. \url{https://dx.doi.org/10.1084/jem.57.4.571}
 

@@ -24,6 +24,10 @@
 // Add updated Font Awesome 5.6.3 library
 $('head').append('<!-- Updated Font Awesome library --><link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">');
 
+// Email template for new GitLab issues
+//https://stackoverflow.com/a/33190494/4575331
+//incoming+msberends-amr-9011429-5miwzuo1xo70wbz9r6fwv4dmg-issue@incoming.gitlab.com
+
 // Edit footer
 $( document ).ready(function() {
 

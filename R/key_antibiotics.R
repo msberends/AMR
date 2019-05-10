@@ -78,24 +78,24 @@
 #' # FALSE, because I is not ignored and so the 4th value differs
 key_antibiotics <- function(tbl,
                             col_mo = NULL,
-                            universal_1 = guess_ab_col(tbl, "amox"),
-                            universal_2 = guess_ab_col(tbl, "amcl"),
-                            universal_3 = guess_ab_col(tbl, "cfur"),
-                            universal_4 = guess_ab_col(tbl, "pita"),
-                            universal_5 = guess_ab_col(tbl, "cipr"),
-                            universal_6 = guess_ab_col(tbl, "trsu"),
-                            GramPos_1 = guess_ab_col(tbl, "vanc"),
-                            GramPos_2 = guess_ab_col(tbl, "teic"),
-                            GramPos_3 = guess_ab_col(tbl, "tetr"),
-                            GramPos_4 = guess_ab_col(tbl, "eryt"),
-                            GramPos_5 = guess_ab_col(tbl, "oxac"),
-                            GramPos_6 = guess_ab_col(tbl, "rifa"),
-                            GramNeg_1 = guess_ab_col(tbl, "gent"),
-                            GramNeg_2 = guess_ab_col(tbl, "tobr"),
-                            GramNeg_3 = guess_ab_col(tbl, "coli"),
-                            GramNeg_4 = guess_ab_col(tbl, "cfot"),
-                            GramNeg_5 = guess_ab_col(tbl, "cfta"),
-                            GramNeg_6 = guess_ab_col(tbl, "mero"),
+                            universal_1 = guess_ab_col(tbl, "AMX"),
+                            universal_2 = guess_ab_col(tbl, "AMC"),
+                            universal_3 = guess_ab_col(tbl, "CXM"),
+                            universal_4 = guess_ab_col(tbl, "TZP"),
+                            universal_5 = guess_ab_col(tbl, "CIP"),
+                            universal_6 = guess_ab_col(tbl, "SXT"),
+                            GramPos_1 = guess_ab_col(tbl, "VAN"),
+                            GramPos_2 = guess_ab_col(tbl, "TEC"),
+                            GramPos_3 = guess_ab_col(tbl, "TCY"),
+                            GramPos_4 = guess_ab_col(tbl, "ERY"),
+                            GramPos_5 = guess_ab_col(tbl, "OXA"),
+                            GramPos_6 = guess_ab_col(tbl, "RIF"),
+                            GramNeg_1 = guess_ab_col(tbl, "GEN"),
+                            GramNeg_2 = guess_ab_col(tbl, "TOB"),
+                            GramNeg_3 = guess_ab_col(tbl, "COL"),
+                            GramNeg_4 = guess_ab_col(tbl, "CTX"),
+                            GramNeg_5 = guess_ab_col(tbl, "CAZ"),
+                            GramNeg_6 = guess_ab_col(tbl, "MEM"),
                             warnings = TRUE,
                             ...) {
 
@@ -112,6 +112,35 @@ key_antibiotics <- function(tbl,
   col.list <- c(universal_1, universal_2, universal_3, universal_4, universal_5, universal_6,
                 GramPos_1, GramPos_2, GramPos_3, GramPos_4, GramPos_5, GramPos_6,
                 GramNeg_1, GramNeg_2, GramNeg_3, GramNeg_4, GramNeg_5, GramNeg_6)
+  check_available_columns <- function(tbl, col.list, info = TRUE) {
+    # check columns
+    col.list <- col.list[!is.na(col.list) & !is.null(col.list)]
+    names(col.list) <- col.list
+    col.list.bak <- col.list
+    # are they available as upper case or lower case then?
+    for (i in 1:length(col.list)) {
+      if (is.null(col.list[i]) | isTRUE(is.na(col.list[i]))) {
+        col.list[i] <- NA
+      } else if (toupper(col.list[i]) %in% colnames(tbl)) {
+        col.list[i] <- toupper(col.list[i])
+      } else if (tolower(col.list[i]) %in% colnames(tbl)) {
+        col.list[i] <- tolower(col.list[i])
+      } else if (!col.list[i] %in% colnames(tbl)) {
+        col.list[i] <- NA
+      }
+    }
+    if (!all(col.list %in% colnames(tbl))) {
+      if (info == TRUE) {
+        warning('Some columns do not exist and will be ignored: ',
+                col.list.bak[!(col.list %in% colnames(tbl))] %>% toString(),
+                '.\nTHIS MAY STRONGLY INFLUENCE THE OUTCOME.',
+                immediate. = TRUE,
+                call. = FALSE)
+      }
+    }
+    col.list
+  }
+
   col.list <- check_available_columns(tbl = tbl, col.list = col.list, info = warnings)
   universal_1 <- col.list[universal_1]
   universal_2 <- col.list[universal_2]
@@ -139,11 +168,19 @@ key_antibiotics <- function(tbl,
                     GramPos_1, GramPos_2, GramPos_3,
                     GramPos_4, GramPos_5, GramPos_6)
   gram_positive <- gram_positive[!is.null(gram_positive)]
+  gram_positive <- gram_positive[!is.na(gram_positive)]
+  if (length(gram_positive) < 12) {
+    warning("only using ", length(gram_positive), " different antibiotics as key antibiotics for Gram positives. See ?key_antibiotics.", call. = FALSE)
+  }
 
   gram_negative = c(universal,
                     GramNeg_1, GramNeg_2, GramNeg_3,
                     GramNeg_4, GramNeg_5, GramNeg_6)
   gram_negative <- gram_negative[!is.null(gram_negative)]
+  gram_negative <- gram_negative[!is.na(gram_negative)]
+  if (length(gram_negative) < 12) {
+    warning("only using ", length(gram_negative), " different antibiotics as key antibiotics for Gram negatives. See ?key_antibiotics.", call. = FALSE)
+  }
 
   # join to microorganisms data set
   tbl <- tbl %>%

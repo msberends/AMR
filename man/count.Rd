@@ -29,8 +29,8 @@ count_all(...)
 
 n_rsi(...)
 
-count_df(data, translate_ab = getOption("get_antibiotic_names",
-  "official"), combine_IR = FALSE)
+count_df(data, translate_ab = "name", language = get_locale(),
+  combine_IR = FALSE)
 }
 \arguments{
 \item{...}{one or more vectors (or columns) with antibiotic interpretations. They will be transformed internally with \code{\link{as.rsi}} if needed.}
@@ -39,7 +39,9 @@ count_df(data, translate_ab = getOption("get_antibiotic_names",
 
 \item{data}{a \code{data.frame} containing columns with class \code{rsi} (see \code{\link{as.rsi}})}
 
-\item{translate_ab}{a column name of the \code{\link{antibiotics}} data set to translate the antibiotic abbreviations to, using \code{\link{abname}}. This can be set with \code{\link{getOption}("get_antibiotic_names")}.}
+\item{translate_ab}{a column name of the \code{\link{antibiotics}} data set to translate the antibiotic abbreviations to, using \code{\link{ab_property}}}
+
+\item{language}{language of the returned text, defaults to system language (see \code{\link{get_locale}}) and can also be set with \code{\link{getOption}("AMR_locale")}. Use \code{language = NULL} or \code{language = ""} to prevent translation.}
 
 \item{combine_IR}{a logical to indicate whether all values of I and R must be merged into one, so the output only consists of S vs. IR (susceptible vs. non-susceptible)}
 }
@@ -68,55 +70,55 @@ On our website \url{https://msberends.gitlab.io/AMR} you can find \href{https://
 ?septic_patients
 
 # Count resistant isolates
-count_R(septic_patients$amox)
-count_IR(septic_patients$amox)
+count_R(septic_patients$AMX)
+count_IR(septic_patients$AMX)
 
 # Or susceptible isolates
-count_S(septic_patients$amox)
-count_SI(septic_patients$amox)
+count_S(septic_patients$AMX)
+count_SI(septic_patients$AMX)
 
 # Count all available isolates
-count_all(septic_patients$amox)
-n_rsi(septic_patients$amox)
+count_all(septic_patients$AMX)
+n_rsi(septic_patients$AMX)
 
 # Since n_rsi counts available isolates, you can
 # calculate back to count e.g. non-susceptible isolates.
 # This results in the same:
-count_IR(septic_patients$amox)
-portion_IR(septic_patients$amox) * n_rsi(septic_patients$amox)
+count_IR(septic_patients$AMX)
+portion_IR(septic_patients$AMX) * n_rsi(septic_patients$AMX)
 
 library(dplyr)
 septic_patients \%>\%
   group_by(hospital_id) \%>\%
-  summarise(R  = count_R(cipr),
-            I  = count_I(cipr),
-            S  = count_S(cipr),
-            n1 = count_all(cipr), # the actual total; sum of all three
-            n2 = n_rsi(cipr),     # same - analogous to n_distinct
+  summarise(R  = count_R(CIP),
+            I  = count_I(CIP),
+            S  = count_S(CIP),
+            n1 = count_all(CIP),  # the actual total; sum of all three
+            n2 = n_rsi(CIP),      # same - analogous to n_distinct
             total = n())          # NOT the number of tested isolates!
 
 # Count co-resistance between amoxicillin/clav acid and gentamicin,
 # so we can see that combination therapy does a lot more than mono therapy.
 # Please mind that `portion_S` calculates percentages right away instead.
-count_S(septic_patients$amcl)   # S = 1342 (71.4\%)
-count_all(septic_patients$amcl) # n = 1879
+count_S(septic_patients$AMC)   # S = 1342 (71.4\%)
+count_all(septic_patients$AMC) # n = 1879
 
-count_S(septic_patients$gent)   # S = 1372 (74.0\%)
-count_all(septic_patients$gent) # n = 1855
+count_S(septic_patients$GEN)   # S = 1372 (74.0\%)
+count_all(septic_patients$GEN) # n = 1855
 
 with(septic_patients,
-     count_S(amcl, gent))       # S = 1660 (92.3\%)
+     count_S(AMC, GEN))         # S = 1660 (92.3\%)
 with(septic_patients,           # n = 1798
-     n_rsi(amcl, gent))
+     n_rsi(AMC, GEN))
 
 # Get portions S/I/R immediately of all rsi columns
 septic_patients \%>\%
-  select(amox, cipr) \%>\%
+  select(AMX, CIP) \%>\%
   count_df(translate = FALSE)
 
 # It also supports grouping variables
 septic_patients \%>\%
-  select(hospital_id, amox, cipr) \%>\%
+  select(hospital_id, AMX, CIP) \%>\%
   group_by(hospital_id) \%>\%
   count_df(translate = FALSE)
 

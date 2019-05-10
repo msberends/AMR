@@ -80,7 +80,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.6.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.6.1.9003</span>
       </span>
     </div>
 
@@ -145,7 +145,7 @@
       </a>
     </li>
     <li>
-      <a href="../reference/atc_property.html">
+      <a href="../reference/ab_property.html">
         <span class="fa fa-capsules"></span>
          
         Get properties of an antibiotic
@@ -302,9 +302,9 @@
 <span class='co'># filter on isolates that have any result for any aminoglycoside</span>
 <span class='no'>septic_patients</span> <span class='kw'>%&gt;%</span> <span class='fu'>filter_aminoglycosides</span>()
 
-<span class='co'># this is essentially the same as:</span>
+<span class='co'># this is essentially the same as (but without determination of column names):</span>
 <span class='no'>septic_patients</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter_all.html'>filter_at</a></span>(<span class='kw'>.vars</span> <span class='kw'>=</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"gent"</span>, <span class='st'>"tobr"</span>, <span class='st'>"amik"</span>, <span class='st'>"kana"</span>)),
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter_all.html'>filter_at</a></span>(<span class='kw'>.vars</span> <span class='kw'>=</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"GEN"</span>, <span class='st'>"TOB"</span>, <span class='st'>"AMK"</span>, <span class='st'>"KAN"</span>)),
             <span class='kw'>.vars_predicate</span> <span class='kw'>=</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/all_vars.html'>any_vars</a></span>(<span class='no'>.</span> <span class='kw'>%in%</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"S"</span>, <span class='st'>"I"</span>, <span class='st'>"R"</span>)))
 
 

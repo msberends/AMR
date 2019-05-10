@@ -112,7 +112,7 @@ age <- function(x, reference = Sys.Date()) {
 #'          mo == as.mo("E. coli")) %>%
 #'   group_by(age_group = age_groups(age)) %>%
 #'   select(age_group,
-#'          cipr) %>%
+#'          CIP) %>%
 #'   ggplot_rsi(x = "age_group")
 age_groups <- function(x, split_at = c(12, 25, 55, 75)) {
   if (is.character(split_at)) {

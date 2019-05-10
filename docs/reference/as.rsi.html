@@ -47,7 +47,7 @@
   <script src="../extra.js"></script>
 <meta property="og:title" content="Class 'rsi' — as.rsi" />
 
-<meta property="og:description" content="This transforms a vector to a new class rsi, which is an ordered factor with levels S &amp;lt; I &amp;lt; R. Invalid antimicrobial interpretations will be translated as NA with a warning." />
+<meta property="og:description" content="Interpret MIC values according to EUCAST or CLSI, or clean up existing RSI values. This transforms the input to a new class rsi, which is an ordered factor with levels S &amp;lt; I &amp;lt; R. Invalid antimicrobial interpretations will be translated as NA with a warning." />
 
 <meta property="og:image" content="https://msberends.gitlab.io/AMR/logo.png" />
 <meta name="twitter:card" content="summary" />
@@ -80,7 +80,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.6.1.9002</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.6.1.9003</span>
       </span>
     </div>
 
@@ -145,7 +145,7 @@
       </a>
     </li>
     <li>
-      <a href="../reference/atc_property.html">
+      <a href="../reference/ab_property.html">
         <span class="fa fa-capsules"></span>
          
         Get properties of an antibiotic
@@ -237,11 +237,21 @@
 
     <div class="ref-description">
     
-    <p>This transforms a vector to a new class <code>rsi</code>, which is an ordered factor with levels <code>S &lt; I &lt; R</code>. Invalid antimicrobial interpretations will be translated as <code>NA</code> with a warning.</p>
+    <p>Interpret MIC values according to EUCAST or CLSI, or clean up existing RSI values. This transforms the input to a new class <code>rsi</code>, which is an ordered factor with levels <code>S &lt; I &lt; R</code>. Invalid antimicrobial interpretations will be translated as <code>NA</code> with a warning.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>as.rsi</span>(<span class='no'>x</span>)
+    <pre class="usage"><span class='fu'>as.rsi</span>(<span class='no'>x</span>, <span class='no'>...</span>)
+
+<span class='co'># S3 method for mic</span>
+<span class='fu'>as.rsi</span>(<span class='no'>x</span>, <span class='no'>mo</span>, <span class='no'>ab</span>, <span class='kw'>guideline</span> <span class='kw'>=</span> <span class='st'>"EUCAST"</span>, <span class='no'>...</span>)
+
+<span class='co'># S3 method for disk</span>
+<span class='fu'>as.rsi</span>(<span class='no'>x</span>, <span class='no'>mo</span>, <span class='no'>ab</span>, <span class='kw'>guideline</span> <span class='kw'>=</span> <span class='st'>"EUCAST"</span>, <span class='no'>...</span>)
+
+<span class='co'># S3 method for data.frame</span>
+<span class='fu'>as.rsi</span>(<span class='no'>x</span>, <span class='kw'>col_mo</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>guideline</span> <span class='kw'>=</span> <span class='st'>"EUCAST"</span>,
+  <span class='no'>...</span>)
 
 <span class='fu'>is.rsi</span>(<span class='no'>x</span>)
 
@@ -252,7 +262,27 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>x</th>
-      <td><p>vector</p></td>
+      <td><p>vector of values (for class <code>mic</code>: an MIC value in mg/L, for class <code>disk</code>: a disk diffusion radius in millimeters)</p></td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td><p>parameters passed on to methods</p></td>
+    </tr>
+    <tr>
+      <th>mo</th>
+      <td><p>a microorganism code, generated with <code><a href='as.mo.html'>as.mo</a></code></p></td>
+    </tr>
+    <tr>
+      <th>ab</th>
+      <td><p>an antibiotic code, generated with <code><a href='as.ab.html'>as.ab</a></code></p></td>
+    </tr>
+    <tr>
+      <th>guideline</th>
+      <td><p>defaults to the latest included EUCAST guideline, run <code><a href='https://www.rdocumentation.org/packages/base/topics/unique'>unique(AMR::rsi_translation$guideline)</a></code> for all options</p></td>
+    </tr>
+    <tr>
+      <th>col_mo</th>
+      <td><p>column name of the unique IDs of the microorganisms (see <code><a href='as.mo.html'>mo</a></code>), defaults to the first column of class <code>mo</code>. Values will be coerced using <code><a href='as.mo.html'>as.mo</a></code>.</p></td>
     </tr>
     <tr>
       <th>threshold</th>
@@ -266,8 +296,9 @@
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p><strong>NOTE:</strong> This function does not translate MIC values to RSI values. If more than 50% of the input resembles MIC values, it will warn about this.<br /> You can use <code><a href='eucast_rules.html'>eucast_rules</a></code> to (1) apply inferred susceptibility and resistance based on results of other antibiotics and (2) apply intrinsic resistance based on taxonomic properties of a microorganism.</p>
-<p>The function <code>is.rsi.eligible</code> returns <code>TRUE</code> when a columns contains only valid antimicrobial interpretations (S and/or I and/or R), and <code>FALSE</code> otherwise.</p>
+    <p>Run <code><a href='https://www.rdocumentation.org/packages/base/topics/unique'>unique(AMR::rsi_translation$guideline)</a></code> for a list of all supported guidelines.</p>
+<p>After using <code>as.rsi</code>, you can use <code><a href='eucast_rules.html'>eucast_rules</a></code> to (1) apply inferred susceptibility and resistance based on results of other antibiotics and (2) apply intrinsic resistance based on taxonomic properties of a microorganism.</p>
+<p>The function <code>is.rsi.eligible</code> returns <code>TRUE</code> when a columns contains at most 5% invalid antimicrobial interpretations (not S and/or I and/or R), and <code>FALSE</code> otherwise. The threshold of 5% can be set with the <code>threshold</code> parameter.</p>
     
     <h2 class="hasAnchor" id="read-more-on-our-website-"><a class="anchor" href="#read-more-on-our-website-"></a>Read more on our website!</h2>
 
@@ -288,6 +319,16 @@
 <span class='co'># this can also coerce combined MIC/RSI values:</span>
 <span class='fu'>as.rsi</span>(<span class='st'>"&lt;= 0.002; S"</span>) <span class='co'># will return S</span>
 
+<span class='co'># interpret MIC values</span>
+<span class='fu'>as.rsi</span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='fu'><a href='as.mic.html'>as.mic</a></span>(<span class='fl'>2</span>),
+       <span class='kw'>mo</span> <span class='kw'>=</span> <span class='fu'><a href='as.mo.html'>as.mo</a></span>(<span class='st'>"S. pneumoniae"</span>),
+       <span class='kw'>ab</span> <span class='kw'>=</span> <span class='st'>"AMX"</span>,
+       <span class='kw'>guideline</span> <span class='kw'>=</span> <span class='st'>"EUCAST"</span>)
+<span class='fu'>as.rsi</span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='fu'><a href='as.mic.html'>as.mic</a></span>(<span class='fl'>4</span>),
+       <span class='kw'>mo</span> <span class='kw'>=</span> <span class='fu'><a href='as.mo.html'>as.mo</a></span>(<span class='st'>"S. pneumoniae"</span>),
+       <span class='kw'>ab</span> <span class='kw'>=</span> <span class='st'>"AMX"</span>,
+       <span class='kw'>guideline</span> <span class='kw'>=</span> <span class='st'>"EUCAST"</span>)
+
 <span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/plot'>plot</a></span>(<span class='no'>rsi_data</span>)    <span class='co'># for percentages</span>
 <span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/barplot'>barplot</a></span>(<span class='no'>rsi_data</span>) <span class='co'># for frequencies</span>
 <span class='fu'><a href='freq.html'>freq</a></span>(<span class='no'>rsi_data</span>)    <span class='co'># frequency table with informative header</span>
@@ -295,7 +336,7 @@
 <span class='co'># using dplyr's mutate</span>
 <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>dplyr</span>)
 <span class='no'>septic_patients</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate_all.html'>mutate_at</a></span>(<span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='no'>peni</span>:<span class='no'>rifa</span>), <span class='no'>as.rsi</span>)
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate_all.html'>mutate_at</a></span>(<span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='no'>PEN</span>:<span class='no'>RIF</span>), <span class='no'>as.rsi</span>)
 
 
 <span class='co'># fastest way to transform all columns with already valid AB results to class `rsi`:</span>
@@ -305,7 +346,7 @@
 
 <span class='co'># default threshold of `is.rsi.eligible` is 5%.</span>
 <span class='fu'>is.rsi.eligible</span>(<span class='no'>WHONET</span>$<span class='no'>`First name`</span>) <span class='co'># fails, &gt;80% is invalid</span>
-<span class='fu'>is.rsi.eligible</span>(<span class='no'>WHONET</span>$<span class='no'>`First name`</span>, <span class='kw'>threshold</span> <span class='kw'>=</span> <span class='fl'>0.9</span>) <span class='co'># succeeds</span>
+<span class='fu'>is.rsi.eligible</span>(<span class='no'>WHONET</span>$<span class='no'>`First name`</span>, <span class='kw'>threshold</span> <span class='kw'>=</span> <span class='fl'>0.99</span>) <span class='co'># succeeds</span>
 <span class='co'># }</span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

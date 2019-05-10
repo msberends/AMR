@@ -96,8 +96,6 @@ MOs <- data_total %>%
     (
       # we only want all MICROorganisms and no viruses
       !kingdom %in% c("Animalia", "Plantae", "Viruses")
-      # and no entries above genus level - all species already have a taxonomic tree
-      & !rank %in% c("kingdom", "phylum", "superfamily", "class", "order", "family")
       # and not all fungi: Aspergillus, Candida, Trichphyton and Pneumocystis are the most important,
       # so only keep these orders from the fungi:
       & !(kingdom == "Fungi"
@@ -194,7 +192,12 @@ MOs.old <- MOs %>%
 MOs <- MOs %>%
   filter(is.na(col_id_new) | source == "DSMZ") %>%
   transmute(col_id,
-            fullname = trimws(paste(genus, species, subspecies)),
+            fullname = trimws(case_when(rank == "family" ~ family,
+                                        rank == "order" ~ order,
+                                        rank == "class" ~ class,
+                                        rank == "phylum" ~ phylum,
+                                        rank == "kingdom" ~ kingdom,
+                                        TRUE ~ paste(genus, species, subspecies))),
             kingdom,
             phylum,
             class,
@@ -220,6 +223,34 @@ MOs <- MOs %>%
 # These will become valid and unique microbial IDs for the AMR package.
 MOs <- MOs %>%
   group_by(kingdom) %>%
+  mutate(abbr_other = case_when(
+    rank == "family" ~ paste0("[FAM]_",
+                              abbreviate(family,
+                                         minlength = 8,
+                                         use.classes = TRUE,
+                                         method = "both.sides",
+                                         strict = FALSE)),
+    rank == "order" ~ paste0("[ORD]_",
+                             abbreviate(order,
+                                        minlength = 8,
+                                        use.classes = TRUE,
+                                        method = "both.sides",
+                                        strict = FALSE)),
+    rank == "class" ~ paste0("[CLS]_",
+                             abbreviate(class,
+                                        minlength = 8,
+                                        use.classes = TRUE,
+                                        method = "both.sides",
+                                        strict = FALSE)),
+    rank == "phylum" ~ paste0("[PHL]_",
+                              abbreviate(phylum,
+                                         minlength = 8,
+                                         use.classes = TRUE,
+                                         method = "both.sides",
+                                         strict = FALSE)),
+    rank == "kingdom" ~ paste0("[KNG]_", kingdom),
+    TRUE ~ NA_character_
+  )) %>%
   # abbreviations may be same for genera between kingdoms,
   # because each abbreviation starts with the the first character(s) of the kingdom
   mutate(abbr_genus = abbreviate(genus,
@@ -247,9 +278,12 @@ MOs <- MOs %>%
                    toupper(paste(ifelse(kingdom %in% c("Animalia", "Plantae"),
                                         substr(kingdom, 1, 2),
                                         substr(kingdom, 1, 1)),
-                                 abbr_genus,
-                                 abbr_species,
-                                 abbr_subspecies,
+                                 ifelse(is.na(abbr_other),
+                                        paste(abbr_genus,
+                                              abbr_species,
+                                              abbr_subspecies,
+                                              sep = "_"),
+                                        abbr_other),
                                  sep = "_")))) %>%
   mutate(mo = ifelse(duplicated(.$mo),
                      # these one or two must be unique too
@@ -259,7 +293,7 @@ MOs <- MOs %>%
                            trimws(paste(genus, species, subspecies)),
                            fullname)) %>%
   # put `mo` in front, followed by the rest
-  select(mo, everything(), -abbr_genus, -abbr_species, -abbr_subspecies)
+  select(mo, everything(), -abbr_other, -abbr_genus, -abbr_species, -abbr_subspecies)
 
 
 # add non-taxonomic entries
@@ -419,7 +453,7 @@ sum(duplicated(MOs$mo))
 colnames(MOs)
 
 # save it
-MOs <- as.data.frame(MOs %>% arrange(mo), stringsAsFactors = FALSE)
+MOs <- as.data.frame(MOs %>% arrange(fullname), stringsAsFactors = FALSE)
 MOs.old <- as.data.frame(MOs.old, stringsAsFactors = FALSE)
 class(MOs$mo) <- "mo"
 

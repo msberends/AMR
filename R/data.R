@@ -19,115 +19,36 @@
 # Visit our website for more info: https://msberends.gitlab.io/AMR.    #
 # ==================================================================== #
 
-#' Data set with ~500 antibiotics
+#' Data set with ~450 antibiotics
 #'
-#' A data set containing all antibiotics with a J0 code and some other antimicrobial agents, with their DDDs. Except for trade names and abbreviations, all properties were downloaded from the WHO, see Source.
-#' @format A \code{\link{data.frame}} with 488 observations and 17 variables:
+#' A data set containing all antibiotics. Use \code{\link{as.ab}} or one of the \code{\link{ab_property}} functions to retrieve values from this data set. Three identifiers are included in this data set: an antibiotic ID (\code{ab}, primarily used in this package) as defined by WHONET/EARS-Net, an ATC code (\code{atc}) as defined by the WHO, and a Compound ID (\code{cid}) as found in PubChem. Other properties in this data set are derived from one or more of these codes.
+#' @format A \code{\link{data.frame}} with 455 observations and 13 variables:
 #' \describe{
-#'   \item{\code{atc}}{ATC code (Anatomical Therapeutic Chemical), like \code{J01CR02}}
-#'   \item{\code{ears_net}}{EARS-Net code (European Antimicrobial Resistance Surveillance Network), like \code{AMC}}
-#'   \item{\code{certe}}{Certe code, like \code{amcl}}
-#'   \item{\code{umcg}}{UMCG code, like \code{AMCL}}
-#'   \item{\code{abbr}}{Abbreviation as used by many countries, used internally by \code{\link{as.atc}}}
-#'   \item{\code{official}}{Official name by the WHO, like \code{"Amoxicillin and beta-lactamase inhibitor"}}
-#'   \item{\code{official_nl}}{Official name in the Netherlands, like \code{"Amoxicilline met enzymremmer"}}
-#'   \item{\code{trivial_nl}}{Trivial name in Dutch, like \code{"Amoxicilline/clavulaanzuur"}}
-#'   \item{\code{trade_name}}{Trade name as used by many countries (a total of 294), used internally by \code{\link{as.atc}}}
+#'   \item{\code{ab}}{Antibiotic ID as used in this package (like \code{AMC}), using the official EARS-Net (European Antimicrobial Resistance Surveillance Network) codes where available}
+#'   \item{\code{atc}}{ATC code (Anatomical Therapeutic Chemical) as defined by the WHOCC, like \code{J01CR02}}
+#'   \item{\code{cid}}{Compound ID as found in PubChem}
+#'   \item{\code{name}}{Official name as used by WHONET/EARS-Net or the WHO}
+#'   \item{\code{group}}{A short and concise group name, based on WHONET and WHOCC definitions}
+#'   \item{\code{atc_group1}}{Official pharmacological subgroup (3rd level ATC code) as defined by the WHOCC, like \code{"Macrolides, lincosamides and streptogramins"}}
+#'   \item{\code{atc_group2}}{Official chemical subgroup (4th level ATC code) as defined by the WHOCC, like \code{"Macrolides"}}
+#'   \item{\code{abbr}}{List of abbreviations as used in many countries, also for antibiotic susceptibility testing (AST)}
+#'   \item{\code{synonyms}}{Synonyms (often trade names) of a drug, as found in PubChem based on their compound ID}
 #'   \item{\code{oral_ddd}}{Defined Daily Dose (DDD), oral treatment}
 #'   \item{\code{oral_units}}{Units of \code{ddd_units}}
 #'   \item{\code{iv_ddd}}{Defined Daily Dose (DDD), parenteral treatment}
 #'   \item{\code{iv_units}}{Units of \code{iv_ddd}}
-#'   \item{\code{atc_group1}}{ATC group, like \code{"Macrolides, lincosamides and streptogramins"}}
-#'   \item{\code{atc_group2}}{Subgroup of \code{atc_group1}, like \code{"Macrolides"}}
-#'   \item{\code{useful_gramnegative}}{\code{FALSE} if not useful according to EUCAST, \code{NA} otherwise (see Source)}
-#'   \item{\code{useful_grampositive}}{\code{FALSE} if not useful according to EUCAST, \code{NA} otherwise (see Source)}
 #' }
-#' @source World Health Organization (WHO) Collaborating Centre for Drug Statistics Methodology: \url{https://www.whocc.no/atc_ddd_index/}
+#' @details Properties that are based on an ATC code are only available when an ATC is available. These properties are: \code{atc_group1}, \code{atc_group2}, \code{oral_ddd}, \code{oral_units}, \code{iv_ddd} and \code{iv_units}
 #'
-#' Table antibiotic coding EARSS (from WHONET 5.3): \url{http://www.madsonline.dk/Tutorials/landskoder_antibiotika_WM.pdf}
+#' Synonyms (i.e. trade names) are derived from the Compound ID (\code{cid}) and consequently only available where a CID is available.
+#' @source World Health Organization (WHO) Collaborating Centre for Drug Statistics Methodology (WHOCC): \url{https://www.whocc.no/atc_ddd_index/}
 #'
-#' EUCAST Expert Rules, Intrinsic Resistance and Exceptional Phenotypes Tables. Version 3.1, 2016: \url{http://www.eucast.org/fileadmin/src/media/PDFs/EUCAST_files/Expert_Rules/Expert_rules_intrinsic_exceptional_V3.1.pdf}
+#' WHONET 2019 software: \url{http://www.whonet.org/software.html}
 #'
 #' European Commission Public Health PHARMACEUTICALS - COMMUNITY REGISTER: \url{http://ec.europa.eu/health/documents/community-register/html/atc.htm}
 #' @inheritSection WHOCC WHOCC
 #' @inheritSection AMR Read more on our website!
 #' @seealso \code{\link{microorganisms}}
-# use this later to further fill AMR::antibiotics
-# drug <- "Ciprofloxacin"
-# url <- xml2::read_html(paste0("https://www.ncbi.nlm.nih.gov/pccompound?term=", drug)) %>%
-#   html_nodes(".rslt") %>%
-#   .[[1]] %>%
-#   html_nodes(".title a") %>%
-#   html_attr("href") %>%
-#   gsub("/compound/", "/rest/pug_view/data/compound/", ., fixed = TRUE) %>%
-#   paste0("/XML/?response_type=display")
-# synonyms <- url %>%
-#   read_xml() %>%
-#   xml_contents() %>% .[[6]] %>%
-#   xml_contents() %>% .[[8]] %>%
-#   xml_contents() %>% .[[3]] %>%
-#   xml_contents() %>% .[[3]] %>%
-#   xml_contents() %>%
-#   paste() %>%
-#   .[. %like% "StringValueList"] %>%
-#   gsub("[</]+StringValueList[>]", "", .)
-
-# last two columns created with:
-# antibiotics %>%
-#   mutate(useful_gramnegative =
-#            if_else(
-#              atc_group1 %like% '(fusidic|glycopeptide|macrolide|lincosamide|daptomycin|linezolid)' |
-#                atc_group2 %like% '(fusidic|glycopeptide|macrolide|lincosamide|daptomycin|linezolid)' |
-#                official %like% '(fusidic|glycopeptide|macrolide|lincosamide|daptomycin|linezolid)',
-#              FALSE,
-#              NA
-#            ),
-#          useful_grampositive =
-#            if_else(
-#              atc_group1 %like% '(aztreonam|temocillin|polymyxin|colistin|nalidixic)' |
-#                atc_group2 %like% '(aztreonam|temocillin|polymyxin|colistin|nalidixic)' |
-#                official %like% '(aztreonam|temocillin|polymyxin|colistin|nalidixic)',
-#              FALSE,
-#              NA
-#            )
-#   )
-#
-# ADD NEW TRADE NAMES FROM OTHER DATAFRAME
-# antibiotics_add_to_property <- function(ab_df, atc, property, value) {
-#   if (length(atc) > 1L) {
-#     stop("only one atc at a time")
-#   }
-#   if (!property %in% c("abbr", "trade_name")) {
-#     stop("only possible for abbr and trade_name")
-#   }
-#
-#   value <- gsub(ab_df[which(ab_df$atc == atc),] %>% pull("official"), "", value, fixed = TRUE)
-#   value <- gsub("||", "|", value, fixed = TRUE)
-#   value <- gsub("[äáàâ]", "a", value)
-#   value <- gsub("[ëéèê]", "e", value)
-#   value <- gsub("[ïíìî]", "i", value)
-#   value <- gsub("[öóòô]", "o", value)
-#   value <- gsub("[üúùû]", "u", value)
-#   if (!atc %in% ab_df$atc) {
-#     message("SKIPPING - UNKNOWN ATC: ", atc)
-#   }
-#   if (is.na(value)) {
-#     message("SKIPPING - VALUE MISSES: ", atc)
-#   }
-#   if (atc %in% ab_df$atc & !is.na(value)) {
-#     current <- ab_df[which(ab_df$atc == atc),] %>% pull(property)
-#     if (!is.na(current)) {
-#       value <- paste(current, value, sep = "|")
-#     }
-#     value <- strsplit(value, "|", fixed = TRUE) %>% unlist() %>% unique() %>% paste(collapse = "|")
-#     value <- gsub("||", "|", value, fixed = TRUE)
-#     # print(value)
-#     ab_df[which(ab_df$atc == atc), property] <- value
-#     message("Added ", value, " to ", ab_official(atc), " (", atc, ", ", ab_certe(atc), ")")
-#   }
-#   ab_df
-# }
-#
 "antibiotics"
 
 #' Data set with ~65,000 microorganisms
@@ -262,6 +183,24 @@ catalogue_of_life <- list(
 #' @inheritSection AMR Read more on our website!
 "WHONET"
 
+#' Data set for RSI interpretation
+#'
+#' Data set to interpret MIC and disk diffusion to RSI values. Included guidelines are CLSI (2011-2019) and EUCAST (2011-2019). Use \code{\link{as.rsi}} to transform MICs or disks measurements to RSI values.
+#' @format A \code{\link{data.frame}} with 11,559 observations and 9 variables:
+#' \describe{
+#'   \item{\code{guideline}}{Name of the guideline}
+#'   \item{\code{mo}}{Microbial ID, see \code{\link{as.mo}}}
+#'   \item{\code{ab}}{Antibiotic ID, see \code{\link{as.ab}}}
+#'   \item{\code{ref_tbl}}{Info about where the guideline rule can be found}
+#'   \item{\code{S_mic}}{Lowest MIC value that leads to "S"}
+#'   \item{\code{R_mic}}{Highest MIC value that leads to "R"}
+#'   \item{\code{dose_disk}}{Dose of the used disk diffusion method}
+#'   \item{\code{S_disk}}{Lowest number of millimeters that leads to "S"}
+#'   \item{\code{R_disk}}{Highest number of millimeters that leads to "R"}
+#' }
+#' @inheritSection AMR Read more on our website!
+"rsi_translation"
+
 # transforms data set to data.frame with only ASCII values, to comply with CRAN policies
 dataset_UTF8_to_ASCII <- function(df) {
   trans <- function(vect) {
@@ -270,14 +209,21 @@ dataset_UTF8_to_ASCII <- function(df) {
   df <- as.data.frame(df, stringsAsFactors = FALSE)
   for (i in 1:NCOL(df)) {
     col <- df[, i]
-    if (is.factor(col)) {
-      levels(col) <- trans(levels(col))
-    } else if (is.character(col)) {
-      col <- trans(col)
+    if (is.list(col)) {
+      for (j in 1:length(col)) {
+        col[[j]] <- trans(col[[j]])
+      }
+      df[, i] <- list(col)
     } else {
-      col
+      if (is.factor(col)) {
+        levels(col) <- trans(levels(col))
+      } else if (is.character(col)) {
+        col <- trans(col)
+      } else {
+        col
+      }
+      df[, i] <- col
     }
-    df[, i] <- col
   }
   df
 }

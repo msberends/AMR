@@ -81,7 +81,7 @@ boxplot(microbenchmark(as.mo("Thermus islandicus"),
                        as.mo("E. coli"),
                        times = 10),
         horizontal = TRUE, las = 1, unit = "s", log = FALSE,
-        xlab = "", ylab = "Time in seconds", ylim = c(0, 0.5),
+        xlab = "", ylab = "Time in seconds",
         main = "Benchmarks per prevalence")
 ```
 

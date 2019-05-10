@@ -22,7 +22,7 @@
 # print successful as.mo coercions to AMR environment
 #' @importFrom dplyr %>% distinct filter
 set_mo_history <- function(x, mo, uncertainty_level, force = FALSE) {
-  # disable function
+  # disable function for now
   return(base::invisible())
 
   # if (base::interactive() | force == TRUE) {
@@ -58,7 +58,7 @@ set_mo_history <- function(x, mo, uncertainty_level, force = FALSE) {
 }
 
 get_mo_history <- function(x, uncertainty_level, force = FALSE) {
-  # disable function
+  # disable function for now
   return(NA)
 
   # history <- read_mo_history(uncertainty_level = uncertainty_level, force = force)
@@ -73,7 +73,7 @@ get_mo_history <- function(x, uncertainty_level, force = FALSE) {
 
 #' @importFrom dplyr %>% filter distinct
 read_mo_history <- function(uncertainty_level = 2, force = FALSE, unfiltered = FALSE) {
-  # disable function
+  # disable function for now
   return(NULL)
 
   # if ((!base::interactive() & force == FALSE)) {

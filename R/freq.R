@@ -181,8 +181,8 @@
 #'
 #'
 #' # check differences between frequency tables
-#' diff(freq(septic_patients$trim),
-#'      freq(septic_patients$trsu))
+#' diff(freq(septic_patients$TMP),
+#'      freq(septic_patients$SXT))
 frequency_tbl <- function(x,
                           ...,
                           sort.count = TRUE,
@@ -419,8 +419,8 @@ frequency_tbl <- function(x,
   }
 
   if (any(class(x) == "rsi")) {
-    header_list$count_S <- max(0, sum(x == "S", na.rm = TRUE), na.rm = TRUE)
-    header_list$count_IR <- max(0, sum(x %in% c("I", "R"), na.rm = TRUE), na.rm = TRUE)
+    header_list$count_SI <- max(0, sum(x %in% c("S", "I"), na.rm = TRUE), na.rm = TRUE)
+    header_list$count_R <- max(0, sum(x == "R", na.rm = TRUE), na.rm = TRUE)
   }
 
   formatdates <- "%e %B %Y" # = d mmmm yyyy
@@ -565,14 +565,15 @@ format_header <- function(x, markdown = FALSE, decimal.mark = ".", big.mark = ",
   # FORMATTING
   # rsi
   if (has_length == TRUE & any(x_class == "rsi")) {
-    ab <- tryCatch(atc_name(attributes(x)$opt$vars), error = function(e) NA)
+    ab <- tryCatch(as.ab(attributes(x)$opt$vars), error = function(e) NA)
     if (!is.na(ab)) {
-      header$drug <- ab[1L]
+      header$drug <- paste0(ab_name(ab[1L]), " (", ab[1L], ", ", ab_atc(ab[1L]), ")")
+      header$group <- ab_group(ab[1L])
     }
-    header$`%IR` <- percent(header$count_IR / (header$count_S + header$count_IR),
+    header$`%SI` <- percent(header$count_SI / (header$count_SI + header$count_R),
                             force_zero = TRUE, round = digits, decimal.mark = decimal.mark)
   }
-  header <- header[!names(header) %in% c("count_S", "count_IR")]
+  header <- header[!names(header) %in% c("count_SI", "count_R")]
   # dates
   if (!is.null(header$date_format)) {
     if (header$date_format == "%H:%M:%S") {

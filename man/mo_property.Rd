@@ -92,13 +92,10 @@ All functions will return the most recently known taxonomic property according t
 
 The Gram stain - \code{mo_gramstain()} - will be determined on the taxonomic kingdom and phylum. According to Cavalier-Smith (2002) who defined subkingdoms Negibacteria and Posibacteria, only these phyla are Posibacteria: Actinobacteria, Chloroflexi, Firmicutes and Tenericutes. These bacteria are considered Gram positive - all other bacteria are considered Gram negative. Species outside the kingdom of Bacteria will return a value \code{NA}.
 
+All output will be \link{translate}d where possible.
+
 The function \code{mo_url()} will return the direct URL to the online database entry, which also shows the scientific reference of the concerned species.
 }
-\section{Supported languages}{
-
-Supported languages are \code{"en"} (English), \code{"de"} (German), \code{"nl"} (Dutch), \code{"es"} (Spanish), \code{"it"} (Italian), \code{"fr"} (French), and \code{"pt"} (Portuguese).
-}
-
 \section{Catalogue of Life}{
 
 \if{html}{\figure{logo_col.png}{options: height=40px style=margin-bottom:5px} \cr}
@@ -111,7 +108,7 @@ This package contains the complete taxonomic tree of almost all microorganisms (
 
 [1] Becker K \emph{et al.} \strong{Coagulase-Negative Staphylococci}. 2014. Clin Microbiol Rev. 27(4): 870–926. \url{https://dx.doi.org/10.1128/CMR.00109-13}
 
-[2] Becker K \emph{et al.} \strong{Implications of identifying the recently defined members of the S. aureus complex, S. argenteus and S. schweitzeri: A position paper of members of the ESCMID Study Group for staphylococci and Staphylococcal Diseases (ESGS).}. 2019. Clin Microbiol Infect. 2019 Mar 11. \url{https://doi.org/10.1016/j.cmi.2019.02.028}
+[2] Becker K \emph{et al.} \strong{Implications of identifying the recently defined members of the \emph{S. aureus} complex, \emph{S. argenteus} and \emph{S. schweitzeri}: A position paper of members of the ESCMID Study Group for staphylococci and Staphylococcal Diseases (ESGS).} 2019. Clin Microbiol Infect. \url{https://doi.org/10.1016/j.cmi.2019.02.028}
 
 [3] Lancefield RC \strong{A serological differentiation of human and other groups of hemolytic streptococci}. 1933. J Exp Med. 57(4): 571–95. \url{https://dx.doi.org/10.1084/jem.57.4.571}
 
@@ -142,7 +139,7 @@ mo_shortname("E. coli")       # "E. coli"
 mo_gramstain("E. coli")       # "Gram negative"
 mo_type("E. coli")            # "Bacteria" (equal to kingdom)
 mo_rank("E. coli")            # "species"
-mo_url("E. coli")             # get the direct url to the Catalogue of Life
+mo_url("E. coli")             # get the direct url to the online database entry
 
 ## scientific reference
 mo_ref("E. coli")             # "Castellani et al., 1919"
@@ -200,7 +197,7 @@ mo_fullname("S. pyogenes",
             language = "nl")              # "Streptococcus groep A"
 
 
-# get a list with the complete taxonomy (kingdom to subspecies)
+# get a list with the complete taxonomy (from kingdom to subspecies)
 mo_taxonomy("E. coli")
 }
 \seealso{

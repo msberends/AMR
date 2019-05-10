@@ -41,16 +41,16 @@ Our package contains a function `resistance_predict()`, which takes the same inp
 
 It is basically as easy as:
 ```{r, eval = FALSE}
-# resistance prediction of piperacillin/tazobactam (pita):
-resistance_predict(tbl = septic_patients, col_date = "date", col_ab = "pita")
+# resistance prediction of piperacillin/tazobactam (TZP):
+resistance_predict(tbl = septic_patients, col_date = "date", col_ab = "TZP")
 
 # or:
 septic_patients %>% 
-  resistance_predict(col_ab = "pita")
+  resistance_predict(col_ab = "TZP")
 
-# to bind it to object 'predict_pita' for example:
-predict_pita <- septic_patients %>% 
-  resistance_predict(col_ab = "pita")
+# to bind it to object 'predict_TZP' for example:
+predict_TZP <- septic_patients %>% 
+  resistance_predict(col_ab = "TZP")
 ```
 
 The function will look for a date column itself if `col_date` is not set.
@@ -58,20 +58,20 @@ The function will look for a date column itself if `col_date` is not set.
 When running any of these commands, a summary of the regression model will be printed unless using `resistance_predict(..., info = FALSE)`.
 
 ```{r, echo = FALSE}
-predict_pita <- septic_patients %>% 
-  resistance_predict(col_ab = "pita")
+predict_TZP <- septic_patients %>% 
+  resistance_predict(col_ab = "TZP")
 ```
 
 This text is only a printed summary - the actual result (output) of the function is a `data.frame` containing for each year: the number of observations, the actual observed resistance, the estimated resistance and the standard error below and above the estimation:
 
 ```{r}
-predict_pita
+predict_TZP
 ```
 
 The function `plot` is available in base R, and can be extended by other packages to depend the output based on the type of input. We extended its function to cope with resistance predictions:
 
 ```{r, fig.height = 5.5}
-plot(predict_pita)
+plot(predict_TZP)
 ```
 
 This is the fastest way to plot the result. It automatically adds the right axes, error bars, titles, number of available observations and type of model.
@@ -79,10 +79,10 @@ This is the fastest way to plot the result. It automatically adds the right axes
 We also support the `ggplot2` package with our custom function `ggplot_rsi_predict()` to create more appealing plots:
 
 ```{r}
-ggplot_rsi_predict(predict_pita)
+ggplot_rsi_predict(predict_TZP)
 
 # choose for error bars instead of a ribbon
-ggplot_rsi_predict(predict_pita, ribbon = FALSE)
+ggplot_rsi_predict(predict_TZP, ribbon = FALSE)
 ```
 
 ### Choosing the right model
@@ -92,7 +92,7 @@ Resistance is not easily predicted; if we look at vancomycin resistance in Gram 
 ```{r}
 septic_patients %>%
   filter(mo_gramstain(mo) == "Gram positive") %>%
-  resistance_predict(col_ab = "vanc", year_min = 2010, info = FALSE) %>% 
+  resistance_predict(col_ab = "VAN", year_min = 2010, info = FALSE) %>% 
   ggplot_rsi_predict()
 ```
 
@@ -113,7 +113,7 @@ For the vancomycin resistance in Gram positive bacteria, a linear model might be
 ```{r}
 septic_patients %>%
   filter(mo_gramstain(mo) == "Gram positive") %>%
-  resistance_predict(col_ab = "vanc", year_min = 2010, info = FALSE, model = "linear") %>% 
+  resistance_predict(col_ab = "VAN", year_min = 2010, info = FALSE, model = "linear") %>% 
   ggplot_rsi_predict()
 ```
 
@@ -121,7 +121,7 @@ This seems more likely, doesn't it?
 
 The model itself is also available from the object, as an `attribute`:
 ```{r}
-model <- attributes(predict_pita)$model
+model <- attributes(predict_TZP)$model
 
 summary(model)$family
 

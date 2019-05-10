@@ -73,6 +73,11 @@ rsi_calc <- function(...,
     }
   }
 
+  if (is.null(x)) {
+    warning("argument is NULL (check if columns exist): returning NA", call. = FALSE)
+    return(NA)
+  }
+
   print_warning <- FALSE
 
   type_trans <- as.integer(as.rsi(type))
