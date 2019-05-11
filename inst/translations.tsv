@@ -154,303 +154,204 @@ pt	vegetative	vegetativo	FALSE	FALSE
 pt	([([ ]*?)group	\\1grupo	FALSE	FALSE
 pt	([([ ]*?)Group	\\1Grupo	FALSE	FALSE
 
-nl	4-aminosalicylic acid	aminosalicylzuur
-nl	adefovir dipivoxil	adefovir
-nl	aldesulfone sodium	aldesulfon
-nl	amikacin	amikacine
-nl	amoxicillin	amoxicilline
-nl	amoxicillin and beta-lactamase inhibitor	amoxicilline met enzymremmer
-nl	amphotericin B	amfotericine B
-nl	ampicillin	ampicilline
-nl	ampicillin and beta-lactamase inhibitor	ampicilline met enzymremmer
-nl	ampicillin, combinations	ampicilline, combinatiepreparaten
-nl	anidulafungin	anidulafungine
-nl	anthrax antigen	anthrax-antigeen
-nl	anti-d (rh) immunoglobulin	rhesus(d)immunoglobuline
-nl	azidocillin	azidocilline
-nl	azithromycin	azitromycine
-nl	azlocillin	azlocilline
-nl	bacampicillin	bacampicilline
-nl	bacitracin	bacitracine
-nl	benzathine benzylpenicillin	benzylpenicillinebenzathine
-nl	benzathine phenoxymethylpenicillin	fenoxymethylpenicillinebenzathine
-nl	benzylpenicillin	benzylpenicilline
-nl	botulinum antitoxin	serum tegen botulisme
-nl	brucella antigen	brucella-antigeen
-nl	calcium aminosalicylate	aminosalicylzuur
-nl	capreomycin	capreomycine
-nl	carbenicillin	carbenicilline
-nl	carindacillin	carindacilline
-nl	caspofungin	caspofungine
-nl	cefacetrile	cefacetril
-nl	cefalexin	cefalexine
-nl	cefalotin	cefalotine
-nl	cefamandole	cefamandol
-nl	cefapirin	cefapirine
-nl	cefazedone	cefazedon
-nl	cefazolin	cefazoline
-nl	cefepime	cefepim
-nl	cefixime	cefixim
-nl	cefmenoxime	cefmenoxim
-nl	cefmetazole	cefmetazol
-nl	cefodizime	cefodizim
-nl	cefonicid	cefonicide
-nl	cefoperazone	cefoperazon
-nl	cefoperazone and beta-lactamase inhibitor	cefoperazon combinatiepreparaten
-nl	cefotaxime	cefotaxim
-nl	cefoxitin	cefoxitine
-nl	cefpirome	cefpirom
-nl	cefpodoxime	cefpodoxim
-nl	cefsulodin	cefsulodine
-nl	ceftazidime	ceftazidim
-nl	ceftezole	ceftezol
-nl	ceftizoxime	ceftizoxim
-nl	ceftriaxone	ceftriaxon
-nl	ceftriaxone, combinations	ceftriaxon, combinatiepreparaten
-nl	cefuroxime	cefuroxim
-nl	cefuroxime and metronidazole	cefuroxim met andere antibacteriele middelen
-nl	chloramphenicol	chlooramfenicol
-nl	chlortetracycline	chloortetracycline
-nl	cholera, combinations with typhoid vaccine, inactivated, whole cell	choleravaccin met tyfusvaccin, geinactiveerd, hele cel
-nl	cholera, inactivated, whole cell	cholera, geinactiveerd, hele cel
-nl	cholera, live attenuated	cholera, levend verzwakt
-nl	cinoxacin	cinoxacine
-nl	ciprofloxacin	ciprofloxacine
-nl	clarithromycin	claritromycine
+nl	4-aminosalicylic acid	4-aminosalicylzuur
+nl	Adefovir dipivoxil	Adefovir
+nl	Aldesulfone sodium	Aldesulfon
+nl	Amikacin	Amikacine
+nl	Amoxicillin	Amoxicilline
+nl	Amoxicillin/beta-lactamase inhibitor	Amoxicilline/enzymremmer
+nl	Amphotericin B	Amfotericine B
+nl	Ampicillin	Ampicilline
+nl	Ampicillin/beta-lactamase inhibitor	Ampicilline/enzymremmer
+nl	Anidulafungin	Anidulafungine
+nl	Azidocillin	Azidocilline
+nl	Azithromycin	Azitromycine
+nl	Azlocillin	Azlocilline
+nl	Bacampicillin	Bacampicilline
+nl	Bacitracin	Bacitracine
+nl	Benzathine benzylpenicillin	Benzylpenicillinebenzathine
+nl	Benzathine phenoxymethylpenicillin	Fenoxymethylpenicillinebenzathine
+nl	Benzylpenicillin	Benzylpenicilline
+nl	Calcium aminosalicylate	Aminosalicylzuur
+nl	Capreomycin	Capreomycine
+nl	Carbenicillin	Carbenicilline
+nl	Carindacillin	Carindacilline
+nl	Caspofungin	Caspofungine
+nl	Cefacetrile	Cefacetril
+nl	Cefalexin	Cefalexine
+nl	Cefalotin	Cefalotine
+nl	Cefamandole	Cefamandol
+nl	Cefapirin	Cefapirine
+nl	Cefazedone	Cefazedon
+nl	Cefazolin	Cefazoline
+nl	Cefepime	Cefepim
+nl	Cefixime	Cefixim
+nl	Cefmenoxime	Cefmenoxim
+nl	Cefmetazole	Cefmetazol
+nl	Cefodizime	Cefodizim
+nl	Cefonicid	Cefonicide
+nl	Cefoperazone	Cefoperazon
+nl	Cefoperazone/beta-lactamase inhibitor	Cefoperazon combinatiepreparaten
+nl	Cefotaxime	Cefotaxim
+nl	Cefoxitin	Cefoxitine
+nl	Cefpirome	Cefpirom
+nl	Cefpodoxime	Cefpodoxim
+nl	Cefsulodin	Cefsulodine
+nl	Ceftazidime	Ceftazidim
+nl	Ceftezole	Ceftezol
+nl	Ceftizoxime	Ceftizoxim
+nl	Ceftriaxone	Ceftriaxon
+nl	Cefuroxime	Cefuroxim
+nl	Cefuroxime/metronidazole	Cefuroxim/andere antibacteriele middelen
+nl	Chloramphenicol	Chlooramfenicol
+nl	Chlortetracycline	Chloortetracycline
+nl	Cinoxacin	Cinoxacine
+nl	Ciprofloxacin	Ciprofloxacine
+nl	Clarithromycin	Claritromycine
+nl	Clavulanic acid	Clavulaanzuur
 nl	clavulanic acid	clavulaanzuur
-nl	clindamycin	clindamycine
-nl	clometocillin	clometocilline
-nl	clotrimazole	clotrimazol
-nl	cloxacillin	cloxacilline
-nl	colistin	colistine
-nl	combinations	combinatiepreparaten
-nl	combinations	combinatiepreparaten
-nl	combinations	combinatiepreparaten
-nl	combinations	combinatiepreparaten
-nl	combinations	combinatiepreparaten
-nl	combinations	combinatiepreparaten
-nl	combinations	combinatiepreparaten
-nl	combinations of penicillins	combinatiepreparaten
-nl	combinations of tetracyclines	tetracycline combinatiepreparaten
-nl	cytomegalovirus immunoglobulin	cytomegalie-immunoglobuline
-nl	dapsone	dapson
-nl	daptomycin	daptomycine
-nl	dibekacin	dibekacine
-nl	dicloxacillin	dicloxacilline
-nl	diphtheria antitoxin	serum tegen difterie
-nl	diphtheria immunoglobulin	difterie-immunoglobuline
-nl	diphtheria toxoid	difterietoxoide
-nl	diphtheria-hemophilus influenzae b-pertussis-poliomyelitis-tetanus	difterie-haemophilus-kinkhoest-poliomyelitis-tetanus
-nl	diphtheria-hemophilus influenzae b-pertussis-poliomyelitis-tetanus-hepatitis B	difterie-haemophilus-kinkhoest-polio-tetanus-hepatitis B
-nl	diphtheria-hemophilus influenzae b-pertussis-tetanus-hepatitis B	difterie-haemophilus-kinkhoest-tetanus-hepatitis B
-nl	diphtheria-hepatitis b-pertussis-tetanus	difterie-hepatitis b-kinkhoest-tetanus
-nl	diphtheria-hepatitis b-tetanus	difterie-hepatitis b-tetanus
-nl	diphtheria-pertussis-poliomyelitis-tetanus	difterie-kinkhoest-poliomyelitis-tetanus
-nl	diphtheria-pertussis-poliomyelitis-tetanus-hepatitis B	difterie-kinkhoest-poliomyelitis-tetanus-hepatitis B
-nl	diphtheria-poliomyelitis-tetanus	difterie-poliomyelitis-tetanus
-nl	diphtheria-rubella-tetanus	difterie-rubella-tetanus
-nl	dirithromycin	diritromycine
-nl	econazole	econazol
-nl	encephalitis, japanese, inactivated, whole virus	japanse-encefalitis, geinactiveerd, intact virus
-nl	encephalitis, tick borne immunoglobulin	teken-encephalitis-immunoglobuline
-nl	encephalitis, tick borne, inactivated, whole virus	tekenencefalitis, geinactiveerd, intact virus
-nl	enoxacin	enoxacine
-nl	epicillin	epicilline
-nl	erythromycin	erytromycine
-nl	ethambutol and isoniazid	ethambutol met isoniazide
-nl	fleroxacin	fleroxacine
-nl	flucloxacillin	flucloxacilline
-nl	fluconazole	fluconazol
-nl	flucytosine	fluorocytosine
-nl	flurithromycin	fluritromycine
-nl	fosfomycin	fosfomycine
-nl	fusidic acid	fusidinezuur
-nl	gas-gangrene sera	serum tegen gasgangreen
-nl	gatifloxacin	gatifloxacine
-nl	gemifloxacin	gemifloxacine
-nl	gentamicin	gentamicine
-nl	grepafloxacin	grepafloxacine
-nl	hachimycin	hachimycine
-nl	hemophilus influenzae B and hepatitis B	haemophilus influenzae b-hepatitis B
-nl	hemophilus influenzae B and poliomyelitis	haemophilus influenzae b-poliomyelitis
-nl	hemophilus influenzae B, combinations with pertussis and toxoids	haemophilus influenzae B met kinkhoest en toxoiden
-nl	hemophilus influenzae B, combinations with toxoids	haemophilus influenzae B met toxoiden
-nl	hemophilus influenzae B, purified antigen conjugated	haemophilus influenzae B, gezuiverd geconjugeerd antigeen
-nl	hepatitis A immunoglobulin	hepatitis a-immunoglobuline
-nl	hepatitis A, inactivated, whole virus	hepatitis A, geinactiveerd, intact virus
-nl	hepatitis B immunoglobulin	hepatitis b-immunoglobuline
-nl	hepatitis B, purified antigen	hepatitis B, gezuiverd antigeen
-nl	hetacillin	hetacilline
-nl	imipenem and cilastatin	imipenem met enzymremmer
-nl	immunoglobulins, normal human, for extravascular adm,	immunoglobuline, normaal, extravasculair
-nl	immunoglobulins, normal human, for intravascular adm,	immunoglobuline, normaal, intravasculair
-nl	influenza, inactivated, split virus or surface antigen	influenza, gezuiverd antigeen
-nl	influenza, inactivated, whole virus	influenza, geinactiveerd, intact virus
-nl	inosine pranobex	inosiplex
-nl	isepamicin	isepamicine
-nl	isoconazole	isoconazol
-nl	isoniazid	isoniazide
-nl	isoniazid, combinations	isoniazide, combinatiepreparaten
-nl	itraconazole	itraconazol
-nl	josamycin	josamycine
-nl	kanamycin	kanamycine
-nl	ketoconazole	ketoconazol
-nl	levofloxacin	levofloxacine
-nl	lincomycin	lincomycine
-nl	lomefloxacin	lomefloxacine
-nl	lysozyme	lysozym
-nl	mandelic acid	amandelzuur
-nl	measles immunoglobulin	mazelenimmunoglobuline
-nl	measles, combinations with mumps and rubella, live attenuated	mazelen met bof en rubella, levend verzwakt
-nl	measles, combinations with mumps, live attenuated	mazelen met bof, levend verzwakt
-nl	measles, combinations with mumps, rubella and varicella, live attenuated	mazelen met bof, rubella en varicella, levend verzwakt
-nl	measles, combinations with rubella, live attenuated	mazelen met rubella, levend verzwakt
-nl	measles, live attenuated	mazelen, levend verzwakt
-nl	meningococcus A, purified polysaccharides antigen	meningokok A, gezuiverd polysaccharidenantigeen
-nl	meningococcus A,c, bivalent purified polysaccharides antigen	meningokok, 2 typen, gezuiverd polysaccharidenantigeen
-nl	meningococcus A,c,y,w-135, tetravalent purified polysaccharides antigen	meningokok, 4 typen, gezuiverd polysaccharidenantigeen
-nl	meningococcus B, outer membrane vesicle vaccine	meningokok B, buitenmembraanvaccin
-nl	meningococcus C, purified polysaccharides antigen conjugated	meningokok C, gezuiverd saccharidenantigeen geconjugeerd
-nl	metampicillin	metampicilline
-nl	meticillin	meticilline
-nl	metisazone	metisazon
-nl	metronidazole	metronidazol
-nl	mezlocillin	mezlocilline
-nl	micafungin	micafungine
-nl	miconazole	miconazol
-nl	midecamycin	midecamycine
-nl	miocamycin	miocamycine
-nl	moxifloxacin	moxifloxacine
-nl	mumps immunoglobulin	bofimmunoglobuline
-nl	mumps, live attenuated	bof, levend verzwakt
-nl	mupirocin	mupirocine
-nl	nalidixic acid	nalidixinezuur
-nl	neomycin	neomycine
-nl	netilmicin	netilmicine
-nl	nitrofurantoin	nitrofurantoine
-nl	norfloxacin	norfloxacine
-nl	novobiocin	novobiocine
-nl	nystatin	nystatine
-nl	ofloxacin	ofloxacine
-nl	oleandomycin	oleandomycine
-nl	ornidazole	ornidazol
-nl	other meningococcal monovalent purified polysaccharides antigen	meningokok, 1 type, gezuiverd polysaccaridenantigeen
-nl	other meningococcal polyvalent purified polysaccharides antigen	meningokok, meer typen, gezuiverd polysaccharidenantigeen
-nl	oxacillin	oxacilline
-nl	oxolinic acid	oxolinezuur
-nl	oxytetracycline, combinations	oxytetracycline, combinatiepreparaten
-nl	pazufloxacin	pazufloxacine
-nl	pefloxacin	pefloxacine
-nl	penamecillin	penamecilline
-nl	penicillins, combinations with other antibacterials	penicillines met andere antibacteriele middelen
-nl	pertussis immunoglobulin	kinkhoestimmunoglobuline
-nl	pertussis, inactivated, whole cell	pertussis, geinactiveerd, hele cel
-nl	pertussis, inactivated, whole cell, combinations with toxoids	pertussis, geinactiveerd hele cel, met toxoiden
-nl	pertussis, purified antigen	pertussis, gezuiverd antigeen
-nl	pertussis, purified antigen, combinations with toxoids	pertussis, gezuiverd antigeen, met toxoiden
-nl	pheneticillin	feneticilline
-nl	phenoxymethylpenicillin	fenoxymethylpenicilline
-nl	pipemidic acid	pipemidinezuur
-nl	piperacillin	piperacilline
-nl	piperacillin and beta-lactamase inhibitor	piperacilline met enzymremmer
-nl	piromidic acid	piromidinezuur
-nl	pivampicillin	pivampicilline
-nl	plague, inactivated, whole cell	yersinia pestis, geinactiveerd, hele cel
-nl	pneumococcus, purified polysaccharides antigen	pneumokok, gezuiverd polysaccharidenantigeen
-nl	pneumococcus, purified polysaccharides antigen conjugated	pneumokok, gezuiverd geconjugeerd polysaccharidenantigeen
-nl	poliomyelitis oral, monovalent, live attenuated	poliomyelitis, oraal, 1 type, levend verzwakt
-nl	poliomyelitis oral, trivalent, live attenuated	poliomyelitis, oraal, 3 typen, levend verzwakt
-nl	poliomyelitis, trivalent, inactivated, whole virus	poliomyelitis, 3 typen, geinactiveerd, intact virus
-nl	polymyxin B	polymyxine B
-nl	posaconazole	posaconazol
-nl	pristinamycin	pristinamycine
-nl	procaine benzylpenicillin	benzylpenicillineprocaine
-nl	propicillin	propicilline
-nl	prulifloxacin	prulifloxacine
-nl	quinupristin/dalfopristin	quinupristine/dalfopristine
-nl	rabies immunoglobulin	rabiesimmunoglobuline
-nl	rabies serum	serum tegen rabies
-nl	rabies, inactivated, whole virus	rabies, geinactiveerd, intact virus
-nl	ribostamycin	ribostamycine
-nl	rifabutin	rifabutine
-nl	rifampicin	rifampicine
-nl	rifampicin and isoniazid	rifampicine met isoniazide
-nl	rifampicin, pyrazinamide and isoniazid	rifampicine met pyrazinamide en isoniazide
-nl	rifampicin, pyrazinamide, ethambutol and isoniazid	rifampicine met pyrazinamide, ethambutol en isoniazide
-nl	rifamycin	rifamycine
-nl	rifaximin	rifaximine
-nl	rokitamycin	rokitamycine
-nl	rosoxacin	rosoxacine
-nl	rota virus, live attenuated	rotavirus, levend verzwakt
-nl	roxithromycin	roxitromycine
-nl	rubella immunoglobulin	rubella-immunoglobuline
-nl	rubella, combinations with mumps, live attenuated	rubella met bof, levend verzwakt
-nl	rubella, live attenuated	rubella, levend verzwakt
-nl	rufloxacin	rufloxacine
-nl	sisomicin	sisomicine
-nl	snake venom antiserum	serum tegen slangebeet
-nl	sodium aminosalicylate	aminosalicylzuur,4- (na-zout)
-nl	sparfloxacin	sparfloxacine
-nl	spectinomycin	spectinomycine
-nl	spiramycin	spiramycine
-nl	spiramycin and metronidazole	spiramycine met andere antibacteriele middelen
-nl	staphylococcus immunoglobulin	stafylokokkenimmunoglobuline
-nl	streptoduocin	streptoduocine
-nl	streptomycin	streptomycine
-nl	streptomycin and isoniazid	streptomycine met isoniazide
-nl	sulbenicillin	sulbenicilline
-nl	sulfadiazine and tetroxoprim	sulfadiazine met tetroxoprim
-nl	sulfadiazine and trimethoprim	sulfadiazine met trimethoprim
-nl	sulfadimidine and trimethoprim	sulfadimidine met trimethoprim
-nl	sulfafurazole	sulfafurazol
-nl	sulfaisodimidine	sulfisomidine
-nl	sulfalene	sulfaleen
-nl	sulfamazone	sulfamazon
-nl	sulfamerazine and trimethoprim	sulfamerazine met trimethoprim
-nl	sulfamethizole	sulfamethizol
-nl	sulfamethoxazole	sulfamethoxazol
-nl	sulfamethoxazole and trimethoprim	sulfamethoxazol met trimethoprim
-nl	sulfametoxydiazine	sulfamethoxydiazine
-nl	sulfametrole and trimethoprim	sulfametrol met trimethoprim
-nl	sulfamoxole	sulfamoxol
-nl	sulfamoxole and trimethoprim	sulfamoxol met trimethoprim
-nl	sulfaperin	sulfaperine
-nl	sulfaphenazole	sulfafenazol
-nl	sulfathiazole	sulfathiazol
-nl	sulfathiourea	sulfathioureum
-nl	sulfonamides, combinations with other antibacterials (excl, trimethoprim)	sulfonamiden met andere antibacteriele middelen (exc trim)
-nl	sultamicillin	sultamicilline
-nl	talampicillin	talampicilline
-nl	teicoplanin	teicoplanine
-nl	telithromycin	telitromycine
-nl	temafloxacin	temafloxacine
-nl	temocillin	temocilline
-nl	tenofovir disoproxil	tenofovir
-nl	terizidone	terizidon
-nl	tetanus antitoxin	serum tegen tetanus
-nl	tetanus immunoglobulin	tetanusimmunoglobuline
-nl	tetanus toxoid	tetanustoxoide
-nl	tetanus toxoid, combinations with diphtheria toxoid	tetanustoxoide met difterietoxoide
-nl	tetanus toxoid, combinations with tetanus immunoglobulin	tetanustoxoide met tetanusimmunoglobuline
-nl	thiamphenicol	thiamfenicol
-nl	thiamphenicol, combinations	thiamfenicol combinatiepreparaten
-nl	thioacetazone and isoniazid	thioacetazon met isoniazide
-nl	ticarcillin	ticarcilline
-nl	ticarcillin and beta-lactamase inhibitor	ticarcilline met enzymremmer
-nl	tinidazole	tinidazol
-nl	tobramycin	tobramycine
-nl	troleandomycin	troleandomycine
-nl	trovafloxacin	trovafloxacine
-nl	tuberculosis, live attenuated	bacillus calmette guerin, levend verzwakt
-nl	typhoid, combinations with paratyphi types	buiktyfus met paratyfus-typen
-nl	typhoid, inactivated, whole cell	buiktyfus, geinactiveerd, hele cel
-nl	typhoid, oral, live attenuated	buiktyfus, oraal, levend verzwakt
-nl	typhoid, purified polysaccharide antigen	buiktyfus, gezuiverd polysaccharidenantigeen
-nl	typhoid-hepatitis A	buiktyfus-hepatitis A
-nl	typhus exanthematicus, inactivated, whole cell	vlektyfus, geinactiveerd, hele cel
-nl	vaccinia immunoglobulin	vaccinia-immunoglobuline
-nl	vancomycin	vancomycine
-nl	varicella, live attenuated	varicella, levend verzwakt
-nl	varicella/zoster immunoglobulin	varicella-zoster-immunoglobuline
-nl	voriconazole	voriconazol
-nl	yellow fever, live attenuated	gele koorts, levend verzwakt
+nl	Clindamycin	Clindamycine
+nl	Clometocillin	Clometocilline
+nl	Clotrimazole	Clotrimazol
+nl	Cloxacillin	Cloxacilline
+nl	Colistin	Colistine
+nl	Dapsone	Dapson
+nl	Daptomycin	Daptomycine
+nl	Dibekacin	Dibekacine
+nl	Dicloxacillin	Dicloxacilline
+nl	Dirithromycin	Diritromycine
+nl	Econazole	Econazol
+nl	Enoxacin	Enoxacine
+nl	Epicillin	Epicilline
+nl	Erythromycin	Erytromycine
+nl	Ethambutol/isoniazid	Ethambutol/isoniazide
+nl	Fleroxacin	Fleroxacine
+nl	Flucloxacillin	Flucloxacilline
+nl	Fluconazole	Fluconazol
+nl	Flucytosine	Fluorocytosine
+nl	Flurithromycin	Fluritromycine
+nl	Fosfomycin	Fosfomycine
+nl	Fusidic acid	Fusidinezuur
+nl	Gatifloxacin	Gatifloxacine
+nl	Gemifloxacin	Gemifloxacine
+nl	Gentamicin	Gentamicine
+nl	Grepafloxacin	Grepafloxacine
+nl	Hachimycin	Hachimycine
+nl	Hetacillin	Hetacilline
+nl	Imipenem/cilastatin	Imipenem/enzymremmer
+nl	Inosine pranobex	Inosiplex
+nl	Isepamicin	Isepamicine
+nl	Isoconazole	Isoconazol
+nl	Isoniazid	Isoniazide
+nl	Itraconazole	Itraconazol
+nl	Josamycin	Josamycine
+nl	Kanamycin	Kanamycine
+nl	Ketoconazole	Ketoconazol
+nl	Levofloxacin	Levofloxacine
+nl	Lincomycin	Lincomycine
+nl	Lomefloxacin	Lomefloxacine
+nl	Lysozyme	Lysozym
+nl	Mandelic acid	Amandelzuur
+nl	Metampicillin	Metampicilline
+nl	Meticillin	Meticilline
+nl	Metisazone	Metisazon
+nl	Metronidazole	Metronidazol
+nl	Mezlocillin	Mezlocilline
+nl	Micafungin	Micafungine
+nl	Miconazole	Miconazol
+nl	Midecamycin	Midecamycine
+nl	Miocamycin	Miocamycine
+nl	Moxifloxacin	Moxifloxacine
+nl	Mupirocin	Mupirocine
+nl	Nalidixic acid	Nalidixinezuur
+nl	Neomycin	Neomycine
+nl	Netilmicin	Netilmicine
+nl	Nitrofurantoin	Nitrofurantoine
+nl	Norfloxacin	Norfloxacine
+nl	Novobiocin	Novobiocine
+nl	Nystatin	Nystatine
+nl	Ofloxacin	Ofloxacine
+nl	Oleandomycin	Oleandomycine
+nl	Ornidazole	Ornidazol
+nl	Oxacillin	Oxacilline
+nl	Oxolinic acid	Oxolinezuur
+nl	Oxytetracycline	Oxytetracycline
+nl	Pazufloxacin	Pazufloxacine
+nl	Pefloxacin	Pefloxacine
+nl	Penamecillin	Penamecilline
+nl	Penicillin	Penicilline
+nl	Pheneticillin	Feneticilline
+nl	Phenoxymethylpenicillin	Fenoxymethylpenicilline
+nl	Pipemidic acid	Pipemidinezuur
+nl	Piperacillin	Piperacilline
+nl	Piperacillin/beta-lactamase inhibitor	Piperacilline/enzymremmer
+nl	Piromidic acid	Piromidinezuur
+nl	Pivampicillin	Pivampicilline
+nl	Polymyxin B	Polymyxine B
+nl	Posaconazole	Posaconazol
+nl	Pristinamycin	Pristinamycine
+nl	Procaine benzylpenicillin	Benzylpenicillineprocaine
+nl	Propicillin	Propicilline
+nl	Prulifloxacin	Prulifloxacine
+nl	Quinupristin/dalfopristin	Quinupristine/dalfopristine
+nl	Ribostamycin	Ribostamycine
+nl	Rifabutin	Rifabutine
+nl	Rifampicin	Rifampicine
+nl	Rifampicin, pyrazinamide, ethambutol/isoniazid	Rifampicine/pyrazinamide, ethambutol en isoniazide
+nl	Rifampicin, pyrazinamide/isoniazid	Rifampicine/pyrazinamide en isoniazide
+nl	Rifampicin/isoniazid	Rifampicine/isoniazide
+nl	Rifamycin	Rifamycine
+nl	Rifaximin	Rifaximine
+nl	Rokitamycin	Rokitamycine
+nl	Rosoxacin	Rosoxacine
+nl	Roxithromycin	Roxitromycine
+nl	Rufloxacin	Rufloxacine
+nl	Sisomicin	Sisomicine
+nl	Sodium aminosalicylate	Aminosalicylzuur,4- (na-zout)
+nl	Sparfloxacin	Sparfloxacine
+nl	Spectinomycin	Spectinomycine
+nl	Spiramycin	Spiramycine
+nl	Spiramycin/metronidazole	Spiramycine/andere antibacteriele middelen
+nl	Staphylococcus immunoglobulin	Stafylokokkenimmunoglobuline
+nl	Streptoduocin	Streptoduocine
+nl	Streptomycin	Streptomycine
+nl	Streptomycin/isoniazid	Streptomycine/isoniazide
+nl	Sulbenicillin	Sulbenicilline
+nl	Sulfadiazine/tetroxoprim	Sulfadiazine/tetroxoprim
+nl	Sulfadiazine/trimethoprim	Sulfadiazine/trimethoprim
+nl	Sulfadimidine/trimethoprim	Sulfadimidine/trimethoprim
+nl	Sulfafurazole	Sulfafurazol
+nl	Sulfaisodimidine	Sulfisomidine
+nl	Sulfalene	Sulfaleen
+nl	Sulfamazone	Sulfamazon
+nl	Sulfamerazine/trimethoprim	Sulfamerazine/trimethoprim
+nl	Sulfamethizole	Sulfamethizol
+nl	Sulfamethoxazole	Sulfamethoxazol
+nl	Sulfamethoxazole/trimethoprim	Sulfamethoxazol/trimethoprim
+nl	Sulfametoxydiazine	Sulfamethoxydiazine
+nl	Sulfametrole/trimethoprim	Sulfametrol/trimethoprim
+nl	Sulfamoxole	Sulfamoxol
+nl	Sulfamoxole/trimethoprim	Sulfamoxol/trimethoprim
+nl	Sulfaperin	Sulfaperine
+nl	Sulfaphenazole	Sulfafenazol
+nl	Sulfathiazole	Sulfathiazol
+nl	Sulfathiourea	Sulfathioureum
+nl	Sultamicillin	Sultamicilline
+nl	Talampicillin	Talampicilline
+nl	Teicoplanin	Teicoplanine
+nl	Telithromycin	Telitromycine
+nl	Temafloxacin	Temafloxacine
+nl	Temocillin	Temocilline
+nl	Tenofovir disoproxil	Tenofovir
+nl	Terizidone	Terizidon
+nl	Thiamphenicol	Thiamfenicol
+nl	Thiamphenicol	Thiamfenicol combinatiepreparaten
+nl	Thioacetazone/isoniazid	Thioacetazon/isoniazide
+nl	Ticarcillin	Ticarcilline
+nl	Ticarcillin/beta-lactamase inhibitor	Ticarcilline/enzymremmer
+nl	Tinidazole	Tinidazol
+nl	Tobramycin	Tobramycine
+nl	Troleandomycin	Troleandomycine
+nl	Trovafloxacin	Trovafloxacine
+nl	Vancomycin	Vancomycine
+nl	Voriconazole	Voriconazol

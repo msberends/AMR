@@ -321,15 +321,12 @@ mdro <- function(x,
         & !ab_missing(CIP)
         & !ab_missing(CAZ)
         & !ab_missing(TZP) ) {
-      tbl_ <- tbl_ %>% mutate(
-        psae = 0,
-        psae = ifelse(MEM == "R" | IPM == "R", psae + 1, psae),
-        psae = ifelse(GEN == "R" & TOB == "R", psae + 1, psae),
-        psae = ifelse(CIP == "R", psae + 1, psae),
-        psae = ifelse(CAZ == "R", psae + 1, psae),
-        psae = ifelse(TZP == "R", psae + 1, psae),
-        psae = ifelse(is.na(psae), 0, psae)
-      )
+      tbl_$psae <- 0
+      tbl_[which(tbl_[, MEM] == "R" | tbl_[, IPM] == "R"), "psae"] <- 1 + tbl_[which(tbl_[, MEM] == "R" | tbl_[, IPM] == "R"), "psae"]
+      tbl_[which(tbl_[, GEN] == "R" & tbl_[, TOB] == "R"), "psae"] <- 1 + tbl_[which(tbl_[, GEN] == "R" & tbl_[, TOB] == "R"), "psae"]
+      tbl_[which(tbl_[, CIP] == "R"), "psae"] <- 1 + tbl_[which(tbl_[, CIP] == "R"), "psae"]
+      tbl_[which(tbl_[, CAZ] == "R"), "psae"] <- 1 + tbl_[which(tbl_[, CAZ] == "R"), "psae"]
+      tbl_[which(tbl_[, TZP] == "R"), "psae"] <- 1 + tbl_[which(tbl_[, TZP] == "R"), "psae"]
     } else {
       tbl_$psae <- 0
     }

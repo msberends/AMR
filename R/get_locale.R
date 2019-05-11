@@ -26,7 +26,7 @@
 #'
 #' \code{system.file("translations.tsv", package = "AMR")}
 #'
-#' This file will be read by all functions where a translated output can be desired, like all \code{\link{mo_property}} functions (\code{\link{mo_fullname}}, \code{\link{mo_type}}, etc.). Please suggest your own translations \href{https://gitlab.com/msberends/AMR/issues/new?issue[title]=Translation suggestion}{by creating a new issue on our repository}.
+#' This file will be read by all functions where a translated output can be desired, like all \code{\link{mo_property}} functions (\code{\link{mo_fullname}}, \code{\link{mo_type}}, etc.). Please suggest your own translations \href{https://gitlab.com/msberends/AMR/issues/new?issue[title]=Translation\%20suggestion}{by creating a new issue on our repository}.
 #'
 #' The system language will be used at default, if supported, using \code{\link{get_locale}}. The system language can be overwritten with \code{\link{getOption}("AMR_locale")}.
 #' @inheritSection AMR Read more on our website!

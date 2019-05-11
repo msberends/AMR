@@ -22,8 +22,8 @@ On our website \url{https://msberends.gitlab.io/AMR} you can find \href{https://
 }
 
 \examples{
-as.atc("meropenem")
-atc_name("J01DH02")
+as.ab("meropenem")
+ab_name("J01DH02")
 
-atc_tradenames("flucloxacillin")
+ab_tradenames("flucloxacillin")
 }

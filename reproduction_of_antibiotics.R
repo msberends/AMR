@@ -285,7 +285,7 @@ antibiotics[which(antibiotics$ab == "LTM"), "abbreviations"][[1]] <- list(c("MOX
 antibiotics <- filter(antibiotics, ab != "MOX")
 # ESBL E-test codes:
 antibiotics[which(antibiotics$ab == "CCV"), "abbreviations"][[1]] <- list(c("xtzl"))
-antibiotics[which(antibiotics$ab == "CAZ"), "abbreviations"][[1]] <- list(c(antibiotics[which(antibiotics$ab == "CAZ"), "abbreviations"][[1]], "xtz"))
+antibiotics[which(antibiotics$ab == "CAZ"), "abbreviations"][[1]] <- list(c(antibiotics[which(antibiotics$ab == "CAZ"), "abbreviations"][[1]], "xtz", "cefta"))
 antibiotics[which(antibiotics$ab == "CPC"), "abbreviations"][[1]] <- list(c("xpml"))
 antibiotics[which(antibiotics$ab == "FEP"), "abbreviations"][[1]] <- list(c(antibiotics[which(antibiotics$ab == "FEP"), "abbreviations"][[1]], "xpm"))
 antibiotics[which(antibiotics$ab == "CTC"), "abbreviations"][[1]] <- list(c("xctl"))
@@ -295,3 +295,4 @@ class(antibiotics$ab) <- "ab"
 class(antibiotics$atc) <- "atc"
 
 usethis::use_data(antibiotics, overwrite = TRUE)
+rm(antibiotics)
