@@ -114,7 +114,7 @@ All classes will be printed into the header (default is `FALSE` when using markd
 
 ```{r, echo = TRUE}
 septic_patients %>%
-  freq(amox, header = TRUE)
+  freq(AMX, header = TRUE)
 ```
 
 ## Frequencies of dates
@@ -148,7 +148,7 @@ With the `na.rm` parameter (defaults to `TRUE`, but they will always be shown in
 
 ```{r, echo = TRUE}
 septic_patients %>%
-  freq(amox, na.rm = FALSE)
+  freq(AMX, na.rm = FALSE)
 ```
 
 ### Parameter `row.names`
