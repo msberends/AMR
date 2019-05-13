@@ -31,7 +31,8 @@
 #' @param data a \code{data.frame} containing columns with class \code{rsi} (see \code{\link{as.rsi}})
 #' @param translate_ab a column name of the \code{\link{antibiotics}} data set to translate the antibiotic abbreviations to, using \code{\link{ab_property}}
 #' @inheritParams ab_property
-#' @param combine_IR a logical to indicate whether all values of I and R must be merged into one, so the output only consists of S vs. IR (susceptible vs. non-susceptible)
+#' @param combine_SI a logical to indicate whether all values of I and S must be merged into one, so the output only consists of S+I vs. R (susceptible vs. resistant). This used to be the parameter \code{combine_IR}, but this now follows the redefinition by EUCAST about the interpretion of I (increased exposure) in 2019, see below. Default is now \code{TRUE}.
+#' @inheritSection as.rsi Interpretation of S, I and R
 #' @details \strong{Remember that you should filter your table to let it contain only first isolates!} Use \code{\link{first_isolate}} to determine them in your data set.
 #'
 #' These functions are not meant to count isolates, but to calculate the portion of resistance/susceptibility. Use the \code{\link[AMR]{count}} functions to count isolates. \emph{Low counts can infuence the outcome - these \code{portion} functions may camouflage this, since they only return the portion albeit being dependent on the \code{minimum} parameter.}
@@ -220,69 +221,16 @@ portion_df <- function(data,
                        language = get_locale(),
                        minimum = 30,
                        as_percent = FALSE,
+                       combine_SI = TRUE,
                        combine_IR = FALSE) {
 
-  if (!"data.frame" %in% class(data)) {
-    stop("`portion_df` must be called on a data.frame")
-  }
-
-  if (data %>% select_if(is.rsi) %>% ncol() == 0) {
-    stop("No columns with class 'rsi' found. See ?as.rsi.")
-  }
-
-  if (as.character(translate_ab) %in% c("TRUE", "official")) {
-    translate_ab <- "name"
-  }
-
-  resS <- summarise_if(.tbl = data,
-                       .predicate = is.rsi,
-                       .funs = portion_S,
-                       minimum = minimum,
-                       as_percent = as_percent) %>%
-    mutate(Interpretation = "S") %>%
-    select(Interpretation, everything())
-
-  if (combine_IR == FALSE) {
-    resI <- summarise_if(.tbl = data,
-                         .predicate = is.rsi,
-                         .funs = portion_I,
-                         minimum = minimum,
-                         as_percent = as_percent) %>%
-      mutate(Interpretation = "I") %>%
-      select(Interpretation, everything())
-
-    resR <- summarise_if(.tbl = data,
-                         .predicate = is.rsi,
-                         .funs = portion_R,
-                         minimum = minimum,
-                         as_percent = as_percent) %>%
-      mutate(Interpretation = "R") %>%
-      select(Interpretation, everything())
-
-    data.groups <- group_vars(data)
-
-    res <- bind_rows(resS, resI, resR) %>%
-      mutate(Interpretation = factor(Interpretation, levels = c("R", "I", "S"), ordered = TRUE)) %>%
-      tidyr::gather(Antibiotic, Value, -Interpretation, -data.groups)
-  } else {
-    resIR <- summarise_if(.tbl = data,
-                          .predicate = is.rsi,
-                          .funs = portion_IR,
-                          minimum = minimum,
-                          as_percent = as_percent) %>%
-      mutate(Interpretation = "IR") %>%
-      select(Interpretation, everything())
-
-    data.groups <- group_vars(data)
-
-    res <- bind_rows(resS, resIR) %>%
-      mutate(Interpretation = factor(Interpretation, levels = c("IR", "S"), ordered = TRUE)) %>%
-      tidyr::gather(Antibiotic, Value, -Interpretation, -data.groups)
-  }
-
-  if (!translate_ab == FALSE) {
-    res <- res %>% mutate(Antibiotic = ab_property(Antibiotic, property = translate_ab, language = language))
-  }
-
-  res
+  rsi_calc_df(type = "portion",
+              data = data,
+              translate_ab = translate_ab,
+              language = language,
+              minimum = minimum,
+              as_percent = as_percent,
+              combine_SI = combine_SI,
+              combine_IR = combine_IR,
+              combine_SI_missing = missing(combine_SI))
 }

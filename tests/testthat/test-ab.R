@@ -36,6 +36,9 @@ test_that("as.ab works", {
 
   expect_identical(class(as.ab("amox")), "ab")
   expect_identical(class(pull(antibiotics, ab)), "ab")
+  expect_true(is.ab(as.ab("amox")))
+  expect_output(print(as.ab("amox")))
+  expect_output(print(data.frame(a = as.ab("amox"))))
 
   expect_warning(as.ab("Z00ZZ00")) # not yet available in data set
   expect_warning(as.ab("UNKNOWN"))

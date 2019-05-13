@@ -12,13 +12,15 @@
 \usage{
 ggplot_rsi(data, position = NULL, x = "Antibiotic",
   fill = "Interpretation", facet = NULL, breaks = seq(0, 1, 0.1),
-  limits = NULL, translate_ab = "name", language = get_locale(),
-  fun = count_df, nrow = NULL, datalabels = TRUE,
-  datalabels.size = 3, datalabels.colour = "grey15", ...)
+  limits = NULL, translate_ab = "name", combine_SI = TRUE,
+  combine_IR = FALSE, language = get_locale(), fun = count_df,
+  nrow = NULL, datalabels = TRUE, datalabels.size = 3,
+  datalabels.colour = "grey15", ...)
 
 geom_rsi(position = NULL, x = c("Antibiotic", "Interpretation"),
   fill = "Interpretation", translate_ab = "name",
-  language = get_locale(), fun = count_df, ...)
+  language = get_locale(), combine_SI = TRUE, combine_IR = FALSE,
+  fun = count_df, ...)
 
 facet_rsi(facet = c("Interpretation", "Antibiotic"), nrow = NULL)
 
@@ -46,9 +48,11 @@ labels_rsi_count(position = NULL, x = "Antibiotic",
 
 \item{limits}{numeric vector of length two providing limits of the scale, use \code{NA} to refer to the existing minimum or maximum}
 
-\item{translate_ab}{a column name of the \code{\link{antibiotics}} data set to translate the antibiotic abbreviations into, using \code{\link{ab_name}}. Default behaviour is to translate to official names according to the WHO. Use \code{translate_ab = FALSE} to disable translation.}
+\item{translate_ab}{a column name of the \code{\link{antibiotics}} data set to translate the antibiotic abbreviations to, using \code{\link{ab_property}}}
 
-\item{language}{the language used for translation of antibiotic names}
+\item{combine_SI}{a logical to indicate whether all values of I and S must be merged into one, so the output only consists of S+I vs. R (susceptible vs. resistant). This used to be the parameter \code{combine_IR}, but this now follows the redefinition by EUCAST about the interpretion of I (increased exposure) in 2019, see below. Default is now \code{TRUE}.}
+
+\item{language}{language of the returned text, defaults to system language (see \code{\link{get_locale}}) and can also be set with \code{\link{getOption}("AMR_locale")}. Use \code{language = NULL} or \code{language = ""} to prevent translation.}
 
 \item{fun}{function to transform \code{data}, either \code{\link{count_df}} (default) or \code{\link{portion_df}}}
 

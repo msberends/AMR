@@ -101,14 +101,19 @@ test_that("portions works", {
   # portion_df
   expect_equal(
     septic_patients %>% select(AMX) %>% portion_df() %>% pull(Value),
-    c(septic_patients$AMX %>% portion_S(),
-      septic_patients$AMX %>% portion_I(),
+    c(septic_patients$AMX %>% portion_SI(),
       septic_patients$AMX %>% portion_R())
   )
   expect_equal(
     septic_patients %>% select(AMX) %>% portion_df(combine_IR = TRUE) %>% pull(Value),
     c(septic_patients$AMX %>% portion_S(),
       septic_patients$AMX %>% portion_IR())
+  )
+  expect_equal(
+    septic_patients %>% select(AMX) %>% portion_df(combine_SI = FALSE) %>% pull(Value),
+    c(septic_patients$AMX %>% portion_S(),
+      septic_patients$AMX %>% portion_I(),
+      septic_patients$AMX %>% portion_R())
   )
 
 

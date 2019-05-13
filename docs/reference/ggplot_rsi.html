@@ -243,13 +243,15 @@
 
     <pre class="usage"><span class='fu'>ggplot_rsi</span>(<span class='no'>data</span>, <span class='kw'>position</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>x</span> <span class='kw'>=</span> <span class='st'>"Antibiotic"</span>,
   <span class='kw'>fill</span> <span class='kw'>=</span> <span class='st'>"Interpretation"</span>, <span class='kw'>facet</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>breaks</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/seq'>seq</a></span>(<span class='fl'>0</span>, <span class='fl'>1</span>, <span class='fl'>0.1</span>),
-  <span class='kw'>limits</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>translate_ab</span> <span class='kw'>=</span> <span class='st'>"name"</span>, <span class='kw'>language</span> <span class='kw'>=</span> <span class='fu'><a href='translate.html'>get_locale</a></span>(),
-  <span class='kw'>fun</span> <span class='kw'>=</span> <span class='no'>count_df</span>, <span class='kw'>nrow</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>datalabels</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>datalabels.size</span> <span class='kw'>=</span> <span class='fl'>3</span>, <span class='kw'>datalabels.colour</span> <span class='kw'>=</span> <span class='st'>"grey15"</span>, <span class='no'>...</span>)
+  <span class='kw'>limits</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>translate_ab</span> <span class='kw'>=</span> <span class='st'>"name"</span>, <span class='kw'>combine_SI</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>combine_IR</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>language</span> <span class='kw'>=</span> <span class='fu'><a href='translate.html'>get_locale</a></span>(), <span class='kw'>fun</span> <span class='kw'>=</span> <span class='no'>count_df</span>,
+  <span class='kw'>nrow</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>datalabels</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>datalabels.size</span> <span class='kw'>=</span> <span class='fl'>3</span>,
+  <span class='kw'>datalabels.colour</span> <span class='kw'>=</span> <span class='st'>"grey15"</span>, <span class='no'>...</span>)
 
 <span class='fu'>geom_rsi</span>(<span class='kw'>position</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>x</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"Antibiotic"</span>, <span class='st'>"Interpretation"</span>),
   <span class='kw'>fill</span> <span class='kw'>=</span> <span class='st'>"Interpretation"</span>, <span class='kw'>translate_ab</span> <span class='kw'>=</span> <span class='st'>"name"</span>,
-  <span class='kw'>language</span> <span class='kw'>=</span> <span class='fu'><a href='translate.html'>get_locale</a></span>(), <span class='kw'>fun</span> <span class='kw'>=</span> <span class='no'>count_df</span>, <span class='no'>...</span>)
+  <span class='kw'>language</span> <span class='kw'>=</span> <span class='fu'><a href='translate.html'>get_locale</a></span>(), <span class='kw'>combine_SI</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>combine_IR</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>fun</span> <span class='kw'>=</span> <span class='no'>count_df</span>, <span class='no'>...</span>)
 
 <span class='fu'>facet_rsi</span>(<span class='kw'>facet</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"Interpretation"</span>, <span class='st'>"Antibiotic"</span>), <span class='kw'>nrow</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)
 
@@ -295,11 +297,15 @@
     </tr>
     <tr>
       <th>translate_ab</th>
-      <td><p>a column name of the <code><a href='antibiotics.html'>antibiotics</a></code> data set to translate the antibiotic abbreviations into, using <code><a href='ab_property.html'>ab_name</a></code>. Default behaviour is to translate to official names according to the WHO. Use <code>translate_ab = FALSE</code> to disable translation.</p></td>
+      <td><p>a column name of the <code><a href='antibiotics.html'>antibiotics</a></code> data set to translate the antibiotic abbreviations to, using <code><a href='ab_property.html'>ab_property</a></code></p></td>
+    </tr>
+    <tr>
+      <th>combine_SI</th>
+      <td><p>a logical to indicate whether all values of I and S must be merged into one, so the output only consists of S+I vs. R (susceptible vs. resistant). This used to be the parameter <code>combine_IR</code>, but this now follows the redefinition by EUCAST about the interpretion of I (increased exposure) in 2019, see below. Default is now <code>TRUE</code>.</p></td>
     </tr>
     <tr>
       <th>language</th>
-      <td><p>the language used for translation of antibiotic names</p></td>
+      <td><p>language of the returned text, defaults to system language (see <code><a href='translate.html'>get_locale</a></code>) and can also be set with <code><a href='https://www.rdocumentation.org/packages/base/topics/options'>getOption</a>("AMR_locale")</code>. Use <code>language = NULL</code> or <code>language = ""</code> to prevent translation.</p></td>
     </tr>
     <tr>
       <th>fun</th>

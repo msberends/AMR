@@ -4,14 +4,17 @@
 \alias{guess_ab_col}
 \title{Guess antibiotic column}
 \usage{
-guess_ab_col(tbl = NULL, col = NULL, verbose = FALSE)
+guess_ab_col(x = NULL, search_string = NULL, verbose = FALSE)
 }
 \arguments{
-\item{tbl}{a \code{data.frame}}
+\item{x}{a \code{data.frame}}
 
-\item{col}{a character to look for}
+\item{search_string}{a text to search \code{x} for}
 
 \item{verbose}{a logical to indicate whether additional info should be printed}
+}
+\value{
+A column name of \code{x}, or \code{NULL} when no result is found.
 }
 \description{
 This tries to find a column name in a data set based on information from the \code{\link{antibiotics}} data set. Also supports WHONET abbreviations. You can look for an antibiotic (trade) name or abbreviation and it will search the \code{data.frame} for any column containing a name or ATC code of that antibiotic.
@@ -31,7 +34,7 @@ guess_ab_col(df, "J01AA07") # ATC code of tetracycline
 # [1] "tetr"
 
 guess_ab_col(df, "J01AA07", verbose = TRUE)
-# using column `tetr` for col "J01AA07"
+# Note: Using column `tetr` as input for "J01AA07".
 # [1] "tetr"
 
 # WHONET codes

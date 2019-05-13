@@ -19,22 +19,21 @@
 # Visit our website for more info: https://msberends.gitlab.io/AMR.    #
 # ==================================================================== #
 
-#' WHOCC: WHO Collaborating Centre for Drug Statistics Methodology
-#'
-#' All antimicrobial drugs and their official names, ATC codes, ATC groups and defined daily dose (DDD) are included in this package, using the WHO Collaborating Centre for Drug Statistics Methodology.
-#' @section WHOCC:
-#' \if{html}{\figure{logo_who.png}{options: height=60px style=margin-bottom:5px} \cr}
-#' This package contains \strong{all ~450 antimicrobial drugs} and their Anatomical Therapeutic Chemical (ATC) codes, ATC groups and Defined Daily Dose (DDD) from the World Health Organization Collaborating Centre for Drug Statistics Methodology (WHOCC, \url{https://www.whocc.no}) and the Pharmaceuticals Community Register of the European Commission (\url{http://ec.europa.eu/health/documents/community-register/html/atc.htm}).
-#'
-#' These have become the gold standard for international drug utilisation monitoring and research.
-#'
-#' The WHOCC is located in Oslo at the Norwegian Institute of Public Health and funded by the Norwegian government. The European Commission is the executive of the European Union and promotes its general interest.
-#' @inheritSection AMR Read more on our website!
-#' @name WHOCC
-#' @rdname WHOCC
-#' @examples
-#' as.ab("meropenem")
-#' ab_name("J01DH02")
-#'
-#' ab_tradenames("flucloxacillin")
-NULL
+context("ab.R")
+
+test_that("as.atc works", {
+  expect_identical(class(as.atc("amox")), "atc")
+  expect_true(is.atc(as.atc("amox")))
+  expect_output(print(as.atc("amox")))
+  expect_output(print(data.frame(a = as.atc("amox"))))
+
+  expect_identical(class(pull(antibiotics, atc)), "atc")
+
+  expect_warning(as.atc("Z00ZZ00")) # not yet availatcle in data set
+  expect_warning(as.atc("UNKNOWN"))
+
+  expect_output(print(as.atc("amox")))
+
+
+
+})

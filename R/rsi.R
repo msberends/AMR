@@ -35,6 +35,20 @@
 #' After using \code{as.rsi}, you can use \code{\link{eucast_rules}} to (1) apply inferred susceptibility and resistance based on results of other antibiotics and (2) apply intrinsic resistance based on taxonomic properties of a microorganism.
 #'
 #' The function \code{is.rsi.eligible} returns \code{TRUE} when a columns contains at most 5\% invalid antimicrobial interpretations (not S and/or I and/or R), and \code{FALSE} otherwise. The threshold of 5\% can be set with the \code{threshold} parameter.
+#' @section Interpretation of S, I and R:
+#' In 2019, EUCAST has decided to change the definitions of susceptibility testing categories S, I and R as shown below. Results of several consultations on the new definitions are available on the EUCAST website under "Consultations".
+#'
+#' \itemize{
+#'   \item{\strong{S}}{Susceptible, standard dosing regimen: A microorganism is categorised as "Susceptible, standard dosing regimen", when there is a high likelihood of therapeutic success using a standard dosing regimen of the agent.}
+#'   \item{\strong{I}}{Susceptible, increased exposure: A microorganism is categorised as "Susceptible, Increased exposure" when there is a high likelihood of therapeutic success because exposure to the agent is increased by adjusting the dosing regimen or by its concentration at the site of infection.}
+#'   \item{\strong{R}}{Resistant: A microorganism is categorised as "Resistant" when there is a high likelihood of therapeutic failure even when there is increased exposure.}
+#' }
+#'
+#' Exposure is a function of how the mode of administration, dose, dosing interval, infusion time, as well as distribution and excretion of the antimicrobial agent will influence the infecting organism at the site of infection.
+#'
+#' Source: \url{http://www.eucast.org/newsiandr/}.
+#'
+#' \strong{This AMR package honours this new insight.}
 #' @return Ordered factor with new class \code{rsi}
 #' @keywords rsi
 #' @export
@@ -182,17 +196,17 @@ exec_as.rsi <- function(method, x, mo, ab, guideline) {
   mo_becker <- as.mo(mo, Becker = TRUE)
   mo_lancefield <- as.mo(mo, Lancefield = TRUE)
 
-  guideline <- toupper(guideline)
-  if (guideline %in% c("CLSI", "EUCAST")) {
-    guideline <- AMR::rsi_translation %>%
-      filter(guideline %like% guideline) %>%
+  guideline_param <- toupper(guideline)
+  if (guideline_param %in% c("CLSI", "EUCAST")) {
+    guideline_param <- AMR::rsi_translation %>%
+      filter(guideline %like% guideline_param) %>%
       pull(guideline) %>%
       sort() %>%
       rev() %>%
       .[1]
   }
 
-  if (!guideline %in% AMR::rsi_translation$guideline) {
+  if (!guideline_param %in% AMR::rsi_translation$guideline) {
     stop(paste0("invalid guideline: '", guideline,
                 "'.\nValid guidelines are: ", paste0("'", rev(sort(unique(AMR::rsi_translation$guideline))), "'", collapse = ", ")),
          call. = FALSE)
@@ -200,7 +214,7 @@ exec_as.rsi <- function(method, x, mo, ab, guideline) {
 
   new_rsi <- rep(NA_character_, length(x))
   trans <- AMR::rsi_translation %>%
-    filter(guideline == guideline) %>%
+    filter(guideline == guideline_param) %>%
     mutate(lookup = paste(mo, ab))
 
   lookup_mo <- paste(mo, ab)
@@ -224,15 +238,15 @@ exec_as.rsi <- function(method, x, mo, ab, guideline) {
 
     if (NROW(get_record) > 0) {
       if (method == "mic") {
-        new_rsi[i] <- case_when(is.na(get_record$S_mic) | is.na(get_record$R_mic) ~ NA_character_,
-                                x[i] <= get_record$S_mic ~ "S",
-                                x[i] >= get_record$R_mic ~ "R",
-                                TRUE ~ "I")
+        new_rsi[i] <- case_when(isTRUE(x[i] <= get_record$S_mic) ~ "S",
+                                isTRUE(x[i] >= get_record$R_mic) ~ "R",
+                                !is.na(get_record$S_mic) & !is.na(get_record$R_mic) ~ "I",
+                                TRUE ~ NA_character_)
       } else if (method == "disk") {
-        new_rsi[i] <- case_when(is.na(get_record$S_disk) | is.na(get_record$R_disk) ~ NA_character_,
-                                x[i] <= get_record$S_disk ~ "S",
-                                x[i] >= get_record$R_disk ~ "R",
-                                TRUE ~ "I")
+        new_rsi[i] <- case_when(isTRUE(x[i] >= get_record$S_disk) ~ "S",
+                                isTRUE(x[i] <= get_record$R_disk) ~ "R",
+                                !is.na(get_record$S_disk) & !is.na(get_record$R_disk) ~ "I",
+                                TRUE ~ NA_character_)
       }
 
     }

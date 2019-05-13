@@ -22,11 +22,12 @@
 #' Guess antibiotic column
 #'
 #' This tries to find a column name in a data set based on information from the \code{\link{antibiotics}} data set. Also supports WHONET abbreviations. You can look for an antibiotic (trade) name or abbreviation and it will search the \code{data.frame} for any column containing a name or ATC code of that antibiotic.
-#' @param tbl a \code{data.frame}
-#' @param col a character to look for
+#' @param x a \code{data.frame}
+#' @param search_string a text to search \code{x} for
 #' @param verbose a logical to indicate whether additional info should be printed
 #' @importFrom dplyr %>% select filter_all any_vars
 #' @importFrom crayon blue
+#' @return A column name of \code{x}, or \code{NULL} when no result is found.
 #' @export
 #' @inheritSection AMR Read more on our website!
 #' @examples
@@ -39,7 +40,7 @@
 #' # [1] "tetr"
 #'
 #' guess_ab_col(df, "J01AA07", verbose = TRUE)
-#' # using column `tetr` for col "J01AA07"
+#' # Note: Using column `tetr` as input for "J01AA07".
 #' # [1] "tetr"
 #'
 #' # WHONET codes
@@ -51,40 +52,40 @@
 #' # [1] "AMC_ED20"
 #' guess_ab_col(df, as.ab("augmentin"))
 #' # [1] "AMC_ED20"
-guess_ab_col <- function(tbl = NULL, col = NULL, verbose = FALSE) {
-  if (is.null(tbl) & is.null(col)) {
+guess_ab_col <- function(x = NULL, search_string = NULL, verbose = FALSE) {
+  if (is.null(x) & is.null(search_string)) {
     return(as.name("guess_ab_col"))
   }
 
-  if (length(col) > 1) {
-    warning("argument 'col' has length > 1 and only the first element will be used")
-    col <- col[1]
+  if (length(search_string) > 1) {
+    warning("argument 'search_string' has length > 1 and only the first element will be used")
+    search_string <- search_string[1]
   }
-  col <- as.character(col)
-  if (!is.data.frame(tbl)) {
-    stop("`tbl` must be a data.frame")
+  search_string <- as.character(search_string)
+  if (!is.data.frame(x)) {
+    stop("`x` must be a data.frame")
   }
 
-  if (col %in% colnames(tbl)) {
-    ab_result <- col
+  if (search_string %in% colnames(x)) {
+    ab_result <- search_string
   } else {
     # sort colnames on length - longest first
-    cols <- colnames(tbl[, tbl %>% colnames() %>% nchar() %>% order() %>% rev()])
+    cols <- colnames(x[, x %>% colnames() %>% nchar() %>% order() %>% rev()])
     df_trans <- data.frame(cols = cols,
                            abs = suppressWarnings(as.ab(cols)),
                            stringsAsFactors = FALSE)
-    ab_result <- df_trans[which(df_trans$abs == as.ab(col)), "cols"]
+    ab_result <- df_trans[which(df_trans$abs == as.ab(search_string)), "cols"]
     ab_result <- ab_result[!is.na(ab_result)][1L]
   }
 
   if (length(ab_result) == 0) {
     if (verbose == TRUE) {
-      message('No column found as input for `', col, '`.')
+      message('No column found as input for `', search_string, '`.')
     }
     return(NULL)
   } else {
     if (verbose == TRUE) {
-      message(blue(paste0("NOTE: Using column `", bold(ab_result), "` as input for `", col, "`.")))
+      message(blue(paste0("NOTE: Using column `", bold(ab_result), "` as input for `", search_string, "`.")))
     }
     return(ab_result)
   }

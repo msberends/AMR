@@ -250,7 +250,13 @@
 <ul>
 <li>Completely reworked the <code>antibiotics</code> data set:
 <ul>
-<li>All entries now have 3 different identifiers: a human readable EARS-Net code (<code>ab</code>, used by ECDC and WHONET), an ATC code (<code>atc</code>, used by WHO), and a CID code (<code>cid</code>, Compound ID, used by PubChem)</li>
+<li>All entries now have 3 different identifiers:
+<ul>
+<li>Column <code>ab</code> contains a human readable EARS-Net code, used by ECDC and WHO/WHONET - this is the primary identifier used in this package</li>
+<li>Column <code>atc</code> contains the ATC code, used by WHO/WHOCC</li>
+<li>Column <code>cid</code> contains the CID code (Compound ID), used by PubChem</li>
+</ul>
+</li>
 <li>Based on the Compound ID, more than a thousand official brand names have been added from many different countries</li>
 <li>All references to antibiotics in our package now use EARS-Net codes, like <code>AMX</code> for amoxicillin</li>
 <li>Functions <code>atc_certe</code>, <code>ab_umcg</code> and <code>atc_trivial_nl</code> have been removed</li>
@@ -264,6 +270,7 @@ Please create an issue in one of our repositories if you want additions in this 
 <li>Improved intelligence of looking up antibiotic tables in data set using <code><a href="../reference/guess_ab_col.html">guess_ab_col()</a></code>
 </li>
 <li>Added ~5,000 more old taxonomic names to the <code>microorganisms.old</code> data set, which leads to better results finding when using the <code><a href="../reference/as.mo.html">as.mo()</a></code> function</li>
+<li>This package now honours the new EUCAST insight (2019) that S and I are but classified as susceptible, where I is defined as ‘increased exposure’ and not ‘intermediate’ anymore. For functions like <code><a href="../reference/portion.html">portion_df()</a></code> and <code><a href="../reference/count.html">count_df()</a></code> this means that their new parameter <code>combine_SI</code> is TRUE at default.</li>
 <li>Removed deprecated functions <code>guess_mo()</code>, <code>guess_atc()</code>, <code>EUCAST_rules()</code>, <code>interpretive_reading()</code>, <code>rsi()</code>
 </li>
 <li>Frequency tables of microbial IDs speed improvement</li>

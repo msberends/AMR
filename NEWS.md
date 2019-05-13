@@ -6,7 +6,10 @@
 
 #### Changed
 * Completely reworked the `antibiotics` data set:
-  * All entries now have 3 different identifiers: a human readable EARS-Net code (`ab`, used by ECDC and WHONET), an ATC code (`atc`, used by WHO), and a CID code (`cid`, Compound ID, used by PubChem)
+  * All entries now have 3 different identifiers:
+    * Column `ab` contains a human readable EARS-Net code, used by ECDC and WHO/WHONET - this is the primary identifier used in this package
+    * Column `atc` contains the ATC code, used by WHO/WHOCC
+    * Column `cid` contains the CID code (Compound ID), used by PubChem
   * Based on the Compound ID, more than a thousand official brand names have been added from many different countries
   * All references to antibiotics in our package now use EARS-Net codes, like `AMX` for amoxicillin
   * Functions `atc_certe`, `ab_umcg` and `atc_trivial_nl` have been removed
@@ -18,6 +21,7 @@
     Please create an issue in one of our repositories if you want additions in this file.
 * Improved intelligence of looking up antibiotic tables in data set using `guess_ab_col()`
 * Added ~5,000 more old taxonomic names to the `microorganisms.old` data set, which leads to better results finding when using the `as.mo()` function
+* This package now honours the new EUCAST insight (2019) that S and I are but classified as susceptible, where I is defined as 'increased exposure' and not 'intermediate' anymore. For functions like `portion_df()` and `count_df()` this means that their new parameter `combine_SI` is TRUE at default.
 * Removed deprecated functions `guess_mo()`, `guess_atc()`, `EUCAST_rules()`, `interpretive_reading()`, `rsi()`
 * Frequency tables of microbial IDs speed improvement
 * Removed all hardcoded EUCAST rules and replaced them with a new reference file: `./inst/eucast/eucast.tsv`.

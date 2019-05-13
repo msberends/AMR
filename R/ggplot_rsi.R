@@ -29,9 +29,8 @@
 #' @param breaks numeric vector of positions
 #' @param limits numeric vector of length two providing limits of the scale, use \code{NA} to refer to the existing minimum or maximum
 #' @param facet variable to split plots by, either \code{"Interpretation"} (default) or \code{"Antibiotic"} or a grouping variable
-#' @param translate_ab a column name of the \code{\link{antibiotics}} data set to translate the antibiotic abbreviations into, using \code{\link{ab_name}}. Default behaviour is to translate to official names according to the WHO. Use \code{translate_ab = FALSE} to disable translation.
-#' @param language the language used for translation of antibiotic names
 #' @param fun function to transform \code{data}, either \code{\link{count_df}} (default) or \code{\link{portion_df}}
+#' @inheritParams portion
 #' @param nrow (when using \code{facet}) number of rows
 #' @param datalabels show datalabels using \code{labels_rsi_count}, will at default only be shown when \code{fun = count_df}
 #' @param datalabels.size size of the datalabels
@@ -158,6 +157,8 @@ ggplot_rsi <- function(data,
                        breaks = seq(0, 1, 0.1),
                        limits = NULL,
                        translate_ab = "name",
+                       combine_SI = TRUE,
+                       combine_IR = FALSE,
                        language = get_locale(),
                        fun = count_df,
                        nrow = NULL,
@@ -196,7 +197,8 @@ ggplot_rsi <- function(data,
   }
 
   p <- ggplot2::ggplot(data = data) +
-    geom_rsi(position = position, x = x, fill = fill, translate_ab = translate_ab, fun = fun, ...) +
+    geom_rsi(position = position, x = x, fill = fill, translate_ab = translate_ab,
+             fun = fun, combine_SI = combine_SI, combine_IR = combine_IR, ...) +
     theme_rsi()
 
   if (fill == "Interpretation") {
@@ -233,10 +235,16 @@ geom_rsi <- function(position = NULL,
                      fill = "Interpretation",
                      translate_ab = "name",
                      language = get_locale(),
+                     combine_SI = TRUE,
+                     combine_IR = FALSE,
                      fun = count_df,
                      ...)  {
 
   stopifnot_installed_package("ggplot2")
+
+  if (is.data.frame(position)) {
+    stop("`position` is invalid. Did you accidentally use '%>%' instead of '+'?", call. = FALSE)
+  }
 
   fun_name <- deparse(substitute(fun))
   if (!fun_name %in% c("portion_df", "count_df", "fun")) {
@@ -272,7 +280,13 @@ geom_rsi <- function(position = NULL,
 
   ggplot2::layer(geom = "bar", stat = "identity", position = position,
                  mapping = ggplot2::aes_string(x = x, y = y, fill = fill),
-                 data = fun, params = list(...))
+                 params = list(...), data = function(x) {
+                   fun(data = x,
+                       translate_ab = translate_ab,
+                       language = language,
+                       combine_SI = combine_SI,
+                       combine_IR = combine_IR)
+                 })
 
 }
 
@@ -320,7 +334,16 @@ scale_y_percent <- function(breaks = seq(0, 1, 0.1), limits = NULL) {
 scale_rsi_colours <- function() {
   stopifnot_installed_package("ggplot2")
   #ggplot2::scale_fill_brewer(palette = "RdYlGn")
-  ggplot2::scale_fill_manual(values = c("#b22222", "#ae9c20", "#7cfc00"))
+  #ggplot2::scale_fill_manual(values = c("#b22222", "#ae9c20", "#7cfc00"))
+
+  # mixed using https://www.colorhexa.com/b22222
+  # and https://www.w3schools.com/colors/colors_mixer.asp
+  ggplot2::scale_fill_manual(values = c(S = "#22b222",
+                                        SI = "#22b222",
+                                        I = "#548022",
+                                        IR = "#b22222",
+                                        R = "#b22222"))
+
 }
 
 #' @rdname ggplot_rsi

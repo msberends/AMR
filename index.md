@@ -16,6 +16,7 @@ This R package is actively maintained and is free software; you can freely use a
 This package can be used for:
 
   * Reference for microorganisms, since it contains all microbial (sub)species from the [Catalogue of Life](http://www.catalogueoflife.org)
+  * Interpreting raw MIC and disk diffusion values, based on the latest CLSI or EUCAST guidelines
   * Calculating antimicrobial resistance
   * Calculating empirical susceptibility of both mono therapy and combination therapy
   * Predicting future antimicrobial resistance using regression models
@@ -23,7 +24,7 @@ This package can be used for:
   * Getting properties for any antibiotic (like name, ATC code, defined daily dose or trade name)
   * Plotting antimicrobial resistance
   * Determining first isolates to be used for AMR analysis
-  * Applying EUCAST expert rules (not the translation from MIC to RSI values)
+  * Applying EUCAST expert rules
   * Determining multi-drug resistant organisms (MDRO)
   * Descriptive statistics: frequency tables, kurtosis and skewness
 
@@ -133,7 +134,7 @@ The `AMR` package basically does four important things:
 1. It **cleanses existing data** by providing new *classes* for microoganisms, antibiotics and antimicrobial results (both S/I/R and MIC). By installing this package, you teach R everything about microbiology that is needed for analysis. These functions all use intelligent rules to guess results that you would expect:
 
    * Use `as.mo()` to get a microbial ID. The IDs are human readable for the trained eye - the ID of *Klebsiella pneumoniae* is "B_KLBSL_PNE" (B stands for Bacteria) and the ID of *S. aureus* is "B_STPHY_AUR". The function takes almost any text as input that looks like the name or code of a microorganism like "E. coli", "esco" or "esccol" and tries to find expected results using intelligent rules combined with the included Catalogue of Life data set. It only takes milliseconds to find results, please see our [benchmarks](./articles/benchmarks.html). Moreover, it can group *Staphylococci* into coagulase negative and positive (CoNS and CoPS, see [source](./reference/as.mo.html#source)) and can categorise *Streptococci* into Lancefield groups (like beta-haemolytic *Streptococcus* Group B, [source](./reference/as.mo.html#source)).
-   * Use `as.rsi()` to transform values to valid antimicrobial results. It produces just S, I or R based on your input and warns about invalid values. Even values like "<=0.002; S" (combined MIC/RSI) will result in "S".
+   * Use `as.rsi()` to get antibiotic interpretations based on raw MIC values (in mg/L) or disk diffusion values (in mm), or transform existing values to valid antimicrobial results. It produces just S, I or R based on your input and warns about invalid values. Even values like "<=0.002; S" (combined MIC/RSI) will result in "S".
    * Use `as.mic()` to cleanse your MIC values. It produces a so-called factor (called *ordinal* in SPSS) with valid MIC values as levels. A value like "<=0.002; S" (combined MIC/RSI) will result in "<=0.002".
    * Use `as.ab()` to get a antibiotic ID, which are abbreviations used by EARS-Net whenever available. Use `as.atc()` to get the ATC code of an antibiotic as defined by the WHO. This package contains a database with most LIS codes, official names, DDDs and even trade names of antibiotics. For example, the values "Furabid", "Furadantin", "nitro" all return the ID of Nitrofurantoine.
    

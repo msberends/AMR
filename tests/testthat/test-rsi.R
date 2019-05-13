@@ -54,3 +54,53 @@ test_that("rsi works", {
                40)
 
 })
+
+test_that("mic2rsi works", {
+  expect_equal(as.character(
+    as.rsi(x = as.mic(0.125),
+                      mo = "B_STRPT_PNE",
+                      ab = "AMX",
+                      guideline = "EUCAST")),
+    "S")
+  expect_equal(as.character(
+    as.rsi(x = as.mic(4),
+           mo = "B_STRPT_PNE",
+           ab = "AMX",
+           guideline = "EUCAST")),
+    "R")
+
+  expect_true(septic_patients %>%
+                mutate(amox_mic = as.mic(2)) %>%
+                select(mo, amox_mic) %>%
+                as.rsi() %>%
+                pull(amox_mic) %>%
+                is.rsi())
+})
+
+test_that("disk2rsi works", {
+  expect_equal(as.character(
+    as.rsi(x = as.disk(22),
+           mo = "B_STRPT_PNE",
+           ab = "ERY",
+           guideline = "CLSI")),
+    "S")
+  expect_equal(as.character(
+    as.rsi(x = as.disk(18),
+           mo = "B_STRPT_PNE",
+           ab = "ERY",
+           guideline = "CLSI")),
+    "I")
+  expect_equal(as.character(
+    as.rsi(x = as.disk(10),
+           mo = "B_STRPT_PNE",
+           ab = "ERY",
+           guideline = "CLSI")),
+    "R")
+
+  expect_true(septic_patients %>%
+                mutate(amox_disk = as.disk(15)) %>%
+                select(mo, amox_disk) %>%
+                as.rsi(guideline = "CLSI") %>%
+                pull(amox_disk) %>%
+                is.rsi())
+})

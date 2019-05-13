@@ -26,6 +26,7 @@
 #' \code{count_R} and \code{count_IR} can be used to count resistant isolates, \code{count_S} and \code{count_SI} can be used to count susceptible isolates.\cr
 #' @param ... one or more vectors (or columns) with antibiotic interpretations. They will be transformed internally with \code{\link{as.rsi}} if needed.
 #' @inheritParams portion
+#' @inheritSection as.rsi Interpretation of S, I and R
 #' @details These functions are meant to count isolates. Use the \code{\link{portion}_*} functions to calculate microbial resistance.
 #'
 #' \code{n_rsi} is an alias of \code{count_all}. They can be used to count all available isolates, i.e. where all input antibiotics have an available result (S, I or R). Their use is equal to \code{\link{n_distinct}}. Their function is equal to \code{count_S(...) + count_IR(...)}.
@@ -174,61 +175,14 @@ n_rsi <- function(...) {
 count_df <- function(data,
                      translate_ab = "name",
                      language = get_locale(),
+                     combine_SI = TRUE,
                      combine_IR = FALSE) {
 
-  if (!"data.frame" %in% class(data)) {
-    stop("`count_df` must be called on a data.frame")
-  }
-
-  if (data %>% select_if(is.rsi) %>% ncol() == 0) {
-    stop("No columns with class 'rsi' found. See ?as.rsi.")
-  }
-
-  if (as.character(translate_ab) %in% c("TRUE", "official")) {
-    translate_ab <- "name"
-  }
-
-  resS <- summarise_if(.tbl = data,
-                       .predicate = is.rsi,
-                       .funs = count_S) %>%
-    mutate(Interpretation = "S") %>%
-    select(Interpretation, everything())
-
-  if (combine_IR == FALSE) {
-    resI <- summarise_if(.tbl = data,
-                         .predicate = is.rsi,
-                         .funs = count_I) %>%
-      mutate(Interpretation = "I") %>%
-      select(Interpretation, everything())
-
-    resR <- summarise_if(.tbl = data,
-                         .predicate = is.rsi,
-                         .funs = count_R) %>%
-      mutate(Interpretation = "R") %>%
-      select(Interpretation, everything())
-
-    data.groups <- group_vars(data)
-
-    res <- bind_rows(resS, resI, resR) %>%
-      mutate(Interpretation = factor(Interpretation, levels = c("R", "I", "S"), ordered = TRUE)) %>%
-      tidyr::gather(Antibiotic, Value, -Interpretation, -data.groups)
-  } else {
-    resIR <- summarise_if(.tbl = data,
-                          .predicate = is.rsi,
-                          .funs = count_IR) %>%
-      mutate(Interpretation = "IR") %>%
-      select(Interpretation, everything())
-
-    data.groups <- group_vars(data)
-
-    res <- bind_rows(resS, resIR) %>%
-      mutate(Interpretation = factor(Interpretation, levels = c("IR", "S"), ordered = TRUE)) %>%
-      tidyr::gather(Antibiotic, Value, -Interpretation, -data.groups)
-  }
-
-  if (!translate_ab == FALSE) {
-    res <- res %>% mutate(Antibiotic = ab_property(Antibiotic, property = translate_ab, language = language))
-  }
-
-  res
+  rsi_calc_df(type = "count",
+              data = data,
+              translate_ab = translate_ab,
+              language = language,
+              combine_SI = combine_SI,
+              combine_IR = combine_IR,
+              combine_SI_missing = missing(combine_SI))
 }

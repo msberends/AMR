@@ -241,24 +241,28 @@
     
     </div>
 
-    <pre class="usage"><span class='fu'>guess_ab_col</span>(<span class='kw'>tbl</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>col</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
+    <pre class="usage"><span class='fu'>guess_ab_col</span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>search_string</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>tbl</th>
+      <th>x</th>
       <td><p>a <code>data.frame</code></p></td>
     </tr>
     <tr>
-      <th>col</th>
-      <td><p>a character to look for</p></td>
+      <th>search_string</th>
+      <td><p>a text to search <code>x</code> for</p></td>
     </tr>
     <tr>
       <th>verbose</th>
       <td><p>a logical to indicate whether additional info should be printed</p></td>
     </tr>
     </table>
+    
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+
+    <p>A column name of <code>x</code>, or <code>NULL</code> when no result is found.</p>
     
     <h2 class="hasAnchor" id="read-more-on-our-website-"><a class="anchor" href="#read-more-on-our-website-"></a>Read more on our website!</h2>
 
@@ -277,7 +281,7 @@
 <span class='co'># [1] "tetr"</span>
 
 <span class='fu'>guess_ab_col</span>(<span class='no'>df</span>, <span class='st'>"J01AA07"</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
-<span class='co'># using column `tetr` for col "J01AA07"</span>
+<span class='co'># Note: Using column `tetr` as input for "J01AA07".</span>
 <span class='co'># [1] "tetr"</span>
 
 <span class='co'># WHONET codes</span>
@@ -296,6 +300,8 @@
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
       
+      <li><a href="#value">Value</a></li>
+
       <li><a href="#read-more-on-our-website-">Read more on our website!</a></li>
       
       <li><a href="#examples">Examples</a></li>
