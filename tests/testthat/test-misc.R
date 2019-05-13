@@ -42,3 +42,10 @@ test_that("functions missing in older R versions work", {
   expect_equal(trimws(" test ", "l"), "test ")
   expect_equal(trimws(" test ", "r"), " test")
 })
+
+test_that("looking up ab columns works", {
+  expect_warning(generate_warning_abs_missing(c("AMP", "AMX")))
+  expect_warning(generate_warning_abs_missing(c("AMP", "AMX"), any = TRUE))
+  expect_warning(get_column_abx(septic_patients, hard_dependencies = "FUS"))
+  expect_warning(get_column_abx(septic_patients, soft_dependencies = "FUS"))
+})

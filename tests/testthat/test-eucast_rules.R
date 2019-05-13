@@ -33,6 +33,9 @@ test_that("EUCAST rules work", {
                  "reference.rule", "reference.rule_group"))
 
   expect_error(suppressWarnings(eucast_rules(septic_patients, col_mo = "Non-existing")))
+  expect_error(eucast_rules(x = "text"))
+  expect_error(eucast_rules(data.frame(a = "test")))
+  expect_error(eucast_rules(data.frame(mo = "test"), rules = "invalid rules set"))
 
   expect_identical(colnames(septic_patients),
                    colnames(suppressWarnings(eucast_rules(septic_patients))))

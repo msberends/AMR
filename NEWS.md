@@ -3,6 +3,7 @@
 
 #### New
 * Support for translation of disk diffusion and MIC values to RSI values (i.e. antimicrobial interpretations). Supported guidelines are EUCAST (2011 to 2019) and CLSI (2011 to 2019). Use `as.rsi()` on an MIC value (created with `as.mic()`), a disk diffusion value (created with the new `as.disk()`) or on a complete date set containing columns with MIC or disk diffusion values.
+* Function `mo_name()` as alias of `mo_fullname()`
 
 #### Changed
 * Completely reworked the `antibiotics` data set:

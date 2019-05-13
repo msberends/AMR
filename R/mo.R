@@ -557,22 +557,22 @@ exec_as.mo <- function(x,
       if (nchar(gsub("[^a-zA-Z]", "", x_trimmed[i])) < 3
           & !x_backup_without_spp[i] %like% "O?(26|103|104|104|111|121|145|157)") {
         # check if search term was like "A. species", then return first genus found with ^A
-        if (x_backup[i] %like% "[a-z]+ species" | x_backup[i] %like% "[a-z] spp[.]?") {
-          # get mo code of first hit
-          found <- microorganismsDT[fullname %like% x_withspaces_start_only[i], mo]
-          if (length(found) > 0) {
-            mo_code <- found[1L] %>% strsplit("_") %>% unlist() %>% .[1:2] %>% paste(collapse = "_")
-            found <- microorganismsDT[mo == mo_code, ..property][[1]]
-            # return first genus that begins with x_trimmed, e.g. when "E. spp."
-            if (length(found) > 0) {
-              x[i] <- found[1L]
-              if (initial_search == TRUE) {
-                set_mo_history(x_backup[i], get_mo_code(x[i], property), 0, force = force_mo_history)
-              }
-              next
-            }
-          }
-        }
+        # if (x_backup[i] %like% "[a-z]+ species" | x_backup[i] %like% "[a-z] spp[.]?") {
+        #   # get mo code of first hit
+        #   found <- microorganismsDT[fullname %like% x_withspaces_start_only[i], mo]
+        #   if (length(found) > 0) {
+        #     mo_code <- found[1L] %>% strsplit("_") %>% unlist() %>% .[1:2] %>% paste(collapse = "_")
+        #     found <- microorganismsDT[mo == mo_code, ..property][[1]]
+        #     # return first genus that begins with x_trimmed, e.g. when "E. spp."
+        #     if (length(found) > 0) {
+        #       x[i] <- found[1L]
+        #       if (initial_search == TRUE) {
+        #         set_mo_history(x_backup[i], get_mo_code(x[i], property), 0, force = force_mo_history)
+        #       }
+        #       next
+        #     }
+        #   }
+        # }
         # fewer than 3 chars and not looked for species, add as failure
         x[i] <- microorganismsDT[mo == "UNKNOWN", ..property][[1]]
         if (initial_search == TRUE) {

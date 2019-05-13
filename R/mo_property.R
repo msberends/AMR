@@ -64,7 +64,8 @@
 #' mo_subspecies("E. coli")      # ""
 #'
 #' ## colloquial properties
-#' mo_fullname("E. coli")        # "Escherichia coli"
+#' mo_name("E. coli")            # "Escherichia coli"
+#' mo_fullname("E. coli")        # "Escherichia coli", same as mo_name()
 #' mo_shortname("E. coli")       # "E. coli"
 #'
 #' ## other properties
@@ -131,6 +132,12 @@
 #'
 #' # get a list with the complete taxonomy (from kingdom to subspecies)
 #' mo_taxonomy("E. coli")
+mo_name <- function(x, language = get_locale(), ...) {
+  mo_fullname(x = x, language = language, ... = ...)
+}
+
+#' @rdname mo_property
+#' @export
 mo_fullname <- function(x, language = get_locale(), ...) {
   x <- mo_validate(x = x, property = "fullname", ...)
   t(x, language = language)

@@ -285,7 +285,11 @@ count_R and count_IR can be used to count resistant isolates, count_S and count_
     </tr>
     <tr>
       <th>combine_SI</th>
-      <td><p>a logical to indicate whether all values of I and S must be merged into one, so the output only consists of S+I vs. R (susceptible vs. resistant). This used to be the parameter <code>combine_IR</code>, but this now follows the redefinition by EUCAST about the interpretion of I (increased exposure) in 2019, see below. Default is now <code>TRUE</code>.</p></td>
+      <td><p>a logical to indicate whether all values of S and I must be merged into one, so the output only consists of S+I vs. R (susceptible vs. resistant). This used to be the parameter <code>combine_IR</code>, but this now follows the redefinition by EUCAST about the interpretion of I (increased exposure) in 2019, see below. Default is now <code>TRUE</code>.</p></td>
+    </tr>
+    <tr>
+      <th>combine_IR</th>
+      <td><p>a logical to indicate whether all values of I and R must be merged into one, so the output only consists of S vs. I+R (susceptible vs. non-susceptible). This is outdated, see parameter <code>combine_SI</code>.</p></td>
     </tr>
     </table>
     

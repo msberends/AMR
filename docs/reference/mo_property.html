@@ -241,7 +241,9 @@
     
     </div>
 
-    <pre class="usage"><span class='fu'>mo_fullname</span>(<span class='no'>x</span>, <span class='kw'>language</span> <span class='kw'>=</span> <span class='fu'><a href='translate.html'>get_locale</a></span>(), <span class='no'>...</span>)
+    <pre class="usage"><span class='fu'>mo_name</span>(<span class='no'>x</span>, <span class='kw'>language</span> <span class='kw'>=</span> <span class='fu'><a href='translate.html'>get_locale</a></span>(), <span class='no'>...</span>)
+
+<span class='fu'>mo_fullname</span>(<span class='no'>x</span>, <span class='kw'>language</span> <span class='kw'>=</span> <span class='fu'><a href='translate.html'>get_locale</a></span>(), <span class='no'>...</span>)
 
 <span class='fu'>mo_shortname</span>(<span class='no'>x</span>, <span class='kw'>language</span> <span class='kw'>=</span> <span class='fu'><a href='translate.html'>get_locale</a></span>(), <span class='no'>...</span>)
 
@@ -364,7 +366,8 @@ This package contains the complete taxonomic tree of almost all microorganisms (
 <span class='fu'>mo_subspecies</span>(<span class='st'>"E. coli"</span>)      <span class='co'># ""</span>
 
 <span class='co'>## colloquial properties</span>
-<span class='fu'>mo_fullname</span>(<span class='st'>"E. coli"</span>)        <span class='co'># "Escherichia coli"</span>
+<span class='fu'>mo_name</span>(<span class='st'>"E. coli"</span>)            <span class='co'># "Escherichia coli"</span>
+<span class='fu'>mo_fullname</span>(<span class='st'>"E. coli"</span>)        <span class='co'># "Escherichia coli", same as mo_name()</span>
 <span class='fu'>mo_shortname</span>(<span class='st'>"E. coli"</span>)       <span class='co'># "E. coli"</span>
 
 <span class='co'>## other properties</span>

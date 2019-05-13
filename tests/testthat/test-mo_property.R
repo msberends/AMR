@@ -31,6 +31,7 @@ test_that("mo_property works", {
   expect_equal(mo_species("E. coli"), "coli")
   expect_equal(mo_subspecies("E. coli"), "")
   expect_equal(mo_fullname("E. coli"), "Escherichia coli")
+  expect_equal(mo_name("E. coli"), "Escherichia coli")
   expect_equal(mo_type("E. coli", language = "en"), "Bacteria")
   expect_equal(mo_gramstain("E. coli", language = "en"), "Gram negative")
   expect_equal(class(mo_taxonomy("E. coli")), "list")
@@ -46,6 +47,8 @@ test_that("mo_property works", {
   expect_equal(mo_shortname("MRSA", Becker = "all", language = "en"), "CoPS")
   expect_equal(mo_shortname("S. agalac"), "S. agalactiae")
   expect_equal(mo_shortname("S. agalac", Lancefield = TRUE), "GBS")
+
+  expect_true(mo_url("Escherichia coli") %like% "www.catalogueoflife.org")
 
   # test integrity
   MOs <- AMR::microorganisms

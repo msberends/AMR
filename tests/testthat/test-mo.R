@@ -200,6 +200,9 @@ test_that("as.mo works", {
   expect_equal(suppressWarnings(as.character(as.mo("esco extra_text", allow_uncertain = FALSE))), "UNKNOWN")
   expect_equal(suppressWarnings(as.character(as.mo("esco extra_text", allow_uncertain = TRUE))), "B_ESCHR_COL")
   expect_warning(as.mo("esco extra_text", allow_uncertain = TRUE))
+  expect_equal(suppressWarnings(as.character(as.mo("unexisting aureus", allow_uncertain = 3))), "B_STPHY_AUR")
+  expect_equal(suppressWarnings(as.character(as.mo("unexisting staphy", allow_uncertain = 3))), "B_STPHY")
+  expect_equal(suppressWarnings(as.character(as.mo("Staphylococcus aureus unexisting", allow_uncertain = 3))), "B_STPHY")
 
   # predefined reference_df
   expect_equal(as.character(as.mo("TestingOwnID",
@@ -243,5 +246,21 @@ test_that("as.mo works", {
 
   # summary
   expect_equal(length(summary(septic_patients$mo)), 6)
+
+  # other
+  expect_equal(as.character(as.mo(c("xxx", "con", "na", "nan"), debug = TRUE)),
+               rep(NA_character_, 4))
+
+  expect_equal(as.character(as.mo(c("other", "none", "unknown"))),
+               rep("UNKNOWN", 3))
+
+  expect_null(mo_failures())
+  expect_true(septic_patients %>% pull(mo) %>% is.mo())
+
+  expect_equal(get_mo_code("test", "mo"), "test")
+  expect_equal(length(get_mo_code("Escherichia", "genus")),
+               nrow(AMR::microorganisms[base::which(AMR::microorganisms[, "genus"] %in% "Escherichia"),]))
+
+  expect_error(translate_allow_uncertain(5))
 
 })

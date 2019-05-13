@@ -2,6 +2,7 @@
 % Please edit documentation in R/mo_property.R
 \name{mo_property}
 \alias{mo_property}
+\alias{mo_name}
 \alias{mo_fullname}
 \alias{mo_shortname}
 \alias{mo_subspecies}
@@ -22,6 +23,8 @@
 \alias{mo_url}
 \title{Property of a microorganism}
 \usage{
+mo_name(x, language = get_locale(), ...)
+
 mo_fullname(x, language = get_locale(), ...)
 
 mo_shortname(x, language = get_locale(), ...)
@@ -132,7 +135,8 @@ mo_species("E. coli")         # "coli"
 mo_subspecies("E. coli")      # ""
 
 ## colloquial properties
-mo_fullname("E. coli")        # "Escherichia coli"
+mo_name("E. coli")            # "Escherichia coli"
+mo_fullname("E. coli")        # "Escherichia coli", same as mo_name()
 mo_shortname("E. coli")       # "E. coli"
 
 ## other properties

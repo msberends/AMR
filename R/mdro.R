@@ -374,42 +374,42 @@ eucast_exceptional_phenotypes <- function(x, country = "EUCAST", ...) {
   mdro(x = x, country = "EUCAST", ...)
 }
 
-is_ESBL <- function(x, col_mo = NULL, ...) {
-  col_mo <- get_column_mo(tbl = x, col_mo = col_mo)
-  cols_ab <- get_column_abx(tbl = x,
-                            soft_dependencies = c("AMX", "AMP"),
-                            hard_dependencies = c("CAZ"),
-                            ...)
-
-  if (!any(c("AMX", "AMP") %in% names(cols_ab))) {
-    # both ampicillin and amoxicillin are missing
-    generate_warning_abs_missing(c("AMX", "AMP"), any = TRUE)
-    return(rep(NA, nrow(x)))
-  }
-
-  ESBLs <- rep(NA, nrow(x))
-
-  # first make all eligible cases FALSE
-  ESBLs[which(mo_family(x[, col_mo]) == "Enterobacteriaceae"
-              & x[, get_ab_col(cols_ab, "AMX")] %in% c("R", "I", "S")
-              & x[, get_ab_col(cols_ab, "AMX")] %in% c("R", "I", "S")
-              & x[, get_ab_col(cols_ab, "AMX")] %in% c("R", "I", "S")
-              )] <- FALSE
-  # now make the positives cases TRUE
-  ESBLs[which(!is.na(ESBLs)
-              & x[, get_ab_col(cols_ab, "AMX")]  == "R"
-              & x[, get_ab_col(cols_ab, "CAZ")] == "R")] <- TRUE
-  ESBLs
-
-}
-
-is_3MRGN <- function(x, ...) {
-
-}
-
-is_4MRGN <- function(x, ...) {
-
-}
+# is_ESBL <- function(x, col_mo = NULL, ...) {
+#   col_mo <- get_column_mo(tbl = x, col_mo = col_mo)
+#   cols_ab <- get_column_abx(tbl = x,
+#                             soft_dependencies = c("AMX", "AMP"),
+#                             hard_dependencies = c("CAZ"),
+#                             ...)
+#
+#   if (!any(c("AMX", "AMP") %in% names(cols_ab))) {
+#     # both ampicillin and amoxicillin are missing
+#     generate_warning_abs_missing(c("AMX", "AMP"), any = TRUE)
+#     return(rep(NA, nrow(x)))
+#   }
+#
+#   ESBLs <- rep(NA, nrow(x))
+#
+#   # first make all eligible cases FALSE
+#   ESBLs[which(mo_family(x[, col_mo]) == "Enterobacteriaceae"
+#               & x[, get_ab_col(cols_ab, "AMX")] %in% c("R", "I", "S")
+#               & x[, get_ab_col(cols_ab, "AMX")] %in% c("R", "I", "S")
+#               & x[, get_ab_col(cols_ab, "AMX")] %in% c("R", "I", "S")
+#               )] <- FALSE
+#   # now make the positives cases TRUE
+#   ESBLs[which(!is.na(ESBLs)
+#               & x[, get_ab_col(cols_ab, "AMX")]  == "R"
+#               & x[, get_ab_col(cols_ab, "CAZ")] == "R")] <- TRUE
+#   ESBLs
+#
+# }
+#
+# is_3MRGN <- function(x, ...) {
+#
+# }
+#
+# is_4MRGN <- function(x, ...) {
+#
+# }
 
 get_column_mo <- function(tbl, col_mo = NULL) {
   # throws a blue note about which column will be used if guessed

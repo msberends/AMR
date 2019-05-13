@@ -306,17 +306,17 @@ get_column_abx <- function(tbl,
                          TOB = TOB, TMP = TMP, SXT = SXT, VAN = VAN)
 
   if (!is.null(hard_dependencies)) {
-    if (!all(hard_dependencies %in% names(columns_available))) {
+    if (!all(hard_dependencies %in% names(columns_available[!is.na(columns_available)]))) {
       # missing a hard dependency will return NA and consequently the data will not be analysed
-      missing <- hard_dependencies[!hard_dependencies %in% names(columns_available)]
+      missing <- hard_dependencies[!hard_dependencies %in% names(columns_available[!is.na(columns_available)])]
       generate_warning_abs_missing(missing, any = FALSE)
       return(NA)
     }
   }
   if (!is.null(soft_dependencies)) {
-    if (!all(soft_dependencies %in% names(columns_available))) {
+    if (!all(soft_dependencies %in% names(columns_available[!is.na(columns_available)]))) {
       # missing a soft dependency may lower the reliability
-      missing <- soft_dependencies[!soft_dependencies %in% names(columns_available)]
+      missing <- soft_dependencies[!soft_dependencies %in% names(columns_available[!is.na(columns_available)])]
       missing <- paste0("`", missing, "` (", ab_name(missing, tolower = TRUE), ")")
       warning('Reliability might be improved if these antimicrobial results would be available too: ', paste(missing, collapse = ", "),
               immediate. = TRUE,
