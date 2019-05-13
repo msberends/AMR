@@ -24,8 +24,6 @@ ggplot_rsi_predict(x, main = paste("Resistance prediction of",
   attributes(x)$ab), ribbon = TRUE, ...)
 }
 \arguments{
-\item{tbl}{a \code{data.frame} containing isolates.}
-
 \item{col_ab}{column name of \code{tbl} with antimicrobial interpretations (\code{R}, \code{I} and \code{S})}
 
 \item{col_date}{column name of the date, will be used to calculate years if this column doesn't consist of years already, defaults to the first column of with a date class}
@@ -46,9 +44,7 @@ ggplot_rsi_predict(x, main = paste("Resistance prediction of",
 
 \item{info}{a logical to indicate whether textual analysis should be printed with the name and \code{\link{summary}} of the statistical model.}
 
-\item{x}{the coordinates of points in the plot. Alternatively, a
-      single plotting structure, function or \emph{any \R object with a
-        \code{plot} method} can be provided.}
+\item{x}{a \code{data.frame} containing isolates.}
 
 \item{main}{title of the plot}
 

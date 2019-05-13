@@ -9,22 +9,22 @@
 Methodology of this function is based on: \strong{M39 Analysis and Presentation of Cumulative Antimicrobial Susceptibility Test Data, 4th Edition}, 2014, \emph{Clinical and Laboratory Standards Institute (CLSI)}. \url{https://clsi.org/standards/products/microbiology/documents/m39/}.
 }
 \usage{
-first_isolate(tbl, col_date = NULL, col_patient_id = NULL,
+first_isolate(x, col_date = NULL, col_patient_id = NULL,
   col_mo = NULL, col_testcode = NULL, col_specimen = NULL,
   col_icu = NULL, col_keyantibiotics = NULL, episode_days = 365,
   testcodes_exclude = NULL, icu_exclude = FALSE,
   specimen_group = NULL, type = "keyantibiotics", ignore_I = TRUE,
   points_threshold = 2, info = TRUE, ...)
 
-filter_first_isolate(tbl, col_date = NULL, col_patient_id = NULL,
+filter_first_isolate(x, col_date = NULL, col_patient_id = NULL,
   col_mo = NULL, ...)
 
-filter_first_weighted_isolate(tbl, col_date = NULL,
+filter_first_weighted_isolate(x, col_date = NULL,
   col_patient_id = NULL, col_mo = NULL, col_keyantibiotics = NULL,
   ...)
 }
 \arguments{
-\item{tbl}{a \code{data.frame} containing isolates.}
+\item{x}{a \code{data.frame} containing isolates.}
 
 \item{col_date}{column name of the result date (or date that is was received on the lab), defaults to the first column of with a date class}
 
@@ -70,16 +70,16 @@ To conduct an analysis of antimicrobial resistance, you should only include the 
 
 The functions \code{filter_first_isolate} and \code{filter_first_weighted_isolate} are helper functions to quickly filter on first isolates. The function \code{filter_first_isolate} is essentially equal to:
 \preformatted{
- tbl \%>\%
-   mutate(only_firsts = first_isolate(tbl, ...)) \%>\%
+ x \%>\%
+   mutate(only_firsts = first_isolate(x, ...)) \%>\%
    filter(only_firsts == TRUE) \%>\%
    select(-only_firsts)
 }
 The function \code{filter_first_weighted_isolate} is essentially equal to:
 \preformatted{
- tbl \%>\%
+ x \%>\%
    mutate(keyab = key_antibiotics(.)) \%>\%
-   mutate(only_weighted_firsts = first_isolate(tbl,
+   mutate(only_weighted_firsts = first_isolate(x,
                                                col_keyantibiotics = "keyab", ...)) \%>\%
    filter(only_weighted_firsts == TRUE) \%>\%
    select(-only_weighted_firsts)
@@ -144,39 +144,39 @@ B <- septic_patients \%>\%
 \dontrun{
 
 # set key antibiotics to a new variable
-tbl$keyab <- key_antibiotics(tbl)
+x$keyab <- key_antibiotics(x)
 
-tbl$first_isolate <-
-  first_isolate(tbl)
+x$first_isolate <-
+  first_isolate(x)
 
-tbl$first_isolate_weighed <-
-  first_isolate(tbl,
+x$first_isolate_weighed <-
+  first_isolate(x,
                 col_keyantibiotics = 'keyab')
 
-tbl$first_blood_isolate <-
-  first_isolate(tbl,
+x$first_blood_isolate <-
+  first_isolate(x,
                 specimen_group = 'Blood')
 
-tbl$first_blood_isolate_weighed <-
-  first_isolate(tbl,
+x$first_blood_isolate_weighed <-
+  first_isolate(x,
                 specimen_group = 'Blood',
                 col_keyantibiotics = 'keyab')
 
-tbl$first_urine_isolate <-
-  first_isolate(tbl,
+x$first_urine_isolate <-
+  first_isolate(x,
                 specimen_group = 'Urine')
 
-tbl$first_urine_isolate_weighed <-
-  first_isolate(tbl,
+x$first_urine_isolate_weighed <-
+  first_isolate(x,
                 specimen_group = 'Urine',
                 col_keyantibiotics = 'keyab')
 
-tbl$first_resp_isolate <-
-  first_isolate(tbl,
+x$first_resp_isolate <-
+  first_isolate(x,
                 specimen_group = 'Respiratory')
 
-tbl$first_resp_isolate_weighed <-
-  first_isolate(tbl,
+x$first_resp_isolate_weighed <-
+  first_isolate(x,
                 specimen_group = 'Respiratory',
                 col_keyantibiotics = 'keyab')
 }

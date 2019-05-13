@@ -55,7 +55,7 @@
 #'
 #' A data set containing the microbial taxonomy of six kingdoms from the Catalogue of Life. MO codes can be looked up using \code{\link{as.mo}}.
 #' @inheritSection catalogue_of_life Catalogue of Life
-#' @format A \code{\link{data.frame}} with 65,629 observations and 16 variables:
+#' @format A \code{\link{data.frame}} with 67,903 observations and 16 variables:
 #' \describe{
 #'   \item{\code{mo}}{ID of microorganism as used by this package}
 #'   \item{\code{col_id}}{Catalogue of Life ID}

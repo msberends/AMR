@@ -4,7 +4,7 @@
 \name{microorganisms}
 \alias{microorganisms}
 \title{Data set with ~65,000 microorganisms}
-\format{A \code{\link{data.frame}} with 65,629 observations and 16 variables:
+\format{A \code{\link{data.frame}} with 67,903 observations and 16 variables:
 \describe{
   \item{\code{mo}}{ID of microorganism as used by this package}
   \item{\code{col_id}}{Catalogue of Life ID}

@@ -1,6 +1,6 @@
 # ==================================================================== #
 # TITLE                                                                #
-# Antimicrobial Resistance (AMR) Analysis                              #
+# Antidiskrobial Resistance (AMR) Analysis                              #
 #                                                                      #
 # SOURCE                                                               #
 # https://gitlab.com/msberends/AMR                                     #
@@ -19,35 +19,17 @@
 # Visit our website for more info: https://msberends.gitlab.io/AMR.    #
 # ==================================================================== #
 
-context("data.R")
+context("disk.R")
 
-test_that("data sets are valid", {
-  # IDs should always be unique
-  expect_identical(nrow(antibiotics), length(unique(antibiotics$ab)))
-  expect_identical(nrow(microorganisms), length(unique(microorganisms$mo)))
+test_that("disk works", {
+  expect_true(as.disk(8) == as.disk("8"))
+  expect_true(is.disk(as.disk(8)))
 
-  # there should be no diacritics (i.e. non ASCII) characters in the datasets
-  datasets <- data(package = "AMR", envir = asNamespace("AMR"))$results[, "Item"]
-  for (i in 1:length(datasets)) {
-    dataset <- get(datasets[i], envir = asNamespace("AMR"))
-    expect_identical(dataset_UTF8_to_ASCII(dataset), dataset)
-  }
-})
+  expect_equal(suppressWarnings(as.logical(as.disk("INVALID VALUE"))), NA)
 
-test_that("creation of data sets is valid", {
-  df <- make()
-  expect_lt(nrow(df[which(df$prevalence == 1), ]), nrow(df[which(df$prevalence == 2), ]))
-  expect_lt(nrow(df[which(df$prevalence == 2), ]), nrow(df[which(df$prevalence == 3), ]))
-  DT <- make_DT()
-  expect_lt(nrow(DT[prevalence == 1]), nrow(DT[prevalence == 2]))
-  expect_lt(nrow(DT[prevalence == 2]), nrow(DT[prevalence == 3]))
-  old <- make_trans_tbl()
-  expect_gt(length(old), 0)
-})
+  # all levels should be valid disks
+  expect_silent(as.disk(levels(as.disk(15))))
 
-test_that("CoL version info works", {
- expect_identical(class(catalogue_of_life_version()),
-                  c("catalogue_of_life_version", "list"))
+  expect_warning(as.disk("INVALID VALUE"))
 
-  expect_output(print(catalogue_of_life_version()))
 })

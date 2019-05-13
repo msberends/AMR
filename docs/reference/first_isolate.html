@@ -241,17 +241,17 @@
     
     </div>
 
-    <pre class="usage"><span class='fu'>first_isolate</span>(<span class='no'>tbl</span>, <span class='kw'>col_date</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>col_patient_id</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+    <pre class="usage"><span class='fu'>first_isolate</span>(<span class='no'>x</span>, <span class='kw'>col_date</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>col_patient_id</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>col_mo</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>col_testcode</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>col_specimen</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>col_icu</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>col_keyantibiotics</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>episode_days</span> <span class='kw'>=</span> <span class='fl'>365</span>,
   <span class='kw'>testcodes_exclude</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>icu_exclude</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='kw'>specimen_group</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"keyantibiotics"</span>, <span class='kw'>ignore_I</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
   <span class='kw'>points_threshold</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>info</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>...</span>)
 
-<span class='fu'>filter_first_isolate</span>(<span class='no'>tbl</span>, <span class='kw'>col_date</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>col_patient_id</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+<span class='fu'>filter_first_isolate</span>(<span class='no'>x</span>, <span class='kw'>col_date</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>col_patient_id</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>col_mo</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)
 
-<span class='fu'>filter_first_weighted_isolate</span>(<span class='no'>tbl</span>, <span class='kw'>col_date</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+<span class='fu'>filter_first_weighted_isolate</span>(<span class='no'>x</span>, <span class='kw'>col_date</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>col_patient_id</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>col_mo</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>col_keyantibiotics</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='no'>...</span>)</pre>
     
@@ -259,7 +259,7 @@
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>tbl</th>
+      <th>x</th>
       <td><p>a <code>data.frame</code> containing isolates.</p></td>
     </tr>
     <tr>
@@ -341,14 +341,14 @@
     <p><strong>WHY THIS IS SO IMPORTANT</strong> <br />
 To conduct an analysis of antimicrobial resistance, you should only include the first isolate of every patient per episode <a href='https://www.ncbi.nlm.nih.gov/pubmed/17304462'>[1]</a>. If you would not do this, you could easily get an overestimate or underestimate of the resistance of an antibiotic. Imagine that a patient was admitted with an MRSA and that it was found in 5 different blood cultures the following week. The resistance percentage of oxacillin of all <em>S. aureus</em> isolates would be overestimated, because you included this MRSA more than once. It would be <a href='https://en.wikipedia.org/wiki/Selection_bias'>selection bias</a>.</p>
 <p>The functions <code>filter_first_isolate</code> and <code>filter_first_weighted_isolate</code> are helper functions to quickly filter on first isolates. The function <code>filter_first_isolate</code> is essentially equal to:</p><pre>
- tbl %&gt;%
-   mutate(only_firsts = first_isolate(tbl, ...)) %&gt;%
+ x %&gt;%
+   mutate(only_firsts = first_isolate(x, ...)) %&gt;%
    filter(only_firsts == TRUE) %&gt;%
    select(-only_firsts)
 </pre><p>The function <code>filter_first_weighted_isolate</code> is essentially equal to:</p><pre>
- tbl %&gt;%
+ x %&gt;%
    mutate(keyab = key_antibiotics(.)) %&gt;%
-   mutate(only_weighted_firsts = first_isolate(tbl,
+   mutate(only_weighted_firsts = first_isolate(x,
                                                col_keyantibiotics = "keyab", ...)) %&gt;%
    filter(only_weighted_firsts == TRUE) %&gt;%
    select(-only_weighted_firsts)
@@ -416,39 +416,39 @@ To conduct an analysis of antimicrobial resistance, you should only include the 
 
 <span class='co'># }</span><span class='co'># NOT RUN {</span>
 <span class='co'># set key antibiotics to a new variable</span>
-<span class='no'>tbl</span>$<span class='no'>keyab</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='key_antibiotics.html'>key_antibiotics</a></span>(<span class='no'>tbl</span>)
+<span class='no'>x</span>$<span class='no'>keyab</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='key_antibiotics.html'>key_antibiotics</a></span>(<span class='no'>x</span>)
 
-<span class='no'>tbl</span>$<span class='no'>first_isolate</span> <span class='kw'>&lt;-</span>
-  <span class='fu'>first_isolate</span>(<span class='no'>tbl</span>)
+<span class='no'>x</span>$<span class='no'>first_isolate</span> <span class='kw'>&lt;-</span>
+  <span class='fu'>first_isolate</span>(<span class='no'>x</span>)
 
-<span class='no'>tbl</span>$<span class='no'>first_isolate_weighed</span> <span class='kw'>&lt;-</span>
-  <span class='fu'>first_isolate</span>(<span class='no'>tbl</span>,
+<span class='no'>x</span>$<span class='no'>first_isolate_weighed</span> <span class='kw'>&lt;-</span>
+  <span class='fu'>first_isolate</span>(<span class='no'>x</span>,
                 <span class='kw'>col_keyantibiotics</span> <span class='kw'>=</span> <span class='st'>'keyab'</span>)
 
-<span class='no'>tbl</span>$<span class='no'>first_blood_isolate</span> <span class='kw'>&lt;-</span>
-  <span class='fu'>first_isolate</span>(<span class='no'>tbl</span>,
+<span class='no'>x</span>$<span class='no'>first_blood_isolate</span> <span class='kw'>&lt;-</span>
+  <span class='fu'>first_isolate</span>(<span class='no'>x</span>,
                 <span class='kw'>specimen_group</span> <span class='kw'>=</span> <span class='st'>'Blood'</span>)
 
-<span class='no'>tbl</span>$<span class='no'>first_blood_isolate_weighed</span> <span class='kw'>&lt;-</span>
-  <span class='fu'>first_isolate</span>(<span class='no'>tbl</span>,
+<span class='no'>x</span>$<span class='no'>first_blood_isolate_weighed</span> <span class='kw'>&lt;-</span>
+  <span class='fu'>first_isolate</span>(<span class='no'>x</span>,
                 <span class='kw'>specimen_group</span> <span class='kw'>=</span> <span class='st'>'Blood'</span>,
                 <span class='kw'>col_keyantibiotics</span> <span class='kw'>=</span> <span class='st'>'keyab'</span>)
 
-<span class='no'>tbl</span>$<span class='no'>first_urine_isolate</span> <span class='kw'>&lt;-</span>
-  <span class='fu'>first_isolate</span>(<span class='no'>tbl</span>,
+<span class='no'>x</span>$<span class='no'>first_urine_isolate</span> <span class='kw'>&lt;-</span>
+  <span class='fu'>first_isolate</span>(<span class='no'>x</span>,
                 <span class='kw'>specimen_group</span> <span class='kw'>=</span> <span class='st'>'Urine'</span>)
 
-<span class='no'>tbl</span>$<span class='no'>first_urine_isolate_weighed</span> <span class='kw'>&lt;-</span>
-  <span class='fu'>first_isolate</span>(<span class='no'>tbl</span>,
+<span class='no'>x</span>$<span class='no'>first_urine_isolate_weighed</span> <span class='kw'>&lt;-</span>
+  <span class='fu'>first_isolate</span>(<span class='no'>x</span>,
                 <span class='kw'>specimen_group</span> <span class='kw'>=</span> <span class='st'>'Urine'</span>,
                 <span class='kw'>col_keyantibiotics</span> <span class='kw'>=</span> <span class='st'>'keyab'</span>)
 
-<span class='no'>tbl</span>$<span class='no'>first_resp_isolate</span> <span class='kw'>&lt;-</span>
-  <span class='fu'>first_isolate</span>(<span class='no'>tbl</span>,
+<span class='no'>x</span>$<span class='no'>first_resp_isolate</span> <span class='kw'>&lt;-</span>
+  <span class='fu'>first_isolate</span>(<span class='no'>x</span>,
                 <span class='kw'>specimen_group</span> <span class='kw'>=</span> <span class='st'>'Respiratory'</span>)
 
-<span class='no'>tbl</span>$<span class='no'>first_resp_isolate_weighed</span> <span class='kw'>&lt;-</span>
-  <span class='fu'>first_isolate</span>(<span class='no'>tbl</span>,
+<span class='no'>x</span>$<span class='no'>first_resp_isolate_weighed</span> <span class='kw'>&lt;-</span>
+  <span class='fu'>first_isolate</span>(<span class='no'>x</span>,
                 <span class='kw'>specimen_group</span> <span class='kw'>=</span> <span class='st'>'Respiratory'</span>,
                 <span class='kw'>col_keyantibiotics</span> <span class='kw'>=</span> <span class='st'>'keyab'</span>)
 <span class='co'># }</span></pre>

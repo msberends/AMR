@@ -25,10 +25,11 @@
 * This package now honours the new EUCAST insight (2019) that S and I are but classified as susceptible, where I is defined as 'increased exposure' and not 'intermediate' anymore. For functions like `portion_df()` and `count_df()` this means that their new parameter `combine_SI` is TRUE at default.
 * Removed deprecated functions `guess_mo()`, `guess_atc()`, `EUCAST_rules()`, `interpretive_reading()`, `rsi()`
 * Frequency tables of microbial IDs speed improvement
-* Removed all hardcoded EUCAST rules and replaced them with a new reference file: `./inst/eucast/eucast.tsv`.
+* Removed all hardcoded EUCAST rules and replaced them with a new reference file: `./inst/eucast/eucast.tsv`
 * Added ceftazidim intrinsic resistance to *Streptococci*
-* Changed default settings for `age_groups()`, to let groups of fives and tens end with 100+ instead of 120+.
-* Fix for `freq()` for when all values are `NA`.
+* Changed default settings for `age_groups()`, to let groups of fives and tens end with 100+ instead of 120+
+* Fix for `freq()` for when all values are `NA`
+* Fix for `first_isolate()` for when dates are missing
 
 #### Other
 * Support for R 3.6.0

@@ -42,8 +42,11 @@ test_that("as.ab works", {
 
   expect_warning(as.ab("Z00ZZ00")) # not yet available in data set
   expect_warning(as.ab("UNKNOWN"))
+  expect_warning(as.ab(""))
 
   expect_output(print(as.ab("amox")))
+
+  expect_identical(class(pull(antibiotics, ab)), "ab")
 
   # first 5 chars of official name
   expect_equal(as.character(as.atc(c("nitro", "cipro"))),
@@ -52,5 +55,8 @@ test_that("as.ab works", {
   # EARS-Net
   expect_equal(as.character(as.atc("AMX")),
                "J01CA04")
+
+  expect_equal(as.character(as.ab("Phloxapen")),
+               "FLC")
 
 })
