@@ -241,15 +241,15 @@
     
     </div>
 
-    <pre class="usage"><span class='fu'>resistance_predict</span>(<span class='no'>tbl</span>, <span class='no'>col_ab</span>, <span class='kw'>col_date</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>year_min</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+    <pre class="usage"><span class='fu'>resistance_predict</span>(<span class='no'>x</span>, <span class='no'>col_ab</span>, <span class='kw'>col_date</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>year_min</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>year_max</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>year_every</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>minimum</span> <span class='kw'>=</span> <span class='fl'>30</span>,
-  <span class='kw'>model</span> <span class='kw'>=</span> <span class='st'>"binomial"</span>, <span class='kw'>I_as_R</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>preserve_measurements</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>info</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+  <span class='kw'>model</span> <span class='kw'>=</span> <span class='st'>"binomial"</span>, <span class='kw'>I_as_S</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>preserve_measurements</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>info</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>...</span>)
 
-<span class='fu'>rsi_predict</span>(<span class='no'>tbl</span>, <span class='no'>col_ab</span>, <span class='kw'>col_date</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>year_min</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+<span class='fu'>rsi_predict</span>(<span class='no'>x</span>, <span class='no'>col_ab</span>, <span class='kw'>col_date</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>year_min</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>year_max</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>year_every</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>minimum</span> <span class='kw'>=</span> <span class='fl'>30</span>,
-  <span class='kw'>model</span> <span class='kw'>=</span> <span class='st'>"binomial"</span>, <span class='kw'>I_as_R</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>preserve_measurements</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>info</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+  <span class='kw'>model</span> <span class='kw'>=</span> <span class='st'>"binomial"</span>, <span class='kw'>I_as_S</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>preserve_measurements</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>info</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>...</span>)
 
 <span class='co'># S3 method for resistance_predict</span>
 <span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/plot'>plot</a></span>(<span class='no'>x</span>,
@@ -262,8 +262,12 @@
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
+      <th>x</th>
+      <td><p>a <code>data.frame</code> containing isolates.</p></td>
+    </tr>
+    <tr>
       <th>col_ab</th>
-      <td><p>column name of <code>tbl</code> with antimicrobial interpretations (<code>R</code>, <code>I</code> and <code>S</code>)</p></td>
+      <td><p>column name of <code>x</code> with antimicrobial interpretations (<code>R</code>, <code>I</code> and <code>S</code>)</p></td>
     </tr>
     <tr>
       <th>col_date</th>
@@ -290,8 +294,8 @@
       <td><p>the statistical model of choice. Defaults to a generalised linear regression model with binomial distribution, assuming that a period of zero resistance was followed by a period of increasing resistance leading slowly to more and more resistance. See Details for valid options.</p></td>
     </tr>
     <tr>
-      <th>I_as_R</th>
-      <td><p>a logical to indicate whether values <code>I</code> should be treated as <code>R</code></p></td>
+      <th>I_as_S</th>
+      <td><p>a logical to indicate whether values <code>I</code> should be treated as <code>S</code></p></td>
     </tr>
     <tr>
       <th>preserve_measurements</th>
@@ -302,16 +306,12 @@
       <td><p>a logical to indicate whether textual analysis should be printed with the name and <code><a href='https://www.rdocumentation.org/packages/base/topics/summary'>summary</a></code> of the statistical model.</p></td>
     </tr>
     <tr>
-      <th>x</th>
-      <td><p>a <code>data.frame</code> containing isolates.</p></td>
+      <th>...</th>
+      <td><p>parameters passed on to functions</p></td>
     </tr>
     <tr>
       <th>main</th>
       <td><p>title of the plot</p></td>
-    </tr>
-    <tr>
-      <th>...</th>
-      <td><p>parameters passed on to the <code>first_isolate</code> function</p></td>
     </tr>
     <tr>
       <th>ribbon</th>

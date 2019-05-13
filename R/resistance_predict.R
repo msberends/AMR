@@ -22,20 +22,21 @@
 #' Predict antimicrobial resistance
 #'
 #' Create a prediction model to predict antimicrobial resistance for the next years on statistical solid ground. Standard errors (SE) will be returned as columns \code{se_min} and \code{se_max}. See Examples for a real live example.
-#' @inheritParams first_isolate
-#' @inheritParams graphics::plot
-#' @param col_ab column name of \code{tbl} with antimicrobial interpretations (\code{R}, \code{I} and \code{S})
+#' @param col_ab column name of \code{x} with antimicrobial interpretations (\code{R}, \code{I} and \code{S})
 #' @param col_date column name of the date, will be used to calculate years if this column doesn't consist of years already, defaults to the first column of with a date class
 #' @param year_min lowest year to use in the prediction model, dafaults to the lowest year in \code{col_date}
 #' @param year_max highest year to use in the prediction model, defaults to 10 years after today
 #' @param year_every unit of sequence between lowest year found in the data and \code{year_max}
 #' @param minimum minimal amount of available isolates per year to include. Years containing less observations will be estimated by the model.
 #' @param model the statistical model of choice. Defaults to a generalised linear regression model with binomial distribution, assuming that a period of zero resistance was followed by a period of increasing resistance leading slowly to more and more resistance. See Details for valid options.
-#' @param I_as_R a logical to indicate whether values \code{I} should be treated as \code{R}
+#' @param I_as_S a logical to indicate whether values \code{I} should be treated as \code{S}
 #' @param preserve_measurements a logical to indicate whether predictions of years that are actually available in the data should be overwritten by the original data. The standard errors of those years will be \code{NA}.
 #' @param info a logical to indicate whether textual analysis should be printed with the name and \code{\link{summary}} of the statistical model.
 #' @param main title of the plot
 #' @param ribbon a logical to indicate whether a ribbon should be shown (default) or error bars
+#' @param ... parameters passed on to functions
+#' @inheritParams first_isolate
+#' @inheritParams graphics::plot
 #' @details Valid options for the statistical model are:
 #' \itemize{
 #'   \item{\code{"binomial"} or \code{"binom"} or \code{"logit"}: a generalised linear regression model with binomial distribution}
@@ -104,7 +105,7 @@
 #'          x = "Year") +
 #'     theme_minimal(base_size = 13)
 #' }
-resistance_predict <- function(tbl,
+resistance_predict <- function(x,
                                col_ab,
                                col_date = NULL,
                                year_min = NULL,
@@ -112,33 +113,46 @@ resistance_predict <- function(tbl,
                                year_every = 1,
                                minimum = 30,
                                model = 'binomial',
-                               I_as_R = TRUE,
+                               I_as_S = TRUE,
                                preserve_measurements = TRUE,
-                               info = TRUE) {
+                               info = TRUE,
+                               ...) {
 
-  if (nrow(tbl) == 0) {
+  if (nrow(x) == 0) {
     stop('This table does not contain any observations.')
   }
 
-  if (!col_ab %in% colnames(tbl)) {
+  if (!col_ab %in% colnames(x)) {
     stop('Column ', col_ab, ' not found.')
+  }
+
+  dots <- unlist(list(...))
+  if (length(dots) != 0) {
+    # backwards compatibility with old parameters
+    dots.names <- dots %>% names()
+    if ('tbl' %in% dots.names) {
+      x <- dots[which(dots.names == 'tbl')]
+    }
+    if ('I_as_R' %in% dots.names) {
+      warning("`I_as_R is deprecated - use I_as_S instead.", call. = FALSE)
+    }
   }
 
   # -- date
   if (is.null(col_date)) {
-    col_date <- search_type_in_df(tbl = tbl, type = "date")
+    col_date <- search_type_in_df(tbl = x, type = "date")
   }
   if (is.null(col_date)) {
     stop("`col_date` must be set.", call. = FALSE)
   }
 
-  if (!col_date %in% colnames(tbl)) {
+  if (!col_date %in% colnames(x)) {
     stop('Column ', col_date, ' not found.')
   }
 
-  if (n_groups(tbl) > 1) {
+  if (n_groups(x) > 1) {
     # no grouped tibbles please, mutate will throw errors
-    tbl <- base::as.data.frame(tbl, stringsAsFactors = FALSE)
+    x <- base::as.data.frame(x, stringsAsFactors = FALSE)
   }
 
   year <- function(x) {
@@ -149,14 +163,15 @@ resistance_predict <- function(tbl,
     }
   }
 
-  df <- tbl %>%
+  df <- x %>%
     mutate_at(col_ab, as.rsi) %>%
     mutate_at(col_ab, droplevels) %>%
     mutate_at(col_ab, funs(
-      if (I_as_R == TRUE) {
-        gsub("I", "R", .)
-      } else {
+      if (I_as_S == TRUE) {
         gsub("I", "S", .)
+      } else {
+        # then I as R
+        gsub("I", "R", .)
       }
       )) %>%
     filter_at(col_ab, all_vars(!is.na(.))) %>%
@@ -289,7 +304,7 @@ resistance_predict <- function(tbl,
   structure(
     .Data = df_prediction,
     class = c("resistance_predict", "data.frame"),
-    I_as_R = I_as_R,
+    I_as_S = I_as_S,
     model_title = model,
     model = model_lm,
     ab = col_ab
@@ -306,10 +321,10 @@ rsi_predict <- resistance_predict
 #' @importFrom graphics plot axis arrows points
 #' @rdname resistance_predict
 plot.resistance_predict <- function(x, main = paste("Resistance prediction of", attributes(x)$ab), ...) {
-  if (attributes(x)$I_as_R == TRUE) {
-    ylab <- "%IR"
-  } else {
+  if (attributes(x)$I_as_S == TRUE) {
     ylab <- "%R"
+  } else {
+    ylab <- "%IR"
   }
   plot(x = x$year,
        y = x$value,
@@ -352,10 +367,10 @@ ggplot_rsi_predict <- function(x,
     stop("`x` must be a resistance prediction model created with resistance_predict().")
   }
 
-  if (attributes(x)$I_as_R == TRUE) {
-    ylab <- "%IR"
-  } else {
+  if (attributes(x)$I_as_S == TRUE) {
     ylab <- "%R"
+  } else {
+    ylab <- "%IR"
   }
 
   p <- ggplot2::ggplot(x, ggplot2::aes(x = year, y = value)) +

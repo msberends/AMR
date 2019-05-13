@@ -7,15 +7,15 @@
 \alias{ggplot_rsi_predict}
 \title{Predict antimicrobial resistance}
 \usage{
-resistance_predict(tbl, col_ab, col_date = NULL, year_min = NULL,
+resistance_predict(x, col_ab, col_date = NULL, year_min = NULL,
   year_max = NULL, year_every = 1, minimum = 30,
-  model = "binomial", I_as_R = TRUE, preserve_measurements = TRUE,
-  info = TRUE)
+  model = "binomial", I_as_S = TRUE, preserve_measurements = TRUE,
+  info = TRUE, ...)
 
-rsi_predict(tbl, col_ab, col_date = NULL, year_min = NULL,
+rsi_predict(x, col_ab, col_date = NULL, year_min = NULL,
   year_max = NULL, year_every = 1, minimum = 30,
-  model = "binomial", I_as_R = TRUE, preserve_measurements = TRUE,
-  info = TRUE)
+  model = "binomial", I_as_S = TRUE, preserve_measurements = TRUE,
+  info = TRUE, ...)
 
 \method{plot}{resistance_predict}(x,
   main = paste("Resistance prediction of", attributes(x)$ab), ...)
@@ -24,7 +24,9 @@ ggplot_rsi_predict(x, main = paste("Resistance prediction of",
   attributes(x)$ab), ribbon = TRUE, ...)
 }
 \arguments{
-\item{col_ab}{column name of \code{tbl} with antimicrobial interpretations (\code{R}, \code{I} and \code{S})}
+\item{x}{a \code{data.frame} containing isolates.}
+
+\item{col_ab}{column name of \code{x} with antimicrobial interpretations (\code{R}, \code{I} and \code{S})}
 
 \item{col_date}{column name of the date, will be used to calculate years if this column doesn't consist of years already, defaults to the first column of with a date class}
 
@@ -38,17 +40,15 @@ ggplot_rsi_predict(x, main = paste("Resistance prediction of",
 
 \item{model}{the statistical model of choice. Defaults to a generalised linear regression model with binomial distribution, assuming that a period of zero resistance was followed by a period of increasing resistance leading slowly to more and more resistance. See Details for valid options.}
 
-\item{I_as_R}{a logical to indicate whether values \code{I} should be treated as \code{R}}
+\item{I_as_S}{a logical to indicate whether values \code{I} should be treated as \code{S}}
 
 \item{preserve_measurements}{a logical to indicate whether predictions of years that are actually available in the data should be overwritten by the original data. The standard errors of those years will be \code{NA}.}
 
 \item{info}{a logical to indicate whether textual analysis should be printed with the name and \code{\link{summary}} of the statistical model.}
 
-\item{x}{a \code{data.frame} containing isolates.}
+\item{...}{parameters passed on to functions}
 
 \item{main}{title of the plot}
-
-\item{...}{parameters passed on to the \code{first_isolate} function}
 
 \item{ribbon}{a logical to indicate whether a ribbon should be shown (default) or error bars}
 }
