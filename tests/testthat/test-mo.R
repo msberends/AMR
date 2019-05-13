@@ -202,7 +202,7 @@ test_that("as.mo works", {
   expect_warning(as.mo("esco extra_text", allow_uncertain = TRUE))
   expect_equal(suppressWarnings(as.character(as.mo("unexisting aureus", allow_uncertain = 3))), "B_STPHY_AUR")
   expect_equal(suppressWarnings(as.character(as.mo("unexisting staphy", allow_uncertain = 3))), "B_STPHY")
-  expect_equal(suppressWarnings(as.character(as.mo("Staphylococcus aureus unexisting", allow_uncertain = 3))), "B_STPHY")
+  expect_equal(suppressWarnings(as.character(as.mo("Staphylococcus aureus unexisting", allow_uncertain = 3))), "B_STPHY_AUR")
 
   # predefined reference_df
   expect_equal(as.character(as.mo("TestingOwnID",
