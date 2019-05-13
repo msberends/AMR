@@ -30,6 +30,7 @@
 * Changed default settings for `age_groups()`, to let groups of fives and tens end with 100+ instead of 120+
 * Fix for `freq()` for when all values are `NA`
 * Fix for `first_isolate()` for when dates are missing
+* Improved speed of `guess_ab_col()`
 
 #### Other
 * Support for R 3.6.0

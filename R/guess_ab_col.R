@@ -69,13 +69,18 @@ guess_ab_col <- function(x = NULL, search_string = NULL, verbose = FALSE) {
   if (search_string %in% colnames(x)) {
     ab_result <- search_string
   } else {
-    # sort colnames on length - longest first
-    cols <- colnames(x[, x %>% colnames() %>% nchar() %>% order() %>% rev()])
-    df_trans <- data.frame(cols = cols,
-                           abs = suppressWarnings(as.ab(cols)),
-                           stringsAsFactors = FALSE)
-    ab_result <- df_trans[which(df_trans$abs == as.ab(search_string)), "cols"]
-    ab_result <- ab_result[!is.na(ab_result)][1L]
+    search_string.ab <- suppressWarnings(as.ab(search_string))
+    if (search_string.ab %in% colnames(x)) {
+      ab_result <- colnames(x)[colnames(x) == search_string.ab][1L]
+    } else {
+      # sort colnames on length - longest first
+      cols <- colnames(x[, x %>% colnames() %>% nchar() %>% order() %>% rev()])
+      df_trans <- data.frame(cols = cols,
+                             abs = suppressWarnings(as.ab(cols)),
+                             stringsAsFactors = FALSE)
+      ab_result <- df_trans[which(df_trans$abs == search_string.ab), "cols"]
+      ab_result <- ab_result[!is.na(ab_result)][1L]
+    }
   }
 
   if (length(ab_result) == 0) {

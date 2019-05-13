@@ -192,7 +192,7 @@
       <h1>How to predict antimicrobial resistance</h1>
                         <h4 class="author">Matthijs S. Berends</h4>
             
-            <h4 class="date">12 May 2019</h4>
+            <h4 class="date">13 May 2019</h4>
       
       
       <div class="hidden name"><code>resistance_predict.Rmd</code></div>
@@ -240,52 +240,52 @@
 #&gt; 
 #&gt; Deviance Residuals: 
 #&gt;     Min       1Q   Median       3Q      Max  
-#&gt; -2.9203  -1.3066   0.0166   0.7641   3.1984  
+#&gt; -2.6817  -1.4087  -0.5657   0.9672   3.5728  
 #&gt; 
 #&gt; Coefficients:
 #&gt;               Estimate Std. Error z value Pr(&gt;|z|)    
-#&gt; (Intercept) -222.51053   45.94675  -4.843 1.28e-06 ***
-#&gt; year           0.10973    0.02284   4.805 1.55e-06 ***
+#&gt; (Intercept) -224.39872   48.03354  -4.672 2.99e-06 ***
+#&gt; year           0.11061    0.02388   4.633 3.61e-06 ***
 #&gt; ---
 #&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 #&gt; 
 #&gt; (Dispersion parameter for binomial family taken to be 1)
 #&gt; 
-#&gt;     Null deviance: 59.763  on 14  degrees of freedom
-#&gt; Residual deviance: 35.261  on 13  degrees of freedom
-#&gt; AIC: 93.537
+#&gt;     Null deviance: 61.512  on 14  degrees of freedom
+#&gt; Residual deviance: 38.692  on 13  degrees of freedom
+#&gt; AIC: 95.212
 #&gt; 
 #&gt; Number of Fisher Scoring iterations: 4</code></pre>
 <p>This text is only a printed summary - the actual result (output) of the function is a <code>data.frame</code> containing for each year: the number of observations, the actual observed resistance, the estimated resistance and the standard error below and above the estimation:</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" title="1">predict_TZP</a>
 <a class="sourceLine" id="cb4-2" title="2"><span class="co">#&gt;    year      value    se_min    se_max observations   observed  estimated</span></a>
-<a class="sourceLine" id="cb4-3" title="3"><span class="co">#&gt; 1  2003 0.06250000        NA        NA           32 0.06250000 0.06179057</span></a>
-<a class="sourceLine" id="cb4-4" title="4"><span class="co">#&gt; 2  2004 0.08536585        NA        NA           82 0.08536585 0.06846623</span></a>
-<a class="sourceLine" id="cb4-5" title="5"><span class="co">#&gt; 3  2005 0.10000000        NA        NA           60 0.10000000 0.07580483</span></a>
-<a class="sourceLine" id="cb4-6" title="6"><span class="co">#&gt; 4  2006 0.05084746        NA        NA           59 0.05084746 0.08385921</span></a>
-<a class="sourceLine" id="cb4-7" title="7"><span class="co">#&gt; 5  2007 0.12121212        NA        NA           66 0.12121212 0.09268356</span></a>
-<a class="sourceLine" id="cb4-8" title="8"><span class="co">#&gt; 6  2008 0.04166667        NA        NA           72 0.04166667 0.10233276</span></a>
-<a class="sourceLine" id="cb4-9" title="9"><span class="co">#&gt; 7  2009 0.01639344        NA        NA           61 0.01639344 0.11286156</span></a>
-<a class="sourceLine" id="cb4-10" title="10"><span class="co">#&gt; 8  2010 0.09433962        NA        NA           53 0.09433962 0.12432363</span></a>
-<a class="sourceLine" id="cb4-11" title="11"><span class="co">#&gt; 9  2011 0.18279570        NA        NA           93 0.18279570 0.13677030</span></a>
-<a class="sourceLine" id="cb4-12" title="12"><span class="co">#&gt; 10 2012 0.30769231        NA        NA           65 0.30769231 0.15024926</span></a>
-<a class="sourceLine" id="cb4-13" title="13"><span class="co">#&gt; 11 2013 0.08620690        NA        NA           58 0.08620690 0.16480299</span></a>
-<a class="sourceLine" id="cb4-14" title="14"><span class="co">#&gt; 12 2014 0.15000000        NA        NA           60 0.15000000 0.18046706</span></a>
-<a class="sourceLine" id="cb4-15" title="15"><span class="co">#&gt; 13 2015 0.27272727        NA        NA           55 0.27272727 0.19726831</span></a>
-<a class="sourceLine" id="cb4-16" title="16"><span class="co">#&gt; 14 2016 0.25000000        NA        NA           84 0.25000000 0.21522295</span></a>
-<a class="sourceLine" id="cb4-17" title="17"><span class="co">#&gt; 15 2017 0.16279070        NA        NA           86 0.16279070 0.23433471</span></a>
-<a class="sourceLine" id="cb4-18" title="18"><span class="co">#&gt; 16 2018 0.25459302 0.2223385 0.2868476           NA         NA 0.25459302</span></a>
-<a class="sourceLine" id="cb4-19" title="19"><span class="co">#&gt; 17 2019 0.27597143 0.2381174 0.3138255           NA         NA 0.27597143</span></a>
-<a class="sourceLine" id="cb4-20" title="20"><span class="co">#&gt; 18 2020 0.29842630 0.2545398 0.3423128           NA         NA 0.29842630</span></a>
-<a class="sourceLine" id="cb4-21" title="21"><span class="co">#&gt; 19 2021 0.32189595 0.2716308 0.3721611           NA         NA 0.32189595</span></a>
-<a class="sourceLine" id="cb4-22" title="22"><span class="co">#&gt; 20 2022 0.34630028 0.2894072 0.4031934           NA         NA 0.34630028</span></a>
-<a class="sourceLine" id="cb4-23" title="23"><span class="co">#&gt; 21 2023 0.37154107 0.3078773 0.4352048           NA         NA 0.37154107</span></a>
-<a class="sourceLine" id="cb4-24" title="24"><span class="co">#&gt; 22 2024 0.39750288 0.3270414 0.4679643           NA         NA 0.39750288</span></a>
-<a class="sourceLine" id="cb4-25" title="25"><span class="co">#&gt; 23 2025 0.42405472 0.3468903 0.5012191           NA         NA 0.42405472</span></a>
-<a class="sourceLine" id="cb4-26" title="26"><span class="co">#&gt; 24 2026 0.45105237 0.3674044 0.5347004           NA         NA 0.45105237</span></a>
-<a class="sourceLine" id="cb4-27" title="27"><span class="co">#&gt; 25 2027 0.47834130 0.3885523 0.5681303           NA         NA 0.47834130</span></a>
-<a class="sourceLine" id="cb4-28" title="28"><span class="co">#&gt; 26 2028 0.50576012 0.4102900 0.6012302           NA         NA 0.50576012</span></a>
-<a class="sourceLine" id="cb4-29" title="29"><span class="co">#&gt; 27 2029 0.53314434 0.4325600 0.6337287           NA         NA 0.53314434</span></a></code></pre></div>
+<a class="sourceLine" id="cb4-3" title="3"><span class="co">#&gt; 1  2003 0.06250000        NA        NA           32 0.06250000 0.05486389</span></a>
+<a class="sourceLine" id="cb4-4" title="4"><span class="co">#&gt; 2  2004 0.08536585        NA        NA           82 0.08536585 0.06089002</span></a>
+<a class="sourceLine" id="cb4-5" title="5"><span class="co">#&gt; 3  2005 0.05000000        NA        NA           60 0.05000000 0.06753075</span></a>
+<a class="sourceLine" id="cb4-6" title="6"><span class="co">#&gt; 4  2006 0.05084746        NA        NA           59 0.05084746 0.07483801</span></a>
+<a class="sourceLine" id="cb4-7" title="7"><span class="co">#&gt; 5  2007 0.12121212        NA        NA           66 0.12121212 0.08286570</span></a>
+<a class="sourceLine" id="cb4-8" title="8"><span class="co">#&gt; 6  2008 0.04166667        NA        NA           72 0.04166667 0.09166918</span></a>
+<a class="sourceLine" id="cb4-9" title="9"><span class="co">#&gt; 7  2009 0.01639344        NA        NA           61 0.01639344 0.10130461</span></a>
+<a class="sourceLine" id="cb4-10" title="10"><span class="co">#&gt; 8  2010 0.05660377        NA        NA           53 0.05660377 0.11182814</span></a>
+<a class="sourceLine" id="cb4-11" title="11"><span class="co">#&gt; 9  2011 0.18279570        NA        NA           93 0.18279570 0.12329488</span></a>
+<a class="sourceLine" id="cb4-12" title="12"><span class="co">#&gt; 10 2012 0.30769231        NA        NA           65 0.30769231 0.13575768</span></a>
+<a class="sourceLine" id="cb4-13" title="13"><span class="co">#&gt; 11 2013 0.06896552        NA        NA           58 0.06896552 0.14926576</span></a>
+<a class="sourceLine" id="cb4-14" title="14"><span class="co">#&gt; 12 2014 0.10000000        NA        NA           60 0.10000000 0.16386307</span></a>
+<a class="sourceLine" id="cb4-15" title="15"><span class="co">#&gt; 13 2015 0.23636364        NA        NA           55 0.23636364 0.17958657</span></a>
+<a class="sourceLine" id="cb4-16" title="16"><span class="co">#&gt; 14 2016 0.22619048        NA        NA           84 0.22619048 0.19646431</span></a>
+<a class="sourceLine" id="cb4-17" title="17"><span class="co">#&gt; 15 2017 0.16279070        NA        NA           86 0.16279070 0.21451350</span></a>
+<a class="sourceLine" id="cb4-18" title="18"><span class="co">#&gt; 16 2018 0.23373852 0.2021578 0.2653193           NA         NA 0.23373852</span></a>
+<a class="sourceLine" id="cb4-19" title="19"><span class="co">#&gt; 17 2019 0.25412909 0.2168525 0.2914057           NA         NA 0.25412909</span></a>
+<a class="sourceLine" id="cb4-20" title="20"><span class="co">#&gt; 18 2020 0.27565854 0.2321869 0.3191302           NA         NA 0.27565854</span></a>
+<a class="sourceLine" id="cb4-21" title="21"><span class="co">#&gt; 19 2021 0.29828252 0.2481942 0.3483709           NA         NA 0.29828252</span></a>
+<a class="sourceLine" id="cb4-22" title="22"><span class="co">#&gt; 20 2022 0.32193804 0.2649008 0.3789753           NA         NA 0.32193804</span></a>
+<a class="sourceLine" id="cb4-23" title="23"><span class="co">#&gt; 21 2023 0.34654311 0.2823269 0.4107593           NA         NA 0.34654311</span></a>
+<a class="sourceLine" id="cb4-24" title="24"><span class="co">#&gt; 22 2024 0.37199700 0.3004860 0.4435080           NA         NA 0.37199700</span></a>
+<a class="sourceLine" id="cb4-25" title="25"><span class="co">#&gt; 23 2025 0.39818127 0.3193839 0.4769787           NA         NA 0.39818127</span></a>
+<a class="sourceLine" id="cb4-26" title="26"><span class="co">#&gt; 24 2026 0.42496142 0.3390173 0.5109056           NA         NA 0.42496142</span></a>
+<a class="sourceLine" id="cb4-27" title="27"><span class="co">#&gt; 25 2027 0.45218939 0.3593720 0.5450068           NA         NA 0.45218939</span></a>
+<a class="sourceLine" id="cb4-28" title="28"><span class="co">#&gt; 26 2028 0.47970658 0.3804212 0.5789920           NA         NA 0.47970658</span></a>
+<a class="sourceLine" id="cb4-29" title="29"><span class="co">#&gt; 27 2029 0.50734745 0.4021241 0.6125708           NA         NA 0.50734745</span></a></code></pre></div>
 <p>The function <code>plot</code> is available in base R, and can be extended by other packages to depend the output based on the type of input. We extended its function to cope with resistance predictions:</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/graphics/topics/plot">plot</a></span>(predict_TZP)</a></code></pre></div>
 <p><img src="resistance_predict_files/figure-html/unnamed-chunk-4-1.png" width="720"></p>
@@ -362,9 +362,9 @@
 <a class="sourceLine" id="cb10-6" title="6"><span class="co">#&gt; Link function: logit</span></a>
 <a class="sourceLine" id="cb10-7" title="7"></a>
 <a class="sourceLine" id="cb10-8" title="8"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/summary">summary</a></span>(model)<span class="op">$</span>coefficients</a>
-<a class="sourceLine" id="cb10-9" title="9"><span class="co">#&gt;                 Estimate  Std. Error   z value     Pr(&gt;|z|)</span></a>
-<a class="sourceLine" id="cb10-10" title="10"><span class="co">#&gt; (Intercept) -222.5105288 45.94675125 -4.842791 1.280277e-06</span></a>
-<a class="sourceLine" id="cb10-11" title="11"><span class="co">#&gt; year           0.1097306  0.02283874  4.804581 1.550761e-06</span></a></code></pre></div>
+<a class="sourceLine" id="cb10-9" title="9"><span class="co">#&gt;                 Estimate Std. Error   z value     Pr(&gt;|z|)</span></a>
+<a class="sourceLine" id="cb10-10" title="10"><span class="co">#&gt; (Intercept) -224.3987194 48.0335384 -4.671709 2.987038e-06</span></a>
+<a class="sourceLine" id="cb10-11" title="11"><span class="co">#&gt; year           0.1106102  0.0238753  4.632831 3.606990e-06</span></a></code></pre></div>
 </div>
 </div>
   </div>

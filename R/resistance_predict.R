@@ -320,7 +320,9 @@ rsi_predict <- resistance_predict
 #' @importFrom dplyr filter
 #' @importFrom graphics plot axis arrows points
 #' @rdname resistance_predict
-plot.resistance_predict <- function(x, main = paste("Resistance prediction of", attributes(x)$ab), ...) {
+plot.resistance_predict <- function(x, main = paste("Resistance Prediction of", x_name), ...) {
+  x_name <- paste0(ab_name(attributes(x)$ab), " (", attributes(x)$ab, ")")
+
   if (attributes(x)$I_as_S == TRUE) {
     ylab <- "%R"
   } else {
@@ -359,13 +361,14 @@ plot.resistance_predict <- function(x, main = paste("Resistance prediction of", 
 #' @importFrom dplyr filter
 #' @export
 ggplot_rsi_predict <- function(x,
-                               main = paste("Resistance prediction of", attributes(x)$ab),
+                               main = paste("Resistance Prediction of", x_name),
                                ribbon = TRUE,
                                ...) {
-
   if (!"resistance_predict" %in% class(x)) {
     stop("`x` must be a resistance prediction model created with resistance_predict().")
   }
+
+  x_name <- paste0(ab_name(attributes(x)$ab), " (", attributes(x)$ab, ")")
 
   if (attributes(x)$I_as_S == TRUE) {
     ylab <- "%R"

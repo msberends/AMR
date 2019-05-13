@@ -18,10 +18,10 @@ rsi_predict(x, col_ab, col_date = NULL, year_min = NULL,
   info = TRUE, ...)
 
 \method{plot}{resistance_predict}(x,
-  main = paste("Resistance prediction of", attributes(x)$ab), ...)
+  main = paste("Resistance Prediction of", x_name), ...)
 
-ggplot_rsi_predict(x, main = paste("Resistance prediction of",
-  attributes(x)$ab), ribbon = TRUE, ...)
+ggplot_rsi_predict(x, main = paste("Resistance Prediction of", x_name),
+  ribbon = TRUE, ...)
 }
 \arguments{
 \item{x}{a \code{data.frame} containing isolates.}
