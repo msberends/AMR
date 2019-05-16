@@ -250,7 +250,8 @@ frequency_tbl <- function(x,
     if (length(user_exprs) > 0) {
       new_list <- list(0)
       for (i in 1:length(user_exprs)) {
-        new_list[[i]] <- eval_tidy(user_exprs[[i]], data = x)
+        new_list[[i]] <- tryCatch(eval_tidy(user_exprs[[i]], data = x),
+                                  error = function(e) stop(e$message, call. = FALSE))
         if (length(new_list[[i]]) == 1) {
           if (is.character(new_list[[i]]) & new_list[[i]] %in% colnames(x)) {
             # support septic_patients %>% freq("hospital_id")
@@ -330,8 +331,27 @@ frequency_tbl <- function(x,
     cols <- NULL
     # mult.columns <- 2
   } else {
-    x.name <- NULL
-    cols <- NULL
+    x.name <- deparse(substitute(x))
+    if (x.name %like% "[$]") {
+      cols <- unlist(strsplit(x.name, "$", fixed = TRUE))[2]
+      x.name <- unlist(strsplit(x.name, "$", fixed = TRUE))[1]
+      # try to find the object to determine dimensions
+      x.obj <- tryCatch(get(x.name), error = function(e) NULL)
+      x.name <- paste0("`", x.name , "`")
+      if (!is.null(x.obj)) {
+        x.name <- paste0(x.name,
+                         " (",
+                         x.obj %>%
+                           dim() %>%
+                           format(decimal.mark = decimal.mark, big.mark = big.mark) %>%
+                           trimws() %>%
+                           paste(collapse = " x "),
+                         ")")
+      }
+    } else {
+      x.name <- NULL
+      cols <- NULL
+    }
   }
 
   if (!is.null(ncol(x))) {
@@ -566,7 +586,7 @@ format_header <- function(x, markdown = FALSE, decimal.mark = ".", big.mark = ",
   # rsi
   if (has_length == TRUE & any(x_class == "rsi")) {
     ab <- tryCatch(as.ab(attributes(x)$opt$vars), error = function(e) NA)
-    if (!is.na(ab)) {
+    if (!is.na(ab) & isTRUE(length(ab) > 0)) {
       header$drug <- paste0(ab_name(ab[1L]), " (", ab[1L], ", ", ab_atc(ab[1L]), ")")
       header$group <- ab_group(ab[1L])
     }

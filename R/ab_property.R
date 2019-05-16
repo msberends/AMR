@@ -35,7 +35,7 @@
 #' @name ab_property
 #' @return \itemize{
 #'   \item{An \code{integer} in case of \code{ab_cid}}
-#'   \item{A named \code{list} in case of multiple \code{ab_synonyms}}
+#'   \item{A named \code{list} in case of \code{ab_info} and multiple \code{ab_synonyms}/\code{ab_tradenames}}
 #'   \item{A \code{double} in case of \code{ab_ddd}}
 #'   \item{A \code{character} in all other cases}
 #' }
@@ -63,6 +63,8 @@
 #' ab_ddd("AMX", "oral", units = TRUE) # "g"
 #' ab_ddd("AMX", "iv")                 #  1
 #' ab_ddd("AMX", "iv", units = TRUE)   # "g"
+#'
+#' ab_info("AMX")       # all properties as a list
 #'
 #' # all ab_* functions use as.ab() internally:
 #' ab_name("Fluclox")   # "Flucloxacillin"
@@ -113,20 +115,20 @@ ab_tradenames <- function(x, ...) {
 
 #' @rdname ab_property
 #' @export
-ab_group <- function(x, ...) {
-  ab_validate(x = x, property = "group", ...)
+ab_group <- function(x, language = get_locale(), ...) {
+  t(ab_validate(x = x, property = "group", ...), language = language)
 }
 
 #' @rdname ab_property
 #' @export
-ab_atc_group1 <- function(x, ...) {
-  ab_validate(x = x, property = "atc_group1", ...)
+ab_atc_group1 <- function(x, language = get_locale(), ...) {
+  t(ab_validate(x = x, property = "atc_group1", ...), language = language)
 }
 
 #' @rdname ab_property
 #' @export
-ab_atc_group2 <- function(x, ...) {
-  ab_validate(x = x, property = "atc_group2", ...)
+ab_atc_group2 <- function(x, language = get_locale(), ...) {
+  t(ab_validate(x = x, property = "atc_group2", ...), language = language)
 }
 
 #' @rdname ab_property
@@ -142,6 +144,22 @@ ab_ddd <- function(x, administration = "oral", units = FALSE, ...) {
     ddd_prop <- paste0(ddd_prop, "_ddd")
   }
   ab_validate(x = x, property = ddd_prop, ...)
+}
+
+ab_info <- function(x, language = get_locale(), ...) {
+  x <- AMR::as.ab(x, ...)
+  base::list(ab = x,
+             atc = ab_atc(x),
+             cid = ab_cid(x),
+             name = ab_name(x, language = language),
+             group = ab_group(x, language = language),
+             atc_group1 = ab_atc_group1(x, language = language),
+             atc_group2 = ab_atc_group2(x, language = language),
+             tradenames = ab_tradenames(x),
+             ddd = list(oral = list(amount = ab_ddd(x, administration = "oral", units = FALSE),
+                                    units = ab_ddd(x, administration = "oral", units = TRUE)),
+                        iv = list(amount = ab_ddd(x, administration = "iv", units = FALSE),
+                                  units = ab_ddd(x, administration = "iv", units = TRUE))))
 }
 
 #' @rdname ab_property
@@ -169,8 +187,8 @@ ab_validate <- function(x, property, ...) {
            error = function(e) stop(e$message, call. = FALSE))
 
   if (!all(x %in% AMR::antibiotics[, property])) {
-    x <- data.frame(ab = as.ab(x), stringsAsFactors = FALSE) %>%
-      left_join(antibiotics %>% select(c("ab", property)), by = "ab") %>%
+    x <- data.frame(ab = AMR::as.ab(x), stringsAsFactors = FALSE) %>%
+      left_join(AMR::antibiotics, by = "ab") %>%
       pull(property)
   }
   if (property %in% c("ab", "atc")) {

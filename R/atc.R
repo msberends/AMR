@@ -33,7 +33,7 @@
 #'
 #' In the ATC classification system, the active substances are classified in a hierarchy with five different levels.  The system has fourteen main anatomical/pharmacological groups or 1st levels. Each ATC main group is divided into 2nd levels which could be either pharmacological or therapeutic groups.  The 3rd and 4th levels are chemical, pharmacological or therapeutic subgroups and the 5th level is the chemical substance.  The 2nd, 3rd and 4th levels are often used to identify pharmacological subgroups when that is considered more appropriate than therapeutic or chemical subgroups.
 #'   Source: \url{https://www.whocc.no/atc/structure_and_principles/}
-#' @return Character (vector) with class \code{"act"}. Unknown values will return \code{NA}.
+#' @return Character (vector) with class \code{"atc"}. Unknown values will return \code{NA}.
 #' @seealso \code{\link{antibiotics}} for the dataframe that is being used to determine ATCs.
 #' @inheritSection AMR Read more on our website!
 #' @examples

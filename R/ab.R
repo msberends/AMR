@@ -52,7 +52,7 @@
 #' as.ab("   eryt 123")
 #' as.ab("ERYT")
 #' as.ab("ERY")
-#' as.ab("erytromicine") # spelled wrong
+#' as.ab("eritromicine") # spelled wrong, yet works
 #' as.ab("Erythrocin")   # trade name
 #' as.ab("Romycin")      # trade name
 #'
@@ -64,13 +64,20 @@ as.ab <- function(x) {
   if (is.ab(x)) {
     return(x)
   }
+
+  if (all(toupper(x) %in% AMR::antibiotics$ab)) {
+    # valid AB code, but not yet right class
+    return(structure(.Data = toupper(x),
+                     class = "ab"))
+  }
+
   x_bak <- x
   # remove suffices
-  x_bak_clean <- gsub("_(mic|rsi|disk|disc)$", "", x)
+  x_bak_clean <- gsub("_(mic|rsi|disk|disc)$", "", x, ignore.case = TRUE)
   # remove disk concentrations, like LVX_NM -> LVX
   x_bak_clean <- gsub("_[A-Z]{2}[0-9_]{0,3}$", "", x_bak_clean, ignore.case = TRUE)
   # clean rest of it
-  x_bak_clean <- gsub("[^a-zA-Z0-9/-]", "", x_bak_clean)
+  x_bak_clean <- gsub("[^A-Z0-9/-]", "", x_bak_clean, ignore.case = TRUE)
   # keep only a-z when it's not an ATC code or only numbers
   x_bak_clean[!x_bak_clean %like% "^([A-Z][0-9]{2}[A-Z]{2}[0-9]{2}|[0-9]+)$"] <- gsub("[^a-zA-Z]+",
                                                                                       "",
@@ -156,19 +163,25 @@ as.ab <- function(x) {
       x_unknown <- c(x_unknown, x_bak[x[i] == x_bak_clean][1])
       next
     }
-    x_spelling <- x[i]
-    x_spelling <- gsub("[iy]+", "[iy]+", x_spelling, ignore.case = TRUE)
-    x_spelling <- gsub("[sz]+", "[sz]+", x_spelling, ignore.case = TRUE)
-    x_spelling <- gsub("(c|k|q|qu)+", "(c|k|q|qu)+", x_spelling, ignore.case = TRUE)
-    x_spelling <- gsub("(ph|f|v)+", "(ph|f|v)+", x_spelling, ignore.case = TRUE)
-    x_spelling <- gsub("(th|t)+", "(th|t)+", x_spelling, ignore.case = TRUE)
-    x_spelling <- gsub("a+", "a+", x_spelling, ignore.case = TRUE)
-    x_spelling <- gsub("e+", "e+", x_spelling, ignore.case = TRUE)
-    x_spelling <- gsub("o+", "o+", x_spelling, ignore.case = TRUE)
+    x_spelling <- tolower(x[i])
+    x_spelling <- gsub("[iy]+", "[iy]+", x_spelling)
+    x_spelling <- gsub("[sz]+", "[sz]+", x_spelling)
+    x_spelling <- gsub("(c|k|q|qu)+", "(c|k|q|qu)+", x_spelling)
+    x_spelling <- gsub("(ph|f|v)+", "(ph|f|v)+", x_spelling)
+    x_spelling <- gsub("(th|t)+", "(th|t)+", x_spelling)
+    x_spelling <- gsub("(x|ks)+", "(x|ks)+", x_spelling)
+    x_spelling <- gsub("a+", "a+", x_spelling)
+    x_spelling <- gsub("e+", "e+", x_spelling)
+    x_spelling <- gsub("o+", "o+", x_spelling)
+    # allow start with C/S/Z
+    x_spelling <- gsub("^(\\(c\\|k\\|q\\|qu\\)|\\[sz\\])", "(c|k|q|qu|s|z)", x_spelling)
+    x_spelling <- gsub("(c|k|q|qu)+[sz]", "(c|k|q|qu|s|x|z)", x_spelling, fixed = TRUE)
     # allow any ending of -in/-ine and -im/-ime
-    x_spelling <- gsub("(\\[iy\\]\\+(n|m)|\\[iy\\]\\+(n|m)e\\+)$", "[iy]+(n|m)e*", x_spelling, ignore.case = TRUE)
+    x_spelling <- gsub("(\\[iy\\]\\+(n|m)|\\[iy\\]\\+(n|m)e\\+)$", "[iy]+(n|m)e*", x_spelling)
     # allow any ending of -ol/-ole
-    x_spelling <- gsub("(o\\+l|o\\+le\\+)$", "o+le*", x_spelling, ignore.case = TRUE)
+    x_spelling <- gsub("(o\\+l|o\\+le\\+)$", "o+le*", x_spelling)
+    # allow any ending of -on/-one
+    x_spelling <- gsub("(o\\+n|o\\+ne\\+)$", "o+ne*", x_spelling)
     # try if name starts with it
     found <- AMR::antibiotics[which(AMR::antibiotics$name %like% paste0("^", x_spelling)),]$ab
     if (length(found) > 0) {
@@ -203,11 +216,15 @@ as.ab <- function(x) {
     left_join(data.frame(x = x, x_new = x_new, stringsAsFactors = FALSE), by = "x") %>%
     pull(x_new)
 
+  if (length(x_result) == 0) {
+    x_result <- NA_character_
+  }
+
   structure(.Data = x_result,
             class = "ab")
 }
 
-#' @rdname as.atc
+#' @rdname as.ab
 #' @export
 is.ab <- function(x) {
   identical(class(x), "ab")

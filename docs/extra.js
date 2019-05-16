@@ -67,6 +67,8 @@ $( document ).ready(function() {
       x = x.replace("Alex", "Prof Dr Alex");
       x = x.replace("Bhanu", "Prof Dr Bhanu");
       x = x.replace(/Author, thesis advisor/g, "Doctoral advisor");
+      x = x.replace(/Author, maintainer./g, "");
+      x = x.replace(/Author./g, "");
     }
     return(x);
   }

@@ -40,7 +40,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.6.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.6.1.9003</span>
       </span>
     </div>
 
@@ -105,7 +105,7 @@
       </a>
     </li>
     <li>
-      <a href="../reference/atc_property.html">
+      <a href="../reference/ab_property.html">
         <span class="fa fa-capsules"></span>
          
         Get properties of an antibiotic
@@ -192,7 +192,7 @@
       <h1>How to work with WHONET data</h1>
                         <h4 class="author">Matthijs S. Berends</h4>
             
-            <h4 class="date">27 March 2019</h4>
+            <h4 class="date">16 May 2019</h4>
       
       
       <div class="hidden name"><code>WHONET.Rmd</code></div>
@@ -336,12 +336,13 @@ Species: 38</p>
 <a class="sourceLine" id="cb5-3" title="3"><span class="co"># amoxicillin/clavulanic acid (J01CR02) as an example</span></a>
 <a class="sourceLine" id="cb5-4" title="4">data <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="../reference/freq.html">freq</a></span>(AMC_ND2)</a></code></pre></div>
 <p><strong>Frequency table of <code>AMC_ND2</code> from a <code>data.frame</code> (500 x 54)</strong></p>
-<pre><code># Warning: These values could not be coerced to a valid atc: "AMCND".</code></pre>
 <p>Class: <code>factor</code> &gt; <code>ordered</code> &gt; <code>rsi</code> (<code>numeric</code>)<br>
 Length: 500 (of which NA: 19 = 3.80%)<br>
 Levels: 3: <code>S</code> &lt; <code>I</code> &lt; <code>R</code><br>
 Unique: 3</p>
-<p>%IR: 25.99%</p>
+<p>Drug: Amoxicillin/clavulanic acid (AMC, J01CR02)<br>
+Group: Beta-lactams/penicillins<br>
+%SI: 78.59%</p>
 <table class="table">
 <thead><tr class="header">
 <th align="left"></th>

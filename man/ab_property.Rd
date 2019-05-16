@@ -23,11 +23,11 @@ ab_synonyms(x, ...)
 
 ab_tradenames(x, ...)
 
-ab_group(x, ...)
+ab_group(x, language = get_locale(), ...)
 
-ab_atc_group1(x, ...)
+ab_atc_group1(x, language = get_locale(), ...)
 
-ab_atc_group2(x, ...)
+ab_atc_group2(x, language = get_locale(), ...)
 
 ab_ddd(x, administration = "oral", units = FALSE, ...)
 
@@ -51,7 +51,7 @@ ab_property(x, property = "name", language = get_locale(), ...)
 \value{
 \itemize{
   \item{An \code{integer} in case of \code{ab_cid}}
-  \item{A named \code{list} in case of multiple \code{ab_synonyms}}
+  \item{A named \code{list} in case of \code{ab_info} and multiple \code{ab_synonyms}/\code{ab_tradenames}}
   \item{A \code{double} in case of \code{ab_ddd}}
   \item{A \code{character} in all other cases}
 }
@@ -97,6 +97,8 @@ ab_ddd("AMX", "oral")               #  1
 ab_ddd("AMX", "oral", units = TRUE) # "g"
 ab_ddd("AMX", "iv")                 #  1
 ab_ddd("AMX", "iv", units = TRUE)   # "g"
+
+ab_info("AMX")       # all properties as a list
 
 # all ab_* functions use as.ab() internally:
 ab_name("Fluclox")   # "Flucloxacillin"

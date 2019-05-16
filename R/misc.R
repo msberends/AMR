@@ -390,9 +390,12 @@ t <- function(from, language = get_locale()) {
   df_trans$fixed[is.na(df_trans$fixed)] <- TRUE
 
   # check if text to look for is in one of the patterns
-  pattern_total <- tryCatch(paste0("(", paste(df_trans$pattern, collapse = "|"), ")"),
-                            error = "")
-  if (NROW(df_trans) == 0 | !any(from %like% pattern_total)) {
+  any_form_in_patterns <- tryCatch(any(from %like% paste0("(", paste(df_trans$pattern, collapse = "|"), ")")),
+                                   error = function(e) {
+                                     warning("Translation not possible. Please open an issue on GitLab (https://gitlab.com/msberends/AMR/issues) or GitHub (https://github.com/msberends/AMR/issues).", call. = FALSE)
+                                     return(FALSE)
+                                   })
+  if (NROW(df_trans) == 0 | !any_form_in_patterns) {
     return(from)
   }
 

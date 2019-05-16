@@ -49,6 +49,8 @@ test_that("ab_property works", {
   expect_identical(ab_name(x = c("AMC", "PLB"), tolower = TRUE),
                    c("amoxicillin/clavulanic acid", "polymyxin B"))
 
+  expect_equal(class(ab_info("AMX")), "list")
+
   expect_error(ab_property("amox", "invalid property"))
   expect_error(ab_name("amox", language = "INVALID"))
   expect_output(print(ab_name("amox", language = NULL)))

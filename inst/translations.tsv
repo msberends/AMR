@@ -191,7 +191,7 @@ nl	Cefmetazole	Cefmetazol
 nl	Cefodizime	Cefodizim
 nl	Cefonicid	Cefonicide
 nl	Cefoperazone	Cefoperazon
-nl	Cefoperazone/beta-lactamase inhibitor	Cefoperazon combinatiepreparaten
+nl	Cefoperazone/beta-lactamase inhibitor	Cefoperazon/enzymremmer
 nl	Cefotaxime	Cefotaxim
 nl	Cefoxitin	Cefoxitine
 nl	Cefpirome	Cefpirom
@@ -297,8 +297,8 @@ nl	Quinupristin/dalfopristin	Quinupristine/dalfopristine
 nl	Ribostamycin	Ribostamycine
 nl	Rifabutin	Rifabutine
 nl	Rifampicin	Rifampicine
-nl	Rifampicin, pyrazinamide, ethambutol/isoniazid	Rifampicine/pyrazinamide, ethambutol en isoniazide
-nl	Rifampicin, pyrazinamide/isoniazid	Rifampicine/pyrazinamide en isoniazide
+nl	Rifampicin/pyrazinamide/ethambutol/isoniazid	Rifampicine/pyrazinamide/ethambutol/isoniazide
+nl	Rifampicin/pyrazinamide/isoniazid	Rifampicine/pyrazinamide/isoniazide
 nl	Rifampicin/isoniazid	Rifampicine/isoniazide
 nl	Rifamycin	Rifamycine
 nl	Rifaximin	Rifaximine
@@ -307,11 +307,11 @@ nl	Rosoxacin	Rosoxacine
 nl	Roxithromycin	Roxitromycine
 nl	Rufloxacin	Rufloxacine
 nl	Sisomicin	Sisomicine
-nl	Sodium aminosalicylate	Aminosalicylzuur,4- (na-zout)
+nl	Sodium aminosalicylate	Aminosalicylzuur
 nl	Sparfloxacin	Sparfloxacine
 nl	Spectinomycin	Spectinomycine
 nl	Spiramycin	Spiramycine
-nl	Spiramycin/metronidazole	Spiramycine/andere antibacteriele middelen
+nl	Spiramycin/metronidazole	Spiramycine/metronidazol
 nl	Staphylococcus immunoglobulin	Stafylokokkenimmunoglobuline
 nl	Streptoduocin	Streptoduocine
 nl	Streptomycin	Streptomycine
@@ -345,7 +345,6 @@ nl	Temocillin	Temocilline
 nl	Tenofovir disoproxil	Tenofovir
 nl	Terizidone	Terizidon
 nl	Thiamphenicol	Thiamfenicol
-nl	Thiamphenicol	Thiamfenicol combinatiepreparaten
 nl	Thioacetazone/isoniazid	Thioacetazon/isoniazide
 nl	Ticarcillin	Ticarcilline
 nl	Ticarcillin/beta-lactamase inhibitor	Ticarcilline/enzymremmer
@@ -355,3 +354,18 @@ nl	Troleandomycin	Troleandomycine
 nl	Trovafloxacin	Trovafloxacine
 nl	Vancomycin	Vancomycine
 nl	Voriconazole	Voriconazol
+nl	Aminoglycosides	Aminoglycosiden	TRUE	FALSE
+nl	Amphenicols	Amfenicolen	TRUE	FALSE
+nl	Antifungals/antimycotics	Antifungica/antimycotica	TRUE	FALSE
+nl	Antimycobacterials	Antimycobacteriele middelen	TRUE	FALSE
+nl	Beta-lactams/penicillins	Beta-lactams/penicillines	TRUE	FALSE
+nl	Cephalosporins (1st gen.)	Cefalosporines (1e gen.)	TRUE	FALSE
+nl	Cephalosporins (2nd gen.)	Cefalosporines (2e gen.)	TRUE	FALSE
+nl	Cephalosporins (3rd gen.)	Cefalosporines (3e gen.)	TRUE	FALSE
+nl	Cephalosporins (4th gen.)	Cefalosporines (4e gen.)	TRUE	FALSE
+nl	Cephalosporins	Cefalosporines	TRUE	FALSE
+nl	Glycopeptides	Glycopeptiden	TRUE	FALSE
+nl	Macrolides/lincosamides	Macroliden/lincosamiden	TRUE	FALSE
+nl	Other antibacterials	Overige antibiotica	TRUE	FALSE
+nl	Polymyxins	Polymyxines	TRUE	FALSE
+nl	Quinolones	Quinolonen	TRUE	FALSE

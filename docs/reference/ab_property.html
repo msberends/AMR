@@ -251,11 +251,11 @@
 
 <span class='fu'>ab_tradenames</span>(<span class='no'>x</span>, <span class='no'>...</span>)
 
-<span class='fu'>ab_group</span>(<span class='no'>x</span>, <span class='no'>...</span>)
+<span class='fu'>ab_group</span>(<span class='no'>x</span>, <span class='kw'>language</span> <span class='kw'>=</span> <span class='fu'><a href='translate.html'>get_locale</a></span>(), <span class='no'>...</span>)
 
-<span class='fu'>ab_atc_group1</span>(<span class='no'>x</span>, <span class='no'>...</span>)
+<span class='fu'>ab_atc_group1</span>(<span class='no'>x</span>, <span class='kw'>language</span> <span class='kw'>=</span> <span class='fu'><a href='translate.html'>get_locale</a></span>(), <span class='no'>...</span>)
 
-<span class='fu'>ab_atc_group2</span>(<span class='no'>x</span>, <span class='no'>...</span>)
+<span class='fu'>ab_atc_group2</span>(<span class='no'>x</span>, <span class='kw'>language</span> <span class='kw'>=</span> <span class='fu'><a href='translate.html'>get_locale</a></span>(), <span class='no'>...</span>)
 
 <span class='fu'>ab_ddd</span>(<span class='no'>x</span>, <span class='kw'>administration</span> <span class='kw'>=</span> <span class='st'>"oral"</span>, <span class='kw'>units</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>...</span>)
 
@@ -299,7 +299,7 @@
     
 <ul>
 <li><p>An <code>integer</code> in case of <code>ab_cid</code></p></li>
-<li><p>A named <code>list</code> in case of multiple <code>ab_synonyms</code></p></li>
+<li><p>A named <code>list</code> in case of <code>ab_info</code> and multiple <code>ab_synonyms</code>/<code>ab_tradenames</code></p></li>
 <li><p>A <code>double</code> in case of <code>ab_ddd</code></p></li>
 <li><p>A <code>character</code> in all other cases</p></li>
 </ul>
@@ -348,6 +348,8 @@
 <span class='fu'>ab_ddd</span>(<span class='st'>"AMX"</span>, <span class='st'>"oral"</span>, <span class='kw'>units</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>) <span class='co'># "g"</span>
 <span class='fu'>ab_ddd</span>(<span class='st'>"AMX"</span>, <span class='st'>"iv"</span>)                 <span class='co'>#  1</span>
 <span class='fu'>ab_ddd</span>(<span class='st'>"AMX"</span>, <span class='st'>"iv"</span>, <span class='kw'>units</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)   <span class='co'># "g"</span>
+
+<span class='fu'>ab_info</span>(<span class='st'>"AMX"</span>)       <span class='co'># all properties as a list</span>
 
 <span class='co'># all ab_* functions use as.ab() internally:</span>
 <span class='fu'>ab_name</span>(<span class='st'>"Fluclox"</span>)   <span class='co'># "Flucloxacillin"</span>

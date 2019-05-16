@@ -69,7 +69,7 @@ R-release:
       - '*.Rcheck/*'
     expire_in: '1 month'
   cache:
-    key: "$CI_COMMIT_REF_SLUG"
+    key: "r350"
     paths:
       - installed_deps/
 
@@ -98,13 +98,17 @@ R-devel:
     paths:
       - '*.Rcheck/*'
     expire_in: '1 month'
+  cache:
+    key: "r360"
+    paths:
+      - installed_deps/
 
 coverage:
   stage: test
   allow_failure: true
   when: on_success
   cache:
-    key: "$CI_COMMIT_REF_SLUG"
+    key: "r350"
     paths:
       - installed_deps/
   only:
@@ -121,17 +125,18 @@ coverage:
 pages:
   stage: deploy
   when: always
-  cache:
-    key: "$CI_COMMIT_REF_SLUG"
-    paths:
-      - installed_deps/
+  #cache:
+  #  key: "$CI_COMMIT_REF_SLUG"
+   # paths:
+    #  - installed_deps/
   only:
     - master
   script:
+    - mv docs public
     # install missing and outdated packages
-    - Rscript -e 'source(".gitlab-ci.R"); gl_update_pkg_all(repos = "https://cran.rstudio.com", quiet = TRUE, install_pkgdown = TRUE)'
-    - Rscript -e "devtools::install(build = TRUE, upgrade = FALSE)"
-    - R -e "pkgdown::build_site(examples = FALSE, lazy = TRUE, override = list(destination = 'public'))"
+    #- Rscript -e 'source(".gitlab-ci.R"); gl_update_pkg_all(repos = "https://cran.rstudio.com", quiet = TRUE, install_pkgdown = TRUE)'
+    #- Rscript -e "devtools::install(build = TRUE, upgrade = FALSE)"
+    #- R -e "pkgdown::build_site(examples = FALSE, lazy = TRUE, override = list(destination = 'public'))"
   artifacts:
     paths:
       - public

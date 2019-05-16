@@ -2,9 +2,12 @@
 % Please edit documentation in R/ab.R
 \name{as.ab}
 \alias{as.ab}
+\alias{is.ab}
 \title{Transform to antibiotic ID}
 \usage{
 as.ab(x)
+
+is.ab(x)
 }
 \arguments{
 \item{x}{character vector to determine to antibiotic ID}
@@ -56,7 +59,7 @@ as.ab("eryt")
 as.ab("   eryt 123")
 as.ab("ERYT")
 as.ab("ERY")
-as.ab("erytromicine") # spelled wrong
+as.ab("eritromicine") # spelled wrong, yet works
 as.ab("Erythrocin")   # trade name
 as.ab("Romycin")      # trade name
 

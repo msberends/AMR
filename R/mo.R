@@ -349,6 +349,7 @@ exec_as.mo <- function(x,
 
   # conversion of old MO codes from v0.5.0 (ITIS) to later versions (Catalogue of Life)
   if (any(x %like% "^[BFP]_[A-Z]{3,7}") & !all(x %in% microorganisms$mo)) {
+    x <- gsub("^F_CANDD_GLB$", "F_CANDD_GLA", x) # specific old code for C. glabrata
     leftpart <- gsub("^([BFP]_[A-Z]{3,7}).*", "\\1", x)
     if (any(leftpart %in% names(mo_codes_v0.5.0))) {
       rightpart <- gsub("^[BFP]_[A-Z]{3,7}(.*)", "\\1", x)
