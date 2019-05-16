@@ -11,6 +11,7 @@
 \alias{ab_atc_group1}
 \alias{ab_atc_group2}
 \alias{ab_ddd}
+\alias{ab_info}
 \title{Property of an antibiotic}
 \usage{
 ab_name(x, language = get_locale(), tolower = FALSE, ...)
@@ -30,6 +31,8 @@ ab_atc_group1(x, language = get_locale(), ...)
 ab_atc_group2(x, language = get_locale(), ...)
 
 ab_ddd(x, administration = "oral", units = FALSE, ...)
+
+ab_info(x, language = get_locale(), ...)
 
 ab_property(x, property = "name", language = get_locale(), ...)
 }

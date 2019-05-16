@@ -146,6 +146,8 @@ ab_ddd <- function(x, administration = "oral", units = FALSE, ...) {
   ab_validate(x = x, property = ddd_prop, ...)
 }
 
+#' @rdname ab_property
+#' @export
 ab_info <- function(x, language = get_locale(), ...) {
   x <- AMR::as.ab(x, ...)
   base::list(ab = x,
