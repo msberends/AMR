@@ -585,10 +585,12 @@ format_header <- function(x, markdown = FALSE, decimal.mark = ".", big.mark = ",
   # FORMATTING
   # rsi
   if (has_length == TRUE & any(x_class == "rsi")) {
-    ab <- tryCatch(as.ab(attributes(x)$opt$vars), error = function(e) NA)
-    if (!is.na(ab) & isTRUE(length(ab) > 0)) {
-      header$drug <- paste0(ab_name(ab[1L]), " (", ab[1L], ", ", ab_atc(ab[1L]), ")")
-      header$group <- ab_group(ab[1L])
+    if (!is.null(attributes(x)$opt$vars)) {
+      ab <- tryCatch(as.ab(attributes(x)$opt$vars), error = function(e) NA)
+      if (!is.na(ab) & isTRUE(length(ab) > 0)) {
+        header$drug <- paste0(ab_name(ab[1L]), " (", ab[1L], ", ", ab_atc(ab[1L]), ")")
+        header$group <- ab_group(ab[1L])
+      }
     }
     header$`%SI` <- percent(header$count_SI / (header$count_SI + header$count_R),
                             force_zero = TRUE, round = digits, decimal.mark = decimal.mark)
