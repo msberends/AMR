@@ -147,7 +147,7 @@ search_type_in_df <- function(tbl, type) {
   if (!is.null(found)) {
     msg <- paste0("NOTE: Using column `", bold(found), "` as input for `col_", type, "`.")
     if (type %in% c("keyantibiotics", "specimen")) {
-      msg <- paste(msg, "Use", bold(paste0("col_", type), " = FALSE"), "to prevent this.")
+      msg <- paste(msg, "Use", bold(paste0("col_", type), "= FALSE"), "to prevent this.")
     }
     message(blue(msg))
   }

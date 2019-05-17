@@ -315,10 +315,10 @@ data_1st %>%
 
 ## Resistance percentages
 
-The functions `portion_S()`, `portion_SI()`, `portion_I()`, `portion_IR()` and `portion_R()` can be used to determine the portion of a specific antimicrobial outcome. They can be used on their own:
+The functions `portion_S()`, `portion_SI()`, `portion_I()`, `portion_IR()` and `portion_R()` can be used to determine the portion of a specific antimicrobial outcome. As per the EUCAST guideline of 2019, we calculate resistance as the portion of R (`portion_R()`) and susceptibility as the portion of S and I (`portion_SI()`). These functions can be used on their own:
 
 ```{r}
-data_1st %>% portion_IR(AMX)
+data_1st %>% portion_R(AMX)
 ```
 
 Or can be used in conjuction with `group_by()` and `summarise()`, both from the `dplyr` package:
@@ -326,12 +326,12 @@ Or can be used in conjuction with `group_by()` and `summarise()`, both from the 
 ```{r, eval = FALSE}
 data_1st %>% 
   group_by(hospital) %>% 
-  summarise(amoxicillin = portion_IR(AMX))
+  summarise(amoxicillin = portion_R(AMX))
 ```
 ```{r, echo = FALSE}
 data_1st %>% 
   group_by(hospital) %>% 
-  summarise(amoxicillin = portion_IR(AMX)) %>% 
+  summarise(amoxicillin = portion_R(AMX)) %>% 
   knitr::kable(align = "c", big.mark = ",")
 ```
 
@@ -340,13 +340,13 @@ Of course it would be very convenient to know the number of isolates responsible
 ```{r, eval = FALSE}
 data_1st %>% 
   group_by(hospital) %>% 
-  summarise(amoxicillin = portion_IR(AMX),
+  summarise(amoxicillin = portion_R(AMX),
             available = n_rsi(AMX))
 ```
 ```{r, echo = FALSE}
 data_1st %>% 
   group_by(hospital) %>% 
-  summarise(amoxicillin = portion_IR(AMX),
+  summarise(amoxicillin = portion_R(AMX),
             available = n_rsi(AMX)) %>% 
   knitr::kable(align = "c", big.mark = ",")
 ```
@@ -356,16 +356,16 @@ These functions can also be used to get the portion of multiple antibiotics, to 
 ```{r, eval = FALSE}
 data_1st %>% 
   group_by(genus) %>% 
-  summarise(amoxiclav = portion_S(AMC),
-            gentamicin = portion_S(GEN),
-            amoxiclav_genta = portion_S(AMC, GEN))
+  summarise(amoxiclav = portion_SI(AMC),
+            gentamicin = portion_SI(GEN),
+            amoxiclav_genta = portion_SI(AMC, GEN))
 ```
 ```{r, echo = FALSE}
 data_1st %>% 
   group_by(genus) %>% 
-  summarise(amoxiclav = portion_S(AMC),
-            gentamicin = portion_S(GEN),
-            amoxiclav_genta = portion_S(AMC, GEN)) %>% 
+  summarise(amoxiclav = portion_SI(AMC),
+            gentamicin = portion_SI(GEN),
+            amoxiclav_genta = portion_SI(AMC, GEN)) %>% 
   knitr::kable(align = "c", big.mark = ",")
 ```
 
@@ -374,9 +374,9 @@ To make a transition to the next part, let's see how this difference could be pl
 ```{r plot 1}
 data_1st %>% 
   group_by(genus) %>% 
-  summarise("1. Amoxi/clav" = portion_S(AMC),
-            "2. Gentamicin" = portion_S(GEN),
-            "3. Amoxi/clav + GEN" = portion_S(AMC, GEN)) %>% 
+  summarise("1. Amoxi/clav" = portion_SI(AMC),
+            "2. Gentamicin" = portion_SI(GEN),
+            "3. Amoxi/clav + genta" = portion_SI(AMC, GEN)) %>% 
   tidyr::gather("Antibiotic", "S", -genus) %>%
   ggplot(aes(x = genus,
              y = S,
@@ -426,7 +426,7 @@ ggplot(data_1st %>% group_by(genus)) +
   scale_rsi_colours() +
   # show percentages on y axis
   scale_y_percent(breaks = 0:4 * 25) +
-  # turn 90 degrees, make it bars instead of columns
+  # turn 90 degrees, to make it bars instead of columns
   coord_flip() +
   # add labels
   labs(title = "Resistance per genus and antibiotic", 

@@ -28,9 +28,9 @@
 #' @inheritSection WHOCC WHOCC
 #' @export
 #' @importFrom dplyr %>% filter slice pull
-#' @details All entries in the \code{\{link{antibiotics}} data set have three different identifiers: a human readable EARS-Net code (column \code{ab}, used by ECDC and WHONET), an ATC code (column \code{atc}, used by WHO), and a CID code (column \code{cid}, Compound ID, used by PubChem). The data set contains more than 5,000 official brand names from many different countries, as found in PubChem.
+#' @details All entries in the \code{\link{antibiotics}} data set have three different identifiers: a human readable EARS-Net code (column \code{ab}, used by ECDC and WHONET), an ATC code (column \code{atc}, used by WHO), and a CID code (column \code{cid}, Compound ID, used by PubChem). The data set contains more than 5,000 official brand names from many different countries, as found in PubChem.
 #'
-#' Use the \code{\link{ab_property}} functions to get properties based on the returned ATC code, see Examples.
+#' Use the \code{\link{ab_property}} functions to get properties based on the returned antibiotic ID, see Examples.
 #'
 #' In the ATC classification system, the active substances are classified in a hierarchy with five different levels. The system has fourteen main anatomical/pharmacological groups or 1st levels. Each ATC main group is divided into 2nd levels which could be either pharmacological or therapeutic groups.  The 3rd and 4th levels are chemical, pharmacological or therapeutic subgroups and the 5th level is the chemical substance.  The 2nd, 3rd and 4th levels are often used to identify pharmacological subgroups when that is considered more appropriate than therapeutic or chemical subgroups.
 #'   Source: \url{https://www.whocc.no/atc/structure_and_principles/}
