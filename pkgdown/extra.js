@@ -23,6 +23,8 @@
 
 // Add updated Font Awesome 5.6.3 library
 $('head').append('<!-- Updated Font Awesome library --><link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">');
+// Add Disqus
+$('head').append('<script src="https://amr-for-r.disqus.com/embed.js" data-timestamp="' + new Date()  + '"></script');
 
 // Email template for new GitLab issues
 //https://stackoverflow.com/a/33190494/4575331
@@ -38,27 +40,40 @@ $( document ).ready(function() {
     window.location.replace(url_new);
   }
 
-  // PR for 'R for Data Science' on How To pages
   if ($(".template-article").length > 0) {
-     $('#sidebar').prepend(
-      '<div id="r4ds">' +
-      '  <a target="_blank" href="https://r4ds.had.co.nz/">' +
-      '    Learn R reading this great book: R for Data Science.' +
-      '    <br><br>' +
-      '    Click to read it online - it was published for free.' +
-      '    <img src="https://gitlab.com/msberends/AMR/raw/master/docs/cover_r4ds.png" height="100px">' +
-      '  </a>     ' +
-      '  <hr>' +
-      '</div>');
+    // PR for 'R for Data Science' on How To pages
+    $('#sidebar').prepend(
+    '<div id="r4ds">' +
+    '  <a target="_blank" href="https://r4ds.had.co.nz/">' +
+    '    Learn R reading this great book: R for Data Science.' +
+    '    <br><br>' +
+    '    Click to read it online - it was published for free.' +
+    '    <img src="https://gitlab.com/msberends/AMR/raw/master/docs/cover_r4ds.png" height="100px">' +
+    '  </a>     ' +
+    '  <hr>' +
+    '</div>');
   }
+
+  // Add Disqus to all pages
+  var disqus =
+    '<button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseDisqus" aria-expanded="false" aria-controls="collapseDisqus">' +
+      '  Having a question? Or knowing something we don\'t? Click here to open comments.' +
+    '</button>' +
+    '<div class="collapse" id="collapseDisqus">' +
+      '<div id="disqus_thread"></div>' +
+    '</div>';
+
+  $(disqus).insertBefore('footer');
+  $('#disqus_thread footer').remove();
 
   $('footer').html(
     '<div>' +
       '<p>' + $('footer .copyright p').html().replace(
         "Developed by",
-        '<code>AMR</code> (for R). Developed at the <a href="https://www.rug.nl" target="_blank">University of Groningen</a>.<br>Authors:') + '</p>' +
-      '<a href="https://www.rug.nl" target="_blank"><img src="https://gitlab.com/msberends/AMR/raw/master/docs/logo_rug.png" class="footer_logo"></a>' +
+        '<code>AMR</code> (for R). Developed at the <a href="https://www.rug.nl">University of Groningen</a>.<br>Authors:') + '</p>' +
+      '<a href="https://www.rug.nl"><img src="https://gitlab.com/msberends/AMR/raw/master/docs/logo_rug.png" class="footer_logo"></a>' +
     '</div>');
+  $('footer').html($('footer').html().replace(/href/g, 'target="_blank" href'));
 
   // doctoral titles of authors
   function doct_tit(x) {
@@ -67,8 +82,10 @@ $( document ).ready(function() {
       x = x.replace("Alex", "Prof Dr Alex");
       x = x.replace("Bhanu", "Prof Dr Bhanu");
       x = x.replace(/Author, thesis advisor/g, "Doctoral advisor");
+      x = x.replace(/Authors/g, "aut_plural");
       x = x.replace(/Author, maintainer./g, "");
-      x = x.replace(/Author./g, "");
+      x = x.replace(/Author/g, "");
+      x = x.replace(/aut_plural/g, "Authors");
     }
     return(x);
   }

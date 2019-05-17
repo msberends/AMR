@@ -82,7 +82,6 @@ R-devel:
     - echo 'LANGUAGE="en_US.utf8"' > .Renviron
     - echo 'LANG="en_US.utf8"' >> .Renviron
     - echo 'LANGUAGE="en_US.utf8"' > ~/.Renviron
-    - rm -rf installed_deps
     - Rscriptdevel -e 'sessionInfo()'
     # install missing and outdated packages
     - Rscriptdevel -e 'source(".gitlab-ci.R"); gl_update_pkg_all(repos = "https://cran.rstudio.com", quiet = TRUE, install_pkgdown = TRUE)'

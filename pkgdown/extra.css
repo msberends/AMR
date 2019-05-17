@@ -203,3 +203,9 @@ table a:not(.btn):hover, .table a:not(.btn):hover {
   color: black;
   font-weight: bold;
 }
+
+#collapseDisqus {
+  padding: 2%;
+  border: 2px #2c3e50 dashed;
+  margin-top: 1%;
+}
