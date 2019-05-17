@@ -69,8 +69,7 @@ R-release:
       - '*.Rcheck/*'
     expire_in: '1 month'
   cache:
-    when: always
-    key: "r350"
+    key: r350
     paths:
       - installed_deps/
 
@@ -100,8 +99,7 @@ R-devel:
       - '*.Rcheck/*'
     expire_in: '1 month'
   cache:
-    when: always
-    key: "r360"
+    key: r360
     paths:
       - installed_deps/
 
@@ -110,9 +108,10 @@ coverage:
   allow_failure: true
   when: on_success
   cache:
-    key: "r350"
+    key: r350
     paths:
       - installed_deps/
+    policy: pull # no uploading after run
   only:
     - premaster
     - master
