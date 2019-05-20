@@ -157,21 +157,54 @@ search_type_in_df <- function(tbl, type) {
 get_column_abx <- function(x,
                            soft_dependencies = NULL,
                            hard_dependencies = NULL,
-                           verbose = FALSE) {
+                           verbose = FALSE,
+                           ...) {
 
+  # determine from given data set
   df_trans <- data.frame(colnames = colnames(x),
                          abcode = suppressWarnings(as.ab(colnames(x))))
   df_trans <- df_trans[!is.na(df_trans$abcode),]
   x <- as.character(df_trans$colnames)
   names(x) <- df_trans$abcode
+
+  # add from self-defined dots (...):
+  # get_column_abx(septic_patients %>% rename(thisone = AMX), amox = "thisone")
+  dots <- list(...)
+  if (length(dots) > 0) {
+    dots <- unlist(dots)
+    newnames <- suppressWarnings(as.ab(names(dots)))
+    if (any(is.na(newnames))) {
+      warning("Invalid antibiotic reference(s): ", toString(names(dots)[is.na(newnames)]),
+              call. = FALSE, immediate. = TRUE)
+    }
+    names(dots) <- newnames
+    dots <- dots[!is.na(names(dots))]
+    # merge, but overwrite automatically determined ones by 'dots'
+    x <- c(x[!x %in% dots & !names(x) %in% names(dots)], dots)
+  }
+
   # sort on name
   x <- x[sort(names(x))]
+  duplies <- x[base::duplicated(x)]
 
   if (verbose == TRUE) {
     for (i in 1:length(x)) {
-      message(blue(paste0("NOTE: Using column `", bold(x[i]), "` as input for ", names(x)[i],
-                          " (", ab_name(names(x)[i], language = "en", tolower = TRUE), ").")))
+      if (x[i] %in% duplies) {
+        message(red(paste0("NOTE: Using column `", bold(x[i]), "` as input for ", names(x)[i],
+                           " (", ab_name(names(x)[i], language = "en", tolower = TRUE), ") [DUPLICATED USE].")))
+      } else {
+        message(blue(paste0("NOTE: Using column `", bold(x[i]), "` as input for ", names(x)[i],
+                            " (", ab_name(names(x)[i], language = "en", tolower = TRUE), ").")))
+      }
     }
+  }
+
+  if (n_distinct(x) != length(x)) {
+    msg_txt <- paste("Column(s)", paste0("'", duplies, "'", collapse = "'"), "used for more than one antibiotic.")
+    if (verbose == FALSE) {
+      msg_txt <- paste(msg_txt, "Use verbose = TRUE to see which antibiotics are used by which columns.")
+    }
+    stop(msg_txt, call. = FALSE)
   }
 
   if (!is.null(hard_dependencies)) {
@@ -274,4 +307,8 @@ t <- function(from, language = get_locale()) {
   # force UTF-8 for diacritics
   base::enc2utf8(from)
 
+}
+
+"%or%" <- function(x, y) {
+  ifelse(!is.na(x), x, ifelse(!is.na(y), y, NA))
 }

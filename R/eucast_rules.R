@@ -291,7 +291,8 @@ eucast_rules <- function(x,
                                                   "SXT",
                                                   "VAN"),
                             hard_dependencies = NULL,
-                            verbose = verbose)
+                            verbose = verbose,
+                            ...)
 
   AMC <- cols_ab['AMC']
   AMK <- cols_ab['AMK']

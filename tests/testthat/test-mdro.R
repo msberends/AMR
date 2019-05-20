@@ -40,7 +40,7 @@ test_that("mdro works", {
 
   # septic_patients should have these finding using Dutch guidelines
   expect_equal(outcome %>% freq() %>% pull(count),
-               c(1989, 9, 2)) # 1989 neg, 9 pos, 2 unconfirmed
+               c(1969, 25, 6)) # 1969 neg, 25 unconfirmed, 6 pos
 
   expect_equal(
     suppressWarnings(
