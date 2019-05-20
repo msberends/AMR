@@ -18,6 +18,5 @@ vignettes/*.R
 .DS_Store
 .Rprofile
 ^CRAN-RELEASE$
-git_*.sh
 packrat/lib*/
 packrat/src/

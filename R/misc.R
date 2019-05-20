@@ -154,10 +154,6 @@ search_type_in_df <- function(tbl, type) {
   found
 }
 
-get_ab_col <- function(columns, ab) {
-  columns[names(columns) == ab]
-}
-
 get_column_abx <- function(x,
                            soft_dependencies = NULL,
                            hard_dependencies = NULL,

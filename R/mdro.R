@@ -374,6 +374,9 @@ eucast_exceptional_phenotypes <- function(x, country = "EUCAST", ...) {
 }
 
 # is_ESBL <- function(x, col_mo = NULL, ...) {
+#   get_ab_col <- function(columns, ab) {
+#     columns[names(columns) == ab]
+#   }
 #   col_mo <- get_column_mo(tbl = x, col_mo = col_mo)
 #   cols_ab <- get_column_abx(tbl = x,
 #                             soft_dependencies = c("AMX", "AMP"),
