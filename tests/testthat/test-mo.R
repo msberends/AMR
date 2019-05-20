@@ -263,4 +263,8 @@ test_that("as.mo works", {
 
   expect_error(translate_allow_uncertain(5))
 
+  # very old MO codes (<= v0.5.0)
+  expect_equal(as.character(as.mo("F_CCCCS_NEO")), "F_CRYPT_NEO")
+  expect_equal(as.character(as.mo("F_CANDD_GLB")), "F_CANDD_GLA")
+
 })

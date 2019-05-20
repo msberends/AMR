@@ -66,6 +66,7 @@ $( document ).ready(function() {
   $(disqus).insertBefore('footer');
   $('#disqus_thread footer').remove();
 
+  // Alter footer
   $('footer').html(
     '<div>' +
       '<p>' + $('footer .copyright p').html().replace(
@@ -73,6 +74,7 @@ $( document ).ready(function() {
         '<code>AMR</code> (for R). Developed at the <a href="https://www.rug.nl">University of Groningen</a>.<br>Authors:') + '</p>' +
       '<a href="https://www.rug.nl"><img src="https://gitlab.com/msberends/AMR/raw/master/docs/logo_rug.png" class="footer_logo"></a>' +
     '</div>');
+  // all links should open in new tab/window
   $('footer').html($('footer').html().replace(/href/g, 'target="_blank" href'));
 
   // doctoral titles of authors
@@ -83,8 +85,8 @@ $( document ).ready(function() {
       x = x.replace("Bhanu", "Prof Dr Bhanu");
       x = x.replace(/Author, thesis advisor/g, "Doctoral advisor");
       x = x.replace(/Authors/g, "aut_plural");
-      x = x.replace(/Author, maintainer./g, "");
-      x = x.replace(/Author/g, "");
+      x = x.replace(/Author, maintainer[.]?/g, "");
+      x = x.replace(/Author[.]?/g, "");
       x = x.replace(/aut_plural/g, "Authors");
     }
     return(x);

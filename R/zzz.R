@@ -104,7 +104,7 @@ make_DT <- function() {
 make_trans_tbl <- function() {
   # conversion of old MO codes from v0.5.0 (ITIS) to later versions (Catalogue of Life)
   c(B_ACHRMB = "B_ACHRM", B_ANNMA = "B_ACTNS", B_ACLLS = "B_ALCYC",
-    B_AHNGM = "B_ARCHN", B_ARMTM = "B_ARMTMN", B_ARTHRS = "B_ARTHR",
+    B_AHNGM = "B_ARCHN", B_ARMTM = "B_ARMTMN", B_ARTHR = "B_ARTHRB", B_ARTHRS = "B_ARTHR",
     B_APHLS = "B_AZRHZP", B_BRCHA = "B_BRCHY", B_BCTRM = "B_BRVBCT",
     B_CLRBCT = "B_CLRBC", B_CTRDM = "B_CLSTR", B_CPRMM = "B_CYLND",
     B_DLCLN = "B_DPLCL", B_DMCLM = "B_DSLFT", B_DSLFVB = "B_DSLFV",
@@ -288,5 +288,12 @@ make_trans_tbl <- function() {
     F_PRCHN = "P_PRCHN", F_PRMBD = "P_PRMBD", F_PRTPH = "P_PRTPH",
     F_PSRNA = "P_PSRNA", F_PYSRM = "P_PYSRM", F_RTCLR = "P_RTCLR",
     F_STMNT = "P_STMNT", F_SYMPH = "P_SYMPH", F_TRBRK = "P_TRBRK",
-    F_TRICH = "P_TRICH", F_TUBFR = "P_TUBFR")
+    F_TRICH = "P_TRICH", F_TUBFR = "P_TUBFR",
+    B_GRDNR = "B_GRLLA", B_SGMNS = "B_SNGMNS", B_TCLLS = "B_THBCL",
+    F_CCCCS = "F_CRYPT",
+    # renamings of old genus + species
+    F_CANDD_GLB = "F_CANDD_GLA", F_CANDD_KRU = "F_ISSTC_ORI",
+    F_CANDD_LUS = "F_CLVSP_LUS", B_STRPT_TUS = "B_STRPT",
+    B_PRVTL_OLA = "B_PRVTL_OULO", B_FSBCT_RUM = "B_FSBCT",
+    B_CRYNB_EYI = "B_CRYNB_FRE", B_OLGLL_LIS = "B_OLGLL_URE")
 }

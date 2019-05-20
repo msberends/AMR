@@ -158,177 +158,45 @@ get_ab_col <- function(columns, ab) {
   columns[names(columns) == ab]
 }
 
-get_column_abx <- function(tbl,
+get_column_abx <- function(x,
                            soft_dependencies = NULL,
                            hard_dependencies = NULL,
-                           verbose = FALSE,
-                           AMC = guess_ab_col(),
-                           AMK = guess_ab_col(),
-                           AMX = guess_ab_col(),
-                           AMP = guess_ab_col(),
-                           AZM = guess_ab_col(),
-                           AZL = guess_ab_col(),
-                           ATM = guess_ab_col(),
-                           RID = guess_ab_col(),
-                           FEP = guess_ab_col(),
-                           CTX = guess_ab_col(),
-                           FOX = guess_ab_col(),
-                           CED = guess_ab_col(),
-                           CAZ = guess_ab_col(),
-                           CRO = guess_ab_col(),
-                           CXM = guess_ab_col(),
-                           CHL = guess_ab_col(),
-                           CIP = guess_ab_col(),
-                           CLR = guess_ab_col(),
-                           CLI = guess_ab_col(),
-                           FLC = guess_ab_col(),
-                           COL = guess_ab_col(),
-                           CZO = guess_ab_col(),
-                           DAP = guess_ab_col(),
-                           DOX = guess_ab_col(),
-                           ETP = guess_ab_col(),
-                           ERY = guess_ab_col(),
-                           FOS = guess_ab_col(),
-                           FUS = guess_ab_col(),
-                           GEN = guess_ab_col(),
-                           IPM = guess_ab_col(),
-                           KAN = guess_ab_col(),
-                           LVX = guess_ab_col(),
-                           LIN = guess_ab_col(),
-                           LNZ = guess_ab_col(),
-                           MEM = guess_ab_col(),
-                           MTR = guess_ab_col(),
-                           MEZ = guess_ab_col(),
-                           MNO = guess_ab_col(),
-                           MFX = guess_ab_col(),
-                           NAL = guess_ab_col(),
-                           NEO = guess_ab_col(),
-                           NET = guess_ab_col(),
-                           NIT = guess_ab_col(),
-                           NOR = guess_ab_col(),
-                           NOV = guess_ab_col(),
-                           OFX = guess_ab_col(),
-                           OXA = guess_ab_col(),
-                           PEN = guess_ab_col(),
-                           PIP = guess_ab_col(),
-                           TZP = guess_ab_col(),
-                           PLB = guess_ab_col(),
-                           PRI = guess_ab_col(),
-                           QDA = guess_ab_col(),
-                           RIF = guess_ab_col(),
-                           RXT = guess_ab_col(),
-                           SIS = guess_ab_col(),
-                           TEC = guess_ab_col(),
-                           TCY = guess_ab_col(),
-                           TIC = guess_ab_col(),
-                           TGC = guess_ab_col(),
-                           TOB = guess_ab_col(),
-                           TMP = guess_ab_col(),
-                           SXT = guess_ab_col(),
-                           VAN = guess_ab_col()) {
-  # check columns
-  if (identical(AMC, as.name("guess_ab_col"))) AMC <- guess_ab_col(tbl, "AMC", verbose = verbose)
-  if (identical(AMK, as.name("guess_ab_col"))) AMK <- guess_ab_col(tbl, "AMK", verbose = verbose)
-  if (identical(AMX, as.name("guess_ab_col"))) AMX <- guess_ab_col(tbl, "AMX", verbose = verbose)
-  if (identical(AMP, as.name("guess_ab_col"))) AMP <- guess_ab_col(tbl, "AMP", verbose = verbose)
-  if (identical(AZM, as.name("guess_ab_col"))) AZM <- guess_ab_col(tbl, "AZM", verbose = verbose)
-  if (identical(AZL, as.name("guess_ab_col"))) AZL <- guess_ab_col(tbl, "AZL", verbose = verbose)
-  if (identical(ATM, as.name("guess_ab_col"))) ATM <- guess_ab_col(tbl, "ATM", verbose = verbose)
-  if (identical(RID, as.name("guess_ab_col"))) RID <- guess_ab_col(tbl, "RID", verbose = verbose)
-  if (identical(FEP, as.name("guess_ab_col"))) FEP <- guess_ab_col(tbl, "FEP", verbose = verbose)
-  if (identical(CTX, as.name("guess_ab_col"))) CTX <- guess_ab_col(tbl, "CTX", verbose = verbose)
-  if (identical(FOX, as.name("guess_ab_col"))) FOX <- guess_ab_col(tbl, "FOX", verbose = verbose)
-  if (identical(CED, as.name("guess_ab_col"))) CED <- guess_ab_col(tbl, "CED", verbose = verbose)
-  if (identical(CAZ, as.name("guess_ab_col"))) CAZ <- guess_ab_col(tbl, "CAZ", verbose = verbose)
-  if (identical(CRO, as.name("guess_ab_col"))) CRO <- guess_ab_col(tbl, "CRO", verbose = verbose)
-  if (identical(CXM, as.name("guess_ab_col"))) CXM <- guess_ab_col(tbl, "CXM", verbose = verbose)
-  if (identical(CHL, as.name("guess_ab_col"))) CHL <- guess_ab_col(tbl, "CHL", verbose = verbose)
-  if (identical(CIP, as.name("guess_ab_col"))) CIP <- guess_ab_col(tbl, "CIP", verbose = verbose)
-  if (identical(CLR, as.name("guess_ab_col"))) CLR <- guess_ab_col(tbl, "CLR", verbose = verbose)
-  if (identical(CLI, as.name("guess_ab_col"))) CLI <- guess_ab_col(tbl, "CLI", verbose = verbose)
-  if (identical(FLC, as.name("guess_ab_col"))) FLC <- guess_ab_col(tbl, "FLC", verbose = verbose)
-  if (identical(COL, as.name("guess_ab_col"))) COL <- guess_ab_col(tbl, "COL", verbose = verbose)
-  if (identical(CZO, as.name("guess_ab_col"))) CZO <- guess_ab_col(tbl, "CZO", verbose = verbose)
-  if (identical(DAP, as.name("guess_ab_col"))) DAP <- guess_ab_col(tbl, "DAP", verbose = verbose)
-  if (identical(DOX, as.name("guess_ab_col"))) DOX <- guess_ab_col(tbl, "DOX", verbose = verbose)
-  if (identical(ETP, as.name("guess_ab_col"))) ETP <- guess_ab_col(tbl, "ETP", verbose = verbose)
-  if (identical(ERY, as.name("guess_ab_col"))) ERY <- guess_ab_col(tbl, "ERY", verbose = verbose)
-  if (identical(FOS, as.name("guess_ab_col"))) FOS <- guess_ab_col(tbl, "FOS", verbose = verbose)
-  if (identical(FUS, as.name("guess_ab_col"))) FUS <- guess_ab_col(tbl, "FUS", verbose = verbose)
-  if (identical(GEN, as.name("guess_ab_col"))) GEN <- guess_ab_col(tbl, "GEN", verbose = verbose)
-  if (identical(IPM, as.name("guess_ab_col"))) IPM <- guess_ab_col(tbl, "IPM", verbose = verbose)
-  if (identical(KAN, as.name("guess_ab_col"))) KAN <- guess_ab_col(tbl, "KAN", verbose = verbose)
-  if (identical(LVX, as.name("guess_ab_col"))) LVX <- guess_ab_col(tbl, "LVX", verbose = verbose)
-  if (identical(LIN, as.name("guess_ab_col"))) LIN <- guess_ab_col(tbl, "LIN", verbose = verbose)
-  if (identical(LNZ, as.name("guess_ab_col"))) LNZ <- guess_ab_col(tbl, "LNZ", verbose = verbose)
-  if (identical(MEM, as.name("guess_ab_col"))) MEM <- guess_ab_col(tbl, "MEM", verbose = verbose)
-  if (identical(MTR, as.name("guess_ab_col"))) MTR <- guess_ab_col(tbl, "MTR", verbose = verbose)
-  if (identical(MEZ, as.name("guess_ab_col"))) MEZ <- guess_ab_col(tbl, "MEZ", verbose = verbose)
-  if (identical(MNO, as.name("guess_ab_col"))) MNO <- guess_ab_col(tbl, "MNO", verbose = verbose)
-  if (identical(MFX, as.name("guess_ab_col"))) MFX <- guess_ab_col(tbl, "MFX", verbose = verbose)
-  if (identical(NAL, as.name("guess_ab_col"))) NAL <- guess_ab_col(tbl, "NAL", verbose = verbose)
-  if (identical(NEO, as.name("guess_ab_col"))) NEO <- guess_ab_col(tbl, "NEO", verbose = verbose)
-  if (identical(NET, as.name("guess_ab_col"))) NET <- guess_ab_col(tbl, "NET", verbose = verbose)
-  if (identical(NIT, as.name("guess_ab_col"))) NIT <- guess_ab_col(tbl, "NIT", verbose = verbose)
-  if (identical(NOR, as.name("guess_ab_col"))) NOR <- guess_ab_col(tbl, "NOR", verbose = verbose)
-  if (identical(NOV, as.name("guess_ab_col"))) NOV <- guess_ab_col(tbl, "NOV", verbose = verbose)
-  if (identical(OFX, as.name("guess_ab_col"))) OFX <- guess_ab_col(tbl, "OFX", verbose = verbose)
-  if (identical(OXA, as.name("guess_ab_col"))) OXA <- guess_ab_col(tbl, "OXA", verbose = verbose)
-  if (identical(PEN, as.name("guess_ab_col"))) PEN <- guess_ab_col(tbl, "PEN", verbose = verbose)
-  if (identical(PIP, as.name("guess_ab_col"))) PIP <- guess_ab_col(tbl, "PIP", verbose = verbose)
-  if (identical(TZP, as.name("guess_ab_col"))) TZP <- guess_ab_col(tbl, "TZP", verbose = verbose)
-  if (identical(PLB, as.name("guess_ab_col"))) PLB <- guess_ab_col(tbl, "PLB", verbose = verbose)
-  if (identical(PRI, as.name("guess_ab_col"))) PRI <- guess_ab_col(tbl, "PRI", verbose = verbose)
-  if (identical(QDA, as.name("guess_ab_col"))) QDA <- guess_ab_col(tbl, "QDA", verbose = verbose)
-  if (identical(RIF, as.name("guess_ab_col"))) RIF <- guess_ab_col(tbl, "RIF", verbose = verbose)
-  if (identical(RXT, as.name("guess_ab_col"))) RXT <- guess_ab_col(tbl, "RXT", verbose = verbose)
-  if (identical(SIS, as.name("guess_ab_col"))) SIS <- guess_ab_col(tbl, "SIS", verbose = verbose)
-  if (identical(TEC, as.name("guess_ab_col"))) TEC <- guess_ab_col(tbl, "TEC", verbose = verbose)
-  if (identical(TCY, as.name("guess_ab_col"))) TCY <- guess_ab_col(tbl, "TCY", verbose = verbose)
-  if (identical(TIC, as.name("guess_ab_col"))) TIC <- guess_ab_col(tbl, "TIC", verbose = verbose)
-  if (identical(TGC, as.name("guess_ab_col"))) TGC <- guess_ab_col(tbl, "TGC", verbose = verbose)
-  if (identical(TOB, as.name("guess_ab_col"))) TOB <- guess_ab_col(tbl, "TOB", verbose = verbose)
-  if (identical(TMP, as.name("guess_ab_col"))) TMP <- guess_ab_col(tbl, "TMP", verbose = verbose)
-  if (identical(SXT, as.name("guess_ab_col"))) SXT <- guess_ab_col(tbl, "SXT", verbose = verbose)
-  if (identical(VAN, as.name("guess_ab_col"))) VAN <- guess_ab_col(tbl, "VAN", verbose = verbose)
-  columns_available <- c(AMC = AMC, AMK = AMK, AMX = AMX, AMP = AMP, AZM = AZM,
-                         AZL = AZL, ATM = ATM, RID = RID, FEP = FEP, CTX = CTX,
-                         FOX = FOX, CED = CED, CAZ = CAZ, CRO = CRO, CXM = CXM,
-                         CHL = CHL, CIP = CIP, CLR = CLR, CLI = CLI, FLC = FLC,
-                         COL = COL, CZO = CZO, DAP = DAP, DOX = DOX, ETP = ETP,
-                         ERY = ERY, FOS = FOS, FUS = FUS, GEN = GEN, IPM = IPM,
-                         KAN = KAN, LVX = LVX, LIN = LIN, LNZ = LNZ, MEM = MEM,
-                         MTR = MTR, MEZ = MEZ, MNO = MNO, MFX = MFX, NAL = NAL,
-                         NEO = NEO, NET = NET, NIT = NIT, NOR = NOR, NOV = NOV,
-                         OFX = OFX, OXA = OXA, PEN = PEN, PIP = PIP, TZP = TZP,
-                         PLB = PLB, PRI = PRI, QDA = QDA, RIF = RIF, RXT = RXT,
-                         SIS = SIS, TEC = TEC, TCY = TCY, TIC = TIC, TGC = TGC,
-                         TOB = TOB, TMP = TMP, SXT = SXT, VAN = VAN)
+                           verbose = FALSE) {
+
+  df_trans <- data.frame(colnames = colnames(x),
+                         abcode = suppressWarnings(as.ab(colnames(x))))
+  df_trans <- df_trans[!is.na(df_trans$abcode),]
+  x <- as.character(df_trans$colnames)
+  names(x) <- df_trans$abcode
+  # sort on name
+  x <- x[sort(names(x))]
+
+  if (verbose == TRUE) {
+    for (i in 1:length(x)) {
+      message(blue(paste0("NOTE: Using column `", bold(x[i]), "` as input for ", names(x)[i],
+                          " (", ab_name(names(x)[i], language = "en", tolower = TRUE), ").")))
+    }
+  }
 
   if (!is.null(hard_dependencies)) {
-    if (!all(hard_dependencies %in% names(columns_available[!is.na(columns_available)]))) {
+    if (!all(hard_dependencies %in% names(x))) {
       # missing a hard dependency will return NA and consequently the data will not be analysed
-      missing <- hard_dependencies[!hard_dependencies %in% names(columns_available[!is.na(columns_available)])]
+      missing <- hard_dependencies[!hard_dependencies %in% names(x)]
       generate_warning_abs_missing(missing, any = FALSE)
       return(NA)
     }
   }
   if (!is.null(soft_dependencies)) {
-    if (!all(soft_dependencies %in% names(columns_available[!is.na(columns_available)]))) {
+    if (!all(soft_dependencies %in% names(x))) {
       # missing a soft dependency may lower the reliability
-      missing <- soft_dependencies[!soft_dependencies %in% names(columns_available[!is.na(columns_available)])]
+      missing <- soft_dependencies[!soft_dependencies %in% names(x)]
       missing <- paste0("`", missing, "` (", ab_name(missing, tolower = TRUE), ")")
       warning('Reliability might be improved if these antimicrobial results would be available too: ', paste(missing, collapse = ", "),
               immediate. = TRUE,
               call. = FALSE)
     }
   }
-  #deps <- c(soft_dependencies, hard_dependencies)
-  #if (length(deps) > 0) {
-  #  columns_available[names(columns_available) %in% deps]
-  #} else {
-    columns_available
-  #}
+  x
 }
 
 generate_warning_abs_missing <- function(missing, any = FALSE) {

@@ -192,7 +192,7 @@
       <h1>How to import data from SPSS / SAS / Stata</h1>
                         <h4 class="author">Matthijs S. Berends</h4>
             
-            <h4 class="date">17 May 2019</h4>
+            <h4 class="date">20 May 2019</h4>
       
       
       <div class="hidden name"><code>SPSS.Rmd</code></div>
@@ -244,38 +244,38 @@
 <p>To demonstrate the first point:</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1"><span class="co"># not all values are valid MIC values:</span></a>
 <a class="sourceLine" id="cb1-2" title="2"><span class="kw"><a href="../reference/as.mic.html">as.mic</a></span>(<span class="fl">0.125</span>)</a>
-<a class="sourceLine" id="cb1-3" title="3"><span class="co">#&gt; Class 'mic'</span></a>
-<a class="sourceLine" id="cb1-4" title="4"><span class="co">#&gt; [1] 0.125</span></a>
+<a class="sourceLine" id="cb1-3" title="3"><span class="co"># Class 'mic'</span></a>
+<a class="sourceLine" id="cb1-4" title="4"><span class="co"># [1] 0.125</span></a>
 <a class="sourceLine" id="cb1-5" title="5"><span class="kw"><a href="../reference/as.mic.html">as.mic</a></span>(<span class="st">"testvalue"</span>)</a>
-<a class="sourceLine" id="cb1-6" title="6"><span class="co">#&gt; Class 'mic'</span></a>
-<a class="sourceLine" id="cb1-7" title="7"><span class="co">#&gt; [1] &lt;NA&gt;</span></a>
+<a class="sourceLine" id="cb1-6" title="6"><span class="co"># Class 'mic'</span></a>
+<a class="sourceLine" id="cb1-7" title="7"><span class="co"># [1] &lt;NA&gt;</span></a>
 <a class="sourceLine" id="cb1-8" title="8"></a>
 <a class="sourceLine" id="cb1-9" title="9"><span class="co"># the Gram stain is avaiable for all bacteria:</span></a>
 <a class="sourceLine" id="cb1-10" title="10"><span class="kw"><a href="../reference/mo_property.html">mo_gramstain</a></span>(<span class="st">"E. coli"</span>)</a>
-<a class="sourceLine" id="cb1-11" title="11"><span class="co">#&gt; [1] "Gram negative"</span></a>
+<a class="sourceLine" id="cb1-11" title="11"><span class="co"># [1] "Gram negative"</span></a>
 <a class="sourceLine" id="cb1-12" title="12"></a>
 <a class="sourceLine" id="cb1-13" title="13"><span class="co"># Klebsiella is intrinsic resistant to amoxicllin, according to EUCAST:</span></a>
 <a class="sourceLine" id="cb1-14" title="14">klebsiella_test &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/data.frame">data.frame</a></span>(<span class="dt">mo =</span> <span class="st">"klebsiella"</span>, </a>
 <a class="sourceLine" id="cb1-15" title="15">                              <span class="dt">amox =</span> <span class="st">"S"</span>,</a>
 <a class="sourceLine" id="cb1-16" title="16">                              <span class="dt">stringsAsFactors =</span> <span class="ot">FALSE</span>)</a>
 <a class="sourceLine" id="cb1-17" title="17">klebsiella_test</a>
-<a class="sourceLine" id="cb1-18" title="18"><span class="co">#&gt;           mo amox</span></a>
-<a class="sourceLine" id="cb1-19" title="19"><span class="co">#&gt; 1 klebsiella    S</span></a>
+<a class="sourceLine" id="cb1-18" title="18"><span class="co">#           mo amox</span></a>
+<a class="sourceLine" id="cb1-19" title="19"><span class="co"># 1 klebsiella    S</span></a>
 <a class="sourceLine" id="cb1-20" title="20"><span class="kw"><a href="../reference/eucast_rules.html">eucast_rules</a></span>(klebsiella_test, <span class="dt">info =</span> <span class="ot">FALSE</span>)</a>
-<a class="sourceLine" id="cb1-21" title="21"><span class="co">#&gt;           mo amox</span></a>
-<a class="sourceLine" id="cb1-22" title="22"><span class="co">#&gt; 1 klebsiella    R</span></a>
+<a class="sourceLine" id="cb1-21" title="21"><span class="co">#           mo amox</span></a>
+<a class="sourceLine" id="cb1-22" title="22"><span class="co"># 1 klebsiella    R</span></a>
 <a class="sourceLine" id="cb1-23" title="23"></a>
 <a class="sourceLine" id="cb1-24" title="24"><span class="co"># hundreds of trade names can be translated to a name, trade name or an ATC code:</span></a>
 <a class="sourceLine" id="cb1-25" title="25"><span class="kw"><a href="../reference/ab_property.html">ab_name</a></span>(<span class="st">"floxapen"</span>)</a>
-<a class="sourceLine" id="cb1-26" title="26"><span class="co">#&gt; [1] "Flucloxacillin"</span></a>
+<a class="sourceLine" id="cb1-26" title="26"><span class="co"># [1] "Flucloxacillin"</span></a>
 <a class="sourceLine" id="cb1-27" title="27"><span class="kw"><a href="../reference/ab_property.html">ab_tradenames</a></span>(<span class="st">"floxapen"</span>)</a>
-<a class="sourceLine" id="cb1-28" title="28"><span class="co">#&gt;  [1] "Floxacillin"          "FLOXACILLIN"          "Floxapen"            </span></a>
-<a class="sourceLine" id="cb1-29" title="29"><span class="co">#&gt;  [4] "Floxapen sodium salt" "Fluclox"              "Flucloxacilina"      </span></a>
-<a class="sourceLine" id="cb1-30" title="30"><span class="co">#&gt;  [7] "Flucloxacillin"       "Flucloxacilline"      "Flucloxacillinum"    </span></a>
-<a class="sourceLine" id="cb1-31" title="31"><span class="co">#&gt; [10] "Fluorochloroxacillin"</span></a>
+<a class="sourceLine" id="cb1-28" title="28"><span class="co">#  [1] "Floxacillin"          "FLOXACILLIN"          "Floxapen"            </span></a>
+<a class="sourceLine" id="cb1-29" title="29"><span class="co">#  [4] "Floxapen sodium salt" "Fluclox"              "Flucloxacilina"      </span></a>
+<a class="sourceLine" id="cb1-30" title="30"><span class="co">#  [7] "Flucloxacillin"       "Flucloxacilline"      "Flucloxacillinum"    </span></a>
+<a class="sourceLine" id="cb1-31" title="31"><span class="co"># [10] "Fluorochloroxacillin"</span></a>
 <a class="sourceLine" id="cb1-32" title="32"><span class="kw"><a href="../reference/ab_property.html">ab_atc</a></span>(<span class="st">"floxapen"</span>)</a>
-<a class="sourceLine" id="cb1-33" title="33"><span class="co">#&gt; Class 'atc'</span></a>
-<a class="sourceLine" id="cb1-34" title="34"><span class="co">#&gt; [1] J01CF05</span></a></code></pre></div>
+<a class="sourceLine" id="cb1-33" title="33"><span class="co"># Class 'atc'</span></a>
+<a class="sourceLine" id="cb1-34" title="34"><span class="co"># [1] J01CF05</span></a></code></pre></div>
 </div>
 <div id="import-data-from-spsssasstata" class="section level2">
 <h2 class="hasAnchor">

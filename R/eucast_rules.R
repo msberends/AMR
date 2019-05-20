@@ -226,7 +226,7 @@ eucast_rules <- function(x,
     }
   }
 
-  cols_ab <- get_column_abx(tbl = x,
+  cols_ab <- get_column_abx(x = x,
                             soft_dependencies = c("AMC",
                                                   "AMK",
                                                   "AMX",
@@ -291,8 +291,7 @@ eucast_rules <- function(x,
                                                   "SXT",
                                                   "VAN"),
                             hard_dependencies = NULL,
-                            verbose = verbose,
-                            ...)
+                            verbose = verbose)
 
   AMC <- cols_ab['AMC']
   AMK <- cols_ab['AMK']
@@ -674,8 +673,11 @@ eucast_rules <- function(x,
                    'out of', formatnr(nrow(tbl_original)),
                    'rows, making a total of', formatnr(nrow(verbose_info)), 'edits\n')))
 
+    n_added <- verbose_info %>% filter(is.na(old)) %>% nrow()
+    n_changed <- verbose_info %>% filter(!is.na(old)) %>% nrow()
+
     # print added values ----
-    if (verbose_info %>% filter(is.na(old)) %>% nrow() == 0) {
+    if (n_added == 0) {
       colour <- cat # is function
     } else {
       colour <- blue # is function
@@ -685,7 +687,7 @@ eucast_rules <- function(x,
                                       filter(is.na(old)) %>%
                                       nrow()), "test results"),
                       "\n")))
-    if (verbose_info %>% filter(is.na(old)) %>% nrow() > 0) {
+    if (n_added > 0) {
       verbose_info %>%
         filter(is.na(old)) %>%
         # sort it well: S < I < R
@@ -700,17 +702,20 @@ eucast_rules <- function(x,
     }
 
     # print changed values ----
-    if (verbose_info %>% filter(!is.na(old)) %>% nrow() == 0) {
+    if (n_changed == 0) {
       colour <- cat # is function
     } else {
       colour <- blue # is function
     }
-    cat(colour(paste0("\n=> ", wouldve, "changed ",
+    if (n_added + n_changed > 0) {
+      cat("\n")
+    }
+    cat(colour(paste0("=> ", wouldve, "changed ",
                       bold(formatnr(verbose_info %>%
                                       filter(!is.na(old)) %>%
                                       nrow()), "test results"),
                       "\n")))
-    if (verbose_info %>% filter(!is.na(old)) %>% nrow() > 0) {
+    if (n_changed > 0) {
       verbose_info %>%
         filter(!is.na(old)) %>%
         # sort it well: S < I < R

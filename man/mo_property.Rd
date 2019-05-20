@@ -72,7 +72,7 @@ mo_property(x, property = "fullname", language = get_locale(), ...)
 
 \item{open}{browse the URL using \code{\link[utils]{browseURL}()}}
 
-\item{property}{one of the column names of one of the \code{\link{microorganisms}} data set or \code{"shortname"}}
+\item{property}{one of the column names of the \code{\link{microorganisms}} data set or \code{"shortname"}}
 }
 \value{
 \itemize{
@@ -88,7 +88,7 @@ Use these functions to return a specific property of a microorganism from the \c
 \details{
 All functions will return the most recently known taxonomic property according to the Catalogue of Life, except for \code{mo_ref}, \code{mo_authors} and \code{mo_year}. This leads to the following results:
 \itemize{
-  \item{\code{mo_fullname("Chlamydia psittaci")} will return \code{"Chlamydophila psittaci"} (with a warning about the renaming)}
+  \item{\code{mo_name("Chlamydia psittaci")} will return \code{"Chlamydophila psittaci"} (with a warning about the renaming)}
   \item{\code{mo_ref("Chlamydia psittaci")} will return \code{"Page, 1968"} (with a warning about the renaming)}
   \item{\code{mo_ref("Chlamydophila psittaci")} will return \code{"Everett et al., 1999"} (without a warning)}
 }
@@ -162,9 +162,10 @@ mo_species("VISA")            # "aureus"
 
 
 # Known subspecies
+mo_name("doylei")             # "Campylobacter jejuni doylei"
 mo_genus("doylei")            # "Campylobacter"
 mo_species("doylei")          # "jejuni"
-mo_fullname("doylei")         # "Campylobacter jejuni doylei"
+mo_subspecies("doylei")       # "doylei"
 
 mo_fullname("K. pneu rh")     # "Klebsiella pneumoniae rhinoscleromatis"
 mo_shortname("K. pneu rh")    # "K. pneumoniae"

@@ -56,15 +56,15 @@ guess_ab_col <- function(x = NULL, search_string = NULL, verbose = FALSE) {
   if (is.null(x) & is.null(search_string)) {
     return(as.name("guess_ab_col"))
   }
+  if (!is.data.frame(x)) {
+    stop("`x` must be a data.frame")
+  }
 
   if (length(search_string) > 1) {
     warning("argument 'search_string' has length > 1 and only the first element will be used")
     search_string <- search_string[1]
   }
   search_string <- as.character(search_string)
-  if (!is.data.frame(x)) {
-    stop("`x` must be a data.frame")
-  }
 
   if (search_string %in% colnames(x)) {
     ab_result <- search_string

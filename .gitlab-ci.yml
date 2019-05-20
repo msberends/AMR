@@ -19,6 +19,9 @@
 # Visit our website for more info: https://msberends.gitlab.io/AMR.    #
 # ==================================================================== #
 
+# to check with R-Hub:
+# rhub::check_for_cran(devtools::build(args = c('--no-build-vignettes')))
+
 stages:
   - build
   - test
@@ -78,10 +81,6 @@ R-devel:
   image: rocker/r-devel
   allow_failure: true
   script:
-    # set language
-    - echo 'LANGUAGE="en_US.utf8"' > .Renviron
-    - echo 'LANG="en_US.utf8"' >> .Renviron
-    - echo 'LANGUAGE="en_US.utf8"' > ~/.Renviron
     - Rscriptdevel -e 'sessionInfo()'
     # install missing and outdated packages
     - Rscriptdevel -e 'source(".gitlab-ci.R"); gl_update_pkg_all(repos = "https://cran.rstudio.com", quiet = TRUE, install_pkgdown = TRUE)'

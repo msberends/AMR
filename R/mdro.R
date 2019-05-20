@@ -110,8 +110,7 @@ mdro <- function(x,
   }
 
 
-  cols_ab <- get_column_abx(tbl = x,
-                            ...)
+  cols_ab <- get_column_abx(x = x, verbose = verbose)
 
   AMC <- cols_ab['AMC']
   AMK <- cols_ab['AMK']

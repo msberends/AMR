@@ -112,16 +112,16 @@ Use \code{mo_uncertainties()} to get a data.frame with all values that were coer
 Use \code{mo_renamed()} to get a vector with all values that could be coerced based on an old, previously accepted taxonomic name.
 
 \strong{Microbial prevalence of pathogens in humans} \cr
-The intelligent rules takes into account microbial prevalence of pathogens in humans. It uses three groups and all (sub)species are in only one group. These groups are:
+The intelligent rules take into account microbial prevalence of pathogens in humans. It uses three groups and all (sub)species are in only one group. These groups are:
 \itemize{
   \item{1 (most prevalent): class is Gammaproteobacteria \strong{or} genus is one of: \emph{Enterococcus}, \emph{Staphylococcus}, \emph{Streptococcus}.}
   \item{2: phylum is one of: Proteobacteria, Firmicutes, Actinobacteria, Sarcomastigophora \strong{or} genus is one of: \emph{Aspergillus}, \emph{Bacteroides}, \emph{Candida}, \emph{Capnocytophaga}, \emph{Chryseobacterium}, \emph{Cryptococcus}, \emph{Elisabethkingia}, \emph{Flavobacterium}, \emph{Fusobacterium}, \emph{Giardia}, \emph{Leptotrichia}, \emph{Mycoplasma}, \emph{Prevotella}, \emph{Rhodotorula}, \emph{Treponema}, \emph{Trichophyton}, \emph{Ureaplasma}.}
   \item{3 (least prevalent): all others.}
 }
 
-Group 1 contains all common Gram negatives, like all Enterobacteriaceae and e.g. \emph{Pseudomonas} and \emph{Legionella}.
+Group 1 contains all common Gram positives and Gram negatives, like all Enterobacteriaceae and e.g. \emph{Pseudomonas} and \emph{Legionella}.
 
-Group 2 probably contains all other microbial pathogens ever found in humans.
+Group 2 probably contains less microbial pathogens; all other members of phyla that were found in humans in the Northern Netherlands between 2001 and 2018.
 }
 \section{Source}{
 

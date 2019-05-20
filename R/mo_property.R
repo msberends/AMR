@@ -23,13 +23,13 @@
 #'
 #' Use these functions to return a specific property of a microorganism from the \code{\link{microorganisms}} data set. All input values will be evaluated internally with \code{\link{as.mo}}.
 #' @param x any (vector of) text that can be coerced to a valid microorganism code with \code{\link{as.mo}}
-#' @param property one of the column names of one of the \code{\link{microorganisms}} data set or \code{"shortname"}
+#' @param property one of the column names of the \code{\link{microorganisms}} data set or \code{"shortname"}
 #' @param language language of the returned text, defaults to system language (see \code{\link{get_locale}}) and can also be set with \code{\link{getOption}("AMR_locale")}. Use \code{language = NULL} or \code{language = ""} to prevent translation.
 #' @param ... other parameters passed on to \code{\link{as.mo}}
 #' @param open browse the URL using \code{\link[utils]{browseURL}()}
 #' @details All functions will return the most recently known taxonomic property according to the Catalogue of Life, except for \code{mo_ref}, \code{mo_authors} and \code{mo_year}. This leads to the following results:
 #' \itemize{
-#'   \item{\code{mo_fullname("Chlamydia psittaci")} will return \code{"Chlamydophila psittaci"} (with a warning about the renaming)}
+#'   \item{\code{mo_name("Chlamydia psittaci")} will return \code{"Chlamydophila psittaci"} (with a warning about the renaming)}
 #'   \item{\code{mo_ref("Chlamydia psittaci")} will return \code{"Page, 1968"} (with a warning about the renaming)}
 #'   \item{\code{mo_ref("Chlamydophila psittaci")} will return \code{"Everett et al., 1999"} (without a warning)}
 #' }
@@ -91,9 +91,10 @@
 #'
 #'
 #' # Known subspecies
+#' mo_name("doylei")             # "Campylobacter jejuni doylei"
 #' mo_genus("doylei")            # "Campylobacter"
 #' mo_species("doylei")          # "jejuni"
-#' mo_fullname("doylei")         # "Campylobacter jejuni doylei"
+#' mo_subspecies("doylei")       # "doylei"
 #'
 #' mo_fullname("K. pneu rh")     # "Klebsiella pneumoniae rhinoscleromatis"
 #' mo_shortname("K. pneu rh")    # "K. pneumoniae"
@@ -139,8 +140,7 @@ mo_name <- function(x, language = get_locale(), ...) {
 #' @rdname mo_property
 #' @export
 mo_fullname <- function(x, language = get_locale(), ...) {
-  x <- mo_validate(x = x, property = "fullname", ...)
-  t(x, language = language)
+  t(mo_validate(x = x, property = "fullname", ...), language = language)
 }
 
 #' @rdname mo_property
