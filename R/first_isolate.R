@@ -463,8 +463,8 @@ first_isolate <- function(x,
     suppressWarnings(
       all_first <- all_first %>%
         mutate(key_ab_lag = lag(key_ab)) %>%
-        mutate(key_ab_other = !key_antibiotics_equal(x = key_ab,
-                                                     y = key_ab_lag,
+        mutate(key_ab_other = !key_antibiotics_equal(y = key_ab,
+                                                     z = key_ab_lag,
                                                      type = type_param,
                                                      ignore_I = ignore_I,
                                                      points_threshold = points_threshold,
