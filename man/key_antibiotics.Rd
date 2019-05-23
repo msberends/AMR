@@ -19,7 +19,7 @@ key_antibiotics(x, col_mo = NULL, universal_1 = guess_ab_col(x, "AMX"),
   GramNeg_5 = guess_ab_col(x, "CAZ"), GramNeg_6 = guess_ab_col(x,
   "MEM"), warnings = TRUE, ...)
 
-key_antibiotics_equal(x, y, type = c("keyantibiotics", "points"),
+key_antibiotics_equal(y, z, type = c("keyantibiotics", "points"),
   ignore_I = TRUE, points_threshold = 2, info = FALSE)
 }
 \arguments{
@@ -37,6 +37,8 @@ key_antibiotics_equal(x, y, type = c("keyantibiotics", "points"),
 
 \item{...}{other parameters passed on to function}
 
+\item{y, z}{characters to compare}
+
 \item{type}{type to determine weighed isolates; can be \code{"keyantibiotics"} or \code{"points"}, see Details}
 
 \item{ignore_I}{logical to determine whether antibiotic interpretations with \code{"I"} will be ignored when \code{type = "keyantibiotics"}, see Details}
@@ -44,8 +46,6 @@ key_antibiotics_equal(x, y, type = c("keyantibiotics", "points"),
 \item{points_threshold}{points until the comparison of key antibiotics will lead to inclusion of an isolate when \code{type = "points"}, see Details}
 
 \item{info}{print progress}
-
-\item{x, y}{characters to compare}
 }
 \description{
 These function can be used to determine first isolates (see \code{\link{first_isolate}}). Using key antibiotics to determine first isolates is more reliable than without key antibiotics. These selected isolates will then be called first \emph{weighted} isolates.

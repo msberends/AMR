@@ -23,7 +23,7 @@
 #'
 #' These function can be used to determine first isolates (see \code{\link{first_isolate}}). Using key antibiotics to determine first isolates is more reliable than without key antibiotics. These selected isolates will then be called first \emph{weighted} isolates.
 #' @param x table with antibiotics coloms, like \code{AMX} or \code{amox}
-#' @param x,y characters to compare
+#' @param y,z characters to compare
 #' @inheritParams first_isolate
 #' @param universal_1,universal_2,universal_3,universal_4,universal_5,universal_6 column names of \strong{broad-spectrum} antibiotics, case-insensitive. At default, the columns containing these antibiotics will be guessed with \code{\link{guess_ab_col}}.
 #' @param GramPos_1,GramPos_2,GramPos_3,GramPos_4,GramPos_5,GramPos_6 column names of antibiotics for \strong{Gram positives}, case-insensitive. At default, the columns containing these antibiotics will be guessed with \code{\link{guess_ab_col}}.
@@ -218,13 +218,15 @@ key_antibiotics <- function(x,
 #' @importFrom dplyr progress_estimated %>%
 #' @rdname key_antibiotics
 #' @export
-key_antibiotics_equal <- function(x,
-                                  y,
+key_antibiotics_equal <- function(y,
+                                  z,
                                   type = c("keyantibiotics", "points"),
                                   ignore_I = TRUE,
                                   points_threshold = 2,
                                   info = FALSE) {
-  # x is active row, y is lag
+  # y is active row, z is lag
+  x <- y
+  y <- z
 
   type <- type[1]
 

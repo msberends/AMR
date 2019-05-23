@@ -80,7 +80,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.6.1.9035</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.6.1.9036</span>
       </span>
     </div>
 
@@ -262,7 +262,7 @@
   <span class='kw'>GramNeg_5</span> <span class='kw'>=</span> <span class='fu'><a href='guess_ab_col.html'>guess_ab_col</a></span>(<span class='no'>x</span>, <span class='st'>"CAZ"</span>), <span class='kw'>GramNeg_6</span> <span class='kw'>=</span> <span class='fu'><a href='guess_ab_col.html'>guess_ab_col</a></span>(<span class='no'>x</span>,
   <span class='st'>"MEM"</span>), <span class='kw'>warnings</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>...</span>)
 
-<span class='fu'>key_antibiotics_equal</span>(<span class='no'>x</span>, <span class='no'>y</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"keyantibiotics"</span>, <span class='st'>"points"</span>),
+<span class='fu'>key_antibiotics_equal</span>(<span class='no'>y</span>, <span class='no'>z</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"keyantibiotics"</span>, <span class='st'>"points"</span>),
   <span class='kw'>ignore_I</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>points_threshold</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>info</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -297,6 +297,10 @@
       <td><p>other parameters passed on to function</p></td>
     </tr>
     <tr>
+      <th>y, z</th>
+      <td><p>characters to compare</p></td>
+    </tr>
+    <tr>
       <th>type</th>
       <td><p>type to determine weighed isolates; can be <code>"keyantibiotics"</code> or <code>"points"</code>, see Details</p></td>
     </tr>
@@ -311,10 +315,6 @@
     <tr>
       <th>info</th>
       <td><p>print progress</p></td>
-    </tr>
-    <tr>
-      <th>x, y</th>
-      <td><p>characters to compare</p></td>
     </tr>
     </table>
     
