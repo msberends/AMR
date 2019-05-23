@@ -74,6 +74,6 @@ my_TB_data$mdr <- mdr_tb(my_TB_data)
 
 And review the result with a frequency table:
 
-```{r}
+```{r, results = 'asis'}
 freq(my_TB_data$mdr)
 ```

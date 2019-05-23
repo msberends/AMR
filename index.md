@@ -25,7 +25,7 @@ This package can be used for:
   * Getting properties for any antibiotic (like name, ATC code, defined daily dose or trade name) ([manual](./reference/ab_property.html))
   * Plotting antimicrobial resistance ([tutorial](./articles/AMR.html))
   * Determining first isolates to be used for AMR analysis ([manual](./reference/first_isolate.html))
-  * Applying EUCAST expert rules ([manual](./reference/eucast_rules.html)
+  * Applying EUCAST expert rules ([manual](./reference/eucast_rules.html))
   * Descriptive statistics: frequency tables, kurtosis and skewness ([tutorial](./articles/freq.html))
 
 This package is ready-to-use for a professional environment by specialists in the following fields:
