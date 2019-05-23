@@ -78,7 +78,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.6.1.9034</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.6.1.9035</span>
       </span>
     </div>
 
@@ -112,6 +112,13 @@
         <span class="fa fa-dice"></span>
          
         Predict antimicrobial resistance
+      </a>
+    </li>
+    <li>
+      <a href="../articles/MDR.html">
+        <span class="fa fa-skull-crossbones"></span>
+         
+        Determine multi-drug resistance (MDR)
       </a>
     </li>
     <li>
@@ -232,9 +239,9 @@
       
     </div>
 
-    <div id="amr-0619001" class="section level1">
+    <div id="amr-06190xx" class="section level1">
 <h1 class="page-header">
-<a href="#amr-0619001" class="anchor"></a>AMR 0.6.1.9001<small> Unreleased </small>
+<a href="#amr-06190xx" class="anchor"></a>AMR 0.6.1.90xx<small> Unreleased </small>
 </h1>
 <p><strong>Note: latest development version</strong></p>
 <div id="new" class="section level4">
@@ -244,6 +251,7 @@
 <li>Support for translation of disk diffusion and MIC values to RSI values (i.e. antimicrobial interpretations). Supported guidelines are EUCAST (2011 to 2019) and CLSI (2011 to 2019). Use <code><a href="../reference/as.rsi.html">as.rsi()</a></code> on an MIC value (created with <code><a href="../reference/as.mic.html">as.mic()</a></code>), a disk diffusion value (created with the new <code><a href="../reference/as.disk.html">as.disk()</a></code>) or on a complete date set containing columns with MIC or disk diffusion values.</li>
 <li>Function <code><a href="../reference/mo_property.html">mo_name()</a></code> as alias of <code><a href="../reference/mo_property.html">mo_fullname()</a></code>
 </li>
+<li>Added guidelines of the WHO to determine mutli-drug resistance (MDR) for TB (<code><a href="../reference/mdro.html">mdr_tb()</a></code>) and added a new vignette about MDR</li>
 </ul>
 </div>
 <div id="changed" class="section level4">
@@ -259,7 +267,7 @@
 <li>Column <code>cid</code> contains the CID code (Compound ID), used by PubChem</li>
 </ul>
 </li>
-<li>Based on the Compound ID, more than a thousand official brand names have been added from many different countries</li>
+<li>Based on the Compound ID, almost 5,000 official brand names have been added from many different countries</li>
 <li>All references to antibiotics in our package now use EARS-Net codes, like <code>AMX</code> for amoxicillin</li>
 <li>Functions <code>atc_certe</code>, <code>ab_umcg</code> and <code>atc_trivial_nl</code> have been removed</li>
 <li>All <code>atc_*</code> functions are superceded by <code>ab_*</code> functions</li>
@@ -275,7 +283,14 @@ Please create an issue in one of our repositories if you want additions in this 
 <li>This package now honours the new EUCAST insight (2019) that S and I are but classified as susceptible, where I is defined as ‘increased exposure’ and not ‘intermediate’ anymore. For functions like <code><a href="../reference/portion.html">portion_df()</a></code> and <code><a href="../reference/count.html">count_df()</a></code> this means that their new parameter <code>combine_SI</code> is TRUE at default.</li>
 <li>Removed deprecated functions <code>guess_mo()</code>, <code>guess_atc()</code>, <code>EUCAST_rules()</code>, <code>interpretive_reading()</code>, <code>rsi()</code>
 </li>
-<li>Frequency tables of microbial IDs speed improvement</li>
+<li>Frequency tables (<code><a href="../reference/freq.html">freq()</a></code>):
+<ul>
+<li>speed improvement for microbial IDs</li>
+<li>fixed level names in markdown</li>
+<li>
+</li>
+</ul>
+</li>
 <li>Removed all hardcoded EUCAST rules and replaced them with a new reference file: <code>./inst/eucast/eucast.tsv</code>
 </li>
 <li>Added ceftazidim intrinsic resistance to <em>Streptococci</em>
@@ -1028,7 +1043,7 @@ Using <code><a href="../reference/as.mo.html">as.mo(..., allow_uncertain = 3)</a
     <div id="tocnav">
       <h2>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
-        <li><a href="#amr-0619001">0.6.1.9001</a></li>
+        <li><a href="#amr-06190xx">0.6.1.90</a></li>
         <li><a href="#amr-061">0.6.1</a></li>
         <li><a href="#amr-060">0.6.0</a></li>
         <li><a href="#amr-050">0.5.0</a></li>

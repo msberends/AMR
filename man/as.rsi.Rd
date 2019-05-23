@@ -55,9 +55,9 @@ The function \code{is.rsi.eligible} returns \code{TRUE} when a columns contains 
 In 2019, EUCAST has decided to change the definitions of susceptibility testing categories S, I and R as shown below. Results of several consultations on the new definitions are available on the EUCAST website under "Consultations".
 
 \itemize{
-  \item{\strong{S}}{Susceptible, standard dosing regimen: A microorganism is categorised as "Susceptible, standard dosing regimen", when there is a high likelihood of therapeutic success using a standard dosing regimen of the agent.}
-  \item{\strong{I}}{Susceptible, increased exposure: A microorganism is categorised as "Susceptible, Increased exposure" when there is a high likelihood of therapeutic success because exposure to the agent is increased by adjusting the dosing regimen or by its concentration at the site of infection.}
-  \item{\strong{R}}{Resistant: A microorganism is categorised as "Resistant" when there is a high likelihood of therapeutic failure even when there is increased exposure.}
+  \item{\strong{S} - }{Susceptible, standard dosing regimen: A microorganism is categorised as "Susceptible, standard dosing regimen", when there is a high likelihood of therapeutic success using a standard dosing regimen of the agent.}
+  \item{\strong{I} - }{Susceptible, increased exposure: A microorganism is categorised as "Susceptible, Increased exposure" when there is a high likelihood of therapeutic success because exposure to the agent is increased by adjusting the dosing regimen or by its concentration at the site of infection.}
+  \item{\strong{R} - }{Resistant: A microorganism is categorised as "Resistant" when there is a high likelihood of therapeutic failure even when there is increased exposure.}
 }
 
 Exposure is a function of how the mode of administration, dose, dosing interval, infusion time, as well as distribution and excretion of the antimicrobial agent will influence the infecting organism at the site of infection.

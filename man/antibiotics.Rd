@@ -4,7 +4,7 @@
 \name{antibiotics}
 \alias{antibiotics}
 \title{Data set with ~450 antibiotics}
-\format{A \code{\link{data.frame}} with 455 observations and 13 variables:
+\format{A \code{\link{data.frame}} with 454 observations and 13 variables:
 \describe{
   \item{\code{ab}}{Antibiotic ID as used in this package (like \code{AMC}), using the official EARS-Net (European Antimicrobial Resistance Surveillance Network) codes where available}
   \item{\code{atc}}{ATC code (Anatomical Therapeutic Chemical) as defined by the WHOCC, like \code{J01CR02}}

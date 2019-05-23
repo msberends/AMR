@@ -336,9 +336,10 @@ frequency_tbl <- function(x,
       cols <- unlist(strsplit(x.name, "$", fixed = TRUE))[2]
       x.name <- unlist(strsplit(x.name, "$", fixed = TRUE))[1]
       # try to find the object to determine dimensions
+
       x.obj <- tryCatch(get(x.name), error = function(e) NULL)
       x.name <- paste0("`", x.name , "`")
-      if (!is.null(x.obj)) {
+      if (!is.null(dim(x.obj))) {
         x.name <- paste0(x.name,
                          " (",
                          x.obj %>%
@@ -664,6 +665,10 @@ format_header <- function(x, markdown = FALSE, decimal.mark = ".", big.mark = ",
     if (nchar(levels_text) > 70) {
       # levels text wider than half the console
       levels_text <- paste0(substr(levels_text, 1, 70 - 3), "...")
+      if (nchar(gsub("[^`]", "", levels_text)) %% 2 == 1) {
+        # odd number of backticks, should be even
+        levels_text <- paste0(levels_text, "`")
+      }
     }
     header$levels <- paste0(length(header$levels), ": ", levels_text)
     header <- header[names(header) != "ordered"]

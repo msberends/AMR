@@ -43,7 +43,7 @@ count_df(data, translate_ab = "name", language = get_locale(),
 
 \item{language}{language of the returned text, defaults to system language (see \code{\link{get_locale}}) and can also be set with \code{\link{getOption}("AMR_locale")}. Use \code{language = NULL} or \code{language = ""} to prevent translation.}
 
-\item{combine_SI}{a logical to indicate whether all values of S and I must be merged into one, so the output only consists of S+I vs. R (susceptible vs. resistant). This used to be the parameter \code{combine_IR}, but this now follows the redefinition by EUCAST about the interpretion of I (increased exposure) in 2019, see below. Default is now \code{TRUE}.}
+\item{combine_SI}{a logical to indicate whether all values of S and I must be merged into one, so the output only consists of S+I vs. R (susceptible vs. resistant). This used to be the parameter \code{combine_IR}, but this now follows the redefinition by EUCAST about the interpretion of I (increased exposure) in 2019, see section 'Interpretation of S, I and R' below. Default is \code{TRUE}.}
 
 \item{combine_IR}{a logical to indicate whether all values of I and R must be merged into one, so the output only consists of S vs. I+R (susceptible vs. non-susceptible). This is outdated, see parameter \code{combine_SI}.}
 }
@@ -67,9 +67,9 @@ These functions are meant to count isolates. Use the \code{\link{portion}_*} fun
 In 2019, EUCAST has decided to change the definitions of susceptibility testing categories S, I and R as shown below. Results of several consultations on the new definitions are available on the EUCAST website under "Consultations".
 
 \itemize{
-  \item{\strong{S}}{Susceptible, standard dosing regimen: A microorganism is categorised as "Susceptible, standard dosing regimen", when there is a high likelihood of therapeutic success using a standard dosing regimen of the agent.}
-  \item{\strong{I}}{Susceptible, increased exposure: A microorganism is categorised as "Susceptible, Increased exposure" when there is a high likelihood of therapeutic success because exposure to the agent is increased by adjusting the dosing regimen or by its concentration at the site of infection.}
-  \item{\strong{R}}{Resistant: A microorganism is categorised as "Resistant" when there is a high likelihood of therapeutic failure even when there is increased exposure.}
+  \item{\strong{S} - }{Susceptible, standard dosing regimen: A microorganism is categorised as "Susceptible, standard dosing regimen", when there is a high likelihood of therapeutic success using a standard dosing regimen of the agent.}
+  \item{\strong{I} - }{Susceptible, increased exposure: A microorganism is categorised as "Susceptible, Increased exposure" when there is a high likelihood of therapeutic success because exposure to the agent is increased by adjusting the dosing regimen or by its concentration at the site of infection.}
+  \item{\strong{R} - }{Resistant: A microorganism is categorised as "Resistant" when there is a high likelihood of therapeutic failure even when there is increased exposure.}
 }
 
 Exposure is a function of how the mode of administration, dose, dosing interval, infusion time, as well as distribution and excretion of the antimicrobial agent will influence the infecting organism at the site of infection.

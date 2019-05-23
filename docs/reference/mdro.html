@@ -80,7 +80,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.6.1.9033</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.6.1.9035</span>
       </span>
     </div>
 
@@ -114,6 +114,13 @@
         <span class="fa fa-dice"></span>
          
         Predict antimicrobial resistance
+      </a>
+    </li>
+    <li>
+      <a href="../articles/MDR.html">
+        <span class="fa fa-skull-crossbones"></span>
+         
+        Determine multi-drug resistance (MDR)
       </a>
     </li>
     <li>
@@ -241,14 +248,16 @@
     
     </div>
 
-    <pre class="usage"><span class='fu'>mdro</span>(<span class='no'>x</span>, <span class='kw'>country</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>col_mo</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>info</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>...</span>)
+    <pre class="usage"><span class='fu'>mdro</span>(<span class='no'>x</span>, <span class='kw'>country</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>guideline</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>col_mo</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>info</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>...</span>)
 
 <span class='fu'>brmo</span>(<span class='no'>...</span>, <span class='kw'>country</span> <span class='kw'>=</span> <span class='st'>"nl"</span>)
 
 <span class='fu'>mrgn</span>(<span class='no'>x</span>, <span class='kw'>country</span> <span class='kw'>=</span> <span class='st'>"de"</span>, <span class='no'>...</span>)
 
-<span class='fu'>eucast_exceptional_phenotypes</span>(<span class='no'>x</span>, <span class='kw'>country</span> <span class='kw'>=</span> <span class='st'>"EUCAST"</span>, <span class='no'>...</span>)</pre>
+<span class='fu'>mdr_tb</span>(<span class='no'>x</span>, <span class='kw'>guideline</span> <span class='kw'>=</span> <span class='st'>"TB"</span>, <span class='no'>...</span>)
+
+<span class='fu'>eucast_exceptional_phenotypes</span>(<span class='no'>x</span>, <span class='kw'>guideline</span> <span class='kw'>=</span> <span class='st'>"EUCAST"</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -259,7 +268,11 @@
     </tr>
     <tr>
       <th>country</th>
-      <td><p>country code to determine guidelines. EUCAST rules will be used when left empty, see Details. Should be or a code from the <a href='https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2#Officially_assigned_code_elements'>list of ISO 3166-1 alpha-2 country codes</a>. Case-insensitive. Currently supported are <code>de</code> (Germany) and <code>nl</code> (the Netherlands).</p></td>
+      <td><p>country code to determine guidelines. Should be or a code from the <a href='https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2#Officially_assigned_code_elements'>list of ISO 3166-1 alpha-2 country codes</a>. Case-insensitive.</p></td>
+    </tr>
+    <tr>
+      <th>guideline</th>
+      <td><p>a specific guideline to mention. For some countries this will be determined automatically, see Details. EUCAST guidelines will be used when left empty, see Details.</p></td>
     </tr>
     <tr>
       <th>col_mo</th>
@@ -285,7 +298,15 @@
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>When <code>country</code> will be left blank, guidelines will be taken from EUCAST Expert Rules Version 3.1 "Intrinsic Resistance and Exceptional Phenotypes Tables" (<a href='http://www.eucast.org/fileadmin/src/media/PDFs/EUCAST_files/Expert_Rules/Expert_rules_intrinsic_exceptional_V3.1.pdf'>link</a>).</p>
+    <p>When <code>country</code> is set, the parameter guideline will be ignored as these guidelines will be used:</p>
+<ul>
+<li><p><code>country = "nl"</code>: Rijksinstituut voor Volksgezondheid en Milieu "WIP-richtlijn BRMO (Bijzonder Resistente Micro-Organismen) [ZKH]" (<a href='https://www.rivm.nl/Documenten_en_publicaties/Professioneel_Praktisch/Richtlijnen/Infectieziekten/WIP_Richtlijnen/WIP_Richtlijnen/Ziekenhuizen/WIP_richtlijn_BRMO_Bijzonder_Resistente_Micro_Organismen_ZKH'>link</a>)</p></li>
+</ul>
+    <p>Please suggest your own country's specific guidelines by letting us know: <a href='https://gitlab.com/msberends/AMR/issues/new'>https://gitlab.com/msberends/AMR/issues/new</a>.</p>
+<p>Other currently supported guidelines are:</p><ul>
+<li><p><code>guideline = "eucast"</code>: EUCAST Expert Rules Version 3.1 "Intrinsic Resistance and Exceptional Phenotypes Tables" (<a href='http://www.eucast.org/fileadmin/src/media/PDFs/EUCAST_files/Expert_Rules/Expert_rules_intrinsic_exceptional_V3.1.pdf'>link</a>)</p></li>
+<li><p><code>guideline = "tb"</code>: World Health Organization "Companion handbook to the WHO guidelines for the programmatic management of drug-resistant tuberculosis" (<a href='https://www.who.int/tb/publications/pmdt_companionhandbook/en/'>link</a>)</p></li>
+</ul>
     
     <h2 class="hasAnchor" id="antibiotics"><a class="anchor" href="#antibiotics"></a>Antibiotics</h2>
 

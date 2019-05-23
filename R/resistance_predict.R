@@ -140,7 +140,7 @@ resistance_predict <- function(x,
 
   # -- date
   if (is.null(col_date)) {
-    col_date <- search_type_in_df(tbl = x, type = "date")
+    col_date <- search_type_in_df(x = x, type = "date")
   }
   if (is.null(col_date)) {
     stop("`col_date` must be set.", call. = FALSE)

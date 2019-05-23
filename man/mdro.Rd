@@ -4,22 +4,27 @@
 \alias{mdro}
 \alias{brmo}
 \alias{mrgn}
+\alias{mdr_tb}
 \alias{eucast_exceptional_phenotypes}
 \title{Determine multidrug-resistant organisms (MDRO)}
 \usage{
-mdro(x, country = NULL, col_mo = NULL, info = TRUE,
-  verbose = FALSE, ...)
+mdro(x, country = NULL, guideline = NULL, col_mo = NULL,
+  info = TRUE, verbose = FALSE, ...)
 
 brmo(..., country = "nl")
 
 mrgn(x, country = "de", ...)
 
-eucast_exceptional_phenotypes(x, country = "EUCAST", ...)
+mdr_tb(x, guideline = "TB", ...)
+
+eucast_exceptional_phenotypes(x, guideline = "EUCAST", ...)
 }
 \arguments{
 \item{x}{table with antibiotic columns, like e.g. \code{AMX} and \code{AMC}}
 
-\item{country}{country code to determine guidelines. EUCAST rules will be used when left empty, see Details. Should be or a code from the \href{https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2#Officially_assigned_code_elements}{list of ISO 3166-1 alpha-2 country codes}. Case-insensitive. Currently supported are \code{de} (Germany) and \code{nl} (the Netherlands).}
+\item{country}{country code to determine guidelines. Should be or a code from the \href{https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2#Officially_assigned_code_elements}{list of ISO 3166-1 alpha-2 country codes}. Case-insensitive.}
+
+\item{guideline}{a specific guideline to mention. For some countries this will be determined automatically, see Details. EUCAST guidelines will be used when left empty, see Details.}
 
 \item{col_mo}{column name of the unique IDs of the microorganisms (see \code{\link{mo}}), defaults to the first column of class \code{mo}. Values will be coerced using \code{\link{as.mo}}.}
 
@@ -36,7 +41,19 @@ Ordered factor with levels \code{Negative < Positive, unconfirmed < Positive}.
 Determine which isolates are multidrug-resistant organisms (MDRO) according to country-specific guidelines.
 }
 \details{
-When \code{country} will be left blank, guidelines will be taken from EUCAST Expert Rules Version 3.1 "Intrinsic Resistance and Exceptional Phenotypes Tables" (\href{http://www.eucast.org/fileadmin/src/media/PDFs/EUCAST_files/Expert_Rules/Expert_rules_intrinsic_exceptional_V3.1.pdf}{link}).
+When \code{country} is set, the parameter guideline will be ignored as these guidelines will be used:
+
+\itemize{
+  \item{\code{country = "nl"}: Rijksinstituut voor Volksgezondheid en Milieu "WIP-richtlijn BRMO (Bijzonder Resistente Micro-Organismen) [ZKH]" (\href{https://www.rivm.nl/Documenten_en_publicaties/Professioneel_Praktisch/Richtlijnen/Infectieziekten/WIP_Richtlijnen/WIP_Richtlijnen/Ziekenhuizen/WIP_richtlijn_BRMO_Bijzonder_Resistente_Micro_Organismen_ZKH}{link})}
+}
+
+Please suggest your own country's specific guidelines by letting us know: \url{https://gitlab.com/msberends/AMR/issues/new}.
+
+Other currently supported guidelines are:
+\itemize{
+  \item{\code{guideline = "eucast"}: EUCAST Expert Rules Version 3.1 "Intrinsic Resistance and Exceptional Phenotypes Tables" (\href{http://www.eucast.org/fileadmin/src/media/PDFs/EUCAST_files/Expert_Rules/Expert_rules_intrinsic_exceptional_V3.1.pdf}{link})}
+  \item{\code{guideline = "tb"}: World Health Organization "Companion handbook to the WHO guidelines for the programmatic management of drug-resistant tuberculosis" (\href{https://www.who.int/tb/publications/pmdt_companionhandbook/en/}{link})}
+}
 }
 \section{Antibiotics}{
 

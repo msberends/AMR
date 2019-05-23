@@ -39,9 +39,9 @@
 #' In 2019, EUCAST has decided to change the definitions of susceptibility testing categories S, I and R as shown below. Results of several consultations on the new definitions are available on the EUCAST website under "Consultations".
 #'
 #' \itemize{
-#'   \item{\strong{S}}{Susceptible, standard dosing regimen: A microorganism is categorised as "Susceptible, standard dosing regimen", when there is a high likelihood of therapeutic success using a standard dosing regimen of the agent.}
-#'   \item{\strong{I}}{Susceptible, increased exposure: A microorganism is categorised as "Susceptible, Increased exposure" when there is a high likelihood of therapeutic success because exposure to the agent is increased by adjusting the dosing regimen or by its concentration at the site of infection.}
-#'   \item{\strong{R}}{Resistant: A microorganism is categorised as "Resistant" when there is a high likelihood of therapeutic failure even when there is increased exposure.}
+#'   \item{\strong{S} - }{Susceptible, standard dosing regimen: A microorganism is categorised as "Susceptible, standard dosing regimen", when there is a high likelihood of therapeutic success using a standard dosing regimen of the agent.}
+#'   \item{\strong{I} - }{Susceptible, increased exposure: A microorganism is categorised as "Susceptible, Increased exposure" when there is a high likelihood of therapeutic success because exposure to the agent is increased by adjusting the dosing regimen or by its concentration at the site of infection.}
+#'   \item{\strong{R} - }{Resistant: A microorganism is categorised as "Resistant" when there is a high likelihood of therapeutic failure even when there is increased exposure.}
 #' }
 #'
 #' Exposure is a function of how the mode of administration, dose, dosing interval, infusion time, as well as distribution and excretion of the antimicrobial agent will influence the infecting organism at the site of infection.
@@ -259,9 +259,9 @@ exec_as.rsi <- function(method, x, mo, ab, guideline) {
 #' @importFrom crayon red blue
 #' @export
 as.rsi.data.frame <- function(x, col_mo = NULL, guideline = "EUCAST", ...) {
-  tbl_ <- x
+  x <- x
 
-  ab_cols <- colnames(tbl_)[sapply(tbl_, function(x) is.mic(x) | is.disk(x))]
+  ab_cols <- colnames(x)[sapply(x, function(y) is.mic(y) | is.disk(y))]
   if (length(ab_cols) == 0) {
     stop("No columns with MIC values or disk zones found in this data set. Use as.mic or as.disk to transform antibiotic columns.", call. = FALSE)
   }
@@ -269,14 +269,14 @@ as.rsi.data.frame <- function(x, col_mo = NULL, guideline = "EUCAST", ...) {
   # try to find columns based on type
   # -- mo
   if (is.null(col_mo)) {
-    col_mo <- search_type_in_df(tbl = tbl_, type = "mo")
+    col_mo <- search_type_in_df(x = x, type = "mo")
   }
   if (is.null(col_mo)) {
     stop("`col_mo` must be set.", call. = FALSE)
   }
 
   # transform all MICs
-  ab_cols <- colnames(tbl_)[sapply(tbl_, is.mic)]
+  ab_cols <- colnames(x)[sapply(x, is.mic)]
   if (length(ab_cols) > 0) {
     for (i in 1:length(ab_cols)) {
       if (is.na(suppressWarnings(as.ab(ab_cols[i])))) {
@@ -284,16 +284,16 @@ as.rsi.data.frame <- function(x, col_mo = NULL, guideline = "EUCAST", ...) {
         next
       }
       message(blue(paste0("Interpreting column `", bold(ab_cols[i]), "` (", ab_name(ab_cols[i], tolower = TRUE), ")...")), appendLF = FALSE)
-      tbl_[, ab_cols[i]] <- exec_as.rsi(method = "mic",
-                                        x = tbl_ %>% pull(ab_cols[i]),
-                                        mo = tbl_ %>% pull(col_mo),
+      x[, ab_cols[i]] <- exec_as.rsi(method = "mic",
+                                        x = x %>% pull(ab_cols[i]),
+                                        mo = x %>% pull(col_mo),
                                         ab = as.ab(ab_cols[i]),
                                         guideline = guideline)
       message(blue(" OK."))
     }
   }
   # transform all disks
-  ab_cols <- colnames(tbl_)[sapply(tbl_, is.disk)]
+  ab_cols <- colnames(x)[sapply(x, is.disk)]
   if (length(ab_cols) > 0) {
     for (i in 1:length(ab_cols)) {
       if (is.na(suppressWarnings(as.ab(ab_cols[i])))) {
@@ -301,16 +301,16 @@ as.rsi.data.frame <- function(x, col_mo = NULL, guideline = "EUCAST", ...) {
         next
       }
       message(blue(paste0("Interpreting column `", bold(ab_cols[i]), "` (", ab_name(ab_cols[i], tolower = TRUE), ")...")), appendLF = FALSE)
-      tbl_[, ab_cols[i]] <- exec_as.rsi(method = "disk",
-                                        x = tbl_ %>% pull(ab_cols[i]),
-                                        mo = tbl_ %>% pull(col_mo),
+      x[, ab_cols[i]] <- exec_as.rsi(method = "disk",
+                                        x = x %>% pull(ab_cols[i]),
+                                        mo = x %>% pull(col_mo),
                                         ab = as.ab(ab_cols[i]),
                                         guideline = guideline)
       message(blue(" OK."))
     }
   }
 
-  tbl_
+  x
 }
 
 #' @rdname as.rsi

@@ -87,43 +87,43 @@ percent <- function(x, round = 1, force_zero = FALSE, decimal.mark = getOption("
 
 #' @importFrom crayon blue bold red
 #' @importFrom dplyr %>% pull
-search_type_in_df <- function(tbl, type) {
+search_type_in_df <- function(x, type) {
   # try to find columns based on type
   found <- NULL
 
-  colnames(tbl) <- trimws(colnames(tbl))
+  colnames(x) <- trimws(colnames(x))
 
   # -- mo
   if (type == "mo") {
-    if ("mo" %in% lapply(tbl, class)) {
-      found <- colnames(tbl)[lapply(tbl, class) == "mo"][1]
-    } else if (any(colnames(tbl) %like% "^(mo|microorganism|organism|bacteria)")) {
-      found <- colnames(tbl)[colnames(tbl) %like% "^(mo|microorganism|organism|bacteria)"][1]
-    } else if (any(colnames(tbl) %like% "species")) {
-      found <- colnames(tbl)[colnames(tbl) %like% "species"][1]
+    if ("mo" %in% lapply(x, class)) {
+      found <- colnames(x)[lapply(x, class) == "mo"][1]
+    } else if (any(colnames(x) %like% "^(mo|microorganism|organism|bacteria)s?$")) {
+      found <- colnames(x)[colnames(x) %like% "^(mo|microorganism|organism|bacteria)s?$"][1]
+    } else if (any(colnames(x) %like% "species")) {
+      found <- colnames(x)[colnames(x) %like% "species"][1]
     }
 
   }
   # -- key antibiotics
   if (type == "keyantibiotics") {
-    if (any(colnames(tbl) %like% "^key.*(ab|antibiotics)")) {
-      found <- colnames(tbl)[colnames(tbl) %like% "^key.*(ab|antibiotics)"][1]
+    if (any(colnames(x) %like% "^key.*(ab|antibiotics)")) {
+      found <- colnames(x)[colnames(x) %like% "^key.*(ab|antibiotics)"][1]
     }
   }
   # -- date
   if (type == "date") {
-    if (any(colnames(tbl) %like% "^(specimen date|specimen_date|spec_date)")) {
+    if (any(colnames(x) %like% "^(specimen date|specimen_date|spec_date)")) {
       # WHONET support
-      found <- colnames(tbl)[colnames(tbl) %like% "^(specimen date|specimen_date|spec_date)"][1]
-      if (!any(class(tbl %>% pull(found)) %in% c("Date", "POSIXct"))) {
+      found <- colnames(x)[colnames(x) %like% "^(specimen date|specimen_date|spec_date)"][1]
+      if (!any(class(x %>% pull(found)) %in% c("Date", "POSIXct"))) {
         stop(red(paste0("ERROR: Found column `", bold(found), "` to be used as input for `col_", type,
                         "`, but this column contains no valid dates. Transform its values to valid dates first.")),
              call. = FALSE)
       }
     } else {
-      for (i in 1:ncol(tbl)) {
-        if (any(class(tbl %>% pull(i)) %in% c("Date", "POSIXct"))) {
-          found <- colnames(tbl)[i]
+      for (i in 1:ncol(x)) {
+        if (any(class(x %>% pull(i)) %in% c("Date", "POSIXct"))) {
+          found <- colnames(x)[i]
           break
         }
       }
@@ -131,16 +131,16 @@ search_type_in_df <- function(tbl, type) {
   }
   # -- patient id
   if (type == "patient_id") {
-    if (any(colnames(tbl) %like% "^(identification |patient|patid)")) {
-      found <- colnames(tbl)[colnames(tbl) %like% "^(identification |patient|patid)"][1]
+    if (any(colnames(x) %like% "^(identification |patient|patid)")) {
+      found <- colnames(x)[colnames(x) %like% "^(identification |patient|patid)"][1]
     }
   }
   # -- specimen
   if (type == "specimen") {
-    if (any(colnames(tbl) %like% "(specimen type|spec_type)")) {
-      found <- colnames(tbl)[colnames(tbl) %like% "(specimen type|spec_type)"][1]
-    } else if (any(colnames(tbl) %like% "^(specimen)")) {
-      found <- colnames(tbl)[colnames(tbl) %like% "^(specimen)"][1]
+    if (any(colnames(x) %like% "(specimen type|spec_type)")) {
+      found <- colnames(x)[colnames(x) %like% "(specimen type|spec_type)"][1]
+    } else if (any(colnames(x) %like% "^(specimen)")) {
+      found <- colnames(x)[colnames(x) %like% "^(specimen)"][1]
     }
   }
 

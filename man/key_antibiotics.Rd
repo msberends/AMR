@@ -5,26 +5,25 @@
 \alias{key_antibiotics_equal}
 \title{Key antibiotics for first \emph{weighted} isolates}
 \usage{
-key_antibiotics(tbl, col_mo = NULL, universal_1 = guess_ab_col(tbl,
-  "AMX"), universal_2 = guess_ab_col(tbl, "AMC"),
-  universal_3 = guess_ab_col(tbl, "CXM"),
-  universal_4 = guess_ab_col(tbl, "TZP"),
-  universal_5 = guess_ab_col(tbl, "CIP"),
-  universal_6 = guess_ab_col(tbl, "SXT"), GramPos_1 = guess_ab_col(tbl,
-  "VAN"), GramPos_2 = guess_ab_col(tbl, "TEC"),
-  GramPos_3 = guess_ab_col(tbl, "TCY"), GramPos_4 = guess_ab_col(tbl,
-  "ERY"), GramPos_5 = guess_ab_col(tbl, "OXA"),
-  GramPos_6 = guess_ab_col(tbl, "RIF"), GramNeg_1 = guess_ab_col(tbl,
-  "GEN"), GramNeg_2 = guess_ab_col(tbl, "TOB"),
-  GramNeg_3 = guess_ab_col(tbl, "COL"), GramNeg_4 = guess_ab_col(tbl,
-  "CTX"), GramNeg_5 = guess_ab_col(tbl, "CAZ"),
-  GramNeg_6 = guess_ab_col(tbl, "MEM"), warnings = TRUE, ...)
+key_antibiotics(x, col_mo = NULL, universal_1 = guess_ab_col(x, "AMX"),
+  universal_2 = guess_ab_col(x, "AMC"), universal_3 = guess_ab_col(x,
+  "CXM"), universal_4 = guess_ab_col(x, "TZP"),
+  universal_5 = guess_ab_col(x, "CIP"), universal_6 = guess_ab_col(x,
+  "SXT"), GramPos_1 = guess_ab_col(x, "VAN"),
+  GramPos_2 = guess_ab_col(x, "TEC"), GramPos_3 = guess_ab_col(x,
+  "TCY"), GramPos_4 = guess_ab_col(x, "ERY"),
+  GramPos_5 = guess_ab_col(x, "OXA"), GramPos_6 = guess_ab_col(x,
+  "RIF"), GramNeg_1 = guess_ab_col(x, "GEN"),
+  GramNeg_2 = guess_ab_col(x, "TOB"), GramNeg_3 = guess_ab_col(x,
+  "COL"), GramNeg_4 = guess_ab_col(x, "CTX"),
+  GramNeg_5 = guess_ab_col(x, "CAZ"), GramNeg_6 = guess_ab_col(x,
+  "MEM"), warnings = TRUE, ...)
 
 key_antibiotics_equal(x, y, type = c("keyantibiotics", "points"),
   ignore_I = TRUE, points_threshold = 2, info = FALSE)
 }
 \arguments{
-\item{tbl}{table with antibiotics coloms, like \code{amox} and \code{amcl}.}
+\item{x}{table with antibiotics coloms, like \code{AMX} or \code{amox}}
 
 \item{col_mo}{column name of the unique IDs of the microorganisms (see \code{\link{mo}}), defaults to the first column of class \code{mo}. Values will be coerced using \code{\link{as.mo}}.}
 
@@ -38,8 +37,6 @@ key_antibiotics_equal(x, y, type = c("keyantibiotics", "points"),
 
 \item{...}{other parameters passed on to function}
 
-\item{x, y}{characters to compare}
-
 \item{type}{type to determine weighed isolates; can be \code{"keyantibiotics"} or \code{"points"}, see Details}
 
 \item{ignore_I}{logical to determine whether antibiotic interpretations with \code{"I"} will be ignored when \code{type = "keyantibiotics"}, see Details}
@@ -47,6 +44,8 @@ key_antibiotics_equal(x, y, type = c("keyantibiotics", "points"),
 \item{points_threshold}{points until the comparison of key antibiotics will lead to inclusion of an isolate when \code{type = "points"}, see Details}
 
 \item{info}{print progress}
+
+\item{x, y}{characters to compare}
 }
 \description{
 These function can be used to determine first isolates (see \code{\link{first_isolate}}). Using key antibiotics to determine first isolates is more reliable than without key antibiotics. These selected isolates will then be called first \emph{weighted} isolates.

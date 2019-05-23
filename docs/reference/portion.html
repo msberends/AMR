@@ -81,7 +81,7 @@ portion_R and portion_IR can be used to calculate resistance, portion_S and port
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.6.1.9033</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.6.1.9035</span>
       </span>
     </div>
 
@@ -115,6 +115,13 @@ portion_R and portion_IR can be used to calculate resistance, portion_S and port
         <span class="fa fa-dice"></span>
          
         Predict antimicrobial resistance
+      </a>
+    </li>
+    <li>
+      <a href="../articles/MDR.html">
+        <span class="fa fa-skull-crossbones"></span>
+         
+        Determine multi-drug resistance (MDR)
       </a>
     </li>
     <li>
@@ -295,7 +302,7 @@ portion_R and portion_IR can be used to calculate resistance, portion_S and port
     </tr>
     <tr>
       <th>combine_SI</th>
-      <td><p>a logical to indicate whether all values of S and I must be merged into one, so the output only consists of S+I vs. R (susceptible vs. resistant). This used to be the parameter <code>combine_IR</code>, but this now follows the redefinition by EUCAST about the interpretion of I (increased exposure) in 2019, see below. Default is now <code>TRUE</code>.</p></td>
+      <td><p>a logical to indicate whether all values of S and I must be merged into one, so the output only consists of S+I vs. R (susceptible vs. resistant). This used to be the parameter <code>combine_IR</code>, but this now follows the redefinition by EUCAST about the interpretion of I (increased exposure) in 2019, see section 'Interpretation of S, I and R' below. Default is <code>TRUE</code>.</p></td>
     </tr>
     <tr>
       <th>combine_IR</th>
@@ -335,9 +342,9 @@ portion_R and portion_IR can be used to calculate resistance, portion_S and port
     
     <p>In 2019, EUCAST has decided to change the definitions of susceptibility testing categories S, I and R as shown below. Results of several consultations on the new definitions are available on the EUCAST website under "Consultations".</p>
 <ul>
-<li><p><strong>S</strong>Susceptible, standard dosing regimen: A microorganism is categorised as "Susceptible, standard dosing regimen", when there is a high likelihood of therapeutic success using a standard dosing regimen of the agent.</p></li>
-<li><p><strong>I</strong>Susceptible, increased exposure: A microorganism is categorised as "Susceptible, Increased exposure" when there is a high likelihood of therapeutic success because exposure to the agent is increased by adjusting the dosing regimen or by its concentration at the site of infection.</p></li>
-<li><p><strong>R</strong>Resistant: A microorganism is categorised as "Resistant" when there is a high likelihood of therapeutic failure even when there is increased exposure.</p></li>
+<li><p><strong>S</strong> - Susceptible, standard dosing regimen: A microorganism is categorised as "Susceptible, standard dosing regimen", when there is a high likelihood of therapeutic success using a standard dosing regimen of the agent.</p></li>
+<li><p><strong>I</strong> - Susceptible, increased exposure: A microorganism is categorised as "Susceptible, Increased exposure" when there is a high likelihood of therapeutic success because exposure to the agent is increased by adjusting the dosing regimen or by its concentration at the site of infection.</p></li>
+<li><p><strong>R</strong> - Resistant: A microorganism is categorised as "Resistant" when there is a high likelihood of therapeutic failure even when there is increased exposure.</p></li>
 </ul>
     <p>Exposure is a function of how the mode of administration, dose, dosing interval, infusion time, as well as distribution and excretion of the antimicrobial agent will influence the infecting organism at the site of infection.</p>
 <p>Source: <a href='http://www.eucast.org/newsiandr/'>http://www.eucast.org/newsiandr/</a>.</p>

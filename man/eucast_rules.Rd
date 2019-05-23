@@ -43,7 +43,7 @@ eucast_rules_file()
 \item{...}{column name of an antibiotic, see section Antibiotics}
 }
 \value{
-The input of \code{tbl_}, possibly with edited values of antibiotics. Or, if \code{verbose = TRUE}, a \code{data.frame} with all original and new values of the affected bug-drug combinations.
+The input of \code{x}, possibly with edited values of antibiotics. Or, if \code{verbose = TRUE}, a \code{data.frame} with all original and new values of the affected bug-drug combinations.
 }
 \description{
 Apply susceptibility rules as defined by the European Committee on Antimicrobial Susceptibility Testing (EUCAST, \url{http://eucast.org}), see \emph{Source}. This includes (1) expert rules, (2) intrinsic resistance and (3) inferred resistance as defined in their breakpoint tables.

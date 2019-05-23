@@ -191,7 +191,7 @@ first_isolate <- function(x,
   # try to find columns based on type
   # -- mo
   if (is.null(col_mo)) {
-    col_mo <- search_type_in_df(tbl = x, type = "mo")
+    col_mo <- search_type_in_df(x = x, type = "mo")
   }
   if (is.null(col_mo)) {
     stop("`col_mo` must be set.", call. = FALSE)
@@ -199,7 +199,7 @@ first_isolate <- function(x,
 
   # -- date
   if (is.null(col_date)) {
-    col_date <- search_type_in_df(tbl = x, type = "date")
+    col_date <- search_type_in_df(x = x, type = "date")
   }
   if (is.null(col_date)) {
     stop("`col_date` must be set.", call. = FALSE)
@@ -217,7 +217,7 @@ first_isolate <- function(x,
       col_patient_id <- "patient_id"
       message(blue(paste0("NOTE: Using combined columns ", bold("`First name`, `Last name` and `Sex`"), " as input for `col_patient_id`.")))
     } else {
-    col_patient_id <- search_type_in_df(tbl = x, type = "patient_id")
+      col_patient_id <- search_type_in_df(x = x, type = "patient_id")
     }
   }
   if (is.null(col_patient_id)) {
@@ -226,7 +226,7 @@ first_isolate <- function(x,
 
   # -- key antibiotics
   if (is.null(col_keyantibiotics)) {
-    col_keyantibiotics <- search_type_in_df(tbl = x, type = "keyantibiotics")
+    col_keyantibiotics <- search_type_in_df(x = x, type = "keyantibiotics")
   }
   if (isFALSE(col_keyantibiotics)) {
     col_keyantibiotics <- NULL
@@ -234,7 +234,7 @@ first_isolate <- function(x,
 
   # -- specimen
   if (is.null(col_specimen)) {
-    col_specimen <- search_type_in_df(tbl = x, type = "specimen")
+    col_specimen <- search_type_in_df(x = x, type = "specimen")
   }
   if (isFALSE(col_specimen)) {
     col_specimen <- NULL
@@ -547,10 +547,10 @@ filter_first_isolate <- function(x,
                                  col_mo = NULL,
                                  ...) {
   filter(x, first_isolate(x = x,
-                            col_date = col_date,
-                            col_patient_id = col_patient_id,
-                            col_mo = col_mo,
-                            ...))
+                          col_date = col_date,
+                          col_patient_id = col_patient_id,
+                          col_mo = col_mo,
+                          ...))
 }
 
 #' @rdname first_isolate

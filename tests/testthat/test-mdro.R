@@ -24,8 +24,8 @@ context("mdro.R")
 test_that("mdro works", {
   library(dplyr)
 
-  expect_error(suppressWarnings(mdro(septic_patients, "invalid", col_mo = "mo", info = TRUE)))
-  expect_error(suppressWarnings(mdro(septic_patients, "fr", info = TRUE)))
+  expect_error(suppressWarnings(mdro(septic_patients, country = "invalid", col_mo = "mo", info = TRUE)))
+  expect_error(suppressWarnings(mdro(septic_patients, country = "fr", info = TRUE)))
   expect_error(suppressWarnings(mdro(septic_patients, country = c("de", "nl"), info = TRUE)))
   expect_error(suppressWarnings(mdro(septic_patients, col_mo = "invalid", info = TRUE)))
 
@@ -46,7 +46,7 @@ test_that("mdro works", {
     suppressWarnings(
       brmo(septic_patients, info = FALSE)),
     suppressWarnings(
-      mdro(septic_patients, "nl", info = FALSE)
+      mdro(septic_patients, country = "nl", info = FALSE)
     )
   )
 
@@ -80,5 +80,33 @@ test_that("mdro works", {
                       col_mo = "mo",
                       info = FALSE))
   ), "Positive")
+
+  # MDR TB
+  expect_equal(
+    suppressWarnings(
+      # select only rifampicine, mo will be determined automatically (as M. tuberculosis),
+      # number of mono-resistant strains should be equal to number of rifampicine-resistant strains
+      septic_patients %>% select(RIF) %>% mdr_tb() %>% freq() %>% pull(count) %>% .[2]
+    ),
+    count_R(septic_patients$RIF))
+
+  sample_rsi <- function() {
+    sample(c("S", "I", "R"),
+           size = 5000,
+           prob = c(0.5, 0.1, 0.4),
+           replace = TRUE)
+  }
+  expect_gt(
+    suppressWarnings(
+      data.frame(rifampicin = sample_rsi(),
+                 inh = sample_rsi(),
+                 gatifloxacin = sample_rsi(),
+                 eth = sample_rsi(),
+                 pza = sample_rsi(),
+                 MFX = sample_rsi(),
+                 KAN = sample_rsi()) %>%
+        mdr_tb() %>%
+        n_distinct()),
+    2)
 
 })

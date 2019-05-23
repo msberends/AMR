@@ -225,7 +225,7 @@ get_synonyms <- function(CID, clean = TRUE) {
   synonyms
 }
 
-# get brand names (2-3 min)
+# get brand names from PubChem (2-3 min)
 synonyms <- get_synonyms(CIDs)
 synonyms <- lapply(synonyms,
                    function(x) {
@@ -244,7 +244,9 @@ antibiotics <- abx2 %>%
             atc,
             cid = CIDs,
             # no capital after a slash: Ampicillin/Sulbactam -> Ampicillin/sulbactam
-            name = gsub("edta", "EDTA", gsub("/([A-Z])", "/\\L\\1", name, perl = TRUE), ignore.case = TRUE),
+            name = name %>%
+              gsub("([/-])([A-Z])", "\\1\\L\\2", ., perl = TRUE) %>%
+              gsub("edta", "EDTA", ., ignore.case = TRUE),
             group = case_when(
               paste(atc_group1, atc_group2, CLASS, SUBCLASS) %like% "am(ph|f)enicol" ~ "Amphenicols",
               paste(atc_group1, atc_group2, CLASS, SUBCLASS) %like% "aminoglycoside" ~ "Aminoglycosides",
@@ -283,6 +285,10 @@ antibiotics <- filter(antibiotics, ab != "POL")
 # 'Latamoxef' (LTM) and 'Moxalactam (Latamoxef)' (MOX) both exist, so:
 antibiotics[which(antibiotics$ab == "LTM"), "abbreviations"][[1]] <- list(c("MOX", "moxa"))
 antibiotics <- filter(antibiotics, ab != "MOX")
+# RFP and RFP1 (the J0 one) both mean 'rifapentine', although 'rifp' is not recognised, so:
+antibiotics <- filter(antibiotics, ab != "RFP")
+antibiotics[which(antibiotics$ab == "RFP1"), "ab"] <- "RFP"
+antibiotics[which(antibiotics$ab == "RFP"), "abbreviations"][[1]] <- list(c("rifp"))
 # ESBL E-test codes:
 antibiotics[which(antibiotics$ab == "CCV"), "abbreviations"][[1]] <- list(c("xtzl"))
 antibiotics[which(antibiotics$ab == "CAZ"), "abbreviations"][[1]] <- list(c(antibiotics[which(antibiotics$ab == "CAZ"), "abbreviations"][[1]], "xtz", "cefta"))
@@ -294,5 +300,6 @@ antibiotics[which(antibiotics$ab == "CTX"), "abbreviations"][[1]] <- list(c(anti
 class(antibiotics$ab) <- "ab"
 class(antibiotics$atc) <- "atc"
 
+dim(antibiotics) # for R/data.R
 usethis::use_data(antibiotics, overwrite = TRUE)
 rm(antibiotics)

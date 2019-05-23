@@ -15,18 +15,18 @@ This R package is actively maintained and is free software; you can freely use a
 
 This package can be used for:
 
-  * Reference for microorganisms, since it contains all microbial (sub)species from the [Catalogue of Life](http://www.catalogueoflife.org)
-  * Interpreting raw MIC and disk diffusion values, based on the latest CLSI or EUCAST guidelines
-  * Calculating antimicrobial resistance
-  * Calculating empirical susceptibility of both mono therapy and combination therapy
-  * Predicting future antimicrobial resistance using regression models
-  * Getting properties for any microorganism (like Gram stain, species, genus or family)
-  * Getting properties for any antibiotic (like name, ATC code, defined daily dose or trade name)
-  * Plotting antimicrobial resistance
-  * Determining first isolates to be used for AMR analysis
-  * Applying EUCAST expert rules
-  * Determining multi-drug resistant organisms (MDRO)
-  * Descriptive statistics: frequency tables, kurtosis and skewness
+  * Reference for microorganisms, since it contains all microbial (sub)species from the [Catalogue of Life](http://www.catalogueoflife.org) ([manual](./reference/mo_property.html))
+  * Interpreting raw MIC and disk diffusion values, based on the latest CLSI or EUCAST guidelines ([manual](./reference/as.rsi.html))
+  * Calculating antimicrobial resistance ([tutorial](./articles/AMR.html))
+  * Determining multi-drug resistance (MDR) / multi-drug resistant organisms (MDRO) ([tutorial](./articles/MDR.html))
+  * Calculating empirical susceptibility of both mono therapy and combination therapy ([tutorial](./articles/AMR.html))
+  * Predicting future antimicrobial resistance using regression models ([tutorial](./articles/resistance_predict.html))
+  * Getting properties for any microorganism (like Gram stain, species, genus or family) ([manual](./reference/mo_property.html))
+  * Getting properties for any antibiotic (like name, ATC code, defined daily dose or trade name) ([manual](./reference/ab_property.html))
+  * Plotting antimicrobial resistance ([tutorial](./articles/AMR.html))
+  * Determining first isolates to be used for AMR analysis ([manual](./reference/first_isolate.html))
+  * Applying EUCAST expert rules ([manual](./reference/eucast_rules.html)
+  * Descriptive statistics: frequency tables, kurtosis and skewness ([tutorial](./articles/freq.html))
 
 This package is ready-to-use for a professional environment by specialists in the following fields:
 

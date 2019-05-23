@@ -80,7 +80,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.6.1.9033</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.6.1.9035</span>
       </span>
     </div>
 
@@ -114,6 +114,13 @@
         <span class="fa fa-dice"></span>
          
         Predict antimicrobial resistance
+      </a>
+    </li>
+    <li>
+      <a href="../articles/MDR.html">
+        <span class="fa fa-skull-crossbones"></span>
+         
+        Determine multi-drug resistance (MDR)
       </a>
     </li>
     <li>
@@ -241,20 +248,19 @@
     
     </div>
 
-    <pre class="usage"><span class='fu'>key_antibiotics</span>(<span class='no'>tbl</span>, <span class='kw'>col_mo</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>universal_1</span> <span class='kw'>=</span> <span class='fu'><a href='guess_ab_col.html'>guess_ab_col</a></span>(<span class='no'>tbl</span>,
-  <span class='st'>"AMX"</span>), <span class='kw'>universal_2</span> <span class='kw'>=</span> <span class='fu'><a href='guess_ab_col.html'>guess_ab_col</a></span>(<span class='no'>tbl</span>, <span class='st'>"AMC"</span>),
-  <span class='kw'>universal_3</span> <span class='kw'>=</span> <span class='fu'><a href='guess_ab_col.html'>guess_ab_col</a></span>(<span class='no'>tbl</span>, <span class='st'>"CXM"</span>),
-  <span class='kw'>universal_4</span> <span class='kw'>=</span> <span class='fu'><a href='guess_ab_col.html'>guess_ab_col</a></span>(<span class='no'>tbl</span>, <span class='st'>"TZP"</span>),
-  <span class='kw'>universal_5</span> <span class='kw'>=</span> <span class='fu'><a href='guess_ab_col.html'>guess_ab_col</a></span>(<span class='no'>tbl</span>, <span class='st'>"CIP"</span>),
-  <span class='kw'>universal_6</span> <span class='kw'>=</span> <span class='fu'><a href='guess_ab_col.html'>guess_ab_col</a></span>(<span class='no'>tbl</span>, <span class='st'>"SXT"</span>), <span class='kw'>GramPos_1</span> <span class='kw'>=</span> <span class='fu'><a href='guess_ab_col.html'>guess_ab_col</a></span>(<span class='no'>tbl</span>,
-  <span class='st'>"VAN"</span>), <span class='kw'>GramPos_2</span> <span class='kw'>=</span> <span class='fu'><a href='guess_ab_col.html'>guess_ab_col</a></span>(<span class='no'>tbl</span>, <span class='st'>"TEC"</span>),
-  <span class='kw'>GramPos_3</span> <span class='kw'>=</span> <span class='fu'><a href='guess_ab_col.html'>guess_ab_col</a></span>(<span class='no'>tbl</span>, <span class='st'>"TCY"</span>), <span class='kw'>GramPos_4</span> <span class='kw'>=</span> <span class='fu'><a href='guess_ab_col.html'>guess_ab_col</a></span>(<span class='no'>tbl</span>,
-  <span class='st'>"ERY"</span>), <span class='kw'>GramPos_5</span> <span class='kw'>=</span> <span class='fu'><a href='guess_ab_col.html'>guess_ab_col</a></span>(<span class='no'>tbl</span>, <span class='st'>"OXA"</span>),
-  <span class='kw'>GramPos_6</span> <span class='kw'>=</span> <span class='fu'><a href='guess_ab_col.html'>guess_ab_col</a></span>(<span class='no'>tbl</span>, <span class='st'>"RIF"</span>), <span class='kw'>GramNeg_1</span> <span class='kw'>=</span> <span class='fu'><a href='guess_ab_col.html'>guess_ab_col</a></span>(<span class='no'>tbl</span>,
-  <span class='st'>"GEN"</span>), <span class='kw'>GramNeg_2</span> <span class='kw'>=</span> <span class='fu'><a href='guess_ab_col.html'>guess_ab_col</a></span>(<span class='no'>tbl</span>, <span class='st'>"TOB"</span>),
-  <span class='kw'>GramNeg_3</span> <span class='kw'>=</span> <span class='fu'><a href='guess_ab_col.html'>guess_ab_col</a></span>(<span class='no'>tbl</span>, <span class='st'>"COL"</span>), <span class='kw'>GramNeg_4</span> <span class='kw'>=</span> <span class='fu'><a href='guess_ab_col.html'>guess_ab_col</a></span>(<span class='no'>tbl</span>,
-  <span class='st'>"CTX"</span>), <span class='kw'>GramNeg_5</span> <span class='kw'>=</span> <span class='fu'><a href='guess_ab_col.html'>guess_ab_col</a></span>(<span class='no'>tbl</span>, <span class='st'>"CAZ"</span>),
-  <span class='kw'>GramNeg_6</span> <span class='kw'>=</span> <span class='fu'><a href='guess_ab_col.html'>guess_ab_col</a></span>(<span class='no'>tbl</span>, <span class='st'>"MEM"</span>), <span class='kw'>warnings</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>...</span>)
+    <pre class="usage"><span class='fu'>key_antibiotics</span>(<span class='no'>x</span>, <span class='kw'>col_mo</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>universal_1</span> <span class='kw'>=</span> <span class='fu'><a href='guess_ab_col.html'>guess_ab_col</a></span>(<span class='no'>x</span>, <span class='st'>"AMX"</span>),
+  <span class='kw'>universal_2</span> <span class='kw'>=</span> <span class='fu'><a href='guess_ab_col.html'>guess_ab_col</a></span>(<span class='no'>x</span>, <span class='st'>"AMC"</span>), <span class='kw'>universal_3</span> <span class='kw'>=</span> <span class='fu'><a href='guess_ab_col.html'>guess_ab_col</a></span>(<span class='no'>x</span>,
+  <span class='st'>"CXM"</span>), <span class='kw'>universal_4</span> <span class='kw'>=</span> <span class='fu'><a href='guess_ab_col.html'>guess_ab_col</a></span>(<span class='no'>x</span>, <span class='st'>"TZP"</span>),
+  <span class='kw'>universal_5</span> <span class='kw'>=</span> <span class='fu'><a href='guess_ab_col.html'>guess_ab_col</a></span>(<span class='no'>x</span>, <span class='st'>"CIP"</span>), <span class='kw'>universal_6</span> <span class='kw'>=</span> <span class='fu'><a href='guess_ab_col.html'>guess_ab_col</a></span>(<span class='no'>x</span>,
+  <span class='st'>"SXT"</span>), <span class='kw'>GramPos_1</span> <span class='kw'>=</span> <span class='fu'><a href='guess_ab_col.html'>guess_ab_col</a></span>(<span class='no'>x</span>, <span class='st'>"VAN"</span>),
+  <span class='kw'>GramPos_2</span> <span class='kw'>=</span> <span class='fu'><a href='guess_ab_col.html'>guess_ab_col</a></span>(<span class='no'>x</span>, <span class='st'>"TEC"</span>), <span class='kw'>GramPos_3</span> <span class='kw'>=</span> <span class='fu'><a href='guess_ab_col.html'>guess_ab_col</a></span>(<span class='no'>x</span>,
+  <span class='st'>"TCY"</span>), <span class='kw'>GramPos_4</span> <span class='kw'>=</span> <span class='fu'><a href='guess_ab_col.html'>guess_ab_col</a></span>(<span class='no'>x</span>, <span class='st'>"ERY"</span>),
+  <span class='kw'>GramPos_5</span> <span class='kw'>=</span> <span class='fu'><a href='guess_ab_col.html'>guess_ab_col</a></span>(<span class='no'>x</span>, <span class='st'>"OXA"</span>), <span class='kw'>GramPos_6</span> <span class='kw'>=</span> <span class='fu'><a href='guess_ab_col.html'>guess_ab_col</a></span>(<span class='no'>x</span>,
+  <span class='st'>"RIF"</span>), <span class='kw'>GramNeg_1</span> <span class='kw'>=</span> <span class='fu'><a href='guess_ab_col.html'>guess_ab_col</a></span>(<span class='no'>x</span>, <span class='st'>"GEN"</span>),
+  <span class='kw'>GramNeg_2</span> <span class='kw'>=</span> <span class='fu'><a href='guess_ab_col.html'>guess_ab_col</a></span>(<span class='no'>x</span>, <span class='st'>"TOB"</span>), <span class='kw'>GramNeg_3</span> <span class='kw'>=</span> <span class='fu'><a href='guess_ab_col.html'>guess_ab_col</a></span>(<span class='no'>x</span>,
+  <span class='st'>"COL"</span>), <span class='kw'>GramNeg_4</span> <span class='kw'>=</span> <span class='fu'><a href='guess_ab_col.html'>guess_ab_col</a></span>(<span class='no'>x</span>, <span class='st'>"CTX"</span>),
+  <span class='kw'>GramNeg_5</span> <span class='kw'>=</span> <span class='fu'><a href='guess_ab_col.html'>guess_ab_col</a></span>(<span class='no'>x</span>, <span class='st'>"CAZ"</span>), <span class='kw'>GramNeg_6</span> <span class='kw'>=</span> <span class='fu'><a href='guess_ab_col.html'>guess_ab_col</a></span>(<span class='no'>x</span>,
+  <span class='st'>"MEM"</span>), <span class='kw'>warnings</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>...</span>)
 
 <span class='fu'>key_antibiotics_equal</span>(<span class='no'>x</span>, <span class='no'>y</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"keyantibiotics"</span>, <span class='st'>"points"</span>),
   <span class='kw'>ignore_I</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>points_threshold</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>info</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
@@ -263,8 +269,8 @@
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>tbl</th>
-      <td><p>table with antibiotics coloms, like <code>amox</code> and <code>amcl</code>.</p></td>
+      <th>x</th>
+      <td><p>table with antibiotics coloms, like <code>AMX</code> or <code>amox</code></p></td>
     </tr>
     <tr>
       <th>col_mo</th>
@@ -291,10 +297,6 @@
       <td><p>other parameters passed on to function</p></td>
     </tr>
     <tr>
-      <th>x, y</th>
-      <td><p>characters to compare</p></td>
-    </tr>
-    <tr>
       <th>type</th>
       <td><p>type to determine weighed isolates; can be <code>"keyantibiotics"</code> or <code>"points"</code>, see Details</p></td>
     </tr>
@@ -309,6 +311,10 @@
     <tr>
       <th>info</th>
       <td><p>print progress</p></td>
+    </tr>
+    <tr>
+      <th>x, y</th>
+      <td><p>characters to compare</p></td>
     </tr>
     </table>
     

@@ -128,7 +128,7 @@ septic_patients %>%
 
 ## Assigning a frequency table to an object
 
-A frequency table is actaually a regular `data.frame`, with the exception that it contains an additional class.
+A frequency table is actually a regular `data.frame`, with the exception that it contains an additional class.
 
 ```{r, echo = TRUE}
 my_df <- septic_patients %>% freq(age)
@@ -144,15 +144,17 @@ dim(my_df)
 ## Additional parameters
 
 ### Parameter `na.rm`
-With the `na.rm` parameter (defaults to `TRUE`, but they will always be shown into the header), you can include `NA` values in the frequency table:
+With the `na.rm` parameter you can remove `NA` values from the frequency table (defaults to `TRUE`, but the number of `NA` values will always be shown into the header):
 
 ```{r, echo = TRUE}
+septic_patients %>%
+  freq(AMX, na.rm = FALSE)
 septic_patients %>%
   freq(AMX, na.rm = FALSE)
 ```
 
 ### Parameter `row.names`
-The default frequency tables shows row indices. To remove them, use `row.names = FALSE`:
+A frequency table shows row indices. To remove them, use `row.names = FALSE`:
 
 ```{r, echo = TRUE}
 septic_patients %>%

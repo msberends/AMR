@@ -50,7 +50,7 @@ labels_rsi_count(position = NULL, x = "Antibiotic",
 
 \item{translate_ab}{a column name of the \code{\link{antibiotics}} data set to translate the antibiotic abbreviations to, using \code{\link{ab_property}}}
 
-\item{combine_SI}{a logical to indicate whether all values of S and I must be merged into one, so the output only consists of S+I vs. R (susceptible vs. resistant). This used to be the parameter \code{combine_IR}, but this now follows the redefinition by EUCAST about the interpretion of I (increased exposure) in 2019, see below. Default is now \code{TRUE}.}
+\item{combine_SI}{a logical to indicate whether all values of S and I must be merged into one, so the output only consists of S+I vs. R (susceptible vs. resistant). This used to be the parameter \code{combine_IR}, but this now follows the redefinition by EUCAST about the interpretion of I (increased exposure) in 2019, see section 'Interpretation of S, I and R' below. Default is \code{TRUE}.}
 
 \item{combine_IR}{a logical to indicate whether all values of I and R must be merged into one, so the output only consists of S vs. I+R (susceptible vs. non-susceptible). This is outdated, see parameter \code{combine_SI}.}
 

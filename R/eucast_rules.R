@@ -116,7 +116,7 @@ EUCAST_VERSION_EXPERT_RULES <- "3.1, 2016"
 #' @export
 #' @importFrom dplyr %>% select pull mutate_at vars group_by summarise n
 #' @importFrom crayon bold bgGreen bgYellow bgRed black green blue italic strip_style white
-#' @return The input of \code{tbl_}, possibly with edited values of antibiotics. Or, if \code{verbose = TRUE}, a \code{data.frame} with all original and new values of the affected bug-drug combinations.
+#' @return The input of \code{x}, possibly with edited values of antibiotics. Or, if \code{verbose = TRUE}, a \code{data.frame} with all original and new values of the affected bug-drug combinations.
 #' @source
 #'   \itemize{
 #'     \item{
@@ -184,16 +184,16 @@ eucast_rules <- function(x,
                          verbose = FALSE,
                          ...) {
 
-  tbl_ <- x
+  x <- x
 
-  if (!is.data.frame(tbl_)) {
+  if (!is.data.frame(x)) {
     stop("`x` must be a data frame.", call. = FALSE)
   }
 
   # try to find columns based on type
   # -- mo
   if (is.null(col_mo)) {
-    col_mo <- search_type_in_df(tbl = tbl_, type = "mo")
+    col_mo <- search_type_in_df(x = x, type = "mo")
   }
   if (is.null(col_mo)) {
     stop("`col_mo` must be set.", call. = FALSE)
@@ -376,12 +376,12 @@ eucast_rules <- function(x,
   edit_rsi <- function(to, rule, rows, cols) {
     cols <- unique(cols[!is.na(cols) & !is.null(cols)])
     if (length(rows) > 0 & length(cols) > 0) {
-      before_df <- tbl_original
-      before <- as.character(unlist(as.list(tbl_original[rows, cols])))
+      before_df <- x_original
+      before <- as.character(unlist(as.list(x_original[rows, cols])))
 
       tryCatch(
         # insert into original table
-        tbl_original[rows, cols] <<- to,
+        x_original[rows, cols] <<- to,
         warning = function(w) {
           if (w$message %like% 'invalid factor level') {
             warning('Value "', to, '" could not be applied to column(s) `', paste(cols, collapse = '`, `'), '` because this value is not an existing factor level.', call. = FALSE)
@@ -396,9 +396,9 @@ eucast_rules <- function(x,
         }
       )
 
-      tbl_[rows, cols] <<- tbl_original[rows, cols]
+      x[rows, cols] <<- x_original[rows, cols]
 
-      after <- as.character(unlist(as.list(tbl_original[rows, cols])))
+      after <- as.character(unlist(as.list(x_original[rows, cols])))
 
       # before_df might not be a data.frame, but a tibble of data.table instead
       old <- as.data.frame(before_df, stringsAsFactors = FALSE)[rows,]
@@ -406,9 +406,9 @@ eucast_rules <- function(x,
       for (i in 1:length(cols)) {
         verbose_new <- data.frame(row = rows,
                                   col = cols[i],
-                                  mo_fullname = tbl_[rows, "fullname"],
+                                  mo_fullname = x[rows, "fullname"],
                                   old = as.character(old[, cols[i]]),
-                                  new = as.character(tbl_[rows, cols[i]]),
+                                  new = as.character(x[rows, cols[i]]),
                                   rule = strip_style(rule[1]),
                                   rule_group = strip_style(rule[2]),
                                   rule_name = strip_style(rule[3]),
@@ -426,11 +426,11 @@ eucast_rules <- function(x,
   }
 
   # save original table
-  tbl_original <- tbl_
+  x_original <- x
 
   # join to microorganisms data set
   suppressWarnings(
-    tbl_ <- tbl_ %>%
+    x <- x %>%
       mutate_at(vars(col_mo), as.mo) %>%
       left_join_microorganisms(by = col_mo, suffix = c("_oldcols", "")) %>%
       mutate(gramstain = mo_gramstain(pull(., col_mo), language = "en"),
@@ -448,18 +448,18 @@ eucast_rules <- function(x,
   if (!ab_missing(AMP) & !ab_missing(AMX)) {
     if (verbose == TRUE) {
       cat("\n VERBOSE: transforming",
-          length(which(tbl_[, AMX] == "S" & !tbl_[, AMP] %in% c("S", "I", "R"))),
+          length(which(x[, AMX] == "S" & !x[, AMP] %in% c("S", "I", "R"))),
           "empty ampicillin fields to 'S' based on amoxicillin. ")
       cat("\n VERBOSE: transforming",
-          length(which(tbl_[, AMX] == "I" & !tbl_[, AMP] %in% c("S", "I", "R"))),
+          length(which(x[, AMX] == "I" & !x[, AMP] %in% c("S", "I", "R"))),
           "empty ampicillin fields to 'I' based on amoxicillin. ")
       cat("\n VERBOSE: transforming",
-          length(which(tbl_[, AMX] == "R" & !tbl_[, AMP] %in% c("S", "I", "R"))),
+          length(which(x[, AMX] == "R" & !x[, AMP] %in% c("S", "I", "R"))),
           "empty ampicillin fields to 'R' based on amoxicillin. \n")
     }
-    tbl_[which(tbl_[, AMX] == "S" & !tbl_[, AMP] %in% c("S", "I", "R")), AMP] <- "S"
-    tbl_[which(tbl_[, AMX] == "I" & !tbl_[, AMP] %in% c("S", "I", "R")), AMP] <- "I"
-    tbl_[which(tbl_[, AMX] == "R" & !tbl_[, AMP] %in% c("S", "I", "R")), AMP] <- "R"
+    x[which(x[, AMX] == "S" & !x[, AMP] %in% c("S", "I", "R")), AMP] <- "S"
+    x[which(x[, AMX] == "I" & !x[, AMP] %in% c("S", "I", "R")), AMP] <- "I"
+    x[which(x[, AMX] == "R" & !x[, AMP] %in% c("S", "I", "R")), AMP] <- "R"
   } else if (ab_missing(AMP) & !ab_missing(AMX)) {
     # ampicillin column is missing, but amoxicillin is available
     message(blue(paste0("NOTE: Using column `", bold(AMX), "` as input for ampicillin (J01CA01) since many EUCAST rules depend on it.")))
@@ -605,36 +605,36 @@ eucast_rules <- function(x,
     target_value <- eucast_rules_df[i, 7]
 
     if (is.na(source_antibiotics)) {
-      rows <- tryCatch(which(tbl_[, col_mo_property] %like% mo_value),
+      rows <- tryCatch(which(x[, col_mo_property] %like% mo_value),
                        error = function(e) integer(0))
     } else {
-      source_antibiotics <- get_antibiotic_columns(source_antibiotics, tbl_)
+      source_antibiotics <- get_antibiotic_columns(source_antibiotics, x)
       if (length(source_value) == 1 & length(source_antibiotics) > 1) {
         source_value <- rep(source_value, length(source_antibiotics))
       }
       if (length(source_antibiotics) == 0) {
         rows <- integer(0)
       } else if (length(source_antibiotics) == 1) {
-        rows <-  tryCatch(which(tbl_[, col_mo_property] %like% mo_value
-                                & tbl_[, source_antibiotics[1L]] == source_value[1L]),
+        rows <-  tryCatch(which(x[, col_mo_property] %like% mo_value
+                                & x[, source_antibiotics[1L]] == source_value[1L]),
                           error = function(e) integer(0))
       } else if (length(source_antibiotics) == 2) {
-        rows <-  tryCatch(which(tbl_[, col_mo_property] %like% mo_value
-                                & tbl_[, source_antibiotics[1L]] == source_value[1L]
-                                & tbl_[, source_antibiotics[2L]] == source_value[2L]),
+        rows <-  tryCatch(which(x[, col_mo_property] %like% mo_value
+                                & x[, source_antibiotics[1L]] == source_value[1L]
+                                & x[, source_antibiotics[2L]] == source_value[2L]),
                           error = function(e) integer(0))
       } else if (length(source_antibiotics) == 3) {
-        rows <-  tryCatch(which(tbl_[, col_mo_property] %like% mo_value
-                                & tbl_[, source_antibiotics[1L]] == source_value[1L]
-                                & tbl_[, source_antibiotics[2L]] == source_value[2L]
-                                & tbl_[, source_antibiotics[3L]] == source_value[3L]),
+        rows <-  tryCatch(which(x[, col_mo_property] %like% mo_value
+                                & x[, source_antibiotics[1L]] == source_value[1L]
+                                & x[, source_antibiotics[2L]] == source_value[2L]
+                                & x[, source_antibiotics[3L]] == source_value[3L]),
                           error = function(e) integer(0))
       } else {
         stop("only 3 antibiotics supported for source_antibiotics ", call. = FALSE)
       }
     }
 
-    cols <- get_antibiotic_columns(target_antibiotics, tbl_)
+    cols <- get_antibiotic_columns(target_antibiotics, x)
 
     # Apply rule on data ------------------------------------------------------
     # this will return the unique number of changes
@@ -671,7 +671,7 @@ eucast_rules <- function(x,
     cat(paste0("\n", silver(strrep("-", options()$width - 1)), "\n"))
     cat(bold(paste('EUCAST rules', paste0(wouldve, 'affected'),
                    formatnr(n_distinct(verbose_info$row)),
-                   'out of', formatnr(nrow(tbl_original)),
+                   'out of', formatnr(nrow(x_original)),
                    'rows, making a total of', formatnr(nrow(verbose_info)), 'edits\n')))
 
     n_added <- verbose_info %>% filter(is.na(old)) %>% nrow()
@@ -742,7 +742,7 @@ eucast_rules <- function(x,
   if (verbose == TRUE) {
     verbose_info
   } else {
-    tbl_original
+    x_original
   }
 }
 

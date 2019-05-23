@@ -40,7 +40,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.6.1.9003</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.6.1.9035</span>
       </span>
     </div>
 
@@ -74,6 +74,13 @@
         <span class="fa fa-dice"></span>
          
         Predict antimicrobial resistance
+      </a>
+    </li>
+    <li>
+      <a href="../articles/MDR.html">
+        <span class="fa fa-skull-crossbones"></span>
+         
+        Determine multi-drug resistance (MDR)
       </a>
     </li>
     <li>
@@ -192,7 +199,7 @@
       <h1>How to create frequency tables</h1>
                         <h4 class="author">Matthijs S. Berends</h4>
             
-            <h4 class="date">17 May 2019</h4>
+            <h4 class="date">23 May 2019</h4>
       
       
       <div class="hidden name"><code>freq.Rmd</code></div>
@@ -714,7 +721,7 @@ Median: 31 July 2009 (47.39%)</p>
 <div id="assigning-a-frequency-table-to-an-object" class="section level2">
 <h2 class="hasAnchor">
 <a href="#assigning-a-frequency-table-to-an-object" class="anchor"></a>Assigning a frequency table to an object</h2>
-<p>A frequency table is actaually a regular <code>data.frame</code>, with the exception that it contains an additional class.</p>
+<p>A frequency table is actually a regular <code>data.frame</code>, with the exception that it contains an additional class.</p>
 <div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" title="1">my_df &lt;-<span class="st"> </span>septic_patients <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="../reference/freq.html">freq</a></span>(age)</a>
 <a class="sourceLine" id="cb11-2" title="2"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/class">class</a></span>(my_df)</a></code></pre></div>
 <p>[1] “frequency_tbl” “data.frame”</p>
@@ -729,9 +736,63 @@ Median: 31 July 2009 (47.39%)</p>
 <h3 class="hasAnchor">
 <a href="#parameter-na-rm" class="anchor"></a>Parameter <code>na.rm</code>
 </h3>
-<p>With the <code>na.rm</code> parameter (defaults to <code>TRUE</code>, but they will always be shown into the header), you can include <code>NA</code> values in the frequency table:</p>
+<p>With the <code>na.rm</code> parameter you can remove <code>NA</code> values from the frequency table (defaults to <code>TRUE</code>, but the number of <code>NA</code> values will always be shown into the header):</p>
 <div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" title="1">septic_patients <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb13-2" title="2"><span class="st">  </span><span class="kw"><a href="../reference/freq.html">freq</a></span>(AMX, <span class="dt">na.rm =</span> <span class="ot">FALSE</span>)</a></code></pre></div>
+<p><strong>Frequency table of <code>AMX</code> from a <code>data.frame</code> (2,000 x 49)</strong></p>
+<p>Class: <code>factor</code> &gt; <code>ordered</code> &gt; <code>rsi</code> (<code>numeric</code>)<br>
+Length: 2,000 (of which NA: 771 = 38.55%)<br>
+Levels: 3: <code>S</code> &lt; <code>I</code> &lt; <code>R</code><br>
+Unique: 4</p>
+<p>Drug: Amoxicillin (AMX, J01CA04)<br>
+Group: Beta-lactams/penicillins<br>
+%SI: 44.43%</p>
+<table class="table">
+<thead><tr class="header">
+<th align="left"></th>
+<th align="left">Item</th>
+<th align="right">Count</th>
+<th align="right">Percent</th>
+<th align="right">Cum. Count</th>
+<th align="right">Cum. Percent</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="left">1</td>
+<td align="left">(NA)</td>
+<td align="right">771</td>
+<td align="right">38.6%</td>
+<td align="right">771</td>
+<td align="right">38.6%</td>
+</tr>
+<tr class="even">
+<td align="left">2</td>
+<td align="left">R</td>
+<td align="right">683</td>
+<td align="right">34.2%</td>
+<td align="right">1,454</td>
+<td align="right">72.7%</td>
+</tr>
+<tr class="odd">
+<td align="left">3</td>
+<td align="left">S</td>
+<td align="right">543</td>
+<td align="right">27.2%</td>
+<td align="right">1,997</td>
+<td align="right">99.8%</td>
+</tr>
+<tr class="even">
+<td align="left">4</td>
+<td align="left">I</td>
+<td align="right">3</td>
+<td align="right">0.2%</td>
+<td align="right">2,000</td>
+<td align="right">100.0%</td>
+</tr>
+</tbody>
+</table>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" title="1">septic_patients <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb14-2" title="2"><span class="st">  </span><span class="kw"><a href="../reference/freq.html">freq</a></span>(AMX, <span class="dt">na.rm =</span> <span class="ot">FALSE</span>)</a></code></pre></div>
 <p><strong>Frequency table of <code>AMX</code> from a <code>data.frame</code> (2,000 x 49)</strong></p>
 <p>Class: <code>factor</code> &gt; <code>ordered</code> &gt; <code>rsi</code> (<code>numeric</code>)<br>
 Length: 2,000 (of which NA: 771 = 38.55%)<br>
@@ -789,9 +850,9 @@ Group: Beta-lactams/penicillins<br>
 <h3 class="hasAnchor">
 <a href="#parameter-row-names" class="anchor"></a>Parameter <code>row.names</code>
 </h3>
-<p>The default frequency tables shows row indices. To remove them, use <code>row.names = FALSE</code>:</p>
-<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" title="1">septic_patients <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb14-2" title="2"><span class="st">  </span><span class="kw"><a href="../reference/freq.html">freq</a></span>(hospital_id, <span class="dt">row.names =</span> <span class="ot">FALSE</span>)</a></code></pre></div>
+<p>A frequency table shows row indices. To remove them, use <code>row.names = FALSE</code>:</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" title="1">septic_patients <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb15-2" title="2"><span class="st">  </span><span class="kw"><a href="../reference/freq.html">freq</a></span>(hospital_id, <span class="dt">row.names =</span> <span class="ot">FALSE</span>)</a></code></pre></div>
 <p><strong>Frequency table of <code>hospital_id</code> from a <code>data.frame</code> (2,000 x 49)</strong></p>
 <p>Class: <code>factor</code> (<code>numeric</code>)<br>
 Length: 2,000 (of which NA: 0 = 0.00%)<br>
@@ -842,8 +903,8 @@ Unique: 4</p>
 <a href="#parameter-markdown" class="anchor"></a>Parameter <code>markdown</code>
 </h3>
 <p>The <code>markdown</code> parameter is <code>TRUE</code> at default in non-interactive sessions, like in reports created with R Markdown. This will always print all rows, unless <code>nmax</code> is set.</p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" title="1">septic_patients <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb15-2" title="2"><span class="st">  </span><span class="kw"><a href="../reference/freq.html">freq</a></span>(hospital_id, <span class="dt">markdown =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb16-1" title="1">septic_patients <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb16-2" title="2"><span class="st">  </span><span class="kw"><a href="../reference/freq.html">freq</a></span>(hospital_id, <span class="dt">markdown =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
 <p><strong>Frequency table of <code>hospital_id</code> from a <code>data.frame</code> (2,000 x 49)</strong></p>
 <p>Class: <code>factor</code> (<code>numeric</code>)<br>
 Length: 2,000 (of which NA: 0 = 0.00%)<br>

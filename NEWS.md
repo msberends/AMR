@@ -1,9 +1,10 @@
-# AMR 0.6.1.9001
+# AMR 0.6.1.90xx
 **Note: latest development version**
 
 #### New
 * Support for translation of disk diffusion and MIC values to RSI values (i.e. antimicrobial interpretations). Supported guidelines are EUCAST (2011 to 2019) and CLSI (2011 to 2019). Use `as.rsi()` on an MIC value (created with `as.mic()`), a disk diffusion value (created with the new `as.disk()`) or on a complete date set containing columns with MIC or disk diffusion values.
 * Function `mo_name()` as alias of `mo_fullname()`
+* Added guidelines of the WHO to determine mutli-drug resistance (MDR) for TB (`mdr_tb()`) and added a new vignette about MDR
 
 #### Changed
 * Completely reworked the `antibiotics` data set:
@@ -11,7 +12,7 @@
     * Column `ab` contains a human readable EARS-Net code, used by ECDC and WHO/WHONET - this is the primary identifier used in this package
     * Column `atc` contains the ATC code, used by WHO/WHOCC
     * Column `cid` contains the CID code (Compound ID), used by PubChem
-  * Based on the Compound ID, more than a thousand official brand names have been added from many different countries
+  * Based on the Compound ID, almost 5,000 official brand names have been added from many different countries
   * All references to antibiotics in our package now use EARS-Net codes, like `AMX` for amoxicillin
   * Functions `atc_certe`, `ab_umcg` and `atc_trivial_nl` have been removed
   * All `atc_*` functions are superceded by `ab_*` functions
@@ -24,7 +25,10 @@
 * Added ~5,000 more old taxonomic names to the `microorganisms.old` data set, which leads to better results finding when using the `as.mo()` function
 * This package now honours the new EUCAST insight (2019) that S and I are but classified as susceptible, where I is defined as 'increased exposure' and not 'intermediate' anymore. For functions like `portion_df()` and `count_df()` this means that their new parameter `combine_SI` is TRUE at default.
 * Removed deprecated functions `guess_mo()`, `guess_atc()`, `EUCAST_rules()`, `interpretive_reading()`, `rsi()`
-* Frequency tables of microbial IDs speed improvement
+* Frequency tables (`freq()`):
+  * speed improvement for microbial IDs
+  * fixed level names in markdown
+  * 
 * Removed all hardcoded EUCAST rules and replaced them with a new reference file: `./inst/eucast/eucast.tsv`
 * Added ceftazidim intrinsic resistance to *Streptococci*
 * Changed default settings for `age_groups()`, to let groups of fives and tens end with 100+ instead of 120+
