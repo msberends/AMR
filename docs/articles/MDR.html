@@ -242,18 +242,18 @@
 <p>The data set looks like this now:</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/head">head</a></span>(my_TB_data)</a>
 <a class="sourceLine" id="cb3-2" title="2"><span class="co">#   rifampicin isoniazid gatifloxacin ethambutol pyrazinamide moxifloxacin</span></a>
-<a class="sourceLine" id="cb3-3" title="3"><span class="co"># 1          R         R            S          I            S            S</span></a>
-<a class="sourceLine" id="cb3-4" title="4"><span class="co"># 2          S         R            I          R            S            R</span></a>
-<a class="sourceLine" id="cb3-5" title="5"><span class="co"># 3          S         S            S          S            R            R</span></a>
-<a class="sourceLine" id="cb3-6" title="6"><span class="co"># 4          R         S            R          S            S            S</span></a>
-<a class="sourceLine" id="cb3-7" title="7"><span class="co"># 5          I         R            R          S            R            R</span></a>
-<a class="sourceLine" id="cb3-8" title="8"><span class="co"># 6          S         S            S          S            S            S</span></a>
+<a class="sourceLine" id="cb3-3" title="3"><span class="co"># 1          S         S            R          S            R            S</span></a>
+<a class="sourceLine" id="cb3-4" title="4"><span class="co"># 2          R         R            S          S            R            S</span></a>
+<a class="sourceLine" id="cb3-5" title="5"><span class="co"># 3          R         S            R          R            S            S</span></a>
+<a class="sourceLine" id="cb3-6" title="6"><span class="co"># 4          S         I            R          S            R            R</span></a>
+<a class="sourceLine" id="cb3-7" title="7"><span class="co"># 5          R         S            R          R            S            S</span></a>
+<a class="sourceLine" id="cb3-8" title="8"><span class="co"># 6          I         I            S          S            R            S</span></a>
 <a class="sourceLine" id="cb3-9" title="9"><span class="co">#   kanamycin</span></a>
 <a class="sourceLine" id="cb3-10" title="10"><span class="co"># 1         S</span></a>
 <a class="sourceLine" id="cb3-11" title="11"><span class="co"># 2         R</span></a>
 <a class="sourceLine" id="cb3-12" title="12"><span class="co"># 3         S</span></a>
 <a class="sourceLine" id="cb3-13" title="13"><span class="co"># 4         R</span></a>
-<a class="sourceLine" id="cb3-14" title="14"><span class="co"># 5         R</span></a>
+<a class="sourceLine" id="cb3-14" title="14"><span class="co"># 5         S</span></a>
 <a class="sourceLine" id="cb3-15" title="15"><span class="co"># 6         R</span></a></code></pre></div>
 <p>We can now add the interpretation of MDR-TB to our data set:</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" title="1">my_TB_data<span class="op">$</span>mdr &lt;-<span class="st"> </span><span class="kw"><a href="../reference/mdro.html">mdr_tb</a></span>(my_TB_data)</a>
@@ -263,15 +263,14 @@
 <a class="sourceLine" id="cb4-5" title="5"><span class="co"># Version:   WHO/HTM/TB/2014.11</span></a>
 <a class="sourceLine" id="cb4-6" title="6"><span class="co"># Author:    WHO (World Health Organization)</span></a>
 <a class="sourceLine" id="cb4-7" title="7"><span class="co"># Source:    https://www.who.int/tb/publications/pmdt_companionhandbook/en/</span></a>
-<a class="sourceLine" id="cb4-8" title="8"><span class="co"># Warning: Reliability might be improved if these antimicrobial results</span></a>
-<a class="sourceLine" id="cb4-9" title="9"><span class="co"># would be available too: `CAP` (capreomycin), `RIB` (rifabutin), `RFP`</span></a>
-<a class="sourceLine" id="cb4-10" title="10"><span class="co"># (rifapentine)</span></a></code></pre></div>
+<a class="sourceLine" id="cb4-8" title="8"><span class="co"># Warning: Reliability might be improved if these antimicrobial results would</span></a>
+<a class="sourceLine" id="cb4-9" title="9"><span class="co"># be available too: CAP (capreomycin), RIB (rifabutin), RFP (rifapentine)</span></a></code></pre></div>
 <p>And review the result with a frequency table:</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" title="1"><span class="kw"><a href="../reference/freq.html">freq</a></span>(my_TB_data<span class="op">$</span>mdr)</a></code></pre></div>
 <p><strong>Frequency table of <code>mdr</code> from <code>my_TB_data</code> (5,000 x 8)</strong></p>
-<p>Class: <code>factor</code> &gt; <code>ordered</code> (<code>numeric</code>)<br>
+<p>Class: factor &gt; ordered (numeric)<br>
 Length: 5,000 (of which NA: 0 = 0.00%)<br>
-Levels: 5: <code>Negative</code> &lt; <code>Mono-resistance</code> &lt; <code>Poly-resistance</code> &lt; <code>Multidrug res...</code><br>
+Levels: 5: Negative &lt; Mono-resistance &lt; Poly-resistance &lt; Multidrug resistance…<br>
 Unique: 5</p>
 <table class="table">
 <thead><tr class="header">
@@ -286,40 +285,40 @@ Unique: 5</p>
 <tr class="odd">
 <td align="left">1</td>
 <td align="left">Mono-resistance</td>
-<td align="right">3,288</td>
-<td align="right">65.8%</td>
-<td align="right">3,288</td>
-<td align="right">65.8%</td>
+<td align="right">3,240</td>
+<td align="right">64.8%</td>
+<td align="right">3,240</td>
+<td align="right">64.8%</td>
 </tr>
 <tr class="even">
 <td align="left">2</td>
 <td align="left">Negative</td>
-<td align="right">686</td>
-<td align="right">13.7%</td>
-<td align="right">3,974</td>
-<td align="right">79.5%</td>
+<td align="right">641</td>
+<td align="right">12.8%</td>
+<td align="right">3,881</td>
+<td align="right">77.6%</td>
 </tr>
 <tr class="odd">
 <td align="left">3</td>
 <td align="left">Multidrug resistance</td>
-<td align="right">560</td>
-<td align="right">11.2%</td>
-<td align="right">4,534</td>
-<td align="right">90.7%</td>
+<td align="right">638</td>
+<td align="right">12.8%</td>
+<td align="right">4,519</td>
+<td align="right">90.4%</td>
 </tr>
 <tr class="even">
 <td align="left">4</td>
 <td align="left">Poly-resistance</td>
-<td align="right">269</td>
-<td align="right">5.4%</td>
-<td align="right">4,803</td>
-<td align="right">96.1%</td>
+<td align="right">279</td>
+<td align="right">5.6%</td>
+<td align="right">4,798</td>
+<td align="right">96.0%</td>
 </tr>
 <tr class="odd">
 <td align="left">5</td>
 <td align="left">Extensive drug resistance</td>
-<td align="right">197</td>
-<td align="right">3.9%</td>
+<td align="right">202</td>
+<td align="right">4.0%</td>
 <td align="right">5,000</td>
 <td align="right">100.0%</td>
 </tr>

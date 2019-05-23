@@ -88,7 +88,7 @@ mdro <- function(x,
   if (is.null(col_mo) & guideline$code == "tb") {
     message(blue("NOTE: No column found as input for `col_mo`,",
                  bold("assuming all records contain",
-                      italic("Mycobacterium tuberculosis."))))
+                      italic("Mycobacterium tuberculosis.\n"))))
     x$mo <- AMR::as.mo("Mycobacterium tuberculosis")
     col_mo <- "mo"
   }

@@ -639,13 +639,13 @@ format_header <- function(x, markdown = FALSE, decimal.mark = ".", big.mark = ",
 
   # class and mode
   if (is.null(header$columns)) {
-    if (markdown == TRUE) {
-      header$class <- paste0("`", header$class, "`")
-    }
+    # if (markdown == TRUE) {
+    #   header$class <- paste0("`", header$class, "`")
+    # }
     if (!header$mode %in% header$class) {
-      if (markdown == TRUE) {
-        header$mode <- paste0("`", header$mode, "`")
-      }
+    #   if (markdown == TRUE) {
+    #     header$mode <- paste0("`", header$mode, "`")
+    #   }
       header$class <- header$class %>% rev() %>% paste(collapse = " > ") %>% paste0(silver(paste0(" (", header$mode, ")")))
     } else {
       header$class <- header$class %>% rev() %>% paste(collapse = " > ")
@@ -654,9 +654,9 @@ format_header <- function(x, markdown = FALSE, decimal.mark = ".", big.mark = ",
   }
   # levels
   if (!is.null(header$levels)) {
-    if (markdown == TRUE) {
-      header$levels <- paste0("`", header$levels, "`")
-    }
+    # if (markdown == TRUE) {
+    #   header$levels <- paste0("`", header$levels, "`")
+    # }
     if (header$ordered == TRUE) {
       levels_text <- paste0(header$levels, collapse = " < ")
     } else {

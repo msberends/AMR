@@ -219,7 +219,7 @@ get_column_abx <- function(x,
     if (!all(soft_dependencies %in% names(x))) {
       # missing a soft dependency may lower the reliability
       missing <- soft_dependencies[!soft_dependencies %in% names(x)]
-      missing <- paste0("`", missing, "` (", ab_name(missing, tolower = TRUE), ")")
+      missing <- paste0(missing, " (", ab_name(missing, tolower = TRUE), ")")
       warning('Reliability might be improved if these antimicrobial results would be available too: ', paste(missing, collapse = ", "),
               immediate. = TRUE,
               call. = FALSE)
@@ -229,7 +229,7 @@ get_column_abx <- function(x,
 }
 
 generate_warning_abs_missing <- function(missing, any = FALSE) {
-  missing <- paste0("`", missing, "` (", ab_name(missing, tolower = TRUE), ")")
+  missing <- paste0(missing, " (", ab_name(missing, tolower = TRUE), ")")
   if (any == TRUE) {
     any_txt <- c(" any of", "is")
   } else {
