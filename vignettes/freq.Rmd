@@ -28,13 +28,23 @@ library(AMR)
 
 ## Introduction
 
-Frequency tables (or frequency distributions) are summaries of the distribution of values in a sample. With the `freq` function, you can create univariate frequency tables. Multiple variables will be pasted into one variable, so it forces a univariate distribution. We take the `septic_patients` dataset (included in this AMR package) as example.
+Frequency tables (or frequency distributions) are summaries of the distribution of values in a sample. With the `freq()` function, you can create univariate frequency tables. Multiple variables will be pasted into one variable, so it forces a univariate distribution. We take the `septic_patients` dataset (included in this AMR package) as example.
 
 ## Frequencies of one variable
 
 To only show and quickly review the content of one variable, you can just select this variable in various ways. Let's say we want to get the frequencies of the `gender` variable of the `septic_patients` dataset:
 ```{r, echo = TRUE}
-septic_patients %>% freq(gender)
+# Any of these will work:
+# freq(septic_patients$gender)
+# freq(septic_patients[, "gender"])
+
+# Using tidyverse:
+# septic_patients$gender %>% freq()
+# septic_patients[, "gender"] %>% freq()
+# septic_patients %>% freq("gender")
+
+# Probably the fastest and easiest:
+septic_patients %>% freq(gender)  
 ```
 This immediately shows the class of the variable, its length and availability (i.e. the amount of `NA`), the amount of unique values and (most importantly) that among septic patients men are more prevalent than women.
 
@@ -84,9 +94,13 @@ So the following properties are determined, where `NA` values are always ignored
 
 * **Coefficient of variation** (CV), the standard deviation divided by the mean
 
-* **Five numbers of Tukey** (min, Q1, median, Q3, max)
+* **Mean absolute deviation** (MAD), the median of the absolute deviations from the median - a more robust statistic than the standard deviation
 
-* **Coefficient of quartile variation** (CQV, sometimes called coefficient of dispersion), calculated as (Q3 - Q1) / (Q3 + Q1) using quantile with `type = 6` as quantile algorithm to comply with SPSS standards
+* **Five numbers of Tukey**, namely: the minimum, Q1, median, Q3 and maximum
+
+* **Interquartile range** (IQR), the distance between Q1 and Q3
+
+* **Coefficient of quartile variation** (CQV, sometimes called *coefficient of dispersion*), calculated as (Q3 - Q1) / (Q3 + Q1) using `quantile()` with `type = 6` as quantile algorithm to comply with SPSS standards
 
 * **Outliers** (total count and unique count)
 
@@ -94,7 +108,7 @@ So for example, the above frequency table quickly shows the median age of patien
 
 ## Frequencies of factors
 
-To sort frequencies of factors on factor level instead of item count, use the `sort.count` parameter. 
+To sort frequencies of factors on their levels instead of item count, use the `sort.count` parameter. 
 
 `sort.count` is `TRUE` by default. Compare this default behaviour...
 
@@ -103,14 +117,14 @@ septic_patients %>%
   freq(hospital_id)
 ```
 
-... with this, where items are now sorted on count:
+... to this, where items are now sorted on factor levels:
 
 ```{r, echo = TRUE}
 septic_patients %>%
   freq(hospital_id, sort.count = FALSE)
 ```
 
-All classes will be printed into the header (default is `FALSE` when using markdown like this document). Variables with the new `rsi` class of this AMR package are actually ordered factors and have three classes (look at `Class` in the header):
+All classes will be printed into the header. Variables with the new `rsi` class of this AMR package are actually ordered factors and have three classes (look at `Class` in the header):
 
 ```{r, echo = TRUE}
 septic_patients %>%
@@ -149,8 +163,6 @@ With the `na.rm` parameter you can remove `NA` values from the frequency table (
 ```{r, echo = TRUE}
 septic_patients %>%
   freq(AMX, na.rm = FALSE)
-septic_patients %>%
-  freq(AMX, na.rm = FALSE)
 ```
 
 ### Parameter `row.names`
@@ -162,9 +174,9 @@ septic_patients %>%
 ```
 
 ### Parameter `markdown`
-The `markdown` parameter is `TRUE` at default in non-interactive sessions, like in reports created with R Markdown. This will always print all rows, unless `nmax` is set.
+The `markdown` parameter is `TRUE` at default in non-interactive sessions, like in reports created with R Markdown. This will always print all rows, unless `nmax` is set. Without markdown (like in regular R), a frequency table would print like:
 
-```{r, echo = TRUE}
+```{r, echo = TRUE, results = 'markup'}
 septic_patients %>%
-  freq(hospital_id, markdown = TRUE)
+  freq(hospital_id, markdown = FALSE)
 ```

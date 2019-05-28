@@ -40,7 +40,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.6.1.9037</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.6.1.9040</span>
       </span>
     </div>
 
@@ -199,7 +199,7 @@
       <h1>How to create frequency tables</h1>
                         <h4 class="author">Matthijs S. Berends</h4>
             
-            <h4 class="date">28 May 2019</h4>
+            <h4 class="date">29 May 2019</h4>
       
       
       <div class="hidden name"><code>freq.Rmd</code></div>
@@ -211,13 +211,23 @@
 <div id="introduction" class="section level2">
 <h2 class="hasAnchor">
 <a href="#introduction" class="anchor"></a>Introduction</h2>
-<p>Frequency tables (or frequency distributions) are summaries of the distribution of values in a sample. With the <code>freq</code> function, you can create univariate frequency tables. Multiple variables will be pasted into one variable, so it forces a univariate distribution. We take the <code>septic_patients</code> dataset (included in this AMR package) as example.</p>
+<p>Frequency tables (or frequency distributions) are summaries of the distribution of values in a sample. With the <code><a href="../reference/freq.html">freq()</a></code> function, you can create univariate frequency tables. Multiple variables will be pasted into one variable, so it forces a univariate distribution. We take the <code>septic_patients</code> dataset (included in this AMR package) as example.</p>
 </div>
 <div id="frequencies-of-one-variable" class="section level2">
 <h2 class="hasAnchor">
 <a href="#frequencies-of-one-variable" class="anchor"></a>Frequencies of one variable</h2>
 <p>To only show and quickly review the content of one variable, you can just select this variable in various ways. Let’s say we want to get the frequencies of the <code>gender</code> variable of the <code>septic_patients</code> dataset:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1">septic_patients <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="../reference/freq.html">freq</a></span>(gender)</a></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1"><span class="co"># Any of these will work:</span></a>
+<a class="sourceLine" id="cb1-2" title="2"><span class="co"># freq(septic_patients$gender)</span></a>
+<a class="sourceLine" id="cb1-3" title="3"><span class="co"># freq(septic_patients[, "gender"])</span></a>
+<a class="sourceLine" id="cb1-4" title="4"></a>
+<a class="sourceLine" id="cb1-5" title="5"><span class="co"># Using tidyverse:</span></a>
+<a class="sourceLine" id="cb1-6" title="6"><span class="co"># septic_patients$gender %&gt;% freq()</span></a>
+<a class="sourceLine" id="cb1-7" title="7"><span class="co"># septic_patients[, "gender"] %&gt;% freq()</span></a>
+<a class="sourceLine" id="cb1-8" title="8"><span class="co"># septic_patients %&gt;% freq("gender")</span></a>
+<a class="sourceLine" id="cb1-9" title="9"></a>
+<a class="sourceLine" id="cb1-10" title="10"><span class="co"># Probably the fastest and easiest:</span></a>
+<a class="sourceLine" id="cb1-11" title="11">septic_patients <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="../reference/freq.html">freq</a></span>(gender)  </a></code></pre></div>
 <p><strong>Frequency table of <code>gender</code> from a <code>data.frame</code> (2,000 x 49)</strong></p>
 <p>Class: character<br>
 Length: 2,000 (of which NA: 0 = 0.00%)<br>
@@ -489,8 +499,10 @@ Outliers: 15 (unique count: 12)</p>
 <li><p><strong>Mean</strong></p></li>
 <li><p><strong>Standard deviation</strong></p></li>
 <li><p><strong>Coefficient of variation</strong> (CV), the standard deviation divided by the mean</p></li>
-<li><p><strong>Five numbers of Tukey</strong> (min, Q1, median, Q3, max)</p></li>
-<li><p><strong>Coefficient of quartile variation</strong> (CQV, sometimes called coefficient of dispersion), calculated as (Q3 - Q1) / (Q3 + Q1) using quantile with <code>type = 6</code> as quantile algorithm to comply with SPSS standards</p></li>
+<li><p><strong>Mean absolute deviation</strong> (MAD), the median of the absolute deviations from the median - a more robust statistic than the standard deviation</p></li>
+<li><p><strong>Five numbers of Tukey</strong>, namely: the minimum, Q1, median, Q3 and maximum</p></li>
+<li><p><strong>Interquartile range</strong> (IQR), the distance between Q1 and Q3</p></li>
+<li><p><strong>Coefficient of quartile variation</strong> (CQV, sometimes called <em>coefficient of dispersion</em>), calculated as (Q3 - Q1) / (Q3 + Q1) using <code><a href="https://www.rdocumentation.org/packages/stats/topics/quantile">quantile()</a></code> with <code>type = 6</code> as quantile algorithm to comply with SPSS standards</p></li>
 <li><p><strong>Outliers</strong> (total count and unique count)</p></li>
 </ul>
 <p>So for example, the above frequency table quickly shows the median age of patients being 74.</p>
@@ -498,7 +510,7 @@ Outliers: 15 (unique count: 12)</p>
 <div id="frequencies-of-factors" class="section level2">
 <h2 class="hasAnchor">
 <a href="#frequencies-of-factors" class="anchor"></a>Frequencies of factors</h2>
-<p>To sort frequencies of factors on factor level instead of item count, use the <code>sort.count</code> parameter.</p>
+<p>To sort frequencies of factors on their levels instead of item count, use the <code>sort.count</code> parameter.</p>
 <p><code>sort.count</code> is <code>TRUE</code> by default. Compare this default behaviour…</p>
 <div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" title="1">septic_patients <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb7-2" title="2"><span class="st">  </span><span class="kw"><a href="../reference/freq.html">freq</a></span>(hospital_id)</a></code></pre></div>
@@ -551,7 +563,7 @@ Unique: 4</p>
 </tr>
 </tbody>
 </table>
-<p>… with this, where items are now sorted on count:</p>
+<p>… to this, where items are now sorted on factor levels:</p>
 <div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" title="1">septic_patients <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb8-2" title="2"><span class="st">  </span><span class="kw"><a href="../reference/freq.html">freq</a></span>(hospital_id, <span class="dt">sort.count =</span> <span class="ot">FALSE</span>)</a></code></pre></div>
 <p><strong>Frequency table of <code>hospital_id</code> from a <code>data.frame</code> (2,000 x 49)</strong></p>
@@ -603,7 +615,7 @@ Unique: 4</p>
 </tr>
 </tbody>
 </table>
-<p>All classes will be printed into the header (default is <code>FALSE</code> when using markdown like this document). Variables with the new <code>rsi</code> class of this AMR package are actually ordered factors and have three classes (look at <code>Class</code> in the header):</p>
+<p>All classes will be printed into the header. Variables with the new <code>rsi</code> class of this AMR package are actually ordered factors and have three classes (look at <code>Class</code> in the header):</p>
 <div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" title="1">septic_patients <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb9-2" title="2"><span class="st">  </span><span class="kw"><a href="../reference/freq.html">freq</a></span>(AMX, <span class="dt">header =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
 <p><strong>Frequency table of <code>AMX</code> from a <code>data.frame</code> (2,000 x 49)</strong></p>
@@ -791,68 +803,14 @@ Group: Beta-lactams/penicillins<br>
 </tr>
 </tbody>
 </table>
-<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" title="1">septic_patients <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb14-2" title="2"><span class="st">  </span><span class="kw"><a href="../reference/freq.html">freq</a></span>(AMX, <span class="dt">na.rm =</span> <span class="ot">FALSE</span>)</a></code></pre></div>
-<p><strong>Frequency table of <code>AMX</code> from a <code>data.frame</code> (2,000 x 49)</strong></p>
-<p>Class: factor &gt; ordered &gt; rsi (numeric)<br>
-Length: 2,000 (of which NA: 771 = 38.55%)<br>
-Levels: 3: S &lt; I &lt; R<br>
-Unique: 4</p>
-<p>Drug: Amoxicillin (AMX, J01CA04)<br>
-Group: Beta-lactams/penicillins<br>
-%SI: 44.43%</p>
-<table class="table">
-<thead><tr class="header">
-<th align="left"></th>
-<th align="left">Item</th>
-<th align="right">Count</th>
-<th align="right">Percent</th>
-<th align="right">Cum. Count</th>
-<th align="right">Cum. Percent</th>
-</tr></thead>
-<tbody>
-<tr class="odd">
-<td align="left">1</td>
-<td align="left">(NA)</td>
-<td align="right">771</td>
-<td align="right">38.6%</td>
-<td align="right">771</td>
-<td align="right">38.6%</td>
-</tr>
-<tr class="even">
-<td align="left">2</td>
-<td align="left">R</td>
-<td align="right">683</td>
-<td align="right">34.2%</td>
-<td align="right">1,454</td>
-<td align="right">72.7%</td>
-</tr>
-<tr class="odd">
-<td align="left">3</td>
-<td align="left">S</td>
-<td align="right">543</td>
-<td align="right">27.2%</td>
-<td align="right">1,997</td>
-<td align="right">99.8%</td>
-</tr>
-<tr class="even">
-<td align="left">4</td>
-<td align="left">I</td>
-<td align="right">3</td>
-<td align="right">0.2%</td>
-<td align="right">2,000</td>
-<td align="right">100.0%</td>
-</tr>
-</tbody>
-</table>
 </div>
 <div id="parameter-row-names" class="section level3">
 <h3 class="hasAnchor">
 <a href="#parameter-row-names" class="anchor"></a>Parameter <code>row.names</code>
 </h3>
 <p>A frequency table shows row indices. To remove them, use <code>row.names = FALSE</code>:</p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" title="1">septic_patients <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb15-2" title="2"><span class="st">  </span><span class="kw"><a href="../reference/freq.html">freq</a></span>(hospital_id, <span class="dt">row.names =</span> <span class="ot">FALSE</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" title="1">septic_patients <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb14-2" title="2"><span class="st">  </span><span class="kw"><a href="../reference/freq.html">freq</a></span>(hospital_id, <span class="dt">row.names =</span> <span class="ot">FALSE</span>)</a></code></pre></div>
 <p><strong>Frequency table of <code>hospital_id</code> from a <code>data.frame</code> (2,000 x 49)</strong></p>
 <p>Class: factor (numeric)<br>
 Length: 2,000 (of which NA: 0 = 0.00%)<br>
@@ -902,58 +860,22 @@ Unique: 4</p>
 <h3 class="hasAnchor">
 <a href="#parameter-markdown" class="anchor"></a>Parameter <code>markdown</code>
 </h3>
-<p>The <code>markdown</code> parameter is <code>TRUE</code> at default in non-interactive sessions, like in reports created with R Markdown. This will always print all rows, unless <code>nmax</code> is set.</p>
-<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb16-1" title="1">septic_patients <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb16-2" title="2"><span class="st">  </span><span class="kw"><a href="../reference/freq.html">freq</a></span>(hospital_id, <span class="dt">markdown =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
-<p><strong>Frequency table of <code>hospital_id</code> from a <code>data.frame</code> (2,000 x 49)</strong></p>
-<p>Class: factor (numeric)<br>
-Length: 2,000 (of which NA: 0 = 0.00%)<br>
-Levels: 4: A, B, C, D<br>
-Unique: 4</p>
-<table class="table">
-<thead><tr class="header">
-<th align="left"></th>
-<th align="left">Item</th>
-<th align="right">Count</th>
-<th align="right">Percent</th>
-<th align="right">Cum. Count</th>
-<th align="right">Cum. Percent</th>
-</tr></thead>
-<tbody>
-<tr class="odd">
-<td align="left">1</td>
-<td align="left">D</td>
-<td align="right">762</td>
-<td align="right">38.1%</td>
-<td align="right">762</td>
-<td align="right">38.1%</td>
-</tr>
-<tr class="even">
-<td align="left">2</td>
-<td align="left">B</td>
-<td align="right">663</td>
-<td align="right">33.2%</td>
-<td align="right">1,425</td>
-<td align="right">71.2%</td>
-</tr>
-<tr class="odd">
-<td align="left">3</td>
-<td align="left">A</td>
-<td align="right">321</td>
-<td align="right">16.0%</td>
-<td align="right">1,746</td>
-<td align="right">87.3%</td>
-</tr>
-<tr class="even">
-<td align="left">4</td>
-<td align="left">C</td>
-<td align="right">254</td>
-<td align="right">12.7%</td>
-<td align="right">2,000</td>
-<td align="right">100.0%</td>
-</tr>
-</tbody>
-</table>
+<p>The <code>markdown</code> parameter is <code>TRUE</code> at default in non-interactive sessions, like in reports created with R Markdown. This will always print all rows, unless <code>nmax</code> is set. Without markdown (like in regular R), a frequency table would print like:</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" title="1">septic_patients <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb15-2" title="2"><span class="st">  </span><span class="kw"><a href="../reference/freq.html">freq</a></span>(hospital_id, <span class="dt">markdown =</span> <span class="ot">FALSE</span>)</a>
+<a class="sourceLine" id="cb15-3" title="3"><span class="co"># Frequency table of `hospital_id` from a data.frame (2,000 x 49) </span></a>
+<a class="sourceLine" id="cb15-4" title="4"><span class="co"># </span></a>
+<a class="sourceLine" id="cb15-5" title="5"><span class="co"># Class:   factor (numeric)</span></a>
+<a class="sourceLine" id="cb15-6" title="6"><span class="co"># Length:  2,000 (of which NA: 0 = 0.00%)</span></a>
+<a class="sourceLine" id="cb15-7" title="7"><span class="co"># Levels:  4: A, B, C, D</span></a>
+<a class="sourceLine" id="cb15-8" title="8"><span class="co"># Unique:  4</span></a>
+<a class="sourceLine" id="cb15-9" title="9"><span class="co"># </span></a>
+<a class="sourceLine" id="cb15-10" title="10"><span class="co">#      Item    Count   Percent   Cum. Count   Cum. Percent</span></a>
+<a class="sourceLine" id="cb15-11" title="11"><span class="co"># ---  -----  ------  --------  -----------  -------------</span></a>
+<a class="sourceLine" id="cb15-12" title="12"><span class="co"># 1    D         762     38.1%          762          38.1%</span></a>
+<a class="sourceLine" id="cb15-13" title="13"><span class="co"># 2    B         663     33.2%        1,425          71.2%</span></a>
+<a class="sourceLine" id="cb15-14" title="14"><span class="co"># 3    A         321     16.0%        1,746          87.3%</span></a>
+<a class="sourceLine" id="cb15-15" title="15"><span class="co"># 4    C         254     12.7%        2,000         100.0%</span></a></code></pre></div>
 </div>
 </div>
   </div>

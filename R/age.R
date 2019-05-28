@@ -50,8 +50,8 @@ age <- function(x, reference = Sys.Date()) {
                   as.integer(years_gap))
 
   if (any(ages < 0, na.rm = TRUE)) {
-    warning("NAs introduced for ages below 0.")
     ages[ages < 0] <- NA_integer_
+    warning("NAs introduced for ages below 0.")
   }
   if (any(ages > 120, na.rm = TRUE)) {
     warning("Some ages are > 120.")
@@ -71,7 +71,7 @@ age <- function(x, reference = Sys.Date()) {
 #'         The default is to split on young children (0-11), youth (12-24), young adults (25-54), middle-aged adults (55-74) and elderly (75+).}
 #'   \item{A character:}
 #'     \itemize{
-#'       \item{\code{"children"}, equivalent of: \code{c(0, 1, 2, 4, 6, 13, 18)}. This will split on 0, 1, 2-3, 4-5, 6-12, 13-17 and 18+.}
+#'       \item{\code{"children"} or \code{"kids"}, equivalent of: \code{c(0, 1, 2, 4, 6, 13, 18)}. This will split on 0, 1, 2-3, 4-5, 6-12, 13-17 and 18+.}
 #'       \item{\code{"elderly"} or \code{"seniors"}, equivalent of: \code{c(65, 75, 85)}. This will split on 0-64, 65-74, 75-84, 85+.}
 #'       \item{\code{"fives"}, equivalent of: \code{1:20 * 5}. This will split on 0-4, 5-9, 10-14, ..., 90-94, 95-99, 100+.}
 #'       \item{\code{"tens"}, equivalent of: \code{1:10 * 10}. This will split on 0-9, 10-19, 20-29, ... 80-89, 90-99, 100+.}
@@ -107,17 +107,15 @@ age <- function(x, reference = Sys.Date()) {
 #' # resistance of ciprofloxacine per age group
 #' library(dplyr)
 #' septic_patients %>%
-#'   mutate(first_isolate = first_isolate(.)) %>%
-#'   filter(first_isolate == TRUE,
-#'          mo == as.mo("E. coli")) %>%
+#'   filter_first_isolate) %>%
+#'   filter(mo == as.mo("E. coli")) %>%
 #'   group_by(age_group = age_groups(age)) %>%
-#'   select(age_group,
-#'          CIP) %>%
+#'   select(age_group, CIP) %>%
 #'   ggplot_rsi(x = "age_group")
 age_groups <- function(x, split_at = c(12, 25, 55, 75)) {
   if (is.character(split_at)) {
     split_at <- split_at[1L]
-    if (split_at %like% "^(child|kid)") {
+    if (split_at %like% "^(child|kid|junior)") {
       split_at <- c(0, 1, 2, 4, 6, 13, 18)
     } else if (split_at %like% "^(elder|senior)") {
       split_at <-  c(65, 75, 85)
@@ -133,10 +131,12 @@ age_groups <- function(x, split_at = c(12, 25, 55, 75)) {
   }
   split_at <- sort(unique(split_at))
   if (!split_at[1] == 0) {
+    # add base number 0
     split_at <- c(0, split_at)
   }
+  split_at <- split_at[!is.na(split_at)]
   if (length(split_at) == 1) {
-    # only 0 available
+    # only 0 is available
     stop("invalid value for `split_at`.")
   }
 
