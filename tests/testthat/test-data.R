@@ -26,6 +26,9 @@ test_that("data sets are valid", {
   expect_identical(nrow(antibiotics), length(unique(antibiotics$ab)))
   expect_identical(nrow(microorganisms), length(unique(microorganisms$mo)))
 
+  # check cross table reference
+  expect_true(all(microorganisms.codes$mo %in% microorganisms$mo))
+
   # there should be no diacritics (i.e. non ASCII) characters in the datasets
   datasets <- data(package = "AMR", envir = asNamespace("AMR"))$results[, "Item"]
   for (i in 1:length(datasets)) {

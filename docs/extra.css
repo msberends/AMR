@@ -164,7 +164,7 @@ help {
   text-align: center;
 }
 
-/* tables */
+/* tables, make them look like scientific ones */
 .table {
   font-size: 90%;
 }
@@ -208,4 +208,7 @@ table a:not(.btn):hover, .table a:not(.btn):hover {
   padding: 2%;
   border: 2px #2c3e50 dashed;
   margin-top: 1%;
+}
+#btn_collapseDisqus {
+  white-space: normal;
 }

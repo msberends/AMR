@@ -28,13 +28,15 @@
 * Frequency tables (`freq()`):
   * speed improvement for microbial IDs
   * fixed level names in markdown
-  * 
 * Removed all hardcoded EUCAST rules and replaced them with a new reference file: `./inst/eucast/eucast.tsv`
 * Added ceftazidim intrinsic resistance to *Streptococci*
 * Changed default settings for `age_groups()`, to let groups of fives and tens end with 100+ instead of 120+
 * Fix for `freq()` for when all values are `NA`
 * Fix for `first_isolate()` for when dates are missing
 * Improved speed of `guess_ab_col()`
+* Function `as.mo()` now gently interprets any number of whitespace characters (like tabs) as one space
+* Small algorithm fix for `as.mo()`
+* Removed viruses from data set `microorganisms.codes` and cleaned it up
 
 #### Other
 * Support for R 3.6.0

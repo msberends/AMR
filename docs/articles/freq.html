@@ -199,7 +199,7 @@
       <h1>How to create frequency tables</h1>
                         <h4 class="author">Matthijs S. Berends</h4>
             
-            <h4 class="date">23 May 2019</h4>
+            <h4 class="date">28 May 2019</h4>
       
       
       <div class="hidden name"><code>freq.Rmd</code></div>
@@ -219,7 +219,7 @@
 <p>To only show and quickly review the content of one variable, you can just select this variable in various ways. Let’s say we want to get the frequencies of the <code>gender</code> variable of the <code>septic_patients</code> dataset:</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1">septic_patients <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="../reference/freq.html">freq</a></span>(gender)</a></code></pre></div>
 <p><strong>Frequency table of <code>gender</code> from a <code>data.frame</code> (2,000 x 49)</strong></p>
-<p>Class: <code>character</code> (<code>character</code>)<br>
+<p>Class: character<br>
 Length: 2,000 (of which NA: 0 = 0.00%)<br>
 Unique: 2</p>
 <p>Shortest: 1<br>
@@ -424,7 +424,7 @@ Longest: 34</p>
 <a class="sourceLine" id="cb6-3" title="3"><span class="st">  </span><span class="kw">distinct</span>(patient_id, <span class="dt">.keep_all =</span> <span class="ot">TRUE</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb6-4" title="4"><span class="st">  </span><span class="kw"><a href="../reference/freq.html">freq</a></span>(age, <span class="dt">nmax =</span> <span class="dv">5</span>, <span class="dt">header =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
 <p><strong>Frequency table of <code>age</code> from a <code>data.frame</code> (981 x 49)</strong></p>
-<p>Class: <code>numeric</code> (<code>numeric</code>)<br>
+<p>Class: numeric<br>
 Length: 981 (of which NA: 0 = 0.00%)<br>
 Unique: 73</p>
 <p>Mean: 71.08<br>
@@ -503,9 +503,9 @@ Outliers: 15 (unique count: 12)</p>
 <div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" title="1">septic_patients <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb7-2" title="2"><span class="st">  </span><span class="kw"><a href="../reference/freq.html">freq</a></span>(hospital_id)</a></code></pre></div>
 <p><strong>Frequency table of <code>hospital_id</code> from a <code>data.frame</code> (2,000 x 49)</strong></p>
-<p>Class: <code>factor</code> (<code>numeric</code>)<br>
+<p>Class: factor (numeric)<br>
 Length: 2,000 (of which NA: 0 = 0.00%)<br>
-Levels: 4: <code>A</code>, <code>B</code>, <code>C</code>, <code>D</code><br>
+Levels: 4: A, B, C, D<br>
 Unique: 4</p>
 <table class="table">
 <thead><tr class="header">
@@ -555,9 +555,9 @@ Unique: 4</p>
 <div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" title="1">septic_patients <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb8-2" title="2"><span class="st">  </span><span class="kw"><a href="../reference/freq.html">freq</a></span>(hospital_id, <span class="dt">sort.count =</span> <span class="ot">FALSE</span>)</a></code></pre></div>
 <p><strong>Frequency table of <code>hospital_id</code> from a <code>data.frame</code> (2,000 x 49)</strong></p>
-<p>Class: <code>factor</code> (<code>numeric</code>)<br>
+<p>Class: factor (numeric)<br>
 Length: 2,000 (of which NA: 0 = 0.00%)<br>
-Levels: 4: <code>A</code>, <code>B</code>, <code>C</code>, <code>D</code><br>
+Levels: 4: A, B, C, D<br>
 Unique: 4</p>
 <table class="table">
 <thead><tr class="header">
@@ -607,9 +607,9 @@ Unique: 4</p>
 <div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" title="1">septic_patients <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb9-2" title="2"><span class="st">  </span><span class="kw"><a href="../reference/freq.html">freq</a></span>(AMX, <span class="dt">header =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
 <p><strong>Frequency table of <code>AMX</code> from a <code>data.frame</code> (2,000 x 49)</strong></p>
-<p>Class: <code>factor</code> &gt; <code>ordered</code> &gt; <code>rsi</code> (<code>numeric</code>)<br>
+<p>Class: factor &gt; ordered &gt; rsi (numeric)<br>
 Length: 2,000 (of which NA: 771 = 38.55%)<br>
-Levels: 3: <code>S</code> &lt; <code>I</code> &lt; <code>R</code><br>
+Levels: 3: S &lt; I &lt; R<br>
 Unique: 3</p>
 <p>Drug: Amoxicillin (AMX, J01CA04)<br>
 Group: Beta-lactams/penicillins<br>
@@ -658,7 +658,7 @@ Group: Beta-lactams/penicillins<br>
 <div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" title="1">septic_patients <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb10-2" title="2"><span class="st">  </span><span class="kw"><a href="../reference/freq.html">freq</a></span>(date, <span class="dt">nmax =</span> <span class="dv">5</span>, <span class="dt">header =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
 <p><strong>Frequency table of <code>date</code> from a <code>data.frame</code> (2,000 x 49)</strong></p>
-<p>Class: <code>Date</code> (<code>numeric</code>)<br>
+<p>Class: Date (numeric)<br>
 Length: 2,000 (of which NA: 0 = 0.00%)<br>
 Unique: 1,140</p>
 <p>Oldest: 2 January 2002<br>
@@ -740,9 +740,9 @@ Median: 31 July 2009 (47.39%)</p>
 <div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" title="1">septic_patients <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb13-2" title="2"><span class="st">  </span><span class="kw"><a href="../reference/freq.html">freq</a></span>(AMX, <span class="dt">na.rm =</span> <span class="ot">FALSE</span>)</a></code></pre></div>
 <p><strong>Frequency table of <code>AMX</code> from a <code>data.frame</code> (2,000 x 49)</strong></p>
-<p>Class: <code>factor</code> &gt; <code>ordered</code> &gt; <code>rsi</code> (<code>numeric</code>)<br>
+<p>Class: factor &gt; ordered &gt; rsi (numeric)<br>
 Length: 2,000 (of which NA: 771 = 38.55%)<br>
-Levels: 3: <code>S</code> &lt; <code>I</code> &lt; <code>R</code><br>
+Levels: 3: S &lt; I &lt; R<br>
 Unique: 4</p>
 <p>Drug: Amoxicillin (AMX, J01CA04)<br>
 Group: Beta-lactams/penicillins<br>
@@ -794,9 +794,9 @@ Group: Beta-lactams/penicillins<br>
 <div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" title="1">septic_patients <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb14-2" title="2"><span class="st">  </span><span class="kw"><a href="../reference/freq.html">freq</a></span>(AMX, <span class="dt">na.rm =</span> <span class="ot">FALSE</span>)</a></code></pre></div>
 <p><strong>Frequency table of <code>AMX</code> from a <code>data.frame</code> (2,000 x 49)</strong></p>
-<p>Class: <code>factor</code> &gt; <code>ordered</code> &gt; <code>rsi</code> (<code>numeric</code>)<br>
+<p>Class: factor &gt; ordered &gt; rsi (numeric)<br>
 Length: 2,000 (of which NA: 771 = 38.55%)<br>
-Levels: 3: <code>S</code> &lt; <code>I</code> &lt; <code>R</code><br>
+Levels: 3: S &lt; I &lt; R<br>
 Unique: 4</p>
 <p>Drug: Amoxicillin (AMX, J01CA04)<br>
 Group: Beta-lactams/penicillins<br>
@@ -854,9 +854,9 @@ Group: Beta-lactams/penicillins<br>
 <div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" title="1">septic_patients <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb15-2" title="2"><span class="st">  </span><span class="kw"><a href="../reference/freq.html">freq</a></span>(hospital_id, <span class="dt">row.names =</span> <span class="ot">FALSE</span>)</a></code></pre></div>
 <p><strong>Frequency table of <code>hospital_id</code> from a <code>data.frame</code> (2,000 x 49)</strong></p>
-<p>Class: <code>factor</code> (<code>numeric</code>)<br>
+<p>Class: factor (numeric)<br>
 Length: 2,000 (of which NA: 0 = 0.00%)<br>
-Levels: 4: <code>A</code>, <code>B</code>, <code>C</code>, <code>D</code><br>
+Levels: 4: A, B, C, D<br>
 Unique: 4</p>
 <table class="table">
 <thead><tr class="header">
@@ -906,9 +906,9 @@ Unique: 4</p>
 <div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb16-1" title="1">septic_patients <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb16-2" title="2"><span class="st">  </span><span class="kw"><a href="../reference/freq.html">freq</a></span>(hospital_id, <span class="dt">markdown =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
 <p><strong>Frequency table of <code>hospital_id</code> from a <code>data.frame</code> (2,000 x 49)</strong></p>
-<p>Class: <code>factor</code> (<code>numeric</code>)<br>
+<p>Class: factor (numeric)<br>
 Length: 2,000 (of which NA: 0 = 0.00%)<br>
-Levels: 4: <code>A</code>, <code>B</code>, <code>C</code>, <code>D</code><br>
+Levels: 4: A, B, C, D<br>
 Unique: 4</p>
 <table class="table">
 <thead><tr class="header">

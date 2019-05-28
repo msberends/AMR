@@ -177,6 +177,9 @@ authors:
   Bhanu N. M. Sinha:
     href: https://www.rug.nl/staff/b.sinha/
 
+development:
+  mode: release # improves indexing by search engines
+
 template:
   assets: pkgdown/logos # use logos in this folder
   params:

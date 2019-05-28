@@ -43,7 +43,7 @@ As said, SPSS is easier to learn than R. But SPSS, SAS and Stata come with major
   
 * **R can be easily automated.**
 
-  Over the last years, [R Markdown](https://rmarkdown.rstudio.com/) has really made an interesting development. With R Markdown, you can very easily reproduce your reports, whether it's to Word, Powerpoint, a website, a PDF document or just the raw data to Excel. I use this a lot to generate monthly reports automatically. Just write the code once and enjoy the automatically updated reports at any interval you like.
+  Over the last years, [R Markdown](https://rmarkdown.rstudio.com/) has really made an interesting development. With R Markdown, you can very easily produce reports, whether format has to be Word, PowerPoint, a website, a PDF document or just the raw data to Excel. It even allows the use of a reference file containing the layout style (e.g. fonts and colours) of your organisation. I use this a lot to generate weekly and monthly reports automatically. Just write the code once and enjoy the automatically updated reports at any interval you like.
   
   For an even more professional environment, you could create [Shiny apps](https://shiny.rstudio.com/): live manipulation of data using a custom made website. The webdesign knowledge needed (JavaScript, CSS, HTML) is almost *zero*.
   
@@ -53,9 +53,9 @@ As said, SPSS is easier to learn than R. But SPSS, SAS and Stata come with major
   
 * **R understands any data type, including SPSS/SAS/Stata.**
 
-  And that's not vice versa I'm afraid. You can import data from any source into R. From SPSS, SAS and Stata ([link](https://haven.tidyverse.org/)), from Minitab, Epi Info and EpiData ([link](https://cran.r-project.org/package=foreign)), from Excel ([link](https://readxl.tidyverse.org/)), from flat files like CSV, TXT or TSV ([link](https://readr.tidyverse.org/)), or directly from databases and datawarehouses from anywhere on the world ([link](https://dbplyr.tidyverse.org/)). You can even scrape websites to download tables that are live on the internet ([link](https://github.com/hadley/rvest)).
+  And that's not vice versa I'm afraid. You can import data from any source into R. From SPSS, SAS and Stata ([link](https://haven.tidyverse.org/)), from Minitab, Epi Info and EpiData ([link](https://cran.r-project.org/package=foreign)), from Excel ([link](https://readxl.tidyverse.org/)), from flat files like CSV, TXT or TSV ([link](https://readr.tidyverse.org/)), or directly from databases and datawarehouses from anywhere on the world ([link](https://dbplyr.tidyverse.org/)). You can even scrape websites to download tables that are live on the internet ([link](https://github.com/hadley/rvest)) or get the results of an API call ([link](https://github.com/Rdatatable/data.table/wiki/Convenience-features-of-fread)).
   
-  And the best part - you can export from R to most data formats as well. So you can import an SPSS file, do your analysis neatly in R and export the resulting tables to Excel files.
+  And the best part - you can export from R to most data formats as well. So you can import an SPSS file, do your analysis neatly in R and export the resulting tables to Excel files for sharing.
 
 * **R is completely free and open-source.**
 

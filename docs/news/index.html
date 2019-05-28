@@ -78,7 +78,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.6.1.9037</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.6.1.9040</span>
       </span>
     </div>
 
@@ -287,8 +287,6 @@ Please create an issue in one of our repositories if you want additions in this 
 <ul>
 <li>speed improvement for microbial IDs</li>
 <li>fixed level names in markdown</li>
-<li>
-</li>
 </ul>
 </li>
 <li>Removed all hardcoded EUCAST rules and replaced them with a new reference file: <code>./inst/eucast/eucast.tsv</code>
@@ -301,6 +299,10 @@ Please create an issue in one of our repositories if you want additions in this 
 <li>Fix for <code><a href="../reference/first_isolate.html">first_isolate()</a></code> for when dates are missing</li>
 <li>Improved speed of <code><a href="../reference/guess_ab_col.html">guess_ab_col()</a></code>
 </li>
+<li>Function <code><a href="../reference/as.mo.html">as.mo()</a></code> now gently interprets any number of whitespace characters (like tabs) as one space</li>
+<li>Small algorithm fix for <code><a href="../reference/as.mo.html">as.mo()</a></code>
+</li>
+<li>Removed viruses from data set <code>microorganisms.codes</code> and cleaned it up</li>
 </ul>
 </div>
 <div id="other" class="section level4">

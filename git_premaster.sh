@@ -17,9 +17,11 @@ echo "••••••••••••••••••••••••�
 sed -i -- "s/^Date: .*/Date: $(date '+%Y-%m-%d')/" DESCRIPTION
 # get latest tags
 git pull --tags --quiet
-# get version number: latest tag + .90 + number of commits (like 0.6.1.9033)
-newversion=`git describe --tags | sed 's/-/.90/' | sed 's/-.*//' | sed 's/v//'`
-sed -i -- "s/^Version: .*/Version: ${newversion}/" DESCRIPTION
+current_tag=`git describe --tags --abbrev=0 | sed 's/v//'`
+current_commit=`git describe --tags | sed 's/.*-\(.*\)-.*/\1/'`
+# combine tag (e.g. 0.1.0) and commit number (like 40) increased by 9000 to indicate beta version
+new_version="$current_tag.$((current_commit + 9000))" # results in 0.1.0.9040
+sed -i -- "s/^Version: .*/Version: ${new_version}/" DESCRIPTION
 echo "First 3 lines of DESCRIPTION:"
 head -3 DESCRIPTION
 echo

@@ -24,7 +24,8 @@
 // Add updated Font Awesome 5.6.3 library
 $('head').append('<!-- Updated Font Awesome library --><link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">');
 // Add Disqus
-$('head').append('<script src="https://amr-for-r.disqus.com/embed.js" data-timestamp="' + new Date()  + '"></script');
+// $('head').append('<link rel="preload" href="https://amr-for-r.disqus.com/embed.js" as="script">');
+$('head').append('<script src="https://amr-for-r.disqus.com/embed.js" data-timestamp="' + new Date()  + '"></script>');
 
 // Email template for new GitLab issues
 //https://stackoverflow.com/a/33190494/4575331
@@ -56,7 +57,7 @@ $( document ).ready(function() {
 
   // Add Disqus to all pages
   var disqus =
-    '<button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseDisqus" aria-expanded="false" aria-controls="collapseDisqus">' +
+    '<button id="btn_collapseDisqus" class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseDisqus" aria-expanded="false" aria-controls="collapseDisqus">' +
       '  Having a question? Or knowing something we don\'t? Click here to open comments.' +
     '</button>' +
     '<div class="collapse" id="collapseDisqus">' +

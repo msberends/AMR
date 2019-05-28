@@ -396,7 +396,7 @@ mo_validate <- function(x, property, ...) {
   tryCatch(x[1L] %in% AMR::microorganisms[1, property],
            error = function(e) stop(e$message, call. = FALSE))
 
-  if (!all(x %in% AMR::microorganisms[, property])
+  if (!all(x %in% pull(AMR::microorganisms, property))
       | Becker %in% c(TRUE, "all")
       | Lancefield %in% c(TRUE, "all")) {
     exec_as.mo(x, property = property, ...)

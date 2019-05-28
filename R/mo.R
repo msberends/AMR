@@ -456,10 +456,19 @@ exec_as.mo <- function(x,
 
   } else if (!all(x %in% AMR::microorganisms[, property])) {
 
+    strip_whitespace <- function(x) {
+      # all whitespaces (tab, new lines, etc.) should be one space
+      # and spaces before and after should be omitted
+      trimws(gsub("[\\s]+", " ", x, perl = TRUE), which = "both")
+    }
+
+    x <- strip_whitespace(x)
     x_backup <- x
 
     # remove spp and species
-    x <- trimws(gsub(" +(spp.?|ssp.?|sp.? |ss ?.?|subsp.?|subspecies|biovar |serovar |species)", " ", x_backup, ignore.case = TRUE), which = "both")
+    x <- gsub(" +(spp.?|ssp.?|sp.? |ss ?.?|subsp.?|subspecies|biovar |serovar |species)", " ", x_backup, ignore.case = TRUE)
+    x <- strip_whitespace(x)
+
     x_backup_without_spp <- x
     x_species <- paste(x, "species")
     # translate to English for supported languages of mo_property
@@ -487,8 +496,8 @@ exec_as.mo <- function(x,
     x <- gsub("e+", "e+", x, ignore.case = TRUE)
     x <- gsub("o+", "o+", x, ignore.case = TRUE)
 
-    # but spaces before and after should be omitted
-    x <- trimws(x, which = "both")
+    x <- strip_whitespace(x)
+
     x_trimmed <- x
     x_trimmed_species <- paste(x_trimmed, "species")
     x_trimmed_without_group <- gsub(" gro.u.p$", "", x_trimmed, ignore.case = TRUE)
@@ -1063,7 +1072,7 @@ exec_as.mo <- function(x,
               }
             }
           }
-          # (6) try to strip off one element from start and check the remains (only allow 2-part name outcome) ----
+          # (6) try to strip off one element from start and check the remains (only allow >= 2-part name outcome) ----
           x_strip <- a.x_backup %>% strsplit(" ") %>% unlist()
           if (length(x_strip) > 1 & nchar(g.x_backup_without_spp) >= 6) {
             for (i in 2:(length(x_strip))) {
@@ -1072,8 +1081,8 @@ exec_as.mo <- function(x,
               if (!empty_result(found)) {
                 found_result <- found
                 found <- microorganismsDT[mo == found_result[1L], ..property][[1]]
-                # uncertainty level 2 only if the fullname contains a space (otherwise it will be found with lvl 3)
-                if (microorganismsDT[mo == found_result[1L], fullname][[1]] %like% " ") {
+                # uncertainty level 2 only if searched part contains a space (otherwise it will be found with lvl 3)
+                if (x_strip_collapsed %like% " ") {
                   uncertainties <<- rbind(uncertainties,
                                           data.frame(uncertainty = 2,
                                                      input = a.x_backup,
