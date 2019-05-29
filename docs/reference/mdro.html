@@ -80,7 +80,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.6.1.9040</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.6.1.9042</span>
       </span>
     </div>
 
@@ -312,15 +312,17 @@
 
     
     <p>To define antibiotics column names, leave as it is to determine it automatically with <code><a href='guess_ab_col.html'>guess_ab_col</a></code> or input a text (case-insensitive), or use <code>NULL</code> to skip a column (e.g. <code>TIC = NULL</code> to skip ticarcillin). Manually defined but non-existing columns will be skipped with a warning.</p>
-<p>Available abbrevations of the column containing antibiotics in the form '<strong>antimicrobial ID</strong>: name (<em>ATC code</em>)':</p>
-<p><strong>AMC</strong>: amoxicillin/clavulanic acid (<a href='https://www.whocc.no/atc_ddd_index/?code=J01CR02'>J01CR02</a>),
- <strong>AMK</strong>: amikacin (<a href='https://www.whocc.no/atc_ddd_index/?code=J01GB06'>J01GB06</a>),
+<p>The following antibiotics are used for the functions <code><a href='eucast_rules.html'>eucast_rules</a></code> and <code>mdro</code>. These are shown in the format '<strong>antimicrobial ID</strong>: name (<em>ATC code</em>)', sorted by name:</p>
+<p><strong>AMK</strong>: amikacin (<a href='https://www.whocc.no/atc_ddd_index/?code=J01GB06'>J01GB06</a>),
  <strong>AMX</strong>: amoxicillin (<a href='https://www.whocc.no/atc_ddd_index/?code=J01CA04'>J01CA04</a>),
+ <strong>AMC</strong>: amoxicillin/clavulanic acid (<a href='https://www.whocc.no/atc_ddd_index/?code=J01CR02'>J01CR02</a>),
  <strong>AMP</strong>: ampicillin (<a href='https://www.whocc.no/atc_ddd_index/?code=J01CA01'>J01CA01</a>),
  <strong>AZM</strong>: azithromycin (<a href='https://www.whocc.no/atc_ddd_index/?code=J01FA10'>J01FA10</a>),
  <strong>AZL</strong>: azlocillin (<a href='https://www.whocc.no/atc_ddd_index/?code=J01CA09'>J01CA09</a>),
  <strong>ATM</strong>: aztreonam (<a href='https://www.whocc.no/atc_ddd_index/?code=J01DF01'>J01DF01</a>),
+ <strong>CAP</strong>: capreomycin (<a href='https://www.whocc.no/atc_ddd_index/?code=J04AB30'>J04AB30</a>),
  <strong>RID</strong>: cefaloridine (<a href='https://www.whocc.no/atc_ddd_index/?code=J01DB02'>J01DB02</a>),
+ <strong>CZO</strong>: cefazolin (<a href='https://www.whocc.no/atc_ddd_index/?code=J01DB04'>J01DB04</a>),
  <strong>FEP</strong>: cefepime (<a href='https://www.whocc.no/atc_ddd_index/?code=J01DE01'>J01DE01</a>),
  <strong>CTX</strong>: cefotaxime (<a href='https://www.whocc.no/atc_ddd_index/?code=J01DD01'>J01DD01</a>),
  <strong>FOX</strong>: cefoxitin (<a href='https://www.whocc.no/atc_ddd_index/?code=J01DC01'>J01DC01</a>),
@@ -332,26 +334,28 @@
  <strong>CIP</strong>: ciprofloxacin (<a href='https://www.whocc.no/atc_ddd_index/?code=J01MA02'>J01MA02</a>),
  <strong>CLR</strong>: clarithromycin (<a href='https://www.whocc.no/atc_ddd_index/?code=J01FA09'>J01FA09</a>),
  <strong>CLI</strong>: clindamycin (<a href='https://www.whocc.no/atc_ddd_index/?code=J01FF01'>J01FF01</a>),
- <strong>FLC</strong>: flucloxacillin (<a href='https://www.whocc.no/atc_ddd_index/?code=J01CF05'>J01CF05</a>),
  <strong>COL</strong>: colistin (<a href='https://www.whocc.no/atc_ddd_index/?code=J01XB01'>J01XB01</a>),
- <strong>CZO</strong>: cefazolin (<a href='https://www.whocc.no/atc_ddd_index/?code=J01DB04'>J01DB04</a>),
  <strong>DAP</strong>: daptomycin (<a href='https://www.whocc.no/atc_ddd_index/?code=J01XX09'>J01XX09</a>),
  <strong>DOX</strong>: doxycycline (<a href='https://www.whocc.no/atc_ddd_index/?code=J01AA02'>J01AA02</a>),
  <strong>ETP</strong>: ertapenem (<a href='https://www.whocc.no/atc_ddd_index/?code=J01DH03'>J01DH03</a>),
  <strong>ERY</strong>: erythromycin (<a href='https://www.whocc.no/atc_ddd_index/?code=J01FA01'>J01FA01</a>),
+ <strong>ETH</strong>: ethambutol (<a href='https://www.whocc.no/atc_ddd_index/?code=J04AK02'>J04AK02</a>),
+ <strong>FLC</strong>: flucloxacillin (<a href='https://www.whocc.no/atc_ddd_index/?code=J01CF05'>J01CF05</a>),
  <strong>FOS</strong>: fosfomycin (<a href='https://www.whocc.no/atc_ddd_index/?code=J01XX01'>J01XX01</a>),
  <strong>FUS</strong>: fusidic acid (<a href='https://www.whocc.no/atc_ddd_index/?code=J01XC01'>J01XC01</a>),
+ <strong>GAT</strong>: gatifloxacin (<a href='https://www.whocc.no/atc_ddd_index/?code=J01MA16'>J01MA16</a>),
  <strong>GEN</strong>: gentamicin (<a href='https://www.whocc.no/atc_ddd_index/?code=J01GB03'>J01GB03</a>),
  <strong>IPM</strong>: imipenem (<a href='https://www.whocc.no/atc_ddd_index/?code=J01DH51'>J01DH51</a>),
+ <strong>INH</strong>: isoniazid (<a href='https://www.whocc.no/atc_ddd_index/?code=J04AC01'>J04AC01</a>),
  <strong>KAN</strong>: kanamycin (<a href='https://www.whocc.no/atc_ddd_index/?code=J01GB04'>J01GB04</a>),
  <strong>LVX</strong>: levofloxacin (<a href='https://www.whocc.no/atc_ddd_index/?code=J01MA12'>J01MA12</a>),
  <strong>LIN</strong>: lincomycin (<a href='https://www.whocc.no/atc_ddd_index/?code=J01FF02'>J01FF02</a>),
  <strong>LNZ</strong>: linezolid (<a href='https://www.whocc.no/atc_ddd_index/?code=J01XX08'>J01XX08</a>),
  <strong>MEM</strong>: meropenem (<a href='https://www.whocc.no/atc_ddd_index/?code=J01DH02'>J01DH02</a>),
+ <strong>MTR</strong>: metronidazole (<a href='https://www.whocc.no/atc_ddd_index/?code=J01XD01'>J01XD01</a>),
  <strong>MEZ</strong>: mezlocillin (<a href='https://www.whocc.no/atc_ddd_index/?code=J01CA10'>J01CA10</a>),
  <strong>MNO</strong>: minocycline (<a href='https://www.whocc.no/atc_ddd_index/?code=J01AA08'>J01AA08</a>),
  <strong>MFX</strong>: moxifloxacin (<a href='https://www.whocc.no/atc_ddd_index/?code=J01MA14'>J01MA14</a>),
- <strong>MTR</strong>: metronidazole (<a href='https://www.whocc.no/atc_ddd_index/?code=J01MA14'>J01XD01</a>),
  <strong>NAL</strong>: nalidixic acid (<a href='https://www.whocc.no/atc_ddd_index/?code=J01MB02'>J01MB02</a>),
  <strong>NEO</strong>: neomycin (<a href='https://www.whocc.no/atc_ddd_index/?code=J01GB05'>J01GB05</a>),
  <strong>NET</strong>: netilmicin (<a href='https://www.whocc.no/atc_ddd_index/?code=J01GB07'>J01GB07</a>),
@@ -359,14 +363,18 @@
  <strong>NOR</strong>: norfloxacin (<a href='https://www.whocc.no/atc_ddd_index/?code=J01MA06'>J01MA06</a>),
  <strong>NOV</strong>: novobiocin (an ATCvet code: <a href='https://www.whocc.no/atc_ddd_index/?code=QJ01XX95'>QJ01XX95</a>),
  <strong>OFX</strong>: ofloxacin (<a href='https://www.whocc.no/atc_ddd_index/?code=J01MA01'>J01MA01</a>),
- <strong>OXA</strong>: oxacillin (<a href='https://www.whocc.no/atc_ddd_index/?code=J01MA01'>J01CF04</a>),
+ <strong>OXA</strong>: oxacillin (<a href='https://www.whocc.no/atc_ddd_index/?code=J01CF04'>J01CF04</a>),
  <strong>PEN</strong>: penicillin G (<a href='https://www.whocc.no/atc_ddd_index/?code=J01CE01'>J01CE01</a>),
  <strong>PIP</strong>: piperacillin (<a href='https://www.whocc.no/atc_ddd_index/?code=J01CA12'>J01CA12</a>),
  <strong>TZP</strong>: piperacillin/tazobactam (<a href='https://www.whocc.no/atc_ddd_index/?code=J01CR05'>J01CR05</a>),
  <strong>PLB</strong>: polymyxin B (<a href='https://www.whocc.no/atc_ddd_index/?code=J01XB02'>J01XB02</a>),
  <strong>PRI</strong>: pristinamycin (<a href='https://www.whocc.no/atc_ddd_index/?code=J01FG01'>J01FG01</a>),
+ <strong>PZA</strong>: pyrazinamide (<a href='https://www.whocc.no/atc_ddd_index/?code=J04AK01'>J04AK01</a>),
  <strong>QDA</strong>: quinupristin/dalfopristin (<a href='https://www.whocc.no/atc_ddd_index/?code=J01FG02'>J01FG02</a>),
+ <strong>RIB</strong>: rifabutin (<a href='https://www.whocc.no/atc_ddd_index/?code=J04AB04'>J04AB04</a>),
  <strong>RIF</strong>: rifampicin (<a href='https://www.whocc.no/atc_ddd_index/?code=J04AB02'>J04AB02</a>),
+ <strong>RIF</strong>: rifampin (<a href='https://www.whocc.no/atc_ddd_index/?code=J04AB02'>J04AB02</a>),
+ <strong>RFP</strong>: rifapentine (<a href='https://www.whocc.no/atc_ddd_index/?code=J04AB05'>J04AB05</a>),
  <strong>RXT</strong>: roxithromycin (<a href='https://www.whocc.no/atc_ddd_index/?code=J01FA06'>J01FA06</a>),
  <strong>SIS</strong>: sisomicin (<a href='https://www.whocc.no/atc_ddd_index/?code=J01GB08'>J01GB08</a>),
  <strong>TEC</strong>: teicoplanin (<a href='https://www.whocc.no/atc_ddd_index/?code=J01XA02'>J01XA02</a>),

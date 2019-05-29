@@ -28,6 +28,17 @@
 * Frequency tables (`freq()`):
   * speed improvement for microbial IDs
   * fixed level names in markdown
+  * support for boxplots:
+    ```r
+    septic_patients %>% 
+      freq(age) %>% 
+      boxplot()
+    # grouped boxplots:
+    septic_patients %>% 
+      group_by(hospital_id) %>% 
+      freq(age) %>%
+      boxplot()
+    ```
 * Removed all hardcoded EUCAST rules and replaced them with a new reference file: `./inst/eucast/eucast.tsv`
 * Added ceftazidim intrinsic resistance to *Streptococci*
 * Changed default settings for `age_groups()`, to let groups of fives and tens end with 100+ instead of 120+

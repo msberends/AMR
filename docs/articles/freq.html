@@ -40,7 +40,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.6.1.9040</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.6.1.9042</span>
       </span>
     </div>
 
@@ -736,7 +736,7 @@ Median: 31 July 2009 (47.39%)</p>
 <p>A frequency table is actually a regular <code>data.frame</code>, with the exception that it contains an additional class.</p>
 <div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" title="1">my_df &lt;-<span class="st"> </span>septic_patients <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="../reference/freq.html">freq</a></span>(age)</a>
 <a class="sourceLine" id="cb11-2" title="2"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/class">class</a></span>(my_df)</a></code></pre></div>
-<p>[1] “frequency_tbl” “data.frame”</p>
+<p>[1] “freq” “data.frame”</p>
 <p>Because of this additional class, a frequency table prints like the examples above. But the object itself contains the complete table without a row limitation:</p>
 <div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/dim">dim</a></span>(my_df)</a></code></pre></div>
 <p>[1] 74 5</p>

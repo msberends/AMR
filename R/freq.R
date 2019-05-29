@@ -75,7 +75,7 @@
 #' @keywords summary summarise frequency freq
 #' @rdname freq
 #' @name freq
-#' @return A \code{data.frame} (with an additional class \code{"frequency_tbl"}) with five columns: \code{item}, \code{count}, \code{percent}, \code{cum_count} and \code{cum_percent}.
+#' @return A \code{data.frame} (with an additional class \code{"freq"}) with five columns: \code{item}, \code{count}, \code{percent}, \code{cum_count} and \code{cum_percent}.
 #' @export
 #' @inheritSection AMR Read more on our website!
 #' @examples
@@ -139,6 +139,16 @@
 #'   freq(age) %>%
 #'   hist()
 #'
+#' # or a boxplot of numeric values
+#' septic_patients %>%
+#'   freq(age) %>%
+#'   boxplot()
+#'
+#' # or even a boxplot per group
+#' septic_patients %>%
+#'   group_by(hospital_id) %>%
+#'   freq(age) %>%
+#'   boxplot()
 #'
 #' # or print all points to a regular plot
 #' septic_patients %>%
@@ -183,22 +193,22 @@
 #' # check differences between frequency tables
 #' diff(freq(septic_patients$TMP),
 #'      freq(septic_patients$SXT))
-frequency_tbl <- function(x,
-                          ...,
-                          sort.count = TRUE,
-                          nmax = getOption("max.print.freq"),
-                          na.rm = TRUE,
-                          row.names = TRUE,
-                          markdown = !interactive(),
-                          digits = 2,
-                          quote = FALSE,
-                          header = TRUE,
-                          title = NULL,
-                          na = "<NA>",
-                          droplevels = TRUE,
-                          sep = " ",
-                          decimal.mark = getOption("OutDec"),
-                          big.mark = ifelse(decimal.mark != ",", ",", ".")) {
+freq <- function(x,
+                 ...,
+                 sort.count = TRUE,
+                 nmax = getOption("max.print.freq"),
+                 na.rm = TRUE,
+                 row.names = TRUE,
+                 markdown = !interactive(),
+                 digits = 2,
+                 quote = FALSE,
+                 header = TRUE,
+                 title = NULL,
+                 na = "<NA>",
+                 droplevels = TRUE,
+                 sep = " ",
+                 decimal.mark = getOption("OutDec"),
+                 big.mark = ifelse(decimal.mark != ",", ",", ".")) {
 
   mult.columns <- 0
   x.group = character(0)
@@ -544,7 +554,7 @@ frequency_tbl <- function(x,
   # }
 
   structure(.Data = df,
-            class = c("frequency_tbl", class(df)),
+            class = unique(c("freq", class(df))),
             header = header_list,
             opt = list(title = title,
                        data = x.name,
@@ -565,7 +575,11 @@ frequency_tbl <- function(x,
 
 #' @rdname freq
 #' @export
-freq <- frequency_tbl
+frequency_tbl <- freq
+
+is.freq <- function(f) {
+  any(c("freq", "frequency_tbl") %in% class(f))
+}
 
 #' @importFrom crayon silver green red
 #' @importFrom dplyr %>%
@@ -639,13 +653,7 @@ format_header <- function(x, markdown = FALSE, decimal.mark = ".", big.mark = ",
 
   # class and mode
   if (is.null(header$columns)) {
-    # if (markdown == TRUE) {
-    #   header$class <- paste0("`", header$class, "`")
-    # }
     if (!header$mode %in% header$class) {
-    #   if (markdown == TRUE) {
-    #     header$mode <- paste0("`", header$mode, "`")
-    #   }
       header$class <- header$class %>% rev() %>% paste(collapse = " > ") %>% paste0(silver(paste0(" (", header$mode, ")")))
     } else {
       header$class <- header$class %>% rev() %>% paste(collapse = " > ")
@@ -654,9 +662,6 @@ format_header <- function(x, markdown = FALSE, decimal.mark = ".", big.mark = ",
   }
   # levels
   if (!is.null(header$levels)) {
-    # if (markdown == TRUE) {
-    #   header$levels <- paste0("`", header$levels, "`")
-    # }
     if (header$ordered == TRUE) {
       levels_text <- paste0(header$levels, collapse = " < ")
     } else {
@@ -733,7 +738,7 @@ format_header <- function(x, markdown = FALSE, decimal.mark = ".", big.mark = ",
 #' @export
 #' @importFrom dplyr top_n pull
 top_freq <- function(f, n) {
-  if (!"frequency_tbl" %in% class(f)) {
+  if (!is.freq(f)) {
     stop("`top_freq` can only be applied to frequency tables", call. = FALSE)
   }
   if (!is.numeric(n) | length(n) != 1L) {
@@ -751,7 +756,7 @@ top_freq <- function(f, n) {
 #' @rdname freq
 #' @export
 header <- function(f, property = NULL) {
-  if (!"frequency_tbl" %in% class(f)) {
+  if (!is.freq(f)) {
     stop("`header` can only be applied to frequency tables", call. = FALSE)
   }
   if (is.null(property)) {
@@ -765,13 +770,12 @@ header <- function(f, property = NULL) {
 }
 
 #' @noRd
-#' @exportMethod diff.frequency_tbl
+#' @exportMethod diff.freq
 #' @importFrom dplyr %>% full_join mutate
 #' @export
-diff.frequency_tbl <- function(x, y, ...) {
+diff.freq <- function(x, y, ...) {
   # check classes
-  if (!"frequency_tbl" %in% class(x)
-      | !"frequency_tbl" %in% class(y)) {
+  if (!is.freq(x) | !is.freq(y)) {
     stop("Both x and y must be a frequency table.")
   }
 
@@ -817,21 +821,34 @@ diff.frequency_tbl <- function(x, y, ...) {
 }
 
 #' @rdname freq
-#' @exportMethod print.frequency_tbl
+#' @exportMethod print.freq
 #' @importFrom knitr kable
 #' @importFrom dplyr n_distinct
 #' @importFrom crayon bold silver
 #' @export
-print.frequency_tbl <- function(x,
-                                nmax = getOption("max.print.freq", default = 15),
-                                markdown = !interactive(),
-                                header = TRUE,
-                                decimal.mark = getOption("OutDec"),
-                                big.mark = ifelse(decimal.mark != ",", ",", "."),
-                                ...) {
+print.freq <- function(x,
+                       nmax = getOption("max.print.freq", default = 15),
+                       markdown = !interactive(),
+                       header = TRUE,
+                       decimal.mark = getOption("OutDec"),
+                       big.mark = ifelse(decimal.mark != ",", ",", "."),
+                       ...) {
 
   opt <- attr(x, "opt")
+  if (is.null(opt)) {
+    # selection of frequency table, return original class
+    class(x) <- class(x)[!class(x) %in% c("freq", "frequency_tbl")]
+    print(x)
+    return(invisible())
+  }
+
   opt$header_txt <- header(x)
+  if (is.null(opt$nmax)) {
+    opt$nmax <- 0
+  }
+  if (is.null(opt$tbl_format)) {
+    opt$tbl_format <- "pandoc"
+  }
 
   dots <- list(...)
   if ("markdown" %in% names(dots)) {
@@ -854,7 +871,7 @@ print.frequency_tbl <- function(x,
   }
 
   if (is.null(opt$title)) {
-    if (isTRUE(opt$data %like% "^a data.frame") & opt$tbl_format == "markdown") {
+    if (isTRUE(opt$data %like% "^a data.frame") & isTRUE(opt$tbl_format == "markdown")) {
       opt$data <- gsub("data.frame", "`data.frame`", opt$data, fixed = TRUE)
     }
     if (!is.null(opt$data) & !is.null(opt$vars)) {
@@ -883,21 +900,21 @@ print.frequency_tbl <- function(x,
     title <- opt$title
   }
 
-  if (!missing(nmax)) {
+  if (!missing(nmax) | is.null(opt$nmax)) {
     opt$nmax <- nmax
     opt$nmax.set <- TRUE
   }
-  if (opt$nmax %in% c(0, Inf, NA, NULL)) {
+  if (isTRUE(opt$nmax %in% c(0, Inf, NA, NULL))) {
     opt$nmax <- NROW(x)
     opt$nmax.set <- FALSE
-  } else if (opt$nmax >= NROW(x)) {
+  } else if (isTRUE(opt$nmax >= NROW(x))) {
     opt$nmax.set <- FALSE
   }
 
-  if (!missing(decimal.mark)) {
+  if (!missing(decimal.mark) | is.null(opt$decimal.mark)) {
     opt$decimal.mark <- decimal.mark
   }
-  if (!missing(big.mark)) {
+  if (!missing(big.mark) | is.null(opt$big.mark)) {
     opt$big.mark <- big.mark
   }
   if (!missing(header)) {
@@ -905,9 +922,9 @@ print.frequency_tbl <- function(x,
   }
 
   # bold title
-  if (opt$tbl_format == "pandoc") {
+  if (isTRUE(opt$tbl_format == "pandoc")) {
     title <- bold(title)
-  } else if (opt$tbl_format == "markdown") {
+  } else if (isTRUE(opt$tbl_format == "markdown")) {
     title <- paste0("\n\n**", title, "**  ") # two space for newline
   }
 
@@ -915,7 +932,7 @@ print.frequency_tbl <- function(x,
 
   if (NROW(x) == 0 | isTRUE(all(is.na(x$item)))) {
     cat("No observations")
-    if (isTRUE(all(is.na(x$item)))) {
+    if (isTRUE(all(is.na(x$item) | identical(x$item, "<NA>") | identical(x$item, "(NA)")))) {
       cat(" - all values are missing (<NA>)")
     }
     cat(".\n")
@@ -925,7 +942,7 @@ print.frequency_tbl <- function(x,
     return(invisible())
   }
 
-  if (opt$header == TRUE) {
+  if (isTRUE(opt$header == TRUE)) {
     if (!is.null(opt$header_txt)) {
       if (is.null(opt$digits)) {
         opt$digits <- 2
@@ -940,7 +957,7 @@ print.frequency_tbl <- function(x,
   if (is.null(opt$na)) {
     opt$na <- "<NA>"
   }
-  if (opt$tbl_format == "markdown") {
+  if (isTRUE(opt$tbl_format == "markdown")) {
     # no HTML tags
     opt$na <- gsub("<", "(", opt$na, fixed = TRUE)
     opt$na <- gsub(">", ")", opt$na, fixed = TRUE)
@@ -951,7 +968,7 @@ print.frequency_tbl <- function(x,
   x.unprinted <- base::sum(x[(opt$nmax + 1):nrow(x), "count"], na.rm = TRUE)
   x.printed <- base::sum(x$count) - x.unprinted
 
-  if (nrow(x) > opt$nmax & opt$tbl_format != "markdown") {
+  if (nrow(x) > opt$nmax & isTRUE(opt$tbl_format != "markdown")) {
 
     if (opt$nmax.set == TRUE) {
       nmax <- opt$nmax
@@ -1029,6 +1046,13 @@ print.frequency_tbl <- function(x,
     cat("\n")
   }
 
+  if (is.null(opt$row_names)) {
+    opt$row_names <- TRUE
+  }
+  if (is.null(opt$column_names)) {
+    opt$column_names <- colnames(x)
+  }
+
   print(
     knitr::kable(x,
                  format = opt$tbl_format,
@@ -1055,37 +1079,42 @@ print.frequency_tbl <- function(x,
 }
 
 #' @noRd
-#' @exportMethod as.data.frame.frequency_tbl
+#' @exportMethod print.frequency_tbl
 #' @export
-as.data.frame.frequency_tbl <- function(x, ...) {
+print.frequency_tbl <- print.freq
+
+#' @noRd
+#' @exportMethod as.data.frame.freq
+#' @export
+as.data.frame.freq <- function(x, ...) {
   attr(x, "package") <- NULL
   attr(x, "opt") <- NULL
   as.data.frame.data.frame(x, ...)
 }
 
-#' @exportMethod select.frequency_tbl
+#' @exportMethod select.freq
 #' @export
 #' @importFrom dplyr select
 #' @noRd
-select.frequency_tbl <- function(.data, ...) {
+select.freq <- function(.data, ...) {
   select(as.data.frame(.data), ...)
 }
 
 #' @noRd
-#' @exportMethod as_tibble.frequency_tbl
+#' @exportMethod as_tibble.freq
 #' @export
 #' @importFrom dplyr as_tibble
-as_tibble.frequency_tbl <- function(x, validate = TRUE, ..., rownames = NA) {
+as_tibble.freq <- function(x, validate = TRUE, ..., rownames = NA) {
   attr(x, "package") <- NULL
   attr(x, "opt") <- NULL
   as_tibble(x = as.data.frame(x), validate = validate, ..., rownames = rownames)
 }
 
 #' @noRd
-#' @exportMethod hist.frequency_tbl
+#' @exportMethod hist.freq
 #' @export
 #' @importFrom graphics hist
-hist.frequency_tbl <- function(x, breaks = "Sturges", main = NULL, xlab = NULL, ...) {
+hist.freq <- function(x, breaks = "Sturges", main = NULL, xlab = NULL, ...) {
   opt <- attr(x, "opt")
   if (!class(x$item) %in% c("numeric", "double", "integer", "Date")) {
     stop("`x` must be numeric or Date.", call. = FALSE)
@@ -1112,9 +1141,56 @@ hist.frequency_tbl <- function(x, breaks = "Sturges", main = NULL, xlab = NULL, 
 }
 
 #' @noRd
-#' @exportMethod plot.frequency_tbl
+#' @exportMethod boxplot.freq
 #' @export
-plot.frequency_tbl <- function(x, y, ...) {
+#' @importFrom graphics boxplot
+boxplot.freq <- function(x, main = NULL, xlab = NULL, ...) {
+  opt <- attr(x, "opt")
+  x.bak <- x
+  if (!class(x$item) %in% c("numeric", "double", "integer", "Date")) {
+    stop("`x` must be numeric or Date.", call. = FALSE)
+  }
+  if (!is.null(opt$vars)) {
+    title <- opt$vars
+  } else if (!is.null(opt$data)) {
+    title <- opt$data
+  } else {
+    title <- "frequency table"
+  }
+  if (class(x$item) == "Date") {
+    x <- as.Date(as.vector(x), origin = "1970-01-01")
+  } else {
+    x <- as.vector(x)
+  }
+  if (is.null(main)) {
+    main <- paste("Boxplot of", title)
+  }
+  if (is.null(xlab)) {
+    xlab <- title
+  }
+  if (!is.null(opt$group_var) & isTRUE(length(opt$group_var) > 0)) {
+    # support for grouped frequency table
+    x.new <- data.frame(group = character(0), item = character(0))
+    for (i in 1:nrow(x.bak)) {
+      if (x.bak[i, "group"] == "") {
+        x.bak[i, "group"] <- x.bak[i - 1, "group"]
+      }
+      for (j in 1:x.bak[i, "count"]) {
+        x.new <- rbind(x.new,
+                       data.frame(group = x.bak[i, "group"],
+                                  item = x.bak[i, "item"]))
+      }
+    }
+    boxplot(item ~ group, data = x.bak, main = main, ylab = xlab, xlab = opt$group_var, ...)
+  } else {
+    boxplot(x, main = main, xlab = xlab, ...)
+  }
+}
+
+#' @noRd
+#' @exportMethod plot.freq
+#' @export
+plot.freq <- function(x, y, ...) {
   opt <- attr(x, "opt")
   if (!is.null(opt$vars)) {
     title <- opt$vars
@@ -1125,16 +1201,16 @@ plot.frequency_tbl <- function(x, y, ...) {
 }
 
 #' @noRd
-#' @exportMethod as.vector.frequency_tbl
+#' @exportMethod as.vector.freq
 #' @export
-as.vector.frequency_tbl <- function(x, mode = "any") {
+as.vector.freq <- function(x, mode = "any") {
   as.vector(rep(x$item, x$count), mode = mode)
 }
 
 #' @noRd
-#' @exportMethod format.frequency_tbl
+#' @exportMethod format.freq
 #' @export
-format.frequency_tbl <- function(x, digits = 1, ...) {
+format.freq <- function(x, digits = 1, ...) {
   opt <- attr(x, "opt")
   if (opt$nmax.set == TRUE) {
     nmax <- opt$nmax

@@ -5,16 +5,9 @@
 \alias{frequency_tbl}
 \alias{top_freq}
 \alias{header}
-\alias{print.frequency_tbl}
+\alias{print.freq}
 \title{Frequency table}
 \usage{
-frequency_tbl(x, ..., sort.count = TRUE,
-  nmax = getOption("max.print.freq"), na.rm = TRUE, row.names = TRUE,
-  markdown = !interactive(), digits = 2, quote = FALSE,
-  header = TRUE, title = NULL, na = "<NA>", droplevels = TRUE,
-  sep = " ", decimal.mark = getOption("OutDec"),
-  big.mark = ifelse(decimal.mark != ",", ",", "."))
-
 freq(x, ..., sort.count = TRUE, nmax = getOption("max.print.freq"),
   na.rm = TRUE, row.names = TRUE, markdown = !interactive(),
   digits = 2, quote = FALSE, header = TRUE, title = NULL,
@@ -22,12 +15,19 @@ freq(x, ..., sort.count = TRUE, nmax = getOption("max.print.freq"),
   decimal.mark = getOption("OutDec"), big.mark = ifelse(decimal.mark !=
   ",", ",", "."))
 
+frequency_tbl(x, ..., sort.count = TRUE,
+  nmax = getOption("max.print.freq"), na.rm = TRUE, row.names = TRUE,
+  markdown = !interactive(), digits = 2, quote = FALSE,
+  header = TRUE, title = NULL, na = "<NA>", droplevels = TRUE,
+  sep = " ", decimal.mark = getOption("OutDec"),
+  big.mark = ifelse(decimal.mark != ",", ",", "."))
+
 top_freq(f, n)
 
 header(f, property = NULL)
 
-\method{print}{frequency_tbl}(x, nmax = getOption("max.print.freq",
-  default = 15), markdown = !interactive(), header = TRUE,
+\method{print}{freq}(x, nmax = getOption("max.print.freq", default = 15),
+  markdown = !interactive(), header = TRUE,
   decimal.mark = getOption("OutDec"), big.mark = ifelse(decimal.mark !=
   ",", ",", "."), ...)
 }
@@ -75,7 +75,7 @@ header(f, property = NULL)
 \item{property}{property in header to return this value directly}
 }
 \value{
-A \code{data.frame} (with an additional class \code{"frequency_tbl"}) with five columns: \code{item}, \code{count}, \code{percent}, \code{cum_count} and \code{cum_percent}.
+A \code{data.frame} (with an additional class \code{"freq"}) with five columns: \code{item}, \code{count}, \code{percent}, \code{cum_count} and \code{cum_percent}.
 }
 \description{
 Create a frequency table of a vector with items or a \code{data.frame}. Supports quasiquotation and markdown for reports. Best practice is: \code{data \%>\% freq(var)}.\cr
@@ -173,6 +173,16 @@ septic_patients \%>\%
   freq(age) \%>\%
   hist()
 
+# or a boxplot of numeric values
+septic_patients \%>\%
+  freq(age) \%>\%
+  boxplot()
+
+# or even a boxplot per group
+septic_patients \%>\%
+  group_by(hospital_id) \%>\%
+  freq(age) \%>\%
+  boxplot()
 
 # or print all points to a regular plot
 septic_patients \%>\%
