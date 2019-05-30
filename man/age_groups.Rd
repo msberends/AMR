@@ -61,7 +61,7 @@ age_groups(ages, c(1, 2, 4, 6, 13, 17))
 # resistance of ciprofloxacine per age group
 library(dplyr)
 septic_patients \%>\%
-  filter_first_isolate) \%>\%
+  filter_first_isolate() \%>\%
   filter(mo == as.mo("E. coli")) \%>\%
   group_by(age_group = age_groups(age)) \%>\%
   select(age_group, CIP) \%>\%

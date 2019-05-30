@@ -14,8 +14,8 @@ ggplot_rsi(data, position = NULL, x = "Antibiotic",
   fill = "Interpretation", facet = NULL, breaks = seq(0, 1, 0.1),
   limits = NULL, translate_ab = "name", combine_SI = TRUE,
   combine_IR = FALSE, language = get_locale(), fun = count_df,
-  nrow = NULL, datalabels = TRUE, datalabels.size = 3,
-  datalabels.colour = "grey15", ...)
+  nrow = NULL, datalabels = FALSE, datalabels.size = 3,
+  datalabels.colour = "white", ...)
 
 geom_rsi(position = NULL, x = c("Antibiotic", "Interpretation"),
   fill = "Interpretation", translate_ab = "name",
@@ -31,7 +31,7 @@ scale_rsi_colours()
 theme_rsi()
 
 labels_rsi_count(position = NULL, x = "Antibiotic",
-  datalabels.size = 3, datalabels.colour = "grey15")
+  datalabels.size = 3, datalabels.colour = "white")
 }
 \arguments{
 \item{data}{a \code{data.frame} with column(s) of class \code{"rsi"} (see \code{\link{as.rsi}})}

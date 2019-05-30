@@ -162,9 +162,9 @@ ggplot_rsi <- function(data,
                        language = get_locale(),
                        fun = count_df,
                        nrow = NULL,
-                       datalabels = TRUE,
+                       datalabels = FALSE,
                        datalabels.size = 3,
-                       datalabels.colour = "grey15",
+                       datalabels.colour = "white",
                        ...) {
 
   stopifnot_installed_package("ggplot2")
@@ -209,7 +209,7 @@ ggplot_rsi <- function(data,
     position <- "fill"
   }
   if (fun_name == "portion_df"
-      | (fun_name == "count_df" & position == "fill")) {
+      | (fun_name == "count_df" & identical(position, "fill"))) {
     # portions, so use y scale with percentage
     p <- p + scale_y_percent(breaks = breaks, limits = limits)
   }
@@ -361,13 +361,13 @@ theme_rsi <- function() {
 labels_rsi_count <- function(position = NULL,
                              x = "Antibiotic",
                              datalabels.size = 3,
-                             datalabels.colour = "grey15") {
+                             datalabels.colour = "white") {
   stopifnot_installed_package("ggplot2")
   if (is.null(position)) {
     position <- "fill"
   }
-  if (position == "fill") {
-    position <- ggplot2::position_fill(vjust = 0.5)
+  if (identical(position, "fill")) {
+    position <- ggplot2::position_fill(vjust = 0.5, reverse = TRUE)
   }
   ggplot2::geom_text(mapping = ggplot2::aes_string(label = "lbl",
                                                    x = x,

@@ -55,7 +55,7 @@ echo "••••••••••••••••••••••••�
 echo "• Uploading to repository •"
 echo "•••••••••••••••••••••••••••"
 git add .
-git commit -a -m "$1" --quiet
+git commit -a -m "(v$new_version) $1" --quiet
 git push --quiet
 echo "Comparison:"
 echo "https://gitlab.com/msberends/AMR/compare/master...premaster?view=inline"
