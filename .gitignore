@@ -20,3 +20,4 @@ vignettes/*.R
 ^CRAN-RELEASE$
 packrat/lib*/
 packrat/src/
+cran-comments.md

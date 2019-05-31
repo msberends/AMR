@@ -452,6 +452,39 @@ MOs <- MOs %>%
 sum(duplicated(MOs$mo))
 colnames(MOs)
 
+# set prevalence per species
+MOs <- MOs %>%
+  mutate(prevalence = case_when(
+    class == "Gammaproteobacteria"
+    | genus %in% c("Enterococcus", "Staphylococcus", "Streptococcus")
+    | mo == "UNKNOWN"
+    ~ 1,
+    phylum %in% c("Proteobacteria",
+                  "Firmicutes",
+                  "Actinobacteria",
+                  "Sarcomastigophora")
+    | genus %in% c("Aspergillus",
+                   "Bacteroides",
+                   "Candida",
+                   "Capnocytophaga",
+                   "Chryseobacterium",
+                   "Cryptococcus",
+                   "Elisabethkingia",
+                   "Flavobacterium",
+                   "Fusobacterium",
+                   "Giardia",
+                   "Leptotrichia",
+                   "Mycoplasma",
+                   "Prevotella",
+                   "Rhodotorula",
+                   "Treponema",
+                   "Trichophyton",
+                   "Ureaplasma")
+    | rank %in% c("kingdom", "phylum", "class", "order", "family")
+    ~ 2,
+    TRUE ~ 3
+  ))
+
 # save it
 MOs <- as.data.frame(MOs %>% arrange(fullname), stringsAsFactors = FALSE)
 MOs.old <- as.data.frame(MOs.old, stringsAsFactors = FALSE)

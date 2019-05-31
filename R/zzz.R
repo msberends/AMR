@@ -29,10 +29,6 @@
   microorganisms.oldDT$fullname_lower <- tolower(microorganisms.oldDT$fullname)
   setkey(microorganisms.oldDT, col_id, fullname)
 
-  assign(x = "microorganisms",
-         value = make(),
-         envir = asNamespace("AMR"))
-
   assign(x = "microorganismsDT",
          value = make_DT(),
          envir = asNamespace("AMR"))
@@ -55,44 +51,9 @@
 
 }
 
-#' @importFrom dplyr mutate case_when
-make <- function() {
-  AMR::microorganisms %>%
-    mutate(prevalence = case_when(
-      class == "Gammaproteobacteria"
-      | genus %in% c("Enterococcus", "Staphylococcus", "Streptococcus")
-      | mo == "UNKNOWN"
-      ~ 1,
-      phylum %in% c("Proteobacteria",
-                    "Firmicutes",
-                    "Actinobacteria",
-                    "Sarcomastigophora")
-      | genus %in% c("Aspergillus",
-                     "Bacteroides",
-                     "Candida",
-                     "Capnocytophaga",
-                     "Chryseobacterium",
-                     "Cryptococcus",
-                     "Elisabethkingia",
-                     "Flavobacterium",
-                     "Fusobacterium",
-                     "Giardia",
-                     "Leptotrichia",
-                     "Mycoplasma",
-                     "Prevotella",
-                     "Rhodotorula",
-                     "Treponema",
-                     "Trichophyton",
-                     "Ureaplasma")
-      | rank %in% c("kingdom", "phylum", "class", "order", "family")
-      ~ 2,
-      TRUE ~ 3
-    ))
-}
-
 #' @importFrom data.table as.data.table setkey
 make_DT <- function() {
-  microorganismsDT <- as.data.table(make())
+  microorganismsDT <- as.data.table(AMR::microorganisms)
   microorganismsDT$fullname_lower <- tolower(microorganismsDT$fullname)
   setkey(microorganismsDT,
          prevalence,
