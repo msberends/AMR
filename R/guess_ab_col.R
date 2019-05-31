@@ -85,12 +85,14 @@ guess_ab_col <- function(x = NULL, search_string = NULL, verbose = FALSE) {
 
   if (length(ab_result) == 0) {
     if (verbose == TRUE) {
-      message('No column found as input for `', search_string, '`.')
+      message(paste0("No column found as input for `", search_string,
+                     "` (", ab_name(search_string, language = "en", tolower = TRUE), ")."))
     }
     return(NULL)
   } else {
     if (verbose == TRUE) {
-      message(blue(paste0("NOTE: Using column `", bold(ab_result), "` as input for `", search_string, "`.")))
+      message(blue(paste0("NOTE: Using column `", bold(ab_result), "` as input for `", search_string,
+                          "` (", ab_name(search_string, language = "en", tolower = TRUE), ").")))
     }
     return(ab_result)
   }

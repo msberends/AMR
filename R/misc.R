@@ -190,17 +190,17 @@ get_column_abx <- function(x,
   if (verbose == TRUE) {
     for (i in 1:length(x)) {
       if (x[i] %in% duplies) {
-        message(red(paste0("NOTE: Using column `", bold(x[i]), "` as input for ", names(x)[i],
-                           " (", ab_name(names(x)[i], language = "en", tolower = TRUE), ") [DUPLICATED USE].")))
+        message(red(paste0("NOTE: Using column `", bold(x[i]), "` as input for `", names(x)[i],
+                           "` (", ab_name(names(x)[i], language = "en", tolower = TRUE), ") [DUPLICATED USE].")))
       } else {
-        message(blue(paste0("NOTE: Using column `", bold(x[i]), "` as input for ", names(x)[i],
-                            " (", ab_name(names(x)[i], language = "en", tolower = TRUE), ").")))
+        message(blue(paste0("NOTE: Using column `", bold(x[i]), "` as input for `", names(x)[i],
+                            "` (", ab_name(names(x)[i], language = "en", tolower = TRUE), ").")))
       }
     }
   }
 
   if (n_distinct(x) != length(x)) {
-    msg_txt <- paste("Column(s)", paste0("'", duplies, "'", collapse = "'"), "used for more than one antibiotic.")
+    msg_txt <- paste("Column(s)", paste0("`", duplies, "`", collapse = " and "), "used for more than one antibiotic.")
     if (verbose == FALSE) {
       msg_txt <- paste(msg_txt, "Use verbose = TRUE to see which antibiotics are used by which columns.")
     }

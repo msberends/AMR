@@ -24,15 +24,22 @@
 #' Calculates age in years based on a reference date, which is the sytem date at default.
 #' @param x date(s), will be coerced with \code{\link{as.POSIXlt}}
 #' @param reference reference date(s) (defaults to today), will be coerced with \code{\link{as.POSIXlt}} and cannot be lower than \code{x}
-#' @return Integer (no decimals)
+#' @param exact a logical to indicate whether age calculation should be exact, i.e. with decimals
+#' @return An integer (no decimals) if \code{exact = FALSE}, a double (with decimals) otherwise
 #' @seealso \code{\link{age_groups}} to split age into age groups
 #' @importFrom dplyr if_else
 #' @inheritSection AMR Read more on our website!
 #' @export
 #' @examples
-#' df <- data.frame(birth_date = Sys.Date() - runif(100) * 25000)
+#' # 10 random birth dates
+#' df <- data.frame(birth_date = Sys.Date() - runif(10) * 25000)
+#' # add ages
 #' df$age <- age(df$birth_date)
-age <- function(x, reference = Sys.Date()) {
+#' # add exact ages
+#' df$age_exact <- age(df$birth_date, exact = TRUE)
+#'
+#' df
+age <- function(x, reference = Sys.Date(), exact = FALSE) {
   if (length(x) != length(reference)) {
     if (length(reference) == 1) {
       reference <- rep(reference, length(x))
@@ -49,15 +56,31 @@ age <- function(x, reference = Sys.Date()) {
                   as.integer(years_gap - 1),
                   as.integer(years_gap))
 
+  # add decimals
+  if (exact == TRUE) {
+    # get dates of `x` when `x` would have the year of `reference`
+    x_in_reference_year <- base::as.POSIXlt(paste0(format(reference, "%Y"), format(x, "-%m-%d")))
+    # get differences in days
+    n_days_x_rest <- base::as.double(base::difftime(reference, x_in_reference_year, units = "days"))
+    # get numbers of days the years of `reference` has for a reliable denominator
+    n_days_reference_year <- base::as.POSIXlt(paste0(format(reference, "%Y"), "-12-31"))$yday + 1
+    # add decimal parts of year
+    ages <- ages + (n_days_x_rest / n_days_reference_year)
+  }
+
   if (any(ages < 0, na.rm = TRUE)) {
-    ages[ages < 0] <- NA_integer_
+    ages[ages < 0] <- NA
     warning("NAs introduced for ages below 0.")
   }
   if (any(ages > 120, na.rm = TRUE)) {
-    warning("Some ages are > 120.")
+    warning("Some ages are above 120.")
   }
 
   ages
+}
+
+age_to_toDate <- function(age) {
+
 }
 
 #' Split ages into age groups

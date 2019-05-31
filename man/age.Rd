@@ -4,27 +4,35 @@
 \alias{age}
 \title{Age in years of individuals}
 \usage{
-age(x, reference = Sys.Date())
+age(x, reference = Sys.Date(), exact = FALSE)
 }
 \arguments{
 \item{x}{date(s), will be coerced with \code{\link{as.POSIXlt}}}
 
 \item{reference}{reference date(s) (defaults to today), will be coerced with \code{\link{as.POSIXlt}} and cannot be lower than \code{x}}
+
+\item{exact}{a logical to indicate whether age calculation should be exact, i.e. with decimals}
 }
 \value{
-Integer (no decimals)
+An integer (no decimals) if \code{exact = FALSE}, a double (with decimals) otherwise
 }
 \description{
 Calculates age in years based on a reference date, which is the sytem date at default.
 }
 \section{Read more on our website!}{
 
-On our website \url{https://msberends.gitlab.io/AMR} you can find \href{https://msberends.gitlab.io/AMR/articles/AMR.html}{a comprehensive tutorial} about how to conduct AMR analysis, the \href{https://msberends.gitlab.io/AMR/reference}{complete documentation of all functions} (which reads a lot easier than here in R) and \href{https://msberends.gitlab.io/AMR/articles/WHONET.html}{an example analysis using WHONET data}.
+On our website \url{https://msberends.gitlab.io/AMR} you can find \href{https://msberends.gitlab.io/AMR/articles/AMR.html}{a tutorial} about how to conduct AMR analysis, the \href{https://msberends.gitlab.io/AMR/reference}{complete documentation of all functions} (which reads a lot easier than here in R) and \href{https://msberends.gitlab.io/AMR/articles/WHONET.html}{an example analysis using WHONET data}.
 }
 
 \examples{
-df <- data.frame(birth_date = Sys.Date() - runif(100) * 25000)
+# 10 random birth dates
+df <- data.frame(birth_date = Sys.Date() - runif(10) * 25000)
+# add ages
 df$age <- age(df$birth_date)
+# add exact ages
+df$age_exact <- age(df$birth_date, exact = TRUE)
+
+df
 }
 \seealso{
 \code{\link{age_groups}} to split age into age groups

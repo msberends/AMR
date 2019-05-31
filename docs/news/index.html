@@ -78,7 +78,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.6.1.9043</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.6.1.9044</span>
       </span>
     </div>
 
@@ -258,6 +258,7 @@
 <h4 class="hasAnchor">
 <a href="#changed" class="anchor"></a>Changed</h4>
 <ul>
+<li>Fixed a critical bug in <code><a href="../reference/first_isolate.html">first_isolate()</a></code> where missing species would lead to incorrect FALSEs. This bug was not present in AMR v0.5.0, but was in v0.6.0 and v0.6.1.</li>
 <li>Completely reworked the <code>antibiotics</code> data set:
 <ul>
 <li>All entries now have 3 different identifiers:
@@ -281,6 +282,7 @@ Please create an issue in one of our repositories if you want additions in this 
 </li>
 <li>Added ~5,000 more old taxonomic names to the <code>microorganisms.old</code> data set, which leads to better results finding when using the <code><a href="../reference/as.mo.html">as.mo()</a></code> function</li>
 <li>This package now honours the new EUCAST insight (2019) that S and I are but classified as susceptible, where I is defined as ‘increased exposure’ and not ‘intermediate’ anymore. For functions like <code><a href="../reference/portion.html">portion_df()</a></code> and <code><a href="../reference/count.html">count_df()</a></code> this means that their new parameter <code>combine_SI</code> is TRUE at default.</li>
+<li>The <code><a href="../reference/age.html">age()</a></code> function gained a new parameter <code>exact</code> to determine ages with decimals</li>
 <li>Removed deprecated functions <code>guess_mo()</code>, <code>guess_atc()</code>, <code>EUCAST_rules()</code>, <code>interpretive_reading()</code>, <code>rsi()</code>
 </li>
 <li>Frequency tables (<code><a href="../reference/freq.html">freq()</a></code>):

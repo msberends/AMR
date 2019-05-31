@@ -17,3 +17,4 @@ coverage:
 
 ignore:
   - "R/atc_online.R"
+  - "R/mo_source.R"

@@ -233,7 +233,7 @@ first_isolate <- function(x,
   }
 
   # -- specimen
-  if (is.null(col_specimen)) {
+  if (is.null(col_specimen) & !is.null(specimen_group)) {
     col_specimen <- search_type_in_df(x = x, type = "specimen")
   }
   if (isFALSE(col_specimen)) {
@@ -263,7 +263,9 @@ first_isolate <- function(x,
   # join to microorganisms data set
   x <- x %>%
     mutate_at(vars(col_mo), as.mo) %>%
-    left_join_microorganisms(by = col_mo)
+    left_join_microorganisms(by = col_mo) %>%
+    # empty species will lead to first = FALSE, so put in text there if genus is available
+    mutate(species = ifelse(!is.na(genus) & species == "", "species", species))
   col_genus <- "genus"
   col_species <- "species"
 

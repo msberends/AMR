@@ -31,7 +31,7 @@ test_that("first isolates work", {
                     col_mo = "mo",
                     info = TRUE),
       na.rm = TRUE),
-    1274)
+    1317)
 
   # first *weighted* isolates
   expect_equal(
@@ -46,7 +46,7 @@ test_that("first isolates work", {
                       type = "keyantibiotics",
                       info = TRUE),
         na.rm = TRUE)),
-    1369)
+    1413)
   # should be same for tibbles
   expect_equal(
     suppressWarnings(
@@ -60,7 +60,7 @@ test_that("first isolates work", {
                       type = "keyantibiotics",
                       info = TRUE),
         na.rm = TRUE)),
-    1369)
+    1413)
   # when not ignoring I
   expect_equal(
     suppressWarnings(
@@ -74,7 +74,7 @@ test_that("first isolates work", {
                       type = "keyantibiotics",
                       info = TRUE),
         na.rm = TRUE)),
-    1392)
+    1436)
   # when using points
   expect_equal(
     suppressWarnings(
@@ -87,7 +87,7 @@ test_that("first isolates work", {
                       type = "points",
                       info = TRUE),
         na.rm = TRUE)),
-    1372)
+    1417)
 
   # first non-ICU isolates
   expect_equal(
@@ -100,7 +100,7 @@ test_that("first isolates work", {
                     info = TRUE,
                     icu_exclude = TRUE),
       na.rm = TRUE),
-    1129)
+    1163)
 
   # set 1500 random observations to be of specimen type 'Urine'
   random_rows <- sample(x = 1:2000, size = 1500, replace = FALSE)
@@ -175,6 +175,7 @@ test_that("first isolates work", {
                                    col_mo = "mo",
                                    col_patient_id = "patient_id"))
 
+  # missing dates should be no problem
   df <- septic_patients
   df[1:100, "date"] <- NA
   expect_equal(
@@ -185,6 +186,6 @@ test_that("first isolates work", {
                     col_mo = "mo",
                     info = TRUE),
       na.rm = TRUE),
-    1279)
+    1322)
 
 })

@@ -10,6 +10,11 @@ if [ -z "$1" ]; then
   echo "FATAL - no commit message"
   exit 1
 fi
+if [ -z "$2" ]; then
+  lazy="TRUE"
+else
+  lazy=$2
+fi
 
 echo "••••••••••••••••••••••••••••••••••••••••••••"
 echo "• Updating package date and version number •"
@@ -35,7 +40,7 @@ echo
 echo "•••••••••••••••••"
 echo "• Building site •"
 echo "•••••••••••••••••"
-Rscript -e "suppressMessages(pkgdown::build_site(lazy = TRUE, examples = FALSE))"
+Rscript -e "suppressMessages(pkgdown::build_site(lazy = $lazy, examples = FALSE))"
 
 echo
 echo "•••••••••••••••••••••••••"
