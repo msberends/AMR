@@ -19,9 +19,12 @@
 # Visit our website for more info: https://msberends.gitlab.io/AMR.    #
 # ==================================================================== #
 
-url: 'https://msberends.gitlab.io/AMR'
-
 title: 'AMR (for R)'
+url: 'https://msberends.gitlab.io/AMR'
+development:
+  mode: release # improves indexing by search engines
+news:
+  one_page: true
 
 navbar:
   title: 'AMR (for R)'
@@ -176,9 +179,6 @@ authors:
     href: https://www.rug.nl/staff/a.w.friedrich/
   Bhanu N. M. Sinha:
     href: https://www.rug.nl/staff/b.sinha/
-
-development:
-  mode: release # improves indexing by search engines
 
 template:
   assets: pkgdown/logos # use logos in this folder

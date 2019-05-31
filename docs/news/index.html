@@ -78,7 +78,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.6.1.9045</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.6.1.9046</span>
       </span>
     </div>
 
@@ -278,6 +278,12 @@
 Please create an issue in one of our repositories if you want additions in this file.</li>
 </ul>
 </li>
+<li>Improvements to plotting AMR results with <code><a href="../reference/ggplot_rsi.html">ggplot_rsi()</a></code>:
+<ul>
+<li>New parameter <code>colours</code> to set the bar colours</li>
+<li>New parameters <code>title</code>, <code>subtitle</code>, <code>caption</code>, <code>x.title</code> and <code>y.title</code> to set titles and axis descriptions</li>
+</ul>
+</li>
 <li>Improved intelligence of looking up antibiotic tables in data set using <code><a href="../reference/guess_ab_col.html">guess_ab_col()</a></code>
 </li>
 <li>Added ~5,000 more old taxonomic names to the <code>microorganisms.old</code> data set, which leads to better results finding when using the <code><a href="../reference/as.mo.html">as.mo()</a></code> function</li>
@@ -316,6 +322,7 @@ Please create an issue in one of our repositories if you want additions in this 
 <li>Small algorithm fix for <code><a href="../reference/as.mo.html">as.mo()</a></code>
 </li>
 <li>Removed viruses from data set <code>microorganisms.codes</code> and cleaned it up</li>
+<li>Fix for <code><a href="../reference/mo_property.html">mo_shortname()</a></code> where species would not be determined correctly</li>
 </ul>
 </div>
 <div id="other" class="section level4">

@@ -22,6 +22,9 @@
     system.file("translations.tsv", package = "AMR")
     ```
     Please create an issue in one of our repositories if you want additions in this file.
+* Improvements to plotting AMR results with `ggplot_rsi()`:
+  * New parameter `colours` to set the bar colours
+  * New parameters `title`, `subtitle`, `caption`, `x.title` and `y.title` to set titles and axis descriptions
 * Improved intelligence of looking up antibiotic tables in data set using `guess_ab_col()`
 * Added ~5,000 more old taxonomic names to the `microorganisms.old` data set, which leads to better results finding when using the `as.mo()` function
 * This package now honours the new EUCAST insight (2019) that S and I are but classified as susceptible, where I is defined as 'increased exposure' and not 'intermediate' anymore. For functions like `portion_df()` and `count_df()` this means that their new parameter `combine_SI` is TRUE at default.
@@ -50,6 +53,7 @@
 * Function `as.mo()` now gently interprets any number of whitespace characters (like tabs) as one space
 * Small algorithm fix for `as.mo()`
 * Removed viruses from data set `microorganisms.codes` and cleaned it up
+* Fix for `mo_shortname()` where species would not be determined correctly
 
 #### Other
 * Support for R 3.6.0

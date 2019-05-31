@@ -79,6 +79,8 @@ test_that("frequency table works", {
                   Sys.time() - runif(5, min = 0, max = 60 * 60 * 24),
                   units = "hours")))))
 
+  expect_output(print(freq(septic_patients$age)[,1:3]))
+
   library(dplyr)
   expect_output(septic_patients %>% select(1:2) %>% freq() %>% print())
   expect_output(septic_patients %>% select(1:3) %>% freq() %>% print())
