@@ -155,7 +155,8 @@
 #'              translate_ab = FALSE,
 #'              nrow = 1,
 #'              title = "AMR of Top Three Microorganisms In Blood Culture Isolates",
-#'              subtitle = expression(paste("Only First Isolates, CoNS grouped according to Becker ", italic("et al."), " (2014)")),
+#'              subtitle = expression(paste("Only First Isolates, CoNS grouped according to Becker ",
+#'                                          italic("et al."), " (2014)")),
 #'              x.title = "Antibiotic (EARS-Net code)")
 #' }
 ggplot_rsi <- function(data,
