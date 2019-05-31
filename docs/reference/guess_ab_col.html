@@ -47,7 +47,7 @@
   <script src="../extra.js"></script>
 <meta property="og:title" content="Guess antibiotic column — guess_ab_col" />
 
-<meta property="og:description" content="This tries to find a column name in a data set based on information from the antibiotics data set. Also supports WHONET abbreviations. You can look for an antibiotic (trade) name or abbreviation and it will search the data.frame for any column containing a name or ATC code of that antibiotic." />
+<meta property="og:description" content="This tries to find a column name in a data set based on information from the antibiotics data set. Also supports WHONET abbreviations." />
 
 <meta property="og:image" content="https://msberends.gitlab.io/AMR/logo.png" />
 <meta name="twitter:card" content="summary" />
@@ -80,7 +80,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.6.1.9044</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.6.1.9045</span>
       </span>
     </div>
 
@@ -244,7 +244,7 @@
 
     <div class="ref-description">
     
-    <p>This tries to find a column name in a data set based on information from the <code><a href='antibiotics.html'>antibiotics</a></code> data set. Also supports WHONET abbreviations. You can look for an antibiotic (trade) name or abbreviation and it will search the <code>data.frame</code> for any column containing a name or ATC code of that antibiotic.</p>
+    <p>This tries to find a column name in a data set based on information from the <code><a href='antibiotics.html'>antibiotics</a></code> data set. Also supports WHONET abbreviations.</p>
     
     </div>
 
@@ -270,6 +270,10 @@
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>A column name of <code>x</code>, or <code>NULL</code> when no result is found.</p>
+    
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p>You can look for an antibiotic (trade) name or abbreviation and it will search <code>x</code> and the <code><a href='antibiotics.html'>antibiotics</a></code> data set for any column containing a name or ATC code of that antibiotic. <strong>Longer columns names take precendence over shorter column names.</strong></p>
     
     <h2 class="hasAnchor" id="read-more-on-our-website-"><a class="anchor" href="#read-more-on-our-website-"></a>Read more on our website!</h2>
 
@@ -300,6 +304,12 @@
 <span class='co'># [1] "AMC_ED20"</span>
 <span class='fu'>guess_ab_col</span>(<span class='no'>df</span>, <span class='fu'><a href='as.ab.html'>as.ab</a></span>(<span class='st'>"augmentin"</span>))
 <span class='co'># [1] "AMC_ED20"</span>
+
+<span class='co'># Longer names take precendence:</span>
+<span class='no'>df</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/data.frame'>data.frame</a></span>(<span class='kw'>AMP_ED2</span> <span class='kw'>=</span> <span class='st'>"S"</span>,
+                 <span class='kw'>AMP_ED20</span> <span class='kw'>=</span> <span class='st'>"S"</span>)
+<span class='fu'>guess_ab_col</span>(<span class='no'>df</span>, <span class='st'>"ampicillin"</span>)
+<span class='co'># [1] "AMP_ED20"</span>
 <span class='co'># }</span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
@@ -308,6 +318,8 @@
       <li><a href="#arguments">Arguments</a></li>
       
       <li><a href="#value">Value</a></li>
+
+      <li><a href="#details">Details</a></li>
 
       <li><a href="#read-more-on-our-website-">Read more on our website!</a></li>
       

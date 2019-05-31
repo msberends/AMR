@@ -17,7 +17,10 @@ guess_ab_col(x = NULL, search_string = NULL, verbose = FALSE)
 A column name of \code{x}, or \code{NULL} when no result is found.
 }
 \description{
-This tries to find a column name in a data set based on information from the \code{\link{antibiotics}} data set. Also supports WHONET abbreviations. You can look for an antibiotic (trade) name or abbreviation and it will search the \code{data.frame} for any column containing a name or ATC code of that antibiotic.
+This tries to find a column name in a data set based on information from the \code{\link{antibiotics}} data set. Also supports WHONET abbreviations.
+}
+\details{
+You can look for an antibiotic (trade) name or abbreviation and it will search \code{x} and the \code{\link{antibiotics}} data set for any column containing a name or ATC code of that antibiotic. \strong{Longer columns names take precendence over shorter column names.}
 }
 \section{Read more on our website!}{
 
@@ -46,4 +49,10 @@ guess_ab_col(df, "J01CR02")
 # [1] "AMC_ED20"
 guess_ab_col(df, as.ab("augmentin"))
 # [1] "AMC_ED20"
+
+# Longer names take precendence:
+df <- data.frame(AMP_ED2 = "S",
+                 AMP_ED20 = "S")
+guess_ab_col(df, "ampicillin")
+# [1] "AMP_ED20"
 }

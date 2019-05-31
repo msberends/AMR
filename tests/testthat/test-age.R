@@ -30,7 +30,7 @@ test_that("age works", {
                    reference = "2019-09-01",
                    exact = TRUE),
                c(0.6656393, 0.4191781, 0.1698630),
-               tolerance = 0.000001)
+               tolerance = 0.001)
 
   expect_error(age(x = c("1980-01-01", "1985-01-01", "1990-01-01"),
                    reference = c("2019-01-01", "2019-01-01")))
