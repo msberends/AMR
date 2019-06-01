@@ -24,9 +24,7 @@ context("eucast_rules.R")
 test_that("EUCAST rules work", {
 
   # thoroughly check input table
-  expect_true(file.exists(EUCAST_RULES_FILE_LOCATION))
-  eucast_input_file <- eucast_rules_file()
-  expect_equal(colnames(eucast_input_file),
+  expect_equal(colnames(eucast_rules_file),
                c("if_mo_property", "like_is_one_of", "this_value",
                  "and_these_antibiotics", "have_these_values",
                  "then_change_these_antibiotics", "to_value",
