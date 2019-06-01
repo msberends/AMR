@@ -20,7 +20,6 @@
 # ==================================================================== #
 
 # global variables
-EUCAST_RULES_FILE_LOCATION <- system.file("eucast/eucast_rules.tsv", package = "AMR")
 EUCAST_VERSION_BREAKPOINTS <- "9.0, 2019"
 EUCAST_VERSION_EXPERT_RULES <- "3.1, 2016"
 
@@ -37,10 +36,7 @@ EUCAST_VERSION_EXPERT_RULES <- "3.1, 2016"
 #' \strong{Note:} This function does not translate MIC values to RSI values. Use \code{\link{as.rsi}} for that. \cr
 #' \strong{Note:} When ampicillin (AMP, J01CA01) is not available but amoxicillin (AMX, J01CA04) is, the latter will be used for all rules where there is a dependency on ampicillin. These drugs are interchangeable when it comes to expression of antimicrobial resistance.
 #'
-#' The file used for applying all EUCAST rules can be retrieved with \code{\link{eucast_rules_file}()}. It returns an easily readable data set containing all rules. The original TSV file (tab separated file) that is being read by \code{eucast_rules()} can be found by running this command: \cr
-#' \code{AMR::EUCAST_RULES_FILE_LOCATION} (without brackets).
-#'
-#' In the source code the file containing all rules is located \href{https://gitlab.com/msberends/AMR/blob/master/inst/eucast/eucast_rules.tsv}{here}.
+#' The file containing all EUCAST rules is located here: \url{https://gitlab.com/msberends/AMR/blob/master/data-raw/eucast_rules.tsv}.
 #'
 #' @section Antibiotics:
 #' To define antibiotics column names, leave as it is to determine it automatically with \code{\link{guess_ab_col}} or input a text (case-insensitive), or use \code{NULL} to skip a column (e.g. \code{TIC = NULL} to skip ticarcillin). Manually defined but non-existing columns will be skipped with a warning.
@@ -141,8 +137,6 @@ EUCAST_VERSION_EXPERT_RULES <- "3.1, 2016"
 #'       \url{http://www.eucast.org/fileadmin/src/media/PDFs/EUCAST_files/Breakpoint_tables/v_9.0_Breakpoint_Tables.xlsx}
 #'     }
 #'   }
-#'
-#'   For editing the reference file (which is available with \code{\link{eucast_rules_file}}), these values can all be used for target antibiotics: aminoglycosides, tetracyclines, polymyxins, macrolides, glycopeptides, streptogramins, cephalosporins, cephalosporins_without_cfta, carbapenems, aminopenicillins, ureidopenicillins, fluoroquinolones, all_betalactams, and all separate four letter codes like AMC. They can be separated by comma: \code{"AMC, fluoroquinolones"}. The mo_property can be any column name from the \code{\link{microorganisms}} data set, or \code{genus_species} or \code{gramstain}. This file contains references to the 'Burkholderia cepacia complex'. The species in this group can be found in: LiPuma JJ, 2015 (PMID 16217180).
 #' @inheritSection AMR Read more on our website!
 #' @examples
 #' a <- eucast_rules(septic_patients)
@@ -499,7 +493,7 @@ eucast_rules <- function(x,
     y[y != "" & y %in% colnames(df)]
   }
 
-  eucast_rules_df <- eucast_rules_file()
+  eucast_rules_df <- eucast_rules_file # internal data file
   no_of_changes <- 0
   for (i in 1:nrow(eucast_rules_df)) {
 
@@ -754,16 +748,3 @@ eucast_rules <- function(x,
   }
 }
 
-#' @rdname eucast_rules
-#' @importFrom dplyr %>% arrange
-#' @export
-eucast_rules_file <- function() {
-  utils::read.delim(file = EUCAST_RULES_FILE_LOCATION,
-                    sep = "\t",
-                    stringsAsFactors = FALSE,
-                    header = TRUE,
-                    strip.white = TRUE,
-                    na = c(NA, "", NULL)) %>%
-    arrange(reference.rule_group,
-            reference.rule)
-}

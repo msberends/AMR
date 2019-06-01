@@ -191,7 +191,7 @@
 #' }
 as.mo <- function(x, Becker = FALSE, Lancefield = FALSE, allow_uncertain = TRUE, reference_df = get_mo_source(), ...) {
   if (!"AMR" %in% base::.packages()) {
-    library("AMR")
+    require("AMR")
     # check onLoad() in R/zzz.R: data tables are created there.
   }
 
@@ -295,7 +295,7 @@ exec_as.mo <- function(x,
                        debug = FALSE) {
 
   if (!"AMR" %in% base::.packages()) {
-    library("AMR")
+    require("AMR")
     # check onLoad() in R/zzz.R: data tables are created there.
   }
 

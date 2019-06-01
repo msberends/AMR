@@ -364,7 +364,7 @@ mo_validate <- function(x, property, ...) {
   }
 
   if (!"AMR" %in% base::.packages()) {
-    library("AMR")
+    require("AMR")
     # check onLoad() in R/zzz.R: data tables are created there.
   }
 

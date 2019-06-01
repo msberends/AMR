@@ -80,7 +80,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.6.1.9044</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.6.1.9050</span>
       </span>
     </div>
 
@@ -249,9 +249,7 @@
     </div>
 
     <pre class="usage"><span class='fu'>eucast_rules</span>(<span class='no'>x</span>, <span class='kw'>col_mo</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>info</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>rules</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"breakpoints"</span>,
-  <span class='st'>"expert"</span>, <span class='st'>"other"</span>, <span class='st'>"all"</span>), <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>...</span>)
-
-<span class='fu'>eucast_rules_file</span>()</pre>
+  <span class='st'>"expert"</span>, <span class='st'>"other"</span>, <span class='st'>"all"</span>), <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -293,7 +291,6 @@
 <li><p>EUCAST Breakpoint tables for interpretation of MICs and zone diameters. Version 9.0, 2019. <br />
       <a href='http://www.eucast.org/fileadmin/src/media/PDFs/EUCAST_files/Breakpoint_tables/v_9.0_Breakpoint_Tables.xlsx'>http://www.eucast.org/fileadmin/src/media/PDFs/EUCAST_files/Breakpoint_tables/v_9.0_Breakpoint_Tables.xlsx</a></p></li>
 </ul>
-    <p>For editing the reference file (which is available with <code>eucast_rules_file</code>), these values can all be used for target antibiotics: aminoglycosides, tetracyclines, polymyxins, macrolides, glycopeptides, streptogramins, cephalosporins, cephalosporins_without_cfta, carbapenems, aminopenicillins, ureidopenicillins, fluoroquinolones, all_betalactams, and all separate four letter codes like AMC. They can be separated by comma: <code>"AMC, fluoroquinolones"</code>. The mo_property can be any column name from the <code><a href='microorganisms.html'>microorganisms</a></code> data set, or <code>genus_species</code> or <code>gramstain</code>. This file contains references to the 'Burkholderia cepacia complex'. The species in this group can be found in: LiPuma JJ, 2015 (PMID 16217180).</p>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
@@ -303,9 +300,7 @@
 
     <p><strong>Note:</strong> This function does not translate MIC values to RSI values. Use <code><a href='as.rsi.html'>as.rsi</a></code> for that. <br />
 <strong>Note:</strong> When ampicillin (AMP, J01CA01) is not available but amoxicillin (AMX, J01CA04) is, the latter will be used for all rules where there is a dependency on ampicillin. These drugs are interchangeable when it comes to expression of antimicrobial resistance.</p>
-<p>The file used for applying all EUCAST rules can be retrieved with <code>eucast_rules_file()</code>. It returns an easily readable data set containing all rules. The original TSV file (tab separated file) that is being read by <code>eucast_rules()</code> can be found by running this command: <br />
-<code>AMR::EUCAST_RULES_FILE_LOCATION</code> (without brackets).</p>
-<p>In the source code the file containing all rules is located <a href='https://gitlab.com/msberends/AMR/blob/master/inst/eucast/eucast_rules.tsv'>here</a>.</p>
+<p>The file containing all EUCAST rules is located here: <a href='https://gitlab.com/msberends/AMR/blob/master/data-raw/eucast_rules.tsv'>https://gitlab.com/msberends/AMR/blob/master/data-raw/eucast_rules.tsv</a>.</p>
     
     <h2 class="hasAnchor" id="antibiotics"><a class="anchor" href="#antibiotics"></a>Antibiotics</h2>
 

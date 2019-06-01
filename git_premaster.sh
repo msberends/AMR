@@ -31,17 +31,21 @@ echo "First 3 lines of DESCRIPTION:"
 head -3 DESCRIPTION
 echo
 echo "•••••••••••••••••••••••••••••••••"
-echo "• Reloading/Documenting package •"
+echo "• Reloading/documenting package •"
 echo "•••••••••••••••••••••••••••••••••"
 Rscript -e "devtools::load_all(quiet = TRUE)"
 Rscript -e "suppressMessages(devtools::document())"
 Rscript -e "devtools::install(quiet = TRUE, dependencies = FALSE)"
 echo
+echo "••••••••••••••••••••••••••"
+echo "• Updating internal data •"
+echo "••••••••••••••••••••••••••"
+Rscript -e "source('data-raw/internals.R')"
+echo
 echo "•••••••••••••••••"
 echo "• Building site •"
 echo "•••••••••••••••••"
 Rscript -e "suppressMessages(pkgdown::build_site(lazy = $lazy, examples = FALSE))"
-
 echo
 echo "•••••••••••••••••••••••••"
 echo "• List of changed files •"

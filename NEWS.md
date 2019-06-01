@@ -17,11 +17,8 @@
   * All references to antibiotics in our package now use EARS-Net codes, like `AMX` for amoxicillin
   * Functions `atc_certe`, `ab_umcg` and `atc_trivial_nl` have been removed
   * All `atc_*` functions are superceded by `ab_*` functions
-  * All output will be translated by using an included, local translation file that can be found after install with:
-    ```r
-    system.file("translations.tsv", package = "AMR")
-    ```
-    Please create an issue in one of our repositories if you want additions in this file.
+  * All output will be translated by using an included translation file which [can be viewed here](https://gitlab.com/msberends/AMR/blob/master/data-raw/translations.tsv)
+    Please [create an issue in one of our repositories](https://gitlab.com/msberends/AMR/issues/new?issue[title]=Translation%20suggestion) if you want additions in this file.
 * Improvements to plotting AMR results with `ggplot_rsi()`:
   * New parameter `colours` to set the bar colours
   * New parameters `title`, `subtitle`, `caption`, `x.title` and `y.title` to set titles and axis descriptions
@@ -44,7 +41,8 @@
       freq(age) %>%
       boxplot()
     ```
-* Removed all hardcoded EUCAST rules and replaced them with a new reference file: `./inst/eucast/eucast.tsv`
+* Removed all hardcoded EUCAST rules and replaced them with a new reference file which [can be viewed here](https://gitlab.com/msberends/AMR/blob/master/data-raw/eucast_rules.tsv)
+  Please [create an issue in one of our repositories](https://gitlab.com/msberends/AMR/issues/new?issue[title]=EUCAST%20edit) if you want changes in this file.
 * Added ceftazidim intrinsic resistance to *Streptococci*
 * Changed default settings for `age_groups()`, to let groups of fives and tens end with 100+ instead of 120+
 * Fix for `freq()` for when all values are `NA`
@@ -56,8 +54,7 @@
 * Fix for `mo_shortname()` where species would not be determined correctly
 
 #### Other
-* Support for R 3.6.0
-* Prevented [staged install](https://developer.r-project.org/Blog/public/2019/02/14/staged-install/index.html) in R 3.6.0 and later by adding `StagedInstall: false` to the DESCRIPTION file
+* Support for R 3.6.0 and later by providing support for [staged install](https://developer.r-project.org/Blog/public/2019/02/14/staged-install/index.html)
 
 # AMR 0.6.1
 

@@ -11,11 +11,11 @@ get_locale()
 For language-dependent output of AMR functions, like \code{\link{mo_fullname}} and \code{\link{mo_type}}.
 }
 \details{
-Strings will be translated to foreign languages if they are defined in a local translation file. This file comes with this package and can be found when running:
+Strings will be translated to foreign languages if they are defined in a local translation file. Additions to this file can be suggested at our repository. The file can be found here: \url{https://gitlab.com/msberends/AMR/blob/master/data-raw/translations.tsv}.
 
-\code{system.file("translations.tsv", package = "AMR")}
+Please suggest your own translations \href{https://gitlab.com/msberends/AMR/issues/new?issue[title]=Translation\%20suggestion}{by creating a new issue on our repository}.
 
-This file will be read by all functions where a translated output can be desired, like all \code{\link{mo_property}} functions (\code{\link{mo_fullname}}, \code{\link{mo_type}}, etc.). Please suggest your own translations \href{https://gitlab.com/msberends/AMR/issues/new?issue[title]=Translation\%20suggestion}{by creating a new issue on our repository}.
+This file will be read by all functions where a translated output can be desired, like all \code{\link{mo_property}} functions (\code{\link{mo_fullname}}, \code{\link{mo_type}}, etc.).
 
 The system language will be used at default, if supported, using \code{\link{get_locale}}. The system language can be overwritten with \code{\link{getOption}("AMR_locale")}.
 }

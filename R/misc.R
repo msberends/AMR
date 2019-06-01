@@ -243,9 +243,10 @@ generate_warning_abs_missing <- function(missing, any = FALSE) {
 
 
 stopifnot_installed_package <- function(package) {
-  if (!package %in% base::rownames(utils::installed.packages())) {
-    stop("this function requires the ", package, " package.", call. = FALSE)
-  }
+  # no "utils::installed.packages()" since it requires non-staged install since R 3.6.0
+  # https://developer.r-project.org/Blog/public/2019/02/14/staged-install/index.html
+  get(".packageName", envir = asNamespace(package))
+  return(invisible())
 }
 
 # translate strings based on inst/translations.tsv
@@ -262,16 +263,7 @@ t <- function(from, language = get_locale()) {
     return(from)
   }
 
-  df_trans <- utils::read.table(file = system.file("translations.tsv", package = "AMR"),
-                                sep = "\t",
-                                stringsAsFactors = FALSE,
-                                header = TRUE,
-                                blank.lines.skip = TRUE,
-                                fill = TRUE,
-                                strip.white = TRUE,
-                                encoding = "UTF-8",
-                                fileEncoding = "UTF-8",
-                                na.strings = c(NA, "", NULL))
+  df_trans <- translations_file # internal data file
 
   if (!language %in% df_trans$lang) {
     stop("Unsupported language: '", language, "' - use one of: ",

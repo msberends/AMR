@@ -2,7 +2,6 @@
 % Please edit documentation in R/eucast_rules.R
 \name{eucast_rules}
 \alias{eucast_rules}
-\alias{eucast_rules_file}
 \title{EUCAST rules}
 \source{
 \itemize{
@@ -20,14 +19,10 @@
       \url{http://www.eucast.org/fileadmin/src/media/PDFs/EUCAST_files/Breakpoint_tables/v_9.0_Breakpoint_Tables.xlsx}
     }
   }
-
-  For editing the reference file (which is available with \code{\link{eucast_rules_file}}), these values can all be used for target antibiotics: aminoglycosides, tetracyclines, polymyxins, macrolides, glycopeptides, streptogramins, cephalosporins, cephalosporins_without_cfta, carbapenems, aminopenicillins, ureidopenicillins, fluoroquinolones, all_betalactams, and all separate four letter codes like AMC. They can be separated by comma: \code{"AMC, fluoroquinolones"}. The mo_property can be any column name from the \code{\link{microorganisms}} data set, or \code{genus_species} or \code{gramstain}. This file contains references to the 'Burkholderia cepacia complex'. The species in this group can be found in: LiPuma JJ, 2015 (PMID 16217180).
 }
 \usage{
 eucast_rules(x, col_mo = NULL, info = TRUE, rules = c("breakpoints",
   "expert", "other", "all"), verbose = FALSE, ...)
-
-eucast_rules_file()
 }
 \arguments{
 \item{x}{data with antibiotic columns, like e.g. \code{AMX} and \code{AMC}}
@@ -52,10 +47,7 @@ Apply susceptibility rules as defined by the European Committee on Antimicrobial
 \strong{Note:} This function does not translate MIC values to RSI values. Use \code{\link{as.rsi}} for that. \cr
 \strong{Note:} When ampicillin (AMP, J01CA01) is not available but amoxicillin (AMX, J01CA04) is, the latter will be used for all rules where there is a dependency on ampicillin. These drugs are interchangeable when it comes to expression of antimicrobial resistance.
 
-The file used for applying all EUCAST rules can be retrieved with \code{\link{eucast_rules_file}()}. It returns an easily readable data set containing all rules. The original TSV file (tab separated file) that is being read by \code{eucast_rules()} can be found by running this command: \cr
-\code{AMR::EUCAST_RULES_FILE_LOCATION} (without brackets).
-
-In the source code the file containing all rules is located \href{https://gitlab.com/msberends/AMR/blob/master/inst/eucast/eucast_rules.tsv}{here}.
+The file containing all EUCAST rules is located here: \url{https://gitlab.com/msberends/AMR/blob/master/data-raw/eucast_rules.tsv}.
 }
 \section{Antibiotics}{
 
