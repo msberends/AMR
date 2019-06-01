@@ -1,4 +1,4 @@
-# AMR 0.6.1.90xx
+# AMR 0.6.1.9052
 **Note: latest development version**
 
 #### New
@@ -17,7 +17,8 @@
   * All references to antibiotics in our package now use EARS-Net codes, like `AMX` for amoxicillin
   * Functions `atc_certe`, `ab_umcg` and `atc_trivial_nl` have been removed
   * All `atc_*` functions are superceded by `ab_*` functions
-  * All output will be translated by using an included translation file which [can be viewed here](https://gitlab.com/msberends/AMR/blob/master/data-raw/translations.tsv)
+  * All output will be translated by using an included translation file which [can be viewed here](https://gitlab.com/msberends/AMR/blob/master/data-raw/translations.tsv).
+    
     Please [create an issue in one of our repositories](https://gitlab.com/msberends/AMR/issues/new?issue[title]=Translation%20suggestion) if you want additions in this file.
 * Improvements to plotting AMR results with `ggplot_rsi()`:
   * New parameter `colours` to set the bar colours
@@ -41,7 +42,8 @@
       freq(age) %>%
       boxplot()
     ```
-* Removed all hardcoded EUCAST rules and replaced them with a new reference file which [can be viewed here](https://gitlab.com/msberends/AMR/blob/master/data-raw/eucast_rules.tsv)
+* Removed all hardcoded EUCAST rules and replaced them with a new reference file which [can be viewed here](https://gitlab.com/msberends/AMR/blob/master/data-raw/eucast_rules.tsv).
+  
   Please [create an issue in one of our repositories](https://gitlab.com/msberends/AMR/issues/new?issue[title]=EUCAST%20edit) if you want changes in this file.
 * Added ceftazidim intrinsic resistance to *Streptococci*
 * Changed default settings for `age_groups()`, to let groups of fives and tens end with 100+ instead of 120+

@@ -23,6 +23,8 @@ title: 'AMR (for R)'
 url: 'https://msberends.gitlab.io/AMR'
 development:
   mode: release # improves indexing by search engines
+  # version_label: default
+  version_tooltip: "Latest development version"
 news:
   one_page: true
 
