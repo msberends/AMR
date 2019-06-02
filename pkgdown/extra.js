@@ -21,18 +21,19 @@
 # ==================================================================== #
 */
 
-// Add updated Font Awesome 5.6.3 library
-$('head').append('<!-- Updated Font Awesome library --><link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">');
+// Add updated Font Awesome 5.8.2 library
+$('head').append('<!-- Updated Font Awesome library --><link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">');
 // Add Disqus
-// $('head').append('<link rel="preload" href="https://amr-for-r.disqus.com/embed.js" as="script">');
 $('head').append('<script src="https://amr-for-r.disqus.com/embed.js" data-timestamp="' + new Date()  + '"></script>');
 
 // Email template for new GitLab issues
 //https://stackoverflow.com/a/33190494/4575331
 //incoming+msberends-amr-9011429-5miwzuo1xo70wbz9r6fwv4dmg-issue@incoming.gitlab.com
 
-// Edit footer
 $( document ).ready(function() {
+
+  // remove version label from header
+  $(".version.label").remove();
 
   // redirect to GitLab
   var url_old = window.location.href;
@@ -41,8 +42,8 @@ $( document ).ready(function() {
     window.location.replace(url_new);
   }
 
+  // PR for 'R for Data Science' on How To pages
   if ($(".template-article").length > 0) {
-    // PR for 'R for Data Science' on How To pages
     $('#sidebar').prepend(
     '<div id="r4ds">' +
     '  <a target="_blank" href="https://r4ds.had.co.nz/">' +
@@ -55,7 +56,7 @@ $( document ).ready(function() {
     '</div>');
   }
 
-  // Add Disqus to all pages
+  // add Disqus to all pages
   var disqus =
     '<button id="btn_collapseDisqus" class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseDisqus" aria-expanded="false" aria-controls="collapseDisqus">' +
       '  Having a question? Or knowing something we don\'t? Click here to open comments.' +
@@ -67,7 +68,7 @@ $( document ).ready(function() {
   $(disqus).insertBefore('footer');
   $('#disqus_thread footer').remove();
 
-  // Alter footer
+  // edit footer
   $('footer').html(
     '<div>' +
       '<p>' + $('footer .copyright p').html().replace(

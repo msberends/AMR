@@ -136,11 +136,8 @@ help {
   font-size: 1.5em;
 }
 
-/* hide version label */
 .version.label {
-  /*
   display: none;
-  */
 }
 
 /* Date of vignettes */
@@ -215,6 +212,3 @@ table a:not(.btn):hover, .table a:not(.btn):hover {
   white-space: normal;
 }
 
-#search-input {
-  max-width: 100px;
-}
