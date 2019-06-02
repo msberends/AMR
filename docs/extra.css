@@ -138,7 +138,7 @@ help {
 
 /* hide version label */
 .version.label {
-  /* 
+  /*
   display: none;
   */
 }
@@ -213,4 +213,8 @@ table a:not(.btn):hover, .table a:not(.btn):hover {
 }
 #btn_collapseDisqus {
   white-space: normal;
+}
+
+#search-input {
+  max-width: 100px;
 }

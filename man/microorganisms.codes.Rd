@@ -4,7 +4,7 @@
 \name{microorganisms.codes}
 \alias{microorganisms.codes}
 \title{Translation table for microorganism codes}
-\format{A \code{\link{data.frame}} with 5,171 observations and 2 variables:
+\format{A \code{\link{data.frame}} with 4,969 observations and 2 variables:
 \describe{
   \item{\code{certe}}{Commonly used code of a microorganism}
   \item{\code{mo}}{ID of the microorganism in the \code{\link{microorganisms}} data set}

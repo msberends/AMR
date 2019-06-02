@@ -195,10 +195,11 @@ as.mo <- function(x, Becker = FALSE, Lancefield = FALSE, allow_uncertain = TRUE,
     # check onLoad() in R/zzz.R: data tables are created there.
   }
 
-  x[x == ""] <- NA_character_
+  # WHONET: xxx = no growth
+  x[tolower(as.character(paste0(x, ""))) %in% c("", "xxx", "na", "nan")] <- NA_character_
 
   uncertainty_level <- translate_allow_uncertain(allow_uncertain)
-  mo_hist <- get_mo_history(x, uncertainty_level, force = isTRUE(list(...)$force_mo_history))
+  # mo_hist <- get_mo_history(x, uncertainty_level, force = isTRUE(list(...)$force_mo_history))
 
   if (mo_source_isvalid(reference_df)
       & isFALSE(Becker)
@@ -231,11 +232,11 @@ as.mo <- function(x, Becker = FALSE, Lancefield = FALSE, allow_uncertain = TRUE,
              & isFALSE(Lancefield)) {
     y <- x
 
-  } else if (!any(is.na(mo_hist))
-             & isFALSE(Becker)
-             & isFALSE(Lancefield)) {
-    # check previously found results
-    y <- mo_hist
+  # } else if (!any(is.na(mo_hist))
+  #            & isFALSE(Becker)
+  #            & isFALSE(Lancefield)) {
+  #   # check previously found results
+  #   y <- mo_hist
 
   } else if (all(tolower(x) %in% microorganismsDT$fullname_lower)
              & isFALSE(Becker)
@@ -299,7 +300,8 @@ exec_as.mo <- function(x,
     # check onLoad() in R/zzz.R: data tables are created there.
   }
 
-  x[x == ""] <- NA_character_
+  # WHONET: xxx = no growth
+  x[tolower(as.character(paste0(x, ""))) %in% c("", "xxx", "na", "nan")] <- NA_character_
 
   if (initial_search == TRUE) {
     options(mo_failures = NULL)
@@ -340,12 +342,11 @@ exec_as.mo <- function(x,
   # only check the uniques, which is way faster
   x <- unique(x)
   # remove empty values (to later fill them in again with NAs)
-  # ("xxx" is WHONET code for 'no growth' and "con" is WHONET code for 'contamination')
+  # ("xxx" is WHONET code for 'no growth')
   x <- x[!is.na(x)
          & !is.null(x)
          & !identical(x, "")
-         & !identical(x, "xxx")
-         & !identical(x, "con")]
+         & !identical(x, "xxx")]
 
   # conversion of old MO codes from v0.5.0 (ITIS) to later versions (Catalogue of Life)
   if (any(x %like% "^[BFP]_[A-Z]{3,7}") & !all(x %in% microorganisms$mo)) {
@@ -560,7 +561,8 @@ exec_as.mo <- function(x,
         next
       }
 
-      if (any(tolower(x_backup_without_spp[i]) %in% c(NA, "", "xxx", "con", "na", "nan"))) {
+      # WHONET: xxx = no growth
+      if (tolower(as.character(paste0(x_backup_without_spp[i], ""))) %in% c("", "xxx", "na", "nan")) {
         x[i] <- NA_character_
         next
       }
@@ -1273,8 +1275,7 @@ exec_as.mo <- function(x,
   x_input_unique_nonempty <- unique(x_input[!is.na(x_input)
                                             & !is.null(x_input)
                                             & !identical(x_input, "")
-                                            & !identical(x_input, "xxx")
-                                            & !identical(x_input, "con")])
+                                            & !identical(x_input, "xxx")])
 
   # left join the found results to the original input values (x_input)
   df_found <- data.frame(input = as.character(x_input_unique_nonempty),

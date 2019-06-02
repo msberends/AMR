@@ -42,7 +42,7 @@ knitr::kable(dplyr::tibble(date = Sys.Date(),
 ``` 
 
 ## Needed R packages
-As with many uses in R, we need some additional packages for AMR analysis. Our package works closely together with the [tidyverse packages](https://www.tidyverse.org) [`dplyr`](https://dplyr.tidyverse.org/) and [`ggplot2`](https://ggplot2.tidyverse.org) by [Dr Hadley Wickham](https://www.linkedin.com/in/hadleywickham/). The tidyverse tremendously improves the way we conduct data science - it allows for a very natural way of writing syntaxes and creating beautiful plots in R.
+As with many uses in R, we need some additional packages for AMR analysis. Our package works closely together with the [tidyverse packages](https://www.tidyverse.org) [`dplyr`](https://dplyr.tidyverse.org/) and [`ggplot2`](https://ggplot2.tidyverse.org) by Dr Hadley Wickham. The tidyverse tremendously improves the way we conduct data science - it allows for a very natural way of writing syntaxes and creating beautiful plots in R.
 
 Our `AMR` package depends on these packages and even extends their use and functions.
 

@@ -66,7 +66,7 @@ test_that("frequency table works", {
   # rsi
   expect_output(print(freq(septic_patients$AMC)))
   # hms
-  expect_output(suppressWarnings(print(freq(hms::as.hms(sample(c(0:86399), 50))))))
+  expect_output(print(freq(hms::as.hms(sample(c(0:86399), 50)))))
   # matrix
   expect_output(print(freq(as.matrix(septic_patients$age))))
   expect_output(print(freq(as.matrix(septic_patients[, c("age", "gender")]))))
@@ -74,10 +74,10 @@ test_that("frequency table works", {
   expect_output(print(freq(list(age = septic_patients$age))))
   expect_output(print(freq(list(age = septic_patients$age, gender = septic_patients$gender))))
   # difftime
-  expect_output(suppressWarnings(print(
+  expect_output(print(
     freq(difftime(Sys.time(),
                   Sys.time() - runif(5, min = 0, max = 60 * 60 * 24),
-                  units = "hours")))))
+                  units = "hours"))))
 
   expect_output(print(freq(septic_patients$age)[,1:3]))
 

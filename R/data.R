@@ -59,16 +59,9 @@
 #' \describe{
 #'   \item{\code{mo}}{ID of microorganism as used by this package}
 #'   \item{\code{col_id}}{Catalogue of Life ID}
-#'   \item{\code{fullname}}{Full name, like \code{"Echerichia coli"}}
-#'   \item{\code{kingdom}}{Taxonomic kingdom of the microorganism}
-#'   \item{\code{phylum}}{Taxonomic phylum of the microorganism}
-#'   \item{\code{class}}{Taxonomic class of the microorganism}
-#'   \item{\code{order}}{Taxonomic order of the microorganism}
-#'   \item{\code{family}}{Taxonomic family of the microorganism}
-#'   \item{\code{genus}}{Taxonomic genus of the microorganism}
-#'   \item{\code{species}}{Taxonomic species of the microorganism}
-#'   \item{\code{subspecies}}{Taxonomic subspecies of the microorganism}
-#'   \item{\code{rank}}{Taxonomic rank of the microorganism, like \code{"species"} or \code{"genus"}}
+#'   \item{\code{fullname}}{Full name, like \code{"Escherichia coli"}}
+#'   \item{\code{kingdom}, \code{phylum}, \code{class}, \code{order}, \code{family}, \code{genus}, \code{species}, \code{subspecies}}{Taxonomic rank of the microorganism}
+#'   \item{\code{rank}}{Text of the taxonomic rank of the microorganism, like \code{"species"} or \code{"genus"}}
 #'   \item{\code{ref}}{Author(s) and year of concerning scientific publication}
 #'   \item{\code{species_id}}{ID of the species as used by the Catalogue of Life}
 #'   \item{\code{source}}{Either \code{"CoL"}, \code{"DSMZ"} (see source) or "manually added"}
@@ -119,7 +112,7 @@ catalogue_of_life <- list(
 #' Translation table for microorganism codes
 #'
 #' A data set containing commonly used codes for microorganisms, from laboratory systems and WHONET. Define your own with \code{\link{set_mo_source}}.
-#' @format A \code{\link{data.frame}} with 5,171 observations and 2 variables:
+#' @format A \code{\link{data.frame}} with 4,969 observations and 2 variables:
 #' \describe{
 #'   \item{\code{certe}}{Commonly used code of a microorganism}
 #'   \item{\code{mo}}{ID of the microorganism in the \code{\link{microorganisms}} data set}

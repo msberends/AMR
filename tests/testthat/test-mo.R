@@ -247,11 +247,13 @@ test_that("as.mo works", {
   # summary
   expect_equal(length(summary(septic_patients$mo)), 6)
 
-  # other
-  expect_equal(as.character(as.mo(c("xxx", "con", "na", "nan"), debug = TRUE)),
-               rep(NA_character_, 4))
-
-  expect_equal(as.character(as.mo(c("other", "none", "unknown"))),
+  # WHONET codes and NA/NaN
+  expect_equal(as.character(as.mo(c("xxx", "na", "nan"), debug = TRUE)),
+               rep(NA_character_, 3))
+  expect_equal(as.character(as.mo("con")), "UNKNOWN")
+  expect_equal(as.character(as.mo("xxx")), NA_character_)
+  expect_equal(as.character(as.mo(c("xxx", "con"))), c(NA_character_, "UNKNOWN"))
+    expect_equal(as.character(as.mo(c("other", "none", "unknown"))),
                rep("UNKNOWN", 3))
 
   expect_null(mo_failures())

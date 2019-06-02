@@ -342,7 +342,7 @@ freq <- function(x,
     # mult.columns <- 2
   } else {
     x.name <- deparse(substitute(x))
-    if (x.name %like% "[$]") {
+    if (all(x.name %like% "[$]") & length(x.name) == 1) {
       cols <- unlist(strsplit(x.name, "$", fixed = TRUE))[2]
       x.name <- unlist(strsplit(x.name, "$", fixed = TRUE))[1]
       # try to find the object to determine dimensions
@@ -710,7 +710,8 @@ format_header <- function(x, markdown = FALSE, decimal.mark = ".", big.mark = ",
   })
 
   # numeric values
-  if (has_length == TRUE & any(x_class %in% c("double", "integer", "numeric", "raw", "single"))) {
+  if (has_length == TRUE & !is.null(header$sd)) {
+    # any(x_class %in% c("double", "integer", "numeric", "raw", "single"))) {
     header$sd <- paste0(header$sd, " (CV: ", header$cv, ", MAD: ", header$mad, ")")
     header$fivenum <- paste0(paste(trimws(header$fivenum), collapse = " | "), " (IQR: ", header$IQR, ", CQV: ", header$cqv, ")")
     header$outliers_total <- paste0(header$outliers_total, " (unique count: ", header$outliers_unique, ")")
@@ -1018,9 +1019,11 @@ print.freq <- function(x,
   } else {
     opt$column_names <- opt$column_names[!opt$column_names == "Item"]
   }
+
+  all_unique <- FALSE
   if ("count" %in% colnames(x)) {
     if (all(x$count == 1)) {
-      warning("All observations are unique.", call. = FALSE)
+      all_unique <- TRUE
     }
     x$count <- format(x$count, decimal.mark = opt$decimal.mark, big.mark = opt$big.mark)
   } else {
@@ -1070,6 +1073,10 @@ print.freq <- function(x,
     cat("\n\n")
   } else {
     cat("\n")
+  }
+
+  if (all_unique == TRUE) {
+    message("NOTE: All observations are unique.")
   }
 
   # reset old kable setting

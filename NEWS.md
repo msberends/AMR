@@ -1,5 +1,4 @@
-# AMR 0.6.1.9052
-**Note: latest development version**
+# AMR 0.6.1.9053
 
 #### New
 * Support for translation of disk diffusion and MIC values to RSI values (i.e. antimicrobial interpretations). Supported guidelines are EUCAST (2011 to 2019) and CLSI (2011 to 2019). Use `as.rsi()` on an MIC value (created with `as.mic()`), a disk diffusion value (created with the new `as.disk()`) or on a complete date set containing columns with MIC or disk diffusion values.
@@ -30,7 +29,8 @@
 * Removed deprecated functions `guess_mo()`, `guess_atc()`, `EUCAST_rules()`, `interpretive_reading()`, `rsi()`
 * Frequency tables (`freq()`):
   * speed improvement for microbial IDs
-  * fixed level names in markdown
+  * fixed factor level names for R Markdown
+  * when all values are unique it now shows a message instead of a warning
   * support for boxplots:
     ```r
     septic_patients %>% 
@@ -51,6 +51,7 @@
 * Fix for `first_isolate()` for when dates are missing
 * Improved speed of `guess_ab_col()`
 * Function `as.mo()` now gently interprets any number of whitespace characters (like tabs) as one space
+* Function `as.mo()` now returns `UNKNOWN` for `"con"` (WHONET ID of 'contamination') and returns `NA` for `"xxx"`(WHONET ID of 'no growth')
 * Small algorithm fix for `as.mo()`
 * Removed viruses from data set `microorganisms.codes` and cleaned it up
 * Fix for `mo_shortname()` where species would not be determined correctly

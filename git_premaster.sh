@@ -28,7 +28,7 @@ current_commit=`git describe --tags | sed 's/.*-\(.*\)-.*/\1/'`
 new_version="$current_tag.$((current_commit + 9000))" # results in 0.1.0.9040
 sed -i -- "s/^Version: .*/Version: ${new_version}/" DESCRIPTION
 # update 1st line of NEWS.md
-sed -i -- "1s/${current_tag}.*/${new_version}/" NEWS.md
+sed -i -- "1s/.*/# AMR ${new_version}/" NEWS.md
 echo "First 3 lines of DESCRIPTION:"
 head -3 DESCRIPTION
 echo

@@ -4,25 +4,7 @@
 \name{microorganisms}
 \alias{microorganisms}
 \title{Data set with ~65,000 microorganisms}
-\format{A \code{\link{data.frame}} with 67,903 observations and 16 variables:
-\describe{
-  \item{\code{mo}}{ID of microorganism as used by this package}
-  \item{\code{col_id}}{Catalogue of Life ID}
-  \item{\code{fullname}}{Full name, like \code{"Echerichia coli"}}
-  \item{\code{kingdom}}{Taxonomic kingdom of the microorganism}
-  \item{\code{phylum}}{Taxonomic phylum of the microorganism}
-  \item{\code{class}}{Taxonomic class of the microorganism}
-  \item{\code{order}}{Taxonomic order of the microorganism}
-  \item{\code{family}}{Taxonomic family of the microorganism}
-  \item{\code{genus}}{Taxonomic genus of the microorganism}
-  \item{\code{species}}{Taxonomic species of the microorganism}
-  \item{\code{subspecies}}{Taxonomic subspecies of the microorganism}
-  \item{\code{rank}}{Taxonomic rank of the microorganism, like \code{"species"} or \code{"genus"}}
-  \item{\code{ref}}{Author(s) and year of concerning scientific publication}
-  \item{\code{species_id}}{ID of the species as used by the Catalogue of Life}
-  \item{\code{source}}{Either \code{"CoL"}, \code{"DSMZ"} (see source) or "manually added"}
-  \item{\code{prevalence}}{Prevalence of the microorganism, see \code{?as.mo}}
-}}
+\format{An object of class \code{data.frame} with 67903 rows and 16 columns.}
 \source{
 Catalogue of Life: Annual Checklist (public online taxonomic database), \url{www.catalogueoflife.org} (check included annual version with \code{\link{catalogue_of_life_version}()}).
 
