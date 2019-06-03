@@ -78,7 +78,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.7.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.7.0.9000</span>
       </span>
     </div>
 
@@ -239,13 +239,30 @@
       
     </div>
 
-    <div id="amr-070" class="section level1">
+    <div id="amr-0709000" class="section level1">
 <h1 class="page-header">
-<a href="#amr-070" class="anchor"></a>AMR 0.7.0<small> Unreleased </small>
+<a href="#amr-0709000" class="anchor"></a>AMR 0.7.0.9000<small> Unreleased </small>
 </h1>
 <div id="new" class="section level4">
 <h4 class="hasAnchor">
 <a href="#new" class="anchor"></a>New</h4>
+</div>
+<div id="changed" class="section level4">
+<h4 class="hasAnchor">
+<a href="#changed" class="anchor"></a>Changed</h4>
+</div>
+<div id="other" class="section level4">
+<h4 class="hasAnchor">
+<a href="#other" class="anchor"></a>Other</h4>
+</div>
+</div>
+    <div id="amr-070" class="section level1">
+<h1 class="page-header">
+<a href="#amr-070" class="anchor"></a>AMR 0.7.0<small> 2019-06-03 </small>
+</h1>
+<div id="new-1" class="section level4">
+<h4 class="hasAnchor">
+<a href="#new-1" class="anchor"></a>New</h4>
 <ul>
 <li>Support for translation of disk diffusion and MIC values to RSI values (i.e. antimicrobial interpretations). Supported guidelines are EUCAST (2011 to 2019) and CLSI (2011 to 2019). Use <code><a href="../reference/as.rsi.html">as.rsi()</a></code> on an MIC value (created with <code><a href="../reference/as.mic.html">as.mic()</a></code>), a disk diffusion value (created with the new <code><a href="../reference/as.disk.html">as.disk()</a></code>) or on a complete date set containing columns with MIC or disk diffusion values.</li>
 <li>Function <code><a href="../reference/mo_property.html">mo_name()</a></code> as alias of <code><a href="../reference/mo_property.html">mo_fullname()</a></code>
@@ -253,9 +270,9 @@
 <li>Added guidelines of the WHO to determine multi-drug resistance (MDR) for TB (<code><a href="../reference/mdro.html">mdr_tb()</a></code>) and added a new vignette about MDR. Read this tutorial <a href="https://msberends.gitlab.io/AMR/articles/MDR.html">here on our website</a>.</li>
 </ul>
 </div>
-<div id="changed" class="section level4">
+<div id="changed-1" class="section level4">
 <h4 class="hasAnchor">
-<a href="#changed" class="anchor"></a>Changed</h4>
+<a href="#changed-1" class="anchor"></a>Changed</h4>
 <ul>
 <li>Fixed a critical bug in <code><a href="../reference/first_isolate.html">first_isolate()</a></code> where missing species would lead to incorrect FALSEs. This bug was not present in AMR v0.5.0, but was in v0.6.0 and v0.6.1.</li>
 <li>Fixedd a bug in <code><a href="../reference/eucast_rules.html">eucast_rules()</a></code> where antibiotics from WHONET software would not be recognised</li>
@@ -327,9 +344,9 @@ Please <a href="https://gitlab.com/msberends/AMR/issues/new?issue%5Btitle%5D=EUC
 <li><p>Fix for <code><a href="../reference/mo_property.html">mo_shortname()</a></code> where species would not be determined correctly</p></li>
 </ul>
 </div>
-<div id="other" class="section level4">
+<div id="other-1" class="section level4">
 <h4 class="hasAnchor">
-<a href="#other" class="anchor"></a>Other</h4>
+<a href="#other-1" class="anchor"></a>Other</h4>
 <ul>
 <li>Support for R 3.6.0 and later by providing support for <a href="https://developer.r-project.org/Blog/public/2019/02/14/staged-install/index.html">staged install</a>
 </li>
@@ -340,9 +357,9 @@ Please <a href="https://gitlab.com/msberends/AMR/issues/new?issue%5Btitle%5D=EUC
 <h1 class="page-header">
 <a href="#amr-061" class="anchor"></a>AMR 0.6.1<small> 2019-03-29 </small>
 </h1>
-<div id="changed-1" class="section level4">
+<div id="changed-2" class="section level4">
 <h4 class="hasAnchor">
-<a href="#changed-1" class="anchor"></a>Changed</h4>
+<a href="#changed-2" class="anchor"></a>Changed</h4>
 <ul>
 <li>Fixed a critical bug when using <code><a href="../reference/eucast_rules.html">eucast_rules()</a></code> with <code>verbose = TRUE</code>
 </li>
@@ -360,9 +377,9 @@ Please <a href="https://gitlab.com/msberends/AMR/issues/new?issue%5Btitle%5D=EUC
 <li>Contains the complete manual of this package and all of its functions with an explanation of their parameters</li>
 <li>Contains a comprehensive tutorial about how to conduct antimicrobial resistance analysis, import data from WHONET or SPSS and many more.</li>
 </ul>
-<div id="new-1" class="section level4">
+<div id="new-2" class="section level4">
 <h4 class="hasAnchor">
-<a href="#new-1" class="anchor"></a>New</h4>
+<a href="#new-2" class="anchor"></a>New</h4>
 <ul>
 <li>
 <strong>BREAKING</strong>: removed deprecated functions, parameters and references to ‘bactid’. Use <code><a href="../reference/as.mo.html">as.mo()</a></code> to identify an MO code.</li>
@@ -446,9 +463,9 @@ These functions use <code><a href="../reference/as.atc.html">as.atc()</a></code>
 <li><p>New vignettes about how to conduct AMR analysis, predict antimicrobial resistance, use the <em>G</em>-test and more. These are also available (and even easier readable) on our website: <a href="https://msberends.gitlab.io/AMR" class="uri">https://msberends.gitlab.io/AMR</a>.</p></li>
 </ul>
 </div>
-<div id="changed-2" class="section level4">
+<div id="changed-3" class="section level4">
 <h4 class="hasAnchor">
-<a href="#changed-2" class="anchor"></a>Changed</h4>
+<a href="#changed-3" class="anchor"></a>Changed</h4>
 <ul>
 <li>Function <code><a href="../reference/eucast_rules.html">eucast_rules()</a></code>:
 <ul>
@@ -575,9 +592,9 @@ Using <code><a href="../reference/as.mo.html">as.mo(..., allow_uncertain = 3)</a
 <li>if using different lengths of pattern and x in <code>%like%</code>, it will now return the call</li>
 </ul>
 </div>
-<div id="other-1" class="section level4">
+<div id="other-2" class="section level4">
 <h4 class="hasAnchor">
-<a href="#other-1" class="anchor"></a>Other</h4>
+<a href="#other-2" class="anchor"></a>Other</h4>
 <ul>
 <li>Updated licence text to emphasise GPL 2.0 and that this is an R package.</li>
 </ul>
@@ -587,9 +604,9 @@ Using <code><a href="../reference/as.mo.html">as.mo(..., allow_uncertain = 3)</a
 <h1 class="page-header">
 <a href="#amr-050" class="anchor"></a>AMR 0.5.0<small> 2018-11-30 </small>
 </h1>
-<div id="new-2" class="section level4">
+<div id="new-3" class="section level4">
 <h4 class="hasAnchor">
-<a href="#new-2" class="anchor"></a>New</h4>
+<a href="#new-3" class="anchor"></a>New</h4>
 <ul>
 <li>Repository moved to GitLab: <a href="https://gitlab.com/msberends/AMR" class="uri">https://gitlab.com/msberends/AMR</a>
 </li>
@@ -601,9 +618,9 @@ Using <code><a href="../reference/as.mo.html">as.mo(..., allow_uncertain = 3)</a
 <li>Functions <code>mo_authors</code> and <code>mo_year</code> to get specific values about the scientific reference of a taxonomic entry</li>
 </ul>
 </div>
-<div id="changed-3" class="section level4">
+<div id="changed-4" class="section level4">
 <h4 class="hasAnchor">
-<a href="#changed-3" class="anchor"></a>Changed</h4>
+<a href="#changed-4" class="anchor"></a>Changed</h4>
 <ul>
 <li>Functions <code>MDRO</code>, <code>BRMO</code>, <code>MRGN</code> and <code>EUCAST_exceptional_phenotypes</code> were renamed to <code>mdro</code>, <code>brmo</code>, <code>mrgn</code> and <code>eucast_exceptional_phenotypes</code>
 </li>
@@ -700,9 +717,9 @@ Using <code><a href="../reference/as.mo.html">as.mo(..., allow_uncertain = 3)</a
 <li><p>Percentages will now will rounded more logically (e.g. in <code>freq</code> function)</p></li>
 </ul>
 </div>
-<div id="other-2" class="section level4">
+<div id="other-3" class="section level4">
 <h4 class="hasAnchor">
-<a href="#other-2" class="anchor"></a>Other</h4>
+<a href="#other-3" class="anchor"></a>Other</h4>
 <ul>
 <li>New dependency on package <code>crayon</code>, to support formatted text in the console</li>
 <li>Dependency <code>tidyr</code> is now mandatory (went to <code>Import</code> field) since <code>portion_df</code> and <code>count_df</code> rely on it</li>
@@ -714,9 +731,9 @@ Using <code><a href="../reference/as.mo.html">as.mo(..., allow_uncertain = 3)</a
 <h1 class="page-header">
 <a href="#amr-040" class="anchor"></a>AMR 0.4.0<small> 2018-10-01 </small>
 </h1>
-<div id="new-3" class="section level4">
+<div id="new-4" class="section level4">
 <h4 class="hasAnchor">
-<a href="#new-3" class="anchor"></a>New</h4>
+<a href="#new-4" class="anchor"></a>New</h4>
 <ul>
 <li>The data set <code>microorganisms</code> now contains <strong>all microbial taxonomic data from ITIS</strong> (kingdoms Bacteria, Fungi and Protozoa), the Integrated Taxonomy Information System, available via <a href="https://itis.gov" class="uri">https://itis.gov</a>. The data set now contains more than 18,000 microorganisms with all known bacteria, fungi and protozoa according ITIS with genus, species, subspecies, family, order, class, phylum and subkingdom. The new data set <code>microorganisms.old</code> contains all previously known taxonomic names from those kingdoms.</li>
 <li>New functions based on the existing function <code>mo_property</code>:
@@ -785,9 +802,9 @@ Using <code><a href="../reference/as.mo.html">as.mo(..., allow_uncertain = 3)</a
 <li><p>Renamed <code>septic_patients$sex</code> to <code>septic_patients$gender</code></p></li>
 </ul>
 </div>
-<div id="changed-4" class="section level4">
+<div id="changed-5" class="section level4">
 <h4 class="hasAnchor">
-<a href="#changed-4" class="anchor"></a>Changed</h4>
+<a href="#changed-5" class="anchor"></a>Changed</h4>
 <ul>
 <li>Added three antimicrobial agents to the <code>antibiotics</code> data set: Terbinafine (D01BA02), Rifaximin (A07AA11) and Isoconazole (D01AC05)</li>
 <li>
@@ -837,9 +854,9 @@ Using <code><a href="../reference/as.mo.html">as.mo(..., allow_uncertain = 3)</a
 </li>
 </ul>
 </div>
-<div id="other-3" class="section level4">
+<div id="other-4" class="section level4">
 <h4 class="hasAnchor">
-<a href="#other-3" class="anchor"></a>Other</h4>
+<a href="#other-4" class="anchor"></a>Other</h4>
 <ul>
 <li>More unit tests to ensure better integrity of functions</li>
 </ul>
@@ -849,9 +866,9 @@ Using <code><a href="../reference/as.mo.html">as.mo(..., allow_uncertain = 3)</a
 <h1 class="page-header">
 <a href="#amr-030" class="anchor"></a>AMR 0.3.0<small> 2018-08-14 </small>
 </h1>
-<div id="new-4" class="section level4">
+<div id="new-5" class="section level4">
 <h4 class="hasAnchor">
-<a href="#new-4" class="anchor"></a>New</h4>
+<a href="#new-5" class="anchor"></a>New</h4>
 <ul>
 <li>
 <strong>BREAKING</strong>: <code>rsi_df</code> was removed in favour of new functions <code>portion_R</code>, <code>portion_IR</code>, <code>portion_I</code>, <code>portion_SI</code> and <code>portion_S</code> to selectively calculate resistance or susceptibility. These functions are 20 to 30 times faster than the old <code>rsi</code> function. The old function still works, but is deprecated.
@@ -922,9 +939,9 @@ Using <code><a href="../reference/as.mo.html">as.mo(..., allow_uncertain = 3)</a
 </li>
 </ul>
 </div>
-<div id="changed-5" class="section level4">
+<div id="changed-6" class="section level4">
 <h4 class="hasAnchor">
-<a href="#changed-5" class="anchor"></a>Changed</h4>
+<a href="#changed-6" class="anchor"></a>Changed</h4>
 <ul>
 <li>Improvements for forecasting with <code>resistance_predict</code> and added more examples</li>
 <li>More antibiotics added as parameters for EUCAST rules</li>
@@ -966,9 +983,9 @@ Using <code><a href="../reference/as.mo.html">as.mo(..., allow_uncertain = 3)</a
 <li>Other small fixes</li>
 </ul>
 </div>
-<div id="other-4" class="section level4">
+<div id="other-5" class="section level4">
 <h4 class="hasAnchor">
-<a href="#other-4" class="anchor"></a>Other</h4>
+<a href="#other-5" class="anchor"></a>Other</h4>
 <ul>
 <li>Added integration tests (check if everything works as expected) for all releases of R 3.1 and higher
 <ul>
@@ -986,9 +1003,9 @@ Using <code><a href="../reference/as.mo.html">as.mo(..., allow_uncertain = 3)</a
 <h1 class="page-header">
 <a href="#amr-020" class="anchor"></a>AMR 0.2.0<small> 2018-05-03 </small>
 </h1>
-<div id="new-5" class="section level4">
+<div id="new-6" class="section level4">
 <h4 class="hasAnchor">
-<a href="#new-5" class="anchor"></a>New</h4>
+<a href="#new-6" class="anchor"></a>New</h4>
 <ul>
 <li>Full support for Windows, Linux and macOS</li>
 <li>Full support for old R versions, only R-3.0.0 (April 2013) or later is needed (needed packages may have other dependencies)</li>
@@ -1008,9 +1025,9 @@ Using <code><a href="../reference/as.mo.html">as.mo(..., allow_uncertain = 3)</a
 <li>New print format for <code>tibble</code>s and <code>data.table</code>s</li>
 </ul>
 </div>
-<div id="changed-6" class="section level4">
+<div id="changed-7" class="section level4">
 <h4 class="hasAnchor">
-<a href="#changed-6" class="anchor"></a>Changed</h4>
+<a href="#changed-7" class="anchor"></a>Changed</h4>
 <ul>
 <li>Fixed <code>rsi</code> class for vectors that contain only invalid antimicrobial interpretations</li>
 <li>Renamed dataset <code>ablist</code> to <code>antibiotics</code>
@@ -1028,9 +1045,9 @@ Using <code><a href="../reference/as.mo.html">as.mo(..., allow_uncertain = 3)</a
 <li>Functions <code>as.rsi</code> and <code>as.mic</code> now add the package name and version as attributes</li>
 </ul>
 </div>
-<div id="other-5" class="section level4">
+<div id="other-6" class="section level4">
 <h4 class="hasAnchor">
-<a href="#other-5" class="anchor"></a>Other</h4>
+<a href="#other-6" class="anchor"></a>Other</h4>
 <ul>
 <li>Expanded <code>README.md</code> with more examples</li>
 <li>Added <a href="https://orcid.org">ORCID</a> of authors to DESCRIPTION file</li>
@@ -1067,6 +1084,7 @@ Using <code><a href="../reference/as.mo.html">as.mo(..., allow_uncertain = 3)</a
     <div id="tocnav">
       <h2>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
+        <li><a href="#amr-0709000">0.7.0.9000</a></li>
         <li><a href="#amr-070">0.7.0</a></li>
         <li><a href="#amr-061">0.6.1</a></li>
         <li><a href="#amr-060">0.6.0</a></li>
