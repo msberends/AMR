@@ -1,12 +1,13 @@
-# AMR 0.6.1.9053
+# AMR 0.7.0
 
 #### New
 * Support for translation of disk diffusion and MIC values to RSI values (i.e. antimicrobial interpretations). Supported guidelines are EUCAST (2011 to 2019) and CLSI (2011 to 2019). Use `as.rsi()` on an MIC value (created with `as.mic()`), a disk diffusion value (created with the new `as.disk()`) or on a complete date set containing columns with MIC or disk diffusion values.
 * Function `mo_name()` as alias of `mo_fullname()`
-* Added guidelines of the WHO to determine mutli-drug resistance (MDR) for TB (`mdr_tb()`) and added a new vignette about MDR
+* Added guidelines of the WHO to determine multi-drug resistance (MDR) for TB (`mdr_tb()`) and added a new vignette about MDR. Read this tutorial [here on our website](https://msberends.gitlab.io/AMR/articles/MDR.html).
 
 #### Changed
 * Fixed a critical bug in `first_isolate()` where missing species would lead to incorrect FALSEs. This bug was not present in AMR v0.5.0, but was in v0.6.0 and v0.6.1.
+* Fixedd a bug in `eucast_rules()` where antibiotics from WHONET software would not be recognised
 * Completely reworked the `antibiotics` data set:
   * All entries now have 3 different identifiers:
     * Column `ab` contains a human readable EARS-Net code, used by ECDC and WHO/WHONET - this is the primary identifier used in this package
@@ -22,9 +23,9 @@
 * Improvements to plotting AMR results with `ggplot_rsi()`:
   * New parameter `colours` to set the bar colours
   * New parameters `title`, `subtitle`, `caption`, `x.title` and `y.title` to set titles and axis descriptions
-* Improved intelligence of looking up antibiotic tables in data set using `guess_ab_col()`
+* Improved intelligence of looking up antibiotic columns in a data set using `guess_ab_col()`
 * Added ~5,000 more old taxonomic names to the `microorganisms.old` data set, which leads to better results finding when using the `as.mo()` function
-* This package now honours the new EUCAST insight (2019) that S and I are but classified as susceptible, where I is defined as 'increased exposure' and not 'intermediate' anymore. For functions like `portion_df()` and `count_df()` this means that their new parameter `combine_SI` is TRUE at default.
+* This package now honours the new EUCAST insight (2019) that S and I are but classified as susceptible, where I is defined as 'increased exposure' and not 'intermediate' anymore. For functions like `portion_df()` and `count_df()` this means that their new parameter `combine_SI` is TRUE at default. Our plotting function `ggplot_rsi()` also reflects this change since it uses `count_df()` internally.
 * The `age()` function gained a new parameter `exact` to determine ages with decimals
 * Removed deprecated functions `guess_mo()`, `guess_atc()`, `EUCAST_rules()`, `interpretive_reading()`, `rsi()`
 * Frequency tables (`freq()`):

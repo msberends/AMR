@@ -24,7 +24,7 @@
 #' Calculates age in years based on a reference date, which is the sytem date at default.
 #' @param x date(s), will be coerced with \code{\link{as.POSIXlt}}
 #' @param reference reference date(s) (defaults to today), will be coerced with \code{\link{as.POSIXlt}} and cannot be lower than \code{x}
-#' @param exact a logical to indicate whether age calculation should be exact, i.e. with decimals
+#' @param exact a logical to indicate whether age calculation should be exact, i.e. with decimals. It divides the number of days of \href{https://en.wikipedia.org/wiki/Year-to-date}{year-to-date} (YTD) of \code{x} by the number of days in a year of \code{reference} (either 365 or 366).
 #' @return An integer (no decimals) if \code{exact = FALSE}, a double (with decimals) otherwise
 #' @seealso \code{\link{age_groups}} to split age into age groups
 #' @importFrom dplyr if_else

@@ -55,18 +55,16 @@ navbar:
         href: 'articles/EUCAST.html'
       - text: 'Get properties of a microorganism'
         icon: 'fa-bug'
-        # href: 'articles/mo_property.html'
-        href: 'reference/mo_property.html'
+        href: 'reference/mo_property.html' # reference instead of article
       - text: 'Get properties of an antibiotic'
         icon: 'fa-capsules'
-        # href: 'articles/ab_property.html'
-        href: 'reference/ab_property.html'
+        href: 'reference/ab_property.html' # reference instead of article
       - text: 'Create frequency tables'
         icon: 'fa-sort-amount-down'
         href: 'articles/freq.html'
       - text: 'Use the G-test'
         icon: 'fa-clipboard-check'
-        href: 'articles/G_test.html'
+        href: 'reference/g.test.html' # reference instead of article
       - text: 'Other: benchmarks'
         icon: 'fa-shipping-fast'
         href: 'articles/benchmarks.html'

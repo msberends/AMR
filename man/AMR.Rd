@@ -32,7 +32,7 @@ This package can be used for:
 Matthijs S. Berends[1,2] Christian F. Luz[1], Erwin E.A. Hassing[2],  Corinna Glasner[1],  Alex W. Friedrich[1],  Bhanu N.M. Sinha[1] \cr
 
 [1] Department of Medical Microbiology, University of Groningen, University Medical Center Groningen, Groningen, the Netherlands - \url{https://www.rug.nl} \url{https://www.umcg.nl} \cr
-[2] Certe Medical Diagnostics & Advice, Groningen, the Netherlands - \url{certe.nl}
+[2] Certe Medical Diagnostics & Advice, Groningen, the Netherlands - \url{https://www.certe.nl}
 }
 
 \section{Read more on our website!}{

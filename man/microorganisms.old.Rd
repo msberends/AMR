@@ -12,7 +12,7 @@
   \item{\code{ref}}{Author(s) and year of concerning scientific publication}
 }}
 \source{
-Catalogue of Life: Annual Checklist (public online taxonomic database), \url{www.catalogueoflife.org} (check included annual version with \code{\link{catalogue_of_life_version}()}).
+Catalogue of Life: Annual Checklist (public online taxonomic database), \url{http://www.catalogueoflife.org} (check included annual version with \code{\link{catalogue_of_life_version}()}).
 }
 \usage{
 microorganisms.old

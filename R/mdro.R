@@ -69,6 +69,9 @@ mdro <- function(x,
   if (length(guideline) > 1) {
     stop("`guideline` must be a length one character string.", call. = FALSE)
   }
+  if (length(country) > 1) {
+    stop("`country` must be a length one character string.", call. = FALSE)
+  }
   if (!is.null(country)) {
     guideline <- country
   }

@@ -24,17 +24,17 @@ context("mdro.R")
 test_that("mdro works", {
   library(dplyr)
 
-  expect_error(suppressWarnings(mdro(septic_patients, country = "invalid", col_mo = "mo", info = TRUE)))
-  expect_error(suppressWarnings(mdro(septic_patients, country = "fr", info = TRUE)))
-  expect_error(suppressWarnings(mdro(septic_patients, country = c("de", "nl"), info = TRUE)))
-  expect_error(suppressWarnings(mdro(septic_patients, col_mo = "invalid", info = TRUE)))
+  expect_error(mdro(septic_patients, country = "invalid", col_mo = "mo", info = TRUE))
+  expect_error(mdro(septic_patients, country = "fr", info = TRUE))
+  expect_error(mdro(septic_patients, country = c("de", "nl"), info = TRUE))
+  expect_error(mdro(septic_patients, col_mo = "invalid", info = TRUE))
 
-  outcome <- suppressWarnings(mdro(septic_patients))
-  outcome <- suppressWarnings(eucast_exceptional_phenotypes(septic_patients, info = TRUE))
+  outcome <- mdro(septic_patients)
+  outcome <- eucast_exceptional_phenotypes(septic_patients, info = TRUE)
   # check class
   expect_equal(outcome %>% class(), c('ordered', 'factor'))
 
-  outcome <- suppressWarnings(mdro(septic_patients, "nl", info = TRUE))
+  outcome <- mdro(septic_patients, "nl", info = TRUE)
   # check class
   expect_equal(outcome %>% class(), c('ordered', 'factor'))
 
@@ -42,19 +42,14 @@ test_that("mdro works", {
   expect_equal(outcome %>% freq() %>% pull(count),
                c(1969, 25, 6)) # 1969 neg, 25 unconfirmed, 6 pos
 
-  expect_equal(
-    suppressWarnings(
-      brmo(septic_patients, info = FALSE)),
-    suppressWarnings(
-      mdro(septic_patients, country = "nl", info = FALSE)
-    )
-  )
+  expect_equal(brmo(septic_patients, info = FALSE),
+               mdro(septic_patients, country = "nl", info = FALSE))
 
   # still working on German guidelines
   expect_error(suppressWarnings(mrgn(septic_patients, info = TRUE)))
 
   # test Dutch P. aeruginosa MDRO
-  expect_equal(suppressWarnings(
+  expect_equal(
     as.character(mdro(data.frame(mo = as.mo("P. aeruginosa"),
                                  cfta = "S",
                                  cipr = "S",
@@ -65,9 +60,9 @@ test_that("mdro works", {
                                  pita = "S"),
                       country = "nl",
                       col_mo = "mo",
-                      info = FALSE))
-  ), "Negative")
-  expect_equal(suppressWarnings(
+                      info = FALSE)),
+    "Negative")
+  expect_equal(
     as.character(mdro(data.frame(mo = as.mo("P. aeruginosa"),
                                  cefta = "R",
                                  cipr = "R",
@@ -78,16 +73,14 @@ test_that("mdro works", {
                                  pita = "R"),
                       country = "nl",
                       col_mo = "mo",
-                      info = FALSE))
-  ), "Positive")
+                      info = FALSE)),
+    "Positive")
 
   # MDR TB
   expect_equal(
-    suppressWarnings(
-      # select only rifampicine, mo will be determined automatically (as M. tuberculosis),
-      # number of mono-resistant strains should be equal to number of rifampicine-resistant strains
-      septic_patients %>% select(RIF) %>% mdr_tb() %>% freq() %>% pull(count) %>% .[2]
-    ),
+    # select only rifampicine, mo will be determined automatically (as M. tuberculosis),
+    # number of mono-resistant strains should be equal to number of rifampicine-resistant strains
+    septic_patients %>% select(RIF) %>% mdr_tb() %>% freq() %>% pull(count) %>% .[2],
     count_R(septic_patients$RIF))
 
   sample_rsi <- function() {
@@ -97,7 +90,7 @@ test_that("mdro works", {
            replace = TRUE)
   }
   expect_gt(
-    suppressWarnings(
+    #suppressWarnings(
       data.frame(rifampicin = sample_rsi(),
                  inh = sample_rsi(),
                  gatifloxacin = sample_rsi(),
@@ -106,7 +99,9 @@ test_that("mdro works", {
                  MFX = sample_rsi(),
                  KAN = sample_rsi()) %>%
         mdr_tb() %>%
-        n_distinct()),
+        n_distinct()
+      #)
+      ,
     2)
 
 })

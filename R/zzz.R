@@ -254,6 +254,7 @@ make_trans_tbl <- function() {
     F_CCCCS = "F_CRYPT",
     # renamings of old genus + species
     F_CANDD_GLB = "F_CANDD_GLA", F_CANDD_KRU = "F_ISSTC_ORI",
+    F_CANDD_GUI = "F_MYRZY_GUI",
     F_CANDD_LUS = "F_CLVSP_LUS", B_STRPT_TUS = "B_STRPT",
     B_PRVTL_OLA = "B_PRVTL_OULO", B_FSBCT_RUM = "B_FSBCT",
     B_CRYNB_EYI = "B_CRYNB_FRE", B_OLGLL_LIS = "B_OLGLL_URE")

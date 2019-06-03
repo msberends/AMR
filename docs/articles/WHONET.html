@@ -40,7 +40,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">0.6.1.9053</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.7.0</span>
       </span>
     </div>
 
@@ -126,7 +126,7 @@
       </a>
     </li>
     <li>
-      <a href="../articles/G_test.html">
+      <a href="../reference/g.test.html">
         <span class="fa fa-clipboard-check"></span>
          
         Use the G-test
@@ -199,7 +199,7 @@
       <h1>How to work with WHONET data</h1>
                         <h4 class="author">Matthijs S. Berends</h4>
             
-            <h4 class="date">02 June 2019</h4>
+            <h4 class="date">03 June 2019</h4>
       
       
       <div class="hidden name"><code>WHONET.Rmd</code></div>
@@ -215,7 +215,7 @@
 <p>An example syntax could look like this:</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(readxl)</a>
 <a class="sourceLine" id="cb1-2" title="2">data &lt;-<span class="st"> </span><span class="kw"><a href="https://readxl.tidyverse.org/reference/read_excel.html">read_excel</a></span>(<span class="dt">path =</span> <span class="st">"path/to/your/file.xlsx"</span>)</a></code></pre></div>
-<p>This package comes with an <a href="./reference/WHONET.html">example data set <code>WHONET</code></a>. We will use it for this analysis.</p>
+<p>This package comes with an <a href="https://msberends.gitlab.io/AMR/reference/WHONET.html">example data set <code>WHONET</code></a>. We will use it for this analysis.</p>
 </div>
 <div id="preparation" class="section level1">
 <h1 class="hasAnchor">
@@ -226,7 +226,7 @@
 <a class="sourceLine" id="cb2-3" title="3"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(AMR)     <span class="co"># this package</span></a></code></pre></div>
 <p>We will have to transform some variables to simplify and automate the analysis:</p>
 <ul>
-<li>Microorganisms should be transformed to our own microorganism IDs (called an <code>mo</code>) using <a href="./reference/ITIS.html">the ITIS reference data set</a>, which contains all ~20,000 microorganisms from the taxonomic kingdoms Bacteria, Fungi and Protozoa. We do the tranformation with <code><a href="../reference/as.mo.html">as.mo()</a></code>. This function also recognises almost all WHONET abbreviations of microorganisms.</li>
+<li>Microorganisms should be transformed to our own microorganism IDs (called an <code>mo</code>) using <a href="https://msberends.gitlab.io/AMR/reference/ITIS.html">the ITIS reference data set</a>, which contains all ~20,000 microorganisms from the taxonomic kingdoms Bacteria, Fungi and Protozoa. We do the tranformation with <code><a href="../reference/as.mo.html">as.mo()</a></code>. This function also recognises almost all WHONET abbreviations of microorganisms.</li>
 <li>Antimicrobial results or interpretations have to be clean and valid. In other words, they should only contain values <code>"S"</code>, <code>"I"</code> or <code>"R"</code>. That is exactly where the <code><a href="../reference/as.rsi.html">as.rsi()</a></code> function is for.</li>
 </ul>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" title="1"><span class="co"># transform variables</span></a>

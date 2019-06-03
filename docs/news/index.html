@@ -78,7 +78,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">0.6.1.9053</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.7.0</span>
       </span>
     </div>
 
@@ -164,7 +164,7 @@
       </a>
     </li>
     <li>
-      <a href="../articles/G_test.html">
+      <a href="../reference/g.test.html">
         <span class="fa fa-clipboard-check"></span>
          
         Use the G-test
@@ -239,9 +239,9 @@
       
     </div>
 
-    <div id="amr-0619053" class="section level1">
+    <div id="amr-070" class="section level1">
 <h1 class="page-header">
-<a href="#amr-0619053" class="anchor"></a>AMR 0.6.1.9053<small> Unreleased </small>
+<a href="#amr-070" class="anchor"></a>AMR 0.7.0<small> Unreleased </small>
 </h1>
 <div id="new" class="section level4">
 <h4 class="hasAnchor">
@@ -250,7 +250,7 @@
 <li>Support for translation of disk diffusion and MIC values to RSI values (i.e. antimicrobial interpretations). Supported guidelines are EUCAST (2011 to 2019) and CLSI (2011 to 2019). Use <code><a href="../reference/as.rsi.html">as.rsi()</a></code> on an MIC value (created with <code><a href="../reference/as.mic.html">as.mic()</a></code>), a disk diffusion value (created with the new <code><a href="../reference/as.disk.html">as.disk()</a></code>) or on a complete date set containing columns with MIC or disk diffusion values.</li>
 <li>Function <code><a href="../reference/mo_property.html">mo_name()</a></code> as alias of <code><a href="../reference/mo_property.html">mo_fullname()</a></code>
 </li>
-<li>Added guidelines of the WHO to determine mutli-drug resistance (MDR) for TB (<code><a href="../reference/mdro.html">mdr_tb()</a></code>) and added a new vignette about MDR</li>
+<li>Added guidelines of the WHO to determine multi-drug resistance (MDR) for TB (<code><a href="../reference/mdro.html">mdr_tb()</a></code>) and added a new vignette about MDR. Read this tutorial <a href="https://msberends.gitlab.io/AMR/articles/MDR.html">here on our website</a>.</li>
 </ul>
 </div>
 <div id="changed" class="section level4">
@@ -258,6 +258,7 @@
 <a href="#changed" class="anchor"></a>Changed</h4>
 <ul>
 <li>Fixed a critical bug in <code><a href="../reference/first_isolate.html">first_isolate()</a></code> where missing species would lead to incorrect FALSEs. This bug was not present in AMR v0.5.0, but was in v0.6.0 and v0.6.1.</li>
+<li>Fixedd a bug in <code><a href="../reference/eucast_rules.html">eucast_rules()</a></code> where antibiotics from WHONET software would not be recognised</li>
 <li>Completely reworked the <code>antibiotics</code> data set:
 <ul>
 <li>All entries now have 3 different identifiers:
@@ -282,10 +283,10 @@ Please <a href="https://gitlab.com/msberends/AMR/issues/new?issue%5Btitle%5D=Tra
 <li>New parameters <code>title</code>, <code>subtitle</code>, <code>caption</code>, <code>x.title</code> and <code>y.title</code> to set titles and axis descriptions</li>
 </ul>
 </li>
-<li>Improved intelligence of looking up antibiotic tables in data set using <code><a href="../reference/guess_ab_col.html">guess_ab_col()</a></code>
+<li>Improved intelligence of looking up antibiotic columns in a data set using <code><a href="../reference/guess_ab_col.html">guess_ab_col()</a></code>
 </li>
 <li>Added ~5,000 more old taxonomic names to the <code>microorganisms.old</code> data set, which leads to better results finding when using the <code><a href="../reference/as.mo.html">as.mo()</a></code> function</li>
-<li>This package now honours the new EUCAST insight (2019) that S and I are but classified as susceptible, where I is defined as ‘increased exposure’ and not ‘intermediate’ anymore. For functions like <code><a href="../reference/portion.html">portion_df()</a></code> and <code><a href="../reference/count.html">count_df()</a></code> this means that their new parameter <code>combine_SI</code> is TRUE at default.</li>
+<li>This package now honours the new EUCAST insight (2019) that S and I are but classified as susceptible, where I is defined as ‘increased exposure’ and not ‘intermediate’ anymore. For functions like <code><a href="../reference/portion.html">portion_df()</a></code> and <code><a href="../reference/count.html">count_df()</a></code> this means that their new parameter <code>combine_SI</code> is TRUE at default. Our plotting function <code><a href="../reference/ggplot_rsi.html">ggplot_rsi()</a></code> also reflects this change since it uses <code><a href="../reference/count.html">count_df()</a></code> internally.</li>
 <li>The <code><a href="../reference/age.html">age()</a></code> function gained a new parameter <code>exact</code> to determine ages with decimals</li>
 <li>Removed deprecated functions <code>guess_mo()</code>, <code>guess_atc()</code>, <code>EUCAST_rules()</code>, <code>interpretive_reading()</code>, <code>rsi()</code>
 </li>
@@ -1066,7 +1067,7 @@ Using <code><a href="../reference/as.mo.html">as.mo(..., allow_uncertain = 3)</a
     <div id="tocnav">
       <h2>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
-        <li><a href="#amr-0619053">0.6.1.9053</a></li>
+        <li><a href="#amr-070">0.7.0</a></li>
         <li><a href="#amr-061">0.6.1</a></li>
         <li><a href="#amr-060">0.6.0</a></li>
         <li><a href="#amr-050">0.5.0</a></li>

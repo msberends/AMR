@@ -154,6 +154,7 @@ search_type_in_df <- function(x, type) {
   found
 }
 
+#' @importFrom crayon blue bold
 get_column_abx <- function(x,
                            soft_dependencies = NULL,
                            hard_dependencies = NULL,
@@ -219,10 +220,8 @@ get_column_abx <- function(x,
     if (!all(soft_dependencies %in% names(x))) {
       # missing a soft dependency may lower the reliability
       missing <- soft_dependencies[!soft_dependencies %in% names(x)]
-      missing <- paste0(missing, " (", ab_name(missing, tolower = TRUE), ")")
-      warning('Reliability might be improved if these antimicrobial results would be available too: ', paste(missing, collapse = ", "),
-              immediate. = TRUE,
-              call. = FALSE)
+      missing <- paste0(bold(missing), " (", ab_name(missing, tolower = TRUE), ")")
+      message(blue('NOTE: Reliability might be improved if these antimicrobial results would be available too:', paste(missing, collapse = ", ")))
     }
   }
   x

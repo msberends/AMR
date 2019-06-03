@@ -17,7 +17,7 @@
   \item{\code{prevalence}}{Prevalence of the microorganism, see \code{?as.mo}}
 }}
 \source{
-Catalogue of Life: Annual Checklist (public online taxonomic database), \url{www.catalogueoflife.org} (check included annual version with \code{\link{catalogue_of_life_version}()}).
+Catalogue of Life: Annual Checklist (public online taxonomic database), \url{http://www.catalogueoflife.org} (check included annual version with \code{\link{catalogue_of_life_version}()}).
 
 Leibniz Institute DSMZ-German Collection of Microorganisms and Cell Cultures, Germany, Prokaryotic Nomenclature Up-to-Date, \url{http://www.dsmz.de/bacterial-diversity/prokaryotic-nomenclature-up-to-date} (check included version with \code{\link{catalogue_of_life_version}()}).
 }

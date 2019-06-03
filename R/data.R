@@ -78,7 +78,7 @@
 #' Names of prokaryotes are defined as being validly published by the International Code of Nomenclature of Bacteria. Validly published are all names which are included in the Approved Lists of Bacterial Names and the names subsequently published in the International Journal of Systematic Bacteriology (IJSB) and, from January 2000, in the International Journal of Systematic and Evolutionary Microbiology (IJSEM) as original articles or in the validation lists.
 #'
 #' From: \url{https://www.dsmz.de/support/bacterial-nomenclature-up-to-date-downloads/readme.html}
-#' @source Catalogue of Life: Annual Checklist (public online taxonomic database), \url{www.catalogueoflife.org} (check included annual version with \code{\link{catalogue_of_life_version}()}).
+#' @source Catalogue of Life: Annual Checklist (public online taxonomic database), \url{http://www.catalogueoflife.org} (check included annual version with \code{\link{catalogue_of_life_version}()}).
 #'
 #' Leibniz Institute DSMZ-German Collection of Microorganisms and Cell Cultures, Germany, Prokaryotic Nomenclature Up-to-Date, \url{http://www.dsmz.de/bacterial-diversity/prokaryotic-nomenclature-up-to-date} (check included version with \code{\link{catalogue_of_life_version}()}).
 #' @inheritSection AMR Read more on our website!
@@ -104,7 +104,7 @@ catalogue_of_life <- list(
 #'   \item{\code{fullname}}{Old full taxonomic name of the microorganism}
 #'   \item{\code{ref}}{Author(s) and year of concerning scientific publication}
 #' }
-#' @source Catalogue of Life: Annual Checklist (public online taxonomic database), \url{www.catalogueoflife.org} (check included annual version with \code{\link{catalogue_of_life_version}()}).
+#' @source Catalogue of Life: Annual Checklist (public online taxonomic database), \url{http://www.catalogueoflife.org} (check included annual version with \code{\link{catalogue_of_life_version}()}).
 #' @inheritSection AMR Read more on our website!
 #' @seealso \code{\link{as.mo}} \code{\link{mo_property}} \code{\link{microorganisms}}
 "microorganisms.old"
