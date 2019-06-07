@@ -199,7 +199,7 @@
       <h1>How to work with WHONET data</h1>
                         <h4 class="author">Matthijs S. Berends</h4>
             
-            <h4 class="date">03 June 2019</h4>
+            <h4 class="date">07 June 2019</h4>
       
       
       <div class="hidden name"><code>WHONET.Rmd</code></div>
@@ -238,7 +238,7 @@
 <p>No errors or warnings, so all values are transformed succesfully. Let’s check it though, with a couple of frequency tables:</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" title="1"><span class="co"># our newly created `mo` variable</span></a>
 <a class="sourceLine" id="cb4-2" title="2">data <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="../reference/freq.html">freq</a></span>(mo, <span class="dt">nmax =</span> <span class="dv">10</span>)</a></code></pre></div>
-<p><strong>Frequency table of <code>mo</code> from a <code>data.frame</code> (500 x 54)</strong></p>
+<p><strong>Frequency table of <code>mo</code> from <code>data</code> (500 x 54)</strong></p>
 <p>Class: mo (character)<br>
 Length: 500 (of which NA: 0 = 0.00%)<br>
 Unique: 39</p>
@@ -342,7 +342,7 @@ Species: 38</p>
 <a class="sourceLine" id="cb5-2" title="2"><span class="co"># our transformed antibiotic columns</span></a>
 <a class="sourceLine" id="cb5-3" title="3"><span class="co"># amoxicillin/clavulanic acid (J01CR02) as an example</span></a>
 <a class="sourceLine" id="cb5-4" title="4">data <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="../reference/freq.html">freq</a></span>(AMC_ND2)</a></code></pre></div>
-<p><strong>Frequency table of <code>AMC_ND2</code> from a <code>data.frame</code> (500 x 54)</strong></p>
+<p><strong>Frequency table of <code>AMC_ND2</code> from <code>data</code> (500 x 54)</strong></p>
 <p>Class: factor &gt; ordered &gt; rsi (numeric)<br>
 Length: 500 (of which NA: 19 = 3.80%)<br>
 Levels: 3: S &lt; I &lt; R<br>

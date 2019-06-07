@@ -172,16 +172,19 @@ get_column_abx <- function(x,
   # get_column_abx(septic_patients %>% rename(thisone = AMX), amox = "thisone")
   dots <- list(...)
   if (length(dots) > 0) {
-    dots <- unlist(dots)
     newnames <- suppressWarnings(as.ab(names(dots)))
     if (any(is.na(newnames))) {
       warning("Invalid antibiotic reference(s): ", toString(names(dots)[is.na(newnames)]),
               call. = FALSE, immediate. = TRUE)
     }
+    # turn all NULLs to NAs
+    dots <- unlist(lapply(dots, function(x) if (is.null(x)) NA else x))
     names(dots) <- newnames
     dots <- dots[!is.na(names(dots))]
     # merge, but overwrite automatically determined ones by 'dots'
     x <- c(x[!x %in% dots & !names(x) %in% names(dots)], dots)
+    # delete NAs, this will make eucast_rules(... TMP = NULL) work to prevent TMP from being used
+    x <- x[!is.na(x)]
   }
 
   # sort on name

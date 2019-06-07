@@ -209,6 +209,12 @@ eucast_rules <- function(x,
     stop("`col_mo` must be set")
   }
 
+  decimal.mark <- getOption("OutDec")
+  big.mark <- ifelse(decimal.mark != ",", ",", ".")
+  formatnr <- function(x) {
+    trimws(format(x, big.mark = big.mark, decimal.mark = decimal.mark))
+  }
+
   warned <- FALSE
 
   txt_error <- function() { cat("", bgRed(white(" ERROR ")), "\n") }
@@ -219,7 +225,7 @@ eucast_rules <- function(x,
         if (no_of_changes == 1) {
           cat(blue(" (1 new change)\n"))
         } else {
-          cat(blue(paste0(" (", no_of_changes, " new changes)\n")))
+          cat(blue(paste0(" (", formatnr(no_of_changes), " new changes)\n")))
         }
       } else {
         cat(green(" (no new changes)\n"))
@@ -663,12 +669,6 @@ eucast_rules <- function(x,
 
     verbose_info <- verbose_info %>%
       arrange(row, rule_group, rule_name, col)
-
-    decimal.mark <- getOption("OutDec")
-    big.mark <- ifelse(decimal.mark != ",", ",", ".")
-    formatnr <- function(x) {
-      trimws(format(x, big.mark = big.mark, decimal.mark = decimal.mark))
-    }
 
     cat(paste0("\n", silver(strrep("-", options()$width - 1)), "\n"))
     cat(bold(paste('EUCAST rules', paste0(wouldve, 'affected'),

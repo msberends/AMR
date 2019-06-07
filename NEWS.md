@@ -1,10 +1,26 @@
-# AMR 0.7.0.9000
+# AMR 0.7.0.9001
 
 #### New
+* Support for all scientifically published pathotypes of *E. coli* to date. Supported are: AIEC (Adherent-Invasive *E. coli*), ATEC (Atypical Entero-pathogenic *E. coli*), DAEC (Diffusely Adhering *E. coli*), EAEC (Entero-Aggresive *E. coli*), EHEC (Entero-Haemorrhagic *E. coli*), EIEC (Entero-Invasive *E. coli*), EPEC (Entero-Pathogenic *E. coli*), ETEC (Entero-Toxigenic *E. coli*), NMEC (Neonatal Meningitis‐causing *E. coli*), STEC (Shiga-toxin producing *E. coli*) and UPEC (Uropathogenic *E. coli*). All these lead to the microbial ID of *E. coli*:
+  ```r
+  as.mo("UPEC")
+  # B_ESCHR_COL
+  mo_fullname("UPEC")
+  # "Escherichia coli"
+  ```
 
 #### Changed
+* Fixed bug in translation of microorganism names
+* Fixed bug in determining taxonomic kingdoms
+* Algorithm improvements for `as.ab()` and `as.mo()` to understand even more severe misspelled input
+* Added `ggplot2` methods for automatically determining the scale type of classes `mo` and `ab`
+* Added names of object in the header in frequency tables, even when using pipes
+* Prevented `"bacteria"` from getting coerced by `as.ab()` because Bacterial is a brand name of trimethoprim (TMP)
+* Fixed a bug where setting an antibiotic would not work for `eucast_rules()` and `mdro()`
+* Fixed a EUCAST rule for Staphylococci, where amikacin resistance would not be inferred from tobramycin
 
 #### Other
+* Fixed a note thrown by CRAN tests
 
 # AMR 0.7.0
 

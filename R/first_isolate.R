@@ -414,15 +414,15 @@ first_isolate <- function(x,
     if (length(x) == 1) {
       return(TRUE)
     }
-    indices = integer(0)
-    start = x[1]
-    ind = 1
-    indices[ind] = ind
+    indices <- integer(0)
+    start <- x[1]
+    ind <- 1
+    indices[ind] <- ind
     for (i in 2:length(x)) {
-      if (as.numeric(x[i] - start >= episode_days)) {
-        ind = ind + 1
-        indices[ind] = i
-        start = x[i]
+      if (isTRUE(as.numeric(x[i] - start) >= episode_days)) {
+        ind <- ind + 1
+        indices[ind] <- i
+        start <- x[i]
       }
     }
     result <- rep(FALSE, length(x))

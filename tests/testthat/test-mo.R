@@ -74,7 +74,7 @@ test_that("as.mo works", {
 
   # prevalent MO
   expect_identical(
-    as.character(
+    suppressWarnings(as.character(
       as.mo(c("stau",
               "STAU",
               "staaur",
@@ -83,12 +83,12 @@ test_that("as.mo works", {
               "Sthafilokkockus aureeuzz",
               "Staphylococcus aureus",
               "MRSA",
-              "VISA"))),
+              "VISA")))),
     rep("B_STPHY_AUR", 9))
   expect_identical(
     as.character(
-      as.mo(c('EHEC', 'EPEC', 'EIEC', 'STEC', 'ATEC'))),
-    rep("B_ESCHR_COL", 5))
+      as.mo(c('EHEC', 'EPEC', 'EIEC', 'STEC', 'ATEC', 'UPEC'))),
+    rep("B_ESCHR_COL", 6))
   # unprevalent MO
   expect_identical(
     as.character(

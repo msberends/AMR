@@ -165,7 +165,7 @@ family	is	Enterobacteriaceae	TIC, PIP	R, S	PIP	R	Table 09: Interpretive rules fo
 genus	is	.*	ERY	S	AZM, CLR	S	Table 11: Interpretive rules for macrolides, lincosamides, and streptogramins	Expert Rules
 genus	is	.*	ERY	I	AZM, CLR	I	Table 11: Interpretive rules for macrolides, lincosamides, and streptogramins	Expert Rules
 genus	is	.*	ERY	R	AZM, CLR	R	Table 11: Interpretive rules for macrolides, lincosamides, and streptogramins	Expert Rules
-genus	is	Staphylococcus	TOB	R	KAN, amik	R	Table 12: Interpretive rules for aminoglycosides	Expert Rules
+genus	is	Staphylococcus	TOB	R	KAN, AMK	R	Table 12: Interpretive rules for aminoglycosides	Expert Rules
 genus	is	Staphylococcus	GEN	R	aminoglycosides	R	Table 12: Interpretive rules for aminoglycosides	Expert Rules
 family	is	Enterobacteriaceae	GEN, TOB	I, S	GEN	R	Table 12: Interpretive rules for aminoglycosides	Expert Rules
 family	is	Enterobacteriaceae	GEN, TOB	R, I	TOB	R	Table 12: Interpretive rules for aminoglycosides	Expert Rules

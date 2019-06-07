@@ -485,18 +485,21 @@ exec_as.mo <- function(x,
     # remove genus as first word
     x <- gsub("^Genus ", "", x)
     # allow characters that resemble others
-    x <- gsub("[iy]+", "[iy]+", x, ignore.case = TRUE)
-    x <- gsub("[sz]+", "[sz]+", x, ignore.case = TRUE)
-    x <- gsub("(c|k|q|qu)+", "(c|k|q|qu)+", x, ignore.case = TRUE)
-    x <- gsub("(ph|f|v)+", "(ph|f|v)+", x, ignore.case = TRUE)
-    x <- gsub("(th|t)+", "(th|t)+", x, ignore.case = TRUE)
-    x <- gsub("a+", "a+", x, ignore.case = TRUE)
-    # allow any ending of -um, -us, -ium, -ius and -a (needs perl for the negative backward lookup):
-    x <- gsub("(um|u\\[sz\\]\\+|\\[iy\\]\\+um|\\[iy\\]\\+u\\[sz\\]\\+|a\\+)(?![a-z[])",
-              "(um|us|ium|ius|a)", x, ignore.case = TRUE, perl = TRUE)
-    x <- gsub("e+", "e+", x, ignore.case = TRUE)
-    x <- gsub("o+", "o+", x, ignore.case = TRUE)
-
+    if (initial_search == FALSE) {
+      x <- tolower(x)
+      x <- gsub("[iy]+", "[iy]+", x)
+      x <- gsub("(c|k|q|qu|s|z|x|ks)+", "(c|k|q|qu|s|z|x|ks)+", x)
+      x <- gsub("(ph|f|v)+", "(ph|f|v)+", x)
+      x <- gsub("(th|t)+", "(th|t)+", x)
+      x <- gsub("a+", "a+", x)
+      x <- gsub("u+", "u+", x)
+      # allow any ending of -um, -us, -ium, -ius and -a (needs perl for the negative backward lookup):
+      x <- gsub("(um|u\\[sz\\]\\+|\\[iy\\]\\+um|\\[iy\\]\\+u\\[sz\\]\\+|a\\+)(?![a-z[])",
+                "(um|us|ium|ius|a)", x, ignore.case = TRUE, perl = TRUE)
+      x <- gsub("e+", "e+", x, ignore.case = TRUE)
+      x <- gsub("o+", "o+", x, ignore.case = TRUE)
+      x <- gsub("(.)\\1+", "\\1+", x)
+    }
     x <- strip_whitespace(x)
 
     x_trimmed <- x
@@ -639,7 +642,7 @@ exec_as.mo <- function(x,
           }
           next
         }
-        if (toupper(x_backup_without_spp[i]) %in% c("EHEC", "EPEC", "EIEC", "STEC", "ATEC")
+        if (toupper(x_backup_without_spp[i]) %in% c("AIEC", "ATEC", "DAEC", "EAEC", "EHEC", "EIEC", "EPEC", "ETEC", "NMEC", "STEC", "UPEC")
             | x_backup_without_spp[i] %like% "O?(26|103|104|104|111|121|145|157)") {
           x[i] <- microorganismsDT[mo == 'B_ESCHR_COL', ..property][[1]][1L]
           if (initial_search == TRUE) {
@@ -1480,4 +1483,14 @@ translate_allow_uncertain <- function(allow_uncertain) {
     }
   }
   allow_uncertain
+}
+
+#' @exportMethod scale_type.mo
+#' @export
+#' @noRd
+scale_type.mo <- function(x) {
+  # fix for:
+  # "Don't know how to automatically pick scale for object of type mo. Defaulting to continuous."
+  # "Error: Discrete value supplied to continuous scale"
+  "discrete"
 }

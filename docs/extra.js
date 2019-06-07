@@ -23,14 +23,19 @@
 
 // Add updated Font Awesome 5.8.2 library
 $('head').append('<!-- Updated Font Awesome library --><link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">');
-// Add Disqus
-$('head').append('<script src="https://amr-for-r.disqus.com/embed.js" data-timestamp="' + new Date()  + '"></script>');
 
 // Email template for new GitLab issues
 //https://stackoverflow.com/a/33190494/4575331
 //incoming+msberends-amr-9011429-5miwzuo1xo70wbz9r6fwv4dmg-issue@incoming.gitlab.com
 
 $( document ).ready(function() {
+
+  // add SurveyMonkey
+  $('body').append('<script>(function(t,e,s,o){var n,a,c;t.SMCX=t.SMCX||[],e.getElementById(o)||(n=e.getElementsByTagName(s),a=n[n.length-1],c=e.createElement(s),c.type="text/javascript",c.async=!0,c.id=o,c.src=["https:"===location.protocol?"https://":"http://","widget.surveymonkey.com/collect/website/js/tRaiETqnLgj758hTBazgd_2BrwaGaWbg59AiLjNGdPaaJiBHKqgXKIw46VauwBvZ67.js"].join(""),a.parentNode.insertBefore(c,a))})(window,document,"script","smcx-sdk");</script>');
+
+  // add link to survey at home sidebar
+  $('.template-home #sidebar .list-unstyled:first').append('<li><strong>Please fill in our survey at</strong> <br><a href="https://www.surveymonkey.com/r/AMR_for_R" target="_blank">https://www.surveymonkey.com/r/AMR_for_R</a></li>');
+
 
   // remove version label from header
   $(".version.label").remove();
@@ -55,18 +60,6 @@ $( document ).ready(function() {
     '  <hr>' +
     '</div>');
   }
-
-  // add Disqus to all pages
-  var disqus =
-    '<button id="btn_collapseDisqus" class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseDisqus" aria-expanded="false" aria-controls="collapseDisqus">' +
-      '  Having a question? Or knowing something we don\'t? Click here to open comments.' +
-    '</button>' +
-    '<div class="collapse" id="collapseDisqus">' +
-      '<div id="disqus_thread"></div>' +
-    '</div>';
-
-  $(disqus).insertBefore('footer');
-  $('#disqus_thread footer').remove();
 
   // edit footer
   $('footer').html(

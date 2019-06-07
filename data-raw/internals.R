@@ -18,7 +18,7 @@ eucast_rules_file <- dplyr::arrange(
   reference.rule)
 
 # Translations -----
-translations_file <- utils::read.table(file = "data-raw/translations.tsv",
+translations_file <- utils::read.delim(file = "data-raw/translations.tsv",
                                        sep = "\t",
                                        stringsAsFactors = FALSE,
                                        header = TRUE,
@@ -27,7 +27,9 @@ translations_file <- utils::read.table(file = "data-raw/translations.tsv",
                                        strip.white = TRUE,
                                        encoding = "UTF-8",
                                        fileEncoding = "UTF-8",
-                                       na.strings = c(NA, "", NULL))
+                                       na.strings = c(NA, "", NULL),
+                                       allowEscapes = TRUE, # else "\\1" will be imported as "\\\\1"
+                                       quote = "")
 
 # Export to package as internal data ----
 usethis::use_data(eucast_rules_file, translations_file,

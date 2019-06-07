@@ -238,7 +238,8 @@ mo_kingdom <- function(x, language = get_locale(), ...) {
   x <- as.mo(x, ...)
   kngdm <- mo_validate(x = x, property = "kingdom", ...)
   if (language != "en") {
-    kngdm[x == "UNKNOWN"] <- t(kngdm[x == "UNKNOWN"], language = language)
+    # translate only unknown, so "Bacteria" (the official taxonomic name) would not change
+    kngdm[identical(x, "UNKNOWN")] <- t(kngdm[identical(x, "UNKNOWN")], language = language)
   }
   kngdm
 }

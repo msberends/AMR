@@ -238,7 +238,13 @@ freq <- function(x,
       x.name <- x.name %>% strsplit("%>%", fixed = TRUE) %>% unlist() %>% .[1] %>% trimws()
     }
     if (x.name == ".") {
-      x.name <- "a data.frame"
+      # passed on with pipe
+      x.name <- get_data_source_name(x)
+      if (!is.null(x.name)) {
+        x.name <- paste0("`", x.name, "`")
+      } else {
+        x.name <- "a data.frame"
+      }
     } else {
       x.name <- paste0("`", x.name, "`")
     }
@@ -1229,4 +1235,22 @@ format.freq <- function(x, digits = 1, ...) {
   x$percent <- percent(x$percent, round = digits, force_zero = TRUE)
   x$cum_percent <- percent(x$cum_percent, round = digits, force_zero = TRUE)
   base::format.data.frame(x, ...)
+}
+
+#' @importFrom data.table address
+get_data_source_name <- function(x, else_txt = NULL) {
+  obj_addr <- address(x)
+  # try global environment
+  addrs <- unlist(lapply(ls(".GlobalEnv"), function(x) address(get(x))))
+  res <- ls(".GlobalEnv")[addrs == obj_addr]
+  if (length(res) == 0) {
+    # check AMR package - some users might use our data sets for testing
+    addrs <- unlist(lapply(ls("package:AMR"), function(x) address(get(x))))
+    res <- ls("package:AMR")[addrs == obj_addr]
+  }
+  if (length(res) == 0) {
+    else_txt
+  } else {
+    res
+  }
 }

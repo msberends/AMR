@@ -91,6 +91,11 @@ as.ab <- function(x) {
       x_unknown <- c(x_unknown, x_bak[x[i] == x_bak_clean][1])
       next
     }
+    # prevent "bacteria" from coercing to TMP, since Bacterial is a brand name of it
+    if (identical(tolower(x[i]), "bacteria")) {
+      x_unknown <- c(x_unknown, x_bak[x[i] == x_bak_clean][1])
+      next
+    }
 
     # exact AB code
     found <- AMR::antibiotics[which(AMR::antibiotics$ab == toupper(x[i])),]$ab
@@ -162,23 +167,20 @@ as.ab <- function(x) {
     }
     x_spelling <- tolower(x[i])
     x_spelling <- gsub("[iy]+", "[iy]+", x_spelling)
-    x_spelling <- gsub("[sz]+", "[sz]+", x_spelling)
-    x_spelling <- gsub("(c|k|q|qu)+", "(c|k|q|qu)+", x_spelling)
+    x_spelling <- gsub("(c|k|q|qu|s|z|x|ks)+", "(c|k|q|qu|s|z|x|ks)+", x_spelling)
     x_spelling <- gsub("(ph|f|v)+", "(ph|f|v)+", x_spelling)
     x_spelling <- gsub("(th|t)+", "(th|t)+", x_spelling)
-    x_spelling <- gsub("(x|ks)+", "(x|ks)+", x_spelling)
     x_spelling <- gsub("a+", "a+", x_spelling)
     x_spelling <- gsub("e+", "e+", x_spelling)
     x_spelling <- gsub("o+", "o+", x_spelling)
-    # allow start with C/S/Z
-    x_spelling <- gsub("^(\\(c\\|k\\|q\\|qu\\)|\\[sz\\])", "(c|k|q|qu|s|z)", x_spelling)
-    x_spelling <- gsub("(c|k|q|qu)+[sz]", "(c|k|q|qu|s|x|z)", x_spelling, fixed = TRUE)
     # allow any ending of -in/-ine and -im/-ime
     x_spelling <- gsub("(\\[iy\\]\\+(n|m)|\\[iy\\]\\+(n|m)e\\+)$", "[iy]+(n|m)e*", x_spelling)
     # allow any ending of -ol/-ole
     x_spelling <- gsub("(o\\+l|o\\+le\\+)$", "o+le*", x_spelling)
     # allow any ending of -on/-one
     x_spelling <- gsub("(o\\+n|o\\+ne\\+)$", "o+ne*", x_spelling)
+    # replace multiple same characters to single one with '+', like "ll" -> "l+"
+    x_spelling <- gsub("(.)\\1+", "\\1+", x_spelling)
     # try if name starts with it
     found <- AMR::antibiotics[which(AMR::antibiotics$name %like% paste0("^", x_spelling)),]$ab
     if (length(found) > 0) {
@@ -255,4 +257,14 @@ as.data.frame.ab <- function (x, ...) {
 #' @noRd
 pull.ab <- function(.data, ...) {
   pull(as.data.frame(.data), ...)
+}
+
+#' @exportMethod scale_type.ab
+#' @export
+#' @noRd
+scale_type.ab <- function(x) {
+  # fix for:
+  # "Don't know how to automatically pick scale for object of type ab. Defaulting to continuous."
+  # "Error: Discrete value supplied to continuous scale"
+  "discrete"
 }

@@ -59,4 +59,8 @@ test_that("as.ab works", {
   expect_equal(as.character(as.ab("Phloxapen")),
                "FLC")
 
+  expect_equal(suppressWarnings(as.character(as.ab(c("Bacteria", "Bacterial")))),
+               c(NA, "TMP"))
+
+
 })
