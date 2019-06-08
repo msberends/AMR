@@ -260,7 +260,6 @@ pull.ab <- function(.data, ...) {
 }
 
 #' @exportMethod scale_type.ab
-#' @export
 #' @noRd
 scale_type.ab <- function(x) {
   # fix for:

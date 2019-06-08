@@ -1486,7 +1486,7 @@ translate_allow_uncertain <- function(allow_uncertain) {
 }
 
 #' @exportMethod scale_type.mo
-#' @export
+# @export
 #' @noRd
 scale_type.mo <- function(x) {
   # fix for:
