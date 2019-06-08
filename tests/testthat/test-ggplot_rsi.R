@@ -62,4 +62,16 @@ test_that("ggplot_rsi works", {
   expect_error(ggplot_rsi(septic_patients, fun = "invalid"))
   expect_error(geom_rsi(septic_patients, fun = "invalid"))
 
+  # support for scale_type ab and mo
+  expect_equal(class((data.frame(mo = as.mo(c("e. coli", "s aureus")),
+                                 n = c(40, 100)) %>%
+                        ggplot(aes(x = mo, y = n)) +
+                        geom_col())$data),
+               "data.frame")
+  expect_equal(class((data.frame(ab = as.ab(c("amx", "amc")),
+                                 n = c(40, 100)) %>%
+                        ggplot(aes(x = ab, y = n)) +
+                        geom_col())$data),
+               "data.frame")
+
 })

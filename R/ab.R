@@ -258,12 +258,3 @@ as.data.frame.ab <- function (x, ...) {
 pull.ab <- function(.data, ...) {
   pull(as.data.frame(.data), ...)
 }
-
-#' @exportMethod scale_type.ab
-#' @noRd
-scale_type.ab <- function(x) {
-  # fix for:
-  # "Don't know how to automatically pick scale for object of type ab. Defaulting to continuous."
-  # "Error: Discrete value supplied to continuous scale"
-  "discrete"
-}

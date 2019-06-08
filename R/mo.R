@@ -1484,13 +1484,3 @@ translate_allow_uncertain <- function(allow_uncertain) {
   }
   allow_uncertain
 }
-
-#' @exportMethod scale_type.mo
-# @export
-#' @noRd
-scale_type.mo <- function(x) {
-  # fix for:
-  # "Don't know how to automatically pick scale for object of type mo. Defaulting to continuous."
-  # "Error: Discrete value supplied to continuous scale"
-  "discrete"
-}
