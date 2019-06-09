@@ -52,7 +52,9 @@ echo "••••••••••••••••••••••••�
 echo "• Reloading/documenting package •"
 echo "•••••••••••••••••••••••••••••••••"
 Rscript -e "devtools::load_all(quiet = TRUE)"
+echo "Documenting..."
 Rscript -e "suppressMessages(devtools::document())"
+echo "Installing..."
 Rscript -e "devtools::install(quiet = TRUE, dependencies = FALSE)"
 echo
 echo "••••••••••••••••••••••••••"

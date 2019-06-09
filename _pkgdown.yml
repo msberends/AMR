@@ -19,152 +19,160 @@
 # Visit our website for more info: https://msberends.gitlab.io/AMR.    #
 # ==================================================================== #
 
-title: 'AMR (for R)'
-url: 'https://msberends.gitlab.io/AMR'
+title: "AMR (for R)"
+url: "https://msberends.gitlab.io/AMR"
+
 development:
-  mode: release # improves indexing by search engines
+  mode: "release" # improves indexing by search engines
+  version_tooltip: "Latest development version"
+
 news:
   one_page: true
 
 navbar:
-  title: 'AMR (for R)'
+  title: "AMR (for R)"
   left:
-    - text: 'Home'
-      icon: 'fa-home'
-      href: 'index.html'
-    - text: 'How to'
-      icon: 'fa-question-circle'
+    - text: "Home"
+      icon: "fa-home"
+      href: "index.html"
+    - text: "How to"
+      icon: "fa-question-circle"
       menu:
-      - text: 'Conduct AMR analysis'
-        icon: 'fa-directions'
-        href: 'articles/AMR.html'
-      - text: 'Predict antimicrobial resistance'
-        icon: 'fa-dice'
-        href: 'articles/resistance_predict.html'
-      - text: 'Determine multi-drug resistance (MDR)'
-        icon: 'fa-skull-crossbones'
-        href: 'articles/MDR.html'
-      - text: 'Work with WHONET data'
-        icon: 'fa-globe-americas'
-        href: 'articles/WHONET.html'
-      - text: 'Import data from SPSS/SAS/Stata'
-        icon: 'fa-file-upload'
-        href: 'articles/SPSS.html'
-      - text: 'Apply EUCAST rules'
-        icon: 'fa-exchange-alt'
-        href: 'articles/EUCAST.html'
-      - text: 'Get properties of a microorganism'
-        icon: 'fa-bug'
-        href: 'reference/mo_property.html' # reference instead of article
-      - text: 'Get properties of an antibiotic'
-        icon: 'fa-capsules'
-        href: 'reference/ab_property.html' # reference instead of article
-      - text: 'Create frequency tables'
-        icon: 'fa-sort-amount-down'
-        href: 'articles/freq.html'
-      - text: 'Use the G-test'
-        icon: 'fa-clipboard-check'
-        href: 'reference/g.test.html' # reference instead of article
-      - text: 'Other: benchmarks'
-        icon: 'fa-shipping-fast'
-        href: 'articles/benchmarks.html'
-    - text: 'Manual'
-      icon: 'fa-book-open'
-      href: 'reference/'
-    - text: 'Authors'
-      icon: 'fa-users'
-      href: 'authors.html'
-    - text: 'Changelog'
-      icon: 'far fa-newspaper'
-      href: 'news/'
+      - text: "Conduct AMR analysis"
+        icon: "fa-directions"
+        href: "articles/AMR.html"
+      - text: "Predict antimicrobial resistance"
+        icon: "fa-dice"
+        href: "articles/resistance_predict.html"
+      - text: "Determine multi-drug resistance (MDR)"
+        icon: "fa-skull-crossbones"
+        href: "articles/MDR.html"
+      - text: "Work with WHONET data"
+        icon: "fa-globe-americas"
+        href: "articles/WHONET.html"
+      - text: "Import data from SPSS/SAS/Stata"
+        icon: "fa-file-upload"
+        href: "articles/SPSS.html"
+      - text: "Apply EUCAST rules"
+        icon: "fa-exchange-alt"
+        href: "articles/EUCAST.html"
+      - text: "Get properties of a microorganism"
+        icon: "fa-bug"
+        href: "reference/mo_property.html" # reference instead of article
+      - text: "Get properties of an antibiotic"
+        icon: "fa-capsules"
+        href: "reference/ab_property.html" # reference instead of article
+      - text: "Create frequency tables"
+        icon: "fa-sort-amount-down"
+        href: "articles/freq.html"
+#       - text: "Use the G-test"
+#         icon: "fa-clipboard-check"
+#         href: "reference/g.test.html" # reference instead of article
+      - text: "Other: benchmarks"
+        icon: "fa-shipping-fast"
+        href: "articles/benchmarks.html"
+    - text: "Manual"
+      icon: "fa-book-open"
+      href: "reference/"
+    - text: "Authors"
+      icon: "fa-users"
+      href: "authors.html"
+    - text: "Changelog"
+      icon: "far fa-newspaper"
+      href: "news/"
   right:
-    - text: 'Source Code'
-      icon: 'fab fa-gitlab'
-      href: 'https://gitlab.com/msberends/AMR'
-    - text: 'Licence'
-      icon: 'fa-book'
-      href: 'LICENSE-text.html'
+    - text: "Source Code"
+      icon: "fab fa-gitlab"
+      href: "https://gitlab.com/msberends/AMR"
+    - text: "Licence"
+      icon: "fa-book"
+      href: "LICENSE-text.html"
 
 reference:
-  - title: 'Background information'
+  - title: "Background information"
     desc: >
       Some pages about our package and its external sources. Be sure to read our [How To's](./../articles/index.html)
       for more information about how to work with functions in this package.
     contents:
-    - '`AMR`'
-    - '`catalogue_of_life`'
-    - '`catalogue_of_life_version`'
-    - '`WHOCC`'
-  - title: 'Cleaning your data'
+    - "`AMR`"
+    - "`catalogue_of_life`"
+    - "`catalogue_of_life_version`"
+    - "`WHOCC`"
+  - title: "Cleaning your data"
     desc: >
       Functions for cleaning and optimising your data, to be able to add
       variables later on (like taxonomic properties) or to fix and extend
       antibiotic interpretations by applying [EUCAST rules](http://www.eucast.org/expert_rules_and_intrinsic_resistance/).
     contents:
     - starts_with("as.")
-    - '`mo_source`'
-    - '`eucast_rules`'
-    - '`rsi_translation`'
-    - '`guess_ab_col`'
-    - '`read.4D`'
-  - title: 'Adding variables to your data'
+    - "`mo_source`"
+    - "`eucast_rules`"
+    - "`rsi_translation`"
+    - "`guess_ab_col`"
+    - "`read.4D`"
+  - title: "Adding variables to your data"
     desc: >
       Functions to add new data to existing data, like the determination
       of first isolates, multi-drug resistant microorganisms (MDRO), getting
       properties of microorganisms or antibiotics and determining the age of
       patients or divide ages into age groups.
     contents:
-    - '`first_isolate`'
-    - '`mdro`'
-    - '`key_antibiotics`'
-    - '`mo_property`'
-    - '`ab_property`'
-    - '`age`'
-    - '`age_groups`'
-    - '`p.symbol`'
-    - '`join`'
-    - '`atc_online_property`'
-  - title: 'Analysing your data'
+    - "`first_isolate`"
+    - "`mdro`"
+    - "`key_antibiotics`"
+    - "`mo_property`"
+    - "`ab_property`"
+    - "`age`"
+    - "`age_groups`"
+    - "`p.symbol`"
+    - "`join`"
+    - "`atc_online_property`"
+  - title: "Analysing your data"
     desc: >
       Functions for conducting AMR analysis, like counting isolates, calculating
       resistance or susceptibility, creating frequency tables or make plots.
     contents:
-    - '`availability`'
-    - '`count`'
-    - '`portion`'
-    - '`filter_ab_class`'
-    - '`freq`'
-    - '`g.test`'
-    - '`ggplot_rsi`'
-    - '`kurtosis`'
-    - '`resistance_predict`'
-    - '`skewness`'
-  - title: 'Included data sets'
+    - "`availability`"
+    - "`count`"
+    - "`portion`"
+    - "`filter_ab_class`"
+    - "`freq`"
+    - "`g.test`"
+    - "`ggplot_rsi`"
+    - "`kurtosis`"
+    - "`resistance_predict`"
+    - "`skewness`"
+  - title: "Included data sets"
     desc: >
       References for microorganisms and antibiotics, and even a
       genuine data set with isolates from septic patients.
     contents:
-    - '`antibiotics`'
-    - '`microorganisms`'
-    - '`septic_patients`'
-    - '`WHONET`'
-    - '`microorganisms.codes`'
-    - '`microorganisms.old`'
+    - "`antibiotics`"
+    - "`microorganisms`"
+    - "`septic_patients`"
+    - "`WHONET`"
+    - "`microorganisms.codes`"
+    - "`microorganisms.old`"
   - title: Other functions
     desc: >
       These functions are mostly for internal use, but some of
       them may also be suitable for your analysis. Especially the
       'like' function can be useful: `if (x %like% y) {...}`.
     contents:
-    - '`get_locale`'
-    - '`like`'
-  - title: Deprecated functions
+    - "`get_locale`"
+    - "`like`"
+  - title: Extended functions
+    desc: >
+      These functions are extensions of functions in other packages.
+    contents:
+    - "`extended-functions`"
+  - title:  functions
     desc: >
       These functions are deprecated, meaning that they still
       work but show a warning with every use and will be removed
       in a future version.
     contents:
-    - '`AMR-deprecated`'
+    - "`AMR-deprecated`"
 
 authors:
   Matthijs S. Berends:
@@ -179,11 +187,11 @@ authors:
     href: https://www.rug.nl/staff/b.sinha/
 
 template:
-  assets: pkgdown/logos # use logos in this folder
+  assets: "pkgdown/logos" # use logos in this folder
   params:
     noindex: false
-    bootswatch: flatly
+    bootswatch: "flatly"
     docsearch:
       # using algolia.com
-      api_key: 'f737050abfd4d726c63938e18f8c496e'
-      index_name: 'amr'
+      api_key: "f737050abfd4d726c63938e18f8c496e"
+      index_name: "amr"
