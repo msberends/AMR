@@ -318,13 +318,13 @@ MOs <- MOs %>%
                stringsAsFactors = FALSE),
     data.frame(mo = "B_GRAMN",
                col_id = NA_integer_,
-               fullname = "(unknown Gram negatives)",
+               fullname = "(unknown Gram-negatives)",
                kingdom = "Bacteria",
                phylum = "(unknown phylum)",
                class = "(unknown class)",
                order = "(unknown order)",
                family = "(unknown family)",
-               genus = "(unknown Gram negatives)",
+               genus = "(unknown Gram-negatives)",
                species = "(unknown species)",
                subspecies = "(unknown subspecies)",
                rank = "species",
@@ -334,13 +334,13 @@ MOs <- MOs %>%
                stringsAsFactors = FALSE),
     data.frame(mo = "B_GRAMP",
                col_id = NA_integer_,
-               fullname = "(unknown Gram positives)",
+               fullname = "(unknown Gram-positives)",
                kingdom = "Bacteria",
                phylum = "(unknown phylum)",
                class = "(unknown class)",
                order = "(unknown order)",
                family = "(unknown family)",
-               genus = "(unknown Gram positives)",
+               genus = "(unknown Gram-positives)",
                species = "(unknown species)",
                subspecies = "(unknown subspecies)",
                rank = "species",
@@ -457,7 +457,7 @@ MOs <- MOs %>%
   mutate(prevalence = case_when(
     class == "Gammaproteobacteria"
     | genus %in% c("Enterococcus", "Staphylococcus", "Streptococcus")
-    | mo == "UNKNOWN"
+    | mo %in% c("UNKNOWN", "B_GRAMN", "B_GRAMP")
     ~ 1,
     phylum %in% c("Proteobacteria",
                   "Firmicutes",
@@ -494,8 +494,8 @@ saveRDS(MOs, "microorganisms.rds")
 saveRDS(MOs.old, "microorganisms.old.rds")
 
 # on the server:
-usethis::use_data(microorganisms, overwrite = TRUE)
-usethis::use_data(microorganisms.old, overwrite = TRUE)
+usethis::use_data(microorganisms, overwrite = TRUE, version = 2)
+usethis::use_data(microorganisms.old, overwrite = TRUE, version = 2)
 rm(microorganisms)
 rm(microorganisms.old)
 # and update the year in R/data.R

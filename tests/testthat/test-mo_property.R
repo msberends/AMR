@@ -33,10 +33,13 @@ test_that("mo_property works", {
   expect_equal(mo_fullname("E. coli"), "Escherichia coli")
   expect_equal(mo_name("E. coli"), "Escherichia coli")
   expect_equal(mo_type("E. coli", language = "en"), "Bacteria")
-  expect_equal(mo_gramstain("E. coli", language = "en"), "Gram negative")
+  expect_equal(mo_gramstain("E. coli", language = "en"), "Gram-negative")
   expect_equal(class(mo_taxonomy("E. coli")), "list")
   expect_equal(names(mo_taxonomy("E. coli")), c("kingdom", "phylum", "class", "order",
                                                 "family", "genus", "species", "subspecies"))
+  expect_equal(names(mo_info("E. coli")), c("kingdom", "phylum", "class", "order",
+                                            "family", "genus", "species", "subspecies",
+                                            "url", "ref"))
 
   expect_equal(mo_ref("E. coli"), "Castellani et al., 1919")
   expect_equal(mo_authors("E. coli"), "Castellani et al.")

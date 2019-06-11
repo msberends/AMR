@@ -22,7 +22,7 @@
 #' Data set with ~450 antibiotics
 #'
 #' A data set containing all antibiotics. Use \code{\link{as.ab}} or one of the \code{\link{ab_property}} functions to retrieve values from this data set. Three identifiers are included in this data set: an antibiotic ID (\code{ab}, primarily used in this package) as defined by WHONET/EARS-Net, an ATC code (\code{atc}) as defined by the WHO, and a Compound ID (\code{cid}) as found in PubChem. Other properties in this data set are derived from one or more of these codes.
-#' @format A \code{\link{data.frame}} with 454 observations and 13 variables:
+#' @format A \code{\link{data.frame}} with 453 observations and 13 variables:
 #' \describe{
 #'   \item{\code{ab}}{Antibiotic ID as used in this package (like \code{AMC}), using the official EARS-Net (European Antimicrobial Resistance Surveillance Network) codes where available}
 #'   \item{\code{atc}}{ATC code (Anatomical Therapeutic Chemical) as defined by the WHOCC, like \code{J01CR02}}

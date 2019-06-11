@@ -61,9 +61,9 @@ mo_ref("E. coli")
 # [1] "Castellani et al., 1919"
 
 # Do not get mistaken - the package only includes microorganisms
-mo_phylum("C. elegans")
-# [1] "Cyanobacteria"                   # Bacteria?!
-mo_fullname("C. elegans")
+mo_kingdom("C. elegans")
+# [1] "Bacteria"                        # Bacteria?!
+mo_name("C. elegans")
 # [1] "Chroococcus limneticus elegans"  # Because a microorganism was found
 }
 \seealso{

@@ -70,15 +70,15 @@ as.ab <- function(x) {
 
   x_bak <- x
   # remove suffices
-  x_bak_clean <- gsub("_(mic|rsi|disk|disc)$", "", x, ignore.case = TRUE)
+  x_bak_clean <- gsub("_(mic|rsi|dis[ck])$", "", x, ignore.case = TRUE)
   # remove disk concentrations, like LVX_NM -> LVX
   x_bak_clean <- gsub("_[A-Z]{2}[0-9_]{0,3}$", "", x_bak_clean, ignore.case = TRUE)
-  # clean rest of it
-  x_bak_clean <- gsub("[^A-Z0-9/-]", "", x_bak_clean, ignore.case = TRUE)
-  # keep only a-z when it's not an ATC code or only numbers
-  x_bak_clean[!x_bak_clean %like% "^([A-Z][0-9]{2}[A-Z]{2}[0-9]{2}|[0-9]+)$"] <- gsub("[^a-zA-Z]+",
-                                                                                      "",
-                                                                                      x_bak_clean[!x_bak_clean %like% "^([A-Z][0-9]{2}[A-Z]{2}[0-9]{2}|[0-9]+)$"])
+  # remove part between brackets if that's followed by another string
+  x_bak_clean <- gsub("(.*)+ [(].*[)]", "\\1", x_bak_clean)
+  # keep only a-Z, 0-9, space, slash and dash
+  x_bak_clean <- gsub("[^A-Z0-9 /-]", "", x_bak_clean, ignore.case = TRUE)
+  # keep only max 1 space
+  x_bak_clean <- trimws(gsub(" +", " ", x_bak_clean, ignore.case = TRUE))
   x <- unique(x_bak_clean)
   x_new <- rep(NA_character_, length(x))
   x_unknown <- character(0)
@@ -198,6 +198,24 @@ as.ab <- function(x) {
     if (length(found) > 0) {
       x_new[i] <- found[1L]
       next
+    }
+
+    # try by removing all spaces
+    if (x[i] %like% " ") {
+      found <- suppressWarnings(as.ab(gsub(" +", "", x[i])))
+      if (length(found) > 0) {
+        x_new[i] <- found[1L]
+        next
+      }
+    }
+
+    # try by removing all spaces and numbers
+    if (x[i] %like% " " | x[i] %like% "[0-9]") {
+      found <- suppressWarnings(as.ab(gsub("[ 0-9]", "", x[i])))
+      if (length(found) > 0) {
+        x_new[i] <- found[1L]
+        next
+      }
     }
 
     # not found

@@ -73,14 +73,13 @@
 #' ab_name(21319)       # "Flucloxacillin" (using CID)
 #' ab_name("J01CF05")   # "Flucloxacillin" (using ATC)
 ab_name <- function(x, language = get_locale(), tolower = FALSE, ...) {
-  x <- ab_validate(x = x, property = "name", ...)
-  res <- t(x, language = language)
+  x <- translate_AMR(ab_validate(x = x, property = "name", ...), language = language)
   if (tolower == TRUE) {
     # use perl to only transform the first character
     # as we want "polymyxin B", not "polymyxin b"
-    res <- gsub("^([A-Z])", "\\L\\1", res, perl = TRUE)
+    x <- gsub("^([A-Z])", "\\L\\1", x, perl = TRUE)
   }
-  res
+  x
 }
 
 #' @rdname ab_property
@@ -116,19 +115,19 @@ ab_tradenames <- function(x, ...) {
 #' @rdname ab_property
 #' @export
 ab_group <- function(x, language = get_locale(), ...) {
-  t(ab_validate(x = x, property = "group", ...), language = language)
+  translate_AMR(ab_validate(x = x, property = "group", ...), language = language)
 }
 
 #' @rdname ab_property
 #' @export
 ab_atc_group1 <- function(x, language = get_locale(), ...) {
-  t(ab_validate(x = x, property = "atc_group1", ...), language = language)
+  translate_AMR(ab_validate(x = x, property = "atc_group1", ...), language = language)
 }
 
 #' @rdname ab_property
 #' @export
 ab_atc_group2 <- function(x, language = get_locale(), ...) {
-  t(ab_validate(x = x, property = "atc_group2", ...), language = language)
+  translate_AMR(ab_validate(x = x, property = "atc_group2", ...), language = language)
 }
 
 #' @rdname ab_property
@@ -150,8 +149,8 @@ ab_ddd <- function(x, administration = "oral", units = FALSE, ...) {
 #' @export
 ab_info <- function(x, language = get_locale(), ...) {
   x <- AMR::as.ab(x, ...)
-  base::list(ab = x,
-             atc = ab_atc(x),
+  base::list(ab = as.character(x),
+             atc = as.character(ab_atc(x)),
              cid = ab_cid(x),
              name = ab_name(x, language = language),
              group = ab_group(x, language = language),
@@ -174,7 +173,7 @@ ab_property <- function(x, property = 'name', language = get_locale(), ...) {
     stop("invalid property: '", property, "' - use a column name of the `antibiotics` data set")
   }
 
-  t(ab_validate(x = x, property = property, ...), language = language)
+  translate_AMR(ab_validate(x = x, property = property, ...), language = language)
 }
 
 ab_validate <- function(x, property, ...) {

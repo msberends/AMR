@@ -20,6 +20,7 @@
 \alias{mo_year}
 \alias{mo_rank}
 \alias{mo_taxonomy}
+\alias{mo_info}
 \alias{mo_url}
 \title{Property of a microorganism}
 \usage{
@@ -58,6 +59,8 @@ mo_year(x, ...)
 mo_rank(x, ...)
 
 mo_taxonomy(x, language = get_locale(), ...)
+
+mo_info(x, language = get_locale(), ...)
 
 mo_url(x, open = FALSE, ...)
 
@@ -140,8 +143,8 @@ mo_fullname("E. coli")        # "Escherichia coli", same as mo_name()
 mo_shortname("E. coli")       # "E. coli"
 
 ## other properties
-mo_gramstain("E. coli")       # "Gram negative"
-mo_type("E. coli")            # "Bacteria" (equal to kingdom)
+mo_gramstain("E. coli")       # "Gram-negative"
+mo_type("E. coli")            # "Bacteria" (equal to kingdom, but may be translated)
 mo_rank("E. coli")            # "species"
 mo_url("E. coli")             # get the direct url to the online database entry
 
@@ -155,7 +158,7 @@ mo_year("E. coli")            # 1919
 mo_genus("MRSA")              # "Staphylococcus"
 mo_species("MRSA")            # "aureus"
 mo_shortname("MRSA")          # "S. aureus"
-mo_gramstain("MRSA")          # "Gram positive"
+mo_gramstain("MRSA")          # "Gram-positive"
 
 mo_genus("VISA")              # "Staphylococcus"
 mo_species("VISA")            # "aureus"
@@ -204,6 +207,8 @@ mo_fullname("S. pyogenes",
 
 # get a list with the complete taxonomy (from kingdom to subspecies)
 mo_taxonomy("E. coli")
+# get a list with the taxonomy, the authors and the URL to the online database
+mo_info("E. coli")
 }
 \seealso{
 \code{\link{microorganisms}}

@@ -2,8 +2,8 @@ lang	pattern	replacement	fixed	ignore.case
 de	Coagulase-negative Staphylococcus	Koagulase-negative Staphylococcus	FALSE	FALSE
 de	Coagulase-positive Staphylococcus	Koagulase-positive Staphylococcus	FALSE	FALSE
 de	Beta-haemolytic Streptococcus	Beta-hämolytischer Streptococcus	FALSE	FALSE
-de	unknown Gram negatives	unbekannte Gramnegativen	FALSE	FALSE
-de	unknown Gram positives	unbekannte Grampositiven	FALSE	FALSE
+de	unknown Gram-negatives	unbekannte Gramnegativen	FALSE	FALSE
+de	unknown Gram-positives	unbekannte Grampositiven	FALSE	FALSE
 de	unknown name	unbekannte Name	FALSE	FALSE
 de	unknown kingdom	unbekanntes Reich	FALSE	FALSE
 de	unknown phylum	unbekannter Stamm	FALSE	FALSE
@@ -16,8 +16,8 @@ de	unknown subspecies	unbekannte Unterart	FALSE	FALSE
 de	unknown rank	unbekannter Rang	FALSE	FALSE
 de	(CoNS)	(KNS)	TRUE	FALSE
 de	(CoPS)	(KPS)	TRUE	FALSE
-de	Gram negative	Gramnegativ	FALSE	FALSE
-de	Gram positive	Grampositiv	FALSE	FALSE
+de	Gram-negative	Gramnegativ	FALSE	FALSE
+de	Gram-positive	Grampositiv	FALSE	FALSE
 de	Bacteria	Bakterien	FALSE	FALSE
 de	Fungi	Hefen/Pilze	FALSE	FALSE
 de	Protozoa	Protozoen	FALSE	FALSE
@@ -29,8 +29,8 @@ de	([([ ]*?)Group	\\1Gruppe	FALSE	FALSE
 nl	Coagulase-negative Staphylococcus	Coagulase-negatieve Staphylococcus	FALSE	FALSE
 nl	Coagulase-positive Staphylococcus	Coagulase-positieve Staphylococcus	FALSE	FALSE
 nl	Beta-haemolytic Streptococcus	Beta-hemolytische Streptococcus	FALSE	FALSE
-nl	unknown Gram negatives	onbekende Gram-negatieven	FALSE	FALSE
-nl	unknown Gram positives	onbekende Gram-positieven	FALSE	FALSE
+nl	unknown Gram-negatives	onbekende Gram-negatieven	FALSE	FALSE
+nl	unknown Gram-positives	onbekende Gram-positieven	FALSE	FALSE
 nl	unknown name	onbekende naam	FALSE	FALSE
 nl	unknown kingdom	onbekend koninkrijk	FALSE	FALSE
 nl	unknown phylum	onbekend fylum	FALSE	FALSE
@@ -43,8 +43,8 @@ nl	unknown subspecies	onbekende ondersoort	FALSE	FALSE
 nl	unknown rank	onbekende rang	FALSE	FALSE
 nl	(CoNS)	(CNS)	TRUE	FALSE
 nl	(CoPS)	(CPS)	TRUE	FALSE
-nl	Gram negative	Gram-negatief	FALSE	FALSE
-nl	Gram positive	Gram-positief	FALSE	FALSE
+nl	Gram-negative	Gram-negatief	FALSE	FALSE
+nl	Gram-positive	Gram-positief	FALSE	FALSE
 nl	Bacteria	Bacteriën	FALSE	FALSE
 nl	Fungi	Schimmels/gisten	FALSE	FALSE
 nl	Protozoa	protozoën	FALSE	FALSE
@@ -55,8 +55,8 @@ nl	([([ ]*?)Group	\\1Groep	FALSE	FALSE
 es	Coagulase-negative Staphylococcus	Staphylococcus coagulasa negativo	FALSE	FALSE
 es	Coagulase-positive Staphylococcus	Staphylococcus coagulasa positivo	FALSE	FALSE
 es	Beta-haemolytic Streptococcus	Streptococcus Beta-hemolítico	FALSE	FALSE
-es	unknown Gram negatives	Gram negativos desconocidos	FALSE	FALSE
-es	unknown Gram positives	Gram positivos desconocidos	FALSE	FALSE
+es	unknown Gram-negatives	Gram negativos desconocidos	FALSE	FALSE
+es	unknown Gram-positives	Gram positivos desconocidos	FALSE	FALSE
 es	unknown name	nombre desconocido	FALSE	FALSE
 es	unknown kingdom	reino desconocido	FALSE	FALSE
 es	unknown phylum	filo desconocido	FALSE	FALSE
@@ -69,8 +69,8 @@ es	unknown subspecies	subespecie desconocida	FALSE	FALSE
 es	unknown rank	rango desconocido	FALSE	FALSE
 es	(CoNS)	(SCN)	TRUE	FALSE
 es	(CoPS)	(SCP)	TRUE	FALSE
-es	Gram negative	Gram negativo	FALSE	FALSE
-es	Gram positive	Gram positivo	FALSE	FALSE
+es	Gram-negative	Gram negativo	FALSE	FALSE
+es	Gram-positive	Gram positivo	FALSE	FALSE
 es	Bacteria	Bacterias	FALSE	FALSE
 es	Fungi	Hongos	FALSE	FALSE
 es	Protozoa	Protozoarios	FALSE	FALSE
@@ -82,8 +82,8 @@ es	([([ ]*?)Group	\\1Grupo	FALSE	FALSE
 it	Coagulase-negative Staphylococcus	Staphylococcus negativo coagulasi	FALSE	FALSE
 it	Coagulase-positive Staphylococcus	Staphylococcus positivo coagulasi	FALSE	FALSE
 it	Beta-haemolytic Streptococcus	Streptococcus Beta-emolitico	FALSE	FALSE
-it	unknown Gram negatives	Gram negativi sconosciuti	FALSE	FALSE
-it	unknown Gram positives	Gram positivi sconosciuti	FALSE	FALSE
+it	unknown Gram-negatives	Gram negativi sconosciuti	FALSE	FALSE
+it	unknown Gram-positives	Gram positivi sconosciuti	FALSE	FALSE
 it	unknown name	nome sconosciuto	FALSE	FALSE
 it	unknown kingdom	regno sconosciuto	FALSE	FALSE
 it	unknown phylum	phylum sconosciuto	FALSE	FALSE
@@ -94,8 +94,8 @@ it	unknown genus	genere sconosciuto	FALSE	FALSE
 it	unknown species	specie sconosciute	FALSE	FALSE
 it	unknown subspecies	sottospecie sconosciute	FALSE	FALSE
 it	unknown rank	grado sconosciuto	FALSE	FALSE
-it	Gram negative	Gram negativo	FALSE	FALSE
-it	Gram positive	Gram positivo	FALSE	FALSE
+it	Gram-negative	Gram negativo	FALSE	FALSE
+it	Gram-positive	Gram positivo	FALSE	FALSE
 it	Bacteria	Batteri	FALSE	FALSE
 it	Fungi	Fungo	FALSE	FALSE
 it	Protozoa	Protozoi	FALSE	FALSE
@@ -107,8 +107,8 @@ it	([([ ]*?)Group	\\1Gruppo	FALSE	FALSE
 fr	Coagulase-negative Staphylococcus	Staphylococcus à coagulase négative	FALSE	FALSE
 fr	Coagulase-positive Staphylococcus	Staphylococcus à coagulase positif	FALSE	FALSE
 fr	Beta-haemolytic Streptococcus	Streptococcus Bêta-hémolytique	FALSE	FALSE
-fr	unknown Gram negatives	Gram négatifs inconnus	FALSE	FALSE
-fr	unknown Gram positives	Gram positifs inconnus	FALSE	FALSE
+fr	unknown Gram-negatives	Gram négatifs inconnus	FALSE	FALSE
+fr	unknown Gram-positives	Gram positifs inconnus	FALSE	FALSE
 fr	unknown name	nom inconnu	FALSE	FALSE
 fr	unknown kingdom	règme inconnu	FALSE	FALSE
 fr	unknown phylum	embranchement inconnu	FALSE	FALSE
@@ -119,8 +119,8 @@ fr	unknown genus	genre inconnu	FALSE	FALSE
 fr	unknown species	espèce inconnue	FALSE	FALSE
 fr	unknown subspecies	sous-espèce inconnue	FALSE	FALSE
 fr	unknown rank	rang inconnu	FALSE	FALSE
-fr	Gram negative	Gram négatif	FALSE	FALSE
-fr	Gram positive	Gram positif	FALSE	FALSE
+fr	Gram-negative	Gram négatif	FALSE	FALSE
+fr	Gram-positive	Gram positif	FALSE	FALSE
 fr	Bacteria	Bactéries	FALSE	FALSE
 fr	Fungi	Champignons	FALSE	FALSE
 fr	Protozoa	Protozoaires	FALSE	FALSE
@@ -131,8 +131,8 @@ fr	([([ ]*?)Group	\\1Groupe	FALSE	FALSE
 pt	Coagulase-negative Staphylococcus	Staphylococcus coagulase negativo	FALSE	FALSE
 pt	Coagulase-positive Staphylococcus	Staphylococcus coagulase positivo	FALSE	FALSE
 pt	Beta-haemolytic Streptococcus	Streptococcus Beta-hemolítico	FALSE	FALSE
-pt	unknown Gram negatives	Gram negativos desconhecidos	FALSE	FALSE
-pt	unknown Gram positives	Gram positivos desconhecidos	FALSE	FALSE
+pt	unknown Gram-negatives	Gram negativos desconhecidos	FALSE	FALSE
+pt	unknown Gram-positives	Gram positivos desconhecidos	FALSE	FALSE
 pt	unknown name	nome desconhecido	FALSE	FALSE
 pt	unknown kingdom	reino desconhecido	FALSE	FALSE
 pt	unknown phylum	filo desconhecido	FALSE	FALSE
@@ -143,8 +143,8 @@ pt	unknown genus	gênero desconhecido	FALSE	FALSE
 pt	unknown species	espécies desconhecida	FALSE	FALSE
 pt	unknown subspecies	subespécies desconhecida	FALSE	FALSE
 pt	unknown rank	classificação desconhecido	FALSE	FALSE
-pt	Gram negative	Gram negativo	FALSE	FALSE
-pt	Gram positive	Gram positivo	FALSE	FALSE
+pt	Gram-negative	Gram negativo	FALSE	FALSE
+pt	Gram-positive	Gram positivo	FALSE	FALSE
 pt	Bacteria	Bactérias	FALSE	FALSE
 pt	Fungi	Fungos	FALSE	FALSE
 pt	Protozoa	Protozoários	FALSE	FALSE

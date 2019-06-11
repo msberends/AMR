@@ -253,7 +253,7 @@ stopifnot_installed_package <- function(package) {
 
 # translate strings based on inst/translations.tsv
 #' @importFrom dplyr %>% filter
-t <- function(from, language = get_locale()) {
+translate_AMR <- function(from, language = get_locale(), only_unknown = FALSE) {
   # if (getOption("AMR_locale", "en") != language) {
   #   language <- getOption("AMR_locale", "en")
   # }
@@ -274,6 +274,9 @@ t <- function(from, language = get_locale()) {
   }
 
   df_trans <- df_trans %>% filter(lang == language)
+  if (only_unknown == TRUE) {
+    df_trans <- df_trans %>% filter(pattern %like% "unknown")
+  }
 
   # default case sensitive if value if 'ignore.case' is missing:
   df_trans$ignore.case[is.na(df_trans$ignore.case)] <- FALSE

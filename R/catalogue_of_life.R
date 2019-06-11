@@ -71,19 +71,17 @@
 #' # [1] "Castellani et al., 1919"
 #'
 #' # Do not get mistaken - the package only includes microorganisms
-#' mo_phylum("C. elegans")
-#' # [1] "Cyanobacteria"                   # Bacteria?!
-#' mo_fullname("C. elegans")
+#' mo_kingdom("C. elegans")
+#' # [1] "Bacteria"                        # Bacteria?!
+#' mo_name("C. elegans")
 #' # [1] "Chroococcus limneticus elegans"  # Because a microorganism was found
 NULL
 
 #' Version info of included Catalogue of Life
 #'
-#' This function returns information about the included data from the Catalogue of Life. It also shows if the included version is their latest annual release. The Catalogue of Life releases their annual release in March each year.
+#' This function returns information about the included data from the Catalogue of Life.
 #' @seealso \code{\link{microorganisms}}
-#' @details The list item \code{...$catalogue_of_life$is_latest_annual_release} is based on the system date.
-#'
-#' For DSMZ, see \code{?microorganisms}.
+#' @details For DSMZ, see \code{?microorganisms}.
 #' @return a \code{list}, which prints in pretty format
 #' @inheritSection catalogue_of_life Catalogue of Life
 #' @inheritSection AMR Read more on our website!
@@ -99,8 +97,6 @@ catalogue_of_life_version <- function() {
   lst <- list(catalogue_of_life =
                 list(version = gsub("{year}", catalogue_of_life$year, catalogue_of_life$version, fixed = TRUE),
                      url = gsub("{year}", catalogue_of_life$year, catalogue_of_life$url_CoL, fixed = TRUE),
-                     # annual release always somewhere in May, so before June is TRUE, FALSE otherwise
-                     is_latest_annual_release = Sys.Date() < as.Date(paste0(catalogue_of_life$year + 1, "-06-01")),
                      n = nrow(filter(AMR::microorganisms, source == "CoL"))),
               deutsche_sammlung_von_mikroorganismen_und_zellkulturen =
                 list(version = "Prokaryotic Nomenclature Up-to-Date from DSMZ",
@@ -125,7 +121,6 @@ print.catalogue_of_life_version <- function(x, ...) {
              underline(lst$catalogue_of_life$version), "\n",
              "  Available at: ", lst$catalogue_of_life$url, "\n",
              "  Number of included species: ", format(lst$catalogue_of_life$n, big.mark = ","), "\n",
-             "  (based on your system time, this is most likely ", ifelse(lst$catalogue_of_life$is_latest_annual_release, "", "not "), "the latest annual release)\n\n",
              underline(paste0(lst$deutsche_sammlung_von_mikroorganismen_und_zellkulturen$version, " (",
                               lst$deutsche_sammlung_von_mikroorganismen_und_zellkulturen$yearmonth, ")")), "\n",
              "  Available at: ", lst$deutsche_sammlung_von_mikroorganismen_und_zellkulturen$url, "\n",

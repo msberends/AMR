@@ -5,8 +5,8 @@
 # "minopenicillins", "ureidopenicillins", "fluoroquinolones", "all_betalactams",
 # and all separate EARS-Net letter codes like "AMC". They can be separated by comma: "AMC, fluoroquinolones".
 # The mo_property can be any column name from the AMR::microorganisms data set, or "genus_species" or "gramstain".
-# This file contains references to the 'Burkholderia cepacia complex'. The species in this group can be found in:
-# LiPuma JJ, 2015 (PMID 16217180).
+# The EUCAST guideline contains references to the 'Burkholderia cepacia complex'. The species in this group can be found in:
+# LiPuma JJ, Curr Opin Pulm Med. 2005 Nov;11(6):528-33. (PMID 16217180).
 eucast_rules_file <- dplyr::arrange(
   .data = utils::read.delim(file = "data-raw/eucast_rules.tsv",
                             sep = "\t",

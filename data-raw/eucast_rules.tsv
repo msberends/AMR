@@ -59,12 +59,12 @@ genus_species	is	Moraxella catarrhalis	ERY	S	AZM, CLR, RXT	S	Moraxella catarrhal
 genus_species	is	Moraxella catarrhalis	ERY	I	AZM, CLR, RXT	I	Moraxella catarrhalis	Breakpoints
 genus_species	is	Moraxella catarrhalis	ERY	R	AZM, CLR, RXT	R	Moraxella catarrhalis	Breakpoints
 genus_species	is	Moraxella catarrhalis	TCY	S	DOX, MNO	S	Moraxella catarrhalis	Breakpoints
-genus	one_of	Actinomyces, Bifidobacterium, Clostridium, Cutibacterium, Eggerthella, Eubacterium, Lactobacillus, Propionibacterium	PEN	S	AMP, AMX, PIP, TZP, TIC	S	Anaerobic Gram positives	Breakpoints
-genus	one_of	Actinomyces, Bifidobacterium, Clostridium, Cutibacterium, Eggerthella, Eubacterium, Lactobacillus, Propionibacterium	PEN	I	AMP, AMX, PIP, TZP, TIC	I	Anaerobic Gram positives	Breakpoints
-genus	one_of	Actinomyces, Bifidobacterium, Clostridium, Cutibacterium, Eggerthella, Eubacterium, Lactobacillus, Propionibacterium	PEN	R	AMP, AMX, PIP, TZP, TIC	R	Anaerobic Gram positives	Breakpoints
-genus	one_of	Bacteroides, Bilophila , Fusobacterium, Mobiluncus, Porphyromonas, Prevotella	PEN	S	AMP, AMX, PIP, TZP, TIC	S	Anaerobic Gram negatives	Breakpoints
-genus	one_of	Bacteroides, Bilophila , Fusobacterium, Mobiluncus, Porphyromonas, Prevotella	PEN	I	AMP, AMX, PIP, TZP, TIC	I	Anaerobic Gram negatives	Breakpoints
-genus	one_of	Bacteroides, Bilophila , Fusobacterium, Mobiluncus, Porphyromonas, Prevotella	PEN	R	AMP, AMX, PIP, TZP, TIC	R	Anaerobic Gram negatives	Breakpoints
+genus	one_of	Actinomyces, Bifidobacterium, Clostridium, Cutibacterium, Eggerthella, Eubacterium, Lactobacillus, Propionibacterium	PEN	S	AMP, AMX, PIP, TZP, TIC	S	Anaerobic Gram-positives	Breakpoints
+genus	one_of	Actinomyces, Bifidobacterium, Clostridium, Cutibacterium, Eggerthella, Eubacterium, Lactobacillus, Propionibacterium	PEN	I	AMP, AMX, PIP, TZP, TIC	I	Anaerobic Gram-positives	Breakpoints
+genus	one_of	Actinomyces, Bifidobacterium, Clostridium, Cutibacterium, Eggerthella, Eubacterium, Lactobacillus, Propionibacterium	PEN	R	AMP, AMX, PIP, TZP, TIC	R	Anaerobic Gram-positives	Breakpoints
+genus	one_of	Bacteroides, Bilophila , Fusobacterium, Mobiluncus, Porphyromonas, Prevotella	PEN	S	AMP, AMX, PIP, TZP, TIC	S	Anaerobic Gram-negatives	Breakpoints
+genus	one_of	Bacteroides, Bilophila , Fusobacterium, Mobiluncus, Porphyromonas, Prevotella	PEN	I	AMP, AMX, PIP, TZP, TIC	I	Anaerobic Gram-negatives	Breakpoints
+genus	one_of	Bacteroides, Bilophila , Fusobacterium, Mobiluncus, Porphyromonas, Prevotella	PEN	R	AMP, AMX, PIP, TZP, TIC	R	Anaerobic Gram-negatives	Breakpoints
 genus_species	is	Pasteurella multocida	PEN	S	AMP, AMX	S	Pasteurella multocida	Breakpoints
 genus_species	is	Pasteurella multocida	PEN	I	AMP, AMX	I	Pasteurella multocida	Breakpoints
 genus_species	is	Pasteurella multocida	PEN	R	AMP, AMX	R	Pasteurella multocida	Breakpoints
@@ -135,7 +135,7 @@ genus	is	Neisseria			TMP	R	Table 03: Intrinsic resistance in other Gram-negative
 genus_species	is	Campylobacter fetus			FUS, streptogramins, TMP, NAL	R	Table 03: Intrinsic resistance in other Gram-negative bacteria	Expert Rules
 genus_species	is	Campylobacter jejuni			FUS, streptogramins, TMP	R	Table 03: Intrinsic resistance in other Gram-negative bacteria	Expert Rules
 genus_species	is	Campylobacter coli			FUS, streptogramins, TMP	R	Table 03: Intrinsic resistance in other Gram-negative bacteria	Expert Rules
-gramstain	is	Gram positive			ATM, polymyxins, NAL	R	Table 04: Intrinsic resistance in Gram-positive bacteria	Expert Rules
+gramstain	is	Gram-positive			ATM, polymyxins, NAL	R	Table 04: Intrinsic resistance in Gram-positive bacteria	Expert Rules
 genus_species	is	Staphylococcus saprophyticus			FUS, CAZ, FOS, NOV	R	Table 04: Intrinsic resistance in Gram-positive bacteria	Expert Rules
 genus_species	is	Staphylococcus cohnii			CAZ, NOV	R	Table 04: Intrinsic resistance in Gram-positive bacteria	Expert Rules
 genus_species	is	Staphylococcus xylosus			CAZ, NOV	R	Table 04: Intrinsic resistance in Gram-positive bacteria	Expert Rules

@@ -80,7 +80,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.7.0.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">0.7.0.9005</span>
       </span>
     </div>
 
@@ -163,13 +163,6 @@
         <span class="fa fa-sort-amount-down"></span>
          
         Create frequency tables
-      </a>
-    </li>
-    <li>
-      <a href="../reference/g.test.html">
-        <span class="fa fa-clipboard-check"></span>
-         
-        Use the G-test
       </a>
     </li>
     <li>
@@ -284,6 +277,8 @@
 
 <span class='fu'>mo_taxonomy</span>(<span class='no'>x</span>, <span class='kw'>language</span> <span class='kw'>=</span> <span class='fu'><a href='translate.html'>get_locale</a></span>(), <span class='no'>...</span>)
 
+<span class='fu'>mo_info</span>(<span class='no'>x</span>, <span class='kw'>language</span> <span class='kw'>=</span> <span class='fu'><a href='translate.html'>get_locale</a></span>(), <span class='no'>...</span>)
+
 <span class='fu'>mo_url</span>(<span class='no'>x</span>, <span class='kw'>open</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>...</span>)
 
 <span class='fu'>mo_property</span>(<span class='no'>x</span>, <span class='kw'>property</span> <span class='kw'>=</span> <span class='st'>"fullname"</span>, <span class='kw'>language</span> <span class='kw'>=</span> <span class='fu'><a href='translate.html'>get_locale</a></span>(), <span class='no'>...</span>)</pre>
@@ -378,8 +373,8 @@ This package contains the complete taxonomic tree of almost all microorganisms (
 <span class='fu'>mo_shortname</span>(<span class='st'>"E. coli"</span>)       <span class='co'># "E. coli"</span>
 
 <span class='co'>## other properties</span>
-<span class='fu'>mo_gramstain</span>(<span class='st'>"E. coli"</span>)       <span class='co'># "Gram negative"</span>
-<span class='fu'>mo_type</span>(<span class='st'>"E. coli"</span>)            <span class='co'># "Bacteria" (equal to kingdom)</span>
+<span class='fu'>mo_gramstain</span>(<span class='st'>"E. coli"</span>)       <span class='co'># "Gram-negative"</span>
+<span class='fu'>mo_type</span>(<span class='st'>"E. coli"</span>)            <span class='co'># "Bacteria" (equal to kingdom, but may be translated)</span>
 <span class='fu'>mo_rank</span>(<span class='st'>"E. coli"</span>)            <span class='co'># "species"</span>
 <span class='fu'>mo_url</span>(<span class='st'>"E. coli"</span>)             <span class='co'># get the direct url to the online database entry</span>
 
@@ -393,7 +388,7 @@ This package contains the complete taxonomic tree of almost all microorganisms (
 <span class='fu'>mo_genus</span>(<span class='st'>"MRSA"</span>)              <span class='co'># "Staphylococcus"</span>
 <span class='fu'>mo_species</span>(<span class='st'>"MRSA"</span>)            <span class='co'># "aureus"</span>
 <span class='fu'>mo_shortname</span>(<span class='st'>"MRSA"</span>)          <span class='co'># "S. aureus"</span>
-<span class='fu'>mo_gramstain</span>(<span class='st'>"MRSA"</span>)          <span class='co'># "Gram positive"</span>
+<span class='fu'>mo_gramstain</span>(<span class='st'>"MRSA"</span>)          <span class='co'># "Gram-positive"</span>
 
 <span class='fu'>mo_genus</span>(<span class='st'>"VISA"</span>)              <span class='co'># "Staphylococcus"</span>
 <span class='fu'>mo_species</span>(<span class='st'>"VISA"</span>)            <span class='co'># "aureus"</span>
@@ -442,6 +437,8 @@ This package contains the complete taxonomic tree of almost all microorganisms (
 
 <span class='co'># get a list with the complete taxonomy (from kingdom to subspecies)</span>
 <span class='fu'>mo_taxonomy</span>(<span class='st'>"E. coli"</span>)
+<span class='co'># get a list with the taxonomy, the authors and the URL to the online database</span>
+<span class='fu'>mo_info</span>(<span class='st'>"E. coli"</span>)
 <span class='co'># }</span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

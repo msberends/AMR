@@ -289,6 +289,9 @@ antibiotics <- filter(antibiotics, ab != "MOX")
 antibiotics <- filter(antibiotics, ab != "RFP")
 antibiotics[which(antibiotics$ab == "RFP1"), "ab"] <- "RFP"
 antibiotics[which(antibiotics$ab == "RFP"), "abbreviations"][[1]] <- list(c("rifp"))
+# PME and PVM1 (the J0 one) both mean 'Pivmecillinam', so:
+antibiotics <- filter(antibiotics, ab != "PME")
+antibiotics[which(antibiotics$ab == "PVM1"), "ab"] <- "PME"
 # ESBL E-test codes:
 antibiotics[which(antibiotics$ab == "CCV"), "abbreviations"][[1]] <- list(c("xtzl"))
 antibiotics[which(antibiotics$ab == "CAZ"), "abbreviations"][[1]] <- list(c(antibiotics[which(antibiotics$ab == "CAZ"), "abbreviations"][[1]], "xtz", "cefta"))

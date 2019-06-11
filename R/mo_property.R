@@ -69,8 +69,8 @@
 #' mo_shortname("E. coli")       # "E. coli"
 #'
 #' ## other properties
-#' mo_gramstain("E. coli")       # "Gram negative"
-#' mo_type("E. coli")            # "Bacteria" (equal to kingdom)
+#' mo_gramstain("E. coli")       # "Gram-negative"
+#' mo_type("E. coli")            # "Bacteria" (equal to kingdom, but may be translated)
 #' mo_rank("E. coli")            # "species"
 #' mo_url("E. coli")             # get the direct url to the online database entry
 #'
@@ -84,7 +84,7 @@
 #' mo_genus("MRSA")              # "Staphylococcus"
 #' mo_species("MRSA")            # "aureus"
 #' mo_shortname("MRSA")          # "S. aureus"
-#' mo_gramstain("MRSA")          # "Gram positive"
+#' mo_gramstain("MRSA")          # "Gram-positive"
 #'
 #' mo_genus("VISA")              # "Staphylococcus"
 #' mo_species("VISA")            # "aureus"
@@ -133,15 +133,15 @@
 #'
 #' # get a list with the complete taxonomy (from kingdom to subspecies)
 #' mo_taxonomy("E. coli")
+#' # get a list with the taxonomy, the authors and the URL to the online database
+#' mo_info("E. coli")
 mo_name <- function(x, language = get_locale(), ...) {
-  mo_fullname(x = x, language = language, ... = ...)
+  translate_AMR(mo_validate(x = x, property = "fullname", ...), language = language, only_unknown = FALSE)
 }
 
 #' @rdname mo_property
 #' @export
-mo_fullname <- function(x, language = get_locale(), ...) {
-  t(mo_validate(x = x, property = "fullname", ...), language = language)
-}
+mo_fullname <- mo_name
 
 #' @rdname mo_property
 #' @importFrom dplyr %>% mutate pull
@@ -184,70 +184,61 @@ mo_shortname <- function(x, language = get_locale(), ...) {
   res1[res1 != res2] <- res2_fullname
   result <- as.character(res1)
 
-  t(result, language = language)
+  translate_AMR(result, language = language, only_unknown = FALSE)
 }
 
 #' @rdname mo_property
 #' @export
 mo_subspecies <- function(x, language = get_locale(), ...) {
-  t(mo_validate(x = x, property = "subspecies", ...), language = language)
+  translate_AMR(mo_validate(x = x, property = "subspecies", ...), language = language, only_unknown = TRUE)
 }
 
 #' @rdname mo_property
 #' @export
 mo_species <- function(x, language = get_locale(), ...) {
-  t(mo_validate(x = x, property = "species", ...), language = language)
+  translate_AMR(mo_validate(x = x, property = "species", ...), language = language, only_unknown = TRUE)
 }
 
 #' @rdname mo_property
 #' @export
 mo_genus <- function(x, language = get_locale(), ...) {
-  t(mo_validate(x = x, property = "genus", ...), language = language)
+  translate_AMR(mo_validate(x = x, property = "genus", ...), language = language, only_unknown = TRUE)
 }
 
 #' @rdname mo_property
 #' @export
 mo_family <- function(x, language = get_locale(), ...) {
-  t(mo_validate(x = x, property = "family", ...), language = language)
+  translate_AMR(mo_validate(x = x, property = "family", ...), language = language, only_unknown = TRUE)
 }
 
 #' @rdname mo_property
 #' @export
 mo_order <- function(x, language = get_locale(), ...) {
-  t(mo_validate(x = x, property = "order", ...), language = language)
+  translate_AMR(mo_validate(x = x, property = "order", ...), language = language, only_unknown = TRUE)
 }
 
 #' @rdname mo_property
 #' @export
 mo_class <- function(x, language = get_locale(), ...) {
-  t(mo_validate(x = x, property = "class", ...), language = language)
+  translate_AMR(mo_validate(x = x, property = "class", ...), language = language, only_unknown = TRUE)
 }
 
 #' @rdname mo_property
 #' @export
 mo_phylum <- function(x, language = get_locale(), ...) {
-  t(mo_validate(x = x, property = "phylum", ...), language = language)
+  translate_AMR(mo_validate(x = x, property = "phylum", ...), language = language, only_unknown = TRUE)
 }
 
 #' @rdname mo_property
 #' @export
 mo_kingdom <- function(x, language = get_locale(), ...) {
-  if (all(x %in% AMR::microorganisms$kingdom)) {
-    return(x)
-  }
-  x <- as.mo(x, ...)
-  kngdm <- mo_validate(x = x, property = "kingdom", ...)
-  if (language != "en") {
-    # translate only unknown, so "Bacteria" (the official taxonomic name) would not change
-    kngdm[identical(x, "UNKNOWN")] <- t(kngdm[identical(x, "UNKNOWN")], language = language)
-  }
-  kngdm
+  translate_AMR(mo_validate(x = x, property = "kingdom", ...), language = language, only_unknown = TRUE)
 }
 
 #' @rdname mo_property
 #' @export
 mo_type <- function(x, language = get_locale(), ...) {
-  t(mo_validate(x = x, property = "kingdom", ...), language = language)
+  translate_AMR(mo_validate(x = x, property = "kingdom", ...), language = language, only_unknown = FALSE)
 }
 
 #' @rdname mo_property
@@ -255,16 +246,26 @@ mo_type <- function(x, language = get_locale(), ...) {
 mo_gramstain <- function(x, language = get_locale(), ...) {
   x.mo <- as.mo(x, ...)
   x.phylum <- mo_phylum(x.mo, language = "en")
+  # DETERMINE GRAM STAIN FOR BACTERIA
+  # Source: https://itis.gov/servlet/SingleRpt/SingleRpt?search_topic=TSN&search_value=956097
+  # It says this:
+  # Kingdom Bacteria (Cavalier-Smith, 2002)
+  #    Subkingdom Posibacteria (Cavalier-Smith, 2002)
+  #   Direct Children:
+  #       Phylum  Actinobacteria (Cavalier-Smith, 2002)
+  #       Phylum  Chloroflexi (Garrity and Holt, 2002)
+  #       Phylum  Firmicutes (corrig. Gibbons and Murray, 1978)
+  #       Phylum  Tenericutes (Murray, 1984)
+  x <- NA_character_
+  # make all bacteria Gram negative
+  x[mo_kingdom(x.mo, language = "en") == "Bacteria"] <- "Gram-negative"
+  # overwrite these phyla with Gram positive
   x[x.phylum %in% c("Actinobacteria",
                     "Chloroflexi",
                     "Firmicutes",
-                    "Tenericutes")] <- "Gram positive"
-  x[x != "Gram positive"] <- "Gram negative"
-  x[mo_kingdom(x.mo, language = "en") != "Bacteria"] <- NA_character_
-  x[x.mo == "B_GRAMP"] <- "Gram positive"
-  x[x.mo == "B_GRAMN"] <- "Gram negative"
-
-  t(x, language = language)
+                    "Tenericutes")
+    | x.mo == "B_GRAMP"] <- "Gram-positive"
+  translate_AMR(x, language = language, only_unknown = FALSE)
 }
 
 #' @rdname mo_property
@@ -312,6 +313,15 @@ mo_taxonomy <- function(x, language = get_locale(),  ...) {
 }
 
 #' @rdname mo_property
+#' @export
+mo_info <- function(x, language = get_locale(),  ...) {
+  x <- AMR::as.mo(x, ...)
+  c(mo_taxonomy(x, language = language),
+    list(url = unname(mo_url(x, open = FALSE)),
+         ref = mo_ref(x)))
+}
+
+#' @rdname mo_property
 #' @importFrom utils browseURL
 #' @importFrom dplyr %>% left_join select mutate case_when
 #' @export
@@ -349,7 +359,7 @@ mo_property <- function(x, property = 'fullname', language = get_locale(), ...) 
     stop("invalid property: '", property, "' - use a column name of the `microorganisms` data set")
   }
 
-  t(mo_validate(x = x, property = property, ...), language = language)
+  translate_AMR(mo_validate(x = x, property = property, ...), language = language, only_unknown = TRUE)
 }
 
 mo_validate <- function(x, property, ...) {

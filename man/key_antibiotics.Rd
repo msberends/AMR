@@ -5,19 +5,22 @@
 \alias{key_antibiotics_equal}
 \title{Key antibiotics for first \emph{weighted} isolates}
 \usage{
-key_antibiotics(x, col_mo = NULL, universal_1 = guess_ab_col(x, "AMX"),
-  universal_2 = guess_ab_col(x, "AMC"), universal_3 = guess_ab_col(x,
-  "CXM"), universal_4 = guess_ab_col(x, "TZP"),
-  universal_5 = guess_ab_col(x, "CIP"), universal_6 = guess_ab_col(x,
-  "SXT"), GramPos_1 = guess_ab_col(x, "VAN"),
-  GramPos_2 = guess_ab_col(x, "TEC"), GramPos_3 = guess_ab_col(x,
-  "TCY"), GramPos_4 = guess_ab_col(x, "ERY"),
-  GramPos_5 = guess_ab_col(x, "OXA"), GramPos_6 = guess_ab_col(x,
-  "RIF"), GramNeg_1 = guess_ab_col(x, "GEN"),
-  GramNeg_2 = guess_ab_col(x, "TOB"), GramNeg_3 = guess_ab_col(x,
-  "COL"), GramNeg_4 = guess_ab_col(x, "CTX"),
-  GramNeg_5 = guess_ab_col(x, "CAZ"), GramNeg_6 = guess_ab_col(x,
-  "MEM"), warnings = TRUE, ...)
+key_antibiotics(x, col_mo = NULL, universal_1 = guess_ab_col(x,
+  "amoxicillin"), universal_2 = guess_ab_col(x,
+  "amoxicillin/clavulanic acid"), universal_3 = guess_ab_col(x,
+  "cefuroxime"), universal_4 = guess_ab_col(x,
+  "piperacillin/tazobactam"), universal_5 = guess_ab_col(x,
+  "ciprofloxacin"), universal_6 = guess_ab_col(x,
+  "trimethoprim/sulfamethoxazole"), GramPos_1 = guess_ab_col(x,
+  "vancomycin"), GramPos_2 = guess_ab_col(x, "teicoplanin"),
+  GramPos_3 = guess_ab_col(x, "tetracycline"),
+  GramPos_4 = guess_ab_col(x, "erythromycin"),
+  GramPos_5 = guess_ab_col(x, "oxacillin"), GramPos_6 = guess_ab_col(x,
+  "rifampin"), GramNeg_1 = guess_ab_col(x, "gentamicin"),
+  GramNeg_2 = guess_ab_col(x, "tobramycin"),
+  GramNeg_3 = guess_ab_col(x, "colistin"), GramNeg_4 = guess_ab_col(x,
+  "cefotaxime"), GramNeg_5 = guess_ab_col(x, "ceftazidime"),
+  GramNeg_6 = guess_ab_col(x, "meropenem"), warnings = TRUE, ...)
 
 key_antibiotics_equal(y, z, type = c("keyantibiotics", "points"),
   ignore_I = TRUE, points_threshold = 2, info = FALSE)
@@ -29,9 +32,9 @@ key_antibiotics_equal(y, z, type = c("keyantibiotics", "points"),
 
 \item{universal_1, universal_2, universal_3, universal_4, universal_5, universal_6}{column names of \strong{broad-spectrum} antibiotics, case-insensitive. At default, the columns containing these antibiotics will be guessed with \code{\link{guess_ab_col}}.}
 
-\item{GramPos_1, GramPos_2, GramPos_3, GramPos_4, GramPos_5, GramPos_6}{column names of antibiotics for \strong{Gram positives}, case-insensitive. At default, the columns containing these antibiotics will be guessed with \code{\link{guess_ab_col}}.}
+\item{GramPos_1, GramPos_2, GramPos_3, GramPos_4, GramPos_5, GramPos_6}{column names of antibiotics for \strong{Gram-positives}, case-insensitive. At default, the columns containing these antibiotics will be guessed with \code{\link{guess_ab_col}}.}
 
-\item{GramNeg_1, GramNeg_2, GramNeg_3, GramNeg_4, GramNeg_5, GramNeg_6}{column names of antibiotics for \strong{Gram negatives}, case-insensitive. At default, the columns containing these antibiotics will be guessed with \code{\link{guess_ab_col}}.}
+\item{GramNeg_1, GramNeg_2, GramNeg_3, GramNeg_4, GramNeg_5, GramNeg_6}{column names of antibiotics for \strong{Gram-negatives}, case-insensitive. At default, the columns containing these antibiotics will be guessed with \code{\link{guess_ab_col}}.}
 
 \item{warnings}{give warning about missing antibiotic columns, they will anyway be ignored}
 
@@ -53,11 +56,11 @@ These function can be used to determine first isolates (see \code{\link{first_is
 \details{
 The function \code{key_antibiotics} returns a character vector with 12 antibiotic results for every isolate. These isolates can then be compared using \code{key_antibiotics_equal}, to check if two isolates have generally the same antibiogram. Missing and invalid values are replaced with a dot (\code{"."}). The \code{\link{first_isolate}} function only uses this function on the same microbial species from the same patient. Using this, an MRSA will be included after a susceptible \emph{S. aureus} (MSSA) found within the same episode (see \code{episode} parameter of \code{\link{first_isolate}}). Without key antibiotic comparison it would not.
 
-  At default, the antibiotics that are used for \strong{Gram positive bacteria} are (colum names): \cr
-  \code{"amox"}, \code{"amcl"}, \code{"cfur"}, \code{"pita"}, \code{"cipr"}, \code{"trsu"} (until here is universal), \code{"vanc"}, \code{"teic"}, \code{"tetr"}, \code{"eryt"}, \code{"oxac"}, \code{"rifa"}.
+  At default, the antibiotics that are used for \strong{Gram-positive bacteria} are: \cr
+  amoxicillin, amoxicillin/clavulanic acid, cefuroxime, piperacillin/tazobactam, ciprofloxacin, trimethoprim/sulfamethoxazole (until here is universal), vancomycin, teicoplanin, tetracycline, erythromycin, oxacillin, rifampin.
 
-  At default, the antibiotics that are used for \strong{Gram negative bacteria} are (colum names): \cr
-  \code{"amox"}, \code{"amcl"}, \code{"cfur"}, \code{"pita"}, \code{"cipr"}, \code{"trsu"} (until here is universal), \code{"gent"}, \code{"tobr"}, \code{"coli"}, \code{"cfot"}, \code{"cfta"}, \code{"mero"}.
+  At default, the antibiotics that are used for \strong{Gram-negative bacteria} are: \cr
+  amoxicillin, amoxicillin/clavulanic acid, cefuroxime, piperacillin/tazobactam, ciprofloxacin, trimethoprim/sulfamethoxazole (until here is universal), gentamicin, tobramycin, colistin, cefotaxime, ceftazidime, meropenem.
 
 
   The function \code{key_antibiotics_equal} checks the characters returned by \code{key_antibiotics} for equality, and returns a logical vector.
@@ -81,6 +84,7 @@ On our website \url{https://msberends.gitlab.io/AMR} you can find \href{https://
 \examples{
 # septic_patients is a dataset available in the AMR package
 ?septic_patients
+
 library(dplyr)
 # set key antibiotics to a new variable
 my_patients <- septic_patients \%>\%
