@@ -1,4 +1,4 @@
-# AMR 0.7.0.9005
+# AMR 0.7.0.9006
 
 #### New
 * Support for all scientifically published pathotypes of *E. coli* to date. Supported are: AIEC (Adherent-Invasive *E. coli*), ATEC (Atypical Entero-pathogenic *E. coli*), DAEC (Diffusely Adhering *E. coli*), EAEC (Entero-Aggresive *E. coli*), EHEC (Entero-Haemorrhagic *E. coli*), EIEC (Entero-Invasive *E. coli*), EPEC (Entero-Pathogenic *E. coli*), ETEC (Entero-Toxigenic *E. coli*), NMEC (Neonatal Meningitis‐causing *E. coli*), STEC (Shiga-toxin producing *E. coli*) and UPEC (Uropathogenic *E. coli*). All these lead to the microbial ID of *E. coli*:

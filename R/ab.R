@@ -203,7 +203,8 @@ as.ab <- function(x) {
     # try by removing all spaces
     if (x[i] %like% " ") {
       found <- suppressWarnings(as.ab(gsub(" +", "", x[i])))
-      if (length(found) > 0) {
+      print(found)
+      if (length(found) > 0 & !is.na(found)) {
         x_new[i] <- found[1L]
         next
       }
@@ -212,7 +213,7 @@ as.ab <- function(x) {
     # try by removing all spaces and numbers
     if (x[i] %like% " " | x[i] %like% "[0-9]") {
       found <- suppressWarnings(as.ab(gsub("[ 0-9]", "", x[i])))
-      if (length(found) > 0) {
+      if (length(found) > 0 & !is.na(found)) {
         x_new[i] <- found[1L]
         next
       }
@@ -220,6 +221,16 @@ as.ab <- function(x) {
 
     # not found
     x_unknown <- c(x_unknown, x_bak[x[i] == x_bak_clean][1])
+  }
+
+  # take failed ATC codes apart from rest
+  x_unknown_ATCs <- x_unknown[x_unknown %like% "[A-Z][0-9][0-9][A-Z][A-Z][0-9][0-9]"]
+  x_unknown <- x_unknown[!x_unknown %in% x_unknown_ATCs]
+  if (length(x_unknown_ATCs) > 0) {
+    warning("These ATC codes are not (yet) in the antibiotics data set: ",
+            paste('"', sort(unique(x_unknown_ATCs)), '"', sep = "", collapse = ', '),
+            ".",
+            call. = FALSE)
   }
 
   if (length(x_unknown) > 0) {

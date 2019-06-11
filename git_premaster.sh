@@ -30,31 +30,25 @@ if [ -z "$new_version" ]; then
   new_version="$current_tag.9000"
   echo
   echo "** COULD NOT CREATE NEW VERSION NUMBER! **"
-  echo "Are there some unpushed changes in a new tag?? Then mind NEWS.md. Assuming sequence number 9000."
+  echo "Are there some unpushed changes in a new tag? Then mind NEWS.md. Assuming sequence number 9000."
   echo
 fi
 sed -i -- "s/^Version: .*/Version: ${new_version}/" DESCRIPTION
 # update 1st line of NEWS.md
 sed -i -- "1s/.*/# AMR ${new_version}/" NEWS.md
-echo "First 3 lines of DESCRIPTION:"
+echo "• First 3 lines of DESCRIPTION:"
 head -3 DESCRIPTION
 echo
-echo "First line of NEWS.md:"
+echo "• First line of NEWS.md:"
 head -1 NEWS.md
-echo
-read -p "Continue (Y/n)? " choice
-case "$choice" in
-  n|N ) exit 1;;
-  * ) ;;
-esac
 echo
 echo "•••••••••••••••••••••••••••••••••"
 echo "• Reloading/documenting package •"
 echo "•••••••••••••••••••••••••••••••••"
 Rscript -e "devtools::load_all(quiet = TRUE)"
-echo "Documenting..."
+echo "• Documenting..."
 Rscript -e "suppressMessages(devtools::document())"
-echo "Installing..."
+echo "• Installing..."
 Rscript -e "devtools::install(quiet = TRUE, dependencies = FALSE)"
 echo
 echo "••••••••••••••••••••••••••"
@@ -73,7 +67,7 @@ echo "••••••••••••••••••••••••�
 git status --short
 echo
 
-read -p "Continue (Y/n)? " choice
+read -p "Pushing version ${new_version}. Continue (Y/n)? " choice
 case "$choice" in
   n|N ) exit 1;;
   * ) ;;
