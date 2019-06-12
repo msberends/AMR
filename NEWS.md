@@ -1,4 +1,4 @@
-# AMR 0.7.0.9006
+# AMR 0.7.0.9007
 
 #### New
 * Support for all scientifically published pathotypes of *E. coli* to date. Supported are: AIEC (Adherent-Invasive *E. coli*), ATEC (Atypical Entero-pathogenic *E. coli*), DAEC (Diffusely Adhering *E. coli*), EAEC (Entero-Aggresive *E. coli*), EHEC (Entero-Haemorrhagic *E. coli*), EIEC (Entero-Invasive *E. coli*), EPEC (Entero-Pathogenic *E. coli*), ETEC (Entero-Toxigenic *E. coli*), NMEC (Neonatal Meningitis‐causing *E. coli*), STEC (Shiga-toxin producing *E. coli*) and UPEC (Uropathogenic *E. coli*). All these lead to the microbial ID of *E. coli*:
@@ -22,6 +22,7 @@
 * Fixed a EUCAST rule for Staphylococci, where amikacin resistance would not be inferred from tobramycin
 * Removed `latest_annual_release` from the `catalogue_of_life_version()` function
 * Removed antibiotic code `PVM1` from the `antibiotics` data set as this was a duplicate of `PME`
+* Fixed bug where not all old taxonomic named would not be printed when using a vector as input for `as.mo()`
 
 #### Other
 * Fixed a note thrown by CRAN tests

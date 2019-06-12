@@ -748,7 +748,7 @@ exec_as.mo <- function(x,
               set_mo_history(x_backup[i], get_mo_code(x[i], property), 0, force = force_mo_history)
             }
             options(mo_renamed = c(getOption("mo_renamed"),
-                                   magenta(paste0("Note: ",
+                                   magenta(paste0("NOTE: ",
                                                   italic("Salmonella"), " ", trimws(gsub("Salmonella", "", x_backup_without_spp[i])),
                                                   " was considered ",
                                                   italic("Salmonella species"),
@@ -760,7 +760,7 @@ exec_as.mo <- function(x,
               set_mo_history(x_backup[i], get_mo_code(x[i], property), 0, force = force_mo_history)
             }
             options(mo_renamed = c(getOption("mo_renamed"),
-                                   magenta(paste0("Note: ",
+                                   magenta(paste0("NOTE: ",
                                                   italic("Salmonella"), " ", trimws(gsub("Salmonella", "", x_backup_without_spp[i])),
                                                   " was considered a subspecies of ",
                                                   italic("Salmonella enterica"),
@@ -1233,7 +1233,7 @@ exec_as.mo <- function(x,
     post_Becker <- c("argensis", "caeli", "cornubiensis", "edaphicus")
     if (any(x %in% MOs_staph[species %in% post_Becker, ..property][[1]])) {
 
-      warning("Becker ", italic("et al."), " (2014) does not contain species named after their publication: ",
+      warning("Becker ", italic("et al."), " (2014, 2019) does not contain species named after their publication: ",
               italic(paste("S.",
                            sort(mo_species(unique(x[x %in% MOs_staph[species %in% post_Becker, ..property][[1]]]))),
                            collapse = ", ")),
@@ -1306,7 +1306,7 @@ exec_as.mo <- function(x,
     }
     notes <- sort(notes)
     for (i in 1:length(notes)) {
-      base::message(blue(paste("Note:", notes[i])))
+      base::message(blue(paste("NOTE:", notes[i])))
     }
   }
 
@@ -1336,7 +1336,7 @@ was_renamed <- function(name_old, name_new, ref_old = "", ref_new = "", mo = "")
   }
   msg <- paste0(italic(name_old), ref_old, " was renamed ", italic(name_new), ref_new, mo)
   msg <- gsub("et al.", italic("et al."), msg)
-  options(mo_renamed = sort(msg))
+  options(mo_renamed = c(getOption("mo_renamed"), sort(msg)))
 }
 
 #' @exportMethod print.mo
