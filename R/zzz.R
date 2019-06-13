@@ -74,7 +74,7 @@
       }
       txt_new <- paste0(txt_new, txt[i], " ")
     }
-    packageStartupMessage(txt_new)
+    # packageStartupMessage(txt_new)
   }
 }
 
