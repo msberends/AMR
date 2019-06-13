@@ -151,6 +151,7 @@ rsi_calc <- function(...,
   }
 }
 
+#' @importFrom dplyr %>% summarise_if mutate select everything bind_rows
 rsi_calc_df <- function(type, # "portion" or "count"
                         data,
                         translate_ab = "name",
@@ -196,8 +197,8 @@ rsi_calc_df <- function(type, # "portion" or "count"
                            .funs = int_fn)
     }
     summ %>%
-      mutate(Interpretation = int) %>%
-      select(Interpretation, everything())
+      mutate(interpretation = int) %>%
+      select(interpretation, everything())
   }
 
   resS <- get_summaryfunction("S")
@@ -209,28 +210,29 @@ rsi_calc_df <- function(type, # "portion" or "count"
 
   if (isFALSE(combine_SI) & isFALSE(combine_IR)) {
     res <- bind_rows(resS, resI, resR) %>%
-      mutate(Interpretation = factor(Interpretation,
+      mutate(interpretation = factor(interpretation,
                                      levels = c("S", "I", "R"),
                                      ordered = TRUE))
 
   } else if (isTRUE(combine_IR)) {
     res <- bind_rows(resS, resIR) %>%
-      mutate(Interpretation = factor(Interpretation,
+      mutate(interpretation = factor(interpretation,
                                      levels = c("S", "IR"),
                                      ordered = TRUE))
 
   } else if (isTRUE(combine_SI)) {
     res <- bind_rows(resSI, resR) %>%
-      mutate(Interpretation = factor(Interpretation,
+      mutate(interpretation = factor(interpretation,
                                      levels = c("SI", "R"),
                                      ordered = TRUE))
   }
 
   res <- res %>%
-    tidyr::gather(Antibiotic, Value, -Interpretation, -data.groups)
+    tidyr::gather(antibiotic, value, -interpretation, -data.groups) %>%
+    select(antibiotic, everything())
 
   if (!translate_ab == FALSE) {
-    res <- res %>% mutate(Antibiotic = ab_property(Antibiotic, property = translate_ab, language = language))
+    res <- res %>% mutate(antibiotic = ab_property(antibiotic, property = translate_ab, language = language))
   }
 
   res

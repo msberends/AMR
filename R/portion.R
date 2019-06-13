@@ -38,7 +38,9 @@
 #'
 #' These functions are not meant to count isolates, but to calculate the portion of resistance/susceptibility. Use the \code{\link[AMR]{count}} functions to count isolates. \emph{Low counts can infuence the outcome - these \code{portion} functions may camouflage this, since they only return the portion albeit being dependent on the \code{minimum} parameter.}
 #'
-#' \code{portion_df} takes any variable from \code{data} that has an \code{"rsi"} class (created with \code{\link{as.rsi}}) and calculates the portions R, I and S. The resulting \emph{tidy data} (see Source) \code{data.frame} will have three rows (S/I/R) and a column for each variable with class \code{"rsi"}.
+#' The function \code{portion_df} takes any variable from \code{data} that has an \code{"rsi"} class (created with \code{\link{as.rsi}}) and calculates the portions R, I and S. The resulting \emph{tidy data} (see Source) \code{data.frame} will have three rows (S/I/R) and a column for each group and each variable with class \code{"rsi"}.
+#'
+#' The function \code{rsi_df} works exactly like \code{portion_df}, but add the number of isolates.
 #' \if{html}{
 #    (created with https://www.latex4technics.com/)
 #'   \cr\cr

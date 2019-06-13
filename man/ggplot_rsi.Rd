@@ -10,8 +10,8 @@
 \alias{labels_rsi_count}
 \title{AMR plots with \code{ggplot2}}
 \usage{
-ggplot_rsi(data, position = NULL, x = "Antibiotic",
-  fill = "Interpretation", facet = NULL, breaks = seq(0, 1, 0.1),
+ggplot_rsi(data, position = NULL, x = "antibiotic",
+  fill = "interpretation", facet = NULL, breaks = seq(0, 1, 0.1),
   limits = NULL, translate_ab = "name", combine_SI = TRUE,
   combine_IR = FALSE, language = get_locale(), fun = count_df,
   nrow = NULL, colours = c(S = "#61a8ff", SI = "#61a8ff", I =
@@ -20,12 +20,12 @@ ggplot_rsi(data, position = NULL, x = "Antibiotic",
   subtitle = NULL, caption = NULL, x.title = NULL, y.title = NULL,
   ...)
 
-geom_rsi(position = NULL, x = c("Antibiotic", "Interpretation"),
-  fill = "Interpretation", translate_ab = "name",
+geom_rsi(position = NULL, x = c("antibiotic", "interpretation"),
+  fill = "interpretation", translate_ab = "name",
   language = get_locale(), combine_SI = TRUE, combine_IR = FALSE,
   fun = count_df, ...)
 
-facet_rsi(facet = c("Interpretation", "Antibiotic"), nrow = NULL)
+facet_rsi(facet = c("interpretation", "antibiotic"), nrow = NULL)
 
 scale_y_percent(breaks = seq(0, 1, 0.1), limits = NULL)
 
@@ -34,7 +34,7 @@ scale_rsi_colours(colours = c(S = "#61a8ff", SI = "#61a8ff", I =
 
 theme_rsi()
 
-labels_rsi_count(position = NULL, x = "Antibiotic",
+labels_rsi_count(position = NULL, x = "antibiotic",
   translate_ab = "name", combine_SI = TRUE, combine_IR = FALSE,
   datalabels.size = 3, datalabels.colour = "gray15")
 }
@@ -43,11 +43,11 @@ labels_rsi_count(position = NULL, x = "Antibiotic",
 
 \item{position}{position adjustment of bars, either \code{"fill"} (default when \code{fun} is \code{\link{count_df}}), \code{"stack"} (default when \code{fun} is \code{\link{portion_df}}) or \code{"dodge"}}
 
-\item{x}{variable to show on x axis, either \code{"Antibiotic"} (default) or \code{"Interpretation"} or a grouping variable}
+\item{x}{variable to show on x axis, either \code{"antibiotic"} (default) or \code{"interpretation"} or a grouping variable}
 
-\item{fill}{variable to categorise using the plots legend, either \code{"Antibiotic"} (default) or \code{"Interpretation"} or a grouping variable}
+\item{fill}{variable to categorise using the plots legend, either \code{"antibiotic"} (default) or \code{"interpretation"} or a grouping variable}
 
-\item{facet}{variable to split plots by, either \code{"Interpretation"} (default) or \code{"Antibiotic"} or a grouping variable}
+\item{facet}{variable to split plots by, either \code{"interpretation"} (default) or \code{"antibiotic"} or a grouping variable}
 
 \item{breaks}{numeric vector of positions}
 
@@ -178,7 +178,7 @@ septic_patients \%>\%
   select(hospital_id, AMX, NIT, FOS, TMP, CIP) \%>\%
   group_by(hospital_id) \%>\%
   ggplot_rsi(x = "hospital_id",
-             facet = "Antibiotic",
+             facet = "antibiotic",
              nrow = 1,
              title = "AMR of Anti-UTI Drugs Per Hospital",
              x.title = "Hospital",
@@ -199,7 +199,7 @@ septic_patients \%>\%
   # group by MO
   group_by(bug) \%>\%
   # plot the thing, putting MOs on the facet
-  ggplot_rsi(x = "Antibiotic",
+  ggplot_rsi(x = "antibiotic",
              facet = "bug",
              translate_ab = FALSE,
              nrow = 1,

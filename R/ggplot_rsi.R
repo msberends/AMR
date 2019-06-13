@@ -24,11 +24,11 @@
 #' Use these functions to create bar plots for antimicrobial resistance analysis. All functions rely on internal \code{\link[ggplot2]{ggplot}2} functions.
 #' @param data a \code{data.frame} with column(s) of class \code{"rsi"} (see \code{\link{as.rsi}})
 #' @param position position adjustment of bars, either \code{"fill"} (default when \code{fun} is \code{\link{count_df}}), \code{"stack"} (default when \code{fun} is \code{\link{portion_df}}) or \code{"dodge"}
-#' @param x variable to show on x axis, either \code{"Antibiotic"} (default) or \code{"Interpretation"} or a grouping variable
-#' @param fill variable to categorise using the plots legend, either \code{"Antibiotic"} (default) or \code{"Interpretation"} or a grouping variable
+#' @param x variable to show on x axis, either \code{"antibiotic"} (default) or \code{"interpretation"} or a grouping variable
+#' @param fill variable to categorise using the plots legend, either \code{"antibiotic"} (default) or \code{"interpretation"} or a grouping variable
 #' @param breaks numeric vector of positions
 #' @param limits numeric vector of length two providing limits of the scale, use \code{NA} to refer to the existing minimum or maximum
-#' @param facet variable to split plots by, either \code{"Interpretation"} (default) or \code{"Antibiotic"} or a grouping variable
+#' @param facet variable to split plots by, either \code{"interpretation"} (default) or \code{"antibiotic"} or a grouping variable
 #' @param fun function to transform \code{data}, either \code{\link{count_df}} (default) or \code{\link{portion_df}}
 #' @inheritParams portion
 #' @param nrow (when using \code{facet}) number of rows
@@ -129,7 +129,7 @@
 #'   select(hospital_id, AMX, NIT, FOS, TMP, CIP) %>%
 #'   group_by(hospital_id) %>%
 #'   ggplot_rsi(x = "hospital_id",
-#'              facet = "Antibiotic",
+#'              facet = "antibiotic",
 #'              nrow = 1,
 #'              title = "AMR of Anti-UTI Drugs Per Hospital",
 #'              x.title = "Hospital",
@@ -150,7 +150,7 @@
 #'   # group by MO
 #'   group_by(bug) %>%
 #'   # plot the thing, putting MOs on the facet
-#'   ggplot_rsi(x = "Antibiotic",
+#'   ggplot_rsi(x = "antibiotic",
 #'              facet = "bug",
 #'              translate_ab = FALSE,
 #'              nrow = 1,
@@ -161,8 +161,8 @@
 #' }
 ggplot_rsi <- function(data,
                        position = NULL,
-                       x = "Antibiotic",
-                       fill = "Interpretation",
+                       x = "antibiotic",
+                       fill = "interpretation",
                        # params = list(),
                        facet = NULL,
                        breaks = seq(0, 1, 0.1),
@@ -226,7 +226,7 @@ ggplot_rsi <- function(data,
              fun = fun, combine_SI = combine_SI, combine_IR = combine_IR, ...) +
     theme_rsi()
 
-  if (fill == "Interpretation") {
+  if (fill == "interpretation") {
     # set RSI colours
     if (isFALSE(colours) & missing(datalabels.colour)) {
       # set datalabel colour to middle gray
@@ -267,8 +267,8 @@ ggplot_rsi <- function(data,
 #' @rdname ggplot_rsi
 #' @export
 geom_rsi <- function(position = NULL,
-                     x = c("Antibiotic", "Interpretation"),
-                     fill = "Interpretation",
+                     x = c("antibiotic", "interpretation"),
+                     fill = "interpretation",
                      translate_ab = "name",
                      language = get_locale(),
                      combine_SI = TRUE,
@@ -286,7 +286,7 @@ geom_rsi <- function(position = NULL,
   if (!fun_name %in% c("portion_df", "count_df", "fun")) {
     stop("`fun` must be portion_df or count_df")
   }
-  y <- "Value"
+  y <- "value"
   if (identical(fun, count_df)) {
     if (missing(position) | is.null(position)) {
       position <- "fill"
@@ -312,10 +312,10 @@ geom_rsi <- function(position = NULL,
     x <- substr(x, 2, nchar(x) - 1)
   }
 
-  if (tolower(x) %in% tolower(c('ab', 'antibiotic', 'abx', 'antibiotics'))) {
-    x <- "Antibiotic"
-  } else if (tolower(x) %in% tolower(c('SIR', 'RSI', 'interpretation', 'interpretations', 'result'))) {
-    x <- "Interpretation"
+  if (tolower(x) %in% tolower(c('ab', 'abx', 'antibiotics'))) {
+    x <- "antibiotic"
+  } else if (tolower(x) %in% tolower(c('SIR', 'RSI', 'interpretations', 'result'))) {
+    x <- "interpretation"
   }
 
   ggplot2::layer(geom = "bar", stat = "identity", position = position,
@@ -332,7 +332,7 @@ geom_rsi <- function(position = NULL,
 
 #' @rdname ggplot_rsi
 #' @export
-facet_rsi <- function(facet = c("Interpretation", "Antibiotic"), nrow = NULL) {
+facet_rsi <- function(facet = c("interpretation", "antibiotic"), nrow = NULL) {
 
   stopifnot_installed_package("ggplot2")
 
@@ -347,10 +347,10 @@ facet_rsi <- function(facet = c("Interpretation", "Antibiotic"), nrow = NULL) {
     facet <- substr(facet, 2, nchar(facet) - 1)
   }
 
-  if (tolower(facet) %in% tolower(c('SIR', 'RSI', 'interpretation', 'interpretations', 'result'))) {
-    facet <- "Interpretation"
-  } else if (tolower(facet) %in% tolower(c('ab', 'antibiotic', 'abx', 'antibiotics'))) {
-    facet <- "Antibiotic"
+  if (tolower(facet) %in% tolower(c('SIR', 'RSI', 'interpretations', 'result'))) {
+    facet <- "interpretation"
+  } else if (tolower(facet) %in% tolower(c('ab', 'abx', 'antibiotics'))) {
+    facet <- "antibiotic"
   }
 
   ggplot2::facet_wrap(facets = facet, scales = "free_x", nrow = nrow)
@@ -408,7 +408,7 @@ theme_rsi <- function() {
 #' @importFrom dplyr mutate %>% group_by_at
 #' @export
 labels_rsi_count <- function(position = NULL,
-                             x = "Antibiotic",
+                             x = "antibiotic",
                              translate_ab = "name",
                              combine_SI = TRUE,
                              combine_IR = FALSE,
@@ -424,7 +424,7 @@ labels_rsi_count <- function(position = NULL,
   x_name <- x
   ggplot2::geom_text(mapping = ggplot2::aes_string(label = "lbl",
                                                    x = x,
-                                                   y = "Value"),
+                                                   y = "value"),
                      position = position,
                      inherit.aes = FALSE,
                      size = datalabels.size,
@@ -438,7 +438,7 @@ labels_rsi_count <- function(position = NULL,
                                 combine_SI = combine_SI,
                                 combine_IR = combine_IR) %>%
                          group_by_at(x_name) %>%
-                         mutate(lbl = paste0(percent(Value / sum(Value, na.rm = TRUE), force_zero = TRUE),
-                                             "\n(n=", Value, ")"))
+                         mutate(lbl = paste0(percent(value / sum(value, na.rm = TRUE), force_zero = TRUE),
+                                             "\n(n=", value, ")"))
                      })
 }

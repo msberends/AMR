@@ -29,9 +29,11 @@
 #' @inheritSection as.rsi Interpretation of S, I and R
 #' @details These functions are meant to count isolates. Use the \code{\link{portion}_*} functions to calculate microbial resistance.
 #'
-#' \code{n_rsi} is an alias of \code{count_all}. They can be used to count all available isolates, i.e. where all input antibiotics have an available result (S, I or R). Their use is equal to \code{\link{n_distinct}}. Their function is equal to \code{count_S(...) + count_IR(...)}.
+#' The function \code{n_rsi} is an alias of \code{count_all}. They can be used to count all available isolates, i.e. where all input antibiotics have an available result (S, I or R). Their use is equal to \code{\link{n_distinct}}. Their function is equal to \code{count_S(...) + count_IR(...)}.
 #'
-#' \code{count_df} takes any variable from \code{data} that has an \code{"rsi"} class (created with \code{\link{as.rsi}}) and counts the amounts of R, I and S. The resulting \emph{tidy data} (see Source) \code{data.frame} will have three rows (S/I/R) and a column for each variable with class \code{"rsi"}.
+#' The function \code{count_df} takes any variable from \code{data} that has an \code{"rsi"} class (created with \code{\link{as.rsi}}) and counts the amounts of S, I and R. The resulting \emph{tidy data} (see Source) \code{data.frame} will have three rows (S/I/R) and a column for each variable with class \code{"rsi"}.
+#'
+#' The function \code{rsi_df} works exactly like \code{count_df}, but add the percentage of S, I and R.
 #' @source Wickham H. \strong{Tidy Data.} The Journal of Statistical Software, vol. 59, 2014. \url{http://vita.had.co.nz/papers/tidy-data.html}
 #' @seealso \code{\link{portion}_*} to calculate microbial resistance and susceptibility.
 #' @keywords resistance susceptibility rsi antibiotics isolate isolates

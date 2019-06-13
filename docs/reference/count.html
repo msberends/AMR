@@ -81,7 +81,7 @@ count_R and count_IR can be used to count resistant isolates, count_S and count_
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.7.0.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">0.7.0.9008</span>
       </span>
     </div>
 
@@ -164,13 +164,6 @@ count_R and count_IR can be used to count resistant isolates, count_S and count_
         <span class="fa fa-sort-amount-down"></span>
          
         Create frequency tables
-      </a>
-    </li>
-    <li>
-      <a href="../reference/g.test.html">
-        <span class="fa fa-clipboard-check"></span>
-         
-        Use the G-test
       </a>
     </li>
     <li>
@@ -311,8 +304,9 @@ count_R and count_IR can be used to count resistant isolates, count_S and count_
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>These functions are meant to count isolates. Use the <code><a href='portion.html'>portion</a>_*</code> functions to calculate microbial resistance.</p>
-<p><code>n_rsi</code> is an alias of <code>count_all</code>. They can be used to count all available isolates, i.e. where all input antibiotics have an available result (S, I or R). Their use is equal to <code><a href='https://dplyr.tidyverse.org/reference/n_distinct.html'>n_distinct</a></code>. Their function is equal to <code>count_S(...) + count_IR(...)</code>.</p>
-<p><code>count_df</code> takes any variable from <code>data</code> that has an <code>"rsi"</code> class (created with <code><a href='as.rsi.html'>as.rsi</a></code>) and counts the amounts of R, I and S. The resulting <em>tidy data</em> (see Source) <code>data.frame</code> will have three rows (S/I/R) and a column for each variable with class <code>"rsi"</code>.</p>
+<p>The function <code>n_rsi</code> is an alias of <code>count_all</code>. They can be used to count all available isolates, i.e. where all input antibiotics have an available result (S, I or R). Their use is equal to <code><a href='https://dplyr.tidyverse.org/reference/n_distinct.html'>n_distinct</a></code>. Their function is equal to <code>count_S(...) + count_IR(...)</code>.</p>
+<p>The function <code>count_df</code> takes any variable from <code>data</code> that has an <code>"rsi"</code> class (created with <code><a href='as.rsi.html'>as.rsi</a></code>) and counts the amounts of S, I and R. The resulting <em>tidy data</em> (see Source) <code>data.frame</code> will have three rows (S/I/R) and a column for each variable with class <code>"rsi"</code>.</p>
+<p>The function <code>rsi_df</code> works exactly like <code>count_df</code>, but add the percentage of S, I and R.</p>
     
     <h2 class="hasAnchor" id="interpretation-of-s-i-and-r"><a class="anchor" href="#interpretation-of-s-i-and-r"></a>Interpretation of S, I and R</h2>
 

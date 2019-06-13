@@ -1,6 +1,17 @@
-# AMR 0.7.0.9007
+# AMR 0.7.0.9008
 
 #### New
+* Function `rsi_df()` to transform a `data.frame` to a data set containing only the microbial interpretation (S, I, R), the antibiotic, the percentage of S/I/R and the number of available isolates. This is a convenient combinations of existing functions `count_df()` and `portion_df()` to immediately show resistance percentages and number of available isolates:
+  ```r
+  septic_patients %>%
+    select(AMX, CIP) %>%
+    rsi_df()
+  #      antibiotic  interpretation      value  isolates
+  # 1   Amoxicillin              SI  0.4442636       546
+  # 2   Amoxicillin               R  0.5557364       683
+  # 3 Ciprofloxacin              SI  0.8381831      1181
+  # 4 Ciprofloxacin               R  0.1618169       228
+  ```
 * Support for all scientifically published pathotypes of *E. coli* to date. Supported are: AIEC (Adherent-Invasive *E. coli*), ATEC (Atypical Entero-pathogenic *E. coli*), DAEC (Diffusely Adhering *E. coli*), EAEC (Entero-Aggresive *E. coli*), EHEC (Entero-Haemorrhagic *E. coli*), EIEC (Entero-Invasive *E. coli*), EPEC (Entero-Pathogenic *E. coli*), ETEC (Entero-Toxigenic *E. coli*), NMEC (Neonatal Meningitis‐causing *E. coli*), STEC (Shiga-toxin producing *E. coli*) and UPEC (Uropathogenic *E. coli*). All these lead to the microbial ID of *E. coli*:
   ```r
   as.mo("UPEC")
@@ -11,6 +22,7 @@
 * Function `mo_info()` as an analogy to `ab_info()`. The `mo_info()` prints a list with the full taxonomy, authors, and the URL to the online database of a microorganism
 
 #### Changed
+* Column names of output `count_df()` and `portion_df()` are now lowercase
 * Fixed bug in translation of microorganism names
 * Fixed bug in determining taxonomic kingdoms
 * Algorithm improvements for `as.ab()` and `as.mo()` to understand even more severely misspelled input
@@ -23,6 +35,7 @@
 * Removed `latest_annual_release` from the `catalogue_of_life_version()` function
 * Removed antibiotic code `PVM1` from the `antibiotics` data set as this was a duplicate of `PME`
 * Fixed bug where not all old taxonomic named would not be printed when using a vector as input for `as.mo()`
+* Manually added *Trichomonas vaginalis* from the kingdom of Protozoa, which is missing from the Catalogue of Life
 
 #### Other
 * Fixed a note thrown by CRAN tests

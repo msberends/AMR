@@ -50,17 +50,17 @@ test_that("counts work", {
 
   # count_df
   expect_equal(
-    septic_patients %>% select(AMX) %>% count_df() %>% pull(Value),
+    septic_patients %>% select(AMX) %>% count_df() %>% pull(value),
     c(septic_patients$AMX %>% count_SI(),
       septic_patients$AMX %>% count_R())
   )
   expect_equal(
-    septic_patients %>% select(AMX) %>% count_df(combine_IR = TRUE) %>% pull(Value),
+    septic_patients %>% select(AMX) %>% count_df(combine_IR = TRUE) %>% pull(value),
     c(septic_patients$AMX %>% count_S(),
       septic_patients$AMX %>% count_IR())
   )
   expect_equal(
-    septic_patients %>% select(AMX) %>% count_df(combine_SI = FALSE) %>% pull(Value),
+    septic_patients %>% select(AMX) %>% count_df(combine_SI = FALSE) %>% pull(value),
     c(septic_patients$AMX %>% count_S(),
       septic_patients$AMX %>% count_I(),
       septic_patients$AMX %>% count_R())

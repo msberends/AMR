@@ -81,7 +81,7 @@ portion_R and portion_IR can be used to calculate resistance, portion_S and port
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.7.0.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">0.7.0.9008</span>
       </span>
     </div>
 
@@ -164,13 +164,6 @@ portion_R and portion_IR can be used to calculate resistance, portion_S and port
         <span class="fa fa-sort-amount-down"></span>
          
         Create frequency tables
-      </a>
-    </li>
-    <li>
-      <a href="../reference/g.test.html">
-        <span class="fa fa-clipboard-check"></span>
-         
-        Use the G-test
       </a>
     </li>
     <li>
@@ -267,6 +260,10 @@ portion_R and portion_IR can be used to calculate resistance, portion_S and port
 
 <span class='fu'>portion_df</span>(<span class='no'>data</span>, <span class='kw'>translate_ab</span> <span class='kw'>=</span> <span class='st'>"name"</span>, <span class='kw'>language</span> <span class='kw'>=</span> <span class='fu'><a href='translate.html'>get_locale</a></span>(),
   <span class='kw'>minimum</span> <span class='kw'>=</span> <span class='fl'>30</span>, <span class='kw'>as_percent</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>combine_SI</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>combine_IR</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
+
+<span class='fu'>rsi_df</span>(<span class='no'>data</span>, <span class='kw'>translate_ab</span> <span class='kw'>=</span> <span class='st'>"name"</span>, <span class='kw'>language</span> <span class='kw'>=</span> <span class='fu'><a href='translate.html'>get_locale</a></span>(),
+  <span class='kw'>minimum</span> <span class='kw'>=</span> <span class='fl'>30</span>, <span class='kw'>as_percent</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>combine_SI</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
   <span class='kw'>combine_IR</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -323,7 +320,8 @@ portion_R and portion_IR can be used to calculate resistance, portion_S and port
 
     <p><strong>Remember that you should filter your table to let it contain only first isolates!</strong> Use <code><a href='first_isolate.html'>first_isolate</a></code> to determine them in your data set.</p>
 <p>These functions are not meant to count isolates, but to calculate the portion of resistance/susceptibility. Use the <code><a href='count.html'>count</a></code> functions to count isolates. <em>Low counts can infuence the outcome - these <code>portion</code> functions may camouflage this, since they only return the portion albeit being dependent on the <code>minimum</code> parameter.</em></p>
-<p><code>portion_df</code> takes any variable from <code>data</code> that has an <code>"rsi"</code> class (created with <code><a href='as.rsi.html'>as.rsi</a></code>) and calculates the portions R, I and S. The resulting <em>tidy data</em> (see Source) <code>data.frame</code> will have three rows (S/I/R) and a column for each variable with class <code>"rsi"</code>.
+<p>The function <code>portion_df</code> takes any variable from <code>data</code> that has an <code>"rsi"</code> class (created with <code><a href='as.rsi.html'>as.rsi</a></code>) and calculates the portions R, I and S. The resulting <em>tidy data</em> (see Source) <code>data.frame</code> will have three rows (S/I/R) and a column for each group and each variable with class <code>"rsi"</code>.</p>
+<p>The function <code>rsi_df</code> works exactly like <code>portion_df</code>, but add the number of isolates.
     <br /><br />
   To calculate the probability (<em>p</em>) of susceptibility of one antibiotic, we use this formula:
   <div style="text-align: center;"><img src='figures/combi_therapy_2.png' alt='' /></div>

@@ -444,7 +444,43 @@ MOs <- MOs %>%
              fullname = "Beta-haemolytic Streptococcus",
              ref = NA_character_,
              species_id = "",
-             source = "manually added")
+             source = "manually added"),
+    # Trichomonas vaginalis is missing, same order as Dientamoeba
+    MOs %>%
+      filter(fullname == "Dientamoeba") %>%
+      mutate(mo = gsub("DNTMB", "THMNS", mo),
+             col_id = NA,
+             fullname = "Trichomonas",
+             family = "Trichomonadidae",
+             genus = "Trichomonas",
+             source = "manually added",
+             ref = "Donne, 1836",
+             species_id = ""),
+    MOs %>%
+      filter(fullname == "Dientamoeba fragilis") %>%
+      mutate(mo = gsub("DNTMB", "THMNS", mo),
+             mo = gsub("FRA", "VAG", mo),
+             col_id = NA,
+             fullname = "Trichomonas vaginalis",
+             family = "Trichomonadidae",
+             genus = "Trichomonas",
+             species = "vaginalis",
+             source = "manually added",
+             ref = "Donne, 1836",
+             species_id = ""),
+    MOs %>% # add family as such too
+      filter(fullname == "Monocercomonadidae") %>%
+      mutate(mo = gsub("MNCRCMND", "TRCHMNDD", mo),
+             col_id = NA,
+             fullname = "Trichomonadidae",
+             family = "Trichomonadidae",
+             rank = "family",
+             genus = "",
+             species = "",
+             source = "manually added",
+             ref = "",
+             species_id = ""),
+
   )
 
 
@@ -485,8 +521,12 @@ MOs <- MOs %>%
     TRUE ~ 3
   ))
 
+# arrange
+MOs <- MOs %>% arrange(fullname)
+MOs.old <- MOs.old %>% arrange(fullname)
+
 # save it
-MOs <- as.data.frame(MOs %>% arrange(fullname), stringsAsFactors = FALSE)
+MOs <- as.data.frame(MOs, stringsAsFactors = FALSE)
 MOs.old <- as.data.frame(MOs.old, stringsAsFactors = FALSE)
 class(MOs$mo) <- "mo"
 

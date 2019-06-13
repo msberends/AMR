@@ -136,6 +136,9 @@ age <- function(x, reference = Sys.Date(), exact = FALSE) {
 #'   select(age_group, CIP) %>%
 #'   ggplot_rsi(x = "age_group")
 age_groups <- function(x, split_at = c(12, 25, 55, 75)) {
+  if (!is.numeric(x)) {
+    stop("`x` and must be numeric, not a ", paste0(class(x), collapse = "/"), ".")
+  }
   if (is.character(split_at)) {
     split_at <- split_at[1L]
     if (split_at %like% "^(child|kid|junior)") {
@@ -148,11 +151,7 @@ age_groups <- function(x, split_at = c(12, 25, 55, 75)) {
       split_at <- 1:10 * 10
     }
   }
-  split_at <- as.integer(split_at)
-  if (!is.numeric(x) | !is.numeric(split_at)) {
-    stop("`x` and `split_at` must both be numeric.")
-  }
-  split_at <- sort(unique(split_at))
+  split_at <- sort(unique(as.integer(split_at)))
   if (!split_at[1] == 0) {
     # add base number 0
     split_at <- c(0, split_at)

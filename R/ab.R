@@ -203,7 +203,6 @@ as.ab <- function(x) {
     # try by removing all spaces
     if (x[i] %like% " ") {
       found <- suppressWarnings(as.ab(gsub(" +", "", x[i])))
-      print(found)
       if (length(found) > 0 & !is.na(found)) {
         x_new[i] <- found[1L]
         next

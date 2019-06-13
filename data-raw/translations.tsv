@@ -154,6 +154,8 @@ pt	vegetative	vegetativo	FALSE	FALSE
 pt	([([ ]*?)group	\\1grupo	FALSE	FALSE
 pt	([([ ]*?)Group	\\1Grupo	FALSE	FALSE
 
+de	clavulanic acid	Clavulansäure	FALSE	TRUE
+
 nl	4-aminosalicylic acid	4-aminosalicylzuur
 nl	Adefovir dipivoxil	Adefovir
 nl	Aldesulfone sodium	Aldesulfon
@@ -348,8 +350,10 @@ nl	Thiamphenicol	Thiamfenicol
 nl	Thioacetazone/isoniazid	Thioacetazon/isoniazide
 nl	Ticarcillin	Ticarcilline
 nl	Ticarcillin/beta-lactamase inhibitor	Ticarcilline/enzymremmer
+nl	Ticarcillin/clavulanic acid	Ticarcilline/clavulaanzuur
 nl	Tinidazole	Tinidazol
 nl	Tobramycin	Tobramycine
+nl	Trimethoprim/sulfamethoxazole	Trimethoprim/sulfamethoxazol
 nl	Troleandomycin	Troleandomycine
 nl	Trovafloxacin	Trovafloxacine
 nl	Vancomycin	Vancomycine
