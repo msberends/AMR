@@ -62,7 +62,7 @@ The function \code{n_rsi} is an alias of \code{count_all}. They can be used to c
 
 The function \code{count_df} takes any variable from \code{data} that has an \code{"rsi"} class (created with \code{\link{as.rsi}}) and counts the amounts of S, I and R. The resulting \emph{tidy data} (see Source) \code{data.frame} will have three rows (S/I/R) and a column for each variable with class \code{"rsi"}.
 
-The function \code{rsi_df} works exactly like \code{count_df}, but add the percentage of S, I and R.
+The function \code{rsi_df} works exactly like \code{count_df}, but adds the percentage of S, I and R.
 }
 \section{Interpretation of S, I and R}{
 

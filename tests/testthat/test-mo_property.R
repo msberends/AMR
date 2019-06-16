@@ -22,34 +22,37 @@
 context("mo_property.R")
 
 test_that("mo_property works", {
-  expect_equal(mo_kingdom("E. coli"), "Bacteria")
-  expect_equal(mo_phylum("E. coli"), "Proteobacteria")
-  expect_equal(mo_class("E. coli"), "Gammaproteobacteria")
-  expect_equal(mo_order("E. coli"), "Enterobacteriales")
-  expect_equal(mo_family("E. coli"), "Enterobacteriaceae")
-  expect_equal(mo_genus("E. coli"), "Escherichia")
-  expect_equal(mo_species("E. coli"), "coli")
-  expect_equal(mo_subspecies("E. coli"), "")
-  expect_equal(mo_fullname("E. coli"), "Escherichia coli")
-  expect_equal(mo_name("E. coli"), "Escherichia coli")
-  expect_equal(mo_type("E. coli", language = "en"), "Bacteria")
-  expect_equal(mo_gramstain("E. coli", language = "en"), "Gram-negative")
-  expect_equal(class(mo_taxonomy("E. coli")), "list")
-  expect_equal(names(mo_taxonomy("E. coli")), c("kingdom", "phylum", "class", "order",
+  expect_equal(mo_kingdom("Escherichia coli"), "Bacteria")
+  expect_equal(mo_phylum("Escherichia coli"), "Proteobacteria")
+  expect_equal(mo_class("Escherichia coli"), "Gammaproteobacteria")
+  expect_equal(mo_order("Escherichia coli"), "Enterobacteriales")
+  expect_equal(mo_family("Escherichia coli"), "Enterobacteriaceae")
+  expect_equal(mo_genus("Escherichia coli"), "Escherichia")
+  expect_equal(mo_species("Escherichia coli"), "coli")
+  expect_equal(mo_subspecies("Escherichia coli"), "")
+  expect_equal(mo_fullname("Escherichia coli"), "Escherichia coli")
+  expect_equal(mo_name("Escherichia coli"), "Escherichia coli")
+  expect_equal(mo_type("Escherichia coli", language = "en"), "Bacteria")
+  expect_equal(mo_gramstain("Escherichia coli", language = "en"), "Gram-negative")
+  expect_equal(class(mo_taxonomy("Escherichia coli")), "list")
+  expect_equal(names(mo_taxonomy("Escherichia coli")), c("kingdom", "phylum", "class", "order",
                                                 "family", "genus", "species", "subspecies"))
-  expect_equal(names(mo_info("E. coli")), c("kingdom", "phylum", "class", "order",
+  expect_equal(mo_synonyms("Escherichia coli"), NULL)
+  expect_gt(length(mo_synonyms("C. albicans")), 1)
+  expect_equal(names(mo_info("Escherichia coli")), c("kingdom", "phylum", "class", "order",
                                             "family", "genus", "species", "subspecies",
-                                            "url", "ref"))
+                                            "synonyms", "url", "ref"))
 
-  expect_equal(mo_ref("E. coli"), "Castellani et al., 1919")
-  expect_equal(mo_authors("E. coli"), "Castellani et al.")
-  expect_equal(mo_year("E. coli"), 1919)
+  expect_equal(mo_ref("Escherichia coli"), "Castellani et al., 1919")
+  expect_equal(mo_authors("Escherichia coli"), "Castellani et al.")
+  expect_equal(mo_year("Escherichia coli"), 1919)
 
-  expect_equal(mo_shortname("MRSA"), "S. aureus")
-  expect_equal(mo_shortname("MRSA", Becker = TRUE), "S. aureus")
-  expect_equal(mo_shortname("MRSA", Becker = "all", language = "en"), "CoPS")
-  expect_equal(mo_shortname("S. agalac"), "S. agalactiae")
-  expect_equal(mo_shortname("S. agalac", Lancefield = TRUE), "GBS")
+  expect_equal(mo_shortname("Escherichia coli"), "E. coli")
+  expect_equal(mo_shortname("Staphylococcus aureus"), "S. aureus")
+  expect_equal(mo_shortname("Staphylococcus aureus", Becker = TRUE), "S. aureus")
+  expect_equal(mo_shortname("Staphylococcus aureus", Becker = "all", language = "en"), "CoPS")
+  expect_equal(mo_shortname("Streptococcus agalactiae"), "S. agalactiae")
+  expect_equal(mo_shortname("Streptococcus agalactiae", Lancefield = TRUE), "GBS")
 
   expect_true(mo_url("Escherichia coli") %like% "www.catalogueoflife.org")
 
@@ -58,28 +61,28 @@ test_that("mo_property works", {
   expect_identical(MOs$fullname, mo_fullname(MOs$fullname, language = "en"))
 
   # check languages
-  expect_equal(mo_type("E. coli", language = "de"), "Bakterien")
-  expect_equal(mo_gramstain("E. coli", language = "nl"), "Gram-negatief")
+  expect_equal(mo_type("Escherichia coli", language = "de"), "Bakterien")
+  expect_equal(mo_gramstain("Escherichia coli", language = "nl"), "Gram-negatief")
 
-  expect_output(print(mo_gramstain("E. coli", language = "en")))
-  expect_output(print(mo_gramstain("E. coli", language = "de")))
-  expect_output(print(mo_gramstain("E. coli", language = "nl")))
-  expect_output(print(mo_gramstain("E. coli", language = "es")))
-  expect_output(print(mo_gramstain("E. coli", language = "pt")))
-  expect_output(print(mo_gramstain("E. coli", language = "it")))
-  expect_output(print(mo_gramstain("E. coli", language = "fr")))
+  expect_output(print(mo_gramstain("Escherichia coli", language = "en")))
+  expect_output(print(mo_gramstain("Escherichia coli", language = "de")))
+  expect_output(print(mo_gramstain("Escherichia coli", language = "nl")))
+  expect_output(print(mo_gramstain("Escherichia coli", language = "es")))
+  expect_output(print(mo_gramstain("Escherichia coli", language = "pt")))
+  expect_output(print(mo_gramstain("Escherichia coli", language = "it")))
+  expect_output(print(mo_gramstain("Escherichia coli", language = "fr")))
 
-  expect_error(mo_gramstain("E. coli", language = "UNKNOWN"))
+  expect_error(mo_gramstain("Escherichia coli", language = "UNKNOWN"))
 
   # manual property function
-  expect_error(mo_property("E. coli", property = c("tsn", "fullname")))
-  expect_error(mo_property("E. coli", property = "UNKNOWN"))
-  expect_identical(mo_property("E. coli", property = "fullname"),
-                   mo_fullname("E. coli"))
-  expect_identical(mo_property("E. coli", property = "genus"),
-                   mo_genus("E. coli"))
-  expect_identical(mo_property("E. coli", property = "species"),
-                   mo_species("E. coli"))
+  expect_error(mo_property("Escherichia coli", property = c("tsn", "fullname")))
+  expect_error(mo_property("Escherichia coli", property = "UNKNOWN"))
+  expect_identical(mo_property("Escherichia coli", property = "fullname"),
+                   mo_fullname("Escherichia coli"))
+  expect_identical(mo_property("Escherichia coli", property = "genus"),
+                   mo_genus("Escherichia coli"))
+  expect_identical(mo_property("Escherichia coli", property = "species"),
+                   mo_species("Escherichia coli"))
 
   expect_identical(suppressWarnings(mo_ref("Chlamydia psittaci")), "Page, 1968")
   expect_identical(mo_ref("Chlamydophila psittaci"), "Everett et al., 1999")
@@ -87,14 +90,13 @@ test_that("mo_property works", {
 
   # outcome of mo_fullname must always return the fullname from the data set
   library(dplyr)
-  a <- microorganisms %>%
+  x <- microorganisms %>%
     transmute(mo,
               # fullname from the original data:
               f1 = fullname,
               # newly created fullname based on MO code:
               f2 = mo_fullname(mo, language = "en")) %>%
     filter(f1 != f2)
-
-  expect_equal(nrow(a), 0)
+  expect_equal(nrow(x), 0)
 
 })

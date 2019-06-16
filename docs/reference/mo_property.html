@@ -80,7 +80,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">0.7.0.9005</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">0.7.0.9010</span>
       </span>
     </div>
 
@@ -277,6 +277,8 @@
 
 <span class='fu'>mo_taxonomy</span>(<span class='no'>x</span>, <span class='kw'>language</span> <span class='kw'>=</span> <span class='fu'><a href='translate.html'>get_locale</a></span>(), <span class='no'>...</span>)
 
+<span class='fu'>mo_synonyms</span>(<span class='no'>x</span>, <span class='no'>...</span>)
+
 <span class='fu'>mo_info</span>(<span class='no'>x</span>, <span class='kw'>language</span> <span class='kw'>=</span> <span class='fu'><a href='translate.html'>get_locale</a></span>(), <span class='no'>...</span>)
 
 <span class='fu'>mo_url</span>(<span class='no'>x</span>, <span class='kw'>open</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>...</span>)
@@ -377,6 +379,7 @@ This package contains the complete taxonomic tree of almost all microorganisms (
 <span class='fu'>mo_type</span>(<span class='st'>"E. coli"</span>)            <span class='co'># "Bacteria" (equal to kingdom, but may be translated)</span>
 <span class='fu'>mo_rank</span>(<span class='st'>"E. coli"</span>)            <span class='co'># "species"</span>
 <span class='fu'>mo_url</span>(<span class='st'>"E. coli"</span>)             <span class='co'># get the direct url to the online database entry</span>
+<span class='fu'>mo_synonyms</span>(<span class='st'>"E. coli"</span>)        <span class='co'># get previously accepted taxonomic names</span>
 
 <span class='co'>## scientific reference</span>
 <span class='fu'>mo_ref</span>(<span class='st'>"E. coli"</span>)             <span class='co'># "Castellani et al., 1919"</span>

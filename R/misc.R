@@ -307,5 +307,14 @@ translate_AMR <- function(from, language = get_locale(), only_unknown = FALSE) {
 }
 
 "%or%" <- function(x, y) {
-  ifelse(!is.na(x), x, ifelse(!is.na(y), y, NA))
+  if (is.null(x) | is.null(y)) {
+    if (is.null(x)) {
+      return(y)
+    } else {
+      return(x)
+    }
+  }
+  ifelse(!is.na(x),
+         x,
+         ifelse(!is.na(y), y, NA))
 }

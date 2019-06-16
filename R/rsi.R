@@ -387,9 +387,14 @@ summary.rsi <- function(object, ...) {
 #' @importFrom dplyr %>% group_by summarise filter mutate if_else n_distinct
 #' @importFrom graphics plot text
 #' @noRd
-plot.rsi <- function(x, ...) {
-  x_name <- deparse(substitute(x))
-
+plot.rsi <- function(x,
+                     lwd = 2,
+                     ylim = NULL,
+                     ylab = 'Percentage',
+                     xlab = 'Antimicrobial Interpretation',
+                     main = paste('Susceptibility Analysis of', deparse(substitute(x))),
+                     axes = FALSE,
+                     ...) {
   suppressWarnings(
     data <- data.frame(x = x,
                        y = 1,
@@ -415,13 +420,12 @@ plot.rsi <- function(x, ...) {
 
   plot(x = data$x,
        y = data$s,
-       lwd = 2,
-       col = c('green', 'orange', 'red'),
+       lwd = lwd,
        ylim = c(0, ymax),
-       ylab = 'Percentage',
-       xlab = 'Antimicrobial Interpretation',
-       main = paste('Susceptibility Analysis of', x_name),
-       axes = FALSE,
+       ylab = ylab,
+       xlab = xlab,
+       main = main,
+       axes = axes,
        ...)
   # x axis
   axis(side = 1, at = 1:n_distinct(data$x), labels = levels(data$x), lwd = 0)
@@ -439,24 +443,32 @@ plot.rsi <- function(x, ...) {
 #' @importFrom dplyr %>% group_by summarise
 #' @importFrom graphics barplot axis
 #' @noRd
-barplot.rsi <- function(height, ...) {
-  x <- height
-  x_name <- deparse(substitute(height))
+barplot.rsi <- function(height,
+                        col = c('green3', 'orange2', 'red3'),
+                        xlab = ifelse(beside, 'Antimicrobial Interpretation', ''),
+                        main = paste('Susceptibility Analysis of', deparse(substitute(height))),
+                        ylab = 'Frequency',
+                        beside = TRUE,
+                        axes = beside,
+                        ...) {
 
-  suppressWarnings(
-    data <- data.frame(rsi = x, cnt = 1) %>%
-      group_by(rsi) %>%
-      summarise(cnt = sum(cnt)) %>%
-      droplevels()
-  )
+  if (axes == TRUE) {
+    par(mar =  c(5, 4, 4, 2) + 0.1)
+  } else {
+    par(mar =  c(2, 4, 4, 2) + 0.1)
+  }
 
-  barplot(table(x),
-          col = c('green3', 'orange2', 'red3'),
-          xlab = 'Antimicrobial Interpretation',
-          main = paste('Susceptibility Analysis of', x_name),
-          ylab = 'Frequency',
+  barplot(as.matrix(table(height)),
+          col = col,
+          xlab = xlab,
+          main = main,
+          ylab = ylab,
+          beside = beside,
           axes = FALSE,
           ...)
   # y axis, 0-100%
-  axis(side = 2, at = seq(0, max(data$cnt) + max(data$cnt) * 1.1, by = 25))
+  axis(side = 2, at = seq(0, max(table(height)) + max(table(height)) * 1.1, by = 25))
+  if (axes == TRUE && beside == TRUE) {
+    axis(side = 1, labels = levels(height), at = c(1, 2, 3) + 0.5, lwd = 0)
+  }
 }

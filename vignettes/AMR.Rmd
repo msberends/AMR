@@ -78,7 +78,7 @@ patients_table <- data.frame(patient_id = patients,
 The first 135 patient IDs are now male, the other 125 are female.
 
 ## Dates
-Let's pretend that our data consists of blood cultures isolates from 1 January 2010 until 1 January 2018. 
+Let's pretend that our data consists of blood cultures isolates from between 1 January 2010 and 1 January 2018. 
 
 ```{r create dates}
 dates <- seq(as.Date("2010-01-01"), as.Date("2018-01-01"), by = "day")
@@ -131,7 +131,7 @@ Using the `left_join()` function from the `dplyr` package, we can 'map' the gend
 data <- data %>% left_join(patients_table)
 ```
 
-The resulting data set contains 5,000 blood culture isolates. With the `head()` function we can preview the first 6 values of this data set:
+The resulting data set contains `r format(nrow(data), big.mark = ",")` blood culture isolates. With the `head()` function we can preview the first 6 values of this data set:
 
 ```{r preview data set 1, eval = FALSE}
 head(data)
@@ -154,7 +154,7 @@ data %>% freq(gender) # this would be the same: freq(data$gender)
 data %>% freq(gender, markdown = FALSE, header = TRUE)
 ```
 
-So, we can draw at least two conclusions immediately. From a data scientist perspective, the data looks clean: only values `M` and `F`. From a researcher perspective: there are slightly more men. Nothing we didn't already know.
+So, we can draw at least two conclusions immediately. From a data scientists perspective, the data looks clean: only values `M` and `F`. From a researchers perspective: there are slightly more men. Nothing we didn't already know.
 
 The data is already quite clean, but we still need to transform some variables. The `bacteria` column now consists of text, and we want to add more variables based on microbial IDs later on. So, we will transform this column to valid IDs. The `mutate()` function of the `dplyr` package makes this really easy:
 
@@ -219,7 +219,6 @@ data_1st <- data %>%
 ```
 
 ## First *weighted* isolates
-We made a slight twist to the CLSI algorithm, to take into account the antimicrobial susceptibility profile. Imagine this data, sorted on date:
 
 ```{r, echo = FALSE, message = FALSE, warning = FALSE, results = 'asis'}
 weighted_df <- data %>%
@@ -232,7 +231,11 @@ weighted_df <- data %>%
   .[1:min(10, nrow(.)),] %>% 
   mutate(isolate = row_number()) %>% 
   select(isolate, everything())
+```
 
+We made a slight twist to the CLSI algorithm, to take into account the antimicrobial susceptibility profile. Have a look at all isolates of patient `r as.data.frame(weighted_df[1, 'patient_id'])`, sorted on date:
+
+```{r, echo = FALSE, message = FALSE, warning = FALSE, results = 'asis'}
 weighted_df %>% 
   knitr::kable(align = "c")
 ```
@@ -378,10 +381,10 @@ data_1st %>%
   summarise("1. Amoxi/clav" = portion_SI(AMC),
             "2. Gentamicin" = portion_SI(GEN),
             "3. Amoxi/clav + genta" = portion_SI(AMC, GEN)) %>% 
-  tidyr::gather("Antibiotic", "S", -genus) %>%
+  tidyr::gather("antibiotic", "S", -genus) %>%
   ggplot(aes(x = genus,
              y = S,
-             fill = Antibiotic)) +
+             fill = antibiotic)) +
   geom_col(position = "dodge2")
 ```
 
@@ -410,7 +413,7 @@ ggplot(data_1st) +
   geom_rsi(translate_ab = FALSE)
 ```
 
-Omit the `translate_ab = FALSE` to have the antibiotic codes (AMX, AMC, CIP, GEN) translated to official WHO names (amoxicillin, amoxicillin and betalactamase inhibitor, ciprofloxacin, gentamicin).
+Omit the `translate_ab = FALSE` to have the antibiotic codes (AMX, AMC, CIP, GEN) translated to official WHO names (amoxicillin, amoxicillin/clavulanic acid, ciprofloxacin, gentamicin).
 
 If we group on e.g. the `genus` column and add some additional functions from our package, we can create this:
 
@@ -422,7 +425,7 @@ ggplot(data_1st %>% group_by(genus)) +
   # of which we have 4 (earlier created with `as.rsi`)
   geom_rsi(x = "genus") + 
   # split plots on antibiotic
-  facet_rsi(facet = "Antibiotic") +
+  facet_rsi(facet = "antibiotic") +
   # make R red, I yellow and S green
   scale_rsi_colours() +
   # show percentages on y axis
@@ -443,7 +446,7 @@ To simplify this, we also created the `ggplot_rsi()` function, which combines al
 data_1st %>% 
   group_by(genus) %>%
   ggplot_rsi(x = "genus",
-             facet = "Antibiotic",
+             facet = "antibiotic",
              breaks = 0:4 * 25,
              datalabels = FALSE) +
   coord_flip()
@@ -453,33 +456,26 @@ data_1st %>%
 
 The next example uses the included `septic_patients`, which is an anonymised data set containing 2,000 microbial blood culture isolates with their full antibiograms found in septic patients in 4 different hospitals in the Netherlands, between 2001 and 2017. It is true, genuine data. This `data.frame` can be used to practice AMR analysis.
 
-We will compare the resistance to fosfomycin (column `FOS`) in hospital A and D. The input for the final `fisher.test()` will be this:
+We will compare the resistance to fosfomycin (column `FOS`) in hospital A and D. The input for the `fisher.test()` can be retrieved with a transformation like this:
 
-```{r, echo = FALSE, results = 'asis'}
-septic_patients %>%
-  filter(hospital_id %in% c("A", "D")) %>%
-  select(hospital_id, FOS) %>%
-  group_by(hospital_id) %>%
-  count_df(combine_IR = TRUE) %>%
-  tidyr::spread(hospital_id, Value) %>%
-  select(A, D) %>%
-  bind_cols(tibble(" " = c("IR", "S")), .) %>% 
-  as.matrix() %>%
-  knitr::kable()
-```
-
-We can transform the data and apply the test in only a couple of lines: 
-
-```{r}
-septic_patients %>%
+```{r, results = 'markup'}
+check_FOS <- septic_patients %>%
   filter(hospital_id %in% c("A", "D")) %>% # filter on only hospitals A and D
   select(hospital_id, FOS) %>%             # select the hospitals and fosfomycin
   group_by(hospital_id) %>%                # group on the hospitals
-  count_df(combine_IR = TRUE) %>%          # count all isolates per group (hospital_id)
-  tidyr::spread(hospital_id, Value) %>%    # transform output so A and D are columns
+  count_df(combine_SI = TRUE) %>%          # count all isolates per group (hospital_id)
+  tidyr::spread(hospital_id, value) %>%    # transform output so A and D are columns
   select(A, D) %>%                         # and select these only
-  as.matrix() %>%                          # transform to good old matrix for fisher.test()
-  fisher.test()                            # do Fisher's Exact Test
+  as.matrix()                              # transform to good old matrix for fisher.test()
+
+check_FOS
 ```
 
-As can be seen, the p value is 0.03, which means that the fosfomycin resistances found in hospital A and D are really different.
+We can apply the test now with:
+
+```{r}
+# do Fisher's Exact Test
+fisher.test(check_FOS)                            
+```
+
+As can be seen, the p value is `r round(fisher.test(check_FOS)$p.value, 3)`, which means that the fosfomycin resistances found in hospital A and D are really different.

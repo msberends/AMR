@@ -20,7 +20,7 @@
 # ==================================================================== #
 
 # to check with R-Hub:
-# rhub::check_for_cran(devtools::build(args = c('--no-build-vignettes')))
+# chck <- rhub::check_for_cran(devtools::build(args = c('--no-build-vignettes')))
 
 stages:
   - build
@@ -124,18 +124,10 @@ coverage:
 pages:
   stage: deploy
   when: always
-  #cache:
-  #  key: "$CI_COMMIT_REF_SLUG"
-   # paths:
-    #  - installed_deps/
   only:
     - master
   script:
     - mv docs public
-    # install missing and outdated packages
-    #- Rscript -e 'source(".gitlab-ci.R"); gl_update_pkg_all(repos = "https://cran.rstudio.com", quiet = TRUE, install_pkgdown = TRUE)'
-    #- Rscript -e "devtools::install(build = TRUE, upgrade = FALSE)"
-    #- R -e "pkgdown::build_site(examples = FALSE, lazy = TRUE, override = list(destination = 'public'))"
   artifacts:
     paths:
       - public

@@ -73,6 +73,7 @@
 #' mo_type("E. coli")            # "Bacteria" (equal to kingdom, but may be translated)
 #' mo_rank("E. coli")            # "species"
 #' mo_url("E. coli")             # get the direct url to the online database entry
+#' mo_synonyms("E. coli")        # get previously accepted taxonomic names
 #'
 #' ## scientific reference
 #' mo_ref("E. coli")             # "Castellani et al., 1919"
@@ -314,10 +315,22 @@ mo_taxonomy <- function(x, language = get_locale(),  ...) {
 
 #' @rdname mo_property
 #' @export
+mo_synonyms <- function(x, ...) {
+  x <- AMR::as.mo(x, ...)
+  col_id <- AMR::microorganisms[which(AMR::microorganisms$mo == x), "col_id"]
+  if (is.na(col_id) | !col_id %in% AMR::microorganisms.old$col_id_new) {
+    return(NULL)
+  }
+  sort(AMR::microorganisms.old[which(AMR::microorganisms.old$col_id_new == col_id), "fullname"])
+}
+
+#' @rdname mo_property
+#' @export
 mo_info <- function(x, language = get_locale(),  ...) {
   x <- AMR::as.mo(x, ...)
   c(mo_taxonomy(x, language = language),
-    list(url = unname(mo_url(x, open = FALSE)),
+    list(synonyms = mo_synonyms(x),
+         url = unname(mo_url(x, open = FALSE)),
          ref = mo_ref(x)))
 }
 

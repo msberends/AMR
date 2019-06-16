@@ -33,7 +33,7 @@
 #'
 #' The function \code{count_df} takes any variable from \code{data} that has an \code{"rsi"} class (created with \code{\link{as.rsi}}) and counts the amounts of S, I and R. The resulting \emph{tidy data} (see Source) \code{data.frame} will have three rows (S/I/R) and a column for each variable with class \code{"rsi"}.
 #'
-#' The function \code{rsi_df} works exactly like \code{count_df}, but add the percentage of S, I and R.
+#' The function \code{rsi_df} works exactly like \code{count_df}, but adds the percentage of S, I and R.
 #' @source Wickham H. \strong{Tidy Data.} The Journal of Statistical Software, vol. 59, 2014. \url{http://vita.had.co.nz/papers/tidy-data.html}
 #' @seealso \code{\link{portion}_*} to calculate microbial resistance and susceptibility.
 #' @keywords resistance susceptibility rsi antibiotics isolate isolates

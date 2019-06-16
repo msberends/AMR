@@ -20,6 +20,7 @@
 \alias{mo_year}
 \alias{mo_rank}
 \alias{mo_taxonomy}
+\alias{mo_synonyms}
 \alias{mo_info}
 \alias{mo_url}
 \title{Property of a microorganism}
@@ -59,6 +60,8 @@ mo_year(x, ...)
 mo_rank(x, ...)
 
 mo_taxonomy(x, language = get_locale(), ...)
+
+mo_synonyms(x, ...)
 
 mo_info(x, language = get_locale(), ...)
 
@@ -147,6 +150,7 @@ mo_gramstain("E. coli")       # "Gram-negative"
 mo_type("E. coli")            # "Bacteria" (equal to kingdom, but may be translated)
 mo_rank("E. coli")            # "species"
 mo_url("E. coli")             # get the direct url to the online database entry
+mo_synonyms("E. coli")        # get previously accepted taxonomic names
 
 ## scientific reference
 mo_ref("E. coli")             # "Castellani et al., 1919"

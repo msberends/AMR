@@ -73,7 +73,7 @@ These functions are not meant to count isolates, but to calculate the portion of
 
 The function \code{portion_df} takes any variable from \code{data} that has an \code{"rsi"} class (created with \code{\link{as.rsi}}) and calculates the portions R, I and S. The resulting \emph{tidy data} (see Source) \code{data.frame} will have three rows (S/I/R) and a column for each group and each variable with class \code{"rsi"}.
 
-The function \code{rsi_df} works exactly like \code{portion_df}, but add the number of isolates.
+The function \code{rsi_df} works exactly like \code{portion_df}, but adds the number of isolates.
 \if{html}{
   \cr\cr
   To calculate the probability (\emph{p}) of susceptibility of one antibiotic, we use this formula:

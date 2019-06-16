@@ -1,7 +1,7 @@
-# AMR 0.7.0.9009
+# AMR 0.7.0.9010
 
 #### New
-* Function `rsi_df()` to transform a `data.frame` to a data set containing only the microbial interpretation (S, I, R), the antibiotic, the percentage of S/I/R and the number of available isolates. This is a convenient combinations of existing functions `count_df()` and `portion_df()` to immediately show resistance percentages and number of available isolates:
+* Function `rsi_df()` to transform a `data.frame` to a data set containing only the microbial interpretation (S, I, R), the antibiotic, the percentage of S/I/R and the number of available isolates. This is a convenient combination of the existing functions `count_df()` and `portion_df()` to immediately show resistance percentages and number of available isolates:
   ```r
   septic_patients %>%
     select(AMX, CIP) %>%
@@ -12,14 +12,31 @@
   # 3 Ciprofloxacin              SI  0.8381831      1181
   # 4 Ciprofloxacin               R  0.1618169       228
   ```
-* Support for all scientifically published pathotypes of *E. coli* to date. Supported are: AIEC (Adherent-Invasive *E. coli*), ATEC (Atypical Entero-pathogenic *E. coli*), DAEC (Diffusely Adhering *E. coli*), EAEC (Entero-Aggresive *E. coli*), EHEC (Entero-Haemorrhagic *E. coli*), EIEC (Entero-Invasive *E. coli*), EPEC (Entero-Pathogenic *E. coli*), ETEC (Entero-Toxigenic *E. coli*), NMEC (Neonatal Meningitis‐causing *E. coli*), STEC (Shiga-toxin producing *E. coli*) and UPEC (Uropathogenic *E. coli*). All these lead to the microbial ID of *E. coli*:
+* Support for all scientifically published pathotypes of *E. coli* to date. Supported are: 
+
+  * AIEC (Adherent-Invasive *E. coli*) 
+  * ATEC (Atypical Entero-pathogenic *E. coli*) 
+  * DAEC (Diffusely Adhering *E. coli*) 
+  * EAEC (Entero-Aggresive *E. coli*) 
+  * EHEC (Entero-Haemorrhagic *E. coli*) 
+  * EIEC (Entero-Invasive *E. coli*) 
+  * EPEC (Entero-Pathogenic *E. coli*) 
+  * ETEC (Entero-Toxigenic *E. coli*) 
+  * NMEC (Neonatal Meningitis‐causing *E. coli*) 
+  * STEC (Shiga-toxin producing *E. coli*) 
+  * UPEC (Uropathogenic *E. coli*)
+  
+  All these lead to the microbial ID of *E. coli*:
   ```r
   as.mo("UPEC")
   # B_ESCHR_COL
-  mo_fullname("UPEC")
+  mo_name("UPEC")
   # "Escherichia coli"
+  mo_gramstain("EHEC")
+  # "Gram-negative"
   ```
 * Function `mo_info()` as an analogy to `ab_info()`. The `mo_info()` prints a list with the full taxonomy, authors, and the URL to the online database of a microorganism
+* Function `mo_synonyms()` to get all previously accepted taxonomic names of a microorganism
 
 #### Changed
 * Column names of output `count_df()` and `portion_df()` are now lowercase
@@ -36,6 +53,7 @@
 * Removed antibiotic code `PVM1` from the `antibiotics` data set as this was a duplicate of `PME`
 * Fixed bug where not all old taxonomic named would not be printed when using a vector as input for `as.mo()`
 * Manually added *Trichomonas vaginalis* from the kingdom of Protozoa, which is missing from the Catalogue of Life
+* Small improvements to `plot()` and `barplot()` for MIC and RSI classes
 
 #### Other
 * Fixed a note thrown by CRAN tests

@@ -242,34 +242,38 @@ summary.mic <- function(object, ...) {
 
 #' @exportMethod plot.mic
 #' @export
-#' @importFrom dplyr %>% group_by summarise
-#' @importFrom graphics plot text
+#' @importFrom graphics barplot axis
 #' @noRd
-plot.mic <- function(x, ...) {
-  x_name <- deparse(substitute(x))
-  create_barplot_mic(x, x_name, ...)
+plot.mic <- function(x,
+                     main = paste('MIC values of', deparse(substitute(x))),
+                     ylab = 'Frequency',
+                     xlab = 'MIC value',
+                     axes = FALSE,
+                     ...) {
+  barplot(table(droplevels.factor(x)),
+          ylab = ylab,
+          xlab = xlab,
+          axes = axes,
+          main = main,
+          ...)
+  axis(2, seq(0, max(table(droplevels.factor(x)))))
 }
 
 #' @exportMethod barplot.mic
 #' @export
 #' @importFrom graphics barplot axis
 #' @noRd
-barplot.mic <- function(height, ...) {
-  x_name <- deparse(substitute(height))
-  create_barplot_mic(height, x_name, ...)
-}
-
-#' @importFrom graphics barplot axis
-#' @importFrom dplyr %>% group_by summarise
-create_barplot_mic <- function(x, x_name, ...) {
-  data <- data.frame(mic = droplevels(x), cnt = 1) %>%
-    group_by(mic) %>%
-    summarise(cnt = sum(cnt))
-  barplot(table(droplevels.factor(x)),
-          ylab = 'Frequency',
-          xlab = 'MIC value',
-          main = paste('MIC values of', x_name),
-          axes = FALSE,
+barplot.mic <- function(height,
+                        main = paste('MIC values of', deparse(substitute(height))),
+                        ylab = 'Frequency',
+                        xlab = 'MIC value',
+                        axes = FALSE,
+                        ...) {
+  barplot(table(droplevels.factor(height)),
+          ylab = ylab,
+          xlab = xlab,
+          axes = axes,
+          main = main,
           ...)
-  axis(2, seq(0, max(data$cnt)))
+  axis(2, seq(0, max(table(droplevels.factor(height)))))
 }
