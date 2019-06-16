@@ -441,7 +441,7 @@ plot.rsi <- function(x,
 #' @exportMethod barplot.rsi
 #' @export
 #' @importFrom dplyr %>% group_by summarise
-#' @importFrom graphics barplot axis
+#' @importFrom graphics barplot axis par
 #' @noRd
 barplot.rsi <- function(height,
                         col = c('green3', 'orange2', 'red3'),

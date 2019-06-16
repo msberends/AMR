@@ -242,7 +242,7 @@ summary.mic <- function(object, ...) {
 
 #' @exportMethod plot.mic
 #' @export
-#' @importFrom graphics barplot axis
+#' @importFrom graphics barplot axis par
 #' @noRd
 plot.mic <- function(x,
                      main = paste('MIC values of', deparse(substitute(x))),
