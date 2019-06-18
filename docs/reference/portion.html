@@ -81,7 +81,7 @@ portion_R and portion_IR can be used to calculate resistance, portion_S and port
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">0.7.0.9009</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">0.7.0.9012</span>
       </span>
     </div>
 
@@ -321,7 +321,7 @@ portion_R and portion_IR can be used to calculate resistance, portion_S and port
     <p><strong>Remember that you should filter your table to let it contain only first isolates!</strong> Use <code><a href='first_isolate.html'>first_isolate</a></code> to determine them in your data set.</p>
 <p>These functions are not meant to count isolates, but to calculate the portion of resistance/susceptibility. Use the <code><a href='count.html'>count</a></code> functions to count isolates. <em>Low counts can infuence the outcome - these <code>portion</code> functions may camouflage this, since they only return the portion albeit being dependent on the <code>minimum</code> parameter.</em></p>
 <p>The function <code>portion_df</code> takes any variable from <code>data</code> that has an <code>"rsi"</code> class (created with <code><a href='as.rsi.html'>as.rsi</a></code>) and calculates the portions R, I and S. The resulting <em>tidy data</em> (see Source) <code>data.frame</code> will have three rows (S/I/R) and a column for each group and each variable with class <code>"rsi"</code>.</p>
-<p>The function <code>rsi_df</code> works exactly like <code>portion_df</code>, but add the number of isolates.
+<p>The function <code>rsi_df</code> works exactly like <code>portion_df</code>, but adds the number of isolates.
     <br /><br />
   To calculate the probability (<em>p</em>) of susceptibility of one antibiotic, we use this formula:
   <div style="text-align: center;"><img src='figures/combi_therapy_2.png' alt='' /></div>
