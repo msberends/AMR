@@ -33,6 +33,7 @@ test_that("as.mo works", {
 
   expect_equal(as.character(as.mo("Escherichia coli")), "B_ESCHR_COL")
   expect_equal(as.character(as.mo("Escherichia  coli")), "B_ESCHR_COL")
+  expect_equal(as.character(as.mo(22242416)), "B_ESCHR_COL")
   expect_equal(as.character(as.mo("Escherichia  species")), "B_ESCHR")
   expect_equal(as.character(as.mo("Escherichia")), "B_ESCHR")
   expect_equal(as.character(as.mo("Esch spp.")), "B_ESCHR")

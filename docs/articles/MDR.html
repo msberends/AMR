@@ -40,7 +40,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.7.0.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">0.7.0.9013</span>
       </span>
     </div>
 
@@ -126,13 +126,6 @@
       </a>
     </li>
     <li>
-      <a href="../reference/g.test.html">
-        <span class="fa fa-clipboard-check"></span>
-         
-        Use the G-test
-      </a>
-    </li>
-    <li>
       <a href="../articles/benchmarks.html">
         <span class="fa fa-shipping-fast"></span>
          
@@ -199,7 +192,7 @@
       <h1>How to determine multi-drug resistance (MDR)</h1>
                         <h4 class="author">Matthijs S. Berends</h4>
             
-            <h4 class="date">07 June 2019</h4>
+            <h4 class="date">22 June 2019</h4>
       
       
       <div class="hidden name"><code>MDR.Rmd</code></div>
@@ -242,19 +235,19 @@
 <p>The data set looks like this now:</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/head">head</a></span>(my_TB_data)</a>
 <a class="sourceLine" id="cb3-2" title="2"><span class="co">#   rifampicin isoniazid gatifloxacin ethambutol pyrazinamide moxifloxacin</span></a>
-<a class="sourceLine" id="cb3-3" title="3"><span class="co"># 1          R         S            R          R            I            R</span></a>
-<a class="sourceLine" id="cb3-4" title="4"><span class="co"># 2          I         S            S          I            S            R</span></a>
-<a class="sourceLine" id="cb3-5" title="5"><span class="co"># 3          S         R            S          R            I            R</span></a>
-<a class="sourceLine" id="cb3-6" title="6"><span class="co"># 4          R         R            R          R            R            R</span></a>
-<a class="sourceLine" id="cb3-7" title="7"><span class="co"># 5          S         S            S          S            R            S</span></a>
-<a class="sourceLine" id="cb3-8" title="8"><span class="co"># 6          S         I            S          R            R            I</span></a>
+<a class="sourceLine" id="cb3-3" title="3"><span class="co"># 1          S         S            R          S            R            I</span></a>
+<a class="sourceLine" id="cb3-4" title="4"><span class="co"># 2          S         S            R          S            R            S</span></a>
+<a class="sourceLine" id="cb3-5" title="5"><span class="co"># 3          R         R            S          S            S            S</span></a>
+<a class="sourceLine" id="cb3-6" title="6"><span class="co"># 4          S         I            S          I            S            S</span></a>
+<a class="sourceLine" id="cb3-7" title="7"><span class="co"># 5          S         S            I          I            R            R</span></a>
+<a class="sourceLine" id="cb3-8" title="8"><span class="co"># 6          R         R            R          R            R            R</span></a>
 <a class="sourceLine" id="cb3-9" title="9"><span class="co">#   kanamycin</span></a>
-<a class="sourceLine" id="cb3-10" title="10"><span class="co"># 1         S</span></a>
-<a class="sourceLine" id="cb3-11" title="11"><span class="co"># 2         S</span></a>
+<a class="sourceLine" id="cb3-10" title="10"><span class="co"># 1         R</span></a>
+<a class="sourceLine" id="cb3-11" title="11"><span class="co"># 2         I</span></a>
 <a class="sourceLine" id="cb3-12" title="12"><span class="co"># 3         R</span></a>
 <a class="sourceLine" id="cb3-13" title="13"><span class="co"># 4         I</span></a>
-<a class="sourceLine" id="cb3-14" title="14"><span class="co"># 5         S</span></a>
-<a class="sourceLine" id="cb3-15" title="15"><span class="co"># 6         S</span></a></code></pre></div>
+<a class="sourceLine" id="cb3-14" title="14"><span class="co"># 5         R</span></a>
+<a class="sourceLine" id="cb3-15" title="15"><span class="co"># 6         I</span></a></code></pre></div>
 <p>We can now add the interpretation of MDR-TB to our data set:</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" title="1">my_TB_data<span class="op">$</span>mdr &lt;-<span class="st"> </span><span class="kw"><a href="../reference/mdro.html">mdr_tb</a></span>(my_TB_data)</a>
 <a class="sourceLine" id="cb4-2" title="2"><span class="co"># </span><span class="al">NOTE</span><span class="co">: No column found as input for `col_mo`, assuming all records contain Mycobacterium tuberculosis.</span></a>
@@ -284,40 +277,40 @@ Unique: 5</p>
 <tr class="odd">
 <td align="left">1</td>
 <td align="left">Mono-resistance</td>
-<td align="right">3,283</td>
+<td align="right">3,284</td>
 <td align="right">65.7%</td>
-<td align="right">3,283</td>
+<td align="right">3,284</td>
 <td align="right">65.7%</td>
 </tr>
 <tr class="even">
 <td align="left">2</td>
 <td align="left">Negative</td>
-<td align="right">650</td>
-<td align="right">13.0%</td>
-<td align="right">3,933</td>
-<td align="right">78.7%</td>
+<td align="right">675</td>
+<td align="right">13.5%</td>
+<td align="right">3,959</td>
+<td align="right">79.2%</td>
 </tr>
 <tr class="odd">
 <td align="left">3</td>
 <td align="left">Multidrug resistance</td>
-<td align="right">593</td>
-<td align="right">11.9%</td>
-<td align="right">4,526</td>
-<td align="right">90.5%</td>
+<td align="right">570</td>
+<td align="right">11.4%</td>
+<td align="right">4,529</td>
+<td align="right">90.6%</td>
 </tr>
 <tr class="even">
 <td align="left">4</td>
 <td align="left">Poly-resistance</td>
-<td align="right">259</td>
-<td align="right">5.2%</td>
-<td align="right">4,785</td>
-<td align="right">95.7%</td>
+<td align="right">263</td>
+<td align="right">5.3%</td>
+<td align="right">4,792</td>
+<td align="right">95.8%</td>
 </tr>
 <tr class="odd">
 <td align="left">5</td>
 <td align="left">Extensive drug resistance</td>
-<td align="right">215</td>
-<td align="right">4.3%</td>
+<td align="right">208</td>
+<td align="right">4.2%</td>
 <td align="right">5,000</td>
 <td align="right">100.0%</td>
 </tr>

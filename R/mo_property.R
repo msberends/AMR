@@ -279,7 +279,7 @@ mo_ref <- function(x, ...) {
 #' @export
 mo_authors <- function(x, ...) {
   x <- mo_validate(x = x, property = "ref", ...)
-  # remove last 4 digits and presumably the comma and space that preceeds them
+  # remove last 4 digits and presumably the comma and space that preceed them
   x[!is.na(x)] <- gsub(",? ?[0-9]{4}", "", x[!is.na(x)])
   suppressWarnings(x)
 }
@@ -303,35 +303,52 @@ mo_rank <- function(x, ...) {
 #' @export
 mo_taxonomy <- function(x, language = get_locale(),  ...) {
   x <- AMR::as.mo(x, ...)
-  base::list(kingdom = mo_kingdom(x, language = language),
-             phylum = mo_phylum(x, language = language),
-             class = mo_class(x, language = language),
-             order = mo_order(x, language = language),
-             family = mo_family(x, language = language),
-             genus = mo_genus(x, language = language),
-             species = mo_species(x, language = language),
-             subspecies = mo_subspecies(x, language = language))
+  base::list(kingdom = AMR::mo_kingdom(x, language = language),
+             phylum = AMR::mo_phylum(x, language = language),
+             class = AMR::mo_class(x, language = language),
+             order = AMR::mo_order(x, language = language),
+             family = AMR::mo_family(x, language = language),
+             genus = AMR::mo_genus(x, language = language),
+             species = AMR::mo_species(x, language = language),
+             subspecies = AMR::mo_subspecies(x, language = language))
 }
 
 #' @rdname mo_property
 #' @export
 mo_synonyms <- function(x, ...) {
-  x <- AMR::as.mo(x, ...)
-  col_id <- AMR::microorganisms[which(AMR::microorganisms$mo == x), "col_id"]
-  if (is.na(col_id) | !col_id %in% AMR::microorganisms.old$col_id_new) {
-    return(NULL)
+  x <- as.mo(x, ...)
+  IDs <- AMR::mo_property(x = x, property = "col_id", language = NULL)
+  syns <- lapply(IDs, function(col_id) {
+    res <- sort(AMR::microorganisms.old[which(AMR::microorganisms.old$col_id_new == col_id), "fullname"])
+    if (length(res) == 0) {
+      NULL
+    } else {
+      res
+    }
+  })
+  if (length(syns) > 1) {
+    names(syns) <- mo_fullname(x)
+    syns
+  } else {
+    unlist(syns)
   }
-  sort(AMR::microorganisms.old[which(AMR::microorganisms.old$col_id_new == col_id), "fullname"])
 }
 
 #' @rdname mo_property
 #' @export
 mo_info <- function(x, language = get_locale(),  ...) {
   x <- AMR::as.mo(x, ...)
-  c(mo_taxonomy(x, language = language),
-    list(synonyms = mo_synonyms(x),
-         url = unname(mo_url(x, open = FALSE)),
-         ref = mo_ref(x)))
+  info <- lapply(x, function(y)
+    c(mo_taxonomy(y, language = language),
+      list(synonyms = mo_synonyms(y),
+           url = unname(mo_url(y, open = FALSE)),
+           ref = mo_ref(y))))
+  if (length(info) > 1) {
+    names(info) <- mo_fullname(x)
+    info
+  } else {
+    info[[1L]]
+  }
 }
 
 #' @rdname mo_property
@@ -350,7 +367,7 @@ mo_url <- function(x, open = FALSE, ...) {
                              NA_character_))
 
   u <- df$url
-  names(u) <- mo_fullname(mo)
+  names(u) <- AMR::mo_fullname(mo)
   if (open == TRUE) {
     if (length(u) > 1) {
       warning("only the first URL will be opened, as `browseURL()` only suports one string.")
@@ -400,12 +417,15 @@ mo_validate <- function(x, property, ...) {
   if (!all(x %in% pull(AMR::microorganisms, property))
       | Becker %in% c(TRUE, "all")
       | Lancefield %in% c(TRUE, "all")) {
-    exec_as.mo(x, property = property, ...)
-  } else {
-    if (property == "mo") {
-      return(structure(x, class = "mo"))
-    } else {
-      return(x)
-    }
+    x <- exec_as.mo(x, property = property, ...)
   }
+
+  if (property == "mo") {
+    return(structure(x, class = "mo"))
+  } else if (property == "col_id") {
+    return(as.integer(x))
+  } else {
+    return(x)
+  }
+
 }

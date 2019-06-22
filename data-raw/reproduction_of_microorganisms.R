@@ -525,15 +525,19 @@ MOs <- MOs %>%
 MOs <- MOs %>% arrange(fullname)
 MOs.old <- MOs.old %>% arrange(fullname)
 
-# save it
+# transform
 MOs <- as.data.frame(MOs, stringsAsFactors = FALSE)
 MOs.old <- as.data.frame(MOs.old, stringsAsFactors = FALSE)
 class(MOs$mo) <- "mo"
+MOs$col_id <- as.integer(MOs$col_id)
+MOs.old$col_id <- as.integer(MOs.old$col_id)
+MOs.old$col_id_new <- as.integer(MOs.old$col_id_new)
 
+# save
 saveRDS(MOs, "microorganisms.rds")
 saveRDS(MOs.old, "microorganisms.old.rds")
 
-# on the server:
+# on the server, do:
 usethis::use_data(microorganisms, overwrite = TRUE, version = 2)
 usethis::use_data(microorganisms.old, overwrite = TRUE, version = 2)
 rm(microorganisms)

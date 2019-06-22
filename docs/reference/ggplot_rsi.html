@@ -80,7 +80,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">0.7.0.9009</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">0.7.0.9013</span>
       </span>
     </div>
 
@@ -237,7 +237,7 @@
 
     <div class="ref-description">
     
-    <p>Use these functions to create bar plots for antimicrobial resistance analysis. All functions rely on internal <code><a href='https://www.rdocumentation.org/packages/ggplot2/topics/ggplot'>ggplot</a>2</code> functions.</p>
+    <p>Use these functions to create bar plots for antimicrobial resistance analysis. All functions rely on internal <code><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a>2</code> functions.</p>
     
     </div>
 
@@ -371,11 +371,11 @@
     <p>At default, the names of antibiotics will be shown on the plots using <code><a href='ab_property.html'>ab_name</a></code>. This can be set with the <code>translate_ab</code> parameter. See <code><a href='count.html'>count_df</a></code>.</p>
 <p><strong>The functions</strong><br />
 <code>geom_rsi</code> will take any variable from the data that has an <code>rsi</code> class (created with <code><a href='as.rsi.html'>as.rsi</a></code>) using <code>fun</code> (<code><a href='count.html'>count_df</a></code> at default, can also be <code><a href='portion.html'>portion_df</a></code>) and will plot bars with the percentage R, I and S. The default behaviour is to have the bars stacked and to have the different antibiotics on the x axis.</p>
-<p><code>facet_rsi</code> creates 2d plots (at default based on S/I/R) using <code><a href='https://www.rdocumentation.org/packages/ggplot2/topics/facet_wrap'>facet_wrap</a></code>.</p>
+<p><code>facet_rsi</code> creates 2d plots (at default based on S/I/R) using <code><a href='https://ggplot2.tidyverse.org/reference/facet_wrap.html'>facet_wrap</a></code>.</p>
 <p><code>scale_y_percent</code> transforms the y axis to a 0 to 100% range using <code>scale_continuous</code>.</p>
 <p><code>scale_rsi_colours</code> sets colours to the bars: pastel blue for S, pastel turquoise for I and pastel red for R, using <code>scale_brewer</code>.</p>
-<p><code>theme_rsi</code> is a <code>ggplot <a href='https://www.rdocumentation.org/packages/ggplot2/topics/theme'>theme</a></code> with minimal distraction.</p>
-<p><code>labels_rsi_count</code> print datalabels on the bars with percentage and amount of isolates using <code><a href='https://www.rdocumentation.org/packages/ggplot2/topics/geom_text'>geom_text</a></code></p>
+<p><code>theme_rsi</code> is a <code>ggplot <a href='https://ggplot2.tidyverse.org/reference/theme.html'>theme</a></code> with minimal distraction.</p>
+<p><code>labels_rsi_count</code> print datalabels on the bars with percentage and amount of isolates using <code><a href='https://ggplot2.tidyverse.org/reference/geom_text.html'>geom_text</a></code></p>
 <p><code>ggplot_rsi</code> is a wrapper around all above functions that uses data as first input. This makes it possible to use this function after a pipe (<code>%&gt;%</code>). See Examples.</p>
     
     <h2 class="hasAnchor" id="read-more-on-our-website-"><a class="anchor" href="#read-more-on-our-website-"></a>Read more on our website!</h2>
@@ -390,12 +390,12 @@
 <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>ggplot2</span>)
 
 <span class='co'># get antimicrobial results for drugs against a UTI:</span>
-<span class='fu'><a href='https://www.rdocumentation.org/packages/ggplot2/topics/ggplot'>ggplot</a></span>(<span class='no'>septic_patients</span> <span class='kw'>%&gt;%</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='no'>AMX</span>, <span class='no'>NIT</span>, <span class='no'>FOS</span>, <span class='no'>TMP</span>, <span class='no'>CIP</span>)) +
+<span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span>(<span class='no'>septic_patients</span> <span class='kw'>%&gt;%</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='no'>AMX</span>, <span class='no'>NIT</span>, <span class='no'>FOS</span>, <span class='no'>TMP</span>, <span class='no'>CIP</span>)) +
   <span class='fu'>geom_rsi</span>()
 
 <span class='co'># prettify the plot using some additional functions:</span>
 <span class='no'>df</span> <span class='kw'>&lt;-</span> <span class='no'>septic_patients</span> <span class='kw'>%&gt;%</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='no'>AMX</span>, <span class='no'>NIT</span>, <span class='no'>FOS</span>, <span class='no'>TMP</span>, <span class='no'>CIP</span>)
-<span class='fu'><a href='https://www.rdocumentation.org/packages/ggplot2/topics/ggplot'>ggplot</a></span>(<span class='no'>df</span>) +
+<span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span>(<span class='no'>df</span>) +
   <span class='fu'>geom_rsi</span>() +
   <span class='fu'>scale_y_percent</span>() +
   <span class='fu'>scale_rsi_colours</span>() +
@@ -439,7 +439,7 @@
 <span class='co'># for colourblind mode, use divergent colours from the viridis package:</span>
 <span class='no'>septic_patients</span> <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='no'>AMX</span>, <span class='no'>NIT</span>, <span class='no'>FOS</span>, <span class='no'>TMP</span>, <span class='no'>CIP</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'>ggplot_rsi</span>() + <span class='fu'><a href='https://www.rdocumentation.org/packages/ggplot2/topics/scale_viridis'>scale_fill_viridis_d</a></span>()
+  <span class='fu'>ggplot_rsi</span>() + <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/scale_viridis.html'>scale_fill_viridis_d</a></span>()
 <span class='co'># a shorter version which also adjusts data label colours:</span>
 <span class='no'>septic_patients</span> <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='no'>AMX</span>, <span class='no'>NIT</span>, <span class='no'>FOS</span>, <span class='no'>TMP</span>, <span class='no'>CIP</span>) <span class='kw'>%&gt;%</span>

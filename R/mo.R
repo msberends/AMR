@@ -148,9 +148,10 @@
 #' as.mo("Staphylococcus aureus")
 #' as.mo("Staphylococcus aureus (MRSA)")
 #' as.mo("Sthafilokkockus aaureuz") # handles incorrect spelling
-#' as.mo("MRSA") # Methicillin Resistant S. aureus
-#' as.mo("VISA") # Vancomycin Intermediate S. aureus
-#' as.mo("VRSA") # Vancomycin Resistant S. aureus
+#' as.mo("MRSA")   # Methicillin Resistant S. aureus
+#' as.mo("VISA")   # Vancomycin Intermediate S. aureus
+#' as.mo("VRSA")   # Vancomycin Resistant S. aureus
+#' as.mo(22242419) # Catalogue of Life ID
 #'
 #' # Dyslexia is no problem - these all work:
 #' as.mo("Ureaplasma urealyticum")
@@ -232,11 +233,11 @@ as.mo <- function(x, Becker = FALSE, Lancefield = FALSE, allow_uncertain = TRUE,
              & isFALSE(Lancefield)) {
     y <- x
 
-  # } else if (!any(is.na(mo_hist))
-  #            & isFALSE(Becker)
-  #            & isFALSE(Lancefield)) {
-  #   # check previously found results
-  #   y <- mo_hist
+    # } else if (!any(is.na(mo_hist))
+    #            & isFALSE(Becker)
+    #            & isFALSE(Lancefield)) {
+    #   # check previously found results
+    #   y <- mo_hist
 
   } else if (all(tolower(x) %in% microorganismsDT$fullname_lower)
              & isFALSE(Becker)
@@ -564,6 +565,17 @@ exec_as.mo <- function(x,
         next
       }
 
+      found <- microorganismsDT[col_id == x_backup[i], ..property][[1]]
+      # is a valid Catalogue of Life ID
+      if (NROW(found) > 0) {
+        x[i] <- found[1L]
+        if (initial_search == TRUE) {
+          set_mo_history(x_backup[i], get_mo_code(x[i], property), 0, force = force_mo_history)
+        }
+        next
+      }
+
+
       # WHONET: xxx = no growth
       if (tolower(as.character(paste0(x_backup_without_spp[i], ""))) %in% c("", "xxx", "na", "nan")) {
         x[i] <- NA_character_
@@ -642,6 +654,18 @@ exec_as.mo <- function(x,
           }
           next
         }
+        # support for:
+        # - AIEC (Adherent-Invasive E. coli)
+        # - ATEC (Atypical Entero-pathogenic E. coli)
+        # - DAEC (Diffusely Adhering E. coli)
+        # - EAEC (Entero-Aggresive E. coli)
+        # - EHEC (Entero-Haemorrhagic E. coli)
+        # - EIEC (Entero-Invasive E. coli)
+        # - EPEC (Entero-Pathogenic E. coli)
+        # - ETEC (Entero-Toxigenic E. coli)
+        # - NMEC (Neonatal Meningitis‐causing E. coli)
+        # - STEC (Shiga-toxin producing E. coli)
+        # - UPEC (Uropathogenic E. coli)
         if (toupper(x_backup_without_spp[i]) %in% c("AIEC", "ATEC", "DAEC", "EAEC", "EHEC", "EIEC", "EPEC", "ETEC", "NMEC", "STEC", "UPEC")
             | x_backup_without_spp[i] %like% "O?(26|103|104|104|111|121|145|157)") {
           x[i] <- microorganismsDT[mo == 'B_ESCHR_COL', ..property][[1]][1L]
@@ -770,7 +794,7 @@ exec_as.mo <- function(x,
         }
       }
 
-      # FIRST TRY FULLNAMES AND CODES
+      # FIRST TRY FULLNAMES AND CODES ----
       # if only genus is available, return only genus
       if (all(!c(x[i], x_trimmed[i]) %like% " ")) {
         found <- microorganismsDT[fullname_lower %in% tolower(c(x_species[i], x_trimmed_species[i])), ..property][[1]]
@@ -1465,6 +1489,9 @@ unregex <- function(x) {
 }
 
 get_mo_code <- function(x, property) {
+  # don't use right now
+  return(NULL)
+
   if (property == "mo") {
     unique(x)
   } else {

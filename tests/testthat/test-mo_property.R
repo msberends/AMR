@@ -38,10 +38,12 @@ test_that("mo_property works", {
   expect_equal(names(mo_taxonomy("Escherichia coli")), c("kingdom", "phylum", "class", "order",
                                                 "family", "genus", "species", "subspecies"))
   expect_equal(mo_synonyms("Escherichia coli"), NULL)
-  expect_gt(length(mo_synonyms("C. albicans")), 1)
+  expect_gt(length(mo_synonyms("Candida albicans")), 1)
+  expect_equal(class(mo_synonyms(c("Candida albicans", "Escherichia coli"))), "list")
   expect_equal(names(mo_info("Escherichia coli")), c("kingdom", "phylum", "class", "order",
                                             "family", "genus", "species", "subspecies",
                                             "synonyms", "url", "ref"))
+  expect_equal(class(mo_info(c("Escherichia coli", "Staphylococcus aureus"))), "list")
 
   expect_equal(mo_ref("Escherichia coli"), "Castellani et al., 1919")
   expect_equal(mo_authors("Escherichia coli"), "Castellani et al.")
