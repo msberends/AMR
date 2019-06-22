@@ -260,9 +260,9 @@ test_that("as.mo works", {
   expect_null(mo_failures())
   expect_true(septic_patients %>% pull(mo) %>% is.mo())
 
-  expect_equal(get_mo_code("test", "mo"), "test")
-  expect_equal(length(get_mo_code("Escherichia", "genus")),
-               nrow(AMR::microorganisms[base::which(AMR::microorganisms[, "genus"] %in% "Escherichia"),]))
+  # expect_equal(get_mo_code("test", "mo"), "test")
+  # expect_equal(length(get_mo_code("Escherichia", "genus")),
+  #              nrow(AMR::microorganisms[base::which(AMR::microorganisms[, "genus"] %in% "Escherichia"),]))
 
   expect_error(translate_allow_uncertain(5))
 

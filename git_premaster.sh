@@ -66,8 +66,7 @@ echo "• List of changed files •"
 echo "•••••••••••••••••••••••••"
 git status --short
 echo
-
-read -p "Pushing version ${new_version}. Continue (Y/n)? " choice
+read -p "Uploading version ${new_version}. Continue (Y/n)? " choice
 case "$choice" in
   n|N ) exit 1;;
   * ) ;;
@@ -82,6 +81,7 @@ git commit -a -m "(v$new_version) $1" --quiet
 git push --quiet
 echo "Comparison:"
 echo "https://gitlab.com/msberends/AMR/compare/master...premaster?view=inline"
-
+echo "Check for all CRAN tests:"
+echo "rhub::check_for_cran(devtools::build(args = c('--no-build-vignettes')))"
 echo
 echo "Done."

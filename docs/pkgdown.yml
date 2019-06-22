@@ -7,10 +7,8 @@ articles:
   MDR: MDR.html
   SPSS: SPSS.html
   WHONET: WHONET.html
-  ab_property: ab_property.html
   benchmarks: benchmarks.html
   freq: freq.html
-  mo_property: mo_property.html
   resistance_predict: resistance_predict.html
 urls:
   reference: https://msberends.gitlab.io/AMR/reference
