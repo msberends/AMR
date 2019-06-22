@@ -40,7 +40,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.7.0.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">0.7.0.9015</span>
       </span>
     </div>
 
@@ -126,13 +126,6 @@
       </a>
     </li>
     <li>
-      <a href="../reference/g.test.html">
-        <span class="fa fa-clipboard-check"></span>
-         
-        Use the G-test
-      </a>
-    </li>
-    <li>
       <a href="../articles/benchmarks.html">
         <span class="fa fa-shipping-fast"></span>
          
@@ -199,7 +192,7 @@
       <h1>How to predict antimicrobial resistance</h1>
                         <h4 class="author">Matthijs S. Berends</h4>
             
-            <h4 class="date">07 June 2019</h4>
+            <h4 class="date">22 June 2019</h4>
       
       
       <div class="hidden name"><code>resistance_predict.Rmd</code></div>
@@ -309,7 +302,7 @@
 <a href="#choosing-the-right-model" class="anchor"></a>Choosing the right model</h3>
 <p>Resistance is not easily predicted; if we look at vancomycin resistance in Gram positives, the spread (i.e. standard error) is enormous:</p>
 <div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" title="1">septic_patients <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb8-2" title="2"><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span>(<span class="kw"><a href="../reference/mo_property.html">mo_gramstain</a></span>(mo) <span class="op">==</span><span class="st"> "Gram positive"</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb8-2" title="2"><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span>(<span class="kw"><a href="../reference/mo_property.html">mo_gramstain</a></span>(mo, <span class="dt">language =</span> <span class="ot">NULL</span>) <span class="op">==</span><span class="st"> "Gram-positive"</span>) <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb8-3" title="3"><span class="st">  </span><span class="kw"><a href="../reference/resistance_predict.html">resistance_predict</a></span>(<span class="dt">col_ab =</span> <span class="st">"VAN"</span>, <span class="dt">year_min =</span> <span class="dv">2010</span>, <span class="dt">info =</span> <span class="ot">FALSE</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb8-4" title="4"><span class="st">  </span><span class="kw"><a href="../reference/resistance_predict.html">ggplot_rsi_predict</a></span>()</a>
 <a class="sourceLine" id="cb8-5" title="5"><span class="co"># </span><span class="al">NOTE</span><span class="co">: Using column `date` as input for `col_date`.</span></a></code></pre></div>
@@ -354,7 +347,7 @@
 </table>
 <p>For the vancomycin resistance in Gram positive bacteria, a linear model might be more appropriate since no (left half of a) binomial distribution is to be expected based on the observed years:</p>
 <div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" title="1">septic_patients <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb9-2" title="2"><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span>(<span class="kw"><a href="../reference/mo_property.html">mo_gramstain</a></span>(mo) <span class="op">==</span><span class="st"> "Gram positive"</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb9-2" title="2"><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span>(<span class="kw"><a href="../reference/mo_property.html">mo_gramstain</a></span>(mo, <span class="dt">language =</span> <span class="ot">NULL</span>) <span class="op">==</span><span class="st"> "Gram-positive"</span>) <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb9-3" title="3"><span class="st">  </span><span class="kw"><a href="../reference/resistance_predict.html">resistance_predict</a></span>(<span class="dt">col_ab =</span> <span class="st">"VAN"</span>, <span class="dt">year_min =</span> <span class="dv">2010</span>, <span class="dt">info =</span> <span class="ot">FALSE</span>, <span class="dt">model =</span> <span class="st">"linear"</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb9-4" title="4"><span class="st">  </span><span class="kw"><a href="../reference/resistance_predict.html">ggplot_rsi_predict</a></span>()</a>
 <a class="sourceLine" id="cb9-5" title="5"><span class="co"># </span><span class="al">NOTE</span><span class="co">: Using column `date` as input for `col_date`.</span></a></code></pre></div>

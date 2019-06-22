@@ -91,7 +91,7 @@ Resistance is not easily predicted; if we look at vancomycin resistance in Gram 
 
 ```{r}
 septic_patients %>%
-  filter(mo_gramstain(mo) == "Gram positive") %>%
+  filter(mo_gramstain(mo, language = NULL) == "Gram-positive") %>%
   resistance_predict(col_ab = "VAN", year_min = 2010, info = FALSE) %>% 
   ggplot_rsi_predict()
 ```
@@ -112,7 +112,7 @@ For the vancomycin resistance in Gram positive bacteria, a linear model might be
 
 ```{r}
 septic_patients %>%
-  filter(mo_gramstain(mo) == "Gram positive") %>%
+  filter(mo_gramstain(mo, language = NULL) == "Gram-positive") %>%
   resistance_predict(col_ab = "VAN", year_min = 2010, info = FALSE, model = "linear") %>% 
   ggplot_rsi_predict()
 ```

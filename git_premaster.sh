@@ -81,7 +81,16 @@ git commit -a -m "(v$new_version) $1" --quiet
 git push --quiet
 echo "Comparison:"
 echo "https://gitlab.com/msberends/AMR/compare/master...premaster?view=inline"
-echo "Check for all CRAN tests:"
-echo "rhub::check_for_cran(devtools::build(args = c('--no-build-vignettes')))"
+
 echo
-echo "Done."
+echo "•••••••••"
+echo "• Done •"
+echo "••••••••"
+echo
+read -p "Upload to R-hub builder (y/N)? " choice
+case "$choice" in
+  y|Y|j|J ) ;;
+  * ) exit 1;;
+esac
+Rscript -e "rhub::check_for_cran(devtools::build())"
+echo
