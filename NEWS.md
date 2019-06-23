@@ -1,4 +1,8 @@
-# AMR 0.7.1.9002
+# AMR 0.7.1.9003
+
+(no code changes yet)
+
+# AMR 0.7.1
 
 #### New
 * Function `rsi_df()` to transform a `data.frame` to a data set containing only the microbial interpretation (S, I, R), the antibiotic, the percentage of S/I/R and the number of available isolates. This is a convenient combination of the existing functions `count_df()` and `portion_df()` to immediately show resistance percentages and number of available isolates:
