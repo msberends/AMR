@@ -1217,11 +1217,11 @@ exec_as.mo <- function(x,
   if (NROW(uncertainties) > 0 & initial_search == TRUE) {
     options(mo_uncertainties = as.list(distinct(uncertainties, input, .keep_all = TRUE)))
 
-    plural <- c("value", "it")
+    plural <- c("", "it")
     if (NROW(uncertainties) > 1) {
-      plural <- c("values", "them")
+      plural <- c("s", "them")
     }
-    msg <- paste0("\nResults of ", nr2char(NROW(uncertainties)), " ", plural[1],
+    msg <- paste0("\nResult", plural[1], " of ", nr2char(NROW(uncertainties)), " value", plural[1],
                   " was guessed with uncertainty. Use mo_uncertainties() to review ", plural[2], ".")
     warning(red(msg),
             call. = FALSE,
