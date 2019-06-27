@@ -392,7 +392,7 @@ eucast_rules <- function(x,
         x_original[rows, cols] <<- to,
         warning = function(w) {
           if (w$message %like% 'invalid factor level') {
-            warning('Value "', to, '" could not be applied to column(s) `', paste(cols, collapse = '`, `'), '` because this value is not an existing factor level.', call. = FALSE)
+            warning('Value "', to, '" could not be applied to column(s) `', paste(cols, collapse = '`, `'), '` because this value is not an existing factor level. You can use as.rsi() to fix this.', call. = FALSE)
           } else {
             warning(w$message, call. = FALSE)
           }

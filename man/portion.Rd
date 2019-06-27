@@ -46,7 +46,7 @@ rsi_df(data, translate_ab = "name", language = get_locale(),
 
 \item{as_percent}{a logical to indicate whether the output must be returned as a hundred fold with \% sign (a character). A value of \code{0.123456} will then be returned as \code{"12.3\%"}.}
 
-\item{also_single_tested}{a logical to indicate whether (in combination therapies) also observations should be included where not all antibiotics were tested, but at least one of the tested antibiotics contains a target interpretation (e.g. S in case of \code{portion_S} and R in case of \code{portion_R}). \strong{This would lead to selection bias in almost all cases.}}
+\item{also_single_tested}{a logical to indicate whether for combination therapies also observations should be included where not all antibiotics were tested, but at least one of the tested antibiotics contains a target interpretation (e.g. S in case of \code{portion_S} and R in case of \code{portion_R}). \strong{This could lead to selection bias.}}
 
 \item{data}{a \code{data.frame} containing columns with class \code{rsi} (see \code{\link{as.rsi}})}
 
@@ -154,6 +154,15 @@ septic_patients \%>\% count_all(GEN)       # n = 1855
 
 septic_patients \%>\% portion_S(AMC, GEN)  # S = 92.3\%
 septic_patients \%>\% count_all(AMC, GEN)  # n = 1798
+
+# Using `also_single_tested` can be useful ...
+septic_patients \%>\%
+  portion_S(AMC, GEN,
+            also_single_tested = TRUE)   # S = 92.6\%
+# ... but can also lead to selection bias - the data only has 2,000 rows:
+septic_patients \%>\%
+  count_all(AMC, GEN,
+            also_single_tested = TRUE)   # n = 2555
 
 
 septic_patients \%>\%

@@ -81,7 +81,7 @@ portion_R and portion_IR can be used to calculate resistance, portion_S and port
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">0.7.1.9003</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">0.7.1.9004</span>
       </span>
     </div>
 
@@ -283,7 +283,7 @@ portion_R and portion_IR can be used to calculate resistance, portion_S and port
     </tr>
     <tr>
       <th>also_single_tested</th>
-      <td><p>a logical to indicate whether (in combination therapies) also observations should be included where not all antibiotics were tested, but at least one of the tested antibiotics contains a target interpretation (e.g. S in case of <code>portion_S</code> and R in case of <code>portion_R</code>). <strong>This would lead to selection bias in almost all cases.</strong></p></td>
+      <td><p>a logical to indicate whether for combination therapies also observations should be included where not all antibiotics were tested, but at least one of the tested antibiotics contains a target interpretation (e.g. S in case of <code>portion_S</code> and R in case of <code>portion_R</code>). <strong>This could lead to selection bias.</strong></p></td>
     </tr>
     <tr>
       <th>data</th>
@@ -402,6 +402,15 @@ portion_R and portion_IR can be used to calculate resistance, portion_S and port
 
 <span class='no'>septic_patients</span> <span class='kw'>%&gt;%</span> <span class='fu'>portion_S</span>(<span class='no'>AMC</span>, <span class='no'>GEN</span>)  <span class='co'># S = 92.3%</span>
 <span class='no'>septic_patients</span> <span class='kw'>%&gt;%</span> <span class='fu'><a href='count.html'>count_all</a></span>(<span class='no'>AMC</span>, <span class='no'>GEN</span>)  <span class='co'># n = 1798</span>
+
+<span class='co'># Using `also_single_tested` can be useful ...</span>
+<span class='no'>septic_patients</span> <span class='kw'>%&gt;%</span>
+  <span class='fu'>portion_S</span>(<span class='no'>AMC</span>, <span class='no'>GEN</span>,
+            <span class='kw'>also_single_tested</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)   <span class='co'># S = 92.6%</span>
+<span class='co'># ... but can also lead to selection bias - the data only has 2,000 rows:</span>
+<span class='no'>septic_patients</span> <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='count.html'>count_all</a></span>(<span class='no'>AMC</span>, <span class='no'>GEN</span>,
+            <span class='kw'>also_single_tested</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)   <span class='co'># n = 2555</span>
 
 
 <span class='no'>septic_patients</span> <span class='kw'>%&gt;%</span>

@@ -27,71 +27,8 @@
 #' @keywords internal
 #' @name AMR-deprecated
 #' @rdname AMR-deprecated
-ratio <- function(x, ratio) {
-  .Deprecated(package = "AMR")
-
-  if (!all(is.numeric(x))) {
-    stop('`x` must be a vector of numeric values.')
-  }
-  if (length(ratio) == 1) {
-    if (ratio %like% '^([0-9]+([.][0-9]+)?[-,:])+[0-9]+([.][0-9]+)?$') {
-      # support for "1:2:1", "1-2-1", "1,2,1" and even "1.75:2:1.5"
-      ratio <- ratio %>% strsplit("[-,:]") %>% unlist() %>% as.double()
-    } else {
-      stop('Invalid `ratio`: ', ratio, '.')
-    }
-  }
-  if (length(x) != 1 & length(x) != length(ratio)) {
-    stop('`x` and `ratio` must be of same size.')
-  }
-  sum(x, na.rm = TRUE) * (ratio / sum(ratio, na.rm = TRUE))
+as.atc <- function(x) {
+  .Deprecated("ab_atc", package = "AMR")
+  ab_atc(x)
 }
 
-#' @rdname AMR-deprecated
-#' @export
-abname <- function(...) {
-  .Deprecated("ab_name", package = "AMR")
-  ab_name(...)
-}
-
-#' @rdname AMR-deprecated
-#' @export
-atc_property <- function(...) {
-  .Deprecated("ab_property", package = "AMR")
-  ab_property(...)
-}
-
-#' @rdname AMR-deprecated
-#' @export
-atc_official <- function(...) {
-  .Deprecated("ab_name", package = "AMR")
-  ab_name(...)
-}
-
-#' @rdname AMR-deprecated
-#' @export
-ab_official <- function(...) {
-  .Deprecated("ab_name", package = "AMR")
-  ab_name(...)
-}
-
-#' @rdname AMR-deprecated
-#' @export
-atc_name <- function(...) {
-  .Deprecated("ab_name", package = "AMR")
-  ab_name(...)
-}
-
-#' @rdname AMR-deprecated
-#' @export
-atc_trivial_nl <- function(...) {
-  .Deprecated("ab_name", package = "AMR")
-  ab_name(..., language = "nl")
-}
-
-#' @rdname AMR-deprecated
-#' @export
-atc_tradenames <- function(...) {
-  .Deprecated("ab_tradenames", package = "AMR")
-  ab_tradenames(...)
-}

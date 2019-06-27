@@ -15,7 +15,7 @@
   \item{\code{gender}}{gender of the patient}
   \item{\code{patient_id}}{ID of the patient, first 10 characters of an SHA hash containing irretrievable information}
   \item{\code{mo}}{ID of microorganism created with \code{\link{as.mo}}, see also \code{\link{microorganisms}}}
-  \item{\code{peni:rifa}}{40 different antibiotics with class \code{rsi} (see \code{\link{as.rsi}}); these column names occur in \code{\link{antibiotics}} data set and can be translated with \code{\link{abname}}}
+  \item{\code{peni:rifa}}{40 different antibiotics with class \code{rsi} (see \code{\link{as.rsi}}); these column names occur in \code{\link{antibiotics}} data set and can be translated with \code{\link{ab_name}}}
 }}
 \usage{
 septic_patients

@@ -36,31 +36,30 @@ test_that("ggplot_rsi works", {
       summarise_all(portion_IR) %>% as.double()
   )
 
+  print(septic_patients %>% select(AMC, CIP) %>% ggplot_rsi(x = "interpretation", facet = "antibiotic"))
+  print(septic_patients %>% select(AMC, CIP) %>% ggplot_rsi(x = "antibiotic", facet = "interpretation"))
+
   expect_equal(
-    (septic_patients %>% select(AMC, CIP) %>% ggplot_rsi(x = "Interpretation", facet = "Antibiotic"))$data %>%
+    (septic_patients %>% select(AMC, CIP) %>% ggplot_rsi(x = "interpretation", facet = "antibiotic"))$data %>%
       summarise_all(portion_IR) %>% as.double(),
     septic_patients %>% select(AMC, CIP) %>%
       summarise_all(portion_IR) %>% as.double()
   )
 
   expect_equal(
-    (septic_patients %>% select(AMC, CIP) %>% ggplot_rsi(x = "Antibiotic", facet = "Interpretation"))$data %>%
+    (septic_patients %>% select(AMC, CIP) %>% ggplot_rsi(x = "antibiotic", facet = "interpretation"))$data %>%
       summarise_all(portion_IR) %>% as.double(),
     septic_patients %>% select(AMC, CIP) %>%
       summarise_all(portion_IR) %>% as.double()
   )
 
   expect_equal(
-    (septic_patients %>% select(AMC, CIP) %>% ggplot_rsi(x = "Antibiotic",
-                                                           facet = "Interpretation",
-                                                           fun = count_df))$data %>%
+    (septic_patients %>% select(AMC, CIP) %>% ggplot_rsi(x = "antibiotic",
+                                                         facet = "interpretation"))$data %>%
       summarise_all(count_IR) %>% as.double(),
     septic_patients %>% select(AMC, CIP) %>%
       summarise_all(count_IR) %>% as.double()
   )
-
-  expect_error(ggplot_rsi(septic_patients, fun = "invalid"))
-  expect_error(geom_rsi(septic_patients, fun = "invalid"))
 
   # support for scale_type ab and mo
   expect_equal(class((data.frame(mo = as.mo(c("e. coli", "s aureus")),

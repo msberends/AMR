@@ -111,7 +111,7 @@
 #' mo_fullname("S. pyo")                     # "Streptococcus pyogenes"
 #' mo_fullname("S. pyo", Lancefield = TRUE)  # "Streptococcus group A"
 #' mo_shortname("S. pyo")                    # "S. pyogenes"
-#' mo_shortname("S. pyo", Lancefield = TRUE) # "GAS" ('Group A streptococci')
+#' mo_shortname("S. pyo", Lancefield = TRUE) # "GAS" (='Group A Streptococci')
 #'
 #'
 #' # language support for German, Dutch, Spanish, Portuguese, Italian and French
@@ -148,44 +148,17 @@ mo_fullname <- mo_name
 #' @importFrom dplyr %>% mutate pull
 #' @export
 mo_shortname <- function(x, language = get_locale(), ...) {
-  dots <- list(...)
-  Becker <- dots$Becker
-  if (is.null(Becker)) {
-    Becker <- FALSE
-  }
-  Lancefield <- dots$Lancefield
-  if (is.null(Lancefield)) {
-    Lancefield <- FALSE
-  }
+  x.mo <- as.mo(x, ...)
+  # get first char of genus and complete species in English
+  shortnames <- paste0(substr(mo_genus(x.mo, language = NULL), 1, 1), ". ", mo_species(x.mo, language = NULL))
 
-  # get result without transformations
-  res1 <- AMR::as.mo(x, Becker = FALSE, Lancefield = FALSE, reference_df = dots$reference_df)
-  # and result with transformations
-  res2 <- suppressWarnings(AMR::as.mo(res1, ...))
-  res2_fullname <- mo_fullname(res2, language = language)
-  res2_fullname[res2_fullname %like% " \\(CoNS\\)"] <- "CoNS"
-  res2_fullname[res2_fullname %like% " \\(CoPS\\)"] <- "CoPS"
-  res2_fullname[res2_fullname %like% " \\(KNS\\)"] <- "KNS"
-  res2_fullname[res2_fullname %like% " \\(KPS\\)"] <- "KPS"
-  res2_fullname[res2_fullname %like% " \\(CNS\\)"] <- "CNS"
-  res2_fullname[res2_fullname %like% " \\(CPS\\)"] <- "CPS"
-  res2_fullname[res2_fullname %like% " \\(SCN\\)"] <- "SCN"
-  res2_fullname <- gsub("Streptococcus (group|Gruppe|gruppe|groep|grupo|gruppo|groupe) (.)",
-                        "G\\2S",
-                        res2_fullname) # turn "Streptococcus group A" and "Streptococcus grupo A" to "GAS"
-  res2_fullname_vector <- res2_fullname[res2_fullname == mo_fullname(res1)]
-  res2_fullname[res2_fullname == mo_fullname(res1)] <- paste0(substr(mo_genus(res2_fullname_vector), 1, 1),
-                                                              ". ",
-                                                              suppressWarnings(mo_species(res2_fullname_vector)))
-  if (sum(res1 == res2, na.rm = TRUE) > 0) {
-    res1[res1 == res2] <- paste0(substr(mo_genus(res1[res1 == res2]), 1, 1),
-                                 ". ",
-                                 suppressWarnings(mo_species(res1[res1 == res2])))
-  }
-  res1[res1 != res2] <- res2_fullname
-  result <- as.character(res1)
+  # exceptions for Staphylococci
+  shortnames[shortnames == "S. coagulase-negative" ] <- "CoNS"
+  shortnames[shortnames == "S. coagulase-positive" ] <- "CoPS"
+  # exceptions for Streptococci
+  shortnames[shortnames %like% "S. group [ABCDFGHK]"] <- paste0("G", gsub("S. group ([ABCDFGHK])", "\\1", shortnames[shortnames %like% "S. group [ABCDFGHK]"]), "S")
 
-  translate_AMR(result, language = language, only_unknown = FALSE)
+  translate_AMR(shortnames, language = language, only_unknown = FALSE)
 }
 
 #' @rdname mo_property
@@ -246,7 +219,7 @@ mo_type <- function(x, language = get_locale(), ...) {
 #' @export
 mo_gramstain <- function(x, language = get_locale(), ...) {
   x.mo <- as.mo(x, ...)
-  x.phylum <- mo_phylum(x.mo, language = "en")
+  x.phylum <- mo_phylum(x.mo, language = NULL)
   # DETERMINE GRAM STAIN FOR BACTERIA
   # Source: https://itis.gov/servlet/SingleRpt/SingleRpt?search_topic=TSN&search_value=956097
   # It says this:
@@ -259,7 +232,7 @@ mo_gramstain <- function(x, language = get_locale(), ...) {
   #       Phylum  Tenericutes (Murray, 1984)
   x <- NA_character_
   # make all bacteria Gram negative
-  x[mo_kingdom(x.mo, language = "en") == "Bacteria"] <- "Gram-negative"
+  x[mo_kingdom(x.mo, language = NULL) == "Bacteria"] <- "Gram-negative"
   # overwrite these phyla with Gram positive
   x[x.phylum %in% c("Actinobacteria",
                     "Chloroflexi",

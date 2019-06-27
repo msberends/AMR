@@ -25,9 +25,9 @@ count_SI(..., also_single_tested = FALSE)
 
 count_S(..., also_single_tested = FALSE)
 
-count_all(...)
+count_all(..., also_single_tested = FALSE)
 
-n_rsi(...)
+n_rsi(..., also_single_tested = FALSE)
 
 count_df(data, translate_ab = "name", language = get_locale(),
   combine_SI = TRUE, combine_IR = FALSE)
@@ -35,7 +35,7 @@ count_df(data, translate_ab = "name", language = get_locale(),
 \arguments{
 \item{...}{one or more vectors (or columns) with antibiotic interpretations. They will be transformed internally with \code{\link{as.rsi}} if needed.}
 
-\item{also_single_tested}{a logical to indicate whether (in combination therapies) also observations should be included where not all antibiotics were tested, but at least one of the tested antibiotics contains a target interpretation (e.g. S in case of \code{portion_S} and R in case of \code{portion_R}). \strong{This would lead to selection bias in almost all cases.}}
+\item{also_single_tested}{a logical to indicate whether for combination therapies also observations should be included where not all antibiotics were tested, but at least one of the tested antibiotics contains a target interpretation (e.g. S in case of \code{portion_S} and R in case of \code{portion_R}). \strong{This could lead to selection bias.}}
 
 \item{data}{a \code{data.frame} containing columns with class \code{rsi} (see \code{\link{as.rsi}})}
 

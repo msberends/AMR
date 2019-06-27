@@ -27,7 +27,7 @@
 #' @param ... one or more vectors (or columns) with antibiotic interpretations. They will be transformed internally with \code{\link{as.rsi}} if needed. Use multiple columns to calculate (the lack of) co-resistance: the probability where one of two drugs have a resistant or susceptible result. See Examples.
 #' @param minimum the minimum allowed number of available (tested) isolates. Any isolate count lower than \code{minimum} will return \code{NA} with a warning. The default number of \code{30} isolates is advised by the Clinical and Laboratory Standards Institute (CLSI) as best practice, see Source.
 #' @param as_percent a logical to indicate whether the output must be returned as a hundred fold with \% sign (a character). A value of \code{0.123456} will then be returned as \code{"12.3\%"}.
-#' @param also_single_tested a logical to indicate whether (in combination therapies) also observations should be included where not all antibiotics were tested, but at least one of the tested antibiotics contains a target interpretation (e.g. S in case of \code{portion_S} and R in case of \code{portion_R}). \strong{This would lead to selection bias in almost all cases.}
+#' @param also_single_tested a logical to indicate whether for combination therapies also observations should be included where not all antibiotics were tested, but at least one of the tested antibiotics contains a target interpretation (e.g. S in case of \code{portion_S} and R in case of \code{portion_R}). \strong{This could lead to selection bias.}
 #' @param data a \code{data.frame} containing columns with class \code{rsi} (see \code{\link{as.rsi}})
 #' @param translate_ab a column name of the \code{\link{antibiotics}} data set to translate the antibiotic abbreviations to, using \code{\link{ab_property}}
 #' @inheritParams ab_property
@@ -111,6 +111,15 @@
 #'
 #' septic_patients %>% portion_S(AMC, GEN)  # S = 92.3%
 #' septic_patients %>% count_all(AMC, GEN)  # n = 1798
+#'
+#' # Using `also_single_tested` can be useful ...
+#' septic_patients %>%
+#'   portion_S(AMC, GEN,
+#'             also_single_tested = TRUE)   # S = 92.6%
+#' # ... but can also lead to selection bias - the data only has 2,000 rows:
+#' septic_patients %>%
+#'   count_all(AMC, GEN,
+#'             also_single_tested = TRUE)   # n = 2555
 #'
 #'
 #' septic_patients %>%

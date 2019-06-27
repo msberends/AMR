@@ -188,7 +188,7 @@ mo_shortname("S. epi", Becker = TRUE)     # "CoNS"
 mo_fullname("S. pyo")                     # "Streptococcus pyogenes"
 mo_fullname("S. pyo", Lancefield = TRUE)  # "Streptococcus group A"
 mo_shortname("S. pyo")                    # "S. pyogenes"
-mo_shortname("S. pyo", Lancefield = TRUE) # "GAS" ('Group A streptococci')
+mo_shortname("S. pyo", Lancefield = TRUE) # "GAS" (='Group A Streptococci')
 
 
 # language support for German, Dutch, Spanish, Portuguese, Italian and French

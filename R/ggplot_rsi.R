@@ -29,11 +29,10 @@
 #' @param breaks numeric vector of positions
 #' @param limits numeric vector of length two providing limits of the scale, use \code{NA} to refer to the existing minimum or maximum
 #' @param facet variable to split plots by, either \code{"interpretation"} (default) or \code{"antibiotic"} or a grouping variable
-#' @param fun function to transform \code{data}, either \code{\link{count_df}} (default) or \code{\link{portion_df}}
 #' @inheritParams portion
 #' @param nrow (when using \code{facet}) number of rows
 #' @param colours a named vector with colours for the bars. The names must be one or more of: S, SI, I, IR, R or be \code{FALSE} to use default \code{ggplot2} colours.
-#' @param datalabels show datalabels using \code{labels_rsi_count}, will only be shown when \code{fun = count_df}
+#' @param datalabels show datalabels using \code{labels_rsi_count}
 #' @param datalabels.size size of the datalabels
 #' @param datalabels.colour colour of the datalabels
 #' @param title text to show as title of the plot
@@ -45,7 +44,7 @@
 #' @details At default, the names of antibiotics will be shown on the plots using \code{\link{ab_name}}. This can be set with the \code{translate_ab} parameter. See \code{\link{count_df}}.
 #'
 #' \strong{The functions}\cr
-#' \code{geom_rsi} will take any variable from the data that has an \code{rsi} class (created with \code{\link{as.rsi}}) using \code{fun} (\code{\link{count_df}} at default, can also be \code{\link{portion_df}}) and will plot bars with the percentage R, I and S. The default behaviour is to have the bars stacked and to have the different antibiotics on the x axis.
+#' \code{geom_rsi} will take any variable from the data that has an \code{rsi} class (created with \code{\link{as.rsi}}) using \code{\link{rsi_df}} and will plot bars with the percentage R, I and S. The default behaviour is to have the bars stacked and to have the different antibiotics on the x axis.
 #'
 #' \code{facet_rsi} creates 2d plots (at default based on S/I/R) using \code{\link[ggplot2]{facet_wrap}}.
 #'
@@ -87,7 +86,7 @@
 #' # get only portions and no counts:
 #' septic_patients %>%
 #'   select(AMX, NIT, FOS, TMP, CIP) %>%
-#'   ggplot_rsi(fun = portion_df)
+#'   ggplot_rsi(datalabels = FALSE)
 #'
 #' # add other ggplot2 parameters as you like:
 #' septic_patients %>%
@@ -171,7 +170,6 @@ ggplot_rsi <- function(data,
                        combine_SI = TRUE,
                        combine_IR = FALSE,
                        language = get_locale(),
-                       fun = count_df,
                        nrow = NULL,
                        colours = c(S = "#61a8ff",
                                    SI = "#61a8ff",
@@ -189,11 +187,6 @@ ggplot_rsi <- function(data,
                        ...) {
 
   stopifnot_installed_package("ggplot2")
-
-  fun_name <- deparse(substitute(fun))
-  if (!fun_name %in% c("portion_df", "count_df")) {
-    stop("`fun` must be portion_df or count_df")
-  }
 
   x <- x[1]
   facet <- facet[1]
@@ -223,7 +216,7 @@ ggplot_rsi <- function(data,
 
   p <- ggplot2::ggplot(data = data) +
     geom_rsi(position = position, x = x, fill = fill, translate_ab = translate_ab,
-             fun = fun, combine_SI = combine_SI, combine_IR = combine_IR, ...) +
+             combine_SI = combine_SI, combine_IR = combine_IR, ...) +
     theme_rsi()
 
   if (fill == "interpretation") {
@@ -235,13 +228,12 @@ ggplot_rsi <- function(data,
     p <- p + scale_rsi_colours(colours = colours)
   }
 
-  if (fun_name == "portion_df"
-      | (fun_name == "count_df" & identical(position, "fill"))) {
+  if (identical(position, "fill")) {
     # portions, so use y scale with percentage
     p <- p + scale_y_percent(breaks = breaks, limits = limits)
   }
 
-  if (fun_name == "count_df" & datalabels == TRUE) {
+  if (datalabels == TRUE) {
     p <- p + labels_rsi_count(position = position,
                               x = x,
                               translate_ab = translate_ab,
@@ -273,7 +265,6 @@ geom_rsi <- function(position = NULL,
                      language = get_locale(),
                      combine_SI = TRUE,
                      combine_IR = FALSE,
-                     fun = count_df,
                      ...)  {
 
   stopifnot_installed_package("ggplot2")
@@ -282,19 +273,9 @@ geom_rsi <- function(position = NULL,
     stop("`position` is invalid. Did you accidentally use '%>%' instead of '+'?", call. = FALSE)
   }
 
-  fun_name <- deparse(substitute(fun))
-  if (!fun_name %in% c("portion_df", "count_df", "fun")) {
-    stop("`fun` must be portion_df or count_df")
-  }
   y <- "value"
-  if (identical(fun, count_df)) {
-    if (missing(position) | is.null(position)) {
-      position <- "fill"
-    }
-  } else {
-    if (missing(position) | is.null(position)) {
-      position <- "stack"
-    }
+  if (missing(position) | is.null(position)) {
+    position <- "fill"
   }
 
   if (identical(position, "fill")) {
@@ -321,11 +302,11 @@ geom_rsi <- function(position = NULL,
   ggplot2::layer(geom = "bar", stat = "identity", position = position,
                  mapping = ggplot2::aes_string(x = x, y = y, fill = fill),
                  params = list(...), data = function(x) {
-                   fun(data = x,
-                       translate_ab = translate_ab,
-                       language = language,
-                       combine_SI = combine_SI,
-                       combine_IR = combine_IR)
+                   AMR::rsi_df(data = x,
+                               translate_ab = translate_ab,
+                               language = language,
+                               combine_SI = combine_SI,
+                               combine_IR = combine_IR)
                  })
 
 }
@@ -431,14 +412,12 @@ labels_rsi_count <- function(position = NULL,
                      colour = datalabels.colour,
                      lineheight = 0.75,
                      data = function(x) {
-                       # labels are only shown when function is count_df,
-                       # so no need parameterise it here
-                       count_df(data = x,
-                                translate_ab = translate_ab,
-                                combine_SI = combine_SI,
-                                combine_IR = combine_IR) %>%
+                       rsi_df(data = x,
+                              translate_ab = translate_ab,
+                              combine_SI = combine_SI,
+                              combine_IR = combine_IR) %>%
                          group_by_at(x_name) %>%
                          mutate(lbl = paste0(percent(value / sum(value, na.rm = TRUE), force_zero = TRUE),
-                                             "\n(n=", value, ")"))
+                                             "\n(n=", isolates, ")"))
                      })
 }

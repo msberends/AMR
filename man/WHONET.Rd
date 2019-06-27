@@ -31,7 +31,7 @@
   \item{\code{Inducible clindamycin resistance}}{Clindamycin can be induced?}
   \item{\code{Comment}}{Other comments}
   \item{\code{Date of data entry}}{Date this data was entered in WHONET}
-  \item{\code{AMP_ND10:CIP_EE}}{27 different antibiotics. You can lookup the abbreviatons in the \code{\link{antibiotics}} data set, or use e.g. \code{\link{atc_name}("AMP")} to get the official name immediately. Before analysis, you should transform this to a valid antibiotic class, using \code{\link{as.rsi}}.}
+  \item{\code{AMP_ND10:CIP_EE}}{27 different antibiotics. You can lookup the abbreviatons in the \code{\link{antibiotics}} data set, or use e.g. \code{\link{ab_name}("AMP")} to get the official name immediately. Before analysis, you should transform this to a valid antibiotic class, using \code{\link{as.rsi}}.}
 }}
 \usage{
 WHONET

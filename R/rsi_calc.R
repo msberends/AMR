@@ -19,6 +19,23 @@
 # Visit our website for more info: https://msberends.gitlab.io/AMR.    #
 # ==================================================================== #
 
+#' @importFrom rlang enquos as_label
+dots2vars <- function(...) {
+  paste(
+    unlist(
+      lapply(enquos(...),
+             function(x) {
+               l <- as_label(x)
+               if (l != ".") {
+                 l
+               } else {
+                 character(0)
+               }
+             })
+    ),
+    collapse = ", ")
+}
+
 #' @importFrom dplyr %>% pull all_vars any_vars filter_all funs mutate_all
 rsi_calc <- function(...,
                      type,
@@ -27,6 +44,8 @@ rsi_calc <- function(...,
                      as_percent,
                      also_single_tested,
                      only_count) {
+
+  data_vars <- dots2vars(...)
 
   if (!is.logical(include_I)) {
     stop('`include_I` must be logical', call. = FALSE)
@@ -138,7 +157,7 @@ rsi_calc <- function(...,
   }
 
   if (total < minimum) {
-    warning("Introducing NA: only ", total, " results available (minimum set to ", minimum, ").", call. = FALSE)
+    warning("Introducing NA: only ", total, " results available for ", data_vars, " (minimum set to ", minimum, ").", call. = FALSE)
     result <- NA
   } else {
     result <- found / total

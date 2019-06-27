@@ -78,7 +78,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">0.7.1.9003</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">0.7.1.9004</span>
       </span>
     </div>
 
@@ -232,11 +232,23 @@
       
     </div>
 
-    <div id="amr-0719003" class="section level1">
+    <div id="amr-0719004" class="section level1">
 <h1 class="page-header">
-<a href="#amr-0719003" class="anchor"></a>AMR 0.7.1.9003<small> Unreleased </small>
+<a href="#amr-0719004" class="anchor"></a>AMR 0.7.1.9004<small> Unreleased </small>
 </h1>
-<p>(no code changes yet)</p>
+<div id="changed" class="section level3">
+<h3 class="hasAnchor">
+<a href="#changed" class="anchor"></a>Changed</h3>
+<ul>
+<li>Removed class <code>atc</code> - using <code><a href="../reference/AMR-deprecated.html">as.atc()</a></code> is now deprecated in favour of <code><a href="../reference/ab_property.html">ab_atc()</a></code> and this will return a character, not the <code>atc</code> class anymore</li>
+<li>Removed deprecated functions <code>abname()</code>, <code>ab_official()</code>, <code>atc_name()</code>, <code>atc_official()</code>, <code>atc_property()</code>, <code>atc_tradenames()</code>, <code>atc_trivial_nl()</code>
+</li>
+<li>Fix and speed improvement for <code><a href="../reference/mo_property.html">mo_shortname()</a></code>
+</li>
+<li>Fix for <code><a href="../reference/as.mo.html">as.mo()</a></code> where misspelled input would not be understood</li>
+<li>Fix for <code>also_single_tested</code> parameter in <code>count_*</code> functions</li>
+</ul>
+</div>
 </div>
     <div id="amr-071" class="section level1">
 <h1 class="page-header">
@@ -284,9 +296,9 @@
 <li><p>Function <code><a href="../reference/mo_property.html">mo_synonyms()</a></code> to get all previously accepted taxonomic names of a microorganism</p></li>
 </ul>
 </div>
-<div id="changed" class="section level4">
+<div id="changed-1" class="section level4">
 <h4 class="hasAnchor">
-<a href="#changed" class="anchor"></a>Changed</h4>
+<a href="#changed-1" class="anchor"></a>Changed</h4>
 <ul>
 <li>Column names of output <code><a href="../reference/count.html">count_df()</a></code> and <code><a href="../reference/portion.html">portion_df()</a></code> are now lowercase</li>
 <li>Fixed bug in translation of microorganism names</li>
@@ -333,9 +345,9 @@
 <li>Added guidelines of the WHO to determine multi-drug resistance (MDR) for TB (<code><a href="../reference/mdro.html">mdr_tb()</a></code>) and added a new vignette about MDR. Read this tutorial <a href="https://msberends.gitlab.io/AMR/articles/MDR.html">here on our website</a>.</li>
 </ul>
 </div>
-<div id="changed-1" class="section level4">
+<div id="changed-2" class="section level4">
 <h4 class="hasAnchor">
-<a href="#changed-1" class="anchor"></a>Changed</h4>
+<a href="#changed-2" class="anchor"></a>Changed</h4>
 <ul>
 <li>Fixed a critical bug in <code><a href="../reference/first_isolate.html">first_isolate()</a></code> where missing species would lead to incorrect FALSEs. This bug was not present in AMR v0.5.0, but was in v0.6.0 and v0.6.1.</li>
 <li>Fixedd a bug in <code><a href="../reference/eucast_rules.html">eucast_rules()</a></code> where antibiotics from WHONET software would not be recognised</li>
@@ -420,9 +432,9 @@ Please <a href="https://gitlab.com/msberends/AMR/issues/new?issue%5Btitle%5D=EUC
 <h1 class="page-header">
 <a href="#amr-061" class="anchor"></a>AMR 0.6.1<small> 2019-03-29 </small>
 </h1>
-<div id="changed-2" class="section level4">
+<div id="changed-3" class="section level4">
 <h4 class="hasAnchor">
-<a href="#changed-2" class="anchor"></a>Changed</h4>
+<a href="#changed-3" class="anchor"></a>Changed</h4>
 <ul>
 <li>Fixed a critical bug when using <code><a href="../reference/eucast_rules.html">eucast_rules()</a></code> with <code>verbose = TRUE</code>
 </li>
@@ -488,14 +500,14 @@ This data is updated annually - check the included version with the new function
 </li>
 <li>
 <p>All <code>ab_*</code> functions are deprecated and replaced by <code>atc_*</code> functions:</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" title="1">ab_property -&gt;<span class="st"> </span><span class="kw"><a href="../reference/AMR-deprecated.html">atc_property</a></span>()</a>
-<a class="sourceLine" id="cb6-2" title="2">ab_name -&gt;<span class="st"> </span><span class="kw"><a href="../reference/AMR-deprecated.html">atc_name</a></span>()</a>
-<a class="sourceLine" id="cb6-3" title="3">ab_official -&gt;<span class="st"> </span><span class="kw"><a href="../reference/AMR-deprecated.html">atc_official</a></span>()</a>
-<a class="sourceLine" id="cb6-4" title="4">ab_trivial_nl -&gt;<span class="st"> </span><span class="kw"><a href="../reference/AMR-deprecated.html">atc_trivial_nl</a></span>()</a>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" title="1">ab_property -&gt;<span class="st"> </span><span class="kw">atc_property</span>()</a>
+<a class="sourceLine" id="cb6-2" title="2">ab_name -&gt;<span class="st"> </span><span class="kw">atc_name</span>()</a>
+<a class="sourceLine" id="cb6-3" title="3">ab_official -&gt;<span class="st"> </span><span class="kw">atc_official</span>()</a>
+<a class="sourceLine" id="cb6-4" title="4">ab_trivial_nl -&gt;<span class="st"> </span><span class="kw">atc_trivial_nl</span>()</a>
 <a class="sourceLine" id="cb6-5" title="5">ab_certe -&gt;<span class="st"> </span><span class="kw">atc_certe</span>()</a>
 <a class="sourceLine" id="cb6-6" title="6">ab_umcg -&gt;<span class="st"> </span><span class="kw">atc_umcg</span>()</a>
-<a class="sourceLine" id="cb6-7" title="7">ab_tradenames -&gt;<span class="st"> </span><span class="kw"><a href="../reference/AMR-deprecated.html">atc_tradenames</a></span>()</a></code></pre></div>
-These functions use <code><a href="../reference/as.atc.html">as.atc()</a></code> internally. The old <code>atc_property</code> has been renamed <code><a href="../reference/atc_online.html">atc_online_property()</a></code>. This is done for two reasons: firstly, not all ATC codes are of antibiotics (ab) but can also be of antivirals or antifungals. Secondly, the input must have class <code>atc</code> or must be coerable to this class. Properties of these classes should start with the same class name, analogous to <code><a href="../reference/as.mo.html">as.mo()</a></code> and e.g. <code>mo_genus</code>.</li>
+<a class="sourceLine" id="cb6-7" title="7">ab_tradenames -&gt;<span class="st"> </span><span class="kw">atc_tradenames</span>()</a></code></pre></div>
+These functions use <code><a href="../reference/AMR-deprecated.html">as.atc()</a></code> internally. The old <code>atc_property</code> has been renamed <code><a href="../reference/atc_online.html">atc_online_property()</a></code>. This is done for two reasons: firstly, not all ATC codes are of antibiotics (ab) but can also be of antivirals or antifungals. Secondly, the input must have class <code>atc</code> or must be coerable to this class. Properties of these classes should start with the same class name, analogous to <code><a href="../reference/as.mo.html">as.mo()</a></code> and e.g. <code>mo_genus</code>.</li>
 <li>New functions <code><a href="../reference/mo_source.html">set_mo_source()</a></code> and <code><a href="../reference/mo_source.html">get_mo_source()</a></code> to use your own predefined MO codes as input for <code><a href="../reference/as.mo.html">as.mo()</a></code> and consequently all <code>mo_*</code> functions</li>
 <li>Support for the upcoming <a href="https://dplyr.tidyverse.org"><code>dplyr</code></a> version 0.8.0</li>
 <li>New function <code><a href="../reference/guess_ab_col.html">guess_ab_col()</a></code> to find an antibiotic column in a table</li>
@@ -526,9 +538,9 @@ These functions use <code><a href="../reference/as.atc.html">as.atc()</a></code>
 <li><p>New vignettes about how to conduct AMR analysis, predict antimicrobial resistance, use the <em>G</em>-test and more. These are also available (and even easier readable) on our website: <a href="https://msberends.gitlab.io/AMR" class="uri">https://msberends.gitlab.io/AMR</a>.</p></li>
 </ul>
 </div>
-<div id="changed-3" class="section level4">
+<div id="changed-4" class="section level4">
 <h4 class="hasAnchor">
-<a href="#changed-3" class="anchor"></a>Changed</h4>
+<a href="#changed-4" class="anchor"></a>Changed</h4>
 <ul>
 <li>Function <code><a href="../reference/eucast_rules.html">eucast_rules()</a></code>:
 <ul>
@@ -543,7 +555,7 @@ These functions use <code><a href="../reference/as.atc.html">as.atc()</a></code>
 <li>Removed columns <code>atc_group1_nl</code> and <code>atc_group2_nl</code> from the <code>antibiotics</code> data set</li>
 <li>Functions <code>atc_ddd()</code> and <code>atc_groups()</code> have been renamed <code><a href="../reference/atc_online.html">atc_online_ddd()</a></code> and <code><a href="../reference/atc_online.html">atc_online_groups()</a></code>. The old functions are deprecated and will be removed in a future version.</li>
 <li>Function <code>guess_mo()</code> is now deprecated in favour of <code><a href="../reference/as.mo.html">as.mo()</a></code> and will be removed in future versions</li>
-<li>Function <code>guess_atc()</code> is now deprecated in favour of <code><a href="../reference/as.atc.html">as.atc()</a></code> and will be removed in future versions</li>
+<li>Function <code>guess_atc()</code> is now deprecated in favour of <code><a href="../reference/AMR-deprecated.html">as.atc()</a></code> and will be removed in future versions</li>
 <li>Improvements for <code><a href="../reference/as.mo.html">as.mo()</a></code>:
 <ul>
 <li>
@@ -681,9 +693,9 @@ Using <code><a href="../reference/as.mo.html">as.mo(..., allow_uncertain = 3)</a
 <li>Functions <code>mo_authors</code> and <code>mo_year</code> to get specific values about the scientific reference of a taxonomic entry</li>
 </ul>
 </div>
-<div id="changed-4" class="section level4">
+<div id="changed-5" class="section level4">
 <h4 class="hasAnchor">
-<a href="#changed-4" class="anchor"></a>Changed</h4>
+<a href="#changed-5" class="anchor"></a>Changed</h4>
 <ul>
 <li>Functions <code>MDRO</code>, <code>BRMO</code>, <code>MRGN</code> and <code>EUCAST_exceptional_phenotypes</code> were renamed to <code>mdro</code>, <code>brmo</code>, <code>mrgn</code> and <code>eucast_exceptional_phenotypes</code>
 </li>
@@ -865,14 +877,14 @@ Using <code><a href="../reference/as.mo.html">as.mo(..., allow_uncertain = 3)</a
 <li><p>Renamed <code>septic_patients$sex</code> to <code>septic_patients$gender</code></p></li>
 </ul>
 </div>
-<div id="changed-5" class="section level4">
+<div id="changed-6" class="section level4">
 <h4 class="hasAnchor">
-<a href="#changed-5" class="anchor"></a>Changed</h4>
+<a href="#changed-6" class="anchor"></a>Changed</h4>
 <ul>
 <li>Added three antimicrobial agents to the <code>antibiotics</code> data set: Terbinafine (D01BA02), Rifaximin (A07AA11) and Isoconazole (D01AC05)</li>
 <li>
 <p>Added 163 trade names to the <code>antibiotics</code> data set, it now contains 298 different trade names in total, e.g.:</p>
-<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb21-1" title="1"><span class="kw"><a href="../reference/AMR-deprecated.html">ab_official</a></span>(<span class="st">"Bactroban"</span>)</a>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb21-1" title="1"><span class="kw">ab_official</span>(<span class="st">"Bactroban"</span>)</a>
 <a class="sourceLine" id="cb21-2" title="2"><span class="co"># [1] "Mupirocin"</span></a>
 <a class="sourceLine" id="cb21-3" title="3"><span class="kw"><a href="../reference/ab_property.html">ab_name</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"Bactroban"</span>, <span class="st">"Amoxil"</span>, <span class="st">"Zithromax"</span>, <span class="st">"Floxapen"</span>))</a>
 <a class="sourceLine" id="cb21-4" title="4"><span class="co"># [1] "Mupirocin" "Amoxicillin" "Azithromycin" "Flucloxacillin"</span></a>
@@ -976,7 +988,7 @@ Using <code><a href="../reference/as.mo.html">as.mo(..., allow_uncertain = 3)</a
 <li>
 <del>Function <code>ratio</code> to transform a vector of values to a preset ratio</del>
 <ul>
-<li><del>For example: <code><a href="../reference/AMR-deprecated.html">ratio(c(10, 500, 10), ratio = "1:2:1")</a></code> would return <code>130, 260, 130</code></del></li>
+<li><del>For example: <code>ratio(c(10, 500, 10), ratio = "1:2:1")</code> would return <code>130, 260, 130</code></del></li>
 </ul>
 </li>
 <li>Support for Addins menu in RStudio to quickly insert <code>%in%</code> or <code>%like%</code> (and give them keyboard shortcuts), or to view the datasets that come with this package</li>
@@ -1002,9 +1014,9 @@ Using <code><a href="../reference/as.mo.html">as.mo(..., allow_uncertain = 3)</a
 </li>
 </ul>
 </div>
-<div id="changed-6" class="section level4">
+<div id="changed-7" class="section level4">
 <h4 class="hasAnchor">
-<a href="#changed-6" class="anchor"></a>Changed</h4>
+<a href="#changed-7" class="anchor"></a>Changed</h4>
 <ul>
 <li>Improvements for forecasting with <code>resistance_predict</code> and added more examples</li>
 <li>More antibiotics added as parameters for EUCAST rules</li>
@@ -1034,7 +1046,7 @@ Using <code><a href="../reference/as.mo.html">as.mo(..., allow_uncertain = 3)</a
 </li>
 <li>Now possible to coerce MIC values with a space between operator and value, i.e. <code><a href="../reference/as.mic.html">as.mic("&lt;= 0.002")</a></code> now works</li>
 <li>Classes <code>rsi</code> and <code>mic</code> do not add the attribute <code>package.version</code> anymore</li>
-<li>Added <code>"groups"</code> option for <code><a href="../reference/AMR-deprecated.html">atc_property(..., property)</a></code>. It will return a vector of the ATC hierarchy as defined by the <a href="https://www.whocc.no/atc/structure_and_principles/">WHO</a>. The new function <code>atc_groups</code> is a convenient wrapper around this.</li>
+<li>Added <code>"groups"</code> option for <code>atc_property(..., property)</code>. It will return a vector of the ATC hierarchy as defined by the <a href="https://www.whocc.no/atc/structure_and_principles/">WHO</a>. The new function <code>atc_groups</code> is a convenient wrapper around this.</li>
 <li>Build-in host check for <code>atc_property</code> as it requires the host set by <code>url</code> to be responsive</li>
 <li>Improved <code>first_isolate</code> algorithm to exclude isolates where bacteria ID or genus is unavailable</li>
 <li>Fix for warning <em>hybrid evaluation forced for row_number</em> (<a href="https://github.com/tidyverse/dplyr/commit/924b62"><code>924b62</code></a>) from the <code>dplyr</code> package v0.7.5 and above</li>
@@ -1088,9 +1100,9 @@ Using <code><a href="../reference/as.mo.html">as.mo(..., allow_uncertain = 3)</a
 <li>New print format for <code>tibble</code>s and <code>data.table</code>s</li>
 </ul>
 </div>
-<div id="changed-7" class="section level4">
+<div id="changed-8" class="section level4">
 <h4 class="hasAnchor">
-<a href="#changed-7" class="anchor"></a>Changed</h4>
+<a href="#changed-8" class="anchor"></a>Changed</h4>
 <ul>
 <li>Fixed <code>rsi</code> class for vectors that contain only invalid antimicrobial interpretations</li>
 <li>Renamed dataset <code>ablist</code> to <code>antibiotics</code>
@@ -1147,7 +1159,7 @@ Using <code><a href="../reference/as.mo.html">as.mo(..., allow_uncertain = 3)</a
     <div id="tocnav">
       <h2>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
-        <li><a href="#amr-0719003">0.7.1.9003</a></li>
+        <li><a href="#amr-0719004">0.7.1.9004</a></li>
         <li><a href="#amr-071">0.7.1</a></li>
         <li><a href="#amr-070">0.7.0</a></li>
         <li><a href="#amr-061">0.6.1</a></li>

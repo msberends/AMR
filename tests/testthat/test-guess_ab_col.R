@@ -40,6 +40,5 @@ test_that("guess_ab_col works", {
                "AMP_ND10")
   expect_equal(guess_ab_col(df, "J01CR02"),
                "AMC_ED20")
-  expect_equal(guess_ab_col(df, as.atc("augmentin")),
-               "AMC_ED20")
+
 })

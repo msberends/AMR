@@ -1,6 +1,11 @@
-# AMR 0.7.1.9003
+# AMR 0.7.1.9004
 
-(no code changes yet)
+### Changed
+* Removed class `atc` - using `as.atc()` is now deprecated in favour of `ab_atc()` and this will return a character, not the `atc` class anymore
+* Removed deprecated functions `abname()`, `ab_official()`, `atc_name()`, `atc_official()`, `atc_property()`, `atc_tradenames()`, `atc_trivial_nl()`
+* Fix and speed improvement for `mo_shortname()`
+* Fix for `as.mo()` where misspelled input would not be understood
+* Fix for `also_single_tested` parameter in `count_*` functions
 
 # AMR 0.7.1
 

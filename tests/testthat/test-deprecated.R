@@ -23,18 +23,16 @@ context("deprecated.R")
 
 test_that("deprecated functions work", {
 
-  expect_error(suppressWarnings(ratio("A")))
-  expect_error(suppressWarnings(ratio(1, ratio = "abc")))
-  expect_error(suppressWarnings(ratio(c(1, 2), ratio = c(1, 2, 3))))
-  expect_warning(ratio(c(772, 1611, 737), ratio = "1:2:1"))
-  expect_identical(suppressWarnings(ratio(c(772, 1611, 737), ratio = "1:2:1")), c(780, 1560,  780))
-  expect_identical(suppressWarnings(ratio(c(1752, 1895), ratio = c(1, 1))), c(1823.5, 1823.5))
+  # first 5 chars of official name
+  expect_equal(suppressWarnings(as.character(as.atc(c("nitro", "cipro")))),
+               c("J01XE01", "J01MA02"))
 
-  expect_warning(atc_property("amox"))
-  expect_warning(atc_official("amox"))
-  expect_warning(ab_official("amox"))
-  expect_warning(atc_name("amox"))
-  expect_warning(atc_trivial_nl("amox"))
-  expect_warning(atc_tradenames("amox"))
+  # EARS-Net
+  expect_equal(suppressWarnings(as.character(as.atc("AMX"))),
+               "J01CA04")
 
+  expect_equal(suppressWarnings(guess_ab_col(data.frame(AMP_ND10 = "R",
+                                                        AMC_ED20 = "S"),
+                                             as.atc("augmentin"))),
+               "AMC_ED20")
 })

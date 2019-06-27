@@ -486,7 +486,7 @@ exec_as.mo <- function(x,
     # remove genus as first word
     x <- gsub("^Genus ", "", x)
     # allow characters that resemble others
-    if (initial_search == FALSE) {
+    if (uncertainty_level >= 2) {
       x <- tolower(x)
       x <- gsub("[iy]+", "[iy]+", x)
       x <- gsub("(c|k|q|qu|s|z|x|ks)+", "(c|k|q|qu|s|z|x|ks)+", x)
@@ -494,9 +494,13 @@ exec_as.mo <- function(x,
       x <- gsub("(th|t)+", "(th|t)+", x)
       x <- gsub("a+", "a+", x)
       x <- gsub("u+", "u+", x)
-      # allow any ending of -um, -us, -ium, -ius and -a (needs perl for the negative backward lookup):
-      x <- gsub("(um|u\\[sz\\]\\+|\\[iy\\]\\+um|\\[iy\\]\\+u\\[sz\\]\\+|a\\+)(?![a-z[])",
-                "(um|us|ium|ius|a)", x, ignore.case = TRUE, perl = TRUE)
+      # allow any ending of -um, -us, -ium, -icum, -ius, -icus, -ica and -a (needs perl for the negative backward lookup):
+      x <- gsub("(u\\+\\(c\\|k\\|q\\|qu\\+\\|s\\|z\\|x\\|ks\\)\\+)(?![a-z[])",
+                "(u[s|m]|[iy][ck]?u[ms]|[iy]?[ck]?a)", x, ignore.case = TRUE, perl = TRUE)
+      x <- gsub("(\\[iy\\]\\+\\(c\\|k\\|q\\|qu\\+\\|s\\|z\\|x\\|ks\\)\\+a\\+)(?![a-z[])",
+                "(u[s|m]|[iy][ck]?u[ms]|[iy]?[ck]?a)", x, ignore.case = TRUE, perl = TRUE)
+      x <- gsub("(\\[iy\\]\\+u\\+m)(?![a-z[])",
+                "(u[s|m]|[iy][ck]?u[ms]|[iy]?[ck]?a)", x, ignore.case = TRUE, perl = TRUE)
       x <- gsub("e+", "e+", x, ignore.case = TRUE)
       x <- gsub("o+", "o+", x, ignore.case = TRUE)
       x <- gsub("(.)\\1+", "\\1+", x)
@@ -1078,8 +1082,33 @@ exec_as.mo <- function(x,
             return(found[1L])
           }
 
-          # (5) try to strip off one element from end and check the remains ----
+          # (5a) try to strip off half an element from end and check the remains ----
           x_strip <- a.x_backup %>% strsplit(" ") %>% unlist()
+          if (length(x_strip) > 1) {
+            for (i in 1:(length(x_strip) - 1)) {
+              lastword <- x_strip[length(x_strip) - i + 1]
+              lastword_half <- substr(lastword, 1, as.integer(nchar(lastword) / 2))
+              # remove last half of the second term
+              x_strip_collapsed <- paste(c(x_strip[1:(length(x_strip) - i)], lastword_half), collapse = " ")
+              if (nchar(x_strip_collapsed) >= 4) {
+                found <- suppressMessages(suppressWarnings(exec_as.mo(x_strip_collapsed, initial_search = FALSE, allow_uncertain = FALSE)))
+                if (!empty_result(found)) {
+                  found_result <- found
+                  found <- microorganismsDT[mo == found, ..property][[1]]
+                  uncertainties <<- rbind(uncertainties,
+                                          data.frame(uncertainty = 2,
+                                                     input = a.x_backup,
+                                                     fullname = microorganismsDT[mo == found_result[1L], fullname][[1]],
+                                                     mo = found_result[1L]))
+                  if (initial_search == TRUE) {
+                    set_mo_history(a.x_backup, get_mo_code(found[1L], property), 2, force = force_mo_history)
+                  }
+                  return(found[1L])
+                }
+              }
+            }
+          }
+          # (5b) try to strip off one element from end and check the remains ----
           if (length(x_strip) > 1) {
             for (i in 1:(length(x_strip) - 1)) {
               x_strip_collapsed <- paste(x_strip[1:(length(x_strip) - i)], collapse = " ")

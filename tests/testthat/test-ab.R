@@ -48,14 +48,6 @@ test_that("as.ab works", {
 
   expect_identical(class(pull(antibiotics, ab)), "ab")
 
-  # first 5 chars of official name
-  expect_equal(as.character(as.atc(c("nitro", "cipro"))),
-               c("J01XE01", "J01MA02"))
-
-  # EARS-Net
-  expect_equal(as.character(as.atc("AMX")),
-               "J01CA04")
-
   expect_equal(as.character(as.ab("Phloxapen")),
                "FLC")
 

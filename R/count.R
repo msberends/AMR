@@ -105,7 +105,7 @@ count_R <- function(..., also_single_tested = FALSE) {
            include_I = FALSE,
            minimum = 0,
            as_percent = FALSE,
-           also_single_tested = FALSE,
+           also_single_tested = also_single_tested,
            only_count = TRUE)
 }
 
@@ -117,7 +117,7 @@ count_IR <- function(..., also_single_tested = FALSE) {
            include_I = TRUE,
            minimum = 0,
            as_percent = FALSE,
-           also_single_tested = FALSE,
+           also_single_tested = also_single_tested,
            only_count = TRUE)
 }
 
@@ -129,7 +129,7 @@ count_I <- function(..., also_single_tested = FALSE) {
            include_I = FALSE,
            minimum = 0,
            as_percent = FALSE,
-           also_single_tested = FALSE,
+           also_single_tested = also_single_tested,
            only_count = TRUE)
 }
 
@@ -141,7 +141,7 @@ count_SI <- function(..., also_single_tested = FALSE) {
            include_I = TRUE,
            minimum = 0,
            as_percent = FALSE,
-           also_single_tested = FALSE,
+           also_single_tested = also_single_tested,
            only_count = TRUE)
 }
 
@@ -153,26 +153,24 @@ count_S <- function(..., also_single_tested = FALSE) {
            include_I = FALSE,
            minimum = 0,
            as_percent = FALSE,
-           also_single_tested = FALSE,
+           also_single_tested = also_single_tested,
            only_count = TRUE)
 }
 
 #' @rdname count
 #' @export
-count_all <- function(...) {
+count_all <- function(..., also_single_tested = FALSE) {
+  res_SI <- count_SI(..., also_single_tested = also_single_tested)
   # only print warnings once, if needed
-  count_S(...) + suppressWarnings(count_IR(...))
+  res_R <- suppressWarnings(count_R(..., also_single_tested = also_single_tested))
+  res_SI + res_R
 }
 
 #' @rdname count
 #' @export
-n_rsi <- function(...) {
-  # only print warnings once, if needed
-  count_S(...) + suppressWarnings(count_IR(...))
-}
+n_rsi<- count_all
 
 #' @rdname count
-#' @importFrom dplyr %>% select_if bind_rows summarise_if mutate group_vars select everything
 #' @export
 count_df <- function(data,
                      translate_ab = "name",

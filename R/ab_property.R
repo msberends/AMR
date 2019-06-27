@@ -150,7 +150,7 @@ ab_ddd <- function(x, administration = "oral", units = FALSE, ...) {
 ab_info <- function(x, language = get_locale(), ...) {
   x <- AMR::as.ab(x, ...)
   base::list(ab = as.character(x),
-             atc = as.character(ab_atc(x)),
+             atc = ab_atc(x),
              cid = ab_cid(x),
              name = ab_name(x, language = language),
              group = ab_group(x, language = language),
@@ -192,7 +192,7 @@ ab_validate <- function(x, property, ...) {
       left_join(AMR::antibiotics, by = "ab") %>%
       pull(property)
   }
-  if (property %in% c("ab", "atc")) {
+  if (property == "ab") {
     return(structure(x, class = property))
   } else if (property == "cid") {
     return(as.integer(x))

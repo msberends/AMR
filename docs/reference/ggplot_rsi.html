@@ -80,7 +80,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">0.7.1.9003</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">0.7.1.9004</span>
       </span>
     </div>
 
@@ -244,17 +244,16 @@
     <pre class="usage"><span class='fu'>ggplot_rsi</span>(<span class='no'>data</span>, <span class='kw'>position</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>x</span> <span class='kw'>=</span> <span class='st'>"antibiotic"</span>,
   <span class='kw'>fill</span> <span class='kw'>=</span> <span class='st'>"interpretation"</span>, <span class='kw'>facet</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>breaks</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/seq'>seq</a></span>(<span class='fl'>0</span>, <span class='fl'>1</span>, <span class='fl'>0.1</span>),
   <span class='kw'>limits</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>translate_ab</span> <span class='kw'>=</span> <span class='st'>"name"</span>, <span class='kw'>combine_SI</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>combine_IR</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>language</span> <span class='kw'>=</span> <span class='fu'><a href='translate.html'>get_locale</a></span>(), <span class='kw'>fun</span> <span class='kw'>=</span> <span class='no'>count_df</span>,
-  <span class='kw'>nrow</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>colours</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='kw'>S</span> <span class='kw'>=</span> <span class='st'>"#61a8ff"</span>, <span class='kw'>SI</span> <span class='kw'>=</span> <span class='st'>"#61a8ff"</span>, <span class='kw'>I</span> <span class='kw'>=</span>
-  <span class='st'>"#61f7ff"</span>, <span class='kw'>IR</span> <span class='kw'>=</span> <span class='st'>"#ff6961"</span>, <span class='kw'>R</span> <span class='kw'>=</span> <span class='st'>"#ff6961"</span>), <span class='kw'>datalabels</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>datalabels.size</span> <span class='kw'>=</span> <span class='fl'>2.5</span>, <span class='kw'>datalabels.colour</span> <span class='kw'>=</span> <span class='st'>"gray15"</span>, <span class='kw'>title</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>subtitle</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>caption</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>x.title</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>y.title</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='no'>...</span>)
+  <span class='kw'>combine_IR</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>language</span> <span class='kw'>=</span> <span class='fu'><a href='translate.html'>get_locale</a></span>(), <span class='kw'>nrow</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>colours</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='kw'>S</span> <span class='kw'>=</span> <span class='st'>"#61a8ff"</span>, <span class='kw'>SI</span> <span class='kw'>=</span> <span class='st'>"#61a8ff"</span>, <span class='kw'>I</span> <span class='kw'>=</span> <span class='st'>"#61f7ff"</span>, <span class='kw'>IR</span> <span class='kw'>=</span>
+  <span class='st'>"#ff6961"</span>, <span class='kw'>R</span> <span class='kw'>=</span> <span class='st'>"#ff6961"</span>), <span class='kw'>datalabels</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>datalabels.size</span> <span class='kw'>=</span> <span class='fl'>2.5</span>,
+  <span class='kw'>datalabels.colour</span> <span class='kw'>=</span> <span class='st'>"gray15"</span>, <span class='kw'>title</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>subtitle</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>caption</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>x.title</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>y.title</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)
 
 <span class='fu'>geom_rsi</span>(<span class='kw'>position</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>x</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"antibiotic"</span>, <span class='st'>"interpretation"</span>),
   <span class='kw'>fill</span> <span class='kw'>=</span> <span class='st'>"interpretation"</span>, <span class='kw'>translate_ab</span> <span class='kw'>=</span> <span class='st'>"name"</span>,
   <span class='kw'>language</span> <span class='kw'>=</span> <span class='fu'><a href='translate.html'>get_locale</a></span>(), <span class='kw'>combine_SI</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>combine_IR</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>fun</span> <span class='kw'>=</span> <span class='no'>count_df</span>, <span class='no'>...</span>)
+  <span class='no'>...</span>)
 
 <span class='fu'>facet_rsi</span>(<span class='kw'>facet</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"interpretation"</span>, <span class='st'>"antibiotic"</span>), <span class='kw'>nrow</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)
 
@@ -317,10 +316,6 @@
       <td><p>language of the returned text, defaults to system language (see <code><a href='translate.html'>get_locale</a></code>) and can also be set with <code><a href='https://www.rdocumentation.org/packages/base/topics/options'>getOption</a>("AMR_locale")</code>. Use <code>language = NULL</code> or <code>language = ""</code> to prevent translation.</p></td>
     </tr>
     <tr>
-      <th>fun</th>
-      <td><p>function to transform <code>data</code>, either <code><a href='count.html'>count_df</a></code> (default) or <code><a href='portion.html'>portion_df</a></code></p></td>
-    </tr>
-    <tr>
       <th>nrow</th>
       <td><p>(when using <code>facet</code>) number of rows</p></td>
     </tr>
@@ -330,7 +325,7 @@
     </tr>
     <tr>
       <th>datalabels</th>
-      <td><p>show datalabels using <code>labels_rsi_count</code>, will only be shown when <code>fun = count_df</code></p></td>
+      <td><p>show datalabels using <code>labels_rsi_count</code></p></td>
     </tr>
     <tr>
       <th>datalabels.size</th>
@@ -370,7 +365,7 @@
 
     <p>At default, the names of antibiotics will be shown on the plots using <code><a href='ab_property.html'>ab_name</a></code>. This can be set with the <code>translate_ab</code> parameter. See <code><a href='count.html'>count_df</a></code>.</p>
 <p><strong>The functions</strong><br />
-<code>geom_rsi</code> will take any variable from the data that has an <code>rsi</code> class (created with <code><a href='as.rsi.html'>as.rsi</a></code>) using <code>fun</code> (<code><a href='count.html'>count_df</a></code> at default, can also be <code><a href='portion.html'>portion_df</a></code>) and will plot bars with the percentage R, I and S. The default behaviour is to have the bars stacked and to have the different antibiotics on the x axis.</p>
+<code>geom_rsi</code> will take any variable from the data that has an <code>rsi</code> class (created with <code><a href='as.rsi.html'>as.rsi</a></code>) using <code><a href='portion.html'>rsi_df</a></code> and will plot bars with the percentage R, I and S. The default behaviour is to have the bars stacked and to have the different antibiotics on the x axis.</p>
 <p><code>facet_rsi</code> creates 2d plots (at default based on S/I/R) using <code><a href='https://ggplot2.tidyverse.org/reference/facet_wrap.html'>facet_wrap</a></code>.</p>
 <p><code>scale_y_percent</code> transforms the y axis to a 0 to 100% range using <code>scale_continuous</code>.</p>
 <p><code>scale_rsi_colours</code> sets colours to the bars: pastel blue for S, pastel turquoise for I and pastel red for R, using <code>scale_brewer</code>.</p>
@@ -410,7 +405,7 @@
 <span class='co'># get only portions and no counts:</span>
 <span class='no'>septic_patients</span> <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='no'>AMX</span>, <span class='no'>NIT</span>, <span class='no'>FOS</span>, <span class='no'>TMP</span>, <span class='no'>CIP</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'>ggplot_rsi</span>(<span class='kw'>fun</span> <span class='kw'>=</span> <span class='no'>portion_df</span>)
+  <span class='fu'>ggplot_rsi</span>(<span class='kw'>datalabels</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
 
 <span class='co'># add other ggplot2 parameters as you like:</span>
 <span class='no'>septic_patients</span> <span class='kw'>%&gt;%</span>

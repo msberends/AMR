@@ -104,3 +104,100 @@ guess_ab_col <- function(x = NULL, search_string = NULL, verbose = FALSE) {
     return(ab_result)
   }
 }
+
+
+#' @importFrom crayon blue bold
+#' @importFrom dplyr %>% mutate arrange pull
+get_column_abx <- function(x,
+                           soft_dependencies = NULL,
+                           hard_dependencies = NULL,
+                           verbose = FALSE,
+                           ...) {
+
+  # determine from given data set
+  df_trans <- data.frame(colnames = colnames(x),
+                         abcode = suppressWarnings(as.ab(colnames(x))))
+  df_trans <- df_trans[!is.na(df_trans$abcode),]
+  x <- as.character(df_trans$colnames)
+  names(x) <- df_trans$abcode
+
+  # add from self-defined dots (...):
+  # get_column_abx(septic_patients %>% rename(thisone = AMX), amox = "thisone")
+  dots <- list(...)
+  if (length(dots) > 0) {
+    newnames <- suppressWarnings(as.ab(names(dots)))
+    if (any(is.na(newnames))) {
+      warning("Invalid antibiotic reference(s): ", toString(names(dots)[is.na(newnames)]),
+              call. = FALSE, immediate. = TRUE)
+    }
+    # turn all NULLs to NAs
+    dots <- unlist(lapply(dots, function(x) if (is.null(x)) NA else x))
+    names(dots) <- newnames
+    dots <- dots[!is.na(names(dots))]
+    # merge, but overwrite automatically determined ones by 'dots'
+    x <- c(x[!x %in% dots & !names(x) %in% names(dots)], dots)
+    # delete NAs, this will make e.g. eucast_rules(... TMP = NULL) work to prevent TMP from being used
+    x <- x[!is.na(x)]
+  }
+
+  # sort on name
+  x <- x[sort(names(x))]
+  dupes <- x[base::duplicated(x)]
+
+  if (verbose == TRUE) {
+    for (i in 1:length(x)) {
+      if (x[i] %in% dupes) {
+        message(red(paste0("NOTE: Using column `", bold(x[i]), "` as input for `", names(x)[i],
+                           "` (", ab_name(names(x)[i], language = "en", tolower = TRUE), ") [DUPLICATED USE].")))
+      } else {
+        message(blue(paste0("NOTE: Using column `", bold(x[i]), "` as input for `", names(x)[i],
+                            "` (", ab_name(names(x)[i], language = "en", tolower = TRUE), ").")))
+      }
+    }
+  }
+
+  if (n_distinct(x) != length(x)) {
+    msg_txt <- paste("Column(s)", paste0("`", dupes, "`", collapse = " and "), "used for more than one antibiotic.")
+    if (verbose == FALSE) {
+      msg_txt <- paste(msg_txt, "Use verbose = TRUE to see which antibiotics are used by which columns.")
+    }
+    stop(msg_txt, call. = FALSE)
+  }
+
+  if (!is.null(hard_dependencies)) {
+    if (!all(hard_dependencies %in% names(x))) {
+      # missing a hard dependency will return NA and consequently the data will not be analysed
+      missing <- hard_dependencies[!hard_dependencies %in% names(x)]
+      generate_warning_abs_missing(missing, any = FALSE)
+      return(NA)
+    }
+  }
+  if (!is.null(soft_dependencies)) {
+    if (!all(soft_dependencies %in% names(x))) {
+      # missing a soft dependency may lower the reliability
+      missing <- soft_dependencies[!soft_dependencies %in% names(x)]
+      missing_txt <- data.frame(missing = missing,
+                                missing_names = AMR::ab_name(missing, tolower = TRUE),
+                                stringsAsFactors = FALSE) %>%
+        mutate(txt = paste0(bold(missing), " (", missing_names, ")")) %>%
+        arrange(missing_names) %>%
+        pull(txt)
+      message(blue('NOTE: Reliability might be improved if these antimicrobial results would be available too:',
+                   paste(missing_txt, collapse = ", ")))
+    }
+  }
+  x
+}
+
+generate_warning_abs_missing <- function(missing, any = FALSE) {
+  missing <- paste0(missing, " (", ab_name(missing, tolower = TRUE), ")")
+  if (any == TRUE) {
+    any_txt <- c(" any of", "is")
+  } else {
+    any_txt <- c("", "are")
+  }
+  warning(paste0("Introducing NAs since", any_txt[1], " these antimicrobials ", any_txt[2], " required: ",
+                 paste(missing, collapse = ", ")),
+          immediate. = TRUE,
+          call. = FALSE)
+}

@@ -137,7 +137,7 @@ catalogue_of_life <- list(
 #'   \item{\code{gender}}{gender of the patient}
 #'   \item{\code{patient_id}}{ID of the patient, first 10 characters of an SHA hash containing irretrievable information}
 #'   \item{\code{mo}}{ID of microorganism created with \code{\link{as.mo}}, see also \code{\link{microorganisms}}}
-#'   \item{\code{peni:rifa}}{40 different antibiotics with class \code{rsi} (see \code{\link{as.rsi}}); these column names occur in \code{\link{antibiotics}} data set and can be translated with \code{\link{abname}}}
+#'   \item{\code{peni:rifa}}{40 different antibiotics with class \code{rsi} (see \code{\link{as.rsi}}); these column names occur in \code{\link{antibiotics}} data set and can be translated with \code{\link{ab_name}}}
 #' }
 #' @inheritSection AMR Read more on our website!
 "septic_patients"
@@ -172,7 +172,7 @@ catalogue_of_life <- list(
 #'   \item{\code{Inducible clindamycin resistance}}{Clindamycin can be induced?}
 #'   \item{\code{Comment}}{Other comments}
 #'   \item{\code{Date of data entry}}{Date this data was entered in WHONET}
-#'   \item{\code{AMP_ND10:CIP_EE}}{27 different antibiotics. You can lookup the abbreviatons in the \code{\link{antibiotics}} data set, or use e.g. \code{\link{atc_name}("AMP")} to get the official name immediately. Before analysis, you should transform this to a valid antibiotic class, using \code{\link{as.rsi}}.}
+#'   \item{\code{AMP_ND10:CIP_EE}}{27 different antibiotics. You can lookup the abbreviatons in the \code{\link{antibiotics}} data set, or use e.g. \code{\link{ab_name}("AMP")} to get the official name immediately. Before analysis, you should transform this to a valid antibiotic class, using \code{\link{as.rsi}}.}
 #' }
 #' @inheritSection AMR Read more on our website!
 "WHONET"

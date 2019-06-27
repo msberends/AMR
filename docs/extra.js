@@ -31,10 +31,9 @@ $('head').append('<!-- Updated Font Awesome library --><link rel="stylesheet" hr
 $( document ).ready(function() {
 
   // add SurveyMonkey
-  $('body').append('<script>(function(t,e,s,o){var n,a,c;t.SMCX=t.SMCX||[],e.getElementById(o)||(n=e.getElementsByTagName(s),a=n[n.length-1],c=e.createElement(s),c.type="text/javascript",c.async=!0,c.id=o,c.src=["https:"===location.protocol?"https://":"http://","widget.surveymonkey.com/collect/website/js/tRaiETqnLgj758hTBazgd_2BrwaGaWbg59AiLjNGdPaaJiBHKqgXKIw46VauwBvZ67.js"].join(""),a.parentNode.insertBefore(c,a))})(window,document,"script","smcx-sdk");</script>');
-
+  // $('body').append('<script>(function(t,e,s,o){var n,a,c;t.SMCX=t.SMCX||[],e.getElementById(o)||(n=e.getElementsByTagName(s),a=n[n.length-1],c=e.createElement(s),c.type="text/javascript",c.async=!0,c.id=o,c.src=["https:"===location.protocol?"https://":"http://","widget.surveymonkey.com/collect/website/js/tRaiETqnLgj758hTBazgd_2BrwaGaWbg59AiLjNGdPaaJiBHKqgXKIw46VauwBvZ67.js"].join(""),a.parentNode.insertBefore(c,a))})(window,document,"script","smcx-sdk");</script>');
   // add link to survey at home sidebar
-  $('.template-home #sidebar .list-unstyled:first').append('<li><strong>Please fill in our survey at</strong> <br><a href="https://www.surveymonkey.com/r/AMR_for_R" target="_blank">https://www.surveymonkey.com/r/AMR_for_R</a></li>');
+  // $('.template-home #sidebar .list-unstyled:first').append('<li><strong>Please fill in our survey at</strong> <br><a href="https://www.surveymonkey.com/r/AMR_for_R" target="_blank">https://www.surveymonkey.com/r/AMR_for_R</a></li>');
 
 
   // remove version label from header

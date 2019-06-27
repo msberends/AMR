@@ -81,7 +81,7 @@ count_R and count_IR can be used to count resistant isolates, count_S and count_
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">0.7.1.9003</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">0.7.1.9004</span>
       </span>
     </div>
 
@@ -253,9 +253,9 @@ count_R and count_IR can be used to count resistant isolates, count_S and count_
 
 <span class='fu'>count_S</span>(<span class='no'>...</span>, <span class='kw'>also_single_tested</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
 
-<span class='fu'>count_all</span>(<span class='no'>...</span>)
+<span class='fu'>count_all</span>(<span class='no'>...</span>, <span class='kw'>also_single_tested</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
 
-<span class='fu'>n_rsi</span>(<span class='no'>...</span>)
+<span class='fu'>n_rsi</span>(<span class='no'>...</span>, <span class='kw'>also_single_tested</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
 
 <span class='fu'>count_df</span>(<span class='no'>data</span>, <span class='kw'>translate_ab</span> <span class='kw'>=</span> <span class='st'>"name"</span>, <span class='kw'>language</span> <span class='kw'>=</span> <span class='fu'><a href='translate.html'>get_locale</a></span>(),
   <span class='kw'>combine_SI</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>combine_IR</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
@@ -269,7 +269,7 @@ count_R and count_IR can be used to count resistant isolates, count_S and count_
     </tr>
     <tr>
       <th>also_single_tested</th>
-      <td><p>a logical to indicate whether (in combination therapies) also observations should be included where not all antibiotics were tested, but at least one of the tested antibiotics contains a target interpretation (e.g. S in case of <code>portion_S</code> and R in case of <code>portion_R</code>). <strong>This would lead to selection bias in almost all cases.</strong></p></td>
+      <td><p>a logical to indicate whether for combination therapies also observations should be included where not all antibiotics were tested, but at least one of the tested antibiotics contains a target interpretation (e.g. S in case of <code>portion_S</code> and R in case of <code>portion_R</code>). <strong>This could lead to selection bias.</strong></p></td>
     </tr>
     <tr>
       <th>data</th>

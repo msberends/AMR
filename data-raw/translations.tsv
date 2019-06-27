@@ -14,8 +14,8 @@ de	unknown genus	unbekannte Gattung	FALSE	FALSE
 de	unknown species	unbekannte Art	FALSE	FALSE
 de	unknown subspecies	unbekannte Unterart	FALSE	FALSE
 de	unknown rank	unbekannter Rang	FALSE	FALSE
-de	(CoNS)	(KNS)	TRUE	FALSE
-de	(CoPS)	(KPS)	TRUE	FALSE
+de	CoNS	KNS	TRUE	FALSE
+de	CoPS	KPS	TRUE	FALSE
 de	Gram-negative	Gramnegativ	FALSE	FALSE
 de	Gram-positive	Grampositiv	FALSE	FALSE
 de	Bacteria	Bakterien	FALSE	FALSE
@@ -41,8 +41,8 @@ nl	unknown genus	onbekend geslacht	FALSE	FALSE
 nl	unknown species	onbekende soort	FALSE	FALSE
 nl	unknown subspecies	onbekende ondersoort	FALSE	FALSE
 nl	unknown rank	onbekende rang	FALSE	FALSE
-nl	(CoNS)	(CNS)	TRUE	FALSE
-nl	(CoPS)	(CPS)	TRUE	FALSE
+nl	CoNS	CNS	TRUE	FALSE
+nl	CoPS	CPS	TRUE	FALSE
 nl	Gram-negative	Gram-negatief	FALSE	FALSE
 nl	Gram-positive	Gram-positief	FALSE	FALSE
 nl	Bacteria	Bacteriën	FALSE	FALSE
@@ -67,8 +67,8 @@ es	unknown genus	género desconocido	FALSE	FALSE
 es	unknown species	especie desconocida	FALSE	FALSE
 es	unknown subspecies	subespecie desconocida	FALSE	FALSE
 es	unknown rank	rango desconocido	FALSE	FALSE
-es	(CoNS)	(SCN)	TRUE	FALSE
-es	(CoPS)	(SCP)	TRUE	FALSE
+es	CoNS	SCN	TRUE	FALSE
+es	CoPS	SCP	TRUE	FALSE
 es	Gram-negative	Gram negativo	FALSE	FALSE
 es	Gram-positive	Gram positivo	FALSE	FALSE
 es	Bacteria	Bacterias	FALSE	FALSE
@@ -179,32 +179,33 @@ nl	Capreomycin	Capreomycine
 nl	Carbenicillin	Carbenicilline
 nl	Carindacillin	Carindacilline
 nl	Caspofungin	Caspofungine
-nl	Cefacetrile	Cefacetril
-nl	Cefalexin	Cefalexine
-nl	Cefalotin	Cefalotine
-nl	Cefamandole	Cefamandol
-nl	Cefapirin	Cefapirine
-nl	Cefazedone	Cefazedon
-nl	Cefazolin	Cefazoline
-nl	Cefepime	Cefepim
-nl	Cefixime	Cefixim
-nl	Cefmenoxime	Cefmenoxim
-nl	Cefmetazole	Cefmetazol
-nl	Cefodizime	Cefodizim
-nl	Cefonicid	Cefonicide
-nl	Cefoperazone	Cefoperazon
-nl	Cefoperazone/beta-lactamase inhibitor	Cefoperazon/enzymremmer
-nl	Cefotaxime	Cefotaxim
-nl	Cefoxitin	Cefoxitine
-nl	Cefpirome	Cefpirom
-nl	Cefpodoxime	Cefpodoxim
-nl	Cefsulodin	Cefsulodine
-nl	Ceftazidime	Ceftazidim
-nl	Ceftezole	Ceftezol
-nl	Ceftizoxime	Ceftizoxim
-nl	Ceftriaxone	Ceftriaxon
-nl	Cefuroxime	Cefuroxim
-nl	Cefuroxime/metronidazole	Cefuroxim/andere antibacteriele middelen
+nl	Ce(f|ph)acetrile	Cefacetril	FALSE
+nl	Ce(f|ph)alexin	Cefalexine	FALSE	FALSE
+nl	Ce(f|ph)alotin	Cefalotine	FALSE
+nl	Ce(f|ph)amandole	Cefamandol	FALSE
+nl	Ce(f|ph)apirin	Cefapirine	FALSE
+nl	Ce(f|ph)azedone	Cefazedon	FALSE
+nl	Ce(f|ph)azolin	Cefazoline	FALSE
+nl	Ce(f|ph)epime	Cefepim	FALSE
+nl	Ce(f|ph)ixime	Cefixim	FALSE
+nl	Ce(f|ph)menoxime	Cefmenoxim	FALSE
+nl	Ce(f|ph)metazole	Cefmetazol	FALSE
+nl	Ce(f|ph)odizime	Cefodizim	FALSE
+nl	Ce(f|ph)onicid	Cefonicide	FALSE
+nl	Ce(f|ph)operazone	Cefoperazon	FALSE
+nl	Ce(f|ph)operazone/beta-lactamase inhibitor	Cefoperazon/enzymremmer	FALSE
+nl	Ce(f|ph)otaxime	Cefotaxim	FALSE
+nl	Ce(f|ph)oxitin	Cefoxitine	FALSE
+nl	Ce(f|ph)pirome	Cefpirom	FALSE
+nl	Ce(f|ph)podoxime	Cefpodoxim	FALSE
+nl	Ce(f|ph)radine	Cefradine	FALSE
+nl	Ce(f|ph)sulodin	Cefsulodine	FALSE
+nl	Ce(f|ph)tazidime	Ceftazidim	FALSE
+nl	Ce(f|ph)tezole	Ceftezol	FALSE
+nl	Ce(f|ph)tizoxime	Ceftizoxim	FALSE
+nl	Ce(f|ph)triaxone	Ceftriaxon	FALSE
+nl	Ce(f|ph)uroxime	Cefuroxim	FALSE
+nl	Ce(f|ph)uroxime/metronidazole	Cefuroxim/andere antibacteriele middelen	FALSE
 nl	Chloramphenicol	Chlooramfenicol
 nl	Chlortetracycline	Chloortetracycline
 nl	Cinoxacin	Cinoxacine
