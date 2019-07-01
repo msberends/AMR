@@ -1,11 +1,42 @@
-# AMR 0.7.1.9004
+# AMR 0.7.1.9005
+
+### New
+* Additional way to calculate co-resistance, i.e. when using multiple antibiotics as input for `portion_*` functions or `count_*` functions. This can be used to determine the empiric susceptibily of a combination therapy. A new parameter `only_all_tested` replaces the old `also_single_tested` and can be used to select one of the two methods to count isolates and calculate portions. The difference can be seen in this example table (which is also on the `portion` and `count` help pages), where the %SI is being determined:
+
+  ```r
+  # -------------------------------------------------------------------------
+  #                         only_all_tested = FALSE   only_all_tested = TRUE
+  # Antibiotic  Antibiotic  -----------------------   -----------------------
+  #     A           B       include as  include as    include as  include as
+  #                         numerator   denominator   numerator   denominator
+  # ----------  ----------  ----------  -----------   ----------  -----------
+  #     S           S           X            X             X            X
+  #     I           S           X            X             X            X
+  #     R           S           X            X             X            X
+  # not tested      S           X            X             -            -
+  #     S           I           X            X             X            X
+  #     I           I           X            X             X            X
+  #     R           I           X            X             X            X
+  # not tested      I           X            X             -            -
+  #     S           R           X            X             X            X
+  #     I           R           X            X             X            X
+  #     R           R           -            X             -            X
+  # not tested      R           -            -             -            -
+  #     S       not tested      X            X             -            -
+  #     I       not tested      X            X             -            -
+  #     R       not tested      -            -             -            -
+  # not tested  not tested      -            -             -            -
+  # -------------------------------------------------------------------------
+  ```
+  
+  Since this is a major change, usage of the old `also_single_tested` will throw an informative error that it has been replaced by `only_all_tested`.
 
 ### Changed
 * Removed class `atc` - using `as.atc()` is now deprecated in favour of `ab_atc()` and this will return a character, not the `atc` class anymore
 * Removed deprecated functions `abname()`, `ab_official()`, `atc_name()`, `atc_official()`, `atc_property()`, `atc_tradenames()`, `atc_trivial_nl()`
 * Fix and speed improvement for `mo_shortname()`
 * Fix for `as.mo()` where misspelled input would not be understood
-* Fix for `also_single_tested` parameter in `count_*` functions
+* Fix for using `mo_*` functions where the coercion uncertainties and failures would not be available through `mo_uncertainties()` and `mo_failures()` anymore
 
 # AMR 0.7.1
 

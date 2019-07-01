@@ -33,20 +33,22 @@ test_that("counts work", {
 
   library(dplyr)
   expect_equal(septic_patients %>% count_S(AMC), 1342)
-  expect_equal(septic_patients %>% count_S(AMC, GEN), 1660)
-  expect_equal(septic_patients %>% count_all(AMC, GEN), 1798)
-  expect_identical(septic_patients %>% count_all(AMC, GEN),
-                   septic_patients %>% count_S(AMC, GEN) +
-                     septic_patients %>% count_IR(AMC, GEN))
+  expect_equal(septic_patients %>% count_S(AMC, GEN, only_all_tested = TRUE), 1660)
+  expect_equal(septic_patients %>% count_S(AMC, GEN, only_all_tested = FALSE), 1728)
+  expect_equal(septic_patients %>% count_all(AMC, GEN, only_all_tested = TRUE), 1798)
+  expect_equal(septic_patients %>% count_all(AMC, GEN, only_all_tested = FALSE), 1936)
+  expect_identical(septic_patients %>% count_all(AMC, GEN, only_all_tested = TRUE),
+                   septic_patients %>% count_S(AMC, GEN, only_all_tested = TRUE) +
+                     septic_patients %>% count_IR(AMC, GEN, only_all_tested = TRUE))
 
   # count of cases
   expect_equal(septic_patients %>%
                  group_by(hospital_id) %>%
-                 summarise(cipro = count_S(CIP),
-                           genta = count_S(GEN),
-                           combination = count_S(CIP, GEN)) %>%
+                 summarise(cipro = count_SI(CIP),
+                           genta = count_SI(GEN),
+                           combination = count_SI(CIP, GEN)) %>%
                  pull(combination),
-               c(192, 446, 184, 474))
+               c(253, 465, 192, 558))
 
   # count_df
   expect_equal(

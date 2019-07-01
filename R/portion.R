@@ -27,36 +27,61 @@
 #' @param ... one or more vectors (or columns) with antibiotic interpretations. They will be transformed internally with \code{\link{as.rsi}} if needed. Use multiple columns to calculate (the lack of) co-resistance: the probability where one of two drugs have a resistant or susceptible result. See Examples.
 #' @param minimum the minimum allowed number of available (tested) isolates. Any isolate count lower than \code{minimum} will return \code{NA} with a warning. The default number of \code{30} isolates is advised by the Clinical and Laboratory Standards Institute (CLSI) as best practice, see Source.
 #' @param as_percent a logical to indicate whether the output must be returned as a hundred fold with \% sign (a character). A value of \code{0.123456} will then be returned as \code{"12.3\%"}.
-#' @param also_single_tested a logical to indicate whether for combination therapies also observations should be included where not all antibiotics were tested, but at least one of the tested antibiotics contains a target interpretation (e.g. S in case of \code{portion_S} and R in case of \code{portion_R}). \strong{This could lead to selection bias.}
+#' @param only_all_tested (for combination therapies, i.e. using more than one variable for \code{...}) a logical to indicate that isolates must be tested for all antibiotics, see section \emph{Combination therapy} below
 #' @param data a \code{data.frame} containing columns with class \code{rsi} (see \code{\link{as.rsi}})
 #' @param translate_ab a column name of the \code{\link{antibiotics}} data set to translate the antibiotic abbreviations to, using \code{\link{ab_property}}
 #' @inheritParams ab_property
 #' @param combine_SI a logical to indicate whether all values of S and I must be merged into one, so the output only consists of S+I vs. R (susceptible vs. resistant). This used to be the parameter \code{combine_IR}, but this now follows the redefinition by EUCAST about the interpretion of I (increased exposure) in 2019, see section 'Interpretation of S, I and R' below. Default is \code{TRUE}.
 #' @param combine_IR a logical to indicate whether all values of I and R must be merged into one, so the output only consists of S vs. I+R (susceptible vs. non-susceptible). This is outdated, see parameter \code{combine_SI}.
 #' @inheritSection as.rsi Interpretation of S, I and R
-#' @details \strong{Remember that you should filter your table to let it contain only first isolates!} Use \code{\link{first_isolate}} to determine them in your data set.
+#' @details \strong{Remember that you should filter your table to let it contain only first isolates!} This is needed to exclude duplicates and to reduce selection bias. Use \code{\link{first_isolate}} to determine them in your data set.
 #'
 #' These functions are not meant to count isolates, but to calculate the portion of resistance/susceptibility. Use the \code{\link[AMR]{count}} functions to count isolates. \emph{Low counts can infuence the outcome - these \code{portion} functions may camouflage this, since they only return the portion albeit being dependent on the \code{minimum} parameter.}
 #'
 #' The function \code{portion_df} takes any variable from \code{data} that has an \code{"rsi"} class (created with \code{\link{as.rsi}}) and calculates the portions R, I and S. The resulting \emph{tidy data} (see Source) \code{data.frame} will have three rows (S/I/R) and a column for each group and each variable with class \code{"rsi"}.
 #'
 #' The function \code{rsi_df} works exactly like \code{portion_df}, but adds the number of isolates.
-#' \if{html}{
-#    (created with https://www.latex4technics.com/)
-#'   \cr\cr
-#'   To calculate the probability (\emph{p}) of susceptibility of one antibiotic, we use this formula:
-#'   \out{<div style="text-align: center;">}\figure{combi_therapy_2.png}\out{</div>}
-#'   To calculate the probability (\emph{p}) of susceptibility of more antibiotics (i.e. combination therapy), we need to check whether one of them has a susceptible result (as numerator) and count all cases where all antibiotics were tested (as denominator). \cr
-#'   \cr
-#'   For two antibiotics:
-#'   \out{<div style="text-align: center;">}\figure{combi_therapy_2.png}\out{</div>}
-#'   \cr
-#'   For three antibiotics:
-#'   \out{<div style="text-align: center;">}\figure{combi_therapy_2.png}\out{</div>}
-#'   \cr
-#'   And so on.
+#' @section Combination therapy:
+#' When using more than one variable for \code{...} (= combination therapy)), use \code{only_all_tested} to only count isolates that are tested for all antibiotics/variables that you test them for. See this example for two antibiotics, Antibiotic A and Antibiotic B, about how \code{portion_SI} works to calculate the \%SI:
+#'
+#' \preformatted{
+#' -------------------------------------------------------------------------
+#'                         only_all_tested = FALSE   only_all_tested = TRUE
+#' Antibiotic  Antibiotic  -----------------------   -----------------------
+#'     A           B       include as  include as    include as  include as
+#'                         numerator   denominator   numerator   denominator
+#' ----------  ----------  ----------  -----------   ----------  -----------
+#'     S           S           X            X             X            X
+#'     I           S           X            X             X            X
+#'     R           S           X            X             X            X
+#' not tested      S           X            X             -            -
+#'     S           I           X            X             X            X
+#'     I           I           X            X             X            X
+#'     R           I           X            X             X            X
+#' not tested      I           X            X             -            -
+#'     S           R           X            X             X            X
+#'     I           R           X            X             X            X
+#'     R           R           -            X             -            X
+#' not tested      R           -            -             -            -
+#'     S       not tested      X            X             -            -
+#'     I       not tested      X            X             -            -
+#'     R       not tested      -            -             -            -
+#' not tested  not tested      -            -             -            -
+#' -------------------------------------------------------------------------
 #' }
 #'
+#' Please note that for \code{only_all_tested = TRUE} applies that:
+#' \preformatted{
+#'    count_S()  +  count_I()  +  count_R()  == count_all()
+#'   portion_S() + portion_I() + portion_R() == 1
+#' }
+#' and that for \code{only_all_tested = FALSE} applies that:
+#' \preformatted{
+#'    count_S()  +  count_I()  +  count_R()  >= count_all()
+#'   portion_S() + portion_I() + portion_R() >= 1
+#' }
+#'
+#' Using \code{only_all_tested} has no impact when only using one antibiotic as input.
 #' @source \strong{M39 Analysis and Presentation of Cumulative Antimicrobial Susceptibility Test Data, 4th Edition}, 2014, \emph{Clinical and Laboratory Standards Institute (CLSI)}. \url{https://clsi.org/standards/products/microbiology/documents/m39/}.
 #'
 #' Wickham H. \strong{Tidy Data.} The Journal of Statistical Software, vol. 59, 2014. \url{http://vita.had.co.nz/papers/tidy-data.html}
@@ -89,7 +114,7 @@
 #'
 #' septic_patients %>%
 #'   group_by(hospital_id) %>%
-#'   summarise(p = portion_S(CIP),
+#'   summarise(p = portion_SI(CIP),
 #'             n = n_rsi(CIP)) # n_rsi works like n_distinct in dplyr
 #'
 #' septic_patients %>%
@@ -103,32 +128,38 @@
 #'
 #' # Calculate co-resistance between amoxicillin/clav acid and gentamicin,
 #' # so we can see that combination therapy does a lot more than mono therapy:
-#' septic_patients %>% portion_S(AMC)       # S = 71.4%
-#' septic_patients %>% count_all(AMC)       # n = 1879
+#' septic_patients %>% portion_SI(AMC)      # %SI = 76.3%
+#' septic_patients %>% count_all(AMC)       #   n = 1879
 #'
-#' septic_patients %>% portion_S(GEN)       # S = 74.0%
-#' septic_patients %>% count_all(GEN)       # n = 1855
+#' septic_patients %>% portion_SI(GEN)      # %SI = 75.4%
+#' septic_patients %>% count_all(GEN)       #   n = 1855
 #'
-#' septic_patients %>% portion_S(AMC, GEN)  # S = 92.3%
-#' septic_patients %>% count_all(AMC, GEN)  # n = 1798
+#' septic_patients %>% portion_SI(AMC, GEN) # %SI = 94.1%
+#' septic_patients %>% count_all(AMC, GEN)  #   n = 1939
 #'
-#' # Using `also_single_tested` can be useful ...
+#'
+#' # See Details on how `only_all_tested` works. Example:
 #' septic_patients %>%
-#'   portion_S(AMC, GEN,
-#'             also_single_tested = TRUE)   # S = 92.6%
-#' # ... but can also lead to selection bias - the data only has 2,000 rows:
+#'   summarise(numerator = count_SI(AMC, GEN),
+#'             denominator = count_all(AMC, GEN),
+#'             portion = portion_SI(AMC, GEN))
+#' #   numerator denominator portion
+#' #        1764        1936  0.9408
 #' septic_patients %>%
-#'   count_all(AMC, GEN,
-#'             also_single_tested = TRUE)   # n = 2555
+#'   summarise(numerator = count_SI(AMC, GEN, only_all_tested = TRUE),
+#'             denominator = count_all(AMC, GEN, only_all_tested = TRUE),
+#'             portion = portion_SI(AMC, GEN, only_all_tested = TRUE))
+#' #   numerator denominator portion
+#' #       1687        1798   0.9383
 #'
 #'
 #' septic_patients %>%
 #'   group_by(hospital_id) %>%
-#'   summarise(cipro_p = portion_S(CIP, as_percent = TRUE),
+#'   summarise(cipro_p = portion_SI(CIP, as_percent = TRUE),
 #'             cipro_n = count_all(CIP),
-#'             genta_p = portion_S(GEN, as_percent = TRUE),
+#'             genta_p = portion_SI(GEN, as_percent = TRUE),
 #'             genta_n = count_all(GEN),
-#'             combination_p = portion_S(CIP, GEN, as_percent = TRUE),
+#'             combination_p = portion_SI(CIP, GEN, as_percent = TRUE),
 #'             combination_n = count_all(CIP, GEN))
 #'
 #' # Get portions S/I/R immediately of all rsi columns
@@ -155,13 +186,12 @@
 portion_R <- function(...,
                       minimum = 30,
                       as_percent = FALSE,
-                      also_single_tested = FALSE) {
+                      only_all_tested = FALSE) {
   rsi_calc(...,
-           type = "R",
-           include_I = FALSE,
+           ab_result = "R",
            minimum = minimum,
            as_percent = as_percent,
-           also_single_tested = also_single_tested,
+           only_all_tested = only_all_tested,
            only_count = FALSE)
 }
 
@@ -170,13 +200,12 @@ portion_R <- function(...,
 portion_IR <- function(...,
                        minimum = 30,
                        as_percent = FALSE,
-                       also_single_tested = FALSE) {
+                       only_all_tested = FALSE) {
   rsi_calc(...,
-           type = "R",
-           include_I = TRUE,
+           ab_result = c("I", "R"),
            minimum = minimum,
            as_percent = as_percent,
-           also_single_tested = also_single_tested,
+           only_all_tested = only_all_tested,
            only_count = FALSE)
 }
 
@@ -185,13 +214,12 @@ portion_IR <- function(...,
 portion_I <- function(...,
                       minimum = 30,
                       as_percent = FALSE,
-                      also_single_tested = FALSE) {
+                      only_all_tested = FALSE) {
   rsi_calc(...,
-           type = "I",
-           include_I = FALSE,
+           ab_result = "I",
            minimum = minimum,
            as_percent = as_percent,
-           also_single_tested = also_single_tested,
+           only_all_tested = only_all_tested,
            only_count = FALSE)
 }
 
@@ -200,13 +228,12 @@ portion_I <- function(...,
 portion_SI <- function(...,
                        minimum = 30,
                        as_percent = FALSE,
-                       also_single_tested = FALSE) {
+                       only_all_tested = FALSE) {
   rsi_calc(...,
-           type = "S",
-           include_I = TRUE,
+           ab_result = c("S", "I"),
            minimum = minimum,
            as_percent = as_percent,
-           also_single_tested = also_single_tested,
+           only_all_tested = only_all_tested,
            only_count = FALSE)
 }
 
@@ -215,13 +242,12 @@ portion_SI <- function(...,
 portion_S <- function(...,
                       minimum = 30,
                       as_percent = FALSE,
-                      also_single_tested = FALSE) {
+                      only_all_tested = FALSE) {
   rsi_calc(...,
-           type = "S",
-           include_I = FALSE,
+           ab_result = "S",
            minimum = minimum,
            as_percent = as_percent,
-           also_single_tested = also_single_tested,
+           only_all_tested = only_all_tested,
            only_count = FALSE)
 }
 

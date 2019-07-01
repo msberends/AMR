@@ -148,7 +148,9 @@ mo_fullname <- mo_name
 #' @importFrom dplyr %>% mutate pull
 #' @export
 mo_shortname <- function(x, language = get_locale(), ...) {
-  x.mo <- as.mo(x, ...)
+  x.mo <- AMR::as.mo(x, ...)
+  metadata <- get_mo_failures_uncertainties_renamed()
+
   # get first char of genus and complete species in English
   shortnames <- paste0(substr(mo_genus(x.mo, language = NULL), 1, 1), ". ", mo_species(x.mo, language = NULL))
 
@@ -158,6 +160,7 @@ mo_shortname <- function(x, language = get_locale(), ...) {
   # exceptions for Streptococci
   shortnames[shortnames %like% "S. group [ABCDFGHK]"] <- paste0("G", gsub("S. group ([ABCDFGHK])", "\\1", shortnames[shortnames %like% "S. group [ABCDFGHK]"]), "S")
 
+  load_mo_failures_uncertainties_renamed(metadata)
   translate_AMR(shortnames, language = language, only_unknown = FALSE)
 }
 
@@ -218,8 +221,10 @@ mo_type <- function(x, language = get_locale(), ...) {
 #' @rdname mo_property
 #' @export
 mo_gramstain <- function(x, language = get_locale(), ...) {
-  x.mo <- as.mo(x, ...)
-  x.phylum <- mo_phylum(x.mo, language = NULL)
+  x.mo <- AMR::as.mo(x, ...)
+  metadata <- get_mo_failures_uncertainties_renamed()
+
+  x.phylum <- mo_phylum(x.mo)
   # DETERMINE GRAM STAIN FOR BACTERIA
   # Source: https://itis.gov/servlet/SingleRpt/SingleRpt?search_topic=TSN&search_value=956097
   # It says this:
@@ -232,13 +237,15 @@ mo_gramstain <- function(x, language = get_locale(), ...) {
   #       Phylum  Tenericutes (Murray, 1984)
   x <- NA_character_
   # make all bacteria Gram negative
-  x[mo_kingdom(x.mo, language = NULL) == "Bacteria"] <- "Gram-negative"
+  x[mo_kingdom(x.mo) == "Bacteria"] <- "Gram-negative"
   # overwrite these phyla with Gram positive
   x[x.phylum %in% c("Actinobacteria",
                     "Chloroflexi",
                     "Firmicutes",
                     "Tenericutes")
     | x.mo == "B_GRAMP"] <- "Gram-positive"
+
+  load_mo_failures_uncertainties_renamed(metadata)
   translate_AMR(x, language = language, only_unknown = FALSE)
 }
 
@@ -276,7 +283,9 @@ mo_rank <- function(x, ...) {
 #' @export
 mo_taxonomy <- function(x, language = get_locale(),  ...) {
   x <- AMR::as.mo(x, ...)
-  base::list(kingdom = AMR::mo_kingdom(x, language = language),
+  metadata <- get_mo_failures_uncertainties_renamed()
+
+  result <- base::list(kingdom = AMR::mo_kingdom(x, language = language),
              phylum = AMR::mo_phylum(x, language = language),
              class = AMR::mo_class(x, language = language),
              order = AMR::mo_order(x, language = language),
@@ -284,12 +293,17 @@ mo_taxonomy <- function(x, language = get_locale(),  ...) {
              genus = AMR::mo_genus(x, language = language),
              species = AMR::mo_species(x, language = language),
              subspecies = AMR::mo_subspecies(x, language = language))
+
+  load_mo_failures_uncertainties_renamed(metadata)
+  result
 }
 
 #' @rdname mo_property
 #' @export
 mo_synonyms <- function(x, ...) {
-  x <- as.mo(x, ...)
+  x <- AMR::as.mo(x, ...)
+  metadata <- get_mo_failures_uncertainties_renamed()
+
   IDs <- AMR::mo_property(x = x, property = "col_id", language = NULL)
   syns <- lapply(IDs, function(col_id) {
     res <- sort(AMR::microorganisms.old[which(AMR::microorganisms.old$col_id_new == col_id), "fullname"])
@@ -301,16 +315,21 @@ mo_synonyms <- function(x, ...) {
   })
   if (length(syns) > 1) {
     names(syns) <- mo_fullname(x)
-    syns
+    result <- syns
   } else {
-    unlist(syns)
+    result <- unlist(syns)
   }
+
+  load_mo_failures_uncertainties_renamed(metadata)
+  result
 }
 
 #' @rdname mo_property
 #' @export
 mo_info <- function(x, language = get_locale(),  ...) {
   x <- AMR::as.mo(x, ...)
+  metadata <- get_mo_failures_uncertainties_renamed()
+
   info <- lapply(x, function(y)
     c(mo_taxonomy(y, language = language),
       list(synonyms = mo_synonyms(y),
@@ -318,10 +337,13 @@ mo_info <- function(x, language = get_locale(),  ...) {
            ref = mo_ref(y))))
   if (length(info) > 1) {
     names(info) <- mo_fullname(x)
-    info
+    result <- info
   } else {
-    info[[1L]]
+    result <- info[[1L]]
   }
+
+  load_mo_failures_uncertainties_renamed(metadata)
+  result
 }
 
 #' @rdname mo_property
@@ -330,6 +352,8 @@ mo_info <- function(x, language = get_locale(),  ...) {
 #' @export
 mo_url <- function(x, open = FALSE, ...) {
   mo <- AMR::as.mo(x = x, ... = ...)
+  metadata <- get_mo_failures_uncertainties_renamed()
+
   df <- data.frame(mo, stringsAsFactors = FALSE) %>%
     left_join(select(AMR::microorganisms, mo, source, species_id), by = "mo") %>%
     mutate(url = case_when(source == "CoL" ~
@@ -347,6 +371,8 @@ mo_url <- function(x, open = FALSE, ...) {
     }
     browseURL(u[1L])
   }
+
+  load_mo_failures_uncertainties_renamed(metadata)
   u
 }
 

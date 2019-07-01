@@ -87,12 +87,9 @@
 #' \strong{Uncertain results} \cr
 #' The algorithm can additionally use three different levels of uncertainty to guess valid results. The default is \code{allow_uncertain = TRUE}, which is equal to uncertainty level 2. Using \code{allow_uncertain = FALSE} will skip all of these additional rules:
 #' \itemize{
-#'   \item{(uncertainty level 1): It tries to look for only matching genera}
-#'   \item{(uncertainty level 1): It tries to look for previously accepted (but now invalid) taxonomic names}
-#'   \item{(uncertainty level 2): It strips off values between brackets and the brackets itself, and re-evaluates the input with all previous rules}
-#'   \item{(uncertainty level 2): It strips off words from the end one by one and re-evaluates the input with all previous rules}
-#'   \item{(uncertainty level 3): It strips off words from the start one by one and re-evaluates the input with all previous rules}
-#'   \item{(uncertainty level 3): It tries any part of the name}
+#'   \item{(uncertainty level 1): It tries to look for only matching genera, previously accepted (but now invalid) taxonomic names and misspelled input}
+#'   \item{(uncertainty level 2): It removed parts between brackets, strips off words from the end one by one and re-evaluates the input with all previous rules}
+#'   \item{(uncertainty level 3): It strips off words from the start one by one and tries any part of the name}
 #' }
 #'
 #' You can also use e.g. \code{as.mo(..., allow_uncertain = 1)} to only allow up to level 1 uncertainty.
@@ -281,7 +278,7 @@ is.mo <- function(x) {
 
 #' @importFrom dplyr %>% pull left_join n_distinct progress_estimated filter distinct
 #' @importFrom data.table data.table as.data.table setkey
-#' @importFrom crayon magenta red blue silver italic has_color
+#' @importFrom crayon magenta red blue silver italic
 # param property a column name of AMR::microorganisms
 # param initial_search logical - is FALSE when coming from uncertain tries, which uses exec_as.mo internally too
 # param force_mo_history logical - whether found result must be saved with set_mo_history (default FALSE on non-interactive sessions)
@@ -486,7 +483,7 @@ exec_as.mo <- function(x,
     # remove genus as first word
     x <- gsub("^Genus ", "", x)
     # allow characters that resemble others
-    if (uncertainty_level >= 2) {
+    if (initial_search == FALSE) {
       x <- tolower(x)
       x <- gsub("[iy]+", "[iy]+", x)
       x <- gsub("(c|k|q|qu|s|z|x|ks)+", "(c|k|q|qu|s|z|x|ks)+", x)
@@ -768,31 +765,24 @@ exec_as.mo <- function(x,
           }
           next
         }
-        if (grepl("[sS]almonella [A-Z][a-z]+ ?.*", x_backup_without_spp[i], ignore.case = FALSE)) {
+        if (x_backup_without_spp[i] %like% "salmonella [a-z]+ ?.*") {
           if (x_backup_without_spp[i] %like% "Salmonella group") {
             # Salmonella Group A to Z, just return S. species for now
             x[i] <- microorganismsDT[mo == 'B_SLMNL', ..property][[1]][1L]
             if (initial_search == TRUE) {
               set_mo_history(x_backup[i], get_mo_code(x[i], property), 0, force = force_mo_history)
             }
-            options(mo_renamed = c(getOption("mo_renamed"),
-                                   magenta(paste0("NOTE: ",
-                                                  italic("Salmonella"), " ", trimws(gsub("Salmonella", "", x_backup_without_spp[i])),
-                                                  " was considered ",
-                                                  italic("Salmonella species"),
-                                                  " (B_SLMNL)"))))
-          } else {
+          } else if (grepl("[sS]almonella [A-Z][a-z]+ ?.*", x_backup_without_spp[i], ignore.case = FALSE)) {
             # Salmonella with capital letter species like "Salmonella Goettingen" - they're all S. enterica
             x[i] <- microorganismsDT[mo == 'B_SLMNL_ENT', ..property][[1]][1L]
             if (initial_search == TRUE) {
               set_mo_history(x_backup[i], get_mo_code(x[i], property), 0, force = force_mo_history)
             }
-            options(mo_renamed = c(getOption("mo_renamed"),
-                                   magenta(paste0("NOTE: ",
-                                                  italic("Salmonella"), " ", trimws(gsub("Salmonella", "", x_backup_without_spp[i])),
-                                                  " was considered a subspecies of ",
-                                                  italic("Salmonella enterica"),
-                                                  " (B_SLMNL_ENT)"))))
+            uncertainties <- rbind(uncertainties,
+                                   data.frame(uncertainty = 1,
+                                              input = x_backup_without_spp[i],
+                                              fullname = microorganismsDT[mo == "B_SLMNL_ENT", fullname][[1]],
+                                              mo = "B_SLMNL_ENT"))
           }
           next
         }
@@ -1041,9 +1031,27 @@ exec_as.mo <- function(x,
             }
             return(x)
           }
+
+          # (2) Try with misspelled input ----
+          # just rerun with initial_search = FALSE will used the extensive regex part above
+          found <- suppressMessages(suppressWarnings(exec_as.mo(a.x_backup, initial_search = FALSE, allow_uncertain = FALSE)))
+          if (!empty_result(found)) {
+            found_result <- found
+            found <- microorganismsDT[mo == found, ..property][[1]]
+            uncertainties <<- rbind(uncertainties,
+                                    data.frame(uncertainty = 1,
+                                               input = a.x_backup,
+                                               fullname = microorganismsDT[mo == found_result[1L], fullname][[1]],
+                                               mo = found_result[1L]))
+            if (initial_search == TRUE) {
+              set_mo_history(a.x_backup, get_mo_code(found[1L], property), 1, force = force_mo_history)
+            }
+            return(found[1L])
+          }
         }
 
         if (uncertainty_level >= 2) {
+
           # (3) look for genus only, part of name ----
           if (nchar(g.x_backup_without_spp) > 4 & !b.x_trimmed %like% " ") {
             if (!grepl("^[A-Z][a-z]+", b.x_trimmed, ignore.case = FALSE)) {
@@ -1286,10 +1294,11 @@ exec_as.mo <- function(x,
     post_Becker <- c("argensis", "caeli", "cornubiensis", "edaphicus")
     if (any(x %in% MOs_staph[species %in% post_Becker, ..property][[1]])) {
 
-      warning("Becker ", italic("et al."), " (2014, 2019) does not contain species named after their publication: ",
+      warning("Becker ", italic("et al."), " (2014, 2019) does not contain these species named after their publication: ",
               italic(paste("S.",
                            sort(mo_species(unique(x[x %in% MOs_staph[species %in% post_Becker, ..property][[1]]]))),
                            collapse = ", ")),
+              ".",
               call. = FALSE,
               immediate. = TRUE)
     }
@@ -1352,15 +1361,7 @@ exec_as.mo <- function(x,
   }
 
   if (length(mo_renamed()) > 0) {
-    if (has_color()) {
-      notes <- getOption("mo_renamed")
-    } else {
-      notes <- mo_renamed()
-    }
-    notes <- sort(notes)
-    for (i in 1:length(notes)) {
-      base::message(blue(paste("NOTE:", notes[i])))
-    }
+    print(mo_renamed())
   }
 
   x
@@ -1387,9 +1388,14 @@ was_renamed <- function(name_old, name_new, ref_old = "", ref_new = "", mo = "")
   } else {
     mo <- ""
   }
-  msg <- paste0(italic(name_old), ref_old, " was renamed ", italic(name_new), ref_new, mo)
-  msg <- gsub("et al.", italic("et al."), msg)
-  options(mo_renamed = c(getOption("mo_renamed"), sort(msg)))
+  old_values <- paste0(italic(name_old), ref_old)
+  old_values <- gsub("et al.", italic("et al."), old_values)
+  new_values <- paste0(italic(name_new), ref_new, mo)
+  new_values <- gsub("et al.", italic("et al."), new_values)
+
+  names(new_values) <- old_values
+  total <- c(getOption("mo_renamed"), new_values)
+  options(mo_renamed = total[order(names(total))])
 }
 
 #' @exportMethod print.mo
@@ -1451,6 +1457,9 @@ mo_failures <- function() {
 #' @importFrom crayon italic
 #' @export
 mo_uncertainties <- function() {
+  if (is.null(getOption("mo_uncertainties"))) {
+    return(NULL)
+  }
   structure(.Data = as.data.frame(getOption("mo_uncertainties"), stringsAsFactors = FALSE),
             class = c("mo_uncertainties", "data.frame"))
 }
@@ -1463,8 +1472,8 @@ print.mo_uncertainties <- function(x, ...) {
   if (NROW(x) == 0) {
     return(NULL)
   }
-  cat(paste0(bold(nrow(x), "unique result(s) guessed with uncertainty:"),
-             "\n(1 = ", green("renamed"),
+  cat(paste0(bold(nr2char(nrow(x)), paste0("unique result", ifelse(nrow(x) > 1, "s", ""), " guessed with uncertainty:")),
+             "\n(1 = ", green("renamed/misspelled"),
              ", 2 = ", yellow("uncertain"),
              ", 3 = ", red("very uncertain"), ")\n"))
 
@@ -1489,10 +1498,18 @@ print.mo_uncertainties <- function(x, ...) {
 }
 
 #' @rdname as.mo
+#' @importFrom crayon strip_style
 #' @export
 mo_renamed <- function() {
-  structure(.Data = strip_style(gsub("was renamed", "->", getOption("mo_renamed"), fixed = TRUE)),
-            class = c("mo_renamed", "character"))
+  items <- getOption("mo_renamed")
+  if (is.null(items)) {
+    return(NULL)
+  }
+
+  items <- strip_style(items)
+  names(items) <- strip_style(names(items))
+  structure(.Data = items,
+             class = c("mo_renamed", "character"))
 }
 
 #' @exportMethod print.mo_renamed
@@ -1500,7 +1517,8 @@ mo_renamed <- function() {
 #' @export
 #' @noRd
 print.mo_renamed <- function(x, ...) {
-  cat(blue(paste(getOption("mo_renamed"), collapse = "\n")))
+  items <- getOption("mo_renamed")
+  base::message(blue(paste("NOTE:", names(items), "was renamed", items, collapse = "\n"), collapse = "\n"))
 }
 
 nr2char <- function(x) {
@@ -1539,4 +1557,16 @@ translate_allow_uncertain <- function(allow_uncertain) {
     }
   }
   allow_uncertain
+}
+
+get_mo_failures_uncertainties_renamed <- function() {
+  list(failures = getOption("mo_failures"),
+       uncertainties = getOption("mo_uncertainties"),
+       renamed = getOption("mo_renamed"))
+}
+
+load_mo_failures_uncertainties_renamed <- function(metadata) {
+  options("mo_failures" = metadata$failures)
+  options("mo_uncertainties" = metadata$uncertainties)
+  options("mo_renamed" = metadata$renamed)
 }

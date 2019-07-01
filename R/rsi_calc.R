@@ -38,30 +38,29 @@ dots2vars <- function(...) {
 
 #' @importFrom dplyr %>% pull all_vars any_vars filter_all funs mutate_all
 rsi_calc <- function(...,
-                     type,
-                     include_I,
-                     minimum,
-                     as_percent,
-                     also_single_tested,
-                     only_count) {
+                     ab_result,
+                     minimum = 0,
+                     as_percent = FALSE,
+                     only_all_tested = FALSE,
+                     only_count = FALSE) {
 
   data_vars <- dots2vars(...)
 
-  if (!is.logical(include_I)) {
-    stop('`include_I` must be logical', call. = FALSE)
-  }
   if (!is.numeric(minimum)) {
     stop('`minimum` must be numeric', call. = FALSE)
   }
   if (!is.logical(as_percent)) {
     stop('`as_percent` must be logical', call. = FALSE)
   }
-  if (!is.logical(also_single_tested)) {
-    stop('`also_single_tested` must be logical', call. = FALSE)
+  if (!is.logical(only_all_tested)) {
+    stop('`only_all_tested` must be logical', call. = FALSE)
   }
 
   dots_df <- ...elt(1) # it needs this evaluation
   dots <- base::eval(base::substitute(base::alist(...)))
+  if ("also_single_tested" %in% names(dots)) {
+    stop("`also_single_tested` was replaced by `only_all_tested`. Please read Details in the help page (`?portion`) as this may have a considerable impact on your analysis.", call. = FALSE)
+  }
   ndots <- length(dots)
 
  if ("data.frame" %in% class(dots_df)) {
@@ -99,8 +98,7 @@ rsi_calc <- function(...,
 
   print_warning <- FALSE
 
-  type_trans <- as.integer(as.rsi(type))
-  type_others <- base::setdiff(1:3, type_trans)
+  ab_result <- as.rsi(ab_result)
 
   if (is.data.frame(x)) {
     rsi_integrity_check <- character(0)
@@ -108,43 +106,38 @@ rsi_calc <- function(...,
       # check integrity of columns: force rsi class
       if (!is.rsi(x %>% pull(i))) {
         rsi_integrity_check <- c(rsi_integrity_check, x %>% pull(i) %>% as.character())
-        x[, i] <- suppressWarnings(as.rsi(x[, i])) # warning will be given later
+        x[, i] <- suppressWarnings(x %>% pull(i) %>% as.rsi()) # warning will be given later
         print_warning <- TRUE
       }
-      x[, i] <- x %>% pull(i) %>% as.integer()
+      #x[, i] <- x %>% pull(i)
     }
     if (length(rsi_integrity_check) > 0) {
       # this will give a warning for invalid results, of all input columns (so only 1 warning)
       rsi_integrity_check <- as.rsi(rsi_integrity_check)
     }
 
-    if (include_I == TRUE) {
-      x <- x %>% mutate_all(funs(ifelse(. == 2, type_trans, .)))
-    }
-
-    if (also_single_tested == TRUE) {
-      # THE CHANCE THAT AT LEAST ONE RESULT IS type
-      found <- x %>% filter_all(any_vars(. == type_trans)) %>% nrow()
-      # THE CHANCE THAT AT LEAST ONE RESULT IS type OR ALL ARE TESTED
-      total <- found + x %>% filter_all(all_vars(. %in% type_others)) %>% nrow()
+    # THE CHANCE THAT AT LEAST ONE RESULT IS ab_result
+    #numerator <- x %>% filter_all(any_vars(. %in% ab_result)) %>% nrow()
+    if (only_all_tested == TRUE) {
+      # THE NUMBER OF ISOLATES WHERE *ALL* ABx ARE S/I/R
+      x_filtered <- x %>% filter_all(all_vars(!is.na(.)))
+      numerator <- x_filtered %>% filter_all(any_vars(. %in% ab_result)) %>% nrow()
+      denominator <- x_filtered %>% nrow()
     } else {
-      x <- apply(X = x,
-                 MARGIN = 1,
-                 FUN = min)
-      found <- sum(as.integer(x) == type_trans, na.rm = TRUE)
-      total <- length(x) - sum(is.na(x))
+      # THE NUMBER OF ISOLATES WHERE *ANY* ABx IS S/I/R
+      other_values <- base::setdiff(c(NA, levels(ab_result)), ab_result)
+      other_values_filter <- base::apply(x, 1, function(y) { base::all(y %in% other_values) & base::any(is.na(y)) })
+      numerator <- x %>% filter_all(any_vars(. %in% ab_result)) %>% nrow()
+      denominator <- x %>% filter(!other_values_filter) %>% nrow()
     }
   } else {
+    # x is not a data.frame
     if (!is.rsi(x)) {
       x <- as.rsi(x)
       print_warning <- TRUE
     }
-    x <- as.integer(x)
-    if (include_I == TRUE) {
-      x[x == 2] <- type_trans
-    }
-    found <- sum(x == type_trans, na.rm = TRUE)
-    total <- length(x) - sum(is.na(x))
+    numerator <- sum(x %in% ab_result, na.rm = TRUE)
+    denominator <- sum(x %in% levels(ab_result), na.rm = TRUE)
   }
 
   if (print_warning == TRUE) {
@@ -153,20 +146,23 @@ rsi_calc <- function(...,
   }
 
   if (only_count == TRUE) {
-    return(found)
+    return(numerator)
   }
 
-  if (total < minimum) {
-    warning("Introducing NA: only ", total, " results available for ", data_vars, " (minimum set to ", minimum, ").", call. = FALSE)
-    result <- NA
+  if (denominator < minimum) {
+    if (data_vars != "") {
+      data_vars <- paste(" for", data_vars)
+    }
+    warning("Introducing NA: only ", denominator, " results available", data_vars, " (minimum set to ", minimum, ").", call. = FALSE)
+    fraction <- NA
   } else {
-    result <- found / total
+    fraction <- numerator / denominator
   }
 
   if (as_percent == TRUE) {
-    percent(result, force_zero = TRUE)
+    percent(fraction, force_zero = TRUE)
   } else {
-    result
+    fraction
   }
 }
 

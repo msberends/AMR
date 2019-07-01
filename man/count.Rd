@@ -15,19 +15,19 @@
 Wickham H. \strong{Tidy Data.} The Journal of Statistical Software, vol. 59, 2014. \url{http://vita.had.co.nz/papers/tidy-data.html}
 }
 \usage{
-count_R(..., also_single_tested = FALSE)
+count_R(..., only_all_tested = FALSE)
 
-count_IR(..., also_single_tested = FALSE)
+count_IR(..., only_all_tested = FALSE)
 
-count_I(..., also_single_tested = FALSE)
+count_I(..., only_all_tested = FALSE)
 
-count_SI(..., also_single_tested = FALSE)
+count_SI(..., only_all_tested = FALSE)
 
-count_S(..., also_single_tested = FALSE)
+count_S(..., only_all_tested = FALSE)
 
-count_all(..., also_single_tested = FALSE)
+count_all(..., only_all_tested = FALSE)
 
-n_rsi(..., also_single_tested = FALSE)
+n_rsi(..., only_all_tested = FALSE)
 
 count_df(data, translate_ab = "name", language = get_locale(),
   combine_SI = TRUE, combine_IR = FALSE)
@@ -35,7 +35,7 @@ count_df(data, translate_ab = "name", language = get_locale(),
 \arguments{
 \item{...}{one or more vectors (or columns) with antibiotic interpretations. They will be transformed internally with \code{\link{as.rsi}} if needed.}
 
-\item{also_single_tested}{a logical to indicate whether for combination therapies also observations should be included where not all antibiotics were tested, but at least one of the tested antibiotics contains a target interpretation (e.g. S in case of \code{portion_S} and R in case of \code{portion_R}). \strong{This could lead to selection bias.}}
+\item{only_all_tested}{(for combination therapies, i.e. using more than one variable for \code{...}) a logical to indicate that isolates must be tested for all antibiotics, see section \emph{Combination therapy} below}
 
 \item{data}{a \code{data.frame} containing columns with class \code{rsi} (see \code{\link{as.rsi}})}
 
@@ -66,7 +66,7 @@ The function \code{rsi_df} works exactly like \code{count_df}, but adds the perc
 }
 \section{Interpretation of S, I and R}{
 
-In 2019, EUCAST has decided to change the definitions of susceptibility testing categories S, I and R as shown below. Results of several consultations on the new definitions are available on the EUCAST website under "Consultations".
+In 2019, EUCAST has decided to change the definitions of susceptibility testing categories S, I and R as shown below (\url{http://www.eucast.org/newsiandr/}). Results of several consultations on the new definitions are available on the EUCAST website under "Consultations".
 
 \itemize{
   \item{\strong{S} - }{Susceptible, standard dosing regimen: A microorganism is categorised as "Susceptible, standard dosing regimen", when there is a high likelihood of therapeutic success using a standard dosing regimen of the agent.}
@@ -76,9 +76,51 @@ In 2019, EUCAST has decided to change the definitions of susceptibility testing 
 
 Exposure is a function of how the mode of administration, dose, dosing interval, infusion time, as well as distribution and excretion of the antimicrobial agent will influence the infecting organism at the site of infection.
 
-Source: \url{http://www.eucast.org/newsiandr/}.
+This AMR package honours this new insight. Use \code{\link{portion_SI}} to determine antimicrobial susceptibility and \code{\link{count_SI}} to count susceptible isolates.
+}
 
-\strong{This AMR package honours this new insight.}
+\section{Combination therapy}{
+
+When using more than one variable for \code{...} (= combination therapy)), use \code{only_all_tested} to only count isolates that are tested for all antibiotics/variables that you test them for. See this example for two antibiotics, Antibiotic A and Antibiotic B, about how \code{portion_SI} works to calculate the \%SI:
+
+\preformatted{
+-------------------------------------------------------------------------
+                        only_all_tested = FALSE   only_all_tested = TRUE
+Antibiotic  Antibiotic  -----------------------   -----------------------
+    A           B       include as  include as    include as  include as
+                        numerator   denominator   numerator   denominator
+----------  ----------  ----------  -----------   ----------  -----------
+    S           S           X            X             X            X
+    I           S           X            X             X            X
+    R           S           X            X             X            X
+not tested      S           X            X             -            -
+    S           I           X            X             X            X
+    I           I           X            X             X            X
+    R           I           X            X             X            X
+not tested      I           X            X             -            -
+    S           R           X            X             X            X
+    I           R           X            X             X            X
+    R           R           -            X             -            X
+not tested      R           -            -             -            -
+    S       not tested      X            X             -            -
+    I       not tested      X            X             -            -
+    R       not tested      -            -             -            -
+not tested  not tested      -            -             -            -
+-------------------------------------------------------------------------
+}
+
+Please note that for \code{only_all_tested = TRUE} applies that:
+\preformatted{
+   count_S()  +  count_I()  +  count_R()  == count_all()
+  portion_S() + portion_I() + portion_R() == 1
+}
+and that for \code{only_all_tested = FALSE} applies that:
+\preformatted{
+   count_S()  +  count_I()  +  count_R()  >= count_all()
+  portion_S() + portion_I() + portion_R() >= 1
+}
+
+Using \code{only_all_tested} has no impact when only using one antibiotic as input.
 }
 
 \section{Read more on our website!}{
@@ -105,8 +147,8 @@ n_rsi(septic_patients$AMX)
 # Since n_rsi counts available isolates, you can
 # calculate back to count e.g. non-susceptible isolates.
 # This results in the same:
-count_IR(septic_patients$AMX)
-portion_IR(septic_patients$AMX) * n_rsi(septic_patients$AMX)
+count_SI(septic_patients$AMX)
+portion_SI(septic_patients$AMX) * n_rsi(septic_patients$AMX)
 
 library(dplyr)
 septic_patients \%>\%
@@ -120,17 +162,17 @@ septic_patients \%>\%
 
 # Count co-resistance between amoxicillin/clav acid and gentamicin,
 # so we can see that combination therapy does a lot more than mono therapy.
-# Please mind that `portion_S` calculates percentages right away instead.
-count_S(septic_patients$AMC)   # S = 1342 (71.4\%)
-count_all(septic_patients$AMC) # n = 1879
+# Please mind that `portion_SI` calculates percentages right away instead.
+count_SI(septic_patients$AMC)  # 1433
+count_all(septic_patients$AMC) # 1879
 
-count_S(septic_patients$GEN)   # S = 1372 (74.0\%)
-count_all(septic_patients$GEN) # n = 1855
+count_SI(septic_patients$GEN)  # 1399
+count_all(septic_patients$GEN) # 1855
 
 with(septic_patients,
-     count_S(AMC, GEN))         # S = 1660 (92.3\%)
-with(septic_patients,           # n = 1798
-     n_rsi(AMC, GEN))
+     count_SI(AMC, GEN))        # 1764
+with(septic_patients,
+     n_rsi(AMC, GEN))           # 1936
 
 # Get portions S/I/R immediately of all rsi columns
 septic_patients \%>\%

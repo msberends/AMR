@@ -17,19 +17,19 @@ Wickham H. \strong{Tidy Data.} The Journal of Statistical Software, vol. 59, 201
 }
 \usage{
 portion_R(..., minimum = 30, as_percent = FALSE,
-  also_single_tested = FALSE)
+  only_all_tested = FALSE)
 
 portion_IR(..., minimum = 30, as_percent = FALSE,
-  also_single_tested = FALSE)
+  only_all_tested = FALSE)
 
 portion_I(..., minimum = 30, as_percent = FALSE,
-  also_single_tested = FALSE)
+  only_all_tested = FALSE)
 
 portion_SI(..., minimum = 30, as_percent = FALSE,
-  also_single_tested = FALSE)
+  only_all_tested = FALSE)
 
 portion_S(..., minimum = 30, as_percent = FALSE,
-  also_single_tested = FALSE)
+  only_all_tested = FALSE)
 
 portion_df(data, translate_ab = "name", language = get_locale(),
   minimum = 30, as_percent = FALSE, combine_SI = TRUE,
@@ -46,7 +46,7 @@ rsi_df(data, translate_ab = "name", language = get_locale(),
 
 \item{as_percent}{a logical to indicate whether the output must be returned as a hundred fold with \% sign (a character). A value of \code{0.123456} will then be returned as \code{"12.3\%"}.}
 
-\item{also_single_tested}{a logical to indicate whether for combination therapies also observations should be included where not all antibiotics were tested, but at least one of the tested antibiotics contains a target interpretation (e.g. S in case of \code{portion_S} and R in case of \code{portion_R}). \strong{This could lead to selection bias.}}
+\item{only_all_tested}{(for combination therapies, i.e. using more than one variable for \code{...}) a logical to indicate that isolates must be tested for all antibiotics, see section \emph{Combination therapy} below}
 
 \item{data}{a \code{data.frame} containing columns with class \code{rsi} (see \code{\link{as.rsi}})}
 
@@ -67,31 +67,61 @@ These functions can be used to calculate the (co-)resistance of microbial isolat
 \code{portion_R} and \code{portion_IR} can be used to calculate resistance, \code{portion_S} and \code{portion_SI} can be used to calculate susceptibility.\cr
 }
 \details{
-\strong{Remember that you should filter your table to let it contain only first isolates!} Use \code{\link{first_isolate}} to determine them in your data set.
+\strong{Remember that you should filter your table to let it contain only first isolates!} This is needed to exclude duplicates and to reduce selection bias. Use \code{\link{first_isolate}} to determine them in your data set.
 
 These functions are not meant to count isolates, but to calculate the portion of resistance/susceptibility. Use the \code{\link[AMR]{count}} functions to count isolates. \emph{Low counts can infuence the outcome - these \code{portion} functions may camouflage this, since they only return the portion albeit being dependent on the \code{minimum} parameter.}
 
 The function \code{portion_df} takes any variable from \code{data} that has an \code{"rsi"} class (created with \code{\link{as.rsi}}) and calculates the portions R, I and S. The resulting \emph{tidy data} (see Source) \code{data.frame} will have three rows (S/I/R) and a column for each group and each variable with class \code{"rsi"}.
 
 The function \code{rsi_df} works exactly like \code{portion_df}, but adds the number of isolates.
-\if{html}{
-  \cr\cr
-  To calculate the probability (\emph{p}) of susceptibility of one antibiotic, we use this formula:
-  \out{<div style="text-align: center;">}\figure{combi_therapy_2.png}\out{</div>}
-  To calculate the probability (\emph{p}) of susceptibility of more antibiotics (i.e. combination therapy), we need to check whether one of them has a susceptible result (as numerator) and count all cases where all antibiotics were tested (as denominator). \cr
-  \cr
-  For two antibiotics:
-  \out{<div style="text-align: center;">}\figure{combi_therapy_2.png}\out{</div>}
-  \cr
-  For three antibiotics:
-  \out{<div style="text-align: center;">}\figure{combi_therapy_2.png}\out{</div>}
-  \cr
-  And so on.
 }
+\section{Combination therapy}{
+
+When using more than one variable for \code{...} (= combination therapy)), use \code{only_all_tested} to only count isolates that are tested for all antibiotics/variables that you test them for. See this example for two antibiotics, Antibiotic A and Antibiotic B, about how \code{portion_SI} works to calculate the \%SI:
+
+\preformatted{
+-------------------------------------------------------------------------
+                        only_all_tested = FALSE   only_all_tested = TRUE
+Antibiotic  Antibiotic  -----------------------   -----------------------
+    A           B       include as  include as    include as  include as
+                        numerator   denominator   numerator   denominator
+----------  ----------  ----------  -----------   ----------  -----------
+    S           S           X            X             X            X
+    I           S           X            X             X            X
+    R           S           X            X             X            X
+not tested      S           X            X             -            -
+    S           I           X            X             X            X
+    I           I           X            X             X            X
+    R           I           X            X             X            X
+not tested      I           X            X             -            -
+    S           R           X            X             X            X
+    I           R           X            X             X            X
+    R           R           -            X             -            X
+not tested      R           -            -             -            -
+    S       not tested      X            X             -            -
+    I       not tested      X            X             -            -
+    R       not tested      -            -             -            -
+not tested  not tested      -            -             -            -
+-------------------------------------------------------------------------
 }
+
+Please note that for \code{only_all_tested = TRUE} applies that:
+\preformatted{
+   count_S()  +  count_I()  +  count_R()  == count_all()
+  portion_S() + portion_I() + portion_R() == 1
+}
+and that for \code{only_all_tested = FALSE} applies that:
+\preformatted{
+   count_S()  +  count_I()  +  count_R()  >= count_all()
+  portion_S() + portion_I() + portion_R() >= 1
+}
+
+Using \code{only_all_tested} has no impact when only using one antibiotic as input.
+}
+
 \section{Interpretation of S, I and R}{
 
-In 2019, EUCAST has decided to change the definitions of susceptibility testing categories S, I and R as shown below. Results of several consultations on the new definitions are available on the EUCAST website under "Consultations".
+In 2019, EUCAST has decided to change the definitions of susceptibility testing categories S, I and R as shown below (\url{http://www.eucast.org/newsiandr/}). Results of several consultations on the new definitions are available on the EUCAST website under "Consultations".
 
 \itemize{
   \item{\strong{S} - }{Susceptible, standard dosing regimen: A microorganism is categorised as "Susceptible, standard dosing regimen", when there is a high likelihood of therapeutic success using a standard dosing regimen of the agent.}
@@ -101,9 +131,7 @@ In 2019, EUCAST has decided to change the definitions of susceptibility testing 
 
 Exposure is a function of how the mode of administration, dose, dosing interval, infusion time, as well as distribution and excretion of the antimicrobial agent will influence the infecting organism at the site of infection.
 
-Source: \url{http://www.eucast.org/newsiandr/}.
-
-\strong{This AMR package honours this new insight.}
+This AMR package honours this new insight. Use \code{\link{portion_SI}} to determine antimicrobial susceptibility and \code{\link{count_SI}} to count susceptible isolates.
 }
 
 \section{Read more on our website!}{
@@ -132,7 +160,7 @@ septic_patients \%>\% portion_SI(AMX)
 
 septic_patients \%>\%
   group_by(hospital_id) \%>\%
-  summarise(p = portion_S(CIP),
+  summarise(p = portion_SI(CIP),
             n = n_rsi(CIP)) # n_rsi works like n_distinct in dplyr
 
 septic_patients \%>\%
@@ -146,32 +174,38 @@ septic_patients \%>\%
 
 # Calculate co-resistance between amoxicillin/clav acid and gentamicin,
 # so we can see that combination therapy does a lot more than mono therapy:
-septic_patients \%>\% portion_S(AMC)       # S = 71.4\%
-septic_patients \%>\% count_all(AMC)       # n = 1879
+septic_patients \%>\% portion_SI(AMC)      # \%SI = 76.3\%
+septic_patients \%>\% count_all(AMC)       #   n = 1879
 
-septic_patients \%>\% portion_S(GEN)       # S = 74.0\%
-septic_patients \%>\% count_all(GEN)       # n = 1855
+septic_patients \%>\% portion_SI(GEN)      # \%SI = 75.4\%
+septic_patients \%>\% count_all(GEN)       #   n = 1855
 
-septic_patients \%>\% portion_S(AMC, GEN)  # S = 92.3\%
-septic_patients \%>\% count_all(AMC, GEN)  # n = 1798
+septic_patients \%>\% portion_SI(AMC, GEN) # \%SI = 94.1\%
+septic_patients \%>\% count_all(AMC, GEN)  #   n = 1939
 
-# Using `also_single_tested` can be useful ...
+
+# See Details on how `only_all_tested` works. Example:
 septic_patients \%>\%
-  portion_S(AMC, GEN,
-            also_single_tested = TRUE)   # S = 92.6\%
-# ... but can also lead to selection bias - the data only has 2,000 rows:
+  summarise(numerator = count_SI(AMC, GEN),
+            denominator = count_all(AMC, GEN),
+            portion = portion_SI(AMC, GEN))
+#   numerator denominator portion
+#        1764        1936  0.9408
 septic_patients \%>\%
-  count_all(AMC, GEN,
-            also_single_tested = TRUE)   # n = 2555
+  summarise(numerator = count_SI(AMC, GEN, only_all_tested = TRUE),
+            denominator = count_all(AMC, GEN, only_all_tested = TRUE),
+            portion = portion_SI(AMC, GEN, only_all_tested = TRUE))
+#   numerator denominator portion
+#       1687        1798   0.9383
 
 
 septic_patients \%>\%
   group_by(hospital_id) \%>\%
-  summarise(cipro_p = portion_S(CIP, as_percent = TRUE),
+  summarise(cipro_p = portion_SI(CIP, as_percent = TRUE),
             cipro_n = count_all(CIP),
-            genta_p = portion_S(GEN, as_percent = TRUE),
+            genta_p = portion_SI(GEN, as_percent = TRUE),
             genta_n = count_all(GEN),
-            combination_p = portion_S(CIP, GEN, as_percent = TRUE),
+            combination_p = portion_SI(CIP, GEN, as_percent = TRUE),
             combination_n = count_all(CIP, GEN))
 
 # Get portions S/I/R immediately of all rsi columns

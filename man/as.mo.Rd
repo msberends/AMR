@@ -88,12 +88,9 @@ This means that looking up human pathogenic microorganisms takes less time than 
 \strong{Uncertain results} \cr
 The algorithm can additionally use three different levels of uncertainty to guess valid results. The default is \code{allow_uncertain = TRUE}, which is equal to uncertainty level 2. Using \code{allow_uncertain = FALSE} will skip all of these additional rules:
 \itemize{
-  \item{(uncertainty level 1): It tries to look for only matching genera}
-  \item{(uncertainty level 1): It tries to look for previously accepted (but now invalid) taxonomic names}
-  \item{(uncertainty level 2): It strips off values between brackets and the brackets itself, and re-evaluates the input with all previous rules}
-  \item{(uncertainty level 2): It strips off words from the end one by one and re-evaluates the input with all previous rules}
-  \item{(uncertainty level 3): It strips off words from the start one by one and re-evaluates the input with all previous rules}
-  \item{(uncertainty level 3): It tries any part of the name}
+  \item{(uncertainty level 1): It tries to look for only matching genera, previously accepted (but now invalid) taxonomic names and misspelled input}
+  \item{(uncertainty level 2): It removed parts between brackets, strips off words from the end one by one and re-evaluates the input with all previous rules}
+  \item{(uncertainty level 3): It strips off words from the start one by one and tries any part of the name}
 }
 
 You can also use e.g. \code{as.mo(..., allow_uncertain = 1)} to only allow up to level 1 uncertainty.

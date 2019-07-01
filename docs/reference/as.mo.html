@@ -80,7 +80,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">0.7.1.9003</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">0.7.1.9005</span>
       </span>
     </div>
 
@@ -322,12 +322,9 @@ This function uses intelligent rules to help getting fast and logical results. I
 </ul><p>This means that looking up human pathogenic microorganisms takes less time than looking up human non-pathogenic microorganisms.</p>
 <p><strong>Uncertain results</strong> <br />
 The algorithm can additionally use three different levels of uncertainty to guess valid results. The default is <code>allow_uncertain = TRUE</code>, which is equal to uncertainty level 2. Using <code>allow_uncertain = FALSE</code> will skip all of these additional rules:</p><ul>
-<li><p>(uncertainty level 1): It tries to look for only matching genera</p></li>
-<li><p>(uncertainty level 1): It tries to look for previously accepted (but now invalid) taxonomic names</p></li>
-<li><p>(uncertainty level 2): It strips off values between brackets and the brackets itself, and re-evaluates the input with all previous rules</p></li>
-<li><p>(uncertainty level 2): It strips off words from the end one by one and re-evaluates the input with all previous rules</p></li>
-<li><p>(uncertainty level 3): It strips off words from the start one by one and re-evaluates the input with all previous rules</p></li>
-<li><p>(uncertainty level 3): It tries any part of the name</p></li>
+<li><p>(uncertainty level 1): It tries to look for only matching genera, previously accepted (but now invalid) taxonomic names and misspelled input</p></li>
+<li><p>(uncertainty level 2): It removed parts between brackets, strips off words from the end one by one and re-evaluates the input with all previous rules</p></li>
+<li><p>(uncertainty level 3): It strips off words from the start one by one and tries any part of the name</p></li>
 </ul>
     <p>You can also use e.g. <code>as.mo(..., allow_uncertain = 1)</code> to only allow up to level 1 uncertainty.</p>
 <p>Examples:</p><ul>
