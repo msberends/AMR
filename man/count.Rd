@@ -109,12 +109,12 @@ not tested  not tested      -            -             -            -
 -------------------------------------------------------------------------
 }
 
-Please note that for \code{only_all_tested = TRUE} applies that:
+Please note that, in combination therapies, for \code{only_all_tested = TRUE} applies that:
 \preformatted{
    count_S()  +  count_I()  +  count_R()  == count_all()
   portion_S() + portion_I() + portion_R() == 1
 }
-and that for \code{only_all_tested = FALSE} applies that:
+and that, in combination therapies, for \code{only_all_tested = FALSE} applies that:
 \preformatted{
    count_S()  +  count_I()  +  count_R()  >= count_all()
   portion_S() + portion_I() + portion_R() >= 1

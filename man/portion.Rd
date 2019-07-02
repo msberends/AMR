@@ -69,7 +69,7 @@ These functions can be used to calculate the (co-)resistance of microbial isolat
 \details{
 \strong{Remember that you should filter your table to let it contain only first isolates!} This is needed to exclude duplicates and to reduce selection bias. Use \code{\link{first_isolate}} to determine them in your data set.
 
-These functions are not meant to count isolates, but to calculate the portion of resistance/susceptibility. Use the \code{\link[AMR]{count}} functions to count isolates. \emph{Low counts can infuence the outcome - these \code{portion} functions may camouflage this, since they only return the portion albeit being dependent on the \code{minimum} parameter.}
+These functions are not meant to count isolates, but to calculate the portion of resistance/susceptibility. Use the \code{\link[AMR]{count}} functions to count isolates. The function \code{portion_SI()} is essentially equal to \code{count_SI() / count_all()}. \emph{Low counts can infuence the outcome - the \code{portion} functions may camouflage this, since they only return the portion (albeit being dependent on the \code{minimum} parameter).}
 
 The function \code{portion_df} takes any variable from \code{data} that has an \code{"rsi"} class (created with \code{\link{as.rsi}}) and calculates the portions R, I and S. The resulting \emph{tidy data} (see Source) \code{data.frame} will have three rows (S/I/R) and a column for each group and each variable with class \code{"rsi"}.
 
@@ -105,12 +105,12 @@ not tested  not tested      -            -             -            -
 -------------------------------------------------------------------------
 }
 
-Please note that for \code{only_all_tested = TRUE} applies that:
+Please note that, in combination therapies, for \code{only_all_tested = TRUE} applies that:
 \preformatted{
    count_S()  +  count_I()  +  count_R()  == count_all()
   portion_S() + portion_I() + portion_R() == 1
 }
-and that for \code{only_all_tested = FALSE} applies that:
+and that, in combination therapies, for \code{only_all_tested = FALSE} applies that:
 \preformatted{
    count_S()  +  count_I()  +  count_R()  >= count_all()
   portion_S() + portion_I() + portion_R() >= 1

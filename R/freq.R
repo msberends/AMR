@@ -318,7 +318,7 @@ freq <- function(x,
       df <- df %>%
         ungroup() %>%
         # do not repeat group labels
-        mutate_at(vars(x.group), funs(ifelse(lag(.) == ., "", .)))
+        mutate_at(vars(x.group), ~(ifelse(lag(.) == ., "", .)))
       df[1, 1] <- df.topleft
       colnames(df)[1:2] <- c("group", "item")
 

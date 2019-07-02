@@ -166,7 +166,7 @@ resistance_predict <- function(x,
   df <- x %>%
     mutate_at(col_ab, as.rsi) %>%
     mutate_at(col_ab, droplevels) %>%
-    mutate_at(col_ab, funs(
+    mutate_at(col_ab, ~(
       if (I_as_S == TRUE) {
         gsub("I", "S", .)
       } else {

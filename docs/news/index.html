@@ -78,7 +78,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">0.7.1.9005</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">0.7.1.9006</span>
       </span>
     </div>
 
@@ -232,16 +232,16 @@
       
     </div>
 
-    <div id="amr-0719005" class="section level1">
+    <div id="amr-0719006" class="section level1">
 <h1 class="page-header">
-<a href="#amr-0719005" class="anchor"></a>AMR 0.7.1.9005<small> Unreleased </small>
+<a href="#amr-0719006" class="anchor"></a>AMR 0.7.1.9006<small> Unreleased </small>
 </h1>
 <div id="new" class="section level3">
 <h3 class="hasAnchor">
 <a href="#new" class="anchor"></a>New</h3>
 <ul>
 <li>
-<p>Additional way to calculate co-resistance, i.e. when using multiple antibiotics as input for <code>portion_*</code> functions or <code>count_*</code> functions. This can be used to determine the empiric susceptibily of a combination therapy. A new parameter <code>only_all_tested</code> replaces the old <code>also_single_tested</code> and can be used to select one of the two methods to count isolates and calculate portions. The difference can be seen in this example table (which is also on the <code>portion</code> and <code>count</code> help pages), where the %SI is being determined:</p>
+<p>Additional way to calculate co-resistance, i.e. when using multiple antibiotics as input for <code>portion_*</code> functions or <code>count_*</code> functions. This can be used to determine the empiric susceptibily of a combination therapy. A new parameter <code>only_all_tested</code> (<strong>which defaults to <code>FALSE</code></strong>) replaces the old <code>also_single_tested</code> and can be used to select one of the two methods to count isolates and calculate portions. The difference can be seen in this example table (which is also on the <code>portion</code> and <code>count</code> help pages), where the %SI is being determined:</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1"><span class="co"># -------------------------------------------------------------------------</span></a>
 <a class="sourceLine" id="cb1-2" title="2"><span class="co">#                         only_all_tested = FALSE   only_all_tested = TRUE</span></a>
 <a class="sourceLine" id="cb1-3" title="3"><span class="co"># Antibiotic  Antibiotic  -----------------------   -----------------------</span></a>
@@ -1192,7 +1192,7 @@ Using <code><a href="../reference/as.mo.html">as.mo(..., allow_uncertain = 3)</a
     <div id="tocnav">
       <h2>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
-        <li><a href="#amr-0719005">0.7.1.9005</a></li>
+        <li><a href="#amr-0719006">0.7.1.9006</a></li>
         <li><a href="#amr-071">0.7.1</a></li>
         <li><a href="#amr-070">0.7.0</a></li>
         <li><a href="#amr-061">0.6.1</a></li>

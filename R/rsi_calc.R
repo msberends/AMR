@@ -120,9 +120,15 @@ rsi_calc <- function(...,
     #numerator <- x %>% filter_all(any_vars(. %in% ab_result)) %>% nrow()
     if (only_all_tested == TRUE) {
       # THE NUMBER OF ISOLATES WHERE *ALL* ABx ARE S/I/R
-      x_filtered <- x %>% filter_all(all_vars(!is.na(.)))
-      numerator <- x_filtered %>% filter_all(any_vars(. %in% ab_result)) %>% nrow()
-      denominator <- x_filtered %>% nrow()
+      # x_filtered <- x %>% filter_all(all_vars(!is.na(.)))
+      # numerator <- x_filtered %>% filter_all(any_vars(. %in% ab_result)) %>% nrow()
+      # denominator <- x_filtered %>% nrow()
+      x <- apply(X = x %>% mutate_all(as.integer),
+                 MARGIN = 1,
+                 FUN = base::min)
+      numerator <- sum(as.integer(x) %in% as.integer(ab_result), na.rm = TRUE)
+      denominator <- length(x) - sum(is.na(x))
+
     } else {
       # THE NUMBER OF ISOLATES WHERE *ANY* ABx IS S/I/R
       other_values <- base::setdiff(c(NA, levels(ab_result)), ab_result)

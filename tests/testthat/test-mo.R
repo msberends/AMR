@@ -238,7 +238,7 @@ test_that("as.mo works", {
   print(mo_uncertainties())
 
   # Salmonella (City) are all actually Salmonella enterica spp (City)
-  expect_equal(as.character(suppressMessages(as.mo("Salmonella Goettingen"))),
+  expect_equal(as.character(suppressWarnings(as.mo("Salmonella Goettingen"))),
                "B_SLMNL_ENT")
   expect_equal(as.character(as.mo("Salmonella Group A")), "B_SLMNL")
 

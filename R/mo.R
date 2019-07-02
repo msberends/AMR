@@ -135,6 +135,7 @@
 #' @inheritSection AMR Read more on our website!
 #' @importFrom dplyr %>% pull left_join
 #' @examples
+#' \donttest{
 #' # These examples all return "B_STPHY_AUR", the ID of S. aureus:
 #' as.mo("sau") # WHONET code
 #' as.mo("stau")
@@ -169,7 +170,7 @@
 #' # All mo_* functions use as.mo() internally too (see ?mo_property):
 #' mo_genus("E. coli")           # returns "Escherichia"
 #' mo_gramstain("E. coli")       # returns "Gram negative"#'
-#'
+#' }
 #' \dontrun{
 #' df$mo <- as.mo(df$microorganism_name)
 #'

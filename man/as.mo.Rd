@@ -145,6 +145,7 @@ On our website \url{https://msberends.gitlab.io/AMR} you can find \href{https://
 }
 
 \examples{
+\donttest{
 # These examples all return "B_STPHY_AUR", the ID of S. aureus:
 as.mo("sau") # WHONET code
 as.mo("stau")
@@ -179,7 +180,7 @@ as.mo("S. pyogenes", Lancefield = TRUE) # will not remain species: B_STRPT_GRA
 # All mo_* functions use as.mo() internally too (see ?mo_property):
 mo_genus("E. coli")           # returns "Escherichia"
 mo_gramstain("E. coli")       # returns "Gram negative"#'
-
+}
 \dontrun{
 df$mo <- as.mo(df$microorganism_name)
 

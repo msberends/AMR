@@ -81,7 +81,7 @@ portion_R and portion_IR can be used to calculate resistance, portion_S and port
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">0.7.1.9005</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">0.7.1.9006</span>
       </span>
     </div>
 
@@ -319,7 +319,7 @@ portion_R and portion_IR can be used to calculate resistance, portion_S and port
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p><strong>Remember that you should filter your table to let it contain only first isolates!</strong> This is needed to exclude duplicates and to reduce selection bias. Use <code><a href='first_isolate.html'>first_isolate</a></code> to determine them in your data set.</p>
-<p>These functions are not meant to count isolates, but to calculate the portion of resistance/susceptibility. Use the <code><a href='count.html'>count</a></code> functions to count isolates. <em>Low counts can infuence the outcome - these <code>portion</code> functions may camouflage this, since they only return the portion albeit being dependent on the <code>minimum</code> parameter.</em></p>
+<p>These functions are not meant to count isolates, but to calculate the portion of resistance/susceptibility. Use the <code><a href='count.html'>count</a></code> functions to count isolates. The function <code>portion_SI()</code> is essentially equal to <code>count_SI() / count_all()</code>. <em>Low counts can infuence the outcome - the <code>portion</code> functions may camouflage this, since they only return the portion (albeit being dependent on the <code>minimum</code> parameter).</em></p>
 <p>The function <code>portion_df</code> takes any variable from <code>data</code> that has an <code>"rsi"</code> class (created with <code><a href='as.rsi.html'>as.rsi</a></code>) and calculates the portions R, I and S. The resulting <em>tidy data</em> (see Source) <code>data.frame</code> will have three rows (S/I/R) and a column for each group and each variable with class <code>"rsi"</code>.</p>
 <p>The function <code>rsi_df</code> works exactly like <code>portion_df</code>, but adds the number of isolates.</p>
     
@@ -352,10 +352,10 @@ not tested      R           -            -             -            -
 not tested  not tested      -            -             -            -
 -------------------------------------------------------------------------
 </pre>
-    <p>Please note that for <code>only_all_tested = TRUE</code> applies that:</p><pre>
+    <p>Please note that, in combination therapies, for <code>only_all_tested = TRUE</code> applies that:</p><pre>
    count_S()  +  count_I()  +  count_R()  == count_all()
   portion_S() + portion_I() + portion_R() == 1
-</pre><p>and that for <code>only_all_tested = FALSE</code> applies that:</p><pre>
+</pre><p>and that, in combination therapies, for <code>only_all_tested = FALSE</code> applies that:</p><pre>
    count_S()  +  count_I()  +  count_R()  &gt;= count_all()
   portion_S() + portion_I() + portion_R() &gt;= 1
 </pre>
