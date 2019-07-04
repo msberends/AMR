@@ -24,9 +24,9 @@ context("mdro.R")
 test_that("mdro works", {
   library(dplyr)
 
-  expect_error(mdro(septic_patients, country = "invalid", col_mo = "mo", info = TRUE))
-  expect_error(mdro(septic_patients, country = "fr", info = TRUE))
-  expect_error(mdro(septic_patients, country = c("de", "nl"), info = TRUE))
+  expect_error(suppressWarnings(mdro(septic_patients, country = "invalid", col_mo = "mo", info = TRUE)))
+  expect_error(suppressWarnings(mdro(septic_patients, country = "fr", info = TRUE)))
+  expect_error(mdro(septic_patients, guideline = c("BRMO", "MRGN"), info = TRUE))
   expect_error(mdro(septic_patients, col_mo = "invalid", info = TRUE))
 
   outcome <- mdro(septic_patients)
@@ -43,7 +43,7 @@ test_that("mdro works", {
                c(1969, 25, 6)) # 1969 neg, 25 unconfirmed, 6 pos
 
   expect_equal(brmo(septic_patients, info = FALSE),
-               mdro(septic_patients, country = "nl", info = FALSE))
+               mdro(septic_patients, guideline = "BRMO", info = FALSE))
 
   # still working on German guidelines
   expect_error(suppressWarnings(mrgn(septic_patients, info = TRUE)))
@@ -58,7 +58,7 @@ test_that("mdro works", {
                                  gent = "S",
                                  tobr = "S",
                                  pita = "S"),
-                      country = "nl",
+                      guideline = "BRMO",
                       col_mo = "mo",
                       info = FALSE)),
     "Negative")
@@ -71,7 +71,7 @@ test_that("mdro works", {
                                  gent = "R",
                                  tobr = "R",
                                  pita = "R"),
-                      country = "nl",
+                      guideline = "BRMO",
                       col_mo = "mo",
                       info = FALSE)),
     "Positive")

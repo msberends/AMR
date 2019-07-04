@@ -15,7 +15,7 @@ This R package is actively maintained and is free software; you can freely use a
 
 This package can be used for:
 
-  * Reference for microorganisms, since it contains all microbial (sub)species from the [Catalogue of Life](http://www.catalogueoflife.org) ([manual](./reference/mo_property.html))
+  * Reference for the taxonomy of microorganisms, since the package contains all microbial (sub)species from the [Catalogue of Life](http://www.catalogueoflife.org) ([manual](./reference/mo_property.html))
   * Interpreting raw MIC and disk diffusion values, based on the latest CLSI or EUCAST guidelines ([manual](./reference/as.rsi.html))
   * Calculating antimicrobial resistance ([tutorial](./articles/AMR.html))
   * Determining multi-drug resistance (MDR) / multi-drug resistant organisms (MDRO) ([tutorial](./articles/MDR.html))

@@ -10,14 +10,14 @@
 \usage{
 freq(x, ..., sort.count = TRUE, nmax = getOption("max.print.freq"),
   na.rm = TRUE, row.names = TRUE, markdown = !interactive(),
-  digits = 2, quote = FALSE, header = TRUE, title = NULL,
+  digits = 2, quote = NULL, header = TRUE, title = NULL,
   na = "<NA>", droplevels = TRUE, sep = " ",
   decimal.mark = getOption("OutDec"), big.mark = ifelse(decimal.mark !=
   ",", ",", "."))
 
 frequency_tbl(x, ..., sort.count = TRUE,
   nmax = getOption("max.print.freq"), na.rm = TRUE, row.names = TRUE,
-  markdown = !interactive(), digits = 2, quote = FALSE,
+  markdown = !interactive(), digits = 2, quote = NULL,
   header = TRUE, title = NULL, na = "<NA>", droplevels = TRUE,
   sep = " ", decimal.mark = getOption("OutDec"),
   big.mark = ifelse(decimal.mark != ",", ",", "."))
@@ -48,7 +48,7 @@ header(f, property = NULL)
 
 \item{digits}{how many significant digits are to be used for numeric values in the header (not for the items themselves, that depends on \code{\link{getOption}("digits")})}
 
-\item{quote}{a logical value indicating whether or not strings should be printed with surrounding quotes}
+\item{quote}{a logical value indicating whether or not strings should be printed with surrounding quotes. Default is to print them only around characters that are actually numeric values.}
 
 \item{header}{a logical value indicating whether an informative header should be printed}
 

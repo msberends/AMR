@@ -31,7 +31,7 @@
 #' @param row.names a logical value indicating whether row indices should be printed as \code{1:nrow(x)}
 #' @param markdown a logical value indicating whether the frequency table should be printed in markdown format. This will print all rows (except when \code{nmax} is defined) and is default behaviour in non-interactive R sessions (like when knitting RMarkdown files).
 #' @param digits how many significant digits are to be used for numeric values in the header (not for the items themselves, that depends on \code{\link{getOption}("digits")})
-#' @param quote a logical value indicating whether or not strings should be printed with surrounding quotes
+#' @param quote a logical value indicating whether or not strings should be printed with surrounding quotes. Default is to print them only around characters that are actually numeric values.
 #' @param header a logical value indicating whether an informative header should be printed
 #' @param title text to show above frequency table, at default to tries to coerce from the variables passed to \code{x}
 #' @param na a character string that should be used to show empty (\code{NA}) values (only useful when \code{na.rm = FALSE})
@@ -201,7 +201,7 @@ freq <- function(x,
                  row.names = TRUE,
                  markdown = !interactive(),
                  digits = 2,
-                 quote = FALSE,
+                 quote = NULL,
                  header = TRUE,
                  title = NULL,
                  na = "<NA>",
@@ -218,12 +218,15 @@ freq <- function(x,
   cols.names <- NULL
   if (any(class(x) == "list")) {
     cols <- names(x)
+    cols.names <- cols
     x <- as.data.frame(x, stringsAsFactors = FALSE)
     x.name <- "a list"
   } else if (any(class(x) == "matrix")) {
     x <- as.data.frame(x, stringsAsFactors = FALSE)
     x.name <- "a matrix"
     cols <- colnames(x)
+    quote <- FALSE
+    cols.names <- cols
     if (all(cols %like% "V[0-9]")) {
       cols <- NULL
     }
@@ -245,7 +248,7 @@ freq <- function(x,
       } else {
         x.name <- "a data.frame"
       }
-    } else {
+    } else if (!x.name %in% c("a list", "a matrix")) {
       x.name <- paste0("`", x.name, "`")
     }
     x.name.dims <- x %>%
@@ -289,6 +292,11 @@ freq <- function(x,
     } else {
       # complete data frame
       df <- x
+    }
+
+    if (identical(x.group, cols.names)) {
+      # ... %>% group_by(var = calculation(..)) %>% freq(var)
+      x.group <- NULL
     }
 
     # support grouping variables
@@ -524,6 +532,14 @@ freq <- function(x,
     # remove escape char
     # see https://en.wikipedia.org/wiki/Escape_character#ASCII_escape_character
     df <- df %>% mutate(item = item %>% gsub("\033", " ", ., fixed = TRUE))
+  }
+
+  if (is.null(quote)) {
+    if (!is.numeric(df$item) & all(df$item %like% "^[0-9]+$", na.rm = TRUE)) {
+      quote <- TRUE
+    } else {
+      quote <- FALSE
+    }
   }
 
   if (quote == TRUE) {

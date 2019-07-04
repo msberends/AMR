@@ -78,7 +78,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">0.7.1.9006</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">0.7.1.9007</span>
       </span>
     </div>
 
@@ -232,9 +232,9 @@
       
     </div>
 
-    <div id="amr-0719006" class="section level1">
+    <div id="amr-0719007" class="section level1">
 <h1 class="page-header">
-<a href="#amr-0719006" class="anchor"></a>AMR 0.7.1.9006<small> Unreleased </small>
+<a href="#amr-0719007" class="anchor"></a>AMR 0.7.1.9007<small> Unreleased </small>
 </h1>
 <div id="new" class="section level3">
 <h3 class="hasAnchor">
@@ -280,6 +280,8 @@
 </li>
 <li>Fix for <code><a href="../reference/as.mo.html">as.mo()</a></code> where misspelled input would not be understood</li>
 <li>Fix for using <code>mo_*</code> functions where the coercion uncertainties and failures would not be available through <code><a href="../reference/as.mo.html">mo_uncertainties()</a></code> and <code><a href="../reference/as.mo.html">mo_failures()</a></code> anymore</li>
+<li>Deprecated the <code>country</code> parameter of <code><a href="../reference/mdro.html">mdro()</a></code> in favour of the already existing <code>guideline</code> parameter to support multiple guidelines within one country</li>
+<li>Fix for frequency tables when creating one directly on a group (using <code>group_by()</code>)</li>
 </ul>
 </div>
 </div>
@@ -1192,7 +1194,7 @@ Using <code><a href="../reference/as.mo.html">as.mo(..., allow_uncertain = 3)</a
     <div id="tocnav">
       <h2>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
-        <li><a href="#amr-0719006">0.7.1.9006</a></li>
+        <li><a href="#amr-0719007">0.7.1.9007</a></li>
         <li><a href="#amr-071">0.7.1</a></li>
         <li><a href="#amr-070">0.7.0</a></li>
         <li><a href="#amr-061">0.6.1</a></li>

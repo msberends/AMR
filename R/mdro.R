@@ -21,33 +21,36 @@
 
 #' Determine multidrug-resistant organisms (MDRO)
 #'
-#' Determine which isolates are multidrug-resistant organisms (MDRO) according to country-specific guidelines.
+#' Determine which isolates are multidrug-resistant organisms (MDRO) according to (country-specific) guidelines.
 #' @param x table with antibiotic columns, like e.g. \code{AMX} and \code{AMC}
-#' @param country country code to determine guidelines. Should be or a code from the \href{https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2#Officially_assigned_code_elements}{list of ISO 3166-1 alpha-2 country codes}. Case-insensitive.
-#' @param guideline a specific guideline to mention. For some countries this will be determined automatically, see Details. EUCAST guidelines will be used when left empty, see Details.
+#' @param guideline a specific guideline to mention, see Details. EUCAST guidelines will be used when left empty, see Details.
 #' @param info print progress
 #' @inheritParams eucast_rules
 #' @param verbose print additional info: missing antibiotic columns per parameter
 #' @inheritSection eucast_rules Antibiotics
-#' @details When \code{country} is set, the parameter guideline will be ignored as these guidelines will be used:
-#'
+#' @details Currently supported guidelines are:
 #' \itemize{
-#'   \item{\code{country = "nl"}: Rijksinstituut voor Volksgezondheid en Milieu "WIP-richtlijn BRMO (Bijzonder Resistente Micro-Organismen) [ZKH]" (\href{https://www.rivm.nl/Documenten_en_publicaties/Professioneel_Praktisch/Richtlijnen/Infectieziekten/WIP_Richtlijnen/WIP_Richtlijnen/Ziekenhuizen/WIP_richtlijn_BRMO_Bijzonder_Resistente_Micro_Organismen_ZKH}{link})}
+#'   \item{\code{guideline = "EUCAST"}: EUCAST Expert Rules Version 3.1 "Intrinsic Resistance and Exceptional Phenotypes Tables" (\href{http://www.eucast.org/fileadmin/src/media/PDFs/EUCAST_files/Expert_Rules/Expert_rules_intrinsic_exceptional_V3.1.pdf}{link})}
+#'   \item{\code{guideline = "TB"}: World Health Organization "Companion handbook to the WHO guidelines for the programmatic management of drug-resistant tuberculosis" (\href{https://www.who.int/tb/publications/pmdt_companionhandbook/en/}{link})}
+#'   \item{\code{guideline = "MRGN"}: (work in progress)}
+#'   \item{\code{guideline = "BRMO"}: Rijksinstituut voor Volksgezondheid en Milieu "WIP-richtlijn BRMO (Bijzonder Resistente Micro-Organismen) [ZKH]" (\href{https://www.rivm.nl/Documenten_en_publicaties/Professioneel_Praktisch/Richtlijnen/Infectieziekten/WIP_Richtlijnen/WIP_Richtlijnen/Ziekenhuizen/WIP_richtlijn_BRMO_Bijzonder_Resistente_Micro_Organismen_ZKH}{link})}
 #' }
 #'
-#' Please suggest your own country's specific guidelines by letting us know: \url{https://gitlab.com/msberends/AMR/issues/new}.
+#' Please suggest your own (country-specific) guidelines by letting us know: \url{https://gitlab.com/msberends/AMR/issues/new}.
+#' @return For TB (\code{mdr_tb()}): Ordered factor with levels \code{Negative < Mono-resistance < Poly-resistance < Multidrug resistance < Extensive drug resistance}.
 #'
-#' Other currently supported guidelines are:
-#' \itemize{
-#'   \item{\code{guideline = "eucast"}: EUCAST Expert Rules Version 3.1 "Intrinsic Resistance and Exceptional Phenotypes Tables" (\href{http://www.eucast.org/fileadmin/src/media/PDFs/EUCAST_files/Expert_Rules/Expert_rules_intrinsic_exceptional_V3.1.pdf}{link})}
-#'   \item{\code{guideline = "tb"}: World Health Organization "Companion handbook to the WHO guidelines for the programmatic management of drug-resistant tuberculosis" (\href{https://www.who.int/tb/publications/pmdt_companionhandbook/en/}{link})}
-#' }
-#' @return Ordered factor with levels \code{Negative < Positive, unconfirmed < Positive}.
+#' For everything else: Ordered factor with levels \code{Negative < Positive, unconfirmed < Positive}. The value \code{"Positive, unconfirmed"} means that, according to the guideline, it is not entirely sure if the isolate is multi-drug resistant and this should be confirmed with additional (e.g. molecular) tests.
 #' @rdname mdro
 #' @importFrom dplyr %>%
 #' @importFrom crayon red blue bold
 #' @export
 #' @inheritSection AMR Read more on our website!
+#' @source
+#' EUCAST Expert Rules Version 3.1 "Intrinsic Resistance and Exceptional Phenotypes Tables" (\href{http://www.eucast.org/fileadmin/src/media/PDFs/EUCAST_files/Expert_Rules/Expert_rules_intrinsic_exceptional_V3.1.pdf}{link})
+#'
+#' World Health Organization "Companion handbook to the WHO guidelines for the programmatic management of drug-resistant tuberculosis" (\href{https://www.who.int/tb/publications/pmdt_companionhandbook/en/}{link})
+#'
+#' Rijksinstituut voor Volksgezondheid en Milieu "WIP-richtlijn BRMO (Bijzonder Resistente Micro-Organismen) [ZKH]" (\href{https://www.rivm.nl/Documenten_en_publicaties/Professioneel_Praktisch/Richtlijnen/Infectieziekten/WIP_Richtlijnen/WIP_Richtlijnen/Ziekenhuizen/WIP_richtlijn_BRMO_Bijzonder_Resistente_Micro_Organismen_ZKH}{link})
 #' @examples
 #' library(dplyr)
 #'
@@ -55,7 +58,6 @@
 #'   mutate(EUCAST = mdro(.),
 #'          BRMO = brmo(.))
 mdro <- function(x,
-                 country = NULL,
                  guideline = NULL,
                  col_mo = NULL,
                  info = TRUE,
@@ -66,19 +68,25 @@ mdro <- function(x,
     stop("`x` must be a data frame.", call. = FALSE)
   }
 
+
+  if (!is.null(list(...)$country)) {
+    warning("Using `country` is deprecated, use `guideline` instead. Please see ?mdro.", call. = FALSE)
+    guideline <- list(...)$country
+  }
   if (length(guideline) > 1) {
     stop("`guideline` must be a length one character string.", call. = FALSE)
   }
-  if (length(country) > 1) {
-    stop("`country` must be a length one character string.", call. = FALSE)
-  }
-  if (!is.null(country)) {
-    guideline <- country
-  }
+
   if (is.null(guideline)) {
     guideline <- "eucast"
   }
-  if (!tolower(guideline) %in% c("nl", "de", "eucast", "tb")) {
+  if (tolower(guideline) == "nl") {
+    guideline <- "BRMO"
+  }
+  if (tolower(guideline) == "de") {
+    guideline <- "MRGN"
+  }
+  if (!tolower(guideline) %in% c("brmo", "mrgn", "eucast", "tb")) {
     stop("invalid guideline: ", guideline, call. = FALSE)
   }
   guideline <- list(code = tolower(guideline))
@@ -90,17 +98,12 @@ mdro <- function(x,
   }
   if (is.null(col_mo) & guideline$code == "tb") {
     message(blue("NOTE: No column found as input for `col_mo`,",
-                 bold("assuming all records contain",
-                      italic("Mycobacterium tuberculosis.\n"))))
+                 bold("assuming all records contain", italic("Mycobacterium tuberculosis.\n"))))
     x$mo <- AMR::as.mo("Mycobacterium tuberculosis")
     col_mo <- "mo"
   }
   if (is.null(col_mo)) {
     stop("`col_mo` must be set.", call. = FALSE)
-  }
-
-  if (length(country) > 1) {
-    stop("`country` must be a length one character string.", call. = FALSE)
   }
 
   if (guideline$code == "eucast") {
@@ -116,19 +119,16 @@ mdro <- function(x,
     guideline$source <- "https://www.who.int/tb/publications/pmdt_companionhandbook/en/"
 
     # support per country:
-  } else if (guideline$code == "de") {
+  } else if (guideline$code == "mrgn") {
     guideline$name <- "Germany"
     guideline$name <- ""
     guideline$version <- ""
     guideline$source <- ""
-  } else if (guideline$code == "nl") {
+  } else if (guideline$code == "brmo") {
     guideline$name <- "WIP-Richtlijn Bijzonder Resistente Micro-organismen (BRMO)"
     guideline$author <- "RIVM (Rijksinstituut voor de Volksgezondheid)"
     guideline$version <- "Revision as of December 2017"
     guideline$source <- "https://www.rivm.nl/Documenten_en_publicaties/Professioneel_Praktisch/Richtlijnen/Infectieziekten/WIP_Richtlijnen/WIP_Richtlijnen/Ziekenhuizen/WIP_richtlijn_BRMO_Bijzonder_Resistente_Micro_Organismen_ZKH"
-  # add here more countries like this:
-  # } else if (country$code == "xx") {
-  #   country$name <- "country name"
   } else {
     stop("This guideline is currently unsupported: ", guideline$code, call. = FALSE)
   }
@@ -336,12 +336,12 @@ mdro <- function(x,
               "any")
   }
 
-  if (guideline$code == "de") {
+  if (guideline$code == "mrgn") {
     # Germany -----------------------------------------------------------------
     stop("We are still working on German guidelines in this beta version.", call. = FALSE)
   }
 
-  if (guideline$code == "nl") {
+  if (guideline$code == "brmo") {
     # Netherlands -------------------------------------------------------------
     aminoglycosides <- aminoglycosides[!is.na(aminoglycosides)]
     fluoroquinolones <- fluoroquinolones[!is.na(fluoroquinolones)]
@@ -496,14 +496,14 @@ mdro <- function(x,
 
 #' @rdname mdro
 #' @export
-brmo <- function(..., country = "nl") {
-  mdro(..., country = "nl")
+brmo <- function(..., guideline = "BRMO") {
+  mdro(..., guideline = "BRMO")
 }
 
 #' @rdname mdro
 #' @export
-mrgn <- function(x, country = "de", ...) {
-  mdro(x = x, country = "de", ...)
+mrgn <- function(x, guideline = "MRGN", ...) {
+  mdro(x = x, guideline = "MRGN", ...)
 }
 
 #' @rdname mdro

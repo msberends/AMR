@@ -182,5 +182,8 @@ test_that("frequency table works", {
          "Just a string") # not a freq tbl
   ))
 
+  # directly on group
+  expect_output(print(septic_patients %>% group_by(ageplusone = as.character(age + 1)) %>% freq(ageplusone)))
+
 })
 
