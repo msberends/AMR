@@ -289,6 +289,8 @@ antibiotics <- filter(antibiotics, ab != "MOX")
 antibiotics <- filter(antibiotics, ab != "RFP")
 antibiotics[which(antibiotics$ab == "RFP1"), "ab"] <- "RFP"
 antibiotics[which(antibiotics$ab == "RFP"), "abbreviations"][[1]] <- list(c("rifp"))
+# Rifampicin is better known as a drug than Rifampin (Rifampin is still listed as a brand name), so:
+antibiotics[which(antibiotics$ab == "RIF"), "name"] <- "Rifampicin"
 # PME and PVM1 (the J0 one) both mean 'Pivmecillinam', so:
 antibiotics <- filter(antibiotics, ab != "PME")
 antibiotics[which(antibiotics$ab == "PVM1"), "ab"] <- "PME"
@@ -300,8 +302,9 @@ antibiotics[which(antibiotics$ab == "FEP"), "abbreviations"][[1]] <- list(c(anti
 antibiotics[which(antibiotics$ab == "CTC"), "abbreviations"][[1]] <- list(c("xctl"))
 antibiotics[which(antibiotics$ab == "CTX"), "abbreviations"][[1]] <- list(c(antibiotics[which(antibiotics$ab == "CTX"), "abbreviations"][[1]], "xct"))
 
+antibiotics <- antibiotics %>% arrange(name)
+
 class(antibiotics$ab) <- "ab"
-class(antibiotics$atc) <- "atc"
 
 dim(antibiotics) # for R/data.R
 usethis::use_data(antibiotics, overwrite = TRUE)
