@@ -30,7 +30,7 @@ stages:
 image: rocker/r-base
 
 before_script:
-  - apt-get update -qq
+  - apt-get update -qq  --allow-releaseinfo-change
   # install dependencies for packages
   - apt-get install -y wget locales libxml2-dev libssl-dev libcurl4-openssl-dev zlib1g-dev > /dev/null
   # recent pandoc
