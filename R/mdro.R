@@ -496,8 +496,8 @@ mdro <- function(x,
 
 #' @rdname mdro
 #' @export
-brmo <- function(..., guideline = "BRMO") {
-  mdro(..., guideline = "BRMO")
+brmo <- function(x, guideline = "BRMO", ...) {
+  mdro(x, guideline = "BRMO", ...)
 }
 
 #' @rdname mdro

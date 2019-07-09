@@ -157,7 +157,7 @@ mo_shortname <- function(x, language = get_locale(), ...) {
   # exceptions for Staphylococci
   shortnames[shortnames == "S. coagulase-negative" ] <- "CoNS"
   shortnames[shortnames == "S. coagulase-positive" ] <- "CoPS"
-  # exceptions for Streptococci
+  # exceptions for Streptococci: Streptococcus Group A -> GAS
   shortnames[shortnames %like% "S. group [ABCDFGHK]"] <- paste0("G", gsub("S. group ([ABCDFGHK])", "\\1", shortnames[shortnames %like% "S. group [ABCDFGHK]"]), "S")
 
   load_mo_failures_uncertainties_renamed(metadata)

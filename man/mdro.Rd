@@ -18,7 +18,7 @@ Rijksinstituut voor Volksgezondheid en Milieu "WIP-richtlijn BRMO (Bijzonder Res
 mdro(x, guideline = NULL, col_mo = NULL, info = TRUE,
   verbose = FALSE, ...)
 
-brmo(..., guideline = "BRMO")
+brmo(x, guideline = "BRMO", ...)
 
 mrgn(x, guideline = "MRGN", ...)
 

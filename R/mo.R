@@ -483,7 +483,7 @@ exec_as.mo <- function(x,
     x <- gsub("(alpha|beta|gamma).?ha?emoly", "\\1-haemoly", x)
     # remove genus as first word
     x <- gsub("^Genus ", "", x)
-    # allow characters that resemble others
+    # allow characters that resemble others, but not on first try
     if (initial_search == FALSE) {
       x <- tolower(x)
       x <- gsub("[iy]+", "[iy]+", x)
