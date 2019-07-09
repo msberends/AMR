@@ -29,7 +29,7 @@ EUCAST_VERSION_EXPERT_RULES <- "3.1, 2016"
 #' @param x data with antibiotic columns, like e.g. \code{AMX} and \code{AMC}
 #' @param info print progress
 #' @param rules a character vector that specifies which rules should be applied - one or more of \code{c("breakpoints", "expert", "other", "all")}
-#' @param verbose a logical to indicate whether extensive info should be returned as a \code{data.frame} with info about which rows and columns are effected. It runs all EUCAST rules, but will not be applied to an output - only an informative \code{data.frame} with changes will be returned as output.
+#' @param verbose a logical to turn Verbose mode on and off (default is off). In Verbose mode, the function does not apply rules to the data, but instead returns a \code{data.frame} with extensive info about which rows and columns would be effected and in which way.
 #' @param ... column name of an antibiotic, see section Antibiotics
 #' @inheritParams first_isolate
 #' @details
@@ -119,7 +119,7 @@ EUCAST_VERSION_EXPERT_RULES <- "3.1, 2016"
 #' @rdname eucast_rules
 #' @export
 #' @importFrom dplyr %>% select pull mutate_at vars group_by summarise n
-#' @importFrom crayon bold bgGreen bgYellow bgRed black green blue italic strip_style white
+#' @importFrom crayon bold bgGreen bgYellow bgRed black green blue italic strip_style white red
 #' @return The input of \code{x}, possibly with edited values of antibiotics. Or, if \code{verbose = TRUE}, a \code{data.frame} with all original and new values of the affected bug-drug combinations.
 #' @source
 #'   \itemize{
@@ -185,8 +185,6 @@ eucast_rules <- function(x,
                          rules = c("breakpoints", "expert", "other", "all"),
                          verbose = FALSE,
                          ...) {
-
-  x <- x
 
   if (!is.data.frame(x)) {
     stop("`x` must be a data frame.", call. = FALSE)
@@ -498,6 +496,15 @@ eucast_rules <- function(x,
     }
     y[y != "" & y %in% colnames(df)]
   }
+  get_antibiotic_names <- function(x) {
+    x %>%
+      strsplit(",") %>%
+      unlist() %>%
+      trimws() %>%
+      sapply(function(x) if(x %in% AMR::antibiotics$ab) ab_name(x, language = NULL, tolower = TRUE) else x) %>%
+      sort() %>%
+      paste(collapse = ", ")
+  }
 
   eucast_rules_df <- eucast_rules_file # internal data file
   no_of_changes <- 0
@@ -510,10 +517,11 @@ eucast_rules <- function(x,
     rule_group_current <- eucast_rules_df[i, "reference.rule_group"]
     rule_group_next <- eucast_rules_df[min(nrow(eucast_rules_df), i + 1), "reference.rule_group"]
     if (is.na(eucast_rules_df[i, 4])) {
-      rule_text <- paste("always:", eucast_rules_df[i, 6], "=", eucast_rules_df[i, 7])
+      rule_text <- paste0("always report as '", eucast_rules_df[i, 7], "': ", get_antibiotic_names(eucast_rules_df[i, 6]))
     } else {
-      rule_text <- paste("if", eucast_rules_df[i, 4], "=", eucast_rules_df[i, 5],
-                         "then", eucast_rules_df[i, 6], "=", eucast_rules_df[i, 7])
+      rule_text <- paste0("report as '", eucast_rules_df[i, 7], "' when ",
+                          get_antibiotic_names(eucast_rules_df[i, 4]), " is '", eucast_rules_df[i, 5], "': ",
+                          get_antibiotic_names(eucast_rules_df[i, 6]))
     }
     if (i == 1) {
       rule_previous <- ""
@@ -736,7 +744,9 @@ eucast_rules <- function(x,
     cat(paste0(silver(strrep("-", options()$width - 1)), "\n"))
 
     if (verbose == FALSE & nrow(verbose_info) > 0) {
-      cat(paste("\nUse", bold("verbose = TRUE"), "to get a data.frame with all specified edits instead.\n"))
+      cat(paste("\nUse", bold("verbose = TRUE"), "(on your original data) to get a data.frame with all specified edits instead.\n"))
+    } else if (verbose == TRUE) {
+      cat(paste(red("\nUsed 'Verbose mode' (verbose = TRUE)."), "This returns a data.frame with all specified edits.\nUse", bold("verbose = FALSE"), "to apply the rules on your data.\n"))
     }
   }
 
