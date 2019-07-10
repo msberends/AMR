@@ -1,4 +1,4 @@
-# AMR 0.7.1.9010
+# AMR 0.7.1.9012
 
 ### New
 * Additional way to calculate co-resistance, i.e. when using multiple antibiotics as input for `portion_*` functions or `count_*` functions. This can be used to determine the empiric susceptibily of a combination therapy. A new parameter `only_all_tested` (**which defaults to `FALSE`**) replaces the old `also_single_tested` and can be used to select one of the two methods to count isolates and calculate portions. The difference can be seen in this example table (which is also on the `portion` and `count` help pages), where the %SI is being determined:

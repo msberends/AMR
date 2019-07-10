@@ -151,9 +151,14 @@ mo_shortname <- function(x, language = get_locale(), ...) {
   x.mo <- AMR::as.mo(x, ...)
   metadata <- get_mo_failures_uncertainties_renamed()
 
+  replace_empty <- function(x) {
+    x[x == ""] <- "spp."
+    x
+  }
+  
   # get first char of genus and complete species in English
-  shortnames <- paste0(substr(mo_genus(x.mo, language = NULL), 1, 1), ". ", mo_species(x.mo, language = NULL))
-
+  shortnames <- paste0(substr(mo_genus(x.mo, language = NULL), 1, 1), ". ", replace_empty(mo_species(x.mo, language = NULL)))
+  
   # exceptions for Staphylococci
   shortnames[shortnames == "S. coagulase-negative" ] <- "CoNS"
   shortnames[shortnames == "S. coagulase-positive" ] <- "CoPS"
