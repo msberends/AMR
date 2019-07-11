@@ -42,7 +42,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">0.7.1.9012</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">0.7.1.9013</span>
       </span>
     </div>
 
@@ -190,9 +190,9 @@
       
       </header><div class="row">
   <div class="contents col-md-9">
-<div id="amr-for-r" class="section level1">
+<div id="amr-for-r-" class="section level1">
 <div class="page-header"><h1 class="hasAnchor">
-<a href="#amr-for-r" class="anchor"></a><code>AMR</code> (for R) <img src="./logo.png" align="right" height="120px">
+<a href="#amr-for-r-" class="anchor"></a><code>AMR</code> (for R) <img src="./logo.png" align="right" height="120px">
 </h1></div>
 <p><em>(<help title="Too Long, Didn't Read">TLDR</help> - to find out how to conduct AMR analysis, please <a href="./articles/AMR.html">continue reading here to get started</a>.</em></p>
 <hr>
@@ -248,7 +248,7 @@
 <h4 class="hasAnchor">
 <a href="#latest-released-version" class="anchor"></a>Latest released version</h4>
 <p>This package is available <a href="https://cran.r-project.org/package=AMR">on the official R network (CRAN)</a>, which has a peer-reviewed submission process. Install this package in R with:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/install.packages">install.packages</a></span>(<span class="st">"AMR"</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/install.packages">install.packages</a></span>(<span class="st">"AMR"</span>)</a></code></pre></div>
 <p>It will be downloaded and installed automatically. For RStudio, click on the menu <em>Tools</em> &gt; <em>Install Packages…</em> and then type in “AMR” and press <kbd>Install</kbd>.</p>
 <p><strong>Note:</strong> Not all functions on this website may be available in this latest release. To use all functions and data sets mentioned on this website, install the latest development version.</p>
 </div>
@@ -256,8 +256,8 @@
 <h4 class="hasAnchor">
 <a href="#latest-development-version" class="anchor"></a>Latest development version</h4>
 <p>The latest and unpublished development version can be installed with (<strong>precaution: may be unstable</strong>):</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/install.packages">install.packages</a></span>(<span class="st">"devtools"</span>)</a>
-<a class="sourceLine" id="cb2-2" data-line-number="2">devtools<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/devtools/topics/reexports">install_gitlab</a></span>(<span class="st">"msberends/AMR"</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/install.packages">install.packages</a></span>(<span class="st">"devtools"</span>)</a>
+<a class="sourceLine" id="cb2-2" title="2">devtools<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/devtools/topics/reexports">install_gitlab</a></span>(<span class="st">"msberends/AMR"</span>)</a></code></pre></div>
 </div>
 </div>
 <div id="get-started" class="section level2">
@@ -299,9 +299,9 @@
 <p><strong>NOTE: The WHOCC copyright does not allow use for commercial purposes, unlike any other info from this package. See \url{<a href="https://www.whocc.no/copyright_disclaimer/" class="uri">https://www.whocc.no/copyright_disclaimer/</a>}.</strong></p>
 <p>Read more about the data from WHOCC <a href="./reference/WHOCC.html">in our manual</a>.</p>
 </div>
-<div id="whonet-ears-net" class="section level4">
+<div id="whonet--ears-net" class="section level4">
 <h4 class="hasAnchor">
-<a href="#whonet-ears-net" class="anchor"></a>WHONET / EARS-Net</h4>
+<a href="#whonet--ears-net" class="anchor"></a>WHONET / EARS-Net</h4>
 <p><img src="./whonet.png"></p>
 <p>We support WHONET and EARS-Net data. Exported files from WHONET can be imported into R and can be analysed easily using this package. For education purposes, we created an <a href="./reference/WHONET.html">example data set <code>WHONET</code></a> with the exact same structure as a WHONET export file. Furthermore, this package also contains a <a href="./reference/antibiotics.html">data set <code>antibiotics</code></a> with all EARS-Net antibiotic abbreviations, and knows almost all WHONET abbreviations for microorganisms. When using WHONET data as input for analysis, all input parameters will be set automatically.</p>
 <p>Read our tutorial about <a href="./articles/WHONET.html">how to work with WHONET data here</a>.</p>

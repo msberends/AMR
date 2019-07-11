@@ -79,6 +79,13 @@ guess_ab_col <- function(x = NULL, search_string = NULL, verbose = FALSE) {
     search_string.ab <- suppressWarnings(as.ab(search_string))
     if (search_string.ab %in% colnames(x)) {
       ab_result <- colnames(x)[colnames(x) == search_string.ab][1L]
+
+    } else if (any(tolower(colnames(x)) %in% tolower(unlist(ab_property(search_string.ab, "abbreviations"))))) {
+      ab_result <- colnames(x)[tolower(colnames(x)) %in% tolower(unlist(ab_property(search_string.ab, "abbreviations")))][1L]
+
+    # } else if (any(tolower(colnames(x)) %in% tolower(ab_tradenames(search_string.ab)))) {
+    #   ab_result <- colnames(x)[tolower(colnames(x)) %in% tolower(ab_tradenames(search_string.ab))][1L]
+
     } else {
       # sort colnames on length - longest first
       cols <- colnames(x[, x %>% colnames() %>% nchar() %>% order() %>% rev()])
