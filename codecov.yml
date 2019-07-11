@@ -1,6 +1,6 @@
 codecov:
   notify:
-    require_ci_to_pass: no
+    require_ci_to_pass: no # allow fail
   ci:
     - !appveyor # ignore CI builds by AppVeyor
 
@@ -18,3 +18,4 @@ coverage:
 ignore:
   - "R/atc_online.R"
   - "R/mo_source.R"
+  - "R/resistance_predict.R"
