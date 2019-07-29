@@ -144,7 +144,14 @@ knitr::kable(head(data), align = "c")
 Now, let's start the cleaning and the analysis!
 
 # Cleaning the data
-Use the frequency table function `freq()` to look specifically for unique values in any variable. For example, for the `gender` variable:
+
+We also created a package dedicated to data cleaning and checking, called the `clean` package. It gets automatically installed with the `AMR` package, so we only have to load it:
+
+```{r lib clean, message = FALSE}
+library(clean)
+```
+
+Use the frequency table function `freq()` from this `clean` package to look specifically for unique values in any variable. For example, for the `gender` variable:
 
 ```{r freq gender 1, eval = FALSE}
 data %>% freq(gender) # this would be the same: freq(data$gender)

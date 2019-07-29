@@ -80,7 +80,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">0.7.1.9012</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">0.7.1.9015</span>
       </span>
     </div>
 
@@ -156,13 +156,6 @@
         <span class="fa fa-capsules"></span>
          
         Get properties of an antibiotic
-      </a>
-    </li>
-    <li>
-      <a href="../articles/freq.html">
-        <span class="fa fa-sort-amount-down"></span>
-         
-        Create frequency tables
       </a>
     </li>
     <li>
@@ -309,7 +302,7 @@
 <span class='no'>septic_patients</span> <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='join.html'>left_join_microorganisms</a></span>() <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span>(<span class='no'>genus</span> <span class='kw'>%like%</span> <span class='st'>'^ent'</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='freq.html'>freq</a></span>(<span class='no'>genus</span>, <span class='no'>species</span>)
+  <span class='fu'>freq</span>(<span class='no'>genus</span>, <span class='no'>species</span>)
 <span class='co'># }</span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

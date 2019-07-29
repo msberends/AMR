@@ -80,7 +80,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">0.7.1.9012</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">0.7.1.9015</span>
       </span>
     </div>
 
@@ -156,13 +156,6 @@
         <span class="fa fa-capsules"></span>
          
         Get properties of an antibiotic
-      </a>
-    </li>
-    <li>
-      <a href="../articles/freq.html">
-        <span class="fa fa-sort-amount-down"></span>
-         
-        Create frequency tables
       </a>
     </li>
     <li>
@@ -457,7 +450,7 @@
   <span class='co'># create new bacterial ID's, with all CoNS under the same group (Becker et al.)</span>
   <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span>(<span class='kw'>mo</span> <span class='kw'>=</span> <span class='fu'><a href='as.mo.html'>as.mo</a></span>(<span class='no'>mo</span>, <span class='kw'>Becker</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)) <span class='kw'>%&gt;%</span>
   <span class='co'># filter on top three bacterial ID's</span>
-  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span>(<span class='no'>mo</span> <span class='kw'>%in%</span> <span class='fu'><a href='freq.html'>top_freq</a></span>(<span class='fu'><a href='freq.html'>freq</a></span>(<span class='no'>.</span>$<span class='no'>mo</span>), <span class='fl'>3</span>)) <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span>(<span class='no'>mo</span> <span class='kw'>%in%</span> <span class='fu'>top_freq</span>(<span class='fu'>freq</span>(<span class='no'>.</span>$<span class='no'>mo</span>), <span class='fl'>3</span>)) <span class='kw'>%&gt;%</span>
   <span class='co'># filter on first isolates</span>
   <span class='fu'><a href='first_isolate.html'>filter_first_isolate</a></span>() <span class='kw'>%&gt;%</span>
   <span class='co'># get short MO names (like "E. coli")</span>

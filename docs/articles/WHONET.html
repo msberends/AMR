@@ -40,7 +40,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">0.7.1.9012</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">0.7.1.9015</span>
       </span>
     </div>
 
@@ -119,13 +119,6 @@
       </a>
     </li>
     <li>
-      <a href="../articles/freq.html">
-        <span class="fa fa-sort-amount-down"></span>
-         
-        Create frequency tables
-      </a>
-    </li>
-    <li>
       <a href="../articles/benchmarks.html">
         <span class="fa fa-shipping-fast"></span>
          
@@ -192,7 +185,7 @@
       <h1>How to work with WHONET data</h1>
                         <h4 class="author">Matthijs S. Berends</h4>
             
-            <h4 class="date">10 July 2019</h4>
+            <h4 class="date">29 July 2019</h4>
       
       
       <div class="hidden name"><code>WHONET.Rmd</code></div>
@@ -228,16 +221,20 @@
 <a class="sourceLine" id="cb3-4" data-line-number="4"><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(<span class="dt">mo =</span> <span class="kw"><a href="../reference/as.mo.html">as.mo</a></span>(Organism)) <span class="op">%&gt;%</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb3-5" data-line-number="5"><span class="st">  </span><span class="co"># transform everything from "AMP_ND10" to "CIP_EE" to the new `rsi` class</span></a>
 <a class="sourceLine" id="cb3-6" data-line-number="6"><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/mutate_all.html">mutate_at</a></span>(<span class="kw"><a href="https://dplyr.tidyverse.org/reference/vars.html">vars</a></span>(AMP_ND10<span class="op">:</span>CIP_EE), as.rsi)</a></code></pre></div>
-<p>No errors or warnings, so all values are transformed succesfully. Let’s check it though, with a couple of frequency tables:</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="co"># our newly created `mo` variable</span></a>
-<a class="sourceLine" id="cb4-2" data-line-number="2">data <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="../reference/freq.html">freq</a></span>(mo, <span class="dt">nmax =</span> <span class="dv">10</span>)</a></code></pre></div>
-<p><strong>Frequency table of <code>mo</code> from <code>data</code> (500 x 54)</strong></p>
+<p>No errors or warnings, so all values are transformed succesfully.</p>
+<p>We created a package dedicated to data cleaning and checking, called the <code>clean</code> package. It gets automatically installed with the <code>AMR</code> package, so we only have to load it:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(clean)</a></code></pre></div>
+<p>It contains the <code><a href="https://www.rdocumentation.org/packages/clean/topics/freq">freq()</a></code> function, to create frequency tables.</p>
+<p>So let’s check our data, with a couple of frequency tables:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="co"># our newly created `mo` variable</span></a>
+<a class="sourceLine" id="cb5-2" data-line-number="2">data <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/clean/topics/freq">freq</a></span>(mo, <span class="dt">nmax =</span> <span class="dv">10</span>)</a></code></pre></div>
+<p><strong>Frequency table</strong></p>
 <p>Class: mo (character)<br>
 Length: 500 (of which NA: 0 = 0.00%)<br>
 Unique: 39</p>
 <p>Families: 10<br>
 Genera: 17<br>
-Species: 38</p>
+Species: 39</p>
 <table class="table">
 <thead><tr class="header">
 <th align="left"></th>
@@ -331,18 +328,16 @@ Species: 38</p>
 </tbody>
 </table>
 <p>(omitted 29 entries, n = 57 [11.4%])</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1"></a>
-<a class="sourceLine" id="cb5-2" data-line-number="2"><span class="co"># our transformed antibiotic columns</span></a>
-<a class="sourceLine" id="cb5-3" data-line-number="3"><span class="co"># amoxicillin/clavulanic acid (J01CR02) as an example</span></a>
-<a class="sourceLine" id="cb5-4" data-line-number="4">data <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="../reference/freq.html">freq</a></span>(AMC_ND2)</a></code></pre></div>
-<p><strong>Frequency table of <code>AMC_ND2</code> from <code>data</code> (500 x 54)</strong></p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1"></a>
+<a class="sourceLine" id="cb6-2" data-line-number="2"><span class="co"># our transformed antibiotic columns</span></a>
+<a class="sourceLine" id="cb6-3" data-line-number="3"><span class="co"># amoxicillin/clavulanic acid (J01CR02) as an example</span></a>
+<a class="sourceLine" id="cb6-4" data-line-number="4">data <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/clean/topics/freq">freq</a></span>(AMC_ND2)</a></code></pre></div>
+<p><strong>Frequency table</strong></p>
 <p>Class: factor &gt; ordered &gt; rsi (numeric)<br>
-Length: 500 (of which NA: 19 = 3.80%)<br>
+Length: 481 (of which NA: 19 = 3.95%)<br>
 Levels: 3: S &lt; I &lt; R<br>
 Unique: 3</p>
-<p>Drug: Amoxicillin/clavulanic acid (AMC, J01CR02)<br>
-Group: Beta-lactams/penicillins<br>
-%SI: 78.59%</p>
+<p>%SI: 78.6%</p>
 <table class="table">
 <thead><tr class="header">
 <th align="left"></th>

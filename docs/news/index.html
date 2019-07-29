@@ -78,7 +78,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">0.7.1.9014</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">0.7.1.9015</span>
       </span>
     </div>
 
@@ -157,13 +157,6 @@
       </a>
     </li>
     <li>
-      <a href="../articles/freq.html">
-        <span class="fa fa-sort-amount-down"></span>
-         
-        Create frequency tables
-      </a>
-    </li>
-    <li>
       <a href="../articles/benchmarks.html">
         <span class="fa fa-shipping-fast"></span>
          
@@ -232,10 +225,17 @@
       
     </div>
 
-    <div id="amr-0-7-1-9014" class="section level1">
+    <div id="amr-0-7-1-9015" class="section level1">
 <h1 class="page-header">
-<a href="#amr-0-7-1-9014" class="anchor"></a>AMR 0.7.1.9014<small> Unreleased </small>
+<a href="#amr-0-7-1-9015" class="anchor"></a>AMR 0.7.1.9015<small> Unreleased </small>
 </h1>
+<div id="breaking" class="section level3">
+<h3 class="hasAnchor">
+<a href="#breaking" class="anchor"></a>Breaking</h3>
+<ul>
+<li>Function <code>freq()</code> has moved to a new package, <a href="https://github.com/msberends/clean"><code>clean</code></a> (<a href="https://cran.r-project.org/package=clean">CRAN link</a>). Creating frequency tables is actually not the scope of this package (never was) and this function has matured a lot over the last two years. We decided to create a new package for data cleaning and checking and it perfectly fits the <code>freq()</code> function. The <a href="https://github.com/msberends/clean"><code>clean</code></a> package is available on CRAN and will be installed automatically when updating the <code>AMR</code> package, that now imports it. In a later stage, the <code><a href="../reference/skewness.html">skewness()</a></code> and <code><a href="../reference/kurtosis.html">kurtosis()</a></code> functions will be moved to the <code>clean</code> package too.</li>
+</ul>
+</div>
 <div id="new" class="section level3">
 <h3 class="hasAnchor">
 <a href="#new" class="anchor"></a>New</h3>
@@ -421,7 +421,7 @@ Please <a href="https://gitlab.com/msberends/AMR/issues/new?issue%5Btitle%5D=Tra
 <li>The <code><a href="../reference/age.html">age()</a></code> function gained a new parameter <code>exact</code> to determine ages with decimals</li>
 <li>Removed deprecated functions <code>guess_mo()</code>, <code>guess_atc()</code>, <code>EUCAST_rules()</code>, <code>interpretive_reading()</code>, <code>rsi()</code>
 </li>
-<li>Frequency tables (<code><a href="../reference/freq.html">freq()</a></code>):
+<li>Frequency tables (<code>freq()</code>):
 <ul>
 <li>speed improvement for microbial IDs</li>
 <li>fixed factor level names for R Markdown</li>
@@ -429,12 +429,12 @@ Please <a href="https://gitlab.com/msberends/AMR/issues/new?issue%5Btitle%5D=Tra
 <li>
 <p>support for boxplots:</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1">septic_patients <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb4-2" data-line-number="2"><span class="st">  </span><span class="kw"><a href="../reference/freq.html">freq</a></span>(age) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb4-2" data-line-number="2"><span class="st">  </span><span class="kw">freq</span>(age) <span class="op">%&gt;%</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb4-3" data-line-number="3"><span class="st">  </span><span class="kw"><a href="https://www.rdocumentation.org/packages/graphics/topics/boxplot">boxplot</a></span>()</a>
 <a class="sourceLine" id="cb4-4" data-line-number="4"><span class="co"># grouped boxplots:</span></a>
 <a class="sourceLine" id="cb4-5" data-line-number="5">septic_patients <span class="op">%&gt;%</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb4-6" data-line-number="6"><span class="st">  </span><span class="kw">group_by</span>(hospital_id) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb4-7" data-line-number="7"><span class="st">  </span><span class="kw"><a href="../reference/freq.html">freq</a></span>(age) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb4-7" data-line-number="7"><span class="st">  </span><span class="kw">freq</span>(age) <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb4-8" data-line-number="8"><span class="st">  </span><span class="kw"><a href="https://www.rdocumentation.org/packages/graphics/topics/boxplot">boxplot</a></span>()</a></code></pre></div>
 </li>
 </ul>
@@ -445,7 +445,7 @@ Please <a href="https://gitlab.com/msberends/AMR/issues/new?issue%5Btitle%5D=EUC
 <li>Added ceftazidim intrinsic resistance to <em>Streptococci</em>
 </li>
 <li>Changed default settings for <code><a href="../reference/age_groups.html">age_groups()</a></code>, to let groups of fives and tens end with 100+ instead of 120+</li>
-<li>Fix for <code><a href="../reference/freq.html">freq()</a></code> for when all values are <code>NA</code>
+<li>Fix for <code>freq()</code> for when all values are <code>NA</code>
 </li>
 <li>Fix for <code><a href="../reference/first_isolate.html">first_isolate()</a></code> for when dates are missing</li>
 <li>Improved speed of <code><a href="../reference/guess_ab_col.html">guess_ab_col()</a></code>
@@ -667,7 +667,7 @@ Using <code><a href="../reference/as.mo.html">as.mo(..., allow_uncertain = 3)</a
 </li>
 </ul>
 </li>
-<li>Frequency tables (<code><a href="../reference/freq.html">freq()</a></code> function):
+<li>Frequency tables (<code>freq()</code> function):
 <ul>
 <li>
 <p>Support for tidyverse quasiquotation! Now you can create frequency tables of function outcomes:</p>
@@ -675,15 +675,15 @@ Using <code><a href="../reference/as.mo.html">as.mo(..., allow_uncertain = 3)</a
 <a class="sourceLine" id="cb14-2" data-line-number="2"><span class="co"># OLD WAY</span></a>
 <a class="sourceLine" id="cb14-3" data-line-number="3">septic_patients <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb14-4" data-line-number="4"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">genus =</span> <span class="kw"><a href="../reference/mo_property.html">mo_genus</a></span>(mo)) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb14-5" data-line-number="5"><span class="st">  </span><span class="kw"><a href="../reference/freq.html">freq</a></span>(genus)</a>
+<a class="sourceLine" id="cb14-5" data-line-number="5"><span class="st">  </span><span class="kw">freq</span>(genus)</a>
 <a class="sourceLine" id="cb14-6" data-line-number="6"><span class="co"># NEW WAY</span></a>
 <a class="sourceLine" id="cb14-7" data-line-number="7">septic_patients <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb14-8" data-line-number="8"><span class="st">  </span><span class="kw"><a href="../reference/freq.html">freq</a></span>(<span class="kw"><a href="../reference/mo_property.html">mo_genus</a></span>(mo))</a>
+<a class="sourceLine" id="cb14-8" data-line-number="8"><span class="st">  </span><span class="kw">freq</span>(<span class="kw"><a href="../reference/mo_property.html">mo_genus</a></span>(mo))</a>
 <a class="sourceLine" id="cb14-9" data-line-number="9"></a>
 <a class="sourceLine" id="cb14-10" data-line-number="10"><span class="co"># Even supports grouping variables:</span></a>
 <a class="sourceLine" id="cb14-11" data-line-number="11">septic_patients <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb14-12" data-line-number="12"><span class="st">  </span><span class="kw">group_by</span>(gender) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb14-13" data-line-number="13"><span class="st">  </span><span class="kw"><a href="../reference/freq.html">freq</a></span>(<span class="kw"><a href="../reference/mo_property.html">mo_genus</a></span>(mo))</a></code></pre></div>
+<a class="sourceLine" id="cb14-13" data-line-number="13"><span class="st">  </span><span class="kw">freq</span>(<span class="kw"><a href="../reference/mo_property.html">mo_genus</a></span>(mo))</a></code></pre></div>
 </li>
 <li>Header info is now available as a list, with the <code>header</code> function</li>
 <li>The parameter <code>header</code> is now set to <code>TRUE</code> at default, even for markdown</li>
@@ -770,18 +770,18 @@ Using <code><a href="../reference/as.mo.html">as.mo(..., allow_uncertain = 3)</a
 <li>Using <code>portion_*</code> functions now throws a warning when total available isolate is below parameter <code>minimum</code>
 </li>
 <li>Functions <code>as.mo</code>, <code>as.rsi</code>, <code>as.mic</code>, <code>as.atc</code> and <code>freq</code> will not set package name as attribute anymore</li>
-<li>Frequency tables - <code><a href="../reference/freq.html">freq()</a></code>:
+<li>Frequency tables - <code>freq()</code>:
 <ul>
 <li>
 <p>Support for grouping variables, test with:</p>
 <div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb16-1" data-line-number="1">septic_patients <span class="op">%&gt;%</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb16-2" data-line-number="2"><span class="st">  </span><span class="kw">group_by</span>(hospital_id) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb16-3" data-line-number="3"><span class="st">  </span><span class="kw"><a href="../reference/freq.html">freq</a></span>(gender)</a></code></pre></div>
+<a class="sourceLine" id="cb16-3" data-line-number="3"><span class="st">  </span><span class="kw">freq</span>(gender)</a></code></pre></div>
 </li>
 <li>
 <p>Support for (un)selecting columns:</p>
 <div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb17-1" data-line-number="1">septic_patients <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb17-2" data-line-number="2"><span class="st">  </span><span class="kw"><a href="../reference/freq.html">freq</a></span>(hospital_id) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb17-2" data-line-number="2"><span class="st">  </span><span class="kw">freq</span>(hospital_id) <span class="op">%&gt;%</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb17-3" data-line-number="3"><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>count, <span class="op">-</span>cum_count) <span class="co"># only get item, percent, cum_percent</span></a></code></pre></div>
 </li>
 <li>Check for <code><a href="https://www.rdocumentation.org/packages/hms/topics/Deprecated">hms::is.hms</a></code>
@@ -802,7 +802,7 @@ Using <code><a href="../reference/as.mo.html">as.mo(..., allow_uncertain = 3)</a
 <li>Removed diacritics from all authors (columns <code>microorganisms$ref</code> and <code>microorganisms.old$ref</code>) to comply with CRAN policy to only allow ASCII characters</li>
 <li>Fix for <code>mo_property</code> not working properly</li>
 <li>Fix for <code>eucast_rules</code> where some Streptococci would become ceftazidime R in EUCAST rule 4.5</li>
-<li>Support for named vectors of class <code>mo</code>, useful for <code><a href="../reference/freq.html">top_freq()</a></code>
+<li>Support for named vectors of class <code>mo</code>, useful for <code>top_freq()</code>
 </li>
 <li>
 <code>ggplot_rsi</code> and <code>scale_y_percent</code> have <code>breaks</code> parameter</li>
@@ -960,11 +960,11 @@ Using <code><a href="../reference/as.mo.html">as.mo(..., allow_uncertain = 3)</a
 <li>
 <p>Support for types (classes) list and matrix for <code>freq</code></p>
 <div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb24-1" data-line-number="1">my_matrix =<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/with">with</a></span>(septic_patients, <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/matrix">matrix</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(age, gender), <span class="dt">ncol =</span> <span class="dv">2</span>))</a>
-<a class="sourceLine" id="cb24-2" data-line-number="2"><span class="kw"><a href="../reference/freq.html">freq</a></span>(my_matrix)</a></code></pre></div>
+<a class="sourceLine" id="cb24-2" data-line-number="2"><span class="kw">freq</span>(my_matrix)</a></code></pre></div>
 <p>For lists, subsetting is possible:</p>
 <div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb25-1" data-line-number="1">my_list =<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(<span class="dt">age =</span> septic_patients<span class="op">$</span>age, <span class="dt">gender =</span> septic_patients<span class="op">$</span>gender)</a>
-<a class="sourceLine" id="cb25-2" data-line-number="2">my_list <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="../reference/freq.html">freq</a></span>(age)</a>
-<a class="sourceLine" id="cb25-3" data-line-number="3">my_list <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="../reference/freq.html">freq</a></span>(gender)</a></code></pre></div>
+<a class="sourceLine" id="cb25-2" data-line-number="2">my_list <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">freq</span>(age)</a>
+<a class="sourceLine" id="cb25-3" data-line-number="3">my_list <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">freq</span>(gender)</a></code></pre></div>
 </li>
 </ul>
 </div>
@@ -1038,13 +1038,13 @@ Using <code><a href="../reference/as.mo.html">as.mo(..., allow_uncertain = 3)</a
 <ul>
 <li>A vignette to explain its usage</li>
 <li>Support for <code>rsi</code> (antimicrobial resistance) to use as input</li>
-<li>Support for <code>table</code> to use as input: <code><a href="../reference/freq.html">freq(table(x, y))</a></code>
+<li>Support for <code>table</code> to use as input: <code>freq(table(x, y))</code>
 </li>
 <li>Support for existing functions <code>hist</code> and <code>plot</code> to use a frequency table as input: <code><a href="https://www.rdocumentation.org/packages/graphics/topics/hist">hist(freq(df$age))</a></code>
 </li>
 <li>Support for <code>as.vector</code>, <code>as.data.frame</code>, <code>as_tibble</code> and <code>format</code>
 </li>
-<li>Support for quasiquotation: <code><a href="../reference/freq.html">freq(mydata, mycolumn)</a></code> is the same as <code>mydata %&gt;% freq(mycolumn)</code>
+<li>Support for quasiquotation: <code>freq(mydata, mycolumn)</code> is the same as <code>mydata %&gt;% freq(mycolumn)</code>
 </li>
 <li>Function <code>top_freq</code> function to return the top/below <em>n</em> items as vector</li>
 <li>Header of frequency tables now also show Mean Absolute Deviaton (MAD) and Interquartile Range (IQR)</li>
@@ -1198,7 +1198,7 @@ Using <code><a href="../reference/as.mo.html">as.mo(..., allow_uncertain = 3)</a
     <div id="tocnav">
       <h2>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
-        <li><a href="#amr-0-7-1-9014">0.7.1.9014</a></li>
+        <li><a href="#amr-0-7-1-9015">0.7.1.9015</a></li>
         <li><a href="#amr-0-7-1">0.7.1</a></li>
         <li><a href="#amr-0-7-0">0.7.0</a></li>
         <li><a href="#amr-0-6-1">0.6.1</a></li>

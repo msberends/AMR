@@ -8,7 +8,6 @@ articles:
   SPSS: SPSS.html
   WHONET: WHONET.html
   benchmarks: benchmarks.html
-  freq: freq.html
   resistance_predict: resistance_predict.html
 urls:
   reference: https://msberends.gitlab.io/AMR/reference

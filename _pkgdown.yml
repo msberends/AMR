@@ -62,12 +62,6 @@ navbar:
       - text: "Get properties of an antibiotic"
         icon: "fa-capsules"
         href: "reference/ab_property.html" # reference instead of article
-      - text: "Create frequency tables"
-        icon: "fa-sort-amount-down"
-        href: "articles/freq.html"
-#       - text: "Use the G-test"
-#         icon: "fa-clipboard-check"
-#         href: "reference/g.test.html" # reference instead of article
       - text: "Other: benchmarks"
         icon: "fa-shipping-fast"
         href: "articles/benchmarks.html"
@@ -130,13 +124,12 @@ reference:
   - title: "Analysing your data"
     desc: >
       Functions for conducting AMR analysis, like counting isolates, calculating
-      resistance or susceptibility, creating frequency tables or make plots.
+      resistance or susceptibility, or make plots.
     contents:
     - "`availability`"
     - "`count`"
     - "`portion`"
     - "`filter_ab_class`"
-    - "`freq`"
     - "`g.test`"
     - "`ggplot_rsi`"
     - "`kurtosis`"
