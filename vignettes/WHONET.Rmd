@@ -60,7 +60,17 @@ data <- WHONET %>%
   mutate_at(vars(AMP_ND10:CIP_EE), as.rsi)
 ```
 
-No errors or warnings, so all values are transformed succesfully. Let's check it though, with a couple of frequency tables:
+No errors or warnings, so all values are transformed succesfully.
+
+We created a package dedicated to data cleaning and checking, called the `clean` package. It gets automatically installed with the `AMR` package, so we only have to load it:
+
+```{r lib clean, message = FALSE}
+library(clean)
+```
+
+It contains the `freq()` function, to create frequency tables. 
+
+So let's check our data, with a couple of frequency tables:
 
 ```{r, results = 'asis'}
 # our newly created `mo` variable

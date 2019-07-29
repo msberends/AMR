@@ -90,6 +90,7 @@ NULL
 #' @export
 #' @examples
 #' library(dplyr)
+#' library(clean)
 #' microorganisms %>% freq(kingdom)
 #' microorganisms %>% group_by(kingdom) %>% freq(phylum, nmax = NULL)
 catalogue_of_life_version <- function() {

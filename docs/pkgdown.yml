@@ -1,4 +1,4 @@
-pandoc: '2.6'
+pandoc: 2.3.1
 pkgdown: 1.3.0
 pkgdown_sha: ~
 articles:
@@ -8,7 +8,6 @@ articles:
   SPSS: SPSS.html
   WHONET: WHONET.html
   benchmarks: benchmarks.html
-  freq: freq.html
   resistance_predict: resistance_predict.html
 urls:
   reference: https://msberends.gitlab.io/AMR/reference

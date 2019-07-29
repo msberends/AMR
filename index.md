@@ -26,7 +26,6 @@ This package can be used for:
   * Plotting antimicrobial resistance ([tutorial](./articles/AMR.html))
   * Determining first isolates to be used for AMR analysis ([manual](./reference/first_isolate.html))
   * Applying EUCAST expert rules ([manual](./reference/eucast_rules.html))
-  * Descriptive statistics: frequency tables, kurtosis and skewness ([tutorial](./articles/freq.html))
 
 This package is ready-to-use for a professional environment by specialists in the following fields:
 
@@ -154,7 +153,6 @@ The `AMR` package basically does four important things:
    * Calculate the resistance (and even co-resistance) of microbial isolates with the `portion_R()`, `portion_IR()`, `portion_I()`, `portion_SI()` and `portion_S()` functions. Similarly, the *number* of isolates can be determined with the `count_R()`, `count_IR()`, `count_I()`, `count_SI()` and `count_S()` functions. All these functions can be used with the `dplyr` package (e.g. in conjunction with `summarise()`)
    * Plot AMR results with `geom_rsi()`, a function made for the `ggplot2` package
    * Predict antimicrobial resistance for the nextcoming years using logistic regression models with the `resistance_predict()` function
-   * Conduct descriptive statistics to enhance base R: calculate `kurtosis()`, `skewness()` and create frequency tables with `freq()`
 
 4. It **teaches the user** how to use all the above actions.
 
