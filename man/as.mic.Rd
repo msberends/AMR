@@ -47,6 +47,8 @@ as.rsi(x = as.mic(4),
 
 plot(mic_data)
 barplot(mic_data)
+
+library(clean)
 freq(mic_data)
 }
 \seealso{

@@ -51,6 +51,8 @@
 #'
 #' plot(mic_data)
 #' barplot(mic_data)
+#' 
+#' library(clean)
 #' freq(mic_data)
 as.mic <- function(x, na.rm = FALSE) {
   if (is.mic(x)) {

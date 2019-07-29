@@ -1412,6 +1412,7 @@ print.mo <- function(x, ...) {
 
 #' @exportMethod summary.mo
 #' @importFrom dplyr n_distinct
+#' @importFrom clean freq top_freq
 #' @export
 #' @noRd
 summary.mo <- function(object, ...) {

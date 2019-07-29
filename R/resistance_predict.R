@@ -58,7 +58,7 @@
 #' @rdname resistance_predict
 #' @export
 #' @importFrom stats predict glm lm
-#' @importFrom dplyr %>% pull mutate mutate_at n group_by_at summarise filter filter_at all_vars n_distinct arrange case_when n_groups transmute
+#' @importFrom dplyr %>% pull mutate mutate_at n group_by_at summarise filter filter_at all_vars n_distinct arrange case_when n_groups transmute ungroup
 #' @inheritSection AMR Read more on our website!
 #' @examples
 #' x <- resistance_predict(septic_patients, col_ab = "AMX", year_min = 2010)
