@@ -139,8 +139,6 @@ EUCAST_VERSION_EXPERT_RULES <- "3.1, 2016"
 #'   }
 #' @inheritSection AMR Read more on our website!
 #' @examples
-#' a <- eucast_rules(septic_patients)
-#'
 #' a <- data.frame(mo = c("Staphylococcus aureus",
 #'                        "Enterococcus faecalis",
 #'                        "Escherichia coli",
@@ -176,7 +174,7 @@ EUCAST_VERSION_EXPERT_RULES <- "3.1, 2016"
 #' # 5 Pseudomonas aeruginosa    R    R    -    -    R    R    R
 #'
 #'
-#' # do not apply EUCAST rules, but rather get a a data.frame
+#' # do not apply EUCAST rules, but rather get a data.frame
 #' # with 18 rows, containing all details about the transformations:
 #' c <- eucast_rules(a, verbose = TRUE)
 eucast_rules <- function(x,

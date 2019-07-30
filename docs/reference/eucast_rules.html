@@ -80,7 +80,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">0.7.1.9015</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">0.7.1.9018</span>
       </span>
     </div>
 
@@ -374,8 +374,6 @@
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><span class='co'># NOT RUN {</span>
-<span class='no'>a</span> <span class='kw'>&lt;-</span> <span class='fu'>eucast_rules</span>(<span class='no'>septic_patients</span>)
-
 <span class='no'>a</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/data.frame'>data.frame</a></span>(<span class='kw'>mo</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"Staphylococcus aureus"</span>,
                        <span class='st'>"Enterococcus faecalis"</span>,
                        <span class='st'>"Escherichia coli"</span>,
@@ -411,7 +409,7 @@
 <span class='co'># 5 Pseudomonas aeruginosa    R    R    -    -    R    R    R</span>
 
 
-<span class='co'># do not apply EUCAST rules, but rather get a a data.frame</span>
+<span class='co'># do not apply EUCAST rules, but rather get a data.frame</span>
 <span class='co'># with 18 rows, containing all details about the transformations:</span>
 <span class='no'>c</span> <span class='kw'>&lt;-</span> <span class='fu'>eucast_rules</span>(<span class='no'>a</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
 <span class='co'># }</span></pre>

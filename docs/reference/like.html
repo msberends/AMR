@@ -80,7 +80,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">0.7.1.9015</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">0.7.1.9018</span>
       </span>
     </div>
 
@@ -299,10 +299,11 @@
 
 <span class='co'># get frequencies of bacteria whose name start with 'Ent' or 'ent'</span>
 <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>dplyr</span>)
+<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>clean</span>)
 <span class='no'>septic_patients</span> <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='join.html'>left_join_microorganisms</a></span>() <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span>(<span class='no'>genus</span> <span class='kw'>%like%</span> <span class='st'>'^ent'</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'>freq</span>(<span class='no'>genus</span>, <span class='no'>species</span>)
+  <span class='fu'><a href='https://www.rdocumentation.org/packages/clean/topics/freq'>freq</a></span>(<span class='no'>genus</span>, <span class='no'>species</span>)
 <span class='co'># }</span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
