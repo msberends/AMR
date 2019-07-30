@@ -135,8 +135,6 @@ On our website \url{https://msberends.gitlab.io/AMR} you can find \href{https://
 }
 
 \examples{
-a <- eucast_rules(septic_patients)
-
 a <- data.frame(mo = c("Staphylococcus aureus",
                        "Enterococcus faecalis",
                        "Escherichia coli",
@@ -172,7 +170,7 @@ b
 # 5 Pseudomonas aeruginosa    R    R    -    -    R    R    R
 
 
-# do not apply EUCAST rules, but rather get a a data.frame
+# do not apply EUCAST rules, but rather get a data.frame
 # with 18 rows, containing all details about the transformations:
 c <- eucast_rules(a, verbose = TRUE)
 }
