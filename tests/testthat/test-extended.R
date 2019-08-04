@@ -19,15 +19,11 @@
 # Visit our website for more info: https://msberends.gitlab.io/AMR.    #
 # ==================================================================== #
 
-context("freq.R")
+context("extended.R")
 
-test_that("frequency table works", {
-  library(clean)
-  # mo
-  expect_true(is.freq(freq(septic_patients$mo)))
-  # rsi
-  expect_true(is.freq(freq(septic_patients$AMX)))
-  library(dplyr)
-  expect_true(is.freq(septic_patients %>% freq(mo)))
+test_that("extensions work", {
+  
+  expect_identical(scale_type.mo(), "discrete")
+  expect_identical(scale_type.ab(), "discrete")
+  
 })
-

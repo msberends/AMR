@@ -38,9 +38,9 @@ ggplot_rsi_predict(x, main = paste("Resistance Prediction of", x_name),
 
 \item{minimum}{minimal amount of available isolates per year to include. Years containing less observations will be estimated by the model.}
 
-\item{model}{the statistical model of choice. Defaults to a generalised linear regression model with binomial distribution, assuming that a period of zero resistance was followed by a period of increasing resistance leading slowly to more and more resistance. See Details for valid options.}
+\item{model}{the statistical model of choice. Defaults to a generalised linear regression model with binomial distribution (i.e. using \code{\link{glm}(..., family = \link{binomial})}), assuming that a period of zero resistance was followed by a period of increasing resistance leading slowly to more and more resistance. See Details for valid options.}
 
-\item{I_as_S}{a logical to indicate whether values \code{I} should be treated as \code{S}}
+\item{I_as_S}{a logical to indicate whether values \code{I} should be treated as \code{S} (will otherwise be treated as \code{R})}
 
 \item{preserve_measurements}{a logical to indicate whether predictions of years that are actually available in the data should be overwritten by the original data. The standard errors of those years will be \code{NA}.}
 

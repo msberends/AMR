@@ -116,9 +116,9 @@ coverage:
   script:
     - apt-get install --yes git
     # install missing and outdated packages
-    - Rscript -e 'source(".gitlab-ci.R"); gl_update_pkg_all(repos = "https://cran.rstudio.com", quiet = TRUE, install_pkgdown = TRUE)'
+    - Rscript -e 'source(".gitlab-ci.R"); gl_update_pkg_all(repos = "https://cran.rstudio.com", quiet = TRUE, install_pkgdown = FALSE)'
     # codecov token is set in https://gitlab.com/msberends/AMR/settings/ci_cd
-    - Rscript -e "cc <- covr::package_coverage(); covr::codecov(coverage = cc, token = '$codecov', exclusions = c('R/atc_online.R', 'R/mo_source.R')); cat('Code coverage:', covr::percent_coverage(cc))"
+    - Rscript -e "cc <- covr::package_coverage(line_exclusions = list('R/atc_online.R', 'R/mo_source.R')); covr::codecov(coverage = cc, token = '$codecov'); cat('Code coverage:', covr::percent_coverage(cc))"
   coverage: '/Code coverage: \d+\.\d+/'
 
 pages:
