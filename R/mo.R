@@ -1238,10 +1238,10 @@ exec_as.mo <- function(x,
     if (n_distinct(failures) > 1) {
       plural <- c("values", "them", "were")
     }
-    total_failures <- length(x_input[x_input %in% failures & !x_input %in% c(NA, NULL, NaN)])
+    total_failures <- length(x_input[as.character(x_input) %in% as.character(failures) & !x_input %in% c(NA, NULL, NaN)])
     total_n <- length(x_input[!x_input %in% c(NA, NULL, NaN)])
     msg <- paste0(nr2char(n_distinct(failures)), " unique ", plural[1],
-                  " (^= ", percent(total_failures / total_n, round = 1, force_zero = TRUE),
+                  " (covering ", percent(total_failures / total_n, round = 1, force_zero = TRUE),
                   ") could not be coerced and ", plural[3], " considered 'unknown'")
     if (n_distinct(failures) <= 10) {
       msg <- paste0(msg, ": ", paste('"', unique(failures), '"', sep = "", collapse = ', '))
