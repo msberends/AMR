@@ -71,18 +71,20 @@ size_humanreadable <- function(bytes, decimals = 1) {
   out
 }
 
-percent_scales <- scales::percent
+percent_clean <- clean:::percent
 # No export, no Rd
-# based on scales::percent
-percent <- function(x, round = 1, force_zero = FALSE, decimal.mark = getOption("OutDec"), ...) {
-  x <- percent_scales(x = as.double(x),
-                      accuracy = 1 / 10 ^ round,
-                      decimal.mark = decimal.mark,
-                      ...)
-  if (force_zero == FALSE) {
-    x <- gsub("([.]%|%%)", "%", paste0(gsub("0+%$", "", x), "%"))
+percent <- function(x, round = 1, force_zero = FALSE, decimal.mark = getOption("OutDec"), big.mark = ",", ...) {
+  if (decimal.mark == big.mark) {
+    if (decimal.mark == ",") {
+      big.mark <- "."
+    } else if (decimal.mark == ".") {
+      big.mark <- ","
+    } else {
+      big.mark <- " "
+    }
   }
-  x
+  x <- percent_clean(x = x, round = round, force_zero = force_zero, 
+                     decimal.mark = decimal.mark, big.mark = big.mark, ...)
 }
 
 #' @importFrom crayon blue bold red
