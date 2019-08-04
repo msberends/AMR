@@ -28,8 +28,8 @@
 #' @param year_max highest year to use in the prediction model, defaults to 10 years after today
 #' @param year_every unit of sequence between lowest year found in the data and \code{year_max}
 #' @param minimum minimal amount of available isolates per year to include. Years containing less observations will be estimated by the model.
-#' @param model the statistical model of choice. Defaults to a generalised linear regression model with binomial distribution, assuming that a period of zero resistance was followed by a period of increasing resistance leading slowly to more and more resistance. See Details for valid options.
-#' @param I_as_S a logical to indicate whether values \code{I} should be treated as \code{S}
+#' @param model the statistical model of choice. Defaults to a generalised linear regression model with binomial distribution (i.e. using \code{\link{glm}(..., family = \link{binomial})}), assuming that a period of zero resistance was followed by a period of increasing resistance leading slowly to more and more resistance. See Details for valid options.
+#' @param I_as_S a logical to indicate whether values \code{I} should be treated as \code{S} (will otherwise be treated as \code{R})
 #' @param preserve_measurements a logical to indicate whether predictions of years that are actually available in the data should be overwritten by the original data. The standard errors of those years will be \code{NA}.
 #' @param info a logical to indicate whether textual analysis should be printed with the name and \code{\link{summary}} of the statistical model.
 #' @param main title of the plot
@@ -162,18 +162,19 @@ resistance_predict <- function(x,
       as.integer(format(as.Date(x), '%Y'))
     }
   }
-
+  
   df <- x %>%
     mutate_at(col_ab, as.rsi) %>%
-    mutate_at(col_ab, droplevels) %>%
-    mutate_at(col_ab, ~(
-      if (I_as_S == TRUE) {
-        gsub("I", "S", .)
-      } else {
-        # then I as R
-        gsub("I", "R", .)
-      }
-      )) %>%
+    mutate_at(col_ab, droplevels)
+  if (I_as_S == TRUE) {
+    df <- df %>%
+      mutate_at(col_ab, ~gsub("I", "S", .))
+  } else {
+    # then I as R
+    df <- df %>%
+      mutate_at(col_ab, ~gsub("I", "R", .))
+  }
+  df <- df %>% 
     filter_at(col_ab, all_vars(!is.na(.))) %>%
     mutate(year = pull(., col_date) %>% year()) %>%
     group_by_at(c('year', col_ab)) %>%

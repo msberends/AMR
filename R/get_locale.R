@@ -67,7 +67,10 @@ get_locale <- function() {
   }
 
   lang <- Sys.getlocale("LC_COLLATE")
-  # grepl with case = FALSE is faster than like
+  
+  # Check the locale settings for a start with one of these languages:
+  
+  # grepl() with ignore.case = FALSE is faster than %like%
   if (grepl("^(English|en_|EN_)", lang, ignore.case = FALSE)) {
     # as first option to optimise speed
     "en"
