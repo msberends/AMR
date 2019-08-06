@@ -1,4 +1,4 @@
-# AMR 0.7.1.9023
+# AMR 0.7.1.9024
 
 ### Breaking
 * Function `freq()` has moved to a new package, [`clean`](https://github.com/msberends/clean) ([CRAN link](https://cran.r-project.org/package=clean)). Creating frequency tables is actually not the scope of this package (never was) and this function has matured  a lot over the last two years. Therefore, a new package was created for data cleaning and checking and it perfectly fits the `freq()` function. The [`clean`](https://github.com/msberends/clean) package is available on CRAN and will be installed automatically when updating the `AMR` package, that now imports it. In a later stage, the `skewness()` and `kurtosis()` functions will be moved to the `clean` package too.
@@ -35,13 +35,17 @@
   Since this is a major change, usage of the old `also_single_tested` will throw an informative error that it has been replaced by `only_all_tested`.
 
 ### Changed
+* Fixed a bug in `eucast_rules()` that caused an error when the input was a specific kind of `tibble`
 * Removed class `atc` - using `as.atc()` is now deprecated in favour of `ab_atc()` and this will return a character, not the `atc` class anymore
 * Removed deprecated functions `abname()`, `ab_official()`, `atc_name()`, `atc_official()`, `atc_property()`, `atc_tradenames()`, `atc_trivial_nl()`
 * Fix and speed improvement for `mo_shortname()`
-* Fix for `as.mo()` where misspelled input would not be understood
+* Algorithm improvements for `as.mo()`:
+  * Some misspelled input were not understood
+  * These new trivial names known to the field are now understood: meningococcus, gonococcus, pneumococcus
+  * Added support for unknown yeasts and fungi
+* Added the newest taxonomic data from the IJSEM journal (now up to date until August 2019)
 * Fix for using `mo_*` functions where the coercion uncertainties and failures would not be available through `mo_uncertainties()` and `mo_failures()` anymore
 * Deprecated the `country` parameter of `mdro()` in favour of the already existing `guideline` parameter to support multiple guidelines within one country
-* Fix for frequency tables when creating one directly on a group (using `group_by()`)
 * The `name` of `RIF` is now Rifampicin instead of Rifampin
 * The `antibiotics` data set is now sorted by name
 * Using verbose mode with `eucast_rules(..., verbose = TRUE)` returns more informative and readable output

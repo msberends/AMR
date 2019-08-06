@@ -183,7 +183,21 @@ eucast_rules <- function(x,
                          rules = c("breakpoints", "expert", "other", "all"),
                          verbose = FALSE,
                          ...) {
-
+  
+  if (verbose == TRUE & interactive()) {
+    txt <- paste0("WARNING: In Verbose mode, the eucast_rules() function does not apply rules to the data, but instead returns a data set in logbook form: with extensive info about which rows and columns would be effected and in which way.",
+                  "\n\nThis may overwrite your existing data if you use e.g.:",
+                  "\ndata <- eucast_rules(data, verbose = TRUE)\n\nDo you want to continue?")
+    if ("rstudioapi" %in% rownames(installed.packages())) {
+      q_continue <- rstudioapi::showQuestion("Using verbose = TRUE with eucast_rules()", txt)
+    } else {
+      q_continue <- menu(choices = c("OK", "Cancel"), graphics = TRUE, title = txt)
+    }
+    if (q_continue %in% c(FALSE, 2)) {
+      return(invisible())
+    }
+  }
+  
   if (!is.data.frame(x)) {
     stop("`x` must be a data frame.", call. = FALSE)
   }
@@ -381,7 +395,6 @@ eucast_rules <- function(x,
     cols <- unique(cols[!is.na(cols) & !is.null(cols)])
     if (length(rows) > 0 & length(cols) > 0) {
       before_df <- x_original
-      before <- as.character(unlist(as.list(x_original[rows, cols])))
 
       tryCatch(
         # insert into original table
@@ -402,9 +415,7 @@ eucast_rules <- function(x,
 
       x[rows, cols] <<- x_original[rows, cols]
 
-      after <- as.character(unlist(as.list(x_original[rows, cols])))
-
-      # before_df might not be a data.frame, but a tibble of data.table instead
+      # before_df might not be a data.frame, but a tibble or data.table instead
       old <- as.data.frame(before_df, stringsAsFactors = FALSE)[rows,]
       no_of_changes_this_run <- 0
       for (i in 1:length(cols)) {
@@ -419,13 +430,14 @@ eucast_rules <- function(x,
                                   stringsAsFactors = FALSE)
         colnames(verbose_new) <- c("row", "col", "mo_fullname", "old", "new", "rule", "rule_group", "rule_name")
         verbose_new <- verbose_new %>% filter(old != new | is.na(old))
+        # save changes to data set 'verbose_info'
         verbose_info <<- rbind(verbose_info, verbose_new)
         no_of_changes_this_run <- no_of_changes_this_run + nrow(verbose_new)
       }
-      # return number of (new) changes
+      # after the applied changes: return number of (new) changes
       return(no_of_changes_this_run)
     }
-    # return number of (new) changes: none.
+    # no changes were applied: return number of (new) changes: none.
     return(0)
   }
 

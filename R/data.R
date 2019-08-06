@@ -55,7 +55,7 @@
 #'
 #' A data set containing the microbial taxonomy of six kingdoms from the Catalogue of Life. MO codes can be looked up using \code{\link{as.mo}}.
 #' @inheritSection catalogue_of_life Catalogue of Life
-#' @format A \code{\link{data.frame}} with 67,906 observations and 16 variables:
+#' @format A \code{\link{data.frame}} with 68,260 observations and 16 variables:
 #' \describe{
 #'   \item{\code{mo}}{ID of microorganism as used by this package}
 #'   \item{\code{col_id}}{Catalogue of Life ID}
@@ -72,8 +72,8 @@
 #'   \item{9 entries of \emph{Streptococcus} (beta haemolytic groups A, B, C, D, F, G, H, K and unspecified)}
 #'   \item{2 entries of \emph{Staphylococcus} (coagulase-negative [CoNS] and coagulase-positive [CoPS])}
 #'   \item{3 entries of Trichomonas (Trichomonas vaginalis, and its family and genus)}
-#'   \item{3 other 'undefined' entries (unknown, unknown Gram negatives and unknown Gram positives)}
-#'   \item{8,830 species from the DSMZ (Deutsche Sammlung von Mikroorganismen und Zellkulturen) that are not in the Catalogue of Life}
+#'   \item{5 other 'undefined' entries (unknown, unknown Gram negatives, unknown Gram positives, unknown yeast and unknown fungus)}
+#'   \item{8,970 species from the DSMZ (Deutsche Sammlung von Mikroorganismen und Zellkulturen) that are not in the Catalogue of Life}
 #' }
 #' @section About the records from DSMZ (see source):
 #' Names of prokaryotes are defined as being validly published by the International Code of Nomenclature of Bacteria. Validly published are all names which are included in the Approved Lists of Bacterial Names and the names subsequently published in the International Journal of Systematic Bacteriology (IJSB) and, from January 2000, in the International Journal of Systematic and Evolutionary Microbiology (IJSEM) as original articles or in the validation lists.
@@ -91,14 +91,14 @@ catalogue_of_life <- list(
   version = "Catalogue of Life: {year} Annual Checklist",
   url_CoL = "http://www.catalogueoflife.org/annual-checklist/{year}/",
   url_DSMZ = "https://www.dsmz.de/microorganisms/pnu/bacterial_nomenclature_info_mm.php",
-  yearmonth_DSMZ = "February 2019"
+  yearmonth_DSMZ = "August 2019"
 )
 
 #' Data set with previously accepted taxonomic names
 #'
 #' A data set containing old (previously valid or accepted) taxonomic names according to the Catalogue of Life. This data set is used internally by \code{\link{as.mo}}.
 #' @inheritSection catalogue_of_life Catalogue of Life
-#' @format A \code{\link{data.frame}} with 21,342 observations and 4 variables:
+#' @format A \code{\link{data.frame}} with 21,743 observations and 4 variables:
 #' \describe{
 #'   \item{\code{col_id}}{Catalogue of Life ID that was originally given}
 #'   \item{\code{col_id_new}}{New Catalogue of Life ID that responds to an entry in the \code{\link{microorganisms}} data set}

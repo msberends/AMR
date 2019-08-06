@@ -1,4 +1,14 @@
-if_mo_property	like_is_one_of	this_value	and_these_antibiotics	have_these_values	then_change_these_antibiotics	to_value	reference.rule	reference.rule_group
+# ---------------------------------------------------------------------------------------------------
+# For editing this EUCAST reference file, these values can all be used for target antibiotics:
+# all_betalactams, aminoglycosides, carbapenems, cephalosporins, cephalosporins_without_CAZ, fluoroquinolones, 
+# glycopeptides, macrolides, minopenicillins, polymyxins, streptogramins, tetracyclines, ureidopenicillins
+# and all separate EARS-Net letter codes like AMC. They can be separated by comma: 'AMC, fluoroquinolones'.
+# The if_mo_property column can be any column name from the AMR::microorganisms data set, or "genus_species" or "gramstain".
+# The like.is.one_of column must contain one of: like, is, one_of ('like' will read the first column as regular expression)
+# The EUCAST guideline contains references to the 'Burkholderia cepacia complex'. All species in this group can be found in: LiPuma J, Curr Opin Pulm Med. 2005 Nov;11(6):528-33. (PMID 16217180).
+# >>>>> IF YOU WANT TO IMPORT THIS FILE INTO YOUR OWN SOFTWARE, HAVE THE FIRST 10 LINES SKIPPED <<<<<
+# ---------------------------------------------------------------------------------------------------
+if_mo_property	like.is.one_of	this_value	and_these_antibiotics	have_these_values	then_change_these_antibiotics	to_value	reference.rule	reference.rule_group
 order	is	Enterobacteriales	AMP	S	AMX	S	Enterobacteriales (Order)	Breakpoints
 order	is	Enterobacteriales	AMP	I	AMX	I	Enterobacteriales (Order)	Breakpoints
 order	is	Enterobacteriales	AMP	R	AMX	R	Enterobacteriales (Order)	Breakpoints

@@ -78,7 +78,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">0.7.1.9023</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">0.7.1.9024</span>
       </span>
     </div>
 
@@ -225,9 +225,9 @@
       
     </div>
 
-    <div id="amr-0-7-1-9023" class="section level1">
+    <div id="amr-0-7-1-9024" class="section level1">
 <h1 class="page-header">
-<a href="#amr-0-7-1-9023" class="anchor"></a>AMR 0.7.1.9023<small> Unreleased </small>
+<a href="#amr-0-7-1-9024" class="anchor"></a>AMR 0.7.1.9024<small> Unreleased </small>
 </h1>
 <div id="breaking" class="section level3">
 <h3 class="hasAnchor">
@@ -273,15 +273,23 @@
 <h3 class="hasAnchor">
 <a href="#changed" class="anchor"></a>Changed</h3>
 <ul>
+<li>Fixed a bug in <code><a href="../reference/eucast_rules.html">eucast_rules()</a></code> that caused an error when the input was a specific kind of <code>tibble</code>
+</li>
 <li>Removed class <code>atc</code> - using <code><a href="../reference/AMR-deprecated.html">as.atc()</a></code> is now deprecated in favour of <code><a href="../reference/ab_property.html">ab_atc()</a></code> and this will return a character, not the <code>atc</code> class anymore</li>
 <li>Removed deprecated functions <code>abname()</code>, <code>ab_official()</code>, <code>atc_name()</code>, <code>atc_official()</code>, <code>atc_property()</code>, <code>atc_tradenames()</code>, <code>atc_trivial_nl()</code>
 </li>
 <li>Fix and speed improvement for <code><a href="../reference/mo_property.html">mo_shortname()</a></code>
 </li>
-<li>Fix for <code><a href="../reference/as.mo.html">as.mo()</a></code> where misspelled input would not be understood</li>
+<li>Algorithm improvements for <code><a href="../reference/as.mo.html">as.mo()</a></code>:
+<ul>
+<li>Some misspelled input were not understood</li>
+<li>These new trivial names known to the field are now understood: meningococcus, gonococcus, pneumococcus</li>
+<li>Added support for unknown yeasts and fungi</li>
+</ul>
+</li>
+<li>Added the newest taxonomic data from the IJSEM journal (now up to date until August 2019)</li>
 <li>Fix for using <code>mo_*</code> functions where the coercion uncertainties and failures would not be available through <code><a href="../reference/as.mo.html">mo_uncertainties()</a></code> and <code><a href="../reference/as.mo.html">mo_failures()</a></code> anymore</li>
 <li>Deprecated the <code>country</code> parameter of <code><a href="../reference/mdro.html">mdro()</a></code> in favour of the already existing <code>guideline</code> parameter to support multiple guidelines within one country</li>
-<li>Fix for frequency tables when creating one directly on a group (using <code>group_by()</code>)</li>
 <li>The <code>name</code> of <code>RIF</code> is now Rifampicin instead of Rifampin</li>
 <li>The <code>antibiotics</code> data set is now sorted by name</li>
 <li>Using verbose mode with <code><a href="../reference/eucast_rules.html">eucast_rules(..., verbose = TRUE)</a></code> returns more informative and readable output</li>
@@ -1198,7 +1206,7 @@ Using <code><a href="../reference/as.mo.html">as.mo(..., allow_uncertain = 3)</a
     <div id="tocnav">
       <h2>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
-        <li><a href="#amr-0-7-1-9023">0.7.1.9023</a></li>
+        <li><a href="#amr-0-7-1-9024">0.7.1.9024</a></li>
         <li><a href="#amr-0-7-1">0.7.1</a></li>
         <li><a href="#amr-0-7-0">0.7.0</a></li>
         <li><a href="#amr-0-6-1">0.6.1</a></li>
