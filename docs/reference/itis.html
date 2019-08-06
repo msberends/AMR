@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>ITIS: Integrated Taxonomic Information System — itis • AMR (for R)</title>
+<title>ITIS: Integrated Taxonomic Information System — ITIS • AMR (for R)</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -45,7 +45,7 @@
 
   <link href="../extra.css" rel="stylesheet">
   <script src="../extra.js"></script>
-<meta property="og:title" content="ITIS: Integrated Taxonomic Information System — itis" />
+<meta property="og:title" content="ITIS: Integrated Taxonomic Information System — ITIS" />
 
 <meta property="og:description" content="All taxonomic names of all microorganisms are included in this package, using the authoritative Integrated Taxonomic Information System (ITIS)." />
 
@@ -80,7 +80,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.0.9009</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.0.9018</span>
       </span>
     </div>
 
@@ -110,10 +110,24 @@
       </a>
     </li>
     <li>
-      <a href="../articles/Predict.html">
+      <a href="../articles/resistance_predict.html">
         <span class="fa fa-dice"></span>
          
         Predict antimicrobial resistance
+      </a>
+    </li>
+    <li>
+      <a href="../articles/WHONET.html">
+        <span class="fa fa-globe-americas"></span>
+         
+        Work with WHONET data
+      </a>
+    </li>
+    <li>
+      <a href="../articles/SPSS.html">
+        <span class="fa fa-file-upload"></span>
+         
+        Import data from SPSS/SAS/Stata
       </a>
     </li>
     <li>
@@ -124,14 +138,14 @@
       </a>
     </li>
     <li>
-      <a href="../articles/mo_property.html">
+      <a href="../reference/mo_property.html">
         <span class="fa fa-bug"></span>
          
         Get properties of a microorganism
       </a>
     </li>
     <li>
-      <a href="../articles/ab_property.html">
+      <a href="../reference/atc_property.html">
         <span class="fa fa-capsules"></span>
          
         Get properties of an antibiotic
@@ -149,6 +163,13 @@
         <span class="fa fa-clipboard-check"></span>
          
         Use the G-test
+      </a>
+    </li>
+    <li>
+      <a href="../articles/benchmarks.html">
+        <span class="fa fa-shipping-fast"></span>
+         
+        Other: benchmarks
       </a>
     </li>
   </ul>
@@ -211,7 +232,7 @@
     <div class="page-header">
     <h1>ITIS: Integrated Taxonomic Information System</h1>
     
-    <div class="hidden name"><code>itis.Rd</code></div>
+    <div class="hidden name"><code>ITIS.Rd</code></div>
     </div>
 
     <div class="ref-description">
@@ -224,23 +245,23 @@
     <h2 class="hasAnchor" id="itis"><a class="anchor" href="#itis"></a>ITIS</h2>
 
     
-    <p><img src='figures/itis_logo.jpg' height=60px style=margin-bottom:5px /> <br />
+    <p><img src='figures/logo_itis.jpg' height=60px style=margin-bottom:5px /> <br />
 This package contains the <strong>complete microbial taxonomic data</strong> (with all nine taxonomic ranks - from kingdom to subspecies) from the publicly available Integrated Taxonomic Information System (ITIS, <a href='https://www.itis.gov'>https://www.itis.gov</a>).</p>
-<p>All (sub)species from <strong>the taxonomic kingdoms Bacteria, Fungi and Protozoa are included in this package</strong>, as well as all previously accepted names known to ITIS. Furthermore, the responsible authors and year of publication are available. This allows users to use authoritative taxonomic information for their data analysis on any microorganism, not only human pathogens. It also helps to quickly determine the Gram stain of bacteria, since all bacteria are classified into subkingdom Negibacteria or Posibacteria.</p>
+<p>All ~20,000 (sub)species from <strong>the taxonomic kingdoms Bacteria, Fungi and Protozoa are included in this package</strong>, as well as all their ~2,500 previously accepted names known to ITIS. Furthermore, the responsible authors and year of publication are available. This allows users to use authoritative taxonomic information for their data analysis on any microorganism, not only human pathogens. It also helps to quickly determine the Gram stain of bacteria, since ITIS honours the taxonomic branching order of bacterial phyla according to Cavalier-Smith (2002), which defines that all bacteria are classified into either subkingdom Negibacteria or subkingdom Posibacteria.</p>
 <p>ITIS is a partnership of U.S., Canadian, and Mexican agencies and taxonomic specialists [3].</p>
     
     <h2 class="hasAnchor" id="read-more-on-our-website-"><a class="anchor" href="#read-more-on-our-website-"></a>Read more on our website!</h2>
 
     
     <p><img src='figures/logo.png' height=40px style=margin-bottom:5px /> <br />
-On our website <a href='https://msberends.gitlab.io/AMR'>https://msberends.gitlab.io/AMR</a> you can find <a href='https://msberends.gitlab.io/AMR/articles/AMR.html'>a omprehensive tutorial</a> about how to conduct AMR analysis and find <a href='https://msberends.gitlab.io/AMR/reference'>the complete documentation of all functions</a>, which reads a lot easier than in R.</p>
+On our website <a href='https://msberends.gitlab.io/AMR'>https://msberends.gitlab.io/AMR</a> you can find <a href='https://msberends.gitlab.io/AMR/articles/AMR.html'>a comprehensive tutorial</a> about how to conduct AMR analysis, the <a href='https://msberends.gitlab.io/AMR/reference'>complete documentation of all functions</a> (which reads a lot easier than here in R) and <a href='https://msberends.gitlab.io/AMR/articles/WHONET.html'>an example analysis using WHONET data</a>.</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><span class='co'># NOT RUN {</span>
 <span class='co'># Get a note when a species was renamed</span>
 <span class='fu'><a href='mo_property.html'>mo_shortname</a></span>(<span class='st'>"Chlamydia psittaci"</span>)
-<span class='co'># Note: 'Chlamydia psittaci' (Page, 1968) was renamed </span>
+<span class='co'># Note: 'Chlamydia psittaci' (Page, 1968) was renamed</span>
 <span class='co'>#       'Chlamydophila psittaci' (Everett et al., 1999)</span>
 <span class='co'># [1] "C. psittaci"</span>
 
