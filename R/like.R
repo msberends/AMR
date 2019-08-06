@@ -48,6 +48,7 @@
 #'
 #' # get frequencies of bacteria whose name start with 'Ent' or 'ent'
 #' library(dplyr)
+#' library(clean)
 #' septic_patients %>%
 #'   left_join_microorganisms() %>%
 #'   filter(genus %like% '^ent') %>%
@@ -75,7 +76,11 @@ like <- function(x, pattern) {
   if (is.factor(x)) {
     as.integer(x) %in% base::grep(pattern, levels(x), ignore.case = TRUE)
   } else {
-    base::grepl(pattern, x, ignore.case = TRUE)
+    tryCatch(base::grepl(pattern, x, ignore.case = TRUE),
+             error = function(e) ifelse(test = grepl("Invalid regexp", e$message),
+                                        # try with perl = TRUE:
+                                        yes = return(base::grepl(pattern, x, ignore.case = TRUE, perl = TRUE)),
+                                        no = stop(e$message)))
   }
 }
 

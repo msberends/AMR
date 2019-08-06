@@ -1,14 +1,16 @@
-# EUCAST rules ----
-# For editing the reference file, these values can all be used for target antibiotics:
-# "aminoglycosides", "tetracyclines", "polymyxins", "macrolides", "glycopeptides",
-# "streptogramins", "cephalosporins", "cephalosporins_without_CAZ", "carbapenems",
-# "minopenicillins", "ureidopenicillins", "fluoroquinolones", "all_betalactams",
-# and all separate EARS-Net letter codes like "AMC". They can be separated by comma: "AMC, fluoroquinolones".
-# The mo_property can be any column name from the AMR::microorganisms data set, or "genus_species" or "gramstain".
-# The EUCAST guideline contains references to the 'Burkholderia cepacia complex'. The species in this group can be found in:
-# LiPuma JJ, Curr Opin Pulm Med. 2005 Nov;11(6):528-33. (PMID 16217180).
+# ---------------------------------------------------------------------------------------------------
+# For editing this EUCAST reference file, these values can all be used for target antibiotics:
+# all_betalactams, aminoglycosides, carbapenems, cephalosporins, cephalosporins_without_CAZ, fluoroquinolones, 
+# glycopeptides, macrolides, minopenicillins, polymyxins, streptogramins, tetracyclines, ureidopenicillins
+# and all separate EARS-Net letter codes like AMC. They can be separated by comma: 'AMC, fluoroquinolones'.
+# The if_mo_property column can be any column name from the AMR::microorganisms data set, or "genus_species" or "gramstain".
+# The EUCAST guideline contains references to the 'Burkholderia cepacia complex'. All species in this group can be found in:
+# LiPuma J, Curr Opin Pulm Med. 2005 Nov;11(6):528-33. (PMID 16217180).
+# >>>>> IF YOU WANT TO IMPORT THIS FILE INTO YOUR OWN SOFTWARE, HAVE THE FIRST 10 LINES SKIPPED <<<<<
+# ---------------------------------------------------------------------------------------------------
 eucast_rules_file <- dplyr::arrange(
   .data = utils::read.delim(file = "data-raw/eucast_rules.tsv",
+                            skip = 10,
                             sep = "\t",
                             stringsAsFactors = FALSE,
                             header = TRUE,

@@ -46,6 +46,9 @@ $( document ).ready(function() {
     window.location.replace(url_new);
   }
 
+  // Replace 'Value' in manual to 'Returned value'
+  $(".template-reference-topic h2#value").text("Returned value");
+
   // PR for 'R for Data Science' on How To pages
   if ($(".template-article").length > 0) {
     $('#sidebar').prepend(

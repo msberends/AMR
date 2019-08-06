@@ -99,7 +99,7 @@ MOs <- data_total %>%
       # and not all fungi: Aspergillus, Candida, Trichphyton and Pneumocystis are the most important,
       # so only keep these orders from the fungi:
       & !(kingdom == "Fungi"
-          & !order %in% c("Eurotiales", "Saccharomycetales", "Schizosaccharomycetales", "Tremellales", "Onygenales", "Pneumocystales"))
+          & !order %in% c("Eurotiales", "Mucorales", "Saccharomycetales", "Schizosaccharomycetales", "Tremellales", "Onygenales", "Pneumocystales"))
     )
     # or the genus has to be one of the genera we found in our hospitals last decades (Northern Netherlands, 2002-2018)
     | genus %in% c("Absidia", "Acremonium", "Actinotignum", "Alternaria", "Anaerosalibacter", "Ancylostoma", "Anisakis", "Apophysomyces",
@@ -123,7 +123,7 @@ MOs <- MOs %>%
 
 MOs <- MOs %>%
   # remove text if it contains 'Not assigned' like phylum in viruses
-  mutate_all(~gsub("Not assigned", "", .))
+  mutate_all(~gsub("(Not assigned|\\[homonym\\]|\\[mistake\\])", "", ., ignore.case = TRUE))
 
 MOs <- MOs %>%
   # Only keep first author, e.g. transform 'Smith, Jones, 2011' to 'Smith et al., 2011':
@@ -166,8 +166,10 @@ MOs <- MOs %>%
 
 # Remove non-ASCII characters (these are not allowed by CRAN)
 MOs <- MOs %>%
-  lapply(iconv, from = "UTF-8", to = "ASCII//TRANSLIT") %>%
-  as_tibble(stringsAsFactors = FALSE)
+  lapply(iconv, from = "UTF-8", to = "ASCII//TRANSLIT") %>% 
+  as_tibble(stringsAsFactors = FALSE) %>% 
+  # remove invalid characters
+  mutate_all(~gsub("[\"'`]+", "", .))
 
 # Split old taxonomic names - they refer in the original data to a new `taxonID` with `acceptedNameUsageID`
 MOs.old <- MOs %>%
@@ -218,6 +220,9 @@ MOs <- MOs %>%
   filter(!(source == "DSMZ" & fullname %in% MOs.old$fullname),
          !(source == "DSMZ" & fullname %in% (MOs %>% filter(source == "CoL") %>% pull(fullname)))) %>%
   distinct(fullname, .keep_all = TRUE)
+
+# what characters are in the fullnames?
+paste(unique(sort(unlist(strsplit(x = paste(MOs$fullname, collapse = ""), split = "")))), collapse = "")
 
 # Add abbreviations so we can easily know which ones are which ones.
 # These will become valid and unique microbial IDs for the AMR package.
@@ -295,7 +300,6 @@ MOs <- MOs %>%
   # put `mo` in front, followed by the rest
   select(mo, everything(), -abbr_other, -abbr_genus, -abbr_species, -abbr_subspecies)
 
-
 # add non-taxonomic entries
 MOs <- MOs %>%
   bind_rows(
@@ -341,6 +345,38 @@ MOs <- MOs %>%
                order = "(unknown order)",
                family = "(unknown family)",
                genus = "(unknown Gram-positives)",
+               species = "(unknown species)",
+               subspecies = "(unknown subspecies)",
+               rank = "species",
+               ref = NA_character_,
+               species_id = "",
+               source = "manually added",
+               stringsAsFactors = FALSE),
+    data.frame(mo = "F_YEAST",
+               col_id = NA_integer_,
+               fullname = "(unknown yeast)",
+               kingdom = "Fungi",
+               phylum = "(unknown phylum)",
+               class = "(unknown class)",
+               order = "(unknown order)",
+               family = "(unknown family)",
+               genus = "(unknown genus)",
+               species = "(unknown species)",
+               subspecies = "(unknown subspecies)",
+               rank = "species",
+               ref = NA_character_,
+               species_id = "",
+               source = "manually added",
+               stringsAsFactors = FALSE),
+    data.frame(mo = "F_FUNGUS",
+               col_id = NA_integer_,
+               fullname = "(unknown fungus)",
+               kingdom = "Fungi",
+               phylum = "(unknown phylum)",
+               class = "(unknown class)",
+               order = "(unknown order)",
+               family = "(unknown family)",
+               genus = "(unknown genus)",
                species = "(unknown species)",
                subspecies = "(unknown subspecies)",
                rank = "species",
@@ -488,6 +524,11 @@ MOs <- MOs %>%
 sum(duplicated(MOs$mo))
 colnames(MOs)
 
+# here we welcome the new ones:
+MOs %>% filter(!fullname %in% AMR::microorganisms$fullname) %>% View()
+# and the ones we lost:
+AMR::microorganisms %>% filter(!fullname %in% MOs$fullname) %>% View()
+
 # set prevalence per species
 MOs <- MOs %>%
   mutate(prevalence = case_when(
@@ -534,12 +575,16 @@ MOs.old$col_id <- as.integer(MOs.old$col_id)
 MOs.old$col_id_new <- as.integer(MOs.old$col_id_new)
 
 # save
+### for other server
 saveRDS(MOs, "microorganisms.rds")
 saveRDS(MOs.old, "microorganisms.old.rds")
+### for same server
+microorganisms <- MOs
+microorganisms.old <- MOs.old
 
 # on the server, do:
 usethis::use_data(microorganisms, overwrite = TRUE, version = 2)
 usethis::use_data(microorganisms.old, overwrite = TRUE, version = 2)
 rm(microorganisms)
 rm(microorganisms.old)
-# and update the year in R/data.R
+# and update the year and dimensions in R/data.R

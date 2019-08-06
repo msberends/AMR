@@ -80,7 +80,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">0.7.1.9005</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">0.7.1.9026</span>
       </span>
     </div>
 
@@ -156,13 +156,6 @@
         <span class="fa fa-capsules"></span>
          
         Get properties of an antibiotic
-      </a>
-    </li>
-    <li>
-      <a href="../articles/freq.html">
-        <span class="fa fa-sort-amount-down"></span>
-         
-        Create frequency tables
       </a>
     </li>
     <li>
@@ -291,11 +284,11 @@
     </tr>
     <tr>
       <th>model</th>
-      <td><p>the statistical model of choice. Defaults to a generalised linear regression model with binomial distribution, assuming that a period of zero resistance was followed by a period of increasing resistance leading slowly to more and more resistance. See Details for valid options.</p></td>
+      <td><p>the statistical model of choice. Defaults to a generalised linear regression model with binomial distribution (i.e. using <code><a href='https://www.rdocumentation.org/packages/stats/topics/glm'>glm</a>(..., family = <a href='https://www.rdocumentation.org/packages/stats/topics/family'>binomial</a>)</code>), assuming that a period of zero resistance was followed by a period of increasing resistance leading slowly to more and more resistance. See Details for valid options.</p></td>
     </tr>
     <tr>
       <th>I_as_S</th>
-      <td><p>a logical to indicate whether values <code>I</code> should be treated as <code>S</code></p></td>
+      <td><p>a logical to indicate whether values <code>I</code> should be treated as <code>S</code> (will otherwise be treated as <code>R</code>)</p></td>
     </tr>
     <tr>
       <th>preserve_measurements</th>

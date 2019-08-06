@@ -29,7 +29,7 @@ EUCAST_VERSION_EXPERT_RULES <- "3.1, 2016"
 #' @param x data with antibiotic columns, like e.g. \code{AMX} and \code{AMC}
 #' @param info print progress
 #' @param rules a character vector that specifies which rules should be applied - one or more of \code{c("breakpoints", "expert", "other", "all")}
-#' @param verbose a logical to indicate whether extensive info should be returned as a \code{data.frame} with info about which rows and columns are effected. It runs all EUCAST rules, but will not be applied to an output - only an informative \code{data.frame} with changes will be returned as output.
+#' @param verbose a logical to turn Verbose mode on and off (default is off). In Verbose mode, the function does not apply rules to the data, but instead returns a \code{data.frame} with extensive info about which rows and columns would be effected and in which way.
 #' @param ... column name of an antibiotic, see section Antibiotics
 #' @inheritParams first_isolate
 #' @details
@@ -119,7 +119,8 @@ EUCAST_VERSION_EXPERT_RULES <- "3.1, 2016"
 #' @rdname eucast_rules
 #' @export
 #' @importFrom dplyr %>% select pull mutate_at vars group_by summarise n
-#' @importFrom crayon bold bgGreen bgYellow bgRed black green blue italic strip_style white
+#' @importFrom crayon bold bgGreen bgYellow bgRed black green blue italic strip_style white red
+#' @importFrom utils menu
 #' @return The input of \code{x}, possibly with edited values of antibiotics. Or, if \code{verbose = TRUE}, a \code{data.frame} with all original and new values of the affected bug-drug combinations.
 #' @source
 #'   \itemize{
@@ -139,8 +140,6 @@ EUCAST_VERSION_EXPERT_RULES <- "3.1, 2016"
 #'   }
 #' @inheritSection AMR Read more on our website!
 #' @examples
-#' a <- eucast_rules(septic_patients)
-#'
 #' a <- data.frame(mo = c("Staphylococcus aureus",
 #'                        "Enterococcus faecalis",
 #'                        "Escherichia coli",
@@ -176,7 +175,7 @@ EUCAST_VERSION_EXPERT_RULES <- "3.1, 2016"
 #' # 5 Pseudomonas aeruginosa    R    R    -    -    R    R    R
 #'
 #'
-#' # do not apply EUCAST rules, but rather get a a data.frame
+#' # do not apply EUCAST rules, but rather get a data.frame
 #' # with 18 rows, containing all details about the transformations:
 #' c <- eucast_rules(a, verbose = TRUE)
 eucast_rules <- function(x,
@@ -185,9 +184,21 @@ eucast_rules <- function(x,
                          rules = c("breakpoints", "expert", "other", "all"),
                          verbose = FALSE,
                          ...) {
-
-  x <- x
-
+  
+  if (verbose == TRUE & interactive()) {
+    txt <- paste0("WARNING: In Verbose mode, the eucast_rules() function does not apply rules to the data, but instead returns a data set in logbook form: with extensive info about which rows and columns would be effected and in which way.",
+                  "\n\nThis may overwrite your existing data if you use e.g.:",
+                  "\ndata <- eucast_rules(data, verbose = TRUE)\n\nDo you want to continue?")
+    if ("rstudioapi" %in% rownames(installed.packages())) {
+      q_continue <- rstudioapi::showQuestion("Using verbose = TRUE with eucast_rules()", txt)
+    } else {
+      q_continue <- menu(choices = c("OK", "Cancel"), graphics = TRUE, title = txt)
+    }
+    if (q_continue %in% c(FALSE, 2)) {
+      return(invisible())
+    }
+  }
+  
   if (!is.data.frame(x)) {
     stop("`x` must be a data frame.", call. = FALSE)
   }
@@ -385,7 +396,6 @@ eucast_rules <- function(x,
     cols <- unique(cols[!is.na(cols) & !is.null(cols)])
     if (length(rows) > 0 & length(cols) > 0) {
       before_df <- x_original
-      before <- as.character(unlist(as.list(x_original[rows, cols])))
 
       tryCatch(
         # insert into original table
@@ -406,9 +416,7 @@ eucast_rules <- function(x,
 
       x[rows, cols] <<- x_original[rows, cols]
 
-      after <- as.character(unlist(as.list(x_original[rows, cols])))
-
-      # before_df might not be a data.frame, but a tibble of data.table instead
+      # before_df might not be a data.frame, but a tibble or data.table instead
       old <- as.data.frame(before_df, stringsAsFactors = FALSE)[rows,]
       no_of_changes_this_run <- 0
       for (i in 1:length(cols)) {
@@ -423,13 +431,14 @@ eucast_rules <- function(x,
                                   stringsAsFactors = FALSE)
         colnames(verbose_new) <- c("row", "col", "mo_fullname", "old", "new", "rule", "rule_group", "rule_name")
         verbose_new <- verbose_new %>% filter(old != new | is.na(old))
+        # save changes to data set 'verbose_info'
         verbose_info <<- rbind(verbose_info, verbose_new)
         no_of_changes_this_run <- no_of_changes_this_run + nrow(verbose_new)
       }
-      # return number of (new) changes
+      # after the applied changes: return number of (new) changes
       return(no_of_changes_this_run)
     }
-    # return number of (new) changes: none.
+    # no changes were applied: return number of (new) changes: none.
     return(0)
   }
 
@@ -498,6 +507,15 @@ eucast_rules <- function(x,
     }
     y[y != "" & y %in% colnames(df)]
   }
+  get_antibiotic_names <- function(x) {
+    x %>%
+      strsplit(",") %>%
+      unlist() %>%
+      trimws() %>%
+      sapply(function(x) if(x %in% AMR::antibiotics$ab) ab_name(x, language = NULL, tolower = TRUE) else x) %>%
+      sort() %>%
+      paste(collapse = ", ")
+  }
 
   eucast_rules_df <- eucast_rules_file # internal data file
   no_of_changes <- 0
@@ -510,10 +528,11 @@ eucast_rules <- function(x,
     rule_group_current <- eucast_rules_df[i, "reference.rule_group"]
     rule_group_next <- eucast_rules_df[min(nrow(eucast_rules_df), i + 1), "reference.rule_group"]
     if (is.na(eucast_rules_df[i, 4])) {
-      rule_text <- paste("always:", eucast_rules_df[i, 6], "=", eucast_rules_df[i, 7])
+      rule_text <- paste0("always report as '", eucast_rules_df[i, 7], "': ", get_antibiotic_names(eucast_rules_df[i, 6]))
     } else {
-      rule_text <- paste("if", eucast_rules_df[i, 4], "=", eucast_rules_df[i, 5],
-                         "then", eucast_rules_df[i, 6], "=", eucast_rules_df[i, 7])
+      rule_text <- paste0("report as '", eucast_rules_df[i, 7], "' when ",
+                          get_antibiotic_names(eucast_rules_df[i, 4]), " is '", eucast_rules_df[i, 5], "': ",
+                          get_antibiotic_names(eucast_rules_df[i, 6]))
     }
     if (i == 1) {
       rule_previous <- ""
@@ -736,7 +755,9 @@ eucast_rules <- function(x,
     cat(paste0(silver(strrep("-", options()$width - 1)), "\n"))
 
     if (verbose == FALSE & nrow(verbose_info) > 0) {
-      cat(paste("\nUse", bold("verbose = TRUE"), "to get a data.frame with all specified edits instead.\n"))
+      cat(paste("\nUse", bold("verbose = TRUE"), "(on your original data) to get a data.frame with all specified edits instead.\n"))
+    } else if (verbose == TRUE) {
+      cat(paste(red("\nUsed 'Verbose mode' (verbose = TRUE)."), "This returns a data.frame with all specified edits.\nUse", bold("verbose = FALSE"), "to apply the rules on your data.\n"))
     }
   }
 

@@ -187,8 +187,10 @@ table a:not(.btn):hover, .table a:not(.btn):hover {
 
 /* text below header in manual overview */
 .template-reference-index h2 ~ p {
-  font-size: 110%;
-  /* font-weight: bold; */
+  font-size: 16px;
+}
+.template-reference-topic h2 {
+  font-size: 24px;
 }
 
 /* logos on index page */

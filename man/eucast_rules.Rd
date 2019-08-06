@@ -33,7 +33,7 @@ eucast_rules(x, col_mo = NULL, info = TRUE, rules = c("breakpoints",
 
 \item{rules}{a character vector that specifies which rules should be applied - one or more of \code{c("breakpoints", "expert", "other", "all")}}
 
-\item{verbose}{a logical to indicate whether extensive info should be returned as a \code{data.frame} with info about which rows and columns are effected. It runs all EUCAST rules, but will not be applied to an output - only an informative \code{data.frame} with changes will be returned as output.}
+\item{verbose}{a logical to turn Verbose mode on and off (default is off). In Verbose mode, the function does not apply rules to the data, but instead returns a \code{data.frame} with extensive info about which rows and columns would be effected and in which way.}
 
 \item{...}{column name of an antibiotic, see section Antibiotics}
 }
@@ -135,8 +135,6 @@ On our website \url{https://msberends.gitlab.io/AMR} you can find \href{https://
 }
 
 \examples{
-a <- eucast_rules(septic_patients)
-
 a <- data.frame(mo = c("Staphylococcus aureus",
                        "Enterococcus faecalis",
                        "Escherichia coli",
@@ -172,7 +170,7 @@ b
 # 5 Pseudomonas aeruginosa    R    R    -    -    R    R    R
 
 
-# do not apply EUCAST rules, but rather get a a data.frame
+# do not apply EUCAST rules, but rather get a data.frame
 # with 18 rows, containing all details about the transformations:
 c <- eucast_rules(a, verbose = TRUE)
 }

@@ -17,16 +17,15 @@ This package can be used for:
 
   * Reference for the taxonomy of microorganisms, since the package contains all microbial (sub)species from the [Catalogue of Life](http://www.catalogueoflife.org) ([manual](./reference/mo_property.html))
   * Interpreting raw MIC and disk diffusion values, based on the latest CLSI or EUCAST guidelines ([manual](./reference/as.rsi.html))
+  * Determining first isolates to be used for AMR analysis ([manual](./reference/first_isolate.html))
   * Calculating antimicrobial resistance ([tutorial](./articles/AMR.html))
   * Determining multi-drug resistance (MDR) / multi-drug resistant organisms (MDRO) ([tutorial](./articles/MDR.html))
-  * Calculating empirical susceptibility of both mono therapy and combination therapy ([tutorial](./articles/AMR.html))
+  * Calculating (empirical) susceptibility of both mono therapy and combination therapies ([tutorial](./articles/AMR.html))
   * Predicting future antimicrobial resistance using regression models ([tutorial](./articles/resistance_predict.html))
   * Getting properties for any microorganism (like Gram stain, species, genus or family) ([manual](./reference/mo_property.html))
   * Getting properties for any antibiotic (like name, ATC code, defined daily dose or trade name) ([manual](./reference/ab_property.html))
   * Plotting antimicrobial resistance ([tutorial](./articles/AMR.html))
-  * Determining first isolates to be used for AMR analysis ([manual](./reference/first_isolate.html))
   * Applying EUCAST expert rules ([manual](./reference/eucast_rules.html))
-  * Descriptive statistics: frequency tables, kurtosis and skewness ([tutorial](./articles/freq.html))
 
 This package is ready-to-use for a professional environment by specialists in the following fields:
 
@@ -117,6 +116,8 @@ Read more about the data from the Catalogue of Life [in our manual](./reference/
 
 This package contains **all ~450 antimicrobial drugs** and their Anatomical Therapeutic Chemical (ATC) codes, ATC groups and Defined Daily Dose (DDD, oral and IV) from the World Health Organization Collaborating Centre for Drug Statistics Methodology (WHOCC, https://www.whocc.no) and the [Pharmaceuticals Community Register of the European Commission](http://ec.europa.eu/health/documents/community-register/html/atc.htm).
 
+**NOTE: The WHOCC copyright does not allow use for commercial purposes, unlike any other info from this package. See \url{https://www.whocc.no/copyright_disclaimer/}.**
+
 Read more about the data from WHOCC [in our manual](./reference/WHOCC.html).
 
 #### WHONET / EARS-Net
@@ -134,7 +135,7 @@ The `AMR` package basically does four important things:
 1. It **cleanses existing data** by providing new *classes* for microoganisms, antibiotics and antimicrobial results (both S/I/R and MIC). By installing this package, you teach R everything about microbiology that is needed for analysis. These functions all use intelligent rules to guess results that you would expect:
 
    * Use `as.mo()` to get a microbial ID. The IDs are human readable for the trained eye - the ID of *Klebsiella pneumoniae* is "B_KLBSL_PNE" (B stands for Bacteria) and the ID of *S. aureus* is "B_STPHY_AUR". The function takes almost any text as input that looks like the name or code of a microorganism like "E. coli", "esco" or "esccol" and tries to find expected results using intelligent rules combined with the included Catalogue of Life data set. It only takes milliseconds to find results, please see our [benchmarks](./articles/benchmarks.html). Moreover, it can group *Staphylococci* into coagulase negative and positive (CoNS and CoPS, see [source](./reference/as.mo.html#source)) and can categorise *Streptococci* into Lancefield groups (like beta-haemolytic *Streptococcus* Group B, [source](./reference/as.mo.html#source)).
-   * Use `as.ab()` to get an antibiotic ID. Like microbial IDs, these IDs are also human readable based on those used by EARS-Net. For example, the ID of amoxicillin is `AMX` and the ID of gentamicin is `GEN`. The `as.ab()` function also uses intelligent rules to find results like accepting misspelling, trade names and abbrevations used in many laboratory systems. For instance, the values "Furabid", "Furadantin", "nitro" all return the ID of Nitrofurantoine. To accomplish this, the package contains a database with most LIS codes, official names, trade names, DDDs and categories of antibiotics. The function `as.atc()` will return the ATC code of an antibiotic as defined by the WHO. 
+   * Use `as.ab()` to get an antibiotic ID. Like microbial IDs, these IDs are also human readable based on those used by EARS-Net. For example, the ID of amoxicillin is `AMX` and the ID of gentamicin is `GEN`. The `as.ab()` function also uses intelligent rules to find results like accepting misspelling, trade names and abbrevations used in many laboratory systems. For instance, the values "Furabid", "Furadantin", "nitro" all return the ID of Nitrofurantoine. To accomplish this, the package contains a database with most LIS codes, official names, trade names, ATC codes, defined daily doses (DDD) and drug categories of antibiotics.
    * Use `as.rsi()` to get antibiotic interpretations based on raw MIC values (in mg/L) or disk diffusion values (in mm), or transform existing values to valid antimicrobial results. It produces just S, I or R based on your input and warns about invalid values. Even values like "<=0.002; S" (combined MIC/RSI) will result in "S".
    * Use `as.mic()` to cleanse your MIC values. It produces a so-called factor (called *ordinal* in SPSS) with valid MIC values as levels. A value like "<=0.002; S" (combined MIC/RSI) will result in "<=0.002".
    
@@ -145,14 +146,13 @@ The `AMR` package basically does four important things:
      * You can also identify first *weighted* isolates of every patient, an adjusted version of the CLSI guideline. This takes into account key antibiotics of every strain and compares them.
    * Use `mdro()` (abbreviation of Multi Drug Resistant Organisms) to check your isolates for exceptional resistance with country-specific guidelines or EUCAST rules. Currently, national guidelines for Germany and the Netherlands are supported.
    * The [data set `microorganisms`](./reference/microorganisms.html) contains the complete taxonomic tree of ~65,000 microorganisms. Furthermore, some colloquial names and all Gram stains are available, which enables resistance analysis of e.g. different antibiotics per Gram stain. The package also contains functions to look up values in this data set like `mo_genus()`, `mo_family()`, `mo_gramstain()` or even `mo_phylum()`. As they use `as.mo()` internally, they also use the same intelligent rules for determination. For example, `mo_genus("MRSA")` and `mo_genus("S. aureus")` will both return `"Staphylococcus"`. They also come with support for German, Dutch, Spanish, Italian, French and Portuguese. These functions can be used to add new variables to your data.
-   * The [data set `antibiotics`](./reference/antibiotics.html) contains ~450 antimicrobial drugs with their EARS-Net code, ATC code, PubChem compound ID, official name, common LIS codes and DDDs of both oral and parenteral administration. It also contains all (thousands of) trade names found in PubChem. Use functions like `ab_name()`, `ab_group()` and `ab_tradenames()` to look up values. The `ab_*` functions use `as.ab()` internally so they support the same intelligent rules to guess the most probable result. For example, `ab_name("Fluclox")`, `ab_name("Floxapen")` and `ab_name("J01CF05")` will all return `"Flucloxacillin"`. These functions can again be used to add new variables to your data.
+   * The [data set `antibiotics`](./reference/antibiotics.html) contains ~450 antimicrobial drugs with their EARS-Net code, ATC code, PubChem compound ID, official name, common LIS codes and DDDs of both oral and parenteral administration. It also contains all (thousands of) trade names found in PubChem. The function `ab_atc()` will return the ATC code of an antibiotic as defined by the WHO. Use functions like `ab_name()`, `ab_group()` and `ab_tradenames()` to look up values. The `ab_*` functions use `as.ab()` internally so they support the same intelligent rules to guess the most probable result. For example, `ab_name("Fluclox")`, `ab_name("Floxapen")` and `ab_name("J01CF05")` will all return `"Flucloxacillin"`. These functions can again be used to add new variables to your data.
 
 3. It **analyses the data** with convenient functions that use well-known methods.
 
    * Calculate the resistance (and even co-resistance) of microbial isolates with the `portion_R()`, `portion_IR()`, `portion_I()`, `portion_SI()` and `portion_S()` functions. Similarly, the *number* of isolates can be determined with the `count_R()`, `count_IR()`, `count_I()`, `count_SI()` and `count_S()` functions. All these functions can be used with the `dplyr` package (e.g. in conjunction with `summarise()`)
    * Plot AMR results with `geom_rsi()`, a function made for the `ggplot2` package
    * Predict antimicrobial resistance for the nextcoming years using logistic regression models with the `resistance_predict()` function
-   * Conduct descriptive statistics to enhance base R: calculate `kurtosis()`, `skewness()` and create frequency tables with `freq()`
 
 4. It **teaches the user** how to use all the above actions.
 

@@ -40,7 +40,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">0.7.1.9005</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">0.7.1.9026</span>
       </span>
     </div>
 
@@ -119,13 +119,6 @@
       </a>
     </li>
     <li>
-      <a href="../articles/freq.html">
-        <span class="fa fa-sort-amount-down"></span>
-         
-        Create frequency tables
-      </a>
-    </li>
-    <li>
       <a href="../articles/benchmarks.html">
         <span class="fa fa-shipping-fast"></span>
          
@@ -192,7 +185,7 @@
       <h1>How to determine multi-drug resistance (MDR)</h1>
                         <h4 class="author">Matthijs S. Berends</h4>
             
-            <h4 class="date">01 July 2019</h4>
+            <h4 class="date">06 August 2019</h4>
       
       
       <div class="hidden name"><code>MDR.Rmd</code></div>
@@ -208,58 +201,60 @@
 <li>“WIP-Richtlijn Bijzonder Resistente Micro-organismen (BRMO)”, by RIVM (Rijksinstituut voor de Volksgezondheid, the Netherlands National Institute for Public Health and the Environment)</li>
 </ul>
 <p>As an example, I will make a data set to determine multi-drug resistant TB:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1"><span class="co"># a helper function to get a random vector with values S, I and R</span></a>
-<a class="sourceLine" id="cb1-2" title="2"><span class="co"># with the probabilities 50%-10%-40%</span></a>
-<a class="sourceLine" id="cb1-3" title="3">sample_rsi &lt;-<span class="st"> </span><span class="cf">function</span>() {</a>
-<a class="sourceLine" id="cb1-4" title="4">  <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/sample">sample</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"S"</span>, <span class="st">"I"</span>, <span class="st">"R"</span>),</a>
-<a class="sourceLine" id="cb1-5" title="5">         <span class="dt">size =</span> <span class="dv">5000</span>,</a>
-<a class="sourceLine" id="cb1-6" title="6">         <span class="dt">prob =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="fl">0.5</span>, <span class="fl">0.1</span>, <span class="fl">0.4</span>),</a>
-<a class="sourceLine" id="cb1-7" title="7">         <span class="dt">replace =</span> <span class="ot">TRUE</span>)</a>
-<a class="sourceLine" id="cb1-8" title="8">}</a>
-<a class="sourceLine" id="cb1-9" title="9"></a>
-<a class="sourceLine" id="cb1-10" title="10">my_TB_data &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/data.frame">data.frame</a></span>(<span class="dt">rifampicin =</span> <span class="kw">sample_rsi</span>(),</a>
-<a class="sourceLine" id="cb1-11" title="11">                         <span class="dt">isoniazid =</span> <span class="kw">sample_rsi</span>(),</a>
-<a class="sourceLine" id="cb1-12" title="12">                         <span class="dt">gatifloxacin =</span> <span class="kw">sample_rsi</span>(),</a>
-<a class="sourceLine" id="cb1-13" title="13">                         <span class="dt">ethambutol =</span> <span class="kw">sample_rsi</span>(),</a>
-<a class="sourceLine" id="cb1-14" title="14">                         <span class="dt">pyrazinamide =</span> <span class="kw">sample_rsi</span>(),</a>
-<a class="sourceLine" id="cb1-15" title="15">                         <span class="dt">moxifloxacin =</span> <span class="kw">sample_rsi</span>(),</a>
-<a class="sourceLine" id="cb1-16" title="16">                         <span class="dt">kanamycin =</span> <span class="kw">sample_rsi</span>())</a></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="co"># a helper function to get a random vector with values S, I and R</span></a>
+<a class="sourceLine" id="cb1-2" data-line-number="2"><span class="co"># with the probabilities 50%-10%-40%</span></a>
+<a class="sourceLine" id="cb1-3" data-line-number="3">sample_rsi &lt;-<span class="st"> </span><span class="cf">function</span>() {</a>
+<a class="sourceLine" id="cb1-4" data-line-number="4">  <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/sample">sample</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"S"</span>, <span class="st">"I"</span>, <span class="st">"R"</span>),</a>
+<a class="sourceLine" id="cb1-5" data-line-number="5">         <span class="dt">size =</span> <span class="dv">5000</span>,</a>
+<a class="sourceLine" id="cb1-6" data-line-number="6">         <span class="dt">prob =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="fl">0.5</span>, <span class="fl">0.1</span>, <span class="fl">0.4</span>),</a>
+<a class="sourceLine" id="cb1-7" data-line-number="7">         <span class="dt">replace =</span> <span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb1-8" data-line-number="8">}</a>
+<a class="sourceLine" id="cb1-9" data-line-number="9"></a>
+<a class="sourceLine" id="cb1-10" data-line-number="10">my_TB_data &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/data.frame">data.frame</a></span>(<span class="dt">rifampicin =</span> <span class="kw">sample_rsi</span>(),</a>
+<a class="sourceLine" id="cb1-11" data-line-number="11">                         <span class="dt">isoniazid =</span> <span class="kw">sample_rsi</span>(),</a>
+<a class="sourceLine" id="cb1-12" data-line-number="12">                         <span class="dt">gatifloxacin =</span> <span class="kw">sample_rsi</span>(),</a>
+<a class="sourceLine" id="cb1-13" data-line-number="13">                         <span class="dt">ethambutol =</span> <span class="kw">sample_rsi</span>(),</a>
+<a class="sourceLine" id="cb1-14" data-line-number="14">                         <span class="dt">pyrazinamide =</span> <span class="kw">sample_rsi</span>(),</a>
+<a class="sourceLine" id="cb1-15" data-line-number="15">                         <span class="dt">moxifloxacin =</span> <span class="kw">sample_rsi</span>(),</a>
+<a class="sourceLine" id="cb1-16" data-line-number="16">                         <span class="dt">kanamycin =</span> <span class="kw">sample_rsi</span>())</a></code></pre></div>
 <p>Because all column names are automatically verified for valid drug names or codes, this would have worked exactly the same:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" title="1">my_TB_data &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/data.frame">data.frame</a></span>(<span class="dt">RIF =</span> <span class="kw">sample_rsi</span>(),</a>
-<a class="sourceLine" id="cb2-2" title="2">                         <span class="dt">INH =</span> <span class="kw">sample_rsi</span>(),</a>
-<a class="sourceLine" id="cb2-3" title="3">                         <span class="dt">GAT =</span> <span class="kw">sample_rsi</span>(),</a>
-<a class="sourceLine" id="cb2-4" title="4">                         <span class="dt">ETH =</span> <span class="kw">sample_rsi</span>(),</a>
-<a class="sourceLine" id="cb2-5" title="5">                         <span class="dt">PZA =</span> <span class="kw">sample_rsi</span>(),</a>
-<a class="sourceLine" id="cb2-6" title="6">                         <span class="dt">MFX =</span> <span class="kw">sample_rsi</span>(),</a>
-<a class="sourceLine" id="cb2-7" title="7">                         <span class="dt">KAN =</span> <span class="kw">sample_rsi</span>())</a></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1">my_TB_data &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/data.frame">data.frame</a></span>(<span class="dt">RIF =</span> <span class="kw">sample_rsi</span>(),</a>
+<a class="sourceLine" id="cb2-2" data-line-number="2">                         <span class="dt">INH =</span> <span class="kw">sample_rsi</span>(),</a>
+<a class="sourceLine" id="cb2-3" data-line-number="3">                         <span class="dt">GAT =</span> <span class="kw">sample_rsi</span>(),</a>
+<a class="sourceLine" id="cb2-4" data-line-number="4">                         <span class="dt">ETH =</span> <span class="kw">sample_rsi</span>(),</a>
+<a class="sourceLine" id="cb2-5" data-line-number="5">                         <span class="dt">PZA =</span> <span class="kw">sample_rsi</span>(),</a>
+<a class="sourceLine" id="cb2-6" data-line-number="6">                         <span class="dt">MFX =</span> <span class="kw">sample_rsi</span>(),</a>
+<a class="sourceLine" id="cb2-7" data-line-number="7">                         <span class="dt">KAN =</span> <span class="kw">sample_rsi</span>())</a></code></pre></div>
 <p>The data set looks like this now:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/head">head</a></span>(my_TB_data)</a>
-<a class="sourceLine" id="cb3-2" title="2"><span class="co">#   rifampicin isoniazid gatifloxacin ethambutol pyrazinamide moxifloxacin</span></a>
-<a class="sourceLine" id="cb3-3" title="3"><span class="co"># 1          R         R            S          S            R            I</span></a>
-<a class="sourceLine" id="cb3-4" title="4"><span class="co"># 2          R         R            S          R            S            R</span></a>
-<a class="sourceLine" id="cb3-5" title="5"><span class="co"># 3          R         S            S          R            R            R</span></a>
-<a class="sourceLine" id="cb3-6" title="6"><span class="co"># 4          R         R            S          S            S            I</span></a>
-<a class="sourceLine" id="cb3-7" title="7"><span class="co"># 5          R         R            S          S            R            I</span></a>
-<a class="sourceLine" id="cb3-8" title="8"><span class="co"># 6          R         S            R          R            S            S</span></a>
-<a class="sourceLine" id="cb3-9" title="9"><span class="co">#   kanamycin</span></a>
-<a class="sourceLine" id="cb3-10" title="10"><span class="co"># 1         S</span></a>
-<a class="sourceLine" id="cb3-11" title="11"><span class="co"># 2         S</span></a>
-<a class="sourceLine" id="cb3-12" title="12"><span class="co"># 3         S</span></a>
-<a class="sourceLine" id="cb3-13" title="13"><span class="co"># 4         R</span></a>
-<a class="sourceLine" id="cb3-14" title="14"><span class="co"># 5         R</span></a>
-<a class="sourceLine" id="cb3-15" title="15"><span class="co"># 6         S</span></a></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/head">head</a></span>(my_TB_data)</a>
+<a class="sourceLine" id="cb3-2" data-line-number="2"><span class="co">#   rifampicin isoniazid gatifloxacin ethambutol pyrazinamide moxifloxacin</span></a>
+<a class="sourceLine" id="cb3-3" data-line-number="3"><span class="co"># 1          R         R            S          R            S            S</span></a>
+<a class="sourceLine" id="cb3-4" data-line-number="4"><span class="co"># 2          R         R            S          R            S            S</span></a>
+<a class="sourceLine" id="cb3-5" data-line-number="5"><span class="co"># 3          R         S            R          S            S            R</span></a>
+<a class="sourceLine" id="cb3-6" data-line-number="6"><span class="co"># 4          R         I            S          R            R            R</span></a>
+<a class="sourceLine" id="cb3-7" data-line-number="7"><span class="co"># 5          I         S            S          R            I            S</span></a>
+<a class="sourceLine" id="cb3-8" data-line-number="8"><span class="co"># 6          R         R            R          S            I            S</span></a>
+<a class="sourceLine" id="cb3-9" data-line-number="9"><span class="co">#   kanamycin</span></a>
+<a class="sourceLine" id="cb3-10" data-line-number="10"><span class="co"># 1         I</span></a>
+<a class="sourceLine" id="cb3-11" data-line-number="11"><span class="co"># 2         S</span></a>
+<a class="sourceLine" id="cb3-12" data-line-number="12"><span class="co"># 3         I</span></a>
+<a class="sourceLine" id="cb3-13" data-line-number="13"><span class="co"># 4         S</span></a>
+<a class="sourceLine" id="cb3-14" data-line-number="14"><span class="co"># 5         S</span></a>
+<a class="sourceLine" id="cb3-15" data-line-number="15"><span class="co"># 6         S</span></a></code></pre></div>
 <p>We can now add the interpretation of MDR-TB to our data set:</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" title="1">my_TB_data<span class="op">$</span>mdr &lt;-<span class="st"> </span><span class="kw"><a href="../reference/mdro.html">mdr_tb</a></span>(my_TB_data)</a>
-<a class="sourceLine" id="cb4-2" title="2"><span class="co"># </span><span class="al">NOTE</span><span class="co">: No column found as input for `col_mo`, assuming all records contain Mycobacterium tuberculosis.</span></a>
-<a class="sourceLine" id="cb4-3" title="3"><span class="co"># Determining multidrug-resistant organisms (MDRO), according to:</span></a>
-<a class="sourceLine" id="cb4-4" title="4"><span class="co"># Guideline: Companion handbook to the WHO guidelines for the programmatic management of drug-resistant tuberculosis</span></a>
-<a class="sourceLine" id="cb4-5" title="5"><span class="co"># Version:   WHO/HTM/TB/2014.11</span></a>
-<a class="sourceLine" id="cb4-6" title="6"><span class="co"># Author:    WHO (World Health Organization)</span></a>
-<a class="sourceLine" id="cb4-7" title="7"><span class="co"># Source:    https://www.who.int/tb/publications/pmdt_companionhandbook/en/</span></a>
-<a class="sourceLine" id="cb4-8" title="8"><span class="co"># </span><span class="al">NOTE</span><span class="co">: Reliability might be improved if these antimicrobial results would be available too: CAP (capreomycin), RIB (rifabutin), RFP (rifapentine)</span></a></code></pre></div>
-<p>And review the result with a frequency table:</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" title="1"><span class="kw"><a href="../reference/freq.html">freq</a></span>(my_TB_data<span class="op">$</span>mdr)</a></code></pre></div>
-<p><strong>Frequency table of <code>mdr</code> from <code>my_TB_data</code> (5,000 x 8)</strong></p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1">my_TB_data<span class="op">$</span>mdr &lt;-<span class="st"> </span><span class="kw"><a href="../reference/mdro.html">mdr_tb</a></span>(my_TB_data)</a>
+<a class="sourceLine" id="cb4-2" data-line-number="2"><span class="co"># </span><span class="al">NOTE</span><span class="co">: No column found as input for `col_mo`, assuming all records contain Mycobacterium tuberculosis.</span></a>
+<a class="sourceLine" id="cb4-3" data-line-number="3"><span class="co"># Determining multidrug-resistant organisms (MDRO), according to:</span></a>
+<a class="sourceLine" id="cb4-4" data-line-number="4"><span class="co"># Guideline: Companion handbook to the WHO guidelines for the programmatic management of drug-resistant tuberculosis</span></a>
+<a class="sourceLine" id="cb4-5" data-line-number="5"><span class="co"># Version:   WHO/HTM/TB/2014.11</span></a>
+<a class="sourceLine" id="cb4-6" data-line-number="6"><span class="co"># Author:    WHO (World Health Organization)</span></a>
+<a class="sourceLine" id="cb4-7" data-line-number="7"><span class="co"># Source:    https://www.who.int/tb/publications/pmdt_companionhandbook/en/</span></a>
+<a class="sourceLine" id="cb4-8" data-line-number="8"><span class="co"># </span><span class="al">NOTE</span><span class="co">: Reliability might be improved if these antimicrobial results would be available too: CAP (capreomycin), RIB (rifabutin), RFP (rifapentine)</span></a></code></pre></div>
+<p>We also created a package dedicated to data cleaning and checking, called the <code>clean</code> package. It gets automatically installed with the <code>AMR</code> package, so we only have to load it:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(clean)</a></code></pre></div>
+<p>It contains the <code><a href="https://www.rdocumentation.org/packages/clean/topics/freq">freq()</a></code> function, to create a frequency table:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/clean/topics/freq">freq</a></span>(my_TB_data<span class="op">$</span>mdr)</a></code></pre></div>
+<p><strong>Frequency table</strong></p>
 <p>Class: factor &gt; ordered (numeric)<br>
 Length: 5,000 (of which NA: 0 = 0.00%)<br>
 Levels: 5: Negative &lt; Mono-resistance &lt; Poly-resistance &lt; Multidrug resistance…<br>
@@ -277,41 +272,41 @@ Unique: 5</p>
 <tr class="odd">
 <td align="left">1</td>
 <td align="left">Mono-resistance</td>
-<td align="right">3,222</td>
-<td align="right">64.4%</td>
-<td align="right">3,222</td>
-<td align="right">64.4%</td>
+<td align="right">3264</td>
+<td align="right">65.3%</td>
+<td align="right">3264</td>
+<td align="right">65.3%</td>
 </tr>
 <tr class="even">
 <td align="left">2</td>
 <td align="left">Negative</td>
-<td align="right">659</td>
-<td align="right">13.2%</td>
-<td align="right">3,881</td>
-<td align="right">77.6%</td>
+<td align="right">627</td>
+<td align="right">12.5%</td>
+<td align="right">3891</td>
+<td align="right">77.8%</td>
 </tr>
 <tr class="odd">
 <td align="left">3</td>
 <td align="left">Multidrug resistance</td>
-<td align="right">589</td>
-<td align="right">11.8%</td>
-<td align="right">4,470</td>
-<td align="right">89.4%</td>
+<td align="right">607</td>
+<td align="right">12.1%</td>
+<td align="right">4498</td>
+<td align="right">90.0%</td>
 </tr>
 <tr class="even">
 <td align="left">4</td>
 <td align="left">Poly-resistance</td>
-<td align="right">313</td>
-<td align="right">6.3%</td>
-<td align="right">4,783</td>
+<td align="right">288</td>
+<td align="right">5.8%</td>
+<td align="right">4786</td>
 <td align="right">95.7%</td>
 </tr>
 <tr class="odd">
 <td align="left">5</td>
 <td align="left">Extensive drug resistance</td>
-<td align="right">217</td>
+<td align="right">214</td>
 <td align="right">4.3%</td>
-<td align="right">5,000</td>
+<td align="right">5000</td>
 <td align="right">100.0%</td>
 </tr>
 </tbody>

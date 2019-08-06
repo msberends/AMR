@@ -72,7 +72,13 @@ We can now add the interpretation of MDR-TB to our data set:
 my_TB_data$mdr <- mdr_tb(my_TB_data)
 ```
 
-And review the result with a frequency table:
+We also created a package dedicated to data cleaning and checking, called the `clean` package. It gets automatically installed with the `AMR` package, so we only have to load it:
+
+```{r lib clean, message = FALSE}
+library(clean)
+```
+
+It contains the `freq()` function, to create a frequency table:
 
 ```{r, results = 'asis'}
 freq(my_TB_data$mdr)

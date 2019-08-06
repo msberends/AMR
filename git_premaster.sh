@@ -36,6 +36,7 @@ fi
 sed -i -- "s/^Version: .*/Version: ${new_version}/" DESCRIPTION
 # update 1st line of NEWS.md
 sed -i -- "1s/.*/# AMR ${new_version}/" NEWS.md
+rm *-- || true
 echo "• First 3 lines of DESCRIPTION:"
 head -3 DESCRIPTION
 echo

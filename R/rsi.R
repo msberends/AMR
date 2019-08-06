@@ -50,7 +50,7 @@
 #' @return Ordered factor with new class \code{rsi}
 #' @keywords rsi
 #' @export
-#' @importFrom dplyr %>%
+#' @importFrom dplyr %>% desc arrange filter 
 #' @seealso \code{\link{as.mic}}
 #' @inheritSection AMR Read more on our website!
 #' @examples
@@ -73,6 +73,8 @@
 #'
 #' plot(rsi_data)    # for percentages
 #' barplot(rsi_data) # for frequencies
+#' 
+#' library(clean)
 #' freq(rsi_data)    # frequency table with informative header
 #'
 #' # using dplyr's mutate

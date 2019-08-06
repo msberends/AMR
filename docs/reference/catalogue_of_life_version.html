@@ -80,7 +80,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">0.7.1.9005</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">0.7.1.9026</span>
       </span>
     </div>
 
@@ -156,13 +156,6 @@
         <span class="fa fa-capsules"></span>
          
         Get properties of an antibiotic
-      </a>
-    </li>
-    <li>
-      <a href="../articles/freq.html">
-        <span class="fa fa-sort-amount-down"></span>
-         
-        Create frequency tables
       </a>
     </li>
     <li>
@@ -271,8 +264,9 @@ This package contains the complete taxonomic tree of almost all microorganisms (
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><span class='co'># NOT RUN {</span>
 <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>dplyr</span>)
-<span class='no'>microorganisms</span> <span class='kw'>%&gt;%</span> <span class='fu'><a href='freq.html'>freq</a></span>(<span class='no'>kingdom</span>)
-<span class='no'>microorganisms</span> <span class='kw'>%&gt;%</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span>(<span class='no'>kingdom</span>) <span class='kw'>%&gt;%</span> <span class='fu'><a href='freq.html'>freq</a></span>(<span class='no'>phylum</span>, <span class='kw'>nmax</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)
+<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>clean</span>)
+<span class='no'>microorganisms</span> <span class='kw'>%&gt;%</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/clean/topics/freq'>freq</a></span>(<span class='no'>kingdom</span>)
+<span class='no'>microorganisms</span> <span class='kw'>%&gt;%</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span>(<span class='no'>kingdom</span>) <span class='kw'>%&gt;%</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/clean/topics/freq'>freq</a></span>(<span class='no'>phylum</span>, <span class='kw'>nmax</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)
 <span class='co'># }</span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
