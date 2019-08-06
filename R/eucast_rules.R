@@ -120,6 +120,7 @@ EUCAST_VERSION_EXPERT_RULES <- "3.1, 2016"
 #' @export
 #' @importFrom dplyr %>% select pull mutate_at vars group_by summarise n
 #' @importFrom crayon bold bgGreen bgYellow bgRed black green blue italic strip_style white red
+#' @importFrom utils menu
 #' @return The input of \code{x}, possibly with edited values of antibiotics. Or, if \code{verbose = TRUE}, a \code{data.frame} with all original and new values of the affected bug-drug combinations.
 #' @source
 #'   \itemize{
