@@ -45,4 +45,3 @@ scale_type.ab <- function(x) {
   # "Error: Discrete value supplied to continuous scale"
   "discrete"
 }
-

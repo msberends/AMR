@@ -472,3 +472,21 @@ barplot.rsi <- function(height,
     axis(side = 1, labels = levels(height), at = c(1, 2, 3) + 0.5, lwd = 0)
   }
 }
+
+#' @importFrom pillar type_sum
+#' @export
+type_sum.rsi <- function(x) {
+  "rsi"
+}
+
+#' @importFrom pillar pillar_shaft
+#' @importFrom crayon bgGreen bgYellow bgRed white black
+#' @export 
+pillar_shaft.rsi <- function(x, ...) {
+  out <- trimws(format(x))
+  out[is.na(x)] <- pillar::style_subtle("NA")
+  out[x == "S"] <- bgGreen(white(" S "))
+  out[x == "I"] <- bgYellow(black(" I "))
+  out[x == "R"] <- bgRed(white(" R "))
+  pillar::new_pillar_shaft_simple(out, align = "left", min_width = 4)
+}

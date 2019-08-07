@@ -268,13 +268,17 @@ as.mo <- function(x, Becker = FALSE, Lancefield = FALSE, allow_uncertain = TRUE,
   }
 
 
-  structure(.Data = y, class = "mo")
+  to_class_mo(y)
+}
+
+to_class_mo <- function(x) {
+  structure(.Data = x, class = "mo")
 }
 
 #' @rdname as.mo
 #' @export
 is.mo <- function(x) {
-  identical(class(x), "mo")
+  identical(class(x), class(to_class_mo(x)))
 }
 
 #' @importFrom dplyr %>% pull left_join n_distinct progress_estimated filter distinct
@@ -391,8 +395,7 @@ exec_as.mo <- function(x,
   # all empty
   if (all(identical(trimws(x_input), "") | is.na(x_input) | length(x) == 0)) {
     if (property == "mo") {
-      return(structure(rep(NA_character_, length(x_input)),
-                       class = "mo"))
+      return(to_class_mo(rep(NA_character_, length(x_input))))
     } else {
       return(rep(NA_character_, length(x_input)))
     }
@@ -1455,7 +1458,7 @@ exec_as.mo <- function(x,
   )
 
   if (property == "mo") {
-    class(x) <- "mo"
+    x <- to_class_mo(x)
   }
 
   if (length(mo_renamed()) > 0) {
@@ -1505,6 +1508,20 @@ print.mo <- function(x, ...) {
   x <- as.character(x)
   names(x) <- x_names
   print.default(x, quote = FALSE)
+}
+
+#' @importFrom pillar type_sum
+#' @export
+type_sum.mo <- function(x) {
+  "mo"
+}
+
+#' @importFrom pillar pillar_shaft
+#' @export
+pillar_shaft.mo <- function(x, ...) {
+  out <- format(x)
+  out[is.na(x)] <- NA
+  pillar::new_pillar_shaft_simple(out, align = "left", min_width = 11)
 }
 
 #' @exportMethod summary.mo
