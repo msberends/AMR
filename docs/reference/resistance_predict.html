@@ -80,7 +80,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">0.7.1.9027</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">0.7.1.9028</span>
       </span>
     </div>
 
@@ -342,7 +342,7 @@
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><span class='co'># NOT RUN {</span>
-<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'>resistance_predict</span>(<span class='no'>septic_patients</span>, <span class='kw'>col_ab</span> <span class='kw'>=</span> <span class='st'>"AMX"</span>, <span class='kw'>year_min</span> <span class='kw'>=</span> <span class='fl'>2010</span>)
+<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'>resistance_predict</span>(<span class='no'>septic_patients</span>, <span class='kw'>col_ab</span> <span class='kw'>=</span> <span class='st'>"AMX"</span>, <span class='kw'>year_min</span> <span class='kw'>=</span> <span class='fl'>2010</span>, <span class='kw'>model</span> <span class='kw'>=</span> <span class='st'>"binomial"</span>)
 <span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/plot'>plot</a></span>(<span class='no'>x</span>)
 <span class='fu'>ggplot_rsi_predict</span>(<span class='no'>x</span>)
 
@@ -351,7 +351,7 @@
 <span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='no'>septic_patients</span> <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='first_isolate.html'>filter_first_isolate</a></span>() <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span>(<span class='fu'><a href='mo_property.html'>mo_genus</a></span>(<span class='no'>mo</span>) <span class='kw'>==</span> <span class='st'>"Staphylococcus"</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'>resistance_predict</span>(<span class='st'>"PEN"</span>)
+  <span class='fu'>resistance_predict</span>(<span class='st'>"PEN"</span>, <span class='kw'>model</span> <span class='kw'>=</span> <span class='st'>"binomial"</span>)
 <span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/plot'>plot</a></span>(<span class='no'>x</span>)
 
 
@@ -367,6 +367,7 @@
     <span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span>(<span class='no'>mo</span> <span class='kw'>==</span> <span class='fu'><a href='as.mo.html'>as.mo</a></span>(<span class='st'>"E. coli"</span>)) <span class='kw'>%&gt;%</span>
     <span class='fu'>resistance_predict</span>(<span class='kw'>col_ab</span> <span class='kw'>=</span> <span class='st'>"AMX"</span>,
                        <span class='kw'>col_date</span> <span class='kw'>=</span> <span class='st'>"date"</span>,
+                       <span class='kw'>model</span> <span class='kw'>=</span> <span class='st'>"binomial"</span>,
                        <span class='kw'>info</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
                        <span class='kw'>minimum</span> <span class='kw'>=</span> <span class='fl'>15</span>)
 
