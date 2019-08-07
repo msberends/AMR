@@ -80,7 +80,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">0.7.1.9026</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">0.7.1.9027</span>
       </span>
     </div>
 
@@ -235,14 +235,12 @@
     </div>
 
     <pre class="usage"><span class='fu'>resistance_predict</span>(<span class='no'>x</span>, <span class='no'>col_ab</span>, <span class='kw'>col_date</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>year_min</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>year_max</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>year_every</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>minimum</span> <span class='kw'>=</span> <span class='fl'>30</span>,
-  <span class='kw'>model</span> <span class='kw'>=</span> <span class='st'>"binomial"</span>, <span class='kw'>I_as_S</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>preserve_measurements</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>info</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>...</span>)
+  <span class='kw'>year_max</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>year_every</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>minimum</span> <span class='kw'>=</span> <span class='fl'>30</span>, <span class='kw'>model</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>I_as_S</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>preserve_measurements</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>info</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>...</span>)
 
 <span class='fu'>rsi_predict</span>(<span class='no'>x</span>, <span class='no'>col_ab</span>, <span class='kw'>col_date</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>year_min</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>year_max</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>year_every</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>minimum</span> <span class='kw'>=</span> <span class='fl'>30</span>,
-  <span class='kw'>model</span> <span class='kw'>=</span> <span class='st'>"binomial"</span>, <span class='kw'>I_as_S</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>preserve_measurements</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>info</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>...</span>)
+  <span class='kw'>year_max</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>year_every</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>minimum</span> <span class='kw'>=</span> <span class='fl'>30</span>, <span class='kw'>model</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>I_as_S</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>preserve_measurements</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>info</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>...</span>)
 
 <span class='co'># S3 method for resistance_predict</span>
 <span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/plot'>plot</a></span>(<span class='no'>x</span>,
@@ -284,7 +282,7 @@
     </tr>
     <tr>
       <th>model</th>
-      <td><p>the statistical model of choice. Defaults to a generalised linear regression model with binomial distribution (i.e. using <code><a href='https://www.rdocumentation.org/packages/stats/topics/glm'>glm</a>(..., family = <a href='https://www.rdocumentation.org/packages/stats/topics/family'>binomial</a>)</code>), assuming that a period of zero resistance was followed by a period of increasing resistance leading slowly to more and more resistance. See Details for valid options.</p></td>
+      <td><p>the statistical model of choice. This could be a generalised linear regression model with binomial distribution (i.e. using <code><a href='https://www.rdocumentation.org/packages/stats/topics/glm'>glm</a>(..., family = <a href='https://www.rdocumentation.org/packages/stats/topics/family'>binomial</a>)</code>), assuming that a period of zero resistance was followed by a period of increasing resistance leading slowly to more and more resistance. See Details for all valid options.</p></td>
     </tr>
     <tr>
       <th>I_as_S</th>

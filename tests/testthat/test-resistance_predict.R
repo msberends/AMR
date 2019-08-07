@@ -32,7 +32,7 @@ test_that("prediction of rsi works", {
   # # AMX resistance will increase according to data set `septic_patients`
   # expect_true(AMX_R[3] < AMX_R[20])
 
-  x <- resistance_predict(septic_patients, col_ab = "AMX", year_min = 2010)
+  x <- resistance_predict(septic_patients, col_ab = "AMX", year_min = 2010, model = "binomial")
   plot(x)
   ggplot_rsi_predict(x)
   expect_error(ggplot_rsi_predict(septic_patients))
@@ -61,19 +61,27 @@ test_that("prediction of rsi works", {
                            col_date = "date",
                            info = TRUE))
   expect_error(rsi_predict(x = filter(septic_patients, mo == "B_ESCHR_COL"),
+                           model = "binomial",
                            col_ab = "NOT EXISTING COLUMN",
                            col_date = "date",
+                           info = TRUE))
+  expect_error(rsi_predict(x = filter(septic_patients, mo == "B_ESCHR_COL"),
+                           model = "binomial",
+                           col_ab = "AMX",
+                           col_date = "NOT EXISTING COLUMN",
                            info = TRUE))
   expect_error(rsi_predict(x = filter(septic_patients, mo == "B_ESCHR_COL"),
                            col_ab = "AMX",
                            col_date = "NOT EXISTING COLUMN",
                            info = TRUE))
+  expect_error(rsi_predict(x = filter(septic_patients, mo == "B_ESCHR_COL"),
+                           col_ab = "AMX",
+                           col_date = "date",
+                           info = TRUE))
   # almost all E. coli are MEM S in the Netherlands :)
   expect_error(resistance_predict(x = filter(septic_patients, mo == "B_ESCHR_COL"),
+                                  model = "binomial",
                                   col_ab = "MEM",
                                   col_date = "date",
                                   info = TRUE))
-
-  expect_error(portion_df(c("A", "B", "C")))
-  expect_error(portion_df(septic_patients[,"date"]))
 })

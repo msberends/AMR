@@ -34,6 +34,8 @@ test_that("EUCAST rules work", {
   expect_error(eucast_rules(x = "text"))
   expect_error(eucast_rules(data.frame(a = "test")))
   expect_error(eucast_rules(data.frame(mo = "test"), rules = "invalid rules set"))
+  
+  expect_warning(eucast_rules(data.frame(mo = "Escherichia coli", vancomycin = "S")))
 
   expect_identical(colnames(septic_patients),
                    colnames(suppressWarnings(eucast_rules(septic_patients))))

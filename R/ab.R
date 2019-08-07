@@ -262,7 +262,7 @@ is.ab <- function(x) {
 #' @noRd
 print.ab <- function(x, ...) {
   cat("Class 'ab'\n")
-  print.default(as.character(x), quote = FALSE)
+  print(as.character(x), quote = FALSE)
 }
 
 #' @exportMethod as.data.frame.ab
@@ -285,4 +285,18 @@ as.data.frame.ab <- function (x, ...) {
 #' @noRd
 pull.ab <- function(.data, ...) {
   pull(as.data.frame(.data), ...)
+}
+
+#' @importFrom pillar type_sum
+#' @export
+type_sum.ab <- function(x) {
+  "ab"
+}
+
+#' @importFrom pillar pillar_shaft
+#' @export
+pillar_shaft.ab <- function(x, ...) {
+  out <- format(x)
+  out[is.na(x)] <- NA
+  pillar::new_pillar_shaft_simple(out, align = "left", min_width = 4)
 }

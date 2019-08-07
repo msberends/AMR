@@ -8,14 +8,12 @@
 \title{Predict antimicrobial resistance}
 \usage{
 resistance_predict(x, col_ab, col_date = NULL, year_min = NULL,
-  year_max = NULL, year_every = 1, minimum = 30,
-  model = "binomial", I_as_S = TRUE, preserve_measurements = TRUE,
-  info = TRUE, ...)
+  year_max = NULL, year_every = 1, minimum = 30, model = NULL,
+  I_as_S = TRUE, preserve_measurements = TRUE, info = TRUE, ...)
 
 rsi_predict(x, col_ab, col_date = NULL, year_min = NULL,
-  year_max = NULL, year_every = 1, minimum = 30,
-  model = "binomial", I_as_S = TRUE, preserve_measurements = TRUE,
-  info = TRUE, ...)
+  year_max = NULL, year_every = 1, minimum = 30, model = NULL,
+  I_as_S = TRUE, preserve_measurements = TRUE, info = TRUE, ...)
 
 \method{plot}{resistance_predict}(x,
   main = paste("Resistance Prediction of", x_name), ...)
@@ -38,7 +36,7 @@ ggplot_rsi_predict(x, main = paste("Resistance Prediction of", x_name),
 
 \item{minimum}{minimal amount of available isolates per year to include. Years containing less observations will be estimated by the model.}
 
-\item{model}{the statistical model of choice. Defaults to a generalised linear regression model with binomial distribution (i.e. using \code{\link{glm}(..., family = \link{binomial})}), assuming that a period of zero resistance was followed by a period of increasing resistance leading slowly to more and more resistance. See Details for valid options.}
+\item{model}{the statistical model of choice. This could be a generalised linear regression model with binomial distribution (i.e. using \code{\link{glm}(..., family = \link{binomial})}), assuming that a period of zero resistance was followed by a period of increasing resistance leading slowly to more and more resistance. See Details for all valid options.}
 
 \item{I_as_S}{a logical to indicate whether values \code{I} should be treated as \code{S} (will otherwise be treated as \code{R})}
 

@@ -28,7 +28,7 @@
 #' @param year_max highest year to use in the prediction model, defaults to 10 years after today
 #' @param year_every unit of sequence between lowest year found in the data and \code{year_max}
 #' @param minimum minimal amount of available isolates per year to include. Years containing less observations will be estimated by the model.
-#' @param model the statistical model of choice. Defaults to a generalised linear regression model with binomial distribution (i.e. using \code{\link{glm}(..., family = \link{binomial})}), assuming that a period of zero resistance was followed by a period of increasing resistance leading slowly to more and more resistance. See Details for valid options.
+#' @param model the statistical model of choice. This could be a generalised linear regression model with binomial distribution (i.e. using \code{\link{glm}(..., family = \link{binomial})}), assuming that a period of zero resistance was followed by a period of increasing resistance leading slowly to more and more resistance. See Details for all valid options.
 #' @param I_as_S a logical to indicate whether values \code{I} should be treated as \code{S} (will otherwise be treated as \code{R})
 #' @param preserve_measurements a logical to indicate whether predictions of years that are actually available in the data should be overwritten by the original data. The standard errors of those years will be \code{NA}.
 #' @param info a logical to indicate whether textual analysis should be printed with the name and \code{\link{summary}} of the statistical model.
@@ -112,7 +112,7 @@ resistance_predict <- function(x,
                                year_max = NULL,
                                year_every = 1,
                                minimum = 30,
-                               model = 'binomial',
+                               model = NULL,
                                I_as_S = TRUE,
                                preserve_measurements = TRUE,
                                info = TRUE,
@@ -120,6 +120,10 @@ resistance_predict <- function(x,
 
   if (nrow(x) == 0) {
     stop('This table does not contain any observations.')
+  }
+  
+  if (is.null(model)) {
+    stop('Choose a regression model with the `model` parameter, e.g. resistance_predict(..., model = "binomial").')
   }
 
   if (!col_ab %in% colnames(x)) {
@@ -252,7 +256,7 @@ resistance_predict <- function(x,
     se <- predictmodel$se.fit
 
   } else {
-    stop('No valid model selected.')
+    stop('No valid model selected. See ?resistance_predict.')
   }
 
   # prepare the output dataframe

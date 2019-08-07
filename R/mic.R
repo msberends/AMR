@@ -173,9 +173,8 @@ as.mic <- function(x, na.rm = FALSE) {
               list_missing, call. = FALSE)
     }
 
-    x <- factor(x, levels = lvls, ordered = TRUE)
-    class(x) <- c('mic', 'ordered', 'factor')
-    x
+    structure(.Data = factor(x, levels = lvls, ordered = TRUE),
+              class =  c('mic', 'ordered', 'factor'))
   }
 }
 
@@ -278,4 +277,18 @@ barplot.mic <- function(height,
           main = main,
           ...)
   axis(2, seq(0, max(table(droplevels.factor(height)))))
+}
+
+#' @importFrom pillar type_sum
+#' @export
+type_sum.mic <- function(x) {
+  "mic"
+}
+
+#' @importFrom pillar pillar_shaft
+#' @export
+pillar_shaft.mic <- function(x, ...) {
+  out <- trimws(format(x))
+  out[is.na(x)] <- NA
+  pillar::new_pillar_shaft_simple(out, align = "right", min_width = 4)
 }

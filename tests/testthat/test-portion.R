@@ -115,6 +115,7 @@ test_that("portions works", {
       septic_patients$AMX %>% portion_I(),
       septic_patients$AMX %>% portion_R())
   )
-
-
+  
+  expect_error(portion_df(c("A", "B", "C")))
+  expect_error(portion_df(septic_patients[,"date"]))
 })

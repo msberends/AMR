@@ -425,11 +425,10 @@ mo_validate <- function(x, property, ...) {
   }
 
   if (property == "mo") {
-    return(structure(x, class = "mo"))
+    return(to_class_mo(x))
   } else if (property == "col_id") {
     return(as.integer(x))
   } else {
     return(x)
   }
-
 }

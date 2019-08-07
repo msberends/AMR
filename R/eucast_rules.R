@@ -228,18 +228,18 @@ eucast_rules <- function(x,
 
   warned <- FALSE
 
-  txt_error <- function() { cat("", bgRed(white(" ERROR ")), "\n") }
-  txt_warning <- function() { if (warned == FALSE) { cat("", bgYellow(black(" WARNING ")), "\n") }; warned <<- TRUE }
+  txt_error <- function() { cat("", bgRed(white(" ERROR ")), "\n\n") }
+  txt_warning <- function() { if (warned == FALSE) { cat("", bgYellow(black(" WARNING "))) }; warned <<- TRUE }
   txt_ok <- function(no_of_changes) {
     if (warned == FALSE) {
       if (no_of_changes > 0) {
         if (no_of_changes == 1) {
-          cat(blue(" (1 new change)\n"))
+          cat(blue(" (1 value changed)\n"))
         } else {
-          cat(blue(paste0(" (", formatnr(no_of_changes), " new changes)\n")))
+          cat(blue(paste0(" (", formatnr(no_of_changes), " values changed)\n")))
         }
       } else {
-        cat(green(" (no new changes)\n"))
+        cat(green(" (no values changed)\n"))
       }
       warned <<- FALSE
     }
@@ -402,20 +402,37 @@ eucast_rules <- function(x,
         x_original[rows, cols] <<- to,
         warning = function(w) {
           if (w$message %like% 'invalid factor level') {
-            warning('Value "', to, '" could not be applied to column(s) `', paste(cols, collapse = '`, `'), '` because this value is not an existing factor level. You can use as.rsi() to fix this.', call. = FALSE)
+            x_original <<- x_original %>% mutate_at(vars(cols), ~factor(x = as.character(.), levels = c(to, levels(.))))
+            x <<- x %>% mutate_at(vars(cols), ~factor(x = as.character(.), levels = c(to, levels(.))))
+            x_original[rows, cols] <<- to
+            warning('Value "', to, '" added to the factor levels of column(s) `', paste(cols, collapse = '`, `'), '` because this value was not an existing factor level.\nA better way is to use as.rsi() on beforehand on antibiotic columns to guarantee the right structure.', call. = FALSE)
+            txt_warning()
+            warned <<- FALSE
           } else {
             warning(w$message, call. = FALSE)
+            txt_warning()
+            cat("\n") # txt_warning() does not append a "\n" on itself
           }
-          txt_warning()
         },
         error = function(e) {
           txt_error()
-          stop(e, call. = FALSE)
+          stop(paste0("Error in row(s) ", paste(rows[1:min(length(rows), 10)], collapse = ","),
+                      '... while writing value "', to, 
+                      '" to column(s) `', paste(cols, collapse = "`, `"), 
+                      "` (data class:", paste(class(x_original), collapse = "/"), "):\n", e$message), call. = FALSE)
         }
       )
-
-      x[rows, cols] <<- x_original[rows, cols]
-
+      
+      tryCatch(
+        x[rows, cols] <<- x_original[rows, cols],
+        error = function(e) {
+          stop(paste0("Error in row(s) ", paste(rows[1:min(length(rows), 10)], collapse = ","),
+                      '... while writing value "', to, 
+                      '" to column(s) `', paste(cols, collapse = "`, `"), 
+                      "` (data class:", paste(class(x), collapse = "/"), "):\n", e$message), call. = FALSE)
+        }
+      )
+      
       # before_df might not be a data.frame, but a tibble or data.table instead
       old <- as.data.frame(before_df, stringsAsFactors = FALSE)[rows,]
       no_of_changes_this_run <- 0
@@ -719,7 +736,7 @@ eucast_rules <- function(x,
         mutate(plural = ifelse(n > 1, "s", ""),
                txt = paste0(formatnr(n), " test result", plural, " added as ", new)) %>%
         pull(txt) %>%
-        paste("   -", ., collapse = "\n") %>%
+        paste("   *", ., collapse = "\n") %>%
         cat()
     }
 
@@ -748,16 +765,16 @@ eucast_rules <- function(x,
         mutate(plural = ifelse(n > 1, "s", ""),
                txt = paste0(formatnr(n), " test result", plural, " changed from ", old, " to ", new)) %>%
         pull(txt) %>%
-        paste("   -", ., collapse = "\n") %>%
+        paste("   *", ., collapse = "\n") %>%
         cat()
       cat("\n")
     }
     cat(paste0(silver(strrep("-", options()$width - 1)), "\n"))
 
     if (verbose == FALSE & nrow(verbose_info) > 0) {
-      cat(paste("\nUse", bold("verbose = TRUE"), "(on your original data) to get a data.frame with all specified edits instead.\n"))
+      cat(paste("\nUse", bold("eucast_rules(..., verbose = TRUE)"), "(on your original data) to get a data.frame with all specified edits instead.\n\n"))
     } else if (verbose == TRUE) {
-      cat(paste(red("\nUsed 'Verbose mode' (verbose = TRUE)."), "This returns a data.frame with all specified edits.\nUse", bold("verbose = FALSE"), "to apply the rules on your data.\n"))
+      cat(paste(red("\nUsed 'Verbose mode' (verbose = TRUE)"), ", which returns a data.frame with all specified edits.\nUse", bold("verbose = FALSE"), "to apply the rules on your data.\n\n"))
     }
   }
 

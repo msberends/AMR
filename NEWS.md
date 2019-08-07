@@ -1,4 +1,4 @@
-# AMR 0.7.1.9026
+# AMR 0.7.1.9027
 
 ### Breaking
 * Function `freq()` has moved to a new package, [`clean`](https://github.com/msberends/clean) ([CRAN link](https://cran.r-project.org/package=clean)). Creating frequency tables is actually not the scope of this package (never was) and this function has matured  a lot over the last two years. Therefore, a new package was created for data cleaning and checking and it perfectly fits the `freq()` function. The [`clean`](https://github.com/msberends/clean) package is available on CRAN and will be installed automatically when updating the `AMR` package, that now imports it. In a later stage, the `skewness()` and `kurtosis()` functions will be moved to the `clean` package too.
@@ -35,7 +35,18 @@
   Since this is a major change, usage of the old `also_single_tested` will throw an informative error that it has been replaced by `only_all_tested`.
 
 ### Changed
-* Fixed a bug in `eucast_rules()` that caused an error when the input was a specific kind of `tibble`
+* Added more informative errors and warnings to `eucast_rules()`
+* Added tibble printing support for classes `rsi`, `mic`, `ab` and `mo`. When using tibbles containing antibiotic columns, values `S` will print in green, values `I` will print in yellow and values `R` will print in red:
+  ```r
+  (run this on your own console, as this page does not support colour printing)
+  tibble(mo = sample(AMR::microorganisms$fullname, 10),
+         drug1 = as.rsi(sample(c("S", "I", "R"), 10, replace = TRUE, 
+                               prob = c(0.6, 0.1, 0.3))),
+         drug2 = as.rsi(sample(c("S", "I", "R"), 10, replace = TRUE,
+                               prob = c(0.6, 0.1, 0.3))),
+         drug3 = as.rsi(sample(c("S", "I", "R"), 10, replace = TRUE,
+                               prob = c(0.6, 0.1, 0.3))))
+  ```
 * Removed class `atc` - using `as.atc()` is now deprecated in favour of `ab_atc()` and this will return a character, not the `atc` class anymore
 * Removed deprecated functions `abname()`, `ab_official()`, `atc_name()`, `atc_official()`, `atc_property()`, `atc_tradenames()`, `atc_trivial_nl()`
 * Fix and speed improvement for `mo_shortname()`
@@ -50,6 +61,7 @@
 * The `antibiotics` data set is now sorted by name
 * Using verbose mode with `eucast_rules(..., verbose = TRUE)` returns more informative and readable output
 * Speed improvement for `guess_ab_col()` which is now 30 times faster for antibiotic abbreviations
+* Using factors as input for `eucast_rules()` now adds missing factors levels when the function changes antibiotic results
 
 # AMR 0.7.1
 
