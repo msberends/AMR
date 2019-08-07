@@ -26,6 +26,7 @@ test_that("prediction of rsi works", {
     filter(mo == "B_ESCHR_COL") %>%
     rsi_predict(col_ab = "AMX",
                 col_date = "date",
+                model = "binomial",
                 minimum = 10,
                 info = TRUE) %>%
     pull("value")
