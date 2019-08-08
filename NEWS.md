@@ -1,4 +1,4 @@
-# AMR 0.7.1.9029
+# AMR 0.7.1.9030
 
 ### Breaking
 * Function `freq()` has moved to a new package, [`clean`](https://github.com/msberends/clean) ([CRAN link](https://cran.r-project.org/package=clean)). Creating frequency tables is actually not the scope of this package (never was) and this function has matured  a lot over the last two years. Therefore, a new package was created for data cleaning and checking and it perfectly fits the `freq()` function. The [`clean`](https://github.com/msberends/clean) package is available on CRAN and will be installed automatically when updating the `AMR` package, that now imports it. In a later stage, the `skewness()` and `kurtosis()` functions will be moved to the `clean` package too.
@@ -36,6 +36,7 @@
 
 ### Changed
 * Added more informative errors and warnings to `eucast_rules()`
+* Fixed a bug in `eucast_rules()` where antibiotic columns would be read as lists instead of characters
 * Added tibble printing support for classes `rsi`, `mic`, `ab` and `mo`. When using tibbles containing antibiotic columns, values `S` will print in green, values `I` will print in yellow and values `R` will print in red:
   ```r
   (run this on your own console, as this page does not support colour printing)
@@ -62,6 +63,9 @@
 * Using verbose mode with `eucast_rules(..., verbose = TRUE)` returns more informative and readable output
 * Speed improvement for `guess_ab_col()` which is now 30 times faster for antibiotic abbreviations
 * Using factors as input for `eucast_rules()` now adds missing factors levels when the function changes antibiotic results
+
+#### Other
+* Added Dr Bart Meijer and Dr Dennis Souverein as contributors
 
 # AMR 0.7.1
 

@@ -39,33 +39,36 @@ As said, SPSS is easier to learn than R. But SPSS, SAS and Stata come with major
   
 * **R is extremely flexible.**
 
-  Because you write the syntax yourself, you can do anything you want. The flexibility in transforming, gathering, grouping, summarising and drawing plots is endless - with SPSS, SAS or Stata you are bound to their algorithms and styles. They may be a bit flexible, but you can probably never create that very specific publication-ready plot without using other (paid) software.
+  Because you write the syntax yourself, you can do anything you want. The flexibility in transforming, gathering, grouping and summarising data, or drawing plots, is endless - with SPSS, SAS or Stata you are bound to their algorithms and format styles. They may be a bit flexible, but you can probably never create that very specific publication-ready plot without using other (paid) software. If you sometimes write syntaxes in SPSS to run a complete analysis or to 'automate' some of your work, you could do this a lot less time in R. You will notice that writing syntaxes in R is a lot more nifty and clever than in SPSS. Still, as working with any statistical package, you will have to have knowledge about what you are doing (statistically) and what you are willing to accomplish.
   
 * **R can be easily automated.**
 
-  Over the last years, [R Markdown](https://rmarkdown.rstudio.com/) has really made an interesting development. With R Markdown, you can very easily produce reports, whether format has to be Word, PowerPoint, a website, a PDF document or just the raw data to Excel. It even allows the use of a reference file containing the layout style (e.g. fonts and colours) of your organisation. I use this a lot to generate weekly and monthly reports automatically. Just write the code once and enjoy the automatically updated reports at any interval you like.
+  Over the last years, [R Markdown](https://rmarkdown.rstudio.com/) has really made an interesting development. With R Markdown, you can very easily produce reports, whether the format has to be Word, PowerPoint, a website, a PDF document or just the raw data to Excel. It even allows the use of a reference file containing the layout style (e.g. fonts and colours) of your organisation. I use this a lot to generate weekly and monthly reports automatically. Just write the code once and enjoy the automatically updated reports at any interval you like.
   
   For an even more professional environment, you could create [Shiny apps](https://shiny.rstudio.com/): live manipulation of data using a custom made website. The webdesign knowledge needed (JavaScript, CSS, HTML) is almost *zero*.
   
 * **R has a huge community.**
 
-  Many R users just ask questions on websites like [StackOverflow.com](https://stackoverflow.com), the largest online community for programmers. At the time of writing, almost [300,000 R-related questions](https://stackoverflow.com/questions/tagged/r?sort=votes) have already been asked on this platform (which covers questions and answers for any programming language). In my own experience, most questions are answered within a couple of minutes.
+  Many R users just ask questions on websites like [StackOverflow.com](https://stackoverflow.com), the largest online community for programmers. At the time of writing, more than [300,000 R-related questions](https://stackoverflow.com/questions/tagged/r?sort=votes) have already been asked on this platform (which covers questions and answers for any programming language). In my own experience, most questions are answered within a couple of minutes.
   
 * **R understands any data type, including SPSS/SAS/Stata.**
 
-  And that's not vice versa I'm afraid. You can import data from any source into R. From SPSS, SAS and Stata ([link](https://haven.tidyverse.org/)), from Minitab, Epi Info and EpiData ([link](https://cran.r-project.org/package=foreign)), from Excel ([link](https://readxl.tidyverse.org/)), from flat files like CSV, TXT or TSV ([link](https://readr.tidyverse.org/)), or directly from databases and datawarehouses from anywhere on the world ([link](https://dbplyr.tidyverse.org/)). You can even scrape websites to download tables that are live on the internet ([link](https://github.com/hadley/rvest)) or get the results of an API call ([link](https://github.com/Rdatatable/data.table/wiki/Convenience-features-of-fread)).
+  And that's not vice versa I'm afraid. You can import data from any source into R. For example from SPSS, SAS and Stata ([link](https://haven.tidyverse.org/)), from Minitab, Epi Info and EpiData ([link](https://cran.r-project.org/package=foreign)), from Excel ([link](https://readxl.tidyverse.org/)), from flat files like CSV, TXT or TSV ([link](https://readr.tidyverse.org/)), or directly from databases and datawarehouses from anywhere on the world ([link](https://dbplyr.tidyverse.org/)). You can even scrape websites to download tables that are live on the internet ([link](https://github.com/hadley/rvest)) or get the results of an API call and transform it into data in only one command ([link](https://github.com/Rdatatable/data.table/wiki/Convenience-features-of-fread)).
   
   And the best part - you can export from R to most data formats as well. So you can import an SPSS file, do your analysis neatly in R and export the resulting tables to Excel files for sharing.
 
 * **R is completely free and open-source.**
 
-  No strings attached. It was created and is being maintained by volunteers who believe that (data) science should be open and publicly available to everybody. SPSS, SAS and Stata are quite expensive. IBM SPSS Staticstics only comes with subscriptions nowadays, varying [between USD 1,300 and USD 8,500](https://www.ibm.com/products/spss-statistics/pricing) per computer *per year*. SAS Analytics Pro costs [around USD 10,000](https://www.sas.com/store/products-solutions/sas-analytics-pro/prodPERSANL.html) per computer. Stata also has a business model with subscription fees, varying [between USD 600 and USD 1,200](https://www.stata.com/order/new/bus/single-user-licenses/dl/) per computer per year, but lower prices come with a limitation of the number of variables you can work with.
+  No strings attached. It was created and is being maintained by volunteers who believe that (data) science should be open and publicly available to everybody. SPSS, SAS and Stata are quite expensive. IBM SPSS Staticstics only comes with subscriptions nowadays, varying [between USD 1,300 and USD 8,500](https://www.ibm.com/products/spss-statistics/pricing) per user *per year*. SAS Analytics Pro costs [around USD 10,000](https://www.sas.com/store/products-solutions/sas-analytics-pro/prodPERSANL.html) per computer. Stata also has a business model with subscription fees, varying [between USD 600 and USD 2,800](https://www.stata.com/order/new/bus/single-user-licenses/dl/) per computer per year, but lower prices come with a limitation of the number of variables you can work with. And still they do not offer the above benefits of R.
   
   If you are working at a midsized or small company, you can save it tens of thousands of dollars by using R instead of e.g. SPSS - gaining even more functions and flexibility. And all R enthousiasts can do as much PR as they want (like I do here), because nobody is officially associated with or affiliated by R. It is really free.
-
-
-If you sometimes write syntaxes in SPSS to run a complete analysis or to 'automate' some of your work, you should perhaps do this in R. You will notice that writing syntaxes in R is a lot more nifty and clever than in SPSS. Still, as working with any statistical package, you will have to have knowledge about what you are doing (statistically) and what you are willing to accomplish.
-
+  
+* **R is (nowadays) the preferred analysis software in academic papers.**
+  
+  At present, R is among the world most powerful statistical languages, and it is generally very popular in science (Bollmann *et al.*,  2017). For all the above reasons, the number of references to R as an analysis method in academic papers [is rising continuously](https://r4stats.com/2014/08/20/r-passes-spss-in-scholarly-use-stata-growing-rapidly/) and has even surpassed SPSS for academic use (Muenchen, 2014). 
+    
+  I believe that the thing with SPSS is, that it has always had a great user interface which is very easy to learn and use. Back when they developed it, they had very little competition, let alone from R. R didn't even had a professional user interface until the last decade (called RStudio, see below). How people used R between the nineties and 2010 is almost completely incomparable to how R is being used now. The language itself [has been restyled completely](https://www.tidyverse.org/packages/) by volunteers who are dedicated professionals in the field of data science. SPSS was great when there was nothing else that could compete. But now in `r max(2019, as.integer(format(Sys.Date(), "%Y")))`, I don't see any reason why SPSS would be of any better use than R.
+  
 To demonstrate the first point:
 
 ```{r, warning = FALSE, message = FALSE}
@@ -80,8 +83,8 @@ mo_gramstain("E. coli")
 klebsiella_test <- data.frame(mo = "klebsiella", 
                               amox = "S",
                               stringsAsFactors = FALSE)
-klebsiella_test
-eucast_rules(klebsiella_test, info = FALSE)
+klebsiella_test # (our original data)
+eucast_rules(klebsiella_test, info = FALSE) # (the edited data by EUCAST rules)
 
 # hundreds of trade names can be translated to a name, trade name or an ATC code:
 ab_name("floxapen")
