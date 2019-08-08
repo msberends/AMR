@@ -78,7 +78,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">0.7.1.9029</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">0.7.1.9030</span>
       </span>
     </div>
 
@@ -225,9 +225,9 @@
       
     </div>
 
-    <div id="amr-0-7-1-9029" class="section level1">
+    <div id="amr-0-7-1-9030" class="section level1">
 <h1 class="page-header">
-<a href="#amr-0-7-1-9029" class="anchor"></a>AMR 0.7.1.9029<small> Unreleased </small>
+<a href="#amr-0-7-1-9030" class="anchor"></a>AMR 0.7.1.9030<small> Unreleased </small>
 </h1>
 <div id="breaking" class="section level3">
 <h3 class="hasAnchor">
@@ -275,6 +275,7 @@
 <ul>
 <li>Added more informative errors and warnings to <code><a href="../reference/eucast_rules.html">eucast_rules()</a></code>
 </li>
+<li>Fixed a bug in <code><a href="../reference/eucast_rules.html">eucast_rules()</a></code> where antibiotic columns would be read as lists instead of characters</li>
 <li>
 <p>Added tibble printing support for classes <code>rsi</code>, <code>mic</code>, <code>ab</code> and <code>mo</code>. When using tibbles containing antibiotic columns, values <code>S</code> will print in green, values <code>I</code> will print in yellow and values <code>R</code> will print in red:</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1">(run this on your own console, as this page does not support colour printing)</a>
@@ -307,6 +308,13 @@
 <li>Speed improvement for <code><a href="../reference/guess_ab_col.html">guess_ab_col()</a></code> which is now 30 times faster for antibiotic abbreviations</li>
 <li><p>Using factors as input for <code><a href="../reference/eucast_rules.html">eucast_rules()</a></code> now adds missing factors levels when the function changes antibiotic results</p></li>
 </ul>
+<div id="other" class="section level4">
+<h4 class="hasAnchor">
+<a href="#other" class="anchor"></a>Other</h4>
+<ul>
+<li>Added Dr Bart Meijer and Dr Dennis Souverein as contributors</li>
+</ul>
+</div>
 </div>
 </div>
     <div id="amr-0-7-1" class="section level1">
@@ -382,9 +390,9 @@
 </li>
 </ul>
 </div>
-<div id="other" class="section level4">
+<div id="other-1" class="section level4">
 <h4 class="hasAnchor">
-<a href="#other" class="anchor"></a>Other</h4>
+<a href="#other-1" class="anchor"></a>Other</h4>
 <ul>
 <li>Fixed a note thrown by CRAN tests</li>
 </ul>
@@ -478,9 +486,9 @@ Please <a href="https://gitlab.com/msberends/AMR/issues/new?issue%5Btitle%5D=EUC
 <li><p>Fix for <code><a href="../reference/mo_property.html">mo_shortname()</a></code> where species would not be determined correctly</p></li>
 </ul>
 </div>
-<div id="other-1" class="section level4">
+<div id="other-2" class="section level4">
 <h4 class="hasAnchor">
-<a href="#other-1" class="anchor"></a>Other</h4>
+<a href="#other-2" class="anchor"></a>Other</h4>
 <ul>
 <li>Support for R 3.6.0 and later by providing support for <a href="https://developer.r-project.org/Blog/public/2019/02/14/staged-install/index.html">staged install</a>
 </li>
@@ -726,9 +734,9 @@ Using <code><a href="../reference/as.mo.html">as.mo(..., allow_uncertain = 3)</a
 <li>if using different lengths of pattern and x in <code>%like%</code>, it will now return the call</li>
 </ul>
 </div>
-<div id="other-2" class="section level4">
+<div id="other-3" class="section level4">
 <h4 class="hasAnchor">
-<a href="#other-2" class="anchor"></a>Other</h4>
+<a href="#other-3" class="anchor"></a>Other</h4>
 <ul>
 <li>Updated licence text to emphasise GPL 2.0 and that this is an R package.</li>
 </ul>
@@ -851,9 +859,9 @@ Using <code><a href="../reference/as.mo.html">as.mo(..., allow_uncertain = 3)</a
 <li><p>Percentages will now will rounded more logically (e.g. in <code>freq</code> function)</p></li>
 </ul>
 </div>
-<div id="other-3" class="section level4">
+<div id="other-4" class="section level4">
 <h4 class="hasAnchor">
-<a href="#other-3" class="anchor"></a>Other</h4>
+<a href="#other-4" class="anchor"></a>Other</h4>
 <ul>
 <li>New dependency on package <code>crayon</code>, to support formatted text in the console</li>
 <li>Dependency <code>tidyr</code> is now mandatory (went to <code>Import</code> field) since <code>portion_df</code> and <code>count_df</code> rely on it</li>
@@ -988,9 +996,9 @@ Using <code><a href="../reference/as.mo.html">as.mo(..., allow_uncertain = 3)</a
 </li>
 </ul>
 </div>
-<div id="other-4" class="section level4">
+<div id="other-5" class="section level4">
 <h4 class="hasAnchor">
-<a href="#other-4" class="anchor"></a>Other</h4>
+<a href="#other-5" class="anchor"></a>Other</h4>
 <ul>
 <li>More unit tests to ensure better integrity of functions</li>
 </ul>
@@ -1117,9 +1125,9 @@ Using <code><a href="../reference/as.mo.html">as.mo(..., allow_uncertain = 3)</a
 <li>Other small fixes</li>
 </ul>
 </div>
-<div id="other-5" class="section level4">
+<div id="other-6" class="section level4">
 <h4 class="hasAnchor">
-<a href="#other-5" class="anchor"></a>Other</h4>
+<a href="#other-6" class="anchor"></a>Other</h4>
 <ul>
 <li>Added integration tests (check if everything works as expected) for all releases of R 3.1 and higher
 <ul>
@@ -1179,9 +1187,9 @@ Using <code><a href="../reference/as.mo.html">as.mo(..., allow_uncertain = 3)</a
 <li>Functions <code>as.rsi</code> and <code>as.mic</code> now add the package name and version as attributes</li>
 </ul>
 </div>
-<div id="other-6" class="section level4">
+<div id="other-7" class="section level4">
 <h4 class="hasAnchor">
-<a href="#other-6" class="anchor"></a>Other</h4>
+<a href="#other-7" class="anchor"></a>Other</h4>
 <ul>
 <li>Expanded <code>README.md</code> with more examples</li>
 <li>Added <a href="https://orcid.org">ORCID</a> of authors to DESCRIPTION file</li>
@@ -1218,7 +1226,7 @@ Using <code><a href="../reference/as.mo.html">as.mo(..., allow_uncertain = 3)</a
     <div id="tocnav">
       <h2>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
-        <li><a href="#amr-0-7-1-9029">0.7.1.9029</a></li>
+        <li><a href="#amr-0-7-1-9030">0.7.1.9030</a></li>
         <li><a href="#amr-0-7-1">0.7.1</a></li>
         <li><a href="#amr-0-7-0">0.7.0</a></li>
         <li><a href="#amr-0-6-1">0.6.1</a></li>

@@ -42,15 +42,17 @@ Our package contains a function `resistance_predict()`, which takes the same inp
 It is basically as easy as:
 ```{r, eval = FALSE}
 # resistance prediction of piperacillin/tazobactam (TZP):
-resistance_predict(tbl = septic_patients, col_date = "date", col_ab = "TZP")
+resistance_predict(tbl = septic_patients, col_date = "date", col_ab = "TZP", model = "binomial")
 
 # or:
 septic_patients %>% 
-  resistance_predict(col_ab = "TZP")
+  resistance_predict(col_ab = "TZP",
+                     model  "binomial")
 
 # to bind it to object 'predict_TZP' for example:
 predict_TZP <- septic_patients %>% 
-  resistance_predict(col_ab = "TZP")
+  resistance_predict(col_ab = "TZP",
+                     model = "binomial")
 ```
 
 The function will look for a date column itself if `col_date` is not set.
@@ -59,7 +61,7 @@ When running any of these commands, a summary of the regression model will be pr
 
 ```{r, echo = FALSE}
 predict_TZP <- septic_patients %>% 
-  resistance_predict(col_ab = "TZP")
+  resistance_predict(col_ab = "TZP", model = "binomial")
 ```
 
 This text is only a printed summary - the actual result (output) of the function is a `data.frame` containing for each year: the number of observations, the actual observed resistance, the estimated resistance and the standard error below and above the estimation:
@@ -92,13 +94,13 @@ Resistance is not easily predicted; if we look at vancomycin resistance in Gram 
 ```{r}
 septic_patients %>%
   filter(mo_gramstain(mo, language = NULL) == "Gram-positive") %>%
-  resistance_predict(col_ab = "VAN", year_min = 2010, info = FALSE) %>% 
+  resistance_predict(col_ab = "VAN", year_min = 2010, info = FALSE, model = "binomial") %>% 
   ggplot_rsi_predict()
 ```
 
 Vancomycin resistance could be 100% in ten years, but might also stay around 0%. 
 
-You can define the model with the `model` parameter. The default model is a generalised linear regression model using a binomial distribution, assuming that a period of zero resistance was followed by a period of increasing resistance leading slowly to more and more resistance.
+You can define the model with the `model` parameter. The model chosen above is a generalised linear regression model using a binomial distribution, assuming that a period of zero resistance was followed by a period of increasing resistance leading slowly to more and more resistance.
 
 Valid values are:
 

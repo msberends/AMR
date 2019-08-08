@@ -416,10 +416,12 @@ eucast_rules <- function(x,
         },
         error = function(e) {
           txt_error()
-          stop(paste0("Error in row(s) ", paste(rows[1:min(length(rows), 10)], collapse = ","),
-                      '... while writing value "', to, 
+          stop(paste0("In row(s) ", paste(rows[1:min(length(rows), 10)], collapse = ","), 
+                      ifelse(length(rows) > 10, "...", ""),
+                      ' while writing value "', to, 
                       '" to column(s) `', paste(cols, collapse = "`, `"), 
-                      "` (data class:", paste(class(x_original), collapse = "/"), "):\n", e$message), call. = FALSE)
+                      "` (data class: ", paste(class(x_original), collapse = "/"), "):\n", e$message),
+               call. = FALSE)
         }
       )
       
@@ -520,6 +522,9 @@ eucast_rules <- function(x,
     x <- trimws(unlist(strsplit(x, ",", fixed = TRUE)))
     y <- character(0)
     for (i in 1:length(x)) {
+      if (is.function(get(x[i]))) {
+        stop("Column ", x[i], " is also a function. Please create an issue on github.com/msberends/AMR/issues.")
+      }
       y <- c(y, tryCatch(get(x[i]), error = function(e) ""))
     }
     y[y != "" & y %in% colnames(df)]
@@ -736,7 +741,7 @@ eucast_rules <- function(x,
         mutate(plural = ifelse(n > 1, "s", ""),
                txt = paste0(formatnr(n), " test result", plural, " added as ", new)) %>%
         pull(txt) %>%
-        paste("   *", ., collapse = "\n") %>%
+        paste("   -", ., collapse = "\n") %>%
         cat()
     }
 
@@ -765,7 +770,7 @@ eucast_rules <- function(x,
         mutate(plural = ifelse(n > 1, "s", ""),
                txt = paste0(formatnr(n), " test result", plural, " changed from ", old, " to ", new)) %>%
         pull(txt) %>%
-        paste("   *", ., collapse = "\n") %>%
+        paste("   -", ., collapse = "\n") %>%
         cat()
       cat("\n")
     }
@@ -774,7 +779,7 @@ eucast_rules <- function(x,
     if (verbose == FALSE & nrow(verbose_info) > 0) {
       cat(paste("\nUse", bold("eucast_rules(..., verbose = TRUE)"), "(on your original data) to get a data.frame with all specified edits instead.\n\n"))
     } else if (verbose == TRUE) {
-      cat(paste(red("\nUsed 'Verbose mode' (verbose = TRUE)"), ", which returns a data.frame with all specified edits.\nUse", bold("verbose = FALSE"), "to apply the rules on your data.\n\n"))
+      cat(paste0("\nUsed 'Verbose mode' (", bold("verbose = TRUE"), "), which returns a data.frame with all specified edits.\nUse ", bold("verbose = FALSE"), " to apply the rules on your data.\n\n"))
     }
   }
 

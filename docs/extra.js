@@ -80,6 +80,8 @@ $( document ).ready(function() {
       x = x.replace("Corinna", "Dr Corinna");
       x = x.replace("Alex", "Prof Dr Alex");
       x = x.replace("Bhanu", "Prof Dr Bhanu");
+      x = x.replace("Bart", "Dr Bart");
+      x = x.replace("Dennis", "Dr Dennis");
       x = x.replace(/Author, thesis advisor/g, "Doctoral advisor");
       x = x.replace(/Authors/g, "aut_plural");
       x = x.replace(/Author, maintainer[.]?/g, "");

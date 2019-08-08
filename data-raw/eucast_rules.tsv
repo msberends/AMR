@@ -126,7 +126,7 @@ genus_species	is	Providencia stuartii			aminopenicillins, AMC, CZO, CXM, tetracy
 genus	is	Raoultella			aminopenicillins, TIC	R	Table 01: Intrinsic resistance in Enterobacteriaceae	Expert Rules
 genus_species	is	Serratia marcescens			aminopenicillins, AMC, CZO, FOX, CXM, DOX, TCY, polymyxins, NIT	R	Table 01: Intrinsic resistance in Enterobacteriaceae	Expert Rules
 genus_species	is	Yersinia enterocolitica			aminopenicillins, AMC, TIC, CZO, FOX	R	Table 01: Intrinsic resistance in Enterobacteriaceae	Expert Rules
-genus_species	is	Yersinia pseudotuberculosis			poly, COL	R	Table 01: Intrinsic resistance in Enterobacteriaceae	Expert Rules
+genus_species	is	Yersinia pseudotuberculosis			PLB, COL	R	Table 01: Intrinsic resistance in Enterobacteriaceae	Expert Rules
 genus	one_of	Achromobacter, Acinetobacter, Alcaligenes, Bordatella, Burkholderia, Elizabethkingia, Flavobacterium, Ochrobactrum, Pseudomonas, Stenotrophomonas			PEN, FOX, CXM, glycopeptides, FUS, macrolides, LIN, streptogramins, RIF, DAP, LNZ	R	Table 02: Intrinsic resistance in non-fermentative Gram-negative bacteria	Expert Rules
 genus_species	is	Acinetobacter baumannii			aminopenicillins, AMC, CZO, CTX, CRO, ATM, ETP, TMP, FOS, DOX, TCY	R	Table 02: Intrinsic resistance in non-fermentative Gram-negative bacteria	Expert Rules
 genus_species	is	Acinetobacter pittii			aminopenicillins, AMC, CZO, CTX, CRO, ATM, ETP, TMP, FOS, DOX, TCY	R	Table 02: Intrinsic resistance in non-fermentative Gram-negative bacteria	Expert Rules
