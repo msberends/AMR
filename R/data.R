@@ -51,11 +51,11 @@
 #' @seealso \code{\link{microorganisms}}
 "antibiotics"
 
-#' Data set with ~65,000 microorganisms
+#' Data set with ~70,000 microorganisms
 #'
 #' A data set containing the microbial taxonomy of six kingdoms from the Catalogue of Life. MO codes can be looked up using \code{\link{as.mo}}.
 #' @inheritSection catalogue_of_life Catalogue of Life
-#' @format A \code{\link{data.frame}} with 68,260 observations and 16 variables:
+#' @format A \code{\link{data.frame}} with 69,854 observations and 16 variables:
 #' \describe{
 #'   \item{\code{mo}}{ID of microorganism as used by this package}
 #'   \item{\code{col_id}}{Catalogue of Life ID}
@@ -98,7 +98,7 @@ catalogue_of_life <- list(
 #'
 #' A data set containing old (previously valid or accepted) taxonomic names according to the Catalogue of Life. This data set is used internally by \code{\link{as.mo}}.
 #' @inheritSection catalogue_of_life Catalogue of Life
-#' @format A \code{\link{data.frame}} with 21,743 observations and 4 variables:
+#' @format A \code{\link{data.frame}} with 22,932 observations and 4 variables:
 #' \describe{
 #'   \item{\code{col_id}}{Catalogue of Life ID that was originally given}
 #'   \item{\code{col_id_new}}{New Catalogue of Life ID that responds to an entry in the \code{\link{microorganisms}} data set}
@@ -113,7 +113,7 @@ catalogue_of_life <- list(
 #' Translation table for microorganism codes
 #'
 #' A data set containing commonly used codes for microorganisms, from laboratory systems and WHONET. Define your own with \code{\link{set_mo_source}}.
-#' @format A \code{\link{data.frame}} with 4,969 observations and 2 variables:
+#' @format A \code{\link{data.frame}} with 4,965 observations and 2 variables:
 #' \describe{
 #'   \item{\code{certe}}{Commonly used code of a microorganism}
 #'   \item{\code{mo}}{ID of the microorganism in the \code{\link{microorganisms}} data set}

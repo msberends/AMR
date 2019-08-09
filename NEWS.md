@@ -1,4 +1,4 @@
-# AMR 0.7.1.9032
+# AMR 0.7.1.9034
 
 ### Breaking
 * Function `freq()` has moved to a new package, [`clean`](https://github.com/msberends/clean) ([CRAN link](https://cran.r-project.org/package=clean)). Creating frequency tables is actually not the scope of this package (never was) and this function has matured  a lot over the last two years. Therefore, a new package was created for data cleaning and checking and it perfectly fits the `freq()` function. The [`clean`](https://github.com/msberends/clean) package is available on CRAN and will be installed automatically when updating the `AMR` package, that now imports it. In a later stage, the `skewness()` and `kurtosis()` functions will be moved to the `clean` package too.
@@ -60,7 +60,8 @@
   * Some misspelled input were not understood
   * These new trivial names known to the field are now understood: meningococcus, gonococcus, pneumococcus
   * Added support for unknown yeasts and fungi
-* Added the newest taxonomic data from the IJSEM journal (now up to date until August 2019)
+* Updated the `microorganisms` data set to contain the latest taxonomic data from the IJSEM journal (now up to date until August 2019)
+* Added almost 5,000 new fungi to the `microorganisms` data set
 * Fix for using `mo_*` functions where the coercion uncertainties and failures would not be available through `mo_uncertainties()` and `mo_failures()` anymore
 * Deprecated the `country` parameter of `mdro()` in favour of the already existing `guideline` parameter to support multiple guidelines within one country
 * The `name` of `RIF` is now Rifampicin instead of Rifampin

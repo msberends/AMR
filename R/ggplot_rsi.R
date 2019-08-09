@@ -182,8 +182,8 @@ ggplot_rsi <- function(data,
                        title = NULL,
                        subtitle = NULL,
                        caption = NULL,
-                       x.title = NULL,
-                       y.title = NULL,
+                       x.title = "Antimicrobial",
+                       y.title = "Proportion",
                        ...) {
 
   stopifnot_installed_package("ggplot2")
