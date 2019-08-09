@@ -11,10 +11,10 @@ library(dplyr)
 library(AMR)
 
 # unzip and extract taxon.tab (around 1.5 GB) from the CoL archive, then:
-data_col <- data.table::fread("Downloads/taxon.tab")
+data_col <- data.table::fread("data-raw/taxon.tab")
 
 # read the xlsx file from DSMZ (only around 2.5 MB):
-data_dsmz <- readxl::read_xlsx("Downloads/DSMZ_bactnames.xlsx")
+data_dsmz <- readxl::read_xlsx("data-raw/DSMZ_bactnames.xlsx")
 
 # the CoL data is over 3.7M rows:
 data_col %>% freq(kingdom)
@@ -99,23 +99,25 @@ MOs <- data_total %>%
       # and not all fungi: Aspergillus, Candida, Trichphyton and Pneumocystis are the most important,
       # so only keep these orders from the fungi:
       & !(kingdom == "Fungi"
-          & !order %in% c("Eurotiales", "Mucorales", "Saccharomycetales", "Schizosaccharomycetales", "Tremellales", "Onygenales", "Pneumocystales"))
+          & !order %in% c("Eurotiales", "Microascales", "Mucorales", "Saccharomycetales", "Schizosaccharomycetales", "Tremellales", "Onygenales", "Pneumocystales"))
     )
     # or the genus has to be one of the genera we found in our hospitals last decades (Northern Netherlands, 2002-2018)
     | genus %in% c("Absidia", "Acremonium", "Actinotignum", "Alternaria", "Anaerosalibacter", "Ancylostoma", "Anisakis", "Apophysomyces",
                    "Arachnia", "Ascaris", "Aureobacterium", "Aureobasidium", "Balantidum", "Bilophilia", "Branhamella", "Brochontrix",
                    "Brugia", "Calymmatobacterium", "Catabacter", "Cdc", "Chilomastix", "Chryseomonas", "Cladophialophora", "Cladosporium",
                    "Clonorchis", "Cordylobia", "Curvularia", "Demodex", "Dermatobia", "Diphyllobothrium", "Dracunculus", "Echinococcus",
-                   "Enterobius", "Euascomycetes", "Exophiala", "Fasciola", "Fusarium", "Hendersonula", "Hymenolepis", "Kloeckera",
+                   "Enterobius", "Euascomycetes", "Exophiala", "Fasciola", "Fusarium", "Hendersonula", "Hymenolepis", "Hypomyces", "Kloeckera",
                    "Koserella", "Larva", "Leishmania", "Lelliottia", "Loa", "Lumbricus", "Malassezia", "Metagonimus", "Molonomonas",
-                   "Mucor", "Nattrassia", "Necator", "Novospingobium", "Onchocerca", "Opistorchis", "Paragonimus", "Paramyxovirus",
+                   "Mucor", "Nattrassia", "Necator", "Nectria", "Novospingobium", "Onchocerca", "Opistorchis", "Paragonimus", "Paramyxovirus",
                    "Pediculus", "Phoma", "Phthirus", "Pityrosporum", "Pseudallescheria", "Pulex", "Rhizomucor", "Rhizopus", "Rhodotorula",
                    "Salinococcus", "Sanguibacteroides", "Schistosoma", "Scopulariopsis", "Scytalidium", "Sporobolomyces", "Stomatococcus",
-                   "Strongyloides", "Syncephalastraceae", "Taenia", "Torulopsis", "Trichinella", "Trichobilharzia", "Trichomonas",
+                   "Strongyloides", "Syncephalastraceae", "Taenia", "Torulopsis", "Trichinella", "Trichobilharzia", "Trichoderma", "Trichomonas",
                    "Trichosporon", "Trichuris", "Trypanosoma", "Wuchereria")
     # or the taxonomic entry is old - the species was renamed
     | !is.na(col_id_new)
-  )
+  ) %>%
+  # really no Plantae (e.g. Dracunculus exist both as worm and as plant)
+  filter(kingdom != "Plantae")
 
 # filter old taxonomic names so only the ones with an existing reference will be kept
 MOs <- MOs %>%
@@ -222,7 +224,7 @@ MOs <- MOs %>%
   distinct(fullname, .keep_all = TRUE)
 
 # what characters are in the fullnames?
-paste(unique(sort(unlist(strsplit(x = paste(MOs$fullname, collapse = ""), split = "")))), collapse = "")
+table(sort(unlist(strsplit(x = paste(MOs$fullname, collapse = ""), split = ""))))
 
 # Add abbreviations so we can easily know which ones are which ones.
 # These will become valid and unique microbial IDs for the AMR package.
@@ -522,12 +524,20 @@ MOs <- MOs %>%
 
 # everything distinct?
 sum(duplicated(MOs$mo))
+sum(duplicated(MOs$fullname))
 colnames(MOs)
 
 # here we welcome the new ones:
 MOs %>% filter(!fullname %in% AMR::microorganisms$fullname) %>% View()
 # and the ones we lost:
 AMR::microorganisms %>% filter(!fullname %in% MOs$fullname) %>% View()
+# and these IDs have changed:
+MOs %>%
+  filter(fullname %in% AMR::microorganisms$fullname) %>%
+  left_join(AMR::microorganisms %>% select(mo, fullname), by = "fullname", suffix = c("_new", "_old")) %>% 
+  filter(mo_new != mo_old) %>% 
+  select(mo_old, mo_new, everything()) %>% 
+  View()
 
 # set prevalence per species
 MOs <- MOs %>%

@@ -21,3 +21,5 @@ vignettes/*.R
 packrat/lib*/
 packrat/src/
 cran-comments.md
+data-raw/taxon.tab
+data-raw/DSMZ_bactnames.xlsx

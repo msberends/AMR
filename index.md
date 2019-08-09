@@ -4,14 +4,28 @@
 
 ----
 
-`AMR` is a free and open-source [R package](https://www.r-project.org) to simplify the analysis and prediction of Antimicrobial Resistance (AMR) and to work with microbial and antimicrobial properties by using evidence-based methods. It supports any data format, including WHONET/EARS-Net data.
+### What is `AMR` (for R)?
 
-After installing this package, R knows [**~65,000 microorganisms**](./reference/microorganisms.html) and [**~450 antibiotics**](./reference/antibiotics.html) by name and code, and knows all about valid RSI and MIC values.
+`AMR` is a free and open-source [R package](https://www.r-project.org) to simplify the analysis and prediction of Antimicrobial Resistance (AMR) and to work with microbial and antimicrobial properties by using evidence-based methods. Since its first public release in early 2018, this package has been downloaded over 20,000 times from more than 40 countries <small>(source: [CRAN logs, 2019](https://cran-logs.rstudio.com))</small>.
 
-**Used to SPSS?** Read our [tutorial on how to import data from SPSS, SAS or Stata](./articles/SPSS.html) and learn in which ways R outclasses any of these statistical packages.
+After installing this package, R knows [**~70,000 microorganisms**](./reference/microorganisms.html) (distinct microbial species) and [**~450 antibiotics**](./reference/antibiotics.html) by name and code, and knows all about valid RSI and MIC values. It supports any data format, including WHONET/EARS-Net data. 
 
 We created this package for both academic research and routine analysis at the Faculty of Medical Sciences of the University of Groningen, the Netherlands, and the Medical Microbiology & Infection Prevention (MMBI) department of the University Medical Center Groningen (UMCG).
-This R package is actively maintained and is free software; you can freely use and distribute it for both personal and commercial (but **not** patent) purposes under the terms of the GNU General Public License version 2.0 (GPL-2), as published by the Free Software Foundation. Read the full license [here](./LICENSE-text.html).
+This R package is [actively maintained](./news) and is free software; you can freely use and distribute it for both personal and commercial (but **not** patent) purposes under the terms of the GNU General Public License version 2.0 (GPL-2), as published by the Free Software Foundation. Read the full license [here](./LICENSE-text.html).
+
+**Used to SPSS?** Read our [tutorial on how to import data from SPSS, SAS or Stata](./articles/SPSS.html).
+
+#### Partners
+
+The development of this package is part of, related to, or made possible by:
+
+<a href="https://www.rug.nl"><img src="./logo_rug.png" class="partner_logo"></a>
+<a href="https://www.umcg.nl"><img src="./logo_umcg.png" class="partner_logo"></a>
+<a href="https://www.certe.nl"><img src="./logo_certe.png" class="partner_logo"></a>
+<a href="http://www.eurhealth-1health.eu"><img src="./logo_eh1h.png" class="partner_logo"></a>
+<a href="http://www.eurhealth-1health.eu"><img src="./logo_interreg.png" class="partner_logo"></a>
+
+### What can you do with this package?
 
 This package can be used for:
 
@@ -23,7 +37,7 @@ This package can be used for:
   * Calculating (empirical) susceptibility of both mono therapy and combination therapies ([tutorial](./articles/AMR.html))
   * Predicting future antimicrobial resistance using regression models ([tutorial](./articles/resistance_predict.html))
   * Getting properties for any microorganism (like Gram stain, species, genus or family) ([manual](./reference/mo_property.html))
-  * Getting properties for any antibiotic (like name, ATC code, defined daily dose or trade name) ([manual](./reference/ab_property.html))
+  * Getting properties for any antibiotic (like name, EARS-Net code, ATC code, PubChem code, defined daily dose or trade name) ([manual](./reference/ab_property.html))
   * Plotting antimicrobial resistance ([tutorial](./articles/AMR.html))
   * Applying EUCAST expert rules ([manual](./reference/eucast_rules.html))
 
@@ -54,7 +68,7 @@ Developers
   * Software developers
   * Web application / Shiny developers
 
-## Get this package
+### Get this package
 
 #### Latest released version
 
@@ -76,11 +90,11 @@ install.packages("devtools")
 devtools::install_gitlab("msberends/AMR")
 ```
 
-## Get started
+### Get started
 
 To find out how to conduct AMR analysis, please [continue reading here to get started](./articles/AMR.html) or click the links in the 'How to' menu.
 
-## Short introduction
+### Short introduction
 
 #### Microbial (taxonomic) reference data
 
@@ -90,15 +104,15 @@ This package contains the complete taxonomic tree of almost all microorganisms f
 
 Included are:
 
-* All ~55,000 (sub)species from the kingdoms of Archaea, Bacteria and Protozoa
+* All ~61,000 (sub)species from the kingdoms of Archaea, Bacteria, Chromista and Protozoa
 
-* All ~3,500 (sub)species from these orders of the kingdom of Fungi: Eurotiales, Onygenales, Pneumocystales, Saccharomycetales, Schizosaccharomycetales and Tremellales.
+* All ~8,500 (sub)species from these orders of the kingdom of Fungi: Eurotiales, Microascales, Mucorales, Onygenales, Pneumocystales, Saccharomycetales, Schizosaccharomycetales and Tremellales.
 
   The kingdom of Fungi is a very large taxon with almost 300,000 different (sub)species, of which most are not microbial (but rather macroscopic, like mushrooms). Because of this, not all fungi fit the scope of this package and including everything would tremendously slow down our algorithms too. By only including the aforementioned taxonomic orders, the most relevant fungi are covered (like all species of *Aspergillus*, *Candida*, *Cryptococcus*, *Histoplasma*, *Pneumocystis*, *Saccharomyces* and *Trichophyton*).
 
-* All ~2,000 (sub)species from ~100 other relevant genera, from the kingdoms of Animalia and Plantae (like *Strongyloides* and *Taenia*)
+* All ~150 (sub)species from ~100 other relevant genera from the kingdom of Animalia (like *Strongyloides* and *Taenia*)
 
-* All ~21,000 previously accepted names of included (sub)species that have been taxonomically renamed
+* All ~23,000 previously accepted names of all included (sub)species (these were taxonomically renamed)
 
 * The responsible author(s) and year of scientific publication
 
@@ -145,7 +159,7 @@ The `AMR` package basically does four important things:
    * Use `first_isolate()` to identify the first isolates of every patient [using guidelines from the CLSI](https://clsi.org/standards/products/microbiology/documents/m39/) (Clinical and Laboratory Standards Institute).
      * You can also identify first *weighted* isolates of every patient, an adjusted version of the CLSI guideline. This takes into account key antibiotics of every strain and compares them.
    * Use `mdro()` (abbreviation of Multi Drug Resistant Organisms) to check your isolates for exceptional resistance with country-specific guidelines or EUCAST rules. Currently, national guidelines for Germany and the Netherlands are supported.
-   * The [data set `microorganisms`](./reference/microorganisms.html) contains the complete taxonomic tree of ~65,000 microorganisms. Furthermore, some colloquial names and all Gram stains are available, which enables resistance analysis of e.g. different antibiotics per Gram stain. The package also contains functions to look up values in this data set like `mo_genus()`, `mo_family()`, `mo_gramstain()` or even `mo_phylum()`. As they use `as.mo()` internally, they also use the same intelligent rules for determination. For example, `mo_genus("MRSA")` and `mo_genus("S. aureus")` will both return `"Staphylococcus"`. They also come with support for German, Dutch, Spanish, Italian, French and Portuguese. These functions can be used to add new variables to your data.
+   * The [data set `microorganisms`](./reference/microorganisms.html) contains the complete taxonomic tree of ~70,000 microorganisms. Furthermore, some colloquial names and all Gram stains are available, which enables resistance analysis of e.g. different antibiotics per Gram stain. The package also contains functions to look up values in this data set like `mo_genus()`, `mo_family()`, `mo_gramstain()` or even `mo_phylum()`. As they use `as.mo()` internally, they also use the same intelligent rules for determination. For example, `mo_genus("MRSA")` and `mo_genus("S. aureus")` will both return `"Staphylococcus"`. They also come with support for German, Dutch, Spanish, Italian, French and Portuguese. These functions can be used to add new variables to your data.
    * The [data set `antibiotics`](./reference/antibiotics.html) contains ~450 antimicrobial drugs with their EARS-Net code, ATC code, PubChem compound ID, official name, common LIS codes and DDDs of both oral and parenteral administration. It also contains all (thousands of) trade names found in PubChem. The function `ab_atc()` will return the ATC code of an antibiotic as defined by the WHO. Use functions like `ab_name()`, `ab_group()` and `ab_tradenames()` to look up values. The `ab_*` functions use `as.ab()` internally so they support the same intelligent rules to guess the most probable result. For example, `ab_name("Fluclox")`, `ab_name("Floxapen")` and `ab_name("J01CF05")` will all return `"Flucloxacillin"`. These functions can again be used to add new variables to your data.
 
 3. It **analyses the data** with convenient functions that use well-known methods.
@@ -163,14 +177,3 @@ The `AMR` package basically does four important things:
        * Results of 40 antibiotics (each antibiotic in its own column) with a total ~40,000 antimicrobial results
        * Real and genuine data
      * The [`WHONET` data set](./reference/WHONET.html). This data set only contains fake data, but with the exact same structure as files exported by WHONET. Read more about WHONET [on its tutorial page](./articles/WHONET.html).
-    
-
-#### Partners
-
-The development of this package is part of, related to, or made possible by:
-
-<a href="https://www.rug.nl"><img src="./logo_rug.png" class="partner_logo"></a>
-<a href="https://www.umcg.nl"><img src="./logo_umcg.png" class="partner_logo"></a>
-<a href="https://www.certe.nl"><img src="./logo_certe.png" class="partner_logo"></a>
-<a href="http://www.eurhealth-1health.eu"><img src="./logo_eh1h.png" class="partner_logo"></a>
-<a href="http://www.eurhealth-1health.eu"><img src="./logo_interreg.png" class="partner_logo"></a>

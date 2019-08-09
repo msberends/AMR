@@ -17,7 +17,8 @@ ggplot_rsi(data, position = NULL, x = "antibiotic",
   colours = c(S = "#61a8ff", SI = "#61a8ff", I = "#61f7ff", IR =
   "#ff6961", R = "#ff6961"), datalabels = TRUE, datalabels.size = 2.5,
   datalabels.colour = "gray15", title = NULL, subtitle = NULL,
-  caption = NULL, x.title = NULL, y.title = NULL, ...)
+  caption = NULL, x.title = "Antimicrobial", y.title = "Proportion",
+  ...)
 
 geom_rsi(position = NULL, x = c("antibiotic", "interpretation"),
   fill = "interpretation", translate_ab = "name",
