@@ -10,15 +10,15 @@
 # git stash --quiet
 
 # go to master
-git add .
-git commit -a -m "website update" --quiet
 git checkout master --quiet
 echo "• changed branch to master"
+
 # import everything from premaster
 git merge premaster --quiet
 # and send it to git
 git push --quiet
 echo "• pushed changes to master"
+
 # return to premaster
 git checkout premaster --quiet
 echo "• changed branch back to premaster"

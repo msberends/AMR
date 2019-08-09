@@ -1520,7 +1520,7 @@ type_sum.mo <- function(x) {
 #' @export
 pillar_shaft.mo <- function(x, ...) {
   out <- format(x)
-  out[is.na(x)] <- NA
+  out[is.na(x)] <- pillar::style_na("NA")
   pillar::new_pillar_shaft_simple(out, align = "left", min_width = 11)
 }
 

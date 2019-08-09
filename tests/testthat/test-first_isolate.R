@@ -187,5 +187,25 @@ test_that("first isolates work", {
                     info = TRUE),
       na.rm = TRUE),
     1322)
+  
+  # unknown MOs
+  expect_equal(septic_patients %>% 
+                 mutate(mo = ifelse(mo == "B_ESCHR_COL", "UNKNOWN", mo)) %>% 
+                 mutate(first = first_isolate(., include_unknown = FALSE)) %>%
+                 .$first %>% 
+                 sum(),
+               1062)
+  expect_equal(septic_patients %>% 
+                 mutate(mo = ifelse(mo == "B_ESCHR_COL", "UNKNOWN", mo)) %>% 
+                 mutate(first = first_isolate(., include_unknown = TRUE)) %>%
+                 .$first %>% 
+                 sum(),
+               1529)
+  expect_equal(septic_patients %>% 
+                 mutate(mo = ifelse(mo == "B_ESCHR_COL", NA, mo)) %>% 
+                 mutate(first = first_isolate(.)) %>%
+                 .$first %>% 
+                 sum(),
+               1062)
 
 })

@@ -14,7 +14,7 @@ first_isolate(x, col_date = NULL, col_patient_id = NULL,
   col_icu = NULL, col_keyantibiotics = NULL, episode_days = 365,
   testcodes_exclude = NULL, icu_exclude = FALSE,
   specimen_group = NULL, type = "keyantibiotics", ignore_I = TRUE,
-  points_threshold = 2, info = TRUE, ...)
+  points_threshold = 2, info = TRUE, include_unknown = FALSE, ...)
 
 filter_first_isolate(x, col_date = NULL, col_patient_id = NULL,
   col_mo = NULL, ...)
@@ -40,7 +40,7 @@ filter_first_weighted_isolate(x, col_date = NULL,
 
 \item{col_keyantibiotics}{column name of the key antibiotics to determine first \emph{weighted} isolates, see \code{\link{key_antibiotics}}. Defaults to the first column that starts with 'key' followed by 'ab' or 'antibiotics' (case insensitive). Use \code{col_keyantibiotics = FALSE} to prevent this.}
 
-\item{episode_days}{episode in days after which a genus/species combination will be determined as 'first isolate' again}
+\item{episode_days}{episode in days after which a genus/species combination will be determined as 'first isolate' again. The default of 365 days is based on the guideline by CLSI, see Source.}
 
 \item{testcodes_exclude}{character vector with test codes that should be excluded (case-insensitive)}
 
@@ -56,6 +56,8 @@ filter_first_weighted_isolate(x, col_date = NULL,
 
 \item{info}{print progress}
 
+\item{include_unknown}{logical to determine whether 'unknown' microorganisms should be included too, i.e. microbial code \code{"UNKNOWN"}, which defaults to \code{FALSE}. For WHONET users, this means that all records with organism code \code{"con"} (\emph{contamination}) will be excluded at default. Isolates with a microbial ID of \code{NA} will always be excluded as first isolate.}
+
 \item{...}{parameters passed on to the \code{first_isolate} function}
 }
 \value{
@@ -67,6 +69,8 @@ Determine first (weighted) isolates of all microorganisms of every patient per e
 \details{
 \strong{WHY THIS IS SO IMPORTANT} \cr
 To conduct an analysis of antimicrobial resistance, you should only include the first isolate of every patient per episode \href{https://www.ncbi.nlm.nih.gov/pubmed/17304462}{[1]}. If you would not do this, you could easily get an overestimate or underestimate of the resistance of an antibiotic. Imagine that a patient was admitted with an MRSA and that it was found in 5 different blood cultures the following week. The resistance percentage of oxacillin of all \emph{S. aureus} isolates would be overestimated, because you included this MRSA more than once. It would be \href{https://en.wikipedia.org/wiki/Selection_bias}{selection bias}.
+
+All isolates with a microbial ID of \code{NA} will be excluded as first isolate.
 
 The functions \code{filter_first_isolate} and \code{filter_first_weighted_isolate} are helper functions to quickly filter on first isolates. The function \code{filter_first_isolate} is essentially equal to:
 \preformatted{

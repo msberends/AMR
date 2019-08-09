@@ -1,7 +1,8 @@
-# AMR 0.7.1.9030
+# AMR 0.7.1.9031
 
 ### Breaking
 * Function `freq()` has moved to a new package, [`clean`](https://github.com/msberends/clean) ([CRAN link](https://cran.r-project.org/package=clean)). Creating frequency tables is actually not the scope of this package (never was) and this function has matured  a lot over the last two years. Therefore, a new package was created for data cleaning and checking and it perfectly fits the `freq()` function. The [`clean`](https://github.com/msberends/clean) package is available on CRAN and will be installed automatically when updating the `AMR` package, that now imports it. In a later stage, the `skewness()` and `kurtosis()` functions will be moved to the `clean` package too.
+* Determination of first isolates now **excludes** all 'unknown' microorganisms at default, i.e. microbial code `"UNKNOWN"`. They can be included with the new parameter `include_unknown`: `first_isolates(..., include_unknown = TRUE)`. For WHONET users, this means that all records with organism code `"con"` (*contamination*) will be excluded at default, since `as.mo("con") = "UNKNOWN"`.
 
 ### New
 * Additional way to calculate co-resistance, i.e. when using multiple antibiotics as input for `portion_*` functions or `count_*` functions. This can be used to determine the empiric susceptibily of a combination therapy. A new parameter `only_all_tested` (**which defaults to `FALSE`**) replaces the old `also_single_tested` and can be used to select one of the two methods to count isolates and calculate portions. The difference can be seen in this example table (which is also on the `portion` and `count` help pages), where the %SI is being determined:
@@ -36,7 +37,7 @@
 
 ### Changed
 * Added more informative errors and warnings to `eucast_rules()`
-* Fixed a bug in `eucast_rules()` where antibiotic columns would be read as lists instead of characters
+* Fixed a bug in `eucast_rules()` for *Yersinia pseudotuberculosis*
 * Added tibble printing support for classes `rsi`, `mic`, `ab` and `mo`. When using tibbles containing antibiotic columns, values `S` will print in green, values `I` will print in yellow and values `R` will print in red:
   ```r
   (run this on your own console, as this page does not support colour printing)
@@ -65,7 +66,7 @@
 * Using factors as input for `eucast_rules()` now adds missing factors levels when the function changes antibiotic results
 
 #### Other
-* Added Dr Bart Meijer and Dr Dennis Souverein as contributors
+* Added Dr Bart Meijer, Dr Dennis Souverein and Annick Lenglet as contributors
 
 # AMR 0.7.1
 
