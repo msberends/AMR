@@ -1581,7 +1581,7 @@ mo_uncertainties <- function() {
 }
 
 #' @exportMethod print.mo_uncertainties
-#' @importFrom crayon green yellow red white bgGreen bgYellow bgRed
+#' @importFrom crayon green yellow red white black bgGreen bgYellow bgRed
 #' @export
 #' @noRd
 print.mo_uncertainties <- function(x, ...) {
@@ -1600,7 +1600,7 @@ print.mo_uncertainties <- function(x, ...) {
       colour2 <- function(...) bgGreen(white(...))
     } else if (x[i, "uncertainty"] == 2) {
       colour1 <- yellow
-      colour2 <- bgYellow
+      colour2 <- function(...) bgYellow(black(...))
     } else {
       colour1 <- red
       colour2 <- function(...) bgRed(white(...))

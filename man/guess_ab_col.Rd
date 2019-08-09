@@ -9,7 +9,7 @@ guess_ab_col(x = NULL, search_string = NULL, verbose = FALSE)
 \arguments{
 \item{x}{a \code{data.frame}}
 
-\item{search_string}{a text to search \code{x} for}
+\item{search_string}{a text to search \code{x} for, will be checked with \code{\link{as.ab}} if this value is not a column in \code{x}}
 
 \item{verbose}{a logical to indicate whether additional info should be printed}
 }
@@ -20,7 +20,7 @@ A column name of \code{x}, or \code{NULL} when no result is found.
 This tries to find a column name in a data set based on information from the \code{\link{antibiotics}} data set. Also supports WHONET abbreviations.
 }
 \details{
-You can look for an antibiotic (trade) name or abbreviation and it will search \code{x} and the \code{\link{antibiotics}} data set for any column containing a name or ATC code of that antibiotic. \strong{Longer columns names take precendence over shorter column names.}
+You can look for an antibiotic (trade) name or abbreviation and it will search \code{x} and the \code{\link{antibiotics}} data set for any column containing a name or code of that antibiotic. \strong{Longer columns names take precendence over shorter column names.}
 }
 \section{Read more on our website!}{
 

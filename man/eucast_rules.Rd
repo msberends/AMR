@@ -33,7 +33,7 @@ eucast_rules(x, col_mo = NULL, info = TRUE, rules = c("breakpoints",
 
 \item{rules}{a character vector that specifies which rules should be applied - one or more of \code{c("breakpoints", "expert", "other", "all")}}
 
-\item{verbose}{a logical to turn Verbose mode on and off (default is off). In Verbose mode, the function does not apply rules to the data, but instead returns a \code{data.frame} with extensive info about which rows and columns would be effected and in which way.}
+\item{verbose}{a logical to turn Verbose mode on and off (default is off). In Verbose mode, the function does not apply rules to the data, but instead returns a data set in logbook form with extensive info about which rows and columns would be effected and in which way.}
 
 \item{...}{column name of an antibiotic, see section Antibiotics}
 }
@@ -53,7 +53,7 @@ The file containing all EUCAST rules is located here: \url{https://gitlab.com/ms
 
 To define antibiotics column names, leave as it is to determine it automatically with \code{\link{guess_ab_col}} or input a text (case-insensitive), or use \code{NULL} to skip a column (e.g. \code{TIC = NULL} to skip ticarcillin). Manually defined but non-existing columns will be skipped with a warning.
 
-The following antibiotics are used for the functions \code{\link{eucast_rules}} and \code{\link{mdro}}. These are shown in the format '\strong{antimicrobial ID}: name (\emph{ATC code})', sorted by name:
+The following antibiotics are used for the functions \code{\link{eucast_rules}} and \code{\link{mdro}}. These are shown below in the format '\strong{antimicrobial ID}: name (\emph{ATC code})', sorted by name:
 
  \strong{AMK}: amikacin (\href{https://www.whocc.no/atc_ddd_index/?code=J01GB06}{J01GB06}),
  \strong{AMX}: amoxicillin (\href{https://www.whocc.no/atc_ddd_index/?code=J01CA04}{J01CA04}),
@@ -170,9 +170,11 @@ b
 # 5 Pseudomonas aeruginosa    R    R    -    -    R    R    R
 
 
+\donttest{
 # do not apply EUCAST rules, but rather get a data.frame
 # with 18 rows, containing all details about the transformations:
 c <- eucast_rules(a, verbose = TRUE)
+}
 }
 \keyword{eucast}
 \keyword{interpretive}
