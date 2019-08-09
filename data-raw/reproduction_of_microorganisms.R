@@ -538,6 +538,8 @@ MOs %>%
   filter(mo_new != mo_old) %>% 
   select(mo_old, mo_new, everything()) %>% 
   View()
+# and these codes are now missing (which will throw a unit test error):
+AMR::microorganisms.codes %>% filter(!mo %in% AMR::microorganisms$mo)
 
 # set prevalence per species
 MOs <- MOs %>%
