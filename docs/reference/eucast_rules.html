@@ -80,7 +80,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">0.7.1.9029</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">0.7.1.9032</span>
       </span>
     </div>
 
@@ -258,7 +258,7 @@
     </tr>
     <tr>
       <th>verbose</th>
-      <td><p>a logical to turn Verbose mode on and off (default is off). In Verbose mode, the function does not apply rules to the data, but instead returns a <code>data.frame</code> with extensive info about which rows and columns would be effected and in which way.</p></td>
+      <td><p>a logical to turn Verbose mode on and off (default is off). In Verbose mode, the function does not apply rules to the data, but instead returns a data set in logbook form with extensive info about which rows and columns would be effected and in which way.</p></td>
     </tr>
     <tr>
       <th>...</th>
@@ -292,7 +292,7 @@
 
     
     <p>To define antibiotics column names, leave as it is to determine it automatically with <code><a href='guess_ab_col.html'>guess_ab_col</a></code> or input a text (case-insensitive), or use <code>NULL</code> to skip a column (e.g. <code>TIC = NULL</code> to skip ticarcillin). Manually defined but non-existing columns will be skipped with a warning.</p>
-<p>The following antibiotics are used for the functions <code>eucast_rules</code> and <code><a href='mdro.html'>mdro</a></code>. These are shown in the format '<strong>antimicrobial ID</strong>: name (<em>ATC code</em>)', sorted by name:</p>
+<p>The following antibiotics are used for the functions <code>eucast_rules</code> and <code><a href='mdro.html'>mdro</a></code>. These are shown below in the format '<strong>antimicrobial ID</strong>: name (<em>ATC code</em>)', sorted by name:</p>
 <p><strong>AMK</strong>: amikacin (<a href='https://www.whocc.no/atc_ddd_index/?code=J01GB06'>J01GB06</a>),
  <strong>AMX</strong>: amoxicillin (<a href='https://www.whocc.no/atc_ddd_index/?code=J01CA04'>J01CA04</a>),
  <strong>AMC</strong>: amoxicillin/clavulanic acid (<a href='https://www.whocc.no/atc_ddd_index/?code=J01CR02'>J01CR02</a>),
@@ -409,6 +409,7 @@
 <span class='co'># 5 Pseudomonas aeruginosa    R    R    -    -    R    R    R</span>
 
 
+<span class='co'># }</span><span class='co'># NOT RUN {</span>
 <span class='co'># do not apply EUCAST rules, but rather get a data.frame</span>
 <span class='co'># with 18 rows, containing all details about the transformations:</span>
 <span class='no'>c</span> <span class='kw'>&lt;-</span> <span class='fu'>eucast_rules</span>(<span class='no'>a</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)

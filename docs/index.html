@@ -42,7 +42,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">0.7.1.9031</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">0.7.1.9032</span>
       </span>
     </div>
 
@@ -315,7 +315,7 @@
 <li>
 <p>It <strong>enhances existing data</strong> and <strong>adds new data</strong> from data sets included in this package.</p>
 <ul>
-<li>Use <code><a href="reference/eucast_rules.html">eucast_rules()</a></code> to apply <a href="http://www.eucast.org/expert_rules_and_intrinsic_resistance/">EUCAST expert rules to isolates</a> (not the translation from MIC to RSI values).</li>
+<li>Use <code><a href="reference/eucast_rules.html">eucast_rules()</a></code> to apply <a href="http://www.eucast.org/expert_rules_and_intrinsic_resistance/">EUCAST expert rules to isolates</a> (not the translation from MIC to RSI values, use <code><a href="reference/as.rsi.html">as.rsi()</a></code> for that).</li>
 <li>Use <code><a href="reference/first_isolate.html">first_isolate()</a></code> to identify the first isolates of every patient <a href="https://clsi.org/standards/products/microbiology/documents/m39/">using guidelines from the CLSI</a> (Clinical and Laboratory Standards Institute).
 <ul>
 <li>You can also identify first <em>weighted</em> isolates of every patient, an adjusted version of the CLSI guideline. This takes into account key antibiotics of every strain and compares them.</li>

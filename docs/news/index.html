@@ -78,7 +78,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">0.7.1.9031</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">0.7.1.9032</span>
       </span>
     </div>
 
@@ -225,16 +225,16 @@
       
     </div>
 
-    <div id="amr-0-7-1-9031" class="section level1">
+    <div id="amr-0-7-1-9032" class="section level1">
 <h1 class="page-header">
-<a href="#amr-0-7-1-9031" class="anchor"></a>AMR 0.7.1.9031<small> Unreleased </small>
+<a href="#amr-0-7-1-9032" class="anchor"></a>AMR 0.7.1.9032<small> Unreleased </small>
 </h1>
 <div id="breaking" class="section level3">
 <h3 class="hasAnchor">
 <a href="#breaking" class="anchor"></a>Breaking</h3>
 <ul>
 <li>Function <code>freq()</code> has moved to a new package, <a href="https://github.com/msberends/clean"><code>clean</code></a> (<a href="https://cran.r-project.org/package=clean">CRAN link</a>). Creating frequency tables is actually not the scope of this package (never was) and this function has matured a lot over the last two years. Therefore, a new package was created for data cleaning and checking and it perfectly fits the <code>freq()</code> function. The <a href="https://github.com/msberends/clean"><code>clean</code></a> package is available on CRAN and will be installed automatically when updating the <code>AMR</code> package, that now imports it. In a later stage, the <code><a href="../reference/skewness.html">skewness()</a></code> and <code><a href="../reference/kurtosis.html">kurtosis()</a></code> functions will be moved to the <code>clean</code> package too.</li>
-<li>Selection of first isolates now <strong>excludes</strong> all ‘unknown’ microorganisms at default, i.e. microbial codes <code>NA</code> and <code>"UNKNOWN"</code>. They can be included with the new parameter <code>include_unknown</code>: <code>first_isolates(..., include_unknown = TRUE)</code>. For WHONET users, this means that all records with microbial codes <code>"xxx"</code> (<em>no growth</em>) and <code>"con"</code> (<em>contamination</em>) will be excluded at default.</li>
+<li>Determination of first isolates now <strong>excludes</strong> all ‘unknown’ microorganisms at default, i.e. microbial code <code>"UNKNOWN"</code>. They can be included with the new parameter <code>include_unknown</code>: <code>first_isolates(..., include_unknown = TRUE)</code>. For WHONET users, this means that all records with organism code <code>"con"</code> (<em>contamination</em>) will be excluded at default, since <code>as.mo("con") = "UNKNOWN"</code>.</li>
 </ul>
 </div>
 <div id="new" class="section level3">
@@ -274,9 +274,15 @@
 <h3 class="hasAnchor">
 <a href="#changed" class="anchor"></a>Changed</h3>
 <ul>
-<li>Added more informative errors and warnings to <code><a href="../reference/eucast_rules.html">eucast_rules()</a></code>
+<li>Function: <code><a href="../reference/eucast_rules.html">eucast_rules()</a></code>
+<ul>
+<li>Fixed a bug for <em>Yersinia pseudotuberculosis</em>
 </li>
-<li>Fixed a bug in <code><a href="../reference/eucast_rules.html">eucast_rules()</a></code> for <em>Yersinia pseudotuberculosis</em>
+<li>Added more informative errors and warnings</li>
+<li>Printed info now distinguishes between added and changes values</li>
+<li>Using Verbose mode (i.e. <code><a href="../reference/eucast_rules.html">eucast_rules(..., verbose = TRUE)</a></code>) returns more informative and readable output</li>
+<li>Using factors as input now adds missing factors levels when the function changes antibiotic results</li>
+</ul>
 </li>
 <li>
 <p>Added tibble printing support for classes <code>rsi</code>, <code>mic</code>, <code>ab</code> and <code>mo</code>. When using tibbles containing antibiotic columns, values <code>S</code> will print in green, values <code>I</code> will print in yellow and values <code>R</code> will print in red:</p>
@@ -306,15 +312,13 @@
 <li>Deprecated the <code>country</code> parameter of <code><a href="../reference/mdro.html">mdro()</a></code> in favour of the already existing <code>guideline</code> parameter to support multiple guidelines within one country</li>
 <li>The <code>name</code> of <code>RIF</code> is now Rifampicin instead of Rifampin</li>
 <li>The <code>antibiotics</code> data set is now sorted by name</li>
-<li>Using verbose mode with <code><a href="../reference/eucast_rules.html">eucast_rules(..., verbose = TRUE)</a></code> returns more informative and readable output</li>
-<li>Speed improvement for <code><a href="../reference/guess_ab_col.html">guess_ab_col()</a></code> which is now 30 times faster for antibiotic abbreviations</li>
-<li><p>Using factors as input for <code><a href="../reference/eucast_rules.html">eucast_rules()</a></code> now adds missing factors levels when the function changes antibiotic results</p></li>
+<li><p>Speed improvement for <code><a href="../reference/guess_ab_col.html">guess_ab_col()</a></code> which is now 30 times faster for antibiotic abbreviations</p></li>
 </ul>
 <div id="other" class="section level4">
 <h4 class="hasAnchor">
 <a href="#other" class="anchor"></a>Other</h4>
 <ul>
-<li>Added Dr Bart Meijer and Dr Dennis Souverein as contributors</li>
+<li>Added Dr Bart Meijer, Dr Dennis Souverein and Annick Lenglet as contributors</li>
 </ul>
 </div>
 </div>
@@ -1228,7 +1232,7 @@ Using <code><a href="../reference/as.mo.html">as.mo(..., allow_uncertain = 3)</a
     <div id="tocnav">
       <h2>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
-        <li><a href="#amr-0-7-1-9031">0.7.1.9031</a></li>
+        <li><a href="#amr-0-7-1-9032">0.7.1.9032</a></li>
         <li><a href="#amr-0-7-1">0.7.1</a></li>
         <li><a href="#amr-0-7-0">0.7.0</a></li>
         <li><a href="#amr-0-6-1">0.6.1</a></li>

@@ -80,7 +80,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">0.7.1.9031</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">0.7.1.9032</span>
       </span>
     </div>
 
@@ -317,7 +317,7 @@
     </tr>
     <tr>
       <th>include_unknown</th>
-      <td><p>logical to determine whether 'unknown' microorganisms should be included too, i.e. microbial code <code>"UNKNOWN"</code>, which defaults to <code>FALSE</code>. For WHONET users, this means that all records with organism code <code>"con"</code> (<em>contamination</em>) will be excluded at default.</p></td>
+      <td><p>logical to determine whether 'unknown' microorganisms should be included too, i.e. microbial code <code>"UNKNOWN"</code>, which defaults to <code>FALSE</code>. For WHONET users, this means that all records with organism code <code>"con"</code> (<em>contamination</em>) will be excluded at default. Isolates with a microbial ID of <code>NA</code> will always be excluded as first isolate.</p></td>
     </tr>
     <tr>
       <th>...</th>
@@ -337,6 +337,7 @@
 
     <p><strong>WHY THIS IS SO IMPORTANT</strong> <br />
 To conduct an analysis of antimicrobial resistance, you should only include the first isolate of every patient per episode <a href='https://www.ncbi.nlm.nih.gov/pubmed/17304462'>[1]</a>. If you would not do this, you could easily get an overestimate or underestimate of the resistance of an antibiotic. Imagine that a patient was admitted with an MRSA and that it was found in 5 different blood cultures the following week. The resistance percentage of oxacillin of all <em>S. aureus</em> isolates would be overestimated, because you included this MRSA more than once. It would be <a href='https://en.wikipedia.org/wiki/Selection_bias'>selection bias</a>.</p>
+<p>All isolates with a microbial ID of <code>NA</code> will be excluded as first isolate.</p>
 <p>The functions <code>filter_first_isolate</code> and <code>filter_first_weighted_isolate</code> are helper functions to quickly filter on first isolates. The function <code>filter_first_isolate</code> is essentially equal to:</p><pre>
  x %&gt;%
    mutate(only_firsts = first_isolate(x, ...)) %&gt;%

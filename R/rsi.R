@@ -129,18 +129,20 @@ as.rsi.default <- function(x, ...) {
     x <- gsub('^R+$', 'R', x)
     x[!x %in% c('S', 'I', 'R')] <- NA
     na_after <- x[is.na(x) | x == ''] %>% length()
-
-    if (na_before != na_after) {
-      list_missing <- x.bak[is.na(x) & !is.na(x.bak) & x.bak != ''] %>%
-        unique() %>%
-        sort()
-      list_missing <- paste0('"', list_missing , '"', collapse = ", ")
-      warning(na_after - na_before, ' results truncated (',
-              round(((na_after - na_before) / length(x)) * 100),
-              '%) that were invalid antimicrobial interpretations: ',
-              list_missing, call. = FALSE)
+    
+    if (!isFALSE(list(...)$warn)) { # so as.rsi(..., warn = FALSE) will never throw a warning
+      if (na_before != na_after) {
+        list_missing <- x.bak[is.na(x) & !is.na(x.bak) & x.bak != ''] %>%
+          unique() %>%
+          sort()
+        list_missing <- paste0('"', list_missing , '"', collapse = ", ")
+        warning(na_after - na_before, ' results truncated (',
+                round(((na_after - na_before) / length(x)) * 100),
+                '%) that were invalid antimicrobial interpretations: ',
+                list_missing, call. = FALSE)
+      }
     }
-
+    
     structure(.Data = factor(x, levels = c("S", "I", "R"), ordered = TRUE),
               class =  c('rsi', 'ordered', 'factor'))
   }

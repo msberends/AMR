@@ -89,7 +89,7 @@ mo_property(x, property = "fullname", language = get_locale(), ...)
 }
 }
 \description{
-Use these functions to return a specific property of a microorganism from the \code{\link{microorganisms}} data set. All input values will be evaluated internally with \code{\link{as.mo}}.
+Use these functions to return a specific property of a microorganism. All input values will be evaluated internally with \code{\link{as.mo}}, which makes it possible for input of these functions to use microbial abbreviations, codes and names. See Examples.
 }
 \details{
 All functions will return the most recently known taxonomic property according to the Catalogue of Life, except for \code{mo_ref}, \code{mo_authors} and \code{mo_year}. This leads to the following results:
@@ -130,7 +130,7 @@ On our website \url{https://msberends.gitlab.io/AMR} you can find \href{https://
 }
 
 \examples{
-## taxonomic tree
+# taxonomic tree -----------------------------------------------------------
 mo_kingdom("E. coli")         # "Bacteria"
 mo_phylum("E. coli")          # "Proteobacteria"
 mo_class("E. coli")           # "Gammaproteobacteria"
@@ -140,35 +140,33 @@ mo_genus("E. coli")           # "Escherichia"
 mo_species("E. coli")         # "coli"
 mo_subspecies("E. coli")      # ""
 
-## colloquial properties
+# colloquial properties ----------------------------------------------------
 mo_name("E. coli")            # "Escherichia coli"
 mo_fullname("E. coli")        # "Escherichia coli", same as mo_name()
 mo_shortname("E. coli")       # "E. coli"
 
-## other properties
+# other properties ---------------------------------------------------------
 mo_gramstain("E. coli")       # "Gram-negative"
 mo_type("E. coli")            # "Bacteria" (equal to kingdom, but may be translated)
 mo_rank("E. coli")            # "species"
 mo_url("E. coli")             # get the direct url to the online database entry
 mo_synonyms("E. coli")        # get previously accepted taxonomic names
 
-## scientific reference
+# scientific reference -----------------------------------------------------
 mo_ref("E. coli")             # "Castellani et al., 1919"
 mo_authors("E. coli")         # "Castellani et al."
 mo_year("E. coli")            # 1919
 
-
-# Abbreviations known in the field
+# abbreviations known in the field -----------------------------------------
 mo_genus("MRSA")              # "Staphylococcus"
 mo_species("MRSA")            # "aureus"
-mo_shortname("MRSA")          # "S. aureus"
-mo_gramstain("MRSA")          # "Gram-positive"
+mo_shortname("VISA")          # "S. aureus"
+mo_gramstain("VISA")          # "Gram-positive"
 
-mo_genus("VISA")              # "Staphylococcus"
-mo_species("VISA")            # "aureus"
+mo_genus("EHEC")              # "Escherichia"
+mo_species("EHEC")            # "coli"
 
-
-# Known subspecies
+# known subspecies ---------------------------------------------------------
 mo_name("doylei")             # "Campylobacter jejuni doylei"
 mo_genus("doylei")            # "Campylobacter"
 mo_species("doylei")          # "jejuni"
@@ -177,14 +175,14 @@ mo_subspecies("doylei")       # "doylei"
 mo_fullname("K. pneu rh")     # "Klebsiella pneumoniae rhinoscleromatis"
 mo_shortname("K. pneu rh")    # "K. pneumoniae"
 
-
-# Becker classification, see ?as.mo
+\donttest{
+# Becker classification, see ?as.mo ----------------------------------------
 mo_fullname("S. epi")                     # "Staphylococcus epidermidis"
 mo_fullname("S. epi", Becker = TRUE)      # "Coagulase-negative Staphylococcus (CoNS)"
 mo_shortname("S. epi")                    # "S. epidermidis"
 mo_shortname("S. epi", Becker = TRUE)     # "CoNS"
 
-# Lancefield classification, see ?as.mo
+# Lancefield classification, see ?as.mo ------------------------------------
 mo_fullname("S. pyo")                     # "Streptococcus pyogenes"
 mo_fullname("S. pyo", Lancefield = TRUE)  # "Streptococcus group A"
 mo_shortname("S. pyo")                    # "S. pyogenes"
@@ -213,6 +211,7 @@ mo_fullname("S. pyogenes",
 mo_taxonomy("E. coli")
 # get a list with the taxonomy, the authors and the URL to the online database
 mo_info("E. coli")
+}
 }
 \seealso{
 \code{\link{microorganisms}}
