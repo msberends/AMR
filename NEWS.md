@@ -1,8 +1,12 @@
-# AMR 0.7.1.9034
+# AMR 0.7.1.9035
 
 ### Breaking
 * Function `freq()` has moved to a new package, [`clean`](https://github.com/msberends/clean) ([CRAN link](https://cran.r-project.org/package=clean)). Creating frequency tables is actually not the scope of this package (never was) and this function has matured  a lot over the last two years. Therefore, a new package was created for data cleaning and checking and it perfectly fits the `freq()` function. The [`clean`](https://github.com/msberends/clean) package is available on CRAN and will be installed automatically when updating the `AMR` package, that now imports it. In a later stage, the `skewness()` and `kurtosis()` functions will be moved to the `clean` package too.
-* Determination of first isolates now **excludes** all 'unknown' microorganisms at default, i.e. microbial code `"UNKNOWN"`. They can be included with the new parameter `include_unknown`: `first_isolates(..., include_unknown = TRUE)`. For WHONET users, this means that all records with organism code `"con"` (*contamination*) will be excluded at default, since `as.mo("con") = "UNKNOWN"`.
+* Determination of first isolates now **excludes** all 'unknown' microorganisms at default, i.e. microbial code `"UNKNOWN"`. They can be included with the new parameter `include_unknown`:
+  ```r
+  first_isolate(..., include_unknown = TRUE)
+  ```
+  For WHONET users, this means that all records with organism code `"con"` (*contamination*) will be excluded at default, since `as.mo("con") = "UNKNOWN"`. The function always shows a note with the number of 'unknown' microorganisms that were included or excluded.
 
 ### New
 * Additional way to calculate co-resistance, i.e. when using multiple antibiotics as input for `portion_*` functions or `count_*` functions. This can be used to determine the empiric susceptibily of a combination therapy. A new parameter `only_all_tested` (**which defaults to `FALSE`**) replaces the old `also_single_tested` and can be used to select one of the two methods to count isolates and calculate portions. The difference can be seen in this example table (which is also on the `portion` and `count` help pages), where the %SI is being determined:
@@ -44,7 +48,7 @@
   * Using factors as input now adds missing factors levels when the function changes antibiotic results
 * Added tibble printing support for classes `rsi`, `mic`, `ab` and `mo`. When using tibbles containing antibiotic columns, values `S` will print in green, values `I` will print in yellow and values `R` will print in red:
   ```r
-  (run this on your own console, as this page does not support colour printing)
+  # (run this on your own console, as this page does not support colour printing)
   tibble(mo = sample(AMR::microorganisms$fullname, 10),
          drug1 = as.rsi(sample(c("S", "I", "R"), 10, replace = TRUE, 
                                prob = c(0.6, 0.1, 0.3))),
@@ -65,7 +69,7 @@
 * Fix for using `mo_*` functions where the coercion uncertainties and failures would not be available through `mo_uncertainties()` and `mo_failures()` anymore
 * Deprecated the `country` parameter of `mdro()` in favour of the already existing `guideline` parameter to support multiple guidelines within one country
 * The `name` of `RIF` is now Rifampicin instead of Rifampin
-* The `antibiotics` data set is now sorted by name
+* The `antibiotics` data set is now sorted by name and all cephalosporines now have their generation between brackets
 * Speed improvement for `guess_ab_col()` which is now 30 times faster for antibiotic abbreviations
 
 #### Other

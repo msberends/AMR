@@ -29,13 +29,13 @@ is.rsi.eligible(x, threshold = 0.05)
 
 \item{mo}{a microorganism code, generated with \code{\link{as.mo}}}
 
-\item{ab}{an antibiotic code, generated with \code{\link{as.ab}}}
+\item{ab}{an antimicrobial code, generated with \code{\link{as.ab}}}
 
 \item{guideline}{defaults to the latest included EUCAST guideline, run \code{unique(AMR::rsi_translation$guideline)} for all options}
 
 \item{col_mo}{column name of the unique IDs of the microorganisms (see \code{\link{mo}}), defaults to the first column of class \code{mo}. Values will be coerced using \code{\link{as.mo}}.}
 
-\item{threshold}{maximum fraction of \code{x} that is allowed to fail transformation, see Examples}
+\item{threshold}{maximum fraction of invalid antimicrobial interpretations of \code{x}, see Examples}
 }
 \value{
 Ordered factor with new class \code{rsi}
@@ -46,7 +46,7 @@ Interpret MIC values according to EUCAST or CLSI, or clean up existing RSI value
 \details{
 Run \code{unique(AMR::rsi_translation$guideline)} for a list of all supported guidelines.
 
-After using \code{as.rsi}, you can use \code{\link{eucast_rules}} to (1) apply inferred susceptibility and resistance based on results of other antibiotics and (2) apply intrinsic resistance based on taxonomic properties of a microorganism.
+After using \code{as.rsi}, you can use \code{\link{eucast_rules}} to (1) apply inferred susceptibility and resistance based on results of other antimicrobials and (2) apply intrinsic resistance based on taxonomic properties of a microorganism.
 
 The function \code{is.rsi.eligible} returns \code{TRUE} when a columns contains at most 5\% invalid antimicrobial interpretations (not S and/or I and/or R), and \code{FALSE} otherwise. The threshold of 5\% can be set with the \code{threshold} parameter.
 }

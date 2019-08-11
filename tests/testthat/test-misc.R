@@ -31,10 +31,6 @@ test_that("percentages works", {
   expect_equal(percent(0.0055), "0.6%")
 })
 
-test_that("size format works", {
-  expect_equal(size_humanreadable(123456), "121 kB")
-})
-
 test_that("functions missing in older R versions work", {
   expect_equal(strrep("A", 5), "AAAAA")
   expect_equal(strrep(c("A", "B"), c(5, 2)), c("AAAAA", "BB"))

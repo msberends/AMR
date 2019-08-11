@@ -28,7 +28,7 @@
 #' @rdname like
 #' @export
 #' @details Using RStudio? This function can also be inserted from the Addins menu and can have its own Keyboard Shortcut like Ctrl+Shift+L or Cmd+Shift+L (see Tools > Modify Keyboard Shortcuts...).
-#' @source Idea from the \href{https://github.com/Rdatatable/data.table/blob/master/R/like.R}{\code{like} function from the \code{data.table} package}, but made it case insensitive at default and let it support multiple patterns.
+#' @source Idea from the \href{https://github.com/Rdatatable/data.table/blob/master/R/like.R}{\code{like} function from the \code{data.table} package}, but made it case insensitive at default and let it support multiple patterns. Also, if the regex fails the first time, it tries again with \code{perl = TRUE}.
 #' @seealso \code{\link[base]{grep}}
 #' @inheritSection AMR Read more on our website!
 #' @examples

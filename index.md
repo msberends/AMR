@@ -130,7 +130,7 @@ Read more about the data from the Catalogue of Life [in our manual](./reference/
 
 This package contains **all ~450 antimicrobial drugs** and their Anatomical Therapeutic Chemical (ATC) codes, ATC groups and Defined Daily Dose (DDD, oral and IV) from the World Health Organization Collaborating Centre for Drug Statistics Methodology (WHOCC, https://www.whocc.no) and the [Pharmaceuticals Community Register of the European Commission](http://ec.europa.eu/health/documents/community-register/html/atc.htm).
 
-**NOTE: The WHOCC copyright does not allow use for commercial purposes, unlike any other info from this package. See \url{https://www.whocc.no/copyright_disclaimer/}.**
+**NOTE: The WHOCC copyright does not allow use for commercial purposes, unlike any other info from this package. See https://www.whocc.no/copyright_disclaimer/.**
 
 Read more about the data from WHOCC [in our manual](./reference/WHOCC.html).
 

@@ -253,7 +253,7 @@ test_that("as.mo works", {
                rep(NA_character_, 3))
   expect_equal(as.character(as.mo("con")), "UNKNOWN")
   expect_equal(as.character(as.mo("xxx")), NA_character_)
-  expect_equal(as.character(as.mo(c("xxx", "con"))), c(NA_character_, "UNKNOWN"))
+  expect_equal(as.character(as.mo(c("xxx", "con", "eco"))), c(NA_character_, "UNKNOWN", "B_ESCHR_COL"))
     expect_equal(as.character(as.mo(c("other", "none", "unknown"))),
                rep("UNKNOWN", 3))
 
@@ -269,5 +269,17 @@ test_that("as.mo works", {
   # very old MO codes (<= v0.5.0)
   expect_equal(as.character(as.mo("F_CCCCS_NEO")), "F_CRYPT_NEO")
   expect_equal(as.character(as.mo("F_CANDD_GLB")), "F_CANDD_GLA")
+  
+  # debug mode
+  expect_warning(as.mo("kshgcjkhsdgkshjdfsfvsdfv", debug = TRUE, allow_uncertain = 3))
 
+  # ..coccus
+  expect_equal(as.character(as.mo(c("meningococ", "gonococ", "pneumococ"))), 
+               c("B_NESSR_MEN", "B_NESSR_GON", "B_STRPT_PNE"))
+  # yeasts and fungi
+  expect_equal(suppressWarnings(as.character(as.mo(c("yeasts", "fungi")))), 
+               c("F_YEAST", "F_FUNGUS"))
+  
+  # print tibble
+  expect_output(print(tibble(mo = as.mo("B_STRPT_PNE"))))
 })

@@ -21,14 +21,16 @@
 
 #' Translate strings from AMR package
 #'
-#' For language-dependent output of AMR functions, like \code{\link{mo_fullname}} and \code{\link{mo_type}}.
+#' For language-dependent output of AMR functions, like \code{\link{mo_name}},  \code{\link{mo_type}} and \code{\link{ab_name}}.
 #' @details Strings will be translated to foreign languages if they are defined in a local translation file. Additions to this file can be suggested at our repository. The file can be found here: \url{https://gitlab.com/msberends/AMR/blob/master/data-raw/translations.tsv}.
+#'
+#' Currently supported languages can be found if running: \code{unique(AMR:::translations_file$lang)}.
 #'
 #' Please suggest your own translations \href{https://gitlab.com/msberends/AMR/issues/new?issue[title]=Translation\%20suggestion}{by creating a new issue on our repository}.
 #'
 #' This file will be read by all functions where a translated output can be desired, like all \code{\link{mo_property}} functions (\code{\link{mo_fullname}}, \code{\link{mo_type}}, etc.).
 #'
-#' The system language will be used at default, if supported, using \code{\link{get_locale}}. The system language can be overwritten with \code{\link{getOption}("AMR_locale")}.
+#' The system language will be used at default, if that language is supported. The system language can be overwritten with \code{\link{getOption}("AMR_locale")}.
 #' @inheritSection AMR Read more on our website!
 #' @rdname translate
 #' @name translate
@@ -39,27 +41,27 @@
 #' # with get_locale()
 #'
 #' # English
-#' mo_fullname("CoNS", language = "en")
+#' mo_name("CoNS", language = "en")
 #' #> "Coagulase-negative Staphylococcus (CoNS)"
 #'
 #' # German
-#' mo_fullname("CoNS", language = "de")
+#' mo_name("CoNS", language = "de")
 #' #> "Koagulase-negative Staphylococcus (KNS)"
 #'
 #' # Dutch
-#' mo_fullname("CoNS", language = "nl")
+#' mo_name("CoNS", language = "nl")
 #' #> "Coagulase-negatieve Staphylococcus (CNS)"
 #'
 #' # Spanish
-#' mo_fullname("CoNS", language = "es")
+#' mo_name("CoNS", language = "es")
 #' #> "Staphylococcus coagulasa negativo (SCN)"
 #'
 #' # Italian
-#' mo_fullname("CoNS", language = "it")
+#' mo_name("CoNS", language = "it")
 #' #> "Staphylococcus negativo coagulasi (CoNS)"
 #'
 #' # Portuguese
-#' mo_fullname("CoNS", language = "pt")
+#' mo_name("CoNS", language = "pt")
 #' #> "Staphylococcus coagulase negativo (CoNS)"
 get_locale <- function() {
   if (getOption("AMR_locale", "en") != "en") {

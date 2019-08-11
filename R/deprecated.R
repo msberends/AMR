@@ -29,6 +29,5 @@
 #' @rdname AMR-deprecated
 as.atc <- function(x) {
   .Deprecated("ab_atc", package = "AMR")
-  ab_atc(x)
+  AMR::ab_atc(x)
 }
-
