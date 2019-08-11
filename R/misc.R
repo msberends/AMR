@@ -29,48 +29,6 @@ addin_insert_like <- function() {
   rstudioapi::insertText(" %like% ")
 }
 
-# No export, no Rd
-# works exactly like round(), but rounds `round(44.55, 1)` as 44.6 instead of 44.5
-# and adds decimal zeroes until `digits` is reached when force_zero = TRUE
-round2 <- function(x, digits = 0, force_zero = TRUE) {
-  # https://stackoverflow.com/a/12688836/4575331
-  val <- (trunc((abs(x) * 10 ^ digits) + 0.5) / 10 ^ digits) * sign(x)
-  if (digits > 0 & force_zero == TRUE) {
-    val[val != as.integer(val)] <- paste0(val[val != as.integer(val)],
-                                          strrep("0", max(0, digits - nchar(gsub(".*[.](.*)$", "\\1", val[val != as.integer(val)])))))
-  }
-  val
-}
-
-# Coefficient of variation (CV)
-cv <- function(x, na.rm = TRUE) {
-  stats::sd(x, na.rm = na.rm) / base::abs(base::mean(x, na.rm = na.rm))
-}
-
-# Coefficient of dispersion, or coefficient of quartile variation (CQV).
-# (Bonett et al., 2006: Confidence interval for a coefficient of quartile variation).
-cqv <- function(x, na.rm = TRUE) {
-  fives <- stats::fivenum(x, na.rm = na.rm)
-  (fives[4] - fives[2]) / (fives[4] + fives[2])
-}
-
-# show bytes as kB/MB/GB
-# size_humanreadable(123456) # 121 kB
-# size_humanreadable(12345678) # 11.8 MB
-size_humanreadable <- function(bytes, decimals = 1) {
-  bytes <- bytes %>% as.double()
-  # Adapted from:
-  # http://jeffreysambells.com/2012/10/25/human-readable-filesize-php
-  size <- c('B','kB','MB','GB','TB','PB','EB','ZB','YB')
-  factor <- floor((nchar(bytes) - 1) / 3)
-  # added slight improvement; no decimals for B and kB:
-  decimals <- rep(decimals, length(bytes))
-  decimals[size[factor + 1] %in% c('B', 'kB')] <- 0
-
-  out <- paste(sprintf(paste0("%.", decimals, "f"), bytes / (1024 ^ factor)), size[factor + 1])
-  out
-}
-
 percent_clean <- clean:::percent
 # No export, no Rd
 percent <- function(x, round = 1, force_zero = FALSE, decimal.mark = getOption("OutDec"), big.mark = ",", ...) {

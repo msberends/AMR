@@ -233,7 +233,7 @@ as.ab <- function(x) {
   }
 
   if (length(x_unknown) > 0) {
-    warning("These values could not be coerced to a valid antibiotic ID: ",
+    warning("These values could not be coerced to a valid antimicrobial ID: ",
             paste('"', sort(unique(x_unknown)), '"', sep = "", collapse = ', '),
             ".",
             call. = FALSE)

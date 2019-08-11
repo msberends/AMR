@@ -80,7 +80,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">0.7.1.9032</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">0.7.1.9035</span>
       </span>
     </div>
 
@@ -267,7 +267,7 @@
     </tr>
     <tr>
       <th>ab</th>
-      <td><p>an antibiotic code, generated with <code><a href='as.ab.html'>as.ab</a></code></p></td>
+      <td><p>an antimicrobial code, generated with <code><a href='as.ab.html'>as.ab</a></code></p></td>
     </tr>
     <tr>
       <th>guideline</th>
@@ -279,7 +279,7 @@
     </tr>
     <tr>
       <th>threshold</th>
-      <td><p>maximum fraction of <code>x</code> that is allowed to fail transformation, see Examples</p></td>
+      <td><p>maximum fraction of invalid antimicrobial interpretations of <code>x</code>, see Examples</p></td>
     </tr>
     </table>
     
@@ -290,7 +290,7 @@
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>Run <code><a href='https://www.rdocumentation.org/packages/base/topics/unique'>unique(AMR::rsi_translation$guideline)</a></code> for a list of all supported guidelines.</p>
-<p>After using <code>as.rsi</code>, you can use <code><a href='eucast_rules.html'>eucast_rules</a></code> to (1) apply inferred susceptibility and resistance based on results of other antibiotics and (2) apply intrinsic resistance based on taxonomic properties of a microorganism.</p>
+<p>After using <code>as.rsi</code>, you can use <code><a href='eucast_rules.html'>eucast_rules</a></code> to (1) apply inferred susceptibility and resistance based on results of other antimicrobials and (2) apply intrinsic resistance based on taxonomic properties of a microorganism.</p>
 <p>The function <code>is.rsi.eligible</code> returns <code>TRUE</code> when a columns contains at most 5% invalid antimicrobial interpretations (not S and/or I and/or R), and <code>FALSE</code> otherwise. The threshold of 5% can be set with the <code>threshold</code> parameter.</p>
     
     <h2 class="hasAnchor" id="interpretation-of-s-i-and-r"><a class="anchor" href="#interpretation-of-s-i-and-r"></a>Interpretation of S, I and R</h2>

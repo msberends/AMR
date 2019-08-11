@@ -368,6 +368,8 @@ nl	Cephalosporins (1st gen.)	Cefalosporines (1e gen.)	TRUE	FALSE
 nl	Cephalosporins (2nd gen.)	Cefalosporines (2e gen.)	TRUE	FALSE
 nl	Cephalosporins (3rd gen.)	Cefalosporines (3e gen.)	TRUE	FALSE
 nl	Cephalosporins (4th gen.)	Cefalosporines (4e gen.)	TRUE	FALSE
+nl	Cephalosporins (5th gen.)	Cefalosporines (5e gen.)	TRUE	FALSE
+nl	Cephalosporins (unclassified gen.)	Cefalosporines (ongeclassificeerd)	TRUE	FALSE
 nl	Cephalosporins	Cefalosporines	TRUE	FALSE
 nl	Glycopeptides	Glycopeptiden	TRUE	FALSE
 nl	Macrolides/lincosamides	Macroliden/lincosamiden	TRUE	FALSE

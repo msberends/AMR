@@ -318,7 +318,7 @@ mo_synonyms <- function(x, ...) {
     }
   })
   if (length(syns) > 1) {
-    names(syns) <- mo_fullname(x)
+    names(syns) <- mo_name(x)
     result <- syns
   } else {
     result <- unlist(syns)
@@ -340,7 +340,7 @@ mo_info <- function(x, language = get_locale(),  ...) {
            url = unname(mo_url(y, open = FALSE)),
            ref = mo_ref(y))))
   if (length(info) > 1) {
-    names(info) <- mo_fullname(x)
+    names(info) <- mo_name(x)
     result <- info
   } else {
     result <- info[[1L]]
@@ -368,7 +368,7 @@ mo_url <- function(x, open = FALSE, ...) {
                              NA_character_))
 
   u <- df$url
-  names(u) <- AMR::mo_fullname(mo)
+  names(u) <- AMR::mo_name(mo)
   if (open == TRUE) {
     if (length(u) > 1) {
       warning("only the first URL will be opened, as `browseURL()` only suports one string.")

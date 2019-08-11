@@ -294,6 +294,8 @@ antibiotics[which(antibiotics$ab == "RIF"), "name"] <- "Rifampicin"
 # PME and PVM1 (the J0 one) both mean 'Pivmecillinam', so:
 antibiotics <- filter(antibiotics, ab != "PME")
 antibiotics[which(antibiotics$ab == "PVM1"), "ab"] <- "PME"
+# Remove Sinecatechins
+antibiotics <- filter(antibiotics, ab != "SNC")
 # ESBL E-test codes:
 antibiotics[which(antibiotics$ab == "CCV"), "abbreviations"][[1]] <- list(c("xtzl"))
 antibiotics[which(antibiotics$ab == "CAZ"), "abbreviations"][[1]] <- list(c(antibiotics[which(antibiotics$ab == "CAZ"), "abbreviations"][[1]], "xtz", "cefta"))
@@ -304,6 +306,44 @@ antibiotics[which(antibiotics$ab == "CTX"), "abbreviations"][[1]] <- list(c(anti
 
 antibiotics <- antibiotics %>% arrange(name)
 
+# set cephalosporins groups for the ones that could not be determined automatically:
+antibiotics <- antibiotics %>% 
+  mutate(group = case_when(
+    name == "Cefcapene" ~ "Cephalosporins (3rd gen.)",
+    name == "Cefcapene pivoxil" ~ "Cephalosporins (3rd gen.)",
+    name == "Cefditoren pivoxil" ~ "Cephalosporins (3rd gen.)",
+    name == "Cefepime/clavulanic acid" ~ "Cephalosporins (4th gen.)",
+    name == "Cefepime/tazobactam" ~ "Cephalosporins (4th gen.)",
+    name == "Cefetamet pivoxil" ~ "Cephalosporins (3rd gen.)",
+    name == "Cefetecol (Cefcatacol)" ~ "Cephalosporins (4th gen.)",
+    name == "Cefetrizole" ~ "Cephalosporins (unclassified gen.)",
+    name == "Cefoselis" ~ "Cephalosporins (4th gen.)",
+    name == "Cefotaxime/clavulanic acid" ~ "Cephalosporins (3rd gen.)",
+    name == "Cefotaxime/sulbactam" ~ "Cephalosporins (3rd gen.)",
+    name == "Cefotiam hexetil" ~ "Cephalosporins (3rd gen.)",
+    name == "Cefovecin" ~ "Cephalosporins (3rd gen.)",
+    name == "Cefozopran" ~ "Cephalosporins (4th gen.)",
+    name == "Cefpimizole" ~ "Cephalosporins (3rd gen.)",
+    name == "Cefpodoxime proxetil" ~ "Cephalosporins (3rd gen.)",
+    name == "Cefpodoxime/clavulanic acid" ~ "Cephalosporins (3rd gen.)",
+    name == "Cefquinome" ~ "Cephalosporins (4th gen.)",
+    name == "Cefsumide" ~ "Cephalosporins (unclassified gen.)",
+    name == "Ceftaroline" ~ "Cephalosporins (5th gen.)",
+    name == "Ceftaroline/avibactam" ~ "Cephalosporins (5th gen.)",
+    name == "Ceftazidime/avibactam" ~ "Cephalosporins (3rd gen.)",
+    name == "Cefteram" ~ "Cephalosporins (3rd gen.)",
+    name == "Cefteram pivoxil" ~ "Cephalosporins (3rd gen.)",
+    name == "Ceftiofur" ~ "Cephalosporins (3rd gen.)",
+    name == "Ceftizoxime alapivoxil" ~ "Cephalosporins (3rd gen.)",
+    name == "Ceftobiprole" ~ "Cephalosporins (5th gen.)",
+    name == "Ceftobiprole medocaril" ~ "Cephalosporins (5th gen.)",
+    name == "Ceftolozane/enzyme inhibitor" ~ "Cephalosporins (5th gen.)",
+    name == "Ceftolozane/tazobactam" ~ "Cephalosporins (5th gen.)",
+    name == "Cefuroxime axetil" ~ "Cephalosporins (2nd gen.)",
+    TRUE ~ group))
+
+# set as data.frame again
+antibiotics <- as.data.frame(antibiotics, stringsAsFactors = FALSE)
 class(antibiotics$ab) <- "ab"
 
 dim(antibiotics) # for R/data.R

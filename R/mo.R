@@ -477,7 +477,8 @@ exec_as.mo <- function(x,
     # translate to English for supported languages of mo_property
     x <- gsub("(gruppe|groep|grupo|gruppo|groupe)", "group", x, ignore.case = TRUE)
     x <- gsub("(hefe|gist|gisten|levadura|lievito|fermento|levure)[a-z]*", "yeast", x, ignore.case = TRUE)
-    x <- gsub("(schimmels?|mofo|molde|stampo|moisissure)[a-z]*", "fungus", x, ignore.case = TRUE)
+    x <- gsub("(schimmels?|mofo|molde|stampo|moisissure|fungi)[a-z]*", "fungus", x, ignore.case = TRUE)
+    x <- gsub("Fungus[ph|f]rya", "Fungiphrya", x, ignore.case = TRUE)
     # remove non-text in case of "E. coli" except dots and spaces
     x <- gsub("[^.a-zA-Z0-9/ \\-]+", "", x)
     # replace minus by a space
@@ -1216,7 +1217,7 @@ exec_as.mo <- function(x,
             }
             return(found[1L])
           }
-          if (b.x_trimmed %like% "fungus") {
+          if (b.x_trimmed %like% "(fungus|fungi)" & !b.x_trimmed %like% "Fungiphrya") {
             found <- "F_FUNGUS"
             found_result <- found
             found <- microorganismsDT[mo == found, ..property][[1]]

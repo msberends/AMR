@@ -25,14 +25,14 @@
 #' @rdname as.rsi
 #' @param x vector of values (for class \code{mic}: an MIC value in mg/L, for class \code{disk}: a disk diffusion radius in millimeters)
 #' @param mo a microorganism code, generated with \code{\link{as.mo}}
-#' @param ab an antibiotic code, generated with \code{\link{as.ab}}
+#' @param ab an antimicrobial code, generated with \code{\link{as.ab}}
 #' @inheritParams first_isolate
 #' @param guideline defaults to the latest included EUCAST guideline, run \code{unique(AMR::rsi_translation$guideline)} for all options
-#' @param threshold maximum fraction of \code{x} that is allowed to fail transformation, see Examples
+#' @param threshold maximum fraction of invalid antimicrobial interpretations of \code{x}, see Examples
 #' @param ... parameters passed on to methods
 #' @details Run \code{unique(AMR::rsi_translation$guideline)} for a list of all supported guidelines.
 #'
-#' After using \code{as.rsi}, you can use \code{\link{eucast_rules}} to (1) apply inferred susceptibility and resistance based on results of other antibiotics and (2) apply intrinsic resistance based on taxonomic properties of a microorganism.
+#' After using \code{as.rsi}, you can use \code{\link{eucast_rules}} to (1) apply inferred susceptibility and resistance based on results of other antimicrobials and (2) apply intrinsic resistance based on taxonomic properties of a microorganism.
 #'
 #' The function \code{is.rsi.eligible} returns \code{TRUE} when a columns contains at most 5\% invalid antimicrobial interpretations (not S and/or I and/or R), and \code{FALSE} otherwise. The threshold of 5\% can be set with the \code{threshold} parameter.
 #' @section Interpretation of S, I and R:
@@ -265,7 +265,7 @@ as.rsi.data.frame <- function(x, col_mo = NULL, guideline = "EUCAST", ...) {
 
   ab_cols <- colnames(x)[sapply(x, function(y) is.mic(y) | is.disk(y))]
   if (length(ab_cols) == 0) {
-    stop("No columns with MIC values or disk zones found in this data set. Use as.mic or as.disk to transform antibiotic columns.", call. = FALSE)
+    stop("No columns with MIC values or disk zones found in this data set. Use as.mic or as.disk to transform antimicrobial columns.", call. = FALSE)
   }
 
   # try to find columns based on type

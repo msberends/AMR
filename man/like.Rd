@@ -5,7 +5,7 @@
 \alias{\%like\%}
 \title{Pattern Matching}
 \source{
-Idea from the \href{https://github.com/Rdatatable/data.table/blob/master/R/like.R}{\code{like} function from the \code{data.table} package}, but made it case insensitive at default and let it support multiple patterns.
+Idea from the \href{https://github.com/Rdatatable/data.table/blob/master/R/like.R}{\code{like} function from the \code{data.table} package}, but made it case insensitive at default and let it support multiple patterns. Also, if the regex fails the first time, it tries again with \code{perl = TRUE}.
 }
 \usage{
 like(x, pattern)

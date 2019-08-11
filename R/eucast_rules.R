@@ -669,7 +669,7 @@ eucast_rules <- function(x,
       suppressWarnings(
         all_staph <- AMR::microorganisms %>%
           filter(genus == "Staphylococcus") %>%
-          mutate(CNS_CPS = mo_fullname(mo, Becker = "all"))
+          mutate(CNS_CPS = mo_name(mo, Becker = "all"))
       )
       if (eucast_rules_df[i, 3] %like% "coagulase-") {
         eucast_rules_df[i, 3] <- paste0("^(",
