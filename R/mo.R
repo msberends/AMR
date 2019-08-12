@@ -1521,8 +1521,18 @@ type_sum.mo <- function(x) {
 #' @export
 pillar_shaft.mo <- function(x, ...) {
   out <- format(x)
-  out[is.na(x)] <- pillar::style_na("NA")
-  pillar::new_pillar_shaft_simple(out, align = "left", min_width = 11)
+  # grey out the kingdom (part before first "_")
+  first_parts <- unlist(lapply(gregexpr(pattern = '_', x[!is.na(x)], fixed = TRUE), min))
+  first_parts[first_parts < 0] <- 0
+  out[!is.na(x)] <- paste0(pillar::style_subtle(substr(x[!is.na(x)], 0, first_parts)), 
+                           substr(x[!is.na(x)], first_parts + 1, nchar(x)))
+  
+  out[is.na(x)] <- pillar::style_na("  NA")
+  out[x == "UNKNOWN"] <- pillar::style_na("  UNKNOWN")
+  
+  out <- gsub("_", pillar::style_subtle("_"), out)
+  
+  pillar::new_pillar_shaft_simple(out, align = "left", min_width = 12)
 }
 
 #' @exportMethod summary.mo
@@ -1556,12 +1566,13 @@ as.data.frame.mo <- function(x, ...) {
   }
 }
 
-#' @exportMethod pull.mo
+#' @exportMethod [.mo
 #' @export
-#' @importFrom dplyr pull
 #' @noRd
-pull.mo <- function(.data, ...) {
-  pull(as.data.frame(.data), ...)
+"[.mo" <- function (x, ...) {
+  # this function is needed to preserve the "mo" class for any subsetting, like df %>% filter(...)
+  y <- NextMethod()
+  to_class_mo(y)
 }
 
 #' @rdname as.mo

@@ -78,7 +78,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">0.7.1.9035</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">0.7.1.9036</span>
       </span>
     </div>
 
@@ -225,9 +225,9 @@
       
     </div>
 
-    <div id="amr-0-7-1-9035" class="section level1">
+    <div id="amr-0-7-1-9036" class="section level1">
 <h1 class="page-header">
-<a href="#amr-0-7-1-9035" class="anchor"></a>AMR 0.7.1.9035<small> Unreleased </small>
+<a href="#amr-0-7-1-9036" class="anchor"></a>AMR 0.7.1.9036<small> Unreleased </small>
 </h1>
 <div id="breaking" class="section level3">
 <h3 class="hasAnchor">
@@ -289,15 +289,12 @@
 </ul>
 </li>
 <li>
-<p>Added tibble printing support for classes <code>rsi</code>, <code>mic</code>, <code>ab</code> and <code>mo</code>. When using tibbles containing antibiotic columns, values <code>S</code> will print in green, values <code>I</code> will print in yellow and values <code>R</code> will print in red:</p>
+<p>Added tibble printing support for classes <code>rsi</code>, <code>mic</code>, <code>disk</code>, <code>ab</code> <code>mo</code>. When using tibbles containing antibiotic columns, values <code>S</code> will print in green, values <code>I</code> will print in yellow and values <code>R</code> will print in red. Microbial IDs (class <code>mo</code>) will emphasise on the genus and species, not on the kingdom.</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="co"># (run this on your own console, as this page does not support colour printing)</span></a>
-<a class="sourceLine" id="cb3-2" data-line-number="2"><span class="kw">tibble</span>(<span class="dt">mo =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/sample">sample</a></span>(AMR<span class="op">::</span>microorganisms<span class="op">$</span>fullname, <span class="dv">10</span>),</a>
-<a class="sourceLine" id="cb3-3" data-line-number="3">       <span class="dt">drug1 =</span> <span class="kw"><a href="../reference/as.rsi.html">as.rsi</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/sample">sample</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"S"</span>, <span class="st">"I"</span>, <span class="st">"R"</span>), <span class="dv">10</span>, <span class="dt">replace =</span> <span class="ot">TRUE</span>, </a>
-<a class="sourceLine" id="cb3-4" data-line-number="4">                             <span class="dt">prob =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="fl">0.6</span>, <span class="fl">0.1</span>, <span class="fl">0.3</span>))),</a>
-<a class="sourceLine" id="cb3-5" data-line-number="5">       <span class="dt">drug2 =</span> <span class="kw"><a href="../reference/as.rsi.html">as.rsi</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/sample">sample</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"S"</span>, <span class="st">"I"</span>, <span class="st">"R"</span>), <span class="dv">10</span>, <span class="dt">replace =</span> <span class="ot">TRUE</span>,</a>
-<a class="sourceLine" id="cb3-6" data-line-number="6">                             <span class="dt">prob =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="fl">0.6</span>, <span class="fl">0.1</span>, <span class="fl">0.3</span>))),</a>
-<a class="sourceLine" id="cb3-7" data-line-number="7">       <span class="dt">drug3 =</span> <span class="kw"><a href="../reference/as.rsi.html">as.rsi</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/sample">sample</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"S"</span>, <span class="st">"I"</span>, <span class="st">"R"</span>), <span class="dv">10</span>, <span class="dt">replace =</span> <span class="ot">TRUE</span>,</a>
-<a class="sourceLine" id="cb3-8" data-line-number="8">                             <span class="dt">prob =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="fl">0.6</span>, <span class="fl">0.1</span>, <span class="fl">0.3</span>))))</a></code></pre></div>
+<a class="sourceLine" id="cb3-2" data-line-number="2"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(dplyr)</a>
+<a class="sourceLine" id="cb3-3" data-line-number="3">septic_patients <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb3-4" data-line-number="4"><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span>(mo<span class="op">:</span>AMC) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb3-5" data-line-number="5"><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/reexports.html">as_tibble</a></span>()</a></code></pre></div>
 </li>
 <li>Removed class <code>atc</code> - using <code><a href="../reference/AMR-deprecated.html">as.atc()</a></code> is now deprecated in favour of <code><a href="../reference/ab_property.html">ab_atc()</a></code> and this will return a character, not the <code>atc</code> class anymore</li>
 <li>Removed deprecated functions <code>abname()</code>, <code>ab_official()</code>, <code>atc_name()</code>, <code>atc_official()</code>, <code>atc_property()</code>, <code>atc_tradenames()</code>, <code>atc_trivial_nl()</code>
@@ -316,8 +313,10 @@
 <li>Fix for using <code>mo_*</code> functions where the coercion uncertainties and failures would not be available through <code><a href="../reference/as.mo.html">mo_uncertainties()</a></code> and <code><a href="../reference/as.mo.html">mo_failures()</a></code> anymore</li>
 <li>Deprecated the <code>country</code> parameter of <code><a href="../reference/mdro.html">mdro()</a></code> in favour of the already existing <code>guideline</code> parameter to support multiple guidelines within one country</li>
 <li>The <code>name</code> of <code>RIF</code> is now Rifampicin instead of Rifampin</li>
-<li>The <code>antibiotics</code> data set is now sorted by name and all cephalosporines now have their generation between brackets</li>
-<li><p>Speed improvement for <code><a href="../reference/guess_ab_col.html">guess_ab_col()</a></code> which is now 30 times faster for antibiotic abbreviations</p></li>
+<li>The <code>antibiotics</code> data set is now sorted by name and all cephalosporins now have their generation between brackets</li>
+<li>Speed improvement for <code><a href="../reference/guess_ab_col.html">guess_ab_col()</a></code> which is now 30 times faster for antibiotic abbreviations</li>
+<li>Improved <code><a href="../reference/filter_ab_class.html">filter_ab_class()</a></code> to be more reliable and to support 5th generation cephalosporins</li>
+<li><p>Classes <code>ab</code> and <code>mo</code> will now be preserved in any subsetting</p></li>
 </ul>
 <div id="other" class="section level4">
 <h4 class="hasAnchor">
@@ -339,7 +338,7 @@
 <li>
 <p>Function <code><a href="../reference/portion.html">rsi_df()</a></code> to transform a <code>data.frame</code> to a data set containing only the microbial interpretation (S, I, R), the antibiotic, the percentage of S/I/R and the number of available isolates. This is a convenient combination of the existing functions <code><a href="../reference/count.html">count_df()</a></code> and <code><a href="../reference/portion.html">portion_df()</a></code> to immediately show resistance percentages and number of available isolates:</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1">septic_patients <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb4-2" data-line-number="2"><span class="st">  </span><span class="kw">select</span>(AMX, CIP) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb4-2" data-line-number="2"><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span>(AMX, CIP) <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb4-3" data-line-number="3"><span class="st">  </span><span class="kw"><a href="../reference/portion.html">rsi_df</a></span>()</a>
 <a class="sourceLine" id="cb4-4" data-line-number="4"><span class="co">#      antibiotic  interpretation      value  isolates</span></a>
 <a class="sourceLine" id="cb4-5" data-line-number="5"><span class="co"># 1   Amoxicillin              SI  0.4442636       546</span></a>
@@ -472,7 +471,7 @@ Please <a href="https://gitlab.com/msberends/AMR/issues/new?issue%5Btitle%5D=Tra
 <a class="sourceLine" id="cb6-3" data-line-number="3"><span class="st">  </span><span class="kw"><a href="https://www.rdocumentation.org/packages/graphics/topics/boxplot">boxplot</a></span>()</a>
 <a class="sourceLine" id="cb6-4" data-line-number="4"><span class="co"># grouped boxplots:</span></a>
 <a class="sourceLine" id="cb6-5" data-line-number="5">septic_patients <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb6-6" data-line-number="6"><span class="st">  </span><span class="kw">group_by</span>(hospital_id) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb6-6" data-line-number="6"><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span>(hospital_id) <span class="op">%&gt;%</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb6-7" data-line-number="7"><span class="st">  </span><span class="kw">freq</span>(age) <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb6-8" data-line-number="8"><span class="st">  </span><span class="kw"><a href="https://www.rdocumentation.org/packages/graphics/topics/boxplot">boxplot</a></span>()</a></code></pre></div>
 </li>
@@ -607,9 +606,9 @@ These functions use <code><a href="../reference/AMR-deprecated.html">as.atc()</a
 <a class="sourceLine" id="cb11-3" data-line-number="3"><span class="kw"><a href="../reference/first_isolate.html">filter_first_isolate</a></span>(septic_patients, ...)</a></code></pre></div>
 <p>is equal to:</p>
 <div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" data-line-number="1">septic_patients <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb12-2" data-line-number="2"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">only_firsts =</span> <span class="kw"><a href="../reference/first_isolate.html">first_isolate</a></span>(septic_patients, ...)) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb12-3" data-line-number="3"><span class="st">  </span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/filter">filter</a></span>(only_firsts <span class="op">==</span><span class="st"> </span><span class="ot">TRUE</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb12-4" data-line-number="4"><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>only_firsts)</a></code></pre></div>
+<a class="sourceLine" id="cb12-2" data-line-number="2"><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(<span class="dt">only_firsts =</span> <span class="kw"><a href="../reference/first_isolate.html">first_isolate</a></span>(septic_patients, ...)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb12-3" data-line-number="3"><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span>(only_firsts <span class="op">==</span><span class="st"> </span><span class="ot">TRUE</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb12-4" data-line-number="4"><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span>(<span class="op">-</span>only_firsts)</a></code></pre></div>
 </li>
 <li>New function <code><a href="../reference/availability.html">availability()</a></code> to check the number of available (non-empty) results in a <code>data.frame</code>
 </li>
@@ -713,7 +712,7 @@ Using <code><a href="../reference/as.mo.html">as.mo(..., allow_uncertain = 3)</a
 <div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb16-1" data-line-number="1"><span class="co"># Determine genus of microorganisms (mo) in `septic_patients` data set:</span></a>
 <a class="sourceLine" id="cb16-2" data-line-number="2"><span class="co"># OLD WAY</span></a>
 <a class="sourceLine" id="cb16-3" data-line-number="3">septic_patients <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb16-4" data-line-number="4"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">genus =</span> <span class="kw"><a href="../reference/mo_property.html">mo_genus</a></span>(mo)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb16-4" data-line-number="4"><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(<span class="dt">genus =</span> <span class="kw"><a href="../reference/mo_property.html">mo_genus</a></span>(mo)) <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb16-5" data-line-number="5"><span class="st">  </span><span class="kw">freq</span>(genus)</a>
 <a class="sourceLine" id="cb16-6" data-line-number="6"><span class="co"># NEW WAY</span></a>
 <a class="sourceLine" id="cb16-7" data-line-number="7">septic_patients <span class="op">%&gt;%</span><span class="st"> </span></a>
@@ -721,7 +720,7 @@ Using <code><a href="../reference/as.mo.html">as.mo(..., allow_uncertain = 3)</a
 <a class="sourceLine" id="cb16-9" data-line-number="9"></a>
 <a class="sourceLine" id="cb16-10" data-line-number="10"><span class="co"># Even supports grouping variables:</span></a>
 <a class="sourceLine" id="cb16-11" data-line-number="11">septic_patients <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb16-12" data-line-number="12"><span class="st">  </span><span class="kw">group_by</span>(gender) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb16-12" data-line-number="12"><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span>(gender) <span class="op">%&gt;%</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb16-13" data-line-number="13"><span class="st">  </span><span class="kw">freq</span>(<span class="kw"><a href="../reference/mo_property.html">mo_genus</a></span>(mo))</a></code></pre></div>
 </li>
 <li>Header info is now available as a list, with the <code>header</code> function</li>
@@ -734,7 +733,7 @@ Using <code><a href="../reference/as.mo.html">as.mo(..., allow_uncertain = 3)</a
 </li>
 <li>New parameter <code>droplevels</code> to exclude empty factor levels when input is a factor</li>
 <li>Factor levels will be in header when present in input data (maximum of 5)</li>
-<li>Fix for using <code>select()</code> on frequency tables</li>
+<li>Fix for using <code><a href="https://dplyr.tidyverse.org/reference/select.html">select()</a></code> on frequency tables</li>
 </ul>
 </li>
 <li>Function <code><a href="../reference/ggplot_rsi.html">scale_y_percent()</a></code> now contains the <code>limits</code> parameter</li>
@@ -814,14 +813,14 @@ Using <code><a href="../reference/as.mo.html">as.mo(..., allow_uncertain = 3)</a
 <li>
 <p>Support for grouping variables, test with:</p>
 <div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb18-1" data-line-number="1">septic_patients <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb18-2" data-line-number="2"><span class="st">  </span><span class="kw">group_by</span>(hospital_id) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb18-2" data-line-number="2"><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span>(hospital_id) <span class="op">%&gt;%</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb18-3" data-line-number="3"><span class="st">  </span><span class="kw">freq</span>(gender)</a></code></pre></div>
 </li>
 <li>
 <p>Support for (un)selecting columns:</p>
 <div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb19-1" data-line-number="1">septic_patients <span class="op">%&gt;%</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb19-2" data-line-number="2"><span class="st">  </span><span class="kw">freq</span>(hospital_id) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb19-3" data-line-number="3"><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>count, <span class="op">-</span>cum_count) <span class="co"># only get item, percent, cum_percent</span></a></code></pre></div>
+<a class="sourceLine" id="cb19-3" data-line-number="3"><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span>(<span class="op">-</span>count, <span class="op">-</span>cum_count) <span class="co"># only get item, percent, cum_percent</span></a></code></pre></div>
 </li>
 <li>Check for <code><a href="https://www.rdocumentation.org/packages/hms/topics/Deprecated">hms::is.hms</a></code>
 </li>
@@ -978,7 +977,7 @@ Using <code><a href="../reference/as.mo.html">as.mo(..., allow_uncertain = 3)</a
 </li>
 <li>
 <p>Support for quasiquotation in the functions series <code>count_*</code> and <code>portions_*</code>, and <code>n_rsi</code>. This allows to check for more than 2 vectors or columns.</p>
-<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb25-1" data-line-number="1">septic_patients <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>(amox, cipr) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="../reference/count.html">count_IR</a></span>()</a>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb25-1" data-line-number="1">septic_patients <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span>(amox, cipr) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="../reference/count.html">count_IR</a></span>()</a>
 <a class="sourceLine" id="cb25-2" data-line-number="2"><span class="co"># which is the same as:</span></a>
 <a class="sourceLine" id="cb25-3" data-line-number="3">septic_patients <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="../reference/count.html">count_IR</a></span>(amox, cipr)</a>
 <a class="sourceLine" id="cb25-4" data-line-number="4"></a>
@@ -1237,7 +1236,7 @@ Using <code><a href="../reference/as.mo.html">as.mo(..., allow_uncertain = 3)</a
     <div id="tocnav">
       <h2>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
-        <li><a href="#amr-0-7-1-9035">0.7.1.9035</a></li>
+        <li><a href="#amr-0-7-1-9036">0.7.1.9036</a></li>
         <li><a href="#amr-0-7-1">0.7.1</a></li>
         <li><a href="#amr-0-7-0">0.7.0</a></li>
         <li><a href="#amr-0-6-1">0.6.1</a></li>

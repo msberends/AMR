@@ -486,9 +486,9 @@ type_sum.rsi <- function(x) {
 #' @export 
 pillar_shaft.rsi <- function(x, ...) {
   out <- trimws(format(x))
-  out[is.na(x)] <- pillar::style_subtle("NA")
+  out[is.na(x)] <- pillar::style_subtle(" NA")
   out[x == "S"] <- bgGreen(white(" S "))
   out[x == "I"] <- bgYellow(black(" I "))
   out[x == "R"] <- bgRed(white(" R "))
-  pillar::new_pillar_shaft_simple(out, align = "left", min_width = 4)
+  pillar::new_pillar_shaft_simple(out, align = "left", min_width = 3)
 }

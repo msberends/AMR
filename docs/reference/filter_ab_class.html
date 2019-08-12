@@ -80,7 +80,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">0.7.1.9029</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">0.7.1.9036</span>
       </span>
     </div>
 
@@ -234,40 +234,42 @@
     
     </div>
 
-    <pre class="usage"><span class='fu'>filter_ab_class</span>(<span class='no'>tbl</span>, <span class='no'>ab_class</span>, <span class='kw'>result</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>scope</span> <span class='kw'>=</span> <span class='st'>"any"</span>, <span class='no'>...</span>)
+    <pre class="usage"><span class='fu'>filter_ab_class</span>(<span class='no'>x</span>, <span class='no'>ab_class</span>, <span class='kw'>result</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>scope</span> <span class='kw'>=</span> <span class='st'>"any"</span>, <span class='no'>...</span>)
 
-<span class='fu'>filter_aminoglycosides</span>(<span class='no'>tbl</span>, <span class='kw'>result</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>scope</span> <span class='kw'>=</span> <span class='st'>"any"</span>, <span class='no'>...</span>)
+<span class='fu'>filter_aminoglycosides</span>(<span class='no'>x</span>, <span class='kw'>result</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>scope</span> <span class='kw'>=</span> <span class='st'>"any"</span>, <span class='no'>...</span>)
 
-<span class='fu'>filter_carbapenems</span>(<span class='no'>tbl</span>, <span class='kw'>result</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>scope</span> <span class='kw'>=</span> <span class='st'>"any"</span>, <span class='no'>...</span>)
+<span class='fu'>filter_carbapenems</span>(<span class='no'>x</span>, <span class='kw'>result</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>scope</span> <span class='kw'>=</span> <span class='st'>"any"</span>, <span class='no'>...</span>)
 
-<span class='fu'>filter_cephalosporins</span>(<span class='no'>tbl</span>, <span class='kw'>result</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>scope</span> <span class='kw'>=</span> <span class='st'>"any"</span>, <span class='no'>...</span>)
+<span class='fu'>filter_cephalosporins</span>(<span class='no'>x</span>, <span class='kw'>result</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>scope</span> <span class='kw'>=</span> <span class='st'>"any"</span>, <span class='no'>...</span>)
 
-<span class='fu'>filter_1st_cephalosporins</span>(<span class='no'>tbl</span>, <span class='kw'>result</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>scope</span> <span class='kw'>=</span> <span class='st'>"any"</span>, <span class='no'>...</span>)
+<span class='fu'>filter_1st_cephalosporins</span>(<span class='no'>x</span>, <span class='kw'>result</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>scope</span> <span class='kw'>=</span> <span class='st'>"any"</span>, <span class='no'>...</span>)
 
-<span class='fu'>filter_2nd_cephalosporins</span>(<span class='no'>tbl</span>, <span class='kw'>result</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>scope</span> <span class='kw'>=</span> <span class='st'>"any"</span>, <span class='no'>...</span>)
+<span class='fu'>filter_2nd_cephalosporins</span>(<span class='no'>x</span>, <span class='kw'>result</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>scope</span> <span class='kw'>=</span> <span class='st'>"any"</span>, <span class='no'>...</span>)
 
-<span class='fu'>filter_3rd_cephalosporins</span>(<span class='no'>tbl</span>, <span class='kw'>result</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>scope</span> <span class='kw'>=</span> <span class='st'>"any"</span>, <span class='no'>...</span>)
+<span class='fu'>filter_3rd_cephalosporins</span>(<span class='no'>x</span>, <span class='kw'>result</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>scope</span> <span class='kw'>=</span> <span class='st'>"any"</span>, <span class='no'>...</span>)
 
-<span class='fu'>filter_4th_cephalosporins</span>(<span class='no'>tbl</span>, <span class='kw'>result</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>scope</span> <span class='kw'>=</span> <span class='st'>"any"</span>, <span class='no'>...</span>)
+<span class='fu'>filter_4th_cephalosporins</span>(<span class='no'>x</span>, <span class='kw'>result</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>scope</span> <span class='kw'>=</span> <span class='st'>"any"</span>, <span class='no'>...</span>)
 
-<span class='fu'>filter_fluoroquinolones</span>(<span class='no'>tbl</span>, <span class='kw'>result</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>scope</span> <span class='kw'>=</span> <span class='st'>"any"</span>, <span class='no'>...</span>)
+<span class='fu'>filter_5th_cephalosporins</span>(<span class='no'>x</span>, <span class='kw'>result</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>scope</span> <span class='kw'>=</span> <span class='st'>"any"</span>, <span class='no'>...</span>)
 
-<span class='fu'>filter_glycopeptides</span>(<span class='no'>tbl</span>, <span class='kw'>result</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>scope</span> <span class='kw'>=</span> <span class='st'>"any"</span>, <span class='no'>...</span>)
+<span class='fu'>filter_fluoroquinolones</span>(<span class='no'>x</span>, <span class='kw'>result</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>scope</span> <span class='kw'>=</span> <span class='st'>"any"</span>, <span class='no'>...</span>)
 
-<span class='fu'>filter_macrolides</span>(<span class='no'>tbl</span>, <span class='kw'>result</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>scope</span> <span class='kw'>=</span> <span class='st'>"any"</span>, <span class='no'>...</span>)
+<span class='fu'>filter_glycopeptides</span>(<span class='no'>x</span>, <span class='kw'>result</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>scope</span> <span class='kw'>=</span> <span class='st'>"any"</span>, <span class='no'>...</span>)
 
-<span class='fu'>filter_tetracyclines</span>(<span class='no'>tbl</span>, <span class='kw'>result</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>scope</span> <span class='kw'>=</span> <span class='st'>"any"</span>, <span class='no'>...</span>)</pre>
+<span class='fu'>filter_macrolides</span>(<span class='no'>x</span>, <span class='kw'>result</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>scope</span> <span class='kw'>=</span> <span class='st'>"any"</span>, <span class='no'>...</span>)
+
+<span class='fu'>filter_tetracyclines</span>(<span class='no'>x</span>, <span class='kw'>result</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>scope</span> <span class='kw'>=</span> <span class='st'>"any"</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>tbl</th>
+      <th>x</th>
       <td><p>a data set</p></td>
     </tr>
     <tr>
       <th>ab_class</th>
-      <td><p>an antimicrobial class, like <code>"carbapenems"</code>. More specifically, this should be a text that can be found in a 4th level ATC group (chemical subgroup) or a 5th level ATC group (chemical substance), please see <a href='https://www.whocc.no/atc/structure_and_principles/'>this explanation on the WHOCC website</a>.</p></td>
+      <td><p>an antimicrobial class, like <code>"carbapenems"</code>, as can be found in <code>AMR::antibiotics$group</code></p></td>
     </tr>
     <tr>
       <th>result</th>
@@ -285,7 +287,7 @@
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>The <code><a href='antibiotics.html'>antibiotics</a></code> data set will be searched for <code>ab_class</code> in the columns <code>atc_group1</code> and <code>atc_group2</code> (case-insensitive). Next, <code>tbl</code> will be checked for column names with a value in any abbreviations, codes or official names found in the <code>antibiotics</code> data set.</p>
+    <p>The <code>group</code> column in <code><a href='antibiotics.html'>antibiotics</a></code> data set will be searched for <code>ab_class</code> (case-insensitive). If no results are found, the <code>atc_group1</code> and <code>atc_group2</code> columns will be searched. Next, <code>x</code> will be checked for column names with a value in any abbreviations, codes or official names found in the <code>antibiotics</code> data set.</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>

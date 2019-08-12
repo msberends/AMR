@@ -1,4 +1,4 @@
-# AMR 0.7.1.9035
+# AMR 0.7.1.9036
 
 ### Breaking
 * Function `freq()` has moved to a new package, [`clean`](https://github.com/msberends/clean) ([CRAN link](https://cran.r-project.org/package=clean)). Creating frequency tables is actually not the scope of this package (never was) and this function has matured  a lot over the last two years. Therefore, a new package was created for data cleaning and checking and it perfectly fits the `freq()` function. The [`clean`](https://github.com/msberends/clean) package is available on CRAN and will be installed automatically when updating the `AMR` package, that now imports it. In a later stage, the `skewness()` and `kurtosis()` functions will be moved to the `clean` package too.
@@ -46,16 +46,13 @@
   * Printed info now distinguishes between added and changes values
   * Using Verbose mode (i.e. `eucast_rules(..., verbose = TRUE)`) returns more informative and readable output
   * Using factors as input now adds missing factors levels when the function changes antibiotic results
-* Added tibble printing support for classes `rsi`, `mic`, `ab` and `mo`. When using tibbles containing antibiotic columns, values `S` will print in green, values `I` will print in yellow and values `R` will print in red:
+* Added tibble printing support for classes `rsi`, `mic`, `disk`, `ab` `mo`. When using tibbles containing antibiotic columns, values `S` will print in green, values `I` will print in yellow and values `R` will print in red. Microbial IDs (class `mo`) will emphasise on the genus and species, not on the kingdom.
   ```r
   # (run this on your own console, as this page does not support colour printing)
-  tibble(mo = sample(AMR::microorganisms$fullname, 10),
-         drug1 = as.rsi(sample(c("S", "I", "R"), 10, replace = TRUE, 
-                               prob = c(0.6, 0.1, 0.3))),
-         drug2 = as.rsi(sample(c("S", "I", "R"), 10, replace = TRUE,
-                               prob = c(0.6, 0.1, 0.3))),
-         drug3 = as.rsi(sample(c("S", "I", "R"), 10, replace = TRUE,
-                               prob = c(0.6, 0.1, 0.3))))
+  library(dplyr)
+  septic_patients %>%
+    select(mo:AMC) %>% 
+    as_tibble()
   ```
 * Removed class `atc` - using `as.atc()` is now deprecated in favour of `ab_atc()` and this will return a character, not the `atc` class anymore
 * Removed deprecated functions `abname()`, `ab_official()`, `atc_name()`, `atc_official()`, `atc_property()`, `atc_tradenames()`, `atc_trivial_nl()`
@@ -69,8 +66,10 @@
 * Fix for using `mo_*` functions where the coercion uncertainties and failures would not be available through `mo_uncertainties()` and `mo_failures()` anymore
 * Deprecated the `country` parameter of `mdro()` in favour of the already existing `guideline` parameter to support multiple guidelines within one country
 * The `name` of `RIF` is now Rifampicin instead of Rifampin
-* The `antibiotics` data set is now sorted by name and all cephalosporines now have their generation between brackets
+* The `antibiotics` data set is now sorted by name and all cephalosporins now have their generation between brackets
 * Speed improvement for `guess_ab_col()` which is now 30 times faster for antibiotic abbreviations
+* Improved `filter_ab_class()` to be more reliable and to support 5th generation cephalosporins
+* Classes `ab` and `mo` will now be preserved in any subsetting
 
 #### Other
 * Added Dr Bart Meijer, Dr Dennis Souverein and Annick Lenglet as contributors
