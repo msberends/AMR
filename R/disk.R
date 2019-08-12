@@ -90,3 +90,17 @@ print.disk <- function(x, ...) {
   cat("Class 'disk'\n")
   print(as.integer(x), quote = FALSE)
 }
+
+#' @importFrom pillar type_sum
+#' @export
+type_sum.disk <- function(x) {
+  "disk"
+}
+
+#' @importFrom pillar pillar_shaft
+#' @export
+pillar_shaft.disk <- function(x, ...) {
+  out <- trimws(format(x))
+  out[is.na(x)] <- pillar::style_na(NA)
+  pillar::new_pillar_shaft_simple(out, align = "right", min_width = 3)
+}

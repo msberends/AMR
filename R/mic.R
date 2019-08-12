@@ -289,6 +289,6 @@ type_sum.mic <- function(x) {
 #' @export
 pillar_shaft.mic <- function(x, ...) {
   out <- trimws(format(x))
-  out[is.na(x)] <- NA
+  out[is.na(x)] <- pillar::style_na(NA)
   pillar::new_pillar_shaft_simple(out, align = "right", min_width = 4)
 }

@@ -279,12 +279,13 @@ as.data.frame.ab <- function (x, ...) {
   }
 }
 
-#' @exportMethod pull.ab
+#' @exportMethod [.ab
 #' @export
-#' @importFrom dplyr pull
 #' @noRd
-pull.ab <- function(.data, ...) {
-  pull(as.data.frame(.data), ...)
+"[.ab" <- function (x, ...) {
+  # this function is needed to preserve the "ab" class for any subsetting, like df %>% filter(...)
+  y <- NextMethod()
+  structure(y, class = "ab")
 }
 
 #' @importFrom pillar type_sum

@@ -159,8 +159,7 @@ test_that("as.mo works", {
     septic_patients[1:10,] %>%
       left_join_microorganisms() %>%
       select(genus, species) %>%
-      as.mo() %>%
-      as.character())
+      as.mo())
 
   # unknown results
   expect_warning(as.mo(c("INVALID", "Yeah, unknown")))
@@ -198,8 +197,8 @@ test_that("as.mo works", {
   print(mo_renamed())
 
   # check uncertain names
-  expect_equal(suppressWarnings(as.character(as.mo("esco extra_text", allow_uncertain = FALSE))), "UNKNOWN")
-  expect_equal(suppressWarnings(as.character(as.mo("esco extra_text", allow_uncertain = TRUE))), "B_ESCHR_COL")
+  expect_equal(suppressWarnings(as.character(as.mo("staaur extratest", allow_uncertain = TRUE))), "B_STPHY_AUR")
+  expect_equal(suppressWarnings(as.character(as.mo("staaur extratest", allow_uncertain = FALSE))), "UNKNOWN")
   expect_warning(as.mo("esco extra_text", allow_uncertain = TRUE))
   expect_equal(suppressWarnings(as.character(as.mo("unexisting aureus", allow_uncertain = 3))), "B_STPHY_AUR")
   expect_equal(suppressWarnings(as.character(as.mo("unexisting staphy", allow_uncertain = 3))), "B_STPHY")
@@ -271,7 +270,7 @@ test_that("as.mo works", {
   expect_equal(as.character(as.mo("F_CANDD_GLB")), "F_CANDD_GLA")
   
   # debug mode
-  expect_warning(as.mo("kshgcjkhsdgkshjdfsfvsdfv", debug = TRUE, allow_uncertain = 3))
+  expect_output(print(suppressMessages(suppressWarnings(as.mo("kshgcjkhsdgkshjdfsfvsdfv", debug = TRUE, allow_uncertain = 3)))))
 
   # ..coccus
   expect_equal(as.character(as.mo(c("meningococ", "gonococ", "pneumococ"))), 

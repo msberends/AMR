@@ -193,19 +193,19 @@ as.mo <- function(x, Becker = FALSE, Lancefield = FALSE, allow_uncertain = TRUE,
     require("AMR")
     # check onLoad() in R/zzz.R: data tables are created there.
   }
-
+  
   # WHONET: xxx = no growth
   x[tolower(as.character(paste0(x, ""))) %in% c("", "xxx", "na", "nan")] <- NA_character_
-
+  
   uncertainty_level <- translate_allow_uncertain(allow_uncertain)
   # mo_hist <- get_mo_history(x, uncertainty_level, force = isTRUE(list(...)$force_mo_history))
-
+  
   if (mo_source_isvalid(reference_df)
       & isFALSE(Becker)
       & isFALSE(Lancefield)
       & !is.null(reference_df)
       & all(x %in% reference_df[,1][[1]])) {
-
+    
     # has valid own reference_df
     # (data.table not faster here)
     reference_df <- reference_df %>% filter(!is.na(mo))
@@ -225,18 +225,18 @@ as.mo <- function(x, Becker = FALSE, Lancefield = FALSE, allow_uncertain = TRUE,
         left_join(reference_df, by = "x") %>%
         pull("mo")
     )
-
+    
   } else if (all(x %in% AMR::microorganisms$mo)
              & isFALSE(Becker)
              & isFALSE(Lancefield)) {
     y <- x
-
+    
     # } else if (!any(is.na(mo_hist))
     #            & isFALSE(Becker)
     #            & isFALSE(Lancefield)) {
     #   # check previously found results
     #   y <- mo_hist
-
+    
   } else if (all(tolower(x) %in% microorganismsDT$fullname_lower)
              & isFALSE(Becker)
              & isFALSE(Lancefield)) {
@@ -257,7 +257,7 @@ as.mo <- function(x, Becker = FALSE, Lancefield = FALSE, allow_uncertain = TRUE,
     }
     # save them to history
     set_mo_history(x, y, 0, force = isTRUE(list(...)$force_mo_history))
-
+    
   } else {
     # will be checked for mo class in validation and uses exec_as.mo internally if necessary
     y <- mo_validate(x = x, property = "mo",
@@ -266,8 +266,8 @@ as.mo <- function(x, Becker = FALSE, Lancefield = FALSE, allow_uncertain = TRUE,
                      force_mo_history = isTRUE(list(...)$force_mo_history),
                      ...)
   }
-
-
+  
+  
   to_class_mo(y)
 }
 
@@ -286,6 +286,7 @@ is.mo <- function(x) {
 #' @importFrom crayon magenta red blue silver italic
 # param property a column name of AMR::microorganisms
 # param initial_search logical - is FALSE when coming from uncertain tries, which uses exec_as.mo internally too
+# param dyslexia_mode logical - also check for characters that resemble others
 # param force_mo_history logical - whether found result must be saved with set_mo_history (default FALSE on non-interactive sessions)
 # param debug logical - show different lookup texts while searching
 exec_as.mo <- function(x,
@@ -295,23 +296,24 @@ exec_as.mo <- function(x,
                        reference_df = get_mo_source(),
                        property = "mo",
                        initial_search = TRUE,
+                       dyslexia_mode = FALSE,
                        force_mo_history = FALSE,
                        debug = FALSE) {
-
+  
   if (!"AMR" %in% base::.packages()) {
     require("AMR")
     # check onLoad() in R/zzz.R: data tables are created there.
   }
-
+  
   # WHONET: xxx = no growth
   x[tolower(as.character(paste0(x, ""))) %in% c("", "xxx", "na", "nan")] <- NA_character_
-
+  
   if (initial_search == TRUE) {
     options(mo_failures = NULL)
     options(mo_uncertainties = NULL)
     options(mo_renamed = NULL)
   }
-
+  
   if (NCOL(x) == 2) {
     # support tidyverse selection like: df %>% select(colA, colB)
     # paste these columns together
@@ -325,20 +327,20 @@ exec_as.mo <- function(x,
       stop('`x` can be 2 columns at most', call. = FALSE)
     }
     x[is.null(x)] <- NA
-
+    
     # support tidyverse selection like: df %>% select(colA)
     if (!is.vector(x) & !is.null(dim(x))) {
       x <- pull(x, 1)
     }
   }
-
+  
   notes <- character(0)
   uncertainties <- data.frame(input = character(0),
                               fullname = character(0),
                               mo = character(0))
   failures <- character(0)
   uncertainty_level <- translate_allow_uncertain(allow_uncertain)
-
+  
   x_input <- x
   # already strip leading and trailing spaces
   x <- trimws(x, which = "both")
@@ -350,7 +352,7 @@ exec_as.mo <- function(x,
          & !is.null(x)
          & !identical(x, "")
          & !identical(x, "xxx")]
-
+  
   # conversion of old MO codes from v0.5.0 (ITIS) to later versions (Catalogue of Life)
   if (any(x %like% "^[BFP]_[A-Z]{3,7}") & !all(x %in% microorganisms$mo)) {
     leftpart <- gsub("^([BFP]_[A-Z]{3,7}).*", "\\1", x)
@@ -372,7 +374,7 @@ exec_as.mo <- function(x,
         pull(new)
     }
   }
-
+  
   # defined df to check for
   if (!is.null(reference_df)) {
     if (!mo_source_isvalid(reference_df)) {
@@ -391,7 +393,7 @@ exec_as.mo <- function(x,
       reference_df[] <- lapply(reference_df, as.character)
     )
   }
-
+  
   # all empty
   if (all(identical(trimws(x_input), "") | is.na(x_input) | length(x) == 0)) {
     if (property == "mo") {
@@ -399,7 +401,7 @@ exec_as.mo <- function(x,
     } else {
       return(rep(NA_character_, length(x_input)))
     }
-
+    
   } else if (all(x %in% reference_df[, 1][[1]])) {
     # all in reference df
     colnames(reference_df)[1] <- "x"
@@ -409,7 +411,7 @@ exec_as.mo <- function(x,
         left_join(AMR::microorganisms, by = "mo") %>%
         pull(property)
     )
-
+    
   } else if (all(x %in% AMR::microorganisms$mo)) {
     # existing mo codes when not looking for property "mo", like mo_genus("B_ESCHR_COL")
     y <- microorganismsDT[prevalence == 1][data.table(mo = x), on = "mo", ..property][[1]]
@@ -424,7 +426,7 @@ exec_as.mo <- function(x,
                                                        ..property][[1]]
     }
     x <- y
-
+    
   } else if (all(x %in% read_mo_history(uncertainty_level,
                                         force = force_mo_history)$x)) {
     # previously found code
@@ -432,7 +434,7 @@ exec_as.mo <- function(x,
                                                          uncertainty_level,
                                                          force = force_mo_history)),
                           on = "mo", ..property][[1]]
-
+    
   } else if (all(tolower(x) %in% microorganismsDT$fullname_lower)) {
     # we need special treatment for very prevalent full names, they are likely!
     # e.g. as.mo("Staphylococcus aureus")
@@ -448,30 +450,30 @@ exec_as.mo <- function(x,
                                                        ..property][[1]]
     }
     x <- y
-
+    
   } else if (all(toupper(x) %in% AMR::microorganisms.codes$code)) {
     # commonly used MO codes
     y <- as.data.table(AMR::microorganisms.codes)[data.table(code = toupper(x)), on = "code", ]
     # save them to history
     set_mo_history(x, y$mo, 0, force = force_mo_history)
-
+    
     x <- microorganismsDT[data.table(mo = y[["mo"]]), on = "mo", ..property][[1]]
-
+    
   } else if (!all(x %in% AMR::microorganisms[, property])) {
-
+    
     strip_whitespace <- function(x) {
       # all whitespaces (tab, new lines, etc.) should be one space
       # and spaces before and after should be omitted
       trimws(gsub("[\\s]+", " ", x, perl = TRUE), which = "both")
     }
-
+    
     x <- strip_whitespace(x)
     x_backup <- x
-
+    
     # remove spp and species
     x <- gsub(" +(spp.?|ssp.?|sp.? |ss ?.?|subsp.?|subspecies|biovar |serovar |species)", " ", x_backup, ignore.case = TRUE)
     x <- strip_whitespace(x)
-
+    
     x_backup_without_spp <- x
     x_species <- paste(x, "species")
     # translate to English for supported languages of mo_property
@@ -490,7 +492,7 @@ exec_as.mo <- function(x,
     # remove genus as first word
     x <- gsub("^Genus ", "", x)
     # allow characters that resemble others ----
-    if (initial_search == FALSE) {
+    if (dyslexia_mode == TRUE) {
       x <- tolower(x)
       x <- gsub("[iy]+", "[iy]+", x)
       x <- gsub("(c|k|q|qu|s|z|x|ks)+", "(c|k|q|qu|s|z|x|ks)+", x)
@@ -512,7 +514,7 @@ exec_as.mo <- function(x,
       x <- gsub("e\\+n(?![a-z[])", "(e+n|u+(c|k|q|qu|s|z|x|ks)+)", x, ignore.case = TRUE, perl = TRUE)
     }
     x <- strip_whitespace(x)
-
+    
     x_trimmed <- x
     x_trimmed_species <- paste(x_trimmed, "species")
     x_trimmed_without_group <- gsub(" gro.u.p$", "", x_trimmed, ignore.case = TRUE)
@@ -526,7 +528,7 @@ exec_as.mo <- function(x,
     x_withspaces_start_only <- paste0('^', x_withspaces)
     x_withspaces_end_only <- paste0(x_withspaces, '$')
     x_withspaces_start_end <- paste0('^', x_withspaces, '$')
-
+    
     if (isTRUE(debug)) {
       cat(paste0('x                       "', x, '"\n'))
       cat(paste0('x_species               "', x_species, '"\n'))
@@ -539,13 +541,13 @@ exec_as.mo <- function(x,
       cat(paste0('x_trimmed_species       "', x_trimmed_species, '"\n'))
       cat(paste0('x_trimmed_without_group "', x_trimmed_without_group, '"\n'))
     }
-
+    
     progress <- progress_estimated(n = length(x), min_time = 3)
-
+    
     for (i in 1:length(x)) {
-
+      
       progress$tick()$print()
-
+      
       if (initial_search == TRUE) {
         found <- microorganismsDT[mo == get_mo_history(x_backup[i],
                                                        uncertainty_level,
@@ -557,14 +559,14 @@ exec_as.mo <- function(x,
           next
         }
       }
-
+      
       found <- microorganismsDT[mo == toupper(x_backup[i]), ..property][[1]]
       # is a valid MO code
       if (length(found) > 0) {
         x[i] <- found[1L]
         next
       }
-
+      
       found <- microorganismsDT[fullname_lower %in% tolower(c(x_backup[i], x_backup_without_spp[i])), ..property][[1]]
       # most probable: is exact match in fullname
       if (length(found) > 0) {
@@ -574,7 +576,7 @@ exec_as.mo <- function(x,
         }
         next
       }
-
+      
       found <- microorganismsDT[col_id == x_backup[i], ..property][[1]]
       # is a valid Catalogue of Life ID
       if (NROW(found) > 0) {
@@ -584,14 +586,14 @@ exec_as.mo <- function(x,
         }
         next
       }
-
-
+      
+      
       # WHONET: xxx = no growth
       if (tolower(as.character(paste0(x_backup_without_spp[i], ""))) %in% c("", "xxx", "na", "nan")) {
         x[i] <- NA_character_
         next
       }
-
+      
       if (tolower(x_backup_without_spp[i]) %in% c("other", "none", "unknown")) {
         # empty and nonsense values, ignore without warning
         x[i] <- microorganismsDT[mo == "UNKNOWN", ..property][[1]]
@@ -600,7 +602,7 @@ exec_as.mo <- function(x,
         }
         next
       }
-
+      
       # check for very small input, but ignore the O antigens of E. coli
       if (nchar(gsub("[^a-zA-Z]", "", x_trimmed[i])) < 3
           & !x_backup_without_spp[i] %like% "O?(26|103|104|104|111|121|145|157)") {
@@ -629,7 +631,7 @@ exec_as.mo <- function(x,
         }
         next
       }
-
+      
       if (x_backup_without_spp[i] %like% "virus") {
         # there is no fullname like virus, so don't try to coerce it
         x[i] <- microorganismsDT[mo == "UNKNOWN", ..property][[1]]
@@ -639,7 +641,7 @@ exec_as.mo <- function(x,
         }
         next
       }
-
+      
       # translate known trivial abbreviations to genus + species ----
       if (!is.na(x_trimmed[i])) {
         if (toupper(x_backup_without_spp[i]) %in% c('MRSA', 'MSSA', 'VISA', 'VRSA')) {
@@ -830,7 +832,7 @@ exec_as.mo <- function(x,
           next
         }
       }
-
+      
       # FIRST TRY FULLNAMES AND CODES ----
       # if only genus is available, return only genus
       if (all(!c(x[i], x_trimmed[i]) %like% " ")) {
@@ -854,7 +856,7 @@ exec_as.mo <- function(x,
         }
         # rest of genus only is in allow_uncertain part.
       }
-
+      
       # TRY OTHER SOURCES ----
       # WHONET and other common LIS codes
       if (toupper(x_backup[i]) %in% AMR::microorganisms.codes[, 1]) {
@@ -879,7 +881,7 @@ exec_as.mo <- function(x,
           }
         }
       }
-
+      
       # allow no codes less than 4 characters long, was already checked for WHONET above
       if (nchar(x_backup_without_spp[i]) < 4) {
         x[i] <- microorganismsDT[mo == "UNKNOWN", ..property][[1]]
@@ -889,7 +891,7 @@ exec_as.mo <- function(x,
         }
         next
       }
-
+      
       check_per_prevalence <- function(data_to_check,
                                        a.x_backup,
                                        b.x_trimmed,
@@ -898,19 +900,19 @@ exec_as.mo <- function(x,
                                        e.x_withspaces_start_only,
                                        f.x_withspaces_end_only,
                                        g.x_backup_without_spp) {
-
+        
         # try probable: trimmed version of fullname ----
         found <- data_to_check[fullname_lower %in% tolower(g.x_backup_without_spp), ..property][[1]]
         if (length(found) > 0) {
           return(found[1L])
         }
-
+        
         # try any match keeping spaces ----
         found <- data_to_check[fullname %like% d.x_withspaces_start_end, ..property][[1]]
         if (length(found) > 0 & nchar(g.x_backup_without_spp) >= 6) {
           return(found[1L])
         }
-
+        
         # try any match keeping spaces, not ending with $ ----
         found <- data_to_check[fullname %like% paste0(trimws(e.x_withspaces_start_only), " "), ..property][[1]]
         if (length(found) > 0) {
@@ -920,21 +922,21 @@ exec_as.mo <- function(x,
         if (length(found) > 0 & nchar(g.x_backup_without_spp) >= 6) {
           return(found[1L])
         }
-
+        
         # try any match keeping spaces, not start with ^ ----
         found <- data_to_check[fullname %like% paste0(" ", trimws(f.x_withspaces_end_only)), ..property][[1]]
         if (length(found) > 0) {
           return(found[1L])
         }
-
+        
         # try a trimmed version
         found <- data_to_check[fullname_lower %like% b.x_trimmed
                                | fullname_lower %like% c.x_trimmed_without_group, ..property][[1]]
         if (length(found) > 0 & nchar(g.x_backup_without_spp) >= 6) {
           return(found[1L])
         }
-
-
+        
+        
         # try splitting of characters in the middle and then find ID ----
         # only when text length is 6 or lower
         # like esco = E. coli, klpn = K. pneumoniae, stau = S. aureus, staaur = S. aureus
@@ -949,18 +951,18 @@ exec_as.mo <- function(x,
             return(found[1L])
           }
         }
-
+        
         # try fullname without start and without nchar limit of >= 6 ----
         # like "K. pneu rhino" >> "Klebsiella pneumoniae (rhinoscleromatis)" = KLEPNERH
         found <- data_to_check[fullname %like% e.x_withspaces_start_only, ..property][[1]]
         if (length(found) > 0) {
           return(found[1L])
         }
-
+        
         # didn't found any
         return(NA_character_)
       }
-
+      
       # FIRST TRY VERY PREVALENT IN HUMAN INFECTIONS ----
       x[i] <- check_per_prevalence(data_to_check = microorganismsDT[prevalence == 1],
                                    a.x_backup = x_backup[i],
@@ -1006,9 +1008,9 @@ exec_as.mo <- function(x,
         }
         next
       }
-
+      
       # MISCELLANEOUS ----
-
+      
       # look for old taxonomic names ----
       found <- microorganisms.oldDT[fullname_lower == tolower(x_backup[i])
                                     | fullname %like% x_withspaces_start_end[i],]
@@ -1032,7 +1034,7 @@ exec_as.mo <- function(x,
         }
         next
       }
-
+      
       # check for uncertain results ----
       uncertain_fn <- function(a.x_backup,
                                b.x_trimmed,
@@ -1040,16 +1042,21 @@ exec_as.mo <- function(x,
                                d.x_withspaces_start_only,
                                f.x_withspaces_end_only,
                                g.x_backup_without_spp) {
-
+        
         if (uncertainty_level == 0) {
           # do not allow uncertainties
           return(NA_character_)
         }
-
+        
         if (uncertainty_level >= 1) {
+          now_checks_for_uncertainty_level <- 1
+          
           # (1) look again for old taxonomic names, now for G. species ----
           if (isTRUE(debug)) {
             cat("\n[UNCERTAINLY LEVEL 1] (1) look again for old taxonomic names, now for G. species\n")
+          }
+          if (isTRUE(debug)) {
+            message("Running '", c.x_withspaces_start_end, "' and '", d.x_withspaces_start_only, "'")
           }
           found <- microorganisms.oldDT[fullname %like% c.x_withspaces_start_end
                                         | fullname %like% d.x_withspaces_start_only]
@@ -1068,7 +1075,7 @@ exec_as.mo <- function(x,
                         ref_new = microorganismsDT[col_id == found[1, col_id_new], ref],
                         mo = microorganismsDT[col_id == found[1, col_id_new], mo])
             uncertainties <<- rbind(uncertainties,
-                                    data.frame(uncertainty = 1,
+                                    data.frame(uncertainty = now_checks_for_uncertainty_level,
                                                input = a.x_backup,
                                                fullname = found[1, fullname],
                                                mo = paste("CoL", found[1, col_id])))
@@ -1077,18 +1084,26 @@ exec_as.mo <- function(x,
             }
             return(x)
           }
-
+          
           # (2) Try with misspelled input ----
-          # just rerun with initial_search = FALSE will used the extensive regex part above
+          # just rerun with dyslexia_mode = TRUE will used the extensive regex part above
           if (isTRUE(debug)) {
             cat("\n[UNCERTAINLY LEVEL 1] (2) Try with misspelled input\n")
           }
-          found <- suppressMessages(suppressWarnings(exec_as.mo(a.x_backup, initial_search = FALSE, allow_uncertain = FALSE, debug = debug)))
+          if (isTRUE(debug)) {
+            message("Running '", a.x_backup, "'")
+          }
+          # first try without dyslexia mode
+          found <- suppressMessages(suppressWarnings(exec_as.mo(a.x_backup, initial_search = FALSE, dyslexia_mode = FALSE, allow_uncertain = FALSE, debug = debug)))
+          if (empty_result(found)) {
+            # then with dyslexia mode
+            found <- suppressMessages(suppressWarnings(exec_as.mo(a.x_backup, initial_search = FALSE, dyslexia_mode = TRUE, allow_uncertain = FALSE, debug = debug)))
+          }
           if (!empty_result(found)) {
             found_result <- found
             found <- microorganismsDT[mo == found, ..property][[1]]
             uncertainties <<- rbind(uncertainties,
-                                    data.frame(uncertainty = 1,
+                                    data.frame(uncertainty = now_checks_for_uncertainty_level,
                                                input = a.x_backup,
                                                fullname = microorganismsDT[mo == found_result[1L], fullname][[1]],
                                                mo = found_result[1L]))
@@ -1098,21 +1113,25 @@ exec_as.mo <- function(x,
             return(found[1L])
           }
         }
-
+        
         if (uncertainty_level >= 2) {
-
+          now_checks_for_uncertainty_level <- 2
+          
           # (3) look for genus only, part of name ----
           if (isTRUE(debug)) {
             cat("\n[UNCERTAINLY LEVEL 2] (3) look for genus only, part of name\n")
           }
           if (nchar(g.x_backup_without_spp) > 4 & !b.x_trimmed %like% " ") {
             if (!grepl("^[A-Z][a-z]+", b.x_trimmed, ignore.case = FALSE)) {
+              if (isTRUE(debug)) {
+                message("Running '", paste(b.x_trimmed, "species"), "'")
+              }
               # not when input is like Genustext, because then Neospora would lead to Actinokineospora
               found <- microorganismsDT[fullname_lower %like% paste(b.x_trimmed, "species"), ..property][[1]]
               if (length(found) > 0) {
                 x[i] <- found[1L]
                 uncertainties <<- rbind(uncertainties,
-                                        data.frame(uncertainty = 2,
+                                        data.frame(uncertainty = now_checks_for_uncertainty_level,
                                                    input = a.x_backup,
                                                    fullname = microorganismsDT[mo == found[1L], fullname][[1]],
                                                    mo = found[1L]))
@@ -1123,19 +1142,27 @@ exec_as.mo <- function(x,
               }
             }
           }
-
+          
           # (4) strip values between brackets ----
           if (isTRUE(debug)) {
             cat("\n[UNCERTAINLY LEVEL 2] (4) strip values between brackets\n")
           }
           a.x_backup_stripped <- gsub("( *[(].*[)] *)", " ", a.x_backup)
           a.x_backup_stripped <- trimws(gsub(" +", " ", a.x_backup_stripped))
-          found <- suppressMessages(suppressWarnings(exec_as.mo(a.x_backup_stripped, initial_search = FALSE, allow_uncertain = FALSE, debug = debug)))
+          if (isTRUE(debug)) {
+            message("Running '", a.x_backup_stripped, "'")
+          }
+          # first try without dyslexia mode
+          found <- suppressMessages(suppressWarnings(exec_as.mo(a.x_backup_stripped, initial_search = FALSE, dyslexia_mode = FALSE, allow_uncertain = FALSE, debug = debug)))
+          if (empty_result(found)) {
+            # then with dyslexia mode
+            found <- suppressMessages(suppressWarnings(exec_as.mo(a.x_backup_stripped, initial_search = FALSE, dyslexia_mode = TRUE, allow_uncertain = FALSE, debug = debug)))
+          }
           if (!empty_result(found) & nchar(g.x_backup_without_spp) >= 6) {
             found_result <- found
             found <- microorganismsDT[mo == found, ..property][[1]]
             uncertainties <<- rbind(uncertainties,
-                                    data.frame(uncertainty = 2,
+                                    data.frame(uncertainty = now_checks_for_uncertainty_level,
                                                input = a.x_backup,
                                                fullname = microorganismsDT[mo == found_result[1L], fullname][[1]],
                                                mo = found_result[1L]))
@@ -1144,7 +1171,7 @@ exec_as.mo <- function(x,
             }
             return(found[1L])
           }
-
+          
           # (5a) try to strip off half an element from end and check the remains ----
           if (isTRUE(debug)) {
             cat("\n[UNCERTAINLY LEVEL 2] (5a) try to strip off half an element from end and check the remains\n")
@@ -1156,13 +1183,21 @@ exec_as.mo <- function(x,
               lastword_half <- substr(lastword, 1, as.integer(nchar(lastword) / 2))
               # remove last half of the second term
               x_strip_collapsed <- paste(c(x_strip[1:(length(x_strip) - i)], lastword_half), collapse = " ")
-              if (nchar(x_strip_collapsed) >= 4) {
-                found <- suppressMessages(suppressWarnings(exec_as.mo(x_strip_collapsed, initial_search = FALSE, allow_uncertain = FALSE, debug = debug)))
+              if (nchar(x_strip_collapsed) >= 4 & nchar(lastword_half) > 2) {
+                if (isTRUE(debug)) {
+                  message("Running '", x_strip_collapsed, "'")
+                }
+                # first try without dyslexia mode
+                found <- suppressMessages(suppressWarnings(exec_as.mo(x_strip_collapsed, initial_search = FALSE, dyslexia_mode = FALSE, allow_uncertain = FALSE, debug = debug)))
+                if (empty_result(found)) {
+                  # then with dyslexia mode
+                  found <- suppressMessages(suppressWarnings(exec_as.mo(x_strip_collapsed, initial_search = FALSE, dyslexia_mode = TRUE, allow_uncertain = FALSE, debug = debug)))
+                }
                 if (!empty_result(found)) {
                   found_result <- found
                   found <- microorganismsDT[mo == found, ..property][[1]]
                   uncertainties <<- rbind(uncertainties,
-                                          data.frame(uncertainty = 2,
+                                          data.frame(uncertainty = now_checks_for_uncertainty_level,
                                                      input = a.x_backup,
                                                      fullname = microorganismsDT[mo == found_result[1L], fullname][[1]],
                                                      mo = found_result[1L]))
@@ -1181,13 +1216,21 @@ exec_as.mo <- function(x,
           if (length(x_strip) > 1) {
             for (i in 1:(length(x_strip) - 1)) {
               x_strip_collapsed <- paste(x_strip[1:(length(x_strip) - i)], collapse = " ")
-              if (nchar(x_strip_collapsed) >= 4) {
-                found <- suppressMessages(suppressWarnings(exec_as.mo(x_strip_collapsed, initial_search = FALSE, allow_uncertain = FALSE, debug = debug)))
+              if (nchar(x_strip_collapsed) >= 6) {
+                if (isTRUE(debug)) {
+                  message("Running '", x_strip_collapsed, "'")
+                }
+                # first try without dyslexia mode
+                found <- suppressMessages(suppressWarnings(exec_as.mo(x_strip_collapsed, initial_search = FALSE, dyslexia_mode = FALSE, allow_uncertain = FALSE, debug = debug)))
+                if (empty_result(found)) {
+                  # then with dyslexia mode
+                  found <- suppressMessages(suppressWarnings(exec_as.mo(x_strip_collapsed, initial_search = FALSE, dyslexia_mode = TRUE, allow_uncertain = FALSE, debug = debug)))
+                }
                 if (!empty_result(found)) {
                   found_result <- found
                   found <- microorganismsDT[mo == found, ..property][[1]]
                   uncertainties <<- rbind(uncertainties,
-                                          data.frame(uncertainty = 2,
+                                          data.frame(uncertainty = now_checks_for_uncertainty_level,
                                                      input = a.x_backup,
                                                      fullname = microorganismsDT[mo == found_result[1L], fullname][[1]],
                                                      mo = found_result[1L]))
@@ -1208,7 +1251,7 @@ exec_as.mo <- function(x,
             found_result <- found
             found <- microorganismsDT[mo == found, ..property][[1]]
             uncertainties <<- rbind(uncertainties,
-                                    data.frame(uncertainty = 2,
+                                    data.frame(uncertainty = now_checks_for_uncertainty_level,
                                                input = a.x_backup,
                                                fullname = microorganismsDT[mo == found_result[1L], fullname][[1]],
                                                mo = found_result[1L]))
@@ -1222,7 +1265,7 @@ exec_as.mo <- function(x,
             found_result <- found
             found <- microorganismsDT[mo == found, ..property][[1]]
             uncertainties <<- rbind(uncertainties,
-                                    data.frame(uncertainty = 2,
+                                    data.frame(uncertainty = now_checks_for_uncertainty_level,
                                                input = a.x_backup,
                                                fullname = microorganismsDT[mo == found_result[1L], fullname][[1]],
                                                mo = found_result[1L]))
@@ -1239,14 +1282,22 @@ exec_as.mo <- function(x,
           if (length(x_strip) > 1 & nchar(g.x_backup_without_spp) >= 6) {
             for (i in 2:(length(x_strip))) {
               x_strip_collapsed <- paste(x_strip[i:length(x_strip)], collapse = " ")
-              found <- suppressMessages(suppressWarnings(exec_as.mo(x_strip_collapsed, initial_search = FALSE, allow_uncertain = FALSE, debug = debug)))
+              if (isTRUE(debug)) {
+                message("Running '", x_strip_collapsed, "'")
+              }
+              # first try without dyslexia mode
+              found <- suppressMessages(suppressWarnings(exec_as.mo(x_strip_collapsed, initial_search = FALSE, dyslexia_mode = FALSE, allow_uncertain = FALSE, debug = debug)))
+              if (empty_result(found)) {
+                # then with dyslexia mode
+                found <- suppressMessages(suppressWarnings(exec_as.mo(x_strip_collapsed, initial_search = FALSE, dyslexia_mode = TRUE, allow_uncertain = FALSE, debug = debug)))
+              }
               if (!empty_result(found)) {
                 found_result <- found
                 found <- microorganismsDT[mo == found_result[1L], ..property][[1]]
                 # uncertainty level 2 only if searched part contains a space (otherwise it will be found with lvl 3)
                 if (x_strip_collapsed %like% " ") {
                   uncertainties <<- rbind(uncertainties,
-                                          data.frame(uncertainty = 2,
+                                          data.frame(uncertainty = now_checks_for_uncertainty_level,
                                                      input = a.x_backup,
                                                      fullname = microorganismsDT[mo == found_result[1L], fullname][[1]],
                                                      mo = found_result[1L]))
@@ -1259,22 +1310,32 @@ exec_as.mo <- function(x,
             }
           }
         }
-
+        
         if (uncertainty_level >= 3) {
-          # (7) try to strip off one element from start and check the remains ----
+          now_checks_for_uncertainty_level <- 3
+          
+          # (7a) try to strip off one element from start and check the remains (any text size) ----
           if (isTRUE(debug)) {
-            cat("\n[UNCERTAINLY LEVEL 3] (7) try to strip off one element from start and check the remains\n")
+            cat("\n[UNCERTAINLY LEVEL 3] (7a) try to strip off one element from start and check the remains (any text size)\n")
           }
           x_strip <- a.x_backup %>% strsplit(" ") %>% unlist()
           if (length(x_strip) > 1 & nchar(g.x_backup_without_spp) >= 6) {
             for (i in 2:(length(x_strip))) {
               x_strip_collapsed <- paste(x_strip[i:length(x_strip)], collapse = " ")
-              found <- suppressMessages(suppressWarnings(exec_as.mo(x_strip_collapsed, initial_search = FALSE, allow_uncertain = FALSE, debug = debug)))
+              if (isTRUE(debug)) {
+                message("Running '", x_strip_collapsed, "'")
+              }
+              # first try without dyslexia mode
+              found <- suppressMessages(suppressWarnings(exec_as.mo(x_strip_collapsed, initial_search = FALSE, dyslexia_mode = FALSE, allow_uncertain = FALSE, debug = debug)))
+              if (empty_result(found)) {
+                # then with dyslexia mode
+                found <- suppressMessages(suppressWarnings(exec_as.mo(x_strip_collapsed, initial_search = FALSE, dyslexia_mode = TRUE, allow_uncertain = FALSE, debug = debug)))
+              }
               if (!empty_result(found)) {
                 found_result <- found
                 found <- microorganismsDT[mo == found, ..property][[1]]
                 uncertainties <<- rbind(uncertainties,
-                                        data.frame(uncertainty = 3,
+                                        data.frame(uncertainty = now_checks_for_uncertainty_level,
                                                    input = a.x_backup,
                                                    fullname = microorganismsDT[mo == found_result[1L], fullname][[1]],
                                                    mo = found_result[1L]))
@@ -1285,10 +1346,45 @@ exec_as.mo <- function(x,
               }
             }
           }
-
+          # (7b) try to strip off one element from end and check the remains (any text size) ----
+          # (this is in fact 5b but without nchar limit of >=6)
+          if (isTRUE(debug)) {
+            cat("\n[UNCERTAINLY LEVEL 3] (7b) try to strip off one element from end and check the remains (any text size)\n")
+          }
+          if (length(x_strip) > 1) {
+            for (i in 1:(length(x_strip) - 1)) {
+              x_strip_collapsed <- paste(x_strip[1:(length(x_strip) - i)], collapse = " ")
+              if (isTRUE(debug)) {
+                message("Running '", x_strip_collapsed, "'")
+              }
+              # first try without dyslexia mode
+              found <- suppressMessages(suppressWarnings(exec_as.mo(x_strip_collapsed, initial_search = FALSE, dyslexia_mode = FALSE, allow_uncertain = FALSE, debug = debug)))
+              if (empty_result(found)) {
+                # then with dyslexia mode
+                found <- suppressMessages(suppressWarnings(exec_as.mo(x_strip_collapsed, initial_search = FALSE, dyslexia_mode = TRUE, allow_uncertain = FALSE, debug = debug)))
+              }
+              if (!empty_result(found)) {
+                found_result <- found
+                found <- microorganismsDT[mo == found, ..property][[1]]
+                uncertainties <<- rbind(uncertainties,
+                                        data.frame(uncertainty = now_checks_for_uncertainty_level,
+                                                   input = a.x_backup,
+                                                   fullname = microorganismsDT[mo == found_result[1L], fullname][[1]],
+                                                   mo = found_result[1L]))
+                if (initial_search == TRUE) {
+                  set_mo_history(a.x_backup, get_mo_code(found[1L], property), 2, force = force_mo_history)
+                }
+                return(found[1L])
+              }
+            }
+          }
+          
           # (8) part of a name (very unlikely match) ----
           if (isTRUE(debug)) {
             cat("\n[UNCERTAINLY LEVEL 3] (8) part of a name (very unlikely match)\n")
+          }
+          if (isTRUE(debug)) {
+            message("Running '", f.x_withspaces_end_only, "'")
           }
           found <- microorganismsDT[fullname %like% f.x_withspaces_end_only]
           if (nrow(found) > 0) {
@@ -1296,7 +1392,7 @@ exec_as.mo <- function(x,
             if (!empty_result(found_result) & nchar(g.x_backup_without_spp) >= 6) {
               found <- microorganismsDT[mo == found_result[1L], ..property][[1]]
               uncertainties <<- rbind(uncertainties,
-                                      data.frame(uncertainty = 3,
+                                      data.frame(uncertainty = now_checks_for_uncertainty_level,
                                                  input = a.x_backup,
                                                  fullname = microorganismsDT[mo == found_result[1L], fullname][[1]],
                                                  mo = found_result[1L]))
@@ -1307,7 +1403,7 @@ exec_as.mo <- function(x,
             }
           }
         }
-
+        
         # didn't found in uncertain results too
         return(NA_character_)
       }
@@ -1321,7 +1417,7 @@ exec_as.mo <- function(x,
         # no set_mo_history here - it is already set in uncertain_fn()
         next
       }
-
+      
       # no results found: make them UNKNOWN ----
       x[i] <- microorganismsDT[mo == "UNKNOWN", ..property][[1]]
       if (initial_search == TRUE) {
@@ -1330,7 +1426,7 @@ exec_as.mo <- function(x,
       }
     }
   }
-
+  
   # handling failures ----
   failures <- failures[!failures %in% c(NA, NULL, NaN)]
   if (length(failures) > 0 & initial_search == TRUE) {
@@ -1355,7 +1451,7 @@ exec_as.mo <- function(x,
   # handling uncertainties ----
   if (NROW(uncertainties) > 0 & initial_search == TRUE) {
     options(mo_uncertainties = as.list(distinct(uncertainties, input, .keep_all = TRUE)))
-
+    
     plural <- c("", "it")
     if (NROW(uncertainties) > 1) {
       plural <- c("s", "them")
@@ -1366,7 +1462,7 @@ exec_as.mo <- function(x,
             call. = FALSE,
             immediate. = TRUE) # thus will always be shown, even if >= warnings
   }
-
+  
   # Becker ----
   if (Becker == TRUE | Becker == "all") {
     # See Source. It's this figure:
@@ -1391,11 +1487,11 @@ exec_as.mo <- function(x,
                                      "pseudintermedius", "pseudointermedius",
                                      "schweitzeri", "argenteus")
                       | (species == "schleiferi" & subspecies == "coagulans"), ..property][[1]]
-
+    
     # warn when species found that are not in Becker (2014, PMID 25278577) and Becker (2019, PMID 30872103)
     post_Becker <- c("argensis", "caeli", "cornubiensis", "edaphicus")
     if (any(x %in% MOs_staph[species %in% post_Becker, ..property][[1]])) {
-
+      
       warning("Becker ", italic("et al."), " (2014, 2019) does not contain these species named after their publication: ",
               italic(paste("S.",
                            sort(mo_species(unique(x[x %in% MOs_staph[species %in% post_Becker, ..property][[1]]]))),
@@ -1404,14 +1500,14 @@ exec_as.mo <- function(x,
               call. = FALSE,
               immediate. = TRUE)
     }
-
+    
     x[x %in% CoNS] <- microorganismsDT[mo == 'B_STPHY_CNS', ..property][[1]][1L]
     x[x %in% CoPS] <- microorganismsDT[mo == 'B_STPHY_CPS', ..property][[1]][1L]
     if (Becker == "all") {
       x[x %in% microorganismsDT[mo %like% '^B_STPHY_AUR', ..property][[1]]] <- microorganismsDT[mo == 'B_STPHY_CPS', ..property][[1]][1L]
     }
   }
-
+  
   # Lancefield ----
   if (Lancefield == TRUE | Lancefield == "all") {
     # group A - S. pyogenes
@@ -1435,37 +1531,37 @@ exec_as.mo <- function(x,
     # group K - S. salivarius
     x[x == microorganismsDT[mo == 'B_STRPT_SAL', ..property][[1]][1L]] <- microorganismsDT[mo == 'B_STRPT_GRK', ..property][[1]][1L]
   }
-
+  
   # Wrap up ----------------------------------------------------------------
-
+  
   # comply to x, which is also unique and without empty values
   x_input_unique_nonempty <- unique(x_input[!is.na(x_input)
                                             & !is.null(x_input)
                                             & !identical(x_input, "")
                                             & !identical(x_input, "xxx")])
-
+  
   # left join the found results to the original input values (x_input)
   df_found <- data.frame(input = as.character(x_input_unique_nonempty),
                          found = as.character(x),
                          stringsAsFactors = FALSE)
   df_input <- data.frame(input = as.character(x_input),
                          stringsAsFactors = FALSE)
-
+  
   suppressWarnings(
     x <- df_input %>%
       left_join(df_found,
                 by = "input") %>%
       pull(found)
   )
-
+  
   if (property == "mo") {
     x <- to_class_mo(x)
   }
-
+  
   if (length(mo_renamed()) > 0) {
     print(mo_renamed())
   }
-
+  
   x
 }
 
@@ -1494,7 +1590,7 @@ was_renamed <- function(name_old, name_new, ref_old = "", ref_new = "", mo = "")
   old_values <- gsub("et al.", italic("et al."), old_values)
   new_values <- paste0(italic(name_new), ref_new, mo)
   new_values <- gsub("et al.", italic("et al."), new_values)
-
+  
   names(new_values) <- old_values
   total <- c(getOption("mo_renamed"), new_values)
   options(mo_renamed = total[order(names(total))])
@@ -1521,8 +1617,18 @@ type_sum.mo <- function(x) {
 #' @export
 pillar_shaft.mo <- function(x, ...) {
   out <- format(x)
-  out[is.na(x)] <- pillar::style_na("NA")
-  pillar::new_pillar_shaft_simple(out, align = "left", min_width = 11)
+  # grey out the kingdom (part before first "_")
+  first_parts <- unlist(lapply(gregexpr(pattern = '_', x[!is.na(x)], fixed = TRUE), min))
+  first_parts[first_parts < 0] <- 0
+  out[!is.na(x)] <- paste0(pillar::style_subtle(substr(x[!is.na(x)], 0, first_parts)), 
+                           substr(x[!is.na(x)], first_parts + 1, nchar(x)))
+  
+  out[is.na(x)] <- pillar::style_na("  NA")
+  out[x == "UNKNOWN"] <- pillar::style_na("  UNKNOWN")
+  
+  out <- gsub("_", pillar::style_subtle("_"), out)
+  
+  pillar::new_pillar_shaft_simple(out, align = "left", min_width = 12)
 }
 
 #' @exportMethod summary.mo
@@ -1556,12 +1662,13 @@ as.data.frame.mo <- function(x, ...) {
   }
 }
 
-#' @exportMethod pull.mo
+#' @exportMethod [.mo
 #' @export
-#' @importFrom dplyr pull
 #' @noRd
-pull.mo <- function(.data, ...) {
-  pull(as.data.frame(.data), ...)
+"[.mo" <- function (x, ...) {
+  # this function is needed to preserve the "mo" class for any subsetting, like df %>% filter(...)
+  y <- NextMethod()
+  to_class_mo(y)
 }
 
 #' @rdname as.mo
@@ -1593,7 +1700,7 @@ print.mo_uncertainties <- function(x, ...) {
              "\n(1 = ", green("renamed/misspelled"),
              ", 2 = ", yellow("uncertain"),
              ", 3 = ", red("very uncertain"), ")\n"))
-
+  
   msg <- ""
   for (i in 1:nrow(x)) {
     if (x[i, "uncertainty"] == 1) {
@@ -1622,11 +1729,11 @@ mo_renamed <- function() {
   if (is.null(items)) {
     return(NULL)
   }
-
+  
   items <- strip_style(items)
   names(items) <- strip_style(names(items))
   structure(.Data = items,
-             class = c("mo_renamed", "character"))
+            class = c("mo_renamed", "character"))
 }
 
 #' @exportMethod print.mo_renamed
@@ -1655,7 +1762,7 @@ unregex <- function(x) {
 get_mo_code <- function(x, property) {
   # don't use right now
   return(NULL)
-
+  
   if (property == "mo") {
     unique(x)
   } else {
