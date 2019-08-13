@@ -78,7 +78,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">0.7.1.9038</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">0.7.1.9055</span>
       </span>
     </div>
 
@@ -225,9 +225,9 @@
       
     </div>
 
-    <div id="amr-0-7-1-9038" class="section level1">
+    <div id="amr-0-7-1-9055" class="section level1">
 <h1 class="page-header">
-<a href="#amr-0-7-1-9038" class="anchor"></a>AMR 0.7.1.9038<small> Unreleased </small>
+<a href="#amr-0-7-1-9055" class="anchor"></a>AMR 0.7.1.9055<small> Unreleased </small>
 </h1>
 <div id="breaking" class="section level3">
 <h3 class="hasAnchor">
@@ -301,15 +301,16 @@
 </li>
 <li>Fix and speed improvement for <code><a href="../reference/mo_property.html">mo_shortname()</a></code>
 </li>
-<li>Algorithm improvements for <code><a href="../reference/as.mo.html">as.mo()</a></code>:
+<li>Algorithm improvements for <code><a href="../reference/as.mo.html">as.mo()</a></code> (by which some additions were made to the <code>microorganisms</code> data set:
 <ul>
-<li>Some misspelled input were not understood</li>
+<li>Big improvement for misspelled input</li>
 <li>These new trivial names known to the field are now understood: meningococcus, gonococcus, pneumococcus</li>
+<li>Updated to the latest taxonomic data (updated to August 2019, from the International Journal of Systematic and Evolutionary Microbiology</li>
+<li>Added support for Viridans Group Streptococci (VGS) and Milleri Group Streptococci (MGS)</li>
+<li>Added support for 5,000 new fungi</li>
 <li>Added support for unknown yeasts and fungi</li>
 </ul>
 </li>
-<li>Updated the <code>microorganisms</code> data set to contain the latest taxonomic data from the IJSEM journal (now up to date until August 2019)</li>
-<li>Added almost 5,000 new fungi to the <code>microorganisms</code> data set</li>
 <li>Fix for using <code>mo_*</code> functions where the coercion uncertainties and failures would not be available through <code><a href="../reference/as.mo.html">mo_uncertainties()</a></code> and <code><a href="../reference/as.mo.html">mo_failures()</a></code> anymore</li>
 <li>Deprecated the <code>country</code> parameter of <code><a href="../reference/mdro.html">mdro()</a></code> in favour of the already existing <code>guideline</code> parameter to support multiple guidelines within one country</li>
 <li>The <code>name</code> of <code>RIF</code> is now Rifampicin instead of Rifampin</li>
@@ -427,7 +428,7 @@
 <a href="#changed-2" class="anchor"></a>Changed</h4>
 <ul>
 <li>Fixed a critical bug in <code><a href="../reference/first_isolate.html">first_isolate()</a></code> where missing species would lead to incorrect FALSEs. This bug was not present in AMR v0.5.0, but was in v0.6.0 and v0.6.1.</li>
-<li>Fixedd a bug in <code><a href="../reference/eucast_rules.html">eucast_rules()</a></code> where antibiotics from WHONET software would not be recognised</li>
+<li>Fixed a bug in <code><a href="../reference/eucast_rules.html">eucast_rules()</a></code> where antibiotics from WHONET software would not be recognised</li>
 <li>Completely reworked the <code>antibiotics</code> data set:
 <ul>
 <li>All entries now have 3 different identifiers:
@@ -1236,7 +1237,7 @@ Using <code><a href="../reference/as.mo.html">as.mo(..., allow_uncertain = 3)</a
     <div id="tocnav">
       <h2>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
-        <li><a href="#amr-0-7-1-9038">0.7.1.9038</a></li>
+        <li><a href="#amr-0-7-1-9055">0.7.1.9055</a></li>
         <li><a href="#amr-0-7-1">0.7.1</a></li>
         <li><a href="#amr-0-7-0">0.7.0</a></li>
         <li><a href="#amr-0-6-1">0.6.1</a></li>
@@ -1255,7 +1256,7 @@ Using <code><a href="../reference/as.mo.html">as.mo(..., allow_uncertain = 3)</a
 
       <footer>
       <div class="copyright">
-  <p>Developed by <a href='https://www.rug.nl/staff/m.s.berends/'>Matthijs S. Berends</a>, <a href='https://www.rug.nl/staff/c.f.luz/'>Christian F. Luz</a>, <a href='https://www.rug.nl/staff/c.glasner/'>Corinna Glasner</a>, <a href='https://www.rug.nl/staff/a.w.friedrich/'>Alex W. Friedrich</a>, <a href='https://www.rug.nl/staff/b.sinha/'>Bhanu N. M. Sinha</a>.</p>
+  <p>Developed by <a href='https://www.rug.nl/staff/m.s.berends/'>Matthijs S. Berends</a>, <a href='https://www.rug.nl/staff/c.f.luz/'>Christian F. Luz</a>, <a href='https://www.rug.nl/staff/a.w.friedrich/'>Alex W. Friedrich</a>, <a href='https://www.rug.nl/staff/b.sinha/'>Bhanu N. M. Sinha</a>, <a href='https://www.rug.nl/staff/c.glasner/'>Corinna Glasner</a>.</p>
 </div>
 
 <div class="pkgdown">

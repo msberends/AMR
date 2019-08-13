@@ -302,6 +302,9 @@ MOs <- MOs %>%
   # put `mo` in front, followed by the rest
   select(mo, everything(), -abbr_other, -abbr_genus, -abbr_species, -abbr_subspecies)
 
+# remove empty fullnames
+MOs <- MOs %>% filter(fullname != "")
+
 # add non-taxonomic entries
 MOs <- MOs %>%
   bind_rows(
@@ -483,6 +486,26 @@ MOs <- MOs %>%
              ref = NA_character_,
              species_id = "",
              source = "manually added"),
+    # Viridans Streptococci
+    MOs %>%
+      filter(genus == "Streptococcus", species == "agalactiae") %>% .[1,] %>%
+      mutate(mo = gsub("AGA", "VIR", mo),
+             col_id = NA_integer_,
+             species = "viridans" ,
+             fullname = "Viridans Group Streptococcus (VGS)",
+             ref = NA_character_,
+             species_id = "",
+             source = "manually added"),
+    # Milleri Streptococci
+    MOs %>%
+      filter(genus == "Streptococcus", species == "agalactiae") %>% .[1,] %>%
+      mutate(mo = gsub("AGA", "MIL", mo),
+             col_id = NA_integer_,
+             species = "milleri" ,
+             fullname = "Milleri Group Streptococcus (MGS)",
+             ref = NA_character_,
+             species_id = "",
+             source = "manually added"),
     # Trichomonas vaginalis is missing, same order as Dientamoeba
     MOs %>%
       filter(fullname == "Dientamoeba") %>%
@@ -575,7 +598,7 @@ MOs <- MOs %>%
   ))
 
 # arrange
-MOs <- MOs %>% arrange(fullname)
+MOs <- MOs %>% arrange(genus, species, subspecies)
 MOs.old <- MOs.old %>% arrange(fullname)
 
 # transform

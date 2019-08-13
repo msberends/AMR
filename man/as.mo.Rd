@@ -31,7 +31,7 @@ mo_renamed()
 
   This excludes \emph{Enterococci} at default (who are in group D), use \code{Lancefield = "all"} to also categorise all \emph{Enterococci} as group D.}
 
-\item{allow_uncertain}{a logical (\code{TRUE} or \code{FALSE}) or a value between 0 and 3 to indicate whether the input should be checked for less possible results, see Details}
+\item{allow_uncertain}{a number between 0 (or "none") and 3 (or "all"), or TRUE (= 2) or FALSE (= 0) to indicate whether the input should be checked for less possible results, see Details}
 
 \item{reference_df}{a \code{data.frame} to use for extra reference when translating \code{x} to a valid \code{mo}. See \code{\link{set_mo_source}} and \code{\link{get_mo_source}} to automate the usage of your own codes (e.g. used in your analysis or organisation).}
 
@@ -58,8 +58,7 @@ A microbial ID from this package (class: \code{mo}) typically looks like these e
   |   |     ----> species, a 3-4 letter acronym
   |    ----> genus, a 5-7 letter acronym, mostly without vowels
    ----> taxonomic kingdom: A (Archaea), AN (Animalia), B (Bacteria),
-                            C (Chromista), F (Fungi), P (Protozoa) or
-                            PL (Plantae)
+                            C (Chromista), F (Fungi), P (Protozoa)
 }
 
 Values that cannot be coered will be considered 'unknown' and will get the MO code \code{UNKNOWN}.
@@ -134,9 +133,9 @@ Group 2 probably contains less microbial pathogens; all other members of phyla t
 \section{Catalogue of Life}{
 
 \if{html}{\figure{logo_col.png}{options: height=40px style=margin-bottom:5px} \cr}
-This package contains the complete taxonomic tree of almost all microorganisms (~65,000 species) from the authoritative and comprehensive Catalogue of Life (\url{http://www.catalogueoflife.org}). The Catalogue of Life is the most comprehensive and authoritative global index of species currently available.
+This package contains the complete taxonomic tree of almost all microorganisms (~70,000 species) from the authoritative and comprehensive Catalogue of Life (\url{http://www.catalogueoflife.org}). The Catalogue of Life is the most comprehensive and authoritative global index of species currently available.
 
-\link[=catalogue_of_life]{Click here} for more information about the included taxa. The Catalogue of Life releases updates annually; check which version was included in this package with \code{\link{catalogue_of_life_version}()}.
+\link[=catalogue_of_life]{Click here} for more information about the included taxa. Check which version of the Catalogue of Life was included in this package with \code{\link{catalogue_of_life_version}()}.
 }
 
 \section{Read more on our website!}{
@@ -179,7 +178,8 @@ as.mo("S. pyogenes", Lancefield = TRUE) # will not remain species: B_STRPT_GRA
 
 # All mo_* functions use as.mo() internally too (see ?mo_property):
 mo_genus("E. coli")           # returns "Escherichia"
-mo_gramstain("E. coli")       # returns "Gram negative"#'
+mo_gramstain("E. coli")       # returns "Gram negative"
+
 }
 \dontrun{
 df$mo <- as.mo(df$microorganism_name)

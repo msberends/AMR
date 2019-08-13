@@ -29,7 +29,7 @@
 #' @param Lancefield a logical to indicate whether beta-haemolytic \emph{Streptococci} should be categorised into Lancefield groups instead of their own species, according to Rebecca C. Lancefield [3]. These \emph{Streptococci} will be categorised in their first group, e.g. \emph{Streptococcus dysgalactiae} will be group C, although officially it was also categorised into groups G and L.
 #'
 #'   This excludes \emph{Enterococci} at default (who are in group D), use \code{Lancefield = "all"} to also categorise all \emph{Enterococci} as group D.
-#' @param allow_uncertain a logical (\code{TRUE} or \code{FALSE}) or a value between 0 and 3 to indicate whether the input should be checked for less possible results, see Details
+#' @param allow_uncertain a number between 0 (or "none") and 3 (or "all"), or TRUE (= 2) or FALSE (= 0) to indicate whether the input should be checked for less possible results, see Details
 #' @param reference_df a \code{data.frame} to use for extra reference when translating \code{x} to a valid \code{mo}. See \code{\link{set_mo_source}} and \code{\link{get_mo_source}} to automate the usage of your own codes (e.g. used in your analysis or organisation).
 #' @param ... other parameters passed on to functions
 #' @rdname as.mo
@@ -50,8 +50,7 @@
 #'   |   |     ----> species, a 3-4 letter acronym
 #'   |    ----> genus, a 5-7 letter acronym, mostly without vowels
 #'    ----> taxonomic kingdom: A (Archaea), AN (Animalia), B (Bacteria),
-#'                             C (Chromista), F (Fungi), P (Protozoa) or
-#'                             PL (Plantae)
+#'                             C (Chromista), F (Fungi), P (Protozoa)
 #' }
 #'
 #' Values that cannot be coered will be considered 'unknown' and will get the MO code \code{UNKNOWN}.
@@ -60,13 +59,14 @@
 #'
 #' The algorithm uses data from the Catalogue of Life (see below) and from one other source (see \code{?microorganisms}).
 #'
+# /// THIS PART WAS DELETED FROM THE MAN PAGE
 # \strong{Self-learning algoritm} \cr
 # The \code{as.mo()} function gains experience from previously determined microbial IDs and learns from it. This drastically improves both speed and reliability. Use \code{clean_mo_history()} to reset the algorithms. Only experience from your current \code{AMR} package version is used. This is done because in the future the taxonomic tree (which is included in this package) may change for any organism and it consequently has to rebuild its knowledge.
 #
 # Usually, any guess after the first try runs 80-95\% faster than the first try.
 #
 # For now, learning only works per session. If R is closed or terminated, the algorithms reset. This will probably be resolved in a next version.
-#
+# ////
 #' \strong{Intelligent rules} \cr
 #' This function uses intelligent rules to help getting fast and logical results. It tries to find matches in this order:
 #' \itemize{
@@ -169,7 +169,8 @@
 #'
 #' # All mo_* functions use as.mo() internally too (see ?mo_property):
 #' mo_genus("E. coli")           # returns "Escherichia"
-#' mo_gramstain("E. coli")       # returns "Gram negative"#'
+#' mo_gramstain("E. coli")       # returns "Gram negative"
+#' 
 #' }
 #' \dontrun{
 #' df$mo <- as.mo(df$microorganism_name)
@@ -478,6 +479,7 @@ exec_as.mo <- function(x,
     x_species <- paste(x, "species")
     # translate to English for supported languages of mo_property
     x <- gsub("(gruppe|groep|grupo|gruppo|groupe)", "group", x, ignore.case = TRUE)
+    x <- gsub("(vergroen)[a-z]*", "viridans", x, ignore.case = TRUE)
     x <- gsub("(hefe|gist|gisten|levadura|lievito|fermento|levure)[a-z]*", "yeast", x, ignore.case = TRUE)
     x <- gsub("(schimmels?|mofo|molde|stampo|moisissure|fungi)[a-z]*", "fungus", x, ignore.case = TRUE)
     x <- gsub("Fungus[ph|f]rya", "Fungiphrya", x, ignore.case = TRUE)
@@ -491,13 +493,13 @@ exec_as.mo <- function(x,
     x <- gsub("(alpha|beta|gamma).?ha?emoly", "\\1-haemoly", x)
     # remove genus as first word
     x <- gsub("^Genus ", "", x)
-    # allow characters that resemble others ----
+    # allow characters that resemble others = dyslexia_mode ----
     if (dyslexia_mode == TRUE) {
       x <- tolower(x)
       x <- gsub("[iy]+", "[iy]+", x)
       x <- gsub("(c|k|q|qu|s|z|x|ks)+", "(c|k|q|qu|s|z|x|ks)+", x)
-      x <- gsub("(ph|f|v)+", "(ph|f|v)+", x)
-      x <- gsub("(th|t)+", "(th|t)+", x)
+      x <- gsub("(ph|hp|f|v)+", "(ph|hp|f|v)+", x)
+      x <- gsub("(th|ht|t)+", "(th|ht|t)+", x)
       x <- gsub("a+", "a+", x)
       x <- gsub("u+", "u+", x)
       # allow any ending of -um, -us, -ium, -icum, -ius, -icus, -ica and -a (needs perl for the negative backward lookup):
@@ -512,6 +514,10 @@ exec_as.mo <- function(x,
       x <- gsub("(.)\\1+", "\\1+", x)
       # allow ending in -en or -us
       x <- gsub("e\\+n(?![a-z[])", "(e+n|u+(c|k|q|qu|s|z|x|ks)+)", x, ignore.case = TRUE, perl = TRUE)
+      # if the input is longer than 10 characters, add a [.] between all characters, as some might have forgotten a character
+      # this will allow "Pasteurella damatis" to be correctly read as "Pasteurella dagmatis".
+      x[nchar(x_backup_without_spp) > 10] <- gsub("([a-z])([a-z])", "\\1.*\\2", x[nchar(x_backup_without_spp) > 10], ignore.case = TRUE)
+      x[nchar(x_backup_without_spp) > 10] <- gsub("[+]", "+.*", x[nchar(x_backup_without_spp) > 10])
     }
     x <- strip_whitespace(x)
     
@@ -759,6 +765,27 @@ exec_as.mo <- function(x,
             | x_backup_without_spp[i] %like% '[ck]o?ps[^a-z]?$') {
           # coerce S. coagulase positive
           x[i] <- microorganismsDT[mo == 'B_STPHY_CPS', ..property][[1]][1L]
+          if (initial_search == TRUE) {
+            set_mo_history(x_backup[i], get_mo_code(x[i], property), 0, force = force_mo_history)
+          }
+          next
+        }
+        # streptococcal groups: milleri and viridans
+        if (x_trimmed[i] %like% 'strepto.* milleri'
+            | x_backup_without_spp[i] %like% 'strepto.* milleri'
+            | x_backup_without_spp[i] %like% 'mgs[^a-z]?$') {
+          # Milleri Group Streptococcus (MGS)
+          x[i] <- microorganismsDT[mo == 'B_STRPT_MIL', ..property][[1]][1L]
+          if (initial_search == TRUE) {
+            set_mo_history(x_backup[i], get_mo_code(x[i], property), 0, force = force_mo_history)
+          }
+          next
+        }
+        if (x_trimmed[i] %like% 'strepto.* viridans'
+            | x_backup_without_spp[i] %like% 'strepto.* viridans'
+            | x_backup_without_spp[i] %like% 'vgs[^a-z]?$') {
+          # Viridans Group Streptococcus (VGS)
+          x[i] <- microorganismsDT[mo == 'B_STRPT_VIR', ..property][[1]][1L]
           if (initial_search == TRUE) {
             set_mo_history(x_backup[i], get_mo_code(x[i], property), 0, force = force_mo_history)
           }
@@ -1048,6 +1075,7 @@ exec_as.mo <- function(x,
           return(NA_character_)
         }
         
+        # UNCERTAINTY LEVEL 1 ----
         if (uncertainty_level >= 1) {
           now_checks_for_uncertainty_level <- 1
           
@@ -1114,6 +1142,7 @@ exec_as.mo <- function(x,
           }
         }
         
+        # UNCERTAINTY LEVEL 2 ----
         if (uncertainty_level >= 2) {
           now_checks_for_uncertainty_level <- 2
           
@@ -1172,9 +1201,37 @@ exec_as.mo <- function(x,
             return(found[1L])
           }
           
-          # (5a) try to strip off half an element from end and check the remains ----
+          # (5) inverse input ----
           if (isTRUE(debug)) {
-            cat("\n[UNCERTAINLY LEVEL 2] (5a) try to strip off half an element from end and check the remains\n")
+            cat("\n[UNCERTAINLY LEVEL 2] (5) inverse input\n")
+          }
+          a.x_backup_inversed <- paste(rev(unlist(strsplit(a.x_backup, split = " "))), collapse = " ")
+          if (isTRUE(debug)) {
+            message("Running '", a.x_backup_inversed, "'")
+          }
+          # first try without dyslexia mode
+          found <- suppressMessages(suppressWarnings(exec_as.mo(a.x_backup_inversed, initial_search = FALSE, dyslexia_mode = FALSE, allow_uncertain = FALSE, debug = debug)))
+          if (empty_result(found)) {
+            # then with dyslexia mode
+            found <- suppressMessages(suppressWarnings(exec_as.mo(a.x_backup_inversed, initial_search = FALSE, dyslexia_mode = TRUE, allow_uncertain = FALSE, debug = debug)))
+          }
+          if (!empty_result(found) & nchar(g.x_backup_without_spp) >= 6) {
+            found_result <- found
+            found <- microorganismsDT[mo == found, ..property][[1]]
+            uncertainties <<- rbind(uncertainties,
+                                    data.frame(uncertainty = now_checks_for_uncertainty_level,
+                                               input = a.x_backup,
+                                               fullname = microorganismsDT[mo == found_result[1L], fullname][[1]],
+                                               mo = found_result[1L]))
+            if (initial_search == TRUE) {
+              set_mo_history(a.x_backup, get_mo_code(found[1L], property), 2, force = force_mo_history)
+            }
+            return(found[1L])
+          }
+          
+          # (6) try to strip off half an element from end and check the remains ----
+          if (isTRUE(debug)) {
+            cat("\n[UNCERTAINLY LEVEL 2] (6) try to strip off half an element from end and check the remains\n")
           }
           x_strip <- a.x_backup %>% strsplit(" ") %>% unlist()
           if (length(x_strip) > 1) {
@@ -1209,9 +1266,9 @@ exec_as.mo <- function(x,
               }
             }
           }
-          # (5b) try to strip off one element from end and check the remains ----
+          # (7) try to strip off one element from end and check the remains ----
           if (isTRUE(debug)) {
-            cat("\n[UNCERTAINLY LEVEL 2] (5b) try to strip off one element from end and check the remains\n")
+            cat("\n[UNCERTAINLY LEVEL 2] (7) try to strip off one element from end and check the remains\n")
           }
           if (length(x_strip) > 1) {
             for (i in 1:(length(x_strip) - 1)) {
@@ -1242,9 +1299,9 @@ exec_as.mo <- function(x,
               }
             }
           }
-          # (5c) check for unknown yeasts/fungi ----
+          # (8) check for unknown yeasts/fungi ----
           if (isTRUE(debug)) {
-            cat("\n[UNCERTAINLY LEVEL 2] (5b) check for unknown yeasts/fungi\n")
+            cat("\n[UNCERTAINLY LEVEL 2] (8) check for unknown yeasts/fungi\n")
           }
           if (b.x_trimmed %like% "yeast") {
             found <- "F_YEAST"
@@ -1274,9 +1331,9 @@ exec_as.mo <- function(x,
             }
             return(found[1L])
           }
-          # (6) try to strip off one element from start and check the remains (only allow >= 2-part name outcome) ----
+          # (9) try to strip off one element from start and check the remains (only allow >= 2-part name outcome) ----
           if (isTRUE(debug)) {
-            cat("\n[UNCERTAINLY LEVEL 2] (6) try to strip off one element from start and check the remains (only allow >= 2-part name outcome)\n")
+            cat("\n[UNCERTAINLY LEVEL 2] (9) try to strip off one element from start and check the remains (only allow >= 2-part name outcome)\n")
           }
           x_strip <- a.x_backup %>% strsplit(" ") %>% unlist()
           if (length(x_strip) > 1 & nchar(g.x_backup_without_spp) >= 6) {
@@ -1311,12 +1368,13 @@ exec_as.mo <- function(x,
           }
         }
         
+        # UNCERTAINTY LEVEL 3 ----
         if (uncertainty_level >= 3) {
           now_checks_for_uncertainty_level <- 3
           
-          # (7a) try to strip off one element from start and check the remains (any text size) ----
+          # (10) try to strip off one element from start and check the remains (any text size) ----
           if (isTRUE(debug)) {
-            cat("\n[UNCERTAINLY LEVEL 3] (7a) try to strip off one element from start and check the remains (any text size)\n")
+            cat("\n[UNCERTAINLY LEVEL 3] (10) try to strip off one element from start and check the remains (any text size)\n")
           }
           x_strip <- a.x_backup %>% strsplit(" ") %>% unlist()
           if (length(x_strip) > 1 & nchar(g.x_backup_without_spp) >= 6) {
@@ -1346,10 +1404,10 @@ exec_as.mo <- function(x,
               }
             }
           }
-          # (7b) try to strip off one element from end and check the remains (any text size) ----
-          # (this is in fact 5b but without nchar limit of >=6)
+          # (11) try to strip off one element from end and check the remains (any text size) ----
+          # (this is in fact 7 but without nchar limit of >=6)
           if (isTRUE(debug)) {
-            cat("\n[UNCERTAINLY LEVEL 3] (7b) try to strip off one element from end and check the remains (any text size)\n")
+            cat("\n[UNCERTAINLY LEVEL 3] (11) try to strip off one element from end and check the remains (any text size)\n")
           }
           if (length(x_strip) > 1) {
             for (i in 1:(length(x_strip) - 1)) {
@@ -1379,9 +1437,9 @@ exec_as.mo <- function(x,
             }
           }
           
-          # (8) part of a name (very unlikely match) ----
+          # (12) part of a name (very unlikely match) ----
           if (isTRUE(debug)) {
-            cat("\n[UNCERTAINLY LEVEL 3] (8) part of a name (very unlikely match)\n")
+            cat("\n[UNCERTAINLY LEVEL 3] (12) part of a name (very unlikely match)\n")
           }
           if (isTRUE(debug)) {
             message("Running '", f.x_withspaces_end_only, "'")
@@ -1775,9 +1833,11 @@ translate_allow_uncertain <- function(allow_uncertain) {
     # default to uncertainty level 2
     allow_uncertain <- 2
   } else {
+    allow_uncertain[tolower(allow_uncertain) == "none"] <- 0
+    allow_uncertain[tolower(allow_uncertain) == "all"] <- 3
     allow_uncertain <- as.integer(allow_uncertain)
     if (!allow_uncertain %in% c(0:3)) {
-      stop("`allow_uncertain` must be a number between 0 (none) and 3 (all), or TRUE (= 2) or FALSE (= 0).", call. = FALSE)
+      stop('`allow_uncertain` must be a number between 0 (or "none") and 3 (or "all"), or TRUE (= 2) or FALSE (= 0).', call. = FALSE)
     }
   }
   allow_uncertain

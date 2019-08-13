@@ -1,4 +1,4 @@
-# AMR 0.7.1.9038
+# AMR 0.7.1.9055
 
 ### Breaking
 * Function `freq()` has moved to a new package, [`clean`](https://github.com/msberends/clean) ([CRAN link](https://cran.r-project.org/package=clean)). Creating frequency tables is actually not the scope of this package (never was) and this function has matured  a lot over the last two years. Therefore, a new package was created for data cleaning and checking and it perfectly fits the `freq()` function. The [`clean`](https://github.com/msberends/clean) package is available on CRAN and will be installed automatically when updating the `AMR` package, that now imports it. In a later stage, the `skewness()` and `kurtosis()` functions will be moved to the `clean` package too.
@@ -57,12 +57,13 @@
 * Removed class `atc` - using `as.atc()` is now deprecated in favour of `ab_atc()` and this will return a character, not the `atc` class anymore
 * Removed deprecated functions `abname()`, `ab_official()`, `atc_name()`, `atc_official()`, `atc_property()`, `atc_tradenames()`, `atc_trivial_nl()`
 * Fix and speed improvement for `mo_shortname()`
-* Algorithm improvements for `as.mo()`:
-  * Some misspelled input were not understood
+* Algorithm improvements for `as.mo()` (by which some additions were made to the `microorganisms` data set:
+  * Big improvement for misspelled input
   * These new trivial names known to the field are now understood: meningococcus, gonococcus, pneumococcus
+  * Updated to the latest taxonomic data (updated to August 2019, from the International Journal of Systematic and Evolutionary Microbiology
+  * Added support for Viridans Group Streptococci (VGS) and Milleri Group Streptococci (MGS)
+  * Added support for 5,000 new fungi
   * Added support for unknown yeasts and fungi
-* Updated the `microorganisms` data set to contain the latest taxonomic data from the IJSEM journal (now up to date until August 2019)
-* Added almost 5,000 new fungi to the `microorganisms` data set
 * Fix for using `mo_*` functions where the coercion uncertainties and failures would not be available through `mo_uncertainties()` and `mo_failures()` anymore
 * Deprecated the `country` parameter of `mdro()` in favour of the already existing `guideline` parameter to support multiple guidelines within one country
 * The `name` of `RIF` is now Rifampicin instead of Rifampin
@@ -144,7 +145,7 @@
 
 #### Changed
 * Fixed a critical bug in `first_isolate()` where missing species would lead to incorrect FALSEs. This bug was not present in AMR v0.5.0, but was in v0.6.0 and v0.6.1.
-* Fixedd a bug in `eucast_rules()` where antibiotics from WHONET software would not be recognised
+* Fixed a bug in `eucast_rules()` where antibiotics from WHONET software would not be recognised
 * Completely reworked the `antibiotics` data set:
   * All entries now have 3 different identifiers:
     * Column `ab` contains a human readable EARS-Net code, used by ECDC and WHO/WHONET - this is the primary identifier used in this package

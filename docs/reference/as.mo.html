@@ -80,7 +80,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">0.7.1.9029</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">0.7.1.9055</span>
       </span>
     </div>
 
@@ -264,7 +264,7 @@
     </tr>
     <tr>
       <th>allow_uncertain</th>
-      <td><p>a logical (<code>TRUE</code> or <code>FALSE</code>) or a value between 0 and 3 to indicate whether the input should be checked for less possible results, see Details</p></td>
+      <td><p>a number between 0 (or "none") and 3 (or "all"), or TRUE (= 2) or FALSE (= 0) to indicate whether the input should be checked for less possible results, see Details</p></td>
     </tr>
     <tr>
       <th>reference_df</th>
@@ -295,8 +295,7 @@ A microbial ID from this package (class: <code>mo</code>) typically looks like t
   |   |     ----&gt; species, a 3-4 letter acronym
   |    ----&gt; genus, a 5-7 letter acronym, mostly without vowels
    ----&gt; taxonomic kingdom: A (Archaea), AN (Animalia), B (Bacteria),
-                            C (Chromista), F (Fungi), P (Protozoa) or
-                            PL (Plantae)
+                            C (Chromista), F (Fungi), P (Protozoa)
 </pre>
     <p>Values that cannot be coered will be considered 'unknown' and will get the MO code <code>UNKNOWN</code>.</p>
 <p>Use the <code><a href='mo_property.html'>mo_property</a>_*</code> functions to get properties based on the returned code, see Examples.</p>
@@ -349,8 +348,8 @@ The intelligent rules take into account microbial prevalence of pathogens in hum
 
     
     <p><img src='figures/logo_col.png' height=40px style=margin-bottom:5px /> <br />
-This package contains the complete taxonomic tree of almost all microorganisms (~65,000 species) from the authoritative and comprehensive Catalogue of Life (<a href='http://www.catalogueoflife.org'>http://www.catalogueoflife.org</a>). The Catalogue of Life is the most comprehensive and authoritative global index of species currently available.</p>
-<p><a href='catalogue_of_life.html'>Click here</a> for more information about the included taxa. The Catalogue of Life releases updates annually; check which version was included in this package with <code><a href='catalogue_of_life_version.html'>catalogue_of_life_version</a>()</code>.</p>
+This package contains the complete taxonomic tree of almost all microorganisms (~70,000 species) from the authoritative and comprehensive Catalogue of Life (<a href='http://www.catalogueoflife.org'>http://www.catalogueoflife.org</a>). The Catalogue of Life is the most comprehensive and authoritative global index of species currently available.</p>
+<p><a href='catalogue_of_life.html'>Click here</a> for more information about the included taxa. Check which version of the Catalogue of Life was included in this package with <code><a href='catalogue_of_life_version.html'>catalogue_of_life_version</a>()</code>.</p>
     
     <h2 class="hasAnchor" id="read-more-on-our-website-"><a class="anchor" href="#read-more-on-our-website-"></a>Read more on our website!</h2>
 
@@ -398,7 +397,8 @@ The <code><a href='mo_property.html'>mo_property</a></code> functions (like <cod
 
 <span class='co'># All mo_* functions use as.mo() internally too (see ?mo_property):</span>
 <span class='fu'><a href='mo_property.html'>mo_genus</a></span>(<span class='st'>"E. coli"</span>)           <span class='co'># returns "Escherichia"</span>
-<span class='fu'><a href='mo_property.html'>mo_gramstain</a></span>(<span class='st'>"E. coli"</span>)       <span class='co'># returns "Gram negative"#'</span>
+<span class='fu'><a href='mo_property.html'>mo_gramstain</a></span>(<span class='st'>"E. coli"</span>)       <span class='co'># returns "Gram negative"</span>
+
 <span class='co'># }</span><span class='co'># NOT RUN {</span>
 <span class='no'>df</span>$<span class='no'>mo</span> <span class='kw'>&lt;-</span> <span class='fu'>as.mo</span>(<span class='no'>df</span>$<span class='no'>microorganism_name</span>)
 
@@ -442,7 +442,7 @@ The <code><a href='mo_property.html'>mo_property</a></code> functions (like <cod
 
       <footer>
       <div class="copyright">
-  <p>Developed by <a href='https://www.rug.nl/staff/m.s.berends/'>Matthijs S. Berends</a>, <a href='https://www.rug.nl/staff/c.f.luz/'>Christian F. Luz</a>, <a href='https://www.rug.nl/staff/c.glasner/'>Corinna Glasner</a>, <a href='https://www.rug.nl/staff/a.w.friedrich/'>Alex W. Friedrich</a>, <a href='https://www.rug.nl/staff/b.sinha/'>Bhanu N. M. Sinha</a>.</p>
+  <p>Developed by <a href='https://www.rug.nl/staff/m.s.berends/'>Matthijs S. Berends</a>, <a href='https://www.rug.nl/staff/c.f.luz/'>Christian F. Luz</a>, <a href='https://www.rug.nl/staff/a.w.friedrich/'>Alex W. Friedrich</a>, <a href='https://www.rug.nl/staff/b.sinha/'>Bhanu N. M. Sinha</a>, <a href='https://www.rug.nl/staff/c.glasner/'>Corinna Glasner</a>.</p>
 </div>
 
 <div class="pkgdown">

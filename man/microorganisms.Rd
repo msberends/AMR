@@ -4,7 +4,7 @@
 \name{microorganisms}
 \alias{microorganisms}
 \title{Data set with ~70,000 microorganisms}
-\format{A \code{\link{data.frame}} with 69,854 observations and 16 variables:
+\format{A \code{\link{data.frame}} with 69,855 observations and 16 variables:
 \describe{
   \item{\code{mo}}{ID of microorganism as used by this package}
   \item{\code{col_id}}{Catalogue of Life ID}
@@ -13,7 +13,7 @@
   \item{\code{rank}}{Text of the taxonomic rank of the microorganism, like \code{"species"} or \code{"genus"}}
   \item{\code{ref}}{Author(s) and year of concerning scientific publication}
   \item{\code{species_id}}{ID of the species as used by the Catalogue of Life}
-  \item{\code{source}}{Either \code{"CoL"}, \code{"DSMZ"} (see source) or "manually added"}
+  \item{\code{source}}{Either "CoL", "DSMZ" (see Source) or "manually added"}
   \item{\code{prevalence}}{Prevalence of the microorganism, see \code{?as.mo}}
 }}
 \source{
@@ -30,9 +30,9 @@ A data set containing the microbial taxonomy of six kingdoms from the Catalogue 
 \details{
 Manually added were:
 \itemize{
-  \item{9 entries of \emph{Streptococcus} (beta haemolytic groups A, B, C, D, F, G, H, K and unspecified)}
+  \item{11 entries of \emph{Streptococcus} (beta-haemolytic: groups A, B, C, D, F, G, H, K and unspecified; other: viridans, milleri)}
   \item{2 entries of \emph{Staphylococcus} (coagulase-negative [CoNS] and coagulase-positive [CoPS])}
-  \item{3 entries of Trichomonas (Trichomonas vaginalis, and its family and genus)}
+  \item{3 entries of \emph{Trichomonas} (\emph{Trichomonas vaginalis}, and its family and genus)}
   \item{5 other 'undefined' entries (unknown, unknown Gram negatives, unknown Gram positives, unknown yeast and unknown fungus)}
   \item{8,970 species from the DSMZ (Deutsche Sammlung von Mikroorganismen und Zellkulturen) that are not in the Catalogue of Life}
 }
@@ -47,9 +47,9 @@ From: \url{https://www.dsmz.de/support/bacterial-nomenclature-up-to-date-downloa
 \section{Catalogue of Life}{
 
 \if{html}{\figure{logo_col.png}{options: height=40px style=margin-bottom:5px} \cr}
-This package contains the complete taxonomic tree of almost all microorganisms (~65,000 species) from the authoritative and comprehensive Catalogue of Life (\url{http://www.catalogueoflife.org}). The Catalogue of Life is the most comprehensive and authoritative global index of species currently available.
+This package contains the complete taxonomic tree of almost all microorganisms (~70,000 species) from the authoritative and comprehensive Catalogue of Life (\url{http://www.catalogueoflife.org}). The Catalogue of Life is the most comprehensive and authoritative global index of species currently available.
 
-\link[=catalogue_of_life]{Click here} for more information about the included taxa. The Catalogue of Life releases updates annually; check which version was included in this package with \code{\link{catalogue_of_life_version}()}.
+\link[=catalogue_of_life]{Click here} for more information about the included taxa. Check which version of the Catalogue of Life was included in this package with \code{\link{catalogue_of_life_version}()}.
 }
 
 \section{Read more on our website!}{

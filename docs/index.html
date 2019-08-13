@@ -42,7 +42,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">0.7.1.9038</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">0.7.1.9055</span>
       </span>
     </div>
 
@@ -200,7 +200,13 @@
 <h4 class="hasAnchor">
 <a href="#partners" class="anchor"></a>Partners</h4>
 <p>The development of this package is part of, related to, or made possible by:</p>
-<p><a href="https://www.rug.nl"><img src="./logo_rug.png" class="partner_logo"></a> <a href="https://www.umcg.nl"><img src="./logo_umcg.png" class="partner_logo"></a> <a href="https://www.certe.nl"><img src="./logo_certe.png" class="partner_logo"></a> <a href="http://www.eurhealth-1health.eu"><img src="./logo_eh1h.png" class="partner_logo"></a> <a href="http://www.eurhealth-1health.eu"><img src="./logo_interreg.png" class="partner_logo"></a></p>
+<div align="center">
+  <a href="https://www.rug.nl"><img src="./logo_rug.png" class="partner_logo"></a>
+  <a href="https://www.umcg.nl"><img src="./logo_umcg.png" class="partner_logo"></a>
+  <a href="https://www.certe.nl"><img src="./logo_certe.png" class="partner_logo"></a>
+  <a href="http://www.eurhealth-1health.eu"><img src="./logo_eh1h.png" class="partner_logo"></a>
+  <a href="http://www.eurhealth-1health.eu"><img src="./logo_interreg.png" class="partner_logo"></a>
+</div>
 </div>
 </div>
 <div id="what-can-you-do-with-this-package" class="section level3">
@@ -278,22 +284,8 @@
 <h4 class="hasAnchor">
 <a href="#microbial-taxonomic-reference-data" class="anchor"></a>Microbial (taxonomic) reference data</h4>
 <p><img src="reference/figures/logo_col.png"></p>
-<p>This package contains the complete taxonomic tree of almost all microorganisms from the authoritative and comprehensive Catalogue of Life (<a href="http://www.catalogueoflife.org">www.catalogueoflife.org</a>).</p>
-<p>Included are:</p>
-<ul>
-<li><p>All ~61,000 (sub)species from the kingdoms of Archaea, Bacteria, Chromista and Protozoa</p></li>
-<li>
-<p>All ~8,500 (sub)species from these orders of the kingdom of Fungi: Eurotiales, Microascales, Mucorales, Onygenales, Pneumocystales, Saccharomycetales, Schizosaccharomycetales and Tremellales.</p>
-<p>The kingdom of Fungi is a very large taxon with almost 300,000 different (sub)species, of which most are not microbial (but rather macroscopic, like mushrooms). Because of this, not all fungi fit the scope of this package and including everything would tremendously slow down our algorithms too. By only including the aforementioned taxonomic orders, the most relevant fungi are covered (like all species of <em>Aspergillus</em>, <em>Candida</em>, <em>Cryptococcus</em>, <em>Histoplasma</em>, <em>Pneumocystis</em>, <em>Saccharomyces</em> and <em>Trichophyton</em>).</p>
-</li>
-<li><p>All ~150 (sub)species from ~100 other relevant genera from the kingdom of Animalia (like <em>Strongyloides</em> and <em>Taenia</em>)</p></li>
-<li><p>All ~23,000 previously accepted names of all included (sub)species (these were taxonomically renamed)</p></li>
-<li><p>The responsible author(s) and year of scientific publication</p></li>
-</ul>
-<p>This data is updated annually - check the included version with <code><a href="reference/catalogue_of_life_version.html">catalogue_of_life_version()</a></code>.</p>
-<p><strong>About the Catalogue of Life</strong></p>
-<p>The <a href="http://www.catalogueoflife.org">Catalogue of Life</a> is the most comprehensive and authoritative global index of species currently available. It holds essential information on the names, relationships and distributions of over 1.6 million species. The Catalogue of Life is used to support the major biodiversity and conservation information services such as the Global Biodiversity Information Facility (GBIF), Encyclopedia of Life (EoL) and the International Union for Conservation of Nature Red List. It is recognised by the Convention on Biological Diversity as a significant component of the Global Taxonomy Initiative and a contribution to Target 1 of the Global Strategy for Plant Conservation.</p>
-<p>Read more about the data from the Catalogue of Life <a href="./reference/catalogue_of_life.html">in our manual</a>.</p>
+<p>This package contains the complete taxonomic tree of almost all 70,000 microorganisms from the authoritative and comprehensive Catalogue of Life (CoL, <a href="http://www.catalogueoflife.org">www.catalogueoflife.org</a>). With <code><a href="reference/catalogue_of_life_version.html">catalogue_of_life_version()</a></code> can be checked which version of the CoL is included in this package.</p>
+<p>Read more about which data from the Catalogue of Life <a href="./reference/catalogue_of_life.html">in our manual</a>.</p>
 </div>
 <div id="antimicrobial-reference-data" class="section level4">
 <h4 class="hasAnchor">
@@ -398,11 +390,11 @@
 <li>
 <a href="https://www.rug.nl/staff/c.f.luz/">Christian F. Luz</a> <br><small class="roles"> Author </small> <a href="https://orcid.org/0000-0001-5809-5995" target="orcid.widget"><img src="https://members.orcid.org/sites/default/files/vector_iD_icon.svg" class="orcid" alt="ORCID" height="16"></a> </li>
 <li>
-<a href="https://www.rug.nl/staff/c.glasner/">Corinna Glasner</a> <br><small class="roles"> Author, thesis advisor </small> <a href="https://orcid.org/0000-0003-1241-1328" target="orcid.widget"><img src="https://members.orcid.org/sites/default/files/vector_iD_icon.svg" class="orcid" alt="ORCID" height="16"></a> </li>
-<li>
 <a href="https://www.rug.nl/staff/a.w.friedrich/">Alex W. Friedrich</a> <br><small class="roles"> Author, thesis advisor </small> <a href="https://orcid.org/0000-0003-4881-038X" target="orcid.widget"><img src="https://members.orcid.org/sites/default/files/vector_iD_icon.svg" class="orcid" alt="ORCID" height="16"></a> </li>
 <li>
 <a href="https://www.rug.nl/staff/b.sinha/">Bhanu N. M. Sinha</a> <br><small class="roles"> Author, thesis advisor </small> <a href="https://orcid.org/0000-0003-1634-0010" target="orcid.widget"><img src="https://members.orcid.org/sites/default/files/vector_iD_icon.svg" class="orcid" alt="ORCID" height="16"></a> </li>
+<li>
+<a href="https://www.rug.nl/staff/c.glasner/">Corinna Glasner</a> <br><small class="roles"> Author, thesis advisor </small> <a href="https://orcid.org/0000-0003-1241-1328" target="orcid.widget"><img src="https://members.orcid.org/sites/default/files/vector_iD_icon.svg" class="orcid" alt="ORCID" height="16"></a> </li>
 <li><a href="authors.html">All authors...</a></li>
 </ul>
 </div>
@@ -411,7 +403,7 @@
 </div>
 
       <footer><div class="copyright">
-  <p>Developed by <a href="https://www.rug.nl/staff/m.s.berends/">Matthijs S. Berends</a>, <a href="https://www.rug.nl/staff/c.f.luz/">Christian F. Luz</a>, <a href="https://www.rug.nl/staff/c.glasner/">Corinna Glasner</a>, <a href="https://www.rug.nl/staff/a.w.friedrich/">Alex W. Friedrich</a>, <a href="https://www.rug.nl/staff/b.sinha/">Bhanu N. M. Sinha</a>.</p>
+  <p>Developed by <a href="https://www.rug.nl/staff/m.s.berends/">Matthijs S. Berends</a>, <a href="https://www.rug.nl/staff/c.f.luz/">Christian F. Luz</a>, <a href="https://www.rug.nl/staff/a.w.friedrich/">Alex W. Friedrich</a>, <a href="https://www.rug.nl/staff/b.sinha/">Bhanu N. M. Sinha</a>, <a href="https://www.rug.nl/staff/c.glasner/">Corinna Glasner</a>.</p>
 </div>
 
 <div class="pkgdown">

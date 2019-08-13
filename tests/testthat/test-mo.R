@@ -70,6 +70,9 @@ test_that("as.mo works", {
   expect_equal(as.character(as.mo("CoNS")), "B_STPHY_CNS")
   expect_equal(as.character(as.mo("CPS")), "B_STPHY_CPS")
   expect_equal(as.character(as.mo("CoPS")), "B_STPHY_CPS")
+  expect_equal(as.character(as.mo("VGS")), "B_STRPT_VIR")
+  expect_equal(as.character(as.mo("streptococcus milleri")), "B_STRPT_MIL")
+  
 
   expect_equal(as.character(as.mo(c("Gram negative", "Gram positive"))), c("B_GRAMN", "B_GRAMP"))
 

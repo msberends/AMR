@@ -19,11 +19,13 @@ This R package is [actively maintained](./news) and is free software; you can fr
 
 The development of this package is part of, related to, or made possible by:
 
-<a href="https://www.rug.nl"><img src="./logo_rug.png" class="partner_logo"></a>
-<a href="https://www.umcg.nl"><img src="./logo_umcg.png" class="partner_logo"></a>
-<a href="https://www.certe.nl"><img src="./logo_certe.png" class="partner_logo"></a>
-<a href="http://www.eurhealth-1health.eu"><img src="./logo_eh1h.png" class="partner_logo"></a>
-<a href="http://www.eurhealth-1health.eu"><img src="./logo_interreg.png" class="partner_logo"></a>
+<div align="center">
+  <a href="https://www.rug.nl"><img src="./logo_rug.png" class="partner_logo"></a>
+  <a href="https://www.umcg.nl"><img src="./logo_umcg.png" class="partner_logo"></a>
+  <a href="https://www.certe.nl"><img src="./logo_certe.png" class="partner_logo"></a>
+  <a href="http://www.eurhealth-1health.eu"><img src="./logo_eh1h.png" class="partner_logo"></a>
+  <a href="http://www.eurhealth-1health.eu"><img src="./logo_interreg.png" class="partner_logo"></a>
+</div>
 
 ### What can you do with this package?
 
@@ -100,29 +102,9 @@ To find out how to conduct AMR analysis, please [continue reading here to get st
 
 <img src="man/figures/logo_col.png">
 
-This package contains the complete taxonomic tree of almost all microorganisms from the authoritative and comprehensive Catalogue of Life ([www.catalogueoflife.org](http://www.catalogueoflife.org)).
+This package contains the complete taxonomic tree of almost all 70,000 microorganisms from the authoritative and comprehensive Catalogue of Life (CoL, [www.catalogueoflife.org](http://www.catalogueoflife.org)). With `catalogue_of_life_version()` can be checked which version of the CoL is included in this package.
 
-Included are:
-
-* All ~61,000 (sub)species from the kingdoms of Archaea, Bacteria, Chromista and Protozoa
-
-* All ~8,500 (sub)species from these orders of the kingdom of Fungi: Eurotiales, Microascales, Mucorales, Onygenales, Pneumocystales, Saccharomycetales, Schizosaccharomycetales and Tremellales.
-
-  The kingdom of Fungi is a very large taxon with almost 300,000 different (sub)species, of which most are not microbial (but rather macroscopic, like mushrooms). Because of this, not all fungi fit the scope of this package and including everything would tremendously slow down our algorithms too. By only including the aforementioned taxonomic orders, the most relevant fungi are covered (like all species of *Aspergillus*, *Candida*, *Cryptococcus*, *Histoplasma*, *Pneumocystis*, *Saccharomyces* and *Trichophyton*).
-
-* All ~150 (sub)species from ~100 other relevant genera from the kingdom of Animalia (like *Strongyloides* and *Taenia*)
-
-* All ~23,000 previously accepted names of all included (sub)species (these were taxonomically renamed)
-
-* The responsible author(s) and year of scientific publication
-
-This data is updated annually - check the included version with `catalogue_of_life_version()`.
-
-**About the Catalogue of Life**
-
-The [Catalogue of Life](http://www.catalogueoflife.org) is the most comprehensive and authoritative global index of species currently available. It holds essential information on the names, relationships and distributions of over 1.6 million species. The Catalogue of Life is used to support the major biodiversity and conservation information services such as the Global Biodiversity Information Facility (GBIF), Encyclopedia of Life (EoL) and the International Union for Conservation of Nature Red List. It is recognised by the Convention on Biological Diversity as a significant component of the Global Taxonomy Initiative and a contribution to Target 1 of the Global Strategy for Plant Conservation.
-
-Read more about the data from the Catalogue of Life [in our manual](./reference/catalogue_of_life.html).
+Read more about which data from the Catalogue of Life [in our manual](./reference/catalogue_of_life.html).
 
 #### Antimicrobial reference data
 
