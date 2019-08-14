@@ -77,16 +77,14 @@ $( document ).ready(function() {
   // doctoral titles of authors
   function doct_tit(x) {
     if (typeof(x) != "undefined") {
-      x = x.replace("Corinna", "Dr Corinna");
       x = x.replace("Alex", "Prof Dr Alex");
       x = x.replace("Bhanu", "Prof Dr Bhanu");
+      x = x.replace("Corinna", "Dr Corinna");
+      x = x.replace("Casper", "Prof Dr Casper");
       x = x.replace("Bart", "Dr Bart");
       x = x.replace("Dennis", "Dr Dennis");
       x = x.replace(/Author, thesis advisor/g, "Doctoral advisor");
-      x = x.replace(/Authors/g, "aut_plural");
-      x = x.replace(/Author, maintainer[.]?/g, "");
-      x = x.replace(/Author[.]?/g, "");
-      x = x.replace(/aut_plural/g, "Authors");
+      x = x.replace(/Author(, maintainer)?[.]?[^s]/g, "");
     }
     return(x);
   }

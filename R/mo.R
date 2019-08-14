@@ -1723,10 +1723,42 @@ as.data.frame.mo <- function(x, ...) {
 #' @exportMethod [.mo
 #' @export
 #' @noRd
-"[.mo" <- function (x, ...) {
-  # this function is needed to preserve the "mo" class for any subsetting, like df %>% filter(...)
+"[.mo" <- function(x, ...) {
   y <- NextMethod()
-  to_class_mo(y)
+  attributes(y) <- attributes(x)
+  y
+}
+#' @exportMethod [<-.mo
+#' @export
+#' @noRd
+"[<-.mo" <- function(i, j, ..., value) {
+  y <- NextMethod()
+  attributes(y) <- attributes(value)
+  y
+}
+#' @exportMethod [[.mo
+#' @export
+#' @noRd
+"[[.mo" <- function(x, ...) {
+  y <- NextMethod()
+  attributes(y) <- attributes(x)
+  y
+}
+#' @exportMethod [[<-.mo
+#' @export
+#' @noRd
+"[[<-.mo" <- function(value) {
+  y <- NextMethod()
+  attributes(y) <- attributes(value)
+  y
+}
+#' @exportMethod c.mo
+#' @export
+#' @noRd
+c.mo <- function(x, ...) {
+  y <- NextMethod()
+  attributes(y) <- attributes(x)
+  y
 }
 
 #' @rdname as.mo

@@ -100,15 +100,11 @@ To find out how to conduct AMR analysis, please [continue reading here to get st
 
 #### Microbial (taxonomic) reference data
 
-<img src="man/figures/logo_col.png">
-
 This package contains the complete taxonomic tree of almost all 70,000 microorganisms from the authoritative and comprehensive Catalogue of Life (CoL, [www.catalogueoflife.org](http://www.catalogueoflife.org)). With `catalogue_of_life_version()` can be checked which version of the CoL is included in this package.
 
 Read more about which data from the Catalogue of Life [in our manual](./reference/catalogue_of_life.html).
 
 #### Antimicrobial reference data
-
-<div><img src="reference/figures/logo_who.png" height="75px" class="logo_img"><p class="logo_txt">WHO Collaborating Centre for Drug Statistics Methodology</p></div>
 
 This package contains **all ~450 antimicrobial drugs** and their Anatomical Therapeutic Chemical (ATC) codes, ATC groups and Defined Daily Dose (DDD, oral and IV) from the World Health Organization Collaborating Centre for Drug Statistics Methodology (WHOCC, https://www.whocc.no) and the [Pharmaceuticals Community Register of the European Commission](http://ec.europa.eu/health/documents/community-register/html/atc.htm).
 
@@ -117,8 +113,6 @@ This package contains **all ~450 antimicrobial drugs** and their Anatomical Ther
 Read more about the data from WHOCC [in our manual](./reference/WHOCC.html).
 
 #### WHONET / EARS-Net
-
-<img src="./whonet.png">
 
 We support WHONET and EARS-Net data. Exported files from WHONET can be imported into R and can be analysed easily using this package. For education purposes, we created an [example data set `WHONET`](./reference/WHONET.html) with the exact same structure as a WHONET export file. Furthermore, this package also contains a [data set `antibiotics`](./reference/antibiotics.html) with all EARS-Net antibiotic abbreviations, and knows almost all WHONET abbreviations for microorganisms. When using WHONET data as input for analysis, all input parameters will be set automatically.
 

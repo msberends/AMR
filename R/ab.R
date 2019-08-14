@@ -282,10 +282,42 @@ as.data.frame.ab <- function (x, ...) {
 #' @exportMethod [.ab
 #' @export
 #' @noRd
-"[.ab" <- function (x, ...) {
-  # this function is needed to preserve the "ab" class for any subsetting, like df %>% filter(...)
+"[.ab" <- function(x, ...) {
   y <- NextMethod()
-  structure(y, class = "ab")
+  attributes(y) <- attributes(x)
+  y
+}
+#' @exportMethod [<-.ab
+#' @export
+#' @noRd
+"[<-.ab" <- function(value) {
+  y <- NextMethod()
+  attributes(y) <- attributes(value)
+  y
+}
+#' @exportMethod [[.ab
+#' @export
+#' @noRd
+"[[.ab" <- function(x, ...) {
+  y <- NextMethod()
+  attributes(y) <- attributes(x)
+  y
+}
+#' @exportMethod [[<-.ab
+#' @export
+#' @noRd
+"[[<-.ab" <- function(i, j, ..., value) {
+  y <- NextMethod()
+  attributes(y) <- attributes(value)
+  y
+}
+#' @exportMethod c.ab
+#' @export
+#' @noRd
+c.ab <- function(x, ...) {
+  y <- NextMethod()
+  attributes(y) <- attributes(x)
+  y
 }
 
 #' @importFrom pillar type_sum

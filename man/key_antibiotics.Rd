@@ -82,8 +82,8 @@ On our website \url{https://msberends.gitlab.io/AMR} you can find \href{https://
 }
 
 \examples{
-# septic_patients is a dataset available in the AMR package
-?septic_patients
+# `septic_patients` is a dataset available in the AMR package. It is true, genuine data.
+# See ?septic_patients.
 
 library(dplyr)
 # set key antibiotics to a new variable

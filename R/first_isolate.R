@@ -79,8 +79,8 @@
 #' @source Methodology of this function is based on: \strong{M39 Analysis and Presentation of Cumulative Antimicrobial Susceptibility Test Data, 4th Edition}, 2014, \emph{Clinical and Laboratory Standards Institute (CLSI)}. \url{https://clsi.org/standards/products/microbiology/documents/m39/}.
 #' @inheritSection AMR Read more on our website!
 #' @examples
-#' # septic_patients is a dataset available in the AMR package. It is true, genuine data.
-#' ?septic_patients
+#' # `septic_patients` is a dataset available in the AMR package. It is true, genuine data.
+#' # See ?septic_patients.
 #'
 #' library(dplyr)
 #' # Filter on first isolates:
@@ -97,7 +97,7 @@
 #' # or for first weighted isolates:
 #' septic_patients %>%
 #'   filter_first_weighted_isolate()
-#'
+#' 
 #' # Now let's see if first isolates matter:
 #' A <- septic_patients %>%
 #'   group_by(hospital_id) %>%

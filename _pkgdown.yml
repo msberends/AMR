@@ -172,12 +172,14 @@ authors:
     href: https://www.rug.nl/staff/m.s.berends/
   Christian F. Luz:
     href: https://www.rug.nl/staff/c.f.luz/
-  Corinna Glasner:
-    href: https://www.rug.nl/staff/c.glasner/
   Alex W. Friedrich:
     href: https://www.rug.nl/staff/a.w.friedrich/
   Bhanu N. M. Sinha:
     href: https://www.rug.nl/staff/b.sinha/
+  Casper J. Albers:
+    href: https://www.rug.nl/staff/c.j.albers/
+  Corinna Glasner:
+    href: https://www.rug.nl/staff/c.glasner/
 
 template:
   assets: "pkgdown/logos" # use logos in this folder

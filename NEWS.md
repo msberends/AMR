@@ -1,4 +1,4 @@
-# AMR 0.7.1.9055
+# AMR 0.7.1.9056
 
 ### Breaking
 * Function `freq()` has moved to a new package, [`clean`](https://github.com/msberends/clean) ([CRAN link](https://cran.r-project.org/package=clean)). Creating frequency tables is actually not the scope of this package (never was) and this function has matured  a lot over the last two years. Therefore, a new package was created for data cleaning and checking and it perfectly fits the `freq()` function. The [`clean`](https://github.com/msberends/clean) package is available on CRAN and will be installed automatically when updating the `AMR` package, that now imports it. In a later stage, the `skewness()` and `kurtosis()` functions will be moved to the `clean` package too.
@@ -73,7 +73,7 @@
 * Classes `ab` and `mo` will now be preserved in any subsetting
 
 #### Other
-* Added Dr Bart Meijer, Dr Dennis Souverein and Annick Lenglet as contributors
+* Added Prof Dr Casper Albers as doctoral advisor and Dr Bart Meijer, Dr Dennis Souverein and Annick Lenglet as contributors
 
 # AMR 0.7.1
 
