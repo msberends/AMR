@@ -1,4 +1,4 @@
-# AMR 0.7.1.9056
+# AMR 0.7.1.9057
 
 ### Breaking
 * Function `freq()` has moved to a new package, [`clean`](https://github.com/msberends/clean) ([CRAN link](https://cran.r-project.org/package=clean)). Creating frequency tables is actually not the scope of this package (never was) and this function has matured  a lot over the last two years. Therefore, a new package was created for data cleaning and checking and it perfectly fits the `freq()` function. The [`clean`](https://github.com/msberends/clean) package is available on CRAN and will be installed automatically when updating the `AMR` package, that now imports it. In a later stage, the `skewness()` and `kurtosis()` functions will be moved to the `clean` package too.
@@ -46,6 +46,7 @@
   * Printed info now distinguishes between added and changes values
   * Using Verbose mode (i.e. `eucast_rules(..., verbose = TRUE)`) returns more informative and readable output
   * Using factors as input now adds missing factors levels when the function changes antibiotic results
+* Improved the internal auto-guessing function for determining antibiotics in your data set (`AMR:::get_column_abx()`)
 * Added tibble printing support for classes `rsi`, `mic`, `disk`, `ab` `mo`. When using tibbles containing antibiotic columns, values `S` will print in green, values `I` will print in yellow and values `R` will print in red. Microbial IDs (class `mo`) will emphasise on the genus and species, not on the kingdom.
   ```r
   # (run this on your own console, as this page does not support colour printing)

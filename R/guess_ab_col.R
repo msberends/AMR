@@ -148,27 +148,21 @@ get_column_abx <- function(x,
   }
 
   # sort on name
-  x <- x[sort(names(x))]
-  dupes <- x[base::duplicated(x)]
-
+  x <- x[order(names(x), x)]
+  duplicates <- x[base::duplicated(x)]
+  x <- x[!names(x) %in% names(duplicates)]
+  
   if (verbose == TRUE) {
     for (i in 1:length(x)) {
-      if (x[i] %in% dupes) {
-        message(red(paste0("NOTE: Using column `", bold(x[i]), "` as input for `", names(x)[i],
-                           "` (", ab_name(names(x)[i], language = "en", tolower = TRUE), ") [DUPLICATED USE].")))
-      } else {
-        message(blue(paste0("NOTE: Using column `", bold(x[i]), "` as input for `", names(x)[i],
-                            "` (", ab_name(names(x)[i], language = "en", tolower = TRUE), ").")))
-      }
+      message(blue(paste0("NOTE: Using column `", bold(x[i]), "` as input for `", names(x)[i],
+                          "` (", ab_name(names(x)[i], tolower = TRUE), ").")))
     }
-  }
-
-  if (n_distinct(x) != length(x)) {
-    msg_txt <- paste("Column(s)", paste0("`", dupes, "`", collapse = " and "), "used for more than one antibiotic.")
-    if (verbose == FALSE) {
-      msg_txt <- paste(msg_txt, "Use verbose = TRUE to see which antibiotics are used by which columns.")
+  } else if (length(duplicates) > 0) {
+    for (i in 1:length(duplicates)) {
+     warning(red(paste0("Using column `", bold(duplicates[i]), "` as input for `", names(x[which(x == duplicates[i])]), 
+                        "` (", ab_name(names(x[names(which(x == duplicates))[i]]), tolower = TRUE), 
+                        "), although it was matched for multiple antibiotics or columns.")), call. = FALSE)
     }
-    stop(msg_txt, call. = FALSE)
   }
 
   if (!is.null(hard_dependencies)) {

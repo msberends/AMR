@@ -78,7 +78,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">0.7.1.9056</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">0.7.1.9057</span>
       </span>
     </div>
 
@@ -225,9 +225,9 @@
       
     </div>
 
-    <div id="amr-0-7-1-9056" class="section level1">
+    <div id="amr-0-7-1-9057" class="section level1">
 <h1 class="page-header">
-<a href="#amr-0-7-1-9056" class="anchor"></a>AMR 0.7.1.9056<small> Unreleased </small>
+<a href="#amr-0-7-1-9057" class="anchor"></a>AMR 0.7.1.9057<small> Unreleased </small>
 </h1>
 <div id="breaking" class="section level3">
 <h3 class="hasAnchor">
@@ -288,6 +288,7 @@
 <li>Using factors as input now adds missing factors levels when the function changes antibiotic results</li>
 </ul>
 </li>
+<li>Improved the internal auto-guessing function for determining antibiotics in your data set (<code>AMR:::get_column_abx()</code>)</li>
 <li>
 <p>Added tibble printing support for classes <code>rsi</code>, <code>mic</code>, <code>disk</code>, <code>ab</code> <code>mo</code>. When using tibbles containing antibiotic columns, values <code>S</code> will print in green, values <code>I</code> will print in yellow and values <code>R</code> will print in red. Microbial IDs (class <code>mo</code>) will emphasise on the genus and species, not on the kingdom.</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="co"># (run this on your own console, as this page does not support colour printing)</span></a>
@@ -1237,7 +1238,7 @@ Using <code><a href="../reference/as.mo.html">as.mo(..., allow_uncertain = 3)</a
     <div id="tocnav">
       <h2>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
-        <li><a href="#amr-0-7-1-9056">0.7.1.9056</a></li>
+        <li><a href="#amr-0-7-1-9057">0.7.1.9057</a></li>
         <li><a href="#amr-0-7-1">0.7.1</a></li>
         <li><a href="#amr-0-7-0">0.7.0</a></li>
         <li><a href="#amr-0-6-1">0.6.1</a></li>
