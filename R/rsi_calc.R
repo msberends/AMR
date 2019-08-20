@@ -21,6 +21,8 @@
 
 #' @importFrom rlang enquos as_label
 dots2vars <- function(...) {
+  # this function is to give more informative output about 
+  # variable names in count_* and portion_* functions
   paste(
     unlist(
       lapply(enquos(...),
@@ -109,20 +111,14 @@ rsi_calc <- function(...,
         x[, i] <- suppressWarnings(x %>% pull(i) %>% as.rsi()) # warning will be given later
         print_warning <- TRUE
       }
-      #x[, i] <- x %>% pull(i)
     }
     if (length(rsi_integrity_check) > 0) {
       # this will give a warning for invalid results, of all input columns (so only 1 warning)
       rsi_integrity_check <- as.rsi(rsi_integrity_check)
     }
 
-    # THE CHANCE THAT AT LEAST ONE RESULT IS ab_result
-    #numerator <- x %>% filter_all(any_vars(. %in% ab_result)) %>% nrow()
     if (only_all_tested == TRUE) {
       # THE NUMBER OF ISOLATES WHERE *ALL* ABx ARE S/I/R
-      # x_filtered <- x %>% filter_all(all_vars(!is.na(.)))
-      # numerator <- x_filtered %>% filter_all(any_vars(. %in% ab_result)) %>% nrow()
-      # denominator <- x_filtered %>% nrow()
       x <- apply(X = x %>% mutate_all(as.integer),
                  MARGIN = 1,
                  FUN = base::min)
@@ -159,7 +155,7 @@ rsi_calc <- function(...,
     if (data_vars != "") {
       data_vars <- paste(" for", data_vars)
     }
-    warning("Introducing NA: only ", denominator, " results available", data_vars, " (minimum set to ", minimum, ").", call. = FALSE)
+    warning("Introducing NA: only ", denominator, " results available", data_vars, " (`minimum` was set to ", minimum, ").", call. = FALSE)
     fraction <- NA
   } else {
     fraction <- numerator / denominator

@@ -119,7 +119,7 @@ EUCAST_VERSION_EXPERT_RULES <- "3.1, 2016"
 #' @rdname eucast_rules
 #' @export
 #' @importFrom dplyr %>% select pull mutate_at vars group_by summarise n
-#' @importFrom crayon bold bgGreen bgYellow bgRed black green blue italic strip_style white red
+#' @importFrom crayon bold bgGreen bgYellow bgRed black green blue italic strip_style white red make_style
 #' @importFrom utils menu
 #' @return The input of \code{x}, possibly with edited values of antibiotics. Or, if \code{verbose = TRUE}, a \code{data.frame} with all original and new values of the affected bug-drug combinations.
 #' @source
@@ -197,7 +197,8 @@ eucast_rules <- function(x,
       q_continue <- menu(choices = c("OK", "Cancel"), graphics = TRUE, title = txt)
     }
     if (q_continue %in% c(FALSE, 2)) {
-      return(invisible())
+      message("Cancelled, returning original data")
+      return(x)
     }
   }
   
@@ -228,6 +229,8 @@ eucast_rules <- function(x,
     trimws(format(x, big.mark = big.mark, decimal.mark = decimal.mark))
   }
   
+  grey <- make_style("grey")
+  
   warned <- FALSE
   
   txt_error <- function() { cat("", bgRed(white(" ERROR ")), "\n\n") }
@@ -235,21 +238,21 @@ eucast_rules <- function(x,
   txt_ok <- function(no_added, no_changed) {
     if (warned == FALSE) {
       if (no_added + no_changed == 0) {
-        cat(green(" (no changes)\n"))
+        cat(pillar::style_subtle(" (no changes)\n"))
       } else {
         # opening
-        cat(blue(" ("))
+        cat(grey(" ("))
         # additions
         if (no_added > 0) {
           if (no_added == 1) {
-            cat(blue("1 value added"))
+            cat(green("1 value added"))
           } else {
-            cat(blue(formatnr(no_added), "values added"))
+            cat(green(formatnr(no_added), "values added"))
           }
         }
         # separator
         if (no_added > 0 & no_changed > 0) {
-          cat(blue(", "))
+          cat(grey(", "))
         }
         # changes
         if (no_changed > 0) {
@@ -260,7 +263,7 @@ eucast_rules <- function(x,
           }
         } 
         # closing
-        cat(blue(")\n"))
+        cat(grey(")\n"))
       }
       warned <<- FALSE
     }
@@ -770,7 +773,7 @@ eucast_rules <- function(x,
     verbose_info <- verbose_info %>%
       arrange(row, rule_group, rule_name, col)
     
-    cat(paste0("\n", silver(strrep("-", options()$width - 1)), "\n"))
+    cat(paste0("\n", grey(strrep("-", options()$width - 1)), "\n"))
     cat(bold(paste('EUCAST rules', paste0(wouldve, 'affected'),
                    formatnr(n_distinct(verbose_info$row)),
                    'out of', formatnr(nrow(x_original)),
@@ -783,7 +786,7 @@ eucast_rules <- function(x,
     if (n_added == 0) {
       colour <- cat # is function
     } else {
-      colour <- blue # is function
+      colour <- green # is function
     }
     cat(colour(paste0("=> ", wouldve, "added ",
                       bold(formatnr(verbose_info %>%
@@ -828,7 +831,7 @@ eucast_rules <- function(x,
         cat()
       cat("\n")
     }
-    cat(paste0(silver(strrep("-", options()$width - 1)), "\n"))
+    cat(paste0(grey(strrep("-", options()$width - 1)), "\n"))
     
     if (verbose == FALSE & nrow(verbose_info) > 0) {
       cat(paste("\nUse", bold("eucast_rules(..., verbose = TRUE)"), "(on your original data) to get a data.frame with all specified edits instead.\n\n"))
