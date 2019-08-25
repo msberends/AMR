@@ -78,9 +78,9 @@ format.bugdrug <- function(x, combine_SI = TRUE, add_ab_group = TRUE, ...) {
   }
   y <- x %>%
     mutate(mo = mo_name(mo),
-           txt = paste0(AMR:::percent(isolates / total, force_zero = TRUE), 
-                            " (", trimws(format(isolates, big.mark = ",")), "/", 
-                            trimws(format(total, big.mark = ",")), ")")) %>% 
+           txt = paste0(percent(isolates / total, force_zero = TRUE), 
+                        " (", trimws(format(isolates, big.mark = ",")), "/", 
+                        trimws(format(total, big.mark = ",")), ")")) %>% 
     select(ab, mo, txt) %>% 
     spread(mo, txt) %>%
     mutate_all(~ifelse(is.na(.), "", .)) %>% 
