@@ -15,7 +15,10 @@ availability(tbl, width = NULL)
 \code{data.frame} with column names of \code{tbl} as row names
 }
 \description{
-Easy check for availability of columns in a data set. This makes it easy to get an idea of which antibiotic combination can be used for calculation with e.g. \code{\link{portion_IR}}.
+Easy check for availability of columns in a data set. This makes it easy to get an idea of which antimicrobial combination can be used for calculation with e.g. \code{\link{portion_R}}.
+}
+\details{
+The function returns a \code{data.frame} with columns \code{"resistant"} and \code{"visual_resistance"}. The values in that columns are calculated with \code{\link{portion_R}}.
 }
 \section{Read more on our website!}{
 

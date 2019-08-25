@@ -19,38 +19,11 @@
 # Visit our website for more info: https://msberends.gitlab.io/AMR.    #
 # ==================================================================== #
 
-#' @importFrom clean freq
-#' @export
-clean::freq
+context("bug_drug_combinations.R")
 
-#' @exportMethod freq.mo
-#' @importFrom dplyr n_distinct
-#' @importFrom clean freq.default
-#' @export
-#' @noRd
-freq.mo <- function(x, ...) {
-  freq.default(x = x, ...,
-               .add_header = list(families = n_distinct(mo_family(x, language = NULL)),
-                                  genera = n_distinct(mo_genus(x, language = NULL)),
-                                  species = n_distinct(paste(mo_genus(x, language = NULL),
-                                                             mo_species(x, language = NULL)))))
-}
-
-#' @exportMethod freq.rsi
-#' @importFrom clean freq.default
-#' @export
-#' @noRd
-freq.rsi <- function(x, ...) {
-  x_name <- deparse(substitute(x))
-  x_name <- gsub(".*[$]", "", x_name)
-  ab <- suppressMessages(suppressWarnings(AMR::as.ab(x_name)))
-  if (!is.na(ab)) {
-    freq.default(x = x, ...,
-                 .add_header = list(Drug = paste0(ab_name(ab), " (", ab, ", ", ab_atc(ab), ")"),
-                                    group = ab_group(ab),
-                                    `%SI` = AMR::portion_SI(x, minimum = 0, as_percent = TRUE)))
-  } else {
-    freq.default(x = x, ...,
-                 .add_header = list(`%SI` = AMR::portion_SI(x, minimum = 0, as_percent = TRUE)))
-  }
-}
+test_that("bug_drug_combinations works", {
+  b <- suppressWarnings(bug_drug_combinations(septic_patients))
+  expect_s3_class(b, "bugdrug")
+  expect_message(print(b))
+  expect_true(is.data.frame(format(b)))
+})

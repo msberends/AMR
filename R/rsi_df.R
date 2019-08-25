@@ -21,7 +21,6 @@
 
 #' @rdname portion
 #' @rdname count
-#' @importFrom dplyr %>% select_if bind_rows summarise_if mutate group_vars select everything
 #' @export
 rsi_df <- function(data,
                    translate_ab = "name",

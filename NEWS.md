@@ -1,7 +1,7 @@
-# AMR 0.7.1.9058
+# AMR 0.7.1.9059
 
 ### Breaking
-* Function `freq()` has moved to a new package, [`clean`](https://github.com/msberends/clean) ([CRAN link](https://cran.r-project.org/package=clean)). Creating frequency tables is actually not the scope of this package (never was) and this function has matured  a lot over the last two years. Therefore, a new package was created for data cleaning and checking and it perfectly fits the `freq()` function. The [`clean`](https://github.com/msberends/clean) package is available on CRAN and will be installed automatically when updating the `AMR` package, that now imports it. In a later stage, the `skewness()` and `kurtosis()` functions will be moved to the `clean` package too.
+* Function `freq()` has moved to a new package, [`clean`](https://github.com/msberends/clean) ([CRAN link](https://cran.r-project.org/package=clean)). The `freq()` function still works, since it is re-exported from the `clean` package to this `AMR` package. Creating frequency tables is actually not the scope of this package (never was) and this function has matured  a lot over the last two years. Therefore, a new package was created for data cleaning and checking and it perfectly fits the `freq()` function. The [`clean`](https://github.com/msberends/clean) package is available on CRAN and will be installed automatically when updating the `AMR` package, that now imports it. In a later stage, the `skewness()` and `kurtosis()` functions will be moved to the `clean` package too.
 * Determination of first isolates now **excludes** all 'unknown' microorganisms at default, i.e. microbial code `"UNKNOWN"`. They can be included with the new parameter `include_unknown`:
   ```r
   first_isolate(..., include_unknown = TRUE)
@@ -9,6 +9,21 @@
   For WHONET users, this means that all records with organism code `"con"` (*contamination*) will be excluded at default, since `as.mo("con") = "UNKNOWN"`. The function always shows a note with the number of 'unknown' microorganisms that were included or excluded.
 
 ### New
+* Function `bug_drug_combinations()` to quickly get a `data.frame` with the antimicrobial resistance of any bug-drug combination in a data set:
+  ```r
+  x <- bug_drug_combinations(septic_patients)
+  x
+  #>      ab          mo   S  I   R total
+  #> 1   AMC B_ESCHR_COL 332 74  61   467
+  #> 2   AMC B_KLBSL_PNE  49  3   6    58
+  #> 3   AMC B_PROTS_MIR  28  7   1    36
+  #> 4   AMC B_PSDMN_AER   0  0  30    30
+  #> 5   AMC B_STPHY_AUR 234  0   1   235
+  ```
+  You can format this to a printable format, ready for reporting or exporting to e.g. Excel with the base R `format()` function:
+  ```r
+  format(x)
+  ```
 * Additional way to calculate co-resistance, i.e. when using multiple antibiotics as input for `portion_*` functions or `count_*` functions. This can be used to determine the empiric susceptibily of a combination therapy. A new parameter `only_all_tested` (**which defaults to `FALSE`**) replaces the old `also_single_tested` and can be used to select one of the two methods to count isolates and calculate portions. The difference can be seen in this example table (which is also on the `portion` and `count` help pages), where the %SI is being determined:
 
   ```r
@@ -72,6 +87,7 @@
 * Speed improvement for `guess_ab_col()` which is now 30 times faster for antibiotic abbreviations
 * Improved `filter_ab_class()` to be more reliable and to support 5th generation cephalosporins
 * Classes `ab` and `mo` will now be preserved in any subsetting
+* Function `availability()` now uses `portion_R()` instead of `portion_IR()`, to comply with EUCAST insights
 
 #### Other
 * Added Prof Dr Casper Albers as doctoral advisor and Dr Bart Meijer, Dr Dennis Souverein and Annick Lenglet as contributors

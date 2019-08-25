@@ -49,6 +49,9 @@
     <loc>https://msberends.gitlab.io/AMR/reference/availability.html</loc>
   </url>
   <url>
+    <loc>https://msberends.gitlab.io/AMR/reference/bug_drug_combinations.html</loc>
+  </url>
+  <url>
     <loc>https://msberends.gitlab.io/AMR/reference/catalogue_of_life.html</loc>
   </url>
   <url>
@@ -116,6 +119,9 @@
   </url>
   <url>
     <loc>https://msberends.gitlab.io/AMR/reference/read.4D.html</loc>
+  </url>
+  <url>
+    <loc>https://msberends.gitlab.io/AMR/reference/reexports.html</loc>
   </url>
   <url>
     <loc>https://msberends.gitlab.io/AMR/reference/resistance_predict.html</loc>

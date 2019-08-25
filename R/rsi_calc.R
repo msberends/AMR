@@ -169,6 +169,7 @@ rsi_calc <- function(...,
 }
 
 #' @importFrom dplyr %>% summarise_if mutate select everything bind_rows
+#' @importFrom tidyr gather
 rsi_calc_df <- function(type, # "portion" or "count"
                         data,
                         translate_ab = "name",
@@ -187,10 +188,10 @@ rsi_calc_df <- function(type, # "portion" or "count"
     combine_SI <- FALSE
   }
   if (isTRUE(combine_SI) & isTRUE(combine_IR)) {
-    stop("either `combine_SI` or `combine_IR` can be TRUE", call. = FALSE)
+    stop("either `combine_SI` or `combine_IR` can be TRUE, not both", call. = FALSE)
   }
 
-  if (data %>% select_if(is.rsi) %>% ncol() == 0) {
+  if (!any(sapply(data, is.rsi), na.rm = TRUE)) {
     stop("No columns with class 'rsi' found. See ?as.rsi.", call. = FALSE)
   }
 
@@ -198,7 +199,7 @@ rsi_calc_df <- function(type, # "portion" or "count"
     translate_ab <- "name"
   }
 
-  get_summaryfunction <- function(int) {
+  get_summaryfunction <- function(int, type) {
     # look for portion_S, count_S, etc:
     int_fn <- get(paste0(type, "_", int), envir = asNamespace("AMR"))
 
@@ -218,11 +219,11 @@ rsi_calc_df <- function(type, # "portion" or "count"
       select(interpretation, everything())
   }
 
-  resS <- get_summaryfunction("S")
-  resI <- get_summaryfunction("I")
-  resR <- get_summaryfunction("R")
-  resSI <- get_summaryfunction("SI")
-  resIR <- get_summaryfunction("IR")
+  resS <- get_summaryfunction("S", type)
+  resI <- get_summaryfunction("I", type)
+  resR <- get_summaryfunction("R", type)
+  resSI <- get_summaryfunction("SI", type)
+  resIR <- get_summaryfunction("IR", type)
   data.groups <- group_vars(data)
 
   if (isFALSE(combine_SI) & isFALSE(combine_IR)) {
@@ -245,11 +246,11 @@ rsi_calc_df <- function(type, # "portion" or "count"
   }
 
   res <- res %>%
-    tidyr::gather(antibiotic, value, -interpretation, -data.groups) %>%
+    gather(antibiotic, value, -interpretation, -data.groups) %>%
     select(antibiotic, everything())
 
   if (!translate_ab == FALSE) {
-    res <- res %>% mutate(antibiotic = ab_property(antibiotic, property = translate_ab, language = language))
+    res <- res %>% mutate(antibiotic = AMR::ab_property(antibiotic, property = translate_ab, language = language))
   }
 
   res
