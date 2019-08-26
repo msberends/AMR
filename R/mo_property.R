@@ -144,7 +144,6 @@ mo_name <- function(x, language = get_locale(), ...) {
 mo_fullname <- mo_name
 
 #' @rdname mo_property
-#' @importFrom dplyr %>% mutate pull
 #' @export
 mo_shortname <- function(x, language = get_locale(), ...) {
   x.mo <- AMR::as.mo(x, ...)
@@ -416,13 +415,19 @@ mo_validate <- function(x, property, ...) {
   # so the 'call.' can be set to FALSE
   tryCatch(x[1L] %in% AMR::microorganisms[1, property],
            error = function(e) stop(e$message, call. = FALSE))
-
-  if (!all(x %in% pull(AMR::microorganisms, property))
-      | Becker %in% c(TRUE, "all")
-      | Lancefield %in% c(TRUE, "all")) {
+  
+  if (is.mo(x) 
+      & !Becker %in% c(TRUE, "all") 
+      & !Lancefield %in% c(TRUE, "all")) {
+    # this will not reset mo_uncertainties and mo_failures
+    # because it's already a valid MO
+    x <- exec_as.mo(x, property = property, initial_search = FALSE, ...)
+  } else if (!all(x %in% pull(AMR::microorganisms, property))
+             | Becker %in% c(TRUE, "all")
+             | Lancefield %in% c(TRUE, "all")) {
     x <- exec_as.mo(x, property = property, ...)
   }
-
+  
   if (property == "mo") {
     return(to_class_mo(x))
   } else if (property == "col_id") {
