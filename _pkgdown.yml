@@ -127,6 +127,7 @@ reference:
       resistance or susceptibility, or make plots.
     contents:
     - "`availability`"
+    - "`bug_drug_combinations`"
     - "`count`"
     - "`portion`"
     - "`filter_ab_class`"

@@ -284,4 +284,13 @@ test_that("as.mo works", {
   
   # print tibble
   expect_output(print(tibble(mo = as.mo("B_STRPT_PNE"))))
+  
+  # assigning and subsetting
+  x <- septic_patients$mo
+  expect_s3_class(x[1], "mo")
+  expect_s3_class(x[[1]], "mo")
+  expect_s3_class(c(x[1], x[9]), "mo")
+  expect_warning(x[1] <- "invalid code")
+  expect_warning(x[[1]] <- "invalid code")
+  expect_warning(c(x[1], "test"))
 })

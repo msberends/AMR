@@ -190,3 +190,11 @@ translate_AMR <- function(from, language = get_locale(), only_unknown = FALSE) {
          x,
          ifelse(!is.na(y), y, NA))
 }
+
+class_integrity_check <- function(value, type, check_vector) {
+  if (!all(value[!is.na(value)] %in% check_vector)) {
+    warning(paste0("invalid ", type, ", NA generated"), call. = FALSE)
+    value[!value %in% check_vector] <- NA
+  }
+  value
+}

@@ -81,7 +81,7 @@ portion_R and portion_IR can be used to calculate resistance, portion_S and port
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">0.7.1.9055</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">0.7.1.9062</span>
       </span>
     </div>
 
@@ -321,29 +321,22 @@ portion_R and portion_IR can be used to calculate resistance, portion_S and port
     
     <p>When using more than one variable for <code>...</code> (= combination therapy)), use <code>only_all_tested</code> to only count isolates that are tested for all antibiotics/variables that you test them for. See this example for two antibiotics, Antibiotic A and Antibiotic B, about how <code>portion_SI</code> works to calculate the %SI:</p>
 <pre>
--------------------------------------------------------------------------
-                        only_all_tested = FALSE   only_all_tested = TRUE
-Antibiotic  Antibiotic  -----------------------   -----------------------
-    A           B       include as  include as    include as  include as
-                        numerator   denominator   numerator   denominator
-----------  ----------  ----------  -----------   ----------  -----------
-    S           S           X            X             X            X
-    I           S           X            X             X            X
-    R           S           X            X             X            X
-not tested      S           X            X             -            -
-    S           I           X            X             X            X
-    I           I           X            X             X            X
-    R           I           X            X             X            X
-not tested      I           X            X             -            -
-    S           R           X            X             X            X
-    I           R           X            X             X            X
-    R           R           -            X             -            X
-not tested      R           -            -             -            -
-    S       not tested      X            X             -            -
-    I       not tested      X            X             -            -
-    R       not tested      -            -             -            -
-not tested  not tested      -            -             -            -
--------------------------------------------------------------------------
+--------------------------------------------------------------------
+                    only_all_tested = FALSE  only_all_tested = TRUE
+                    -----------------------  -----------------------
+ Drug A    Drug B   include as  include as   include as  include as
+                    numerator   denominator  numerator   denominator
+--------  --------  ----------  -----------  ----------  -----------
+ S or I    S or I       X            X            X            X
+   R       S or I       X            X            X            X
+  &lt;NA&gt;     S or I       X            X            -            -
+ S or I      R          X            X            X            X
+   R         R          -            X            -            X
+  &lt;NA&gt;       R          -            -            -            -
+ S or I     &lt;NA&gt;        X            X            -            -
+   R        &lt;NA&gt;        -            -            -            -
+  &lt;NA&gt;      &lt;NA&gt;        -            -            -            -
+--------------------------------------------------------------------
 </pre>
     <p>Please note that, in combination therapies, for <code>only_all_tested = TRUE</code> applies that:</p><pre>
    count_S()  +  count_I()  +  count_R()  == count_all()
@@ -494,7 +487,7 @@ not tested  not tested      -            -             -            -
 
       <footer>
       <div class="copyright">
-  <p>Developed by <a href='https://www.rug.nl/staff/m.s.berends/'>Matthijs S. Berends</a>, <a href='https://www.rug.nl/staff/c.f.luz/'>Christian F. Luz</a>, <a href='https://www.rug.nl/staff/a.w.friedrich/'>Alex W. Friedrich</a>, <a href='https://www.rug.nl/staff/b.sinha/'>Bhanu N. M. Sinha</a>, <a href='https://www.rug.nl/staff/c.glasner/'>Corinna Glasner</a>.</p>
+  <p>Developed by <a href='https://www.rug.nl/staff/m.s.berends/'>Matthijs S. Berends</a>, <a href='https://www.rug.nl/staff/c.f.luz/'>Christian F. Luz</a>, <a href='https://www.rug.nl/staff/a.w.friedrich/'>Alex W. Friedrich</a>, <a href='https://www.rug.nl/staff/b.sinha/'>Bhanu N. M. Sinha</a>, <a href='https://www.rug.nl/staff/c.j.albers/'>Casper J. Albers</a>, <a href='https://www.rug.nl/staff/c.glasner/'>Corinna Glasner</a>.</p>
 </div>
 
 <div class="pkgdown">

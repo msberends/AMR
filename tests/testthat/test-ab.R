@@ -54,5 +54,12 @@ test_that("as.ab works", {
   expect_equal(suppressWarnings(as.character(as.ab(c("Bacteria", "Bacterial")))),
                c(NA, "TMP"))
 
-
+  # assigning and subsetting
+  x <- antibiotics$ab
+  expect_s3_class(x[1], "ab")
+  expect_s3_class(x[[1]], "ab")
+  expect_s3_class(c(x[1], x[9]), "ab")
+  expect_warning(x[1] <- "invalid code")
+  expect_warning(x[[1]] <- "invalid code")
+  expect_warning(c(x[1], "test"))
 })

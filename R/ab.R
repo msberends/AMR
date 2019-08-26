@@ -287,14 +287,6 @@ as.data.frame.ab <- function (x, ...) {
   attributes(y) <- attributes(x)
   y
 }
-#' @exportMethod [<-.ab
-#' @export
-#' @noRd
-"[<-.ab" <- function(value) {
-  y <- NextMethod()
-  attributes(y) <- attributes(value)
-  y
-}
 #' @exportMethod [[.ab
 #' @export
 #' @noRd
@@ -303,13 +295,21 @@ as.data.frame.ab <- function (x, ...) {
   attributes(y) <- attributes(x)
   y
 }
+#' @exportMethod [<-.ab
+#' @export
+#' @noRd
+"[<-.ab" <- function(i, j, ..., value) {
+  y <- NextMethod()
+  attributes(y) <- attributes(i)
+  class_integrity_check(y, "antimicrobial code", AMR::antibiotics$ab)
+}
 #' @exportMethod [[<-.ab
 #' @export
 #' @noRd
 "[[<-.ab" <- function(i, j, ..., value) {
   y <- NextMethod()
-  attributes(y) <- attributes(value)
-  y
+  attributes(y) <- attributes(i)
+  class_integrity_check(y, "antimicrobial code", AMR::antibiotics$ab)
 }
 #' @exportMethod c.ab
 #' @export
@@ -317,7 +317,7 @@ as.data.frame.ab <- function (x, ...) {
 c.ab <- function(x, ...) {
   y <- NextMethod()
   attributes(y) <- attributes(x)
-  y
+  class_integrity_check(y, "antimicrobial code", AMR::antibiotics$ab)
 }
 
 #' @importFrom pillar type_sum

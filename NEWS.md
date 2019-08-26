@@ -1,12 +1,27 @@
-# AMR 0.7.1.9061
+# AMR 0.7.1.9062
 
 ### Breaking
-* Function `freq()` has moved to a new package, [`clean`](https://github.com/msberends/clean) ([CRAN link](https://cran.r-project.org/package=clean)). The `freq()` function still works, since it is re-exported from the `clean` package to this `AMR` package. Creating frequency tables is actually not the scope of this package (never was) and this function has matured  a lot over the last two years. Therefore, a new package was created for data cleaning and checking and it perfectly fits the `freq()` function. The [`clean`](https://github.com/msberends/clean) package is available on CRAN and will be installed automatically when updating the `AMR` package, that now imports it. In a later stage, the `skewness()` and `kurtosis()` functions will be moved to the `clean` package too.
 * Determination of first isolates now **excludes** all 'unknown' microorganisms at default, i.e. microbial code `"UNKNOWN"`. They can be included with the new parameter `include_unknown`:
   ```r
   first_isolate(..., include_unknown = TRUE)
   ```
-  For WHONET users, this means that all records with organism code `"con"` (*contamination*) will be excluded at default, since `as.mo("con") = "UNKNOWN"`. The function always shows a note with the number of 'unknown' microorganisms that were included or excluded.
+  For WHONET users, this means that all records/isolates with organism code `"con"` (*contamination*) will be excluded at default, since `as.mo("con") = "UNKNOWN"`. The function always shows a note with the number of 'unknown' microorganisms that were included or excluded.
+* For code consistency, classes `ab` and `mo` will now be preserved in any subsetting or assignment. For the sake of data integrity, this means that invalid assignments will now result in `NA`:
+  ```r
+  # how it works in base R:
+  x <- factor("A")
+  x[1] <- "B"
+  #> Warning message:
+  #> invalid factor level, NA generated
+  
+  # how it now works similarly for classes 'mo' and 'ab':
+  x <- as.mo("E. coli")
+  x[1] <- "testvalue"
+  #> Warning message:
+  #> invalid microbial code, NA generated
+  ```
+  This is important, because a value like `"testvalue"` could never be understood by e.g. `mo_name()`, although the class would suggest a valid microbial code.
+* Function `freq()` has moved to a new package, [`clean`](https://github.com/msberends/clean) ([CRAN link](https://cran.r-project.org/package=clean)), since creating frequency tables actually does not fit the scope of this package. The `freq()` function still works, since it is re-exported from the `clean` package (which will be installed automatically upon updating this `AMR` package).
 
 ### New
 * Function `bug_drug_combinations()` to quickly get a `data.frame` with the antimicrobial resistance of any bug-drug combination in a data set:
@@ -24,35 +39,36 @@
   ```r
   format(x)
   ```
-* Additional way to calculate co-resistance, i.e. when using multiple antibiotics as input for `portion_*` functions or `count_*` functions. This can be used to determine the empiric susceptibily of a combination therapy. A new parameter `only_all_tested` (**which defaults to `FALSE`**) replaces the old `also_single_tested` and can be used to select one of the two methods to count isolates and calculate portions. The difference can be seen in this example table (which is also on the `portion` and `count` help pages), where the %SI is being determined:
+* Additional way to calculate co-resistance, i.e. when using multiple antimicrobials as input for `portion_*` functions or `count_*` functions. This can be used to determine the empiric susceptibily of a combination therapy. A new parameter `only_all_tested` (**which defaults to `FALSE`**) replaces the old `also_single_tested` and can be used to select one of the two methods to count isolates and calculate portions. The difference can be seen in this example table (which is also on the `portion` and `count` help pages), where the %SI is being determined:
 
   ```r
-  # -------------------------------------------------------------------------
-  #                         only_all_tested = FALSE   only_all_tested = TRUE
-  # Antibiotic  Antibiotic  -----------------------   -----------------------
-  #     A           B       include as  include as    include as  include as
-  #                         numerator   denominator   numerator   denominator
-  # ----------  ----------  ----------  -----------   ----------  -----------
-  #     S           S           X            X             X            X
-  #     I           S           X            X             X            X
-  #     R           S           X            X             X            X
-  # not tested      S           X            X             -            -
-  #     S           I           X            X             X            X
-  #     I           I           X            X             X            X
-  #     R           I           X            X             X            X
-  # not tested      I           X            X             -            -
-  #     S           R           X            X             X            X
-  #     I           R           X            X             X            X
-  #     R           R           -            X             -            X
-  # not tested      R           -            -             -            -
-  #     S       not tested      X            X             -            -
-  #     I       not tested      X            X             -            -
-  #     R       not tested      -            -             -            -
-  # not tested  not tested      -            -             -            -
-  # -------------------------------------------------------------------------
+  # --------------------------------------------------------------------
+  #                     only_all_tested = FALSE  only_all_tested = TRUE
+  #                     -----------------------  -----------------------
+  #  Drug A    Drug B   include as  include as   include as  include as
+  #                     numerator   denominator  numerator   denominator
+  # --------  --------  ----------  -----------  ----------  -----------
+  #  S or I    S or I       X            X            X            X
+  #    R       S or I       X            X            X            X
+  #   <NA>     S or I       X            X            -            -
+  #  S or I      R          X            X            X            X
+  #    R         R          -            X            -            X
+  #   <NA>       R          -            -            -            -
+  #  S or I     <NA>        X            X            -            -
+  #    R        <NA>        -            -            -            -
+  #   <NA>      <NA>        -            -            -            -
+  # --------------------------------------------------------------------
   ```
   
   Since this is a major change, usage of the old `also_single_tested` will throw an informative error that it has been replaced by `only_all_tested`.
+* `tibble` printing support for classes `rsi`, `mic`, `disk`, `ab` `mo`. When using `tibble`s containing antimicrobial columns, values `S` will print in green, values `I` will print in yellow and values `R` will print in red. Microbial IDs (class `mo`) will emphasise on the genus and species, not on the kingdom.
+  ```r
+  # (run this on your own console, as this page does not support colour printing)
+  library(dplyr)
+  septic_patients %>%
+    select(mo:AMC) %>% 
+    as_tibble()
+  ```
 
 ### Changed
 * Function: `eucast_rules()`
@@ -62,14 +78,6 @@
   * Using Verbose mode (i.e. `eucast_rules(..., verbose = TRUE)`) returns more informative and readable output
   * Using factors as input now adds missing factors levels when the function changes antibiotic results
 * Improved the internal auto-guessing function for determining antibiotics in your data set (`AMR:::get_column_abx()`)
-* Added tibble printing support for classes `rsi`, `mic`, `disk`, `ab` `mo`. When using tibbles containing antibiotic columns, values `S` will print in green, values `I` will print in yellow and values `R` will print in red. Microbial IDs (class `mo`) will emphasise on the genus and species, not on the kingdom.
-  ```r
-  # (run this on your own console, as this page does not support colour printing)
-  library(dplyr)
-  septic_patients %>%
-    select(mo:AMC) %>% 
-    as_tibble()
-  ```
 * Removed class `atc` - using `as.atc()` is now deprecated in favour of `ab_atc()` and this will return a character, not the `atc` class anymore
 * Removed deprecated functions `abname()`, `ab_official()`, `atc_name()`, `atc_official()`, `atc_property()`, `atc_tradenames()`, `atc_trivial_nl()`
 * Fix and speed improvement for `mo_shortname()`
@@ -86,7 +94,6 @@
 * The `antibiotics` data set is now sorted by name and all cephalosporins now have their generation between brackets
 * Speed improvement for `guess_ab_col()` which is now 30 times faster for antibiotic abbreviations
 * Improved `filter_ab_class()` to be more reliable and to support 5th generation cephalosporins
-* Classes `ab` and `mo` will now be preserved in any subsetting
 * Function `availability()` now uses `portion_R()` instead of `portion_IR()`, to comply with EUCAST insights
 
 #### Other

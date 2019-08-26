@@ -1693,16 +1693,14 @@ type_sum.mo <- function(x) {
 #' @export
 pillar_shaft.mo <- function(x, ...) {
   out <- format(x)
-  # grey out the kingdom (part before first "_")
-  first_parts <- unlist(lapply(gregexpr(pattern = '_', x[!is.na(x)], fixed = TRUE), min))
-  first_parts[first_parts < 0] <- 0
-  out[!is.na(x)] <- paste0(pillar::style_subtle(substr(x[!is.na(x)], 0, first_parts)), 
-                           substr(x[!is.na(x)], first_parts + 1, nchar(x)))
+  # grey out the kingdom (part until first "_")
+  out[!is.na(x)] <- gsub("^([A-Z]+_)(.*)", paste0(pillar::style_subtle("\\1"), "\\2"), out[!is.na(x)])
+  # and grey out every _
+  out[!is.na(x)] <- gsub("_", pillar::style_subtle("_"), out[!is.na(x)])
   
+  # markup NA and UNKNOWN
   out[is.na(x)] <- pillar::style_na("  NA")
   out[x == "UNKNOWN"] <- pillar::style_na("  UNKNOWN")
-  
-  out <- gsub("_", pillar::style_subtle("_"), out)
   
   pillar::new_pillar_shaft_simple(out, align = "left", min_width = 12)
 }
@@ -1746,14 +1744,6 @@ as.data.frame.mo <- function(x, ...) {
   attributes(y) <- attributes(x)
   y
 }
-#' @exportMethod [<-.mo
-#' @export
-#' @noRd
-"[<-.mo" <- function(i, j, ..., value) {
-  y <- NextMethod()
-  attributes(y) <- attributes(value)
-  y
-}
 #' @exportMethod [[.mo
 #' @export
 #' @noRd
@@ -1762,13 +1752,21 @@ as.data.frame.mo <- function(x, ...) {
   attributes(y) <- attributes(x)
   y
 }
+#' @exportMethod [<-.mo
+#' @export
+#' @noRd
+"[<-.mo" <- function(i, j, ..., value) {
+  y <- NextMethod()
+  attributes(y) <- attributes(i)
+  class_integrity_check(y, "microbial code", AMR::microorganisms$mo)
+}
 #' @exportMethod [[<-.mo
 #' @export
 #' @noRd
-"[[<-.mo" <- function(value) {
+"[[<-.mo" <- function(i, j, ..., value) {
   y <- NextMethod()
-  attributes(y) <- attributes(value)
-  y
+  attributes(y) <- attributes(i)
+  class_integrity_check(y, "microbial code", AMR::microorganisms$mo)
 }
 #' @exportMethod c.mo
 #' @export
@@ -1776,7 +1774,7 @@ as.data.frame.mo <- function(x, ...) {
 c.mo <- function(x, ...) {
   y <- NextMethod()
   attributes(y) <- attributes(x)
-  y
+  class_integrity_check(y, "microbial code", AMR::microorganisms$mo)
 }
 
 #' @rdname as.mo

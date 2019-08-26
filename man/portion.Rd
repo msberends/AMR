@@ -80,29 +80,22 @@ The function \code{rsi_df} works exactly like \code{portion_df}, but adds the nu
 When using more than one variable for \code{...} (= combination therapy)), use \code{only_all_tested} to only count isolates that are tested for all antibiotics/variables that you test them for. See this example for two antibiotics, Antibiotic A and Antibiotic B, about how \code{portion_SI} works to calculate the \%SI:
 
 \preformatted{
--------------------------------------------------------------------------
-                        only_all_tested = FALSE   only_all_tested = TRUE
-Antibiotic  Antibiotic  -----------------------   -----------------------
-    A           B       include as  include as    include as  include as
-                        numerator   denominator   numerator   denominator
-----------  ----------  ----------  -----------   ----------  -----------
-    S           S           X            X             X            X
-    I           S           X            X             X            X
-    R           S           X            X             X            X
-not tested      S           X            X             -            -
-    S           I           X            X             X            X
-    I           I           X            X             X            X
-    R           I           X            X             X            X
-not tested      I           X            X             -            -
-    S           R           X            X             X            X
-    I           R           X            X             X            X
-    R           R           -            X             -            X
-not tested      R           -            -             -            -
-    S       not tested      X            X             -            -
-    I       not tested      X            X             -            -
-    R       not tested      -            -             -            -
-not tested  not tested      -            -             -            -
--------------------------------------------------------------------------
+--------------------------------------------------------------------
+                    only_all_tested = FALSE  only_all_tested = TRUE
+                    -----------------------  -----------------------
+ Drug A    Drug B   include as  include as   include as  include as
+                    numerator   denominator  numerator   denominator
+--------  --------  ----------  -----------  ----------  -----------
+ S or I    S or I       X            X            X            X
+   R       S or I       X            X            X            X
+  <NA>     S or I       X            X            -            -
+ S or I      R          X            X            X            X
+   R         R          -            X            -            X
+  <NA>       R          -            -            -            -
+ S or I     <NA>        X            X            -            -
+   R        <NA>        -            -            -            -
+  <NA>      <NA>        -            -            -            -
+--------------------------------------------------------------------
 }
 
 Please note that, in combination therapies, for \code{only_all_tested = TRUE} applies that:
