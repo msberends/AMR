@@ -24,10 +24,10 @@ context("freq.R")
 test_that("frequency table works", {
   library(clean)
   # mo
-  expect_true(is.freq(freq(septic_patients$mo)))
+  expect_true(is.freq(freq(example_isolates$mo)))
   # rsi
-  expect_true(is.freq(freq(septic_patients$AMX)))
+  expect_true(is.freq(freq(example_isolates$AMX)))
   library(dplyr)
-  expect_true(is.freq(septic_patients %>% freq(mo)))
+  expect_true(is.freq(example_isolates %>% freq(mo)))
 })
 

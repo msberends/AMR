@@ -81,7 +81,7 @@ portion_R and portion_IR can be used to calculate resistance, portion_S and port
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">0.7.1.9062</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">0.7.1.9063</span>
       </span>
     </div>
 
@@ -371,30 +371,30 @@ portion_R and portion_IR can be used to calculate resistance, portion_S and port
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><span class='co'># NOT RUN {</span>
-<span class='co'># septic_patients is a data set available in the AMR package. It is true, genuine data.</span>
-?<span class='no'>septic_patients</span>
+<span class='co'># example_isolates is a data set available in the AMR package.</span>
+?<span class='no'>example_isolates</span>
 
 <span class='co'># Calculate resistance</span>
-<span class='fu'>portion_R</span>(<span class='no'>septic_patients</span>$<span class='no'>AMX</span>)
-<span class='fu'>portion_IR</span>(<span class='no'>septic_patients</span>$<span class='no'>AMX</span>)
+<span class='fu'>portion_R</span>(<span class='no'>example_isolates</span>$<span class='no'>AMX</span>)
+<span class='fu'>portion_IR</span>(<span class='no'>example_isolates</span>$<span class='no'>AMX</span>)
 
 <span class='co'># Or susceptibility</span>
-<span class='fu'>portion_S</span>(<span class='no'>septic_patients</span>$<span class='no'>AMX</span>)
-<span class='fu'>portion_SI</span>(<span class='no'>septic_patients</span>$<span class='no'>AMX</span>)
+<span class='fu'>portion_S</span>(<span class='no'>example_isolates</span>$<span class='no'>AMX</span>)
+<span class='fu'>portion_SI</span>(<span class='no'>example_isolates</span>$<span class='no'>AMX</span>)
 
 <span class='co'># Do the above with pipes:</span>
 <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>dplyr</span>)
-<span class='no'>septic_patients</span> <span class='kw'>%&gt;%</span> <span class='fu'>portion_R</span>(<span class='no'>AMX</span>)
-<span class='no'>septic_patients</span> <span class='kw'>%&gt;%</span> <span class='fu'>portion_IR</span>(<span class='no'>AMX</span>)
-<span class='no'>septic_patients</span> <span class='kw'>%&gt;%</span> <span class='fu'>portion_S</span>(<span class='no'>AMX</span>)
-<span class='no'>septic_patients</span> <span class='kw'>%&gt;%</span> <span class='fu'>portion_SI</span>(<span class='no'>AMX</span>)
+<span class='no'>example_isolates</span> <span class='kw'>%&gt;%</span> <span class='fu'>portion_R</span>(<span class='no'>AMX</span>)
+<span class='no'>example_isolates</span> <span class='kw'>%&gt;%</span> <span class='fu'>portion_IR</span>(<span class='no'>AMX</span>)
+<span class='no'>example_isolates</span> <span class='kw'>%&gt;%</span> <span class='fu'>portion_S</span>(<span class='no'>AMX</span>)
+<span class='no'>example_isolates</span> <span class='kw'>%&gt;%</span> <span class='fu'>portion_SI</span>(<span class='no'>AMX</span>)
 
-<span class='no'>septic_patients</span> <span class='kw'>%&gt;%</span>
+<span class='no'>example_isolates</span> <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span>(<span class='no'>hospital_id</span>) <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='https://dplyr.tidyverse.org/reference/summarise.html'>summarise</a></span>(<span class='kw'>p</span> <span class='kw'>=</span> <span class='fu'>portion_SI</span>(<span class='no'>CIP</span>),
             <span class='kw'>n</span> <span class='kw'>=</span> <span class='fu'><a href='count.html'>n_rsi</a></span>(<span class='no'>CIP</span>)) <span class='co'># n_rsi works like n_distinct in dplyr</span>
 
-<span class='no'>septic_patients</span> <span class='kw'>%&gt;%</span>
+<span class='no'>example_isolates</span> <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span>(<span class='no'>hospital_id</span>) <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='https://dplyr.tidyverse.org/reference/summarise.html'>summarise</a></span>(<span class='kw'>R</span> <span class='kw'>=</span> <span class='fu'>portion_R</span>(<span class='no'>CIP</span>, <span class='kw'>as_percent</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>),
             <span class='kw'>I</span> <span class='kw'>=</span> <span class='fu'>portion_I</span>(<span class='no'>CIP</span>, <span class='kw'>as_percent</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>),
@@ -405,24 +405,24 @@ portion_R and portion_IR can be used to calculate resistance, portion_S and port
 
 <span class='co'># Calculate co-resistance between amoxicillin/clav acid and gentamicin,</span>
 <span class='co'># so we can see that combination therapy does a lot more than mono therapy:</span>
-<span class='no'>septic_patients</span> <span class='kw'>%&gt;%</span> <span class='fu'>portion_SI</span>(<span class='no'>AMC</span>)      <span class='co'># %SI = 76.3%</span>
-<span class='no'>septic_patients</span> <span class='kw'>%&gt;%</span> <span class='fu'><a href='count.html'>count_all</a></span>(<span class='no'>AMC</span>)       <span class='co'>#   n = 1879</span>
+<span class='no'>example_isolates</span> <span class='kw'>%&gt;%</span> <span class='fu'>portion_SI</span>(<span class='no'>AMC</span>)      <span class='co'># %SI = 76.3%</span>
+<span class='no'>example_isolates</span> <span class='kw'>%&gt;%</span> <span class='fu'><a href='count.html'>count_all</a></span>(<span class='no'>AMC</span>)       <span class='co'>#   n = 1879</span>
 
-<span class='no'>septic_patients</span> <span class='kw'>%&gt;%</span> <span class='fu'>portion_SI</span>(<span class='no'>GEN</span>)      <span class='co'># %SI = 75.4%</span>
-<span class='no'>septic_patients</span> <span class='kw'>%&gt;%</span> <span class='fu'><a href='count.html'>count_all</a></span>(<span class='no'>GEN</span>)       <span class='co'>#   n = 1855</span>
+<span class='no'>example_isolates</span> <span class='kw'>%&gt;%</span> <span class='fu'>portion_SI</span>(<span class='no'>GEN</span>)      <span class='co'># %SI = 75.4%</span>
+<span class='no'>example_isolates</span> <span class='kw'>%&gt;%</span> <span class='fu'><a href='count.html'>count_all</a></span>(<span class='no'>GEN</span>)       <span class='co'>#   n = 1855</span>
 
-<span class='no'>septic_patients</span> <span class='kw'>%&gt;%</span> <span class='fu'>portion_SI</span>(<span class='no'>AMC</span>, <span class='no'>GEN</span>) <span class='co'># %SI = 94.1%</span>
-<span class='no'>septic_patients</span> <span class='kw'>%&gt;%</span> <span class='fu'><a href='count.html'>count_all</a></span>(<span class='no'>AMC</span>, <span class='no'>GEN</span>)  <span class='co'>#   n = 1939</span>
+<span class='no'>example_isolates</span> <span class='kw'>%&gt;%</span> <span class='fu'>portion_SI</span>(<span class='no'>AMC</span>, <span class='no'>GEN</span>) <span class='co'># %SI = 94.1%</span>
+<span class='no'>example_isolates</span> <span class='kw'>%&gt;%</span> <span class='fu'><a href='count.html'>count_all</a></span>(<span class='no'>AMC</span>, <span class='no'>GEN</span>)  <span class='co'>#   n = 1939</span>
 
 
 <span class='co'># See Details on how `only_all_tested` works. Example:</span>
-<span class='no'>septic_patients</span> <span class='kw'>%&gt;%</span>
+<span class='no'>example_isolates</span> <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='https://dplyr.tidyverse.org/reference/summarise.html'>summarise</a></span>(<span class='kw'>numerator</span> <span class='kw'>=</span> <span class='fu'><a href='count.html'>count_SI</a></span>(<span class='no'>AMC</span>, <span class='no'>GEN</span>),
             <span class='kw'>denominator</span> <span class='kw'>=</span> <span class='fu'><a href='count.html'>count_all</a></span>(<span class='no'>AMC</span>, <span class='no'>GEN</span>),
             <span class='kw'>portion</span> <span class='kw'>=</span> <span class='fu'>portion_SI</span>(<span class='no'>AMC</span>, <span class='no'>GEN</span>))
 <span class='co'>#   numerator denominator portion</span>
 <span class='co'>#        1764        1936  0.9408</span>
-<span class='no'>septic_patients</span> <span class='kw'>%&gt;%</span>
+<span class='no'>example_isolates</span> <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='https://dplyr.tidyverse.org/reference/summarise.html'>summarise</a></span>(<span class='kw'>numerator</span> <span class='kw'>=</span> <span class='fu'><a href='count.html'>count_SI</a></span>(<span class='no'>AMC</span>, <span class='no'>GEN</span>, <span class='kw'>only_all_tested</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>),
             <span class='kw'>denominator</span> <span class='kw'>=</span> <span class='fu'><a href='count.html'>count_all</a></span>(<span class='no'>AMC</span>, <span class='no'>GEN</span>, <span class='kw'>only_all_tested</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>),
             <span class='kw'>portion</span> <span class='kw'>=</span> <span class='fu'>portion_SI</span>(<span class='no'>AMC</span>, <span class='no'>GEN</span>, <span class='kw'>only_all_tested</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>))
@@ -430,7 +430,7 @@ portion_R and portion_IR can be used to calculate resistance, portion_S and port
 <span class='co'>#       1687        1798   0.9383</span>
 
 
-<span class='no'>septic_patients</span> <span class='kw'>%&gt;%</span>
+<span class='no'>example_isolates</span> <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span>(<span class='no'>hospital_id</span>) <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='https://dplyr.tidyverse.org/reference/summarise.html'>summarise</a></span>(<span class='kw'>cipro_p</span> <span class='kw'>=</span> <span class='fu'>portion_SI</span>(<span class='no'>CIP</span>, <span class='kw'>as_percent</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>),
             <span class='kw'>cipro_n</span> <span class='kw'>=</span> <span class='fu'><a href='count.html'>count_all</a></span>(<span class='no'>CIP</span>),
@@ -440,12 +440,12 @@ portion_R and portion_IR can be used to calculate resistance, portion_S and port
             <span class='kw'>combination_n</span> <span class='kw'>=</span> <span class='fu'><a href='count.html'>count_all</a></span>(<span class='no'>CIP</span>, <span class='no'>GEN</span>))
 
 <span class='co'># Get portions S/I/R immediately of all rsi columns</span>
-<span class='no'>septic_patients</span> <span class='kw'>%&gt;%</span>
+<span class='no'>example_isolates</span> <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='no'>AMX</span>, <span class='no'>CIP</span>) <span class='kw'>%&gt;%</span>
   <span class='fu'>portion_df</span>(<span class='kw'>translate</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
 
 <span class='co'># It also supports grouping variables</span>
-<span class='no'>septic_patients</span> <span class='kw'>%&gt;%</span>
+<span class='no'>example_isolates</span> <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='no'>hospital_id</span>, <span class='no'>AMX</span>, <span class='no'>CIP</span>) <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span>(<span class='no'>hospital_id</span>) <span class='kw'>%&gt;%</span>
   <span class='fu'>portion_df</span>(<span class='kw'>translate</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)

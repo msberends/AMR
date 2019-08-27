@@ -30,34 +30,34 @@ test_that("ggplot_rsi works", {
 
   # data should be equal
   expect_equal(
-    (septic_patients %>% select(AMC, CIP) %>% ggplot_rsi())$data %>%
+    (example_isolates %>% select(AMC, CIP) %>% ggplot_rsi())$data %>%
       summarise_all(portion_IR) %>% as.double(),
-    septic_patients %>% select(AMC, CIP) %>%
+    example_isolates %>% select(AMC, CIP) %>%
       summarise_all(portion_IR) %>% as.double()
   )
 
-  print(septic_patients %>% select(AMC, CIP) %>% ggplot_rsi(x = "interpretation", facet = "antibiotic"))
-  print(septic_patients %>% select(AMC, CIP) %>% ggplot_rsi(x = "antibiotic", facet = "interpretation"))
+  print(example_isolates %>% select(AMC, CIP) %>% ggplot_rsi(x = "interpretation", facet = "antibiotic"))
+  print(example_isolates %>% select(AMC, CIP) %>% ggplot_rsi(x = "antibiotic", facet = "interpretation"))
 
   expect_equal(
-    (septic_patients %>% select(AMC, CIP) %>% ggplot_rsi(x = "interpretation", facet = "antibiotic"))$data %>%
+    (example_isolates %>% select(AMC, CIP) %>% ggplot_rsi(x = "interpretation", facet = "antibiotic"))$data %>%
       summarise_all(portion_IR) %>% as.double(),
-    septic_patients %>% select(AMC, CIP) %>%
-      summarise_all(portion_IR) %>% as.double()
-  )
-
-  expect_equal(
-    (septic_patients %>% select(AMC, CIP) %>% ggplot_rsi(x = "antibiotic", facet = "interpretation"))$data %>%
-      summarise_all(portion_IR) %>% as.double(),
-    septic_patients %>% select(AMC, CIP) %>%
+    example_isolates %>% select(AMC, CIP) %>%
       summarise_all(portion_IR) %>% as.double()
   )
 
   expect_equal(
-    (septic_patients %>% select(AMC, CIP) %>% ggplot_rsi(x = "antibiotic",
+    (example_isolates %>% select(AMC, CIP) %>% ggplot_rsi(x = "antibiotic", facet = "interpretation"))$data %>%
+      summarise_all(portion_IR) %>% as.double(),
+    example_isolates %>% select(AMC, CIP) %>%
+      summarise_all(portion_IR) %>% as.double()
+  )
+
+  expect_equal(
+    (example_isolates %>% select(AMC, CIP) %>% ggplot_rsi(x = "antibiotic",
                                                          facet = "interpretation"))$data %>%
       summarise_all(count_IR) %>% as.double(),
-    septic_patients %>% select(AMC, CIP) %>%
+    example_isolates %>% select(AMC, CIP) %>%
       summarise_all(count_IR) %>% as.double()
   )
 

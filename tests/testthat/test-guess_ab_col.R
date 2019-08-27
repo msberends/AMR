@@ -23,15 +23,15 @@ context("guess_ab_col.R")
 
 test_that("guess_ab_col works", {
 
-  expect_equal(guess_ab_col(septic_patients, "amox"),
+  expect_equal(guess_ab_col(example_isolates, "amox"),
                "AMX")
-  expect_equal(guess_ab_col(septic_patients, "amoxicillin"),
+  expect_equal(guess_ab_col(example_isolates, "amoxicillin"),
                "AMX")
-  expect_equal(guess_ab_col(septic_patients, "J01AA07"),
+  expect_equal(guess_ab_col(example_isolates, "J01AA07"),
                "TCY")
-  expect_equal(guess_ab_col(septic_patients, "tetracycline"),
+  expect_equal(guess_ab_col(example_isolates, "tetracycline"),
                "TCY")
-  expect_equal(guess_ab_col(septic_patients, "TETR"),
+  expect_equal(guess_ab_col(example_isolates, "TETR"),
                "TCY")
 
   df <- data.frame(AMP_ND10 = "R",

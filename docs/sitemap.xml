@@ -64,6 +64,9 @@
     <loc>https://msberends.gitlab.io/AMR/reference/eucast_rules.html</loc>
   </url>
   <url>
+    <loc>https://msberends.gitlab.io/AMR/reference/example_isolates.html</loc>
+  </url>
+  <url>
     <loc>https://msberends.gitlab.io/AMR/reference/extended-functions.html</loc>
   </url>
   <url>
@@ -128,9 +131,6 @@
   </url>
   <url>
     <loc>https://msberends.gitlab.io/AMR/reference/rsi_translation.html</loc>
-  </url>
-  <url>
-    <loc>https://msberends.gitlab.io/AMR/reference/septic_patients.html</loc>
   </url>
   <url>
     <loc>https://msberends.gitlab.io/AMR/reference/skewness.html</loc>

@@ -80,7 +80,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">0.7.1.9055</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">0.7.1.9063</span>
       </span>
     </div>
 
@@ -295,29 +295,29 @@
 <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>dplyr</span>)
 
 <span class='co'># filter on isolates that have any result for any aminoglycoside</span>
-<span class='no'>septic_patients</span> <span class='kw'>%&gt;%</span> <span class='fu'>filter_aminoglycosides</span>()
+<span class='no'>example_isolates</span> <span class='kw'>%&gt;%</span> <span class='fu'>filter_aminoglycosides</span>()
 
 <span class='co'># this is essentially the same as (but without determination of column names):</span>
-<span class='no'>septic_patients</span> <span class='kw'>%&gt;%</span>
+<span class='no'>example_isolates</span> <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter_all.html'>filter_at</a></span>(<span class='kw'>.vars</span> <span class='kw'>=</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"GEN"</span>, <span class='st'>"TOB"</span>, <span class='st'>"AMK"</span>, <span class='st'>"KAN"</span>)),
             <span class='kw'>.vars_predicate</span> <span class='kw'>=</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/all_vars.html'>any_vars</a></span>(<span class='no'>.</span> <span class='kw'>%in%</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"S"</span>, <span class='st'>"I"</span>, <span class='st'>"R"</span>)))
 
 
 <span class='co'># filter on isolates that show resistance to ANY aminoglycoside</span>
-<span class='no'>septic_patients</span> <span class='kw'>%&gt;%</span> <span class='fu'>filter_aminoglycosides</span>(<span class='st'>"R"</span>)
+<span class='no'>example_isolates</span> <span class='kw'>%&gt;%</span> <span class='fu'>filter_aminoglycosides</span>(<span class='st'>"R"</span>)
 
 <span class='co'># filter on isolates that show resistance to ALL aminoglycosides</span>
-<span class='no'>septic_patients</span> <span class='kw'>%&gt;%</span> <span class='fu'>filter_aminoglycosides</span>(<span class='st'>"R"</span>, <span class='st'>"all"</span>)
+<span class='no'>example_isolates</span> <span class='kw'>%&gt;%</span> <span class='fu'>filter_aminoglycosides</span>(<span class='st'>"R"</span>, <span class='st'>"all"</span>)
 
 <span class='co'># filter on isolates that show resistance to</span>
 <span class='co'># any aminoglycoside and any fluoroquinolone</span>
-<span class='no'>septic_patients</span> <span class='kw'>%&gt;%</span>
+<span class='no'>example_isolates</span> <span class='kw'>%&gt;%</span>
   <span class='fu'>filter_aminoglycosides</span>(<span class='st'>"R"</span>) <span class='kw'>%&gt;%</span>
   <span class='fu'>filter_fluoroquinolones</span>(<span class='st'>"R"</span>)
 
 <span class='co'># filter on isolates that show resistance to</span>
 <span class='co'># all aminoglycosides and all fluoroquinolones</span>
-<span class='no'>septic_patients</span> <span class='kw'>%&gt;%</span>
+<span class='no'>example_isolates</span> <span class='kw'>%&gt;%</span>
   <span class='fu'>filter_aminoglycosides</span>(<span class='st'>"R"</span>, <span class='st'>"all"</span>) <span class='kw'>%&gt;%</span>
   <span class='fu'>filter_fluoroquinolones</span>(<span class='st'>"R"</span>, <span class='st'>"all"</span>)
 <span class='co'># }</span></pre>
@@ -337,7 +337,7 @@
 
       <footer>
       <div class="copyright">
-  <p>Developed by <a href='https://www.rug.nl/staff/m.s.berends/'>Matthijs S. Berends</a>, <a href='https://www.rug.nl/staff/c.f.luz/'>Christian F. Luz</a>, <a href='https://www.rug.nl/staff/a.w.friedrich/'>Alex W. Friedrich</a>, <a href='https://www.rug.nl/staff/b.sinha/'>Bhanu N. M. Sinha</a>, <a href='https://www.rug.nl/staff/c.glasner/'>Corinna Glasner</a>.</p>
+  <p>Developed by <a href='https://www.rug.nl/staff/m.s.berends/'>Matthijs S. Berends</a>, <a href='https://www.rug.nl/staff/c.f.luz/'>Christian F. Luz</a>, <a href='https://www.rug.nl/staff/a.w.friedrich/'>Alex W. Friedrich</a>, <a href='https://www.rug.nl/staff/b.sinha/'>Bhanu N. M. Sinha</a>, <a href='https://www.rug.nl/staff/c.j.albers/'>Casper J. Albers</a>, <a href='https://www.rug.nl/staff/c.glasner/'>Corinna Glasner</a>.</p>
 </div>
 
 <div class="pkgdown">

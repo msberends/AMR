@@ -42,8 +42,8 @@ test_that("functions missing in older R versions work", {
 test_that("looking up ab columns works", {
   expect_warning(generate_warning_abs_missing(c("AMP", "AMX")))
   expect_warning(generate_warning_abs_missing(c("AMP", "AMX"), any = TRUE))
-  expect_warning(get_column_abx(septic_patients, hard_dependencies = "FUS"))
-  expect_message(get_column_abx(septic_patients, soft_dependencies = "FUS"))
-  expect_message(get_column_abx(dplyr::rename(septic_patients, thisone = AMX), amox = "thisone", tmp = "thisone", verbose = TRUE))
-  expect_warning(get_column_abx(dplyr::rename(septic_patients, thisone = AMX), amox = "thisone", tmp = "thisone", verbose = FALSE))
+  expect_warning(get_column_abx(example_isolates, hard_dependencies = "FUS"))
+  expect_message(get_column_abx(example_isolates, soft_dependencies = "FUS"))
+  expect_message(get_column_abx(dplyr::rename(example_isolates, thisone = AMX), amox = "thisone", tmp = "thisone", verbose = TRUE))
+  expect_warning(get_column_abx(dplyr::rename(example_isolates, thisone = AMX), amox = "thisone", tmp = "thisone", verbose = FALSE))
 })

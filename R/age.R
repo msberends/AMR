@@ -129,7 +129,7 @@ age <- function(x, reference = Sys.Date(), exact = FALSE) {
 #'
 #' # resistance of ciprofloxacine per age group
 #' library(dplyr)
-#' septic_patients %>%
+#' example_isolates %>%
 #'   filter_first_isolate() %>%
 #'   filter(mo == as.mo("E. coli")) %>%
 #'   group_by(age_group = age_groups(age)) %>%

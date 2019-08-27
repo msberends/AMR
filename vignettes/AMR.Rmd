@@ -461,12 +461,12 @@ data_1st %>%
 
 ## Independence test
 
-The next example uses the included `septic_patients`, which is an anonymised data set containing 2,000 microbial blood culture isolates with their full antibiograms found in septic patients in 4 different hospitals in the Netherlands, between 2001 and 2017. It is true, genuine data. This `data.frame` can be used to practice AMR analysis.
+The next example uses the included `example_isolates`, which is an anonymised data set containing 2,000 microbial blood culture isolates with their full antibiograms found in septic patients in 4 different hospitals in the Netherlands, between 2001 and 2017. This `data.frame` can be used to practice AMR analysis.
 
 We will compare the resistance to fosfomycin (column `FOS`) in hospital A and D. The input for the `fisher.test()` can be retrieved with a transformation like this:
 
 ```{r, results = 'markup'}
-check_FOS <- septic_patients %>%
+check_FOS <- example_isolates %>%
   filter(hospital_id %in% c("A", "D")) %>% # filter on only hospitals A and D
   select(hospital_id, FOS) %>%             # select the hospitals and fosfomycin
   group_by(hospital_id) %>%                # group on the hospitals

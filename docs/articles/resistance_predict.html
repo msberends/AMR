@@ -40,7 +40,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">0.7.1.9055</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">0.7.1.9063</span>
       </span>
     </div>
 
@@ -185,7 +185,7 @@
       <h1>How to predict antimicrobial resistance</h1>
                         <h4 class="author">Matthijs S. Berends</h4>
             
-            <h4 class="date">13 August 2019</h4>
+            <h4 class="date">27 August 2019</h4>
       
       
       <div class="hidden name"><code>resistance_predict.Rmd</code></div>
@@ -212,15 +212,15 @@
 <p>Our package contains a function <code><a href="../reference/resistance_predict.html">resistance_predict()</a></code>, which takes the same input as functions for <a href="./AMR.html">other AMR analysis</a>. Based on a date column, it calculates cases per year and uses a regression model to predict antimicrobial resistance.</p>
 <p>It is basically as easy as:</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="co"># resistance prediction of piperacillin/tazobactam (TZP):</span></a>
-<a class="sourceLine" id="cb2-2" data-line-number="2"><span class="kw"><a href="../reference/resistance_predict.html">resistance_predict</a></span>(<span class="dt">tbl =</span> septic_patients, <span class="dt">col_date =</span> <span class="st">"date"</span>, <span class="dt">col_ab =</span> <span class="st">"TZP"</span>, <span class="dt">model =</span> <span class="st">"binomial"</span>)</a>
+<a class="sourceLine" id="cb2-2" data-line-number="2"><span class="kw"><a href="../reference/resistance_predict.html">resistance_predict</a></span>(<span class="dt">tbl =</span> example_isolates, <span class="dt">col_date =</span> <span class="st">"date"</span>, <span class="dt">col_ab =</span> <span class="st">"TZP"</span>, <span class="dt">model =</span> <span class="st">"binomial"</span>)</a>
 <a class="sourceLine" id="cb2-3" data-line-number="3"></a>
 <a class="sourceLine" id="cb2-4" data-line-number="4"><span class="co"># or:</span></a>
-<a class="sourceLine" id="cb2-5" data-line-number="5">septic_patients <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb2-5" data-line-number="5">example_isolates <span class="op">%&gt;%</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb2-6" data-line-number="6"><span class="st">  </span><span class="kw"><a href="../reference/resistance_predict.html">resistance_predict</a></span>(<span class="dt">col_ab =</span> <span class="st">"TZP"</span>,</a>
 <a class="sourceLine" id="cb2-7" data-line-number="7">                     model  <span class="st">"binomial"</span>)</a>
 <a class="sourceLine" id="cb2-8" data-line-number="8"></a>
 <a class="sourceLine" id="cb2-9" data-line-number="9"><span class="co"># to bind it to object 'predict_TZP' for example:</span></a>
-<a class="sourceLine" id="cb2-10" data-line-number="10">predict_TZP &lt;-<span class="st"> </span>septic_patients <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb2-10" data-line-number="10">predict_TZP &lt;-<span class="st"> </span>example_isolates <span class="op">%&gt;%</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb2-11" data-line-number="11"><span class="st">  </span><span class="kw"><a href="../reference/resistance_predict.html">resistance_predict</a></span>(<span class="dt">col_ab =</span> <span class="st">"TZP"</span>,</a>
 <a class="sourceLine" id="cb2-12" data-line-number="12">                     <span class="dt">model =</span> <span class="st">"binomial"</span>)</a></code></pre></div>
 <p>The function will look for a date column itself if <code>col_date</code> is not set.</p>
@@ -296,7 +296,7 @@
 <h3 class="hasAnchor">
 <a href="#choosing-the-right-model" class="anchor"></a>Choosing the right model</h3>
 <p>Resistance is not easily predicted; if we look at vancomycin resistance in Gram positives, the spread (i.e. standard error) is enormous:</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1">septic_patients <span class="op">%&gt;%</span></a>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1">example_isolates <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb8-2" data-line-number="2"><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span>(<span class="kw"><a href="../reference/mo_property.html">mo_gramstain</a></span>(mo, <span class="dt">language =</span> <span class="ot">NULL</span>) <span class="op">==</span><span class="st"> "Gram-positive"</span>) <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb8-3" data-line-number="3"><span class="st">  </span><span class="kw"><a href="../reference/resistance_predict.html">resistance_predict</a></span>(<span class="dt">col_ab =</span> <span class="st">"VAN"</span>, <span class="dt">year_min =</span> <span class="dv">2010</span>, <span class="dt">info =</span> <span class="ot">FALSE</span>, <span class="dt">model =</span> <span class="st">"binomial"</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb8-4" data-line-number="4"><span class="st">  </span><span class="kw"><a href="../reference/resistance_predict.html">ggplot_rsi_predict</a></span>()</a>
@@ -341,7 +341,7 @@
 </tbody>
 </table>
 <p>For the vancomycin resistance in Gram positive bacteria, a linear model might be more appropriate since no (left half of a) binomial distribution is to be expected based on the observed years:</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" data-line-number="1">septic_patients <span class="op">%&gt;%</span></a>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" data-line-number="1">example_isolates <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb9-2" data-line-number="2"><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span>(<span class="kw"><a href="../reference/mo_property.html">mo_gramstain</a></span>(mo, <span class="dt">language =</span> <span class="ot">NULL</span>) <span class="op">==</span><span class="st"> "Gram-positive"</span>) <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb9-3" data-line-number="3"><span class="st">  </span><span class="kw"><a href="../reference/resistance_predict.html">resistance_predict</a></span>(<span class="dt">col_ab =</span> <span class="st">"VAN"</span>, <span class="dt">year_min =</span> <span class="dv">2010</span>, <span class="dt">info =</span> <span class="ot">FALSE</span>, <span class="dt">model =</span> <span class="st">"linear"</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb9-4" data-line-number="4"><span class="st">  </span><span class="kw"><a href="../reference/resistance_predict.html">ggplot_rsi_predict</a></span>()</a>
@@ -379,7 +379,7 @@
 
 
       <footer><div class="copyright">
-  <p>Developed by <a href="https://www.rug.nl/staff/m.s.berends/">Matthijs S. Berends</a>, <a href="https://www.rug.nl/staff/c.f.luz/">Christian F. Luz</a>, <a href="https://www.rug.nl/staff/a.w.friedrich/">Alex W. Friedrich</a>, <a href="https://www.rug.nl/staff/b.sinha/">Bhanu N. M. Sinha</a>, <a href="https://www.rug.nl/staff/c.glasner/">Corinna Glasner</a>.</p>
+  <p>Developed by <a href="https://www.rug.nl/staff/m.s.berends/">Matthijs S. Berends</a>, <a href="https://www.rug.nl/staff/c.f.luz/">Christian F. Luz</a>, <a href="https://www.rug.nl/staff/a.w.friedrich/">Alex W. Friedrich</a>, <a href="https://www.rug.nl/staff/b.sinha/">Bhanu N. M. Sinha</a>, <a href="https://www.rug.nl/staff/c.j.albers/">Casper J. Albers</a>, <a href="https://www.rug.nl/staff/c.glasner/">Corinna Glasner</a>.</p>
 </div>
 
 <div class="pkgdown">

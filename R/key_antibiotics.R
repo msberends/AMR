@@ -48,12 +48,12 @@
 #' @seealso \code{\link{first_isolate}}
 #' @inheritSection AMR Read more on our website!
 #' @examples
-#' # `septic_patients` is a dataset available in the AMR package. It is true, genuine data.
-#' # See ?septic_patients.
+#' # `example_isolates` is a dataset available in the AMR package.
+#' # See ?example_isolates.
 #'
 #' library(dplyr)
 #' # set key antibiotics to a new variable
-#' my_patients <- septic_patients %>%
+#' my_patients <- example_isolates %>%
 #'   mutate(keyab = key_antibiotics(.)) %>%
 #'   mutate(
 #'     # now calculate first isolates

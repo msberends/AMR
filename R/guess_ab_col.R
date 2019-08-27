@@ -129,7 +129,7 @@ get_column_abx <- function(x,
   names(x) <- df_trans$abcode
 
   # add from self-defined dots (...):
-  # get_column_abx(septic_patients %>% rename(thisone = AMX), amox = "thisone")
+  # get_column_abx(example_isolates %>% rename(thisone = AMX), amox = "thisone")
   dots <- list(...)
   if (length(dots) > 0) {
     newnames <- suppressWarnings(as.ab(names(dots)))

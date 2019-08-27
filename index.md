@@ -148,7 +148,7 @@ The `AMR` package basically does four important things:
 
    * Aside from this website with many tutorials, the package itself contains extensive help pages with many examples for all functions.
    * The package also contains example data sets:
-     * The [`septic_patients` data set](./reference/septic_patients.html). This data set contains:
+     * The [`example_isolates` data set](./reference/example_isolates.html). This data set contains:
        * 2,000 blood culture isolates from anonymised septic patients between 2001 and 2017 in the Northern Netherlands
        * Results of 40 antibiotics (each antibiotic in its own column) with a total ~40,000 antimicrobial results
        * Real and genuine data

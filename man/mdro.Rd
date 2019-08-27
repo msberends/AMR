@@ -146,7 +146,7 @@ On our website \url{https://msberends.gitlab.io/AMR} you can find \href{https://
 \examples{
 library(dplyr)
 
-septic_patients \%>\%
+example_isolates \%>\%
   mutate(EUCAST = mdro(.),
          BRMO = brmo(.))
 }

@@ -42,15 +42,15 @@ Our package contains a function `resistance_predict()`, which takes the same inp
 It is basically as easy as:
 ```{r, eval = FALSE}
 # resistance prediction of piperacillin/tazobactam (TZP):
-resistance_predict(tbl = septic_patients, col_date = "date", col_ab = "TZP", model = "binomial")
+resistance_predict(tbl = example_isolates, col_date = "date", col_ab = "TZP", model = "binomial")
 
 # or:
-septic_patients %>% 
+example_isolates %>% 
   resistance_predict(col_ab = "TZP",
                      model  "binomial")
 
 # to bind it to object 'predict_TZP' for example:
-predict_TZP <- septic_patients %>% 
+predict_TZP <- example_isolates %>% 
   resistance_predict(col_ab = "TZP",
                      model = "binomial")
 ```
@@ -60,7 +60,7 @@ The function will look for a date column itself if `col_date` is not set.
 When running any of these commands, a summary of the regression model will be printed unless using `resistance_predict(..., info = FALSE)`.
 
 ```{r, echo = FALSE}
-predict_TZP <- septic_patients %>% 
+predict_TZP <- example_isolates %>% 
   resistance_predict(col_ab = "TZP", model = "binomial")
 ```
 
@@ -92,7 +92,7 @@ ggplot_rsi_predict(predict_TZP, ribbon = FALSE)
 Resistance is not easily predicted; if we look at vancomycin resistance in Gram positives, the spread (i.e. standard error) is enormous:
 
 ```{r}
-septic_patients %>%
+example_isolates %>%
   filter(mo_gramstain(mo, language = NULL) == "Gram-positive") %>%
   resistance_predict(col_ab = "VAN", year_min = 2010, info = FALSE, model = "binomial") %>% 
   ggplot_rsi_predict()
@@ -113,7 +113,7 @@ Valid values are:
 For the vancomycin resistance in Gram positive bacteria, a linear model might be more appropriate since no (left half of a) binomial distribution is to be expected based on the observed years:
 
 ```{r}
-septic_patients %>%
+example_isolates %>%
   filter(mo_gramstain(mo, language = NULL) == "Gram-positive") %>%
   resistance_predict(col_ab = "VAN", year_min = 2010, info = FALSE, model = "linear") %>% 
   ggplot_rsi_predict()

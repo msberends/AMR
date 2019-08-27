@@ -96,12 +96,12 @@ freq(rsi_data)    # frequency table with informative header
 
 # using dplyr's mutate
 library(dplyr)
-septic_patients \%>\%
+example_isolates \%>\%
   mutate_at(vars(PEN:RIF), as.rsi)
 
 
 # fastest way to transform all columns with already valid AB results to class `rsi`:
-septic_patients \%>\%
+example_isolates \%>\%
   mutate_if(is.rsi.eligible,
             as.rsi)
 

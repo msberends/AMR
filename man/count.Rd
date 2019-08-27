@@ -122,29 +122,29 @@ On our website \url{https://msberends.gitlab.io/AMR} you can find \href{https://
 }
 
 \examples{
-# septic_patients is a data set available in the AMR package. It is true, genuine data.
-?septic_patients
+# example_isolates is a data set available in the AMR package.
+?example_isolates
 
 # Count resistant isolates
-count_R(septic_patients$AMX)
-count_IR(septic_patients$AMX)
+count_R(example_isolates$AMX)
+count_IR(example_isolates$AMX)
 
 # Or susceptible isolates
-count_S(septic_patients$AMX)
-count_SI(septic_patients$AMX)
+count_S(example_isolates$AMX)
+count_SI(example_isolates$AMX)
 
 # Count all available isolates
-count_all(septic_patients$AMX)
-n_rsi(septic_patients$AMX)
+count_all(example_isolates$AMX)
+n_rsi(example_isolates$AMX)
 
 # Since n_rsi counts available isolates, you can
 # calculate back to count e.g. non-susceptible isolates.
 # This results in the same:
-count_SI(septic_patients$AMX)
-portion_SI(septic_patients$AMX) * n_rsi(septic_patients$AMX)
+count_SI(example_isolates$AMX)
+portion_SI(example_isolates$AMX) * n_rsi(example_isolates$AMX)
 
 library(dplyr)
-septic_patients \%>\%
+example_isolates \%>\%
   group_by(hospital_id) \%>\%
   summarise(R  = count_R(CIP),
             I  = count_I(CIP),
@@ -156,24 +156,24 @@ septic_patients \%>\%
 # Count co-resistance between amoxicillin/clav acid and gentamicin,
 # so we can see that combination therapy does a lot more than mono therapy.
 # Please mind that `portion_SI` calculates percentages right away instead.
-count_SI(septic_patients$AMC)  # 1433
-count_all(septic_patients$AMC) # 1879
+count_SI(example_isolates$AMC)  # 1433
+count_all(example_isolates$AMC) # 1879
 
-count_SI(septic_patients$GEN)  # 1399
-count_all(septic_patients$GEN) # 1855
+count_SI(example_isolates$GEN)  # 1399
+count_all(example_isolates$GEN) # 1855
 
-with(septic_patients,
+with(example_isolates,
      count_SI(AMC, GEN))        # 1764
-with(septic_patients,
+with(example_isolates,
      n_rsi(AMC, GEN))           # 1936
 
 # Get portions S/I/R immediately of all rsi columns
-septic_patients \%>\%
+example_isolates \%>\%
   select(AMX, CIP) \%>\%
   count_df(translate = FALSE)
 
 # It also supports grouping variables
-septic_patients \%>\%
+example_isolates \%>\%
   select(hospital_id, AMX, CIP) \%>\%
   group_by(hospital_id) \%>\%
   count_df(translate = FALSE)

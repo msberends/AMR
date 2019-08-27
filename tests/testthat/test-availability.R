@@ -22,5 +22,5 @@
 context("availability.R")
 
 test_that("availability works", {
-  expect_equal(class(availability(septic_patients)), "data.frame")
+  expect_equal(class(availability(example_isolates)), "data.frame")
 })

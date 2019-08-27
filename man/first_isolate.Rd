@@ -106,12 +106,12 @@ On our website \url{https://msberends.gitlab.io/AMR} you can find \href{https://
 }
 
 \examples{
-# `septic_patients` is a dataset available in the AMR package. It is true, genuine data.
-# See ?septic_patients.
+# `example_isolates` is a dataset available in the AMR package.
+# See ?example_isolates.
 
 library(dplyr)
 # Filter on first isolates:
-septic_patients \%>\%
+example_isolates \%>\%
   mutate(first_isolate = first_isolate(.,
                                        col_date = "date",
                                        col_patient_id = "patient_id",
@@ -119,19 +119,19 @@ septic_patients \%>\%
   filter(first_isolate == TRUE)
 
 # Which can be shortened to:
-septic_patients \%>\%
+example_isolates \%>\%
   filter_first_isolate()
 # or for first weighted isolates:
-septic_patients \%>\%
+example_isolates \%>\%
   filter_first_weighted_isolate()
 
 # Now let's see if first isolates matter:
-A <- septic_patients \%>\%
+A <- example_isolates \%>\%
   group_by(hospital_id) \%>\%
   summarise(count = n_rsi(GEN),            # gentamicin availability
             resistance = portion_IR(GEN))  # gentamicin resistance
 
-B <- septic_patients \%>\%
+B <- example_isolates \%>\%
   filter_first_weighted_isolate() \%>\%      # the 1st isolate filter
   group_by(hospital_id) \%>\%
   summarise(count = n_rsi(GEN),            # gentamicin availability

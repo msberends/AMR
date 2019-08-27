@@ -125,7 +125,7 @@ catalogue_of_life <- list(
 
 #' Data set with 2,000 blood culture isolates from septic patients
 #'
-#' An anonymised data set containing 2,000 microbial blood culture isolates with their full antibiograms found in septic patients in 4 different hospitals in the Netherlands, between 2001 and 2017. It is true, genuine data. This \code{data.frame} can be used to practice AMR analysis. For examples, please read \href{https://msberends.gitlab.io/AMR/articles/AMR.html}{the tutorial on our website}.
+#' An anonymised data set containing 2,000 microbial blood culture isolates with their full antibiograms found in septic patients in 4 different hospitals in the Netherlands, between 2001 and 2017. This \code{data.frame} can be used to practice AMR analysis. For examples, please read \href{https://msberends.gitlab.io/AMR/articles/AMR.html}{the tutorial on our website}.
 #' @format A \code{\link{data.frame}} with 2,000 observations and 49 variables:
 #' \describe{
 #'   \item{\code{date}}{date of receipt at the laboratory}
@@ -140,11 +140,11 @@ catalogue_of_life <- list(
 #'   \item{\code{peni:rifa}}{40 different antibiotics with class \code{rsi} (see \code{\link{as.rsi}}); these column names occur in \code{\link{antibiotics}} data set and can be translated with \code{\link{ab_name}}}
 #' }
 #' @inheritSection AMR Read more on our website!
-"septic_patients"
+"example_isolates"
 
 #' Data set with 500 isolates - WHONET example
 #'
-#' This example data set has the exact same structure as an export file from WHONET. Such files can be used with this package, as this example data set shows. The data itself was based on our \code{\link{septic_patients}} data set.
+#' This example data set has the exact same structure as an export file from WHONET. Such files can be used with this package, as this example data set shows. The data itself was based on our \code{\link{example_isolates}} data set.
 #' @format A \code{\link{data.frame}} with 500 observations and 53 variables:
 #' \describe{
 #'   \item{\code{Identification number}}{ID of the sample}

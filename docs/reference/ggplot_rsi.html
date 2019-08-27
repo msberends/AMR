@@ -80,7 +80,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">0.7.1.9055</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">0.7.1.9063</span>
       </span>
     </div>
 
@@ -379,11 +379,11 @@
 <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>ggplot2</span>)
 
 <span class='co'># get antimicrobial results for drugs against a UTI:</span>
-<span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span>(<span class='no'>septic_patients</span> <span class='kw'>%&gt;%</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='no'>AMX</span>, <span class='no'>NIT</span>, <span class='no'>FOS</span>, <span class='no'>TMP</span>, <span class='no'>CIP</span>)) +
+<span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span>(<span class='no'>example_isolates</span> <span class='kw'>%&gt;%</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='no'>AMX</span>, <span class='no'>NIT</span>, <span class='no'>FOS</span>, <span class='no'>TMP</span>, <span class='no'>CIP</span>)) +
   <span class='fu'>geom_rsi</span>()
 
 <span class='co'># prettify the plot using some additional functions:</span>
-<span class='no'>df</span> <span class='kw'>&lt;-</span> <span class='no'>septic_patients</span> <span class='kw'>%&gt;%</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='no'>AMX</span>, <span class='no'>NIT</span>, <span class='no'>FOS</span>, <span class='no'>TMP</span>, <span class='no'>CIP</span>)
+<span class='no'>df</span> <span class='kw'>&lt;-</span> <span class='no'>example_isolates</span> <span class='kw'>%&gt;%</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='no'>AMX</span>, <span class='no'>NIT</span>, <span class='no'>FOS</span>, <span class='no'>TMP</span>, <span class='no'>CIP</span>)
 <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span>(<span class='no'>df</span>) +
   <span class='fu'>geom_rsi</span>() +
   <span class='fu'>scale_y_percent</span>() +
@@ -392,17 +392,17 @@
   <span class='fu'>theme_rsi</span>()
 
 <span class='co'># or better yet, simplify this using the wrapper function - a single command:</span>
-<span class='no'>septic_patients</span> <span class='kw'>%&gt;%</span>
+<span class='no'>example_isolates</span> <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='no'>AMX</span>, <span class='no'>NIT</span>, <span class='no'>FOS</span>, <span class='no'>TMP</span>, <span class='no'>CIP</span>) <span class='kw'>%&gt;%</span>
   <span class='fu'>ggplot_rsi</span>()
 
 <span class='co'># get only portions and no counts:</span>
-<span class='no'>septic_patients</span> <span class='kw'>%&gt;%</span>
+<span class='no'>example_isolates</span> <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='no'>AMX</span>, <span class='no'>NIT</span>, <span class='no'>FOS</span>, <span class='no'>TMP</span>, <span class='no'>CIP</span>) <span class='kw'>%&gt;%</span>
   <span class='fu'>ggplot_rsi</span>(<span class='kw'>datalabels</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
 
 <span class='co'># add other ggplot2 parameters as you like:</span>
-<span class='no'>septic_patients</span> <span class='kw'>%&gt;%</span>
+<span class='no'>example_isolates</span> <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='no'>AMX</span>, <span class='no'>NIT</span>, <span class='no'>FOS</span>, <span class='no'>TMP</span>, <span class='no'>CIP</span>) <span class='kw'>%&gt;%</span>
   <span class='fu'>ggplot_rsi</span>(<span class='kw'>width</span> <span class='kw'>=</span> <span class='fl'>0.5</span>,
              <span class='kw'>colour</span> <span class='kw'>=</span> <span class='st'>"black"</span>,
@@ -410,12 +410,12 @@
              <span class='kw'>linetype</span> <span class='kw'>=</span> <span class='fl'>2</span>,
              <span class='kw'>alpha</span> <span class='kw'>=</span> <span class='fl'>0.25</span>)
 
-<span class='no'>septic_patients</span> <span class='kw'>%&gt;%</span>
+<span class='no'>example_isolates</span> <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='no'>AMX</span>) <span class='kw'>%&gt;%</span>
   <span class='fu'>ggplot_rsi</span>(<span class='kw'>colours</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='kw'>SI</span> <span class='kw'>=</span> <span class='st'>"yellow"</span>))
 
 <span class='co'># resistance of ciprofloxacine per age group</span>
-<span class='no'>septic_patients</span> <span class='kw'>%&gt;%</span>
+<span class='no'>example_isolates</span> <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span>(<span class='kw'>first_isolate</span> <span class='kw'>=</span> <span class='fu'><a href='first_isolate.html'>first_isolate</a></span>(<span class='no'>.</span>)) <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span>(<span class='no'>first_isolate</span> <span class='kw'>==</span> <span class='fl'>TRUE</span>,
          <span class='no'>mo</span> <span class='kw'>==</span> <span class='fu'><a href='as.mo.html'>as.mo</a></span>(<span class='st'>"E. coli"</span>)) <span class='kw'>%&gt;%</span>
@@ -426,17 +426,17 @@
   <span class='fu'>ggplot_rsi</span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='st'>"age_group"</span>)
 <span class='co'># }</span><span class='co'># NOT RUN {</span>
 <span class='co'># for colourblind mode, use divergent colours from the viridis package:</span>
-<span class='no'>septic_patients</span> <span class='kw'>%&gt;%</span>
+<span class='no'>example_isolates</span> <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='no'>AMX</span>, <span class='no'>NIT</span>, <span class='no'>FOS</span>, <span class='no'>TMP</span>, <span class='no'>CIP</span>) <span class='kw'>%&gt;%</span>
   <span class='fu'>ggplot_rsi</span>() + <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/scale_viridis.html'>scale_fill_viridis_d</a></span>()
 <span class='co'># a shorter version which also adjusts data label colours:</span>
-<span class='no'>septic_patients</span> <span class='kw'>%&gt;%</span>
+<span class='no'>example_isolates</span> <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='no'>AMX</span>, <span class='no'>NIT</span>, <span class='no'>FOS</span>, <span class='no'>TMP</span>, <span class='no'>CIP</span>) <span class='kw'>%&gt;%</span>
   <span class='fu'>ggplot_rsi</span>(<span class='kw'>colours</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
 
 
 <span class='co'># it also supports groups (don't forget to use the group var on `x` or `facet`):</span>
-<span class='no'>septic_patients</span> <span class='kw'>%&gt;%</span>
+<span class='no'>example_isolates</span> <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='no'>hospital_id</span>, <span class='no'>AMX</span>, <span class='no'>NIT</span>, <span class='no'>FOS</span>, <span class='no'>TMP</span>, <span class='no'>CIP</span>) <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span>(<span class='no'>hospital_id</span>) <span class='kw'>%&gt;%</span>
   <span class='fu'>ggplot_rsi</span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='st'>"hospital_id"</span>,
@@ -447,11 +447,11 @@
              <span class='kw'>datalabels</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
 
 <span class='co'># genuine analysis: check 3 most prevalent microorganisms</span>
-<span class='no'>septic_patients</span> <span class='kw'>%&gt;%</span>
+<span class='no'>example_isolates</span> <span class='kw'>%&gt;%</span>
   <span class='co'># create new bacterial ID's, with all CoNS under the same group (Becker et al.)</span>
   <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span>(<span class='kw'>mo</span> <span class='kw'>=</span> <span class='fu'><a href='as.mo.html'>as.mo</a></span>(<span class='no'>mo</span>, <span class='kw'>Becker</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)) <span class='kw'>%&gt;%</span>
   <span class='co'># filter on top three bacterial ID's</span>
-  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span>(<span class='no'>mo</span> <span class='kw'>%in%</span> <span class='fu'>top_freq</span>(<span class='fu'>freq</span>(<span class='no'>.</span>$<span class='no'>mo</span>), <span class='fl'>3</span>)) <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span>(<span class='no'>mo</span> <span class='kw'>%in%</span> <span class='fu'>top_freq</span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/clean/topics/freq'>freq</a></span>(<span class='no'>.</span>$<span class='no'>mo</span>), <span class='fl'>3</span>)) <span class='kw'>%&gt;%</span>
   <span class='co'># filter on first isolates</span>
   <span class='fu'><a href='first_isolate.html'>filter_first_isolate</a></span>() <span class='kw'>%&gt;%</span>
   <span class='co'># get short MO names (like "E. coli")</span>
@@ -488,7 +488,7 @@
 
       <footer>
       <div class="copyright">
-  <p>Developed by <a href='https://www.rug.nl/staff/m.s.berends/'>Matthijs S. Berends</a>, <a href='https://www.rug.nl/staff/c.f.luz/'>Christian F. Luz</a>, <a href='https://www.rug.nl/staff/a.w.friedrich/'>Alex W. Friedrich</a>, <a href='https://www.rug.nl/staff/b.sinha/'>Bhanu N. M. Sinha</a>, <a href='https://www.rug.nl/staff/c.glasner/'>Corinna Glasner</a>.</p>
+  <p>Developed by <a href='https://www.rug.nl/staff/m.s.berends/'>Matthijs S. Berends</a>, <a href='https://www.rug.nl/staff/c.f.luz/'>Christian F. Luz</a>, <a href='https://www.rug.nl/staff/a.w.friedrich/'>Alex W. Friedrich</a>, <a href='https://www.rug.nl/staff/b.sinha/'>Bhanu N. M. Sinha</a>, <a href='https://www.rug.nl/staff/c.j.albers/'>Casper J. Albers</a>, <a href='https://www.rug.nl/staff/c.glasner/'>Corinna Glasner</a>.</p>
 </div>
 
 <div class="pkgdown">

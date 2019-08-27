@@ -67,11 +67,11 @@ rsi_calc <- function(...,
 
  if ("data.frame" %in% class(dots_df)) {
    # data.frame passed with other columns, like:
-   #   septic_patients %>% portion_S(amcl, gent)
+   #   example_isolates %>% portion_S(amcl, gent)
    dots <- as.character(dots)
    dots <- dots[dots != "."]
     if (length(dots) == 0 | all(dots == "df")) {
-      # for complete data.frames, like septic_patients %>% select(amcl, gent) %>% portion_S()
+      # for complete data.frames, like example_isolates %>% select(amcl, gent) %>% portion_S()
       # and the old rsi function, that has "df" as name of the first parameter
       x <- dots_df
     } else {
@@ -79,16 +79,16 @@ rsi_calc <- function(...,
     }
   } else if (ndots == 1) {
     # only 1 variable passed (can also be data.frame), like:
-    #   portion_S(septic_patients$amcl)
-    #   septic_patients$amcl %>% portion_S()
+    #   portion_S(example_isolates$amcl)
+    #   example_isolates$amcl %>% portion_S()
     x <- dots_df
   } else {
     # multiple variables passed without pipe, like:
-    #   portion_S(septic_patients$amcl, septic_patients$gent)
+    #   portion_S(example_isolates$amcl, example_isolates$gent)
     x <- NULL
     try(x <- as.data.frame(dots), silent = TRUE)
     if (is.null(x)) {
-      # support for: with(septic_patients, portion_S(amcl, gent))
+      # support for: with(example_isolates, portion_S(amcl, gent))
       x <- as.data.frame(rlang::list2(...))
     }
   }

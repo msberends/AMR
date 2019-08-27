@@ -54,7 +54,7 @@
 #' @examples
 #' library(dplyr)
 #'
-#' septic_patients %>%
+#' example_isolates %>%
 #'   mutate(EUCAST = mdro(.),
 #'          BRMO = brmo(.))
 mdro <- function(x,

@@ -1,4 +1,4 @@
-# AMR 0.7.1.9062
+# AMR 0.7.1.9063
 
 ### Breaking
 * Determination of first isolates now **excludes** all 'unknown' microorganisms at default, i.e. microbial code `"UNKNOWN"`. They can be included with the new parameter `include_unknown`:
@@ -37,7 +37,7 @@
   ```
   You can format this to a printable format, ready for reporting or exporting to e.g. Excel with the base R `format()` function:
   ```r
-  format(x)
+  format(x, combine_SI = TRUE)
   ```
 * Additional way to calculate co-resistance, i.e. when using multiple antimicrobials as input for `portion_*` functions or `count_*` functions. This can be used to determine the empiric susceptibily of a combination therapy. A new parameter `only_all_tested` (**which defaults to `FALSE`**) replaces the old `also_single_tested` and can be used to select one of the two methods to count isolates and calculate portions. The difference can be seen in this example table (which is also on the `portion` and `count` help pages), where the %SI is being determined:
 
@@ -71,7 +71,8 @@
   ```
 
 ### Changed
-* Function: `eucast_rules()`
+* Renamed data set `septic_patients` to `example_isolates`
+* Function `eucast_rules()`:
   * Fixed a bug for *Yersinia pseudotuberculosis*
   * Added more informative errors and warnings
   * Printed info now distinguishes between added and changes values

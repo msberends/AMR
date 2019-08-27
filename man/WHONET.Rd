@@ -37,7 +37,7 @@
 WHONET
 }
 \description{
-This example data set has the exact same structure as an export file from WHONET. Such files can be used with this package, as this example data set shows. The data itself was based on our \code{\link{septic_patients}} data set.
+This example data set has the exact same structure as an export file from WHONET. Such files can be used with this package, as this example data set shows. The data itself was based on our \code{\link{example_isolates}} data set.
 }
 \section{Read more on our website!}{
 

@@ -41,12 +41,12 @@ test_that("rsi works", {
                                                "-Sum R" = "1",
                                                "-Sum I" = "0"))
 
-  expect_identical(as.logical(lapply(septic_patients, is.rsi.eligible)),
-                   rep(FALSE, length(septic_patients)))
+  expect_identical(as.logical(lapply(example_isolates, is.rsi.eligible)),
+                   rep(FALSE, length(example_isolates)))
 
   library(dplyr)
   # 40 rsi columns
-  expect_equal(septic_patients %>%
+  expect_equal(example_isolates %>%
                  mutate_at(vars(PEN:RIF), as.character) %>%
                  lapply(is.rsi.eligible) %>%
                  as.logical() %>%
@@ -69,7 +69,7 @@ test_that("mic2rsi works", {
            guideline = "EUCAST")),
     "R")
 
-  expect_true(septic_patients %>%
+  expect_true(example_isolates %>%
                 mutate(amox_mic = as.mic(2)) %>%
                 select(mo, amox_mic) %>%
                 as.rsi() %>%
@@ -97,7 +97,7 @@ test_that("disk2rsi works", {
            guideline = "CLSI")),
     "R")
 
-  expect_true(septic_patients %>%
+  expect_true(example_isolates %>%
                 mutate(amox_disk = as.disk(15)) %>%
                 select(mo, amox_disk) %>%
                 as.rsi(guideline = "CLSI") %>%

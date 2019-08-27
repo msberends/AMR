@@ -29,16 +29,16 @@
 #' @inheritSection AMR Read more on our website!
 #' @export
 #' @examples
-#' availability(septic_patients)
+#' availability(example_isolates)
 #'
 #' library(dplyr)
-#' septic_patients %>% availability()
+#' example_isolates %>% availability()
 #'
-#' septic_patients %>%
+#' example_isolates %>%
 #'   select_if(is.rsi) %>%
 #'   availability()
 #'
-#' septic_patients %>%
+#' example_isolates %>%
 #'   filter(mo == as.mo("E. coli")) %>%
 #'   select_if(is.rsi) %>%
 #'   availability()

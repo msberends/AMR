@@ -63,29 +63,29 @@ The \code{group} column in \code{\link{antibiotics}} data set will be searched f
 library(dplyr)
 
 # filter on isolates that have any result for any aminoglycoside
-septic_patients \%>\% filter_aminoglycosides()
+example_isolates \%>\% filter_aminoglycosides()
 
 # this is essentially the same as (but without determination of column names):
-septic_patients \%>\%
+example_isolates \%>\%
   filter_at(.vars = vars(c("GEN", "TOB", "AMK", "KAN")),
             .vars_predicate = any_vars(. \%in\% c("S", "I", "R")))
 
 
 # filter on isolates that show resistance to ANY aminoglycoside
-septic_patients \%>\% filter_aminoglycosides("R")
+example_isolates \%>\% filter_aminoglycosides("R")
 
 # filter on isolates that show resistance to ALL aminoglycosides
-septic_patients \%>\% filter_aminoglycosides("R", "all")
+example_isolates \%>\% filter_aminoglycosides("R", "all")
 
 # filter on isolates that show resistance to
 # any aminoglycoside and any fluoroquinolone
-septic_patients \%>\%
+example_isolates \%>\%
   filter_aminoglycosides("R") \%>\%
   filter_fluoroquinolones("R")
 
 # filter on isolates that show resistance to
 # all aminoglycosides and all fluoroquinolones
-septic_patients \%>\%
+example_isolates \%>\%
   filter_aminoglycosides("R", "all") \%>\%
   filter_fluoroquinolones("R", "all")
 }

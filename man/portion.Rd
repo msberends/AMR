@@ -133,30 +133,30 @@ On our website \url{https://msberends.gitlab.io/AMR} you can find \href{https://
 }
 
 \examples{
-# septic_patients is a data set available in the AMR package. It is true, genuine data.
-?septic_patients
+# example_isolates is a data set available in the AMR package.
+?example_isolates
 
 # Calculate resistance
-portion_R(septic_patients$AMX)
-portion_IR(septic_patients$AMX)
+portion_R(example_isolates$AMX)
+portion_IR(example_isolates$AMX)
 
 # Or susceptibility
-portion_S(septic_patients$AMX)
-portion_SI(septic_patients$AMX)
+portion_S(example_isolates$AMX)
+portion_SI(example_isolates$AMX)
 
 # Do the above with pipes:
 library(dplyr)
-septic_patients \%>\% portion_R(AMX)
-septic_patients \%>\% portion_IR(AMX)
-septic_patients \%>\% portion_S(AMX)
-septic_patients \%>\% portion_SI(AMX)
+example_isolates \%>\% portion_R(AMX)
+example_isolates \%>\% portion_IR(AMX)
+example_isolates \%>\% portion_S(AMX)
+example_isolates \%>\% portion_SI(AMX)
 
-septic_patients \%>\%
+example_isolates \%>\%
   group_by(hospital_id) \%>\%
   summarise(p = portion_SI(CIP),
             n = n_rsi(CIP)) # n_rsi works like n_distinct in dplyr
 
-septic_patients \%>\%
+example_isolates \%>\%
   group_by(hospital_id) \%>\%
   summarise(R = portion_R(CIP, as_percent = TRUE),
             I = portion_I(CIP, as_percent = TRUE),
@@ -167,24 +167,24 @@ septic_patients \%>\%
 
 # Calculate co-resistance between amoxicillin/clav acid and gentamicin,
 # so we can see that combination therapy does a lot more than mono therapy:
-septic_patients \%>\% portion_SI(AMC)      # \%SI = 76.3\%
-septic_patients \%>\% count_all(AMC)       #   n = 1879
+example_isolates \%>\% portion_SI(AMC)      # \%SI = 76.3\%
+example_isolates \%>\% count_all(AMC)       #   n = 1879
 
-septic_patients \%>\% portion_SI(GEN)      # \%SI = 75.4\%
-septic_patients \%>\% count_all(GEN)       #   n = 1855
+example_isolates \%>\% portion_SI(GEN)      # \%SI = 75.4\%
+example_isolates \%>\% count_all(GEN)       #   n = 1855
 
-septic_patients \%>\% portion_SI(AMC, GEN) # \%SI = 94.1\%
-septic_patients \%>\% count_all(AMC, GEN)  #   n = 1939
+example_isolates \%>\% portion_SI(AMC, GEN) # \%SI = 94.1\%
+example_isolates \%>\% count_all(AMC, GEN)  #   n = 1939
 
 
 # See Details on how `only_all_tested` works. Example:
-septic_patients \%>\%
+example_isolates \%>\%
   summarise(numerator = count_SI(AMC, GEN),
             denominator = count_all(AMC, GEN),
             portion = portion_SI(AMC, GEN))
 #   numerator denominator portion
 #        1764        1936  0.9408
-septic_patients \%>\%
+example_isolates \%>\%
   summarise(numerator = count_SI(AMC, GEN, only_all_tested = TRUE),
             denominator = count_all(AMC, GEN, only_all_tested = TRUE),
             portion = portion_SI(AMC, GEN, only_all_tested = TRUE))
@@ -192,7 +192,7 @@ septic_patients \%>\%
 #       1687        1798   0.9383
 
 
-septic_patients \%>\%
+example_isolates \%>\%
   group_by(hospital_id) \%>\%
   summarise(cipro_p = portion_SI(CIP, as_percent = TRUE),
             cipro_n = count_all(CIP),
@@ -202,12 +202,12 @@ septic_patients \%>\%
             combination_n = count_all(CIP, GEN))
 
 # Get portions S/I/R immediately of all rsi columns
-septic_patients \%>\%
+example_isolates \%>\%
   select(AMX, CIP) \%>\%
   portion_df(translate = FALSE)
 
 # It also supports grouping variables
-septic_patients \%>\%
+example_isolates \%>\%
   select(hospital_id, AMX, CIP) \%>\%
   group_by(hospital_id) \%>\%
   portion_df(translate = FALSE)

@@ -80,13 +80,13 @@ On our website \url{https://msberends.gitlab.io/AMR} you can find \href{https://
 }
 
 \examples{
-x <- resistance_predict(septic_patients, col_ab = "AMX", year_min = 2010, model = "binomial")
+x <- resistance_predict(example_isolates, col_ab = "AMX", year_min = 2010, model = "binomial")
 plot(x)
 ggplot_rsi_predict(x)
 
 # use dplyr so you can actually read it:
 library(dplyr)
-x <- septic_patients \%>\%
+x <- example_isolates \%>\%
   filter_first_isolate() \%>\%
   filter(mo_genus(mo) == "Staphylococcus") \%>\%
   resistance_predict("PEN", model = "binomial")
@@ -101,7 +101,7 @@ summary(mymodel)
 # create nice plots with ggplot2 yourself
 if (!require(ggplot2)) {
 
-  data <- septic_patients \%>\%
+  data <- example_isolates \%>\%
     filter(mo == as.mo("E. coli")) \%>\%
     resistance_predict(col_ab = "AMX",
                        col_date = "date",

@@ -114,8 +114,8 @@ Repetitive results are unique values that are present more than once. Unique val
 
 ```{r, message = FALSE}
 library(dplyr)
-# take all MO codes from the septic_patients data set
-x <- septic_patients$mo %>%
+# take all MO codes from the example_isolates data set
+x <- example_isolates$mo %>%
   # keep only the unique ones
   unique() %>%
   # pick 50 of them at random

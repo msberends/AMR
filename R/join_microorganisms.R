@@ -37,7 +37,7 @@
 #' left_join_microorganisms("B_KLBSL_PNE")
 #'
 #' library(dplyr)
-#' septic_patients %>% left_join_microorganisms()
+#' example_isolates %>% left_join_microorganisms()
 #'
 #' df <- data.frame(date = seq(from = as.Date("2018-01-01"),
 #'                             to = as.Date("2018-01-07"),

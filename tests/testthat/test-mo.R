@@ -147,7 +147,7 @@ test_that("as.mo works", {
 
   # select with one column
   expect_identical(
-    septic_patients[1:10,] %>%
+    example_isolates[1:10,] %>%
       left_join_microorganisms() %>%
       select(genus) %>%
       as.mo() %>%
@@ -157,9 +157,9 @@ test_that("as.mo works", {
 
   # select with two columns
   expect_identical(
-    septic_patients[1:10,] %>%
+    example_isolates[1:10,] %>%
       pull(mo),
-    septic_patients[1:10,] %>%
+    example_isolates[1:10,] %>%
       left_join_microorganisms() %>%
       select(genus, species) %>%
       as.mo())
@@ -168,13 +168,13 @@ test_that("as.mo works", {
   expect_warning(as.mo(c("INVALID", "Yeah, unknown")))
 
   # too many columns
-  expect_error(septic_patients %>% select(1:3) %>% as.mo())
+  expect_error(example_isolates %>% select(1:3) %>% as.mo())
 
   # print
   expect_output(print(as.mo(c("B_ESCHR_COL", NA))))
 
   # test pull
-  expect_equal(nrow(septic_patients %>% mutate(mo = as.mo(mo))),
+  expect_equal(nrow(example_isolates %>% mutate(mo = as.mo(mo))),
                2000)
 
   # test data.frame
@@ -248,7 +248,7 @@ test_that("as.mo works", {
   expect_warning(as.mo("Virus"))
 
   # summary
-  expect_equal(length(summary(septic_patients$mo)), 6)
+  expect_equal(length(summary(example_isolates$mo)), 6)
 
   # WHONET codes and NA/NaN
   expect_equal(as.character(as.mo(c("xxx", "na", "nan"), debug = TRUE)),
@@ -260,7 +260,7 @@ test_that("as.mo works", {
                rep("UNKNOWN", 3))
 
   expect_null(mo_failures())
-  expect_true(septic_patients %>% pull(mo) %>% is.mo())
+  expect_true(example_isolates %>% pull(mo) %>% is.mo())
 
   # expect_equal(get_mo_code("test", "mo"), "test")
   # expect_equal(length(get_mo_code("Escherichia", "genus")),
@@ -286,7 +286,7 @@ test_that("as.mo works", {
   expect_output(print(tibble(mo = as.mo("B_STRPT_PNE"))))
   
   # assigning and subsetting
-  x <- septic_patients$mo
+  x <- example_isolates$mo
   expect_s3_class(x[1], "mo")
   expect_s3_class(x[[1]], "mo")
   expect_s3_class(c(x[1], x[9]), "mo")
