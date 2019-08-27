@@ -31,7 +31,7 @@ eucast_exceptional_phenotypes(x, guideline = "EUCAST", ...)
 
 \item{guideline}{a specific guideline to mention, see Details. EUCAST guidelines will be used when left empty, see Details.}
 
-\item{col_mo}{column name of the unique IDs of the microorganisms (see \code{\link{mo}}), defaults to the first column of class \code{mo}. Values will be coerced using \code{\link{as.mo}}.}
+\item{col_mo}{column name of the IDs of the microorganisms (see \code{\link{as.mo}}), defaults to the first column of class \code{mo}. Values will be coerced using \code{\link{as.mo}}.}
 
 \item{info}{print progress}
 

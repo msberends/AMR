@@ -80,7 +80,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">0.7.1.9064</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">0.7.1.9065</span>
       </span>
     </div>
 
@@ -234,7 +234,11 @@
     
     </div>
 
-    <pre class="usage"><span class='fu'>bug_drug_combinations</span>(<span class='no'>x</span>, <span class='kw'>col_mo</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>minimum</span> <span class='kw'>=</span> <span class='fl'>30</span>)</pre>
+    <pre class="usage"><span class='fu'>bug_drug_combinations</span>(<span class='no'>x</span>, <span class='kw'>col_mo</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>minimum</span> <span class='kw'>=</span> <span class='fl'>30</span>)
+
+<span class='co'># S3 method for bug_drug_combinations</span>
+<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/format'>format</a></span>(<span class='no'>x</span>, <span class='kw'>combine_IR</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>add_ab_group</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -245,7 +249,7 @@
     </tr>
     <tr>
       <th>col_mo</th>
-      <td><p>column name of the unique IDs of the microorganisms (see <code><a href='as.mo.html'>mo</a></code>), defaults to the first column of class <code>mo</code>. Values will be coerced using <code><a href='as.mo.html'>as.mo</a></code>.</p></td>
+      <td><p>column name of the IDs of the microorganisms (see <code><a href='as.mo.html'>as.mo</a></code>), defaults to the first column of class <code>mo</code>. Values will be coerced using <code><a href='as.mo.html'>as.mo</a></code>.</p></td>
     </tr>
     <tr>
       <th>minimum</th>
@@ -255,6 +259,10 @@
       <th>combine_IR</th>
       <td><p>logical to indicate whether values R and I should be summed</p></td>
     </tr>
+    <tr>
+      <th>add_ab_group</th>
+      <td><p>logical to indicate where the group of the antimicrobials must be included as a first column</p></td>
+    </tr>
     </table>
     
     <h2 class="hasAnchor" id="source"><a class="anchor" href="#source"></a>Source</h2>
@@ -263,7 +271,7 @@
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>The function <code>format</code> calculated the resistance per bug-drug combination. Use <code>combine_IR = FALSE</code> (default) to test R vs. S+I and <code>combine_IR = TRUE</code> to test R+I vs. S.</p>
+    <p>The function <code>format</code> calculates the resistance per bug-drug combination. Use <code>combine_IR = FALSE</code> (default) to test R vs. S+I and <code>combine_IR = TRUE</code> to test R+I vs. S.</p>
     
     <h2 class="hasAnchor" id="read-more-on-our-website-"><a class="anchor" href="#read-more-on-our-website-"></a>Read more on our website!</h2>
 

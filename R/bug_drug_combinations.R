@@ -24,12 +24,14 @@
 #' Determine antimicrobial resistance (AMR) of all bug-drug combinations in your data set where at least 30 (default) isolates are available per species. Use \code{format} on the result to prettify it to a printable format, see Examples.
 #' @inheritParams eucast_rules
 #' @param combine_IR logical to indicate whether values R and I should be summed
+#' @param add_ab_group logical to indicate where the group of the antimicrobials must be included as a first column
 #' @inheritParams rsi_df
 #' @importFrom dplyr rename
 #' @importFrom tidyr spread
 #' @importFrom clean freq
-#' @details The function \code{format} calculated the resistance per bug-drug combination. Use \code{combine_IR = FALSE} (default) to test R vs. S+I and \code{combine_IR = TRUE} to test R+I vs. S. 
+#' @details The function \code{format} calculates the resistance per bug-drug combination. Use \code{combine_IR = FALSE} (default) to test R vs. S+I and \code{combine_IR = TRUE} to test R+I vs. S. 
 #' @export
+#' @rdname bug_drug_combinations
 #' @source \strong{M39 Analysis and Presentation of Cumulative Antimicrobial Susceptibility Test Data, 4th Edition}, 2014, \emph{Clinical and Laboratory Standards Institute (CLSI)}. \url{https://clsi.org/standards/products/microbiology/documents/m39/}.
 #' @inheritSection AMR Read more on our website!
 #' @examples 
@@ -65,14 +67,15 @@ bug_drug_combinations <- function(x, col_mo = NULL, minimum = 30) {
     filter(total >= minimum) %>% 
     rename(ab = antibiotic)
   
-  structure(.Data = x, class = c("bugdrug", class(x)))
+  structure(.Data = x, class = c("bug_drug_combinations", class(x)))
 }
 
 #' @importFrom dplyr everything rename
 #' @importFrom tidyr spread
-#' @exportMethod format.bugdrug
+#' @exportMethod format.bug_drug_combinations
 #' @export
-format.bugdrug <- function(x, combine_IR = FALSE, add_ab_group = TRUE, ...) {
+#' @rdname bug_drug_combinations
+format.bug_drug_combinations <- function(x, combine_IR = FALSE, add_ab_group = TRUE) {
   if (combine_IR == FALSE) {
     x$isolates <- x$R
   } else {
@@ -100,10 +103,10 @@ format.bugdrug <- function(x, combine_IR = FALSE, add_ab_group = TRUE, ...) {
   y
 }
 
-#' @exportMethod print.bugdrug
+#' @exportMethod print.bug_drug_combinations
 #' @export
 #' @importFrom crayon blue
-print.bugdrug <- function(x, ...) {
+print.bug_drug_combinations <- function(x, ...) {
   print(as.data.frame(x, stringsAsFactors = FALSE))
   message(blue("NOTE: Use 'format()' on this result to get a format that is ready for export or printing."))
 }
