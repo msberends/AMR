@@ -78,7 +78,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">0.7.1.9063</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">0.7.1.9064</span>
       </span>
     </div>
 
@@ -225,9 +225,9 @@
       
     </div>
 
-    <div id="amr-0-7-1-9063" class="section level1">
+    <div id="amr-0-7-1-9064" class="section level1">
 <h1 class="page-header">
-<a href="#amr-0-7-1-9063" class="anchor"></a>AMR 0.7.1.9063<small> Unreleased </small>
+<a href="#amr-0-7-1-9064" class="anchor"></a>AMR 0.7.1.9064<small> Unreleased </small>
 </h1>
 <div id="breaking" class="section level3">
 <h3 class="hasAnchor">
@@ -269,7 +269,7 @@ This is important, because a value like <code>"testvalue"</code> could never be 
 <a class="sourceLine" id="cb3-7" data-line-number="7"><span class="co">#&gt; 4   AMC B_PSDMN_AER   0  0  30    30</span></a>
 <a class="sourceLine" id="cb3-8" data-line-number="8"><span class="co">#&gt; 5   AMC B_STPHY_AUR 234  0   1   235</span></a></code></pre></div>
 <p>You can format this to a printable format, ready for reporting or exporting to e.g. Excel with the base R <code><a href="https://www.rdocumentation.org/packages/base/topics/format">format()</a></code> function:</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/format">format</a></span>(x, <span class="dt">combine_SI =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/format">format</a></span>(x, <span class="dt">combine_IR =</span> <span class="ot">FALSE</span>)</a></code></pre></div>
 </li>
 <li>
 <p>Additional way to calculate co-resistance, i.e. when using multiple antimicrobials as input for <code>portion_*</code> functions or <code>count_*</code> functions. This can be used to determine the empiric susceptibily of a combination therapy. A new parameter <code>only_all_tested</code> (<strong>which defaults to <code>FALSE</code></strong>) replaces the old <code>also_single_tested</code> and can be used to select one of the two methods to count isolates and calculate portions. The difference can be seen in this example table (which is also on the <code>portion</code> and <code>count</code> help pages), where the %SI is being determined:</p>
@@ -1258,7 +1258,7 @@ Using <code><a href="../reference/as.mo.html">as.mo(..., allow_uncertain = 3)</a
     <div id="tocnav">
       <h2>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
-        <li><a href="#amr-0-7-1-9063">0.7.1.9063</a></li>
+        <li><a href="#amr-0-7-1-9064">0.7.1.9064</a></li>
         <li><a href="#amr-0-7-1">0.7.1</a></li>
         <li><a href="#amr-0-7-0">0.7.0</a></li>
         <li><a href="#amr-0-6-1">0.6.1</a></li>
