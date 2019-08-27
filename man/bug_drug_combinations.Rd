@@ -11,7 +11,7 @@
 bug_drug_combinations(x, col_mo = NULL, minimum = 30)
 
 \method{format}{bug_drug_combinations}(x, combine_IR = FALSE,
-  add_ab_group = TRUE)
+  add_ab_group = TRUE, ...)
 }
 \arguments{
 \item{x}{data with antibiotic columns, like e.g. \code{AMX} and \code{AMC}}
@@ -23,6 +23,8 @@ bug_drug_combinations(x, col_mo = NULL, minimum = 30)
 \item{combine_IR}{logical to indicate whether values R and I should be summed}
 
 \item{add_ab_group}{logical to indicate where the group of the antimicrobials must be included as a first column}
+
+\item{...}{argumments passed on to \code{\link{mo_name}}}
 }
 \description{
 Determine antimicrobial resistance (AMR) of all bug-drug combinations in your data set where at least 30 (default) isolates are available per species. Use \code{format} on the result to prettify it to a printable format, see Examples.

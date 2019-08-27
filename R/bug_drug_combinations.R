@@ -25,6 +25,7 @@
 #' @inheritParams eucast_rules
 #' @param combine_IR logical to indicate whether values R and I should be summed
 #' @param add_ab_group logical to indicate where the group of the antimicrobials must be included as a first column
+#' @param ... argumments passed on to \code{\link{mo_name}}
 #' @inheritParams rsi_df
 #' @importFrom dplyr rename
 #' @importFrom tidyr spread
@@ -75,14 +76,14 @@ bug_drug_combinations <- function(x, col_mo = NULL, minimum = 30) {
 #' @exportMethod format.bug_drug_combinations
 #' @export
 #' @rdname bug_drug_combinations
-format.bug_drug_combinations <- function(x, combine_IR = FALSE, add_ab_group = TRUE) {
+format.bug_drug_combinations <- function(x, combine_IR = FALSE, add_ab_group = TRUE, ...) {
   if (combine_IR == FALSE) {
     x$isolates <- x$R
   } else {
     x$isolates <- x$R + x$I
   }
   y <- x %>%
-    mutate(mo = mo_name(mo),
+    mutate(mo = mo_name(mo, ...),
            txt = paste0(percent(isolates / total, force_zero = TRUE), 
                         " (", trimws(format(isolates, big.mark = ",")), "/", 
                         trimws(format(total, big.mark = ",")), ")")) %>% 
