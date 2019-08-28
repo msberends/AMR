@@ -496,7 +496,7 @@ first_isolate <- function(x,
   big.mark <- ifelse(decimal.mark != ",", ",", ".")
   
   # handle empty microorganisms
-  if (any(all_first$newvar_mo == "UNKNOWN", na.rm = TRUE)) {
+  if (any(all_first$newvar_mo == "UNKNOWN", na.rm = TRUE) & info == TRUE) {
     if (include_unknown == TRUE) {
       message(blue(paste0("NOTE: Included ", format(sum(all_first$newvar_mo == "UNKNOWN"),
                                                     decimal.mark = decimal.mark, big.mark = big.mark), 
@@ -511,7 +511,7 @@ first_isolate <- function(x,
   all_first[which(all_first$newvar_mo == "UNKNOWN"), 'real_first_isolate'] <- include_unknown
   
   # exclude all NAs
-  if (any(is.na(all_first$newvar_mo))) {
+  if (any(is.na(all_first$newvar_mo)) & info == TRUE) {
     message(blue(paste0("NOTE: Excluded ", format(sum(is.na(all_first$newvar_mo)),
                                                   decimal.mark = decimal.mark, big.mark = big.mark), 
                         ' isolates with a microbial ID "NA" (column `', bold(col_mo), '`).')))

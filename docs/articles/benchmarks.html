@@ -40,7 +40,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">0.7.1.9063</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">0.7.1.9067</span>
       </span>
     </div>
 
@@ -185,7 +185,7 @@
       <h1>Benchmarks</h1>
                         <h4 class="author">Matthijs S. Berends</h4>
             
-            <h4 class="date">27 August 2019</h4>
+            <h4 class="date">28 August 2019</h4>
       
       
       <div class="hidden name"><code>benchmarks.Rmd</code></div>
@@ -210,14 +210,14 @@
 <a class="sourceLine" id="cb2-8" data-line-number="8">                           <span class="dt">times =</span> <span class="dv">10</span>)</a>
 <a class="sourceLine" id="cb2-9" data-line-number="9"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/print">print</a></span>(S.aureus, <span class="dt">unit =</span> <span class="st">"ms"</span>, <span class="dt">signif =</span> <span class="dv">2</span>)</a>
 <a class="sourceLine" id="cb2-10" data-line-number="10"><span class="co"># Unit: milliseconds</span></a>
-<a class="sourceLine" id="cb2-11" data-line-number="11"><span class="co">#                            expr  min   lq mean median   uq   max neval</span></a>
-<a class="sourceLine" id="cb2-12" data-line-number="12"><span class="co">#                    as.mo("sau")  8.1  8.1  8.3    8.3  8.4   8.6    10</span></a>
-<a class="sourceLine" id="cb2-13" data-line-number="13"><span class="co">#                   as.mo("stau") 31.0 31.0 48.0   40.0 48.0 130.0    10</span></a>
-<a class="sourceLine" id="cb2-14" data-line-number="14"><span class="co">#                 as.mo("staaur")  8.1  8.3 10.0    8.4  8.6  24.0    10</span></a>
-<a class="sourceLine" id="cb2-15" data-line-number="15"><span class="co">#                 as.mo("STAAUR")  8.1  8.1 12.0    8.4  9.2  28.0    10</span></a>
-<a class="sourceLine" id="cb2-16" data-line-number="16"><span class="co">#              as.mo("S. aureus") 22.0 23.0 26.0   23.0 24.0  40.0    10</span></a>
-<a class="sourceLine" id="cb2-17" data-line-number="17"><span class="co">#             as.mo("S.  aureus") 22.0 23.0 23.0   23.0 23.0  24.0    10</span></a>
-<a class="sourceLine" id="cb2-18" data-line-number="18"><span class="co">#  as.mo("Staphylococcus aureus")  3.6  3.8  4.0    3.9  4.0   5.2    10</span></a></code></pre></div>
+<a class="sourceLine" id="cb2-11" data-line-number="11"><span class="co">#                            expr  min   lq mean median   uq max neval</span></a>
+<a class="sourceLine" id="cb2-12" data-line-number="12"><span class="co">#                    as.mo("sau")  8.4  8.5 16.0    9.7 25.0  27    10</span></a>
+<a class="sourceLine" id="cb2-13" data-line-number="13"><span class="co">#                   as.mo("stau") 31.0 31.0 33.0   31.0 33.0  49    10</span></a>
+<a class="sourceLine" id="cb2-14" data-line-number="14"><span class="co">#                 as.mo("staaur")  8.1  8.3 13.0    8.5 23.0  24    10</span></a>
+<a class="sourceLine" id="cb2-15" data-line-number="15"><span class="co">#                 as.mo("STAAUR")  8.2  8.5  9.1    8.9  9.4  11    10</span></a>
+<a class="sourceLine" id="cb2-16" data-line-number="16"><span class="co">#              as.mo("S. aureus") 22.0 22.0 23.0   23.0 23.0  24    10</span></a>
+<a class="sourceLine" id="cb2-17" data-line-number="17"><span class="co">#             as.mo("S.  aureus") 22.0 23.0 34.0   23.0 24.0 110    10</span></a>
+<a class="sourceLine" id="cb2-18" data-line-number="18"><span class="co">#  as.mo("Staphylococcus aureus")  3.8  3.9  5.0    4.0  4.3  12    10</span></a></code></pre></div>
 <p>In the table above, all measurements are shown in milliseconds (thousands of seconds). A value of 5 milliseconds means it can determine 200 input values per second. It case of 100 milliseconds, this is only 10 input values per second. The second input is the only one that has to be looked up thoroughly. All the others are known codes (the first one is a WHONET code) or common laboratory codes, or common full organism names like the last one. Full organism names are always preferred.</p>
 <p>To achieve this speed, the <code>as.mo</code> function also takes into account the prevalence of human pathogenic microorganisms. The downside is of course that less prevalent microorganisms will be determined less fast. See this example for the ID of <em>Thermus islandicus</em> (<code>B_THERMS_ISL</code>), a bug probably never found before in humans:</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1">T.islandicus &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/microbenchmark/topics/microbenchmark">microbenchmark</a></span>(<span class="kw"><a href="../reference/as.mo.html">as.mo</a></span>(<span class="st">"theisl"</span>),</a>
@@ -229,12 +229,12 @@
 <a class="sourceLine" id="cb3-7" data-line-number="7"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/print">print</a></span>(T.islandicus, <span class="dt">unit =</span> <span class="st">"ms"</span>, <span class="dt">signif =</span> <span class="dv">2</span>)</a>
 <a class="sourceLine" id="cb3-8" data-line-number="8"><span class="co"># Unit: milliseconds</span></a>
 <a class="sourceLine" id="cb3-9" data-line-number="9"><span class="co">#                         expr min  lq mean median  uq max neval</span></a>
-<a class="sourceLine" id="cb3-10" data-line-number="10"><span class="co">#              as.mo("theisl") 260 270  280    280 290 300    10</span></a>
-<a class="sourceLine" id="cb3-11" data-line-number="11"><span class="co">#              as.mo("THEISL") 260 280  300    290 300 370    10</span></a>
-<a class="sourceLine" id="cb3-12" data-line-number="12"><span class="co">#       as.mo("T. islandicus") 130 140  140    140 150 150    10</span></a>
-<a class="sourceLine" id="cb3-13" data-line-number="13"><span class="co">#      as.mo("T.  islandicus") 130 130  130    130 140 150    10</span></a>
-<a class="sourceLine" id="cb3-14" data-line-number="14"><span class="co">#  as.mo("Thermus islandicus")  47  48   53     50  52  71    10</span></a></code></pre></div>
-<p>That takes 9.6 times as much time on average. A value of 100 milliseconds means it can only determine ~10 different input values per second. We can conclude that looking up arbitrary codes of less prevalent microorganisms is the worst way to go, in terms of calculation performance. Full names (like <em>Thermus islandicus</em>) are almost fast - these are the most probable input from most data sets.</p>
+<a class="sourceLine" id="cb3-10" data-line-number="10"><span class="co">#              as.mo("theisl") 260 280  280    280 290 290    10</span></a>
+<a class="sourceLine" id="cb3-11" data-line-number="11"><span class="co">#              as.mo("THEISL") 250 260  280    280 290 300    10</span></a>
+<a class="sourceLine" id="cb3-12" data-line-number="12"><span class="co">#       as.mo("T. islandicus") 120 130  130    130 150 150    10</span></a>
+<a class="sourceLine" id="cb3-13" data-line-number="13"><span class="co">#      as.mo("T.  islandicus") 120 130  140    140 140 150    10</span></a>
+<a class="sourceLine" id="cb3-14" data-line-number="14"><span class="co">#  as.mo("Thermus islandicus")  47  47   53     48  62  67    10</span></a></code></pre></div>
+<p>That takes 9.3 times as much time on average. A value of 100 milliseconds means it can only determine ~10 different input values per second. We can conclude that looking up arbitrary codes of less prevalent microorganisms is the worst way to go, in terms of calculation performance. Full names (like <em>Thermus islandicus</em>) are almost fast - these are the most probable input from most data sets.</p>
 <p>In the figure below, we compare <em>Escherichia coli</em> (which is very common) with <em>Prevotella brevis</em> (which is moderately common) and with <em>Thermus islandicus</em> (which is very uncommon):</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/graphics/topics/par">par</a></span>(<span class="dt">mar =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="dv">5</span>, <span class="dv">16</span>, <span class="dv">4</span>, <span class="dv">2</span>)) <span class="co"># set more space for left margin text (16)</span></a>
 <a class="sourceLine" id="cb4-2" data-line-number="2"></a>
@@ -280,8 +280,8 @@
 <a class="sourceLine" id="cb5-24" data-line-number="24"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/print">print</a></span>(run_it, <span class="dt">unit =</span> <span class="st">"ms"</span>, <span class="dt">signif =</span> <span class="dv">3</span>)</a>
 <a class="sourceLine" id="cb5-25" data-line-number="25"><span class="co"># Unit: milliseconds</span></a>
 <a class="sourceLine" id="cb5-26" data-line-number="26"><span class="co">#        expr min  lq mean median  uq max neval</span></a>
-<a class="sourceLine" id="cb5-27" data-line-number="27"><span class="co">#  mo_name(x) 611 618  646    642 656 720    10</span></a></code></pre></div>
-<p>So transforming 500,000 values (!!) of 50 unique values only takes 0.64 seconds (641 ms). You only lose time on your unique input values.</p>
+<a class="sourceLine" id="cb5-27" data-line-number="27"><span class="co">#  mo_name(x) 587 591  604    594 612 653    10</span></a></code></pre></div>
+<p>So transforming 500,000 values (!!) of 50 unique values only takes 0.59 seconds (594 ms). You only lose time on your unique input values.</p>
 </div>
 <div id="precalculated-results" class="section level3">
 <h3 class="hasAnchor">
@@ -293,11 +293,11 @@
 <a class="sourceLine" id="cb6-4" data-line-number="4">                         <span class="dt">times =</span> <span class="dv">10</span>)</a>
 <a class="sourceLine" id="cb6-5" data-line-number="5"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/print">print</a></span>(run_it, <span class="dt">unit =</span> <span class="st">"ms"</span>, <span class="dt">signif =</span> <span class="dv">3</span>)</a>
 <a class="sourceLine" id="cb6-6" data-line-number="6"><span class="co"># Unit: milliseconds</span></a>
-<a class="sourceLine" id="cb6-7" data-line-number="7"><span class="co">#  expr    min     lq   mean median     uq    max neval</span></a>
-<a class="sourceLine" id="cb6-8" data-line-number="8"><span class="co">#     A  6.440  6.690  9.070  7.040  7.500 27.800    10</span></a>
-<a class="sourceLine" id="cb6-9" data-line-number="9"><span class="co">#     B 21.800 22.200 23.600 23.400 23.800 30.200    10</span></a>
-<a class="sourceLine" id="cb6-10" data-line-number="10"><span class="co">#     C  0.661  0.826  0.844  0.836  0.928  0.936    10</span></a></code></pre></div>
-<p>So going from <code><a href="../reference/mo_property.html">mo_name("Staphylococcus aureus")</a></code> to <code>"Staphylococcus aureus"</code> takes 0.0008 seconds - it doesn’t even start calculating <em>if the result would be the same as the expected resulting value</em>. That goes for all helper functions:</p>
+<a class="sourceLine" id="cb6-7" data-line-number="7"><span class="co">#  expr    min     lq  mean median     uq   max neval</span></a>
+<a class="sourceLine" id="cb6-8" data-line-number="8"><span class="co">#     A  6.270  6.300  6.69  6.540  6.990  7.93    10</span></a>
+<a class="sourceLine" id="cb6-9" data-line-number="9"><span class="co">#     B 21.600 22.700 25.80 23.300 24.400 43.70    10</span></a>
+<a class="sourceLine" id="cb6-10" data-line-number="10"><span class="co">#     C  0.795  0.812  0.89  0.879  0.962  1.03    10</span></a></code></pre></div>
+<p>So going from <code><a href="../reference/mo_property.html">mo_name("Staphylococcus aureus")</a></code> to <code>"Staphylococcus aureus"</code> takes 0.0009 seconds - it doesn’t even start calculating <em>if the result would be the same as the expected resulting value</em>. That goes for all helper functions:</p>
 <div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1">run_it &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/microbenchmark/topics/microbenchmark">microbenchmark</a></span>(<span class="dt">A =</span> <span class="kw"><a href="../reference/mo_property.html">mo_species</a></span>(<span class="st">"aureus"</span>),</a>
 <a class="sourceLine" id="cb7-2" data-line-number="2">                         <span class="dt">B =</span> <span class="kw"><a href="../reference/mo_property.html">mo_genus</a></span>(<span class="st">"Staphylococcus"</span>),</a>
 <a class="sourceLine" id="cb7-3" data-line-number="3">                         <span class="dt">C =</span> <span class="kw"><a href="../reference/mo_property.html">mo_name</a></span>(<span class="st">"Staphylococcus aureus"</span>),</a>
@@ -310,14 +310,14 @@
 <a class="sourceLine" id="cb7-10" data-line-number="10"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/print">print</a></span>(run_it, <span class="dt">unit =</span> <span class="st">"ms"</span>, <span class="dt">signif =</span> <span class="dv">3</span>)</a>
 <a class="sourceLine" id="cb7-11" data-line-number="11"><span class="co"># Unit: milliseconds</span></a>
 <a class="sourceLine" id="cb7-12" data-line-number="12"><span class="co">#  expr   min    lq  mean median    uq   max neval</span></a>
-<a class="sourceLine" id="cb7-13" data-line-number="13"><span class="co">#     A 0.468 0.472 0.483  0.483 0.487 0.520    10</span></a>
-<a class="sourceLine" id="cb7-14" data-line-number="14"><span class="co">#     B 0.619 0.621 0.649  0.648 0.656 0.698    10</span></a>
-<a class="sourceLine" id="cb7-15" data-line-number="15"><span class="co">#     C 0.702 0.732 0.770  0.788 0.799 0.809    10</span></a>
-<a class="sourceLine" id="cb7-16" data-line-number="16"><span class="co">#     D 0.456 0.457 0.487  0.466 0.475 0.684    10</span></a>
-<a class="sourceLine" id="cb7-17" data-line-number="17"><span class="co">#     E 0.451 0.463 0.466  0.466 0.471 0.479    10</span></a>
-<a class="sourceLine" id="cb7-18" data-line-number="18"><span class="co">#     F 0.437 0.457 0.464  0.463 0.469 0.497    10</span></a>
-<a class="sourceLine" id="cb7-19" data-line-number="19"><span class="co">#     G 0.450 0.454 0.468  0.466 0.477 0.495    10</span></a>
-<a class="sourceLine" id="cb7-20" data-line-number="20"><span class="co">#     H 0.454 0.458 0.471  0.464 0.471 0.510    10</span></a></code></pre></div>
+<a class="sourceLine" id="cb7-13" data-line-number="13"><span class="co">#     A 0.452 0.459 0.473  0.464 0.475 0.518    10</span></a>
+<a class="sourceLine" id="cb7-14" data-line-number="14"><span class="co">#     B 0.607 0.610 0.654  0.616 0.639 0.860    10</span></a>
+<a class="sourceLine" id="cb7-15" data-line-number="15"><span class="co">#     C 0.661 0.686 0.724  0.729 0.763 0.796    10</span></a>
+<a class="sourceLine" id="cb7-16" data-line-number="16"><span class="co">#     D 0.441 0.448 0.473  0.458 0.471 0.596    10</span></a>
+<a class="sourceLine" id="cb7-17" data-line-number="17"><span class="co">#     E 0.412 0.439 0.464  0.449 0.458 0.593    10</span></a>
+<a class="sourceLine" id="cb7-18" data-line-number="18"><span class="co">#     F 0.437 0.447 0.471  0.454 0.483 0.586    10</span></a>
+<a class="sourceLine" id="cb7-19" data-line-number="19"><span class="co">#     G 0.437 0.446 0.478  0.454 0.477 0.580    10</span></a>
+<a class="sourceLine" id="cb7-20" data-line-number="20"><span class="co">#     H 0.435 0.445 0.467  0.454 0.459 0.581    10</span></a></code></pre></div>
 <p>Of course, when running <code><a href="../reference/mo_property.html">mo_phylum("Firmicutes")</a></code> the function has zero knowledge about the actual microorganism, namely <em>S. aureus</em>. But since the result would be <code>"Firmicutes"</code> too, there is no point in calculating the result. And because this package ‘knows’ all phyla of all known bacteria (according to the Catalogue of Life), it can just return the initial value immediately.</p>
 </div>
 <div id="results-in-other-languages" class="section level3">
@@ -344,13 +344,13 @@
 <a class="sourceLine" id="cb8-18" data-line-number="18"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/print">print</a></span>(run_it, <span class="dt">unit =</span> <span class="st">"ms"</span>, <span class="dt">signif =</span> <span class="dv">4</span>)</a>
 <a class="sourceLine" id="cb8-19" data-line-number="19"><span class="co"># Unit: milliseconds</span></a>
 <a class="sourceLine" id="cb8-20" data-line-number="20"><span class="co">#  expr   min    lq  mean median    uq   max neval</span></a>
-<a class="sourceLine" id="cb8-21" data-line-number="21"><span class="co">#    en 17.37 18.13 21.04  18.34 20.65 35.24    10</span></a>
-<a class="sourceLine" id="cb8-22" data-line-number="22"><span class="co">#    de 18.69 19.32 19.49  19.44 19.77 20.06    10</span></a>
-<a class="sourceLine" id="cb8-23" data-line-number="23"><span class="co">#    nl 24.85 25.07 27.07  25.37 25.58 42.68    10</span></a>
-<a class="sourceLine" id="cb8-24" data-line-number="24"><span class="co">#    es 18.96 19.55 23.91  19.88 21.02 41.15    10</span></a>
-<a class="sourceLine" id="cb8-25" data-line-number="25"><span class="co">#    it 18.85 19.34 21.08  19.52 20.22 35.18    10</span></a>
-<a class="sourceLine" id="cb8-26" data-line-number="26"><span class="co">#    fr 18.80 19.32 21.40  19.56 20.29 37.00    10</span></a>
-<a class="sourceLine" id="cb8-27" data-line-number="27"><span class="co">#    pt 18.81 19.45 19.57  19.59 19.64 20.20    10</span></a></code></pre></div>
+<a class="sourceLine" id="cb8-21" data-line-number="21"><span class="co">#    en 17.56 18.00 22.17  18.14 26.18 35.39    10</span></a>
+<a class="sourceLine" id="cb8-22" data-line-number="22"><span class="co">#    de 18.94 19.20 19.99  19.86 20.44 21.82    10</span></a>
+<a class="sourceLine" id="cb8-23" data-line-number="23"><span class="co">#    nl 23.95 25.02 29.17  25.22 28.39 45.95    10</span></a>
+<a class="sourceLine" id="cb8-24" data-line-number="24"><span class="co">#    es 19.05 19.34 22.98  19.75 20.59 36.66    10</span></a>
+<a class="sourceLine" id="cb8-25" data-line-number="25"><span class="co">#    it 18.70 19.27 19.36  19.35 19.57 19.79    10</span></a>
+<a class="sourceLine" id="cb8-26" data-line-number="26"><span class="co">#    fr 18.54 19.07 21.03  19.24 19.37 37.92    10</span></a>
+<a class="sourceLine" id="cb8-27" data-line-number="27"><span class="co">#    pt 18.57 18.92 19.58  19.31 20.32 21.21    10</span></a></code></pre></div>
 <p>Currently supported are German, Dutch, Spanish, Italian, French and Portuguese.</p>
 </div>
   </div>
