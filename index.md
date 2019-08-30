@@ -10,8 +10,7 @@
 
 After installing this package, R knows [**~70,000 microorganisms**](./reference/microorganisms.html) (distinct microbial species) and [**~450 antibiotics**](./reference/antibiotics.html) by name and code, and knows all about valid RSI and MIC values. It supports any data format, including WHONET/EARS-Net data. 
 
-We created this package for both academic research and routine analysis at the Faculty of Medical Sciences of the University of Groningen, the Netherlands, and the Medical Microbiology & Infection Prevention (MMBI) department of the University Medical Center Groningen (UMCG).
-This R package is [actively maintained](./news) and is free software; you can freely use and distribute it for both personal and commercial (but **not** patent) purposes under the terms of the GNU General Public License version 2.0 (GPL-2), as published by the Free Software Foundation. Read the full license [here](./LICENSE-text.html).
+We created this package for both routine analysis and academic research (as part of our PhD theses) at the Faculty of Medical Sciences of the University of Groningen, the Netherlands, and the Medical Microbiology & Infection Prevention (MMBI) department of the University Medical Center Groningen (UMCG). This R package is [actively maintained](./news) and is free software (see [Copyright](#copyright)).
 
 **Used to SPSS?** Read our [tutorial on how to import data from SPSS, SAS or Stata](./articles/SPSS.html).
 
@@ -153,3 +152,27 @@ The `AMR` package basically does four important things:
        * Results of 40 antibiotics (each antibiotic in its own column) with a total ~40,000 antimicrobial results
        * Real and genuine data
      * The [`WHONET` data set](./reference/WHONET.html). This data set only contains fake data, but with the exact same structure as files exported by WHONET. Read more about WHONET [on its tutorial page](./articles/WHONET.html).
+
+### Copyright
+
+This R package is free, open-source software and licensed under the [GNU General Public License v2.0 (GPL-2)](./LICENSE-text.html). In a nutshell, this means that this package:
+
+- May be used for commercial purposes
+
+- May be used for private purposes
+
+- May **not** be used for patent purposes
+
+- May be modified, although:
+
+  - Modifications **must** be released under the same license when distributing the package
+  - Changes made to the code **must** be documented
+
+- May be distributed, although:
+
+  - Source code **must** be made available when the package is distributed
+  - A copy of the license and copyright notice **must** be included with the package.
+
+- Comes with a LIMITATION of liability
+
+- Comes with NO warranty

@@ -29,11 +29,22 @@ clean::freq
 #' @export
 #' @noRd
 freq.mo <- function(x, ...) {
+  x_noNA <- x[!is.na(x)]
+  grams <- mo_gramstain(x_noNA, language = NULL)
   freq.default(x = x, ...,
-               .add_header = list(families = n_distinct(mo_family(x, language = NULL)),
-                                  genera = n_distinct(mo_genus(x, language = NULL)),
-                                  species = n_distinct(paste(mo_genus(x, language = NULL),
-                                                             mo_species(x, language = NULL)))))
+               .add_header = list(`Gram-negative` = paste0(format(sum(grams == "Gram-negative", na.rm = TRUE),
+                                                                  big.mark = ",",
+                                                                  decimal.mark = "."),
+                                                           " (", percent(sum(grams == "Gram-negative", na.rm = TRUE) / length(grams), force_zero = TRUE),
+                                                           " of total)"),
+                                  `Gram-positive` = paste0(format(sum(grams == "Gram-positive", na.rm = TRUE),
+                                                                  big.mark = ",",
+                                                                  decimal.mark = "."),
+                                                           " (", percent(sum(grams == "Gram-positive", na.rm = TRUE) / length(grams), force_zero = TRUE),
+                                                           " of total)"),
+                                  genera = n_distinct(mo_genus(x_noNA, language = NULL)),
+                                  species = n_distinct(paste(mo_genus(x_noNA, language = NULL),
+                                                             mo_species(x_noNA, language = NULL)))))
 }
 
 #' @exportMethod freq.rsi

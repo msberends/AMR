@@ -25,9 +25,13 @@ test_that("frequency table works", {
   library(clean)
   # mo
   expect_true(is.freq(freq(example_isolates$mo)))
+  # for this to work, the output of mo_gramstain() is to be expected as follows:
+  expect_equal(mo_gramstain("B_ESCHR_COL"), "Gram-negative")
+  expect_equal(mo_gramstain("B_STPHY_AUR"), "Gram-positive")
+  
   # rsi
   expect_true(is.freq(freq(example_isolates$AMX)))
   library(dplyr)
-  expect_true(is.freq(example_isolates %>% freq(mo)))
+  expect_true(is.freq(example_isolates %>% freq(AMX)))
 })
 
