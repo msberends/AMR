@@ -692,7 +692,8 @@ exec_as.mo <- function(x,
         # - STEC (Shiga-toxin producing E. coli)
         # - UPEC (Uropathogenic E. coli)
         if (toupper(x_backup_without_spp[i]) %in% c("AIEC", "ATEC", "DAEC", "EAEC", "EHEC", "EIEC", "EPEC", "ETEC", "NMEC", "STEC", "UPEC")
-            | x_backup_without_spp[i] %like% "O?(26|103|104|104|111|121|145|157)") {
+            # also support O-antigens of E. coli: O26, O103, O104, O111, O121, O145, O157
+            | x_backup_without_spp[i] %like% "O?(26|103|104|111|121|145|157)") {
           x[i] <- microorganismsDT[mo == 'B_ESCHR_COL', ..property][[1]][1L]
           if (initial_search == TRUE) {
             set_mo_history(x_backup[i], get_mo_code(x[i], property), 0, force = force_mo_history)

@@ -36,12 +36,14 @@ fi
 sed -i -- "s/^Version: .*/Version: ${new_version}/" DESCRIPTION
 # update 1st line of NEWS.md
 sed -i -- "1s/.*/# AMR ${new_version}/" NEWS.md
+# add date to 2nd line of NEWS.md
+sed -i -- "2s/.*/\<small\>Last updated: $(date '+%d-%b-%Y')\<\/small\>/" NEWS.md
 rm *-- || true
 echo "• First 3 lines of DESCRIPTION:"
 head -3 DESCRIPTION
 echo
-echo "• First line of NEWS.md:"
-head -1 NEWS.md
+echo "• First 2 lines of NEWS.md:"
+head -2 NEWS.md
 echo
 echo "•••••••••••••••••••••••••••••••••"
 echo "• Reloading/documenting package •"

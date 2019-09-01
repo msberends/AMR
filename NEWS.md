@@ -1,4 +1,5 @@
-# AMR 0.7.1.9068
+# AMR 0.7.1.9069
+<small>Last updated: 01-Sep-2019</small>
 
 ### Breaking
 * Determination of first isolates now **excludes** all 'unknown' microorganisms at default, i.e. microbial code `"UNKNOWN"`. They can be included with the new parameter `include_unknown`:
@@ -26,7 +27,7 @@
 ### New
 * Function `bug_drug_combinations()` to quickly get a `data.frame` with the antimicrobial resistance of any bug-drug combination in a data set:
   ```r
-  x <- bug_drug_combinations(septic_patients)
+  x <- bug_drug_combinations(example_isolates)
   x
   #>      ab          mo   S  I   R total
   #> 1   AMC B_ESCHR_COL 332 74  61   467
@@ -65,7 +66,7 @@
   ```r
   # (run this on your own console, as this page does not support colour printing)
   library(dplyr)
-  septic_patients %>%
+  example_isolates %>%
     select(mo:AMC) %>% 
     as_tibble()
   ```

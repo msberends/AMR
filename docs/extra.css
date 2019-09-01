@@ -109,6 +109,9 @@ kbd {
 li, p {
   line-height: 1.5;
 }
+li p {
+  margin-top: 10.5px;
+}
 
 /* slightly smaller blockquote */
 blockquote {

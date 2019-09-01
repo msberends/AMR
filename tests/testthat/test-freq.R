@@ -26,8 +26,8 @@ test_that("frequency table works", {
   # mo
   expect_true(is.freq(freq(example_isolates$mo)))
   # for this to work, the output of mo_gramstain() is to be expected as follows:
-  expect_equal(mo_gramstain("B_ESCHR_COL"), "Gram-negative")
-  expect_equal(mo_gramstain("B_STPHY_AUR"), "Gram-positive")
+  expect_equal(mo_gramstain("B_ESCHR_COL", language = NULL), "Gram-negative")
+  expect_equal(mo_gramstain("B_STPHY_AUR", language = NULL), "Gram-positive")
   
   # rsi
   expect_true(is.freq(freq(example_isolates$AMX)))
