@@ -80,7 +80,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">0.7.1.9055</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">0.7.1.9070</span>
       </span>
     </div>
 
@@ -234,7 +234,7 @@
     
     </div>
 
-    <pre class="usage"><span class='fu'>age</span>(<span class='no'>x</span>, <span class='kw'>reference</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/Sys.time'>Sys.Date</a></span>(), <span class='kw'>exact</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
+    <pre class="usage"><span class='fu'>age</span>(<span class='no'>x</span>, <span class='kw'>reference</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/Sys.time'>Sys.Date</a></span>(), <span class='kw'>exact</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>na.rm</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -251,6 +251,10 @@
       <th>exact</th>
       <td><p>a logical to indicate whether age calculation should be exact, i.e. with decimals. It divides the number of days of <a href='https://en.wikipedia.org/wiki/Year-to-date'>year-to-date</a> (YTD) of <code>x</code> by the number of days in a year of <code>reference</code> (either 365 or 366).</p></td>
     </tr>
+    <tr>
+      <th>na.rm</th>
+      <td><p>a logical to indicate whether missing values should be removed</p></td>
+    </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
@@ -264,7 +268,7 @@
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><code><a href='age_groups.html'>age_groups</a></code> to split age into age groups</p></div>
+    <div class='dont-index'><p>To split ages into groups, use the <code><a href='age_groups.html'>age_groups</a></code> function.</p></div>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
@@ -298,7 +302,7 @@
 
       <footer>
       <div class="copyright">
-  <p>Developed by <a href='https://www.rug.nl/staff/m.s.berends/'>Matthijs S. Berends</a>, <a href='https://www.rug.nl/staff/c.f.luz/'>Christian F. Luz</a>, <a href='https://www.rug.nl/staff/a.w.friedrich/'>Alex W. Friedrich</a>, <a href='https://www.rug.nl/staff/b.sinha/'>Bhanu N. M. Sinha</a>, <a href='https://www.rug.nl/staff/c.glasner/'>Corinna Glasner</a>.</p>
+  <p>Developed by <a href='https://www.rug.nl/staff/m.s.berends/'>Matthijs S. Berends</a>, <a href='https://www.rug.nl/staff/c.f.luz/'>Christian F. Luz</a>, <a href='https://www.rug.nl/staff/a.w.friedrich/'>Alex W. Friedrich</a>, <a href='https://www.rug.nl/staff/b.sinha/'>Bhanu N. M. Sinha</a>, <a href='https://www.rug.nl/staff/c.j.albers/'>Casper J. Albers</a>, <a href='https://www.rug.nl/staff/c.glasner/'>Corinna Glasner</a>.</p>
 </div>
 
 <div class="pkgdown">

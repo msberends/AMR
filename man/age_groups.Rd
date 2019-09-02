@@ -4,12 +4,14 @@
 \alias{age_groups}
 \title{Split ages into age groups}
 \usage{
-age_groups(x, split_at = c(12, 25, 55, 75))
+age_groups(x, split_at = c(12, 25, 55, 75), na.rm = FALSE)
 }
 \arguments{
 \item{x}{age, e.g. calculated with \code{\link{age}}}
 
 \item{split_at}{values to split \code{x} at, defaults to age groups 0-11, 12-24, 25-54, 55-74 and 75+. See Details.}
+
+\item{na.rm}{a logical to indicate whether missing values should be removed}
 }
 \value{
 Ordered \code{\link{factor}}
@@ -68,7 +70,7 @@ example_isolates \%>\%
   ggplot_rsi(x = "age_group")
 }
 \seealso{
-\code{\link{age}} to determine ages based on one or more reference dates
+To determine ages, based on one or more reference dates, use the \code{\link{age}} function.
 }
 \keyword{age}
 \keyword{age_group}

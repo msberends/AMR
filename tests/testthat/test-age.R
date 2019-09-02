@@ -40,6 +40,10 @@ test_that("age works", {
 
   expect_warning(age(x = c("1800-01-01", "1805-01-01", "1810-01-01"),
                      reference = "2019-01-01"))
+  
+  expect_equal(length(age(x = c("2019-01-01", NA), na.rm = TRUE)),
+               1)
+  
 })
 
 test_that("age_groups works", {
@@ -60,5 +64,8 @@ test_that("age_groups works", {
 
   expect_identical(class(age_groups(ages, "fives")),
                    c("ordered", "factor"))
+  
+  expect_equal(length(age_groups(c(10, 20, 30, NA), na.rm = TRUE)),
+               3)
 
 })
