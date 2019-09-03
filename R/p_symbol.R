@@ -27,34 +27,16 @@
 #' @return Text
 #' @inheritSection AMR Read more on our website!
 #' @export
-p.symbol <- function(p, emptychar = " ") {
-  setting.bak <- options()$scipen
-  options(scipen = 999)
-  s <- vector(mode = "character", length = length(p))
-  for (i in 1:length(p)) {
-    if (is.na(p[i])) {
-      s[i] <- NA_character_
-      next
-    }
-    if (p[i] > 1) {
-      s[i] <- NA_character_
-      next
-    } else {
-      p_test <- p[i]
-    }
+p_symbol <- function(p, emptychar = " ") {
 
-    if (p_test > 0.1) {
-      s[i] <- emptychar
-    } else if (p_test > 0.05) {
-      s[i] <- '.'
-    } else if (p_test > 0.01) {
-      s[i] <- '*'
-    } else if (p_test > 0.001) {
-      s[i] <- '**'
-    } else if (p_test >= 0) {
-      s[i] <- '***'
-    }
-  }
-  options(scipen = setting.bak)
+  p <- as.double(p)
+  s <- rep(NA_character_, length(p))
+
+  s[p <= 1] <- emptychar
+  s[p <= 0.100] <- "."
+  s[p <= 0.050] <- "*"
+  s[p <= 0.010] <- "**"
+  s[p <= 0.001] <- "***"
+  
   s
 }

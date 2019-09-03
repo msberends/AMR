@@ -31,3 +31,10 @@ as.atc <- function(x) {
   .Deprecated("ab_atc", package = "AMR")
   AMR::ab_atc(x)
 }
+
+#' @rdname AMR-deprecated
+#' @export
+p.symbol <- function(...) {
+  .Deprecated("p_symbol", package = "AMR")
+  AMR::p_symbol(...)
+}

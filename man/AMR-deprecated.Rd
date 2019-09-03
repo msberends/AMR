@@ -3,9 +3,12 @@
 \name{AMR-deprecated}
 \alias{AMR-deprecated}
 \alias{as.atc}
+\alias{p.symbol}
 \title{Deprecated functions}
 \usage{
 as.atc(x)
+
+p.symbol(...)
 }
 \description{
 These functions are so-called '\link{Deprecated}'. They will be removed in a future release. Using the functions will give a warning with the name of the function it has been replaced by (if there is one).

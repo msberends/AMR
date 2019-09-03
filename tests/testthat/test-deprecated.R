@@ -35,4 +35,7 @@ test_that("deprecated functions work", {
                                                         AMC_ED20 = "S"),
                                              as.atc("augmentin"))),
                "AMC_ED20")
+  
+  expect_identical(suppressWarnings(p.symbol(seq(0, 1, 0.001))),
+                   p_symbol(seq(0, 1, 0.001)))
 })
