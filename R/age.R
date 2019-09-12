@@ -145,6 +145,10 @@ age_groups <- function(x, split_at = c(12, 25, 55, 75), na.rm = FALSE) {
   if (!is.numeric(x)) {
     stop("`x` and must be numeric, not a ", paste0(class(x), collapse = "/"), ".")
   }
+  if (any(x < 0, na.rm = TRUE)) {
+    x[x < 0] <- NA
+    warning("NAs introduced for ages below 0.")
+  }
   if (is.character(split_at)) {
     split_at <- split_at[1L]
     if (split_at %like% "^(child|kid|junior)") {

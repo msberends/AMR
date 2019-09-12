@@ -184,25 +184,28 @@ key_antibiotics <- function(x,
 
   # join to microorganisms data set
   x <- x %>%
+    as.data.frame(stringsAsFactors = FALSE) %>% 
     mutate_at(vars(col_mo), as.mo) %>%
     left_join_microorganisms(by = col_mo) %>%
     mutate(key_ab = NA_character_,
-           gramstain = mo_gramstain(pull(., col_mo)))
-
+           gramstain = mo_gramstain(pull(., col_mo), language = NULL))
+  
   # Gram +
   x <- x %>% mutate(key_ab =
                       if_else(gramstain == "Gram-positive",
-                              apply(X = x[, gram_positive],
-                                    MARGIN = 1,
-                                    FUN = function(x) paste(x, collapse = "")),
+                              tryCatch(apply(X = x[, gram_positive],
+                                             MARGIN = 1,
+                                             FUN = function(x) paste(x, collapse = "")),
+                                       error = function(e) paste0(rep(".", 12), collapse = "")),
                               key_ab))
-
+  
   # Gram -
   x <- x %>% mutate(key_ab =
                       if_else(gramstain == "Gram-negative",
-                              apply(X = x[, gram_negative],
-                                    MARGIN = 1,
-                                    FUN = function(x) paste(x, collapse = "")),
+                              tryCatch(apply(X = x[, gram_negative],
+                                             MARGIN = 1,
+                                             FUN = function(x) paste(x, collapse = "")),
+                                       error = function(e) paste0(rep(".", 12), collapse = "")),
                               key_ab))
 
   # format
@@ -211,6 +214,10 @@ key_antibiotics <- function(x,
     gsub('(NA|NULL)', '.', .) %>%
     gsub('[^SIR]', '.', ., ignore.case = TRUE) %>%
     toupper()
+  
+  if (n_distinct(key_abs) == 1) {
+    warning("No distinct key antibiotics determined.", call. = FALSE)
+  }
 
   key_abs
 

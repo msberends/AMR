@@ -19,287 +19,17 @@
 # Visit our website for more info: https://msberends.gitlab.io/AMR.    #
 # ==================================================================== #
 
-#' Transform to microorganism ID
-#'
-#' Use this function to determine a valid microorganism ID (\code{mo}). Determination is done using intelligent rules and the complete taxonomic kingdoms Bacteria, Chromista, Protozoa, Archaea and most microbial species from the kingdom Fungi (see Source). The input can be almost anything: a full name (like \code{"Staphylococcus aureus"}), an abbreviated name (like \code{"S. aureus"}), an abbreviation known in the field (like \code{"MRSA"}), or just a genus. Please see Examples.
-#' @param x a character vector or a \code{data.frame} with one or two columns
-#' @param Becker a logical to indicate whether \emph{Staphylococci} should be categorised into coagulase-negative \emph{Staphylococci} ("CoNS") and coagulase-positive \emph{Staphylococci} ("CoPS") instead of their own species, according to Karsten Becker \emph{et al.} [1,2]. Note that this does not include species that were newly named after these publications, like \emph{S. caeli}.
-#'
-#'   This excludes \emph{Staphylococcus aureus} at default, use \code{Becker = "all"} to also categorise \emph{S. aureus} as "CoPS".
-#' @param Lancefield a logical to indicate whether beta-haemolytic \emph{Streptococci} should be categorised into Lancefield groups instead of their own species, according to Rebecca C. Lancefield [3]. These \emph{Streptococci} will be categorised in their first group, e.g. \emph{Streptococcus dysgalactiae} will be group C, although officially it was also categorised into groups G and L.
-#'
-#'   This excludes \emph{Enterococci} at default (who are in group D), use \code{Lancefield = "all"} to also categorise all \emph{Enterococci} as group D.
-#' @param allow_uncertain a number between 0 (or "none") and 3 (or "all"), or TRUE (= 2) or FALSE (= 0) to indicate whether the input should be checked for less possible results, see Details
-#' @param reference_df a \code{data.frame} to use for extra reference when translating \code{x} to a valid \code{mo}. See \code{\link{set_mo_source}} and \code{\link{get_mo_source}} to automate the usage of your own codes (e.g. used in your analysis or organisation).
-#' @param ... other parameters passed on to functions
-#' @rdname as.mo
-#' @aliases mo
-#' @keywords mo Becker becker Lancefield lancefield guess
-#' @details
-#' \strong{General info} \cr
-#' A microbial ID from this package (class: \code{mo}) typically looks like these examples:\cr
-#' \preformatted{
-#'   Code              Full name
-#'   ---------------   --------------------------------------
-#'   B_KLBSL           Klebsiella
-#'   B_KLBSL_PNE       Klebsiella pneumoniae
-#'   B_KLBSL_PNE_RHI   Klebsiella pneumoniae rhinoscleromatis
-#'   |   |    |   |
-#'   |   |    |   |
-#'   |   |    |    ----> subspecies, a 3-4 letter acronym
-#'   |   |     ----> species, a 3-4 letter acronym
-#'   |    ----> genus, a 5-7 letter acronym, mostly without vowels
-#'    ----> taxonomic kingdom: A (Archaea), AN (Animalia), B (Bacteria),
-#'                             C (Chromista), F (Fungi), P (Protozoa)
-#' }
-#'
-#' Values that cannot be coered will be considered 'unknown' and will get the MO code \code{UNKNOWN}.
-#'
-#' Use the \code{\link{mo_property}_*} functions to get properties based on the returned code, see Examples.
-#'
-#' The algorithm uses data from the Catalogue of Life (see below) and from one other source (see \code{?microorganisms}).
-#'
-# /// THIS PART WAS DELETED FROM THE MAN PAGE
-# \strong{Self-learning algoritm} \cr
-# The \code{as.mo()} function gains experience from previously determined microbial IDs and learns from it. This drastically improves both speed and reliability. Use \code{clean_mo_history()} to reset the algorithms. Only experience from your current \code{AMR} package version is used. This is done because in the future the taxonomic tree (which is included in this package) may change for any organism and it consequently has to rebuild its knowledge.
-#
-# Usually, any guess after the first try runs 80-95\% faster than the first try.
-#
-# For now, learning only works per session. If R is closed or terminated, the algorithms reset. This will probably be resolved in a next version.
-# ////
-#' \strong{Intelligent rules} \cr
-#' This function uses intelligent rules to help getting fast and logical results. It tries to find matches in this order:
-#' \itemize{
-#'   \item{Valid MO codes and full names: it first searches in already valid MO code and known genus/species combinations}
-#'   \item{Human pathogenic prevalence: it first searches in more prevalent microorganisms, then less prevalent ones (see \emph{Microbial prevalence of pathogens in humans} below)}
-#'   \item{Taxonomic kingdom: it first searches in Bacteria/Chromista, then Fungi, then Protozoa}
-#'   \item{Breakdown of input values: from here it starts to breakdown input values to find possible matches}
-#' }
-#'
-#' A couple of effects because of these rules:
-#' \itemize{
-#'   \item{\code{"E. coli"} will return the ID of \emph{Escherichia coli} and not \emph{Entamoeba coli}, although the latter would alphabetically come first}
-#'   \item{\code{"H. influenzae"} will return the ID of \emph{Haemophilus influenzae} and not \emph{Haematobacter influenzae} for the same reason}
-#'   \item{Something like \code{"stau"} or \code{"S aur"} will return the ID of \emph{Staphylococcus aureus} and not \emph{Staphylococcus auricularis}}
-#' }
-#' This means that looking up human pathogenic microorganisms takes less time than looking up human non-pathogenic microorganisms.
-#'
-#' \strong{Uncertain results} \cr
-#' The algorithm can additionally use three different levels of uncertainty to guess valid results. The default is \code{allow_uncertain = TRUE}, which is equal to uncertainty level 2. Using \code{allow_uncertain = FALSE} will skip all of these additional rules:
-#' \itemize{
-#'   \item{(uncertainty level 1): It tries to look for only matching genera, previously accepted (but now invalid) taxonomic names and misspelled input}
-#'   \item{(uncertainty level 2): It removed parts between brackets, strips off words from the end one by one and re-evaluates the input with all previous rules}
-#'   \item{(uncertainty level 3): It strips off words from the start one by one and tries any part of the name}
-#' }
-#'
-#' You can also use e.g. \code{as.mo(..., allow_uncertain = 1)} to only allow up to level 1 uncertainty.
-#'
-#' Examples:
-#' \itemize{
-#'   \item{\code{"Streptococcus group B (known as S. agalactiae)"}. The text between brackets will be removed and a warning will be thrown that the result \emph{Streptococcus group B} (\code{B_STRPT_GRB}) needs review.}
-#'   \item{\code{"S. aureus - please mind: MRSA"}. The last word will be stripped, after which the function will try to find a match. If it does not, the second last word will be stripped, etc. Again, a warning will be thrown that the result \emph{Staphylococcus aureus} (\code{B_STPHY_AUR}) needs review.}
-#'   \item{\code{"Fluoroquinolone-resistant Neisseria gonorrhoeae"}. The first word will be stripped, after which the function will try to find a match. A warning will be thrown that the result \emph{Neisseria gonorrhoeae} (\code{B_NESSR_GON}) needs review.}
-#' }
-#'
-#' Use \code{mo_failures()} to get a vector with all values that could not be coerced to a valid value.
-#'
-#' Use \code{mo_uncertainties()} to get a data.frame with all values that were coerced to a valid value, but with uncertainty.
-#'
-#' Use \code{mo_renamed()} to get a vector with all values that could be coerced based on an old, previously accepted taxonomic name.
-#'
-#' \strong{Microbial prevalence of pathogens in humans} \cr
-#' The intelligent rules take into account microbial prevalence of pathogens in humans. It uses three groups and all (sub)species are in only one group. These groups are:
-#' \itemize{
-#'   \item{1 (most prevalent): class is Gammaproteobacteria \strong{or} genus is one of: \emph{Enterococcus}, \emph{Staphylococcus}, \emph{Streptococcus}.}
-#'   \item{2: phylum is one of: Proteobacteria, Firmicutes, Actinobacteria, Sarcomastigophora \strong{or} genus is one of: \emph{Aspergillus}, \emph{Bacteroides}, \emph{Candida}, \emph{Capnocytophaga}, \emph{Chryseobacterium}, \emph{Cryptococcus}, \emph{Elisabethkingia}, \emph{Flavobacterium}, \emph{Fusobacterium}, \emph{Giardia}, \emph{Leptotrichia}, \emph{Mycoplasma}, \emph{Prevotella}, \emph{Rhodotorula}, \emph{Treponema}, \emph{Trichophyton}, \emph{Ureaplasma}.}
-#'   \item{3 (least prevalent): all others.}
-#' }
-#'
-#' Group 1 contains all common Gram positives and Gram negatives, like all Enterobacteriaceae and e.g. \emph{Pseudomonas} and \emph{Legionella}.
-#'
-#' Group 2 probably contains less microbial pathogens; all other members of phyla that were found in humans in the Northern Netherlands between 2001 and 2018.
-#' @inheritSection catalogue_of_life Catalogue of Life
-#  (source as a section here, so it can be inherited by other man pages:)
-#' @section Source:
-#' [1] Becker K \emph{et al.} \strong{Coagulase-Negative Staphylococci}. 2014. Clin Microbiol Rev. 27(4): 870–926. \url{https://dx.doi.org/10.1128/CMR.00109-13}
-#'
-#' [2] Becker K \emph{et al.} \strong{Implications of identifying the recently defined members of the \emph{S. aureus} complex, \emph{S. argenteus} and \emph{S. schweitzeri}: A position paper of members of the ESCMID Study Group for staphylococci and Staphylococcal Diseases (ESGS).} 2019. Clin Microbiol Infect. \url{https://doi.org/10.1016/j.cmi.2019.02.028}
-#'
-#' [3] Lancefield RC \strong{A serological differentiation of human and other groups of hemolytic streptococci}. 1933. J Exp Med. 57(4): 571–95. \url{https://dx.doi.org/10.1084/jem.57.4.571}
-#'
-#' [4] Catalogue of Life: Annual Checklist (public online taxonomic database), \url{http://www.catalogueoflife.org} (check included annual version with \code{\link{catalogue_of_life_version}()}).
-#' @export
-#' @return Character (vector) with class \code{"mo"}
-#' @seealso \code{\link{microorganisms}} for the \code{data.frame} that is being used to determine ID's. \cr
-#' The \code{\link{mo_property}} functions (like \code{\link{mo_genus}}, \code{\link{mo_gramstain}}) to get properties based on the returned code.
-#' @inheritSection AMR Read more on our website!
-#' @importFrom dplyr %>% pull left_join
-#' @examples
-#' \donttest{
-#' # These examples all return "B_STPHY_AUR", the ID of S. aureus:
-#' as.mo("sau") # WHONET code
-#' as.mo("stau")
-#' as.mo("STAU")
-#' as.mo("staaur")
-#' as.mo("S. aureus")
-#' as.mo("S aureus")
-#' as.mo("Staphylococcus aureus")
-#' as.mo("Staphylococcus aureus (MRSA)")
-#' as.mo("Sthafilokkockus aaureuz") # handles incorrect spelling
-#' as.mo("MRSA")   # Methicillin Resistant S. aureus
-#' as.mo("VISA")   # Vancomycin Intermediate S. aureus
-#' as.mo("VRSA")   # Vancomycin Resistant S. aureus
-#' as.mo(22242419) # Catalogue of Life ID
-#'
-#' # Dyslexia is no problem - these all work:
-#' as.mo("Ureaplasma urealyticum")
-#' as.mo("Ureaplasma urealyticus")
-#' as.mo("Ureaplasmium urealytica")
-#' as.mo("Ureaplazma urealitycium")
-#'
-#' as.mo("Streptococcus group A")
-#' as.mo("GAS") # Group A Streptococci
-#' as.mo("GBS") # Group B Streptococci
-#'
-#' as.mo("S. epidermidis")                 # will remain species: B_STPHY_EPI
-#' as.mo("S. epidermidis", Becker = TRUE)  # will not remain species: B_STPHY_CNS
-#'
-#' as.mo("S. pyogenes")                    # will remain species: B_STRPT_PYO
-#' as.mo("S. pyogenes", Lancefield = TRUE) # will not remain species: B_STRPT_GRA
-#'
-#' # All mo_* functions use as.mo() internally too (see ?mo_property):
-#' mo_genus("E. coli")           # returns "Escherichia"
-#' mo_gramstain("E. coli")       # returns "Gram negative"
-#' 
-#' }
-#' \dontrun{
-#' df$mo <- as.mo(df$microorganism_name)
-#'
-#' # the select function of tidyverse is also supported:
-#' library(dplyr)
-#' df$mo <- df %>%
-#'   select(microorganism_name) %>%
-#'   as.mo()
-#'
-#' # and can even contain 2 columns, which is convenient for genus/species combinations:
-#' df$mo <- df %>%
-#'   select(genus, species) %>%
-#'   as.mo()
-#' # although this works easier and does the same:
-#' df <- df %>%
-#'   mutate(mo = as.mo(paste(genus, species)))
-#' }
-as.mo <- function(x, Becker = FALSE, Lancefield = FALSE, allow_uncertain = TRUE, reference_df = get_mo_source(), ...) {
-  if (!"AMR" %in% base::.packages()) {
-    require("AMR")
-    # check onLoad() in R/zzz.R: data tables are created there.
-  }
-  
-  # WHONET: xxx = no growth
-  x[tolower(as.character(paste0(x, ""))) %in% c("", "xxx", "na", "nan")] <- NA_character_
-  
-  uncertainty_level <- translate_allow_uncertain(allow_uncertain)
-  # mo_hist <- get_mo_history(x, uncertainty_level, force = isTRUE(list(...)$force_mo_history))
-  
-  if (mo_source_isvalid(reference_df)
-      & isFALSE(Becker)
-      & isFALSE(Lancefield)
-      & !is.null(reference_df)
-      & all(x %in% reference_df[,1][[1]])) {
-    
-    # has valid own reference_df
-    # (data.table not faster here)
-    reference_df <- reference_df %>% filter(!is.na(mo))
-    # keep only first two columns, second must be mo
-    if (colnames(reference_df)[1] == "mo") {
-      reference_df <- reference_df[, c(2, 1)]
-    } else {
-      reference_df <- reference_df[, c(1, 2)]
-    }
-    colnames(reference_df)[1] <- "x"
-    # remove factors, just keep characters
-    suppressWarnings(
-      reference_df[] <- lapply(reference_df, as.character)
-    )
-    suppressWarnings(
-      y <- data.frame(x = x, stringsAsFactors = FALSE) %>%
-        left_join(reference_df, by = "x") %>%
-        pull("mo")
-    )
-    
-  } else if (all(x %in% AMR::microorganisms$mo)
-             & isFALSE(Becker)
-             & isFALSE(Lancefield)) {
-    y <- x
-    
-    # } else if (!any(is.na(mo_hist))
-    #            & isFALSE(Becker)
-    #            & isFALSE(Lancefield)) {
-    #   # check previously found results
-    #   y <- mo_hist
-    
-  } else if (all(tolower(x) %in% microorganismsDT$fullname_lower)
-             & isFALSE(Becker)
-             & isFALSE(Lancefield)) {
-    # we need special treatment for very prevalent full names, they are likely! (case insensitive)
-    # e.g. as.mo("Staphylococcus aureus")
-    y <- microorganismsDT[prevalence == 1][data.table(fullname_lower = tolower(x)),
-                                           on = "fullname_lower",
-                                           "mo"][[1]]
-    if (any(is.na(y))) {
-      y[is.na(y)] <- microorganismsDT[prevalence == 2][data.table(fullname_lower = tolower(x[is.na(y)])),
-                                                       on = "fullname_lower",
-                                                       "mo"][[1]]
-    }
-    if (any(is.na(y))) {
-      y[is.na(y)] <- microorganismsDT[prevalence == 3][data.table(fullname_lower = tolower(x[is.na(y)])),
-                                                       on = "fullname_lower",
-                                                       "mo"][[1]]
-    }
-    # save them to history
-    set_mo_history(x, y, 0, force = isTRUE(list(...)$force_mo_history))
-    
-  } else {
-    # will be checked for mo class in validation and uses exec_as.mo internally if necessary
-    y <- mo_validate(x = x, property = "mo",
-                     Becker = Becker, Lancefield = Lancefield,
-                     allow_uncertain = uncertainty_level, reference_df = reference_df,
-                     force_mo_history = isTRUE(list(...)$force_mo_history),
-                     ...)
-  }
-  
-  
-  to_class_mo(y)
-}
-
-to_class_mo <- function(x) {
-  structure(.Data = x, class = "mo")
-}
-
-#' @rdname as.mo
-#' @export
-is.mo <- function(x) {
-  identical(class(x), class(to_class_mo(x)))
-}
-
-#' @importFrom dplyr %>% pull left_join n_distinct progress_estimated filter distinct
-#' @importFrom data.table data.table as.data.table setkey
-#' @importFrom crayon magenta red blue silver italic
-# param property a column name of AMR::microorganisms
-# param initial_search logical - is FALSE when coming from uncertain tries, which uses exec_as.mo internally too
-# param dyslexia_mode logical - also check for characters that resemble others
-# param force_mo_history logical - whether found result must be saved with set_mo_history (default FALSE on non-interactive sessions)
-# param debug logical - show different lookup texts while searching
-exec_as.mo <- function(x,
-                       Becker = FALSE,
-                       Lancefield = FALSE,
-                       allow_uncertain = TRUE,
-                       reference_df = get_mo_source(),
-                       property = "mo",
-                       initial_search = TRUE,
-                       dyslexia_mode = FALSE,
-                       force_mo_history = FALSE,
-                       debug = FALSE) {
+# THIS IS A TEST FUNCTION
+as.mo2 <- function(x,
+                      Becker = FALSE,
+                      Lancefield = FALSE,
+                      allow_uncertain = TRUE,
+                      reference_df = get_mo_source(),
+                      property = "mo",
+                      initial_search = TRUE,
+                      dyslexia_mode = FALSE,
+                      force_mo_history = FALSE,
+                      debug = FALSE) {
   
   if (!"AMR" %in% base::.packages()) {
     require("AMR")
@@ -346,17 +76,18 @@ exec_as.mo <- function(x,
   failures <- character(0)
   uncertainty_level <- translate_allow_uncertain(allow_uncertain)
   
-  x_input <- x
+  
+  # x_input <- x
   # already strip leading and trailing spaces
-  x <- trimws(x, which = "both")
+  #x <- trimws(x, which = "both")
   # only check the uniques, which is way faster
-  x <- unique(x)
+  #x <- unique(x)
   # remove empty values (to later fill them in again with NAs)
   # ("xxx" is WHONET code for 'no growth')
-  x <- x[!is.na(x)
-         & !is.null(x)
-         & !identical(x, "")
-         & !identical(x, "xxx")]
+  # x <- x[!is.na(x)
+  #        & !is.null(x)
+  #        & !identical(x, "")
+  #        & !identical(x, "xxx")]
   
   # conversion of old MO codes from v0.5.0 (ITIS) to later versions (Catalogue of Life)
   if (any(x %like% "^[BFP]_[A-Z]{3,7}") & !all(x %in% microorganisms$mo)) {
@@ -380,104 +111,116 @@ exec_as.mo <- function(x,
     }
   }
   
-  # defined df to check for
-  if (!is.null(reference_df)) {
-    if (!mo_source_isvalid(reference_df)) {
-      stop("`reference_df` must contain a column `mo` with values from the 'microorganisms' data set.", call. = FALSE)
-    }
-    reference_df <- reference_df %>% filter(!is.na(mo))
-    # keep only first two columns, second must be mo
-    if (colnames(reference_df)[1] == "mo") {
-      reference_df <- reference_df[, c(2, 1)]
-    } else {
-      reference_df <- reference_df[, c(1, 2)]
-    }
-    colnames(reference_df)[1] <- "x"
-    # remove factors, just keep characters
-    suppressWarnings(
-      reference_df[] <- lapply(reference_df, as.character)
-    )
-  }
-  
-  # all empty
-  if (all(identical(trimws(x_input), "") | is.na(x_input) | length(x) == 0)) {
-    if (property == "mo") {
-      return(to_class_mo(rep(NA_character_, length(x_input))))
-    } else {
-      return(rep(NA_character_, length(x_input)))
-    }
-    
-  } else if (all(x %in% reference_df[, 1][[1]])) {
-    # all in reference df
-    colnames(reference_df)[1] <- "x"
-    suppressWarnings(
-      x <- data.frame(x = x, stringsAsFactors = FALSE) %>%
-        left_join(reference_df, by = "x") %>%
-        left_join(AMR::microorganisms, by = "mo") %>%
-        pull(property)
-    )
-    
-  } else if (all(x %in% AMR::microorganisms$mo)) {
-    # existing mo codes when not looking for property "mo", like mo_genus("B_ESCHR_COL")
-    y <- microorganismsDT[prevalence == 1][data.table(mo = x), on = "mo", ..property][[1]]
-    if (any(is.na(y))) {
-      y[is.na(y)] <- microorganismsDT[prevalence == 2][data.table(mo = x[is.na(y)]),
-                                                       on = "mo",
-                                                       ..property][[1]]
-    }
-    if (any(is.na(y))) {
-      y[is.na(y)] <- microorganismsDT[prevalence == 3][data.table(mo = x[is.na(y)]),
-                                                       on = "mo",
-                                                       ..property][[1]]
-    }
-    x <- y
-    
-    # } else if (all(x %in% read_mo_history(uncertainty_level,
-    #                                       force = force_mo_history)$x)) {
-    #   # previously found code
-    #   x <- microorganismsDT[data.table(mo = get_mo_history(x,
-    #                                                        uncertainty_level,
-    #                                                        force = force_mo_history)),
-    #                         on = "mo", ..property][[1]]
-    
-  } else if (all(tolower(x) %in% microorganismsDT$fullname_lower)) {
-    # we need special treatment for very prevalent full names, they are likely!
-    # e.g. as.mo("Staphylococcus aureus")
-    y <- microorganismsDT[prevalence == 1][data.table(fullname_lower = tolower(x)), on = "fullname_lower", ..property][[1]]
-    if (any(is.na(y))) {
-      y[is.na(y)] <- microorganismsDT[prevalence == 2][data.table(fullname_lower = tolower(x[is.na(y)])),
-                                                       on = "fullname_lower",
-                                                       ..property][[1]]
-    }
-    if (any(is.na(y))) {
-      y[is.na(y)] <- microorganismsDT[prevalence == 3][data.table(fullname_lower = tolower(x[is.na(y)])),
-                                                       on = "fullname_lower",
-                                                       ..property][[1]]
-    }
-    x <- y
-    
-  } else if (all(toupper(x) %in% AMR::microorganisms.codes$code)) {
-    # commonly used MO codes
-    y <- as.data.table(AMR::microorganisms.codes)[data.table(code = toupper(x)), on = "code", ]
-    # save them to history
-    set_mo_history(x, y$mo, 0, force = force_mo_history)
-    
-    x <- microorganismsDT[data.table(mo = y[["mo"]]), on = "mo", ..property][[1]]
-    
-  } else if (!all(x %in% AMR::microorganisms[, property])) {
-    
+  # # defined df to check for
+  # if (!is.null(reference_df)) {
+  #   if (!mo_source_isvalid(reference_df)) {
+  #     stop("`reference_df` must contain a column `mo` with values from the 'microorganisms' data set.", call. = FALSE)
+  #   }
+  #   reference_df <- reference_df %>% filter(!is.na(mo))
+  #   # keep only first two columns, second must be mo
+  #   if (colnames(reference_df)[1] == "mo") {
+  #     reference_df <- reference_df[, c(2, 1)]
+  #   } else {
+  #     reference_df <- reference_df[, c(1, 2)]
+  #   }
+  #   colnames(reference_df)[1] <- "x"
+  #   # remove factors, just keep characters
+  #   suppressWarnings(
+  #     reference_df[] <- lapply(reference_df, as.character)
+  #   )
+  # }
+  # 
+  # # all empty
+  # if (all(identical(trimws(x_input), "") | is.na(x_input) | length(x) == 0)) {
+  #   if (property == "mo") {
+  #     return(to_class_mo(rep(NA_character_, length(x_input))))
+  #   } else {
+  #     return(rep(NA_character_, length(x_input)))
+  #   }
+  #   
+  # } else if (all(x %in% reference_df[, 1][[1]])) {
+  #   # all in reference df
+  #   colnames(reference_df)[1] <- "x"
+  #   suppressWarnings(
+  #     x <- data.frame(x = x, stringsAsFactors = FALSE) %>%
+  #       left_join(reference_df, by = "x") %>%
+  #       left_join(AMR::microorganisms, by = "mo") %>%
+  #       pull(property)
+  #   )
+  #   
+  # } else if (all(x %in% AMR::microorganisms$mo)) {
+  #   # existing mo codes when not looking for property "mo", like mo_genus("B_ESCHR_COL")
+  #   y <- microorganismsDT[prevalence == 1][data.table(mo = x), on = "mo", ..property][[1]]
+  #   if (any(is.na(y))) {
+  #     y[is.na(y)] <- microorganismsDT[prevalence == 2][data.table(mo = x[is.na(y)]),
+  #                                                      on = "mo",
+  #                                                      ..property][[1]]
+  #   }
+  #   if (any(is.na(y))) {
+  #     y[is.na(y)] <- microorganismsDT[prevalence == 3][data.table(mo = x[is.na(y)]),
+  #                                                      on = "mo",
+  #                                                      ..property][[1]]
+  #   }
+  #   x <- y
+  #   
+  # # } else if (all(x %in% read_mo_history(uncertainty_level,
+  # #                                       force = force_mo_history)$x)) {
+  # #   # previously found code
+  # #   x <- microorganismsDT[data.table(mo = get_mo_history(x,
+  # #                                                        uncertainty_level,
+  # #                                                        force = force_mo_history)),
+  # #                         on = "mo", ..property][[1]]
+  #   
+  # } else if (all(tolower(x) %in% microorganismsDT$fullname_lower)) {
+  #   # we need special treatment for very prevalent full names, they are likely!
+  #   # e.g. as.mo("Staphylococcus aureus")
+  #   y <- microorganismsDT[prevalence == 1][data.table(fullname_lower = tolower(x)), on = "fullname_lower", ..property][[1]]
+  #   if (any(is.na(y))) {
+  #     y[is.na(y)] <- microorganismsDT[prevalence == 2][data.table(fullname_lower = tolower(x[is.na(y)])),
+  #                                                      on = "fullname_lower",
+  #                                                      ..property][[1]]
+  #   }
+  #   if (any(is.na(y))) {
+  #     y[is.na(y)] <- microorganismsDT[prevalence == 3][data.table(fullname_lower = tolower(x[is.na(y)])),
+  #                                                      on = "fullname_lower",
+  #                                                      ..property][[1]]
+  #   }
+  #   x <- y
+  #   
+  # } else if (all(toupper(x) %in% AMR::microorganisms.codes$code)) {
+  #   # commonly used MO codes
+  #   y <- as.data.table(AMR::microorganisms.codes)[data.table(code = toupper(x)), on = "code", ]
+  #   # save them to history
+  #   set_mo_history(x, y$mo, 0, force = force_mo_history)
+  #   
+  #   x <- microorganismsDT[data.table(mo = y[["mo"]]), on = "mo", ..property][[1]]
+  #   
+  # } else if (!all(x %in% AMR::microorganisms[, property])) {
+  #   
+  if (1 == 1) {
     strip_whitespace <- function(x) {
       # all whitespaces (tab, new lines, etc.) should be one space
       # and spaces before and after should be omitted
       trimws(gsub("[\\s]+", " ", x, perl = TRUE), which = "both")
     }
     
+    
+    x_new <- rep(NA_character_, length(x))
+    
+    # keep only dots, letters, numbers, slashes, spaces and dashes
+    x <- gsub("[^.a-zA-Z0-9/ \\-]+", "", x)
+    # remove spp and species
+    x <- gsub(" +(spp.?|ssp.?|sp.? |ss ?.?|subsp.?|subspecies|biovar |serovar |species)", " ", x, ignore.case = TRUE)
+    # remove 'genus' as first word
+    x <- gsub("^genus ", "", x, ignore.case = TRUE)
+    # remove 'uncertain'-like texts
+    x <- trimws(gsub("(uncertain|susp[ie]c[a-z]+|verdacht)", "", x, ignore.case = TRUE))
     x <- strip_whitespace(x)
     x_backup <- x
     
     # remove spp and species
-    x <- gsub(" +(spp.?|ssp.?|sp.? |ss ?.?|subsp.?|subspecies|biovar |serovar |species)", " ", x_backup, ignore.case = TRUE)
-    x <- strip_whitespace(x)
+    #x <- gsub(" +(spp.?|ssp.?|sp.? |ss ?.?|subsp.?|subspecies|biovar |serovar |species)", " ", x_backup, ignore.case = TRUE)
+    #x <- strip_whitespace(x)
     
     x_backup_without_spp <- x
     x_species <- paste(x, "species")
@@ -488,7 +231,7 @@ exec_as.mo <- function(x,
     x <- gsub("(schimmels?|mofo|molde|stampo|moisissure|fungi)[a-z]*", "fungus", x, ignore.case = TRUE)
     x <- gsub("Fungus[ph|f]rya", "Fungiphrya", x, ignore.case = TRUE)
     # remove non-text in case of "E. coli" except dots and spaces
-    x <- gsub("[^.a-zA-Z0-9/ \\-]+", "", x)
+    #   x <- gsub("[^.a-zA-Z0-9/ \\-]+", "", x)
     # replace minus by a space
     x <- gsub("-+", " ", x)
     # replace hemolytic by haemolytic
@@ -496,9 +239,9 @@ exec_as.mo <- function(x,
     # place minus back in streptococci
     x <- gsub("(alpha|beta|gamma).?ha?emoly", "\\1-haemoly", x, ignore.case = TRUE)
     # remove genus as first word
-    x <- gsub("^genus ", "", x, ignore.case = TRUE)
+    #  x <- gsub("^genus ", "", x, ignore.case = TRUE)
     # remove 'uncertain' like texts
-    x <- trimws(gsub("(uncertain|susp[ie]c[a-z]+|verdacht)", "", x, ignore.case = TRUE))
+    # x <- trimws(gsub("(uncertain|susp[ie]c[a-z]+|verdacht)", "", x, ignore.case = TRUE))
     # allow characters that resemble others = dyslexia_mode ----
     if (dyslexia_mode == TRUE) {
       x <- tolower(x)
@@ -543,23 +286,149 @@ exec_as.mo <- function(x,
     x_withspaces_start_end <- paste0('^', x_withspaces, '$')
     
     if (isTRUE(debug)) {
-      cat(paste0('x                       "', x, '"\n'))
-      cat(paste0('x_species               "', x_species, '"\n'))
-      cat(paste0('x_withspaces_start_only "', x_withspaces_start_only, '"\n'))
-      cat(paste0('x_withspaces_end_only   "', x_withspaces_end_only, '"\n'))
-      cat(paste0('x_withspaces_start_end  "', x_withspaces_start_end, '"\n'))
-      cat(paste0('x_backup                "', x_backup, '"\n'))
-      cat(paste0('x_backup_without_spp    "', x_backup_without_spp, '"\n'))
-      cat(paste0('x_trimmed               "', x_trimmed, '"\n'))
-      cat(paste0('x_trimmed_species       "', x_trimmed_species, '"\n'))
-      cat(paste0('x_trimmed_without_group "', x_trimmed_without_group, '"\n'))
+      print(data.frame(
+        x_backup,
+        x,
+        x_species,
+        x_withspaces_start_only,
+        x_withspaces_end_only,
+        x_withspaces_start_end,
+        x_backup_without_spp,
+        x_trimmed,
+        x_trimmed_species,
+        x_trimmed_without_group), right = FALSE)
+      # cat(paste0('x                       "', x, '"\n'))
+      # cat(paste0('x_species               "', x_species, '"\n'))
+      # cat(paste0('x_withspaces_start_only "', x_withspaces_start_only, '"\n'))
+      # cat(paste0('x_withspaces_end_only   "', x_withspaces_end_only, '"\n'))
+      # cat(paste0('x_withspaces_start_end  "', x_withspaces_start_end, '"\n'))
+      # cat(paste0('x_backup                "', x_backup, '"\n'))
+      # cat(paste0('x_backup_without_spp    "', x_backup_without_spp, '"\n'))
+      # cat(paste0('x_trimmed               "', x_trimmed, '"\n'))
+      # cat(paste0('x_trimmed_species       "', x_trimmed_species, '"\n'))
+      # cat(paste0('x_trimmed_without_group "', x_trimmed_without_group, '"\n'))
     }
     
-    progress <- progress_estimated(n = length(x), min_time = 3)
+    #progress <- progress_estimated(n = length(x), min_time = 3)
     
-    for (i in 1:length(x)) {
+    # THE NEW WAY ----
+    nothing_more_to_do <- function() !any(is.na(x_new) & !is.na(x_backup))
+    
+    lookup_regexes <- function(data, property, regex) {
+      prop <- regex %>% 
+        sapply(function(pattern) pull(data, property) %like% pattern) %>%
+        as.data.frame() %>% 
+        lapply(function(c) suppressWarnings(min(pull(data, property)[c]))) %>% 
+        unlist()
+      if (is.null(prop)) {
+        return(rep(NA, length(regex)))
+      }
+      DT <- data.table(prop)
+      colnames(DT) <- property
+      microorganismsDT[DT, on = property, "mo"][[1]]
+    }
+    
+    # LATER: only unique if more than 500 values, of which max 85% distinct?
+    
+    x_backup_upper <- toupper(x_backup)
+    x_backup_lower <- tolower(x_backup)
+    
+    # exclude all viruses (there is no fullname containing 'virus' in the data set)
+    x_new[x_backup %like% "virus"] <- "UNKNOWN"
+    
+    # try available fields in the microorganisms data set
+    x_new[x_backup_upper %in% microorganisms$mo] <- microorganismsDT[data.table(mo = x_backup_upper[x_backup_upper %in% microorganisms$mo]), on = "mo", "mo"][[1]]
+    x_new[x_backup_lower %in% microorganismsDT$fullname_lower] <- microorganismsDT[data.table(fullname_lower = x_backup_lower[x_backup_lower %in% microorganismsDT$fullname_lower]), on = "fullname_lower", "mo"][[1]]
+    # x_new[x_backup %in% microorganisms$col_id] <- microorganismsDT[data.table(col_id = as.integer(x_backup[x_backup %in% microorganisms$col_id])), on = "col_id", ..property][[1]]
+    
+    # old names
+    old_names <- x_backup[x_backup_lower %in% microorganisms.oldDT$fullname_lower]
+    x_new[x_backup_lower %in% microorganisms.oldDT$fullname_lower] <- microorganismsDT[microorganisms.oldDT[data.table(fullname_lower = x_backup_lower[x_backup_lower %in% microorganisms.oldDT$fullname_lower]), on = "fullname_lower", "col_id_new"], on = c("col_id" = "col_id_new"), "mo"][[1]]
+    
+    if (nothing_more_to_do()) {
+      if (property != "mo") {
+        return(microorganismsDT[data.table(mo = x_new), on = "mo", ..property][[1]])
+      } else {
+        return(to_class_mo(x_new))
+      }
+    }
+    
+    # codes from the microorganisms.codes data set
+    x_new[x_backup_upper %in% microorganisms.codes$code] <- as.data.table(microorganisms.codes)[data.table(code = x_backup_upper[x_backup_upper %in% microorganisms.codes$code]), on = "code", "mo"][[1]]
+    if (!is.null(reference_df)) {
+      colnames(reference_df)[1] <- "code"
+      x_new[x_backup_upper %in% reference_df$code] <- as.data.table(reference_df)[data.table(code = x_backup_upper[x_backup_upper %in% reference_df$code]), on = "code", mo][[1]]
+      if (!all(x_new %in% microorganisms$mo, na.rm = TRUE)) {
+        warning("Values ", paste(x_new[!x_new %in% c(NA, microorganisms$mo)], collapse = ", "), " found in reference_df, but these are not valid MO codes.", call. = FALSE)
+        x_new[!x_new %in% c(NA, microorganisms$mo)] <- "UNKNOWN"
+      }
+    }
+    
+    x_new[x_backup_upper %in% c("MRSA", "MSSA", "VISA", "VRSA")] <- "B_STPHY_AUR"
+    x_new[x_backup_upper %in% c("MRSE", "MSSE")] <- "B_STPHY_EPI"
+    x_new[x_backup_upper %in% c("AIEC", "ATEC", "DAEC", "EAEC", "EHEC", "EIEC", "EPEC", "ETEC", "NMEC", "STEC", "UPEC")
+          | x_backup_upper %like% "O?(26|103|104|111|121|145|157)"] <- "B_ESCHR_COL"
+    x_new[x_backup_upper %in% c("MRPA")] <- "B_PSDMN_AER"
+    x_new[x_backup_upper %in% c("CRSM")] <- "B_STNTR_MAL"
+    x_new[x_backup_upper %in% c("PISP", "PRSP", "VISP", "VRSP")] <- "B_STRPT_PNE"
+    x_new[x_backup_upper %in% c("VRE")
+          | x_backup %like% "(enterococci|enterokok|enterococo)[a-z]*?$"] <- "B_ENTRC"
+    
+    # start showing progress bar here
+    progress <- progress_estimated(n = 3, min_time = 0)
+    # most prevalent (1)
+    x_new[!is.na(x_backup) & is.na(x_new) & nchar(x_backup) >= 6] <- microorganismsDT[prevalence == 1] %>% lookup_regexes("fullname", x_withspaces_start_end[!is.na(x_backup) & is.na(x_new) & nchar(x_backup) >= 6])
+    x_new[!is.na(x_backup) & is.na(x_new)] <- microorganismsDT[prevalence == 1] %>% lookup_regexes("fullname", paste0(trimws(x_withspaces_start_only), " ")[!is.na(x_backup) & is.na(x_new)])
+    x_new[!is.na(x_backup) & is.na(x_new) & nchar(x_backup) >= 6] <- microorganismsDT[prevalence == 1] %>% lookup_regexes("fullname", x_withspaces_start_only[!is.na(x_backup) & is.na(x_new) & nchar(x_backup) >= 6])
+    x_new[!is.na(x_backup) & is.na(x_new)] <- microorganismsDT[prevalence == 1] %>% lookup_regexes("fullname", paste0(" ", trimws(x_withspaces_end_only))[!is.na(x_backup) & is.na(x_new)])
+    x_new[!is.na(x_backup) & is.na(x_new) & nchar(x_backup) >= 6] <- microorganismsDT[prevalence == 1] %>% lookup_regexes("fullname", x_trimmed[!is.na(x_backup) & is.na(x_new) & nchar(x_backup) >= 6])
+    x_new[!is.na(x_backup) & is.na(x_new) & nchar(x_backup) >= 6] <- microorganismsDT[prevalence == 1] %>% lookup_regexes("fullname", x_trimmed_without_group[!is.na(x_backup) & is.na(x_new) & nchar(x_backup) >= 6])
+    x_new[!is.na(x_backup) & is.na(x_new)] <- microorganismsDT[prevalence == 1] %>% lookup_regexes("fullname", x_withspaces_start_only[!is.na(x_backup) & is.na(x_new)])
+    if (nothing_more_to_do()) {
+      if (property != "mo") {
+        return(microorganismsDT[data.table(mo = x_new), on = "mo", ..property][[1]])
+      } else {
+        return(to_class_mo(x_new))
+      }
+    }
+    progress$tick()$print()
+    # less prevalent (2)
+    x_new[!is.na(x_backup) & is.na(x_new) & nchar(x_backup) >= 6] <- microorganismsDT[prevalence == 2] %>% lookup_regexes("fullname", x_withspaces_start_end[!is.na(x_backup) & is.na(x_new) & nchar(x_backup) >= 6])
+    x_new[!is.na(x_backup) & is.na(x_new)] <- microorganismsDT[prevalence == 2] %>% lookup_regexes("fullname", paste0(trimws(x_withspaces_start_only), " ")[!is.na(x_backup) & is.na(x_new)])
+    x_new[!is.na(x_backup) & is.na(x_new) & nchar(x_backup) >= 6] <- microorganismsDT[prevalence == 2] %>% lookup_regexes("fullname", x_withspaces_start_only[!is.na(x_backup) & is.na(x_new) & nchar(x_backup) >= 6])
+    x_new[!is.na(x_backup) & is.na(x_new)] <- microorganismsDT[prevalence == 2] %>% lookup_regexes("fullname", paste0(" ", trimws(x_withspaces_end_only))[!is.na(x_backup) & is.na(x_new)])
+    x_new[!is.na(x_backup) & is.na(x_new) & nchar(x_backup) >= 6] <- microorganismsDT[prevalence == 2] %>% lookup_regexes("fullname", x_trimmed[!is.na(x_backup) & is.na(x_new) & nchar(x_backup) >= 6])
+    x_new[!is.na(x_backup) & is.na(x_new) & nchar(x_backup) >= 6] <- microorganismsDT[prevalence == 2] %>% lookup_regexes("fullname", x_trimmed_without_group[!is.na(x_backup) & is.na(x_new) & nchar(x_backup) >= 6])
+    x_new[!is.na(x_backup) & is.na(x_new)] <- microorganismsDT[prevalence == 2] %>% lookup_regexes("fullname", x_withspaces_start_only[!is.na(x_backup) & is.na(x_new)])
+    if (nothing_more_to_do()) {
+      if (property != "mo") {
+        return(microorganismsDT[data.table(mo = x_new), on = "mo", ..property][[1]])
+      } else {
+        return(to_class_mo(x_new))
+      }
+    }
+    progress$tick()$print()
+    # least prevalent (3)
+    x_new[!is.na(x_backup) & is.na(x_new) & nchar(x_backup) >= 6] <- microorganismsDT[prevalence == 3] %>% lookup_regexes("fullname", x_withspaces_start_end[!is.na(x_backup) & is.na(x_new) & nchar(x_backup) >= 6])
+    x_new[!is.na(x_backup) & is.na(x_new)] <- microorganismsDT[prevalence == 3] %>% lookup_regexes("fullname", paste0(trimws(x_withspaces_start_only), " ")[!is.na(x_backup) & is.na(x_new)])
+    x_new[!is.na(x_backup) & is.na(x_new) & nchar(x_backup) >= 6] <- microorganismsDT[prevalence == 3] %>% lookup_regexes("fullname", x_withspaces_start_only[!is.na(x_backup) & is.na(x_new) & nchar(x_backup) >= 6])
+    x_new[!is.na(x_backup) & is.na(x_new)] <- microorganismsDT[prevalence == 3] %>% lookup_regexes("fullname", paste0(" ", trimws(x_withspaces_end_only))[!is.na(x_backup) & is.na(x_new)])
+    x_new[!is.na(x_backup) & is.na(x_new) & nchar(x_backup) >= 6] <- microorganismsDT[prevalence == 3] %>% lookup_regexes("fullname", x_trimmed[!is.na(x_backup) & is.na(x_new) & nchar(x_backup) >= 6])
+    x_new[!is.na(x_backup) & is.na(x_new) & nchar(x_backup) >= 6] <- microorganismsDT[prevalence == 3] %>% lookup_regexes("fullname", x_trimmed_without_group[!is.na(x_backup) & is.na(x_new) & nchar(x_backup) >= 6])
+    x_new[!is.na(x_backup) & is.na(x_new)] <- microorganismsDT[prevalence == 3] %>% lookup_regexes("fullname", x_withspaces_start_only[!is.na(x_backup) & is.na(x_new)])
+    
+    # all others are UNKNOWN
+    x_new[!is.na(x_backup) & is.na(x_new)] <- "UNKNOWN"
+    progress$tick()$print()
+    
+    return(to_class_mo(x_new))
+    #for (i in 1:length(x)) {
+    for (i in character(0)) {
       
-      progress$tick()$print()
+      x[i] <- "UNKNOWN"
+      next
+      
+      # progress$tick()$print()
       
       # if (initial_search == TRUE) {
       #   found <- microorganismsDT[mo == get_mo_history(x_backup[i],
@@ -826,7 +695,6 @@ exec_as.mo <- function(x,
             if (initial_search == TRUE) {
               set_mo_history(x_backup[i], get_mo_code(x[i], property), 0, force = force_mo_history)
             }
-            next
           } else if (grepl("[sS]almonella [A-Z][a-z]+ ?.*", x_backup_without_spp[i], ignore.case = FALSE)) {
             # Salmonella with capital letter species like "Salmonella Goettingen" - they're all S. enterica
             x[i] <- microorganismsDT[mo == 'B_SLMNL_ENT', ..property][[1]][1L]
@@ -837,8 +705,8 @@ exec_as.mo <- function(x,
                                    format_uncertainty_as_df(uncertainty_level = 1,
                                                             input = x_backup_without_spp[i],
                                                             result_mo = "B_SLMNL_ENT"))
-            next
           }
+          next
         }
         
         # trivial names known to the field:
@@ -1618,294 +1486,4 @@ exec_as.mo <- function(x,
   }
   
   x
-}
-
-empty_result <- function(x) {
-  all(x %in% c(NA, "UNKNOWN"))
-}
-
-#' @importFrom crayon italic
-was_renamed <- function(name_old, name_new, ref_old = "", ref_new = "", mo = "") {
-  if (!is.na(ref_old)) {
-    ref_old <- paste0(" (", ref_old, ")")
-  } else {
-    ref_old <- ""
-  }
-  if (!is.na(ref_new)) {
-    ref_new <- paste0(" (", ref_new, ")")
-  } else {
-    ref_new <- ""
-  }
-  if (!is.na(mo)) {
-    mo <- paste0(" (", mo, ")")
-  } else {
-    mo <- ""
-  }
-  old_values <- paste0(italic(name_old), ref_old)
-  old_values <- gsub("et al.", italic("et al."), old_values)
-  new_values <- paste0(italic(name_new), ref_new, mo)
-  new_values <- gsub("et al.", italic("et al."), new_values)
-  
-  names(new_values) <- old_values
-  total <- c(getOption("mo_renamed"), new_values)
-  options(mo_renamed = total[order(names(total))])
-}
-
-format_uncertainty_as_df <- function(uncertainty_level,
-                                     input,
-                                     result_mo) {
-  if (!is.null(getOption("mo_renamed_last_run", default = NULL))) {
-    # was found as a renamed mo
-    df <- data.frame(uncertainty = uncertainty_level,
-                     input = input,
-                     fullname = getOption("mo_renamed_last_run"),
-                     renamed_to = microorganismsDT[mo == result_mo, fullname][[1]],
-                     mo = result_mo,
-                     stringsAsFactors = FALSE)
-    options(mo_renamed_last_run = NULL)
-  } else {
-    df <- data.frame(uncertainty = uncertainty_level,
-                     input = input,
-                     fullname = microorganismsDT[mo == result_mo, fullname][[1]],
-                     renamed_to = NA_character_,
-                     mo = result_mo,
-                     stringsAsFactors = FALSE)
-  }
-  df
-}
-
-#' @exportMethod print.mo
-#' @export
-#' @noRd
-print.mo <- function(x, ...) {
-  cat("Class 'mo'\n")
-  x_names <- names(x)
-  x <- as.character(x)
-  names(x) <- x_names
-  print.default(x, quote = FALSE)
-}
-
-#' @importFrom pillar type_sum
-#' @export
-type_sum.mo <- function(x) {
-  "mo"
-}
-
-#' @importFrom pillar pillar_shaft
-#' @export
-pillar_shaft.mo <- function(x, ...) {
-  out <- format(x)
-  # grey out the kingdom (part until first "_")
-  out[!is.na(x)] <- gsub("^([A-Z]+_)(.*)", paste0(pillar::style_subtle("\\1"), "\\2"), out[!is.na(x)])
-  # and grey out every _
-  out[!is.na(x)] <- gsub("_", pillar::style_subtle("_"), out[!is.na(x)])
-  
-  # markup NA and UNKNOWN
-  out[is.na(x)] <- pillar::style_na("  NA")
-  out[x == "UNKNOWN"] <- pillar::style_na("  UNKNOWN")
-  
-  pillar::new_pillar_shaft_simple(out, align = "left", min_width = 12)
-}
-
-#' @exportMethod summary.mo
-#' @importFrom dplyr n_distinct
-#' @importFrom clean freq top_freq
-#' @export
-#' @noRd
-summary.mo <- function(object, ...) {
-  # unique and top 1-3
-  x <- object
-  top_3 <- unname(top_freq(freq(x), 3))
-  c("Class" = "mo",
-    "<NA>" = length(x[is.na(x)]),
-    "Unique" = n_distinct(x[!is.na(x)]),
-    "#1" = top_3[1],
-    "#2" = top_3[2],
-    "#3" = top_3[3])
-}
-
-#' @exportMethod as.data.frame.mo
-#' @export
-#' @noRd
-as.data.frame.mo <- function(x, ...) {
-  # same as as.data.frame.character but with removed stringsAsFactors, since it will be class "mo"
-  nm <- paste(deparse(substitute(x), width.cutoff = 500L),
-              collapse = " ")
-  if (!"nm" %in% names(list(...))) {
-    as.data.frame.vector(x, ..., nm = nm)
-  } else {
-    as.data.frame.vector(x, ...)
-  }
-}
-
-#' @exportMethod [.mo
-#' @export
-#' @noRd
-"[.mo" <- function(x, ...) {
-  y <- NextMethod()
-  attributes(y) <- attributes(x)
-  y
-}
-#' @exportMethod [[.mo
-#' @export
-#' @noRd
-"[[.mo" <- function(x, ...) {
-  y <- NextMethod()
-  attributes(y) <- attributes(x)
-  y
-}
-#' @exportMethod [<-.mo
-#' @export
-#' @noRd
-"[<-.mo" <- function(i, j, ..., value) {
-  y <- NextMethod()
-  attributes(y) <- attributes(i)
-  class_integrity_check(y, "microbial code", AMR::microorganisms$mo)
-}
-#' @exportMethod [[<-.mo
-#' @export
-#' @noRd
-"[[<-.mo" <- function(i, j, ..., value) {
-  y <- NextMethod()
-  attributes(y) <- attributes(i)
-  class_integrity_check(y, "microbial code", AMR::microorganisms$mo)
-}
-#' @exportMethod c.mo
-#' @export
-#' @noRd
-c.mo <- function(x, ...) {
-  y <- NextMethod()
-  attributes(y) <- attributes(x)
-  class_integrity_check(y, "microbial code", AMR::microorganisms$mo)
-}
-
-#' @rdname as.mo
-#' @export
-mo_failures <- function() {
-  getOption("mo_failures")
-}
-
-#' @rdname as.mo
-#' @importFrom crayon italic
-#' @export
-mo_uncertainties <- function() {
-  if (is.null(getOption("mo_uncertainties"))) {
-    return(NULL)
-  }
-  structure(.Data = as.data.frame(getOption("mo_uncertainties"), stringsAsFactors = FALSE),
-            class = c("mo_uncertainties", "data.frame"))
-}
-
-#' @exportMethod print.mo_uncertainties
-#' @importFrom crayon green yellow red white black bgGreen bgYellow bgRed
-#' @export
-#' @noRd
-print.mo_uncertainties <- function(x, ...) {
-  if (NROW(x) == 0) {
-    return(NULL)
-  }
-  cat(paste0(bold(nr2char(nrow(x)), paste0("unique result", ifelse(nrow(x) > 1, "s", ""), " guessed with uncertainty:")),
-             "\n(1 = ", green("renamed/misspelled"),
-             ", 2 = ", yellow("uncertain"),
-             ", 3 = ", red("very uncertain"), ")\n"))
-  
-  msg <- ""
-  for (i in 1:nrow(x)) {
-    if (x[i, "uncertainty"] == 1) {
-      colour1 <- green
-      colour2 <- function(...) bgGreen(white(...))
-    } else if (x[i, "uncertainty"] == 2) {
-      colour1 <- yellow
-      colour2 <- function(...) bgYellow(black(...))
-    } else {
-      colour1 <- red
-      colour2 <- function(...) bgRed(white(...))
-    }
-    msg <- paste(msg,
-                 paste0(colour2(paste0(" [", x[i, "uncertainty"], "] ")), ' "', x[i, "input"], '" -> ',
-                        colour1(paste0(italic(x[i, "fullname"]),
-                                       ifelse(!is.na(x[i, "renamed_to"]), paste(", renamed to", italic(x[i, "renamed_to"])), ""),
-                                       " (", x[i, "mo"], ")"))),
-                 sep = "\n")
-  }
-  cat(msg)
-}
-
-#' @rdname as.mo
-#' @importFrom crayon strip_style
-#' @export
-mo_renamed <- function() {
-  items <- getOption("mo_renamed")
-  if (is.null(items)) {
-    return(NULL)
-  }
-  
-  items <- strip_style(items)
-  names(items) <- strip_style(names(items))
-  structure(.Data = items,
-            class = c("mo_renamed", "character"))
-}
-
-#' @exportMethod print.mo_renamed
-#' @importFrom crayon blue
-#' @export
-#' @noRd
-print.mo_renamed <- function(x, ...) {
-  items <- x #getOption("mo_renamed")
-  old <- names(x)
-  new <- x
-  
-  cat(blue(paste("NOTE:", italic(names(items)), "was renamed", italic(items), collapse = "\n"), collapse = "\n"))
-}
-
-nr2char <- function(x) {
-  if (x %in% c(1:10)) {
-    v <- c("one" = 1, "two" = 2, "three" = 3, "four" = 4, "five" = 5,
-           "six" = 6, "seven" = 7, "eight" = 8, "nine" = 9, "ten" = 10)
-    names(v[x])
-  } else {
-    x
-  }
-}
-
-unregex <- function(x) {
-  gsub("[^a-zA-Z0-9 -]", "", x)
-}
-
-get_mo_code <- function(x, property) {
-  # don't use right now
-  return(NULL)
-  
-  if (property == "mo") {
-    unique(x)
-  } else {
-    AMR::microorganisms[base::which(AMR::microorganisms[, property] %in% x),]$mo
-  }
-}
-
-translate_allow_uncertain <- function(allow_uncertain) {
-  if (isTRUE(allow_uncertain)) {
-    # default to uncertainty level 2
-    allow_uncertain <- 2
-  } else {
-    allow_uncertain[tolower(allow_uncertain) == "none"] <- 0
-    allow_uncertain[tolower(allow_uncertain) == "all"] <- 3
-    allow_uncertain <- as.integer(allow_uncertain)
-    if (!allow_uncertain %in% c(0:3)) {
-      stop('`allow_uncertain` must be a number between 0 (or "none") and 3 (or "all"), or TRUE (= 2) or FALSE (= 0).', call. = FALSE)
-    }
-  }
-  allow_uncertain
-}
-
-get_mo_failures_uncertainties_renamed <- function() {
-  list(failures = getOption("mo_failures"),
-       uncertainties = getOption("mo_uncertainties"),
-       renamed = getOption("mo_renamed"))
-}
-
-load_mo_failures_uncertainties_renamed <- function(metadata) {
-  options("mo_failures" = metadata$failures)
-  options("mo_uncertainties" = metadata$uncertainties)
-  options("mo_renamed" = metadata$renamed)
 }

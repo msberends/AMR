@@ -64,7 +64,7 @@
 #' mo_name("CoNS", language = "pt")
 #' #> "Staphylococcus coagulase negativo (CoNS)"
 get_locale <- function() {
-  if (getOption("AMR_locale", "en") != "en") {
+  if (!is.null(getOption("AMR_locale", default = NULL))) {
     return(getOption("AMR_locale"))
   }
 
@@ -73,6 +73,7 @@ get_locale <- function() {
   # Check the locale settings for a start with one of these languages:
   
   # grepl() with ignore.case = FALSE is faster than %like%
+  
   if (grepl("^(English|en_|EN_)", lang, ignore.case = FALSE)) {
     # as first option to optimise speed
     "en"
@@ -92,4 +93,56 @@ get_locale <- function() {
     # other language -> set to English
     "en"
   }
+}
+
+# translate strings based on inst/translations.tsv
+#' @importFrom dplyr %>% filter
+translate_AMR <- function(from, language = get_locale(), only_unknown = FALSE) {
+
+  if (is.null(language)) {
+    return(from)
+  }
+  if (language %in% c("en", "", NA)) {
+    return(from)
+  }
+  
+  df_trans <- translations_file # internal data file
+  
+  if (!language %in% df_trans$lang) {
+    stop("Unsupported language: '", language, "' - use one of: ",
+         paste0("'", sort(unique(df_trans$lang)), "'", collapse = ", "),
+         call. = FALSE)
+  }
+  
+  df_trans <- df_trans %>% filter(lang == language)
+  if (only_unknown == TRUE) {
+    df_trans <- df_trans %>% filter(pattern %like% "unknown")
+  }
+  
+  # default case sensitive if value if 'ignore.case' is missing:
+  df_trans$ignore.case[is.na(df_trans$ignore.case)] <- FALSE
+  # default not using regular expressions (fixed = TRUE) if 'fixed' is missing:
+  df_trans$fixed[is.na(df_trans$fixed)] <- TRUE
+  
+  # check if text to look for is in one of the patterns
+  any_form_in_patterns <- tryCatch(any(from %like% paste0("(", paste(df_trans$pattern, collapse = "|"), ")")),
+                                   error = function(e) {
+                                     warning("Translation not possible. Please open an issue on GitLab (https://gitlab.com/msberends/AMR/issues) or GitHub (https://github.com/msberends/AMR/issues).", call. = FALSE)
+                                     return(FALSE)
+                                   })
+  if (NROW(df_trans) == 0 | !any_form_in_patterns) {
+    return(from)
+  }
+  
+  for (i in 1:nrow(df_trans)) {
+    from <- gsub(x = from,
+                 pattern = df_trans$pattern[i],
+                 replacement = df_trans$replacement[i],
+                 fixed = df_trans$fixed[i],
+                 ignore.case = df_trans$ignore.case[i])
+  }
+  
+  # force UTF-8 for diacritics
+  base::enc2utf8(from)
+  
 }

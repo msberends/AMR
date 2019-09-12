@@ -1,5 +1,5 @@
-# AMR 0.7.1.9071
-<small>Last updated: 03-Sep-2019</small>
+# AMR 0.7.1.9072
+<small>Last updated: 12-Sep-2019</small>
 
 ### Breaking
 * Determination of first isolates now **excludes** all 'unknown' microorganisms at default, i.e. microbial code `"UNKNOWN"`. They can be included with the new parameter `include_unknown`:
@@ -99,6 +99,9 @@
 * Function `availability()` now uses `portion_R()` instead of `portion_IR()`, to comply with EUCAST insights
 * Functions `age()` and `age_groups()` now have a `na.rm` parameter to remove empty values
 * Renamed function `p.symbol()` to `p_symbol()` (the former is now deprecated and will be removed in a future version)
+* Using negative values for `x` in `age_groups()` will now introduce `NA`s and not return an error anymore
+* Fix for determining the system's language
+* Fix for `key_antibiotics()` on foreign systems
 
 #### Other
 * Added Prof Dr Casper Albers as doctoral advisor and Dr Bart Meijer, Dr Dennis Souverein and Annick Lenglet as contributors

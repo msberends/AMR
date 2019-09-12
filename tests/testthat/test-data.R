@@ -30,6 +30,8 @@ test_that("data sets are valid", {
 
   # check cross table reference
   expect_true(all(microorganisms.codes$mo %in% microorganisms$mo))
+  expect_false(any(is.na(microorganisms.codes$code)))
+  expect_false(any(is.na(microorganisms.codes$mo)))
 
   # antibiotic names must always be coercible to their original AB code
   expect_identical(antibiotics$ab, as.ab(antibiotics$name))

@@ -30,4 +30,7 @@ test_that("keyantibiotics work", {
   expect_false(key_antibiotics_equal("SSS", "SIS", ignore_I = FALSE))
   expect_true(key_antibiotics_equal(".SS", "SI.", ignore_I = TRUE))
   expect_false(key_antibiotics_equal(".SS", "SI.", ignore_I = FALSE))
+  
+  library(dplyr)
+  expect_warning(key_antibiotics(example_isolates %>% slice(rep(1, 10))))
 })

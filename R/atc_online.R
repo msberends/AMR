@@ -81,7 +81,7 @@ atc_online_property <- function(atc_code,
   }
 
   if (!all(atc_code %in% AMR::antibiotics)) {
-    atc_code <- as.character(as.atc(atc_code))
+    atc_code <- as.character(ab_atc(atc_code))
   }
 
   if (!curl::has_internet()) {

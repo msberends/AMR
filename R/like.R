@@ -56,8 +56,16 @@
 like <- function(x, pattern) {
   if (length(pattern) > 1) {
     if (length(x) != length(pattern)) {
-      pattern <- pattern[1]
-      warning('only the first element of argument `pattern` used for `%like%`', call. = TRUE)
+      if (length(x) == 1) {
+        x <- rep(x, length(pattern))
+      }
+      # return TRUE for every 'x' that matches any 'pattern', FALSE otherwise
+      res <- sapply(pattern, function(pttrn) x %like% pttrn)
+      res2 <- as.logical(rowSums(res))
+      # get only first item of every hit in pattern
+      res2[duplicated(res)] <- FALSE
+      res2[rowSums(res) == 0] <- NA
+      return(res2)
     } else {
       # x and pattern are of same length, so items with each other
       res <- vector(length = length(pattern))
