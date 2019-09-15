@@ -22,6 +22,8 @@
 context("mo.R")
 
 test_that("as.mo works", {
+  
+  clear_mo_history(force = TRUE)
 
   library(dplyr)
   MOs <- AMR::microorganisms %>% filter(!is.na(mo), nchar(mo) > 3)

@@ -47,7 +47,7 @@
   <script src="../extra.js"></script>
 <meta property="og:title" content="Pattern Matching — like" />
 
-<meta property="og:description" content="Convenient wrapper around grep to match a pattern: a %like% b. It always returns a logical vector and is always case-insensitive. Also, pattern (b) can be as long as x (a) to compare items of each index in both vectors." />
+<meta property="og:description" content="Convenient wrapper around grep to match a pattern: a %like% b. It always returns a logical vector and is always case-insensitive (use a %like_case% b for case-sensitive matching). Also, pattern (b) can be as long as x (a) to compare items of each index in both vectors, or can both have the same length to iterate over all cases." />
 
 <meta property="og:image" content="https://msberends.gitlab.io/AMR/logo.png" />
 <meta name="twitter:card" content="summary" />
@@ -80,7 +80,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">0.7.1.9067</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">0.7.1.9073</span>
       </span>
     </div>
 
@@ -230,13 +230,15 @@
 
     <div class="ref-description">
     
-    <p>Convenient wrapper around <code><a href='https://www.rdocumentation.org/packages/base/topics/grep'>grep</a></code> to match a pattern: <code>a %like% b</code>. It always returns a <code>logical</code> vector and is always case-insensitive. Also, <code>pattern</code> (<code>b</code>) can be as long as <code>x</code> (<code>a</code>) to compare items of each index in both vectors.</p>
+    <p>Convenient wrapper around <code><a href='https://www.rdocumentation.org/packages/base/topics/grep'>grep</a></code> to match a pattern: <code>a %like% b</code>. It always returns a <code>logical</code> vector and is always case-insensitive (use <code>a %like_case% b</code> for case-sensitive matching). Also, <code>pattern</code> (<code>b</code>) can be as long as <code>x</code> (<code>a</code>) to compare items of each index in both vectors, or can both have the same length to iterate over all cases.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>like</span>(<span class='no'>x</span>, <span class='no'>pattern</span>)
+    <pre class="usage"><span class='fu'>like</span>(<span class='no'>x</span>, <span class='no'>pattern</span>, <span class='kw'>ignore.case</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
 
-<span class='no'>x</span> <span class='kw'>%like%</span> <span class='no'>pattern</span></pre>
+<span class='no'>x</span> <span class='kw'>%like%</span> <span class='no'>pattern</span>
+
+<span class='no'>x</span> <span class='kw'>%like_case%</span> <span class='no'>pattern</span></pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -256,6 +258,11 @@
     character vector of length 2 or more is supplied, the first element
     is used with a warning.  Missing values are allowed except for
     <code>regexpr</code> and <code>gregexpr</code>.</p></td>
+    </tr>
+    <tr>
+      <th>ignore.case</th>
+      <td><p>if <code>FALSE</code>, the pattern matching is <em>case
+      sensitive</em> and if <code>TRUE</code>, case is ignored during matching.</p></td>
     </tr>
     </table>
     

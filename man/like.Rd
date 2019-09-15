@@ -3,14 +3,17 @@
 \name{like}
 \alias{like}
 \alias{\%like\%}
+\alias{\%like_case\%}
 \title{Pattern Matching}
 \source{
 Idea from the \href{https://github.com/Rdatatable/data.table/blob/master/R/like.R}{\code{like} function from the \code{data.table} package}, but made it case insensitive at default and let it support multiple patterns. Also, if the regex fails the first time, it tries again with \code{perl = TRUE}.
 }
 \usage{
-like(x, pattern)
+like(x, pattern, ignore.case = TRUE)
 
 x \%like\% pattern
+
+x \%like_case\% pattern
 }
 \arguments{
 \item{x}{a character vector where matches are sought, or an
@@ -24,12 +27,15 @@ x \%like\% pattern
     character vector of length 2 or more is supplied, the first element
     is used with a warning.  Missing values are allowed except for
     \code{regexpr} and \code{gregexpr}.}
+
+\item{ignore.case}{if \code{FALSE}, the pattern matching is \emph{case
+      sensitive} and if \code{TRUE}, case is ignored during matching.}
 }
 \value{
 A \code{logical} vector
 }
 \description{
-Convenient wrapper around \code{\link[base]{grep}} to match a pattern: \code{a \%like\% b}. It always returns a \code{logical} vector and is always case-insensitive. Also, \code{pattern} (\code{b}) can be as long as \code{x} (\code{a}) to compare items of each index in both vectors.
+Convenient wrapper around \code{\link[base]{grep}} to match a pattern: \code{a \%like\% b}. It always returns a \code{logical} vector and is always case-insensitive (use \code{a \%like_case\% b} for case-sensitive matching). Also, \code{pattern} (\code{b}) can be as long as \code{x} (\code{a}) to compare items of each index in both vectors, or can both have the same length to iterate over all cases.
 }
 \details{
 Using RStudio? This function can also be inserted from the Addins menu and can have its own Keyboard Shortcut like Ctrl+Shift+L or Cmd+Shift+L (see Tools > Modify Keyboard Shortcuts...).

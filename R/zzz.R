@@ -26,7 +26,8 @@
 
   # register data
   microorganisms.oldDT <- as.data.table(AMR::microorganisms.old)
-  microorganisms.oldDT$fullname_lower <- tolower(microorganisms.oldDT$fullname)
+  # for fullname_lower: keep only dots, letters, numbers, slashes, spaces and dashes
+  microorganisms.oldDT$fullname_lower <- gsub("[^.a-z0-9/ \\-]+", "", tolower(microorganisms.oldDT$fullname))
   setkey(microorganisms.oldDT, col_id, fullname)
 
   assign(x = "microorganismsDT",
@@ -81,7 +82,8 @@
 #' @importFrom data.table as.data.table setkey
 make_DT <- function() {
   microorganismsDT <- as.data.table(AMR::microorganisms)
-  microorganismsDT$fullname_lower <- tolower(microorganismsDT$fullname)
+  # for fullname_lower: keep only dots, letters, numbers, slashes, spaces and dashes
+  microorganismsDT$fullname_lower <- gsub("[^.a-z0-9/ \\-]+", "", tolower(microorganismsDT$fullname))
   setkey(microorganismsDT,
          prevalence,
          kingdom,

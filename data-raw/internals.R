@@ -19,7 +19,7 @@ eucast_rules_file <- dplyr::arrange(
   reference.rule_group,
   reference.rule)
 
-# Translations -----
+# Translations ----
 translations_file <- utils::read.delim(file = "data-raw/translations.tsv",
                                        sep = "\t",
                                        stringsAsFactors = FALSE,
@@ -42,3 +42,16 @@ usethis::use_data(eucast_rules_file, translations_file,
 # Remove from global environment ----
 rm(eucast_rules_file)
 rm(translations_file)
+
+# Clean mo history ----
+mo_history_file <- file.path(file.path(system.file(package = "AMR"), "mo_history"), "mo_history.csv")
+usethis::ui_done(paste0("Resetting {usethis::ui_value('", mo_history_file, "')}"))
+tryCatch(
+  write.csv(x = data.frame(x = character(0),
+                           mo = character(0),
+                           uncertainty_level = integer(0),
+                           package_v = character(0),
+                           stringsAsFactors = FALSE),
+            file = mo_history_file),
+  warning = function(w) invisible(),
+  error = function(e) TRUE)

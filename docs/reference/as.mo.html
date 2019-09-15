@@ -80,7 +80,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">0.7.1.9055</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">0.7.1.9073</span>
       </span>
     </div>
 
@@ -243,7 +243,9 @@
 
 <span class='fu'>mo_uncertainties</span>()
 
-<span class='fu'>mo_renamed</span>()</pre>
+<span class='fu'>mo_renamed</span>()
+
+<span class='fu'>clear_mo_history</span>(<span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -283,7 +285,7 @@
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p><strong>General info</strong> <br />
-A microbial ID from this package (class: <code>mo</code>) typically looks like these examples:<br /></p><pre>
+A microorganism ID from this package (class: <code>mo</code>) typically looks like these examples:<br /></p><pre>
   Code              Full name
   ---------------   --------------------------------------
   B_KLBSL           Klebsiella
@@ -299,8 +301,11 @@ A microbial ID from this package (class: <code>mo</code>) typically looks like t
 </pre>
     <p>Values that cannot be coered will be considered 'unknown' and will get the MO code <code>UNKNOWN</code>.</p>
 <p>Use the <code><a href='mo_property.html'>mo_property</a>_*</code> functions to get properties based on the returned code, see Examples.</p>
-<p>The algorithm uses data from the Catalogue of Life (see below) and from one other source (see <code><a href='microorganisms.html'>?microorganisms</a></code>).</p>
-<p><strong>Intelligent rules</strong> <br />
+<p>The algorithm uses data from the Catalogue of Life (see below) and from one other source (see <code><a href='microorganisms.html'>microorganisms</a></code>).</p>
+<p><strong>Self-learning algoritm</strong> <br />
+The <code>as.mo()</code> function gains experience from previously determined microorganism IDs and learns from it. This drastically improves both speed and reliability. Use <code>clear_mo_history()</code> to reset the algorithms. Only experience from your current <code>AMR</code> package version is used. This is done because in the future the taxonomic tree (which is included in this package) may change for any organism and it consequently has to rebuild its knowledge.</p>
+<p>Usually, any guess after the first try runs 80-95% faster than the first try.</p>
+    <p><strong>Intelligent rules</strong> <br />
 This function uses intelligent rules to help getting fast and logical results. It tries to find matches in this order:</p><ul>
 <li><p>Valid MO codes and full names: it first searches in already valid MO code and known genus/species combinations</p></li>
 <li><p>Human pathogenic prevalence: it first searches in more prevalent microorganisms, then less prevalent ones (see <em>Microbial prevalence of pathogens in humans</em> below)</p></li>
@@ -326,7 +331,7 @@ The algorithm can additionally use three different levels of uncertainty to gues
 </ul>
     <p>Use <code>mo_failures()</code> to get a vector with all values that could not be coerced to a valid value.</p>
 <p>Use <code>mo_uncertainties()</code> to get a data.frame with all values that were coerced to a valid value, but with uncertainty.</p>
-<p>Use <code>mo_renamed()</code> to get a vector with all values that could be coerced based on an old, previously accepted taxonomic name.</p>
+<p>Use <code>mo_renamed()</code> to get a data.frame with all values that could be coerced based on an old, previously accepted taxonomic name.</p>
 <p><strong>Microbial prevalence of pathogens in humans</strong> <br />
 The intelligent rules take into account microbial prevalence of pathogens in humans. It uses three groups and all (sub)species are in only one group. These groups are:</p><ul>
 <li><p>1 (most prevalent): class is Gammaproteobacteria <strong>or</strong> genus is one of: <em>Enterococcus</em>, <em>Staphylococcus</em>, <em>Streptococcus</em>.</p></li>
@@ -334,7 +339,7 @@ The intelligent rules take into account microbial prevalence of pathogens in hum
 <li><p>3 (least prevalent): all others.</p></li>
 </ul>
     <p>Group 1 contains all common Gram positives and Gram negatives, like all Enterobacteriaceae and e.g. <em>Pseudomonas</em> and <em>Legionella</em>.</p>
-<p>Group 2 probably contains less microbial pathogens; all other members of phyla that were found in humans in the Northern Netherlands between 2001 and 2018.</p>
+<p>Group 2 contains probably less pathogenic microorganisms; all other members of phyla that were found in humans in the Northern Netherlands between 2001 and 2018.</p>
     
     <h2 class="hasAnchor" id="source"><a class="anchor" href="#source"></a>Source</h2>
 

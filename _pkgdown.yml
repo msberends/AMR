@@ -118,7 +118,7 @@ reference:
     - "`ab_property`"
     - "`age`"
     - "`age_groups`"
-    - "`p.symbol`"
+    - "`p_symbol`"
     - "`join`"
     - "`atc_online_property`"
   - title: "Analysing your data"

@@ -41,8 +41,8 @@ percent <- function(x, round = 1, force_zero = FALSE, decimal.mark = getOption("
       big.mark <- " "
     }
   }
-  x <- percent_clean(x = x, round = round, force_zero = force_zero, 
-                     decimal.mark = decimal.mark, big.mark = big.mark, ...)
+  percent_clean(x = x, round = round, force_zero = force_zero, 
+                decimal.mark = decimal.mark, big.mark = big.mark, ...)
 }
 
 #' @importFrom crayon blue bold red

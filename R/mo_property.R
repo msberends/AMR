@@ -408,7 +408,7 @@ mo_validate <- function(x, property, ...) {
 
   if (!"AMR" %in% base::.packages()) {
     require("AMR")
-    # check onLoad() in R/zzz.R: data tables are created there.
+    # check .onLoad() in R/zzz.R: data tables are created there.
   }
 
   # try to catch an error when inputting an invalid parameter

@@ -1,5 +1,5 @@
-# AMR 0.7.1.9072
-<small>Last updated: 12-Sep-2019</small>
+# AMR 0.7.1.9073
+<small>Last updated: 15-Sep-2019</small>
 
 ### Breaking
 * Determination of first isolates now **excludes** all 'unknown' microorganisms at default, i.e. microbial code `"UNKNOWN"`. They can be included with the new parameter `include_unknown`:
@@ -72,6 +72,14 @@
   ```
 
 ### Changed
+* Many algorithm improvements for `as.mo()` (of which some led to additions to the `microorganisms` data set):
+  * Self-learning algorithm - the function now gains experience from previously determined microorganism IDs and learns from it (yielding 80-95% speed improvement for any guess after the first try)
+  * Big improvement for misspelled input
+  * These new trivial names known to the field are now understood: meningococcus, gonococcus, pneumococcus
+  * Updated to the latest taxonomic data (updated to August 2019, from the International Journal of Systematic and Evolutionary Microbiology
+  * Added support for Viridans Group Streptococci (VGS) and Milleri Group Streptococci (MGS)
+  * Added support for 5,000 new fungi
+  * Added support for unknown yeasts and fungi
 * Renamed data set `septic_patients` to `example_isolates`
 * Function `eucast_rules()`:
   * Fixed a bug for *Yersinia pseudotuberculosis*
@@ -83,13 +91,6 @@
 * Removed class `atc` - using `as.atc()` is now deprecated in favour of `ab_atc()` and this will return a character, not the `atc` class anymore
 * Removed deprecated functions `abname()`, `ab_official()`, `atc_name()`, `atc_official()`, `atc_property()`, `atc_tradenames()`, `atc_trivial_nl()`
 * Fix and speed improvement for `mo_shortname()`
-* Algorithm improvements for `as.mo()` (by which some additions were made to the `microorganisms` data set:
-  * Big improvement for misspelled input
-  * These new trivial names known to the field are now understood: meningococcus, gonococcus, pneumococcus
-  * Updated to the latest taxonomic data (updated to August 2019, from the International Journal of Systematic and Evolutionary Microbiology
-  * Added support for Viridans Group Streptococci (VGS) and Milleri Group Streptococci (MGS)
-  * Added support for 5,000 new fungi
-  * Added support for unknown yeasts and fungi
 * Fix for using `mo_*` functions where the coercion uncertainties and failures would not be available through `mo_uncertainties()` and `mo_failures()` anymore
 * Deprecated the `country` parameter of `mdro()` in favour of the already existing `guideline` parameter to support multiple guidelines within one country
 * The `name` of `RIF` is now Rifampicin instead of Rifampin

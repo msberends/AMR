@@ -21,7 +21,7 @@
 
 #' Pattern Matching
 #'
-#' Convenient wrapper around \code{\link[base]{grep}} to match a pattern: \code{a \%like\% b}. It always returns a \code{logical} vector and is always case-insensitive. Also, \code{pattern} (\code{b}) can be as long as \code{x} (\code{a}) to compare items of each index in both vectors.
+#' Convenient wrapper around \code{\link[base]{grep}} to match a pattern: \code{a \%like\% b}. It always returns a \code{logical} vector and is always case-insensitive (use \code{a \%like_case\% b} for case-sensitive matching). Also, \code{pattern} (\code{b}) can be as long as \code{x} (\code{a}) to compare items of each index in both vectors, or can both have the same length to iterate over all cases.
 #' @inheritParams base::grepl
 #' @return A \code{logical} vector
 #' @name like
@@ -53,14 +53,14 @@
 #'   left_join_microorganisms() %>%
 #'   filter(genus %like% '^ent') %>%
 #'   freq(genus, species)
-like <- function(x, pattern) {
+like <- function(x, pattern, ignore.case = TRUE) {
   if (length(pattern) > 1) {
     if (length(x) != length(pattern)) {
       if (length(x) == 1) {
         x <- rep(x, length(pattern))
       }
       # return TRUE for every 'x' that matches any 'pattern', FALSE otherwise
-      res <- sapply(pattern, function(pttrn) x %like% pttrn)
+      res <- sapply(pattern, function(pttrn) base::grepl(pttrn, x, ignore.case = ignore.case))
       res2 <- as.logical(rowSums(res))
       # get only first item of every hit in pattern
       res2[duplicated(res)] <- FALSE
@@ -71,9 +71,9 @@ like <- function(x, pattern) {
       res <- vector(length = length(pattern))
       for (i in 1:length(res)) {
         if (is.factor(x[i])) {
-          res[i] <- as.integer(x[i]) %in% base::grep(pattern[i], levels(x[i]), ignore.case = TRUE)
+          res[i] <- as.integer(x[i]) %in% base::grep(pattern[i], levels(x[i]), ignore.case = ignore.case)
         } else {
-          res[i] <- base::grepl(pattern[i], x[i], ignore.case = TRUE)
+          res[i] <- base::grepl(pattern[i], x[i], ignore.case = ignore.case)
         }
       }
       return(res)
@@ -82,16 +82,24 @@ like <- function(x, pattern) {
 
   # the regular way how grepl works; just one pattern against one or more x
   if (is.factor(x)) {
-    as.integer(x) %in% base::grep(pattern, levels(x), ignore.case = TRUE)
+    as.integer(x) %in% base::grep(pattern, levels(x), ignore.case = ignore.case)
   } else {
-    tryCatch(base::grepl(pattern, x, ignore.case = TRUE),
+    tryCatch(base::grepl(pattern, x, ignore.case = ignore.case),
              error = function(e) ifelse(test = grepl("Invalid regexp", e$message),
                                         # try with perl = TRUE:
-                                        yes = return(base::grepl(pattern, x, ignore.case = TRUE, perl = TRUE)),
+                                        yes = return(base::grepl(pattern, x, ignore.case = ignore.case, perl = TRUE)),
                                         no = stop(e$message)))
   }
 }
 
 #' @rdname like
 #' @export
-"%like%" <- like
+"%like%" <- function(x, pattern) {
+  like(x, pattern, ignore.case = TRUE)
+}
+
+#' @rdname like
+#' @export
+"%like_case%" <- function(x, pattern) {
+  like(x, pattern, ignore.case = FALSE)
+}
