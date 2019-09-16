@@ -258,7 +258,7 @@ as.mo <- function(x, Becker = FALSE, Lancefield = FALSE, allow_uncertain = TRUE,
     y <- mo_validate(x = x, property = "mo",
                      Becker = Becker, Lancefield = Lancefield,
                      allow_uncertain = uncertainty_level, reference_df = reference_df,
-                     force_mo_history = isTRUE(list(...)$force_mo_history),
+                     #force_mo_history = isTRUE(list(...)$force_mo_history),
                      ...)
   }
   
@@ -675,14 +675,16 @@ exec_as.mo <- function(x,
       
       # translate known trivial abbreviations to genus + species ----
       if (!is.na(x_trimmed[i])) {
-        if (toupper(x_backup_without_spp[i]) %in% c('MRSA', 'MSSA', 'VISA', 'VRSA')) {
+        if (toupper(x_backup_without_spp[i]) %in% c('MRSA', 'MSSA', 'VISA', 'VRSA')
+            | x_backup_without_spp[i] %like_case% " (mrsa|mssa|visa|vrsa) ") {
           x[i] <- microorganismsDT[mo == 'B_STPHY_AUR', ..property][[1]][1L]
           if (initial_search == TRUE) {
             set_mo_history(x_backup[i], get_mo_code(x[i], property), 0, force = force_mo_history, disable = disable_mo_history)
           }
           next
         }
-        if (toupper(x_backup_without_spp[i]) %in% c('MRSE', 'MSSE')) {
+        if (toupper(x_backup_without_spp[i]) %in% c('MRSE', 'MSSE')
+            | x_backup_without_spp[i] %like_case% " (mrse|msse) ") {
           x[i] <- microorganismsDT[mo == 'B_STPHY_EPI', ..property][[1]][1L]
           if (initial_search == TRUE) {
             set_mo_history(x_backup[i], get_mo_code(x[i], property), 0, force = force_mo_history, disable = disable_mo_history)
@@ -690,6 +692,7 @@ exec_as.mo <- function(x,
           next
         }
         if (toupper(x_backup_without_spp[i]) == "VRE"
+            | x_backup_without_spp[i] %like_case% " vre "
             | x_backup_without_spp[i] %like_case% '(enterococci|enterokok|enterococo)[a-z]*?$')  {
           x[i] <- microorganismsDT[mo == 'B_ENTRC', ..property][[1]][1L]
           if (initial_search == TRUE) {
@@ -718,7 +721,8 @@ exec_as.mo <- function(x,
           }
           next
         }
-        if (toupper(x_backup_without_spp[i]) == 'MRPA') {
+        if (toupper(x_backup_without_spp[i]) == 'MRPA'
+            | x_backup_without_spp[i] %like_case% " mrpa ") {
           # multi resistant P. aeruginosa
           x[i] <- microorganismsDT[mo == 'B_PSDMN_AER', ..property][[1]][1L]
           if (initial_search == TRUE) {
@@ -735,7 +739,8 @@ exec_as.mo <- function(x,
           }
           next
         }
-        if (toupper(x_backup_without_spp[i]) %in% c('PISP', 'PRSP', 'VISP', 'VRSP')) {
+        if (toupper(x_backup_without_spp[i]) %in% c('PISP', 'PRSP', 'VISP', 'VRSP')
+            | x_backup_without_spp[i] %like_case% " (pisp|prsp|visp|vrsp) ") {
           # peni I, peni R, vanco I, vanco R: S. pneumoniae
           x[i] <- microorganismsDT[mo == 'B_STRPT_PNE', ..property][[1]][1L]
           if (initial_search == TRUE) {

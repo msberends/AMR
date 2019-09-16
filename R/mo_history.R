@@ -19,10 +19,9 @@
 # Visit our website for more info: https://msberends.gitlab.io/AMR.    #
 # ==================================================================== #
 
-mo_history_file <- file.path(file.path(system.file(package = "AMR"), "mo_history"), "mo_history.csv")
-
 # print successful as.mo coercions to a options entry
 #' @importFrom dplyr %>% distinct filter
+#' @importFrom utils write.csv
 set_mo_history <- function(x, mo, uncertainty_level, force = FALSE, disable = FALSE) {
   if (isTRUE(disable)) {
     return(base::invisible())
@@ -42,14 +41,14 @@ set_mo_history <- function(x, mo, uncertainty_level, force = FALSE, disable = FA
       # save package version too, as both the as.mo() algorithm and the reference data set may change
       if (NROW(mo_hist[base::which(mo_hist$x == x[i] &
                                    mo_hist$uncertainty_level >= uncertainty_level &
-                                   mo_hist$package_v == utils::packageVersion("AMR")),]) == 0) {
+                                   mo_hist$package_version == utils::packageVersion("AMR")),]) == 0) {
         # # Not using the file system:        
         # tryCatch(options(mo_remembered_results = rbind(mo_hist,
         #                                                data.frame(
         #                                                  x = x[i],
         #                                                  mo = mo[i],
         #                                                  uncertainty_level = uncertainty_level,
-        #                                                  package_v = base::as.character(utils::packageVersion("AMR")),
+        #                                                  package_version = base::as.character(utils::packageVersion("AMR")),
         #                                                  stringsAsFactors = FALSE))),
         #          error = function(e) base::invisible())
         # # don't remember more than 1,000 different input values
@@ -57,16 +56,17 @@ set_mo_history <- function(x, mo, uncertainty_level, force = FALSE, disable = FA
         #   return(base::invisible())
         # }
         if (is.null(mo_hist)) {
-          message(blue(paste0("NOTE: results are saved to ", mo_history_file, ".")))
+          message(blue(paste0("NOTE: results are saved to ", mo_history_file(), ".")))
         }
         tryCatch(write.csv(rbind(mo_hist,
                                  data.frame(
                                    x = x[i],
                                    mo = mo[i],
                                    uncertainty_level = uncertainty_level,
-                                   package_v = base::as.character(utils::packageVersion("AMR")),
+                                   package_version = base::as.character(utils::packageVersion("AMR")),
                                    stringsAsFactors = FALSE)),
-                           file = mo_history_file, row.names = FALSE),
+                           row.names = FALSE,
+                           file = mo_history_file()),
                  error = function(e) base::invisible())
       }
     }
@@ -91,6 +91,7 @@ get_mo_history <- function(x, uncertainty_level, force = FALSE, disable = FALSE)
 }
 
 #' @importFrom dplyr %>% filter distinct
+#' @importFrom utils read.csv
 read_mo_history <- function(uncertainty_level = 2, force = FALSE, unfiltered = FALSE, disable = FALSE) {
   if (isTRUE(disable)) {
     return(NULL)
@@ -104,7 +105,7 @@ read_mo_history <- function(uncertainty_level = 2, force = FALSE, unfiltered = F
   # # Not using the file system:
   # history <- tryCatch(getOption("mo_remembered_results"),
   #                     error = function(e) NULL)
-  history <- tryCatch(read.csv(mo_history_file, stringsAsFactors = FALSE),
+  history <- tryCatch(read.csv(mo_history_file(), stringsAsFactors = FALSE),
                       warning = function(w) invisible(),
                       error = function(e) NULL)
   if (is.null(history)) {
@@ -116,7 +117,7 @@ read_mo_history <- function(uncertainty_level = 2, force = FALSE, unfiltered = F
 
   if (unfiltered == FALSE) {
     history <- history %>%
-      filter(package_v == as.character(utils::packageVersion("AMR")),
+      filter(package_version == as.character(utils::packageVersion("AMR")),
              # only take unknowns if uncertainty_level_param is higher
              ((mo == "UNKNOWN" & uncertainty_level_param == uncertainty_level) |
                 (mo != "UNKNOWN" & uncertainty_level_param >= uncertainty_level))) %>%
@@ -152,19 +153,54 @@ clear_mo_history <- function(...) {
     #                     error = function(e) FALSE)
     success <- create_blank_mo_history()
     if (!isFALSE(success)) {
-      cat(red(paste("File", mo_history_file, "cleared.")))
+      cat(red(paste("File", mo_history_file(), "cleared.")))
     }
   }
 }
 
+#' @importFrom utils write.csv
 create_blank_mo_history <- function() {
   tryCatch(
     write.csv(x = data.frame(x = character(0),
                              mo = character(0),
                              uncertainty_level = integer(0),
-                             package_v = character(0),
+                             package_version = character(0),
                              stringsAsFactors = FALSE),
-              file = mo_history_file),
+              row.names = FALSE,
+              file = mo_history_file()),
     warning = function(w) invisible(),
     error = function(e) TRUE)
+}
+
+
+# Borrowed all below code from the extrafont package,
+# https://github.com/wch/extrafont/blob/254c3f99b02f11adb59affbda699a92aec8624f5/R/utils.r
+inst_path <- function() {
+  envname <- environmentName(parent.env(environment()))
+  
+  # If installed in package, envname == "AMR"
+  # If loaded with load_all, envname == "package:AMR"
+  # (This is kind of strange)
+  if (envname == "AMR") {
+    system.file(package = "AMR")
+  } else {
+    srcfile <- attr(attr(inst_path, "srcref"), "srcfile")
+    file.path(dirname(dirname(srcfile$filename)), "inst")
+  }
+}
+
+
+# Get the path where extrafontdb is installed
+db_path <- function() {
+  system.file(package = "AMR")
+}
+
+# fonttable file
+mo_history_file <- function() {
+  file.path(mo_history_path(), "mo_history.csv")
+}
+
+# Path of fontmap directory
+mo_history_path <- function() {
+  file.path(db_path(), "mo_history")
 }

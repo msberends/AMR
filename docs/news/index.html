@@ -78,7 +78,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">0.7.1.9072</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">0.7.1.9074</span>
       </span>
     </div>
 
@@ -225,11 +225,11 @@
       
     </div>
 
-    <div id="amr-0-7-1-9072" class="section level1">
+    <div id="amr-0-7-1-9074" class="section level1">
 <h1 class="page-header">
-<a href="#amr-0-7-1-9072" class="anchor"></a>AMR 0.7.1.9072<small> Unreleased </small>
+<a href="#amr-0-7-1-9074" class="anchor"></a>AMR 0.7.1.9074<small> Unreleased </small>
 </h1>
-<p><small>Last updated: 12-Sep-2019</small></p>
+<p><small>Last updated: 16-Sep-2019</small></p>
 <div id="breaking" class="section level3">
 <h3 class="hasAnchor">
 <a href="#breaking" class="anchor"></a>Breaking</h3>
@@ -305,6 +305,17 @@ Since this is a major change, usage of the old <code>also_single_tested</code> w
 <h3 class="hasAnchor">
 <a href="#changed" class="anchor"></a>Changed</h3>
 <ul>
+<li>Many algorithm improvements for <code><a href="../reference/as.mo.html">as.mo()</a></code> (of which some led to additions to the <code>microorganisms</code> data set):
+<ul>
+<li>Self-learning algorithm - the function now gains experience from previously determined microorganism IDs and learns from it (yielding 80-95% speed improvement for any guess after the first try)</li>
+<li>Big improvement for misspelled input</li>
+<li>These new trivial names known to the field are now understood: meningococcus, gonococcus, pneumococcus</li>
+<li>Updated to the latest taxonomic data (updated to August 2019, from the International Journal of Systematic and Evolutionary Microbiology</li>
+<li>Added support for Viridans Group Streptococci (VGS) and Milleri Group Streptococci (MGS)</li>
+<li>Added support for 5,000 new fungi</li>
+<li>Added support for unknown yeasts and fungi</li>
+</ul>
+</li>
 <li>Renamed data set <code>septic_patients</code> to <code>example_isolates</code>
 </li>
 <li>Function <code><a href="../reference/eucast_rules.html">eucast_rules()</a></code>:
@@ -322,16 +333,6 @@ Since this is a major change, usage of the old <code>also_single_tested</code> w
 <li>Removed deprecated functions <code>abname()</code>, <code>ab_official()</code>, <code>atc_name()</code>, <code>atc_official()</code>, <code>atc_property()</code>, <code>atc_tradenames()</code>, <code>atc_trivial_nl()</code>
 </li>
 <li>Fix and speed improvement for <code><a href="../reference/mo_property.html">mo_shortname()</a></code>
-</li>
-<li>Algorithm improvements for <code><a href="../reference/as.mo.html">as.mo()</a></code> (by which some additions were made to the <code>microorganisms</code> data set:
-<ul>
-<li>Big improvement for misspelled input</li>
-<li>These new trivial names known to the field are now understood: meningococcus, gonococcus, pneumococcus</li>
-<li>Updated to the latest taxonomic data (updated to August 2019, from the International Journal of Systematic and Evolutionary Microbiology</li>
-<li>Added support for Viridans Group Streptococci (VGS) and Milleri Group Streptococci (MGS)</li>
-<li>Added support for 5,000 new fungi</li>
-<li>Added support for unknown yeasts and fungi</li>
-</ul>
 </li>
 <li>Fix for using <code>mo_*</code> functions where the coercion uncertainties and failures would not be available through <code><a href="../reference/as.mo.html">mo_uncertainties()</a></code> and <code><a href="../reference/as.mo.html">mo_failures()</a></code> anymore</li>
 <li>Deprecated the <code>country</code> parameter of <code><a href="../reference/mdro.html">mdro()</a></code> in favour of the already existing <code>guideline</code> parameter to support multiple guidelines within one country</li>
@@ -1264,7 +1265,7 @@ Using <code><a href="../reference/as.mo.html">as.mo(..., allow_uncertain = 3)</a
     <div id="tocnav">
       <h2>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
-        <li><a href="#amr-0-7-1-9072">0.7.1.9072</a></li>
+        <li><a href="#amr-0-7-1-9074">0.7.1.9074</a></li>
         <li><a href="#amr-0-7-1">0.7.1</a></li>
         <li><a href="#amr-0-7-0">0.7.0</a></li>
         <li><a href="#amr-0-6-1">0.6.1</a></li>

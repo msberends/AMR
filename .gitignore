@@ -20,7 +20,6 @@ vignettes/*.R
 ^CRAN-RELEASE$
 packrat/lib*/
 packrat/src/
-cran-comments.md
 data-raw/taxon.tab
 data-raw/DSMZ_bactnames.xlsx
 R/aa_test.R
