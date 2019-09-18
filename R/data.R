@@ -55,7 +55,7 @@
 #'
 #' A data set containing the microbial taxonomy of six kingdoms from the Catalogue of Life. MO codes can be looked up using \code{\link{as.mo}}.
 #' @inheritSection catalogue_of_life Catalogue of Life
-#' @format A \code{\link{data.frame}} with 69,855 observations and 16 variables:
+#' @format A \code{\link{data.frame}} with 69,460 observations and 16 variables:
 #' \describe{
 #'   \item{\code{mo}}{ID of microorganism as used by this package}
 #'   \item{\code{col_id}}{Catalogue of Life ID}
@@ -73,7 +73,7 @@
 #'   \item{2 entries of \emph{Staphylococcus} (coagulase-negative [CoNS] and coagulase-positive [CoPS])}
 #'   \item{3 entries of \emph{Trichomonas} (\emph{Trichomonas vaginalis}, and its family and genus)}
 #'   \item{5 other 'undefined' entries (unknown, unknown Gram negatives, unknown Gram positives, unknown yeast and unknown fungus)}
-#'   \item{8,970 species from the DSMZ (Deutsche Sammlung von Mikroorganismen und Zellkulturen) that are not in the Catalogue of Life}
+#'   \item{22,654 species from the DSMZ (Deutsche Sammlung von Mikroorganismen und Zellkulturen) overwriting records from the Catalogue of Life, since the DSMZ contain the latest taxonomic information based on recent publications}
 #' }
 #' @section About the records from DSMZ (see source):
 #' Names of prokaryotes are defined as being validly published by the International Code of Nomenclature of Bacteria. Validly published are all names which are included in the Approved Lists of Bacterial Names and the names subsequently published in the International Journal of Systematic Bacteriology (IJSB) and, from January 2000, in the International Journal of Systematic and Evolutionary Microbiology (IJSEM) as original articles or in the validation lists.
@@ -98,7 +98,7 @@ catalogue_of_life <- list(
 #'
 #' A data set containing old (previously valid or accepted) taxonomic names according to the Catalogue of Life. This data set is used internally by \code{\link{as.mo}}.
 #' @inheritSection catalogue_of_life Catalogue of Life
-#' @format A \code{\link{data.frame}} with 22,932 observations and 4 variables:
+#' @format A \code{\link{data.frame}} with 24,246 observations and 4 variables:
 #' \describe{
 #'   \item{\code{col_id}}{Catalogue of Life ID that was originally given}
 #'   \item{\code{col_id_new}}{New Catalogue of Life ID that responds to an entry in the \code{\link{microorganisms}} data set}
@@ -110,12 +110,12 @@ catalogue_of_life <- list(
 #' @seealso \code{\link{as.mo}} \code{\link{mo_property}} \code{\link{microorganisms}}
 "microorganisms.old"
 
-#' Translation table for microorganism codes
+#' Translation table for common microorganism codes
 #'
 #' A data set containing commonly used codes for microorganisms, from laboratory systems and WHONET. Define your own with \code{\link{set_mo_source}}.
-#' @format A \code{\link{data.frame}} with 4,965 observations and 2 variables:
+#' @format A \code{\link{data.frame}} with 4,927 observations and 2 variables:
 #' \describe{
-#'   \item{\code{certe}}{Commonly used code of a microorganism}
+#'   \item{\code{code}}{Commonly used code of a microorganism}
 #'   \item{\code{mo}}{ID of the microorganism in the \code{\link{microorganisms}} data set}
 #' }
 #' @inheritSection catalogue_of_life Catalogue of Life
@@ -123,9 +123,9 @@ catalogue_of_life <- list(
 #' @seealso \code{\link{as.mo}} \code{\link{microorganisms}}
 "microorganisms.codes"
 
-#' Data set with 2,000 blood culture isolates from septic patients
+#' Data set with 2,000 blood culture isolates
 #'
-#' An anonymised data set containing 2,000 microbial blood culture isolates with their full antibiograms found in septic patients in 4 different hospitals in the Netherlands, between 2001 and 2017. This \code{data.frame} can be used to practice AMR analysis. For examples, please read \href{https://msberends.gitlab.io/AMR/articles/AMR.html}{the tutorial on our website}.
+#' An anonymised data set containing 2,000 microbial blood culture isolates with their full antibiograms found 4 different hospitals in the Netherlands, between 2001 and 2017. This \code{data.frame} can be used to practice AMR analysis. For examples, please read \href{https://msberends.gitlab.io/AMR/articles/AMR.html}{the tutorial on our website}.
 #' @format A \code{\link{data.frame}} with 2,000 observations and 49 variables:
 #' \describe{
 #'   \item{\code{date}}{date of receipt at the laboratory}
@@ -137,7 +137,7 @@ catalogue_of_life <- list(
 #'   \item{\code{gender}}{gender of the patient}
 #'   \item{\code{patient_id}}{ID of the patient, first 10 characters of an SHA hash containing irretrievable information}
 #'   \item{\code{mo}}{ID of microorganism created with \code{\link{as.mo}}, see also \code{\link{microorganisms}}}
-#'   \item{\code{peni:rifa}}{40 different antibiotics with class \code{rsi} (see \code{\link{as.rsi}}); these column names occur in \code{\link{antibiotics}} data set and can be translated with \code{\link{ab_name}}}
+#'   \item{\code{PEN:RIF}}{40 different antibiotics with class \code{rsi} (see \code{\link{as.rsi}}); these column names occur in \code{\link{antibiotics}} data set and can be translated with \code{\link{ab_name}}}
 #' }
 #' @inheritSection AMR Read more on our website!
 "example_isolates"

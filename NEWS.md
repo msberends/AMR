@@ -1,5 +1,5 @@
-# AMR 0.7.1.9074
-<small>Last updated: 16-Sep-2019</small>
+# AMR 0.7.1.9075
+<small>Last updated: 18-Sep-2019</small>
 
 ### Breaking
 * Determination of first isolates now **excludes** all 'unknown' microorganisms at default, i.e. microbial code `"UNKNOWN"`. They can be included with the new parameter `include_unknown`:
@@ -72,7 +72,7 @@
   ```
 
 ### Changed
-* Many algorithm improvements for `as.mo()` (of which some led to additions to the `microorganisms` data set):
+* Many algorithm improvements for `as.mo()` (of which some led to additions to the `microorganisms` data set). Many thanks to all contributors that helped improving the algorithms.
   * Self-learning algorithm - the function now gains experience from previously determined microorganism IDs and learns from it (yielding 80-95% speed improvement for any guess after the first try)
   * Big improvement for misspelled input
   * These new trivial names known to the field are now understood: meningococcus, gonococcus, pneumococcus
@@ -80,6 +80,7 @@
   * Added support for Viridans Group Streptococci (VGS) and Milleri Group Streptococci (MGS)
   * Added support for 5,000 new fungi
   * Added support for unknown yeasts and fungi
+  * Changed most microorganism IDs to improve readability. **IMPORTANT:** Because of these changes, the microorganism IDs have been changed to a slightly different format. Old microorganism IDs are still supported, but support will be dropped in a future version. Use `as.mo()` on your old codes to transform them to the new format.
 * Renamed data set `septic_patients` to `example_isolates`
 * Function `eucast_rules()`:
   * Fixed a bug for *Yersinia pseudotuberculosis*
@@ -105,7 +106,7 @@
 * Fix for `key_antibiotics()` on foreign systems
 
 #### Other
-* Added Prof Dr Casper Albers as doctoral advisor and Dr Bart Meijer, Dr Dennis Souverein and Annick Lenglet as contributors
+* Added Prof. Dr. Casper Albers as doctoral advisor and added Dr. Judith Fonville, Eric Hazenberg, Dr. Bart Meijer, Dr. Dennis Souverein and Annick Lenglet as contributors
 
 # AMR 0.7.1
 

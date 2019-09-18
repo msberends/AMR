@@ -57,7 +57,7 @@ test_that("mo_property works", {
   expect_equal(mo_shortname("Streptococcus agalactiae"), "S. agalactiae")
   expect_equal(mo_shortname("Streptococcus agalactiae", Lancefield = TRUE), "GBS")
 
-  expect_true(mo_url("Escherichia coli") %like% "www.catalogueoflife.org")
+  #expect_true(mo_url("Escherichia coli") %like% "www.catalogueoflife.org")
 
   # test integrity
   MOs <- AMR::microorganisms

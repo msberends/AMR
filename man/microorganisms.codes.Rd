@@ -3,10 +3,10 @@
 \docType{data}
 \name{microorganisms.codes}
 \alias{microorganisms.codes}
-\title{Translation table for microorganism codes}
-\format{A \code{\link{data.frame}} with 4,965 observations and 2 variables:
+\title{Translation table for common microorganism codes}
+\format{A \code{\link{data.frame}} with 4,927 observations and 2 variables:
 \describe{
-  \item{\code{certe}}{Commonly used code of a microorganism}
+  \item{\code{code}}{Commonly used code of a microorganism}
   \item{\code{mo}}{ID of the microorganism in the \code{\link{microorganisms}} data set}
 }}
 \usage{

@@ -190,19 +190,19 @@ test_that("first isolates work", {
   
   # unknown MOs
   expect_equal(example_isolates %>% 
-                 mutate(mo = ifelse(mo == "B_ESCHR_COL", "UNKNOWN", mo)) %>% 
+                 mutate(mo = ifelse(mo == "B_ESCHR_COLI", "UNKNOWN", mo)) %>% 
                  mutate(first = first_isolate(., include_unknown = FALSE)) %>%
                  .$first %>% 
                  sum(),
                1062)
   expect_equal(example_isolates %>% 
-                 mutate(mo = ifelse(mo == "B_ESCHR_COL", "UNKNOWN", mo)) %>% 
+                 mutate(mo = ifelse(mo == "B_ESCHR_COLI", "UNKNOWN", mo)) %>% 
                  mutate(first = first_isolate(., include_unknown = TRUE)) %>%
                  .$first %>% 
                  sum(),
                1529)
   expect_equal(example_isolates %>% 
-                 mutate(mo = ifelse(mo == "B_ESCHR_COL", NA, mo)) %>% 
+                 mutate(mo = ifelse(mo == "B_ESCHR_COLI", NA, mo)) %>% 
                  mutate(first = first_isolate(.)) %>%
                  .$first %>% 
                  sum(),

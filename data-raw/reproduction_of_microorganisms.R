@@ -102,22 +102,38 @@ MOs <- data_total %>%
           & !order %in% c("Eurotiales", "Microascales", "Mucorales", "Saccharomycetales", "Schizosaccharomycetales", "Tremellales", "Onygenales", "Pneumocystales"))
     )
     # or the genus has to be one of the genera we found in our hospitals last decades (Northern Netherlands, 2002-2018)
-    | genus %in% c("Absidia", "Acremonium", "Actinotignum", "Alternaria", "Anaerosalibacter", "Ancylostoma", "Anisakis", "Apophysomyces",
-                   "Arachnia", "Ascaris", "Aureobacterium", "Aureobasidium", "Balantidum", "Bilophilia", "Branhamella", "Brochontrix",
-                   "Brugia", "Calymmatobacterium", "Catabacter", "Cdc", "Chilomastix", "Chryseomonas", "Cladophialophora", "Cladosporium",
-                   "Clonorchis", "Cordylobia", "Curvularia", "Demodex", "Dermatobia", "Diphyllobothrium", "Dracunculus", "Echinococcus",
-                   "Enterobius", "Euascomycetes", "Exophiala", "Fasciola", "Fusarium", "Hendersonula", "Hymenolepis", "Hypomyces", "Kloeckera",
-                   "Koserella", "Larva", "Leishmania", "Lelliottia", "Loa", "Lumbricus", "Malassezia", "Metagonimus", "Molonomonas",
-                   "Mucor", "Nattrassia", "Necator", "Nectria", "Novospingobium", "Onchocerca", "Opistorchis", "Paragonimus", "Paramyxovirus",
-                   "Pediculus", "Phoma", "Phthirus", "Pityrosporum", "Pseudallescheria", "Pulex", "Rhizomucor", "Rhizopus", "Rhodotorula",
-                   "Salinococcus", "Sanguibacteroides", "Schistosoma", "Scopulariopsis", "Scytalidium", "Sporobolomyces", "Stomatococcus",
-                   "Strongyloides", "Syncephalastraceae", "Taenia", "Torulopsis", "Trichinella", "Trichobilharzia", "Trichoderma", "Trichomonas",
-                   "Trichosporon", "Trichuris", "Trypanosoma", "Wuchereria")
+    | genus %in% c("Absidia", "Acremonium", "Actinotignum", "Aedes", "Alternaria", "Anaerosalibacter", "Ancylostoma", "Angiostrongylus", 
+                   "Anisakis", "Anopheles", "Apophysomyces", "Arachnia", "Ascaris", "Aureobacterium", "Aureobasidium", "Balantidum", "Basidiobolus", 
+                   "Beauveria", "Bilophilia", "Branhamella", "Brochontrix", "Brugia", "Calymmatobacterium", "Capillaria", "Catabacter", "Cdc", "Chaetomium",
+                   "Chilomastix", "Chryseomonas", "Chrysonilia", "Cladophialophora", "Cladosporium", "Clonorchis", "Conidiobolus", "Contracaecum", 
+                   "Cordylobia", "Curvularia", "Demodex", "Dermatobia", "Dicrocoelium", "Dioctophyma", "Diphyllobothrium", "Dipylidium", "Dirofilaria",
+                   "Dracunculus", "Echinococcus", "Echinostoma", "Enterobius", "Enteromonas", "Euascomycetes", "Exophiala", "Exserohilum", "Fasciola", 
+                   "Fasciolopsis", "Fonsecaea", "Fusarium", "Gnathostoma", "Hendersonula", "Heterophyes", "Hymenolepis", "Hypomyces", "Hysterothylacium", 
+                   "Kloeckera", "Koserella", "Larva", "Lecythophora", "Leishmania", "Lelliottia", "Leptomyxida", "Leptosphaeria", "Loa", "Lucilia",
+                   "Lumbricus", "Malassezia", "Malbranchea", "Mansonella", "Mesocestoides", "Metagonimus", "Metarrhizium", "Molonomonas", "Mortierella", 
+                   "Mucor", "Multiceps", "Mycocentrospora", "Nanophetus", "Nattrassia", "Necator", "Nectria", "Novospingobium", "Ochroconis", 
+                   "Oesophagostomum", "Oidiodendron", "Onchocerca", "Opisthorchis", "Opistorchis", "Paragonimus", "Paramyxovirus", "Pediculus",
+                   "Phlebotomus", "Phocanema", "Phoma", "Phthirus", "Piedraia", "Pithomyces", "Pityrosporum", "Pseudallescheria", "Pseudoterranova",
+                   "Pulex", "Retortamonas", "Rhizomucor", "Rhizopus", "Rhodotorula", "Salinococcus", "Sanguibacteroides", "Sarcophagidae", "Sarcoptes",
+                   "Schistosoma", "Scolecobasidium", "Scopulariopsis", "Scytalidium", "Spirometra", "Sporobolomyces", "Stachybotrys", "Stenotrophomononas",
+                   "Stomatococcus", "Strongyloides", "Syncephalastraceae", "Syngamus", "Taenia", "Ternidens", "Torulopsis", "Toxocara", "Trichinella",
+                   "Trichobilharzia", "Trichoderma", "Trichomonas", "Trichosporon", "Trichostrongylus", "Trichuris", "Tritirachium", "Trombicula", 
+                   "Trypanosoma", "Tunga", "Wuchereria")
     # or the taxonomic entry is old - the species was renamed
     | !is.na(col_id_new)
   ) %>%
   # really no Plantae (e.g. Dracunculus exist both as worm and as plant)
-  filter(kingdom != "Plantae")
+  filter(kingdom != "Plantae") %>% 
+  filter(!rank %in% c("kingdom", "phylum", "class", "order", "family", "genus"))
+
+# include all ranks other than species for the included species
+MOs <- MOs %>% bind_rows(data_total %>% 
+                           filter((kingdom %in% MOs$kingdom & rank == "kingdom")
+                                  | (phylum %in% MOs$phylum & rank == "phylum")
+                                  | (class %in% MOs$class & rank == "class")
+                                  | (order %in% MOs$order & rank == "order")
+                                  | (family %in% MOs$family & rank == "family")
+                                  | (genus %in% MOs$genus & rank == "genus")))
 
 # filter old taxonomic names so only the ones with an existing reference will be kept
 MOs <- MOs %>%
@@ -193,6 +209,11 @@ MOs.old <- MOs %>%
   distinct(fullname, .keep_all = TRUE) %>%
   arrange(col_id)
 
+MO.bak <- MOs
+MOold.bak <- MOs.old
+MOs <- MO.bak
+MOs.old <- MOold.bak
+
 MOs <- MOs %>%
   filter(is.na(col_id_new) | source == "DSMZ") %>%
   transmute(col_id,
@@ -215,20 +236,93 @@ MOs <- MOs %>%
             species_id = gsub(".*/([a-f0-9]+)", "\\1", species_id),
             source) %>%
   #distinct(fullname, .keep_all = TRUE) %>%
-  filter(!grepl("unassigned", fullname, ignore.case = TRUE))
+  filter(!grepl("unassigned", fullname, ignore.case = TRUE)) %>% 
+  # prefer DSMZ over CoL, since that's more recent
+  arrange(desc(source)) %>% 
+  distinct(kingdom, fullname, .keep_all = TRUE)
 
-# Filter out the DSMZ records that were renamed and are now in MOs.old
-MOs <- MOs %>%
-  filter(!(source == "DSMZ" & fullname %in% MOs.old$fullname),
-         !(source == "DSMZ" & fullname %in% (MOs %>% filter(source == "CoL") %>% pull(fullname)))) %>%
-  distinct(fullname, .keep_all = TRUE)
+# # Filter out the DSMZ records that were renamed and are now in MOs.old
+# MOs <- MOs %>%
+#   filter(!(source == "DSMZ" & fullname %in% MOs.old$fullname)) %>% 
+#   distinct(kingdom, fullname, .keep_all = TRUE) %>% 
+#   filter(fullname != "")
+
+# remove all genera that have no species - they are irrelevant for microbiology and almost all from the kingdom of Animalia
+to_remove <- MOs %>%
+  filter(!kingdom %in% c("Bacteria", "Protozoa")) %>% 
+  group_by(kingdom, genus) %>%
+  count() %>%
+  filter(n == 1) %>%
+  ungroup() %>%
+  mutate(kingdom_genus = paste(kingdom, genus)) %>% 
+  pull(kingdom_genus)
+MOs <- MOs %>% filter(!(paste(kingdom, genus) %in% to_remove))
+rm(to_remove)
+
+# add CoL ID from MOs.bak, for the cases where DSMZ took preference
+MOs <- MOs %>% 
+  mutate(kingdom_fullname = paste(kingdom, fullname)) %>% 
+  select(-col_id) %>%
+  left_join(MO.bak %>%
+              filter(is.na(col_id_new), !is.na(col_id)) %>%
+              transmute(col_id, kingdom_fullname = trimws(paste(kingdom, genus, species, subspecies))), 
+            by = "kingdom_fullname") %>% 
+  select(col_id, everything(), -kingdom_fullname)
+
+
+MOs.old <- MOs.old %>%
+  # remove the ones that are in the MOs data set
+  filter(col_id_new %in% MOs$col_id) %>% 
+  # and remove the ones that have the exact same fullname in the MOs data set, like Moraxella catarrhalis
+  left_join(MOs, by = "fullname") %>%
+  filter(col_id_new != col_id.y | is.na(col_id.y)) %>% 
+  select(col_id = col_id.x, col_id_new, fullname, ref = ref.x)
+
+# remove the records that are in MOs.old
+MOs <- MOs %>% filter(!fullname %in% MOs.old$fullname)
 
 # what characters are in the fullnames?
 table(sort(unlist(strsplit(x = paste(MOs$fullname, collapse = ""), split = ""))))
 
+table(MOs$kingdom, MOs$rank)
+table(AMR::microorganisms$kingdom, AMR::microorganisms$rank)
+
+# set prevalence per species
+MOs <- MOs %>%
+  mutate(prevalence = case_when(
+    class == "Gammaproteobacteria"
+    | genus %in% c("Enterococcus", "Staphylococcus", "Streptococcus")
+    ~ 1,
+    phylum %in% c("Proteobacteria",
+                  "Firmicutes",
+                  "Actinobacteria",
+                  "Sarcomastigophora")
+    | genus %in% c("Aspergillus",
+                   "Bacteroides",
+                   "Candida",
+                   "Capnocytophaga",
+                   "Chryseobacterium",
+                   "Cryptococcus",
+                   "Elisabethkingia",
+                   "Flavobacterium",
+                   "Fusobacterium",
+                   "Giardia",
+                   "Leptotrichia",
+                   "Mycoplasma",
+                   "Prevotella",
+                   "Rhodotorula",
+                   "Treponema",
+                   "Trichophyton",
+                   "Ureaplasma")
+    | rank %in% c("kingdom", "phylum", "class", "order", "family")
+    ~ 2,
+    TRUE ~ 3
+  ))
+
 # Add abbreviations so we can easily know which ones are which ones.
 # These will become valid and unique microbial IDs for the AMR package.
 MOs <- MOs %>%
+  arrange(prevalence, fullname) %>% 
   group_by(kingdom) %>%
   mutate(abbr_other = case_when(
     rank == "family" ~ paste0("[FAM]_",
@@ -270,14 +364,14 @@ MOs <- MOs %>%
   # species abbreviations may be the same between genera
   # because the genus abbreviation is part of the abbreviation
   mutate(abbr_species = abbreviate(species,
-                                   minlength = 3,
-                                   use.classes = FALSE,
+                                   minlength = 4,
+                                   use.classes = TRUE,
                                    method = "both.sides")) %>%
   ungroup() %>%
   group_by(genus, species) %>%
   mutate(abbr_subspecies = abbreviate(subspecies,
-                                      minlength = 3,
-                                      use.classes = FALSE,
+                                      minlength = 4,
+                                      use.classes = TRUE,
                                       method = "both.sides")) %>%
   ungroup() %>%
   # remove trailing underscores
@@ -302,9 +396,6 @@ MOs <- MOs %>%
   # put `mo` in front, followed by the rest
   select(mo, everything(), -abbr_other, -abbr_genus, -abbr_species, -abbr_subspecies)
 
-# remove empty fullnames
-MOs <- MOs %>% filter(fullname != "")
-
 # add non-taxonomic entries
 MOs <- MOs %>%
   bind_rows(
@@ -324,6 +415,7 @@ MOs <- MOs %>%
                ref = NA_character_,
                species_id = "",
                source = "manually added",
+               prevalence = 1,
                stringsAsFactors = FALSE),
     data.frame(mo = "B_GRAMN",
                col_id = NA_integer_,
@@ -340,6 +432,7 @@ MOs <- MOs %>%
                ref = NA_character_,
                species_id = "",
                source = "manually added",
+               prevalence = 1,
                stringsAsFactors = FALSE),
     data.frame(mo = "B_GRAMP",
                col_id = NA_integer_,
@@ -356,6 +449,7 @@ MOs <- MOs %>%
                ref = NA_character_,
                species_id = "",
                source = "manually added",
+               prevalence = 1,
                stringsAsFactors = FALSE),
     data.frame(mo = "F_YEAST",
                col_id = NA_integer_,
@@ -372,6 +466,7 @@ MOs <- MOs %>%
                ref = NA_character_,
                species_id = "",
                source = "manually added",
+               prevalence = 2,
                stringsAsFactors = FALSE),
     data.frame(mo = "F_FUNGUS",
                col_id = NA_integer_,
@@ -388,11 +483,12 @@ MOs <- MOs %>%
                ref = NA_character_,
                species_id = "",
                source = "manually added",
+               prevalence = 2,
                stringsAsFactors = FALSE),
     # CoNS
     MOs %>%
       filter(genus == "Staphylococcus", species == "epidermidis") %>% .[1,] %>%
-      mutate(mo = gsub("EPI", "CNS", mo),
+      mutate(mo = gsub("(.*)_(.*)_.*", "\\1_\\2_CONS", mo),
              col_id = NA_integer_,
              species = "coagulase-negative",
              fullname = "Coagulase-negative Staphylococcus (CoNS)",
@@ -402,7 +498,7 @@ MOs <- MOs %>%
     # CoPS
     MOs %>%
       filter(genus == "Staphylococcus", species == "epidermidis") %>% .[1,] %>%
-      mutate(mo = gsub("EPI", "CPS", mo),
+      mutate(mo = gsub("(.*)_(.*)_.*", "\\1_\\2_COPS", mo),
              col_id = NA_integer_,
              species = "coagulase-positive",
              fullname = "Coagulase-positive Staphylococcus (CoPS)",
@@ -413,18 +509,20 @@ MOs <- MOs %>%
     MOs %>%
       filter(genus == "Streptococcus", species == "pyogenes") %>% .[1,] %>%
       # we can keep all other details, since S. pyogenes is the only member of group A
-      mutate(mo = gsub("PYO", "GRA", mo),
+      mutate(mo = gsub("(.*)_(.*)_.*", "\\1_\\2_GRPA", mo),
              species = "group A" ,
-             fullname = "Streptococcus group A"),
+             fullname = "Streptococcus group A",
+             source = "manually added"),
     MOs %>%
       filter(genus == "Streptococcus", species == "agalactiae") %>% .[1,] %>%
       # we can keep all other details, since S. agalactiae is the only member of group B
-      mutate(mo = gsub("AGA", "GRB", mo),
+      mutate(mo = gsub("(.*)_(.*)_.*", "\\1_\\2_GRPB", mo),
              species = "group B" ,
-             fullname = "Streptococcus group B"),
+             fullname = "Streptococcus group B",
+             source = "manually added"),
     MOs %>%
       filter(genus == "Streptococcus", species == "dysgalactiae") %>% .[1,] %>%
-      mutate(mo = gsub("DYS", "GRC", mo),
+      mutate(mo = gsub("(.*)_(.*)_.*", "\\1_\\2_GRPC", mo),
              col_id = NA_integer_,
              species = "group C" ,
              fullname = "Streptococcus group C",
@@ -433,7 +531,7 @@ MOs <- MOs %>%
              source = "manually added"),
     MOs %>%
       filter(genus == "Streptococcus", species == "agalactiae") %>% .[1,] %>%
-      mutate(mo = gsub("AGA", "GRD", mo),
+      mutate(mo = gsub("(.*)_(.*)_.*", "\\1_\\2_GRPD", mo),
              col_id = NA_integer_,
              species = "group D" ,
              fullname = "Streptococcus group D",
@@ -442,7 +540,7 @@ MOs <- MOs %>%
              source = "manually added"),
     MOs %>%
       filter(genus == "Streptococcus", species == "agalactiae") %>% .[1,] %>%
-      mutate(mo = gsub("AGA", "GRF", mo),
+      mutate(mo = gsub("(.*)_(.*)_.*", "\\1_\\2_GRPF", mo),
              col_id = NA_integer_,
              species = "group F" ,
              fullname = "Streptococcus group F",
@@ -451,7 +549,7 @@ MOs <- MOs %>%
              source = "manually added"),
     MOs %>%
       filter(genus == "Streptococcus", species == "agalactiae") %>% .[1,] %>%
-      mutate(mo = gsub("AGA", "GRG", mo),
+      mutate(mo = gsub("(.*)_(.*)_.*", "\\1_\\2_GRPG", mo),
              col_id = NA_integer_,
              species = "group G" ,
              fullname = "Streptococcus group G",
@@ -460,7 +558,7 @@ MOs <- MOs %>%
              source = "manually added"),
     MOs %>%
       filter(genus == "Streptococcus", species == "agalactiae") %>% .[1,] %>%
-      mutate(mo = gsub("AGA", "GRH", mo),
+      mutate(mo = gsub("(.*)_(.*)_.*", "\\1_\\2_GRPH", mo),
              col_id = NA_integer_,
              species = "group H" ,
              fullname = "Streptococcus group H",
@@ -469,7 +567,7 @@ MOs <- MOs %>%
              source = "manually added"),
     MOs %>%
       filter(genus == "Streptococcus", species == "agalactiae") %>% .[1,] %>%
-      mutate(mo = gsub("AGA", "GRK", mo),
+      mutate(mo = gsub("(.*)_(.*)_.*", "\\1_\\2_GRPK", mo),
              col_id = NA_integer_,
              species = "group K" ,
              fullname = "Streptococcus group K",
@@ -479,7 +577,7 @@ MOs <- MOs %>%
     # Beta haemolytic Streptococci
     MOs %>%
       filter(genus == "Streptococcus", species == "agalactiae") %>% .[1,] %>%
-      mutate(mo = gsub("AGA", "HAE", mo),
+      mutate(mo = gsub("(.*)_(.*)_.*", "\\1_\\2_HAEM", mo),
              col_id = NA_integer_,
              species = "beta-haemolytic" ,
              fullname = "Beta-haemolytic Streptococcus",
@@ -489,7 +587,7 @@ MOs <- MOs %>%
     # Viridans Streptococci
     MOs %>%
       filter(genus == "Streptococcus", species == "agalactiae") %>% .[1,] %>%
-      mutate(mo = gsub("AGA", "VIR", mo),
+      mutate(mo = gsub("(.*)_(.*)_.*", "\\1_\\2_VIRI", mo),
              col_id = NA_integer_,
              species = "viridans" ,
              fullname = "Viridans Group Streptococcus (VGS)",
@@ -499,7 +597,7 @@ MOs <- MOs %>%
     # Milleri Streptococci
     MOs %>%
       filter(genus == "Streptococcus", species == "agalactiae") %>% .[1,] %>%
-      mutate(mo = gsub("AGA", "MIL", mo),
+      mutate(mo = gsub("(.*)_(.*)_.*", "\\1_\\2_MILL", mo),
              col_id = NA_integer_,
              species = "milleri" ,
              fullname = "Milleri Group Streptococcus (MGS)",
@@ -509,7 +607,7 @@ MOs <- MOs %>%
     # Trichomonas vaginalis is missing, same order as Dientamoeba
     MOs %>%
       filter(fullname == "Dientamoeba") %>%
-      mutate(mo = gsub("DNTMB", "THMNS", mo),
+      mutate(mo = gsub("(.*?)_.*", "\\1_THMNS", mo),
              col_id = NA,
              fullname = "Trichomonas",
              family = "Trichomonadidae",
@@ -519,8 +617,7 @@ MOs <- MOs %>%
              species_id = ""),
     MOs %>%
       filter(fullname == "Dientamoeba fragilis") %>%
-      mutate(mo = gsub("DNTMB", "THMNS", mo),
-             mo = gsub("FRA", "VAG", mo),
+      mutate(mo = gsub("(.*?)_.*", "\\1_THMNS_VAG", mo),
              col_id = NA,
              fullname = "Trichomonas vaginalis",
              family = "Trichomonadidae",
@@ -531,7 +628,7 @@ MOs <- MOs %>%
              species_id = ""),
     MOs %>% # add family as such too
       filter(fullname == "Monocercomonadidae") %>%
-      mutate(mo = gsub("MNCRCMND", "TRCHMNDD", mo),
+      mutate(mo = gsub("(.*)_(.*)_.*", "\\1_\\2_TRCHMNDD", mo),
              col_id = NA,
              fullname = "Trichomonadidae",
              family = "Trichomonadidae",
@@ -541,9 +638,12 @@ MOs <- MOs %>%
              source = "manually added",
              ref = "",
              species_id = ""),
-
   )
 
+MOs <- MOs %>%
+  group_by(kingdom) %>%
+  distinct(fullname, .keep_all = TRUE) %>% 
+  ungroup()
 
 # everything distinct?
 sum(duplicated(MOs$mo))
@@ -551,60 +651,44 @@ sum(duplicated(MOs$fullname))
 colnames(MOs)
 
 # here we welcome the new ones:
-MOs %>% filter(!fullname %in% AMR::microorganisms$fullname) %>% View()
+MOs %>% arrange(genus, species, subspecies) %>% filter(!fullname %in% AMR::microorganisms$fullname) %>% View()
 # and the ones we lost:
 AMR::microorganisms %>% filter(!fullname %in% MOs$fullname) %>% View()
 # and these IDs have changed:
-MOs %>%
-  filter(fullname %in% AMR::microorganisms$fullname) %>%
-  left_join(AMR::microorganisms %>% select(mo, fullname), by = "fullname", suffix = c("_new", "_old")) %>% 
+old_new <- MOs %>%
+  mutate(kingdom_fullname = paste(kingdom, fullname)) %>% 
+  filter(kingdom_fullname %in% (AMR::microorganisms %>% mutate(kingdom_fullname = paste(kingdom, fullname)) %>% pull(kingdom_fullname))) %>%
+  left_join(AMR::microorganisms %>% mutate(kingdom_fullname = paste(kingdom, fullname)) %>% select(mo, kingdom_fullname), by = "kingdom_fullname", suffix = c("_new", "_old")) %>% 
   filter(mo_new != mo_old) %>% 
-  select(mo_old, mo_new, everything()) %>% 
+  select(mo_old, mo_new, everything())
+old_new %>% 
   View()
 # and these codes are now missing (which will throw a unit test error):
-AMR::microorganisms.codes %>% filter(!mo %in% AMR::microorganisms$mo)
-
-# set prevalence per species
-MOs <- MOs %>%
-  mutate(prevalence = case_when(
-    class == "Gammaproteobacteria"
-    | genus %in% c("Enterococcus", "Staphylococcus", "Streptococcus")
-    | mo %in% c("UNKNOWN", "B_GRAMN", "B_GRAMP")
-    ~ 1,
-    phylum %in% c("Proteobacteria",
-                  "Firmicutes",
-                  "Actinobacteria",
-                  "Sarcomastigophora")
-    | genus %in% c("Aspergillus",
-                   "Bacteroides",
-                   "Candida",
-                   "Capnocytophaga",
-                   "Chryseobacterium",
-                   "Cryptococcus",
-                   "Elisabethkingia",
-                   "Flavobacterium",
-                   "Fusobacterium",
-                   "Giardia",
-                   "Leptotrichia",
-                   "Mycoplasma",
-                   "Prevotella",
-                   "Rhodotorula",
-                   "Treponema",
-                   "Trichophyton",
-                   "Ureaplasma")
-    | rank %in% c("kingdom", "phylum", "class", "order", "family")
-    ~ 2,
-    TRUE ~ 3
-  ))
+AMR::microorganisms.codes %>% filter(!mo %in% MOs$mo)
+# this is how to fix it
+microorganisms.codes <- AMR::microorganisms.codes %>% 
+  left_join(MOs  %>%
+              mutate(kingdom_fullname = paste(kingdom, fullname)) %>% 
+              left_join(AMR::microorganisms  %>%
+                          mutate(kingdom_fullname = paste(kingdom, fullname)) %>% 
+                          select(mo, kingdom_fullname), by = "kingdom_fullname", suffix = c("_new", "_old")) %>%
+              select(mo_old, mo_new),
+            by = c("mo" = "mo_old")) %>% 
+  select(code, mo = mo_new) %>% 
+  filter(!is.na(mo))
+microorganisms.codes %>% filter(!mo %in% MOs$mo)
 
 # arrange
 MOs <- MOs %>% arrange(genus, species, subspecies)
 MOs.old <- MOs.old %>% arrange(fullname)
+microorganisms.codes <- microorganisms.codes %>% arrange(code)
 
 # transform
 MOs <- as.data.frame(MOs, stringsAsFactors = FALSE)
 MOs.old <- as.data.frame(MOs.old, stringsAsFactors = FALSE)
+microorganisms.codes <- as.data.frame(microorganisms.codes, stringsAsFactors = FALSE)
 class(MOs$mo) <- "mo"
+class(microorganisms.codes$mo) <- "mo"
 MOs$col_id <- as.integer(MOs$col_id)
 MOs.old$col_id <- as.integer(MOs.old$col_id)
 MOs.old$col_id_new <- as.integer(MOs.old$col_id_new)
@@ -616,10 +700,17 @@ saveRDS(MOs.old, "microorganisms.old.rds")
 ### for same server
 microorganisms <- MOs
 microorganisms.old <- MOs.old
+microorganisms.translation <- old_new %>% select(mo_old, mo_new)
+class(microorganisms.translation$mo_old) <- "mo"
+class(microorganisms.translation$mo_new) <- "mo"
 
 # on the server, do:
 usethis::use_data(microorganisms, overwrite = TRUE, version = 2)
 usethis::use_data(microorganisms.old, overwrite = TRUE, version = 2)
+usethis::use_data(microorganisms.codes, overwrite = TRUE, version = 2)
+saveRDS(AMR::microorganisms.translation, file = "microorganisms.translation.rds", version = 2) # this one will be covered in data-raw/internals.R
 rm(microorganisms)
 rm(microorganisms.old)
+rm(microorganisms.codes)
+rm(microorganisms.translation)
 # and update the year and dimensions in R/data.R

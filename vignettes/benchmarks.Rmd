@@ -64,7 +64,7 @@ library(microbenchmark)
 library(AMR)
 ```
 
-In the next test, we try to 'coerce' different input values for *Staphylococcus aureus*. The actual result is the same every time: it returns its MO code `B_STPHY_AUR` (*B* stands for *Bacteria*, the taxonomic kingdom). 
+In the next test, we try to 'coerce' different input values for *Staphylococcus aureus*. The actual result is the same every time: it returns its MO code `B_STPHY_AURS` (*B* stands for *Bacteria*, the taxonomic kingdom). 
 
 But the calculation time differs a lot:
 
@@ -93,7 +93,7 @@ ggplot.bm(S.aureus)
 
 In the table above, all measurements are shown in milliseconds (thousands of seconds). A value of 5 milliseconds means it can determine 200 input values per second. It case of 100 milliseconds, this is only 10 input values per second. The second input is the only one that has to be looked up thoroughly. All the others are known codes (the first one is a WHONET code) or common laboratory codes, or common full organism names like the last one. Full organism names are always preferred.
 
-To achieve this speed, the `as.mo` function also takes into account the prevalence of human pathogenic microorganisms. The downside is of course that less prevalent microorganisms will be determined less fast. See this example for the ID of *Thermus islandicus* (`B_THERMS_ISL`), a bug probably never found before in humans:
+To achieve this speed, the `as.mo` function also takes into account the prevalence of human pathogenic microorganisms. The downside is of course that less prevalent microorganisms will be determined less fast. See this example for the ID of *Thermus islandicus* (`B_THERMS_ISLN`), a bug probably never found before in humans:
 
 ```{r}
 T.islandicus <- microbenchmark(as.mo("theisl"),
@@ -198,7 +198,7 @@ So transforming 500,000 values (!!) of `r n_distinct(x)` unique values only take
 What about precalculated results? If the input is an already precalculated result of a helper function like `mo_name()`, it almost doesn't take any time at all (see 'C' below):
 
 ```{r}
-run_it <- microbenchmark(A = mo_name("B_STPHY_AUR"),
+run_it <- microbenchmark(A = mo_name("B_STPHY_AURS"),
                          B = mo_name("S. aureus"),
                          C = mo_name("Staphylococcus aureus"),
                          times = 10)

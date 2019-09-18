@@ -45,7 +45,7 @@ test_that("read 4D works", {
   expect_equal(ncol(x), 11)
   expect_equal(class(x$date_received), "Date")
   expect_equal(class(x$mo), "mo")
-  expect_equal(as.character(x$mo), "B_ESCHR_COL")
+  expect_equal(as.character(x$mo), "B_ESCHR_COLI")
   expect_equal(is.rsi(x$peni), TRUE)
 
 })

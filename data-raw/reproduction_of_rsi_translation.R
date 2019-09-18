@@ -4,7 +4,7 @@ library(readxl)
 # Installed WHONET 2019 software on Windows (http://www.whonet.org/software.html),
 #    opened C:\WHONET\Codes\WHONETCodes.mdb in MS Access
 #    and exported table 'DRGLST1' to MS Excel
-DRGLST1 <- read_excel("DRGLST1.xlsx")
+DRGLST1 <- read_excel("data-raw/DRGLST1.xlsx")
 rsi_translation <- DRGLST1 %>%
   # only keep CLSI and EUCAST guidelines:
   filter(GUIDELINES %like% "^(CLSI|EUCST)") %>%
@@ -21,6 +21,8 @@ rsi_translation <- DRGLST1 %>%
             R_mic = as.mic(MIC_R)) %>%
   filter(!is.na(mo) & !is.na(ab)) %>%
   arrange(desc(guideline), mo, ab)
+
+print(mo_failures())
 
 # create 2 tables: MIC and disk
 tbl_mic <- rsi_translation %>%

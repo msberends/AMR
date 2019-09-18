@@ -197,7 +197,7 @@ exec_as.rsi <- function(method, x, mo, ab, guideline) {
   mo_order <- as.mo(mo_order(mo))
   mo_becker <- as.mo(mo, Becker = TRUE)
   mo_lancefield <- as.mo(mo, Lancefield = TRUE)
-
+ 
   guideline_param <- toupper(guideline)
   if (guideline_param %in% c("CLSI", "EUCAST")) {
     guideline_param <- AMR::rsi_translation %>%

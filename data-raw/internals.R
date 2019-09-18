@@ -33,8 +33,12 @@ translations_file <- utils::read.delim(file = "data-raw/translations.tsv",
                                        allowEscapes = TRUE, # else "\\1" will be imported as "\\\\1"
                                        quote = "")
 
+# Old microorganism codes -------------------------------------------------
+
+microorganisms.translation <- readRDS("data-raw/microorganisms.translation.rds")
+
 # Export to package as internal data ----
-usethis::use_data(eucast_rules_file, translations_file,
+usethis::use_data(eucast_rules_file, translations_file, microorganisms.translation,
                   internal = TRUE,
                   overwrite = TRUE,
                   version = 2)
@@ -42,6 +46,7 @@ usethis::use_data(eucast_rules_file, translations_file,
 # Remove from global environment ----
 rm(eucast_rules_file)
 rm(translations_file)
+rm(microorganisms.translation)
 
 # Clean mo history ----
 mo_history_file <- file.path(file.path(system.file(package = "AMR"), "mo_history"), "mo_history.csv")

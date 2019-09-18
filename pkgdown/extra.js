@@ -81,13 +81,14 @@ $( document ).ready(function() {
       x = x.replace(/Author, maintainer/g, "Main developer");
       x = x.replace(/Author, contributor/g, "Main contributor");
       x = x.replace(/Author, thesis advisor/g, "Doctoral advisor");
-      x = x.replace("Alex", "Prof. Dr Alex");
-      x = x.replace("Bhanu", "Prof. Dr Bhanu");
-      x = x.replace("Casper", "Prof. Dr Casper");
-      x = x.replace("Corinna", "Dr Corinna");
+      x = x.replace("Alex", "Prof. Dr. Alex");
+      x = x.replace("Bhanu", "Prof. Dr. Bhanu");
+      x = x.replace("Casper", "Prof. Dr. Casper");
+      x = x.replace("Corinna", "Dr. Corinna");
       // others
-      x = x.replace("Bart", "Dr Bart");
-      x = x.replace("Dennis", "Dr Dennis");
+      x = x.replace("Bart", "Dr. Bart");
+      x = x.replace("Dennis", "Dr. Dennis");
+      x = x.replace("Judith", "Dr. Judith");
     }
     return(x);
   }

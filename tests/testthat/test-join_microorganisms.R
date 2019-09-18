@@ -45,17 +45,17 @@ test_that("joins work", {
   expect_true(nrow(unjoined) < nrow(full))
 
 
-  expect_equal(nrow(inner_join_microorganisms("B_ESCHR_COL")), 1)
-  expect_equal(nrow(inner_join_microorganisms("B_ESCHR_COL", by = c("mo" = "mo"))), 1)
+  expect_equal(nrow(inner_join_microorganisms("B_ESCHR_COLI")), 1)
+  expect_equal(nrow(inner_join_microorganisms("B_ESCHR_COLI", by = c("mo" = "mo"))), 1)
   expect_warning(inner_join_microorganisms("Escherichia", by = c("mo" = "genus")))
 
-  expect_equal(nrow(left_join_microorganisms("B_ESCHR_COL")), 1)
+  expect_equal(nrow(left_join_microorganisms("B_ESCHR_COLI")), 1)
   expect_warning(left_join_microorganisms("Escherichia", by = c("mo" = "genus")))
 
-  expect_equal(nrow(semi_join_microorganisms("B_ESCHR_COL")), 1)
-  expect_equal(nrow(anti_join_microorganisms("B_ESCHR_COL")), 0)
+  expect_equal(nrow(semi_join_microorganisms("B_ESCHR_COLI")), 1)
+  expect_equal(nrow(anti_join_microorganisms("B_ESCHR_COLI")), 0)
 
-  expect_warning(right_join_microorganisms("B_ESCHR_COL"))
-  expect_warning(full_join_microorganisms("B_ESCHR_COL"))
+  expect_warning(right_join_microorganisms("B_ESCHR_COLI"))
+  expect_warning(full_join_microorganisms("B_ESCHR_COLI"))
 
 })

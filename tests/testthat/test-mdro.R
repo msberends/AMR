@@ -40,7 +40,7 @@ test_that("mdro works", {
 
   # example_isolates should have these finding using Dutch guidelines
   expect_equal(outcome %>% freq() %>% pull(count),
-               c(1969, 25, 6)) # 1969 neg, 25 unconfirmed, 6 pos
+               c(1972, 22, 6)) # 1969 neg, 25 unconfirmed, 6 pos
 
   expect_equal(brmo(example_isolates, info = FALSE),
                mdro(example_isolates, guideline = "BRMO", info = FALSE))

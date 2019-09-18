@@ -34,7 +34,7 @@ clear_mo_history(...)
 
   This excludes \emph{Enterococci} at default (who are in group D), use \code{Lancefield = "all"} to also categorise all \emph{Enterococci} as group D.}
 
-\item{allow_uncertain}{a number between 0 (or "none") and 3 (or "all"), or TRUE (= 2) or FALSE (= 0) to indicate whether the input should be checked for less possible results, see Details}
+\item{allow_uncertain}{a number between 0 (or "none") and 3 (or "all"), or TRUE (= 2) or FALSE (= 0) to indicate whether the input should be checked for less probable results, see Details}
 
 \item{reference_df}{a \code{data.frame} to use for extra reference when translating \code{x} to a valid \code{mo}. See \code{\link{set_mo_source}} and \code{\link{get_mo_source}} to automate the usage of your own codes (e.g. used in your analysis or organisation).}
 
@@ -50,16 +50,16 @@ Use this function to determine a valid microorganism ID (\code{mo}). Determinati
 \strong{General info} \cr
 A microorganism ID from this package (class: \code{mo}) typically looks like these examples:\cr
 \preformatted{
-  Code              Full name
-  ---------------   --------------------------------------
-  B_KLBSL           Klebsiella
-  B_KLBSL_PNE       Klebsiella pneumoniae
-  B_KLBSL_PNE_RHI   Klebsiella pneumoniae rhinoscleromatis
-  |   |    |   |
-  |   |    |   |
-  |   |    |    ----> subspecies, a 3-4 letter acronym
-  |   |     ----> species, a 3-4 letter acronym
-  |    ----> genus, a 5-7 letter acronym, mostly without vowels
+  Code               Full name
+  ---------------    --------------------------------------
+  B_KLBSL            Klebsiella
+  B_KLBSL_PNMN       Klebsiella pneumoniae
+  B_KLBSL_PNMN_RHNS  Klebsiella pneumoniae rhinoscleromatis
+  |   |    |    |
+  |   |    |    |
+  |   |    |     ---> subspecies, a 4-5 letter acronym
+  |   |     ----> species, a 4-5 letter acronym
+  |    ----> genus, a 5-7 letter acronym
    ----> taxonomic kingdom: A (Archaea), AN (Animalia), B (Bacteria),
                             C (Chromista), F (Fungi), P (Protozoa)
 }
@@ -105,7 +105,7 @@ You can also use e.g. \code{as.mo(..., allow_uncertain = 1)} to only allow up to
 
 Examples:
 \itemize{
-  \item{\code{"Streptococcus group B (known as S. agalactiae)"}. The text between brackets will be removed and a warning will be thrown that the result \emph{Streptococcus group B} (\code{B_STRPT_GRB}) needs review.}
+  \item{\code{"Streptococcus group B (known as S. agalactiae)"}. The text between brackets will be removed and a warning will be thrown that the result \emph{Streptococcus group B} (\code{B_STRPT_GRPB}) needs review.}
   \item{\code{"S. aureus - please mind: MRSA"}. The last word will be stripped, after which the function will try to find a match. If it does not, the second last word will be stripped, etc. Again, a warning will be thrown that the result \emph{Staphylococcus aureus} (\code{B_STPHY_AUR}) needs review.}
   \item{\code{"Fluoroquinolone-resistant Neisseria gonorrhoeae"}. The first word will be stripped, after which the function will try to find a match. A warning will be thrown that the result \emph{Neisseria gonorrhoeae} (\code{B_NESSR_GON}) needs review.}
 }
@@ -154,7 +154,7 @@ On our website \url{https://msberends.gitlab.io/AMR} you can find \href{https://
 
 \examples{
 \donttest{
-# These examples all return "B_STPHY_AUR", the ID of S. aureus:
+# These examples all return "B_STPHY_AURS", the ID of S. aureus:
 as.mo("sau") # WHONET code
 as.mo("stau")
 as.mo("STAU")
@@ -179,11 +179,11 @@ as.mo("Streptococcus group A")
 as.mo("GAS") # Group A Streptococci
 as.mo("GBS") # Group B Streptococci
 
-as.mo("S. epidermidis")                 # will remain species: B_STPHY_EPI
-as.mo("S. epidermidis", Becker = TRUE)  # will not remain species: B_STPHY_CNS
+as.mo("S. epidermidis")                 # will remain species: B_STPHY_EPDR
+as.mo("S. epidermidis", Becker = TRUE)  # will not remain species: B_STPHY_CONS
 
-as.mo("S. pyogenes")                    # will remain species: B_STRPT_PYO
-as.mo("S. pyogenes", Lancefield = TRUE) # will not remain species: B_STRPT_GRA
+as.mo("S. pyogenes")                    # will remain species: B_STRPT_PYGN
+as.mo("S. pyogenes", Lancefield = TRUE) # will not remain species: B_STRPT_GRPA
 
 # All mo_* functions use as.mo() internally too (see ?mo_property):
 mo_genus("E. coli")           # returns "Escherichia"

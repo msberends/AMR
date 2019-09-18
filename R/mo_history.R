@@ -83,7 +83,7 @@ get_mo_history <- function(x, uncertainty_level, force = FALSE, disable = FALSE)
   if (base::is.null(history)) {
     result <- NA
   } else {
-    result <- data.frame(x = toupper(x), stringsAsFactors = FALSE) %>%
+    result <- data.frame(x = as.character(toupper(x)), stringsAsFactors = FALSE) %>%
       left_join(history, by = "x") %>%
       pull(mo)
   }

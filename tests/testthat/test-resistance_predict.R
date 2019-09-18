@@ -23,7 +23,7 @@ context("resistance_predict.R")
 
 test_that("prediction of rsi works", {
   AMX_R <- example_isolates %>%
-    filter(mo == "B_ESCHR_COL") %>%
+    filter(mo == "B_ESCHR_COLI") %>%
     rsi_predict(col_ab = "AMX",
                 col_date = "date",
                 model = "binomial",
@@ -40,47 +40,47 @@ test_that("prediction of rsi works", {
 
   library(dplyr)
 
-  expect_output(rsi_predict(x = filter(example_isolates, mo == "B_ESCHR_COL"),
+  expect_output(rsi_predict(x = filter(example_isolates, mo == "B_ESCHR_COLI"),
                             model = "binomial",
                             col_ab = "AMX",
                             col_date = "date",
                             info = TRUE))
-  expect_output(rsi_predict(x = filter(example_isolates, mo == "B_ESCHR_COL"),
+  expect_output(rsi_predict(x = filter(example_isolates, mo == "B_ESCHR_COLI"),
                             model = "loglin",
                             col_ab = "AMX",
                             col_date = "date",
                             info = TRUE))
-  expect_output(rsi_predict(x = filter(example_isolates, mo == "B_ESCHR_COL"),
+  expect_output(rsi_predict(x = filter(example_isolates, mo == "B_ESCHR_COLI"),
                             model = "lin",
                             col_ab = "AMX",
                             col_date = "date",
                             info = TRUE))
 
-  expect_error(rsi_predict(x = filter(example_isolates, mo == "B_ESCHR_COL"),
+  expect_error(rsi_predict(x = filter(example_isolates, mo == "B_ESCHR_COLI"),
                            model = "INVALID MODEL",
                            col_ab = "AMX",
                            col_date = "date",
                            info = TRUE))
-  expect_error(rsi_predict(x = filter(example_isolates, mo == "B_ESCHR_COL"),
+  expect_error(rsi_predict(x = filter(example_isolates, mo == "B_ESCHR_COLI"),
                            model = "binomial",
                            col_ab = "NOT EXISTING COLUMN",
                            col_date = "date",
                            info = TRUE))
-  expect_error(rsi_predict(x = filter(example_isolates, mo == "B_ESCHR_COL"),
+  expect_error(rsi_predict(x = filter(example_isolates, mo == "B_ESCHR_COLI"),
                            model = "binomial",
                            col_ab = "AMX",
                            col_date = "NOT EXISTING COLUMN",
                            info = TRUE))
-  expect_error(rsi_predict(x = filter(example_isolates, mo == "B_ESCHR_COL"),
+  expect_error(rsi_predict(x = filter(example_isolates, mo == "B_ESCHR_COLI"),
                            col_ab = "AMX",
                            col_date = "NOT EXISTING COLUMN",
                            info = TRUE))
-  expect_error(rsi_predict(x = filter(example_isolates, mo == "B_ESCHR_COL"),
+  expect_error(rsi_predict(x = filter(example_isolates, mo == "B_ESCHR_COLI"),
                            col_ab = "AMX",
                            col_date = "date",
                            info = TRUE))
   # almost all E. coli are MEM S in the Netherlands :)
-  expect_error(resistance_predict(x = filter(example_isolates, mo == "B_ESCHR_COL"),
+  expect_error(resistance_predict(x = filter(example_isolates, mo == "B_ESCHR_COLI"),
                                   model = "binomial",
                                   col_ab = "MEM",
                                   col_date = "date",

@@ -78,7 +78,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">0.7.1.9074</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">0.7.1.9075</span>
       </span>
     </div>
 
@@ -225,11 +225,11 @@
       
     </div>
 
-    <div id="amr-0-7-1-9074" class="section level1">
+    <div id="amr-0-7-1-9075" class="section level1">
 <h1 class="page-header">
-<a href="#amr-0-7-1-9074" class="anchor"></a>AMR 0.7.1.9074<small> Unreleased </small>
+<a href="#amr-0-7-1-9075" class="anchor"></a>AMR 0.7.1.9075<small> Unreleased </small>
 </h1>
-<p><small>Last updated: 16-Sep-2019</small></p>
+<p><small>Last updated: 18-Sep-2019</small></p>
 <div id="breaking" class="section level3">
 <h3 class="hasAnchor">
 <a href="#breaking" class="anchor"></a>Breaking</h3>
@@ -305,7 +305,7 @@ Since this is a major change, usage of the old <code>also_single_tested</code> w
 <h3 class="hasAnchor">
 <a href="#changed" class="anchor"></a>Changed</h3>
 <ul>
-<li>Many algorithm improvements for <code><a href="../reference/as.mo.html">as.mo()</a></code> (of which some led to additions to the <code>microorganisms</code> data set):
+<li>Many algorithm improvements for <code><a href="../reference/as.mo.html">as.mo()</a></code> (of which some led to additions to the <code>microorganisms</code> data set). Many thanks to all contributors that helped improving the algorithms.
 <ul>
 <li>Self-learning algorithm - the function now gains experience from previously determined microorganism IDs and learns from it (yielding 80-95% speed improvement for any guess after the first try)</li>
 <li>Big improvement for misspelled input</li>
@@ -314,6 +314,7 @@ Since this is a major change, usage of the old <code>also_single_tested</code> w
 <li>Added support for Viridans Group Streptococci (VGS) and Milleri Group Streptococci (MGS)</li>
 <li>Added support for 5,000 new fungi</li>
 <li>Added support for unknown yeasts and fungi</li>
+<li>Changed most microorganism IDs to improve readability. <strong>IMPORTANT:</strong> Because of these changes, the microorganism IDs have been changed to a slightly different format. Old microorganism IDs are still supported, but support will be dropped in a future version. Use <code><a href="../reference/as.mo.html">as.mo()</a></code> on your old codes to transform them to the new format.</li>
 </ul>
 </li>
 <li>Renamed data set <code>septic_patients</code> to <code>example_isolates</code>
@@ -351,7 +352,7 @@ Since this is a major change, usage of the old <code>also_single_tested</code> w
 <h4 class="hasAnchor">
 <a href="#other" class="anchor"></a>Other</h4>
 <ul>
-<li>Added Prof Dr Casper Albers as doctoral advisor and Dr Bart Meijer, Dr Dennis Souverein and Annick Lenglet as contributors</li>
+<li>Added Prof. Dr. Casper Albers as doctoral advisor and added Dr. Judith Fonville, Eric Hazenberg, Dr. Bart Meijer, Dr. Dennis Souverein and Annick Lenglet as contributors</li>
 </ul>
 </div>
 </div>
@@ -1265,7 +1266,7 @@ Using <code><a href="../reference/as.mo.html">as.mo(..., allow_uncertain = 3)</a
     <div id="tocnav">
       <h2>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
-        <li><a href="#amr-0-7-1-9074">0.7.1.9074</a></li>
+        <li><a href="#amr-0-7-1-9075">0.7.1.9075</a></li>
         <li><a href="#amr-0-7-1">0.7.1</a></li>
         <li><a href="#amr-0-7-0">0.7.0</a></li>
         <li><a href="#amr-0-6-1">0.6.1</a></li>

@@ -58,13 +58,13 @@ test_that("rsi works", {
 test_that("mic2rsi works", {
   expect_equal(as.character(
     as.rsi(x = as.mic(0.125),
-                      mo = "B_STRPT_PNE",
+                      mo = "B_STRPT_PNMN",
                       ab = "AMX",
                       guideline = "EUCAST")),
     "S")
   expect_equal(as.character(
     as.rsi(x = as.mic(4),
-           mo = "B_STRPT_PNE",
+           mo = "B_STRPT_PNMN",
            ab = "AMX",
            guideline = "EUCAST")),
     "R")
@@ -80,19 +80,19 @@ test_that("mic2rsi works", {
 test_that("disk2rsi works", {
   expect_equal(as.character(
     as.rsi(x = as.disk(22),
-           mo = "B_STRPT_PNE",
+           mo = "B_STRPT_PNMN",
            ab = "ERY",
            guideline = "CLSI")),
     "S")
   expect_equal(as.character(
     as.rsi(x = as.disk(18),
-           mo = "B_STRPT_PNE",
+           mo = "B_STRPT_PNMN",
            ab = "ERY",
            guideline = "CLSI")),
     "I")
   expect_equal(as.character(
     as.rsi(x = as.disk(10),
-           mo = "B_STRPT_PNE",
+           mo = "B_STRPT_PNMN",
            ab = "ERY",
            guideline = "CLSI")),
     "R")
