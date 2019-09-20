@@ -355,6 +355,7 @@ mo_info <- function(x, language = get_locale(),  ...) {
 #' @export
 mo_url <- function(x, open = FALSE, ...) {
   mo <- AMR::as.mo(x = x, ... = ...)
+  mo_names <- AMR::mo_name(mo)
   metadata <- get_mo_failures_uncertainties_renamed()
 
   df <- data.frame(mo, stringsAsFactors = FALSE) %>%
@@ -362,12 +363,12 @@ mo_url <- function(x, open = FALSE, ...) {
     mutate(url = case_when(source == "CoL" ~
                              paste0(gsub("{year}", catalogue_of_life$year, catalogue_of_life$url_CoL, fixed = TRUE), "details/species/id/", species_id),
                            source == "DSMZ" ~
-                             paste0(catalogue_of_life$url_DSMZ, "?bnu_no=", species_id, "#", species_id),
+                             paste0(catalogue_of_life$url_DSMZ, "/", unlist(lapply(strsplit(mo_names, ""), function(x) x[1]))),
                            TRUE ~
                              NA_character_))
 
   u <- df$url
-  names(u) <- AMR::mo_name(mo)
+  names(u) <- mo_names
   if (open == TRUE) {
     if (length(u) > 1) {
       warning("only the first URL will be opened, as `browseURL()` only suports one string.")

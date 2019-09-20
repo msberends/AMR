@@ -91,6 +91,32 @@ rm(data_col)
 rm(data_dsmz)
 rm(ref_taxonomy)
 
+mo_found_in_NL <- c("Absidia", "Acremonium", "Actinotignum", "Aedes", "Alternaria", "Anaerosalibacter", "Ancylostoma", 
+                    "Angiostrongylus", "Anisakis", "Anopheles", "Apophysomyces", "Arachnia", "Ascaris", "Aspergillus", 
+                    "Aureobacterium", "Aureobasidium", "Bacteroides", "Balantidum", "Basidiobolus", "Beauveria", 
+                    "Bilophilia", "Branhamella", "Brochontrix", "Brugia", "Calymmatobacterium", "Candida", "Capillaria",
+                    "Capnocytophaga", "Catabacter", "Cdc", "Chaetomium", "Chilomastix", "Chryseobacterium",
+                    "Chryseomonas", "Chrysonilia", "Cladophialophora", "Cladosporium", "Clonorchis", "Conidiobolus",
+                    "Contracaecum", "Cordylobia", "Cryptococcus", "Curvularia", "Demodex", "Dermatobia", "Dicrocoelium", 
+                    "Dioctophyma", "Diphyllobothrium", "Dipylidium", "Dirofilaria", "Dracunculus", "Echinococcus", 
+                    "Echinostoma", "Elisabethkingia", "Enterobius", "Enteromonas", "Euascomycetes", "Exophiala",
+                    "Exserohilum", "Fasciola", "Fasciolopsis", "Flavobacterium", "Fonsecaea", "Fusarium", "Fusobacterium",
+                    "Giardia", "Gnathostoma", "Hendersonula", "Heterophyes", "Hymenolepis", "Hypomyces", 
+                    "Hysterothylacium", "Kloeckera", "Koserella", "Larva", "Lecythophora", "Leishmania", "Lelliottia",
+                    "Leptomyxida", "Leptosphaeria", "Leptotrichia", "Loa", "Lucilia", "Lumbricus", "Malassezia", 
+                    "Malbranchea", "Mansonella", "Mesocestoides", "Metagonimus", "Metarrhizium", "Molonomonas", 
+                    "Mortierella", "Mucor", "Multiceps", "Mycocentrospora", "Mycoplasma", "Nanophetus", "Nattrassia",
+                    "Necator", "Nectria", "Novospingobium", "Ochroconis", "Oesophagostomum", "Oidiodendron", "Onchocerca",
+                    "Opisthorchis", "Opistorchis", "Paragonimus", "Paramyxovirus", "Pediculus", "Phlebotomus",
+                    "Phocanema", "Phoma", "Phthirus", "Piedraia", "Pithomyces", "Pityrosporum", "Prevotella", 
+                    "Pseudallescheria", "Pseudoterranova", "Pulex", "Retortamonas", "Rhizomucor", "Rhizopus",
+                    "Rhodotorula", "Salinococcus", "Sanguibacteroides", "Sarcophagidae", "Sarcoptes", "Schistosoma", 
+                    "Scolecobasidium", "Scopulariopsis", "Scytalidium", "Spirometra", "Sporobolomyces", "Stachybotrys",
+                    "Stenotrophomononas", "Stomatococcus", "Strongyloides", "Syncephalastraceae", "Syngamus", "Taenia",
+                    "Ternidens", "Torulopsis", "Toxocara", "Treponema", "Trichinella", "Trichobilharzia", "Trichoderma",
+                    "Trichomonas", "Trichophyton", "Trichosporon", "Trichostrongylus", "Trichuris", "Tritirachium",
+                    "Trombicula", "Trypanosoma", "Tunga", "Ureaplasma", "Wuchereria")
+
 MOs <- data_total %>%
   filter(
     (
@@ -102,23 +128,7 @@ MOs <- data_total %>%
           & !order %in% c("Eurotiales", "Microascales", "Mucorales", "Saccharomycetales", "Schizosaccharomycetales", "Tremellales", "Onygenales", "Pneumocystales"))
     )
     # or the genus has to be one of the genera we found in our hospitals last decades (Northern Netherlands, 2002-2018)
-    | genus %in% c("Absidia", "Acremonium", "Actinotignum", "Aedes", "Alternaria", "Anaerosalibacter", "Ancylostoma", "Angiostrongylus", 
-                   "Anisakis", "Anopheles", "Apophysomyces", "Arachnia", "Ascaris", "Aureobacterium", "Aureobasidium", "Balantidum", "Basidiobolus", 
-                   "Beauveria", "Bilophilia", "Branhamella", "Brochontrix", "Brugia", "Calymmatobacterium", "Capillaria", "Catabacter", "Cdc", "Chaetomium",
-                   "Chilomastix", "Chryseomonas", "Chrysonilia", "Cladophialophora", "Cladosporium", "Clonorchis", "Conidiobolus", "Contracaecum", 
-                   "Cordylobia", "Curvularia", "Demodex", "Dermatobia", "Dicrocoelium", "Dioctophyma", "Diphyllobothrium", "Dipylidium", "Dirofilaria",
-                   "Dracunculus", "Echinococcus", "Echinostoma", "Enterobius", "Enteromonas", "Euascomycetes", "Exophiala", "Exserohilum", "Fasciola", 
-                   "Fasciolopsis", "Fonsecaea", "Fusarium", "Gnathostoma", "Hendersonula", "Heterophyes", "Hymenolepis", "Hypomyces", "Hysterothylacium", 
-                   "Kloeckera", "Koserella", "Larva", "Lecythophora", "Leishmania", "Lelliottia", "Leptomyxida", "Leptosphaeria", "Loa", "Lucilia",
-                   "Lumbricus", "Malassezia", "Malbranchea", "Mansonella", "Mesocestoides", "Metagonimus", "Metarrhizium", "Molonomonas", "Mortierella", 
-                   "Mucor", "Multiceps", "Mycocentrospora", "Nanophetus", "Nattrassia", "Necator", "Nectria", "Novospingobium", "Ochroconis", 
-                   "Oesophagostomum", "Oidiodendron", "Onchocerca", "Opisthorchis", "Opistorchis", "Paragonimus", "Paramyxovirus", "Pediculus",
-                   "Phlebotomus", "Phocanema", "Phoma", "Phthirus", "Piedraia", "Pithomyces", "Pityrosporum", "Pseudallescheria", "Pseudoterranova",
-                   "Pulex", "Retortamonas", "Rhizomucor", "Rhizopus", "Rhodotorula", "Salinococcus", "Sanguibacteroides", "Sarcophagidae", "Sarcoptes",
-                   "Schistosoma", "Scolecobasidium", "Scopulariopsis", "Scytalidium", "Spirometra", "Sporobolomyces", "Stachybotrys", "Stenotrophomononas",
-                   "Stomatococcus", "Strongyloides", "Syncephalastraceae", "Syngamus", "Taenia", "Ternidens", "Torulopsis", "Toxocara", "Trichinella",
-                   "Trichobilharzia", "Trichoderma", "Trichomonas", "Trichosporon", "Trichostrongylus", "Trichuris", "Tritirachium", "Trombicula", 
-                   "Trypanosoma", "Tunga", "Wuchereria")
+    | genus %in% mo_found_in_NL
     # or the taxonomic entry is old - the species was renamed
     | !is.na(col_id_new)
   ) %>%
@@ -209,11 +219,6 @@ MOs.old <- MOs %>%
   distinct(fullname, .keep_all = TRUE) %>%
   arrange(col_id)
 
-MO.bak <- MOs
-MOold.bak <- MOs.old
-MOs <- MO.bak
-MOs.old <- MOold.bak
-
 MOs <- MOs %>%
   filter(is.na(col_id_new) | source == "DSMZ") %>%
   transmute(col_id,
@@ -241,12 +246,6 @@ MOs <- MOs %>%
   arrange(desc(source)) %>% 
   distinct(kingdom, fullname, .keep_all = TRUE)
 
-# # Filter out the DSMZ records that were renamed and are now in MOs.old
-# MOs <- MOs %>%
-#   filter(!(source == "DSMZ" & fullname %in% MOs.old$fullname)) %>% 
-#   distinct(kingdom, fullname, .keep_all = TRUE) %>% 
-#   filter(fullname != "")
-
 # remove all genera that have no species - they are irrelevant for microbiology and almost all from the kingdom of Animalia
 to_remove <- MOs %>%
   filter(!kingdom %in% c("Bacteria", "Protozoa")) %>% 
@@ -259,15 +258,19 @@ to_remove <- MOs %>%
 MOs <- MOs %>% filter(!(paste(kingdom, genus) %in% to_remove))
 rm(to_remove)
 
-# add CoL ID from MOs.bak, for the cases where DSMZ took preference
+# add CoL's col_id, source and ref from MOs.bak, for the cases where DSMZ took preference
 MOs <- MOs %>% 
   mutate(kingdom_fullname = paste(kingdom, fullname)) %>% 
-  select(-col_id) %>%
   left_join(MO.bak %>%
               filter(is.na(col_id_new), !is.na(col_id)) %>%
-              transmute(col_id, kingdom_fullname = trimws(paste(kingdom, genus, species, subspecies))), 
-            by = "kingdom_fullname") %>% 
-  select(col_id, everything(), -kingdom_fullname)
+              transmute(col_id, species_id, source, ref, kingdom_fullname = trimws(paste(kingdom, genus, species, subspecies))), 
+            by = "kingdom_fullname",
+            suffix = c("_dsmz", "_col")) %>% 
+  mutate(col_id = col_id_col, 
+         species_id = ifelse(!is.na(species_id_col), gsub(".*/(.*)$", "\\1", species_id_col), species_id_dsmz),
+         source = ifelse(!is.na(species_id_col), source_col, source_dsmz), 
+         ref = ifelse(!is.na(species_id_col) & ref_col != "", ref_col, ref_dsmz)) %>% 
+  select(-matches("(_col|_dsmz|kingdom_fullname)"))
 
 
 MOs.old <- MOs.old %>%
@@ -279,7 +282,9 @@ MOs.old <- MOs.old %>%
   select(col_id = col_id.x, col_id_new, fullname, ref = ref.x)
 
 # remove the records that are in MOs.old
+sum(MOs.old$fullname %in% MOs$fullname)
 MOs <- MOs %>% filter(!fullname %in% MOs.old$fullname)
+sum(MOs.old$fullname %in% MOs$fullname)
 
 # what characters are in the fullnames?
 table(sort(unlist(strsplit(x = paste(MOs$fullname, collapse = ""), split = ""))))
@@ -293,28 +298,13 @@ MOs <- MOs %>%
     class == "Gammaproteobacteria"
     | genus %in% c("Enterococcus", "Staphylococcus", "Streptococcus")
     ~ 1,
-    phylum %in% c("Proteobacteria",
-                  "Firmicutes",
-                  "Actinobacteria",
-                  "Sarcomastigophora")
-    | genus %in% c("Aspergillus",
-                   "Bacteroides",
-                   "Candida",
-                   "Capnocytophaga",
-                   "Chryseobacterium",
-                   "Cryptococcus",
-                   "Elisabethkingia",
-                   "Flavobacterium",
-                   "Fusobacterium",
-                   "Giardia",
-                   "Leptotrichia",
-                   "Mycoplasma",
-                   "Prevotella",
-                   "Rhodotorula",
-                   "Treponema",
-                   "Trichophyton",
-                   "Ureaplasma")
-    | rank %in% c("kingdom", "phylum", "class", "order", "family")
+    kingdom %in% c("Archaea", "Bacteria", "Chromista", "Fungi")
+    & (phylum %in% c("Proteobacteria",
+                     "Firmicutes",
+                     "Actinobacteria",
+                     "Sarcomastigophora")
+       | genus %in% mo_found_in_NL
+       | rank %in% c("kingdom", "phylum", "class", "order", "family"))
     ~ 2,
     TRUE ~ 3
   ))
@@ -322,7 +312,7 @@ MOs <- MOs %>%
 # Add abbreviations so we can easily know which ones are which ones.
 # These will become valid and unique microbial IDs for the AMR package.
 MOs <- MOs %>%
-  arrange(prevalence, fullname) %>% 
+  arrange(prevalence, genus, species, subspecies) %>% 
   group_by(kingdom) %>%
   mutate(abbr_other = case_when(
     rank == "family" ~ paste0("[FAM]_",
@@ -354,22 +344,21 @@ MOs <- MOs %>%
   )) %>%
   # abbreviations may be same for genera between kingdoms,
   # because each abbreviation starts with the the first character(s) of the kingdom
-  mutate(abbr_genus = abbreviate(genus,
+  mutate(abbr_genus = abbreviate(gsub("^ae", "\u00E6\u00E6", genus, ignore.case = TRUE), # keep a starting Latin ae
                                  minlength = 5,
                                  use.classes = TRUE,
-                                 method = "both.sides",
-                                 strict = FALSE)) %>%
+                                 method = "both.sides")) %>%
   ungroup() %>%
   group_by(genus) %>%
   # species abbreviations may be the same between genera
   # because the genus abbreviation is part of the abbreviation
-  mutate(abbr_species = abbreviate(species,
+  mutate(abbr_species = abbreviate(gsub("^ae", "\u00E6\u00E6", species),
                                    minlength = 4,
                                    use.classes = TRUE,
                                    method = "both.sides")) %>%
   ungroup() %>%
   group_by(genus, species) %>%
-  mutate(abbr_subspecies = abbreviate(subspecies,
+  mutate(abbr_subspecies = abbreviate(gsub("^ae", "\u00E6\u00E6", subspecies),
                                       minlength = 4,
                                       use.classes = TRUE,
                                       method = "both.sides")) %>%
@@ -385,7 +374,8 @@ MOs <- MOs %>%
                                               abbr_subspecies,
                                               sep = "_"),
                                         abbr_other),
-                                 sep = "_")))) %>%
+                                 sep = "_"))),
+         mo = gsub("(\u00C6|\u00E6)+", "AE", mo)) %>%
   mutate(mo = ifelse(duplicated(.$mo),
                      # these one or two must be unique too
                      paste0(mo, "1"),
@@ -643,7 +633,8 @@ MOs <- MOs %>%
 MOs <- MOs %>%
   group_by(kingdom) %>%
   distinct(fullname, .keep_all = TRUE) %>% 
-  ungroup()
+  ungroup() %>% 
+  filter(fullname != "")
 
 # everything distinct?
 sum(duplicated(MOs$mo))
@@ -693,10 +684,11 @@ MOs$col_id <- as.integer(MOs$col_id)
 MOs.old$col_id <- as.integer(MOs.old$col_id)
 MOs.old$col_id_new <- as.integer(MOs.old$col_id_new)
 
-# save
+# SAVE
 ### for other server
 saveRDS(MOs, "microorganisms.rds")
 saveRDS(MOs.old, "microorganisms.old.rds")
+saveRDS(microorganisms.codes, "microorganisms.codes.rds")
 ### for same server
 microorganisms <- MOs
 microorganisms.old <- MOs.old
@@ -708,9 +700,14 @@ class(microorganisms.translation$mo_new) <- "mo"
 usethis::use_data(microorganisms, overwrite = TRUE, version = 2)
 usethis::use_data(microorganisms.old, overwrite = TRUE, version = 2)
 usethis::use_data(microorganisms.codes, overwrite = TRUE, version = 2)
-saveRDS(AMR::microorganisms.translation, file = "microorganisms.translation.rds", version = 2) # this one will be covered in data-raw/internals.R
+saveRDS(microorganisms.translation, file = "data-raw/microorganisms.translation.rds", version = 2) # this one will be covered in data-raw/internals.R
 rm(microorganisms)
 rm(microorganisms.old)
 rm(microorganisms.codes)
 rm(microorganisms.translation)
-# and update the year and dimensions in R/data.R
+devtools::load_all(".")
+
+# TO DO AFTER THIS
+# * Update the year and dim()s in R/data.R
+# * Rerun data-raw/reproduction_of_rsi_translation.R
+# * Run unit tests

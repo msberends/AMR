@@ -654,4 +654,8 @@ usethis::use_data(microorganisms, overwrite = TRUE, version = 2)
 usethis::use_data(microorganisms.old, overwrite = TRUE, version = 2)
 rm(microorganisms)
 rm(microorganisms.old)
-# and update the year in R/data.R
+
+# TO DO AFTER THIS
+# * Update the year and dim()s in R/data.R
+# * Rerun data-raw/reproduction_of_rsi_translation.R
+# * Run unit tests

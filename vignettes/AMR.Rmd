@@ -121,8 +121,7 @@ data <- data.frame(date = sample(dates, size = sample_size, replace = TRUE),
                    CIP = sample(ab_interpretations, size = sample_size, replace = TRUE,
                                  prob = c(0.80, 0.00, 0.20)),
                    GEN = sample(ab_interpretations, size = sample_size, replace = TRUE,
-                                 prob = c(0.92, 0.00, 0.08))
-                   )
+                                 prob = c(0.92, 0.00, 0.08)))
 ```
 
 Using the `left_join()` function from the `dplyr` package, we can 'map' the gender to the patient ID using the `patients_table` object we created earlier:

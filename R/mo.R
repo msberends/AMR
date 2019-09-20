@@ -1065,30 +1065,33 @@ exec_as.mo <- function(x,
         }
         
         # MISCELLANEOUS ----
-        
+   
         # look for old taxonomic names ----
-        found <- microorganisms.oldDT[fullname_lower == tolower(a.x_backup)
-                                      | fullname_lower %like_case% d.x_withspaces_start_end,]
-        if (NROW(found) > 0) {
-          col_id_new <- found[1, col_id_new]
-          # when property is "ref" (which is the case in mo_ref, mo_authors and mo_year), return the old value, so:
-          # mo_ref("Chlamydia psittaci") = "Page, 1968" (with warning)
-          # mo_ref("Chlamydophila psittaci") = "Everett et al., 1999"
-          if (property == "ref") {
-            x[i] <- found[1, ref]
-          } else {
-            x[i] <- microorganismsDT[col_id == found[1, col_id_new], ..property][[1]]
+        # wait until prevalence == 2 to run the old taxonomic results on both prevalence == 1 and prevalence == 2
+        if (nrow(data_to_check) == nrow(microorganismsDT[prevalence == 2])) {
+          found <- microorganisms.oldDT[fullname_lower == tolower(a.x_backup)
+                                        | fullname_lower %like_case% d.x_withspaces_start_end,]
+          if (NROW(found) > 0) {
+            col_id_new <- found[1, col_id_new]
+            # when property is "ref" (which is the case in mo_ref, mo_authors and mo_year), return the old value, so:
+            # mo_ref("Chlamydia psittaci") = "Page, 1968" (with warning)
+            # mo_ref("Chlamydophila psittaci") = "Everett et al., 1999"
+            if (property == "ref") {
+              x[i] <- found[1, ref]
+            } else {
+              x[i] <- microorganismsDT[col_id == found[1, col_id_new], ..property][[1]]
+            }
+            options(mo_renamed_last_run = found[1, fullname])
+            was_renamed(name_old = found[1, fullname],
+                        name_new = microorganismsDT[col_id == found[1, col_id_new], fullname],
+                        ref_old = found[1, ref],
+                        ref_new = microorganismsDT[col_id == found[1, col_id_new], ref],
+                        mo = microorganismsDT[col_id == found[1, col_id_new], mo])
+            if (initial_search == TRUE) {
+              set_mo_history(a.x_backup, get_mo_code(x[i], property), 0, force = force_mo_history, disable = disable_mo_history)
+            }
+            return(x[i])
           }
-          options(mo_renamed_last_run = found[1, fullname])
-          was_renamed(name_old = found[1, fullname],
-                      name_new = microorganismsDT[col_id == found[1, col_id_new], fullname],
-                      ref_old = found[1, ref],
-                      ref_new = microorganismsDT[col_id == found[1, col_id_new], ref],
-                      mo = microorganismsDT[col_id == found[1, col_id_new], mo])
-          if (initial_search == TRUE) {
-            set_mo_history(a.x_backup, get_mo_code(x[i], property), 0, force = force_mo_history, disable = disable_mo_history)
-          }
-          return(x[i])
         }
         
         # check for uncertain results ----
@@ -1851,7 +1854,7 @@ as.data.frame.mo <- function(x, ...) {
 "[<-.mo" <- function(i, j, ..., value) {
   y <- NextMethod()
   attributes(y) <- attributes(i)
-  class_integrity_check(y, "microbial code", c(as.character(AMR::microorganisms$mo), as.character(microorganisms.translation$mo_old)))
+  class_integrity_check(y, "microorganism code", c(as.character(AMR::microorganisms$mo), as.character(microorganisms.translation$mo_old)))
 }
 #' @exportMethod [[<-.mo
 #' @export
@@ -1859,7 +1862,7 @@ as.data.frame.mo <- function(x, ...) {
 "[[<-.mo" <- function(i, j, ..., value) {
   y <- NextMethod()
   attributes(y) <- attributes(i)
-  class_integrity_check(y, "microbial code", c(as.character(AMR::microorganisms$mo), as.character(microorganisms.translation$mo_old)))
+  class_integrity_check(y, "microorganism code", c(as.character(AMR::microorganisms$mo), as.character(microorganisms.translation$mo_old)))
 }
 #' @exportMethod c.mo
 #' @export
@@ -1867,7 +1870,7 @@ as.data.frame.mo <- function(x, ...) {
 c.mo <- function(x, ...) {
   y <- NextMethod()
   attributes(y) <- attributes(x)
-  class_integrity_check(y, "microbial code", c(as.character(AMR::microorganisms$mo), as.character(microorganisms.translation$mo_old)))
+  class_integrity_check(y, "microorganism code", c(as.character(AMR::microorganisms$mo), as.character(microorganisms.translation$mo_old)))
 }
 
 #' @rdname as.mo

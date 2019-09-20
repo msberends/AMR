@@ -1,5 +1,5 @@
-# AMR 0.7.1.9075
-<small>Last updated: 18-Sep-2019</small>
+# AMR 0.7.1.9076
+<small>Last updated: 20-Sep-2019</small>
 
 ### Breaking
 * Determination of first isolates now **excludes** all 'unknown' microorganisms at default, i.e. microbial code `"UNKNOWN"`. They can be included with the new parameter `include_unknown`:
@@ -19,7 +19,7 @@
   x <- as.mo("E. coli")
   x[1] <- "testvalue"
   #> Warning message:
-  #> invalid microbial code, NA generated
+  #> invalid microorganism code, NA generated
   ```
   This is important, because a value like `"testvalue"` could never be understood by e.g. `mo_name()`, although the class would suggest a valid microbial code.
 * Function `freq()` has moved to a new package, [`clean`](https://github.com/msberends/clean) ([CRAN link](https://cran.r-project.org/package=clean)), since creating frequency tables actually does not fit the scope of this package. The `freq()` function still works, since it is re-exported from the `clean` package (which will be installed automatically upon updating this `AMR` package).
@@ -29,12 +29,13 @@
   ```r
   x <- bug_drug_combinations(example_isolates)
   x
-  #>      ab          mo   S  I   R total
-  #> 1   AMC B_ESCHR_COL 332 74  61   467
-  #> 2   AMC B_KLBSL_PNE  49  3   6    58
-  #> 3   AMC B_PROTS_MIR  28  7   1    36
-  #> 4   AMC B_PSDMN_AER   0  0  30    30
-  #> 5   AMC B_STPHY_AUR 234  0   1   235
+  # NOTE: Using column `mo` as input for `col_mo`.
+  #>      ab           mo   S  I   R total
+  #> 1   AMC B_ESCHR_COLI 332 74  61   467
+  #> 2   AMC B_KLBSL_PNMN  49  3   6    58
+  #> 3   AMC B_PROTS_MRBL  28  7   1    36
+  #> 4   AMC B_PSDMN_AERG   0  0  30    30
+  #> 5   AMC B_STPHY_AURS 234  0   1   235
   ```
   You can format this to a printable format, ready for reporting or exporting to e.g. Excel with the base R `format()` function:
   ```r

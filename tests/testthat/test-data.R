@@ -30,6 +30,9 @@ test_that("data sets are valid", {
 
   # check cross table reference
   expect_true(all(microorganisms.codes$mo %in% microorganisms$mo))
+  expect_true(all(example_isolates$mo %in% microorganisms$mo))
+  expect_true(all(microorganisms.translation$mo_new %in% microorganisms$mo))
+  expect_true(all(rsi_translation$mo %in% microorganisms$mo))
   expect_false(any(is.na(microorganisms.codes$code)))
   expect_false(any(is.na(microorganisms.codes$mo)))
 
@@ -40,6 +43,7 @@ test_that("data sets are valid", {
   datasets <- data(package = "AMR", envir = asNamespace("AMR"))$results[, "Item"]
   for (i in 1:length(datasets)) {
     dataset <- get(datasets[i], envir = asNamespace("AMR"))
+    #print(paste("testing data set", datasets[i]))
     expect_identical(dataset_UTF8_to_ASCII(dataset), dataset)
   }
 })

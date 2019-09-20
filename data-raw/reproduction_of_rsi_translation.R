@@ -52,3 +52,4 @@ rsi_translation <- tbl_mic %>%
 # save to package
 usethis::use_data(rsi_translation, overwrite = TRUE)
 rm(rsi_translation)
+devtools::load_all(".")

@@ -95,7 +95,7 @@ In the table above, all measurements are shown in milliseconds (thousands of sec
 
 To achieve this speed, the `as.mo` function also takes into account the prevalence of human pathogenic microorganisms. The downside is of course that less prevalent microorganisms will be determined less fast. See this example for the ID of *Thermus islandicus* (`B_THERMS_ISLN`), a bug probably never found before in humans:
 
-```{r}
+```{r, warning=FALSE}
 T.islandicus <- microbenchmark(as.mo("theisl"),
                                as.mo("THEISL"),
                                as.mo("T. islandicus"),

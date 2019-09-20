@@ -55,7 +55,7 @@
 #'
 #' A data set containing the microbial taxonomy of six kingdoms from the Catalogue of Life. MO codes can be looked up using \code{\link{as.mo}}.
 #' @inheritSection catalogue_of_life Catalogue of Life
-#' @format A \code{\link{data.frame}} with 69,460 observations and 16 variables:
+#' @format A \code{\link{data.frame}} with 69,454 observations and 16 variables:
 #' \describe{
 #'   \item{\code{mo}}{ID of microorganism as used by this package}
 #'   \item{\code{col_id}}{Catalogue of Life ID}
@@ -73,7 +73,7 @@
 #'   \item{2 entries of \emph{Staphylococcus} (coagulase-negative [CoNS] and coagulase-positive [CoPS])}
 #'   \item{3 entries of \emph{Trichomonas} (\emph{Trichomonas vaginalis}, and its family and genus)}
 #'   \item{5 other 'undefined' entries (unknown, unknown Gram negatives, unknown Gram positives, unknown yeast and unknown fungus)}
-#'   \item{22,654 species from the DSMZ (Deutsche Sammlung von Mikroorganismen und Zellkulturen) overwriting records from the Catalogue of Life, since the DSMZ contain the latest taxonomic information based on recent publications}
+#'   \item{9,460 species from the DSMZ (Deutsche Sammlung von Mikroorganismen und Zellkulturen) since the DSMZ contain the latest taxonomic information based on recent publications}
 #' }
 #' @section About the records from DSMZ (see source):
 #' Names of prokaryotes are defined as being validly published by the International Code of Nomenclature of Bacteria. Validly published are all names which are included in the Approved Lists of Bacterial Names and the names subsequently published in the International Journal of Systematic Bacteriology (IJSB) and, from January 2000, in the International Journal of Systematic and Evolutionary Microbiology (IJSEM) as original articles or in the validation lists.
@@ -90,7 +90,7 @@ catalogue_of_life <- list(
   year = 2018,
   version = "Catalogue of Life: {year} Annual Checklist",
   url_CoL = "http://www.catalogueoflife.org/annual-checklist/{year}/",
-  url_DSMZ = "https://www.dsmz.de/microorganisms/pnu/bacterial_nomenclature_info_mm.php",
+  url_DSMZ = "https://www.dsmz.de/services/online-tools/prokaryotic-nomenclature-up-to-date/prokaryotic-nomenclature-up-to-date/genus-search",
   yearmonth_DSMZ = "August 2019"
 )
 

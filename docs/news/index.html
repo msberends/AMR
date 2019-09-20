@@ -78,7 +78,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">0.7.1.9075</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">0.7.1.9076</span>
       </span>
     </div>
 
@@ -225,11 +225,11 @@
       
     </div>
 
-    <div id="amr-0-7-1-9075" class="section level1">
+    <div id="amr-0-7-1-9076" class="section level1">
 <h1 class="page-header">
-<a href="#amr-0-7-1-9075" class="anchor"></a>AMR 0.7.1.9075<small> Unreleased </small>
+<a href="#amr-0-7-1-9076" class="anchor"></a>AMR 0.7.1.9076<small> Unreleased </small>
 </h1>
-<p><small>Last updated: 18-Sep-2019</small></p>
+<p><small>Last updated: 20-Sep-2019</small></p>
 <div id="breaking" class="section level3">
 <h3 class="hasAnchor">
 <a href="#breaking" class="anchor"></a>Breaking</h3>
@@ -250,7 +250,7 @@ For WHONET users, this means that all records/isolates with organism code <code>
 <a class="sourceLine" id="cb2-8" data-line-number="8">x &lt;-<span class="st"> </span><span class="kw"><a href="../reference/as.mo.html">as.mo</a></span>(<span class="st">"E. coli"</span>)</a>
 <a class="sourceLine" id="cb2-9" data-line-number="9">x[<span class="dv">1</span>] &lt;-<span class="st"> "testvalue"</span></a>
 <a class="sourceLine" id="cb2-10" data-line-number="10"><span class="co">#&gt; Warning message:</span></a>
-<a class="sourceLine" id="cb2-11" data-line-number="11"><span class="co">#&gt; invalid microbial code, NA generated</span></a></code></pre></div>
+<a class="sourceLine" id="cb2-11" data-line-number="11"><span class="co">#&gt; invalid microorganism code, NA generated</span></a></code></pre></div>
 This is important, because a value like <code>"testvalue"</code> could never be understood by e.g. <code><a href="../reference/mo_property.html">mo_name()</a></code>, although the class would suggest a valid microbial code.</li>
 <li><p>Function <code><a href="https://www.rdocumentation.org/packages/clean/topics/freq">freq()</a></code> has moved to a new package, <a href="https://github.com/msberends/clean"><code>clean</code></a> (<a href="https://cran.r-project.org/package=clean">CRAN link</a>), since creating frequency tables actually does not fit the scope of this package. The <code><a href="https://www.rdocumentation.org/packages/clean/topics/freq">freq()</a></code> function still works, since it is re-exported from the <code>clean</code> package (which will be installed automatically upon updating this <code>AMR</code> package).</p></li>
 </ul>
@@ -263,12 +263,13 @@ This is important, because a value like <code>"testvalue"</code> could never be 
 <p>Function <code><a href="../reference/bug_drug_combinations.html">bug_drug_combinations()</a></code> to quickly get a <code>data.frame</code> with the antimicrobial resistance of any bug-drug combination in a data set:</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1">x &lt;-<span class="st"> </span><span class="kw"><a href="../reference/bug_drug_combinations.html">bug_drug_combinations</a></span>(example_isolates)</a>
 <a class="sourceLine" id="cb3-2" data-line-number="2">x</a>
-<a class="sourceLine" id="cb3-3" data-line-number="3"><span class="co">#&gt;      ab          mo   S  I   R total</span></a>
-<a class="sourceLine" id="cb3-4" data-line-number="4"><span class="co">#&gt; 1   AMC B_ESCHR_COL 332 74  61   467</span></a>
-<a class="sourceLine" id="cb3-5" data-line-number="5"><span class="co">#&gt; 2   AMC B_KLBSL_PNE  49  3   6    58</span></a>
-<a class="sourceLine" id="cb3-6" data-line-number="6"><span class="co">#&gt; 3   AMC B_PROTS_MIR  28  7   1    36</span></a>
-<a class="sourceLine" id="cb3-7" data-line-number="7"><span class="co">#&gt; 4   AMC B_PSDMN_AER   0  0  30    30</span></a>
-<a class="sourceLine" id="cb3-8" data-line-number="8"><span class="co">#&gt; 5   AMC B_STPHY_AUR 234  0   1   235</span></a></code></pre></div>
+<a class="sourceLine" id="cb3-3" data-line-number="3"><span class="co"># </span><span class="al">NOTE</span><span class="co">: Using column `mo` as input for `col_mo`.</span></a>
+<a class="sourceLine" id="cb3-4" data-line-number="4"><span class="co">#&gt;      ab           mo   S  I   R total</span></a>
+<a class="sourceLine" id="cb3-5" data-line-number="5"><span class="co">#&gt; 1   AMC B_ESCHR_COLI 332 74  61   467</span></a>
+<a class="sourceLine" id="cb3-6" data-line-number="6"><span class="co">#&gt; 2   AMC B_KLBSL_PNMN  49  3   6    58</span></a>
+<a class="sourceLine" id="cb3-7" data-line-number="7"><span class="co">#&gt; 3   AMC B_PROTS_MRBL  28  7   1    36</span></a>
+<a class="sourceLine" id="cb3-8" data-line-number="8"><span class="co">#&gt; 4   AMC B_PSDMN_AERG   0  0  30    30</span></a>
+<a class="sourceLine" id="cb3-9" data-line-number="9"><span class="co">#&gt; 5   AMC B_STPHY_AURS 234  0   1   235</span></a></code></pre></div>
 <p>You can format this to a printable format, ready for reporting or exporting to e.g. Excel with the base R <code><a href="https://www.rdocumentation.org/packages/base/topics/format">format()</a></code> function:</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/format">format</a></span>(x, <span class="dt">combine_IR =</span> <span class="ot">FALSE</span>)</a></code></pre></div>
 </li>
@@ -1266,7 +1267,7 @@ Using <code><a href="../reference/as.mo.html">as.mo(..., allow_uncertain = 3)</a
     <div id="tocnav">
       <h2>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
-        <li><a href="#amr-0-7-1-9075">0.7.1.9075</a></li>
+        <li><a href="#amr-0-7-1-9076">0.7.1.9076</a></li>
         <li><a href="#amr-0-7-1">0.7.1</a></li>
         <li><a href="#amr-0-7-0">0.7.0</a></li>
         <li><a href="#amr-0-6-1">0.6.1</a></li>
