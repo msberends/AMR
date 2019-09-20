@@ -1539,7 +1539,8 @@ exec_as.mo <- function(x,
       
       # THEN TRY PREVALENT IN HUMAN INFECTIONS ----
       x[i] <- check_per_prevalence(data_to_check = reference_data_to_use[prevalence == 2],
-                                   data.old_to_check = microorganisms.oldDT[prevalence == 2],
+                                   data.old_to_check = microorganisms.oldDT[prevalence %in% c(2, 3)], # run all other old MOs the second time,
+                                                                                                      # otherwise e.g. mo_ref("Chlamydia psittaci") doesn't work correctly
                                    a.x_backup = x_backup[i],
                                    b.x_trimmed = x_trimmed[i],
                                    c.x_trimmed_without_group = x_trimmed_without_group[i],
@@ -1558,7 +1559,7 @@ exec_as.mo <- function(x,
       
       # THEN UNPREVALENT IN HUMAN INFECTIONS ----
       x[i] <- check_per_prevalence(data_to_check = reference_data_to_use[prevalence == 3],
-                                   data.old_to_check = microorganisms.oldDT[prevalence == 3],
+                                   data.old_to_check = microorganisms.oldDT[prevalence == 999],
                                    a.x_backup = x_backup[i],
                                    b.x_trimmed = x_trimmed[i],
                                    c.x_trimmed_without_group = x_trimmed_without_group[i],
