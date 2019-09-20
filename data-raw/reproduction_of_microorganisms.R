@@ -636,6 +636,9 @@ MOs <- MOs %>%
   ungroup() %>% 
   filter(fullname != "")
 
+MOs.old <- MOs.old %>% 
+  left_join(MOs %>% select(col_id, prevalence), by = c("col_id_new" = "col_id"))
+
 # everything distinct?
 sum(duplicated(MOs$mo))
 sum(duplicated(MOs$fullname))

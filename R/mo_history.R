@@ -55,7 +55,7 @@ set_mo_history <- function(x, mo, uncertainty_level, force = FALSE, disable = FA
         # if (tryCatch(nrow(getOption("mo_remembered_results")), error = function(e) 1001) > 1000) {
         #   return(base::invisible())
         # }
-        if (is.null(mo_hist)) {
+        if (is.null(mo_hist) & interactive()) {
           message(blue(paste0("NOTE: results are saved to ", mo_history_file(), ".")))
         }
         tryCatch(write.csv(rbind(mo_hist,

@@ -80,7 +80,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">0.7.1.9076</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">0.7.1.9077</span>
       </span>
     </div>
 
@@ -309,7 +309,7 @@ The <code>as.mo()</code> function gains experience from previously determined mi
 This function uses intelligent rules to help getting fast and logical results. It tries to find matches in this order:</p><ul>
 <li><p>Valid MO codes and full names: it first searches in already valid MO code and known genus/species combinations</p></li>
 <li><p>Human pathogenic prevalence: it first searches in more prevalent microorganisms, then less prevalent ones (see <em>Microbial prevalence of pathogens in humans</em> below)</p></li>
-<li><p>Taxonomic kingdom: it first searches in Bacteria/Chromista, then Fungi, then Protozoa</p></li>
+<li><p>Taxonomic kingdom: it first searches in Bacteria, then Fungi, then Protozoa, then Archaea, then others</p></li>
 <li><p>Breakdown of input values: from here it starts to breakdown input values to find possible matches</p></li>
 </ul>
     <p>A couple of effects because of these rules:</p><ul>

@@ -4,12 +4,13 @@
 \name{microorganisms.old}
 \alias{microorganisms.old}
 \title{Data set with previously accepted taxonomic names}
-\format{A \code{\link{data.frame}} with 24,246 observations and 4 variables:
+\format{A \code{\link{data.frame}} with 24,246 observations and 5 variables:
 \describe{
   \item{\code{col_id}}{Catalogue of Life ID that was originally given}
   \item{\code{col_id_new}}{New Catalogue of Life ID that responds to an entry in the \code{\link{microorganisms}} data set}
   \item{\code{fullname}}{Old full taxonomic name of the microorganism}
   \item{\code{ref}}{Author(s) and year of concerning scientific publication}
+  \item{\code{prevalence}}{Prevalence of the microorganism, see \code{?as.mo}}
 }}
 \source{
 Catalogue of Life: Annual Checklist (public online taxonomic database), \url{http://www.catalogueoflife.org} (check included annual version with \code{\link{catalogue_of_life_version}()}).

@@ -64,10 +64,13 @@ library(microbenchmark)
 library(AMR)
 ```
 
-In the next test, we try to 'coerce' different input values for *Staphylococcus aureus*. The actual result is the same every time: it returns its MO code `B_STPHY_AURS` (*B* stands for *Bacteria*, the taxonomic kingdom). 
+In the next test, we try to 'coerce' different input values for *Staphylococcus aureus*. The actual result is the same every time: it returns its microorganism code `B_STPHY_AURS` (*B* stands for *Bacteria*, the taxonomic kingdom). 
 
 But the calculation time differs a lot:
 
+```{r, echo = FALSE}
+clear_mo_history()
+```
 ```{r, warning=FALSE}
 S.aureus <- microbenchmark(
   as.mo("sau"), # WHONET code
@@ -93,68 +96,61 @@ ggplot.bm(S.aureus)
 
 In the table above, all measurements are shown in milliseconds (thousands of seconds). A value of 5 milliseconds means it can determine 200 input values per second. It case of 100 milliseconds, this is only 10 input values per second. The second input is the only one that has to be looked up thoroughly. All the others are known codes (the first one is a WHONET code) or common laboratory codes, or common full organism names like the last one. Full organism names are always preferred.
 
-To achieve this speed, the `as.mo` function also takes into account the prevalence of human pathogenic microorganisms. The downside is of course that less prevalent microorganisms will be determined less fast. See this example for the ID of *Thermus islandicus* (`B_THERMS_ISLN`), a bug probably never found before in humans:
-
-```{r, warning=FALSE}
-T.islandicus <- microbenchmark(as.mo("theisl"),
-                               as.mo("THEISL"),
-                               as.mo("T. islandicus"),
-                               as.mo("T.  islandicus"),
-                               as.mo("Thermus islandicus"),
-                               times = 10)
-print(T.islandicus, unit = "ms", signif = 2)
-```
-
-That takes `r round(mean(T.islandicus$time, na.rm = TRUE) / mean(S.aureus$time, na.rm = TRUE), 1)` times as much time on average. A value of 100 milliseconds means it can only determine ~10 different input values per second. We can conclude that looking up arbitrary codes of less prevalent microorganisms is the worst way to go, in terms of calculation performance. Full names (like *Thermus islandicus*) are almost fast - these are the most probable input from most data sets.
-
-In the figure below, we compare *Escherichia coli* (which is very common) with *Prevotella brevis* (which is moderately common) and with *Thermus islandicus* (which is uncommon):
+To achieve this speed, the `as.mo` function also takes into account the prevalence of human pathogenic microorganisms. The downside is of course that less prevalent microorganisms will be determined less fast. See this example for the ID of *Methanosarcina semesiae* (`B_MTHNSR_SEMS`), a bug probably never found before in humans:
 
 ```{r, echo = FALSE}
-# ggplot.bm(
-#   microbenchmark(as.mo("Escherichia coli"),
-#                  as.mo("E. coli"),
-#                  times = 10), title = "Very common")
-# 
-# ggplot.bm(
-#   microbenchmark(as.mo("Prevotella brevis"),
-#                  as.mo("P. brevis"),
-#                  times = 10), title = "Moderately common")
-# 
-# ggplot.bm(
-#   microbenchmark(as.mo("Thermus islandicus"),
-#                  as.mo("T. islandicus"),
-#                  times = 10), title = "Uncommon")
+clear_mo_history()
+```
+```{r, warning=FALSE}
+M.semesiae <- microbenchmark(as.mo("metsem"),
+                               as.mo("METSEM"),
+                               as.mo("M. semesiae"),
+                               as.mo("M.  semesiae"),
+                               as.mo("Methanosarcina semesiae"),
+                               times = 10)
+print(M.semesiae, unit = "ms", signif = 4)
+```
 
+That takes `r round(mean(M.semesiae$time, na.rm = TRUE) / mean(S.aureus$time, na.rm = TRUE), 1)` times as much time on average. A value of 100 milliseconds means it can only determine ~10 different input values per second. We can conclude that looking up arbitrary codes of less prevalent microorganisms is the worst way to go, in terms of calculation performance. Full names (like *Methanosarcina semesiae*) are almost fast - these are the most probable input from most data sets.
+
+In the figure below, we compare *Escherichia coli* (which is very common) with *Prevotella brevis* (which is moderately common) and with *Methanosarcina semesiae* (which is uncommon):
+
+```{r, echo = FALSE}
+clear_mo_history()
+```
+```{r, echo = FALSE}
 par(mar = c(5, 16, 4, 2))
 boxplot(microbenchmark(
-  'as.mo("Thermus islandicus")' = as.mo("Thermus islandicus"),
+  'as.mo("Methanosarcina semesiae")' = as.mo("Methanosarcina semesiae"),
   'as.mo("Prevotella brevis")' = as.mo("Prevotella brevis"),
   'as.mo("Escherichia coli")' = as.mo("Escherichia coli"),
-  'as.mo("T. islandicus")' = as.mo("T. islandicus"),
+  'as.mo("M. semesiae")' = as.mo("M. semesiae"),
   'as.mo("P. brevis")' = as.mo("P. brevis"),
   'as.mo("E. coli")' = as.mo("E. coli"),
   times = 10),
-        horizontal = TRUE, las = 1, unit = "s", log = FALSE,
-        xlab = "", ylab = "Time in seconds", ylim = c(0, 0.5),
+        horizontal = TRUE, las = 1, unit = "s", log = TRUE,
+        xlab = "", ylab = "Time in seconds (log)",
         main = "Benchmarks per prevalence")
 ```
 
 In reality, the `as.mo()` functions **learns from its own output to speed up determinations for next times**. In above figure, this effect was disabled to show the difference with the boxplot below - when you would use `as.mo()` yourself:
 
 ```{r, echo = FALSE}
-
 clear_mo_history()
+```
+
+```{r, echo = FALSE}
 par(mar = c(5, 16, 4, 2))
 boxplot(microbenchmark(
-  'as.mo("Thermus islandicus")' = as.mo("Thermus islandicus", force_mo_history = TRUE),
+  'as.mo("Methanosarcina semesiae")' = as.mo("Methanosarcina semesiae", force_mo_history = TRUE),
   'as.mo("Prevotella brevis")' = as.mo("Prevotella brevis", force_mo_history = TRUE),
   'as.mo("Escherichia coli")' = as.mo("Escherichia coli", force_mo_history = TRUE),
-  'as.mo("T. islandicus")' = as.mo("T. islandicus", force_mo_history = TRUE),
+  'as.mo("M. semesiae")' = as.mo("M. semesiae", force_mo_history = TRUE),
   'as.mo("P. brevis")' = as.mo("P. brevis", force_mo_history = TRUE),
   'as.mo("E. coli")' = as.mo("E. coli", force_mo_history = TRUE),
   times = 10),
         horizontal = TRUE, las = 1, unit = "s", log = FALSE,
-        xlab = "", ylab = "Time in seconds", ylim = c(0, 0.5),
+        xlab = "", ylab = "Time in seconds",
         main = "Benchmarks per prevalence")
 ```
 
@@ -197,6 +193,9 @@ So transforming 500,000 values (!!) of `r n_distinct(x)` unique values only take
 
 What about precalculated results? If the input is an already precalculated result of a helper function like `mo_name()`, it almost doesn't take any time at all (see 'C' below):
 
+```{r, echo = FALSE}
+clear_mo_history()
+```
 ```{r}
 run_it <- microbenchmark(A = mo_name("B_STPHY_AURS"),
                          B = mo_name("S. aureus"),
@@ -207,6 +206,9 @@ print(run_it, unit = "ms", signif = 3)
 
 So going from `mo_name("Staphylococcus aureus")` to `"Staphylococcus aureus"` takes `r format(round(run_it %>% filter(expr == "C") %>% pull(time) %>% median() / 1e9, 4), scientific = FALSE)` seconds - it doesn't even start calculating *if the result would be the same as the expected resulting value*. That goes for all helper functions:
 
+```{r, echo = FALSE}
+clear_mo_history()
+```
 ```{r}
 run_it <- microbenchmark(A = mo_species("aureus"),
                          B = mo_genus("Staphylococcus"),
@@ -226,6 +228,9 @@ Of course, when running `mo_phylum("Firmicutes")` the function has zero knowledg
 
 When the system language is non-English and supported by this `AMR` package, some functions will have a translated result. This almost does't take extra time:
 
+```{r, echo = FALSE}
+clear_mo_history()
+```
 ```{r}
 mo_name("CoNS", language = "en") # or just mo_name("CoNS") on an English system
 

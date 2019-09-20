@@ -81,9 +81,10 @@ This function uses intelligent rules to help getting fast and logical results. I
 \itemize{
   \item{Valid MO codes and full names: it first searches in already valid MO code and known genus/species combinations}
   \item{Human pathogenic prevalence: it first searches in more prevalent microorganisms, then less prevalent ones (see \emph{Microbial prevalence of pathogens in humans} below)}
-  \item{Taxonomic kingdom: it first searches in Bacteria/Chromista, then Fungi, then Protozoa}
+  \item{Taxonomic kingdom: it first searches in Bacteria, then Fungi, then Protozoa, then Archaea, then others}
   \item{Breakdown of input values: from here it starts to breakdown input values to find possible matches}
 }
+
 
 A couple of effects because of these rules:
 \itemize{

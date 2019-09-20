@@ -71,9 +71,10 @@
 #' \itemize{
 #'   \item{Valid MO codes and full names: it first searches in already valid MO code and known genus/species combinations}
 #'   \item{Human pathogenic prevalence: it first searches in more prevalent microorganisms, then less prevalent ones (see \emph{Microbial prevalence of pathogens in humans} below)}
-#'   \item{Taxonomic kingdom: it first searches in Bacteria/Chromista, then Fungi, then Protozoa}
+#'   \item{Taxonomic kingdom: it first searches in Bacteria, then Fungi, then Protozoa, then Archaea, then others}
 #'   \item{Breakdown of input values: from here it starts to breakdown input values to find possible matches}
 #' }
+#' 
 #'
 #' A couple of effects because of these rules:
 #' \itemize{
@@ -258,7 +259,6 @@ as.mo <- function(x, Becker = FALSE, Lancefield = FALSE, allow_uncertain = TRUE,
     y <- mo_validate(x = x, property = "mo",
                      Becker = Becker, Lancefield = Lancefield,
                      allow_uncertain = uncertainty_level, reference_df = reference_df,
-                     #force_mo_history = isTRUE(list(...)$force_mo_history),
                      ...)
   }
   
@@ -285,7 +285,7 @@ is.mo <- function(x) {
 # param force_mo_history logical - whether found result must be saved with set_mo_history (default FALSE on non-interactive sessions)
 # param disable_mo_history logical - whether set_mo_history and get_mo_history should be ignored
 # param debug logical - show different lookup texts while searching
-# param uncertain_check_prevalence integer - the prevalence to check for when running for uncertain results, follows microorganisms$prevalence
+# param reference_data_to_use data.frame - the data set to check for
 exec_as.mo <- function(x,
                        Becker = FALSE,
                        Lancefield = FALSE,
@@ -936,6 +936,7 @@ exec_as.mo <- function(x,
       
       # NOW RUN THROUGH DIFFERENT PREVALENCE LEVELS
       check_per_prevalence <- function(data_to_check,
+                                       data.old_to_check,
                                        a.x_backup,
                                        b.x_trimmed,
                                        c.x_trimmed_without_group,
@@ -1065,33 +1066,31 @@ exec_as.mo <- function(x,
         }
         
         # MISCELLANEOUS ----
-   
+        
         # look for old taxonomic names ----
         # wait until prevalence == 2 to run the old taxonomic results on both prevalence == 1 and prevalence == 2
-        if (nrow(data_to_check) == nrow(microorganismsDT[prevalence == 2])) {
-          found <- microorganisms.oldDT[fullname_lower == tolower(a.x_backup)
-                                        | fullname_lower %like_case% d.x_withspaces_start_end,]
-          if (NROW(found) > 0) {
-            col_id_new <- found[1, col_id_new]
-            # when property is "ref" (which is the case in mo_ref, mo_authors and mo_year), return the old value, so:
-            # mo_ref("Chlamydia psittaci") = "Page, 1968" (with warning)
-            # mo_ref("Chlamydophila psittaci") = "Everett et al., 1999"
-            if (property == "ref") {
-              x[i] <- found[1, ref]
-            } else {
-              x[i] <- microorganismsDT[col_id == found[1, col_id_new], ..property][[1]]
-            }
-            options(mo_renamed_last_run = found[1, fullname])
-            was_renamed(name_old = found[1, fullname],
-                        name_new = microorganismsDT[col_id == found[1, col_id_new], fullname],
-                        ref_old = found[1, ref],
-                        ref_new = microorganismsDT[col_id == found[1, col_id_new], ref],
-                        mo = microorganismsDT[col_id == found[1, col_id_new], mo])
-            if (initial_search == TRUE) {
-              set_mo_history(a.x_backup, get_mo_code(x[i], property), 0, force = force_mo_history, disable = disable_mo_history)
-            }
-            return(x[i])
+        found <- data.old_to_check[fullname_lower == tolower(a.x_backup)
+                                   | fullname_lower %like_case% d.x_withspaces_start_end,]
+        if (NROW(found) > 0) {
+          col_id_new <- found[1, col_id_new]
+          # when property is "ref" (which is the case in mo_ref, mo_authors and mo_year), return the old value, so:
+          # mo_ref("Chlamydia psittaci") = "Page, 1968" (with warning)
+          # mo_ref("Chlamydophila psittaci") = "Everett et al., 1999"
+          if (property == "ref") {
+            x[i] <- found[1, ref]
+          } else {
+            x[i] <- microorganismsDT[col_id == found[1, col_id_new], ..property][[1]]
           }
+          options(mo_renamed_last_run = found[1, fullname])
+          was_renamed(name_old = found[1, fullname],
+                      name_new = microorganismsDT[col_id == found[1, col_id_new], fullname],
+                      ref_old = found[1, ref],
+                      ref_new = microorganismsDT[col_id == found[1, col_id_new], ref],
+                      mo = microorganismsDT[col_id == found[1, col_id_new], mo])
+          if (initial_search == TRUE) {
+            set_mo_history(a.x_backup, get_mo_code(x[i], property), 0, force = force_mo_history, disable = disable_mo_history)
+          }
+          return(x[i])
         }
         
         # check for uncertain results ----
@@ -1119,7 +1118,7 @@ exec_as.mo <- function(x,
             if (isTRUE(debug)) {
               message("Running '", d.x_withspaces_start_end, "' and '", e.x_withspaces_start_only, "'")
             }
-            found <- microorganisms.oldDT[fullname_lower %like_case% d.x_withspaces_start_end
+            found <- data.old_to_check[fullname_lower %like_case% d.x_withspaces_start_end
                                           | fullname_lower %like_case% e.x_withspaces_start_only]
             if (NROW(found) > 0 & nchar(g.x_backup_without_spp) >= 6) {
               if (property == "ref") {
@@ -1521,6 +1520,7 @@ exec_as.mo <- function(x,
       
       # FIRST TRY VERY PREVALENT IN HUMAN INFECTIONS ----
       x[i] <- check_per_prevalence(data_to_check = reference_data_to_use[prevalence == 1],
+                                   data.old_to_check = microorganisms.oldDT[prevalence == 1],
                                    a.x_backup = x_backup[i],
                                    b.x_trimmed = x_trimmed[i],
                                    c.x_trimmed_without_group = x_trimmed_without_group[i],
@@ -1539,6 +1539,7 @@ exec_as.mo <- function(x,
       
       # THEN TRY PREVALENT IN HUMAN INFECTIONS ----
       x[i] <- check_per_prevalence(data_to_check = reference_data_to_use[prevalence == 2],
+                                   data.old_to_check = microorganisms.oldDT[prevalence == 2],
                                    a.x_backup = x_backup[i],
                                    b.x_trimmed = x_trimmed[i],
                                    c.x_trimmed_without_group = x_trimmed_without_group[i],
@@ -1557,6 +1558,7 @@ exec_as.mo <- function(x,
       
       # THEN UNPREVALENT IN HUMAN INFECTIONS ----
       x[i] <- check_per_prevalence(data_to_check = reference_data_to_use[prevalence == 3],
+                                   data.old_to_check = microorganisms.oldDT[prevalence == 3],
                                    a.x_backup = x_backup[i],
                                    b.x_trimmed = x_trimmed[i],
                                    c.x_trimmed_without_group = x_trimmed_without_group[i],
