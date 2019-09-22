@@ -1,4 +1,4 @@
-# AMR 0.7.1.9079
+# AMR 0.7.1.9080
 <small>Last updated: 22-Sep-2019</small>
 
 ### Breaking
@@ -79,6 +79,7 @@
   * These new trivial names known to the field are now understood: meningococcus, gonococcus, pneumococcus
   * Updated to the latest taxonomic data (updated to August 2019, from the International Journal of Systematic and Evolutionary Microbiology
   * Added support for Viridans Group Streptococci (VGS) and Milleri Group Streptococci (MGS)
+  * Added support for *Blastocystis*
   * Added support for 5,000 new fungi
   * Added support for unknown yeasts and fungi
   * Changed most microorganism IDs to improve readability. **IMPORTANT:** Because of these changes, the microorganism IDs have been changed to a slightly different format. Old microorganism IDs are still supported, but support will be dropped in a future version. Use `as.mo()` on your old codes to transform them to the new format.
@@ -105,6 +106,7 @@
 * Using negative values for `x` in `age_groups()` will now introduce `NA`s and not return an error anymore
 * Fix for determining the system's language
 * Fix for `key_antibiotics()` on foreign systems
+* Added 80 new LIS codes for microorganisms
 
 #### Other
 * Added Prof. Dr. Casper Albers as doctoral advisor and added Dr. Judith Fonville, Eric Hazenberg, Dr. Bart Meijer, Dr. Dennis Souverein and Annick Lenglet as contributors

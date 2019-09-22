@@ -94,7 +94,7 @@ rm(ref_taxonomy)
 mo_found_in_NL <- c("Absidia", "Acremonium", "Actinotignum", "Aedes", "Alternaria", "Anaerosalibacter", "Ancylostoma", 
                     "Angiostrongylus", "Anisakis", "Anopheles", "Apophysomyces", "Arachnia", "Ascaris", "Aspergillus", 
                     "Aureobacterium", "Aureobasidium", "Bacteroides", "Balantidum", "Basidiobolus", "Beauveria", 
-                    "Bilophilia", "Branhamella", "Brochontrix", "Brugia", "Calymmatobacterium", "Candida", "Capillaria",
+                    "Bilophilia", "Blastocystis", "Branhamella", "Brochontrix", "Brugia", "Calymmatobacterium", "Candida", "Capillaria",
                     "Capnocytophaga", "Catabacter", "Cdc", "Chaetomium", "Chilomastix", "Chryseobacterium",
                     "Chryseomonas", "Chrysonilia", "Cladophialophora", "Cladosporium", "Clonorchis", "Conidiobolus",
                     "Contracaecum", "Cordylobia", "Cryptococcus", "Curvularia", "Demodex", "Dermatobia", "Dicrocoelium", 
@@ -113,7 +113,7 @@ mo_found_in_NL <- c("Absidia", "Acremonium", "Actinotignum", "Aedes", "Alternari
                     "Rhodotorula", "Salinococcus", "Sanguibacteroides", "Sarcophagidae", "Sarcoptes", "Schistosoma", 
                     "Scolecobasidium", "Scopulariopsis", "Scytalidium", "Spirometra", "Sporobolomyces", "Stachybotrys",
                     "Stenotrophomononas", "Stomatococcus", "Strongyloides", "Syncephalastraceae", "Syngamus", "Taenia",
-                    "Ternidens", "Torulopsis", "Toxocara", "Treponema", "Trichinella", "Trichobilharzia", "Trichoderma",
+                    "Ternidens", "Torulopsis", "Toxocara", "Toxoplasma", "Treponema", "Trichinella", "Trichobilharzia", "Trichoderma",
                     "Trichomonas", "Trichophyton", "Trichosporon", "Trichostrongylus", "Trichuris", "Tritirachium",
                     "Trombicula", "Trypanosoma", "Tunga", "Ureaplasma", "Wuchereria")
 
@@ -218,6 +218,8 @@ MOs.old <- MOs %>%
   filter(!is.na(fullname)) %>%
   distinct(fullname, .keep_all = TRUE) %>%
   arrange(col_id)
+
+MO.bak <- MOs
 
 MOs <- MOs %>%
   filter(is.na(col_id_new) | source == "DSMZ") %>%
@@ -594,6 +596,17 @@ MOs <- MOs %>%
              ref = NA_character_,
              species_id = "",
              source = "manually added"),
+    # Blastocystis hominis does not exist (it means 'got a Bastocystis from humans', PMID 15634993)
+    # but let's be nice to the clinical people in microbiology
+    MOs %>%
+      filter(fullname == "Blastocystis") %>%
+      mutate(mo = paste0(mo, "_HMNS"),
+             fullname = paste(fullname, "hominis"),
+             species = "hominis",
+             col_id = NA,
+             source = "manually added",
+             ref = NA_character_,
+             species_id = ""),
     # Trichomonas vaginalis is missing, same order as Dientamoeba
     MOs %>%
       filter(fullname == "Dientamoeba") %>%
@@ -636,6 +649,7 @@ MOs <- MOs %>%
   ungroup() %>% 
   filter(fullname != "")
 
+# add prevalence to old taxonomic names
 MOs.old <- MOs.old %>% 
   left_join(MOs %>% select(col_id, prevalence), by = c("col_id_new" = "col_id"))
 
@@ -645,7 +659,8 @@ sum(duplicated(MOs$fullname))
 colnames(MOs)
 
 # here we welcome the new ones:
-MOs %>% arrange(genus, species, subspecies) %>% filter(!fullname %in% AMR::microorganisms$fullname) %>% View()
+MOs %>% arrange(fullname) %>% filter(!fullname %in% AMR::microorganisms$fullname) %>% View()
+MOs.old %>% arrange(fullname) %>% filter(!fullname %in% AMR::microorganisms.old$fullname) %>% View()
 # and the ones we lost:
 AMR::microorganisms %>% filter(!fullname %in% MOs$fullname) %>% View()
 # and these IDs have changed:
@@ -659,9 +674,11 @@ old_new %>%
   View()
 # and these codes are now missing (which will throw a unit test error):
 AMR::microorganisms.codes %>% filter(!mo %in% MOs$mo)
+AMR::rsi_translation %>% filter(!mo %in% MOs$mo)
+AMR::microorganisms.translation %>% filter(!mo_new %in% MOs$mo)
 # this is how to fix it
 microorganisms.codes <- AMR::microorganisms.codes %>% 
-  left_join(MOs  %>%
+  left_join(MOs %>%
               mutate(kingdom_fullname = paste(kingdom, fullname)) %>% 
               left_join(AMR::microorganisms  %>%
                           mutate(kingdom_fullname = paste(kingdom, fullname)) %>% 
@@ -673,7 +690,7 @@ microorganisms.codes <- AMR::microorganisms.codes %>%
 microorganisms.codes %>% filter(!mo %in% MOs$mo)
 
 # arrange
-MOs <- MOs %>% arrange(genus, species, subspecies)
+MOs <- MOs %>% arrange(fullname)
 MOs.old <- MOs.old %>% arrange(fullname)
 microorganisms.codes <- microorganisms.codes %>% arrange(code)
 

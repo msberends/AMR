@@ -51,7 +51,7 @@ filter_tetracyclines(x, result = NULL, scope = "any", ...)
 
 \item{scope}{the scope to check which variables to check, can be \code{"any"} (default) or \code{"all"}}
 
-\item{...}{parameters passed on to \code{\link[dplyr]{filter_at}}}
+\item{...}{parameters passed on to \code{filter_at} from the \code{dplyr} package}
 }
 \description{
 Filter isolates on results in specific antibiotic variables based on their class (ATC groups). This makes it easy to get a list of isolates that were tested for e.g. any aminoglycoside.

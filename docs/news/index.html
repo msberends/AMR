@@ -78,7 +78,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">0.7.1.9079</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">0.7.1.9080</span>
       </span>
     </div>
 
@@ -225,9 +225,9 @@
       
     </div>
 
-    <div id="amr-0-7-1-9079" class="section level1">
+    <div id="amr-0-7-1-9080" class="section level1">
 <h1 class="page-header">
-<a href="#amr-0-7-1-9079" class="anchor"></a>AMR 0.7.1.9079<small> Unreleased </small>
+<a href="#amr-0-7-1-9080" class="anchor"></a>AMR 0.7.1.9080<small> Unreleased </small>
 </h1>
 <p><small>Last updated: 22-Sep-2019</small></p>
 <div id="breaking" class="section level3">
@@ -236,7 +236,7 @@
 <ul>
 <li>
 <p>Determination of first isolates now <strong>excludes</strong> all ‘unknown’ microorganisms at default, i.e. microbial code <code>"UNKNOWN"</code>. They can be included with the new parameter <code>include_unknown</code>:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw"><a href="../reference/first_isolate.html">first_isolate</a></span>(..., <span class="dt">include_unknown =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw">first_isolate</span>(..., <span class="dt">include_unknown =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
 For WHONET users, this means that all records/isolates with organism code <code>"con"</code> (<em>contamination</em>) will be excluded at default, since <code>as.mo("con") = "UNKNOWN"</code>. The function always shows a note with the number of ‘unknown’ microorganisms that were included or excluded.</li>
 <li>
 <p>For code consistency, classes <code>ab</code> and <code>mo</code> will now be preserved in any subsetting or assignment. For the sake of data integrity, this means that invalid assignments will now result in <code>NA</code>:</p>
@@ -247,12 +247,12 @@ For WHONET users, this means that all records/isolates with organism code <code>
 <a class="sourceLine" id="cb2-5" data-line-number="5"><span class="co">#&gt; invalid factor level, NA generated</span></a>
 <a class="sourceLine" id="cb2-6" data-line-number="6"></a>
 <a class="sourceLine" id="cb2-7" data-line-number="7"><span class="co"># how it now works similarly for classes 'mo' and 'ab':</span></a>
-<a class="sourceLine" id="cb2-8" data-line-number="8">x &lt;-<span class="st"> </span><span class="kw"><a href="../reference/as.mo.html">as.mo</a></span>(<span class="st">"E. coli"</span>)</a>
+<a class="sourceLine" id="cb2-8" data-line-number="8">x &lt;-<span class="st"> </span><span class="kw">as.mo</span>(<span class="st">"E. coli"</span>)</a>
 <a class="sourceLine" id="cb2-9" data-line-number="9">x[<span class="dv">1</span>] &lt;-<span class="st"> "testvalue"</span></a>
 <a class="sourceLine" id="cb2-10" data-line-number="10"><span class="co">#&gt; Warning message:</span></a>
 <a class="sourceLine" id="cb2-11" data-line-number="11"><span class="co">#&gt; invalid microorganism code, NA generated</span></a></code></pre></div>
-This is important, because a value like <code>"testvalue"</code> could never be understood by e.g. <code><a href="../reference/mo_property.html">mo_name()</a></code>, although the class would suggest a valid microbial code.</li>
-<li><p>Function <code><a href="https://www.rdocumentation.org/packages/clean/topics/freq">freq()</a></code> has moved to a new package, <a href="https://github.com/msberends/clean"><code>clean</code></a> (<a href="https://cran.r-project.org/package=clean">CRAN link</a>), since creating frequency tables actually does not fit the scope of this package. The <code><a href="https://www.rdocumentation.org/packages/clean/topics/freq">freq()</a></code> function still works, since it is re-exported from the <code>clean</code> package (which will be installed automatically upon updating this <code>AMR</code> package).</p></li>
+This is important, because a value like <code>"testvalue"</code> could never be understood by e.g. <code>mo_name()</code>, although the class would suggest a valid microbial code.</li>
+<li><p>Function <code>freq()</code> has moved to a new package, <a href="https://github.com/msberends/clean"><code>clean</code></a> (<a href="https://cran.r-project.org/package=clean">CRAN link</a>), since creating frequency tables actually does not fit the scope of this package. The <code>freq()</code> function still works, since it is re-exported from the <code>clean</code> package (which will be installed automatically upon updating this <code>AMR</code> package).</p></li>
 </ul>
 </div>
 <div id="new" class="section level3">
@@ -260,8 +260,8 @@ This is important, because a value like <code>"testvalue"</code> could never be 
 <a href="#new" class="anchor"></a>New</h3>
 <ul>
 <li>
-<p>Function <code><a href="../reference/bug_drug_combinations.html">bug_drug_combinations()</a></code> to quickly get a <code>data.frame</code> with the antimicrobial resistance of any bug-drug combination in a data set:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1">x &lt;-<span class="st"> </span><span class="kw"><a href="../reference/bug_drug_combinations.html">bug_drug_combinations</a></span>(example_isolates)</a>
+<p>Function <code>bug_drug_combinations()</code> to quickly get a <code>data.frame</code> with the antimicrobial resistance of any bug-drug combination in a data set:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1">x &lt;-<span class="st"> </span><span class="kw">bug_drug_combinations</span>(example_isolates)</a>
 <a class="sourceLine" id="cb3-2" data-line-number="2">x</a>
 <a class="sourceLine" id="cb3-3" data-line-number="3"><span class="co"># </span><span class="al">NOTE</span><span class="co">: Using column `mo` as input for `col_mo`.</span></a>
 <a class="sourceLine" id="cb3-4" data-line-number="4"><span class="co">#&gt;      ab           mo   S  I   R total</span></a>
@@ -306,48 +306,51 @@ Since this is a major change, usage of the old <code>also_single_tested</code> w
 <h3 class="hasAnchor">
 <a href="#changed" class="anchor"></a>Changed</h3>
 <ul>
-<li>Many algorithm improvements for <code><a href="../reference/as.mo.html">as.mo()</a></code> (of which some led to additions to the <code>microorganisms</code> data set). Many thanks to all contributors that helped improving the algorithms.
+<li>Many algorithm improvements for <code>as.mo()</code> (of which some led to additions to the <code>microorganisms</code> data set). Many thanks to all contributors that helped improving the algorithms.
 <ul>
 <li>Self-learning algorithm - the function now gains experience from previously determined microorganism IDs and learns from it (yielding 80-95% speed improvement for any guess after the first try)</li>
 <li>Big improvement for misspelled input</li>
 <li>These new trivial names known to the field are now understood: meningococcus, gonococcus, pneumococcus</li>
 <li>Updated to the latest taxonomic data (updated to August 2019, from the International Journal of Systematic and Evolutionary Microbiology</li>
 <li>Added support for Viridans Group Streptococci (VGS) and Milleri Group Streptococci (MGS)</li>
+<li>Added support for <em>Blastocystis</em>
+</li>
 <li>Added support for 5,000 new fungi</li>
 <li>Added support for unknown yeasts and fungi</li>
-<li>Changed most microorganism IDs to improve readability. <strong>IMPORTANT:</strong> Because of these changes, the microorganism IDs have been changed to a slightly different format. Old microorganism IDs are still supported, but support will be dropped in a future version. Use <code><a href="../reference/as.mo.html">as.mo()</a></code> on your old codes to transform them to the new format.</li>
+<li>Changed most microorganism IDs to improve readability. <strong>IMPORTANT:</strong> Because of these changes, the microorganism IDs have been changed to a slightly different format. Old microorganism IDs are still supported, but support will be dropped in a future version. Use <code>as.mo()</code> on your old codes to transform them to the new format.</li>
 </ul>
 </li>
 <li>Renamed data set <code>septic_patients</code> to <code>example_isolates</code>
 </li>
-<li>Function <code><a href="../reference/eucast_rules.html">eucast_rules()</a></code>:
+<li>Function <code>eucast_rules()</code>:
 <ul>
 <li>Fixed a bug for <em>Yersinia pseudotuberculosis</em>
 </li>
 <li>Added more informative errors and warnings</li>
 <li>Printed info now distinguishes between added and changes values</li>
-<li>Using Verbose mode (i.e. <code><a href="../reference/eucast_rules.html">eucast_rules(..., verbose = TRUE)</a></code>) returns more informative and readable output</li>
+<li>Using Verbose mode (i.e. <code>eucast_rules(..., verbose = TRUE)</code>) returns more informative and readable output</li>
 <li>Using factors as input now adds missing factors levels when the function changes antibiotic results</li>
 </ul>
 </li>
 <li>Improved the internal auto-guessing function for determining antibiotics in your data set (<code>AMR:::get_column_abx()</code>)</li>
-<li>Removed class <code>atc</code> - using <code><a href="../reference/AMR-deprecated.html">as.atc()</a></code> is now deprecated in favour of <code><a href="../reference/ab_property.html">ab_atc()</a></code> and this will return a character, not the <code>atc</code> class anymore</li>
+<li>Removed class <code>atc</code> - using <code>as.atc()</code> is now deprecated in favour of <code>ab_atc()</code> and this will return a character, not the <code>atc</code> class anymore</li>
 <li>Removed deprecated functions <code>abname()</code>, <code>ab_official()</code>, <code>atc_name()</code>, <code>atc_official()</code>, <code>atc_property()</code>, <code>atc_tradenames()</code>, <code>atc_trivial_nl()</code>
 </li>
-<li>Fix and speed improvement for <code><a href="../reference/mo_property.html">mo_shortname()</a></code>
+<li>Fix and speed improvement for <code>mo_shortname()</code>
 </li>
-<li>Fix for using <code>mo_*</code> functions where the coercion uncertainties and failures would not be available through <code><a href="../reference/as.mo.html">mo_uncertainties()</a></code> and <code><a href="../reference/as.mo.html">mo_failures()</a></code> anymore</li>
-<li>Deprecated the <code>country</code> parameter of <code><a href="../reference/mdro.html">mdro()</a></code> in favour of the already existing <code>guideline</code> parameter to support multiple guidelines within one country</li>
+<li>Fix for using <code>mo_*</code> functions where the coercion uncertainties and failures would not be available through <code>mo_uncertainties()</code> and <code>mo_failures()</code> anymore</li>
+<li>Deprecated the <code>country</code> parameter of <code>mdro()</code> in favour of the already existing <code>guideline</code> parameter to support multiple guidelines within one country</li>
 <li>The <code>name</code> of <code>RIF</code> is now Rifampicin instead of Rifampin</li>
 <li>The <code>antibiotics</code> data set is now sorted by name and all cephalosporins now have their generation between brackets</li>
-<li>Speed improvement for <code><a href="../reference/guess_ab_col.html">guess_ab_col()</a></code> which is now 30 times faster for antibiotic abbreviations</li>
-<li>Improved <code><a href="../reference/filter_ab_class.html">filter_ab_class()</a></code> to be more reliable and to support 5th generation cephalosporins</li>
-<li>Function <code><a href="../reference/availability.html">availability()</a></code> now uses <code><a href="../reference/portion.html">portion_R()</a></code> instead of <code><a href="../reference/portion.html">portion_IR()</a></code>, to comply with EUCAST insights</li>
-<li>Functions <code><a href="../reference/age.html">age()</a></code> and <code><a href="../reference/age_groups.html">age_groups()</a></code> now have a <code>na.rm</code> parameter to remove empty values</li>
-<li>Renamed function <code><a href="../reference/AMR-deprecated.html">p.symbol()</a></code> to <code><a href="../reference/p_symbol.html">p_symbol()</a></code> (the former is now deprecated and will be removed in a future version)</li>
-<li>Using negative values for <code>x</code> in <code><a href="../reference/age_groups.html">age_groups()</a></code> will now introduce <code>NA</code>s and not return an error anymore</li>
+<li>Speed improvement for <code>guess_ab_col()</code> which is now 30 times faster for antibiotic abbreviations</li>
+<li>Improved <code>filter_ab_class()</code> to be more reliable and to support 5th generation cephalosporins</li>
+<li>Function <code>availability()</code> now uses <code>portion_R()</code> instead of <code>portion_IR()</code>, to comply with EUCAST insights</li>
+<li>Functions <code>age()</code> and <code>age_groups()</code> now have a <code>na.rm</code> parameter to remove empty values</li>
+<li>Renamed function <code>p.symbol()</code> to <code>p_symbol()</code> (the former is now deprecated and will be removed in a future version)</li>
+<li>Using negative values for <code>x</code> in <code>age_groups()</code> will now introduce <code>NA</code>s and not return an error anymore</li>
 <li>Fix for determining the system’s language</li>
-<li>Fix for <code><a href="../reference/key_antibiotics.html">key_antibiotics()</a></code> on foreign systems</li>
+<li>Fix for <code>key_antibiotics()</code> on foreign systems</li>
+<li>Added 80 new LIS codes for microorganisms</li>
 </ul>
 <div id="other" class="section level4">
 <h4 class="hasAnchor">
@@ -367,10 +370,10 @@ Since this is a major change, usage of the old <code>also_single_tested</code> w
 <a href="#new-1" class="anchor"></a>New</h4>
 <ul>
 <li>
-<p>Function <code><a href="../reference/portion.html">rsi_df()</a></code> to transform a <code>data.frame</code> to a data set containing only the microbial interpretation (S, I, R), the antibiotic, the percentage of S/I/R and the number of available isolates. This is a convenient combination of the existing functions <code><a href="../reference/count.html">count_df()</a></code> and <code><a href="../reference/portion.html">portion_df()</a></code> to immediately show resistance percentages and number of available isolates:</p>
+<p>Function <code>rsi_df()</code> to transform a <code>data.frame</code> to a data set containing only the microbial interpretation (S, I, R), the antibiotic, the percentage of S/I/R and the number of available isolates. This is a convenient combination of the existing functions <code>count_df()</code> and <code>portion_df()</code> to immediately show resistance percentages and number of available isolates:</p>
 <div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1">septic_patients <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb7-2" data-line-number="2"><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span>(AMX, CIP) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb7-3" data-line-number="3"><span class="st">  </span><span class="kw"><a href="../reference/portion.html">rsi_df</a></span>()</a>
+<a class="sourceLine" id="cb7-3" data-line-number="3"><span class="st">  </span><span class="kw">rsi_df</span>()</a>
 <a class="sourceLine" id="cb7-4" data-line-number="4"><span class="co">#      antibiotic  interpretation      value  isolates</span></a>
 <a class="sourceLine" id="cb7-5" data-line-number="5"><span class="co"># 1   Amoxicillin              SI  0.4442636       546</span></a>
 <a class="sourceLine" id="cb7-6" data-line-number="6"><span class="co"># 2   Amoxicillin               R  0.5557364       683</span></a>
@@ -393,41 +396,41 @@ Since this is a major change, usage of the old <code>also_single_tested</code> w
 <li>UPEC (Uropathogenic <em>E. coli</em>)</li>
 </ul>
 <p>All these lead to the microbial ID of <em>E. coli</em>:</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1"><span class="kw"><a href="../reference/as.mo.html">as.mo</a></span>(<span class="st">"UPEC"</span>)</a>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1"><span class="kw">as.mo</span>(<span class="st">"UPEC"</span>)</a>
 <a class="sourceLine" id="cb8-2" data-line-number="2"><span class="co"># B_ESCHR_COL</span></a>
-<a class="sourceLine" id="cb8-3" data-line-number="3"><span class="kw"><a href="../reference/mo_property.html">mo_name</a></span>(<span class="st">"UPEC"</span>)</a>
+<a class="sourceLine" id="cb8-3" data-line-number="3"><span class="kw">mo_name</span>(<span class="st">"UPEC"</span>)</a>
 <a class="sourceLine" id="cb8-4" data-line-number="4"><span class="co"># "Escherichia coli"</span></a>
-<a class="sourceLine" id="cb8-5" data-line-number="5"><span class="kw"><a href="../reference/mo_property.html">mo_gramstain</a></span>(<span class="st">"EHEC"</span>)</a>
+<a class="sourceLine" id="cb8-5" data-line-number="5"><span class="kw">mo_gramstain</span>(<span class="st">"EHEC"</span>)</a>
 <a class="sourceLine" id="cb8-6" data-line-number="6"><span class="co"># "Gram-negative"</span></a></code></pre></div>
 </li>
-<li>Function <code><a href="../reference/mo_property.html">mo_info()</a></code> as an analogy to <code><a href="../reference/ab_property.html">ab_info()</a></code>. The <code><a href="../reference/mo_property.html">mo_info()</a></code> prints a list with the full taxonomy, authors, and the URL to the online database of a microorganism</li>
-<li><p>Function <code><a href="../reference/mo_property.html">mo_synonyms()</a></code> to get all previously accepted taxonomic names of a microorganism</p></li>
+<li>Function <code>mo_info()</code> as an analogy to <code>ab_info()</code>. The <code>mo_info()</code> prints a list with the full taxonomy, authors, and the URL to the online database of a microorganism</li>
+<li><p>Function <code>mo_synonyms()</code> to get all previously accepted taxonomic names of a microorganism</p></li>
 </ul>
 </div>
 <div id="changed-1" class="section level4">
 <h4 class="hasAnchor">
 <a href="#changed-1" class="anchor"></a>Changed</h4>
 <ul>
-<li>Column names of output <code><a href="../reference/count.html">count_df()</a></code> and <code><a href="../reference/portion.html">portion_df()</a></code> are now lowercase</li>
+<li>Column names of output <code>count_df()</code> and <code>portion_df()</code> are now lowercase</li>
 <li>Fixed bug in translation of microorganism names</li>
 <li>Fixed bug in determining taxonomic kingdoms</li>
-<li>Algorithm improvements for <code><a href="../reference/as.ab.html">as.ab()</a></code> and <code><a href="../reference/as.mo.html">as.mo()</a></code> to understand even more severely misspelled input</li>
-<li>Function <code><a href="../reference/as.ab.html">as.ab()</a></code> now allows spaces for coercing antibiotics names</li>
+<li>Algorithm improvements for <code>as.ab()</code> and <code>as.mo()</code> to understand even more severely misspelled input</li>
+<li>Function <code>as.ab()</code> now allows spaces for coercing antibiotics names</li>
 <li>Added <code>ggplot2</code> methods for automatically determining the scale type of classes <code>mo</code> and <code>ab</code>
 </li>
 <li>Added names of object in the header in frequency tables, even when using pipes</li>
-<li>Prevented <code>"bacteria"</code> from getting coerced by <code><a href="../reference/as.ab.html">as.ab()</a></code> because Bacterial is a brand name of trimethoprim (TMP)</li>
-<li>Fixed a bug where setting an antibiotic would not work for <code><a href="../reference/eucast_rules.html">eucast_rules()</a></code> and <code><a href="../reference/mdro.html">mdro()</a></code>
+<li>Prevented <code>"bacteria"</code> from getting coerced by <code>as.ab()</code> because Bacterial is a brand name of trimethoprim (TMP)</li>
+<li>Fixed a bug where setting an antibiotic would not work for <code>eucast_rules()</code> and <code>mdro()</code>
 </li>
 <li>Fixed a EUCAST rule for Staphylococci, where amikacin resistance would not be inferred from tobramycin</li>
-<li>Removed <code>latest_annual_release</code> from the <code><a href="../reference/catalogue_of_life_version.html">catalogue_of_life_version()</a></code> function</li>
+<li>Removed <code>latest_annual_release</code> from the <code>catalogue_of_life_version()</code> function</li>
 <li>Removed antibiotic code <code>PVM1</code> from the <code>antibiotics</code> data set as this was a duplicate of <code>PME</code>
 </li>
-<li>Fixed bug where not all old taxonomic names would be printed, when using a vector as input for <code><a href="../reference/as.mo.html">as.mo()</a></code>
+<li>Fixed bug where not all old taxonomic names would be printed, when using a vector as input for <code>as.mo()</code>
 </li>
 <li>Manually added <em>Trichomonas vaginalis</em> from the kingdom of Protozoa, which is missing from the Catalogue of Life</li>
 <li>Small improvements to <code><a href="https://www.rdocumentation.org/packages/graphics/topics/plot">plot()</a></code> and <code><a href="https://www.rdocumentation.org/packages/graphics/topics/barplot">barplot()</a></code> for MIC and RSI classes</li>
-<li>Allow Catalogue of Life IDs to be coerced by <code><a href="../reference/as.mo.html">as.mo()</a></code>
+<li>Allow Catalogue of Life IDs to be coerced by <code>as.mo()</code>
 </li>
 </ul>
 </div>
@@ -447,18 +450,18 @@ Since this is a major change, usage of the old <code>also_single_tested</code> w
 <h4 class="hasAnchor">
 <a href="#new-2" class="anchor"></a>New</h4>
 <ul>
-<li>Support for translation of disk diffusion and MIC values to RSI values (i.e. antimicrobial interpretations). Supported guidelines are EUCAST (2011 to 2019) and CLSI (2011 to 2019). Use <code><a href="../reference/as.rsi.html">as.rsi()</a></code> on an MIC value (created with <code><a href="../reference/as.mic.html">as.mic()</a></code>), a disk diffusion value (created with the new <code><a href="../reference/as.disk.html">as.disk()</a></code>) or on a complete date set containing columns with MIC or disk diffusion values.</li>
-<li>Function <code><a href="../reference/mo_property.html">mo_name()</a></code> as alias of <code><a href="../reference/mo_property.html">mo_fullname()</a></code>
+<li>Support for translation of disk diffusion and MIC values to RSI values (i.e. antimicrobial interpretations). Supported guidelines are EUCAST (2011 to 2019) and CLSI (2011 to 2019). Use <code>as.rsi()</code> on an MIC value (created with <code>as.mic()</code>), a disk diffusion value (created with the new <code>as.disk()</code>) or on a complete date set containing columns with MIC or disk diffusion values.</li>
+<li>Function <code>mo_name()</code> as alias of <code>mo_fullname()</code>
 </li>
-<li>Added guidelines of the WHO to determine multi-drug resistance (MDR) for TB (<code><a href="../reference/mdro.html">mdr_tb()</a></code>) and added a new vignette about MDR. Read this tutorial <a href="https://msberends.gitlab.io/AMR/articles/MDR.html">here on our website</a>.</li>
+<li>Added guidelines of the WHO to determine multi-drug resistance (MDR) for TB (<code>mdr_tb()</code>) and added a new vignette about MDR. Read this tutorial <a href="https://msberends.gitlab.io/AMR/articles/MDR.html">here on our website</a>.</li>
 </ul>
 </div>
 <div id="changed-2" class="section level4">
 <h4 class="hasAnchor">
 <a href="#changed-2" class="anchor"></a>Changed</h4>
 <ul>
-<li>Fixed a critical bug in <code><a href="../reference/first_isolate.html">first_isolate()</a></code> where missing species would lead to incorrect FALSEs. This bug was not present in AMR v0.5.0, but was in v0.6.0 and v0.6.1.</li>
-<li>Fixed a bug in <code><a href="../reference/eucast_rules.html">eucast_rules()</a></code> where antibiotics from WHONET software would not be recognised</li>
+<li>Fixed a critical bug in <code>first_isolate()</code> where missing species would lead to incorrect FALSEs. This bug was not present in AMR v0.5.0, but was in v0.6.0 and v0.6.1.</li>
+<li>Fixed a bug in <code>eucast_rules()</code> where antibiotics from WHONET software would not be recognised</li>
 <li>Completely reworked the <code>antibiotics</code> data set:
 <ul>
 <li>All entries now have 3 different identifiers:
@@ -477,20 +480,20 @@ Since this is a major change, usage of the old <code>also_single_tested</code> w
 Please <a href="https://gitlab.com/msberends/AMR/issues/new?issue%5Btitle%5D=Translation%20suggestion">create an issue in one of our repositories</a> if you want additions in this file.</li>
 </ul>
 </li>
-<li>Improvements to plotting AMR results with <code><a href="../reference/ggplot_rsi.html">ggplot_rsi()</a></code>:
+<li>Improvements to plotting AMR results with <code>ggplot_rsi()</code>:
 <ul>
 <li>New parameter <code>colours</code> to set the bar colours</li>
 <li>New parameters <code>title</code>, <code>subtitle</code>, <code>caption</code>, <code>x.title</code> and <code>y.title</code> to set titles and axis descriptions</li>
 </ul>
 </li>
-<li>Improved intelligence of looking up antibiotic columns in a data set using <code><a href="../reference/guess_ab_col.html">guess_ab_col()</a></code>
+<li>Improved intelligence of looking up antibiotic columns in a data set using <code>guess_ab_col()</code>
 </li>
-<li>Added ~5,000 more old taxonomic names to the <code>microorganisms.old</code> data set, which leads to better results finding when using the <code><a href="../reference/as.mo.html">as.mo()</a></code> function</li>
-<li>This package now honours the new EUCAST insight (2019) that S and I are but classified as susceptible, where I is defined as ‘increased exposure’ and not ‘intermediate’ anymore. For functions like <code><a href="../reference/portion.html">portion_df()</a></code> and <code><a href="../reference/count.html">count_df()</a></code> this means that their new parameter <code>combine_SI</code> is TRUE at default. Our plotting function <code><a href="../reference/ggplot_rsi.html">ggplot_rsi()</a></code> also reflects this change since it uses <code><a href="../reference/count.html">count_df()</a></code> internally.</li>
-<li>The <code><a href="../reference/age.html">age()</a></code> function gained a new parameter <code>exact</code> to determine ages with decimals</li>
+<li>Added ~5,000 more old taxonomic names to the <code>microorganisms.old</code> data set, which leads to better results finding when using the <code>as.mo()</code> function</li>
+<li>This package now honours the new EUCAST insight (2019) that S and I are but classified as susceptible, where I is defined as ‘increased exposure’ and not ‘intermediate’ anymore. For functions like <code>portion_df()</code> and <code>count_df()</code> this means that their new parameter <code>combine_SI</code> is TRUE at default. Our plotting function <code>ggplot_rsi()</code> also reflects this change since it uses <code>count_df()</code> internally.</li>
+<li>The <code>age()</code> function gained a new parameter <code>exact</code> to determine ages with decimals</li>
 <li>Removed deprecated functions <code>guess_mo()</code>, <code>guess_atc()</code>, <code>EUCAST_rules()</code>, <code>interpretive_reading()</code>, <code>rsi()</code>
 </li>
-<li>Frequency tables (<code><a href="https://www.rdocumentation.org/packages/clean/topics/freq">freq()</a></code>):
+<li>Frequency tables (<code>freq()</code>):
 <ul>
 <li>speed improvement for microbial IDs</li>
 <li>fixed factor level names for R Markdown</li>
@@ -498,12 +501,12 @@ Please <a href="https://gitlab.com/msberends/AMR/issues/new?issue%5Btitle%5D=Tra
 <li>
 <p>support for boxplots:</p>
 <div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" data-line-number="1">septic_patients <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb9-2" data-line-number="2"><span class="st">  </span><span class="kw"><a href="https://www.rdocumentation.org/packages/clean/topics/freq">freq</a></span>(age) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb9-2" data-line-number="2"><span class="st">  </span><span class="kw">freq</span>(age) <span class="op">%&gt;%</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb9-3" data-line-number="3"><span class="st">  </span><span class="kw"><a href="https://www.rdocumentation.org/packages/graphics/topics/boxplot">boxplot</a></span>()</a>
 <a class="sourceLine" id="cb9-4" data-line-number="4"><span class="co"># grouped boxplots:</span></a>
 <a class="sourceLine" id="cb9-5" data-line-number="5">septic_patients <span class="op">%&gt;%</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb9-6" data-line-number="6"><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span>(hospital_id) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb9-7" data-line-number="7"><span class="st">  </span><span class="kw"><a href="https://www.rdocumentation.org/packages/clean/topics/freq">freq</a></span>(age) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb9-7" data-line-number="7"><span class="st">  </span><span class="kw">freq</span>(age) <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb9-8" data-line-number="8"><span class="st">  </span><span class="kw"><a href="https://www.rdocumentation.org/packages/graphics/topics/boxplot">boxplot</a></span>()</a></code></pre></div>
 </li>
 </ul>
@@ -513,18 +516,18 @@ Please <a href="https://gitlab.com/msberends/AMR/issues/new?issue%5Btitle%5D=Tra
 Please <a href="https://gitlab.com/msberends/AMR/issues/new?issue%5Btitle%5D=EUCAST%20edit">create an issue in one of our repositories</a> if you want changes in this file.</li>
 <li>Added ceftazidim intrinsic resistance to <em>Streptococci</em>
 </li>
-<li>Changed default settings for <code><a href="../reference/age_groups.html">age_groups()</a></code>, to let groups of fives and tens end with 100+ instead of 120+</li>
-<li>Fix for <code><a href="https://www.rdocumentation.org/packages/clean/topics/freq">freq()</a></code> for when all values are <code>NA</code>
+<li>Changed default settings for <code>age_groups()</code>, to let groups of fives and tens end with 100+ instead of 120+</li>
+<li>Fix for <code>freq()</code> for when all values are <code>NA</code>
 </li>
-<li>Fix for <code><a href="../reference/first_isolate.html">first_isolate()</a></code> for when dates are missing</li>
-<li>Improved speed of <code><a href="../reference/guess_ab_col.html">guess_ab_col()</a></code>
+<li>Fix for <code>first_isolate()</code> for when dates are missing</li>
+<li>Improved speed of <code>guess_ab_col()</code>
 </li>
-<li>Function <code><a href="../reference/as.mo.html">as.mo()</a></code> now gently interprets any number of whitespace characters (like tabs) as one space</li>
-<li>Function <code><a href="../reference/as.mo.html">as.mo()</a></code> now returns <code>UNKNOWN</code> for <code>"con"</code> (WHONET ID of ‘contamination’) and returns <code>NA</code> for <code>"xxx"</code>(WHONET ID of ‘no growth’)</li>
-<li>Small algorithm fix for <code><a href="../reference/as.mo.html">as.mo()</a></code>
+<li>Function <code>as.mo()</code> now gently interprets any number of whitespace characters (like tabs) as one space</li>
+<li>Function <code>as.mo()</code> now returns <code>UNKNOWN</code> for <code>"con"</code> (WHONET ID of ‘contamination’) and returns <code>NA</code> for <code>"xxx"</code>(WHONET ID of ‘no growth’)</li>
+<li>Small algorithm fix for <code>as.mo()</code>
 </li>
 <li>Removed viruses from data set <code>microorganisms.codes</code> and cleaned it up</li>
-<li><p>Fix for <code><a href="../reference/mo_property.html">mo_shortname()</a></code> where species would not be determined correctly</p></li>
+<li><p>Fix for <code>mo_shortname()</code> where species would not be determined correctly</p></li>
 </ul>
 </div>
 <div id="other-2" class="section level4">
@@ -544,7 +547,7 @@ Please <a href="https://gitlab.com/msberends/AMR/issues/new?issue%5Btitle%5D=EUC
 <h4 class="hasAnchor">
 <a href="#changed-3" class="anchor"></a>Changed</h4>
 <ul>
-<li>Fixed a critical bug when using <code><a href="../reference/eucast_rules.html">eucast_rules()</a></code> with <code>verbose = TRUE</code>
+<li>Fixed a critical bug when using <code>eucast_rules()</code> with <code>verbose = TRUE</code>
 </li>
 <li>Coercion of microbial IDs are now written to the package namespace instead of the user’s home folder, to comply with the CRAN policy</li>
 </ul>
@@ -565,7 +568,7 @@ Please <a href="https://gitlab.com/msberends/AMR/issues/new?issue%5Btitle%5D=EUC
 <a href="#new-3" class="anchor"></a>New</h4>
 <ul>
 <li>
-<strong>BREAKING</strong>: removed deprecated functions, parameters and references to ‘bactid’. Use <code><a href="../reference/as.mo.html">as.mo()</a></code> to identify an MO code.</li>
+<strong>BREAKING</strong>: removed deprecated functions, parameters and references to ‘bactid’. Use <code>as.mo()</code> to identify an MO code.</li>
 <li>Catalogue of Life as a new taxonomic source for data about microorganisms, which also contains all ITIS data we used previously. The <code>microorganisms</code> data set now contains:
 <ul>
 <li>All ~55,000 (sub)species from the kingdoms of Archaea, Bacteria and Protozoa</li>
@@ -574,36 +577,36 @@ Please <a href="https://gitlab.com/msberends/AMR/issues/new?issue%5Btitle%5D=EUC
 <li>All ~15,000 previously accepted names of included (sub)species that have been taxonomically renamed</li>
 <li>
 <p>The responsible author(s) and year of scientific publication</p>
-This data is updated annually - check the included version with the new function <code><a href="../reference/catalogue_of_life_version.html">catalogue_of_life_version()</a></code>.</li>
+This data is updated annually - check the included version with the new function <code>catalogue_of_life_version()</code>.</li>
 <li>Due to this change, some <code>mo</code> codes changed (e.g. <em>Streptococcus</em> changed from <code>B_STRPTC</code> to <code>B_STRPT</code>). A translation table is used internally to support older microorganism IDs, so users will not notice this difference.</li>
-<li>New function <code><a href="../reference/mo_property.html">mo_rank()</a></code> for the taxonomic rank (genus, species, infraspecies, etc.)</li>
-<li>New function <code><a href="../reference/mo_property.html">mo_url()</a></code> to get the direct URL of a species from the Catalogue of Life</li>
+<li>New function <code>mo_rank()</code> for the taxonomic rank (genus, species, infraspecies, etc.)</li>
+<li>New function <code>mo_url()</code> to get the direct URL of a species from the Catalogue of Life</li>
 </ul>
 </li>
 <li>Support for data from <a href="https://whonet.org/">WHONET</a> and <a href="https://ecdc.europa.eu/en/about-us/partnerships-and-networks/disease-and-laboratory-networks/ears-net">EARS-Net</a> (European Antimicrobial Resistance Surveillance Network):
 <ul>
-<li>Exported files from WHONET can be read and used in this package. For functions like <code><a href="../reference/first_isolate.html">first_isolate()</a></code> and <code><a href="../reference/eucast_rules.html">eucast_rules()</a></code>, all parameters will be filled in automatically.</li>
+<li>Exported files from WHONET can be read and used in this package. For functions like <code>first_isolate()</code> and <code>eucast_rules()</code>, all parameters will be filled in automatically.</li>
 <li>This package now knows all antibiotic abbrevations by EARS-Net (which are also being used by WHONET) - the <code>antibiotics</code> data set now contains a column <code>ears_net</code>.</li>
-<li>The function <code><a href="../reference/as.mo.html">as.mo()</a></code> now knows all WHONET species abbreviations too, because almost 2,000 microbial abbreviations were added to the <code>microorganisms.codes</code> data set.</li>
+<li>The function <code>as.mo()</code> now knows all WHONET species abbreviations too, because almost 2,000 microbial abbreviations were added to the <code>microorganisms.codes</code> data set.</li>
 </ul>
 </li>
 <li>
 <p>New filters for antimicrobial classes. Use these functions to filter isolates on results in one of more antibiotics from a specific class:</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" data-line-number="1"><span class="kw"><a href="../reference/filter_ab_class.html">filter_aminoglycosides</a></span>()</a>
-<a class="sourceLine" id="cb10-2" data-line-number="2"><span class="kw"><a href="../reference/filter_ab_class.html">filter_carbapenems</a></span>()</a>
-<a class="sourceLine" id="cb10-3" data-line-number="3"><span class="kw"><a href="../reference/filter_ab_class.html">filter_cephalosporins</a></span>()</a>
-<a class="sourceLine" id="cb10-4" data-line-number="4"><span class="kw"><a href="../reference/filter_ab_class.html">filter_1st_cephalosporins</a></span>()</a>
-<a class="sourceLine" id="cb10-5" data-line-number="5"><span class="kw"><a href="../reference/filter_ab_class.html">filter_2nd_cephalosporins</a></span>()</a>
-<a class="sourceLine" id="cb10-6" data-line-number="6"><span class="kw"><a href="../reference/filter_ab_class.html">filter_3rd_cephalosporins</a></span>()</a>
-<a class="sourceLine" id="cb10-7" data-line-number="7"><span class="kw"><a href="../reference/filter_ab_class.html">filter_4th_cephalosporins</a></span>()</a>
-<a class="sourceLine" id="cb10-8" data-line-number="8"><span class="kw"><a href="../reference/filter_ab_class.html">filter_fluoroquinolones</a></span>()</a>
-<a class="sourceLine" id="cb10-9" data-line-number="9"><span class="kw"><a href="../reference/filter_ab_class.html">filter_glycopeptides</a></span>()</a>
-<a class="sourceLine" id="cb10-10" data-line-number="10"><span class="kw"><a href="../reference/filter_ab_class.html">filter_macrolides</a></span>()</a>
-<a class="sourceLine" id="cb10-11" data-line-number="11"><span class="kw"><a href="../reference/filter_ab_class.html">filter_tetracyclines</a></span>()</a></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" data-line-number="1"><span class="kw">filter_aminoglycosides</span>()</a>
+<a class="sourceLine" id="cb10-2" data-line-number="2"><span class="kw">filter_carbapenems</span>()</a>
+<a class="sourceLine" id="cb10-3" data-line-number="3"><span class="kw">filter_cephalosporins</span>()</a>
+<a class="sourceLine" id="cb10-4" data-line-number="4"><span class="kw">filter_1st_cephalosporins</span>()</a>
+<a class="sourceLine" id="cb10-5" data-line-number="5"><span class="kw">filter_2nd_cephalosporins</span>()</a>
+<a class="sourceLine" id="cb10-6" data-line-number="6"><span class="kw">filter_3rd_cephalosporins</span>()</a>
+<a class="sourceLine" id="cb10-7" data-line-number="7"><span class="kw">filter_4th_cephalosporins</span>()</a>
+<a class="sourceLine" id="cb10-8" data-line-number="8"><span class="kw">filter_fluoroquinolones</span>()</a>
+<a class="sourceLine" id="cb10-9" data-line-number="9"><span class="kw">filter_glycopeptides</span>()</a>
+<a class="sourceLine" id="cb10-10" data-line-number="10"><span class="kw">filter_macrolides</span>()</a>
+<a class="sourceLine" id="cb10-11" data-line-number="11"><span class="kw">filter_tetracyclines</span>()</a></code></pre></div>
 <p>The <code>antibiotics</code> data set will be searched, after which the input data will be checked for column names with a value in any abbreviations, codes or official names found in the <code>antibiotics</code> data set. For example:</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" data-line-number="1">septic_patients <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="../reference/filter_ab_class.html">filter_glycopeptides</a></span>(<span class="dt">result =</span> <span class="st">"R"</span>)</a>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" data-line-number="1">septic_patients <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter_glycopeptides</span>(<span class="dt">result =</span> <span class="st">"R"</span>)</a>
 <a class="sourceLine" id="cb11-2" data-line-number="2"><span class="co"># Filtering on glycopeptide antibacterials: any of `vanc` or `teic` is R</span></a>
-<a class="sourceLine" id="cb11-3" data-line-number="3">septic_patients <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="../reference/filter_ab_class.html">filter_glycopeptides</a></span>(<span class="dt">result =</span> <span class="st">"R"</span>, <span class="dt">scope =</span> <span class="st">"all"</span>)</a>
+<a class="sourceLine" id="cb11-3" data-line-number="3">septic_patients <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter_glycopeptides</span>(<span class="dt">result =</span> <span class="st">"R"</span>, <span class="dt">scope =</span> <span class="st">"all"</span>)</a>
 <a class="sourceLine" id="cb11-4" data-line-number="4"><span class="co"># Filtering on glycopeptide antibacterials: all of `vanc` and `teic` is R</span></a></code></pre></div>
 </li>
 <li>
@@ -615,33 +618,33 @@ This data is updated annually - check the included version with the new function
 <a class="sourceLine" id="cb12-5" data-line-number="5">ab_certe -&gt;<span class="st"> </span><span class="kw">atc_certe</span>()</a>
 <a class="sourceLine" id="cb12-6" data-line-number="6">ab_umcg -&gt;<span class="st"> </span><span class="kw">atc_umcg</span>()</a>
 <a class="sourceLine" id="cb12-7" data-line-number="7">ab_tradenames -&gt;<span class="st"> </span><span class="kw">atc_tradenames</span>()</a></code></pre></div>
-These functions use <code><a href="../reference/AMR-deprecated.html">as.atc()</a></code> internally. The old <code>atc_property</code> has been renamed <code><a href="../reference/atc_online.html">atc_online_property()</a></code>. This is done for two reasons: firstly, not all ATC codes are of antibiotics (ab) but can also be of antivirals or antifungals. Secondly, the input must have class <code>atc</code> or must be coerable to this class. Properties of these classes should start with the same class name, analogous to <code><a href="../reference/as.mo.html">as.mo()</a></code> and e.g. <code>mo_genus</code>.</li>
-<li>New functions <code><a href="../reference/mo_source.html">set_mo_source()</a></code> and <code><a href="../reference/mo_source.html">get_mo_source()</a></code> to use your own predefined MO codes as input for <code><a href="../reference/as.mo.html">as.mo()</a></code> and consequently all <code>mo_*</code> functions</li>
+These functions use <code>as.atc()</code> internally. The old <code>atc_property</code> has been renamed <code>atc_online_property()</code>. This is done for two reasons: firstly, not all ATC codes are of antibiotics (ab) but can also be of antivirals or antifungals. Secondly, the input must have class <code>atc</code> or must be coerable to this class. Properties of these classes should start with the same class name, analogous to <code>as.mo()</code> and e.g. <code>mo_genus</code>.</li>
+<li>New functions <code>set_mo_source()</code> and <code>get_mo_source()</code> to use your own predefined MO codes as input for <code>as.mo()</code> and consequently all <code>mo_*</code> functions</li>
 <li>Support for the upcoming <a href="https://dplyr.tidyverse.org"><code>dplyr</code></a> version 0.8.0</li>
-<li>New function <code><a href="../reference/guess_ab_col.html">guess_ab_col()</a></code> to find an antibiotic column in a table</li>
-<li>New function <code><a href="../reference/as.mo.html">mo_failures()</a></code> to review values that could not be coerced to a valid MO code, using <code><a href="../reference/as.mo.html">as.mo()</a></code>. This latter function will now only show a maximum of 10 uncoerced values and will refer to <code><a href="../reference/as.mo.html">mo_failures()</a></code>.</li>
-<li>New function <code><a href="../reference/as.mo.html">mo_uncertainties()</a></code> to review values that could be coerced to a valid MO code using <code><a href="../reference/as.mo.html">as.mo()</a></code>, but with uncertainty.</li>
-<li>New function <code><a href="../reference/as.mo.html">mo_renamed()</a></code> to get a list of all returned values from <code><a href="../reference/as.mo.html">as.mo()</a></code> that have had taxonomic renaming</li>
-<li>New function <code><a href="../reference/age.html">age()</a></code> to calculate the (patients) age in years</li>
-<li>New function <code><a href="../reference/age_groups.html">age_groups()</a></code> to split ages into custom or predefined groups (like children or elderly). This allows for easier demographic antimicrobial resistance analysis per age group.</li>
+<li>New function <code>guess_ab_col()</code> to find an antibiotic column in a table</li>
+<li>New function <code>mo_failures()</code> to review values that could not be coerced to a valid MO code, using <code>as.mo()</code>. This latter function will now only show a maximum of 10 uncoerced values and will refer to <code>mo_failures()</code>.</li>
+<li>New function <code>mo_uncertainties()</code> to review values that could be coerced to a valid MO code using <code>as.mo()</code>, but with uncertainty.</li>
+<li>New function <code>mo_renamed()</code> to get a list of all returned values from <code>as.mo()</code> that have had taxonomic renaming</li>
+<li>New function <code>age()</code> to calculate the (patients) age in years</li>
+<li>New function <code>age_groups()</code> to split ages into custom or predefined groups (like children or elderly). This allows for easier demographic antimicrobial resistance analysis per age group.</li>
 <li>
-<p>New function <code><a href="../reference/resistance_predict.html">ggplot_rsi_predict()</a></code> as well as the base R <code><a href="https://www.rdocumentation.org/packages/graphics/topics/plot">plot()</a></code> function can now be used for resistance prediction calculated with <code><a href="../reference/resistance_predict.html">resistance_predict()</a></code>:</p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" data-line-number="1">x &lt;-<span class="st"> </span><span class="kw"><a href="../reference/resistance_predict.html">resistance_predict</a></span>(septic_patients, <span class="dt">col_ab =</span> <span class="st">"amox"</span>)</a>
+<p>New function <code>ggplot_rsi_predict()</code> as well as the base R <code><a href="https://www.rdocumentation.org/packages/graphics/topics/plot">plot()</a></code> function can now be used for resistance prediction calculated with <code>resistance_predict()</code>:</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" data-line-number="1">x &lt;-<span class="st"> </span><span class="kw">resistance_predict</span>(septic_patients, <span class="dt">col_ab =</span> <span class="st">"amox"</span>)</a>
 <a class="sourceLine" id="cb13-2" data-line-number="2"><span class="kw"><a href="https://www.rdocumentation.org/packages/graphics/topics/plot">plot</a></span>(x)</a>
-<a class="sourceLine" id="cb13-3" data-line-number="3"><span class="kw"><a href="../reference/resistance_predict.html">ggplot_rsi_predict</a></span>(x)</a></code></pre></div>
+<a class="sourceLine" id="cb13-3" data-line-number="3"><span class="kw">ggplot_rsi_predict</span>(x)</a></code></pre></div>
 </li>
 <li>
-<p>Functions <code><a href="../reference/first_isolate.html">filter_first_isolate()</a></code> and <code><a href="../reference/first_isolate.html">filter_first_weighted_isolate()</a></code> to shorten and fasten filtering on data sets with antimicrobial results, e.g.:</p>
-<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" data-line-number="1">septic_patients <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="../reference/first_isolate.html">filter_first_isolate</a></span>(...)</a>
+<p>Functions <code>filter_first_isolate()</code> and <code>filter_first_weighted_isolate()</code> to shorten and fasten filtering on data sets with antimicrobial results, e.g.:</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" data-line-number="1">septic_patients <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter_first_isolate</span>(...)</a>
 <a class="sourceLine" id="cb14-2" data-line-number="2"><span class="co"># or</span></a>
-<a class="sourceLine" id="cb14-3" data-line-number="3"><span class="kw"><a href="../reference/first_isolate.html">filter_first_isolate</a></span>(septic_patients, ...)</a></code></pre></div>
+<a class="sourceLine" id="cb14-3" data-line-number="3"><span class="kw">filter_first_isolate</span>(septic_patients, ...)</a></code></pre></div>
 <p>is equal to:</p>
 <div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" data-line-number="1">septic_patients <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb15-2" data-line-number="2"><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(<span class="dt">only_firsts =</span> <span class="kw"><a href="../reference/first_isolate.html">first_isolate</a></span>(septic_patients, ...)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb15-2" data-line-number="2"><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(<span class="dt">only_firsts =</span> <span class="kw">first_isolate</span>(septic_patients, ...)) <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb15-3" data-line-number="3"><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span>(only_firsts <span class="op">==</span><span class="st"> </span><span class="ot">TRUE</span>) <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb15-4" data-line-number="4"><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span>(<span class="op">-</span>only_firsts)</a></code></pre></div>
 </li>
-<li>New function <code><a href="../reference/availability.html">availability()</a></code> to check the number of available (non-empty) results in a <code>data.frame</code>
+<li>New function <code>availability()</code> to check the number of available (non-empty) results in a <code>data.frame</code>
 </li>
 <li><p>New vignettes about how to conduct AMR analysis, predict antimicrobial resistance, use the <em>G</em>-test and more. These are also available (and even easier readable) on our website: <a href="https://msberends.gitlab.io/AMR" class="uri">https://msberends.gitlab.io/AMR</a>.</p></li>
 </ul>
@@ -650,48 +653,48 @@ These functions use <code><a href="../reference/AMR-deprecated.html">as.atc()</a
 <h4 class="hasAnchor">
 <a href="#changed-4" class="anchor"></a>Changed</h4>
 <ul>
-<li>Function <code><a href="../reference/eucast_rules.html">eucast_rules()</a></code>:
+<li>Function <code>eucast_rules()</code>:
 <ul>
 <li>Updated EUCAST Clinical breakpoints to <a href="http://www.eucast.org/clinical_breakpoints/">version 9.0 of 1 January 2019</a>, the data set <code>septic_patients</code> now reflects these changes</li>
 <li>Fixed a critical bug where some rules that depend on previous applied rules would not be applied adequately</li>
 <li>Emphasised in manual that penicillin is meant as benzylpenicillin (ATC <a href="https://www.whocc.no/atc_ddd_index/?code=J01CE01">J01CE01</a>)</li>
-<li>New info is returned when running this function, stating exactly what has been changed or added. Use <code><a href="../reference/eucast_rules.html">eucast_rules(..., verbose = TRUE)</a></code> to get a data set with all changed per bug and drug combination.</li>
+<li>New info is returned when running this function, stating exactly what has been changed or added. Use <code>eucast_rules(..., verbose = TRUE)</code> to get a data set with all changed per bug and drug combination.</li>
 </ul>
 </li>
 <li>Removed data sets <code>microorganisms.oldDT</code>, <code>microorganisms.prevDT</code>, <code>microorganisms.unprevDT</code> and <code>microorganismsDT</code> since they were no longer needed and only contained info already available in the <code>microorganisms</code> data set</li>
 <li>Added 65 antibiotics to the <code>antibiotics</code> data set, from the <a href="http://ec.europa.eu/health/documents/community-register/html/atc.htm">Pharmaceuticals Community Register</a> of the European Commission</li>
 <li>Removed columns <code>atc_group1_nl</code> and <code>atc_group2_nl</code> from the <code>antibiotics</code> data set</li>
-<li>Functions <code>atc_ddd()</code> and <code>atc_groups()</code> have been renamed <code><a href="../reference/atc_online.html">atc_online_ddd()</a></code> and <code><a href="../reference/atc_online.html">atc_online_groups()</a></code>. The old functions are deprecated and will be removed in a future version.</li>
-<li>Function <code>guess_mo()</code> is now deprecated in favour of <code><a href="../reference/as.mo.html">as.mo()</a></code> and will be removed in future versions</li>
-<li>Function <code>guess_atc()</code> is now deprecated in favour of <code><a href="../reference/AMR-deprecated.html">as.atc()</a></code> and will be removed in future versions</li>
-<li>Improvements for <code><a href="../reference/as.mo.html">as.mo()</a></code>:
+<li>Functions <code>atc_ddd()</code> and <code>atc_groups()</code> have been renamed <code>atc_online_ddd()</code> and <code>atc_online_groups()</code>. The old functions are deprecated and will be removed in a future version.</li>
+<li>Function <code>guess_mo()</code> is now deprecated in favour of <code>as.mo()</code> and will be removed in future versions</li>
+<li>Function <code>guess_atc()</code> is now deprecated in favour of <code>as.atc()</code> and will be removed in future versions</li>
+<li>Improvements for <code>as.mo()</code>:
 <ul>
 <li>
 <p>Now handles incorrect spelling, like <code>i</code> instead of <code>y</code> and <code>f</code> instead of <code>ph</code>:</p>
 <div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb16-1" data-line-number="1"><span class="co"># mo_fullname() uses as.mo() internally</span></a>
 <a class="sourceLine" id="cb16-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb16-3" data-line-number="3"><span class="kw"><a href="../reference/mo_property.html">mo_fullname</a></span>(<span class="st">"Sthafilokockus aaureuz"</span>)</a>
+<a class="sourceLine" id="cb16-3" data-line-number="3"><span class="kw">mo_fullname</span>(<span class="st">"Sthafilokockus aaureuz"</span>)</a>
 <a class="sourceLine" id="cb16-4" data-line-number="4"><span class="co">#&gt; [1] "Staphylococcus aureus"</span></a>
 <a class="sourceLine" id="cb16-5" data-line-number="5"></a>
-<a class="sourceLine" id="cb16-6" data-line-number="6"><span class="kw"><a href="../reference/mo_property.html">mo_fullname</a></span>(<span class="st">"S. klossi"</span>)</a>
+<a class="sourceLine" id="cb16-6" data-line-number="6"><span class="kw">mo_fullname</span>(<span class="st">"S. klossi"</span>)</a>
 <a class="sourceLine" id="cb16-7" data-line-number="7"><span class="co">#&gt; [1] "Staphylococcus kloosii"</span></a></code></pre></div>
 </li>
 <li>
-<p>Uncertainty of the algorithm is now divided into four levels, 0 to 3, where the default <code>allow_uncertain = TRUE</code> is equal to uncertainty level 2. Run <code><a href="../reference/as.mo.html">?as.mo</a></code> for more info about these levels.</p>
+<p>Uncertainty of the algorithm is now divided into four levels, 0 to 3, where the default <code>allow_uncertain = TRUE</code> is equal to uncertainty level 2. Run <code>?as.mo</code> for more info about these levels.</p>
 <div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb17-1" data-line-number="1"><span class="co"># equal:</span></a>
-<a class="sourceLine" id="cb17-2" data-line-number="2"><span class="kw"><a href="../reference/as.mo.html">as.mo</a></span>(..., <span class="dt">allow_uncertain =</span> <span class="ot">TRUE</span>)</a>
-<a class="sourceLine" id="cb17-3" data-line-number="3"><span class="kw"><a href="../reference/as.mo.html">as.mo</a></span>(..., <span class="dt">allow_uncertain =</span> <span class="dv">2</span>)</a>
+<a class="sourceLine" id="cb17-2" data-line-number="2"><span class="kw">as.mo</span>(..., <span class="dt">allow_uncertain =</span> <span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb17-3" data-line-number="3"><span class="kw">as.mo</span>(..., <span class="dt">allow_uncertain =</span> <span class="dv">2</span>)</a>
 <a class="sourceLine" id="cb17-4" data-line-number="4"></a>
 <a class="sourceLine" id="cb17-5" data-line-number="5"><span class="co"># also equal:</span></a>
-<a class="sourceLine" id="cb17-6" data-line-number="6"><span class="kw"><a href="../reference/as.mo.html">as.mo</a></span>(..., <span class="dt">allow_uncertain =</span> <span class="ot">FALSE</span>)</a>
-<a class="sourceLine" id="cb17-7" data-line-number="7"><span class="kw"><a href="../reference/as.mo.html">as.mo</a></span>(..., <span class="dt">allow_uncertain =</span> <span class="dv">0</span>)</a></code></pre></div>
-Using <code><a href="../reference/as.mo.html">as.mo(..., allow_uncertain = 3)</a></code> could lead to very unreliable results.</li>
+<a class="sourceLine" id="cb17-6" data-line-number="6"><span class="kw">as.mo</span>(..., <span class="dt">allow_uncertain =</span> <span class="ot">FALSE</span>)</a>
+<a class="sourceLine" id="cb17-7" data-line-number="7"><span class="kw">as.mo</span>(..., <span class="dt">allow_uncertain =</span> <span class="dv">0</span>)</a></code></pre></div>
+Using <code>as.mo(..., allow_uncertain = 3)</code> could lead to very unreliable results.</li>
 <li>Implemented the latest publication of Becker <em>et al.</em> (2019), for categorising coagulase-negative <em>Staphylococci</em>
 </li>
 <li>All microbial IDs that found are now saved to a local file <code>~/.Rhistory_mo</code>. Use the new function <code>clean_mo_history()</code> to delete this file, which resets the algorithms.</li>
 <li>
 <p>Incoercible results will now be considered ‘unknown’, MO code <code>UNKNOWN</code>. On foreign systems, properties of these will be translated to all languages already previously supported: German, Dutch, French, Italian, Spanish and Portuguese:</p>
-<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb18-1" data-line-number="1"><span class="kw"><a href="../reference/mo_property.html">mo_genus</a></span>(<span class="st">"qwerty"</span>, <span class="dt">language =</span> <span class="st">"es"</span>)</a>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb18-1" data-line-number="1"><span class="kw">mo_genus</span>(<span class="st">"qwerty"</span>, <span class="dt">language =</span> <span class="st">"es"</span>)</a>
 <a class="sourceLine" id="cb18-2" data-line-number="2"><span class="co"># Warning: </span></a>
 <a class="sourceLine" id="cb18-3" data-line-number="3"><span class="co"># one unique value (^= 100.0%) could not be coerced and is considered 'unknown': "qwerty". Use mo_failures() to review it.</span></a>
 <a class="sourceLine" id="cb18-4" data-line-number="4"><span class="co">#&gt; [1] "(género desconocido)"</span></a></code></pre></div>
@@ -709,7 +712,7 @@ Using <code><a href="../reference/as.mo.html">as.mo(..., allow_uncertain = 3)</a
 <li>Console will return the percentage of uncoercable input</li>
 </ul>
 </li>
-<li>Function <code><a href="../reference/first_isolate.html">first_isolate()</a></code>:
+<li>Function <code>first_isolate()</code>:
 <ul>
 <li>Fixed a bug where distances between dates would not be calculated right - in the <code>septic_patients</code> data set this yielded a difference of 0.15% more isolates</li>
 <li>Will now use a column named like “patid” for the patient ID (parameter <code>col_patientid</code>), when this parameter was left blank</li>
@@ -721,38 +724,38 @@ Using <code><a href="../reference/as.mo.html">as.mo(..., allow_uncertain = 3)</a
 <li>A note to the manual pages of the <code>portion</code> functions, that low counts can influence the outcome and that the <code>portion</code> functions may camouflage this, since they only return the portion (albeit being dependent on the <code>minimum</code> parameter)</li>
 <li>Merged data sets <code>microorganisms.certe</code> and <code>microorganisms.umcg</code> into <code>microorganisms.codes</code>
 </li>
-<li>Function <code><a href="../reference/mo_property.html">mo_taxonomy()</a></code> now contains the kingdom too</li>
-<li>Reduce false positives for <code><a href="../reference/as.rsi.html">is.rsi.eligible()</a></code> using the new <code>threshold</code> parameter</li>
-<li>New colours for <code><a href="../reference/ggplot_rsi.html">scale_rsi_colours()</a></code>
+<li>Function <code>mo_taxonomy()</code> now contains the kingdom too</li>
+<li>Reduce false positives for <code>is.rsi.eligible()</code> using the new <code>threshold</code> parameter</li>
+<li>New colours for <code>scale_rsi_colours()</code>
 </li>
 <li>Summaries of class <code>mo</code> will now return the top 3 and the unique count, e.g. using <code><a href="https://www.rdocumentation.org/packages/base/topics/summary">summary(mo)</a></code>
 </li>
 <li>Small text updates to summaries of class <code>rsi</code> and <code>mic</code>
 </li>
-<li>Function <code><a href="../reference/as.rsi.html">as.rsi()</a></code>:
+<li>Function <code>as.rsi()</code>:
 <ul>
 <li>Now gives a warning when inputting MIC values</li>
 <li>Now accepts high and low resistance: <code>"HIGH S"</code> will return <code>S</code>
 </li>
 </ul>
 </li>
-<li>Frequency tables (<code><a href="https://www.rdocumentation.org/packages/clean/topics/freq">freq()</a></code> function):
+<li>Frequency tables (<code>freq()</code> function):
 <ul>
 <li>
 <p>Support for tidyverse quasiquotation! Now you can create frequency tables of function outcomes:</p>
 <div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb19-1" data-line-number="1"><span class="co"># Determine genus of microorganisms (mo) in `septic_patients` data set:</span></a>
 <a class="sourceLine" id="cb19-2" data-line-number="2"><span class="co"># OLD WAY</span></a>
 <a class="sourceLine" id="cb19-3" data-line-number="3">septic_patients <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb19-4" data-line-number="4"><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(<span class="dt">genus =</span> <span class="kw"><a href="../reference/mo_property.html">mo_genus</a></span>(mo)) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb19-5" data-line-number="5"><span class="st">  </span><span class="kw"><a href="https://www.rdocumentation.org/packages/clean/topics/freq">freq</a></span>(genus)</a>
+<a class="sourceLine" id="cb19-4" data-line-number="4"><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(<span class="dt">genus =</span> <span class="kw">mo_genus</span>(mo)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb19-5" data-line-number="5"><span class="st">  </span><span class="kw">freq</span>(genus)</a>
 <a class="sourceLine" id="cb19-6" data-line-number="6"><span class="co"># NEW WAY</span></a>
 <a class="sourceLine" id="cb19-7" data-line-number="7">septic_patients <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb19-8" data-line-number="8"><span class="st">  </span><span class="kw"><a href="https://www.rdocumentation.org/packages/clean/topics/freq">freq</a></span>(<span class="kw"><a href="../reference/mo_property.html">mo_genus</a></span>(mo))</a>
+<a class="sourceLine" id="cb19-8" data-line-number="8"><span class="st">  </span><span class="kw">freq</span>(<span class="kw">mo_genus</span>(mo))</a>
 <a class="sourceLine" id="cb19-9" data-line-number="9"></a>
 <a class="sourceLine" id="cb19-10" data-line-number="10"><span class="co"># Even supports grouping variables:</span></a>
 <a class="sourceLine" id="cb19-11" data-line-number="11">septic_patients <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb19-12" data-line-number="12"><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span>(gender) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb19-13" data-line-number="13"><span class="st">  </span><span class="kw"><a href="https://www.rdocumentation.org/packages/clean/topics/freq">freq</a></span>(<span class="kw"><a href="../reference/mo_property.html">mo_genus</a></span>(mo))</a></code></pre></div>
+<a class="sourceLine" id="cb19-13" data-line-number="13"><span class="st">  </span><span class="kw">freq</span>(<span class="kw">mo_genus</span>(mo))</a></code></pre></div>
 </li>
 <li>Header info is now available as a list, with the <code>header</code> function</li>
 <li>The parameter <code>header</code> is now set to <code>TRUE</code> at default, even for markdown</li>
@@ -767,11 +770,11 @@ Using <code><a href="../reference/as.mo.html">as.mo(..., allow_uncertain = 3)</a
 <li>Fix for using <code><a href="https://dplyr.tidyverse.org/reference/select.html">select()</a></code> on frequency tables</li>
 </ul>
 </li>
-<li>Function <code><a href="../reference/ggplot_rsi.html">scale_y_percent()</a></code> now contains the <code>limits</code> parameter</li>
-<li>Automatic parameter filling for <code><a href="../reference/mdro.html">mdro()</a></code>, <code><a href="../reference/key_antibiotics.html">key_antibiotics()</a></code> and <code><a href="../reference/eucast_rules.html">eucast_rules()</a></code>
+<li>Function <code>scale_y_percent()</code> now contains the <code>limits</code> parameter</li>
+<li>Automatic parameter filling for <code>mdro()</code>, <code>key_antibiotics()</code> and <code>eucast_rules()</code>
 </li>
-<li>Updated examples for resistance prediction (<code><a href="../reference/resistance_predict.html">resistance_predict()</a></code> function)</li>
-<li>Fix for <code><a href="../reference/as.mic.html">as.mic()</a></code> to support more values ending in (several) zeroes</li>
+<li>Updated examples for resistance prediction (<code>resistance_predict()</code> function)</li>
+<li>Fix for <code>as.mic()</code> to support more values ending in (several) zeroes</li>
 <li>if using different lengths of pattern and x in <code>%like%</code>, it will now return the call</li>
 </ul>
 </div>
@@ -827,30 +830,30 @@ Using <code><a href="../reference/as.mo.html">as.mo(..., allow_uncertain = 3)</a
 <li>Fewer than 3 characters as input for <code>as.mo</code> will return NA</li>
 <li>
 <p>Function <code>as.mo</code> (and all <code>mo_*</code> wrappers) now supports genus abbreviations with “species” attached</p>
-<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb20-1" data-line-number="1"><span class="kw"><a href="../reference/as.mo.html">as.mo</a></span>(<span class="st">"E. species"</span>)        <span class="co"># B_ESCHR</span></a>
-<a class="sourceLine" id="cb20-2" data-line-number="2"><span class="kw"><a href="../reference/mo_property.html">mo_fullname</a></span>(<span class="st">"E. spp."</span>)     <span class="co"># "Escherichia species"</span></a>
-<a class="sourceLine" id="cb20-3" data-line-number="3"><span class="kw"><a href="../reference/as.mo.html">as.mo</a></span>(<span class="st">"S. spp"</span>)            <span class="co"># B_STPHY</span></a>
-<a class="sourceLine" id="cb20-4" data-line-number="4"><span class="kw"><a href="../reference/mo_property.html">mo_fullname</a></span>(<span class="st">"S. species"</span>)  <span class="co"># "Staphylococcus species"</span></a></code></pre></div>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb20-1" data-line-number="1"><span class="kw">as.mo</span>(<span class="st">"E. species"</span>)        <span class="co"># B_ESCHR</span></a>
+<a class="sourceLine" id="cb20-2" data-line-number="2"><span class="kw">mo_fullname</span>(<span class="st">"E. spp."</span>)     <span class="co"># "Escherichia species"</span></a>
+<a class="sourceLine" id="cb20-3" data-line-number="3"><span class="kw">as.mo</span>(<span class="st">"S. spp"</span>)            <span class="co"># B_STPHY</span></a>
+<a class="sourceLine" id="cb20-4" data-line-number="4"><span class="kw">mo_fullname</span>(<span class="st">"S. species"</span>)  <span class="co"># "Staphylococcus species"</span></a></code></pre></div>
 </li>
 <li>Added parameter <code>combine_IR</code> (TRUE/FALSE) to functions <code>portion_df</code> and <code>count_df</code>, to indicate that all values of I and R must be merged into one, so the output only consists of S vs. IR (susceptible vs. non-susceptible)</li>
 <li>Fix for <code>portion_*(..., as_percent = TRUE)</code> when minimal number of isolates would not be met</li>
-<li>Added parameter <code>also_single_tested</code> for <code>portion_*</code> and <code>count_*</code> functions to also include cases where not all antibiotics were tested but at least one of the tested antibiotics includes the target antimicribial interpretation, see <code><a href="../reference/portion.html">?portion</a></code>
+<li>Added parameter <code>also_single_tested</code> for <code>portion_*</code> and <code>count_*</code> functions to also include cases where not all antibiotics were tested but at least one of the tested antibiotics includes the target antimicribial interpretation, see <code>?portion</code>
 </li>
 <li>Using <code>portion_*</code> functions now throws a warning when total available isolate is below parameter <code>minimum</code>
 </li>
 <li>Functions <code>as.mo</code>, <code>as.rsi</code>, <code>as.mic</code>, <code>as.atc</code> and <code>freq</code> will not set package name as attribute anymore</li>
-<li>Frequency tables - <code><a href="https://www.rdocumentation.org/packages/clean/topics/freq">freq()</a></code>:
+<li>Frequency tables - <code>freq()</code>:
 <ul>
 <li>
 <p>Support for grouping variables, test with:</p>
 <div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb21-1" data-line-number="1">septic_patients <span class="op">%&gt;%</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb21-2" data-line-number="2"><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span>(hospital_id) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb21-3" data-line-number="3"><span class="st">  </span><span class="kw"><a href="https://www.rdocumentation.org/packages/clean/topics/freq">freq</a></span>(gender)</a></code></pre></div>
+<a class="sourceLine" id="cb21-3" data-line-number="3"><span class="st">  </span><span class="kw">freq</span>(gender)</a></code></pre></div>
 </li>
 <li>
 <p>Support for (un)selecting columns:</p>
 <div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb22-1" data-line-number="1">septic_patients <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb22-2" data-line-number="2"><span class="st">  </span><span class="kw"><a href="https://www.rdocumentation.org/packages/clean/topics/freq">freq</a></span>(hospital_id) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb22-2" data-line-number="2"><span class="st">  </span><span class="kw">freq</span>(hospital_id) <span class="op">%&gt;%</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb22-3" data-line-number="3"><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span>(<span class="op">-</span>count, <span class="op">-</span>cum_count) <span class="co"># only get item, percent, cum_percent</span></a></code></pre></div>
 </li>
 <li>Check for <code><a href="https://www.rdocumentation.org/packages/hms/topics/Deprecated">hms::is.hms</a></code>
@@ -931,16 +934,16 @@ Using <code><a href="../reference/as.mo.html">as.mo(..., allow_uncertain = 3)</a
 </li>
 </ul>
 <p>They also come with support for German, Dutch, French, Italian, Spanish and Portuguese:</p>
-<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb23-1" data-line-number="1"><span class="kw"><a href="../reference/mo_property.html">mo_gramstain</a></span>(<span class="st">"E. coli"</span>)</a>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb23-1" data-line-number="1"><span class="kw">mo_gramstain</span>(<span class="st">"E. coli"</span>)</a>
 <a class="sourceLine" id="cb23-2" data-line-number="2"><span class="co"># [1] "Gram negative"</span></a>
-<a class="sourceLine" id="cb23-3" data-line-number="3"><span class="kw"><a href="../reference/mo_property.html">mo_gramstain</a></span>(<span class="st">"E. coli"</span>, <span class="dt">language =</span> <span class="st">"de"</span>) <span class="co"># German</span></a>
+<a class="sourceLine" id="cb23-3" data-line-number="3"><span class="kw">mo_gramstain</span>(<span class="st">"E. coli"</span>, <span class="dt">language =</span> <span class="st">"de"</span>) <span class="co"># German</span></a>
 <a class="sourceLine" id="cb23-4" data-line-number="4"><span class="co"># [1] "Gramnegativ"</span></a>
-<a class="sourceLine" id="cb23-5" data-line-number="5"><span class="kw"><a href="../reference/mo_property.html">mo_gramstain</a></span>(<span class="st">"E. coli"</span>, <span class="dt">language =</span> <span class="st">"es"</span>) <span class="co"># Spanish</span></a>
+<a class="sourceLine" id="cb23-5" data-line-number="5"><span class="kw">mo_gramstain</span>(<span class="st">"E. coli"</span>, <span class="dt">language =</span> <span class="st">"es"</span>) <span class="co"># Spanish</span></a>
 <a class="sourceLine" id="cb23-6" data-line-number="6"><span class="co"># [1] "Gram negativo"</span></a>
-<a class="sourceLine" id="cb23-7" data-line-number="7"><span class="kw"><a href="../reference/mo_property.html">mo_fullname</a></span>(<span class="st">"S. group A"</span>, <span class="dt">language =</span> <span class="st">"pt"</span>) <span class="co"># Portuguese</span></a>
+<a class="sourceLine" id="cb23-7" data-line-number="7"><span class="kw">mo_fullname</span>(<span class="st">"S. group A"</span>, <span class="dt">language =</span> <span class="st">"pt"</span>) <span class="co"># Portuguese</span></a>
 <a class="sourceLine" id="cb23-8" data-line-number="8"><span class="co"># [1] "Streptococcus grupo A"</span></a></code></pre></div>
 <p>Furthermore, former taxonomic names will give a note about the current taxonomic name:</p>
-<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb24-1" data-line-number="1"><span class="kw"><a href="../reference/mo_property.html">mo_gramstain</a></span>(<span class="st">"Esc blattae"</span>)</a>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb24-1" data-line-number="1"><span class="kw">mo_gramstain</span>(<span class="st">"Esc blattae"</span>)</a>
 <a class="sourceLine" id="cb24-2" data-line-number="2"><span class="co"># Note: 'Escherichia blattae' (Burgess et al., 1973) was renamed 'Shimwellia blattae' (Priest and Barker, 2010)</span></a>
 <a class="sourceLine" id="cb24-3" data-line-number="3"><span class="co"># [1] "Gram negative"</span></a></code></pre></div>
 </li>
@@ -953,15 +956,15 @@ Using <code><a href="../reference/as.mo.html">as.mo(..., allow_uncertain = 3)</a
 </li>
 <li>
 <p>Functions <code>as.mo</code> and <code>is.mo</code> as replacements for <code>as.bactid</code> and <code>is.bactid</code> (since the <code>microoganisms</code> data set not only contains bacteria). These last two functions are deprecated and will be removed in a future release. The <code>as.mo</code> function determines microbial IDs using intelligent rules:</p>
-<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb25-1" data-line-number="1"><span class="kw"><a href="../reference/as.mo.html">as.mo</a></span>(<span class="st">"E. coli"</span>)</a>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb25-1" data-line-number="1"><span class="kw">as.mo</span>(<span class="st">"E. coli"</span>)</a>
 <a class="sourceLine" id="cb25-2" data-line-number="2"><span class="co"># [1] B_ESCHR_COL</span></a>
-<a class="sourceLine" id="cb25-3" data-line-number="3"><span class="kw"><a href="../reference/as.mo.html">as.mo</a></span>(<span class="st">"MRSA"</span>)</a>
+<a class="sourceLine" id="cb25-3" data-line-number="3"><span class="kw">as.mo</span>(<span class="st">"MRSA"</span>)</a>
 <a class="sourceLine" id="cb25-4" data-line-number="4"><span class="co"># [1] B_STPHY_AUR</span></a>
-<a class="sourceLine" id="cb25-5" data-line-number="5"><span class="kw"><a href="../reference/as.mo.html">as.mo</a></span>(<span class="st">"S group A"</span>)</a>
+<a class="sourceLine" id="cb25-5" data-line-number="5"><span class="kw">as.mo</span>(<span class="st">"S group A"</span>)</a>
 <a class="sourceLine" id="cb25-6" data-line-number="6"><span class="co"># [1] B_STRPTC_GRA</span></a></code></pre></div>
 <p>And with great speed too - on a quite regular Linux server from 2007 it takes us less than 0.02 seconds to transform 25,000 items:</p>
 <div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb26-1" data-line-number="1">thousands_of_E_colis &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/rep">rep</a></span>(<span class="st">"E. coli"</span>, <span class="dv">25000</span>)</a>
-<a class="sourceLine" id="cb26-2" data-line-number="2">microbenchmark<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/microbenchmark/topics/microbenchmark">microbenchmark</a></span>(<span class="kw"><a href="../reference/as.mo.html">as.mo</a></span>(thousands_of_E_colis), <span class="dt">unit =</span> <span class="st">"s"</span>)</a>
+<a class="sourceLine" id="cb26-2" data-line-number="2">microbenchmark<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/microbenchmark/topics/microbenchmark">microbenchmark</a></span>(<span class="kw">as.mo</span>(thousands_of_E_colis), <span class="dt">unit =</span> <span class="st">"s"</span>)</a>
 <a class="sourceLine" id="cb26-3" data-line-number="3"><span class="co"># Unit: seconds</span></a>
 <a class="sourceLine" id="cb26-4" data-line-number="4"><span class="co">#         min       median         max  neval</span></a>
 <a class="sourceLine" id="cb26-5" data-line-number="5"><span class="co">#  0.01817717  0.01843957  0.03878077    100</span></a></code></pre></div>
@@ -994,9 +997,9 @@ Using <code><a href="../reference/as.mo.html">as.mo(..., allow_uncertain = 3)</a
 <p>Added 163 trade names to the <code>antibiotics</code> data set, it now contains 298 different trade names in total, e.g.:</p>
 <div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb27-1" data-line-number="1"><span class="kw">ab_official</span>(<span class="st">"Bactroban"</span>)</a>
 <a class="sourceLine" id="cb27-2" data-line-number="2"><span class="co"># [1] "Mupirocin"</span></a>
-<a class="sourceLine" id="cb27-3" data-line-number="3"><span class="kw"><a href="../reference/ab_property.html">ab_name</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"Bactroban"</span>, <span class="st">"Amoxil"</span>, <span class="st">"Zithromax"</span>, <span class="st">"Floxapen"</span>))</a>
+<a class="sourceLine" id="cb27-3" data-line-number="3"><span class="kw">ab_name</span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"Bactroban"</span>, <span class="st">"Amoxil"</span>, <span class="st">"Zithromax"</span>, <span class="st">"Floxapen"</span>))</a>
 <a class="sourceLine" id="cb27-4" data-line-number="4"><span class="co"># [1] "Mupirocin" "Amoxicillin" "Azithromycin" "Flucloxacillin"</span></a>
-<a class="sourceLine" id="cb27-5" data-line-number="5"><span class="kw"><a href="../reference/ab_property.html">ab_atc</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"Bactroban"</span>, <span class="st">"Amoxil"</span>, <span class="st">"Zithromax"</span>, <span class="st">"Floxapen"</span>))</a>
+<a class="sourceLine" id="cb27-5" data-line-number="5"><span class="kw">ab_atc</span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"Bactroban"</span>, <span class="st">"Amoxil"</span>, <span class="st">"Zithromax"</span>, <span class="st">"Floxapen"</span>))</a>
 <a class="sourceLine" id="cb27-6" data-line-number="6"><span class="co"># [1] "R01AX06" "J01CA04" "J01FA10" "J01CF05"</span></a></code></pre></div>
 </li>
 <li>For <code>first_isolate</code>, rows will be ignored when there’s no species available</li>
@@ -1008,13 +1011,13 @@ Using <code><a href="../reference/as.mo.html">as.mo(..., allow_uncertain = 3)</a
 </li>
 <li>
 <p>Support for quasiquotation in the functions series <code>count_*</code> and <code>portions_*</code>, and <code>n_rsi</code>. This allows to check for more than 2 vectors or columns.</p>
-<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb28-1" data-line-number="1">septic_patients <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span>(amox, cipr) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="../reference/count.html">count_IR</a></span>()</a>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb28-1" data-line-number="1">septic_patients <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span>(amox, cipr) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">count_IR</span>()</a>
 <a class="sourceLine" id="cb28-2" data-line-number="2"><span class="co"># which is the same as:</span></a>
-<a class="sourceLine" id="cb28-3" data-line-number="3">septic_patients <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="../reference/count.html">count_IR</a></span>(amox, cipr)</a>
+<a class="sourceLine" id="cb28-3" data-line-number="3">septic_patients <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">count_IR</span>(amox, cipr)</a>
 <a class="sourceLine" id="cb28-4" data-line-number="4"></a>
-<a class="sourceLine" id="cb28-5" data-line-number="5">septic_patients <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="../reference/portion.html">portion_S</a></span>(amcl)</a>
-<a class="sourceLine" id="cb28-6" data-line-number="6">septic_patients <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="../reference/portion.html">portion_S</a></span>(amcl, gent)</a>
-<a class="sourceLine" id="cb28-7" data-line-number="7">septic_patients <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="../reference/portion.html">portion_S</a></span>(amcl, gent, pita)</a></code></pre></div>
+<a class="sourceLine" id="cb28-5" data-line-number="5">septic_patients <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">portion_S</span>(amcl)</a>
+<a class="sourceLine" id="cb28-6" data-line-number="6">septic_patients <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">portion_S</span>(amcl, gent)</a>
+<a class="sourceLine" id="cb28-7" data-line-number="7">septic_patients <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">portion_S</span>(amcl, gent, pita)</a></code></pre></div>
 </li>
 <li>Edited <code>ggplot_rsi</code> and <code>geom_rsi</code> so they can cope with <code>count_df</code>. The new <code>fun</code> parameter has value <code>portion_df</code> at default, but can be set to <code>count_df</code>.</li>
 <li>Fix for <code>ggplot_rsi</code> when the <code>ggplot2</code> package was not loaded</li>
@@ -1029,11 +1032,11 @@ Using <code><a href="../reference/as.mo.html">as.mo(..., allow_uncertain = 3)</a
 <li>
 <p>Support for types (classes) list and matrix for <code>freq</code></p>
 <div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb29-1" data-line-number="1">my_matrix =<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/with">with</a></span>(septic_patients, <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/matrix">matrix</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(age, gender), <span class="dt">ncol =</span> <span class="dv">2</span>))</a>
-<a class="sourceLine" id="cb29-2" data-line-number="2"><span class="kw"><a href="https://www.rdocumentation.org/packages/clean/topics/freq">freq</a></span>(my_matrix)</a></code></pre></div>
+<a class="sourceLine" id="cb29-2" data-line-number="2"><span class="kw">freq</span>(my_matrix)</a></code></pre></div>
 <p>For lists, subsetting is possible:</p>
 <div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb30-1" data-line-number="1">my_list =<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(<span class="dt">age =</span> septic_patients<span class="op">$</span>age, <span class="dt">gender =</span> septic_patients<span class="op">$</span>gender)</a>
-<a class="sourceLine" id="cb30-2" data-line-number="2">my_list <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/clean/topics/freq">freq</a></span>(age)</a>
-<a class="sourceLine" id="cb30-3" data-line-number="3">my_list <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/clean/topics/freq">freq</a></span>(gender)</a></code></pre></div>
+<a class="sourceLine" id="cb30-2" data-line-number="2">my_list <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">freq</span>(age)</a>
+<a class="sourceLine" id="cb30-3" data-line-number="3">my_list <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">freq</span>(gender)</a></code></pre></div>
 </li>
 </ul>
 </div>
@@ -1075,7 +1078,7 @@ Using <code><a href="../reference/as.mo.html">as.mo(..., allow_uncertain = 3)</a
 <ul>
 <li>
 <code>septic_patients %&gt;% select(tobr, gent) %&gt;% ggplot_rsi</code> will show portions of S, I and R immediately in a pretty plot</li>
-<li>Support for grouped variables, see <code><a href="../reference/ggplot_rsi.html">?ggplot_rsi</a></code>
+<li>Support for grouped variables, see <code>?ggplot_rsi</code>
 </li>
 </ul>
 </li>
@@ -1107,13 +1110,13 @@ Using <code><a href="../reference/as.mo.html">as.mo(..., allow_uncertain = 3)</a
 <ul>
 <li>A vignette to explain its usage</li>
 <li>Support for <code>rsi</code> (antimicrobial resistance) to use as input</li>
-<li>Support for <code>table</code> to use as input: <code><a href="https://www.rdocumentation.org/packages/clean/topics/freq">freq(table(x, y))</a></code>
+<li>Support for <code>table</code> to use as input: <code>freq(table(x, y))</code>
 </li>
 <li>Support for existing functions <code>hist</code> and <code>plot</code> to use a frequency table as input: <code><a href="https://www.rdocumentation.org/packages/graphics/topics/hist">hist(freq(df$age))</a></code>
 </li>
 <li>Support for <code>as.vector</code>, <code>as.data.frame</code>, <code>as_tibble</code> and <code>format</code>
 </li>
-<li>Support for quasiquotation: <code><a href="https://www.rdocumentation.org/packages/clean/topics/freq">freq(mydata, mycolumn)</a></code> is the same as <code>mydata %&gt;% freq(mycolumn)</code>
+<li>Support for quasiquotation: <code>freq(mydata, mycolumn)</code> is the same as <code>mydata %&gt;% freq(mycolumn)</code>
 </li>
 <li>Function <code>top_freq</code> function to return the top/below <em>n</em> items as vector</li>
 <li>Header of frequency tables now also show Mean Absolute Deviaton (MAD) and Interquartile Range (IQR)</li>
@@ -1145,14 +1148,14 @@ Using <code><a href="../reference/as.mo.html">as.mo(..., allow_uncertain = 3)</a
 <li>Combined MIC/RSI values will now be coerced by the <code>rsi</code> and <code>mic</code> functions:
 <ul>
 <li>
-<code><a href="../reference/as.rsi.html">as.rsi("&lt;=0.002; S")</a></code> will return <code>S</code>
+<code>as.rsi("&lt;=0.002; S")</code> will return <code>S</code>
 </li>
 <li>
-<code><a href="../reference/as.mic.html">as.mic("&lt;=0.002; S")</a></code> will return <code>&lt;=0.002</code>
+<code>as.mic("&lt;=0.002; S")</code> will return <code>&lt;=0.002</code>
 </li>
 </ul>
 </li>
-<li>Now possible to coerce MIC values with a space between operator and value, i.e. <code><a href="../reference/as.mic.html">as.mic("&lt;= 0.002")</a></code> now works</li>
+<li>Now possible to coerce MIC values with a space between operator and value, i.e. <code>as.mic("&lt;= 0.002")</code> now works</li>
 <li>Classes <code>rsi</code> and <code>mic</code> do not add the attribute <code>package.version</code> anymore</li>
 <li>Added <code>"groups"</code> option for <code>atc_property(..., property)</code>. It will return a vector of the ATC hierarchy as defined by the <a href="https://www.whocc.no/atc/structure_and_principles/">WHO</a>. The new function <code>atc_groups</code> is a convenient wrapper around this.</li>
 <li>Build-in host check for <code>atc_property</code> as it requires the host set by <code>url</code> to be responsive</li>
@@ -1203,7 +1206,7 @@ Using <code><a href="../reference/as.mo.html">as.mo(..., allow_uncertain = 3)</a
 <li>Functions <code>BRMO</code> and <code>MRGN</code> are wrappers for Dutch and German guidelines, respectively</li>
 </ul>
 </li>
-<li>New algorithm to determine weighted isolates, can now be <code>"points"</code> or <code>"keyantibiotics"</code>, see <code><a href="../reference/first_isolate.html">?first_isolate</a></code>
+<li>New algorithm to determine weighted isolates, can now be <code>"points"</code> or <code>"keyantibiotics"</code>, see <code>?first_isolate</code>
 </li>
 <li>New print format for <code>tibble</code>s and <code>data.table</code>s</li>
 </ul>
@@ -1267,7 +1270,7 @@ Using <code><a href="../reference/as.mo.html">as.mo(..., allow_uncertain = 3)</a
     <div id="tocnav">
       <h2>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
-        <li><a href="#amr-0-7-1-9079">0.7.1.9079</a></li>
+        <li><a href="#amr-0-7-1-9080">0.7.1.9080</a></li>
         <li><a href="#amr-0-7-1">0.7.1</a></li>
         <li><a href="#amr-0-7-0">0.7.0</a></li>
         <li><a href="#amr-0-6-1">0.6.1</a></li>

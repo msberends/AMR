@@ -49,14 +49,14 @@ rm(translations_file)
 rm(microorganisms.translation)
 
 # Clean mo history ----
-mo_history_file <- file.path(file.path(system.file(package = "AMR"), "mo_history"), "mo_history.csv")
-usethis::ui_done(paste0("Resetting {usethis::ui_value('", mo_history_file, "')}"))
+usethis::ui_done(paste0("Resetting {usethis::ui_value('mo_history.csv')}"))
 tryCatch(
   write.csv(x = data.frame(x = character(0),
                            mo = character(0),
                            uncertainty_level = integer(0),
-                           package_v = character(0),
+                           package_version = character(0),
                            stringsAsFactors = FALSE),
-            file = mo_history_file),
-  warning = function(w) invisible(),
-  error = function(e) TRUE)
+            row.names = FALSE,
+            file = "inst/mo_history/mo_history.csv"),
+  warning = function(w) cat("Warning:", w$message, "\n"),
+  error = function(e) cat("Error:", e$message, "\n"))

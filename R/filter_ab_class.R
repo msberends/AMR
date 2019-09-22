@@ -26,7 +26,7 @@
 #' @param ab_class an antimicrobial class, like \code{"carbapenems"}, as can be found in \code{AMR::antibiotics$group}
 #' @param result an antibiotic result: S, I or R (or a combination of more of them)
 #' @param scope the scope to check which variables to check, can be \code{"any"} (default) or \code{"all"}
-#' @param ... parameters passed on to \code{\link[dplyr]{filter_at}}
+#' @param ... parameters passed on to \code{filter_at} from the \code{dplyr} package
 #' @details The \code{group} column in \code{\link{antibiotics}} data set will be searched for \code{ab_class} (case-insensitive). If no results are found, the \code{atc_group1} and \code{atc_group2} columns will be searched. Next, \code{x} will be checked for column names with a value in any abbreviations, codes or official names found in the \code{antibiotics} data set.
 #' @rdname filter_ab_class
 #' @keywords filter fillter_class

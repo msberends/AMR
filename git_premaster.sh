@@ -51,8 +51,6 @@ echo "••••••••••••••••••••••••�
 Rscript -e "devtools::load_all(quiet = TRUE)"
 echo "• Documenting..."
 Rscript -e "suppressMessages(devtools::document())"
-echo "• Installing..."
-Rscript -e "devtools::install(quiet = TRUE, dependencies = FALSE)"
 echo
 echo "••••••••••••••••••••••••••"
 echo "• Updating internal data •"
@@ -62,6 +60,8 @@ echo
 echo "•••••••••••••••••"
 echo "• Building site •"
 echo "•••••••••••••••••"
+echo "• Installing..."
+Rscript -e "devtools::install(quiet = TRUE, dependencies = FALSE)"
 Rscript -e "suppressMessages(pkgdown::build_site(lazy = $lazy, examples = FALSE))"
 echo
 echo "•••••••••••••••••••••••••"

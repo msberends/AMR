@@ -55,7 +55,7 @@
 #'
 #' A data set containing the microbial taxonomy of six kingdoms from the Catalogue of Life. MO codes can be looked up using \code{\link{as.mo}}.
 #' @inheritSection catalogue_of_life Catalogue of Life
-#' @format A \code{\link{data.frame}} with 69,454 observations and 16 variables:
+#' @format A \code{\link{data.frame}} with 69,465 observations and 16 variables:
 #' \describe{
 #'   \item{\code{mo}}{ID of microorganism as used by this package}
 #'   \item{\code{col_id}}{Catalogue of Life ID}
@@ -72,6 +72,7 @@
 #'   \item{11 entries of \emph{Streptococcus} (beta-haemolytic: groups A, B, C, D, F, G, H, K and unspecified; other: viridans, milleri)}
 #'   \item{2 entries of \emph{Staphylococcus} (coagulase-negative [CoNS] and coagulase-positive [CoPS])}
 #'   \item{3 entries of \emph{Trichomonas} (\emph{Trichomonas vaginalis}, and its family and genus)}
+#'   \item{1 entry of \emph{Blastocystis} (\emph{Blastocystis hominis}), although it officially does not exist (Noel et al. 2005, PMID 15634993)}
 #'   \item{5 other 'undefined' entries (unknown, unknown Gram negatives, unknown Gram positives, unknown yeast and unknown fungus)}
 #'   \item{9,460 species from the DSMZ (Deutsche Sammlung von Mikroorganismen und Zellkulturen) since the DSMZ contain the latest taxonomic information based on recent publications}
 #' }
@@ -114,7 +115,7 @@ catalogue_of_life <- list(
 #' Translation table for common microorganism codes
 #'
 #' A data set containing commonly used codes for microorganisms, from laboratory systems and WHONET. Define your own with \code{\link{set_mo_source}}.
-#' @format A \code{\link{data.frame}} with 4,927 observations and 2 variables:
+#' @format A \code{\link{data.frame}} with 5,006 observations and 2 variables:
 #' \describe{
 #'   \item{\code{code}}{Commonly used code of a microorganism}
 #'   \item{\code{mo}}{ID of the microorganism in the \code{\link{microorganisms}} data set}

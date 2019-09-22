@@ -29,22 +29,21 @@ clean::freq
 #' @export
 #' @noRd
 freq.mo <- function(x, ...) {
-  x <- as.mo(x) # to get the newest mo codes
-  x_noNA <- x[!is.na(x)]
+  x_noNA <- as.mo(x[!is.na(x)]) # as.mo() to get the newest mo codes
   grams <- mo_gramstain(x_noNA, language = NULL)
   freq.default(x = x, ...,
                .add_header = list(`Gram-negative` = paste0(format(sum(grams == "Gram-negative", na.rm = TRUE),
                                                                   big.mark = ",",
                                                                   decimal.mark = "."),
-                                                           " (", percent(sum(grams == "Gram-negative", na.rm = TRUE) / length(grams), force_zero = TRUE),
-                                                           " of total)"),
+                                                           " (", percent(sum(grams == "Gram-negative", na.rm = TRUE) / length(grams), force_zero = TRUE, round = 2),
+                                                           ")"),
                                   `Gram-positive` = paste0(format(sum(grams == "Gram-positive", na.rm = TRUE),
                                                                   big.mark = ",",
                                                                   decimal.mark = "."),
-                                                           " (", percent(sum(grams == "Gram-positive", na.rm = TRUE) / length(grams), force_zero = TRUE),
-                                                           " of total)"),
-                                  genera = n_distinct(mo_genus(x_noNA, language = NULL)),
-                                  species = n_distinct(paste(mo_genus(x_noNA, language = NULL),
+                                                           " (", percent(sum(grams == "Gram-positive", na.rm = TRUE) / length(grams), force_zero = TRUE, round = 2),
+                                                           ")"),
+                                  `Unique genera` = n_distinct(mo_genus(x_noNA, language = NULL)),
+                                  `Unique species` = n_distinct(paste(mo_genus(x_noNA, language = NULL),
                                                              mo_species(x_noNA, language = NULL)))))
 }
 

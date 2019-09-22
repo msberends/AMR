@@ -4,7 +4,7 @@
 \name{microorganisms}
 \alias{microorganisms}
 \title{Data set with ~70,000 microorganisms}
-\format{A \code{\link{data.frame}} with 69,454 observations and 16 variables:
+\format{A \code{\link{data.frame}} with 69,465 observations and 16 variables:
 \describe{
   \item{\code{mo}}{ID of microorganism as used by this package}
   \item{\code{col_id}}{Catalogue of Life ID}
@@ -33,6 +33,7 @@ Manually added were:
   \item{11 entries of \emph{Streptococcus} (beta-haemolytic: groups A, B, C, D, F, G, H, K and unspecified; other: viridans, milleri)}
   \item{2 entries of \emph{Staphylococcus} (coagulase-negative [CoNS] and coagulase-positive [CoPS])}
   \item{3 entries of \emph{Trichomonas} (\emph{Trichomonas vaginalis}, and its family and genus)}
+  \item{1 entry of \emph{Blastocystis} (\emph{Blastocystis hominis}), although it officially does not exist (Noel et al. 2005, PMID 15634993)}
   \item{5 other 'undefined' entries (unknown, unknown Gram negatives, unknown Gram positives, unknown yeast and unknown fungus)}
   \item{9,460 species from the DSMZ (Deutsche Sammlung von Mikroorganismen und Zellkulturen) since the DSMZ contain the latest taxonomic information based on recent publications}
 }
