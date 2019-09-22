@@ -29,6 +29,7 @@ clean::freq
 #' @export
 #' @noRd
 freq.mo <- function(x, ...) {
+  x <- as.mo(x) # to get the newest mo codes
   x_noNA <- x[!is.na(x)]
   grams <- mo_gramstain(x_noNA, language = NULL)
   freq.default(x = x, ...,

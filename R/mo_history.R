@@ -29,6 +29,7 @@ set_mo_history <- function(x, mo, uncertainty_level, force = FALSE, disable = FA
   
   if (base::interactive() | force == TRUE) {
     mo_hist <- read_mo_history(uncertainty_level = uncertainty_level, force = force)
+    warning_new_write <- FALSE
     df <- data.frame(x, mo, stringsAsFactors = FALSE) %>%
       distinct(x, .keep_all = TRUE) %>%
       filter(!is.na(x) & !is.na(mo))
@@ -55,8 +56,9 @@ set_mo_history <- function(x, mo, uncertainty_level, force = FALSE, disable = FA
         # if (tryCatch(nrow(getOption("mo_remembered_results")), error = function(e) 1001) > 1000) {
         #   return(base::invisible())
         # }
-        if (is.null(mo_hist) & interactive()) {
+        if (is.null(mo_hist) & interactive() & warning_new_write == FALSE) {
           message(blue(paste0("NOTE: results are saved to ", mo_history_file(), ".")))
+          warning_new_write <- TRUE
         }
         tryCatch(write.csv(rbind(mo_hist,
                                  data.frame(

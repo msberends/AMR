@@ -1721,7 +1721,7 @@ exec_as.mo <- function(x,
     print(mo_renamed())
   }
   
-  if (old_mo_warning == TRUE) {
+  if (old_mo_warning == TRUE & property != "mo") {
     warning("The input contained old microorganism IDs from previous versions of this package. Please use as.mo() on these old codes.\nSUPPORT FOR THIS WILL BE DROPPED IN A FUTURE VERSION.", call. = FALSE)
   }
   

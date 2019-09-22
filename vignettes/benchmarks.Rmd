@@ -149,8 +149,8 @@ boxplot(microbenchmark(
   'as.mo("P. brevis")' = as.mo("P. brevis", force_mo_history = TRUE),
   'as.mo("E. coli")' = as.mo("E. coli", force_mo_history = TRUE),
   times = 10),
-        horizontal = TRUE, las = 1, unit = "s", log = FALSE,
-        xlab = "", ylab = "Time in seconds",
+        horizontal = TRUE, las = 1, unit = "s", log = TRUE,
+        xlab = "", ylab = "Time in seconds (log)",
         main = "Benchmarks per prevalence")
 ```
 
