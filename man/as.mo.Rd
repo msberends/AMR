@@ -75,59 +75,47 @@ The \code{as.mo()} function gains experience from previously determined microorg
 
 Usually, any guess after the first try runs 80-95\% faster than the first try.
 
+This resets with every update of this \code{AMR} package since results are saved to your local package library folder.
 
 \strong{Intelligent rules} \cr
-This function uses intelligent rules to help getting fast and logical results. It tries to find matches in this order:
+The \code{as.mo()} function uses several coercion rules for fast and logical results. It assesses the input matching criteria in the following order:
 \itemize{
-  \item{Valid MO codes and full names: it first searches in already valid MO code and known genus/species combinations}
-  \item{Human pathogenic prevalence: it first searches in more prevalent microorganisms, then less prevalent ones (see \emph{Microbial prevalence of pathogens in humans} below)}
-  \item{Taxonomic kingdom: it first searches in Bacteria, then Fungi, then Protozoa, then Archaea, then others}
-  \item{Breakdown of input values: from here it starts to breakdown input values to find possible matches}
+  \item{Human pathogenic prevalence: the function  starts with more prevalent microorganisms, followed by less prevalent ones;}
+  \item{Taxonomic kingdom: the function starts with determining Bacteria, then Fungi, then Protozoa, then others;}
+  \item{Breakdown of input values to identify possible matches.}
 }
 
+This will lead to the effect that e.g. \code{"E. coli"} (a highly prevalent microorganism found in humans) will return the microbial ID of \emph{Escherichia coli} and not \emph{Entamoeba coli} (a less prevalent microorganism in humans), although the latter would alphabetically come first. In addition, the \code{as.mo()} function can differentiate four levels of uncertainty to guess valid results: 
 
-A couple of effects because of these rules:
 \itemize{
-  \item{\code{"E. coli"} will return the ID of \emph{Escherichia coli} and not \emph{Entamoeba coli}, although the latter would alphabetically come first}
-  \item{\code{"H. influenzae"} will return the ID of \emph{Haemophilus influenzae} and not \emph{Haematobacter influenzae} for the same reason}
-  \item{Something like \code{"stau"} or \code{"S aur"} will return the ID of \emph{Staphylococcus aureus} and not \emph{Staphylococcus auricularis}}
-}
-This means that looking up human pathogenic microorganisms takes less time than looking up human non-pathogenic microorganisms.
-
-\strong{Uncertain results} \cr
-The algorithm can additionally use three different levels of uncertainty to guess valid results. The default is \code{allow_uncertain = TRUE}, which is equal to uncertainty level 2. Using \code{allow_uncertain = FALSE} will skip all of these additional rules:
-\itemize{
-  \item{(uncertainty level 1): It tries to look for only matching genera, previously accepted (but now invalid) taxonomic names and misspelled input}
-  \item{(uncertainty level 2): It removed parts between brackets, strips off words from the end one by one and re-evaluates the input with all previous rules}
-  \item{(uncertainty level 3): It strips off words from the start one by one and tries any part of the name}
+  \item{Uncertainty level 0: no additional rules are applied;}
+  \item{Uncertainty level 1: allow previously accepted (but now invalid) taxonomic names and minor spelling errors;}
+  \item{Uncertainty level 2: allow all of level 1, strip values between brackets, inverse the words of the input, strip off text elements from the end keeping at least two elements;}
+  \item{Uncertainty level 3: allow all of level 1 and 2, strip off text elements from the end, allow any part of a taxonomic name.}
 }
 
-You can also use e.g. \code{as.mo(..., allow_uncertain = 1)} to only allow up to level 1 uncertainty.
+This leads to e.g.:
 
-Examples:
 \itemize{
   \item{\code{"Streptococcus group B (known as S. agalactiae)"}. The text between brackets will be removed and a warning will be thrown that the result \emph{Streptococcus group B} (\code{B_STRPT_GRPB}) needs review.}
-  \item{\code{"S. aureus - please mind: MRSA"}. The last word will be stripped, after which the function will try to find a match. If it does not, the second last word will be stripped, etc. Again, a warning will be thrown that the result \emph{Staphylococcus aureus} (\code{B_STPHY_AUR}) needs review.}
-  \item{\code{"Fluoroquinolone-resistant Neisseria gonorrhoeae"}. The first word will be stripped, after which the function will try to find a match. A warning will be thrown that the result \emph{Neisseria gonorrhoeae} (\code{B_NESSR_GON}) needs review.}
+  \item{\code{"S. aureus - please mind: MRSA"}. The last word will be stripped, after which the function will try to find a match. If it does not, the second last word will be stripped, etc. Again, a warning will be thrown that the result \emph{Staphylococcus aureus} (\code{B_STPHY_AURS}) needs review.}
+  \item{\code{"Fluoroquinolone-resistant Neisseria gonorrhoeae"}. The first word will be stripped, after which the function will try to find a match. A warning will be thrown that the result \emph{Neisseria gonorrhoeae} (\code{B_NESSR_GNRR}) needs review.}
 }
 
-Use \code{mo_failures()} to get a vector with all values that could not be coerced to a valid value.
+The level of uncertainty can be set using the argument \code{allow_uncertain}. The default is \code{allow_uncertain = TRUE}, which is equal to uncertainty level 2. Using \code{allow_uncertain = FALSE} is equal to uncertainty level 0 and will skip all rules. You can also use e.g. \code{as.mo(..., allow_uncertain = 1)} to only allow up to level 1 uncertainty.
 
-Use \code{mo_uncertainties()} to get a data.frame with all values that were coerced to a valid value, but with uncertainty.
-
-Use \code{mo_renamed()} to get a data.frame with all values that could be coerced based on an old, previously accepted taxonomic name.
+Use \code{mo_failures()} to get a vector with all values that could not be coerced to a valid value. \cr
+Use \code{mo_uncertainties()} to get a \code{data.frame} with all values that were coerced to a valid value, but with uncertainty. \cr
+Use \code{mo_renamed()} to get a \code{data.frame} with all values that could be coerced based on an old, previously accepted taxonomic name.
 
 \strong{Microbial prevalence of pathogens in humans} \cr
-The intelligent rules take into account microbial prevalence of pathogens in humans. It uses three groups and all (sub)species are in only one group. These groups are:
-\itemize{
-  \item{1 (most prevalent): class is Gammaproteobacteria \strong{or} genus is one of: \emph{Enterococcus}, \emph{Staphylococcus}, \emph{Streptococcus}.}
-  \item{2: phylum is one of: Proteobacteria, Firmicutes, Actinobacteria, Sarcomastigophora \strong{or} genus is one of: \emph{Aspergillus}, \emph{Bacteroides}, \emph{Candida}, \emph{Capnocytophaga}, \emph{Chryseobacterium}, \emph{Cryptococcus}, \emph{Elisabethkingia}, \emph{Flavobacterium}, \emph{Fusobacterium}, \emph{Giardia}, \emph{Leptotrichia}, \emph{Mycoplasma}, \emph{Prevotella}, \emph{Rhodotorula}, \emph{Treponema}, \emph{Trichophyton}, \emph{Ureaplasma}.}
-  \item{3 (least prevalent): all others.}
-}
+The intelligent rules consider the prevalence of microorganisms in humans grouped into three groups, which is available as the \code{prevalence} columns in the \code{\link{microorganisms}} and \code{\link{microorganisms.old}} data sets. The grouping into prevalence groups is based on experience from several microbiological laboratories in the Netherlands in conjunction with international reports on pathogen prevalence.
 
-Group 1 contains all common Gram positives and Gram negatives, like all Enterobacteriaceae and e.g. \emph{Pseudomonas} and \emph{Legionella}.
+Group 1 (most prevalent microorganisms) consists of all microorganisms where the taxonomic class is Gammaproteobacteria or where the taxonomic genus is  \emph{Enterococcus}, \emph{Staphylococcus} or \emph{Streptococcus}. This group consequently contains all common Gram-negative bacteria, such as \emph{Pseudomonas} and \emph{Legionella} and all species within the order Enterobacteriales. 
 
-Group 2 contains probably less pathogenic microorganisms; all other members of phyla that were found in humans in the Northern Netherlands between 2001 and 2018.
+Group 2 consists of all microorganisms where the taxonomic phylum is Proteobacteria, Firmicutes, Actinobacteria or Sarcomastigophora, or where the taxonomic genus is \emph{Aspergillus}, \emph{Bacteroides}, \emph{Candida}, \emph{Capnocytophaga}, \emph{Chryseobacterium}, \emph{Cryptococcus}, \emph{Elisabethkingia}, \emph{Flavobacterium}, \emph{Fusobacterium}, \emph{Giardia}, \emph{Leptotrichia}, \emph{Mycoplasma}, \emph{Prevotella}, \emph{Rhodotorula}, \emph{Treponema}, \emph{Trichophyton} or \emph{Ureaplasma}. 
+
+Group 3 (least prevalent microorganisms) consists of all other microorganisms.
 }
 \section{Source}{
 

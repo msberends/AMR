@@ -1,5 +1,5 @@
-# AMR 0.7.1.9080
-<small>Last updated: 22-Sep-2019</small>
+# AMR 0.7.1.9081
+<small>Last updated: 23-Sep-2019</small>
 
 ### Breaking
 * Determination of first isolates now **excludes** all 'unknown' microorganisms at default, i.e. microbial code `"UNKNOWN"`. They can be included with the new parameter `include_unknown`:
@@ -25,17 +25,27 @@
 * Function `freq()` has moved to a new package, [`clean`](https://github.com/msberends/clean) ([CRAN link](https://cran.r-project.org/package=clean)), since creating frequency tables actually does not fit the scope of this package. The `freq()` function still works, since it is re-exported from the `clean` package (which will be installed automatically upon updating this `AMR` package).
 
 ### New
-* Function `bug_drug_combinations()` to quickly get a `data.frame` with the antimicrobial resistance of any bug-drug combination in a data set:
+* Function `bug_drug_combinations()` to quickly get a `data.frame` with the antimicrobial resistance of any bug-drug combination in a data set. The columns with microorganism codes is guessed automatically and its input is transformed with `mo_shortname()` at default:
   ```r
   x <- bug_drug_combinations(example_isolates)
-  x
   # NOTE: Using column `mo` as input for `col_mo`.
-  #>      ab           mo   S  I   R total
-  #> 1   AMC B_ESCHR_COLI 332 74  61   467
-  #> 2   AMC B_KLBSL_PNMN  49  3   6    58
-  #> 3   AMC B_PROTS_MRBL  28  7   1    36
-  #> 4   AMC B_PSDMN_AERG   0  0  30    30
-  #> 5   AMC B_STPHY_AURS 234  0   1   235
+  x[1:5, ]
+  #>     ab            mo   S  I   R total
+  #>  1 AMC          CoNS 178  0 132   310
+  #>  2 AMC       E. coli 332 74  61   467
+  #>  3 AMC K. pneumoniae  49  3   6    58
+  #>  4 AMC P. aeruginosa   0  0  30    30
+  #>  5 AMC  P. mirabilis  28  7   1    36
+
+  # change the transformation with the FUN argument to anything you like:
+  x <- bug_drug_combinations(example_isolates, FUN = mo_gramstain)
+  # NOTE: Using column `mo` as input for `col_mo`.
+  x[1:4, ]
+  #>     ab            mo   S  I   R total
+  #>  1 AMC Gram-negative 469 89 174   732
+  #>  2 AMC Gram-positive 873  2 272  1147
+  #>  3 AMK Gram-negative 251  0   2   253
+  #>  4 AMK Gram-positive   0  0 100   100
   ```
   You can format this to a printable format, ready for reporting or exporting to e.g. Excel with the base R `format()` function:
   ```r
@@ -82,7 +92,8 @@
   * Added support for *Blastocystis*
   * Added support for 5,000 new fungi
   * Added support for unknown yeasts and fungi
-  * Changed most microorganism IDs to improve readability. **IMPORTANT:** Because of these changes, the microorganism IDs have been changed to a slightly different format. Old microorganism IDs are still supported, but support will be dropped in a future version. Use `as.mo()` on your old codes to transform them to the new format.
+  * Changed most microorganism IDs to improve readability. For example, the old code `B_ENTRC_FAE` could have been both *E. faecalis* and *E. faecium*. Its new code is `B_ENTRC_FCLS` and *E. faecium* has become `B_ENTRC_FACM`. Also, the Latin character æ (ae) is now preserved at the start of each genus and species abbreviation. For example, the old code for *Aerococcus urinae* was `B_ARCCC_NAE`. This is now `B_AERCC_URIN`.
+    **IMPORTANT:** Old microorganism IDs are still supported, but support will be dropped in a future version. Use `as.mo()` on your old codes to transform them to the new format. Using functions from the `mo_*` family (like `mo_name()` and `mo_gramstain()`) on old codes, will throw a warning.
 * Renamed data set `septic_patients` to `example_isolates`
 * Function `eucast_rules()`:
   * Fixed a bug for *Yersinia pseudotuberculosis*

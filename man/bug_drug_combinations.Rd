@@ -8,10 +8,12 @@
 \strong{M39 Analysis and Presentation of Cumulative Antimicrobial Susceptibility Test Data, 4th Edition}, 2014, \emph{Clinical and Laboratory Standards Institute (CLSI)}. \url{https://clsi.org/standards/products/microbiology/documents/m39/}.
 }
 \usage{
-bug_drug_combinations(x, col_mo = NULL, minimum = 30)
+bug_drug_combinations(x, col_mo = NULL, minimum = 30,
+  FUN = mo_shortname, ...)
 
 \method{format}{bug_drug_combinations}(x, combine_IR = FALSE,
-  add_ab_group = TRUE, ...)
+  add_ab_group = TRUE, decimal.mark = getOption("OutDec"),
+  big.mark = ifelse(decimal.mark == ",", ".", ","))
 }
 \arguments{
 \item{x}{data with antibiotic columns, like e.g. \code{AMX} and \code{AMC}}
@@ -20,17 +22,28 @@ bug_drug_combinations(x, col_mo = NULL, minimum = 30)
 
 \item{minimum}{the minimum allowed number of available (tested) isolates. Any isolate count lower than \code{minimum} will return \code{NA} with a warning. The default number of \code{30} isolates is advised by the Clinical and Laboratory Standards Institute (CLSI) as best practice, see Source.}
 
+\item{FUN}{the function to call on the \code{mo} column to transform the microorganism IDs, defaults to \code{\link{mo_shortname}}}
+
+\item{...}{argumments passed on to \code{FUN}}
+
 \item{combine_IR}{logical to indicate whether values R and I should be summed}
 
 \item{add_ab_group}{logical to indicate where the group of the antimicrobials must be included as a first column}
 
-\item{...}{argumments passed on to \code{\link{mo_name}}}
+\item{decimal.mark}{the character to be used to indicate the numeric
+    decimal point.}
+
+\item{big.mark}{character; if not empty used as mark between every
+    \code{big.interval} decimals \emph{before} (hence \code{big}) the
+    decimal point.}
 }
 \description{
 Determine antimicrobial resistance (AMR) of all bug-drug combinations in your data set where at least 30 (default) isolates are available per species. Use \code{format} on the result to prettify it to a printable format, see Examples.
 }
 \details{
-The function \code{format} calculates the resistance per bug-drug combination. Use \code{combine_IR = FALSE} (default) to test R vs. S+I and \code{combine_IR = TRUE} to test R+I vs. S.
+The function \code{format} calculates the resistance per bug-drug combination. Use \code{combine_IR = FALSE} (default) to test R vs. S+I and \code{combine_IR = TRUE} to test R+I vs. S. 
+
+The language of the output can be overwritten with \code{options(AMR_locale)}, please see \link{translate}.
 }
 \section{Read more on our website!}{
 
@@ -42,5 +55,14 @@ On our website \url{https://msberends.gitlab.io/AMR} you can find \href{https://
 x <- bug_drug_combinations(example_isolates)
 x
 format(x)
+
+# Use FUN to change to transformation of microorganism codes
+x <- bug_drug_combinations(example_isolates, 
+                           FUN = mo_gramstain)
+                           
+x <- bug_drug_combinations(example_isolates,
+                           FUN = function(x) ifelse(x == "B_ESCHR_COLI",
+                                                    "E. coli",
+                                                    "Others"))
 }
 }

@@ -52,6 +52,8 @@ nl	biogroup	biogroep	FALSE	FALSE
 nl	vegetative	vegetatief	FALSE	FALSE
 nl	([([ ]*?)group	\\1groep	FALSE	FALSE
 nl	([([ ]*?)Group	\\1Groep	FALSE	FALSE
+nl	antibiotic	antibioticum	FALSE	FALSE
+nl	Antibiotic	Antibioticum	FALSE	FALSE
 es	Coagulase-negative Staphylococcus	Staphylococcus coagulasa negativo	FALSE	FALSE
 es	Coagulase-positive Staphylococcus	Staphylococcus coagulasa positivo	FALSE	FALSE
 es	Beta-haemolytic Streptococcus	Streptococcus Beta-hemolítico	FALSE	FALSE

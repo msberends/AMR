@@ -80,7 +80,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">0.7.1.9067</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">0.7.1.9081</span>
       </span>
     </div>
 
@@ -234,11 +234,13 @@
     
     </div>
 
-    <pre class="usage"><span class='fu'>bug_drug_combinations</span>(<span class='no'>x</span>, <span class='kw'>col_mo</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>minimum</span> <span class='kw'>=</span> <span class='fl'>30</span>)
+    <pre class="usage"><span class='fu'>bug_drug_combinations</span>(<span class='no'>x</span>, <span class='kw'>col_mo</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>minimum</span> <span class='kw'>=</span> <span class='fl'>30</span>,
+  <span class='kw'>FUN</span> <span class='kw'>=</span> <span class='no'>mo_shortname</span>, <span class='no'>...</span>)
 
 <span class='co'># S3 method for bug_drug_combinations</span>
 <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/format'>format</a></span>(<span class='no'>x</span>, <span class='kw'>combine_IR</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>add_ab_group</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>...</span>)</pre>
+  <span class='kw'>add_ab_group</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>decimal.mark</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/options'>getOption</a></span>(<span class='st'>"OutDec"</span>),
+  <span class='kw'>big.mark</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/ifelse'>ifelse</a></span>(<span class='no'>decimal.mark</span> <span class='kw'>==</span> <span class='st'>","</span>, <span class='st'>"."</span>, <span class='st'>","</span>))</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -256,6 +258,14 @@
       <td><p>the minimum allowed number of available (tested) isolates. Any isolate count lower than <code>minimum</code> will return <code>NA</code> with a warning. The default number of <code>30</code> isolates is advised by the Clinical and Laboratory Standards Institute (CLSI) as best practice, see Source.</p></td>
     </tr>
     <tr>
+      <th>FUN</th>
+      <td><p>the function to call on the <code>mo</code> column to transform the microorganism IDs, defaults to <code><a href='mo_property.html'>mo_shortname</a></code></p></td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td><p>argumments passed on to <code>FUN</code></p></td>
+    </tr>
+    <tr>
       <th>combine_IR</th>
       <td><p>logical to indicate whether values R and I should be summed</p></td>
     </tr>
@@ -264,8 +274,15 @@
       <td><p>logical to indicate where the group of the antimicrobials must be included as a first column</p></td>
     </tr>
     <tr>
-      <th>...</th>
-      <td><p>argumments passed on to <code><a href='mo_property.html'>mo_name</a></code></p></td>
+      <th>decimal.mark</th>
+      <td><p>the character to be used to indicate the numeric
+    decimal point.</p></td>
+    </tr>
+    <tr>
+      <th>big.mark</th>
+      <td><p>character; if not empty used as mark between every
+    <code>big.interval</code> decimals <em>before</em> (hence <code>big</code>) the
+    decimal point.</p></td>
     </tr>
     </table>
     
@@ -276,6 +293,7 @@
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>The function <code>format</code> calculates the resistance per bug-drug combination. Use <code>combine_IR = FALSE</code> (default) to test R vs. S+I and <code>combine_IR = TRUE</code> to test R+I vs. S.</p>
+<p>The language of the output can be overwritten with <code><a href='https://www.rdocumentation.org/packages/base/topics/options'>options(AMR_locale)</a></code>, please see <a href='translate.html'>translate</a>.</p>
     
     <h2 class="hasAnchor" id="read-more-on-our-website-"><a class="anchor" href="#read-more-on-our-website-"></a>Read more on our website!</h2>
 
@@ -288,6 +306,15 @@
 <span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'>bug_drug_combinations</span>(<span class='no'>example_isolates</span>)
 <span class='no'>x</span>
 <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/format'>format</a></span>(<span class='no'>x</span>)
+
+<span class='co'># Use FUN to change to transformation of microorganism codes</span>
+<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'>bug_drug_combinations</span>(<span class='no'>example_isolates</span>,
+                           <span class='kw'>FUN</span> <span class='kw'>=</span> <span class='no'>mo_gramstain</span>)
+
+<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'>bug_drug_combinations</span>(<span class='no'>example_isolates</span>,
+                           <span class='kw'>FUN</span> <span class='kw'>=</span> <span class='kw'>function</span>(<span class='no'>x</span>) <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/ifelse'>ifelse</a></span>(<span class='no'>x</span> <span class='kw'>==</span> <span class='st'>"B_ESCHR_COLI"</span>,
+                                                    <span class='st'>"E. coli"</span>,
+                                                    <span class='st'>"Others"</span>))
 <span class='co'># }</span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

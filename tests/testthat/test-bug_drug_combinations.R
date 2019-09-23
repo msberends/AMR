@@ -24,6 +24,7 @@ context("bug_drug_combinations.R")
 test_that("bug_drug_combinations works", {
   b <- suppressWarnings(bug_drug_combinations(example_isolates))
   expect_s3_class(b, "bug_drug_combinations")
-  expect_message(print(b))
+  expect_output(print(b))
   expect_true(is.data.frame(format(b)))
+  expect_true(is.data.frame(format(b, combine_IR = TRUE, add_ab_group = FALSE)))
 })
