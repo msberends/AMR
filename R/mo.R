@@ -905,7 +905,7 @@ exec_as.mo <- function(x,
             }
             uncertainties <- rbind(uncertainties,
                                    format_uncertainty_as_df(uncertainty_level = 1,
-                                                            input = x_backup_without_spp[i],
+                                                            input = x_backup[i],
                                                             result_mo = "B_SLMNL_ENTR"))
             next
           }
