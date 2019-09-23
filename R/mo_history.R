@@ -27,6 +27,10 @@ set_mo_history <- function(x, mo, uncertainty_level, force = FALSE, disable = FA
     return(base::invisible())
   }
   
+  # don't save codes that are in a code data set already
+  mo <- mo[!x %in% microorganisms.codes$code & !x %in% microorganisms.translation$mo_old]
+  x <- x[!x %in% microorganisms.codes$code & !x %in% microorganisms.translation$mo_old]
+  
   if (base::interactive() | force == TRUE) {
     mo_hist <- read_mo_history(uncertainty_level = uncertainty_level, force = force)
     warning_new_write <- FALSE

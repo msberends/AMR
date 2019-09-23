@@ -490,8 +490,8 @@ exec_as.mo <- function(x,
     x_backup[grepl("^(fungus|fungi)$", x)] <- "F_FUNGUS" # will otherwise become the kingdom
     
     # remove spp and species
-    x <- gsub(" +(spp.?|ssp.?|sp.? |ss ?.?|subsp.?|subspecies|biovar |serovar |species)", " ", x, ignore.case = TRUE)
-    x <- gsub("(spp.?|ssp.?|subsp.?|subspecies|biovar|serovar|species)", "", x, ignore.case = TRUE)
+    x <- gsub(" +(spp.?|ssp.?|sp.? |ss ?.?|subsp.?|subspecies|biovar |serovar |species)", " ", x)
+    x <- gsub("(spp.?|subsp.?|subspecies|biovar|serovar|species)", "", x)
     x <- strip_whitespace(x, dyslexia_mode)
     
     x_backup_without_spp <- x
@@ -582,7 +582,7 @@ exec_as.mo <- function(x,
       
       progress$tick()$print()
       
-      mo_hist <- get_mo_history(x, uncertainty_level, force = force_mo_history, disable = disable_mo_history)
+      mo_hist <- get_mo_history(x_backup[i], uncertainty_level, force = force_mo_history, disable = disable_mo_history)
       if (initial_search == TRUE & !any(is.na(mo_hist))) {
         # previously found code
         found <- data.frame(mo = mo_hist, 
@@ -638,6 +638,29 @@ exec_as.mo <- function(x,
         next
       }
       
+      # WHONET and other common LIS codes
+      if (any(toupper(c(x_backup[i], x_backup_without_spp[i])) %in% AMR::microorganisms.codes$code)) {
+        mo_found <- AMR::microorganisms.codes[which(AMR::microorganisms.codes$code %in% toupper(c(x_backup[i], x_backup_without_spp[i]))), "mo"][1L]
+        if (length(mo_found) > 0) {
+          x[i] <- microorganismsDT[mo == mo_found, ..property][[1]][1L]
+          if (initial_search == TRUE) {
+            set_mo_history(x_backup[i], get_mo_code(x[i], property), 0, force = force_mo_history, disable = disable_mo_history)
+          }
+          next
+        }
+      }
+      if (!is.null(reference_df)) {
+        # self-defined reference
+        if (x_backup[i] %in% reference_df[, 1]) {
+          ref_mo <- reference_df[reference_df[, 1] == x_backup[i], "mo"]
+          if (ref_mo %in% data_to_check[, mo]) {
+            x[i] <- data_to_check[mo == ref_mo, ..property][[1]][1L]
+            next
+          } else {
+            warning("Value '", x_backup[i], "' was found in reference_df, but '", ref_mo, "' is not a valid MO code.", call. = FALSE)
+          }
+        }
+      }
       
       # WHONET: xxx = no growth
       if (tolower(as.character(paste0(x_backup_without_spp[i], ""))) %in% c("", "xxx", "na", "nan")) {
@@ -688,13 +711,6 @@ exec_as.mo <- function(x,
         x[i] <- NA_character_
         next
       }
-      #   x[i] <- microorganismsDT[mo == "UNKNOWN", ..property][[1]]
-      #   if (initial_search == TRUE) {
-      #     failures <- c(failures, x_backup[i])
-      #     set_mo_history(x_backup[i], get_mo_code(x[i], property), 0, force = force_mo_history, disable = disable_mo_history)
-      #   }
-      #   next
-      # }
       
       # translate known trivial abbreviations to genus + species ----
       if (!is.na(x_trimmed[i])) {
@@ -961,32 +977,7 @@ exec_as.mo <- function(x,
           # rest of genus only is in allow_uncertain part.
         }
         
-        # TRY OTHER SOURCES ----
-        # WHONET and other common LIS codes
-        if (toupper(a.x_backup) %in% AMR::microorganisms.codes[, 1]) {
-          mo_found <- AMR::microorganisms.codes[toupper(a.x_backup) == AMR::microorganisms.codes[, 1], "mo"][1L]
-          if (length(mo_found) > 0) {
-            x[i] <- microorganismsDT[mo == mo_found, ..property][[1]][1L]
-            if (initial_search == TRUE) {
-              set_mo_history(a.x_backup, get_mo_code(x[i], property), 0, force = force_mo_history, disable = disable_mo_history)
-            }
-            return(x[i])
-          }
-        }
-        if (!is.null(reference_df)) {
-          # self-defined reference
-          if (a.x_backup %in% reference_df[, 1]) {
-            ref_mo <- reference_df[reference_df[, 1] == a.x_backup, "mo"]
-            if (ref_mo %in% data_to_check[, mo]) {
-              x[i] <- data_to_check[mo == ref_mo, ..property][[1]][1L]
-              return(x[i])
-            } else {
-              warning("Value '", a.x_backup, "' was found in reference_df, but '", ref_mo, "' is not a valid MO code.", call. = FALSE)
-            }
-          }
-        }
-        
-        # allow no codes less than 4 characters long, was already checked for WHONET above
+        # allow no codes less than 4 characters long, was already checked for WHONET earlier
         if (nchar(g.x_backup_without_spp) < 4) {
           x[i] <- microorganismsDT[mo == "UNKNOWN", ..property][[1]]
           if (initial_search == TRUE) {
@@ -1564,7 +1555,6 @@ exec_as.mo <- function(x,
         }
         next
       }
-      
       
       # no results found: make them UNKNOWN ----
       x[i] <- microorganismsDT[mo == "UNKNOWN", ..property][[1]]
