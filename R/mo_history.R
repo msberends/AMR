@@ -31,9 +31,10 @@ set_mo_history <- function(x, mo, uncertainty_level, force = FALSE, disable = FA
   mo <- mo[!x %in% microorganisms.codes$code & !x %in% microorganisms.translation$mo_old]
   x <- x[!x %in% microorganisms.codes$code & !x %in% microorganisms.translation$mo_old]
   
+  warning_new_write <- FALSE
+  
   if (base::interactive() | force == TRUE) {
     mo_hist <- read_mo_history(uncertainty_level = uncertainty_level, force = force)
-    warning_new_write <- FALSE
     df <- data.frame(x, mo, stringsAsFactors = FALSE) %>%
       distinct(x, .keep_all = TRUE) %>%
       filter(!is.na(x) & !is.na(mo))
