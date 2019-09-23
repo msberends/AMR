@@ -652,9 +652,9 @@ exec_as.mo <- function(x,
       if (!is.null(reference_df)) {
         # self-defined reference
         if (x_backup[i] %in% reference_df[, 1]) {
-          ref_mo <- reference_df[reference_df[, 1] == x_backup[i], "mo"]
-          if (ref_mo %in% data_to_check[, mo]) {
-            x[i] <- data_to_check[mo == ref_mo, ..property][[1]][1L]
+          ref_mo <- reference_df[reference_df[, 1] == x_backup[i], "mo"][[1L]]
+          if (ref_mo %in% microorganismsDT[, mo]) {
+            x[i] <- microorganismsDT[mo == ref_mo, ..property][[1]][1L]
             next
           } else {
             warning("Value '", x_backup[i], "' was found in reference_df, but '", ref_mo, "' is not a valid MO code.", call. = FALSE)
@@ -769,8 +769,7 @@ exec_as.mo <- function(x,
           }
           next
         }
-        if (toupper(x_backup_without_spp[i]) == 'CRS'
-            | toupper(x_backup_without_spp[i]) == 'CRSM') {
+        if (toupper(x_backup_without_spp[i]) == 'CRSM') {
           # co-trim resistant S. maltophilia
           x[i] <- microorganismsDT[mo == 'B_STNTR_MLTP', ..property][[1]][1L]
           if (initial_search == TRUE) {
