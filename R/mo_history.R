@@ -60,8 +60,7 @@ set_mo_history <- function(x, mo, uncertainty_level, force = FALSE, disable = FA
         # if (tryCatch(nrow(getOption("mo_remembered_results")), error = function(e) 1001) > 1000) {
         #   return(base::invisible())
         # }
-        if (is.null(mo_hist) & interactive() & warning_new_write == FALSE) {
-          message(blue(paste0("NOTE: results are saved to ", mo_history_file(), ".")))
+        if (is.null(mo_hist) & interactive()) {
           warning_new_write <- TRUE
         }
         tryCatch(write.csv(rbind(mo_hist,
@@ -73,9 +72,12 @@ set_mo_history <- function(x, mo, uncertainty_level, force = FALSE, disable = FA
                                    stringsAsFactors = FALSE)),
                            row.names = FALSE,
                            file = mo_history_file()),
-                 error = function(e) base::invisible())
+                 error = function(e) { warning_new_write <- FALSE; base::invisible()})
       }
     }
+  }
+  if (warning_new_write == TRUE) {
+    message(blue(paste0("NOTE: results are saved to ", mo_history_file(), ".")))
   }
   return(base::invisible())
 }

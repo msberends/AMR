@@ -241,7 +241,7 @@ as.mo <- function(x, Becker = FALSE, Lancefield = FALSE, allow_uncertain = TRUE,
       pull(mo)
     
     # save them to history
-    set_mo_history(x, y, 0, force = isTRUE(list(...)$force_mo_history))
+    set_mo_history(x, y, 0, force = isTRUE(list(...)$force_mo_history), disable = isTRUE(list(...)$disable_mo_history))
     
   } else {
     # will be checked for mo class in validation and uses exec_as.mo internally if necessary
