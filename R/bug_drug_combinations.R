@@ -97,7 +97,8 @@ format.bug_drug_combinations <- function(x,
                                          combine_IR = FALSE, 
                                          add_ab_group = TRUE,
                                          decimal.mark = getOption("OutDec"),
-                                         big.mark = ifelse(decimal.mark == ",", ".", ",")) {
+                                         big.mark = ifelse(decimal.mark == ",", ".", ","),
+                                         ...) {
   if (combine_IR == FALSE) {
     x$isolates <- x$R
   } else {

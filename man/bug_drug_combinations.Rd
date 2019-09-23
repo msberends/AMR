@@ -13,7 +13,7 @@ bug_drug_combinations(x, col_mo = NULL, minimum = 30,
 
 \method{format}{bug_drug_combinations}(x, combine_IR = FALSE,
   add_ab_group = TRUE, decimal.mark = getOption("OutDec"),
-  big.mark = ifelse(decimal.mark == ",", ".", ","))
+  big.mark = ifelse(decimal.mark == ",", ".", ","), ...)
 }
 \arguments{
 \item{x}{data with antibiotic columns, like e.g. \code{AMX} and \code{AMC}}
