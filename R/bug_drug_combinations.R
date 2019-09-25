@@ -75,6 +75,7 @@ bug_drug_combinations <- function(x,
   }
   
   x <- x %>%
+    as.data.frame(stringsAsFactors = FALSE) %>% 
     mutate(mo = x %>% pull(col_mo) %>% FUN(...)) %>% 
     filter(mo %in% (freq(mo) %>%
                       filter(count >= minimum) %>%
