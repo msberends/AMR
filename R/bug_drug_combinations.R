@@ -21,15 +21,17 @@
 
 #' Determine bug-drug combinations
 #' 
-#' Determine antimicrobial resistance (AMR) of all bug-drug combinations in your data set where at least 30 (default) isolates are available per species. Use \code{format} on the result to prettify it to a printable format, see Examples.
+#' Determine antimicrobial resistance (AMR) of all bug-drug combinations in your data set where at least 30 (default) isolates are available per species. Use \code{format} on the result to prettify it to a publicable/printable format, see Examples.
 #' @inheritParams eucast_rules
 #' @param combine_IR logical to indicate whether values R and I should be summed
 #' @param add_ab_group logical to indicate where the group of the antimicrobials must be included as a first column
+#' @param remove_intrinsic_resistant logical to indicate that rows with 100\% resistance for all tested antimicrobials must be removed from the table
 #' @param FUN the function to call on the \code{mo} column to transform the microorganism IDs, defaults to \code{\link{mo_shortname}} 
-#' @param ... argumments passed on to \code{FUN}
+#' @param translate_ab a character of length 1 containing column names of the \code{\link{antibiotics}} data set
+#' @param ... arguments passed on to \code{FUN}
 #' @inheritParams rsi_df
 #' @inheritParams base::formatC
-#' @importFrom dplyr rename
+#' @importFrom dplyr %>% rename group_by select mutate filter pull
 #' @importFrom tidyr spread
 #' @importFrom clean freq
 #' @details The function \code{format} calculates the resistance per bug-drug combination. Use \code{combine_IR = FALSE} (default) to test R vs. S+I and \code{combine_IR = TRUE} to test R+I vs. S. 
@@ -74,9 +76,9 @@ bug_drug_combinations <- function(x,
   
   x <- x %>%
     mutate(mo = x %>% pull(col_mo) %>% FUN(...)) %>% 
-    filter(mo %in% (clean::freq(mo) %>%
-                      filter(count >= minimum) %>% 
-                      pull(item))) %>%
+    filter(mo %in% (freq(mo) %>%
+                      filter(count >= minimum) %>%
+                      pull(item))) %>% 
     group_by(mo) %>% 
     AMR::rsi_df(translate_ab = FALSE, combine_SI = FALSE) %>% 
     select(-value) %>%
@@ -88,41 +90,73 @@ bug_drug_combinations <- function(x,
   structure(.Data = x, class = c("bug_drug_combinations", class(x)))
 }
 
-#' @importFrom dplyr everything rename
+#' @importFrom dplyr everything rename %>% ungroup group_by summarise mutate_all arrange everything lag
 #' @importFrom tidyr spread
 #' @exportMethod format.bug_drug_combinations
 #' @export
 #' @rdname bug_drug_combinations
-format.bug_drug_combinations <- function(x, 
-                                         combine_IR = FALSE, 
+format.bug_drug_combinations <- function(x,
+                                         translate_ab = "name (ab, atc)",
+                                         language = get_locale(),
+                                         minimum = 30,
+                                         combine_SI = TRUE,
+                                         combine_IR = FALSE,
                                          add_ab_group = TRUE,
+                                         remove_intrinsic_resistant = FALSE,
                                          decimal.mark = getOption("OutDec"),
                                          big.mark = ifelse(decimal.mark == ",", ".", ","),
                                          ...) {
-  if (combine_IR == FALSE) {
+  if (remove_intrinsic_resistant == TRUE) {
+    x <- x %>% filter(R != total)
+  }
+  if (combine_IR == FALSE | combine_SI == TRUE) {
     x$isolates <- x$R
   } else {
     x$isolates <- x$R + x$I
   }
+  
+  give_ab_name <- function(ab, format, language) {
+    format <- tolower(format)
+    ab_txt <- rep(format, length(ab))
+    for (i in 1:length(ab_txt)) {
+      ab_txt[i] <- gsub("ab", ab[i], ab_txt[i])
+      ab_txt[i] <- gsub("cid", ab_cid(ab[i]), ab_txt[i])
+      ab_txt[i] <- gsub("group", ab_group(ab[i], language = language), ab_txt[i])
+      ab_txt[i] <- gsub("atc_group1", ab_atc_group1(ab[i], language = language), ab_txt[i])
+      ab_txt[i] <- gsub("atc_group2", ab_atc_group2(ab[i], language = language), ab_txt[i])
+      ab_txt[i] <- gsub("atc", ab_atc(ab[i]), ab_txt[i])
+      ab_txt[i] <- gsub("name", ab_name(ab[i], language = language), ab_txt[i])
+      ab_txt[i]
+    }
+    ab_txt
+  }
+
   y <- x %>%
+    filter(total >= minimum) %>% 
+    mutate(ab = as.ab(ab),
+           ab_txt = give_ab_name(ab = ab, format = translate_ab, language = language)) %>% 
+    group_by(ab, ab_txt, mo) %>% 
+    summarise(isolates = sum(isolates, na.rm = TRUE),
+              total = sum(total, na.rm = TRUE)) %>% 
+    ungroup() %>% 
     mutate(txt = paste0(percent(isolates / total, force_zero = TRUE, decimal.mark = decimal.mark, big.mark = big.mark), 
                         " (", trimws(format(isolates, big.mark = big.mark)), "/", 
                         trimws(format(total, big.mark = big.mark)), ")")) %>% 
-    select(ab, mo, txt) %>% 
+    select(ab, ab_txt, mo, txt) %>% 
     spread(mo, txt) %>%
     mutate_all(~ifelse(is.na(.), "", .)) %>% 
-    mutate(ab_group = ab_group(ab),
-           ab = paste0(ab_name(ab), " (", as.ab(ab), ", ", ab_atc(ab), ")")) %>% 
-    select(ab_group, ab, everything()) %>% 
-    arrange(ab_group, ab) %>% 
+    mutate(ab_group = ab_group(ab, language = language),
+           ab_txt) %>% 
+    select(ab_group, ab_txt, everything(), -ab) %>% 
+    arrange(ab_group, ab_txt) %>% 
     mutate(ab_group = ifelse(ab_group != lag(ab_group) | is.na(lag(ab_group)), ab_group, ""))
   
   if (add_ab_group == FALSE) {
-    y <- y %>% select(-ab_group) %>% rename("Antibiotic" = ab)
+    y <- y %>% select(-ab_group) %>% rename("Drug" = ab_txt)
     colnames(y)[1] <- translate_AMR(colnames(y)[1], language = get_locale(), only_unknown = FALSE)
   } else {
     y <- y %>% rename("Group" = ab_group,
-                      "Antibiotic" = ab)
+                      "Drug" = ab_txt)
     colnames(y)[1:2] <- translate_AMR(colnames(y)[1:2], language = get_locale(), only_unknown = FALSE)
   }
   y
@@ -133,5 +167,5 @@ format.bug_drug_combinations <- function(x,
 #' @importFrom crayon blue
 print.bug_drug_combinations <- function(x, ...) {
   print(as.data.frame(x, stringsAsFactors = FALSE))
-  message(blue("NOTE: Use 'format()' on this result to get a format that is ready for export or printing."))
+  message(blue("NOTE: Use 'format()' on this result to get a publicable/printable format."))
 }

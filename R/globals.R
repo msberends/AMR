@@ -22,6 +22,7 @@
 globalVariables(c(".",
                   "..property",
                   "ab",
+                  "ab_txt",
                   "abbreviations",
                   "antibiotic",
                   "CNS_CPS",

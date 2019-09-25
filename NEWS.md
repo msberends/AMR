@@ -1,5 +1,5 @@
-# AMR 0.7.1.9087
-<small>Last updated: 23-Sep-2019</small>
+# AMR 0.7.1.9088
+<small>Last updated: 25-Sep-2019</small>
 
 ### Breaking
 * Determination of first isolates now **excludes** all 'unknown' microorganisms at default, i.e. microbial code `"UNKNOWN"`. They can be included with the new parameter `include_unknown`:

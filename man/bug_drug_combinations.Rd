@@ -11,9 +11,12 @@
 bug_drug_combinations(x, col_mo = NULL, minimum = 30,
   FUN = mo_shortname, ...)
 
-\method{format}{bug_drug_combinations}(x, combine_IR = FALSE,
-  add_ab_group = TRUE, decimal.mark = getOption("OutDec"),
-  big.mark = ifelse(decimal.mark == ",", ".", ","), ...)
+\method{format}{bug_drug_combinations}(x,
+  translate_ab = "name (ab, atc)", language = get_locale(),
+  minimum = 30, combine_SI = TRUE, combine_IR = FALSE,
+  add_ab_group = TRUE, remove_intrinsic_resistant = FALSE,
+  decimal.mark = getOption("OutDec"), big.mark = ifelse(decimal.mark ==
+  ",", ".", ","), ...)
 }
 \arguments{
 \item{x}{data with antibiotic columns, like e.g. \code{AMX} and \code{AMC}}
@@ -24,11 +27,19 @@ bug_drug_combinations(x, col_mo = NULL, minimum = 30,
 
 \item{FUN}{the function to call on the \code{mo} column to transform the microorganism IDs, defaults to \code{\link{mo_shortname}}}
 
-\item{...}{argumments passed on to \code{FUN}}
+\item{...}{arguments passed on to \code{FUN}}
+
+\item{translate_ab}{a character of length 1 containing column names of the \code{\link{antibiotics}} data set}
+
+\item{language}{language of the returned text, defaults to system language (see \code{\link{get_locale}}) and can also be set with \code{\link{getOption}("AMR_locale")}. Use \code{language = NULL} or \code{language = ""} to prevent translation.}
+
+\item{combine_SI}{a logical to indicate whether all values of S and I must be merged into one, so the output only consists of S+I vs. R (susceptible vs. resistant). This used to be the parameter \code{combine_IR}, but this now follows the redefinition by EUCAST about the interpretion of I (increased exposure) in 2019, see section 'Interpretation of S, I and R' below. Default is \code{TRUE}.}
 
 \item{combine_IR}{logical to indicate whether values R and I should be summed}
 
 \item{add_ab_group}{logical to indicate where the group of the antimicrobials must be included as a first column}
+
+\item{remove_intrinsic_resistant}{logical to indicate that rows with 100\% resistance for all tested antimicrobials must be removed from the table}
 
 \item{decimal.mark}{the character to be used to indicate the numeric
     decimal point.}
@@ -38,7 +49,7 @@ bug_drug_combinations(x, col_mo = NULL, minimum = 30,
     decimal point.}
 }
 \description{
-Determine antimicrobial resistance (AMR) of all bug-drug combinations in your data set where at least 30 (default) isolates are available per species. Use \code{format} on the result to prettify it to a printable format, see Examples.
+Determine antimicrobial resistance (AMR) of all bug-drug combinations in your data set where at least 30 (default) isolates are available per species. Use \code{format} on the result to prettify it to a publicable/printable format, see Examples.
 }
 \details{
 The function \code{format} calculates the resistance per bug-drug combination. Use \code{combine_IR = FALSE} (default) to test R vs. S+I and \code{combine_IR = TRUE} to test R+I vs. S. 
