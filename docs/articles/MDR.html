@@ -13,8 +13,9 @@
 <link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png">
 <link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png">
 <!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script><!-- Bootstrap --><link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/flatly/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous">
-<!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script><!-- sticky kit --><script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/all.min.css" integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78=" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/v4-shims.min.css" integrity="sha256-6qHlizsOWFskGlwVOKuns+D1nB6ssZrHQrNj1wGplHc=" crossorigin="anonymous">
+<!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/headroom.min.js" integrity="sha256-DJFC1kqIhelURkuza0AvYal5RxMtpzLjFhsnVIeuk+U=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
 <script src="../pkgdown.js"></script><!-- docsearch --><script src="../docsearch.js"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/docsearch.js/2.6.1/docsearch.min.css" integrity="sha256-QOSRU/ra9ActyXkIBbiIB144aDBdtvXBcNc3OTNuX/Q=" crossorigin="anonymous">
 <link href="../docsearch.css" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/jquery.mark.min.js" integrity="sha256-4HLtjeVgH0eIB3aZ9mLYF6E8oU5chNdjU6p6rrXpl9U=" crossorigin="anonymous"></script><link href="../extra.css" rel="stylesheet">
@@ -40,7 +41,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">0.7.1.9055</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">0.7.1.9090</span>
       </span>
     </div>
 
@@ -165,7 +166,7 @@
   </a>
 </li>
       </ul>
-<form class="navbar-form navbar-right" role="search">
+<form class="navbar-form navbar-right hidden-xs hidden-sm" role="search">
         <div class="form-group">
           <input type="search" class="form-control" name="search-input" id="search-input" placeholder="Search..." aria-label="Search for..." autocomplete="off">
 </div>
@@ -179,13 +180,14 @@
 <!--/.navbar -->
 
       
+
       </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1>How to determine multi-drug resistance (MDR)</h1>
                         <h4 class="author">Matthijs S. Berends</h4>
             
-            <h4 class="date">13 August 2019</h4>
+            <h4 class="date">26 September 2019</h4>
       
       
       <div class="hidden name"><code>MDR.Rmd</code></div>
@@ -202,15 +204,15 @@
 </ul>
 <p>As an example, I will make a data set to determine multi-drug resistant TB:</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="co"># a helper function to get a random vector with values S, I and R</span></a>
-<a class="sourceLine" id="cb1-2" data-line-number="2"><span class="co"># with the probabilities 50%-10%-40%</span></a>
+<a class="sourceLine" id="cb1-2" data-line-number="2"><span class="co"># with the probabilities 50% - 10% - 40%</span></a>
 <a class="sourceLine" id="cb1-3" data-line-number="3">sample_rsi &lt;-<span class="st"> </span><span class="cf">function</span>() {</a>
-<a class="sourceLine" id="cb1-4" data-line-number="4">  <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/sample">sample</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"S"</span>, <span class="st">"I"</span>, <span class="st">"R"</span>),</a>
+<a class="sourceLine" id="cb1-4" data-line-number="4">  <span class="kw"><a href="https://rdrr.io/r/base/sample.html">sample</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"S"</span>, <span class="st">"I"</span>, <span class="st">"R"</span>),</a>
 <a class="sourceLine" id="cb1-5" data-line-number="5">         <span class="dt">size =</span> <span class="dv">5000</span>,</a>
-<a class="sourceLine" id="cb1-6" data-line-number="6">         <span class="dt">prob =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="fl">0.5</span>, <span class="fl">0.1</span>, <span class="fl">0.4</span>),</a>
+<a class="sourceLine" id="cb1-6" data-line-number="6">         <span class="dt">prob =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">0.5</span>, <span class="fl">0.1</span>, <span class="fl">0.4</span>),</a>
 <a class="sourceLine" id="cb1-7" data-line-number="7">         <span class="dt">replace =</span> <span class="ot">TRUE</span>)</a>
 <a class="sourceLine" id="cb1-8" data-line-number="8">}</a>
 <a class="sourceLine" id="cb1-9" data-line-number="9"></a>
-<a class="sourceLine" id="cb1-10" data-line-number="10">my_TB_data &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/data.frame">data.frame</a></span>(<span class="dt">rifampicin =</span> <span class="kw">sample_rsi</span>(),</a>
+<a class="sourceLine" id="cb1-10" data-line-number="10">my_TB_data &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span>(<span class="dt">rifampicin =</span> <span class="kw">sample_rsi</span>(),</a>
 <a class="sourceLine" id="cb1-11" data-line-number="11">                         <span class="dt">isoniazid =</span> <span class="kw">sample_rsi</span>(),</a>
 <a class="sourceLine" id="cb1-12" data-line-number="12">                         <span class="dt">gatifloxacin =</span> <span class="kw">sample_rsi</span>(),</a>
 <a class="sourceLine" id="cb1-13" data-line-number="13">                         <span class="dt">ethambutol =</span> <span class="kw">sample_rsi</span>(),</a>
@@ -218,7 +220,7 @@
 <a class="sourceLine" id="cb1-15" data-line-number="15">                         <span class="dt">moxifloxacin =</span> <span class="kw">sample_rsi</span>(),</a>
 <a class="sourceLine" id="cb1-16" data-line-number="16">                         <span class="dt">kanamycin =</span> <span class="kw">sample_rsi</span>())</a></code></pre></div>
 <p>Because all column names are automatically verified for valid drug names or codes, this would have worked exactly the same:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1">my_TB_data &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/data.frame">data.frame</a></span>(<span class="dt">RIF =</span> <span class="kw">sample_rsi</span>(),</a>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1">my_TB_data &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span>(<span class="dt">RIF =</span> <span class="kw">sample_rsi</span>(),</a>
 <a class="sourceLine" id="cb2-2" data-line-number="2">                         <span class="dt">INH =</span> <span class="kw">sample_rsi</span>(),</a>
 <a class="sourceLine" id="cb2-3" data-line-number="3">                         <span class="dt">GAT =</span> <span class="kw">sample_rsi</span>(),</a>
 <a class="sourceLine" id="cb2-4" data-line-number="4">                         <span class="dt">ETH =</span> <span class="kw">sample_rsi</span>(),</a>
@@ -226,21 +228,21 @@
 <a class="sourceLine" id="cb2-6" data-line-number="6">                         <span class="dt">MFX =</span> <span class="kw">sample_rsi</span>(),</a>
 <a class="sourceLine" id="cb2-7" data-line-number="7">                         <span class="dt">KAN =</span> <span class="kw">sample_rsi</span>())</a></code></pre></div>
 <p>The data set looks like this now:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/head">head</a></span>(my_TB_data)</a>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(my_TB_data)</a>
 <a class="sourceLine" id="cb3-2" data-line-number="2"><span class="co">#   rifampicin isoniazid gatifloxacin ethambutol pyrazinamide moxifloxacin</span></a>
-<a class="sourceLine" id="cb3-3" data-line-number="3"><span class="co"># 1          I         R            R          R            S            R</span></a>
-<a class="sourceLine" id="cb3-4" data-line-number="4"><span class="co"># 2          S         R            S          S            R            R</span></a>
-<a class="sourceLine" id="cb3-5" data-line-number="5"><span class="co"># 3          R         R            S          R            R            S</span></a>
-<a class="sourceLine" id="cb3-6" data-line-number="6"><span class="co"># 4          S         S            S          S            R            R</span></a>
-<a class="sourceLine" id="cb3-7" data-line-number="7"><span class="co"># 5          R         S            S          S            S            R</span></a>
-<a class="sourceLine" id="cb3-8" data-line-number="8"><span class="co"># 6          I         S            S          R            R            S</span></a>
+<a class="sourceLine" id="cb3-3" data-line-number="3"><span class="co"># 1          R         R            R          R            S            R</span></a>
+<a class="sourceLine" id="cb3-4" data-line-number="4"><span class="co"># 2          R         I            R          R            R            R</span></a>
+<a class="sourceLine" id="cb3-5" data-line-number="5"><span class="co"># 3          S         S            R          S            R            R</span></a>
+<a class="sourceLine" id="cb3-6" data-line-number="6"><span class="co"># 4          S         I            S          S            R            I</span></a>
+<a class="sourceLine" id="cb3-7" data-line-number="7"><span class="co"># 5          I         S            R          R            R            S</span></a>
+<a class="sourceLine" id="cb3-8" data-line-number="8"><span class="co"># 6          R         S            S          S            R            R</span></a>
 <a class="sourceLine" id="cb3-9" data-line-number="9"><span class="co">#   kanamycin</span></a>
 <a class="sourceLine" id="cb3-10" data-line-number="10"><span class="co"># 1         R</span></a>
-<a class="sourceLine" id="cb3-11" data-line-number="11"><span class="co"># 2         I</span></a>
-<a class="sourceLine" id="cb3-12" data-line-number="12"><span class="co"># 3         S</span></a>
-<a class="sourceLine" id="cb3-13" data-line-number="13"><span class="co"># 4         R</span></a>
-<a class="sourceLine" id="cb3-14" data-line-number="14"><span class="co"># 5         R</span></a>
-<a class="sourceLine" id="cb3-15" data-line-number="15"><span class="co"># 6         S</span></a></code></pre></div>
+<a class="sourceLine" id="cb3-11" data-line-number="11"><span class="co"># 2         R</span></a>
+<a class="sourceLine" id="cb3-12" data-line-number="12"><span class="co"># 3         R</span></a>
+<a class="sourceLine" id="cb3-13" data-line-number="13"><span class="co"># 4         S</span></a>
+<a class="sourceLine" id="cb3-14" data-line-number="14"><span class="co"># 5         I</span></a>
+<a class="sourceLine" id="cb3-15" data-line-number="15"><span class="co"># 6         I</span></a></code></pre></div>
 <p>We can now add the interpretation of MDR-TB to our data set:</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1">my_TB_data<span class="op">$</span>mdr &lt;-<span class="st"> </span><span class="kw"><a href="../reference/mdro.html">mdr_tb</a></span>(my_TB_data)</a>
 <a class="sourceLine" id="cb4-2" data-line-number="2"><span class="co"># </span><span class="al">NOTE</span><span class="co">: No column found as input for `col_mo`, assuming all records contain Mycobacterium tuberculosis.</span></a>
@@ -251,13 +253,13 @@
 <a class="sourceLine" id="cb4-7" data-line-number="7"><span class="co"># Source:    https://www.who.int/tb/publications/pmdt_companionhandbook/en/</span></a>
 <a class="sourceLine" id="cb4-8" data-line-number="8"><span class="co"># </span><span class="al">NOTE</span><span class="co">: Reliability might be improved if these antimicrobial results would be available too: CAP (capreomycin), RIB (rifabutin), RFP (rifapentine)</span></a></code></pre></div>
 <p>We also created a package dedicated to data cleaning and checking, called the <code>clean</code> package. It gets automatically installed with the <code>AMR</code> package, so we only have to load it:</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(clean)</a></code></pre></div>
-<p>It contains the <code><a href="https://www.rdocumentation.org/packages/clean/topics/freq">freq()</a></code> function, to create a frequency table:</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/clean/topics/freq">freq</a></span>(my_TB_data<span class="op">$</span>mdr)</a></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(clean)</a></code></pre></div>
+<p>It contains the <code><a href="https://rdrr.io/pkg/clean/man/freq.html">freq()</a></code> function, to create a frequency table:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/pkg/clean/man/freq.html">freq</a></span>(my_TB_data<span class="op">$</span>mdr)</a></code></pre></div>
 <p><strong>Frequency table</strong></p>
 <p>Class: factor &gt; ordered (numeric)<br>
 Length: 5,000 (of which NA: 0 = 0.00%)<br>
-Levels: 5: Negative &lt; Mono-resistance &lt; Poly-resistance &lt; Multidrug resistance…<br>
+Levels: 5: Negative &lt; Mono-resistant &lt; Poly-resistant &lt; Multi-drug-resistant &lt;…<br>
 Unique: 5</p>
 <table class="table">
 <thead><tr class="header">
@@ -271,40 +273,40 @@ Unique: 5</p>
 <tbody>
 <tr class="odd">
 <td align="left">1</td>
-<td align="left">Mono-resistance</td>
-<td align="right">3308</td>
-<td align="right">66.2%</td>
-<td align="right">3308</td>
-<td align="right">66.2%</td>
+<td align="left">Mono-resistant</td>
+<td align="right">3255</td>
+<td align="right">65.1%</td>
+<td align="right">3255</td>
+<td align="right">65.1%</td>
 </tr>
 <tr class="even">
 <td align="left">2</td>
 <td align="left">Negative</td>
-<td align="right">643</td>
-<td align="right">12.9%</td>
-<td align="right">3951</td>
-<td align="right">79.0%</td>
+<td align="right">638</td>
+<td align="right">12.8%</td>
+<td align="right">3893</td>
+<td align="right">77.9%</td>
 </tr>
 <tr class="odd">
 <td align="left">3</td>
-<td align="left">Multidrug resistance</td>
-<td align="right">570</td>
-<td align="right">11.4%</td>
-<td align="right">4521</td>
-<td align="right">90.4%</td>
+<td align="left">Multi-drug-resistant</td>
+<td align="right">618</td>
+<td align="right">12.4%</td>
+<td align="right">4511</td>
+<td align="right">90.2%</td>
 </tr>
 <tr class="even">
 <td align="left">4</td>
-<td align="left">Poly-resistance</td>
-<td align="right">263</td>
-<td align="right">5.3%</td>
-<td align="right">4784</td>
+<td align="left">Poly-resistant</td>
+<td align="right">276</td>
+<td align="right">5.5%</td>
+<td align="right">4787</td>
 <td align="right">95.7%</td>
 </tr>
 <tr class="odd">
 <td align="left">5</td>
-<td align="left">Extensive drug resistance</td>
-<td align="right">216</td>
+<td align="left">Extensive drug-resistant</td>
+<td align="right">213</td>
 <td align="right">4.3%</td>
 <td align="right">5000</td>
 <td align="right">100.0%</td>
@@ -314,18 +316,21 @@ Unique: 5</p>
 </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
+
       </div>
 
 </div>
 
 
+
       <footer><div class="copyright">
-  <p>Developed by <a href="https://www.rug.nl/staff/m.s.berends/">Matthijs S. Berends</a>, <a href="https://www.rug.nl/staff/c.f.luz/">Christian F. Luz</a>, <a href="https://www.rug.nl/staff/a.w.friedrich/">Alex W. Friedrich</a>, <a href="https://www.rug.nl/staff/b.sinha/">Bhanu N. M. Sinha</a>, <a href="https://www.rug.nl/staff/c.glasner/">Corinna Glasner</a>.</p>
+  <p>Developed by <a href="https://www.rug.nl/staff/m.s.berends/">Matthijs S. Berends</a>, <a href="https://www.rug.nl/staff/c.f.luz/">Christian F. Luz</a>, <a href="https://www.rug.nl/staff/a.w.friedrich/">Alex W. Friedrich</a>, <a href="https://www.rug.nl/staff/b.sinha/">Bhanu N. M. Sinha</a>, <a href="https://www.rug.nl/staff/c.j.albers/">Casper J. Albers</a>, <a href="https://www.rug.nl/staff/c.glasner/">Corinna Glasner</a>.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.3.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.</p>
 </div>
+
       </footer>
 </div>
 

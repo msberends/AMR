@@ -31,7 +31,7 @@ As an example, I will make a data set to determine multi-drug resistant TB:
 
 ```{r}
 # a helper function to get a random vector with values S, I and R
-# with the probabilities 50%-10%-40%
+# with the probabilities 50% - 10% - 40%
 sample_rsi <- function() {
   sample(c("S", "I", "R"),
          size = 5000,

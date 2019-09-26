@@ -484,7 +484,7 @@ mdro <- function(x,
   if (guideline$code == "tb") {
     factor(x =  x$mdr_tb,
            levels = 1:5,
-           labels = c("Negative", "Mono-resistance", "Poly-resistance", "Multidrug resistance", "Extensive drug resistance"),
+           labels = c("Negative", "Mono-resistant", "Poly-resistant", "Multi-drug-resistant", "Extensive drug-resistant"),
            ordered = TRUE)
   } else {
     factor(x =  x$MDRO,

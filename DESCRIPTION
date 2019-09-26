@@ -1,6 +1,6 @@
 Package: AMR
-Version: 0.7.1.9089
-Date: 2019-09-25
+Version: 0.7.1.9090
+Date: 2019-09-26
 Title: Antimicrobial Resistance Analysis
 Authors@R: c(
     person(role = c("aut", "cre"), 

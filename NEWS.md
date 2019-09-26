@@ -1,5 +1,5 @@
-# AMR 0.7.1.9089
-<small>Last updated: 25-Sep-2019</small>
+# AMR 0.7.1.9090
+<small>Last updated: 26-Sep-2019</small>
 
 ### Breaking
 * Determination of first isolates now **excludes** all 'unknown' microorganisms at default, i.e. microbial code `"UNKNOWN"`. They can be included with the new parameter `include_unknown`:
@@ -118,6 +118,7 @@
 * Fix for determining the system's language
 * Fix for `key_antibiotics()` on foreign systems
 * Added 80 new LIS codes for microorganisms
+* Relabeled the factor levels of `mdr_tb()`
 
 #### Other
 * Added Prof. Dr. Casper Albers as doctoral advisor and added Dr. Judith Fonville, Eric Hazenberg, Dr. Bart Meijer, Dr. Dennis Souverein and Annick Lenglet as contributors
