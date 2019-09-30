@@ -268,6 +268,7 @@ is.mo <- function(x) {
 #' @importFrom dplyr %>% pull left_join n_distinct progress_estimated filter distinct
 #' @importFrom data.table data.table as.data.table setkey
 #' @importFrom crayon magenta red blue silver italic
+#' @importFrom clean percentage
 # param property a column name of AMR::microorganisms
 # param initial_search logical - is FALSE when coming from uncertain tries, which uses exec_as.mo internally too
 # param dyslexia_mode logical - also check for characters that resemble others
@@ -1575,7 +1576,7 @@ exec_as.mo <- function(x,
     total_failures <- length(x_input[as.character(x_input) %in% as.character(failures) & !x_input %in% c(NA, NULL, NaN)])
     total_n <- length(x_input[!x_input %in% c(NA, NULL, NaN)])
     msg <- paste0(nr2char(n_distinct(failures)), " unique ", plural[1],
-                  " (covering ", percent(total_failures / total_n, round = 1, force_zero = TRUE),
+                  " (covering ", percentage(total_failures / total_n),
                   ") could not be coerced and ", plural[3], " considered 'unknown'")
     if (n_distinct(failures) <= 10) {
       msg <- paste0(msg, ": ", paste('"', unique(failures), '"', sep = "", collapse = ', '))

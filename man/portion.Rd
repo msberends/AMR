@@ -44,7 +44,7 @@ rsi_df(data, translate_ab = "name", language = get_locale(),
 
 \item{minimum}{the minimum allowed number of available (tested) isolates. Any isolate count lower than \code{minimum} will return \code{NA} with a warning. The default number of \code{30} isolates is advised by the Clinical and Laboratory Standards Institute (CLSI) as best practice, see Source.}
 
-\item{as_percent}{a logical to indicate whether the output must be returned as a hundred fold with \% sign (a character). A value of \code{0.123456} will then be returned as \code{"12.3\%"}.}
+\item{as_percent}{a logical to indicate whether the output must be returned as a hundred fold with \% sign (a character) using\code{\link[clean]{percentage}}. A value of \code{0.123456} will then be returned as \code{"12.3\%"}.}
 
 \item{only_all_tested}{(for combination therapies, i.e. using more than one variable for \code{...}) a logical to indicate that isolates must be tested for all antibiotics, see section \emph{Combination therapy} below}
 

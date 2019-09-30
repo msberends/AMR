@@ -75,6 +75,7 @@
 #' @export
 #' @importFrom dplyr arrange_at lag between row_number filter mutate arrange pull ungroup
 #' @importFrom crayon blue bold silver
+#' @importFrom clean percentage
 #' @return Logical vector
 #' @source Methodology of this function is based on: \strong{M39 Analysis and Presentation of Cumulative Antimicrobial Susceptibility Test Data, 4th Edition}, 2014, \emph{Clinical and Laboratory Standards Institute (CLSI)}. \url{https://clsi.org/standards/products/microbiology/documents/m39/}.
 #' @inheritSection AMR Read more on our website!
@@ -525,8 +526,8 @@ first_isolate <- function(x,
   
   if (info == TRUE) {
     n_found <- base::sum(all_first, na.rm = TRUE)
-    p_found_total <- percent(n_found / nrow(x), force_zero = TRUE)
-    p_found_scope <- percent(n_found / scope.size, force_zero = TRUE)
+    p_found_total <- percentage(n_found / nrow(x))
+    p_found_scope <- percentage(n_found / scope.size)
     # mark up number of found
     n_found <- base::format(n_found, big.mark = big.mark, decimal.mark = decimal.mark)
     if (p_found_total != p_found_scope) {

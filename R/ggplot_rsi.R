@@ -58,7 +58,6 @@
 #'
 #' \code{ggplot_rsi} is a wrapper around all above functions that uses data as first input. This makes it possible to use this function after a pipe (\code{\%>\%}). See Examples.
 #' @rdname ggplot_rsi
-#' @importFrom utils installed.packages
 #' @export
 #' @inheritSection AMR Read more on our website!
 #' @examples
@@ -338,6 +337,7 @@ facet_rsi <- function(facet = c("interpretation", "antibiotic"), nrow = NULL) {
 }
 
 #' @rdname ggplot_rsi
+#' @importFrom clean percentage
 #' @export
 scale_y_percent <- function(breaks = seq(0, 1, 0.1), limits = NULL) {
   stopifnot_installed_package("ggplot2")
@@ -346,7 +346,7 @@ scale_y_percent <- function(breaks = seq(0, 1, 0.1), limits = NULL) {
     breaks <- breaks / 100
   }
   ggplot2::scale_y_continuous(breaks = breaks,
-                              labels = percent(breaks),
+                              labels = percentage(breaks),
                               limits = limits)
 }
 
@@ -387,6 +387,7 @@ theme_rsi <- function() {
 
 #' @rdname ggplot_rsi
 #' @importFrom dplyr mutate %>% group_by_at
+#' @importFrom clean percentage
 #' @export
 labels_rsi_count <- function(position = NULL,
                              x = "antibiotic",
@@ -417,7 +418,7 @@ labels_rsi_count <- function(position = NULL,
                               combine_SI = combine_SI,
                               combine_IR = combine_IR) %>%
                          group_by_at(x_name) %>%
-                         mutate(lbl = paste0(percent(value / sum(value, na.rm = TRUE), force_zero = TRUE),
+                         mutate(lbl = paste0(percentage(value / sum(value, na.rm = TRUE)),
                                              "\n(n=", isolates, ")"))
                      })
 }

@@ -67,5 +67,4 @@
 #' @rdname AMR
 #  # prevent NOTE on R >= 3.6
 #' @importFrom microbenchmark microbenchmark
-#' @importFrom scales percent
 NULL

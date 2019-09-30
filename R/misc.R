@@ -29,22 +29,6 @@ addin_insert_like <- function() {
   rstudioapi::insertText(" %like% ")
 }
 
-percent_clean <- clean:::percent
-# No export, no Rd
-percent <- function(x, round = 1, force_zero = FALSE, decimal.mark = getOption("OutDec"), big.mark = ",", ...) {
-  if (decimal.mark == big.mark) {
-    if (decimal.mark == ",") {
-      big.mark <- "."
-    } else if (decimal.mark == ".") {
-      big.mark <- ","
-    } else {
-      big.mark <- " "
-    }
-  }
-  percent_clean(x = x, round = round, force_zero = force_zero, 
-                decimal.mark = decimal.mark, big.mark = big.mark, ...)
-}
-
 #' @importFrom crayon blue bold red
 #' @importFrom dplyr %>% pull
 search_type_in_df <- function(x, type) {

@@ -27,6 +27,7 @@
 #' @details The function returns a \code{data.frame} with columns \code{"resistant"} and \code{"visual_resistance"}. The values in that columns are calculated with \code{\link{portion_R}}.
 #' @return \code{data.frame} with column names of \code{tbl} as row names
 #' @inheritSection AMR Read more on our website!
+#' @importFrom clean percentage
 #' @export
 #' @examples
 #' availability(example_isolates)
@@ -47,7 +48,7 @@ availability <- function(tbl, width = NULL) {
   n <- base::sapply(tbl, function(x) base::length(x[!base::is.na(x)]))
   R <- base::sapply(tbl, function(x) base::ifelse(is.rsi(x), portion_R(x, minimum = 0), NA))
   R_print <- character(length(R))
-  R_print[!is.na(R)] <- percent(R[!is.na(R)], round = 1, force_zero = TRUE)
+  R_print[!is.na(R)] <- percentage(R[!is.na(R)])
   R_print[is.na(R)] <- ""
 
   if (is.null(width)) {
@@ -77,7 +78,7 @@ availability <- function(tbl, width = NULL) {
   x_chars_empty <- strrep("-", width - nchar(x_chars))
 
   df <- data.frame(count = n,
-                   available = percent(x, round = 1, force_zero = TRUE),
+                   available = percentage(x),
                    visual_availabilty = paste0("|", x_chars, x_chars_empty, "|"),
                    resistant = R_print,
                    visual_resistance = vis_resistance)

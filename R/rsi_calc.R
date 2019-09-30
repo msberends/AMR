@@ -39,6 +39,7 @@ dots2vars <- function(...) {
 }
 
 #' @importFrom dplyr %>% pull all_vars any_vars filter_all funs mutate_all
+#' @importFrom clean percentage
 rsi_calc <- function(...,
                      ab_result,
                      minimum = 0,
@@ -162,7 +163,7 @@ rsi_calc <- function(...,
   }
 
   if (as_percent == TRUE) {
-    percent(fraction, force_zero = TRUE)
+    percentage(fraction, digits = 1)
   } else {
     fraction
   }

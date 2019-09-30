@@ -25,22 +25,26 @@ clean::freq
 
 #' @exportMethod freq.mo
 #' @importFrom dplyr n_distinct
-#' @importFrom clean freq.default
+#' @importFrom clean freq.default percentage
 #' @export
 #' @noRd
 freq.mo <- function(x, ...) {
   x_noNA <- as.mo(x[!is.na(x)]) # as.mo() to get the newest mo codes
   grams <- mo_gramstain(x_noNA, language = NULL)
+  digits <- list(...)$digits
+  if (is.null(digits)) {
+    digits <- 2
+  }
   freq.default(x = x, ...,
                .add_header = list(`Gram-negative` = paste0(format(sum(grams == "Gram-negative", na.rm = TRUE),
                                                                   big.mark = ",",
                                                                   decimal.mark = "."),
-                                                           " (", percent(sum(grams == "Gram-negative", na.rm = TRUE) / length(grams), force_zero = TRUE, round = 2),
+                                                           " (", percentage(sum(grams == "Gram-negative", na.rm = TRUE) / length(grams), digits = digits),
                                                            ")"),
                                   `Gram-positive` = paste0(format(sum(grams == "Gram-positive", na.rm = TRUE),
                                                                   big.mark = ",",
                                                                   decimal.mark = "."),
-                                                           " (", percent(sum(grams == "Gram-positive", na.rm = TRUE) / length(grams), force_zero = TRUE, round = 2),
+                                                           " (", percentage(sum(grams == "Gram-positive", na.rm = TRUE) / length(grams), digits = digits),
                                                            ")"),
                                   `Nr of genera` = n_distinct(mo_genus(x_noNA, language = NULL)),
                                   `Nr of species` = n_distinct(paste(mo_genus(x_noNA, language = NULL),
