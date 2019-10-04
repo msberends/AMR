@@ -188,7 +188,7 @@ ab_validate <- function(x, property, ...) {
            error = function(e) stop(e$message, call. = FALSE))
 
   if (!all(x %in% AMR::antibiotics[, property])) {
-    x <- data.frame(ab = AMR::as.ab(x), stringsAsFactors = FALSE) %>%
+    x <- data.frame(ab = AMR::as.ab(x, ...), stringsAsFactors = FALSE) %>%
       left_join(AMR::antibiotics, by = "ab") %>%
       pull(property)
   }

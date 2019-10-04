@@ -21,6 +21,16 @@
 
 context("misc.R")
 
+test_that("percentages works", {
+  expect_equal(percentage(0.25), "25%")
+  expect_equal(percentage(0.5), "50%")
+  expect_equal(percentage(0.500, digits = 1), "50.0%")
+  expect_equal(percentage(0.1234), "12.3%")
+  # round up 0.5
+  expect_equal(percentage(0.0054), "0.5%")
+  expect_equal(percentage(0.0055), "0.6%")
+})
+
 test_that("functions missing in older R versions work", {
   expect_equal(strrep("A", 5), "AAAAA")
   expect_equal(strrep(c("A", "B"), c(5, 2)), c("AAAAA", "BB"))

@@ -53,6 +53,9 @@ test_that("as.ab works", {
 
   expect_equal(suppressWarnings(as.character(as.ab(c("Bacteria", "Bacterial")))),
                c(NA, "TMP"))
+  
+  expect_equal(as.character(as.ab("Amoxy + clavulaanzuur")),
+               "AMC")
 
   # assigning and subsetting
   x <- antibiotics$ab

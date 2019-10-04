@@ -39,7 +39,7 @@ dots2vars <- function(...) {
 }
 
 #' @importFrom dplyr %>% pull all_vars any_vars filter_all funs mutate_all
-#' @importFrom clean percentage
+# @importFrom clean percentage
 rsi_calc <- function(...,
                      ab_result,
                      minimum = 0,

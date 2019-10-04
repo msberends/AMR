@@ -5,12 +5,14 @@
 \alias{is.ab}
 \title{Transform to antibiotic ID}
 \usage{
-as.ab(x)
+as.ab(x, ...)
 
 is.ab(x)
 }
 \arguments{
 \item{x}{character vector to determine to antibiotic ID}
+
+\item{...}{arguments passed on to internal functions}
 }
 \value{
 Character (vector) with class \code{"ab"}. Unknown values will return \code{NA}.

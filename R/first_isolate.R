@@ -75,7 +75,7 @@
 #' @export
 #' @importFrom dplyr arrange_at lag between row_number filter mutate arrange pull ungroup
 #' @importFrom crayon blue bold silver
-#' @importFrom clean percentage
+# @importFrom clean percentage
 #' @return Logical vector
 #' @source Methodology of this function is based on: \strong{M39 Analysis and Presentation of Cumulative Antimicrobial Susceptibility Test Data, 4th Edition}, 2014, \emph{Clinical and Laboratory Standards Institute (CLSI)}. \url{https://clsi.org/standards/products/microbiology/documents/m39/}.
 #' @inheritSection AMR Read more on our website!

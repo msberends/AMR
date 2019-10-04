@@ -127,3 +127,45 @@ class_integrity_check <- function(value, type, check_vector) {
   }
   value
 }
+
+
+
+
+# Percentages -------------------------------------------------------------
+# Can all be removed when clean 1.2.0 is on CRAN
+
+getdecimalplaces <- function(x, minimum = 0, maximum = 3) {
+  if (maximum < minimum) {
+    maximum <- minimum
+  }
+  if (minimum > maximum) {
+    minimum <- maximum
+  }
+  max_places <- max(unlist(lapply(strsplit(sub('0+$', '', 
+                                               as.character(x * 100)), ".", fixed = TRUE),
+                                  function(y) ifelse(length(y) == 2, nchar(y[2]), 0))), na.rm = TRUE)
+  max(min(max_places,
+          maximum, na.rm = TRUE),
+      minimum, na.rm = TRUE)
+}
+
+round2 <- function(x, digits = 0, force_zero = TRUE) {
+  # https://stackoverflow.com/a/12688836/4575331
+  val <- (trunc((abs(x) * 10 ^ digits) + 0.5) / 10 ^ digits) * sign(x)
+  if (digits > 0 & force_zero == TRUE) {
+    val[val != as.integer(val)] <- paste0(val[val != as.integer(val)],
+                                          strrep("0", max(0, digits - nchar(gsub(".*[.](.*)$", "\\1", val[val != as.integer(val)])))))
+  }
+  val
+}
+
+percentage <- function(x, digits = NULL, ...) {
+  if (is.null(digits)) {
+    digits <- getdecimalplaces(x, minimum = 0, maximum = 1)
+  }
+  # round right: percentage(0.4455) should return "44.6%", not "44.5%"
+  x <- as.numeric(round2(x, digits = digits + 2))
+  x_formatted <- format(as.double(x) * 100, scientific = FALSE, digits = digits, nsmall = digits, ...)
+  x_formatted[!is.na(x)] <- paste0(x_formatted[!is.na(x)], "%")
+  x_formatted
+}

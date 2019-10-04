@@ -84,7 +84,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">0.7.1.9091</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">0.7.1.9092</span>
       </span>
     </div>
 
@@ -231,11 +231,11 @@
       
     </div>
 
-    <div id="amr-0-7-1-9091" class="section level1">
+    <div id="amr-0-7-1-9092" class="section level1">
 <h1 class="page-header">
-<a href="#amr-0-7-1-9091" class="anchor"></a>AMR 0.7.1.9091<small> Unreleased </small>
+<a href="#amr-0-7-1-9092" class="anchor"></a>AMR 0.7.1.9092<small> Unreleased </small>
 </h1>
-<p><small>Last updated: 30-Sep-2019</small></p>
+<p><small>Last updated: 04-Oct-2019</small></p>
 <div id="breaking" class="section level3">
 <h3 class="hasAnchor">
 <a href="#breaking" class="anchor"></a>Breaking</h3>
@@ -335,6 +335,8 @@ Since this is a major change, usage of the old <code>also_single_tested</code> w
 <li>Added support for unknown yeasts and fungi</li>
 <li>Changed most microorganism IDs to improve readability. For example, the old code <code>B_ENTRC_FAE</code> could have been both <em>E. faecalis</em> and <em>E. faecium</em>. Its new code is <code>B_ENTRC_FCLS</code> and <em>E. faecium</em> has become <code>B_ENTRC_FACM</code>. Also, the Latin character æ (ae) is now preserved at the start of each genus and species abbreviation. For example, the old code for <em>Aerococcus urinae</em> was <code>B_ARCCC_NAE</code>. This is now <code>B_AERCC_URIN</code>. <strong>IMPORTANT:</strong> Old microorganism IDs are still supported, but support will be dropped in a future version. Use <code><a href="../reference/as.mo.html">as.mo()</a></code> on your old codes to transform them to the new format. Using functions from the <code>mo_*</code> family (like <code><a href="../reference/mo_property.html">mo_name()</a></code> and <code><a href="../reference/mo_property.html">mo_gramstain()</a></code>) on old codes, will throw a warning.</li>
 </ul>
+</li>
+<li>More intelligent guessing for <code><a href="../reference/as.ab.html">as.ab()</a></code>
 </li>
 <li>Renamed data set <code>septic_patients</code> to <code>example_isolates</code>
 </li>
@@ -1288,7 +1290,7 @@ Using <code><a href="../reference/as.mo.html">as.mo(..., allow_uncertain = 3)</a
     <div id="tocnav">
       <h2>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
-        <li><a href="#amr-0-7-1-9091">0.7.1.9091</a></li>
+        <li><a href="#amr-0-7-1-9092">0.7.1.9092</a></li>
         <li><a href="#amr-0-7-1">0.7.1</a></li>
         <li><a href="#amr-0-7-0">0.7.0</a></li>
         <li><a href="#amr-0-6-1">0.6.1</a></li>

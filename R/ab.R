@@ -23,6 +23,7 @@
 #'
 #' Use this function to determine the antibiotic code of one or more antibiotics. The data set \code{\link{antibiotics}} will be searched for abbreviations, official names and synonyms (brand names).
 #' @param x character vector to determine to antibiotic ID
+#' @param ... arguments passed on to internal functions
 #' @rdname as.ab
 #' @keywords atc
 #' @inheritSection WHOCC WHOCC
@@ -57,7 +58,7 @@
 #' # they use as.ab() internally:
 #' ab_name("J01FA01")    # "Erythromycin"
 #' ab_name("eryt")       # "Erythromycin"
-as.ab <- function(x) {
+as.ab <- function(x, ...) {
   if (is.ab(x)) {
     return(x)
   }
@@ -69,6 +70,9 @@ as.ab <- function(x) {
   }
 
   x_bak <- x
+  # remove diacritics
+  x <- iconv(x, from = "UTF-8", to = "ASCII//TRANSLIT")
+  x <- gsub('"', "", x, fixed = TRUE)
   # remove suffices
   x_bak_clean <- gsub("_(mic|rsi|dis[ck])$", "", x, ignore.case = TRUE)
   # remove disk concentrations, like LVX_NM -> LVX
@@ -76,9 +80,15 @@ as.ab <- function(x) {
   # remove part between brackets if that's followed by another string
   x_bak_clean <- gsub("(.*)+ [(].*[)]", "\\1", x_bak_clean)
   # keep only a-Z, 0-9, space, slash and dash
-  x_bak_clean <- gsub("[^A-Z0-9 /-]", "", x_bak_clean, ignore.case = TRUE)
+  # x_bak_clean <- gsub("[^A-Z0-9 /-]", "", x_bak_clean, ignore.case = TRUE)
   # keep only max 1 space
   x_bak_clean <- trimws(gsub(" +", " ", x_bak_clean, ignore.case = TRUE))
+  # non-character, space or number should be a slash
+  x_bak_clean <- gsub("[^A-Za-z0-9 ]", "/", x_bak_clean)
+  # spaces around non-characters must be removed: amox + clav -> amox/clav
+  x_bak_clean <- gsub("(.*[a-zA-Z0-9]) ([^a-zA-Z0-9].*)", "\\1\\2", x_bak_clean)
+  x_bak_clean <- gsub("(.*[^a-zA-Z0-9]) ([a-zA-Z0-9].*)", "\\1\\2", x_bak_clean)
+
   x <- unique(x_bak_clean)
   x_new <- rep(NA_character_, length(x))
   x_unknown <- character(0)
@@ -181,6 +191,7 @@ as.ab <- function(x) {
     x_spelling <- gsub("(o\\+n|o\\+ne\\+)$", "o+ne*", x_spelling)
     # replace multiple same characters to single one with '+', like "ll" -> "l+"
     x_spelling <- gsub("(.)\\1+", "\\1+", x_spelling)
+  
     # try if name starts with it
     found <- AMR::antibiotics[which(AMR::antibiotics$name %like% paste0("^", x_spelling)),]$ab
     if (length(found) > 0) {
@@ -217,7 +228,44 @@ as.ab <- function(x) {
         next
       }
     }
-
+    
+    if (!isFALSE(list(...)$initial_search)) {
+      # transform back from other languages and try again
+      x_translated <- paste(lapply(strsplit(x[i], "[^a-zA-Z0-9 ]"),
+                                   function(y) {
+                                     for (i in 1:length(y)) {
+                                       y[i] <- ifelse(tolower(y[i]) %in% tolower(translations_file$replacement),
+                                                      translations_file[which(tolower(translations_file$replacement) == tolower(y[i]) &
+                                                                                !isFALSE(translations_file$fixed)), "pattern"],
+                                                      y[i])
+                                     }
+                                     y
+                                   })[[1]],
+                            collapse = "/")
+      x_translated_guess <- suppressWarnings(as.ab(x_translated, initial_search = FALSE))
+      if (!is.na(x_translated_guess)) {
+        x_new[i] <- x_translated_guess
+        next
+      }
+      # now also try to coerce brandname combinations like "Amoxy/clavulanic acid"
+      x_translated <- paste(lapply(strsplit(x_translated, "[^a-zA-Z0-9 ]"),
+                                   function(y) {
+                                     for (i in 1:length(y)) {
+                                       y_name <- suppressWarnings(ab_name(y[i], language = NULL, initial_search = FALSE))
+                                       y[i] <- ifelse(!is.na(y_name),
+                                                      y_name,
+                                                      y[i])
+                                     }
+                                     y
+                                   })[[1]],
+                            collapse = "/")
+      x_translated_guess <- suppressWarnings(as.ab(x_translated, initial_search = FALSE))
+      if (!is.na(x_translated_guess)) {
+        x_new[i] <- x_translated_guess
+        next
+      }
+    }
+    
     # not found
     x_unknown <- c(x_unknown, x_bak[x[i] == x_bak_clean][1])
   }

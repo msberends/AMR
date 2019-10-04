@@ -25,7 +25,8 @@ clean::freq
 
 #' @exportMethod freq.mo
 #' @importFrom dplyr n_distinct
-#' @importFrom clean freq.default percentage
+#' @importFrom clean freq.default
+# @importFrom clean percentage
 #' @export
 #' @noRd
 freq.mo <- function(x, ...) {

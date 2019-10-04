@@ -27,7 +27,7 @@
 #' @details The function returns a \code{data.frame} with columns \code{"resistant"} and \code{"visual_resistance"}. The values in that columns are calculated with \code{\link{portion_R}}.
 #' @return \code{data.frame} with column names of \code{tbl} as row names
 #' @inheritSection AMR Read more on our website!
-#' @importFrom clean percentage
+# @importFrom clean percentage
 #' @export
 #' @examples
 #' availability(example_isolates)
