@@ -129,9 +129,14 @@ get_column_abx <- function(x,
   x <- as.character(df_trans$colnames)
   names(x) <- df_trans$abcode
   
-  # remove the ones that do not already have the rsi class (as.rsi) and that have >50% invalid values
-  x <- sapply(x, function(col = x, df = x_bak) {
-    ifelse(is.rsi(as.data.frame(df)[, col]) | 
+  # remove the ones that are not a valid AB code, ATC code, name, abbreviation or synonym,
+  # and do not already have the rsi class (as.rsi) 
+  # and that have >50% invalid values
+  vectr_antibiotics <- unique(toupper(unlist(AMR::antibiotics[,c("ab", "atc", "name", "abbreviations", "synonyms")])))
+  vectr_antibiotics <- vectr_antibiotics[!is.na(vectr_antibiotics) & nchar(vectr_antibiotics) >= 3]
+   x <- sapply(x, function(col = x, df = x_bak) {
+    ifelse(toupper(col) %in% vectr_antibiotics |
+             is.rsi(as.data.frame(df)[, col]) | 
              is.rsi.eligible(as.data.frame(df)[, col], threshold = 0.5),
            col,
            NA)
