@@ -23,11 +23,11 @@ context("data.R")
 
 test_that("data sets are valid", {
   # IDs should always be unique
-  expect_identical(nrow(antibiotics), length(unique(antibiotics$ab)))
-  expect_identical(class(antibiotics$ab), "ab")
   expect_identical(nrow(microorganisms), length(unique(microorganisms$mo)))
   expect_identical(class(microorganisms$mo), "mo")
-
+  expect_identical(nrow(antibiotics), length(unique(antibiotics$ab)))
+  expect_identical(class(antibiotics$ab), "ab")
+  
   # check cross table reference
   expect_true(all(microorganisms.codes$mo %in% microorganisms$mo))
   expect_true(all(example_isolates$mo %in% microorganisms$mo))

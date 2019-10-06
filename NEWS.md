@@ -1,5 +1,5 @@
-# AMR 0.7.1.9092
-<small>Last updated: 04-Oct-2019</small>
+# AMR 0.7.1.9093
+<small>Last updated: 06-Oct-2019</small>
 
 ### Breaking
 * Determination of first isolates now **excludes** all 'unknown' microorganisms at default, i.e. microbial code `"UNKNOWN"`. They can be included with the new parameter `include_unknown`:
@@ -94,7 +94,7 @@
   * Added support for unknown yeasts and fungi
   * Changed most microorganism IDs to improve readability. For example, the old code `B_ENTRC_FAE` could have been both *E. faecalis* and *E. faecium*. Its new code is `B_ENTRC_FCLS` and *E. faecium* has become `B_ENTRC_FACM`. Also, the Latin character æ (ae) is now preserved at the start of each genus and species abbreviation. For example, the old code for *Aerococcus urinae* was `B_ARCCC_NAE`. This is now `B_AERCC_URIN`.
     **IMPORTANT:** Old microorganism IDs are still supported, but support will be dropped in a future version. Use `as.mo()` on your old codes to transform them to the new format. Using functions from the `mo_*` family (like `mo_name()` and `mo_gramstain()`) on old codes, will throw a warning.
-* More intelligent guessing for `as.ab()`
+* More intelligent guessing for `as.ab()` which also led to bidirectional language support
 * Renamed data set `septic_patients` to `example_isolates`
 * Function `eucast_rules()`:
   * Fixed a bug for *Yersinia pseudotuberculosis*

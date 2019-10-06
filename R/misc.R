@@ -153,8 +153,8 @@ round2 <- function(x, digits = 0, force_zero = TRUE) {
   # https://stackoverflow.com/a/12688836/4575331
   val <- (trunc((abs(x) * 10 ^ digits) + 0.5) / 10 ^ digits) * sign(x)
   if (digits > 0 & force_zero == TRUE) {
-    val[val != as.integer(val)] <- paste0(val[val != as.integer(val)],
-                                          strrep("0", max(0, digits - nchar(gsub(".*[.](.*)$", "\\1", val[val != as.integer(val)])))))
+    val[val != as.integer(val) & !is.na(val)] <- paste0(val[val != as.integer(val) & !is.na(val)],
+                                          strrep("0", max(0, digits - nchar(gsub(".*[.](.*)$", "\\1", val[val != as.integer(val) & !is.na(val)])))))
   }
   val
 }

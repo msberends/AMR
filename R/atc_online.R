@@ -76,7 +76,7 @@ atc_online_property <- function(atc_code,
                                 administration = 'O',
                                 url = 'https://www.whocc.no/atc_ddd_index/?code=%s&showdescription=no') {
 
-  if (!all(c("curl", "rvest", "xml2") %in% rownames(installed.packages()))) {
+  if (!all(c("curl", "rvest", "xml2") %in% rownames(utils::installed.packages()))) {
     stop("Packages 'xml2', 'rvest' and 'curl' are required for this function")
   }
 
