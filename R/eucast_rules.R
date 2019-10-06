@@ -191,7 +191,7 @@ eucast_rules <- function(x,
     txt <- paste0("WARNING: In Verbose mode, the eucast_rules() function does not apply rules to the data, but instead returns a data set in logbook form with extensive info about which rows and columns would be effected and in which way.",
                   "\n\nThis may overwrite your existing data if you use e.g.:",
                   "\ndata <- eucast_rules(data, verbose = TRUE)\n\nDo you want to continue?")
-    if ("rstudioapi" %in% rownames(installed.packages())) {
+    if ("rstudioapi" %in% rownames(utils::installed.packages())) {
       q_continue <- rstudioapi::showQuestion("Using verbose = TRUE with eucast_rules()", txt)
     } else {
       q_continue <- menu(choices = c("OK", "Cancel"), graphics = TRUE, title = txt)

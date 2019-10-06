@@ -122,11 +122,21 @@ get_column_abx <- function(x,
                            ...) {
 
   # determine from given data set
+  x_bak <- x
   df_trans <- data.frame(colnames = colnames(x),
                          abcode = suppressWarnings(as.ab(colnames(x))))
   df_trans <- df_trans[!is.na(df_trans$abcode),]
   x <- as.character(df_trans$colnames)
   names(x) <- df_trans$abcode
+  
+  # remove the ones that do not already have the rsi class (as.rsi) and that have >50% invalid values
+  x <- sapply(x, function(col = x, df = x_bak) {
+    ifelse(is.rsi(as.data.frame(df)[, col]) | 
+             is.rsi.eligible(as.data.frame(df)[, col], threshold = 0.5),
+           col,
+           NA)
+  })
+  x <- x[!is.na(x)]
 
   # add from self-defined dots (...):
   # get_column_abx(example_isolates %>% rename(thisone = AMX), amox = "thisone")

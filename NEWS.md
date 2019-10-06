@@ -1,4 +1,4 @@
-# AMR 0.7.1.9093
+# AMR 0.7.1.9094
 <small>Last updated: 06-Oct-2019</small>
 
 ### Breaking
@@ -102,7 +102,7 @@
   * Printed info now distinguishes between added and changes values
   * Using Verbose mode (i.e. `eucast_rules(..., verbose = TRUE)`) returns more informative and readable output
   * Using factors as input now adds missing factors levels when the function changes antibiotic results
-* Improved the internal auto-guessing function for determining antibiotics in your data set (`AMR:::get_column_abx()`)
+* Improved the internal auto-guessing function for determining antimicrobials in your data set (`AMR:::get_column_abx()`)
 * Removed class `atc` - using `as.atc()` is now deprecated in favour of `ab_atc()` and this will return a character, not the `atc` class anymore
 * Removed deprecated functions `abname()`, `ab_official()`, `atc_name()`, `atc_official()`, `atc_property()`, `atc_tradenames()`, `atc_trivial_nl()`
 * Fix and speed improvement for `mo_shortname()`
