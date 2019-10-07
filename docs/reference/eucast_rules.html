@@ -15,21 +15,25 @@
 <link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png" />
 <link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png" />
 <link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png" />
+
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
 <link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/flatly/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
 
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
 
 <!-- Font Awesome icons -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/all.min.css" integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/v4-shims.min.css" integrity="sha256-6qHlizsOWFskGlwVOKuns+D1nB6ssZrHQrNj1wGplHc=" crossorigin="anonymous" />
 
 <!-- clipboard.js -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script>
 
-<!-- sticky kit -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script>
+<!-- headroom.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/headroom.min.js" integrity="sha256-DJFC1kqIhelURkuza0AvYal5RxMtpzLjFhsnVIeuk+U=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
@@ -45,12 +49,12 @@
 
   <link href="../extra.css" rel="stylesheet">
   <script src="../extra.js"></script>
+
 <meta property="og:title" content="EUCAST rules — eucast_rules" />
-
 <meta property="og:description" content="Apply susceptibility rules as defined by the European Committee on Antimicrobial Susceptibility Testing (EUCAST, http://eucast.org), see Source. This includes (1) expert rules, (2) intrinsic resistance and (3) inferred resistance as defined in their breakpoint tables." />
-
 <meta property="og:image" content="https://msberends.gitlab.io/AMR/logo.png" />
 <meta name="twitter:card" content="summary" />
+
 
 
 
@@ -62,6 +66,7 @@
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
+
 
 
   </head>
@@ -80,7 +85,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">0.7.1.9067</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">0.7.1.9096</span>
       </span>
     </div>
 
@@ -189,7 +194,6 @@
   </a>
 </li>
       </ul>
-      
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://gitlab.com/msberends/AMR">
@@ -207,7 +211,7 @@
 </li>
       </ul>
       
-      <form class="navbar-form navbar-right" role="search">
+      <form class="navbar-form navbar-right hidden-xs hidden-sm" role="search">
         <div class="form-group">
           <input type="search" class="form-control" name="search-input" id="search-input" placeholder="Search..." aria-label="Search for..." autocomplete="off">
         </div>
@@ -218,6 +222,7 @@
 </div><!--/.navbar -->
 
       
+
       </header>
 
 <div class="row">
@@ -229,14 +234,12 @@
     </div>
 
     <div class="ref-description">
-    
     <p>Apply susceptibility rules as defined by the European Committee on Antimicrobial Susceptibility Testing (EUCAST, <a href='http://eucast.org'>http://eucast.org</a>), see <em>Source</em>. This includes (1) expert rules, (2) intrinsic resistance and (3) inferred resistance as defined in their breakpoint tables.</p>
-    
     </div>
 
-    <pre class="usage"><span class='fu'>eucast_rules</span>(<span class='no'>x</span>, <span class='kw'>col_mo</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>info</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>rules</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"breakpoints"</span>,
+    <pre class="usage"><span class='fu'>eucast_rules</span>(<span class='no'>x</span>, <span class='kw'>col_mo</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>info</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>rules</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"breakpoints"</span>,
   <span class='st'>"expert"</span>, <span class='st'>"other"</span>, <span class='st'>"all"</span>), <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>...</span>)</pre>
-    
+
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
@@ -254,7 +257,7 @@
     </tr>
     <tr>
       <th>rules</th>
-      <td><p>a character vector that specifies which rules should be applied - one or more of <code><a href='https://www.rdocumentation.org/packages/base/topics/c'>c("breakpoints", "expert", "other", "all")</a></code></p></td>
+      <td><p>a character vector that specifies which rules should be applied - one or more of <code><a href='https://rdrr.io/r/base/c.html'>c("breakpoints", "expert", "other", "all")</a></code></p></td>
     </tr>
     <tr>
       <th>verbose</th>
@@ -265,10 +268,11 @@
       <td><p>column name of an antibiotic, see section Antibiotics</p></td>
     </tr>
     </table>
-    
+
     <h2 class="hasAnchor" id="source"><a class="anchor" href="#source"></a>Source</h2>
 
-    <ul>
+    
+<ul>
 <li><p>EUCAST Expert Rules. Version 2.0, 2012. <br />
       Leclercq et al. <strong>EUCAST expert rules in antimicrobial susceptibility testing.</strong> <em>Clin Microbiol Infect.</em> 2013;19(2):141-60. <br />
       <a href='https://doi.org/10.1111/j.1469-0691.2011.03703.x'>https://doi.org/10.1111/j.1469-0691.2011.03703.x</a></p></li>
@@ -277,22 +281,21 @@
 <li><p>EUCAST Breakpoint tables for interpretation of MICs and zone diameters. Version 9.0, 2019. <br />
       <a href='http://www.eucast.org/fileadmin/src/media/PDFs/EUCAST_files/Breakpoint_tables/v_9.0_Breakpoint_Tables.xlsx'>http://www.eucast.org/fileadmin/src/media/PDFs/EUCAST_files/Breakpoint_tables/v_9.0_Breakpoint_Tables.xlsx</a></p></li>
 </ul>
-    
+
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>The input of <code>x</code>, possibly with edited values of antibiotics. Or, if <code>verbose = TRUE</code>, a <code>data.frame</code> with all original and new values of the affected bug-drug combinations.</p>
-    
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p><strong>Note:</strong> This function does not translate MIC values to RSI values. Use <code><a href='as.rsi.html'>as.rsi</a></code> for that. <br />
 <strong>Note:</strong> When ampicillin (AMP, J01CA01) is not available but amoxicillin (AMX, J01CA04) is, the latter will be used for all rules where there is a dependency on ampicillin. These drugs are interchangeable when it comes to expression of antimicrobial resistance.</p>
 <p>The file containing all EUCAST rules is located here: <a href='https://gitlab.com/msberends/AMR/blob/master/data-raw/eucast_rules.tsv'>https://gitlab.com/msberends/AMR/blob/master/data-raw/eucast_rules.tsv</a>.</p>
-    
     <h2 class="hasAnchor" id="antibiotics"><a class="anchor" href="#antibiotics"></a>Antibiotics</h2>
 
     
-    <p>To define antibiotics column names, leave as it is to determine it automatically with <code><a href='guess_ab_col.html'>guess_ab_col</a></code> or input a text (case-insensitive), or use <code>NULL</code> to skip a column (e.g. <code>TIC = NULL</code> to skip ticarcillin). Manually defined but non-existing columns will be skipped with a warning.</p>
-<p>The following antibiotics are used for the functions <code>eucast_rules</code> and <code><a href='mdro.html'>mdro</a></code>. These are shown below in the format '<strong>antimicrobial ID</strong>: name (<em>ATC code</em>)', sorted by name:</p>
+
+<p>To define antibiotics column names, leave as it is to determine it automatically with <code><a href='guess_ab_col.html'>guess_ab_col</a></code> or input a text (case-insensitive), or use <code>NULL</code> to skip a column (e.g. <code>TIC = NULL</code> to skip ticarcillin). Manually defined but non-existing columns will be skipped with a warning.</p>
+<p>The following antibiotics are used for the functions <code>eucast_rules</code> and <code><a href='mdro.html'>mdro</a></code>. These are shown below in the format '<strong>antimicrobial ID</strong>: name (<a href='https://www.whocc.no/atc/structure_and_principles/'>ATC code</a>)', sorted by name:</p>
 <p><strong>AMK</strong>: amikacin (<a href='https://www.whocc.no/atc_ddd_index/?code=J01GB06'>J01GB06</a>),
  <strong>AMX</strong>: amoxicillin (<a href='https://www.whocc.no/atc_ddd_index/?code=J01CA04'>J01CA04</a>),
  <strong>AMC</strong>: amoxicillin/clavulanic acid (<a href='https://www.whocc.no/atc_ddd_index/?code=J01CR02'>J01CR02</a>),
@@ -365,16 +368,14 @@
  <strong>TMP</strong>: trimethoprim (<a href='https://www.whocc.no/atc_ddd_index/?code=J01EA01'>J01EA01</a>),
  <strong>SXT</strong>: trimethoprim/sulfamethoxazole (<a href='https://www.whocc.no/atc_ddd_index/?code=J01EE01'>J01EE01</a>),
  <strong>VAN</strong>: vancomycin (<a href='https://www.whocc.no/atc_ddd_index/?code=J01XA01'>J01XA01</a>).</p>
-    
     <h2 class="hasAnchor" id="read-more-on-our-website-"><a class="anchor" href="#read-more-on-our-website-"></a>Read more on our website!</h2>
 
     
-    <p>On our website <a href='https://msberends.gitlab.io/AMR'>https://msberends.gitlab.io/AMR</a> you can find <a href='https://msberends.gitlab.io/AMR/articles/AMR.html'>a tutorial</a> about how to conduct AMR analysis, the <a href='https://msberends.gitlab.io/AMR/reference'>complete documentation of all functions</a> (which reads a lot easier than here in R) and <a href='https://msberends.gitlab.io/AMR/articles/WHONET.html'>an example analysis using WHONET data</a>.</p>
-    
+
+<p>On our website <a href='https://msberends.gitlab.io/AMR'>https://msberends.gitlab.io/AMR</a> you can find <a href='https://msberends.gitlab.io/AMR/articles/AMR.html'>a tutorial</a> about how to conduct AMR analysis, the <a href='https://msberends.gitlab.io/AMR/reference'>complete documentation of all functions</a> (which reads a lot easier than here in R) and <a href='https://msberends.gitlab.io/AMR/articles/WHONET.html'>an example analysis using WHONET data</a>.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><span class='co'># NOT RUN {</span>
-<span class='no'>a</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/data.frame'>data.frame</a></span>(<span class='kw'>mo</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"Staphylococcus aureus"</span>,
+    <pre class="examples"><span class='no'>a</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span>(<span class='kw'>mo</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"Staphylococcus aureus"</span>,
                        <span class='st'>"Enterococcus faecalis"</span>,
                        <span class='st'>"Escherichia coli"</span>,
                        <span class='st'>"Klebsiella pneumoniae"</span>,
@@ -409,7 +410,7 @@
 <span class='co'># 5 Pseudomonas aeruginosa    R    R    -    -    R    R    R</span>
 
 
-<span class='co'># }</span><span class='co'># NOT RUN {</span>
+<span class='co'># \donttest{</span>
 <span class='co'># do not apply EUCAST rules, but rather get a data.frame</span>
 <span class='co'># with 18 rows, containing all details about the transformations:</span>
 <span class='no'>c</span> <span class='kw'>&lt;-</span> <span class='fu'>eucast_rules</span>(<span class='no'>a</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
@@ -419,22 +420,17 @@
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-      
       <li><a href="#source">Source</a></li>
-
       <li><a href="#value">Value</a></li>
-
       <li><a href="#details">Details</a></li>
-
       <li><a href="#antibiotics">Antibiotics</a></li>
-
       <li><a href="#read-more-on-our-website-">Read more on our website!</a></li>
-      
       <li><a href="#examples">Examples</a></li>
     </ul>
 
   </div>
 </div>
+
 
       <footer>
       <div class="copyright">
@@ -442,8 +438,9 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.3.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.</p>
 </div>
+
       </footer>
    </div>
 
@@ -466,6 +463,8 @@
 </script>
 
 
+
   </body>
 </html>
+
 

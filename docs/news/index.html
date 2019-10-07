@@ -84,7 +84,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">0.7.1.9095</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">0.7.1.9096</span>
       </span>
     </div>
 
@@ -231,11 +231,11 @@
       
     </div>
 
-    <div id="amr-0-7-1-9095" class="section level1">
+    <div id="amr-0-7-1-9096" class="section level1">
 <h1 class="page-header">
-<a href="#amr-0-7-1-9095" class="anchor"></a>AMR 0.7.1.9095<small> Unreleased </small>
+<a href="#amr-0-7-1-9096" class="anchor"></a>AMR 0.7.1.9096<small> Unreleased </small>
 </h1>
-<p><small>Last updated: 06-Oct-2019</small></p>
+<p><small>Last updated: 07-Oct-2019</small></p>
 <div id="breaking" class="section level3">
 <h3 class="hasAnchor">
 <a href="#breaking" class="anchor"></a>Breaking</h3>
@@ -258,7 +258,8 @@ For WHONET users, this means that all records/isolates with organism code <code>
 <a class="sourceLine" id="cb2-10" data-line-number="10"><span class="co">#&gt; Warning message:</span></a>
 <a class="sourceLine" id="cb2-11" data-line-number="11"><span class="co">#&gt; invalid microorganism code, NA generated</span></a></code></pre></div>
 This is important, because a value like <code>"testvalue"</code> could never be understood by e.g. <code><a href="../reference/mo_property.html">mo_name()</a></code>, although the class would suggest a valid microbial code.</li>
-<li><p>Function <code><a href="https://rdrr.io/pkg/clean/man/freq.html">freq()</a></code> has moved to a new package, <a href="https://github.com/msberends/clean"><code>clean</code></a> (<a href="https://cran.r-project.org/package=clean">CRAN link</a>), since creating frequency tables actually does not fit the scope of this package. The <code><a href="https://rdrr.io/pkg/clean/man/freq.html">freq()</a></code> function still works, since it is re-exported from the <code>clean</code> package (which will be installed automatically upon updating this <code>AMR</code> package).</p></li>
+<li>Function <code><a href="https://rdrr.io/pkg/clean/man/freq.html">freq()</a></code> has moved to a new package, <a href="https://github.com/msberends/clean"><code>clean</code></a> (<a href="https://cran.r-project.org/package=clean">CRAN link</a>), since creating frequency tables actually does not fit the scope of this package. The <code><a href="https://rdrr.io/pkg/clean/man/freq.html">freq()</a></code> function still works, since it is re-exported from the <code>clean</code> package (which will be installed automatically upon updating this <code>AMR</code> package).</li>
+<li><p>Renamed data set <code>septic_patients</code> to <code>example_isolates</code></p></li>
 </ul>
 </div>
 <div id="new" class="section level3">
@@ -336,9 +337,8 @@ Since this is a major change, usage of the old <code>also_single_tested</code> w
 <li>Changed most microorganism IDs to improve readability. For example, the old code <code>B_ENTRC_FAE</code> could have been both <em>E. faecalis</em> and <em>E. faecium</em>. Its new code is <code>B_ENTRC_FCLS</code> and <em>E. faecium</em> has become <code>B_ENTRC_FACM</code>. Also, the Latin character æ (ae) is now preserved at the start of each genus and species abbreviation. For example, the old code for <em>Aerococcus urinae</em> was <code>B_ARCCC_NAE</code>. This is now <code>B_AERCC_URIN</code>. <strong>IMPORTANT:</strong> Old microorganism IDs are still supported, but support will be dropped in a future version. Use <code><a href="../reference/as.mo.html">as.mo()</a></code> on your old codes to transform them to the new format. Using functions from the <code>mo_*</code> family (like <code><a href="../reference/mo_property.html">mo_name()</a></code> and <code><a href="../reference/mo_property.html">mo_gramstain()</a></code>) on old codes, will throw a warning.</li>
 </ul>
 </li>
-<li>More intelligent guessing for <code><a href="../reference/as.ab.html">as.ab()</a></code> which also led to bidirectional language support</li>
-<li>Renamed data set <code>septic_patients</code> to <code>example_isolates</code>
-</li>
+<li>More intelligent guessing for <code><a href="../reference/as.ab.html">as.ab()</a></code>, including bidirectional language support</li>
+<li>Added support for the German national guideline (3MRGN/4MRGN) in the <code><a href="../reference/mdro.html">mdro()</a></code> function, to determine multi-drug resistant organisms</li>
 <li>Function <code><a href="../reference/eucast_rules.html">eucast_rules()</a></code>:
 <ul>
 <li>Fixed a bug for <em>Yersinia pseudotuberculosis</em>
@@ -1289,7 +1289,7 @@ Using <code><a href="../reference/as.mo.html">as.mo(..., allow_uncertain = 3)</a
     <div id="tocnav">
       <h2>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
-        <li><a href="#amr-0-7-1-9095">0.7.1.9095</a></li>
+        <li><a href="#amr-0-7-1-9096">0.7.1.9096</a></li>
         <li><a href="#amr-0-7-1">0.7.1</a></li>
         <li><a href="#amr-0-7-0">0.7.0</a></li>
         <li><a href="#amr-0-6-1">0.6.1</a></li>

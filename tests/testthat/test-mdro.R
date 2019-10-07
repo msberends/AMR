@@ -75,7 +75,27 @@ test_that("mdro works", {
                       col_mo = "mo",
                       info = FALSE)),
     "Positive")
-
+  
+  # German 3MRGN and 4MRGN
+  expect_equal(as.character(mrgn(
+    data.frame(mo = c("E. coli", "E. coli", "K. pneumoniae", "E. coli",
+                      "A. baumannii", "A. baumannii", "A. baumannii",
+                      "P. aeruginosa", "P. aeruginosa", "P. aeruginosa"), 
+               PIP = c("S", "R", "R", "S",
+                       "S", "R", "R",
+                       "S", "R", "R"),
+               CTX = c("S", "R", "R", "S",
+                       "R", "R", "R",
+                       "R", "R", "R"),
+               IPM = c("S", "R", "S", "R",
+                       "R", "R", "S",
+                       "S", "R", "R"),
+               CIP = c("S", "R", "R", "S",
+                       "R", "R", "R",
+                       "R", "S", "R"),
+               stringsAsFactors = FALSE))),
+    c("Negative", "4MRGN", "3MRGN", "4MRGN",  "4MRGN",  "4MRGN", "3MRGN", "Negative", "3MRGN", "4MRGN"))
+  
   # MDR TB
   expect_equal(
     # select only rifampicine, mo will be determined automatically (as M. tuberculosis),

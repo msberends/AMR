@@ -1,5 +1,5 @@
-# AMR 0.7.1.9095
-<small>Last updated: 06-Oct-2019</small>
+# AMR 0.7.1.9096
+<small>Last updated: 07-Oct-2019</small>
 
 ### Breaking
 * Determination of first isolates now **excludes** all 'unknown' microorganisms at default, i.e. microbial code `"UNKNOWN"`. They can be included with the new parameter `include_unknown`:
@@ -23,6 +23,7 @@
   ```
   This is important, because a value like `"testvalue"` could never be understood by e.g. `mo_name()`, although the class would suggest a valid microbial code.
 * Function `freq()` has moved to a new package, [`clean`](https://github.com/msberends/clean) ([CRAN link](https://cran.r-project.org/package=clean)), since creating frequency tables actually does not fit the scope of this package. The `freq()` function still works, since it is re-exported from the `clean` package (which will be installed automatically upon updating this `AMR` package).
+* Renamed data set `septic_patients` to `example_isolates`
 
 ### New
 * Function `bug_drug_combinations()` to quickly get a `data.frame` with the antimicrobial resistance of any bug-drug combination in a data set. The columns with microorganism codes is guessed automatically and its input is transformed with `mo_shortname()` at default:
@@ -94,8 +95,8 @@
   * Added support for unknown yeasts and fungi
   * Changed most microorganism IDs to improve readability. For example, the old code `B_ENTRC_FAE` could have been both *E. faecalis* and *E. faecium*. Its new code is `B_ENTRC_FCLS` and *E. faecium* has become `B_ENTRC_FACM`. Also, the Latin character æ (ae) is now preserved at the start of each genus and species abbreviation. For example, the old code for *Aerococcus urinae* was `B_ARCCC_NAE`. This is now `B_AERCC_URIN`.
     **IMPORTANT:** Old microorganism IDs are still supported, but support will be dropped in a future version. Use `as.mo()` on your old codes to transform them to the new format. Using functions from the `mo_*` family (like `mo_name()` and `mo_gramstain()`) on old codes, will throw a warning.
-* More intelligent guessing for `as.ab()` which also led to bidirectional language support
-* Renamed data set `septic_patients` to `example_isolates`
+* More intelligent guessing for `as.ab()`, including bidirectional language support
+* Added support for the German national guideline (3MRGN/4MRGN) in the `mdro()` function, to determine multi-drug resistant organisms
 * Function `eucast_rules()`:
   * Fixed a bug for *Yersinia pseudotuberculosis*
   * Added more informative errors and warnings

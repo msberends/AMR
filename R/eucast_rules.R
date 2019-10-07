@@ -41,7 +41,7 @@ EUCAST_VERSION_EXPERT_RULES <- "3.1, 2016"
 #' @section Antibiotics:
 #' To define antibiotics column names, leave as it is to determine it automatically with \code{\link{guess_ab_col}} or input a text (case-insensitive), or use \code{NULL} to skip a column (e.g. \code{TIC = NULL} to skip ticarcillin). Manually defined but non-existing columns will be skipped with a warning.
 #'
-#' The following antibiotics are used for the functions \code{\link{eucast_rules}} and \code{\link{mdro}}. These are shown below in the format '\strong{antimicrobial ID}: name (\emph{ATC code})', sorted by name:
+#' The following antibiotics are used for the functions \code{\link{eucast_rules}} and \code{\link{mdro}}. These are shown below in the format '\strong{antimicrobial ID}: name (\href{https://www.whocc.no/atc/structure_and_principles/}{ATC code})', sorted by name:
 #'
 #'  \strong{AMK}: amikacin (\href{https://www.whocc.no/atc_ddd_index/?code=J01GB06}{J01GB06}),
 #'  \strong{AMX}: amoxicillin (\href{https://www.whocc.no/atc_ddd_index/?code=J01CA04}{J01CA04}),
