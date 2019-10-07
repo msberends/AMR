@@ -45,9 +45,6 @@ test_that("mdro works", {
   expect_equal(brmo(example_isolates, info = FALSE),
                mdro(example_isolates, guideline = "BRMO", info = FALSE))
 
-  # still working on German guidelines
-  expect_error(suppressWarnings(mrgn(example_isolates, info = TRUE)))
-
   # test Dutch P. aeruginosa MDRO
   expect_equal(
     as.character(mdro(data.frame(mo = as.mo("P. aeruginosa"),

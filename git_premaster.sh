@@ -90,10 +90,4 @@ echo "•••••••••"
 echo "• Done •"
 echo "••••••••"
 echo
-read -p "Upload to R-hub builder (y/N)? " choice
-case "$choice" in
-  y|Y|j|J ) ;;
-  * ) exit 1;;
-esac
-Rscript -e "rhub::check_for_cran(devtools::build())"
-echo
+

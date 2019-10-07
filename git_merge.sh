@@ -23,7 +23,16 @@ echo "• pushed changes to master"
 git checkout premaster --quiet
 echo "• changed branch back to premaster"
 git status --short
+echo
 
+read -p "Use R-hub to simulate all CRAN checks (y/N)? " choice
+case "$choice" in
+  y|Y|j|J ) ;;
+  * ) exit 1;;
+esac
+Rscript -e "rhub::check(devtools::build(), platform = c('debian-clang-devel', 'debian-gcc-devel', 'fedora-clang-devel', 'fedora-gcc-devel', 'windows-x86_64-devel', 'debian-gcc-patched', 'solaris-x86-patched', 'debian-gcc-release', 'windows-x86_64-release', 'macos-elcapitan-release',
+'windows-x86_64-oldrel'))"
+echo
 
 # and get stashed changes back
 # git stash apply --quiet
