@@ -154,7 +154,7 @@ example_isolates \%>\%
          MRGN = mrgn(.))
          
 example_isolates \%>\% 
-  rename(PIP = TZP) # no piperacillin, so take piperacillin/tazobactam
-  mrgn() \%>\%        # check German guideline
-  freq()            # check frequencies
+  rename(PIP = TZP) \%>\% # no piperacillin, so take piperacillin/tazobactam
+  mrgn() \%>\%            # check German guideline
+  freq()                # check frequencies
 }
