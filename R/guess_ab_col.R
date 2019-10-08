@@ -121,27 +121,32 @@ get_column_abx <- function(x,
                            verbose = FALSE,
                            ...) {
 
-  # determine from given data set
+  message(blue("NOTE: Auto-guessing columns suitable for analysis..."))
+  
+  x <- as.data.frame(x, stringsAsFactors = FALSE)
   x_bak <- x
+  # only check columns that are a valid AB code, ATC code, name, abbreviation or synonym,
+  # or already have the rsi class (as.rsi) 
+  # and that have no more than 50% invalid values
+  vectr_antibiotics <- unique(toupper(unlist(AMR::antibiotics[,c("ab", "atc", "name", "abbreviations", "synonyms")])))
+  vectr_antibiotics <- vectr_antibiotics[!is.na(vectr_antibiotics) & nchar(vectr_antibiotics) >= 3]
+  x_columns <- sapply(colnames(x), function(col = x, df = x_bak) {
+    if (toupper(col) %in% vectr_antibiotics | 
+        is.rsi(as.data.frame(df)[, col]) |
+        is.rsi.eligible(as.data.frame(df)[, col], threshold = 0.5)) {
+      return(col)
+    } else {
+      return(NA_character_)
+    }
+  })
+  x_coluxmns <- x_columns[!is.na(x_columns)]
+  x <- x[,x_columns[!is.na(x_columns)]]
+  
   df_trans <- data.frame(colnames = colnames(x),
                          abcode = suppressWarnings(as.ab(colnames(x))))
   df_trans <- df_trans[!is.na(df_trans$abcode),]
   x <- as.character(df_trans$colnames)
   names(x) <- df_trans$abcode
-  
-  # remove the ones that are not a valid AB code, ATC code, name, abbreviation or synonym,
-  # and do not already have the rsi class (as.rsi) 
-  # and that have >50% invalid values
-  vectr_antibiotics <- unique(toupper(unlist(AMR::antibiotics[,c("ab", "atc", "name", "abbreviations", "synonyms")])))
-  vectr_antibiotics <- vectr_antibiotics[!is.na(vectr_antibiotics) & nchar(vectr_antibiotics) >= 3]
-   x <- sapply(x, function(col = x, df = x_bak) {
-    ifelse(toupper(col) %in% vectr_antibiotics |
-             is.rsi(as.data.frame(df)[, col]) | 
-             is.rsi.eligible(as.data.frame(df)[, col], threshold = 0.5),
-           col,
-           NA)
-  })
-  x <- x[!is.na(x)]
 
   # add from self-defined dots (...):
   # get_column_abx(example_isolates %>% rename(thisone = AMX), amox = "thisone")
@@ -174,9 +179,9 @@ get_column_abx <- function(x,
     }
   } else if (length(duplicates) > 0) {
     for (i in 1:length(duplicates)) {
-     warning(red(paste0("Using column `", bold(duplicates[i]), "` as input for `", names(x[which(x == duplicates[i])]), 
-                        "` (", ab_name(names(x[names(which(x == duplicates))[i]]), tolower = TRUE), 
-                        "), although it was matched for multiple antibiotics or columns.")), call. = FALSE)
+      warning(red(paste0("Using column `", bold(duplicates[i]), "` as input for `", names(x[which(x == duplicates[i])]), 
+                         "` (", ab_name(names(x[names(which(x == duplicates))[i]]), tolower = TRUE), 
+                         "), although it was matched for multiple antibiotics or columns.")), call. = FALSE)
     }
   }
 
