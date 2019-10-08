@@ -39,6 +39,7 @@
 #' The language of the output can be overwritten with \code{options(AMR_locale)}, please see \link{translate}.
 #' @export
 #' @rdname bug_drug_combinations
+#' @return The function \code{bug_drug_combinations} returns a \code{data.frame} with columns "mo", "ab", "S", "I", "R" and "total".
 #' @source \strong{M39 Analysis and Presentation of Cumulative Antimicrobial Susceptibility Test Data, 4th Edition}, 2014, \emph{Clinical and Laboratory Standards Institute (CLSI)}. \url{https://clsi.org/standards/products/microbiology/documents/m39/}.
 #' @inheritSection AMR Read more on our website!
 #' @examples 
@@ -58,7 +59,6 @@
 #' }
 bug_drug_combinations <- function(x, 
                                   col_mo = NULL, 
-                                  minimum = 30,
                                   FUN = mo_shortname,
                                   ...) {
   if (!is.data.frame(x)) {
@@ -77,17 +77,17 @@ bug_drug_combinations <- function(x,
   x <- x %>%
     as.data.frame(stringsAsFactors = FALSE) %>% 
     mutate(mo = x %>% pull(col_mo) %>% FUN(...)) %>% 
-    filter(mo %in% (freq(mo) %>%
-                      filter(count >= minimum) %>%
-                      pull(item))) %>% 
     group_by(mo) %>% 
-    AMR::rsi_df(translate_ab = FALSE, combine_SI = FALSE) %>% 
-    select(-value) %>%
-    spread(interpretation, isolates) %>%
+    select_if(is.rsi) %>% 
+    gather("ab", "value", -mo) %>% 
+    group_by(mo, ab) %>% 
+    summarise(S = sum(value == "S", na.rm = TRUE),
+              I = sum(value == "I", na.rm = TRUE),
+              R = sum(value == "R", na.rm = TRUE)) %>%
+    ungroup() %>%
     mutate(total = S + I + R) %>%
-    filter(total >= minimum) %>% 
-    rename(ab = antibiotic)
-  
+    as.data.frame(stringsAsFactors = FALSE)
+
   structure(.Data = x, class = c("bug_drug_combinations", class(x)))
 }
 
@@ -107,6 +107,8 @@ format.bug_drug_combinations <- function(x,
                                          decimal.mark = getOption("OutDec"),
                                          big.mark = ifelse(decimal.mark == ",", ".", ","),
                                          ...) {
+  x <- x %>% filter(total >= minimum)
+  
   if (remove_intrinsic_resistant == TRUE) {
     x <- x %>% filter(R != total)
   }
@@ -133,7 +135,6 @@ format.bug_drug_combinations <- function(x,
   }
 
   y <- x %>%
-    filter(total >= minimum) %>% 
     mutate(ab = as.ab(ab),
            ab_txt = give_ab_name(ab = ab, format = translate_ab, language = language)) %>% 
     group_by(ab, ab_txt, mo) %>% 

@@ -279,6 +279,7 @@ antibiotics <- abx2 %>%
 antibiotics[which(antibiotics$ab == "DOX"), "abbreviations"][[1]] <- list(c("dox", "doxy"))
 antibiotics[which(antibiotics$ab == "FLC"), "abbreviations"][[1]] <- list(c("clox"))
 antibiotics[which(antibiotics$ab == "CEC"), "abbreviations"][[1]] <- list(c(antibiotics[which(antibiotics$ab == "CEC"), "abbreviations"][[1]], "CFC")) # cefaclor old WHONET4 code
+antibiotics[which(antibiotics$ab == "AMX"), "synonyms"][[1]] <- list(sort(c(antibiotics[which(antibiotics$ab == "AMX"), "synonyms"][[1]], "Amoxy")))
 # 'Polymixin B' (POL) and 'Polymyxin B' (PLB) both exist, so:
 antibiotics[which(antibiotics$ab == "PLB"), "abbreviations"][[1]] <- list(c(antibiotics[which(antibiotics$ab == "PLB"), "abbreviations"][[1]], "POL", "Polymixin", "Polymixin B"))
 antibiotics <- filter(antibiotics, ab != "POL")
@@ -303,6 +304,10 @@ antibiotics[which(antibiotics$ab == "CPC"), "abbreviations"][[1]] <- list(c("xpm
 antibiotics[which(antibiotics$ab == "FEP"), "abbreviations"][[1]] <- list(c(antibiotics[which(antibiotics$ab == "FEP"), "abbreviations"][[1]], "xpm"))
 antibiotics[which(antibiotics$ab == "CTC"), "abbreviations"][[1]] <- list(c("xctl"))
 antibiotics[which(antibiotics$ab == "CTX"), "abbreviations"][[1]] <- list(c(antibiotics[which(antibiotics$ab == "CTX"), "abbreviations"][[1]], "xct"))
+# High level Gentamcin and Streptomycin
+antibiotics[which(antibiotics$ab == "GEH"), "abbreviations"][[1]] <- list(c("gehl"))
+antibiotics[which(antibiotics$ab == "STH"), "abbreviations"][[1]] <- list(c("sthl"))
+
 
 antibiotics <- antibiotics %>% arrange(name)
 

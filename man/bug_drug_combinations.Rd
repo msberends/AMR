@@ -8,8 +8,7 @@
 \strong{M39 Analysis and Presentation of Cumulative Antimicrobial Susceptibility Test Data, 4th Edition}, 2014, \emph{Clinical and Laboratory Standards Institute (CLSI)}. \url{https://clsi.org/standards/products/microbiology/documents/m39/}.
 }
 \usage{
-bug_drug_combinations(x, col_mo = NULL, minimum = 30,
-  FUN = mo_shortname, ...)
+bug_drug_combinations(x, col_mo = NULL, FUN = mo_shortname, ...)
 
 \method{format}{bug_drug_combinations}(x,
   translate_ab = "name (ab, atc)", language = get_locale(),
@@ -23,8 +22,6 @@ bug_drug_combinations(x, col_mo = NULL, minimum = 30,
 
 \item{col_mo}{column name of the IDs of the microorganisms (see \code{\link{as.mo}}), defaults to the first column of class \code{mo}. Values will be coerced using \code{\link{as.mo}}.}
 
-\item{minimum}{the minimum allowed number of available (tested) isolates. Any isolate count lower than \code{minimum} will return \code{NA} with a warning. The default number of \code{30} isolates is advised by the Clinical and Laboratory Standards Institute (CLSI) as best practice, see Source.}
-
 \item{FUN}{the function to call on the \code{mo} column to transform the microorganism IDs, defaults to \code{\link{mo_shortname}}}
 
 \item{...}{arguments passed on to \code{FUN}}
@@ -32,6 +29,8 @@ bug_drug_combinations(x, col_mo = NULL, minimum = 30,
 \item{translate_ab}{a character of length 1 containing column names of the \code{\link{antibiotics}} data set}
 
 \item{language}{language of the returned text, defaults to system language (see \code{\link{get_locale}}) and can also be set with \code{\link{getOption}("AMR_locale")}. Use \code{language = NULL} or \code{language = ""} to prevent translation.}
+
+\item{minimum}{the minimum allowed number of available (tested) isolates. Any isolate count lower than \code{minimum} will return \code{NA} with a warning. The default number of \code{30} isolates is advised by the Clinical and Laboratory Standards Institute (CLSI) as best practice, see Source.}
 
 \item{combine_SI}{a logical to indicate whether all values of S and I must be merged into one, so the output only consists of S+I vs. R (susceptible vs. resistant). This used to be the parameter \code{combine_IR}, but this now follows the redefinition by EUCAST about the interpretion of I (increased exposure) in 2019, see section 'Interpretation of S, I and R' below. Default is \code{TRUE}.}
 
@@ -47,6 +46,9 @@ bug_drug_combinations(x, col_mo = NULL, minimum = 30,
 \item{big.mark}{character; if not empty used as mark between every
     \code{big.interval} decimals \emph{before} (hence \code{big}) the
     decimal point.}
+}
+\value{
+The function \code{bug_drug_combinations} returns a \code{data.frame} with columns "mo", "ab", "S", "I", "R" and "total".
 }
 \description{
 Determine antimicrobial resistance (AMR) of all bug-drug combinations in your data set where at least 30 (default) isolates are available per species. Use \code{format} on the result to prettify it to a publicable/printable format, see Examples.

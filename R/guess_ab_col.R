@@ -130,7 +130,7 @@ get_column_abx <- function(x,
   # and that have no more than 50% invalid values
   vectr_antibiotics <- unique(toupper(unlist(AMR::antibiotics[,c("ab", "atc", "name", "abbreviations", "synonyms")])))
   vectr_antibiotics <- vectr_antibiotics[!is.na(vectr_antibiotics) & nchar(vectr_antibiotics) >= 3]
-  x_columns <- sapply(colnames(x), function(col = x, df = x_bak) {
+  x_columns <- sapply(colnames(x), function(col, df = x_bak) {
     if (toupper(col) %in% vectr_antibiotics | 
         is.rsi(as.data.frame(df)[, col]) |
         is.rsi.eligible(as.data.frame(df)[, col], threshold = 0.5)) {
@@ -139,9 +139,9 @@ get_column_abx <- function(x,
       return(NA_character_)
     }
   })
-  x_coluxmns <- x_columns[!is.na(x_columns)]
-  x <- x[,x_columns[!is.na(x_columns)]]
-  
+  x_columns <- x_columns[!is.na(x_columns)]
+  x <- x[, x_columns, drop = FALSE] # without drop = TRUE, x will become a vector when x_columns is length 1
+
   df_trans <- data.frame(colnames = colnames(x),
                          abcode = suppressWarnings(as.ab(colnames(x))))
   df_trans <- df_trans[!is.na(df_trans$abcode),]

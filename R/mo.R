@@ -412,13 +412,13 @@ exec_as.mo <- function(x,
     y <- reference_data_to_use[prevalence == 1][data.table(mo = x), on = "mo", ..property][[1]]
     if (any(is.na(y))) {
       y[is.na(y)] <- reference_data_to_use[prevalence == 2][data.table(mo = x[is.na(y)]),
-                                                       on = "mo",
-                                                       ..property][[1]]
+                                                            on = "mo",
+                                                            ..property][[1]]
     }
     if (any(is.na(y))) {
       y[is.na(y)] <- reference_data_to_use[prevalence == 3][data.table(mo = x[is.na(y)]),
-                                                       on = "mo",
-                                                       ..property][[1]]
+                                                            on = "mo",
+                                                            ..property][[1]]
     }
     x <- y
     
@@ -441,13 +441,13 @@ exec_as.mo <- function(x,
     y <- reference_data_to_use[prevalence == 1][data.table(fullname_lower = tolower(x)), on = "fullname_lower", ..property][[1]]
     if (any(is.na(y))) {
       y[is.na(y)] <- reference_data_to_use[prevalence == 2][data.table(fullname_lower = tolower(x[is.na(y)])),
-                                                       on = "fullname_lower",
-                                                       ..property][[1]]
+                                                            on = "fullname_lower",
+                                                            ..property][[1]]
     }
     if (any(is.na(y))) {
       y[is.na(y)] <- reference_data_to_use[prevalence == 3][data.table(fullname_lower = tolower(x[is.na(y)])),
-                                                       on = "fullname_lower",
-                                                       ..property][[1]]
+                                                            on = "fullname_lower",
+                                                            ..property][[1]]
     }
     x <- y
     
@@ -548,7 +548,7 @@ exec_as.mo <- function(x,
       x[nchar(x_backup_without_spp) > 10] <- gsub("[+]", paste0("+[", constants, "]?"), x[nchar(x_backup_without_spp) > 10])
     }
     x <- strip_whitespace(x, dyslexia_mode)
-
+    
     x_trimmed <- x
     x_trimmed_species <- paste(x_trimmed, "species")
     x_trimmed_without_group <- gsub(" gro.u.p$", "", x_trimmed)
@@ -1067,9 +1067,9 @@ exec_as.mo <- function(x,
                       ref_old = found[1, ref],
                       ref_new = microorganismsDT[col_id == found[1, col_id_new], ref],
                       mo = microorganismsDT[col_id == found[1, col_id_new], mo])
-          if (initial_search == TRUE) {
-            set_mo_history(a.x_backup, get_mo_code(x[i], property), 0, force = force_mo_history, disable = disable_mo_history)
-          }
+          # if (initial_search == TRUE) {
+          #   set_mo_history(a.x_backup, get_mo_code(x[i], property), 0, force = force_mo_history, disable = disable_mo_history)
+          # }
           return(x[i])
         }
         
@@ -1099,7 +1099,7 @@ exec_as.mo <- function(x,
               message("Running '", d.x_withspaces_start_end, "' and '", e.x_withspaces_start_only, "'")
             }
             found <- data.old_to_check[fullname_lower %like_case% d.x_withspaces_start_end
-                                          | fullname_lower %like_case% e.x_withspaces_start_only]
+                                       | fullname_lower %like_case% e.x_withspaces_start_only]
             if (NROW(found) > 0 & nchar(g.x_backup_without_spp) >= 6) {
               if (property == "ref") {
                 # when property is "ref" (which is the case in mo_ref, mo_authors and mo_year), return the old value, so:
@@ -1119,9 +1119,9 @@ exec_as.mo <- function(x,
                                       format_uncertainty_as_df(uncertainty_level = now_checks_for_uncertainty_level,
                                                                input = a.x_backup,
                                                                result_mo = microorganismsDT[col_id == found[1, col_id_new], mo]))
-              if (initial_search == TRUE) {
-                set_mo_history(a.x_backup, get_mo_code(x, property), 1, force = force_mo_history, disable = disable_mo_history)
-              }
+              # if (initial_search == TRUE) {
+              #   set_mo_history(a.x_backup, get_mo_code(x, property), 1, force = force_mo_history, disable = disable_mo_history)
+              # }
               return(x)
             }
             
@@ -1520,7 +1520,7 @@ exec_as.mo <- function(x,
       # THEN TRY PREVALENT IN HUMAN INFECTIONS ----
       x[i] <- check_per_prevalence(data_to_check = reference_data_to_use[prevalence == 2],
                                    data.old_to_check = microorganisms.oldDT[prevalence %in% c(2, 3)], # run all other old MOs the second time,
-                                                                                                      # otherwise e.g. mo_ref("Chlamydia psittaci") doesn't work correctly
+                                   # otherwise e.g. mo_ref("Chlamydia psittaci") doesn't work correctly
                                    a.x_backup = x_backup[i],
                                    b.x_trimmed = x_trimmed[i],
                                    c.x_trimmed_without_group = x_trimmed_without_group[i],
@@ -1931,12 +1931,12 @@ print.mo_renamed <- function(x, ...) {
   }
   for (i in 1:nrow(x)) {
     message(blue(paste0("NOTE: ", 
-                    italic(x$old_name[i]), ifelse(x$old_ref[i] %in% c("", NA), "", 
-                                                  paste0(" (",  gsub("et al.", italic("et al."), x$old_ref[i]), ")")),
-                    " was renamed ", 
-                    italic(x$new_name[i]), ifelse(x$new_ref[i] %in% c("", NA), "", 
-                                                  paste0(" (",  gsub("et al.", italic("et al."), x$new_ref[i]), ")")),
-                    " [", x$mo[i], "]")))
+                        italic(x$old_name[i]), ifelse(x$old_ref[i] %in% c("", NA), "", 
+                                                      paste0(" (",  gsub("et al.", italic("et al."), x$old_ref[i]), ")")),
+                        " was renamed ", 
+                        italic(x$new_name[i]), ifelse(x$new_ref[i] %in% c("", NA), "", 
+                                                      paste0(" (",  gsub("et al.", italic("et al."), x$new_ref[i]), ")")),
+                        " [", x$mo[i], "]")))
   }
 }
 

@@ -181,12 +181,12 @@ ab_validate <- function(x, property, ...) {
     library("AMR")
     # check onLoad() in R/zzz.R: data tables are created there.
   }
-
+  
   # try to catch an error when inputting an invalid parameter
   # so the 'call.' can be set to FALSE
   tryCatch(x[1L] %in% AMR::antibiotics[1, property],
            error = function(e) stop(e$message, call. = FALSE))
-
+  x_bak <- x
   if (!all(x %in% AMR::antibiotics[, property])) {
     x <- data.frame(ab = AMR::as.ab(x, ...), stringsAsFactors = FALSE) %>%
       left_join(AMR::antibiotics, by = "ab") %>%
@@ -199,6 +199,8 @@ ab_validate <- function(x, property, ...) {
   } else if (property %like% "ddd") {
     return(as.double(x))
   } else {
+    # return "(input)" for NAs
+    x[is.na(x) & !is.na(x_bak)] <- paste0("(", x_bak[is.na(x) & !is.na(x_bak)], ")")
     return(x)
   }
 }

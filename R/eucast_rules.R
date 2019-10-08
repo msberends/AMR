@@ -429,7 +429,7 @@ eucast_rules <- function(x,
             x_original <<- x_original %>% mutate_at(vars(cols), ~factor(x = as.character(.), levels = c(to, levels(.))))
             x <<- x %>% mutate_at(vars(cols), ~factor(x = as.character(.), levels = c(to, levels(.))))
             x_original[rows, cols] <<- to
-            warning('Value "', to, '" added to the factor levels of column(s) `', paste(cols, collapse = '`, `'), '` because this value was not an existing factor level.\nA better way is to use as.rsi() on beforehand on antibiotic columns to guarantee the right structure.', call. = FALSE)
+            warning('Value "', to, '" added to the factor levels of column(s) `', paste(cols, collapse = '`, `'), '` because this value was not an existing factor level.\nA better way is to use as.rsi() on beforehand on antimicrobial columns to guarantee the right structure.', call. = FALSE)
             txt_warning()
             warned <<- FALSE
           } else {
