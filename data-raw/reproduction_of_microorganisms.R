@@ -189,8 +189,14 @@ MOs <- MOs %>%
                       authors),
          # fix beginning and ending
          ref = gsub(", $", "", ref),
-         ref = gsub("^, ", "", ref)
+         ref = gsub("^, ", "", ref),
+         ref = gsub("^(emend|et al.,?)", "", ref),
+         ref = trimws(ref)
   )
+# a lot start with a lowercase character - fix that
+MOs$ref[!grepl("^d[A-Z]", MOs$ref)] <- gsub("^([a-z])", "\\U\\1", MOs$ref[!grepl("^d[A-Z]", MOs$ref)], perl = TRUE)
+# specific one for the French that are named dOrbigny 
+MOs$ref[grepl("^d[A-Z]", MOs$ref)] <- gsub("^d", "d'", MOs$ref[grepl("^d[A-Z]", MOs$ref)])
 
 # Remove non-ASCII characters (these are not allowed by CRAN)
 MOs <- MOs %>%

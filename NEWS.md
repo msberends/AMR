@@ -1,5 +1,5 @@
-# AMR 0.7.1.9100
-<small>Last updated: 08-Oct-2019</small>
+# AMR 0.7.1.9101
+<small>Last updated: 09-Oct-2019</small>
 
 ### Breaking
 * Determination of first isolates now **excludes** all 'unknown' microorganisms at default, i.e. microbial code `"UNKNOWN"`. They can be included with the new parameter `include_unknown`:
@@ -26,33 +26,34 @@
 * Renamed data set `septic_patients` to `example_isolates`
 
 ### New
-* Function `bug_drug_combinations()` to quickly get a `data.frame` with the antimicrobial resistance of any bug-drug combination in a data set. The columns with microorganism codes is guessed automatically and its input is transformed with `mo_shortname()` at default:
+* Function `bug_drug_combinations()` to quickly get a `data.frame` with the results of all bug-drug combinations in a data set. The column containing microorganism codes is guessed automatically and its input is transformed with `mo_shortname()` at default:
   ```r
   x <- bug_drug_combinations(example_isolates)
-  # NOTE: Using column `mo` as input for `col_mo`.
-  x[1:5, ]
-  #>     ab            mo   S  I   R total
-  #>  1 AMC          CoNS 178  0 132   310
-  #>  2 AMC       E. coli 332 74  61   467
-  #>  3 AMC K. pneumoniae  49  3   6    58
-  #>  4 AMC P. aeruginosa   0  0  30    30
-  #>  5 AMC  P. mirabilis  28  7   1    36
+  #> NOTE: Using column `mo` as input for `col_mo`.
+  x[1:4, ]
+  #>             mo  ab S I R total
+  #> 1 A. baumannii AMC 0 0 3     3
+  #> 2 A. baumannii AMK 0 0 0     0
+  #> 3 A. baumannii AMP 0 0 3     3
+  #> 4 A. baumannii AMX 0 0 3     3
+  #> NOTE: Use 'format()' on this result to get a publicable/printable format.
 
   # change the transformation with the FUN argument to anything you like:
   x <- bug_drug_combinations(example_isolates, FUN = mo_gramstain)
-  # NOTE: Using column `mo` as input for `col_mo`.
+  #> NOTE: Using column `mo` as input for `col_mo`.
   x[1:4, ]
-  #>     ab            mo   S  I   R total
-  #>  1 AMC Gram-negative 469 89 174   732
-  #>  2 AMC Gram-positive 873  2 272  1147
-  #>  3 AMK Gram-negative 251  0   2   253
-  #>  4 AMK Gram-positive   0  0 100   100
+  #>              mo  ab   S  I   R total
+  #> 1 Gram-negative AMC 469 89 174   732
+  #> 2 Gram-negative AMK 251  0   2   253
+  #> 3 Gram-negative AMP 227  0 405   632
+  #> 4 Gram-negative AMX 227  0 405   632
+  #> NOTE: Use 'format()' on this result to get a publicable/printable format.
   ```
   You can format this to a printable format, ready for reporting or exporting to e.g. Excel with the base R `format()` function:
   ```r
   format(x, combine_IR = FALSE)
   ```
-* Additional way to calculate co-resistance, i.e. when using multiple antimicrobials as input for `portion_*` functions or `count_*` functions. This can be used to determine the empiric susceptibily of a combination therapy. A new parameter `only_all_tested` (**which defaults to `FALSE`**) replaces the old `also_single_tested` and can be used to select one of the two methods to count isolates and calculate portions. The difference can be seen in this example table (which is also on the `portion` and `count` help pages), where the %SI is being determined:
+* Additional way to calculate co-resistance, i.e. when using multiple antimicrobials as input for `portion_*` functions or `count_*` functions. This can be used to determine the empiric susceptibility of a combination therapy. A new parameter `only_all_tested` (**which defaults to `FALSE`**) replaces the old `also_single_tested` and can be used to select one of the two methods to count isolates and calculate portions. The difference can be seen in this example table (which is also on the `portion` and `count` help pages), where the %SI is being determined:
 
   ```r
   # --------------------------------------------------------------------
