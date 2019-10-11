@@ -26,6 +26,7 @@ stages:
   - build
   - test
   - deploy
+  - lint
 
 image: rocker/r-base
 
@@ -131,3 +132,12 @@ pages:
   artifacts:
     paths:
       - public
+
+lintr:
+  stage: lint
+  when: on_success
+  script:
+    # install missing and outdated packages
+    - Rscript -e 'source(".gitlab-ci.R"); gl_update_pkg_all(repos = "https://cran.rstudio.com", quiet = TRUE, install_pkgdown = FALSE, install_lintr = TRUE)'
+    # check all syntax with lintr
+    - Rscript -e 'lintr::lint_package()'

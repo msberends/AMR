@@ -84,7 +84,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">0.7.1.9100</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">0.7.1.9102</span>
       </span>
     </div>
 
@@ -231,11 +231,11 @@
       
     </div>
 
-    <div id="amr-0-7-1-9100" class="section level1">
+    <div id="amr-0-7-1-9102" class="section level1">
 <h1 class="page-header">
-<a href="#amr-0-7-1-9100" class="anchor"></a>AMR 0.7.1.9100<small> Unreleased </small>
+<a href="#amr-0-7-1-9102" class="anchor"></a>AMR 0.7.1.9102<small> Unreleased </small>
 </h1>
-<p><small>Last updated: 08-Oct-2019</small></p>
+<p><small>Last updated: 11-Oct-2019</small></p>
 <div id="breaking" class="section level3">
 <h3 class="hasAnchor">
 <a href="#breaking" class="anchor"></a>Breaking</h3>
@@ -267,31 +267,32 @@ This is important, because a value like <code>"testvalue"</code> could never be 
 <a href="#new" class="anchor"></a>New</h3>
 <ul>
 <li>
-<p>Function <code><a href="../reference/bug_drug_combinations.html">bug_drug_combinations()</a></code> to quickly get a <code>data.frame</code> with the antimicrobial resistance of any bug-drug combination in a data set. The columns with microorganism codes is guessed automatically and its input is transformed with <code><a href="../reference/mo_property.html">mo_shortname()</a></code> at default:</p>
+<p>Function <code><a href="../reference/bug_drug_combinations.html">bug_drug_combinations()</a></code> to quickly get a <code>data.frame</code> with the results of all bug-drug combinations in a data set. The column containing microorganism codes is guessed automatically and its input is transformed with <code><a href="../reference/mo_property.html">mo_shortname()</a></code> at default:</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1">x &lt;-<span class="st"> </span><span class="kw"><a href="../reference/bug_drug_combinations.html">bug_drug_combinations</a></span>(example_isolates)</a>
-<a class="sourceLine" id="cb3-2" data-line-number="2"><span class="co"># </span><span class="al">NOTE</span><span class="co">: Using column `mo` as input for `col_mo`.</span></a>
-<a class="sourceLine" id="cb3-3" data-line-number="3">x[<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>, ]</a>
-<a class="sourceLine" id="cb3-4" data-line-number="4"><span class="co">#&gt;     ab            mo   S  I   R total</span></a>
-<a class="sourceLine" id="cb3-5" data-line-number="5"><span class="co">#&gt;  1 AMC          CoNS 178  0 132   310</span></a>
-<a class="sourceLine" id="cb3-6" data-line-number="6"><span class="co">#&gt;  2 AMC       E. coli 332 74  61   467</span></a>
-<a class="sourceLine" id="cb3-7" data-line-number="7"><span class="co">#&gt;  3 AMC K. pneumoniae  49  3   6    58</span></a>
-<a class="sourceLine" id="cb3-8" data-line-number="8"><span class="co">#&gt;  4 AMC P. aeruginosa   0  0  30    30</span></a>
-<a class="sourceLine" id="cb3-9" data-line-number="9"><span class="co">#&gt;  5 AMC  P. mirabilis  28  7   1    36</span></a>
+<a class="sourceLine" id="cb3-2" data-line-number="2"><span class="co">#&gt; </span><span class="al">NOTE</span><span class="co">: Using column `mo` as input for `col_mo`.</span></a>
+<a class="sourceLine" id="cb3-3" data-line-number="3">x[<span class="dv">1</span><span class="op">:</span><span class="dv">4</span>, ]</a>
+<a class="sourceLine" id="cb3-4" data-line-number="4"><span class="co">#&gt;             mo  ab S I R total</span></a>
+<a class="sourceLine" id="cb3-5" data-line-number="5"><span class="co">#&gt; 1 A. baumannii AMC 0 0 3     3</span></a>
+<a class="sourceLine" id="cb3-6" data-line-number="6"><span class="co">#&gt; 2 A. baumannii AMK 0 0 0     0</span></a>
+<a class="sourceLine" id="cb3-7" data-line-number="7"><span class="co">#&gt; 3 A. baumannii AMP 0 0 3     3</span></a>
+<a class="sourceLine" id="cb3-8" data-line-number="8"><span class="co">#&gt; 4 A. baumannii AMX 0 0 3     3</span></a>
+<a class="sourceLine" id="cb3-9" data-line-number="9"><span class="co">#&gt; </span><span class="al">NOTE</span><span class="co">: Use 'format()' on this result to get a publicable/printable format.</span></a>
 <a class="sourceLine" id="cb3-10" data-line-number="10"></a>
 <a class="sourceLine" id="cb3-11" data-line-number="11"><span class="co"># change the transformation with the FUN argument to anything you like:</span></a>
 <a class="sourceLine" id="cb3-12" data-line-number="12">x &lt;-<span class="st"> </span><span class="kw"><a href="../reference/bug_drug_combinations.html">bug_drug_combinations</a></span>(example_isolates, <span class="dt">FUN =</span> mo_gramstain)</a>
-<a class="sourceLine" id="cb3-13" data-line-number="13"><span class="co"># </span><span class="al">NOTE</span><span class="co">: Using column `mo` as input for `col_mo`.</span></a>
+<a class="sourceLine" id="cb3-13" data-line-number="13"><span class="co">#&gt; </span><span class="al">NOTE</span><span class="co">: Using column `mo` as input for `col_mo`.</span></a>
 <a class="sourceLine" id="cb3-14" data-line-number="14">x[<span class="dv">1</span><span class="op">:</span><span class="dv">4</span>, ]</a>
-<a class="sourceLine" id="cb3-15" data-line-number="15"><span class="co">#&gt;     ab            mo   S  I   R total</span></a>
-<a class="sourceLine" id="cb3-16" data-line-number="16"><span class="co">#&gt;  1 AMC Gram-negative 469 89 174   732</span></a>
-<a class="sourceLine" id="cb3-17" data-line-number="17"><span class="co">#&gt;  2 AMC Gram-positive 873  2 272  1147</span></a>
-<a class="sourceLine" id="cb3-18" data-line-number="18"><span class="co">#&gt;  3 AMK Gram-negative 251  0   2   253</span></a>
-<a class="sourceLine" id="cb3-19" data-line-number="19"><span class="co">#&gt;  4 AMK Gram-positive   0  0 100   100</span></a></code></pre></div>
+<a class="sourceLine" id="cb3-15" data-line-number="15"><span class="co">#&gt;              mo  ab   S  I   R total</span></a>
+<a class="sourceLine" id="cb3-16" data-line-number="16"><span class="co">#&gt; 1 Gram-negative AMC 469 89 174   732</span></a>
+<a class="sourceLine" id="cb3-17" data-line-number="17"><span class="co">#&gt; 2 Gram-negative AMK 251  0   2   253</span></a>
+<a class="sourceLine" id="cb3-18" data-line-number="18"><span class="co">#&gt; 3 Gram-negative AMP 227  0 405   632</span></a>
+<a class="sourceLine" id="cb3-19" data-line-number="19"><span class="co">#&gt; 4 Gram-negative AMX 227  0 405   632</span></a>
+<a class="sourceLine" id="cb3-20" data-line-number="20"><span class="co">#&gt; </span><span class="al">NOTE</span><span class="co">: Use 'format()' on this result to get a publicable/printable format.</span></a></code></pre></div>
 <p>You can format this to a printable format, ready for reporting or exporting to e.g. Excel with the base R <code><a href="https://rdrr.io/r/base/format.html">format()</a></code> function:</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/base/format.html">format</a></span>(x, <span class="dt">combine_IR =</span> <span class="ot">FALSE</span>)</a></code></pre></div>
 </li>
 <li>
-<p>Additional way to calculate co-resistance, i.e. when using multiple antimicrobials as input for <code>portion_*</code> functions or <code>count_*</code> functions. This can be used to determine the empiric susceptibily of a combination therapy. A new parameter <code>only_all_tested</code> (<strong>which defaults to <code>FALSE</code></strong>) replaces the old <code>also_single_tested</code> and can be used to select one of the two methods to count isolates and calculate portions. The difference can be seen in this example table (which is also on the <code>portion</code> and <code>count</code> help pages), where the %SI is being determined:</p>
+<p>Additional way to calculate co-resistance, i.e. when using multiple antimicrobials as input for <code>portion_*</code> functions or <code>count_*</code> functions. This can be used to determine the empiric susceptibility of a combination therapy. A new parameter <code>only_all_tested</code> (<strong>which defaults to <code>FALSE</code></strong>) replaces the old <code>also_single_tested</code> and can be used to select one of the two methods to count isolates and calculate portions. The difference can be seen in this example table (which is also on the <code>portion</code> and <code>count</code> help pages), where the %SI is being determined:</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="co"># --------------------------------------------------------------------</span></a>
 <a class="sourceLine" id="cb5-2" data-line-number="2"><span class="co">#                     only_all_tested = FALSE  only_all_tested = TRUE</span></a>
 <a class="sourceLine" id="cb5-3" data-line-number="3"><span class="co">#                     -----------------------  -----------------------</span></a>
@@ -377,6 +378,7 @@ Since this is a major change, usage of the old <code>also_single_tested</code> w
 <a href="#other" class="anchor"></a>Other</h4>
 <ul>
 <li>Added Prof. Dr. Casper Albers as doctoral advisor and added Dr. Judith Fonville, Eric Hazenberg, Dr. Bart Meijer, Dr. Dennis Souverein and Annick Lenglet as contributors</li>
+<li>Cleaned the coding style of every single syntax line in this package with the help of the <code>lintr</code> package</li>
 </ul>
 </div>
 </div>
@@ -1290,7 +1292,7 @@ Using <code><a href="../reference/as.mo.html">as.mo(..., allow_uncertain = 3)</a
     <div id="tocnav">
       <h2>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
-        <li><a href="#amr-0-7-1-9100">0.7.1.9100</a></li>
+        <li><a href="#amr-0-7-1-9102">0.7.1.9102</a></li>
         <li><a href="#amr-0-7-1">0.7.1</a></li>
         <li><a href="#amr-0-7-0">0.7.0</a></li>
         <li><a href="#amr-0-6-1">0.6.1</a></li>

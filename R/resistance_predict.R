@@ -120,7 +120,7 @@ resistance_predict <- function(x,
                                ...) {
 
   if (nrow(x) == 0) {
-    stop('This table does not contain any observations.')
+    stop("This table does not contain any observations.")
   }
   
   if (is.null(model)) {
@@ -128,17 +128,17 @@ resistance_predict <- function(x,
   }
 
   if (!col_ab %in% colnames(x)) {
-    stop('Column ', col_ab, ' not found.')
+    stop("Column ", col_ab, " not found.")
   }
 
   dots <- unlist(list(...))
   if (length(dots) != 0) {
     # backwards compatibility with old parameters
     dots.names <- dots %>% names()
-    if ('tbl' %in% dots.names) {
-      x <- dots[which(dots.names == 'tbl')]
+    if ("tbl" %in% dots.names) {
+      x <- dots[which(dots.names == "tbl")]
     }
-    if ('I_as_R' %in% dots.names) {
+    if ("I_as_R" %in% dots.names) {
       warning("`I_as_R is deprecated - use I_as_S instead.", call. = FALSE)
     }
   }
@@ -152,7 +152,7 @@ resistance_predict <- function(x,
   }
 
   if (!col_date %in% colnames(x)) {
-    stop('Column ', col_date, ' not found.')
+    stop("Column ", col_date, " not found.")
   }
 
   if (n_groups(x) > 1) {
@@ -161,10 +161,10 @@ resistance_predict <- function(x,
   }
 
   year <- function(x) {
-    if (all(grepl('^[0-9]{4}$', x))) {
+    if (all(grepl("^[0-9]{4}$", x))) {
       x
     } else {
-      as.integer(format(as.Date(x), '%Y'))
+      as.integer(format(as.Date(x), "%Y"))
     }
   }
   
@@ -181,8 +181,8 @@ resistance_predict <- function(x,
   }
   df <- df %>% 
     filter_at(col_ab, all_vars(!is.na(.))) %>%
-    mutate(year = pull(., col_date) %>% year()) %>%
-    group_by_at(c('year', col_ab)) %>%
+    mutate(year = year(pull(., col_date))) %>%
+    group_by_at(c("year", col_ab)) %>%
     summarise(n())
 
   if (df %>% pull(col_ab) %>% n_distinct(na.rm = TRUE) < 2) {
@@ -191,7 +191,7 @@ resistance_predict <- function(x,
          call. = FALSE)
   }
 
-  colnames(df) <- c('year', 'antibiotic', 'observations')
+  colnames(df) <- c("year", "antibiotic", "observations")
   df <- df %>%
     filter(!is.na(antibiotic)) %>%
     tidyr::spread(antibiotic, observations, fill = 0) %>%
@@ -202,7 +202,7 @@ resistance_predict <- function(x,
     as.matrix()
 
   if (NROW(df) == 0) {
-    stop('There are no observations.')
+    stop("There are no observations.")
   }
 
   year_lowest <- min(df$year)
@@ -217,12 +217,12 @@ resistance_predict <- function(x,
 
   years <- list(year = seq(from = year_min, to = year_max, by = year_every))
 
-  if (model %in% c('binomial', 'binom', 'logit')) {
+  if (model %in% c("binomial", "binom", "logit")) {
     model <- "binomial"
     model_lm <- with(df, glm(df_matrix ~ year, family = binomial))
     if (info == TRUE) {
-      cat('\nLogistic regression model (logit) with binomial distribution')
-      cat('\n------------------------------------------------------------\n')
+      cat("\nLogistic regression model (logit) with binomial distribution")
+      cat("\n------------------------------------------------------------\n")
       print(summary(model_lm))
     }
 
@@ -230,12 +230,12 @@ resistance_predict <- function(x,
     prediction <- predictmodel$fit
     se <- predictmodel$se.fit
 
-  } else if (model %in% c('loglin', 'poisson')) {
+  } else if (model %in% c("loglin", "poisson")) {
     model <- "poisson"
     model_lm <- with(df, glm(R ~ year, family = poisson))
     if (info == TRUE) {
-      cat('\nLog-linear regression model (loglin) with poisson distribution')
-      cat('\n--------------------------------------------------------------\n')
+      cat("\nLog-linear regression model (loglin) with poisson distribution")
+      cat("\n--------------------------------------------------------------\n")
       print(summary(model_lm))
     }
 
@@ -243,12 +243,12 @@ resistance_predict <- function(x,
     prediction <- predictmodel$fit
     se <- predictmodel$se.fit
 
-  } else if (model %in% c('lin', 'linear')) {
+  } else if (model %in% c("lin", "linear")) {
     model <- "linear"
     model_lm <- with(df, lm((R / (R + S)) ~ year))
     if (info == TRUE) {
-      cat('\nLinear regression model')
-      cat('\n-----------------------\n')
+      cat("\nLinear regression model")
+      cat("\n-----------------------\n")
       print(summary(model_lm))
     }
 
@@ -257,7 +257,7 @@ resistance_predict <- function(x,
     se <- predictmodel$se.fit
 
   } else {
-    stop('No valid model selected. See ?resistance_predict.')
+    stop("No valid model selected. See ?resistance_predict.")
   }
 
   # prepare the output dataframe
@@ -268,7 +268,7 @@ resistance_predict <- function(x,
     mutate(se_min = value - se,
            se_max = value + se)
 
-  if (model == 'poisson') {
+  if (model == "poisson") {
     df_prediction <- df_prediction %>%
       mutate(value = value %>%
                format(scientific = FALSE) %>%

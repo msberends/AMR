@@ -175,7 +175,7 @@ age_groups <- function(x, split_at = c(12, 25, 55, 75), na.rm = FALSE) {
   # turn input values to 'split_at' indices
   y <- x
   labs <- split_at
-  for (i in 1:length(split_at)) {
+  for (i in seq_len(length(split_at))) {
     y[x >= split_at[i]] <- i
     # create labels
     labs[i - 1] <- paste0(unique(c(split_at[i - 1], split_at[i] - 1)), collapse = "-")

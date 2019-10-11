@@ -69,7 +69,7 @@ like <- function(x, pattern, ignore.case = TRUE) {
     } else {
       # x and pattern are of same length, so items with each other
       res <- vector(length = length(pattern))
-      for (i in 1:length(res)) {
+      for (i in seq_len(length(res))) {
         if (is.factor(x[i])) {
           res[i] <- as.integer(x[i]) %in% base::grep(pattern[i], levels(x[i]), ignore.case = ignore.case)
         } else {

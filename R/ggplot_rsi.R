@@ -292,9 +292,9 @@ geom_rsi <- function(position = NULL,
     x <- substr(x, 2, nchar(x) - 1)
   }
 
-  if (tolower(x) %in% tolower(c('ab', 'abx', 'antibiotics'))) {
+  if (tolower(x) %in% tolower(c("ab", "abx", "antibiotics"))) {
     x <- "antibiotic"
-  } else if (tolower(x) %in% tolower(c('SIR', 'RSI', 'interpretations', 'result'))) {
+  } else if (tolower(x) %in% tolower(c("SIR", "RSI", "interpretations", "result"))) {
     x <- "interpretation"
   }
 
@@ -327,9 +327,9 @@ facet_rsi <- function(facet = c("interpretation", "antibiotic"), nrow = NULL) {
     facet <- substr(facet, 2, nchar(facet) - 1)
   }
 
-  if (tolower(facet) %in% tolower(c('SIR', 'RSI', 'interpretations', 'result'))) {
+  if (tolower(facet) %in% tolower(c("SIR", "RSI", "interpretations", "result"))) {
     facet <- "interpretation"
-  } else if (tolower(facet) %in% tolower(c('ab', 'abx', 'antibiotics'))) {
+  } else if (tolower(facet) %in% tolower(c("ab", "abx", "antibiotics"))) {
     facet <- "antibiotic"
   }
 
@@ -358,8 +358,8 @@ scale_rsi_colours <- function(colours = c(S = "#61a8ff",
                                           IR = "#ff6961",
                                           R = "#ff6961")) {
   stopifnot_installed_package("ggplot2")
-  #ggplot2::scale_fill_brewer(palette = "RdYlGn")
-  #ggplot2::scale_fill_manual(values = c("#b22222", "#ae9c20", "#7cfc00"))
+  # previous colour: palette = "RdYlGn"
+  # previous colours: values = c("#b22222", "#ae9c20", "#7cfc00")
 
   if (!identical(colours, FALSE)) {
     original_cols <- c(S = "#61a8ff",

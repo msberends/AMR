@@ -1,0 +1,2 @@
+linters: with_defaults(line_length_linter = NULL, trailing_whitespace_linter = NULL, object_name_linter = NULL, cyclocomp_linter = NULL, object_usage_linter = NULL, object_length_linter(length = 50L))
+exclusions: list("R/mo_history.R", "tests/testthat/test-mo_history.R")

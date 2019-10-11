@@ -37,7 +37,7 @@ kurtosis <- function(x, na.rm = FALSE) {
 #' @exportMethod kurtosis.default
 #' @rdname kurtosis
 #' @export
-kurtosis.default <- function (x, na.rm = FALSE) {
+kurtosis.default <- function(x, na.rm = FALSE) {
   x <- as.vector(x)
   if (na.rm == TRUE) {
     x <- x[!is.na(x)]
@@ -50,13 +50,13 @@ kurtosis.default <- function (x, na.rm = FALSE) {
 #' @exportMethod kurtosis.matrix
 #' @rdname kurtosis
 #' @export
-kurtosis.matrix <- function (x, na.rm = FALSE) {
+kurtosis.matrix <- function(x, na.rm = FALSE) {
   base::apply(x, 2, kurtosis.default, na.rm = na.rm)
 }
 
 #' @exportMethod kurtosis.data.frame
 #' @rdname kurtosis
 #' @export
-kurtosis.data.frame <- function (x, na.rm = FALSE) {
+kurtosis.data.frame <- function(x, na.rm = FALSE) {
   base::sapply(x, kurtosis.default, na.rm = na.rm)
 }

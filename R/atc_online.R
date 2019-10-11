@@ -73,8 +73,8 @@
 #' }
 atc_online_property <- function(atc_code,
                                 property,
-                                administration = 'O',
-                                url = 'https://www.whocc.no/atc_ddd_index/?code=%s&showdescription=no') {
+                                administration = "O",
+                                url = "https://www.whocc.no/atc_ddd_index/?code=%s&showdescription=no") {
 
   if (!all(c("curl", "rvest", "xml2") %in% rownames(utils::installed.packages()))) {
     stop("Packages 'xml2', 'rvest' and 'curl' are required for this function")
@@ -90,15 +90,15 @@ atc_online_property <- function(atc_code,
   }
 
   if (length(property) != 1L) {
-    stop('`property` must be of length 1', call. = FALSE)
+    stop("`property` must be of length 1", call. = FALSE)
   }
   if (length(administration) != 1L) {
-    stop('`administration` must be of length 1', call. = FALSE)
+    stop("`administration` must be of length 1", call. = FALSE)
   }
 
   # also allow unit as property
-  if (property %like% 'unit') {
-    property <- 'U'
+  if (property %like% "unit") {
+    property <- "U"
   }
 
   # validation of properties
@@ -109,12 +109,12 @@ atc_online_property <- function(atc_code,
   valid_properties <- tolower(valid_properties)
 
   if (!property %in% valid_properties) {
-    stop('Invalid `property`, use one of ', paste(valid_properties.bak, collapse = ", "), '.')
+    stop("Invalid `property`, use one of ", paste(valid_properties.bak, collapse = ", "), ".")
   }
 
-  if (property == 'ddd') {
+  if (property == "ddd") {
     returnvalue <- rep(NA_real_, length(atc_code))
-  } else if (property == 'groups') {
+  } else if (property == "groups") {
     returnvalue <- list()
   } else {
     returnvalue <- rep(NA_character_, length(atc_code))
@@ -122,11 +122,11 @@ atc_online_property <- function(atc_code,
 
   progress <- progress_estimated(n = length(atc_code))
 
-  for (i in 1:length(atc_code)) {
+  for (i in seq_len(length(atc_code))) {
 
     progress$tick()$print()
 
-    atc_url <- sub('%s', atc_code[i], url, fixed = TRUE)
+    atc_url <- sub("%s", atc_code[i], url, fixed = TRUE)
 
     if (property == "groups") {
       tbl <- xml2::read_html(atc_url) %>%
@@ -141,34 +141,34 @@ atc_online_property <- function(atc_code,
       # select only text items where URL like "code="
       texts <- texts[grepl("?code=", tolower(hrefs), fixed = TRUE)]
       # last one is antibiotics, skip it
-      texts <- texts[1:length(texts) - 1]
+      texts <- texts[seq_len(length(texts)) - 1]
       returnvalue <- c(list(texts), returnvalue)
 
     } else {
       tbl <- xml2::read_html(atc_url) %>%
-        rvest::html_nodes('table') %>%
+        rvest::html_nodes("table") %>%
         rvest::html_table(header = TRUE) %>%
         as.data.frame(stringsAsFactors = FALSE)
 
       # case insensitive column names
-      colnames(tbl) <- tolower(colnames(tbl)) %>% gsub('^atc.*', 'atc', .)
+      colnames(tbl) <- tolower(colnames(tbl)) %>% gsub("^atc.*", "atc", .)
 
       if (length(tbl) == 0) {
-        warning('ATC not found: ', atc_code[i], '. Please check ', atc_url, '.', call. = FALSE)
+        warning("ATC not found: ", atc_code[i], ". Please check ", atc_url, ".", call. = FALSE)
         returnvalue[i] <- NA
         next
       }
 
-      if (property %in% c('atc', 'name')) {
+      if (property %in% c("atc", "name")) {
         # ATC and name are only in first row
         returnvalue[i] <- tbl[1, property]
       } else {
-        if (!'adm.r' %in% colnames(tbl) | is.na(tbl[1, 'adm.r'])) {
+        if (!"adm.r" %in% colnames(tbl) | is.na(tbl[1, "adm.r"])) {
           returnvalue[i] <- NA
           next
         } else {
-          for (j in 1:nrow(tbl)) {
-            if (tbl[j, 'adm.r'] == administration) {
+          for (j in seq_len(length(tbl))) {
+            if (tbl[j, "adm.r"] == administration) {
               returnvalue[i] <- tbl[j, property]
             }
           }
@@ -195,4 +195,3 @@ atc_online_groups <- function(atc_code, ...) {
 atc_online_ddd <- function(atc_code, ...) {
   atc_online_property(atc_code = atc_code, property = "ddd", ...)
 }
-

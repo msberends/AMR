@@ -34,4 +34,3 @@ test_that("frequency table works", {
   library(dplyr)
   expect_true(is.freq(example_isolates %>% freq(AMX)))
 })
-

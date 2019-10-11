@@ -22,4 +22,3 @@ packrat/lib*/
 packrat/src/
 data-raw/taxon.tab
 data-raw/DSMZ_bactnames.xlsx
-R/aa_test.R

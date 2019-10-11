@@ -79,8 +79,6 @@ as.ab <- function(x, ...) {
   x_bak_clean <- gsub("_[A-Z]{2}[0-9_]{0,3}$", "", x_bak_clean, ignore.case = TRUE)
   # remove part between brackets if that's followed by another string
   x_bak_clean <- gsub("(.*)+ [(].*[)]", "\\1", x_bak_clean)
-  # keep only a-Z, 0-9, space, slash and dash
-  # x_bak_clean <- gsub("[^A-Z0-9 /-]", "", x_bak_clean, ignore.case = TRUE)
   # keep only max 1 space
   x_bak_clean <- trimws(gsub(" +", " ", x_bak_clean, ignore.case = TRUE))
   # non-character, space or number should be a slash
@@ -93,7 +91,7 @@ as.ab <- function(x, ...) {
   x_new <- rep(NA_character_, length(x))
   x_unknown <- character(0)
 
-  for (i in 1:length(x)) {
+  for (i in seq_len(length(x))) {
     if (is.na(x[i]) | is.null(x[i])) {
       next
     }
@@ -108,28 +106,28 @@ as.ab <- function(x, ...) {
     }
 
     # exact AB code
-    found <- AMR::antibiotics[which(AMR::antibiotics$ab == toupper(x[i])),]$ab
+    found <- AMR::antibiotics[which(AMR::antibiotics$ab == toupper(x[i])), ]$ab
     if (length(found) > 0) {
       x_new[i] <- found[1L]
       next
     }
 
     # exact ATC code
-    found <- AMR::antibiotics[which(AMR::antibiotics$atc == toupper(x[i])),]$ab
+    found <- AMR::antibiotics[which(AMR::antibiotics$atc == toupper(x[i])), ]$ab
     if (length(found) > 0) {
       x_new[i] <- found[1L]
       next
     }
 
     # exact CID code
-    found <- AMR::antibiotics[which(AMR::antibiotics$cid == x[i]),]$ab
+    found <- AMR::antibiotics[which(AMR::antibiotics$cid == x[i]), ]$ab
     if (length(found) > 0) {
       x_new[i] <- found[1L]
       next
     }
 
     # exact name
-    found <- AMR::antibiotics[which(toupper(AMR::antibiotics$name) == toupper(x[i])),]$ab
+    found <- AMR::antibiotics[which(toupper(AMR::antibiotics$name) == toupper(x[i])), ]$ab
     if (length(found) > 0) {
       x_new[i] <- found[1L]
       next
@@ -163,7 +161,7 @@ as.ab <- function(x, ...) {
 
     # first >=4 characters of name
     if (nchar(x[i]) >= 4) {
-      found <- AMR::antibiotics[which(toupper(AMR::antibiotics$name) %like% paste0("^", x[i])),]$ab
+      found <- AMR::antibiotics[which(toupper(AMR::antibiotics$name) %like% paste0("^", x[i])), ]$ab
       if (length(found) > 0) {
         x_new[i] <- found[1L]
         next
@@ -193,7 +191,7 @@ as.ab <- function(x, ...) {
     x_spelling <- gsub("(.)\\1+", "\\1+", x_spelling)
   
     # try if name starts with it
-    found <- AMR::antibiotics[which(AMR::antibiotics$name %like% paste0("^", x_spelling)),]$ab
+    found <- AMR::antibiotics[which(AMR::antibiotics$name %like% paste0("^", x_spelling)), ]$ab
     if (length(found) > 0) {
       x_new[i] <- found[1L]
       next
@@ -233,7 +231,7 @@ as.ab <- function(x, ...) {
       # transform back from other languages and try again
       x_translated <- paste(lapply(strsplit(x[i], "[^a-zA-Z0-9 ]"),
                                    function(y) {
-                                     for (i in 1:length(y)) {
+                                     for (i in seq_len(length(y))) {
                                        y[i] <- ifelse(tolower(y[i]) %in% tolower(translations_file$replacement),
                                                       translations_file[which(tolower(translations_file$replacement) == tolower(y[i]) &
                                                                                 !isFALSE(translations_file$fixed)), "pattern"],
@@ -252,7 +250,7 @@ as.ab <- function(x, ...) {
         # now also try to coerce brandname combinations like "Amoxy/clavulanic acid"
         x_translated <- paste(lapply(strsplit(x_translated, "[^a-zA-Z0-9 ]"),
                                      function(y) {
-                                       for (i in 1:length(y)) {
+                                       for (i in seq_len(length(y))) {
                                          y_name <- suppressWarnings(ab_name(y[i], language = NULL, initial_search = FALSE, initial_search2 = FALSE))
                                          y[i] <- ifelse(!is.na(y_name),
                                                         y_name,
@@ -278,14 +276,14 @@ as.ab <- function(x, ...) {
   x_unknown <- x_unknown[!x_unknown %in% x_unknown_ATCs]
   if (length(x_unknown_ATCs) > 0) {
     warning("These ATC codes are not (yet) in the antibiotics data set: ",
-            paste('"', sort(unique(x_unknown_ATCs)), '"', sep = "", collapse = ', '),
+            paste('"', sort(unique(x_unknown_ATCs)), '"', sep = "", collapse = ", "),
             ".",
             call. = FALSE)
   }
 
   if (length(x_unknown) > 0) {
     warning("These values could not be coerced to a valid antimicrobial ID: ",
-            paste('"', sort(unique(x_unknown)), '"', sep = "", collapse = ', '),
+            paste('"', sort(unique(x_unknown)), '"', sep = "", collapse = ", "),
             ".",
             call. = FALSE)
   }
@@ -319,7 +317,7 @@ print.ab <- function(x, ...) {
 #' @exportMethod as.data.frame.ab
 #' @export
 #' @noRd
-as.data.frame.ab <- function (x, ...) {
+as.data.frame.ab <- function(x, ...) {
   # same as as.data.frame.character but with removed stringsAsFactors
   nm <- paste(deparse(substitute(x), width.cutoff = 500L),
               collapse = " ")

@@ -67,7 +67,7 @@ On our website \url{https://msberends.gitlab.io/AMR} you can find \href{https://
 \donttest{
 x <- bug_drug_combinations(example_isolates)
 x
-format(x)
+format(x, translate_ab = "name (atc)")
 
 # Use FUN to change to transformation of microorganism codes
 x <- bug_drug_combinations(example_isolates, 

@@ -37,13 +37,13 @@ test_that("ab_property works", {
   expect_identical(ab_name("Fluclox"), "Flucloxacillin")
   expect_identical(ab_name("fluklox"), "Flucloxacillin")
   expect_identical(ab_name("floxapen"), "Flucloxacillin")
-  expect_identical(ab_name(21319) , "Flucloxacillin")
+  expect_identical(ab_name(21319), "Flucloxacillin")
   expect_identical(ab_name("J01CF05"), "Flucloxacillin")
 
   expect_identical(ab_ddd("AMX", "oral"), 1)
-  expect_identical(ab_ddd("AMX", "oral", units = TRUE) , "g")
+  expect_identical(ab_ddd("AMX", "oral", units = TRUE), "g")
   expect_identical(ab_ddd("AMX", "iv"), 1)
-  expect_identical(ab_ddd("AMX", "iv", units = TRUE) , "g")
+  expect_identical(ab_ddd("AMX", "iv", units = TRUE), "g")
 
   expect_identical(ab_name(x = c("AMC", "PLB")), c("Amoxicillin/clavulanic acid", "Polymyxin B"))
   expect_identical(ab_name(x = c("AMC", "PLB"), tolower = TRUE),

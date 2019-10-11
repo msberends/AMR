@@ -42,42 +42,9 @@
          value = make_trans_tbl(),
          envir = asNamespace("AMR"))
 
-#  assign(x = "mo_history",
-#         value = data.frame(x = character(0),
-#                            mo = character(0),
-#                            uncertainty_level = integer(0),
-#                            package_v = character(0),
-#                            stringsAsFactors = FALSE),
-#         envir = asNamespace("AMR"))
-
 }
 
-
-.onAttach <- function(...) {
-  # if (interactive() & !isFALSE(getOption("AMR_survey"))) {
-  #   options(AMR_survey = FALSE)
-  #   console_width <- options()$width - 1
-  #   url <- "https://www.surveymonkey.com/r/AMR_for_R"
-  #   txt <- paste0("Thanks for using the AMR package! ",
-  #                "As researchers, we are interested in how and why you use this package and if there are things you're missing from it. ",
-  #                "Please fill in our 2-minute survey at: ", url, ". ",
-  #                "This message can be turned off with: options(AMR_survey = FALSE)")
-  # 
-  #   # make it honour new lines bases on console width:
-  #   txt <- unlist(strsplit(txt, " "))
-  #   txt_new <- ""
-  #   total_chars <- 0
-  #   for (i in 1:length(txt)) {
-  #     total_chars <- total_chars + nchar(txt[i]) + 1
-  #     if (total_chars > console_width) {
-  #       txt_new <- paste0(txt_new, "\n")
-  #       total_chars <- 0
-  #     }
-  #     txt_new <- paste0(txt_new, txt[i], " ")
-  #   }
-  #   # packageStartupMessage(txt_new)
-  # }
-}
+# maybe add survey later: "https://www.surveymonkey.com/r/AMR_for_R"
 
 #' @importFrom data.table as.data.table setkey
 make_DT <- function() {

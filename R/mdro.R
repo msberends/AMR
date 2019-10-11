@@ -272,7 +272,7 @@ mdro <- function(x,
         row_filter <- which(x[, cols] == "R")
       } else if (any_all == "all") {
         row_filter <- x %>%
-          mutate(index = 1:nrow(.)) %>%
+          mutate(index = seq_len(nrow(.))) %>%
           filter_at(vars(cols), all_vars(. == "R")) %>%
           pull((index))
       }
@@ -452,7 +452,7 @@ mdro <- function(x,
         & !ab_missing(GEN) & !ab_missing(TOB)
         & !ab_missing(CIP)
         & !ab_missing(CAZ)
-        & !ab_missing(TZP) ) {
+        & !ab_missing(TZP)) {
       x$psae <- 0
       x[which(x[, MEM] == "R" | x[, IPM] == "R"), "psae"] <- 1 + x[which(x[, MEM] == "R" | x[, IPM] == "R"), "psae"]
       x[which(x[, GEN] == "R" & x[, TOB] == "R"), "psae"] <- 1 + x[which(x[, GEN] == "R" & x[, TOB] == "R"), "psae"]

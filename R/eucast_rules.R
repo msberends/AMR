@@ -233,8 +233,15 @@ eucast_rules <- function(x,
   
   warned <- FALSE
   
-  txt_error <- function() { cat("", bgRed(white(" ERROR ")), "\n\n") }
-  txt_warning <- function() { if (warned == FALSE) { cat("", bgYellow(black(" WARNING "))) }; warned <<- TRUE }
+  txt_error <- function() {
+    cat("", bgRed(white(" ERROR ")), "\n\n") 
+  }
+  txt_warning <- function() {
+    if (warned == FALSE) {
+      cat("", bgYellow(black(" WARNING ")))
+    }
+    warned <<- TRUE 
+  }
   txt_ok <- function(no_added, no_changed) {
     if (warned == FALSE) {
       if (no_added + no_changed == 0) {
@@ -337,69 +344,69 @@ eucast_rules <- function(x,
                             verbose = verbose,
                             ...)
   
-  AMC <- cols_ab['AMC']
-  AMK <- cols_ab['AMK']
-  AMP <- cols_ab['AMP']
-  AMX <- cols_ab['AMX']
-  ATM <- cols_ab['ATM']
-  AZL <- cols_ab['AZL']
-  AZM <- cols_ab['AZM']
-  CAZ <- cols_ab['CAZ']
-  CED <- cols_ab['CED']
-  CHL <- cols_ab['CHL']
-  CIP <- cols_ab['CIP']
-  CLI <- cols_ab['CLI']
-  CLR <- cols_ab['CLR']
-  COL <- cols_ab['COL']
-  CRO <- cols_ab['CRO']
-  CTX <- cols_ab['CTX']
-  CXM <- cols_ab['CXM']
-  CZO <- cols_ab['CZO']
-  DAP <- cols_ab['DAP']
-  DOX <- cols_ab['DOX']
-  ERY <- cols_ab['ERY']
-  ETP <- cols_ab['ETP']
-  FEP <- cols_ab['FEP']
-  FLC <- cols_ab['FLC']
-  FOS <- cols_ab['FOS']
-  FOX <- cols_ab['FOX']
-  FUS <- cols_ab['FUS']
-  GEN <- cols_ab['GEN']
-  IPM <- cols_ab['IPM']
-  KAN <- cols_ab['KAN']
-  LIN <- cols_ab['LIN']
-  LNZ <- cols_ab['LNZ']
-  LVX <- cols_ab['LVX']
-  MEM <- cols_ab['MEM']
-  MEZ <- cols_ab['MEZ']
-  MFX <- cols_ab['MFX']
-  MNO <- cols_ab['MNO']
-  NAL <- cols_ab['NAL']
-  NEO <- cols_ab['NEO']
-  NET <- cols_ab['NET']
-  NIT <- cols_ab['NIT']
-  NOR <- cols_ab['NOR']
-  NOV <- cols_ab['NOV']
-  OFX <- cols_ab['OFX']
-  OXA <- cols_ab['OXA']
-  PEN <- cols_ab['PEN']
-  PIP <- cols_ab['PIP']
-  PLB <- cols_ab['PLB']
-  PRI <- cols_ab['PRI']
-  QDA <- cols_ab['QDA']
-  RID <- cols_ab['RID']
-  RIF <- cols_ab['RIF']
-  RXT <- cols_ab['RXT']
-  SIS <- cols_ab['SIS']
-  SXT <- cols_ab['SXT']
-  TCY <- cols_ab['TCY']
-  TEC <- cols_ab['TEC']
-  TGC <- cols_ab['TGC']
-  TIC <- cols_ab['TIC']
-  TMP <- cols_ab['TMP']
-  TOB <- cols_ab['TOB']
-  TZP <- cols_ab['TZP']
-  VAN <- cols_ab['VAN']
+  AMC <- cols_ab["AMC"]
+  AMK <- cols_ab["AMK"]
+  AMP <- cols_ab["AMP"]
+  AMX <- cols_ab["AMX"]
+  ATM <- cols_ab["ATM"]
+  AZL <- cols_ab["AZL"]
+  AZM <- cols_ab["AZM"]
+  CAZ <- cols_ab["CAZ"]
+  CED <- cols_ab["CED"]
+  CHL <- cols_ab["CHL"]
+  CIP <- cols_ab["CIP"]
+  CLI <- cols_ab["CLI"]
+  CLR <- cols_ab["CLR"]
+  COL <- cols_ab["COL"]
+  CRO <- cols_ab["CRO"]
+  CTX <- cols_ab["CTX"]
+  CXM <- cols_ab["CXM"]
+  CZO <- cols_ab["CZO"]
+  DAP <- cols_ab["DAP"]
+  DOX <- cols_ab["DOX"]
+  ERY <- cols_ab["ERY"]
+  ETP <- cols_ab["ETP"]
+  FEP <- cols_ab["FEP"]
+  FLC <- cols_ab["FLC"]
+  FOS <- cols_ab["FOS"]
+  FOX <- cols_ab["FOX"]
+  FUS <- cols_ab["FUS"]
+  GEN <- cols_ab["GEN"]
+  IPM <- cols_ab["IPM"]
+  KAN <- cols_ab["KAN"]
+  LIN <- cols_ab["LIN"]
+  LNZ <- cols_ab["LNZ"]
+  LVX <- cols_ab["LVX"]
+  MEM <- cols_ab["MEM"]
+  MEZ <- cols_ab["MEZ"]
+  MFX <- cols_ab["MFX"]
+  MNO <- cols_ab["MNO"]
+  NAL <- cols_ab["NAL"]
+  NEO <- cols_ab["NEO"]
+  NET <- cols_ab["NET"]
+  NIT <- cols_ab["NIT"]
+  NOR <- cols_ab["NOR"]
+  NOV <- cols_ab["NOV"]
+  OFX <- cols_ab["OFX"]
+  OXA <- cols_ab["OXA"]
+  PEN <- cols_ab["PEN"]
+  PIP <- cols_ab["PIP"]
+  PLB <- cols_ab["PLB"]
+  PRI <- cols_ab["PRI"]
+  QDA <- cols_ab["QDA"]
+  RID <- cols_ab["RID"]
+  RIF <- cols_ab["RIF"]
+  RXT <- cols_ab["RXT"]
+  SIS <- cols_ab["SIS"]
+  SXT <- cols_ab["SXT"]
+  TCY <- cols_ab["TCY"]
+  TEC <- cols_ab["TEC"]
+  TGC <- cols_ab["TGC"]
+  TIC <- cols_ab["TIC"]
+  TMP <- cols_ab["TMP"]
+  TOB <- cols_ab["TOB"]
+  TZP <- cols_ab["TZP"]
+  VAN <- cols_ab["VAN"]
   
   ab_missing <- function(ab) {
     all(ab %in% c(NULL, NA))
@@ -425,11 +432,11 @@ eucast_rules <- function(x,
         # insert into original table
         x_original[rows, cols] <<- to,
         warning = function(w) {
-          if (w$message %like% 'invalid factor level') {
+          if (w$message %like% "invalid factor level") {
             x_original <<- x_original %>% mutate_at(vars(cols), ~factor(x = as.character(.), levels = c(to, levels(.))))
             x <<- x %>% mutate_at(vars(cols), ~factor(x = as.character(.), levels = c(to, levels(.))))
             x_original[rows, cols] <<- to
-            warning('Value "', to, '" added to the factor levels of column(s) `', paste(cols, collapse = '`, `'), '` because this value was not an existing factor level.\nA better way is to use as.rsi() on beforehand on antimicrobial columns to guarantee the right structure.', call. = FALSE)
+            warning('Value "', to, '" added to the factor levels of column(s) `', paste(cols, collapse = "`, `"), "` because this value was not an existing factor level.\nA better way is to use as.rsi() on beforehand on antimicrobial columns to guarantee the right structure.", call. = FALSE)
             txt_warning()
             warned <<- FALSE
           } else {
@@ -442,8 +449,8 @@ eucast_rules <- function(x,
           txt_error()
           stop(paste0("In row(s) ", paste(rows[1:min(length(rows), 10)], collapse = ","), 
                       ifelse(length(rows) > 10, "...", ""),
-                      ' while writing value "', to, 
-                      '" to column(s) `', paste(cols, collapse = "`, `"), 
+                      " while writing value '", to, 
+                      "' to column(s) `", paste(cols, collapse = "`, `"), 
                       "`:\n", e$message),
                call. = FALSE)
         }
@@ -453,17 +460,17 @@ eucast_rules <- function(x,
         x[rows, cols] <<- x_original[rows, cols],
         error = function(e) {
           stop(paste0("In row(s) ", paste(rows[1:min(length(rows), 10)], collapse = ","),
-                      '... while writing value "', to, 
-                      '" to column(s) `', paste(cols, collapse = "`, `"), 
+                      "... while writing value '", to, 
+                      "' to column(s) `", paste(cols, collapse = "`, `"), 
                       "`:\n", e$message), call. = FALSE)
         }
       )
       
       # before_df might not be a data.frame, but a tibble or data.table instead
-      old <- as.data.frame(before_df, stringsAsFactors = FALSE)[rows,]
+      old <- as.data.frame(before_df, stringsAsFactors = FALSE)[rows, ]
       track_changes <- list(added = 0,
                             changed = 0)
-      for (i in 1:length(cols)) {
+      for (i in seq_len(length(cols))) {
         verbose_new <- data.frame(row = rows,
                                   col = cols[i],
                                   mo_fullname = x[rows, "fullname"],
@@ -530,6 +537,7 @@ eucast_rules <- function(x,
     AMP <- AMX
   }
   
+  # nolint start
   # antibiotic classes
   aminoglycosides <- c(TOB, GEN, KAN, NEO, NET, SIS)
   tetracyclines <- c(DOX, MNO, TCY) # since EUCAST v3.1 tigecycline (TGC) is set apart
@@ -544,12 +552,13 @@ eucast_rules <- function(x,
   ureidopenicillins <- c(PIP, TZP, AZL, MEZ)
   all_betalactams <- c(aminopenicillins, cephalosporins, carbapenems, ureidopenicillins, AMC, OXA, FLC, PEN)
   fluoroquinolones <- c(OFX, CIP, NOR, LVX, MFX)
+  # nolint end
   
   # Help function to get available antibiotic column names ------------------
   get_antibiotic_columns <- function(x, df) {
     x <- trimws(unlist(strsplit(x, ",", fixed = TRUE)))
     y <- character(0)
-    for (i in 1:length(x)) {
+    for (i in seq_len(length(x))) {
       if (is.function(get(x[i]))) {
         stop("Column ", x[i], " is also a function. Please create an issue on github.com/msberends/AMR/issues.")
       }
@@ -562,7 +571,7 @@ eucast_rules <- function(x,
       strsplit(",") %>%
       unlist() %>%
       trimws() %>%
-      sapply(function(x) if(x %in% AMR::antibiotics$ab) ab_name(x, language = NULL, tolower = TRUE) else x) %>%
+      sapply(function(x) if (x %in% AMR::antibiotics$ab) ab_name(x, language = NULL, tolower = TRUE) else x) %>%
       sort() %>%
       paste(collapse = ", ")
   }
@@ -598,14 +607,13 @@ eucast_rules <- function(x,
   eucast_rules_df <- eucast_rules_file # internal data file
   no_added <- 0
   no_changed <- 0
-  for (i in 1:nrow(eucast_rules_df)) {
+  for (i in seq_len(nrow(eucast_rules_df))) {
     
     rule_previous <- eucast_rules_df[max(1, i - 1), "reference.rule"]
     rule_current <- eucast_rules_df[i, "reference.rule"]
     rule_next <- eucast_rules_df[min(nrow(eucast_rules_df), i + 1), "reference.rule"]
     rule_group_previous <- eucast_rules_df[max(1, i - 1), "reference.rule_group"]
     rule_group_current <- eucast_rules_df[i, "reference.rule_group"]
-    rule_group_next <- eucast_rules_df[min(nrow(eucast_rules_df), i + 1), "reference.rule_group"]
     if (is.na(eucast_rules_df[i, 4])) {
       rule_text <- paste0("always report as '", eucast_rules_df[i, 7], "': ", get_antibiotic_names(eucast_rules_df[i, 6]))
     } else {
@@ -620,7 +628,6 @@ eucast_rules <- function(x,
     }
     if (i == nrow(eucast_rules_df)) {
       rule_next <- ""
-      rule_group_next <- ""
     }
     
     # don't apply rules if user doesn't want to apply them
@@ -695,7 +702,7 @@ eucast_rules <- function(x,
     if (like_is_one_of == "is") {
       mo_value <- paste0("^", eucast_rules_df[i, 3], "$")
     } else if (like_is_one_of == "one_of") {
-      # "Clostridium, Actinomyces, ..." -> "^(Clostridium|Actinomyces|...)$"
+      # so 'Clostridium, Actinomyces, ...' will turn into '^(Clostridium|Actinomyces|...)$'
       mo_value <- paste0("^(",
                          paste(trimws(unlist(strsplit(eucast_rules_df[i, 3], ",", fixed = TRUE))),
                                collapse = "|"),
@@ -774,10 +781,10 @@ eucast_rules <- function(x,
       arrange(row, rule_group, rule_name, col)
     
     cat(paste0("\n", grey(strrep("-", options()$width - 1)), "\n"))
-    cat(bold(paste('EUCAST rules', paste0(wouldve, 'affected'),
+    cat(bold(paste("EUCAST rules", paste0(wouldve, "affected"),
                    formatnr(n_distinct(verbose_info$row)),
-                   'out of', formatnr(nrow(x_original)),
-                   'rows, making a total of', formatnr(nrow(verbose_info)), 'edits\n')))
+                   "out of", formatnr(nrow(x_original)),
+                   "rows, making a total of", formatnr(nrow(verbose_info)), "edits\n")))
     
     n_added <- verbose_info %>% filter(is.na(old)) %>% nrow()
     n_changed <- verbose_info %>% filter(!is.na(old)) %>% nrow()
@@ -847,4 +854,3 @@ eucast_rules <- function(x,
     x_original
   }
 }
-

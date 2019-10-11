@@ -203,10 +203,10 @@ dataset_UTF8_to_ASCII <- function(df) {
     iconv(vect, from = "UTF-8", to = "ASCII//TRANSLIT")
   }
   df <- as.data.frame(df, stringsAsFactors = FALSE)
-  for (i in 1:NCOL(df)) {
+  for (i in seq_len(NCOL(df))) {
     col <- df[, i]
     if (is.list(col)) {
-      for (j in 1:length(col)) {
+      for (j in seq_len(length(col))) {
         col[[j]] <- trans(col[[j]])
       }
       df[, i] <- list(col)

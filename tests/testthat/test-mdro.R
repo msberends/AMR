@@ -32,11 +32,11 @@ test_that("mdro works", {
   outcome <- mdro(example_isolates)
   outcome <- eucast_exceptional_phenotypes(example_isolates, info = TRUE)
   # check class
-  expect_equal(outcome %>% class(), c('ordered', 'factor'))
+  expect_equal(outcome %>% class(), c("ordered", "factor"))
 
   outcome <- mdro(example_isolates, "nl", info = TRUE)
   # check class
-  expect_equal(outcome %>% class(), c('ordered', 'factor'))
+  expect_equal(outcome %>% class(), c("ordered", "factor"))
 
   # example_isolates should have these finding using Dutch guidelines
   expect_equal(outcome %>% freq() %>% pull(count),

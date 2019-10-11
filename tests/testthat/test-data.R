@@ -41,9 +41,8 @@ test_that("data sets are valid", {
 
   # there should be no diacritics (i.e. non ASCII) characters in the datasets (CRAN policy)
   datasets <- data(package = "AMR", envir = asNamespace("AMR"))$results[, "Item"]
-  for (i in 1:length(datasets)) {
+  for (i in seq_len(length(datasets))) {
     dataset <- get(datasets[i], envir = asNamespace("AMR"))
-    #print(paste("testing data set", datasets[i]))
     expect_identical(dataset_UTF8_to_ASCII(dataset), dataset)
   }
 })

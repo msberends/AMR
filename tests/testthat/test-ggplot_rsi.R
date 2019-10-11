@@ -30,35 +30,26 @@ test_that("ggplot_rsi works", {
 
   # data should be equal
   expect_equal(
-    (example_isolates %>% select(AMC, CIP) %>% ggplot_rsi())$data %>%
-      summarise_all(portion_IR) %>% as.double(),
-    example_isolates %>% select(AMC, CIP) %>%
-      summarise_all(portion_IR) %>% as.double()
+    (example_isolates %>% select(AMC, CIP) %>% ggplot_rsi())$data %>% summarise_all(portion_IR) %>% as.double(),
+    example_isolates %>% select(AMC, CIP) %>% summarise_all(portion_IR) %>% as.double()
   )
 
   print(example_isolates %>% select(AMC, CIP) %>% ggplot_rsi(x = "interpretation", facet = "antibiotic"))
   print(example_isolates %>% select(AMC, CIP) %>% ggplot_rsi(x = "antibiotic", facet = "interpretation"))
 
   expect_equal(
-    (example_isolates %>% select(AMC, CIP) %>% ggplot_rsi(x = "interpretation", facet = "antibiotic"))$data %>%
-      summarise_all(portion_IR) %>% as.double(),
-    example_isolates %>% select(AMC, CIP) %>%
-      summarise_all(portion_IR) %>% as.double()
+    (example_isolates %>% select(AMC, CIP) %>% ggplot_rsi(x = "interpretation", facet = "antibiotic"))$data %>% summarise_all(portion_IR) %>% as.double(),
+    example_isolates %>% select(AMC, CIP) %>% summarise_all(portion_IR) %>% as.double()
   )
 
   expect_equal(
-    (example_isolates %>% select(AMC, CIP) %>% ggplot_rsi(x = "antibiotic", facet = "interpretation"))$data %>%
-      summarise_all(portion_IR) %>% as.double(),
-    example_isolates %>% select(AMC, CIP) %>%
-      summarise_all(portion_IR) %>% as.double()
+    (example_isolates %>% select(AMC, CIP) %>% ggplot_rsi(x = "antibiotic", facet = "interpretation"))$data %>% summarise_all(portion_IR) %>% as.double(),
+    example_isolates %>% select(AMC, CIP) %>% summarise_all(portion_IR) %>% as.double()
   )
 
   expect_equal(
-    (example_isolates %>% select(AMC, CIP) %>% ggplot_rsi(x = "antibiotic",
-                                                         facet = "interpretation"))$data %>%
-      summarise_all(count_IR) %>% as.double(),
-    example_isolates %>% select(AMC, CIP) %>%
-      summarise_all(count_IR) %>% as.double()
+    (example_isolates %>% select(AMC, CIP) %>% ggplot_rsi(x = "antibiotic", facet = "interpretation"))$data %>% summarise_all(count_IR) %>% as.double(),
+    example_isolates %>% select(AMC, CIP) %>% summarise_all(count_IR) %>% as.double()
   )
 
   # support for scale_type ab and mo

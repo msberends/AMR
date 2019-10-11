@@ -1,5 +1,5 @@
-# AMR 0.7.1.9101
-<small>Last updated: 09-Oct-2019</small>
+# AMR 0.7.1.9102
+<small>Last updated: 11-Oct-2019</small>
 
 ### Breaking
 * Determination of first isolates now **excludes** all 'unknown' microorganisms at default, i.e. microbial code `"UNKNOWN"`. They can be included with the new parameter `include_unknown`:
@@ -126,6 +126,7 @@
 
 #### Other
 * Added Prof. Dr. Casper Albers as doctoral advisor and added Dr. Judith Fonville, Eric Hazenberg, Dr. Bart Meijer, Dr. Dennis Souverein and Annick Lenglet as contributors
+* Cleaned the coding style of every single syntax line in this package with the help of the `lintr` package
 
 # AMR 0.7.1
 

@@ -56,7 +56,7 @@ inner_join_microorganisms <- function(x, by = NULL, suffix = c("2", ""), ...) {
     dplyr::inner_join(x = x, y = AMR::microorganisms, by = by, suffix = suffix, ...)
   )
   if (nrow(join) > nrow(x)) {
-    warning('The newly joined tbl contains ', nrow(join) - nrow(x), ' rows more that its original.')
+    warning("The newly joined tbl contains ", nrow(join) - nrow(x), " rows more that its original.")
   }
   join
 }
@@ -71,7 +71,7 @@ left_join_microorganisms <- function(x, by = NULL, suffix = c("2", ""), ...) {
     dplyr::left_join(x = x, y = AMR::microorganisms, by = by, suffix = suffix, ...)
   )
   if (nrow(join) > nrow(x)) {
-    warning('The newly joined tbl contains ', nrow(join) - nrow(x), ' rows more that its original.')
+    warning("The newly joined tbl contains ", nrow(join) - nrow(x), " rows more that its original.")
   }
   join
 }
@@ -86,7 +86,7 @@ right_join_microorganisms <- function(x, by = NULL, suffix = c("2", ""), ...) {
     dplyr::right_join(x = x, y = AMR::microorganisms, by = by, suffix = suffix, ...)
   )
   if (nrow(join) > nrow(x)) {
-    warning('The newly joined tbl contains ', nrow(join) - nrow(x), ' rows more that its original.')
+    warning("The newly joined tbl contains ", nrow(join) - nrow(x), " rows more that its original.")
   }
   join
 }
@@ -101,7 +101,7 @@ full_join_microorganisms <- function(x, by = NULL, suffix = c("2", ""), ...) {
     dplyr::full_join(x = x, y = AMR::microorganisms, by = by, suffix = suffix, ...)
   )
   if (nrow(join) > nrow(x)) {
-    warning('The newly joined tbl contains ', nrow(join) - nrow(x), ' rows more that its original.')
+    warning("The newly joined tbl contains ", nrow(join) - nrow(x), " rows more that its original.")
   }
   join
 }

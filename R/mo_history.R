@@ -43,11 +43,11 @@ set_mo_history <- function(x, mo, uncertainty_level, force = FALSE, disable = FA
     }
     x <- toupper(df$x)
     mo <- df$mo
-    for (i in 1:length(x)) {
+    for (i in seq_len(length(x))) {
       # save package version too, as both the as.mo() algorithm and the reference data set may change
       if (NROW(mo_hist[base::which(mo_hist$x == x[i] &
                                    mo_hist$uncertainty_level >= uncertainty_level &
-                                   mo_hist$package_version == utils::packageVersion("AMR")),]) == 0) {
+                                   mo_hist$package_version == utils::packageVersion("AMR")), ]) == 0) {
         # # Not using the file system:        
         # tryCatch(options(mo_remembered_results = rbind(mo_hist,
         #                                                data.frame(
@@ -73,7 +73,9 @@ set_mo_history <- function(x, mo, uncertainty_level, force = FALSE, disable = FA
                                    stringsAsFactors = FALSE)),
                            row.names = FALSE,
                            file = mo_history_file()),
-                 error = function(e) { warning_new_write <- FALSE; base::invisible()})
+                 error = function(e) {
+                   warning_new_write <- FALSE; base::invisible()
+                 })
       }
     }
   }
@@ -87,7 +89,7 @@ get_mo_history <- function(x, uncertainty_level, force = FALSE, disable = FALSE)
   if (isTRUE(disable)) {
     return(to_class_mo(NA))
   }
-
+  
   history <- read_mo_history(uncertainty_level = uncertainty_level, force = force)
   if (base::is.null(history)) {
     result <- NA
@@ -105,7 +107,7 @@ read_mo_history <- function(uncertainty_level = 2, force = FALSE, unfiltered = F
   if (isTRUE(disable)) {
     return(NULL)
   }
-
+  
   if ((!base::interactive() & force == FALSE)) {
     return(NULL)
   }
@@ -123,7 +125,7 @@ read_mo_history <- function(uncertainty_level = 2, force = FALSE, unfiltered = F
   # Below: filter on current package version.
   # Even current fullnames may be replaced by new taxonomic names, so new versions of
   # the Catalogue of Life must not lead to data corruption.
-
+  
   if (unfiltered == FALSE) {
     history <- history %>%
       filter(package_version == as.character(utils::packageVersion("AMR")),
@@ -133,7 +135,7 @@ read_mo_history <- function(uncertainty_level = 2, force = FALSE, unfiltered = F
       arrange(desc(uncertainty_level)) %>%
       distinct(x, mo, .keep_all = TRUE)
   }
-
+  
   if (nrow(history) == 0) {
     NULL
   } else {

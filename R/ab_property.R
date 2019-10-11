@@ -165,7 +165,7 @@ ab_info <- function(x, language = get_locale(), ...) {
 
 #' @rdname ab_property
 #' @export
-ab_property <- function(x, property = 'name', language = get_locale(), ...) {
+ab_property <- function(x, property = "name", language = get_locale(), ...) {
   if (length(property) != 1L) {
     stop("'property' must be of length 1.")
   }

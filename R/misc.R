@@ -67,7 +67,7 @@ search_type_in_df <- function(x, type) {
              call. = FALSE)
       }
     } else {
-      for (i in 1:ncol(x)) {
+      for (i in seq_len(ncol(x))) {
         if (any(class(x %>% pull(i)) %in% c("Date", "POSIXct"))) {
           found <- colnames(x)[i]
           break
@@ -141,7 +141,7 @@ getdecimalplaces <- function(x, minimum = 0, maximum = 3) {
   if (minimum > maximum) {
     minimum <- maximum
   }
-  max_places <- max(unlist(lapply(strsplit(sub('0+$', '', 
+  max_places <- max(unlist(lapply(strsplit(sub("0+$", "", 
                                                as.character(x * 100)), ".", fixed = TRUE),
                                   function(y) ifelse(length(y) == 2, nchar(y[2]), 0))), na.rm = TRUE)
   max(min(max_places,

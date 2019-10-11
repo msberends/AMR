@@ -65,29 +65,29 @@ as.mic <- function(x, na.rm = FALSE) {
     x.bak <- x
 
     # comma to period
-    x <- gsub(',', '.', x, fixed = TRUE)
+    x <- gsub(",", ".", x, fixed = TRUE)
     # remove space between operator and number ("<= 0.002" -> "<=0.002")
-    x <- gsub('(<|=|>) +', '\\1', x)
+    x <- gsub("(<|=|>) +", "\\1", x)
     # transform => to >= and =< to <=
-    x <- gsub('=>', '>=', x, fixed = TRUE)
-    x <- gsub('=<', '<=', x, fixed = TRUE)
+    x <- gsub("=>", ">=", x, fixed = TRUE)
+    x <- gsub("=<", "<=", x, fixed = TRUE)
     # starting dots must start with 0
-    x <- gsub('^[.]+', '0.', x)
+    x <- gsub("^[.]+", "0.", x)
     # <=0.2560.512 should be 0.512
-    x <- gsub('.*[.].*[.]', '0.', x)
+    x <- gsub(".*[.].*[.]", "0.", x)
     # remove ending .0
-    x <- gsub('[.]+0$', '', x)
+    x <- gsub("[.]+0$", "", x)
     # remove all after last digit
-    x <- gsub('[^0-9]+$', '', x)
+    x <- gsub("[^0-9]+$", "", x)
     # keep only one zero before dot
     x <- gsub("0+[.]", "0.", x)
     # starting 00 is probably 0.0 if there's no dot yet
     x[!x %like% "[.]"] <- gsub("^00", "0.0", x[!x %like% "[.]"])
     # remove last zeroes
-    x <- gsub('([.].?)0+$', '\\1', x)
-    x <- gsub('(.*[.])0+$', '\\10', x)
+    x <- gsub("([.].?)0+$", "\\1", x)
+    x <- gsub("(.*[.])0+$", "\\10", x)
     # remove ending .0 again
-    x[x %like% "[.]"] <- gsub('0+$', '', x[x %like% "[.]"])
+    x[x %like% "[.]"] <- gsub("0+$", "", x[x %like% "[.]"])
     # force to be character
     x <- as.character(x)
     # trim it
@@ -190,23 +190,23 @@ as.mic <- function(x, na.rm = FALSE) {
               "<1024", "<=1024", "1024", ">=1024", ">1024",
               "1025")
 
-    na_before <- x[is.na(x) | x == ''] %>% length()
+    na_before <- x[is.na(x) | x == ""] %>% length()
     x[!x %in% lvls] <- NA
-    na_after <- x[is.na(x) | x == ''] %>% length()
+    na_after <- x[is.na(x) | x == ""] %>% length()
 
     if (na_before != na_after) {
-      list_missing <- x.bak[is.na(x) & !is.na(x.bak) & x.bak != ''] %>%
+      list_missing <- x.bak[is.na(x) & !is.na(x.bak) & x.bak != ""] %>%
         unique() %>%
         sort()
-      list_missing <- paste0('"', list_missing , '"', collapse = ", ")
-      warning(na_after - na_before, ' results truncated (',
+      list_missing <- paste0('"', list_missing, '"', collapse = ", ")
+      warning(na_after - na_before, " results truncated (",
               round(((na_after - na_before) / length(x)) * 100),
-              '%) that were invalid MICs: ',
+              "%) that were invalid MICs: ",
               list_missing, call. = FALSE)
     }
 
     structure(.Data = factor(x, levels = lvls, ordered = TRUE),
-              class =  c('mic', 'ordered', 'factor'))
+              class =  c("mic", "ordered", "factor"))
   }
 }
 
@@ -214,36 +214,36 @@ as.mic <- function(x, na.rm = FALSE) {
 #' @export
 #' @importFrom dplyr %>%
 is.mic <- function(x) {
-  class(x) %>% identical(c('mic', 'ordered', 'factor'))
+  class(x) %>% identical(c("mic", "ordered", "factor"))
 }
 
 #' @exportMethod as.double.mic
 #' @export
 #' @noRd
 as.double.mic <- function(x, ...) {
-  as.double(gsub('(<|=|>)+', '', as.character(x)))
+  as.double(gsub("(<|=|>)+", "", as.character(x)))
 }
 
 #' @exportMethod as.integer.mic
 #' @export
 #' @noRd
 as.integer.mic <- function(x, ...) {
-  as.integer(gsub('(<|=|>)+', '', as.character(x)))
+  as.integer(gsub("(<|=|>)+", "", as.character(x)))
 }
 
 #' @exportMethod as.numeric.mic
 #' @export
 #' @noRd
 as.numeric.mic <- function(x, ...) {
-  as.numeric(gsub('(<|=|>)+', '', as.character(x)))
+  as.numeric(gsub("(<|=|>)+", "", as.character(x)))
 }
 
 #' @exportMethod droplevels.mic
 #' @export
 #' @noRd
-droplevels.mic <- function(x, exclude = if(anyNA(levels(x))) NULL else NA, ...) {
+droplevels.mic <- function(x, exclude = ifelse(anyNA(levels(x)), NULL, NA), ...) {
   x <- droplevels.factor(x, exclude = exclude, ...)
-  class(x) <- c('mic', 'ordered', 'factor')
+  class(x) <- c("mic", "ordered", "factor")
   x
 }
 
@@ -266,7 +266,7 @@ summary.mic <- function(object, ...) {
   x <- x[!is.na(x)]
   n <- x %>% length()
   c(
-    "Class" = 'mic',
+    "Class" = "mic",
     "<NA>" = n_total - n,
     "Min." = sort(x)[1] %>% as.character(),
     "Max." = sort(x)[n] %>% as.character()
@@ -278,9 +278,9 @@ summary.mic <- function(object, ...) {
 #' @importFrom graphics barplot axis par
 #' @noRd
 plot.mic <- function(x,
-                     main = paste('MIC values of', deparse(substitute(x))),
-                     ylab = 'Frequency',
-                     xlab = 'MIC value',
+                     main = paste("MIC values of", deparse(substitute(x))),
+                     ylab = "Frequency",
+                     xlab = "MIC value",
                      axes = FALSE,
                      ...) {
   barplot(table(droplevels.factor(x)),
@@ -297,9 +297,9 @@ plot.mic <- function(x,
 #' @importFrom graphics barplot axis
 #' @noRd
 barplot.mic <- function(height,
-                        main = paste('MIC values of', deparse(substitute(height))),
-                        ylab = 'Frequency',
-                        xlab = 'MIC value',
+                        main = paste("MIC values of", deparse(substitute(height))),
+                        ylab = "Frequency",
+                        xlab = "MIC value",
                         axes = FALSE,
                         ...) {
   barplot(table(droplevels.factor(height)),

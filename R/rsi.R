@@ -100,20 +100,17 @@ as.rsi.default <- function(x, ...) {
   if (is.rsi(x)) {
     x
   } else if (identical(levels(x), c("S", "I", "R"))) {
-    structure(x, class = c('rsi', 'ordered', 'factor'))
+    structure(x, class = c("rsi", "ordered", "factor"))
   } else {
-    # if (input_resembles_mic(x) > 0.5) {
-    #   warning("`as.rsi` is intended to clean antimicrobial interpretations - not to interpret MIC values.", call. = FALSE)
-    # }
 
     x <- x %>% unlist()
     x.bak <- x
 
-    na_before <- x[is.na(x) | x == ''] %>% length()
+    na_before <- x[is.na(x) | x == ""] %>% length()
     # remove all spaces
-    x <- gsub(' +', '', x)
+    x <- gsub(" +", "", x)
     # remove all MIC-like values: numbers, operators and periods
-    x <- gsub('[0-9.,;:<=>]+', '', x)
+    x <- gsub("[0-9.,;:<=>]+", "", x)
     # remove everything between brackets, and 'high' and 'low'
     x <- gsub("([(].*[)])", "", x)
     x <- gsub("(high|low)", "", x, ignore.case = TRUE)
@@ -122,29 +119,29 @@ as.rsi.default <- function(x, ...) {
     # set to capitals
     x <- toupper(x)
     # remove all invalid characters
-    x <- gsub('[^RSI]+', '', x)
+    x <- gsub("[^RSI]+", "", x)
     # in cases of "S;S" keep S, but in case of "S;I" make it NA
-    x <- gsub('^S+$', 'S', x)
-    x <- gsub('^I+$', 'I', x)
-    x <- gsub('^R+$', 'R', x)
-    x[!x %in% c('S', 'I', 'R')] <- NA
-    na_after <- x[is.na(x) | x == ''] %>% length()
+    x <- gsub("^S+$", "S", x)
+    x <- gsub("^I+$", "I", x)
+    x <- gsub("^R+$", "R", x)
+    x[!x %in% c("S", "I", "R")] <- NA
+    na_after <- x[is.na(x) | x == ""] %>% length()
     
     if (!isFALSE(list(...)$warn)) { # so as.rsi(..., warn = FALSE) will never throw a warning
       if (na_before != na_after) {
-        list_missing <- x.bak[is.na(x) & !is.na(x.bak) & x.bak != ''] %>%
+        list_missing <- x.bak[is.na(x) & !is.na(x.bak) & x.bak != ""] %>%
           unique() %>%
           sort()
-        list_missing <- paste0('"', list_missing , '"', collapse = ", ")
-        warning(na_after - na_before, ' results truncated (',
+        list_missing <- paste0('"', list_missing, '"', collapse = ", ")
+        warning(na_after - na_before, " results truncated (",
                 round(((na_after - na_before) / length(x)) * 100),
-                '%) that were invalid antimicrobial interpretations: ',
+                "%) that were invalid antimicrobial interpretations: ",
                 list_missing, call. = FALSE)
       }
     }
     
     structure(.Data = factor(x, levels = c("S", "I", "R"), ordered = TRUE),
-              class =  c('rsi', 'ordered', 'factor'))
+              class =  c("rsi", "ordered", "factor"))
   }
 }
 
@@ -226,7 +223,7 @@ exec_as.rsi <- function(method, x, mo, ab, guideline) {
   lookup_becker <- paste(mo_becker, ab)
   lookup_lancefield <- paste(mo_lancefield, ab)
 
-  for (i in 1:length(x)) {
+  for (i in seq_len(length(x))) {
     get_record <- trans %>%
       filter(lookup %in% c(lookup_mo[i],
                            lookup_genus[i],
@@ -236,7 +233,7 @@ exec_as.rsi <- function(method, x, mo, ab, guideline) {
                            lookup_lancefield[i])) %>%
       # be as specific as possible (i.e. prefer species over genus):
       arrange(desc(nchar(mo))) %>%
-      .[1L,]
+      .[1L, ]
 
     if (NROW(get_record) > 0) {
       if (method == "mic") {
@@ -254,7 +251,7 @@ exec_as.rsi <- function(method, x, mo, ab, guideline) {
     }
   }
   structure(.Data = factor(new_rsi, levels = c("S", "I", "R"), ordered = TRUE),
-            class =  c('rsi', 'ordered', 'factor'))
+            class =  c("rsi", "ordered", "factor"))
 }
 
 #' @rdname as.rsi
@@ -280,7 +277,7 @@ as.rsi.data.frame <- function(x, col_mo = NULL, guideline = "EUCAST", ...) {
   # transform all MICs
   ab_cols <- colnames(x)[sapply(x, is.mic)]
   if (length(ab_cols) > 0) {
-    for (i in 1:length(ab_cols)) {
+    for (i in seq_len(length(ab_cols))) {
       if (is.na(suppressWarnings(as.ab(ab_cols[i])))) {
         message(red(paste0("Unknown drug: `", bold(ab_cols[i]), "`. Rename this column to a drug name or code, and check the output with as.ab().")))
         next
@@ -297,7 +294,7 @@ as.rsi.data.frame <- function(x, col_mo = NULL, guideline = "EUCAST", ...) {
   # transform all disks
   ab_cols <- colnames(x)[sapply(x, is.disk)]
   if (length(ab_cols) > 0) {
-    for (i in 1:length(ab_cols)) {
+    for (i in seq_len(length(ab_cols))) {
       if (is.na(suppressWarnings(as.ab(ab_cols[i])))) {
         message(red(paste0("Unknown drug: `", bold(ab_cols[i]), "`. Rename this column to a drug name or code, and check the output with as.ab().")))
         next
@@ -319,14 +316,14 @@ as.rsi.data.frame <- function(x, col_mo = NULL, guideline = "EUCAST", ...) {
 #' @export
 is.rsi <- function(x) {
   identical(class(x),
-            c('rsi', 'ordered', 'factor'))
+            c("rsi", "ordered", "factor"))
 }
 
 #' @rdname as.rsi
 #' @export
 is.rsi.eligible <- function(x, threshold = 0.05) {
   if (NCOL(x) > 1) {
-    stop('`x` must be a one-dimensional vector.')
+    stop("`x` must be a one-dimensional vector.")
   }
   if (any(c("logical",
             "numeric",
@@ -363,9 +360,9 @@ print.rsi <- function(x, ...) {
 #' @exportMethod droplevels.rsi
 #' @export
 #' @noRd
-droplevels.rsi <- function(x, exclude = if(anyNA(levels(x))) NULL else NA, ...) {
+droplevels.rsi <- function(x, exclude = if (anyNA(levels(x))) NULL else NA, ...) {
   x <- droplevels.factor(x, exclude = exclude, ...)
-  class(x) <- c('rsi', 'ordered', 'factor')
+  class(x) <- c("rsi", "ordered", "factor")
   x
 }
 
@@ -375,7 +372,7 @@ droplevels.rsi <- function(x, exclude = if(anyNA(levels(x))) NULL else NA, ...) 
 summary.rsi <- function(object, ...) {
   x <- object
   c(
-    "Class" = 'rsi',
+    "Class" = "rsi",
     "<NA>" = sum(is.na(x)),
     "Sum S" = sum(x == "S", na.rm = TRUE),
     "Sum IR" = sum(x %in% c("I", "R"), na.rm = TRUE),
@@ -392,9 +389,9 @@ summary.rsi <- function(object, ...) {
 plot.rsi <- function(x,
                      lwd = 2,
                      ylim = NULL,
-                     ylab = 'Percentage',
-                     xlab = 'Antimicrobial Interpretation',
-                     main = paste('Susceptibility Analysis of', deparse(substitute(x))),
+                     ylab = "Percentage",
+                     xlab = "Antimicrobial Interpretation",
+                     main = paste("Susceptibility Analysis of", deparse(substitute(x))),
                      axes = FALSE,
                      ...) {
   suppressWarnings(
@@ -416,7 +413,7 @@ plot.rsi <- function(x,
     data <- rbind(data, data.frame(x = "R", n = 0, s = 0))
   }
 
-  data$x <- factor(data$x, levels = c('S', 'I', 'R'), ordered = TRUE)
+  data$x <- factor(data$x, levels = c("S", "I", "R"), ordered = TRUE)
 
   ymax <- if_else(max(data$s) > 95, 105, 100)
 
@@ -436,7 +433,7 @@ plot.rsi <- function(x,
 
   text(x = data$x,
        y = data$s + 4,
-       labels = paste0(data$s, '% (n = ', data$n, ')'))
+       labels = paste0(data$s, "% (n = ", data$n, ")"))
 }
 
 
@@ -446,10 +443,10 @@ plot.rsi <- function(x,
 #' @importFrom graphics barplot axis par
 #' @noRd
 barplot.rsi <- function(height,
-                        col = c('green3', 'orange2', 'red3'),
-                        xlab = ifelse(beside, 'Antimicrobial Interpretation', ''),
-                        main = paste('Susceptibility Analysis of', deparse(substitute(height))),
-                        ylab = 'Frequency',
+                        col = c("green3", "orange2", "red3"),
+                        xlab = ifelse(beside, "Antimicrobial Interpretation", ""),
+                        main = paste("Susceptibility Analysis of", deparse(substitute(height))),
+                        ylab = "Frequency",
                         beside = TRUE,
                         axes = beside,
                         ...) {

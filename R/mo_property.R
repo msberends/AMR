@@ -158,8 +158,8 @@ mo_shortname <- function(x, language = get_locale(), ...) {
   shortnames <- paste0(substr(mo_genus(x.mo, language = NULL), 1, 1), ". ", replace_empty(mo_species(x.mo, language = NULL)))
   
   # exceptions for Staphylococci
-  shortnames[shortnames == "S. coagulase-negative" ] <- "CoNS"
-  shortnames[shortnames == "S. coagulase-positive" ] <- "CoPS"
+  shortnames[shortnames == "S. coagulase-negative"] <- "CoNS"
+  shortnames[shortnames == "S. coagulase-positive"] <- "CoPS"
   # exceptions for Streptococci: Streptococcus Group A -> GAS
   shortnames[shortnames %like% "S. group [ABCDFGHK]"] <- paste0("G", gsub("S. group ([ABCDFGHK])", "\\1", shortnames[shortnames %like% "S. group [ABCDFGHK]"]), "S")
 
@@ -384,7 +384,7 @@ mo_url <- function(x, open = FALSE, ...) {
 #' @rdname mo_property
 #' @importFrom data.table data.table as.data.table setkey
 #' @export
-mo_property <- function(x, property = 'fullname', language = get_locale(), ...) {
+mo_property <- function(x, property = "fullname", language = get_locale(), ...) {
   if (length(property) != 1L) {
     stop("'property' must be of length 1.")
   }

@@ -29,7 +29,8 @@ install_if_needed <- function(pkg, repos, quiet) {
 
 gl_update_pkg_all <- function(repos = "https://cran.rstudio.com",
                               quiet = TRUE,
-                              install_pkgdown = FALSE) {
+                              install_pkgdown = FALSE,
+                              install_lintr = FALSE) {
   # update existing
   update.packages(ask = FALSE, repos = repos, quiet = quiet)
 
@@ -37,7 +38,10 @@ gl_update_pkg_all <- function(repos = "https://cran.rstudio.com",
   if (install_pkgdown == TRUE) {
     install_if_needed(pkg = "pkgdown", repos = repos, quiet = quiet)
   }
-
+  if (install_lintr == TRUE) {
+    install_if_needed(pkg = "lintr", repos = repos, quiet = quiet)
+  }
+  
   devtools::install_dev_deps(repos = repos, quiet = quiet, upgrade = TRUE)
 
   cat("INSTALLED:\n")

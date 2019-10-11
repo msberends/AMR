@@ -50,13 +50,13 @@ rsi_calc <- function(...,
   data_vars <- dots2vars(...)
 
   if (!is.numeric(minimum)) {
-    stop('`minimum` must be numeric', call. = FALSE)
+    stop("`minimum` must be numeric", call. = FALSE)
   }
   if (!is.logical(as_percent)) {
-    stop('`as_percent` must be logical', call. = FALSE)
+    stop("`as_percent` must be logical", call. = FALSE)
   }
   if (!is.logical(only_all_tested)) {
-    stop('`only_all_tested` must be logical', call. = FALSE)
+    stop("`only_all_tested` must be logical", call. = FALSE)
   }
 
   dots_df <- ...elt(1) # it needs this evaluation
@@ -67,8 +67,7 @@ rsi_calc <- function(...,
   ndots <- length(dots)
 
  if ("data.frame" %in% class(dots_df)) {
-   # data.frame passed with other columns, like:
-   #   example_isolates %>% portion_S(amcl, gent)
+   # data.frame passed with other columns, like: example_isolates %>% portion_S(amcl, gent)
    dots <- as.character(dots)
    dots <- dots[dots != "."]
     if (length(dots) == 0 | all(dots == "df")) {
@@ -79,13 +78,10 @@ rsi_calc <- function(...,
       x <- dots_df[, dots]
     }
   } else if (ndots == 1) {
-    # only 1 variable passed (can also be data.frame), like:
-    #   portion_S(example_isolates$amcl)
-    #   example_isolates$amcl %>% portion_S()
+    # only 1 variable passed (can also be data.frame), like: portion_S(example_isolates$amcl) and example_isolates$amcl %>% portion_S()
     x <- dots_df
   } else {
-    # multiple variables passed without pipe, like:
-    #   portion_S(example_isolates$amcl, example_isolates$gent)
+    # multiple variables passed without pipe, like: portion_S(example_isolates$amcl, example_isolates$gent)
     x <- NULL
     try(x <- as.data.frame(dots), silent = TRUE)
     if (is.null(x)) {
@@ -105,7 +101,7 @@ rsi_calc <- function(...,
 
   if (is.data.frame(x)) {
     rsi_integrity_check <- character(0)
-    for (i in 1:ncol(x)) {
+    for (i in seq_len(ncol(x))) {
       # check integrity of columns: force rsi class
       if (!is.rsi(x %>% pull(i))) {
         rsi_integrity_check <- c(rsi_integrity_check, x %>% pull(i) %>% as.character())
@@ -125,11 +121,13 @@ rsi_calc <- function(...,
                  FUN = base::min)
       numerator <- sum(as.integer(x) %in% as.integer(ab_result), na.rm = TRUE)
       denominator <- length(x) - sum(is.na(x))
-
+      
     } else {
       # THE NUMBER OF ISOLATES WHERE *ANY* ABx IS S/I/R
       other_values <- base::setdiff(c(NA, levels(ab_result)), ab_result)
-      other_values_filter <- base::apply(x, 1, function(y) { base::all(y %in% other_values) & base::any(is.na(y)) })
+      other_values_filter <- base::apply(x, 1, function(y) {
+        base::all(y %in% other_values) & base::any(is.na(y))
+      })
       numerator <- x %>% filter_all(any_vars(. %in% ab_result)) %>% nrow()
       denominator <- x %>% filter(!other_values_filter) %>% nrow()
     }

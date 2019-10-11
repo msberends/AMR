@@ -150,39 +150,11 @@ B <- example_isolates \%>\%
 # set key antibiotics to a new variable
 x$keyab <- key_antibiotics(x)
 
-x$first_isolate <-
-  first_isolate(x)
+x$first_isolate <- first_isolate(x)
 
-x$first_isolate_weighed <-
-  first_isolate(x,
-                col_keyantibiotics = 'keyab')
+x$first_isolate_weighed <- first_isolate(x, col_keyantibiotics = 'keyab')
 
-x$first_blood_isolate <-
-  first_isolate(x,
-                specimen_group = 'Blood')
-
-x$first_blood_isolate_weighed <-
-  first_isolate(x,
-                specimen_group = 'Blood',
-                col_keyantibiotics = 'keyab')
-
-x$first_urine_isolate <-
-  first_isolate(x,
-                specimen_group = 'Urine')
-
-x$first_urine_isolate_weighed <-
-  first_isolate(x,
-                specimen_group = 'Urine',
-                col_keyantibiotics = 'keyab')
-
-x$first_resp_isolate <-
-  first_isolate(x,
-                specimen_group = 'Respiratory')
-
-x$first_resp_isolate_weighed <-
-  first_isolate(x,
-                specimen_group = 'Respiratory',
-                col_keyantibiotics = 'keyab')
+x$first_blood_isolate <- first_isolate(x, specimen_group = "Blood")
 }
 }
 \seealso{

@@ -85,6 +85,6 @@ test_that("counts work", {
   expect_error(count_S("test", as_percent = "test"))
 
   expect_error(count_df(c("A", "B", "C")))
-  expect_error(count_df(example_isolates[,"date"]))
+  expect_error(count_df(example_isolates[, "date"]))
 
 })

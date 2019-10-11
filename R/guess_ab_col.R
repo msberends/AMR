@@ -83,9 +83,6 @@ guess_ab_col <- function(x = NULL, search_string = NULL, verbose = FALSE) {
     } else if (any(tolower(colnames(x)) %in% tolower(unlist(ab_property(search_string.ab, "abbreviations"))))) {
       ab_result <- colnames(x)[tolower(colnames(x)) %in% tolower(unlist(ab_property(search_string.ab, "abbreviations")))][1L]
 
-    # } else if (any(tolower(colnames(x)) %in% tolower(ab_tradenames(search_string.ab)))) {
-    #   ab_result <- colnames(x)[tolower(colnames(x)) %in% tolower(ab_tradenames(search_string.ab))][1L]
-
     } else {
       # sort colnames on length - longest first
       cols <- colnames(x[, x %>% colnames() %>% nchar() %>% order() %>% rev()])
@@ -128,7 +125,7 @@ get_column_abx <- function(x,
   # only check columns that are a valid AB code, ATC code, name, abbreviation or synonym,
   # or already have the rsi class (as.rsi) 
   # and that have no more than 50% invalid values
-  vectr_antibiotics <- unique(toupper(unlist(AMR::antibiotics[,c("ab", "atc", "name", "abbreviations", "synonyms")])))
+  vectr_antibiotics <- unique(toupper(unlist(AMR::antibiotics[, c("ab", "atc", "name", "abbreviations", "synonyms")])))
   vectr_antibiotics <- vectr_antibiotics[!is.na(vectr_antibiotics) & nchar(vectr_antibiotics) >= 3]
   x_columns <- sapply(colnames(x), function(col, df = x_bak) {
     if (toupper(col) %in% vectr_antibiotics | 
@@ -144,12 +141,12 @@ get_column_abx <- function(x,
 
   df_trans <- data.frame(colnames = colnames(x),
                          abcode = suppressWarnings(as.ab(colnames(x))))
-  df_trans <- df_trans[!is.na(df_trans$abcode),]
+  df_trans <- df_trans[!is.na(df_trans$abcode), ]
   x <- as.character(df_trans$colnames)
   names(x) <- df_trans$abcode
 
   # add from self-defined dots (...):
-  # get_column_abx(example_isolates %>% rename(thisone = AMX), amox = "thisone")
+  # such as get_column_abx(example_isolates %>% rename(thisone = AMX), amox = "thisone")
   dots <- list(...)
   if (length(dots) > 0) {
     newnames <- suppressWarnings(as.ab(names(dots)))
@@ -173,12 +170,12 @@ get_column_abx <- function(x,
   x <- x[!names(x) %in% names(duplicates)]
   
   if (verbose == TRUE) {
-    for (i in 1:length(x)) {
+    for (i in seq_len(length(x))) {
       message(blue(paste0("NOTE: Using column `", bold(x[i]), "` as input for `", names(x)[i],
                           "` (", ab_name(names(x)[i], tolower = TRUE), ").")))
     }
   } else if (length(duplicates) > 0) {
-    for (i in 1:length(duplicates)) {
+    for (i in seq_len(length(duplicates))) {
       warning(red(paste0("Using column `", bold(duplicates[i]), "` as input for `", names(x[which(x == duplicates[i])]), 
                          "` (", ab_name(names(x[names(which(x == duplicates))[i]]), tolower = TRUE), 
                          "), although it was matched for multiple antibiotics or columns.")), call. = FALSE)
@@ -203,7 +200,7 @@ get_column_abx <- function(x,
         mutate(txt = paste0(bold(missing), " (", missing_names, ")")) %>%
         arrange(missing_names) %>%
         pull(txt)
-      message(blue('NOTE: Reliability might be improved if these antimicrobial results would be available too:',
+      message(blue("NOTE: Reliability might be improved if these antimicrobial results would be available too:",
                    paste(missing_txt, collapse = ", ")))
     }
   }

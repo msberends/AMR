@@ -134,7 +134,7 @@ translate_AMR <- function(from, language = get_locale(), only_unknown = FALSE) {
     return(from)
   }
   
-  for (i in 1:nrow(df_trans)) {
+  for (i in seq_len(nrow(df_trans))) {
     from <- gsub(x = from,
                  pattern = df_trans$pattern[i],
                  replacement = df_trans$replacement[i],

@@ -154,7 +154,7 @@ read.4D <- function(file,
   if (info == TRUE) {
     message("OK\nSetting original column names as label... ", appendLF = FALSE)
   }
-  for (i in 1:ncol(data_4D)) {
+  for (i in seq_len(ncol(data_4D))) {
     if (!is.na(colnames.bak[i])) {
       attr(data_4D[, i], "label") <- colnames.bak[i]
     }
@@ -163,7 +163,7 @@ read.4D <- function(file,
   if (info == TRUE) {
     message("OK\nSetting query as label to data.frame... ", appendLF = FALSE)
   }
-  qry <- readLines(con <- file(file, open="r"))[1]
+  qry <- readLines(con <- file(file, open = "r"))[1]
   close(con)
   attr(data_4D, "label") <- qry
 
@@ -173,4 +173,3 @@ read.4D <- function(file,
 
   data_4D
 }
-

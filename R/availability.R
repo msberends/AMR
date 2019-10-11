@@ -44,7 +44,9 @@
 #'   select_if(is.rsi) %>%
 #'   availability()
 availability <- function(tbl, width = NULL) {
-  x <- base::sapply(tbl, function(x) { 1 - base::sum(base::is.na(x)) / base::length(x) })
+  x <- base::sapply(tbl, function(x) {
+    1 - base::sum(base::is.na(x)) / base::length(x) 
+  })
   n <- base::sapply(tbl, function(x) base::length(x[!base::is.na(x)]))
   R <- base::sapply(tbl, function(x) base::ifelse(is.rsi(x), portion_R(x, minimum = 0), NA))
   R_print <- character(length(R))
@@ -83,7 +85,7 @@ availability <- function(tbl, width = NULL) {
                    resistant = R_print,
                    visual_resistance = vis_resistance)
   if (length(R[is.na(R)]) == ncol(tbl)) {
-    df[,1:3]
+    df[, 1:3]
   } else {
     df
   }

@@ -117,5 +117,5 @@ test_that("portions works", {
   )
   
   expect_error(portion_df(c("A", "B", "C")))
-  expect_error(portion_df(example_isolates[,"date"]))
+  expect_error(portion_df(example_isolates[, "date"]))
 })

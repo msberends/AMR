@@ -94,7 +94,7 @@ test_that("as.mo works", {
     rep("B_STPHY_AURS", 9))
   expect_identical(
     as.character(
-      as.mo(c('EHEC', 'EPEC', 'EIEC', 'STEC', 'ATEC', 'UPEC'))),
+      as.mo(c("EHEC", "EPEC", "EIEC", "STEC", "ATEC", "UPEC"))),
     rep("B_ESCHR_COLI", 6))
   # unprevalent MO
   expect_identical(
@@ -114,13 +114,13 @@ test_that("as.mo works", {
                c("UNKNOWN", NA_character_, "B_STNTR_MLTP", "B_KLBSL_PNMN_RHNS", "B_ESCHR_COLI"))
   
   # check for Becker classification
-  expect_identical(as.character(as.mo("S. epidermidis", Becker = FALSE)), "B_STPHY_EPDR")
-  expect_identical(as.character(as.mo("S. epidermidis", Becker = TRUE)),  "B_STPHY_CONS")
-  expect_identical(as.character(as.mo("STAEPI",         Becker = TRUE)),  "B_STPHY_CONS")
-  expect_identical(as.character(as.mo("S. intermedius", Becker = FALSE)), "B_STPHY_INTR")
-  expect_identical(as.character(as.mo("Sta intermedius",Becker = FALSE)), "B_STPHY_INTR")
-  expect_identical(as.character(as.mo("Sta intermedius",Becker = TRUE)),  "B_STPHY_COPS")
-  expect_identical(as.character(as.mo("STAINT",         Becker = TRUE)),  "B_STPHY_COPS")
+  expect_identical(as.character(as.mo("S. epidermidis",  Becker = FALSE)), "B_STPHY_EPDR")
+  expect_identical(as.character(as.mo("S. epidermidis",  Becker = TRUE)),  "B_STPHY_CONS")
+  expect_identical(as.character(as.mo("STAEPI",          Becker = TRUE)),  "B_STPHY_CONS")
+  expect_identical(as.character(as.mo("S. intermedius",  Becker = FALSE)), "B_STPHY_INTR")
+  expect_identical(as.character(as.mo("Sta intermedius", Becker = FALSE)), "B_STPHY_INTR")
+  expect_identical(as.character(as.mo("Sta intermedius", Becker = TRUE)),  "B_STPHY_COPS")
+  expect_identical(as.character(as.mo("STAINT",          Becker = TRUE)),  "B_STPHY_COPS")
   # aureus must only be influenced if Becker = "all"
   expect_identical(as.character(as.mo("STAAUR", Becker = FALSE)), "B_STPHY_AURS")
   expect_identical(as.character(as.mo("STAAUR", Becker = TRUE)),  "B_STPHY_AURS")
@@ -150,7 +150,7 @@ test_that("as.mo works", {
   
   # select with one column
   expect_identical(
-    example_isolates[1:10,] %>%
+    example_isolates[1:10, ] %>%
       left_join_microorganisms() %>%
       select(genus) %>%
       as.mo() %>%
@@ -160,9 +160,9 @@ test_that("as.mo works", {
   
   # select with two columns
   expect_identical(
-    example_isolates[1:10,] %>%
+    example_isolates[1:10, ] %>%
       pull(mo),
-    example_isolates[1:10,] %>%
+    example_isolates[1:10, ] %>%
       left_join_microorganisms() %>%
       select(genus, species) %>%
       as.mo())
@@ -259,10 +259,6 @@ test_that("as.mo works", {
   
   expect_null(mo_failures())
   expect_true(example_isolates %>% pull(mo) %>% is.mo())
-  
-  # expect_equal(get_mo_code("test", "mo"), "test")
-  # expect_equal(length(get_mo_code("Escherichia", "genus")),
-  #              nrow(AMR::microorganisms[base::which(AMR::microorganisms[, "genus"] %in% "Escherichia"),]))
   
   expect_error(translate_allow_uncertain(5))
   

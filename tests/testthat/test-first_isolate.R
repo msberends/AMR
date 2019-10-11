@@ -33,16 +33,12 @@ test_that("first isolates work", {
       na.rm = TRUE),
     1317)
 
-  # first *weighted* isolates
+  # first weighted isolates
   expect_equal(
     suppressWarnings(
       sum(
         first_isolate(x = example_isolates %>% mutate(keyab = key_antibiotics(.)),
-                      # let syntax determine these automatically:
-                      # col_date = "date",
-                      # col_patient_id = "patient_id",
-                      # col_mo = "mo",
-                      # col_keyantibiotics = "keyab",
+                      # let syntax determine arguments automatically
                       type = "keyantibiotics",
                       info = TRUE),
         na.rm = TRUE)),
@@ -145,7 +141,7 @@ test_that("first isolates work", {
                                                 filter_specimen = "something_unexisting")))
 
   # printing of exclusion message
-  expect_output(example_isolates %>%
+  expect_message(example_isolates %>%
                   first_isolate(col_date = "date",
                                 col_mo = "mo",
                                 col_patient_id = "patient_id",

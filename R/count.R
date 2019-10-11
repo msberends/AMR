@@ -154,7 +154,7 @@ count_all <- function(..., only_all_tested = FALSE) {
 
 #' @rdname count
 #' @export
-n_rsi<- count_all
+n_rsi <- count_all
 
 #' @rdname count
 #' @export

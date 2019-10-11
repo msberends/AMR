@@ -1,6 +1,6 @@
 Package: AMR
-Version: 0.7.1.9101
-Date: 2019-10-09
+Version: 0.7.1.9102
+Date: 2019-10-11
 Title: Antimicrobial Resistance Analysis
 Authors@R: c(
     person(role = c("aut", "cre"), 
@@ -48,6 +48,7 @@ Suggests:
     covr (>= 3.0.1),
     curl,
     readxl,
+    rmarkdown,
     rstudioapi,
     rvest (>= 0.3.2),
     testthat (>= 1.0.2),

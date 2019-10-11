@@ -64,14 +64,14 @@ as.disk <- function(x, na.rm = FALSE) {
       list_missing <- x.bak[is.na(x) & !is.na(x.bak)] %>%
         unique() %>%
         sort()
-      list_missing <- paste0('"', list_missing , '"', collapse = ", ")
-      warning(na_after - na_before, ' results truncated (',
+      list_missing <- paste0('"', list_missing, '"', collapse = ", ")
+      warning(na_after - na_before, " results truncated (",
               round(((na_after - na_before) / length(x)) * 100),
-              '%) that were invalid disk zones: ',
+              "%) that were invalid disk zones: ",
               list_missing, call. = FALSE)
     }
 
-    class(x) <- c('disk', 'integer')
+    class(x) <- c("disk", "integer")
     x
   }
 }
@@ -80,7 +80,7 @@ as.disk <- function(x, na.rm = FALSE) {
 #' @export
 #' @importFrom dplyr %>%
 is.disk <- function(x) {
-  class(x) %>% identical(c('disk', 'integer'))
+  class(x) %>% identical(c("disk", "integer"))
 }
 
 #' @exportMethod print.disk

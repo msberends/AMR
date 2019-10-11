@@ -99,7 +99,7 @@
 #' @inheritSection AMR Read more on our website!
 set_mo_source <- function(path) {
 
-  file_location <- path.expand('~/mo_source.rds')
+  file_location <- path.expand("~/mo_source.rds")
 
   if (!is.character(path) | length(path) > 1) {
     stop("`path` must be a character of length 1.")
@@ -119,17 +119,17 @@ set_mo_source <- function(path) {
     stop("File not found: ", path)
   }
 
-  if (path %like% '[.]rds$') {
+  if (path %like% "[.]rds$") {
     df <- readRDS(path)
 
-  } else if (path %like% '[.]xlsx?$') {
+  } else if (path %like% "[.]xlsx?$") {
     # is Excel file (old or new)
     if (!"readxl" %in% utils::installed.packages()) {
       stop("Install the 'readxl' package first.")
     }
     df <- readxl::read_excel(path)
 
-  } else if (path %like% '[.]tsv$') {
+  } else if (path %like% "[.]tsv$") {
     df <- utils::read.table(header = TRUE, sep = "\t", stringsAsFactors = FALSE)
 
   } else {
@@ -196,7 +196,7 @@ get_mo_source <- function() {
       # set updated source
       set_mo_source(getOption("mo_source"))
     }
-    file_location <- path.expand('~/mo_source.rds')
+    file_location <- path.expand("~/mo_source.rds")
     readRDS(file_location)
   }
 }

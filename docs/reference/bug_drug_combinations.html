@@ -85,7 +85,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">0.7.1.9100</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">0.7.1.9102</span>
       </span>
     </div>
 
@@ -327,7 +327,7 @@
     <pre class="examples"><span class='co'># \donttest{</span>
 <span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'>bug_drug_combinations</span>(<span class='no'>example_isolates</span>)
 <span class='no'>x</span>
-<span class='fu'><a href='https://rdrr.io/r/base/format.html'>format</a></span>(<span class='no'>x</span>)
+<span class='fu'><a href='https://rdrr.io/r/base/format.html'>format</a></span>(<span class='no'>x</span>, <span class='kw'>translate_ab</span> <span class='kw'>=</span> <span class='st'>"name (atc)"</span>)
 
 <span class='co'># Use FUN to change to transformation of microorganism codes</span>
 <span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'>bug_drug_combinations</span>(<span class='no'>example_isolates</span>,

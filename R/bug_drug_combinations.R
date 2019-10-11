@@ -31,7 +31,7 @@
 #' @param ... arguments passed on to \code{FUN}
 #' @inheritParams rsi_df
 #' @inheritParams base::formatC
-#' @importFrom dplyr %>% rename group_by select mutate filter pull
+#' @importFrom dplyr %>% rename group_by select mutate filter summarise ungroup
 #' @importFrom tidyr spread
 # @importFrom clean freq percentage
 #' @details The function \code{format} calculates the resistance per bug-drug combination. Use \code{combine_IR = FALSE} (default) to test R vs. S+I and \code{combine_IR = TRUE} to test R+I vs. S. 
@@ -46,7 +46,7 @@
 #' \donttest{
 #' x <- bug_drug_combinations(example_isolates)
 #' x
-#' format(x)
+#' format(x, translate_ab = "name (atc)")
 #' 
 #' # Use FUN to change to transformation of microorganism codes
 #' x <- bug_drug_combinations(example_isolates, 
@@ -76,7 +76,9 @@ bug_drug_combinations <- function(x,
   
   x <- x %>%
     as.data.frame(stringsAsFactors = FALSE) %>% 
-    mutate(mo = x %>% pull(col_mo) %>% FUN(...)) %>% 
+    mutate(mo = x %>% 
+             pull(col_mo) %>% 
+             FUN(...)) %>% 
     group_by(mo) %>% 
     select_if(is.rsi) %>% 
     gather("ab", "value", -mo) %>% 
@@ -112,7 +114,7 @@ format.bug_drug_combinations <- function(x,
   if (remove_intrinsic_resistant == TRUE) {
     x <- x %>% filter(R != total)
   }
-  if (combine_IR == FALSE | combine_SI == TRUE) {
+  if (combine_SI == TRUE | combine_IR == FALSE) {
     x$isolates <- x$R
   } else {
     x$isolates <- x$R + x$I
@@ -121,7 +123,7 @@ format.bug_drug_combinations <- function(x,
   give_ab_name <- function(ab, format, language) {
     format <- tolower(format)
     ab_txt <- rep(format, length(ab))
-    for (i in 1:length(ab_txt)) {
+    for (i in seq_len(length(ab_txt))) {
       ab_txt[i] <- gsub("ab", ab[i], ab_txt[i])
       ab_txt[i] <- gsub("cid", ab_cid(ab[i]), ab_txt[i])
       ab_txt[i] <- gsub("group", ab_group(ab[i], language = language), ab_txt[i])
