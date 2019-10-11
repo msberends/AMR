@@ -19,8 +19,8 @@
 # Visit our website for more info: https://msberends.gitlab.io/AMR.    #
 # ==================================================================== #
 
-# to check with R-Hub:
-# chck <- rhub::check_for_cran(devtools::build(args = c('--no-build-vignettes')))
+# to do a full CRAN check with R-Hub:
+# chck <- rhub::check(devtools::build(), platform = c('debian-clang-devel', 'debian-gcc-devel', 'fedora-clang-devel', 'fedora-gcc-devel', 'windows-x86_64-devel', 'debian-gcc-patched', 'solaris-x86-patched', 'debian-gcc-release', 'windows-x86_64-release', 'macos-elcapitan-release', 'windows-x86_64-oldrel'))
 
 stages:
   - build
@@ -59,7 +59,7 @@ R-release:
   script:
     - Rscript -e 'sessionInfo()'
     # install missing and outdated packages
-    - Rscript -e 'source(".gitlab-ci.R"); gl_update_pkg_all(repos = "https://cran.rstudio.com", quiet = TRUE, install_pkgdown = TRUE)'
+    - Rscript -e 'source(".gitlab-ci.R"); gl_update_pkg_all(repos = "https://cran.rstudio.com", quiet = TRUE, install_pkgdown = TRUE,  install_lintr = TRUE)'
     # remove vignettes folder and get VignetteBuilder field out of DESCRIPTION file
     - rm -rf vignettes
     - Rscript -e 'd <- read.dcf("DESCRIPTION"); d[, colnames(d) == "VignetteBuilder"] <- NA; write.dcf(d, "DESCRIPTION")'
@@ -80,11 +80,11 @@ R-release:
 R-devel:
   stage: build
   image: rocker/r-devel
-  allow_failure: true
+  allow_failure: false
   script:
     - Rscriptdevel -e 'sessionInfo()'
     # install missing and outdated packages
-    - Rscriptdevel -e 'source(".gitlab-ci.R"); gl_update_pkg_all(repos = "https://cran.rstudio.com", quiet = TRUE, install_pkgdown = TRUE)'
+    - Rscriptdevel -e 'source(".gitlab-ci.R"); gl_update_pkg_all(repos = "https://cran.rstudio.com", quiet = TRUE)'
     # remove vignettes folder and get VignetteBuilder field out of DESCRIPTION file
     - rm -rf vignettes
     - Rscriptdevel -e 'd <- read.dcf("DESCRIPTION"); d[, colnames(d) == "VignetteBuilder"] <- NA; write.dcf(d, "DESCRIPTION")'
@@ -116,8 +116,6 @@ coverage:
     - master
   script:
     - apt-get install --yes git
-    # install missing and outdated packages
-    - Rscript -e 'source(".gitlab-ci.R"); gl_update_pkg_all(repos = "https://cran.rstudio.com", quiet = TRUE, install_pkgdown = FALSE)'
     # codecov token is set in https://gitlab.com/msberends/AMR/settings/ci_cd
     - Rscript -e "cc <- covr::package_coverage(); covr::codecov(coverage = cc, token = '$codecov'); cat('Code coverage:', covr::percent_coverage(cc))"
   coverage: '/Code coverage: \d+\.\d+/'
@@ -136,8 +134,14 @@ pages:
 lintr:
   stage: lint
   when: on_success
+  cache:
+    key: r350
+    paths:
+      - installed_deps/
+    policy: pull # no uploading after run
+  only:
+    - premaster
+    - master
   script:
-    # install missing and outdated packages
-    - Rscript -e 'source(".gitlab-ci.R"); gl_update_pkg_all(repos = "https://cran.rstudio.com", quiet = TRUE, install_pkgdown = FALSE, install_lintr = TRUE)'
     # check all syntax with lintr
     - Rscript -e 'lintr::lint_package()'
