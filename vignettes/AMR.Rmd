@@ -210,7 +210,7 @@ data <- data %>%
   mutate(first = first_isolate(.))
 ```
 
-So only `r percentage(sum(data$first) / nrow(data))` is suitable for resistance analysis! We can now filter on it with the `filter()` function, also from the `dplyr` package:
+So only `r AMR:::percentage(sum(data$first) / nrow(data))` is suitable for resistance analysis! We can now filter on it with the `filter()` function, also from the `dplyr` package:
 
 ```{r 1st isolate filter}
 data_1st <- data %>% 
@@ -272,7 +272,7 @@ weighted_df2 %>%
   knitr::kable(align = "c")
 ```
 
-Instead of `r sum(weighted_df$first)`, now `r sum(weighted_df2$first_weighted)` isolates are flagged. In total, `r percentage(sum(data$first_weighted) / nrow(data))` of all isolates are marked 'first weighted' - `r percentage((sum(data$first_weighted) / nrow(data)) - (sum(data$first) / nrow(data)))` more than when using the CLSI guideline. In real life, this novel algorithm will yield 5-10% more isolates than the classic CLSI guideline.
+Instead of `r sum(weighted_df$first)`, now `r sum(weighted_df2$first_weighted)` isolates are flagged. In total, `r AMR:::percentage(sum(data$first_weighted) / nrow(data))` of all isolates are marked 'first weighted' - `r AMR:::percentage((sum(data$first_weighted) / nrow(data)) - (sum(data$first) / nrow(data)))` more than when using the CLSI guideline. In real life, this novel algorithm will yield 5-10% more isolates than the classic CLSI guideline.
 
 As with `filter_first_isolate()`, there's a shortcut for this new algorithm too:
 ```{r 1st isolate filter 3, results = 'hide', message = FALSE, warning = FALSE}
