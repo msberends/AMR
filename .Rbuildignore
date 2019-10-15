@@ -23,3 +23,5 @@
 ^data-raw$
 R/aa_test.R$
 ^\.lintr$
+^vignettes/benchmark.*
+^vignettes/SPSS.*

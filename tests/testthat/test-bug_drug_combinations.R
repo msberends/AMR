@@ -22,6 +22,9 @@
 context("bug_drug_combinations.R")
 
 test_that("bug_drug_combinations works", {
+  
+  skip_on_cran()
+  
   b <- suppressWarnings(bug_drug_combinations(example_isolates))
   expect_s3_class(b, "bug_drug_combinations")
   expect_output(print(b))

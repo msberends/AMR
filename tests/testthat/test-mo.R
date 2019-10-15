@@ -23,6 +23,8 @@ context("mo.R")
 
 test_that("as.mo works", {
   
+  skip_on_cran()
+  
   clear_mo_history(force = TRUE)
   
   library(dplyr)

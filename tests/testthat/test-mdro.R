@@ -22,6 +22,9 @@
 context("mdro.R")
 
 test_that("mdro works", {
+  
+  skip_on_cran()
+  
   library(dplyr)
 
   expect_error(suppressWarnings(mdro(example_isolates, country = "invalid", col_mo = "mo", info = TRUE)))

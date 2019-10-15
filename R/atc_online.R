@@ -167,7 +167,7 @@ atc_online_property <- function(atc_code,
           returnvalue[i] <- NA
           next
         } else {
-          for (j in seq_len(length(tbl))) {
+          for (j in seq_len(nrow(tbl))) {
             if (tbl[j, "adm.r"] == administration) {
               returnvalue[i] <- tbl[j, property]
             }

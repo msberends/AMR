@@ -22,6 +22,9 @@
 context("first_isolate.R")
 
 test_that("first isolates work", {
+  
+  skip_on_cran()
+  
   # first isolates
   expect_equal(
     sum(

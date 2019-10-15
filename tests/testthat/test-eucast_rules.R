@@ -22,6 +22,8 @@
 context("eucast_rules.R")
 
 test_that("EUCAST rules work", {
+  
+  skip_on_cran()
 
   # thoroughly check input table
   expect_equal(colnames(eucast_rules_file),

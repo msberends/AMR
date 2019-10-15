@@ -22,6 +22,9 @@
 context("rsi.R")
 
 test_that("rsi works", {
+  
+  skip_on_cran()
+  
   expect_true(as.rsi("S") < as.rsi("I"))
   expect_true(as.rsi("I") < as.rsi("R"))
   expect_true(as.rsi("R") > as.rsi("S"))
@@ -56,6 +59,9 @@ test_that("rsi works", {
 })
 
 test_that("mic2rsi works", {
+  
+  skip_on_cran()
+  
   expect_equal(as.character(
     as.rsi(x = as.mic(0.125),
                       mo = "B_STRPT_PNMN",
@@ -78,6 +84,9 @@ test_that("mic2rsi works", {
 })
 
 test_that("disk2rsi works", {
+  
+  skip_on_cran()
+  
   expect_equal(as.character(
     as.rsi(x = as.disk(22),
            mo = "B_STRPT_PNMN",
