@@ -84,7 +84,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">0.7.1.9107</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">0.8.0.9000</span>
       </span>
     </div>
 
@@ -231,11 +231,24 @@
       
     </div>
 
-    <div id="amr-0-7-1-9107" class="section level1">
+    <div id="amr-0-8-0-9000" class="section level1">
 <h1 class="page-header">
-<a href="#amr-0-7-1-9107" class="anchor"></a>AMR 0.7.1.9107<small> Unreleased </small>
+<a href="#amr-0-8-0-9000" class="anchor"></a>AMR 0.8.0.9000<small> Unreleased </small>
 </h1>
-<p><small>Last updated: 15-Oct-2019</small></p>
+<p><small>Last updated: 16-Oct-2019</small></p>
+<div id="new" class="section level3">
+<h3 class="hasAnchor">
+<a href="#new" class="anchor"></a>New</h3>
+</div>
+<div id="changes" class="section level3">
+<h3 class="hasAnchor">
+<a href="#changes" class="anchor"></a>Changes</h3>
+</div>
+</div>
+    <div id="amr-0-8-0" class="section level1">
+<h1 class="page-header">
+<a href="#amr-0-8-0" class="anchor"></a>AMR 0.8.0<small> 2019-10-15 </small>
+</h1>
 <div id="breaking" class="section level3">
 <h3 class="hasAnchor">
 <a href="#breaking" class="anchor"></a>Breaking</h3>
@@ -262,9 +275,9 @@ This is important, because a value like <code>"testvalue"</code> could never be 
 <li><p>Renamed data set <code>septic_patients</code> to <code>example_isolates</code></p></li>
 </ul>
 </div>
-<div id="new" class="section level3">
+<div id="new-1" class="section level3">
 <h3 class="hasAnchor">
-<a href="#new" class="anchor"></a>New</h3>
+<a href="#new-1" class="anchor"></a>New</h3>
 <ul>
 <li>
 <p>Function <code><a href="../reference/bug_drug_combinations.html">bug_drug_combinations()</a></code> to quickly get a <code>data.frame</code> with the results of all bug-drug combinations in a data set. The column containing microorganism codes is guessed automatically and its input is transformed with <code><a href="../reference/mo_property.html">mo_shortname()</a></code> at default:</p>
@@ -387,9 +400,9 @@ Since this is a major change, usage of the old <code>also_single_tested</code> w
 <h1 class="page-header">
 <a href="#amr-0-7-1" class="anchor"></a>AMR 0.7.1<small> 2019-06-23 </small>
 </h1>
-<div id="new-1" class="section level4">
+<div id="new-2" class="section level4">
 <h4 class="hasAnchor">
-<a href="#new-1" class="anchor"></a>New</h4>
+<a href="#new-2" class="anchor"></a>New</h4>
 <ul>
 <li>
 <p>Function <code><a href="../reference/portion.html">rsi_df()</a></code> to transform a <code>data.frame</code> to a data set containing only the microbial interpretation (S, I, R), the antibiotic, the percentage of S/I/R and the number of available isolates. This is a convenient combination of the existing functions <code><a href="../reference/count.html">count_df()</a></code> and <code><a href="../reference/portion.html">portion_df()</a></code> to immediately show resistance percentages and number of available isolates:</p>
@@ -468,9 +481,9 @@ Since this is a major change, usage of the old <code>also_single_tested</code> w
 <h1 class="page-header">
 <a href="#amr-0-7-0" class="anchor"></a>AMR 0.7.0<small> 2019-06-03 </small>
 </h1>
-<div id="new-2" class="section level4">
+<div id="new-3" class="section level4">
 <h4 class="hasAnchor">
-<a href="#new-2" class="anchor"></a>New</h4>
+<a href="#new-3" class="anchor"></a>New</h4>
 <ul>
 <li>Support for translation of disk diffusion and MIC values to RSI values (i.e. antimicrobial interpretations). Supported guidelines are EUCAST (2011 to 2019) and CLSI (2011 to 2019). Use <code><a href="../reference/as.rsi.html">as.rsi()</a></code> on an MIC value (created with <code><a href="../reference/as.mic.html">as.mic()</a></code>), a disk diffusion value (created with the new <code><a href="../reference/as.disk.html">as.disk()</a></code>) or on a complete date set containing columns with MIC or disk diffusion values.</li>
 <li>Function <code><a href="../reference/mo_property.html">mo_name()</a></code> as alias of <code><a href="../reference/mo_property.html">mo_fullname()</a></code>
@@ -585,9 +598,9 @@ Please <a href="https://gitlab.com/msberends/AMR/issues/new?issue%5Btitle%5D=EUC
 <li>Contains the complete manual of this package and all of its functions with an explanation of their parameters</li>
 <li>Contains a comprehensive tutorial about how to conduct antimicrobial resistance analysis, import data from WHONET or SPSS and many more.</li>
 </ul>
-<div id="new-3" class="section level4">
+<div id="new-4" class="section level4">
 <h4 class="hasAnchor">
-<a href="#new-3" class="anchor"></a>New</h4>
+<a href="#new-4" class="anchor"></a>New</h4>
 <ul>
 <li>
 <strong>BREAKING</strong>: removed deprecated functions, parameters and references to ‘bactid’. Use <code><a href="../reference/as.mo.html">as.mo()</a></code> to identify an MO code.</li>
@@ -812,9 +825,9 @@ Using <code><a href="../reference/as.mo.html">as.mo(..., allow_uncertain = 3)</a
 <h1 class="page-header">
 <a href="#amr-0-5-0" class="anchor"></a>AMR 0.5.0<small> 2018-11-30 </small>
 </h1>
-<div id="new-4" class="section level4">
+<div id="new-5" class="section level4">
 <h4 class="hasAnchor">
-<a href="#new-4" class="anchor"></a>New</h4>
+<a href="#new-5" class="anchor"></a>New</h4>
 <ul>
 <li>Repository moved to GitLab: <a href="https://gitlab.com/msberends/AMR" class="uri">https://gitlab.com/msberends/AMR</a>
 </li>
@@ -939,9 +952,9 @@ Using <code><a href="../reference/as.mo.html">as.mo(..., allow_uncertain = 3)</a
 <h1 class="page-header">
 <a href="#amr-0-4-0" class="anchor"></a>AMR 0.4.0<small> 2018-10-01 </small>
 </h1>
-<div id="new-5" class="section level4">
+<div id="new-6" class="section level4">
 <h4 class="hasAnchor">
-<a href="#new-5" class="anchor"></a>New</h4>
+<a href="#new-6" class="anchor"></a>New</h4>
 <ul>
 <li>The data set <code>microorganisms</code> now contains <strong>all microbial taxonomic data from ITIS</strong> (kingdoms Bacteria, Fungi and Protozoa), the Integrated Taxonomy Information System, available via <a href="https://itis.gov" class="uri">https://itis.gov</a>. The data set now contains more than 18,000 microorganisms with all known bacteria, fungi and protozoa according ITIS with genus, species, subspecies, family, order, class, phylum and subkingdom. The new data set <code>microorganisms.old</code> contains all previously known taxonomic names from those kingdoms.</li>
 <li>New functions based on the existing function <code>mo_property</code>:
@@ -1074,9 +1087,9 @@ Using <code><a href="../reference/as.mo.html">as.mo(..., allow_uncertain = 3)</a
 <h1 class="page-header">
 <a href="#amr-0-3-0" class="anchor"></a>AMR 0.3.0<small> 2018-08-14 </small>
 </h1>
-<div id="new-6" class="section level4">
+<div id="new-7" class="section level4">
 <h4 class="hasAnchor">
-<a href="#new-6" class="anchor"></a>New</h4>
+<a href="#new-7" class="anchor"></a>New</h4>
 <ul>
 <li>
 <strong>BREAKING</strong>: <code>rsi_df</code> was removed in favour of new functions <code>portion_R</code>, <code>portion_IR</code>, <code>portion_I</code>, <code>portion_SI</code> and <code>portion_S</code> to selectively calculate resistance or susceptibility. These functions are 20 to 30 times faster than the old <code>rsi</code> function. The old function still works, but is deprecated.
@@ -1211,9 +1224,9 @@ Using <code><a href="../reference/as.mo.html">as.mo(..., allow_uncertain = 3)</a
 <h1 class="page-header">
 <a href="#amr-0-2-0" class="anchor"></a>AMR 0.2.0<small> 2018-05-03 </small>
 </h1>
-<div id="new-7" class="section level4">
+<div id="new-8" class="section level4">
 <h4 class="hasAnchor">
-<a href="#new-7" class="anchor"></a>New</h4>
+<a href="#new-8" class="anchor"></a>New</h4>
 <ul>
 <li>Full support for Windows, Linux and macOS</li>
 <li>Full support for old R versions, only R-3.0.0 (April 2013) or later is needed (needed packages may have other dependencies)</li>
@@ -1292,7 +1305,8 @@ Using <code><a href="../reference/as.mo.html">as.mo(..., allow_uncertain = 3)</a
     <div id="tocnav">
       <h2>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
-        <li><a href="#amr-0-7-1-9107">0.7.1.9107</a></li>
+        <li><a href="#amr-0-8-0-9000">0.8.0.9000</a></li>
+        <li><a href="#amr-0-8-0">0.8.0</a></li>
         <li><a href="#amr-0-7-1">0.7.1</a></li>
         <li><a href="#amr-0-7-0">0.7.0</a></li>
         <li><a href="#amr-0-6-1">0.6.1</a></li>

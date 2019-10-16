@@ -6,7 +6,7 @@
 
 ### What is `AMR` (for R)?
 
-`AMR` is a free and open-source [R package](https://www.r-project.org) to simplify the analysis and prediction of Antimicrobial Resistance (AMR) and to work with microbial and antimicrobial properties by using evidence-based methods. Since its first public release in early 2018, this package has been downloaded over 20,000 times from more than 40 countries <small>(source: [CRAN logs, 2019](https://cran-logs.rstudio.com))</small>.
+`AMR` is a free and open-source [R package](https://www.r-project.org) to simplify the analysis and prediction of Antimicrobial Resistance (AMR) and to work with microbial and antimicrobial properties by using evidence-based methods. Since its first public release in early 2018, this package has been downloaded over 25,000 times from more than 60 countries <small>(source: [CRAN logs, 2019](https://cran-logs.rstudio.com))</small>.
 
 After installing this package, R knows [**~70,000 microorganisms**](./reference/microorganisms.html) (distinct microbial species) and [**~450 antibiotics**](./reference/antibiotics.html) by name and code, and knows all about valid RSI and MIC values. It supports any data format, including WHONET/EARS-Net data. 
 
