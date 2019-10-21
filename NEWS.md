@@ -1,9 +1,10 @@
-# AMR 0.8.0.9000
-<small>Last updated: 16-Oct-2019</small>
+# AMR 0.8.0.9001
+<small>Last updated: 21-Oct-2019</small>
 
 ### New
 
 ### Changes
+* When running `as.rsi()` over a data set, it will now print the guideline that will be used
 
 
 # AMR 0.8.0

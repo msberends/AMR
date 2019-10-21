@@ -254,8 +254,28 @@ exec_as.rsi <- function(method, x, mo, ab, guideline) {
             class =  c("rsi", "ordered", "factor"))
 }
 
+get_guideline <- function(guideline) {
+  guideline_param <- toupper(guideline)
+  if (guideline_param %in% c("CLSI", "EUCAST")) {
+    guideline_param <- AMR::rsi_translation %>%
+      filter(guideline %like% guideline_param) %>%
+      pull(guideline) %>%
+      sort() %>%
+      rev() %>%
+      .[1]
+  }
+  
+  if (!guideline_param %in% AMR::rsi_translation$guideline) {
+    stop(paste0("invalid guideline: '", guideline,
+                "'.\nValid guidelines are: ", paste0("'", rev(sort(unique(AMR::rsi_translation$guideline))), "'", collapse = ", ")),
+         call. = FALSE)
+  }
+  
+  guideline_param
+}
+
 #' @rdname as.rsi
-#' @importFrom crayon red blue
+#' @importFrom crayon red blue bold
 #' @export
 as.rsi.data.frame <- function(x, col_mo = NULL, guideline = "EUCAST", ...) {
   x <- x
@@ -273,6 +293,9 @@ as.rsi.data.frame <- function(x, col_mo = NULL, guideline = "EUCAST", ...) {
   if (is.null(col_mo)) {
     stop("`col_mo` must be set.", call. = FALSE)
   }
+  
+  guideline <- get_guideline(guideline)
+  message(blue("Interpreting using guideline", bold(guideline)))
 
   # transform all MICs
   ab_cols <- colnames(x)[sapply(x, is.mic)]

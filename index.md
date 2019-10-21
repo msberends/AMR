@@ -2,6 +2,10 @@
 
 *(<help title="Too Long, Didn't Read">TLDR</help> - to find out how to conduct AMR analysis, please [continue reading here to get started](./articles/AMR.html).*
 
+> *18 October 2019*  
+> **METHODS PAPER PREPRINTED**  
+> A methods paper about this package has been preprinted at bioRxiv. Please see [here for the publishers page](https://doi.org/10.1101/810622) or [click here for the PDF](https://www.biorxiv.org/content/early/2019/10/18/810622.full.pdf).
+
 ----
 
 ### What is `AMR` (for R)?
