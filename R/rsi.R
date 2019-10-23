@@ -102,10 +102,10 @@ as.rsi.default <- function(x, ...) {
   } else if (identical(levels(x), c("S", "I", "R"))) {
     structure(x, class = c("rsi", "ordered", "factor"))
   } else {
-
+    
     x <- x %>% unlist()
     x.bak <- x
-
+    
     na_before <- x[is.na(x) | x == ""] %>% length()
     # remove all spaces
     x <- gsub(" +", "", x)
@@ -179,81 +179,6 @@ as.rsi.disk <- function(x, mo, ab, guideline = "EUCAST", ...) {
               guideline = guideline)
 }
 
-exec_as.rsi <- function(method, x, mo, ab, guideline) {
-  if (method == "mic") {
-    x <- as.mic(x) # when as.rsi.mic is called directly
-  } else if (method == "disk") {
-    x <- as.disk(x) # when as.rsi.disk is called directly
-  }
-
-  mo <- as.mo(mo)
-  ab <- as.ab(ab)
-
-  mo_genus <- as.mo(mo_genus(mo))
-  mo_family <- as.mo(mo_family(mo))
-  mo_order <- as.mo(mo_order(mo))
-  mo_becker <- as.mo(mo, Becker = TRUE)
-  mo_lancefield <- as.mo(mo, Lancefield = TRUE)
- 
-  guideline_param <- toupper(guideline)
-  if (guideline_param %in% c("CLSI", "EUCAST")) {
-    guideline_param <- AMR::rsi_translation %>%
-      filter(guideline %like% guideline_param) %>%
-      pull(guideline) %>%
-      sort() %>%
-      rev() %>%
-      .[1]
-  }
-
-  if (!guideline_param %in% AMR::rsi_translation$guideline) {
-    stop(paste0("invalid guideline: '", guideline,
-                "'.\nValid guidelines are: ", paste0("'", rev(sort(unique(AMR::rsi_translation$guideline))), "'", collapse = ", ")),
-         call. = FALSE)
-  }
-
-  new_rsi <- rep(NA_character_, length(x))
-  trans <- AMR::rsi_translation %>%
-    filter(guideline == guideline_param) %>%
-    mutate(lookup = paste(mo, ab))
-
-  lookup_mo <- paste(mo, ab)
-  lookup_genus <- paste(mo_genus, ab)
-  lookup_family <- paste(mo_family, ab)
-  lookup_order <- paste(mo_order, ab)
-  lookup_becker <- paste(mo_becker, ab)
-  lookup_lancefield <- paste(mo_lancefield, ab)
-
-  for (i in seq_len(length(x))) {
-    get_record <- trans %>%
-      filter(lookup %in% c(lookup_mo[i],
-                           lookup_genus[i],
-                           lookup_family[i],
-                           lookup_order[i],
-                           lookup_becker[i],
-                           lookup_lancefield[i])) %>%
-      # be as specific as possible (i.e. prefer species over genus):
-      arrange(desc(nchar(mo))) %>%
-      .[1L, ]
-
-    if (NROW(get_record) > 0) {
-      if (method == "mic") {
-        new_rsi[i] <- case_when(isTRUE(x[i] <= get_record$S_mic) ~ "S",
-                                isTRUE(x[i] >= get_record$R_mic) ~ "R",
-                                !is.na(get_record$S_mic) & !is.na(get_record$R_mic) ~ "I",
-                                TRUE ~ NA_character_)
-      } else if (method == "disk") {
-        new_rsi[i] <- case_when(isTRUE(x[i] >= get_record$S_disk) ~ "S",
-                                isTRUE(x[i] <= get_record$R_disk) ~ "R",
-                                !is.na(get_record$S_disk) & !is.na(get_record$R_disk) ~ "I",
-                                TRUE ~ NA_character_)
-      }
-
-    }
-  }
-  structure(.Data = factor(new_rsi, levels = c("S", "I", "R"), ordered = TRUE),
-            class =  c("rsi", "ordered", "factor"))
-}
-
 get_guideline <- function(guideline) {
   guideline_param <- toupper(guideline)
   if (guideline_param %in% c("CLSI", "EUCAST")) {
@@ -274,17 +199,84 @@ get_guideline <- function(guideline) {
   guideline_param
 }
 
+exec_as.rsi <- function(method, x, mo, ab, guideline) {
+  if (method == "mic") {
+    x <- as.double(as.mic(x)) # when as.rsi.mic is called directly
+    method_param <- "MIC"
+  } else if (method == "disk") {
+    x <- as.double(as.disk(x)) # when as.rsi.disk is called directly
+    method_param <- "DISK"
+  }
+  
+  mo <- as.mo(mo)
+  ab <- as.ab(ab)
+  
+  mo_genus <- as.mo(mo_genus(mo))
+  mo_family <- as.mo(mo_family(mo))
+  mo_order <- as.mo(mo_order(mo))
+  mo_becker <- as.mo(mo, Becker = TRUE)
+  mo_lancefield <- as.mo(mo, Lancefield = TRUE)
+  
+  guideline_coerced <- get_guideline(guideline)
+  if (guideline_coerced != guideline) {
+    message(blue(paste0("Note: Using guideline ", bold(guideline_coerced), " as input for `guideline`.")))
+  }
+
+  new_rsi <- rep(NA_character_, length(x))
+  trans <- AMR::rsi_translation %>%
+    filter(guideline == guideline_coerced & method == method_param) %>%
+    mutate(lookup = paste(mo, ab))
+
+  lookup_mo <- paste(mo, ab)
+  lookup_genus <- paste(mo_genus, ab)
+  lookup_family <- paste(mo_family, ab)
+  lookup_order <- paste(mo_order, ab)
+  lookup_becker <- paste(mo_becker, ab)
+  lookup_lancefield <- paste(mo_lancefield, ab)
+  
+  for (i in seq_len(length(x))) {
+    get_record <- trans %>%
+      filter(lookup %in% c(lookup_mo[i],
+                           lookup_genus[i],
+                           lookup_family[i],
+                           lookup_order[i],
+                           lookup_becker[i],
+                           lookup_lancefield[i])) %>%
+      # be as specific as possible (i.e. prefer species over genus):
+      arrange(desc(nchar(mo))) %>%
+      .[1L, ]
+    
+    if (NROW(get_record) > 0) {
+      if (is.na(x[i])) {
+        new_rsi[i] <- NA_character_
+      } else if (method == "mic") {
+        new_rsi[i] <- case_when(isTRUE(x[i] <= get_record$breakpoint_S) ~ "S",
+                                isTRUE(x[i] >= get_record$breakpoint_R) ~ "R",
+                                !is.na(get_record$breakpoint_S) & !is.na(get_record$breakpoint_R) ~ "I",
+                                TRUE ~ NA_character_)
+      } else if (method == "disk") {
+        new_rsi[i] <- case_when(isTRUE(x[i] >= get_record$breakpoint_S) ~ "S",
+                                isTRUE(x[i] <= get_record$breakpoint_R) ~ "R",
+                                !is.na(get_record$breakpoint_S) & !is.na(get_record$breakpoint_R) ~ "I",
+                                TRUE ~ NA_character_)
+      }
+    }
+  }
+  structure(.Data = factor(new_rsi, levels = c("S", "I", "R"), ordered = TRUE),
+            class =  c("rsi", "ordered", "factor"))
+}
+
 #' @rdname as.rsi
 #' @importFrom crayon red blue bold
 #' @export
 as.rsi.data.frame <- function(x, col_mo = NULL, guideline = "EUCAST", ...) {
   x <- x
-
+  
   ab_cols <- colnames(x)[sapply(x, function(y) is.mic(y) | is.disk(y))]
   if (length(ab_cols) == 0) {
     stop("No columns with MIC values or disk zones found in this data set. Use as.mic or as.disk to transform antimicrobial columns.", call. = FALSE)
   }
-
+  
   # try to find columns based on type
   # -- mo
   if (is.null(col_mo)) {
@@ -294,23 +286,29 @@ as.rsi.data.frame <- function(x, col_mo = NULL, guideline = "EUCAST", ...) {
     stop("`col_mo` must be set.", call. = FALSE)
   }
   
-  guideline <- get_guideline(guideline)
-  message(blue("Interpreting using guideline", bold(guideline)))
-
+  guideline_coerced <- get_guideline(guideline)
+  if (guideline_coerced != guideline) {
+    message(blue(paste0("Note: Using guideline ", bold(guideline_coerced), " as input for `guideline`.")))
+  }
+  
   # transform all MICs
   ab_cols <- colnames(x)[sapply(x, is.mic)]
   if (length(ab_cols) > 0) {
     for (i in seq_len(length(ab_cols))) {
-      if (is.na(suppressWarnings(as.ab(ab_cols[i])))) {
+      ab_col_coerced <- suppressWarnings(as.ab(ab_cols[i]))
+      if (is.na(ab_col_coerced)) {
         message(red(paste0("Unknown drug: `", bold(ab_cols[i]), "`. Rename this column to a drug name or code, and check the output with as.ab().")))
         next
       }
-      message(blue(paste0("Interpreting column `", bold(ab_cols[i]), "` (", ab_name(ab_cols[i], tolower = TRUE), ")...")), appendLF = FALSE)
+      message(blue(paste0("Interpreting column `", bold(ab_cols[i]), "` (",
+                          ifelse(ab_col_coerced != ab_cols[i], paste0(ab_col_coerced, ", "), ""),
+                          ab_name(ab_col_coerced, tolower = TRUE), ")...")),
+              appendLF = FALSE)
       x[, ab_cols[i]] <- exec_as.rsi(method = "mic",
-                                        x = x %>% pull(ab_cols[i]),
-                                        mo = x %>% pull(col_mo),
-                                        ab = as.ab(ab_cols[i]),
-                                        guideline = guideline)
+                                     x = x %>% pull(ab_cols[i]),
+                                     mo = x %>% pull(col_mo),
+                                     ab = ab_col_coerced,
+                                     guideline = guideline_coerced)
       message(blue(" OK."))
     }
   }
@@ -318,20 +316,24 @@ as.rsi.data.frame <- function(x, col_mo = NULL, guideline = "EUCAST", ...) {
   ab_cols <- colnames(x)[sapply(x, is.disk)]
   if (length(ab_cols) > 0) {
     for (i in seq_len(length(ab_cols))) {
-      if (is.na(suppressWarnings(as.ab(ab_cols[i])))) {
+      ab_col_coerced <- suppressWarnings(as.ab(ab_cols[i]))
+      if (is.na(ab_col_coerced)) {
         message(red(paste0("Unknown drug: `", bold(ab_cols[i]), "`. Rename this column to a drug name or code, and check the output with as.ab().")))
         next
       }
-      message(blue(paste0("Interpreting column `", bold(ab_cols[i]), "` (", ab_name(ab_cols[i], tolower = TRUE), ")...")), appendLF = FALSE)
+      message(blue(paste0("Interpreting column `", bold(ab_cols[i]), "` (",
+                          ifelse(ab_col_coerced != ab_cols[i], paste0(ab_col_coerced, ", "), ""),
+                          ab_name(ab_col_coerced, tolower = TRUE), ")...")),
+              appendLF = FALSE)
       x[, ab_cols[i]] <- exec_as.rsi(method = "disk",
-                                        x = x %>% pull(ab_cols[i]),
-                                        mo = x %>% pull(col_mo),
-                                        ab = as.ab(ab_cols[i]),
-                                        guideline = guideline)
+                                     x = x %>% pull(ab_cols[i]),
+                                     mo = x %>% pull(col_mo),
+                                     ab = ab_col_coerced,
+                                     guideline = guideline_coerced)
       message(blue(" OK."))
     }
   }
-
+  
   x
 }
 
@@ -435,11 +437,11 @@ plot.rsi <- function(x,
   if (!"R" %in% data$x) {
     data <- rbind(data, data.frame(x = "R", n = 0, s = 0))
   }
-
+  
   data$x <- factor(data$x, levels = c("S", "I", "R"), ordered = TRUE)
-
+  
   ymax <- if_else(max(data$s) > 95, 105, 100)
-
+  
   plot(x = data$x,
        y = data$s,
        lwd = lwd,
@@ -453,7 +455,7 @@ plot.rsi <- function(x,
   axis(side = 1, at = 1:n_distinct(data$x), labels = levels(data$x), lwd = 0)
   # y axis, 0-100%
   axis(side = 2, at = seq(0, 100, 5))
-
+  
   text(x = data$x,
        y = data$s + 4,
        labels = paste0(data$s, "% (n = ", data$n, ")"))
@@ -473,13 +475,13 @@ barplot.rsi <- function(height,
                         beside = TRUE,
                         axes = beside,
                         ...) {
-
+  
   if (axes == TRUE) {
     par(mar =  c(5, 4, 4, 2) + 0.1)
   } else {
     par(mar =  c(2, 4, 4, 2) + 0.1)
   }
-
+  
   barplot(as.matrix(table(height)),
           col = col,
           xlab = xlab,
@@ -502,13 +504,14 @@ type_sum.rsi <- function(x) {
 }
 
 #' @importFrom pillar pillar_shaft
-#' @importFrom crayon bgGreen bgYellow bgRed white black
+#' @importFrom crayon bgGreen bgYellow bgRed black make_style
 #' @export 
 pillar_shaft.rsi <- function(x, ...) {
   out <- trimws(format(x))
   out[is.na(x)] <- pillar::style_subtle(" NA")
-  out[x == "S"] <- bgGreen(white(" S "))
+  real_white <- make_style(rgb(1, 1, 1))
+  out[x == "S"] <- bgGreen(real_white(" S "))
   out[x == "I"] <- bgYellow(black(" I "))
-  out[x == "R"] <- bgRed(white(" R "))
-  pillar::new_pillar_shaft_simple(out, align = "left", min_width = 3)
+  out[x == "R"] <- bgRed(real_white(" R "))
+  pillar::new_pillar_shaft_simple(out, align = "left", width = 3)
 }

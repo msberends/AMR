@@ -1,11 +1,11 @@
-# AMR 0.8.0.9001
-<small>Last updated: 21-Oct-2019</small>
-
-### New
+# AMR 0.8.0.9002
+<small>Last updated: 23-Oct-2019</small>
 
 ### Changes
-* When running `as.rsi()` over a data set, it will now print the guideline that will be used
-
+* When running `as.rsi()` over a data set, it will now print the guideline that will be used if it is not specified by the user
+* Fix for `eucast_rules()`: *Stenotrophomonas maltophilia* not interpreted "R" to ceftazidime anymore (following EUCAST v3.1)
+* Fix in taxonomic info for genera that are in multiple kingdoms, like *Proteus*
+* Fix for interpreting MIC values with `as.rsi()` where the input is `NA`
 
 # AMR 0.8.0
 

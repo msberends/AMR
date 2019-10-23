@@ -240,8 +240,8 @@ as.mo <- function(x, Becker = FALSE, Lancefield = FALSE, allow_uncertain = TRUE,
       left_join(microorganismsDT, by = "fullname_lower") %>% 
       pull(mo)
     
-    # save them to history
-    set_mo_history(x, y, 0, force = isTRUE(list(...)$force_mo_history), disable = isTRUE(list(...)$disable_mo_history))
+    # don't save valid fullnames to history (i.e. values that are in microorganisms$fullname)
+    # set_mo_history(x, y, 0, force = isTRUE(list(...)$force_mo_history), disable = isTRUE(list(...)$disable_mo_history))
     
   } else {
     # will be checked for mo class in validation and uses exec_as.mo internally if necessary
@@ -482,6 +482,7 @@ exec_as.mo <- function(x,
       trimmed
     }
     
+    x_backup_untouched <- x
     x <- strip_whitespace(x, dyslexia_mode)
     x_backup <- x
     
@@ -618,13 +619,24 @@ exec_as.mo <- function(x,
           next
         }
       }
+
+      if (toupper(x_backup_untouched[i]) %in% microorganisms.codes$code) {
+        # is a WHONET code, like "HA-"
+        found <- microorganismsDT[mo == microorganisms.codes[which(microorganisms.codes$code == toupper(x_backup_untouched[i])), "mo"][1L], ..property][[1]]
+        if (length(found) > 0) {
+          x[i] <- found[1L]
+          # don't save to history, as all items are already in microorganisms.codes
+          next
+        }
+      }
       
       found <- reference_data_to_use[fullname_lower %in% tolower(c(x_backup[i], x_backup_without_spp[i])), ..property][[1]]
       # most probable: is exact match in fullname
       if (length(found) > 0) {
         x[i] <- found[1L]
         if (initial_search == TRUE) {
-          set_mo_history(x_backup[i], get_mo_code(x[i], property), 0, force = force_mo_history, disable = disable_mo_history)
+          # don't save valid fullnames to history (i.e. values that are in microorganisms$fullname)
+          # set_mo_history(x_backup[i], get_mo_code(x[i], property), 0, force = force_mo_history, disable = disable_mo_history)
         }
         next
       }
@@ -1759,7 +1771,7 @@ pillar_shaft.mo <- function(x, ...) {
   out[is.na(x)] <- pillar::style_na("  NA")
   out[x == "UNKNOWN"] <- pillar::style_na("  UNKNOWN")
   
-  pillar::new_pillar_shaft_simple(out, align = "left", min_width = 12)
+  pillar::new_pillar_shaft_simple(out, align = "left", width = max(nchar(x)))
 }
 
 #' @exportMethod summary.mo

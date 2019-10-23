@@ -43,7 +43,7 @@ test_that("data sets are valid", {
   datasets <- data(package = "AMR", envir = asNamespace("AMR"))$results[, "Item"]
   for (i in seq_len(length(datasets))) {
     dataset <- get(datasets[i], envir = asNamespace("AMR"))
-    expect_identical(dataset_UTF8_to_ASCII(dataset), dataset)
+    expect_identical(dataset_UTF8_to_ASCII(dataset), dataset, label = datasets[i])
   }
 })
 

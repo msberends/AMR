@@ -1,16 +1,16 @@
 library(dplyr)
-library(readxl)
 
 # Installed WHONET 2019 software on Windows (http://www.whonet.org/software.html),
 #    opened C:\WHONET\Codes\WHONETCodes.mdb in MS Access
 #    and exported table 'DRGLST1' to MS Excel
-DRGLST1 <- read_excel("data-raw/DRGLST1.xlsx")
+DRGLST1 <- readxl::read_excel("data-raw/DRGLST1.xlsx")
 rsi_translation <- DRGLST1 %>%
   # only keep CLSI and EUCAST guidelines:
   filter(GUIDELINES %like% "^(CLSI|EUCST)") %>%
   # set a nice layout:
   transmute(guideline = gsub("([0-9]+)$", " 20\\1", gsub("EUCST", "EUCAST", GUIDELINES)),
             method = TESTMETHOD,
+            site = SITE_INF,
             mo = as.mo(ORG_CODE),
             ab = as.ab(WHON5_CODE),
             ref_tbl = REF_TABLE,
@@ -19,7 +19,7 @@ rsi_translation <- DRGLST1 %>%
             R_disk = as.disk(DISK_R),
             S_mic = as.mic(MIC_S),
             R_mic = as.mic(MIC_R)) %>%
-  filter(!is.na(mo) & !is.na(ab)) %>%
+  filter(!is.na(mo) & !is.na(ab) & !mo %in% c("UNKNOWN", "B_GRAMN", "B_GRAMP", "F_FUNGUS", "F_YEAST")) %>%
   arrange(desc(guideline), mo, ab)
 
 print(mo_failures())
@@ -27,27 +27,20 @@ print(mo_failures())
 # create 2 tables: MIC and disk
 tbl_mic <- rsi_translation %>%
   filter(method == "MIC") %>%
-  select(-ends_with("_disk")) %>%
-  mutate(joinstring = paste(guideline, mo, ab))
+  mutate(breakpoint_S = as.double(S_mic), breakpoint_R = as.double(R_mic))
 tbl_disk <- rsi_translation %>%
   filter(method == "DISK") %>%
-  select(-S_mic, -R_mic) %>%
-  mutate(joinstring = paste(guideline, mo, ab)) %>%
-  select(joinstring, ends_with("_disk"))
+  mutate(breakpoint_S = as.double(S_disk), breakpoint_R = as.double(R_disk))
 
 # merge them so every record is a unique combination of method, mo and ab
-rsi_translation <- tbl_mic %>%
-  left_join(tbl_disk,
-            by = "joinstring") %>%
-  select(-joinstring, -method) %>%
+rsi_translation <- bind_rows(tbl_mic, tbl_disk) %>%
+  rename(disk_dose = dose_disk) %>% 
+  mutate(disk_dose = gsub("µ", "u", disk_dose)) %>% 
+  select(-ends_with("_mic"), -ends_with("_disk")) %>%
   as.data.frame(stringsAsFactors = FALSE) %>%
   # force classes again
   mutate(mo = as.mo(mo),
-         ab = as.ab(ab),
-         S_mic = as.mic(S_mic),
-         R_mic = as.mic(R_mic),
-         S_disk = as.disk(S_disk),
-         R_disk = as.disk(R_disk))
+         ab = as.ab(ab))
 
 # save to package
 usethis::use_data(rsi_translation, overwrite = TRUE)

@@ -137,7 +137,7 @@ fullname	like	^Burkholderia (cepacia|multivorans|cenocepacia|stabilis|vietnamien
 genus_species	is	Elizabethkingia meningoseptica			aminopenicillins, AMC, TIC, CZO, CTX, CRO, CAZ, FEP, ATM, ETP, IPM, MEM, polymyxins	R	Table 02: Intrinsic resistance in non-fermentative Gram-negative bacteria	Expert Rules
 genus_species	is	Ochrobactrum anthropi			aminopenicillins, AMC, TIC, PIP, TZP, CZO, CTX, CRO, CAZ, FEP, ATM, ETP	R	Table 02: Intrinsic resistance in non-fermentative Gram-negative bacteria	Expert Rules
 genus_species	is	Pseudomonas aeruginosa			aminopenicillins, AMC, CZO, CTX, CRO, ETP, CHL, KAN, NEO, TMP, SXT, tetracyclines, TGC	R	Table 02: Intrinsic resistance in non-fermentative Gram-negative bacteria	Expert Rules
-genus_species	is	Stenotrophomonas maltophilia			aminopenicillins, AMC, TIC, PIP, TZP, CZO, CTX, CRO, CAZ, ATM, ETP, IPM, MEM, aminoglycosides, TMP, FOS, TCY	R	Table 02: Intrinsic resistance in non-fermentative Gram-negative bacteria	Expert Rules
+genus_species	is	Stenotrophomonas maltophilia			aminopenicillins, AMC, TIC, PIP, TZP, CZO, CTX, CRO, ATM, ETP, IPM, MEM, aminoglycosides, TMP, FOS, TCY	R	Table 02: Intrinsic resistance in non-fermentative Gram-negative bacteria	Expert Rules
 genus	one_of	Haemophilus, Moraxella, Neisseria, Campylobacter			glycopeptides, LIN, DAP, LNZ	R	Table 03: Intrinsic resistance in other Gram-negative bacteria	Expert Rules
 genus_species	is	Haemophilus influenzae			FUS, streptogramins	R	Table 03: Intrinsic resistance in other Gram-negative bacteria	Expert Rules
 genus_species	is	Moraxella catarrhalis			TMP	R	Table 03: Intrinsic resistance in other Gram-negative bacteria	Expert Rules

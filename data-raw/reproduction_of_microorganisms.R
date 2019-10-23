@@ -70,7 +70,13 @@ data_dsmz <- data_dsmz %>%
 # DSMZ only contains genus/(sub)species, try to find taxonomic properties based on genus and data_col
 ref_taxonomy <- data_col %>%
   filter(genus %in% data_dsmz$genus,
+         kingdom %in% c("Bacteria", "Chromista", "Archaea", "Protozoa", "Fungi"),
          family != "") %>%
+  mutate(kingdom = factor(kingdom,
+                          # in the left_join following, try Bacteria first, then Chromista, ...
+                          levels = c("Bacteria", "Chromista", "Archaea", "Protozoa", "Fungi"),
+                          ordered = TRUE)) %>% 
+  arrange(kingdom) %>% 
   distinct(genus, .keep_all = TRUE) %>%
   select(kingdom, phylum, class, order, family, genus)
 
@@ -197,6 +203,7 @@ MOs <- MOs %>%
 MOs$ref[!grepl("^d[A-Z]", MOs$ref)] <- gsub("^([a-z])", "\\U\\1", MOs$ref[!grepl("^d[A-Z]", MOs$ref)], perl = TRUE)
 # specific one for the French that are named dOrbigny 
 MOs$ref[grepl("^d[A-Z]", MOs$ref)] <- gsub("^d", "d'", MOs$ref[grepl("^d[A-Z]", MOs$ref)])
+MOs <- MOs %>% mutate(ref = gsub(" +", " ", ref))
 
 # Remove non-ASCII characters (these are not allowed by CRAN)
 MOs <- MOs %>%
@@ -275,9 +282,15 @@ MOs <- MOs %>%
             by = "kingdom_fullname",
             suffix = c("_dsmz", "_col")) %>% 
   mutate(col_id = col_id_col, 
-         species_id = ifelse(!is.na(species_id_col), gsub(".*/(.*)$", "\\1", species_id_col), species_id_dsmz),
-         source = ifelse(!is.na(species_id_col), source_col, source_dsmz), 
-         ref = ifelse(!is.na(species_id_col) & ref_col != "", ref_col, ref_dsmz)) %>% 
+         species_id = ifelse(!is.na(species_id_col) & ref_col == ref_dsmz, 
+                             gsub(".*/(.*)$", "\\1", species_id_col), 
+                             species_id_dsmz),
+         source = ifelse(!is.na(species_id_col) & ref_col == ref_dsmz,
+                         source_col, 
+                         source_dsmz), 
+         ref = ifelse(!is.na(species_id_col) & ref_col == ref_dsmz,
+                      ref_col, 
+                      ref_dsmz)) %>% 
   select(-matches("(_col|_dsmz|kingdom_fullname)"))
 
 
@@ -296,6 +309,7 @@ sum(MOs.old$fullname %in% MOs$fullname)
 
 # what characters are in the fullnames?
 table(sort(unlist(strsplit(x = paste(MOs$fullname, collapse = ""), split = ""))))
+MOs %>% filter(!fullname %like% "^[a-z ]+$") %>% View()
 
 table(MOs$kingdom, MOs$rank)
 table(AMR::microorganisms$kingdom, AMR::microorganisms$rank)
@@ -676,8 +690,16 @@ old_new <- MOs %>%
   left_join(AMR::microorganisms %>% mutate(kingdom_fullname = paste(kingdom, fullname)) %>% select(mo, kingdom_fullname), by = "kingdom_fullname", suffix = c("_new", "_old")) %>% 
   filter(mo_new != mo_old) %>% 
   select(mo_old, mo_new, everything())
-old_new %>% 
-  View()
+
+View(old_new)
+# to keep all the old IDs:
+# MOs <- MOs %>% filter(!mo %in% old_new$mo_new) %>% 
+#   rbind(microorganisms %>%
+#           filter(mo %in% old_new$mo_old) %>%
+#           select(mo, fullname) %>%
+#           left_join(MOs %>% 
+#                       select(-mo), by = "fullname"))
+
 # and these codes are now missing (which will throw a unit test error):
 AMR::microorganisms.codes %>% filter(!mo %in% MOs$mo)
 AMR::rsi_translation %>% filter(!mo %in% MOs$mo)
