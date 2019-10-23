@@ -118,7 +118,7 @@ get_column_abx <- function(x,
                            verbose = FALSE,
                            ...) {
 
-  message(blue("NOTE: Auto-guessing columns suitable for analysis..."))
+  message(blue("NOTE: Auto-guessing columns suitable for analysis..."), appendLF = FALSE)
   
   x <- as.data.frame(x, stringsAsFactors = FALSE)
   x_bak <- x
@@ -168,6 +168,9 @@ get_column_abx <- function(x,
   x <- x[order(names(x), x)]
   duplicates <- x[base::duplicated(x)]
   x <- x[!names(x) %in% names(duplicates)]
+  
+  # succeeded with aut-guessing
+  message(blue("OK."))
   
   if (verbose == TRUE) {
     for (i in seq_len(length(x))) {

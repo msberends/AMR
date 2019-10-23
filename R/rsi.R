@@ -504,14 +504,13 @@ type_sum.rsi <- function(x) {
 }
 
 #' @importFrom pillar pillar_shaft
-#' @importFrom crayon bgGreen bgYellow bgRed black make_style
+#' @importFrom crayon bgGreen bgYellow bgRed black white
 #' @export 
 pillar_shaft.rsi <- function(x, ...) {
   out <- trimws(format(x))
   out[is.na(x)] <- pillar::style_subtle(" NA")
-  real_white <- make_style(rgb(1, 1, 1))
-  out[x == "S"] <- bgGreen(real_white(" S "))
+  out[x == "S"] <- bgGreen(white(" S "))
   out[x == "I"] <- bgYellow(black(" I "))
-  out[x == "R"] <- bgRed(real_white(" R "))
+  out[x == "R"] <- bgRed(white(" R "))
   pillar::new_pillar_shaft_simple(out, align = "left", width = 3)
 }
