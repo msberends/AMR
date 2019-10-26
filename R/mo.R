@@ -241,7 +241,6 @@ as.mo <- function(x, Becker = FALSE, Lancefield = FALSE, allow_uncertain = TRUE,
       pull(mo)
     
     # don't save valid fullnames to history (i.e. values that are in microorganisms$fullname)
-    # set_mo_history(x, y, 0, force = isTRUE(list(...)$force_mo_history), disable = isTRUE(list(...)$disable_mo_history))
     
   } else {
     # will be checked for mo class in validation and uses exec_as.mo internally if necessary
@@ -636,7 +635,6 @@ exec_as.mo <- function(x,
         x[i] <- found[1L]
         if (initial_search == TRUE) {
           # don't save valid fullnames to history (i.e. values that are in microorganisms$fullname)
-          # set_mo_history(x_backup[i], get_mo_code(x[i], property), 0, force = force_mo_history, disable = disable_mo_history)
         }
         next
       }

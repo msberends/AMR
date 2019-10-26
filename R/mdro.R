@@ -461,7 +461,7 @@ mdro <- function(x,
     left_join_microorganisms(by = col_mo) %>%
     # add unconfirmed to where genus is available
     mutate(MDRO = ifelse(!is.na(genus), 1, NA_integer_),
-           row_number = 1:nrow(x)) %>% 
+           row_number = seq_len(nrow(x))) %>% 
     # transform to data.frame so subsetting is possible with x[y, z] (might not be the case with tibble/data.table/...)
     as.data.frame(stringsAsFactors = FALSE)
   

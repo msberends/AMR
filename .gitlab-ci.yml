@@ -117,7 +117,7 @@ coverage:
   script:
     - apt-get install --yes git
     # codecov token is set in https://gitlab.com/msberends/AMR/settings/ci_cd
-    - Rscript -e "cc <- covr::package_coverage(); covr::codecov(coverage = cc, token = '$codecov'); cat('Code coverage:', covr::percent_coverage(cc))"
+    - Rscript -e "Sys.setenv(NOT_CRAN = 'true'); cc <- covr::package_coverage(); covr::codecov(coverage = cc, token = '$codecov'); cat('Code coverage:', covr::percent_coverage(cc))"
   coverage: '/Code coverage: \d+\.\d+/'
 
 pages:
