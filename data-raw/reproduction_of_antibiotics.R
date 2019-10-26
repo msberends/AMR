@@ -318,6 +318,12 @@ antibiotics[which(antibiotics$ab == "FAR"), "atc"] <- "J01DI03"
 # ceftobiprole
 antibiotics[which(antibiotics$ab == "BPR"), "atc"] <- "J01DI01"
 
+# typo
+antibiotics[which(antibiotics$ab == "RXT"), "name"] <- "Roxithromycin"
+
+antibiotics[which(antibiotics$ab == "PEN"), "atc"] <- "J01CE01"
+
+
 antibiotics <- antibiotics %>% arrange(name)
 
 # set cephalosporins groups for the ones that could not be determined automatically:

@@ -1,5 +1,5 @@
-# AMR 0.8.0.9005
-<small>Last updated: 26-Oct-2019</small>
+# AMR 0.8.0.9006
+<small>Last updated: 27-Oct-2019</small>
 
 ### New
 * Support for a new MDRO guideline: Magiorakos AP, Srinivasan A *et al.* "Multidrug-resistant, extensively drug-resistant and pandrug-resistant bacteria: an international expert proposal for interim standard definitions for acquired resistance." Clinical Microbiology and Infection (2012). **This is now the new default guideline for the `mdro()` function.**
@@ -11,7 +11,7 @@
 * Fix for interpreting MIC values with `as.rsi()` where the input is `NA`
 * Added "imi" as allowed abbreviation for Imipenem
 * Fix for automatically determining columns with antibiotic results in `mdro()` and `eucast_rules()`
-* Added ATC codes for ceftaroline, ceftobiprole and faropenem
+* Added ATC codes for ceftaroline, ceftobiprole and faropenem and fixed two typos in the `antibiotics` data set
 
 # AMR 0.8.0
 
