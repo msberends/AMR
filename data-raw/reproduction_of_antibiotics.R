@@ -305,9 +305,18 @@ antibiotics[which(antibiotics$ab == "FEP"), "abbreviations"][[1]] <- list(c(anti
 antibiotics[which(antibiotics$ab == "CTC"), "abbreviations"][[1]] <- list(c("xctl"))
 antibiotics[which(antibiotics$ab == "CTX"), "abbreviations"][[1]] <- list(c(antibiotics[which(antibiotics$ab == "CTX"), "abbreviations"][[1]], "xct"))
 # High level Gentamcin and Streptomycin
-antibiotics[which(antibiotics$ab == "GEH"), "abbreviations"][[1]] <- list(c("gehl"))
-antibiotics[which(antibiotics$ab == "STH"), "abbreviations"][[1]] <- list(c("sthl"))
+antibiotics[which(antibiotics$ab == "GEH"), "abbreviations"][[1]] <- list(c("gehl", "gentamicin high", "genta high"))
+antibiotics[which(antibiotics$ab == "STH"), "abbreviations"][[1]] <- list(c("sthl", "streptomycin high", "strepto high"))
+# add imi to imipenem
+antibiotics[which(antibiotics$ab == "IPM"), "abbreviations"][[1]] <- list(c("imip", "imi"))
 
+## new ATC codes
+# ceftaroline
+antibiotics[which(antibiotics$ab == "CPT"), "atc"] <- "J01DI02"
+# faropenem
+antibiotics[which(antibiotics$ab == "FAR"), "atc"] <- "J01DI03"
+# ceftobiprole
+antibiotics[which(antibiotics$ab == "BPR"), "atc"] <- "J01DI01"
 
 antibiotics <- antibiotics %>% arrange(name)
 

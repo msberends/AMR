@@ -123,5 +123,51 @@ test_that("mdro works", {
       #)
       ,
     2)
-
+  
+  # check the guideline by Magiorakos  et al. (2012), the default guideline
+  stau <- tibble::tribble(
+    ~mo,         ~GEN, ~RIF, ~CPT, ~OXA, ~CIP, ~MFX, ~SXT, ~FUS, ~VAN, ~TEC, ~TLV, ~TGC, ~CLI, ~DAP, ~ERY, ~LNZ, ~CHL, ~FOS, ~QDA, ~TCY, ~DOX, ~MNO,
+    "S. aureus",  "R",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",
+    "S. aureus",  "R",  "R",  "R",  "R",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",
+    "S. aureus",  "S",  "S",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",
+    "S. aureus",  "R",  "R",  "I",  "I",  "I",  "I",  "I",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R"
+  )
+  expect_equal(as.integer(mdro(stau)), c(1:4))
+  
+  ente <- tibble::tribble(
+    ~mo,            ~GEH, ~STH, ~IPM, ~MEM, ~DOR, ~CIP, ~LVX, ~MFX, ~VAN, ~TEC, ~TGC, ~DAP, ~LNZ, ~AMP, ~QDA, ~DOX, ~MNO,
+    "Enterococcus",  "R",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",
+    "Enterococcus",  "R",  "R",  "R",  "R",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",
+    "Enterococcus",  "S",  "S",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",
+    "Enterococcus",  "R",  "R",  "I",  "I",  "I",  "I",  "I",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R"
+  )
+  expect_equal(as.integer(mdro(ente)), c(1:4))
+  
+  entero <- tibble::tribble(
+    ~mo,       ~GEN, ~TOB, ~AMK, ~NET, ~CPT, ~TCC, ~TZP, ~ETP, ~IPM, ~MEM, ~DOR, ~CZO, ~CXM, ~CTX, ~CAZ, ~FEP, ~FOX, ~CTT, ~CIP, ~SXT, ~TGC, ~ATM, ~AMP, ~AMC, ~SAM, ~CHL, ~FOS, ~COL, ~TCY, ~DOX, ~MNO,
+    "E. coli",  "R",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",
+    "E. coli",  "R",  "R",  "R",  "R",  "R",  "R",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",
+    "E. coli",  "S",  "S",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",
+    "E. coli",  "R",  "R",  "I",  "I",  "I",  "I",  "I",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R"
+  )
+  expect_equal(as.integer(mdro(entero)), c(1:4))
+  
+  pseud <- tibble::tribble(
+    ~mo,             ~GEN, ~TOB, ~AMK, ~NET, ~IPM, ~MEM, ~DOR, ~CAZ, ~FEP, ~CIP, ~LVX, ~TCC, ~TZP, ~ATM, ~FOS, ~COL, ~PLB,
+    "P. aeruginosa",  "R",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",
+    "P. aeruginosa",  "R",  "S",  "S",  "S",  "R",  "S",  "S",  "S",  "R",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",
+    "P. aeruginosa",  "S",  "S",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",
+    "P. aeruginosa",  "R",  "R",  "I",  "I",  "I",  "I",  "I",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R"
+  )
+  expect_equal(as.integer(mdro(pseud)), c(1:4))
+  
+  acin <- tibble::tribble(
+    ~mo,            ~GEN, ~TOB, ~AMK, ~NET, ~IPM, ~MEM, ~DOR, ~CIP, ~LVX, ~TZP, ~TCC, ~CTX, ~CRO, ~CAZ, ~FEP, ~SXT, ~SAM, ~COL, ~PLB, ~TCY, ~DOX, ~MNO,
+    "A. baumannii",  "R",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",
+    "A. baumannii",  "R",  "R",  "R",  "R",  "S",  "R",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "R",  "S",  "S",  "S",  "S",  "S",  "S",  "S",
+    "A. baumannii",  "S",  "S",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",
+    "A. baumannii",  "R",  "R",  "I",  "I",  "I",  "I",  "I",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R"
+  )
+  expect_equal(as.integer(mdro(acin)), c(1:4))
+  
 })

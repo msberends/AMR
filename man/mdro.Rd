@@ -5,14 +5,11 @@
 \alias{brmo}
 \alias{mrgn}
 \alias{mdr_tb}
+\alias{mdr_cmi2012}
 \alias{eucast_exceptional_phenotypes}
 \title{Determine multidrug-resistant organisms (MDRO)}
 \source{
-EUCAST Expert Rules Version 3.1 "Intrinsic Resistance and Exceptional Phenotypes Tables" (\href{http://www.eucast.org/fileadmin/src/media/PDFs/EUCAST_files/Expert_Rules/Expert_rules_intrinsic_exceptional_V3.1.pdf}{link})
-
-World Health Organization "Companion handbook to the WHO guidelines for the programmatic management of drug-resistant tuberculosis" (\href{https://www.who.int/tb/publications/pmdt_companionhandbook/en/}{link})
-
-Rijksinstituut voor Volksgezondheid en Milieu "WIP-richtlijn BRMO (Bijzonder Resistente Micro-Organismen) [ZKH]" (\href{https://www.rivm.nl/Documenten_en_publicaties/Professioneel_Praktisch/Richtlijnen/Infectieziekten/WIP_Richtlijnen/WIP_Richtlijnen/Ziekenhuizen/WIP_richtlijn_BRMO_Bijzonder_Resistente_Micro_Organismen_ZKH}{link})
+Please see Details for the list of publications used for this function.
 }
 \usage{
 mdro(x, guideline = NULL, col_mo = NULL, info = TRUE,
@@ -24,12 +21,14 @@ mrgn(x, guideline = "MRGN", ...)
 
 mdr_tb(x, guideline = "TB", ...)
 
+mdr_cmi2012(x, guideline = "CMI2012", ...)
+
 eucast_exceptional_phenotypes(x, guideline = "EUCAST", ...)
 }
 \arguments{
 \item{x}{table with antibiotic columns, like e.g. \code{AMX} and \code{AMC}}
 
-\item{guideline}{a specific guideline to mention, see Details. EUCAST guidelines will be used when left empty, see Details.}
+\item{guideline}{a specific guideline to follow. When left empty, the publication by Magiorakos \emph{et al.} (2012, Clinical Microbiology and Infection) will be followed, see Details.}
 
 \item{col_mo}{column name of the IDs of the microorganisms (see \code{\link{as.mo}}), defaults to the first column of class \code{mo}. Values will be coerced using \code{\link{as.mo}}.}
 
@@ -41,7 +40,8 @@ eucast_exceptional_phenotypes(x, guideline = "EUCAST", ...)
 }
 \value{
 \itemize{
-  \item{TB guideline - function \code{mdr_tb()} or \code{mdro(..., guideline = "TB")}:\cr Ordered factor with levels \code{Negative < Mono-resistant < Poly-resistant < Multi-drug-resistant < Extensive drug-resistant}}
+  \item{CMI 2012 paper - function \code{mdr_cmi2012()} or \code{mdro()}:\cr Ordered factor with levels \code{Negative < Multi-drug-resistant (MDR) < Extensively drug-resistant (XDR) < Pandrug-resistant (PDR)}}
+  \item{TB guideline - function \code{mdr_tb()} or \code{mdro(..., guideline = "TB")}:\cr Ordered factor with levels \code{Negative < Mono-resistant < Poly-resistant < Multi-drug-resistant < Extensively drug-resistant}}
   \item{German guideline - function \code{mrgn()} or \code{mdro(..., guideline = "MRGN")}:\cr Ordered factor with levels \code{Negative < 3MRGN < 4MRGN}}
   \item{Everything else:\cr Ordered factor with levels \code{Negative < Positive, unconfirmed < Positive}. The value \code{"Positive, unconfirmed"} means that, according to the guideline, it is not entirely sure if the isolate is multi-drug resistant and this should be confirmed with additional (e.g. molecular) tests}
 }
@@ -52,6 +52,7 @@ Determine which isolates are multidrug-resistant organisms (MDRO) according to (
 \details{
 Currently supported guidelines are (case-insensitive):
 \itemize{
+  \item{\code{guideline = "CMI2012"}: Magiorakos AP, Srinivasan A \emph{et al.} "Multidrug-resistant, extensively drug-resistant and pandrug-resistant bacteria: an international expert proposal for interim standard definitions for acquired resistance." Clinical Microbiology and Infection (2012) (\href{https://www.clinicalmicrobiologyandinfection.com/article/S1198-743X(14)61632-3/fulltext}{link})}
   \item{\code{guideline = "EUCAST"}: The European international guideline - EUCAST Expert Rules Version 3.1 "Intrinsic Resistance and Exceptional Phenotypes Tables" (\href{http://www.eucast.org/fileadmin/src/media/PDFs/EUCAST_files/Expert_Rules/Expert_rules_intrinsic_exceptional_V3.1.pdf}{link})}
   \item{\code{guideline = "TB"}: The international guideline for multi-drug resistant tuberculosis - World Health Organization "Companion handbook to the WHO guidelines for the programmatic management of drug-resistant tuberculosis" (\href{https://www.who.int/tb/publications/pmdt_companionhandbook/en/}{link})}
   \item{\code{guideline = "MRGN"}: The German national guideline - Mueller et al. (2015) Antimicrobial Resistance and Infection Control 4:7. DOI: 10.1186/s13756-015-0047-6}
@@ -70,6 +71,7 @@ The following antibiotics are used for the functions \code{\link{eucast_rules}} 
  \strong{AMX}: amoxicillin (\href{https://www.whocc.no/atc_ddd_index/?code=J01CA04}{J01CA04}),
  \strong{AMC}: amoxicillin/clavulanic acid (\href{https://www.whocc.no/atc_ddd_index/?code=J01CR02}{J01CR02}),
  \strong{AMP}: ampicillin (\href{https://www.whocc.no/atc_ddd_index/?code=J01CA01}{J01CA01}),
+ \strong{SAM}: ampicillin/sulbactam (\href{https://www.whocc.no/atc_ddd_index/?code=J01CR01}{J01CR01}),
  \strong{AZM}: azithromycin (\href{https://www.whocc.no/atc_ddd_index/?code=J01FA10}{J01FA10}),
  \strong{AZL}: azlocillin (\href{https://www.whocc.no/atc_ddd_index/?code=J01CA09}{J01CA09}),
  \strong{ATM}: aztreonam (\href{https://www.whocc.no/atc_ddd_index/?code=J01DF01}{J01DF01}),
@@ -78,17 +80,20 @@ The following antibiotics are used for the functions \code{\link{eucast_rules}} 
  \strong{CZO}: cefazolin (\href{https://www.whocc.no/atc_ddd_index/?code=J01DB04}{J01DB04}),
  \strong{FEP}: cefepime (\href{https://www.whocc.no/atc_ddd_index/?code=J01DE01}{J01DE01}),
  \strong{CTX}: cefotaxime (\href{https://www.whocc.no/atc_ddd_index/?code=J01DD01}{J01DD01}),
+ \strong{CTT}: cefotetan (\href{https://www.whocc.no/atc_ddd_index/?code=J01DC05}{J01DC05}),
  \strong{FOX}: cefoxitin (\href{https://www.whocc.no/atc_ddd_index/?code=J01DC01}{J01DC01}),
- \strong{CED}: cefradine (\href{https://www.whocc.no/atc_ddd_index/?code=J01DB09}{J01DB09}),
+ \strong{CPT}: ceftaroline (\href{https://www.whocc.no/atc_ddd_index/?code=J01DI02}{J01DI02}),
  \strong{CAZ}: ceftazidime (\href{https://www.whocc.no/atc_ddd_index/?code=J01DD02}{J01DD02}),
  \strong{CRO}: ceftriaxone (\href{https://www.whocc.no/atc_ddd_index/?code=J01DD04}{J01DD04}),
  \strong{CXM}: cefuroxime (\href{https://www.whocc.no/atc_ddd_index/?code=J01DC02}{J01DC02}),
+ \strong{CED}: cephradine (\href{https://www.whocc.no/atc_ddd_index/?code=J01DB09}{J01DB09}),
  \strong{CHL}: chloramphenicol (\href{https://www.whocc.no/atc_ddd_index/?code=J01BA01}{J01BA01}),
  \strong{CIP}: ciprofloxacin (\href{https://www.whocc.no/atc_ddd_index/?code=J01MA02}{J01MA02}),
  \strong{CLR}: clarithromycin (\href{https://www.whocc.no/atc_ddd_index/?code=J01FA09}{J01FA09}),
  \strong{CLI}: clindamycin (\href{https://www.whocc.no/atc_ddd_index/?code=J01FF01}{J01FF01}),
  \strong{COL}: colistin (\href{https://www.whocc.no/atc_ddd_index/?code=J01XB01}{J01XB01}),
  \strong{DAP}: daptomycin (\href{https://www.whocc.no/atc_ddd_index/?code=J01XX09}{J01XX09}),
+ \strong{DOR}: doripenem (\href{https://www.whocc.no/atc_ddd_index/?code=J01DH04}{J01DH04}),
  \strong{DOX}: doxycycline (\href{https://www.whocc.no/atc_ddd_index/?code=J01AA02}{J01AA02}),
  \strong{ETP}: ertapenem (\href{https://www.whocc.no/atc_ddd_index/?code=J01DH03}{J01DH03}),
  \strong{ERY}: erythromycin (\href{https://www.whocc.no/atc_ddd_index/?code=J01FA01}{J01FA01}),
@@ -98,6 +103,7 @@ The following antibiotics are used for the functions \code{\link{eucast_rules}} 
  \strong{FUS}: fusidic acid (\href{https://www.whocc.no/atc_ddd_index/?code=J01XC01}{J01XC01}),
  \strong{GAT}: gatifloxacin (\href{https://www.whocc.no/atc_ddd_index/?code=J01MA16}{J01MA16}),
  \strong{GEN}: gentamicin (\href{https://www.whocc.no/atc_ddd_index/?code=J01GB03}{J01GB03}),
+ \strong{GEH}: gentamicin-high (no ATC code),
  \strong{IPM}: imipenem (\href{https://www.whocc.no/atc_ddd_index/?code=J01DH51}{J01DH51}),
  \strong{INH}: isoniazid (\href{https://www.whocc.no/atc_ddd_index/?code=J04AC01}{J04AC01}),
  \strong{KAN}: kanamycin (\href{https://www.whocc.no/atc_ddd_index/?code=J01GB04}{J01GB04}),
@@ -114,10 +120,10 @@ The following antibiotics are used for the functions \code{\link{eucast_rules}} 
  \strong{NET}: netilmicin (\href{https://www.whocc.no/atc_ddd_index/?code=J01GB07}{J01GB07}),
  \strong{NIT}: nitrofurantoin (\href{https://www.whocc.no/atc_ddd_index/?code=J01XE01}{J01XE01}),
  \strong{NOR}: norfloxacin (\href{https://www.whocc.no/atc_ddd_index/?code=J01MA06}{J01MA06}),
- \strong{NOV}: novobiocin (an ATCvet code: \href{https://www.whocc.no/atc_ddd_index/?code=QJ01XX95}{QJ01XX95}),
+ \strong{NOV}: novobiocin (\href{https://www.whocc.no/atc_ddd_index/?code=QJ01XX95}{QJ01XX95}),
  \strong{OFX}: ofloxacin (\href{https://www.whocc.no/atc_ddd_index/?code=J01MA01}{J01MA01}),
  \strong{OXA}: oxacillin (\href{https://www.whocc.no/atc_ddd_index/?code=J01CF04}{J01CF04}),
- \strong{PEN}: penicillin G (\href{https://www.whocc.no/atc_ddd_index/?code=J01CE01}{J01CE01}),
+ \strong{PEN}: penicillin G (\href{https://www.whocc.no/atc_ddd_index/?code=J01RA01}{J01RA01}),
  \strong{PIP}: piperacillin (\href{https://www.whocc.no/atc_ddd_index/?code=J01CA12}{J01CA12}),
  \strong{TZP}: piperacillin/tazobactam (\href{https://www.whocc.no/atc_ddd_index/?code=J01CR05}{J01CR05}),
  \strong{PLB}: polymyxin B (\href{https://www.whocc.no/atc_ddd_index/?code=J01XB02}{J01XB02}),
@@ -126,13 +132,15 @@ The following antibiotics are used for the functions \code{\link{eucast_rules}} 
  \strong{QDA}: quinupristin/dalfopristin (\href{https://www.whocc.no/atc_ddd_index/?code=J01FG02}{J01FG02}),
  \strong{RIB}: rifabutin (\href{https://www.whocc.no/atc_ddd_index/?code=J04AB04}{J04AB04}),
  \strong{RIF}: rifampicin (\href{https://www.whocc.no/atc_ddd_index/?code=J04AB02}{J04AB02}),
- \strong{RIF}: rifampin (\href{https://www.whocc.no/atc_ddd_index/?code=J04AB02}{J04AB02}),
  \strong{RFP}: rifapentine (\href{https://www.whocc.no/atc_ddd_index/?code=J04AB05}{J04AB05}),
- \strong{RXT}: roxithromycin (\href{https://www.whocc.no/atc_ddd_index/?code=J01FA06}{J01FA06}),
+ \strong{RXT}: roxithromicin (\href{https://www.whocc.no/atc_ddd_index/?code=J01FA06}{J01FA06}),
  \strong{SIS}: sisomicin (\href{https://www.whocc.no/atc_ddd_index/?code=J01GB08}{J01GB08}),
+ \strong{STH}: streptomycin-high (no ATC code),
  \strong{TEC}: teicoplanin (\href{https://www.whocc.no/atc_ddd_index/?code=J01XA02}{J01XA02}),
+ \strong{TLV}: telavancin (\href{https://www.whocc.no/atc_ddd_index/?code=J01XA03}{J01XA03}),
  \strong{TCY}: tetracycline (\href{https://www.whocc.no/atc_ddd_index/?code=J01AA07}{J01AA07}),
  \strong{TIC}: ticarcillin (\href{https://www.whocc.no/atc_ddd_index/?code=J01CA13}{J01CA13}),
+ \strong{TCC}: ticarcillin/clavulanic acid (\href{https://www.whocc.no/atc_ddd_index/?code=J01CR03}{J01CR03}),
  \strong{TGC}: tigecycline (\href{https://www.whocc.no/atc_ddd_index/?code=J01AA12}{J01AA12}),
  \strong{TOB}: tobramycin (\href{https://www.whocc.no/atc_ddd_index/?code=J01GB01}{J01GB01}),
  \strong{TMP}: trimethoprim (\href{https://www.whocc.no/atc_ddd_index/?code=J01EA01}{J01EA01}),
@@ -148,6 +156,11 @@ On our website \url{https://msberends.gitlab.io/AMR} you can find \href{https://
 \examples{
 library(dplyr)
 
+example_isolates \%>\% 
+  mdro() \%>\% 
+  freq()
+  
+\donttest{
 example_isolates \%>\%
   mutate(EUCAST = mdro(.),
          BRMO = brmo(.),
@@ -157,4 +170,5 @@ example_isolates \%>\%
   rename(PIP = TZP) \%>\% # no piperacillin, so take piperacillin/tazobactam
   mrgn() \%>\%            # check German guideline
   freq()                # check frequencies
+}
 }

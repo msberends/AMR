@@ -85,7 +85,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">0.8.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">0.8.0.9004</span>
       </span>
     </div>
 
@@ -246,6 +246,8 @@
 
 <span class='fu'>mdr_tb</span>(<span class='no'>x</span>, <span class='kw'>guideline</span> <span class='kw'>=</span> <span class='st'>"TB"</span>, <span class='no'>...</span>)
 
+<span class='fu'>mdr_cmi2012</span>(<span class='no'>x</span>, <span class='kw'>guideline</span> <span class='kw'>=</span> <span class='st'>"CMI2012"</span>, <span class='no'>...</span>)
+
 <span class='fu'>eucast_exceptional_phenotypes</span>(<span class='no'>x</span>, <span class='kw'>guideline</span> <span class='kw'>=</span> <span class='st'>"EUCAST"</span>, <span class='no'>...</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -257,7 +259,7 @@
     </tr>
     <tr>
       <th>guideline</th>
-      <td><p>a specific guideline to mention, see Details. EUCAST guidelines will be used when left empty, see Details.</p></td>
+      <td><p>a specific guideline to follow. When left empty, the publication by Magiorakos <em>et al.</em> (2012, Clinical Microbiology and Infection) will be followed, see Details.</p></td>
     </tr>
     <tr>
       <th>col_mo</th>
@@ -279,14 +281,13 @@
 
     <h2 class="hasAnchor" id="source"><a class="anchor" href="#source"></a>Source</h2>
 
-    <p>EUCAST Expert Rules Version 3.1 "Intrinsic Resistance and Exceptional Phenotypes Tables" (<a href='http://www.eucast.org/fileadmin/src/media/PDFs/EUCAST_files/Expert_Rules/Expert_rules_intrinsic_exceptional_V3.1.pdf'>link</a>)</p>
-<p>World Health Organization "Companion handbook to the WHO guidelines for the programmatic management of drug-resistant tuberculosis" (<a href='https://www.who.int/tb/publications/pmdt_companionhandbook/en/'>link</a>)</p>
-<p>Rijksinstituut voor Volksgezondheid en Milieu "WIP-richtlijn BRMO (Bijzonder Resistente Micro-Organismen) [ZKH]" (<a href='https://www.rivm.nl/Documenten_en_publicaties/Professioneel_Praktisch/Richtlijnen/Infectieziekten/WIP_Richtlijnen/WIP_Richtlijnen/Ziekenhuizen/WIP_richtlijn_BRMO_Bijzonder_Resistente_Micro_Organismen_ZKH'>link</a>)</p>
+    <p>Please see Details for the list of publications used for this function.</p>
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     
 <ul>
-<li><p>TB guideline - function <code>mdr_tb()</code> or <code>mdro(..., guideline = "TB")</code>:<br /> Ordered factor with levels <code>Negative &lt; Mono-resistant &lt; Poly-resistant &lt; Multi-drug-resistant &lt; Extensive drug-resistant</code></p></li>
+<li><p>CMI 2012 paper - function <code>mdr_cmi2012()</code> or <code>mdro()</code>:<br /> Ordered factor with levels <code>Negative &lt; Multi-drug-resistant (MDR) &lt; Extensively drug-resistant (XDR) &lt; Pandrug-resistant (PDR)</code></p></li>
+<li><p>TB guideline - function <code>mdr_tb()</code> or <code>mdro(..., guideline = "TB")</code>:<br /> Ordered factor with levels <code>Negative &lt; Mono-resistant &lt; Poly-resistant &lt; Multi-drug-resistant &lt; Extensively drug-resistant</code></p></li>
 <li><p>German guideline - function <code>mrgn()</code> or <code>mdro(..., guideline = "MRGN")</code>:<br /> Ordered factor with levels <code>Negative &lt; 3MRGN &lt; 4MRGN</code></p></li>
 <li><p>Everything else:<br /> Ordered factor with levels <code>Negative &lt; Positive, unconfirmed &lt; Positive</code>. The value <code>"Positive, unconfirmed"</code> means that, according to the guideline, it is not entirely sure if the isolate is multi-drug resistant and this should be confirmed with additional (e.g. molecular) tests</p></li>
 </ul>
@@ -294,6 +295,7 @@
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>Currently supported guidelines are (case-insensitive):</p><ul>
+<li><p><code>guideline = "CMI2012"</code>: Magiorakos AP, Srinivasan A <em>et al.</em> "Multidrug-resistant, extensively drug-resistant and pandrug-resistant bacteria: an international expert proposal for interim standard definitions for acquired resistance." Clinical Microbiology and Infection (2012) (<a href='https://www.clinicalmicrobiologyandinfection.com/article/S1198-743X(14)61632-3/fulltext'>link</a>)</p></li>
 <li><p><code>guideline = "EUCAST"</code>: The European international guideline - EUCAST Expert Rules Version 3.1 "Intrinsic Resistance and Exceptional Phenotypes Tables" (<a href='http://www.eucast.org/fileadmin/src/media/PDFs/EUCAST_files/Expert_Rules/Expert_rules_intrinsic_exceptional_V3.1.pdf'>link</a>)</p></li>
 <li><p><code>guideline = "TB"</code>: The international guideline for multi-drug resistant tuberculosis - World Health Organization "Companion handbook to the WHO guidelines for the programmatic management of drug-resistant tuberculosis" (<a href='https://www.who.int/tb/publications/pmdt_companionhandbook/en/'>link</a>)</p></li>
 <li><p><code>guideline = "MRGN"</code>: The German national guideline - Mueller et al. (2015) Antimicrobial Resistance and Infection Control 4:7. DOI: 10.1186/s13756-015-0047-6</p></li>
@@ -311,6 +313,7 @@
  <strong>AMX</strong>: amoxicillin (<a href='https://www.whocc.no/atc_ddd_index/?code=J01CA04'>J01CA04</a>),
  <strong>AMC</strong>: amoxicillin/clavulanic acid (<a href='https://www.whocc.no/atc_ddd_index/?code=J01CR02'>J01CR02</a>),
  <strong>AMP</strong>: ampicillin (<a href='https://www.whocc.no/atc_ddd_index/?code=J01CA01'>J01CA01</a>),
+ <strong>SAM</strong>: ampicillin/sulbactam (<a href='https://www.whocc.no/atc_ddd_index/?code=J01CR01'>J01CR01</a>),
  <strong>AZM</strong>: azithromycin (<a href='https://www.whocc.no/atc_ddd_index/?code=J01FA10'>J01FA10</a>),
  <strong>AZL</strong>: azlocillin (<a href='https://www.whocc.no/atc_ddd_index/?code=J01CA09'>J01CA09</a>),
  <strong>ATM</strong>: aztreonam (<a href='https://www.whocc.no/atc_ddd_index/?code=J01DF01'>J01DF01</a>),
@@ -319,17 +322,20 @@
  <strong>CZO</strong>: cefazolin (<a href='https://www.whocc.no/atc_ddd_index/?code=J01DB04'>J01DB04</a>),
  <strong>FEP</strong>: cefepime (<a href='https://www.whocc.no/atc_ddd_index/?code=J01DE01'>J01DE01</a>),
  <strong>CTX</strong>: cefotaxime (<a href='https://www.whocc.no/atc_ddd_index/?code=J01DD01'>J01DD01</a>),
+ <strong>CTT</strong>: cefotetan (<a href='https://www.whocc.no/atc_ddd_index/?code=J01DC05'>J01DC05</a>),
  <strong>FOX</strong>: cefoxitin (<a href='https://www.whocc.no/atc_ddd_index/?code=J01DC01'>J01DC01</a>),
- <strong>CED</strong>: cefradine (<a href='https://www.whocc.no/atc_ddd_index/?code=J01DB09'>J01DB09</a>),
+ <strong>CPT</strong>: ceftaroline (<a href='https://www.whocc.no/atc_ddd_index/?code=J01DI02'>J01DI02</a>),
  <strong>CAZ</strong>: ceftazidime (<a href='https://www.whocc.no/atc_ddd_index/?code=J01DD02'>J01DD02</a>),
  <strong>CRO</strong>: ceftriaxone (<a href='https://www.whocc.no/atc_ddd_index/?code=J01DD04'>J01DD04</a>),
  <strong>CXM</strong>: cefuroxime (<a href='https://www.whocc.no/atc_ddd_index/?code=J01DC02'>J01DC02</a>),
+ <strong>CED</strong>: cephradine (<a href='https://www.whocc.no/atc_ddd_index/?code=J01DB09'>J01DB09</a>),
  <strong>CHL</strong>: chloramphenicol (<a href='https://www.whocc.no/atc_ddd_index/?code=J01BA01'>J01BA01</a>),
  <strong>CIP</strong>: ciprofloxacin (<a href='https://www.whocc.no/atc_ddd_index/?code=J01MA02'>J01MA02</a>),
  <strong>CLR</strong>: clarithromycin (<a href='https://www.whocc.no/atc_ddd_index/?code=J01FA09'>J01FA09</a>),
  <strong>CLI</strong>: clindamycin (<a href='https://www.whocc.no/atc_ddd_index/?code=J01FF01'>J01FF01</a>),
  <strong>COL</strong>: colistin (<a href='https://www.whocc.no/atc_ddd_index/?code=J01XB01'>J01XB01</a>),
  <strong>DAP</strong>: daptomycin (<a href='https://www.whocc.no/atc_ddd_index/?code=J01XX09'>J01XX09</a>),
+ <strong>DOR</strong>: doripenem (<a href='https://www.whocc.no/atc_ddd_index/?code=J01DH04'>J01DH04</a>),
  <strong>DOX</strong>: doxycycline (<a href='https://www.whocc.no/atc_ddd_index/?code=J01AA02'>J01AA02</a>),
  <strong>ETP</strong>: ertapenem (<a href='https://www.whocc.no/atc_ddd_index/?code=J01DH03'>J01DH03</a>),
  <strong>ERY</strong>: erythromycin (<a href='https://www.whocc.no/atc_ddd_index/?code=J01FA01'>J01FA01</a>),
@@ -339,6 +345,7 @@
  <strong>FUS</strong>: fusidic acid (<a href='https://www.whocc.no/atc_ddd_index/?code=J01XC01'>J01XC01</a>),
  <strong>GAT</strong>: gatifloxacin (<a href='https://www.whocc.no/atc_ddd_index/?code=J01MA16'>J01MA16</a>),
  <strong>GEN</strong>: gentamicin (<a href='https://www.whocc.no/atc_ddd_index/?code=J01GB03'>J01GB03</a>),
+ <strong>GEH</strong>: gentamicin-high (no ATC code),
  <strong>IPM</strong>: imipenem (<a href='https://www.whocc.no/atc_ddd_index/?code=J01DH51'>J01DH51</a>),
  <strong>INH</strong>: isoniazid (<a href='https://www.whocc.no/atc_ddd_index/?code=J04AC01'>J04AC01</a>),
  <strong>KAN</strong>: kanamycin (<a href='https://www.whocc.no/atc_ddd_index/?code=J01GB04'>J01GB04</a>),
@@ -355,10 +362,10 @@
  <strong>NET</strong>: netilmicin (<a href='https://www.whocc.no/atc_ddd_index/?code=J01GB07'>J01GB07</a>),
  <strong>NIT</strong>: nitrofurantoin (<a href='https://www.whocc.no/atc_ddd_index/?code=J01XE01'>J01XE01</a>),
  <strong>NOR</strong>: norfloxacin (<a href='https://www.whocc.no/atc_ddd_index/?code=J01MA06'>J01MA06</a>),
- <strong>NOV</strong>: novobiocin (an ATCvet code: <a href='https://www.whocc.no/atc_ddd_index/?code=QJ01XX95'>QJ01XX95</a>),
+ <strong>NOV</strong>: novobiocin (<a href='https://www.whocc.no/atc_ddd_index/?code=QJ01XX95'>QJ01XX95</a>),
  <strong>OFX</strong>: ofloxacin (<a href='https://www.whocc.no/atc_ddd_index/?code=J01MA01'>J01MA01</a>),
  <strong>OXA</strong>: oxacillin (<a href='https://www.whocc.no/atc_ddd_index/?code=J01CF04'>J01CF04</a>),
- <strong>PEN</strong>: penicillin G (<a href='https://www.whocc.no/atc_ddd_index/?code=J01CE01'>J01CE01</a>),
+ <strong>PEN</strong>: penicillin G (<a href='https://www.whocc.no/atc_ddd_index/?code=J01RA01'>J01RA01</a>),
  <strong>PIP</strong>: piperacillin (<a href='https://www.whocc.no/atc_ddd_index/?code=J01CA12'>J01CA12</a>),
  <strong>TZP</strong>: piperacillin/tazobactam (<a href='https://www.whocc.no/atc_ddd_index/?code=J01CR05'>J01CR05</a>),
  <strong>PLB</strong>: polymyxin B (<a href='https://www.whocc.no/atc_ddd_index/?code=J01XB02'>J01XB02</a>),
@@ -367,13 +374,15 @@
  <strong>QDA</strong>: quinupristin/dalfopristin (<a href='https://www.whocc.no/atc_ddd_index/?code=J01FG02'>J01FG02</a>),
  <strong>RIB</strong>: rifabutin (<a href='https://www.whocc.no/atc_ddd_index/?code=J04AB04'>J04AB04</a>),
  <strong>RIF</strong>: rifampicin (<a href='https://www.whocc.no/atc_ddd_index/?code=J04AB02'>J04AB02</a>),
- <strong>RIF</strong>: rifampin (<a href='https://www.whocc.no/atc_ddd_index/?code=J04AB02'>J04AB02</a>),
  <strong>RFP</strong>: rifapentine (<a href='https://www.whocc.no/atc_ddd_index/?code=J04AB05'>J04AB05</a>),
- <strong>RXT</strong>: roxithromycin (<a href='https://www.whocc.no/atc_ddd_index/?code=J01FA06'>J01FA06</a>),
+ <strong>RXT</strong>: roxithromicin (<a href='https://www.whocc.no/atc_ddd_index/?code=J01FA06'>J01FA06</a>),
  <strong>SIS</strong>: sisomicin (<a href='https://www.whocc.no/atc_ddd_index/?code=J01GB08'>J01GB08</a>),
+ <strong>STH</strong>: streptomycin-high (no ATC code),
  <strong>TEC</strong>: teicoplanin (<a href='https://www.whocc.no/atc_ddd_index/?code=J01XA02'>J01XA02</a>),
+ <strong>TLV</strong>: telavancin (<a href='https://www.whocc.no/atc_ddd_index/?code=J01XA03'>J01XA03</a>),
  <strong>TCY</strong>: tetracycline (<a href='https://www.whocc.no/atc_ddd_index/?code=J01AA07'>J01AA07</a>),
  <strong>TIC</strong>: ticarcillin (<a href='https://www.whocc.no/atc_ddd_index/?code=J01CA13'>J01CA13</a>),
+ <strong>TCC</strong>: ticarcillin/clavulanic acid (<a href='https://www.whocc.no/atc_ddd_index/?code=J01CR03'>J01CR03</a>),
  <strong>TGC</strong>: tigecycline (<a href='https://www.whocc.no/atc_ddd_index/?code=J01AA12'>J01AA12</a>),
  <strong>TOB</strong>: tobramycin (<a href='https://www.whocc.no/atc_ddd_index/?code=J01GB01'>J01GB01</a>),
  <strong>TMP</strong>: trimethoprim (<a href='https://www.whocc.no/atc_ddd_index/?code=J01EA01'>J01EA01</a>),
@@ -389,6 +398,11 @@
     <pre class="examples"><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>dplyr</span>)
 
 <span class='no'>example_isolates</span> <span class='kw'>%&gt;%</span>
+  <span class='fu'>mdro</span>() <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='https://rdrr.io/pkg/clean/man/freq.html'>freq</a></span>()
+
+<span class='co'># \donttest{</span>
+<span class='no'>example_isolates</span> <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span>(<span class='kw'>EUCAST</span> <span class='kw'>=</span> <span class='fu'>mdro</span>(<span class='no'>.</span>),
          <span class='kw'>BRMO</span> <span class='kw'>=</span> <span class='fu'>brmo</span>(<span class='no'>.</span>),
          <span class='kw'>MRGN</span> <span class='kw'>=</span> <span class='fu'>mrgn</span>(<span class='no'>.</span>))
@@ -396,7 +410,8 @@
 <span class='no'>example_isolates</span> <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>rename</a></span>(<span class='kw'>PIP</span> <span class='kw'>=</span> <span class='no'>TZP</span>) <span class='kw'>%&gt;%</span> <span class='co'># no piperacillin, so take piperacillin/tazobactam</span>
   <span class='fu'>mrgn</span>() <span class='kw'>%&gt;%</span>            <span class='co'># check German guideline</span>
-  <span class='fu'><a href='https://rdrr.io/pkg/clean/man/freq.html'>freq</a></span>()                <span class='co'># check frequencies</span></pre>
+  <span class='fu'><a href='https://rdrr.io/pkg/clean/man/freq.html'>freq</a></span>()                <span class='co'># check frequencies</span>
+<span class='co'># }</span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

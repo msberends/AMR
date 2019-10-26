@@ -23,13 +23,14 @@
 #'
 #' Determine which isolates are multidrug-resistant organisms (MDRO) according to (country-specific) guidelines.
 #' @param x table with antibiotic columns, like e.g. \code{AMX} and \code{AMC}
-#' @param guideline a specific guideline to mention, see Details. EUCAST guidelines will be used when left empty, see Details.
+#' @param guideline a specific guideline to follow. When left empty, the publication by Magiorakos \emph{et al.} (2012, Clinical Microbiology and Infection) will be followed, see Details.
 #' @param info print progress
 #' @inheritParams eucast_rules
 #' @param verbose print additional info: missing antibiotic columns per parameter
 #' @inheritSection eucast_rules Antibiotics
 #' @details Currently supported guidelines are (case-insensitive):
 #' \itemize{
+#'   \item{\code{guideline = "CMI2012"}: Magiorakos AP, Srinivasan A \emph{et al.} "Multidrug-resistant, extensively drug-resistant and pandrug-resistant bacteria: an international expert proposal for interim standard definitions for acquired resistance." Clinical Microbiology and Infection (2012) (\href{https://www.clinicalmicrobiologyandinfection.com/article/S1198-743X(14)61632-3/fulltext}{link})}
 #'   \item{\code{guideline = "EUCAST"}: The European international guideline - EUCAST Expert Rules Version 3.1 "Intrinsic Resistance and Exceptional Phenotypes Tables" (\href{http://www.eucast.org/fileadmin/src/media/PDFs/EUCAST_files/Expert_Rules/Expert_rules_intrinsic_exceptional_V3.1.pdf}{link})}
 #'   \item{\code{guideline = "TB"}: The international guideline for multi-drug resistant tuberculosis - World Health Organization "Companion handbook to the WHO guidelines for the programmatic management of drug-resistant tuberculosis" (\href{https://www.who.int/tb/publications/pmdt_companionhandbook/en/}{link})}
 #'   \item{\code{guideline = "MRGN"}: The German national guideline - Mueller et al. (2015) Antimicrobial Resistance and Infection Control 4:7. DOI: 10.1186/s13756-015-0047-6}
@@ -38,24 +39,26 @@
 #'
 #' Please suggest your own (country-specific) guidelines by letting us know: \url{https://gitlab.com/msberends/AMR/issues/new}.
 #' @return \itemize{
-#'   \item{TB guideline - function \code{mdr_tb()} or \code{mdro(..., guideline = "TB")}:\cr Ordered factor with levels \code{Negative < Mono-resistant < Poly-resistant < Multi-drug-resistant < Extensive drug-resistant}}
+#'   \item{CMI 2012 paper - function \code{mdr_cmi2012()} or \code{mdro()}:\cr Ordered factor with levels \code{Negative < Multi-drug-resistant (MDR) < Extensively drug-resistant (XDR) < Pandrug-resistant (PDR)}}
+#'   \item{TB guideline - function \code{mdr_tb()} or \code{mdro(..., guideline = "TB")}:\cr Ordered factor with levels \code{Negative < Mono-resistant < Poly-resistant < Multi-drug-resistant < Extensively drug-resistant}}
 #'   \item{German guideline - function \code{mrgn()} or \code{mdro(..., guideline = "MRGN")}:\cr Ordered factor with levels \code{Negative < 3MRGN < 4MRGN}}
 #'   \item{Everything else:\cr Ordered factor with levels \code{Negative < Positive, unconfirmed < Positive}. The value \code{"Positive, unconfirmed"} means that, according to the guideline, it is not entirely sure if the isolate is multi-drug resistant and this should be confirmed with additional (e.g. molecular) tests}
 #' }
 #' @rdname mdro
-#' @importFrom dplyr %>%
-#' @importFrom crayon red blue bold
+#' @importFrom dplyr %>% filter_all
+#' @importFrom crayon blue bold italic
 #' @export
 #' @inheritSection AMR Read more on our website!
 #' @source
-#' EUCAST Expert Rules Version 3.1 "Intrinsic Resistance and Exceptional Phenotypes Tables" (\href{http://www.eucast.org/fileadmin/src/media/PDFs/EUCAST_files/Expert_Rules/Expert_rules_intrinsic_exceptional_V3.1.pdf}{link})
-#'
-#' World Health Organization "Companion handbook to the WHO guidelines for the programmatic management of drug-resistant tuberculosis" (\href{https://www.who.int/tb/publications/pmdt_companionhandbook/en/}{link})
-#'
-#' Rijksinstituut voor Volksgezondheid en Milieu "WIP-richtlijn BRMO (Bijzonder Resistente Micro-Organismen) [ZKH]" (\href{https://www.rivm.nl/Documenten_en_publicaties/Professioneel_Praktisch/Richtlijnen/Infectieziekten/WIP_Richtlijnen/WIP_Richtlijnen/Ziekenhuizen/WIP_richtlijn_BRMO_Bijzonder_Resistente_Micro_Organismen_ZKH}{link})
+#' Please see Details for the list of publications used for this function.
 #' @examples
 #' library(dplyr)
-#'
+#' 
+#' example_isolates %>% 
+#'   mdro() %>% 
+#'   freq()
+#'   
+#' \donttest{
 #' example_isolates %>%
 #'   mutate(EUCAST = mdro(.),
 #'          BRMO = brmo(.),
@@ -65,6 +68,7 @@
 #'   rename(PIP = TZP) %>% # no piperacillin, so take piperacillin/tazobactam
 #'   mrgn() %>%            # check German guideline
 #'   freq()                # check frequencies
+#' }
 mdro <- function(x,
                  guideline = NULL,
                  col_mo = NULL,
@@ -86,7 +90,8 @@ mdro <- function(x,
   }
 
   if (is.null(guideline)) {
-    guideline <- "eucast"
+    # default to the paper by Magiorakos et al. (2012)
+    guideline <- "cmi2012"
   }
   if (tolower(guideline) == "nl") {
     guideline <- "BRMO"
@@ -94,7 +99,7 @@ mdro <- function(x,
   if (tolower(guideline) == "de") {
     guideline <- "MRGN"
   }
-  if (!tolower(guideline) %in% c("brmo", "mrgn", "eucast", "tb")) {
+  if (!tolower(guideline) %in% c("brmo", "mrgn", "eucast", "tb", "cmi2012")) {
     stop("invalid guideline: ", guideline, call. = FALSE)
   }
   guideline <- list(code = tolower(guideline))
@@ -114,7 +119,13 @@ mdro <- function(x,
     stop("`col_mo` must be set.", call. = FALSE)
   }
 
-  if (guideline$code == "eucast") {
+  if (guideline$code == "cmi2012") {
+    guideline$name <- "Multidrug-resistant, extensively drug-resistant and pandrug-resistant bacteria: an international expert proposal for interim standard definitions for acquired resistance."
+    guideline$author <- "Magiorakos AP, Srinivasan A, Carey RB, ..., Vatopoulos A, Weber JT, Monnet DL"
+    guideline$version <- "N/A"
+    guideline$source <- "Magiorakos et al. (2012) Clinical Microbiology and Infection 18:3. DOI: 10.1111/j.1469-0691.2011.03570.x"
+    
+  } else if (guideline$code == "eucast") {
     guideline$name <- "EUCAST Expert Rules, \"Intrinsic Resistance and Exceptional Phenotypes Tables\""
     guideline$author <- "EUCAST (European Committee on Antimicrobial Susceptibility Testing)"
     guideline$version <- "3.1"
@@ -129,9 +140,10 @@ mdro <- function(x,
     # support per country:
   } else if (guideline$code == "mrgn") {
     guideline$name <- "Cross-border comparison of the Dutch and German guidelines on multidrug-resistant Gram-negative microorganisms"
-    guideline$author <- "J. M\u00fcller, A. Voss, R. K\u00f6ck, ..., W.V. Kern, C. Wendt, A.W. Friedrich"
+    guideline$author <- "M\u00fcller J, Voss A, K\u00f6ck R, ..., Kern WV, Wendt C, Friedrich AW"
     guideline$version <- "N/A"
     guideline$source <- "M\u00fcller et al. (2015) Antimicrobial Resistance and Infection Control 4:7. DOI: 10.1186/s13756-015-0047-6"
+    
   } else if (guideline$code == "brmo") {
     guideline$name <- "WIP-Richtlijn Bijzonder Resistente Micro-organismen (BRMO)"
     guideline$author <- "RIVM (Rijksinstituut voor de Volksgezondheid)"
@@ -141,16 +153,126 @@ mdro <- function(x,
     stop("This guideline is currently unsupported: ", guideline$code, call. = FALSE)
   }
 
-  if (info == TRUE) {
-    cat("Determining multidrug-resistant organisms (MDRO), according to:\n",
-        "Guideline: ", red(guideline$name), "\n",
-        "Version:   ", red(guideline$version), "\n",
-        "Author:    ",    red(guideline$author), "\n",
-        "Source:    ", blue(guideline$source), "\n",
-        "\n", sep = "")
-  }
-
-  if (guideline$code == "tb") {
+  if (guideline$code == "cmi2012") {
+    cols_ab <- get_column_abx(x = x,
+                              soft_dependencies = c(
+                                # table 1 (S aureus):
+                                "GEN",
+                                "RIF",
+                                "CPT",
+                                "OXA",
+                                "CIP",
+                                "MFX",
+                                "SXT",
+                                "FUS",
+                                "VAN",
+                                "TEC",
+                                "TLV",
+                                "TGC",
+                                "CLI",
+                                "DAP",
+                                "ERY",
+                                "LNZ",
+                                "CHL",
+                                "FOS",
+                                "QDA",
+                                "TCY",
+                                "DOX",
+                                "MNO",
+                                # table 2 (Enterococcus)
+                                "GEH",
+                                "STH",
+                                "IPM",
+                                "MEM",
+                                "DOR",
+                                "CIP",
+                                "LVX",
+                                "MFX",
+                                "VAN",
+                                "TEC",
+                                "TGC",
+                                "DAP",
+                                "LNZ",
+                                "AMP",
+                                "QDA",
+                                "DOX",
+                                "MNO",
+                                # table 3 (Enterobacteriaceae)
+                                "GEN",
+                                "TOB",
+                                "AMK",
+                                "NET",
+                                "CPT",
+                                "TCC",
+                                "TZP",
+                                "ETP",
+                                "IPM",
+                                "MEM",
+                                "DOR",
+                                "CZO",
+                                "CXM",
+                                "CTX",
+                                "CAZ",
+                                "FEP",
+                                "FOX",
+                                "CTT",
+                                "CIP",
+                                "SXT",
+                                "TGC",
+                                "ATM",
+                                "AMP",
+                                "AMC",
+                                "SAM",
+                                "CHL",
+                                "FOS",
+                                "COL",
+                                "TCY",
+                                "DOX",
+                                "MNO",
+                                # table 4 (Pseudomonas)
+                                "GEN",
+                                "TOB",
+                                "AMK",
+                                "NET",
+                                "IPM",
+                                "MEM",
+                                "DOR",
+                                "CAZ",
+                                "FEP",
+                                "CIP",
+                                "LVX",
+                                "TCC",
+                                "TZP",
+                                "ATM",
+                                "FOS",
+                                "COL",
+                                "PLB",
+                                # table 5 (Acinetobacter)
+                                "GEN",
+                                "TOB",
+                                "AMK",
+                                "NET",
+                                "IPM",
+                                "MEM",
+                                "DOR",
+                                "CIP",
+                                "LVX",
+                                "TZP",
+                                "TCC",
+                                "CTX",
+                                "CRO",
+                                "CAZ",
+                                "FEP",
+                                "SXT",
+                                "SAM",
+                                "COL",
+                                "PLB",
+                                "TCY",
+                                "DOX",
+                                "MNO"
+                                ),
+                              verbose = verbose, ...)
+  } else if (guideline$code == "tb") {
     cols_ab <- get_column_abx(x = x,
                               soft_dependencies = c("CAP",
                                                     "ETH",
@@ -188,11 +310,14 @@ mdro <- function(x,
   CLI <- cols_ab["CLI"]
   CLR <- cols_ab["CLR"]
   COL <- cols_ab["COL"]
+  CPT <- cols_ab["CPT"]
   CRO <- cols_ab["CRO"]
+  CTT <- cols_ab["CTT"]
   CTX <- cols_ab["CTX"]
   CXM <- cols_ab["CXM"]
   CZO <- cols_ab["CZO"]
   DAP <- cols_ab["DAP"]
+  DOR <- cols_ab["DOR"]
   DOX <- cols_ab["DOX"]
   ERY <- cols_ab["ERY"]
   ETP <- cols_ab["ETP"]
@@ -201,6 +326,7 @@ mdro <- function(x,
   FOS <- cols_ab["FOS"]
   FOX <- cols_ab["FOX"]
   FUS <- cols_ab["FUS"]
+  GEH <- cols_ab["GEH"]
   GEN <- cols_ab["GEN"]
   IPM <- cols_ab["IPM"]
   KAN <- cols_ab["KAN"]
@@ -219,6 +345,7 @@ mdro <- function(x,
   NOR <- cols_ab["NOR"]
   NOV <- cols_ab["NOV"]
   OFX <- cols_ab["OFX"]
+  OXA <- cols_ab["OXA"]
   PEN <- cols_ab["PEN"]
   PIP <- cols_ab["PIP"]
   PLB <- cols_ab["PLB"]
@@ -227,12 +354,16 @@ mdro <- function(x,
   RID <- cols_ab["RID"]
   RIF <- cols_ab["RIF"]
   RXT <- cols_ab["RXT"]
+  SAM <- cols_ab["SAM"]
   SIS <- cols_ab["SIS"]
+  STH <- cols_ab["STH"]
   SXT <- cols_ab["SXT"]
+  TCC <- cols_ab["TCC"]
   TCY <- cols_ab["TCY"]
   TEC <- cols_ab["TEC"]
   TGC <- cols_ab["TGC"]
   TIC <- cols_ab["TIC"]
+  TLV <- cols_ab["TLV"]
   TMP <- cols_ab["TMP"]
   TOB <- cols_ab["TOB"]
   TZP <- cols_ab["TZP"]
@@ -251,9 +382,21 @@ mdro <- function(x,
   if (guideline$code == "tb" & length(abx_tb) == 0) {
     stop("No antimycobacterials found in data set.", call. = FALSE)
   }
+  
+  if (info == TRUE) {
+    cat("\nDetermining multidrug-resistant organisms (MDRO), according to:\n",
+        bold("Guideline: "), italic(guideline$name), "\n",
+        bold("Version:   "), guideline$version, "\n",
+        bold("Author:    "),    guideline$author, "\n",
+        bold("Source:    "), guideline$source, "\n",
+        "\n", sep = "")
+  }
 
   ab_missing <- function(ab) {
     isTRUE(ab %in% c(NULL, NA)) | length(ab) == 0
+  }
+  ab_NA <- function(x) {
+    x[!is.na(x)]
   }
 
   # antibiotic classes
@@ -280,16 +423,211 @@ mdro <- function(x,
       x[rows, "MDRO"] <<- to
     }
   }
-
+  trans_tbl2 <- function(txt, rows, lst) {
+    # function specific for the CMI paper of 2012 (Magiorakos et al.)
+    lst_vector <- unlist(lst)[!is.na(unlist(lst))]
+    x$total_groups <- NA_integer_
+    x$affected_groups <- NA_integer_
+    x[rows, "total_groups"] <- length(lst)
+    # now the hard part - using two sapply()s for super fast results:
+    # [1] run through all `rows` with sapply()
+    # [2] within each row, run through all antibiotic groups with another sapply()
+    # [3] determine for each antibiotic group in that row if at least 1 drug is R of I 
+    # [4] sum the number of TRUEs of this determination
+    x[rows, "affected_groups"] <- sapply(rows, 
+                                         function(row, group_tbl = lst) {
+                                           sum(sapply(group_tbl, 
+                                                      function(group) {
+                                                        any(x[row, group[!is.na(group)]] == "R") | 
+                                                          any(x[row, group[!is.na(group)]] == "I") 
+                                                      }),
+                                               na.rm = TRUE) 
+                                         })
+    # now set MDROs: 
+    # MDR (=2): >=3 groups affected
+    x[which(x$row_number %in% rows & x$affected_groups >= 3), "MDRO"] <<- 2
+    # XDR (=3): all but <=2 groups affected
+    x[which(x$row_number %in% rows & x$total_groups - x$affected_groups <= 2), "MDRO"] <<- 3
+    # PDR (=4): all agents are R 
+    x[filter_at(x[rows, ], 
+                vars(lst_vector),
+                all_vars(. %in% c("R", "I")))$row_number,
+      "MDRO"] <<- 4
+  }
+  
   x <- x %>%
     mutate_at(vars(col_mo), as.mo) %>%
     # join to microorganisms data set
     left_join_microorganisms(by = col_mo) %>%
     # add unconfirmed to where genus is available
-    mutate(MDRO = ifelse(!is.na(genus), 1, NA_integer_)) %>% 
+    mutate(MDRO = ifelse(!is.na(genus), 1, NA_integer_),
+           row_number = 1:nrow(x)) %>% 
     # transform to data.frame so subsetting is possible with x[y, z] (might not be the case with tibble/data.table/...)
     as.data.frame(stringsAsFactors = FALSE)
+  
+  if (guideline$code == "cmi2012") {
+    # CMI, 2012 ---------------------------------------------------------------
+    # Non-susceptible = R and I
+    # (see header 'Approaches to Creating Definitions for MDR, XDR and PDR' in paper)
 
+    # take amoxicillin if ampicillin is unavailable
+    if (is.na(AMP) & !is.na(AMX)) AMP <- AMX
+    # take ceftriaxone if cefotaxime is unavailable and vice versa
+    if (is.na(CRO) & !is.na(CTX)) CRO <- CTX
+    if (is.na(CTX) & !is.na(CRO)) CTX <- CRO
+    
+    # intrinsic resistant must not be considered for the determination of MDR,
+    # so let's just remove them, meticulously following the paper
+    x[which(x$genus == "Enterococcus" & x$species == "faecium"), ab_NA(IPM)] <- NA
+    x[which(x$genus == "Enterococcus" & x$species == "faecalis"), ab_NA(QDA)] <- NA
+    x[which((x$genus == "Providencia" & x$species == "rettgeri")
+             | (x$genus == "Providencia" & x$species == "stuartii")), ab_NA(c(GEN, TOB, NET))] <- NA
+    x[which(x$genus == "Escherichia" & x$species == "hermannii"), ab_NA(c(TCC, TZP))] <- NA
+    x[which((x$genus == "Citrobacter" & x$species == "freundii")
+            | (x$genus == "Enterobacter" & x$species == "aerogenes")
+            | (x$genus == "Enterobacter" & x$species == "cloacae")
+            | (x$genus == "Hafnia" & x$species == "alvei")
+            | (x$genus == "Morganella" & x$species == "morganii")
+            | (x$genus == "Proteus" & x$species == "penneri")
+            | (x$genus == "Proteus" & x$species == "vulgaris")
+            | (x$genus == "Serratia" & x$species == "marcescens")), ab_NA(CZO)] <- NA
+    x[which((x$genus == "Morganella" & x$species == "morganii")
+            | (x$genus == "Proteus" & x$species == "penneri")
+            | (x$genus == "Proteus" & x$species == "vulgaris")
+            | (x$genus == "Serratia" & x$species == "marcescens")), ab_NA(CXM)] <- NA
+    x[which((x$genus == "Morganella" & x$species == "morganii")
+            | (x$genus == "Proteus" & x$species == "mirabilis")
+            | (x$genus == "Proteus" & x$species == "penneri")
+            | (x$genus == "Proteus" & x$species == "vulgaris")
+            | (x$genus == "Providencia" & x$species == "rettgeri")
+            | (x$genus == "Providencia" & x$species == "stuartii")), ab_NA(TGC)] <- NA
+    x[which((x$genus == "Citrobacter" & x$species == "koseri")
+            | (x$genus == "Citrobacter" & x$species == "freundii")
+            | (x$genus == "Enterobacter" & x$species == "aerogenes")
+            | (x$genus == "Enterobacter" & x$species == "cloacae")
+            | (x$genus == "Escherichia" & x$species == "hermannii")
+            | (x$genus == "Hafnia" & x$species == "alvei")
+            | (x$genus == "Klebsiella")
+            | (x$genus == "Morganella" & x$species == "morganii")
+            | (x$genus == "Proteus" & x$species == "penneri")
+            | (x$genus == "Proteus" & x$species == "vulgaris")
+            | (x$genus == "Providencia" & x$species == "rettgeri")
+            | (x$genus == "Providencia" & x$species == "stuartii")
+            | (x$genus == "Serratia" & x$species == "marcescens")), ab_NA(AMP)] <- NA
+    x[which((x$genus == "Citrobacter" & x$species == "freundii")
+            | (x$genus == "Enterobacter" & x$species == "aerogenes")
+            | (x$genus == "Enterobacter" & x$species == "cloacae")
+            | (x$genus == "Hafnia" & x$species == "alvei")
+            | (x$genus == "Morganella" & x$species == "morganii")
+            | (x$genus == "Providencia" & x$species == "rettgeri")
+            | (x$genus == "Providencia" & x$species == "stuartii")
+            | (x$genus == "Serratia" & x$species == "marcescens")), ab_NA(AMC)] <- NA
+    x[which((x$genus == "Citrobacter" & x$species == "freundii")
+            | (x$genus == "Citrobacter" & x$species == "koseri")
+            | (x$genus == "Enterobacter" & x$species == "aerogenes")
+            | (x$genus == "Enterobacter" & x$species == "cloacae")
+            | (x$genus == "Hafnia" & x$species == "alvei")
+            | (x$genus == "Providencia" & x$species == "rettgeri")
+            | (x$genus == "Serratia" & x$species == "marcescens")), ab_NA(SAM)] <- NA
+    x[which((x$genus == "Morganella" & x$species == "morganii")
+            | (x$genus == "Proteus" & x$species == "mirabilis")
+            | (x$genus == "Proteus" & x$species == "penneri")
+            | (x$genus == "Proteus" & x$species == "vulgaris")
+            | (x$genus == "Providencia" & x$species == "rettgeri")
+            | (x$genus == "Providencia" & x$species == "stuartii")
+            | (x$genus == "Serratia" & x$species == "marcescens")), ab_NA(COL)] <- NA
+    x[which((x$genus == "Morganella" & x$species == "morganii")
+            | (x$genus == "Proteus" & x$species == "mirabilis")
+            | (x$genus == "Proteus" & x$species == "penneri")
+            | (x$genus == "Proteus" & x$species == "vulgaris")
+            | (x$genus == "Providencia" & x$species == "rettgeri")
+            | (x$genus == "Providencia" & x$species == "stuartii")), ab_NA(TCY)] <- NA
+    x[which((x$genus == "Morganella" & x$species == "morganii")
+            | (x$genus == "Proteus" & x$species == "penneri")
+            | (x$genus == "Proteus" & x$species == "vulgaris")
+            | (x$genus == "Providencia" & x$species == "rettgeri")
+            | (x$genus == "Providencia" & x$species == "stuartii")), ab_NA(c(DOX, MNO))] <- NA
+    
+    # now add the MDR levels to the data
+    trans_tbl(2,
+              which(x$genus == "Staphylococcus" & x$species == "aureus"),
+              c(OXA, FOX),
+              "any")
+    trans_tbl2(paste("Table 1 -", italic("S. aureus")),
+               which(x$genus == "Staphylococcus" & x$species == "aureus"),
+               list(GEN,
+                    RIF,
+                    CPT,
+                    c(OXA, FOX),
+                    c(CIP, MFX),
+                    SXT,
+                    FUS,
+                    c(VAN, TEC, TLV),
+                    TGC,
+                    CLI,
+                    DAP,
+                    ERY,
+                    LNZ,
+                    CHL,
+                    FOS,
+                    QDA,
+                    c(TCY, DOX, MNO)))
+    trans_tbl2(paste("Table 2 -", italic("Enterococcus"), "spp"),
+               which(x$genus == "Enterococcus"),
+               list(GEH,
+                    STH,
+                    c(IPM, MEM, DOR),
+                    c(CIP, LVX, MFX),
+                    c(VAN, TEC),
+                    TGC,
+                    DAP,
+                    LNZ,
+                    AMP,
+                    QDA,
+                    c(DOX, MNO)))
+    trans_tbl2(paste("Table 3 -", italic("Enterobacteriaceae")),
+               which(x$family == "Enterobacteriaceae"),
+               list(c(GEN, TOB, AMK, NET),
+                    CPT,
+                    c(TCC, TZP),
+                    c(ETP, IPM, MEM, DOR),
+                    CZO,
+                    CXM,
+                    c(CTX, CAZ, FEP),
+                    c(FOX, CTT),
+                    CIP,
+                    SXT,
+                    TGC,
+                    ATM,
+                    AMP,
+                    c(AMC, SAM),
+                    CHL,
+                    FOS,
+                    COL,
+                    c(TCY, DOX, MNO)))
+    trans_tbl2(paste("Table 4 -", italic("Pseudomonas aeruginosa")),
+               which(x$genus == "Pseudomonas" & x$species == "aeruginosa"),
+               list(c(GEN, TOB, AMK, NET),
+                    c(IPM, MEM, DOR),
+                    c(CAZ, FEP),
+                    c(CIP, LVX),
+                    c(TCC, TZP),
+                    ATM,
+                    FOS,
+                    c(COL, PLB)))
+    trans_tbl2(paste("Table 5 -", italic("Acinetobacter"), "spp"),
+               which(x$genus == "Acinetobacter"),
+               list(c(GEN, TOB, AMK, NET),
+                    c(IPM, MEM, DOR),
+                    c(CIP, LVX),
+                    c(TZP, TCC),
+                    c(CTX, CRO, CAZ, FEP),
+                    SXT,
+                    SAM,
+                    c(COL, PLB),
+                    c(TCY, DOX, MNO)))
+  }
+  
   if (guideline$code == "eucast") {
     # EUCAST ------------------------------------------------------------------
     # Table 5
@@ -534,20 +872,32 @@ mdro <- function(x,
              second = ifelse(drug_is_R(CAP) | drug_is_R(KAN) | drug_is_R(AMK),
                              TRUE, FALSE),
              xdr = ifelse(mdr & xdr & second, TRUE, FALSE)) %>%
-      mutate(mdr_tb = case_when(xdr ~ 5,
+      mutate(MDRO = case_when(xdr ~ 5,
                                 mdr ~ 4,
                                 poly ~ 3,
                                 mono ~ 2,
                                 TRUE ~ 1),
              # keep all real TB, make other species NA
-             mdr_tb = ifelse(x$fullname == "Mycobacterium tuberculosis", mdr_tb, NA_real_))
+             MDRO = ifelse(x$fullname == "Mycobacterium tuberculosis", MDRO, NA_real_))
+  }
+  
+  if (info == TRUE) {
+    cat(bold(paste0("=> Found ", sum(x$MDRO %in% c(2:5), na.rm = TRUE), " MDROs out of ", sum(!is.na(x$MDRO)), 
+                    " possible cases (", percentage(sum(x$MDRO %in% c(2:5), na.rm = TRUE) / sum(!is.na(x$MDRO))), ")")))
   }
 
   # return results
-  if (guideline$code == "tb") {
-    factor(x =  x$mdr_tb,
+  if (guideline$code == "cmi2012") {
+    factor(x =  x$MDRO,
+           levels = 1:4,
+           labels = c("Negative", "Multi-drug-resistant (MDR)", 
+                      "Extensively drug-resistant (XDR)", "Pandrug-resistant (PDR)"),
+           ordered = TRUE)
+  } else if (guideline$code == "tb") {
+    factor(x =  x$MDRO,
            levels = 1:5,
-           labels = c("Negative", "Mono-resistant", "Poly-resistant", "Multi-drug-resistant", "Extensive drug-resistant"),
+           labels = c("Negative", "Mono-resistant", "Poly-resistant", 
+                      "Multi-drug-resistant", "Extensively drug-resistant"),
            ordered = TRUE)
   } else if (guideline$code == "mrgn") {
     factor(x =  x$MDRO,
@@ -579,6 +929,13 @@ mrgn <- function(x, guideline = "MRGN", ...) {
 mdr_tb <- function(x, guideline = "TB", ...) {
   mdro(x = x, guideline = "TB", ...)
 }
+
+#' @rdname mdro
+#' @export
+mdr_cmi2012 <- function(x, guideline = "CMI2012", ...) {
+  mdro(x = x, guideline = "CMI2012", ...)
+}
+
 
 #' @rdname mdro
 #' @export
