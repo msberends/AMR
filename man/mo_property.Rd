@@ -134,7 +134,7 @@ On our website \url{https://msberends.gitlab.io/AMR} you can find \href{https://
 mo_kingdom("E. coli")         # "Bacteria"
 mo_phylum("E. coli")          # "Proteobacteria"
 mo_class("E. coli")           # "Gammaproteobacteria"
-mo_order("E. coli")           # "Enterobacteriales"
+mo_order("E. coli")           # "Enterobacterales" ()
 mo_family("E. coli")          # "Enterobacteriaceae"
 mo_genus("E. coli")           # "Escherichia"
 mo_species("E. coli")         # "coli"

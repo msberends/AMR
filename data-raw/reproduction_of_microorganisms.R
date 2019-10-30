@@ -663,6 +663,97 @@ MOs <- MOs %>%
              species_id = ""),
   )
 
+# Incorporate new microbial order for Gammaproteobacteria - Adeolu et al. (2016), PMID 27620848
+MOs[which(MOs$family == "Enterobacteriaceae"), "family"] <- ""
+MOs[which(MOs$genus %in% c("Escherichia",
+                           "Atlantibacter",
+                           "Biostraticola",
+                           "Buttiauxella",
+                           "Cedecea",
+                           "Citrobacter",
+                           "Cronobacter",
+                           "Enterobacillus",
+                           "Enterobacter",
+                           "Franconibacter",
+                           "Gibbsiella",
+                           "Izhakiella",
+                           "Klebsiella",
+                           "Kluyvera",
+                           "Kosakonia",
+                           "Leclercia",
+                           "Lelliottia",
+                           "Mangrovibacter",
+                           "Pluralibacter",
+                           "Pseudocitrobacter",
+                           "Raoultella",
+                           "Rosenbergiella",
+                           "Saccharobacter",
+                           "Salmonella",
+                           "Shigella",
+                           "Shimwellia",
+                           "Siccibacter",
+                           "Trabulsiella",
+                           "Yokenella")), "family"] <- "Enterobacteriaceae"
+MOs[which(MOs$genus %in% c("Erwinia",
+                           "Buchnera",
+                           "Pantoea",
+                           "Phaseolibacter",
+                           "Tatumella",
+                           "Wigglesworthia")), "family"] <- "Erwiniaceae"
+MOs[which(MOs$genus %in% c("Pectobacterium",
+                           "Brenneria",
+                           "Dickeya",
+                           "Lonsdalea",
+                           "Sodalis")), "family"] <- "Pectobacteriaceae"
+MOs[which(MOs$genus %in% c("Yersinia",
+                           "Chania",
+                           "Ewingella",
+                           "Rahnella",
+                           "Rouxiella",
+                           "Samsonia",
+                           "Serratia")), "family"] <- "Yersiniaceae"
+MOs[which(MOs$genus %in% c("Hafnia",
+                           "Edwardsiella",
+                           "Obesumbacterium")), "family"] <- "Hafniaceae"
+MOs[which(MOs$genus %in% c("Morganella",
+                           "Arsenophonus",
+                           "Cosenzaea",
+                           "Moellerella",
+                           "Photorhabdus",
+                           "Proteus",
+                           "Providencia",
+                           "Xenorhabdus")), "family"] <- "Morganellaceae"
+MOs[which(MOs$genus %in% c("Budvicia",
+                           "Leminorella",
+                           "Pragia")), "family"] <- "Budviciaceae"
+MOs[which(MOs$family %in% c("Enterobacteriaceae",
+                            "Erwiniaceae",
+                            "Pectobacteriaceae",
+                            "Yersiniaceae",
+                            "Hafniaceae",
+                            "Morganellaceae",
+                            "Budviciaceae")), "order"] <- "Enterobacterales"
+new_families <- MOs %>%
+  filter(order == "Enterobacterales") %>%
+  pull(family) %>%
+  unique()
+class(MOs$mo) <- "character"
+MOs <- rbind(MOs %>% filter(!(rank == "family" & fullname %in% new_families)), 
+             AMR::microorganisms %>%
+               filter(family == "Enterobacteriaceae" & rank == "family") %>%
+               rbind(., ., ., ., ., ., .) %>% 
+               mutate(fullname = new_families,
+                      source = "manually added",
+                      ref = "Adeolu et al., 2016",
+                      family = fullname, mo = paste0("B_[FAM]_",
+                                                     toupper(abbreviate(new_families,
+                                                                        minlength = 8,
+                                                                        use.classes = TRUE,
+                                                                        method = "both.sides",
+                                                                        strict = FALSE)))))
+MOs[which(MOs$order == "Enterobacteriales"), "order"] <- "Enterobacterales"
+MOs[which(MOs$fullname == "Enterobacteriales"), "fullname"] <- "Enterobacterales"
+
 MOs <- MOs %>%
   group_by(kingdom) %>%
   distinct(fullname, .keep_all = TRUE) %>% 

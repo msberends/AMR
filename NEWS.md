@@ -1,5 +1,5 @@
-# AMR 0.8.0.9006
-<small>Last updated: 27-Oct-2019</small>
+# AMR 0.8.0.9007
+<small>Last updated: 30-Oct-2019</small>
 
 ### New
 * Support for a new MDRO guideline: Magiorakos AP, Srinivasan A *et al.* "Multidrug-resistant, extensively drug-resistant and pandrug-resistant bacteria: an international expert proposal for interim standard definitions for acquired resistance." Clinical Microbiology and Infection (2012). **This is now the new default guideline for the `mdro()` function.**
@@ -7,7 +7,7 @@
 ### Changes
 * When running `as.rsi()` over a data set, it will now print the guideline that will be used if it is not specified by the user
 * Fix for `eucast_rules()`: *Stenotrophomonas maltophilia* not interpreted "R" to ceftazidime anymore (following EUCAST v3.1)
-* Fix in taxonomic info for genera that are in multiple kingdoms, like *Proteus*
+* Adopted Adeolu *et al.* (2016), [PMID 27620848](https://www.ncbi.nlm.nih.gov/pubmed/27620848) for the `microorganisms` data set, which means that the new order Enterobacterales now consists of a part of the existing family *Enterobacteriaceae*, but that this family has been split into other families as well (like *Morganellaceae* and *Yersiniaceae*). Although published in 2016, this information is not yet in the Catalogue of Life version of 2019. All MDRO determinations with `mdro()` will now use the Enterobacterales order for all guidelines before 2016.
 * Fix for interpreting MIC values with `as.rsi()` where the input is `NA`
 * Added "imi" as allowed abbreviation for Imipenem
 * Fix for automatically determining columns with antibiotic results in `mdro()` and `eucast_rules()`

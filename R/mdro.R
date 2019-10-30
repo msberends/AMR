@@ -424,6 +424,9 @@ mdro <- function(x,
     }
   }
   trans_tbl2 <- function(txt, rows, lst) {
+    if (info == TRUE) {
+      message(blue(txt, "..."), appendLF = FALSE)
+    }
     # function specific for the CMI paper of 2012 (Magiorakos et al.)
     lst_vector <- unlist(lst)[!is.na(unlist(lst))]
     x$total_groups <- NA_integer_
@@ -447,12 +450,15 @@ mdro <- function(x,
     # MDR (=2): >=3 groups affected
     x[which(x$row_number %in% rows & x$affected_groups >= 3), "MDRO"] <<- 2
     # XDR (=3): all but <=2 groups affected
-    x[which(x$row_number %in% rows & x$total_groups - x$affected_groups <= 2), "MDRO"] <<- 3
+    x[which(x$row_number %in% rows & (x$total_groups - x$affected_groups) <= 2), "MDRO"] <<- 3
     # PDR (=4): all agents are R 
     x[filter_at(x[rows, ], 
                 vars(lst_vector),
                 all_vars(. %in% c("R", "I")))$row_number,
       "MDRO"] <<- 4
+    if (info == TRUE) {
+      message(blue(" OK"))
+    }
   }
   
   x <- x %>%
@@ -461,7 +467,7 @@ mdro <- function(x,
     left_join_microorganisms(by = col_mo) %>%
     # add unconfirmed to where genus is available
     mutate(MDRO = ifelse(!is.na(genus), 1, NA_integer_),
-           row_number = seq_len(nrow(x))) %>% 
+           row_number = seq_len(nrow(.))) %>% 
     # transform to data.frame so subsetting is possible with x[y, z] (might not be the case with tibble/data.table/...)
     as.data.frame(stringsAsFactors = FALSE)
   
@@ -572,7 +578,7 @@ mdro <- function(x,
                     FOS,
                     QDA,
                     c(TCY, DOX, MNO)))
-    trans_tbl2(paste("Table 2 -", italic("Enterococcus"), "spp"),
+    trans_tbl2(paste("Table 2 -", italic("Enterococcus"), "spp."),
                which(x$genus == "Enterococcus"),
                list(GEH,
                     STH,
@@ -585,8 +591,10 @@ mdro <- function(x,
                     AMP,
                     QDA,
                     c(DOX, MNO)))
-    trans_tbl2(paste("Table 3 -", italic("Enterobacteriaceae")),
-               which(x$family == "Enterobacteriaceae"),
+    trans_tbl2(paste0("Table 3 - ", italic("Enterobacteriaceae"), 
+                     " (before the taxonomic reclassification by Adeolu ", italic("et al."), ", 2016)"),
+               # this new order was previously 'Enterobacteriales' and contained only the family 'Enterobacteriaceae':
+               which(x$order == "Enterobacterales"),
                list(c(GEN, TOB, AMK, NET),
                     CPT,
                     c(TCC, TZP),
@@ -615,7 +623,7 @@ mdro <- function(x,
                     ATM,
                     FOS,
                     c(COL, PLB)))
-    trans_tbl2(paste("Table 5 -", italic("Acinetobacter"), "spp"),
+    trans_tbl2(paste("Table 5 -", italic("Acinetobacter"), "spp."),
                which(x$genus == "Acinetobacter"),
                list(c(GEN, TOB, AMK, NET),
                     c(IPM, MEM, DOR),
@@ -632,7 +640,7 @@ mdro <- function(x,
     # EUCAST ------------------------------------------------------------------
     # Table 5
     trans_tbl(3,
-              which(x$family == "Enterobacteriaceae"
+              which(x$order == "Enterobacterales"
                     | x$fullname %like% "^Pseudomonas aeruginosa"
                     | x$genus == "Acinetobacter"),
               COL,
@@ -706,7 +714,7 @@ mdro <- function(x,
     if (is.na(CIP)) CIP <- "missing"
     
     # Table 1
-    x[which((x$family == "Enterobacteriaceae" | 
+    x[which((x$order == "Enterobacterales" |  # following in fact the old Enterobacteriaceae classification
               x$fullname %like% "^Acinetobacter baumannii") &
               x[, PIP] == "R" &
               x[, CTX_or_CAZ] == "R" &
@@ -714,7 +722,7 @@ mdro <- function(x,
               x[, CIP] == "R"),
       "MDRO"] <- 2 # 2 = 3MRGN
     
-    x[which((x$family == "Enterobacteriaceae" | 
+    x[which((x$order == "Enterobacterales" |  # following in fact the old Enterobacteriaceae classification
                x$fullname %like% "^Acinetobacter baumannii") &
               x[, PIP] == "R" &
               x[, CTX_or_CAZ] == "R" &
@@ -722,7 +730,7 @@ mdro <- function(x,
               x[, CIP] == "R"),
       "MDRO"] <- 3 # 3 = 4MRGN, overwrites 3MRGN if applicable
     
-    x[which((x$family == "Enterobacteriaceae" | 
+    x[which((x$order == "Enterobacterales" |  # following in fact the old Enterobacteriaceae classification
                x$fullname %like% "^Acinetobacter baumannii") &
               x[, IPM] == "R" | x[, MEM] == "R"),
       "MDRO"] <- 3 # 3 = 4MRGN, always when imipenem or meropenem is R
@@ -757,17 +765,17 @@ mdro <- function(x,
 
     # Table 1
     trans_tbl(3,
-              which(x$family == "Enterobacteriaceae"),
+              which(x$order == "Enterobacterales"), # following in fact the old Enterobacteriaceae classification
               c(aminoglycosides, fluoroquinolones),
               "all")
 
     trans_tbl(2,
-              which(x$family == "Enterobacteriaceae"),
+              which(x$order == "Enterobacterales"), # following in fact the old Enterobacteriaceae classification
               carbapenems,
               "any")
 
     trans_tbl(2,
-              which(x$family == "Enterobacteriaceae"),
+              which(x$order == "Enterobacterales"), # following in fact the old Enterobacteriaceae classification
               ESBLs,
               "all")
 

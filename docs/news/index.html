@@ -84,7 +84,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">0.8.0.9006</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">0.8.0.9007</span>
       </span>
     </div>
 
@@ -231,11 +231,11 @@
       
     </div>
 
-    <div id="amr-0-8-0-9006" class="section level1">
+    <div id="amr-0-8-0-9007" class="section level1">
 <h1 class="page-header">
-<a href="#amr-0-8-0-9006" class="anchor"></a>AMR 0.8.0.9006<small> Unreleased </small>
+<a href="#amr-0-8-0-9007" class="anchor"></a>AMR 0.8.0.9007<small> Unreleased </small>
 </h1>
-<p><small>Last updated: 27-Oct-2019</small></p>
+<p><small>Last updated: 30-Oct-2019</small></p>
 <div id="new" class="section level3">
 <h3 class="hasAnchor">
 <a href="#new" class="anchor"></a>New</h3>
@@ -250,8 +250,7 @@
 <ul>
 <li>When running <code><a href="../reference/as.rsi.html">as.rsi()</a></code> over a data set, it will now print the guideline that will be used if it is not specified by the user</li>
 <li>Fix for <code><a href="../reference/eucast_rules.html">eucast_rules()</a></code>: <em>Stenotrophomonas maltophilia</em> not interpreted “R” to ceftazidime anymore (following EUCAST v3.1)</li>
-<li>Fix in taxonomic info for genera that are in multiple kingdoms, like <em>Proteus</em>
-</li>
+<li>Adopted Adeolu <em>et al.</em> (2016), <a href="https://www.ncbi.nlm.nih.gov/pubmed/27620848">PMID 27620848</a> for the <code>microorganisms</code> data set, which means that the new order Enterobacterales now consists of a part of the existing family <em>Enterobacteriaceae</em>, but that this family has been split into other families as well (like <em>Morganellaceae</em> and <em>Yersiniaceae</em>). Although published in 2016, this information is not yet in the Catalogue of Life version of 2019. All MDRO determinations with <code><a href="../reference/mdro.html">mdro()</a></code> will now use the Enterobacterales order for all guidelines before 2016.</li>
 <li>Fix for interpreting MIC values with <code><a href="../reference/as.rsi.html">as.rsi()</a></code> where the input is <code>NA</code>
 </li>
 <li>Added “imi” as allowed abbreviation for Imipenem</li>
@@ -1321,7 +1320,7 @@ Using <code><a href="../reference/as.mo.html">as.mo(..., allow_uncertain = 3)</a
     <div id="tocnav">
       <h2>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
-        <li><a href="#amr-0-8-0-9006">0.8.0.9006</a></li>
+        <li><a href="#amr-0-8-0-9007">0.8.0.9007</a></li>
         <li><a href="#amr-0-8-0">0.8.0</a></li>
         <li><a href="#amr-0-7-1">0.7.1</a></li>
         <li><a href="#amr-0-7-0">0.7.0</a></li>
