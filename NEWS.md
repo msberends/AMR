@@ -1,8 +1,10 @@
-# AMR 0.8.0.9007
-<small>Last updated: 30-Oct-2019</small>
+# AMR 0.8.0.9008
+<small>Last updated: 03-Nov-2019</small>
 
 ### New
-* Support for a new MDRO guideline: Magiorakos AP, Srinivasan A *et al.* "Multidrug-resistant, extensively drug-resistant and pandrug-resistant bacteria: an international expert proposal for interim standard definitions for acquired resistance." Clinical Microbiology and Infection (2012). **This is now the new default guideline for the `mdro()` function.**
+* Support for a new MDRO guideline: Magiorakos AP, Srinivasan A *et al.* "Multidrug-resistant, extensively drug-resistant and pandrug-resistant bacteria: an international expert proposal for interim standard definitions for acquired resistance." Clinical Microbiology and Infection (2012).
+  * This is now the new default guideline for the `mdro()` function
+  * The new Verbose mode (`mdro(...., verbose = TRUE)`) returns an informative data set where the reason for MDRO determination is given for every isolate
 
 ### Changes
 * When running `as.rsi()` over a data set, it will now print the guideline that will be used if it is not specified by the user
@@ -12,6 +14,10 @@
 * Added "imi" as allowed abbreviation for Imipenem
 * Fix for automatically determining columns with antibiotic results in `mdro()` and `eucast_rules()`
 * Added ATC codes for ceftaroline, ceftobiprole and faropenem and fixed two typos in the `antibiotics` data set
+* More robust way of determining valid MIC values
+
+### Other
+* Change dependency on `clean` to `cleaner`, as this package was renamed accordingly upon CRAN request
 
 # AMR 0.8.0
 

@@ -85,7 +85,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">0.8.0.9006</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">0.8.0.9008</span>
       </span>
     </div>
 
@@ -238,7 +238,7 @@
     </div>
 
     <pre class="usage"><span class='fu'>mdro</span>(<span class='no'>x</span>, <span class='kw'>guideline</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>col_mo</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>info</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>...</span>)
+  <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>pct_required_classes</span> <span class='kw'>=</span> <span class='fl'>0.5</span>, <span class='no'>...</span>)
 
 <span class='fu'>brmo</span>(<span class='no'>x</span>, <span class='kw'>guideline</span> <span class='kw'>=</span> <span class='st'>"BRMO"</span>, <span class='no'>...</span>)
 
@@ -255,7 +255,7 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>x</th>
-      <td><p>table with antibiotic columns, like e.g. <code>AMX</code> and <code>AMC</code></p></td>
+      <td><p>data with antibiotic columns, like e.g. <code>AMX</code> and <code>AMC</code></p></td>
     </tr>
     <tr>
       <th>guideline</th>
@@ -274,8 +274,16 @@
       <td><p>print additional info: missing antibiotic columns per parameter</p></td>
     </tr>
     <tr>
+      <th>pct_required_classes</th>
+      <td><p>minimal required percentage of antimicrobial classes that must be available per isolate, rounded down. For example, with the default guideline, 17 antimicrobial classes must be available for <em>S. aureus</em>. Setting this <code>pct_required_classes</code> argument to <code>0.5</code> (default) means that for every <em>S. aureus</em> isolate at least 8 different classes must be available. Any lower number of available classes will return <code>NA</code> for that isolate.</p></td>
+    </tr>
+    <tr>
       <th>...</th>
       <td><p>column name of an antibiotic, see section Antibiotics</p></td>
+    </tr>
+    <tr>
+      <th>verbose</th>
+      <td><p>a logical to turn Verbose mode on and off (default is off). In Verbose mode, the function does not return the MDRO results, but instead returns a data set in logbook form with extensive info about which isolates would be MDRO-positive, or why they are not.</p></td>
     </tr>
     </table>
 
@@ -294,7 +302,8 @@
 
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>Currently supported guidelines are (case-insensitive):</p><ul>
+    <p>For the <code>pct_required_classes</code> argument, values above 1 will be divided by 100. This is to support both fractions (<code>0.75</code> or <code>3/4</code>) and percentages (<code>75</code>).
+Currently supported guidelines are (case-insensitive):</p><ul>
 <li><p><code>guideline = "CMI2012"</code>: Magiorakos AP, Srinivasan A <em>et al.</em> "Multidrug-resistant, extensively drug-resistant and pandrug-resistant bacteria: an international expert proposal for interim standard definitions for acquired resistance." Clinical Microbiology and Infection (2012) (<a href='https://www.clinicalmicrobiologyandinfection.com/article/S1198-743X(14)61632-3/fulltext'>link</a>)</p></li>
 <li><p><code>guideline = "EUCAST"</code>: The European international guideline - EUCAST Expert Rules Version 3.1 "Intrinsic Resistance and Exceptional Phenotypes Tables" (<a href='http://www.eucast.org/fileadmin/src/media/PDFs/EUCAST_files/Expert_Rules/Expert_rules_intrinsic_exceptional_V3.1.pdf'>link</a>)</p></li>
 <li><p><code>guideline = "TB"</code>: The international guideline for multi-drug resistant tuberculosis - World Health Organization "Companion handbook to the WHO guidelines for the programmatic management of drug-resistant tuberculosis" (<a href='https://www.who.int/tb/publications/pmdt_companionhandbook/en/'>link</a>)</p></li>
@@ -399,18 +408,18 @@
 
 <span class='no'>example_isolates</span> <span class='kw'>%&gt;%</span>
   <span class='fu'>mdro</span>() <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='https://rdrr.io/pkg/clean/man/freq.html'>freq</a></span>()
+  <span class='fu'><a href='https://rdrr.io/pkg/cleaner/man/freq.html'>freq</a></span>()
 
 <span class='co'># \donttest{</span>
 <span class='no'>example_isolates</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span>(<span class='kw'>EUCAST</span> <span class='kw'>=</span> <span class='fu'>mdro</span>(<span class='no'>.</span>),
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span>(<span class='kw'>EUCAST</span> <span class='kw'>=</span> <span class='fu'>eucast_exceptional_phenotypes</span>(<span class='no'>.</span>),
          <span class='kw'>BRMO</span> <span class='kw'>=</span> <span class='fu'>brmo</span>(<span class='no'>.</span>),
          <span class='kw'>MRGN</span> <span class='kw'>=</span> <span class='fu'>mrgn</span>(<span class='no'>.</span>))
 
 <span class='no'>example_isolates</span> <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>rename</a></span>(<span class='kw'>PIP</span> <span class='kw'>=</span> <span class='no'>TZP</span>) <span class='kw'>%&gt;%</span> <span class='co'># no piperacillin, so take piperacillin/tazobactam</span>
   <span class='fu'>mrgn</span>() <span class='kw'>%&gt;%</span>            <span class='co'># check German guideline</span>
-  <span class='fu'><a href='https://rdrr.io/pkg/clean/man/freq.html'>freq</a></span>()                <span class='co'># check frequencies</span>
+  <span class='fu'><a href='https://rdrr.io/pkg/cleaner/man/freq.html'>freq</a></span>()                <span class='co'># check frequencies</span>
 <span class='co'># }</span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

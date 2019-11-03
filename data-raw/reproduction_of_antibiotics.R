@@ -308,7 +308,7 @@ antibiotics[which(antibiotics$ab == "CTX"), "abbreviations"][[1]] <- list(c(anti
 antibiotics[which(antibiotics$ab == "GEH"), "abbreviations"][[1]] <- list(c("gehl", "gentamicin high", "genta high"))
 antibiotics[which(antibiotics$ab == "STH"), "abbreviations"][[1]] <- list(c("sthl", "streptomycin high", "strepto high"))
 # add imi to imipenem
-antibiotics[which(antibiotics$ab == "IPM"), "abbreviations"][[1]] <- list(c("imip", "imi"))
+antibiotics[which(antibiotics$ab == "IPM"), "abbreviations"][[1]] <- list(c("imip", "imi", "imp"))
 
 ## new ATC codes
 # ceftaroline

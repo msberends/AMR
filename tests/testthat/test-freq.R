@@ -22,7 +22,7 @@
 context("freq.R")
 
 test_that("frequency table works", {
-  library(clean)
+  library(cleaner)
   # mo
   expect_true(is.freq(freq(example_isolates$mo)))
   # for this to work, the output of mo_gramstain() is to be expected as follows:

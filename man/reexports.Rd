@@ -11,6 +11,6 @@ These objects are imported from other packages. Follow the links
 below to see their documentation.
 
 \describe{
-  \item{clean}{\code{\link[clean]{freq}}}
+  \item{cleaner}{\code{\link[cleaner]{freq}}}
 }}
 

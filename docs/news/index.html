@@ -84,7 +84,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">0.8.0.9007</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">0.8.0.9008</span>
       </span>
     </div>
 
@@ -231,16 +231,20 @@
       
     </div>
 
-    <div id="amr-0-8-0-9007" class="section level1">
+    <div id="amr-0-8-0-9008" class="section level1">
 <h1 class="page-header">
-<a href="#amr-0-8-0-9007" class="anchor"></a>AMR 0.8.0.9007<small> Unreleased </small>
+<a href="#amr-0-8-0-9008" class="anchor"></a>AMR 0.8.0.9008<small> Unreleased </small>
 </h1>
-<p><small>Last updated: 30-Oct-2019</small></p>
+<p><small>Last updated: 03-Nov-2019</small></p>
 <div id="new" class="section level3">
 <h3 class="hasAnchor">
 <a href="#new" class="anchor"></a>New</h3>
 <ul>
-<li>Support for a new MDRO guideline: Magiorakos AP, Srinivasan A <em>et al.</em> “Multidrug-resistant, extensively drug-resistant and pandrug-resistant bacteria: an international expert proposal for interim standard definitions for acquired resistance.” Clinical Microbiology and Infection (2012). <strong>This is now the new default guideline for the <code><a href="../reference/mdro.html">mdro()</a></code> function.</strong>
+<li>Support for a new MDRO guideline: Magiorakos AP, Srinivasan A <em>et al.</em> “Multidrug-resistant, extensively drug-resistant and pandrug-resistant bacteria: an international expert proposal for interim standard definitions for acquired resistance.” Clinical Microbiology and Infection (2012).
+<ul>
+<li>This is now the new default guideline for the <code><a href="../reference/mdro.html">mdro()</a></code> function</li>
+<li>The new Verbose mode (<code><a href="../reference/mdro.html">mdro(...., verbose = TRUE)</a></code>) returns an informative data set where the reason for MDRO determination is given for every isolate</li>
+</ul>
 </li>
 </ul>
 </div>
@@ -257,6 +261,14 @@
 <li>Fix for automatically determining columns with antibiotic results in <code><a href="../reference/mdro.html">mdro()</a></code> and <code><a href="../reference/eucast_rules.html">eucast_rules()</a></code>
 </li>
 <li>Added ATC codes for ceftaroline, ceftobiprole and faropenem and fixed two typos in the <code>antibiotics</code> data set</li>
+<li>More robust way of determining valid MIC values</li>
+</ul>
+</div>
+<div id="other" class="section level3">
+<h3 class="hasAnchor">
+<a href="#other" class="anchor"></a>Other</h3>
+<ul>
+<li>Change dependency on <code>clean</code> to <code>cleaner</code>, as this package was renamed accordingly upon CRAN request</li>
 </ul>
 </div>
 </div>
@@ -286,7 +298,7 @@ For WHONET users, this means that all records/isolates with organism code <code>
 <a class="sourceLine" id="cb2-10" data-line-number="10"><span class="co">#&gt; Warning message:</span></a>
 <a class="sourceLine" id="cb2-11" data-line-number="11"><span class="co">#&gt; invalid microorganism code, NA generated</span></a></code></pre></div>
 This is important, because a value like <code>"testvalue"</code> could never be understood by e.g. <code><a href="../reference/mo_property.html">mo_name()</a></code>, although the class would suggest a valid microbial code.</li>
-<li>Function <code><a href="https://rdrr.io/pkg/clean/man/freq.html">freq()</a></code> has moved to a new package, <a href="https://github.com/msberends/clean"><code>clean</code></a> (<a href="https://cran.r-project.org/package=clean">CRAN link</a>), since creating frequency tables actually does not fit the scope of this package. The <code><a href="https://rdrr.io/pkg/clean/man/freq.html">freq()</a></code> function still works, since it is re-exported from the <code>clean</code> package (which will be installed automatically upon updating this <code>AMR</code> package).</li>
+<li>Function <code><a href="https://rdrr.io/pkg/cleaner/man/freq.html">freq()</a></code> has moved to a new package, <a href="https://github.com/msberends/clean"><code>clean</code></a> (<a href="https://cran.r-project.org/package=clean">CRAN link</a>), since creating frequency tables actually does not fit the scope of this package. The <code><a href="https://rdrr.io/pkg/cleaner/man/freq.html">freq()</a></code> function still works, since it is re-exported from the <code>clean</code> package (which will be installed automatically upon updating this <code>AMR</code> package).</li>
 <li><p>Renamed data set <code>septic_patients</code> to <code>example_isolates</code></p></li>
 </ul>
 </div>
@@ -401,9 +413,9 @@ Since this is a major change, usage of the old <code>also_single_tested</code> w
 </li>
 <li>Added more MIC factor levels (<code><a href="../reference/as.mic.html">as.mic()</a></code>)</li>
 </ul>
-<div id="other" class="section level4">
+<div id="other-1" class="section level4">
 <h4 class="hasAnchor">
-<a href="#other" class="anchor"></a>Other</h4>
+<a href="#other-1" class="anchor"></a>Other</h4>
 <ul>
 <li>Added Prof. Dr. Casper Albers as doctoral advisor and added Dr. Judith Fonville, Eric Hazenberg, Dr. Bart Meijer, Dr. Dennis Souverein and Annick Lenglet as contributors</li>
 <li>Cleaned the coding style of every single syntax line in this package with the help of the <code>lintr</code> package</li>
@@ -484,9 +496,9 @@ Since this is a major change, usage of the old <code>also_single_tested</code> w
 </li>
 </ul>
 </div>
-<div id="other-1" class="section level4">
+<div id="other-2" class="section level4">
 <h4 class="hasAnchor">
-<a href="#other-1" class="anchor"></a>Other</h4>
+<a href="#other-2" class="anchor"></a>Other</h4>
 <ul>
 <li>Fixed a note thrown by CRAN tests</li>
 </ul>
@@ -543,7 +555,7 @@ Please <a href="https://gitlab.com/msberends/AMR/issues/new?issue%5Btitle%5D=Tra
 <li>The <code><a href="../reference/age.html">age()</a></code> function gained a new parameter <code>exact</code> to determine ages with decimals</li>
 <li>Removed deprecated functions <code>guess_mo()</code>, <code>guess_atc()</code>, <code>EUCAST_rules()</code>, <code>interpretive_reading()</code>, <code>rsi()</code>
 </li>
-<li>Frequency tables (<code><a href="https://rdrr.io/pkg/clean/man/freq.html">freq()</a></code>):
+<li>Frequency tables (<code><a href="https://rdrr.io/pkg/cleaner/man/freq.html">freq()</a></code>):
 <ul>
 <li>speed improvement for microbial IDs</li>
 <li>fixed factor level names for R Markdown</li>
@@ -551,12 +563,12 @@ Please <a href="https://gitlab.com/msberends/AMR/issues/new?issue%5Btitle%5D=Tra
 <li>
 <p>support for boxplots:</p>
 <div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" data-line-number="1">septic_patients <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb9-2" data-line-number="2"><span class="st">  </span><span class="kw"><a href="https://rdrr.io/pkg/clean/man/freq.html">freq</a></span>(age) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb9-2" data-line-number="2"><span class="st">  </span><span class="kw"><a href="https://rdrr.io/pkg/cleaner/man/freq.html">freq</a></span>(age) <span class="op">%&gt;%</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb9-3" data-line-number="3"><span class="st">  </span><span class="kw"><a href="https://rdrr.io/r/graphics/boxplot.html">boxplot</a></span>()</a>
 <a class="sourceLine" id="cb9-4" data-line-number="4"><span class="co"># grouped boxplots:</span></a>
 <a class="sourceLine" id="cb9-5" data-line-number="5">septic_patients <span class="op">%&gt;%</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb9-6" data-line-number="6"><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span>(hospital_id) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb9-7" data-line-number="7"><span class="st">  </span><span class="kw"><a href="https://rdrr.io/pkg/clean/man/freq.html">freq</a></span>(age) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb9-7" data-line-number="7"><span class="st">  </span><span class="kw"><a href="https://rdrr.io/pkg/cleaner/man/freq.html">freq</a></span>(age) <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb9-8" data-line-number="8"><span class="st">  </span><span class="kw"><a href="https://rdrr.io/r/graphics/boxplot.html">boxplot</a></span>()</a></code></pre></div>
 </li>
 </ul>
@@ -567,7 +579,7 @@ Please <a href="https://gitlab.com/msberends/AMR/issues/new?issue%5Btitle%5D=EUC
 <li>Added ceftazidim intrinsic resistance to <em>Streptococci</em>
 </li>
 <li>Changed default settings for <code><a href="../reference/age_groups.html">age_groups()</a></code>, to let groups of fives and tens end with 100+ instead of 120+</li>
-<li>Fix for <code><a href="https://rdrr.io/pkg/clean/man/freq.html">freq()</a></code> for when all values are <code>NA</code>
+<li>Fix for <code><a href="https://rdrr.io/pkg/cleaner/man/freq.html">freq()</a></code> for when all values are <code>NA</code>
 </li>
 <li>Fix for <code><a href="../reference/first_isolate.html">first_isolate()</a></code> for when dates are missing</li>
 <li>Improved speed of <code><a href="../reference/guess_ab_col.html">guess_ab_col()</a></code>
@@ -580,9 +592,9 @@ Please <a href="https://gitlab.com/msberends/AMR/issues/new?issue%5Btitle%5D=EUC
 <li><p>Fix for <code><a href="../reference/mo_property.html">mo_shortname()</a></code> where species would not be determined correctly</p></li>
 </ul>
 </div>
-<div id="other-2" class="section level4">
+<div id="other-3" class="section level4">
 <h4 class="hasAnchor">
-<a href="#other-2" class="anchor"></a>Other</h4>
+<a href="#other-3" class="anchor"></a>Other</h4>
 <ul>
 <li>Support for R 3.6.0 and later by providing support for <a href="https://developer.r-project.org/Blog/public/2019/02/14/staged-install/index.html">staged install</a>
 </li>
@@ -789,7 +801,7 @@ Using <code><a href="../reference/as.mo.html">as.mo(..., allow_uncertain = 3)</a
 </li>
 </ul>
 </li>
-<li>Frequency tables (<code><a href="https://rdrr.io/pkg/clean/man/freq.html">freq()</a></code> function):
+<li>Frequency tables (<code><a href="https://rdrr.io/pkg/cleaner/man/freq.html">freq()</a></code> function):
 <ul>
 <li>
 <p>Support for tidyverse quasiquotation! Now you can create frequency tables of function outcomes:</p>
@@ -797,15 +809,15 @@ Using <code><a href="../reference/as.mo.html">as.mo(..., allow_uncertain = 3)</a
 <a class="sourceLine" id="cb19-2" data-line-number="2"><span class="co"># OLD WAY</span></a>
 <a class="sourceLine" id="cb19-3" data-line-number="3">septic_patients <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb19-4" data-line-number="4"><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(<span class="dt">genus =</span> <span class="kw"><a href="../reference/mo_property.html">mo_genus</a></span>(mo)) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb19-5" data-line-number="5"><span class="st">  </span><span class="kw"><a href="https://rdrr.io/pkg/clean/man/freq.html">freq</a></span>(genus)</a>
+<a class="sourceLine" id="cb19-5" data-line-number="5"><span class="st">  </span><span class="kw"><a href="https://rdrr.io/pkg/cleaner/man/freq.html">freq</a></span>(genus)</a>
 <a class="sourceLine" id="cb19-6" data-line-number="6"><span class="co"># NEW WAY</span></a>
 <a class="sourceLine" id="cb19-7" data-line-number="7">septic_patients <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb19-8" data-line-number="8"><span class="st">  </span><span class="kw"><a href="https://rdrr.io/pkg/clean/man/freq.html">freq</a></span>(<span class="kw"><a href="../reference/mo_property.html">mo_genus</a></span>(mo))</a>
+<a class="sourceLine" id="cb19-8" data-line-number="8"><span class="st">  </span><span class="kw"><a href="https://rdrr.io/pkg/cleaner/man/freq.html">freq</a></span>(<span class="kw"><a href="../reference/mo_property.html">mo_genus</a></span>(mo))</a>
 <a class="sourceLine" id="cb19-9" data-line-number="9"></a>
 <a class="sourceLine" id="cb19-10" data-line-number="10"><span class="co"># Even supports grouping variables:</span></a>
 <a class="sourceLine" id="cb19-11" data-line-number="11">septic_patients <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb19-12" data-line-number="12"><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span>(gender) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb19-13" data-line-number="13"><span class="st">  </span><span class="kw"><a href="https://rdrr.io/pkg/clean/man/freq.html">freq</a></span>(<span class="kw"><a href="../reference/mo_property.html">mo_genus</a></span>(mo))</a></code></pre></div>
+<a class="sourceLine" id="cb19-13" data-line-number="13"><span class="st">  </span><span class="kw"><a href="https://rdrr.io/pkg/cleaner/man/freq.html">freq</a></span>(<span class="kw"><a href="../reference/mo_property.html">mo_genus</a></span>(mo))</a></code></pre></div>
 </li>
 <li>Header info is now available as a list, with the <code>header</code> function</li>
 <li>The parameter <code>header</code> is now set to <code>TRUE</code> at default, even for markdown</li>
@@ -828,9 +840,9 @@ Using <code><a href="../reference/as.mo.html">as.mo(..., allow_uncertain = 3)</a
 <li>if using different lengths of pattern and x in <code><a href="../reference/like.html">%like%</a></code>, it will now return the call</li>
 </ul>
 </div>
-<div id="other-3" class="section level4">
+<div id="other-4" class="section level4">
 <h4 class="hasAnchor">
-<a href="#other-3" class="anchor"></a>Other</h4>
+<a href="#other-4" class="anchor"></a>Other</h4>
 <ul>
 <li>Updated licence text to emphasise GPL 2.0 and that this is an R package.</li>
 </ul>
@@ -892,18 +904,18 @@ Using <code><a href="../reference/as.mo.html">as.mo(..., allow_uncertain = 3)</a
 <li>Using <code>portion_*</code> functions now throws a warning when total available isolate is below parameter <code>minimum</code>
 </li>
 <li>Functions <code>as.mo</code>, <code>as.rsi</code>, <code>as.mic</code>, <code>as.atc</code> and <code>freq</code> will not set package name as attribute anymore</li>
-<li>Frequency tables - <code><a href="https://rdrr.io/pkg/clean/man/freq.html">freq()</a></code>:
+<li>Frequency tables - <code><a href="https://rdrr.io/pkg/cleaner/man/freq.html">freq()</a></code>:
 <ul>
 <li>
 <p>Support for grouping variables, test with:</p>
 <div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb21-1" data-line-number="1">septic_patients <span class="op">%&gt;%</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb21-2" data-line-number="2"><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span>(hospital_id) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb21-3" data-line-number="3"><span class="st">  </span><span class="kw"><a href="https://rdrr.io/pkg/clean/man/freq.html">freq</a></span>(gender)</a></code></pre></div>
+<a class="sourceLine" id="cb21-3" data-line-number="3"><span class="st">  </span><span class="kw"><a href="https://rdrr.io/pkg/cleaner/man/freq.html">freq</a></span>(gender)</a></code></pre></div>
 </li>
 <li>
 <p>Support for (un)selecting columns:</p>
 <div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb22-1" data-line-number="1">septic_patients <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb22-2" data-line-number="2"><span class="st">  </span><span class="kw"><a href="https://rdrr.io/pkg/clean/man/freq.html">freq</a></span>(hospital_id) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb22-2" data-line-number="2"><span class="st">  </span><span class="kw"><a href="https://rdrr.io/pkg/cleaner/man/freq.html">freq</a></span>(hospital_id) <span class="op">%&gt;%</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb22-3" data-line-number="3"><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span>(<span class="op">-</span>count, <span class="op">-</span>cum_count) <span class="co"># only get item, percent, cum_percent</span></a></code></pre></div>
 </li>
 <li>Check for <code><a href="https://rdrr.io/pkg/hms/man/Deprecated.html">hms::is.hms</a></code>
@@ -953,9 +965,9 @@ Using <code><a href="../reference/as.mo.html">as.mo(..., allow_uncertain = 3)</a
 <li><p>Percentages will now will rounded more logically (e.g. in <code>freq</code> function)</p></li>
 </ul>
 </div>
-<div id="other-4" class="section level4">
+<div id="other-5" class="section level4">
 <h4 class="hasAnchor">
-<a href="#other-4" class="anchor"></a>Other</h4>
+<a href="#other-5" class="anchor"></a>Other</h4>
 <ul>
 <li>New dependency on package <code>crayon</code>, to support formatted text in the console</li>
 <li>Dependency <code>tidyr</code> is now mandatory (went to <code>Import</code> field) since <code>portion_df</code> and <code>count_df</code> rely on it</li>
@@ -1082,17 +1094,17 @@ Using <code><a href="../reference/as.mo.html">as.mo(..., allow_uncertain = 3)</a
 <li>
 <p>Support for types (classes) list and matrix for <code>freq</code></p>
 <div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb29-1" data-line-number="1">my_matrix =<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/with.html">with</a></span>(septic_patients, <span class="kw"><a href="https://rdrr.io/r/base/matrix.html">matrix</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(age, gender), <span class="dt">ncol =</span> <span class="dv">2</span>))</a>
-<a class="sourceLine" id="cb29-2" data-line-number="2"><span class="kw"><a href="https://rdrr.io/pkg/clean/man/freq.html">freq</a></span>(my_matrix)</a></code></pre></div>
+<a class="sourceLine" id="cb29-2" data-line-number="2"><span class="kw"><a href="https://rdrr.io/pkg/cleaner/man/freq.html">freq</a></span>(my_matrix)</a></code></pre></div>
 <p>For lists, subsetting is possible:</p>
 <div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb30-1" data-line-number="1">my_list =<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="dt">age =</span> septic_patients<span class="op">$</span>age, <span class="dt">gender =</span> septic_patients<span class="op">$</span>gender)</a>
-<a class="sourceLine" id="cb30-2" data-line-number="2">my_list <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/pkg/clean/man/freq.html">freq</a></span>(age)</a>
-<a class="sourceLine" id="cb30-3" data-line-number="3">my_list <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/pkg/clean/man/freq.html">freq</a></span>(gender)</a></code></pre></div>
+<a class="sourceLine" id="cb30-2" data-line-number="2">my_list <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/pkg/cleaner/man/freq.html">freq</a></span>(age)</a>
+<a class="sourceLine" id="cb30-3" data-line-number="3">my_list <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/pkg/cleaner/man/freq.html">freq</a></span>(gender)</a></code></pre></div>
 </li>
 </ul>
 </div>
-<div id="other-5" class="section level4">
+<div id="other-6" class="section level4">
 <h4 class="hasAnchor">
-<a href="#other-5" class="anchor"></a>Other</h4>
+<a href="#other-6" class="anchor"></a>Other</h4>
 <ul>
 <li>More unit tests to ensure better integrity of functions</li>
 </ul>
@@ -1160,13 +1172,13 @@ Using <code><a href="../reference/as.mo.html">as.mo(..., allow_uncertain = 3)</a
 <ul>
 <li>A vignette to explain its usage</li>
 <li>Support for <code>rsi</code> (antimicrobial resistance) to use as input</li>
-<li>Support for <code>table</code> to use as input: <code><a href="https://rdrr.io/pkg/clean/man/freq.html">freq(table(x, y))</a></code>
+<li>Support for <code>table</code> to use as input: <code><a href="https://rdrr.io/pkg/cleaner/man/freq.html">freq(table(x, y))</a></code>
 </li>
 <li>Support for existing functions <code>hist</code> and <code>plot</code> to use a frequency table as input: <code><a href="https://rdrr.io/r/graphics/hist.html">hist(freq(df$age))</a></code>
 </li>
 <li>Support for <code>as.vector</code>, <code>as.data.frame</code>, <code>as_tibble</code> and <code>format</code>
 </li>
-<li>Support for quasiquotation: <code><a href="https://rdrr.io/pkg/clean/man/freq.html">freq(mydata, mycolumn)</a></code> is the same as <code>mydata %&gt;% freq(mycolumn)</code>
+<li>Support for quasiquotation: <code><a href="https://rdrr.io/pkg/cleaner/man/freq.html">freq(mydata, mycolumn)</a></code> is the same as <code>mydata %&gt;% freq(mycolumn)</code>
 </li>
 <li>Function <code>top_freq</code> function to return the top/below <em>n</em> items as vector</li>
 <li>Header of frequency tables now also show Mean Absolute Deviaton (MAD) and Interquartile Range (IQR)</li>
@@ -1219,9 +1231,9 @@ Using <code><a href="../reference/as.mo.html">as.mo(..., allow_uncertain = 3)</a
 <li>Other small fixes</li>
 </ul>
 </div>
-<div id="other-6" class="section level4">
+<div id="other-7" class="section level4">
 <h4 class="hasAnchor">
-<a href="#other-6" class="anchor"></a>Other</h4>
+<a href="#other-7" class="anchor"></a>Other</h4>
 <ul>
 <li>Added integration tests (check if everything works as expected) for all releases of R 3.1 and higher
 <ul>
@@ -1281,9 +1293,9 @@ Using <code><a href="../reference/as.mo.html">as.mo(..., allow_uncertain = 3)</a
 <li>Functions <code>as.rsi</code> and <code>as.mic</code> now add the package name and version as attributes</li>
 </ul>
 </div>
-<div id="other-7" class="section level4">
+<div id="other-8" class="section level4">
 <h4 class="hasAnchor">
-<a href="#other-7" class="anchor"></a>Other</h4>
+<a href="#other-8" class="anchor"></a>Other</h4>
 <ul>
 <li>Expanded <code>README.md</code> with more examples</li>
 <li>Added <a href="https://orcid.org">ORCID</a> of authors to DESCRIPTION file</li>
@@ -1320,7 +1332,7 @@ Using <code><a href="../reference/as.mo.html">as.mo(..., allow_uncertain = 3)</a
     <div id="tocnav">
       <h2>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
-        <li><a href="#amr-0-8-0-9007">0.8.0.9007</a></li>
+        <li><a href="#amr-0-8-0-9008">0.8.0.9008</a></li>
         <li><a href="#amr-0-8-0">0.8.0</a></li>
         <li><a href="#amr-0-7-1">0.7.1</a></li>
         <li><a href="#amr-0-7-0">0.7.0</a></li>

@@ -30,7 +30,6 @@ On our website \url{https://msberends.gitlab.io/AMR} you can find \href{https://
 
 \examples{
 library(dplyr)
-library(clean)
 microorganisms \%>\% freq(kingdom)
 microorganisms \%>\% group_by(kingdom) \%>\% freq(phylum, nmax = NULL)
 }

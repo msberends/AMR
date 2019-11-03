@@ -133,6 +133,7 @@ test_that("mdro works", {
     "S. aureus",  "R",  "R",  "I",  "I",  "I",  "I",  "I",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R"
   )
   expect_equal(as.integer(mdro(stau)), c(1:4))
+  expect_s3_class(mdro(stau, verbose = TRUE), "data.frame")
   
   ente <- tribble(
     ~mo,            ~GEH, ~STH, ~IPM, ~MEM, ~DOR, ~CIP, ~LVX, ~MFX, ~VAN, ~TEC, ~TGC, ~DAP, ~LNZ, ~AMP, ~QDA, ~DOX, ~MNO,
@@ -142,6 +143,7 @@ test_that("mdro works", {
     "Enterococcus",  "R",  "R",  "I",  "I",  "I",  "I",  "I",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R"
   )
   expect_equal(as.integer(mdro(ente)), c(1:4))
+  expect_s3_class(mdro(ente, verbose = TRUE), "data.frame")
   
   entero <- tribble(
     ~mo,       ~GEN, ~TOB, ~AMK, ~NET, ~CPT, ~TCC, ~TZP, ~ETP, ~IPM, ~MEM, ~DOR, ~CZO, ~CXM, ~CTX, ~CAZ, ~FEP, ~FOX, ~CTT, ~CIP, ~SXT, ~TGC, ~ATM, ~AMP, ~AMC, ~SAM, ~CHL, ~FOS, ~COL, ~TCY, ~DOX, ~MNO,
@@ -151,6 +153,7 @@ test_that("mdro works", {
     "E. coli",  "R",  "R",  "I",  "I",  "I",  "I",  "I",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R"
   )
   expect_equal(as.integer(mdro(entero)), c(1:4))
+  expect_s3_class(mdro(entero, verbose = TRUE), "data.frame")
   
   pseud <- tribble(
     ~mo,             ~GEN, ~TOB, ~AMK, ~NET, ~IPM, ~MEM, ~DOR, ~CAZ, ~FEP, ~CIP, ~LVX, ~TCC, ~TZP, ~ATM, ~FOS, ~COL, ~PLB,
@@ -160,6 +163,7 @@ test_that("mdro works", {
     "P. aeruginosa",  "R",  "R",  "I",  "I",  "I",  "I",  "I",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R"
   )
   expect_equal(as.integer(mdro(pseud)), c(1:4))
+  expect_s3_class(mdro(pseud, verbose = TRUE), "data.frame")
   
   acin <- tribble(
     ~mo,            ~GEN, ~TOB, ~AMK, ~NET, ~IPM, ~MEM, ~DOR, ~CIP, ~LVX, ~TZP, ~TCC, ~CTX, ~CRO, ~CAZ, ~FEP, ~SXT, ~SAM, ~COL, ~PLB, ~TCY, ~DOX, ~MNO,
@@ -169,5 +173,6 @@ test_that("mdro works", {
     "A. baumannii",  "R",  "R",  "I",  "I",  "I",  "I",  "I",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R"
   )
   expect_equal(as.integer(mdro(acin)), c(1:4))
+  expect_s3_class(mdro(acin, verbose = TRUE), "data.frame")
   
 })

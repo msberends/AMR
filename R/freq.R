@@ -19,14 +19,13 @@
 # Visit our website for more info: https://msberends.gitlab.io/AMR.    #
 # ==================================================================== #
 
-#' @importFrom clean freq
+#' @importFrom cleaner freq
 #' @export
-clean::freq
+cleaner::freq
 
 #' @exportMethod freq.mo
 #' @importFrom dplyr n_distinct
-#' @importFrom clean freq.default
-# @importFrom clean percentage
+#' @importFrom cleaner freq.default percentage
 #' @export
 #' @noRd
 freq.mo <- function(x, ...) {
@@ -53,7 +52,7 @@ freq.mo <- function(x, ...) {
 }
 
 #' @exportMethod freq.rsi
-#' @importFrom clean freq.default
+#' @importFrom cleaner freq.default
 #' @export
 #' @noRd
 freq.rsi <- function(x, ...) {

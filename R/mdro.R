@@ -22,13 +22,16 @@
 #' Determine multidrug-resistant organisms (MDRO)
 #'
 #' Determine which isolates are multidrug-resistant organisms (MDRO) according to (country-specific) guidelines.
-#' @param x table with antibiotic columns, like e.g. \code{AMX} and \code{AMC}
 #' @param guideline a specific guideline to follow. When left empty, the publication by Magiorakos \emph{et al.} (2012, Clinical Microbiology and Infection) will be followed, see Details.
 #' @param info print progress
 #' @inheritParams eucast_rules
 #' @param verbose print additional info: missing antibiotic columns per parameter
+#' @param pct_required_classes minimal required percentage of antimicrobial classes that must be available per isolate, rounded down. For example, with the default guideline, 17 antimicrobial classes must be available for \emph{S. aureus}. Setting this \code{pct_required_classes} argument to \code{0.5} (default) means that for every \emph{S. aureus} isolate at least 8 different classes must be available. Any lower number of available classes will return \code{NA} for that isolate.
+#' @param verbose a logical to turn Verbose mode on and off (default is off). In Verbose mode, the function does not return the MDRO results, but instead returns a data set in logbook form with extensive info about which isolates would be MDRO-positive, or why they are not.
 #' @inheritSection eucast_rules Antibiotics
-#' @details Currently supported guidelines are (case-insensitive):
+#' @details 
+#' For the \code{pct_required_classes} argument, values above 1 will be divided by 100. This is to support both fractions (\code{0.75} or \code{3/4}) and percentages (\code{75}).
+#' Currently supported guidelines are (case-insensitive):
 #' \itemize{
 #'   \item{\code{guideline = "CMI2012"}: Magiorakos AP, Srinivasan A \emph{et al.} "Multidrug-resistant, extensively drug-resistant and pandrug-resistant bacteria: an international expert proposal for interim standard definitions for acquired resistance." Clinical Microbiology and Infection (2012) (\href{https://www.clinicalmicrobiologyandinfection.com/article/S1198-743X(14)61632-3/fulltext}{link})}
 #'   \item{\code{guideline = "EUCAST"}: The European international guideline - EUCAST Expert Rules Version 3.1 "Intrinsic Resistance and Exceptional Phenotypes Tables" (\href{http://www.eucast.org/fileadmin/src/media/PDFs/EUCAST_files/Expert_Rules/Expert_rules_intrinsic_exceptional_V3.1.pdf}{link})}
@@ -38,6 +41,7 @@
 #' }
 #'
 #' Please suggest your own (country-specific) guidelines by letting us know: \url{https://gitlab.com/msberends/AMR/issues/new}.
+#' 
 #' @return \itemize{
 #'   \item{CMI 2012 paper - function \code{mdr_cmi2012()} or \code{mdro()}:\cr Ordered factor with levels \code{Negative < Multi-drug-resistant (MDR) < Extensively drug-resistant (XDR) < Pandrug-resistant (PDR)}}
 #'   \item{TB guideline - function \code{mdr_tb()} or \code{mdro(..., guideline = "TB")}:\cr Ordered factor with levels \code{Negative < Mono-resistant < Poly-resistant < Multi-drug-resistant < Extensively drug-resistant}}
@@ -47,6 +51,7 @@
 #' @rdname mdro
 #' @importFrom dplyr %>% filter_all
 #' @importFrom crayon blue bold italic
+#' @importFrom cleaner percentage
 #' @export
 #' @inheritSection AMR Read more on our website!
 #' @source
@@ -54,13 +59,13 @@
 #' @examples
 #' library(dplyr)
 #' 
-#' example_isolates %>% 
-#'   mdro() %>% 
+#' example_isolates %>%
+#'   mdro() %>%
 #'   freq()
 #'   
 #' \donttest{
 #' example_isolates %>%
-#'   mutate(EUCAST = mdro(.),
+#'   mutate(EUCAST = eucast_exceptional_phenotypes(.),
 #'          BRMO = brmo(.),
 #'          MRGN = mrgn(.))
 #'          
@@ -74,13 +79,35 @@ mdro <- function(x,
                  col_mo = NULL,
                  info = TRUE,
                  verbose = FALSE,
+                 pct_required_classes = 0.5,
                  ...) {
-
+  
+  if (verbose == TRUE & interactive()) {
+    txt <- paste0("WARNING: In Verbose mode, the mdro() function does not return the MDRO results, but instead returns a data set in logbook form with extensive info about which isolates would be MDRO-positive, or why they are not.",
+                  "\n\nThis may overwrite your existing data if you use e.g.:",
+                  "\ndata <- mdro(data, verbose = TRUE)\n\nDo you want to continue?")
+    if ("rstudioapi" %in% rownames(utils::installed.packages())) {
+      q_continue <- rstudioapi::showQuestion("Using verbose = TRUE with mdro()", txt)
+    } else {
+      q_continue <- menu(choices = c("OK", "Cancel"), graphics = TRUE, title = txt)
+    }
+    if (q_continue %in% c(FALSE, 2)) {
+      message("Cancelled, returning original data")
+      return(x)
+    }
+  }
+  
   if (!is.data.frame(x)) {
     stop("`x` must be a data frame.", call. = FALSE)
   }
-
-
+  if (!is.numeric(pct_required_classes)) {
+    stop("`pct_required_classes` must be numeric.", call. = FALSE)
+  }
+  if (pct_required_classes > 1) {
+    # allow pct_required_classes = 75 -> pct_required_classes = 0.75
+    pct_required_classes <- pct_required_classes / 100
+  }
+  
   if (!is.null(list(...)$country)) {
     warning("Using `country` is deprecated, use `guideline` instead. Please see ?mdro.", call. = FALSE)
     guideline <- list(...)$country
@@ -88,7 +115,7 @@ mdro <- function(x,
   if (length(guideline) > 1) {
     stop("`guideline` must be a length one character string.", call. = FALSE)
   }
-
+  
   if (is.null(guideline)) {
     # default to the paper by Magiorakos et al. (2012)
     guideline <- "cmi2012"
@@ -103,7 +130,7 @@ mdro <- function(x,
     stop("invalid guideline: ", guideline, call. = FALSE)
   }
   guideline <- list(code = tolower(guideline))
-
+  
   # try to find columns based on type
   # -- mo
   if (is.null(col_mo)) {
@@ -118,7 +145,7 @@ mdro <- function(x,
   if (is.null(col_mo)) {
     stop("`col_mo` must be set.", call. = FALSE)
   }
-
+  
   if (guideline$code == "cmi2012") {
     guideline$name <- "Multidrug-resistant, extensively drug-resistant and pandrug-resistant bacteria: an international expert proposal for interim standard definitions for acquired resistance."
     guideline$author <- "Magiorakos AP, Srinivasan A, Carey RB, ..., Vatopoulos A, Weber JT, Monnet DL"
@@ -130,13 +157,13 @@ mdro <- function(x,
     guideline$author <- "EUCAST (European Committee on Antimicrobial Susceptibility Testing)"
     guideline$version <- "3.1"
     guideline$source <- "http://www.eucast.org/fileadmin/src/media/PDFs/EUCAST_files/Expert_Rules/Expert_rules_intrinsic_exceptional_V3.1.pdf"
-
+    
   } else if (guideline$code == "tb") {
     guideline$name <- "Companion handbook to the WHO guidelines for the programmatic management of drug-resistant tuberculosis"
     guideline$author <- "WHO (World Health Organization)"
     guideline$version <- "WHO/HTM/TB/2014.11"
     guideline$source <- "https://www.who.int/tb/publications/pmdt_companionhandbook/en/"
-
+    
     # support per country:
   } else if (guideline$code == "mrgn") {
     guideline$name <- "Cross-border comparison of the Dutch and German guidelines on multidrug-resistant Gram-negative microorganisms"
@@ -152,7 +179,7 @@ mdro <- function(x,
   } else {
     stop("This guideline is currently unsupported: ", guideline$code, call. = FALSE)
   }
-
+  
   if (guideline$code == "cmi2012") {
     cols_ab <- get_column_abx(x = x,
                               soft_dependencies = c(
@@ -270,7 +297,7 @@ mdro <- function(x,
                                 "TCY",
                                 "DOX",
                                 "MNO"
-                                ),
+                              ),
                               verbose = verbose, ...)
   } else if (guideline$code == "tb") {
     cols_ab <- get_column_abx(x = x,
@@ -295,7 +322,7 @@ mdro <- function(x,
   } else {
     cols_ab <- get_column_abx(x = x, verbose = verbose, ...)
   }
-
+  
   AMC <- cols_ab["AMC"]
   AMK <- cols_ab["AMK"]
   AMP <- cols_ab["AMP"]
@@ -391,21 +418,23 @@ mdro <- function(x,
         bold("Source:    "), guideline$source, "\n",
         "\n", sep = "")
   }
-
+  
   ab_missing <- function(ab) {
     isTRUE(ab %in% c(NULL, NA)) | length(ab) == 0
   }
   ab_NA <- function(x) {
     x[!is.na(x)]
   }
-
+  
+  verbose_df <- NULL
+  
   # antibiotic classes
   aminoglycosides <- c(TOB, GEN)
   cephalosporins <- c(FEP, CTX, FOX, CED, CAZ, CRO, CXM, CZO)
   cephalosporins_3rd <- c(CTX, CRO, CAZ)
   carbapenems <- c(ETP, IPM, MEM)
   fluoroquinolones <- c(OFX, CIP, LVX, MFX)
-
+  
   # helper function for editing the table
   trans_tbl <- function(to, rows, cols, any_all) {
     cols <- cols[!ab_missing(cols)]
@@ -421,41 +450,41 @@ mdro <- function(x,
       }
       rows <- rows[rows %in% row_filter]
       x[rows, "MDRO"] <<- to
+      x[rows, "reason"] <<- paste0(any_all, " of these ", ifelse(any_all == "any", "is", "are"), " R: ",
+                                   paste(cols, collapse = ", "))
     }
   }
   trans_tbl2 <- function(txt, rows, lst) {
     if (info == TRUE) {
       message(blue(txt, "..."), appendLF = FALSE)
     }
-    # function specific for the CMI paper of 2012 (Magiorakos et al.)
-    lst_vector <- unlist(lst)[!is.na(unlist(lst))]
-    x$total_groups <- NA_integer_
-    x$affected_groups <- NA_integer_
-    x[rows, "total_groups"] <- length(lst)
-    # now the hard part - using two sapply()s for super fast results:
-    # [1] run through all `rows` with sapply()
-    # [2] within each row, run through all antibiotic groups with another sapply()
-    # [3] determine for each antibiotic group in that row if at least 1 drug is R of I 
-    # [4] sum the number of TRUEs of this determination
-    x[rows, "affected_groups"] <- sapply(rows, 
-                                         function(row, group_tbl = lst) {
-                                           sum(sapply(group_tbl, 
-                                                      function(group) {
-                                                        any(x[row, group[!is.na(group)]] == "R") | 
-                                                          any(x[row, group[!is.na(group)]] == "I") 
-                                                      }),
-                                               na.rm = TRUE) 
-                                         })
-    # now set MDROs: 
-    # MDR (=2): >=3 groups affected
-    x[which(x$row_number %in% rows & x$affected_groups >= 3), "MDRO"] <<- 2
-    # XDR (=3): all but <=2 groups affected
-    x[which(x$row_number %in% rows & (x$total_groups - x$affected_groups) <= 2), "MDRO"] <<- 3
-    # PDR (=4): all agents are R 
-    x[filter_at(x[rows, ], 
-                vars(lst_vector),
-                all_vars(. %in% c("R", "I")))$row_number,
-      "MDRO"] <<- 4
+    if (length(rows) > 0) {
+      # function specific for the CMI paper of 2012 (Magiorakos et al.)
+      lst_vector <- unlist(lst)[!is.na(unlist(lst))]
+      x[rows, "classes_in_guideline"] <<- length(lst)
+      x[rows, "classes_available"] <<- sapply(rows, 
+                                             function(row, group_tbl = lst) {
+                                               sum(sapply(group_tbl, function(group) !all(is.na(group))))
+                                             })
+      # now the hard part - using two sapply()s for super fast results:
+      # [1] run through all `rows` with sapply()
+      # [2] within each row, run through all antibiotic classes with another sapply()
+      # [3] determine for each antibiotic group in that row if at least 1 drug is R of I 
+      # [4] sum the number of TRUEs of this determination
+      x[rows, "classes_affected"] <<- sapply(rows, 
+                                            function(row, group_tbl = lst) {
+                                              sum(sapply(group_tbl, 
+                                                         function(group) {
+                                                           any(x[row, group[!is.na(group)]] == "R") | 
+                                                             any(x[row, group[!is.na(group)]] == "I") 
+                                                         }),
+                                                  na.rm = TRUE) 
+                                            })
+      x[filter_at(x[rows,],
+                  vars(lst_vector),
+                  all_vars(. %in% c("R", "I")))$row_number, "classes_affected"] <<- 999
+    }
+    
     if (info == TRUE) {
       message(blue(" OK"))
     }
@@ -465,9 +494,10 @@ mdro <- function(x,
     mutate_at(vars(col_mo), as.mo) %>%
     # join to microorganisms data set
     left_join_microorganisms(by = col_mo) %>%
-    # add unconfirmed to where genus is available
+    # add unavailable to where genus is available
     mutate(MDRO = ifelse(!is.na(genus), 1, NA_integer_),
-           row_number = seq_len(nrow(.))) %>% 
+           row_number = seq_len(nrow(.)),
+           reason = paste0("not covered by ", toupper(guideline$code), " guideline")) %>% 
     # transform to data.frame so subsetting is possible with x[y, z] (might not be the case with tibble/data.table/...)
     as.data.frame(stringsAsFactors = FALSE)
   
@@ -475,19 +505,34 @@ mdro <- function(x,
     # CMI, 2012 ---------------------------------------------------------------
     # Non-susceptible = R and I
     # (see header 'Approaches to Creating Definitions for MDR, XDR and PDR' in paper)
-
+    
     # take amoxicillin if ampicillin is unavailable
-    if (is.na(AMP) & !is.na(AMX)) AMP <- AMX
+    if (is.na(AMP) & !is.na(AMX)) {
+      if (verbose == TRUE) {
+        message(blue("NOTE: Filling ampicillin (AMP) results with amoxicillin (AMX) results"))
+      }
+      AMP <- AMX
+    }
     # take ceftriaxone if cefotaxime is unavailable and vice versa
-    if (is.na(CRO) & !is.na(CTX)) CRO <- CTX
-    if (is.na(CTX) & !is.na(CRO)) CTX <- CRO
+    if (is.na(CRO) & !is.na(CTX)) {
+      if (verbose == TRUE) {
+        message(blue("NOTE: Filling ceftriaxone (CRO) results with cefotaxime (CTX) results"))
+      }
+      CRO <- CTX
+    }
+    if (is.na(CTX) & !is.na(CRO)) {
+      if (verbose == TRUE) {
+        message(blue("NOTE: Filling cefotaxime (CTX) results with ceftriaxone (CRO) results"))
+      }
+      CTX <- CRO
+    }
     
     # intrinsic resistant must not be considered for the determination of MDR,
     # so let's just remove them, meticulously following the paper
     x[which(x$genus == "Enterococcus" & x$species == "faecium"), ab_NA(IPM)] <- NA
     x[which(x$genus == "Enterococcus" & x$species == "faecalis"), ab_NA(QDA)] <- NA
     x[which((x$genus == "Providencia" & x$species == "rettgeri")
-             | (x$genus == "Providencia" & x$species == "stuartii")), ab_NA(c(GEN, TOB, NET))] <- NA
+            | (x$genus == "Providencia" & x$species == "stuartii")), ab_NA(c(GEN, TOB, NET))] <- NA
     x[which(x$genus == "Escherichia" & x$species == "hermannii"), ab_NA(c(TCC, TZP))] <- NA
     x[which((x$genus == "Citrobacter" & x$species == "freundii")
             | (x$genus == "Enterobacter" & x$species == "aerogenes")
@@ -554,6 +599,10 @@ mdro <- function(x,
             | (x$genus == "Providencia" & x$species == "rettgeri")
             | (x$genus == "Providencia" & x$species == "stuartii")), ab_NA(c(DOX, MNO))] <- NA
     
+    x$classes_in_guideline <- NA_integer_
+    x$classes_available <- NA_integer_
+    x$classes_affected <- NA_integer_
+    
     # now add the MDR levels to the data
     trans_tbl(2,
               which(x$genus == "Staphylococcus" & x$species == "aureus"),
@@ -592,7 +641,7 @@ mdro <- function(x,
                     QDA,
                     c(DOX, MNO)))
     trans_tbl2(paste0("Table 3 - ", italic("Enterobacteriaceae"), 
-                     " (before the taxonomic reclassification by Adeolu ", italic("et al."), ", 2016)"),
+                      " (before the taxonomic reclassification by Adeolu ", italic("et al."), ", 2016)"),
                # this new order was previously 'Enterobacteriales' and contained only the family 'Enterobacteriaceae':
                which(x$order == "Enterobacterales"),
                list(c(GEN, TOB, AMK, NET),
@@ -634,6 +683,37 @@ mdro <- function(x,
                     SAM,
                     c(COL, PLB),
                     c(TCY, DOX, MNO)))
+    
+    # now set MDROs: 
+    # MDR (=2): >=3 classes affected
+    x[which(x$classes_affected >= 3), "MDRO"] <- 2
+    if (verbose == TRUE) {
+      x[which(x$classes_affected >= 3), "reason"] <- paste0("at least 3 classes contain R or I: ", x$classes_affected[which(x$classes_affected >= 3)],
+                                                            " out of ", x$classes_available[which(x$classes_affected >= 3)], " available classes")
+    }
+    # XDR (=3): all but <=2 classes affected
+    x[which((x$classes_in_guideline - x$classes_affected) <= 2), "MDRO"] <- 3
+    if (verbose == TRUE) {
+      x[which((x$classes_in_guideline - x$classes_affected) <= 2), "reason"] <- paste0("less than 3 classes remain susceptible (", x$classes_in_guideline[which((x$classes_in_guideline - x$classes_affected) <= 2)] - x$classes_affected[which((x$classes_in_guideline - x$classes_affected) <= 2)],
+                                                                                       " out of ", x$classes_in_guideline[which((x$classes_in_guideline - x$classes_affected) <= 2)], " classes)")
+    }
+    # PDR (=4): all agents are R 
+    x[which(x$classes_affected == 999 & x$classes_in_guideline == x$classes_available), "MDRO"] <- 4
+    if (verbose == TRUE) {
+      x[which(x$classes_affected == 999 & x$classes_in_guideline == x$classes_available), "reason"] <- paste("all antibiotics in all", x$classes_in_guideline[which(x$classes_affected == 999 & x$classes_in_guideline == x$classes_available)], "classes were tested R or I")
+    }
+    
+    # not enough classes available
+    x[which(x$classes_available < base::floor(x$classes_in_guideline * pct_required_classes)), "MDRO"] <- -1
+    if (verbose == TRUE) {
+      x[which(x$classes_available < base::floor(x$classes_in_guideline * pct_required_classes)), "reason"] <- paste0("not enough classes available: ", x$classes_available[which(x$classes_available < base::floor(x$classes_in_guideline * pct_required_classes))], 
+                                                                                                                     " instead of ", (base::floor(x$classes_in_guideline * pct_required_classes))[which(x$classes_available < base::floor(x$classes_in_guideline * pct_required_classes))], 
+                                                                                                                     " (~", percentage(pct_required_classes), " of ", x$classes_in_guideline[which(x$classes_available < base::floor(x$classes_in_guideline * pct_required_classes))], ")")
+    }
+    # some more info on negative results
+    if (verbose == TRUE) {
+      x[which(x$MDRO == 1 & !is.na(x$classes_affected)), "reason"] <- paste0(x$classes_affected[which(x$MDRO == 1 & !is.na(x$classes_affected))], " of ", x$classes_available[which(x$MDRO == 1 & !is.na(x$classes_affected))], " available classes contain R or I (3 required for MDR)")
+    }
   }
   
   if (guideline$code == "eucast") {
@@ -693,14 +773,14 @@ mdro <- function(x,
     # Table 7
     trans_tbl(3,
               which(x$genus == "Bacteroides"),
-               MTR,
+              MTR,
               "any")
     trans_tbl(3,
               which(x$fullname %like% "^Clostridium difficile"),
               c(MTR, VAN),
               "any")
   }
-
+  
   if (guideline$code == "mrgn") {
     # Germany -----------------------------------------------------------------
     CTX_or_CAZ <- CTX %or% CAZ
@@ -715,7 +795,7 @@ mdro <- function(x,
     
     # Table 1
     x[which((x$order == "Enterobacterales" |  # following in fact the old Enterobacteriaceae classification
-              x$fullname %like% "^Acinetobacter baumannii") &
+               x$fullname %like% "^Acinetobacter baumannii") &
               x[, PIP] == "R" &
               x[, CTX_or_CAZ] == "R" &
               x[, IPM_or_MEM] == "S" &
@@ -749,7 +829,7 @@ mdro <- function(x,
               x[, CIP] == "R"),
       "MDRO"] <- 3 # 3 = 4MRGN
   }
-
+  
   if (guideline$code == "brmo") {
     # Netherlands -------------------------------------------------------------
     aminoglycosides <- aminoglycosides[!is.na(aminoglycosides)]
@@ -762,23 +842,23 @@ mdro <- function(x,
     if (length(ESBLs) != 2) {
       ESBLs <- character(0)
     }
-
+    
     # Table 1
     trans_tbl(3,
               which(x$order == "Enterobacterales"), # following in fact the old Enterobacteriaceae classification
               c(aminoglycosides, fluoroquinolones),
               "all")
-
+    
     trans_tbl(2,
               which(x$order == "Enterobacterales"), # following in fact the old Enterobacteriaceae classification
               carbapenems,
               "any")
-
+    
     trans_tbl(2,
               which(x$order == "Enterobacterales"), # following in fact the old Enterobacteriaceae classification
               ESBLs,
               "all")
-
+    
     # Table 2
     trans_tbl(2,
               which(x$genus == "Acinetobacter"),
@@ -788,12 +868,12 @@ mdro <- function(x,
               which(x$genus == "Acinetobacter"),
               c(aminoglycosides, fluoroquinolones),
               "all")
-
+    
     trans_tbl(3,
               which(x$fullname %like% "^Stenotrophomonas maltophilia"),
               SXT,
               "all")
-
+    
     if (!ab_missing(MEM) & !ab_missing(IPM)
         & !ab_missing(GEN) & !ab_missing(TOB)
         & !ab_missing(CIP)
@@ -812,7 +892,7 @@ mdro <- function(x,
       x$fullname %like% "Pseudomonas aeruginosa"
       & x$psae >= 3
     ), "MDRO"] <- 3
-
+    
     # Table 3
     trans_tbl(3,
               which(x$fullname %like% "Streptococcus pneumoniae"),
@@ -827,7 +907,7 @@ mdro <- function(x,
               c(PEN, VAN),
               "all")
   }
-
+  
   prepare_drug <- function(ab) {
     # returns vector values of drug
     # if `ab` is a column name, looks up the values in `x`
@@ -858,7 +938,7 @@ mdro <- function(x,
       ab != "R"
     }
   }
-
+  
   if (guideline$code == "tb") {
     # Tuberculosis ------------------------------------------------------------
     x <- x %>%
@@ -881,43 +961,59 @@ mdro <- function(x,
                              TRUE, FALSE),
              xdr = ifelse(mdr & xdr & second, TRUE, FALSE)) %>%
       mutate(MDRO = case_when(xdr ~ 5,
-                                mdr ~ 4,
-                                poly ~ 3,
-                                mono ~ 2,
-                                TRUE ~ 1),
+                              mdr ~ 4,
+                              poly ~ 3,
+                              mono ~ 2,
+                              TRUE ~ 1),
              # keep all real TB, make other species NA
              MDRO = ifelse(x$fullname == "Mycobacterium tuberculosis", MDRO, NA_real_))
   }
   
   if (info == TRUE) {
     cat(bold(paste0("=> Found ", sum(x$MDRO %in% c(2:5), na.rm = TRUE), " MDROs out of ", sum(!is.na(x$MDRO)), 
-                    " possible cases (", percentage(sum(x$MDRO %in% c(2:5), na.rm = TRUE) / sum(!is.na(x$MDRO))), ")")))
+                    " tested isolates (", percentage(sum(x$MDRO %in% c(2:5), na.rm = TRUE) / sum(!is.na(x$MDRO))), ")\n")))
   }
-
-  # return results
+  
+  # Results ----
   if (guideline$code == "cmi2012") {
-    factor(x =  x$MDRO,
-           levels = 1:4,
-           labels = c("Negative", "Multi-drug-resistant (MDR)", 
-                      "Extensively drug-resistant (XDR)", "Pandrug-resistant (PDR)"),
-           ordered = TRUE)
+    if (any(x$MDRO == -1)) {
+      warning("NA introduced for isolates where the available percentage of antimicrobial classes was below ",
+              percentage(pct_required_classes), " (set with `pct_required_classes`)")
+      # set these -1s to NA
+      x[which(x$MDRO == -1), "MDRO"] <- NA_integer_
+    }
+    x$MDRO <- factor(x = x$MDRO,
+                     levels = 1:4,
+                     labels = c("Negative", "Multi-drug-resistant (MDR)", 
+                                "Extensively drug-resistant (XDR)", "Pandrug-resistant (PDR)"),
+                     ordered = TRUE)
   } else if (guideline$code == "tb") {
-    factor(x =  x$MDRO,
-           levels = 1:5,
-           labels = c("Negative", "Mono-resistant", "Poly-resistant", 
-                      "Multi-drug-resistant", "Extensively drug-resistant"),
-           ordered = TRUE)
+    x$MDRO <- factor(x = x$MDRO,
+                     levels = 1:5,
+                     labels = c("Negative", "Mono-resistant", "Poly-resistant", 
+                                "Multi-drug-resistant", "Extensively drug-resistant"),
+                     ordered = TRUE)
   } else if (guideline$code == "mrgn") {
-    factor(x =  x$MDRO,
-           levels = 1:3,
-           labels = c("Negative", "3MRGN", "4MRGN"),
-           ordered = TRUE)
+    x$MDRO <- factor(x = x$MDRO,
+                     levels = 1:3,
+                     labels = c("Negative", "3MRGN", "4MRGN"),
+                     ordered = TRUE)
   } else {
-    factor(x =  x$MDRO,
-           levels = 1:3,
-           labels = c("Negative", "Positive, unconfirmed", "Positive"),
-           ordered = TRUE)
+    x$MDRO <- factor(x = x$MDRO,
+                     levels = 1:3,
+                     labels = c("Negative", "Positive, unconfirmed", "Positive"),
+                     ordered = TRUE)
   }
+  
+  if (verbose == TRUE) {
+    x[, c("row_number",
+          col_mo,
+          "MDRO",
+          "reason")]
+  } else {
+    x$MDRO
+  }
+  
 }
 
 #' @rdname mdro

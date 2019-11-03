@@ -73,8 +73,6 @@
 #'
 #' plot(rsi_data)    # for percentages
 #' barplot(rsi_data) # for frequencies
-#' 
-#' library(clean)
 #' freq(rsi_data)    # frequency table with informative header
 #'
 #' # using dplyr's mutate

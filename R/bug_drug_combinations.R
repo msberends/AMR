@@ -33,7 +33,6 @@
 #' @inheritParams base::formatC
 #' @importFrom dplyr %>% rename group_by select mutate filter summarise ungroup
 #' @importFrom tidyr spread
-# @importFrom clean freq percentage
 #' @details The function \code{format} calculates the resistance per bug-drug combination. Use \code{combine_IR = FALSE} (default) to test R vs. S+I and \code{combine_IR = TRUE} to test R+I vs. S. 
 #' 
 #' The language of the output can be overwritten with \code{options(AMR_locale)}, please see \link{translate}.
@@ -95,6 +94,7 @@ bug_drug_combinations <- function(x,
 
 #' @importFrom dplyr everything rename %>% ungroup group_by summarise mutate_all arrange everything lag
 #' @importFrom tidyr spread
+#' @importFrom cleaner percentage
 #' @exportMethod format.bug_drug_combinations
 #' @export
 #' @rdname bug_drug_combinations

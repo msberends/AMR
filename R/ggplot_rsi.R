@@ -337,7 +337,7 @@ facet_rsi <- function(facet = c("interpretation", "antibiotic"), nrow = NULL) {
 }
 
 #' @rdname ggplot_rsi
-# @importFrom clean percentage
+#' @importFrom cleaner percentage
 #' @export
 scale_y_percent <- function(breaks = seq(0, 1, 0.1), limits = NULL) {
   stopifnot_installed_package("ggplot2")
@@ -387,7 +387,7 @@ theme_rsi <- function() {
 
 #' @rdname ggplot_rsi
 #' @importFrom dplyr mutate %>% group_by_at
-# @importFrom clean percentage
+#' @importFrom cleaner percentage
 #' @export
 labels_rsi_count <- function(position = NULL,
                              x = "antibiotic",

@@ -23,7 +23,11 @@ install_if_needed <- function(pkg, repos, quiet) {
   package_path <- find.package(pkg, quiet = quiet)
   if (length(package_path) == 0) {
     message("NOTE: pkg ", pkg, " missing, installing...")
-    install.packages(pkg, repos = repos, quiet = quiet)
+    if (pkg == "cleaner") {
+      devtools::install_github("msberends/cleaner")
+    } else {
+      install.packages(pkg, repos = repos, quiet = quiet)
+    }
   }
 }
 
@@ -41,6 +45,7 @@ gl_update_pkg_all <- function(repos = "https://cran.rstudio.com",
   if (install_lintr == TRUE) {
     install_if_needed(pkg = "lintr", repos = repos, quiet = quiet)
   }
+  install_if_needed(pkg = "cleaner", repos = repos, quiet = quiet)
   
   devtools::install_dev_deps(repos = repos, quiet = quiet, upgrade = TRUE)
 

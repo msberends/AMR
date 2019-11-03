@@ -13,7 +13,7 @@ Please see Details for the list of publications used for this function.
 }
 \usage{
 mdro(x, guideline = NULL, col_mo = NULL, info = TRUE,
-  verbose = FALSE, ...)
+  verbose = FALSE, pct_required_classes = 0.5, ...)
 
 brmo(x, guideline = "BRMO", ...)
 
@@ -26,7 +26,7 @@ mdr_cmi2012(x, guideline = "CMI2012", ...)
 eucast_exceptional_phenotypes(x, guideline = "EUCAST", ...)
 }
 \arguments{
-\item{x}{table with antibiotic columns, like e.g. \code{AMX} and \code{AMC}}
+\item{x}{data with antibiotic columns, like e.g. \code{AMX} and \code{AMC}}
 
 \item{guideline}{a specific guideline to follow. When left empty, the publication by Magiorakos \emph{et al.} (2012, Clinical Microbiology and Infection) will be followed, see Details.}
 
@@ -36,7 +36,11 @@ eucast_exceptional_phenotypes(x, guideline = "EUCAST", ...)
 
 \item{verbose}{print additional info: missing antibiotic columns per parameter}
 
+\item{pct_required_classes}{minimal required percentage of antimicrobial classes that must be available per isolate, rounded down. For example, with the default guideline, 17 antimicrobial classes must be available for \emph{S. aureus}. Setting this \code{pct_required_classes} argument to \code{0.5} (default) means that for every \emph{S. aureus} isolate at least 8 different classes must be available. Any lower number of available classes will return \code{NA} for that isolate.}
+
 \item{...}{column name of an antibiotic, see section Antibiotics}
+
+\item{verbose}{a logical to turn Verbose mode on and off (default is off). In Verbose mode, the function does not return the MDRO results, but instead returns a data set in logbook form with extensive info about which isolates would be MDRO-positive, or why they are not.}
 }
 \value{
 \itemize{
@@ -50,6 +54,7 @@ eucast_exceptional_phenotypes(x, guideline = "EUCAST", ...)
 Determine which isolates are multidrug-resistant organisms (MDRO) according to (country-specific) guidelines.
 }
 \details{
+For the \code{pct_required_classes} argument, values above 1 will be divided by 100. This is to support both fractions (\code{0.75} or \code{3/4}) and percentages (\code{75}).
 Currently supported guidelines are (case-insensitive):
 \itemize{
   \item{\code{guideline = "CMI2012"}: Magiorakos AP, Srinivasan A \emph{et al.} "Multidrug-resistant, extensively drug-resistant and pandrug-resistant bacteria: an international expert proposal for interim standard definitions for acquired resistance." Clinical Microbiology and Infection (2012) (\href{https://www.clinicalmicrobiologyandinfection.com/article/S1198-743X(14)61632-3/fulltext}{link})}
@@ -156,13 +161,13 @@ On our website \url{https://msberends.gitlab.io/AMR} you can find \href{https://
 \examples{
 library(dplyr)
 
-example_isolates \%>\% 
-  mdro() \%>\% 
+example_isolates \%>\%
+  mdro() \%>\%
   freq()
   
 \donttest{
 example_isolates \%>\%
-  mutate(EUCAST = mdro(.),
+  mutate(EUCAST = eucast_exceptional_phenotypes(.),
          BRMO = brmo(.),
          MRGN = mrgn(.))
          
