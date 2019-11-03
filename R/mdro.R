@@ -25,7 +25,6 @@
 #' @param guideline a specific guideline to follow. When left empty, the publication by Magiorakos \emph{et al.} (2012, Clinical Microbiology and Infection) will be followed, see Details.
 #' @param info print progress
 #' @inheritParams eucast_rules
-#' @param verbose print additional info: missing antibiotic columns per parameter
 #' @param pct_required_classes minimal required percentage of antimicrobial classes that must be available per isolate, rounded down. For example, with the default guideline, 17 antimicrobial classes must be available for \emph{S. aureus}. Setting this \code{pct_required_classes} argument to \code{0.5} (default) means that for every \emph{S. aureus} isolate at least 8 different classes must be available. Any lower number of available classes will return \code{NA} for that isolate.
 #' @param verbose a logical to turn Verbose mode on and off (default is off). In Verbose mode, the function does not return the MDRO results, but instead returns a data set in logbook form with extensive info about which isolates would be MDRO-positive, or why they are not.
 #' @inheritSection eucast_rules Antibiotics

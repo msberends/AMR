@@ -60,6 +60,7 @@ age_groups(ages, "children")
 # same:
 age_groups(ages, c(1, 2, 4, 6, 13, 17))
 
+\dontrun{
 # resistance of ciprofloxacine per age group
 library(dplyr)
 example_isolates \%>\%
@@ -68,6 +69,7 @@ example_isolates \%>\%
   group_by(age_group = age_groups(age)) \%>\%
   select(age_group, CIP) \%>\%
   ggplot_rsi(x = "age_group")
+}
 }
 \seealso{
 To determine ages, based on one or more reference dates, use the \code{\link{age}} function.

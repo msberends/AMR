@@ -133,6 +133,7 @@ age <- function(x, reference = Sys.Date(), exact = FALSE, na.rm = FALSE) {
 #' # same:
 #' age_groups(ages, c(1, 2, 4, 6, 13, 17))
 #'
+#' \dontrun{
 #' # resistance of ciprofloxacine per age group
 #' library(dplyr)
 #' example_isolates %>%
@@ -141,6 +142,7 @@ age <- function(x, reference = Sys.Date(), exact = FALSE, na.rm = FALSE) {
 #'   group_by(age_group = age_groups(age)) %>%
 #'   select(age_group, CIP) %>%
 #'   ggplot_rsi(x = "age_group")
+#' }
 age_groups <- function(x, split_at = c(12, 25, 55, 75), na.rm = FALSE) {
   if (!is.numeric(x)) {
     stop("`x` and must be numeric, not a ", paste0(class(x), collapse = "/"), ".")

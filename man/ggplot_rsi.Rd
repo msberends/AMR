@@ -148,6 +148,8 @@ example_isolates \%>\%
 example_isolates \%>\%
   select(AMX) \%>\%
   ggplot_rsi(colours = c(SI = "yellow"))
+  
+\dontrun{
 
 # resistance of ciprofloxacine per age group
 example_isolates \%>\%
@@ -159,8 +161,7 @@ example_isolates \%>\%
   select(age_group,
          CIP) \%>\%
   ggplot_rsi(x = "age_group")
-\donttest{
-
+  
 # for colourblind mode, use divergent colours from the viridis package:
 example_isolates \%>\%
   select(AMX, NIT, FOS, TMP, CIP) \%>\%

@@ -85,7 +85,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">0.8.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">0.8.0.9009</span>
       </span>
     </div>
 
@@ -415,6 +415,8 @@
   <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='no'>AMX</span>) <span class='kw'>%&gt;%</span>
   <span class='fu'>ggplot_rsi</span>(<span class='kw'>colours</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='kw'>SI</span> <span class='kw'>=</span> <span class='st'>"yellow"</span>))
 
+<span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
+
 <span class='co'># resistance of ciprofloxacine per age group</span>
 <span class='no'>example_isolates</span> <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span>(<span class='kw'>first_isolate</span> <span class='kw'>=</span> <span class='fu'><a href='first_isolate.html'>first_isolate</a></span>(<span class='no'>.</span>)) <span class='kw'>%&gt;%</span>
@@ -425,7 +427,6 @@
   <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='no'>age_group</span>,
          <span class='no'>CIP</span>) <span class='kw'>%&gt;%</span>
   <span class='fu'>ggplot_rsi</span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='st'>"age_group"</span>)
-<span class='co'># \donttest{</span>
 
 <span class='co'># for colourblind mode, use divergent colours from the viridis package:</span>
 <span class='no'>example_isolates</span> <span class='kw'>%&gt;%</span>
@@ -453,7 +454,7 @@
   <span class='co'># create new bacterial ID's, with all CoNS under the same group (Becker et al.)</span>
   <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span>(<span class='kw'>mo</span> <span class='kw'>=</span> <span class='fu'><a href='as.mo.html'>as.mo</a></span>(<span class='no'>mo</span>, <span class='kw'>Becker</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)) <span class='kw'>%&gt;%</span>
   <span class='co'># filter on top three bacterial ID's</span>
-  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span>(<span class='no'>mo</span> <span class='kw'>%in%</span> <span class='fu'>top_freq</span>(<span class='fu'><a href='https://rdrr.io/pkg/clean/man/freq.html'>freq</a></span>(<span class='no'>.</span>$<span class='no'>mo</span>), <span class='fl'>3</span>)) <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span>(<span class='no'>mo</span> <span class='kw'>%in%</span> <span class='fu'>top_freq</span>(<span class='fu'><a href='https://rdrr.io/pkg/cleaner/man/freq.html'>freq</a></span>(<span class='no'>.</span>$<span class='no'>mo</span>), <span class='fl'>3</span>)) <span class='kw'>%&gt;%</span>
   <span class='co'># filter on first isolates</span>
   <span class='fu'><a href='first_isolate.html'>filter_first_isolate</a></span>() <span class='kw'>%&gt;%</span>
   <span class='co'># get short MO names (like "E. coli")</span>
@@ -471,7 +472,7 @@
              <span class='kw'>subtitle</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/expression.html'>expression</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste</a></span>(<span class='st'>"Only First Isolates, CoNS grouped according to Becker "</span>,
                                          <span class='fu'><a href='https://rdrr.io/r/grDevices/plotmath.html'>italic</a></span>(<span class='st'>"et al."</span>), <span class='st'>" (2014)"</span>)),
              <span class='kw'>x.title</span> <span class='kw'>=</span> <span class='st'>"Antibiotic (EARS-Net code)"</span>)
-<span class='co'># }</span></pre>
+}</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
