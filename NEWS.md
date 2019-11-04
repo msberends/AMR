@@ -1,5 +1,5 @@
-# AMR 0.8.0.9009
-<small>Last updated: 03-Nov-2019</small>
+# AMR 0.8.0.9010
+<small>Last updated: 04-Nov-2019</small>
 
 ### New
 * Support for a new MDRO guideline: Magiorakos AP, Srinivasan A *et al.* "Multidrug-resistant, extensively drug-resistant and pandrug-resistant bacteria: an international expert proposal for interim standard definitions for acquired resistance." Clinical Microbiology and Infection (2012).
@@ -18,6 +18,7 @@
 
 ### Other
 * Change dependency on `clean` to `cleaner`, as this package was renamed accordingly upon CRAN request
+* Added Dr. Sofia Ny as contributor
 
 # AMR 0.8.0
 

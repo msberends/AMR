@@ -87,6 +87,7 @@ $( document ).ready(function() {
       x = x.replace("Corinna", "Dr. Corinna");
       // others
       x = x.replace("Bart", "Dr. Bart");
+      x = x.replace("Sofia", "Dr. Sofia");
       x = x.replace("Dennis", "Dr. Dennis");
       x = x.replace("Judith", "Dr. Judith");
     }

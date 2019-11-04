@@ -48,7 +48,7 @@
 #'   \item{Everything else:\cr Ordered factor with levels \code{Negative < Positive, unconfirmed < Positive}. The value \code{"Positive, unconfirmed"} means that, according to the guideline, it is not entirely sure if the isolate is multi-drug resistant and this should be confirmed with additional (e.g. molecular) tests}
 #' }
 #' @rdname mdro
-#' @importFrom dplyr %>% filter_all
+#' @importFrom dplyr %>% filter_at vars all_vars pull
 #' @importFrom crayon blue bold italic
 #' @importFrom cleaner percentage
 #' @export
@@ -474,8 +474,8 @@ mdro <- function(x,
                                             function(row, group_tbl = lst) {
                                               sum(sapply(group_tbl, 
                                                          function(group) {
-                                                           any(x[row, group[!is.na(group)]] == "R") | 
-                                                             any(x[row, group[!is.na(group)]] == "I") 
+                                                           any(x[row, group[!is.na(group)]] == "R", na.rm = TRUE) | 
+                                                             any(x[row, group[!is.na(group)]] == "I", na.rm = TRUE) 
                                                          }),
                                                   na.rm = TRUE) 
                                             })
@@ -975,7 +975,7 @@ mdro <- function(x,
   
   # Results ----
   if (guideline$code == "cmi2012") {
-    if (any(x$MDRO == -1)) {
+    if (any(x$MDRO == -1, na.rm = TRUE)) {
       warning("NA introduced for isolates where the available percentage of antimicrobial classes was below ",
               percentage(pct_required_classes), " (set with `pct_required_classes`)")
       # set these -1s to NA
