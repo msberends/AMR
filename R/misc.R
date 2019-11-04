@@ -36,11 +36,17 @@ search_type_in_df <- function(x, type) {
   found <- NULL
 
   colnames(x) <- trimws(colnames(x))
-
+  
   # -- mo
   if (type == "mo") {
     if ("mo" %in% lapply(x, class)) {
       found <- colnames(x)[lapply(x, class) == "mo"][1]
+    } else if ("mo" %in% colnames(x) &
+               suppressWarnings(
+                 all(x$mo %in% c(NA,
+                                 microorganisms$mo,
+                                 microorganisms.translation$mo_old)))) {
+      found <- "mo"
     } else if (any(colnames(x) %like% "^(mo|microorganism|organism|bacteria|bacterie)s?$")) {
       found <- colnames(x)[colnames(x) %like% "^(mo|microorganism|organism|bacteria|bacterie)s?$"][1]
     } else if (any(colnames(x) %like% "^(microorganism|organism|bacteria|bacterie)")) {
@@ -48,7 +54,7 @@ search_type_in_df <- function(x, type) {
     } else if (any(colnames(x) %like% "species")) {
       found <- colnames(x)[colnames(x) %like% "species"][1]
     }
-
+    
   }
   # -- key antibiotics
   if (type == "keyantibiotics") {
