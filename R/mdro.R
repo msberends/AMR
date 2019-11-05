@@ -298,8 +298,7 @@ mdro <- function(x,
                                 "PLB",
                                 "TCY",
                                 "DOX",
-                                "MNO"
-                              ),
+                                "MNO"),
                               verbose = verbose, ...)
   } else if (guideline$code == "tb") {
     cols_ab <- get_column_abx(x = x,
@@ -442,7 +441,6 @@ mdro <- function(x,
     cols <- cols[!ab_missing(cols)]
     cols <- cols[!is.na(cols)]
     if (length(rows) > 0 & length(cols) > 0) {
-      #print(cols)
       x <<- x %>% mutate_at(vars(cols), as.rsi)
       x[rows, "columns_nonsusceptible"] <<- sapply(rows, 
                                                    function(row, group_vct = cols) {
@@ -905,8 +903,7 @@ mdro <- function(x,
     }
     x[which(
       x$fullname %like% "Pseudomonas aeruginosa"
-      & x$psae >= 3
-    ), "MDRO"] <- 3
+      & x$psae >= 3), "MDRO"] <- 3
     
     # Table 3
     trans_tbl(3,
@@ -990,7 +987,7 @@ mdro <- function(x,
   }
   
   # some more info on negative results
-  if (verbose == TRUE ) {
+  if (verbose == TRUE) {
     if (guideline$code == "cmi2012") {
         x[which(x$MDRO == 1 & !is.na(x$classes_affected)), "reason"] <- paste0(x$classes_affected[which(x$MDRO == 1 & !is.na(x$classes_affected))], " of ", x$classes_available[which(x$MDRO == 1 & !is.na(x$classes_affected))], " available classes contain R or I (3 required for MDR)")
     } else {
