@@ -30,6 +30,7 @@
 #' @inheritSection eucast_rules Antibiotics
 #' @details 
 #' For the \code{pct_required_classes} argument, values above 1 will be divided by 100. This is to support both fractions (\code{0.75} or \code{3/4}) and percentages (\code{75}).
+#' 
 #' Currently supported guidelines are (case-insensitive):
 #' \itemize{
 #'   \item{\code{guideline = "CMI2012"}: Magiorakos AP, Srinivasan A \emph{et al.} "Multidrug-resistant, extensively drug-resistant and pandrug-resistant bacteria: an international expert proposal for interim standard definitions for acquired resistance." Clinical Microbiology and Infection (2012) (\href{https://www.clinicalmicrobiologyandinfection.com/article/S1198-743X(14)61632-3/fulltext}{link})}
@@ -40,6 +41,8 @@
 #' }
 #'
 #' Please suggest your own (country-specific) guidelines by letting us know: \url{https://gitlab.com/msberends/AMR/issues/new}.
+#' 
+#' \strong{Note:} Every test that involves the Enterobacteriaceae family, will internally be performed using its newly named order Enterobacterales, since the Enterobacteriaceae family has been taxonomically reclassified by Adeolu \emph{et al.} in 2016. Before that, Enterobacteriaceae was the only family under the Enterobacteriales (with an i) order. All species under the old Enterobacteriaceae family are still under the new Enterobacterales (without an i) order, but divided into multiple families. The way tests are performed now by this \code{mdro()} function makes sure that results from before 2016 and after 2016 are identical.
 #' 
 #' @return \itemize{
 #'   \item{CMI 2012 paper - function \code{mdr_cmi2012()} or \code{mdro()}:\cr Ordered factor with levels \code{Negative < Multi-drug-resistant (MDR) < Extensively drug-resistant (XDR) < Pandrug-resistant (PDR)}}
@@ -652,8 +655,7 @@ mdro <- function(x,
                     AMP,
                     QDA,
                     c(DOX, MNO)))
-    trans_tbl2(paste0("Table 3 - ", italic("Enterobacteriaceae"), 
-                      " (before the taxonomic reclassification by Adeolu ", italic("et al."), ", 2016)"),
+    trans_tbl2(paste0("Table 3 - ", italic("Enterobacteriaceae")),
                # this new order was previously 'Enterobacteriales' and contained only the family 'Enterobacteriaceae':
                which(x$order == "Enterobacterales"),
                list(c(GEN, TOB, AMK, NET),

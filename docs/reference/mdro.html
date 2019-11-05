@@ -85,7 +85,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">0.8.0.9009</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">0.8.0.9013</span>
       </span>
     </div>
 
@@ -298,8 +298,8 @@
 
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>For the <code>pct_required_classes</code> argument, values above 1 will be divided by 100. This is to support both fractions (<code>0.75</code> or <code>3/4</code>) and percentages (<code>75</code>).
-Currently supported guidelines are (case-insensitive):</p><ul>
+    <p>For the <code>pct_required_classes</code> argument, values above 1 will be divided by 100. This is to support both fractions (<code>0.75</code> or <code>3/4</code>) and percentages (<code>75</code>).</p>
+<p>Currently supported guidelines are (case-insensitive):</p><ul>
 <li><p><code>guideline = "CMI2012"</code>: Magiorakos AP, Srinivasan A <em>et al.</em> "Multidrug-resistant, extensively drug-resistant and pandrug-resistant bacteria: an international expert proposal for interim standard definitions for acquired resistance." Clinical Microbiology and Infection (2012) (<a href='https://www.clinicalmicrobiologyandinfection.com/article/S1198-743X(14)61632-3/fulltext'>link</a>)</p></li>
 <li><p><code>guideline = "EUCAST"</code>: The European international guideline - EUCAST Expert Rules Version 3.1 "Intrinsic Resistance and Exceptional Phenotypes Tables" (<a href='http://www.eucast.org/fileadmin/src/media/PDFs/EUCAST_files/Expert_Rules/Expert_rules_intrinsic_exceptional_V3.1.pdf'>link</a>)</p></li>
 <li><p><code>guideline = "TB"</code>: The international guideline for multi-drug resistant tuberculosis - World Health Organization "Companion handbook to the WHO guidelines for the programmatic management of drug-resistant tuberculosis" (<a href='https://www.who.int/tb/publications/pmdt_companionhandbook/en/'>link</a>)</p></li>
@@ -308,6 +308,7 @@ Currently supported guidelines are (case-insensitive):</p><ul>
 </ul>
 
 <p>Please suggest your own (country-specific) guidelines by letting us know: <a href='https://gitlab.com/msberends/AMR/issues/new'>https://gitlab.com/msberends/AMR/issues/new</a>.</p>
+<p><strong>Note:</strong> Every test that involves the Enterobacteriaceae family, will internally be performed using its newly named order Enterobacterales, since the Enterobacteriaceae family has been taxonomically reclassified by Adeolu <em>et al.</em> in 2016. Before that, Enterobacteriaceae was the only family under the Enterobacteriales (with an i) order. All species under the old Enterobacteriaceae family are still under the new Enterobacterales (without an i) order, but divided into multiple families. The way tests are performed now by this <code>mdro()</code> function makes sure that results from before 2016 and after 2016 are identical.</p>
     <h2 class="hasAnchor" id="antibiotics"><a class="anchor" href="#antibiotics"></a>Antibiotics</h2>
 
     

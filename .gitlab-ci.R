@@ -23,11 +23,7 @@ install_if_needed <- function(pkg, repos, quiet) {
   package_path <- find.package(pkg, quiet = quiet)
   if (length(package_path) == 0) {
     message("NOTE: pkg ", pkg, " missing, installing...")
-    if (pkg == "cleaner") {
-      devtools::install_github("msberends/cleaner")
-    } else {
-      install.packages(pkg, repos = repos, quiet = quiet)
-    }
+    install.packages(pkg, repos = repos, quiet = quiet)
   }
 }
 

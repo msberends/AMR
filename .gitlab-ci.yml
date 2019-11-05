@@ -117,7 +117,8 @@ coverage:
   script:
     - apt-get install --yes git
     # codecov token is set in https://gitlab.com/msberends/AMR/settings/ci_cd
-    - Rscript -e "Sys.setenv(NOT_CRAN = 'true'); cc <- covr::package_coverage(); covr::codecov(coverage = cc, token = '$codecov'); cat('Code coverage:', covr::percent_coverage(cc))"
+    # Sys.setenv(NOT_CRAN = 'true'), because otherwise skip_on_cran() will be applied on Covr too, resulting in extremely low coverage percentages
+    - Rscript -e "Sys.setenv(NOT_CRAN = 'true'); cc <- covr::package_coverage(line_exclusions = list('R/atc_online.R', 'R/mo_history.R', 'R/mo_source.R', 'R/resistance_predict.R')); covr::codecov(coverage = cc, token = '$codecov'); cat('Code coverage:', covr::percent_coverage(cc))"
   coverage: '/Code coverage: \d+\.\d+/'
 
 pages:

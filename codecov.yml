@@ -17,5 +17,6 @@ coverage:
 
 ignore:
   - "R/atc_online.R"
+  - "R/mo_history.R"
   - "R/mo_source.R"
-  - "R/resistance_predict.R"
+  - "R/resistance_predict.R" # gives a strange error but unit tests work
