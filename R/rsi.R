@@ -99,6 +99,12 @@ as.rsi.default <- function(x, ...) {
     x
   } else if (identical(levels(x), c("S", "I", "R"))) {
     structure(x, class = c("rsi", "ordered", "factor"))
+  } else if (identical(class(x), "integer") & all(x %in% c(1:3, NA))) {
+    x[x == 1] <- "S"
+    x[x == 2] <- "I"
+    x[x == 3] <- "R"
+    structure(.Data = factor(x, levels = c("S", "I", "R"), ordered = TRUE),
+              class =  c("rsi", "ordered", "factor"))
   } else {
     
     x <- x %>% unlist()

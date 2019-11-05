@@ -48,7 +48,7 @@
 #'   \item{Everything else:\cr Ordered factor with levels \code{Negative < Positive, unconfirmed < Positive}. The value \code{"Positive, unconfirmed"} means that, according to the guideline, it is not entirely sure if the isolate is multi-drug resistant and this should be confirmed with additional (e.g. molecular) tests}
 #' }
 #' @rdname mdro
-#' @importFrom dplyr %>% filter_at vars all_vars pull
+#' @importFrom dplyr %>% filter_at vars all_vars pull mutate_at
 #' @importFrom crayon blue bold italic
 #' @importFrom cleaner percentage
 #' @export
@@ -439,6 +439,15 @@ mdro <- function(x,
     cols <- cols[!ab_missing(cols)]
     cols <- cols[!is.na(cols)]
     if (length(rows) > 0 & length(cols) > 0) {
+      #print(cols)
+      x <<- x %>% mutate_at(vars(cols), as.rsi)
+      x[rows, "columns_nonsusceptible"] <<- sapply(rows, 
+                                                   function(row, group_vct = cols) {
+                                                     cols_nonsus <- sapply(x[row, group_vct, drop = FALSE], function(y) y == "R")
+                                                     paste(sort(c(unlist(strsplit(x[row, "columns_nonsusceptible", drop = TRUE], ", ")),
+                                                                  names(cols_nonsus)[cols_nonsus])), 
+                                                           collapse = ", ")
+                                                   })
       if (any_all == "any") {
         row_filter <- which(x[, cols] == "R")
       } else if (any_all == "all") {
@@ -449,8 +458,7 @@ mdro <- function(x,
       }
       rows <- rows[rows %in% row_filter]
       x[rows, "MDRO"] <<- to
-      x[rows, "reason"] <<- paste0(any_all, " of these ", ifelse(any_all == "any", "is", "are"), " R: ",
-                                   paste(cols, collapse = ", "))
+      x[rows, "reason"] <<- paste0(any_all, " of the required antibiotics ", ifelse(any_all == "any", "is", "are"), " R")
     }
   }
   trans_tbl2 <- function(txt, rows, lst) {
@@ -460,16 +468,20 @@ mdro <- function(x,
     if (length(rows) > 0) {
       # function specific for the CMI paper of 2012 (Magiorakos et al.)
       lst_vector <- unlist(lst)[!is.na(unlist(lst))]
+      x <<- x %>% mutate_at(vars(lst_vector), as.rsi)
       x[rows, "classes_in_guideline"] <<- length(lst)
       x[rows, "classes_available"] <<- sapply(rows, 
-                                             function(row, group_tbl = lst) {
-                                               sum(sapply(group_tbl, function(group) !all(is.na(group))))
-                                             })
-      # now the hard part - using two sapply()s for super fast results:
-      # [1] run through all `rows` with sapply()
-      # [2] within each row, run through all antibiotic classes with another sapply()
-      # [3] determine for each antibiotic group in that row if at least 1 drug is R of I 
-      # [4] sum the number of TRUEs of this determination
+                                              function(row, group_tbl = lst) {
+                                                sum(sapply(group_tbl, function(group) any(unlist(x[row, group[!is.na(group)], drop = TRUE]) %in% c("S", "I", "R"))))
+                                              })
+      
+      if (verbose == TRUE) {
+        x[rows, "columns_nonsusceptible"] <<- sapply(rows, 
+                                                      function(row, group_vct = lst_vector) {
+                                                        cols_nonsus <- sapply(x[row, group_vct, drop = FALSE], function(y) y %in% c("I", "R"))
+                                                        paste(sort(names(cols_nonsus)[cols_nonsus]), collapse = ", ")
+                                                      })
+      }
       x[rows, "classes_affected"] <<- sapply(rows, 
                                             function(row, group_tbl = lst) {
                                               sum(sapply(group_tbl, 
@@ -479,7 +491,7 @@ mdro <- function(x,
                                                          }),
                                                   na.rm = TRUE) 
                                             })
-      x[filter_at(x[rows,],
+      x[filter_at(x[rows, ],
                   vars(lst_vector),
                   all_vars(. %in% c("R", "I")))$row_number, "classes_affected"] <<- 999
     }
@@ -496,7 +508,8 @@ mdro <- function(x,
     # add unavailable to where genus is available
     mutate(MDRO = ifelse(!is.na(genus), 1, NA_integer_),
            row_number = seq_len(nrow(.)),
-           reason = paste0("not covered by ", toupper(guideline$code), " guideline")) %>% 
+           reason = paste0("not covered by ", toupper(guideline$code), " guideline"),
+           columns_nonsusceptible = "") %>% 
     # transform to data.frame so subsetting is possible with x[y, z] (might not be the case with tibble/data.table/...)
     as.data.frame(stringsAsFactors = FALSE)
   
@@ -690,29 +703,30 @@ mdro <- function(x,
       x[which(x$classes_affected >= 3), "reason"] <- paste0("at least 3 classes contain R or I: ", x$classes_affected[which(x$classes_affected >= 3)],
                                                             " out of ", x$classes_available[which(x$classes_affected >= 3)], " available classes")
     }
+    
     # XDR (=3): all but <=2 classes affected
     x[which((x$classes_in_guideline - x$classes_affected) <= 2), "MDRO"] <- 3
     if (verbose == TRUE) {
-      x[which((x$classes_in_guideline - x$classes_affected) <= 2), "reason"] <- paste0("less than 3 classes remain susceptible (", x$classes_in_guideline[which((x$classes_in_guideline - x$classes_affected) <= 2)] - x$classes_affected[which((x$classes_in_guideline - x$classes_affected) <= 2)],
-                                                                                       " out of ", x$classes_in_guideline[which((x$classes_in_guideline - x$classes_affected) <= 2)], " classes)")
+      x[which(x$MDRO == 3), "reason"] <- paste0("less than 3 classes remain susceptible (", x$classes_in_guideline[which((x$classes_in_guideline - x$classes_affected) <= 2)] - x$classes_affected[which(x$MDRO == 3)],
+                                                                                       " out of ", x$classes_in_guideline[which(x$MDRO == 3)], " classes)")
     }
+    
     # PDR (=4): all agents are R 
     x[which(x$classes_affected == 999 & x$classes_in_guideline == x$classes_available), "MDRO"] <- 4
     if (verbose == TRUE) {
-      x[which(x$classes_affected == 999 & x$classes_in_guideline == x$classes_available), "reason"] <- paste("all antibiotics in all", x$classes_in_guideline[which(x$classes_affected == 999 & x$classes_in_guideline == x$classes_available)], "classes were tested R or I")
+      x[which(x$MDRO == 4), "reason"] <- paste("all antibiotics in all", x$classes_in_guideline[which(x$MDRO == 4)], "classes were tested R or I")
     }
     
     # not enough classes available
-    x[which(x$classes_available < base::floor(x$classes_in_guideline * pct_required_classes)), "MDRO"] <- -1
+    x[which(x$MDRO %in% c(1, 3) & x$classes_available < base::floor(x$classes_in_guideline * pct_required_classes)), "MDRO"] <- -1
     if (verbose == TRUE) {
-      x[which(x$classes_available < base::floor(x$classes_in_guideline * pct_required_classes)), "reason"] <- paste0("not enough classes available: ", x$classes_available[which(x$classes_available < base::floor(x$classes_in_guideline * pct_required_classes))], 
-                                                                                                                     " instead of ", (base::floor(x$classes_in_guideline * pct_required_classes))[which(x$classes_available < base::floor(x$classes_in_guideline * pct_required_classes))], 
-                                                                                                                     " (~", percentage(pct_required_classes), " of ", x$classes_in_guideline[which(x$classes_available < base::floor(x$classes_in_guideline * pct_required_classes))], ")")
+      x[which(x$MDRO == -1), "reason"] <- paste0("not enough classes available: ", x$classes_available[which(x$MDRO == -1)], 
+                                                 " of required ", (base::floor(x$classes_in_guideline * pct_required_classes))[which(x$MDRO == -1)], 
+                                                 " (~", percentage(pct_required_classes), " of ", x$classes_in_guideline[which(x$MDRO == -1)], ")")
     }
-    # some more info on negative results
-    if (verbose == TRUE) {
-      x[which(x$MDRO == 1 & !is.na(x$classes_affected)), "reason"] <- paste0(x$classes_affected[which(x$MDRO == 1 & !is.na(x$classes_affected))], " of ", x$classes_available[which(x$MDRO == 1 & !is.na(x$classes_affected))], " available classes contain R or I (3 required for MDR)")
-    }
+    
+    # add antibiotic names of resistant ones to verbose output
+    
   }
   
   if (guideline$code == "eucast") {
@@ -973,6 +987,15 @@ mdro <- function(x,
                     " tested isolates (", percentage(sum(x$MDRO %in% c(2:5), na.rm = TRUE) / sum(!is.na(x$MDRO))), ")\n")))
   }
   
+  # some more info on negative results
+  if (verbose == TRUE ) {
+    if (guideline$code == "cmi2012") {
+        x[which(x$MDRO == 1 & !is.na(x$classes_affected)), "reason"] <- paste0(x$classes_affected[which(x$MDRO == 1 & !is.na(x$classes_affected))], " of ", x$classes_available[which(x$MDRO == 1 & !is.na(x$classes_affected))], " available classes contain R or I (3 required for MDR)")
+    } else {
+      x[which(x$MDRO == 1), "reason"] <- "too few antibiotics are R"
+    }
+  }
+  
   # Results ----
   if (guideline$code == "cmi2012") {
     if (any(x$MDRO == -1, na.rm = TRUE)) {
@@ -1008,7 +1031,9 @@ mdro <- function(x,
     x[, c("row_number",
           col_mo,
           "MDRO",
-          "reason")]
+          "reason",
+          "columns_nonsusceptible")]
+    #x
   } else {
     x$MDRO
   }

@@ -32,7 +32,7 @@ test_that("mdro works", {
   expect_error(mdro(example_isolates, guideline = c("BRMO", "MRGN"), info = TRUE))
   expect_error(mdro(example_isolates, col_mo = "invalid", info = TRUE))
 
-  outcome <- mdro(example_isolates)
+  outcome <- suppressWarnings(mdro(example_isolates))
   outcome <- eucast_exceptional_phenotypes(example_isolates, info = TRUE)
   # check class
   expect_equal(outcome %>% class(), c("ordered", "factor"))

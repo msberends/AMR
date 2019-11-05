@@ -1,10 +1,10 @@
-# AMR 0.8.0.9011
-<small>Last updated: 04-Nov-2019</small>
+# AMR 0.8.0.9012
+<small>Last updated: 05-Nov-2019</small>
 
 ### New
 * Support for a new MDRO guideline: Magiorakos AP, Srinivasan A *et al.* "Multidrug-resistant, extensively drug-resistant and pandrug-resistant bacteria: an international expert proposal for interim standard definitions for acquired resistance." Clinical Microbiology and Infection (2012).
   * This is now the new default guideline for the `mdro()` function
-  * The new Verbose mode (`mdro(...., verbose = TRUE)`) returns an informative data set where the reason for MDRO determination is given for every isolate
+  * The new Verbose mode (`mdro(...., verbose = TRUE)`) returns an informative data set where the reason for MDRO determination is given for every isolate, and an list of the resistant antimicrobial agents
 
 ### Changes
 * When running `as.rsi()` over a data set, it will now print the guideline that will be used if it is not specified by the user
