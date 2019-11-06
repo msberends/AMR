@@ -130,7 +130,7 @@ test_that("mdro works", {
     "S. aureus",  "R",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",
     "S. aureus",  "R",  "R",  "R",  "R",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",
     "S. aureus",  "S",  "S",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",
-    "S. aureus",  "R",  "R",  "I",  "I",  "I",  "I",  "I",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R"
+    "S. aureus",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R"
   )
   expect_equal(as.integer(mdro(stau)), c(1:4))
   expect_s3_class(mdro(stau, verbose = TRUE), "data.frame")
@@ -140,7 +140,7 @@ test_that("mdro works", {
     "Enterococcus",  "R",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",
     "Enterococcus",  "R",  "R",  "R",  "R",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",
     "Enterococcus",  "S",  "S",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",
-    "Enterococcus",  "R",  "R",  "I",  "I",  "I",  "I",  "I",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R"
+    "Enterococcus",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R"
   )
   expect_equal(as.integer(mdro(ente)), c(1:4))
   expect_s3_class(mdro(ente, verbose = TRUE), "data.frame")
@@ -150,7 +150,7 @@ test_that("mdro works", {
     "E. coli",  "R",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",
     "E. coli",  "R",  "R",  "R",  "R",  "R",  "R",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",
     "E. coli",  "S",  "S",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",
-    "E. coli",  "R",  "R",  "I",  "I",  "I",  "I",  "I",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R"
+    "E. coli",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R"
   )
   expect_equal(as.integer(mdro(entero)), c(1:4))
   expect_s3_class(mdro(entero, verbose = TRUE), "data.frame")
@@ -160,7 +160,7 @@ test_that("mdro works", {
     "P. aeruginosa",  "R",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",
     "P. aeruginosa",  "R",  "S",  "S",  "S",  "R",  "S",  "S",  "S",  "R",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",
     "P. aeruginosa",  "S",  "S",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",
-    "P. aeruginosa",  "R",  "R",  "I",  "I",  "I",  "I",  "I",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R"
+    "P. aeruginosa",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R"
   )
   expect_equal(as.integer(mdro(pseud)), c(1:4))
   expect_s3_class(mdro(pseud, verbose = TRUE), "data.frame")
@@ -170,7 +170,7 @@ test_that("mdro works", {
     "A. baumannii",  "R",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",
     "A. baumannii",  "R",  "R",  "R",  "R",  "S",  "R",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "R",  "S",  "S",  "S",  "S",  "S",  "S",  "S",
     "A. baumannii",  "S",  "S",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",
-    "A. baumannii",  "R",  "R",  "I",  "I",  "I",  "I",  "I",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R"
+    "A. baumannii",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R"
   )
   expect_equal(as.integer(mdro(acin)), c(1:4))
   expect_s3_class(mdro(acin, verbose = TRUE), "data.frame")
