@@ -2,6 +2,7 @@
 % Please edit documentation in R/mic.R
 \name{as.mic}
 \alias{as.mic}
+\alias{MIC}
 \alias{is.mic}
 \title{Class 'mic'}
 \usage{
@@ -52,4 +53,3 @@ freq(mic_data)
 \seealso{
 \code{\link{as.rsi}}
 }
-\keyword{mic}

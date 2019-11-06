@@ -79,7 +79,6 @@
 #'
 #' Wickham H. \strong{Tidy Data.} The Journal of Statistical Software, vol. 59, 2014. \url{http://vita.had.co.nz/papers/tidy-data.html}
 #' @seealso \code{\link[AMR]{count}_*} to count resistant and susceptible isolates.
-#' @keywords resistance susceptibility rsi_df rsi antibiotics isolate isolates
 #' @return Double or, when \code{as_percent = TRUE}, a character.
 #' @rdname portion
 #' @name portion

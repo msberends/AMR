@@ -2,6 +2,7 @@
 % Please edit documentation in R/rsi.R
 \name{as.rsi}
 \alias{as.rsi}
+\alias{RSI}
 \alias{as.rsi.mic}
 \alias{as.rsi.disk}
 \alias{as.rsi.data.frame}
@@ -52,7 +53,7 @@ The function \code{is.rsi.eligible} returns \code{TRUE} when a columns contains 
 }
 \section{Interpretation of S, I and R}{
 
-In 2019, EUCAST has decided to change the definitions of susceptibility testing categories S, I and R as shown below (\url{http://www.eucast.org/newsiandr/}). Results of several consultations on the new definitions are available on the EUCAST website under "Consultations".
+In 2019, the European Committee on Antimicrobial Susceptibility Testing (EUCAST) has decided to change the definitions of susceptibility testing categories S, I and R as shown below (\url{http://www.eucast.org/newsiandr/}). Results of several consultations on the new definitions are available on the EUCAST website under "Consultations".
 
 \itemize{
   \item{\strong{S} - }{Susceptible, standard dosing regimen: A microorganism is categorised as "Susceptible, standard dosing regimen", when there is a high likelihood of therapeutic success using a standard dosing regimen of the agent.}
@@ -110,4 +111,3 @@ is.rsi.eligible(WHONET$`First name`, threshold = 0.99) # succeeds
 \seealso{
 \code{\link{as.mic}}
 }
-\keyword{rsi}

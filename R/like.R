@@ -49,9 +49,8 @@
 #' # get frequencies of bacteria whose name start with 'Ent' or 'ent'
 #' library(dplyr)
 #' example_isolates %>%
-#'   left_join_microorganisms() %>%
-#'   filter(genus %like% '^ent') %>%
-#'   freq(genus, species)
+#'   filter(mo_genus(mo) %like% '^ent') %>%
+#'   freq(mo_fullname(mo))
 like <- function(x, pattern, ignore.case = TRUE) {
   if (length(pattern) > 1) {
     if (length(x) != length(pattern)) {

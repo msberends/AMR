@@ -89,5 +89,3 @@ example_isolates \%>\%
   filter_aminoglycosides("R", "all") \%>\%
   filter_fluoroquinolones("R", "all")
 }
-\keyword{fillter_class}
-\keyword{filter}

@@ -2,6 +2,12 @@
 % Please edit documentation in R/mdro.R
 \name{mdro}
 \alias{mdro}
+\alias{MDR}
+\alias{XDR}
+\alias{PDR}
+\alias{BRMO}
+\alias{3MRGN}
+\alias{4MRGN}
 \alias{brmo}
 \alias{mrgn}
 \alias{mdr_tb}
@@ -13,7 +19,8 @@ Please see Details for the list of publications used for this function.
 }
 \usage{
 mdro(x, guideline = NULL, col_mo = NULL, info = TRUE,
-  verbose = FALSE, pct_required_classes = 0.5, ...)
+  pct_required_classes = 0.5, combine_SI = TRUE, verbose = FALSE,
+  ...)
 
 brmo(x, guideline = "BRMO", ...)
 
@@ -34,9 +41,11 @@ eucast_exceptional_phenotypes(x, guideline = "EUCAST", ...)
 
 \item{info}{print progress}
 
-\item{verbose}{a logical to turn Verbose mode on and off (default is off). In Verbose mode, the function does not return the MDRO results, but instead returns a data set in logbook form with extensive info about which isolates would be MDRO-positive, or why they are not.}
-
 \item{pct_required_classes}{minimal required percentage of antimicrobial classes that must be available per isolate, rounded down. For example, with the default guideline, 17 antimicrobial classes must be available for \emph{S. aureus}. Setting this \code{pct_required_classes} argument to \code{0.5} (default) means that for every \emph{S. aureus} isolate at least 8 different classes must be available. Any lower number of available classes will return \code{NA} for that isolate.}
+
+\item{combine_SI}{a logical to indicate whether all values of S and I must be merged into one, so resistance is only considered when isolates are R, not I. As this is the default behaviour of the \code{mdro()} function, it follows the redefinition by EUCAST about the interpretion of I (increased exposure) in 2019, see section 'Interpretation of S, I and R' below. When using \code{combine_SI = FALSE}, resistance is considered when isolates are R or I.}
+
+\item{verbose}{a logical to turn Verbose mode on and off (default is off). In Verbose mode, the function does not return the MDRO results, but instead returns a data set in logbook form with extensive info about which isolates would be MDRO-positive, or why they are not.}
 
 \item{...}{column name of an antibiotic, see section Antibiotics}
 }
@@ -152,6 +161,21 @@ The following antibiotics are used for the functions \code{\link{eucast_rules}} 
  \strong{TMP}: trimethoprim (\href{https://www.whocc.no/atc_ddd_index/?code=J01EA01}{J01EA01}),
  \strong{SXT}: trimethoprim/sulfamethoxazole (\href{https://www.whocc.no/atc_ddd_index/?code=J01EE01}{J01EE01}),
  \strong{VAN}: vancomycin (\href{https://www.whocc.no/atc_ddd_index/?code=J01XA01}{J01XA01}).
+}
+
+\section{Interpretation of S, I and R}{
+
+In 2019, the European Committee on Antimicrobial Susceptibility Testing (EUCAST) has decided to change the definitions of susceptibility testing categories S, I and R as shown below (\url{http://www.eucast.org/newsiandr/}). Results of several consultations on the new definitions are available on the EUCAST website under "Consultations".
+
+\itemize{
+  \item{\strong{S} - }{Susceptible, standard dosing regimen: A microorganism is categorised as "Susceptible, standard dosing regimen", when there is a high likelihood of therapeutic success using a standard dosing regimen of the agent.}
+  \item{\strong{I} - }{Susceptible, increased exposure: A microorganism is categorised as "Susceptible, Increased exposure" when there is a high likelihood of therapeutic success because exposure to the agent is increased by adjusting the dosing regimen or by its concentration at the site of infection.}
+  \item{\strong{R} - }{Resistant: A microorganism is categorised as "Resistant" when there is a high likelihood of therapeutic failure even when there is increased exposure.}
+}
+
+Exposure is a function of how the mode of administration, dose, dosing interval, infusion time, as well as distribution and excretion of the antimicrobial agent will influence the infecting organism at the site of infection.
+
+This AMR package honours this new insight. Use \code{\link{portion_SI}} to determine antimicrobial susceptibility and \code{\link{count_SI}} to count susceptible isolates.
 }
 
 \section{Read more on our website!}{

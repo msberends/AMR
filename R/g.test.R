@@ -61,7 +61,6 @@
 #' where \code{df} are the degrees of freedom.
 #'
 #' If there are more than two categories and you want to find out which ones are significantly different from their null expectation, you can use the same method of testing each category vs. the sum of all categories, with the Bonferroni correction. You use \emph{G}-tests for each category, of course.
-#' @keywords chi
 #' @seealso \code{\link{chisq.test}}
 #' @references [1] McDonald, J.H. 2014. \strong{Handbook of Biological Statistics (3rd ed.)}. Sparky House Publishing, Baltimore, Maryland. \url{http://www.biostathandbook.com/gtestgof.html}.
 #' @source This code is almost identical to \code{\link{chisq.test}}, except that:

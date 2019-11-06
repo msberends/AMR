@@ -66,7 +66,7 @@ The function \code{rsi_df} works exactly like \code{count_df}, but adds the perc
 }
 \section{Interpretation of S, I and R}{
 
-In 2019, EUCAST has decided to change the definitions of susceptibility testing categories S, I and R as shown below (\url{http://www.eucast.org/newsiandr/}). Results of several consultations on the new definitions are available on the EUCAST website under "Consultations".
+In 2019, the European Committee on Antimicrobial Susceptibility Testing (EUCAST) has decided to change the definitions of susceptibility testing categories S, I and R as shown below (\url{http://www.eucast.org/newsiandr/}). Results of several consultations on the new definitions are available on the EUCAST website under "Consultations".
 
 \itemize{
   \item{\strong{S} - }{Susceptible, standard dosing regimen: A microorganism is categorised as "Susceptible, standard dosing regimen", when there is a high likelihood of therapeutic success using a standard dosing regimen of the agent.}
@@ -182,9 +182,3 @@ example_isolates \%>\%
 \seealso{
 \code{\link{portion}_*} to calculate microbial resistance and susceptibility.
 }
-\keyword{antibiotics}
-\keyword{isolate}
-\keyword{isolates}
-\keyword{resistance}
-\keyword{rsi}
-\keyword{susceptibility}

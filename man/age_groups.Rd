@@ -74,5 +74,3 @@ example_isolates \%>\%
 \seealso{
 To determine ages, based on one or more reference dates, use the \code{\link{age}} function.
 }
-\keyword{age}
-\keyword{age_group}

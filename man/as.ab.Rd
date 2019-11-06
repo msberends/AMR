@@ -72,4 +72,3 @@ ab_name("eryt")       # "Erythromycin"
 \seealso{
 \code{\link{antibiotics}} for the dataframe that is being used to determine ATCs.
 }
-\keyword{atc}

@@ -160,6 +160,3 @@ x$first_blood_isolate <- first_isolate(x, specimen_group = "Blood")
 \seealso{
 \code{\link{key_antibiotics}}
 }
-\keyword{first}
-\keyword{isolate}
-\keyword{isolates}

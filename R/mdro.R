@@ -26,6 +26,7 @@
 #' @param info print progress
 #' @inheritParams eucast_rules
 #' @param pct_required_classes minimal required percentage of antimicrobial classes that must be available per isolate, rounded down. For example, with the default guideline, 17 antimicrobial classes must be available for \emph{S. aureus}. Setting this \code{pct_required_classes} argument to \code{0.5} (default) means that for every \emph{S. aureus} isolate at least 8 different classes must be available. Any lower number of available classes will return \code{NA} for that isolate.
+#' @param combine_SI a logical to indicate whether all values of S and I must be merged into one, so resistance is only considered when isolates are R, not I. As this is the default behaviour of the \code{mdro()} function, it follows the redefinition by EUCAST about the interpretion of I (increased exposure) in 2019, see section 'Interpretation of S, I and R' below. When using \code{combine_SI = FALSE}, resistance is considered when isolates are R or I.
 #' @param verbose a logical to turn Verbose mode on and off (default is off). In Verbose mode, the function does not return the MDRO results, but instead returns a data set in logbook form with extensive info about which isolates would be MDRO-positive, or why they are not.
 #' @inheritSection eucast_rules Antibiotics
 #' @details 
@@ -43,7 +44,7 @@
 #' Please suggest your own (country-specific) guidelines by letting us know: \url{https://gitlab.com/msberends/AMR/issues/new}.
 #' 
 #' \strong{Note:} Every test that involves the Enterobacteriaceae family, will internally be performed using its newly named order Enterobacterales, since the Enterobacteriaceae family has been taxonomically reclassified by Adeolu \emph{et al.} in 2016. Before that, Enterobacteriaceae was the only family under the Enterobacteriales (with an i) order. All species under the old Enterobacteriaceae family are still under the new Enterobacterales (without an i) order, but divided into multiple families. The way tests are performed now by this \code{mdro()} function makes sure that results from before 2016 and after 2016 are identical.
-#' 
+#' @inheritSection as.rsi Interpretation of S, I and R
 #' @return \itemize{
 #'   \item{CMI 2012 paper - function \code{mdr_cmi2012()} or \code{mdro()}:\cr Ordered factor with levels \code{Negative < Multi-drug-resistant (MDR) < Extensively drug-resistant (XDR) < Pandrug-resistant (PDR)}}
 #'   \item{TB guideline - function \code{mdr_tb()} or \code{mdro(..., guideline = "TB")}:\cr Ordered factor with levels \code{Negative < Mono-resistant < Poly-resistant < Multi-drug-resistant < Extensively drug-resistant}}
@@ -51,6 +52,7 @@
 #'   \item{Everything else:\cr Ordered factor with levels \code{Negative < Positive, unconfirmed < Positive}. The value \code{"Positive, unconfirmed"} means that, according to the guideline, it is not entirely sure if the isolate is multi-drug resistant and this should be confirmed with additional (e.g. molecular) tests}
 #' }
 #' @rdname mdro
+#' @aliases MDR XDR PDR BRMO 3MRGN 4MRGN
 #' @importFrom dplyr %>% filter_at vars all_vars pull mutate_at
 #' @importFrom crayon blue bold italic
 #' @importFrom cleaner percentage
@@ -80,8 +82,9 @@ mdro <- function(x,
                  guideline = NULL,
                  col_mo = NULL,
                  info = TRUE,
-                 verbose = FALSE,
                  pct_required_classes = 0.5,
+                 combine_SI = TRUE,
+                 verbose = FALSE,
                  ...) {
   
   if (verbose == TRUE & interactive()) {
@@ -109,7 +112,7 @@ mdro <- function(x,
     # allow pct_required_classes = 75 -> pct_required_classes = 0.75
     pct_required_classes <- pct_required_classes / 100
   }
-  
+
   if (!is.null(list(...)$country)) {
     warning("Using `country` is deprecated, use `guideline` instead. Please see ?mdro.", call. = FALSE)
     guideline <- list(...)$country
@@ -410,8 +413,19 @@ mdro <- function(x,
   if (guideline$code == "tb" & length(abx_tb) == 0) {
     stop("No antimycobacterials found in data set.", call. = FALSE)
   }
+
+  if (combine_SI == TRUE) {
+    search_result <- "R"
+  } else {
+    search_result <- c("R", "I")
+  }
   
   if (info == TRUE) {
+    if (combine_SI == TRUE) {
+      cat("\nOnly results with 'R' are considered as resistance. Use `combine_SI = FALSE` to also consider 'I' as resistance.\n")
+    } else {
+      cat("\nResults with 'R' or 'I' are considered as resistance. Use `combine_SI = TRUE` to only consider 'R' as resistance.\n")
+    }
     cat("\nDetermining multidrug-resistant organisms (MDRO), according to:\n",
         bold("Guideline: "), italic(guideline$name), "\n",
         bold("Version:   "), guideline$version, "\n",
@@ -444,19 +458,21 @@ mdro <- function(x,
       x <<- x %>% mutate_at(vars(cols), as.rsi)
       x[rows, "columns_nonsusceptible"] <<- sapply(rows, 
                                                    function(row, group_vct = cols) {
-                                                     cols_nonsus <- sapply(x[row, group_vct, drop = FALSE], function(y) y == "R")
+                                                     cols_nonsus <- sapply(x[row, group_vct, drop = FALSE], 
+                                                                           function(y) y %in% search_result)
                                                      paste(sort(c(unlist(strsplit(x[row, "columns_nonsusceptible", drop = TRUE], ", ")),
                                                                   names(cols_nonsus)[cols_nonsus])), 
                                                            collapse = ", ")
                                                    })
+      
       if (any_all == "any") {
-        row_filter <- which(x[, cols] == "R")
+        search_function <- dplyr::any_vars
       } else if (any_all == "all") {
-        row_filter <- x %>%
-          mutate(index = seq_len(nrow(.))) %>%
-          filter_at(vars(cols), all_vars(. == "R")) %>%
-          pull((index))
+        search_function <- dplyr::all_vars
       }
+      row_filter <- x %>%
+        filter_at(vars(cols), search_function(. %in% search_result)) %>%
+        pull("row_number")
       rows <- rows[rows %in% row_filter]
       x[rows, "MDRO"] <<- to
       x[rows, "reason"] <<- paste0(any_all, " of the required antibiotics ", ifelse(any_all == "any", "is", "are"), " R")
@@ -479,7 +495,7 @@ mdro <- function(x,
       if (verbose == TRUE) {
         x[rows, "columns_nonsusceptible"] <<- sapply(rows, 
                                                       function(row, group_vct = lst_vector) {
-                                                        cols_nonsus <- sapply(x[row, group_vct, drop = FALSE], function(y) y %in% c("I", "R"))
+                                                        cols_nonsus <- sapply(x[row, group_vct, drop = FALSE], function(y) y %in% search_result)
                                                         paste(sort(names(cols_nonsus)[cols_nonsus]), collapse = ", ")
                                                       })
       }
@@ -487,14 +503,14 @@ mdro <- function(x,
                                             function(row, group_tbl = lst) {
                                               sum(sapply(group_tbl, 
                                                          function(group) {
-                                                           any(x[row, group[!is.na(group)]] == "R", na.rm = TRUE) | 
-                                                             any(x[row, group[!is.na(group)]] == "I", na.rm = TRUE) 
+                                                           any(unlist(x[row, group[!is.na(group)], drop = TRUE]) %in% search_result, na.rm = TRUE)
                                                          }),
                                                   na.rm = TRUE) 
                                             })
+      # for PDR; all agents are R (or I if combine_SI = FALSE)
       x[filter_at(x[rows, ],
                   vars(lst_vector),
-                  all_vars(. %in% c("R", "I")))$row_number, "classes_affected"] <<- 999
+                  all_vars(. %in% search_result))$row_number, "classes_affected"] <<- 999
     }
     
     if (info == TRUE) {

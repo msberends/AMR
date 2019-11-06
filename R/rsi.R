@@ -36,7 +36,7 @@
 #'
 #' The function \code{is.rsi.eligible} returns \code{TRUE} when a columns contains at most 5\% invalid antimicrobial interpretations (not S and/or I and/or R), and \code{FALSE} otherwise. The threshold of 5\% can be set with the \code{threshold} parameter.
 #' @section Interpretation of S, I and R:
-#' In 2019, EUCAST has decided to change the definitions of susceptibility testing categories S, I and R as shown below (\url{http://www.eucast.org/newsiandr/}). Results of several consultations on the new definitions are available on the EUCAST website under "Consultations".
+#' In 2019, the European Committee on Antimicrobial Susceptibility Testing (EUCAST) has decided to change the definitions of susceptibility testing categories S, I and R as shown below (\url{http://www.eucast.org/newsiandr/}). Results of several consultations on the new definitions are available on the EUCAST website under "Consultations".
 #'
 #' \itemize{
 #'   \item{\strong{S} - }{Susceptible, standard dosing regimen: A microorganism is categorised as "Susceptible, standard dosing regimen", when there is a high likelihood of therapeutic success using a standard dosing regimen of the agent.}
@@ -48,7 +48,7 @@
 #'
 #' This AMR package honours this new insight. Use \code{\link{portion_SI}} to determine antimicrobial susceptibility and \code{\link{count_SI}} to count susceptible isolates.
 #' @return Ordered factor with new class \code{rsi}
-#' @keywords rsi
+#' @aliases RSI
 #' @export
 #' @importFrom dplyr %>% desc arrange filter 
 #' @seealso \code{\link{as.mic}}

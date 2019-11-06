@@ -145,4 +145,3 @@ g.test(x)
 \seealso{
 \code{\link{chisq.test}}
 }
-\keyword{chi}

@@ -4,6 +4,7 @@
 \alias{ab_property}
 \alias{ab_name}
 \alias{ab_atc}
+\alias{ATC}
 \alias{ab_cid}
 \alias{ab_synonyms}
 \alias{ab_tradenames}

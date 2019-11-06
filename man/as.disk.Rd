@@ -2,6 +2,7 @@
 % Please edit documentation in R/disk.R
 \name{as.disk}
 \alias{as.disk}
+\alias{disk}
 \alias{is.disk}
 \title{Class 'disk'}
 \usage{
@@ -42,4 +43,3 @@ as.rsi(x = 12,
 \seealso{
 \code{\link{as.rsi}}
 }
-\keyword{disk}

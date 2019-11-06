@@ -83,6 +83,7 @@ ab_name <- function(x, language = get_locale(), tolower = FALSE, ...) {
 }
 
 #' @rdname ab_property
+#' @aliases ATC
 #' @export
 ab_atc <- function(x, ...) {
   ab_validate(x = x, property = "atc", ...)

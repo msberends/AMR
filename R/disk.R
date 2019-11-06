@@ -27,7 +27,7 @@
 #' @param na.rm a logical indicating whether missing values should be removed
 #' @details Interpret disk values as RSI values with \code{\link{as.rsi}}. It supports guidelines from EUCAST and CLSI.
 #' @return Ordered integer factor with new class \code{disk}
-#' @keywords disk
+#' @aliases disk
 #' @export
 #' @seealso \code{\link{as.rsi}}
 #' @inheritSection AMR Read more on our website!

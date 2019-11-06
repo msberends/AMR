@@ -37,7 +37,6 @@
 #' @inheritSection portion Combination therapy
 #' @source Wickham H. \strong{Tidy Data.} The Journal of Statistical Software, vol. 59, 2014. \url{http://vita.had.co.nz/papers/tidy-data.html}
 #' @seealso \code{\link{portion}_*} to calculate microbial resistance and susceptibility.
-#' @keywords resistance susceptibility rsi antibiotics isolate isolates
 #' @return Integer
 #' @rdname count
 #' @name count

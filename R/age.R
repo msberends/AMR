@@ -106,7 +106,6 @@ age <- function(x, reference = Sys.Date(), exact = FALSE, na.rm = FALSE) {
 #'       \item{\code{"tens"}, equivalent of: \code{1:10 * 10}. This will split on 0-9, 10-19, 20-29, ... 80-89, 90-99, 100+.}
 #'     }
 #' }
-#' @keywords age_group age
 #' @return Ordered \code{\link{factor}}
 #' @seealso To determine ages, based on one or more reference dates, use the \code{\link{age}} function.
 #' @export

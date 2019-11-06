@@ -27,7 +27,7 @@
 #' @param na.rm a logical indicating whether missing values should be removed
 #' @details Interpret MIC values as RSI values with \code{\link{as.rsi}}. It supports guidelines from EUCAST and CLSI.
 #' @return Ordered factor with new class \code{mic}
-#' @keywords mic
+#' @aliases MIC
 #' @export
 #' @importFrom dplyr %>%
 #' @seealso \code{\link{as.rsi}}

@@ -29,7 +29,6 @@
 #' @param ... parameters passed on to \code{filter_at} from the \code{dplyr} package
 #' @details The \code{group} column in \code{\link{antibiotics}} data set will be searched for \code{ab_class} (case-insensitive). If no results are found, the \code{atc_group1} and \code{atc_group2} columns will be searched. Next, \code{x} will be checked for column names with a value in any abbreviations, codes or official names found in the \code{antibiotics} data set.
 #' @rdname filter_ab_class
-#' @keywords filter fillter_class
 #' @importFrom dplyr filter_at %>% select vars any_vars all_vars
 #' @importFrom crayon bold blue
 #' @export

@@ -25,7 +25,6 @@
 #' @param x character vector to determine to antibiotic ID
 #' @param ... arguments passed on to internal functions
 #' @rdname as.ab
-#' @keywords atc
 #' @inheritSection WHOCC WHOCC
 #' @export
 #' @importFrom dplyr %>% filter slice pull

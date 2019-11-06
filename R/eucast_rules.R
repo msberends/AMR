@@ -122,7 +122,7 @@ EUCAST_VERSION_EXPERT_RULES <- "3.1, 2016"
 #'  \strong{TMP}: trimethoprim (\href{https://www.whocc.no/atc_ddd_index/?code=J01EA01}{J01EA01}),
 #'  \strong{SXT}: trimethoprim/sulfamethoxazole (\href{https://www.whocc.no/atc_ddd_index/?code=J01EE01}{J01EE01}),
 #'  \strong{VAN}: vancomycin (\href{https://www.whocc.no/atc_ddd_index/?code=J01XA01}{J01XA01}).
-#' @keywords interpretive eucast reading resistance
+#' @aliases EUCAST
 #' @rdname eucast_rules
 #' @export
 #' @importFrom dplyr %>% select pull mutate_at vars group_by summarise n

@@ -2,6 +2,7 @@
 % Please edit documentation in R/eucast_rules.R
 \name{eucast_rules}
 \alias{eucast_rules}
+\alias{EUCAST}
 \title{EUCAST rules}
 \source{
 \itemize{
@@ -183,7 +184,3 @@ b
 c <- eucast_rules(a, verbose = TRUE)
 }
 }
-\keyword{eucast}
-\keyword{interpretive}
-\keyword{reading}
-\keyword{resistance}

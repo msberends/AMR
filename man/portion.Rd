@@ -114,7 +114,7 @@ Using \code{only_all_tested} has no impact when only using one antibiotic as inp
 
 \section{Interpretation of S, I and R}{
 
-In 2019, EUCAST has decided to change the definitions of susceptibility testing categories S, I and R as shown below (\url{http://www.eucast.org/newsiandr/}). Results of several consultations on the new definitions are available on the EUCAST website under "Consultations".
+In 2019, the European Committee on Antimicrobial Susceptibility Testing (EUCAST) has decided to change the definitions of susceptibility testing categories S, I and R as shown below (\url{http://www.eucast.org/newsiandr/}). Results of several consultations on the new definitions are available on the EUCAST website under "Consultations".
 
 \itemize{
   \item{\strong{S} - }{Susceptible, standard dosing regimen: A microorganism is categorised as "Susceptible, standard dosing regimen", when there is a high likelihood of therapeutic success using a standard dosing regimen of the agent.}
@@ -226,10 +226,3 @@ my_table \%>\%
 \seealso{
 \code{\link[AMR]{count}_*} to count resistant and susceptible isolates.
 }
-\keyword{antibiotics}
-\keyword{isolate}
-\keyword{isolates}
-\keyword{resistance}
-\keyword{rsi}
-\keyword{rsi_df}
-\keyword{susceptibility}
