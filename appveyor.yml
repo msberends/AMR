@@ -46,10 +46,10 @@ environment:
   - R_VERSION: devel
 
 build_script:
-  - travis-tool.sh install_deps
+  - travis_tool.sh install_deps
 
 test_script:
-  - travis-tool.sh run_tests
+  - travis_tool.sh run_tests
 
 on_failure:
   - 7z a failure.zip *.Rcheck\*
