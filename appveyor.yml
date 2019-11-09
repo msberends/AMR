@@ -44,7 +44,7 @@ environment:
   matrix:
   - R_VERSION: oldrel
   - R_VERSION: release
-  allow_failures:
+    allow_failures:
     - R_VERSION: devel
 
 build_script:
