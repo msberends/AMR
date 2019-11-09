@@ -42,8 +42,10 @@ environment:
   USE_RTOOLS: true
 
   matrix:
+  - R_VERSION: oldrel
   - R_VERSION: release
-  - R_VERSION: devel
+  allow_failures:
+    - R_VERSION: devel
 
 build_script:
   - travis_tool.sh install_deps

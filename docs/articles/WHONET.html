@@ -41,7 +41,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">0.8.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">0.8.0.9021</span>
       </span>
     </div>
 
@@ -187,7 +187,7 @@
       <h1>How to work with WHONET data</h1>
                         <h4 class="author">Matthijs S. Berends</h4>
             
-            <h4 class="date">16 October 2019</h4>
+            <h4 class="date">09 November 2019</h4>
       
       
       <div class="hidden name"><code>WHONET.Rmd</code></div>
@@ -196,18 +196,18 @@
 
     
     
-<div id="import-of-data" class="section level1">
-<h1 class="hasAnchor">
-<a href="#import-of-data" class="anchor"></a>Import of data</h1>
+<div id="import-of-data" class="section level3">
+<h3 class="hasAnchor">
+<a href="#import-of-data" class="anchor"></a>Import of data</h3>
 <p>This tutorial assumes you already imported the WHONET data with e.g. the <a href="https://readxl.tidyverse.org/"><code>readxl</code> package</a>. In RStudio, this can be done using the menu button ‘Import Dataset’ in the tab ‘Environment’. Choose the option ‘From Excel’ and select your exported file. Make sure date fields are imported correctly.</p>
 <p>An example syntax could look like this:</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(readxl)</a>
 <a class="sourceLine" id="cb1-2" data-line-number="2">data &lt;-<span class="st"> </span><span class="kw"><a href="https://readxl.tidyverse.org/reference/read_excel.html">read_excel</a></span>(<span class="dt">path =</span> <span class="st">"path/to/your/file.xlsx"</span>)</a></code></pre></div>
 <p>This package comes with an <a href="https://msberends.gitlab.io/AMR/reference/WHONET.html">example data set <code>WHONET</code></a>. We will use it for this analysis.</p>
 </div>
-<div id="preparation" class="section level1">
-<h1 class="hasAnchor">
-<a href="#preparation" class="anchor"></a>Preparation</h1>
+<div id="preparation" class="section level3">
+<h3 class="hasAnchor">
+<a href="#preparation" class="anchor"></a>Preparation</h3>
 <p>First, load the relevant packages if you did not yet did this. I use the tidyverse for all of my analyses. All of them. If you don’t know it yet, I suggest you read about it on their website: <a href="https://www.tidyverse.org/" class="uri">https://www.tidyverse.org/</a>.</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(dplyr)   <span class="co"># part of tidyverse</span></a>
 <a class="sourceLine" id="cb2-2" data-line-number="2"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(ggplot2) <span class="co"># part of tidyverse</span></a>
@@ -224,18 +224,16 @@
 <a class="sourceLine" id="cb3-5" data-line-number="5"><span class="st">  </span><span class="co"># transform everything from "AMP_ND10" to "CIP_EE" to the new `rsi` class</span></a>
 <a class="sourceLine" id="cb3-6" data-line-number="6"><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/mutate_all.html">mutate_at</a></span>(<span class="kw"><a href="https://dplyr.tidyverse.org/reference/vars.html">vars</a></span>(AMP_ND10<span class="op">:</span>CIP_EE), as.rsi)</a></code></pre></div>
 <p>No errors or warnings, so all values are transformed succesfully.</p>
-<p>We created a package dedicated to data cleaning and checking, called the <code>clean</code> package. It gets automatically installed with the <code>AMR</code> package, so we only have to load it:</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(clean)</a></code></pre></div>
-<p>It contains the <code><a href="https://rdrr.io/pkg/clean/man/freq.html">freq()</a></code> function, to create frequency tables.</p>
+<p>We also created a package dedicated to data cleaning and checking, called the <code>cleaner</code> package. It gets automatically installed with the <code>AMR</code> package. For its <code><a href="https://rdrr.io/pkg/cleaner/man/freq.html">freq()</a></code> function to create frequency tables, you don’t even need to load it yourself as it is available through the <code>AMR</code> package as well.</p>
 <p>So let’s check our data, with a couple of frequency tables:</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="co"># our newly created `mo` variable</span></a>
-<a class="sourceLine" id="cb5-2" data-line-number="2">data <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/pkg/clean/man/freq.html">freq</a></span>(mo, <span class="dt">nmax =</span> <span class="dv">10</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="co"># our newly created `mo` variable</span></a>
+<a class="sourceLine" id="cb4-2" data-line-number="2">data <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/pkg/cleaner/man/freq.html">freq</a></span>(mo, <span class="dt">nmax =</span> <span class="dv">10</span>)</a></code></pre></div>
 <p><strong>Frequency table</strong></p>
 <p>Class: mo (character)<br>
 Length: 500 (of which NA: 0 = 0%)<br>
 Unique: 39</p>
-<p>Gram-negative: 281 (56.20%)<br>
-Gram-positive: 219 (43.80%)<br>
+<p>Gram-negative: 280 (56.00%)<br>
+Gram-positive: 220 (44.00%)<br>
 Nr of genera: 17<br>
 Nr of species: 39</p>
 <table class="table">
@@ -331,10 +329,10 @@ Nr of species: 39</p>
 </tbody>
 </table>
 <p>(omitted 29 entries, n = 57 [11.40%])</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1"></a>
-<a class="sourceLine" id="cb6-2" data-line-number="2"><span class="co"># our transformed antibiotic columns</span></a>
-<a class="sourceLine" id="cb6-3" data-line-number="3"><span class="co"># amoxicillin/clavulanic acid (J01CR02) as an example</span></a>
-<a class="sourceLine" id="cb6-4" data-line-number="4">data <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/pkg/clean/man/freq.html">freq</a></span>(AMC_ND2)</a></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1"></a>
+<a class="sourceLine" id="cb5-2" data-line-number="2"><span class="co"># our transformed antibiotic columns</span></a>
+<a class="sourceLine" id="cb5-3" data-line-number="3"><span class="co"># amoxicillin/clavulanic acid (J01CR02) as an example</span></a>
+<a class="sourceLine" id="cb5-4" data-line-number="4">data <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/pkg/cleaner/man/freq.html">freq</a></span>(AMC_ND2)</a></code></pre></div>
 <p><strong>Frequency table</strong></p>
 <p>Class: factor &gt; ordered &gt; rsi (numeric)<br>
 Length: 500 (of which NA: 19 = 3.8%)<br>
@@ -378,24 +376,17 @@ Unique: 3</p>
 </tbody>
 </table>
 </div>
-<div id="analysis" class="section level1">
-<h1 class="hasAnchor">
-<a href="#analysis" class="anchor"></a>Analysis</h1>
-<p><em>(more will be available soon)</em></p>
+<div id="a-first-glimpse-at-results" class="section level3">
+<h3 class="hasAnchor">
+<a href="#a-first-glimpse-at-results" class="anchor"></a>A first glimpse at results</h3>
+<p>An easy ggplot will already give a lot of information, using the included <code><a href="../reference/ggplot_rsi.html">ggplot_rsi()</a></code> function:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1"><span class="kw"><a href="../reference/ggplot_rsi.html">ggplot_rsi</a></span>(data, <span class="dt">translate_ab =</span> <span class="st">'ab'</span>)</a></code></pre></div>
+<p><img src="WHONET_files/figure-html/unnamed-chunk-5-1.png" width="720"></p>
 </div>
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
 
-        <div id="tocnav">
-      <h2 class="hasAnchor">
-<a href="#tocnav" class="anchor"></a>Contents</h2>
-      <ul class="nav nav-pills nav-stacked">
-<li><a href="#import-of-data">Import of data</a></li>
-      <li><a href="#preparation">Preparation</a></li>
-      <li><a href="#analysis">Analysis</a></li>
-      </ul>
-</div>
       </div>
 
 </div>

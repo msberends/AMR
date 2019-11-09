@@ -23,7 +23,7 @@ knitr::opts_chunk$set(
 )
 ```
 
-# Import of data
+### Import of data
 
 This tutorial assumes you already imported the WHONET data with e.g. the [`readxl` package](https://readxl.tidyverse.org/). In RStudio, this can be done using the menu button 'Import Dataset' in the tab 'Environment'. Choose the option 'From Excel' and select your exported file. Make sure date fields are imported correctly.
 
@@ -36,7 +36,7 @@ data <- read_excel(path = "path/to/your/file.xlsx")
 
 This package comes with an [example data set `WHONET`](https://msberends.gitlab.io/AMR/reference/WHONET.html). We will use it for this analysis.
 
-# Preparation
+### Preparation
 
 First, load the relevant packages if you did not yet did this. I use the tidyverse for all of my analyses. All of them. If you don't know it yet, I suggest you read about it on their website: https://www.tidyverse.org/.
 
@@ -62,13 +62,7 @@ data <- WHONET %>%
 
 No errors or warnings, so all values are transformed succesfully.
 
-We created a package dedicated to data cleaning and checking, called the `clean` package. It gets automatically installed with the `AMR` package, so we only have to load it:
-
-```{r lib clean, message = FALSE}
-library(clean)
-```
-
-It contains the `freq()` function, to create frequency tables. 
+We also created a package dedicated to data cleaning and checking, called the `cleaner` package. It gets automatically installed with the `AMR` package. For its `freq()` function to create frequency tables, you don't even need to load it yourself as it is available through the `AMR` package as well.
 
 So let's check our data, with a couple of frequency tables:
 
@@ -81,7 +75,10 @@ data %>% freq(mo, nmax = 10)
 data %>% freq(AMC_ND2)
 ```
 
-# Analysis
+### A first glimpse at results
 
-*(more will be available soon)*
+An easy ggplot will already give a lot of information, using the included `ggplot_rsi()` function:
 
+```{r}
+ggplot_rsi(data, translate_ab = 'ab')
+```

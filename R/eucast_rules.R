@@ -241,11 +241,11 @@ eucast_rules <- function(x,
   warned <- FALSE
   
   txt_error <- function() {
-    cat("", bgRed(white(" ERROR ")), "\n\n") 
+    if (info == TRUE) cat("", bgRed(white(" ERROR ")), "\n\n") 
   }
   txt_warning <- function() {
     if (warned == FALSE) {
-      cat("", bgYellow(black(" WARNING ")))
+      if (info == TRUE) cat("", bgYellow(black(" WARNING ")))
     }
     warned <<- TRUE 
   }

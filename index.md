@@ -4,7 +4,7 @@
 
 > *18 October 2019*  
 > **METHODS PAPER PREPRINTED**  
-> A methods paper about this package has been preprinted at bioRxiv. Please see [here for the publishers page](https://doi.org/10.1101/810622) or [click here for the PDF](https://www.biorxiv.org/content/early/2019/10/18/810622.full.pdf).
+> A methods paper about this package has been preprinted at bioRxiv. It was updated on 8 November 2019. Please click [here for the publishers page](https://doi.org/10.1101/810622).
 
 ----
 

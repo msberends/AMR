@@ -21,6 +21,7 @@ knitr::opts_chunk$set(
   fig.width = 7.5,
   fig.height = 4.5
 )
+library(AMR)
 ```
 
 ## Introduction
@@ -31,12 +32,17 @@ What are EUCAST rules? The European Committee on Antimicrobial Susceptibility Te
 
 In Europe, a lot of medical microbiological laboratories already apply these rules ([Brown *et al.*, 2015](https://www.eurosurveillance.org/content/10.2807/1560-7917.ES2015.20.2.21008)). Our package features their latest insights on intrinsic resistance and exceptional phenotypes (version 9.0, 2019). Moreover, the `eucast_rules()` function we use for this purpose can also apply additional rules, like forcing <help title="ATC: J01CA01">ampicillin</help> = R in isolates when <help title="ATC: J01CR02">amoxicillin/clavulanic acid</help> = R.
 
-*(more will be available soon)*
-
-### Benefit for empiric therapy success estimation
-
-*(will be available soon)*
-
 ## Examples
 
-*(will be available soon)*
+These rules can be used to discard impossible bug-drug combinations in your data. For example, *Klebsiella* produces beta-lactamase that prevents ampicillin (or amoxicillin) from working against it. In other words, every strain of *Klebsiella* is resistant to ampicillin.
+
+Sometimes, laboratory data can still contain such strains with ampicillin being susceptible to ampicillin. This could be because an antibiogram is available before an identification is available, and the antibiogram is then not re-interpreted based on the identification (namely, *Klebsiella*). EUCAST expert rules solves this:
+
+```{r, warning = FALSE, message = FALSE}
+oops <- data.frame(mo = c("Klebsiella", 
+                          "Escherichia"),
+                   ampicillin = "S")
+oops
+
+eucast_rules(oops, info = FALSE)
+```

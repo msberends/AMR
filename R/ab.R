@@ -75,7 +75,7 @@ as.ab <- function(x, ...) {
   # remove suffices
   x_bak_clean <- gsub("_(mic|rsi|dis[ck])$", "", x, ignore.case = TRUE)
   # remove disk concentrations, like LVX_NM -> LVX
-  x_bak_clean <- gsub("_[A-Z]{2}[0-9_]{0,3}$", "", x_bak_clean, ignore.case = TRUE)
+  x_bak_clean <- gsub("_[A-Z]{2}[0-9_.]{0,3}$", "", x_bak_clean, ignore.case = TRUE)
   # remove part between brackets if that's followed by another string
   x_bak_clean <- gsub("(.*)+ [(].*[)]", "\\1", x_bak_clean)
   # keep only max 1 space

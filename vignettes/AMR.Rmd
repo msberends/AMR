@@ -144,13 +144,9 @@ Now, let's start the cleaning and the analysis!
 
 # Cleaning the data
 
-We also created a package dedicated to data cleaning and checking, called the `clean` package. It gets automatically installed with the `AMR` package, so we only have to load it:
+We also created a package dedicated to data cleaning and checking, called the `cleaner` package. It gets automatically installed with the `AMR` package. For its `freq()` function to create frequency tables, you don't even need to load it yourself as it is available through the `AMR` package as well.
 
-```{r lib clean, message = FALSE}
-library(clean)
-```
-
-Use the frequency table function `freq()` from this `clean` package to look specifically for unique values in any variable. For example, for the `gender` variable:
+For example, for the `gender` variable:
 
 ```{r freq gender 1, eval = FALSE}
 data %>% freq(gender) # this would be the same: freq(data$gender)
@@ -210,7 +206,7 @@ data <- data %>%
   mutate(first = first_isolate(.))
 ```
 
-So only `r AMR:::percentage(sum(data$first) / nrow(data))` is suitable for resistance analysis! We can now filter on it with the `filter()` function, also from the `dplyr` package:
+So only `r cleaner::percentage(sum(data$first) / nrow(data))` is suitable for resistance analysis! We can now filter on it with the `filter()` function, also from the `dplyr` package:
 
 ```{r 1st isolate filter}
 data_1st <- data %>% 
@@ -230,7 +226,7 @@ data_1st <- data %>%
 weighted_df <- data %>%
   filter(bacteria == as.mo("E. coli")) %>% 
   # only most prevalent patient
-  filter(patient_id == top_freq(freq(., patient_id), 1)[1]) %>% 
+  filter(patient_id == cleaner::top_freq(freq(., patient_id), 1)[1]) %>% 
   arrange(date) %>%
   select(date, patient_id, bacteria, AMX:GEN, first) %>% 
   # maximum of 10 rows
@@ -260,7 +256,7 @@ data <- data %>%
 weighted_df2 <- data %>%
   filter(bacteria == as.mo("E. coli")) %>% 
   # only most prevalent patient
-  filter(patient_id == top_freq(freq(., patient_id), 1)[1]) %>% 
+  filter(patient_id == cleaner::top_freq(freq(., patient_id), 1)[1]) %>% 
   arrange(date) %>%
   select(date, patient_id, bacteria, AMX:GEN, first, first_weighted) %>% 
   # maximum of 10 rows
@@ -272,7 +268,7 @@ weighted_df2 %>%
   knitr::kable(align = "c")
 ```
 
-Instead of `r sum(weighted_df$first)`, now `r sum(weighted_df2$first_weighted)` isolates are flagged. In total, `r AMR:::percentage(sum(data$first_weighted) / nrow(data))` of all isolates are marked 'first weighted' - `r AMR:::percentage((sum(data$first_weighted) / nrow(data)) - (sum(data$first) / nrow(data)))` more than when using the CLSI guideline. In real life, this novel algorithm will yield 5-10% more isolates than the classic CLSI guideline.
+Instead of `r sum(weighted_df$first)`, now `r sum(weighted_df2$first_weighted)` isolates are flagged. In total, `r cleaner::percentage(sum(data$first_weighted) / nrow(data))` of all isolates are marked 'first weighted' - `r cleaner::percentage((sum(data$first_weighted) / nrow(data)) - (sum(data$first) / nrow(data)))` more than when using the CLSI guideline. In real life, this novel algorithm will yield 5-10% more isolates than the classic CLSI guideline.
 
 As with `filter_first_isolate()`, there's a shortcut for this new algorithm too:
 ```{r 1st isolate filter 3, results = 'hide', message = FALSE, warning = FALSE}
