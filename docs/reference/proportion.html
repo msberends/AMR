@@ -52,7 +52,7 @@
 
 <meta property="og:title" content="Calculate microbial resistance — proportion" />
 <meta property="og:description" content="These functions can be used to calculate the (co-)resistance or susceptibility of microbial isolates (i.e. percentage of S, SI, I, IR or R). All functions support quasiquotation with pipes, can be used in dplyrs summarise and support grouped variables, see Examples.
-resistance should be used to calculate resistance, susceptibility should be used to calculate susceptibility." />
+resistance() should be used to calculate resistance, susceptibility() should be used to calculate susceptibility." />
 <meta property="og:image" content="https://msberends.gitlab.io/AMR/logo.png" />
 <meta name="twitter:card" content="summary" />
 
@@ -86,7 +86,7 @@ resistance should be used to calculate resistance, susceptibility should be used
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">0.8.0.9027</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">0.8.0.9029</span>
       </span>
     </div>
 
@@ -236,7 +236,7 @@ resistance should be used to calculate resistance, susceptibility should be used
 
     <div class="ref-description">
     <p>These functions can be used to calculate the (co-)resistance or susceptibility of microbial isolates (i.e. percentage of S, SI, I, IR or R). All functions support quasiquotation with pipes, can be used in <code>dplyr</code>s <code><a href='https://dplyr.tidyverse.org/reference/summarise.html'>summarise</a></code> and support grouped variables, see <em>Examples</em>.</p>
-<p><code>resistance</code> should be used to calculate resistance, <code>susceptibility</code> should be used to calculate susceptibility.<br /></p>
+<p><code>resistance()</code> should be used to calculate resistance, <code>susceptibility()</code> should be used to calculate susceptibility.<br /></p>
     </div>
 
     <pre class="usage"><span class='fu'>resistance</span>(<span class='no'>...</span>, <span class='kw'>minimum</span> <span class='kw'>=</span> <span class='fl'>30</span>, <span class='kw'>as_percent</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
@@ -317,10 +317,10 @@ resistance should be used to calculate resistance, susceptibility should be used
     <p>Double or, when <code>as_percent = TRUE</code>, a character.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>The function <code>resistance</code> is equal to the function <code>proportion_R</code>. The function <code>susceptibility</code> is equal to the function <code>proportion_SI</code>.</p> 
+    <p>The function <code>resistance()</code> is equal to the function <code>proportion_R()</code>. The function <code>susceptibility()</code> is equal to the function <code>proportion_SI()</code>.</p> 
 <p><strong>Remember that you should filter your table to let it contain only first isolates!</strong> This is needed to exclude duplicates and to reduce selection bias. Use <code><a href='first_isolate.html'>first_isolate</a></code> to determine them in your data set.</p>
 <p>These functions are not meant to count isolates, but to calculate the proportion of resistance/susceptibility. Use the <code><a href='count.html'>count</a></code> functions to count isolates. The function <code>susceptibility()</code> is essentially equal to <code>count_susceptible() / count_all()</code>. <em>Low counts can infuence the outcome - the <code>proportion</code> functions may camouflage this, since they only return the proportion (albeit being dependent on the <code>minimum</code> parameter).</em></p>
-<p>The function <code>proportion_df</code> takes any variable from <code>data</code> that has an <code>"rsi"</code> class (created with <code><a href='as.rsi.html'>as.rsi</a></code>) and calculates the proportions R, I and S. The function <code>rsi_df</code> works exactly like <code>proportion_df</code>, but adds the number of isolates.</p>
+<p>The function <code>proportion_df()</code> takes any variable from <code>data</code> that has an <code>"rsi"</code> class (created with <code><a href='as.rsi.html'>as.rsi</a>()</code>) and calculates the proportions R, I and S. The function <code>rsi_df()</code> works exactly like <code>proportion_df()</code>, but adds the number of isolates.</p>
     <h2 class="hasAnchor" id="combination-therapy"><a class="anchor" href="#combination-therapy"></a>Combination therapy</h2>
 
     
@@ -366,7 +366,7 @@ resistance should be used to calculate resistance, susceptibility should be used
 </ul>
 
 <p>Exposure is a function of how the mode of administration, dose, dosing interval, infusion time, as well as distribution and excretion of the antimicrobial agent will influence the infecting organism at the site of infection.</p>
-<p>This AMR package honours this new insight. Use <code>susceptibility</code> (equal to <code>proportion_SI</code>) to determine antimicrobial susceptibility and <code><a href='count.html'>count_susceptible</a></code> (equal to <code><a href='count.html'>count_SI</a></code>) to count susceptible isolates.</p>
+<p>This AMR package honours this new insight. Use <code>susceptibility()</code> (equal to <code>proportion_SI()</code>) to determine antimicrobial susceptibility and <code><a href='count.html'>count_susceptible</a>()</code> (equal to <code><a href='count.html'>count_SI</a>()</code>) to count susceptible isolates.</p>
     <h2 class="hasAnchor" id="read-more-on-our-website-"><a class="anchor" href="#read-more-on-our-website-"></a>Read more on our website!</h2>
 
     

@@ -58,7 +58,7 @@ eucast_exceptional_phenotypes(x, guideline = "EUCAST", ...)
 }
 }
 \description{
-Determine which isolates are multidrug-resistant organisms (MDRO) according to (country-specific) guidelines.
+Determine which isolates are multidrug-resistant organisms (MDRO) according to international and national guidelines.
 }
 \details{
 For the \code{pct_required_classes} argument, values above 1 will be divided by 100. This is to support both fractions (\code{0.75} or \code{3/4}) and percentages (\code{75}).
@@ -175,7 +175,7 @@ In 2019, the European Committee on Antimicrobial Susceptibility Testing (EUCAST)
 
 Exposure is a function of how the mode of administration, dose, dosing interval, infusion time, as well as distribution and excretion of the antimicrobial agent will influence the infecting organism at the site of infection.
 
-This AMR package honours this new insight. Use \code{\link{susceptibility}} (equal to \code{\link{proportion_SI}}) to determine antimicrobial susceptibility and \code{\link{count_susceptible}} (equal to \code{\link{count_SI}}) to count susceptible isolates.
+This AMR package honours this new insight. Use \code{\link{susceptibility}()} (equal to \code{\link{proportion_SI}()}) to determine antimicrobial susceptibility and \code{\link{count_susceptible}()} (equal to \code{\link{count_SI}()}) to count susceptible isolates.
 }
 
 \section{Read more on our website!}{

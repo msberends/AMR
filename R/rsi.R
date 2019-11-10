@@ -46,7 +46,7 @@
 #'
 #' Exposure is a function of how the mode of administration, dose, dosing interval, infusion time, as well as distribution and excretion of the antimicrobial agent will influence the infecting organism at the site of infection.
 #'
-#' This AMR package honours this new insight. Use \code{\link{susceptibility}} (equal to \code{\link{proportion_SI}}) to determine antimicrobial susceptibility and \code{\link{count_susceptible}} (equal to \code{\link{count_SI}}) to count susceptible isolates.
+#' This AMR package honours this new insight. Use \code{\link{susceptibility}()} (equal to \code{\link{proportion_SI}()}) to determine antimicrobial susceptibility and \code{\link{count_susceptible}()} (equal to \code{\link{count_SI}()}) to count susceptible isolates.
 #' @return Ordered factor with new class \code{rsi}
 #' @aliases RSI
 #' @export

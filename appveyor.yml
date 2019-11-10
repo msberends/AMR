@@ -19,11 +19,11 @@
 # Visit our website for more info: https://msberends.gitlab.io/AMR.    #
 # ==================================================================== #
 
-# Download script file from GitHub
+# Download script file from this GitLab repo
 init:
   ps: |
         $ErrorActionPreference = "Stop"
-        Invoke-WebRequest https://gitlab.com/msberends/AMR/raw/premaster/tests/appveyor/appveyor_tool.ps1 -OutFile "..\appveyor-tool.ps1"
+        Invoke-WebRequest https://gitlab.com/msberends/AMR/raw/master/tests/appveyor/appveyor_tool.ps1 -OutFile "..\appveyor-tool.ps1"
         Import-Module '..\appveyor-tool.ps1'
 
 install:
@@ -44,11 +44,11 @@ environment:
   matrix:
   - R_VERSION: oldrel
   - R_VERSION: release
-  - R_VERSION: devel # 9 nov 19: searches for R 4.0 and now fails...
+  - R_VERSION: devel
 
 matrix:
   allow_failures:
-  - R_VERSION: "devel"
+  - R_VERSION: "devel" # 9 nov 19: searches for R 4.0 and now fails...
 
 build_script:
   - travis_tool.sh install_deps

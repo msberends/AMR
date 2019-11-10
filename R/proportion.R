@@ -23,7 +23,7 @@
 #'
 #' @description These functions can be used to calculate the (co-)resistance or susceptibility of microbial isolates (i.e. percentage of S, SI, I, IR or R). All functions support quasiquotation with pipes, can be used in \code{dplyr}s \code{\link[dplyr]{summarise}} and support grouped variables, see \emph{Examples}.
 #'
-#' \code{resistance} should be used to calculate resistance, \code{susceptibility} should be used to calculate susceptibility.\cr
+#' \code{resistance()} should be used to calculate resistance, \code{susceptibility()} should be used to calculate susceptibility.\cr
 #' @param ... one or more vectors (or columns) with antibiotic interpretations. They will be transformed internally with \code{\link{as.rsi}} if needed. Use multiple columns to calculate (the lack of) co-resistance: the probability where one of two drugs have a resistant or susceptible result. See Examples.
 #' @param minimum the minimum allowed number of available (tested) isolates. Any isolate count lower than \code{minimum} will return \code{NA} with a warning. The default number of \code{30} isolates is advised by the Clinical and Laboratory Standards Institute (CLSI) as best practice, see Source.
 #' @param as_percent a logical to indicate whether the output must be returned as a hundred fold with \% sign (a character). A value of \code{0.123456} will then be returned as \code{"12.3\%"}.
@@ -35,13 +35,13 @@
 #' @param combine_IR a logical to indicate whether all values of I and R must be merged into one, so the output only consists of S vs. I+R (susceptible vs. non-susceptible). This is outdated, see parameter \code{combine_SI}.
 #' @inheritSection as.rsi Interpretation of S, I and R
 #' @details
-#' The function \code{resistance} is equal to the function \code{proportion_R}. The function \code{susceptibility} is equal to the function \code{proportion_SI}.
+#' The function \code{resistance()} is equal to the function \code{proportion_R()}. The function \code{susceptibility()} is equal to the function \code{proportion_SI()}.
 #'  
 #' \strong{Remember that you should filter your table to let it contain only first isolates!} This is needed to exclude duplicates and to reduce selection bias. Use \code{\link{first_isolate}} to determine them in your data set.
 #'
 #' These functions are not meant to count isolates, but to calculate the proportion of resistance/susceptibility. Use the \code{\link[AMR]{count}} functions to count isolates. The function \code{susceptibility()} is essentially equal to \code{count_susceptible() / count_all()}. \emph{Low counts can infuence the outcome - the \code{proportion} functions may camouflage this, since they only return the proportion (albeit being dependent on the \code{minimum} parameter).}
 #'
-#' The function \code{proportion_df} takes any variable from \code{data} that has an \code{"rsi"} class (created with \code{\link{as.rsi}}) and calculates the proportions R, I and S. The function \code{rsi_df} works exactly like \code{proportion_df}, but adds the number of isolates.
+#' The function \code{proportion_df()} takes any variable from \code{data} that has an \code{"rsi"} class (created with \code{\link{as.rsi}()}) and calculates the proportions R, I and S. The function \code{rsi_df()} works exactly like \code{proportion_df()}, but adds the number of isolates.
 #' @section Combination therapy:
 #' When using more than one variable for \code{...} (= combination therapy)), use \code{only_all_tested} to only count isolates that are tested for all antibiotics/variables that you test them for. See this example for two antibiotics, Antibiotic A and Antibiotic B, about how \code{susceptibility} works to calculate the \%SI:
 #'

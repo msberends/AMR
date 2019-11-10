@@ -41,6 +41,7 @@ Department of Medical Microbiology, University of Groningen \cr
 University Medical Center Groningen \cr
 Post Office Box 30001 \cr
 9700 RB Groningen
+The Netherlands
 
 If you have found a bug, please file a new issue at: \cr
 \url{https://gitlab.com/msberends/AMR/issues}

@@ -71,16 +71,16 @@ Double or, when \code{as_percent = TRUE}, a character.
 \description{
 These functions can be used to calculate the (co-)resistance or susceptibility of microbial isolates (i.e. percentage of S, SI, I, IR or R). All functions support quasiquotation with pipes, can be used in \code{dplyr}s \code{\link[dplyr]{summarise}} and support grouped variables, see \emph{Examples}.
 
-\code{resistance} should be used to calculate resistance, \code{susceptibility} should be used to calculate susceptibility.\cr
+\code{resistance()} should be used to calculate resistance, \code{susceptibility()} should be used to calculate susceptibility.\cr
 }
 \details{
-The function \code{resistance} is equal to the function \code{proportion_R}. The function \code{susceptibility} is equal to the function \code{proportion_SI}.
+The function \code{resistance()} is equal to the function \code{proportion_R()}. The function \code{susceptibility()} is equal to the function \code{proportion_SI()}.
  
 \strong{Remember that you should filter your table to let it contain only first isolates!} This is needed to exclude duplicates and to reduce selection bias. Use \code{\link{first_isolate}} to determine them in your data set.
 
 These functions are not meant to count isolates, but to calculate the proportion of resistance/susceptibility. Use the \code{\link[AMR]{count}} functions to count isolates. The function \code{susceptibility()} is essentially equal to \code{count_susceptible() / count_all()}. \emph{Low counts can infuence the outcome - the \code{proportion} functions may camouflage this, since they only return the proportion (albeit being dependent on the \code{minimum} parameter).}
 
-The function \code{proportion_df} takes any variable from \code{data} that has an \code{"rsi"} class (created with \code{\link{as.rsi}}) and calculates the proportions R, I and S. The function \code{rsi_df} works exactly like \code{proportion_df}, but adds the number of isolates.
+The function \code{proportion_df()} takes any variable from \code{data} that has an \code{"rsi"} class (created with \code{\link{as.rsi}()}) and calculates the proportions R, I and S. The function \code{rsi_df()} works exactly like \code{proportion_df()}, but adds the number of isolates.
 }
 \section{Combination therapy}{
 
@@ -131,7 +131,7 @@ In 2019, the European Committee on Antimicrobial Susceptibility Testing (EUCAST)
 
 Exposure is a function of how the mode of administration, dose, dosing interval, infusion time, as well as distribution and excretion of the antimicrobial agent will influence the infecting organism at the site of infection.
 
-This AMR package honours this new insight. Use \code{\link{susceptibility}} (equal to \code{\link{proportion_SI}}) to determine antimicrobial susceptibility and \code{\link{count_susceptible}} (equal to \code{\link{count_SI}}) to count susceptible isolates.
+This AMR package honours this new insight. Use \code{\link{susceptibility}()} (equal to \code{\link{proportion_SI}()}) to determine antimicrobial susceptibility and \code{\link{count_susceptible}()} (equal to \code{\link{count_SI}()}) to count susceptible isolates.
 }
 
 \section{Read more on our website!}{

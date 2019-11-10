@@ -1,4 +1,4 @@
-# AMR 0.8.0.9028
+# AMR 0.8.0.9029
 <small>Last updated: 10-Nov-2019</small>
 
 ### New
@@ -8,7 +8,7 @@
   * The new Verbose mode (`mdro(...., verbose = TRUE)`) returns an informative data set where the reason for MDRO determination is given for every isolate, and an list of the resistant antimicrobial agents
 
 ### Changes
-* Removed previously deprecated function `as.rsi()` - this function was replaced by `ab_atc()`
+* Removed previously deprecated function `as.atc()` - this function was replaced by `ab_atc()`
 * Renamed all `portion_*` functions to `proportion_*`. All `portion_*` functions are still available as deprecated functions, and will return a warning when used.
 * When running `as.rsi()` over a data set, it will now print the guideline that will be used if it is not specified by the user
 * Fix for `eucast_rules()`: *Stenotrophomonas maltophilia* not interpreted "R" to ceftazidime anymore (following EUCAST v3.1)

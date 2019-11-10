@@ -21,7 +21,7 @@
 
 #' Determine multidrug-resistant organisms (MDRO)
 #'
-#' Determine which isolates are multidrug-resistant organisms (MDRO) according to (country-specific) guidelines.
+#' Determine which isolates are multidrug-resistant organisms (MDRO) according to international and national guidelines.
 #' @param guideline a specific guideline to follow. When left empty, the publication by Magiorakos \emph{et al.} (2012, Clinical Microbiology and Infection) will be followed, see Details.
 #' @param info print progress
 #' @inheritParams eucast_rules
@@ -637,7 +637,7 @@ mdro <- function(x,
               which(x$genus == "Staphylococcus" & x$species == "aureus"),
               c(OXA, FOX),
               "any")
-    trans_tbl2(paste("Table 1 -", italic("S. aureus")),
+    trans_tbl2(paste("Table 1 -", italic("Staphylococcus aureus")),
                which(x$genus == "Staphylococcus" & x$species == "aureus"),
                list(GEN,
                     RIF,
