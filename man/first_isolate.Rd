@@ -129,13 +129,13 @@ example_isolates \%>\%
 A <- example_isolates \%>\%
   group_by(hospital_id) \%>\%
   summarise(count = n_rsi(GEN),            # gentamicin availability
-            resistance = portion_IR(GEN))  # gentamicin resistance
+            resistance = resistance(GEN))  # gentamicin resistance
 
 B <- example_isolates \%>\%
   filter_first_weighted_isolate() \%>\%      # the 1st isolate filter
   group_by(hospital_id) \%>\%
   summarise(count = n_rsi(GEN),            # gentamicin availability
-            resistance = portion_IR(GEN))  # gentamicin resistance
+            resistance = resistance(GEN))  # gentamicin resistance
 
 # Have a look at A and B.
 # B is more reliable because every isolate is only counted once.
