@@ -41,7 +41,7 @@ labels_rsi_count(position = NULL, x = "antibiotic",
 \arguments{
 \item{data}{a \code{data.frame} with column(s) of class \code{"rsi"} (see \code{\link{as.rsi}})}
 
-\item{position}{position adjustment of bars, either \code{"fill"} (default when \code{fun} is \code{\link{count_df}}), \code{"stack"} (default when \code{fun} is \code{\link{portion_df}}) or \code{"dodge"}}
+\item{position}{position adjustment of bars, either \code{"fill"}, \code{"stack"} or \code{"dodge"}}
 
 \item{x}{variable to show on x axis, either \code{"antibiotic"} (default) or \code{"interpretation"} or a grouping variable}
 
@@ -131,7 +131,7 @@ example_isolates \%>\%
   select(AMX, NIT, FOS, TMP, CIP) \%>\%
   ggplot_rsi()
 
-# get only portions and no counts:
+# get only proportions and no counts:
 example_isolates \%>\%
   select(AMX, NIT, FOS, TMP, CIP) \%>\%
   ggplot_rsi(datalabels = FALSE)

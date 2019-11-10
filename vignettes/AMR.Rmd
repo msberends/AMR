@@ -321,10 +321,12 @@ data_1st %>%
 
 ## Resistance percentages
 
-The functions `portion_S()`, `portion_SI()`, `portion_I()`, `portion_IR()` and `portion_R()` can be used to determine the portion of a specific antimicrobial outcome. As per the EUCAST guideline of 2019, we calculate resistance as the portion of R (`portion_R()`) and susceptibility as the portion of S and I (`portion_SI()`). These functions can be used on their own:
+The functions `resistance()` and `susceptibility()` can be used to calculate antimicrobial resistance or susceptibility. For more specific analyses, the functions `proportion_S()`, `proportion_SI()`, `proportion_I()`, `proportion_IR()` and `proportion_R()` can be used to determine the proportion of a specific antimicrobial outcome. 
+
+As per the EUCAST guideline of 2019, we calculate resistance as the proportion of R (`proportion_R()`, equal to `resistance()`) and susceptibility as the proportion of S and I (`proportion_SI()`, equal to `susceptibility()`). These functions can be used on their own:
 
 ```{r}
-data_1st %>% portion_R(AMX)
+data_1st %>% resistance(AMX)
 ```
 
 Or can be used in conjuction with `group_by()` and `summarise()`, both from the `dplyr` package:
@@ -332,12 +334,12 @@ Or can be used in conjuction with `group_by()` and `summarise()`, both from the 
 ```{r, eval = FALSE}
 data_1st %>% 
   group_by(hospital) %>% 
-  summarise(amoxicillin = portion_R(AMX))
+  summarise(amoxicillin = resistance(AMX))
 ```
 ```{r, echo = FALSE}
 data_1st %>% 
   group_by(hospital) %>% 
-  summarise(amoxicillin = portion_R(AMX)) %>% 
+  summarise(amoxicillin = resistance(AMX)) %>% 
   knitr::kable(align = "c", big.mark = ",")
 ```
 
@@ -346,32 +348,32 @@ Of course it would be very convenient to know the number of isolates responsible
 ```{r, eval = FALSE}
 data_1st %>% 
   group_by(hospital) %>% 
-  summarise(amoxicillin = portion_R(AMX),
+  summarise(amoxicillin = resistance(AMX),
             available = n_rsi(AMX))
 ```
 ```{r, echo = FALSE}
 data_1st %>% 
   group_by(hospital) %>% 
-  summarise(amoxicillin = portion_R(AMX),
+  summarise(amoxicillin = resistance(AMX),
             available = n_rsi(AMX)) %>% 
   knitr::kable(align = "c", big.mark = ",")
 ```
 
-These functions can also be used to get the portion of multiple antibiotics, to calculate empiric susceptibility of combination therapies very easily:
+These functions can also be used to get the proportion of multiple antibiotics, to calculate empiric susceptibility of combination therapies very easily:
 
 ```{r, eval = FALSE}
 data_1st %>% 
   group_by(genus) %>% 
-  summarise(amoxiclav = portion_SI(AMC),
-            gentamicin = portion_SI(GEN),
-            amoxiclav_genta = portion_SI(AMC, GEN))
+  summarise(amoxiclav = susceptibility(AMC),
+            gentamicin = susceptibility(GEN),
+            amoxiclav_genta = susceptibility(AMC, GEN))
 ```
 ```{r, echo = FALSE}
 data_1st %>% 
   group_by(genus) %>% 
-  summarise(amoxiclav = portion_SI(AMC),
-            gentamicin = portion_SI(GEN),
-            amoxiclav_genta = portion_SI(AMC, GEN)) %>% 
+  summarise(amoxiclav = susceptibility(AMC),
+            gentamicin = susceptibility(GEN),
+            amoxiclav_genta = susceptibility(AMC, GEN)) %>% 
   knitr::kable(align = "c", big.mark = ",")
 ```
 
@@ -380,9 +382,9 @@ To make a transition to the next part, let's see how this difference could be pl
 ```{r plot 1}
 data_1st %>% 
   group_by(genus) %>% 
-  summarise("1. Amoxi/clav" = portion_SI(AMC),
-            "2. Gentamicin" = portion_SI(GEN),
-            "3. Amoxi/clav + genta" = portion_SI(AMC, GEN)) %>% 
+  summarise("1. Amoxi/clav" = susceptibility(AMC),
+            "2. Gentamicin" = susceptibility(GEN),
+            "3. Amoxi/clav + genta" = susceptibility(AMC, GEN)) %>% 
   tidyr::gather("antibiotic", "S", -genus) %>%
   ggplot(aes(x = genus,
              y = S,
@@ -408,7 +410,7 @@ ggplot(a_data_set) +
   geom_bar(aes(year))
 ```
 
-The `AMR` package contains functions to extend this `ggplot2` package, for example `geom_rsi()`. It automatically transforms data with `count_df()` or `portion_df()` and show results in stacked bars. Its simplest and shortest example:
+The `AMR` package contains functions to extend this `ggplot2` package, for example `geom_rsi()`. It automatically transforms data with `count_df()` or `proportion_df()` and show results in stacked bars. Its simplest and shortest example:
 
 ```{r plot 3}
 ggplot(data_1st) +

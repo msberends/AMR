@@ -63,9 +63,9 @@ freq.rsi <- function(x, ...) {
     freq.default(x = x, ...,
                  .add_header = list(Drug = paste0(ab_name(ab), " (", ab, ", ", ab_atc(ab), ")"),
                                     group = ab_group(ab),
-                                    `%SI` = AMR::portion_SI(x, minimum = 0, as_percent = TRUE)))
+                                    `%SI` = AMR::susceptibility(x, minimum = 0, as_percent = TRUE)))
   } else {
     freq.default(x = x, ...,
-                 .add_header = list(`%SI` = AMR::portion_SI(x, minimum = 0, as_percent = TRUE)))
+                 .add_header = list(`%SI` = AMR::susceptibility(x, minimum = 0, as_percent = TRUE)))
   }
 }

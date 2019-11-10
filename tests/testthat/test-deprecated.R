@@ -22,20 +22,12 @@
 context("deprecated.R")
 
 test_that("deprecated functions work", {
-
-  # first 5 chars of official name
-  expect_equal(suppressWarnings(as.character(as.atc(c("nitro", "cipro")))),
-               c("J01XE01", "J01MA02"))
-
-  # EARS-Net
-  expect_equal(suppressWarnings(as.character(as.atc("AMX"))),
-               "J01CA04")
-
-  expect_equal(suppressWarnings(guess_ab_col(data.frame(AMP_ND10 = "R",
-                                                        AMC_ED20 = "S"),
-                                             as.atc("augmentin"))),
-               "AMC_ED20")
-  
   expect_identical(suppressWarnings(p.symbol(seq(0, 1, 0.001))),
                    p_symbol(seq(0, 1, 0.001)))
+  
+  expect_equal(suppressWarnings(portion_S(example_isolates$AMX)), proportion_S(example_isolates$AMX))
+  expect_equal(suppressWarnings(portion_SI(example_isolates$AMX)), proportion_SI(example_isolates$AMX))
+  expect_equal(suppressWarnings(portion_I(example_isolates$AMX)), proportion_I(example_isolates$AMX))
+  expect_equal(suppressWarnings(portion_IR(example_isolates$AMX)), proportion_IR(example_isolates$AMX))
+  expect_equal(suppressWarnings(portion_R(example_isolates$AMX)), proportion_R(example_isolates$AMX))
 })

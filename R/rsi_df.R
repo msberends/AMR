@@ -19,7 +19,7 @@
 # Visit our website for more info: https://msberends.gitlab.io/AMR.    #
 # ==================================================================== #
 
-#' @rdname portion
+#' @rdname proportion
 #' @rdname count
 #' @export
 rsi_df <- function(data,
@@ -29,17 +29,17 @@ rsi_df <- function(data,
                    as_percent = FALSE,
                    combine_SI = TRUE,
                    combine_IR = FALSE) {
-
-  portions <- rsi_calc_df(type = "portion",
-                          data = data,
-                          translate_ab = translate_ab,
-                          language = language,
-                          minimum = minimum,
-                          as_percent = as_percent,
-                          combine_SI = combine_SI,
-                          combine_IR = combine_IR,
-                          combine_SI_missing = missing(combine_SI))
-
+  
+  proportions <- rsi_calc_df(type = "proportion",
+                             data = data,
+                             translate_ab = translate_ab,
+                             language = language,
+                             minimum = minimum,
+                             as_percent = as_percent,
+                             combine_SI = combine_SI,
+                             combine_IR = combine_IR,
+                             combine_SI_missing = missing(combine_SI))
+  
   counts <- rsi_calc_df(type = "count",
                         data = data,
                         translate_ab = FALSE,
@@ -49,9 +49,9 @@ rsi_df <- function(data,
                         combine_SI = combine_SI,
                         combine_IR = combine_IR,
                         combine_SI_missing = missing(combine_SI))
-
-  data.frame(portions,
+  
+  data.frame(proportions,
              isolates = counts$value,
              stringsAsFactors = FALSE)
-
+  
 }

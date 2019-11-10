@@ -84,7 +84,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">0.8.0.9026</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">0.8.0.9027</span>
       </span>
     </div>
 
@@ -231,15 +231,16 @@
       
     </div>
 
-    <div id="amr-0-8-0-9026" class="section level1">
+    <div id="amr-0-8-0-9027" class="section level1">
 <h1 class="page-header">
-<a href="#amr-0-8-0-9026" class="anchor"></a>AMR 0.8.0.9026<small> Unreleased </small>
+<a href="#amr-0-8-0-9027" class="anchor"></a>AMR 0.8.0.9027<small> Unreleased </small>
 </h1>
 <p><small>Last updated: 10-Nov-2019</small></p>
 <div id="new" class="section level3">
 <h3 class="hasAnchor">
 <a href="#new" class="anchor"></a>New</h3>
 <ul>
+<li>Functions <code><a href="../reference/proportion.html">susceptibility()</a></code> and <code><a href="../reference/proportion.html">resistance()</a></code> as aliases of <code><a href="../reference/proportion.html">proportion_SI()</a></code> and <code><a href="../reference/proportion.html">proportion_R()</a></code>, respectively. These functions were added to make it more clear that I should be considered susceptible and not resistant.</li>
 <li>Support for a new MDRO guideline: Magiorakos AP, Srinivasan A <em>et al.</em> “Multidrug-resistant, extensively drug-resistant and pandrug-resistant bacteria: an international expert proposal for interim standard definitions for acquired resistance.” Clinical Microbiology and Infection (2012).
 <ul>
 <li>This is now the new default guideline for the <code><a href="../reference/mdro.html">mdro()</a></code> function</li>
@@ -252,12 +253,15 @@
 <h3 class="hasAnchor">
 <a href="#changes" class="anchor"></a>Changes</h3>
 <ul>
+<li>Removed previously deprecated function <code><a href="../reference/as.rsi.html">as.rsi()</a></code> - this function was replaced by <code><a href="../reference/ab_property.html">ab_atc()</a></code>
+</li>
+<li>Renamed all <code>portion_*</code> functions to <code>proportion_*</code>. All <code>portion_*</code> functions are still available as deprecated functions, and will return a warning when used.</li>
 <li>When running <code><a href="../reference/as.rsi.html">as.rsi()</a></code> over a data set, it will now print the guideline that will be used if it is not specified by the user</li>
 <li>Fix for <code><a href="../reference/eucast_rules.html">eucast_rules()</a></code>: <em>Stenotrophomonas maltophilia</em> not interpreted “R” to ceftazidime anymore (following EUCAST v3.1)</li>
 <li>Adopted Adeolu <em>et al.</em> (2016), <a href="https://www.ncbi.nlm.nih.gov/pubmed/27620848">PMID 27620848</a> for the <code>microorganisms</code> data set, which means that the new order Enterobacterales now consists of a part of the existing family <em>Enterobacteriaceae</em>, but that this family has been split into other families as well (like <em>Morganellaceae</em> and <em>Yersiniaceae</em>). Although published in 2016, this information is not yet in the Catalogue of Life version of 2019. All MDRO determinations with <code><a href="../reference/mdro.html">mdro()</a></code> will now use the Enterobacterales order for all guidelines before 2016.</li>
 <li>Fix for interpreting MIC values with <code><a href="../reference/as.rsi.html">as.rsi()</a></code> where the input is <code>NA</code>
 </li>
-<li>Added “imi” as allowed abbreviation for Imipenem</li>
+<li>Added “imi” and “imp” as allowed abbreviation for Imipenem (IPM)</li>
 <li>Fix for automatically determining columns with antibiotic results in <code><a href="../reference/mdro.html">mdro()</a></code> and <code><a href="../reference/eucast_rules.html">eucast_rules()</a></code>
 </li>
 <li>Added ATC codes for ceftaroline, ceftobiprole and faropenem and fixed two typos in the <code>antibiotics</code> data set</li>
@@ -392,7 +396,7 @@ Since this is a major change, usage of the old <code>also_single_tested</code> w
 </ul>
 </li>
 <li>Improved the internal auto-guessing function for determining antimicrobials in your data set (<code>AMR:::get_column_abx()</code>)</li>
-<li>Removed class <code>atc</code> - using <code><a href="../reference/AMR-deprecated.html">as.atc()</a></code> is now deprecated in favour of <code><a href="../reference/ab_property.html">ab_atc()</a></code> and this will return a character, not the <code>atc</code> class anymore</li>
+<li>Removed class <code>atc</code> - using <code>as.atc()</code> is now deprecated in favour of <code><a href="../reference/ab_property.html">ab_atc()</a></code> and this will return a character, not the <code>atc</code> class anymore</li>
 <li>Removed deprecated functions <code>abname()</code>, <code>ab_official()</code>, <code>atc_name()</code>, <code>atc_official()</code>, <code>atc_property()</code>, <code>atc_tradenames()</code>, <code>atc_trivial_nl()</code>
 </li>
 <li>Fix and speed improvement for <code><a href="../reference/mo_property.html">mo_shortname()</a></code>
@@ -403,7 +407,7 @@ Since this is a major change, usage of the old <code>also_single_tested</code> w
 <li>The <code>antibiotics</code> data set is now sorted by name and all cephalosporins now have their generation between brackets</li>
 <li>Speed improvement for <code><a href="../reference/guess_ab_col.html">guess_ab_col()</a></code> which is now 30 times faster for antibiotic abbreviations</li>
 <li>Improved <code><a href="../reference/filter_ab_class.html">filter_ab_class()</a></code> to be more reliable and to support 5th generation cephalosporins</li>
-<li>Function <code><a href="../reference/availability.html">availability()</a></code> now uses <code><a href="../reference/portion.html">portion_R()</a></code> instead of <code><a href="../reference/portion.html">portion_IR()</a></code>, to comply with EUCAST insights</li>
+<li>Function <code><a href="../reference/availability.html">availability()</a></code> now uses <code><a href="../reference/AMR-deprecated.html">portion_R()</a></code> instead of <code><a href="../reference/AMR-deprecated.html">portion_IR()</a></code>, to comply with EUCAST insights</li>
 <li>Functions <code><a href="../reference/age.html">age()</a></code> and <code><a href="../reference/age_groups.html">age_groups()</a></code> now have a <code>na.rm</code> parameter to remove empty values</li>
 <li>Renamed function <code><a href="../reference/AMR-deprecated.html">p.symbol()</a></code> to <code><a href="../reference/p_symbol.html">p_symbol()</a></code> (the former is now deprecated and will be removed in a future version)</li>
 <li>Using negative values for <code>x</code> in <code><a href="../reference/age_groups.html">age_groups()</a></code> will now introduce <code>NA</code>s and not return an error anymore</li>
@@ -433,10 +437,10 @@ Since this is a major change, usage of the old <code>also_single_tested</code> w
 <a href="#new-2" class="anchor"></a>New</h4>
 <ul>
 <li>
-<p>Function <code><a href="../reference/portion.html">rsi_df()</a></code> to transform a <code>data.frame</code> to a data set containing only the microbial interpretation (S, I, R), the antibiotic, the percentage of S/I/R and the number of available isolates. This is a convenient combination of the existing functions <code><a href="../reference/count.html">count_df()</a></code> and <code><a href="../reference/portion.html">portion_df()</a></code> to immediately show resistance percentages and number of available isolates:</p>
+<p>Function <code><a href="../reference/proportion.html">rsi_df()</a></code> to transform a <code>data.frame</code> to a data set containing only the microbial interpretation (S, I, R), the antibiotic, the percentage of S/I/R and the number of available isolates. This is a convenient combination of the existing functions <code><a href="../reference/count.html">count_df()</a></code> and <code>portion_df()</code> to immediately show resistance percentages and number of available isolates:</p>
 <div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1">septic_patients <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb7-2" data-line-number="2"><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span>(AMX, CIP) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb7-3" data-line-number="3"><span class="st">  </span><span class="kw"><a href="../reference/portion.html">rsi_df</a></span>()</a>
+<a class="sourceLine" id="cb7-3" data-line-number="3"><span class="st">  </span><span class="kw"><a href="../reference/proportion.html">rsi_df</a></span>()</a>
 <a class="sourceLine" id="cb7-4" data-line-number="4"><span class="co">#      antibiotic  interpretation      value  isolates</span></a>
 <a class="sourceLine" id="cb7-5" data-line-number="5"><span class="co"># 1   Amoxicillin              SI  0.4442636       546</span></a>
 <a class="sourceLine" id="cb7-6" data-line-number="6"><span class="co"># 2   Amoxicillin               R  0.5557364       683</span></a>
@@ -474,7 +478,7 @@ Since this is a major change, usage of the old <code>also_single_tested</code> w
 <h4 class="hasAnchor">
 <a href="#changed-1" class="anchor"></a>Changed</h4>
 <ul>
-<li>Column names of output <code><a href="../reference/count.html">count_df()</a></code> and <code><a href="../reference/portion.html">portion_df()</a></code> are now lowercase</li>
+<li>Column names of output <code><a href="../reference/count.html">count_df()</a></code> and <code>portion_df()</code> are now lowercase</li>
 <li>Fixed bug in translation of microorganism names</li>
 <li>Fixed bug in determining taxonomic kingdoms</li>
 <li>Algorithm improvements for <code><a href="../reference/as.ab.html">as.ab()</a></code> and <code><a href="../reference/as.mo.html">as.mo()</a></code> to understand even more severely misspelled input</li>
@@ -552,7 +556,7 @@ Please <a href="https://gitlab.com/msberends/AMR/issues/new?issue%5Btitle%5D=Tra
 <li>Improved intelligence of looking up antibiotic columns in a data set using <code><a href="../reference/guess_ab_col.html">guess_ab_col()</a></code>
 </li>
 <li>Added ~5,000 more old taxonomic names to the <code>microorganisms.old</code> data set, which leads to better results finding when using the <code><a href="../reference/as.mo.html">as.mo()</a></code> function</li>
-<li>This package now honours the new EUCAST insight (2019) that S and I are but classified as susceptible, where I is defined as ‘increased exposure’ and not ‘intermediate’ anymore. For functions like <code><a href="../reference/portion.html">portion_df()</a></code> and <code><a href="../reference/count.html">count_df()</a></code> this means that their new parameter <code>combine_SI</code> is TRUE at default. Our plotting function <code><a href="../reference/ggplot_rsi.html">ggplot_rsi()</a></code> also reflects this change since it uses <code><a href="../reference/count.html">count_df()</a></code> internally.</li>
+<li>This package now honours the new EUCAST insight (2019) that S and I are but classified as susceptible, where I is defined as ‘increased exposure’ and not ‘intermediate’ anymore. For functions like <code>portion_df()</code> and <code><a href="../reference/count.html">count_df()</a></code> this means that their new parameter <code>combine_SI</code> is TRUE at default. Our plotting function <code><a href="../reference/ggplot_rsi.html">ggplot_rsi()</a></code> also reflects this change since it uses <code><a href="../reference/count.html">count_df()</a></code> internally.</li>
 <li>The <code><a href="../reference/age.html">age()</a></code> function gained a new parameter <code>exact</code> to determine ages with decimals</li>
 <li>Removed deprecated functions <code>guess_mo()</code>, <code>guess_atc()</code>, <code>EUCAST_rules()</code>, <code>interpretive_reading()</code>, <code>rsi()</code>
 </li>
@@ -681,7 +685,7 @@ This data is updated annually - check the included version with the new function
 <a class="sourceLine" id="cb12-5" data-line-number="5">ab_certe -&gt;<span class="st"> </span><span class="kw">atc_certe</span>()</a>
 <a class="sourceLine" id="cb12-6" data-line-number="6">ab_umcg -&gt;<span class="st"> </span><span class="kw">atc_umcg</span>()</a>
 <a class="sourceLine" id="cb12-7" data-line-number="7">ab_tradenames -&gt;<span class="st"> </span><span class="kw">atc_tradenames</span>()</a></code></pre></div>
-These functions use <code><a href="../reference/AMR-deprecated.html">as.atc()</a></code> internally. The old <code>atc_property</code> has been renamed <code><a href="../reference/atc_online.html">atc_online_property()</a></code>. This is done for two reasons: firstly, not all ATC codes are of antibiotics (ab) but can also be of antivirals or antifungals. Secondly, the input must have class <code>atc</code> or must be coerable to this class. Properties of these classes should start with the same class name, analogous to <code><a href="../reference/as.mo.html">as.mo()</a></code> and e.g. <code>mo_genus</code>.</li>
+These functions use <code>as.atc()</code> internally. The old <code>atc_property</code> has been renamed <code><a href="../reference/atc_online.html">atc_online_property()</a></code>. This is done for two reasons: firstly, not all ATC codes are of antibiotics (ab) but can also be of antivirals or antifungals. Secondly, the input must have class <code>atc</code> or must be coerable to this class. Properties of these classes should start with the same class name, analogous to <code><a href="../reference/as.mo.html">as.mo()</a></code> and e.g. <code>mo_genus</code>.</li>
 <li>New functions <code><a href="../reference/mo_source.html">set_mo_source()</a></code> and <code><a href="../reference/mo_source.html">get_mo_source()</a></code> to use your own predefined MO codes as input for <code><a href="../reference/as.mo.html">as.mo()</a></code> and consequently all <code>mo_*</code> functions</li>
 <li>Support for the upcoming <a href="https://dplyr.tidyverse.org"><code>dplyr</code></a> version 0.8.0</li>
 <li>New function <code><a href="../reference/guess_ab_col.html">guess_ab_col()</a></code> to find an antibiotic column in a table</li>
@@ -729,7 +733,7 @@ These functions use <code><a href="../reference/AMR-deprecated.html">as.atc()</a
 <li>Removed columns <code>atc_group1_nl</code> and <code>atc_group2_nl</code> from the <code>antibiotics</code> data set</li>
 <li>Functions <code>atc_ddd()</code> and <code>atc_groups()</code> have been renamed <code><a href="../reference/atc_online.html">atc_online_ddd()</a></code> and <code><a href="../reference/atc_online.html">atc_online_groups()</a></code>. The old functions are deprecated and will be removed in a future version.</li>
 <li>Function <code>guess_mo()</code> is now deprecated in favour of <code><a href="../reference/as.mo.html">as.mo()</a></code> and will be removed in future versions</li>
-<li>Function <code>guess_atc()</code> is now deprecated in favour of <code><a href="../reference/AMR-deprecated.html">as.atc()</a></code> and will be removed in future versions</li>
+<li>Function <code>guess_atc()</code> is now deprecated in favour of <code>as.atc()</code> and will be removed in future versions</li>
 <li>Improvements for <code><a href="../reference/as.mo.html">as.mo()</a></code>:
 <ul>
 <li>
@@ -900,7 +904,7 @@ Using <code><a href="../reference/as.mo.html">as.mo(..., allow_uncertain = 3)</a
 </li>
 <li>Added parameter <code>combine_IR</code> (TRUE/FALSE) to functions <code>portion_df</code> and <code>count_df</code>, to indicate that all values of I and R must be merged into one, so the output only consists of S vs. IR (susceptible vs. non-susceptible)</li>
 <li>Fix for <code>portion_*(..., as_percent = TRUE)</code> when minimal number of isolates would not be met</li>
-<li>Added parameter <code>also_single_tested</code> for <code>portion_*</code> and <code>count_*</code> functions to also include cases where not all antibiotics were tested but at least one of the tested antibiotics includes the target antimicribial interpretation, see <code><a href="../reference/portion.html">?portion</a></code>
+<li>Added parameter <code>also_single_tested</code> for <code>portion_*</code> and <code>count_*</code> functions to also include cases where not all antibiotics were tested but at least one of the tested antibiotics includes the target antimicribial interpretation, see <code><a href="../reference/proportion.html">?portion</a></code>
 </li>
 <li>Using <code>portion_*</code> functions now throws a warning when total available isolate is below parameter <code>minimum</code>
 </li>
@@ -1078,9 +1082,9 @@ Using <code><a href="../reference/as.mo.html">as.mo(..., allow_uncertain = 3)</a
 <a class="sourceLine" id="cb28-2" data-line-number="2"><span class="co"># which is the same as:</span></a>
 <a class="sourceLine" id="cb28-3" data-line-number="3">septic_patients <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="../reference/count.html">count_IR</a></span>(amox, cipr)</a>
 <a class="sourceLine" id="cb28-4" data-line-number="4"></a>
-<a class="sourceLine" id="cb28-5" data-line-number="5">septic_patients <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="../reference/portion.html">portion_S</a></span>(amcl)</a>
-<a class="sourceLine" id="cb28-6" data-line-number="6">septic_patients <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="../reference/portion.html">portion_S</a></span>(amcl, gent)</a>
-<a class="sourceLine" id="cb28-7" data-line-number="7">septic_patients <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="../reference/portion.html">portion_S</a></span>(amcl, gent, pita)</a></code></pre></div>
+<a class="sourceLine" id="cb28-5" data-line-number="5">septic_patients <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="../reference/AMR-deprecated.html">portion_S</a></span>(amcl)</a>
+<a class="sourceLine" id="cb28-6" data-line-number="6">septic_patients <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="../reference/AMR-deprecated.html">portion_S</a></span>(amcl, gent)</a>
+<a class="sourceLine" id="cb28-7" data-line-number="7">septic_patients <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="../reference/AMR-deprecated.html">portion_S</a></span>(amcl, gent, pita)</a></code></pre></div>
 </li>
 <li>Edited <code>ggplot_rsi</code> and <code>geom_rsi</code> so they can cope with <code>count_df</code>. The new <code>fun</code> parameter has value <code>portion_df</code> at default, but can be set to <code>count_df</code>.</li>
 <li>Fix for <code>ggplot_rsi</code> when the <code>ggplot2</code> package was not loaded</li>
@@ -1333,7 +1337,7 @@ Using <code><a href="../reference/as.mo.html">as.mo(..., allow_uncertain = 3)</a
     <div id="tocnav">
       <h2>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
-        <li><a href="#amr-0-8-0-9026">0.8.0.9026</a></li>
+        <li><a href="#amr-0-8-0-9027">0.8.0.9027</a></li>
         <li><a href="#amr-0-8-0">0.8.0</a></li>
         <li><a href="#amr-0-7-1">0.7.1</a></li>
         <li><a href="#amr-0-7-0">0.7.0</a></li>

@@ -27,14 +27,42 @@
 #' @keywords internal
 #' @name AMR-deprecated
 #' @rdname AMR-deprecated
-as.atc <- function(x) {
-  .Deprecated("ab_atc", package = "AMR")
-  AMR::ab_atc(x)
+p.symbol <- function(...) {
+  .Deprecated("p_symbol", package = "AMR")
+  AMR::p_symbol(...)
 }
 
 #' @rdname AMR-deprecated
 #' @export
-p.symbol <- function(...) {
-  .Deprecated("p_symbol", package = "AMR")
-  AMR::p_symbol(...)
+portion_R <- function(...) {
+  .Deprecated("resistance", package = "AMR")
+  proportion_R(...)
+}
+
+#' @rdname AMR-deprecated
+#' @export
+portion_IR <- function(...) {
+  .Deprecated("proportion_IR", package = "AMR")
+  proportion_IR(...)
+}
+
+#' @rdname AMR-deprecated
+#' @export
+portion_I <- function(...) {
+  .Deprecated("proportion_I", package = "AMR")
+  proportion_I(...)
+}
+
+#' @rdname AMR-deprecated
+#' @export
+portion_SI <- function(...) {
+  .Deprecated("susceptibility", package = "AMR")
+  proportion_SI(...)
+}
+
+#' @rdname AMR-deprecated
+#' @export
+portion_S <- function(...) {
+  .Deprecated("proportion_S", package = "AMR")
+  proportion_S(...)
 }

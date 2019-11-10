@@ -52,7 +52,7 @@
 
 <meta property="og:title" content="Count isolates — count" />
 <meta property="og:description" content="These functions can be used to count resistant/susceptible microbial isolates. All functions support quasiquotation with pipes, can be used in dplyrs summarise and support grouped variables, see Examples.
-count_R and count_IR can be used to count resistant isolates, count_S and count_SI can be used to count susceptible isolates." />
+count_resistant should be used to count resistant isolates, count_susceptible should be used to count susceptible isolates." />
 <meta property="og:image" content="https://msberends.gitlab.io/AMR/logo.png" />
 <meta name="twitter:card" content="summary" />
 
@@ -86,7 +86,7 @@ count_R and count_IR can be used to count resistant isolates, count_S and count_
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">0.8.0.9021</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">0.8.0.9027</span>
       </span>
     </div>
 
@@ -236,10 +236,14 @@ count_R and count_IR can be used to count resistant isolates, count_S and count_
 
     <div class="ref-description">
     <p>These functions can be used to count resistant/susceptible microbial isolates. All functions support quasiquotation with pipes, can be used in <code>dplyr</code>s <code><a href='https://dplyr.tidyverse.org/reference/summarise.html'>summarise</a></code> and support grouped variables, see <em>Examples</em>.</p>
-<p><code>count_R</code> and <code>count_IR</code> can be used to count resistant isolates, <code>count_S</code> and <code>count_SI</code> can be used to count susceptible isolates.<br /></p>
+<p><code>count_resistant</code> should be used to count resistant isolates, <code>count_susceptible</code> should be used to count susceptible isolates.<br /></p>
     </div>
 
-    <pre class="usage"><span class='fu'>count_R</span>(<span class='no'>...</span>, <span class='kw'>only_all_tested</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
+    <pre class="usage"><span class='fu'>count_resistant</span>(<span class='no'>...</span>, <span class='kw'>only_all_tested</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
+
+<span class='fu'>count_susceptible</span>(<span class='no'>...</span>, <span class='kw'>only_all_tested</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
+
+<span class='fu'>count_R</span>(<span class='no'>...</span>, <span class='kw'>only_all_tested</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
 
 <span class='fu'>count_IR</span>(<span class='no'>...</span>, <span class='kw'>only_all_tested</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
 
@@ -289,18 +293,15 @@ count_R and count_IR can be used to count resistant isolates, count_S and count_
     </tr>
     </table>
 
-    <h2 class="hasAnchor" id="source"><a class="anchor" href="#source"></a>Source</h2>
-
-    <p>Wickham H. <strong>Tidy Data.</strong> The Journal of Statistical Software, vol. 59, 2014. <a href='http://vita.had.co.nz/papers/tidy-data.html'>http://vita.had.co.nz/papers/tidy-data.html</a></p>
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>Integer</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>These functions are meant to count isolates. Use the <code><a href='portion.html'>portion</a>_*</code> functions to calculate microbial resistance.</p>
-<p>The function <code>n_rsi</code> is an alias of <code>count_all</code>. They can be used to count all available isolates, i.e. where all input antibiotics have an available result (S, I or R). Their use is equal to <code><a href='https://dplyr.tidyverse.org/reference/n_distinct.html'>n_distinct</a></code>. Their function is equal to <code>count_S(...) + count_IR(...)</code>.</p>
-<p>The function <code>count_df</code> takes any variable from <code>data</code> that has an <code>"rsi"</code> class (created with <code><a href='as.rsi.html'>as.rsi</a></code>) and counts the amounts of S, I and R. The resulting <em>tidy data</em> (see Source) <code>data.frame</code> will have three rows (S/I/R) and a column for each variable with class <code>"rsi"</code>.</p>
-<p>The function <code>rsi_df</code> works exactly like <code>count_df</code>, but adds the percentage of S, I and R.</p>
+    <p>These functions are meant to count isolates. Use the <code><a href='proportion.html'>resistance</a></code>/<code><a href='proportion.html'>susceptibility</a></code> functions to calculate microbial resistance/susceptibility.</p>
+<p>The function <code>count_resistant</code> is equal to the function <code>count_R</code>. The function <code>count_susceptible</code> is equal to the function <code>count_SI</code>.</p>
+<p>The function <code>n_rsi</code> is an alias of <code>count_all</code>. They can be used to count all available isolates, i.e. where all input antibiotics have an available result (S, I or R). Their use is equal to <code><a href='https://dplyr.tidyverse.org/reference/n_distinct.html'>n_distinct</a></code>. Their function is equal to <code>count_susceptible(...) + count_resistant(...)</code>.</p>
+<p>The function <code>count_df</code> takes any variable from <code>data</code> that has an <code>"rsi"</code> class (created with <code><a href='as.rsi.html'>as.rsi</a></code>) and counts the number of S's, I's and R's. The function <code>rsi_df</code> works exactly like <code>count_df</code>, but adds the percentage of S, I and R.</p>
     <h2 class="hasAnchor" id="interpretation-of-s-i-and-r"><a class="anchor" href="#interpretation-of-s-i-and-r"></a>Interpretation of S, I and R</h2>
 
     
@@ -313,12 +314,12 @@ count_R and count_IR can be used to count resistant isolates, count_S and count_
 </ul>
 
 <p>Exposure is a function of how the mode of administration, dose, dosing interval, infusion time, as well as distribution and excretion of the antimicrobial agent will influence the infecting organism at the site of infection.</p>
-<p>This AMR package honours this new insight. Use <code><a href='portion.html'>portion_SI</a></code> to determine antimicrobial susceptibility and <code>count_SI</code> to count susceptible isolates.</p>
+<p>This AMR package honours this new insight. Use <code><a href='proportion.html'>susceptibility</a></code> (equal to <code><a href='proportion.html'>proportion_SI</a></code>) to determine antimicrobial susceptibility and <code>count_susceptible</code> (equal to <code>count_SI</code>) to count susceptible isolates.</p>
     <h2 class="hasAnchor" id="combination-therapy"><a class="anchor" href="#combination-therapy"></a>Combination therapy</h2>
 
     
 
-<p>When using more than one variable for <code>...</code> (= combination therapy)), use <code>only_all_tested</code> to only count isolates that are tested for all antibiotics/variables that you test them for. See this example for two antibiotics, Antibiotic A and Antibiotic B, about how <code>portion_SI</code> works to calculate the %SI:</p>
+<p>When using more than one variable for <code>...</code> (= combination therapy)), use <code>only_all_tested</code> to only count isolates that are tested for all antibiotics/variables that you test them for. See this example for two antibiotics, Antibiotic A and Antibiotic B, about how <code>susceptibility</code> works to calculate the %SI:</p>
 <pre>
 --------------------------------------------------------------------
                     only_all_tested = FALSE  only_all_tested = TRUE
@@ -339,11 +340,11 @@ count_R and count_IR can be used to count resistant isolates, count_S and count_
 </pre>
 
 <p>Please note that, in combination therapies, for <code>only_all_tested = TRUE</code> applies that:</p><pre>
-   count_S()  +  count_I()  +  count_R()  == count_all()
-  portion_S() + portion_I() + portion_R() == 1
+    count_S()    +   count_I()    +   count_R()    = count_all()
+  proportion_S() + proportion_I() + proportion_R() = 1
 </pre><p>and that, in combination therapies, for <code>only_all_tested = FALSE</code> applies that:</p><pre>
-   count_S()  +  count_I()  +  count_R()  &gt;= count_all()
-  portion_S() + portion_I() + portion_R() &gt;= 1
+    count_S()    +   count_I()    +   count_R()    &gt;= count_all()
+  proportion_S() + proportion_I() + proportion_R() &gt;= 1
 </pre>
 
 <p>Using <code>only_all_tested</code> has no impact when only using one antibiotic as input.</p>
@@ -354,29 +355,33 @@ count_R and count_IR can be used to count resistant isolates, count_S and count_
 <p>On our website <a href='https://msberends.gitlab.io/AMR'>https://msberends.gitlab.io/AMR</a> you can find <a href='https://msberends.gitlab.io/AMR/articles/AMR.html'>a tutorial</a> about how to conduct AMR analysis, the <a href='https://msberends.gitlab.io/AMR/reference'>complete documentation of all functions</a> (which reads a lot easier than here in R) and <a href='https://msberends.gitlab.io/AMR/articles/WHONET.html'>an example analysis using WHONET data</a>.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><code><a href='portion.html'>portion</a>_*</code> to calculate microbial resistance and susceptibility.</p></div>
+    <div class='dont-index'><p><code><a href='proportion.html'>proportion</a>_*</code> to calculate microbial resistance and susceptibility.</p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><span class='co'># example_isolates is a data set available in the AMR package.</span>
 ?<span class='no'>example_isolates</span>
 
-<span class='co'># Count resistant isolates</span>
-<span class='fu'>count_R</span>(<span class='no'>example_isolates</span>$<span class='no'>AMX</span>)
-<span class='fu'>count_IR</span>(<span class='no'>example_isolates</span>$<span class='no'>AMX</span>)
+<span class='fu'>count_resistant</span>(<span class='no'>example_isolates</span>$<span class='no'>AMX</span>)   <span class='co'># counts "R"</span>
+<span class='fu'>count_susceptible</span>(<span class='no'>example_isolates</span>$<span class='no'>AMX</span>) <span class='co'># counts "S" and "I"</span>
+<span class='fu'>count_all</span>(<span class='no'>example_isolates</span>$<span class='no'>AMX</span>)         <span class='co'># counts "S", "I" and "R"</span>
 
-<span class='co'># Or susceptible isolates</span>
+<span class='co'># be more specific</span>
 <span class='fu'>count_S</span>(<span class='no'>example_isolates</span>$<span class='no'>AMX</span>)
 <span class='fu'>count_SI</span>(<span class='no'>example_isolates</span>$<span class='no'>AMX</span>)
+<span class='fu'>count_I</span>(<span class='no'>example_isolates</span>$<span class='no'>AMX</span>)
+<span class='fu'>count_IR</span>(<span class='no'>example_isolates</span>$<span class='no'>AMX</span>)
+<span class='fu'>count_R</span>(<span class='no'>example_isolates</span>$<span class='no'>AMX</span>)
 
 <span class='co'># Count all available isolates</span>
 <span class='fu'>count_all</span>(<span class='no'>example_isolates</span>$<span class='no'>AMX</span>)
 <span class='fu'>n_rsi</span>(<span class='no'>example_isolates</span>$<span class='no'>AMX</span>)
 
-<span class='co'># Since n_rsi counts available isolates, you can</span>
-<span class='co'># calculate back to count e.g. non-susceptible isolates.</span>
-<span class='co'># This results in the same:</span>
-<span class='fu'>count_SI</span>(<span class='no'>example_isolates</span>$<span class='no'>AMX</span>)
-<span class='fu'><a href='portion.html'>portion_SI</a></span>(<span class='no'>example_isolates</span>$<span class='no'>AMX</span>) * <span class='fu'>n_rsi</span>(<span class='no'>example_isolates</span>$<span class='no'>AMX</span>)
+<span class='co'># n_rsi() is an alias of count_all().</span>
+<span class='co'># Since it counts all available isolates, you can</span>
+<span class='co'># calculate back to count e.g. susceptible isolates.</span>
+<span class='co'># These results are the same:</span>
+<span class='fu'>count_susceptible</span>(<span class='no'>example_isolates</span>$<span class='no'>AMX</span>)
+<span class='fu'><a href='proportion.html'>susceptibility</a></span>(<span class='no'>example_isolates</span>$<span class='no'>AMX</span>) * <span class='fu'>n_rsi</span>(<span class='no'>example_isolates</span>$<span class='no'>AMX</span>)
 
 <span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>dplyr</span>)
 <span class='no'>example_isolates</span> <span class='kw'>%&gt;%</span>
@@ -390,19 +395,16 @@ count_R and count_IR can be used to count resistant isolates, count_S and count_
 
 <span class='co'># Count co-resistance between amoxicillin/clav acid and gentamicin,</span>
 <span class='co'># so we can see that combination therapy does a lot more than mono therapy.</span>
-<span class='co'># Please mind that `portion_SI` calculates percentages right away instead.</span>
-<span class='fu'>count_SI</span>(<span class='no'>example_isolates</span>$<span class='no'>AMC</span>)  <span class='co'># 1433</span>
-<span class='fu'>count_all</span>(<span class='no'>example_isolates</span>$<span class='no'>AMC</span>) <span class='co'># 1879</span>
+<span class='co'># Please mind that `susceptibility()` calculates percentages right away instead.</span>
+<span class='no'>example_isolates</span> <span class='kw'>%&gt;%</span> <span class='fu'>count_susceptible</span>(<span class='no'>AMC</span>) <span class='co'># 1433</span>
+<span class='no'>example_isolates</span> <span class='kw'>%&gt;%</span> <span class='fu'>count_all</span>(<span class='no'>AMC</span>)         <span class='co'># 1879</span>
 
-<span class='fu'>count_SI</span>(<span class='no'>example_isolates</span>$<span class='no'>GEN</span>)  <span class='co'># 1399</span>
-<span class='fu'>count_all</span>(<span class='no'>example_isolates</span>$<span class='no'>GEN</span>) <span class='co'># 1855</span>
+<span class='no'>example_isolates</span> <span class='kw'>%&gt;%</span> <span class='fu'>count_susceptible</span>(<span class='no'>GEN</span>) <span class='co'># 1399</span>
+<span class='no'>example_isolates</span> <span class='kw'>%&gt;%</span> <span class='fu'>count_all</span>(<span class='no'>GEN</span>)         <span class='co'># 1855</span>
 
-<span class='fu'><a href='https://rdrr.io/r/base/with.html'>with</a></span>(<span class='no'>example_isolates</span>,
-     <span class='fu'>count_SI</span>(<span class='no'>AMC</span>, <span class='no'>GEN</span>))        <span class='co'># 1764</span>
-<span class='fu'><a href='https://rdrr.io/r/base/with.html'>with</a></span>(<span class='no'>example_isolates</span>,
-     <span class='fu'>n_rsi</span>(<span class='no'>AMC</span>, <span class='no'>GEN</span>))           <span class='co'># 1936</span>
-
-<span class='co'># Get portions S/I/R immediately of all rsi columns</span>
+<span class='no'>example_isolates</span> <span class='kw'>%&gt;%</span> <span class='fu'>count_susceptible</span>(<span class='no'>AMC</span>, <span class='no'>GEN</span>) <span class='co'># 1764</span>
+<span class='no'>example_isolates</span> <span class='kw'>%&gt;%</span> <span class='fu'>count_all</span>(<span class='no'>AMC</span>, <span class='no'>GEN</span>)         <span class='co'># 1936</span>
+<span class='co'># Get number of S+I vs. R immediately of selected columns</span>
 <span class='no'>example_isolates</span> <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='no'>AMX</span>, <span class='no'>CIP</span>) <span class='kw'>%&gt;%</span>
   <span class='fu'>count_df</span>(<span class='kw'>translate</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
@@ -417,7 +419,6 @@ count_R and count_IR can be used to count resistant isolates, count_S and count_
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-      <li><a href="#source">Source</a></li>
       <li><a href="#value">Value</a></li>
       <li><a href="#details">Details</a></li>
       <li><a href="#interpretation-of-s-i-and-r">Interpretation of S, I and R</a></li>

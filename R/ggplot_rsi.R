@@ -23,13 +23,13 @@
 #'
 #' Use these functions to create bar plots for antimicrobial resistance analysis. All functions rely on internal \code{\link[ggplot2]{ggplot}2} functions.
 #' @param data a \code{data.frame} with column(s) of class \code{"rsi"} (see \code{\link{as.rsi}})
-#' @param position position adjustment of bars, either \code{"fill"} (default when \code{fun} is \code{\link{count_df}}), \code{"stack"} (default when \code{fun} is \code{\link{portion_df}}) or \code{"dodge"}
+#' @param position position adjustment of bars, either \code{"fill"}, \code{"stack"} or \code{"dodge"}
 #' @param x variable to show on x axis, either \code{"antibiotic"} (default) or \code{"interpretation"} or a grouping variable
 #' @param fill variable to categorise using the plots legend, either \code{"antibiotic"} (default) or \code{"interpretation"} or a grouping variable
 #' @param breaks numeric vector of positions
 #' @param limits numeric vector of length two providing limits of the scale, use \code{NA} to refer to the existing minimum or maximum
 #' @param facet variable to split plots by, either \code{"interpretation"} (default) or \code{"antibiotic"} or a grouping variable
-#' @inheritParams portion
+#' @inheritParams proportion
 #' @param nrow (when using \code{facet}) number of rows
 #' @param colours a named vector with colours for the bars. The names must be one or more of: S, SI, I, IR, R or be \code{FALSE} to use default \code{ggplot2} colours.
 #' @param datalabels show datalabels using \code{labels_rsi_count}
@@ -82,7 +82,7 @@
 #'   select(AMX, NIT, FOS, TMP, CIP) %>%
 #'   ggplot_rsi()
 #'
-#' # get only portions and no counts:
+#' # get only proportions and no counts:
 #' example_isolates %>%
 #'   select(AMX, NIT, FOS, TMP, CIP) %>%
 #'   ggplot_rsi(datalabels = FALSE)
@@ -229,7 +229,7 @@ ggplot_rsi <- function(data,
   }
 
   if (identical(position, "fill")) {
-    # portions, so use y scale with percentage
+    # proportions, so use y scale with percentage
     p <- p + scale_y_percent(breaks = breaks, limits = limits)
   }
 

@@ -13,28 +13,19 @@ We created this package for both academic research and routine analysis at the F
 
 This package can be used for:
 \itemize{
-  \item{Reference for microorganisms, since it contains all microbial (sub)species from the Catalogue of Life}
+  \item{Reference for the taxonomy of microorganisms, since the package contains all microbial (sub)species from the Catalogue of Life}
   \item{Interpreting raw MIC and disk diffusion values, based on the latest CLSI or EUCAST guidelines}
+  \item{Determining first isolates to be used for AMR analysis}
   \item{Calculating antimicrobial resistance}
   \item{Determining multi-drug resistance (MDR) / multi-drug resistant organisms (MDRO)}
-  \item{Calculating empirical susceptibility of both mono therapy and combination therapy}
+  \item{Calculating (empirical) susceptibility of both mono therapy and combination therapies}
   \item{Predicting future antimicrobial resistance using regression models}
   \item{Getting properties for any microorganism (like Gram stain, species, genus or family)}
-  \item{Getting properties for any antibiotic (like name, ATC code, defined daily dose or trade name)}
+  \item{Getting properties for any antibiotic (like name, EARS-Net code, ATC code, PubChem code, defined daily dose or trade name)}
   \item{Plotting antimicrobial resistance}
-  \item{Determining first isolates to be used for AMR analysis}
   \item{Applying EUCAST expert rules}
-  \item{Descriptive statistics: frequency tables, kurtosis and skewness}
 }
 }
-\section{Authors}{
-
-Matthijs S. Berends[1,2] Christian F. Luz[1], Erwin E.A. Hassing[2],  Corinna Glasner[1],  Alex W. Friedrich[1],  Bhanu N.M. Sinha[1] \cr
-
-[1] Department of Medical Microbiology, University of Groningen, University Medical Center Groningen, Groningen, the Netherlands - \url{https://www.rug.nl} \url{https://www.umcg.nl} \cr
-[2] Certe Medical Diagnostics & Advice, Groningen, the Netherlands - \url{https://www.certe.nl}
-}
-
 \section{Read more on our website!}{
 
 On our website \url{https://msberends.gitlab.io/AMR} you can find \href{https://msberends.gitlab.io/AMR/articles/AMR.html}{a tutorial} about how to conduct AMR analysis, the \href{https://msberends.gitlab.io/AMR/reference}{complete documentation of all functions} (which reads a lot easier than here in R) and \href{https://msberends.gitlab.io/AMR/articles/WHONET.html}{an example analysis using WHONET data}.

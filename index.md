@@ -143,7 +143,7 @@ The `AMR` package basically does four important things:
 
 3. It **analyses the data** with convenient functions that use well-known methods.
 
-   * Calculate the resistance (and even co-resistance) of microbial isolates with the `portion_R()`, `portion_IR()`, `portion_I()`, `portion_SI()` and `portion_S()` functions. Similarly, the *number* of isolates can be determined with the `count_R()`, `count_IR()`, `count_I()`, `count_SI()` and `count_S()` functions. All these functions can be used with the `dplyr` package (e.g. in conjunction with `summarise()`)
+   * Calculate the microbial susceptibility or resistance (and even co-resistance) with the `susceptibility()` and `resistance()` functions, or be even more specific with the `proportion_R()`, `proportion_IR()`, `proportion_I()`, `proportion_SI()` and `proportion_S()` functions. Similarly, the *number* of isolates can be determined with the `count_resistant()`, `count_susceptible()` and `count_all()` functions. All these functions can be used with the `dplyr` package (e.g. in conjunction with `summarise()`)
    * Plot AMR results with `geom_rsi()`, a function made for the `ggplot2` package
    * Predict antimicrobial resistance for the nextcoming years using logistic regression models with the `resistance_predict()` function
 

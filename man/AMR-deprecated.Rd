@@ -2,13 +2,25 @@
 % Please edit documentation in R/deprecated.R
 \name{AMR-deprecated}
 \alias{AMR-deprecated}
-\alias{as.atc}
 \alias{p.symbol}
+\alias{portion_R}
+\alias{portion_IR}
+\alias{portion_I}
+\alias{portion_SI}
+\alias{portion_S}
 \title{Deprecated functions}
 \usage{
-as.atc(x)
-
 p.symbol(...)
+
+portion_R(...)
+
+portion_IR(...)
+
+portion_I(...)
+
+portion_SI(...)
+
+portion_S(...)
 }
 \description{
 These functions are so-called '\link{Deprecated}'. They will be removed in a future release. Using the functions will give a warning with the name of the function it has been replaced by (if there is one).
