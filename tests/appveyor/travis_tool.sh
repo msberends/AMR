@@ -148,8 +148,6 @@ BootstrapMacOptions() {
 }
 
 EnsureDevtools() {
-    # force install Rcpp
-    RBinaryInstall Rcpp
     if ! Rscript -e 'if (!("devtools" %in% rownames(installed.packages()))) q(status=1)' ; then
         # Install devtools and testthat.
         RBinaryInstall devtools testthat
@@ -157,6 +155,10 @@ EnsureDevtools() {
 }
 
 EnsureRemotes() {
+    if ! Rscript -e 'if (!("Rcpp" %in% rownames(installed.packages()))) q(status=1)' ; then
+        # Install remotes.
+        RBinaryInstall Rcpp
+    fi
     if ! Rscript -e 'if (!("remotes" %in% rownames(installed.packages()))) q(status=1)' ; then
         # Install remotes.
         RBinaryInstall remotes
