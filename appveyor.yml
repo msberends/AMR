@@ -46,6 +46,10 @@ environment:
   - R_VERSION: release
   # - R_VERSION: devel # 9 nov 19: searches for R 4.0 and now fails...
 
+matrix:
+  allow_failures:
+  - R_VERSION: "devel"
+
 build_script:
   - travis_tool.sh install_deps
 

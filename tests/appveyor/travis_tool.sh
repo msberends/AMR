@@ -148,6 +148,8 @@ BootstrapMacOptions() {
 }
 
 EnsureDevtools() {
+    # force install Rcpp
+    RBinaryInstall Rcpp
     if ! Rscript -e 'if (!("devtools" %in% rownames(installed.packages()))) q(status=1)' ; then
         # Install devtools and testthat.
         RBinaryInstall devtools testthat
