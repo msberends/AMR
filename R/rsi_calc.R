@@ -167,8 +167,8 @@ rsi_calc <- function(...,
   }
 }
 
-#' @importFrom dplyr %>% summarise_if mutate select everything bind_rows
-#' @importFrom tidyr gather
+#' @importFrom dplyr %>% summarise_if mutate select everything bind_rows arrange
+#' @importFrom tidyr pivot_longer
 rsi_calc_df <- function(type, # "proportion" or "count"
                         data,
                         translate_ab = "name",
@@ -247,12 +247,13 @@ rsi_calc_df <- function(type, # "proportion" or "count"
   }
   
   res <- res %>%
-    gather(antibiotic, value, -interpretation, -data.groups) %>%
-    select(antibiotic, everything())
+    pivot_longer(-c(interpretation, data.groups), names_to = "antibiotic") %>% 
+    select(antibiotic, everything()) %>% 
+    arrange(antibiotic, interpretation)
   
   if (!translate_ab == FALSE) {
     res <- res %>% mutate(antibiotic = AMR::ab_property(antibiotic, property = translate_ab, language = language))
   }
   
-  res
+  as.data.frame(res, stringsAsFactors = FALSE)
 }

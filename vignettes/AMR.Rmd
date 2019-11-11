@@ -385,9 +385,10 @@ data_1st %>%
   summarise("1. Amoxi/clav" = susceptibility(AMC),
             "2. Gentamicin" = susceptibility(GEN),
             "3. Amoxi/clav + genta" = susceptibility(AMC, GEN)) %>% 
-  tidyr::gather("antibiotic", "S", -genus) %>%
+  # pivot_longer() from the tidyr package "lengthens" data:
+  tidyr::pivot_longer(-genus, names_to = "antibiotic") %>% 
   ggplot(aes(x = genus,
-             y = S,
+             y = value,
              fill = antibiotic)) +
   geom_col(position = "dodge2")
 ```
@@ -463,14 +464,19 @@ The next example uses the included `example_isolates`, which is an anonymised da
 We will compare the resistance to fosfomycin (column `FOS`) in hospital A and D. The input for the `fisher.test()` can be retrieved with a transformation like this:
 
 ```{r, results = 'markup'}
+# use package 'tidyr' to pivot data; 
+# it gets installed with this 'AMR' package
+library(tidyr)
+
 check_FOS <- example_isolates %>%
   filter(hospital_id %in% c("A", "D")) %>% # filter on only hospitals A and D
   select(hospital_id, FOS) %>%             # select the hospitals and fosfomycin
   group_by(hospital_id) %>%                # group on the hospitals
   count_df(combine_SI = TRUE) %>%          # count all isolates per group (hospital_id)
-  tidyr::spread(hospital_id, value) %>%    # transform output so A and D are columns
-  select(A, D) %>%                         # and select these only
-  as.matrix()                              # transform to good old matrix for fisher.test()
+  pivot_wider(names_from = hospital_id,    # transform output so A and D are columns
+              values_from = value) %>%     
+  select(A, D) %>%                         # and only select these columns
+  as.matrix()                              # transform to a good old matrix for fisher.test()
 
 check_FOS
 ```
@@ -482,4 +488,4 @@ We can apply the test now with:
 fisher.test(check_FOS)                            
 ```
 
-As can be seen, the p value is `r round(fisher.test(check_FOS)$p.value, 3)`, which means that the fosfomycin resistances found in hospital A and D are really different.
+As can be seen, the p value is `r round(fisher.test(check_FOS)$p.value, 3)`, which means that the fosfomycin resistance found in hospital A and D are really different.

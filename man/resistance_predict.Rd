@@ -38,7 +38,7 @@ ggplot_rsi_predict(x, main = paste("Resistance Prediction of", x_name),
 
 \item{model}{the statistical model of choice. This could be a generalised linear regression model with binomial distribution (i.e. using \code{\link{glm}(..., family = \link{binomial})}), assuming that a period of zero resistance was followed by a period of increasing resistance leading slowly to more and more resistance. See Details for all valid options.}
 
-\item{I_as_S}{a logical to indicate whether values \code{I} should be treated as \code{S} (will otherwise be treated as \code{R})}
+\item{I_as_S}{a logical to indicate whether values \code{I} should be treated as \code{S} (will otherwise be treated as \code{R}). The default, \code{TRUE}, follows the redefinition by EUCAST about the interpretion of I (increased exposure) in 2019, see section 'Interpretation of S, I and R' below.}
 
 \item{preserve_measurements}{a logical to indicate whether predictions of years that are actually available in the data should be overwritten by the original data. The standard errors of those years will be \code{NA}.}
 
@@ -74,6 +74,21 @@ Valid options for the statistical model are:
   \item{\code{"lin"} or \code{"linear"}: a linear regression model}
 }
 }
+\section{Interpretation of S, I and R}{
+
+In 2019, the European Committee on Antimicrobial Susceptibility Testing (EUCAST) has decided to change the definitions of susceptibility testing categories S, I and R as shown below (\url{http://www.eucast.org/newsiandr/}). Results of several consultations on the new definitions are available on the EUCAST website under "Consultations".
+
+\itemize{
+  \item{\strong{S} - }{Susceptible, standard dosing regimen: A microorganism is categorised as "Susceptible, standard dosing regimen", when there is a high likelihood of therapeutic success using a standard dosing regimen of the agent.}
+  \item{\strong{I} - }{Susceptible, increased exposure: A microorganism is categorised as "Susceptible, Increased exposure" when there is a high likelihood of therapeutic success because exposure to the agent is increased by adjusting the dosing regimen or by its concentration at the site of infection.}
+  \item{\strong{R} - }{Resistant: A microorganism is categorised as "Resistant" when there is a high likelihood of therapeutic failure even when there is increased exposure.}
+}
+
+Exposure is a function of how the mode of administration, dose, dosing interval, infusion time, as well as distribution and excretion of the antimicrobial agent will influence the infecting organism at the site of infection.
+
+This AMR package honours this new insight. Use \code{\link{susceptibility}()} (equal to \code{\link{proportion_SI}()}) to determine antimicrobial susceptibility and \code{\link{count_susceptible}()} (equal to \code{\link{count_SI}()}) to count susceptible isolates.
+}
+
 \section{Read more on our website!}{
 
 On our website \url{https://msberends.gitlab.io/AMR} you can find \href{https://msberends.gitlab.io/AMR/articles/AMR.html}{a tutorial} about how to conduct AMR analysis, the \href{https://msberends.gitlab.io/AMR/reference}{complete documentation of all functions} (which reads a lot easier than here in R) and \href{https://msberends.gitlab.io/AMR/articles/WHONET.html}{an example analysis using WHONET data}.

@@ -1,8 +1,16 @@
-# AMR 0.8.0.9029
-<small>Last updated: 10-Nov-2019</small>
+# AMR 0.8.0.9030
+<small>Last updated: 11-Nov-2019</small>
 
 ### New
-* Functions `susceptibility()` and `resistance()` as aliases of `proportion_SI()` and `proportion_R()`, respectively. These functions were added to make it more clear that I should be considered susceptible and not resistant.
+* Functions `susceptibility()` and `resistance()` as aliases of `proportion_SI()` and `proportion_R()`, respectively. These functions were added to make it more clear that "I" should be considered susceptible and not resistant.
+  ```r
+  library(dplyr)
+  example_isolates %>%
+    group_by(bug = mo_name(mo)) %>% 
+    summarise(amoxicillin = resistance(AMX),
+              amox_clav   = resistance(AMC)) %>%
+    filter(!is.na(amoxicillin) | !is.na(amox_clav))
+  ```
 * Support for a new MDRO guideline: Magiorakos AP, Srinivasan A *et al.* "Multidrug-resistant, extensively drug-resistant and pandrug-resistant bacteria: an international expert proposal for interim standard definitions for acquired resistance." Clinical Microbiology and Infection (2012).
   * This is now the new default guideline for the `mdro()` function
   * The new Verbose mode (`mdro(...., verbose = TRUE)`) returns an informative data set where the reason for MDRO determination is given for every isolate, and an list of the resistant antimicrobial agents

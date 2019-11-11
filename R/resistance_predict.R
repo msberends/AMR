@@ -29,12 +29,13 @@
 #' @param year_every unit of sequence between lowest year found in the data and \code{year_max}
 #' @param minimum minimal amount of available isolates per year to include. Years containing less observations will be estimated by the model.
 #' @param model the statistical model of choice. This could be a generalised linear regression model with binomial distribution (i.e. using \code{\link{glm}(..., family = \link{binomial})}), assuming that a period of zero resistance was followed by a period of increasing resistance leading slowly to more and more resistance. See Details for all valid options.
-#' @param I_as_S a logical to indicate whether values \code{I} should be treated as \code{S} (will otherwise be treated as \code{R})
+#' @param I_as_S a logical to indicate whether values \code{I} should be treated as \code{S} (will otherwise be treated as \code{R}). The default, \code{TRUE}, follows the redefinition by EUCAST about the interpretion of I (increased exposure) in 2019, see section 'Interpretation of S, I and R' below. 
 #' @param preserve_measurements a logical to indicate whether predictions of years that are actually available in the data should be overwritten by the original data. The standard errors of those years will be \code{NA}.
 #' @param info a logical to indicate whether textual analysis should be printed with the name and \code{\link{summary}} of the statistical model.
 #' @param main title of the plot
 #' @param ribbon a logical to indicate whether a ribbon should be shown (default) or error bars
 #' @param ... parameters passed on to functions
+#' @inheritSection as.rsi Interpretation of S, I and R
 #' @inheritParams first_isolate
 #' @inheritParams graphics::plot
 #' @details Valid options for the statistical model are:
@@ -59,6 +60,7 @@
 #' @export
 #' @importFrom stats predict glm lm
 #' @importFrom dplyr %>% pull mutate mutate_at n group_by_at summarise filter filter_at all_vars n_distinct arrange case_when n_groups transmute ungroup
+#' @importFrom tidyr pivot_wider
 #' @inheritSection AMR Read more on our website!
 #' @examples
 #' x <- resistance_predict(example_isolates, col_ab = "AMX", year_min = 2010, model = "binomial")
@@ -161,6 +163,7 @@ resistance_predict <- function(x,
   }
 
   year <- function(x) {
+    # don't depend on lubridate or so, would be overkill for only this function
     if (all(grepl("^[0-9]{4}$", x))) {
       x
     } else {
@@ -192,9 +195,12 @@ resistance_predict <- function(x,
   }
 
   colnames(df) <- c("year", "antibiotic", "observations")
+
   df <- df %>%
     filter(!is.na(antibiotic)) %>%
-    tidyr::spread(antibiotic, observations, fill = 0) %>%
+    pivot_wider(names_from = antibiotic,
+                values_from = observations,
+                values_fill = list(observations = 0)) %>% 
     filter((R + S) >= minimum)
   df_matrix <- df %>%
     ungroup() %>%
