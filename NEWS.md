@@ -1,5 +1,16 @@
-# AMR 0.8.0.9030
-<small>Last updated: 11-Nov-2019</small>
+# AMR 0.8.0.9031
+<small>Last updated: 15-Nov-2019</small>
+
+### Breaking
+* Adopted Adeolu *et al.* (2016), [PMID 27620848](https://www.ncbi.nlm.nih.gov/pubmed/27620848) for the `microorganisms` data set, which means that the new order Enterobacterales now consists of a part of the existing family Enterobacteriaceae, but that this family has been split into other families as well (like *Morganellaceae* and *Yersiniaceae*). Although published in 2016, this information is not yet in the Catalogue of Life version of 2019. All MDRO determinations with `mdro()` will now use the Enterobacterales order for all guidelines before 2016 that were dependent on the Enterobacteriaceae family.
+  * If you were dependent on the old Enterobacteriaceae family e.g. by using in your code:
+    ```r
+    if (mo_family(somebugs) == "Enterobacteriaceae") ...
+    ```
+    then please adjust this to:
+    ```r
+    if (mo_order(somebugs) == "Enterobacterales") ...
+    ```
 
 ### New
 * Functions `susceptibility()` and `resistance()` as aliases of `proportion_SI()` and `proportion_R()`, respectively. These functions were added to make it more clear that "I" should be considered susceptible and not resistant.
@@ -16,11 +27,29 @@
   * The new Verbose mode (`mdro(...., verbose = TRUE)`) returns an informative data set where the reason for MDRO determination is given for every isolate, and an list of the resistant antimicrobial agents
 
 ### Changes
+* Improvements to algorithm in `as.mo()`:
+  * Now allows "ou" where "au" should have been used and vice versa
+  * More intelligent way of coping with some consonants like "l" and "r"
+  * Added a score (a certainty percentage) to `mo_uncertainties()`, that is calculated using the [Levenshtein distance](https://en.wikipedia.org/wiki/Levenshtein_distance):
+    ```r
+    as.mo(c("Stafylococcus aureus",
+            "staphylokok aureuz"))
+    #> Warning: 
+    #> Results of two values was guessed with uncertainty. Use mo_uncertainties() to review them.
+    #> Class 'mo'
+    #> [1] B_STPHY_AURS B_STPHY_AURS
+    
+    mo_uncertainties()
+    #> "Stafylococcus aureus" -> Staphylococcus aureus (B_STPHY_AURS, score: 95.2%)
+    #> "staphylokok aureuz"   -> Staphylococcus aureus (B_STPHY_AURS, score: 85.7%)
+    ```
 * Removed previously deprecated function `as.atc()` - this function was replaced by `ab_atc()`
 * Renamed all `portion_*` functions to `proportion_*`. All `portion_*` functions are still available as deprecated functions, and will return a warning when used.
 * When running `as.rsi()` over a data set, it will now print the guideline that will be used if it is not specified by the user
-* Fix for `eucast_rules()`: *Stenotrophomonas maltophilia* not interpreted "R" to ceftazidime anymore (following EUCAST v3.1)
-* Adopted Adeolu *et al.* (2016), [PMID 27620848](https://www.ncbi.nlm.nih.gov/pubmed/27620848) for the `microorganisms` data set, which means that the new order Enterobacterales now consists of a part of the existing family *Enterobacteriaceae*, but that this family has been split into other families as well (like *Morganellaceae* and *Yersiniaceae*). Although published in 2016, this information is not yet in the Catalogue of Life version of 2019. All MDRO determinations with `mdro()` will now use the Enterobacterales order for all guidelines before 2016.
+* Improvements for `eucast_rules()`:
+  * Fix where *Stenotrophomonas maltophilia* would always become ceftazidime R (following EUCAST v3.1)
+  * Fix where *Leuconostoc* and *Pediococcus* would not always become glyopeptides R
+  * non-EUCAST rules in `eucast_rules()` are now applied first and not as last anymore. This is to improve the dependency on certain antibiotics for the official EUCAST rules. Please see `?eucast_rules`.
 * Fix for interpreting MIC values with `as.rsi()` where the input is `NA`
 * Added "imi" and "imp" as allowed abbreviation for Imipenem (IPM)
 * Fix for automatically determining columns with antibiotic results in `mdro()` and `eucast_rules()`

@@ -85,7 +85,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">0.8.0.9027</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">0.8.0.9031</span>
       </span>
     </div>
 
@@ -305,18 +305,15 @@ A microorganism ID from this package (class: <code>mo</code>) typically looks li
 <p>Values that cannot be coered will be considered 'unknown' and will get the MO code <code>UNKNOWN</code>.</p>
 <p>Use the <code><a href='mo_property.html'>mo_property</a>_*</code> functions to get properties based on the returned code, see Examples.</p>
 <p>The algorithm uses data from the Catalogue of Life (see below) and from one other source (see <code><a href='microorganisms.html'>microorganisms</a></code>).</p>
-<p><strong>Self-learning algoritm</strong> <br />
-The <code>as.mo()</code> function gains experience from previously determined microorganism IDs and learns from it. This drastically improves both speed and reliability. Use <code>clear_mo_history()</code> to reset the algorithms. Only experience from your current <code>AMR</code> package version is used. This is done because in the future the taxonomic tree (which is included in this package) may change for any organism and it consequently has to rebuild its knowledge.</p>
-<p>Usually, any guess after the first try runs 80-95% faster than the first try.</p>
-<p>This resets with every update of this <code>AMR</code> package since results are saved to your local package library folder.</p>
-<p><strong>Intelligent rules</strong> <br />
-The <code>as.mo()</code> function uses several coercion rules for fast and logical results. It assesses the input matching criteria in the following order:</p><ul>
+<p>The <code>as.mo()</code> function uses several coercion rules for fast and logical results. It assesses the input matching criteria in the following order:</p><ul>
 <li><p>Human pathogenic prevalence: the function  starts with more prevalent microorganisms, followed by less prevalent ones;</p></li>
 <li><p>Taxonomic kingdom: the function starts with determining Bacteria, then Fungi, then Protozoa, then others;</p></li>
 <li><p>Breakdown of input values to identify possible matches.</p></li>
 </ul>
 
-<p>This will lead to the effect that e.g. <code>"E. coli"</code> (a highly prevalent microorganism found in humans) will return the microbial ID of <em>Escherichia coli</em> and not <em>Entamoeba coli</em> (a less prevalent microorganism in humans), although the latter would alphabetically come first. In addition, the <code>as.mo()</code> function can differentiate four levels of uncertainty to guess valid results:</p>
+<p>This will lead to the effect that e.g. <code>"E. coli"</code> (a highly prevalent microorganism found in humans) will return the microbial ID of <em>Escherichia coli</em> and not <em>Entamoeba coli</em> (a less prevalent microorganism in humans), although the latter would alphabetically come first.</p>
+<p><strong>Coping with uncertain results</strong> <br />
+In addition, the <code>as.mo()</code> function can differentiate four levels of uncertainty to guess valid results:</p>
 <ul>
 <li><p>Uncertainty level 0: no additional rules are applied;</p></li>
 <li><p>Uncertainty level 1: allow previously accepted (but now invalid) taxonomic names and minor spelling errors;</p></li>
@@ -332,14 +329,21 @@ The <code>as.mo()</code> function uses several coercion rules for fast and logic
 </ul>
 
 <p>The level of uncertainty can be set using the argument <code>allow_uncertain</code>. The default is <code>allow_uncertain = TRUE</code>, which is equal to uncertainty level 2. Using <code>allow_uncertain = FALSE</code> is equal to uncertainty level 0 and will skip all rules. You can also use e.g. <code>as.mo(..., allow_uncertain = 1)</code> to only allow up to level 1 uncertainty.</p>
-<p>Use <code>mo_failures()</code> to get a vector with all values that could not be coerced to a valid value. <br />
-Use <code>mo_uncertainties()</code> to get a <code>data.frame</code> with all values that were coerced to a valid value, but with uncertainty. <br />
-Use <code>mo_renamed()</code> to get a <code>data.frame</code> with all values that could be coerced based on an old, previously accepted taxonomic name.</p>
+<p>There are three helper functions that can be run after then <code>as.mo()</code> function:</p><ul>
+<li><p>Use <code>mo_uncertainties()</code> to get a <code>data.frame</code> with all values that were coerced to a valid value, but with uncertainty. The output contains a score, that is calculated as <code>(n - 0.5 * L) / n</code>, where <em>n</em> is the number of characters of the returned full name of the microorganism, and <em>L</em> is the <a href='https://en.wikipedia.org/wiki/Levenshtein_distance'>Levenshtein distance</a> between that full name and the user input.</p></li>
+<li><p>Use <code>mo_failures()</code> to get a vector with all values that could not be coerced to a valid value.</p></li>
+<li><p>Use <code>mo_renamed()</code> to get a <code>data.frame</code> with all values that could be coerced based on an old, previously accepted taxonomic name.</p></li>
+</ul>   
+
 <p><strong>Microbial prevalence of pathogens in humans</strong> <br />
 The intelligent rules consider the prevalence of microorganisms in humans grouped into three groups, which is available as the <code>prevalence</code> columns in the <code><a href='microorganisms.html'>microorganisms</a></code> and <code><a href='microorganisms.old.html'>microorganisms.old</a></code> data sets. The grouping into prevalence groups is based on experience from several microbiological laboratories in the Netherlands in conjunction with international reports on pathogen prevalence.</p>
 <p>Group 1 (most prevalent microorganisms) consists of all microorganisms where the taxonomic class is Gammaproteobacteria or where the taxonomic genus is  <em>Enterococcus</em>, <em>Staphylococcus</em> or <em>Streptococcus</em>. This group consequently contains all common Gram-negative bacteria, such as <em>Pseudomonas</em> and <em>Legionella</em> and all species within the order Enterobacteriales.</p>
 <p>Group 2 consists of all microorganisms where the taxonomic phylum is Proteobacteria, Firmicutes, Actinobacteria or Sarcomastigophora, or where the taxonomic genus is <em>Aspergillus</em>, <em>Bacteroides</em>, <em>Candida</em>, <em>Capnocytophaga</em>, <em>Chryseobacterium</em>, <em>Cryptococcus</em>, <em>Elisabethkingia</em>, <em>Flavobacterium</em>, <em>Fusobacterium</em>, <em>Giardia</em>, <em>Leptotrichia</em>, <em>Mycoplasma</em>, <em>Prevotella</em>, <em>Rhodotorula</em>, <em>Treponema</em>, <em>Trichophyton</em> or <em>Ureaplasma</em>.</p>
 <p>Group 3 (least prevalent microorganisms) consists of all other microorganisms.</p>
+<p><strong>Self-learning algorithm</strong> <br />
+The <code>as.mo()</code> function gains experience from previously determined microorganism IDs and learns from it. This drastically improves both speed and reliability. Use <code>clear_mo_history()</code> to reset the algorithms. Only experience from your current <code>AMR</code> package version is used. This is done because in the future the taxonomic tree (which is included in this package) may change for any organism and it consequently has to rebuild its knowledge.</p>
+<p>Usually, any guess after the first try runs 80-95% faster than the first try.</p>
+<p>This resets with every update of this <code>AMR</code> package since results are saved to your local package library folder.</p>
     <h2 class="hasAnchor" id="source"><a class="anchor" href="#source"></a>Source</h2>
 
     
@@ -376,7 +380,7 @@ The <code><a href='mo_property.html'>mo_property</a></code> functions (like <cod
 <span class='fu'>as.mo</span>(<span class='st'>"S aureus"</span>)
 <span class='fu'>as.mo</span>(<span class='st'>"Staphylococcus aureus"</span>)
 <span class='fu'>as.mo</span>(<span class='st'>"Staphylococcus aureus (MRSA)"</span>)
-<span class='fu'>as.mo</span>(<span class='st'>"Sthafilokkockus aaureuz"</span>) <span class='co'># handles incorrect spelling</span>
+<span class='fu'>as.mo</span>(<span class='st'>"Zthafilokkoockus oureuz"</span>) <span class='co'># handles incorrect spelling</span>
 <span class='fu'>as.mo</span>(<span class='st'>"MRSA"</span>)   <span class='co'># Methicillin Resistant S. aureus</span>
 <span class='fu'>as.mo</span>(<span class='st'>"VISA"</span>)   <span class='co'># Vancomycin Intermediate S. aureus</span>
 <span class='fu'>as.mo</span>(<span class='st'>"VRSA"</span>)   <span class='co'># Vancomycin Resistant S. aureus</span>

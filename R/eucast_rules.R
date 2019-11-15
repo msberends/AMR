@@ -24,8 +24,11 @@ EUCAST_VERSION_BREAKPOINTS <- "9.0, 2019"
 EUCAST_VERSION_EXPERT_RULES <- "3.1, 2016"
 
 #' EUCAST rules
-#'
-#' Apply susceptibility rules as defined by the European Committee on Antimicrobial Susceptibility Testing (EUCAST, \url{http://eucast.org}), see \emph{Source}. This includes (1) expert rules, (2) intrinsic resistance and (3) inferred resistance as defined in their breakpoint tables.
+#' 
+#' @description
+#' Apply susceptibility rules as defined by the European Committee on Antimicrobial Susceptibility Testing (EUCAST, \url{http://eucast.org}), see \emph{Source}. This includes (1) expert rules, (2) intrinsic resistance and (3) inferred resistance as defined in their breakpoint tables. 
+#' 
+#' To improve the interpretation of the antibiogram before EUCAST rules are applied, some non-EUCAST rules are applied at default, see Details.
 #' @param x data with antibiotic columns, like e.g. \code{AMX} and \code{AMC}
 #' @param info print progress
 #' @param rules a character vector that specifies which rules should be applied - one or more of \code{c("breakpoints", "expert", "other", "all")}
@@ -35,6 +38,19 @@ EUCAST_VERSION_EXPERT_RULES <- "3.1, 2016"
 #' @details
 #' \strong{Note:} This function does not translate MIC values to RSI values. Use \code{\link{as.rsi}} for that. \cr
 #' \strong{Note:} When ampicillin (AMP, J01CA01) is not available but amoxicillin (AMX, J01CA04) is, the latter will be used for all rules where there is a dependency on ampicillin. These drugs are interchangeable when it comes to expression of antimicrobial resistance.
+#'
+#' Before further processing, some non-EUCAST rules are applied to improve the efficacy of the EUCAST rules. These non-EUCAST rules, that are applied to all isolates, are:
+#' \itemize{
+#'   \item{Inherit amoxicillin (AMX) from ampicillin (AMP), where amoxicillin (AMX) is unavailable;}
+#'   \item{Inherit ampicillin (AMP) from amoxicillin (AMX), where ampicillin (AMP) is unavailable;}
+#'   \item{Set amoxicillin (AMX) = R where amoxicillin/clavulanic acid (AMC) = R;}
+#'   \item{Set piperacillin (PIP) = R where piperacillin/tazobactam (TZP) = R;}
+#'   \item{Set trimethoprim (TMP) = R where trimethoprim/sulfamethoxazole (SXT) = R;}
+#'   \item{Set amoxicillin/clavulanic acid (AMC) = S where amoxicillin (AMX) = S;}
+#'   \item{Set piperacillin/tazobactam (TZP) = S where piperacillin (PIP) = S;}
+#'   \item{Set trimethoprim/sulfamethoxazole (SXT) = S where trimethoprim (TMP) = S.}
+#' }
+#' To \emph{not} use these rules, please use \code{eucast_rules(..., rules = c("breakpoints", "expert"))}.
 #'
 #' The file containing all EUCAST rules is located here: \url{https://gitlab.com/msberends/AMR/blob/master/data-raw/eucast_rules.tsv}.
 #'
@@ -516,29 +532,7 @@ eucast_rules <- function(x,
       as.data.frame(stringsAsFactors = FALSE)
   )
   
-  if (info == TRUE) {
-    cat(paste0(
-      "\nRules by the ", bold("European Committee on Antimicrobial Susceptibility Testing (EUCAST)"),
-      "\n", blue("http://eucast.org/"), "\n"))
-  }
-  
-  # since ampicillin ^= amoxicillin, get the first from the latter (not in original EUCAST table)
-  if (!ab_missing(AMP) & !ab_missing(AMX)) {
-    if (verbose == TRUE) {
-      cat("\n VERBOSE: transforming",
-          length(which(x[, AMX] == "S" & !x[, AMP] %in% c("S", "I", "R"))),
-          "empty ampicillin fields to 'S' based on amoxicillin. ")
-      cat("\n VERBOSE: transforming",
-          length(which(x[, AMX] == "I" & !x[, AMP] %in% c("S", "I", "R"))),
-          "empty ampicillin fields to 'I' based on amoxicillin. ")
-      cat("\n VERBOSE: transforming",
-          length(which(x[, AMX] == "R" & !x[, AMP] %in% c("S", "I", "R"))),
-          "empty ampicillin fields to 'R' based on amoxicillin. \n")
-    }
-    x[which(x[, AMX] == "S" & !x[, AMP] %in% c("S", "I", "R")), AMP] <- "S"
-    x[which(x[, AMX] == "I" & !x[, AMP] %in% c("S", "I", "R")), AMP] <- "I"
-    x[which(x[, AMX] == "R" & !x[, AMP] %in% c("S", "I", "R")), AMP] <- "R"
-  } else if (ab_missing(AMP) & !ab_missing(AMX)) {
+  if (ab_missing(AMP) & !ab_missing(AMX)) {
     # ampicillin column is missing, but amoxicillin is available
     message(blue(paste0("NOTE: Using column `", bold(AMX), "` as input for ampicillin (J01CA01) since many EUCAST rules depend on it.")))
     AMP <- AMX
@@ -611,6 +605,7 @@ eucast_rules <- function(x,
     }
   }
   
+  eucast_notification_shown <- FALSE
   eucast_rules_df <- eucast_rules_file # internal data file
   no_added <- 0
   no_changed <- 0
@@ -648,6 +643,13 @@ eucast_rules <- function(x,
       next
     }
     
+    if (info == TRUE & !rule_group_current %like% "other" & eucast_notification_shown == FALSE) {
+      cat(paste0(
+        "\n----\nRules by the ", bold("European Committee on Antimicrobial Susceptibility Testing (EUCAST)"),
+        "\n", blue("http://eucast.org/"), "\n"))
+      eucast_notification_shown <- TRUE
+    }
+    
     
     if (info == TRUE) {
       # Print rule (group) ------------------------------------------------------
@@ -660,7 +662,7 @@ eucast_rules <- function(x,
             rule_group_current %like% "expert" ~
               paste0("\nEUCAST Expert Rules, Intrinsic Resistance and Exceptional Phenotypes (v", EUCAST_VERSION_EXPERT_RULES, ")\n"),
             TRUE ~
-              "\nOther rules\n"
+              "\nOther rules by this AMR package\n"
           )
         ))
       }
@@ -707,6 +709,7 @@ eucast_rules <- function(x,
     }
     
     if (like_is_one_of == "is") {
+      # so 'Enterococcus' will turn into '^Enterococcus$'
       mo_value <- paste0("^", eucast_rules_df[i, 3], "$")
     } else if (like_is_one_of == "one_of") {
       # so 'Clostridium, Actinomyces, ...' will turn into '^(Clostridium|Actinomyces|...)$'
@@ -717,7 +720,7 @@ eucast_rules <- function(x,
     } else if (like_is_one_of == "like") {
       mo_value <- eucast_rules_df[i, 3]
     } else {
-      stop("invalid like_is_one_of", call. = FALSE)
+      stop("invalid value for column 'like.is.one_of'", call. = FALSE)
     }
     
     source_antibiotics <- eucast_rules_df[i, 4]

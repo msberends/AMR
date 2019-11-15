@@ -70,14 +70,6 @@ Use the \code{\link{mo_property}_*} functions to get properties based on the ret
 
 The algorithm uses data from the Catalogue of Life (see below) and from one other source (see \code{\link{microorganisms}}).
 
-\strong{Self-learning algoritm} \cr
-The \code{as.mo()} function gains experience from previously determined microorganism IDs and learns from it. This drastically improves both speed and reliability. Use \code{clear_mo_history()} to reset the algorithms. Only experience from your current \code{AMR} package version is used. This is done because in the future the taxonomic tree (which is included in this package) may change for any organism and it consequently has to rebuild its knowledge.
-
-Usually, any guess after the first try runs 80-95\% faster than the first try.
-
-This resets with every update of this \code{AMR} package since results are saved to your local package library folder.
-
-\strong{Intelligent rules} \cr
 The \code{as.mo()} function uses several coercion rules for fast and logical results. It assesses the input matching criteria in the following order:
 \itemize{
   \item{Human pathogenic prevalence: the function  starts with more prevalent microorganisms, followed by less prevalent ones;}
@@ -85,7 +77,10 @@ The \code{as.mo()} function uses several coercion rules for fast and logical res
   \item{Breakdown of input values to identify possible matches.}
 }
 
-This will lead to the effect that e.g. \code{"E. coli"} (a highly prevalent microorganism found in humans) will return the microbial ID of \emph{Escherichia coli} and not \emph{Entamoeba coli} (a less prevalent microorganism in humans), although the latter would alphabetically come first. In addition, the \code{as.mo()} function can differentiate four levels of uncertainty to guess valid results: 
+This will lead to the effect that e.g. \code{"E. coli"} (a highly prevalent microorganism found in humans) will return the microbial ID of \emph{Escherichia coli} and not \emph{Entamoeba coli} (a less prevalent microorganism in humans), although the latter would alphabetically come first. 
+
+\strong{Coping with uncertain results} \cr
+In addition, the \code{as.mo()} function can differentiate four levels of uncertainty to guess valid results: 
 
 \itemize{
   \item{Uncertainty level 0: no additional rules are applied;}
@@ -104,9 +99,12 @@ This leads to e.g.:
 
 The level of uncertainty can be set using the argument \code{allow_uncertain}. The default is \code{allow_uncertain = TRUE}, which is equal to uncertainty level 2. Using \code{allow_uncertain = FALSE} is equal to uncertainty level 0 and will skip all rules. You can also use e.g. \code{as.mo(..., allow_uncertain = 1)} to only allow up to level 1 uncertainty.
 
-Use \code{mo_failures()} to get a vector with all values that could not be coerced to a valid value. \cr
-Use \code{mo_uncertainties()} to get a \code{data.frame} with all values that were coerced to a valid value, but with uncertainty. \cr
-Use \code{mo_renamed()} to get a \code{data.frame} with all values that could be coerced based on an old, previously accepted taxonomic name.
+There are three helper functions that can be run after then \code{as.mo()} function:
+\itemize{
+  \item{Use \code{mo_uncertainties()} to get a \code{data.frame} with all values that were coerced to a valid value, but with uncertainty. The output contains a score, that is calculated as \code{(n - 0.5 * L) / n}, where \emph{n} is the number of characters of the returned full name of the microorganism, and \emph{L} is the \href{https://en.wikipedia.org/wiki/Levenshtein_distance}{Levenshtein distance} between that full name and the user input.}
+  \item{Use \code{mo_failures()} to get a vector with all values that could not be coerced to a valid value.}
+  \item{Use \code{mo_renamed()} to get a \code{data.frame} with all values that could be coerced based on an old, previously accepted taxonomic name.}
+}   
 
 \strong{Microbial prevalence of pathogens in humans} \cr
 The intelligent rules consider the prevalence of microorganisms in humans grouped into three groups, which is available as the \code{prevalence} columns in the \code{\link{microorganisms}} and \code{\link{microorganisms.old}} data sets. The grouping into prevalence groups is based on experience from several microbiological laboratories in the Netherlands in conjunction with international reports on pathogen prevalence.
@@ -116,6 +114,13 @@ Group 1 (most prevalent microorganisms) consists of all microorganisms where the
 Group 2 consists of all microorganisms where the taxonomic phylum is Proteobacteria, Firmicutes, Actinobacteria or Sarcomastigophora, or where the taxonomic genus is \emph{Aspergillus}, \emph{Bacteroides}, \emph{Candida}, \emph{Capnocytophaga}, \emph{Chryseobacterium}, \emph{Cryptococcus}, \emph{Elisabethkingia}, \emph{Flavobacterium}, \emph{Fusobacterium}, \emph{Giardia}, \emph{Leptotrichia}, \emph{Mycoplasma}, \emph{Prevotella}, \emph{Rhodotorula}, \emph{Treponema}, \emph{Trichophyton} or \emph{Ureaplasma}. 
 
 Group 3 (least prevalent microorganisms) consists of all other microorganisms.
+
+\strong{Self-learning algorithm} \cr
+The \code{as.mo()} function gains experience from previously determined microorganism IDs and learns from it. This drastically improves both speed and reliability. Use \code{clear_mo_history()} to reset the algorithms. Only experience from your current \code{AMR} package version is used. This is done because in the future the taxonomic tree (which is included in this package) may change for any organism and it consequently has to rebuild its knowledge.
+
+Usually, any guess after the first try runs 80-95\% faster than the first try.
+
+This resets with every update of this \code{AMR} package since results are saved to your local package library folder.
 }
 \section{Source}{
 
@@ -152,7 +157,7 @@ as.mo("S. aureus")
 as.mo("S aureus")
 as.mo("Staphylococcus aureus")
 as.mo("Staphylococcus aureus (MRSA)")
-as.mo("Sthafilokkockus aaureuz") # handles incorrect spelling
+as.mo("Zthafilokkoockus oureuz") # handles incorrect spelling
 as.mo("MRSA")   # Methicillin Resistant S. aureus
 as.mo("VISA")   # Vancomycin Intermediate S. aureus
 as.mo("VRSA")   # Vancomycin Resistant S. aureus

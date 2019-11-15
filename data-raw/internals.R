@@ -2,14 +2,18 @@
 # source("data-raw/internals.R")
 
 # See 'data-raw/eucast_rules.tsv' for the EUCAST reference file
-eucast_rules_file <- dplyr::arrange(
-  .data = utils::read.delim(file = "data-raw/eucast_rules.tsv",
+eucast_rules_file <- utils::read.delim(file = "data-raw/eucast_rules.tsv",
                             skip = 10,
                             sep = "\t",
                             stringsAsFactors = FALSE,
                             header = TRUE,
                             strip.white = TRUE,
-                            na = c(NA, "", NULL)),
+                            na = c(NA, "", NULL))
+# take the order of the reference.rule_group column in the orginal data file
+eucast_rules_file$reference.rule_group <- factor(eucast_rules_file$reference.rule_group,
+                                                 levels = unique(eucast_rules_file$reference.rule_group),
+                                                 ordered = TRUE)
+eucast_rules_file <- dplyr::arrange(eucast_rules_file,
   reference.rule_group,
   reference.rule)
 

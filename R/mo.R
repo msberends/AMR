@@ -59,15 +59,6 @@
 #'
 #' The algorithm uses data from the Catalogue of Life (see below) and from one other source (see \code{\link{microorganisms}}).
 #'
-#' \strong{Self-learning algoritm} \cr
-#' The \code{as.mo()} function gains experience from previously determined microorganism IDs and learns from it. This drastically improves both speed and reliability. Use \code{clear_mo_history()} to reset the algorithms. Only experience from your current \code{AMR} package version is used. This is done because in the future the taxonomic tree (which is included in this package) may change for any organism and it consequently has to rebuild its knowledge.
-#'
-#' Usually, any guess after the first try runs 80-95\% faster than the first try.
-#'
-# \emph{For now, learning only works per session. If R is closed or terminated, the algorithms reset. This might be resolved in a future version.}
-#' This resets with every update of this \code{AMR} package since results are saved to your local package library folder.
-#' 
-#' \strong{Intelligent rules} \cr
 #' The \code{as.mo()} function uses several coercion rules for fast and logical results. It assesses the input matching criteria in the following order:
 
 #' \itemize{
@@ -76,7 +67,10 @@
 #'   \item{Breakdown of input values to identify possible matches.}
 #' }
 #'
-#' This will lead to the effect that e.g. \code{"E. coli"} (a highly prevalent microorganism found in humans) will return the microbial ID of \emph{Escherichia coli} and not \emph{Entamoeba coli} (a less prevalent microorganism in humans), although the latter would alphabetically come first. In addition, the \code{as.mo()} function can differentiate four levels of uncertainty to guess valid results: 
+#' This will lead to the effect that e.g. \code{"E. coli"} (a highly prevalent microorganism found in humans) will return the microbial ID of \emph{Escherichia coli} and not \emph{Entamoeba coli} (a less prevalent microorganism in humans), although the latter would alphabetically come first. 
+#' 
+#' \strong{Coping with uncertain results} \cr
+#' In addition, the \code{as.mo()} function can differentiate four levels of uncertainty to guess valid results: 
 #' 
 #' \itemize{
 #'   \item{Uncertainty level 0: no additional rules are applied;}
@@ -95,9 +89,12 @@
 #'
 #' The level of uncertainty can be set using the argument \code{allow_uncertain}. The default is \code{allow_uncertain = TRUE}, which is equal to uncertainty level 2. Using \code{allow_uncertain = FALSE} is equal to uncertainty level 0 and will skip all rules. You can also use e.g. \code{as.mo(..., allow_uncertain = 1)} to only allow up to level 1 uncertainty.
 #' 
-#' Use \code{mo_failures()} to get a vector with all values that could not be coerced to a valid value. \cr
-#' Use \code{mo_uncertainties()} to get a \code{data.frame} with all values that were coerced to a valid value, but with uncertainty. \cr
-#' Use \code{mo_renamed()} to get a \code{data.frame} with all values that could be coerced based on an old, previously accepted taxonomic name.
+#' There are three helper functions that can be run after then \code{as.mo()} function:
+#' \itemize{
+#'   \item{Use \code{mo_uncertainties()} to get a \code{data.frame} with all values that were coerced to a valid value, but with uncertainty. The output contains a score, that is calculated as \code{(n - 0.5 * L) / n}, where \emph{n} is the number of characters of the returned full name of the microorganism, and \emph{L} is the \href{https://en.wikipedia.org/wiki/Levenshtein_distance}{Levenshtein distance} between that full name and the user input.}
+#'   \item{Use \code{mo_failures()} to get a vector with all values that could not be coerced to a valid value.}
+#'   \item{Use \code{mo_renamed()} to get a \code{data.frame} with all values that could be coerced based on an old, previously accepted taxonomic name.}
+#' }   
 #'
 #' \strong{Microbial prevalence of pathogens in humans} \cr
 #' The intelligent rules consider the prevalence of microorganisms in humans grouped into three groups, which is available as the \code{prevalence} columns in the \code{\link{microorganisms}} and \code{\link{microorganisms.old}} data sets. The grouping into prevalence groups is based on experience from several microbiological laboratories in the Netherlands in conjunction with international reports on pathogen prevalence.
@@ -107,6 +104,14 @@
 #' Group 2 consists of all microorganisms where the taxonomic phylum is Proteobacteria, Firmicutes, Actinobacteria or Sarcomastigophora, or where the taxonomic genus is \emph{Aspergillus}, \emph{Bacteroides}, \emph{Candida}, \emph{Capnocytophaga}, \emph{Chryseobacterium}, \emph{Cryptococcus}, \emph{Elisabethkingia}, \emph{Flavobacterium}, \emph{Fusobacterium}, \emph{Giardia}, \emph{Leptotrichia}, \emph{Mycoplasma}, \emph{Prevotella}, \emph{Rhodotorula}, \emph{Treponema}, \emph{Trichophyton} or \emph{Ureaplasma}. 
 #' 
 #' Group 3 (least prevalent microorganisms) consists of all other microorganisms.
+#' 
+#' \strong{Self-learning algorithm} \cr
+#' The \code{as.mo()} function gains experience from previously determined microorganism IDs and learns from it. This drastically improves both speed and reliability. Use \code{clear_mo_history()} to reset the algorithms. Only experience from your current \code{AMR} package version is used. This is done because in the future the taxonomic tree (which is included in this package) may change for any organism and it consequently has to rebuild its knowledge.
+#'
+#' Usually, any guess after the first try runs 80-95\% faster than the first try.
+#'
+# \emph{For now, learning only works per session. If R is closed or terminated, the algorithms reset. This might be resolved in a future version.}
+#' This resets with every update of this \code{AMR} package since results are saved to your local package library folder.
 #' @inheritSection catalogue_of_life Catalogue of Life
 #  (source as a section here, so it can be inherited by other man pages:)
 #' @section Source:
@@ -134,7 +139,7 @@
 #' as.mo("S aureus")
 #' as.mo("Staphylococcus aureus")
 #' as.mo("Staphylococcus aureus (MRSA)")
-#' as.mo("Sthafilokkockus aaureuz") # handles incorrect spelling
+#' as.mo("Zthafilokkoockus oureuz") # handles incorrect spelling
 #' as.mo("MRSA")   # Methicillin Resistant S. aureus
 #' as.mo("VISA")   # Vancomycin Intermediate S. aureus
 #' as.mo("VRSA")   # Vancomycin Resistant S. aureus
@@ -287,7 +292,7 @@ exec_as.mo <- function(x,
                        disable_mo_history = FALSE,
                        debug = FALSE,
                        reference_data_to_use = microorganismsDT) {
-  
+
   if (!"AMR" %in% base::.packages()) {
     require("AMR")
     # check onLoad() in R/zzz.R: data tables are created there.
@@ -518,7 +523,7 @@ exec_as.mo <- function(x,
     x <- gsub("(alpha|beta|gamma).?ha?emoly", "\\1-haemoly", x)
     # remove genus as first word
     x <- gsub("^genus ", "", x)
-    # remove 'uncertain' like texts
+    # remove 'uncertain'-like texts
     x <- trimws(gsub("(uncertain|susp[ie]c[a-z]+|verdacht)", "", x))
     # allow characters that resemble others = dyslexia_mode ----
     if (dyslexia_mode == TRUE) {
@@ -539,13 +544,19 @@ exec_as.mo <- function(x,
       x <- gsub("e+", "e+", x)
       x <- gsub("o+", "o+", x)
       x <- gsub("(.)\\1+", "\\1+", x)
+      # allow multiplication of all other consonants
+      x <- gsub("([bdghjlnrw]+)", "\\1+", x)
       # allow ending in -en or -us
       x <- gsub("e\\+n(?![a-z[])", "(e+n|u+(c|k|q|qu|s|z|x|ks)+)", x, perl = TRUE)
-      # if the input is longer than 10 characters, allow any constant between all characters, as some might have forgotten a character
+      # if the input is longer than 10 characters, allow any forgotten consonant between all characters, as some might just have forgotten one...
       # this will allow "Pasteurella damatis" to be correctly read as "Pasteurella dagmatis".
-      constants <- paste(letters[!letters %in% c("a", "e", "i", "o", "u")], collapse = "")
-
-      x[nchar(x_backup_without_spp) > 10] <- gsub("[+]", paste0("+[", constants, "]?"), x[nchar(x_backup_without_spp) > 10])
+      consonants <- paste(letters[!letters %in% c("a", "e", "i", "o", "u")], collapse = "")
+      x[nchar(x_backup_without_spp) > 10] <- gsub("[+]", paste0("+[", consonants, "]?"), x[nchar(x_backup_without_spp) > 10])
+      # allow au and ou after all these regex implementations
+      x <- gsub("a+[bcdfghjklmnpqrstvwxyz]?u+[bcdfghjklmnpqrstvwxyz]?", "(a+u+|o+u+)[bcdfghjklmnpqrstvwxyz]?", x, fixed = TRUE)
+      x <- gsub("o+[bcdfghjklmnpqrstvwxyz]?u+[bcdfghjklmnpqrstvwxyz]?", "(a+u+|o+u+)[bcdfghjklmnpqrstvwxyz]?", x, fixed = TRUE)
+      # make sure to remove regex overkill (will lead to errors)
+      x <- gsub("++", "+", x, fixed = TRUE)
     }
     x <- strip_whitespace(x, dyslexia_mode)
     
@@ -578,7 +589,7 @@ exec_as.mo <- function(x,
     }
     
     progress <- progress_estimated(n = length(x), min_time = 3)
-    
+
     for (i in seq_len(length(x))) {
       
       progress$tick()$print()
@@ -834,8 +845,8 @@ exec_as.mo <- function(x,
           next
         }
         # streptococcal groups: milleri and viridans
-        if (x_trimmed[i] %like_case% "strepto.* milleri"
-            | x_backup_without_spp[i] %like_case% "strepto.* milleri"
+        if (x_trimmed[i] %like_case% "strepto.* mil+er+i"
+            | x_backup_without_spp[i] %like_case% "strepto.* mil+er+i"
             | x_backup_without_spp[i] %like_case% "mgs[^a-z]?$") {
           # Milleri Group Streptococcus (MGS)
           x[i] <- microorganismsDT[mo == "B_STRPT_MILL", ..property][[1]][1L]
@@ -1863,6 +1874,7 @@ mo_uncertainties <- function() {
 
 #' @exportMethod print.mo_uncertainties
 #' @importFrom crayon green yellow red white black bgGreen bgYellow bgRed
+#' @importFrom cleaner percentage
 #' @export
 #' @noRd
 print.mo_uncertainties <- function(x, ...) {
@@ -1890,7 +1902,9 @@ print.mo_uncertainties <- function(x, ...) {
                  paste0(colour2(paste0(" [", x[i, "uncertainty"], "] ")), ' "', x[i, "input"], '" -> ',
                         colour1(paste0(italic(x[i, "fullname"]),
                                        ifelse(!is.na(x[i, "renamed_to"]), paste(", renamed to", italic(x[i, "renamed_to"])), ""),
-                                       " (", x[i, "mo"], ")"))),
+                                       " (", x[i, "mo"],
+                                       ", score: ", percentage(levenshtein_fraction(x[i, "input"], x[i, "fullname"]), digits = 1),
+                                       ")"))),
                  sep = "\n")
   }
   cat(msg)
@@ -1976,4 +1990,16 @@ load_mo_failures_uncertainties_renamed <- function(metadata) {
   options("mo_failures" = metadata$failures)
   options("mo_uncertainties" = metadata$uncertainties)
   options("mo_renamed" = metadata$renamed)
+}
+
+#' @importFrom utils adist
+levenshtein_fraction <- function(input, output) {
+  levenshtein <- double(length = length(input))
+  for (i in seq_len(length(input))) {
+    # determine levenshtein distance, but maximise to nchar of output
+    levenshtein[i] <- base::min(base::as.double(adist(input[i], output[i], ignore.case = TRUE)),
+                                base::nchar(output[i]))
+  }
+  # self-made score between 0 and 1 (for % certainty, so 0 means huge distance, 1 means no distance)
+  (base::nchar(output) - 0.5 * levenshtein) / nchar(output)
 }

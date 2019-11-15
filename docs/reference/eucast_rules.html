@@ -51,7 +51,8 @@
   <script src="../extra.js"></script>
 
 <meta property="og:title" content="EUCAST rules — eucast_rules" />
-<meta property="og:description" content="Apply susceptibility rules as defined by the European Committee on Antimicrobial Susceptibility Testing (EUCAST, http://eucast.org), see Source. This includes (1) expert rules, (2) intrinsic resistance and (3) inferred resistance as defined in their breakpoint tables." />
+<meta property="og:description" content="Apply susceptibility rules as defined by the European Committee on Antimicrobial Susceptibility Testing (EUCAST, http://eucast.org), see Source. This includes (1) expert rules, (2) intrinsic resistance and (3) inferred resistance as defined in their breakpoint tables.
+To improve the interpretation of the antibiogram before EUCAST rules are applied, some non-EUCAST rules are applied at default, see Details." />
 <meta property="og:image" content="https://msberends.gitlab.io/AMR/logo.png" />
 <meta name="twitter:card" content="summary" />
 
@@ -85,7 +86,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">0.8.0.9027</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">0.8.0.9031</span>
       </span>
     </div>
 
@@ -235,6 +236,7 @@
 
     <div class="ref-description">
     <p>Apply susceptibility rules as defined by the European Committee on Antimicrobial Susceptibility Testing (EUCAST, <a href='http://eucast.org'>http://eucast.org</a>), see <em>Source</em>. This includes (1) expert rules, (2) intrinsic resistance and (3) inferred resistance as defined in their breakpoint tables.</p>
+<p>To improve the interpretation of the antibiogram before EUCAST rules are applied, some non-EUCAST rules are applied at default, see Details.</p>
     </div>
 
     <pre class="usage"><span class='fu'>eucast_rules</span>(<span class='no'>x</span>, <span class='kw'>col_mo</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>info</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>rules</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"breakpoints"</span>,
@@ -289,6 +291,16 @@
 
     <p><strong>Note:</strong> This function does not translate MIC values to RSI values. Use <code><a href='as.rsi.html'>as.rsi</a></code> for that. <br />
 <strong>Note:</strong> When ampicillin (AMP, J01CA01) is not available but amoxicillin (AMX, J01CA04) is, the latter will be used for all rules where there is a dependency on ampicillin. These drugs are interchangeable when it comes to expression of antimicrobial resistance.</p>
+<p>Before further processing, some non-EUCAST rules are applied to improve the efficacy of the EUCAST rules. These non-EUCAST rules, that are applied to all isolates, are:</p><ul>
+<li><p>Inherit amoxicillin (AMX) from ampicillin (AMP), where amoxicillin (AMX) is unavailable;</p></li>
+<li><p>Inherit ampicillin (AMP) from amoxicillin (AMX), where ampicillin (AMP) is unavailable;</p></li>
+<li><p>Set amoxicillin (AMX) = R where amoxicillin/clavulanic acid (AMC) = R;</p></li>
+<li><p>Set piperacillin (PIP) = R where piperacillin/tazobactam (TZP) = R;</p></li>
+<li><p>Set trimethoprim (TMP) = R where trimethoprim/sulfamethoxazole (SXT) = R;</p></li>
+<li><p>Set amoxicillin/clavulanic acid (AMC) = S where amoxicillin (AMX) = S;</p></li>
+<li><p>Set piperacillin/tazobactam (TZP) = S where piperacillin (PIP) = S;</p></li>
+<li><p>Set trimethoprim/sulfamethoxazole (SXT) = S where trimethoprim (TMP) = S.</p></li>
+</ul><p>To <em>not</em> use these rules, please use <code>eucast_rules(..., rules = c("breakpoints", "expert"))</code>.</p>
 <p>The file containing all EUCAST rules is located here: <a href='https://gitlab.com/msberends/AMR/blob/master/data-raw/eucast_rules.tsv'>https://gitlab.com/msberends/AMR/blob/master/data-raw/eucast_rules.tsv</a>.</p>
     <h2 class="hasAnchor" id="antibiotics"><a class="anchor" href="#antibiotics"></a>Antibiotics</h2>
 

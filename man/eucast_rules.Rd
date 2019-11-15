@@ -42,11 +42,26 @@ eucast_rules(x, col_mo = NULL, info = TRUE, rules = c("breakpoints",
 The input of \code{x}, possibly with edited values of antibiotics. Or, if \code{verbose = TRUE}, a \code{data.frame} with all original and new values of the affected bug-drug combinations.
 }
 \description{
-Apply susceptibility rules as defined by the European Committee on Antimicrobial Susceptibility Testing (EUCAST, \url{http://eucast.org}), see \emph{Source}. This includes (1) expert rules, (2) intrinsic resistance and (3) inferred resistance as defined in their breakpoint tables.
+Apply susceptibility rules as defined by the European Committee on Antimicrobial Susceptibility Testing (EUCAST, \url{http://eucast.org}), see \emph{Source}. This includes (1) expert rules, (2) intrinsic resistance and (3) inferred resistance as defined in their breakpoint tables. 
+
+To improve the interpretation of the antibiogram before EUCAST rules are applied, some non-EUCAST rules are applied at default, see Details.
 }
 \details{
 \strong{Note:} This function does not translate MIC values to RSI values. Use \code{\link{as.rsi}} for that. \cr
 \strong{Note:} When ampicillin (AMP, J01CA01) is not available but amoxicillin (AMX, J01CA04) is, the latter will be used for all rules where there is a dependency on ampicillin. These drugs are interchangeable when it comes to expression of antimicrobial resistance.
+
+Before further processing, some non-EUCAST rules are applied to improve the efficacy of the EUCAST rules. These non-EUCAST rules, that are applied to all isolates, are:
+\itemize{
+  \item{Inherit amoxicillin (AMX) from ampicillin (AMP), where amoxicillin (AMX) is unavailable;}
+  \item{Inherit ampicillin (AMP) from amoxicillin (AMX), where ampicillin (AMP) is unavailable;}
+  \item{Set amoxicillin (AMX) = R where amoxicillin/clavulanic acid (AMC) = R;}
+  \item{Set piperacillin (PIP) = R where piperacillin/tazobactam (TZP) = R;}
+  \item{Set trimethoprim (TMP) = R where trimethoprim/sulfamethoxazole (SXT) = R;}
+  \item{Set amoxicillin/clavulanic acid (AMC) = S where amoxicillin (AMX) = S;}
+  \item{Set piperacillin/tazobactam (TZP) = S where piperacillin (PIP) = S;}
+  \item{Set trimethoprim/sulfamethoxazole (SXT) = S where trimethoprim (TMP) = S.}
+}
+To \emph{not} use these rules, please use \code{eucast_rules(..., rules = c("breakpoints", "expert"))}.
 
 The file containing all EUCAST rules is located here: \url{https://gitlab.com/msberends/AMR/blob/master/data-raw/eucast_rules.tsv}.
 }
