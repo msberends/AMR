@@ -1,4 +1,4 @@
-# AMR 0.8.0.9031
+# AMR 0.8.0.9032
 <small>Last updated: 15-Nov-2019</small>
 
 ### Breaking
@@ -35,7 +35,7 @@
     as.mo(c("Stafylococcus aureus",
             "staphylokok aureuz"))
     #> Warning: 
-    #> Results of two values was guessed with uncertainty. Use mo_uncertainties() to review them.
+    #> Results of two values were guessed with uncertainty. Use mo_uncertainties() to review them.
     #> Class 'mo'
     #> [1] B_STPHY_AURS B_STPHY_AURS
     

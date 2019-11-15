@@ -545,7 +545,7 @@ exec_as.mo <- function(x,
       x <- gsub("o+", "o+", x)
       x <- gsub("(.)\\1+", "\\1+", x)
       # allow multiplication of all other consonants
-      x <- gsub("([bdghjlnrw]+)", "\\1+", x)
+      x <- gsub("([bdgjlnrw]+)", "\\1+", x)
       # allow ending in -en or -us
       x <- gsub("e\\+n(?![a-z[])", "(e+n|u+(c|k|q|qu|s|z|x|ks)+)", x, perl = TRUE)
       # if the input is longer than 10 characters, allow any forgotten consonant between all characters, as some might just have forgotten one...
@@ -555,10 +555,11 @@ exec_as.mo <- function(x,
       # allow au and ou after all these regex implementations
       x <- gsub("a+[bcdfghjklmnpqrstvwxyz]?u+[bcdfghjklmnpqrstvwxyz]?", "(a+u+|o+u+)[bcdfghjklmnpqrstvwxyz]?", x, fixed = TRUE)
       x <- gsub("o+[bcdfghjklmnpqrstvwxyz]?u+[bcdfghjklmnpqrstvwxyz]?", "(a+u+|o+u+)[bcdfghjklmnpqrstvwxyz]?", x, fixed = TRUE)
-      # make sure to remove regex overkill (will lead to errors)
-      x <- gsub("++", "+", x, fixed = TRUE)
     }
     x <- strip_whitespace(x, dyslexia_mode)
+    # make sure to remove regex overkill (will lead to errors)
+    x <- gsub("++", "+", x, fixed = TRUE)
+    x <- gsub("?+", "?", x, fixed = TRUE)
     
     x_trimmed <- x
     x_trimmed_species <- paste(x_trimmed, "species")
@@ -571,21 +572,22 @@ exec_as.mo <- function(x,
     # add start en stop regex
     x <- paste0("^", x, "$")
     
+    
     x_withspaces_start_only <- paste0("^", x_withspaces)
     x_withspaces_end_only <- paste0(x_withspaces, "$")
     x_withspaces_start_end <- paste0("^", x_withspaces, "$")
     
     if (isTRUE(debug)) {
-      cat(paste0('x                       "', x, '"\n'))
-      cat(paste0('x_species               "', x_species, '"\n'))
-      cat(paste0('x_withspaces_start_only "', x_withspaces_start_only, '"\n'))
-      cat(paste0('x_withspaces_end_only   "', x_withspaces_end_only, '"\n'))
-      cat(paste0('x_withspaces_start_end  "', x_withspaces_start_end, '"\n'))
-      cat(paste0('x_backup                "', x_backup, '"\n'))
-      cat(paste0('x_backup_without_spp    "', x_backup_without_spp, '"\n'))
-      cat(paste0('x_trimmed               "', x_trimmed, '"\n'))
-      cat(paste0('x_trimmed_species       "', x_trimmed_species, '"\n'))
-      cat(paste0('x_trimmed_without_group "', x_trimmed_without_group, '"\n'))
+      cat(paste0(blue('x'), '                       "', x, '"\n'))
+      cat(paste0(blue('x_species'), '               "', x_species, '"\n'))
+      cat(paste0(blue('x_withspaces_start_only'), ' "', x_withspaces_start_only, '"\n'))
+      cat(paste0(blue('x_withspaces_end_only'), '   "', x_withspaces_end_only, '"\n'))
+      cat(paste0(blue('x_withspaces_start_end'), '  "', x_withspaces_start_end, '"\n'))
+      cat(paste0(blue('x_backup'), '                "', x_backup, '"\n'))
+      cat(paste0(blue('x_backup_without_spp'), '    "', x_backup_without_spp, '"\n'))
+      cat(paste0(blue('x_trimmed'), '               "', x_trimmed, '"\n'))
+      cat(paste0(blue('x_trimmed_species'), '       "', x_trimmed_species, '"\n'))
+      cat(paste0(blue('x_trimmed_without_group'), ' "', x_trimmed_without_group, '"\n'))
     }
     
     progress <- progress_estimated(n = length(x), min_time = 3)
@@ -1590,12 +1592,12 @@ exec_as.mo <- function(x,
   if (NROW(uncertainties) > 0 & initial_search == TRUE) {
     options(mo_uncertainties = as.list(distinct(uncertainties, input, .keep_all = TRUE)))
     
-    plural <- c("", "it")
+    plural <- c("", "it", "was")
     if (NROW(uncertainties) > 1) {
-      plural <- c("s", "them")
+      plural <- c("s", "them", "were")
     }
     msg <- paste0("\nResult", plural[1], " of ", nr2char(NROW(uncertainties)), " value", plural[1],
-                  " was guessed with uncertainty. Use mo_uncertainties() to review ", plural[2], ".")
+                  " ", plural[3], " guessed with uncertainty. Use mo_uncertainties() to review ", plural[2], ".")
     warning(red(msg),
             call. = FALSE,
             immediate. = TRUE) # thus will always be shown, even if >= warnings

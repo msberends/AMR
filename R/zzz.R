@@ -49,23 +49,27 @@
 #' @importFrom data.table as.data.table setkey
 #' @importFrom dplyr %>% mutate case_when
 make_DT <- function() {
-  microorganismsDT <- as.data.table(AMR::microorganisms %>% 
-                                      mutate(kingdom_index = case_when(kingdom == "Bacteria" ~ 1,
-                                                                       kingdom == "Fungi" ~ 2,
-                                                                       kingdom == "Protozoa" ~ 3,
-                                                                       kingdom == "Archaea" ~ 4,
-                                                                       TRUE ~ 99),
-                                             # for fullname_lower: keep only dots, letters,
-                                             # numbers, slashes, spaces and dashes
-                                             fullname_lower = gsub("[^.a-z0-9/ \\-]+", "",
-                                                                   # use this paste instead of `fullname` to
-                                                                   # work with Viridans Group Streptococci, etc.
-                                                                   tolower(trimws(paste(genus, species, subspecies))))))
+  microorganismsDT <- AMR::microorganisms %>% 
+    mutate(kingdom_index = case_when(kingdom == "Bacteria" ~ 1,
+                                     kingdom == "Fungi" ~ 2,
+                                     kingdom == "Protozoa" ~ 3,
+                                     kingdom == "Archaea" ~ 4,
+                                     TRUE ~ 99),
+           # for fullname_lower: keep only dots, letters,
+           # numbers, slashes, spaces and dashes
+           fullname_lower = gsub("[^.a-z0-9/ \\-]+", "",
+                                 # use this paste instead of `fullname` to
+                                 # work with Viridans Group Streptococci, etc.
+                                 tolower(trimws(ifelse(genus == "",
+                                                       fullname,
+                                                       paste(genus, species, subspecies)))))) %>% 
+    as.data.table()
+  
   # so arrange data on prevalence first, then kingdom, then full name
   setkey(microorganismsDT,
          prevalence,
          kingdom_index,
-         fullname)
+         fullname_lower)
   microorganismsDT
 }
 
