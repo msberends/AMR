@@ -184,21 +184,16 @@ On our website \url{https://msberends.gitlab.io/AMR} you can find \href{https://
 }
 
 \examples{
+\donttest{
 library(dplyr)
 
 example_isolates \%>\%
   mdro() \%>\%
   freq()
   
-\donttest{
 example_isolates \%>\%
   mutate(EUCAST = eucast_exceptional_phenotypes(.),
          BRMO = brmo(.),
          MRGN = mrgn(.))
-         
-example_isolates \%>\% 
-  rename(PIP = TZP) \%>\% # no piperacillin, so take piperacillin/tazobactam
-  mrgn() \%>\%            # check German guideline
-  freq()                # check frequencies
 }
 }

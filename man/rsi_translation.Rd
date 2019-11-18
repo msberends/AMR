@@ -4,17 +4,17 @@
 \name{rsi_translation}
 \alias{rsi_translation}
 \title{Data set for RSI interpretation}
-\format{A \code{\link{data.frame}} with 11,559 observations and 9 variables:
+\format{A \code{\link{data.frame}} with 13,975 observations and 9 variables:
 \describe{
   \item{\code{guideline}}{Name of the guideline}
+  \item{\code{method}}{Either "MIC" or "DISK"}
+  \item{\code{site}}{Body site, e.g. "Oral" or "Respiratory"}
   \item{\code{mo}}{Microbial ID, see \code{\link{as.mo}}}
   \item{\code{ab}}{Antibiotic ID, see \code{\link{as.ab}}}
   \item{\code{ref_tbl}}{Info about where the guideline rule can be found}
-  \item{\code{S_mic}}{Lowest MIC value that leads to "S"}
-  \item{\code{R_mic}}{Highest MIC value that leads to "R"}
-  \item{\code{dose_disk}}{Dose of the used disk diffusion method}
-  \item{\code{S_disk}}{Lowest number of millimeters that leads to "S"}
-  \item{\code{R_disk}}{Highest number of millimeters that leads to "R"}
+  \item{\code{disk_dose}}{Dose of the used disk diffusion method}
+  \item{\code{breakpoint_S}}{Lowest MIC value or highest number of millimeters that leads to "S"}
+  \item{\code{breakpoint_R}}{Highest MIC value or lowest number of millimeters that leads to "R"}
 }}
 \usage{
 rsi_translation

@@ -1,5 +1,5 @@
-# AMR 0.8.0.9032
-<small>Last updated: 15-Nov-2019</small>
+# AMR 0.8.0.9033
+## <small>Last updated: 18-Nov-2019</small>
 
 ### Breaking
 * Adopted Adeolu *et al.* (2016), [PMID 27620848](https://www.ncbi.nlm.nih.gov/pubmed/27620848) for the `microorganisms` data set, which means that the new order Enterobacterales now consists of a part of the existing family Enterobacteriaceae, but that this family has been split into other families as well (like *Morganellaceae* and *Yersiniaceae*). Although published in 2016, this information is not yet in the Catalogue of Life version of 2019. All MDRO determinations with `mdro()` will now use the Enterobacterales order for all guidelines before 2016 that were dependent on the Enterobacteriaceae family.
@@ -25,6 +25,7 @@
 * Support for a new MDRO guideline: Magiorakos AP, Srinivasan A *et al.* "Multidrug-resistant, extensively drug-resistant and pandrug-resistant bacteria: an international expert proposal for interim standard definitions for acquired resistance." Clinical Microbiology and Infection (2012).
   * This is now the new default guideline for the `mdro()` function
   * The new Verbose mode (`mdro(...., verbose = TRUE)`) returns an informative data set where the reason for MDRO determination is given for every isolate, and an list of the resistant antimicrobial agents
+* Data set `antivirals`, containing all entries from the ATC J05 group with their DDDs for oral and parenteral treatment
 
 ### Changes
 * Improvements to algorithm in `as.mo()`:
@@ -48,13 +49,14 @@
 * When running `as.rsi()` over a data set, it will now print the guideline that will be used if it is not specified by the user
 * Improvements for `eucast_rules()`:
   * Fix where *Stenotrophomonas maltophilia* would always become ceftazidime R (following EUCAST v3.1)
-  * Fix where *Leuconostoc* and *Pediococcus* would not always become glyopeptides R
+  * Fix where *Leuconostoc* and *Pediococcus* would not always become glycopeptides R
   * non-EUCAST rules in `eucast_rules()` are now applied first and not as last anymore. This is to improve the dependency on certain antibiotics for the official EUCAST rules. Please see `?eucast_rules`.
 * Fix for interpreting MIC values with `as.rsi()` where the input is `NA`
 * Added "imi" and "imp" as allowed abbreviation for Imipenem (IPM)
 * Fix for automatically determining columns with antibiotic results in `mdro()` and `eucast_rules()`
 * Added ATC codes for ceftaroline, ceftobiprole and faropenem and fixed two typos in the `antibiotics` data set
 * More robust way of determining valid MIC values
+* Small changed to the `example_isolates` data set to better reflect reality
 
 ### Other
 * Change dependency on `clean` to `cleaner`, as this package was renamed accordingly upon CRAN request

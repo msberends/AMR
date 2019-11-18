@@ -459,7 +459,7 @@ data_1st %>%
 
 ## Independence test
 
-The next example uses the included `example_isolates`, which is an anonymised data set containing 2,000 microbial blood culture isolates with their full antibiograms found in septic patients in 4 different hospitals in the Netherlands, between 2001 and 2017. This `data.frame` can be used to practice AMR analysis.
+The next example uses the `example_isolates` data set. This is a data set included with this package and contains 2,000 microbial isolates with their full antibiograms. It reflects reality and can be used to practice AMR analysis.
 
 We will compare the resistance to fosfomycin (column `FOS`) in hospital A and D. The input for the `fisher.test()` can be retrieved with a transformation like this:
 

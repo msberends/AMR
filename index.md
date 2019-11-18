@@ -10,9 +10,9 @@
 
 ### What is `AMR` (for R)?
 
-`AMR` is a free and open-source [R package](https://www.r-project.org) to simplify the analysis and prediction of Antimicrobial Resistance (AMR) and to work with microbial and antimicrobial properties by using evidence-based methods. Since its first public release in early 2018, this package has been downloaded over 25,000 times from more than 60 countries <small>(source: [CRAN logs, 2019](https://cran-logs.rstudio.com))</small>.
+`AMR` is a free and open-source [R package](https://www.r-project.org) to simplify the analysis and prediction of Antimicrobial Resistance (AMR) and to work with microbial and antimicrobial properties by using evidence-based methods. Since its first public release in early 2018, this package has been downloaded over 25,000 times from more than 70 countries <small>(source: [CRAN logs, 2019](https://cran-logs.rstudio.com))</small>.
 
-After installing this package, R knows [**~70,000 microorganisms**](./reference/microorganisms.html) (distinct microbial species) and [**~450 antibiotics**](./reference/antibiotics.html) by name and code, and knows all about valid RSI and MIC values. It supports any data format, including WHONET/EARS-Net data. 
+After installing this package, R knows [**~70,000 distinct microbial species**](./reference/microorganisms.html) and all [**~550 antibiotic, antimycotic and antiviral drugs**](./reference/antibiotics.html) by name and code, and knows all about valid RSI and MIC values. It supports any data format, including WHONET/EARS-Net data. 
 
 We created this package for both routine analysis and academic research (as part of our PhD theses) at the Faculty of Medical Sciences of the University of Groningen, the Netherlands, and the Medical Microbiology & Infection Prevention (MMBI) department of the University Medical Center Groningen (UMCG). This R package is [actively maintained](./news) and is free software (see [Copyright](#copyright)).
 
@@ -109,7 +109,7 @@ Read more about which data from the Catalogue of Life [in our manual](./referenc
 
 #### Antimicrobial reference data
 
-This package contains **all ~450 antimicrobial drugs** and their Anatomical Therapeutic Chemical (ATC) codes, ATC groups and Defined Daily Dose (DDD, oral and IV) from the World Health Organization Collaborating Centre for Drug Statistics Methodology (WHOCC, https://www.whocc.no) and the [Pharmaceuticals Community Register of the European Commission](http://ec.europa.eu/health/documents/community-register/html/atc.htm).
+This package contains **all ~550 antibiotic, antimycotic and antiviral drugs** and their Anatomical Therapeutic Chemical (ATC) codes, ATC groups and Defined Daily Dose (DDD, oral and IV) from the World Health Organization Collaborating Centre for Drug Statistics Methodology (WHOCC, https://www.whocc.no) and the [Pharmaceuticals Community Register of the European Commission](http://ec.europa.eu/health/documents/community-register/html/atc.htm).
 
 **NOTE: The WHOCC copyright does not allow use for commercial purposes, unlike any other info from this package. See https://www.whocc.no/copyright_disclaimer/.**
 
@@ -137,9 +137,9 @@ The `AMR` package basically does four important things:
    * Use `eucast_rules()` to apply [EUCAST expert rules to isolates](http://www.eucast.org/expert_rules_and_intrinsic_resistance/) (not the translation from MIC to RSI values, use `as.rsi()` for that).
    * Use `first_isolate()` to identify the first isolates of every patient [using guidelines from the CLSI](https://clsi.org/standards/products/microbiology/documents/m39/) (Clinical and Laboratory Standards Institute).
      * You can also identify first *weighted* isolates of every patient, an adjusted version of the CLSI guideline. This takes into account key antibiotics of every strain and compares them.
-   * Use `mdro()` (abbreviation of Multi Drug Resistant Organisms) to check your isolates for exceptional resistance with country-specific guidelines or EUCAST rules. Currently, national guidelines for Germany and the Netherlands are supported.
+   * Use `mdro()` to determine which micro-organisms are multi-drug resistant organisms (MDRO). It supports a variety of international guidelines, such as the MDR-paper by Magiorakos *et al.* (2012, [PMID 21793988](https://www.ncbi.nlm.nih.gov/pubmed/?term=21793988)), the exceptional phenotype definitions of EUCAST and the WHO guideline on multi-drug resistant TB. It also supports the national guidelines of the Netherlands and Germany.
    * The [data set `microorganisms`](./reference/microorganisms.html) contains the complete taxonomic tree of ~70,000 microorganisms. Furthermore, some colloquial names and all Gram stains are available, which enables resistance analysis of e.g. different antibiotics per Gram stain. The package also contains functions to look up values in this data set like `mo_genus()`, `mo_family()`, `mo_gramstain()` or even `mo_phylum()`. As they use `as.mo()` internally, they also use the same intelligent rules for determination. For example, `mo_genus("MRSA")` and `mo_genus("S. aureus")` will both return `"Staphylococcus"`. They also come with support for German, Dutch, Spanish, Italian, French and Portuguese. These functions can be used to add new variables to your data.
-   * The [data set `antibiotics`](./reference/antibiotics.html) contains ~450 antimicrobial drugs with their EARS-Net code, ATC code, PubChem compound ID, official name, common LIS codes and DDDs of both oral and parenteral administration. It also contains all (thousands of) trade names found in PubChem. The function `ab_atc()` will return the ATC code of an antibiotic as defined by the WHO. Use functions like `ab_name()`, `ab_group()` and `ab_tradenames()` to look up values. The `ab_*` functions use `as.ab()` internally so they support the same intelligent rules to guess the most probable result. For example, `ab_name("Fluclox")`, `ab_name("Floxapen")` and `ab_name("J01CF05")` will all return `"Flucloxacillin"`. These functions can again be used to add new variables to your data.
+   * The [data set `antibiotics`](./reference/antibiotics.html) contains ~450 antimicrobial drugs with their EARS-Net code, ATC code, PubChem compound ID, official name, common LIS codes and DDDs of both oral and parenteral administration. It also contains all (thousands of) trade names found in PubChem. Use functions like `ab_name()`, `ab_group()`, `ab_atc()` and `ab_tradenames()` to look up values. The `ab_*` functions use `as.ab()` internally so they support the same intelligent rules to guess the most probable result. For example, `ab_name("Fluclox")`, `ab_name("Floxapen")` and `ab_name("J01CF05")` will all return `"Flucloxacillin"`. These functions can again be used to add new variables to your data.
 
 3. It **analyses the data** with convenient functions that use well-known methods.
 
@@ -151,10 +151,7 @@ The `AMR` package basically does four important things:
 
    * Aside from this website with many tutorials, the package itself contains extensive help pages with many examples for all functions.
    * The package also contains example data sets:
-     * The [`example_isolates` data set](./reference/example_isolates.html). This data set contains:
-       * 2,000 blood culture isolates from anonymised septic patients between 2001 and 2017 in the Northern Netherlands
-       * Results of 40 antibiotics (each antibiotic in its own column) with a total ~40,000 antimicrobial results
-       * Real and genuine data
+     * The [`example_isolates` data set](./reference/example_isolates.html). This data set contains 2,000 microbial isolates with their full antibiograms. It reflects reality and can be used to practice AMR analysis.
      * The [`WHONET` data set](./reference/WHONET.html). This data set only contains fake data, but with the exact same structure as files exported by WHONET. Read more about WHONET [on its tutorial page](./articles/WHONET.html).
 
 ### Copyright

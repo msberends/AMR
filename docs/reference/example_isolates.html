@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Data set with 2,000 blood culture isolates — example_isolates • AMR (for R)</title>
+<title>Data set with 2,000 example isolates — example_isolates • AMR (for R)</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -50,8 +50,8 @@
   <link href="../extra.css" rel="stylesheet">
   <script src="../extra.js"></script>
 
-<meta property="og:title" content="Data set with 2,000 blood culture isolates — example_isolates" />
-<meta property="og:description" content="An anonymised data set containing 2,000 microbial blood culture isolates with their full antibiograms found 4 different hospitals in the Netherlands, between 2001 and 2017. This data.frame can be used to practice AMR analysis. For examples, please read the tutorial on our website." />
+<meta property="og:title" content="Data set with 2,000 example isolates — example_isolates" />
+<meta property="og:description" content="A data set containing 2,000 microbial isolates with their full antibiograms. The data set reflects reality and can be used to practice AMR analysis. For examples, please read the tutorial on our website." />
 <meta property="og:image" content="https://msberends.gitlab.io/AMR/logo.png" />
 <meta name="twitter:card" content="summary" />
 
@@ -85,7 +85,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">0.8.0.9027</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">0.8.0.9032</span>
       </span>
     </div>
 
@@ -228,13 +228,13 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Data set with 2,000 blood culture isolates</h1>
+    <h1>Data set with 2,000 example isolates</h1>
     
     <div class="hidden name"><code>example_isolates.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>An anonymised data set containing 2,000 microbial blood culture isolates with their full antibiograms found 4 different hospitals in the Netherlands, between 2001 and 2017. This <code>data.frame</code> can be used to practice AMR analysis. For examples, please read <a href='https://msberends.gitlab.io/AMR/articles/AMR.html'>the tutorial on our website</a>.</p>
+    <p>A data set containing 2,000 microbial isolates with their full antibiograms. The data set reflects reality and can be used to practice AMR analysis. For examples, please read <a href='https://msberends.gitlab.io/AMR/articles/AMR.html'>the tutorial on our website</a>.</p>
     </div>
 
     <pre class="usage"><span class='no'>example_isolates</span></pre>
@@ -250,7 +250,7 @@
   <dt><code>ward_outpatient</code></dt><dd><p>logical to determine if ward is an outpatient clinic</p></dd>
   <dt><code>age</code></dt><dd><p>age of the patient</p></dd>
   <dt><code>gender</code></dt><dd><p>gender of the patient</p></dd>
-  <dt><code>patient_id</code></dt><dd><p>ID of the patient, first 10 characters of an SHA hash containing irretrievable information</p></dd>
+  <dt><code>patient_id</code></dt><dd><p>ID of the patient</p></dd>
   <dt><code>mo</code></dt><dd><p>ID of microorganism created with <code><a href='as.mo.html'>as.mo</a></code>, see also <code><a href='microorganisms.html'>microorganisms</a></code></p></dd>
   <dt><code>PEN:RIF</code></dt><dd><p>40 different antibiotics with class <code>rsi</code> (see <code><a href='as.rsi.html'>as.rsi</a></code>); these column names occur in <code><a href='antibiotics.html'>antibiotics</a></code> data set and can be translated with <code><a href='ab_property.html'>ab_name</a></code></p></dd>
 

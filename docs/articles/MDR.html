@@ -41,7 +41,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">0.8.0.9029</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">0.8.0.9032</span>
       </span>
     </div>
 
@@ -187,7 +187,7 @@
       <h1>How to determine multi-drug resistance (MDR)</h1>
                         <h4 class="author">Matthijs S. Berends</h4>
             
-            <h4 class="date">10 November 2019</h4>
+            <h4 class="date">18 November 2019</h4>
       
       
       <div class="hidden name"><code>MDR.Rmd</code></div>
@@ -196,11 +196,11 @@
 
     
     
-<p>With the function <code><a href="../reference/mdro.html">mdro()</a></code>, you can determine multi-drug resistant organisms (MDRO).</p>
+<p>With the function <code><a href="../reference/mdro.html">mdro()</a></code>, you can determine which micro-organisms are multi-drug resistant organisms (MDRO).</p>
 <div id="type-of-input" class="section level4">
 <h4 class="hasAnchor">
 <a href="#type-of-input" class="anchor"></a>Type of input</h4>
-<p>The <code><a href="../reference/mdro.html">mdro()</a></code> takes a data set as input, such as a regular <code>data.frame</code>. It automatically determines the right columns for info about your isolates, like the name of the species and all columns with results of antimicrobial agents. See the help page for more info about how to set the right settings for your data with the command <code><a href="../reference/mdro.html">?mdro</a></code>.</p>
+<p>The <code><a href="../reference/mdro.html">mdro()</a></code> function takes a data set as input, such as a regular <code>data.frame</code>. It tries to automatically determine the right columns for info about your isolates, like the name of the species and all columns with results of antimicrobial agents. See the help page for more info about how to set the right settings for your data with the command <code><a href="../reference/mdro.html">?mdro</a></code>.</p>
 <p>For WHONET data (and most other data), all settings are automatically set correctly.</p>
 </div>
 <div id="guidelines" class="section level4">
@@ -229,7 +229,8 @@ The German national guideline - Mueller et al. (2015) Antimicrobial Resistance a
 <div id="examples" class="section level4">
 <h4 class="hasAnchor">
 <a href="#examples" class="anchor"></a>Examples</h4>
-<p>The <code><a href="../reference/mdro.html">mdro()</a></code> function always returns an ordered <code>factor</code>. For example, the output of the default guideline by Magiorakos <em>et al.</em> returns a <code>factor</code> with levels ‘Negative’, ‘MDR’, ‘XDR’ or ‘PDR’ in that order. If we test that guideline on the included <code>example_isolates</code> data set, we get:</p>
+<p>The <code><a href="../reference/mdro.html">mdro()</a></code> function always returns an ordered <code>factor</code>. For example, the output of the default guideline by Magiorakos <em>et al.</em> returns a <code>factor</code> with levels ‘Negative’, ‘MDR’, ‘XDR’ or ‘PDR’ in that order.</p>
+<p>The next example uses the <code>example_isolates</code> data set. This is a data set included with this package and contains 2,000 microbial isolates with their full antibiograms. It reflects reality and can be used to practice AMR analysis. If we test the MDR/XDR/PDR guideline on this data set, we get:</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(dplyr) <span class="co"># to support pipes: %&gt;%</span></a></code></pre></div>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1">example_isolates <span class="op">%&gt;%</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb2-2" data-line-number="2"><span class="st">  </span><span class="kw"><a href="../reference/mdro.html">mdro</a></span>() <span class="op">%&gt;%</span><span class="st"> </span></a>
@@ -306,14 +307,14 @@ Unique: 2</p>
 <p>The data set now looks like this:</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(my_TB_data)</a>
 <a class="sourceLine" id="cb5-2" data-line-number="2"><span class="co">#   rifampicin isoniazid gatifloxacin ethambutol pyrazinamide moxifloxacin</span></a>
-<a class="sourceLine" id="cb5-3" data-line-number="3"><span class="co"># 1          S         R            S          R            I            R</span></a>
-<a class="sourceLine" id="cb5-4" data-line-number="4"><span class="co"># 2          I         S            R          I            R            R</span></a>
-<a class="sourceLine" id="cb5-5" data-line-number="5"><span class="co"># 3          S         R            S          S            S            R</span></a>
-<a class="sourceLine" id="cb5-6" data-line-number="6"><span class="co"># 4          R         S            S          S            R            S</span></a>
-<a class="sourceLine" id="cb5-7" data-line-number="7"><span class="co"># 5          S         S            S          S            I            R</span></a>
-<a class="sourceLine" id="cb5-8" data-line-number="8"><span class="co"># 6          I         S            R          I            S            S</span></a>
+<a class="sourceLine" id="cb5-3" data-line-number="3"><span class="co"># 1          S         R            S          S            S            S</span></a>
+<a class="sourceLine" id="cb5-4" data-line-number="4"><span class="co"># 2          S         S            S          S            R            S</span></a>
+<a class="sourceLine" id="cb5-5" data-line-number="5"><span class="co"># 3          S         R            R          S            S            R</span></a>
+<a class="sourceLine" id="cb5-6" data-line-number="6"><span class="co"># 4          S         R            S          S            I            S</span></a>
+<a class="sourceLine" id="cb5-7" data-line-number="7"><span class="co"># 5          R         S            S          I            R            S</span></a>
+<a class="sourceLine" id="cb5-8" data-line-number="8"><span class="co"># 6          R         R            S          S            R            R</span></a>
 <a class="sourceLine" id="cb5-9" data-line-number="9"><span class="co">#   kanamycin</span></a>
-<a class="sourceLine" id="cb5-10" data-line-number="10"><span class="co"># 1         S</span></a>
+<a class="sourceLine" id="cb5-10" data-line-number="10"><span class="co"># 1         R</span></a>
 <a class="sourceLine" id="cb5-11" data-line-number="11"><span class="co"># 2         R</span></a>
 <a class="sourceLine" id="cb5-12" data-line-number="12"><span class="co"># 3         R</span></a>
 <a class="sourceLine" id="cb5-13" data-line-number="13"><span class="co"># 4         S</span></a>
@@ -335,7 +336,7 @@ Unique: 2</p>
 <a class="sourceLine" id="cb7-11" data-line-number="11"><span class="co"># Author:    WHO (World Health Organization)</span></a>
 <a class="sourceLine" id="cb7-12" data-line-number="12"><span class="co"># Source:    https://www.who.int/tb/publications/pmdt_companionhandbook/en/</span></a>
 <a class="sourceLine" id="cb7-13" data-line-number="13"><span class="co"># </span></a>
-<a class="sourceLine" id="cb7-14" data-line-number="14"><span class="co"># =&gt; Found 4320 MDROs out of 5000 tested isolates (86.4%)</span></a></code></pre></div>
+<a class="sourceLine" id="cb7-14" data-line-number="14"><span class="co"># =&gt; Found 4341 MDROs out of 5000 tested isolates (86.8%)</span></a></code></pre></div>
 <p>Create a frequency table of the results:</p>
 <div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/pkg/cleaner/man/freq.html">freq</a></span>(my_TB_data<span class="op">$</span>mdr)</a></code></pre></div>
 <p><strong>Frequency table</strong></p>
@@ -356,40 +357,40 @@ Unique: 5</p>
 <tr class="odd">
 <td align="left">1</td>
 <td align="left">Mono-resistant</td>
-<td align="right">3243</td>
-<td align="right">64.86%</td>
-<td align="right">3243</td>
-<td align="right">64.86%</td>
+<td align="right">3281</td>
+<td align="right">65.62%</td>
+<td align="right">3281</td>
+<td align="right">65.62%</td>
 </tr>
 <tr class="even">
 <td align="left">2</td>
 <td align="left">Negative</td>
-<td align="right">680</td>
-<td align="right">13.60%</td>
-<td align="right">3923</td>
-<td align="right">78.46%</td>
+<td align="right">659</td>
+<td align="right">13.18%</td>
+<td align="right">3940</td>
+<td align="right">78.80%</td>
 </tr>
 <tr class="odd">
 <td align="left">3</td>
 <td align="left">Multi-drug-resistant</td>
-<td align="right">587</td>
-<td align="right">11.74%</td>
-<td align="right">4510</td>
-<td align="right">90.20%</td>
+<td align="right">571</td>
+<td align="right">11.42%</td>
+<td align="right">4511</td>
+<td align="right">90.22%</td>
 </tr>
 <tr class="even">
 <td align="left">4</td>
 <td align="left">Poly-resistant</td>
-<td align="right">302</td>
-<td align="right">6.04%</td>
-<td align="right">4812</td>
-<td align="right">96.24%</td>
+<td align="right">278</td>
+<td align="right">5.56%</td>
+<td align="right">4789</td>
+<td align="right">95.78%</td>
 </tr>
 <tr class="odd">
 <td align="left">5</td>
 <td align="left">Extensively drug-resistant</td>
-<td align="right">188</td>
-<td align="right">3.76%</td>
+<td align="right">211</td>
+<td align="right">4.22%</td>
 <td align="right">5000</td>
 <td align="right">100.00%</td>
 </tr>

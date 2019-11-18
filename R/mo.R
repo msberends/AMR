@@ -572,22 +572,21 @@ exec_as.mo <- function(x,
     # add start en stop regex
     x <- paste0("^", x, "$")
     
-    
     x_withspaces_start_only <- paste0("^", x_withspaces)
     x_withspaces_end_only <- paste0(x_withspaces, "$")
     x_withspaces_start_end <- paste0("^", x_withspaces, "$")
     
     if (isTRUE(debug)) {
-      cat(paste0(blue('x'), '                       "', x, '"\n'))
-      cat(paste0(blue('x_species'), '               "', x_species, '"\n'))
-      cat(paste0(blue('x_withspaces_start_only'), ' "', x_withspaces_start_only, '"\n'))
-      cat(paste0(blue('x_withspaces_end_only'), '   "', x_withspaces_end_only, '"\n'))
-      cat(paste0(blue('x_withspaces_start_end'), '  "', x_withspaces_start_end, '"\n'))
-      cat(paste0(blue('x_backup'), '                "', x_backup, '"\n'))
-      cat(paste0(blue('x_backup_without_spp'), '    "', x_backup_without_spp, '"\n'))
-      cat(paste0(blue('x_trimmed'), '               "', x_trimmed, '"\n'))
-      cat(paste0(blue('x_trimmed_species'), '       "', x_trimmed_species, '"\n'))
-      cat(paste0(blue('x_trimmed_without_group'), ' "', x_trimmed_without_group, '"\n'))
+      cat(paste0(blue("x"), '                       "', x, '"\n'))
+      cat(paste0(blue("x_species"), '               "', x_species, '"\n'))
+      cat(paste0(blue("x_withspaces_start_only"), ' "', x_withspaces_start_only, '"\n'))
+      cat(paste0(blue("x_withspaces_end_only"), '   "', x_withspaces_end_only, '"\n'))
+      cat(paste0(blue("x_withspaces_start_end"), '  "', x_withspaces_start_end, '"\n'))
+      cat(paste0(blue("x_backup"), '                "', x_backup, '"\n'))
+      cat(paste0(blue("x_backup_without_spp"), '    "', x_backup_without_spp, '"\n'))
+      cat(paste0(blue("x_trimmed"), '               "', x_trimmed, '"\n'))
+      cat(paste0(blue("x_trimmed_species"), '       "', x_trimmed_species, '"\n'))
+      cat(paste0(blue("x_trimmed_without_group"), ' "', x_trimmed_without_group, '"\n'))
     }
     
     progress <- progress_estimated(n = length(x), min_time = 3)
@@ -1782,6 +1781,7 @@ pillar_shaft.mo <- function(x, ...) {
   out[is.na(x)] <- pillar::style_na("  NA")
   out[x == "UNKNOWN"] <- pillar::style_na("  UNKNOWN")
   
+  # make it always fit exactly
   pillar::new_pillar_shaft_simple(out, align = "left", width = max(nchar(x)))
 }
 

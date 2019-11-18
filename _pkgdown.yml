@@ -83,6 +83,62 @@ navbar:
       href: "LICENSE-text.html"
 
 reference:
+  - title: "Cleaning your data"
+    desc: >
+      Functions for cleaning and optimising your data, to be able to add
+      variables later on (like taxonomic properties) or to fix and extend
+      antibiotic interpretations by applying [EUCAST rules](http://www.eucast.org/expert_rules_and_intrinsic_resistance/).
+    contents:
+    - starts_with("as.")
+    - "`eucast_rules`"
+    - "`guess_ab_col`"
+    - "`mo_source`"
+    - "`read.4D`"
+    - "`rsi_translation`"
+  - title: "Enhancing your data"
+    desc: >
+      Functions to add new data to your existing data, such as the determination
+      of first isolates, multi-drug resistant microorganisms (MDRO), getting
+      properties of microorganisms or antibiotics and determining the age of
+      patients or divide ages into age groups.
+    contents:
+    - "`ab_property`"
+    - "`age_groups`"
+    - "`age`"
+    - "`atc_online_property`"
+    - "`first_isolate`"
+    - "`join`"
+    - "`key_antibiotics`"
+    - "`mdro`"
+    - "`mo_property`"
+    - "`p_symbol`"
+  - title: "Analysing your data"
+    desc: >
+      Functions for conducting AMR analysis, like counting isolates, calculating
+      resistance or susceptibility, or make plots.
+    contents:
+    - "`availability`"
+    - "`bug_drug_combinations`"
+    - "`count`"
+    - "`filter_ab_class`"
+    - "`g.test`"
+    - "`ggplot_rsi`"
+    - "`kurtosis`"
+    - "`portion`"
+    - "`resistance_predict`"
+    - "`skewness`"
+  - title: "Included data sets"
+    desc: >
+      Scientifically reliable references for microorganisms and
+      antibiotics, and example data sets to use for practise.
+    contents:
+    - "`antibiotics`"
+    - "`antivirals`"
+    - "`example_isolates`"
+    - "`microorganisms.codes`"
+    - "`microorganisms.old`"
+    - "`microorganisms`"
+    - "`WHONET`"
   - title: "Background information"
     desc: >
       Some pages about our package and its external sources. Be sure to read our [How To's](./../articles/index.html)
@@ -92,61 +148,6 @@ reference:
     - "`catalogue_of_life`"
     - "`catalogue_of_life_version`"
     - "`WHOCC`"
-  - title: "Cleaning your data"
-    desc: >
-      Functions for cleaning and optimising your data, to be able to add
-      variables later on (like taxonomic properties) or to fix and extend
-      antibiotic interpretations by applying [EUCAST rules](http://www.eucast.org/expert_rules_and_intrinsic_resistance/).
-    contents:
-    - starts_with("as.")
-    - "`mo_source`"
-    - "`eucast_rules`"
-    - "`rsi_translation`"
-    - "`guess_ab_col`"
-    - "`read.4D`"
-  - title: "Adding variables to your data"
-    desc: >
-      Functions to add new data to existing data, like the determination
-      of first isolates, multi-drug resistant microorganisms (MDRO), getting
-      properties of microorganisms or antibiotics and determining the age of
-      patients or divide ages into age groups.
-    contents:
-    - "`first_isolate`"
-    - "`mdro`"
-    - "`key_antibiotics`"
-    - "`mo_property`"
-    - "`ab_property`"
-    - "`age`"
-    - "`age_groups`"
-    - "`p_symbol`"
-    - "`join`"
-    - "`atc_online_property`"
-  - title: "Analysing your data"
-    desc: >
-      Functions for conducting AMR analysis, like counting isolates, calculating
-      resistance or susceptibility, or make plots.
-    contents:
-    - "`availability`"
-    - "`bug_drug_combinations`"
-    - "`count`"
-    - "`portion`"
-    - "`filter_ab_class`"
-    - "`g.test`"
-    - "`ggplot_rsi`"
-    - "`kurtosis`"
-    - "`resistance_predict`"
-    - "`skewness`"
-  - title: "Included data sets"
-    desc: >
-      References for microorganisms and antibiotics, and even a
-      genuine data set with isolates from septic patients.
-    contents:
-    - "`antibiotics`"
-    - "`microorganisms`"
-    - "`example_isolates`"
-    - "`WHONET`"
-    - "`microorganisms.codes`"
-    - "`microorganisms.old`"
   - title: Other functions
     desc: >
       These functions are mostly for internal use, but some of
@@ -160,9 +161,10 @@ reference:
       These functions are extensions of functions in other packages.
     contents:
     - "`extended-functions`"
+    - "`reexports`"
   - title:  functions
     desc: >
-      These functions are deprecated, meaning that they still
+      These functions are deprecated, meaning that they will still
       work but show a warning with every use and will be removed
       in a future version.
     contents:

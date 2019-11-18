@@ -85,7 +85,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">0.8.0.9027</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">0.8.0.9032</span>
       </span>
     </div>
 
@@ -242,16 +242,16 @@
 
     <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
 
-    <p>A <code><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></code> with 11,559 observations and 9 variables:</p><dl class='dl-horizontal'>
+    <p>A <code><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></code> with 13,975 observations and 9 variables:</p><dl class='dl-horizontal'>
   <dt><code>guideline</code></dt><dd><p>Name of the guideline</p></dd>
+  <dt><code>method</code></dt><dd><p>Either "MIC" or "DISK"</p></dd>
+  <dt><code>site</code></dt><dd><p>Body site, e.g. "Oral" or "Respiratory"</p></dd>
   <dt><code>mo</code></dt><dd><p>Microbial ID, see <code><a href='as.mo.html'>as.mo</a></code></p></dd>
   <dt><code>ab</code></dt><dd><p>Antibiotic ID, see <code><a href='as.ab.html'>as.ab</a></code></p></dd>
   <dt><code>ref_tbl</code></dt><dd><p>Info about where the guideline rule can be found</p></dd>
-  <dt><code>S_mic</code></dt><dd><p>Lowest MIC value that leads to "S"</p></dd>
-  <dt><code>R_mic</code></dt><dd><p>Highest MIC value that leads to "R"</p></dd>
-  <dt><code>dose_disk</code></dt><dd><p>Dose of the used disk diffusion method</p></dd>
-  <dt><code>S_disk</code></dt><dd><p>Lowest number of millimeters that leads to "S"</p></dd>
-  <dt><code>R_disk</code></dt><dd><p>Highest number of millimeters that leads to "R"</p></dd>
+  <dt><code>disk_dose</code></dt><dd><p>Dose of the used disk diffusion method</p></dd>
+  <dt><code>breakpoint_S</code></dt><dd><p>Lowest MIC value or highest number of millimeters that leads to "S"</p></dd>
+  <dt><code>breakpoint_R</code></dt><dd><p>Highest MIC value or lowest number of millimeters that leads to "R"</p></dd>
 
 </dl>
     <h2 class="hasAnchor" id="read-more-on-our-website-"><a class="anchor" href="#read-more-on-our-website-"></a>Read more on our website!</h2>

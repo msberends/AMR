@@ -16,7 +16,7 @@
   \item{\code{abbr}}{List of abbreviations as used in many countries, also for antibiotic susceptibility testing (AST)}
   \item{\code{synonyms}}{Synonyms (often trade names) of a drug, as found in PubChem based on their compound ID}
   \item{\code{oral_ddd}}{Defined Daily Dose (DDD), oral treatment}
-  \item{\code{oral_units}}{Units of \code{ddd_units}}
+  \item{\code{oral_units}}{Units of \code{oral_ddd}}
   \item{\code{iv_ddd}}{Defined Daily Dose (DDD), parenteral treatment}
   \item{\code{iv_units}}{Units of \code{iv_ddd}}
 }}
@@ -41,7 +41,7 @@ Synonyms (i.e. trade names) are derived from the Compound ID (\code{cid}) and co
 \section{WHOCC}{
 
 \if{html}{\figure{logo_who.png}{options: height=60px style=margin-bottom:5px} \cr}
-This package contains \strong{all ~450 antimicrobial drugs} and their Anatomical Therapeutic Chemical (ATC) codes, ATC groups and Defined Daily Dose (DDD) from the World Health Organization Collaborating Centre for Drug Statistics Methodology (WHOCC, \url{https://www.whocc.no}) and the Pharmaceuticals Community Register of the European Commission (\url{http://ec.europa.eu/health/documents/community-register/html/atc.htm}). 
+This package contains \strong{all ~550 antibiotic, antimycotic and antiviral drugs} and their Anatomical Therapeutic Chemical (ATC) codes, ATC groups and Defined Daily Dose (DDD) from the World Health Organization Collaborating Centre for Drug Statistics Methodology (WHOCC, \url{https://www.whocc.no}) and the Pharmaceuticals Community Register of the European Commission (\url{http://ec.europa.eu/health/documents/community-register/html/atc.htm}). 
 
 These have become the gold standard for international drug utilisation monitoring and research.
 
@@ -56,6 +56,6 @@ On our website \url{https://msberends.gitlab.io/AMR} you can find \href{https://
 }
 
 \seealso{
-\code{\link{microorganisms}}
+\code{\link{antivirals}} \code{\link{microorganisms}}
 }
 \keyword{datasets}

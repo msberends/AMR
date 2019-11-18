@@ -139,6 +139,11 @@ help {
   font-size: 1.5em;
 }
 
+/* Beautify manually added 'Last updated' text of NEWS */
+div[id^=last-updated] h2 {
+  padding-top: 10px;
+}
+
 .version.label {
   display: none;
 }

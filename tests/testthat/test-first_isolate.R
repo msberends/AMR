@@ -99,7 +99,7 @@ test_that("first isolates work", {
                     info = TRUE,
                     icu_exclude = TRUE),
       na.rm = TRUE),
-    1163)
+    906)
 
   # set 1500 random observations to be of specimen type 'Urine'
   random_rows <- sample(x = 1:2000, size = 1500, replace = FALSE)

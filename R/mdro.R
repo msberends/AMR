@@ -54,29 +54,24 @@
 #' @rdname mdro
 #' @aliases MDR XDR PDR BRMO 3MRGN 4MRGN
 #' @importFrom dplyr %>% filter_at vars all_vars pull mutate_at
-#' @importFrom crayon blue bold italic
+#' @importFrom crayon blue bold italic red
 #' @importFrom cleaner percentage
 #' @export
 #' @inheritSection AMR Read more on our website!
 #' @source
 #' Please see Details for the list of publications used for this function.
 #' @examples
+#' \donttest{
 #' library(dplyr)
 #' 
 #' example_isolates %>%
 #'   mdro() %>%
 #'   freq()
 #'   
-#' \donttest{
 #' example_isolates %>%
 #'   mutate(EUCAST = eucast_exceptional_phenotypes(.),
 #'          BRMO = brmo(.),
 #'          MRGN = mrgn(.))
-#'          
-#' example_isolates %>% 
-#'   rename(PIP = TZP) %>% # no piperacillin, so take piperacillin/tazobactam
-#'   mrgn() %>%            # check German guideline
-#'   freq()                # check frequencies
 #' }
 mdro <- function(x,
                  guideline = NULL,
@@ -155,7 +150,7 @@ mdro <- function(x,
     guideline$name <- "Multidrug-resistant, extensively drug-resistant and pandrug-resistant bacteria: an international expert proposal for interim standard definitions for acquired resistance."
     guideline$author <- "Magiorakos AP, Srinivasan A, Carey RB, ..., Vatopoulos A, Weber JT, Monnet DL"
     guideline$version <- "N/A"
-    guideline$source <- "Magiorakos et al. (2012) Clinical Microbiology and Infection 18:3. DOI: 10.1111/j.1469-0691.2011.03570.x"
+    guideline$source <- "Clinical Microbiology and Infection 18:3, 2012. DOI: 10.1111/j.1469-0691.2011.03570.x"
     
   } else if (guideline$code == "eucast") {
     guideline$name <- "EUCAST Expert Rules, \"Intrinsic Resistance and Exceptional Phenotypes Tables\""
@@ -174,7 +169,7 @@ mdro <- function(x,
     guideline$name <- "Cross-border comparison of the Dutch and German guidelines on multidrug-resistant Gram-negative microorganisms"
     guideline$author <- "M\u00fcller J, Voss A, K\u00f6ck R, ..., Kern WV, Wendt C, Friedrich AW"
     guideline$version <- "N/A"
-    guideline$source <- "M\u00fcller et al. (2015) Antimicrobial Resistance and Infection Control 4:7. DOI: 10.1186/s13756-015-0047-6"
+    guideline$source <- "Antimicrobial Resistance and Infection Control 4:7, 2015. DOI: 10.1186/s13756-015-0047-6"
     
   } else if (guideline$code == "brmo") {
     guideline$name <- "WIP-Richtlijn Bijzonder Resistente Micro-organismen (BRMO)"
@@ -422,9 +417,9 @@ mdro <- function(x,
   
   if (info == TRUE) {
     if (combine_SI == TRUE) {
-      cat("\nOnly results with 'R' are considered as resistance. Use `combine_SI = FALSE` to also consider 'I' as resistance.\n")
+      cat(red("\nOnly results with 'R' are considered as resistance. Use `combine_SI = FALSE` to also consider 'I' as resistance.\n"))
     } else {
-      cat("\nResults with 'R' or 'I' are considered as resistance. Use `combine_SI = TRUE` to only consider 'R' as resistance.\n")
+      cat(red("\nResults with 'R' or 'I' are considered as resistance. Use `combine_SI = TRUE` to only consider 'R' as resistance.\n"))
     }
     cat("\nDetermining multidrug-resistant organisms (MDRO), according to:\n",
         bold("Guideline: "), italic(guideline$name), "\n",

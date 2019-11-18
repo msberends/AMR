@@ -21,11 +21,11 @@ knitr::opts_chunk$set(
 library(AMR)
 ```
 
-With the function `mdro()`, you can determine multi-drug resistant organisms (MDRO).
+With the function `mdro()`, you can determine which micro-organisms are multi-drug resistant organisms (MDRO).
 
 #### Type of input
 
-The  `mdro()` takes a data set as input, such as a regular `data.frame`. It automatically determines the right columns for info about your isolates, like the name of the species and all columns with results of antimicrobial agents. See the help page for more info about how to set the right settings for your data with the command `?mdro`. 
+The  `mdro()` function takes a data set as input, such as a regular `data.frame`. It tries to automatically determine the right columns for info about your isolates, like the name of the species and all columns with results of antimicrobial agents. See the help page for more info about how to set the right settings for your data with the command `?mdro`. 
 
 For WHONET data (and most other data), all settings are automatically set correctly.
 
@@ -51,7 +51,9 @@ The function support multiple guidelines. You can select a guideline with the `g
   
 #### Examples
 
-The `mdro()` function always returns an ordered `factor`. For example, the output of the default guideline by Magiorakos *et al.* returns a `factor` with levels 'Negative', 'MDR', 'XDR' or 'PDR' in that order. If we test that guideline on the included `example_isolates` data set, we get:
+The `mdro()` function always returns an ordered `factor`. For example, the output of the default guideline by Magiorakos *et al.* returns a `factor` with levels 'Negative', 'MDR', 'XDR' or 'PDR' in that order.
+
+The next example uses the `example_isolates` data set. This is a data set included with this package and contains 2,000 microbial isolates with their full antibiograms. It reflects reality and can be used to practice AMR analysis. If we test the MDR/XDR/PDR guideline on this data set, we get:
 
 ```{r, message = FALSE}
 library(dplyr) # to support pipes: %>%
@@ -62,7 +64,7 @@ example_isolates %>%
   freq() # show frequency table of the result
 ```
 ```{r, echo = FALSE, results = 'asis', message = FALSE, warning = FALSE}
-library(dplyr) # to support pipes: %>%
+library(dplyr)
 example_isolates %>% 
   mdro(info = FALSE) %>% 
   freq() # show frequency table of the result

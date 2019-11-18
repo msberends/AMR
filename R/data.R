@@ -34,7 +34,7 @@
 #'   \item{\code{abbr}}{List of abbreviations as used in many countries, also for antibiotic susceptibility testing (AST)}
 #'   \item{\code{synonyms}}{Synonyms (often trade names) of a drug, as found in PubChem based on their compound ID}
 #'   \item{\code{oral_ddd}}{Defined Daily Dose (DDD), oral treatment}
-#'   \item{\code{oral_units}}{Units of \code{ddd_units}}
+#'   \item{\code{oral_units}}{Units of \code{oral_ddd}}
 #'   \item{\code{iv_ddd}}{Defined Daily Dose (DDD), parenteral treatment}
 #'   \item{\code{iv_units}}{Units of \code{iv_ddd}}
 #' }
@@ -48,8 +48,27 @@
 #' European Commission Public Health PHARMACEUTICALS - COMMUNITY REGISTER: \url{http://ec.europa.eu/health/documents/community-register/html/atc.htm}
 #' @inheritSection WHOCC WHOCC
 #' @inheritSection AMR Read more on our website!
-#' @seealso \code{\link{microorganisms}}
+#' @seealso \code{\link{antivirals}} \code{\link{microorganisms}}
 "antibiotics"
+
+#' Data set with ~100 antivirals
+#'
+#' A data set containing all antivirals, according to the ATC code group 'J05' (Antivirals for systemic use).
+#' @format A \code{\link{data.frame}} with 102 observations and 7 variables:
+#' \describe{
+#'   \item{\code{atc}}{ATC code (Anatomical Therapeutic Chemical) as defined by the WHOCC}
+#'   \item{\code{name}}{Official name as used by WHONET/EARS-Net or the WHO}
+#'   \item{\code{atc_group}}{Official pharmacological subgroup (3rd level ATC code) as defined by the WHOCC}
+#'   \item{\code{oral_ddd}}{Defined Daily Dose (DDD), oral treatment}
+#'   \item{\code{oral_units}}{Units of \code{oral_ddd}}
+#'   \item{\code{iv_ddd}}{Defined Daily Dose (DDD), parenteral treatment}
+#'   \item{\code{iv_units}}{Units of \code{iv_ddd}}
+#' }
+#' @source World Health Organization (WHO) Collaborating Centre for Drug Statistics Methodology (WHOCC): \url{https://www.whocc.no/atc_ddd_index/}
+#' @inheritSection WHOCC WHOCC
+#' @inheritSection AMR Read more on our website!
+#' @seealso \code{\link{antibiotics}} \code{\link{microorganisms}}
+"antivirals"
 
 #' Data set with ~70,000 microorganisms
 #'
@@ -126,9 +145,9 @@ catalogue_of_life <- list(
 #' @seealso \code{\link{as.mo}} \code{\link{microorganisms}}
 "microorganisms.codes"
 
-#' Data set with 2,000 blood culture isolates
+#' Data set with 2,000 example isolates
 #'
-#' An anonymised data set containing 2,000 microbial blood culture isolates with their full antibiograms found 4 different hospitals in the Netherlands, between 2001 and 2017. This \code{data.frame} can be used to practice AMR analysis. For examples, please read \href{https://msberends.gitlab.io/AMR/articles/AMR.html}{the tutorial on our website}.
+#' A data set containing 2,000 microbial isolates with their full antibiograms. The data set reflects reality and can be used to practice AMR analysis. For examples, please read \href{https://msberends.gitlab.io/AMR/articles/AMR.html}{the tutorial on our website}.
 #' @format A \code{\link{data.frame}} with 2,000 observations and 49 variables:
 #' \describe{
 #'   \item{\code{date}}{date of receipt at the laboratory}
@@ -138,7 +157,7 @@ catalogue_of_life <- list(
 #'   \item{\code{ward_outpatient}}{logical to determine if ward is an outpatient clinic}
 #'   \item{\code{age}}{age of the patient}
 #'   \item{\code{gender}}{gender of the patient}
-#'   \item{\code{patient_id}}{ID of the patient, first 10 characters of an SHA hash containing irretrievable information}
+#'   \item{\code{patient_id}}{ID of the patient}
 #'   \item{\code{mo}}{ID of microorganism created with \code{\link{as.mo}}, see also \code{\link{microorganisms}}}
 #'   \item{\code{PEN:RIF}}{40 different antibiotics with class \code{rsi} (see \code{\link{as.rsi}}); these column names occur in \code{\link{antibiotics}} data set and can be translated with \code{\link{ab_name}}}
 #' }
@@ -183,17 +202,17 @@ catalogue_of_life <- list(
 #' Data set for RSI interpretation
 #'
 #' Data set to interpret MIC and disk diffusion to RSI values. Included guidelines are CLSI (2011-2019) and EUCAST (2011-2019). Use \code{\link{as.rsi}} to transform MICs or disks measurements to RSI values.
-#' @format A \code{\link{data.frame}} with 11,559 observations and 9 variables:
+#' @format A \code{\link{data.frame}} with 13,975 observations and 9 variables:
 #' \describe{
 #'   \item{\code{guideline}}{Name of the guideline}
+#'   \item{\code{method}}{Either "MIC" or "DISK"}
+#'   \item{\code{site}}{Body site, e.g. "Oral" or "Respiratory"}
 #'   \item{\code{mo}}{Microbial ID, see \code{\link{as.mo}}}
 #'   \item{\code{ab}}{Antibiotic ID, see \code{\link{as.ab}}}
 #'   \item{\code{ref_tbl}}{Info about where the guideline rule can be found}
-#'   \item{\code{S_mic}}{Lowest MIC value that leads to "S"}
-#'   \item{\code{R_mic}}{Highest MIC value that leads to "R"}
-#'   \item{\code{dose_disk}}{Dose of the used disk diffusion method}
-#'   \item{\code{S_disk}}{Lowest number of millimeters that leads to "S"}
-#'   \item{\code{R_disk}}{Highest number of millimeters that leads to "R"}
+#'   \item{\code{disk_dose}}{Dose of the used disk diffusion method}
+#'   \item{\code{breakpoint_S}}{Lowest MIC value or highest number of millimeters that leads to "S"}
+#'   \item{\code{breakpoint_R}}{Highest MIC value or lowest number of millimeters that leads to "R"}
 #' }
 #' @inheritSection AMR Read more on our website!
 "rsi_translation"

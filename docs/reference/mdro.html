@@ -85,7 +85,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">0.8.0.9030</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">0.8.0.9032</span>
       </span>
     </div>
 
@@ -419,22 +419,17 @@
 <p>On our website <a href='https://msberends.gitlab.io/AMR'>https://msberends.gitlab.io/AMR</a> you can find <a href='https://msberends.gitlab.io/AMR/articles/AMR.html'>a tutorial</a> about how to conduct AMR analysis, the <a href='https://msberends.gitlab.io/AMR/reference'>complete documentation of all functions</a> (which reads a lot easier than here in R) and <a href='https://msberends.gitlab.io/AMR/articles/WHONET.html'>an example analysis using WHONET data</a>.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>dplyr</span>)
+    <pre class="examples"><span class='co'># \donttest{</span>
+<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>dplyr</span>)
 
 <span class='no'>example_isolates</span> <span class='kw'>%&gt;%</span>
   <span class='fu'>mdro</span>() <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='https://rdrr.io/pkg/cleaner/man/freq.html'>freq</a></span>()
 
-<span class='co'># \donttest{</span>
 <span class='no'>example_isolates</span> <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span>(<span class='kw'>EUCAST</span> <span class='kw'>=</span> <span class='fu'>eucast_exceptional_phenotypes</span>(<span class='no'>.</span>),
          <span class='kw'>BRMO</span> <span class='kw'>=</span> <span class='fu'>brmo</span>(<span class='no'>.</span>),
          <span class='kw'>MRGN</span> <span class='kw'>=</span> <span class='fu'>mrgn</span>(<span class='no'>.</span>))
-
-<span class='no'>example_isolates</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>rename</a></span>(<span class='kw'>PIP</span> <span class='kw'>=</span> <span class='no'>TZP</span>) <span class='kw'>%&gt;%</span> <span class='co'># no piperacillin, so take piperacillin/tazobactam</span>
-  <span class='fu'>mrgn</span>() <span class='kw'>%&gt;%</span>            <span class='co'># check German guideline</span>
-  <span class='fu'><a href='https://rdrr.io/pkg/cleaner/man/freq.html'>freq</a></span>()                <span class='co'># check frequencies</span>
 <span class='co'># }</span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

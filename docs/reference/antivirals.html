@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>The Catalogue of Life — catalogue_of_life • AMR (for R)</title>
+<title>Data set with ~100 antivirals — antivirals • AMR (for R)</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -50,8 +50,8 @@
   <link href="../extra.css" rel="stylesheet">
   <script src="../extra.js"></script>
 
-<meta property="og:title" content="The Catalogue of Life — catalogue_of_life" />
-<meta property="og:description" content="This package contains the complete taxonomic tree of almost all microorganisms from the authoritative and comprehensive Catalogue of Life." />
+<meta property="og:title" content="Data set with ~100 antivirals — antivirals" />
+<meta property="og:description" content="A data set containing all antivirals, according to the ATC code group 'J05' (Antivirals for systemic use)." />
 <meta property="og:image" content="https://msberends.gitlab.io/AMR/logo.png" />
 <meta name="twitter:card" content="summary" />
 
@@ -228,39 +228,42 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>The Catalogue of Life</h1>
+    <h1>Data set with ~100 antivirals</h1>
     
-    <div class="hidden name"><code>catalogue_of_life.Rd</code></div>
+    <div class="hidden name"><code>antivirals.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>This package contains the complete taxonomic tree of almost all microorganisms from the authoritative and comprehensive Catalogue of Life.</p>
+    <p>A data set containing all antivirals, according to the ATC code group 'J05' (Antivirals for systemic use).</p>
     </div>
 
+    <pre class="usage"><span class='no'>antivirals</span></pre>
 
 
-    <h2 class="hasAnchor" id="catalogue-of-life"><a class="anchor" href="#catalogue-of-life"></a>Catalogue of Life</h2>
+    <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
+
+    <p>A <code><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></code> with 102 observations and 7 variables:</p><dl class='dl-horizontal'>
+  <dt><code>atc</code></dt><dd><p>ATC code (Anatomical Therapeutic Chemical) as defined by the WHOCC</p></dd>
+  <dt><code>name</code></dt><dd><p>Official name as used by WHONET/EARS-Net or the WHO</p></dd>
+  <dt><code>atc_group</code></dt><dd><p>Official pharmacological subgroup (3rd level ATC code) as defined by the WHOCC</p></dd>
+  <dt><code>oral_ddd</code></dt><dd><p>Defined Daily Dose (DDD), oral treatment</p></dd>
+  <dt><code>oral_units</code></dt><dd><p>Units of <code>oral_ddd</code></p></dd>
+  <dt><code>iv_ddd</code></dt><dd><p>Defined Daily Dose (DDD), parenteral treatment</p></dd>
+  <dt><code>iv_units</code></dt><dd><p>Units of <code>iv_ddd</code></p></dd>
+
+</dl>
+    <h2 class="hasAnchor" id="source"><a class="anchor" href="#source"></a>Source</h2>
+
+    <p>World Health Organization (WHO) Collaborating Centre for Drug Statistics Methodology (WHOCC): <a href='https://www.whocc.no/atc_ddd_index/'>https://www.whocc.no/atc_ddd_index/</a></p>
+    <h2 class="hasAnchor" id="whocc"><a class="anchor" href="#whocc"></a>WHOCC</h2>
 
     
 
-<p><img src='figures/logo_col.png' height=40px style=margin-bottom:5px /> <br />
-This package contains the complete taxonomic tree of almost all microorganisms (~70,000 species) from the authoritative and comprehensive Catalogue of Life (<a href='http://www.catalogueoflife.org'>http://www.catalogueoflife.org</a>). The Catalogue of Life is the most comprehensive and authoritative global index of species currently available.</p>
-<p>Click here for more information about the included taxa. Check which version of the Catalogue of Life was included in this package with <code><a href='catalogue_of_life_version.html'>catalogue_of_life_version</a>()</code>.</p>
-    <h2 class="hasAnchor" id="included-taxa"><a class="anchor" href="#included-taxa"></a>Included taxa</h2>
-
-    
-
-<p>Included are:</p><ul>
-<li><p>All ~61,000 (sub)species from the kingdoms of Archaea, Bacteria, Chromista and Protozoa</p></li>
-<li><p>All ~8,500 (sub)species from these orders of the kingdom of Fungi: Eurotiales, Microascales, Mucorales, Onygenales, Pneumocystales, Saccharomycetales, Schizosaccharomycetales and Tremellales. The kingdom of Fungi is a very large taxon with almost 300,000 different (sub)species, of which most are not microbial (but rather macroscopic, like mushrooms). Because of this, not all fungi fit the scope of this package and including everything would tremendously slow down our algorithms too. By only including the aforementioned taxonomic orders, the most relevant fungi are covered (like all species of <em>Aspergillus</em>, <em>Candida</em>, <em>Cryptococcus</em>, <em>Histplasma</em>, <em>Pneumocystis</em>, <em>Saccharomyces</em> and <em>Trichophyton</em>).</p></li>
-<li><p>All ~150 (sub)species from ~100 other relevant genera from the kingdom of Animalia (like <em>Strongyloides</em> and <em>Taenia</em>)</p></li>
-<li><p>All ~23,000 previously accepted names of all included (sub)species (these were taxonomically renamed)</p></li>
-<li><p>The complete taxonomic tree of all included (sub)species: from kingdom to subspecies</p></li>
-<li><p>The responsible author(s) and year of scientific publication</p></li>
-</ul>
-
-<p>The Catalogue of Life (<a href='http://www.catalogueoflife.org'>http://www.catalogueoflife.org</a>) is the most comprehensive and authoritative global index of species currently available. It holds essential information on the names, relationships and distributions of over 1.9 million species. The Catalogue of Life is used to support the major biodiversity and conservation information services such as the Global Biodiversity Information Facility (GBIF), Encyclopedia of Life (EoL) and the International Union for Conservation of Nature Red List. It is recognised by the Convention on Biological Diversity as a significant component of the Global Taxonomy Initiative and a contribution to Target 1 of the Global Strategy for Plant Conservation.</p>
-<p>The syntax used to transform the original data to a cleansed R format, can be found here: <a href='https://gitlab.com/msberends/AMR/blob/master/data-raw/reproduction_of_microorganisms.R'>https://gitlab.com/msberends/AMR/blob/master/data-raw/reproduction_of_microorganisms.R</a>.</p>
+<p><img src='figures/logo_who.png' height=60px style=margin-bottom:5px /> <br />
+This package contains <strong>all ~550 antibiotic, antimycotic and antiviral drugs</strong> and their Anatomical Therapeutic Chemical (ATC) codes, ATC groups and Defined Daily Dose (DDD) from the World Health Organization Collaborating Centre for Drug Statistics Methodology (WHOCC, <a href='https://www.whocc.no'>https://www.whocc.no</a>) and the Pharmaceuticals Community Register of the European Commission (<a href='http://ec.europa.eu/health/documents/community-register/html/atc.htm'>http://ec.europa.eu/health/documents/community-register/html/atc.htm</a>).</p>
+<p>These have become the gold standard for international drug utilisation monitoring and research.</p>
+<p>The WHOCC is located in Oslo at the Norwegian Institute of Public Health and funded by the Norwegian government. The European Commission is the executive of the European Union and promotes its general interest.</p>
+<p><strong>NOTE: The WHOCC copyright does not allow use for commercial purposes, unlike any other info from this package. See <a href='https://www.whocc.no/copyright_disclaimer/'>https://www.whocc.no/copyright_disclaimer/</a>.</strong></p>
     <h2 class="hasAnchor" id="read-more-on-our-website-"><a class="anchor" href="#read-more-on-our-website-"></a>Read more on our website!</h2>
 
     
@@ -268,47 +271,17 @@ This package contains the complete taxonomic tree of almost all microorganisms (
 <p>On our website <a href='https://msberends.gitlab.io/AMR'>https://msberends.gitlab.io/AMR</a> you can find <a href='https://msberends.gitlab.io/AMR/articles/AMR.html'>a tutorial</a> about how to conduct AMR analysis, the <a href='https://msberends.gitlab.io/AMR/reference'>complete documentation of all functions</a> (which reads a lot easier than here in R) and <a href='https://msberends.gitlab.io/AMR/articles/WHONET.html'>an example analysis using WHONET data</a>.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p>Data set <code><a href='microorganisms.html'>microorganisms</a></code> for the actual data. <br />
-Function <code><a href='as.mo.html'>as.mo</a>()</code> to use the data for intelligent determination of microorganisms.</p></div>
+    <div class='dont-index'><p><code><a href='antibiotics.html'>antibiotics</a></code> <code><a href='microorganisms.html'>microorganisms</a></code></p></div>
 
-    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><span class='co'># Get version info of included data set</span>
-<span class='fu'><a href='catalogue_of_life_version.html'>catalogue_of_life_version</a></span>()
-
-
-<span class='co'># Get a note when a species was renamed</span>
-<span class='fu'><a href='mo_property.html'>mo_shortname</a></span>(<span class='st'>"Chlamydia psittaci"</span>)
-<span class='co'># Note: 'Chlamydia psittaci' (Page, 1968) was renamed</span>
-<span class='co'>#       'Chlamydophila psittaci' (Everett et al., 1999)</span>
-<span class='co'># [1] "C. psittaci"</span>
-
-<span class='co'># Get any property from the entire taxonomic tree for all included species</span>
-<span class='fu'><a href='mo_property.html'>mo_class</a></span>(<span class='st'>"E. coli"</span>)
-<span class='co'># [1] "Gammaproteobacteria"</span>
-
-<span class='fu'><a href='mo_property.html'>mo_family</a></span>(<span class='st'>"E. coli"</span>)
-<span class='co'># [1] "Enterobacteriaceae"</span>
-
-<span class='fu'><a href='mo_property.html'>mo_gramstain</a></span>(<span class='st'>"E. coli"</span>) <span class='co'># based on kingdom and phylum, see ?mo_gramstain</span>
-<span class='co'># [1] "Gram negative"</span>
-
-<span class='fu'><a href='mo_property.html'>mo_ref</a></span>(<span class='st'>"E. coli"</span>)
-<span class='co'># [1] "Castellani et al., 1919"</span>
-
-<span class='co'># Do not get mistaken - the package only includes microorganisms</span>
-<span class='fu'><a href='mo_property.html'>mo_kingdom</a></span>(<span class='st'>"C. elegans"</span>)
-<span class='co'># [1] "Bacteria"                        # Bacteria?!</span>
-<span class='fu'><a href='mo_property.html'>mo_name</a></span>(<span class='st'>"C. elegans"</span>)
-<span class='co'># [1] "Chroococcus limneticus elegans"  # Because a microorganism was found</span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
-      <li><a href="#catalogue-of-life">Catalogue of Life</a></li>
-      <li><a href="#included-taxa">Included taxa</a></li>
+      <li><a href="#format">Format</a></li>
+      <li><a href="#source">Source</a></li>
+      <li><a href="#whocc">WHOCC</a></li>
       <li><a href="#read-more-on-our-website-">Read more on our website!</a></li>
       <li><a href="#see-also">See also</a></li>
-      <li><a href="#examples">Examples</a></li>
     </ul>
 
   </div>

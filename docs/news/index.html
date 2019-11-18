@@ -84,7 +84,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">0.8.0.9032</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">0.8.0.9033</span>
       </span>
     </div>
 
@@ -231,11 +231,14 @@
       
     </div>
 
-    <div id="amr-0-8-0-9032" class="section level1">
+    <div id="amr-0-8-0-9033" class="section level1">
 <h1 class="page-header">
-<a href="#amr-0-8-0-9032" class="anchor"></a>AMR 0.8.0.9032<small> Unreleased </small>
+<a href="#amr-0-8-0-9033" class="anchor"></a>AMR 0.8.0.9033<small> Unreleased </small>
 </h1>
-<p><small>Last updated: 15-Nov-2019</small></p>
+<div id="last-updated-18-nov-2019" class="section level2">
+<h2 class="hasAnchor">
+<a href="#last-updated-18-nov-2019" class="anchor"></a><small>Last updated: 18-Nov-2019</small>
+</h2>
 <div id="breaking" class="section level3">
 <h3 class="hasAnchor">
 <a href="#breaking" class="anchor"></a>Breaking</h3>
@@ -271,6 +274,7 @@
 <li>The new Verbose mode (<code><a href="../reference/mdro.html">mdro(...., verbose = TRUE)</a></code>) returns an informative data set where the reason for MDRO determination is given for every isolate, and an list of the resistant antimicrobial agents</li>
 </ul>
 </li>
+<li><p>Data set <code>antivirals</code>, containing all entries from the ATC J05 group with their DDDs for oral and parenteral treatment</p></li>
 </ul>
 </div>
 <div id="changes" class="section level3">
@@ -303,7 +307,7 @@
 <li>Improvements for <code><a href="../reference/eucast_rules.html">eucast_rules()</a></code>:
 <ul>
 <li>Fix where <em>Stenotrophomonas maltophilia</em> would always become ceftazidime R (following EUCAST v3.1)</li>
-<li>Fix where <em>Leuconostoc</em> and <em>Pediococcus</em> would not always become glyopeptides R</li>
+<li>Fix where <em>Leuconostoc</em> and <em>Pediococcus</em> would not always become glycopeptides R</li>
 <li>non-EUCAST rules in <code><a href="../reference/eucast_rules.html">eucast_rules()</a></code> are now applied first and not as last anymore. This is to improve the dependency on certain antibiotics for the official EUCAST rules. Please see <code><a href="../reference/eucast_rules.html">?eucast_rules</a></code>.</li>
 </ul>
 </li>
@@ -314,6 +318,7 @@
 </li>
 <li>Added ATC codes for ceftaroline, ceftobiprole and faropenem and fixed two typos in the <code>antibiotics</code> data set</li>
 <li>More robust way of determining valid MIC values</li>
+<li>Small changed to the <code>example_isolates</code> data set to better reflect reality</li>
 </ul>
 </div>
 <div id="other" class="section level3">
@@ -323,6 +328,7 @@
 <li>Change dependency on <code>clean</code> to <code>cleaner</code>, as this package was renamed accordingly upon CRAN request</li>
 <li>Added Dr. Sofia Ny as contributor</li>
 </ul>
+</div>
 </div>
 </div>
     <div id="amr-0-8-0" class="section level1">
@@ -1385,7 +1391,7 @@ Using <code><a href="../reference/as.mo.html">as.mo(..., allow_uncertain = 3)</a
     <div id="tocnav">
       <h2>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
-        <li><a href="#amr-0-8-0-9032">0.8.0.9032</a></li>
+        <li><a href="#amr-0-8-0-9033">0.8.0.9033</a></li>
         <li><a href="#amr-0-8-0">0.8.0</a></li>
         <li><a href="#amr-0-7-1">0.7.1</a></li>
         <li><a href="#amr-0-7-0">0.7.0</a></li>
