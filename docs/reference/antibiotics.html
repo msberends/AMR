@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Data set with ~450 antibiotics — antibiotics • AMR (for R)</title>
+<title>Data sets with ~550 antimicrobials — antibiotics • AMR (for R)</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -50,8 +50,8 @@
   <link href="../extra.css" rel="stylesheet">
   <script src="../extra.js"></script>
 
-<meta property="og:title" content="Data set with ~450 antibiotics — antibiotics" />
-<meta property="og:description" content="A data set containing all antibiotics. Use as.ab or one of the ab_property functions to retrieve values from this data set. Three identifiers are included in this data set: an antibiotic ID (ab, primarily used in this package) as defined by WHONET/EARS-Net, an ATC code (atc) as defined by the WHO, and a Compound ID (cid) as found in PubChem. Other properties in this data set are derived from one or more of these codes." />
+<meta property="og:title" content="Data sets with ~550 antimicrobials — antibiotics" />
+<meta property="og:description" content="Two data sets containing all antibiotics/antimycotics and antivirals. Use as.ab or one of the ab_property functions to retrieve values from the antibiotics data set. Three identifiers are included in this data set: an antibiotic ID (ab, primarily used in this package) as defined by WHONET/EARS-Net, an ATC code (atc) as defined by the WHO, and a Compound ID (cid) as found in PubChem. Other properties in this data set are derived from one or more of these codes." />
 <meta property="og:image" content="https://msberends.gitlab.io/AMR/logo.png" />
 <meta name="twitter:card" content="summary" />
 
@@ -85,7 +85,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">0.8.0.9032</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">0.8.0.9034</span>
       </span>
     </div>
 
@@ -228,21 +228,23 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Data set with ~450 antibiotics</h1>
+    <h1>Data sets with ~550 antimicrobials</h1>
     
     <div class="hidden name"><code>antibiotics.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>A data set containing all antibiotics. Use <code><a href='as.ab.html'>as.ab</a></code> or one of the <code><a href='ab_property.html'>ab_property</a></code> functions to retrieve values from this data set. Three identifiers are included in this data set: an antibiotic ID (<code>ab</code>, primarily used in this package) as defined by WHONET/EARS-Net, an ATC code (<code>atc</code>) as defined by the WHO, and a Compound ID (<code>cid</code>) as found in PubChem. Other properties in this data set are derived from one or more of these codes.</p>
+    <p>Two data sets containing all antibiotics/antimycotics and antivirals. Use <code><a href='as.ab.html'>as.ab</a></code> or one of the <code><a href='ab_property.html'>ab_property</a></code> functions to retrieve values from the <code>antibiotics</code> data set. Three identifiers are included in this data set: an antibiotic ID (<code>ab</code>, primarily used in this package) as defined by WHONET/EARS-Net, an ATC code (<code>atc</code>) as defined by the WHO, and a Compound ID (<code>cid</code>) as found in PubChem. Other properties in this data set are derived from one or more of these codes.</p>
     </div>
 
-    <pre class="usage"><span class='no'>antibiotics</span></pre>
+    <pre class="usage"><span class='no'>antibiotics</span>
+
+<span class='no'>antivirals</span></pre>
 
 
     <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
 
-    <p>A <code><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></code> with 453 observations and 13 variables:</p><dl class='dl-horizontal'>
+    <p><strong>For the <code>antibiotics</code> data set: a <code><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></code> with 452 observations and 13 variables:</strong></p><dl class='dl-horizontal'>
   <dt><code>ab</code></dt><dd><p>Antibiotic ID as used in this package (like <code>AMC</code>), using the official EARS-Net (European Antimicrobial Resistance Surveillance Network) codes where available</p></dd>
   <dt><code>atc</code></dt><dd><p>ATC code (Anatomical Therapeutic Chemical) as defined by the WHOCC, like <code>J01CR02</code></p></dd>
   <dt><code>cid</code></dt><dd><p>Compound ID as found in PubChem</p></dd>
@@ -258,6 +260,19 @@
   <dt><code>iv_units</code></dt><dd><p>Units of <code>iv_ddd</code></p></dd>
 
 </dl>
+
+<p><strong>For the <code>antivirals</code> data set: a <code><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></code> with 102 observations and 9 variables:</strong></p><dl class='dl-horizontal'>
+  <dt><code>atc</code></dt><dd><p>ATC code (Anatomical Therapeutic Chemical) as defined by the WHOCC</p></dd>
+  <dt><code>cid</code></dt><dd><p>Compound ID as found in PubChem</p></dd>
+  <dt><code>name</code></dt><dd><p>Official name as used by WHONET/EARS-Net or the WHO</p></dd>
+  <dt><code>atc_group</code></dt><dd><p>Official pharmacological subgroup (3rd level ATC code) as defined by the WHOCC</p></dd>
+  <dt><code>synonyms</code></dt><dd><p>Synonyms (often trade names) of a drug, as found in PubChem based on their compound ID</p></dd>
+  <dt><code>oral_ddd</code></dt><dd><p>Defined Daily Dose (DDD), oral treatment</p></dd>
+  <dt><code>oral_units</code></dt><dd><p>Units of <code>oral_ddd</code></p></dd>
+  <dt><code>iv_ddd</code></dt><dd><p>Defined Daily Dose (DDD), parenteral treatment</p></dd>
+  <dt><code>iv_units</code></dt><dd><p>Units of <code>iv_ddd</code></p></dd>
+
+</dl>
     <h2 class="hasAnchor" id="source"><a class="anchor" href="#source"></a>Source</h2>
 
     <p>World Health Organization (WHO) Collaborating Centre for Drug Statistics Methodology (WHOCC): <a href='https://www.whocc.no/atc_ddd_index/'>https://www.whocc.no/atc_ddd_index/</a></p>
@@ -265,7 +280,7 @@
 <p>European Commission Public Health PHARMACEUTICALS - COMMUNITY REGISTER: <a href='http://ec.europa.eu/health/documents/community-register/html/atc.htm'>http://ec.europa.eu/health/documents/community-register/html/atc.htm</a></p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>Properties that are based on an ATC code are only available when an ATC is available. These properties are: <code>atc_group1</code>, <code>atc_group2</code>, <code>oral_ddd</code>, <code>oral_units</code>, <code>iv_ddd</code> and <code>iv_units</code></p>
+    <p>Properties that are based on an ATC code are only available when an ATC is available. These properties are: <code>atc_group1</code>, <code>atc_group2</code>, <code>oral_ddd</code>, <code>oral_units</code>, <code>iv_ddd</code> and <code>iv_units</code>.</p>
 <p>Synonyms (i.e. trade names) are derived from the Compound ID (<code>cid</code>) and consequently only available where a CID is available.</p>
     <h2 class="hasAnchor" id="whocc"><a class="anchor" href="#whocc"></a>WHOCC</h2>
 
@@ -283,7 +298,7 @@ This package contains <strong>all ~550 antibiotic, antimycotic and antiviral dru
 <p>On our website <a href='https://msberends.gitlab.io/AMR'>https://msberends.gitlab.io/AMR</a> you can find <a href='https://msberends.gitlab.io/AMR/articles/AMR.html'>a tutorial</a> about how to conduct AMR analysis, the <a href='https://msberends.gitlab.io/AMR/reference'>complete documentation of all functions</a> (which reads a lot easier than here in R) and <a href='https://msberends.gitlab.io/AMR/articles/WHONET.html'>an example analysis using WHONET data</a>.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><code>antivirals</code> <code><a href='microorganisms.html'>microorganisms</a></code></p></div>
+    <div class='dont-index'><p><code><a href='microorganisms.html'>microorganisms</a></code></p></div>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

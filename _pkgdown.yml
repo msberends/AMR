@@ -155,14 +155,10 @@ reference:
       'like' function can be useful: `if (x %like% y) {...}`.
     contents:
     - "`get_locale`"
-    - "`like`"
-  - title: Extended functions
-    desc: >
-      These functions are extensions of functions in other packages.
-    contents:
     - "`extended-functions`"
+    - "`like`"
     - "`reexports`"
-  - title:  functions
+  - title: Deprecated functions
     desc: >
       These functions are deprecated, meaning that they will still
       work but show a warning with every use and will be removed

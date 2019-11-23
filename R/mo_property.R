@@ -396,6 +396,8 @@ mo_property <- function(x, property = "fullname", language = get_locale(), ...) 
 }
 
 mo_validate <- function(x, property, ...) {
+  
+  load_AMR_package()
 
   dots <- list(...)
   Becker <- dots$Becker
@@ -405,11 +407,6 @@ mo_validate <- function(x, property, ...) {
   Lancefield <- dots$Lancefield
   if (is.null(Lancefield)) {
     Lancefield <- FALSE
-  }
-
-  if (!"AMR" %in% base::.packages()) {
-    require("AMR")
-    # check .onLoad() in R/zzz.R: data tables are created there.
   }
 
   # try to catch an error when inputting an invalid parameter

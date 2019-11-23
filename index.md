@@ -10,13 +10,16 @@
 
 ### What is `AMR` (for R)?
 
-`AMR` is a free and open-source [R package](https://www.r-project.org) to simplify the analysis and prediction of Antimicrobial Resistance (AMR) and to work with microbial and antimicrobial properties by using evidence-based methods. Since its first public release in early 2018, this package has been downloaded over 25,000 times from more than 70 countries <small>(source: [CRAN logs, 2019](https://cran-logs.rstudio.com))</small>.
-
-After installing this package, R knows [**~70,000 distinct microbial species**](./reference/microorganisms.html) and all [**~550 antibiotic, antimycotic and antiviral drugs**](./reference/antibiotics.html) by name and code, and knows all about valid RSI and MIC values. It supports any data format, including WHONET/EARS-Net data. 
+`AMR` is a free and open-source [R package](https://www.r-project.org) to simplify the analysis and prediction of Antimicrobial Resistance (AMR) and to work with microbial and antimicrobial properties by using evidence-based methods. After installing this package, R knows [**~70,000 distinct microbial species**](./reference/microorganisms.html) and all [**~550 antibiotic, antimycotic and antiviral drugs**](./reference/antibiotics.html) by name and code, and knows all about valid RSI and MIC values. It supports any data format, including WHONET/EARS-Net data. 
 
 We created this package for both routine analysis and academic research (as part of our PhD theses) at the Faculty of Medical Sciences of the University of Groningen, the Netherlands, and the Medical Microbiology & Infection Prevention (MMBI) department of the University Medical Center Groningen (UMCG). This R package is [actively maintained](./news) and is free software (see [Copyright](#copyright)).
 
-**Used to SPSS?** Read our [tutorial on how to import data from SPSS, SAS or Stata](./articles/SPSS.html).
+<div class="main-content"> 
+  <p>
+    <a href="./countries.png" target="_blank"><img src="./countries.png" class="countries_map"></a>
+    <strong>Used in over 70 countries</strong><br>
+    Since its first public release in early 2018, this package has been downloaded over 25,000 times from 74 countries <small>(as of November 2019, <a href="https://cran-logs.rstudio.com" target="_blank">CRAN logs</a>)</small>. Click the map to enlarge.</p><br><br>
+</div>
 
 #### Partners
 

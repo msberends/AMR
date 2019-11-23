@@ -41,7 +41,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">0.8.0.9032</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">0.8.0.9033</span>
       </span>
     </div>
 
@@ -187,7 +187,7 @@
       <h1>How to determine multi-drug resistance (MDR)</h1>
                         <h4 class="author">Matthijs S. Berends</h4>
             
-            <h4 class="date">18 November 2019</h4>
+            <h4 class="date">23 November 2019</h4>
       
       
       <div class="hidden name"><code>MDR.Rmd</code></div>
@@ -307,19 +307,19 @@ Unique: 2</p>
 <p>The data set now looks like this:</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(my_TB_data)</a>
 <a class="sourceLine" id="cb5-2" data-line-number="2"><span class="co">#   rifampicin isoniazid gatifloxacin ethambutol pyrazinamide moxifloxacin</span></a>
-<a class="sourceLine" id="cb5-3" data-line-number="3"><span class="co"># 1          S         R            S          S            S            S</span></a>
-<a class="sourceLine" id="cb5-4" data-line-number="4"><span class="co"># 2          S         S            S          S            R            S</span></a>
-<a class="sourceLine" id="cb5-5" data-line-number="5"><span class="co"># 3          S         R            R          S            S            R</span></a>
-<a class="sourceLine" id="cb5-6" data-line-number="6"><span class="co"># 4          S         R            S          S            I            S</span></a>
-<a class="sourceLine" id="cb5-7" data-line-number="7"><span class="co"># 5          R         S            S          I            R            S</span></a>
-<a class="sourceLine" id="cb5-8" data-line-number="8"><span class="co"># 6          R         R            S          S            R            R</span></a>
+<a class="sourceLine" id="cb5-3" data-line-number="3"><span class="co"># 1          S         R            I          S            I            S</span></a>
+<a class="sourceLine" id="cb5-4" data-line-number="4"><span class="co"># 2          S         I            S          S            R            R</span></a>
+<a class="sourceLine" id="cb5-5" data-line-number="5"><span class="co"># 3          R         I            R          R            R            I</span></a>
+<a class="sourceLine" id="cb5-6" data-line-number="6"><span class="co"># 4          S         S            S          R            R            R</span></a>
+<a class="sourceLine" id="cb5-7" data-line-number="7"><span class="co"># 5          I         S            R          S            R            I</span></a>
+<a class="sourceLine" id="cb5-8" data-line-number="8"><span class="co"># 6          R         S            R          R            S            R</span></a>
 <a class="sourceLine" id="cb5-9" data-line-number="9"><span class="co">#   kanamycin</span></a>
-<a class="sourceLine" id="cb5-10" data-line-number="10"><span class="co"># 1         R</span></a>
-<a class="sourceLine" id="cb5-11" data-line-number="11"><span class="co"># 2         R</span></a>
-<a class="sourceLine" id="cb5-12" data-line-number="12"><span class="co"># 3         R</span></a>
-<a class="sourceLine" id="cb5-13" data-line-number="13"><span class="co"># 4         S</span></a>
+<a class="sourceLine" id="cb5-10" data-line-number="10"><span class="co"># 1         S</span></a>
+<a class="sourceLine" id="cb5-11" data-line-number="11"><span class="co"># 2         S</span></a>
+<a class="sourceLine" id="cb5-12" data-line-number="12"><span class="co"># 3         S</span></a>
+<a class="sourceLine" id="cb5-13" data-line-number="13"><span class="co"># 4         R</span></a>
 <a class="sourceLine" id="cb5-14" data-line-number="14"><span class="co"># 5         S</span></a>
-<a class="sourceLine" id="cb5-15" data-line-number="15"><span class="co"># 6         S</span></a></code></pre></div>
+<a class="sourceLine" id="cb5-15" data-line-number="15"><span class="co"># 6         R</span></a></code></pre></div>
 <p>We can now add the interpretation of MDR-TB to our data set. You can use:</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1"><span class="kw"><a href="../reference/mdro.html">mdro</a></span>(my_TB_data, <span class="dt">guideline =</span> <span class="st">"TB"</span>)</a></code></pre></div>
 <p>or its shortcut <code><a href="../reference/mdro.html">mdr_tb()</a></code>:</p>
@@ -336,7 +336,7 @@ Unique: 2</p>
 <a class="sourceLine" id="cb7-11" data-line-number="11"><span class="co"># Author:    WHO (World Health Organization)</span></a>
 <a class="sourceLine" id="cb7-12" data-line-number="12"><span class="co"># Source:    https://www.who.int/tb/publications/pmdt_companionhandbook/en/</span></a>
 <a class="sourceLine" id="cb7-13" data-line-number="13"><span class="co"># </span></a>
-<a class="sourceLine" id="cb7-14" data-line-number="14"><span class="co"># =&gt; Found 4341 MDROs out of 5000 tested isolates (86.8%)</span></a></code></pre></div>
+<a class="sourceLine" id="cb7-14" data-line-number="14"><span class="co"># =&gt; Found 4367 MDROs out of 5000 tested isolates (87.3%)</span></a></code></pre></div>
 <p>Create a frequency table of the results:</p>
 <div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/pkg/cleaner/man/freq.html">freq</a></span>(my_TB_data<span class="op">$</span>mdr)</a></code></pre></div>
 <p><strong>Frequency table</strong></p>
@@ -357,40 +357,40 @@ Unique: 5</p>
 <tr class="odd">
 <td align="left">1</td>
 <td align="left">Mono-resistant</td>
-<td align="right">3281</td>
-<td align="right">65.62%</td>
-<td align="right">3281</td>
-<td align="right">65.62%</td>
+<td align="right">3272</td>
+<td align="right">65.44%</td>
+<td align="right">3272</td>
+<td align="right">65.44%</td>
 </tr>
 <tr class="even">
 <td align="left">2</td>
 <td align="left">Negative</td>
-<td align="right">659</td>
-<td align="right">13.18%</td>
-<td align="right">3940</td>
-<td align="right">78.80%</td>
+<td align="right">633</td>
+<td align="right">12.66%</td>
+<td align="right">3905</td>
+<td align="right">78.10%</td>
 </tr>
 <tr class="odd">
 <td align="left">3</td>
 <td align="left">Multi-drug-resistant</td>
-<td align="right">571</td>
-<td align="right">11.42%</td>
-<td align="right">4511</td>
-<td align="right">90.22%</td>
+<td align="right">584</td>
+<td align="right">11.68%</td>
+<td align="right">4489</td>
+<td align="right">89.78%</td>
 </tr>
 <tr class="even">
 <td align="left">4</td>
 <td align="left">Poly-resistant</td>
-<td align="right">278</td>
-<td align="right">5.56%</td>
-<td align="right">4789</td>
-<td align="right">95.78%</td>
+<td align="right">293</td>
+<td align="right">5.86%</td>
+<td align="right">4782</td>
+<td align="right">95.64%</td>
 </tr>
 <tr class="odd">
 <td align="left">5</td>
 <td align="left">Extensively drug-resistant</td>
-<td align="right">211</td>
-<td align="right">4.22%</td>
+<td align="right">218</td>
+<td align="right">4.36%</td>
 <td align="right">5000</td>
 <td align="right">100.00%</td>
 </tr>

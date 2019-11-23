@@ -57,6 +57,33 @@ for (i in 2:length(atc_groups)) {
   antivirals <- rbind(antivirals, get_atc_table(atc_groups[i]))
 }
 
-# arrange on name, untibble it and save
+# arrange on name, untibble it
 antivirals <- antivirals %>% arrange(name) %>% as.data.frame(stringsAsFactors = FALSE)
+
+# add PubChem Compound ID (cid) and their trade names - functions are in file to create `antibiotics` data set
+CIDs <- get_CID(antivirals$name)
+# these could not be found:
+antivirals[is.na(CIDs),] %>% View()
+# get brand names from PubChem 
+synonyms <- get_synonyms(CIDs)
+synonyms <- lapply(synonyms,
+                   function(x) {
+                     if (length(x) == 0 | all(is.na(x))) {
+                       ""
+                     } else {
+                       x
+                     }})
+
+antivirals <- antivirals %>%
+  transmute(atc,
+            cid = CIDs,
+            name,
+            atc_group,
+            synonyms = unname(synonyms),
+            oral_ddd,
+            oral_units,
+            iv_ddd,
+            iv_units)
+
+# save it
 usethis::use_data(antivirals, overwrite = TRUE)

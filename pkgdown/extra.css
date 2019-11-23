@@ -41,6 +41,11 @@
   width: 19%;
   min-width: 125px;
 }
+.countries_map {
+  float: left; 
+  padding: 0 10px 10px 0;
+  max-width: 25%;
+}
 @media only screen and (max-width: 992px) {
   .footer_logo {
     float: left;

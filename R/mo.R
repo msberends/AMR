@@ -183,11 +183,14 @@
 #' df <- df %>%
 #'   mutate(mo = as.mo(paste(genus, species)))
 #' }
-as.mo <- function(x, Becker = FALSE, Lancefield = FALSE, allow_uncertain = TRUE, reference_df = get_mo_source(), ...) {
-  if (!"AMR" %in% base::.packages()) {
-    require("AMR")
-    # check onLoad() in R/zzz.R: data tables are created there.
-  }
+as.mo <- function(x, 
+                  Becker = FALSE, 
+                  Lancefield = FALSE, 
+                  allow_uncertain = TRUE, 
+                  reference_df = get_mo_source(), 
+                  ...) {
+  
+  load_AMR_package()
   
   # WHONET: xxx = no growth
   x[tolower(as.character(paste0(x, ""))) %in% c("", "xxx", "na", "nan")] <- NA_character_
@@ -293,10 +296,7 @@ exec_as.mo <- function(x,
                        debug = FALSE,
                        reference_data_to_use = microorganismsDT) {
 
-  if (!"AMR" %in% base::.packages()) {
-    require("AMR")
-    # check onLoad() in R/zzz.R: data tables are created there.
-  }
+  load_AMR_package()
   
   # WHONET: xxx = no growth
   x[tolower(as.character(paste0(x, ""))) %in% c("", "xxx", "na", "nan")] <- NA_character_

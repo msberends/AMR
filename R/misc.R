@@ -29,6 +29,14 @@ addin_insert_like <- function() {
   rstudioapi::insertText(" %like% ")
 }
 
+load_AMR_package <- function() {
+  if (!"package:AMR" %in% base::search()) {
+    require(AMR)
+    # check onLoad() in R/zzz.R: data tables are created there.
+  }
+  base::invisible()
+}
+
 #' @importFrom crayon blue bold red
 #' @importFrom dplyr %>% pull
 search_type_in_df <- function(x, type) {
