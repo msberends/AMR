@@ -1,5 +1,5 @@
-# AMR 0.8.0.9034
-## <small>Last updated: 23-Nov-2019</small>
+# AMR 0.8.0.9035
+## <small>Last updated: 24-Nov-2019</small>
 
 ### Breaking
 * Adopted Adeolu *et al.* (2016), [PMID 27620848](https://www.ncbi.nlm.nih.gov/pubmed/27620848) for the `microorganisms` data set, which means that the new order Enterobacterales now consists of a part of the existing family Enterobacteriaceae, but that this family has been split into other families as well (like *Morganellaceae* and *Yersiniaceae*). Although published in 2016, this information is not yet in the Catalogue of Life version of 2019. All MDRO determinations with `mdro()` will now use the Enterobacterales order for all guidelines before 2016 that were dependent on the Enterobacteriaceae family.
@@ -57,6 +57,7 @@
 * Added ATC codes for ceftaroline, ceftobiprole and faropenem and fixed two typos in the `antibiotics` data set
 * More robust way of determining valid MIC values
 * Small changed to the `example_isolates` data set to better reflect reality
+* Added more microorganisms codes from laboratory systems (esp. species of *Pseudescherichia* and *Rodentibacter*)
 
 ### Other
 * Change dependency on `clean` to `cleaner`, as this package was renamed accordingly upon CRAN request
