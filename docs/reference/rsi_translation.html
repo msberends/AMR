@@ -51,7 +51,7 @@
   <script src="../extra.js"></script>
 
 <meta property="og:title" content="Data set for RSI interpretation — rsi_translation" />
-<meta property="og:description" content="Data set to interpret MIC and disk diffusion to RSI values. Included guidelines are CLSI (2011-2019) and EUCAST (2011-2019). Use as.rsi to transform MICs or disks measurements to RSI values." />
+<meta property="og:description" content="Data set to interpret MIC and disk diffusion to RSI values. Included guidelines are CLSI (2011-2019) and EUCAST (2011-2019). Use as.rsi() to transform MICs or disks measurements to RSI values." />
 <meta property="og:image" content="https://msberends.gitlab.io/AMR/logo.png" />
 <meta name="twitter:card" content="summary" />
 
@@ -85,7 +85,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">0.8.0.9033</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">0.8.0.9036</span>
       </span>
     </div>
 
@@ -234,7 +234,7 @@
     </div>
 
     <div class="ref-description">
-    <p>Data set to interpret MIC and disk diffusion to RSI values. Included guidelines are CLSI (2011-2019) and EUCAST (2011-2019). Use <code><a href='as.rsi.html'>as.rsi</a></code> to transform MICs or disks measurements to RSI values.</p>
+    <p>Data set to interpret MIC and disk diffusion to RSI values. Included guidelines are CLSI (2011-2019) and EUCAST (2011-2019). Use <code><a href='as.rsi.html'>as.rsi()</a></code> to transform MICs or disks measurements to RSI values.</p>
     </div>
 
     <pre class="usage"><span class='no'>rsi_translation</span></pre>
@@ -242,18 +242,17 @@
 
     <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
 
-    <p>A <code><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></code> with 13,975 observations and 9 variables:</p><dl class='dl-horizontal'>
-  <dt><code>guideline</code></dt><dd><p>Name of the guideline</p></dd>
-  <dt><code>method</code></dt><dd><p>Either "MIC" or "DISK"</p></dd>
-  <dt><code>site</code></dt><dd><p>Body site, e.g. "Oral" or "Respiratory"</p></dd>
-  <dt><code>mo</code></dt><dd><p>Microbial ID, see <code><a href='as.mo.html'>as.mo</a></code></p></dd>
-  <dt><code>ab</code></dt><dd><p>Antibiotic ID, see <code><a href='as.ab.html'>as.ab</a></code></p></dd>
-  <dt><code>ref_tbl</code></dt><dd><p>Info about where the guideline rule can be found</p></dd>
-  <dt><code>disk_dose</code></dt><dd><p>Dose of the used disk diffusion method</p></dd>
-  <dt><code>breakpoint_S</code></dt><dd><p>Lowest MIC value or highest number of millimeters that leads to "S"</p></dd>
-  <dt><code>breakpoint_R</code></dt><dd><p>Highest MIC value or lowest number of millimeters that leads to "R"</p></dd>
-
-</dl>
+    <p>A <code><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></code> with 13,975 observations and 9 variables:</p><ul>
+<li><p><code>guideline</code><br /> Name of the guideline</p></li>
+<li><p><code>method</code><br /> Either "MIC" or "DISK"</p></li>
+<li><p><code>site</code><br /> Body site, e.g. "Oral" or "Respiratory"</p></li>
+<li><p><code>mo</code><br /> Microbial ID, see <code><a href='as.mo.html'>as.mo()</a></code></p></li>
+<li><p><code>ab</code><br /> Antibiotic ID, see <code><a href='as.ab.html'>as.ab()</a></code></p></li>
+<li><p><code>ref_tbl</code><br /> Info about where the guideline rule can be found</p></li>
+<li><p><code>disk_dose</code><br /> Dose of the used disk diffusion method</p></li>
+<li><p><code>breakpoint_S</code><br /> Lowest MIC value or highest number of millimeters that leads to "S"</p></li>
+<li><p><code>breakpoint_R</code><br /> Highest MIC value or lowest number of millimeters that leads to "R"</p></li>
+</ul>
     <h2 class="hasAnchor" id="read-more-on-our-website-"><a class="anchor" href="#read-more-on-our-website-"></a>Read more on our website!</h2>
 
     

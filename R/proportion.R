@@ -21,31 +21,31 @@
 
 #' Calculate microbial resistance
 #'
-#' @description These functions can be used to calculate the (co-)resistance or susceptibility of microbial isolates (i.e. percentage of S, SI, I, IR or R). All functions support quasiquotation with pipes, can be used in \code{dplyr}s \code{\link[dplyr]{summarise}} and support grouped variables, see \emph{Examples}.
+#' @description These functions can be used to calculate the (co-)resistance or susceptibility of microbial isolates (i.e. percentage of S, SI, I, IR or R). All functions support quasiquotation with pipes, can be used in [dplyr::summarise()] and support grouped variables, please see *Examples*.
 #'
-#' \code{resistance()} should be used to calculate resistance, \code{susceptibility()} should be used to calculate susceptibility.\cr
-#' @param ... one or more vectors (or columns) with antibiotic interpretations. They will be transformed internally with \code{\link{as.rsi}} if needed. Use multiple columns to calculate (the lack of) co-resistance: the probability where one of two drugs have a resistant or susceptible result. See Examples.
-#' @param minimum the minimum allowed number of available (tested) isolates. Any isolate count lower than \code{minimum} will return \code{NA} with a warning. The default number of \code{30} isolates is advised by the Clinical and Laboratory Standards Institute (CLSI) as best practice, see Source.
-#' @param as_percent a logical to indicate whether the output must be returned as a hundred fold with \% sign (a character). A value of \code{0.123456} will then be returned as \code{"12.3\%"}.
-#' @param only_all_tested (for combination therapies, i.e. using more than one variable for \code{...}) a logical to indicate that isolates must be tested for all antibiotics, see section \emph{Combination therapy} below
-#' @param data a \code{data.frame} containing columns with class \code{rsi} (see \code{\link{as.rsi}})
-#' @param translate_ab a column name of the \code{\link{antibiotics}} data set to translate the antibiotic abbreviations to, using \code{\link{ab_property}}
+#' [resistance()] should be used to calculate resistance, [susceptibility()] should be used to calculate susceptibility.\cr
+#' @param ... one or more vectors (or columns) with antibiotic interpretations. They will be transformed internally with [as.rsi()] if needed. Use multiple columns to calculate (the lack of) co-resistance: the probability where one of two drugs have a resistant or susceptible result. See Examples.
+#' @param minimum the minimum allowed number of available (tested) isolates. Any isolate count lower than `minimum` will return `NA` with a warning. The default number of `30` isolates is advised by the Clinical and Laboratory Standards Institute (CLSI) as best practice, see Source.
+#' @param as_percent a logical to indicate whether the output must be returned as a hundred fold with % sign (a character). A value of `0.123456` will then be returned as `"12.3%"`.
+#' @param only_all_tested (for combination therapies, i.e. using more than one variable for `...`): a logical to indicate that isolates must be tested for all antibiotics, see section *Combination therapy* below
+#' @param data a [`data.frame`] containing columns with class [`rsi`] (see [as.rsi()])
+#' @param translate_ab a column name of the [antibiotics] data set to translate the antibiotic abbreviations to, using [ab_property()]
 #' @inheritParams ab_property
-#' @param combine_SI a logical to indicate whether all values of S and I must be merged into one, so the output only consists of S+I vs. R (susceptible vs. resistant). This used to be the parameter \code{combine_IR}, but this now follows the redefinition by EUCAST about the interpretion of I (increased exposure) in 2019, see section 'Interpretation of S, I and R' below. Default is \code{TRUE}.
-#' @param combine_IR a logical to indicate whether all values of I and R must be merged into one, so the output only consists of S vs. I+R (susceptible vs. non-susceptible). This is outdated, see parameter \code{combine_SI}.
+#' @param combine_SI a logical to indicate whether all values of S and I must be merged into one, so the output only consists of S+I vs. R (susceptible vs. resistant). This used to be the parameter `combine_IR`, but this now follows the redefinition by EUCAST about the interpretion of I (increased exposure) in 2019, see section 'Interpretation of S, I and R' below. Default is `TRUE`.
+#' @param combine_IR a logical to indicate whether all values of I and R must be merged into one, so the output only consists of S vs. I+R (susceptible vs. non-susceptible). This is outdated, see parameter `combine_SI`.
 #' @inheritSection as.rsi Interpretation of S, I and R
 #' @details
-#' The function \code{resistance()} is equal to the function \code{proportion_R()}. The function \code{susceptibility()} is equal to the function \code{proportion_SI()}.
+#' The function [resistance()] is equal to the function [proportion_R()]. The function [susceptibility()] is equal to the function [proportion_SI()].
 #'  
-#' \strong{Remember that you should filter your table to let it contain only first isolates!} This is needed to exclude duplicates and to reduce selection bias. Use \code{\link{first_isolate}} to determine them in your data set.
+#' **Remember that you should filter your table to let it contain only first isolates!** This is needed to exclude duplicates and to reduce selection bias. Use [first_isolate()] to determine them in your data set.
 #'
-#' These functions are not meant to count isolates, but to calculate the proportion of resistance/susceptibility. Use the \code{\link[AMR]{count}} functions to count isolates. The function \code{susceptibility()} is essentially equal to \code{count_susceptible() / count_all()}. \emph{Low counts can infuence the outcome - the \code{proportion} functions may camouflage this, since they only return the proportion (albeit being dependent on the \code{minimum} parameter).}
+#' These functions are not meant to count isolates, but to calculate the proportion of resistance/susceptibility. Use the [AMR::count()] functions to count isolates. The function [susceptibility()] is essentially equal to `count_susceptible() / count_all()`. *Low counts can infuence the outcome - the `proportion` functions may camouflage this, since they only return the proportion (albeit being dependent on the `minimum` parameter).*
 #'
-#' The function \code{proportion_df()} takes any variable from \code{data} that has an \code{"rsi"} class (created with \code{\link{as.rsi}()}) and calculates the proportions R, I and S. The function \code{rsi_df()} works exactly like \code{proportion_df()}, but adds the number of isolates.
+#' The function [proportion_df()] takes any variable from `data` that has an [`rsi`] class (created with [as.rsi()]) and calculates the proportions R, I and S. The function [rsi_df()] works exactly like [proportion_df()], but adds the number of isolates.
 #' @section Combination therapy:
-#' When using more than one variable for \code{...} (= combination therapy)), use \code{only_all_tested} to only count isolates that are tested for all antibiotics/variables that you test them for. See this example for two antibiotics, Antibiotic A and Antibiotic B, about how \code{susceptibility} works to calculate the \%SI:
+#' When using more than one variable for `...` (= combination therapy)), use `only_all_tested` to only count isolates that are tested for all antibiotics/variables that you test them for. See this example for two antibiotics, Antibiotic A and Antibiotic B, about how [susceptibility()] works to calculate the %SI:
 #'
-#' \preformatted{
+#' ```
 #' --------------------------------------------------------------------
 #'                     only_all_tested = FALSE  only_all_tested = TRUE
 #'                     -----------------------  -----------------------
@@ -62,23 +62,23 @@
 #'    R        <NA>        -            -            -            -
 #'   <NA>      <NA>        -            -            -            -
 #' --------------------------------------------------------------------
-#' }
+#' ```
 #'
-#' Please note that, in combination therapies, for \code{only_all_tested = TRUE} applies that:
-#' \preformatted{
+#' Please note that, in combination therapies, for `only_all_tested = TRUE` applies that:
+#' ```
 #'     count_S()    +   count_I()    +   count_R()    = count_all()
 #'   proportion_S() + proportion_I() + proportion_R() = 1
-#' }
-#' and that, in combination therapies, for \code{only_all_tested = FALSE} applies that:
-#' \preformatted{
+#' ```
+#' and that, in combination therapies, for `only_all_tested = FALSE` applies that:
+#' ```
 #'     count_S()    +   count_I()    +   count_R()    >= count_all()
 #'   proportion_S() + proportion_I() + proportion_R() >= 1
-#' }
+#' ```
 #'
-#' Using \code{only_all_tested} has no impact when only using one antibiotic as input.
-#' @source \strong{M39 Analysis and Presentation of Cumulative Antimicrobial Susceptibility Test Data, 4th Edition}, 2014, \emph{Clinical and Laboratory Standards Institute (CLSI)}. \url{https://clsi.org/standards/products/microbiology/documents/m39/}.
-#' @seealso \code{\link[AMR]{count}_*} to count resistant and susceptible isolates.
-#' @return Double or, when \code{as_percent = TRUE}, a character.
+#' Using `only_all_tested` has no impact when only using one antibiotic as input.
+#' @source **M39 Analysis and Presentation of Cumulative Antimicrobial Susceptibility Test Data, 4th Edition**, 2014, *Clinical and Laboratory Standards Institute (CLSI)*. <https://clsi.org/standards/products/microbiology/documents/m39/>.
+#' @seealso [AMR::count()] to count resistant and susceptible isolates.
+#' @return A [`double`] or, when `as_percent = TRUE`, a [`character`].
 #' @rdname proportion
 #' @aliases portion
 #' @name proportion

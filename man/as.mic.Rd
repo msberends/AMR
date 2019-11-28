@@ -16,13 +16,13 @@ is.mic(x)
 \item{na.rm}{a logical indicating whether missing values should be removed}
 }
 \value{
-Ordered factor with new class \code{mic}
+Ordered \code{\link{factor}} with new class \code{\link{mic}}
 }
 \description{
-This transforms a vector to a new class \code{mic}, which is an ordered factor with valid MIC values as levels. Invalid MIC values will be translated as \code{NA} with a warning.
+This transforms a vector to a new class \code{\link{mic}}, which is an ordered \code{\link{factor}} with valid MIC values as levels. Invalid MIC values will be translated as \code{NA} with a warning.
 }
 \details{
-Interpret MIC values as RSI values with \code{\link{as.rsi}}. It supports guidelines from EUCAST and CLSI.
+To interpret MIC values as RSI values, use \code{\link[=as.rsi]{as.rsi()}} on MIC values. It supports guidelines from EUCAST and CLSI.
 }
 \section{Read more on our website!}{
 
@@ -51,5 +51,5 @@ barplot(mic_data)
 freq(mic_data)
 }
 \seealso{
-\code{\link{as.rsi}}
+\code{\link[=as.rsi]{as.rsi()}}
 }

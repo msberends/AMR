@@ -85,7 +85,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">0.8.0.9032</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">0.8.0.9036</span>
       </span>
     </div>
 
@@ -234,11 +234,17 @@
     </div>
 
     <div class="ref-description">
-    <p>Use this function to determine a valid microorganism ID (<code>mo</code>). Determination is done using intelligent rules and the complete taxonomic kingdoms Bacteria, Chromista, Protozoa, Archaea and most microbial species from the kingdom Fungi (see Source). The input can be almost anything: a full name (like <code>"Staphylococcus aureus"</code>), an abbreviated name (like <code>"S. aureus"</code>), an abbreviation known in the field (like <code>"MRSA"</code>), or just a genus. Please see Examples.</p>
+    <p>Use this function to determine a valid microorganism ID (<code>mo</code>). Determination is done using intelligent rules and the complete taxonomic kingdoms Bacteria, Chromista, Protozoa, Archaea and most microbial species from the kingdom Fungi (see Source). The input can be almost anything: a full name (like <code>"Staphylococcus aureus"</code>), an abbreviated name (like <code>"S. aureus"</code>), an abbreviation known in the field (like <code>"MRSA"</code>), or just a genus. Please see <em>Examples</em>.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>as.mo</span>(<span class='no'>x</span>, <span class='kw'>Becker</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>Lancefield</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>allow_uncertain</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>reference_df</span> <span class='kw'>=</span> <span class='fu'><a href='mo_source.html'>get_mo_source</a></span>(), <span class='no'>...</span>)
+    <pre class="usage"><span class='fu'>as.mo</span>(
+  <span class='no'>x</span>,
+  <span class='kw'>Becker</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>Lancefield</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>allow_uncertain</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>reference_df</span> <span class='kw'>=</span> <span class='fu'><a href='mo_source.html'>get_mo_source</a></span>(),
+  <span class='no'>...</span>
+)
 
 <span class='fu'>is.mo</span>(<span class='no'>x</span>)
 
@@ -255,25 +261,25 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>x</th>
-      <td><p>a character vector or a <code>data.frame</code> with one or two columns</p></td>
+      <td><p>a character vector or a <code><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></code> with one or two columns</p></td>
     </tr>
     <tr>
       <th>Becker</th>
-      <td><p>a logical to indicate whether <em>Staphylococci</em> should be categorised into coagulase-negative <em>Staphylococci</em> ("CoNS") and coagulase-positive <em>Staphylococci</em> ("CoPS") instead of their own species, according to Karsten Becker <em>et al.</em> [1,2]. Note that this does not include species that were newly named after these publications, like <em>S. caeli</em>.</p>
+      <td><p>a logical to indicate whether <em>Staphylococci</em> should be categorised into coagulase-negative <em>Staphylococci</em> ("CoNS") and coagulase-positive <em>Staphylococci</em> ("CoPS") instead of their own species, according to Karsten Becker <em>et al.</em> (1,2). Note that this does not include species that were newly named after these publications, like <em>S. caeli</em>.</p>
 <p>This excludes <em>Staphylococcus aureus</em> at default, use <code>Becker = "all"</code> to also categorise <em>S. aureus</em> as "CoPS".</p></td>
     </tr>
     <tr>
       <th>Lancefield</th>
-      <td><p>a logical to indicate whether beta-haemolytic <em>Streptococci</em> should be categorised into Lancefield groups instead of their own species, according to Rebecca C. Lancefield [3]. These <em>Streptococci</em> will be categorised in their first group, e.g. <em>Streptococcus dysgalactiae</em> will be group C, although officially it was also categorised into groups G and L.</p>
+      <td><p>a logical to indicate whether beta-haemolytic <em>Streptococci</em> should be categorised into Lancefield groups instead of their own species, according to Rebecca C. Lancefield (3). These <em>Streptococci</em> will be categorised in their first group, e.g. <em>Streptococcus dysgalactiae</em> will be group C, although officially it was also categorised into groups G and L.</p>
 <p>This excludes <em>Enterococci</em> at default (who are in group D), use <code>Lancefield = "all"</code> to also categorise all <em>Enterococci</em> as group D.</p></td>
     </tr>
     <tr>
       <th>allow_uncertain</th>
-      <td><p>a number between 0 (or "none") and 3 (or "all"), or TRUE (= 2) or FALSE (= 0) to indicate whether the input should be checked for less probable results, see Details</p></td>
+      <td><p>a number between <code>0</code> (or <code>"none"</code>) and <code>3</code> (or <code>"all"</code>), or <code>TRUE</code> (= <code>2</code>) or <code>FALSE</code> (= <code>0</code>) to indicate whether the input should be checked for less probable results, please see <em>Details</em></p></td>
     </tr>
     <tr>
       <th>reference_df</th>
-      <td><p>a <code>data.frame</code> to use for extra reference when translating <code>x</code> to a valid <code>mo</code>. See <code><a href='mo_source.html'>set_mo_source</a></code> and <code><a href='mo_source.html'>get_mo_source</a></code> to automate the usage of your own codes (e.g. used in your analysis or organisation).</p></td>
+      <td><p>a <code><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></code> to use for extra reference when translating <code>x</code> to a valid <code>mo</code>. See <code><a href='mo_source.html'>set_mo_source()</a></code> and <code><a href='mo_source.html'>get_mo_source()</a></code> to automate the usage of your own codes (e.g. used in your analysis or organisation).</p></td>
     </tr>
     <tr>
       <th>...</th>
@@ -283,12 +289,14 @@
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>Character (vector) with class <code>"mo"</code></p>
+    <p>A <code><a href='https://rdrr.io/r/base/character.html'>character</a></code> vector with class <code>mo</code></p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p><strong>General info</strong> <br />
-A microorganism ID from this package (class: <code>mo</code>) typically looks like these examples:<br /></p><pre>
-  Code               Full name
+    
+<h3>General info</h3>
+
+
+<p>A microorganism ID from this package (class: <code>mo</code>) typically looks like these examples:</p><pre>  Code               Full name
   ---------------    --------------------------------------
   B_KLBSL            Klebsiella
   B_KLBSL_PNMN       Klebsiella pneumoniae
@@ -303,26 +311,27 @@ A microorganism ID from this package (class: <code>mo</code>) typically looks li
 </pre>
 
 <p>Values that cannot be coered will be considered 'unknown' and will get the MO code <code>UNKNOWN</code>.</p>
-<p>Use the <code><a href='mo_property.html'>mo_property</a>_*</code> functions to get properties based on the returned code, see Examples.</p>
-<p>The algorithm uses data from the Catalogue of Life (see below) and from one other source (see <code><a href='microorganisms.html'>microorganisms</a></code>).</p>
-<p>The <code>as.mo()</code> function uses several coercion rules for fast and logical results. It assesses the input matching criteria in the following order:</p><ul>
+<p>Use the <code><a href='mo_property.html'>mo_property_*</a></code> functions to get properties based on the returned code, see Examples.</p>
+<p>The algorithm uses data from the Catalogue of Life (see below) and from one other source (see <a href='microorganisms.html'>microorganisms</a>).</p>
+<p>The <code>as.mo()</code> function uses several coercion rules for fast and logical results. It assesses the input matching criteria in the following order:</p><ol>
 <li><p>Human pathogenic prevalence: the function  starts with more prevalent microorganisms, followed by less prevalent ones;</p></li>
 <li><p>Taxonomic kingdom: the function starts with determining Bacteria, then Fungi, then Protozoa, then others;</p></li>
 <li><p>Breakdown of input values to identify possible matches.</p></li>
-</ul>
+</ol>
 
 <p>This will lead to the effect that e.g. <code>"E. coli"</code> (a highly prevalent microorganism found in humans) will return the microbial ID of <em>Escherichia coli</em> and not <em>Entamoeba coli</em> (a less prevalent microorganism in humans), although the latter would alphabetically come first.</p>
-<p><strong>Coping with uncertain results</strong> <br />
-In addition, the <code>as.mo()</code> function can differentiate four levels of uncertainty to guess valid results:</p>
-<ul>
+
+<h3>Coping with uncertain results</h3>
+
+
+<p>In addition, the <code>as.mo()</code> function can differentiate four levels of uncertainty to guess valid results:</p><ul>
 <li><p>Uncertainty level 0: no additional rules are applied;</p></li>
 <li><p>Uncertainty level 1: allow previously accepted (but now invalid) taxonomic names and minor spelling errors;</p></li>
 <li><p>Uncertainty level 2: allow all of level 1, strip values between brackets, inverse the words of the input, strip off text elements from the end keeping at least two elements;</p></li>
 <li><p>Uncertainty level 3: allow all of level 1 and 2, strip off text elements from the end, allow any part of a taxonomic name.</p></li>
 </ul>
 
-<p>This leads to e.g.:</p>
-<ul>
+<p>This leads to e.g.:</p><ul>
 <li><p><code>"Streptococcus group B (known as S. agalactiae)"</code>. The text between brackets will be removed and a warning will be thrown that the result <em>Streptococcus group B</em> (<code>B_STRPT_GRPB</code>) needs review.</p></li>
 <li><p><code>"S. aureus - please mind: MRSA"</code>. The last word will be stripped, after which the function will try to find a match. If it does not, the second last word will be stripped, etc. Again, a warning will be thrown that the result <em>Staphylococcus aureus</em> (<code>B_STPHY_AURS</code>) needs review.</p></li>
 <li><p><code>"Fluoroquinolone-resistant Neisseria gonorrhoeae"</code>. The first word will be stripped, after which the function will try to find a match. A warning will be thrown that the result <em>Neisseria gonorrhoeae</em> (<code>B_NESSR_GNRR</code>) needs review.</p></li>
@@ -330,35 +339,45 @@ In addition, the <code>as.mo()</code> function can differentiate four levels of 
 
 <p>The level of uncertainty can be set using the argument <code>allow_uncertain</code>. The default is <code>allow_uncertain = TRUE</code>, which is equal to uncertainty level 2. Using <code>allow_uncertain = FALSE</code> is equal to uncertainty level 0 and will skip all rules. You can also use e.g. <code>as.mo(..., allow_uncertain = 1)</code> to only allow up to level 1 uncertainty.</p>
 <p>There are three helper functions that can be run after then <code>as.mo()</code> function:</p><ul>
-<li><p>Use <code>mo_uncertainties()</code> to get a <code>data.frame</code> with all values that were coerced to a valid value, but with uncertainty. The output contains a score, that is calculated as <code>(n - 0.5 * L) / n</code>, where <em>n</em> is the number of characters of the returned full name of the microorganism, and <em>L</em> is the <a href='https://en.wikipedia.org/wiki/Levenshtein_distance'>Levenshtein distance</a> between that full name and the user input.</p></li>
-<li><p>Use <code>mo_failures()</code> to get a vector with all values that could not be coerced to a valid value.</p></li>
-<li><p>Use <code>mo_renamed()</code> to get a <code>data.frame</code> with all values that could be coerced based on an old, previously accepted taxonomic name.</p></li>
-</ul>   
+<li><p>Use <code>mo_uncertainties()</code> to get a <code><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></code> with all values that were coerced to a valid value, but with uncertainty. The output contains a score, that is calculated as \((n - 0.5 * L) / n\), where <em>n</em> is the number of characters of the returned full name of the microorganism, and <em>L</em> is the <a href='https://en.wikipedia.org/wiki/Levenshtein_distance'>Levenshtein distance</a> between that full name and the user input.</p></li>
+<li><p>Use <code>mo_failures()</code> to get a <code><a href='https://rdrr.io/r/base/vector.html'>vector</a></code> with all values that could not be coerced to a valid value.</p></li>
+<li><p>Use <code>mo_renamed()</code> to get a <code><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></code> with all values that could be coerced based on an old, previously accepted taxonomic name.</p></li>
+</ul>
 
-<p><strong>Microbial prevalence of pathogens in humans</strong> <br />
-The intelligent rules consider the prevalence of microorganisms in humans grouped into three groups, which is available as the <code>prevalence</code> columns in the <code><a href='microorganisms.html'>microorganisms</a></code> and <code><a href='microorganisms.old.html'>microorganisms.old</a></code> data sets. The grouping into prevalence groups is based on experience from several microbiological laboratories in the Netherlands in conjunction with international reports on pathogen prevalence.</p>
+
+<h3>Microbial prevalence of pathogens in humans</h3>
+
+
+<p>The intelligent rules consider the prevalence of microorganisms in humans grouped into three groups, which is available as the <code>prevalence</code> columns in the <a href='microorganisms.html'>microorganisms</a> and <a href='microorganisms.old.html'>microorganisms.old</a> data sets. The grouping into prevalence groups is based on experience from several microbiological laboratories in the Netherlands in conjunction with international reports on pathogen prevalence.</p>
 <p>Group 1 (most prevalent microorganisms) consists of all microorganisms where the taxonomic class is Gammaproteobacteria or where the taxonomic genus is  <em>Enterococcus</em>, <em>Staphylococcus</em> or <em>Streptococcus</em>. This group consequently contains all common Gram-negative bacteria, such as <em>Pseudomonas</em> and <em>Legionella</em> and all species within the order Enterobacteriales.</p>
 <p>Group 2 consists of all microorganisms where the taxonomic phylum is Proteobacteria, Firmicutes, Actinobacteria or Sarcomastigophora, or where the taxonomic genus is <em>Aspergillus</em>, <em>Bacteroides</em>, <em>Candida</em>, <em>Capnocytophaga</em>, <em>Chryseobacterium</em>, <em>Cryptococcus</em>, <em>Elisabethkingia</em>, <em>Flavobacterium</em>, <em>Fusobacterium</em>, <em>Giardia</em>, <em>Leptotrichia</em>, <em>Mycoplasma</em>, <em>Prevotella</em>, <em>Rhodotorula</em>, <em>Treponema</em>, <em>Trichophyton</em> or <em>Ureaplasma</em>.</p>
 <p>Group 3 (least prevalent microorganisms) consists of all other microorganisms.</p>
-<p><strong>Self-learning algorithm</strong> <br />
-The <code>as.mo()</code> function gains experience from previously determined microorganism IDs and learns from it. This drastically improves both speed and reliability. Use <code>clear_mo_history()</code> to reset the algorithms. Only experience from your current <code>AMR</code> package version is used. This is done because in the future the taxonomic tree (which is included in this package) may change for any organism and it consequently has to rebuild its knowledge.</p>
+
+<h3>Self-learning algorithm</h3>
+
+
+<p>The <code>as.mo()</code> function gains experience from previously determined microorganism IDs and learns from it. This drastically improves both speed and reliability. Use <code>clear_mo_history()</code> to reset the algorithms. Only experience from your current <code>AMR</code> package version is used. This is done because in the future the taxonomic tree (which is included in this package) may change for any organism and it consequently has to rebuild its knowledge.</p>
 <p>Usually, any guess after the first try runs 80-95% faster than the first try.</p>
 <p>This resets with every update of this <code>AMR</code> package since results are saved to your local package library folder.</p>
+
     <h2 class="hasAnchor" id="source"><a class="anchor" href="#source"></a>Source</h2>
 
     
 
-<p>[1] Becker K <em>et al.</em> <strong>Coagulase-Negative Staphylococci</strong>. 2014. Clin Microbiol Rev. 27(4): 870–926. <a href='https://dx.doi.org/10.1128/CMR.00109-13'>https://dx.doi.org/10.1128/CMR.00109-13</a></p>
-<p>[2] Becker K <em>et al.</em> <strong>Implications of identifying the recently defined members of the <em>S. aureus</em> complex, <em>S. argenteus</em> and <em>S. schweitzeri</em>: A position paper of members of the ESCMID Study Group for staphylococci and Staphylococcal Diseases (ESGS).</strong> 2019. Clin Microbiol Infect. <a href='https://doi.org/10.1016/j.cmi.2019.02.028'>https://doi.org/10.1016/j.cmi.2019.02.028</a></p>
-<p>[3] Lancefield RC <strong>A serological differentiation of human and other groups of hemolytic streptococci</strong>. 1933. J Exp Med. 57(4): 571–95. <a href='https://dx.doi.org/10.1084/jem.57.4.571'>https://dx.doi.org/10.1084/jem.57.4.571</a></p>
-<p>[4] Catalogue of Life: Annual Checklist (public online taxonomic database), <a href='http://www.catalogueoflife.org'>http://www.catalogueoflife.org</a> (check included annual version with <code><a href='catalogue_of_life_version.html'>catalogue_of_life_version</a>()</code>).</p>
+<ol>
+<li><p>Becker K <em>et al.</em> <strong>Coagulase-Negative Staphylococci</strong>. 2014. Clin Microbiol Rev. 27(4): 870–926. <a href='https://dx.doi.org/10.1128/CMR.00109-13'>https://dx.doi.org/10.1128/CMR.00109-13</a></p></li>
+<li><p>Becker K <em>et al.</em> <strong>Implications of identifying the recently defined members of the <em>S. aureus</em> complex, <em>S. argenteus</em> and <em>S. schweitzeri</em>: A position paper of members of the ESCMID Study Group for staphylococci and Staphylococcal Diseases (ESGS).</strong> 2019. Clin Microbiol Infect. <a href='https://doi.org/10.1016/j.cmi.2019.02.028'>https://doi.org/10.1016/j.cmi.2019.02.028</a></p></li>
+<li><p>Lancefield RC <strong>A serological differentiation of human and other groups of hemolytic streptococci</strong>. 1933. J Exp Med. 57(4): 571–95. <a href='https://dx.doi.org/10.1084/jem.57.4.571'>https://dx.doi.org/10.1084/jem.57.4.571</a></p></li>
+<li><p>Catalogue of Life: Annual Checklist (public online taxonomic database), <a href='http://www.catalogueoflife.org'>http://www.catalogueoflife.org</a> (check included annual version with <code><a href='catalogue_of_life_version.html'>catalogue_of_life_version()</a></code>).</p></li>
+</ol>
+
     <h2 class="hasAnchor" id="catalogue-of-life"><a class="anchor" href="#catalogue-of-life"></a>Catalogue of Life</h2>
 
     
 
 <p><img src='figures/logo_col.png' height=40px style=margin-bottom:5px /> <br />
 This package contains the complete taxonomic tree of almost all microorganisms (~70,000 species) from the authoritative and comprehensive Catalogue of Life (<a href='http://www.catalogueoflife.org'>http://www.catalogueoflife.org</a>). The Catalogue of Life is the most comprehensive and authoritative global index of species currently available.</p>
-<p><a href='catalogue_of_life.html'>Click here</a> for more information about the included taxa. Check which version of the Catalogue of Life was included in this package with <code><a href='catalogue_of_life_version.html'>catalogue_of_life_version</a>()</code>.</p>
+<p><a href='catalogue_of_life.html'>Click here</a> for more information about the included taxa. Check which version of the Catalogue of Life was included in this package with <code><a href='catalogue_of_life_version.html'>catalogue_of_life_version()</a></code>.</p>
     <h2 class="hasAnchor" id="read-more-on-our-website-"><a class="anchor" href="#read-more-on-our-website-"></a>Read more on our website!</h2>
 
     
@@ -366,8 +385,8 @@ This package contains the complete taxonomic tree of almost all microorganisms (
 <p>On our website <a href='https://msberends.gitlab.io/AMR'>https://msberends.gitlab.io/AMR</a> you can find <a href='https://msberends.gitlab.io/AMR/articles/AMR.html'>a tutorial</a> about how to conduct AMR analysis, the <a href='https://msberends.gitlab.io/AMR/reference'>complete documentation of all functions</a> (which reads a lot easier than here in R) and <a href='https://msberends.gitlab.io/AMR/articles/WHONET.html'>an example analysis using WHONET data</a>.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><code><a href='microorganisms.html'>microorganisms</a></code> for the <code>data.frame</code> that is being used to determine ID's. <br />
-The <code><a href='mo_property.html'>mo_property</a></code> functions (like <code><a href='mo_property.html'>mo_genus</a></code>, <code><a href='mo_property.html'>mo_gramstain</a></code>) to get properties based on the returned code.</p></div>
+    <div class='dont-index'><p><a href='microorganisms.html'>microorganisms</a> for the <code><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></code> that is being used to determine ID's.</p>
+<p>The <code><a href='mo_property.html'>mo_property()</a></code> functions (like <code><a href='mo_property.html'>mo_genus()</a></code>, <code><a href='mo_property.html'>mo_gramstain()</a></code>) to get properties based on the returned code.</p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><span class='co'># \donttest{</span>

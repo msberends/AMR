@@ -19,24 +19,24 @@
 # Visit our website for more info: https://msberends.gitlab.io/AMR.    #
 # ==================================================================== #
 
-#' Count isolates
+#' Count available isolates
 #'
-#' @description These functions can be used to count resistant/susceptible microbial isolates. All functions support quasiquotation with pipes, can be used in \code{dplyr}s \code{\link[dplyr]{summarise}} and support grouped variables, see \emph{Examples}.
+#' @description These functions can be used to count resistant/susceptible microbial isolates. All functions support quasiquotation with pipes, can be used in [summarise()] and support grouped variables, see *Examples*.
 #'
-#' \code{count_resistant()} should be used to count resistant isolates, \code{count_susceptible()} should be used to count susceptible isolates.\cr
-#' @param ... one or more vectors (or columns) with antibiotic interpretations. They will be transformed internally with \code{\link{as.rsi}} if needed.
+#' [count_resistant()] should be used to count resistant isolates, [count_susceptible()] should be used to count susceptible isolates.
+#' @param ... one or more vectors (or columns) with antibiotic interpretations. They will be transformed internally with [as.rsi()] if needed.
 #' @inheritParams proportion
 #' @inheritSection as.rsi Interpretation of S, I and R
-#' @details These functions are meant to count isolates. Use the \code{\link{resistance}}/\code{\link{susceptibility}} functions to calculate microbial resistance/susceptibility.
+#' @details These functions are meant to count isolates. Use the [resistance()]/[susceptibility()] functions to calculate microbial resistance/susceptibility.
 #' 
-#' The function \code{count_resistant()} is equal to the function \code{count_R()}. The function \code{count_susceptible()} is equal to the function \code{count_SI()}.
+#' The function [count_resistant()] is equal to the function [count_R()]. The function [count_susceptible()] is equal to the function [count_SI()].
 #'
-#' The function \code{n_rsi()} is an alias of \code{count_all()}. They can be used to count all available isolates, i.e. where all input antibiotics have an available result (S, I or R). Their use is equal to \code{\link{n_distinct}()}. Their function is equal to \code{count_susceptible(...) + count_resistant(...)}.
+#' The function [n_rsi()] is an alias of [count_all()]. They can be used to count all available isolates, i.e. where all input antibiotics have an available result (S, I or R). Their use is equal to [n_distinct()]. Their function is equal to `count_susceptible(...) + count_resistant(...)`.
 #'
-#' The function \code{count_df()} takes any variable from \code{data} that has an \code{"rsi"} class (created with \code{\link{as.rsi}()}) and counts the number of S's, I's and R's. The function \code{rsi_df()} works exactly like \code{count_df()}, but adds the percentage of S, I and R.
+#' The function [count_df()] takes any variable from `data` that has an [`rsi`] class (created with [as.rsi()]) and counts the number of S's, I's and R's. The function [rsi_df()] works exactly like [count_df()], but adds the percentage of S, I and R.
 #' @inheritSection proportion Combination therapy
-#' @seealso \code{\link{proportion}_*} to calculate microbial resistance and susceptibility.
-#' @return Integer
+#' @seealso [`proportion_*`][proportion] to calculate microbial resistance and susceptibility.
+#' @return An [`integer`]
 #' @rdname count
 #' @name count
 #' @export

@@ -10,36 +10,66 @@
 \alias{labels_rsi_count}
 \title{AMR plots with \code{ggplot2}}
 \usage{
-ggplot_rsi(data, position = NULL, x = "antibiotic",
-  fill = "interpretation", facet = NULL, breaks = seq(0, 1, 0.1),
-  limits = NULL, translate_ab = "name", combine_SI = TRUE,
-  combine_IR = FALSE, language = get_locale(), nrow = NULL,
-  colours = c(S = "#61a8ff", SI = "#61a8ff", I = "#61f7ff", IR =
-  "#ff6961", R = "#ff6961"), datalabels = TRUE, datalabels.size = 2.5,
-  datalabels.colour = "gray15", title = NULL, subtitle = NULL,
-  caption = NULL, x.title = "Antimicrobial", y.title = "Proportion",
-  ...)
+ggplot_rsi(
+  data,
+  position = NULL,
+  x = "antibiotic",
+  fill = "interpretation",
+  facet = NULL,
+  breaks = seq(0, 1, 0.1),
+  limits = NULL,
+  translate_ab = "name",
+  combine_SI = TRUE,
+  combine_IR = FALSE,
+  language = get_locale(),
+  nrow = NULL,
+  colours = c(S = "#61a8ff", SI = "#61a8ff", I = "#61f7ff", IR = "#ff6961", R =
+    "#ff6961"),
+  datalabels = TRUE,
+  datalabels.size = 2.5,
+  datalabels.colour = "gray15",
+  title = NULL,
+  subtitle = NULL,
+  caption = NULL,
+  x.title = "Antimicrobial",
+  y.title = "Proportion",
+  ...
+)
 
-geom_rsi(position = NULL, x = c("antibiotic", "interpretation"),
-  fill = "interpretation", translate_ab = "name",
-  language = get_locale(), combine_SI = TRUE, combine_IR = FALSE,
-  ...)
+geom_rsi(
+  position = NULL,
+  x = c("antibiotic", "interpretation"),
+  fill = "interpretation",
+  translate_ab = "name",
+  language = get_locale(),
+  combine_SI = TRUE,
+  combine_IR = FALSE,
+  ...
+)
 
 facet_rsi(facet = c("interpretation", "antibiotic"), nrow = NULL)
 
 scale_y_percent(breaks = seq(0, 1, 0.1), limits = NULL)
 
-scale_rsi_colours(colours = c(S = "#61a8ff", SI = "#61a8ff", I =
-  "#61f7ff", IR = "#ff6961", R = "#ff6961"))
+scale_rsi_colours(
+  colours = c(S = "#61a8ff", SI = "#61a8ff", I = "#61f7ff", IR = "#ff6961", R =
+    "#ff6961")
+)
 
 theme_rsi()
 
-labels_rsi_count(position = NULL, x = "antibiotic",
-  translate_ab = "name", combine_SI = TRUE, combine_IR = FALSE,
-  datalabels.size = 3, datalabels.colour = "gray15")
+labels_rsi_count(
+  position = NULL,
+  x = "antibiotic",
+  translate_ab = "name",
+  combine_SI = TRUE,
+  combine_IR = FALSE,
+  datalabels.size = 3,
+  datalabels.colour = "gray15"
+)
 }
 \arguments{
-\item{data}{a \code{data.frame} with column(s) of class \code{"rsi"} (see \code{\link{as.rsi}})}
+\item{data}{a \code{\link{data.frame}} with column(s) of class \code{\link{rsi}} (see \code{\link[=as.rsi]{as.rsi()}})}
 
 \item{position}{position adjustment of bars, either \code{"fill"}, \code{"stack"} or \code{"dodge"}}
 
@@ -53,19 +83,19 @@ labels_rsi_count(position = NULL, x = "antibiotic",
 
 \item{limits}{numeric vector of length two providing limits of the scale, use \code{NA} to refer to the existing minimum or maximum}
 
-\item{translate_ab}{a column name of the \code{\link{antibiotics}} data set to translate the antibiotic abbreviations to, using \code{\link{ab_property}}}
+\item{translate_ab}{a column name of the \link{antibiotics} data set to translate the antibiotic abbreviations to, using \code{\link[=ab_property]{ab_property()}}}
 
 \item{combine_SI}{a logical to indicate whether all values of S and I must be merged into one, so the output only consists of S+I vs. R (susceptible vs. resistant). This used to be the parameter \code{combine_IR}, but this now follows the redefinition by EUCAST about the interpretion of I (increased exposure) in 2019, see section 'Interpretation of S, I and R' below. Default is \code{TRUE}.}
 
 \item{combine_IR}{a logical to indicate whether all values of I and R must be merged into one, so the output only consists of S vs. I+R (susceptible vs. non-susceptible). This is outdated, see parameter \code{combine_SI}.}
 
-\item{language}{language of the returned text, defaults to system language (see \code{\link{get_locale}}) and can also be set with \code{\link{getOption}("AMR_locale")}. Use \code{language = NULL} or \code{language = ""} to prevent translation.}
+\item{language}{language of the returned text, defaults to system language (see \code{\link[=get_locale]{get_locale()}}) and can also be set with \code{getOption("AMR_locale")}. Use \code{language = NULL} or \code{language = ""} to prevent translation.}
 
 \item{nrow}{(when using \code{facet}) number of rows}
 
-\item{colours}{a named vector with colours for the bars. The names must be one or more of: S, SI, I, IR, R or be \code{FALSE} to use default \code{ggplot2} colours.}
+\item{colours}{a named vector with colours for the bars. The names must be one or more of: S, SI, I, IR, R or be \code{FALSE} to use default [ggplot2][\code{\link[ggplot2:ggplot]{ggplot2::ggplot()}} colours.}
 
-\item{datalabels}{show datalabels using \code{labels_rsi_count}}
+\item{datalabels}{show datalabels using \code{\link[=labels_rsi_count]{labels_rsi_count()}}}
 
 \item{datalabels.size}{size of the datalabels}
 
@@ -81,28 +111,29 @@ labels_rsi_count(position = NULL, x = "antibiotic",
 
 \item{y.title}{text to show as y axis description}
 
-\item{...}{other parameters passed on to \code{geom_rsi}}
+\item{...}{other parameters passed on to \code{\link[=geom_rsi]{geom_rsi()}}}
 }
 \description{
-Use these functions to create bar plots for antimicrobial resistance analysis. All functions rely on internal \code{\link[ggplot2]{ggplot}2} functions.
+Use these functions to create bar plots for antimicrobial resistance analysis. All functions rely on internal \link[ggplot2:ggplot]{ggplot2} functions.
 }
 \details{
-At default, the names of antibiotics will be shown on the plots using \code{\link{ab_name}}. This can be set with the \code{translate_ab} parameter. See \code{\link{count_df}}.
+At default, the names of antibiotics will be shown on the plots using \code{\link[=ab_name]{ab_name()}}. This can be set with the \code{translate_ab} parameter. See \code{\link[=count_df]{count_df()}}.
+\subsection{The functions}{
 
-\strong{The functions}\cr
-\code{geom_rsi} will take any variable from the data that has an \code{rsi} class (created with \code{\link{as.rsi}}) using \code{\link{rsi_df}} and will plot bars with the percentage R, I and S. The default behaviour is to have the bars stacked and to have the different antibiotics on the x axis.
+\code{\link[=geom_rsi]{geom_rsi()}} will take any variable from the data that has an \code{\link{rsi}} class (created with \code{\link[=as.rsi]{as.rsi()}}) using \code{\link[=rsi_df]{rsi_df()}} and will plot bars with the percentage R, I and S. The default behaviour is to have the bars stacked and to have the different antibiotics on the x axis.
 
-\code{facet_rsi} creates 2d plots (at default based on S/I/R) using \code{\link[ggplot2]{facet_wrap}}.
+\code{\link[=facet_rsi]{facet_rsi()}} creates 2d plots (at default based on S/I/R) using \code{\link[ggplot2:facet_wrap]{ggplot2::facet_wrap()}}.
 
-\code{scale_y_percent} transforms the y axis to a 0 to 100\% range using \code{\link[ggplot2]{scale_continuous}}.
+\code{\link[=scale_y_percent]{scale_y_percent()}} transforms the y axis to a 0 to 100\% range using \code{\link[ggplot2:scale_continuous]{ggplot2::scale_continuous()}}.
 
-\code{scale_rsi_colours} sets colours to the bars: pastel blue for S, pastel turquoise for I and pastel red for R, using \code{\link[ggplot2]{scale_brewer}}.
+\code{\link[=scale_rsi_colours]{scale_rsi_colours()}} sets colours to the bars: pastel blue for S, pastel turquoise for I and pastel red for R, using \code{\link[ggplot2:scale_brewer]{ggplot2::scale_brewer()}}.
 
-\code{theme_rsi} is a \code{ggplot \link[ggplot2]{theme}} with minimal distraction.
+\code{\link[=theme_rsi]{theme_rsi()}} is a [ggplot2 theme][\code{\link[ggplot2:theme]{ggplot2::theme()}} with minimal distraction.
 
-\code{labels_rsi_count} print datalabels on the bars with percentage and amount of isolates using \code{\link[ggplot2]{geom_text}}
+\code{\link[=labels_rsi_count]{labels_rsi_count()}} print datalabels on the bars with percentage and amount of isolates using \code{\link[ggplot2:geom_text]{ggplot2::geom_text()}}
 
-\code{ggplot_rsi} is a wrapper around all above functions that uses data as first input. This makes it possible to use this function after a pipe (\code{\%>\%}). See Examples.
+\code{\link[=ggplot_rsi]{ggplot_rsi()}} is a wrapper around all above functions that uses data as first input. This makes it possible to use this function after a pipe (\verb{\%>\%}). See Examples.
+}
 }
 \section{Read more on our website!}{
 

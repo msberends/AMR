@@ -5,38 +5,38 @@
 \alias{microorganisms}
 \title{Data set with ~70,000 microorganisms}
 \format{A \code{\link{data.frame}} with 69,447 observations and 16 variables:
-\describe{
-  \item{\code{mo}}{ID of microorganism as used by this package}
-  \item{\code{col_id}}{Catalogue of Life ID}
-  \item{\code{fullname}}{Full name, like \code{"Escherichia coli"}}
-  \item{\code{kingdom}, \code{phylum}, \code{class}, \code{order}, \code{family}, \code{genus}, \code{species}, \code{subspecies}}{Taxonomic rank of the microorganism}
-  \item{\code{rank}}{Text of the taxonomic rank of the microorganism, like \code{"species"} or \code{"genus"}}
-  \item{\code{ref}}{Author(s) and year of concerning scientific publication}
-  \item{\code{species_id}}{ID of the species as used by the Catalogue of Life}
-  \item{\code{source}}{Either "CoL", "DSMZ" (see Source) or "manually added"}
-  \item{\code{prevalence}}{Prevalence of the microorganism, see \code{?as.mo}}
+\itemize{
+\item \code{mo}\cr ID of microorganism as used by this package
+\item \code{col_id}\cr Catalogue of Life ID
+\item \code{fullname}\cr Full name, like \code{"Escherichia coli"}
+\item \code{kingdom}, \code{phylum}, \code{class}, \code{order}, \code{family}, \code{genus}, \code{species}, \code{subspecies}\cr Taxonomic rank of the microorganism
+\item \code{rank}\cr Text of the taxonomic rank of the microorganism, like \code{"species"} or \code{"genus"}
+\item \code{ref}\cr Author(s) and year of concerning scientific publication
+\item \code{species_id}\cr ID of the species as used by the Catalogue of Life
+\item \code{source}\cr Either "CoL", "DSMZ" (see Source) or "manually added"
+\item \code{prevalence}\cr Prevalence of the microorganism, see \code{\link[=as.mo]{as.mo()}}
 }}
 \source{
-Catalogue of Life: Annual Checklist (public online taxonomic database), \url{http://www.catalogueoflife.org} (check included annual version with \code{\link{catalogue_of_life_version}()}).
+Catalogue of Life: Annual Checklist (public online taxonomic database), \url{http://www.catalogueoflife.org} (check included annual version with \code{\link[=catalogue_of_life_version]{catalogue_of_life_version()}}).
 
-Leibniz Institute DSMZ-German Collection of Microorganisms and Cell Cultures, Germany, Prokaryotic Nomenclature Up-to-Date, \url{http://www.dsmz.de/bacterial-diversity/prokaryotic-nomenclature-up-to-date} (check included version with \code{\link{catalogue_of_life_version}()}).
+Leibniz Institute DSMZ-German Collection of Microorganisms and Cell Cultures, Germany, Prokaryotic Nomenclature Up-to-Date, \url{http://www.dsmz.de/bacterial-diversity/prokaryotic-nomenclature-up-to-date} (check included version with \code{\link[=catalogue_of_life_version]{catalogue_of_life_version()}}).
 }
 \usage{
 microorganisms
 }
 \description{
-A data set containing the microbial taxonomy of six kingdoms from the Catalogue of Life. MO codes can be looked up using \code{\link{as.mo}}.
+A data set containing the microbial taxonomy of six kingdoms from the Catalogue of Life. MO codes can be looked up using \code{\link[=as.mo]{as.mo()}}.
 }
 \details{
 Manually added were:
 \itemize{
-  \item{11 entries of \emph{Streptococcus} (beta-haemolytic: groups A, B, C, D, F, G, H, K and unspecified; other: viridans, milleri)}
-  \item{2 entries of \emph{Staphylococcus} (coagulase-negative [CoNS] and coagulase-positive [CoPS])}
-  \item{3 entries of \emph{Trichomonas} (\emph{Trichomonas vaginalis}, and its family and genus)}
-  \item{1 entry of \emph{Blastocystis} (\emph{Blastocystis hominis}), although it officially does not exist (Noel \emph{et al.} 2005, PMID 15634993)}
-  \item{5 other 'undefined' entries (unknown, unknown Gram negatives, unknown Gram positives, unknown yeast and unknown fungus)}
-  \item{6 families under the Enterobacterales order, according to Adeolu \emph{et al.} (2016, PMID 27620848), that are not in the Catalogue of Life}
-  \item{12,600 species from the DSMZ (Deutsche Sammlung von Mikroorganismen und Zellkulturen) since the DSMZ contain the latest taxonomic information based on recent publications}
+\item 11 entries of \emph{Streptococcus} (beta-haemolytic: groups A, B, C, D, F, G, H, K and unspecified; other: viridans, milleri)
+\item 2 entries of \emph{Staphylococcus} (coagulase-negative \link{CoNS} and coagulase-positive \link{CoPS})
+\item 3 entries of \emph{Trichomonas} (\emph{Trichomonas vaginalis}, and its family and genus)
+\item 1 entry of \emph{Blastocystis} (\emph{Blastocystis hominis}), although it officially does not exist (Noel \emph{et al.} 2005, PMID 15634993)
+\item 5 other 'undefined' entries (unknown, unknown Gram negatives, unknown Gram positives, unknown yeast and unknown fungus)
+\item 6 families under the Enterobacterales order, according to Adeolu \emph{et al.} (2016, PMID 27620848), that are not in the Catalogue of Life
+\item 12,600 species from the DSMZ (Deutsche Sammlung von Mikroorganismen und Zellkulturen) since the DSMZ contain the latest taxonomic information based on recent publications
 }
 }
 \section{About the records from DSMZ (see source)}{
@@ -51,7 +51,7 @@ From: \url{https://www.dsmz.de/support/bacterial-nomenclature-up-to-date-downloa
 \if{html}{\figure{logo_col.png}{options: height=40px style=margin-bottom:5px} \cr}
 This package contains the complete taxonomic tree of almost all microorganisms (~70,000 species) from the authoritative and comprehensive Catalogue of Life (\url{http://www.catalogueoflife.org}). The Catalogue of Life is the most comprehensive and authoritative global index of species currently available.
 
-\link[=catalogue_of_life]{Click here} for more information about the included taxa. Check which version of the Catalogue of Life was included in this package with \code{\link{catalogue_of_life_version}()}.
+\link[=catalogue_of_life]{Click here} for more information about the included taxa. Check which version of the Catalogue of Life was included in this package with \code{\link[=catalogue_of_life_version]{catalogue_of_life_version()}}.
 }
 
 \section{Read more on our website!}{
@@ -60,6 +60,6 @@ On our website \url{https://msberends.gitlab.io/AMR} you can find \href{https://
 }
 
 \seealso{
-\code{\link{as.mo}}, \code{\link{mo_property}}, \code{\link{microorganisms.codes}}
+\code{\link[=as.mo]{as.mo()}}, \code{\link[=mo_property]{mo_property()}}, \link{microorganisms.codes}
 }
 \keyword{datasets}

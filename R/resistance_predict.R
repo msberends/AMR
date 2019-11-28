@@ -21,41 +21,40 @@
 
 #' Predict antimicrobial resistance
 #'
-#' Create a prediction model to predict antimicrobial resistance for the next years on statistical solid ground. Standard errors (SE) will be returned as columns \code{se_min} and \code{se_max}. See Examples for a real live example.
-#' @param col_ab column name of \code{x} with antimicrobial interpretations (\code{R}, \code{I} and \code{S})
+#' Create a prediction model to predict antimicrobial resistance for the next years on statistical solid ground. Standard errors (SE) will be returned as columns `se_min` and `se_max`. See *Examples* for a real live example.
+#' @param col_ab column name of `x` containing antimicrobial interpretations (`"R"`, `"I"` and `"S"`)
 #' @param col_date column name of the date, will be used to calculate years if this column doesn't consist of years already, defaults to the first column of with a date class
-#' @param year_min lowest year to use in the prediction model, dafaults to the lowest year in \code{col_date}
+#' @param year_min lowest year to use in the prediction model, dafaults to the lowest year in `col_date`
 #' @param year_max highest year to use in the prediction model, defaults to 10 years after today
-#' @param year_every unit of sequence between lowest year found in the data and \code{year_max}
+#' @param year_every unit of sequence between lowest year found in the data and `year_max`
 #' @param minimum minimal amount of available isolates per year to include. Years containing less observations will be estimated by the model.
-#' @param model the statistical model of choice. This could be a generalised linear regression model with binomial distribution (i.e. using \code{\link{glm}(..., family = \link{binomial})}), assuming that a period of zero resistance was followed by a period of increasing resistance leading slowly to more and more resistance. See Details for all valid options.
-#' @param I_as_S a logical to indicate whether values \code{I} should be treated as \code{S} (will otherwise be treated as \code{R}). The default, \code{TRUE}, follows the redefinition by EUCAST about the interpretion of I (increased exposure) in 2019, see section 'Interpretation of S, I and R' below. 
-#' @param preserve_measurements a logical to indicate whether predictions of years that are actually available in the data should be overwritten by the original data. The standard errors of those years will be \code{NA}.
-#' @param info a logical to indicate whether textual analysis should be printed with the name and \code{\link{summary}} of the statistical model.
+#' @param model the statistical model of choice. This could be a generalised linear regression model with binomial distribution (i.e. using `glm(..., family = binomial)``, assuming that a period of zero resistance was followed by a period of increasing resistance leading slowly to more and more resistance. See Details for all valid options.
+#' @param I_as_S a logical to indicate whether values `I` should be treated as `S` (will otherwise be treated as `R`). The default, `TRUE`, follows the redefinition by EUCAST about the interpretion of I (increased exposure) in 2019, see section *Interpretation of S, I and R* below. 
+#' @param preserve_measurements a logical to indicate whether predictions of years that are actually available in the data should be overwritten by the original data. The standard errors of those years will be `NA`.
+#' @param info a logical to indicate whether textual analysis should be printed with the name and [summary()] of the statistical model.
 #' @param main title of the plot
 #' @param ribbon a logical to indicate whether a ribbon should be shown (default) or error bars
 #' @param ... parameters passed on to functions
 #' @inheritSection as.rsi Interpretation of S, I and R
 #' @inheritParams first_isolate
 #' @inheritParams graphics::plot
-#' @details Valid options for the statistical model are:
-#' \itemize{
-#'   \item{\code{"binomial"} or \code{"binom"} or \code{"logit"}: a generalised linear regression model with binomial distribution}
-#'   \item{\code{"loglin"} or \code{"poisson"}: a generalised log-linear regression model with poisson distribution}
-#'   \item{\code{"lin"} or \code{"linear"}: a linear regression model}
-#' }
-#' @return \code{data.frame} with extra class \code{"resistance_predict"} with columns:
-#' \itemize{
-#'   \item{\code{year}}
-#'   \item{\code{value}, the same as \code{estimated} when \code{preserve_measurements = FALSE}, and a combination of \code{observed} and \code{estimated} otherwise}
-#'   \item{\code{se_min}, the lower bound of the standard error with a minimum of \code{0} (so the standard error will never go below 0\%)}
-#'   \item{\code{se_max} the upper bound of the standard error with a maximum of \code{1} (so the standard error will never go above 100\%)}
-#'   \item{\code{observations}, the total number of available observations in that year, i.e. S + I + R}
-#'   \item{\code{observed}, the original observed resistant percentages}
-#'   \item{\code{estimated}, the estimated resistant percentages, calculated by the model}
-#' }
-#' Furthermore, the model itself is available as an attribute: \code{attributes(x)$model}, see Examples.
-#' @seealso The \code{\link{portion}} function to calculate resistance, \cr \code{\link{lm}} \code{\link{glm}}
+#' @details Valid options for the statistical model (parameter `model`) are:
+#' - `"binomial"` or `"binom"` or `"logit"`: a generalised linear regression model with binomial distribution
+#' - `"loglin"` or `"poisson"`: a generalised log-linear regression model with poisson distribution
+#' - `"lin"` or `"linear"`: a linear regression model
+#' @return A [`data.frame`] with extra class [`resistance_predict`] with columns:
+#' - `year`
+#' - `value`, the same as `estimated` when `preserve_measurements = FALSE`, and a combination of `observed` and `estimated` otherwise
+#' - `se_min`, the lower bound of the standard error with a minimum of `0` (so the standard error will never go below 0%)
+#' - `se_max` the upper bound of the standard error with a maximum of `1` (so the standard error will never go above 100%)
+#' - `observations`, the total number of available observations in that year, i.e. \eqn{S + I + R}
+#' - `observed`, the original observed resistant percentages
+#' - `estimated`, the estimated resistant percentages, calculated by the model
+#'   
+#' Furthermore, the model itself is available as an attribute: `attributes(x)$model`, please see *Examples*.
+#' @seealso The [proportion()] functions to calculate resistance
+#' 
+#' Models: [lm()] [glm()]
 #' @rdname resistance_predict
 #' @export
 #' @importFrom stats predict glm lm
@@ -63,7 +62,10 @@
 #' @importFrom tidyr pivot_wider
 #' @inheritSection AMR Read more on our website!
 #' @examples
-#' x <- resistance_predict(example_isolates, col_ab = "AMX", year_min = 2010, model = "binomial")
+#' x <- resistance_predict(example_isolates, 
+#'                         col_ab = "AMX",
+#'                         year_min = 2010,
+#'                         model = "binomial")
 #' plot(x)
 #' ggplot_rsi_predict(x)
 #'
@@ -102,9 +104,9 @@
 #'     scale_y_continuous(limits = c(0, 1),
 #'                        breaks = seq(0, 1, 0.1),
 #'                        labels = paste0(seq(0, 100, 10), "%")) +
-#'     labs(title = expression(paste("Forecast of amoxicillin resistance in ",
+#'     labs(title = expression(paste("Forecast of Amoxicillin Resistance in ",
 #'                                   italic("E. coli"))),
-#'          y = "%IR",
+#'          y = "%R",
 #'          x = "Year") +
 #'     theme_minimal(base_size = 13)
 #' }

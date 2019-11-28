@@ -8,7 +8,7 @@
 get_locale()
 }
 \description{
-For language-dependent output of AMR functions, like \code{\link{mo_name}},  \code{\link{mo_type}} and \code{\link{ab_name}}.
+For language-dependent output of AMR functions, like \code{\link[=mo_name]{mo_name()}}, \code{\link[=mo_type]{mo_type()}} and \code{\link[=ab_name]{ab_name()}}.
 }
 \details{
 Strings will be translated to foreign languages if they are defined in a local translation file. Additions to this file can be suggested at our repository. The file can be found here: \url{https://gitlab.com/msberends/AMR/blob/master/data-raw/translations.tsv}.
@@ -17,9 +17,9 @@ Currently supported languages can be found if running: \code{unique(AMR:::transl
 
 Please suggest your own translations \href{https://gitlab.com/msberends/AMR/issues/new?issue[title]=Translation\%20suggestion}{by creating a new issue on our repository}.
 
-This file will be read by all functions where a translated output can be desired, like all \code{\link{mo_property}} functions (\code{\link{mo_fullname}}, \code{\link{mo_type}}, etc.).
+This file will be read by all functions where a translated output can be desired, like all \code{\link[=mo_property]{mo_property()}} functions (\code{\link[=mo_fullname]{mo_fullname()}}, \code{\link[=mo_type]{mo_type()}}, etc.).
 
-The system language will be used at default, if that language is supported. The system language can be overwritten with \code{\link{getOption}("AMR_locale")}.
+The system language will be used at default, if that language is supported. The system language can be overwritten with \code{Sys.setenv(AMR_locale = yourlanguage)}.
 }
 \section{Read more on our website!}{
 

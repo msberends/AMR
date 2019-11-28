@@ -5,34 +5,36 @@
 \alias{antibiotics}
 \alias{antivirals}
 \title{Data sets with ~550 antimicrobials}
-\format{\strong{For the \code{antibiotics} data set: a \code{\link{data.frame}} with 452 observations and 13 variables:}
-\describe{
-  \item{\code{ab}}{Antibiotic ID as used in this package (like \code{AMC}), using the official EARS-Net (European Antimicrobial Resistance Surveillance Network) codes where available}
-  \item{\code{atc}}{ATC code (Anatomical Therapeutic Chemical) as defined by the WHOCC, like \code{J01CR02}}
-  \item{\code{cid}}{Compound ID as found in PubChem}
-  \item{\code{name}}{Official name as used by WHONET/EARS-Net or the WHO}
-  \item{\code{group}}{A short and concise group name, based on WHONET and WHOCC definitions}
-  \item{\code{atc_group1}}{Official pharmacological subgroup (3rd level ATC code) as defined by the WHOCC, like \code{"Macrolides, lincosamides and streptogramins"}}
-  \item{\code{atc_group2}}{Official chemical subgroup (4th level ATC code) as defined by the WHOCC, like \code{"Macrolides"}}
-  \item{\code{abbr}}{List of abbreviations as used in many countries, also for antibiotic susceptibility testing (AST)}
-  \item{\code{synonyms}}{Synonyms (often trade names) of a drug, as found in PubChem based on their compound ID}
-  \item{\code{oral_ddd}}{Defined Daily Dose (DDD), oral treatment}
-  \item{\code{oral_units}}{Units of \code{oral_ddd}}
-  \item{\code{iv_ddd}}{Defined Daily Dose (DDD), parenteral treatment}
-  \item{\code{iv_units}}{Units of \code{iv_ddd}}
+\format{\subsection{For the \link{antibiotics} data set: a \code{\link{data.frame}} with 452 observations and 13 variables:}{
+\itemize{
+\item \code{ab}\cr Antibiotic ID as used in this package (like \code{AMC}), using the official EARS-Net (European Antimicrobial Resistance Surveillance Network) codes where available
+\item \code{atc}\cr ATC code (Anatomical Therapeutic Chemical) as defined by the WHOCC, like \code{J01CR02}
+\item \code{cid}\cr Compound ID as found in PubChem
+\item \code{name}\cr Official name as used by WHONET/EARS-Net or the WHO
+\item \code{group}\cr A short and concise group name, based on WHONET and WHOCC definitions
+\item \code{atc_group1}\cr Official pharmacological subgroup (3rd level ATC code) as defined by the WHOCC, like \code{"Macrolides, lincosamides and streptogramins"}
+\item \code{atc_group2}\cr Official chemical subgroup (4th level ATC code) as defined by the WHOCC, like \code{"Macrolides"}
+\item \code{abbr}\cr List of abbreviations as used in many countries, also for antibiotic susceptibility testing (AST)
+\item \code{synonyms}\cr Synonyms (often trade names) of a drug, as found in PubChem based on their compound ID
+\item \code{oral_ddd}\cr Defined Daily Dose (DDD), oral treatment
+\item \code{oral_units}\cr Units of \code{oral_ddd}
+\item \code{iv_ddd}\cr Defined Daily Dose (DDD), parenteral treatment
+\item \code{iv_units}\cr Units of \code{iv_ddd}
+}
 }
 
-\strong{For the \code{antivirals} data set: a \code{\link{data.frame}} with 102 observations and 9 variables:}
-\describe{
-  \item{\code{atc}}{ATC code (Anatomical Therapeutic Chemical) as defined by the WHOCC}
-  \item{\code{cid}}{Compound ID as found in PubChem}
-  \item{\code{name}}{Official name as used by WHONET/EARS-Net or the WHO}
-  \item{\code{atc_group}}{Official pharmacological subgroup (3rd level ATC code) as defined by the WHOCC}
-  \item{\code{synonyms}}{Synonyms (often trade names) of a drug, as found in PubChem based on their compound ID}
-  \item{\code{oral_ddd}}{Defined Daily Dose (DDD), oral treatment}
-  \item{\code{oral_units}}{Units of \code{oral_ddd}}
-  \item{\code{iv_ddd}}{Defined Daily Dose (DDD), parenteral treatment}
-  \item{\code{iv_units}}{Units of \code{iv_ddd}}
+\subsection{For the \link{antivirals} data set: a \code{\link{data.frame}} with 102 observations and 9 variables:}{
+\itemize{
+\item \code{atc}\cr ATC code (Anatomical Therapeutic Chemical) as defined by the WHOCC
+\item \code{cid}\cr Compound ID as found in PubChem
+\item \code{name}\cr Official name as used by WHONET/EARS-Net or the WHO
+\item \code{atc_group}\cr Official pharmacological subgroup (3rd level ATC code) as defined by the WHOCC
+\item \code{synonyms}\cr Synonyms (often trade names) of a drug, as found in PubChem based on their compound ID
+\item \code{oral_ddd}\cr Defined Daily Dose (DDD), oral treatment
+\item \code{oral_units}\cr Units of \code{oral_ddd}
+\item \code{iv_ddd}\cr Defined Daily Dose (DDD), parenteral treatment
+\item \code{iv_units}\cr Units of \code{iv_ddd}
+}
 }}
 \source{
 World Health Organization (WHO) Collaborating Centre for Drug Statistics Methodology (WHOCC): \url{https://www.whocc.no/atc_ddd_index/}
@@ -47,7 +49,7 @@ antibiotics
 antivirals
 }
 \description{
-Two data sets containing all antibiotics/antimycotics and antivirals. Use \code{\link{as.ab}} or one of the \code{\link{ab_property}} functions to retrieve values from the \code{antibiotics} data set. Three identifiers are included in this data set: an antibiotic ID (\code{ab}, primarily used in this package) as defined by WHONET/EARS-Net, an ATC code (\code{atc}) as defined by the WHO, and a Compound ID (\code{cid}) as found in PubChem. Other properties in this data set are derived from one or more of these codes.
+Two data sets containing all antibiotics/antimycotics and antivirals. Use \code{\link[=as.ab]{as.ab()}} or one of the \code{\link[=ab_property]{ab_property()}} functions to retrieve values from the \link{antibiotics} data set. Three identifiers are included in this data set: an antibiotic ID (\code{ab}, primarily used in this package) as defined by WHONET/EARS-Net, an ATC code (\code{atc}) as defined by the WHO, and a Compound ID (\code{cid}) as found in PubChem. Other properties in this data set are derived from one or more of these codes.
 }
 \details{
 Properties that are based on an ATC code are only available when an ATC is available. These properties are: \code{atc_group1}, \code{atc_group2}, \code{oral_ddd}, \code{oral_units}, \code{iv_ddd} and \code{iv_units}.
@@ -57,13 +59,13 @@ Synonyms (i.e. trade names) are derived from the Compound ID (\code{cid}) and co
 \section{WHOCC}{
 
 \if{html}{\figure{logo_who.png}{options: height=60px style=margin-bottom:5px} \cr}
-This package contains \strong{all ~550 antibiotic, antimycotic and antiviral drugs} and their Anatomical Therapeutic Chemical (ATC) codes, ATC groups and Defined Daily Dose (DDD) from the World Health Organization Collaborating Centre for Drug Statistics Methodology (WHOCC, \url{https://www.whocc.no}) and the Pharmaceuticals Community Register of the European Commission (\url{http://ec.europa.eu/health/documents/community-register/html/atc.htm}). 
+This package contains \strong{all ~550 antibiotic, antimycotic and antiviral drugs} and their Anatomical Therapeutic Chemical (ATC) codes, ATC groups and Defined Daily Dose (DDD) from the World Health Organization Collaborating Centre for Drug Statistics Methodology (WHOCC, \url{https://www.whocc.no}) and the Pharmaceuticals Community Register of the European Commission (\url{http://ec.europa.eu/health/documents/community-register/html/atc.htm}).
 
 These have become the gold standard for international drug utilisation monitoring and research.
 
 The WHOCC is located in Oslo at the Norwegian Institute of Public Health and funded by the Norwegian government. The European Commission is the executive of the European Union and promotes its general interest.
 
-\strong{NOTE: The WHOCC copyright does not allow use for commercial purposes, unlike any other info from this package. See \url{https://www.whocc.no/copyright_disclaimer/}.}
+\strong{NOTE: The WHOCC copyright does not allow use for commercial purposes, unlike any other info from this package.} See \url{https://www.whocc.no/copyright_disclaimer/.}
 }
 
 \section{Read more on our website!}{
@@ -72,6 +74,6 @@ On our website \url{https://msberends.gitlab.io/AMR} you can find \href{https://
 }
 
 \seealso{
-\code{\link{microorganisms}}
+\link{microorganisms}
 }
 \keyword{datasets}

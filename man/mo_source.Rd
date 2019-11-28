@@ -14,24 +14,21 @@ get_mo_source()
 \item{path}{location of your reference file, see Details}
 }
 \description{
-These functions can be used to predefine your own reference to be used in \code{\link{as.mo}} and consequently all \code{mo_*} functions like \code{\link{mo_genus}} and \code{\link{mo_gramstain}}.
+These functions can be used to predefine your own reference to be used in \code{\link[=as.mo]{as.mo()}} and consequently all \verb{mo_*} functions like \code{\link[=mo_genus]{mo_genus()}} and \code{\link[=mo_gramstain]{mo_gramstain()}}.
 
 This is \strong{the fastest way} to have your organisation (or analysis) specific codes picked up and translated by this package.
 }
 \details{
 The reference file can be a text file seperated with commas (CSV) or tabs or pipes, an Excel file (either 'xls' or 'xlsx' format) or an R object file (extension '.rds'). To use an Excel file, you need to have the \code{readxl} package installed.
 
-\code{set_mo_source} will check the file for validity: it must be a \code{data.frame}, must have a column named \code{"mo"} which contains values from \code{microorganisms$mo} and must have a reference column with your own defined values. If all tests pass, \code{set_mo_source} will read the file into R and export it to \code{"~/.mo_source.rds"}. This compressed data file will then be used at default for MO determination (function \code{\link{as.mo}} and consequently all \code{mo_*} functions like \code{\link{mo_genus}} and \code{\link{mo_gramstain}}). The location of the original file will be saved as option with \code{\link{options}(mo_source = path)}. Its timestamp will be saved with \code{\link{options}(mo_source_datetime = ...)}.
+\code{\link[=set_mo_source]{set_mo_source()}} will check the file for validity: it must be a \code{\link{data.frame}}, must have a column named \code{"mo"} which contains values from \code{\link[=microorganisms]{microorganisms$mo}} and must have a reference column with your own defined values. If all tests pass, \code{\link[=set_mo_source]{set_mo_source()}} will read the file into R and export it to \code{"~/.mo_source.rds"}. This compressed data file will then be used at default for MO determination (function \code{\link[=as.mo]{as.mo()}} and consequently all \verb{mo_*} functions like \code{\link[=mo_genus]{mo_genus()}} and \code{\link[=mo_gramstain]{mo_gramstain()}}). The location of the original file will be saved as option with \code{options(mo_source = path)}. Its timestamp will be saved with \code{options(mo_source_datetime = ...)}.
 
-\code{get_mo_source} will return the data set by reading \code{"~/.mo_source.rds"} with \code{\link{readRDS}}. If the original file has changed (the file defined with \code{path}), it will call \code{set_mo_source} to update the data file automatically.
+\code{\link[=get_mo_source]{get_mo_source()}} will return the data set by reading \code{"~/.mo_source.rds"} with \code{\link[=readRDS]{readRDS()}}. If the original file has changed (the file defined with \code{path}), it will call \code{\link[=set_mo_source]{set_mo_source()}} to update the data file automatically.
 
-Reading an Excel file (\code{.xlsx}) with only one row has a size of 8-9 kB. The compressed file used by this package will have a size of 0.1 kB and can be read by \code{get_mo_source} in only a couple of microseconds (a millionth of a second).
-}
-\section{How it works}{
+Reading an Excel file (\code{.xlsx}) with only one row has a size of 8-9 kB. The compressed file used by this package will have a size of 0.1 kB and can be read by \code{\link[=get_mo_source]{get_mo_source()}} in only a couple of microseconds (a millionth of a second).
+\subsection{How it works}{
 
-Imagine this data on a sheet of an Excel file (mo codes were looked up in the `microorganisms` data set). The first column contains the organisation specific codes, the second column contains an MO code from this package:
-\preformatted{
-  |         A          |      B      |
+Imagine this data on a sheet of an Excel file (mo codes were looked up in the \code{microorganisms} data set). The first column contains the organisation specific codes, the second column contains an MO code from this package:\preformatted{  |         A          |      B      |
 --|--------------------|-------------|
 1 | Organisation XYZ   | mo          |
 2 | lab_mo_ecoli       | B_ESCHR_COL |
@@ -39,56 +36,46 @@ Imagine this data on a sheet of an Excel file (mo codes were looked up in the `m
 4 |                    |             |
 }
 
-We save it as \code{'home/me/ourcodes.xlsx'}. Now we have to set it as a source:
-\preformatted{
-set_mo_source("home/me/ourcodes.xlsx")
+We save it as \code{"home/me/ourcodes.xlsx"}. Now we have to set it as a source:\preformatted{set_mo_source("home/me/ourcodes.xlsx")
 # Created mo_source file '~/.mo_source.rds' from 'home/me/ourcodes.xlsx'.
 }
 
-It has now created a file "~/.mo_source.rds" with the contents of our Excel file, but only the first column with foreign values and the 'mo' column will be kept.
+It has now created a file \code{"~/.mo_source.rds"} with the contents of our Excel file, but only the first column with foreign values and the 'mo' column will be kept.
 
-And now we can use it in our functions:
-\preformatted{
-as.mo("lab_mo_ecoli")
-[1] B_ESCHR_COL
+And now we can use it in our functions:\preformatted{as.mo("lab_mo_ecoli")
+\[1\] B_ESCHR_COLI
 
 mo_genus("lab_mo_kpneumoniae")
 [1] "Klebsiella"
 
 # other input values still work too
 as.mo(c("Escherichia coli", "E. coli", "lab_mo_ecoli"))
-[1] B_ESCHR_COL  B_ESCHR_COL  B_ESCHR_COL
+[1] B_ESCHR_COLI B_ESCHR_COLI B_ESCHR_COLI
 }
 
-If we edit the Excel file to, let's say, this:
-\preformatted{
-  |         A          |      B      |
---|--------------------|-------------|
-1 | Organisation XYZ   | mo          |
-2 | lab_mo_ecoli       | B_ESCHR_COL |
-3 | lab_mo_kpneumoniae | B_KLBSL_PNE |
-4 | lab_Staph_aureus   | B_STPHY_AUR |
-5 |                    |             |
+If we edit the Excel file to, let's say, this:\preformatted{  |         A          |       B      |
+--|--------------------|--------------|
+1 | Organisation XYZ   | mo           |
+2 | lab_mo_ecoli       | B_ESCHR_COLI |
+3 | lab_mo_kpneumoniae | B_KLBSL_PNMN |
+4 | lab_Staph_aureus   | B_STPHY_AURS |
+5 |                    |              |
 }
 
-...any new usage of an MO function in this package will update your data:
-\preformatted{
-as.mo("lab_mo_ecoli")
+...any new usage of an MO function in this package will update your data:\preformatted{as.mo("lab_mo_ecoli")
 # Updated mo_source file '~/.mo_source.rds' from 'home/me/ourcodes.xlsx'.
-[1] B_ESCHR_COL
+[1] B_ESCHR_COLI
 
 mo_genus("lab_Staph_aureus")
 [1] "Staphylococcus"
 }
 
-To remove the reference completely, just use any of these:
-\preformatted{
-set_mo_source("")
+To remove the reference completely, just use any of these:\preformatted{set_mo_source("")
 set_mo_source(NULL)
 # Removed mo_source file '~/.mo_source.rds'.
 }
 }
-
+}
 \section{Read more on our website!}{
 
 On our website \url{https://msberends.gitlab.io/AMR} you can find \href{https://msberends.gitlab.io/AMR/articles/AMR.html}{a tutorial} about how to conduct AMR analysis, the \href{https://msberends.gitlab.io/AMR/reference}{complete documentation of all functions} (which reads a lot easier than here in R) and \href{https://msberends.gitlab.io/AMR/articles/WHONET.html}{an example analysis using WHONET data}.

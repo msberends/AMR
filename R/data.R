@@ -21,48 +21,44 @@
 
 #' Data sets with ~550 antimicrobials
 #'
-#' Two data sets containing all antibiotics/antimycotics and antivirals. Use \code{\link{as.ab}} or one of the \code{\link{ab_property}} functions to retrieve values from the \code{antibiotics} data set. Three identifiers are included in this data set: an antibiotic ID (\code{ab}, primarily used in this package) as defined by WHONET/EARS-Net, an ATC code (\code{atc}) as defined by the WHO, and a Compound ID (\code{cid}) as found in PubChem. Other properties in this data set are derived from one or more of these codes.
+#' Two data sets containing all antibiotics/antimycotics and antivirals. Use [as.ab()] or one of the [ab_property()] functions to retrieve values from the [antibiotics] data set. Three identifiers are included in this data set: an antibiotic ID (`ab`, primarily used in this package) as defined by WHONET/EARS-Net, an ATC code (`atc`) as defined by the WHO, and a Compound ID (`cid`) as found in PubChem. Other properties in this data set are derived from one or more of these codes.
 #' @format
-#' \strong{For the \code{antibiotics} data set: a \code{\link{data.frame}} with 452 observations and 13 variables:}
-#' \describe{
-#'   \item{\code{ab}}{Antibiotic ID as used in this package (like \code{AMC}), using the official EARS-Net (European Antimicrobial Resistance Surveillance Network) codes where available}
-#'   \item{\code{atc}}{ATC code (Anatomical Therapeutic Chemical) as defined by the WHOCC, like \code{J01CR02}}
-#'   \item{\code{cid}}{Compound ID as found in PubChem}
-#'   \item{\code{name}}{Official name as used by WHONET/EARS-Net or the WHO}
-#'   \item{\code{group}}{A short and concise group name, based on WHONET and WHOCC definitions}
-#'   \item{\code{atc_group1}}{Official pharmacological subgroup (3rd level ATC code) as defined by the WHOCC, like \code{"Macrolides, lincosamides and streptogramins"}}
-#'   \item{\code{atc_group2}}{Official chemical subgroup (4th level ATC code) as defined by the WHOCC, like \code{"Macrolides"}}
-#'   \item{\code{abbr}}{List of abbreviations as used in many countries, also for antibiotic susceptibility testing (AST)}
-#'   \item{\code{synonyms}}{Synonyms (often trade names) of a drug, as found in PubChem based on their compound ID}
-#'   \item{\code{oral_ddd}}{Defined Daily Dose (DDD), oral treatment}
-#'   \item{\code{oral_units}}{Units of \code{oral_ddd}}
-#'   \item{\code{iv_ddd}}{Defined Daily Dose (DDD), parenteral treatment}
-#'   \item{\code{iv_units}}{Units of \code{iv_ddd}}
-#' }
+#' ### For the [antibiotics] data set: a [`data.frame`] with 452 observations and 13 variables:
+#' - `ab`\cr Antibiotic ID as used in this package (like `AMC`), using the official EARS-Net (European Antimicrobial Resistance Surveillance Network) codes where available
+#' - `atc`\cr ATC code (Anatomical Therapeutic Chemical) as defined by the WHOCC, like `J01CR02`
+#' - `cid`\cr Compound ID as found in PubChem
+#' - `name`\cr Official name as used by WHONET/EARS-Net or the WHO
+#' - `group`\cr A short and concise group name, based on WHONET and WHOCC definitions
+#' - `atc_group1`\cr Official pharmacological subgroup (3rd level ATC code) as defined by the WHOCC, like `"Macrolides, lincosamides and streptogramins"`
+#' - `atc_group2`\cr Official chemical subgroup (4th level ATC code) as defined by the WHOCC, like `"Macrolides"`
+#' - `abbr`\cr List of abbreviations as used in many countries, also for antibiotic susceptibility testing (AST)
+#' - `synonyms`\cr Synonyms (often trade names) of a drug, as found in PubChem based on their compound ID
+#' - `oral_ddd`\cr Defined Daily Dose (DDD), oral treatment
+#' - `oral_units`\cr Units of `oral_ddd`
+#' - `iv_ddd`\cr Defined Daily Dose (DDD), parenteral treatment
+#' - `iv_units`\cr Units of `iv_ddd`
 #' 
-#' \strong{For the \code{antivirals} data set: a \code{\link{data.frame}} with 102 observations and 9 variables:}
-#' \describe{
-#'   \item{\code{atc}}{ATC code (Anatomical Therapeutic Chemical) as defined by the WHOCC}
-#'   \item{\code{cid}}{Compound ID as found in PubChem}
-#'   \item{\code{name}}{Official name as used by WHONET/EARS-Net or the WHO}
-#'   \item{\code{atc_group}}{Official pharmacological subgroup (3rd level ATC code) as defined by the WHOCC}
-#'   \item{\code{synonyms}}{Synonyms (often trade names) of a drug, as found in PubChem based on their compound ID}
-#'   \item{\code{oral_ddd}}{Defined Daily Dose (DDD), oral treatment}
-#'   \item{\code{oral_units}}{Units of \code{oral_ddd}}
-#'   \item{\code{iv_ddd}}{Defined Daily Dose (DDD), parenteral treatment}
-#'   \item{\code{iv_units}}{Units of \code{iv_ddd}}
-#' }
-#' @details Properties that are based on an ATC code are only available when an ATC is available. These properties are: \code{atc_group1}, \code{atc_group2}, \code{oral_ddd}, \code{oral_units}, \code{iv_ddd} and \code{iv_units}.
+#' ### For the [antivirals] data set: a [`data.frame`] with 102 observations and 9 variables:
+#' - `atc`\cr ATC code (Anatomical Therapeutic Chemical) as defined by the WHOCC
+#' - `cid`\cr Compound ID as found in PubChem
+#' - `name`\cr Official name as used by WHONET/EARS-Net or the WHO
+#' - `atc_group`\cr Official pharmacological subgroup (3rd level ATC code) as defined by the WHOCC
+#' - `synonyms`\cr Synonyms (often trade names) of a drug, as found in PubChem based on their compound ID
+#' - `oral_ddd`\cr Defined Daily Dose (DDD), oral treatment
+#' - `oral_units`\cr Units of `oral_ddd`
+#' - `iv_ddd`\cr Defined Daily Dose (DDD), parenteral treatment
+#' - `iv_units`\cr Units of `iv_ddd`
+#' @details Properties that are based on an ATC code are only available when an ATC is available. These properties are: `atc_group1`, `atc_group2`, `oral_ddd`, `oral_units`, `iv_ddd` and `iv_units`.
 #'
-#' Synonyms (i.e. trade names) are derived from the Compound ID (\code{cid}) and consequently only available where a CID is available.
-#' @source World Health Organization (WHO) Collaborating Centre for Drug Statistics Methodology (WHOCC): \url{https://www.whocc.no/atc_ddd_index/}
+#' Synonyms (i.e. trade names) are derived from the Compound ID (`cid`) and consequently only available where a CID is available.
+#' @source World Health Organization (WHO) Collaborating Centre for Drug Statistics Methodology (WHOCC): <https://www.whocc.no/atc_ddd_index/>
 #'
-#' WHONET 2019 software: \url{http://www.whonet.org/software.html}
+#' WHONET 2019 software: <http://www.whonet.org/software.html>
 #'
-#' European Commission Public Health PHARMACEUTICALS - COMMUNITY REGISTER: \url{http://ec.europa.eu/health/documents/community-register/html/atc.htm}
+#' European Commission Public Health PHARMACEUTICALS - COMMUNITY REGISTER: <http://ec.europa.eu/health/documents/community-register/html/atc.htm>
 #' @inheritSection WHOCC WHOCC
 #' @inheritSection AMR Read more on our website!
-#' @seealso \code{\link{microorganisms}}
+#' @seealso [microorganisms]
 "antibiotics"
 
 #' @rdname antibiotics
@@ -70,39 +66,35 @@
 
 #' Data set with ~70,000 microorganisms
 #'
-#' A data set containing the microbial taxonomy of six kingdoms from the Catalogue of Life. MO codes can be looked up using \code{\link{as.mo}}.
+#' A data set containing the microbial taxonomy of six kingdoms from the Catalogue of Life. MO codes can be looked up using [as.mo()].
 #' @inheritSection catalogue_of_life Catalogue of Life
-#' @format A \code{\link{data.frame}} with 69,447 observations and 16 variables:
-#' \describe{
-#'   \item{\code{mo}}{ID of microorganism as used by this package}
-#'   \item{\code{col_id}}{Catalogue of Life ID}
-#'   \item{\code{fullname}}{Full name, like \code{"Escherichia coli"}}
-#'   \item{\code{kingdom}, \code{phylum}, \code{class}, \code{order}, \code{family}, \code{genus}, \code{species}, \code{subspecies}}{Taxonomic rank of the microorganism}
-#'   \item{\code{rank}}{Text of the taxonomic rank of the microorganism, like \code{"species"} or \code{"genus"}}
-#'   \item{\code{ref}}{Author(s) and year of concerning scientific publication}
-#'   \item{\code{species_id}}{ID of the species as used by the Catalogue of Life}
-#'   \item{\code{source}}{Either "CoL", "DSMZ" (see Source) or "manually added"}
-#'   \item{\code{prevalence}}{Prevalence of the microorganism, see \code{?as.mo}}
-#' }
+#' @format A [`data.frame`] with 69,447 observations and 16 variables:
+#' - `mo`\cr ID of microorganism as used by this package
+#' - `col_id`\cr Catalogue of Life ID
+#' - `fullname`\cr Full name, like `"Escherichia coli"`
+#' - `kingdom`, `phylum`, `class`, `order`, `family`, `genus`, `species`, `subspecies`\cr Taxonomic rank of the microorganism
+#' - `rank`\cr Text of the taxonomic rank of the microorganism, like `"species"` or `"genus"`
+#' - `ref`\cr Author(s) and year of concerning scientific publication
+#' - `species_id`\cr ID of the species as used by the Catalogue of Life
+#' - `source`\cr Either "CoL", "DSMZ" (see Source) or "manually added"
+#' - `prevalence`\cr Prevalence of the microorganism, see [as.mo()]
 #' @details Manually added were:
-#' \itemize{
-#'   \item{11 entries of \emph{Streptococcus} (beta-haemolytic: groups A, B, C, D, F, G, H, K and unspecified; other: viridans, milleri)}
-#'   \item{2 entries of \emph{Staphylococcus} (coagulase-negative [CoNS] and coagulase-positive [CoPS])}
-#'   \item{3 entries of \emph{Trichomonas} (\emph{Trichomonas vaginalis}, and its family and genus)}
-#'   \item{1 entry of \emph{Blastocystis} (\emph{Blastocystis hominis}), although it officially does not exist (Noel \emph{et al.} 2005, PMID 15634993)}
-#'   \item{5 other 'undefined' entries (unknown, unknown Gram negatives, unknown Gram positives, unknown yeast and unknown fungus)}
-#'   \item{6 families under the Enterobacterales order, according to Adeolu \emph{et al.} (2016, PMID 27620848), that are not in the Catalogue of Life}
-#'   \item{12,600 species from the DSMZ (Deutsche Sammlung von Mikroorganismen und Zellkulturen) since the DSMZ contain the latest taxonomic information based on recent publications}
-#' }
+#' - 11 entries of *Streptococcus* (beta-haemolytic: groups A, B, C, D, F, G, H, K and unspecified; other: viridans, milleri)
+#' - 2 entries of *Staphylococcus* (coagulase-negative [CoNS] and coagulase-positive [CoPS])
+#' - 3 entries of *Trichomonas* (*Trichomonas vaginalis*, and its family and genus)
+#' - 1 entry of *Blastocystis* (*Blastocystis hominis*), although it officially does not exist (Noel *et al.* 2005, PMID 15634993)
+#' - 5 other 'undefined' entries (unknown, unknown Gram negatives, unknown Gram positives, unknown yeast and unknown fungus)
+#' - 6 families under the Enterobacterales order, according to Adeolu *et al.* (2016, PMID 27620848), that are not in the Catalogue of Life
+#' - 12,600 species from the DSMZ (Deutsche Sammlung von Mikroorganismen und Zellkulturen) since the DSMZ contain the latest taxonomic information based on recent publications
 #' @section About the records from DSMZ (see source):
 #' Names of prokaryotes are defined as being validly published by the International Code of Nomenclature of Bacteria. Validly published are all names which are included in the Approved Lists of Bacterial Names and the names subsequently published in the International Journal of Systematic Bacteriology (IJSB) and, from January 2000, in the International Journal of Systematic and Evolutionary Microbiology (IJSEM) as original articles or in the validation lists.
 #'
-#' From: \url{https://www.dsmz.de/support/bacterial-nomenclature-up-to-date-downloads/readme.html}
-#' @source Catalogue of Life: Annual Checklist (public online taxonomic database), \url{http://www.catalogueoflife.org} (check included annual version with \code{\link{catalogue_of_life_version}()}).
+#' From: <https://www.dsmz.de/support/bacterial-nomenclature-up-to-date-downloads/readme.html>
+#' @source Catalogue of Life: Annual Checklist (public online taxonomic database), <http://www.catalogueoflife.org> (check included annual version with [catalogue_of_life_version()]).
 #'
-#' Leibniz Institute DSMZ-German Collection of Microorganisms and Cell Cultures, Germany, Prokaryotic Nomenclature Up-to-Date, \url{http://www.dsmz.de/bacterial-diversity/prokaryotic-nomenclature-up-to-date} (check included version with \code{\link{catalogue_of_life_version}()}).
+#' Leibniz Institute DSMZ-German Collection of Microorganisms and Cell Cultures, Germany, Prokaryotic Nomenclature Up-to-Date, <http://www.dsmz.de/bacterial-diversity/prokaryotic-nomenclature-up-to-date> (check included version with [catalogue_of_life_version()]).
 #' @inheritSection AMR Read more on our website!
-#' @seealso \code{\link{as.mo}}, \code{\link{mo_property}}, \code{\link{microorganisms.codes}}
+#' @seealso [as.mo()], [mo_property()], [microorganisms.codes]
 "microorganisms"
 
 catalogue_of_life <- list(
@@ -115,103 +107,93 @@ catalogue_of_life <- list(
 
 #' Data set with previously accepted taxonomic names
 #'
-#' A data set containing old (previously valid or accepted) taxonomic names according to the Catalogue of Life. This data set is used internally by \code{\link{as.mo}}.
+#' A data set containing old (previously valid or accepted) taxonomic names according to the Catalogue of Life. This data set is used internally by [as.mo()].
 #' @inheritSection catalogue_of_life Catalogue of Life
-#' @format A \code{\link{data.frame}} with 24,246 observations and 5 variables:
-#' \describe{
-#'   \item{\code{col_id}}{Catalogue of Life ID that was originally given}
-#'   \item{\code{col_id_new}}{New Catalogue of Life ID that responds to an entry in the \code{\link{microorganisms}} data set}
-#'   \item{\code{fullname}}{Old full taxonomic name of the microorganism}
-#'   \item{\code{ref}}{Author(s) and year of concerning scientific publication}
-#'   \item{\code{prevalence}}{Prevalence of the microorganism, see \code{?as.mo}}
-#' }
-#' @source Catalogue of Life: Annual Checklist (public online taxonomic database), \url{http://www.catalogueoflife.org} (check included annual version with \code{\link{catalogue_of_life_version}()}).
+#' @format A [`data.frame`] with 24,246 observations and 5 variables:
+#' - `col_id`\cr Catalogue of Life ID that was originally given
+#' - `col_id_new`\cr New Catalogue of Life ID that responds to an entry in the [microorganisms] data set
+#' - `fullname`\cr Old full taxonomic name of the microorganism
+#' - `ref`\cr Author(s) and year of concerning scientific publication
+#' - `prevalence`\cr Prevalence of the microorganism, see [as.mo()]
+#' @source Catalogue of Life: Annual Checklist (public online taxonomic database), <http://www.catalogueoflife.org> (check included annual version with [catalogue_of_life_version()]).
 #' @inheritSection AMR Read more on our website!
-#' @seealso \code{\link{as.mo}} \code{\link{mo_property}} \code{\link{microorganisms}}
+#' @seealso [as.mo()] [mo_property()] [microorganisms]
 "microorganisms.old"
 
 #' Translation table for common microorganism codes
 #'
-#' A data set containing commonly used codes for microorganisms, from laboratory systems and WHONET. Define your own with \code{\link{set_mo_source}}.
-#' @format A \code{\link{data.frame}} with 5,433 observations and 2 variables:
-#' \describe{
-#'   \item{\code{code}}{Commonly used code of a microorganism}
-#'   \item{\code{mo}}{ID of the microorganism in the \code{\link{microorganisms}} data set}
-#' }
+#' A data set containing commonly used codes for microorganisms, from laboratory systems and WHONET. Define your own with [set_mo_source()].
+#' @format A [`data.frame`] with 5,433 observations and 2 variables:
+#' - `code`\cr Commonly used code of a microorganism
+#' - `mo`\cr ID of the microorganism in the [microorganisms] data set
 #' @inheritSection catalogue_of_life Catalogue of Life
 #' @inheritSection AMR Read more on our website!
-#' @seealso \code{\link{as.mo}} \code{\link{microorganisms}}
+#' @seealso [as.mo()] [microorganisms]
 "microorganisms.codes"
 
 #' Data set with 2,000 example isolates
 #'
-#' A data set containing 2,000 microbial isolates with their full antibiograms. The data set reflects reality and can be used to practice AMR analysis. For examples, please read \href{https://msberends.gitlab.io/AMR/articles/AMR.html}{the tutorial on our website}.
-#' @format A \code{\link{data.frame}} with 2,000 observations and 49 variables:
-#' \describe{
-#'   \item{\code{date}}{date of receipt at the laboratory}
-#'   \item{\code{hospital_id}}{ID of the hospital, from A to D}
-#'   \item{\code{ward_icu}}{logical to determine if ward is an intensive care unit}
-#'   \item{\code{ward_clinical}}{logical to determine if ward is a regular clinical ward}
-#'   \item{\code{ward_outpatient}}{logical to determine if ward is an outpatient clinic}
-#'   \item{\code{age}}{age of the patient}
-#'   \item{\code{gender}}{gender of the patient}
-#'   \item{\code{patient_id}}{ID of the patient}
-#'   \item{\code{mo}}{ID of microorganism created with \code{\link{as.mo}}, see also \code{\link{microorganisms}}}
-#'   \item{\code{PEN:RIF}}{40 different antibiotics with class \code{rsi} (see \code{\link{as.rsi}}); these column names occur in \code{\link{antibiotics}} data set and can be translated with \code{\link{ab_name}}}
-#' }
+#' A data set containing 2,000 microbial isolates with their full antibiograms. The data set reflects reality and can be used to practice AMR analysis. For examples, please read [the tutorial on our website](https://msberends.gitlab.io/AMR/articles/AMR.html).
+#' @format A [`data.frame`] with 2,000 observations and 49 variables:
+#' - `date`\cr date of receipt at the laboratory
+#' - `hospital_id`\cr ID of the hospital, from A to D
+#' - `ward_icu`\cr logical to determine if ward is an intensive care unit
+#' - `ward_clinical`\cr logical to determine if ward is a regular clinical ward
+#' - `ward_outpatient`\cr logical to determine if ward is an outpatient clinic
+#' - `age`\cr age of the patient
+#' - `gender`\cr gender of the patient
+#' - `patient_id`\cr ID of the patient
+#' - `mo`\cr ID of microorganism created with [as.mo()], see also [microorganisms]
+#' - `PEN:RIF`\cr 40 different antibiotics with class [`rsi`] (see [as.rsi()]); these column names occur in [antibiotics] data set and can be translated with [ab_name()]
 #' @inheritSection AMR Read more on our website!
 "example_isolates"
 
 #' Data set with 500 isolates - WHONET example
 #'
-#' This example data set has the exact same structure as an export file from WHONET. Such files can be used with this package, as this example data set shows. The data itself was based on our \code{\link{example_isolates}} data set.
-#' @format A \code{\link{data.frame}} with 500 observations and 53 variables:
-#' \describe{
-#'   \item{\code{Identification number}}{ID of the sample}
-#'   \item{\code{Specimen number}}{ID of the specimen}
-#'   \item{\code{Organism}}{Name of the microorganism. Before analysis, you should transform this to a valid microbial class, using \code{\link{as.mo}}.}
-#'   \item{\code{Country}}{Country of origin}
-#'   \item{\code{Laboratory}}{Name of laboratory}
-#'   \item{\code{Last name}}{Last name of patient}
-#'   \item{\code{First name}}{Initial of patient}
-#'   \item{\code{Sex}}{Gender of patient}
-#'   \item{\code{Age}}{Age of patient}
-#'   \item{\code{Age category}}{Age group, can also be looked up using \code{\link{age_groups}}}
-#'   \item{\code{Date of admission}}{Date of hospital admission}
-#'   \item{\code{Specimen date}}{Date when specimen was received at laboratory}
-#'   \item{\code{Specimen type}}{Specimen type or group}
-#'   \item{\code{Specimen type (Numeric)}}{Translation of \code{"Specimen type"}}
-#'   \item{\code{Reason}}{Reason of request with Differential Diagnosis}
-#'   \item{\code{Isolate number}}{ID of isolate}
-#'   \item{\code{Organism type}}{Type of microorganism, can also be looked up using \code{\link{mo_type}}}
-#'   \item{\code{Serotype}}{Serotype of microorganism}
-#'   \item{\code{Beta-lactamase}}{Microorganism produces beta-lactamase?}
-#'   \item{\code{ESBL}}{Microorganism produces extended spectrum beta-lactamase?}
-#'   \item{\code{Carbapenemase}}{Microorganism produces carbapenemase?}
-#'   \item{\code{MRSA screening test}}{Microorganism is possible MRSA?}
-#'   \item{\code{Inducible clindamycin resistance}}{Clindamycin can be induced?}
-#'   \item{\code{Comment}}{Other comments}
-#'   \item{\code{Date of data entry}}{Date this data was entered in WHONET}
-#'   \item{\code{AMP_ND10:CIP_EE}}{27 different antibiotics. You can lookup the abbreviatons in the \code{\link{antibiotics}} data set, or use e.g. \code{\link{ab_name}("AMP")} to get the official name immediately. Before analysis, you should transform this to a valid antibiotic class, using \code{\link{as.rsi}}.}
-#' }
+#' This example data set has the exact same structure as an export file from WHONET. Such files can be used with this package, as this example data set shows. The data itself was based on our [example_isolates] data set.
+#' @format A [`data.frame`] with 500 observations and 53 variables:
+#' - `Identification number`\cr ID of the sample
+#' - `Specimen number`\cr ID of the specimen
+#' - `Organism`\cr Name of the microorganism. Before analysis, you should transform this to a valid microbial class, using [as.mo()].
+#' - `Country`\cr Country of origin
+#' - `Laboratory`\cr Name of laboratory
+#' - `Last name`\cr Last name of patient
+#' - `First name`\cr Initial of patient
+#' - `Sex`\cr Gender of patient
+#' - `Age`\cr Age of patient
+#' - `Age category`\cr Age group, can also be looked up using [age_groups()]
+#' - `Date of admission`\cr Date of hospital admission
+#' - `Specimen date`\cr Date when specimen was received at laboratory
+#' - `Specimen type`\cr Specimen type or group
+#' - `Specimen type (Numeric)`\cr Translation of `"Specimen type"`
+#' - `Reason`\cr Reason of request with Differential Diagnosis
+#' - `Isolate number`\cr ID of isolate
+#' - `Organism type`\cr Type of microorganism, can also be looked up using [mo_type()]
+#' - `Serotype`\cr Serotype of microorganism
+#' - `Beta-lactamase`\cr Microorganism produces beta-lactamase?
+#' - `ESBL`\cr Microorganism produces extended spectrum beta-lactamase?
+#' - `Carbapenemase`\cr Microorganism produces carbapenemase?
+#' - `MRSA screening test`\cr Microorganism is possible MRSA?
+#' - `Inducible clindamycin resistance`\cr Clindamycin can be induced?
+#' - `Comment`\cr Other comments
+#' - `Date of data entry`\cr Date this data was entered in WHONET
+#' - `AMP_ND10:CIP_EE`\cr 27 different antibiotics. You can lookup the abbreviatons in the [antibiotics] data set, or use e.g. [`ab_name("AMP")`][ab_name()] to get the official name immediately. Before analysis, you should transform this to a valid antibiotic class, using [as.rsi()].
 #' @inheritSection AMR Read more on our website!
 "WHONET"
 
 #' Data set for RSI interpretation
 #'
-#' Data set to interpret MIC and disk diffusion to RSI values. Included guidelines are CLSI (2011-2019) and EUCAST (2011-2019). Use \code{\link{as.rsi}} to transform MICs or disks measurements to RSI values.
-#' @format A \code{\link{data.frame}} with 13,975 observations and 9 variables:
-#' \describe{
-#'   \item{\code{guideline}}{Name of the guideline}
-#'   \item{\code{method}}{Either "MIC" or "DISK"}
-#'   \item{\code{site}}{Body site, e.g. "Oral" or "Respiratory"}
-#'   \item{\code{mo}}{Microbial ID, see \code{\link{as.mo}}}
-#'   \item{\code{ab}}{Antibiotic ID, see \code{\link{as.ab}}}
-#'   \item{\code{ref_tbl}}{Info about where the guideline rule can be found}
-#'   \item{\code{disk_dose}}{Dose of the used disk diffusion method}
-#'   \item{\code{breakpoint_S}}{Lowest MIC value or highest number of millimeters that leads to "S"}
-#'   \item{\code{breakpoint_R}}{Highest MIC value or lowest number of millimeters that leads to "R"}
-#' }
+#' Data set to interpret MIC and disk diffusion to RSI values. Included guidelines are CLSI (2011-2019) and EUCAST (2011-2019). Use [as.rsi()] to transform MICs or disks measurements to RSI values.
+#' @format A [`data.frame`] with 13,975 observations and 9 variables:
+#' - `guideline`\cr Name of the guideline
+#' - `method`\cr Either "MIC" or "DISK"
+#' - `site`\cr Body site, e.g. "Oral" or "Respiratory"
+#' - `mo`\cr Microbial ID, see [as.mo()]
+#' - `ab`\cr Antibiotic ID, see [as.ab()]
+#' - `ref_tbl`\cr Info about where the guideline rule can be found
+#' - `disk_dose`\cr Dose of the used disk diffusion method
+#' - `breakpoint_S`\cr Lowest MIC value or highest number of millimeters that leads to "S"
+#' - `breakpoint_R`\cr Highest MIC value or lowest number of millimeters that leads to "R"
 #' @inheritSection AMR Read more on our website!
 "rsi_translation"
 

@@ -2,7 +2,7 @@
 % Please edit documentation in R/p_symbol.R
 \name{p_symbol}
 \alias{p_symbol}
-\title{Symbol of a p value}
+\title{Symbol of a p-value}
 \usage{
 p_symbol(p, emptychar = " ")
 }
@@ -15,7 +15,7 @@ p_symbol(p, emptychar = " ")
 Text
 }
 \description{
-Return the symbol related to the p value: 0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1. Values above \code{p = 1} will return \code{NA}.
+Return the symbol related to the p-value: 0 '\verb{***}' 0.001 '\verb{**}' 0.01 '\code{*}' 0.05 '\code{.}' 0.1 ' ' 1. Values above \code{p = 1} will return \code{NA}.
 }
 \section{Read more on our website!}{
 

@@ -85,7 +85,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">0.8.0.9033</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">0.8.0.9036</span>
       </span>
     </div>
 
@@ -234,7 +234,7 @@
     </div>
 
     <div class="ref-description">
-    <p>Use this function to determine the antibiotic code of one or more antibiotics. The data set <code><a href='antibiotics.html'>antibiotics</a></code> will be searched for abbreviations, official names and synonyms (brand names).</p>
+    <p>Use this function to determine the antibiotic code of one or more antibiotics. The data set <a href='antibiotics.html'>antibiotics</a> will be searched for abbreviations, official names and synonyms (brand names).</p>
     </div>
 
     <pre class="usage"><span class='fu'>as.ab</span>(<span class='no'>x</span>, <span class='no'>...</span>)
@@ -256,11 +256,11 @@
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>Character (vector) with class <code>"ab"</code>. Unknown values will return <code>NA</code>.</p>
+    <p>Character (vector) with class <code>ab</code>. Unknown values will return <code>NA</code>.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>All entries in the <code><a href='antibiotics.html'>antibiotics</a></code> data set have three different identifiers: a human readable EARS-Net code (column <code>ab</code>, used by ECDC and WHONET), an ATC code (column <code>atc</code>, used by WHO), and a CID code (column <code>cid</code>, Compound ID, used by PubChem). The data set contains more than 5,000 official brand names from many different countries, as found in PubChem.</p>
-<p>Use the <code><a href='ab_property.html'>ab_property</a></code> functions to get properties based on the returned antibiotic ID, see Examples.</p>
+    <p>All entries in the <a href='antibiotics.html'>antibiotics</a> data set have three different identifiers: a human readable EARS-Net code (column <code>ab</code>, used by ECDC and WHONET), an ATC code (column <code>atc</code>, used by WHO), and a CID code (column <code>cid</code>, Compound ID, used by PubChem). The data set contains more than 5,000 official brand names from many different countries, as found in PubChem.</p>
+<p>Use the <code><a href='ab_property.html'>ab_property()</a></code> functions to get properties based on the returned antibiotic ID, see Examples.</p>
     <h2 class="hasAnchor" id="source"><a class="anchor" href="#source"></a>Source</h2>
 
     
@@ -276,7 +276,7 @@
 This package contains <strong>all ~550 antibiotic, antimycotic and antiviral drugs</strong> and their Anatomical Therapeutic Chemical (ATC) codes, ATC groups and Defined Daily Dose (DDD) from the World Health Organization Collaborating Centre for Drug Statistics Methodology (WHOCC, <a href='https://www.whocc.no'>https://www.whocc.no</a>) and the Pharmaceuticals Community Register of the European Commission (<a href='http://ec.europa.eu/health/documents/community-register/html/atc.htm'>http://ec.europa.eu/health/documents/community-register/html/atc.htm</a>).</p>
 <p>These have become the gold standard for international drug utilisation monitoring and research.</p>
 <p>The WHOCC is located in Oslo at the Norwegian Institute of Public Health and funded by the Norwegian government. The European Commission is the executive of the European Union and promotes its general interest.</p>
-<p><strong>NOTE: The WHOCC copyright does not allow use for commercial purposes, unlike any other info from this package. See <a href='https://www.whocc.no/copyright_disclaimer/'>https://www.whocc.no/copyright_disclaimer/</a>.</strong></p>
+<p><strong>NOTE: The WHOCC copyright does not allow use for commercial purposes, unlike any other info from this package.</strong> See <a href='https://www.whocc.no/copyright_disclaimer/.'>https://www.whocc.no/copyright_disclaimer/.</a></p>
     <h2 class="hasAnchor" id="read-more-on-our-website-"><a class="anchor" href="#read-more-on-our-website-"></a>Read more on our website!</h2>
 
     
@@ -284,7 +284,7 @@ This package contains <strong>all ~550 antibiotic, antimycotic and antiviral dru
 <p>On our website <a href='https://msberends.gitlab.io/AMR'>https://msberends.gitlab.io/AMR</a> you can find <a href='https://msberends.gitlab.io/AMR/articles/AMR.html'>a tutorial</a> about how to conduct AMR analysis, the <a href='https://msberends.gitlab.io/AMR/reference'>complete documentation of all functions</a> (which reads a lot easier than here in R) and <a href='https://msberends.gitlab.io/AMR/articles/WHONET.html'>an example analysis using WHONET data</a>.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><code><a href='antibiotics.html'>antibiotics</a></code> for the dataframe that is being used to determine ATCs.</p></div>
+    <div class='dont-index'><p><a href='antibiotics.html'>antibiotics</a> for the dataframe that is being used to determine ATCs.</p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><span class='co'># These examples all return "ERY", the ID of Erythromycin:</span>

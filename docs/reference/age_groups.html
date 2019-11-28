@@ -85,7 +85,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">0.8.0.9032</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">0.8.0.9036</span>
       </span>
     </div>
 
@@ -244,7 +244,7 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>x</th>
-      <td><p>age, e.g. calculated with <code><a href='age.html'>age</a></code></p></td>
+      <td><p>age, e.g. calculated with <code><a href='age.html'>age()</a></code></p></td>
     </tr>
     <tr>
       <th>split_at</th>
@@ -263,7 +263,7 @@
 
     <p>To split ages, the input can be:</p><ul>
 <li><p>A numeric vector. A vector of e.g. <code><a href='https://rdrr.io/r/base/c.html'>c(10, 20)</a></code> will split on 0-9, 10-19 and 20+. A value of only <code>50</code> will split on 0-49 and 50+.
-        The default is to split on young children (0-11), youth (12-24), young adults (25-54), middle-aged adults (55-74) and elderly (75+).</p></li>
+The default is to split on young children (0-11), youth (12-24), young adults (25-54), middle-aged adults (55-74) and elderly (75+).</p></li>
 <li><p>A character:</p><ul>
 <li><p><code>"children"</code> or <code>"kids"</code>, equivalent of: <code><a href='https://rdrr.io/r/base/c.html'>c(0, 1, 2, 4, 6, 13, 18)</a></code>. This will split on 0, 1, 2-3, 4-5, 6-12, 13-17 and 18+.</p></li>
 <li><p><code>"elderly"</code> or <code>"seniors"</code>, equivalent of: <code><a href='https://rdrr.io/r/base/c.html'>c(65, 75, 85)</a></code>. This will split on 0-64, 65-74, 75-84, 85+.</p></li>
@@ -279,7 +279,7 @@
 <p>On our website <a href='https://msberends.gitlab.io/AMR'>https://msberends.gitlab.io/AMR</a> you can find <a href='https://msberends.gitlab.io/AMR/articles/AMR.html'>a tutorial</a> about how to conduct AMR analysis, the <a href='https://msberends.gitlab.io/AMR/reference'>complete documentation of all functions</a> (which reads a lot easier than here in R) and <a href='https://msberends.gitlab.io/AMR/articles/WHONET.html'>an example analysis using WHONET data</a>.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p>To determine ages, based on one or more reference dates, use the <code><a href='age.html'>age</a></code> function.</p></div>
+    <div class='dont-index'><p>To determine ages, based on one or more reference dates, use the <code><a href='age.html'>age()</a></code> function.</p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><span class='no'>ages</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>3</span>, <span class='fl'>8</span>, <span class='fl'>16</span>, <span class='fl'>54</span>, <span class='fl'>31</span>, <span class='fl'>76</span>, <span class='fl'>101</span>, <span class='fl'>43</span>, <span class='fl'>21</span>)

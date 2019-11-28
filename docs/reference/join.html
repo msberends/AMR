@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Join a table with <code>microorganisms</code> — join • AMR (for R)</title>
+<title>Join a table with <a href='microorganisms.html'>microorganisms</a> — join • AMR (for R)</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -50,8 +50,8 @@
   <link href="../extra.css" rel="stylesheet">
   <script src="../extra.js"></script>
 
-<meta property="og:title" content="Join a table with <code>microorganisms</code> — join" />
-<meta property="og:description" content="Join the dataset microorganisms easily to an existing table or character vector." />
+<meta property="og:title" content="Join a table with <a href='microorganisms.html'>microorganisms</a> — join" />
+<meta property="og:description" content="Join the data set microorganisms easily to an existing table or character vector." />
 <meta property="og:image" content="https://msberends.gitlab.io/AMR/logo.png" />
 <meta name="twitter:card" content="summary" />
 
@@ -85,7 +85,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">0.8.0.9032</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">0.8.0.9036</span>
       </span>
     </div>
 
@@ -228,13 +228,13 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Join a table with <code>microorganisms</code></h1>
+    <h1>Join a table with <a href='microorganisms.html'>microorganisms</a></h1>
     
     <div class="hidden name"><code>join.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Join the dataset <code><a href='microorganisms.html'>microorganisms</a></code> easily to an existing table or character vector.</p>
+    <p>Join the data set <a href='microorganisms.html'>microorganisms</a> easily to an existing table or character vector.</p>
     </div>
 
     <pre class="usage"><span class='fu'>inner_join_microorganisms</span>(<span class='no'>x</span>, <span class='kw'>by</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>suffix</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"2"</span>, <span class='st'>""</span>), <span class='no'>...</span>)
@@ -258,7 +258,7 @@
     </tr>
     <tr>
       <th>by</th>
-      <td><p>a variable to join by - if left empty will search for a column with class <code>mo</code> (created with <code><a href='as.mo.html'>as.mo</a></code>) or will be <code>"mo"</code> if that column name exists in <code>x</code>, could otherwise be a column name of <code>x</code> with values that exist in <code>microorganisms$mo</code> (like <code>by = "bacteria_id"</code>), or another column in <code><a href='microorganisms.html'>microorganisms</a></code> (but then it should be named, like <code>by = c("my_genus_species" = "fullname")</code>)</p></td>
+      <td><p>a variable to join by - if left empty will search for a column with class <code><a href='as.mo.html'>mo</a></code> (created with <code><a href='as.mo.html'>as.mo()</a></code>) or will be <code>"mo"</code> if that column name exists in <code>x</code>, could otherwise be a column name of <code>x</code> with values that exist in <code>microorganisms$mo</code> (like <code>by = "bacteria_id"</code>), or another column in <a href='microorganisms.html'>microorganisms</a> (but then it should be named, like <code>by = c("my_genus_species" = "fullname")</code>)</p></td>
     </tr>
     <tr>
       <th>suffix</th>
@@ -266,13 +266,13 @@
     </tr>
     <tr>
       <th>...</th>
-      <td><p>other parameters to pass on to <code>dplyr::<a href='https://dplyr.tidyverse.org/reference/join.html'>join</a></code>.</p></td>
+      <td><p>other parameters to pass on to <code><a href='https://dplyr.tidyverse.org/reference/join.html'>dplyr::join()</a></code></p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p><strong>Note:</strong> As opposed to the <code><a href='https://dplyr.tidyverse.org/reference/join.html'>join</a></code> functions of <code>dplyr</code>, characters vectors are supported and at default existing columns will get a suffix <code>"2"</code> and the newly joined columns will not get a suffix. See <code><a href='https://dplyr.tidyverse.org/reference/join.html'>join</a></code> for more information.</p>
+    <p><strong>Note:</strong> As opposed to the <code><a href='https://dplyr.tidyverse.org/reference/join.html'>dplyr::join()</a></code> functions of <code>dplyr</code>, <code>characters</code> vectors are supported and at default existing columns will get a suffix <code>"2"</code> and the newly joined columns will not get a suffix. See <code><a href='https://dplyr.tidyverse.org/reference/join.html'>dplyr::join()</a></code> for more information.</p>
     <h2 class="hasAnchor" id="read-more-on-our-website-"><a class="anchor" href="#read-more-on-our-website-"></a>Read more on our website!</h2>
 
     

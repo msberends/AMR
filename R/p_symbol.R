@@ -19,11 +19,11 @@
 # Visit our website for more info: https://msberends.gitlab.io/AMR.    #
 # ==================================================================== #
 
-#' Symbol of a p value
+#' Symbol of a p-value
 #'
-#' Return the symbol related to the p value: 0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1. Values above \code{p = 1} will return \code{NA}.
+#' Return the symbol related to the p-value: 0 '`***`' 0.001 '`**`' 0.01 '`*`' 0.05 '`.`' 0.1 ' ' 1. Values above `p = 1` will return `NA`.
 #' @param p p value
-#' @param emptychar text to show when \code{p > 0.1}
+#' @param emptychar text to show when `p > 0.1`
 #' @return Text
 #' @inheritSection AMR Read more on our website!
 #' @export

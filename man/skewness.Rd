@@ -16,7 +16,7 @@ skewness(x, na.rm = FALSE)
 \method{skewness}{data.frame}(x, na.rm = FALSE)
 }
 \arguments{
-\item{x}{a vector of values, a \code{matrix} or a \code{data frame}}
+\item{x}{a vector of values, a \code{\link{matrix}} or a \code{\link{data.frame}}}
 
 \item{na.rm}{a logical value indicating whether \code{NA} values should be stripped before the computation proceeds.}
 }
@@ -31,5 +31,5 @@ On our website \url{https://msberends.gitlab.io/AMR} you can find \href{https://
 }
 
 \seealso{
-\code{\link{kurtosis}}
+\code{\link[=kurtosis]{kurtosis()}}
 }

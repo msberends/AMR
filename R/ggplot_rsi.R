@@ -19,20 +19,20 @@
 # Visit our website for more info: https://msberends.gitlab.io/AMR.    #
 # ==================================================================== #
 
-#' AMR plots with \code{ggplot2}
+#' AMR plots with `ggplot2`
 #'
-#' Use these functions to create bar plots for antimicrobial resistance analysis. All functions rely on internal \code{\link[ggplot2]{ggplot}2} functions.
-#' @param data a \code{data.frame} with column(s) of class \code{"rsi"} (see \code{\link{as.rsi}})
-#' @param position position adjustment of bars, either \code{"fill"}, \code{"stack"} or \code{"dodge"}
-#' @param x variable to show on x axis, either \code{"antibiotic"} (default) or \code{"interpretation"} or a grouping variable
-#' @param fill variable to categorise using the plots legend, either \code{"antibiotic"} (default) or \code{"interpretation"} or a grouping variable
+#' Use these functions to create bar plots for antimicrobial resistance analysis. All functions rely on internal [ggplot2][ggplot2::ggplot()] functions.
+#' @param data a [`data.frame`] with column(s) of class [`rsi`] (see [as.rsi()])
+#' @param position position adjustment of bars, either `"fill"`, `"stack"` or `"dodge"`
+#' @param x variable to show on x axis, either `"antibiotic"` (default) or `"interpretation"` or a grouping variable
+#' @param fill variable to categorise using the plots legend, either `"antibiotic"` (default) or `"interpretation"` or a grouping variable
 #' @param breaks numeric vector of positions
-#' @param limits numeric vector of length two providing limits of the scale, use \code{NA} to refer to the existing minimum or maximum
-#' @param facet variable to split plots by, either \code{"interpretation"} (default) or \code{"antibiotic"} or a grouping variable
+#' @param limits numeric vector of length two providing limits of the scale, use `NA` to refer to the existing minimum or maximum
+#' @param facet variable to split plots by, either `"interpretation"` (default) or `"antibiotic"` or a grouping variable
 #' @inheritParams proportion
-#' @param nrow (when using \code{facet}) number of rows
-#' @param colours a named vector with colours for the bars. The names must be one or more of: S, SI, I, IR, R or be \code{FALSE} to use default \code{ggplot2} colours.
-#' @param datalabels show datalabels using \code{labels_rsi_count}
+#' @param nrow (when using `facet`) number of rows
+#' @param colours a named vector with colours for the bars. The names must be one or more of: S, SI, I, IR, R or be `FALSE` to use default [ggplot2][[ggplot2::ggplot()] colours.
+#' @param datalabels show datalabels using [labels_rsi_count()]
 #' @param datalabels.size size of the datalabels
 #' @param datalabels.colour colour of the datalabels
 #' @param title text to show as title of the plot
@@ -40,23 +40,23 @@
 #' @param caption text to show as caption of the plot
 #' @param x.title text to show as x axis description
 #' @param y.title text to show as y axis description
-#' @param ... other parameters passed on to \code{geom_rsi}
-#' @details At default, the names of antibiotics will be shown on the plots using \code{\link{ab_name}}. This can be set with the \code{translate_ab} parameter. See \code{\link{count_df}}.
+#' @param ... other parameters passed on to [geom_rsi()]
+#' @details At default, the names of antibiotics will be shown on the plots using [ab_name()]. This can be set with the `translate_ab` parameter. See [count_df()].
 #'
-#' \strong{The functions}\cr
-#' \code{geom_rsi} will take any variable from the data that has an \code{rsi} class (created with \code{\link{as.rsi}}) using \code{\link{rsi_df}} and will plot bars with the percentage R, I and S. The default behaviour is to have the bars stacked and to have the different antibiotics on the x axis.
+#' ## The functions
+#' [geom_rsi()] will take any variable from the data that has an [`rsi`] class (created with [as.rsi()]) using [rsi_df()] and will plot bars with the percentage R, I and S. The default behaviour is to have the bars stacked and to have the different antibiotics on the x axis.
 #'
-#' \code{facet_rsi} creates 2d plots (at default based on S/I/R) using \code{\link[ggplot2]{facet_wrap}}.
+#' [facet_rsi()] creates 2d plots (at default based on S/I/R) using [ggplot2::facet_wrap()].
 #'
-#' \code{scale_y_percent} transforms the y axis to a 0 to 100\% range using \code{\link[ggplot2]{scale_continuous}}.
+#' [scale_y_percent()] transforms the y axis to a 0 to 100% range using [ggplot2::scale_continuous()].
 #'
-#' \code{scale_rsi_colours} sets colours to the bars: pastel blue for S, pastel turquoise for I and pastel red for R, using \code{\link[ggplot2]{scale_brewer}}.
+#' [scale_rsi_colours()] sets colours to the bars: pastel blue for S, pastel turquoise for I and pastel red for R, using [ggplot2::scale_brewer()].
 #'
-#' \code{theme_rsi} is a \code{ggplot \link[ggplot2]{theme}} with minimal distraction.
+#' [theme_rsi()] is a [ggplot2 theme][[ggplot2::theme()] with minimal distraction.
 #'
-#' \code{labels_rsi_count} print datalabels on the bars with percentage and amount of isolates using \code{\link[ggplot2]{geom_text}}
+#' [labels_rsi_count()] print datalabels on the bars with percentage and amount of isolates using [ggplot2::geom_text()]
 #'
-#' \code{ggplot_rsi} is a wrapper around all above functions that uses data as first input. This makes it possible to use this function after a pipe (\code{\%>\%}). See Examples.
+#' [ggplot_rsi()] is a wrapper around all above functions that uses data as first input. This makes it possible to use this function after a pipe (`%>%`). See Examples.
 #' @rdname ggplot_rsi
 #' @export
 #' @inheritSection AMR Read more on our website!

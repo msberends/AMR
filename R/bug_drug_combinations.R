@@ -21,25 +21,25 @@
 
 #' Determine bug-drug combinations
 #' 
-#' Determine antimicrobial resistance (AMR) of all bug-drug combinations in your data set where at least 30 (default) isolates are available per species. Use \code{format} on the result to prettify it to a publicable/printable format, see Examples.
+#' Determine antimicrobial resistance (AMR) of all bug-drug combinations in your data set where at least 30 (default) isolates are available per species. Use [format()] on the result to prettify it to a publicable/printable format, see Examples.
 #' @inheritParams eucast_rules
 #' @param combine_IR logical to indicate whether values R and I should be summed
 #' @param add_ab_group logical to indicate where the group of the antimicrobials must be included as a first column
-#' @param remove_intrinsic_resistant logical to indicate that rows with 100\% resistance for all tested antimicrobials must be removed from the table
-#' @param FUN the function to call on the \code{mo} column to transform the microorganism IDs, defaults to \code{\link{mo_shortname}} 
-#' @param translate_ab a character of length 1 containing column names of the \code{\link{antibiotics}} data set
-#' @param ... arguments passed on to \code{FUN}
+#' @param remove_intrinsic_resistant logical to indicate that rows with 100% resistance for all tested antimicrobials must be removed from the table
+#' @param FUN the function to call on the `mo` column to transform the microorganism IDs, defaults to [mo_shortname()] 
+#' @param translate_ab a character of length 1 containing column names of the [antibiotics] data set
+#' @param ... arguments passed on to `FUN`
 #' @inheritParams rsi_df
 #' @inheritParams base::formatC
 #' @importFrom dplyr %>% rename group_by select mutate filter summarise ungroup
 #' @importFrom tidyr pivot_longer
-#' @details The function \code{format} calculates the resistance per bug-drug combination. Use \code{combine_IR = FALSE} (default) to test R vs. S+I and \code{combine_IR = TRUE} to test R+I vs. S. 
+#' @details The function [format()] calculates the resistance per bug-drug combination. Use `combine_IR = FALSE` (default) to test R vs. S+I and `combine_IR = TRUE` to test R+I vs. S. 
 #' 
-#' The language of the output can be overwritten with \code{options(AMR_locale)}, please see \link{translate}.
+#' The language of the output can be overwritten with `options(AMR_locale)`, please see [translate].
 #' @export
 #' @rdname bug_drug_combinations
-#' @return The function \code{bug_drug_combinations} returns a \code{data.frame} with columns "mo", "ab", "S", "I", "R" and "total".
-#' @source \strong{M39 Analysis and Presentation of Cumulative Antimicrobial Susceptibility Test Data, 4th Edition}, 2014, \emph{Clinical and Laboratory Standards Institute (CLSI)}. \url{https://clsi.org/standards/products/microbiology/documents/m39/}.
+#' @return The function [bug_drug_combinations()] returns a [`data.frame`] with columns "mo", "ab", "S", "I", "R" and "total".
+#' @source \strong{M39 Analysis and Presentation of Cumulative Antimicrobial Susceptibility Test Data, 4th Edition}, 2014, *Clinical and Laboratory Standards Institute (CLSI)*. <https://clsi.org/standards/products/microbiology/documents/m39/>.
 #' @inheritSection AMR Read more on our website!
 #' @examples 
 #' \donttest{

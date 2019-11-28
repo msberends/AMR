@@ -1,6 +1,6 @@
 # -------------------------------------------------------------------------------------------------------------------------------
 # For editing this EUCAST reference file, these values can all be used for target antibiotics:
-# 'all_betalactams', 'aminoglycosides', 'aminopenicillins', 'carbapenems', 'cephalosporins', 'cephalosporins_without_CAZ',
+# 'all_betalactams', 'aminoglycosides', 'aminopenicillins', 'carbapenems', 'cephalosporins', 'cephalosporins_except_CAZ',
 # 'fluoroquinolones', 'glycopeptides', 'macrolides', 'polymyxins', 'streptogramins', 'tetracyclines', 'ureidopenicillins'
 # and all separate EARS-Net letter codes like 'AMC'. They can be separated by comma: 'AMC, fluoroquinolones'.
 # The 'if_mo_property' column can be any column name from the AMR::microorganisms data set, or "genus_species" or "gramstain".
@@ -29,9 +29,9 @@ genus	is	Staphylococcus	PEN, FOX	S	AMP, AMX, PIP, TIC	S	Staphylococcus	Breakpoin
 genus	is	Staphylococcus	PEN, FOX	R, S	OXA, FLC	S	Staphylococcus	Breakpoints
 genus	is	Staphylococcus	FOX	R	all_betalactams	R	Staphylococcus	Breakpoints
 genus_species	is	Staphylococcus saprophyticus	AMP	S	AMX, AMC, PIP, TZP	S	Staphylococcus	Breakpoints
-genus	is	Staphylococcus	FOX	S	carbapenems, cephalosporins_without_CAZ	S	Staphylococcus	Breakpoints
-genus	is	Staphylococcus	FOX	I	carbapenems, cephalosporins_without_CAZ	I	Staphylococcus	Breakpoints
-genus	is	Staphylococcus	FOX	R	carbapenems, cephalosporins_without_CAZ	R	Staphylococcus	Breakpoints
+genus	is	Staphylococcus	FOX	S	carbapenems, cephalosporins_except_CAZ	S	Staphylococcus	Breakpoints
+genus	is	Staphylococcus	FOX	I	carbapenems, cephalosporins_except_CAZ	I	Staphylococcus	Breakpoints
+genus	is	Staphylococcus	FOX	R	carbapenems, cephalosporins_except_CAZ	R	Staphylococcus	Breakpoints
 genus	is	Staphylococcus	NOR	S	CIP, LVX, MFX, OFX	S	Staphylococcus	Breakpoints
 genus	is	Staphylococcus	ERY	S	AZM, CLR, RXT	S	Staphylococcus	Breakpoints
 genus	is	Staphylococcus	ERY	I	AZM, CLR, RXT	I	Staphylococcus	Breakpoints
@@ -44,9 +44,9 @@ genus	is	Enterococcus	AMP	R	AMX, AMC, PIP, TZP	R	Enterococcus	Breakpoints
 genus	is	Enterococcus	NOR	S	CIP, LVX	S	Enterococcus	Breakpoints
 genus	is	Enterococcus	NOR	I	CIP, LVX	I	Enterococcus	Breakpoints
 genus	is	Enterococcus	NOR	R	CIP, LVX	R	Enterococcus	Breakpoints
-genus_species	like	^Streptococcus (pyogenes|agalactiae|dysgalactiae|group A|group B|group C|group G)$	PEN	S	aminopenicillins, ureidopenicillins, cephalosporins_without_CAZ, carbapenems, FLC, AMC	S	Streptococcus groups A, B, C, G	Breakpoints
-genus_species	like	^Streptococcus (pyogenes|agalactiae|dysgalactiae|group A|group B|group C|group G)$	PEN	I	aminopenicillins, ureidopenicillins, cephalosporins_without_CAZ, carbapenems, FLC, AMC	I	Streptococcus groups A, B, C, G	Breakpoints
-genus_species	like	^Streptococcus (pyogenes|agalactiae|dysgalactiae|group A|group B|group C|group G)$	PEN	R	aminopenicillins, ureidopenicillins, cephalosporins_without_CAZ, carbapenems, FLC, AMC	R	Streptococcus groups A, B, C, G	Breakpoints
+genus_species	like	^Streptococcus (pyogenes|agalactiae|dysgalactiae|group A|group B|group C|group G)$	PEN	S	aminopenicillins, ureidopenicillins, cephalosporins_except_CAZ, carbapenems, FLC, AMC	S	Streptococcus groups A, B, C, G	Breakpoints
+genus_species	like	^Streptococcus (pyogenes|agalactiae|dysgalactiae|group A|group B|group C|group G)$	PEN	I	aminopenicillins, ureidopenicillins, cephalosporins_except_CAZ, carbapenems, FLC, AMC	I	Streptococcus groups A, B, C, G	Breakpoints
+genus_species	like	^Streptococcus (pyogenes|agalactiae|dysgalactiae|group A|group B|group C|group G)$	PEN	R	aminopenicillins, ureidopenicillins, cephalosporins_except_CAZ, carbapenems, FLC, AMC	R	Streptococcus groups A, B, C, G	Breakpoints
 genus_species	like	^Streptococcus (pyogenes|agalactiae|dysgalactiae|group A|group B|group C|group G)$	NOR	S	LVX, MFX	S	Streptococcus groups A, B, C, G	Breakpoints
 genus_species	like	^Streptococcus (pyogenes|agalactiae|dysgalactiae|group A|group B|group C|group G)$	ERY	S	AZM, CLR, RXT	S	Streptococcus groups A, B, C, G	Breakpoints
 genus_species	like	^Streptococcus (pyogenes|agalactiae|dysgalactiae|group A|group B|group C|group G)$	ERY	I	AZM, CLR, RXT	I	Streptococcus groups A, B, C, G	Breakpoints
@@ -171,17 +171,17 @@ genus_species	is	Staphylococcus haemolyticus			CAZ	R	Table 04: Intrinsic resista
 genus_species	is	Staphylococcus intermedius			CAZ	R	Table 04: Intrinsic resistance in Gram-positive bacteria	Expert Rules
 genus_species	is	Staphylococcus pseudintermedius			CAZ	R	Table 04: Intrinsic resistance in Gram-positive bacteria	Expert Rules
 genus	is	Streptococcus			FUS, CAZ, aminoglycosides	R	Table 04: Intrinsic resistance in Gram-positive bacteria	Expert Rules
-genus_species	is	Enterococcus faecalis			FUS, CAZ, cephalosporins_without_CAZ, aminoglycosides, macrolides, CLI, QDA, TMP, SXT	R	Table 04: Intrinsic resistance in Gram-positive bacteria	Expert Rules
-genus_species	is	Enterococcus gallinarum			FUS, CAZ, cephalosporins_without_CAZ, aminoglycosides, macrolides, CLI, QDA, VAN, TMP, SXT	R	Table 04: Intrinsic resistance in Gram-positive bacteria	Expert Rules
-genus_species	is	Enterococcus casseliflavus			FUS, CAZ, cephalosporins_without_CAZ, aminoglycosides, macrolides, CLI, QDA, VAN, TMP, SXT	R	Table 04: Intrinsic resistance in Gram-positive bacteria	Expert Rules
-genus_species	is	Enterococcus faecium			FUS, CAZ, cephalosporins_without_CAZ, aminoglycosides, macrolides, TMP, SXT	R	Table 04: Intrinsic resistance in Gram-positive bacteria	Expert Rules
+genus_species	is	Enterococcus faecalis			FUS, CAZ, cephalosporins_except_CAZ, aminoglycosides, macrolides, CLI, QDA, TMP, SXT	R	Table 04: Intrinsic resistance in Gram-positive bacteria	Expert Rules
+genus_species	is	Enterococcus gallinarum			FUS, CAZ, cephalosporins_except_CAZ, aminoglycosides, macrolides, CLI, QDA, VAN, TMP, SXT	R	Table 04: Intrinsic resistance in Gram-positive bacteria	Expert Rules
+genus_species	is	Enterococcus casseliflavus			FUS, CAZ, cephalosporins_except_CAZ, aminoglycosides, macrolides, CLI, QDA, VAN, TMP, SXT	R	Table 04: Intrinsic resistance in Gram-positive bacteria	Expert Rules
+genus_species	is	Enterococcus faecium			FUS, CAZ, cephalosporins_except_CAZ, aminoglycosides, macrolides, TMP, SXT	R	Table 04: Intrinsic resistance in Gram-positive bacteria	Expert Rules
 genus	is	Corynebacterium			FOS	R	Table 04: Intrinsic resistance in Gram-positive bacteria	Expert Rules
 genus_species	is	Listeria monocytogenes			cephalosporins	R	Table 04: Intrinsic resistance in Gram-positive bacteria	Expert Rules
 genus	one_of	Leuconostoc, Pediococcus			glycopeptides	R	Table 04: Intrinsic resistance in Gram-positive bacteria	Expert Rules
 genus	is	Lactobacillus			glycopeptides	R	Table 04: Intrinsic resistance in Gram-positive bacteria	Expert Rules
 genus_species	is	Clostridium ramosum			VAN	R	Table 04: Intrinsic resistance in Gram-positive bacteria	Expert Rules
 genus_species	is	Clostridium innocuum			VAN	R	Table 04: Intrinsic resistance in Gram-positive bacteria	Expert Rules
-genus_species	like	^Streptococcus (pyogenes|agalactiae|dysgalactiae|group A|group B|group C|group G)	PEN	S	aminopenicillins, cephalosporins_without_CAZ, carbapenems	S	Table 08: Interpretive rules for B-lactam agents and Gram-positive cocci	Expert Rules
+genus_species	like	^Streptococcus (pyogenes|agalactiae|dysgalactiae|group A|group B|group C|group G)	PEN	S	aminopenicillins, cephalosporins_except_CAZ, carbapenems	S	Table 08: Interpretive rules for B-lactam agents and Gram-positive cocci	Expert Rules
 genus	is	Enterococcus	AMP	R	ureidopenicillins, carbapenems	R	Table 08: Interpretive rules for B-lactam agents and Gram-positive cocci	Expert Rules
 genus	is	Enterococcus	AMX	R	ureidopenicillins, carbapenems	R	Table 08: Interpretive rules for B-lactam agents and Gram-positive cocci	Expert Rules
 family	is	Enterobacteriaceae	TIC, PIP	R, S	PIP	R	Table 09: Interpretive rules for B-lactam agents and Gram-negative rods	Expert Rules

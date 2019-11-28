@@ -2,6 +2,7 @@
 % Please edit documentation in R/ab.R
 \name{as.ab}
 \alias{as.ab}
+\alias{ab}
 \alias{is.ab}
 \title{Transform to antibiotic ID}
 \usage{
@@ -15,15 +16,15 @@ is.ab(x)
 \item{...}{arguments passed on to internal functions}
 }
 \value{
-Character (vector) with class \code{"ab"}. Unknown values will return \code{NA}.
+Character (vector) with class \code{\link{ab}}. Unknown values will return \code{NA}.
 }
 \description{
-Use this function to determine the antibiotic code of one or more antibiotics. The data set \code{\link{antibiotics}} will be searched for abbreviations, official names and synonyms (brand names).
+Use this function to determine the antibiotic code of one or more antibiotics. The data set \link{antibiotics} will be searched for abbreviations, official names and synonyms (brand names).
 }
 \details{
-All entries in the \code{\link{antibiotics}} data set have three different identifiers: a human readable EARS-Net code (column \code{ab}, used by ECDC and WHONET), an ATC code (column \code{atc}, used by WHO), and a CID code (column \code{cid}, Compound ID, used by PubChem). The data set contains more than 5,000 official brand names from many different countries, as found in PubChem.
+All entries in the \link{antibiotics} data set have three different identifiers: a human readable EARS-Net code (column \code{ab}, used by ECDC and WHONET), an ATC code (column \code{atc}, used by WHO), and a CID code (column \code{cid}, Compound ID, used by PubChem). The data set contains more than 5,000 official brand names from many different countries, as found in PubChem.
 
-Use the \code{\link{ab_property}} functions to get properties based on the returned antibiotic ID, see Examples.
+Use the \code{\link[=ab_property]{ab_property()}} functions to get properties based on the returned antibiotic ID, see Examples.
 }
 \section{Source}{
 
@@ -37,13 +38,13 @@ European Commission Public Health PHARMACEUTICALS - COMMUNITY REGISTER: \url{htt
 \section{WHOCC}{
 
 \if{html}{\figure{logo_who.png}{options: height=60px style=margin-bottom:5px} \cr}
-This package contains \strong{all ~550 antibiotic, antimycotic and antiviral drugs} and their Anatomical Therapeutic Chemical (ATC) codes, ATC groups and Defined Daily Dose (DDD) from the World Health Organization Collaborating Centre for Drug Statistics Methodology (WHOCC, \url{https://www.whocc.no}) and the Pharmaceuticals Community Register of the European Commission (\url{http://ec.europa.eu/health/documents/community-register/html/atc.htm}). 
+This package contains \strong{all ~550 antibiotic, antimycotic and antiviral drugs} and their Anatomical Therapeutic Chemical (ATC) codes, ATC groups and Defined Daily Dose (DDD) from the World Health Organization Collaborating Centre for Drug Statistics Methodology (WHOCC, \url{https://www.whocc.no}) and the Pharmaceuticals Community Register of the European Commission (\url{http://ec.europa.eu/health/documents/community-register/html/atc.htm}).
 
 These have become the gold standard for international drug utilisation monitoring and research.
 
 The WHOCC is located in Oslo at the Norwegian Institute of Public Health and funded by the Norwegian government. The European Commission is the executive of the European Union and promotes its general interest.
 
-\strong{NOTE: The WHOCC copyright does not allow use for commercial purposes, unlike any other info from this package. See \url{https://www.whocc.no/copyright_disclaimer/}.}
+\strong{NOTE: The WHOCC copyright does not allow use for commercial purposes, unlike any other info from this package.} See \url{https://www.whocc.no/copyright_disclaimer/.}
 }
 
 \section{Read more on our website!}{
@@ -70,5 +71,5 @@ ab_name("J01FA01")    # "Erythromycin"
 ab_name("eryt")       # "Erythromycin"
 }
 \seealso{
-\code{\link{antibiotics}} for the dataframe that is being used to determine ATCs.
+\link{antibiotics} for the dataframe that is being used to determine ATCs.
 }

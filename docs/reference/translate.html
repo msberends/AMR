@@ -51,7 +51,7 @@
   <script src="../extra.js"></script>
 
 <meta property="og:title" content="Translate strings from AMR package — translate" />
-<meta property="og:description" content="For language-dependent output of AMR functions, like mo_name,  mo_type and ab_name." />
+<meta property="og:description" content="For language-dependent output of AMR functions, like mo_name(), mo_type() and ab_name()." />
 <meta property="og:image" content="https://msberends.gitlab.io/AMR/logo.png" />
 <meta name="twitter:card" content="summary" />
 
@@ -85,7 +85,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">0.8.0.9032</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">0.8.0.9036</span>
       </span>
     </div>
 
@@ -234,7 +234,7 @@
     </div>
 
     <div class="ref-description">
-    <p>For language-dependent output of AMR functions, like <code><a href='mo_property.html'>mo_name</a></code>,  <code><a href='mo_property.html'>mo_type</a></code> and <code><a href='ab_property.html'>ab_name</a></code>.</p>
+    <p>For language-dependent output of AMR functions, like <code><a href='mo_property.html'>mo_name()</a></code>, <code><a href='mo_property.html'>mo_type()</a></code> and <code><a href='ab_property.html'>ab_name()</a></code>.</p>
     </div>
 
     <pre class="usage"><span class='fu'>get_locale</span>()</pre>
@@ -245,8 +245,8 @@
     <p>Strings will be translated to foreign languages if they are defined in a local translation file. Additions to this file can be suggested at our repository. The file can be found here: <a href='https://gitlab.com/msberends/AMR/blob/master/data-raw/translations.tsv'>https://gitlab.com/msberends/AMR/blob/master/data-raw/translations.tsv</a>.</p>
 <p>Currently supported languages can be found if running: <code><a href='https://rdrr.io/r/base/unique.html'>unique(AMR:::translations_file$lang)</a></code>.</p>
 <p>Please suggest your own translations <a href='https://gitlab.com/msberends/AMR/issues/new?issue[title]=Translation%20suggestion'>by creating a new issue on our repository</a>.</p>
-<p>This file will be read by all functions where a translated output can be desired, like all <code><a href='mo_property.html'>mo_property</a></code> functions (<code><a href='mo_property.html'>mo_fullname</a></code>, <code><a href='mo_property.html'>mo_type</a></code>, etc.).</p>
-<p>The system language will be used at default, if that language is supported. The system language can be overwritten with <code><a href='https://rdrr.io/r/base/options.html'>getOption</a>("AMR_locale")</code>.</p>
+<p>This file will be read by all functions where a translated output can be desired, like all <code><a href='mo_property.html'>mo_property()</a></code> functions (<code><a href='mo_property.html'>mo_fullname()</a></code>, <code><a href='mo_property.html'>mo_type()</a></code>, etc.).</p>
+<p>The system language will be used at default, if that language is supported. The system language can be overwritten with <code><a href='https://rdrr.io/r/base/Sys.setenv.html'>Sys.setenv(AMR_locale = yourlanguage)</a></code>.</p>
     <h2 class="hasAnchor" id="read-more-on-our-website-"><a class="anchor" href="#read-more-on-our-website-"></a>Read more on our website!</h2>
 
     

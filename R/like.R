@@ -21,15 +21,15 @@
 
 #' Pattern Matching
 #'
-#' Convenient wrapper around \code{\link[base]{grep}} to match a pattern: \code{a \%like\% b}. It always returns a \code{logical} vector and is always case-insensitive (use \code{a \%like_case\% b} for case-sensitive matching). Also, \code{pattern} (\code{b}) can be as long as \code{x} (\code{a}) to compare items of each index in both vectors, or can both have the same length to iterate over all cases.
+#' Convenient wrapper around [base::grep()] to match a pattern: `a %like% b`. It always returns a [`logical`] vector and is always case-insensitive (use `a %like_case% b` for case-sensitive matching). Also, `pattern` (*b*) can be as long as `x` (*a*) to compare items of each index in both vectors, or can both have the same length to iterate over all cases.
 #' @inheritParams base::grepl
-#' @return A \code{logical} vector
+#' @return A [`logical`] vector
 #' @name like
 #' @rdname like
 #' @export
-#' @details Using RStudio? This function can also be inserted from the Addins menu and can have its own Keyboard Shortcut like Ctrl+Shift+L or Cmd+Shift+L (see Tools > Modify Keyboard Shortcuts...).
-#' @source Idea from the \href{https://github.com/Rdatatable/data.table/blob/master/R/like.R}{\code{like} function from the \code{data.table} package}, but made it case insensitive at default and let it support multiple patterns. Also, if the regex fails the first time, it tries again with \code{perl = TRUE}.
-#' @seealso \code{\link[base]{grep}}
+#' @details Using RStudio? This function can also be inserted from the Addins menu and can have its own Keyboard Shortcut like `Ctrl+Shift+L` or `Cmd+Shift+L` (see `Tools` > `Modify Keyboard Shortcuts...`).
+#' @source Idea from the [`like` function from the `data.table` package](https://github.com/Rdatatable/data.table/blob/master/R/like.R), but made it case insensitive at default and let it support multiple patterns. Also, if the regex fails the first time, it tries again with `perl = TRUE`.
+#' @seealso [base::grep()]
 #' @inheritSection AMR Read more on our website!
 #' @examples
 #' # simple test

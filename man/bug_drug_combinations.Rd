@@ -10,25 +10,32 @@
 \usage{
 bug_drug_combinations(x, col_mo = NULL, FUN = mo_shortname, ...)
 
-\method{format}{bug_drug_combinations}(x,
-  translate_ab = "name (ab, atc)", language = get_locale(),
-  minimum = 30, combine_SI = TRUE, combine_IR = FALSE,
-  add_ab_group = TRUE, remove_intrinsic_resistant = FALSE,
-  decimal.mark = getOption("OutDec"), big.mark = ifelse(decimal.mark ==
-  ",", ".", ","), ...)
+\method{format}{bug_drug_combinations}(
+  x,
+  translate_ab = "name (ab, atc)",
+  language = get_locale(),
+  minimum = 30,
+  combine_SI = TRUE,
+  combine_IR = FALSE,
+  add_ab_group = TRUE,
+  remove_intrinsic_resistant = FALSE,
+  decimal.mark = getOption("OutDec"),
+  big.mark = ifelse(decimal.mark == ",", ".", ","),
+  ...
+)
 }
 \arguments{
 \item{x}{data with antibiotic columns, like e.g. \code{AMX} and \code{AMC}}
 
-\item{col_mo}{column name of the IDs of the microorganisms (see \code{\link{as.mo}}), defaults to the first column of class \code{mo}. Values will be coerced using \code{\link{as.mo}}.}
+\item{col_mo}{column name of the IDs of the microorganisms (see \code{\link[=as.mo]{as.mo()}}), defaults to the first column of class \code{\link{mo}}. Values will be coerced using \code{\link[=as.mo]{as.mo()}}.}
 
-\item{FUN}{the function to call on the \code{mo} column to transform the microorganism IDs, defaults to \code{\link{mo_shortname}}}
+\item{FUN}{the function to call on the \code{mo} column to transform the microorganism IDs, defaults to \code{\link[=mo_shortname]{mo_shortname()}}}
 
 \item{...}{arguments passed on to \code{FUN}}
 
-\item{translate_ab}{a character of length 1 containing column names of the \code{\link{antibiotics}} data set}
+\item{translate_ab}{a character of length 1 containing column names of the \link{antibiotics} data set}
 
-\item{language}{language of the returned text, defaults to system language (see \code{\link{get_locale}}) and can also be set with \code{\link{getOption}("AMR_locale")}. Use \code{language = NULL} or \code{language = ""} to prevent translation.}
+\item{language}{language of the returned text, defaults to system language (see \code{\link[=get_locale]{get_locale()}}) and can also be set with \code{getOption("AMR_locale")}. Use \code{language = NULL} or \code{language = ""} to prevent translation.}
 
 \item{minimum}{the minimum allowed number of available (tested) isolates. Any isolate count lower than \code{minimum} will return \code{NA} with a warning. The default number of \code{30} isolates is advised by the Clinical and Laboratory Standards Institute (CLSI) as best practice, see Source.}
 
@@ -48,13 +55,13 @@ bug_drug_combinations(x, col_mo = NULL, FUN = mo_shortname, ...)
     decimal point.}
 }
 \value{
-The function \code{bug_drug_combinations} returns a \code{data.frame} with columns "mo", "ab", "S", "I", "R" and "total".
+The function \code{\link[=bug_drug_combinations]{bug_drug_combinations()}} returns a \code{\link{data.frame}} with columns "mo", "ab", "S", "I", "R" and "total".
 }
 \description{
-Determine antimicrobial resistance (AMR) of all bug-drug combinations in your data set where at least 30 (default) isolates are available per species. Use \code{format} on the result to prettify it to a publicable/printable format, see Examples.
+Determine antimicrobial resistance (AMR) of all bug-drug combinations in your data set where at least 30 (default) isolates are available per species. Use \code{\link[=format]{format()}} on the result to prettify it to a publicable/printable format, see Examples.
 }
 \details{
-The function \code{format} calculates the resistance per bug-drug combination. Use \code{combine_IR = FALSE} (default) to test R vs. S+I and \code{combine_IR = TRUE} to test R+I vs. S. 
+The function \code{\link[=format]{format()}} calculates the resistance per bug-drug combination. Use \code{combine_IR = FALSE} (default) to test R vs. S+I and \code{combine_IR = TRUE} to test R+I vs. S.
 
 The language of the output can be overwritten with \code{options(AMR_locale)}, please see \link{translate}.
 }

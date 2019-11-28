@@ -9,7 +9,7 @@
 \alias{full_join_microorganisms}
 \alias{semi_join_microorganisms}
 \alias{anti_join_microorganisms}
-\title{Join a table with \code{microorganisms}}
+\title{Join a table with \link{microorganisms}}
 \usage{
 inner_join_microorganisms(x, by = NULL, suffix = c("2", ""), ...)
 
@@ -26,17 +26,17 @@ anti_join_microorganisms(x, by = NULL, ...)
 \arguments{
 \item{x}{existing table to join, or character vector}
 
-\item{by}{a variable to join by - if left empty will search for a column with class \code{mo} (created with \code{\link{as.mo}}) or will be \code{"mo"} if that column name exists in \code{x}, could otherwise be a column name of \code{x} with values that exist in \code{microorganisms$mo} (like \code{by = "bacteria_id"}), or another column in \code{\link{microorganisms}} (but then it should be named, like \code{by = c("my_genus_species" = "fullname")})}
+\item{by}{a variable to join by - if left empty will search for a column with class \code{\link{mo}} (created with \code{\link[=as.mo]{as.mo()}}) or will be \code{"mo"} if that column name exists in \code{x}, could otherwise be a column name of \code{x} with values that exist in \code{microorganisms$mo} (like \code{by = "bacteria_id"}), or another column in \link{microorganisms} (but then it should be named, like \code{by = c("my_genus_species" = "fullname")})}
 
 \item{suffix}{if there are non-joined duplicate variables in \code{x} and \code{y}, these suffixes will be added to the output to disambiguate them. Should be a character vector of length 2.}
 
-\item{...}{other parameters to pass on to \code{dplyr::\link[dplyr]{join}}.}
+\item{...}{other parameters to pass on to \code{\link[dplyr:join]{dplyr::join()}}}
 }
 \description{
-Join the dataset \code{\link{microorganisms}} easily to an existing table or character vector.
+Join the data set \link{microorganisms} easily to an existing table or character vector.
 }
 \details{
-\strong{Note:} As opposed to the \code{\link[dplyr]{join}} functions of \code{dplyr}, characters vectors are supported and at default existing columns will get a suffix \code{"2"} and the newly joined columns will not get a suffix. See \code{\link[dplyr]{join}} for more information.
+\strong{Note:} As opposed to the \code{\link[dplyr:join]{dplyr::join()}} functions of \code{dplyr}, \code{\link{characters}} vectors are supported and at default existing columns will get a suffix \code{"2"} and the newly joined columns will not get a suffix. See \code{\link[dplyr:join]{dplyr::join()}} for more information.
 }
 \section{Read more on our website!}{
 

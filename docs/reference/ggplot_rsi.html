@@ -85,7 +85,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">0.8.0.9032</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">0.8.0.9036</span>
       </span>
     </div>
 
@@ -234,43 +234,73 @@
     </div>
 
     <div class="ref-description">
-    <p>Use these functions to create bar plots for antimicrobial resistance analysis. All functions rely on internal <code><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a>2</code> functions.</p>
+    <p>Use these functions to create bar plots for antimicrobial resistance analysis. All functions rely on internal <a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot2</a> functions.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>ggplot_rsi</span>(<span class='no'>data</span>, <span class='kw'>position</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>x</span> <span class='kw'>=</span> <span class='st'>"antibiotic"</span>,
-  <span class='kw'>fill</span> <span class='kw'>=</span> <span class='st'>"interpretation"</span>, <span class='kw'>facet</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>breaks</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq</a></span>(<span class='fl'>0</span>, <span class='fl'>1</span>, <span class='fl'>0.1</span>),
-  <span class='kw'>limits</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>translate_ab</span> <span class='kw'>=</span> <span class='st'>"name"</span>, <span class='kw'>combine_SI</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>combine_IR</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>language</span> <span class='kw'>=</span> <span class='fu'><a href='translate.html'>get_locale</a></span>(), <span class='kw'>nrow</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>colours</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='kw'>S</span> <span class='kw'>=</span> <span class='st'>"#61a8ff"</span>, <span class='kw'>SI</span> <span class='kw'>=</span> <span class='st'>"#61a8ff"</span>, <span class='kw'>I</span> <span class='kw'>=</span> <span class='st'>"#61f7ff"</span>, <span class='kw'>IR</span> <span class='kw'>=</span>
-  <span class='st'>"#ff6961"</span>, <span class='kw'>R</span> <span class='kw'>=</span> <span class='st'>"#ff6961"</span>), <span class='kw'>datalabels</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>datalabels.size</span> <span class='kw'>=</span> <span class='fl'>2.5</span>,
-  <span class='kw'>datalabels.colour</span> <span class='kw'>=</span> <span class='st'>"gray15"</span>, <span class='kw'>title</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>subtitle</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>caption</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>x.title</span> <span class='kw'>=</span> <span class='st'>"Antimicrobial"</span>, <span class='kw'>y.title</span> <span class='kw'>=</span> <span class='st'>"Proportion"</span>,
-  <span class='no'>...</span>)
+    <pre class="usage"><span class='fu'>ggplot_rsi</span>(
+  <span class='no'>data</span>,
+  <span class='kw'>position</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>x</span> <span class='kw'>=</span> <span class='st'>"antibiotic"</span>,
+  <span class='kw'>fill</span> <span class='kw'>=</span> <span class='st'>"interpretation"</span>,
+  <span class='kw'>facet</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>breaks</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq</a></span>(<span class='fl'>0</span>, <span class='fl'>1</span>, <span class='fl'>0.1</span>),
+  <span class='kw'>limits</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>translate_ab</span> <span class='kw'>=</span> <span class='st'>"name"</span>,
+  <span class='kw'>combine_SI</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>combine_IR</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>language</span> <span class='kw'>=</span> <span class='fu'><a href='translate.html'>get_locale</a></span>(),
+  <span class='kw'>nrow</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>colours</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='kw'>S</span> <span class='kw'>=</span> <span class='st'>"#61a8ff"</span>, <span class='kw'>SI</span> <span class='kw'>=</span> <span class='st'>"#61a8ff"</span>, <span class='kw'>I</span> <span class='kw'>=</span> <span class='st'>"#61f7ff"</span>, <span class='kw'>IR</span> <span class='kw'>=</span> <span class='st'>"#ff6961"</span>, <span class='kw'>R</span> <span class='kw'>=</span>
+    <span class='st'>"#ff6961"</span>),
+  <span class='kw'>datalabels</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>datalabels.size</span> <span class='kw'>=</span> <span class='fl'>2.5</span>,
+  <span class='kw'>datalabels.colour</span> <span class='kw'>=</span> <span class='st'>"gray15"</span>,
+  <span class='kw'>title</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>subtitle</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>caption</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>x.title</span> <span class='kw'>=</span> <span class='st'>"Antimicrobial"</span>,
+  <span class='kw'>y.title</span> <span class='kw'>=</span> <span class='st'>"Proportion"</span>,
+  <span class='no'>...</span>
+)
 
-<span class='fu'>geom_rsi</span>(<span class='kw'>position</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>x</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"antibiotic"</span>, <span class='st'>"interpretation"</span>),
-  <span class='kw'>fill</span> <span class='kw'>=</span> <span class='st'>"interpretation"</span>, <span class='kw'>translate_ab</span> <span class='kw'>=</span> <span class='st'>"name"</span>,
-  <span class='kw'>language</span> <span class='kw'>=</span> <span class='fu'><a href='translate.html'>get_locale</a></span>(), <span class='kw'>combine_SI</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>combine_IR</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='no'>...</span>)
+<span class='fu'>geom_rsi</span>(
+  <span class='kw'>position</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>x</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"antibiotic"</span>, <span class='st'>"interpretation"</span>),
+  <span class='kw'>fill</span> <span class='kw'>=</span> <span class='st'>"interpretation"</span>,
+  <span class='kw'>translate_ab</span> <span class='kw'>=</span> <span class='st'>"name"</span>,
+  <span class='kw'>language</span> <span class='kw'>=</span> <span class='fu'><a href='translate.html'>get_locale</a></span>(),
+  <span class='kw'>combine_SI</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>combine_IR</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='no'>...</span>
+)
 
 <span class='fu'>facet_rsi</span>(<span class='kw'>facet</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"interpretation"</span>, <span class='st'>"antibiotic"</span>), <span class='kw'>nrow</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)
 
 <span class='fu'>scale_y_percent</span>(<span class='kw'>breaks</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq</a></span>(<span class='fl'>0</span>, <span class='fl'>1</span>, <span class='fl'>0.1</span>), <span class='kw'>limits</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)
 
-<span class='fu'>scale_rsi_colours</span>(<span class='kw'>colours</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='kw'>S</span> <span class='kw'>=</span> <span class='st'>"#61a8ff"</span>, <span class='kw'>SI</span> <span class='kw'>=</span> <span class='st'>"#61a8ff"</span>, <span class='kw'>I</span> <span class='kw'>=</span>
-  <span class='st'>"#61f7ff"</span>, <span class='kw'>IR</span> <span class='kw'>=</span> <span class='st'>"#ff6961"</span>, <span class='kw'>R</span> <span class='kw'>=</span> <span class='st'>"#ff6961"</span>))
+<span class='fu'>scale_rsi_colours</span>(
+  <span class='kw'>colours</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='kw'>S</span> <span class='kw'>=</span> <span class='st'>"#61a8ff"</span>, <span class='kw'>SI</span> <span class='kw'>=</span> <span class='st'>"#61a8ff"</span>, <span class='kw'>I</span> <span class='kw'>=</span> <span class='st'>"#61f7ff"</span>, <span class='kw'>IR</span> <span class='kw'>=</span> <span class='st'>"#ff6961"</span>, <span class='kw'>R</span> <span class='kw'>=</span>
+    <span class='st'>"#ff6961"</span>)
+)
 
 <span class='fu'>theme_rsi</span>()
 
-<span class='fu'>labels_rsi_count</span>(<span class='kw'>position</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>x</span> <span class='kw'>=</span> <span class='st'>"antibiotic"</span>,
-  <span class='kw'>translate_ab</span> <span class='kw'>=</span> <span class='st'>"name"</span>, <span class='kw'>combine_SI</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>combine_IR</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>datalabels.size</span> <span class='kw'>=</span> <span class='fl'>3</span>, <span class='kw'>datalabels.colour</span> <span class='kw'>=</span> <span class='st'>"gray15"</span>)</pre>
+<span class='fu'>labels_rsi_count</span>(
+  <span class='kw'>position</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>x</span> <span class='kw'>=</span> <span class='st'>"antibiotic"</span>,
+  <span class='kw'>translate_ab</span> <span class='kw'>=</span> <span class='st'>"name"</span>,
+  <span class='kw'>combine_SI</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>combine_IR</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>datalabels.size</span> <span class='kw'>=</span> <span class='fl'>3</span>,
+  <span class='kw'>datalabels.colour</span> <span class='kw'>=</span> <span class='st'>"gray15"</span>
+)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>data</th>
-      <td><p>a <code>data.frame</code> with column(s) of class <code>"rsi"</code> (see <code><a href='as.rsi.html'>as.rsi</a></code>)</p></td>
+      <td><p>a <code><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></code> with column(s) of class <code>rsi</code> (see <code><a href='as.rsi.html'>as.rsi()</a></code>)</p></td>
     </tr>
     <tr>
       <th>position</th>
@@ -298,7 +328,7 @@
     </tr>
     <tr>
       <th>translate_ab</th>
-      <td><p>a column name of the <code><a href='antibiotics.html'>antibiotics</a></code> data set to translate the antibiotic abbreviations to, using <code><a href='ab_property.html'>ab_property</a></code></p></td>
+      <td><p>a column name of the <a href='antibiotics.html'>antibiotics</a> data set to translate the antibiotic abbreviations to, using <code><a href='ab_property.html'>ab_property()</a></code></p></td>
     </tr>
     <tr>
       <th>combine_SI</th>
@@ -310,7 +340,7 @@
     </tr>
     <tr>
       <th>language</th>
-      <td><p>language of the returned text, defaults to system language (see <code><a href='translate.html'>get_locale</a></code>) and can also be set with <code><a href='https://rdrr.io/r/base/options.html'>getOption</a>("AMR_locale")</code>. Use <code>language = NULL</code> or <code>language = ""</code> to prevent translation.</p></td>
+      <td><p>language of the returned text, defaults to system language (see <code><a href='translate.html'>get_locale()</a></code>) and can also be set with <code><a href='https://rdrr.io/r/base/options.html'>getOption("AMR_locale")</a></code>. Use <code>language = NULL</code> or <code>language = ""</code> to prevent translation.</p></td>
     </tr>
     <tr>
       <th>nrow</th>
@@ -318,11 +348,11 @@
     </tr>
     <tr>
       <th>colours</th>
-      <td><p>a named vector with colours for the bars. The names must be one or more of: S, SI, I, IR, R or be <code>FALSE</code> to use default <code>ggplot2</code> colours.</p></td>
+      <td><p>a named vector with colours for the bars. The names must be one or more of: S, SI, I, IR, R or be <code>FALSE</code> to use default [ggplot2][<code><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot2::ggplot()</a></code> colours.</p></td>
     </tr>
     <tr>
       <th>datalabels</th>
-      <td><p>show datalabels using <code>labels_rsi_count</code></p></td>
+      <td><p>show datalabels using <code>labels_rsi_count()</code></p></td>
     </tr>
     <tr>
       <th>datalabels.size</th>
@@ -354,21 +384,23 @@
     </tr>
     <tr>
       <th>...</th>
-      <td><p>other parameters passed on to <code>geom_rsi</code></p></td>
+      <td><p>other parameters passed on to <code>geom_rsi()</code></p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>At default, the names of antibiotics will be shown on the plots using <code><a href='ab_property.html'>ab_name</a></code>. This can be set with the <code>translate_ab</code> parameter. See <code><a href='count.html'>count_df</a></code>.</p>
-<p><strong>The functions</strong><br />
-<code>geom_rsi</code> will take any variable from the data that has an <code>rsi</code> class (created with <code><a href='as.rsi.html'>as.rsi</a></code>) using <code><a href='proportion.html'>rsi_df</a></code> and will plot bars with the percentage R, I and S. The default behaviour is to have the bars stacked and to have the different antibiotics on the x axis.</p>
-<p><code>facet_rsi</code> creates 2d plots (at default based on S/I/R) using <code><a href='https://ggplot2.tidyverse.org/reference/facet_wrap.html'>facet_wrap</a></code>.</p>
-<p><code>scale_y_percent</code> transforms the y axis to a 0 to 100% range using <code>scale_continuous</code>.</p>
-<p><code>scale_rsi_colours</code> sets colours to the bars: pastel blue for S, pastel turquoise for I and pastel red for R, using <code>scale_brewer</code>.</p>
-<p><code>theme_rsi</code> is a <code>ggplot <a href='https://ggplot2.tidyverse.org/reference/theme.html'>theme</a></code> with minimal distraction.</p>
-<p><code>labels_rsi_count</code> print datalabels on the bars with percentage and amount of isolates using <code><a href='https://ggplot2.tidyverse.org/reference/geom_text.html'>geom_text</a></code></p>
-<p><code>ggplot_rsi</code> is a wrapper around all above functions that uses data as first input. This makes it possible to use this function after a pipe (<code>%&gt;%</code>). See Examples.</p>
+    <p>At default, the names of antibiotics will be shown on the plots using <code><a href='ab_property.html'>ab_name()</a></code>. This can be set with the <code>translate_ab</code> parameter. See <code><a href='count.html'>count_df()</a></code>.</p><h3>The functions</h3>
+
+
+<p><code>geom_rsi()</code> will take any variable from the data that has an <code>rsi</code> class (created with <code><a href='as.rsi.html'>as.rsi()</a></code>) using <code><a href='proportion.html'>rsi_df()</a></code> and will plot bars with the percentage R, I and S. The default behaviour is to have the bars stacked and to have the different antibiotics on the x axis.</p>
+<p><code>facet_rsi()</code> creates 2d plots (at default based on S/I/R) using <code><a href='https://ggplot2.tidyverse.org/reference/facet_wrap.html'>ggplot2::facet_wrap()</a></code>.</p>
+<p><code>scale_y_percent()</code> transforms the y axis to a 0 to 100% range using <code>ggplot2::scale_continuous()</code>.</p>
+<p><code>scale_rsi_colours()</code> sets colours to the bars: pastel blue for S, pastel turquoise for I and pastel red for R, using <code>ggplot2::scale_brewer()</code>.</p>
+<p><code>theme_rsi()</code> is a [ggplot2 theme][<code><a href='https://ggplot2.tidyverse.org/reference/theme.html'>ggplot2::theme()</a></code> with minimal distraction.</p>
+<p><code>labels_rsi_count()</code> print datalabels on the bars with percentage and amount of isolates using <code><a href='https://ggplot2.tidyverse.org/reference/geom_text.html'>ggplot2::geom_text()</a></code></p>
+<p><code>ggplot_rsi()</code> is a wrapper around all above functions that uses data as first input. This makes it possible to use this function after a pipe (<code>%&gt;%</code>). See Examples.</p>
+
     <h2 class="hasAnchor" id="read-more-on-our-website-"><a class="anchor" href="#read-more-on-our-website-"></a>Read more on our website!</h2>
 
     

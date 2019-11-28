@@ -5,39 +5,39 @@
 \alias{WHONET}
 \title{Data set with 500 isolates - WHONET example}
 \format{A \code{\link{data.frame}} with 500 observations and 53 variables:
-\describe{
-  \item{\code{Identification number}}{ID of the sample}
-  \item{\code{Specimen number}}{ID of the specimen}
-  \item{\code{Organism}}{Name of the microorganism. Before analysis, you should transform this to a valid microbial class, using \code{\link{as.mo}}.}
-  \item{\code{Country}}{Country of origin}
-  \item{\code{Laboratory}}{Name of laboratory}
-  \item{\code{Last name}}{Last name of patient}
-  \item{\code{First name}}{Initial of patient}
-  \item{\code{Sex}}{Gender of patient}
-  \item{\code{Age}}{Age of patient}
-  \item{\code{Age category}}{Age group, can also be looked up using \code{\link{age_groups}}}
-  \item{\code{Date of admission}}{Date of hospital admission}
-  \item{\code{Specimen date}}{Date when specimen was received at laboratory}
-  \item{\code{Specimen type}}{Specimen type or group}
-  \item{\code{Specimen type (Numeric)}}{Translation of \code{"Specimen type"}}
-  \item{\code{Reason}}{Reason of request with Differential Diagnosis}
-  \item{\code{Isolate number}}{ID of isolate}
-  \item{\code{Organism type}}{Type of microorganism, can also be looked up using \code{\link{mo_type}}}
-  \item{\code{Serotype}}{Serotype of microorganism}
-  \item{\code{Beta-lactamase}}{Microorganism produces beta-lactamase?}
-  \item{\code{ESBL}}{Microorganism produces extended spectrum beta-lactamase?}
-  \item{\code{Carbapenemase}}{Microorganism produces carbapenemase?}
-  \item{\code{MRSA screening test}}{Microorganism is possible MRSA?}
-  \item{\code{Inducible clindamycin resistance}}{Clindamycin can be induced?}
-  \item{\code{Comment}}{Other comments}
-  \item{\code{Date of data entry}}{Date this data was entered in WHONET}
-  \item{\code{AMP_ND10:CIP_EE}}{27 different antibiotics. You can lookup the abbreviatons in the \code{\link{antibiotics}} data set, or use e.g. \code{\link{ab_name}("AMP")} to get the official name immediately. Before analysis, you should transform this to a valid antibiotic class, using \code{\link{as.rsi}}.}
+\itemize{
+\item \verb{Identification number}\cr ID of the sample
+\item \verb{Specimen number}\cr ID of the specimen
+\item \code{Organism}\cr Name of the microorganism. Before analysis, you should transform this to a valid microbial class, using \code{\link[=as.mo]{as.mo()}}.
+\item \code{Country}\cr Country of origin
+\item \code{Laboratory}\cr Name of laboratory
+\item \verb{Last name}\cr Last name of patient
+\item \verb{First name}\cr Initial of patient
+\item \code{Sex}\cr Gender of patient
+\item \code{Age}\cr Age of patient
+\item \verb{Age category}\cr Age group, can also be looked up using \code{\link[=age_groups]{age_groups()}}
+\item \verb{Date of admission}\cr Date of hospital admission
+\item \verb{Specimen date}\cr Date when specimen was received at laboratory
+\item \verb{Specimen type}\cr Specimen type or group
+\item \verb{Specimen type (Numeric)}\cr Translation of \code{"Specimen type"}
+\item \code{Reason}\cr Reason of request with Differential Diagnosis
+\item \verb{Isolate number}\cr ID of isolate
+\item \verb{Organism type}\cr Type of microorganism, can also be looked up using \code{\link[=mo_type]{mo_type()}}
+\item \code{Serotype}\cr Serotype of microorganism
+\item \code{Beta-lactamase}\cr Microorganism produces beta-lactamase?
+\item \code{ESBL}\cr Microorganism produces extended spectrum beta-lactamase?
+\item \code{Carbapenemase}\cr Microorganism produces carbapenemase?
+\item \verb{MRSA screening test}\cr Microorganism is possible MRSA?
+\item \verb{Inducible clindamycin resistance}\cr Clindamycin can be induced?
+\item \code{Comment}\cr Other comments
+\item \verb{Date of data entry}\cr Date this data was entered in WHONET
+\item \code{AMP_ND10:CIP_EE}\cr 27 different antibiotics. You can lookup the abbreviatons in the \link{antibiotics} data set, or use e.g. \code{\link[=ab_name]{ab_name("AMP")}} to get the official name immediately. Before analysis, you should transform this to a valid antibiotic class, using \code{\link[=as.rsi]{as.rsi()}}.
 }}
 \usage{
 WHONET
 }
 \description{
-This example data set has the exact same structure as an export file from WHONET. Such files can be used with this package, as this example data set shows. The data itself was based on our \code{\link{example_isolates}} data set.
+This example data set has the exact same structure as an export file from WHONET. Such files can be used with this package, as this example data set shows. The data itself was based on our \link{example_isolates} data set.
 }
 \section{Read more on our website!}{
 

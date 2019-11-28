@@ -22,61 +22,65 @@
 #' Determine first (weighted) isolates
 #'
 #' Determine first (weighted) isolates of all microorganisms of every patient per episode and (if needed) per specimen type.
-#' @param x a \code{data.frame} containing isolates.
+#' @param x a [`data.frame`] containing isolates.
 #' @param col_date column name of the result date (or date that is was received on the lab), defaults to the first column of with a date class
 #' @param col_patient_id column name of the unique IDs of the patients, defaults to the first column that starts with 'patient' or 'patid' (case insensitive)
-#' @param col_mo column name of the IDs of the microorganisms (see \code{\link{as.mo}}), defaults to the first column of class \code{mo}. Values will be coerced using \code{\link{as.mo}}.
-#' @param col_testcode column name of the test codes. Use \code{col_testcode = NULL} to \strong{not} exclude certain test codes (like test codes for screening). In that case \code{testcodes_exclude} will be ignored.
+#' @param col_mo column name of the IDs of the microorganisms (see [as.mo()]), defaults to the first column of class [`mo`]. Values will be coerced using [as.mo()].
+#' @param col_testcode column name of the test codes. Use `col_testcode = NULL` to **not** exclude certain test codes (like test codes for screening). In that case `testcodes_exclude` will be ignored.
 #' @param col_specimen column name of the specimen type or group
-#' @param col_icu column name of the logicals (\code{TRUE}/\code{FALSE}) whether a ward or department is an Intensive Care Unit (ICU)
-#' @param col_keyantibiotics column name of the key antibiotics to determine first \emph{weighted} isolates, see \code{\link{key_antibiotics}}. Defaults to the first column that starts with 'key' followed by 'ab' or 'antibiotics' (case insensitive). Use \code{col_keyantibiotics = FALSE} to prevent this.
+#' @param col_icu column name of the logicals (`TRUE`/`FALSE`) whether a ward or department is an Intensive Care Unit (ICU)
+#' @param col_keyantibiotics column name of the key antibiotics to determine first *weighted* isolates, see [key_antibiotics()]. Defaults to the first column that starts with 'key' followed by 'ab' or 'antibiotics' (case insensitive). Use `col_keyantibiotics = FALSE` to prevent this.
 #' @param episode_days episode in days after which a genus/species combination will be determined as 'first isolate' again. The default of 365 days is based on the guideline by CLSI, see Source. 
 #' @param testcodes_exclude character vector with test codes that should be excluded (case-insensitive)
-#' @param icu_exclude logical whether ICU isolates should be excluded (rows with value \code{TRUE} in column \code{col_icu})
-#' @param specimen_group value in column \code{col_specimen} to filter on
-#' @param type type to determine weighed isolates; can be \code{"keyantibiotics"} or \code{"points"}, see Details
-#' @param ignore_I logical to determine whether antibiotic interpretations with \code{"I"} will be ignored when \code{type = "keyantibiotics"}, see Details
-#' @param points_threshold points until the comparison of key antibiotics will lead to inclusion of an isolate when \code{type = "points"}, see Details
+#' @param icu_exclude logical whether ICU isolates should be excluded (rows with value `TRUE` in column `col_icu`)
+#' @param specimen_group value in column `col_specimen` to filter on
+#' @param type type to determine weighed isolates; can be `"keyantibiotics"` or `"points"`, see Details
+#' @param ignore_I logical to determine whether antibiotic interpretations with `"I"` will be ignored when `type = "keyantibiotics"`, see Details
+#' @param points_threshold points until the comparison of key antibiotics will lead to inclusion of an isolate when `type = "points"`, see Details
 #' @param info print progress
-#' @param include_unknown logical to determine whether 'unknown' microorganisms should be included too, i.e. microbial code \code{"UNKNOWN"}, which defaults to \code{FALSE}. For WHONET users, this means that all records with organism code \code{"con"} (\emph{contamination}) will be excluded at default. Isolates with a microbial ID of \code{NA} will always be excluded as first isolate.
-#' @param ... parameters passed on to the \code{first_isolate} function
-#' @details \strong{WHY THIS IS SO IMPORTANT} \cr
-#' To conduct an analysis of antimicrobial resistance, you should only include the first isolate of every patient per episode \href{https://www.ncbi.nlm.nih.gov/pubmed/17304462}{[1]}. If you would not do this, you could easily get an overestimate or underestimate of the resistance of an antibiotic. Imagine that a patient was admitted with an MRSA and that it was found in 5 different blood cultures the following week. The resistance percentage of oxacillin of all \emph{S. aureus} isolates would be overestimated, because you included this MRSA more than once. It would be \href{https://en.wikipedia.org/wiki/Selection_bias}{selection bias}.
+#' @param include_unknown logical to determine whether 'unknown' microorganisms should be included too, i.e. microbial code `"UNKNOWN"`, which defaults to `FALSE`. For WHONET users, this means that all records with organism code `"con"` (*contamination*) will be excluded at default. Isolates with a microbial ID of `NA` will always be excluded as first isolate.
+#' @param ... parameters passed on to the [first_isolate()] function
+#' @details **WHY THIS IS SO IMPORTANT** \cr
+#' To conduct an analysis of antimicrobial resistance, you should only include the first isolate of every patient per episode [[1]](https://www.ncbi.nlm.nih.gov/pubmed/17304462). If you would not do this, you could easily get an overestimate or underestimate of the resistance of an antibiotic. Imagine that a patient was admitted with an MRSA and that it was found in 5 different blood cultures the following week. The resistance percentage of oxacillin of all *S. aureus* isolates would be overestimated, because you included this MRSA more than once. It would be [selection bias](https://en.wikipedia.org/wiki/Selection_bias).
 #'
-#' All isolates with a microbial ID of \code{NA} will be excluded as first isolate.
+#' All isolates with a microbial ID of `NA` will be excluded as first isolate.
 #'
-#' The functions \code{filter_first_isolate} and \code{filter_first_weighted_isolate} are helper functions to quickly filter on first isolates. The function \code{filter_first_isolate} is essentially equal to:
-#' \preformatted{
-#'  x \%>\%
-#'    mutate(only_firsts = first_isolate(x, ...)) \%>\%
-#'    filter(only_firsts == TRUE) \%>\%
+#' The functions [filter_first_isolate()] and [filter_first_weighted_isolate()] are helper functions to quickly filter on first isolates. The function [filter_first_isolate()] is essentially equal to:
+#' ```
+#'  x %>%
+#'    mutate(only_firsts = first_isolate(x, ...)) %>%
+#'    filter(only_firsts == TRUE) %>%
 #'    select(-only_firsts)
-#' }
-#' The function \code{filter_first_weighted_isolate} is essentially equal to:
-#' \preformatted{
-#'  x \%>\%
-#'    mutate(keyab = key_antibiotics(.)) \%>\%
+#' ```
+#' The function [filter_first_weighted_isolate()] is essentially equal to:
+#' ```
+#'  x %>%
+#'    mutate(keyab = key_antibiotics(.)) %>%
 #'    mutate(only_weighted_firsts = first_isolate(x,
-#'                                                col_keyantibiotics = "keyab", ...)) \%>\%
-#'    filter(only_weighted_firsts == TRUE) \%>\%
+#'                                                col_keyantibiotics = "keyab", ...)) %>%
+#'    filter(only_weighted_firsts == TRUE) %>%
 #'    select(-only_weighted_firsts)
-#' }
+#' ```
 #' @section Key antibiotics:
-#'     There are two ways to determine whether isolates can be included as first \emph{weighted} isolates which will give generally the same results: \cr
+#' There are two ways to determine whether isolates can be included as first *weighted* isolates which will give generally the same results:
 #'
-#'     \strong{1. Using} \code{type = "keyantibiotics"} \strong{and parameter} \code{ignore_I} \cr
-#'     Any difference from S to R (or vice versa) will (re)select an isolate as a first weighted isolate. With \code{ignore_I = FALSE}, also differences from I to S|R (or vice versa) will lead to this. This is a reliable method and 30-35 times faster than method 2. Read more about this in the \code{\link{key_antibiotics}} function. \cr
-#'
-#'     \strong{2. Using} \code{type = "points"} \strong{and parameter} \code{points_threshold} \cr
-#'     A difference from I to S|R (or vice versa) means 0.5 points, a difference from S to R (or vice versa) means 1 point. When the sum of points exceeds \code{points_threshold}, which default to \code{2}, an isolate will be (re)selected as a first weighted isolate.
+#' 1. Using `type = "keyantibiotics"` and parameter `ignore_I`
+#' 
+#'    Any difference from S to R (or vice versa) will (re)select an isolate as a first weighted isolate. With `ignore_I = FALSE`, also differences from I to S|R (or vice versa) will lead to this. This is a reliable method and 30-35 times faster than method 2. Read more about this in the [key_antibiotics()] function.
+#'    
+#' 2. Using `type = "points"` and parameter `points_threshold`
+#' 
+#'    A difference from I to S|R (or vice versa) means 0.5 points, a difference from S to R (or vice versa) means 1 point. When the sum of points exceeds `points_threshold`, which default to `2`, an isolate will be (re)selected as a first weighted isolate.
 #' @rdname first_isolate
-#' @seealso \code{\link{key_antibiotics}}
+#' @seealso [key_antibiotics()]
 #' @export
 #' @importFrom dplyr arrange_at lag between row_number filter mutate arrange pull ungroup
 #' @importFrom crayon blue bold silver
 # @importFrom clean percentage
-#' @return Logical vector
-#' @source Methodology of this function is based on: \strong{M39 Analysis and Presentation of Cumulative Antimicrobial Susceptibility Test Data, 4th Edition}, 2014, \emph{Clinical and Laboratory Standards Institute (CLSI)}. \url{https://clsi.org/standards/products/microbiology/documents/m39/}.
+#' @return A [`logical`] vector
+#' @source Methodology of this function is based on:
+#' 
+#' **M39 Analysis and Presentation of Cumulative Antimicrobial Susceptibility Test Data, 4th Edition**, 2014, *Clinical and Laboratory Standards Institute (CLSI)*. <https://clsi.org/standards/products/microbiology/documents/m39/>.
 #' @inheritSection AMR Read more on our website!
 #' @examples
 #' # `example_isolates` is a dataset available in the AMR package.

@@ -5,36 +5,50 @@
 \alias{key_antibiotics_equal}
 \title{Key antibiotics for first \emph{weighted} isolates}
 \usage{
-key_antibiotics(x, col_mo = NULL, universal_1 = guess_ab_col(x,
-  "amoxicillin"), universal_2 = guess_ab_col(x,
-  "amoxicillin/clavulanic acid"), universal_3 = guess_ab_col(x,
-  "cefuroxime"), universal_4 = guess_ab_col(x,
-  "piperacillin/tazobactam"), universal_5 = guess_ab_col(x,
-  "ciprofloxacin"), universal_6 = guess_ab_col(x,
-  "trimethoprim/sulfamethoxazole"), GramPos_1 = guess_ab_col(x,
-  "vancomycin"), GramPos_2 = guess_ab_col(x, "teicoplanin"),
+key_antibiotics(
+  x,
+  col_mo = NULL,
+  universal_1 = guess_ab_col(x, "amoxicillin"),
+  universal_2 = guess_ab_col(x, "amoxicillin/clavulanic acid"),
+  universal_3 = guess_ab_col(x, "cefuroxime"),
+  universal_4 = guess_ab_col(x, "piperacillin/tazobactam"),
+  universal_5 = guess_ab_col(x, "ciprofloxacin"),
+  universal_6 = guess_ab_col(x, "trimethoprim/sulfamethoxazole"),
+  GramPos_1 = guess_ab_col(x, "vancomycin"),
+  GramPos_2 = guess_ab_col(x, "teicoplanin"),
   GramPos_3 = guess_ab_col(x, "tetracycline"),
   GramPos_4 = guess_ab_col(x, "erythromycin"),
-  GramPos_5 = guess_ab_col(x, "oxacillin"), GramPos_6 = guess_ab_col(x,
-  "rifampin"), GramNeg_1 = guess_ab_col(x, "gentamicin"),
+  GramPos_5 = guess_ab_col(x, "oxacillin"),
+  GramPos_6 = guess_ab_col(x, "rifampin"),
+  GramNeg_1 = guess_ab_col(x, "gentamicin"),
   GramNeg_2 = guess_ab_col(x, "tobramycin"),
-  GramNeg_3 = guess_ab_col(x, "colistin"), GramNeg_4 = guess_ab_col(x,
-  "cefotaxime"), GramNeg_5 = guess_ab_col(x, "ceftazidime"),
-  GramNeg_6 = guess_ab_col(x, "meropenem"), warnings = TRUE, ...)
+  GramNeg_3 = guess_ab_col(x, "colistin"),
+  GramNeg_4 = guess_ab_col(x, "cefotaxime"),
+  GramNeg_5 = guess_ab_col(x, "ceftazidime"),
+  GramNeg_6 = guess_ab_col(x, "meropenem"),
+  warnings = TRUE,
+  ...
+)
 
-key_antibiotics_equal(y, z, type = c("keyantibiotics", "points"),
-  ignore_I = TRUE, points_threshold = 2, info = FALSE)
+key_antibiotics_equal(
+  y,
+  z,
+  type = c("keyantibiotics", "points"),
+  ignore_I = TRUE,
+  points_threshold = 2,
+  info = FALSE
+)
 }
 \arguments{
 \item{x}{table with antibiotics coloms, like \code{AMX} or \code{amox}}
 
-\item{col_mo}{column name of the IDs of the microorganisms (see \code{\link{as.mo}}), defaults to the first column of class \code{mo}. Values will be coerced using \code{\link{as.mo}}.}
+\item{col_mo}{column name of the IDs of the microorganisms (see \code{\link[=as.mo]{as.mo()}}), defaults to the first column of class \code{\link{mo}}. Values will be coerced using \code{\link[=as.mo]{as.mo()}}.}
 
-\item{universal_1, universal_2, universal_3, universal_4, universal_5, universal_6}{column names of \strong{broad-spectrum} antibiotics, case-insensitive. At default, the columns containing these antibiotics will be guessed with \code{\link{guess_ab_col}}.}
+\item{universal_1, universal_2, universal_3, universal_4, universal_5, universal_6}{column names of \strong{broad-spectrum} antibiotics, case-insensitive. At default, the columns containing these antibiotics will be guessed with \code{\link[=guess_ab_col]{guess_ab_col()}}.}
 
-\item{GramPos_1, GramPos_2, GramPos_3, GramPos_4, GramPos_5, GramPos_6}{column names of antibiotics for \strong{Gram-positives}, case-insensitive. At default, the columns containing these antibiotics will be guessed with \code{\link{guess_ab_col}}.}
+\item{GramPos_1, GramPos_2, GramPos_3, GramPos_4, GramPos_5, GramPos_6}{column names of antibiotics for \strong{Gram-positives}, case-insensitive. At default, the columns containing these antibiotics will be guessed with \code{\link[=guess_ab_col]{guess_ab_col()}}.}
 
-\item{GramNeg_1, GramNeg_2, GramNeg_3, GramNeg_4, GramNeg_5, GramNeg_6}{column names of antibiotics for \strong{Gram-negatives}, case-insensitive. At default, the columns containing these antibiotics will be guessed with \code{\link{guess_ab_col}}.}
+\item{GramNeg_1, GramNeg_2, GramNeg_3, GramNeg_4, GramNeg_5, GramNeg_6}{column names of antibiotics for \strong{Gram-negatives}, case-insensitive. At default, the columns containing these antibiotics will be guessed with \code{\link[=guess_ab_col]{guess_ab_col()}}.}
 
 \item{warnings}{give warning about missing antibiotic columns, they will anyway be ignored}
 
@@ -51,29 +65,56 @@ key_antibiotics_equal(y, z, type = c("keyantibiotics", "points"),
 \item{info}{print progress}
 }
 \description{
-These function can be used to determine first isolates (see \code{\link{first_isolate}}). Using key antibiotics to determine first isolates is more reliable than without key antibiotics. These selected isolates will then be called first \emph{weighted} isolates.
+These function can be used to determine first isolates (see \code{\link[=first_isolate]{first_isolate()}}). Using key antibiotics to determine first isolates is more reliable than without key antibiotics. These selected isolates will then be called first \emph{weighted} isolates.
 }
 \details{
-The function \code{key_antibiotics} returns a character vector with 12 antibiotic results for every isolate. These isolates can then be compared using \code{key_antibiotics_equal}, to check if two isolates have generally the same antibiogram. Missing and invalid values are replaced with a dot (\code{"."}). The \code{\link{first_isolate}} function only uses this function on the same microbial species from the same patient. Using this, an MRSA will be included after a susceptible \emph{S. aureus} (MSSA) found within the same episode (see \code{episode} parameter of \code{\link{first_isolate}}). Without key antibiotic comparison it would not.
+The function \code{\link[=key_antibiotics]{key_antibiotics()}} returns a character vector with 12 antibiotic results for every isolate. These isolates can then be compared using \code{\link[=key_antibiotics_equal]{key_antibiotics_equal()}}, to check if two isolates have generally the same antibiogram. Missing and invalid values are replaced with a dot (\code{"."}). The \code{\link[=first_isolate]{first_isolate()}} function only uses this function on the same microbial species from the same patient. Using this, an MRSA will be included after a susceptible \emph{S. aureus} (MSSA) found within the same episode (see \code{episode} parameter of \code{\link[=first_isolate]{first_isolate()}}). Without key antibiotic comparison it would not.
 
-  At default, the antibiotics that are used for \strong{Gram-positive bacteria} are: \cr
-  amoxicillin, amoxicillin/clavulanic acid, cefuroxime, piperacillin/tazobactam, ciprofloxacin, trimethoprim/sulfamethoxazole (until here is universal), vancomycin, teicoplanin, tetracycline, erythromycin, oxacillin, rifampin.
+At default, the antibiotics that are used for \strong{Gram-positive bacteria} are:
+\itemize{
+\item Amoxicillin
+\item Amoxicillin/clavulanic acid
+\item Cefuroxime
+\item Piperacillin/tazobactam
+\item Ciprofloxacin
+\item Trimethoprim/sulfamethoxazole
+\item Vancomycin
+\item Teicoplanin
+\item Tetracycline
+\item Erythromycin
+\item Oxacillin
+\item Rifampin
+}
 
-  At default, the antibiotics that are used for \strong{Gram-negative bacteria} are: \cr
-  amoxicillin, amoxicillin/clavulanic acid, cefuroxime, piperacillin/tazobactam, ciprofloxacin, trimethoprim/sulfamethoxazole (until here is universal), gentamicin, tobramycin, colistin, cefotaxime, ceftazidime, meropenem.
+At default the antibiotics that are used for \strong{Gram-negative bacteria} are:
+\itemize{
+\item Amoxicillin
+\item Amoxicillin/clavulanic acid
+\item Cefuroxime
+\item Piperacillin/tazobactam
+\item Ciprofloxacin
+\item Trimethoprim/sulfamethoxazole
+\item Gentamicin
+\item Tobramycin
+\item Colistin
+\item Cefotaxime
+\item Ceftazidime
+\item Meropenem
+}
 
-
-  The function \code{key_antibiotics_equal} checks the characters returned by \code{key_antibiotics} for equality, and returns a logical vector.
+The function \code{\link[=key_antibiotics_equal]{key_antibiotics_equal()}} checks the characters returned by \code{\link[=key_antibiotics]{key_antibiotics()}} for equality, and returns a \code{\link{logical}} vector.
 }
 \section{Key antibiotics}{
 
-    There are two ways to determine whether isolates can be included as first \emph{weighted} isolates which will give generally the same results: \cr
+There are two ways to determine whether isolates can be included as first \emph{weighted} isolates which will give generally the same results:
+\enumerate{
+\item Using \code{type = "keyantibiotics"} and parameter \code{ignore_I}
 
-    \strong{1. Using} \code{type = "keyantibiotics"} \strong{and parameter} \code{ignore_I} \cr
-    Any difference from S to R (or vice versa) will (re)select an isolate as a first weighted isolate. With \code{ignore_I = FALSE}, also differences from I to S|R (or vice versa) will lead to this. This is a reliable method and 30-35 times faster than method 2. Read more about this in the \code{\link{key_antibiotics}} function. \cr
+Any difference from S to R (or vice versa) will (re)select an isolate as a first weighted isolate. With \code{ignore_I = FALSE}, also differences from I to S|R (or vice versa) will lead to this. This is a reliable method and 30-35 times faster than method 2. Read more about this in the \code{\link[=key_antibiotics]{key_antibiotics()}} function.
+\item Using \code{type = "points"} and parameter \code{points_threshold}
 
-    \strong{2. Using} \code{type = "points"} \strong{and parameter} \code{points_threshold} \cr
-    A difference from I to S|R (or vice versa) means 0.5 points, a difference from S to R (or vice versa) means 1 point. When the sum of points exceeds \code{points_threshold}, which default to \code{2}, an isolate will be (re)selected as a first weighted isolate.
+A difference from I to S|R (or vice versa) means 0.5 points, a difference from S to R (or vice versa) means 1 point. When the sum of points exceeds \code{points_threshold}, which default to \code{2}, an isolate will be (re)selected as a first weighted isolate.
+}
 }
 
 \section{Read more on our website!}{
@@ -112,5 +153,5 @@ key_antibiotics_equal(strainA, strainB, ignore_I = FALSE)
 # FALSE, because I is not ignored and so the 4th value differs
 }
 \seealso{
-\code{\link{first_isolate}}
+\code{\link[=first_isolate]{first_isolate()}}
 }

@@ -21,11 +21,11 @@
 
 #' Check availability of columns
 #'
-#' Easy check for availability of columns in a data set. This makes it easy to get an idea of which antimicrobial combination can be used for calculation with e.g. \code{\link{resistance}}.
-#' @param tbl a \code{data.frame} or \code{list}
+#' Easy check for availability of columns in a data set. This makes it easy to get an idea of which antimicrobial combination can be used for calculation with e.g. [resistance()].
+#' @param tbl a [`data.frame`] or [`list`]
 #' @param width number of characters to present the visual availability, defaults to filling the width of the console
-#' @details The function returns a \code{data.frame} with columns \code{"resistant"} and \code{"visual_resistance"}. The values in that columns are calculated with \code{\link{resistance}}.
-#' @return \code{data.frame} with column names of \code{tbl} as row names
+#' @details The function returns a [`data.frame`] with columns `"resistant"` and `"visual_resistance"`. The values in that columns are calculated with [resistance()].
+#' @return [`data.frame`] with column names of `tbl` as row names
 #' @inheritSection AMR Read more on our website!
 #' @importFrom cleaner percentage
 #' @export

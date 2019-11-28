@@ -9,8 +9,12 @@
 \url{https://www.whocc.no/atc_ddd_alterations__cumulative/ddd_alterations/abbrevations/}
 }
 \usage{
-atc_online_property(atc_code, property, administration = "O",
-  url = "https://www.whocc.no/atc_ddd_index/?code=\%s&showdescription=no")
+atc_online_property(
+  atc_code,
+  property,
+  administration = "O",
+  url = "https://www.whocc.no/atc_ddd_index/?code=\%s&showdescription=no"
+)
 
 atc_online_groups(atc_code, ...)
 
@@ -23,38 +27,40 @@ atc_online_ddd(atc_code, ...)
 
 \item{administration}{type of administration when using \code{property = "Adm.R"}, see Details}
 
-\item{url}{url of website of the WHO. The sign \code{\%s} can be used as a placeholder for ATC codes.}
+\item{url}{url of website of the WHO. The sign \verb{\%s} can be used as a placeholder for ATC codes.}
 
 \item{...}{parameters to pass on to \code{atc_property}}
 }
 \description{
-Gets data from the WHO to determine properties of an ATC (e.g. an antibiotic) like name, defined daily dose (DDD) or standard unit. \cr \strong{This function requires an internet connection.}
+Gets data from the WHO to determine properties of an ATC (e.g. an antibiotic) like name, defined daily dose (DDD) or standard unit.
+
+\strong{This function requires an internet connection.}
 }
 \details{
 Options for parameter \code{administration}:
 \itemize{
-  \item{\code{"Implant"}}{ = Implant}
-  \item{\code{"Inhal"}}{ = Inhalation}
-  \item{\code{"Instill"}}{ = Instillation}
-  \item{\code{"N"}}{ = nasal}
-  \item{\code{"O"}}{ = oral}
-  \item{\code{"P"}}{ = parenteral}
-  \item{\code{"R"}}{ = rectal}
-  \item{\code{"SL"}}{ = sublingual/buccal}
-  \item{\code{"TD"}}{ = transdermal}
-  \item{\code{"V"}}{ = vaginal}
+\item \code{"Implant"} = Implant
+\item \code{"Inhal"} = Inhalation
+\item \code{"Instill"} = Instillation
+\item \code{"N"} = nasal
+\item \code{"O"} = oral
+\item \code{"P"} = parenteral
+\item \code{"R"} = rectal
+\item \code{"SL"} = sublingual/buccal
+\item \code{"TD"} = transdermal
+\item \code{"V"} = vaginal
 }
 
 Abbreviations of return values when using \code{property = "U"} (unit):
 \itemize{
-  \item{\code{"g"}}{ = gram}
-  \item{\code{"mg"}}{ = milligram}
-  \item{\code{"mcg"}}{ = microgram}
-  \item{\code{"U"}}{ = unit}
-  \item{\code{"TU"}}{ = thousand units}
-  \item{\code{"MU"}}{ = million units}
-  \item{\code{"mmol"}}{ = millimole}
-  \item{\code{"ml"}}{ = milliliter (e.g. eyedrops)}
+\item \code{"g"} = gram
+\item \code{"mg"} = milligram
+\item `"mcg"`` = microgram
+\item \code{"U"} = unit
+\item \code{"TU"} = thousand units
+\item \code{"MU"} = million units
+\item \code{"mmol"} = millimole
+\item \code{"ml"} = milliliter (e.g. eyedrops)
 }
 }
 \section{Read more on our website!}{

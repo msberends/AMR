@@ -21,25 +21,26 @@
 
 #' Transform to antibiotic ID
 #'
-#' Use this function to determine the antibiotic code of one or more antibiotics. The data set \code{\link{antibiotics}} will be searched for abbreviations, official names and synonyms (brand names).
+#' Use this function to determine the antibiotic code of one or more antibiotics. The data set [antibiotics] will be searched for abbreviations, official names and synonyms (brand names).
 #' @param x character vector to determine to antibiotic ID
 #' @param ... arguments passed on to internal functions
 #' @rdname as.ab
 #' @inheritSection WHOCC WHOCC
-#' @export
 #' @importFrom dplyr %>% filter slice pull
-#' @details All entries in the \code{\link{antibiotics}} data set have three different identifiers: a human readable EARS-Net code (column \code{ab}, used by ECDC and WHONET), an ATC code (column \code{atc}, used by WHO), and a CID code (column \code{cid}, Compound ID, used by PubChem). The data set contains more than 5,000 official brand names from many different countries, as found in PubChem.
+#' @details All entries in the [antibiotics] data set have three different identifiers: a human readable EARS-Net code (column `ab`, used by ECDC and WHONET), an ATC code (column `atc`, used by WHO), and a CID code (column `cid`, Compound ID, used by PubChem). The data set contains more than 5,000 official brand names from many different countries, as found in PubChem.
 #'
-#' Use the \code{\link{ab_property}} functions to get properties based on the returned antibiotic ID, see Examples.
+#' Use the [ab_property()] functions to get properties based on the returned antibiotic ID, see Examples.
 #' @section Source:
 #' World Health Organization (WHO) Collaborating Centre for Drug Statistics Methodology: \url{https://www.whocc.no/atc_ddd_index/}
 #'
 #' WHONET 2019 software: \url{http://www.whonet.org/software.html}
 #'
 #' European Commission Public Health PHARMACEUTICALS - COMMUNITY REGISTER: \url{http://ec.europa.eu/health/documents/community-register/html/atc.htm}
-#' @return Character (vector) with class \code{"ab"}. Unknown values will return \code{NA}.
-#' @seealso \code{\link{antibiotics}} for the dataframe that is being used to determine ATCs.
+#' @aliases ab
+#' @return Character (vector) with class [`ab`]. Unknown values will return `NA`.
+#' @seealso [antibiotics] for the dataframe that is being used to determine ATCs.
 #' @inheritSection AMR Read more on our website!
+#' @export
 #' @examples
 #' # These examples all return "ERY", the ID of Erythromycin:
 #' as.ab("J01FA01")

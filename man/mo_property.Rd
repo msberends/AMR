@@ -70,58 +70,57 @@ mo_url(x, open = FALSE, ...)
 mo_property(x, property = "fullname", language = get_locale(), ...)
 }
 \arguments{
-\item{x}{any (vector of) text that can be coerced to a valid microorganism code with \code{\link{as.mo}}}
+\item{x}{any (vector of) text that can be coerced to a valid microorganism code with \code{\link[=as.mo]{as.mo()}}}
 
-\item{language}{language of the returned text, defaults to system language (see \code{\link{get_locale}}) and can also be set with \code{\link{getOption}("AMR_locale")}. Use \code{language = NULL} or \code{language = ""} to prevent translation.}
+\item{language}{language of the returned text, defaults to system language (see \code{\link[=get_locale]{get_locale()}}) and can also be set with \code{getOption("AMR_locale")}. Use \code{language = NULL} or \code{language = ""} to prevent translation.}
 
-\item{...}{other parameters passed on to \code{\link{as.mo}}}
+\item{...}{other parameters passed on to \code{\link[=as.mo]{as.mo()}}}
 
-\item{open}{browse the URL using \code{\link[utils]{browseURL}()}}
+\item{open}{browse the URL using \code{\link[utils:browseURL]{utils::browseURL()}}}
 
-\item{property}{one of the column names of the \code{\link{microorganisms}} data set or \code{"shortname"}}
+\item{property}{one of the column names of the \link{microorganisms} data set or \code{"shortname"}}
 }
 \value{
 \itemize{
-  \item{An \code{integer} in case of \code{mo_year}}
-  \item{A \code{list} in case of \code{mo_taxonomy}}
-  \item{A named \code{character} in case of \code{mo_url}}
-  \item{A \code{character} in all other cases}
+\item An \code{\link{integer}} in case of \code{\link[=mo_year]{mo_year()}}
+\item A \code{\link{list}} in case of \code{\link[=mo_taxonomy]{mo_taxonomy()}}
+\item A named \code{\link{character}} in case of \code{\link[=mo_url]{mo_url()}}
+\item A \code{\link{character}} in all other cases
 }
 }
 \description{
-Use these functions to return a specific property of a microorganism. All input values will be evaluated internally with \code{\link{as.mo}}, which makes it possible for input of these functions to use microbial abbreviations, codes and names. See Examples.
+Use these functions to return a specific property of a microorganism. All input values will be evaluated internally with \code{\link[=as.mo]{as.mo()}}, which makes it possible for input of these functions to use microbial abbreviations, codes and names. See Examples.
 }
 \details{
-All functions will return the most recently known taxonomic property according to the Catalogue of Life, except for \code{mo_ref}, \code{mo_authors} and \code{mo_year}. This leads to the following results:
+All functions will return the most recently known taxonomic property according to the Catalogue of Life, except for \code{\link[=mo_ref]{mo_ref()}}, \code{\link[=mo_authors]{mo_authors()}} and \code{\link[=mo_year]{mo_year()}}. This leads to the following results:
 \itemize{
-  \item{\code{mo_name("Chlamydia psittaci")} will return \code{"Chlamydophila psittaci"} (with a warning about the renaming)}
-  \item{\code{mo_ref("Chlamydia psittaci")} will return \code{"Page, 1968"} (with a warning about the renaming)}
-  \item{\code{mo_ref("Chlamydophila psittaci")} will return \code{"Everett et al., 1999"} (without a warning)}
+\item \code{mo_name("Chlamydia psittaci")} will return \code{"Chlamydophila psittaci"} (with a warning about the renaming)
+\item \code{mo_ref("Chlamydia psittaci")} will return \code{"Page, 1968"} (with a warning about the renaming)
+\item \code{mo_ref("Chlamydophila psittaci")} will return \code{"Everett et al., 1999"} (without a warning)
 }
 
-The Gram stain - \code{mo_gramstain()} - will be determined on the taxonomic kingdom and phylum. According to Cavalier-Smith (2002) who defined subkingdoms Negibacteria and Posibacteria, only these phyla are Posibacteria: Actinobacteria, Chloroflexi, Firmicutes and Tenericutes. These bacteria are considered Gram positive - all other bacteria are considered Gram negative. Species outside the kingdom of Bacteria will return a value \code{NA}.
+The Gram stain - \code{\link[=mo_gramstain]{mo_gramstain()}} - will be determined on the taxonomic kingdom and phylum. According to Cavalier-Smith (2002) who defined subkingdoms Negibacteria and Posibacteria, only these phyla are Posibacteria: Actinobacteria, Chloroflexi, Firmicutes and Tenericutes. These bacteria are considered Gram positive - all other bacteria are considered Gram negative. Species outside the kingdom of Bacteria will return a value \code{NA}.
 
 All output will be \link{translate}d where possible.
 
-The function \code{mo_url()} will return the direct URL to the online database entry, which also shows the scientific reference of the concerned species.
+The function \code{\link[=mo_url]{mo_url()}} will return the direct URL to the online database entry, which also shows the scientific reference of the concerned species.
 }
 \section{Catalogue of Life}{
 
 \if{html}{\figure{logo_col.png}{options: height=40px style=margin-bottom:5px} \cr}
 This package contains the complete taxonomic tree of almost all microorganisms (~70,000 species) from the authoritative and comprehensive Catalogue of Life (\url{http://www.catalogueoflife.org}). The Catalogue of Life is the most comprehensive and authoritative global index of species currently available.
 
-\link[=catalogue_of_life]{Click here} for more information about the included taxa. Check which version of the Catalogue of Life was included in this package with \code{\link{catalogue_of_life_version}()}.
+\link[=catalogue_of_life]{Click here} for more information about the included taxa. Check which version of the Catalogue of Life was included in this package with \code{\link[=catalogue_of_life_version]{catalogue_of_life_version()}}.
 }
 
 \section{Source}{
 
-[1] Becker K \emph{et al.} \strong{Coagulase-Negative Staphylococci}. 2014. Clin Microbiol Rev. 27(4): 870–926. \url{https://dx.doi.org/10.1128/CMR.00109-13}
-
-[2] Becker K \emph{et al.} \strong{Implications of identifying the recently defined members of the \emph{S. aureus} complex, \emph{S. argenteus} and \emph{S. schweitzeri}: A position paper of members of the ESCMID Study Group for staphylococci and Staphylococcal Diseases (ESGS).} 2019. Clin Microbiol Infect. \url{https://doi.org/10.1016/j.cmi.2019.02.028}
-
-[3] Lancefield RC \strong{A serological differentiation of human and other groups of hemolytic streptococci}. 1933. J Exp Med. 57(4): 571–95. \url{https://dx.doi.org/10.1084/jem.57.4.571}
-
-[4] Catalogue of Life: Annual Checklist (public online taxonomic database), \url{http://www.catalogueoflife.org} (check included annual version with \code{\link{catalogue_of_life_version}()}).
+\enumerate{
+\item Becker K \emph{et al.} \strong{Coagulase-Negative Staphylococci}. 2014. Clin Microbiol Rev. 27(4): 870–926. \url{https://dx.doi.org/10.1128/CMR.00109-13}
+\item Becker K \emph{et al.} \strong{Implications of identifying the recently defined members of the \emph{S. aureus} complex, \emph{S. argenteus} and \emph{S. schweitzeri}: A position paper of members of the ESCMID Study Group for staphylococci and Staphylococcal Diseases (ESGS).} 2019. Clin Microbiol Infect. \url{https://doi.org/10.1016/j.cmi.2019.02.028}
+\item Lancefield RC \strong{A serological differentiation of human and other groups of hemolytic streptococci}. 1933. J Exp Med. 57(4): 571–95. \url{https://dx.doi.org/10.1084/jem.57.4.571}
+\item Catalogue of Life: Annual Checklist (public online taxonomic database), \url{http://www.catalogueoflife.org} (check included annual version with \code{\link[=catalogue_of_life_version]{catalogue_of_life_version()}}).
+}
 }
 
 \section{Read more on our website!}{
@@ -209,10 +208,10 @@ mo_fullname("S. pyogenes",
 
 # get a list with the complete taxonomy (from kingdom to subspecies)
 mo_taxonomy("E. coli")
-# get a list with the taxonomy, the authors and the URL to the online database
+# get a list with the taxonomy, the authors, Gram-stain and URL to the online database
 mo_info("E. coli")
 }
 }
 \seealso{
-\code{\link{microorganisms}}
+\link{microorganisms}
 }

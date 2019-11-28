@@ -85,7 +85,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">0.8.0.9032</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">0.8.0.9036</span>
       </span>
     </div>
 
@@ -234,34 +234,59 @@
     </div>
 
     <div class="ref-description">
-    <p>Create a prediction model to predict antimicrobial resistance for the next years on statistical solid ground. Standard errors (SE) will be returned as columns <code>se_min</code> and <code>se_max</code>. See Examples for a real live example.</p>
+    <p>Create a prediction model to predict antimicrobial resistance for the next years on statistical solid ground. Standard errors (SE) will be returned as columns <code>se_min</code> and <code>se_max</code>. See <em>Examples</em> for a real live example.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>resistance_predict</span>(<span class='no'>x</span>, <span class='no'>col_ab</span>, <span class='kw'>col_date</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>year_min</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>year_max</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>year_every</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>minimum</span> <span class='kw'>=</span> <span class='fl'>30</span>, <span class='kw'>model</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>I_as_S</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>preserve_measurements</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>info</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>...</span>)
+    <pre class="usage"><span class='fu'>resistance_predict</span>(
+  <span class='no'>x</span>,
+  <span class='no'>col_ab</span>,
+  <span class='kw'>col_date</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>year_min</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>year_max</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>year_every</span> <span class='kw'>=</span> <span class='fl'>1</span>,
+  <span class='kw'>minimum</span> <span class='kw'>=</span> <span class='fl'>30</span>,
+  <span class='kw'>model</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>I_as_S</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>preserve_measurements</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>info</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='no'>...</span>
+)
 
-<span class='fu'>rsi_predict</span>(<span class='no'>x</span>, <span class='no'>col_ab</span>, <span class='kw'>col_date</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>year_min</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>year_max</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>year_every</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>minimum</span> <span class='kw'>=</span> <span class='fl'>30</span>, <span class='kw'>model</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>I_as_S</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>preserve_measurements</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>info</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>...</span>)
+<span class='fu'>rsi_predict</span>(
+  <span class='no'>x</span>,
+  <span class='no'>col_ab</span>,
+  <span class='kw'>col_date</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>year_min</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>year_max</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>year_every</span> <span class='kw'>=</span> <span class='fl'>1</span>,
+  <span class='kw'>minimum</span> <span class='kw'>=</span> <span class='fl'>30</span>,
+  <span class='kw'>model</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>I_as_S</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>preserve_measurements</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>info</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='no'>...</span>
+)
 
 <span class='co'># S3 method for resistance_predict</span>
-<span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>x</span>,
-  <span class='kw'>main</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste</a></span>(<span class='st'>"Resistance Prediction of"</span>, <span class='no'>x_name</span>), <span class='no'>...</span>)
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>x</span>, <span class='kw'>main</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste</a></span>(<span class='st'>"Resistance Prediction of"</span>, <span class='no'>x_name</span>), <span class='no'>...</span>)
 
-<span class='fu'>ggplot_rsi_predict</span>(<span class='no'>x</span>, <span class='kw'>main</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste</a></span>(<span class='st'>"Resistance Prediction of"</span>, <span class='no'>x_name</span>),
-  <span class='kw'>ribbon</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>...</span>)</pre>
+<span class='fu'>ggplot_rsi_predict</span>(
+  <span class='no'>x</span>,
+  <span class='kw'>main</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste</a></span>(<span class='st'>"Resistance Prediction of"</span>, <span class='no'>x_name</span>),
+  <span class='kw'>ribbon</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='no'>...</span>
+)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>x</th>
-      <td><p>a <code>data.frame</code> containing isolates.</p></td>
+      <td><p>a <code><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></code> containing isolates.</p></td>
     </tr>
     <tr>
       <th>col_ab</th>
-      <td><p>column name of <code>x</code> with antimicrobial interpretations (<code>R</code>, <code>I</code> and <code>S</code>)</p></td>
+      <td><p>column name of <code>x</code> containing antimicrobial interpretations (<code>"R"</code>, <code>"I"</code> and <code>"S"</code>)</p></td>
     </tr>
     <tr>
       <th>col_date</th>
@@ -285,11 +310,11 @@
     </tr>
     <tr>
       <th>model</th>
-      <td><p>the statistical model of choice. This could be a generalised linear regression model with binomial distribution (i.e. using <code><a href='https://rdrr.io/r/stats/glm.html'>glm</a>(..., family = <a href='https://rdrr.io/r/stats/family.html'>binomial</a>)</code>), assuming that a period of zero resistance was followed by a period of increasing resistance leading slowly to more and more resistance. See Details for all valid options.</p></td>
+      <td><p>the statistical model of choice. This could be a generalised linear regression model with binomial distribution (i.e. using `glm(..., family = binomial)``, assuming that a period of zero resistance was followed by a period of increasing resistance leading slowly to more and more resistance. See Details for all valid options.</p></td>
     </tr>
     <tr>
       <th>I_as_S</th>
-      <td><p>a logical to indicate whether values <code>I</code> should be treated as <code>S</code> (will otherwise be treated as <code>R</code>). The default, <code>TRUE</code>, follows the redefinition by EUCAST about the interpretion of I (increased exposure) in 2019, see section 'Interpretation of S, I and R' below.</p></td>
+      <td><p>a logical to indicate whether values <code>I</code> should be treated as <code>S</code> (will otherwise be treated as <code>R</code>). The default, <code>TRUE</code>, follows the redefinition by EUCAST about the interpretion of I (increased exposure) in 2019, see section <em>Interpretation of S, I and R</em> below.</p></td>
     </tr>
     <tr>
       <th>preserve_measurements</th>
@@ -297,7 +322,7 @@
     </tr>
     <tr>
       <th>info</th>
-      <td><p>a logical to indicate whether textual analysis should be printed with the name and <code><a href='https://rdrr.io/r/base/summary.html'>summary</a></code> of the statistical model.</p></td>
+      <td><p>a logical to indicate whether textual analysis should be printed with the name and <code><a href='https://rdrr.io/r/base/summary.html'>summary()</a></code> of the statistical model.</p></td>
     </tr>
     <tr>
       <th>...</th>
@@ -315,18 +340,20 @@
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p><code>data.frame</code> with extra class <code>"resistance_predict"</code> with columns:</p><ul>
+    <p>A <code><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></code> with extra class <code>resistance_predict</code> with columns:</p><ul>
 <li><p><code>year</code></p></li>
 <li><p><code>value</code>, the same as <code>estimated</code> when <code>preserve_measurements = FALSE</code>, and a combination of <code>observed</code> and <code>estimated</code> otherwise</p></li>
 <li><p><code>se_min</code>, the lower bound of the standard error with a minimum of <code>0</code> (so the standard error will never go below 0%)</p></li>
 <li><p><code>se_max</code> the upper bound of the standard error with a maximum of <code>1</code> (so the standard error will never go above 100%)</p></li>
-<li><p><code>observations</code>, the total number of available observations in that year, i.e. S + I + R</p></li>
+<li><p><code>observations</code>, the total number of available observations in that year, i.e. \(S + I + R\)</p></li>
 <li><p><code>observed</code>, the original observed resistant percentages</p></li>
 <li><p><code>estimated</code>, the estimated resistant percentages, calculated by the model</p></li>
-</ul><p>Furthermore, the model itself is available as an attribute: <code>attributes(x)$model</code>, see Examples.</p>
+</ul>
+
+<p>Furthermore, the model itself is available as an attribute: <code>attributes(x)$model</code>, please see <em>Examples</em>.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>Valid options for the statistical model are:</p><ul>
+    <p>Valid options for the statistical model (parameter <code>model</code>) are:</p><ul>
 <li><p><code>"binomial"</code> or <code>"binom"</code> or <code>"logit"</code>: a generalised linear regression model with binomial distribution</p></li>
 <li><p><code>"loglin"</code> or <code>"poisson"</code>: a generalised log-linear regression model with poisson distribution</p></li>
 <li><p><code>"lin"</code> or <code>"linear"</code>: a linear regression model</p></li>
@@ -336,15 +363,14 @@
 
     
 
-<p>In 2019, the European Committee on Antimicrobial Susceptibility Testing (EUCAST) has decided to change the definitions of susceptibility testing categories S, I and R as shown below (<a href='http://www.eucast.org/newsiandr/'>http://www.eucast.org/newsiandr/</a>). Results of several consultations on the new definitions are available on the EUCAST website under "Consultations".</p>
-<ul>
+<p>In 2019, the European Committee on Antimicrobial Susceptibility Testing (EUCAST) has decided to change the definitions of susceptibility testing categories S, I and R as shown below (<a href='http://www.eucast.org/newsiandr/'>http://www.eucast.org/newsiandr/</a>). Results of several consultations on the new definitions are available on the EUCAST website under "Consultations".</p><ul>
 <li><p><strong>S</strong> - Susceptible, standard dosing regimen: A microorganism is categorised as "Susceptible, standard dosing regimen", when there is a high likelihood of therapeutic success using a standard dosing regimen of the agent.</p></li>
 <li><p><strong>I</strong> - Susceptible, increased exposure: A microorganism is categorised as "Susceptible, Increased exposure" when there is a high likelihood of therapeutic success because exposure to the agent is increased by adjusting the dosing regimen or by its concentration at the site of infection.</p></li>
 <li><p><strong>R</strong> - Resistant: A microorganism is categorised as "Resistant" when there is a high likelihood of therapeutic failure even when there is increased exposure.</p></li>
 </ul>
 
 <p>Exposure is a function of how the mode of administration, dose, dosing interval, infusion time, as well as distribution and excretion of the antimicrobial agent will influence the infecting organism at the site of infection.</p>
-<p>This AMR package honours this new insight. Use <code><a href='proportion.html'>susceptibility</a>()</code> (equal to <code><a href='proportion.html'>proportion_SI</a>()</code>) to determine antimicrobial susceptibility and <code><a href='count.html'>count_susceptible</a>()</code> (equal to <code><a href='count.html'>count_SI</a>()</code>) to count susceptible isolates.</p>
+<p>This AMR package honours this new insight. Use <code><a href='proportion.html'>susceptibility()</a></code> (equal to <code><a href='proportion.html'>proportion_SI()</a></code>) to determine antimicrobial susceptibility and <code><a href='count.html'>count_susceptible()</a></code> (equal to <code><a href='count.html'>count_SI()</a></code>) to count susceptible isolates.</p>
     <h2 class="hasAnchor" id="read-more-on-our-website-"><a class="anchor" href="#read-more-on-our-website-"></a>Read more on our website!</h2>
 
     
@@ -352,10 +378,14 @@
 <p>On our website <a href='https://msberends.gitlab.io/AMR'>https://msberends.gitlab.io/AMR</a> you can find <a href='https://msberends.gitlab.io/AMR/articles/AMR.html'>a tutorial</a> about how to conduct AMR analysis, the <a href='https://msberends.gitlab.io/AMR/reference'>complete documentation of all functions</a> (which reads a lot easier than here in R) and <a href='https://msberends.gitlab.io/AMR/articles/WHONET.html'>an example analysis using WHONET data</a>.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p>The <code><a href='proportion.html'>portion</a></code> function to calculate resistance, <br /> <code><a href='https://rdrr.io/r/stats/lm.html'>lm</a></code> <code><a href='https://rdrr.io/r/stats/glm.html'>glm</a></code></p></div>
+    <div class='dont-index'><p>The <code><a href='proportion.html'>proportion()</a></code> functions to calculate resistance</p>
+<p>Models: <code><a href='https://rdrr.io/r/stats/lm.html'>lm()</a></code> <code><a href='https://rdrr.io/r/stats/glm.html'>glm()</a></code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'>resistance_predict</span>(<span class='no'>example_isolates</span>, <span class='kw'>col_ab</span> <span class='kw'>=</span> <span class='st'>"AMX"</span>, <span class='kw'>year_min</span> <span class='kw'>=</span> <span class='fl'>2010</span>, <span class='kw'>model</span> <span class='kw'>=</span> <span class='st'>"binomial"</span>)
+    <pre class="examples"><span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'>resistance_predict</span>(<span class='no'>example_isolates</span>,
+                        <span class='kw'>col_ab</span> <span class='kw'>=</span> <span class='st'>"AMX"</span>,
+                        <span class='kw'>year_min</span> <span class='kw'>=</span> <span class='fl'>2010</span>,
+                        <span class='kw'>model</span> <span class='kw'>=</span> <span class='st'>"binomial"</span>)
 <span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>x</span>)
 <span class='fu'>ggplot_rsi_predict</span>(<span class='no'>x</span>)
 
@@ -394,9 +424,9 @@
     <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/scale_continuous.html'>scale_y_continuous</a></span>(<span class='kw'>limits</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>0</span>, <span class='fl'>1</span>),
                        <span class='kw'>breaks</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq</a></span>(<span class='fl'>0</span>, <span class='fl'>1</span>, <span class='fl'>0.1</span>),
                        <span class='kw'>labels</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste0</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq</a></span>(<span class='fl'>0</span>, <span class='fl'>100</span>, <span class='fl'>10</span>), <span class='st'>"%"</span>)) +
-    <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/labs.html'>labs</a></span>(<span class='kw'>title</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/expression.html'>expression</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste</a></span>(<span class='st'>"Forecast of amoxicillin resistance in "</span>,
+    <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/labs.html'>labs</a></span>(<span class='kw'>title</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/expression.html'>expression</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste</a></span>(<span class='st'>"Forecast of Amoxicillin Resistance in "</span>,
                                   <span class='fu'><a href='https://rdrr.io/r/grDevices/plotmath.html'>italic</a></span>(<span class='st'>"E. coli"</span>))),
-         <span class='kw'>y</span> <span class='kw'>=</span> <span class='st'>"%IR"</span>,
+         <span class='kw'>y</span> <span class='kw'>=</span> <span class='st'>"%R"</span>,
          <span class='kw'>x</span> <span class='kw'>=</span> <span class='st'>"Year"</span>) +
     <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggtheme.html'>theme_minimal</a></span>(<span class='kw'>base_size</span> <span class='kw'>=</span> <span class='fl'>13</span>)
 }</pre>

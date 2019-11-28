@@ -84,7 +84,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">0.8.0.9035</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">0.8.0.9036</span>
       </span>
     </div>
 
@@ -231,13 +231,13 @@
       
     </div>
 
-    <div id="amr-0-8-0-9035" class="section level1">
+    <div id="amr-0-8-0-9036" class="section level1">
 <h1 class="page-header">
-<a href="#amr-0-8-0-9035" class="anchor"></a>AMR 0.8.0.9035<small> Unreleased </small>
+<a href="#amr-0-8-0-9036" class="anchor"></a>AMR 0.8.0.9036<small> Unreleased </small>
 </h1>
-<div id="last-updated-24-nov-2019" class="section level2">
+<div id="last-updated-28-nov-2019" class="section level2">
 <h2 class="hasAnchor">
-<a href="#last-updated-24-nov-2019" class="anchor"></a><small>Last updated: 24-Nov-2019</small>
+<a href="#last-updated-28-nov-2019" class="anchor"></a><small>Last updated: 28-Nov-2019</small>
 </h2>
 <div id="breaking" class="section level3">
 <h3 class="hasAnchor">
@@ -320,12 +320,15 @@
 <li>More robust way of determining valid MIC values</li>
 <li>Small changed to the <code>example_isolates</code> data set to better reflect reality</li>
 <li>Added more microorganisms codes from laboratory systems (esp. species of <em>Pseudescherichia</em> and <em>Rodentibacter</em>)</li>
+<li>Added Gram-stain to <code><a href="../reference/mo_property.html">mo_info()</a></code>
+</li>
 </ul>
 </div>
 <div id="other" class="section level3">
 <h3 class="hasAnchor">
 <a href="#other" class="anchor"></a>Other</h3>
 <ul>
+<li>Rewrote the complete documentation to markdown format, to be able to use the very latest version of the great <a href="https://roxygen2.r-lib.org/index.html">Roxygen2</a>, released in November 2019. This tremously improved the documentation quality, since the rewrite forced us to go over all texts again and make changes where needed.</li>
 <li>Change dependency on <code>clean</code> to <code>cleaner</code>, as this package was renamed accordingly upon CRAN request</li>
 <li>Added Dr. Sofia Ny as contributor</li>
 </ul>
@@ -492,7 +495,7 @@ Since this is a major change, usage of the old <code>also_single_tested</code> w
 <a href="#new-2" class="anchor"></a>New</h4>
 <ul>
 <li>
-<p>Function <code><a href="../reference/proportion.html">rsi_df()</a></code> to transform a <code>data.frame</code> to a data set containing only the microbial interpretation (S, I, R), the antibiotic, the percentage of S/I/R and the number of available isolates. This is a convenient combination of the existing functions <code><a href="../reference/count.html">count_df()</a></code> and <code>portion_df()</code> to immediately show resistance percentages and number of available isolates:</p>
+<p>Function <code><a href="../reference/proportion.html">rsi_df()</a></code> to transform a <code>data.frame</code> to a data set containing only the microbial interpretation (S, I, R), the antibiotic, the percentage of S/I/R and the number of available isolates. This is a convenient combination of the existing functions <code><a href="../reference/count.html">count_df()</a></code> and <code><a href="../reference/AMR-deprecated.html">portion_df()</a></code> to immediately show resistance percentages and number of available isolates:</p>
 <div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" data-line-number="1">septic_patients <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb11-2" data-line-number="2"><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span>(AMX, CIP) <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb11-3" data-line-number="3"><span class="st">  </span><span class="kw"><a href="../reference/proportion.html">rsi_df</a></span>()</a>
@@ -533,7 +536,7 @@ Since this is a major change, usage of the old <code>also_single_tested</code> w
 <h4 class="hasAnchor">
 <a href="#changed-1" class="anchor"></a>Changed</h4>
 <ul>
-<li>Column names of output <code><a href="../reference/count.html">count_df()</a></code> and <code>portion_df()</code> are now lowercase</li>
+<li>Column names of output <code><a href="../reference/count.html">count_df()</a></code> and <code><a href="../reference/AMR-deprecated.html">portion_df()</a></code> are now lowercase</li>
 <li>Fixed bug in translation of microorganism names</li>
 <li>Fixed bug in determining taxonomic kingdoms</li>
 <li>Algorithm improvements for <code><a href="../reference/as.ab.html">as.ab()</a></code> and <code><a href="../reference/as.mo.html">as.mo()</a></code> to understand even more severely misspelled input</li>
@@ -611,7 +614,7 @@ Please <a href="https://gitlab.com/msberends/AMR/issues/new?issue%5Btitle%5D=Tra
 <li>Improved intelligence of looking up antibiotic columns in a data set using <code><a href="../reference/guess_ab_col.html">guess_ab_col()</a></code>
 </li>
 <li>Added ~5,000 more old taxonomic names to the <code>microorganisms.old</code> data set, which leads to better results finding when using the <code><a href="../reference/as.mo.html">as.mo()</a></code> function</li>
-<li>This package now honours the new EUCAST insight (2019) that S and I are but classified as susceptible, where I is defined as ‘increased exposure’ and not ‘intermediate’ anymore. For functions like <code>portion_df()</code> and <code><a href="../reference/count.html">count_df()</a></code> this means that their new parameter <code>combine_SI</code> is TRUE at default. Our plotting function <code><a href="../reference/ggplot_rsi.html">ggplot_rsi()</a></code> also reflects this change since it uses <code><a href="../reference/count.html">count_df()</a></code> internally.</li>
+<li>This package now honours the new EUCAST insight (2019) that S and I are but classified as susceptible, where I is defined as ‘increased exposure’ and not ‘intermediate’ anymore. For functions like <code><a href="../reference/AMR-deprecated.html">portion_df()</a></code> and <code><a href="../reference/count.html">count_df()</a></code> this means that their new parameter <code>combine_SI</code> is TRUE at default. Our plotting function <code><a href="../reference/ggplot_rsi.html">ggplot_rsi()</a></code> also reflects this change since it uses <code><a href="../reference/count.html">count_df()</a></code> internally.</li>
 <li>The <code><a href="../reference/age.html">age()</a></code> function gained a new parameter <code>exact</code> to determine ages with decimals</li>
 <li>Removed deprecated functions <code>guess_mo()</code>, <code>guess_atc()</code>, <code>EUCAST_rules()</code>, <code>interpretive_reading()</code>, <code>rsi()</code>
 </li>
@@ -1392,7 +1395,7 @@ Using <code><a href="../reference/as.mo.html">as.mo(..., allow_uncertain = 3)</a
     <div id="tocnav">
       <h2>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
-        <li><a href="#amr-0-8-0-9035">0.8.0.9035</a></li>
+        <li><a href="#amr-0-8-0-9036">0.8.0.9036</a></li>
         <li><a href="#amr-0-8-0">0.8.0</a></li>
         <li><a href="#amr-0-7-1">0.7.1</a></li>
         <li><a href="#amr-0-7-0">0.7.0</a></li>

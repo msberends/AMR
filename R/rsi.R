@@ -21,37 +21,35 @@
 
 #' Class 'rsi'
 #'
-#' Interpret MIC values according to EUCAST or CLSI, or clean up existing RSI values. This transforms the input to a new class \code{rsi}, which is an ordered factor with levels \code{S < I < R}. Invalid antimicrobial interpretations will be translated as \code{NA} with a warning.
+#' Interpret MIC values and disk diffusion diameters according to EUCAST or CLSI, or clean up existing RSI values. This transforms the input to a new class [`rsi`], which is an ordered factor with levels `S < I < R`. Invalid antimicrobial interpretations will be translated as `NA` with a warning.
 #' @rdname as.rsi
-#' @param x vector of values (for class \code{mic}: an MIC value in mg/L, for class \code{disk}: a disk diffusion radius in millimeters)
-#' @param mo a microorganism code, generated with \code{\link{as.mo}}
-#' @param ab an antimicrobial code, generated with \code{\link{as.ab}}
+#' @param x vector of values (for class [`mic`]: an MIC value in mg/L, for class [`disk`]: a disk diffusion radius in millimeters)
+#' @param mo a microorganism code, generated with [as.mo()]
+#' @param ab an antimicrobial code, generated with [as.ab()]
 #' @inheritParams first_isolate
-#' @param guideline defaults to the latest included EUCAST guideline, run \code{unique(AMR::rsi_translation$guideline)} for all options
-#' @param threshold maximum fraction of invalid antimicrobial interpretations of \code{x}, see Examples
+#' @param guideline defaults to the latest included EUCAST guideline, run `unique(AMR::rsi_translation$guideline)` for all options
+#' @param threshold maximum fraction of invalid antimicrobial interpretations of `x`, please see *Examples*
 #' @param ... parameters passed on to methods
-#' @details Run \code{unique(AMR::rsi_translation$guideline)} for a list of all supported guidelines.
+#' @details Run `unique(AMR::rsi_translation$guideline)` for a list of all supported guidelines.
 #'
-#' After using \code{as.rsi}, you can use \code{\link{eucast_rules}} to (1) apply inferred susceptibility and resistance based on results of other antimicrobials and (2) apply intrinsic resistance based on taxonomic properties of a microorganism.
+#' After using [as.rsi()], you can use [eucast_rules()] to (1) apply inferred susceptibility and resistance based on results of other antimicrobials and (2) apply intrinsic resistance based on taxonomic properties of a microorganism.
 #'
-#' The function \code{is.rsi.eligible} returns \code{TRUE} when a columns contains at most 5\% invalid antimicrobial interpretations (not S and/or I and/or R), and \code{FALSE} otherwise. The threshold of 5\% can be set with the \code{threshold} parameter.
+#' The function [is.rsi.eligible()] returns `TRUE` when a columns contains at most 5% invalid antimicrobial interpretations (not S and/or I and/or R), and `FALSE` otherwise. The threshold of 5% can be set with the `threshold` parameter.
 #' @section Interpretation of S, I and R:
-#' In 2019, the European Committee on Antimicrobial Susceptibility Testing (EUCAST) has decided to change the definitions of susceptibility testing categories S, I and R as shown below (\url{http://www.eucast.org/newsiandr/}). Results of several consultations on the new definitions are available on the EUCAST website under "Consultations".
+#' In 2019, the European Committee on Antimicrobial Susceptibility Testing (EUCAST) has decided to change the definitions of susceptibility testing categories S, I and R as shown below (<http://www.eucast.org/newsiandr/>). Results of several consultations on the new definitions are available on the EUCAST website under "Consultations".
 #'
-#' \itemize{
-#'   \item{\strong{S} - }{Susceptible, standard dosing regimen: A microorganism is categorised as "Susceptible, standard dosing regimen", when there is a high likelihood of therapeutic success using a standard dosing regimen of the agent.}
-#'   \item{\strong{I} - }{Susceptible, increased exposure: A microorganism is categorised as "Susceptible, Increased exposure" when there is a high likelihood of therapeutic success because exposure to the agent is increased by adjusting the dosing regimen or by its concentration at the site of infection.}
-#'   \item{\strong{R} - }{Resistant: A microorganism is categorised as "Resistant" when there is a high likelihood of therapeutic failure even when there is increased exposure.}
-#' }
+#' - **S** - Susceptible, standard dosing regimen: A microorganism is categorised as "Susceptible, standard dosing regimen", when there is a high likelihood of therapeutic success using a standard dosing regimen of the agent.
+#' - **I** - Susceptible, increased exposure: A microorganism is categorised as "Susceptible, Increased exposure" when there is a high likelihood of therapeutic success because exposure to the agent is increased by adjusting the dosing regimen or by its concentration at the site of infection.
+#' - **R** - Resistant: A microorganism is categorised as "Resistant" when there is a high likelihood of therapeutic failure even when there is increased exposure.
 #'
 #' Exposure is a function of how the mode of administration, dose, dosing interval, infusion time, as well as distribution and excretion of the antimicrobial agent will influence the infecting organism at the site of infection.
 #'
-#' This AMR package honours this new insight. Use \code{\link{susceptibility}()} (equal to \code{\link{proportion_SI}()}) to determine antimicrobial susceptibility and \code{\link{count_susceptible}()} (equal to \code{\link{count_SI}()}) to count susceptible isolates.
-#' @return Ordered factor with new class \code{rsi}
+#' This AMR package honours this new insight. Use [susceptibility()] (equal to [proportion_SI()]) to determine antimicrobial susceptibility and [count_susceptible()] (equal to [count_SI()]) to count susceptible isolates.
+#' @return Ordered factor with new class [`rsi`]
 #' @aliases RSI
 #' @export
 #' @importFrom dplyr %>% desc arrange filter 
-#' @seealso \code{\link{as.mic}}
+#' @seealso [as.mic()]
 #' @inheritSection AMR Read more on our website!
 #' @examples
 #' rsi_data <- as.rsi(c(rep("S", 474), rep("I", 36), rep("R", 370)))

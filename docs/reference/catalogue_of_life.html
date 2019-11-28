@@ -85,7 +85,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">0.8.0.9032</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">0.8.0.9036</span>
       </span>
     </div>
 
@@ -245,7 +245,7 @@
 
 <p><img src='figures/logo_col.png' height=40px style=margin-bottom:5px /> <br />
 This package contains the complete taxonomic tree of almost all microorganisms (~70,000 species) from the authoritative and comprehensive Catalogue of Life (<a href='http://www.catalogueoflife.org'>http://www.catalogueoflife.org</a>). The Catalogue of Life is the most comprehensive and authoritative global index of species currently available.</p>
-<p>Click here for more information about the included taxa. Check which version of the Catalogue of Life was included in this package with <code><a href='catalogue_of_life_version.html'>catalogue_of_life_version</a>()</code>.</p>
+<p>Click here for more information about the included taxa. Check which version of the Catalogue of Life was included in this package with <code><a href='catalogue_of_life_version.html'>catalogue_of_life_version()</a></code>.</p>
     <h2 class="hasAnchor" id="included-taxa"><a class="anchor" href="#included-taxa"></a>Included taxa</h2>
 
     
@@ -268,8 +268,8 @@ This package contains the complete taxonomic tree of almost all microorganisms (
 <p>On our website <a href='https://msberends.gitlab.io/AMR'>https://msberends.gitlab.io/AMR</a> you can find <a href='https://msberends.gitlab.io/AMR/articles/AMR.html'>a tutorial</a> about how to conduct AMR analysis, the <a href='https://msberends.gitlab.io/AMR/reference'>complete documentation of all functions</a> (which reads a lot easier than here in R) and <a href='https://msberends.gitlab.io/AMR/articles/WHONET.html'>an example analysis using WHONET data</a>.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p>Data set <code><a href='microorganisms.html'>microorganisms</a></code> for the actual data. <br />
-Function <code><a href='as.mo.html'>as.mo</a>()</code> to use the data for intelligent determination of microorganisms.</p></div>
+    <div class='dont-index'><p>Data set <a href='microorganisms.html'>microorganisms</a> for the actual data. <br />
+Function <code><a href='as.mo.html'>as.mo()</a></code> to use the data for intelligent determination of microorganisms.</p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><span class='co'># Get version info of included data set</span>
@@ -295,7 +295,7 @@ Function <code><a href='as.mo.html'>as.mo</a>()</code> to use the data for intel
 <span class='fu'><a href='mo_property.html'>mo_ref</a></span>(<span class='st'>"E. coli"</span>)
 <span class='co'># [1] "Castellani et al., 1919"</span>
 
-<span class='co'># Do not get mistaken - the package only includes microorganisms</span>
+<span class='co'># Do not get mistaken - this package is about microorganisms</span>
 <span class='fu'><a href='mo_property.html'>mo_kingdom</a></span>(<span class='st'>"C. elegans"</span>)
 <span class='co'># [1] "Bacteria"                        # Bacteria?!</span>
 <span class='fu'><a href='mo_property.html'>mo_name</a></span>(<span class='st'>"C. elegans"</span>)

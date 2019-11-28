@@ -13,17 +13,17 @@ We created this package for both academic research and routine analysis at the F
 
 This package can be used for:
 \itemize{
-  \item{Reference for the taxonomy of microorganisms, since the package contains all microbial (sub)species from the Catalogue of Life}
-  \item{Interpreting raw MIC and disk diffusion values, based on the latest CLSI or EUCAST guidelines}
-  \item{Determining first isolates to be used for AMR analysis}
-  \item{Calculating antimicrobial resistance}
-  \item{Determining multi-drug resistance (MDR) / multi-drug resistant organisms (MDRO)}
-  \item{Calculating (empirical) susceptibility of both mono therapy and combination therapies}
-  \item{Predicting future antimicrobial resistance using regression models}
-  \item{Getting properties for any microorganism (like Gram stain, species, genus or family)}
-  \item{Getting properties for any antibiotic (like name, EARS-Net code, ATC code, PubChem code, defined daily dose or trade name)}
-  \item{Plotting antimicrobial resistance}
-  \item{Applying EUCAST expert rules}
+\item Reference for the taxonomy of microorganisms, since the package contains all microbial (sub)species from the \href{http://www.catalogueoflife.org}{Catalogue of Life}
+\item Interpreting raw MIC and disk diffusion values, based on the latest CLSI or EUCAST guidelines
+\item Determining first isolates to be used for AMR analysis
+\item Calculating antimicrobial resistance
+\item Determining multi-drug resistance (MDR) / multi-drug resistant organisms (MDRO)
+\item Calculating (empirical) susceptibility of both mono therapy and combination therapies
+\item Predicting future antimicrobial resistance using regression models
+\item Getting properties for any microorganism (like Gram stain, species, genus or family)
+\item Getting properties for any antibiotic (like name, EARS-Net code, ATC code, PubChem code, defined daily dose or trade name)
+\item Plotting antimicrobial resistance
+\item Applying EUCAST expert rules
 }
 }
 \section{Read more on our website!}{
@@ -36,11 +36,11 @@ On our website \url{https://msberends.gitlab.io/AMR} you can find \href{https://
 For suggestions, comments or questions, please contact us at:
 
 Matthijs S. Berends \cr
-m.s.berends [at] umcg [dot] nl \cr
+m.s.berends \link{at} umcg \link{dot} nl \cr
 Department of Medical Microbiology, University of Groningen \cr
 University Medical Center Groningen \cr
 Post Office Box 30001 \cr
-9700 RB Groningen
+9700 RB Groningen \cr
 The Netherlands
 
 If you have found a bug, please file a new issue at: \cr

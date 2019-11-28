@@ -19,8 +19,7 @@
 # Visit our website for more info: https://msberends.gitlab.io/AMR.    #
 # ==================================================================== #
 
-#' @rdname proportion
-#' @rdname count
+#' @rdname proportion 
 #' @export
 rsi_df <- function(data,
                    translate_ab = "name",

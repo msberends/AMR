@@ -51,7 +51,7 @@
   <script src="../extra.js"></script>
 
 <meta property="og:title" content="Translation table for common microorganism codes — microorganisms.codes" />
-<meta property="og:description" content="A data set containing commonly used codes for microorganisms, from laboratory systems and WHONET. Define your own with set_mo_source." />
+<meta property="og:description" content="A data set containing commonly used codes for microorganisms, from laboratory systems and WHONET. Define your own with set_mo_source()." />
 <meta property="og:image" content="https://msberends.gitlab.io/AMR/logo.png" />
 <meta name="twitter:card" content="summary" />
 
@@ -85,7 +85,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">0.8.0.9035</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">0.8.0.9036</span>
       </span>
     </div>
 
@@ -234,7 +234,7 @@
     </div>
 
     <div class="ref-description">
-    <p>A data set containing commonly used codes for microorganisms, from laboratory systems and WHONET. Define your own with <code><a href='mo_source.html'>set_mo_source</a></code>.</p>
+    <p>A data set containing commonly used codes for microorganisms, from laboratory systems and WHONET. Define your own with <code><a href='mo_source.html'>set_mo_source()</a></code>.</p>
     </div>
 
     <pre class="usage"><span class='no'>microorganisms.codes</span></pre>
@@ -242,18 +242,17 @@
 
     <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
 
-    <p>A <code><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></code> with 5,433 observations and 2 variables:</p><dl class='dl-horizontal'>
-  <dt><code>code</code></dt><dd><p>Commonly used code of a microorganism</p></dd>
-  <dt><code>mo</code></dt><dd><p>ID of the microorganism in the <code><a href='microorganisms.html'>microorganisms</a></code> data set</p></dd>
-
-</dl>
+    <p>A <code><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></code> with 5,433 observations and 2 variables:</p><ul>
+<li><p><code>code</code><br /> Commonly used code of a microorganism</p></li>
+<li><p><code>mo</code><br /> ID of the microorganism in the <a href='microorganisms.html'>microorganisms</a> data set</p></li>
+</ul>
     <h2 class="hasAnchor" id="catalogue-of-life"><a class="anchor" href="#catalogue-of-life"></a>Catalogue of Life</h2>
 
     
 
 <p><img src='figures/logo_col.png' height=40px style=margin-bottom:5px /> <br />
 This package contains the complete taxonomic tree of almost all microorganisms (~70,000 species) from the authoritative and comprehensive Catalogue of Life (<a href='http://www.catalogueoflife.org'>http://www.catalogueoflife.org</a>). The Catalogue of Life is the most comprehensive and authoritative global index of species currently available.</p>
-<p><a href='catalogue_of_life.html'>Click here</a> for more information about the included taxa. Check which version of the Catalogue of Life was included in this package with <code><a href='catalogue_of_life_version.html'>catalogue_of_life_version</a>()</code>.</p>
+<p><a href='catalogue_of_life.html'>Click here</a> for more information about the included taxa. Check which version of the Catalogue of Life was included in this package with <code><a href='catalogue_of_life_version.html'>catalogue_of_life_version()</a></code>.</p>
     <h2 class="hasAnchor" id="read-more-on-our-website-"><a class="anchor" href="#read-more-on-our-website-"></a>Read more on our website!</h2>
 
     
@@ -261,7 +260,7 @@ This package contains the complete taxonomic tree of almost all microorganisms (
 <p>On our website <a href='https://msberends.gitlab.io/AMR'>https://msberends.gitlab.io/AMR</a> you can find <a href='https://msberends.gitlab.io/AMR/articles/AMR.html'>a tutorial</a> about how to conduct AMR analysis, the <a href='https://msberends.gitlab.io/AMR/reference'>complete documentation of all functions</a> (which reads a lot easier than here in R) and <a href='https://msberends.gitlab.io/AMR/articles/WHONET.html'>an example analysis using WHONET data</a>.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><code><a href='as.mo.html'>as.mo</a></code> <code><a href='microorganisms.html'>microorganisms</a></code></p></div>
+    <div class='dont-index'><p><code><a href='as.mo.html'>as.mo()</a></code> <a href='microorganisms.html'>microorganisms</a></p></div>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

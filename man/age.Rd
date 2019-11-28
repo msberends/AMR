@@ -7,11 +7,11 @@
 age(x, reference = Sys.Date(), exact = FALSE, na.rm = FALSE)
 }
 \arguments{
-\item{x}{date(s), will be coerced with \code{\link{as.POSIXlt}}}
+\item{x}{date(s), will be coerced with \code{\link[=as.POSIXlt]{as.POSIXlt()}}}
 
-\item{reference}{reference date(s) (defaults to today), will be coerced with \code{\link{as.POSIXlt}} and cannot be lower than \code{x}}
+\item{reference}{reference date(s) (defaults to today), will be coerced with \code{\link[=as.POSIXlt]{as.POSIXlt()}} and cannot be lower than \code{x}}
 
-\item{exact}{a logical to indicate whether age calculation should be exact, i.e. with decimals. It divides the number of days of \href{https://en.wikipedia.org/wiki/Year-to-date}{year-to-date} (YTD) of \code{x} by the number of days in a year of \code{reference} (either 365 or 366).}
+\item{exact}{a logical to indicate whether age calculation should be exact, i.e. with decimals. It divides the number of days of \href{https://en.wikipedia.org/wiki/Year-to-date}{year-to-date} (YTD) of \code{x} by the number of days in the year of \code{reference} (either 365 or 366).}
 
 \item{na.rm}{a logical to indicate whether missing values should be removed}
 }
@@ -37,5 +37,5 @@ df$age_exact <- age(df$birth_date, exact = TRUE)
 df
 }
 \seealso{
-To split ages into groups, use the \code{\link{age_groups}} function.
+To split ages into groups, use the \code{\link[=age_groups]{age_groups()}} function.
 }

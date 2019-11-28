@@ -7,18 +7,18 @@
 availability(tbl, width = NULL)
 }
 \arguments{
-\item{tbl}{a \code{data.frame} or \code{list}}
+\item{tbl}{a \code{\link{data.frame}} or \code{\link{list}}}
 
 \item{width}{number of characters to present the visual availability, defaults to filling the width of the console}
 }
 \value{
-\code{data.frame} with column names of \code{tbl} as row names
+\code{\link{data.frame}} with column names of \code{tbl} as row names
 }
 \description{
-Easy check for availability of columns in a data set. This makes it easy to get an idea of which antimicrobial combination can be used for calculation with e.g. \code{\link{resistance}}.
+Easy check for availability of columns in a data set. This makes it easy to get an idea of which antimicrobial combination can be used for calculation with e.g. \code{\link[=resistance]{resistance()}}.
 }
 \details{
-The function returns a \code{data.frame} with columns \code{"resistant"} and \code{"visual_resistance"}. The values in that columns are calculated with \code{\link{resistance}}.
+The function returns a \code{\link{data.frame}} with columns \code{"resistant"} and \code{"visual_resistance"}. The values in that columns are calculated with \code{\link[=resistance]{resistance()}}.
 }
 \section{Read more on our website!}{
 

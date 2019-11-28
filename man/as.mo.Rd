@@ -10,8 +10,14 @@
 \alias{clear_mo_history}
 \title{Transform to microorganism ID}
 \usage{
-as.mo(x, Becker = FALSE, Lancefield = FALSE, allow_uncertain = TRUE,
-  reference_df = get_mo_source(), ...)
+as.mo(
+  x,
+  Becker = FALSE,
+  Lancefield = FALSE,
+  allow_uncertain = TRUE,
+  reference_df = get_mo_source(),
+  ...
+)
 
 is.mo(x)
 
@@ -24,33 +30,32 @@ mo_renamed()
 clear_mo_history(...)
 }
 \arguments{
-\item{x}{a character vector or a \code{data.frame} with one or two columns}
+\item{x}{a character vector or a \code{\link{data.frame}} with one or two columns}
 
-\item{Becker}{a logical to indicate whether \emph{Staphylococci} should be categorised into coagulase-negative \emph{Staphylococci} ("CoNS") and coagulase-positive \emph{Staphylococci} ("CoPS") instead of their own species, according to Karsten Becker \emph{et al.} [1,2]. Note that this does not include species that were newly named after these publications, like \emph{S. caeli}.
+\item{Becker}{a logical to indicate whether \emph{Staphylococci} should be categorised into coagulase-negative \emph{Staphylococci} ("CoNS") and coagulase-positive \emph{Staphylococci} ("CoPS") instead of their own species, according to Karsten Becker \emph{et al.} (1,2). Note that this does not include species that were newly named after these publications, like \emph{S. caeli}.
 
-  This excludes \emph{Staphylococcus aureus} at default, use \code{Becker = "all"} to also categorise \emph{S. aureus} as "CoPS".}
+This excludes \emph{Staphylococcus aureus} at default, use \code{Becker = "all"} to also categorise \emph{S. aureus} as "CoPS".}
 
-\item{Lancefield}{a logical to indicate whether beta-haemolytic \emph{Streptococci} should be categorised into Lancefield groups instead of their own species, according to Rebecca C. Lancefield [3]. These \emph{Streptococci} will be categorised in their first group, e.g. \emph{Streptococcus dysgalactiae} will be group C, although officially it was also categorised into groups G and L.
+\item{Lancefield}{a logical to indicate whether beta-haemolytic \emph{Streptococci} should be categorised into Lancefield groups instead of their own species, according to Rebecca C. Lancefield (3). These \emph{Streptococci} will be categorised in their first group, e.g. \emph{Streptococcus dysgalactiae} will be group C, although officially it was also categorised into groups G and L.
 
-  This excludes \emph{Enterococci} at default (who are in group D), use \code{Lancefield = "all"} to also categorise all \emph{Enterococci} as group D.}
+This excludes \emph{Enterococci} at default (who are in group D), use \code{Lancefield = "all"} to also categorise all \emph{Enterococci} as group D.}
 
-\item{allow_uncertain}{a number between 0 (or "none") and 3 (or "all"), or TRUE (= 2) or FALSE (= 0) to indicate whether the input should be checked for less probable results, see Details}
+\item{allow_uncertain}{a number between \code{0} (or \code{"none"}) and \code{3} (or \code{"all"}), or \code{TRUE} (= \code{2}) or \code{FALSE} (= \code{0}) to indicate whether the input should be checked for less probable results, please see \emph{Details}}
 
-\item{reference_df}{a \code{data.frame} to use for extra reference when translating \code{x} to a valid \code{mo}. See \code{\link{set_mo_source}} and \code{\link{get_mo_source}} to automate the usage of your own codes (e.g. used in your analysis or organisation).}
+\item{reference_df}{a \code{\link{data.frame}} to use for extra reference when translating \code{x} to a valid \code{\link{mo}}. See \code{\link[=set_mo_source]{set_mo_source()}} and \code{\link[=get_mo_source]{get_mo_source()}} to automate the usage of your own codes (e.g. used in your analysis or organisation).}
 
 \item{...}{other parameters passed on to functions}
 }
 \value{
-Character (vector) with class \code{"mo"}
+A \code{\link{character}} vector with class \code{\link{mo}}
 }
 \description{
-Use this function to determine a valid microorganism ID (\code{mo}). Determination is done using intelligent rules and the complete taxonomic kingdoms Bacteria, Chromista, Protozoa, Archaea and most microbial species from the kingdom Fungi (see Source). The input can be almost anything: a full name (like \code{"Staphylococcus aureus"}), an abbreviated name (like \code{"S. aureus"}), an abbreviation known in the field (like \code{"MRSA"}), or just a genus. Please see Examples.
+Use this function to determine a valid microorganism ID (\code{\link{mo}}). Determination is done using intelligent rules and the complete taxonomic kingdoms Bacteria, Chromista, Protozoa, Archaea and most microbial species from the kingdom Fungi (see Source). The input can be almost anything: a full name (like \code{"Staphylococcus aureus"}), an abbreviated name (like \code{"S. aureus"}), an abbreviation known in the field (like \code{"MRSA"}), or just a genus. Please see \emph{Examples}.
 }
 \details{
-\strong{General info} \cr
-A microorganism ID from this package (class: \code{mo}) typically looks like these examples:\cr
-\preformatted{
-  Code               Full name
+\subsection{General info}{
+
+A microorganism ID from this package (class: \code{\link{mo}}) typically looks like these examples:\preformatted{  Code               Full name
   ---------------    --------------------------------------
   B_KLBSL            Klebsiella
   B_KLBSL_PNMN       Klebsiella pneumoniae
@@ -66,71 +71,75 @@ A microorganism ID from this package (class: \code{mo}) typically looks like the
 
 Values that cannot be coered will be considered 'unknown' and will get the MO code \code{UNKNOWN}.
 
-Use the \code{\link{mo_property}_*} functions to get properties based on the returned code, see Examples.
+Use the \code{\link[=mo_property]{mo_property_*}} functions to get properties based on the returned code, see Examples.
 
-The algorithm uses data from the Catalogue of Life (see below) and from one other source (see \code{\link{microorganisms}}).
+The algorithm uses data from the Catalogue of Life (see below) and from one other source (see \link{microorganisms}).
 
-The \code{as.mo()} function uses several coercion rules for fast and logical results. It assesses the input matching criteria in the following order:
-\itemize{
-  \item{Human pathogenic prevalence: the function  starts with more prevalent microorganisms, followed by less prevalent ones;}
-  \item{Taxonomic kingdom: the function starts with determining Bacteria, then Fungi, then Protozoa, then others;}
-  \item{Breakdown of input values to identify possible matches.}
+The \code{\link[=as.mo]{as.mo()}} function uses several coercion rules for fast and logical results. It assesses the input matching criteria in the following order:
+\enumerate{
+\item Human pathogenic prevalence: the function  starts with more prevalent microorganisms, followed by less prevalent ones;
+\item Taxonomic kingdom: the function starts with determining Bacteria, then Fungi, then Protozoa, then others;
+\item Breakdown of input values to identify possible matches.
 }
 
-This will lead to the effect that e.g. \code{"E. coli"} (a highly prevalent microorganism found in humans) will return the microbial ID of \emph{Escherichia coli} and not \emph{Entamoeba coli} (a less prevalent microorganism in humans), although the latter would alphabetically come first. 
+This will lead to the effect that e.g. \code{"E. coli"} (a highly prevalent microorganism found in humans) will return the microbial ID of \emph{Escherichia coli} and not \emph{Entamoeba coli} (a less prevalent microorganism in humans), although the latter would alphabetically come first.
+}
 
-\strong{Coping with uncertain results} \cr
-In addition, the \code{as.mo()} function can differentiate four levels of uncertainty to guess valid results: 
+\subsection{Coping with uncertain results}{
 
+In addition, the \code{\link[=as.mo]{as.mo()}} function can differentiate four levels of uncertainty to guess valid results:
 \itemize{
-  \item{Uncertainty level 0: no additional rules are applied;}
-  \item{Uncertainty level 1: allow previously accepted (but now invalid) taxonomic names and minor spelling errors;}
-  \item{Uncertainty level 2: allow all of level 1, strip values between brackets, inverse the words of the input, strip off text elements from the end keeping at least two elements;}
-  \item{Uncertainty level 3: allow all of level 1 and 2, strip off text elements from the end, allow any part of a taxonomic name.}
+\item Uncertainty level 0: no additional rules are applied;
+\item Uncertainty level 1: allow previously accepted (but now invalid) taxonomic names and minor spelling errors;
+\item Uncertainty level 2: allow all of level 1, strip values between brackets, inverse the words of the input, strip off text elements from the end keeping at least two elements;
+\item Uncertainty level 3: allow all of level 1 and 2, strip off text elements from the end, allow any part of a taxonomic name.
 }
 
 This leads to e.g.:
-
 \itemize{
-  \item{\code{"Streptococcus group B (known as S. agalactiae)"}. The text between brackets will be removed and a warning will be thrown that the result \emph{Streptococcus group B} (\code{B_STRPT_GRPB}) needs review.}
-  \item{\code{"S. aureus - please mind: MRSA"}. The last word will be stripped, after which the function will try to find a match. If it does not, the second last word will be stripped, etc. Again, a warning will be thrown that the result \emph{Staphylococcus aureus} (\code{B_STPHY_AURS}) needs review.}
-  \item{\code{"Fluoroquinolone-resistant Neisseria gonorrhoeae"}. The first word will be stripped, after which the function will try to find a match. A warning will be thrown that the result \emph{Neisseria gonorrhoeae} (\code{B_NESSR_GNRR}) needs review.}
+\item \code{"Streptococcus group B (known as S. agalactiae)"}. The text between brackets will be removed and a warning will be thrown that the result \emph{Streptococcus group B} (\code{B_STRPT_GRPB}) needs review.
+\item \code{"S. aureus - please mind: MRSA"}. The last word will be stripped, after which the function will try to find a match. If it does not, the second last word will be stripped, etc. Again, a warning will be thrown that the result \emph{Staphylococcus aureus} (\code{B_STPHY_AURS}) needs review.
+\item \code{"Fluoroquinolone-resistant Neisseria gonorrhoeae"}. The first word will be stripped, after which the function will try to find a match. A warning will be thrown that the result \emph{Neisseria gonorrhoeae} (\code{B_NESSR_GNRR}) needs review.
 }
 
 The level of uncertainty can be set using the argument \code{allow_uncertain}. The default is \code{allow_uncertain = TRUE}, which is equal to uncertainty level 2. Using \code{allow_uncertain = FALSE} is equal to uncertainty level 0 and will skip all rules. You can also use e.g. \code{as.mo(..., allow_uncertain = 1)} to only allow up to level 1 uncertainty.
 
-There are three helper functions that can be run after then \code{as.mo()} function:
+There are three helper functions that can be run after then \code{\link[=as.mo]{as.mo()}} function:
 \itemize{
-  \item{Use \code{mo_uncertainties()} to get a \code{data.frame} with all values that were coerced to a valid value, but with uncertainty. The output contains a score, that is calculated as \code{(n - 0.5 * L) / n}, where \emph{n} is the number of characters of the returned full name of the microorganism, and \emph{L} is the \href{https://en.wikipedia.org/wiki/Levenshtein_distance}{Levenshtein distance} between that full name and the user input.}
-  \item{Use \code{mo_failures()} to get a vector with all values that could not be coerced to a valid value.}
-  \item{Use \code{mo_renamed()} to get a \code{data.frame} with all values that could be coerced based on an old, previously accepted taxonomic name.}
-}   
+\item Use \code{\link[=mo_uncertainties]{mo_uncertainties()}} to get a \code{\link{data.frame}} with all values that were coerced to a valid value, but with uncertainty. The output contains a score, that is calculated as \eqn{(n - 0.5 * L) / n}, where \emph{n} is the number of characters of the returned full name of the microorganism, and \emph{L} is the \href{https://en.wikipedia.org/wiki/Levenshtein_distance}{Levenshtein distance} between that full name and the user input.
+\item Use \code{\link[=mo_failures]{mo_failures()}} to get a \code{\link{vector}} with all values that could not be coerced to a valid value.
+\item Use \code{\link[=mo_renamed]{mo_renamed()}} to get a \code{\link{data.frame}} with all values that could be coerced based on an old, previously accepted taxonomic name.
+}
+}
 
-\strong{Microbial prevalence of pathogens in humans} \cr
-The intelligent rules consider the prevalence of microorganisms in humans grouped into three groups, which is available as the \code{prevalence} columns in the \code{\link{microorganisms}} and \code{\link{microorganisms.old}} data sets. The grouping into prevalence groups is based on experience from several microbiological laboratories in the Netherlands in conjunction with international reports on pathogen prevalence.
+\subsection{Microbial prevalence of pathogens in humans}{
 
-Group 1 (most prevalent microorganisms) consists of all microorganisms where the taxonomic class is Gammaproteobacteria or where the taxonomic genus is  \emph{Enterococcus}, \emph{Staphylococcus} or \emph{Streptococcus}. This group consequently contains all common Gram-negative bacteria, such as \emph{Pseudomonas} and \emph{Legionella} and all species within the order Enterobacteriales. 
+The intelligent rules consider the prevalence of microorganisms in humans grouped into three groups, which is available as the \code{prevalence} columns in the \link{microorganisms} and \link{microorganisms.old} data sets. The grouping into prevalence groups is based on experience from several microbiological laboratories in the Netherlands in conjunction with international reports on pathogen prevalence.
 
-Group 2 consists of all microorganisms where the taxonomic phylum is Proteobacteria, Firmicutes, Actinobacteria or Sarcomastigophora, or where the taxonomic genus is \emph{Aspergillus}, \emph{Bacteroides}, \emph{Candida}, \emph{Capnocytophaga}, \emph{Chryseobacterium}, \emph{Cryptococcus}, \emph{Elisabethkingia}, \emph{Flavobacterium}, \emph{Fusobacterium}, \emph{Giardia}, \emph{Leptotrichia}, \emph{Mycoplasma}, \emph{Prevotella}, \emph{Rhodotorula}, \emph{Treponema}, \emph{Trichophyton} or \emph{Ureaplasma}. 
+Group 1 (most prevalent microorganisms) consists of all microorganisms where the taxonomic class is Gammaproteobacteria or where the taxonomic genus is  \emph{Enterococcus}, \emph{Staphylococcus} or \emph{Streptococcus}. This group consequently contains all common Gram-negative bacteria, such as \emph{Pseudomonas} and \emph{Legionella} and all species within the order Enterobacteriales.
+
+Group 2 consists of all microorganisms where the taxonomic phylum is Proteobacteria, Firmicutes, Actinobacteria or Sarcomastigophora, or where the taxonomic genus is \emph{Aspergillus}, \emph{Bacteroides}, \emph{Candida}, \emph{Capnocytophaga}, \emph{Chryseobacterium}, \emph{Cryptococcus}, \emph{Elisabethkingia}, \emph{Flavobacterium}, \emph{Fusobacterium}, \emph{Giardia}, \emph{Leptotrichia}, \emph{Mycoplasma}, \emph{Prevotella}, \emph{Rhodotorula}, \emph{Treponema}, \emph{Trichophyton} or \emph{Ureaplasma}.
 
 Group 3 (least prevalent microorganisms) consists of all other microorganisms.
+}
 
-\strong{Self-learning algorithm} \cr
-The \code{as.mo()} function gains experience from previously determined microorganism IDs and learns from it. This drastically improves both speed and reliability. Use \code{clear_mo_history()} to reset the algorithms. Only experience from your current \code{AMR} package version is used. This is done because in the future the taxonomic tree (which is included in this package) may change for any organism and it consequently has to rebuild its knowledge.
+\subsection{Self-learning algorithm}{
+
+The \code{\link[=as.mo]{as.mo()}} function gains experience from previously determined microorganism IDs and learns from it. This drastically improves both speed and reliability. Use \code{\link[=clear_mo_history]{clear_mo_history()}} to reset the algorithms. Only experience from your current \code{AMR} package version is used. This is done because in the future the taxonomic tree (which is included in this package) may change for any organism and it consequently has to rebuild its knowledge.
 
 Usually, any guess after the first try runs 80-95\% faster than the first try.
 
 This resets with every update of this \code{AMR} package since results are saved to your local package library folder.
 }
+}
 \section{Source}{
 
-[1] Becker K \emph{et al.} \strong{Coagulase-Negative Staphylococci}. 2014. Clin Microbiol Rev. 27(4): 870–926. \url{https://dx.doi.org/10.1128/CMR.00109-13}
-
-[2] Becker K \emph{et al.} \strong{Implications of identifying the recently defined members of the \emph{S. aureus} complex, \emph{S. argenteus} and \emph{S. schweitzeri}: A position paper of members of the ESCMID Study Group for staphylococci and Staphylococcal Diseases (ESGS).} 2019. Clin Microbiol Infect. \url{https://doi.org/10.1016/j.cmi.2019.02.028}
-
-[3] Lancefield RC \strong{A serological differentiation of human and other groups of hemolytic streptococci}. 1933. J Exp Med. 57(4): 571–95. \url{https://dx.doi.org/10.1084/jem.57.4.571}
-
-[4] Catalogue of Life: Annual Checklist (public online taxonomic database), \url{http://www.catalogueoflife.org} (check included annual version with \code{\link{catalogue_of_life_version}()}).
+\enumerate{
+\item Becker K \emph{et al.} \strong{Coagulase-Negative Staphylococci}. 2014. Clin Microbiol Rev. 27(4): 870–926. \url{https://dx.doi.org/10.1128/CMR.00109-13}
+\item Becker K \emph{et al.} \strong{Implications of identifying the recently defined members of the \emph{S. aureus} complex, \emph{S. argenteus} and \emph{S. schweitzeri}: A position paper of members of the ESCMID Study Group for staphylococci and Staphylococcal Diseases (ESGS).} 2019. Clin Microbiol Infect. \url{https://doi.org/10.1016/j.cmi.2019.02.028}
+\item Lancefield RC \strong{A serological differentiation of human and other groups of hemolytic streptococci}. 1933. J Exp Med. 57(4): 571–95. \url{https://dx.doi.org/10.1084/jem.57.4.571}
+\item Catalogue of Life: Annual Checklist (public online taxonomic database), \url{http://www.catalogueoflife.org} (check included annual version with \code{\link[=catalogue_of_life_version]{catalogue_of_life_version()}}).
+}
 }
 
 \section{Catalogue of Life}{
@@ -138,7 +147,7 @@ This resets with every update of this \code{AMR} package since results are saved
 \if{html}{\figure{logo_col.png}{options: height=40px style=margin-bottom:5px} \cr}
 This package contains the complete taxonomic tree of almost all microorganisms (~70,000 species) from the authoritative and comprehensive Catalogue of Life (\url{http://www.catalogueoflife.org}). The Catalogue of Life is the most comprehensive and authoritative global index of species currently available.
 
-\link[=catalogue_of_life]{Click here} for more information about the included taxa. Check which version of the Catalogue of Life was included in this package with \code{\link{catalogue_of_life_version}()}.
+\link[=catalogue_of_life]{Click here} for more information about the included taxa. Check which version of the Catalogue of Life was included in this package with \code{\link[=catalogue_of_life_version]{catalogue_of_life_version()}}.
 }
 
 \section{Read more on our website!}{
@@ -203,8 +212,9 @@ df <- df \%>\%
 }
 }
 \seealso{
-\code{\link{microorganisms}} for the \code{data.frame} that is being used to determine ID's. \cr
-The \code{\link{mo_property}} functions (like \code{\link{mo_genus}}, \code{\link{mo_gramstain}}) to get properties based on the returned code.
+\link{microorganisms} for the \code{\link{data.frame}} that is being used to determine ID's.
+
+The \code{\link[=mo_property]{mo_property()}} functions (like \code{\link[=mo_genus]{mo_genus()}}, \code{\link[=mo_gramstain]{mo_gramstain()}}) to get properties based on the returned code.
 }
 \keyword{Becker}
 \keyword{Lancefield}

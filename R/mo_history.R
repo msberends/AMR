@@ -48,19 +48,6 @@ set_mo_history <- function(x, mo, uncertainty_level, force = FALSE, disable = FA
       if (NROW(mo_hist[base::which(mo_hist$x == x[i] &
                                    mo_hist$uncertainty_level >= uncertainty_level &
                                    mo_hist$package_version == utils::packageVersion("AMR")), ]) == 0) {
-        # # Not using the file system:        
-        # tryCatch(options(mo_remembered_results = rbind(mo_hist,
-        #                                                data.frame(
-        #                                                  x = x[i],
-        #                                                  mo = mo[i],
-        #                                                  uncertainty_level = uncertainty_level,
-        #                                                  package_version = base::as.character(utils::packageVersion("AMR")),
-        #                                                  stringsAsFactors = FALSE))),
-        #          error = function(e) base::invisible())
-        # # don't remember more than 1,000 different input values
-        # if (tryCatch(nrow(getOption("mo_remembered_results")), error = function(e) 1001) > 1000) {
-        #   return(base::invisible())
-        # }
         if (is.null(mo_hist) & interactive()) {
           warning_new_write <- TRUE
         }
@@ -113,9 +100,6 @@ read_mo_history <- function(uncertainty_level = 2, force = FALSE, unfiltered = F
   }
   uncertainty_level_param <- uncertainty_level
   
-  # # Not using the file system:
-  # history <- tryCatch(getOption("mo_remembered_results"),
-  #                     error = function(e) NULL)
   history <- tryCatch(read.csv(mo_history_file(), stringsAsFactors = FALSE),
                       warning = function(w) invisible(),
                       error = function(e) NULL)
@@ -159,9 +143,7 @@ clear_mo_history <- function(...) {
         return(invisible())
       }
     }
-    # # Not using the file system:
-    # success <- tryCatch(options(mo_remembered_results = NULL),
-    #                     error = function(e) FALSE)
+
     success <- create_blank_mo_history()
     if (!isFALSE(success)) {
       cat(red(paste("File", mo_history_file(), "cleared.")))

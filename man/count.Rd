@@ -12,7 +12,7 @@
 \alias{count_all}
 \alias{n_rsi}
 \alias{count_df}
-\title{Count isolates}
+\title{Count available isolates}
 \usage{
 count_resistant(..., only_all_tested = FALSE)
 
@@ -32,62 +32,63 @@ count_all(..., only_all_tested = FALSE)
 
 n_rsi(..., only_all_tested = FALSE)
 
-count_df(data, translate_ab = "name", language = get_locale(),
-  combine_SI = TRUE, combine_IR = FALSE)
+count_df(
+  data,
+  translate_ab = "name",
+  language = get_locale(),
+  combine_SI = TRUE,
+  combine_IR = FALSE
+)
 }
 \arguments{
-\item{...}{one or more vectors (or columns) with antibiotic interpretations. They will be transformed internally with \code{\link{as.rsi}} if needed.}
+\item{...}{one or more vectors (or columns) with antibiotic interpretations. They will be transformed internally with \code{\link[=as.rsi]{as.rsi()}} if needed.}
 
-\item{only_all_tested}{(for combination therapies, i.e. using more than one variable for \code{...}) a logical to indicate that isolates must be tested for all antibiotics, see section \emph{Combination therapy} below}
+\item{only_all_tested}{(for combination therapies, i.e. using more than one variable for \code{...}): a logical to indicate that isolates must be tested for all antibiotics, see section \emph{Combination therapy} below}
 
-\item{data}{a \code{data.frame} containing columns with class \code{rsi} (see \code{\link{as.rsi}})}
+\item{data}{a \code{\link{data.frame}} containing columns with class \code{\link{rsi}} (see \code{\link[=as.rsi]{as.rsi()}})}
 
-\item{translate_ab}{a column name of the \code{\link{antibiotics}} data set to translate the antibiotic abbreviations to, using \code{\link{ab_property}}}
+\item{translate_ab}{a column name of the \link{antibiotics} data set to translate the antibiotic abbreviations to, using \code{\link[=ab_property]{ab_property()}}}
 
-\item{language}{language of the returned text, defaults to system language (see \code{\link{get_locale}}) and can also be set with \code{\link{getOption}("AMR_locale")}. Use \code{language = NULL} or \code{language = ""} to prevent translation.}
+\item{language}{language of the returned text, defaults to system language (see \code{\link[=get_locale]{get_locale()}}) and can also be set with \code{getOption("AMR_locale")}. Use \code{language = NULL} or \code{language = ""} to prevent translation.}
 
 \item{combine_SI}{a logical to indicate whether all values of S and I must be merged into one, so the output only consists of S+I vs. R (susceptible vs. resistant). This used to be the parameter \code{combine_IR}, but this now follows the redefinition by EUCAST about the interpretion of I (increased exposure) in 2019, see section 'Interpretation of S, I and R' below. Default is \code{TRUE}.}
 
 \item{combine_IR}{a logical to indicate whether all values of I and R must be merged into one, so the output only consists of S vs. I+R (susceptible vs. non-susceptible). This is outdated, see parameter \code{combine_SI}.}
 }
 \value{
-Integer
+An \code{\link{integer}}
 }
 \description{
-These functions can be used to count resistant/susceptible microbial isolates. All functions support quasiquotation with pipes, can be used in \code{dplyr}s \code{\link[dplyr]{summarise}} and support grouped variables, see \emph{Examples}.
+These functions can be used to count resistant/susceptible microbial isolates. All functions support quasiquotation with pipes, can be used in \code{\link[=summarise]{summarise()}} and support grouped variables, see \emph{Examples}.
 
-\code{count_resistant()} should be used to count resistant isolates, \code{count_susceptible()} should be used to count susceptible isolates.\cr
+\code{\link[=count_resistant]{count_resistant()}} should be used to count resistant isolates, \code{\link[=count_susceptible]{count_susceptible()}} should be used to count susceptible isolates.
 }
 \details{
-These functions are meant to count isolates. Use the \code{\link{resistance}}/\code{\link{susceptibility}} functions to calculate microbial resistance/susceptibility.
+These functions are meant to count isolates. Use the \code{\link[=resistance]{resistance()}}/\code{\link[=susceptibility]{susceptibility()}} functions to calculate microbial resistance/susceptibility.
 
-The function \code{count_resistant()} is equal to the function \code{count_R()}. The function \code{count_susceptible()} is equal to the function \code{count_SI()}.
+The function \code{\link[=count_resistant]{count_resistant()}} is equal to the function \code{\link[=count_R]{count_R()}}. The function \code{\link[=count_susceptible]{count_susceptible()}} is equal to the function \code{\link[=count_SI]{count_SI()}}.
 
-The function \code{n_rsi()} is an alias of \code{count_all()}. They can be used to count all available isolates, i.e. where all input antibiotics have an available result (S, I or R). Their use is equal to \code{\link{n_distinct}()}. Their function is equal to \code{count_susceptible(...) + count_resistant(...)}.
+The function \code{\link[=n_rsi]{n_rsi()}} is an alias of \code{\link[=count_all]{count_all()}}. They can be used to count all available isolates, i.e. where all input antibiotics have an available result (S, I or R). Their use is equal to \code{\link[=n_distinct]{n_distinct()}}. Their function is equal to \code{count_susceptible(...) + count_resistant(...)}.
 
-The function \code{count_df()} takes any variable from \code{data} that has an \code{"rsi"} class (created with \code{\link{as.rsi}()}) and counts the number of S's, I's and R's. The function \code{rsi_df()} works exactly like \code{count_df()}, but adds the percentage of S, I and R.
+The function \code{\link[=count_df]{count_df()}} takes any variable from \code{data} that has an \code{\link{rsi}} class (created with \code{\link[=as.rsi]{as.rsi()}}) and counts the number of S's, I's and R's. The function \code{\link[=rsi_df]{rsi_df()}} works exactly like \code{\link[=count_df]{count_df()}}, but adds the percentage of S, I and R.
 }
 \section{Interpretation of S, I and R}{
 
 In 2019, the European Committee on Antimicrobial Susceptibility Testing (EUCAST) has decided to change the definitions of susceptibility testing categories S, I and R as shown below (\url{http://www.eucast.org/newsiandr/}). Results of several consultations on the new definitions are available on the EUCAST website under "Consultations".
-
 \itemize{
-  \item{\strong{S} - }{Susceptible, standard dosing regimen: A microorganism is categorised as "Susceptible, standard dosing regimen", when there is a high likelihood of therapeutic success using a standard dosing regimen of the agent.}
-  \item{\strong{I} - }{Susceptible, increased exposure: A microorganism is categorised as "Susceptible, Increased exposure" when there is a high likelihood of therapeutic success because exposure to the agent is increased by adjusting the dosing regimen or by its concentration at the site of infection.}
-  \item{\strong{R} - }{Resistant: A microorganism is categorised as "Resistant" when there is a high likelihood of therapeutic failure even when there is increased exposure.}
+\item \strong{S} - Susceptible, standard dosing regimen: A microorganism is categorised as "Susceptible, standard dosing regimen", when there is a high likelihood of therapeutic success using a standard dosing regimen of the agent.
+\item \strong{I} - Susceptible, increased exposure: A microorganism is categorised as "Susceptible, Increased exposure" when there is a high likelihood of therapeutic success because exposure to the agent is increased by adjusting the dosing regimen or by its concentration at the site of infection.
+\item \strong{R} - Resistant: A microorganism is categorised as "Resistant" when there is a high likelihood of therapeutic failure even when there is increased exposure.
 }
 
 Exposure is a function of how the mode of administration, dose, dosing interval, infusion time, as well as distribution and excretion of the antimicrobial agent will influence the infecting organism at the site of infection.
 
-This AMR package honours this new insight. Use \code{\link{susceptibility}()} (equal to \code{\link{proportion_SI}()}) to determine antimicrobial susceptibility and \code{\link{count_susceptible}()} (equal to \code{\link{count_SI}()}) to count susceptible isolates.
+This AMR package honours this new insight. Use \code{\link[=susceptibility]{susceptibility()}} (equal to \code{\link[=proportion_SI]{proportion_SI()}}) to determine antimicrobial susceptibility and \code{\link[=count_susceptible]{count_susceptible()}} (equal to \code{\link[=count_SI]{count_SI()}}) to count susceptible isolates.
 }
 
 \section{Combination therapy}{
 
-When using more than one variable for \code{...} (= combination therapy)), use \code{only_all_tested} to only count isolates that are tested for all antibiotics/variables that you test them for. See this example for two antibiotics, Antibiotic A and Antibiotic B, about how \code{susceptibility} works to calculate the \%SI:
-
-\preformatted{
---------------------------------------------------------------------
+When using more than one variable for \code{...} (= combination therapy)), use \code{only_all_tested} to only count isolates that are tested for all antibiotics/variables that you test them for. See this example for two antibiotics, Antibiotic A and Antibiotic B, about how \code{\link[=susceptibility]{susceptibility()}} works to calculate the \%SI:\preformatted{--------------------------------------------------------------------
                     only_all_tested = FALSE  only_all_tested = TRUE
                     -----------------------  -----------------------
  Drug A    Drug B   include as  include as   include as  include as
@@ -105,14 +106,11 @@ When using more than one variable for \code{...} (= combination therapy)), use \
 --------------------------------------------------------------------
 }
 
-Please note that, in combination therapies, for \code{only_all_tested = TRUE} applies that:
-\preformatted{
-    count_S()    +   count_I()    +   count_R()    = count_all()
+Please note that, in combination therapies, for \code{only_all_tested = TRUE} applies that:\preformatted{    count_S()    +   count_I()    +   count_R()    = count_all()
   proportion_S() + proportion_I() + proportion_R() = 1
 }
-and that, in combination therapies, for \code{only_all_tested = FALSE} applies that:
-\preformatted{
-    count_S()    +   count_I()    +   count_R()    >= count_all()
+
+and that, in combination therapies, for \code{only_all_tested = FALSE} applies that:\preformatted{    count_S()    +   count_I()    +   count_R()    >= count_all()
   proportion_S() + proportion_I() + proportion_R() >= 1
 }
 
@@ -184,5 +182,5 @@ example_isolates \%>\%
 
 }
 \seealso{
-\code{\link{proportion}_*} to calculate microbial resistance and susceptibility.
+\code{\link[=proportion]{proportion_*}} to calculate microbial resistance and susceptibility.
 }

@@ -6,31 +6,57 @@
 \alias{filter_first_weighted_isolate}
 \title{Determine first (weighted) isolates}
 \source{
-Methodology of this function is based on: \strong{M39 Analysis and Presentation of Cumulative Antimicrobial Susceptibility Test Data, 4th Edition}, 2014, \emph{Clinical and Laboratory Standards Institute (CLSI)}. \url{https://clsi.org/standards/products/microbiology/documents/m39/}.
+Methodology of this function is based on:
+
+\strong{M39 Analysis and Presentation of Cumulative Antimicrobial Susceptibility Test Data, 4th Edition}, 2014, \emph{Clinical and Laboratory Standards Institute (CLSI)}. \url{https://clsi.org/standards/products/microbiology/documents/m39/}.
 }
 \usage{
-first_isolate(x, col_date = NULL, col_patient_id = NULL,
-  col_mo = NULL, col_testcode = NULL, col_specimen = NULL,
-  col_icu = NULL, col_keyantibiotics = NULL, episode_days = 365,
-  testcodes_exclude = NULL, icu_exclude = FALSE,
-  specimen_group = NULL, type = "keyantibiotics", ignore_I = TRUE,
-  points_threshold = 2, info = TRUE, include_unknown = FALSE, ...)
+first_isolate(
+  x,
+  col_date = NULL,
+  col_patient_id = NULL,
+  col_mo = NULL,
+  col_testcode = NULL,
+  col_specimen = NULL,
+  col_icu = NULL,
+  col_keyantibiotics = NULL,
+  episode_days = 365,
+  testcodes_exclude = NULL,
+  icu_exclude = FALSE,
+  specimen_group = NULL,
+  type = "keyantibiotics",
+  ignore_I = TRUE,
+  points_threshold = 2,
+  info = TRUE,
+  include_unknown = FALSE,
+  ...
+)
 
-filter_first_isolate(x, col_date = NULL, col_patient_id = NULL,
-  col_mo = NULL, ...)
+filter_first_isolate(
+  x,
+  col_date = NULL,
+  col_patient_id = NULL,
+  col_mo = NULL,
+  ...
+)
 
-filter_first_weighted_isolate(x, col_date = NULL,
-  col_patient_id = NULL, col_mo = NULL, col_keyantibiotics = NULL,
-  ...)
+filter_first_weighted_isolate(
+  x,
+  col_date = NULL,
+  col_patient_id = NULL,
+  col_mo = NULL,
+  col_keyantibiotics = NULL,
+  ...
+)
 }
 \arguments{
-\item{x}{a \code{data.frame} containing isolates.}
+\item{x}{a \code{\link{data.frame}} containing isolates.}
 
 \item{col_date}{column name of the result date (or date that is was received on the lab), defaults to the first column of with a date class}
 
 \item{col_patient_id}{column name of the unique IDs of the patients, defaults to the first column that starts with 'patient' or 'patid' (case insensitive)}
 
-\item{col_mo}{column name of the IDs of the microorganisms (see \code{\link{as.mo}}), defaults to the first column of class \code{mo}. Values will be coerced using \code{\link{as.mo}}.}
+\item{col_mo}{column name of the IDs of the microorganisms (see \code{\link[=as.mo]{as.mo()}}), defaults to the first column of class \code{\link{mo}}. Values will be coerced using \code{\link[=as.mo]{as.mo()}}.}
 
 \item{col_testcode}{column name of the test codes. Use \code{col_testcode = NULL} to \strong{not} exclude certain test codes (like test codes for screening). In that case \code{testcodes_exclude} will be ignored.}
 
@@ -38,7 +64,7 @@ filter_first_weighted_isolate(x, col_date = NULL,
 
 \item{col_icu}{column name of the logicals (\code{TRUE}/\code{FALSE}) whether a ward or department is an Intensive Care Unit (ICU)}
 
-\item{col_keyantibiotics}{column name of the key antibiotics to determine first \emph{weighted} isolates, see \code{\link{key_antibiotics}}. Defaults to the first column that starts with 'key' followed by 'ab' or 'antibiotics' (case insensitive). Use \code{col_keyantibiotics = FALSE} to prevent this.}
+\item{col_keyantibiotics}{column name of the key antibiotics to determine first \emph{weighted} isolates, see \code{\link[=key_antibiotics]{key_antibiotics()}}. Defaults to the first column that starts with 'key' followed by 'ab' or 'antibiotics' (case insensitive). Use \code{col_keyantibiotics = FALSE} to prevent this.}
 
 \item{episode_days}{episode in days after which a genus/species combination will be determined as 'first isolate' again. The default of 365 days is based on the guideline by CLSI, see Source.}
 
@@ -58,30 +84,27 @@ filter_first_weighted_isolate(x, col_date = NULL,
 
 \item{include_unknown}{logical to determine whether 'unknown' microorganisms should be included too, i.e. microbial code \code{"UNKNOWN"}, which defaults to \code{FALSE}. For WHONET users, this means that all records with organism code \code{"con"} (\emph{contamination}) will be excluded at default. Isolates with a microbial ID of \code{NA} will always be excluded as first isolate.}
 
-\item{...}{parameters passed on to the \code{first_isolate} function}
+\item{...}{parameters passed on to the \code{\link[=first_isolate]{first_isolate()}} function}
 }
 \value{
-Logical vector
+A \code{\link{logical}} vector
 }
 \description{
 Determine first (weighted) isolates of all microorganisms of every patient per episode and (if needed) per specimen type.
 }
 \details{
 \strong{WHY THIS IS SO IMPORTANT} \cr
-To conduct an analysis of antimicrobial resistance, you should only include the first isolate of every patient per episode \href{https://www.ncbi.nlm.nih.gov/pubmed/17304462}{[1]}. If you would not do this, you could easily get an overestimate or underestimate of the resistance of an antibiotic. Imagine that a patient was admitted with an MRSA and that it was found in 5 different blood cultures the following week. The resistance percentage of oxacillin of all \emph{S. aureus} isolates would be overestimated, because you included this MRSA more than once. It would be \href{https://en.wikipedia.org/wiki/Selection_bias}{selection bias}.
+To conduct an analysis of antimicrobial resistance, you should only include the first isolate of every patient per episode [\link{1}](https://www.ncbi.nlm.nih.gov/pubmed/17304462). If you would not do this, you could easily get an overestimate or underestimate of the resistance of an antibiotic. Imagine that a patient was admitted with an MRSA and that it was found in 5 different blood cultures the following week. The resistance percentage of oxacillin of all \emph{S. aureus} isolates would be overestimated, because you included this MRSA more than once. It would be \href{https://en.wikipedia.org/wiki/Selection_bias}{selection bias}.
 
 All isolates with a microbial ID of \code{NA} will be excluded as first isolate.
 
-The functions \code{filter_first_isolate} and \code{filter_first_weighted_isolate} are helper functions to quickly filter on first isolates. The function \code{filter_first_isolate} is essentially equal to:
-\preformatted{
- x \%>\%
+The functions \code{\link[=filter_first_isolate]{filter_first_isolate()}} and \code{\link[=filter_first_weighted_isolate]{filter_first_weighted_isolate()}} are helper functions to quickly filter on first isolates. The function \code{\link[=filter_first_isolate]{filter_first_isolate()}} is essentially equal to:\preformatted{ x \%>\%
    mutate(only_firsts = first_isolate(x, ...)) \%>\%
    filter(only_firsts == TRUE) \%>\%
    select(-only_firsts)
 }
-The function \code{filter_first_weighted_isolate} is essentially equal to:
-\preformatted{
- x \%>\%
+
+The function \code{\link[=filter_first_weighted_isolate]{filter_first_weighted_isolate()}} is essentially equal to:\preformatted{ x \%>\%
    mutate(keyab = key_antibiotics(.)) \%>\%
    mutate(only_weighted_firsts = first_isolate(x,
                                                col_keyantibiotics = "keyab", ...)) \%>\%
@@ -91,13 +114,15 @@ The function \code{filter_first_weighted_isolate} is essentially equal to:
 }
 \section{Key antibiotics}{
 
-    There are two ways to determine whether isolates can be included as first \emph{weighted} isolates which will give generally the same results: \cr
+There are two ways to determine whether isolates can be included as first \emph{weighted} isolates which will give generally the same results:
+\enumerate{
+\item Using \code{type = "keyantibiotics"} and parameter \code{ignore_I}
 
-    \strong{1. Using} \code{type = "keyantibiotics"} \strong{and parameter} \code{ignore_I} \cr
-    Any difference from S to R (or vice versa) will (re)select an isolate as a first weighted isolate. With \code{ignore_I = FALSE}, also differences from I to S|R (or vice versa) will lead to this. This is a reliable method and 30-35 times faster than method 2. Read more about this in the \code{\link{key_antibiotics}} function. \cr
+Any difference from S to R (or vice versa) will (re)select an isolate as a first weighted isolate. With \code{ignore_I = FALSE}, also differences from I to S|R (or vice versa) will lead to this. This is a reliable method and 30-35 times faster than method 2. Read more about this in the \code{\link[=key_antibiotics]{key_antibiotics()}} function.
+\item Using \code{type = "points"} and parameter \code{points_threshold}
 
-    \strong{2. Using} \code{type = "points"} \strong{and parameter} \code{points_threshold} \cr
-    A difference from I to S|R (or vice versa) means 0.5 points, a difference from S to R (or vice versa) means 1 point. When the sum of points exceeds \code{points_threshold}, which default to \code{2}, an isolate will be (re)selected as a first weighted isolate.
+A difference from I to S|R (or vice versa) means 0.5 points, a difference from S to R (or vice versa) means 1 point. When the sum of points exceeds \code{points_threshold}, which default to \code{2}, an isolate will be (re)selected as a first weighted isolate.
+}
 }
 
 \section{Read more on our website!}{
@@ -158,5 +183,5 @@ x$first_blood_isolate <- first_isolate(x, specimen_group = "Blood")
 }
 }
 \seealso{
-\code{\link{key_antibiotics}}
+\code{\link[=key_antibiotics]{key_antibiotics()}}
 }

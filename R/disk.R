@@ -21,15 +21,15 @@
 
 #' Class 'disk'
 #'
-#' This transforms a vector to a new class \code{disk}, which is a growth zone size (around an antibiotic disk) in millimeters between 6 and 99.
+#' This transforms a vector to a new class [`disk`], which is a growth zone size (around an antibiotic disk) in millimeters between 6 and 99.
 #' @rdname as.disk
 #' @param x vector
 #' @param na.rm a logical indicating whether missing values should be removed
-#' @details Interpret disk values as RSI values with \code{\link{as.rsi}}. It supports guidelines from EUCAST and CLSI.
-#' @return Ordered integer factor with new class \code{disk}
+#' @details Interpret disk values as RSI values with [as.rsi()]. It supports guidelines from EUCAST and CLSI.
+#' @return Ordered integer factor with new class [`disk`]
 #' @aliases disk
 #' @export
-#' @seealso \code{\link{as.rsi}}
+#' @seealso [as.rsi()]
 #' @inheritSection AMR Read more on our website!
 #' @examples
 #' # interpret disk values

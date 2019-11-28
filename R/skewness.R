@@ -24,10 +24,10 @@
 #' @description Skewness is a measure of the asymmetry of the probability distribution of a real-valued random variable about its mean.
 #'
 #' When negative: the left tail is longer; the mass of the distribution is concentrated on the right of the figure. When positive: the right tail is longer; the mass of the distribution is concentrated on the left of the figure.
-#' @param x a vector of values, a \code{matrix} or a \code{data frame}
-#' @param na.rm a logical value indicating whether \code{NA} values should be stripped before the computation proceeds.
+#' @param x a vector of values, a [`matrix`] or a [`data.frame`]
+#' @param na.rm a logical value indicating whether `NA` values should be stripped before the computation proceeds.
 #' @exportMethod skewness
-#' @seealso \code{\link{kurtosis}}
+#' @seealso [kurtosis()]
 #' @rdname skewness
 #' @inheritSection AMR Read more on our website!
 #' @export

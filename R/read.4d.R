@@ -18,12 +18,12 @@
 # ANY WARRANTY OR LIABILITY.                                           #
 # Visit our website for more info: https://msberends.gitlab.io/AMR.    #
 # ==================================================================== #
-
+#
 #' Read data from 4D database
 #'
-#' This function is only useful for the MMB department of the UMCG. Use this function to \strong{import data by just defining the \code{file} parameter}. It will automatically transform birth dates and calculate patients age, translate the column names to English, transform the MO codes with \code{\link{as.mo}} and transform all antimicrobial columns with \code{\link{as.rsi}}.
+#' This function is only useful for the MMB department of the UMCG. Use this function to **import data by just defining the `file` parameter**. It will automatically transform birth dates and calculate patients age, translate the column names to English, transform the MO codes with [as.mo()] and transform all antimicrobial columns with [as.rsi()].
 #' @inheritParams utils::read.table
-#' @param info a logical to indicate whether info about the import should be printed, defaults to \code{TRUE} in interactive sessions
+#' @param info a logical to indicate whether info about the import should be printed, defaults to `TRUE` in interactive sessions
 #' @details Column names will be transformed, but the original column names are set as a "label" attribute and can be seen in e.g. RStudio Viewer.
 #' @inheritSection AMR Read more on our website!
 #' @export
@@ -84,7 +84,7 @@ read.4D <- function(file,
 
   colnames(data_4D) <- tolower(colnames(data_4D))
   if (all(c("afnamedat", "gebdatum") %in% colnames(data_4D))) {
-    # add age
+    # add age column
     data_4D$age <- NA_integer_
   }
   cols_wanted <- c("patientnr", "gebdatum", "age", "mv", "monsternr", "afnamedat", "bepaling",

@@ -21,16 +21,16 @@
 
 #' Class 'mic'
 #'
-#' This transforms a vector to a new class \code{mic}, which is an ordered factor with valid MIC values as levels. Invalid MIC values will be translated as \code{NA} with a warning.
+#' This transforms a vector to a new class [`mic`], which is an ordered [`factor`] with valid MIC values as levels. Invalid MIC values will be translated as `NA` with a warning.
 #' @rdname as.mic
 #' @param x vector
 #' @param na.rm a logical indicating whether missing values should be removed
-#' @details Interpret MIC values as RSI values with \code{\link{as.rsi}}. It supports guidelines from EUCAST and CLSI.
-#' @return Ordered factor with new class \code{mic}
+#' @details To interpret MIC values as RSI values, use [as.rsi()] on MIC values. It supports guidelines from EUCAST and CLSI.
+#' @return Ordered [`factor`] with new class [`mic`]
 #' @aliases MIC
 #' @export
 #' @importFrom dplyr %>%
-#' @seealso \code{\link{as.rsi}}
+#' @seealso [as.rsi()]
 #' @inheritSection AMR Read more on our website!
 #' @examples
 #' mic_data <- as.mic(c(">=32", "1.0", "1", "1.00", 8, "<=0.128", "8", "16", "16"))

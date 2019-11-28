@@ -51,7 +51,7 @@
   <script src="../extra.js"></script>
 
 <meta property="og:title" content="Pattern Matching — like" />
-<meta property="og:description" content="Convenient wrapper around grep to match a pattern: a %like% b. It always returns a logical vector and is always case-insensitive (use a %like_case% b for case-sensitive matching). Also, pattern (b) can be as long as x (a) to compare items of each index in both vectors, or can both have the same length to iterate over all cases." />
+<meta property="og:description" content="Convenient wrapper around base::grep() to match a pattern: a %like% b. It always returns a logical vector and is always case-insensitive (use a %like_case% b for case-sensitive matching). Also, pattern (b) can be as long as x (a) to compare items of each index in both vectors, or can both have the same length to iterate over all cases." />
 <meta property="og:image" content="https://msberends.gitlab.io/AMR/logo.png" />
 <meta name="twitter:card" content="summary" />
 
@@ -85,7 +85,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">0.8.0.9032</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">0.8.0.9036</span>
       </span>
     </div>
 
@@ -234,7 +234,7 @@
     </div>
 
     <div class="ref-description">
-    <p>Convenient wrapper around <code><a href='https://rdrr.io/r/base/grep.html'>grep</a></code> to match a pattern: <code>a %like% b</code>. It always returns a <code>logical</code> vector and is always case-insensitive (use <code>a %like_case% b</code> for case-sensitive matching). Also, <code>pattern</code> (<code>b</code>) can be as long as <code>x</code> (<code>a</code>) to compare items of each index in both vectors, or can both have the same length to iterate over all cases.</p>
+    <p>Convenient wrapper around <code><a href='https://rdrr.io/r/base/grep.html'>base::grep()</a></code> to match a pattern: <code>a %like% b</code>. It always returns a <code><a href='https://rdrr.io/r/base/logical.html'>logical</a></code> vector and is always case-insensitive (use <code>a %like_case% b</code> for case-sensitive matching). Also, <code>pattern</code> (<em>b</em>) can be as long as <code>x</code> (<em>a</em>) to compare items of each index in both vectors, or can both have the same length to iterate over all cases.</p>
     </div>
 
     <pre class="usage"><span class='fu'>like</span>(<span class='no'>x</span>, <span class='no'>pattern</span>, <span class='kw'>ignore.case</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
@@ -274,10 +274,10 @@
     <p>Idea from the <a href='https://github.com/Rdatatable/data.table/blob/master/R/like.R'><code>like</code> function from the <code>data.table</code> package</a>, but made it case insensitive at default and let it support multiple patterns. Also, if the regex fails the first time, it tries again with <code>perl = TRUE</code>.</p>
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A <code>logical</code> vector</p>
+    <p>A <code><a href='https://rdrr.io/r/base/logical.html'>logical</a></code> vector</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>Using RStudio? This function can also be inserted from the Addins menu and can have its own Keyboard Shortcut like Ctrl+Shift+L or Cmd+Shift+L (see Tools &gt; Modify Keyboard Shortcuts...).</p>
+    <p>Using RStudio? This function can also be inserted from the Addins menu and can have its own Keyboard Shortcut like <code>Ctrl+Shift+L</code> or <code>Cmd+Shift+L</code> (see <code>Tools</code> &gt; <code>Modify Keyboard Shortcuts...</code>).</p>
     <h2 class="hasAnchor" id="read-more-on-our-website-"><a class="anchor" href="#read-more-on-our-website-"></a>Read more on our website!</h2>
 
     
@@ -285,7 +285,7 @@
 <p>On our website <a href='https://msberends.gitlab.io/AMR'>https://msberends.gitlab.io/AMR</a> you can find <a href='https://msberends.gitlab.io/AMR/articles/AMR.html'>a tutorial</a> about how to conduct AMR analysis, the <a href='https://msberends.gitlab.io/AMR/reference'>complete documentation of all functions</a> (which reads a lot easier than here in R) and <a href='https://msberends.gitlab.io/AMR/articles/WHONET.html'>an example analysis using WHONET data</a>.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><code><a href='https://rdrr.io/r/base/grep.html'>grep</a></code></p></div>
+    <div class='dont-index'><p><code><a href='https://rdrr.io/r/base/grep.html'>base::grep()</a></code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><span class='co'># simple test</span>

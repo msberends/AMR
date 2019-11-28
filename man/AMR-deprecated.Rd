@@ -8,6 +8,7 @@
 \alias{portion_I}
 \alias{portion_SI}
 \alias{portion_S}
+\alias{portion_df}
 \title{Deprecated functions}
 \usage{
 p.symbol(...)
@@ -21,6 +22,8 @@ portion_I(...)
 portion_SI(...)
 
 portion_S(...)
+
+portion_df(...)
 }
 \description{
 These functions are so-called '\link{Deprecated}'. They will be removed in a future release. Using the functions will give a warning with the name of the function it has been replaced by (if there is one).

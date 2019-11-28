@@ -21,36 +21,33 @@
 
 #' Property of a microorganism
 #'
-#' Use these functions to return a specific property of a microorganism. All input values will be evaluated internally with \code{\link{as.mo}}, which makes it possible for input of these functions to use microbial abbreviations, codes and names. See Examples.
-#' @param x any (vector of) text that can be coerced to a valid microorganism code with \code{\link{as.mo}}
-#' @param property one of the column names of the \code{\link{microorganisms}} data set or \code{"shortname"}
-#' @param language language of the returned text, defaults to system language (see \code{\link{get_locale}}) and can also be set with \code{\link{getOption}("AMR_locale")}. Use \code{language = NULL} or \code{language = ""} to prevent translation.
-#' @param ... other parameters passed on to \code{\link{as.mo}}
-#' @param open browse the URL using \code{\link[utils]{browseURL}()}
-#' @details All functions will return the most recently known taxonomic property according to the Catalogue of Life, except for \code{mo_ref}, \code{mo_authors} and \code{mo_year}. This leads to the following results:
-#' \itemize{
-#'   \item{\code{mo_name("Chlamydia psittaci")} will return \code{"Chlamydophila psittaci"} (with a warning about the renaming)}
-#'   \item{\code{mo_ref("Chlamydia psittaci")} will return \code{"Page, 1968"} (with a warning about the renaming)}
-#'   \item{\code{mo_ref("Chlamydophila psittaci")} will return \code{"Everett et al., 1999"} (without a warning)}
-#' }
+#' Use these functions to return a specific property of a microorganism. All input values will be evaluated internally with [as.mo()], which makes it possible for input of these functions to use microbial abbreviations, codes and names. See Examples.
+#' @param x any (vector of) text that can be coerced to a valid microorganism code with [as.mo()]
+#' @param property one of the column names of the [microorganisms] data set or `"shortname"`
+#' @param language language of the returned text, defaults to system language (see [get_locale()]) and can also be set with `getOption("AMR_locale")`. Use `language = NULL` or `language = ""` to prevent translation.
+#' @param ... other parameters passed on to [as.mo()]
+#' @param open browse the URL using [utils::browseURL()]
+#' @details All functions will return the most recently known taxonomic property according to the Catalogue of Life, except for [mo_ref()], [mo_authors()] and [mo_year()]. This leads to the following results:
+#' - `mo_name("Chlamydia psittaci")` will return `"Chlamydophila psittaci"` (with a warning about the renaming)
+#' - `mo_ref("Chlamydia psittaci")` will return `"Page, 1968"` (with a warning about the renaming)
+#' - `mo_ref("Chlamydophila psittaci")` will return `"Everett et al., 1999"` (without a warning)
 #'
-#' The Gram stain - \code{mo_gramstain()} - will be determined on the taxonomic kingdom and phylum. According to Cavalier-Smith (2002) who defined subkingdoms Negibacteria and Posibacteria, only these phyla are Posibacteria: Actinobacteria, Chloroflexi, Firmicutes and Tenericutes. These bacteria are considered Gram positive - all other bacteria are considered Gram negative. Species outside the kingdom of Bacteria will return a value \code{NA}.
+#' The Gram stain - [mo_gramstain()] - will be determined on the taxonomic kingdom and phylum. According to Cavalier-Smith (2002) who defined subkingdoms Negibacteria and Posibacteria, only these phyla are Posibacteria: Actinobacteria, Chloroflexi, Firmicutes and Tenericutes. These bacteria are considered Gram positive - all other bacteria are considered Gram negative. Species outside the kingdom of Bacteria will return a value `NA`.
 #'
-#' All output will be \link{translate}d where possible.
+#' All output will be [translate]d where possible.
 #'
-#' The function \code{mo_url()} will return the direct URL to the online database entry, which also shows the scientific reference of the concerned species.
+#' The function [mo_url()] will return the direct URL to the online database entry, which also shows the scientific reference of the concerned species.
 #' @inheritSection catalogue_of_life Catalogue of Life
 #' @inheritSection as.mo Source
 #' @rdname mo_property
 #' @name mo_property
-#' @return \itemize{
-#'   \item{An \code{integer} in case of \code{mo_year}}
-#'   \item{A \code{list} in case of \code{mo_taxonomy}}
-#'   \item{A named \code{character} in case of \code{mo_url}}
-#'   \item{A \code{character} in all other cases}
-#' }
+#' @return
+#' - An [`integer`] in case of [mo_year()]
+#' - A [`list`] in case of [mo_taxonomy()]
+#' - A named [`character`] in case of [mo_url()]
+#' - A [`character`] in all other cases
 #' @export
-#' @seealso \code{\link{microorganisms}}
+#' @seealso [microorganisms]
 #' @inheritSection AMR Read more on our website!
 #' @examples
 #' # taxonomic tree -----------------------------------------------------------
@@ -132,7 +129,7 @@
 #'
 #' # get a list with the complete taxonomy (from kingdom to subspecies)
 #' mo_taxonomy("E. coli")
-#' # get a list with the taxonomy, the authors and the URL to the online database
+#' # get a list with the taxonomy, the authors, Gram-stain and URL to the online database
 #' mo_info("E. coli")
 #' }
 mo_name <- function(x, language = get_locale(), ...) {
@@ -336,6 +333,7 @@ mo_info <- function(x, language = get_locale(),  ...) {
   info <- lapply(x, function(y)
     c(mo_taxonomy(y, language = language),
       list(synonyms = mo_synonyms(y),
+           gramstain = mo_gramstain(y, language = language),
            url = unname(mo_url(y, open = FALSE)),
            ref = mo_ref(y))))
   if (length(info) > 1) {

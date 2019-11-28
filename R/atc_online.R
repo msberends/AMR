@@ -21,43 +21,43 @@
 
 #' Get ATC properties from WHOCC website
 #'
-#' Gets data from the WHO to determine properties of an ATC (e.g. an antibiotic) like name, defined daily dose (DDD) or standard unit. \cr \strong{This function requires an internet connection.}
+#' @description Gets data from the WHO to determine properties of an ATC (e.g. an antibiotic) like name, defined daily dose (DDD) or standard unit.
+#' 
+#' **This function requires an internet connection.**
 #' @param atc_code a character or character vector with ATC code(s) of antibiotic(s)
-#' @param property property of an ATC code. Valid values are \code{"ATC"}, \code{"Name"}, \code{"DDD"}, \code{"U"} (\code{"unit"}), \code{"Adm.R"}, \code{"Note"} and \code{groups}. For this last option, all hierarchical groups of an ATC code will be returned, see Examples.
-#' @param administration type of administration when using \code{property = "Adm.R"}, see Details
-#' @param url url of website of the WHO. The sign \code{\%s} can be used as a placeholder for ATC codes.
-#' @param ... parameters to pass on to \code{atc_property}
+#' @param property property of an ATC code. Valid values are `"ATC"`, `"Name"`, `"DDD"`, `"U"` (`"unit"`), `"Adm.R"`, `"Note"` and `groups`. For this last option, all hierarchical groups of an ATC code will be returned, see Examples.
+#' @param administration type of administration when using `property = "Adm.R"`, see Details
+#' @param url url of website of the WHO. The sign `%s` can be used as a placeholder for ATC codes.
+#' @param ... parameters to pass on to `atc_property`
 #' @details
-#' Options for parameter \code{administration}:
-#' \itemize{
-#'   \item{\code{"Implant"}}{ = Implant}
-#'   \item{\code{"Inhal"}}{ = Inhalation}
-#'   \item{\code{"Instill"}}{ = Instillation}
-#'   \item{\code{"N"}}{ = nasal}
-#'   \item{\code{"O"}}{ = oral}
-#'   \item{\code{"P"}}{ = parenteral}
-#'   \item{\code{"R"}}{ = rectal}
-#'   \item{\code{"SL"}}{ = sublingual/buccal}
-#'   \item{\code{"TD"}}{ = transdermal}
-#'   \item{\code{"V"}}{ = vaginal}
-#' }
+#' Options for parameter `administration`:
+#' 
+#' - `"Implant"` = Implant
+#' - `"Inhal"` = Inhalation
+#' - `"Instill"` = Instillation
+#' - `"N"` = nasal
+#' - `"O"` = oral
+#' - `"P"` = parenteral
+#' - `"R"` = rectal
+#' - `"SL"` = sublingual/buccal
+#' - `"TD"` = transdermal
+#' - `"V"` = vaginal
 #'
-#' Abbreviations of return values when using \code{property = "U"} (unit):
-#' \itemize{
-#'   \item{\code{"g"}}{ = gram}
-#'   \item{\code{"mg"}}{ = milligram}
-#'   \item{\code{"mcg"}}{ = microgram}
-#'   \item{\code{"U"}}{ = unit}
-#'   \item{\code{"TU"}}{ = thousand units}
-#'   \item{\code{"MU"}}{ = million units}
-#'   \item{\code{"mmol"}}{ = millimole}
-#'   \item{\code{"ml"}}{ = milliliter (e.g. eyedrops)}
-#' }
+#' Abbreviations of return values when using `property = "U"` (unit):
+#' 
+#' - `"g"` = gram
+#' - `"mg"` = milligram
+#' - `"mcg"`` = microgram
+#' - `"U"` = unit
+#' - `"TU"` = thousand units
+#' - `"MU"` = million units
+#' - `"mmol"` = millimole
+#' - `"ml"` = milliliter (e.g. eyedrops)
 #' @export
 #' @rdname atc_online
 #' @importFrom dplyr %>% progress_estimated
 #' @inheritSection AMR Read more on our website!
-#' @source \url{https://www.whocc.no/atc_ddd_alterations__cumulative/ddd_alterations/abbrevations/}
+#' @source <https://www.whocc.no/atc_ddd_alterations__cumulative/ddd_alterations/abbrevations/>
 #' @examples
 #' \donttest{
 #' # oral DDD (Defined Daily Dose) of amoxicillin

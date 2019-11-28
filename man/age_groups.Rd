@@ -7,7 +7,7 @@
 age_groups(x, split_at = c(12, 25, 55, 75), na.rm = FALSE)
 }
 \arguments{
-\item{x}{age, e.g. calculated with \code{\link{age}}}
+\item{x}{age, e.g. calculated with \code{\link[=age]{age()}}}
 
 \item{split_at}{values to split \code{x} at, defaults to age groups 0-11, 12-24, 25-54, 55-74 and 75+. See Details.}
 
@@ -22,15 +22,15 @@ Split ages into age groups defined by the \code{split} parameter. This allows fo
 \details{
 To split ages, the input can be:
 \itemize{
-  \item{A numeric vector. A vector of e.g. \code{c(10, 20)} will split on 0-9, 10-19 and 20+. A value of only \code{50} will split on 0-49 and 50+.
-        The default is to split on young children (0-11), youth (12-24), young adults (25-54), middle-aged adults (55-74) and elderly (75+).}
-  \item{A character:}
-    \itemize{
-      \item{\code{"children"} or \code{"kids"}, equivalent of: \code{c(0, 1, 2, 4, 6, 13, 18)}. This will split on 0, 1, 2-3, 4-5, 6-12, 13-17 and 18+.}
-      \item{\code{"elderly"} or \code{"seniors"}, equivalent of: \code{c(65, 75, 85)}. This will split on 0-64, 65-74, 75-84, 85+.}
-      \item{\code{"fives"}, equivalent of: \code{1:20 * 5}. This will split on 0-4, 5-9, 10-14, ..., 90-94, 95-99, 100+.}
-      \item{\code{"tens"}, equivalent of: \code{1:10 * 10}. This will split on 0-9, 10-19, 20-29, ... 80-89, 90-99, 100+.}
-    }
+\item A numeric vector. A vector of e.g. \code{c(10, 20)} will split on 0-9, 10-19 and 20+. A value of only \code{50} will split on 0-49 and 50+.
+The default is to split on young children (0-11), youth (12-24), young adults (25-54), middle-aged adults (55-74) and elderly (75+).
+\item A character:
+\itemize{
+\item \code{"children"} or \code{"kids"}, equivalent of: \code{c(0, 1, 2, 4, 6, 13, 18)}. This will split on 0, 1, 2-3, 4-5, 6-12, 13-17 and 18+.
+\item \code{"elderly"} or \code{"seniors"}, equivalent of: \code{c(65, 75, 85)}. This will split on 0-64, 65-74, 75-84, 85+.
+\item \code{"fives"}, equivalent of: \code{1:20 * 5}. This will split on 0-4, 5-9, 10-14, ..., 90-94, 95-99, 100+.
+\item \code{"tens"}, equivalent of: \code{1:10 * 10}. This will split on 0-9, 10-19, 20-29, ... 80-89, 90-99, 100+.
+}
 }
 }
 \section{Read more on our website!}{
@@ -72,5 +72,5 @@ example_isolates \%>\%
 }
 }
 \seealso{
-To determine ages, based on one or more reference dates, use the \code{\link{age}} function.
+To determine ages, based on one or more reference dates, use the \code{\link[=age]{age()}} function.
 }

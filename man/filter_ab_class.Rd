@@ -45,7 +45,7 @@ filter_tetracyclines(x, result = NULL, scope = "any", ...)
 \arguments{
 \item{x}{a data set}
 
-\item{ab_class}{an antimicrobial class, like \code{"carbapenems"}, as can be found in \code{AMR::antibiotics$group}}
+\item{ab_class}{an antimicrobial class, like \code{"carbapenems"}, as can be found in \code{\link[=antibiotics]{AMR::antibiotics$group}}}
 
 \item{result}{an antibiotic result: S, I or R (or a combination of more of them)}
 
@@ -57,7 +57,7 @@ filter_tetracyclines(x, result = NULL, scope = "any", ...)
 Filter isolates on results in specific antibiotic variables based on their class (ATC groups). This makes it easy to get a list of isolates that were tested for e.g. any aminoglycoside.
 }
 \details{
-The \code{group} column in \code{\link{antibiotics}} data set will be searched for \code{ab_class} (case-insensitive). If no results are found, the \code{atc_group1} and \code{atc_group2} columns will be searched. Next, \code{x} will be checked for column names with a value in any abbreviations, codes or official names found in the \code{antibiotics} data set.
+The \code{group} column in \link{antibiotics} data set will be searched for \code{ab_class} (case-insensitive). If no results are found, the \code{atc_group1} and \code{atc_group2} columns will be searched. Next, \code{x} will be checked for column names with a value in any abbreviations, codes or official names found in the \link{antibiotics} data set.
 }
 \examples{
 library(dplyr)

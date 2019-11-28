@@ -5,22 +5,22 @@
 \alias{microorganisms.codes}
 \title{Translation table for common microorganism codes}
 \format{A \code{\link{data.frame}} with 5,433 observations and 2 variables:
-\describe{
-  \item{\code{code}}{Commonly used code of a microorganism}
-  \item{\code{mo}}{ID of the microorganism in the \code{\link{microorganisms}} data set}
+\itemize{
+\item \code{code}\cr Commonly used code of a microorganism
+\item \code{mo}\cr ID of the microorganism in the \link{microorganisms} data set
 }}
 \usage{
 microorganisms.codes
 }
 \description{
-A data set containing commonly used codes for microorganisms, from laboratory systems and WHONET. Define your own with \code{\link{set_mo_source}}.
+A data set containing commonly used codes for microorganisms, from laboratory systems and WHONET. Define your own with \code{\link[=set_mo_source]{set_mo_source()}}.
 }
 \section{Catalogue of Life}{
 
 \if{html}{\figure{logo_col.png}{options: height=40px style=margin-bottom:5px} \cr}
 This package contains the complete taxonomic tree of almost all microorganisms (~70,000 species) from the authoritative and comprehensive Catalogue of Life (\url{http://www.catalogueoflife.org}). The Catalogue of Life is the most comprehensive and authoritative global index of species currently available.
 
-\link[=catalogue_of_life]{Click here} for more information about the included taxa. Check which version of the Catalogue of Life was included in this package with \code{\link{catalogue_of_life_version}()}.
+\link[=catalogue_of_life]{Click here} for more information about the included taxa. Check which version of the Catalogue of Life was included in this package with \code{\link[=catalogue_of_life_version]{catalogue_of_life_version()}}.
 }
 
 \section{Read more on our website!}{
@@ -29,6 +29,6 @@ On our website \url{https://msberends.gitlab.io/AMR} you can find \href{https://
 }
 
 \seealso{
-\code{\link{as.mo}} \code{\link{microorganisms}}
+\code{\link[=as.mo]{as.mo()}} \link{microorganisms}
 }
 \keyword{datasets}

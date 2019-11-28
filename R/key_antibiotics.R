@@ -19,33 +19,54 @@
 # Visit our website for more info: https://msberends.gitlab.io/AMR.    #
 # ==================================================================== #
 
-#' Key antibiotics for first \emph{weighted} isolates
+#' Key antibiotics for first *weighted* isolates
 #'
-#' These function can be used to determine first isolates (see \code{\link{first_isolate}}). Using key antibiotics to determine first isolates is more reliable than without key antibiotics. These selected isolates will then be called first \emph{weighted} isolates.
-#' @param x table with antibiotics coloms, like \code{AMX} or \code{amox}
+#' These function can be used to determine first isolates (see [first_isolate()]). Using key antibiotics to determine first isolates is more reliable than without key antibiotics. These selected isolates will then be called first *weighted* isolates.
+#' @param x table with antibiotics coloms, like `AMX` or `amox`
 #' @param y,z characters to compare
 #' @inheritParams first_isolate
-#' @param universal_1,universal_2,universal_3,universal_4,universal_5,universal_6 column names of \strong{broad-spectrum} antibiotics, case-insensitive. At default, the columns containing these antibiotics will be guessed with \code{\link{guess_ab_col}}.
-#' @param GramPos_1,GramPos_2,GramPos_3,GramPos_4,GramPos_5,GramPos_6 column names of antibiotics for \strong{Gram-positives}, case-insensitive. At default, the columns containing these antibiotics will be guessed with \code{\link{guess_ab_col}}.
-#' @param GramNeg_1,GramNeg_2,GramNeg_3,GramNeg_4,GramNeg_5,GramNeg_6 column names of antibiotics for \strong{Gram-negatives}, case-insensitive. At default, the columns containing these antibiotics will be guessed with \code{\link{guess_ab_col}}.
+#' @param universal_1,universal_2,universal_3,universal_4,universal_5,universal_6 column names of **broad-spectrum** antibiotics, case-insensitive. At default, the columns containing these antibiotics will be guessed with [guess_ab_col()].
+#' @param GramPos_1,GramPos_2,GramPos_3,GramPos_4,GramPos_5,GramPos_6 column names of antibiotics for **Gram-positives**, case-insensitive. At default, the columns containing these antibiotics will be guessed with [guess_ab_col()].
+#' @param GramNeg_1,GramNeg_2,GramNeg_3,GramNeg_4,GramNeg_5,GramNeg_6 column names of antibiotics for **Gram-negatives**, case-insensitive. At default, the columns containing these antibiotics will be guessed with [guess_ab_col()].
 #' @param warnings give warning about missing antibiotic columns, they will anyway be ignored
 #' @param ... other parameters passed on to function
-#' @details The function \code{key_antibiotics} returns a character vector with 12 antibiotic results for every isolate. These isolates can then be compared using \code{key_antibiotics_equal}, to check if two isolates have generally the same antibiogram. Missing and invalid values are replaced with a dot (\code{"."}). The \code{\link{first_isolate}} function only uses this function on the same microbial species from the same patient. Using this, an MRSA will be included after a susceptible \emph{S. aureus} (MSSA) found within the same episode (see \code{episode} parameter of \code{\link{first_isolate}}). Without key antibiotic comparison it would not.
+#' @details The function [key_antibiotics()] returns a character vector with 12 antibiotic results for every isolate. These isolates can then be compared using [key_antibiotics_equal()], to check if two isolates have generally the same antibiogram. Missing and invalid values are replaced with a dot (`"."`). The [first_isolate()] function only uses this function on the same microbial species from the same patient. Using this, an MRSA will be included after a susceptible *S. aureus* (MSSA) found within the same episode (see `episode` parameter of [first_isolate()]). Without key antibiotic comparison it would not.
 #'
-#'   At default, the antibiotics that are used for \strong{Gram-positive bacteria} are: \cr
-#'   amoxicillin, amoxicillin/clavulanic acid, cefuroxime, piperacillin/tazobactam, ciprofloxacin, trimethoprim/sulfamethoxazole (until here is universal), vancomycin, teicoplanin, tetracycline, erythromycin, oxacillin, rifampin.
+#' At default, the antibiotics that are used for **Gram-positive bacteria** are:
+#' - Amoxicillin
+#' - Amoxicillin/clavulanic acid
+#' - Cefuroxime
+#' - Piperacillin/tazobactam
+#' - Ciprofloxacin
+#' - Trimethoprim/sulfamethoxazole
+#' - Vancomycin
+#' - Teicoplanin
+#' - Tetracycline
+#' - Erythromycin
+#' - Oxacillin
+#' - Rifampin
 #'
-#'   At default, the antibiotics that are used for \strong{Gram-negative bacteria} are: \cr
-#'   amoxicillin, amoxicillin/clavulanic acid, cefuroxime, piperacillin/tazobactam, ciprofloxacin, trimethoprim/sulfamethoxazole (until here is universal), gentamicin, tobramycin, colistin, cefotaxime, ceftazidime, meropenem.
-#'
-#'
-#'   The function \code{key_antibiotics_equal} checks the characters returned by \code{key_antibiotics} for equality, and returns a logical vector.
+#' At default the antibiotics that are used for **Gram-negative bacteria** are:
+#' - Amoxicillin
+#' - Amoxicillin/clavulanic acid
+#' - Cefuroxime
+#' - Piperacillin/tazobactam
+#' - Ciprofloxacin
+#' - Trimethoprim/sulfamethoxazole
+#' - Gentamicin
+#' - Tobramycin
+#' - Colistin
+#' - Cefotaxime
+#' - Ceftazidime
+#' - Meropenem
+#' 
+#' The function [key_antibiotics_equal()] checks the characters returned by [key_antibiotics()] for equality, and returns a [`logical`] vector.
 #' @inheritSection first_isolate Key antibiotics
 #' @rdname key_antibiotics
 #' @export
 #' @importFrom dplyr %>% mutate if_else pull
 #' @importFrom crayon blue bold
-#' @seealso \code{\link{first_isolate}}
+#' @seealso [first_isolate()]
 #' @inheritSection AMR Read more on our website!
 #' @examples
 #' # `example_isolates` is a dataset available in the AMR package.

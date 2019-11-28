@@ -85,7 +85,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">0.8.0.9032</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">0.8.0.9036</span>
       </span>
     </div>
 
@@ -234,7 +234,7 @@
     </div>
 
     <div class="ref-description">
-    <p>This example data set has the exact same structure as an export file from WHONET. Such files can be used with this package, as this example data set shows. The data itself was based on our <code><a href='example_isolates.html'>example_isolates</a></code> data set.</p>
+    <p>This example data set has the exact same structure as an export file from WHONET. Such files can be used with this package, as this example data set shows. The data itself was based on our <a href='example_isolates.html'>example_isolates</a> data set.</p>
     </div>
 
     <pre class="usage"><span class='no'>WHONET</span></pre>
@@ -242,35 +242,34 @@
 
     <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
 
-    <p>A <code><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></code> with 500 observations and 53 variables:</p><dl class='dl-horizontal'>
-  <dt><code>Identification number</code></dt><dd><p>ID of the sample</p></dd>
-  <dt><code>Specimen number</code></dt><dd><p>ID of the specimen</p></dd>
-  <dt><code>Organism</code></dt><dd><p>Name of the microorganism. Before analysis, you should transform this to a valid microbial class, using <code><a href='as.mo.html'>as.mo</a></code>.</p></dd>
-  <dt><code>Country</code></dt><dd><p>Country of origin</p></dd>
-  <dt><code>Laboratory</code></dt><dd><p>Name of laboratory</p></dd>
-  <dt><code>Last name</code></dt><dd><p>Last name of patient</p></dd>
-  <dt><code>First name</code></dt><dd><p>Initial of patient</p></dd>
-  <dt><code>Sex</code></dt><dd><p>Gender of patient</p></dd>
-  <dt><code>Age</code></dt><dd><p>Age of patient</p></dd>
-  <dt><code>Age category</code></dt><dd><p>Age group, can also be looked up using <code><a href='age_groups.html'>age_groups</a></code></p></dd>
-  <dt><code>Date of admission</code></dt><dd><p>Date of hospital admission</p></dd>
-  <dt><code>Specimen date</code></dt><dd><p>Date when specimen was received at laboratory</p></dd>
-  <dt><code>Specimen type</code></dt><dd><p>Specimen type or group</p></dd>
-  <dt><code>Specimen type (Numeric)</code></dt><dd><p>Translation of <code>"Specimen type"</code></p></dd>
-  <dt><code>Reason</code></dt><dd><p>Reason of request with Differential Diagnosis</p></dd>
-  <dt><code>Isolate number</code></dt><dd><p>ID of isolate</p></dd>
-  <dt><code>Organism type</code></dt><dd><p>Type of microorganism, can also be looked up using <code><a href='mo_property.html'>mo_type</a></code></p></dd>
-  <dt><code>Serotype</code></dt><dd><p>Serotype of microorganism</p></dd>
-  <dt><code>Beta-lactamase</code></dt><dd><p>Microorganism produces beta-lactamase?</p></dd>
-  <dt><code>ESBL</code></dt><dd><p>Microorganism produces extended spectrum beta-lactamase?</p></dd>
-  <dt><code>Carbapenemase</code></dt><dd><p>Microorganism produces carbapenemase?</p></dd>
-  <dt><code>MRSA screening test</code></dt><dd><p>Microorganism is possible MRSA?</p></dd>
-  <dt><code>Inducible clindamycin resistance</code></dt><dd><p>Clindamycin can be induced?</p></dd>
-  <dt><code>Comment</code></dt><dd><p>Other comments</p></dd>
-  <dt><code>Date of data entry</code></dt><dd><p>Date this data was entered in WHONET</p></dd>
-  <dt><code>AMP_ND10:CIP_EE</code></dt><dd><p>27 different antibiotics. You can lookup the abbreviatons in the <code><a href='antibiotics.html'>antibiotics</a></code> data set, or use e.g. <code><a href='ab_property.html'>ab_name</a>("AMP")</code> to get the official name immediately. Before analysis, you should transform this to a valid antibiotic class, using <code><a href='as.rsi.html'>as.rsi</a></code>.</p></dd>
-
-</dl>
+    <p>A <code><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></code> with 500 observations and 53 variables:</p><ul>
+<li><p><code>Identification number</code><br /> ID of the sample</p></li>
+<li><p><code>Specimen number</code><br /> ID of the specimen</p></li>
+<li><p><code>Organism</code><br /> Name of the microorganism. Before analysis, you should transform this to a valid microbial class, using <code><a href='as.mo.html'>as.mo()</a></code>.</p></li>
+<li><p><code>Country</code><br /> Country of origin</p></li>
+<li><p><code>Laboratory</code><br /> Name of laboratory</p></li>
+<li><p><code>Last name</code><br /> Last name of patient</p></li>
+<li><p><code>First name</code><br /> Initial of patient</p></li>
+<li><p><code>Sex</code><br /> Gender of patient</p></li>
+<li><p><code>Age</code><br /> Age of patient</p></li>
+<li><p><code>Age category</code><br /> Age group, can also be looked up using <code><a href='age_groups.html'>age_groups()</a></code></p></li>
+<li><p><code>Date of admission</code><br /> Date of hospital admission</p></li>
+<li><p><code>Specimen date</code><br /> Date when specimen was received at laboratory</p></li>
+<li><p><code>Specimen type</code><br /> Specimen type or group</p></li>
+<li><p><code>Specimen type (Numeric)</code><br /> Translation of <code>"Specimen type"</code></p></li>
+<li><p><code>Reason</code><br /> Reason of request with Differential Diagnosis</p></li>
+<li><p><code>Isolate number</code><br /> ID of isolate</p></li>
+<li><p><code>Organism type</code><br /> Type of microorganism, can also be looked up using <code><a href='mo_property.html'>mo_type()</a></code></p></li>
+<li><p><code>Serotype</code><br /> Serotype of microorganism</p></li>
+<li><p><code>Beta-lactamase</code><br /> Microorganism produces beta-lactamase?</p></li>
+<li><p><code>ESBL</code><br /> Microorganism produces extended spectrum beta-lactamase?</p></li>
+<li><p><code>Carbapenemase</code><br /> Microorganism produces carbapenemase?</p></li>
+<li><p><code>MRSA screening test</code><br /> Microorganism is possible MRSA?</p></li>
+<li><p><code>Inducible clindamycin resistance</code><br /> Clindamycin can be induced?</p></li>
+<li><p><code>Comment</code><br /> Other comments</p></li>
+<li><p><code>Date of data entry</code><br /> Date this data was entered in WHONET</p></li>
+<li><p><code>AMP_ND10:CIP_EE</code><br /> 27 different antibiotics. You can lookup the abbreviatons in the <a href='antibiotics.html'>antibiotics</a> data set, or use e.g. <code><a href='ab_property.html'>ab_name("AMP")</a></code> to get the official name immediately. Before analysis, you should transform this to a valid antibiotic class, using <code><a href='as.rsi.html'>as.rsi()</a></code>.</p></li>
+</ul>
     <h2 class="hasAnchor" id="read-more-on-our-website-"><a class="anchor" href="#read-more-on-our-website-"></a>Read more on our website!</h2>
 
     

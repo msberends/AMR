@@ -19,17 +19,17 @@
 # Visit our website for more info: https://msberends.gitlab.io/AMR.    #
 # ==================================================================== #
 
-#' Join a table with \code{microorganisms}
+#' Join a table with [microorganisms]
 #'
-#' Join the dataset \code{\link{microorganisms}} easily to an existing table or character vector.
+#' Join the data set [microorganisms] easily to an existing table or character vector.
 #' @rdname join
 #' @name join
 #' @aliases join inner_join
 #' @param x existing table to join, or character vector
-#' @param by a variable to join by - if left empty will search for a column with class \code{mo} (created with \code{\link{as.mo}}) or will be \code{"mo"} if that column name exists in \code{x}, could otherwise be a column name of \code{x} with values that exist in \code{microorganisms$mo} (like \code{by = "bacteria_id"}), or another column in \code{\link{microorganisms}} (but then it should be named, like \code{by = c("my_genus_species" = "fullname")})
-#' @param suffix if there are non-joined duplicate variables in \code{x} and \code{y}, these suffixes will be added to the output to disambiguate them. Should be a character vector of length 2.
-#' @param ... other parameters to pass on to \code{dplyr::\link[dplyr]{join}}.
-#' @details \strong{Note:} As opposed to the \code{\link[dplyr]{join}} functions of \code{dplyr}, characters vectors are supported and at default existing columns will get a suffix \code{"2"} and the newly joined columns will not get a suffix. See \code{\link[dplyr]{join}} for more information.
+#' @param by a variable to join by - if left empty will search for a column with class [`mo`] (created with [as.mo()]) or will be `"mo"` if that column name exists in `x`, could otherwise be a column name of `x` with values that exist in `microorganisms$mo` (like `by = "bacteria_id"`), or another column in [microorganisms] (but then it should be named, like `by = c("my_genus_species" = "fullname")`)
+#' @param suffix if there are non-joined duplicate variables in `x` and `y`, these suffixes will be added to the output to disambiguate them. Should be a character vector of length 2.
+#' @param ... other parameters to pass on to [dplyr::join()]
+#' @details **Note:** As opposed to the [dplyr::join()] functions of `dplyr`, [`characters`] vectors are supported and at default existing columns will get a suffix `"2"` and the newly joined columns will not get a suffix. See [dplyr::join()] for more information.
 #' @inheritSection AMR Read more on our website!
 #' @export
 #' @examples

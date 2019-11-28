@@ -16,7 +16,7 @@ eucast_rules_file$reference.rule_group <- factor(eucast_rules_file$reference.rul
 eucast_rules_file <- dplyr::arrange(eucast_rules_file,
   reference.rule_group,
   reference.rule)
-
+eucast_rules_file$reference.rule_group <- as.character(eucast_rules_file$reference.rule_group)
 
 # Translations ----
 translations_file <- utils::read.delim(file = "data-raw/translations.tsv",

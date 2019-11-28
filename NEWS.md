@@ -1,5 +1,5 @@
-# AMR 0.8.0.9035
-## <small>Last updated: 24-Nov-2019</small>
+# AMR 0.8.0.9036
+## <small>Last updated: 28-Nov-2019</small>
 
 ### Breaking
 * Adopted Adeolu *et al.* (2016), [PMID 27620848](https://www.ncbi.nlm.nih.gov/pubmed/27620848) for the `microorganisms` data set, which means that the new order Enterobacterales now consists of a part of the existing family Enterobacteriaceae, but that this family has been split into other families as well (like *Morganellaceae* and *Yersiniaceae*). Although published in 2016, this information is not yet in the Catalogue of Life version of 2019. All MDRO determinations with `mdro()` will now use the Enterobacterales order for all guidelines before 2016 that were dependent on the Enterobacteriaceae family.
@@ -58,8 +58,10 @@
 * More robust way of determining valid MIC values
 * Small changed to the `example_isolates` data set to better reflect reality
 * Added more microorganisms codes from laboratory systems (esp. species of *Pseudescherichia* and *Rodentibacter*)
+* Added Gram-stain to `mo_info()`
 
 ### Other
+* Rewrote the complete documentation to markdown format, to be able to use the very latest version of the great [Roxygen2](https://roxygen2.r-lib.org/index.html), released in November 2019. This tremously improved the documentation quality, since the rewrite forced us to go over all texts again and make changes where needed.
 * Change dependency on `clean` to `cleaner`, as this package was renamed accordingly upon CRAN request
 * Added Dr. Sofia Ny as contributor
 

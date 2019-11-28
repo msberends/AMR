@@ -51,7 +51,7 @@
   <script src="../extra.js"></script>
 
 <meta property="og:title" content="Read data from 4D database — read.4D" />
-<meta property="og:description" content="This function is only useful for the MMB department of the UMCG. Use this function to import data by just defining the file parameter. It will automatically transform birth dates and calculate patients age, translate the column names to English, transform the MO codes with as.mo and transform all antimicrobial columns with as.rsi." />
+<meta property="og:description" content="This function is only useful for the MMB department of the UMCG. Use this function to import data by just defining the file parameter. It will automatically transform birth dates and calculate patients age, translate the column names to English, transform the MO codes with as.mo() and transform all antimicrobial columns with as.rsi()." />
 <meta property="og:image" content="https://msberends.gitlab.io/AMR/logo.png" />
 <meta name="twitter:card" content="summary" />
 
@@ -85,7 +85,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">0.8.0.9032</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">0.8.0.9036</span>
       </span>
     </div>
 
@@ -234,14 +234,27 @@
     </div>
 
     <div class="ref-description">
-    <p>This function is only useful for the MMB department of the UMCG. Use this function to <strong>import data by just defining the <code>file</code> parameter</strong>. It will automatically transform birth dates and calculate patients age, translate the column names to English, transform the MO codes with <code><a href='as.mo.html'>as.mo</a></code> and transform all antimicrobial columns with <code><a href='as.rsi.html'>as.rsi</a></code>.</p>
+    <p>This function is only useful for the MMB department of the UMCG. Use this function to <strong>import data by just defining the <code>file</code> parameter</strong>. It will automatically transform birth dates and calculate patients age, translate the column names to English, transform the MO codes with <code><a href='as.mo.html'>as.mo()</a></code> and transform all antimicrobial columns with <code><a href='as.rsi.html'>as.rsi()</a></code>.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>read.4D</span>(<span class='no'>file</span>, <span class='kw'>info</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/interactive.html'>interactive</a></span>(), <span class='kw'>header</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>row.names</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>sep</span> <span class='kw'>=</span> <span class='st'>"\t"</span>, <span class='kw'>quote</span> <span class='kw'>=</span> <span class='st'>"\"'"</span>, <span class='kw'>dec</span> <span class='kw'>=</span> <span class='st'>","</span>, <span class='kw'>na.strings</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"NA"</span>, <span class='st'>""</span>,
-  <span class='st'>"."</span>), <span class='kw'>skip</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>check.names</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>strip.white</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>fill</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>blank.lines.skip</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>stringsAsFactors</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>fileEncoding</span> <span class='kw'>=</span> <span class='st'>"UTF-8"</span>, <span class='kw'>encoding</span> <span class='kw'>=</span> <span class='st'>"UTF-8"</span>)</pre>
+    <pre class="usage"><span class='fu'>read.4D</span>(
+  <span class='no'>file</span>,
+  <span class='kw'>info</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/interactive.html'>interactive</a></span>(),
+  <span class='kw'>header</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>row.names</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>sep</span> <span class='kw'>=</span> <span class='st'>"\t"</span>,
+  <span class='kw'>quote</span> <span class='kw'>=</span> <span class='st'>"\"'"</span>,
+  <span class='kw'>dec</span> <span class='kw'>=</span> <span class='st'>","</span>,
+  <span class='kw'>na.strings</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"NA"</span>, <span class='st'>""</span>, <span class='st'>"."</span>),
+  <span class='kw'>skip</span> <span class='kw'>=</span> <span class='fl'>2</span>,
+  <span class='kw'>check.names</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>strip.white</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>fill</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>blank.lines.skip</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>stringsAsFactors</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>fileEncoding</span> <span class='kw'>=</span> <span class='st'>"UTF-8"</span>,
+  <span class='kw'>encoding</span> <span class='kw'>=</span> <span class='st'>"UTF-8"</span>
+)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">

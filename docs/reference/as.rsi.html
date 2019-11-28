@@ -51,7 +51,7 @@
   <script src="../extra.js"></script>
 
 <meta property="og:title" content="Class 'rsi' — as.rsi" />
-<meta property="og:description" content="Interpret MIC values according to EUCAST or CLSI, or clean up existing RSI values. This transforms the input to a new class rsi, which is an ordered factor with levels S &amp;lt; I &amp;lt; R. Invalid antimicrobial interpretations will be translated as NA with a warning." />
+<meta property="og:description" content="Interpret MIC values and disk diffusion diameters according to EUCAST or CLSI, or clean up existing RSI values. This transforms the input to a new class rsi, which is an ordered factor with levels S &amp;lt; I &amp;lt; R. Invalid antimicrobial interpretations will be translated as NA with a warning." />
 <meta property="og:image" content="https://msberends.gitlab.io/AMR/logo.png" />
 <meta name="twitter:card" content="summary" />
 
@@ -85,7 +85,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">0.8.0.9032</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">0.8.0.9036</span>
       </span>
     </div>
 
@@ -234,7 +234,7 @@
     </div>
 
     <div class="ref-description">
-    <p>Interpret MIC values according to EUCAST or CLSI, or clean up existing RSI values. This transforms the input to a new class <code>rsi</code>, which is an ordered factor with levels <code>S &lt; I &lt; R</code>. Invalid antimicrobial interpretations will be translated as <code>NA</code> with a warning.</p>
+    <p>Interpret MIC values and disk diffusion diameters according to EUCAST or CLSI, or clean up existing RSI values. This transforms the input to a new class <code>rsi</code>, which is an ordered factor with levels <code>S &lt; I &lt; R</code>. Invalid antimicrobial interpretations will be translated as <code>NA</code> with a warning.</p>
     </div>
 
     <pre class="usage"><span class='fu'>as.rsi</span>(<span class='no'>x</span>, <span class='no'>...</span>)
@@ -246,8 +246,7 @@
 <span class='fu'>as.rsi</span>(<span class='no'>x</span>, <span class='no'>mo</span>, <span class='no'>ab</span>, <span class='kw'>guideline</span> <span class='kw'>=</span> <span class='st'>"EUCAST"</span>, <span class='no'>...</span>)
 
 <span class='co'># S3 method for data.frame</span>
-<span class='fu'>as.rsi</span>(<span class='no'>x</span>, <span class='kw'>col_mo</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>guideline</span> <span class='kw'>=</span> <span class='st'>"EUCAST"</span>,
-  <span class='no'>...</span>)
+<span class='fu'>as.rsi</span>(<span class='no'>x</span>, <span class='kw'>col_mo</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>guideline</span> <span class='kw'>=</span> <span class='st'>"EUCAST"</span>, <span class='no'>...</span>)
 
 <span class='fu'>is.rsi</span>(<span class='no'>x</span>)
 
@@ -258,7 +257,7 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>x</th>
-      <td><p>vector of values (for class <code>mic</code>: an MIC value in mg/L, for class <code>disk</code>: a disk diffusion radius in millimeters)</p></td>
+      <td><p>vector of values (for class <code>mic</code>: an MIC value in mg/L, for class <code><a href='as.disk.html'>disk</a></code>: a disk diffusion radius in millimeters)</p></td>
     </tr>
     <tr>
       <th>...</th>
@@ -266,11 +265,11 @@
     </tr>
     <tr>
       <th>mo</th>
-      <td><p>a microorganism code, generated with <code><a href='as.mo.html'>as.mo</a></code></p></td>
+      <td><p>a microorganism code, generated with <code><a href='as.mo.html'>as.mo()</a></code></p></td>
     </tr>
     <tr>
       <th>ab</th>
-      <td><p>an antimicrobial code, generated with <code><a href='as.ab.html'>as.ab</a></code></p></td>
+      <td><p>an antimicrobial code, generated with <code><a href='as.ab.html'>as.ab()</a></code></p></td>
     </tr>
     <tr>
       <th>guideline</th>
@@ -278,11 +277,11 @@
     </tr>
     <tr>
       <th>col_mo</th>
-      <td><p>column name of the IDs of the microorganisms (see <code><a href='as.mo.html'>as.mo</a></code>), defaults to the first column of class <code>mo</code>. Values will be coerced using <code><a href='as.mo.html'>as.mo</a></code>.</p></td>
+      <td><p>column name of the IDs of the microorganisms (see <code><a href='as.mo.html'>as.mo()</a></code>), defaults to the first column of class <code><a href='as.mo.html'>mo</a></code>. Values will be coerced using <code><a href='as.mo.html'>as.mo()</a></code>.</p></td>
     </tr>
     <tr>
       <th>threshold</th>
-      <td><p>maximum fraction of invalid antimicrobial interpretations of <code>x</code>, see Examples</p></td>
+      <td><p>maximum fraction of invalid antimicrobial interpretations of <code>x</code>, please see <em>Examples</em></p></td>
     </tr>
     </table>
 
@@ -292,21 +291,20 @@
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>Run <code><a href='https://rdrr.io/r/base/unique.html'>unique(AMR::rsi_translation$guideline)</a></code> for a list of all supported guidelines.</p>
-<p>After using <code>as.rsi</code>, you can use <code><a href='eucast_rules.html'>eucast_rules</a></code> to (1) apply inferred susceptibility and resistance based on results of other antimicrobials and (2) apply intrinsic resistance based on taxonomic properties of a microorganism.</p>
-<p>The function <code>is.rsi.eligible</code> returns <code>TRUE</code> when a columns contains at most 5% invalid antimicrobial interpretations (not S and/or I and/or R), and <code>FALSE</code> otherwise. The threshold of 5% can be set with the <code>threshold</code> parameter.</p>
+<p>After using <code>as.rsi()</code>, you can use <code><a href='eucast_rules.html'>eucast_rules()</a></code> to (1) apply inferred susceptibility and resistance based on results of other antimicrobials and (2) apply intrinsic resistance based on taxonomic properties of a microorganism.</p>
+<p>The function <code>is.rsi.eligible()</code> returns <code>TRUE</code> when a columns contains at most 5% invalid antimicrobial interpretations (not S and/or I and/or R), and <code>FALSE</code> otherwise. The threshold of 5% can be set with the <code>threshold</code> parameter.</p>
     <h2 class="hasAnchor" id="interpretation-of-s-i-and-r"><a class="anchor" href="#interpretation-of-s-i-and-r"></a>Interpretation of S, I and R</h2>
 
     
 
-<p>In 2019, the European Committee on Antimicrobial Susceptibility Testing (EUCAST) has decided to change the definitions of susceptibility testing categories S, I and R as shown below (<a href='http://www.eucast.org/newsiandr/'>http://www.eucast.org/newsiandr/</a>). Results of several consultations on the new definitions are available on the EUCAST website under "Consultations".</p>
-<ul>
+<p>In 2019, the European Committee on Antimicrobial Susceptibility Testing (EUCAST) has decided to change the definitions of susceptibility testing categories S, I and R as shown below (<a href='http://www.eucast.org/newsiandr/'>http://www.eucast.org/newsiandr/</a>). Results of several consultations on the new definitions are available on the EUCAST website under "Consultations".</p><ul>
 <li><p><strong>S</strong> - Susceptible, standard dosing regimen: A microorganism is categorised as "Susceptible, standard dosing regimen", when there is a high likelihood of therapeutic success using a standard dosing regimen of the agent.</p></li>
 <li><p><strong>I</strong> - Susceptible, increased exposure: A microorganism is categorised as "Susceptible, Increased exposure" when there is a high likelihood of therapeutic success because exposure to the agent is increased by adjusting the dosing regimen or by its concentration at the site of infection.</p></li>
 <li><p><strong>R</strong> - Resistant: A microorganism is categorised as "Resistant" when there is a high likelihood of therapeutic failure even when there is increased exposure.</p></li>
 </ul>
 
 <p>Exposure is a function of how the mode of administration, dose, dosing interval, infusion time, as well as distribution and excretion of the antimicrobial agent will influence the infecting organism at the site of infection.</p>
-<p>This AMR package honours this new insight. Use <code><a href='proportion.html'>susceptibility</a>()</code> (equal to <code><a href='proportion.html'>proportion_SI</a>()</code>) to determine antimicrobial susceptibility and <code><a href='count.html'>count_susceptible</a>()</code> (equal to <code><a href='count.html'>count_SI</a>()</code>) to count susceptible isolates.</p>
+<p>This AMR package honours this new insight. Use <code><a href='proportion.html'>susceptibility()</a></code> (equal to <code><a href='proportion.html'>proportion_SI()</a></code>) to determine antimicrobial susceptibility and <code><a href='count.html'>count_susceptible()</a></code> (equal to <code><a href='count.html'>count_SI()</a></code>) to count susceptible isolates.</p>
     <h2 class="hasAnchor" id="read-more-on-our-website-"><a class="anchor" href="#read-more-on-our-website-"></a>Read more on our website!</h2>
 
     
@@ -314,7 +312,7 @@
 <p>On our website <a href='https://msberends.gitlab.io/AMR'>https://msberends.gitlab.io/AMR</a> you can find <a href='https://msberends.gitlab.io/AMR/articles/AMR.html'>a tutorial</a> about how to conduct AMR analysis, the <a href='https://msberends.gitlab.io/AMR/reference'>complete documentation of all functions</a> (which reads a lot easier than here in R) and <a href='https://msberends.gitlab.io/AMR/articles/WHONET.html'>an example analysis using WHONET data</a>.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><code><a href='as.mic.html'>as.mic</a></code></p></div>
+    <div class='dont-index'><p><code><a href='as.mic.html'>as.mic()</a></code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><span class='no'>rsi_data</span> <span class='kw'>&lt;-</span> <span class='fu'>as.rsi</span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span>(<span class='st'>"S"</span>, <span class='fl'>474</span>), <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span>(<span class='st'>"I"</span>, <span class='fl'>36</span>), <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span>(<span class='st'>"R"</span>, <span class='fl'>370</span>)))

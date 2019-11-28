@@ -51,7 +51,7 @@
   <script src="../extra.js"></script>
 
 <meta property="og:title" content="Calculate microbial resistance — proportion" />
-<meta property="og:description" content="These functions can be used to calculate the (co-)resistance or susceptibility of microbial isolates (i.e. percentage of S, SI, I, IR or R). All functions support quasiquotation with pipes, can be used in dplyrs summarise and support grouped variables, see Examples.
+<meta property="og:description" content="These functions can be used to calculate the (co-)resistance or susceptibility of microbial isolates (i.e. percentage of S, SI, I, IR or R). All functions support quasiquotation with pipes, can be used in dplyr::summarise() and support grouped variables, please see Examples.
 resistance() should be used to calculate resistance, susceptibility() should be used to calculate susceptibility." />
 <meta property="og:image" content="https://msberends.gitlab.io/AMR/logo.png" />
 <meta name="twitter:card" content="summary" />
@@ -86,7 +86,7 @@ resistance() should be used to calculate resistance, susceptibility() should be 
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">0.8.0.9032</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">0.8.0.9036</span>
       </span>
     </div>
 
@@ -235,45 +235,50 @@ resistance() should be used to calculate resistance, susceptibility() should be 
     </div>
 
     <div class="ref-description">
-    <p>These functions can be used to calculate the (co-)resistance or susceptibility of microbial isolates (i.e. percentage of S, SI, I, IR or R). All functions support quasiquotation with pipes, can be used in <code>dplyr</code>s <code><a href='https://dplyr.tidyverse.org/reference/summarise.html'>summarise</a></code> and support grouped variables, see <em>Examples</em>.</p>
+    <p>These functions can be used to calculate the (co-)resistance or susceptibility of microbial isolates (i.e. percentage of S, SI, I, IR or R). All functions support quasiquotation with pipes, can be used in <code><a href='https://dplyr.tidyverse.org/reference/summarise.html'>dplyr::summarise()</a></code> and support grouped variables, please see <em>Examples</em>.</p>
 <p><code>resistance()</code> should be used to calculate resistance, <code>susceptibility()</code> should be used to calculate susceptibility.<br /></p>
     </div>
 
-    <pre class="usage"><span class='fu'>resistance</span>(<span class='no'>...</span>, <span class='kw'>minimum</span> <span class='kw'>=</span> <span class='fl'>30</span>, <span class='kw'>as_percent</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>only_all_tested</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
+    <pre class="usage"><span class='fu'>resistance</span>(<span class='no'>...</span>, <span class='kw'>minimum</span> <span class='kw'>=</span> <span class='fl'>30</span>, <span class='kw'>as_percent</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>only_all_tested</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
 
-<span class='fu'>susceptibility</span>(<span class='no'>...</span>, <span class='kw'>minimum</span> <span class='kw'>=</span> <span class='fl'>30</span>, <span class='kw'>as_percent</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>only_all_tested</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
+<span class='fu'>susceptibility</span>(<span class='no'>...</span>, <span class='kw'>minimum</span> <span class='kw'>=</span> <span class='fl'>30</span>, <span class='kw'>as_percent</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>only_all_tested</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
 
-<span class='fu'>proportion_R</span>(<span class='no'>...</span>, <span class='kw'>minimum</span> <span class='kw'>=</span> <span class='fl'>30</span>, <span class='kw'>as_percent</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>only_all_tested</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
+<span class='fu'>proportion_R</span>(<span class='no'>...</span>, <span class='kw'>minimum</span> <span class='kw'>=</span> <span class='fl'>30</span>, <span class='kw'>as_percent</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>only_all_tested</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
 
-<span class='fu'>proportion_IR</span>(<span class='no'>...</span>, <span class='kw'>minimum</span> <span class='kw'>=</span> <span class='fl'>30</span>, <span class='kw'>as_percent</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>only_all_tested</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
+<span class='fu'>proportion_IR</span>(<span class='no'>...</span>, <span class='kw'>minimum</span> <span class='kw'>=</span> <span class='fl'>30</span>, <span class='kw'>as_percent</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>only_all_tested</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
 
-<span class='fu'>proportion_I</span>(<span class='no'>...</span>, <span class='kw'>minimum</span> <span class='kw'>=</span> <span class='fl'>30</span>, <span class='kw'>as_percent</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>only_all_tested</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
+<span class='fu'>proportion_I</span>(<span class='no'>...</span>, <span class='kw'>minimum</span> <span class='kw'>=</span> <span class='fl'>30</span>, <span class='kw'>as_percent</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>only_all_tested</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
 
-<span class='fu'>proportion_SI</span>(<span class='no'>...</span>, <span class='kw'>minimum</span> <span class='kw'>=</span> <span class='fl'>30</span>, <span class='kw'>as_percent</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>only_all_tested</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
+<span class='fu'>proportion_SI</span>(<span class='no'>...</span>, <span class='kw'>minimum</span> <span class='kw'>=</span> <span class='fl'>30</span>, <span class='kw'>as_percent</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>only_all_tested</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
 
-<span class='fu'>proportion_S</span>(<span class='no'>...</span>, <span class='kw'>minimum</span> <span class='kw'>=</span> <span class='fl'>30</span>, <span class='kw'>as_percent</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>only_all_tested</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
+<span class='fu'>proportion_S</span>(<span class='no'>...</span>, <span class='kw'>minimum</span> <span class='kw'>=</span> <span class='fl'>30</span>, <span class='kw'>as_percent</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>only_all_tested</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
 
-<span class='fu'>proportion_df</span>(<span class='no'>data</span>, <span class='kw'>translate_ab</span> <span class='kw'>=</span> <span class='st'>"name"</span>, <span class='kw'>language</span> <span class='kw'>=</span> <span class='fu'><a href='translate.html'>get_locale</a></span>(),
-  <span class='kw'>minimum</span> <span class='kw'>=</span> <span class='fl'>30</span>, <span class='kw'>as_percent</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>combine_SI</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>combine_IR</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
+<span class='fu'>proportion_df</span>(
+  <span class='no'>data</span>,
+  <span class='kw'>translate_ab</span> <span class='kw'>=</span> <span class='st'>"name"</span>,
+  <span class='kw'>language</span> <span class='kw'>=</span> <span class='fu'><a href='translate.html'>get_locale</a></span>(),
+  <span class='kw'>minimum</span> <span class='kw'>=</span> <span class='fl'>30</span>,
+  <span class='kw'>as_percent</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>combine_SI</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>combine_IR</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>
+)
 
-<span class='fu'>rsi_df</span>(<span class='no'>data</span>, <span class='kw'>translate_ab</span> <span class='kw'>=</span> <span class='st'>"name"</span>, <span class='kw'>language</span> <span class='kw'>=</span> <span class='fu'><a href='translate.html'>get_locale</a></span>(),
-  <span class='kw'>minimum</span> <span class='kw'>=</span> <span class='fl'>30</span>, <span class='kw'>as_percent</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>combine_SI</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>combine_IR</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
+<span class='fu'>rsi_df</span>(
+  <span class='no'>data</span>,
+  <span class='kw'>translate_ab</span> <span class='kw'>=</span> <span class='st'>"name"</span>,
+  <span class='kw'>language</span> <span class='kw'>=</span> <span class='fu'><a href='translate.html'>get_locale</a></span>(),
+  <span class='kw'>minimum</span> <span class='kw'>=</span> <span class='fl'>30</span>,
+  <span class='kw'>as_percent</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>combine_SI</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>combine_IR</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>
+)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>...</th>
-      <td><p>one or more vectors (or columns) with antibiotic interpretations. They will be transformed internally with <code><a href='as.rsi.html'>as.rsi</a></code> if needed. Use multiple columns to calculate (the lack of) co-resistance: the probability where one of two drugs have a resistant or susceptible result. See Examples.</p></td>
+      <td><p>one or more vectors (or columns) with antibiotic interpretations. They will be transformed internally with <code><a href='as.rsi.html'>as.rsi()</a></code> if needed. Use multiple columns to calculate (the lack of) co-resistance: the probability where one of two drugs have a resistant or susceptible result. See Examples.</p></td>
     </tr>
     <tr>
       <th>minimum</th>
@@ -285,19 +290,19 @@ resistance() should be used to calculate resistance, susceptibility() should be 
     </tr>
     <tr>
       <th>only_all_tested</th>
-      <td><p>(for combination therapies, i.e. using more than one variable for <code>...</code>) a logical to indicate that isolates must be tested for all antibiotics, see section <em>Combination therapy</em> below</p></td>
+      <td><p>(for combination therapies, i.e. using more than one variable for <code>...</code>): a logical to indicate that isolates must be tested for all antibiotics, see section <em>Combination therapy</em> below</p></td>
     </tr>
     <tr>
       <th>data</th>
-      <td><p>a <code>data.frame</code> containing columns with class <code>rsi</code> (see <code><a href='as.rsi.html'>as.rsi</a></code>)</p></td>
+      <td><p>a <code><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></code> containing columns with class <code>rsi</code> (see <code><a href='as.rsi.html'>as.rsi()</a></code>)</p></td>
     </tr>
     <tr>
       <th>translate_ab</th>
-      <td><p>a column name of the <code><a href='antibiotics.html'>antibiotics</a></code> data set to translate the antibiotic abbreviations to, using <code><a href='ab_property.html'>ab_property</a></code></p></td>
+      <td><p>a column name of the <a href='antibiotics.html'>antibiotics</a> data set to translate the antibiotic abbreviations to, using <code><a href='ab_property.html'>ab_property()</a></code></p></td>
     </tr>
     <tr>
       <th>language</th>
-      <td><p>language of the returned text, defaults to system language (see <code><a href='translate.html'>get_locale</a></code>) and can also be set with <code><a href='https://rdrr.io/r/base/options.html'>getOption</a>("AMR_locale")</code>. Use <code>language = NULL</code> or <code>language = ""</code> to prevent translation.</p></td>
+      <td><p>language of the returned text, defaults to system language (see <code><a href='translate.html'>get_locale()</a></code>) and can also be set with <code><a href='https://rdrr.io/r/base/options.html'>getOption("AMR_locale")</a></code>. Use <code>language = NULL</code> or <code>language = ""</code> to prevent translation.</p></td>
     </tr>
     <tr>
       <th>combine_SI</th>
@@ -314,20 +319,18 @@ resistance() should be used to calculate resistance, susceptibility() should be 
     <p><strong>M39 Analysis and Presentation of Cumulative Antimicrobial Susceptibility Test Data, 4th Edition</strong>, 2014, <em>Clinical and Laboratory Standards Institute (CLSI)</em>. <a href='https://clsi.org/standards/products/microbiology/documents/m39/'>https://clsi.org/standards/products/microbiology/documents/m39/</a>.</p>
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>Double or, when <code>as_percent = TRUE</code>, a character.</p>
+    <p>A <code><a href='https://rdrr.io/r/base/double.html'>double</a></code> or, when <code>as_percent = TRUE</code>, a <code><a href='https://rdrr.io/r/base/character.html'>character</a></code>.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>The function <code>resistance()</code> is equal to the function <code>proportion_R()</code>. The function <code>susceptibility()</code> is equal to the function <code>proportion_SI()</code>.</p> 
-<p><strong>Remember that you should filter your table to let it contain only first isolates!</strong> This is needed to exclude duplicates and to reduce selection bias. Use <code><a href='first_isolate.html'>first_isolate</a></code> to determine them in your data set.</p>
-<p>These functions are not meant to count isolates, but to calculate the proportion of resistance/susceptibility. Use the <code><a href='count.html'>count</a></code> functions to count isolates. The function <code>susceptibility()</code> is essentially equal to <code>count_susceptible() / count_all()</code>. <em>Low counts can infuence the outcome - the <code>proportion</code> functions may camouflage this, since they only return the proportion (albeit being dependent on the <code>minimum</code> parameter).</em></p>
-<p>The function <code>proportion_df()</code> takes any variable from <code>data</code> that has an <code>"rsi"</code> class (created with <code><a href='as.rsi.html'>as.rsi</a>()</code>) and calculates the proportions R, I and S. The function <code>rsi_df()</code> works exactly like <code>proportion_df()</code>, but adds the number of isolates.</p>
+    <p>The function <code>resistance()</code> is equal to the function <code>proportion_R()</code>. The function <code>susceptibility()</code> is equal to the function <code>proportion_SI()</code>.</p>
+<p><strong>Remember that you should filter your table to let it contain only first isolates!</strong> This is needed to exclude duplicates and to reduce selection bias. Use <code><a href='first_isolate.html'>first_isolate()</a></code> to determine them in your data set.</p>
+<p>These functions are not meant to count isolates, but to calculate the proportion of resistance/susceptibility. Use the <code><a href='count.html'>AMR::count()</a></code> functions to count isolates. The function <code>susceptibility()</code> is essentially equal to <code>count_susceptible() / count_all()</code>. <em>Low counts can infuence the outcome - the <code>proportion</code> functions may camouflage this, since they only return the proportion (albeit being dependent on the <code>minimum</code> parameter).</em></p>
+<p>The function <code>proportion_df()</code> takes any variable from <code>data</code> that has an <code>rsi</code> class (created with <code><a href='as.rsi.html'>as.rsi()</a></code>) and calculates the proportions R, I and S. The function <code>rsi_df()</code> works exactly like <code>proportion_df()</code>, but adds the number of isolates.</p>
     <h2 class="hasAnchor" id="combination-therapy"><a class="anchor" href="#combination-therapy"></a>Combination therapy</h2>
 
     
 
-<p>When using more than one variable for <code>...</code> (= combination therapy)), use <code>only_all_tested</code> to only count isolates that are tested for all antibiotics/variables that you test them for. See this example for two antibiotics, Antibiotic A and Antibiotic B, about how <code>susceptibility</code> works to calculate the %SI:</p>
-<pre>
---------------------------------------------------------------------
+<p>When using more than one variable for <code>...</code> (= combination therapy)), use <code>only_all_tested</code> to only count isolates that are tested for all antibiotics/variables that you test them for. See this example for two antibiotics, Antibiotic A and Antibiotic B, about how <code>susceptibility()</code> works to calculate the %SI:</p><pre>--------------------------------------------------------------------
                     only_all_tested = FALSE  only_all_tested = TRUE
                     -----------------------  -----------------------
  Drug A    Drug B   include as  include as   include as  include as
@@ -345,11 +348,11 @@ resistance() should be used to calculate resistance, susceptibility() should be 
 --------------------------------------------------------------------
 </pre>
 
-<p>Please note that, in combination therapies, for <code>only_all_tested = TRUE</code> applies that:</p><pre>
-    count_S()    +   count_I()    +   count_R()    = count_all()
+<p>Please note that, in combination therapies, for <code>only_all_tested = TRUE</code> applies that:</p><pre>    count_S()    +   count_I()    +   count_R()    = count_all()
   proportion_S() + proportion_I() + proportion_R() = 1
-</pre><p>and that, in combination therapies, for <code>only_all_tested = FALSE</code> applies that:</p><pre>
-    count_S()    +   count_I()    +   count_R()    &gt;= count_all()
+</pre>
+
+<p>and that, in combination therapies, for <code>only_all_tested = FALSE</code> applies that:</p><pre>    count_S()    +   count_I()    +   count_R()    &gt;= count_all()
   proportion_S() + proportion_I() + proportion_R() &gt;= 1
 </pre>
 
@@ -358,15 +361,14 @@ resistance() should be used to calculate resistance, susceptibility() should be 
 
     
 
-<p>In 2019, the European Committee on Antimicrobial Susceptibility Testing (EUCAST) has decided to change the definitions of susceptibility testing categories S, I and R as shown below (<a href='http://www.eucast.org/newsiandr/'>http://www.eucast.org/newsiandr/</a>). Results of several consultations on the new definitions are available on the EUCAST website under "Consultations".</p>
-<ul>
+<p>In 2019, the European Committee on Antimicrobial Susceptibility Testing (EUCAST) has decided to change the definitions of susceptibility testing categories S, I and R as shown below (<a href='http://www.eucast.org/newsiandr/'>http://www.eucast.org/newsiandr/</a>). Results of several consultations on the new definitions are available on the EUCAST website under "Consultations".</p><ul>
 <li><p><strong>S</strong> - Susceptible, standard dosing regimen: A microorganism is categorised as "Susceptible, standard dosing regimen", when there is a high likelihood of therapeutic success using a standard dosing regimen of the agent.</p></li>
 <li><p><strong>I</strong> - Susceptible, increased exposure: A microorganism is categorised as "Susceptible, Increased exposure" when there is a high likelihood of therapeutic success because exposure to the agent is increased by adjusting the dosing regimen or by its concentration at the site of infection.</p></li>
 <li><p><strong>R</strong> - Resistant: A microorganism is categorised as "Resistant" when there is a high likelihood of therapeutic failure even when there is increased exposure.</p></li>
 </ul>
 
 <p>Exposure is a function of how the mode of administration, dose, dosing interval, infusion time, as well as distribution and excretion of the antimicrobial agent will influence the infecting organism at the site of infection.</p>
-<p>This AMR package honours this new insight. Use <code>susceptibility()</code> (equal to <code>proportion_SI()</code>) to determine antimicrobial susceptibility and <code><a href='count.html'>count_susceptible</a>()</code> (equal to <code><a href='count.html'>count_SI</a>()</code>) to count susceptible isolates.</p>
+<p>This AMR package honours this new insight. Use <code>susceptibility()</code> (equal to <code>proportion_SI()</code>) to determine antimicrobial susceptibility and <code><a href='count.html'>count_susceptible()</a></code> (equal to <code><a href='count.html'>count_SI()</a></code>) to count susceptible isolates.</p>
     <h2 class="hasAnchor" id="read-more-on-our-website-"><a class="anchor" href="#read-more-on-our-website-"></a>Read more on our website!</h2>
 
     
@@ -374,7 +376,7 @@ resistance() should be used to calculate resistance, susceptibility() should be 
 <p>On our website <a href='https://msberends.gitlab.io/AMR'>https://msberends.gitlab.io/AMR</a> you can find <a href='https://msberends.gitlab.io/AMR/articles/AMR.html'>a tutorial</a> about how to conduct AMR analysis, the <a href='https://msberends.gitlab.io/AMR/reference'>complete documentation of all functions</a> (which reads a lot easier than here in R) and <a href='https://msberends.gitlab.io/AMR/articles/WHONET.html'>an example analysis using WHONET data</a>.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><code><a href='count.html'>count</a>_*</code> to count resistant and susceptible isolates.</p></div>
+    <div class='dont-index'><p><code><a href='count.html'>AMR::count()</a></code> to count resistant and susceptible isolates.</p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><span class='co'># example_isolates is a data set available in the AMR package.</span>

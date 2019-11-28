@@ -4,11 +4,24 @@
 \alias{read.4D}
 \title{Read data from 4D database}
 \usage{
-read.4D(file, info = interactive(), header = TRUE, row.names = NULL,
-  sep = "\\t", quote = "\\"'", dec = ",", na.strings = c("NA", "",
-  "."), skip = 2, check.names = TRUE, strip.white = TRUE,
-  fill = TRUE, blank.lines.skip = TRUE, stringsAsFactors = FALSE,
-  fileEncoding = "UTF-8", encoding = "UTF-8")
+read.4D(
+  file,
+  info = interactive(),
+  header = TRUE,
+  row.names = NULL,
+  sep = "\\t",
+  quote = "\\"'",
+  dec = ",",
+  na.strings = c("NA", "", "."),
+  skip = 2,
+  check.names = TRUE,
+  strip.white = TRUE,
+  fill = TRUE,
+  blank.lines.skip = TRUE,
+  stringsAsFactors = FALSE,
+  fileEncoding = "UTF-8",
+  encoding = "UTF-8"
+)
 }
 \arguments{
 \item{file}{the name of the file which the data are to be read from.
@@ -117,7 +130,7 @@ read.4D(file, info = interactive(), header = TRUE, row.names = NULL,
   }
 }
 \description{
-This function is only useful for the MMB department of the UMCG. Use this function to \strong{import data by just defining the \code{file} parameter}. It will automatically transform birth dates and calculate patients age, translate the column names to English, transform the MO codes with \code{\link{as.mo}} and transform all antimicrobial columns with \code{\link{as.rsi}}.
+This function is only useful for the MMB department of the UMCG. Use this function to \strong{import data by just defining the \code{file} parameter}. It will automatically transform birth dates and calculate patients age, translate the column names to English, transform the MO codes with \code{\link[=as.mo]{as.mo()}} and transform all antimicrobial columns with \code{\link[=as.rsi]{as.rsi()}}.
 }
 \details{
 Column names will be transformed, but the original column names are set as a "label" attribute and can be seen in e.g. RStudio Viewer.

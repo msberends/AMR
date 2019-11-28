@@ -7,24 +7,49 @@
 \alias{ggplot_rsi_predict}
 \title{Predict antimicrobial resistance}
 \usage{
-resistance_predict(x, col_ab, col_date = NULL, year_min = NULL,
-  year_max = NULL, year_every = 1, minimum = 30, model = NULL,
-  I_as_S = TRUE, preserve_measurements = TRUE, info = TRUE, ...)
+resistance_predict(
+  x,
+  col_ab,
+  col_date = NULL,
+  year_min = NULL,
+  year_max = NULL,
+  year_every = 1,
+  minimum = 30,
+  model = NULL,
+  I_as_S = TRUE,
+  preserve_measurements = TRUE,
+  info = TRUE,
+  ...
+)
 
-rsi_predict(x, col_ab, col_date = NULL, year_min = NULL,
-  year_max = NULL, year_every = 1, minimum = 30, model = NULL,
-  I_as_S = TRUE, preserve_measurements = TRUE, info = TRUE, ...)
+rsi_predict(
+  x,
+  col_ab,
+  col_date = NULL,
+  year_min = NULL,
+  year_max = NULL,
+  year_every = 1,
+  minimum = 30,
+  model = NULL,
+  I_as_S = TRUE,
+  preserve_measurements = TRUE,
+  info = TRUE,
+  ...
+)
 
-\method{plot}{resistance_predict}(x,
-  main = paste("Resistance Prediction of", x_name), ...)
+\method{plot}{resistance_predict}(x, main = paste("Resistance Prediction of", x_name), ...)
 
-ggplot_rsi_predict(x, main = paste("Resistance Prediction of", x_name),
-  ribbon = TRUE, ...)
+ggplot_rsi_predict(
+  x,
+  main = paste("Resistance Prediction of", x_name),
+  ribbon = TRUE,
+  ...
+)
 }
 \arguments{
-\item{x}{a \code{data.frame} containing isolates.}
+\item{x}{a \code{\link{data.frame}} containing isolates.}
 
-\item{col_ab}{column name of \code{x} with antimicrobial interpretations (\code{R}, \code{I} and \code{S})}
+\item{col_ab}{column name of \code{x} containing antimicrobial interpretations (\code{"R"}, \code{"I"} and \code{"S"})}
 
 \item{col_date}{column name of the date, will be used to calculate years if this column doesn't consist of years already, defaults to the first column of with a date class}
 
@@ -36,13 +61,13 @@ ggplot_rsi_predict(x, main = paste("Resistance Prediction of", x_name),
 
 \item{minimum}{minimal amount of available isolates per year to include. Years containing less observations will be estimated by the model.}
 
-\item{model}{the statistical model of choice. This could be a generalised linear regression model with binomial distribution (i.e. using \code{\link{glm}(..., family = \link{binomial})}), assuming that a period of zero resistance was followed by a period of increasing resistance leading slowly to more and more resistance. See Details for all valid options.}
+\item{model}{the statistical model of choice. This could be a generalised linear regression model with binomial distribution (i.e. using `glm(..., family = binomial)``, assuming that a period of zero resistance was followed by a period of increasing resistance leading slowly to more and more resistance. See Details for all valid options.}
 
-\item{I_as_S}{a logical to indicate whether values \code{I} should be treated as \code{S} (will otherwise be treated as \code{R}). The default, \code{TRUE}, follows the redefinition by EUCAST about the interpretion of I (increased exposure) in 2019, see section 'Interpretation of S, I and R' below.}
+\item{I_as_S}{a logical to indicate whether values \code{I} should be treated as \code{S} (will otherwise be treated as \code{R}). The default, \code{TRUE}, follows the redefinition by EUCAST about the interpretion of I (increased exposure) in 2019, see section \emph{Interpretation of S, I and R} below.}
 
 \item{preserve_measurements}{a logical to indicate whether predictions of years that are actually available in the data should be overwritten by the original data. The standard errors of those years will be \code{NA}.}
 
-\item{info}{a logical to indicate whether textual analysis should be printed with the name and \code{\link{summary}} of the statistical model.}
+\item{info}{a logical to indicate whether textual analysis should be printed with the name and \code{\link[=summary]{summary()}} of the statistical model.}
 
 \item{...}{parameters passed on to functions}
 
@@ -51,42 +76,42 @@ ggplot_rsi_predict(x, main = paste("Resistance Prediction of", x_name),
 \item{ribbon}{a logical to indicate whether a ribbon should be shown (default) or error bars}
 }
 \value{
-\code{data.frame} with extra class \code{"resistance_predict"} with columns:
+A \code{\link{data.frame}} with extra class \code{\link{resistance_predict}} with columns:
 \itemize{
-  \item{\code{year}}
-  \item{\code{value}, the same as \code{estimated} when \code{preserve_measurements = FALSE}, and a combination of \code{observed} and \code{estimated} otherwise}
-  \item{\code{se_min}, the lower bound of the standard error with a minimum of \code{0} (so the standard error will never go below 0\%)}
-  \item{\code{se_max} the upper bound of the standard error with a maximum of \code{1} (so the standard error will never go above 100\%)}
-  \item{\code{observations}, the total number of available observations in that year, i.e. S + I + R}
-  \item{\code{observed}, the original observed resistant percentages}
-  \item{\code{estimated}, the estimated resistant percentages, calculated by the model}
+\item \code{year}
+\item \code{value}, the same as \code{estimated} when \code{preserve_measurements = FALSE}, and a combination of \code{observed} and \code{estimated} otherwise
+\item \code{se_min}, the lower bound of the standard error with a minimum of \code{0} (so the standard error will never go below 0\%)
+\item \code{se_max} the upper bound of the standard error with a maximum of \code{1} (so the standard error will never go above 100\%)
+\item \code{observations}, the total number of available observations in that year, i.e. \eqn{S + I + R}
+\item \code{observed}, the original observed resistant percentages
+\item \code{estimated}, the estimated resistant percentages, calculated by the model
 }
-Furthermore, the model itself is available as an attribute: \code{attributes(x)$model}, see Examples.
+
+Furthermore, the model itself is available as an attribute: \code{attributes(x)$model}, please see \emph{Examples}.
 }
 \description{
-Create a prediction model to predict antimicrobial resistance for the next years on statistical solid ground. Standard errors (SE) will be returned as columns \code{se_min} and \code{se_max}. See Examples for a real live example.
+Create a prediction model to predict antimicrobial resistance for the next years on statistical solid ground. Standard errors (SE) will be returned as columns \code{se_min} and \code{se_max}. See \emph{Examples} for a real live example.
 }
 \details{
-Valid options for the statistical model are:
+Valid options for the statistical model (parameter \code{model}) are:
 \itemize{
-  \item{\code{"binomial"} or \code{"binom"} or \code{"logit"}: a generalised linear regression model with binomial distribution}
-  \item{\code{"loglin"} or \code{"poisson"}: a generalised log-linear regression model with poisson distribution}
-  \item{\code{"lin"} or \code{"linear"}: a linear regression model}
+\item \code{"binomial"} or \code{"binom"} or \code{"logit"}: a generalised linear regression model with binomial distribution
+\item \code{"loglin"} or \code{"poisson"}: a generalised log-linear regression model with poisson distribution
+\item \code{"lin"} or \code{"linear"}: a linear regression model
 }
 }
 \section{Interpretation of S, I and R}{
 
 In 2019, the European Committee on Antimicrobial Susceptibility Testing (EUCAST) has decided to change the definitions of susceptibility testing categories S, I and R as shown below (\url{http://www.eucast.org/newsiandr/}). Results of several consultations on the new definitions are available on the EUCAST website under "Consultations".
-
 \itemize{
-  \item{\strong{S} - }{Susceptible, standard dosing regimen: A microorganism is categorised as "Susceptible, standard dosing regimen", when there is a high likelihood of therapeutic success using a standard dosing regimen of the agent.}
-  \item{\strong{I} - }{Susceptible, increased exposure: A microorganism is categorised as "Susceptible, Increased exposure" when there is a high likelihood of therapeutic success because exposure to the agent is increased by adjusting the dosing regimen or by its concentration at the site of infection.}
-  \item{\strong{R} - }{Resistant: A microorganism is categorised as "Resistant" when there is a high likelihood of therapeutic failure even when there is increased exposure.}
+\item \strong{S} - Susceptible, standard dosing regimen: A microorganism is categorised as "Susceptible, standard dosing regimen", when there is a high likelihood of therapeutic success using a standard dosing regimen of the agent.
+\item \strong{I} - Susceptible, increased exposure: A microorganism is categorised as "Susceptible, Increased exposure" when there is a high likelihood of therapeutic success because exposure to the agent is increased by adjusting the dosing regimen or by its concentration at the site of infection.
+\item \strong{R} - Resistant: A microorganism is categorised as "Resistant" when there is a high likelihood of therapeutic failure even when there is increased exposure.
 }
 
 Exposure is a function of how the mode of administration, dose, dosing interval, infusion time, as well as distribution and excretion of the antimicrobial agent will influence the infecting organism at the site of infection.
 
-This AMR package honours this new insight. Use \code{\link{susceptibility}()} (equal to \code{\link{proportion_SI}()}) to determine antimicrobial susceptibility and \code{\link{count_susceptible}()} (equal to \code{\link{count_SI}()}) to count susceptible isolates.
+This AMR package honours this new insight. Use \code{\link[=susceptibility]{susceptibility()}} (equal to \code{\link[=proportion_SI]{proportion_SI()}}) to determine antimicrobial susceptibility and \code{\link[=count_susceptible]{count_susceptible()}} (equal to \code{\link[=count_SI]{count_SI()}}) to count susceptible isolates.
 }
 
 \section{Read more on our website!}{
@@ -95,7 +120,10 @@ On our website \url{https://msberends.gitlab.io/AMR} you can find \href{https://
 }
 
 \examples{
-x <- resistance_predict(example_isolates, col_ab = "AMX", year_min = 2010, model = "binomial")
+x <- resistance_predict(example_isolates, 
+                        col_ab = "AMX",
+                        year_min = 2010,
+                        model = "binomial")
 plot(x)
 ggplot_rsi_predict(x)
 
@@ -134,13 +162,15 @@ if (!require(ggplot2)) {
     scale_y_continuous(limits = c(0, 1),
                        breaks = seq(0, 1, 0.1),
                        labels = paste0(seq(0, 100, 10), "\%")) +
-    labs(title = expression(paste("Forecast of amoxicillin resistance in ",
+    labs(title = expression(paste("Forecast of Amoxicillin Resistance in ",
                                   italic("E. coli"))),
-         y = "\%IR",
+         y = "\%R",
          x = "Year") +
     theme_minimal(base_size = 13)
 }
 }
 \seealso{
-The \code{\link{portion}} function to calculate resistance, \cr \code{\link{lm}} \code{\link{glm}}
+The \code{\link[=proportion]{proportion()}} functions to calculate resistance
+
+Models: \code{\link[=lm]{lm()}} \code{\link[=glm]{glm()}}
 }

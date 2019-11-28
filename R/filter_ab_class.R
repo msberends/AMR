@@ -23,11 +23,11 @@
 #'
 #' Filter isolates on results in specific antibiotic variables based on their class (ATC groups). This makes it easy to get a list of isolates that were tested for e.g. any aminoglycoside.
 #' @param x a data set
-#' @param ab_class an antimicrobial class, like \code{"carbapenems"}, as can be found in \code{AMR::antibiotics$group}
+#' @param ab_class an antimicrobial class, like `"carbapenems"`, as can be found in [`AMR::antibiotics$group`][antibiotics]
 #' @param result an antibiotic result: S, I or R (or a combination of more of them)
-#' @param scope the scope to check which variables to check, can be \code{"any"} (default) or \code{"all"}
-#' @param ... parameters passed on to \code{filter_at} from the \code{dplyr} package
-#' @details The \code{group} column in \code{\link{antibiotics}} data set will be searched for \code{ab_class} (case-insensitive). If no results are found, the \code{atc_group1} and \code{atc_group2} columns will be searched. Next, \code{x} will be checked for column names with a value in any abbreviations, codes or official names found in the \code{antibiotics} data set.
+#' @param scope the scope to check which variables to check, can be `"any"` (default) or `"all"`
+#' @param ... parameters passed on to `filter_at` from the `dplyr` package
+#' @details The `group` column in [antibiotics] data set will be searched for `ab_class` (case-insensitive). If no results are found, the `atc_group1` and `atc_group2` columns will be searched. Next, `x` will be checked for column names with a value in any abbreviations, codes or official names found in the [antibiotics] data set.
 #' @rdname filter_ab_class
 #' @importFrom dplyr filter_at %>% select vars any_vars all_vars
 #' @importFrom crayon bold blue

@@ -51,7 +51,8 @@
   <script src="../extra.js"></script>
 
 <meta property="og:title" content="Get ATC properties from WHOCC website — atc_online_property" />
-<meta property="og:description" content="Gets data from the WHO to determine properties of an ATC (e.g. an antibiotic) like name, defined daily dose (DDD) or standard unit.  This function requires an internet connection." />
+<meta property="og:description" content="Gets data from the WHO to determine properties of an ATC (e.g. an antibiotic) like name, defined daily dose (DDD) or standard unit.
+This function requires an internet connection." />
 <meta property="og:image" content="https://msberends.gitlab.io/AMR/logo.png" />
 <meta name="twitter:card" content="summary" />
 
@@ -85,7 +86,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">0.8.0.9032</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">0.8.0.9036</span>
       </span>
     </div>
 
@@ -234,11 +235,16 @@
     </div>
 
     <div class="ref-description">
-    <p>Gets data from the WHO to determine properties of an ATC (e.g. an antibiotic) like name, defined daily dose (DDD) or standard unit. <br /> <strong>This function requires an internet connection.</strong></p>
+    <p>Gets data from the WHO to determine properties of an ATC (e.g. an antibiotic) like name, defined daily dose (DDD) or standard unit.</p>
+<p><strong>This function requires an internet connection.</strong></p>
     </div>
 
-    <pre class="usage"><span class='fu'>atc_online_property</span>(<span class='no'>atc_code</span>, <span class='no'>property</span>, <span class='kw'>administration</span> <span class='kw'>=</span> <span class='st'>"O"</span>,
-  <span class='kw'>url</span> <span class='kw'>=</span> <span class='st'>"https://www.whocc.no/atc_ddd_index/?code=%s&amp;showdescription=no"</span>)
+    <pre class="usage"><span class='fu'>atc_online_property</span>(
+  <span class='no'>atc_code</span>,
+  <span class='no'>property</span>,
+  <span class='kw'>administration</span> <span class='kw'>=</span> <span class='st'>"O"</span>,
+  <span class='kw'>url</span> <span class='kw'>=</span> <span class='st'>"https://www.whocc.no/atc_ddd_index/?code=%s&amp;showdescription=no"</span>
+)
 
 <span class='fu'>atc_online_groups</span>(<span class='no'>atc_code</span>, <span class='no'>...</span>)
 
@@ -290,7 +296,7 @@
 <p>Abbreviations of return values when using <code>property = "U"</code> (unit):</p><ul>
 <li><p><code>"g"</code> = gram</p></li>
 <li><p><code>"mg"</code> = milligram</p></li>
-<li><p><code>"mcg"</code> = microgram</p></li>
+<li><p>`"mcg"`` = microgram</p></li>
 <li><p><code>"U"</code> = unit</p></li>
 <li><p><code>"TU"</code> = thousand units</p></li>
 <li><p><code>"MU"</code> = million units</p></li>
