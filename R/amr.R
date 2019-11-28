@@ -46,7 +46,7 @@
 #' For suggestions, comments or questions, please contact us at:
 #'
 #' Matthijs S. Berends \cr
-#' m.s.berends [at] umcg [dot] nl \cr
+#' m.s.berends at umcg dot nl \cr
 #' Department of Medical Microbiology, University of Groningen \cr
 #' University Medical Center Groningen \cr
 #' Post Office Box 30001 \cr

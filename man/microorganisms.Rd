@@ -31,7 +31,7 @@ A data set containing the microbial taxonomy of six kingdoms from the Catalogue 
 Manually added were:
 \itemize{
 \item 11 entries of \emph{Streptococcus} (beta-haemolytic: groups A, B, C, D, F, G, H, K and unspecified; other: viridans, milleri)
-\item 2 entries of \emph{Staphylococcus} (coagulase-negative \link{CoNS} and coagulase-positive \link{CoPS})
+\item 2 entries of \emph{Staphylococcus} (coagulase-negative (CoNS) and coagulase-positive (CoPS))
 \item 3 entries of \emph{Trichomonas} (\emph{Trichomonas vaginalis}, and its family and genus)
 \item 1 entry of \emph{Blastocystis} (\emph{Blastocystis hominis}), although it officially does not exist (Noel \emph{et al.} 2005, PMID 15634993)
 \item 5 other 'undefined' entries (unknown, unknown Gram negatives, unknown Gram positives, unknown yeast and unknown fungus)

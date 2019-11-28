@@ -51,7 +51,7 @@
   <script src="../extra.js"></script>
 
 <meta property="og:title" content="<em>G</em>-test for Count Data — g.test" />
-<meta property="og:description" content="g.test() performs chi-squared contingency table tests and goodness-of-fit tests, just like chisq.test() but is more reliable 1. A G-test can be used to see whether the number of observations in each category fits a theoretical expectation (called a G-test of goodness-of-fit), or to see whether the proportions of one variable are different for different values of the other variable (called a G-test of independence)." />
+<meta property="og:description" content="g.test() performs chi-squared contingency table tests and goodness-of-fit tests, just like chisq.test() but is more reliable (1). A G-test can be used to see whether the number of observations in each category fits a theoretical expectation (called a G-test of goodness-of-fit), or to see whether the proportions of one variable are different for different values of the other variable (called a G-test of independence)." />
 <meta property="og:image" content="https://msberends.gitlab.io/AMR/logo.png" />
 <meta name="twitter:card" content="summary" />
 
@@ -85,7 +85,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">0.8.0.9036</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">0.8.0.9037</span>
       </span>
     </div>
 
@@ -234,7 +234,7 @@
     </div>
 
     <div class="ref-description">
-    <p><code>g.test()</code> performs chi-squared contingency table tests and goodness-of-fit tests, just like <code><a href='https://rdrr.io/r/stats/chisq.test.html'>chisq.test()</a></code> but is more reliable 1. A <em>G</em>-test can be used to see whether the number of observations in each category fits a theoretical expectation (called a <strong><em>G</em>-test of goodness-of-fit</strong>), or to see whether the proportions of one variable are different for different values of the other variable (called a <strong><em>G</em>-test of independence</strong>).</p>
+    <p><code>g.test()</code> performs chi-squared contingency table tests and goodness-of-fit tests, just like <code><a href='https://rdrr.io/r/stats/chisq.test.html'>chisq.test()</a></code> but is more reliable (1). A <em>G</em>-test can be used to see whether the number of observations in each category fits a theoretical expectation (called a <strong><em>G</em>-test of goodness-of-fit</strong>), or to see whether the proportions of one variable are different for different values of the other variable (called a <strong><em>G</em>-test of independence</strong>).</p>
     </div>
 
     <pre class="usage"><span class='fu'>g.test</span>(<span class='no'>x</span>, <span class='kw'>y</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>p</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span>(<span class='fl'>1</span>/<span class='fu'><a href='https://rdrr.io/r/base/length.html'>length</a></span>(<span class='no'>x</span>), <span class='fu'><a href='https://rdrr.io/r/base/length.html'>length</a></span>(<span class='no'>x</span>)), <span class='kw'>rescale.p</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
@@ -334,7 +334,11 @@
 <p>On our website <a href='https://msberends.gitlab.io/AMR'>https://msberends.gitlab.io/AMR</a> you can find <a href='https://msberends.gitlab.io/AMR/articles/AMR.html'>a tutorial</a> about how to conduct AMR analysis, the <a href='https://msberends.gitlab.io/AMR/reference'>complete documentation of all functions</a> (which reads a lot easier than here in R) and <a href='https://msberends.gitlab.io/AMR/articles/WHONET.html'>an example analysis using WHONET data</a>.</p>
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
-    <p>1 McDonald, J.H. 2014. <strong>Handbook of Biological Statistics (3rd ed.)</strong>. Sparky House Publishing, Baltimore, Maryland. <a href='http://www.biostathandbook.com/gtestgof.html'>http://www.biostathandbook.com/gtestgof.html</a>.</p>
+    
+<ol>
+<li><p>McDonald, J.H. 2014. <strong>Handbook of Biological Statistics (3rd ed.)</strong>. Sparky House Publishing, Baltimore, Maryland. <a href='http://www.biostathandbook.com/gtestgof.html'>http://www.biostathandbook.com/gtestgof.html</a>.</p></li>
+</ol>
+
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><code><a href='https://rdrr.io/r/stats/chisq.test.html'>chisq.test()</a></code></p></div>

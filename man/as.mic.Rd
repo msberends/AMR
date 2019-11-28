@@ -2,7 +2,7 @@
 % Please edit documentation in R/mic.R
 \name{as.mic}
 \alias{as.mic}
-\alias{MIC}
+\alias{mic}
 \alias{is.mic}
 \title{Class 'mic'}
 \usage{

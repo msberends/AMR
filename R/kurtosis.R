@@ -22,7 +22,7 @@
 #' Kurtosis of the sample
 #'
 #' @description Kurtosis is a measure of the "tailedness" of the probability distribution of a real-valued random variable.
-#' @param x a vector of values, a [`matrix`] or a [`data frame`]
+#' @param x a vector of values, a [`matrix`] or a [`data.frame`]
 #' @param na.rm a logical value indicating whether `NA` values should be stripped before the computation proceeds.
 #' @exportMethod kurtosis
 #' @seealso [skewness()]

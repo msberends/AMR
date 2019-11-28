@@ -27,7 +27,7 @@
 #' @param na.rm a logical indicating whether missing values should be removed
 #' @details To interpret MIC values as RSI values, use [as.rsi()] on MIC values. It supports guidelines from EUCAST and CLSI.
 #' @return Ordered [`factor`] with new class [`mic`]
-#' @aliases MIC
+#' @aliases mic
 #' @export
 #' @importFrom dplyr %>%
 #' @seealso [as.rsi()]

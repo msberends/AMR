@@ -2,7 +2,7 @@
 % Please edit documentation in R/rsi.R
 \name{as.rsi}
 \alias{as.rsi}
-\alias{RSI}
+\alias{rsi}
 \alias{as.rsi.mic}
 \alias{as.rsi.disk}
 \alias{as.rsi.data.frame}

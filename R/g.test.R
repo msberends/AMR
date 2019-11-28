@@ -21,7 +21,7 @@
 
 #' *G*-test for Count Data
 #'
-#' [g.test()] performs chi-squared contingency table tests and goodness-of-fit tests, just like [chisq.test()] but is more reliable [1]. A *G*-test can be used to see whether the number of observations in each category fits a theoretical expectation (called a ***G*-test of goodness-of-fit**), or to see whether the proportions of one variable are different for different values of the other variable (called a ***G*-test of independence**).
+#' [g.test()] performs chi-squared contingency table tests and goodness-of-fit tests, just like [chisq.test()] but is more reliable (1). A *G*-test can be used to see whether the number of observations in each category fits a theoretical expectation (called a ***G*-test of goodness-of-fit**), or to see whether the proportions of one variable are different for different values of the other variable (called a ***G*-test of independence**).
 #' @inherit stats::chisq.test params return
 #' @details If `x` is a matrix with one row or column, or if `x` is a vector and `y` is not given, then a *goodness-of-fit test* is performed (`x` is treated as a one-dimensional contingency table). The entries of `x` must be non-negative integers. In this case, the hypothesis tested is whether the population probabilities equal those in `p`, or are all equal if `p` is not given.
 #'
@@ -64,7 +64,7 @@
 #'
 #' If there are more than two categories and you want to find out which ones are significantly different from their null expectation, you can use the same method of testing each category vs. the sum of all categories, with the Bonferroni correction. You use *G*-tests for each category, of course.
 #' @seealso [chisq.test()]
-#' @references [1] McDonald, J.H. 2014. **Handbook of Biological Statistics (3rd ed.)**. Sparky House Publishing, Baltimore, Maryland. <http://www.biostathandbook.com/gtestgof.html>.
+#' @references 1. McDonald, J.H. 2014. **Handbook of Biological Statistics (3rd ed.)**. Sparky House Publishing, Baltimore, Maryland. <http://www.biostathandbook.com/gtestgof.html>.
 #' @source The code for this function is identical to that of [chisq.test()], except that:
 #' - The calculation of the statistic was changed to \eqn{2 * sum(x * log(x / E))}
 #' - Yates' continuity correction was removed as it does not apply to a *G*-test

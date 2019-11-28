@@ -36,7 +36,7 @@ anti_join_microorganisms(x, by = NULL, ...)
 Join the data set \link{microorganisms} easily to an existing table or character vector.
 }
 \details{
-\strong{Note:} As opposed to the \code{\link[dplyr:join]{dplyr::join()}} functions of \code{dplyr}, \code{\link{characters}} vectors are supported and at default existing columns will get a suffix \code{"2"} and the newly joined columns will not get a suffix. See \code{\link[dplyr:join]{dplyr::join()}} for more information.
+\strong{Note:} As opposed to the \code{\link[dplyr:join]{dplyr::join()}} functions of \code{dplyr}, \code{\link{character}} vectors are supported and at default existing columns will get a suffix \code{"2"} and the newly joined columns will not get a suffix. See \code{\link[dplyr:join]{dplyr::join()}} for more information.
 }
 \section{Read more on our website!}{
 

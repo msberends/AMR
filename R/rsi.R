@@ -46,7 +46,7 @@
 #'
 #' This AMR package honours this new insight. Use [susceptibility()] (equal to [proportion_SI()]) to determine antimicrobial susceptibility and [count_susceptible()] (equal to [count_SI()]) to count susceptible isolates.
 #' @return Ordered factor with new class [`rsi`]
-#' @aliases RSI
+#' @aliases rsi
 #' @export
 #' @importFrom dplyr %>% desc arrange filter 
 #' @seealso [as.mic()]

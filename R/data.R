@@ -80,7 +80,7 @@
 #' - `prevalence`\cr Prevalence of the microorganism, see [as.mo()]
 #' @details Manually added were:
 #' - 11 entries of *Streptococcus* (beta-haemolytic: groups A, B, C, D, F, G, H, K and unspecified; other: viridans, milleri)
-#' - 2 entries of *Staphylococcus* (coagulase-negative [CoNS] and coagulase-positive [CoPS])
+#' - 2 entries of *Staphylococcus* (coagulase-negative (CoNS) and coagulase-positive (CoPS))
 #' - 3 entries of *Trichomonas* (*Trichomonas vaginalis*, and its family and genus)
 #' - 1 entry of *Blastocystis* (*Blastocystis hominis*), although it officially does not exist (Noel *et al.* 2005, PMID 15634993)
 #' - 5 other 'undefined' entries (unknown, unknown Gram negatives, unknown Gram positives, unknown yeast and unknown fungus)

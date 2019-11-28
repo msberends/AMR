@@ -29,7 +29,7 @@
 #' @param by a variable to join by - if left empty will search for a column with class [`mo`] (created with [as.mo()]) or will be `"mo"` if that column name exists in `x`, could otherwise be a column name of `x` with values that exist in `microorganisms$mo` (like `by = "bacteria_id"`), or another column in [microorganisms] (but then it should be named, like `by = c("my_genus_species" = "fullname")`)
 #' @param suffix if there are non-joined duplicate variables in `x` and `y`, these suffixes will be added to the output to disambiguate them. Should be a character vector of length 2.
 #' @param ... other parameters to pass on to [dplyr::join()]
-#' @details **Note:** As opposed to the [dplyr::join()] functions of `dplyr`, [`characters`] vectors are supported and at default existing columns will get a suffix `"2"` and the newly joined columns will not get a suffix. See [dplyr::join()] for more information.
+#' @details **Note:** As opposed to the [dplyr::join()] functions of `dplyr`, [`character`] vectors are supported and at default existing columns will get a suffix `"2"` and the newly joined columns will not get a suffix. See [dplyr::join()] for more information.
 #' @inheritSection AMR Read more on our website!
 #' @export
 #' @examples

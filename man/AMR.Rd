@@ -36,7 +36,7 @@ On our website \url{https://msberends.gitlab.io/AMR} you can find \href{https://
 For suggestions, comments or questions, please contact us at:
 
 Matthijs S. Berends \cr
-m.s.berends \link{at} umcg \link{dot} nl \cr
+m.s.berends at umcg dot nl \cr
 Department of Medical Microbiology, University of Groningen \cr
 University Medical Center Groningen \cr
 Post Office Box 30001 \cr
