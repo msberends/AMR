@@ -16,20 +16,11 @@ x \%like\% pattern
 x \%like_case\% pattern
 }
 \arguments{
-\item{x}{a character vector where matches are sought, or an
-    object which can be coerced by \code{as.character} to a character
-    vector.  \link[base]{Long vectors} are supported.}
+\item{x}{a character vector where matches are sought, or an object which can be coerced by \code{\link[=as.character]{as.character()}} to a character vector.}
 
-\item{pattern}{character string containing a \link[base]{regular expression}
-    (or character string for \code{fixed = TRUE}) to be matched
-    in the given character vector.  Coerced by
-    \code{\link[base]{as.character}} to a character string if possible.  If a
-    character vector of length 2 or more is supplied, the first element
-    is used with a warning.  Missing values are allowed except for
-    \code{regexpr} and \code{gregexpr}.}
+\item{pattern}{a character string containing a regular expression (or \code{\link{character}} string for \code{fixed = TRUE}) to be matched in the given character vector. Coerced by \code{\link[=as.character]{as.character()}} to a character string if possible.  If a \code{\link{character}} vector of length 2 or more is supplied, the first element is used with a warning.}
 
-\item{ignore.case}{if \code{FALSE}, the pattern matching is \emph{case
-      sensitive} and if \code{TRUE}, case is ignored during matching.}
+\item{ignore.case}{if \code{FALSE}, the pattern matching is \emph{case sensitive} and if \code{TRUE}, case is ignored during matching.}
 }
 \value{
 A \code{\link{logical}} vector

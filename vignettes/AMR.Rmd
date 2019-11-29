@@ -431,7 +431,7 @@ ggplot(data_1st %>% group_by(genus)) +
   geom_rsi(x = "genus") + 
   # split plots on antibiotic
   facet_rsi(facet = "antibiotic") +
-  # make R red, I yellow and S green
+  # set colours to the R/SI interpretations
   scale_rsi_colours() +
   # show percentages on y axis
   scale_y_percent(breaks = 0:4 * 25) +

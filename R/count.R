@@ -26,7 +26,7 @@
 #' [count_resistant()] should be used to count resistant isolates, [count_susceptible()] should be used to count susceptible isolates.
 #' @param ... one or more vectors (or columns) with antibiotic interpretations. They will be transformed internally with [as.rsi()] if needed.
 #' @inheritParams proportion
-#' @inheritSection as.rsi Interpretation of S, I and R
+#' @inheritSection as.rsi Interpretation of R and S/I
 #' @details These functions are meant to count isolates. Use the [resistance()]/[susceptibility()] functions to calculate microbial resistance/susceptibility.
 #' 
 #' The function [count_resistant()] is equal to the function [count_R()]. The function [count_susceptible()] is equal to the function [count_SI()].

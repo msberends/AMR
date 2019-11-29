@@ -41,7 +41,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">0.8.0.9032</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">0.9.0</span>
       </span>
     </div>
 
@@ -187,7 +187,7 @@
       <h1>How to work with WHONET data</h1>
                         <h4 class="author">Matthijs S. Berends</h4>
             
-            <h4 class="date">18 November 2019</h4>
+            <h4 class="date">29 November 2019</h4>
       
       
       <div class="hidden name"><code>WHONET.Rmd</code></div>
@@ -226,16 +226,14 @@
 <p>No errors or warnings, so all values are transformed succesfully.</p>
 <p>We also created a package dedicated to data cleaning and checking, called the <code>cleaner</code> package. It gets automatically installed with the <code>AMR</code> package. For its <code><a href="https://rdrr.io/pkg/cleaner/man/freq.html">freq()</a></code> function to create frequency tables, you don’t even need to load it yourself as it is available through the <code>AMR</code> package as well.</p>
 <p>So let’s check our data, with a couple of frequency tables:</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="co"># our newly created `mo` variable</span></a>
-<a class="sourceLine" id="cb4-2" data-line-number="2">data <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/pkg/cleaner/man/freq.html">freq</a></span>(mo, <span class="dt">nmax =</span> <span class="dv">10</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="co"># our newly created `mo` variable, put in the mo_name() function</span></a>
+<a class="sourceLine" id="cb4-2" data-line-number="2">data <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/pkg/cleaner/man/freq.html">freq</a></span>(<span class="kw"><a href="../reference/mo_property.html">mo_name</a></span>(mo), <span class="dt">nmax =</span> <span class="dv">10</span>)</a></code></pre></div>
 <p><strong>Frequency table</strong></p>
-<p>Class: mo (character)<br>
+<p>Class: character<br>
 Length: 500 (of which NA: 0 = 0%)<br>
 Unique: 39</p>
-<p>Gram-negative: 280 (56.00%)<br>
-Gram-positive: 220 (44.00%)<br>
-Nr of genera: 17<br>
-Nr of species: 39</p>
+<p>Shortest: 11<br>
+Longest: 40</p>
 <table class="table">
 <thead><tr class="header">
 <th align="left"></th>
@@ -248,7 +246,7 @@ Nr of species: 39</p>
 <tbody>
 <tr class="odd">
 <td align="left">1</td>
-<td align="left">B_ESCHR_COLI</td>
+<td align="left">Escherichia coli</td>
 <td align="right">245</td>
 <td align="right">49.0%</td>
 <td align="right">245</td>
@@ -256,7 +254,7 @@ Nr of species: 39</p>
 </tr>
 <tr class="even">
 <td align="left">2</td>
-<td align="left">B_STPHY_CONS</td>
+<td align="left">Coagulase-negative Staphylococcus (CoNS)</td>
 <td align="right">74</td>
 <td align="right">14.8%</td>
 <td align="right">319</td>
@@ -264,7 +262,7 @@ Nr of species: 39</p>
 </tr>
 <tr class="odd">
 <td align="left">3</td>
-<td align="left">B_STPHY_EPDR</td>
+<td align="left">Staphylococcus epidermidis</td>
 <td align="right">38</td>
 <td align="right">7.6%</td>
 <td align="right">357</td>
@@ -272,7 +270,7 @@ Nr of species: 39</p>
 </tr>
 <tr class="even">
 <td align="left">4</td>
-<td align="left">B_STRPT_PNMN</td>
+<td align="left">Streptococcus pneumoniae</td>
 <td align="right">31</td>
 <td align="right">6.2%</td>
 <td align="right">388</td>
@@ -280,7 +278,7 @@ Nr of species: 39</p>
 </tr>
 <tr class="odd">
 <td align="left">5</td>
-<td align="left">B_STPHY_HMNS</td>
+<td align="left">Staphylococcus hominis</td>
 <td align="right">21</td>
 <td align="right">4.2%</td>
 <td align="right">409</td>
@@ -288,7 +286,7 @@ Nr of species: 39</p>
 </tr>
 <tr class="even">
 <td align="left">6</td>
-<td align="left">B_PROTS_MRBL</td>
+<td align="left">Proteus mirabilis</td>
 <td align="right">9</td>
 <td align="right">1.8%</td>
 <td align="right">418</td>
@@ -296,7 +294,7 @@ Nr of species: 39</p>
 </tr>
 <tr class="odd">
 <td align="left">7</td>
-<td align="left">B_ENTRC_FACM</td>
+<td align="left">Enterococcus faecium</td>
 <td align="right">8</td>
 <td align="right">1.6%</td>
 <td align="right">426</td>
@@ -304,7 +302,7 @@ Nr of species: 39</p>
 </tr>
 <tr class="even">
 <td align="left">8</td>
-<td align="left">B_STPHY_CPTS</td>
+<td align="left">Staphylococcus capitis</td>
 <td align="right">8</td>
 <td align="right">1.6%</td>
 <td align="right">434</td>
@@ -312,7 +310,7 @@ Nr of species: 39</p>
 </tr>
 <tr class="odd">
 <td align="left">9</td>
-<td align="left">B_ENTRB_CLOC</td>
+<td align="left">Enterobacter cloacae</td>
 <td align="right">5</td>
 <td align="right">1.0%</td>
 <td align="right">439</td>
@@ -320,7 +318,7 @@ Nr of species: 39</p>
 </tr>
 <tr class="even">
 <td align="left">10</td>
-<td align="left">B_ENTRC_CLMB</td>
+<td align="left">Enterococcus columbae</td>
 <td align="right">4</td>
 <td align="right">0.8%</td>
 <td align="right">443</td>
@@ -329,10 +327,9 @@ Nr of species: 39</p>
 </tbody>
 </table>
 <p>(omitted 29 entries, n = 57 [11.40%])</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1"></a>
-<a class="sourceLine" id="cb5-2" data-line-number="2"><span class="co"># our transformed antibiotic columns</span></a>
-<a class="sourceLine" id="cb5-3" data-line-number="3"><span class="co"># amoxicillin/clavulanic acid (J01CR02) as an example</span></a>
-<a class="sourceLine" id="cb5-4" data-line-number="4">data <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/pkg/cleaner/man/freq.html">freq</a></span>(AMC_ND2)</a></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="co"># our transformed antibiotic columns</span></a>
+<a class="sourceLine" id="cb5-2" data-line-number="2"><span class="co"># amoxicillin/clavulanic acid (J01CR02) as an example</span></a>
+<a class="sourceLine" id="cb5-3" data-line-number="3">data <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/pkg/cleaner/man/freq.html">freq</a></span>(AMC_ND2)</a></code></pre></div>
 <p><strong>Frequency table</strong></p>
 <p>Class: factor &gt; ordered &gt; rsi (numeric)<br>
 Length: 500 (of which NA: 19 = 3.8%)<br>
@@ -379,9 +376,12 @@ Unique: 3</p>
 <div id="a-first-glimpse-at-results" class="section level3">
 <h3 class="hasAnchor">
 <a href="#a-first-glimpse-at-results" class="anchor"></a>A first glimpse at results</h3>
-<p>An easy ggplot will already give a lot of information, using the included <code><a href="../reference/ggplot_rsi.html">ggplot_rsi()</a></code> function:</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1"><span class="kw"><a href="../reference/ggplot_rsi.html">ggplot_rsi</a></span>(data, <span class="dt">translate_ab =</span> <span class="st">'ab'</span>)</a></code></pre></div>
-<p><img src="WHONET_files/figure-html/unnamed-chunk-5-1.png" width="720"></p>
+<p>An easy <code>ggplot</code> will already give a lot of information, using the included <code><a href="../reference/ggplot_rsi.html">ggplot_rsi()</a></code> function:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1">data <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb6-2" data-line-number="2"><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span>(Country) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb6-3" data-line-number="3"><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span>(Country, AMP_ND2, AMC_ED20, CAZ_ED10, CIP_ED5) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb6-4" data-line-number="4"><span class="st">  </span><span class="kw"><a href="../reference/ggplot_rsi.html">ggplot_rsi</a></span>(<span class="dt">translate_ab =</span> <span class="st">'ab'</span>, <span class="dt">facet =</span> <span class="st">"Country"</span>, <span class="dt">datalabels =</span> <span class="ot">FALSE</span>)</a></code></pre></div>
+<p><img src="WHONET_files/figure-html/unnamed-chunk-7-1.png" width="720"></p>
 </div>
   </div>
 

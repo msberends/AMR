@@ -46,8 +46,8 @@ freq.mo <- function(x, ...) {
                                                                   decimal.mark = "."),
                                                            " (", percentage(sum(grams == "Gram-positive", na.rm = TRUE) / length(grams), digits = digits),
                                                            ")"),
-                                  `Nr of genera` = n_distinct(mo_genus(x_noNA, language = NULL)),
-                                  `Nr of species` = n_distinct(paste(mo_genus(x_noNA, language = NULL),
+                                  `No of genera` = n_distinct(mo_genus(x_noNA, language = NULL)),
+                                  `No of species` = n_distinct(paste(mo_genus(x_noNA, language = NULL),
                                                              mo_species(x_noNA, language = NULL)))))
 }
 

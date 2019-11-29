@@ -85,7 +85,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">0.8.0.9036</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">0.9.0</span>
       </span>
     </div>
 
@@ -300,7 +300,7 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>data</th>
-      <td><p>a <code><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></code> with column(s) of class <code>rsi</code> (see <code><a href='as.rsi.html'>as.rsi()</a></code>)</p></td>
+      <td><p>a <code><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></code> with column(s) of class <code><a href='as.rsi.html'>rsi</a></code> (see <code><a href='as.rsi.html'>as.rsi()</a></code>)</p></td>
     </tr>
     <tr>
       <th>position</th>
@@ -393,7 +393,7 @@
     <p>At default, the names of antibiotics will be shown on the plots using <code><a href='ab_property.html'>ab_name()</a></code>. This can be set with the <code>translate_ab</code> parameter. See <code><a href='count.html'>count_df()</a></code>.</p><h3>The functions</h3>
 
 
-<p><code>geom_rsi()</code> will take any variable from the data that has an <code>rsi</code> class (created with <code><a href='as.rsi.html'>as.rsi()</a></code>) using <code><a href='proportion.html'>rsi_df()</a></code> and will plot bars with the percentage R, I and S. The default behaviour is to have the bars stacked and to have the different antibiotics on the x axis.</p>
+<p><code>geom_rsi()</code> will take any variable from the data that has an <code><a href='as.rsi.html'>rsi</a></code> class (created with <code><a href='as.rsi.html'>as.rsi()</a></code>) using <code><a href='proportion.html'>rsi_df()</a></code> and will plot bars with the percentage R, I and S. The default behaviour is to have the bars stacked and to have the different antibiotics on the x axis.</p>
 <p><code>facet_rsi()</code> creates 2d plots (at default based on S/I/R) using <code><a href='https://ggplot2.tidyverse.org/reference/facet_wrap.html'>ggplot2::facet_wrap()</a></code>.</p>
 <p><code>scale_y_percent()</code> transforms the y axis to a 0 to 100% range using <code>ggplot2::scale_continuous()</code>.</p>
 <p><code>scale_rsi_colours()</code> sets colours to the bars: pastel blue for S, pastel turquoise for I and pastel red for R, using <code>ggplot2::scale_brewer()</code>.</p>

@@ -1,9 +1,13 @@
 #######################################################################
 # To push new commits to the premaster branch, run:                   #
 # bash git_premaster.sh "commit message"                              #
+# This creates auto version numbering in DESCRIPTION and NEWS.md.     #
 #                                                                     #
 # After successful CRAN checks, merge it to the master branch with:   #
 # bash git_merge.sh                                                   #
+#                                                                     #
+# To prerelease a new version number, run:                            #
+# bash git_premaster.sh "v0.x.x" FALSE "0.x.x"                        #
 #######################################################################
 
 # stash current changes

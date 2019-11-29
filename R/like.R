@@ -22,7 +22,9 @@
 #' Pattern Matching
 #'
 #' Convenient wrapper around [base::grep()] to match a pattern: `a %like% b`. It always returns a [`logical`] vector and is always case-insensitive (use `a %like_case% b` for case-sensitive matching). Also, `pattern` (*b*) can be as long as `x` (*a*) to compare items of each index in both vectors, or can both have the same length to iterate over all cases.
-#' @inheritParams base::grepl
+#' @param x a character vector where matches are sought, or an object which can be coerced by [as.character()] to a character vector.
+#' @param pattern a character string containing a regular expression (or [`character`] string for `fixed = TRUE`) to be matched in the given character vector. Coerced by [as.character()] to a character string if possible.  If a [`character`] vector of length 2 or more is supplied, the first element is used with a warning.
+#' @param ignore.case if `FALSE`, the pattern matching is *case sensitive* and if `TRUE`, case is ignored during matching.
 #' @return A [`logical`] vector
 #' @name like
 #' @rdname like
@@ -83,10 +85,12 @@ like <- function(x, pattern, ignore.case = TRUE) {
     as.integer(x) %in% base::grep(pattern, levels(x), ignore.case = ignore.case)
   } else {
     tryCatch(base::grepl(pattern, x, ignore.case = ignore.case),
-             error = function(e) ifelse(test = grepl("Invalid regexp", e$message),
+             error = function(e) ifelse(grepl("Invalid regexp", e$message),
                                         # try with perl = TRUE:
-                                        yes = return(base::grepl(pattern, x, ignore.case = ignore.case, perl = TRUE)),
-                                        no = stop(e$message)))
+                                        return(base::grepl(pattern = pattern, x = x,
+                                                                 ignore.case = ignore.case, perl = TRUE)),
+                                        # stop otherwise
+                                        stop(e$message)))
   }
 }
 

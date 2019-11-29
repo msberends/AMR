@@ -48,7 +48,7 @@
 #' Please suggest your own (country-specific) guidelines by letting us know: <https://gitlab.com/msberends/AMR/issues/new>.
 #' 
 #' **Note:** Every test that involves the Enterobacteriaceae family, will internally be performed using its newly named order Enterobacterales, since the Enterobacteriaceae family has been taxonomically reclassified by Adeolu *et al.* in 2016. Before that, Enterobacteriaceae was the only family under the Enterobacteriales (with an i) order. All species under the old Enterobacteriaceae family are still under the new Enterobacterales (without an i) order, but divided into multiple families. The way tests are performed now by this [mdro()] function makes sure that results from before 2016 and after 2016 are identical.
-#' @inheritSection as.rsi Interpretation of S, I and R
+#' @inheritSection as.rsi Interpretation of R and S/I
 #' @return
 #' - CMI 2012 paper - function [mdr_cmi2012()] or [mdro()]:\cr
 #'   Ordered [`factor`] with levels `Negative` < `Multi-drug-resistant (MDR)` < `Extensively drug-resistant (XDR)` < `Pandrug-resistant (PDR)`

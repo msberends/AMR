@@ -67,9 +67,10 @@ We also created a package dedicated to data cleaning and checking, called the `c
 So let's check our data, with a couple of frequency tables:
 
 ```{r, results = 'asis'}
-# our newly created `mo` variable
-data %>% freq(mo, nmax = 10)
-
+# our newly created `mo` variable, put in the mo_name() function
+data %>% freq(mo_name(mo), nmax = 10)
+```
+```{r, results = 'asis'}
 # our transformed antibiotic columns
 # amoxicillin/clavulanic acid (J01CR02) as an example
 data %>% freq(AMC_ND2)
@@ -77,8 +78,21 @@ data %>% freq(AMC_ND2)
 
 ### A first glimpse at results
 
-An easy ggplot will already give a lot of information, using the included `ggplot_rsi()` function:
+An easy `ggplot` will already give a lot of information, using the included `ggplot_rsi()` function:
 
-```{r}
-ggplot_rsi(data, translate_ab = 'ab')
+```{r, eval = FALSE}
+data %>%
+  group_by(Country) %>%
+  select(Country, AMP_ND2, AMC_ED20, CAZ_ED10, CIP_ED5) %>%
+  ggplot_rsi(translate_ab = 'ab', facet = "Country", datalabels = FALSE)
+```
+
+```{r, echo = FALSE}
+# on very old and some new releases of R, this may lead to an error
+tryCatch(data %>%
+           group_by(Country) %>%
+           select(Country, AMP_ND2, AMC_ED20, CAZ_ED10, CIP_ED5) %>%
+           ggplot_rsi(translate_ab = 'ab', facet = "Country", datalabels = FALSE) %>%
+           print(),
+         error = function(e) base::invisible())
 ```

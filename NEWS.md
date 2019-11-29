@@ -1,5 +1,4 @@
-# AMR 0.8.0.9037
-## <small>Last updated: 28-Nov-2019</small>
+# AMR 0.9.0
 
 ### Breaking
 * Adopted Adeolu *et al.* (2016), [PMID 27620848](https://www.ncbi.nlm.nih.gov/pubmed/27620848) for the `microorganisms` data set, which means that the new order Enterobacterales now consists of a part of the existing family Enterobacteriaceae, but that this family has been split into other families as well (like *Morganellaceae* and *Yersiniaceae*). Although published in 2016, this information is not yet in the Catalogue of Life version of 2019. All MDRO determinations with `mdro()` will now use the Enterobacterales order for all guidelines before 2016 that were dependent on the Enterobacteriaceae family.

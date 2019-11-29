@@ -200,10 +200,16 @@ table a:not(.btn):hover, .table a:not(.btn):hover {
 
 /* text below header in manual overview */
 .template-reference-index h2 ~ p {
-  font-size: 16px;
+  font-size: 15px;
 }
 .template-reference-topic h2 {
   font-size: 24px;
+}
+.template-reference-topic h3 {
+  font-size: 18px;
+}
+.template-reference-topic h4 {
+  font-size: 15px;
 }
 
 /* logos on index page */

@@ -33,7 +33,7 @@
 #' @inheritParams ab_property
 #' @param combine_SI a logical to indicate whether all values of S and I must be merged into one, so the output only consists of S+I vs. R (susceptible vs. resistant). This used to be the parameter `combine_IR`, but this now follows the redefinition by EUCAST about the interpretion of I (increased exposure) in 2019, see section 'Interpretation of S, I and R' below. Default is `TRUE`.
 #' @param combine_IR a logical to indicate whether all values of I and R must be merged into one, so the output only consists of S vs. I+R (susceptible vs. non-susceptible). This is outdated, see parameter `combine_SI`.
-#' @inheritSection as.rsi Interpretation of S, I and R
+#' @inheritSection as.rsi Interpretation of R and S/I
 #' @details
 #' The function [resistance()] is equal to the function [proportion_R()]. The function [susceptibility()] is equal to the function [proportion_SI()].
 #'  

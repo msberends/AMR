@@ -41,7 +41,7 @@ is.rsi.eligible(x, threshold = 0.05)
 Ordered factor with new class \code{\link{rsi}}
 }
 \description{
-Interpret MIC values and disk diffusion diameters according to EUCAST or CLSI, or clean up existing RSI values. This transforms the input to a new class \code{\link{rsi}}, which is an ordered factor with levels \verb{S < I < R}. Invalid antimicrobial interpretations will be translated as \code{NA} with a warning.
+Interpret MIC values and disk diffusion diameters according to EUCAST or CLSI, or clean up existing R/SI values. This transforms the input to a new class \code{\link{rsi}}, which is an ordered factor with levels \verb{S < I < R}. Invalid antimicrobial interpretations will be translated as \code{NA} with a warning.
 }
 \details{
 Run \code{unique(AMR::rsi_translation$guideline)} for a list of all supported guidelines.
@@ -50,16 +50,17 @@ After using \code{\link[=as.rsi]{as.rsi()}}, you can use \code{\link[=eucast_rul
 
 The function \code{\link[=is.rsi.eligible]{is.rsi.eligible()}} returns \code{TRUE} when a columns contains at most 5\% invalid antimicrobial interpretations (not S and/or I and/or R), and \code{FALSE} otherwise. The threshold of 5\% can be set with the \code{threshold} parameter.
 }
-\section{Interpretation of S, I and R}{
+\section{Interpretation of R and S/I}{
 
-In 2019, the European Committee on Antimicrobial Susceptibility Testing (EUCAST) has decided to change the definitions of susceptibility testing categories S, I and R as shown below (\url{http://www.eucast.org/newsiandr/}). Results of several consultations on the new definitions are available on the EUCAST website under "Consultations".
+In 2019, the European Committee on Antimicrobial Susceptibility Testing (EUCAST) has decided to change the definitions of susceptibility testing categories R and S/I as shown below (\url{http://www.eucast.org/newsiandr/}). Results of several consultations on the new definitions are available on the EUCAST website under "Consultations".
 \itemize{
-\item \strong{S} - Susceptible, standard dosing regimen: A microorganism is categorised as "Susceptible, standard dosing regimen", when there is a high likelihood of therapeutic success using a standard dosing regimen of the agent.
-\item \strong{I} - Susceptible, increased exposure: A microorganism is categorised as "Susceptible, Increased exposure" when there is a high likelihood of therapeutic success because exposure to the agent is increased by adjusting the dosing regimen or by its concentration at the site of infection.
-\item \strong{R} - Resistant: A microorganism is categorised as "Resistant" when there is a high likelihood of therapeutic failure even when there is increased exposure.
+\item \strong{R = Resistant}\cr
+A microorganism is categorised as \emph{Resistant} when there is a high likelihood of therapeutic failure even when there is increased exposure. Exposure is a function of how the mode of administration, dose, dosing interval, infusion time, as well as distribution and excretion of the antimicrobial agent will influence the infecting organism at the site of infection.
+\item \strong{S = Susceptible}\cr
+A microorganism is categorised as \emph{Susceptible, standard dosing regimen}, when there is a high likelihood of therapeutic success using a standard dosing regimen of the agent.
+\item \strong{I = Increased exposure, but still susceptible}\cr
+A microorganism is categorised as \emph{Susceptible, Increased exposure} when there is a high likelihood of therapeutic success because exposure to the agent is increased by adjusting the dosing regimen or by its concentration at the site of infection.
 }
-
-Exposure is a function of how the mode of administration, dose, dosing interval, infusion time, as well as distribution and excretion of the antimicrobial agent will influence the infecting organism at the site of infection.
 
 This AMR package honours this new insight. Use \code{\link[=susceptibility]{susceptibility()}} (equal to \code{\link[=proportion_SI]{proportion_SI()}}) to determine antimicrobial susceptibility and \code{\link[=count_susceptible]{count_susceptible()}} (equal to \code{\link[=count_SI]{count_SI()}}) to count susceptible isolates.
 }

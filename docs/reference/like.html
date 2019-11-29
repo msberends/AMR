@@ -85,7 +85,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">0.8.0.9036</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">0.9.0</span>
       </span>
     </div>
 
@@ -248,24 +248,15 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>x</th>
-      <td><p>a character vector where matches are sought, or an
-    object which can be coerced by <code>as.character</code> to a character
-    vector.  <a href='https://rdrr.io/r/base/LongVectors.html'>Long vectors</a> are supported.</p></td>
+      <td><p>a character vector where matches are sought, or an object which can be coerced by <code><a href='https://rdrr.io/r/base/character.html'>as.character()</a></code> to a character vector.</p></td>
     </tr>
     <tr>
       <th>pattern</th>
-      <td><p>character string containing a <a href='https://rdrr.io/r/base/regex.html'>regular expression</a>
-    (or character string for <code>fixed = TRUE</code>) to be matched
-    in the given character vector.  Coerced by
-    <code><a href='https://rdrr.io/r/base/character.html'>as.character</a></code> to a character string if possible.  If a
-    character vector of length 2 or more is supplied, the first element
-    is used with a warning.  Missing values are allowed except for
-    <code>regexpr</code> and <code>gregexpr</code>.</p></td>
+      <td><p>a character string containing a regular expression (or <code><a href='https://rdrr.io/r/base/character.html'>character</a></code> string for <code>fixed = TRUE</code>) to be matched in the given character vector. Coerced by <code><a href='https://rdrr.io/r/base/character.html'>as.character()</a></code> to a character string if possible.  If a <code><a href='https://rdrr.io/r/base/character.html'>character</a></code> vector of length 2 or more is supplied, the first element is used with a warning.</p></td>
     </tr>
     <tr>
       <th>ignore.case</th>
-      <td><p>if <code>FALSE</code>, the pattern matching is <em>case
-      sensitive</em> and if <code>TRUE</code>, case is ignored during matching.</p></td>
+      <td><p>if <code>FALSE</code>, the pattern matching is <em>case sensitive</em> and if <code>TRUE</code>, case is ignored during matching.</p></td>
     </tr>
     </table>
 
