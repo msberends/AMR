@@ -216,5 +216,5 @@ mo_source_isvalid <- function(x) {
   if (!"mo" %in% colnames(x)) {
     return(FALSE)
   }
-  all(x$mo %in% c("", AMR::microorganisms$mo, AMR::microorganisms.translation$mo_old), na.rm = TRUE)
+  all(x$mo %in% c("", AMR::microorganisms$mo, microorganisms.translation$mo_old), na.rm = TRUE)
 }

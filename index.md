@@ -8,7 +8,7 @@
 
 *(<help title="Too Long, Didn't Read">TLDR</help> - to find out how to conduct AMR analysis, please [continue reading here to get started](./articles/AMR.html).*
 
-`AMR` is a **free and open-source** [R package](https://www.r-project.org) to simplify the analysis and prediction of Antimicrobial Resistance (AMR) and to work with microbial and antimicrobial properties by using evidence-based methods. Our aim is to offer a new standard for clean and reproducible antimicrobial resistance data analysis, that can therefore empower epidemiological analyses to continuously enable surveillance and treatment evaluation in any setting.
+`AMR` is a free and open-source [R package](https://www.r-project.org) to simplify the analysis and prediction of Antimicrobial Resistance (AMR) and to work with microbial and antimicrobial data and properties, by using evidence-based methods. **Our aim is to supply a standard** for clean and reproducible antimicrobial resistance data analysis, that can therefore empower epidemiological analyses to continuously enable surveillance and treatment evaluation in any setting.
 
 After installing this package, R knows [**~70,000 distinct microbial species**](./reference/microorganisms.html) and all [**~550 antibiotic, antimycotic and antiviral drugs**](./reference/antibiotics.html) by name and code, and knows all about valid RSI and MIC values. It supports any data format, including WHONET/EARS-Net data. 
 
