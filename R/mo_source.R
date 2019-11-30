@@ -40,12 +40,12 @@
 #' 
 #' Imagine this data on a sheet of an Excel file (mo codes were looked up in the `microorganisms` data set). The first column contains the organisation specific codes, the second column contains an MO code from this package:
 #' ```
-#'   |         A          |      B      |
-#' --|--------------------|-------------|
-#' 1 | Organisation XYZ   | mo          |
-#' 2 | lab_mo_ecoli       | B_ESCHR_COL |
-#' 3 | lab_mo_kpneumoniae | B_KLBSL_PNE |
-#' 4 |                    |             |
+#'   |         A          |       B      |
+#' --|--------------------|--------------|
+#' 1 | Organisation XYZ   | mo           |
+#' 2 | lab_mo_ecoli       | B_ESCHR_COLI |
+#' 3 | lab_mo_kpneumoniae | B_KLBSL_PNMN |
+#' 4 |                    |              |
 #' ```
 #'
 #' We save it as `"home/me/ourcodes.xlsx"`. Now we have to set it as a source:
@@ -59,7 +59,7 @@
 #' And now we can use it in our functions:
 #' ```
 #' as.mo("lab_mo_ecoli")
-#' \[1\] B_ESCHR_COLI
+#' [1] B_ESCHR_COLI
 #'
 #' mo_genus("lab_mo_kpneumoniae")
 #' [1] "Klebsiella"
@@ -69,7 +69,7 @@
 #' [1] B_ESCHR_COLI B_ESCHR_COLI B_ESCHR_COLI
 #' ```
 #'
-#' If we edit the Excel file to, let's say, this:
+#' If we edit the Excel file to, let's say, by adding row 4 like this:
 #' ```
 #'   |         A          |       B      |
 #' --|--------------------|--------------|
@@ -80,7 +80,7 @@
 #' 5 |                    |              |
 #' ```
 #'
-#' ...any new usage of an MO function in this package will update your data:
+#' ...any new usage of an MO function in this package will update your data file:
 #' ```
 #' as.mo("lab_mo_ecoli")
 #' # Updated mo_source file '~/.mo_source.rds' from 'home/me/ourcodes.xlsx'.
@@ -90,9 +90,8 @@
 #' [1] "Staphylococcus"
 #' ```
 #'
-#' To remove the reference completely, just use any of these:
+#' To remove the reference data file completely, just use `""` or `NULL` as input for `[set_mo_source()]`:
 #' ```
-#' set_mo_source("")
 #' set_mo_source(NULL)
 #' # Removed mo_source file '~/.mo_source.rds'.
 #' ```
@@ -126,9 +125,7 @@ set_mo_source <- function(path) {
 
   } else if (path %like% "[.]xlsx?$") {
     # is Excel file (old or new)
-    if (!"readxl" %in% utils::installed.packages()) {
-      stop("Install the 'readxl' package first.")
-    }
+    stopifnot_installed_package("readxl")
     df <- readxl::read_excel(path)
 
   } else if (path %like% "[.]tsv$") {
@@ -219,5 +216,5 @@ mo_source_isvalid <- function(x) {
   if (!"mo" %in% colnames(x)) {
     return(FALSE)
   }
-  all(x$mo %in% c("", AMR::microorganisms$mo))
+  all(x$mo %in% c("", AMR::microorganisms$mo, AMR::microorganisms.translation$mo_old), na.rm = TRUE)
 }

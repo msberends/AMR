@@ -21,7 +21,7 @@
 
 #' Property of a microorganism
 #'
-#' Use these functions to return a specific property of a microorganism. All input values will be evaluated internally with [as.mo()], which makes it possible for input of these functions to use microbial abbreviations, codes and names. See Examples.
+#' Use these functions to return a specific property of a microorganism. All input values will be evaluated internally with [as.mo()], which makes it possible to use microbial abbreviations, codes and names as input. Please see *Examples*.
 #' @param x any (vector of) text that can be coerced to a valid microorganism code with [as.mo()]
 #' @param property one of the column names of the [microorganisms] data set or `"shortname"`
 #' @param language language of the returned text, defaults to system language (see [get_locale()]) and can also be set with `getOption("AMR_locale")`. Use `language = NULL` or `language = ""` to prevent translation.
@@ -32,7 +32,7 @@
 #' - `mo_ref("Chlamydia psittaci")` will return `"Page, 1968"` (with a warning about the renaming)
 #' - `mo_ref("Chlamydophila psittaci")` will return `"Everett et al., 1999"` (without a warning)
 #'
-#' The Gram stain - [mo_gramstain()] - will be determined on the taxonomic kingdom and phylum. According to Cavalier-Smith (2002) who defined subkingdoms Negibacteria and Posibacteria, only these phyla are Posibacteria: Actinobacteria, Chloroflexi, Firmicutes and Tenericutes. These bacteria are considered Gram positive - all other bacteria are considered Gram negative. Species outside the kingdom of Bacteria will return a value `NA`.
+#' The Gram stain - [mo_gramstain()] - will be determined on the taxonomic kingdom and phylum. According to Cavalier-Smith (2002) who defined subkingdoms Negibacteria and Posibacteria, only these phyla are Posibacteria: Actinobacteria, Chloroflexi, Firmicutes and Tenericutes. These bacteria are considered Gram-positive - all other bacteria are considered Gram-negative. Species outside the kingdom of Bacteria will return a value `NA`.
 #'
 #' All output will be [translate]d where possible.
 #'
@@ -43,7 +43,7 @@
 #' @name mo_property
 #' @return
 #' - An [`integer`] in case of [mo_year()]
-#' - A [`list`] in case of [mo_taxonomy()]
+#' - A [`list`] in case of [mo_taxonomy()] and [mo_info()]
 #' - A named [`character`] in case of [mo_url()]
 #' - A [`character`] in all other cases
 #' @export

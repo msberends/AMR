@@ -28,12 +28,12 @@ The reference file can be a text file seperated with commas (CSV) or tabs or pip
 Reading an Excel file (\code{.xlsx}) with only one row has a size of 8-9 kB. The compressed file used by this package will have a size of 0.1 kB and can be read by \code{\link[=get_mo_source]{get_mo_source()}} in only a couple of microseconds (a millionth of a second).
 \subsection{How it works}{
 
-Imagine this data on a sheet of an Excel file (mo codes were looked up in the \code{microorganisms} data set). The first column contains the organisation specific codes, the second column contains an MO code from this package:\preformatted{  |         A          |      B      |
---|--------------------|-------------|
-1 | Organisation XYZ   | mo          |
-2 | lab_mo_ecoli       | B_ESCHR_COL |
-3 | lab_mo_kpneumoniae | B_KLBSL_PNE |
-4 |                    |             |
+Imagine this data on a sheet of an Excel file (mo codes were looked up in the \code{microorganisms} data set). The first column contains the organisation specific codes, the second column contains an MO code from this package:\preformatted{  |         A          |       B      |
+--|--------------------|--------------|
+1 | Organisation XYZ   | mo           |
+2 | lab_mo_ecoli       | B_ESCHR_COLI |
+3 | lab_mo_kpneumoniae | B_KLBSL_PNMN |
+4 |                    |              |
 }
 
 We save it as \code{"home/me/ourcodes.xlsx"}. Now we have to set it as a source:\preformatted{set_mo_source("home/me/ourcodes.xlsx")
@@ -43,7 +43,7 @@ We save it as \code{"home/me/ourcodes.xlsx"}. Now we have to set it as a source:
 It has now created a file \code{"~/.mo_source.rds"} with the contents of our Excel file, but only the first column with foreign values and the 'mo' column will be kept.
 
 And now we can use it in our functions:\preformatted{as.mo("lab_mo_ecoli")
-\[1\] B_ESCHR_COLI
+[1] B_ESCHR_COLI
 
 mo_genus("lab_mo_kpneumoniae")
 [1] "Klebsiella"
@@ -53,7 +53,7 @@ as.mo(c("Escherichia coli", "E. coli", "lab_mo_ecoli"))
 [1] B_ESCHR_COLI B_ESCHR_COLI B_ESCHR_COLI
 }
 
-If we edit the Excel file to, let's say, this:\preformatted{  |         A          |       B      |
+If we edit the Excel file to, let's say, by adding row 4 like this:\preformatted{  |         A          |       B      |
 --|--------------------|--------------|
 1 | Organisation XYZ   | mo           |
 2 | lab_mo_ecoli       | B_ESCHR_COLI |
@@ -62,7 +62,7 @@ If we edit the Excel file to, let's say, this:\preformatted{  |         A       
 5 |                    |              |
 }
 
-...any new usage of an MO function in this package will update your data:\preformatted{as.mo("lab_mo_ecoli")
+...any new usage of an MO function in this package will update your data file:\preformatted{as.mo("lab_mo_ecoli")
 # Updated mo_source file '~/.mo_source.rds' from 'home/me/ourcodes.xlsx'.
 [1] B_ESCHR_COLI
 
@@ -70,8 +70,7 @@ mo_genus("lab_Staph_aureus")
 [1] "Staphylococcus"
 }
 
-To remove the reference completely, just use any of these:\preformatted{set_mo_source("")
-set_mo_source(NULL)
+To remove the reference data file completely, just use \code{""} or \code{NULL} as input for \verb{[set_mo_source()]}:\preformatted{set_mo_source(NULL)
 # Removed mo_source file '~/.mo_source.rds'.
 }
 }

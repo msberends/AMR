@@ -260,12 +260,12 @@ This is the fastest way to have your organisation (or analysis) specific codes p
 <p>Reading an Excel file (<code>.xlsx</code>) with only one row has a size of 8-9 kB. The compressed file used by this package will have a size of 0.1 kB and can be read by <code>get_mo_source()</code> in only a couple of microseconds (a millionth of a second).</p><h3>How it works</h3>
 
 
-<p>Imagine this data on a sheet of an Excel file (mo codes were looked up in the <code>microorganisms</code> data set). The first column contains the organisation specific codes, the second column contains an MO code from this package:</p><pre>  |         A          |      B      |
---|--------------------|-------------|
-1 | Organisation XYZ   | mo          |
-2 | lab_mo_ecoli       | B_ESCHR_COL |
-3 | lab_mo_kpneumoniae | B_KLBSL_PNE |
-4 |                    |             |
+<p>Imagine this data on a sheet of an Excel file (mo codes were looked up in the <code>microorganisms</code> data set). The first column contains the organisation specific codes, the second column contains an MO code from this package:</p><pre>  |         A          |       B      |
+--|--------------------|--------------|
+1 | Organisation XYZ   | mo           |
+2 | lab_mo_ecoli       | B_ESCHR_COLI |
+3 | lab_mo_kpneumoniae | B_KLBSL_PNMN |
+4 |                    |              |
 </pre>
 
 <p>We save it as <code>"home/me/ourcodes.xlsx"</code>. Now we have to set it as a source:</p><pre>set_mo_source("home/me/ourcodes.xlsx")
@@ -274,7 +274,7 @@ This is the fastest way to have your organisation (or analysis) specific codes p
 
 <p>It has now created a file <code>"~/.mo_source.rds"</code> with the contents of our Excel file, but only the first column with foreign values and the 'mo' column will be kept.</p>
 <p>And now we can use it in our functions:</p><pre>as.mo("lab_mo_ecoli")
-\[1\] B_ESCHR_COLI
+[1] B_ESCHR_COLI
 
 mo_genus("lab_mo_kpneumoniae")
 [1] "Klebsiella"
@@ -284,7 +284,7 @@ as.mo(c("Escherichia coli", "E. coli", "lab_mo_ecoli"))
 [1] B_ESCHR_COLI B_ESCHR_COLI B_ESCHR_COLI
 </pre>
 
-<p>If we edit the Excel file to, let's say, this:</p><pre>  |         A          |       B      |
+<p>If we edit the Excel file to, let's say, by adding row 4 like this:</p><pre>  |         A          |       B      |
 --|--------------------|--------------|
 1 | Organisation XYZ   | mo           |
 2 | lab_mo_ecoli       | B_ESCHR_COLI |
@@ -293,7 +293,7 @@ as.mo(c("Escherichia coli", "E. coli", "lab_mo_ecoli"))
 5 |                    |              |
 </pre>
 
-<p>...any new usage of an MO function in this package will update your data:</p><pre>as.mo("lab_mo_ecoli")
+<p>...any new usage of an MO function in this package will update your data file:</p><pre>as.mo("lab_mo_ecoli")
 # Updated mo_source file '~/.mo_source.rds' from 'home/me/ourcodes.xlsx'.
 [1] B_ESCHR_COLI
 
@@ -301,8 +301,7 @@ mo_genus("lab_Staph_aureus")
 [1] "Staphylococcus"
 </pre>
 
-<p>To remove the reference completely, just use any of these:</p><pre>set_mo_source("")
-set_mo_source(NULL)
+<p>To remove the reference data file completely, just use <code>""</code> or <code>NULL</code> as input for <code>[set_mo_source()]</code>:</p><pre>set_mo_source(NULL)
 # Removed mo_source file '~/.mo_source.rds'.
 </pre>
 

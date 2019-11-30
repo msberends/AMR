@@ -117,7 +117,10 @@ search_type_in_df <- function(x, type) {
 stopifnot_installed_package <- function(package) {
   # no "utils::installed.packages()" since it requires non-staged install since R 3.6.0
   # https://developer.r-project.org/Blog/public/2019/02/14/staged-install/index.html
-  get(".packageName", envir = asNamespace(package))
+  tryCatch(get(".packageName", envir = asNamespace(package)),
+           error = function(e) stop("package '", package, "' required but not installed",
+                                    ' - try to install it with: install.packages("', package, '")',
+                                    call. = FALSE))
   return(invisible())
 }
 

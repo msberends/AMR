@@ -44,7 +44,7 @@
 .countries_map {
   float: left; 
   padding: 0 10px 10px 0;
-  max-width: 25%;
+  max-width: 35%;
 }
 @media only screen and (max-width: 992px) {
   .footer_logo {
