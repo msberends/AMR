@@ -18,7 +18,7 @@ We created this package for both routine analysis and academic research (as part
   <p>
     <a href="./countries.png" target="_blank"><img src="./countries.png" class="countries_map"></a>
     <strong>Used in over 70 countries</strong><br>
-    Since its first public release in early 2018, this package has been downloaded over 25,000 times from 75 countries <small>(as of November 2019, <a href="https://cran-logs.rstudio.com" target="_blank">CRAN logs</a>)</small>. Click the map to enlarge.</p><br><br>
+    Since its first public release in early 2018, this package has been downloaded over 25,000 times from 78 countries <small>(as of December 2019, <a href="https://cran-logs.rstudio.com" target="_blank">CRAN logs</a>)</small>. Click the map to enlarge.</p><br><br>
 </div>
 
 #### Partners
@@ -80,7 +80,7 @@ Developers
 
 #### Latest released version
 
-This package is available [on the official R network (CRAN)](https://cran.r-project.org/package=AMR), which has a peer-reviewed submission process. Install this package in R with:
+This package is available [here on the official R network (CRAN)](https://cran.r-project.org/package=AMR), which has a peer-reviewed submission process. Install this package in R from CRAN by using the command:
 
 ```r
 install.packages("AMR")

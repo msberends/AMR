@@ -22,3 +22,4 @@ packrat/lib*/
 packrat/src/
 data-raw/taxon.tab
 data-raw/DSMZ_bactnames.xlsx
+data-raw/country_analysis_url_token.R
