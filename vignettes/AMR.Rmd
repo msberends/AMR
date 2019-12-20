@@ -28,6 +28,18 @@ knitr::opts_chunk$set(
 
 # Introduction
 
+Conducting antimicrobial resistance analysis unfortunately requires in-depth knowledge from different scientific fields, which makes it hard to do right. At least, it requires:
+
+* Good questions (always start with these!)
+* A thorough understanding of both (clinical) epidemiology and (clinical) microbiology, to understand the clinical and epidemiological relevance of results and their pharmaceutical implications
+* Experience with data analysis with microbiological tests and their results (MIC/RSI values)
+* Availability of the biological taxonomy of microorganisms
+* Available (inter-)national guidelines and methods to apply them
+
+Of course, we cannot instantly provide you with knowledge and experience. But with this `AMR` pacakge, we aimed at providing (1) tools to simplify antimicrobial resistance data cleaning/analysis, (2) methods to easily incorporate international guidelines and (3) scientifically reliable reference data. The `AMR` package enables standardised and reproducible antimicrobial resistance analyses, including the application of evidence-based rules, determination of first isolates, translation of various codes for microorganisms and antimicrobial agents, determination of (multi-drug) resistant microorganisms, and calculation of antimicrobial resistance, prevalence and future trends.
+
+# Preparation 
+
 For this tutorial, we will create fake demonstration data to work with. 
 
 You can skip to [Cleaning the data](#cleaning-the-data) if you already have your own data ready. If you start your analysis, try to make the structure of your data generally look like this:

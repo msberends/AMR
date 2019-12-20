@@ -44,13 +44,29 @@ countries_plot <- ggplot(world1) +
     # this makes the border Antarctica turn white (invisible):
     scale_colour_gradient(low = "white", high = "#81899B")
 
+countries_plot_mini <- countries_plot
+countries_plot_mini$data <- countries_plot_mini$data %>% filter(ID != "Antarctica")
+countries_plot_mini <- countries_plot_mini + scale_colour_gradient(low = "#81899B", high = "#81899B")
+countries_plot_big <- countries_plot +
+  labs(title = tools::toTitleCase("Countries where the AMR package for R was downloaded from"),
+       subtitle = paste0("Between March 2018 - ", format(Sys.Date(), "%B %Y"))) +
+  theme(plot.title = element_text(size = 16, hjust = 0.5),
+        plot.subtitle = element_text(size = 12, hjust = 0.5)) +
+  geom_text(aes(x = -170,
+                y = -70,
+                label = stringr::str_wrap(paste0("Countries (n = ", 
+                                                 length(countries_name), "): ", 
+                                                 paste(countries_name, collapse = ", ")),
+                                          200)),
+            hjust = 0,
+            size = 4)
 # main website page
 ggsave("pkgdown/logos/countries.png",
        width = 6, 
-       height = 3, 
+       height = 2.5, 
        units = "in", 
        dpi = 100, 
-       plot = countries_plot, 
+       plot = countries_plot_mini, 
        scale = 1)
 # when clicked - a high res enlargement
 ggsave("pkgdown/logos/countries_large.png",
@@ -58,20 +74,7 @@ ggsave("pkgdown/logos/countries_large.png",
        height = 6, 
        units = "in", 
        dpi = 300, 
-       plot = 
-         countries_plot +
-         labs(title = tools::toTitleCase("Countries where the AMR package for R was downloaded from"),
-              subtitle = paste0("Between March 2018 - ", format(Sys.Date(), "%B %Y"))) +
-         theme(plot.title = element_text(size = 16, hjust = 0.5),
-               plot.subtitle = element_text(size = 12, hjust = 0.5)) +
-         geom_text(aes(x = -170,
-                       y = -70,
-                       label = stringr::str_wrap(paste0("Countries (n = ", 
-                                                        length(countries_name), "): ", 
-                                                        paste(countries_name, collapse = ", ")),
-                                                 200)),
-                   hjust = 0,
-                   size = 4), 
+       plot = countries_plot_big,
        scale = 1.5)
 
 

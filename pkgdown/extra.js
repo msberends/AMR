@@ -95,7 +95,7 @@ $( document ).ready(function() {
   }
   $(".template-authors").html(doct_tit($(".template-authors").html()));
   $(".developers").html(doct_tit($(".developers").html()));
-  $("footer").html(doct_tit($("footer").html()));
+  // $("footer").html(doct_tit($("footer").html()));
 
   // Edit title of manual
   $('.template-reference-index h1').text('Manual');

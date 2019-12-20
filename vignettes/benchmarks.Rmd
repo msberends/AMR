@@ -29,8 +29,6 @@ One of the most important features of this package is the complete microbial tax
 
 Using the `microbenchmark` package, we can review the calculation performance of this function. Its function `microbenchmark()` runs different input expressions independently of each other and measures their time-to-result.
 
-`r interactive()`
-
 ```{r, message = FALSE, echo = FALSE}
 library(dplyr)
 library(ggplot2)
@@ -67,7 +65,7 @@ library(AMR)
 
 In the next test, we try to 'coerce' different input values into the microbial code of *Staphylococcus aureus*. Coercion is a computational process of forcing output based on an input. For microorganism names, coercing user input to taxonomically valid microorganism names is crucial to ensure correct interpretation and to enable grouping based on taxonomic properties. 
 
-The actual result is the same every time: it returns its microorganism code `r as.character(as.mo("Staphylococcus aureus"))` (*B* stands for *Bacteria*, the taxonomic kingdom). 
+The actual result is the same every time: it returns its microorganism code ``r as.character(as.mo("Staphylococcus aureus"))`` (*B* stands for *Bacteria*, the taxonomic kingdom). 
 
 But the calculation time differs a lot:
 
@@ -134,7 +132,9 @@ boxplot(microbenchmark(
         main = "Benchmarks per prevalence")
 ```
 
-In reality, the `as.mo()` functions **learns from its own output to speed up determinations for next times**. In below figure, this effect was disabled to show the difference with the boxplot above:
+The highest outliers are the first times. All next determinations were done in only thousands of seconds, because the `as.mo()` function **learns from its own output to speed up determinations for next times**. 
+
+In below figure, this effect was disabled to show the difference with the boxplot above:
 
 ```{r, echo = FALSE, fig.width=12}
 clear_mo_history()
@@ -153,8 +153,6 @@ boxplot(microbenchmark(
         main = "Benchmarks per prevalence")
 options(AMR_disable_mo_history = FALSE)
 ```
-
-The highest outliers are the first times. All next determinations were done in only thousands of seconds.
 
 Uncommon microorganisms take a lot more time than common microorganisms. To relieve this pitfall and further improve performance, two important calculations take almost no time at all: **repetitive results** and **already precalculated results**.
 
@@ -183,7 +181,7 @@ n_distinct(x)
 
 # now let's see:
 run_it <- microbenchmark(mo_name(x),
-                         times = 10)
+                         times = 100)
 print(run_it, unit = "ms", signif = 3)
 ```
 
@@ -245,7 +243,7 @@ run_it <- microbenchmark(en = mo_name("CoNS", language = "en"),
                          it = mo_name("CoNS", language = "it"),
                          fr = mo_name("CoNS", language = "fr"),
                          pt = mo_name("CoNS", language = "pt"),
-                         times = 10)
+                         times = 100)
 print(run_it, unit = "ms", signif = 4)
 ```
 
