@@ -1,30 +1,30 @@
 Package: AMR
-Version: 0.9.0.9002
-Date: 2019-12-16
+Version: 0.9.0.9003
+Date: 2019-12-20
 Title: Antimicrobial Resistance Analysis
 Authors@R: c(
     person(role = c("aut", "cre"), 
-           family = "Berends", given = c("Matthijs", "S."), email = "m.s.berends@umcg.nl", comment = c(ORCID = "0000-0001-7620-1800")),
+           family = "Berends", given = c("Matthijs", "S"), email = "m.s.berends@umcg.nl", comment = c(ORCID = "0000-0001-7620-1800")),
     person(role = c("aut", "ctb"),
-           family = "Luz", given = c("Christian", "F."), email = "c.f.luz@umcg.nl", comment = c(ORCID = "0000-0001-5809-5995")),
+           family = "Luz", given = c("Christian", "F"), email = "c.f.luz@umcg.nl", comment = c(ORCID = "0000-0001-5809-5995")),
     person(role = c("aut", "ths"),
-           family = "Friedrich", given = c("Alex", "W."), email = "alex.friedrich@umcg.nl", comment = c(ORCID = "0000-0003-4881-038X")),
+           family = "Friedrich", given = c("Alexander", "W"), email = "alex.friedrich@umcg.nl", comment = c(ORCID = "0000-0003-4881-038X")),
     person(role = c("aut", "ths"),
-           family = "Sinha", given = c("Bhanu", "N.", "M."), email = "b.sinha@umcg.nl", comment = c(ORCID = "0000-0003-1634-0010")),
+           family = "Sinha", given = c("Bhanu", "N", "M"), email = "b.sinha@umcg.nl", comment = c(ORCID = "0000-0003-1634-0010")),
     person(role = c("aut", "ths"),
-           family = "Albers", given = c("Casper", "J."), email = "c.j.albers@rug.nl", comment = c(ORCID = "0000-0002-9213-6743")),
+           family = "Albers", given = c("Casper", "J"), email = "c.j.albers@rug.nl", comment = c(ORCID = "0000-0002-9213-6743")),
     person(role = c("aut", "ths"),
            family = "Glasner", given = "Corinna", email = "c.glasner@umcg.nl", comment = c(ORCID = "0000-0003-1241-1328")),
     person(role = "ctb",
-           family = "Fonville", given = c("Judith", "M."), email = "j.fonville@pamm.nl"),
+           family = "Fonville", given = c("Judith", "M"), email = "j.fonville@pamm.nl"),
     person(role = "ctb",
-           family = "Hassing", given = c("Erwin", "E.", "A."), email = "e.hassing@certe.nl"),
+           family = "Hassing", given = c("Erwin", "E", "A"), email = "e.hassing@certe.nl"),
     person(role = "ctb",
-           family = "Hazenberg", given = c("Eric", "H.", "L.", "C.", "M."), email = "e.hazenberg@jbz.nl"),
+           family = "Hazenberg", given = c("Eric", "H", "L", "C", "M"), email = "e.hazenberg@jbz.nl"),
     person(role = "ctb",
            family = "Lenglet", given = "Annick", email = "annick.lenglet@amsterdam.msf.org"),
     person(role = "ctb",
-           family = "Meijer", given = c("Bart", "C."), email = "b.meijerg@certe.nl"),
+           family = "Meijer", given = c("Bart", "C"), email = "b.meijerg@certe.nl"),
     person(role = "ctb",
            family = "Ny", given = "Sofia", email = "sofia.ny@folkhalsomyndigheten.se"),
     person(role = "ctb",

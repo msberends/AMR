@@ -2,13 +2,13 @@
 
 > *18 October 2019*  
 > **METHODS PAPER PREPRINTED**  
-> A methods paper about this package has been preprinted at bioRxiv. It was updated on 8 November 2019. Please click [here for the publishers page](https://doi.org/10.1101/810622).
+> A methods paper about this package has been preprinted at bioRxiv (DOI: 10.1101/810622). It was **updated on 18 December 2019** and in parallel sent to a journal. Please click [here for the paper on bioRxiv's publishers page](https://doi.org/10.1101/810622).
 
 ### What is `AMR` (for R)?
 
 *(<help title="Too Long, Didn't Read">TLDR</help> - to find out how to conduct AMR analysis, please [continue reading here to get started](./articles/AMR.html).*
 
-`AMR` is a free and open-source [R package](https://www.r-project.org) to simplify the analysis and prediction of Antimicrobial Resistance (AMR) and to work with microbial and antimicrobial data and properties, by using evidence-based methods. **Our aim is to supply a standard** for clean and reproducible antimicrobial resistance data analysis, that can therefore empower epidemiological analyses to continuously enable surveillance and treatment evaluation in any setting.
+`AMR` is a free and open-source [R package](https://www.r-project.org) to simplify the analysis and prediction of Antimicrobial Resistance (AMR) and to work with microbial and antimicrobial data and properties, by using evidence-based methods. **Our aim is to provide a standard** for clean and reproducible antimicrobial resistance data analysis, that can therefore empower epidemiological analyses to continuously enable surveillance and treatment evaluation in any setting.
 
 After installing this package, R knows [**~70,000 distinct microbial species**](./reference/microorganisms.html) and all [**~550 antibiotic, antimycotic and antiviral drugs**](./reference/antibiotics.html) by name and code, and knows all about valid RSI and MIC values. It supports any data format, including WHONET/EARS-Net data. 
 
@@ -16,9 +16,9 @@ We created this package for both routine analysis and academic research (as part
 
 <div class="main-content"> 
   <p>
-    <a href="./countries.png" target="_blank"><img src="./countries.png" class="countries_map"></a>
-    <strong>Used in over 70 countries</strong><br>
-    Since its first public release in early 2018, this package has been downloaded over 25,000 times from 78 countries <small>(as of December 2019, <a href="https://cran-logs.rstudio.com" target="_blank">CRAN logs</a>)</small>. Click the map to enlarge.</p><br><br>
+    <a href="./countries_large.png" target="_blank"><img src="./countries.png" class="countries_map"></a>
+    <strong>Used in almost 80 countries</strong><br>
+    Since its first public release in early 2018, this package has been downloaded over 25,000 times from 79 countries <small>(as of December 2019, <a href="https://cran-logs.rstudio.com" target="_blank">CRAN logs</a>)</small>. Click the map to enlarge.</p><br><br>
 </div>
 
 #### Partners
@@ -106,7 +106,7 @@ To find out how to conduct AMR analysis, please [continue reading here to get st
 
 #### Microbial (taxonomic) reference data
 
-This package contains the complete taxonomic tree of almost all 70,000 microorganisms from the authoritative and comprehensive Catalogue of Life (CoL, [www.catalogueoflife.org](http://www.catalogueoflife.org)). With `catalogue_of_life_version()` can be checked which version of the CoL is included in this package.
+This package contains the complete taxonomic tree of almost all ~70,000 microorganisms from the authoritative and comprehensive Catalogue of Life (CoL, [www.catalogueoflife.org](http://www.catalogueoflife.org)). With `catalogue_of_life_version()` can be checked which version of the CoL is included in this package.
 
 Read more about which data from the Catalogue of Life [in our manual](./reference/catalogue_of_life.html).
 

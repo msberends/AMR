@@ -22,13 +22,14 @@ knitr::opts_chunk$set(
   fig.height = 4.5,
   dpi = 75
 )
+options(AMR_disable_mo_history = FALSE)
 ```
-
-<small>Source: https://gitlab.com/msberends/AMR/blob/master/vignettes/benchmarks.Rmd</small>
 
 One of the most important features of this package is the complete microbial taxonomic database, supplied by the [Catalogue of Life](http://catalogueoflife.org). We created a function `as.mo()` that transforms any user input value to a valid microbial ID by using intelligent rules combined with the taxonomic tree of Catalogue of Life.
 
 Using the `microbenchmark` package, we can review the calculation performance of this function. Its function `microbenchmark()` runs different input expressions independently of each other and measures their time-to-result.
+
+`r interactive()`
 
 ```{r, message = FALSE, echo = FALSE}
 library(dplyr)
@@ -64,7 +65,9 @@ library(microbenchmark)
 library(AMR)
 ```
 
-In the next test, we try to 'coerce' different input values for *Staphylococcus aureus*. The actual result is the same every time: it returns its microorganism code `B_STPHY_AURS` (*B* stands for *Bacteria*, the taxonomic kingdom). 
+In the next test, we try to 'coerce' different input values into the microbial code of *Staphylococcus aureus*. Coercion is a computational process of forcing output based on an input. For microorganism names, coercing user input to taxonomically valid microorganism names is crucial to ensure correct interpretation and to enable grouping based on taxonomic properties. 
+
+The actual result is the same every time: it returns its microorganism code `r as.character(as.mo("Staphylococcus aureus"))` (*B* stands for *Bacteria*, the taxonomic kingdom). 
 
 But the calculation time differs a lot:
 
@@ -103,43 +106,20 @@ clear_mo_history()
 ```
 ```{r, warning=FALSE}
 M.semesiae <- microbenchmark(as.mo("metsem"),
-                               as.mo("METSEM"),
-                               as.mo("M. semesiae"),
-                               as.mo("M.  semesiae"),
-                               as.mo("Methanosarcina semesiae"),
-                               times = 10)
+                             as.mo("METSEM"),
+                             as.mo("M. semesiae"),
+                             as.mo("M.  semesiae"),
+                             as.mo("Methanosarcina semesiae"),
+                             times = 10)
 print(M.semesiae, unit = "ms", signif = 4)
 ```
 
-That takes `r round(mean(M.semesiae$time, na.rm = TRUE) / mean(S.aureus$time, na.rm = TRUE), 1)` times as much time on average. A value of 100 milliseconds means it can only determine ~10 different input values per second. We can conclude that looking up arbitrary codes of less prevalent microorganisms is the worst way to go, in terms of calculation performance. Full names (like *Methanosarcina semesiae*) are almost fast - these are the most probable input from most data sets.
+That takes `r round(mean(M.semesiae$time, na.rm = TRUE) / mean(S.aureus$time, na.rm = TRUE), 1)` times as much time on average. A value of 100 milliseconds means it can only determine ~10 different input values per second. We can conclude that looking up arbitrary codes of less prevalent microorganisms is the worst way to go, in terms of calculation performance. Full names (like *Methanosarcina semesiae*) are always very fast and only take some thousands of seconds to coerce - they are the most probable input from most data sets.
 
 In the figure below, we compare *Escherichia coli* (which is very common) with *Prevotella brevis* (which is moderately common) and with *Methanosarcina semesiae* (which is uncommon):
 
-```{r, echo = FALSE}
+```{r, echo = FALSE, fig.width=12}
 clear_mo_history()
-```
-```{r, echo = FALSE}
-par(mar = c(5, 16, 4, 2))
-boxplot(microbenchmark(
-  'as.mo("Methanosarcina semesiae")' = as.mo("Methanosarcina semesiae"),
-  'as.mo("Prevotella brevis")' = as.mo("Prevotella brevis"),
-  'as.mo("Escherichia coli")' = as.mo("Escherichia coli"),
-  'as.mo("M. semesiae")' = as.mo("M. semesiae"),
-  'as.mo("P. brevis")' = as.mo("P. brevis"),
-  'as.mo("E. coli")' = as.mo("E. coli"),
-  times = 10),
-        horizontal = TRUE, las = 1, unit = "s", log = TRUE,
-        xlab = "", ylab = "Time in seconds (log)",
-        main = "Benchmarks per prevalence")
-```
-
-In reality, the `as.mo()` functions **learns from its own output to speed up determinations for next times**. In above figure, this effect was disabled to show the difference with the boxplot below - when you would use `as.mo()` yourself:
-
-```{r, echo = FALSE}
-clear_mo_history()
-```
-
-```{r, echo = FALSE}
 par(mar = c(5, 16, 4, 2))
 boxplot(microbenchmark(
   'as.mo("Methanosarcina semesiae")' = as.mo("Methanosarcina semesiae", force_mo_history = TRUE),
@@ -152,6 +132,26 @@ boxplot(microbenchmark(
         horizontal = TRUE, las = 1, unit = "s", log = TRUE,
         xlab = "", ylab = "Time in seconds (log)",
         main = "Benchmarks per prevalence")
+```
+
+In reality, the `as.mo()` functions **learns from its own output to speed up determinations for next times**. In below figure, this effect was disabled to show the difference with the boxplot above:
+
+```{r, echo = FALSE, fig.width=12}
+clear_mo_history()
+options(AMR_disable_mo_history = TRUE)
+par(mar = c(5, 16, 4, 2))
+boxplot(microbenchmark(
+  'as.mo("Methanosarcina semesiae")' = as.mo("Methanosarcina semesiae"),
+  'as.mo("Prevotella brevis")' = as.mo("Prevotella brevis"),
+  'as.mo("Escherichia coli")' = as.mo("Escherichia coli"),
+  'as.mo("M. semesiae")' = as.mo("M. semesiae"),
+  'as.mo("P. brevis")' = as.mo("P. brevis"),
+  'as.mo("E. coli")' = as.mo("E. coli"),
+  times = 10),
+        horizontal = TRUE, las = 1, unit = "s", log = TRUE,
+        xlab = "", ylab = "Time in seconds (log)",
+        main = "Benchmarks per prevalence")
+options(AMR_disable_mo_history = FALSE)
 ```
 
 The highest outliers are the first times. All next determinations were done in only thousands of seconds.

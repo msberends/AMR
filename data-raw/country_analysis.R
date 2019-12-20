@@ -15,6 +15,11 @@ data_json <- jsonlite::read_json(url_json)
 data <- tibble(
   timestamp_server = as.POSIXct(sapply(data_json, function(x) x$serverTimestamp), origin = "1970-01-01"),
   country = sapply(data_json, function(x) x$country))
+rm(data_json)
+
+# how many?
+n_distinct(data$country[data$country != "Unknown"])
+
 
 
 # Plot world map ----------------------------------------------------------
@@ -28,25 +33,46 @@ world1 <- sf::st_as_sf(map('world', plot = FALSE, fill = TRUE)) %>%
          included = as.integer(countries_code %in% countries_iso)) %>% 
   mutate(not_antarctica = as.integer(ID != "Antarctica"))
 
-(ggplot(world1) +
+countries_plot <- ggplot(world1) +
     geom_sf(aes(fill = included, colour = not_antarctica), size = 0.25) +
     theme_minimal() +
-    theme(legend.position = "none", 
+    theme(legend.position = "none",
           panel.grid = element_blank(),
           axis.title = element_blank(),
           axis.text = element_blank()) +
     scale_fill_gradient(low = "white", high = "#CAD6EA") +
     # this makes the border Antarctica turn white (invisible):
-    scale_colour_gradient(low = "white", high = "#81899B") +
-    geom_text(aes(x = -170,
-                  y = -70,
-                  label = stringr::str_wrap(paste0("Accented countries (n = ", 
-                                                   length(countries_name), "): ", 
-                                                   paste(countries_name, collapse = ", ")),
-                                            225)),
-              hjust = 0,
-              size = 4)) %>% 
-  ggsave("pkgdown/logos/countries.png", dpi = 300, plot = ., scale = 1.5)
+    scale_colour_gradient(low = "white", high = "#81899B")
+
+# main website page
+ggsave("pkgdown/logos/countries.png",
+       width = 6, 
+       height = 3, 
+       units = "in", 
+       dpi = 100, 
+       plot = countries_plot, 
+       scale = 1)
+# when clicked - a high res enlargement
+ggsave("pkgdown/logos/countries_large.png",
+       width = 11,
+       height = 6, 
+       units = "in", 
+       dpi = 300, 
+       plot = 
+         countries_plot +
+         labs(title = tools::toTitleCase("Countries where the AMR package for R was downloaded from"),
+              subtitle = paste0("Between March 2018 - ", format(Sys.Date(), "%B %Y"))) +
+         theme(plot.title = element_text(size = 16, hjust = 0.5),
+               plot.subtitle = element_text(size = 12, hjust = 0.5)) +
+         geom_text(aes(x = -170,
+                       y = -70,
+                       label = stringr::str_wrap(paste0("Countries (n = ", 
+                                                        length(countries_name), "): ", 
+                                                        paste(countries_name, collapse = ", ")),
+                                                 200)),
+                   hjust = 0,
+                   size = 4), 
+       scale = 1.5)
 
 
 # Gibberish ---------------------------------------------------------------

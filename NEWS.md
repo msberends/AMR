@@ -1,7 +1,8 @@
-# AMR 0.9.0.9002
-## <small>Last updated: 16-Dec-2019</small>
+# AMR 0.9.0.9003
+## <small>Last updated: 20-Dec-2019</small>
 
-Website updates
+### Changes
+* Speed improvement for `as.mo()` (and consequently all `mo_*` functions that use `as.mo()` internally)
 
 # AMR 0.9.0
 

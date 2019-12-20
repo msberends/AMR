@@ -25,10 +25,10 @@
 #' @param x a character vector or a [`data.frame`] with one or two columns
 #' @param Becker a logical to indicate whether *Staphylococci* should be categorised into coagulase-negative *Staphylococci* ("CoNS") and coagulase-positive *Staphylococci* ("CoPS") instead of their own species, according to Karsten Becker *et al.* (1,2). Note that this does not include species that were newly named after these publications, like *S. caeli*.
 #'
-#'   This excludes *Staphylococcus aureus* at default, use `Becker = "all"` to also categorise *S. aureus* as "CoPS".
+#' This excludes *Staphylococcus aureus* at default, use `Becker = "all"` to also categorise *S. aureus* as "CoPS".
 #' @param Lancefield a logical to indicate whether beta-haemolytic *Streptococci* should be categorised into Lancefield groups instead of their own species, according to Rebecca C. Lancefield (3). These *Streptococci* will be categorised in their first group, e.g. *Streptococcus dysgalactiae* will be group C, although officially it was also categorised into groups G and L.
 #'
-#'   This excludes *Enterococci* at default (who are in group D), use `Lancefield = "all"` to also categorise all *Enterococci* as group D.
+#' This excludes *Enterococci* at default (who are in group D), use `Lancefield = "all"` to also categorise all *Enterococci* as group D.
 #' @param allow_uncertain a number between `0` (or `"none"`) and `3` (or `"all"`), or `TRUE` (= `2`) or `FALSE` (= `0`) to indicate whether the input should be checked for less probable results, please see *Details*
 #' @param reference_df a [`data.frame`] to use for extra reference when translating `x` to a valid [`mo`]. See [set_mo_source()] and [get_mo_source()] to automate the usage of your own codes (e.g. used in your analysis or organisation).
 #' @param ... other parameters passed on to functions
@@ -228,19 +228,7 @@ as.mo <- function(x,
              & isFALSE(Lancefield)) {
     # check previously found results
     y <- mo_hist
-    
-  } else if (all(tolower(x) %in% microorganismsDT$fullname_lower)
-             & isFALSE(Becker)
-             & isFALSE(Lancefield)) {
-    # we need special treatment for very prevalent full names, they are likely! (case insensitive)
-    # e.g. as.mo("Staphylococcus aureus")
-    y <- data.frame(fullname_lower = tolower(x), 
-                    stringsAsFactors = FALSE) %>% 
-      left_join(microorganismsDT, by = "fullname_lower") %>% 
-      pull(mo)
-    
-    # don't save valid fullnames to history (i.e. values that are in microorganisms$fullname)
-    
+  
   } else {
     # will be checked for mo class in validation and uses exec_as.mo internally if necessary
     y <- mo_validate(x = x, property = "mo",
@@ -248,7 +236,6 @@ as.mo <- function(x,
                      allow_uncertain = uncertainty_level, reference_df = reference_df,
                      ...)
   }
-  
   
   to_class_mo(y)
 }
@@ -283,7 +270,7 @@ exec_as.mo <- function(x,
                        initial_search = TRUE,
                        dyslexia_mode = FALSE,
                        force_mo_history = FALSE,
-                       disable_mo_history = FALSE,
+                       disable_mo_history = getOption("AMR_disable_mo_history", FALSE),
                        debug = FALSE,
                        reference_data_to_use = microorganismsDT) {
 
@@ -433,18 +420,7 @@ exec_as.mo <- function(x,
   } else if (all(tolower(x) %in% reference_data_to_use$fullname_lower)) {
     # we need special treatment for very prevalent full names, they are likely!
     # e.g. as.mo("Staphylococcus aureus")
-    y <- reference_data_to_use[prevalence == 1][data.table(fullname_lower = tolower(x)), on = "fullname_lower", ..property][[1]]
-    if (any(is.na(y))) {
-      y[is.na(y)] <- reference_data_to_use[prevalence == 2][data.table(fullname_lower = tolower(x[is.na(y)])),
-                                                            on = "fullname_lower",
-                                                            ..property][[1]]
-    }
-    if (any(is.na(y))) {
-      y[is.na(y)] <- reference_data_to_use[prevalence == 3][data.table(fullname_lower = tolower(x[is.na(y)])),
-                                                            on = "fullname_lower",
-                                                            ..property][[1]]
-    }
-    x <- y
+    x <- reference_data_to_use[data.table(fullname_lower = tolower(x)), on = "fullname_lower", ..property][[1]]
     
   } else if (all(toupper(x) %in% AMR::microorganisms.codes$code)) {
     # commonly used MO codes
