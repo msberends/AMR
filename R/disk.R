@@ -21,12 +21,12 @@
 
 #' Class 'disk'
 #'
-#' This transforms a vector to a new class [`disk`], which is a growth zone size (around an antibiotic disk) in millimeters between 6 and 99.
+#' This transforms a vector to a new class [`disk`], which is a growth zone size (around an antibiotic disk) in millimeters between 6 and 50.
 #' @rdname as.disk
 #' @param x vector
 #' @param na.rm a logical indicating whether missing values should be removed
 #' @details Interpret disk values as RSI values with [as.rsi()]. It supports guidelines from EUCAST and CLSI.
-#' @return Ordered integer factor with new class [`disk`]
+#' @return An [`integer`] with additional new class [`disk`]
 #' @aliases disk
 #' @export
 #' @seealso [as.rsi()]
@@ -56,8 +56,8 @@ as.disk <- function(x, na.rm = FALSE) {
     # force it to be integer
     x <- suppressWarnings(as.integer(x))
 
-    # disks can never be less than 9 mm (size of a disk) or more than 50 mm
-    x[x < 6 | x > 99] <- NA_integer_
+    # disks can never be less than 6 mm (size of smallest disk) or more than 50 mm
+    x[x < 6 | x > 50] <- NA_integer_
     na_after <- length(x[is.na(x)])
 
     if (na_before != na_after) {

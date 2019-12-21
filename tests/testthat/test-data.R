@@ -51,8 +51,18 @@ test_that("creation of data sets is valid", {
   DT <- make_DT()
   expect_lt(nrow(DT[prevalence == 1]), nrow(DT[prevalence == 2]))
   expect_lt(nrow(DT[prevalence == 2]), nrow(DT[prevalence == 3]))
+  expect_true(all(c("mo", "fullname",
+                    "kingdom", "phylum", "class", "order", "family", "genus", "species", "subspecies",
+                    "rank", "col_id", "species_id", "source", "ref", "prevalence",
+                    "kingdom_index", "fullname_lower", "g_species") %in% colnames(DT)))
+
+  oldDT <- make_oldDT()
+  expect_true(all(c("col_id", "col_id_new", "fullname", "ref", "prevalence",
+                    "fullname_lower", "g_species") %in% colnames(oldDT)))
+  
   old <- make_trans_tbl()
   expect_gt(length(old), 0)
+  
 })
 
 test_that("CoL version info works", {

@@ -16,10 +16,10 @@ is.disk(x)
 \item{na.rm}{a logical indicating whether missing values should be removed}
 }
 \value{
-Ordered integer factor with new class \code{\link{disk}}
+An \code{\link{integer}} with additional new class \code{\link{disk}}
 }
 \description{
-This transforms a vector to a new class \code{\link{disk}}, which is a growth zone size (around an antibiotic disk) in millimeters between 6 and 99.
+This transforms a vector to a new class \code{\link{disk}}, which is a growth zone size (around an antibiotic disk) in millimeters between 6 and 50.
 }
 \details{
 Interpret disk values as RSI values with \code{\link[=as.rsi]{as.rsi()}}. It supports guidelines from EUCAST and CLSI.

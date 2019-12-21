@@ -21,21 +21,18 @@
 
 #' @importFrom data.table as.data.table setkey
 .onLoad <- function(libname, pkgname) {
+  # packageStartupMessage("Loading taxonomic reference data")
+  
   # get new functions not available in older versions of R
   backports::import(pkgname)
-
+  
   # register data
-  microorganisms.oldDT <- as.data.table(AMR::microorganisms.old)
-  # for fullname_lower: keep only dots, letters, numbers, slashes, spaces and dashes
-  microorganisms.oldDT$fullname_lower <- gsub("[^.a-z0-9/ \\-]+", "", tolower(microorganisms.oldDT$fullname))
-  setkey(microorganisms.oldDT, prevalence, fullname)
-
   assign(x = "microorganismsDT",
          value = make_DT(),
          envir = asNamespace("AMR"))
 
   assign(x = "microorganisms.oldDT",
-         value = microorganisms.oldDT,
+         value = make_oldDT(),
          envir = asNamespace("AMR"))
 
   assign(x = "mo_codes_v0.5.0",
@@ -62,7 +59,9 @@ make_DT <- function() {
                                  # work with Viridans Group Streptococci, etc.
                                  tolower(trimws(ifelse(genus == "",
                                                        fullname,
-                                                       paste(genus, species, subspecies)))))) %>% 
+                                                       paste(genus, species, subspecies))))),
+           # add a column with only "e coli" like combinations
+           g_species = gsub("^([a-z])[a-z]+ ([a-z]+) ?.*", "\\1 \\2", fullname_lower)) %>% 
     as.data.table()
   
   # so arrange data on prevalence first, then kingdom, then full name
@@ -71,6 +70,25 @@ make_DT <- function() {
          kingdom_index,
          fullname_lower)
   microorganismsDT
+}
+
+#' @importFrom data.table as.data.table setkey
+#' @importFrom dplyr %>% mutate
+make_oldDT <- function() {
+  microorganisms.oldDT <- AMR::microorganisms.old %>% 
+    mutate(
+      # for fullname_lower: keep only dots, letters,
+      # numbers, slashes, spaces and dashes
+      fullname_lower = gsub("[^.a-z0-9/ \\-]+", "", tolower(fullname)),
+      # add a column with only "e coli" like combinations
+      g_species = gsub("^([a-z])[a-z]+ ([a-z]+) ?.*", "\\1 \\2", fullname_lower)) %>% 
+    as.data.table()
+  
+  # so arrange data on prevalence first, then full name
+  setkey(microorganisms.oldDT,
+         prevalence,
+         fullname)
+  microorganisms.oldDT
 }
 
 make_trans_tbl <- function() {

@@ -31,12 +31,15 @@ knitr::opts_chunk$set(
 Conducting antimicrobial resistance analysis unfortunately requires in-depth knowledge from different scientific fields, which makes it hard to do right. At least, it requires:
 
 * Good questions (always start with these!)
-* A thorough understanding of both (clinical) epidemiology and (clinical) microbiology, to understand the clinical and epidemiological relevance of results and their pharmaceutical implications
-* Experience with data analysis with microbiological tests and their results (MIC/RSI values)
-* Availability of the biological taxonomy of microorganisms
-* Available (inter-)national guidelines and methods to apply them
+* A thorough understanding of (clinical) epidemiology, to understand the clinical and epidemiological relevance and possible bias of results
+* A thorough understanding of (clinical) microbiology/infectious diseases, to understand which microorganisms are causal to which infections and the implications of pharmaceutical treatment
+* Experience with data analysis with microbiological tests and their results, to understand the determination and limitations of MIC values and their interpretations to RSI values
+* Availability of the biological taxonomy of microorganisms and probably normalisation factors for pharmaceuticals, such as defined daily doses (DDD)
+* Available (inter-)national guidelines, and profound methods to apply them
 
-Of course, we cannot instantly provide you with knowledge and experience. But with this `AMR` pacakge, we aimed at providing (1) tools to simplify antimicrobial resistance data cleaning/analysis, (2) methods to easily incorporate international guidelines and (3) scientifically reliable reference data. The `AMR` package enables standardised and reproducible antimicrobial resistance analyses, including the application of evidence-based rules, determination of first isolates, translation of various codes for microorganisms and antimicrobial agents, determination of (multi-drug) resistant microorganisms, and calculation of antimicrobial resistance, prevalence and future trends.
+Of course, we cannot instantly provide you with knowledge and experience. But with this `AMR` package, we aimed at providing (1) tools to simplify antimicrobial resistance data cleaning, transformation and analysis, (2) methods to easily incorporate international guidelines and (3) scientifically reliable reference data, including the requirements mentioned above.
+
+The `AMR` package enables standardised and reproducible antimicrobial resistance analysis, with the application of evidence-based rules, determination of first isolates, translation of various codes for microorganisms and antimicrobial agents, determination of (multi-drug) resistant microorganisms, and calculation of antimicrobial resistance, prevalence and future trends.
 
 # Preparation 
 
