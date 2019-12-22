@@ -1,9 +1,12 @@
-# AMR 0.9.0.9005
-## <small>Last updated: 21-Dec-2019</small>
+# AMR 0.9.0.9006
+## <small>Last updated: 22-Dec-2019</small>
 
 ### Changes
 * Speed improvement for `as.mo()` (and consequently all `mo_*` functions that use `as.mo()` internally), especially for the *G. species* format (G for genus), like *E. coli* and *K penumoniae*
 * Input values for `as.disk()` limited to a maximum of 50 millimeters
+
+### Other
+* Add a `CITATION` file
 
 # AMR 0.9.0
 

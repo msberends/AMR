@@ -17,8 +17,8 @@ We created this package for both routine analysis and academic research (as part
 <div class="main-content"> 
   <p>
     <a href="./countries_large.png" target="_blank"><img src="./countries.png" class="countries_map"></a>
-    <strong>Used in almost 80 countries</strong><br>
-    Since its first public release in early 2018, this package has been downloaded over 25,000 times from 79 countries <small>(as of December 2019, <a href="https://cran-logs.rstudio.com" target="_blank">CRAN logs</a>)</small>. Click the map to enlarge.</p><br><br>
+    <strong>Used in 80 countries</strong><br>
+    Since its first public release in early 2018, this package has been downloaded over 25,000 times from 80 countries <small>(as of December 2019, <a href="https://cran-logs.rstudio.com" target="_blank">CRAN logs</a>)</small>. Click the map to enlarge.</p><br><br>
 </div>
 
 #### Partners
