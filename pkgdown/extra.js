@@ -94,6 +94,7 @@ $( document ).ready(function() {
     return(x);
   }
   $(".template-authors").html(doct_tit($(".template-authors").html()));
+  $(".template-citation-authors").html(doct_tit($(".template-citation-authors").html()));
   $(".developers").html(doct_tit($(".developers").html()));
   // $("footer").html(doct_tit($("footer").html()));
 
