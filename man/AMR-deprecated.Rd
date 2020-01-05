@@ -28,6 +28,12 @@ portion_df(...)
 \description{
 These functions are so-called '\link{Deprecated}'. They will be removed in a future release. Using the functions will give a warning with the name of the function it has been replaced by (if there is one).
 }
+\section{Retired lifecycle}{
+
+\if{html}{\figure{lifecycle_retired.svg}{options: style=margin-bottom:5px} \cr}
+The \link[AMR:lifecycle]{lifecycle} of this function is \strong{retired}. A retired function is no longer under active development, and (if appropiate) a better alternative is available. We will only make the necessary changes to ensure that retired functions remain available. No new arguments will be added, and only the most critical bugs will be fixed.
+}
+
 \section{Read more on our website!}{
 
 On our website \url{https://msberends.gitlab.io/AMR} you can find \href{https://msberends.gitlab.io/AMR/articles/AMR.html}{a tutorial} about how to conduct AMR analysis, the \href{https://msberends.gitlab.io/AMR/reference}{complete documentation of all functions} (which reads a lot easier than here in R) and \href{https://msberends.gitlab.io/AMR/articles/WHONET.html}{an example analysis using WHONET data}.

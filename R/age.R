@@ -6,22 +6,23 @@
 # https://gitlab.com/msberends/AMR                                     #
 #                                                                      #
 # LICENCE                                                              #
-# (c) 2019 Berends MS (m.s.berends@umcg.nl), Luz CF (c.f.luz@umcg.nl)  #
+# (c) 2018-2020 Berends MS, Luz CF et al.                              #
 #                                                                      #
 # This R package is free software; you can freely use and distribute   #
 # it for both personal and commercial purposes under the terms of the  #
 # GNU General Public License version 2.0 (GNU GPL-2), as published by  #
 # the Free Software Foundation.                                        #
 #                                                                      #
-# This R package was created for academic research and was publicly    #
-# released in the hope that it will be useful, but it comes WITHOUT    #
-# ANY WARRANTY OR LIABILITY.                                           #
+# We created this package for both routine data analysis and academic  #
+# research and it was publicly released in the hope that it will be    #
+# useful, but it comes WITHOUT ANY WARRANTY OR LIABILITY.              #
 # Visit our website for more info: https://msberends.gitlab.io/AMR.    #
 # ==================================================================== #
 
 #' Age in years of individuals
 #'
 #' Calculates age in years based on a reference date, which is the sytem date at default.
+#' @inheritSection lifecycle Stable lifecycle
 #' @param x date(s), will be coerced with [as.POSIXlt()]
 #' @param reference reference date(s) (defaults to today), will be coerced with [as.POSIXlt()] and cannot be lower than `x`
 #' @param exact a logical to indicate whether age calculation should be exact, i.e. with decimals. It divides the number of days of [year-to-date](https://en.wikipedia.org/wiki/Year-to-date) (YTD) of `x` by the number of days in the year of `reference` (either 365 or 366).
@@ -91,6 +92,7 @@ age <- function(x, reference = Sys.Date(), exact = FALSE, na.rm = FALSE) {
 #' Split ages into age groups
 #'
 #' Split ages into age groups defined by the `split` parameter. This allows for easier demographic (antimicrobial resistance) analysis.
+#' @inheritSection lifecycle Stable lifecycle
 #' @param x age, e.g. calculated with [age()]
 #' @param split_at values to split `x` at, defaults to age groups 0-11, 12-24, 25-54, 55-74 and 75+. See Details.
 #' @param na.rm a logical to indicate whether missing values should be removed

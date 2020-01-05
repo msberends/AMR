@@ -63,6 +63,12 @@ Abbreviations of return values when using \code{property = "U"} (unit):
 \item \code{"ml"} = milliliter (e.g. eyedrops)
 }
 }
+\section{Questioning lifecycle}{
+
+\if{html}{\figure{lifecycle_questioning.svg}{options: style=margin-bottom:5px} \cr}
+The \link[AMR:lifecycle]{lifecycle} of this function is \strong{questioning}. We are no longer convinced that this function is the optimal approach (but we do not know yet what a better approach would be), or whether this function should be in our \code{AMR} package at all.
+}
+
 \section{Read more on our website!}{
 
 On our website \url{https://msberends.gitlab.io/AMR} you can find \href{https://msberends.gitlab.io/AMR/articles/AMR.html}{a tutorial} about how to conduct AMR analysis, the \href{https://msberends.gitlab.io/AMR/reference}{complete documentation of all functions} (which reads a lot easier than here in R) and \href{https://msberends.gitlab.io/AMR/articles/WHONET.html}{an example analysis using WHONET data}.

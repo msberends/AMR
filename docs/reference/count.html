@@ -86,7 +86,7 @@ count_resistant() should be used to count resistant isolates, count_susceptible(
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">0.9.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">0.9.0.9007</span>
       </span>
     </div>
 
@@ -307,6 +307,13 @@ count_resistant() should be used to count resistant isolates, count_susceptible(
 <p>The function <code>count_resistant()</code> is equal to the function <code>count_R()</code>. The function <code>count_susceptible()</code> is equal to the function <code>count_SI()</code>.</p>
 <p>The function <code>n_rsi()</code> is an alias of <code>count_all()</code>. They can be used to count all available isolates, i.e. where all input antibiotics have an available result (S, I or R). Their use is equal to <code><a href='https://dplyr.tidyverse.org/reference/n_distinct.html'>n_distinct()</a></code>. Their function is equal to <code>count_susceptible(...) + count_resistant(...)</code>.</p>
 <p>The function <code>count_df()</code> takes any variable from <code>data</code> that has an <code><a href='as.rsi.html'>rsi</a></code> class (created with <code><a href='as.rsi.html'>as.rsi()</a></code>) and counts the number of S's, I's and R's. The function <code><a href='proportion.html'>rsi_df()</a></code> works exactly like <code>count_df()</code>, but adds the percentage of S, I and R.</p>
+    <h2 class="hasAnchor" id="stable-lifecycle"><a class="anchor" href="#stable-lifecycle"></a>Stable lifecycle</h2>
+
+    
+
+<p><img src='figures/lifecycle_stable.svg' style=margin-bottom:5px /> <br />
+The <a href='lifecycle.html'>lifecycle</a> of this function is <strong>stable</strong>. In a stable function, we are largely happy with the unlying code, and major changes are unlikely. This means that the unlying code will generally evolve by adding new arguments; we will avoid removing arguments or changing the meaning of existing arguments.</p>
+<p>If the unlying code needs breaking changes, they will occur gradually. To begin with, the function or argument will be deprecated; it will continue to work but will emit an message informing you of the change. Next, typically after at least one newly released version on CRAN, the message will be transformed to an error.</p>
     <h2 class="hasAnchor" id="interpretation-of-r-and-s-i"><a class="anchor" href="#interpretation-of-r-and-s-i"></a>Interpretation of R and S/I</h2>
 
     
@@ -425,6 +432,7 @@ A microorganism is categorised as <em>Susceptible, Increased exposure</em> when 
       <li><a href="#arguments">Arguments</a></li>
       <li><a href="#value">Value</a></li>
       <li><a href="#details">Details</a></li>
+      <li><a href="#stable-lifecycle">Stable lifecycle</a></li>
       <li><a href="#interpretation-of-r-and-s-i">Interpretation of R and S/I</a></li>
       <li><a href="#combination-therapy">Combination therapy</a></li>
       <li><a href="#read-more-on-our-website-">Read more on our website!</a></li>
@@ -438,7 +446,7 @@ A microorganism is categorised as <em>Susceptible, Increased exposure</em> when 
 
       <footer>
       <div class="copyright">
-  <p>Developed by <a href='https://www.rug.nl/staff/m.s.berends/'>Matthijs S. Berends</a>, <a href='https://www.rug.nl/staff/c.f.luz/'>Christian F. Luz</a>, <a href='https://www.rug.nl/staff/a.w.friedrich/'>Alex W. Friedrich</a>, <a href='https://www.rug.nl/staff/b.sinha/'>Bhanu N. M. Sinha</a>, <a href='https://www.rug.nl/staff/c.j.albers/'>Casper J. Albers</a>, <a href='https://www.rug.nl/staff/c.glasner/'>Corinna Glasner</a>.</p>
+  <p>Developed by <a href='https://www.rug.nl/staff/m.s.berends/'>Matthijs S Berends</a>, <a href='https://www.rug.nl/staff/c.f.luz/'>Christian F Luz</a>, <a href='https://www.rug.nl/staff/a.w.friedrich/'>Alexander W Friedrich</a>, <a href='https://www.rug.nl/staff/b.sinha/'>Bhanu N M Sinha</a>, <a href='https://www.rug.nl/staff/c.j.albers/'>Casper J Albers</a>, <a href='https://www.rug.nl/staff/c.glasner/'>Corinna Glasner</a>.</p>
 </div>
 
 <div class="pkgdown">

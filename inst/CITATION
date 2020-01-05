@@ -1,15 +1,14 @@
-citHeader("To cite our AMR package in publications, please use:")
+citHeader("To cite our AMR package in publications, please use (for now):")
 
 citEntry(
   entry        = "Article",
   title        = "AMR - An R Package for Working with Antimicrobial Resistance Data",
-  author       = "M S Berends and C F Luz and A W Friedrich and B N M Sinha and C J Albers and C Glasner",
+  author       = "Matthijs S Berends and Christian F Luz and Alexander W Friedrich and Bhanu N M Sinha and Casper J Albers and Corinna Glasner",
   journal      = "bioRxiv",
   publisher    = "Cold Spring Harbor Laboratory",
   year         = 2019,
-  doi          = "10.1101/810622",
   url          = "https://doi.org/10.1101/810622",
   textVersion  = "Berends MS, Luz CF et al. (2019). AMR - An R Package for Working with Antimicrobial Resistance Data. bioRxiv, https://doi.org/10.1101/810622"
 )
 
-citFooter("Many thanks for using our open-source method to work with microbial and antimicrobial data!")
+citFooter("The mentioned article is a preprinted version of a manuscript we sent to a journal. Many thanks for using our open-source method to work with microbial and antimicrobial data!")

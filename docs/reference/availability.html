@@ -51,7 +51,7 @@
   <script src="../extra.js"></script>
 
 <meta property="og:title" content="Check availability of columns — availability" />
-<meta property="og:description" content="Easy check for availability of columns in a data set. This makes it easy to get an idea of which antimicrobial combination can be used for calculation with e.g. resistance()." />
+<meta property="og:description" content="Easy check for data availability of all columns in a data set. This makes it easy to get an idea of which antimicrobial combinations can be used for calculation with e.g. susceptibility() and resistance()." />
 <meta property="og:image" content="https://msberends.gitlab.io/AMR/logo.png" />
 <meta name="twitter:card" content="summary" />
 
@@ -85,7 +85,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">0.9.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">0.9.0.9007</span>
       </span>
     </div>
 
@@ -234,7 +234,7 @@
     </div>
 
     <div class="ref-description">
-    <p>Easy check for availability of columns in a data set. This makes it easy to get an idea of which antimicrobial combination can be used for calculation with e.g. <code><a href='proportion.html'>resistance()</a></code>.</p>
+    <p>Easy check for data availability of all columns in a data set. This makes it easy to get an idea of which antimicrobial combinations can be used for calculation with e.g. <code><a href='proportion.html'>susceptibility()</a></code> and <code><a href='proportion.html'>resistance()</a></code>.</p>
     </div>
 
     <pre class="usage"><span class='fu'>availability</span>(<span class='no'>tbl</span>, <span class='kw'>width</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
@@ -258,6 +258,13 @@
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>The function returns a <code><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></code> with columns <code>"resistant"</code> and <code>"visual_resistance"</code>. The values in that columns are calculated with <code><a href='proportion.html'>resistance()</a></code>.</p>
+    <h2 class="hasAnchor" id="stable-lifecycle"><a class="anchor" href="#stable-lifecycle"></a>Stable lifecycle</h2>
+
+    
+
+<p><img src='figures/lifecycle_stable.svg' style=margin-bottom:5px /> <br />
+The <a href='lifecycle.html'>lifecycle</a> of this function is <strong>stable</strong>. In a stable function, we are largely happy with the unlying code, and major changes are unlikely. This means that the unlying code will generally evolve by adding new arguments; we will avoid removing arguments or changing the meaning of existing arguments.</p>
+<p>If the unlying code needs breaking changes, they will occur gradually. To begin with, the function or argument will be deprecated; it will continue to work but will emit an message informing you of the change. Next, typically after at least one newly released version on CRAN, the message will be transformed to an error.</p>
     <h2 class="hasAnchor" id="read-more-on-our-website-"><a class="anchor" href="#read-more-on-our-website-"></a>Read more on our website!</h2>
 
     
@@ -285,6 +292,7 @@
       <li><a href="#arguments">Arguments</a></li>
       <li><a href="#value">Value</a></li>
       <li><a href="#details">Details</a></li>
+      <li><a href="#stable-lifecycle">Stable lifecycle</a></li>
       <li><a href="#read-more-on-our-website-">Read more on our website!</a></li>
       <li><a href="#examples">Examples</a></li>
     </ul>
@@ -295,7 +303,7 @@
 
       <footer>
       <div class="copyright">
-  <p>Developed by <a href='https://www.rug.nl/staff/m.s.berends/'>Matthijs S. Berends</a>, <a href='https://www.rug.nl/staff/c.f.luz/'>Christian F. Luz</a>, <a href='https://www.rug.nl/staff/a.w.friedrich/'>Alex W. Friedrich</a>, <a href='https://www.rug.nl/staff/b.sinha/'>Bhanu N. M. Sinha</a>, <a href='https://www.rug.nl/staff/c.j.albers/'>Casper J. Albers</a>, <a href='https://www.rug.nl/staff/c.glasner/'>Corinna Glasner</a>.</p>
+  <p>Developed by <a href='https://www.rug.nl/staff/m.s.berends/'>Matthijs S Berends</a>, <a href='https://www.rug.nl/staff/c.f.luz/'>Christian F Luz</a>, <a href='https://www.rug.nl/staff/a.w.friedrich/'>Alexander W Friedrich</a>, <a href='https://www.rug.nl/staff/b.sinha/'>Bhanu N M Sinha</a>, <a href='https://www.rug.nl/staff/c.j.albers/'>Casper J Albers</a>, <a href='https://www.rug.nl/staff/c.glasner/'>Corinna Glasner</a>.</p>
 </div>
 
 <div class="pkgdown">

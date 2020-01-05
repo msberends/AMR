@@ -1,9 +1,10 @@
-# AMR 0.9.0.9007
-## <small>Last updated: 27-Dec-2019</small>
+# AMR 0.9.0.9008
+## <small>Last updated: 05-Jan-2020</small>
 
 ### Changes
 * Speed improvement for `as.mo()` (and consequently all `mo_*` functions that use `as.mo()` internally), especially for the *G. species* format (G for genus), like *E. coli* and *K penumoniae*
 * Input values for `as.disk()` limited to a maximum of 50 millimeters
+* Added a lifecycle state to every function, following [the lifecycle circle of the `tidyverse`](https://www.tidyverse.org/lifecycle)
 
 ### Other
 * Add a `CITATION` file

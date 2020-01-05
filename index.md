@@ -12,13 +12,13 @@
 
 After installing this package, R knows [**~70,000 distinct microbial species**](./reference/microorganisms.html) and all [**~550 antibiotic, antimycotic and antiviral drugs**](./reference/antibiotics.html) by name and code, and knows all about valid RSI and MIC values. It supports any data format, including WHONET/EARS-Net data. 
 
-We created this package for both routine analysis and academic research (as part of our PhD theses) at the Faculty of Medical Sciences of the University of Groningen, the Netherlands, and the Medical Microbiology & Infection Prevention (MMBI) department of the University Medical Center Groningen (UMCG). This R package is [actively maintained](./news) and is free software (see [Copyright](#copyright)).
+We created this package for both routine data analysis and academic research (as part of our PhD theses) at the Faculty of Medical Sciences of the University of Groningen, the Netherlands, and the Medical Microbiology & Infection Prevention (MMBI) department of the University Medical Center Groningen (UMCG). This R package is [actively maintained](./news) and is free software (see [Copyright](#copyright)).
 
 <div class="main-content"> 
   <p>
     <a href="./countries_large.png" target="_blank"><img src="./countries.png" class="countries_map"></a>
-    <strong>Used in 80 countries</strong><br>
-    Since its first public release in early 2018, this package has been downloaded over 25,000 times from 80 countries <small>(as of December 2019, <a href="https://cran-logs.rstudio.com" target="_blank">CRAN logs</a>)</small>. Click the map to enlarge.</p><br><br>
+    <strong>Used over 80 countries</strong><br>
+    Since its first public release in early 2018, this package has been downloaded over 25,000 times from 88 countries <small>(as of January 2020, <a href="https://cran-logs.rstudio.com" target="_blank">CRAN logs</a>)</small>. Click the map to enlarge.</p><br><br>
 </div>
 
 #### Partners
@@ -106,7 +106,7 @@ To find out how to conduct AMR analysis, please [continue reading here to get st
 
 #### Microbial (taxonomic) reference data
 
-This package contains the complete taxonomic tree of almost all ~70,000 microorganisms from the authoritative and comprehensive Catalogue of Life (CoL, [www.catalogueoflife.org](http://www.catalogueoflife.org)). With `catalogue_of_life_version()` can be checked which version of the CoL is included in this package.
+This package contains the complete taxonomic tree of almost all ~70,000 microorganisms from the authoritative and comprehensive Catalogue of Life (CoL, [www.catalogueoflife.org](http://www.catalogueoflife.org)), supplemented by data from the Deutsche Sammlung von Mikroorganismen und Zellkulturen (DSMZ, [www.dsmz.de](https://www.dsmz.de)). This supplementation is needed until the [CoL+ project](https://github.com/Sp2000/colplus) is finished, which we await. With `catalogue_of_life_version()` can be checked which version of the CoL is included in this package. 
 
 Read more about which data from the Catalogue of Life [in our manual](./reference/catalogue_of_life.html).
 

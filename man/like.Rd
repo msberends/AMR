@@ -26,11 +26,19 @@ x \%like_case\% pattern
 A \code{\link{logical}} vector
 }
 \description{
-Convenient wrapper around \code{\link[base:grep]{base::grep()}} to match a pattern: \code{a \%like\% b}. It always returns a \code{\link{logical}} vector and is always case-insensitive (use \code{a \%like_case\% b} for case-sensitive matching). Also, \code{pattern} (\emph{b}) can be as long as \code{x} (\emph{a}) to compare items of each index in both vectors, or can both have the same length to iterate over all cases.
+Convenient wrapper around \code{\link[base:grep]{base::grep()}} to match a pattern: \code{a \%like\% b}. It always returns a \code{\link{logical}} vector and is always case-insensitive (use \code{a \%like_case\% b} for case-sensitive matching). Also, \code{pattern} (\emph{b}) can be as long as \code{x} (\emph{a}) to compare items of each index in both vectors, or they both can have the same length to iterate over all cases.
 }
 \details{
 Using RStudio? This function can also be inserted from the Addins menu and can have its own Keyboard Shortcut like \code{Ctrl+Shift+L} or \code{Cmd+Shift+L} (see \code{Tools} > \verb{Modify Keyboard Shortcuts...}).
 }
+\section{Stable lifecycle}{
+
+\if{html}{\figure{lifecycle_stable.svg}{options: style=margin-bottom:5px} \cr}
+The \link[AMR:lifecycle]{lifecycle} of this function is \strong{stable}. In a stable function, we are largely happy with the unlying code, and major changes are unlikely. This means that the unlying code will generally evolve by adding new arguments; we will avoid removing arguments or changing the meaning of existing arguments.
+
+If the unlying code needs breaking changes, they will occur gradually. To begin with, the function or argument will be deprecated; it will continue to work but will emit an message informing you of the change. Next, typically after at least one newly released version on CRAN, the message will be transformed to an error.
+}
+
 \section{Read more on our website!}{
 
 On our website \url{https://msberends.gitlab.io/AMR} you can find \href{https://msberends.gitlab.io/AMR/articles/AMR.html}{a tutorial} about how to conduct AMR analysis, the \href{https://msberends.gitlab.io/AMR/reference}{complete documentation of all functions} (which reads a lot easier than here in R) and \href{https://msberends.gitlab.io/AMR/articles/WHONET.html}{an example analysis using WHONET data}.

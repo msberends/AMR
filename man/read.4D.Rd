@@ -135,6 +135,12 @@ This function is only useful for the MMB department of the UMCG. Use this functi
 \details{
 Column names will be transformed, but the original column names are set as a "label" attribute and can be seen in e.g. RStudio Viewer.
 }
+\section{Dormant lifecycle}{
+
+\if{html}{\figure{lifecycle_dormant.svg}{options: style=margin-bottom:5px} \cr}
+The \link[AMR:lifecycle]{lifecycle} of this function is \strong{dormant}. A dormant function is currently not under active development and has not reached a stable phase. We might return to it in the future. As with experimental functions, you are best off waiting until a function is more mature before you use it in production code.
+}
+
 \section{Read more on our website!}{
 
 On our website \url{https://msberends.gitlab.io/AMR} you can find \href{https://msberends.gitlab.io/AMR/articles/AMR.html}{a tutorial} about how to conduct AMR analysis, the \href{https://msberends.gitlab.io/AMR/reference}{complete documentation of all functions} (which reads a lot easier than here in R) and \href{https://msberends.gitlab.io/AMR/articles/WHONET.html}{an example analysis using WHONET data}.

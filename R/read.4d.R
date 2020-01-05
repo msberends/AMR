@@ -6,22 +6,23 @@
 # https://gitlab.com/msberends/AMR                                     #
 #                                                                      #
 # LICENCE                                                              #
-# (c) 2019 Berends MS (m.s.berends@umcg.nl), Luz CF (c.f.luz@umcg.nl)  #
+# (c) 2018-2020 Berends MS, Luz CF et al.                              #
 #                                                                      #
 # This R package is free software; you can freely use and distribute   #
 # it for both personal and commercial purposes under the terms of the  #
 # GNU General Public License version 2.0 (GNU GPL-2), as published by  #
 # the Free Software Foundation.                                        #
 #                                                                      #
-# This R package was created for academic research and was publicly    #
-# released in the hope that it will be useful, but it comes WITHOUT    #
-# ANY WARRANTY OR LIABILITY.                                           #
+# We created this package for both routine data analysis and academic  #
+# research and it was publicly released in the hope that it will be    #
+# useful, but it comes WITHOUT ANY WARRANTY OR LIABILITY.              #
 # Visit our website for more info: https://msberends.gitlab.io/AMR.    #
 # ==================================================================== #
 #
 #' Read data from 4D database
 #'
 #' This function is only useful for the MMB department of the UMCG. Use this function to **import data by just defining the `file` parameter**. It will automatically transform birth dates and calculate patients age, translate the column names to English, transform the MO codes with [as.mo()] and transform all antimicrobial columns with [as.rsi()].
+#' @inheritSection lifecycle Dormant lifecycle
 #' @inheritParams utils::read.table
 #' @param info a logical to indicate whether info about the import should be printed, defaults to `TRUE` in interactive sessions
 #' @details Column names will be transformed, but the original column names are set as a "label" attribute and can be seen in e.g. RStudio Viewer.
