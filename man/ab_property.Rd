@@ -116,6 +116,12 @@ ab_name("fluklox")   # "Flucloxacillin"
 ab_name("floxapen")  # "Flucloxacillin"
 ab_name(21319)       # "Flucloxacillin" (using CID)
 ab_name("J01CF05")   # "Flucloxacillin" (using ATC)
+
+# spelling from different languages and dyslexia are no problem
+ab_atc("ceftriaxon")
+ab_atc("cephtriaxone")
+ab_atc("cephthriaxone")
+ab_atc("seephthriaaksone")
 }
 \seealso{
 \link{antibiotics}

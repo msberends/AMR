@@ -148,6 +148,7 @@ reference:
     - "`catalogue_of_life`"
     - "`catalogue_of_life_version`"
     - "`WHOCC`"
+    - "`lifecycle`"
   - title: Other functions
     desc: >
       These functions are mostly for internal use, but some of

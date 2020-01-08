@@ -84,7 +84,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">0.9.0.9008</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">0.9.0.9009</span>
       </span>
     </div>
 
@@ -231,13 +231,13 @@
       
     </div>
 
-    <div id="amr-0-9-0-9008" class="section level1">
+    <div id="amr-0-9-0-9009" class="section level1">
 <h1 class="page-header">
-<a href="#amr-0-9-0-9008" class="anchor"></a>AMR 0.9.0.9008<small> Unreleased </small>
+<a href="#amr-0-9-0-9009" class="anchor"></a>AMR 0.9.0.9009<small> Unreleased </small>
 </h1>
-<div id="last-updated-05-jan-2020" class="section level2">
+<div id="last-updated-08-jan-2020" class="section level2">
 <h2 class="hasAnchor">
-<a href="#last-updated-05-jan-2020" class="anchor"></a><small>Last updated: 05-Jan-2020</small>
+<a href="#last-updated-08-jan-2020" class="anchor"></a><small>Last updated: 08-Jan-2020</small>
 </h2>
 <div id="changes" class="section level3">
 <h3 class="hasAnchor">
@@ -247,6 +247,14 @@
 </li>
 <li>Input values for <code><a href="../reference/as.disk.html">as.disk()</a></code> limited to a maximum of 50 millimeters</li>
 <li>Added a lifecycle state to every function, following <a href="https://www.tidyverse.org/lifecycle">the lifecycle circle of the <code>tidyverse</code></a>
+</li>
+<li>For in <code><a href="../reference/as.ab.html">as.ab()</a></code>: support for drugs starting with “co-” like co-amoxiclav, co-trimoxazole, co-trimazine and co-trimazole (thanks to Peter Dutey)</li>
+<li>Changes to the <code>antibiotics</code> data set (thanks to Peter Dutey):
+<ul>
+<li>Added more synonyms to colistin, imipenem and piperacillin/tazobactam</li>
+<li>Moved synonyms Rifinah and Rimactazid from rifampicin (<code>RIF</code>) to rifampicin/isoniazid (<code>RFI</code>). Please note that <a href="https://www.whocc.no/atc_ddd_index/?code=J04AM02&amp;showdescription=no">the combination rifampicin/isoniazid has no DDDs defined</a>, so e.g. <code><a href="../reference/ab_property.html">ab_ddd("Rimactazid")</a></code> will now return <code>NA</code>.</li>
+<li>Moved synonyms Bactrimel and Cotrimazole from sulfamethoxazole (<code>SMX</code>) to trimethoprim/sulfamethoxazole (<code>SXT</code>)</li>
+</ul>
 </li>
 </ul>
 </div>
@@ -1418,7 +1426,7 @@ Using <code><a href="../reference/as.mo.html">as.mo(..., allow_uncertain = 3)</a
     <div id="tocnav">
       <h2>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
-        <li><a href="#amr-0-9-0-9008">0.9.0.9008</a></li>
+        <li><a href="#amr-0-9-0-9009">0.9.0.9009</a></li>
         <li><a href="#amr-0-9-0">0.9.0</a></li>
         <li><a href="#amr-0-8-0">0.8.0</a></li>
         <li><a href="#amr-0-7-1">0.7.1</a></li>

@@ -43,7 +43,7 @@
 #' @inheritSection AMR Read more on our website!
 #' @export
 #' @examples
-#' # These examples all return "ERY", the ID of Erythromycin:
+#' # these examples all return "ERY", the ID of erythromycin:
 #' as.ab("J01FA01")
 #' as.ab("J 01 FA 01")
 #' as.ab("Erythromycin")
@@ -54,8 +54,14 @@
 #' as.ab("eritromicine") # spelled wrong, yet works
 #' as.ab("Erythrocin")   # trade name
 #' as.ab("Romycin")      # trade name
+#' 
+#' # spelling from different languages and dyslexia are no problem
+#' ab_atc("ceftriaxon")
+#' ab_atc("cephtriaxone")
+#' ab_atc("cephthriaxone")
+#' ab_atc("seephthriaaksone")
 #'
-#' # Use ab_* functions to get a specific properties (see ?ab_property);
+#' # use ab_* functions to get a specific properties (see ?ab_property);
 #' # they use as.ab() internally:
 #' ab_name("J01FA01")    # "Erythromycin"
 #' ab_name("eryt")       # "Erythromycin"
@@ -87,6 +93,10 @@ as.ab <- function(x, ...) {
   # spaces around non-characters must be removed: amox + clav -> amox/clav
   x_bak_clean <- gsub("(.*[a-zA-Z0-9]) ([^a-zA-Z0-9].*)", "\\1\\2", x_bak_clean)
   x_bak_clean <- gsub("(.*[^a-zA-Z0-9]) ([a-zA-Z0-9].*)", "\\1\\2", x_bak_clean)
+  # remove hyphen after a starting "co"
+  x_bak_clean <- gsub("^co-", "co", x_bak_clean, ignore.case = TRUE)
+  # replace text 'and' with a slash
+  x_bak_clean <- gsub(" and ", "/", x_bak_clean, ignore.case = TRUE)
 
   x <- unique(x_bak_clean)
   x_new <- rep(NA_character_, length(x))

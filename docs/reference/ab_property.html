@@ -85,7 +85,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">0.9.0.9007</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">0.9.0.9009</span>
       </span>
     </div>
 
@@ -356,7 +356,13 @@ The <a href='lifecycle.html'>lifecycle</a> of this function is <strong>maturing<
 <span class='fu'>ab_name</span>(<span class='st'>"fluklox"</span>)   <span class='co'># "Flucloxacillin"</span>
 <span class='fu'>ab_name</span>(<span class='st'>"floxapen"</span>)  <span class='co'># "Flucloxacillin"</span>
 <span class='fu'>ab_name</span>(<span class='fl'>21319</span>)       <span class='co'># "Flucloxacillin" (using CID)</span>
-<span class='fu'>ab_name</span>(<span class='st'>"J01CF05"</span>)   <span class='co'># "Flucloxacillin" (using ATC)</span></pre>
+<span class='fu'>ab_name</span>(<span class='st'>"J01CF05"</span>)   <span class='co'># "Flucloxacillin" (using ATC)</span>
+
+<span class='co'># spelling from different languages and dyslexia are no problem</span>
+<span class='fu'>ab_atc</span>(<span class='st'>"ceftriaxon"</span>)
+<span class='fu'>ab_atc</span>(<span class='st'>"cephtriaxone"</span>)
+<span class='fu'>ab_atc</span>(<span class='st'>"cephthriaxone"</span>)
+<span class='fu'>ab_atc</span>(<span class='st'>"seephthriaaksone"</span>)</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

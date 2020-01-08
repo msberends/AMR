@@ -3,7 +3,7 @@ citHeader("To cite our AMR package in publications, please use (for now):")
 citEntry(
   entry        = "Article",
   title        = "AMR - An R Package for Working with Antimicrobial Resistance Data",
-  author       = "Matthijs S Berends and Christian F Luz and Alexander W Friedrich and Bhanu N M Sinha and Casper J Albers and Corinna Glasner",
+  author       = "M S Berends and C F Luz and A W Friedrich and B N M Sinha and C J Albers and C Glasner",
   journal      = "bioRxiv",
   publisher    = "Cold Spring Harbor Laboratory",
   year         = 2019,

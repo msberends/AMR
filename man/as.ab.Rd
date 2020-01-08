@@ -59,7 +59,7 @@ On our website \url{https://msberends.gitlab.io/AMR} you can find \href{https://
 }
 
 \examples{
-# These examples all return "ERY", the ID of Erythromycin:
+# these examples all return "ERY", the ID of erythromycin:
 as.ab("J01FA01")
 as.ab("J 01 FA 01")
 as.ab("Erythromycin")
@@ -71,7 +71,13 @@ as.ab("eritromicine") # spelled wrong, yet works
 as.ab("Erythrocin")   # trade name
 as.ab("Romycin")      # trade name
 
-# Use ab_* functions to get a specific properties (see ?ab_property);
+# spelling from different languages and dyslexia are no problem
+ab_atc("ceftriaxon")
+ab_atc("cephtriaxone")
+ab_atc("cephthriaxone")
+ab_atc("seephthriaaksone")
+
+# use ab_* functions to get a specific properties (see ?ab_property);
 # they use as.ab() internally:
 ab_name("J01FA01")    # "Erythromycin"
 ab_name("eryt")       # "Erythromycin"

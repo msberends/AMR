@@ -85,7 +85,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">0.9.0.9007</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">0.9.0.9009</span>
       </span>
     </div>
 
@@ -293,7 +293,7 @@ This package contains <strong>all ~550 antibiotic, antimycotic and antiviral dru
     <div class='dont-index'><p><a href='antibiotics.html'>antibiotics</a> for the dataframe that is being used to determine ATCs.</p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><span class='co'># These examples all return "ERY", the ID of Erythromycin:</span>
+    <pre class="examples"><span class='co'># these examples all return "ERY", the ID of erythromycin:</span>
 <span class='fu'>as.ab</span>(<span class='st'>"J01FA01"</span>)
 <span class='fu'>as.ab</span>(<span class='st'>"J 01 FA 01"</span>)
 <span class='fu'>as.ab</span>(<span class='st'>"Erythromycin"</span>)
@@ -305,7 +305,13 @@ This package contains <strong>all ~550 antibiotic, antimycotic and antiviral dru
 <span class='fu'>as.ab</span>(<span class='st'>"Erythrocin"</span>)   <span class='co'># trade name</span>
 <span class='fu'>as.ab</span>(<span class='st'>"Romycin"</span>)      <span class='co'># trade name</span>
 
-<span class='co'># Use ab_* functions to get a specific properties (see ?ab_property);</span>
+<span class='co'># spelling from different languages and dyslexia are no problem</span>
+<span class='fu'><a href='ab_property.html'>ab_atc</a></span>(<span class='st'>"ceftriaxon"</span>)
+<span class='fu'><a href='ab_property.html'>ab_atc</a></span>(<span class='st'>"cephtriaxone"</span>)
+<span class='fu'><a href='ab_property.html'>ab_atc</a></span>(<span class='st'>"cephthriaxone"</span>)
+<span class='fu'><a href='ab_property.html'>ab_atc</a></span>(<span class='st'>"seephthriaaksone"</span>)
+
+<span class='co'># use ab_* functions to get a specific properties (see ?ab_property);</span>
 <span class='co'># they use as.ab() internally:</span>
 <span class='fu'><a href='ab_property.html'>ab_name</a></span>(<span class='st'>"J01FA01"</span>)    <span class='co'># "Erythromycin"</span>
 <span class='fu'><a href='ab_property.html'>ab_name</a></span>(<span class='st'>"eryt"</span>)       <span class='co'># "Erythromycin"</span></pre>

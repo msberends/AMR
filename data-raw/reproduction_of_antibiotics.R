@@ -327,8 +327,23 @@ antibiotics[which(antibiotics$ab == "CTX"), "abbreviations"][[1]] <- list(c(anti
 # High level Gentamcin and Streptomycin
 antibiotics[which(antibiotics$ab == "GEH"), "abbreviations"][[1]] <- list(c("gehl", "gentamicin high", "genta high"))
 antibiotics[which(antibiotics$ab == "STH"), "abbreviations"][[1]] <- list(c("sthl", "streptomycin high", "strepto high"))
-# add imi to imipenem
+# add imi and "imipenem/cilastatine" to imipenem
 antibiotics[which(antibiotics$ab == "IPM"), "abbreviations"][[1]] <- list(c("imip", "imi", "imp"))
+antibiotics[which(antibiotics$ab == "IPM"), "synonyms"][[1]] <- list(sort(c(antibiotics[which(antibiotics$ab == "IPM"), "synonyms"][[1]], "imipenem/cilastatin")))
+# add synonyms of ones not found
+antibiotics[which(antibiotics$ab == "TZP"), "synonyms"][[1]] <- list(sort(c(antibiotics[which(antibiotics$ab == "TZP"), "synonyms"][[1]], "Tazocel", "tazocillin", "Tazocin", "Zosyn")))
+antibiotics[which(antibiotics$ab == "COL"), "synonyms"][[1]] <- list(sort(unique(c(antibiotics[which(antibiotics$ab == "COL"), "synonyms"][[1]], "Colisticin", "Polymyxin E", "Colimycin", "Coly-Mycin", "Totazina", "Colistimethate", "Promixin", "Colistimethate Sodium"))))
+# remove incorrect synonyms from rifampicin (RIF) and add them to the combination rifampicin/isoniazid (RFI)
+old_sym <- antibiotics[which(antibiotics$ab == "RIF"), "synonyms"][[1]]
+old_sym <- old_sym[!old_sym %in% c("Rifinah", "Rimactazid")]
+antibiotics[which(antibiotics$ab == "RIF"), "synonyms"][[1]] <- list(old_sym)
+antibiotics[which(antibiotics$ab == "RFI"), "synonyms"][[1]] <- list(sort(c("Rifinah", "Rimactazid")))
+# remove incorrect synonyms from sulfamethoxazole (SMX) and add them to the combination trimethoprim/sulfamethoxazole (SXT)
+old_sym <- antibiotics[which(antibiotics$ab == "SMX"), "synonyms"][[1]]
+old_sym <- old_sym[!old_sym %in% c("Cotrimoxazole", "Bactrimel")]
+antibiotics[which(antibiotics$ab == "SMX"), "synonyms"][[1]] <- list(old_sym)
+antibiotics[which(antibiotics$ab == "SXT"), "synonyms"][[1]] <- list(sort(unique(c(antibiotics[which(antibiotics$ab == "COL"), "synonyms"][[1]], "Cotrimoxazole", "Bactrimel", "Septra", "Bactrim", "Cotrimazole"))))
+
 
 ## new ATC codes
 # ceftaroline

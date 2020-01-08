@@ -1,10 +1,15 @@
-# AMR 0.9.0.9008
-## <small>Last updated: 05-Jan-2020</small>
+# AMR 0.9.0.9009
+## <small>Last updated: 08-Jan-2020</small>
 
 ### Changes
 * Speed improvement for `as.mo()` (and consequently all `mo_*` functions that use `as.mo()` internally), especially for the *G. species* format (G for genus), like *E. coli* and *K penumoniae*
 * Input values for `as.disk()` limited to a maximum of 50 millimeters
 * Added a lifecycle state to every function, following [the lifecycle circle of the `tidyverse`](https://www.tidyverse.org/lifecycle)
+* For in `as.ab()`: support for drugs starting with "co-" like co-amoxiclav, co-trimoxazole, co-trimazine and co-trimazole (thanks to Peter Dutey)
+* Changes to the `antibiotics` data set (thanks to Peter Dutey):
+  * Added more synonyms to colistin, imipenem and piperacillin/tazobactam
+  * Moved synonyms Rifinah and Rimactazid from rifampicin (`RIF`) to rifampicin/isoniazid (`RFI`). Please note that [the combination rifampicin/isoniazid has no DDDs defined](https://www.whocc.no/atc_ddd_index/?code=J04AM02&showdescription=no), so e.g. `ab_ddd("Rimactazid")` will now return `NA`.
+  * Moved synonyms Bactrimel and Cotrimazole from sulfamethoxazole (`SMX`) to trimethoprim/sulfamethoxazole (`SXT`)
 
 ### Other
 * Add a `CITATION` file
