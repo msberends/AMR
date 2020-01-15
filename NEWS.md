@@ -1,5 +1,5 @@
-# AMR 0.9.0.9009
-## <small>Last updated: 08-Jan-2020</small>
+# AMR 0.9.0.9010
+## <small>Last updated: 15-Jan-2020</small>
 
 ### Changes
 * Speed improvement for `as.mo()` (and consequently all `mo_*` functions that use `as.mo()` internally), especially for the *G. species* format (G for genus), like *E. coli* and *K penumoniae*
@@ -13,6 +13,7 @@
 
 ### Other
 * Add a `CITATION` file
+* Full support for the upcoming R 4.0
 
 # AMR 0.9.0
 

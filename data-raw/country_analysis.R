@@ -26,7 +26,7 @@ library(maps)
 library(httr)
 
 GET_df <- function(ip) {
-  ip <- paste0("https://ipinfo.io/", ip, "?token=089aa7765ee912")
+  ip <- paste0("https://ipinfo.io/", ip, "?token=", ipinfo_token)
   result <- ip %>% GET()
   stop_for_status(result)
   result %>%
@@ -56,6 +56,8 @@ for (i in 2:length(unique_ip)) {
   ip_tbl <- ip_tbl %>% 
     bind_rows(GET_df(unique_ip[i]))
 }
+
+ip_tbl.bak <- ip_tbl
 
 # how many?
 n_distinct(ip_tbl$country)
@@ -90,6 +92,9 @@ countries_geometry <- sf::st_as_sf(map('world', plot = FALSE, fill = TRUE)) %>%
          not_antarctica = as.integer(ID != "Antarctica"),
          countries_name = ifelse(included == 1, ID, NA))
 
+# how many?
+countries_geometry %>% filter(included == 1) %>% nrow()
+
 countries_plot <- ggplot(countries_geometry) +
     geom_sf(aes(fill = included, colour = not_antarctica),
             size = 0.25, 
@@ -107,7 +112,9 @@ countries_plot_mini$data <- countries_plot_mini$data %>% filter(ID != "Antarctic
 countries_plot_mini <- countries_plot_mini + scale_colour_gradient(low = "#81899B", high = "#81899B")
 countries_plot_big <- countries_plot +
   labs(title = tools::toTitleCase("Countries where the AMR package for R was downloaded from"),
-       subtitle = paste0("Between March 2018 (first release) and ", format(Sys.Date(), "%B %Y"), ". The dots denote visitors on our website https://gitlab.io/msberends/AMR.")) +
+       subtitle = paste0("Between March 2018 (first release) and ", format(Sys.Date(), "%B %Y"), "." #,
+                         #"The dots denote visitors on our website https://gitlab.io/msberends/AMR."
+                         )) +
   theme(plot.title = element_text(size = 16, hjust = 0.5),
         plot.subtitle = element_text(size = 12, hjust = 0.5)) +
   geom_text(aes(x = -170,
@@ -117,12 +124,12 @@ countries_plot_big <- countries_plot +
                                                  paste(countries_name[!is.na(countries_name)], collapse = ", ")),
                                           200)),
             hjust = 0,
-            size = 4) +
-  # points of visitors
-  geom_point(data = ip_tbl,
-             aes(x = x, y = y), 
-             size = 1,
-             colour = "#81899B")
+             size = 4) # +
+  # # points of visitors
+  # geom_point(data = ip_tbl,
+  #            aes(x = x, y = y), 
+  #            size = 1,
+  #            colour = "#81899B")
 
 # main website page
 ggsave("pkgdown/logos/countries.png",
@@ -143,6 +150,14 @@ ggsave("pkgdown/logos/countries_large.png",
 
 
 # Gibberish ---------------------------------------------------------------
+
+data %>%
+  left_join(ip_tbl, by = c("ipaddress" = "ip")) %>% 
+  group_by(country = countrycode::countrycode(country, 
+                                              origin = 'iso2c', 
+                                              destination = 'country.name')) %>%
+  summarise(first = min(timestamp_server)) %>%
+  arrange(desc(first))
 # 
 # p1 <- data %>%
 #   group_by(country) %>%
