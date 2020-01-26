@@ -240,9 +240,8 @@ test_that("as.mo works", {
   expect_output(print(mo_uncertainties()))
   
   # Salmonella (City) are all actually Salmonella enterica spp (City)
-  expect_equal(as.character(suppressWarnings(as.mo("Salmonella Goettingen"))),
-               "B_SLMNL_ENTR")
-  expect_equal(as.character(as.mo("Salmonella Group A")), "B_SLMNL")
+  expect_equal(mo_name(c("Salmonella Goettingen", "Salmonella Typhimurium", "Salmonella Group A")),
+               c("Salmonella enterica", "Salmonella typhimurium", "Salmonella"))
   
   # no virusses
   expect_equal(as.character(as.mo("Virus")), NA_character_)

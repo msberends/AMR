@@ -47,18 +47,18 @@
 #' ab_name("AMX")       # "Amoxicillin"
 #' ab_atc("AMX")        # J01CA04 (ATC code from the WHO)
 #' ab_cid("AMX")        # 33613 (Compound ID from PubChem)
-#'
 #' ab_synonyms("AMX")   # a list with brand names of amoxicillin
 #' ab_tradenames("AMX") # same
-#'
 #' ab_group("AMX")      # "Beta-lactams/penicillins"
 #' ab_atc_group1("AMX") # "Beta-lactam antibacterials, penicillins"
 #' ab_atc_group2("AMX") # "Penicillins with extended spectrum"
 #'
+#' # smart lowercase tranformation
 #' ab_name(x = c("AMC", "PLB"))  # "Amoxicillin/clavulanic acid" "Polymyxin B"
 #' ab_name(x = c("AMC", "PLB"),
 #'         tolower = TRUE)       # "amoxicillin/clavulanic acid" "polymyxin B"
 #'
+#' # defined daily doses (DDD)
 #' ab_ddd("AMX", "oral")               #  1
 #' ab_ddd("AMX", "oral", units = TRUE) # "g"
 #' ab_ddd("AMX", "iv")                 #  1
@@ -66,12 +66,13 @@
 #'
 #' ab_info("AMX")       # all properties as a list
 #'
-#' # all ab_* functions use as.ab() internally:
-#' ab_name("Fluclox")   # "Flucloxacillin"
-#' ab_name("fluklox")   # "Flucloxacillin"
-#' ab_name("floxapen")  # "Flucloxacillin"
-#' ab_name(21319)       # "Flucloxacillin" (using CID)
-#' ab_name("J01CF05")   # "Flucloxacillin" (using ATC)
+#' # all ab_* functions use as.ab() internally, so you can go from 'any' to 'any':
+#' ab_atc("AMP")           # ATC code of AMP (ampicillin)
+#' ab_group("J01CA01")     # Drug group of ampicillins ATC code
+#' ab_loinc("ampicillin")  # LOINC codes of ampicillin
+#' ab_name("21066-6")      # "Ampicillin" (using LOINC)
+#' ab_name(6249)           # "Ampicillin" (using CID)
+#' ab_name("J01CA01")      # "Ampicillin" (using ATC)
 #' 
 #' # spelling from different languages and dyslexia are no problem
 #' ab_atc("ceftriaxon")
@@ -135,6 +136,18 @@ ab_atc_group1 <- function(x, language = get_locale(), ...) {
 #' @export
 ab_atc_group2 <- function(x, language = get_locale(), ...) {
   translate_AMR(ab_validate(x = x, property = "atc_group2", ...), language = language)
+}
+
+#' @rdname ab_property
+#' @export
+ab_loinc <- function(x, ...) {
+  loincs <- ab_validate(x = x, property = "loinc", ...)
+  names(loincs) <- x
+  if (length(loincs) == 1) {
+    unname(unlist(loincs))
+  } else {
+    loincs
+  }
 }
 
 #' @rdname ab_property

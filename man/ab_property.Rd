@@ -11,6 +11,7 @@
 \alias{ab_group}
 \alias{ab_atc_group1}
 \alias{ab_atc_group2}
+\alias{ab_loinc}
 \alias{ab_ddd}
 \alias{ab_info}
 \title{Property of an antibiotic}
@@ -30,6 +31,8 @@ ab_group(x, language = get_locale(), ...)
 ab_atc_group1(x, language = get_locale(), ...)
 
 ab_atc_group2(x, language = get_locale(), ...)
+
+ab_loinc(x, ...)
 
 ab_ddd(x, administration = "oral", units = FALSE, ...)
 
@@ -91,18 +94,18 @@ On our website \url{https://msberends.gitlab.io/AMR} you can find \href{https://
 ab_name("AMX")       # "Amoxicillin"
 ab_atc("AMX")        # J01CA04 (ATC code from the WHO)
 ab_cid("AMX")        # 33613 (Compound ID from PubChem)
-
 ab_synonyms("AMX")   # a list with brand names of amoxicillin
 ab_tradenames("AMX") # same
-
 ab_group("AMX")      # "Beta-lactams/penicillins"
 ab_atc_group1("AMX") # "Beta-lactam antibacterials, penicillins"
 ab_atc_group2("AMX") # "Penicillins with extended spectrum"
 
+# smart lowercase tranformation
 ab_name(x = c("AMC", "PLB"))  # "Amoxicillin/clavulanic acid" "Polymyxin B"
 ab_name(x = c("AMC", "PLB"),
         tolower = TRUE)       # "amoxicillin/clavulanic acid" "polymyxin B"
 
+# defined daily doses (DDD)
 ab_ddd("AMX", "oral")               #  1
 ab_ddd("AMX", "oral", units = TRUE) # "g"
 ab_ddd("AMX", "iv")                 #  1
@@ -110,12 +113,13 @@ ab_ddd("AMX", "iv", units = TRUE)   # "g"
 
 ab_info("AMX")       # all properties as a list
 
-# all ab_* functions use as.ab() internally:
-ab_name("Fluclox")   # "Flucloxacillin"
-ab_name("fluklox")   # "Flucloxacillin"
-ab_name("floxapen")  # "Flucloxacillin"
-ab_name(21319)       # "Flucloxacillin" (using CID)
-ab_name("J01CF05")   # "Flucloxacillin" (using ATC)
+# all ab_* functions use as.ab() internally, so you can go from 'any' to 'any':
+ab_atc("AMP")           # ATC code of AMP (ampicillin)
+ab_group("J01CA01")     # Drug group of ampicillins ATC code
+ab_loinc("ampicillin")  # LOINC codes of ampicillin
+ab_name("21066-6")      # "Ampicillin" (using LOINC)
+ab_name(6249)           # "Ampicillin" (using CID)
+ab_name("J01CA01")      # "Ampicillin" (using ATC)
 
 # spelling from different languages and dyslexia are no problem
 ab_atc("ceftriaxon")

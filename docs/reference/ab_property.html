@@ -85,7 +85,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">0.9.0.9010</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">0.9.0.9012</span>
       </span>
     </div>
 
@@ -253,6 +253,8 @@
 
 <span class='fu'>ab_atc_group2</span>(<span class='no'>x</span>, <span class='kw'>language</span> <span class='kw'>=</span> <span class='fu'><a href='translate.html'>get_locale</a></span>(), <span class='no'>...</span>)
 
+<span class='fu'>ab_loinc</span>(<span class='no'>x</span>, <span class='no'>...</span>)
+
 <span class='fu'>ab_ddd</span>(<span class='no'>x</span>, <span class='kw'>administration</span> <span class='kw'>=</span> <span class='st'>"oral"</span>, <span class='kw'>units</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>...</span>)
 
 <span class='fu'>ab_info</span>(<span class='no'>x</span>, <span class='kw'>language</span> <span class='kw'>=</span> <span class='fu'><a href='translate.html'>get_locale</a></span>(), <span class='no'>...</span>)
@@ -332,18 +334,18 @@ The <a href='lifecycle.html'>lifecycle</a> of this function is <strong>maturing<
 <span class='fu'>ab_name</span>(<span class='st'>"AMX"</span>)       <span class='co'># "Amoxicillin"</span>
 <span class='fu'>ab_atc</span>(<span class='st'>"AMX"</span>)        <span class='co'># J01CA04 (ATC code from the WHO)</span>
 <span class='fu'>ab_cid</span>(<span class='st'>"AMX"</span>)        <span class='co'># 33613 (Compound ID from PubChem)</span>
-
 <span class='fu'>ab_synonyms</span>(<span class='st'>"AMX"</span>)   <span class='co'># a list with brand names of amoxicillin</span>
 <span class='fu'>ab_tradenames</span>(<span class='st'>"AMX"</span>) <span class='co'># same</span>
-
 <span class='fu'>ab_group</span>(<span class='st'>"AMX"</span>)      <span class='co'># "Beta-lactams/penicillins"</span>
 <span class='fu'>ab_atc_group1</span>(<span class='st'>"AMX"</span>) <span class='co'># "Beta-lactam antibacterials, penicillins"</span>
 <span class='fu'>ab_atc_group2</span>(<span class='st'>"AMX"</span>) <span class='co'># "Penicillins with extended spectrum"</span>
 
+<span class='co'># smart lowercase tranformation</span>
 <span class='fu'>ab_name</span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"AMC"</span>, <span class='st'>"PLB"</span>))  <span class='co'># "Amoxicillin/clavulanic acid" "Polymyxin B"</span>
 <span class='fu'>ab_name</span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"AMC"</span>, <span class='st'>"PLB"</span>),
         <span class='kw'>tolower</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)       <span class='co'># "amoxicillin/clavulanic acid" "polymyxin B"</span>
 
+<span class='co'># defined daily doses (DDD)</span>
 <span class='fu'>ab_ddd</span>(<span class='st'>"AMX"</span>, <span class='st'>"oral"</span>)               <span class='co'>#  1</span>
 <span class='fu'>ab_ddd</span>(<span class='st'>"AMX"</span>, <span class='st'>"oral"</span>, <span class='kw'>units</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>) <span class='co'># "g"</span>
 <span class='fu'>ab_ddd</span>(<span class='st'>"AMX"</span>, <span class='st'>"iv"</span>)                 <span class='co'>#  1</span>
@@ -351,12 +353,13 @@ The <a href='lifecycle.html'>lifecycle</a> of this function is <strong>maturing<
 
 <span class='fu'>ab_info</span>(<span class='st'>"AMX"</span>)       <span class='co'># all properties as a list</span>
 
-<span class='co'># all ab_* functions use as.ab() internally:</span>
-<span class='fu'>ab_name</span>(<span class='st'>"Fluclox"</span>)   <span class='co'># "Flucloxacillin"</span>
-<span class='fu'>ab_name</span>(<span class='st'>"fluklox"</span>)   <span class='co'># "Flucloxacillin"</span>
-<span class='fu'>ab_name</span>(<span class='st'>"floxapen"</span>)  <span class='co'># "Flucloxacillin"</span>
-<span class='fu'>ab_name</span>(<span class='fl'>21319</span>)       <span class='co'># "Flucloxacillin" (using CID)</span>
-<span class='fu'>ab_name</span>(<span class='st'>"J01CF05"</span>)   <span class='co'># "Flucloxacillin" (using ATC)</span>
+<span class='co'># all ab_* functions use as.ab() internally, so you can go from 'any' to 'any':</span>
+<span class='fu'>ab_atc</span>(<span class='st'>"AMP"</span>)           <span class='co'># ATC code of AMP (ampicillin)</span>
+<span class='fu'>ab_group</span>(<span class='st'>"J01CA01"</span>)     <span class='co'># Drug group of ampicillins ATC code</span>
+<span class='fu'>ab_loinc</span>(<span class='st'>"ampicillin"</span>)  <span class='co'># LOINC codes of ampicillin</span>
+<span class='fu'>ab_name</span>(<span class='st'>"21066-6"</span>)      <span class='co'># "Ampicillin" (using LOINC)</span>
+<span class='fu'>ab_name</span>(<span class='fl'>6249</span>)           <span class='co'># "Ampicillin" (using CID)</span>
+<span class='fu'>ab_name</span>(<span class='st'>"J01CA01"</span>)      <span class='co'># "Ampicillin" (using ATC)</span>
 
 <span class='co'># spelling from different languages and dyslexia are no problem</span>
 <span class='fu'>ab_atc</span>(<span class='st'>"ceftriaxon"</span>)

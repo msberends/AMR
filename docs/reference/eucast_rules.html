@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>EUCAST rules — eucast_rules • AMR (for R)</title>
+<title>Apply EUCAST rules — eucast_rules • AMR (for R)</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -50,7 +50,7 @@
   <link href="../extra.css" rel="stylesheet">
   <script src="../extra.js"></script>
 
-<meta property="og:title" content="EUCAST rules — eucast_rules" />
+<meta property="og:title" content="Apply EUCAST rules — eucast_rules" />
 <meta property="og:description" content="Apply susceptibility rules as defined by the European Committee on Antimicrobial Susceptibility Testing (EUCAST, http://eucast.org), see Source. This includes (1) expert rules, (2) intrinsic resistance and (3) inferred resistance as defined in their breakpoint tables.
 To improve the interpretation of the antibiogram before EUCAST rules are applied, some non-EUCAST rules are applied at default, see Details." />
 <meta property="og:image" content="https://msberends.gitlab.io/AMR/logo.png" />
@@ -86,7 +86,7 @@ To improve the interpretation of the antibiogram before EUCAST rules are applied
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">0.9.0.9009</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">0.9.0.9012</span>
       </span>
     </div>
 
@@ -229,7 +229,7 @@ To improve the interpretation of the antibiogram before EUCAST rules are applied
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>EUCAST rules</h1>
+    <h1>Apply EUCAST rules</h1>
     
     <div class="hidden name"><code>eucast_rules.Rd</code></div>
     </div>
@@ -305,10 +305,10 @@ Leclercq et al. <strong>EUCAST expert rules in antimicrobial susceptibility test
 <li><p>Set trimethoprim (TMP) = R where trimethoprim/sulfamethoxazole (SXT) = R;</p></li>
 <li><p>Set amoxicillin/clavulanic acid (AMC) = S where amoxicillin (AMX) = S;</p></li>
 <li><p>Set piperacillin/tazobactam (TZP) = S where piperacillin (PIP) = S;</p></li>
-<li><p>Set trimethoprim/sulfamethoxazole (SXT) = S where trimethoprim (TMP) = S.
-To <em>not</em> use these rules, please use <code>eucast_rules(..., rules = c("breakpoints", "expert"))</code>.</p></li>
+<li><p>Set trimethoprim/sulfamethoxazole (SXT) = S where trimethoprim (TMP) = S.</p></li>
 </ul>
 
+<p>To <em>not</em> use these rules, please use <code>eucast_rules(..., rules = c("breakpoints", "expert"))</code>.</p>
 <p>The file containing all EUCAST rules is located here: <a href='https://gitlab.com/msberends/AMR/blob/master/data-raw/eucast_rules.tsv'>https://gitlab.com/msberends/AMR/blob/master/data-raw/eucast_rules.tsv</a>.</p>
     <h2 class="hasAnchor" id="antibiotics"><a class="anchor" href="#antibiotics"></a>Antibiotics</h2>
 

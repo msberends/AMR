@@ -143,6 +143,19 @@ as.ab <- function(x, ...) {
       x_new[i] <- found[1L]
       next
     }
+    
+    # exact LOINC code
+    loinc_found <- unlist(lapply(AMR::antibiotics$loinc,
+                                   function(s) if (x[i] %in% s) {
+                                     TRUE
+                                   } else {
+                                     FALSE
+                                   }))
+    found <- AMR::antibiotics$ab[loinc_found == TRUE]
+    if (length(found) > 0) {
+      x_new[i] <- found[1L]
+      next
+    }
 
     # exact synonym
     synonym_found <- unlist(lapply(AMR::antibiotics$synonyms,

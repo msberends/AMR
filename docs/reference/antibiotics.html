@@ -85,7 +85,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">0.9.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">0.9.0.9012</span>
       </span>
     </div>
 
@@ -244,7 +244,7 @@
 
     <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
 
-    <h3>For the antibiotics data set: a <code><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></code> with 452 observations and 13 variables:</h3>
+    <h3>For the antibiotics data set: a <code><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></code> with 452 observations and 14 variables:</h3>
 
 <ul>
 <li><p><code>ab</code><br /> Antibiotic ID as used in this package (like <code>AMC</code>), using the official EARS-Net (European Antimicrobial Resistance Surveillance Network) codes where available</p></li>
@@ -260,6 +260,7 @@
 <li><p><code>oral_units</code><br /> Units of <code>oral_ddd</code></p></li>
 <li><p><code>iv_ddd</code><br /> Defined Daily Dose (DDD), parenteral treatment</p></li>
 <li><p><code>iv_units</code><br /> Units of <code>iv_ddd</code></p></li>
+<li><p><code>loinc</code><br /> All LOINC codes (Logical Observation Identifiers Names and Codes) associated with the antimicrobial name of the drug. Use <code>ab_loic()</code> to retrieve them quickly, see <code><a href='ab_property.html'>ab_property()</a></code>.</p></li>
 </ul>
 
 
@@ -322,7 +323,7 @@ This package contains <strong>all ~550 antibiotic, antimycotic and antiviral dru
 
       <footer>
       <div class="copyright">
-  <p>Developed by <a href='https://www.rug.nl/staff/m.s.berends/'>Matthijs S. Berends</a>, <a href='https://www.rug.nl/staff/c.f.luz/'>Christian F. Luz</a>, <a href='https://www.rug.nl/staff/a.w.friedrich/'>Alex W. Friedrich</a>, <a href='https://www.rug.nl/staff/b.sinha/'>Bhanu N. M. Sinha</a>, <a href='https://www.rug.nl/staff/c.j.albers/'>Casper J. Albers</a>, <a href='https://www.rug.nl/staff/c.glasner/'>Corinna Glasner</a>.</p>
+  <p>Developed by <a href='https://www.rug.nl/staff/m.s.berends/'>Matthijs S Berends</a>, <a href='https://www.rug.nl/staff/c.f.luz/'>Christian F Luz</a>, <a href='https://www.rug.nl/staff/a.w.friedrich/'>Alexander W Friedrich</a>, <a href='https://www.rug.nl/staff/b.sinha/'>Bhanu N M Sinha</a>, <a href='https://www.rug.nl/staff/c.j.albers/'>Casper J Albers</a>, <a href='https://www.rug.nl/staff/c.glasner/'>Corinna Glasner</a>.</p>
 </div>
 
 <div class="pkgdown">

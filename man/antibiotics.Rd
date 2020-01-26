@@ -5,7 +5,7 @@
 \alias{antibiotics}
 \alias{antivirals}
 \title{Data sets with ~550 antimicrobials}
-\format{\subsection{For the \link{antibiotics} data set: a \code{\link{data.frame}} with 452 observations and 13 variables:}{
+\format{\subsection{For the \link{antibiotics} data set: a \code{\link{data.frame}} with 452 observations and 14 variables:}{
 \itemize{
 \item \code{ab}\cr Antibiotic ID as used in this package (like \code{AMC}), using the official EARS-Net (European Antimicrobial Resistance Surveillance Network) codes where available
 \item \code{atc}\cr ATC code (Anatomical Therapeutic Chemical) as defined by the WHOCC, like \code{J01CR02}
@@ -20,6 +20,7 @@
 \item \code{oral_units}\cr Units of \code{oral_ddd}
 \item \code{iv_ddd}\cr Defined Daily Dose (DDD), parenteral treatment
 \item \code{iv_units}\cr Units of \code{iv_ddd}
+\item \code{loinc}\cr All LOINC codes (Logical Observation Identifiers Names and Codes) associated with the antimicrobial name of the drug. Use \code{\link[=ab_loic]{ab_loic()}} to retrieve them quickly, see \code{\link[=ab_property]{ab_property()}}.
 }
 }
 

@@ -23,7 +23,7 @@
 EUCAST_VERSION_BREAKPOINTS <- "9.0, 2019"
 EUCAST_VERSION_EXPERT_RULES <- "3.1, 2016"
 
-#' EUCAST rules
+#' Apply EUCAST rules
 #' 
 #' @description
 #' Apply susceptibility rules as defined by the European Committee on Antimicrobial Susceptibility Testing (EUCAST, <http://eucast.org>), see *Source*. This includes (1) expert rules, (2) intrinsic resistance and (3) inferred resistance as defined in their breakpoint tables. 
@@ -49,6 +49,7 @@ EUCAST_VERSION_EXPERT_RULES <- "3.1, 2016"
 #' - Set amoxicillin/clavulanic acid (AMC) = S where amoxicillin (AMX) = S;
 #' - Set piperacillin/tazobactam (TZP) = S where piperacillin (PIP) = S;
 #' - Set trimethoprim/sulfamethoxazole (SXT) = S where trimethoprim (TMP) = S.
+#' 
 #' To *not* use these rules, please use `eucast_rules(..., rules = c("breakpoints", "expert"))`.
 #'
 #' The file containing all EUCAST rules is located here: <https://gitlab.com/msberends/AMR/blob/master/data-raw/eucast_rules.tsv>.

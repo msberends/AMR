@@ -17,8 +17,8 @@ We created this package for both routine data analysis and academic research (as
 <div class="main-content"> 
   <p>
     <a href="./countries_large.png" target="_blank"><img src="./countries.png" class="countries_map"></a>
-    <strong>Used over 90 countries</strong><br>
-    Since its first public release in early 2018, this package has been downloaded over 25,000 times from 92 countries <small>(as of January 2020, <a href="https://cran-logs.rstudio.com" target="_blank">CRAN logs</a>)</small>. Click the map to enlarge.</p><br><br>
+    <strong>Used in almost 100 countries</strong><br>
+    Since its first public release in early 2018, this package has been downloaded over 25,000 times from 96 countries <small>(as of January 2020, <a href="https://cran-logs.rstudio.com" target="_blank">CRAN logs</a>)</small>. Click the map to enlarge.</p><br><br>
 </div>
 
 #### Partners
@@ -48,6 +48,7 @@ This package can be used for:
   * Getting properties for any antibiotic (like name, EARS-Net code, ATC code, PubChem code, defined daily dose or trade name) ([manual](./reference/ab_property.html))
   * Plotting antimicrobial resistance ([tutorial](./articles/AMR.html))
   * Applying EUCAST expert rules ([manual](./reference/eucast_rules.html))
+  * Get the LOINC code of an antibiotic, or get the name associated with a LOINC code ([manual](./reference/ab_property.html))
 
 This package is ready-to-use for a professional environment by specialists in the following fields:
 

@@ -59,9 +59,6 @@ for (i in 2:length(unique_ip)) {
 
 ip_tbl.bak <- ip_tbl
 
-# how many?
-n_distinct(ip_tbl$country)
-
 # add long and lat
 ip_tbl <- ip_tbl %>% 
   separate(loc, into = c("y", "x"), sep = ",", remove = FALSE, convert = TRUE)
@@ -118,7 +115,7 @@ countries_plot_big <- countries_plot +
   theme(plot.title = element_text(size = 16, hjust = 0.5),
         plot.subtitle = element_text(size = 12, hjust = 0.5)) +
   geom_text(aes(x = -170,
-                y = -70,
+                y = -75,
                 label = stringr::str_wrap(paste0("Countries (n = ", 
                                                  length(countries_name[!is.na(countries_name)]), "): ", 
                                                  paste(countries_name[!is.na(countries_name)], collapse = ", ")),

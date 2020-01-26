@@ -922,8 +922,10 @@ exec_as.mo <- function(x,
               set_mo_history(x_backup[i], get_mo_code(x[i], property), 0, force = force_mo_history, disable = disable_mo_history)
             }
             next
-          } else if (grepl("[sS]almonella [A-Z][a-z]+ ?.*", x_backup[i], ignore.case = FALSE)) {
+          } else if (grepl("[sS]almonella [A-Z][a-z]+ ?.*", x_backup[i], ignore.case = FALSE) &
+                       !x_backup[i] %like% "t[iy](ph|f)[iy]") {
             # Salmonella with capital letter species like "Salmonella Goettingen" - they're all S. enterica
+            # except for S. typhi, S. paratyphi, S. typhimurium
             x[i] <- microorganismsDT[mo == "B_SLMNL_ENTR",
                                      ..property][[1]][1L]
             if (initial_search == TRUE) {

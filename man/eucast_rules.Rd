@@ -3,7 +3,7 @@
 \name{eucast_rules}
 \alias{eucast_rules}
 \alias{EUCAST}
-\title{EUCAST rules}
+\title{Apply EUCAST rules}
 \source{
 \itemize{
 \item EUCAST Expert Rules. Version 2.0, 2012. \cr
@@ -60,8 +60,9 @@ Before further processing, some non-EUCAST rules are applied to improve the effi
 \item Set amoxicillin/clavulanic acid (AMC) = S where amoxicillin (AMX) = S;
 \item Set piperacillin/tazobactam (TZP) = S where piperacillin (PIP) = S;
 \item Set trimethoprim/sulfamethoxazole (SXT) = S where trimethoprim (TMP) = S.
-To \emph{not} use these rules, please use \code{eucast_rules(..., rules = c("breakpoints", "expert"))}.
 }
+
+To \emph{not} use these rules, please use \code{eucast_rules(..., rules = c("breakpoints", "expert"))}.
 
 The file containing all EUCAST rules is located here: \url{https://gitlab.com/msberends/AMR/blob/master/data-raw/eucast_rules.tsv}.
 }

@@ -23,7 +23,7 @@
 #'
 #' Two data sets containing all antibiotics/antimycotics and antivirals. Use [as.ab()] or one of the [ab_property()] functions to retrieve values from the [antibiotics] data set. Three identifiers are included in this data set: an antibiotic ID (`ab`, primarily used in this package) as defined by WHONET/EARS-Net, an ATC code (`atc`) as defined by the WHO, and a Compound ID (`cid`) as found in PubChem. Other properties in this data set are derived from one or more of these codes.
 #' @format
-#' ### For the [antibiotics] data set: a [`data.frame`] with 452 observations and 13 variables:
+#' ### For the [antibiotics] data set: a [`data.frame`] with 452 observations and 14 variables:
 #' - `ab`\cr Antibiotic ID as used in this package (like `AMC`), using the official EARS-Net (European Antimicrobial Resistance Surveillance Network) codes where available
 #' - `atc`\cr ATC code (Anatomical Therapeutic Chemical) as defined by the WHOCC, like `J01CR02`
 #' - `cid`\cr Compound ID as found in PubChem
@@ -37,6 +37,7 @@
 #' - `oral_units`\cr Units of `oral_ddd`
 #' - `iv_ddd`\cr Defined Daily Dose (DDD), parenteral treatment
 #' - `iv_units`\cr Units of `iv_ddd`
+#' - `loinc`\cr All LOINC codes (Logical Observation Identifiers Names and Codes) associated with the antimicrobial name of the drug. Use [ab_loic()] to retrieve them quickly, see [ab_property()].
 #' 
 #' ### For the [antivirals] data set: a [`data.frame`] with 102 observations and 9 variables:
 #' - `atc`\cr ATC code (Anatomical Therapeutic Chemical) as defined by the WHOCC

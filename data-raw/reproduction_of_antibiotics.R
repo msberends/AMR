@@ -401,6 +401,8 @@ antibiotics <- antibiotics %>%
 antibiotics <- as.data.frame(antibiotics, stringsAsFactors = FALSE)
 class(antibiotics$ab) <- "ab"
 
+# REFER TO data-raw/loinc.R FOR ADDING LOINC CODES
+
 dim(antibiotics) # for R/data.R
 usethis::use_data(antibiotics, overwrite = TRUE)
 rm(antibiotics)
