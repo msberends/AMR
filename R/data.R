@@ -37,7 +37,7 @@
 #' - `oral_units`\cr Units of `oral_ddd`
 #' - `iv_ddd`\cr Defined Daily Dose (DDD), parenteral treatment
 #' - `iv_units`\cr Units of `iv_ddd`
-#' - `loinc`\cr All LOINC codes (Logical Observation Identifiers Names and Codes) associated with the antimicrobial name of the drug. Use [ab_loic()] to retrieve them quickly, see [ab_property()].
+#' - `loinc`\cr All LOINC codes (Logical Observation Identifiers Names and Codes) associated with the name of the antimicrobial agent. Use [ab_loinc()] to retrieve them quickly, see [ab_property()].
 #' 
 #' ### For the [antivirals] data set: a [`data.frame`] with 102 observations and 9 variables:
 #' - `atc`\cr ATC code (Anatomical Therapeutic Chemical) as defined by the WHOCC
