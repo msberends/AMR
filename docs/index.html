@@ -45,7 +45,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">0.9.0.9015</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">0.9.0.9016</span>
       </span>
     </div>
 
@@ -200,7 +200,7 @@ A methods paper about this package has been preprinted at bioRxiv (DOI: 10.1101/
 <a href="#what-is-amr-for-r" class="anchor"></a>What is <code>AMR</code> (for R)?</h3>
 <p><em>(<help title="Too Long, Didn't Read">TLDR</help> - to find out how to conduct AMR analysis, please <a href="./articles/AMR.html">continue reading here to get started</a>.</em></p>
 <p><code>AMR</code> is a free and open-source <a href="https://www.r-project.org">R package</a> to simplify the analysis and prediction of Antimicrobial Resistance (AMR) and to work with microbial and antimicrobial data and properties, by using evidence-based methods. <strong>Our aim is to provide a standard</strong> for clean and reproducible antimicrobial resistance data analysis, that can therefore empower epidemiological analyses to continuously enable surveillance and treatment evaluation in any setting.</p>
-<p>After installing this package, R knows <a href="./reference/microorganisms.html"><strong>~70,000 distinct microbial species</strong></a> and all <a href="./reference/antibiotics.html"><strong>~550 antibiotic, antimycotic and antiviral drugs</strong></a> by name and code (including ATC and LOINC), and knows all about valid R/SI and MIC values. It supports any data format, including WHONET/EARS-Net data.</p>
+<p>After installing this package, R knows <a href="./reference/microorganisms.html"><strong>~70,000 distinct microbial species</strong></a> and all <a href="./reference/antibiotics.html"><strong>~550 antibiotic, antimycotic and antiviral drugs</strong></a> by name and code (including ATC, LOINC and SNOMED CT), and knows all about valid R/SI and MIC values. It supports any data format, including WHONET/EARS-Net data.</p>
 <p>We created this package for both routine data analysis and academic research (as part of our PhD theses) at the Faculty of Medical Sciences of the University of Groningen, the Netherlands, and the Medical Microbiology &amp; Infection Prevention (MMBI) department of the University Medical Center Groningen (UMCG). This R package is <a href="./news">actively maintained</a> and is free software (see <a href="#copyright">Copyright</a>).</p>
 <div class="main-content"> 
   <p>
@@ -238,34 +238,24 @@ A methods paper about this package has been preprinted at bioRxiv (DOI: 10.1101/
 <li>Getting properties for any antibiotic (like name, EARS-Net code, ATC code, PubChem code, defined daily dose or trade name) (<a href="./reference/ab_property.html">manual</a>)</li>
 <li>Plotting antimicrobial resistance (<a href="./articles/AMR.html">tutorial</a>)</li>
 <li>Applying EUCAST expert rules (<a href="./reference/eucast_rules.html">manual</a>)</li>
+<li>Getting SNOMED codes of a microorganism, or get its name associated with a SNOMED code (<a href="./reference/mo_property.html">manual</a>)</li>
 <li>Getting LOINC codes of an antibiotic, or get its name associated with a LOINC code (<a href="./reference/ab_property.html">manual</a>)</li>
 <li>Machine reading the EUCAST and CLSI guidelines from 2011-2019 to translate MIC values and disk diffusion diameters to R/SI (<a href="https://gitlab.com/msberends/AMR/blob/master/data-raw/rsi_translation.txt">link</a>)</li>
 </ul>
-<p>This package is ready-to-use for a professional environment by specialists in the following fields:</p>
-<p>Medical Microbiology</p>
+<p>This package is ready-to-use for specialists in many fields:</p>
 <ul>
 <li>Epidemiologists (both clinical microbiological and research)</li>
-<li>Research Microbiologists</li>
+<li>(Research) Microbiologists</li>
 <li>Biomedical Researchers</li>
 <li>Research Pharmacologists</li>
 <li>Data Scientists / Data Analysts</li>
-</ul>
-<p>Veterinary Microbiology</p>
-<ul>
+<li>Statisticians</li>
+<li>Bioinformaticians</li>
 <li>Research Veterinarians</li>
 <li>Veterinary Epidemiologists</li>
-</ul>
-<p>Microbial Ecology</p>
-<ul>
 <li>Soil Microbiologists</li>
 <li>Extremophile Researchers</li>
 <li>Astrobiologists</li>
-</ul>
-<p>Developers</p>
-<ul>
-<li>Package developers for R</li>
-<li>Software developers</li>
-<li>Web application / Shiny developers</li>
 </ul>
 </div>
 <div id="get-this-package" class="section level3">
@@ -338,8 +328,8 @@ A methods paper about this package has been preprinted at bioRxiv (DOI: 10.1101/
 </ul>
 </li>
 <li>Use <code><a href="reference/mdro.html">mdro()</a></code> to determine which micro-organisms are multi-drug resistant organisms (MDRO). It supports a variety of international guidelines, such as the MDR-paper by Magiorakos <em>et al.</em> (2012, <a href="https://www.ncbi.nlm.nih.gov/pubmed/?term=21793988">PMID 21793988</a>), the exceptional phenotype definitions of EUCAST and the WHO guideline on multi-drug resistant TB. It also supports the national guidelines of the Netherlands and Germany.</li>
-<li>The <a href="./reference/microorganisms.html">data set microorganisms</a> contains the complete taxonomic tree of ~70,000 microorganisms. Furthermore, some colloquial names and all Gram stains are available, which enables resistance analysis of e.g. different antibiotics per Gram stain. The package also contains functions to look up values in this data set like <code><a href="reference/mo_property.html">mo_genus()</a></code>, <code><a href="reference/mo_property.html">mo_family()</a></code>, <code><a href="reference/mo_property.html">mo_gramstain()</a></code> or even <code><a href="reference/mo_property.html">mo_phylum()</a></code>. As they use <code><a href="reference/as.mo.html">as.mo()</a></code> internally, they also use the same intelligent rules for determination. For example, <code><a href="reference/mo_property.html">mo_genus("MRSA")</a></code> and <code><a href="reference/mo_property.html">mo_genus("S. aureus")</a></code> will both return <code>"Staphylococcus"</code>. They also come with support for German, Dutch, Spanish, Italian, French and Portuguese. These functions can be used to add new variables to your data.</li>
-<li>The <a href="./reference/antibiotics.html">data set antibiotics</a> contains ~450 antimicrobial drugs with their EARS-Net code, ATC code, PubChem compound ID, official name, common LIS codes and DDDs of both oral and parenteral administration. It also contains all (thousands of) trade names found in PubChem. Use functions like <code><a href="reference/ab_property.html">ab_name()</a></code>, <code><a href="reference/ab_property.html">ab_group()</a></code>, <code><a href="reference/ab_property.html">ab_atc()</a></code> and <code><a href="reference/ab_property.html">ab_tradenames()</a></code> to look up values. The <code>ab_*</code> functions use <code><a href="reference/as.ab.html">as.ab()</a></code> internally so they support the same intelligent rules to guess the most probable result. For example, <code><a href="reference/ab_property.html">ab_name("Fluclox")</a></code>, <code><a href="reference/ab_property.html">ab_name("Floxapen")</a></code> and <code><a href="reference/ab_property.html">ab_name("J01CF05")</a></code> will all return <code>"Flucloxacillin"</code>. These functions can again be used to add new variables to your data.</li>
+<li>The <a href="./reference/microorganisms.html">data set microorganisms</a> contains the complete taxonomic tree of ~70,000 microorganisms. Furthermore, some colloquial names and all Gram stains are available, which enables resistance analysis of e.g. different antibiotics per Gram stain. The package also contains functions to look up values in this data set like <code><a href="reference/mo_property.html">mo_genus()</a></code>, <code><a href="reference/mo_property.html">mo_family()</a></code>, <code><a href="reference/mo_property.html">mo_gramstain()</a></code> or even <code><a href="reference/mo_property.html">mo_phylum()</a></code>. Use <code><a href="reference/mo_property.html">mo_snomed()</a></code> to look up any SNOMED CT code associated with a microorganism. As all these function use <code><a href="reference/as.mo.html">as.mo()</a></code> internally, they also use the same intelligent rules for determination. For example, <code><a href="reference/mo_property.html">mo_genus("MRSA")</a></code> and <code><a href="reference/mo_property.html">mo_genus("S. aureus")</a></code> will both return <code>"Staphylococcus"</code>. They also come with support for German, Dutch, Spanish, Italian, French and Portuguese. These functions can be used to add new variables to your data.</li>
+<li>The <a href="./reference/antibiotics.html">data set antibiotics</a> contains ~450 antimicrobial drugs with their EARS-Net code, ATC code, PubChem compound ID, LOINC code, official name, common LIS codes and DDDs of both oral and parenteral administration. It also contains all (thousands of) trade names found in PubChem. Use functions like <code><a href="reference/ab_property.html">ab_name()</a></code>, <code><a href="reference/ab_property.html">ab_group()</a></code>, <code><a href="reference/ab_property.html">ab_atc()</a></code>, <code><a href="reference/ab_property.html">ab_loinc()</a></code> and <code><a href="reference/ab_property.html">ab_tradenames()</a></code> to look up values. The <code>ab_*</code> functions use <code><a href="reference/as.ab.html">as.ab()</a></code> internally so they support the same intelligent rules to guess the most probable result. For example, <code><a href="reference/ab_property.html">ab_name("Fluclox")</a></code>, <code><a href="reference/ab_property.html">ab_name("Floxapen")</a></code> and <code><a href="reference/ab_property.html">ab_name("J01CF05")</a></code> will all return <code>"Flucloxacillin"</code>. These functions can again be used to add new variables to your data.</li>
 </ul>
 </li>
 <li>

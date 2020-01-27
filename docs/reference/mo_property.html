@@ -85,7 +85,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">0.9.0.9013</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">0.9.0.9016</span>
       </span>
     </div>
 
@@ -263,6 +263,8 @@
 
 <span class='fu'>mo_gramstain</span>(<span class='no'>x</span>, <span class='kw'>language</span> <span class='kw'>=</span> <span class='fu'><a href='translate.html'>get_locale</a></span>(), <span class='no'>...</span>)
 
+<span class='fu'>mo_snomed</span>(<span class='no'>x</span>, <span class='no'>...</span>)
+
 <span class='fu'>mo_ref</span>(<span class='no'>x</span>, <span class='no'>...</span>)
 
 <span class='fu'>mo_authors</span>(<span class='no'>x</span>, <span class='no'>...</span>)
@@ -313,6 +315,7 @@
 <li><p>An <code><a href='https://rdrr.io/r/base/integer.html'>integer</a></code> in case of <code>mo_year()</code></p></li>
 <li><p>A <code><a href='https://rdrr.io/r/base/list.html'>list</a></code> in case of <code>mo_taxonomy()</code> and <code>mo_info()</code></p></li>
 <li><p>A named <code><a href='https://rdrr.io/r/base/character.html'>character</a></code> in case of <code>mo_url()</code></p></li>
+<li><p>A <code><a href='https://rdrr.io/r/base/double.html'>double</a></code> in case of <code>mo_snomed()</code></p></li>
 <li><p>A <code><a href='https://rdrr.io/r/base/character.html'>character</a></code> in all other cases</p></li>
 </ul>
 
@@ -367,11 +370,12 @@ This package contains the complete taxonomic tree of almost all microorganisms (
 
 <span class='co'># colloquial properties ----------------------------------------------------</span>
 <span class='fu'>mo_name</span>(<span class='st'>"E. coli"</span>)            <span class='co'># "Escherichia coli"</span>
-<span class='fu'>mo_fullname</span>(<span class='st'>"E. coli"</span>)        <span class='co'># "Escherichia coli", same as mo_name()</span>
+<span class='fu'>mo_fullname</span>(<span class='st'>"E. coli"</span>)        <span class='co'># "Escherichia coli" - same as mo_name()</span>
 <span class='fu'>mo_shortname</span>(<span class='st'>"E. coli"</span>)       <span class='co'># "E. coli"</span>
 
 <span class='co'># other properties ---------------------------------------------------------</span>
 <span class='fu'>mo_gramstain</span>(<span class='st'>"E. coli"</span>)       <span class='co'># "Gram-negative"</span>
+<span class='fu'>mo_snomed</span>(<span class='st'>"E. coli"</span>)          <span class='co'># 112283007, 116395006, ... (SNOMED codes)</span>
 <span class='fu'>mo_type</span>(<span class='st'>"E. coli"</span>)            <span class='co'># "Bacteria" (equal to kingdom, but may be translated)</span>
 <span class='fu'>mo_rank</span>(<span class='st'>"E. coli"</span>)            <span class='co'># "species"</span>
 <span class='fu'>mo_url</span>(<span class='st'>"E. coli"</span>)             <span class='co'># get the direct url to the online database entry</span>

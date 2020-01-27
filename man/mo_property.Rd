@@ -15,6 +15,7 @@
 \alias{mo_kingdom}
 \alias{mo_type}
 \alias{mo_gramstain}
+\alias{mo_snomed}
 \alias{mo_ref}
 \alias{mo_authors}
 \alias{mo_year}
@@ -51,6 +52,8 @@ mo_type(x, language = get_locale(), ...)
 
 mo_gramstain(x, language = get_locale(), ...)
 
+mo_snomed(x, ...)
+
 mo_ref(x, ...)
 
 mo_authors(x, ...)
@@ -85,6 +88,7 @@ mo_property(x, property = "fullname", language = get_locale(), ...)
 \item An \code{\link{integer}} in case of \code{\link[=mo_year]{mo_year()}}
 \item A \code{\link{list}} in case of \code{\link[=mo_taxonomy]{mo_taxonomy()}} and \code{\link[=mo_info]{mo_info()}}
 \item A named \code{\link{character}} in case of \code{\link[=mo_url]{mo_url()}}
+\item A \code{\link{double}} in case of \code{\link[=mo_snomed]{mo_snomed()}}
 \item A \code{\link{character}} in all other cases
 }
 }
@@ -141,11 +145,12 @@ mo_subspecies("E. coli")      # ""
 
 # colloquial properties ----------------------------------------------------
 mo_name("E. coli")            # "Escherichia coli"
-mo_fullname("E. coli")        # "Escherichia coli", same as mo_name()
+mo_fullname("E. coli")        # "Escherichia coli" - same as mo_name()
 mo_shortname("E. coli")       # "E. coli"
 
 # other properties ---------------------------------------------------------
 mo_gramstain("E. coli")       # "Gram-negative"
+mo_snomed("E. coli")          # 112283007, 116395006, ... (SNOMED codes)
 mo_type("E. coli")            # "Bacteria" (equal to kingdom, but may be translated)
 mo_rank("E. coli")            # "species"
 mo_url("E. coli")             # get the direct url to the online database entry

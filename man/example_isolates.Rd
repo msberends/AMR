@@ -15,7 +15,7 @@
 \item \code{gender}\cr gender of the patient
 \item \code{patient_id}\cr ID of the patient
 \item \code{mo}\cr ID of microorganism created with \code{\link[=as.mo]{as.mo()}}, see also \link{microorganisms}
-\item \code{PEN:RIF}\cr 40 different antibiotics with class \code{\link{rsi}} (see \code{\link[=as.rsi]{as.rsi()}}); these column names occur in \link{antibiotics} data set and can be translated with \code{\link[=ab_name]{ab_name()}}
+\item \code{PEN:RIF}\cr 40 different antibiotics with class \code{\link{rsi}} (see \code{\link[=as.rsi]{as.rsi()}}); these column names occur in the \link{antibiotics} data set and can be translated with \code{\link[=ab_name]{ab_name()}}
 }}
 \usage{
 example_isolates

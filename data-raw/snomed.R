@@ -20,7 +20,36 @@
 # ==================================================================== #
 
 library(AMR)
-library(dplyr)
+library(tidyverse)
+
+# go to https://www.nictiz.nl/standaardisatie/terminologiecentrum/referentielijsten/micro-organismen/
+# read the table from clipboard
+snomed <- clipr::read_clip_tbl()
+# snomed <- snomed %>%
+#   transmute(fullname = trimws(gsub("^genus", "", Omschrijving, ignore.case = TRUE)),
+#             snomed = as.integer(Id))
+snomed <- snomed %>%
+  transmute(fullname = mo_name(Omschrijving),
+            snomed = as.integer(Id)) %>% 
+  filter(!fullname %like% "unknown")
+snomed_trans <- snomed %>%
+  group_by(fullname) %>%
+  mutate(snomed_list = list(snomed)) %>%
+  ungroup() %>%
+  select(fullname, snomed = snomed_list) %>%
+  distinct(fullname, .keep_all = TRUE)
+
+microorganisms <- AMR::microorganisms %>% 
+  left_join(snomed_trans)
+# remove the NULLs, set to NA
+microorganisms$snomed <- lapply(microorganisms$snomed, function(x) if (length(x) == 0)  NA else x)
+
+microorganisms <- dataset_UTF8_to_ASCII(microorganisms)
+
+usethis::use_data(microorganisms, overwrite = TRUE)
+rm(microorganisms)
+
+# OLD ---------------------------------------------------------------------
 
 baseUrl <- 'https://browser.ihtsdotools.org/snowstorm/snomed-ct'
 edition <- 'MAIN'

@@ -132,11 +132,12 @@
 #' as.mo("Staphylococcus aureus")
 #' as.mo("Staphylococcus aureus (MRSA)")
 #' as.mo("Zthafilokkoockus oureuz") # handles incorrect spelling
-#' as.mo("MRSA")   # Methicillin Resistant S. aureus
-#' as.mo("VISA")   # Vancomycin Intermediate S. aureus
-#' as.mo("VRSA")   # Vancomycin Resistant S. aureus
-#' as.mo(22242419) # Catalogue of Life ID
-#'
+#' as.mo("MRSA")    # Methicillin Resistant S. aureus
+#' as.mo("VISA")    # Vancomycin Intermediate S. aureus
+#' as.mo("VRSA")    # Vancomycin Resistant S. aureus
+#' as.mo(22242419)  # Catalogue of Life ID
+#' as.mo(115329001) # SNOMED CT code
+#' 
 #' # Dyslexia is no problem - these all work:
 #' as.mo("Ureaplasma urealyticum")
 #' as.mo("Ureaplasma urealyticus")
@@ -567,11 +568,29 @@ exec_as.mo <- function(x,
       cat(paste0(blue("x_trimmed_without_group"), ' "', x_trimmed_without_group, '"\n'))
     }
     
-    progress <- progress_estimated(n = length(x), min_time = 3)
-    
+    if (initial_search == TRUE) {
+      progress <- progress_estimated(n = length(x), min_time = 3)
+      
+      # before we start, omit the ones that are obvious - MO codes and full names
+      skip_vect <- rep(FALSE, length(x))
+      skip_vect[toupper(x_backup) %in% reference_data_to_use$mo] <- TRUE
+      skip_vect[tolower(x_backup) %in% reference_data_to_use$fullname_lower] <- TRUE
+      x[toupper(x_backup) %in% reference_data_to_use$mo] <- reference_data_to_use[data.table(mo = toupper(x_backup[toupper(x_backup) %in% reference_data_to_use$mo])),
+                                                                                  on = "mo",
+                                                                                  ..property][[1]]
+      x[tolower(x_backup) %in% reference_data_to_use$fullname_lower] <- reference_data_to_use[data.table(fullname_lower = tolower(x_backup[tolower(x_backup) %in% reference_data_to_use$fullname_lower])),
+                                                                                              on = "fullname_lower",
+                                                                                              ..property][[1]]
+    }
+
     for (i in seq_len(length(x))) {
       
-      progress$tick()$print()
+      if (initial_search == TRUE) {
+        progress$tick()$print()
+        if (isTRUE(skip_vect[i])) {
+          next
+        }
+      }
       
       mo_hist <- get_mo_history(x_backup[i], uncertainty_level, force = force_mo_history, disable = disable_mo_history)
       if (initial_search == TRUE & !any(is.na(mo_hist))) {
@@ -633,10 +652,27 @@ exec_as.mo <- function(x,
         next
       }
       
+      # exact SNOMED code
+      if (x_backup[i] %like% "^[0-9]+$") {
+        snomed_found <- unlist(lapply(reference_data_to_use$snomed,
+                                      function(s) if (x_backup[i] %in% s) {
+                                        TRUE
+                                      } else {
+                                        FALSE
+                                      }))
+        found <- reference_data_to_use[snomed_found == TRUE,
+                                       ..property][[1]]
+        if (length(found) > 0) {
+          x[i] <- found[1L]
+          # don't save to history, as all items are already in microorganisms
+          next
+        }
+      }
+      
+      # very probable: is G. species
       found <- reference_data_to_use[g_species %in% gsub("[^a-z0-9/ \\-]+", "", 
                                                          tolower(c(x_backup[i], x_backup_without_spp[i]))), 
                                      ..property][[1]]
-      # very probable: is G. species
       if (length(found) > 0) {
         x[i] <- found[1L]
         if (initial_search == TRUE) {
@@ -1634,6 +1670,7 @@ exec_as.mo <- function(x,
       msg <- paste0(msg, ": ", paste('"', unique(failures), '"', sep = "", collapse = ", "))
     }
     msg <- paste0(msg,  ". Use mo_failures() to review ", plural[2], ". Edit the `allow_uncertain` parameter if needed (see ?as.mo).")
+    cat("\n")
     warning(red(msg),
             call. = FALSE,
             immediate. = TRUE) # thus will always be shown, even if >= warnings
@@ -1646,8 +1683,9 @@ exec_as.mo <- function(x,
     if (NROW(uncertainties) > 1) {
       plural <- c("s", "them", "were")
     }
-    msg <- paste0("\nResult", plural[1], " of ", nr2char(NROW(uncertainties)), " value", plural[1],
+    msg <- paste0("Result", plural[1], " of ", nr2char(NROW(uncertainties)), " value", plural[1],
                   " ", plural[3], " guessed with uncertainty. Use mo_uncertainties() to review ", plural[2], ".")
+    cat("\n")
     warning(red(msg),
             call. = FALSE,
             immediate. = TRUE) # thus will always be shown, even if >= warnings
@@ -2036,6 +2074,14 @@ unregex <- function(x) {
 get_mo_code <- function(x, property) {
   if (property == "mo") {
     unique(x)
+  } else if (property == "snomed") {
+    found <- unlist(lapply(microorganismsDT$snomed,
+                           function(s) if (any(x %in% s, na.rm = TRUE)) {
+                             TRUE
+                           } else {
+                             FALSE
+                           }))
+    microorganismsDT$mo[found == TRUE]
   } else {
     microorganismsDT[get(property) == x, "mo"][[1]]
   }

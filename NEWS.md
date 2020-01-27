@@ -1,17 +1,27 @@
-# AMR 0.9.0.9015
+# AMR 0.9.0.9016
 ## <small>Last updated: 27-Jan-2020</small>
 
 ### New
-* Support for LOINC codes in the `antibiotics` data set. Use `ab_loinc()` to retrieve LOINC codes, or use a LOINC code for input in any `ab_*` function:
-  ```r
-  ab_loinc("ampicillin")
-  #> [1] "21066-6" "3355-5"  "33562-0" "33919-2" "43883-8" "43884-6" "87604-5"
-  ab_name("21066-6")
-  #> [1] "Ampicillin"
-  ab_atc("21066-6")
-  #> [1] "J01CA01"
-  ```
-* The repository of this package now contains a clean version of the EUCAST and CLSI guidelines from 2011-2019 to translate MIC and disk diffusion values to R/SI: https://gitlab.com/msberends/AMR/blob/master/data-raw/rsi_translation.txt. This **allows machine reading these guidelines**, which is currently almost impossible with the Excel and PDF files distributed by EUCAST and CLSI. This file is updated automatically.
+* Support for LOINC and SNOMED codes
+  * Support for LOINC codes in the `antibiotics` data set. Use `ab_loinc()` to retrieve LOINC codes, or use a LOINC code for input in any `ab_*` function:
+    ```r
+    ab_loinc("ampicillin")
+    #> [1] "21066-6" "3355-5"  "33562-0" "33919-2" "43883-8" "43884-6" "87604-5"
+    ab_name("21066-6")
+    #> [1] "Ampicillin"
+    ab_atc("21066-6")
+    #> [1] "J01CA01"
+    ```
+  * Support for SNOMED CT codes in the `microorganisms` data set. Use `mo_snomed()` to retrieve SNOMED codes, or use a SNOMED code for input in any `mo_*` function:
+    ```r
+    mo_snomed("S. aureus")
+    #> [1] 115329001   3092008 113961008
+    mo_name(115329001)
+    #> [1] "Staphylococcus aureus"
+    mo_gramstain(115329001)
+    #> [1] "Gram-positive"
+    ```
+* The repository of this package now contains a clean version of the EUCAST and CLSI guidelines from 2011-2019 to translate MIC and disk diffusion values to R/SI: https://gitlab.com/msberends/AMR/blob/master/data-raw/rsi_translation.txt. This **allows for machine reading these guidelines**, which is almost impossible with the Excel and PDF files distributed by EUCAST and CLSI. This file is updated automatically.
 
 ### Changes
 * Bugfix for some WHONET microorganism codes that were not interpreted correctly when using `as.rsi()`

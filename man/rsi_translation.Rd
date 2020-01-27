@@ -3,7 +3,7 @@
 \docType{data}
 \name{rsi_translation}
 \alias{rsi_translation}
-\title{Data set for RSI interpretation}
+\title{Data set for R/SI interpretation}
 \format{A \code{\link{data.frame}} with 13,975 observations and 9 variables:
 \itemize{
 \item \code{guideline}\cr Name of the guideline
@@ -20,7 +20,10 @@
 rsi_translation
 }
 \description{
-Data set to interpret MIC and disk diffusion to RSI values. Included guidelines are CLSI (2011-2019) and EUCAST (2011-2019). Use \code{\link[=as.rsi]{as.rsi()}} to transform MICs or disks measurements to RSI values.
+Data set to interpret MIC and disk diffusion to R/SI values. Included guidelines are CLSI (2011-2019) and EUCAST (2011-2019). Use \code{\link[=as.rsi]{as.rsi()}} to transform MICs or disks measurements to R/SI values.
+}
+\details{
+The repository of this \code{AMR} package contains a file comprising this exact data set: \link{https://gitlab.com/msberends/AMR/blob/master/data-raw/rsi_translation.txt}. This file \strong{allows for machine reading EUCAST and CLSI guidelines}, which is almost impossible with the Excel and PDF files distributed by EUCAST and CLSI. This file is updated automatically.
 }
 \section{Read more on our website!}{
 

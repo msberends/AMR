@@ -45,6 +45,7 @@
 #' - An [`integer`] in case of [mo_year()]
 #' - A [`list`] in case of [mo_taxonomy()] and [mo_info()]
 #' - A named [`character`] in case of [mo_url()]
+#' - A [`double`] in case of [mo_snomed()]
 #' - A [`character`] in all other cases
 #' @export
 #' @seealso [microorganisms]
@@ -62,11 +63,12 @@
 #'
 #' # colloquial properties ----------------------------------------------------
 #' mo_name("E. coli")            # "Escherichia coli"
-#' mo_fullname("E. coli")        # "Escherichia coli", same as mo_name()
+#' mo_fullname("E. coli")        # "Escherichia coli" - same as mo_name()
 #' mo_shortname("E. coli")       # "E. coli"
 #'
 #' # other properties ---------------------------------------------------------
 #' mo_gramstain("E. coli")       # "Gram-negative"
+#' mo_snomed("E. coli")          # 112283007, 116395006, ... (SNOMED codes)
 #' mo_type("E. coli")            # "Bacteria" (equal to kingdom, but may be translated)
 #' mo_rank("E. coli")            # "species"
 #' mo_url("E. coli")             # get the direct url to the online database entry
@@ -251,6 +253,12 @@ mo_gramstain <- function(x, language = get_locale(), ...) {
 
 #' @rdname mo_property
 #' @export
+mo_snomed <- function(x, ...) {
+  mo_validate(x = x, property = "snomed", ...)
+}
+
+#' @rdname mo_property
+#' @export
 mo_ref <- function(x, ...) {
   mo_validate(x = x, property = "ref", ...)
 }
@@ -428,6 +436,8 @@ mo_validate <- function(x, property, ...) {
     return(to_class_mo(x))
   } else if (property == "col_id") {
     return(as.integer(x))
+  } else if (property == "snomed") {
+    return(as.double(eval(parse(text = x))))
   } else {
     return(x)
   }

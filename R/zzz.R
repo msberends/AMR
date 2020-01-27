@@ -21,8 +21,6 @@
 
 #' @importFrom data.table as.data.table setkey
 .onLoad <- function(libname, pkgname) {
-  # packageStartupMessage("Loading taxonomic reference data")
-  
   # get new functions not available in older versions of R
   backports::import(pkgname)
   

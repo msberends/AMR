@@ -144,3 +144,31 @@ class_integrity_check <- function(value, type, check_vector) {
   }
   value
 }
+
+# transforms data set to data.frame with only ASCII values, to comply with CRAN policies
+dataset_UTF8_to_ASCII <- function(df) {
+  trans <- function(vect) {
+    iconv(vect, from = "UTF-8", to = "ASCII//TRANSLIT")
+  }
+  df <- as.data.frame(df, stringsAsFactors = FALSE)
+  for (i in seq_len(NCOL(df))) {
+    col <- df[, i]
+    if (is.list(col)) {
+      col <- lapply(col, function(j) trans(j))
+      # for (j in seq_len(length(col))) {
+      #   col[[j]] <- trans(col[[j]])
+      # }
+      df[, i] <- list(col)
+    } else {
+      if (is.factor(col)) {
+        levels(col) <- trans(levels(col))
+      } else if (is.character(col)) {
+        col <- trans(col)
+      } else {
+        col
+      }
+      df[, i] <- col
+    }
+  }
+  df
+}

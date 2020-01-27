@@ -69,7 +69,7 @@
 #'
 #' A data set containing the microbial taxonomy of six kingdoms from the Catalogue of Life. MO codes can be looked up using [as.mo()].
 #' @inheritSection catalogue_of_life Catalogue of Life
-#' @format A [`data.frame`] with 69,447 observations and 16 variables:
+#' @format A [`data.frame`] with 69,447 observations and 17 variables:
 #' - `mo`\cr ID of microorganism as used by this package
 #' - `col_id`\cr Catalogue of Life ID
 #' - `fullname`\cr Full name, like `"Escherichia coli"`
@@ -79,6 +79,7 @@
 #' - `species_id`\cr ID of the species as used by the Catalogue of Life
 #' - `source`\cr Either "CoL", "DSMZ" (see Source) or "manually added"
 #' - `prevalence`\cr Prevalence of the microorganism, see [as.mo()]
+#' - `snomed`\cr SNOMED code of the microorganism. Use [mo_snomed()] to retrieve it quickly, see [mo_property()].
 #' @details Manually added were:
 #' - 11 entries of *Streptococcus* (beta-haemolytic: groups A, B, C, D, F, G, H, K and unspecified; other: viridans, milleri)
 #' - 2 entries of *Staphylococcus* (coagulase-negative (CoNS) and coagulase-positive (CoPS))
@@ -145,7 +146,7 @@ catalogue_of_life <- list(
 #' - `gender`\cr gender of the patient
 #' - `patient_id`\cr ID of the patient
 #' - `mo`\cr ID of microorganism created with [as.mo()], see also [microorganisms]
-#' - `PEN:RIF`\cr 40 different antibiotics with class [`rsi`] (see [as.rsi()]); these column names occur in [antibiotics] data set and can be translated with [ab_name()]
+#' - `PEN:RIF`\cr 40 different antibiotics with class [`rsi`] (see [as.rsi()]); these column names occur in the [antibiotics] data set and can be translated with [ab_name()]
 #' @inheritSection AMR Read more on our website!
 "example_isolates"
 
@@ -182,9 +183,9 @@ catalogue_of_life <- list(
 #' @inheritSection AMR Read more on our website!
 "WHONET"
 
-#' Data set for RSI interpretation
+#' Data set for R/SI interpretation
 #'
-#' Data set to interpret MIC and disk diffusion to RSI values. Included guidelines are CLSI (2011-2019) and EUCAST (2011-2019). Use [as.rsi()] to transform MICs or disks measurements to RSI values.
+#' Data set to interpret MIC and disk diffusion to R/SI values. Included guidelines are CLSI (2011-2019) and EUCAST (2011-2019). Use [as.rsi()] to transform MICs or disks measurements to R/SI values.
 #' @format A [`data.frame`] with 13,975 observations and 9 variables:
 #' - `guideline`\cr Name of the guideline
 #' - `method`\cr Either "MIC" or "DISK"
@@ -195,32 +196,7 @@ catalogue_of_life <- list(
 #' - `disk_dose`\cr Dose of the used disk diffusion method
 #' - `breakpoint_S`\cr Lowest MIC value or highest number of millimeters that leads to "S"
 #' - `breakpoint_R`\cr Highest MIC value or lowest number of millimeters that leads to "R"
+#' @details The repository of this `AMR` package contains a file comprising this exact data set: [https://gitlab.com/msberends/AMR/blob/master/data-raw/rsi_translation.txt]. This file **allows for machine reading EUCAST and CLSI guidelines**, which is almost impossible with the Excel and PDF files distributed by EUCAST and CLSI. This file is updated automatically.
+
 #' @inheritSection AMR Read more on our website!
 "rsi_translation"
-
-# transforms data set to data.frame with only ASCII values, to comply with CRAN policies
-dataset_UTF8_to_ASCII <- function(df) {
-  trans <- function(vect) {
-    iconv(vect, from = "UTF-8", to = "ASCII//TRANSLIT")
-  }
-  df <- as.data.frame(df, stringsAsFactors = FALSE)
-  for (i in seq_len(NCOL(df))) {
-    col <- df[, i]
-    if (is.list(col)) {
-      for (j in seq_len(length(col))) {
-        col[[j]] <- trans(col[[j]])
-      }
-      df[, i] <- list(col)
-    } else {
-      if (is.factor(col)) {
-        levels(col) <- trans(levels(col))
-      } else if (is.character(col)) {
-        col <- trans(col)
-      } else {
-        col
-      }
-      df[, i] <- col
-    }
-  }
-  df
-}
