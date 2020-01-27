@@ -7,6 +7,8 @@ DRGLST1 <- readxl::read_excel("data-raw/DRGLST1.xlsx")
 rsi_translation <- DRGLST1 %>%
   # only keep CLSI and EUCAST guidelines:
   filter(GUIDELINES %like% "^(CLSI|EUCST)") %>%
+  mutate(DISK_S = ifelse(as.double(DISK_S) > 50, 50, DISK_S),
+         MIC_R = ifelse(as.double(MIC_R) %in% c(1025, 129, 513), as.double(MIC_R) - 1, MIC_R)) %>%
   # set a nice layout:
   transmute(guideline = gsub("([0-9]+)$", " 20\\1", gsub("EUCST", "EUCAST", GUIDELINES)),
             method = TESTMETHOD,
@@ -15,10 +17,10 @@ rsi_translation <- DRGLST1 %>%
             ab = as.ab(WHON5_CODE),
             ref_tbl = REF_TABLE,
             dose_disk = POTENCY,
-            S_disk = as.disk(min(DISK_S, 50, na.rm = TRUE)),
+            S_disk = as.disk(DISK_S),
             R_disk = as.disk(DISK_R),
             S_mic = as.mic(MIC_S),
-            R_mic = as.mic(ifelse(MIC_R %in% c(1025, 129, 513), as.double(MIC_R) - 1, MIC_R))) %>%
+            R_mic = as.mic(MIC_R)) %>%
   filter(!is.na(mo) & !is.na(ab) & !mo %in% c("UNKNOWN", "B_GRAMN", "B_GRAMP", "F_FUNGUS", "F_YEAST")) %>%
   arrange(desc(guideline), mo, ab)
 
