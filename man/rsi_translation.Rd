@@ -23,7 +23,7 @@ rsi_translation
 Data set to interpret MIC and disk diffusion to R/SI values. Included guidelines are CLSI (2011-2019) and EUCAST (2011-2019). Use \code{\link[=as.rsi]{as.rsi()}} to transform MICs or disks measurements to R/SI values.
 }
 \details{
-The repository of this \code{AMR} package contains a file comprising this exact data set: \link{https://gitlab.com/msberends/AMR/blob/master/data-raw/rsi_translation.txt}. This file \strong{allows for machine reading EUCAST and CLSI guidelines}, which is almost impossible with the Excel and PDF files distributed by EUCAST and CLSI. This file is updated automatically.
+The repository of this \code{AMR} package contains a file comprising this exact data set: \url{https://gitlab.com/msberends/AMR/blob/master/data-raw/rsi_translation.txt}. This file \strong{allows for machine reading EUCAST and CLSI guidelines}, which is almost impossible with the Excel and PDF files distributed by EUCAST and CLSI. This file is updated automatically.
 }
 \section{Read more on our website!}{
 
