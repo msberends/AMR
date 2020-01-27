@@ -44,7 +44,9 @@ Ordered factor with new class \code{\link{rsi}}
 Interpret MIC values and disk diffusion diameters according to EUCAST or CLSI, or clean up existing R/SI values. This transforms the input to a new class \code{\link{rsi}}, which is an ordered factor with levels \verb{S < I < R}. Invalid antimicrobial interpretations will be translated as \code{NA} with a warning.
 }
 \details{
-Run \code{unique(AMR::rsi_translation$guideline)} for a list of all supported guidelines.
+Run \code{unique(AMR::rsi_translation$guideline)} for a list of all supported guidelines. The repository of this package contains \href{https://gitlab.com/msberends/AMR/blob/master/data-raw/rsi_translation.txt}{this machine readable version} of these guidelines.
+
+These guidelines are machine readable, since \href{https://gitlab.com/msberends/AMR/blob/master/data-raw/rsi_translation.txt}{}.
 
 After using \code{\link[=as.rsi]{as.rsi()}}, you can use \code{\link[=eucast_rules]{eucast_rules()}} to (1) apply inferred susceptibility and resistance based on results of other antimicrobials and (2) apply intrinsic resistance based on taxonomic properties of a microorganism.
 

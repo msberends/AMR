@@ -1,0 +1,11 @@
+# WHONET fixes
+microorganisms.codes[which(microorganisms.codes$code == "SAP"), "mo"] <- as.mo("staphylococcus")
+microorganisms.codes[which(microorganisms.codes$code == "PAE"), "mo"] <- as.mo("pseudomonas aeruginosa")
+microorganisms.codes[which(microorganisms.codes$code == "ANI"), "mo"] <- as.mo("aspergillus nidulans")
+microorganisms.codes[which(microorganisms.codes$code == "CAL"), "mo"] <- as.mo("candida albicans")
+microorganisms.codes[which(microorganisms.codes$code == "ENT"), "mo"] <- as.mo("enterococcus")
+microorganisms.codes[which(microorganisms.codes$code == "STR"), "mo"] <- as.mo("streptococcus")
+microorganisms.codes[which(microorganisms.codes$code == "CDF"), "mo"] <- as.mo("clostridium difficile")
+microorganisms.codes[which(microorganisms.codes$code == "HA-"), "mo"] <- as.mo("haemophilus influenzae")
+usethis::use_data(microorganisms.codes, overwrite = TRUE)
+rm(microorganisms.codes)

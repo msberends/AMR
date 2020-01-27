@@ -10,7 +10,7 @@
 
 `AMR` is a free and open-source [R package](https://www.r-project.org) to simplify the analysis and prediction of Antimicrobial Resistance (AMR) and to work with microbial and antimicrobial data and properties, by using evidence-based methods. **Our aim is to provide a standard** for clean and reproducible antimicrobial resistance data analysis, that can therefore empower epidemiological analyses to continuously enable surveillance and treatment evaluation in any setting.
 
-After installing this package, R knows [**~70,000 distinct microbial species**](./reference/microorganisms.html) and all [**~550 antibiotic, antimycotic and antiviral drugs**](./reference/antibiotics.html) by name and code, and knows all about valid RSI and MIC values. It supports any data format, including WHONET/EARS-Net data. 
+After installing this package, R knows [**~70,000 distinct microbial species**](./reference/microorganisms.html) and all [**~550 antibiotic, antimycotic and antiviral drugs**](./reference/antibiotics.html) by name and code (including ATC and LOINC), and knows all about valid R/SI and MIC values. It supports any data format, including WHONET/EARS-Net data. 
 
 We created this package for both routine data analysis and academic research (as part of our PhD theses) at the Faculty of Medical Sciences of the University of Groningen, the Netherlands, and the Medical Microbiology & Infection Prevention (MMBI) department of the University Medical Center Groningen (UMCG). This R package is [actively maintained](./news) and is free software (see [Copyright](#copyright)).
 
@@ -48,7 +48,8 @@ This package can be used for:
   * Getting properties for any antibiotic (like name, EARS-Net code, ATC code, PubChem code, defined daily dose or trade name) ([manual](./reference/ab_property.html))
   * Plotting antimicrobial resistance ([tutorial](./articles/AMR.html))
   * Applying EUCAST expert rules ([manual](./reference/eucast_rules.html))
-  * Get the LOINC code of an antibiotic, or get the name associated with a LOINC code ([manual](./reference/ab_property.html))
+  * Getting LOINC codes of an antibiotic, or get its name associated with a LOINC code ([manual](./reference/ab_property.html))
+  * Machine reading the EUCAST and CLSI guidelines from 2011-2019 to translate MIC values and disk diffusion diameters to R/SI ([link](https://gitlab.com/msberends/AMR/blob/master/data-raw/rsi_translation.txt))
 
 This package is ready-to-use for a professional environment by specialists in the following fields:
 
@@ -138,7 +139,7 @@ The `AMR` package basically does four important things:
    
 2. It **enhances existing data** and **adds new data** from data sets included in this package.
 
-   * Use `eucast_rules()` to apply [EUCAST expert rules to isolates](http://www.eucast.org/expert_rules_and_intrinsic_resistance/) (not the translation from MIC to RSI values, use `as.rsi()` for that).
+   * Use `eucast_rules()` to apply [EUCAST expert rules to isolates](http://www.eucast.org/expert_rules_and_intrinsic_resistance/) (not the translation from MIC to R/SI values, use `as.rsi()` for that).
    * Use `first_isolate()` to identify the first isolates of every patient [using guidelines from the CLSI](https://clsi.org/standards/products/microbiology/documents/m39/) (Clinical and Laboratory Standards Institute).
      * You can also identify first *weighted* isolates of every patient, an adjusted version of the CLSI guideline. This takes into account key antibiotics of every strain and compares them.
    * Use `mdro()` to determine which micro-organisms are multi-drug resistant organisms (MDRO). It supports a variety of international guidelines, such as the MDR-paper by Magiorakos *et al.* (2012, [PMID 21793988](https://www.ncbi.nlm.nih.gov/pubmed/?term=21793988)), the exceptional phenotype definitions of EUCAST and the WHO guideline on multi-drug resistant TB. It also supports the national guidelines of the Netherlands and Germany.

@@ -15,10 +15,10 @@ rsi_translation <- DRGLST1 %>%
             ab = as.ab(WHON5_CODE),
             ref_tbl = REF_TABLE,
             dose_disk = POTENCY,
-            S_disk = as.disk(DISK_S),
+            S_disk = as.disk(min(DISK_S, 50, na.rm = TRUE)),
             R_disk = as.disk(DISK_R),
             S_mic = as.mic(MIC_S),
-            R_mic = as.mic(MIC_R)) %>%
+            R_mic = as.mic(ifelse(MIC_R %in% c(1025, 129, 513), as.double(MIC_R) - 1, MIC_R))) %>%
   filter(!is.na(mo) & !is.na(ab) & !mo %in% c("UNKNOWN", "B_GRAMN", "B_GRAMP", "F_FUNGUS", "F_YEAST")) %>%
   arrange(desc(guideline), mo, ab)
 
@@ -41,6 +41,9 @@ rsi_translation <- bind_rows(tbl_mic, tbl_disk) %>%
   # force classes again
   mutate(mo = as.mo(mo),
          ab = as.ab(ab))
+
+# save to data-raw
+write.table(rsi_translation, "data-raw/rsi_translation.txt", sep = "\t", na = "", row.names = FALSE)
 
 # save to package
 usethis::use_data(rsi_translation, overwrite = TRUE)

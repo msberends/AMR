@@ -84,7 +84,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">0.9.0.9013</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">0.9.0.9014</span>
       </span>
     </div>
 
@@ -231,31 +231,36 @@
       
     </div>
 
-    <div id="amr-0-9-0-9013" class="section level1">
+    <div id="amr-0-9-0-9014" class="section level1">
 <h1 class="page-header">
-<a href="#amr-0-9-0-9013" class="anchor"></a>AMR 0.9.0.9013<small> Unreleased </small>
+<a href="#amr-0-9-0-9014" class="anchor"></a>AMR 0.9.0.9014<small> Unreleased </small>
 </h1>
-<div id="last-updated-26-jan-2020" class="section level2">
+<div id="last-updated-27-jan-2020" class="section level2">
 <h2 class="hasAnchor">
-<a href="#last-updated-26-jan-2020" class="anchor"></a><small>Last updated: 26-Jan-2020</small>
+<a href="#last-updated-27-jan-2020" class="anchor"></a><small>Last updated: 27-Jan-2020</small>
 </h2>
 <div id="new" class="section level3">
 <h3 class="hasAnchor">
 <a href="#new" class="anchor"></a>New</h3>
 <ul>
 <li>
-<p>Support for LOINC codes in the <code>antibiotics</code> data set. Use <code><a href="../reference/ab_property.html">ab_loinc()</a></code> to retrieve LOINC codes, or use LOINC code for input in any <code>ab_*</code> function:</p>
+<p>Support for LOINC codes in the <code>antibiotics</code> data set. Use <code><a href="../reference/ab_property.html">ab_loinc()</a></code> to retrieve LOINC codes, or use a LOINC code for input in any <code>ab_*</code> function:</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw"><a href="../reference/ab_property.html">ab_loinc</a></span>(<span class="st">"ampicillin"</span>)</a>
 <a class="sourceLine" id="cb1-2" data-line-number="2"><span class="co">#&gt; [1] "21066-6" "3355-5"  "33562-0" "33919-2" "43883-8" "43884-6" "87604-5"</span></a>
 <a class="sourceLine" id="cb1-3" data-line-number="3"><span class="kw"><a href="../reference/ab_property.html">ab_name</a></span>(<span class="st">"21066-6"</span>)</a>
-<a class="sourceLine" id="cb1-4" data-line-number="4"><span class="co">#&gt; [1] "Ampicillin"</span></a></code></pre></div>
+<a class="sourceLine" id="cb1-4" data-line-number="4"><span class="co">#&gt; [1] "Ampicillin"</span></a>
+<a class="sourceLine" id="cb1-5" data-line-number="5"><span class="kw"><a href="../reference/ab_property.html">ab_atc</a></span>(<span class="st">"21066-6"</span>)</a>
+<a class="sourceLine" id="cb1-6" data-line-number="6"><span class="co">#&gt; [1] "J01CA01"</span></a></code></pre></div>
 </li>
+<li><p>The repository of this package now contains a clean version of the EUCAST and CLSI guidelines from 2011-2019 to translate MIC and disk diffusion values to R/SI: <a href="https://gitlab.com/msberends/AMR/blob/master/data-raw/rsi_translation.txt" class="uri">https://gitlab.com/msberends/AMR/blob/master/data-raw/rsi_translation.txt</a>. This <strong>allows machine reading these guidelines</strong>, which is currently almost impossible with the Excel and PDF files distributed by EUCAST and CLSI. This file is updated automatically.</p></li>
 </ul>
 </div>
 <div id="changes" class="section level3">
 <h3 class="hasAnchor">
 <a href="#changes" class="anchor"></a>Changes</h3>
 <ul>
+<li>Bugfix for some WHONET microorganism codes that were not interpreted correctly when using <code><a href="../reference/as.rsi.html">as.rsi()</a></code>
+</li>
 <li>Speed improvement for <code><a href="../reference/as.mo.html">as.mo()</a></code> (and consequently all <code>mo_*</code> functions that use <code><a href="../reference/as.mo.html">as.mo()</a></code> internally), especially for the <em>G. species</em> format (G for genus), like <em>E. coli</em> and <em>K penumoniae</em>
 </li>
 <li>Better support for determination of <em>Salmonella</em> biovars</li>
@@ -1441,7 +1446,7 @@ Using <code><a href="../reference/as.mo.html">as.mo(..., allow_uncertain = 3)</a
     <div id="tocnav">
       <h2>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
-        <li><a href="#amr-0-9-0-9013">0.9.0.9013</a></li>
+        <li><a href="#amr-0-9-0-9014">0.9.0.9014</a></li>
         <li><a href="#amr-0-9-0">0.9.0</a></li>
         <li><a href="#amr-0-8-0">0.8.0</a></li>
         <li><a href="#amr-0-7-1">0.7.1</a></li>

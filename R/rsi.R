@@ -31,7 +31,9 @@
 #' @param guideline defaults to the latest included EUCAST guideline, run `unique(AMR::rsi_translation$guideline)` for all options
 #' @param threshold maximum fraction of invalid antimicrobial interpretations of `x`, please see *Examples*
 #' @param ... parameters passed on to methods
-#' @details Run `unique(AMR::rsi_translation$guideline)` for a list of all supported guidelines.
+#' @details Run `unique(AMR::rsi_translation$guideline)` for a list of all supported guidelines. The repository of this package contains [this machine readable version](https://gitlab.com/msberends/AMR/blob/master/data-raw/rsi_translation.txt) of these guidelines.
+#' 
+#' These guidelines are machine readable, since [](https://gitlab.com/msberends/AMR/blob/master/data-raw/rsi_translation.txt).
 #'
 #' After using [as.rsi()], you can use [eucast_rules()] to (1) apply inferred susceptibility and resistance based on results of other antimicrobials and (2) apply intrinsic resistance based on taxonomic properties of a microorganism.
 #'

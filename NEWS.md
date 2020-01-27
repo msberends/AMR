@@ -1,16 +1,20 @@
-# AMR 0.9.0.9013
-## <small>Last updated: 26-Jan-2020</small>
+# AMR 0.9.0.9014
+## <small>Last updated: 27-Jan-2020</small>
 
 ### New
-* Support for LOINC codes in the `antibiotics` data set. Use `ab_loinc()` to retrieve LOINC codes, or use LOINC code for input in any `ab_*` function:
+* Support for LOINC codes in the `antibiotics` data set. Use `ab_loinc()` to retrieve LOINC codes, or use a LOINC code for input in any `ab_*` function:
   ```r
   ab_loinc("ampicillin")
   #> [1] "21066-6" "3355-5"  "33562-0" "33919-2" "43883-8" "43884-6" "87604-5"
   ab_name("21066-6")
   #> [1] "Ampicillin"
+  ab_atc("21066-6")
+  #> [1] "J01CA01"
   ```
+* The repository of this package now contains a clean version of the EUCAST and CLSI guidelines from 2011-2019 to translate MIC and disk diffusion values to R/SI: https://gitlab.com/msberends/AMR/blob/master/data-raw/rsi_translation.txt. This **allows machine reading these guidelines**, which is currently almost impossible with the Excel and PDF files distributed by EUCAST and CLSI. This file is updated automatically.
 
 ### Changes
+* Bugfix for some WHONET microorganism codes that were not interpreted correctly when using `as.rsi()`
 * Speed improvement for `as.mo()` (and consequently all `mo_*` functions that use `as.mo()` internally), especially for the *G. species* format (G for genus), like *E. coli* and *K penumoniae*
 * Better support for determination of *Salmonella* biovars
 * Input values for `as.disk()` limited to a maximum of 50 millimeters
