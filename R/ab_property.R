@@ -197,11 +197,6 @@ ab_property <- function(x, property = "name", language = get_locale(), ...) {
 }
 
 ab_validate <- function(x, property, ...) {
-  if (!"AMR" %in% base::.packages()) {
-    library("AMR")
-    # check onLoad() in R/zzz.R: data tables are created there.
-  }
-  
   # try to catch an error when inputting an invalid parameter
   # so the 'call.' can be set to FALSE
   tryCatch(x[1L] %in% AMR::antibiotics[1, property],

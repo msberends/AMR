@@ -327,7 +327,7 @@ as.ab <- function(x, ...) {
 #' @rdname as.ab
 #' @export
 is.ab <- function(x) {
-  identical(class(x), "ab")
+  inherits(x, "ab")
 }
 
 #' @exportMethod print.ab

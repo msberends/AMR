@@ -1,5 +1,5 @@
-# AMR 0.9.0.9017
-## <small>Last updated: 27-Jan-2020</small>
+# AMR 0.9.0.9018
+## <small>Last updated: 31-Jan-2020</small>
 
 ### New
 * Support for LOINC and SNOMED codes
@@ -24,6 +24,7 @@
 * The repository of this package now contains a clean version of the EUCAST and CLSI guidelines from 2011-2019 to translate MIC and disk diffusion values to R/SI: https://gitlab.com/msberends/AMR/blob/master/data-raw/rsi_translation.txt. This **allows for machine reading these guidelines**, which is almost impossible with the Excel and PDF files distributed by EUCAST and CLSI. This file is updated automatically.
 
 ### Changes
+* The `as.mo()` function previously wrote to the package folder to improve calculation speed for previously calculated results. This is no longer the case, to comply with CRAN policies. Consequently, the function `clear_mo_history()` was removed.
 * Bugfix for some WHONET microorganism codes that were not interpreted correctly when using `as.rsi()`
 * Speed improvement for `as.mo()` (and consequently all `mo_*` functions that use `as.mo()` internally), especially for the *G. species* format (G for genus), like *E. coli* and *K penumoniae*
 * Better support for determination of *Salmonella* biovars

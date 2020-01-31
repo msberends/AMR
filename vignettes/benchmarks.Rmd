@@ -22,7 +22,6 @@ knitr::opts_chunk$set(
   fig.height = 4.5,
   dpi = 75
 ) 
-options(AMR_disable_mo_history = FALSE)
 ```
 
 One of the most important features of this package is the complete microbial taxonomic database, supplied by the [Catalogue of Life](http://catalogueoflife.org). We created a function `as.mo()` that transforms any user input value to a valid microbial ID by using intelligent rules combined with the taxonomic tree of Catalogue of Life.
@@ -69,9 +68,6 @@ The actual result is the same every time: it returns its microorganism code ``r 
 
 But the calculation time differs a lot:
 
-```{r, echo = FALSE}
-clear_mo_history()
-```
 ```{r, warning=FALSE}
 S.aureus <- microbenchmark(
   as.mo("sau"), # WHONET code
@@ -95,13 +91,10 @@ print(S.aureus, unit = "ms", signif = 2)
 ggplot.bm(S.aureus)
 ```
 
-In the table above, all measurements are shown in milliseconds (thousands of seconds). A value of 5 milliseconds means it can determine 200 input values per second. It case of 100 milliseconds, this is only 10 input values per second. The second input is the only one that has to be looked up thoroughly. All the others are known codes (the first one is a WHONET code) or common laboratory codes, or common full organism names like the last one. Full organism names are always preferred.
+In the table above, all measurements are shown in milliseconds (thousands of seconds). A value of 5 milliseconds means it can determine 200 input values per second. It case of 100 milliseconds, this is only 10 input values per second. 
 
-To achieve this speed, the `as.mo` function also takes into account the prevalence of human pathogenic microorganisms. The downside is of course that less prevalent microorganisms will be determined less fast. See this example for the ID of *Methanosarcina semesiae* (`B_MTHNSR_SEMS`), a bug probably never found before in humans:
+To achieve this speed, the `as.mo` function also takes into account the prevalence of human pathogenic microorganisms. The downside of this is of course that less prevalent microorganisms will be determined less fast. See this example for the ID of *Methanosarcina semesiae* (`B_MTHNSR_SEMS`), a bug probably never found before in humans:
 
-```{r, echo = FALSE}
-clear_mo_history()
-```
 ```{r, warning=FALSE}
 M.semesiae <- microbenchmark(as.mo("metsem"),
                              as.mo("METSEM"),
@@ -112,33 +105,11 @@ M.semesiae <- microbenchmark(as.mo("metsem"),
 print(M.semesiae, unit = "ms", signif = 4)
 ```
 
-That takes `r round(mean(M.semesiae$time, na.rm = TRUE) / mean(S.aureus$time, na.rm = TRUE), 1)` times as much time on average. A value of 100 milliseconds means it can only determine ~10 different input values per second. We can conclude that looking up arbitrary codes of less prevalent microorganisms is the worst way to go, in terms of calculation performance. Full names (like *Methanosarcina semesiae*) are always very fast and only take some thousands of seconds to coerce - they are the most probable input from most data sets.
+That takes `r round(mean(M.semesiae$time, na.rm = TRUE) / mean(S.aureus$time, na.rm = TRUE), 1)` times as much time on average. We can conclude that looking up arbitrary codes of less prevalent microorganisms is the worst way to go, in terms of calculation performance. Full names (like *Methanosarcina semesiae*) are always very fast and only take some thousands of seconds to coerce - they are the most probable input from most data sets.
 
 In the figure below, we compare *Escherichia coli* (which is very common) with *Prevotella brevis* (which is moderately common) and with *Methanosarcina semesiae* (which is uncommon):
 
 ```{r, echo = FALSE, fig.width=12}
-clear_mo_history()
-par(mar = c(5, 16, 4, 2))
-boxplot(microbenchmark(
-  'as.mo("Methanosarcina semesiae")' = as.mo("Methanosarcina semesiae", force_mo_history = TRUE),
-  'as.mo("Prevotella brevis")' = as.mo("Prevotella brevis", force_mo_history = TRUE),
-  'as.mo("Escherichia coli")' = as.mo("Escherichia coli", force_mo_history = TRUE),
-  'as.mo("M. semesiae")' = as.mo("M. semesiae", force_mo_history = TRUE),
-  'as.mo("P. brevis")' = as.mo("P. brevis", force_mo_history = TRUE),
-  'as.mo("E. coli")' = as.mo("E. coli", force_mo_history = TRUE),
-  times = 10),
-        horizontal = TRUE, las = 1, unit = "s", log = TRUE,
-        xlab = "", ylab = "Time in seconds (log)",
-        main = "Benchmarks per prevalence")
-```
-
-The highest outliers are the first times. All next determinations were done in only thousands of seconds, because the `as.mo()` function **learns from its own output to speed up determinations for next times**. 
-
-In below figure, this effect was disabled to show the difference with the boxplot above:
-
-```{r, echo = FALSE, fig.width=12}
-clear_mo_history()
-options(AMR_disable_mo_history = TRUE)
 par(mar = c(5, 16, 4, 2))
 boxplot(microbenchmark(
   'as.mo("Methanosarcina semesiae")' = as.mo("Methanosarcina semesiae"),
@@ -151,7 +122,6 @@ boxplot(microbenchmark(
         horizontal = TRUE, las = 1, unit = "s", log = TRUE,
         xlab = "", ylab = "Time in seconds (log)",
         main = "Benchmarks per prevalence")
-options(AMR_disable_mo_history = FALSE)
 ```
 
 Uncommon microorganisms take a lot more time than common microorganisms. To relieve this pitfall and further improve performance, two important calculations take almost no time at all: **repetitive results** and **already precalculated results**.
@@ -220,7 +190,7 @@ run_it <- microbenchmark(A = mo_species("aureus"),
 print(run_it, unit = "ms", signif = 3)
 ```
 
-Of course, when running `mo_phylum("Firmicutes")` the function has zero knowledge about the actual microorganism, namely *S. aureus*. But since the result would be `"Firmicutes"` too, there is no point in calculating the result. And because this package 'knows' all phyla of all known bacteria (according to the Catalogue of Life), it can just return the initial value immediately.
+Of course, when running `mo_phylum("Firmicutes")` the function has zero knowledge about the actual microorganism, namely *S. aureus*. But since the result would be `"Firmicutes"` anyway, there is no point in calculating the result. And because this package 'knows' all phyla of all known bacteria (according to the Catalogue of Life), it can just return the initial value immediately.
 
 ### Results in other languages
 
