@@ -56,6 +56,14 @@ Two data sets containing all antibiotics/antimycotics and antivirals. Use \code{
 Properties that are based on an ATC code are only available when an ATC is available. These properties are: \code{atc_group1}, \code{atc_group2}, \code{oral_ddd}, \code{oral_units}, \code{iv_ddd} and \code{iv_units}.
 
 Synonyms (i.e. trade names) are derived from the Compound ID (\code{cid}) and consequently only available where a CID is available.
+\subsection{Direct download}{
+
+These data sets are available as 'flat files' for use even without R - you can find the files here:
+\itemize{
+\item \url{https://gitlab.com/msberends/AMR/blob/master/data-raw/antibiotics.R}
+\item \url{https://gitlab.com/msberends/AMR/blob/master/data-raw/antivirals.R}
+}
+}
 }
 \section{WHOCC}{
 

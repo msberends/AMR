@@ -39,6 +39,13 @@ Manually added were:
 \item 6 families under the Enterobacterales order, according to Adeolu \emph{et al.} (2016, PMID 27620848), that are not in the Catalogue of Life
 \item 12,600 species from the DSMZ (Deutsche Sammlung von Mikroorganismen und Zellkulturen) since the DSMZ contain the latest taxonomic information based on recent publications
 }
+\subsection{Direct download}{
+
+This data set is available as 'flat file' for use even without R - you can find the file here:
+\itemize{
+\item \url{https://gitlab.com/msberends/AMR/blob/master/data-raw/microorganisms.R}
+}
+}
 }
 \section{About the records from DSMZ (see source)}{
 

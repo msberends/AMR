@@ -161,9 +161,6 @@ So transforming 500,000 values (!!) of `r n_distinct(x)` unique values only take
 
 What about precalculated results? If the input is an already precalculated result of a helper function like `mo_name()`, it almost doesn't take any time at all (see 'C' below):
 
-```{r, echo = FALSE}
-clear_mo_history()
-```
 ```{r}
 run_it <- microbenchmark(A = mo_name("B_STPHY_AURS"),
                          B = mo_name("S. aureus"),
@@ -174,9 +171,6 @@ print(run_it, unit = "ms", signif = 3)
 
 So going from `mo_name("Staphylococcus aureus")` to `"Staphylococcus aureus"` takes `r format(round(run_it %>% filter(expr == "C") %>% pull(time) %>% median() / 1e9, 4), scientific = FALSE)` seconds - it doesn't even start calculating *if the result would be the same as the expected resulting value*. That goes for all helper functions:
 
-```{r, echo = FALSE}
-clear_mo_history()
-```
 ```{r}
 run_it <- microbenchmark(A = mo_species("aureus"),
                          B = mo_genus("Staphylococcus"),
@@ -196,9 +190,6 @@ Of course, when running `mo_phylum("Firmicutes")` the function has zero knowledg
 
 When the system language is non-English and supported by this `AMR` package, some functions will have a translated result. This almost does't take extra time:
 
-```{r, echo = FALSE}
-clear_mo_history()
-```
 ```{r}
 mo_name("CoNS", language = "en") # or just mo_name("CoNS") on an English system
 

@@ -44,9 +44,6 @@ rsi_translation <- bind_rows(tbl_mic, tbl_disk) %>%
   mutate(mo = as.mo(mo),
          ab = as.ab(ab))
 
-# save to data-raw
-write.table(rsi_translation, "data-raw/rsi_translation.txt", sep = "\t", na = "", row.names = FALSE)
-
 # save to package
 usethis::use_data(rsi_translation, overwrite = TRUE)
 rm(rsi_translation)

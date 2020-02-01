@@ -69,15 +69,15 @@ rm(eucast_rules_file)
 rm(translations_file)
 rm(microorganisms.translation)
 
-# Clean mo history ----
-usethis::ui_done(paste0("Resetting {usethis::ui_value('mo_history.csv')}"))
-tryCatch(
-  write.csv(x = data.frame(x = character(0),
-                           mo = character(0),
-                           uncertainty_level = integer(0),
-                           package_version = character(0),
-                           stringsAsFactors = FALSE),
-            row.names = FALSE,
-            file = "inst/mo_history/mo_history.csv"),
-  warning = function(w) cat("Warning:", w$message, "\n"),
-  error = function(e) cat("Error:", e$message, "\n"))
+# Save to raw data to repository ----
+library(dplyr, warn.conflicts = FALSE, quietly = TRUE)
+usethis::ui_done(paste0("Saving raw data to {usethis::ui_value('/data-raw/')}"))
+devtools::load_all(quiet = TRUE)
+write.table(AMR::rsi_translation,
+            "data-raw/rsi_translation.txt", sep = "\t", na = "", row.names = FALSE)
+write.table(microorganisms %>% select(-snomed),
+            "data-raw/microorganisms.txt", sep = "\t", na = "", row.names = FALSE)
+write.table(antibiotics %>% select(-c(abbreviations, synonyms, loinc)),
+            "data-raw/antibiotics.txt", sep = "\t", na = "", row.names = FALSE)
+write.table(antivirals %>% select(-synonyms),
+            "data-raw/antivirals.txt", sep = "\t", na = "", row.names = FALSE)

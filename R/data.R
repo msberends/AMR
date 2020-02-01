@@ -52,6 +52,12 @@
 #' @details Properties that are based on an ATC code are only available when an ATC is available. These properties are: `atc_group1`, `atc_group2`, `oral_ddd`, `oral_units`, `iv_ddd` and `iv_units`.
 #'
 #' Synonyms (i.e. trade names) are derived from the Compound ID (`cid`) and consequently only available where a CID is available.
+#' 
+#' ### Direct download
+#' These data sets are available as 'flat files' for use even without R - you can find the files here:
+#' 
+#' * <https://gitlab.com/msberends/AMR/blob/master/data-raw/antibiotics.R>
+#' * <https://gitlab.com/msberends/AMR/blob/master/data-raw/antivirals.R>
 #' @source World Health Organization (WHO) Collaborating Centre for Drug Statistics Methodology (WHOCC): <https://www.whocc.no/atc_ddd_index/>
 #'
 #' WHONET 2019 software: <http://www.whonet.org/software.html>
@@ -88,6 +94,11 @@
 #' - 5 other 'undefined' entries (unknown, unknown Gram negatives, unknown Gram positives, unknown yeast and unknown fungus)
 #' - 6 families under the Enterobacterales order, according to Adeolu *et al.* (2016, PMID 27620848), that are not in the Catalogue of Life
 #' - 12,600 species from the DSMZ (Deutsche Sammlung von Mikroorganismen und Zellkulturen) since the DSMZ contain the latest taxonomic information based on recent publications
+#' 
+#'  ### Direct download
+#'  This data set is available as 'flat file' for use even without R - you can find the file here:
+#' 
+#' * <https://gitlab.com/msberends/AMR/blob/master/data-raw/microorganisms.R>
 #' @section About the records from DSMZ (see source):
 #' Names of prokaryotes are defined as being validly published by the International Code of Nomenclature of Bacteria. Validly published are all names which are included in the Approved Lists of Bacterial Names and the names subsequently published in the International Journal of Systematic Bacteriology (IJSB) and, from January 2000, in the International Journal of Systematic and Evolutionary Microbiology (IJSEM) as original articles or in the validation lists.
 #'
