@@ -1,5 +1,5 @@
-# AMR 0.9.0.9019
-## <small>Last updated: 01-Feb-2020</small>
+# AMR 0.9.0.9020
+## <small>Last updated: 09-Feb-2020</small>
 
 ### New
 * Support for LOINC and SNOMED codes
@@ -26,8 +26,11 @@
 ### Changes
 * The `as.mo()` function previously wrote to the package folder to improve calculation speed for previously calculated results. This is no longer the case, to comply with CRAN policies. Consequently, the function `clear_mo_history()` was removed.
 * Bugfix for some WHONET microorganism codes that were not interpreted correctly when using `as.rsi()`
-* Speed improvement for `as.mo()` (and consequently all `mo_*` functions that use `as.mo()` internally), especially for the *G. species* format (G for genus), like *E. coli* and *K penumoniae*
-* Better support for determination of *Salmonella* biovars
+* Improvements for the algorithm used by `as.mo()` (and consequently all `mo_*` functions, that use `as.mo()` internally):
+  * Support for missing spaces, e.g. in `as.mo("Methicillin-resistant S.aureus")`
+  * Better support for determination of *Salmonella* biovars
+  * Speed improvements, especially for the *G. species* format (G for genus), like *E. coli* and *K pneumoniae*
+  * Support for more common codes used in laboratory information systems
 * Input values for `as.disk()` limited to a maximum of 50 millimeters
 * Added a lifecycle state to every function, following [the lifecycle circle of the `tidyverse`](https://www.tidyverse.org/lifecycle)
 * For in `as.ab()`: support for drugs starting with "co-" like co-amoxiclav, co-trimoxazole, co-trimazine and co-trimazole (thanks to Peter Dutey)

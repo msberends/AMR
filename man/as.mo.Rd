@@ -68,7 +68,7 @@ A microorganism ID from this package (class: \code{\link{mo}}) typically looks l
 
 Values that cannot be coered will be considered 'unknown' and will get the MO code \code{UNKNOWN}.
 
-Use the \code{\link[=mo_property]{mo_property_*}} functions to get properties based on the returned code, see Examples.
+Use the \code{\link[=mo_property]{mo_*}} functions to get properties based on the returned code, see Examples.
 
 The algorithm uses data from the Catalogue of Life (see below) and from one other source (see \link{microorganisms}).
 
@@ -79,7 +79,7 @@ The \code{\link[=as.mo]{as.mo()}} function uses several coercion rules for fast 
 \item Breakdown of input values to identify possible matches.
 }
 
-This will lead to the effect that e.g. \code{"E. coli"} (a highly prevalent microorganism found in humans) will return the microbial ID of \emph{Escherichia coli} and not \emph{Entamoeba coli} (a less prevalent microorganism in humans), although the latter would alphabetically come first.
+This will lead to the effect that e.g. \code{"E. coli"} (a microorganism highly prevalent in humans) will return the microbial ID of \emph{Escherichia coli} and not \emph{Entamoeba coli} (a microorganism less prevalent in humans), although the latter would alphabetically come first.
 }
 
 \subsection{Coping with uncertain results}{

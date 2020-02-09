@@ -75,9 +75,9 @@ usethis::ui_done(paste0("Saving raw data to {usethis::ui_value('/data-raw/')}"))
 devtools::load_all(quiet = TRUE)
 write.table(AMR::rsi_translation,
             "data-raw/rsi_translation.txt", sep = "\t", na = "", row.names = FALSE)
-write.table(microorganisms %>% select(-snomed),
+write.table(microorganisms %>% mutate_if(~!is.numeric(.), as.character),
             "data-raw/microorganisms.txt", sep = "\t", na = "", row.names = FALSE)
-write.table(antibiotics %>% select(-c(abbreviations, synonyms, loinc)),
+write.table(antibiotics %>% mutate_if(~!is.numeric(.), as.character),
             "data-raw/antibiotics.txt", sep = "\t", na = "", row.names = FALSE)
-write.table(antivirals %>% select(-synonyms),
+write.table(antivirals %>% mutate_all(as.character),
             "data-raw/antivirals.txt", sep = "\t", na = "", row.names = FALSE)

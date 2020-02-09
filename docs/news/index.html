@@ -84,7 +84,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">0.9.0.9019</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">0.9.0.9020</span>
       </span>
     </div>
 
@@ -231,13 +231,13 @@
       
     </div>
 
-    <div id="amr-0-9-0-9019" class="section level1">
+    <div id="amr-0-9-0-9020" class="section level1">
 <h1 class="page-header">
-<a href="#amr-0-9-0-9019" class="anchor"></a>AMR 0.9.0.9019<small> Unreleased </small>
+<a href="#amr-0-9-0-9020" class="anchor"></a>AMR 0.9.0.9020<small> Unreleased </small>
 </h1>
-<div id="last-updated-01-feb-2020" class="section level2">
+<div id="last-updated-09-feb-2020" class="section level2">
 <h2 class="hasAnchor">
-<a href="#last-updated-01-feb-2020" class="anchor"></a><small>Last updated: 01-Feb-2020</small>
+<a href="#last-updated-09-feb-2020" class="anchor"></a><small>Last updated: 09-Feb-2020</small>
 </h2>
 <div id="new" class="section level3">
 <h3 class="hasAnchor">
@@ -275,9 +275,16 @@
 <li>The <code><a href="../reference/as.mo.html">as.mo()</a></code> function previously wrote to the package folder to improve calculation speed for previously calculated results. This is no longer the case, to comply with CRAN policies. Consequently, the function <code>clear_mo_history()</code> was removed.</li>
 <li>Bugfix for some WHONET microorganism codes that were not interpreted correctly when using <code><a href="../reference/as.rsi.html">as.rsi()</a></code>
 </li>
-<li>Speed improvement for <code><a href="../reference/as.mo.html">as.mo()</a></code> (and consequently all <code>mo_*</code> functions that use <code><a href="../reference/as.mo.html">as.mo()</a></code> internally), especially for the <em>G. species</em> format (G for genus), like <em>E. coli</em> and <em>K penumoniae</em>
+<li>Improvements for the algorithm used by <code><a href="../reference/as.mo.html">as.mo()</a></code> (and consequently all <code>mo_*</code> functions, that use <code><a href="../reference/as.mo.html">as.mo()</a></code> internally):
+<ul>
+<li>Support for missing spaces, e.g. in <code><a href="../reference/as.mo.html">as.mo("Methicillin-resistant S.aureus")</a></code>
 </li>
 <li>Better support for determination of <em>Salmonella</em> biovars</li>
+<li>Speed improvements, especially for the <em>G. species</em> format (G for genus), like <em>E. coli</em> and <em>K pneumoniae</em>
+</li>
+<li>Support for more common codes used in laboratory information systems</li>
+</ul>
+</li>
 <li>Input values for <code><a href="../reference/as.disk.html">as.disk()</a></code> limited to a maximum of 50 millimeters</li>
 <li>Added a lifecycle state to every function, following <a href="https://www.tidyverse.org/lifecycle">the lifecycle circle of the <code>tidyverse</code></a>
 </li>
@@ -1460,7 +1467,7 @@ Using <code><a href="../reference/as.mo.html">as.mo(..., allow_uncertain = 3)</a
     <div id="tocnav">
       <h2>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
-        <li><a href="#amr-0-9-0-9019">0.9.0.9019</a></li>
+        <li><a href="#amr-0-9-0-9020">0.9.0.9020</a></li>
         <li><a href="#amr-0-9-0">0.9.0</a></li>
         <li><a href="#amr-0-8-0">0.8.0</a></li>
         <li><a href="#amr-0-7-1">0.7.1</a></li>

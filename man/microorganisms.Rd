@@ -43,7 +43,7 @@ Manually added were:
 
 This data set is available as 'flat file' for use even without R - you can find the file here:
 \itemize{
-\item \url{https://gitlab.com/msberends/AMR/blob/master/data-raw/microorganisms.R}
+\item \url{https://gitlab.com/msberends/AMR/raw/master/data-raw/microorganisms.txt}
 }
 }
 }

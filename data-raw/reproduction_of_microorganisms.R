@@ -852,7 +852,7 @@ saveRDS(microorganisms.codes, "microorganisms.codes.rds")
 ### for same server
 microorganisms <- MOs
 microorganisms.old <- MOs.old
-microorganisms.translation <- old_new %>% select(mo_old, mo_new)
+microorganisms.translation <- old_new %>% select(mo_old, mo_new) %>% as.data.frame()
 class(microorganisms.translation$mo_old) <- "mo"
 class(microorganisms.translation$mo_new) <- "mo"
 

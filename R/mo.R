@@ -57,7 +57,7 @@
 #'
 #' Values that cannot be coered will be considered 'unknown' and will get the MO code `UNKNOWN`.
 #'
-#' Use the [`mo_property_*`][mo_property()] functions to get properties based on the returned code, see Examples.
+#' Use the [`mo_*`][mo_property()] functions to get properties based on the returned code, see Examples.
 #'
 #' The algorithm uses data from the Catalogue of Life (see below) and from one other source (see [microorganisms]).
 #'
@@ -67,7 +67,7 @@
 #' 2. Taxonomic kingdom: the function starts with determining Bacteria, then Fungi, then Protozoa, then others;
 #' 3. Breakdown of input values to identify possible matches.
 #'
-#' This will lead to the effect that e.g. `"E. coli"` (a highly prevalent microorganism found in humans) will return the microbial ID of *Escherichia coli* and not *Entamoeba coli* (a less prevalent microorganism in humans), although the latter would alphabetically come first. 
+#' This will lead to the effect that e.g. `"E. coli"` (a microorganism highly prevalent in humans) will return the microbial ID of *Escherichia coli* and not *Entamoeba coli* (a microorganism less prevalent in humans), although the latter would alphabetically come first. 
 #' 
 #' ## Coping with uncertain results
 #' 
@@ -456,6 +456,8 @@ exec_as.mo <- function(x,
     x <- gsub("fungus[ph|f]rya", "fungiphrya", x)
     # remove non-text in case of "E. coli" except dots and spaces
     x <- trimws(gsub("[^.a-zA-Z0-9/ \\-]+", " ", x))
+    # but make sure that dots are followed by a space
+    x <- gsub("[.] ?", ". ", x)
     # replace minus by a space
     x <- gsub("-+", " ", x)
     # replace hemolytic by haemolytic
@@ -1160,7 +1162,7 @@ exec_as.mo <- function(x,
             if (isTRUE(debug)) {
               cat("\n[ UNCERTAINTY LEVEL", now_checks_for_uncertainty_level, "] (6) try to strip off half an element from end and check the remains\n")
             }
-            x_strip <- a.x_backup %>% strsplit(" ") %>% unlist()
+            x_strip <- a.x_backup %>% strsplit("[ .]") %>% unlist()
             if (length(x_strip) > 1) {
               for (i in seq_len(length(x_strip) - 1)) {
                 lastword <- x_strip[length(x_strip) - i + 1]
@@ -1250,7 +1252,7 @@ exec_as.mo <- function(x,
             if (isTRUE(debug)) {
               cat("\n[ UNCERTAINTY LEVEL", now_checks_for_uncertainty_level, "] (9) try to strip off one element from start and check the remains (only allow >= 2-part name outcome)\n")
             }
-            x_strip <- a.x_backup %>% strsplit(" ") %>% unlist()
+            x_strip <- a.x_backup %>% strsplit("[ .]") %>% unlist()
             if (length(x_strip) > 1 & nchar(g.x_backup_without_spp) >= 6) {
               for (i in 2:(length(x_strip))) {
                 x_strip_collapsed <- paste(x_strip[i:length(x_strip)], collapse = " ")
@@ -1288,7 +1290,7 @@ exec_as.mo <- function(x,
             if (isTRUE(debug)) {
               cat("\n[ UNCERTAINTY LEVEL", now_checks_for_uncertainty_level, "] (10) try to strip off one element from start and check the remains (any text size)\n")
             }
-            x_strip <- a.x_backup %>% strsplit(" ") %>% unlist()
+            x_strip <- a.x_backup %>% strsplit("[ .]") %>% unlist()
             if (length(x_strip) > 1 & nchar(g.x_backup_without_spp) >= 6) {
               for (i in 2:(length(x_strip))) {
                 x_strip_collapsed <- paste(x_strip[i:length(x_strip)], collapse = " ")

@@ -60,8 +60,8 @@ Synonyms (i.e. trade names) are derived from the Compound ID (\code{cid}) and co
 
 These data sets are available as 'flat files' for use even without R - you can find the files here:
 \itemize{
-\item \url{https://gitlab.com/msberends/AMR/blob/master/data-raw/antibiotics.R}
-\item \url{https://gitlab.com/msberends/AMR/blob/master/data-raw/antivirals.R}
+\item \url{https://gitlab.com/msberends/AMR/raw/master/data-raw/antibiotics.txt}
+\item \url{https://gitlab.com/msberends/AMR/raw/master/data-raw/antivirals.txt}
 }
 }
 }

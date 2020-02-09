@@ -4,7 +4,7 @@
 \name{microorganisms.codes}
 \alias{microorganisms.codes}
 \title{Translation table for common microorganism codes}
-\format{A \code{\link{data.frame}} with 5,433 observations and 2 variables:
+\format{A \code{\link{data.frame}} with 5,450 observations and 2 variables:
 \itemize{
 \item \code{code}\cr Commonly used code of a microorganism
 \item \code{mo}\cr ID of the microorganism in the \link{microorganisms} data set
@@ -13,7 +13,7 @@
 microorganisms.codes
 }
 \description{
-A data set containing commonly used codes for microorganisms, from laboratory systems and WHONET. Define your own with \code{\link[=set_mo_source]{set_mo_source()}}.
+A data set containing commonly used codes for microorganisms, from laboratory systems and WHONET. Define your own with \code{\link[=set_mo_source]{set_mo_source()}}. They will all be searched when using \code{\link[=as.mo]{as.mo()}} and consequently all the \code{\link[=mo_property]{mo_*}} functions.
 }
 \section{Catalogue of Life}{
 

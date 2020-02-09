@@ -51,7 +51,7 @@
   <script src="../extra.js"></script>
 
 <meta property="og:title" content="Translation table for common microorganism codes — microorganisms.codes" />
-<meta property="og:description" content="A data set containing commonly used codes for microorganisms, from laboratory systems and WHONET. Define your own with set_mo_source()." />
+<meta property="og:description" content="A data set containing commonly used codes for microorganisms, from laboratory systems and WHONET. Define your own with set_mo_source(). They will all be searched when using as.mo() and consequently all the mo_* functions." />
 <meta property="og:image" content="https://msberends.gitlab.io/AMR/logo.png" />
 <meta name="twitter:card" content="summary" />
 
@@ -85,7 +85,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">0.9.0.9013</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">0.9.0.9020</span>
       </span>
     </div>
 
@@ -234,7 +234,7 @@
     </div>
 
     <div class="ref-description">
-    <p>A data set containing commonly used codes for microorganisms, from laboratory systems and WHONET. Define your own with <code><a href='mo_source.html'>set_mo_source()</a></code>.</p>
+    <p>A data set containing commonly used codes for microorganisms, from laboratory systems and WHONET. Define your own with <code><a href='mo_source.html'>set_mo_source()</a></code>. They will all be searched when using <code><a href='as.mo.html'>as.mo()</a></code> and consequently all the <code><a href='mo_property.html'>mo_*</a></code> functions.</p>
     </div>
 
     <pre class="usage"><span class='no'>microorganisms.codes</span></pre>
@@ -242,7 +242,7 @@
 
     <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
 
-    <p>A <code><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></code> with 5,433 observations and 2 variables:</p><ul>
+    <p>A <code><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></code> with 5,450 observations and 2 variables:</p><ul>
 <li><p><code>code</code><br /> Commonly used code of a microorganism</p></li>
 <li><p><code>mo</code><br /> ID of the microorganism in the <a href='microorganisms.html'>microorganisms</a> data set</p></li>
 </ul>

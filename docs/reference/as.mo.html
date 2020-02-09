@@ -85,7 +85,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">0.9.0.9019</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">0.9.0.9020</span>
       </span>
     </div>
 
@@ -309,7 +309,7 @@
 </pre>
 
 <p>Values that cannot be coered will be considered 'unknown' and will get the MO code <code>UNKNOWN</code>.</p>
-<p>Use the <code><a href='mo_property.html'>mo_property_*</a></code> functions to get properties based on the returned code, see Examples.</p>
+<p>Use the <code><a href='mo_property.html'>mo_*</a></code> functions to get properties based on the returned code, see Examples.</p>
 <p>The algorithm uses data from the Catalogue of Life (see below) and from one other source (see <a href='microorganisms.html'>microorganisms</a>).</p>
 <p>The <code>as.mo()</code> function uses several coercion rules for fast and logical results. It assesses the input matching criteria in the following order:</p><ol>
 <li><p>Human pathogenic prevalence: the function  starts with more prevalent microorganisms, followed by less prevalent ones;</p></li>
@@ -317,7 +317,7 @@
 <li><p>Breakdown of input values to identify possible matches.</p></li>
 </ol>
 
-<p>This will lead to the effect that e.g. <code>"E. coli"</code> (a highly prevalent microorganism found in humans) will return the microbial ID of <em>Escherichia coli</em> and not <em>Entamoeba coli</em> (a less prevalent microorganism in humans), although the latter would alphabetically come first.</p>
+<p>This will lead to the effect that e.g. <code>"E. coli"</code> (a microorganism highly prevalent in humans) will return the microbial ID of <em>Escherichia coli</em> and not <em>Entamoeba coli</em> (a microorganism less prevalent in humans), although the latter would alphabetically come first.</p>
 
 <h3>Coping with uncertain results</h3>
 

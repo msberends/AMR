@@ -56,8 +56,8 @@
 #' ### Direct download
 #' These data sets are available as 'flat files' for use even without R - you can find the files here:
 #' 
-#' * <https://gitlab.com/msberends/AMR/blob/master/data-raw/antibiotics.R>
-#' * <https://gitlab.com/msberends/AMR/blob/master/data-raw/antivirals.R>
+#' * <https://gitlab.com/msberends/AMR/raw/master/data-raw/antibiotics.txt>
+#' * <https://gitlab.com/msberends/AMR/raw/master/data-raw/antivirals.txt>
 #' @source World Health Organization (WHO) Collaborating Centre for Drug Statistics Methodology (WHOCC): <https://www.whocc.no/atc_ddd_index/>
 #'
 #' WHONET 2019 software: <http://www.whonet.org/software.html>
@@ -98,7 +98,7 @@
 #'  ### Direct download
 #'  This data set is available as 'flat file' for use even without R - you can find the file here:
 #' 
-#' * <https://gitlab.com/msberends/AMR/blob/master/data-raw/microorganisms.R>
+#' * <https://gitlab.com/msberends/AMR/raw/master/data-raw/microorganisms.txt>
 #' @section About the records from DSMZ (see source):
 #' Names of prokaryotes are defined as being validly published by the International Code of Nomenclature of Bacteria. Validly published are all names which are included in the Approved Lists of Bacterial Names and the names subsequently published in the International Journal of Systematic Bacteriology (IJSB) and, from January 2000, in the International Journal of Systematic and Evolutionary Microbiology (IJSEM) as original articles or in the validation lists.
 #'
@@ -135,8 +135,8 @@ catalogue_of_life <- list(
 
 #' Translation table for common microorganism codes
 #'
-#' A data set containing commonly used codes for microorganisms, from laboratory systems and WHONET. Define your own with [set_mo_source()].
-#' @format A [`data.frame`] with 5,433 observations and 2 variables:
+#' A data set containing commonly used codes for microorganisms, from laboratory systems and WHONET. Define your own with [set_mo_source()]. They will all be searched when using [as.mo()] and consequently all the [`mo_*`][mo_property()] functions.
+#' @format A [`data.frame`] with 5,450 observations and 2 variables:
 #' - `code`\cr Commonly used code of a microorganism
 #' - `mo`\cr ID of the microorganism in the [microorganisms] data set
 #' @inheritSection catalogue_of_life Catalogue of Life

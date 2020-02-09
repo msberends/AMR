@@ -87,7 +87,7 @@ countries_geometry <- sf::st_as_sf(map('world', plot = FALSE, fill = TRUE)) %>%
                                                    )),
          included = as.integer(countries_code %in% ip_tbl$country),
          not_antarctica = as.integer(ID != "Antarctica"),
-         countries_name = ifelse(included == 1, ID, NA))
+         countries_name = ifelse(included == 1, as.character(ID), NA))
 
 # how many?
 countries_geometry %>% filter(included == 1) %>% nrow()
@@ -118,7 +118,7 @@ countries_plot_big <- countries_plot +
                 y = -75,
                 label = stringr::str_wrap(paste0("Countries (n = ", 
                                                  length(countries_name[!is.na(countries_name)]), "): ", 
-                                                 paste(countries_name[!is.na(countries_name)], collapse = ", ")),
+                                                 paste(sort(countries_name[!is.na(countries_name)]), collapse = ", ")),
                                           200)),
             hjust = 0,
              size = 4) # +
