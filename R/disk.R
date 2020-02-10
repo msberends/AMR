@@ -81,7 +81,7 @@ as.disk <- function(x, na.rm = FALSE) {
 #' @export
 #' @importFrom dplyr %>%
 is.disk <- function(x) {
-  class(x) %>% identical(c("disk", "integer"))
+  inherits(x, c("disk", "integer"))
 }
 
 #' @exportMethod print.disk

@@ -346,8 +346,7 @@ as.rsi.data.frame <- function(x, col_mo = NULL, guideline = "EUCAST", ...) {
 #' @rdname as.rsi
 #' @export
 is.rsi <- function(x) {
-  identical(class(x),
-            c("rsi", "ordered", "factor"))
+  inherits(x, c("rsi", "factor"))
 }
 
 #' @rdname as.rsi

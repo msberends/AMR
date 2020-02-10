@@ -130,7 +130,7 @@ as.mic <- function(x, na.rm = FALSE) {
 #' @export
 #' @importFrom dplyr %>%
 is.mic <- function(x) {
-  class(x) %>% identical(c("mic", "ordered", "factor"))
+  inherits(x, c("mic", "factor"))
 }
 
 #' @exportMethod as.double.mic
