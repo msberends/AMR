@@ -130,7 +130,7 @@ as.mic <- function(x, na.rm = FALSE) {
 #' @export
 #' @importFrom dplyr %>%
 is.mic <- function(x) {
-  inherits(x, c("mic", "factor"))
+  inherits(x, "mic")
 }
 
 #' @exportMethod as.double.mic
