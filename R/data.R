@@ -196,7 +196,7 @@ catalogue_of_life <- list(
 
 #' Data set for R/SI interpretation
 #'
-#' Data set to interpret MIC and disk diffusion to R/SI values. Included guidelines are CLSI (2011-2019) and EUCAST (2011-2019). Use [as.rsi()] to transform MICs or disks measurements to R/SI values.
+#' Data set to interpret MIC and disk diffusion to R/SI values. Included guidelines are CLSI (2011-2019) and EUCAST (2011-2020). Use [as.rsi()] to transform MICs or disks measurements to R/SI values.
 #' @format A [`data.frame`] with 13,975 observations and 9 variables:
 #' - `guideline`\cr Name of the guideline
 #' - `method`\cr Either "MIC" or "DISK"

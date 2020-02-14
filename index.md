@@ -50,7 +50,7 @@ This package can be used for:
   * Applying EUCAST expert rules ([manual](./reference/eucast_rules.html))
   * Getting SNOMED codes of a microorganism, or get its name associated with a SNOMED code ([manual](./reference/mo_property.html))
   * Getting LOINC codes of an antibiotic, or get its name associated with a LOINC code ([manual](./reference/ab_property.html))
-  * Machine reading the EUCAST and CLSI guidelines from 2011-2019 to translate MIC values and disk diffusion diameters to R/SI ([link](https://gitlab.com/msberends/AMR/blob/master/data-raw/rsi_translation.txt))
+  * Machine reading the EUCAST and CLSI guidelines from 2011-2020 to translate MIC values and disk diffusion diameters to R/SI ([link](https://gitlab.com/msberends/AMR/blob/master/data-raw/rsi_translation.txt))
 
 This package is ready-to-use for specialists in many fields:
 

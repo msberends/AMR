@@ -23,6 +23,8 @@ context("ggplot_rsi.R")
 
 test_that("ggplot_rsi works", {
 
+  skip_on_cran()
+  
   skip_if_not("ggplot2" %in% rownames(installed.packages()))
 
   library(dplyr)
