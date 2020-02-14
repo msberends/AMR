@@ -202,6 +202,9 @@ get_mo_source <- function() {
 }
 
 mo_source_isvalid <- function(x) {
+  
+  check_dataset_integrity()
+  
   if (deparse(substitute(x)) == "get_mo_source()") {
     return(TRUE)
   }
@@ -217,5 +220,5 @@ mo_source_isvalid <- function(x) {
   if (!"mo" %in% colnames(x)) {
     return(FALSE)
   }
-  all(x$mo %in% c("", AMR::microorganisms$mo, microorganisms.translation$mo_old), na.rm = TRUE)
+  all(x$mo %in% c("", microorganisms$mo, microorganisms.translation$mo_old), na.rm = TRUE)
 }

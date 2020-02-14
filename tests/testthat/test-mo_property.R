@@ -63,7 +63,7 @@ test_that("mo_property works", {
   expect_true(mo_url("Escherichia coli") %like% "www.catalogueoflife.org")
 
   # test integrity
-  MOs <- AMR::microorganisms
+  MOs <- microorganisms
   expect_identical(MOs$fullname, mo_fullname(MOs$fullname, language = "en"))
 
   # check languages

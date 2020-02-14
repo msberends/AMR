@@ -91,20 +91,23 @@ NULL
 #' microorganisms %>% freq(kingdom)
 #' microorganisms %>% group_by(kingdom) %>% freq(phylum, nmax = NULL)
 catalogue_of_life_version <- function() {
+  
+  check_dataset_integrity()
+  
   # see the `catalogue_of_life` list in R/data.R
   lst <- list(catalogue_of_life =
                 list(version = gsub("{year}", catalogue_of_life$year, catalogue_of_life$version, fixed = TRUE),
                      url = gsub("{year}", catalogue_of_life$year, catalogue_of_life$url_CoL, fixed = TRUE),
-                     n = nrow(filter(AMR::microorganisms, source == "CoL"))),
+                     n = nrow(filter(microorganisms, source == "CoL"))),
               deutsche_sammlung_von_mikroorganismen_und_zellkulturen =
                 list(version = "Prokaryotic Nomenclature Up-to-Date from DSMZ",
                      url = catalogue_of_life$url_DSMZ,
                      yearmonth = catalogue_of_life$yearmonth_DSMZ,
-                     n = nrow(filter(AMR::microorganisms, source == "DSMZ"))),
+                     n = nrow(filter(microorganisms, source == "DSMZ"))),
               total_included =
                 list(
-                  n_total_species = nrow(AMR::microorganisms),
-                  n_total_synonyms = nrow(AMR::microorganisms.old)))
+                  n_total_species = nrow(microorganisms),
+                  n_total_synonyms = nrow(microorganisms.old)))
 
   structure(.Data = lst,
             class = c("catalogue_of_life_version", "list"))

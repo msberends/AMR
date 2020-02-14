@@ -303,7 +303,7 @@ geom_rsi <- function(position = NULL,
   ggplot2::layer(geom = "bar", stat = "identity", position = position,
                  mapping = ggplot2::aes_string(x = x, y = y, fill = fill),
                  params = list(...), data = function(x) {
-                   AMR::rsi_df(data = x,
+                   rsi_df(data = x,
                                translate_ab = translate_ab,
                                language = language,
                                combine_SI = combine_SI,

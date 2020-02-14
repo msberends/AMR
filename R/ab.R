@@ -66,11 +66,14 @@
 #' ab_name("J01FA01")    # "Erythromycin"
 #' ab_name("eryt")       # "Erythromycin"
 as.ab <- function(x, ...) {
+  
+  check_dataset_integrity()
+  
   if (is.ab(x)) {
     return(x)
   }
 
-  if (all(toupper(x) %in% AMR::antibiotics$ab)) {
+  if (all(toupper(x) %in% antibiotics$ab)) {
     # valid AB code, but not yet right class
     return(structure(.Data = toupper(x),
                      class = "ab"))
@@ -117,67 +120,67 @@ as.ab <- function(x, ...) {
     }
 
     # exact AB code
-    found <- AMR::antibiotics[which(AMR::antibiotics$ab == toupper(x[i])), ]$ab
+    found <- antibiotics[which(antibiotics$ab == toupper(x[i])), ]$ab
     if (length(found) > 0) {
       x_new[i] <- found[1L]
       next
     }
 
     # exact ATC code
-    found <- AMR::antibiotics[which(AMR::antibiotics$atc == toupper(x[i])), ]$ab
+    found <- antibiotics[which(antibiotics$atc == toupper(x[i])), ]$ab
     if (length(found) > 0) {
       x_new[i] <- found[1L]
       next
     }
 
     # exact CID code
-    found <- AMR::antibiotics[which(AMR::antibiotics$cid == x[i]), ]$ab
+    found <- antibiotics[which(antibiotics$cid == x[i]), ]$ab
     if (length(found) > 0) {
       x_new[i] <- found[1L]
       next
     }
 
     # exact name
-    found <- AMR::antibiotics[which(toupper(AMR::antibiotics$name) == toupper(x[i])), ]$ab
+    found <- antibiotics[which(toupper(antibiotics$name) == toupper(x[i])), ]$ab
     if (length(found) > 0) {
       x_new[i] <- found[1L]
       next
     }
     
     # exact LOINC code
-    loinc_found <- unlist(lapply(AMR::antibiotics$loinc,
+    loinc_found <- unlist(lapply(antibiotics$loinc,
                                    function(s) if (x[i] %in% s) {
                                      TRUE
                                    } else {
                                      FALSE
                                    }))
-    found <- AMR::antibiotics$ab[loinc_found == TRUE]
+    found <- antibiotics$ab[loinc_found == TRUE]
     if (length(found) > 0) {
       x_new[i] <- found[1L]
       next
     }
 
     # exact synonym
-    synonym_found <- unlist(lapply(AMR::antibiotics$synonyms,
+    synonym_found <- unlist(lapply(antibiotics$synonyms,
                                    function(s) if (toupper(x[i]) %in% toupper(s)) {
                                      TRUE
                                    } else {
                                      FALSE
                                    }))
-    found <- AMR::antibiotics$ab[synonym_found == TRUE]
+    found <- antibiotics$ab[synonym_found == TRUE]
     if (length(found) > 0) {
       x_new[i] <- found[1L]
       next
     }
 
     # exact abbreviation
-    abbr_found <- unlist(lapply(AMR::antibiotics$abbreviations,
+    abbr_found <- unlist(lapply(antibiotics$abbreviations,
                                 function(a) if (toupper(x[i]) %in% toupper(a)) {
                                   TRUE
                                 } else {
                                   FALSE
                                 }))
-    found <- AMR::antibiotics$ab[abbr_found == TRUE]
+    found <- antibiotics$ab[abbr_found == TRUE]
     if (length(found) > 0) {
       x_new[i] <- found[1L]
       next
@@ -185,7 +188,7 @@ as.ab <- function(x, ...) {
 
     # first >=4 characters of name
     if (nchar(x[i]) >= 4) {
-      found <- AMR::antibiotics[which(toupper(AMR::antibiotics$name) %like% paste0("^", x[i])), ]$ab
+      found <- antibiotics[which(toupper(antibiotics$name) %like% paste0("^", x[i])), ]$ab
       if (length(found) > 0) {
         x_new[i] <- found[1L]
         next
@@ -215,19 +218,19 @@ as.ab <- function(x, ...) {
     x_spelling <- gsub("(.)\\1+", "\\1+", x_spelling)
   
     # try if name starts with it
-    found <- AMR::antibiotics[which(AMR::antibiotics$name %like% paste0("^", x_spelling)), ]$ab
+    found <- antibiotics[which(antibiotics$name %like% paste0("^", x_spelling)), ]$ab
     if (length(found) > 0) {
       x_new[i] <- found[1L]
       next
     }
     # and try if any synonym starts with it
-    synonym_found <- unlist(lapply(AMR::antibiotics$synonyms,
+    synonym_found <- unlist(lapply(antibiotics$synonyms,
                                    function(s) if (any(s %like% paste0("^", x_spelling))) {
                                      TRUE
                                    } else {
                                      FALSE
                                    }))
-    found <- AMR::antibiotics$ab[synonym_found == TRUE]
+    found <- antibiotics$ab[synonym_found == TRUE]
     if (length(found) > 0) {
       x_new[i] <- found[1L]
       next
@@ -374,7 +377,7 @@ as.data.frame.ab <- function(x, ...) {
 "[<-.ab" <- function(i, j, ..., value) {
   y <- NextMethod()
   attributes(y) <- attributes(i)
-  class_integrity_check(y, "antimicrobial code", AMR::antibiotics$ab)
+  class_integrity_check(y, "antimicrobial code", antibiotics$ab)
 }
 #' @exportMethod [[<-.ab
 #' @export
@@ -382,7 +385,7 @@ as.data.frame.ab <- function(x, ...) {
 "[[<-.ab" <- function(i, j, ..., value) {
   y <- NextMethod()
   attributes(y) <- attributes(i)
-  class_integrity_check(y, "antimicrobial code", AMR::antibiotics$ab)
+  class_integrity_check(y, "antimicrobial code", antibiotics$ab)
 }
 #' @exportMethod c.ab
 #' @export
@@ -390,7 +393,7 @@ as.data.frame.ab <- function(x, ...) {
 c.ab <- function(x, ...) {
   y <- NextMethod()
   attributes(y) <- attributes(x)
-  class_integrity_check(y, "antimicrobial code", AMR::antibiotics$ab)
+  class_integrity_check(y, "antimicrobial code", antibiotics$ab)
 }
 
 #' @importFrom pillar type_sum

@@ -58,14 +58,14 @@ freq.mo <- function(x, ...) {
 freq.rsi <- function(x, ...) {
   x_name <- deparse(substitute(x))
   x_name <- gsub(".*[$]", "", x_name)
-  ab <- suppressMessages(suppressWarnings(AMR::as.ab(x_name)))
+  ab <- suppressMessages(suppressWarnings(as.ab(x_name)))
   if (!is.na(ab)) {
     freq.default(x = x, ...,
                  .add_header = list(Drug = paste0(ab_name(ab), " (", ab, ", ", ab_atc(ab), ")"),
                                     group = ab_group(ab),
-                                    `%SI` = AMR::susceptibility(x, minimum = 0, as_percent = TRUE)))
+                                    `%SI` = susceptibility(x, minimum = 0, as_percent = TRUE)))
   } else {
     freq.default(x = x, ...,
-                 .add_header = list(`%SI` = AMR::susceptibility(x, minimum = 0, as_percent = TRUE)))
+                 .add_header = list(`%SI` = susceptibility(x, minimum = 0, as_percent = TRUE)))
   }
 }

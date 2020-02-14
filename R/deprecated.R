@@ -30,7 +30,7 @@
 #' @rdname AMR-deprecated
 p.symbol <- function(...) {
   .Deprecated("p_symbol()", package = "AMR")
-  AMR::p_symbol(...)
+  p_symbol(...)
 }
 
 #' @rdname AMR-deprecated

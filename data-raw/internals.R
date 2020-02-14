@@ -73,7 +73,8 @@ rm(microorganisms.translation)
 library(dplyr, warn.conflicts = FALSE, quietly = TRUE)
 usethis::ui_done(paste0("Saving raw data to {usethis::ui_value('/data-raw/')}"))
 devtools::load_all(quiet = TRUE)
-write.table(AMR::rsi_translation,
+# give official names to ABs and MOs
+write.table(rsi_translation %>% mutate(ab = ab_name(ab), mo = mo_name(mo)),
             "data-raw/rsi_translation.txt", sep = "\t", na = "", row.names = FALSE)
 write.table(microorganisms %>% mutate_if(~!is.numeric(.), as.character),
             "data-raw/microorganisms.txt", sep = "\t", na = "", row.names = FALSE)

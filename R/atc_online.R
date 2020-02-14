@@ -76,12 +76,14 @@ atc_online_property <- function(atc_code,
                                 property,
                                 administration = "O",
                                 url = "https://www.whocc.no/atc_ddd_index/?code=%s&showdescription=no") {
+  
+  check_dataset_integrity()
 
   if (!all(c("curl", "rvest", "xml2") %in% rownames(utils::installed.packages()))) {
     stop("Packages 'xml2', 'rvest' and 'curl' are required for this function")
   }
 
-  if (!all(atc_code %in% AMR::antibiotics)) {
+  if (!all(atc_code %in% antibiotics)) {
     atc_code <- as.character(ab_atc(atc_code))
   }
 

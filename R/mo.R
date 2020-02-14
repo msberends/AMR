@@ -175,7 +175,7 @@ as.mo <- function(x,
                   reference_df = get_mo_source(), 
                   ...) {
   
-  load_AMR_package()
+  check_dataset_integrity()
   
   # WHONET: xxx = no growth
   x[tolower(as.character(paste0(x, ""))) %in% c("", "xxx", "na", "nan")] <- NA_character_
@@ -238,7 +238,7 @@ is.mo <- function(x) {
 #' @importFrom data.table data.table as.data.table setkey
 #' @importFrom crayon magenta red blue silver italic
 #' @importFrom cleaner percentage
-# param property a column name of AMR::microorganisms
+# param property a column name of microorganisms
 # param initial_search logical - is FALSE when coming from uncertain tries, which uses exec_as.mo internally too
 # param dyslexia_mode logical - also check for characters that resemble others
 # param debug logical - show different lookup texts while searching
@@ -254,7 +254,7 @@ exec_as.mo <- function(x,
                        debug = FALSE,
                        reference_data_to_use = microorganismsDT) {
   
-  load_AMR_package()
+  check_dataset_integrity()
   
   # WHONET: xxx = no growth
   x[tolower(as.character(paste0(x, ""))) %in% c("", "xxx", "na", "nan")] <- NA_character_
@@ -365,7 +365,7 @@ exec_as.mo <- function(x,
     suppressWarnings(
       x <- data.frame(x = x, stringsAsFactors = FALSE) %>%
         left_join(reference_df, by = "x") %>%
-        left_join(AMR::microorganisms, by = "mo") %>%
+        left_join(microorganisms, by = "mo") %>%
         pull(property)
     )
     
@@ -393,9 +393,9 @@ exec_as.mo <- function(x,
                                on = "fullname_lower",
                                ..property][[1]]
     
-  } else if (all(toupper(x) %in% AMR::microorganisms.codes$code)) {
+  } else if (all(toupper(x) %in% microorganisms.codes$code)) {
     # commonly used MO codes
-    y <- as.data.table(AMR::microorganisms.codes)[data.table(code = toupper(x)),
+    y <- as.data.table(microorganisms.codes)[data.table(code = toupper(x)),
                                                   on = "code", ]
     
     x <- reference_data_to_use[data.table(mo = y[["mo"]]),
@@ -412,7 +412,7 @@ exec_as.mo <- function(x,
                                ..property][[1]]
     x <- y
     
-  } else if (!all(x %in% AMR::microorganisms[, property])) {
+  } else if (!all(x %in% microorganisms[, property])) {
     
     strip_whitespace <- function(x, dyslexia_mode) {
       # all whitespaces (tab, new lines, etc.) should be one space
@@ -632,8 +632,8 @@ exec_as.mo <- function(x,
       }
       
       # WHONET and other common LIS codes
-      if (any(toupper(c(x_backup[i], x_backup_without_spp[i])) %in% AMR::microorganisms.codes$code)) {
-        mo_found <- AMR::microorganisms.codes[which(AMR::microorganisms.codes$code %in% toupper(c(x_backup[i], x_backup_without_spp[i]))), "mo"][1L]
+      if (any(toupper(c(x_backup[i], x_backup_without_spp[i])) %in% microorganisms.codes$code)) {
+        mo_found <- microorganisms.codes[which(microorganisms.codes$code %in% toupper(c(x_backup[i], x_backup_without_spp[i]))), "mo"][1L]
         if (length(mo_found) > 0) {
           x[i] <- microorganismsDT[mo == mo_found,
                                    ..property][[1]][1L]
@@ -1476,8 +1476,7 @@ exec_as.mo <- function(x,
       msg <- paste0(msg, ": ", paste('"', unique(failures), '"', sep = "", collapse = ", "))
     }
     msg <- paste0(msg,  ". Use mo_failures() to review ", plural[2], ". Edit the `allow_uncertain` parameter if needed (see ?as.mo).")
-    cat("\n")
-    warning(red(msg),
+    warning(red(paste0("\n", msg)),
             call. = FALSE,
             immediate. = TRUE) # thus will always be shown, even if >= warnings
   }
@@ -1491,8 +1490,7 @@ exec_as.mo <- function(x,
     }
     msg <- paste0("Result", plural[1], " of ", nr2char(NROW(uncertainties)), " value", plural[1],
                   " ", plural[3], " guessed with uncertainty. Use mo_uncertainties() to review ", plural[2], ".")
-    cat("\n")
-    warning(red(msg),
+    warning(red(paste0("\n", msg)),
             call. = FALSE,
             immediate. = TRUE) # thus will always be shown, even if >= warnings
   }
@@ -1753,7 +1751,7 @@ as.data.frame.mo <- function(x, ...) {
 "[<-.mo" <- function(i, j, ..., value) {
   y <- NextMethod()
   attributes(y) <- attributes(i)
-  class_integrity_check(y, "microorganism code", c(as.character(AMR::microorganisms$mo), 
+  class_integrity_check(y, "microorganism code", c(as.character(microorganisms$mo), 
                                                    as.character(microorganisms.translation$mo_old)))
 }
 #' @exportMethod [[<-.mo
@@ -1762,7 +1760,7 @@ as.data.frame.mo <- function(x, ...) {
 "[[<-.mo" <- function(i, j, ..., value) {
   y <- NextMethod()
   attributes(y) <- attributes(i)
-  class_integrity_check(y, "microorganism code", c(as.character(AMR::microorganisms$mo), 
+  class_integrity_check(y, "microorganism code", c(as.character(microorganisms$mo), 
                                                    as.character(microorganisms.translation$mo_old)))
 }
 #' @exportMethod c.mo
@@ -1771,7 +1769,7 @@ as.data.frame.mo <- function(x, ...) {
 c.mo <- function(x, ...) {
   y <- NextMethod()
   attributes(y) <- attributes(x)
-  class_integrity_check(y, "microorganism code", c(as.character(AMR::microorganisms$mo), 
+  class_integrity_check(y, "microorganism code", c(as.character(microorganisms$mo), 
                                                    as.character(microorganisms.translation$mo_old)))
 }
 

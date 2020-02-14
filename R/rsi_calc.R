@@ -179,6 +179,8 @@ rsi_calc_df <- function(type, # "proportion" or "count"
                         combine_IR = FALSE,
                         combine_SI_missing = FALSE) {
   
+  check_dataset_integrity()
+  
   if (!"data.frame" %in% class(data)) {
     stop(paste0("`", type, "_df` must be called on a data.frame"), call. = FALSE)
   }
@@ -252,7 +254,7 @@ rsi_calc_df <- function(type, # "proportion" or "count"
     arrange(antibiotic, interpretation)
   
   if (!translate_ab == FALSE) {
-    res <- res %>% mutate(antibiotic = AMR::ab_property(antibiotic, property = translate_ab, language = language))
+    res <- res %>% mutate(antibiotic = ab_property(antibiotic, property = translate_ab, language = language))
   }
   
   as.data.frame(res, stringsAsFactors = FALSE)

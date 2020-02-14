@@ -28,10 +28,10 @@
 #' @param mo a microorganism code, generated with [as.mo()]
 #' @param ab an antimicrobial code, generated with [as.ab()]
 #' @inheritParams first_isolate
-#' @param guideline defaults to the latest included EUCAST guideline, run `unique(AMR::rsi_translation$guideline)` for all options
+#' @param guideline defaults to the latest included EUCAST guideline, run `unique(rsi_translation$guideline)` for all options
 #' @param threshold maximum fraction of invalid antimicrobial interpretations of `x`, please see *Examples*
 #' @param ... parameters passed on to methods
-#' @details Run `unique(AMR::rsi_translation$guideline)` for a list of all supported guidelines. The repository of this package contains [this machine readable version](https://gitlab.com/msberends/AMR/blob/master/data-raw/rsi_translation.txt) of these guidelines.
+#' @details Run `unique(rsi_translation$guideline)` for a list of all supported guidelines. The repository of this package contains [this machine readable version](https://gitlab.com/msberends/AMR/blob/master/data-raw/rsi_translation.txt) of these guidelines.
 #' 
 #' These guidelines are machine readable, since [](https://gitlab.com/msberends/AMR/blob/master/data-raw/rsi_translation.txt).
 #'
@@ -66,11 +66,12 @@
 #' # interpret MIC values
 #' as.rsi(x = as.mic(2),
 #'        mo = as.mo("S. pneumoniae"),
-#'        ab = "AMX",
+#'        ab = "AMP",
 #'        guideline = "EUCAST")
-#' as.rsi(x = as.mic(4),
-#'        mo = as.mo("S. pneumoniae"),
-#'        ab = "AMX",
+#'
+#' as.rsi(x = as.disk(18),
+#'        mo = "Strep pneu",  # `mo` will be coerced with as.mo()
+#'        ab = "ampicillin",  # and `ab` with as.ab()
 #'        guideline = "EUCAST")
 #'
 #' plot(rsi_data)    # for percentages
@@ -188,7 +189,7 @@ as.rsi.disk <- function(x, mo, ab, guideline = "EUCAST", ...) {
 get_guideline <- function(guideline) {
   guideline_param <- toupper(guideline)
   if (guideline_param %in% c("CLSI", "EUCAST")) {
-    guideline_param <- AMR::rsi_translation %>%
+    guideline_param <- rsi_translation %>%
       filter(guideline %like% guideline_param) %>%
       pull(guideline) %>%
       sort() %>%
@@ -196,9 +197,9 @@ get_guideline <- function(guideline) {
       .[1]
   }
   
-  if (!guideline_param %in% AMR::rsi_translation$guideline) {
+  if (!guideline_param %in% rsi_translation$guideline) {
     stop(paste0("invalid guideline: '", guideline,
-                "'.\nValid guidelines are: ", paste0("'", rev(sort(unique(AMR::rsi_translation$guideline))), "'", collapse = ", ")),
+                "'.\nValid guidelines are: ", paste0("'", rev(sort(unique(rsi_translation$guideline))), "'", collapse = ", ")),
          call. = FALSE)
   }
   
@@ -222,6 +223,7 @@ exec_as.rsi <- function(method, x, mo, ab, guideline) {
   mo_order <- as.mo(mo_order(mo))
   mo_becker <- as.mo(mo, Becker = TRUE)
   mo_lancefield <- as.mo(mo, Lancefield = TRUE)
+  mo_other <- as.mo("other")
   
   guideline_coerced <- get_guideline(guideline)
   if (guideline_coerced != guideline) {
@@ -229,7 +231,7 @@ exec_as.rsi <- function(method, x, mo, ab, guideline) {
   }
 
   new_rsi <- rep(NA_character_, length(x))
-  trans <- AMR::rsi_translation %>%
+  trans <- rsi_translation %>%
     filter(guideline == guideline_coerced & method == method_param) %>%
     mutate(lookup = paste(mo, ab))
 
@@ -239,6 +241,7 @@ exec_as.rsi <- function(method, x, mo, ab, guideline) {
   lookup_order <- paste(mo_order, ab)
   lookup_becker <- paste(mo_becker, ab)
   lookup_lancefield <- paste(mo_lancefield, ab)
+  lookup_other <- paste(mo_other, ab)
   
   for (i in seq_len(length(x))) {
     get_record <- trans %>%
@@ -247,7 +250,8 @@ exec_as.rsi <- function(method, x, mo, ab, guideline) {
                            lookup_family[i],
                            lookup_order[i],
                            lookup_becker[i],
-                           lookup_lancefield[i])) %>%
+                           lookup_lancefield[i],
+                           lookup_other[i])) %>%
       # be as specific as possible (i.e. prefer species over genus):
       arrange(desc(nchar(mo))) %>%
       .[1L, ]

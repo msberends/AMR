@@ -1,0 +1,206 @@
+# ==================================================================== #
+# TITLE                                                                #
+# Antimicrobial Resistance (AMR) Analysis                              #
+#                                                                      #
+# SOURCE                                                               #
+# https://gitlab.com/msberends/AMR                                     #
+#                                                                      #
+# LICENCE                                                              #
+# (c) 2018-2020 Berends MS, Luz CF et al.                              #
+#                                                                      #
+# This R package is free software; you can freely use and distribute   #
+# it for both personal and commercial purposes under the terms of the  #
+# GNU General Public License version 2.0 (GNU GPL-2), as published by  #
+# the Free Software Foundation.                                        #
+#                                                                      #
+# We created this package for both routine data analysis and academic  #
+# research and it was publicly released in the hope that it will be    #
+# useful, but it comes WITHOUT ANY WARRANTY OR LIABILITY.              #
+# Visit our website for more info: https://msberends.gitlab.io/AMR.    #
+# ==================================================================== #
+
+library(openxlsx)
+library(dplyr)
+library(cleaner)
+library(AMR)
+
+read_EUCAST <- function(sheet, file = "data-raw/v_10.0_Breakpoint_Tables.xlsx") { 
+  
+  message("Getting sheet ", sheet)
+  sheet.bak <- sheet
+  
+  raw_data <- read.xlsx(xlsxFile = file,
+                        sheet = sheet,
+                        colNames = FALSE,
+                        skipEmptyRows = FALSE,
+                        skipEmptyCols = FALSE, 
+                        fillMergedCells = TRUE,
+                        na.strings = c("", "-", "NA", "IE", "IP"))
+  
+  # in the info header in the Excel file, EUCAST mentions which genera are targeted
+  if (sheet %like% "anaerob.*Gram.*posi") {
+    sheet <- paste0(c("Actinomyces", "Bifidobacterium", "Clostridioides", 
+                      "Clostridium", "Cutibacterium", "Eggerthella", 
+                      "Eubacterium", "Lactobacillus", "Propionibacterium", 
+                      "Staphylococcus saccharolyticus"), 
+                    collapse = "_")
+  } else if (sheet %like% "anaerob.*Gram.*nega") {
+    sheet <- paste0(c("Bacteroides",
+                      "Bilophila",
+                      "Fusobacterium",
+                      "Mobiluncus",
+                      "Parabacteroides",
+                      "Porphyromonas",
+                      "Prevotella"), 
+                    collapse = "_")
+  } else if (sheet == "Streptococcus A,B,C,G") {
+    sheet <- paste0(microorganisms %>%
+                      filter(genus == "Streptococcus") %>%
+                      mutate(lancefield = mo_name(mo, Lancefield = TRUE)) %>%
+                      filter(lancefield %like% "^Streptococcus group") %>% 
+                      pull(fullname), 
+                    collapse = "_")
+  } else if (sheet %like% "PK.*PD") {
+    sheet <- "UNKNOWN"
+  }
+  mo_sheet <- paste0(as.mo(unlist(strsplit(sheet, "_"))), collapse = "|")
+  
+  set_columns_names <- function(x, cols) {
+    colnames(x) <- cols[1:length(colnames(x))]
+    x
+  }
+  
+  get_mo <- function(x) {
+    for (i in seq_len(length(x))) {
+      y <- trimws(unlist(strsplit(x[i], "(,|and)")))
+      y <- trimws(gsub("[(].*[)]", "", y))
+      y <- suppressWarnings(as.mo(y, allow_uncertain = FALSE))
+      y <- y[!is.na(y) & y != "UNKNOWN"]
+      x[i] <- paste(y, collapse = "|")
+    }
+    x
+  }
+  
+  MICs_with_trailing_superscript <- c(0.0011:0.0019, 11:19, 21:29, 0.51:0.59, 41:49,
+                                      81:89, 0.031:0.039, 0.061:0.069, 0.251:0.259,
+                                      0.1251:0.1259, 161:169, 321:329)
+  
+  has_zone_diameters <- rep(any(unlist(raw_data) %like% "zone diameter"), nrow(raw_data))
+
+  cleaned <- raw_data %>% 
+    as_tibble() %>% 
+    set_columns_names(LETTERS) %>% 
+    transmute(drug = A,
+              MIC_S = B,
+              MIC_R = C,
+              disk_dose = ifelse(has_zone_diameters, E, NA_character_),
+              disk_S = ifelse(has_zone_diameters, `F`, NA_character_),
+              disk_R = ifelse(has_zone_diameters, G, NA_character_)) %>% 
+    filter(!is.na(drug),
+           !(is.na(MIC_S) & is.na(MIC_R) & is.na(disk_S) & is.na(disk_R)),
+           !MIC_S %like% "(MIC|S ≤|note)",
+           drug != MIC_S) %>% 
+    mutate(administration = case_when(drug %like% "[( ]oral" ~ "oral",
+                                      drug %like% "[( ]iv"   ~ "iv",
+                                      TRUE ~ NA_character_),
+           uti = ifelse(drug %like% "(UTI|urinary|urine)", TRUE, FALSE),
+           systemic = ifelse(drug %like% "(systemic|septic)", TRUE, FALSE),
+           mo = ifelse(drug %like% "([.]|spp)", get_mo(drug), mo_sheet)) %>% 
+    # clean disk doses
+    mutate(disk_dose = clean_character(disk_dose, remove = "[^0-9.-]")) %>% 
+    # clean MIC and disk values
+    mutate(MIC_S = gsub(".,.", "", MIC_S), # remove superscript notes with comma, like 0.5^2,3
+           MIC_R = gsub(".,.", "", MIC_R),
+           disk_S = gsub(".,.", "", disk_S),
+           disk_R = gsub(".,.", "", disk_R),
+           MIC_S = clean_double(MIC_S), # make them valid numeric values
+           MIC_R = clean_double(MIC_R),
+           disk_S = clean_integer(disk_S),
+           disk_R = clean_integer(disk_R),
+           # invalid MIC values have a superscript text, delete those
+           MIC_S = ifelse(MIC_S %in% MICs_with_trailing_superscript,
+                          substr(MIC_S, 1, nchar(MIC_S) - 1),
+                          MIC_S),
+           MIC_R = ifelse(MIC_R %in% MICs_with_trailing_superscript,
+                          substr(MIC_R, 1, nchar(MIC_R) - 1),
+                          MIC_R)
+    ) %>% 
+    # clean drug names
+    mutate(drug = gsub(" ?[(, ].*$", "", drug),
+           drug = gsub("[1-9]+$", "", drug),
+           ab = as.ab(drug)) %>% 
+    select(ab, mo, everything(), -drug)
+  
+  # new row for every different MO mentioned
+  for (i in 1:nrow(cleaned)) {
+    mo <- cleaned[i, "mo", drop = TRUE]
+    if (grepl(pattern = "|", mo, fixed = TRUE)) {
+      mo_vect <- unlist(strsplit(mo, "|", fixed = TRUE))
+      cleaned[i, "mo"] <- mo_vect[1]
+      for (j in seq_len(length(mo_vect))) {
+        cleaned <- bind_rows(cleaned, cleaned[i ,])
+        cleaned[nrow(cleaned), "mo"] <- mo_vect[j]
+      }
+    }
+  }
+  
+  cleaned <- cleaned %>% 
+    distinct(ab, mo, administration, uti, systemic, .keep_all = TRUE) %>% 
+    arrange(ab, mo) %>% 
+    mutate_at(c("MIC_S", "MIC_R", "disk_S", "disk_R"), as.double) %>%
+    pivot_longer(c("MIC_S", "MIC_R", "disk_S", "disk_R"), "type") %>% 
+    mutate(method = ifelse(type %like% "MIC", "MIC", "DISK"), 
+           type = gsub("^.*_", "breakpoint_", type)) %>%
+    pivot_wider(names_from = type, values_from = value) %>% 
+    mutate(guideline = "EUCAST 2020",
+           disk_dose = ifelse(method == "DISK", disk_dose, NA_character_),
+           mo = ifelse(mo == "", mo_sheet, mo)) %>% 
+    filter(!(is.na(breakpoint_S) & is.na(breakpoint_R))) %>% 
+    # comply with rsi_translation for now
+    transmute(guideline,
+              method, 
+              site = case_when(uti ~ "UTI",
+                               systemic ~ "Systemic",
+                               TRUE ~ administration),
+              mo, ab, 
+              ref_tbl = sheet.bak, 
+              disk_dose = ifelse(!is.na(disk_dose), paste0(disk_dose, "ug"), NA_character_),
+              breakpoint_S, 
+              breakpoint_R)
+  
+  cleaned
+}
+
+sheets_to_analyse <- c("Enterobacterales",
+                       "Pseudomonas",
+                       "S.maltophilia",
+                       "Acinetobacter",
+                       "Staphylococcus",
+                       "Enterococcus",
+                       "Streptococcus A,B,C,G",
+                       "S.pneumoniae",
+                       "Viridans group streptococci",
+                       "H.influenzae",
+                       "M.catarrhalis",
+                       "N.gonorrhoeae",
+                       "N.meningitidis",
+                       "Anaerobes, Grampositive",
+                       "C.difficile",
+                       "Anaerobes, Gramnegative",
+                       "H.pylori",
+                       "L.monocytogenes",
+                       "P.multocida",
+                       "C.jejuni_C.coli",
+                       "Corynebacterium",
+                       "A.sanguinicola_A.urinae",
+                       "K.kingae",
+                       "Aeromonas",
+                       "B.pseudomallei",
+                       "M.tuberculosis",
+                       "PK PD breakpoints")
+
+new_EUCAST <- read_EUCAST(sheets_to_analyse[1]) # takes the longest time
+for (i in 2:length(sheets_to_analyse)) {
+  new_EUCAST <<- new_EUCAST %>% bind_rows(read_EUCAST(sheets_to_analyse[i]))
+}
+

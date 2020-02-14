@@ -126,7 +126,7 @@ get_column_abx <- function(x,
   # only check columns that are a valid AB code, ATC code, name, abbreviation or synonym,
   # or already have the rsi class (as.rsi) 
   # and that have no more than 50% invalid values
-  vectr_antibiotics <- unique(toupper(unlist(AMR::antibiotics[, c("ab", "atc", "name", "abbreviations", "synonyms")])))
+  vectr_antibiotics <- unique(toupper(unlist(antibiotics[, c("ab", "atc", "name", "abbreviations", "synonyms")])))
   vectr_antibiotics <- vectr_antibiotics[!is.na(vectr_antibiotics) & nchar(vectr_antibiotics) >= 3]
   x_columns <- sapply(colnames(x), function(col, df = x_bak) {
     if (toupper(col) %in% vectr_antibiotics | 
@@ -205,7 +205,7 @@ get_column_abx <- function(x,
       # missing a soft dependency may lower the reliability
       missing <- soft_dependencies[!soft_dependencies %in% names(x)]
       missing_txt <- data.frame(missing = missing,
-                                missing_names = AMR::ab_name(missing, tolower = TRUE),
+                                missing_names = ab_name(missing, tolower = TRUE),
                                 stringsAsFactors = FALSE) %>%
         mutate(txt = paste0(bold(missing), " (", missing_names, ")")) %>%
         arrange(missing_names) %>%

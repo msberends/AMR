@@ -24,7 +24,7 @@
 #' Filter isolates on results in specific antibiotic variables based on their class (ATC groups). This makes it easy to get a list of isolates that were tested for e.g. any aminoglycoside.
 #' @inheritSection lifecycle Stable lifecycle
 #' @param x a data set
-#' @param ab_class an antimicrobial class, like `"carbapenems"`, as can be found in [`AMR::antibiotics$group`][antibiotics]
+#' @param ab_class an antimicrobial class, like `"carbapenems"`, as can be found in [`antibiotics$group`][antibiotics]
 #' @param result an antibiotic result: S, I or R (or a combination of more of them)
 #' @param scope the scope to check which variables to check, can be `"any"` (default) or `"all"`
 #' @param ... parameters passed on to `filter_at` from the `dplyr` package
@@ -67,6 +67,9 @@ filter_ab_class <- function(x,
                             result = NULL,
                             scope = "any",
                             ...) {
+  
+  check_dataset_integrity()
+  
   scope <- scope[1L]
   if (is.null(result)) {
     result <- c("S", "I", "R")
@@ -276,7 +279,7 @@ filter_tetracyclines <- function(x,
 #' @importFrom dplyr %>% filter_at vars any_vars select
 ab_class_vars <- function(ab_class) {
   ab_class <- gsub("[^a-z0-9]+", ".*", ab_class)
-  ab_vars <- AMR::antibiotics %>%
+  ab_vars <- antibiotics %>%
     filter(group %like% ab_class) %>% 
     select(ab:name, abbreviations, synonyms) %>%
     unlist() %>%
@@ -289,7 +292,7 @@ ab_class_vars <- function(ab_class) {
   ab_vars <- ab_vars[!ab_vars %in% c(NA, "", "NA") & nchar(ab_vars) > 2]
   if (length(ab_vars) == 0) {
     # try again, searching atc_group1 and atc_group2 columns
-    ab_vars <- AMR::antibiotics %>%
+    ab_vars <- antibiotics %>%
       filter_at(vars(c("atc_group1", "atc_group2")), any_vars(. %like% ab_class)) %>% 
       select(ab:name, abbreviations, synonyms) %>%
       unlist() %>%
@@ -314,7 +317,7 @@ find_ab_group <- function(ab_class) {
                          "macrolide",
                          "tetracycline"),
          paste0(ab_class, "s"),
-         AMR::antibiotics %>%
+         antibiotics %>%
            filter(ab %in% ab_class_vars(ab_class)) %>%
            pull(group) %>%
            unique() %>%

@@ -168,7 +168,7 @@ ab_ddd <- function(x, administration = "oral", units = FALSE, ...) {
 #' @rdname ab_property
 #' @export
 ab_info <- function(x, language = get_locale(), ...) {
-  x <- AMR::as.ab(x, ...)
+  x <- as.ab(x, ...)
   base::list(ab = as.character(x),
              atc = ab_atc(x),
              cid = ab_cid(x),
@@ -189,7 +189,7 @@ ab_property <- function(x, property = "name", language = get_locale(), ...) {
   if (length(property) != 1L) {
     stop("'property' must be of length 1.")
   }
-  if (!property %in% colnames(AMR::antibiotics)) {
+  if (!property %in% colnames(antibiotics)) {
     stop("invalid property: '", property, "' - use a column name of the `antibiotics` data set")
   }
 
@@ -197,14 +197,17 @@ ab_property <- function(x, property = "name", language = get_locale(), ...) {
 }
 
 ab_validate <- function(x, property, ...) {
+  
+  check_dataset_integrity()
+  
   # try to catch an error when inputting an invalid parameter
   # so the 'call.' can be set to FALSE
-  tryCatch(x[1L] %in% AMR::antibiotics[1, property],
+  tryCatch(x[1L] %in% antibiotics[1, property],
            error = function(e) stop(e$message, call. = FALSE))
   x_bak <- x
-  if (!all(x %in% AMR::antibiotics[, property])) {
-    x <- data.frame(ab = AMR::as.ab(x, ...), stringsAsFactors = FALSE) %>%
-      left_join(AMR::antibiotics, by = "ab") %>%
+  if (!all(x %in% antibiotics[, property])) {
+    x <- data.frame(ab = as.ab(x, ...), stringsAsFactors = FALSE) %>%
+      left_join(antibiotics, by = "ab") %>%
       pull(property)
   }
   if (property == "ab") {

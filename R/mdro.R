@@ -90,6 +90,8 @@ mdro <- function(x,
                  verbose = FALSE,
                  ...) {
   
+  check_dataset_integrity()
+  
   if (verbose == TRUE & interactive()) {
     txt <- paste0("WARNING: In Verbose mode, the mdro() function does not return the MDRO results, but instead returns a data set in logbook form with extensive info about which isolates would be MDRO-positive, or why they are not.",
                   "\n\nThis may overwrite your existing data if you use e.g.:",
@@ -147,7 +149,7 @@ mdro <- function(x,
   if (is.null(col_mo) & guideline$code == "tb") {
     message(blue("NOTE: No column found as input for `col_mo`,",
                  bold("assuming all records contain", italic("Mycobacterium tuberculosis.\n"))))
-    x$mo <- AMR::as.mo("Mycobacterium tuberculosis")
+    x$mo <- as.mo("Mycobacterium tuberculosis")
     col_mo <- "mo"
   }
   if (is.null(col_mo)) {

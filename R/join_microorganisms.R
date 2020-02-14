@@ -54,7 +54,7 @@ inner_join_microorganisms <- function(x, by = NULL, suffix = c("2", ""), ...) {
   x <- checked$x
   by <- checked$by
   join <- suppressWarnings(
-    dplyr::inner_join(x = x, y = AMR::microorganisms, by = by, suffix = suffix, ...)
+    dplyr::inner_join(x = x, y = microorganisms, by = by, suffix = suffix, ...)
   )
   if (nrow(join) > nrow(x)) {
     warning("The newly joined tbl contains ", nrow(join) - nrow(x), " rows more that its original.")
@@ -69,7 +69,7 @@ left_join_microorganisms <- function(x, by = NULL, suffix = c("2", ""), ...) {
   x <- checked$x
   by <- checked$by
   join <- suppressWarnings(
-    dplyr::left_join(x = x, y = AMR::microorganisms, by = by, suffix = suffix, ...)
+    dplyr::left_join(x = x, y = microorganisms, by = by, suffix = suffix, ...)
   )
   if (nrow(join) > nrow(x)) {
     warning("The newly joined tbl contains ", nrow(join) - nrow(x), " rows more that its original.")
@@ -84,7 +84,7 @@ right_join_microorganisms <- function(x, by = NULL, suffix = c("2", ""), ...) {
   x <- checked$x
   by <- checked$by
   join <- suppressWarnings(
-    dplyr::right_join(x = x, y = AMR::microorganisms, by = by, suffix = suffix, ...)
+    dplyr::right_join(x = x, y = microorganisms, by = by, suffix = suffix, ...)
   )
   if (nrow(join) > nrow(x)) {
     warning("The newly joined tbl contains ", nrow(join) - nrow(x), " rows more that its original.")
@@ -99,7 +99,7 @@ full_join_microorganisms <- function(x, by = NULL, suffix = c("2", ""), ...) {
   x <- checked$x
   by <- checked$by
   join <- suppressWarnings(
-    dplyr::full_join(x = x, y = AMR::microorganisms, by = by, suffix = suffix, ...)
+    dplyr::full_join(x = x, y = microorganisms, by = by, suffix = suffix, ...)
   )
   if (nrow(join) > nrow(x)) {
     warning("The newly joined tbl contains ", nrow(join) - nrow(x), " rows more that its original.")
@@ -114,7 +114,7 @@ semi_join_microorganisms <- function(x, by = NULL, ...) {
   x <- checked$x
   by <- checked$by
   suppressWarnings(
-    dplyr::semi_join(x = x, y = AMR::microorganisms, by = by, ...)
+    dplyr::semi_join(x = x, y = microorganisms, by = by, ...)
   )
 }
 
@@ -125,7 +125,7 @@ anti_join_microorganisms <- function(x, by = NULL, ...) {
   x <- checked$x
   by <- checked$by
   suppressWarnings(
-    dplyr::anti_join(x = x, y = AMR::microorganisms, by = by, ...)
+    dplyr::anti_join(x = x, y = microorganisms, by = by, ...)
   )
 }
 
@@ -149,7 +149,7 @@ joins_check_df <- function(x, by) {
     message('Joining, by = "', by, '"') # message same as dplyr::join functions
   }
   if (is.null(names(by))) {
-    joinby <- colnames(AMR::microorganisms)[1]
+    joinby <- colnames(microorganisms)[1]
     names(joinby) <- by
   } else {
     joinby <- by

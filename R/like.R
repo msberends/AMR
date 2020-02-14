@@ -45,15 +45,15 @@
 #'
 #' # also supports multiple patterns, length must be equal to x
 #' a <- c("Test case", "Something different", "Yet another thing")
-#' b <- c("case", "diff", "yet")
+#' b <- c(     "case",           "diff",      "yet")
 #' a %like% b
 #' #> TRUE TRUE TRUE
 #'
 #' # get frequencies of bacteria whose name start with 'Ent' or 'ent'
 #' library(dplyr)
 #' example_isolates %>%
-#'   filter(mo_genus(mo) %like% '^ent') %>%
-#'   freq(mo_fullname(mo))
+#'   filter(mo_name(mo) %like% '^ent') %>%
+#'   freq(mo_genus(mo))
 like <- function(x, pattern, ignore.case = TRUE) {
   if (length(pattern) > 1) {
     if (length(x) != length(pattern)) {

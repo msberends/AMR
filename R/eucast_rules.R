@@ -202,6 +202,8 @@ eucast_rules <- function(x,
                          verbose = FALSE,
                          ...) {
   
+  check_dataset_integrity()
+  
   if (verbose == TRUE & interactive()) {
     txt <- paste0("WARNING: In Verbose mode, the eucast_rules() function does not apply rules to the data, but instead returns a data set in logbook form with extensive info about which rows and columns would be effected and in which way.",
                   "\n\nThis may overwrite your existing data if you use e.g.:",
@@ -564,7 +566,7 @@ eucast_rules <- function(x,
       strsplit(",") %>%
       unlist() %>%
       trimws() %>%
-      sapply(function(x) if (x %in% AMR::antibiotics$ab) ab_name(x, language = NULL, tolower = TRUE) else x) %>%
+      sapply(function(x) if (x %in% antibiotics$ab) ab_name(x, language = NULL, tolower = TRUE) else x) %>%
       sort() %>%
       paste(collapse = ", ")
     x <- gsub("_", " ", x, fixed = TRUE)
@@ -664,8 +666,8 @@ eucast_rules <- function(x,
       # Print rule  -------------------------------------------------------------
       if (rule_current != rule_previous) {
         # is new rule within group, print its name
-        if (rule_current %in% c(AMR::microorganisms$family,
-                                AMR::microorganisms$fullname)) {
+        if (rule_current %in% c(microorganisms$family,
+                                microorganisms$fullname)) {
           cat(italic(rule_current))
         } else {
           cat(rule_current)
@@ -681,7 +683,7 @@ eucast_rules <- function(x,
     # be sure to comprise all coagulase-negative/-positive Staphylococci when they are mentioned
     if (eucast_rules_df[i, 3] %like% "coagulase-") {
       suppressWarnings(
-        all_staph <- AMR::microorganisms %>%
+        all_staph <- microorganisms %>%
           filter(genus == "Staphylococcus") %>%
           mutate(CNS_CPS = mo_name(mo, Becker = "all"))
       )

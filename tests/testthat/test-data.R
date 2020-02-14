@@ -22,6 +22,9 @@
 context("data.R")
 
 test_that("data sets are valid", {
+  
+  expect_true(check_dataset_integrity()) # in misc.R
+  
   # IDs should always be unique
   expect_identical(nrow(microorganisms), length(unique(microorganisms$mo)))
   expect_identical(class(microorganisms$mo), "mo")

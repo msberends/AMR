@@ -3,7 +3,7 @@ library(dplyr)
 # Installed WHONET 2019 software on Windows (http://www.whonet.org/software.html),
 #    opened C:\WHONET\Codes\WHONETCodes.mdb in MS Access
 #    and exported table 'DRGLST1' to MS Excel
-DRGLST1 <- readxl::read_excel("data-raw/DRGLST1.xlsx")
+DRGLST1 <- readxl::read_excel("data-raw/DRGLST1.xlsx", na = c("", "NA", "-"))
 rsi_translation <- DRGLST1 %>%
   # only keep CLSI and EUCAST guidelines:
   filter(GUIDELINES %like% "^(CLSI|EUCST)") %>%
@@ -38,11 +38,17 @@ tbl_disk <- rsi_translation %>%
 rsi_translation <- bind_rows(tbl_mic, tbl_disk) %>%
   rename(disk_dose = dose_disk) %>% 
   mutate(disk_dose = gsub("µ", "u", disk_dose)) %>% 
-  select(-ends_with("_mic"), -ends_with("_disk")) %>%
+  select(-ends_with("_mic"), -ends_with("_disk"))
+
+# add new EUCAST with read_EUCAST.R
+rsi_translation <- rsi_translation %>%
+  bind_rows(new_EUCAST) %>% 
+  mutate(uti = site %like% "(UTI|urinary)") %>% 
   as.data.frame(stringsAsFactors = FALSE) %>%
   # force classes again
   mutate(mo = as.mo(mo),
-         ab = as.ab(ab))
+         ab = as.ab(ab)) %>% 
+  arrange(desc(guideline), ab, mo, method)
 
 # save to package
 usethis::use_data(rsi_translation, overwrite = TRUE)

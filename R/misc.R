@@ -29,12 +29,23 @@ addin_insert_like <- function() {
   rstudioapi::insertText(" %like% ")
 }
 
-load_AMR_package <- function() {
-  if (!"package:AMR" %in% base::search()) {
-    require(AMR)
-    # check onLoad() in R/zzz.R: data tables are created there.
+check_dataset_integrity <- function() {
+  if (!all(colnames(microorganisms) %in% c("mo", "fullname", "kingdom", "phylum",
+                                           "class", "order", "family", "genus", 
+                                           "species", "subspecies", "rank",
+                                           "col_id", "species_id", "source",
+                                           "ref", "prevalence", "snomed"),
+           na.rm = TRUE) |
+      NROW(microorganisms) != NROW(microorganismsDT) |
+      !all(colnames(antibiotics) %in% c("ab", "atc", "cid", "name", "group", 
+                                        "atc_group1", "atc_group2", "abbreviations",
+                                        "synonyms", "oral_ddd", "oral_units", 
+                                        "iv_ddd", "iv_units", "loinc"),
+           na.rm = TRUE)) {
+    stop("Data set `microorganisms` or data set `antibiotics` is overwritten by your global environment and prevents the AMR package from working correctly. Please rename your object before using this function.", call. = FALSE)
   }
-  base::invisible()
+
+  invisible(TRUE)
 }
 
 #' @importFrom crayon blue bold red
@@ -155,9 +166,6 @@ dataset_UTF8_to_ASCII <- function(df) {
     col <- df[, i]
     if (is.list(col)) {
       col <- lapply(col, function(j) trans(j))
-      # for (j in seq_len(length(col))) {
-      #   col[[j]] <- trans(col[[j]])
-      # }
       df[, i] <- list(col)
     } else {
       if (is.factor(col)) {

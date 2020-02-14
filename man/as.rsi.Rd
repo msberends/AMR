@@ -31,7 +31,7 @@ is.rsi.eligible(x, threshold = 0.05)
 
 \item{ab}{an antimicrobial code, generated with \code{\link[=as.ab]{as.ab()}}}
 
-\item{guideline}{defaults to the latest included EUCAST guideline, run \code{unique(AMR::rsi_translation$guideline)} for all options}
+\item{guideline}{defaults to the latest included EUCAST guideline, run \code{unique(rsi_translation$guideline)} for all options}
 
 \item{col_mo}{column name of the IDs of the microorganisms (see \code{\link[=as.mo]{as.mo()}}), defaults to the first column of class \code{\link{mo}}. Values will be coerced using \code{\link[=as.mo]{as.mo()}}.}
 
@@ -44,7 +44,7 @@ Ordered factor with new class \code{\link{rsi}}
 Interpret MIC values and disk diffusion diameters according to EUCAST or CLSI, or clean up existing R/SI values. This transforms the input to a new class \code{\link{rsi}}, which is an ordered factor with levels \verb{S < I < R}. Invalid antimicrobial interpretations will be translated as \code{NA} with a warning.
 }
 \details{
-Run \code{unique(AMR::rsi_translation$guideline)} for a list of all supported guidelines. The repository of this package contains \href{https://gitlab.com/msberends/AMR/blob/master/data-raw/rsi_translation.txt}{this machine readable version} of these guidelines.
+Run \code{unique(rsi_translation$guideline)} for a list of all supported guidelines. The repository of this package contains \href{https://gitlab.com/msberends/AMR/blob/master/data-raw/rsi_translation.txt}{this machine readable version} of these guidelines.
 
 These guidelines are machine readable, since \href{https://gitlab.com/msberends/AMR/blob/master/data-raw/rsi_translation.txt}{}.
 
@@ -91,11 +91,12 @@ as.rsi("<= 0.002; S") # will return S
 # interpret MIC values
 as.rsi(x = as.mic(2),
        mo = as.mo("S. pneumoniae"),
-       ab = "AMX",
+       ab = "AMP",
        guideline = "EUCAST")
-as.rsi(x = as.mic(4),
-       mo = as.mo("S. pneumoniae"),
-       ab = "AMX",
+
+as.rsi(x = as.disk(18),
+       mo = "Strep pneu",  # `mo` will be coerced with as.mo()
+       ab = "ampicillin",  # and `ab` with as.ab()
        guideline = "EUCAST")
 
 plot(rsi_data)    # for percentages

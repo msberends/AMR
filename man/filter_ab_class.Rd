@@ -45,7 +45,7 @@ filter_tetracyclines(x, result = NULL, scope = "any", ...)
 \arguments{
 \item{x}{a data set}
 
-\item{ab_class}{an antimicrobial class, like \code{"carbapenems"}, as can be found in \code{\link[=antibiotics]{AMR::antibiotics$group}}}
+\item{ab_class}{an antimicrobial class, like \code{"carbapenems"}, as can be found in \code{\link[=antibiotics]{antibiotics$group}}}
 
 \item{result}{an antibiotic result: S, I or R (or a combination of more of them)}
 

@@ -1,7 +1,9 @@
-# AMR 0.9.0.9022
-## <small>Last updated: 10-Feb-2020</small>
+# AMR 0.9.0.9023
+## <small>Last updated: 14-Feb-2020</small>
 
 ### New
+* Support for the newest EUCAST Clinical Breakpoint Tables v.10.0, valid from 2020-01-01 (use `as.rsi()` to transform MICs or disk zones)
+* The repository of this package now contains a clean version of the EUCAST and CLSI guidelines from 2011-2020 to translate MIC and disk diffusion values to R/SI: https://gitlab.com/msberends/AMR/blob/master/data-raw/rsi_translation.txt. This **allows for machine reading these guidelines**, which is almost impossible with the Excel and PDF files distributed by EUCAST and CLSI. This file is updated automatically.
 * Support for LOINC and SNOMED codes
   * Support for LOINC codes in the `antibiotics` data set. Use `ab_loinc()` to retrieve LOINC codes, or use a LOINC code for input in any `ab_*` function:
     ```r
@@ -21,7 +23,6 @@
     mo_gramstain(115329001)
     #> [1] "Gram-positive"
     ```
-* The repository of this package now contains a clean version of the EUCAST and CLSI guidelines from 2011-2019 to translate MIC and disk diffusion values to R/SI: https://gitlab.com/msberends/AMR/blob/master/data-raw/rsi_translation.txt. This **allows for machine reading these guidelines**, which is almost impossible with the Excel and PDF files distributed by EUCAST and CLSI. This file is updated automatically.
 
 ### Changes
 * The `as.mo()` function previously wrote to the package folder to improve calculation speed for previously calculated results. This is no longer the case, to comply with CRAN policies. Consequently, the function `clear_mo_history()` was removed.
@@ -42,6 +43,7 @@
 ### Other
 * Add a `CITATION` file
 * Full support for the upcoming R 4.0
+* Removed unnecessary `AMR::` calls
 
 # AMR 0.9.0
 
