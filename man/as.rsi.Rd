@@ -54,7 +54,7 @@ The function \code{\link[=is.rsi.eligible]{is.rsi.eligible()}} returns \code{TRU
 }
 \section{Interpretation of R and S/I}{
 
-In 2019, the European Committee on Antimicrobial Susceptibility Testing (EUCAST) has decided to change the definitions of susceptibility testing categories R and S/I as shown below (\url{http://www.eucast.org/newsiandr/}). Results of several consultations on the new definitions are available on the EUCAST website under "Consultations".
+In 2019, the European Committee on Antimicrobial Susceptibility Testing (EUCAST) has decided to change the definitions of susceptibility testing categories R and S/I as shown below (\url{http://www.eucast.org/newsiandr/}).
 \itemize{
 \item \strong{R = Resistant}\cr
 A microorganism is categorised as \emph{Resistant} when there is a high likelihood of therapeutic failure even when there is increased exposure. Exposure is a function of how the mode of administration, dose, dosing interval, infusion time, as well as distribution and excretion of the antimicrobial agent will influence the infecting organism at the site of infection.
@@ -81,14 +81,9 @@ On our website \url{https://msberends.gitlab.io/AMR} you can find \href{https://
 }
 
 \examples{
-rsi_data <- as.rsi(c(rep("S", 474), rep("I", 36), rep("R", 370)))
-rsi_data <- as.rsi(c(rep("S", 474), rep("I", 36), rep("R", 370), "A", "B", "C"))
-is.rsi(rsi_data)
+# For INTERPRETING disk diffusion and MIC values -----------------------
 
-# this can also coerce combined MIC/RSI values:
-as.rsi("<= 0.002; S") # will return S
-
-# interpret MIC values
+# single values
 as.rsi(x = as.mic(2),
        mo = as.mo("S. pneumoniae"),
        ab = "AMP",
@@ -98,21 +93,36 @@ as.rsi(x = as.disk(18),
        mo = "Strep pneu",  # `mo` will be coerced with as.mo()
        ab = "ampicillin",  # and `ab` with as.ab()
        guideline = "EUCAST")
+       
+# a whole data set, even with combined MIC values and disk zones
+df <- data.frame(microorganism = "E. coli",
+                 AMP = as.mic(12),
+                 GEN = as.disk(18))
+as.rsi(df)
 
+
+# For CLEANING existing R/SI values ------------------------------------
+
+as.rsi(c("S", "I", "R", "A", "B", "C"))
+as.rsi("<= 0.002; S") # will return "S"
+
+rsi_data <- as.rsi(c(rep("S", 474), rep("I", 36), rep("R", 370)))
+is.rsi(rsi_data)
 plot(rsi_data)    # for percentages
 barplot(rsi_data) # for frequencies
 freq(rsi_data)    # frequency table with informative header
 
-# using dplyr's mutate
 library(dplyr)
 example_isolates \%>\%
   mutate_at(vars(PEN:RIF), as.rsi)
 
-
-# fastest way to transform all columns with already valid AB results to class `rsi`:
+# fastest way to transform all columns with already valid AMR results to class `rsi`:
 example_isolates \%>\%
-  mutate_if(is.rsi.eligible,
-            as.rsi)
+  mutate_if(is.rsi.eligible, as.rsi)
+  
+# note: from dplyr 1.0.0 on, this will be: 
+# example_isolates \%>\%
+#   mutate(across(is.rsi.eligible, as.rsi))
 
 # default threshold of `is.rsi.eligible` is 5\%.
 is.rsi.eligible(WHONET$`First name`) # fails, >80\% is invalid

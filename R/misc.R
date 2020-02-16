@@ -30,21 +30,24 @@ addin_insert_like <- function() {
 }
 
 check_dataset_integrity <- function() {
-  if (!all(colnames(microorganisms) %in% c("mo", "fullname", "kingdom", "phylum",
-                                           "class", "order", "family", "genus", 
-                                           "species", "subspecies", "rank",
-                                           "col_id", "species_id", "source",
-                                           "ref", "prevalence", "snomed"),
-           na.rm = TRUE) |
-      NROW(microorganisms) != NROW(microorganismsDT) |
-      !all(colnames(antibiotics) %in% c("ab", "atc", "cid", "name", "group", 
-                                        "atc_group1", "atc_group2", "abbreviations",
-                                        "synonyms", "oral_ddd", "oral_units", 
-                                        "iv_ddd", "iv_units", "loinc"),
-           na.rm = TRUE)) {
+  tryCatch({
+    check_microorganisms <- all(c("mo", "fullname", "kingdom", "phylum",
+                                  "class", "order", "family", "genus", 
+                                  "species", "subspecies", "rank",
+                                  "col_id", "species_id", "source",
+                                  "ref", "prevalence", "snomed") %in% colnames(microorganisms),
+                                na.rm = TRUE) & NROW(microorganisms) == NROW(microorganismsDT)
+    check_antibiotics <- all(c("ab", "atc", "cid", "name", "group", 
+                               "atc_group1", "atc_group2", "abbreviations",
+                               "synonyms", "oral_ddd", "oral_units", 
+                               "iv_ddd", "iv_units", "loinc") %in% colnames(antibiotics),
+                             na.rm = TRUE)
+  }, error = function(e)
+    stop('Please use the command \'library("AMR")\' before using this function, to load the needed reference data.', call. = FALSE)
+  )
+  if (!check_microorganisms | !check_antibiotics) {
     stop("Data set `microorganisms` or data set `antibiotics` is overwritten by your global environment and prevents the AMR package from working correctly. Please rename your object before using this function.", call. = FALSE)
   }
-
   invisible(TRUE)
 }
 

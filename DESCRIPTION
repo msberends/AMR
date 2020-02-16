@@ -1,6 +1,6 @@
 Package: AMR
-Version: 0.9.0.9024
-Date: 2020-02-14
+Version: 0.9.0.9025
+Date: 2020-02-16
 Title: Antimicrobial Resistance Analysis
 Authors@R: c(
     person(role = c("aut", "cre"), 
@@ -28,7 +28,9 @@ Authors@R: c(
     person(role = "ctb",
            family = "Ny", given = "Sofia", email = "sofia.ny@folkhalsomyndigheten.se"),
     person(role = "ctb",
-           family = "Souverein", given = "Dennis", email = "d.souvereing@streeklabhaarlem.nl"))
+           family = "Souverein", given = "Dennis", email = "d.souvereing@streeklabhaarlem.nl"),
+    person(role = "fnd",
+           given = "Stichting Certe Medische Diagnostiek en Advies", email = "medischedataanalyse@certe.nl"))
 Description: Functions to simplify the analysis and prediction of Antimicrobial 
     Resistance (AMR) and to work with microbial and antimicrobial properties by
     using evidence-based methods, like those defined by Leclercq et al. (2013) 

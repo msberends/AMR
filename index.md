@@ -45,7 +45,7 @@ This package can be used for:
   * Calculating (empirical) susceptibility of both mono therapy and combination therapies ([tutorial](./articles/AMR.html))
   * Predicting future antimicrobial resistance using regression models ([tutorial](./articles/resistance_predict.html))
   * Getting properties for any microorganism (like Gram stain, species, genus or family) ([manual](./reference/mo_property.html))
-  * Getting properties for any antibiotic (like name, EARS-Net code, ATC code, PubChem code, defined daily dose or trade name) ([manual](./reference/ab_property.html))
+  * Getting properties for any antibiotic (like name, code of EARS-Net/ATC/LOINC/PubChem, defined daily dose or trade name) ([manual](./reference/ab_property.html))
   * Plotting antimicrobial resistance ([tutorial](./articles/AMR.html))
   * Applying EUCAST expert rules ([manual](./reference/eucast_rules.html))
   * Getting SNOMED codes of a microorganism, or get its name associated with a SNOMED code ([manual](./reference/mo_property.html))

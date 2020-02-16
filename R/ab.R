@@ -57,9 +57,9 @@
 #' 
 #' # spelling from different languages and dyslexia are no problem
 #' ab_atc("ceftriaxon")
-#' ab_atc("cephtriaxone")
-#' ab_atc("cephthriaxone")
-#' ab_atc("seephthriaaksone")
+#' ab_atc("cephtriaxone")     # small spelling error
+#' ab_atc("cephthriaxone")    # or a bit more severe
+#' ab_atc("seephthriaaksone") # and even this works
 #'
 #' # use ab_* functions to get a specific properties (see ?ab_property);
 #' # they use as.ab() internally:
