@@ -16,9 +16,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/all.min.css" integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/v4-shims.min.css" integrity="sha256-6qHlizsOWFskGlwVOKuns+D1nB6ssZrHQrNj1wGplHc=" crossorigin="anonymous">
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/headroom.min.js" integrity="sha256-DJFC1kqIhelURkuza0AvYal5RxMtpzLjFhsnVIeuk+U=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
-<script src="../pkgdown.js"></script><!-- docsearch --><script src="../docsearch.js"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/docsearch.js/2.6.1/docsearch.min.css" integrity="sha256-QOSRU/ra9ActyXkIBbiIB144aDBdtvXBcNc3OTNuX/Q=" crossorigin="anonymous">
-<link href="../docsearch.css" rel="stylesheet">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/jquery.mark.min.js" integrity="sha256-4HLtjeVgH0eIB3aZ9mLYF6E8oU5chNdjU6p6rrXpl9U=" crossorigin="anonymous"></script><link href="../extra.css" rel="stylesheet">
+<script src="../pkgdown.js"></script><link href="../extra.css" rel="stylesheet">
 <script src="../extra.js"></script><meta property="og:title" content="How to apply EUCAST rules">
 <meta property="og:description" content="">
 <meta property="og:image" content="https://msberends.gitlab.io/AMR/logo.png">
@@ -41,7 +39,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">0.9.0.9013</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">0.9.0.9025</span>
       </span>
     </div>
 
@@ -166,13 +164,7 @@
   </a>
 </li>
       </ul>
-<form class="navbar-form navbar-right hidden-xs hidden-sm" role="search">
-        <div class="form-group">
-          <input type="search" class="form-control" name="search-input" id="search-input" placeholder="Search..." aria-label="Search for..." autocomplete="off">
 </div>
-      </form>
-      
-    </div>
 <!--/.nav-collapse -->
   </div>
 <!--/.container -->
@@ -187,7 +179,7 @@
       <h1>How to apply EUCAST rules</h1>
                         <h4 class="author">Matthijs S. Berends</h4>
             
-            <h4 class="date">26 January 2020</h4>
+            <h4 class="date">17 February 2020</h4>
       
       
       <div class="hidden name"><code>EUCAST.Rmd</code></div>
@@ -203,25 +195,169 @@
 <blockquote>
 <p><em>EUCAST expert rules are a tabulated collection of expert knowledge on intrinsic resistances, exceptional resistance phenotypes and interpretive rules that may be applied to antimicrobial susceptibility testing in order to reduce errors and make appropriate recommendations for reporting particular resistances.</em></p>
 </blockquote>
-<p>In Europe, a lot of medical microbiological laboratories already apply these rules (<a href="https://www.eurosurveillance.org/content/10.2807/1560-7917.ES2015.20.2.21008">Brown <em>et al.</em>, 2015</a>). Our package features their latest insights on intrinsic resistance and exceptional phenotypes (version 9.0, 2019). Moreover, the <code><a href="../reference/eucast_rules.html">eucast_rules()</a></code> function we use for this purpose can also apply additional rules, like forcing <help title="ATC: J01CA01">ampicillin</help> = R in isolates when <help title="ATC: J01CR02">amoxicillin/clavulanic acid</help> = R.</p>
+<p>In Europe, a lot of medical microbiological laboratories already apply these rules (<a href="https://www.eurosurveillance.org/content/10.2807/1560-7917.ES2015.20.2.21008">Brown <em>et al.</em>, 2015</a>). Our package features their latest insights on intrinsic resistance and exceptional phenotypes (version 10.0, 2020). Moreover, the <code><a href="../reference/eucast_rules.html">eucast_rules()</a></code> function we use for this purpose can also apply additional rules, like forcing <help title="ATC: J01CA01">ampicillin</help> = R in isolates when <help title="ATC: J01CR02">amoxicillin/clavulanic acid</help> = R.</p>
 </div>
 <div id="examples" class="section level2">
 <h2 class="hasAnchor">
 <a href="#examples" class="anchor"></a>Examples</h2>
-<p>These rules can be used to discard impossible bug-drug combinations in your data. For example, <em>Klebsiella</em> produces beta-lactamase that prevents ampicillin (or amoxicillin) from working against it. In other words, every strain of <em>Klebsiella</em> is resistant to ampicillin.</p>
-<p>Sometimes, laboratory data can still contain such strains with ampicillin being susceptible to ampicillin. This could be because an antibiogram is available before an identification is available, and the antibiogram is then not re-interpreted based on the identification (namely, <em>Klebsiella</em>). EUCAST expert rules solves this:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1">oops &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span>(<span class="dt">mo =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"Klebsiella"</span>, </a>
-<a class="sourceLine" id="cb1-2" data-line-number="2">                          <span class="st">"Escherichia"</span>),</a>
-<a class="sourceLine" id="cb1-3" data-line-number="3">                   <span class="dt">ampicillin =</span> <span class="st">"S"</span>)</a>
-<a class="sourceLine" id="cb1-4" data-line-number="4">oops</a>
-<a class="sourceLine" id="cb1-5" data-line-number="5"><span class="co">#            mo ampicillin</span></a>
-<a class="sourceLine" id="cb1-6" data-line-number="6"><span class="co"># 1  Klebsiella          S</span></a>
-<a class="sourceLine" id="cb1-7" data-line-number="7"><span class="co"># 2 Escherichia          S</span></a>
-<a class="sourceLine" id="cb1-8" data-line-number="8"></a>
-<a class="sourceLine" id="cb1-9" data-line-number="9"><span class="kw"><a href="../reference/eucast_rules.html">eucast_rules</a></span>(oops, <span class="dt">info =</span> <span class="ot">FALSE</span>)</a>
-<a class="sourceLine" id="cb1-10" data-line-number="10"><span class="co">#            mo ampicillin</span></a>
-<a class="sourceLine" id="cb1-11" data-line-number="11"><span class="co"># 1  Klebsiella          R</span></a>
-<a class="sourceLine" id="cb1-12" data-line-number="12"><span class="co"># 2 Escherichia          S</span></a></code></pre></div>
+<p>These rules can be used to discard impossible bug-drug combinations in your data. For example, <em>Klebsiella</em> produces beta-lactamase that prevents ampicillin (or amoxicillin) from working against it. In other words, practically every strain of <em>Klebsiella</em> is resistant to ampicillin.</p>
+<p>Sometimes, laboratory data can still contain such strains with ampicillin being susceptible to ampicillin. This could be because an antibiogram is available before an identification is available, and the antibiogram is then not re-interpreted based on the identification (namely, <em>Klebsiella</em>). EUCAST expert rules solve this, that can be used with <code><a href="../reference/eucast_rules.html">eucast_rules()</a></code>:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a>oops &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span>(<span class="dt">mo =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"Klebsiella"</span>, </span>
+<span id="cb1-2"><a href="#cb1-2"></a>                          <span class="st">"Escherichia"</span>),</span>
+<span id="cb1-3"><a href="#cb1-3"></a>                   <span class="dt">ampicillin =</span> <span class="st">"S"</span>)</span>
+<span id="cb1-4"><a href="#cb1-4"></a>oops</span>
+<span id="cb1-5"><a href="#cb1-5"></a><span class="co">#            mo ampicillin</span></span>
+<span id="cb1-6"><a href="#cb1-6"></a><span class="co"># 1  Klebsiella          S</span></span>
+<span id="cb1-7"><a href="#cb1-7"></a><span class="co"># 2 Escherichia          S</span></span>
+<span id="cb1-8"><a href="#cb1-8"></a></span>
+<span id="cb1-9"><a href="#cb1-9"></a><span class="kw"><a href="../reference/eucast_rules.html">eucast_rules</a></span>(oops, <span class="dt">info =</span> <span class="ot">FALSE</span>)</span>
+<span id="cb1-10"><a href="#cb1-10"></a><span class="co">#            mo ampicillin</span></span>
+<span id="cb1-11"><a href="#cb1-11"></a><span class="co"># 1  Klebsiella          R</span></span>
+<span id="cb1-12"><a href="#cb1-12"></a><span class="co"># 2 Escherichia          S</span></span></code></pre></div>
+<p>EUCAST rules can not only be used for correction, they can also be used for filling in known resistance and susceptibility based on results of other antimicrobials drugs. This process is called <em>interpretive reading</em> and is part of the <code><a href="../reference/eucast_rules.html">eucast_rules()</a></code> function as well:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a>data &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span>(<span class="dt">mo =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"Staphylococcus aureus"</span>,</span>
+<span id="cb2-2"><a href="#cb2-2"></a>                          <span class="st">"Enterococcus faecalis"</span>,</span>
+<span id="cb2-3"><a href="#cb2-3"></a>                          <span class="st">"Escherichia coli"</span>,</span>
+<span id="cb2-4"><a href="#cb2-4"></a>                          <span class="st">"Klebsiella pneumoniae"</span>,</span>
+<span id="cb2-5"><a href="#cb2-5"></a>                          <span class="st">"Pseudomonas aeruginosa"</span>),</span>
+<span id="cb2-6"><a href="#cb2-6"></a>                   <span class="dt">VAN =</span> <span class="st">"-"</span>,       <span class="co"># Vancomycin</span></span>
+<span id="cb2-7"><a href="#cb2-7"></a>                   <span class="dt">AMX =</span> <span class="st">"-"</span>,       <span class="co"># Amoxicillin</span></span>
+<span id="cb2-8"><a href="#cb2-8"></a>                   <span class="dt">COL =</span> <span class="st">"-"</span>,       <span class="co"># Colistin</span></span>
+<span id="cb2-9"><a href="#cb2-9"></a>                   <span class="dt">CAZ =</span> <span class="st">"-"</span>,       <span class="co"># Ceftazidime</span></span>
+<span id="cb2-10"><a href="#cb2-10"></a>                   <span class="dt">CXM =</span> <span class="st">"-"</span>,       <span class="co"># Cefuroxime</span></span>
+<span id="cb2-11"><a href="#cb2-11"></a>                   <span class="dt">PEN =</span> <span class="st">"S"</span>,       <span class="co"># Penicillin G</span></span>
+<span id="cb2-12"><a href="#cb2-12"></a>                   <span class="dt">FOX =</span> <span class="st">"S"</span>,       <span class="co"># Cefoxitin</span></span>
+<span id="cb2-13"><a href="#cb2-13"></a>                   <span class="dt">stringsAsFactors =</span> <span class="ot">FALSE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a>data</span></code></pre></div>
+<table class="table">
+<thead><tr class="header">
+<th align="left">mo</th>
+<th align="center">VAN</th>
+<th align="center">AMX</th>
+<th align="center">COL</th>
+<th align="center">CAZ</th>
+<th align="center">CXM</th>
+<th align="center">PEN</th>
+<th align="center">FOX</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="left">Staphylococcus aureus</td>
+<td align="center">-</td>
+<td align="center">-</td>
+<td align="center">-</td>
+<td align="center">-</td>
+<td align="center">-</td>
+<td align="center">S</td>
+<td align="center">S</td>
+</tr>
+<tr class="even">
+<td align="left">Enterococcus faecalis</td>
+<td align="center">-</td>
+<td align="center">-</td>
+<td align="center">-</td>
+<td align="center">-</td>
+<td align="center">-</td>
+<td align="center">S</td>
+<td align="center">S</td>
+</tr>
+<tr class="odd">
+<td align="left">Escherichia coli</td>
+<td align="center">-</td>
+<td align="center">-</td>
+<td align="center">-</td>
+<td align="center">-</td>
+<td align="center">-</td>
+<td align="center">S</td>
+<td align="center">S</td>
+</tr>
+<tr class="even">
+<td align="left">Klebsiella pneumoniae</td>
+<td align="center">-</td>
+<td align="center">-</td>
+<td align="center">-</td>
+<td align="center">-</td>
+<td align="center">-</td>
+<td align="center">S</td>
+<td align="center">S</td>
+</tr>
+<tr class="odd">
+<td align="left">Pseudomonas aeruginosa</td>
+<td align="center">-</td>
+<td align="center">-</td>
+<td align="center">-</td>
+<td align="center">-</td>
+<td align="center">-</td>
+<td align="center">S</td>
+<td align="center">S</td>
+</tr>
+</tbody>
+</table>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a><span class="kw"><a href="../reference/eucast_rules.html">eucast_rules</a></span>(data, <span class="dt">info =</span> <span class="ot">FALSE</span>)</span></code></pre></div>
+<table class="table">
+<thead><tr class="header">
+<th align="left">mo</th>
+<th align="center">VAN</th>
+<th align="center">AMX</th>
+<th align="center">COL</th>
+<th align="center">CAZ</th>
+<th align="center">CXM</th>
+<th align="center">PEN</th>
+<th align="center">FOX</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="left">Staphylococcus aureus</td>
+<td align="center">-</td>
+<td align="center">S</td>
+<td align="center">R</td>
+<td align="center">R</td>
+<td align="center">S</td>
+<td align="center">S</td>
+<td align="center">S</td>
+</tr>
+<tr class="even">
+<td align="left">Enterococcus faecalis</td>
+<td align="center">-</td>
+<td align="center">-</td>
+<td align="center">R</td>
+<td align="center">R</td>
+<td align="center">R</td>
+<td align="center">S</td>
+<td align="center">R</td>
+</tr>
+<tr class="odd">
+<td align="left">Escherichia coli</td>
+<td align="center">R</td>
+<td align="center">-</td>
+<td align="center">-</td>
+<td align="center">-</td>
+<td align="center">-</td>
+<td align="center">R</td>
+<td align="center">S</td>
+</tr>
+<tr class="even">
+<td align="left">Klebsiella pneumoniae</td>
+<td align="center">R</td>
+<td align="center">R</td>
+<td align="center">-</td>
+<td align="center">-</td>
+<td align="center">-</td>
+<td align="center">R</td>
+<td align="center">S</td>
+</tr>
+<tr class="odd">
+<td align="left">Pseudomonas aeruginosa</td>
+<td align="center">R</td>
+<td align="center">R</td>
+<td align="center">-</td>
+<td align="center">-</td>
+<td align="center">R</td>
+<td align="center">R</td>
+<td align="center">R</td>
+</tr>
+</tbody>
+</table>
 </div>
   </div>
 
@@ -253,20 +389,7 @@
 </div>
 
   
-<script src="https://cdnjs.cloudflare.com/ajax/libs/docsearch.js/2.6.1/docsearch.min.js" integrity="sha256-GKvGqXDznoRYHCwKXGnuchvKSwmx9SRMrZOTh2g4Sb0=" crossorigin="anonymous"></script><script>
-  docsearch({
-    
-    
-    apiKey: 'f737050abfd4d726c63938e18f8c496e',
-    indexName: 'amr',
-    inputSelector: 'input#search-input.form-control',
-    transformData: function(hits) {
-      return hits.map(function (hit) {
-        hit.url = updateHitURL(hit);
-        return hit;
-      });
-    }
-  });
-</script>
-</body>
+
+
+  </body>
 </html>

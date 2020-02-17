@@ -205,8 +205,8 @@ catalogue_of_life <- list(
 #' - `ab`\cr Antibiotic ID, see [as.ab()]
 #' - `ref_tbl`\cr Info about where the guideline rule can be found
 #' - `disk_dose`\cr Dose of the used disk diffusion method
-#' - `breakpoint_S`\cr Lowest MIC value or highest number of millimeters that leads to "S"
-#' - `breakpoint_R`\cr Highest MIC value or lowest number of millimeters that leads to "R"
+#' - `breakpoint_S`\cr Lowest MIC value or highest number of millimetres that leads to "S"
+#' - `breakpoint_R`\cr Highest MIC value or lowest number of millimetres that leads to "R"
 #' @details The repository of this `AMR` package contains a file comprising this exact data set: <https://gitlab.com/msberends/AMR/blob/master/data-raw/rsi_translation.txt>. This file **allows for machine reading EUCAST and CLSI guidelines**, which is almost impossible with the Excel and PDF files distributed by EUCAST and CLSI. This file is updated automatically.
 #' @inheritSection AMR Read more on our website!
 "rsi_translation"

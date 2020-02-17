@@ -24,6 +24,8 @@ library(dplyr)
 library(cleaner)
 library(AMR)
 
+# USE THIS FUNCTION TO READ THE EUCAST EXCEL FILE THAT CONTAINS THE BREAKPOINT TABLES
+
 read_EUCAST <- function(sheet, file = "data-raw/v_10.0_Breakpoint_Tables.xlsx") { 
   
   message("Getting sheet ", sheet)

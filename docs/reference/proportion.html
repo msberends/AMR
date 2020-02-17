@@ -40,18 +40,12 @@
 <script src="../pkgdown.js"></script>
 
 
-<!-- docsearch -->
-<script src="../docsearch.js"></script>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/docsearch.js/2.6.1/docsearch.min.css" integrity="sha256-QOSRU/ra9ActyXkIBbiIB144aDBdtvXBcNc3OTNuX/Q=" crossorigin="anonymous" />
-<link href="../docsearch.css" rel="stylesheet">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/jquery.mark.min.js" integrity="sha256-4HLtjeVgH0eIB3aZ9mLYF6E8oU5chNdjU6p6rrXpl9U=" crossorigin="anonymous"></script>
-
 
   <link href="../extra.css" rel="stylesheet">
   <script src="../extra.js"></script>
 
 <meta property="og:title" content="Calculate microbial resistance — proportion" />
-<meta property="og:description" content="These functions can be used to calculate the (co-)resistance or susceptibility of microbial isolates (i.e. percentage of S, SI, I, IR or R). All functions support quasiquotation with pipes, can be used in dplyr::summarise() and support grouped variables, please see Examples.
+<meta property="og:description" content="These functions can be used to calculate the (co-)resistance or susceptibility of microbial isolates (i.e. percentage of S, SI, I, IR or R). All functions support quasiquotation with pipes, can be used in summarise()][dplyr::summarise()] and also support grouped variables, please see Examples.
 resistance() should be used to calculate resistance, susceptibility() should be used to calculate susceptibility." />
 <meta property="og:image" content="https://msberends.gitlab.io/AMR/logo.png" />
 <meta name="twitter:card" content="summary" />
@@ -212,12 +206,6 @@ resistance() should be used to calculate resistance, susceptibility() should be 
 </li>
       </ul>
       
-      <form class="navbar-form navbar-right hidden-xs hidden-sm" role="search">
-        <div class="form-group">
-          <input type="search" class="form-control" name="search-input" id="search-input" placeholder="Search..." aria-label="Search for..." autocomplete="off">
-        </div>
-      </form>
-      
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
@@ -235,7 +223,7 @@ resistance() should be used to calculate resistance, susceptibility() should be 
     </div>
 
     <div class="ref-description">
-    <p>These functions can be used to calculate the (co-)resistance or susceptibility of microbial isolates (i.e. percentage of S, SI, I, IR or R). All functions support quasiquotation with pipes, can be used in <code><a href='https://dplyr.tidyverse.org/reference/summarise.html'>dplyr::summarise()</a></code> and support grouped variables, please see <em>Examples</em>.</p>
+    <p>These functions can be used to calculate the (co-)resistance or susceptibility of microbial isolates (i.e. percentage of S, SI, I, IR or R). All functions support quasiquotation with pipes, can be used in <code>summarise()</code>][dplyr::summarise()] and also support grouped variables, please see <em>Examples</em>.</p>
 <p><code>resistance()</code> should be used to calculate resistance, <code>susceptibility()</code> should be used to calculate susceptibility.<br /></p>
     </div>
 
@@ -324,13 +312,13 @@ resistance() should be used to calculate resistance, susceptibility() should be 
 
     <p>The function <code>resistance()</code> is equal to the function <code>proportion_R()</code>. The function <code>susceptibility()</code> is equal to the function <code>proportion_SI()</code>.</p>
 <p><strong>Remember that you should filter your table to let it contain only first isolates!</strong> This is needed to exclude duplicates and to reduce selection bias. Use <code><a href='first_isolate.html'>first_isolate()</a></code> to determine them in your data set.</p>
-<p>These functions are not meant to count isolates, but to calculate the proportion of resistance/susceptibility. Use the <code><a href='count.html'>AMR::count()</a></code> functions to count isolates. The function <code>susceptibility()</code> is essentially equal to <code>count_susceptible() / count_all()</code>. <em>Low counts can infuence the outcome - the <code>proportion</code> functions may camouflage this, since they only return the proportion (albeit being dependent on the <code>minimum</code> parameter).</em></p>
+<p>These functions are not meant to count isolates, but to calculate the proportion of resistance/susceptibility. Use the <code><a href='count.html'>count()</a></code>][AMR::count()] functions to count isolates. The function <code>susceptibility()</code> is essentially equal to <code>count_susceptible() / count_all()</code>. <em>Low counts can influence the outcome - the <code>proportion</code> functions may camouflage this, since they only return the proportion (albeit being dependent on the <code>minimum</code> parameter).</em></p>
 <p>The function <code>proportion_df()</code> takes any variable from <code>data</code> that has an <code><a href='as.rsi.html'>rsi</a></code> class (created with <code><a href='as.rsi.html'>as.rsi()</a></code>) and calculates the proportions R, I and S. The function <code>rsi_df()</code> works exactly like <code>proportion_df()</code>, but adds the number of isolates.</p>
     <h2 class="hasAnchor" id="combination-therapy"><a class="anchor" href="#combination-therapy"></a>Combination therapy</h2>
 
     
 
-<p>When using more than one variable for <code>...</code> (= combination therapy)), use <code>only_all_tested</code> to only count isolates that are tested for all antibiotics/variables that you test them for. See this example for two antibiotics, Antibiotic A and Antibiotic B, about how <code>susceptibility()</code> works to calculate the %SI:</p><pre>--------------------------------------------------------------------
+<p>When using more than one variable for <code>...</code> (= combination therapy)), use <code>only_all_tested</code> to only count isolates that are tested for all antibiotics/variables that you test them for. See this example for two antibiotics, Drug A and Drug B, about how <code>susceptibility()</code> works to calculate the %SI:</p><pre>--------------------------------------------------------------------
                     only_all_tested = FALSE  only_all_tested = TRUE
                     -----------------------  -----------------------
  Drug A    Drug B   include as  include as   include as  include as
@@ -382,7 +370,7 @@ A microorganism is categorised as <em>Susceptible, Increased exposure</em> when 
 
     
 
-<p>On our website <a href='https://msberends.gitlab.io/AMR'>https://msberends.gitlab.io/AMR</a> you can find <a href='https://msberends.gitlab.io/AMR/articles/AMR.html'>a tutorial</a> about how to conduct AMR analysis, the <a href='https://msberends.gitlab.io/AMR/reference'>complete documentation of all functions</a> (which reads a lot easier than here in R) and <a href='https://msberends.gitlab.io/AMR/articles/WHONET.html'>an example analysis using WHONET data</a>.</p>
+<p>On our website <a href='https://msberends.gitlab.io/AMR'>https://msberends.gitlab.io/AMR</a> you can find <a href='https://msberends.gitlab.io/AMR/articles/AMR.html'>a comprehensive tutorial</a> about how to conduct AMR analysis, the <a href='https://msberends.gitlab.io/AMR/reference'>complete documentation of all functions</a> (which reads a lot easier than here in R) and <a href='https://msberends.gitlab.io/AMR/articles/WHONET.html'>an example analysis using WHONET data</a>.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><code><a href='count.html'>AMR::count()</a></code> to count resistant and susceptible isolates.</p></div>
@@ -490,7 +478,7 @@ A microorganism is categorised as <em>Susceptible, Increased exposure</em> when 
 
       <footer>
       <div class="copyright">
-  <p>Developed by <a href='https://www.rug.nl/staff/m.s.berends/'>Matthijs S. Berends</a>, <a href='https://www.rug.nl/staff/c.f.luz/'>Christian F. Luz</a>, <a href='https://www.rug.nl/staff/a.w.friedrich/'>Alexander W. Friedrich</a>, <a href='https://www.rug.nl/staff/b.sinha/'>Bhanu N. M. Sinha</a>, <a href='https://www.rug.nl/staff/c.j.albers/'>Casper J. Albers</a>, <a href='https://www.rug.nl/staff/c.glasner/'>Corinna Glasner</a>, Stichting Certe Medische Diagnostiek en Advies.</p>
+  <p>Developed by <a href='https://www.rug.nl/staff/m.s.berends/'>Matthijs S. Berends</a>, <a href='https://www.rug.nl/staff/c.f.luz/'>Christian F. Luz</a>, <a href='https://www.rug.nl/staff/a.w.friedrich/'>Alexander W. Friedrich</a>, <a href='https://www.rug.nl/staff/b.sinha/'>Bhanu N. M. Sinha</a>, <a href='https://www.rug.nl/staff/c.j.albers/'>Casper J. Albers</a>, <a href='https://www.rug.nl/staff/c.glasner/'>Corinna Glasner</a>.</p>
 </div>
 
 <div class="pkgdown">
@@ -501,23 +489,6 @@ A microorganism is categorised as <em>Susceptible, Increased exposure</em> when 
    </div>
 
   
-<script src="https://cdnjs.cloudflare.com/ajax/libs/docsearch.js/2.6.1/docsearch.min.js" integrity="sha256-GKvGqXDznoRYHCwKXGnuchvKSwmx9SRMrZOTh2g4Sb0=" crossorigin="anonymous"></script>
-<script>
-  docsearch({
-    
-    
-    apiKey: 'f737050abfd4d726c63938e18f8c496e',
-    indexName: 'amr',
-    inputSelector: 'input#search-input.form-control',
-    transformData: function(hits) {
-      return hits.map(function (hit) {
-        hit.url = updateHitURL(hit);
-        return hit;
-      });
-    }
-  });
-</script>
-
 
 
   </body>

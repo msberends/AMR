@@ -19,7 +19,7 @@ is.disk(x)
 An \code{\link{integer}} with additional new class \code{\link{disk}}
 }
 \description{
-This transforms a vector to a new class \code{\link{disk}}, which is a growth zone size (around an antibiotic disk) in millimeters between 6 and 50.
+This transforms a vector to a new class \code{\link{disk}}, which is a growth zone size (around an antibiotic disk) in millimetres between 6 and 50.
 }
 \details{
 Interpret disk values as RSI values with \code{\link[=as.rsi]{as.rsi()}}. It supports guidelines from EUCAST and CLSI.
@@ -34,19 +34,26 @@ If the unlying code needs breaking changes, they will occur gradually. To begin 
 
 \section{Read more on our website!}{
 
-On our website \url{https://msberends.gitlab.io/AMR} you can find \href{https://msberends.gitlab.io/AMR/articles/AMR.html}{a tutorial} about how to conduct AMR analysis, the \href{https://msberends.gitlab.io/AMR/reference}{complete documentation of all functions} (which reads a lot easier than here in R) and \href{https://msberends.gitlab.io/AMR/articles/WHONET.html}{an example analysis using WHONET data}.
+On our website \url{https://msberends.gitlab.io/AMR} you can find \href{https://msberends.gitlab.io/AMR/articles/AMR.html}{a comprehensive tutorial} about how to conduct AMR analysis, the \href{https://msberends.gitlab.io/AMR/reference}{complete documentation of all functions} (which reads a lot easier than here in R) and \href{https://msberends.gitlab.io/AMR/articles/WHONET.html}{an example analysis using WHONET data}.
 }
 
 \examples{
-# interpret disk values
-as.rsi(x = 12,
-       mo = as.mo("S. pneumoniae"),
-       ab = "AMX",
+# transform existing disk zones to the `disk` class
+df <- data.frame(microorganism = "E. coli",
+                 AMP = 20,
+                 CIP = 14,
+                 GEN = 18,
+                 TOB = 16)
+df <- df \%>\% mutate_at(vars(AMP:TOB, as.disk))
+df
+
+# interpret disk values, see ?as.rsi
+as.rsi(x = as.disk(18),
+       mo = "Strep pneu",  # `mo` will be coerced with as.mo()
+       ab = "ampicillin",  # and `ab` with as.ab()
        guideline = "EUCAST")
-as.rsi(x = 12,
-       mo = as.mo("S. pneumoniae"),
-       ab = "AMX",
-       guideline = "CLSI")
+       
+as.rsi(df)
 }
 \seealso{
 \code{\link[=as.rsi]{as.rsi()}}

@@ -186,7 +186,3 @@ template:
   params:
     noindex: false
     bootswatch: "flatly"
-    docsearch:
-      # using algolia.com
-      api_key: "f737050abfd4d726c63938e18f8c496e"
-      index_name: "amr"

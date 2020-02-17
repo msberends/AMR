@@ -31,7 +31,7 @@ eucast_rules_file <- utils::read.delim(file = "data-raw/eucast_rules.tsv",
                             header = TRUE,
                             strip.white = TRUE,
                             na = c(NA, "", NULL))
-# take the order of the reference.rule_group column in the orginal data file
+# take the order of the reference.rule_group column in the original data file
 eucast_rules_file$reference.rule_group <- factor(eucast_rules_file$reference.rule_group,
                                                  levels = unique(eucast_rules_file$reference.rule_group),
                                                  ordered = TRUE)

@@ -24,9 +24,9 @@
 #' Interpret MIC values and disk diffusion diameters according to EUCAST or CLSI, or clean up existing R/SI values. This transforms the input to a new class [`rsi`], which is an ordered factor with levels `S < I < R`. Invalid antimicrobial interpretations will be translated as `NA` with a warning.
 #' @inheritSection lifecycle Stable lifecycle
 #' @rdname as.rsi
-#' @param x vector of values (for class [`mic`]: an MIC value in mg/L, for class [`disk`]: a disk diffusion radius in millimeters)
-#' @param mo a microorganism code, generated with [as.mo()]
-#' @param ab an antimicrobial code, generated with [as.ab()]
+#' @param x vector of values (for class [`mic`]: an MIC value in mg/L, for class [`disk`]: a disk diffusion radius in millimetres)
+#' @param mo any (vector of) text that can be coerced to a valid microorganism code with [as.mo()]
+#' @param ab any (vector of) text that can be coerced to a valid antimicrobial code with [as.ab()]
 #' @inheritParams first_isolate
 #' @param guideline defaults to the latest included EUCAST guideline, run `unique(rsi_translation$guideline)` for all options
 #' @param threshold maximum fraction of invalid antimicrobial interpretations of `x`, please see *Examples*
@@ -71,8 +71,10 @@
 #'        
 #' # a whole data set, even with combined MIC values and disk zones
 #' df <- data.frame(microorganism = "E. coli",
-#'                  AMP = as.mic(12),
-#'                  GEN = as.disk(18))
+#'                  AMP = as.mic(8),
+#'                  CIP = as.mic(0.256),
+#'                  GEN = as.disk(18),
+#'                  TOB = as.disk(16))
 #' as.rsi(df)
 #'
 #'
@@ -239,12 +241,12 @@ exec_as.rsi <- function(method, x, mo, ab, guideline) {
   if (guideline_coerced != guideline) {
     message(blue(paste0("Note: Using guideline ", bold(guideline_coerced), " as input for `guideline`.")))
   }
-
+  
   new_rsi <- rep(NA_character_, length(x))
   trans <- rsi_translation %>%
     filter(guideline == guideline_coerced & method == method_param) %>%
     mutate(lookup = paste(mo, ab))
-
+  
   lookup_mo <- paste(mo, ab)
   lookup_genus <- paste(mo_genus, ab)
   lookup_family <- paste(mo_family, ab)

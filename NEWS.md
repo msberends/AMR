@@ -1,9 +1,9 @@
-# AMR 0.9.0.9025
-## <small>Last updated: 16-Feb-2020</small>
+# AMR 0.9.0.9026
+## <small>Last updated: 17-Feb-2020</small>
 
 ### New
-* Support for the newest [EUCAST Clinical Breakpoint Tables v.10.0](http://www.eucast.org/clinical_breakpoints/), valid from 2020-01-01 (use `as.rsi()` to transform MICs and disk zones)
-* The repository of this package now contains a clean version of the EUCAST and CLSI guidelines from 2011-2020 to translate MIC and disk diffusion values to R/SI: https://gitlab.com/msberends/AMR/blob/master/data-raw/rsi_translation.txt. This **allows for machine reading these guidelines**, which is almost impossible with the Excel and PDF files distributed by EUCAST and CLSI. This file is updated automatically.
+* Support for the newest [EUCAST Clinical Breakpoint Tables v.10.0](http://www.eucast.org/clinical_breakpoints/), valid from 1 January 2020. This affects translation of MIC and disk zones using `as.rsi()` and inferred resistance and susceptibility using `eucast_rules()`.
+* The repository of this package now contains a clean version of the EUCAST and CLSI guidelines from 2011-2020 to translate MIC and disk diffusion values to R/SI: <https://gitlab.com/msberends/AMR/blob/master/data-raw/rsi_translation.txt>. This **allows for machine reading these guidelines**, which is almost impossible with the Excel and PDF files distributed by EUCAST and CLSI. This file used to process the EUCAST Clinical Breakpoints Excel file [can be found here](https://gitlab.com/msberends/AMR/blob/master/data-raw/read_EUCAST.R).
 * Support for LOINC and SNOMED codes
   * Support for LOINC codes in the `antibiotics` data set. Use `ab_loinc()` to retrieve LOINC codes, or use a LOINC code for input in any `ab_*` function:
     ```r

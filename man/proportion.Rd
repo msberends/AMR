@@ -74,7 +74,7 @@ rsi_df(
 A \code{\link{double}} or, when \code{as_percent = TRUE}, a \code{\link{character}}.
 }
 \description{
-These functions can be used to calculate the (co-)resistance or susceptibility of microbial isolates (i.e. percentage of S, SI, I, IR or R). All functions support quasiquotation with pipes, can be used in \code{\link[dplyr:summarise]{dplyr::summarise()}} and support grouped variables, please see \emph{Examples}.
+These functions can be used to calculate the (co-)resistance or susceptibility of microbial isolates (i.e. percentage of S, SI, I, IR or R). All functions support quasiquotation with pipes, can be used in \code{summarise()}][dplyr::summarise()] and also support grouped variables, please see \emph{Examples}.
 
 \code{\link[=resistance]{resistance()}} should be used to calculate resistance, \code{\link[=susceptibility]{susceptibility()}} should be used to calculate susceptibility.\cr
 }
@@ -83,13 +83,13 @@ The function \code{\link[=resistance]{resistance()}} is equal to the function \c
 
 \strong{Remember that you should filter your table to let it contain only first isolates!} This is needed to exclude duplicates and to reduce selection bias. Use \code{\link[=first_isolate]{first_isolate()}} to determine them in your data set.
 
-These functions are not meant to count isolates, but to calculate the proportion of resistance/susceptibility. Use the \code{\link[AMR:count]{AMR::count()}} functions to count isolates. The function \code{\link[=susceptibility]{susceptibility()}} is essentially equal to \code{count_susceptible() / count_all()}. \emph{Low counts can infuence the outcome - the \code{proportion} functions may camouflage this, since they only return the proportion (albeit being dependent on the \code{minimum} parameter).}
+These functions are not meant to count isolates, but to calculate the proportion of resistance/susceptibility. Use the \code{count()}][AMR::count()] functions to count isolates. The function \code{\link[=susceptibility]{susceptibility()}} is essentially equal to \code{count_susceptible() / count_all()}. \emph{Low counts can influence the outcome - the \code{proportion} functions may camouflage this, since they only return the proportion (albeit being dependent on the \code{minimum} parameter).}
 
 The function \code{\link[=proportion_df]{proportion_df()}} takes any variable from \code{data} that has an \code{\link{rsi}} class (created with \code{\link[=as.rsi]{as.rsi()}}) and calculates the proportions R, I and S. The function \code{\link[=rsi_df]{rsi_df()}} works exactly like \code{\link[=proportion_df]{proportion_df()}}, but adds the number of isolates.
 }
 \section{Combination therapy}{
 
-When using more than one variable for \code{...} (= combination therapy)), use \code{only_all_tested} to only count isolates that are tested for all antibiotics/variables that you test them for. See this example for two antibiotics, Antibiotic A and Antibiotic B, about how \code{\link[=susceptibility]{susceptibility()}} works to calculate the \%SI:\preformatted{--------------------------------------------------------------------
+When using more than one variable for \code{...} (= combination therapy)), use \code{only_all_tested} to only count isolates that are tested for all antibiotics/variables that you test them for. See this example for two antibiotics, Drug A and Drug B, about how \code{\link[=susceptibility]{susceptibility()}} works to calculate the \%SI:\preformatted{--------------------------------------------------------------------
                     only_all_tested = FALSE  only_all_tested = TRUE
                     -----------------------  -----------------------
  Drug A    Drug B   include as  include as   include as  include as
@@ -143,7 +143,7 @@ This AMR package honours this new insight. Use \code{\link[=susceptibility]{susc
 
 \section{Read more on our website!}{
 
-On our website \url{https://msberends.gitlab.io/AMR} you can find \href{https://msberends.gitlab.io/AMR/articles/AMR.html}{a tutorial} about how to conduct AMR analysis, the \href{https://msberends.gitlab.io/AMR/reference}{complete documentation of all functions} (which reads a lot easier than here in R) and \href{https://msberends.gitlab.io/AMR/articles/WHONET.html}{an example analysis using WHONET data}.
+On our website \url{https://msberends.gitlab.io/AMR} you can find \href{https://msberends.gitlab.io/AMR/articles/AMR.html}{a comprehensive tutorial} about how to conduct AMR analysis, the \href{https://msberends.gitlab.io/AMR/reference}{complete documentation of all functions} (which reads a lot easier than here in R) and \href{https://msberends.gitlab.io/AMR/articles/WHONET.html}{an example analysis using WHONET data}.
 }
 
 \examples{

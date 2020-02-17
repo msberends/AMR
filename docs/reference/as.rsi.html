@@ -40,12 +40,6 @@
 <script src="../pkgdown.js"></script>
 
 
-<!-- docsearch -->
-<script src="../docsearch.js"></script>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/docsearch.js/2.6.1/docsearch.min.css" integrity="sha256-QOSRU/ra9ActyXkIBbiIB144aDBdtvXBcNc3OTNuX/Q=" crossorigin="anonymous" />
-<link href="../docsearch.css" rel="stylesheet">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/jquery.mark.min.js" integrity="sha256-4HLtjeVgH0eIB3aZ9mLYF6E8oU5chNdjU6p6rrXpl9U=" crossorigin="anonymous"></script>
-
 
   <link href="../extra.css" rel="stylesheet">
   <script src="../extra.js"></script>
@@ -211,12 +205,6 @@
 </li>
       </ul>
       
-      <form class="navbar-form navbar-right hidden-xs hidden-sm" role="search">
-        <div class="form-group">
-          <input type="search" class="form-control" name="search-input" id="search-input" placeholder="Search..." aria-label="Search for..." autocomplete="off">
-        </div>
-      </form>
-      
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
@@ -257,7 +245,7 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>x</th>
-      <td><p>vector of values (for class <code><a href='as.mic.html'>mic</a></code>: an MIC value in mg/L, for class <code><a href='as.disk.html'>disk</a></code>: a disk diffusion radius in millimeters)</p></td>
+      <td><p>vector of values (for class <code><a href='as.mic.html'>mic</a></code>: an MIC value in mg/L, for class <code><a href='as.disk.html'>disk</a></code>: a disk diffusion radius in millimetres)</p></td>
     </tr>
     <tr>
       <th>...</th>
@@ -265,11 +253,11 @@
     </tr>
     <tr>
       <th>mo</th>
-      <td><p>a microorganism code, generated with <code><a href='as.mo.html'>as.mo()</a></code></p></td>
+      <td><p>any (vector of) text that can be coerced to a valid microorganism code with <code><a href='as.mo.html'>as.mo()</a></code></p></td>
     </tr>
     <tr>
       <th>ab</th>
-      <td><p>an antimicrobial code, generated with <code><a href='as.ab.html'>as.ab()</a></code></p></td>
+      <td><p>any (vector of) text that can be coerced to a valid antimicrobial code with <code><a href='as.ab.html'>as.ab()</a></code></p></td>
     </tr>
     <tr>
       <th>guideline</th>
@@ -319,7 +307,7 @@ The <a href='lifecycle.html'>lifecycle</a> of this function is <strong>stable</s
 
     
 
-<p>On our website <a href='https://msberends.gitlab.io/AMR'>https://msberends.gitlab.io/AMR</a> you can find <a href='https://msberends.gitlab.io/AMR/articles/AMR.html'>a tutorial</a> about how to conduct AMR analysis, the <a href='https://msberends.gitlab.io/AMR/reference'>complete documentation of all functions</a> (which reads a lot easier than here in R) and <a href='https://msberends.gitlab.io/AMR/articles/WHONET.html'>an example analysis using WHONET data</a>.</p>
+<p>On our website <a href='https://msberends.gitlab.io/AMR'>https://msberends.gitlab.io/AMR</a> you can find <a href='https://msberends.gitlab.io/AMR/articles/AMR.html'>a comprehensive tutorial</a> about how to conduct AMR analysis, the <a href='https://msberends.gitlab.io/AMR/reference'>complete documentation of all functions</a> (which reads a lot easier than here in R) and <a href='https://msberends.gitlab.io/AMR/articles/WHONET.html'>an example analysis using WHONET data</a>.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><code><a href='as.mic.html'>as.mic()</a></code></p></div>
@@ -340,8 +328,10 @@ The <a href='lifecycle.html'>lifecycle</a> of this function is <strong>stable</s
 
 <span class='co'># a whole data set, even with combined MIC values and disk zones</span>
 <span class='no'>df</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span>(<span class='kw'>microorganism</span> <span class='kw'>=</span> <span class='st'>"E. coli"</span>,
-                 <span class='kw'>AMP</span> <span class='kw'>=</span> <span class='fu'><a href='as.mic.html'>as.mic</a></span>(<span class='fl'>12</span>),
-                 <span class='kw'>GEN</span> <span class='kw'>=</span> <span class='fu'><a href='as.disk.html'>as.disk</a></span>(<span class='fl'>18</span>))
+                 <span class='kw'>AMP</span> <span class='kw'>=</span> <span class='fu'><a href='as.mic.html'>as.mic</a></span>(<span class='fl'>8</span>),
+                 <span class='kw'>CIP</span> <span class='kw'>=</span> <span class='fu'><a href='as.mic.html'>as.mic</a></span>(<span class='fl'>0.256</span>),
+                 <span class='kw'>GEN</span> <span class='kw'>=</span> <span class='fu'><a href='as.disk.html'>as.disk</a></span>(<span class='fl'>18</span>),
+                 <span class='kw'>TOB</span> <span class='kw'>=</span> <span class='fu'><a href='as.disk.html'>as.disk</a></span>(<span class='fl'>16</span>))
 <span class='fu'>as.rsi</span>(<span class='no'>df</span>)
 
 
@@ -391,7 +381,7 @@ The <a href='lifecycle.html'>lifecycle</a> of this function is <strong>stable</s
 
       <footer>
       <div class="copyright">
-  <p>Developed by <a href='https://www.rug.nl/staff/m.s.berends/'>Matthijs S. Berends</a>, <a href='https://www.rug.nl/staff/c.f.luz/'>Christian F. Luz</a>, <a href='https://www.rug.nl/staff/a.w.friedrich/'>Alexander W. Friedrich</a>, <a href='https://www.rug.nl/staff/b.sinha/'>Bhanu N. M. Sinha</a>, <a href='https://www.rug.nl/staff/c.j.albers/'>Casper J. Albers</a>, <a href='https://www.rug.nl/staff/c.glasner/'>Corinna Glasner</a>, Stichting Certe Medische Diagnostiek en Advies.</p>
+  <p>Developed by <a href='https://www.rug.nl/staff/m.s.berends/'>Matthijs S. Berends</a>, <a href='https://www.rug.nl/staff/c.f.luz/'>Christian F. Luz</a>, <a href='https://www.rug.nl/staff/a.w.friedrich/'>Alexander W. Friedrich</a>, <a href='https://www.rug.nl/staff/b.sinha/'>Bhanu N. M. Sinha</a>, <a href='https://www.rug.nl/staff/c.j.albers/'>Casper J. Albers</a>, <a href='https://www.rug.nl/staff/c.glasner/'>Corinna Glasner</a>.</p>
 </div>
 
 <div class="pkgdown">
@@ -402,23 +392,6 @@ The <a href='lifecycle.html'>lifecycle</a> of this function is <strong>stable</s
    </div>
 
   
-<script src="https://cdnjs.cloudflare.com/ajax/libs/docsearch.js/2.6.1/docsearch.min.js" integrity="sha256-GKvGqXDznoRYHCwKXGnuchvKSwmx9SRMrZOTh2g4Sb0=" crossorigin="anonymous"></script>
-<script>
-  docsearch({
-    
-    
-    apiKey: 'f737050abfd4d726c63938e18f8c496e',
-    indexName: 'amr',
-    inputSelector: 'input#search-input.form-control',
-    transformData: function(hits) {
-      return hits.map(function (hit) {
-        hit.url = updateHitURL(hit);
-        return hit;
-      });
-    }
-  });
-</script>
-
 
 
   </body>

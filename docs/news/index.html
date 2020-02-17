@@ -40,12 +40,6 @@
 <script src="../pkgdown.js"></script>
 
 
-<!-- docsearch -->
-<script src="../docsearch.js"></script>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/docsearch.js/2.6.1/docsearch.min.css" integrity="sha256-QOSRU/ra9ActyXkIBbiIB144aDBdtvXBcNc3OTNuX/Q=" crossorigin="anonymous" />
-<link href="../docsearch.css" rel="stylesheet">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/jquery.mark.min.js" integrity="sha256-4HLtjeVgH0eIB3aZ9mLYF6E8oU5chNdjU6p6rrXpl9U=" crossorigin="anonymous"></script>
-
 
   <link href="../extra.css" rel="stylesheet">
   <script src="../extra.js"></script>
@@ -84,7 +78,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">0.9.0.9025</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">0.9.0.9026</span>
       </span>
     </div>
 
@@ -210,12 +204,6 @@
 </li>
       </ul>
       
-      <form class="navbar-form navbar-right hidden-xs hidden-sm" role="search">
-        <div class="form-group">
-          <input type="search" class="form-control" name="search-input" id="search-input" placeholder="Search..." aria-label="Search for..." autocomplete="off">
-        </div>
-      </form>
-      
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
@@ -231,20 +219,20 @@
       
     </div>
 
-    <div id="amr-0909025" class="section level1">
+    <div id="amr-0909026" class="section level1">
 <h1 class="page-header">
-<a href="#amr-0909025" class="anchor"></a>AMR 0.9.0.9025<small> Unreleased </small>
+<a href="#amr-0909026" class="anchor"></a>AMR 0.9.0.9026<small> Unreleased </small>
 </h1>
-<div id="last-updated-16-feb-2020" class="section level2">
+<div id="last-updated-17-feb-2020" class="section level2">
 <h2 class="hasAnchor">
-<a href="#last-updated-16-feb-2020" class="anchor"></a><small>Last updated: 16-Feb-2020</small>
+<a href="#last-updated-17-feb-2020" class="anchor"></a><small>Last updated: 17-Feb-2020</small>
 </h2>
 <div id="new" class="section level3">
 <h3 class="hasAnchor">
 <a href="#new" class="anchor"></a>New</h3>
 <ul>
-<li>Support for the newest <a href="http://www.eucast.org/clinical_breakpoints/">EUCAST Clinical Breakpoint Tables v.10.0</a>, valid from 2020-01-01 (use <code><a href="../reference/as.rsi.html">as.rsi()</a></code> to transform MICs and disk zones)</li>
-<li>The repository of this package now contains a clean version of the EUCAST and CLSI guidelines from 2011-2020 to translate MIC and disk diffusion values to R/SI: <a href="https://gitlab.com/msberends/AMR/blob/master/data-raw/rsi_translation.txt" class="uri">https://gitlab.com/msberends/AMR/blob/master/data-raw/rsi_translation.txt</a>. This <strong>allows for machine reading these guidelines</strong>, which is almost impossible with the Excel and PDF files distributed by EUCAST and CLSI. This file is updated automatically.</li>
+<li>Support for the newest <a href="http://www.eucast.org/clinical_breakpoints/">EUCAST Clinical Breakpoint Tables v.10.0</a>, valid from 1 January 2020. This affects translation of MIC and disk zones using <code><a href="../reference/as.rsi.html">as.rsi()</a></code> and inferred resistance and susceptibility using <code><a href="../reference/eucast_rules.html">eucast_rules()</a></code>.</li>
+<li>The repository of this package now contains a clean version of the EUCAST and CLSI guidelines from 2011-2020 to translate MIC and disk diffusion values to R/SI: <a href="https://gitlab.com/msberends/AMR/blob/master/data-raw/rsi_translation.txt" class="uri">https://gitlab.com/msberends/AMR/blob/master/data-raw/rsi_translation.txt</a>. This <strong>allows for machine reading these guidelines</strong>, which is almost impossible with the Excel and PDF files distributed by EUCAST and CLSI. This file used to process the EUCAST Clinical Breakpoints Excel file <a href="https://gitlab.com/msberends/AMR/blob/master/data-raw/read_EUCAST.R">can be found here</a>.</li>
 <li>Support for LOINC and SNOMED codes
 <ul>
 <li>
@@ -1462,7 +1450,7 @@
     <div id="tocnav">
       <h2>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
-        <li><a href="#amr-0909025">0.9.0.9025</a></li>
+        <li><a href="#amr-0909026">0.9.0.9026</a></li>
         <li><a href="#amr-090">0.9.0</a></li>
         <li><a href="#amr-080">0.8.0</a></li>
         <li><a href="#amr-071">0.7.1</a></li>
@@ -1484,7 +1472,7 @@
 
       <footer>
       <div class="copyright">
-  <p>Developed by <a href='https://www.rug.nl/staff/m.s.berends/'>Matthijs S. Berends</a>, <a href='https://www.rug.nl/staff/c.f.luz/'>Christian F. Luz</a>, <a href='https://www.rug.nl/staff/a.w.friedrich/'>Alexander W. Friedrich</a>, <a href='https://www.rug.nl/staff/b.sinha/'>Bhanu N. M. Sinha</a>, <a href='https://www.rug.nl/staff/c.j.albers/'>Casper J. Albers</a>, <a href='https://www.rug.nl/staff/c.glasner/'>Corinna Glasner</a>, Stichting Certe Medische Diagnostiek en Advies.</p>
+  <p>Developed by <a href='https://www.rug.nl/staff/m.s.berends/'>Matthijs S. Berends</a>, <a href='https://www.rug.nl/staff/c.f.luz/'>Christian F. Luz</a>, <a href='https://www.rug.nl/staff/a.w.friedrich/'>Alexander W. Friedrich</a>, <a href='https://www.rug.nl/staff/b.sinha/'>Bhanu N. M. Sinha</a>, <a href='https://www.rug.nl/staff/c.j.albers/'>Casper J. Albers</a>, <a href='https://www.rug.nl/staff/c.glasner/'>Corinna Glasner</a>.</p>
 </div>
 
 <div class="pkgdown">
@@ -1495,23 +1483,6 @@
    </div>
 
   
-<script src="https://cdnjs.cloudflare.com/ajax/libs/docsearch.js/2.6.1/docsearch.min.js" integrity="sha256-GKvGqXDznoRYHCwKXGnuchvKSwmx9SRMrZOTh2g4Sb0=" crossorigin="anonymous"></script>
-<script>
-  docsearch({
-    
-    
-    apiKey: 'f737050abfd4d726c63938e18f8c496e',
-    indexName: 'amr',
-    inputSelector: 'input#search-input.form-control',
-    transformData: function(hits) {
-      return hits.map(function (hit) {
-        hit.url = updateHitURL(hit);
-        return hit;
-      });
-    }
-  });
-</script>
-
 
 
   </body>

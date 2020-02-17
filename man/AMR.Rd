@@ -23,12 +23,14 @@ This package can be used for:
 \item Getting properties for any microorganism (like Gram stain, species, genus or family)
 \item Getting properties for any antibiotic (like name, EARS-Net code, ATC code, PubChem code, defined daily dose or trade name)
 \item Plotting antimicrobial resistance
-\item Applying EUCAST expert rules
+\item Getting SNOMED codes of a microorganism, or get its name associated with a SNOMED code
+\item Getting LOINC codes of an antibiotic, or get its name associated with a LOINC code
+\item Machine reading the EUCAST and CLSI guidelines from 2011-2020 to translate MIC values and disk diffusion diameters to R/SI
 }
 }
 \section{Read more on our website!}{
 
-On our website \url{https://msberends.gitlab.io/AMR} you can find \href{https://msberends.gitlab.io/AMR/articles/AMR.html}{a tutorial} about how to conduct AMR analysis, the \href{https://msberends.gitlab.io/AMR/reference}{complete documentation of all functions} (which reads a lot easier than here in R) and \href{https://msberends.gitlab.io/AMR/articles/WHONET.html}{an example analysis using WHONET data}.
+On our website \url{https://msberends.gitlab.io/AMR} you can find \href{https://msberends.gitlab.io/AMR/articles/AMR.html}{a comprehensive tutorial} about how to conduct AMR analysis, the \href{https://msberends.gitlab.io/AMR/reference}{complete documentation of all functions} (which reads a lot easier than here in R) and \href{https://msberends.gitlab.io/AMR/articles/WHONET.html}{an example analysis using WHONET data}.
 }
 
 \section{Contact us}{
@@ -36,7 +38,7 @@ On our website \url{https://msberends.gitlab.io/AMR} you can find \href{https://
 For suggestions, comments or questions, please contact us at:
 
 Matthijs S. Berends \cr
-m.s.berends at umcg dot nl \cr
+m.s.berends [at] umcg [dot] nl \cr
 Department of Medical Microbiology, University of Groningen \cr
 University Medical Center Groningen \cr
 Post Office Box 30001 \cr

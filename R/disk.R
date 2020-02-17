@@ -21,7 +21,7 @@
 
 #' Class 'disk'
 #'
-#' This transforms a vector to a new class [`disk`], which is a growth zone size (around an antibiotic disk) in millimeters between 6 and 50.
+#' This transforms a vector to a new class [`disk`], which is a growth zone size (around an antibiotic disk) in millimetres between 6 and 50.
 #' @inheritSection lifecycle Stable lifecycle
 #' @rdname as.disk
 #' @param x vector
@@ -33,15 +33,22 @@
 #' @seealso [as.rsi()]
 #' @inheritSection AMR Read more on our website!
 #' @examples
-#' # interpret disk values
-#' as.rsi(x = 12,
-#'        mo = as.mo("S. pneumoniae"),
-#'        ab = "AMX",
+#' # transform existing disk zones to the `disk` class
+#' df <- data.frame(microorganism = "E. coli",
+#'                  AMP = 20,
+#'                  CIP = 14,
+#'                  GEN = 18,
+#'                  TOB = 16)
+#' df <- df %>% mutate_at(vars(AMP:TOB, as.disk))
+#' df
+#' 
+#' # interpret disk values, see ?as.rsi
+#' as.rsi(x = as.disk(18),
+#'        mo = "Strep pneu",  # `mo` will be coerced with as.mo()
+#'        ab = "ampicillin",  # and `ab` with as.ab()
 #'        guideline = "EUCAST")
-#' as.rsi(x = 12,
-#'        mo = as.mo("S. pneumoniae"),
-#'        ab = "AMX",
-#'        guideline = "CLSI")
+#'        
+#' as.rsi(df)
 as.disk <- function(x, na.rm = FALSE) {
   if (is.disk(x)) {
     x

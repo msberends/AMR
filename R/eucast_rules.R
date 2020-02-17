@@ -20,7 +20,7 @@
 # ==================================================================== #
 
 # global variables
-EUCAST_VERSION_BREAKPOINTS <- "9.0, 2019"
+EUCAST_VERSION_BREAKPOINTS <- "10.0, 2020"
 EUCAST_VERSION_EXPERT_RULES <- "3.1, 2016"
 
 #' Apply EUCAST rules
@@ -655,9 +655,11 @@ eucast_rules <- function(x,
         cat(bold(
           case_when(
             rule_group_current %like% "breakpoint" ~
-              paste0("\nEUCAST Clinical Breakpoints (v", EUCAST_VERSION_BREAKPOINTS, ")\n"),
+              paste0("\nEUCAST Clinical Breakpoints (",
+                     red(paste0("v", EUCAST_VERSION_BREAKPOINTS)), ")\n"),
             rule_group_current %like% "expert" ~
-              paste0("\nEUCAST Expert Rules, Intrinsic Resistance and Exceptional Phenotypes (v", EUCAST_VERSION_EXPERT_RULES, ")\n"),
+              paste0("\nEUCAST Expert Rules, Intrinsic Resistance and Exceptional Phenotypes (", 
+                     red(paste0("v", EUCAST_VERSION_EXPERT_RULES)), ")\n"),
             TRUE ~
               "\nOther rules by this AMR package\n"
           )

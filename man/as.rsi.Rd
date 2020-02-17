@@ -23,13 +23,13 @@ is.rsi(x)
 is.rsi.eligible(x, threshold = 0.05)
 }
 \arguments{
-\item{x}{vector of values (for class \code{\link{mic}}: an MIC value in mg/L, for class \code{\link{disk}}: a disk diffusion radius in millimeters)}
+\item{x}{vector of values (for class \code{\link{mic}}: an MIC value in mg/L, for class \code{\link{disk}}: a disk diffusion radius in millimetres)}
 
 \item{...}{parameters passed on to methods}
 
-\item{mo}{a microorganism code, generated with \code{\link[=as.mo]{as.mo()}}}
+\item{mo}{any (vector of) text that can be coerced to a valid microorganism code with \code{\link[=as.mo]{as.mo()}}}
 
-\item{ab}{an antimicrobial code, generated with \code{\link[=as.ab]{as.ab()}}}
+\item{ab}{any (vector of) text that can be coerced to a valid antimicrobial code with \code{\link[=as.ab]{as.ab()}}}
 
 \item{guideline}{defaults to the latest included EUCAST guideline, run \code{unique(rsi_translation$guideline)} for all options}
 
@@ -77,7 +77,7 @@ If the unlying code needs breaking changes, they will occur gradually. To begin 
 
 \section{Read more on our website!}{
 
-On our website \url{https://msberends.gitlab.io/AMR} you can find \href{https://msberends.gitlab.io/AMR/articles/AMR.html}{a tutorial} about how to conduct AMR analysis, the \href{https://msberends.gitlab.io/AMR/reference}{complete documentation of all functions} (which reads a lot easier than here in R) and \href{https://msberends.gitlab.io/AMR/articles/WHONET.html}{an example analysis using WHONET data}.
+On our website \url{https://msberends.gitlab.io/AMR} you can find \href{https://msberends.gitlab.io/AMR/articles/AMR.html}{a comprehensive tutorial} about how to conduct AMR analysis, the \href{https://msberends.gitlab.io/AMR/reference}{complete documentation of all functions} (which reads a lot easier than here in R) and \href{https://msberends.gitlab.io/AMR/articles/WHONET.html}{an example analysis using WHONET data}.
 }
 
 \examples{
@@ -96,8 +96,10 @@ as.rsi(x = as.disk(18),
        
 # a whole data set, even with combined MIC values and disk zones
 df <- data.frame(microorganism = "E. coli",
-                 AMP = as.mic(12),
-                 GEN = as.disk(18))
+                 AMP = as.mic(8),
+                 CIP = as.mic(0.256),
+                 GEN = as.disk(18),
+                 TOB = as.disk(16))
 as.rsi(df)
 
 

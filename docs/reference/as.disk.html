@@ -40,18 +40,12 @@
 <script src="../pkgdown.js"></script>
 
 
-<!-- docsearch -->
-<script src="../docsearch.js"></script>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/docsearch.js/2.6.1/docsearch.min.css" integrity="sha256-QOSRU/ra9ActyXkIBbiIB144aDBdtvXBcNc3OTNuX/Q=" crossorigin="anonymous" />
-<link href="../docsearch.css" rel="stylesheet">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/jquery.mark.min.js" integrity="sha256-4HLtjeVgH0eIB3aZ9mLYF6E8oU5chNdjU6p6rrXpl9U=" crossorigin="anonymous"></script>
-
 
   <link href="../extra.css" rel="stylesheet">
   <script src="../extra.js"></script>
 
 <meta property="og:title" content="Class 'disk' — as.disk" />
-<meta property="og:description" content="This transforms a vector to a new class disk, which is a growth zone size (around an antibiotic disk) in millimeters between 6 and 50." />
+<meta property="og:description" content="This transforms a vector to a new class disk, which is a growth zone size (around an antibiotic disk) in millimetres between 6 and 50." />
 <meta property="og:image" content="https://msberends.gitlab.io/AMR/logo.png" />
 <meta name="twitter:card" content="summary" />
 
@@ -85,7 +79,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">0.9.0.9013</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">0.9.0.9026</span>
       </span>
     </div>
 
@@ -211,12 +205,6 @@
 </li>
       </ul>
       
-      <form class="navbar-form navbar-right hidden-xs hidden-sm" role="search">
-        <div class="form-group">
-          <input type="search" class="form-control" name="search-input" id="search-input" placeholder="Search..." aria-label="Search for..." autocomplete="off">
-        </div>
-      </form>
-      
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
@@ -234,7 +222,7 @@
     </div>
 
     <div class="ref-description">
-    <p>This transforms a vector to a new class <code>disk</code>, which is a growth zone size (around an antibiotic disk) in millimeters between 6 and 50.</p>
+    <p>This transforms a vector to a new class <code>disk</code>, which is a growth zone size (around an antibiotic disk) in millimetres between 6 and 50.</p>
     </div>
 
     <pre class="usage"><span class='fu'>as.disk</span>(<span class='no'>x</span>, <span class='kw'>na.rm</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
@@ -271,21 +259,28 @@ The <a href='lifecycle.html'>lifecycle</a> of this function is <strong>stable</s
 
     
 
-<p>On our website <a href='https://msberends.gitlab.io/AMR'>https://msberends.gitlab.io/AMR</a> you can find <a href='https://msberends.gitlab.io/AMR/articles/AMR.html'>a tutorial</a> about how to conduct AMR analysis, the <a href='https://msberends.gitlab.io/AMR/reference'>complete documentation of all functions</a> (which reads a lot easier than here in R) and <a href='https://msberends.gitlab.io/AMR/articles/WHONET.html'>an example analysis using WHONET data</a>.</p>
+<p>On our website <a href='https://msberends.gitlab.io/AMR'>https://msberends.gitlab.io/AMR</a> you can find <a href='https://msberends.gitlab.io/AMR/articles/AMR.html'>a comprehensive tutorial</a> about how to conduct AMR analysis, the <a href='https://msberends.gitlab.io/AMR/reference'>complete documentation of all functions</a> (which reads a lot easier than here in R) and <a href='https://msberends.gitlab.io/AMR/articles/WHONET.html'>an example analysis using WHONET data</a>.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><code><a href='as.rsi.html'>as.rsi()</a></code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><span class='co'># interpret disk values</span>
-<span class='fu'><a href='as.rsi.html'>as.rsi</a></span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='fl'>12</span>,
-       <span class='kw'>mo</span> <span class='kw'>=</span> <span class='fu'><a href='as.mo.html'>as.mo</a></span>(<span class='st'>"S. pneumoniae"</span>),
-       <span class='kw'>ab</span> <span class='kw'>=</span> <span class='st'>"AMX"</span>,
+    <pre class="examples"><span class='co'># transform existing disk zones to the `disk` class</span>
+<span class='no'>df</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span>(<span class='kw'>microorganism</span> <span class='kw'>=</span> <span class='st'>"E. coli"</span>,
+                 <span class='kw'>AMP</span> <span class='kw'>=</span> <span class='fl'>20</span>,
+                 <span class='kw'>CIP</span> <span class='kw'>=</span> <span class='fl'>14</span>,
+                 <span class='kw'>GEN</span> <span class='kw'>=</span> <span class='fl'>18</span>,
+                 <span class='kw'>TOB</span> <span class='kw'>=</span> <span class='fl'>16</span>)
+<span class='no'>df</span> <span class='kw'>&lt;-</span> <span class='no'>df</span> <span class='kw'>%&gt;%</span> <span class='fu'>mutate_at</span>(<span class='fu'>vars</span>(<span class='no'>AMP</span>:<span class='no'>TOB</span>, <span class='no'>as.disk</span>))
+<span class='no'>df</span>
+
+<span class='co'># interpret disk values, see ?as.rsi</span>
+<span class='fu'><a href='as.rsi.html'>as.rsi</a></span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='fu'>as.disk</span>(<span class='fl'>18</span>),
+       <span class='kw'>mo</span> <span class='kw'>=</span> <span class='st'>"Strep pneu"</span>,  <span class='co'># `mo` will be coerced with as.mo()</span>
+       <span class='kw'>ab</span> <span class='kw'>=</span> <span class='st'>"ampicillin"</span>,  <span class='co'># and `ab` with as.ab()</span>
        <span class='kw'>guideline</span> <span class='kw'>=</span> <span class='st'>"EUCAST"</span>)
-<span class='fu'><a href='as.rsi.html'>as.rsi</a></span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='fl'>12</span>,
-       <span class='kw'>mo</span> <span class='kw'>=</span> <span class='fu'><a href='as.mo.html'>as.mo</a></span>(<span class='st'>"S. pneumoniae"</span>),
-       <span class='kw'>ab</span> <span class='kw'>=</span> <span class='st'>"AMX"</span>,
-       <span class='kw'>guideline</span> <span class='kw'>=</span> <span class='st'>"CLSI"</span>)</pre>
+
+<span class='fu'><a href='as.rsi.html'>as.rsi</a></span>(<span class='no'>df</span>)</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -316,23 +311,6 @@ The <a href='lifecycle.html'>lifecycle</a> of this function is <strong>stable</s
    </div>
 
   
-<script src="https://cdnjs.cloudflare.com/ajax/libs/docsearch.js/2.6.1/docsearch.min.js" integrity="sha256-GKvGqXDznoRYHCwKXGnuchvKSwmx9SRMrZOTh2g4Sb0=" crossorigin="anonymous"></script>
-<script>
-  docsearch({
-    
-    
-    apiKey: 'f737050abfd4d726c63938e18f8c496e',
-    indexName: 'amr',
-    inputSelector: 'input#search-input.form-control',
-    transformData: function(hits) {
-      return hits.map(function (hit) {
-        hit.url = updateHitURL(hit);
-        return hit;
-      });
-    }
-  });
-</script>
-
 
 
   </body>

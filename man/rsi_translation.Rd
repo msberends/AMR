@@ -13,8 +13,8 @@
 \item \code{ab}\cr Antibiotic ID, see \code{\link[=as.ab]{as.ab()}}
 \item \code{ref_tbl}\cr Info about where the guideline rule can be found
 \item \code{disk_dose}\cr Dose of the used disk diffusion method
-\item \code{breakpoint_S}\cr Lowest MIC value or highest number of millimeters that leads to "S"
-\item \code{breakpoint_R}\cr Highest MIC value or lowest number of millimeters that leads to "R"
+\item \code{breakpoint_S}\cr Lowest MIC value or highest number of millimetres that leads to "S"
+\item \code{breakpoint_R}\cr Highest MIC value or lowest number of millimetres that leads to "R"
 }}
 \usage{
 rsi_translation
@@ -27,7 +27,7 @@ The repository of this \code{AMR} package contains a file comprising this exact 
 }
 \section{Read more on our website!}{
 
-On our website \url{https://msberends.gitlab.io/AMR} you can find \href{https://msberends.gitlab.io/AMR/articles/AMR.html}{a tutorial} about how to conduct AMR analysis, the \href{https://msberends.gitlab.io/AMR/reference}{complete documentation of all functions} (which reads a lot easier than here in R) and \href{https://msberends.gitlab.io/AMR/articles/WHONET.html}{an example analysis using WHONET data}.
+On our website \url{https://msberends.gitlab.io/AMR} you can find \href{https://msberends.gitlab.io/AMR/articles/AMR.html}{a comprehensive tutorial} about how to conduct AMR analysis, the \href{https://msberends.gitlab.io/AMR/reference}{complete documentation of all functions} (which reads a lot easier than here in R) and \href{https://msberends.gitlab.io/AMR/articles/WHONET.html}{an example analysis using WHONET data}.
 }
 
 \keyword{datasets}

@@ -145,7 +145,7 @@ Using the `left_join()` function from the `dplyr` package, we can 'map' the gend
 data <- data %>% left_join(patients_table)
 ```
 
-The resulting data set contains `r format(nrow(data), big.mark = ",")` blood culture isolates. With the `head()` function we can preview the first 6 values of this data set:
+The resulting data set contains `r format(nrow(data), big.mark = ",")` blood culture isolates. With the `head()` function we can preview the first 6 rows of this data set:
 
 ```{r preview data set 1, eval = FALSE}
 head(data)
@@ -163,12 +163,8 @@ We also created a package dedicated to data cleaning and checking, called the `c
 
 For example, for the `gender` variable:
 
-```{r freq gender 1, eval = FALSE}
+```{r freq gender 1, results="asis"}
 data %>% freq(gender) # this would be the same: freq(data$gender)
-```
-
-```{r freq gender 2, echo = FALSE, results = 'markup'}
-data %>% freq(gender, markdown = FALSE, header = TRUE)
 ```
 
 So, we can draw at least two conclusions immediately. From a data scientists perspective, the data looks clean: only values `M` and `F`. From a researchers perspective: there are slightly more men. Nothing we didn't already know.

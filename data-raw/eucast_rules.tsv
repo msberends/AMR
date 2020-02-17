@@ -5,7 +5,7 @@
 # and all separate EARS-Net letter codes like 'AMC'. They can be separated by comma: 'AMC, fluoroquinolones'.
 # The 'if_mo_property' column can be any column name from the AMR::microorganisms data set, or "genus_species" or "gramstain".
 # The like.is.one_of column must be 'like' or 'is' or 'one_of' ('like' will read the 'this_value' column as regular expression)
-# The EUCAST guideline contains references to the 'Burkholderia cepacia complex'. All species in this group can be found in: LiPuma J (2005, PMID 16217180).
+# The EUCAST guideline contains references to the 'Burkholderia cepacia complex'. All species in this group are noted on the 'B.cepacia' sheet of the EUCAST Clinical Breakpoint v.10.0 Excel file of 2020 (v_10.0_Breakpoint_Tables.xlsx).
 # >>>>> IF YOU WANT TO IMPORT THIS FILE INTO YOUR OWN SOFTWARE, HAVE THE FIRST 10 LINES SKIPPED <<<<<
 # -------------------------------------------------------------------------------------------------------------------------------
 if_mo_property	like.is.one_of	this_value	and_these_antibiotics	have_these_values	then_change_these_antibiotics	to_value	reference.rule	reference.rule_group
@@ -37,7 +37,6 @@ genus	is	Staphylococcus	ERY	S	AZM, CLR, RXT	S	Staphylococcus	Breakpoints
 genus	is	Staphylococcus	ERY	I	AZM, CLR, RXT	I	Staphylococcus	Breakpoints
 genus	is	Staphylococcus	ERY	R	AZM, CLR, RXT	R	Staphylococcus	Breakpoints
 genus	is	Staphylococcus	TCY	S	DOX, MNO	S	Staphylococcus	Breakpoints
-genus_species	is	Enterococcus faecium	AMP	R	all_betalactams	R	Enterococcus	Breakpoints
 genus	is	Enterococcus	AMP	S	AMX, AMC, PIP, TZP	S	Enterococcus	Breakpoints
 genus	is	Enterococcus	AMP	I	AMX, AMC, PIP, TZP	I	Enterococcus	Breakpoints
 genus	is	Enterococcus	AMP	R	AMX, AMC, PIP, TZP	R	Enterococcus	Breakpoints
@@ -47,7 +46,8 @@ genus	is	Enterococcus	NOR	R	CIP, LVX	R	Enterococcus	Breakpoints
 genus_species	like	^Streptococcus (pyogenes|agalactiae|dysgalactiae|group A|group B|group C|group G)$	PEN	S	aminopenicillins, ureidopenicillins, cephalosporins_except_CAZ, carbapenems, FLC, AMC	S	Streptococcus groups A, B, C, G	Breakpoints
 genus_species	like	^Streptococcus (pyogenes|agalactiae|dysgalactiae|group A|group B|group C|group G)$	PEN	I	aminopenicillins, ureidopenicillins, cephalosporins_except_CAZ, carbapenems, FLC, AMC	I	Streptococcus groups A, B, C, G	Breakpoints
 genus_species	like	^Streptococcus (pyogenes|agalactiae|dysgalactiae|group A|group B|group C|group G)$	PEN	R	aminopenicillins, ureidopenicillins, cephalosporins_except_CAZ, carbapenems, FLC, AMC	R	Streptococcus groups A, B, C, G	Breakpoints
-genus_species	like	^Streptococcus (pyogenes|agalactiae|dysgalactiae|group A|group B|group C|group G)$	NOR	S	LVX, MFX	S	Streptococcus groups A, B, C, G	Breakpoints
+genus_species	like	^Streptococcus (pyogenes|agalactiae|dysgalactiae|group A|group B|group C|group G)$	NOR	S	MFX	S	Streptococcus groups A, B, C, G	Breakpoints
+genus_species	like	^Streptococcus (pyogenes|agalactiae|dysgalactiae|group A|group B|group C|group G)$	NOR	S	LVX	I	Streptococcus groups A, B, C, G	Breakpoints
 genus_species	like	^Streptococcus (pyogenes|agalactiae|dysgalactiae|group A|group B|group C|group G)$	ERY	S	AZM, CLR, RXT	S	Streptococcus groups A, B, C, G	Breakpoints
 genus_species	like	^Streptococcus (pyogenes|agalactiae|dysgalactiae|group A|group B|group C|group G)$	ERY	I	AZM, CLR, RXT	I	Streptococcus groups A, B, C, G	Breakpoints
 genus_species	like	^Streptococcus (pyogenes|agalactiae|dysgalactiae|group A|group B|group C|group G)$	ERY	R	AZM, CLR, RXT	R	Streptococcus groups A, B, C, G	Breakpoints
@@ -56,7 +56,8 @@ genus_species	is	Streptococcus pneumoniae	PEN	S	AMP, AMX, AMC, PIP, TZP	S	Strept
 genus_species	is	Streptococcus pneumoniae	AMP	S	AMX, AMC, PIP, TZP	S	Streptococcus pneumoniae	Breakpoints
 genus_species	is	Streptococcus pneumoniae	AMP	I	AMX, AMC, PIP, TZP	I	Streptococcus pneumoniae	Breakpoints
 genus_species	is	Streptococcus pneumoniae	AMP	R	AMX, AMC, PIP, TZP	R	Streptococcus pneumoniae	Breakpoints
-genus_species	is	Streptococcus pneumoniae	NOR	S	LVX, MFX	S	Streptococcus pneumoniae	Breakpoints
+genus_species	is	Streptococcus pneumoniae	NOR	S	MFX	S	Streptococcus pneumoniae	Breakpoints
+genus_species	is	Streptococcus pneumoniae	NOR	S	LVX	I	Streptococcus pneumoniae	Breakpoints
 genus_species	is	Streptococcus pneumoniae	ERY	S	AZM, CLR, RXT	S	Streptococcus pneumoniae	Breakpoints
 genus_species	is	Streptococcus pneumoniae	ERY	I	AZM, CLR, RXT	I	Streptococcus pneumoniae	Breakpoints
 genus_species	is	Streptococcus pneumoniae	ERY	R	AZM, CLR, RXT	R	Streptococcus pneumoniae	Breakpoints
@@ -122,6 +123,11 @@ genus_species	is	Kingella kingae	ERY	S	AZM, CLR	S	Kingella kingae	Breakpoints
 genus_species	is	Kingella kingae	ERY	I	AZM, CLR	I	Kingella kingae	Breakpoints
 genus_species	is	Kingella kingae	ERY	R	AZM, CLR	R	Kingella kingae	Breakpoints
 genus_species	is	Kingella kingae	TCY	S	DOX	S	Kingella kingae	Breakpoints
+genus_species	is	Kingella kingae	TCY	I	DOX	I	Kingella kingae	Breakpoints
+genus_species	is	Kingella kingae	TCY	R	DOX	R	Kingella kingae	Breakpoints
+genus_species	is	Burkholderia pseudomallei	TCY	S	DOX	S	Burkholderia pseudomallei	Breakpoints
+genus_species	is	Burkholderia pseudomallei	TCY	I	DOX	I	Burkholderia pseudomallei	Breakpoints
+genus_species	is	Burkholderia pseudomallei	TCY	R	DOX	R	Burkholderia pseudomallei	Breakpoints
 order	is	Enterobacterales			PEN, glycopeptides, FUS, macrolides, LIN, streptogramins, RIF, DAP, LNZ	R	Table 01: Intrinsic resistance in Enterobacteriaceae	Expert Rules
 fullname	like	^Citrobacter (koseri|amalonaticus|sedlakii|farmeri|rodentium)			aminopenicillins, TIC	R	Table 01: Intrinsic resistance in Enterobacteriaceae	Expert Rules
 fullname	like	^Citrobacter (freundii|braakii|murliniae|werkmanii|youngae)			aminopenicillins, AMC, CZO, FOX	R	Table 01: Intrinsic resistance in Enterobacteriaceae	Expert Rules
@@ -146,7 +152,7 @@ genus_species	is	Acinetobacter pittii			aminopenicillins, AMC, CZO, CTX, CRO, AT
 genus_species	is	Acinetobacter nosocomialis			aminopenicillins, AMC, CZO, CTX, CRO, ATM, ETP, TMP, FOS, DOX, TCY	R	Table 02: Intrinsic resistance in non-fermentative Gram-negative bacteria	Expert Rules
 genus_species	is	Acinetobacter calcoaceticus			aminopenicillins, AMC, CZO, CTX, CRO, ATM, ETP, TMP, FOS, DOX, TCY	R	Table 02: Intrinsic resistance in non-fermentative Gram-negative bacteria	Expert Rules
 genus_species	is	Achromobacter xylosoxidans			aminopenicillins, CZO, CTX, CRO, ETP	R	Table 02: Intrinsic resistance in non-fermentative Gram-negative bacteria	Expert Rules
-fullname	like	^Burkholderia (cepacia|multivorans|cenocepacia|stabilis|vietnamiensis|dolosa|ambifaria|anthina|pyrrocinia|ubonensis)			aminopenicillins, AMC, TIC, PIP, TZP, CZO, CTX, CRO, ATM, ETP, CIP, CHL, aminoglycosides, TMP, FOS, polymyxins	R	Table 02: Intrinsic resistance in non-fermentative Gram-negative bacteria	Expert Rules
+fullname	like	^Burkholderia (ambifaria|anthina|arboris|cepacia|cenocepacia|contaminans|diffusa|dolosa|lata|latens|metallica|multivorans|paludis|pseudomultivorans|pyrrocinia|pseudomultivorans|seminalis|stabilis|stagnalis|territorii|ubonensis|vietnamiensis)			aminopenicillins, AMC, TIC, PIP, TZP, CZO, CTX, CRO, ATM, ETP, CIP, CHL, aminoglycosides, TMP, FOS, polymyxins	R	Table 02: Intrinsic resistance in non-fermentative Gram-negative bacteria	Expert Rules
 genus_species	is	Elizabethkingia meningoseptica			aminopenicillins, AMC, TIC, CZO, CTX, CRO, CAZ, FEP, ATM, ETP, IPM, MEM, polymyxins	R	Table 02: Intrinsic resistance in non-fermentative Gram-negative bacteria	Expert Rules
 genus_species	is	Ochrobactrum anthropi			aminopenicillins, AMC, TIC, PIP, TZP, CZO, CTX, CRO, CAZ, FEP, ATM, ETP	R	Table 02: Intrinsic resistance in non-fermentative Gram-negative bacteria	Expert Rules
 genus_species	is	Pseudomonas aeruginosa			aminopenicillins, AMC, CZO, CTX, CRO, ETP, CHL, KAN, NEO, TMP, SXT, tetracyclines, TGC	R	Table 02: Intrinsic resistance in non-fermentative Gram-negative bacteria	Expert Rules
