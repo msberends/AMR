@@ -34,12 +34,13 @@
 #' @inheritSection AMR Read more on our website!
 #' @examples
 #' # transform existing disk zones to the `disk` class
+#' library(dplyr)
 #' df <- data.frame(microorganism = "E. coli",
 #'                  AMP = 20,
 #'                  CIP = 14,
 #'                  GEN = 18,
 #'                  TOB = 16)
-#' df <- df %>% mutate_at(vars(AMP:TOB, as.disk))
+#' df <- df %>% mutate_at(vars(AMP:TOB), as.disk)
 #' df
 #' 
 #' # interpret disk values, see ?as.rsi

@@ -79,7 +79,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">0.9.0.9026</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">0.9.0.9027</span>
       </span>
     </div>
 
@@ -266,12 +266,13 @@ The <a href='lifecycle.html'>lifecycle</a> of this function is <strong>stable</s
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><span class='co'># transform existing disk zones to the `disk` class</span>
+<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>dplyr</span>)
 <span class='no'>df</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span>(<span class='kw'>microorganism</span> <span class='kw'>=</span> <span class='st'>"E. coli"</span>,
                  <span class='kw'>AMP</span> <span class='kw'>=</span> <span class='fl'>20</span>,
                  <span class='kw'>CIP</span> <span class='kw'>=</span> <span class='fl'>14</span>,
                  <span class='kw'>GEN</span> <span class='kw'>=</span> <span class='fl'>18</span>,
                  <span class='kw'>TOB</span> <span class='kw'>=</span> <span class='fl'>16</span>)
-<span class='no'>df</span> <span class='kw'>&lt;-</span> <span class='no'>df</span> <span class='kw'>%&gt;%</span> <span class='fu'>mutate_at</span>(<span class='fu'>vars</span>(<span class='no'>AMP</span>:<span class='no'>TOB</span>, <span class='no'>as.disk</span>))
+<span class='no'>df</span> <span class='kw'>&lt;-</span> <span class='no'>df</span> <span class='kw'>%&gt;%</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate_all.html'>mutate_at</a></span>(<span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='no'>AMP</span>:<span class='no'>TOB</span>), <span class='no'>as.disk</span>)
 <span class='no'>df</span>
 
 <span class='co'># interpret disk values, see ?as.rsi</span>
