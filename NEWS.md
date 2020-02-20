@@ -1,5 +1,6 @@
-# AMR 0.9.0.9027
-## <small>Last updated: 17-Feb-2020</small>
+# AMR 1.0.0
+
+This software is now out of beta and considered stable. Nonetheless, this package will be developed continually.
 
 ### New
 * Support for the newest [EUCAST Clinical Breakpoint Tables v.10.0](http://www.eucast.org/clinical_breakpoints/), valid from 1 January 2020. This affects translation of MIC and disk zones using `as.rsi()` and inferred resistance and susceptibility using `eucast_rules()`.
