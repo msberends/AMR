@@ -317,6 +317,13 @@ antibiotics <- filter(antibiotics, ab != "PME")
 antibiotics[which(antibiotics$ab == "PVM1"), "ab"] <- "PME"
 # Remove Sinecatechins
 antibiotics <- filter(antibiotics, ab != "SNC")
+# GLIMS codes
+antibiotics[which(antibiotics$ab == as.ab("cefuroxim")), "abbreviations"][[1]] <- list(c(antibiotics[which(antibiotics$ab == as.ab("cefuroxim")), "abbreviations"][[1]], "cfrx"))
+antibiotics[which(antibiotics$ab == as.ab("cefotaxim")), "abbreviations"][[1]] <- list(c(antibiotics[which(antibiotics$ab == as.ab("cefotaxim")), "abbreviations"][[1]], "cftx"))
+antibiotics[which(antibiotics$ab == as.ab("ceftazidime")), "abbreviations"][[1]] <- list(c(antibiotics[which(antibiotics$ab == as.ab("ceftazidime")), "abbreviations"][[1]], "cftz"))
+antibiotics[which(antibiotics$ab == as.ab("cefepime")), "abbreviations"][[1]] <- list(c(antibiotics[which(antibiotics$ab == as.ab("cefepime")), "abbreviations"][[1]], "cfpi"))
+antibiotics[which(antibiotics$ab == as.ab("cefoxitin")), "abbreviations"][[1]] <- list(c(antibiotics[which(antibiotics$ab == as.ab("cefoxitin")), "abbreviations"][[1]], "cfxt"))
+antibiotics[which(antibiotics$ab == as.ab("cotrimoxazol")), "abbreviations"][[1]] <- list(c(antibiotics[which(antibiotics$ab == as.ab("cotrimoxazol")), "abbreviations"][[1]], "trsx"))
 # ESBL E-test codes:
 antibiotics[which(antibiotics$ab == "CCV"), "abbreviations"][[1]] <- list(c("xtzl"))
 antibiotics[which(antibiotics$ab == "CAZ"), "abbreviations"][[1]] <- list(c(antibiotics[which(antibiotics$ab == "CAZ"), "abbreviations"][[1]], "xtz", "cefta"))

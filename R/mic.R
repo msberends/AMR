@@ -65,11 +65,14 @@ as.mic <- function(x, na.rm = FALSE) {
 
     # comma to period
     x <- gsub(",", ".", x, fixed = TRUE)
+    # transform Unicode for >= and <=
+    x <- gsub("\u2264", "<=", x, fixed = TRUE)
+    x <- gsub("\u2265", ">=", x, fixed = TRUE)
     # remove space between operator and number ("<= 0.002" -> "<=0.002")
     x <- gsub("(<|=|>) +", "\\1", x)
     # transform => to >= and =< to <=
-    x <- gsub("=>", ">=", x, fixed = TRUE)
     x <- gsub("=<", "<=", x, fixed = TRUE)
+    x <- gsub("=>", ">=", x, fixed = TRUE)
     # starting dots must start with 0
     x <- gsub("^[.]+", "0.", x)
     # <=0.2560.512 should be 0.512
@@ -124,6 +127,11 @@ as.mic <- function(x, na.rm = FALSE) {
     structure(.Data = factor(x, levels = lvls, ordered = TRUE),
               class =  c("mic", "ordered", "factor"))
   }
+}
+
+all_valid_mics <- function(x) {
+  x_mic <- suppressWarnings(as.mic(x[!is.na(x)]))
+  !any(is.na(x_mic)) & !all(is.na(x))
 }
 
 #' @rdname as.mic

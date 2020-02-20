@@ -85,6 +85,11 @@ as.disk <- function(x, na.rm = FALSE) {
   }
 }
 
+all_valid_disks <- function(x) {
+  x_disk <- suppressWarnings(as.disk(x[!is.na(x)]))
+  !any(is.na(x_disk)) & !all(is.na(x))
+}
+
 #' @rdname as.disk
 #' @export
 #' @importFrom dplyr %>%

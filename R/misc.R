@@ -117,7 +117,22 @@ search_type_in_df <- function(x, type) {
       found <- colnames(x)[colnames(x) %like% "^(specimen)"][1]
     }
   }
-
+  # -- UTI (urinary tract infection)
+  if (type == "uti") {
+    if (any(colnames(x) == "uti")) {
+      found <- colnames(x)[colnames(x) == "uti"][1]
+    } else if (any(colnames(x) %like% "(urine|urinary)")) {
+      found <- colnames(x)[colnames(x) %like% "(urine|urinary)"][1]
+    }
+    if (!is.null(found)) {
+      if (!is.logical(x[, found, drop = TRUE])) {
+        message(red(paste0("NOTE: Column `", bold(found), "` found as input for `col_", type,
+                           "`, but this column does not contain 'logical' values (TRUE/FALSE) and was ignored.")))
+        found <- NULL
+      }
+    }
+  }
+  
   if (!is.null(found)) {
     msg <- paste0("NOTE: Using column `", bold(found), "` as input for `col_", type, "`.")
     if (type %in% c("keyantibiotics", "specimen")) {

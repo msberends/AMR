@@ -81,6 +81,19 @@ test_that("mic2rsi works", {
                 as.rsi() %>%
                 pull(amox_mic) %>%
                 is.rsi())
+  
+  expect_warning(data.frame(mo = "E. coli",
+                            NIT = c("<= 2", 32)) %>%
+                   as.rsi())
+  expect_message(data.frame(mo = "E. coli",
+                            NIT = c("<= 2", 32),
+                            uti = TRUE) %>%
+                   as.rsi())
+  expect_message(
+    data.frame(mo = "E. coli",
+               NIT = c("<= 2", 32),
+               specimen = c("urine", "blood")) %>%
+      as.rsi())
 })
 
 test_that("disk2rsi works", {

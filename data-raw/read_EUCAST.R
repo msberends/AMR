@@ -83,9 +83,23 @@ read_EUCAST <- function(sheet, file = "data-raw/v_10.0_Breakpoint_Tables.xlsx") 
     x
   }
   
-  MICs_with_trailing_superscript <- c(0.0011:0.0019, 11:19, 21:29, 0.51:0.59, 41:49,
-                                      81:89, 0.031:0.039, 0.061:0.069, 0.251:0.259,
-                                      0.1251:0.1259, 161:169, 321:329)
+  MICs_with_trailing_superscript <- c(seq(from = 0.0011, to = 0.0019, by = 0.0001),
+                                      seq(from = 0.031, to = 0.039, by = 0.001),
+                                      seq(from = 0.061, to = 0.069, by = 0.001),
+                                      seq(from = 0.1251, to = 0.1259, by = 0.0001),
+                                      seq(from = 0.251, to = 0.259, by = 0.001),
+                                      seq(from = 0.51, to = 0.59, by = 0.01),
+                                      seq(from = 11, to = 19, by = 1),
+                                      seq(from = 161, to = 169, by = 01),
+                                      seq(from = 21, to = 29, by = 1),
+                                      seq(from = 321, to = 329, by = 1),
+                                      seq(from = 41, to = 49, by = 1),
+                                      seq(from = 81, to = 89, by = 1))
+  has_superscript <- function(x) {
+    # because due to floating point error 0.1252 is not in: 
+    # seq(from = 0.1251, to = 0.1259, by = 0.0001)
+    sapply(x, function(x) any(near(x, MICs_with_trailing_superscript)))
+  }
   
   has_zone_diameters <- rep(any(unlist(raw_data) %like% "zone diameter"), nrow(raw_data))
 
@@ -101,7 +115,8 @@ read_EUCAST <- function(sheet, file = "data-raw/v_10.0_Breakpoint_Tables.xlsx") 
     filter(!is.na(drug),
            !(is.na(MIC_S) & is.na(MIC_R) & is.na(disk_S) & is.na(disk_R)),
            !MIC_S %like% "(MIC|S ≤|note)",
-           drug != MIC_S) %>% 
+           !MIC_S %like% "^[-]",
+           drug != MIC_S,) %>% 
     mutate(administration = case_when(drug %like% "[( ]oral" ~ "oral",
                                       drug %like% "[( ]iv"   ~ "iv",
                                       TRUE ~ NA_character_),
@@ -120,12 +135,15 @@ read_EUCAST <- function(sheet, file = "data-raw/v_10.0_Breakpoint_Tables.xlsx") 
            disk_S = clean_integer(disk_S),
            disk_R = clean_integer(disk_R),
            # invalid MIC values have a superscript text, delete those
-           MIC_S = ifelse(MIC_S %in% MICs_with_trailing_superscript,
+           MIC_S = ifelse(has_superscript(MIC_S),
                           substr(MIC_S, 1, nchar(MIC_S) - 1),
                           MIC_S),
-           MIC_R = ifelse(MIC_R %in% MICs_with_trailing_superscript,
+           MIC_R = ifelse(has_superscript(MIC_R),
                           substr(MIC_R, 1, nchar(MIC_R) - 1),
-                          MIC_R)
+                          MIC_R),
+           # and some are just awful
+           MIC_S = ifelse(MIC_S == 43.4, 4, MIC_S),
+           MIC_R = ifelse(MIC_R == 43.4, 4, MIC_R),
     ) %>% 
     # clean drug names
     mutate(drug = gsub(" ?[(, ].*$", "", drug),

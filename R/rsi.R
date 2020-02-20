@@ -27,6 +27,7 @@
 #' @param x vector of values (for class [`mic`]: an MIC value in mg/L, for class [`disk`]: a disk diffusion radius in millimetres)
 #' @param mo any (vector of) text that can be coerced to a valid microorganism code with [as.mo()]
 #' @param ab any (vector of) text that can be coerced to a valid antimicrobial code with [as.ab()]
+#' @param uti (Urinary Tract Infection) A vector with [logical]s (`TRUE` or `FALSE`) to specify whether a UTI specific interpretation from the guideline should be chosen. For using [as.rsi()] on a [data.frame], this can also be a column containing [logical]s or when left blank, the data set will be search for a 'specimen' and rows containing 'urin' in that column will be regarded isolates from a UTI. See *Examples*.
 #' @inheritParams first_isolate
 #' @param guideline defaults to the latest included EUCAST guideline, run `unique(rsi_translation$guideline)` for all options
 #' @param threshold maximum fraction of invalid antimicrobial interpretations of `x`, please see *Examples*
@@ -52,13 +53,45 @@
 #' @return Ordered factor with new class [`rsi`]
 #' @aliases rsi
 #' @export
-#' @importFrom dplyr %>% desc arrange filter 
 #' @seealso [as.mic()]
 #' @inheritSection AMR Read more on our website!
 #' @examples
 #' # For INTERPRETING disk diffusion and MIC values -----------------------
+#'        
+#' # a whole data set, even with combined MIC values and disk zones
+#' df <- data.frame(microorganism = "E. coli",
+#'                  AMP = as.mic(8),
+#'                  CIP = as.mic(0.256),
+#'                  GEN = as.disk(18),
+#'                  TOB = as.disk(16),
+#'                  NIT = as.mic(32))
+#' as.rsi(df)
 #' 
-#' # single values
+#' # the dplyr way
+#' library(dplyr)
+#' df %>%
+#'   mutate_at(vars(AMP:TOB), as.rsi, mo = "E. coli")
+#'   
+#' df %>%
+#'   mutate_at(vars(AMP:TOB), as.rsi, mo = .$microorganism)
+#'   
+#' # to include information about urinary tract infections (UTI)
+#' data.frame(mo = "E. coli",
+#'            NIT = c("<= 2", 32),
+#'            from_the_bladder = c(TRUE, FALSE)) %>%
+#'   as.rsi(uti = "from_the_bladder")
+#'   
+#' data.frame(mo = "E. coli",
+#'            NIT = c("<= 2", 32),
+#'            specimen = c("urine", "blood")) %>%
+#'   as.rsi() # automatically determines urine isolates
+#' 
+#' df %>%
+#'   mutate_at(vars(AMP:TOB), as.rsi, mo = "E. coli", uti = TRUE)  
+#'  
+#'   
+#'   
+#' # for single values
 #' as.rsi(x = as.mic(2),
 #'        mo = as.mo("S. pneumoniae"),
 #'        ab = "AMP",
@@ -68,14 +101,6 @@
 #'        mo = "Strep pneu",  # `mo` will be coerced with as.mo()
 #'        ab = "ampicillin",  # and `ab` with as.ab()
 #'        guideline = "EUCAST")
-#'        
-#' # a whole data set, even with combined MIC values and disk zones
-#' df <- data.frame(microorganism = "E. coli",
-#'                  AMP = as.mic(8),
-#'                  CIP = as.mic(0.256),
-#'                  GEN = as.disk(18),
-#'                  TOB = as.disk(16))
-#' as.rsi(df)
 #'
 #'
 #' # For CLEANING existing R/SI values ------------------------------------
@@ -114,6 +139,11 @@ as.rsi.default <- function(x, ...) {
     x
   } else if (identical(levels(x), c("S", "I", "R"))) {
     structure(x, class = c("rsi", "ordered", "factor"))
+  } else if (all_valid_mics(x) & !all(is.na(x))) {
+    as.rsi(as.mic(x), ab = deparse(substitute(x)), ...)
+  } else if (all_valid_disks(x) & !all(is.na(x))) {
+    #message("These values seem to be disk diffusion diameters and were treated as such.")
+    as.rsi(as.disk(x), ab = deparse(substitute(x)), ...)
   } else if (identical(class(x), "integer") & all(x %in% c(1:3, NA))) {
     x[x == 1] <- "S"
     x[x == 2] <- "I"
@@ -164,6 +194,7 @@ as.rsi.default <- function(x, ...) {
   }
 }
 
+#' @importFrom dplyr %>%
 input_resembles_mic <- function(x) {
   mic <- x %>%
     gsub("[^0-9.,]+", "", .) %>%
@@ -178,26 +209,184 @@ input_resembles_mic <- function(x) {
 }
 
 #' @rdname as.rsi
-#' @importFrom dplyr case_when
 #' @export
-as.rsi.mic <- function(x, mo, ab, guideline = "EUCAST", ...) {
-  exec_as.rsi(method = "mic",
-              x = x,
-              mo = mo,
-              ab = ab,
-              guideline = guideline)
+as.rsi.mic <- function(x, mo, ab = deparse(substitute(x)), guideline = "EUCAST", uti = FALSE, ...) {
+  if (missing(mo)) {
+    stop('No information was supplied about the microorganisms (missing parameter "mo"). See ?as.rsi.\n\n',
+         "To transform certain columns with e.g. mutate_at(), use\n",
+         "`data %>% mutate_at(vars(...), as.rsi, mo = .$x)`, where x is your column with microorganisms.\n\n",
+         "To tranform all MIC variables in a data set, use `as.rsi(data)` or `data %>% as.rsi()`.", call. = FALSE)
+  }
+  
+  ab_coerced <- suppressWarnings(as.ab(ab))
+  mo_coerced <- suppressWarnings(as.mo(mo))
+  guideline_coerced <- get_guideline(guideline)
+  if (is.na(ab_coerced)) {
+    message(red(paste0("Unknown drug: `", bold(ab), "`. Rename this column to a drug name or code, and check the output with as.ab().")))
+    return(as.rsi(rep(NA, length(x))))
+  }
+  if (length(mo_coerced) == 1) {
+    mo_coerced <- rep(mo_coerced, length(x))
+  }
+  if (length(uti) == 1) {
+    uti <- rep(uti, length(x))
+  }
+  
+  message(blue(paste0("=> Interpreting MIC values of column `", bold(ab), "` (",
+                      ifelse(ab_coerced != ab, paste0(ab_coerced, ", "), ""),
+                      ab_name(ab_coerced, tolower = TRUE), ") using guideline ", bold(guideline_coerced), " ... ")),
+          appendLF = FALSE)
+  result <- exec_as.rsi(method = "mic",
+                        x = x,
+                        mo = mo_coerced,
+                        ab = ab_coerced,
+                        guideline = guideline_coerced,
+                        uti = uti) # exec_as.rsi will return message(blue(" OK."))
+  result
 }
 
 #' @rdname as.rsi
 #' @export
-as.rsi.disk <- function(x, mo, ab, guideline = "EUCAST", ...) {
-  exec_as.rsi(method = "disk",
-              x = x,
-              mo = mo,
-              ab = ab,
-              guideline = guideline)
+as.rsi.disk <- function(x, mo, ab = deparse(substitute(x)), guideline = "EUCAST", uti = FALSE, ...) {
+  if (missing(mo)) {
+    stop('No information was supplied about the microorganisms (missing parameter "mo"). See ?as.rsi.\n\n',
+         "To transform certain columns with e.g. mutate_at(), use\n",
+         "`data %>% mutate_at(vars(...), as.rsi, mo = .$x)`, where x is your column with microorganisms.\n\n",
+         "To tranform all disk diffusion zones in a data set, use `as.rsi(data)` or `data %>% as.rsi()`.", call. = FALSE)
+  }
+  
+  ab_coerced <- suppressWarnings(as.ab(ab))
+  mo_coerced <- suppressWarnings(as.mo(mo))
+  guideline_coerced <- get_guideline(guideline)
+  if (is.na(ab_coerced)) {
+    message(red(paste0("Unknown drug: `", bold(ab), "`. Rename this column to a drug name or code, and check the output with as.ab().")))
+    return(as.rsi(rep(NA, length(x))))
+  }
+  if (length(mo_coerced) == 1) {
+    mo_coerced <- rep(mo_coerced, length(x))
+  }
+  if (length(uti) == 1) {
+    uti <- rep(uti, length(x))
+  }
+  
+  message(blue(paste0("=> Interpreting disk zones of column `", bold(ab), "` (",
+                      ifelse(ab_coerced != ab, paste0(ab_coerced, ", "), ""),
+                      ab_name(ab_coerced, tolower = TRUE), ") using guideline ", bold(guideline_coerced), " ... ")),
+          appendLF = FALSE)
+  result <- exec_as.rsi(method = "disk",
+                        x = x,
+                        mo = mo_coerced,
+                        ab = ab_coerced,
+                        guideline = guideline_coerced,
+                        uti = uti) # exec_as.rsi will return message(blue(" OK."))
+  result
 }
 
+#' @rdname as.rsi
+#' @importFrom crayon red blue bold
+#' @export
+as.rsi.data.frame <- function(x, col_mo = NULL, guideline = "EUCAST", uti = NULL, ...) {
+  # try to find columns based on type
+  # -- mo
+  if (is.null(col_mo)) {
+    col_mo <- search_type_in_df(x = x, type = "mo")
+  }
+  if (is.null(col_mo)) {
+    stop("`col_mo` must be set.", call. = FALSE)
+  }
+  # -- UTIs
+  col_uti <- uti
+  if (is.null(col_uti)) {
+    col_uti <- search_type_in_df(x = x, type = "uti")
+  }
+  if (!is.null(col_uti)) {
+    if (is.logical(col_uti)) {
+      # already a logical vector as input
+      if (length(col_uti) == 1) {
+        uti <- rep(col_uti, NROW(x))
+      } else {
+        uti <- col_uti
+      }
+    } else {
+      # column found, transform to logical
+      uti <- as.logical(x[, col_uti, drop = TRUE])
+    }
+  } else {
+    # look for specimen column and make logicals of the urines
+    col_specimen <- suppressMessages(search_type_in_df(x = x, type = "specimen"))
+    if (!is.null(col_specimen)) {
+      uti <- x[, col_specimen, drop = TRUE] %like% "urin"
+      values <- sort(unique(x[uti, col_specimen, drop = TRUE]))
+      if (length(values) > 1) {
+        plural <- c("s", "", "")
+      } else {
+        plural <- c("", "s", "a ")
+      }
+      message(blue(paste0("NOTE: Assuming value", plural[1], " ", 
+              paste(paste0('"', values, '"'), collapse = ", "),
+              " in column `", bold(col_specimen),
+              "` reflect", plural[2], " ", plural[3], "urinary tract infection", plural[1], ".\n  Use `as.rsi(uti = FALSE)` to prevent this.")))
+    } else {
+      # no data about UTI's found
+      uti <- FALSE
+    }
+  }
+
+  i <- 0
+  ab_cols <- colnames(x)[sapply(x, function(y) { 
+    i <<- i + 1
+    check <- is.mic(y) | is.disk(y)
+    ab <- colnames(x)[i]
+    ab_coerced <- suppressWarnings(as.ab(ab))
+    if (is.na(ab_coerced)) {
+      # not even a valid AB code
+      return(FALSE)
+    } else if (!check & all_valid_mics(y)) {
+      message(blue(paste0("NOTE: Assuming column `", ab, "` (",
+                          ifelse(ab_coerced != ab, paste0(ab_coerced, ", "), ""),
+                          ab_name(ab_coerced, tolower = TRUE), ") contains MIC values.")))
+      return(TRUE)
+    } else if (!check & all_valid_disks(y)) {
+      message(blue(paste0("NOTE: Assuming column `", ab, "` (",
+                          ifelse(ab_coerced != ab, paste0(ab_coerced, ", "), ""),
+                          ab_name(ab_coerced, tolower = TRUE), ") contains disk zones.")))
+      return(TRUE)
+    } else {
+      return(check)
+    }
+  })]
+  
+  if (length(ab_cols) == 0) {
+    stop("No columns with MIC values or disk zones found in this data set. Use as.mic() or as.disk() to transform antimicrobial columns.", call. = FALSE)
+  }
+  
+  # set type per column
+  types <- character(length(ab_cols))
+  types[sapply(x[, ab_cols], is.mic)] <- "mic"
+  types[types == "" & sapply(x[, ab_cols], all_valid_mics)] <- "mic"
+  types[sapply(x[, ab_cols], is.disk)] <- "disk"
+  types[types == "" & sapply(x[, ab_cols], all_valid_disks)] <- "disk"
+  
+  for (i in seq_len(length(ab_cols))) {
+    if (types[i] == "mic") {
+      x[, ab_cols[i]] <- as.rsi.mic(x = x %>% pull(ab_cols[i]),
+                                    mo = x %>% pull(col_mo),
+                                    ab = ab_cols[i],
+                                    guideline = guideline,
+                                    uti = uti)
+    } else if (types[i] == "disk") {
+      x[, ab_cols[i]] <- as.rsi.disk(x = x %>% pull(ab_cols[i]),
+                                     mo = x %>% pull(col_mo),
+                                     ab = ab_cols[i],
+                                     guideline = guideline,
+                                     uti = uti)
+    }
+  }
+  
+  x
+}
+
+#' @importFrom dplyr %>% filter pull
 get_guideline <- function(guideline) {
   guideline_param <- toupper(guideline)
   if (guideline_param %in% c("CLSI", "EUCAST")) {
@@ -216,19 +405,20 @@ get_guideline <- function(guideline) {
   }
   
   guideline_param
+  
 }
 
-exec_as.rsi <- function(method, x, mo, ab, guideline) {
+#' @importFrom dplyr %>% case_when desc arrange filter n_distinct
+#' @importFrom crayon green red bold
+exec_as.rsi <- function(method, x, mo, ab, guideline, uti) {
   if (method == "mic") {
-    x <- as.double(as.mic(x)) # when as.rsi.mic is called directly
-    method_param <- "MIC"
+    x <- as.mic(x) # when as.rsi.mic is called directly
   } else if (method == "disk") {
-    x <- as.double(as.disk(x)) # when as.rsi.disk is called directly
-    method_param <- "DISK"
+    x <- as.disk(x) # when as.rsi.disk is called directly
   }
   
-  mo <- as.mo(mo)
-  ab <- as.ab(ab)
+  warned <- FALSE
+  method_param <- toupper(method)
   
   mo_genus <- as.mo(mo_genus(mo))
   mo_family <- as.mo(mo_family(mo))
@@ -243,8 +433,9 @@ exec_as.rsi <- function(method, x, mo, ab, guideline) {
   }
   
   new_rsi <- rep(NA_character_, length(x))
+  ab_param <- ab
   trans <- rsi_translation %>%
-    filter(guideline == guideline_coerced & method == method_param) %>%
+    filter(guideline == guideline_coerced & method == method_param & ab == ab_param) %>%
     mutate(lookup = paste(mo, ab))
   
   lookup_mo <- paste(mo, ab)
@@ -255,108 +446,60 @@ exec_as.rsi <- function(method, x, mo, ab, guideline) {
   lookup_lancefield <- paste(mo_lancefield, ab)
   lookup_other <- paste(mo_other, ab)
   
+  if (all(trans$uti == TRUE, na.rm = TRUE) & all(uti == FALSE)) {
+    message(red("WARNING."))
+    warning("Interpretation of ", bold(ab_name(ab, tolower = TRUE)), " for some microorganisms is only available for (uncomplicated) urinary tract infections (UTI).\n  Use parameter 'uti' to set which isolates are from urine. See ?as.rsi.", call. = FALSE)
+    warned <- TRUE
+  }
+  
   for (i in seq_len(length(x))) {
     get_record <- trans %>%
+      # no UTI for now
       filter(lookup %in% c(lookup_mo[i],
                            lookup_genus[i],
                            lookup_family[i],
                            lookup_order[i],
                            lookup_becker[i],
                            lookup_lancefield[i],
-                           lookup_other[i])) %>%
-      # be as specific as possible (i.e. prefer species over genus):
-      arrange(desc(nchar(mo))) %>%
-      .[1L, ]
+                           lookup_other[i]))
+    
+    if (isTRUE(uti[i])) {
+      get_record <- get_record %>% 
+        # be as specific as possible (i.e. prefer species over genus):
+        # desc(uti) = TRUE on top and FALSE on bottom
+        arrange(desc(uti), desc(nchar(mo))) %>% # 'uti' is a column in rsi_translation
+        .[1L, ]
+    } else {
+      get_record <- get_record %>% 
+        filter(uti == FALSE) %>% # 'uti' is a column in rsi_translation
+        arrange(desc(nchar(mo))) %>%
+        .[1L, ]
+    }
     
     if (NROW(get_record) > 0) {
       if (is.na(x[i])) {
         new_rsi[i] <- NA_character_
       } else if (method == "mic") {
-        new_rsi[i] <- case_when(isTRUE(x[i] <= get_record$breakpoint_S) ~ "S",
-                                isTRUE(x[i] >= get_record$breakpoint_R) ~ "R",
+        mic_input <- x[i]
+        mic_S <- as.mic(get_record$breakpoint_S)
+        mic_R <- as.mic(get_record$breakpoint_R)
+        new_rsi[i] <- case_when(isTRUE(which(levels(mic_input) == mic_input) <= which(levels(mic_S) == mic_S)) ~ "S",
+                                isTRUE(which(levels(mic_input) == mic_input) >= which(levels(mic_R) == mic_R)) ~ "R",
                                 !is.na(get_record$breakpoint_S) & !is.na(get_record$breakpoint_R) ~ "I",
                                 TRUE ~ NA_character_)
       } else if (method == "disk") {
-        new_rsi[i] <- case_when(isTRUE(x[i] >= get_record$breakpoint_S) ~ "S",
-                                isTRUE(x[i] <= get_record$breakpoint_R) ~ "R",
+        new_rsi[i] <- case_when(isTRUE(as.double(x[i]) >= as.double(get_record$breakpoint_S)) ~ "S",
+                                isTRUE(as.double(x[i]) <= as.double(get_record$breakpoint_R)) ~ "R",
                                 !is.na(get_record$breakpoint_S) & !is.na(get_record$breakpoint_R) ~ "I",
                                 TRUE ~ NA_character_)
       }
     }
   }
+  if (warned == FALSE) {
+    message(green("OK."))
+  }
   structure(.Data = factor(new_rsi, levels = c("S", "I", "R"), ordered = TRUE),
             class =  c("rsi", "ordered", "factor"))
-}
-
-#' @rdname as.rsi
-#' @importFrom crayon red blue bold
-#' @export
-as.rsi.data.frame <- function(x, col_mo = NULL, guideline = "EUCAST", ...) {
-  x <- x
-  
-  ab_cols <- colnames(x)[sapply(x, function(y) is.mic(y) | is.disk(y))]
-  if (length(ab_cols) == 0) {
-    stop("No columns with MIC values or disk zones found in this data set. Use as.mic or as.disk to transform antimicrobial columns.", call. = FALSE)
-  }
-  
-  # try to find columns based on type
-  # -- mo
-  if (is.null(col_mo)) {
-    col_mo <- search_type_in_df(x = x, type = "mo")
-  }
-  if (is.null(col_mo)) {
-    stop("`col_mo` must be set.", call. = FALSE)
-  }
-  
-  guideline_coerced <- get_guideline(guideline)
-  if (guideline_coerced != guideline) {
-    message(blue(paste0("Note: Using guideline ", bold(guideline_coerced), " as input for `guideline`.")))
-  }
-  
-  # transform all MICs
-  ab_cols <- colnames(x)[sapply(x, is.mic)]
-  if (length(ab_cols) > 0) {
-    for (i in seq_len(length(ab_cols))) {
-      ab_col_coerced <- suppressWarnings(as.ab(ab_cols[i]))
-      if (is.na(ab_col_coerced)) {
-        message(red(paste0("Unknown drug: `", bold(ab_cols[i]), "`. Rename this column to a drug name or code, and check the output with as.ab().")))
-        next
-      }
-      message(blue(paste0("Interpreting MIC values of column `", bold(ab_cols[i]), "` (",
-                          ifelse(ab_col_coerced != ab_cols[i], paste0(ab_col_coerced, ", "), ""),
-                          ab_name(ab_col_coerced, tolower = TRUE), ")...")),
-              appendLF = FALSE)
-      x[, ab_cols[i]] <- exec_as.rsi(method = "mic",
-                                     x = x %>% pull(ab_cols[i]),
-                                     mo = x %>% pull(col_mo),
-                                     ab = ab_col_coerced,
-                                     guideline = guideline_coerced)
-      message(blue(" OK."))
-    }
-  }
-  # transform all disks
-  ab_cols <- colnames(x)[sapply(x, is.disk)]
-  if (length(ab_cols) > 0) {
-    for (i in seq_len(length(ab_cols))) {
-      ab_col_coerced <- suppressWarnings(as.ab(ab_cols[i]))
-      if (is.na(ab_col_coerced)) {
-        message(red(paste0("Unknown drug: `", bold(ab_cols[i]), "`. Rename this column to a drug name or code, and check the output with as.ab().")))
-        next
-      }
-      message(blue(paste0("Interpreting disk zones of column `", bold(ab_cols[i]), "` (",
-                          ifelse(ab_col_coerced != ab_cols[i], paste0(ab_col_coerced, ", "), ""),
-                          ab_name(ab_col_coerced, tolower = TRUE), ")...")),
-              appendLF = FALSE)
-      x[, ab_cols[i]] <- exec_as.rsi(method = "disk",
-                                     x = x %>% pull(ab_cols[i]),
-                                     mo = x %>% pull(col_mo),
-                                     ab = ab_col_coerced,
-                                     guideline = guideline_coerced)
-      message(blue(" OK."))
-    }
-  }
-  
-  x
 }
 
 #' @rdname as.rsi

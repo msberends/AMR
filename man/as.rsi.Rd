@@ -12,11 +12,25 @@
 \usage{
 as.rsi(x, ...)
 
-\method{as.rsi}{mic}(x, mo, ab, guideline = "EUCAST", ...)
+\method{as.rsi}{mic}(
+  x,
+  mo,
+  ab = deparse(substitute(x)),
+  guideline = "EUCAST",
+  uti = FALSE,
+  ...
+)
 
-\method{as.rsi}{disk}(x, mo, ab, guideline = "EUCAST", ...)
+\method{as.rsi}{disk}(
+  x,
+  mo,
+  ab = deparse(substitute(x)),
+  guideline = "EUCAST",
+  uti = FALSE,
+  ...
+)
 
-\method{as.rsi}{data.frame}(x, col_mo = NULL, guideline = "EUCAST", ...)
+\method{as.rsi}{data.frame}(x, col_mo = NULL, guideline = "EUCAST", uti = NULL, ...)
 
 is.rsi(x)
 
@@ -32,6 +46,8 @@ is.rsi.eligible(x, threshold = 0.05)
 \item{ab}{any (vector of) text that can be coerced to a valid antimicrobial code with \code{\link[=as.ab]{as.ab()}}}
 
 \item{guideline}{defaults to the latest included EUCAST guideline, run \code{unique(rsi_translation$guideline)} for all options}
+
+\item{uti}{(Urinary Tract Infection) A vector with \link{logical}s (\code{TRUE} or \code{FALSE}) to specify whether a UTI specific interpretation from the guideline should be chosen. For using \code{\link[=as.rsi]{as.rsi()}} on a \link{data.frame}, this can also be a column containing \link{logical}s or when left blank, the data set will be search for a 'specimen' and rows containing 'urin' in that column will be regarded isolates from a UTI. See \emph{Examples}.}
 
 \item{col_mo}{column name of the IDs of the microorganisms (see \code{\link[=as.mo]{as.mo()}}), defaults to the first column of class \code{\link{mo}}. Values will be coerced using \code{\link[=as.mo]{as.mo()}}.}
 
@@ -82,8 +98,41 @@ On our website \url{https://msberends.gitlab.io/AMR} you can find \href{https://
 
 \examples{
 # For INTERPRETING disk diffusion and MIC values -----------------------
+       
+# a whole data set, even with combined MIC values and disk zones
+df <- data.frame(microorganism = "E. coli",
+                 AMP = as.mic(8),
+                 CIP = as.mic(0.256),
+                 GEN = as.disk(18),
+                 TOB = as.disk(16),
+                 NIT = as.mic(32))
+as.rsi(df)
 
-# single values
+# the dplyr way
+library(dplyr)
+df \%>\%
+  mutate_at(vars(AMP:TOB), as.rsi, mo = "E. coli")
+  
+df \%>\%
+  mutate_at(vars(AMP:TOB), as.rsi, mo = .$microorganism)
+  
+# to include information about urinary tract infections (UTI)
+data.frame(mo = "E. coli",
+           NIT = c("<= 2", 32),
+           from_the_bladder = c(TRUE, FALSE)) \%>\%
+  as.rsi(uti = "from_the_bladder")
+  
+data.frame(mo = "E. coli",
+           NIT = c("<= 2", 32),
+           specimen = c("urine", "blood")) \%>\%
+  as.rsi() # automatically determines urine isolates
+
+df \%>\%
+  mutate_at(vars(AMP:TOB), as.rsi, mo = "E. coli", uti = TRUE)  
+ 
+  
+  
+# for single values
 as.rsi(x = as.mic(2),
        mo = as.mo("S. pneumoniae"),
        ab = "AMP",
@@ -93,14 +142,6 @@ as.rsi(x = as.disk(18),
        mo = "Strep pneu",  # `mo` will be coerced with as.mo()
        ab = "ampicillin",  # and `ab` with as.ab()
        guideline = "EUCAST")
-       
-# a whole data set, even with combined MIC values and disk zones
-df <- data.frame(microorganism = "E. coli",
-                 AMP = as.mic(8),
-                 CIP = as.mic(0.256),
-                 GEN = as.disk(18),
-                 TOB = as.disk(16))
-as.rsi(df)
 
 
 # For CLEANING existing R/SI values ------------------------------------

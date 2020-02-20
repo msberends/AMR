@@ -19,7 +19,7 @@
 "EUCAST 2020"	"DISK"	"iv"	"Haemophilus influenzae"	"Amoxicillin/clavulanic acid"	"H.influenzae"	"2-1ug"	15	15	FALSE
 "EUCAST 2020"	"DISK"	"oral"	"Haemophilus influenzae"	"Amoxicillin/clavulanic acid"	"H.influenzae"	"2-1ug"	50	15	FALSE
 "EUCAST 2020"	"MIC"	"iv"	"Haemophilus influenzae"	"Amoxicillin/clavulanic acid"	"H.influenzae"		2	2	FALSE
-"EUCAST 2020"	"MIC"	"oral"	"Haemophilus influenzae"	"Amoxicillin/clavulanic acid"	"H.influenzae"		0.0015	2	FALSE
+"EUCAST 2020"	"MIC"	"oral"	"Haemophilus influenzae"	"Amoxicillin/clavulanic acid"	"H.influenzae"		0.001	2	FALSE
 "EUCAST 2020"	"MIC"		"Lactobacillus"	"Amoxicillin/clavulanic acid"	"Anaerobes, Grampositive"		4	8	FALSE
 "EUCAST 2020"	"MIC"		"Mobiluncus"	"Amoxicillin/clavulanic acid"	"Anaerobes, Gramnegative"		4	8	FALSE
 "EUCAST 2020"	"DISK"		"Moraxella catarrhalis"	"Amoxicillin/clavulanic acid"	"M.catarrhalis"	"2-1ug"	19	19	FALSE
@@ -70,12 +70,11 @@
 "EUCAST 2020"	"MIC"		"Fusobacterium"	"Ampicillin"	"Anaerobes, Gramnegative"		0.5	2	FALSE
 "EUCAST 2020"	"DISK"		"Haemophilus influenzae"	"Ampicillin"	"H.influenzae"	"2ug"	18	18	FALSE
 "EUCAST 2020"	"MIC"		"Haemophilus influenzae"	"Ampicillin"	"H.influenzae"		1	1	FALSE
-"EUCAST 2020"	"MIC"		"Kingella kingae"	"Ampicillin"	"K.kingae"		0.062	0.062	FALSE
+"EUCAST 2020"	"MIC"		"Kingella kingae"	"Ampicillin"	"K.kingae"		0.06	0.06	FALSE
 "EUCAST 2020"	"MIC"		"Lactobacillus"	"Ampicillin"	"Anaerobes, Grampositive"		4	8	FALSE
 "EUCAST 2020"	"DISK"	"iv"	"Listeria monocytogenes"	"Ampicillin"	"L.monocytogenes"	"2ug"	16	16	FALSE
 "EUCAST 2020"	"MIC"	"iv"	"Listeria monocytogenes"	"Ampicillin"	"L.monocytogenes"		1	1	FALSE
 "EUCAST 2020"	"MIC"		"Mobiluncus"	"Ampicillin"	"Anaerobes, Gramnegative"		0.5	2	FALSE
-"EUCAST 2020"	"MIC"		"Moraxella catarrhalis"	"Ampicillin"	"M.catarrhalis"		-1	-1	FALSE
 "EUCAST 2020"	"MIC"		"Neisseria meningitidis"	"Ampicillin"	"N.meningitidis"		0.125	1	FALSE
 "EUCAST 2020"	"MIC"		"Parabacteroides"	"Ampicillin"	"Anaerobes, Gramnegative"		0.5	2	FALSE
 "EUCAST 2020"	"MIC"		"Porphyromonas"	"Ampicillin"	"Anaerobes, Gramnegative"		0.5	2	FALSE
@@ -103,10 +102,9 @@
 "EUCAST 2020"	"MIC"	"oral"	"Helicobacter pylori"	"Amoxicillin"	"H.pylori"		0.125	0.125	FALSE
 "EUCAST 2020"	"MIC"	"iv"	"Haemophilus influenzae"	"Amoxicillin"	"H.influenzae"		2	2	FALSE
 "EUCAST 2020"	"MIC"	"oral"	"Haemophilus influenzae"	"Amoxicillin"	"H.influenzae"		0.001	2	FALSE
-"EUCAST 2020"	"MIC"		"Kingella kingae"	"Amoxicillin"	"K.kingae"		0.1252	0.1252	FALSE
+"EUCAST 2020"	"MIC"		"Kingella kingae"	"Amoxicillin"	"K.kingae"		0.125	0.125	FALSE
 "EUCAST 2020"	"MIC"		"Lactobacillus"	"Amoxicillin"	"Anaerobes, Grampositive"		4	8	FALSE
 "EUCAST 2020"	"MIC"		"Mobiluncus"	"Amoxicillin"	"Anaerobes, Gramnegative"		0.5	2	FALSE
-"EUCAST 2020"	"MIC"		"Moraxella catarrhalis"	"Amoxicillin"	"M.catarrhalis"		-1	-1	FALSE
 "EUCAST 2020"	"MIC"		"Neisseria meningitidis"	"Amoxicillin"	"N.meningitidis"		0.125	1	FALSE
 "EUCAST 2020"	"MIC"		"Parabacteroides"	"Amoxicillin"	"Anaerobes, Gramnegative"		0.5	2	FALSE
 "EUCAST 2020"	"MIC"		"Porphyromonas"	"Amoxicillin"	"Anaerobes, Gramnegative"		0.5	2	FALSE
@@ -465,29 +463,29 @@
 "EUCAST 2020"	"MIC"		"Haemophilus influenzae"	"Ceftolozane/tazobactam"	"H.influenzae"		0.5	0.5	FALSE
 "EUCAST 2020"	"DISK"		"Pseudomonas aeruginosa"	"Ceftolozane/tazobactam"	"Pseudomonas"	"30-10ug"	24	24	FALSE
 "EUCAST 2020"	"MIC"		"Pseudomonas aeruginosa"	"Ceftolozane/tazobactam"	"Pseudomonas"		4	4	FALSE
-"EUCAST 2020"	"MIC"		"(unknown name)"	"Ceftolozane/tazobactam"	"PK PD breakpoints"		43.4	43.4	FALSE
-"EUCAST 2020"	"MIC"		"Staphylococcus"	"Dalbavancin"	"Staphylococcus"		0.125	0.1253	FALSE
-"EUCAST 2020"	"MIC"		"Streptococcus agalactiae"	"Dalbavancin"	"Streptococcus A,B,C,G"		0.125	0.1252	FALSE
-"EUCAST 2020"	"MIC"		"Streptococcus anginosus"	"Dalbavancin"	"Streptococcus A,B,C,G"		0.125	0.1252	FALSE
-"EUCAST 2020"	"MIC"		"Streptococcus anginosus"	"Dalbavancin"	"Viridans group streptococci"		0.125	0.1252	FALSE
-"EUCAST 2020"	"MIC"		"Streptococcus dysgalactiae"	"Dalbavancin"	"Streptococcus A,B,C,G"		0.125	0.1252	FALSE
-"EUCAST 2020"	"MIC"		"Streptococcus dysgalactiae dysgalactiae"	"Dalbavancin"	"Streptococcus A,B,C,G"		0.125	0.1252	FALSE
-"EUCAST 2020"	"MIC"		"Streptococcus dysgalactiae equisimilis"	"Dalbavancin"	"Streptococcus A,B,C,G"		0.125	0.1252	FALSE
-"EUCAST 2020"	"MIC"		"Streptococcus equi"	"Dalbavancin"	"Streptococcus A,B,C,G"		0.125	0.1252	FALSE
-"EUCAST 2020"	"MIC"		"Streptococcus equi equi"	"Dalbavancin"	"Streptococcus A,B,C,G"		0.125	0.1252	FALSE
-"EUCAST 2020"	"MIC"		"Streptococcus equi ruminatorum"	"Dalbavancin"	"Streptococcus A,B,C,G"		0.125	0.1252	FALSE
-"EUCAST 2020"	"MIC"		"Streptococcus equi zooepidemicus"	"Dalbavancin"	"Streptococcus A,B,C,G"		0.125	0.1252	FALSE
-"EUCAST 2020"	"MIC"		"Streptococcus group A"	"Dalbavancin"	"Streptococcus A,B,C,G"		0.125	0.1252	FALSE
-"EUCAST 2020"	"MIC"		"Streptococcus group B"	"Dalbavancin"	"Streptococcus A,B,C,G"		0.125	0.1252	FALSE
-"EUCAST 2020"	"MIC"		"Streptococcus group C"	"Dalbavancin"	"Streptococcus A,B,C,G"		0.125	0.1252	FALSE
-"EUCAST 2020"	"MIC"		"Streptococcus group D"	"Dalbavancin"	"Streptococcus A,B,C,G"		0.125	0.1252	FALSE
-"EUCAST 2020"	"MIC"		"Streptococcus group F"	"Dalbavancin"	"Streptococcus A,B,C,G"		0.125	0.1252	FALSE
-"EUCAST 2020"	"MIC"		"Streptococcus group G"	"Dalbavancin"	"Streptococcus A,B,C,G"		0.125	0.1252	FALSE
-"EUCAST 2020"	"MIC"		"Streptococcus group H"	"Dalbavancin"	"Streptococcus A,B,C,G"		0.125	0.1252	FALSE
-"EUCAST 2020"	"MIC"		"Streptococcus group K"	"Dalbavancin"	"Streptococcus A,B,C,G"		0.125	0.1252	FALSE
-"EUCAST 2020"	"MIC"		"Streptococcus pyogenes"	"Dalbavancin"	"Streptococcus A,B,C,G"		0.125	0.1252	FALSE
-"EUCAST 2020"	"MIC"		"Streptococcus salivarius"	"Dalbavancin"	"Streptococcus A,B,C,G"		0.125	0.1252	FALSE
-"EUCAST 2020"	"MIC"		"Streptococcus sanguinis"	"Dalbavancin"	"Streptococcus A,B,C,G"		0.125	0.1252	FALSE
+"EUCAST 2020"	"MIC"		"(unknown name)"	"Ceftolozane/tazobactam"	"PK PD breakpoints"		4	4	FALSE
+"EUCAST 2020"	"MIC"		"Staphylococcus"	"Dalbavancin"	"Staphylococcus"		0.125	0.125	FALSE
+"EUCAST 2020"	"MIC"		"Streptococcus agalactiae"	"Dalbavancin"	"Streptococcus A,B,C,G"		0.125	0.125	FALSE
+"EUCAST 2020"	"MIC"		"Streptococcus anginosus"	"Dalbavancin"	"Streptococcus A,B,C,G"		0.125	0.125	FALSE
+"EUCAST 2020"	"MIC"		"Streptococcus anginosus"	"Dalbavancin"	"Viridans group streptococci"		0.125	0.125	FALSE
+"EUCAST 2020"	"MIC"		"Streptococcus dysgalactiae"	"Dalbavancin"	"Streptococcus A,B,C,G"		0.125	0.125	FALSE
+"EUCAST 2020"	"MIC"		"Streptococcus dysgalactiae dysgalactiae"	"Dalbavancin"	"Streptococcus A,B,C,G"		0.125	0.125	FALSE
+"EUCAST 2020"	"MIC"		"Streptococcus dysgalactiae equisimilis"	"Dalbavancin"	"Streptococcus A,B,C,G"		0.125	0.125	FALSE
+"EUCAST 2020"	"MIC"		"Streptococcus equi"	"Dalbavancin"	"Streptococcus A,B,C,G"		0.125	0.125	FALSE
+"EUCAST 2020"	"MIC"		"Streptococcus equi equi"	"Dalbavancin"	"Streptococcus A,B,C,G"		0.125	0.125	FALSE
+"EUCAST 2020"	"MIC"		"Streptococcus equi ruminatorum"	"Dalbavancin"	"Streptococcus A,B,C,G"		0.125	0.125	FALSE
+"EUCAST 2020"	"MIC"		"Streptococcus equi zooepidemicus"	"Dalbavancin"	"Streptococcus A,B,C,G"		0.125	0.125	FALSE
+"EUCAST 2020"	"MIC"		"Streptococcus group A"	"Dalbavancin"	"Streptococcus A,B,C,G"		0.125	0.125	FALSE
+"EUCAST 2020"	"MIC"		"Streptococcus group B"	"Dalbavancin"	"Streptococcus A,B,C,G"		0.125	0.125	FALSE
+"EUCAST 2020"	"MIC"		"Streptococcus group C"	"Dalbavancin"	"Streptococcus A,B,C,G"		0.125	0.125	FALSE
+"EUCAST 2020"	"MIC"		"Streptococcus group D"	"Dalbavancin"	"Streptococcus A,B,C,G"		0.125	0.125	FALSE
+"EUCAST 2020"	"MIC"		"Streptococcus group F"	"Dalbavancin"	"Streptococcus A,B,C,G"		0.125	0.125	FALSE
+"EUCAST 2020"	"MIC"		"Streptococcus group G"	"Dalbavancin"	"Streptococcus A,B,C,G"		0.125	0.125	FALSE
+"EUCAST 2020"	"MIC"		"Streptococcus group H"	"Dalbavancin"	"Streptococcus A,B,C,G"		0.125	0.125	FALSE
+"EUCAST 2020"	"MIC"		"Streptococcus group K"	"Dalbavancin"	"Streptococcus A,B,C,G"		0.125	0.125	FALSE
+"EUCAST 2020"	"MIC"		"Streptococcus pyogenes"	"Dalbavancin"	"Streptococcus A,B,C,G"		0.125	0.125	FALSE
+"EUCAST 2020"	"MIC"		"Streptococcus salivarius"	"Dalbavancin"	"Streptococcus A,B,C,G"		0.125	0.125	FALSE
+"EUCAST 2020"	"MIC"		"Streptococcus sanguinis"	"Dalbavancin"	"Streptococcus A,B,C,G"		0.125	0.125	FALSE
 "EUCAST 2020"	"MIC"		"(unknown name)"	"Dalbavancin"	"PK PD breakpoints"		0.25	0.25	FALSE
 "EUCAST 2020"	"MIC"		"Staphylococcus"	"Daptomycin"	"Staphylococcus"		1	1	FALSE
 "EUCAST 2020"	"MIC"		"Streptococcus agalactiae"	"Daptomycin"	"Streptococcus A,B,C,G"		1	1	FALSE
@@ -671,7 +669,6 @@
 "EUCAST 2020"	"MIC"	"iv"	"Enterobacterales"	"Fosfomycin"	"Enterobacterales"		32	32	FALSE
 "EUCAST 2020"	"MIC"	"UTI"	"Enterobacterales"	"Fosfomycin"	"Enterobacterales"		32	32	TRUE
 "EUCAST 2020"	"MIC"	"iv"	"Staphylococcus"	"Fosfomycin"	"Staphylococcus"		32	32	FALSE
-"EUCAST 2020"	"MIC"		"Clostridium difficile"	"Fusidic acid"	"C.difficile"		-3	-3	FALSE
 "EUCAST 2020"	"DISK"		"Staphylococcus"	"Fusidic acid"	"Staphylococcus"	"10ug"	24	24	FALSE
 "EUCAST 2020"	"MIC"		"Staphylococcus"	"Fusidic acid"	"Staphylococcus"		1	1	FALSE
 "EUCAST 2020"	"DISK"	"Systemic"	"Enterobacterales"	"Gentamicin"	"Enterobacterales"	"10ug"	17	17	FALSE
@@ -928,7 +925,6 @@
 "EUCAST 2020"	"MIC"		"Enterobacterales"	"Moxifloxacin"	"Enterobacterales"		0.25	0.25	FALSE
 "EUCAST 2020"	"DISK"		"Corynebacterium"	"Moxifloxacin"	"Corynebacterium"	"5ug"	25	25	FALSE
 "EUCAST 2020"	"MIC"		"Corynebacterium"	"Moxifloxacin"	"Corynebacterium"		0.5	0.5	FALSE
-"EUCAST 2020"	"MIC"		"Clostridium difficile"	"Moxifloxacin"	"C.difficile"		-1	-1	FALSE
 "EUCAST 2020"	"DISK"		"Haemophilus influenzae"	"Moxifloxacin"	"H.influenzae"	"5ug"	28	28	FALSE
 "EUCAST 2020"	"MIC"		"Haemophilus influenzae"	"Moxifloxacin"	"H.influenzae"		0.125	0.125	FALSE
 "EUCAST 2020"	"DISK"		"Moraxella catarrhalis"	"Moxifloxacin"	"M.catarrhalis"	"5ug"	26	26	FALSE
@@ -1076,28 +1072,28 @@
 "EUCAST 2020"	"DISK"		"Staphylococcus aureus"	"Ofloxacin"	"Staphylococcus"	"5ug"	50	20	FALSE
 "EUCAST 2020"	"MIC"		"Staphylococcus aureus"	"Ofloxacin"	"Staphylococcus"		0.001	1	FALSE
 "EUCAST 2020"	"MIC"		"(unknown name)"	"Ofloxacin"	"PK PD breakpoints"		0.25	0.5	FALSE
-"EUCAST 2020"	"MIC"		"Staphylococcus aureus"	"Oritavancin"	"Staphylococcus"		0.125	0.1253	FALSE
-"EUCAST 2020"	"MIC"		"Streptococcus agalactiae"	"Oritavancin"	"Streptococcus A,B,C,G"		0.25	0.252	FALSE
-"EUCAST 2020"	"MIC"		"Streptococcus anginosus"	"Oritavancin"	"Streptococcus A,B,C,G"		0.25	0.252	FALSE
-"EUCAST 2020"	"MIC"		"Streptococcus anginosus"	"Oritavancin"	"Viridans group streptococci"		0.25	0.252	FALSE
-"EUCAST 2020"	"MIC"		"Streptococcus dysgalactiae"	"Oritavancin"	"Streptococcus A,B,C,G"		0.25	0.252	FALSE
-"EUCAST 2020"	"MIC"		"Streptococcus dysgalactiae dysgalactiae"	"Oritavancin"	"Streptococcus A,B,C,G"		0.25	0.252	FALSE
-"EUCAST 2020"	"MIC"		"Streptococcus dysgalactiae equisimilis"	"Oritavancin"	"Streptococcus A,B,C,G"		0.25	0.252	FALSE
-"EUCAST 2020"	"MIC"		"Streptococcus equi"	"Oritavancin"	"Streptococcus A,B,C,G"		0.25	0.252	FALSE
-"EUCAST 2020"	"MIC"		"Streptococcus equi equi"	"Oritavancin"	"Streptococcus A,B,C,G"		0.25	0.252	FALSE
-"EUCAST 2020"	"MIC"		"Streptococcus equi ruminatorum"	"Oritavancin"	"Streptococcus A,B,C,G"		0.25	0.252	FALSE
-"EUCAST 2020"	"MIC"		"Streptococcus equi zooepidemicus"	"Oritavancin"	"Streptococcus A,B,C,G"		0.25	0.252	FALSE
-"EUCAST 2020"	"MIC"		"Streptococcus group A"	"Oritavancin"	"Streptococcus A,B,C,G"		0.25	0.252	FALSE
-"EUCAST 2020"	"MIC"		"Streptococcus group B"	"Oritavancin"	"Streptococcus A,B,C,G"		0.25	0.252	FALSE
-"EUCAST 2020"	"MIC"		"Streptococcus group C"	"Oritavancin"	"Streptococcus A,B,C,G"		0.25	0.252	FALSE
-"EUCAST 2020"	"MIC"		"Streptococcus group D"	"Oritavancin"	"Streptococcus A,B,C,G"		0.25	0.252	FALSE
-"EUCAST 2020"	"MIC"		"Streptococcus group F"	"Oritavancin"	"Streptococcus A,B,C,G"		0.25	0.252	FALSE
-"EUCAST 2020"	"MIC"		"Streptococcus group G"	"Oritavancin"	"Streptococcus A,B,C,G"		0.25	0.252	FALSE
-"EUCAST 2020"	"MIC"		"Streptococcus group H"	"Oritavancin"	"Streptococcus A,B,C,G"		0.25	0.252	FALSE
-"EUCAST 2020"	"MIC"		"Streptococcus group K"	"Oritavancin"	"Streptococcus A,B,C,G"		0.25	0.252	FALSE
-"EUCAST 2020"	"MIC"		"Streptococcus pyogenes"	"Oritavancin"	"Streptococcus A,B,C,G"		0.25	0.252	FALSE
-"EUCAST 2020"	"MIC"		"Streptococcus salivarius"	"Oritavancin"	"Streptococcus A,B,C,G"		0.25	0.252	FALSE
-"EUCAST 2020"	"MIC"		"Streptococcus sanguinis"	"Oritavancin"	"Streptococcus A,B,C,G"		0.25	0.252	FALSE
+"EUCAST 2020"	"MIC"		"Staphylococcus aureus"	"Oritavancin"	"Staphylococcus"		0.125	0.125	FALSE
+"EUCAST 2020"	"MIC"		"Streptococcus agalactiae"	"Oritavancin"	"Streptococcus A,B,C,G"		0.25	0.25	FALSE
+"EUCAST 2020"	"MIC"		"Streptococcus anginosus"	"Oritavancin"	"Streptococcus A,B,C,G"		0.25	0.25	FALSE
+"EUCAST 2020"	"MIC"		"Streptococcus anginosus"	"Oritavancin"	"Viridans group streptococci"		0.25	0.25	FALSE
+"EUCAST 2020"	"MIC"		"Streptococcus dysgalactiae"	"Oritavancin"	"Streptococcus A,B,C,G"		0.25	0.25	FALSE
+"EUCAST 2020"	"MIC"		"Streptococcus dysgalactiae dysgalactiae"	"Oritavancin"	"Streptococcus A,B,C,G"		0.25	0.25	FALSE
+"EUCAST 2020"	"MIC"		"Streptococcus dysgalactiae equisimilis"	"Oritavancin"	"Streptococcus A,B,C,G"		0.25	0.25	FALSE
+"EUCAST 2020"	"MIC"		"Streptococcus equi"	"Oritavancin"	"Streptococcus A,B,C,G"		0.25	0.25	FALSE
+"EUCAST 2020"	"MIC"		"Streptococcus equi equi"	"Oritavancin"	"Streptococcus A,B,C,G"		0.25	0.25	FALSE
+"EUCAST 2020"	"MIC"		"Streptococcus equi ruminatorum"	"Oritavancin"	"Streptococcus A,B,C,G"		0.25	0.25	FALSE
+"EUCAST 2020"	"MIC"		"Streptococcus equi zooepidemicus"	"Oritavancin"	"Streptococcus A,B,C,G"		0.25	0.25	FALSE
+"EUCAST 2020"	"MIC"		"Streptococcus group A"	"Oritavancin"	"Streptococcus A,B,C,G"		0.25	0.25	FALSE
+"EUCAST 2020"	"MIC"		"Streptococcus group B"	"Oritavancin"	"Streptococcus A,B,C,G"		0.25	0.25	FALSE
+"EUCAST 2020"	"MIC"		"Streptococcus group C"	"Oritavancin"	"Streptococcus A,B,C,G"		0.25	0.25	FALSE
+"EUCAST 2020"	"MIC"		"Streptococcus group D"	"Oritavancin"	"Streptococcus A,B,C,G"		0.25	0.25	FALSE
+"EUCAST 2020"	"MIC"		"Streptococcus group F"	"Oritavancin"	"Streptococcus A,B,C,G"		0.25	0.25	FALSE
+"EUCAST 2020"	"MIC"		"Streptococcus group G"	"Oritavancin"	"Streptococcus A,B,C,G"		0.25	0.25	FALSE
+"EUCAST 2020"	"MIC"		"Streptococcus group H"	"Oritavancin"	"Streptococcus A,B,C,G"		0.25	0.25	FALSE
+"EUCAST 2020"	"MIC"		"Streptococcus group K"	"Oritavancin"	"Streptococcus A,B,C,G"		0.25	0.25	FALSE
+"EUCAST 2020"	"MIC"		"Streptococcus pyogenes"	"Oritavancin"	"Streptococcus A,B,C,G"		0.25	0.25	FALSE
+"EUCAST 2020"	"MIC"		"Streptococcus salivarius"	"Oritavancin"	"Streptococcus A,B,C,G"		0.25	0.25	FALSE
+"EUCAST 2020"	"MIC"		"Streptococcus sanguinis"	"Oritavancin"	"Streptococcus A,B,C,G"		0.25	0.25	FALSE
 "EUCAST 2020"	"MIC"		"(unknown name)"	"Oritavancin"	"PK PD breakpoints"		0.125	0.125	FALSE
 "EUCAST 2020"	"DISK"		"Aerococcus sanguinicola"	"Penicillin G"	"A.sanguinicola_A.urinae"	"1ug"	21	21	FALSE
 "EUCAST 2020"	"MIC"		"Aerococcus sanguinicola"	"Penicillin G"	"A.sanguinicola_A.urinae"		0.125	0.125	FALSE
@@ -1192,7 +1188,6 @@
 "EUCAST 2020"	"MIC"		"Fusobacterium"	"Piperacillin"	"Anaerobes, Gramnegative"		1	1	FALSE
 "EUCAST 2020"	"MIC"		"Lactobacillus"	"Piperacillin"	"Anaerobes, Grampositive"		8	1	FALSE
 "EUCAST 2020"	"MIC"		"Mobiluncus"	"Piperacillin"	"Anaerobes, Gramnegative"		1	1	FALSE
-"EUCAST 2020"	"MIC"		"Moraxella catarrhalis"	"Piperacillin"	"M.catarrhalis"		-1	-1	FALSE
 "EUCAST 2020"	"MIC"		"Parabacteroides"	"Piperacillin"	"Anaerobes, Gramnegative"		1	1	FALSE
 "EUCAST 2020"	"MIC"		"Porphyromonas"	"Piperacillin"	"Anaerobes, Gramnegative"		1	1	FALSE
 "EUCAST 2020"	"MIC"		"Propionibacterium"	"Piperacillin"	"Anaerobes, Grampositive"		8	1	FALSE
@@ -1211,7 +1206,6 @@
 "EUCAST 2020"	"MIC"		"Aerococcus urinae"	"Rifampicin"	"A.sanguinicola_A.urinae"		0.125	0.125	FALSE
 "EUCAST 2020"	"DISK"		"Corynebacterium"	"Rifampicin"	"Corynebacterium"	"5ug"	30	25	FALSE
 "EUCAST 2020"	"MIC"		"Corynebacterium"	"Rifampicin"	"Corynebacterium"		0.06	0.5	FALSE
-"EUCAST 2020"	"MIC"		"Clostridium difficile"	"Rifampicin"	"C.difficile"		-6	-6	FALSE
 "EUCAST 2020"	"MIC"		"Helicobacter pylori"	"Rifampicin"	"H.pylori"		1	1	FALSE
 "EUCAST 2020"	"DISK"		"Haemophilus influenzae"	"Rifampicin"	"H.influenzae"	"5ug"	18	18	FALSE
 "EUCAST 2020"	"MIC"		"Haemophilus influenzae"	"Rifampicin"	"H.influenzae"		1	1	FALSE
@@ -1392,7 +1386,7 @@
 "EUCAST 2020"	"MIC"		"Propionibacterium"	"Ticarcillin/clavulanic acid"	"Anaerobes, Grampositive"		8	16	FALSE
 "EUCAST 2020"	"MIC"		"Prevotella"	"Ticarcillin/clavulanic acid"	"Anaerobes, Gramnegative"		8	16	FALSE
 "EUCAST 2020"	"DISK"		"Pseudomonas"	"Ticarcillin/clavulanic acid"	"Pseudomonas"	"75-10ug"	50	18	FALSE
-"EUCAST 2020"	"MIC"		"Pseudomonas"	"Ticarcillin/clavulanic acid"	"Pseudomonas"		0.0012	16	FALSE
+"EUCAST 2020"	"MIC"		"Pseudomonas"	"Ticarcillin/clavulanic acid"	"Pseudomonas"		0.001	16	FALSE
 "EUCAST 2020"	"MIC"		"Staphylococcus saccharolyticus"	"Ticarcillin/clavulanic acid"	"Anaerobes, Grampositive"		8	16	FALSE
 "EUCAST 2020"	"MIC"		"(unknown name)"	"Ticarcillin/clavulanic acid"	"PK PD breakpoints"		8	16	FALSE
 "EUCAST 2020"	"DISK"		"Campylobacter coli"	"Tetracycline"	"C.jejuni_C.coli"	"30ug"	30	30	FALSE
@@ -1505,53 +1499,53 @@
 "EUCAST 2020"	"DISK"		"Citrobacter koseri"	"Tigecycline"	"Enterobacterales"	"15ug"	18	18	FALSE
 "EUCAST 2020"	"MIC"		"Citrobacter koseri"	"Tigecycline"	"Enterobacterales"		0.5	0.5	FALSE
 "EUCAST 2020"	"DISK"		"Enterococcus faecium"	"Tigecycline"	"Enterococcus"	"15ug"	22	22	FALSE
-"EUCAST 2020"	"MIC"		"Enterococcus faecium"	"Tigecycline"	"Enterococcus"		0.252	0.252	FALSE
+"EUCAST 2020"	"MIC"		"Enterococcus faecium"	"Tigecycline"	"Enterococcus"		0.25	0.25	FALSE
 "EUCAST 2020"	"DISK"		"Enterococcus faecalis"	"Tigecycline"	"Enterococcus"	"15ug"	20	20	FALSE
-"EUCAST 2020"	"MIC"		"Enterococcus faecalis"	"Tigecycline"	"Enterococcus"		0.252	0.252	FALSE
+"EUCAST 2020"	"MIC"		"Enterococcus faecalis"	"Tigecycline"	"Enterococcus"		0.25	0.25	FALSE
 "EUCAST 2020"	"DISK"		"Escherichia coli"	"Tigecycline"	"Enterobacterales"	"15ug"	18	18	FALSE
 "EUCAST 2020"	"MIC"		"Escherichia coli"	"Tigecycline"	"Enterobacterales"		0.5	0.5	FALSE
 "EUCAST 2020"	"DISK"		"Staphylococcus"	"Tigecycline"	"Staphylococcus"	"15ug"	19	19	FALSE
-"EUCAST 2020"	"MIC"		"Staphylococcus"	"Tigecycline"	"Staphylococcus"		0.53	0.53	FALSE
+"EUCAST 2020"	"MIC"		"Staphylococcus"	"Tigecycline"	"Staphylococcus"		0.5	0.5	FALSE
 "EUCAST 2020"	"DISK"		"Streptococcus agalactiae"	"Tigecycline"	"Streptococcus A,B,C,G"	"15ug"	19	19	FALSE
-"EUCAST 2020"	"MIC"		"Streptococcus agalactiae"	"Tigecycline"	"Streptococcus A,B,C,G"		0.1253	0.1253	FALSE
+"EUCAST 2020"	"MIC"		"Streptococcus agalactiae"	"Tigecycline"	"Streptococcus A,B,C,G"		0.125	0.125	FALSE
 "EUCAST 2020"	"DISK"		"Streptococcus anginosus"	"Tigecycline"	"Streptococcus A,B,C,G"	"15ug"	19	19	FALSE
-"EUCAST 2020"	"MIC"		"Streptococcus anginosus"	"Tigecycline"	"Streptococcus A,B,C,G"		0.1253	0.1253	FALSE
+"EUCAST 2020"	"MIC"		"Streptococcus anginosus"	"Tigecycline"	"Streptococcus A,B,C,G"		0.125	0.125	FALSE
 "EUCAST 2020"	"DISK"		"Streptococcus dysgalactiae"	"Tigecycline"	"Streptococcus A,B,C,G"	"15ug"	19	19	FALSE
-"EUCAST 2020"	"MIC"		"Streptococcus dysgalactiae"	"Tigecycline"	"Streptococcus A,B,C,G"		0.1253	0.1253	FALSE
+"EUCAST 2020"	"MIC"		"Streptococcus dysgalactiae"	"Tigecycline"	"Streptococcus A,B,C,G"		0.125	0.125	FALSE
 "EUCAST 2020"	"DISK"		"Streptococcus dysgalactiae dysgalactiae"	"Tigecycline"	"Streptococcus A,B,C,G"	"15ug"	19	19	FALSE
-"EUCAST 2020"	"MIC"		"Streptococcus dysgalactiae dysgalactiae"	"Tigecycline"	"Streptococcus A,B,C,G"		0.1253	0.1253	FALSE
+"EUCAST 2020"	"MIC"		"Streptococcus dysgalactiae dysgalactiae"	"Tigecycline"	"Streptococcus A,B,C,G"		0.125	0.125	FALSE
 "EUCAST 2020"	"DISK"		"Streptococcus dysgalactiae equisimilis"	"Tigecycline"	"Streptococcus A,B,C,G"	"15ug"	19	19	FALSE
-"EUCAST 2020"	"MIC"		"Streptococcus dysgalactiae equisimilis"	"Tigecycline"	"Streptococcus A,B,C,G"		0.1253	0.1253	FALSE
+"EUCAST 2020"	"MIC"		"Streptococcus dysgalactiae equisimilis"	"Tigecycline"	"Streptococcus A,B,C,G"		0.125	0.125	FALSE
 "EUCAST 2020"	"DISK"		"Streptococcus equi"	"Tigecycline"	"Streptococcus A,B,C,G"	"15ug"	19	19	FALSE
-"EUCAST 2020"	"MIC"		"Streptococcus equi"	"Tigecycline"	"Streptococcus A,B,C,G"		0.1253	0.1253	FALSE
+"EUCAST 2020"	"MIC"		"Streptococcus equi"	"Tigecycline"	"Streptococcus A,B,C,G"		0.125	0.125	FALSE
 "EUCAST 2020"	"DISK"		"Streptococcus equi equi"	"Tigecycline"	"Streptococcus A,B,C,G"	"15ug"	19	19	FALSE
-"EUCAST 2020"	"MIC"		"Streptococcus equi equi"	"Tigecycline"	"Streptococcus A,B,C,G"		0.1253	0.1253	FALSE
+"EUCAST 2020"	"MIC"		"Streptococcus equi equi"	"Tigecycline"	"Streptococcus A,B,C,G"		0.125	0.125	FALSE
 "EUCAST 2020"	"DISK"		"Streptococcus equi ruminatorum"	"Tigecycline"	"Streptococcus A,B,C,G"	"15ug"	19	19	FALSE
-"EUCAST 2020"	"MIC"		"Streptococcus equi ruminatorum"	"Tigecycline"	"Streptococcus A,B,C,G"		0.1253	0.1253	FALSE
+"EUCAST 2020"	"MIC"		"Streptococcus equi ruminatorum"	"Tigecycline"	"Streptococcus A,B,C,G"		0.125	0.125	FALSE
 "EUCAST 2020"	"DISK"		"Streptococcus equi zooepidemicus"	"Tigecycline"	"Streptococcus A,B,C,G"	"15ug"	19	19	FALSE
-"EUCAST 2020"	"MIC"		"Streptococcus equi zooepidemicus"	"Tigecycline"	"Streptococcus A,B,C,G"		0.1253	0.1253	FALSE
+"EUCAST 2020"	"MIC"		"Streptococcus equi zooepidemicus"	"Tigecycline"	"Streptococcus A,B,C,G"		0.125	0.125	FALSE
 "EUCAST 2020"	"DISK"		"Streptococcus group A"	"Tigecycline"	"Streptococcus A,B,C,G"	"15ug"	19	19	FALSE
-"EUCAST 2020"	"MIC"		"Streptococcus group A"	"Tigecycline"	"Streptococcus A,B,C,G"		0.1253	0.1253	FALSE
+"EUCAST 2020"	"MIC"		"Streptococcus group A"	"Tigecycline"	"Streptococcus A,B,C,G"		0.125	0.125	FALSE
 "EUCAST 2020"	"DISK"		"Streptococcus group B"	"Tigecycline"	"Streptococcus A,B,C,G"	"15ug"	19	19	FALSE
-"EUCAST 2020"	"MIC"		"Streptococcus group B"	"Tigecycline"	"Streptococcus A,B,C,G"		0.1253	0.1253	FALSE
+"EUCAST 2020"	"MIC"		"Streptococcus group B"	"Tigecycline"	"Streptococcus A,B,C,G"		0.125	0.125	FALSE
 "EUCAST 2020"	"DISK"		"Streptococcus group C"	"Tigecycline"	"Streptococcus A,B,C,G"	"15ug"	19	19	FALSE
-"EUCAST 2020"	"MIC"		"Streptococcus group C"	"Tigecycline"	"Streptococcus A,B,C,G"		0.1253	0.1253	FALSE
+"EUCAST 2020"	"MIC"		"Streptococcus group C"	"Tigecycline"	"Streptococcus A,B,C,G"		0.125	0.125	FALSE
 "EUCAST 2020"	"DISK"		"Streptococcus group D"	"Tigecycline"	"Streptococcus A,B,C,G"	"15ug"	19	19	FALSE
-"EUCAST 2020"	"MIC"		"Streptococcus group D"	"Tigecycline"	"Streptococcus A,B,C,G"		0.1253	0.1253	FALSE
+"EUCAST 2020"	"MIC"		"Streptococcus group D"	"Tigecycline"	"Streptococcus A,B,C,G"		0.125	0.125	FALSE
 "EUCAST 2020"	"DISK"		"Streptococcus group F"	"Tigecycline"	"Streptococcus A,B,C,G"	"15ug"	19	19	FALSE
-"EUCAST 2020"	"MIC"		"Streptococcus group F"	"Tigecycline"	"Streptococcus A,B,C,G"		0.1253	0.1253	FALSE
+"EUCAST 2020"	"MIC"		"Streptococcus group F"	"Tigecycline"	"Streptococcus A,B,C,G"		0.125	0.125	FALSE
 "EUCAST 2020"	"DISK"		"Streptococcus group G"	"Tigecycline"	"Streptococcus A,B,C,G"	"15ug"	19	19	FALSE
-"EUCAST 2020"	"MIC"		"Streptococcus group G"	"Tigecycline"	"Streptococcus A,B,C,G"		0.1253	0.1253	FALSE
+"EUCAST 2020"	"MIC"		"Streptococcus group G"	"Tigecycline"	"Streptococcus A,B,C,G"		0.125	0.125	FALSE
 "EUCAST 2020"	"DISK"		"Streptococcus group H"	"Tigecycline"	"Streptococcus A,B,C,G"	"15ug"	19	19	FALSE
-"EUCAST 2020"	"MIC"		"Streptococcus group H"	"Tigecycline"	"Streptococcus A,B,C,G"		0.1253	0.1253	FALSE
+"EUCAST 2020"	"MIC"		"Streptococcus group H"	"Tigecycline"	"Streptococcus A,B,C,G"		0.125	0.125	FALSE
 "EUCAST 2020"	"DISK"		"Streptococcus group K"	"Tigecycline"	"Streptococcus A,B,C,G"	"15ug"	19	19	FALSE
-"EUCAST 2020"	"MIC"		"Streptococcus group K"	"Tigecycline"	"Streptococcus A,B,C,G"		0.1253	0.1253	FALSE
+"EUCAST 2020"	"MIC"		"Streptococcus group K"	"Tigecycline"	"Streptococcus A,B,C,G"		0.125	0.125	FALSE
 "EUCAST 2020"	"DISK"		"Streptococcus pyogenes"	"Tigecycline"	"Streptococcus A,B,C,G"	"15ug"	19	19	FALSE
-"EUCAST 2020"	"MIC"		"Streptococcus pyogenes"	"Tigecycline"	"Streptococcus A,B,C,G"		0.1253	0.1253	FALSE
+"EUCAST 2020"	"MIC"		"Streptococcus pyogenes"	"Tigecycline"	"Streptococcus A,B,C,G"		0.125	0.125	FALSE
 "EUCAST 2020"	"DISK"		"Streptococcus salivarius"	"Tigecycline"	"Streptococcus A,B,C,G"	"15ug"	19	19	FALSE
-"EUCAST 2020"	"MIC"		"Streptococcus salivarius"	"Tigecycline"	"Streptococcus A,B,C,G"		0.1253	0.1253	FALSE
+"EUCAST 2020"	"MIC"		"Streptococcus salivarius"	"Tigecycline"	"Streptococcus A,B,C,G"		0.125	0.125	FALSE
 "EUCAST 2020"	"DISK"		"Streptococcus sanguinis"	"Tigecycline"	"Streptococcus A,B,C,G"	"15ug"	19	19	FALSE
-"EUCAST 2020"	"MIC"		"Streptococcus sanguinis"	"Tigecycline"	"Streptococcus A,B,C,G"		0.1253	0.1253	FALSE
+"EUCAST 2020"	"MIC"		"Streptococcus sanguinis"	"Tigecycline"	"Streptococcus A,B,C,G"		0.125	0.125	FALSE
 "EUCAST 2020"	"MIC"		"(unknown name)"	"Tigecycline"	"PK PD breakpoints"		0.5	0.5	FALSE
 "EUCAST 2020"	"DISK"		"Enterobacterales"	"Ticarcillin"	"Enterobacterales"	"75ug"	23	20	FALSE
 "EUCAST 2020"	"MIC"		"Enterobacterales"	"Ticarcillin"	"Enterobacterales"		8	1	FALSE
@@ -1619,7 +1613,7 @@
 "EUCAST 2020"	"MIC"		"Streptococcus salivarius"	"Telithromycin"	"Streptococcus A,B,C,G"		0.25	0.5	FALSE
 "EUCAST 2020"	"DISK"		"Streptococcus sanguinis"	"Telithromycin"	"Streptococcus A,B,C,G"	"15ug"	20	17	FALSE
 "EUCAST 2020"	"MIC"		"Streptococcus sanguinis"	"Telithromycin"	"Streptococcus A,B,C,G"		0.25	0.5	FALSE
-"EUCAST 2020"	"MIC"		"Staphylococcus"	"Telavancin"	"Staphylococcus"		0.125	0.1253	FALSE
+"EUCAST 2020"	"MIC"		"Staphylococcus"	"Telavancin"	"Staphylococcus"		0.125	0.125	FALSE
 "EUCAST 2020"	"DISK"	"UTI"	"Enterobacterales"	"Trimethoprim"	"Enterobacterales"	"5ug"	15	15	TRUE
 "EUCAST 2020"	"MIC"	"UTI"	"Enterobacterales"	"Trimethoprim"	"Enterobacterales"		4	4	TRUE
 "EUCAST 2020"	"DISK"	"UTI"	"Staphylococcus"	"Trimethoprim"	"Staphylococcus"	"5ug"	14	14	TRUE
@@ -1645,47 +1639,47 @@
 "EUCAST 2020"	"DISK"		"Staphylococcus"	"Tedizolid"	"Staphylococcus"	"2ug"	21	21	FALSE
 "EUCAST 2020"	"MIC"		"Staphylococcus"	"Tedizolid"	"Staphylococcus"		0.5	0.5	FALSE
 "EUCAST 2020"	"DISK"		"Streptococcus agalactiae"	"Tedizolid"	"Streptococcus A,B,C,G"	"2ug"	18	18	FALSE
-"EUCAST 2020"	"MIC"		"Streptococcus agalactiae"	"Tedizolid"	"Streptococcus A,B,C,G"		0.52	0.5	FALSE
+"EUCAST 2020"	"MIC"		"Streptococcus agalactiae"	"Tedizolid"	"Streptococcus A,B,C,G"		0.5	0.5	FALSE
 "EUCAST 2020"	"DISK"		"Streptococcus anginosus"	"Tedizolid"	"Streptococcus A,B,C,G"	"2ug"	18	18	FALSE
 "EUCAST 2020"	"DISK"		"Streptococcus anginosus"	"Tedizolid"	"Viridans group streptococci"	"2ug"	18	18	FALSE
-"EUCAST 2020"	"MIC"		"Streptococcus anginosus"	"Tedizolid"	"Streptococcus A,B,C,G"		0.52	0.5	FALSE
+"EUCAST 2020"	"MIC"		"Streptococcus anginosus"	"Tedizolid"	"Streptococcus A,B,C,G"		0.5	0.5	FALSE
 "EUCAST 2020"	"MIC"		"Streptococcus anginosus"	"Tedizolid"	"Viridans group streptococci"		0.25	0.25	FALSE
 "EUCAST 2020"	"DISK"		"Streptococcus dysgalactiae"	"Tedizolid"	"Streptococcus A,B,C,G"	"2ug"	18	18	FALSE
-"EUCAST 2020"	"MIC"		"Streptococcus dysgalactiae"	"Tedizolid"	"Streptococcus A,B,C,G"		0.52	0.5	FALSE
+"EUCAST 2020"	"MIC"		"Streptococcus dysgalactiae"	"Tedizolid"	"Streptococcus A,B,C,G"		0.5	0.5	FALSE
 "EUCAST 2020"	"DISK"		"Streptococcus dysgalactiae dysgalactiae"	"Tedizolid"	"Streptococcus A,B,C,G"	"2ug"	18	18	FALSE
-"EUCAST 2020"	"MIC"		"Streptococcus dysgalactiae dysgalactiae"	"Tedizolid"	"Streptococcus A,B,C,G"		0.52	0.5	FALSE
+"EUCAST 2020"	"MIC"		"Streptococcus dysgalactiae dysgalactiae"	"Tedizolid"	"Streptococcus A,B,C,G"		0.5	0.5	FALSE
 "EUCAST 2020"	"DISK"		"Streptococcus dysgalactiae equisimilis"	"Tedizolid"	"Streptococcus A,B,C,G"	"2ug"	18	18	FALSE
-"EUCAST 2020"	"MIC"		"Streptococcus dysgalactiae equisimilis"	"Tedizolid"	"Streptococcus A,B,C,G"		0.52	0.5	FALSE
+"EUCAST 2020"	"MIC"		"Streptococcus dysgalactiae equisimilis"	"Tedizolid"	"Streptococcus A,B,C,G"		0.5	0.5	FALSE
 "EUCAST 2020"	"DISK"		"Streptococcus equi"	"Tedizolid"	"Streptococcus A,B,C,G"	"2ug"	18	18	FALSE
-"EUCAST 2020"	"MIC"		"Streptococcus equi"	"Tedizolid"	"Streptococcus A,B,C,G"		0.52	0.5	FALSE
+"EUCAST 2020"	"MIC"		"Streptococcus equi"	"Tedizolid"	"Streptococcus A,B,C,G"		0.5	0.5	FALSE
 "EUCAST 2020"	"DISK"		"Streptococcus equi equi"	"Tedizolid"	"Streptococcus A,B,C,G"	"2ug"	18	18	FALSE
-"EUCAST 2020"	"MIC"		"Streptococcus equi equi"	"Tedizolid"	"Streptococcus A,B,C,G"		0.52	0.5	FALSE
+"EUCAST 2020"	"MIC"		"Streptococcus equi equi"	"Tedizolid"	"Streptococcus A,B,C,G"		0.5	0.5	FALSE
 "EUCAST 2020"	"DISK"		"Streptococcus equi ruminatorum"	"Tedizolid"	"Streptococcus A,B,C,G"	"2ug"	18	18	FALSE
-"EUCAST 2020"	"MIC"		"Streptococcus equi ruminatorum"	"Tedizolid"	"Streptococcus A,B,C,G"		0.52	0.5	FALSE
+"EUCAST 2020"	"MIC"		"Streptococcus equi ruminatorum"	"Tedizolid"	"Streptococcus A,B,C,G"		0.5	0.5	FALSE
 "EUCAST 2020"	"DISK"		"Streptococcus equi zooepidemicus"	"Tedizolid"	"Streptococcus A,B,C,G"	"2ug"	18	18	FALSE
-"EUCAST 2020"	"MIC"		"Streptococcus equi zooepidemicus"	"Tedizolid"	"Streptococcus A,B,C,G"		0.52	0.5	FALSE
+"EUCAST 2020"	"MIC"		"Streptococcus equi zooepidemicus"	"Tedizolid"	"Streptococcus A,B,C,G"		0.5	0.5	FALSE
 "EUCAST 2020"	"DISK"		"Streptococcus group A"	"Tedizolid"	"Streptococcus A,B,C,G"	"2ug"	18	18	FALSE
-"EUCAST 2020"	"MIC"		"Streptococcus group A"	"Tedizolid"	"Streptococcus A,B,C,G"		0.52	0.5	FALSE
+"EUCAST 2020"	"MIC"		"Streptococcus group A"	"Tedizolid"	"Streptococcus A,B,C,G"		0.5	0.5	FALSE
 "EUCAST 2020"	"DISK"		"Streptococcus group B"	"Tedizolid"	"Streptococcus A,B,C,G"	"2ug"	18	18	FALSE
-"EUCAST 2020"	"MIC"		"Streptococcus group B"	"Tedizolid"	"Streptococcus A,B,C,G"		0.52	0.5	FALSE
+"EUCAST 2020"	"MIC"		"Streptococcus group B"	"Tedizolid"	"Streptococcus A,B,C,G"		0.5	0.5	FALSE
 "EUCAST 2020"	"DISK"		"Streptococcus group C"	"Tedizolid"	"Streptococcus A,B,C,G"	"2ug"	18	18	FALSE
-"EUCAST 2020"	"MIC"		"Streptococcus group C"	"Tedizolid"	"Streptococcus A,B,C,G"		0.52	0.5	FALSE
+"EUCAST 2020"	"MIC"		"Streptococcus group C"	"Tedizolid"	"Streptococcus A,B,C,G"		0.5	0.5	FALSE
 "EUCAST 2020"	"DISK"		"Streptococcus group D"	"Tedizolid"	"Streptococcus A,B,C,G"	"2ug"	18	18	FALSE
-"EUCAST 2020"	"MIC"		"Streptococcus group D"	"Tedizolid"	"Streptococcus A,B,C,G"		0.52	0.5	FALSE
+"EUCAST 2020"	"MIC"		"Streptococcus group D"	"Tedizolid"	"Streptococcus A,B,C,G"		0.5	0.5	FALSE
 "EUCAST 2020"	"DISK"		"Streptococcus group F"	"Tedizolid"	"Streptococcus A,B,C,G"	"2ug"	18	18	FALSE
-"EUCAST 2020"	"MIC"		"Streptococcus group F"	"Tedizolid"	"Streptococcus A,B,C,G"		0.52	0.5	FALSE
+"EUCAST 2020"	"MIC"		"Streptococcus group F"	"Tedizolid"	"Streptococcus A,B,C,G"		0.5	0.5	FALSE
 "EUCAST 2020"	"DISK"		"Streptococcus group G"	"Tedizolid"	"Streptococcus A,B,C,G"	"2ug"	18	18	FALSE
-"EUCAST 2020"	"MIC"		"Streptococcus group G"	"Tedizolid"	"Streptococcus A,B,C,G"		0.52	0.5	FALSE
+"EUCAST 2020"	"MIC"		"Streptococcus group G"	"Tedizolid"	"Streptococcus A,B,C,G"		0.5	0.5	FALSE
 "EUCAST 2020"	"DISK"		"Streptococcus group H"	"Tedizolid"	"Streptococcus A,B,C,G"	"2ug"	18	18	FALSE
-"EUCAST 2020"	"MIC"		"Streptococcus group H"	"Tedizolid"	"Streptococcus A,B,C,G"		0.52	0.5	FALSE
+"EUCAST 2020"	"MIC"		"Streptococcus group H"	"Tedizolid"	"Streptococcus A,B,C,G"		0.5	0.5	FALSE
 "EUCAST 2020"	"DISK"		"Streptococcus group K"	"Tedizolid"	"Streptococcus A,B,C,G"	"2ug"	18	18	FALSE
-"EUCAST 2020"	"MIC"		"Streptococcus group K"	"Tedizolid"	"Streptococcus A,B,C,G"		0.52	0.5	FALSE
+"EUCAST 2020"	"MIC"		"Streptococcus group K"	"Tedizolid"	"Streptococcus A,B,C,G"		0.5	0.5	FALSE
 "EUCAST 2020"	"DISK"		"Streptococcus pyogenes"	"Tedizolid"	"Streptococcus A,B,C,G"	"2ug"	18	18	FALSE
-"EUCAST 2020"	"MIC"		"Streptococcus pyogenes"	"Tedizolid"	"Streptococcus A,B,C,G"		0.52	0.5	FALSE
+"EUCAST 2020"	"MIC"		"Streptococcus pyogenes"	"Tedizolid"	"Streptococcus A,B,C,G"		0.5	0.5	FALSE
 "EUCAST 2020"	"DISK"		"Streptococcus salivarius"	"Tedizolid"	"Streptococcus A,B,C,G"	"2ug"	18	18	FALSE
-"EUCAST 2020"	"MIC"		"Streptococcus salivarius"	"Tedizolid"	"Streptococcus A,B,C,G"		0.52	0.5	FALSE
+"EUCAST 2020"	"MIC"		"Streptococcus salivarius"	"Tedizolid"	"Streptococcus A,B,C,G"		0.5	0.5	FALSE
 "EUCAST 2020"	"DISK"		"Streptococcus sanguinis"	"Tedizolid"	"Streptococcus A,B,C,G"	"2ug"	18	18	FALSE
-"EUCAST 2020"	"MIC"		"Streptococcus sanguinis"	"Tedizolid"	"Streptococcus A,B,C,G"		0.52	0.5	FALSE
+"EUCAST 2020"	"MIC"		"Streptococcus sanguinis"	"Tedizolid"	"Streptococcus A,B,C,G"		0.5	0.5	FALSE
 "EUCAST 2020"	"DISK"		"Enterobacterales"	"Piperacillin/tazobactam"	"Enterobacterales"	"30-6ug"	20	17	FALSE
 "EUCAST 2020"	"MIC"		"Enterobacterales"	"Piperacillin/tazobactam"	"Enterobacterales"		8	16	FALSE
 "EUCAST 2020"	"MIC"		"Actinomyces"	"Piperacillin/tazobactam"	"Anaerobes, Grampositive"		8	16	FALSE
@@ -1699,7 +1693,7 @@
 "EUCAST 2020"	"MIC"		"Eggerthella"	"Piperacillin/tazobactam"	"Anaerobes, Grampositive"		8	16	FALSE
 "EUCAST 2020"	"MIC"		"Fusobacterium"	"Piperacillin/tazobactam"	"Anaerobes, Gramnegative"		8	16	FALSE
 "EUCAST 2020"	"DISK"		"Haemophilus influenzae"	"Piperacillin/tazobactam"	"H.influenzae"	"30-6ug"	27	27	FALSE
-"EUCAST 2020"	"MIC"		"Haemophilus influenzae"	"Piperacillin/tazobactam"	"H.influenzae"		0.256	0.256	FALSE
+"EUCAST 2020"	"MIC"		"Haemophilus influenzae"	"Piperacillin/tazobactam"	"H.influenzae"		0.25	0.25	FALSE
 "EUCAST 2020"	"MIC"		"Lactobacillus"	"Piperacillin/tazobactam"	"Anaerobes, Grampositive"		8	16	FALSE
 "EUCAST 2020"	"MIC"		"Mobiluncus"	"Piperacillin/tazobactam"	"Anaerobes, Gramnegative"		8	16	FALSE
 "EUCAST 2020"	"MIC"		"Parabacteroides"	"Piperacillin/tazobactam"	"Anaerobes, Gramnegative"		8	16	FALSE

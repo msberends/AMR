@@ -21,7 +21,9 @@ rsi_translation <- DRGLST1 %>%
             R_disk = as.disk(DISK_R),
             S_mic = as.mic(MIC_S),
             R_mic = as.mic(MIC_R)) %>%
-  filter(!is.na(mo) & !is.na(ab) & !mo %in% c("UNKNOWN", "B_GRAMN", "B_GRAMP", "F_FUNGUS", "F_YEAST")) %>%
+  filter(!is.na(mo),
+         !is.na(ab),
+         !mo %in% c("UNKNOWN", "B_GRAMN", "B_GRAMP", "F_FUNGUS", "F_YEAST")) %>%
   arrange(desc(guideline), mo, ab)
 
 print(mo_failures())

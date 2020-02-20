@@ -79,7 +79,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">0.9.0.9025</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">0.9.0.9029</span>
       </span>
     </div>
 
@@ -228,13 +228,27 @@
     <pre class="usage"><span class='fu'>as.rsi</span>(<span class='no'>x</span>, <span class='no'>...</span>)
 
 <span class='co'># S3 method for mic</span>
-<span class='fu'>as.rsi</span>(<span class='no'>x</span>, <span class='no'>mo</span>, <span class='no'>ab</span>, <span class='kw'>guideline</span> <span class='kw'>=</span> <span class='st'>"EUCAST"</span>, <span class='no'>...</span>)
+<span class='fu'>as.rsi</span>(
+  <span class='no'>x</span>,
+  <span class='no'>mo</span>,
+  <span class='kw'>ab</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/deparse.html'>deparse</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/substitute.html'>substitute</a></span>(<span class='no'>x</span>)),
+  <span class='kw'>guideline</span> <span class='kw'>=</span> <span class='st'>"EUCAST"</span>,
+  <span class='kw'>uti</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='no'>...</span>
+)
 
 <span class='co'># S3 method for disk</span>
-<span class='fu'>as.rsi</span>(<span class='no'>x</span>, <span class='no'>mo</span>, <span class='no'>ab</span>, <span class='kw'>guideline</span> <span class='kw'>=</span> <span class='st'>"EUCAST"</span>, <span class='no'>...</span>)
+<span class='fu'>as.rsi</span>(
+  <span class='no'>x</span>,
+  <span class='no'>mo</span>,
+  <span class='kw'>ab</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/deparse.html'>deparse</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/substitute.html'>substitute</a></span>(<span class='no'>x</span>)),
+  <span class='kw'>guideline</span> <span class='kw'>=</span> <span class='st'>"EUCAST"</span>,
+  <span class='kw'>uti</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='no'>...</span>
+)
 
 <span class='co'># S3 method for data.frame</span>
-<span class='fu'>as.rsi</span>(<span class='no'>x</span>, <span class='kw'>col_mo</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>guideline</span> <span class='kw'>=</span> <span class='st'>"EUCAST"</span>, <span class='no'>...</span>)
+<span class='fu'>as.rsi</span>(<span class='no'>x</span>, <span class='kw'>col_mo</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>guideline</span> <span class='kw'>=</span> <span class='st'>"EUCAST"</span>, <span class='kw'>uti</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)
 
 <span class='fu'>is.rsi</span>(<span class='no'>x</span>)
 
@@ -262,6 +276,10 @@
     <tr>
       <th>guideline</th>
       <td><p>defaults to the latest included EUCAST guideline, run <code><a href='https://rdrr.io/r/base/unique.html'>unique(rsi_translation$guideline)</a></code> for all options</p></td>
+    </tr>
+    <tr>
+      <th>uti</th>
+      <td><p>(Urinary Tract Infection) A vector with <a href='https://rdrr.io/r/base/logical.html'>logical</a>s (<code>TRUE</code> or <code>FALSE</code>) to specify whether a UTI specific interpretation from the guideline should be chosen. For using <code>as.rsi()</code> on a <a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a>, this can also be a column containing <a href='https://rdrr.io/r/base/logical.html'>logical</a>s or when left blank, the data set will be search for a 'specimen' and rows containing 'urin' in that column will be regarded isolates from a UTI. See <em>Examples</em>.</p></td>
     </tr>
     <tr>
       <th>col_mo</th>
@@ -315,7 +333,40 @@ The <a href='lifecycle.html'>lifecycle</a> of this function is <strong>stable</s
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><span class='co'># For INTERPRETING disk diffusion and MIC values -----------------------</span>
 
-<span class='co'># single values</span>
+<span class='co'># a whole data set, even with combined MIC values and disk zones</span>
+<span class='no'>df</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span>(<span class='kw'>microorganism</span> <span class='kw'>=</span> <span class='st'>"E. coli"</span>,
+                 <span class='kw'>AMP</span> <span class='kw'>=</span> <span class='fu'><a href='as.mic.html'>as.mic</a></span>(<span class='fl'>8</span>),
+                 <span class='kw'>CIP</span> <span class='kw'>=</span> <span class='fu'><a href='as.mic.html'>as.mic</a></span>(<span class='fl'>0.256</span>),
+                 <span class='kw'>GEN</span> <span class='kw'>=</span> <span class='fu'><a href='as.disk.html'>as.disk</a></span>(<span class='fl'>18</span>),
+                 <span class='kw'>TOB</span> <span class='kw'>=</span> <span class='fu'><a href='as.disk.html'>as.disk</a></span>(<span class='fl'>16</span>),
+                 <span class='kw'>NIT</span> <span class='kw'>=</span> <span class='fu'><a href='as.mic.html'>as.mic</a></span>(<span class='fl'>32</span>))
+<span class='fu'>as.rsi</span>(<span class='no'>df</span>)
+
+<span class='co'># the dplyr way</span>
+<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>dplyr</span>)
+<span class='no'>df</span> <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate_all.html'>mutate_at</a></span>(<span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='no'>AMP</span>:<span class='no'>TOB</span>), <span class='no'>as.rsi</span>, <span class='kw'>mo</span> <span class='kw'>=</span> <span class='st'>"E. coli"</span>)
+
+<span class='no'>df</span> <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate_all.html'>mutate_at</a></span>(<span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='no'>AMP</span>:<span class='no'>TOB</span>), <span class='no'>as.rsi</span>, <span class='kw'>mo</span> <span class='kw'>=</span> <span class='no'>.</span>$<span class='no'>microorganism</span>)
+
+<span class='co'># to include information about urinary tract infections (UTI)</span>
+<span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span>(<span class='kw'>mo</span> <span class='kw'>=</span> <span class='st'>"E. coli"</span>,
+           <span class='kw'>NIT</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"&lt;= 2"</span>, <span class='fl'>32</span>),
+           <span class='kw'>from_the_bladder</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>TRUE</span>, <span class='fl'>FALSE</span>)) <span class='kw'>%&gt;%</span>
+  <span class='fu'>as.rsi</span>(<span class='kw'>uti</span> <span class='kw'>=</span> <span class='st'>"from_the_bladder"</span>)
+
+<span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span>(<span class='kw'>mo</span> <span class='kw'>=</span> <span class='st'>"E. coli"</span>,
+           <span class='kw'>NIT</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"&lt;= 2"</span>, <span class='fl'>32</span>),
+           <span class='kw'>specimen</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"urine"</span>, <span class='st'>"blood"</span>)) <span class='kw'>%&gt;%</span>
+  <span class='fu'>as.rsi</span>() <span class='co'># automatically determines urine isolates</span>
+
+<span class='no'>df</span> <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate_all.html'>mutate_at</a></span>(<span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='no'>AMP</span>:<span class='no'>TOB</span>), <span class='no'>as.rsi</span>, <span class='kw'>mo</span> <span class='kw'>=</span> <span class='st'>"E. coli"</span>, <span class='kw'>uti</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+
+
+
+<span class='co'># for single values</span>
 <span class='fu'>as.rsi</span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='fu'><a href='as.mic.html'>as.mic</a></span>(<span class='fl'>2</span>),
        <span class='kw'>mo</span> <span class='kw'>=</span> <span class='fu'><a href='as.mo.html'>as.mo</a></span>(<span class='st'>"S. pneumoniae"</span>),
        <span class='kw'>ab</span> <span class='kw'>=</span> <span class='st'>"AMP"</span>,
@@ -325,14 +376,6 @@ The <a href='lifecycle.html'>lifecycle</a> of this function is <strong>stable</s
        <span class='kw'>mo</span> <span class='kw'>=</span> <span class='st'>"Strep pneu"</span>,  <span class='co'># `mo` will be coerced with as.mo()</span>
        <span class='kw'>ab</span> <span class='kw'>=</span> <span class='st'>"ampicillin"</span>,  <span class='co'># and `ab` with as.ab()</span>
        <span class='kw'>guideline</span> <span class='kw'>=</span> <span class='st'>"EUCAST"</span>)
-
-<span class='co'># a whole data set, even with combined MIC values and disk zones</span>
-<span class='no'>df</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span>(<span class='kw'>microorganism</span> <span class='kw'>=</span> <span class='st'>"E. coli"</span>,
-                 <span class='kw'>AMP</span> <span class='kw'>=</span> <span class='fu'><a href='as.mic.html'>as.mic</a></span>(<span class='fl'>8</span>),
-                 <span class='kw'>CIP</span> <span class='kw'>=</span> <span class='fu'><a href='as.mic.html'>as.mic</a></span>(<span class='fl'>0.256</span>),
-                 <span class='kw'>GEN</span> <span class='kw'>=</span> <span class='fu'><a href='as.disk.html'>as.disk</a></span>(<span class='fl'>18</span>),
-                 <span class='kw'>TOB</span> <span class='kw'>=</span> <span class='fu'><a href='as.disk.html'>as.disk</a></span>(<span class='fl'>16</span>))
-<span class='fu'>as.rsi</span>(<span class='no'>df</span>)
 
 
 <span class='co'># For CLEANING existing R/SI values ------------------------------------</span>
