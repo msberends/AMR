@@ -191,7 +191,7 @@ thead ~ tbody {
   /* only when it has a header */
   border-bottom: 2px solid black;
 }
-th {
+thead th {
   text-align: inherit; 
 }
 table a:not(.btn), .table a:not(.btn) {

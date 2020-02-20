@@ -20,8 +20,7 @@
 # ==================================================================== #
 
 codecov:
-  notify:
-    require_ci_to_pass: no # allow fail
+  require_ci_to_pass: no # allow fail
   ci:
     - !appveyor # ignore CI builds by AppVeyor
 

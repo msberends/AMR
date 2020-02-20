@@ -338,7 +338,7 @@ as.rsi.data.frame <- function(x, col_mo = NULL, guideline = "EUCAST", uti = NULL
   }
 
   i <- 0
-  ab_cols <- colnames(x)[sapply(x, function(y) { 
+  ab_cols <- colnames(x)[sapply(x, function(y) {
     i <<- i + 1
     check <- is.mic(y) | is.disk(y)
     ab <- colnames(x)[i]
