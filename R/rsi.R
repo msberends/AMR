@@ -87,10 +87,8 @@
 #'   as.rsi() # automatically determines urine isolates
 #' 
 #' df %>%
-#'   mutate_at(vars(AMP:TOB), as.rsi, mo = "E. coli", uti = TRUE)  
+#'   mutate_at(vars(AMP:NIT), as.rsi, mo = "E. coli", uti = TRUE)  
 #'  
-#'   
-#'   
 #' # for single values
 #' as.rsi(x = as.mic(2),
 #'        mo = as.mo("S. pneumoniae"),
@@ -139,18 +137,25 @@ as.rsi.default <- function(x, ...) {
     x
   } else if (identical(levels(x), c("S", "I", "R"))) {
     structure(x, class = c("rsi", "ordered", "factor"))
-  } else if (all_valid_mics(x) & !all(is.na(x))) {
-    as.rsi(as.mic(x), ab = deparse(substitute(x)), ...)
-  } else if (all_valid_disks(x) & !all(is.na(x))) {
-    #message("These values seem to be disk diffusion diameters and were treated as such.")
-    as.rsi(as.disk(x), ab = deparse(substitute(x)), ...)
-  } else if (identical(class(x), "integer") & all(x %in% c(1:3, NA))) {
+  } else if (inherits(x, "integer") & all(x %in% c(1:3, NA))) {
     x[x == 1] <- "S"
     x[x == 2] <- "I"
     x[x == 3] <- "R"
     structure(.Data = factor(x, levels = c("S", "I", "R"), ordered = TRUE),
               class =  c("rsi", "ordered", "factor"))
   } else {
+
+    ab <- deparse(substitute(x))
+    if (!any(x %like% "(R|S|I)", na.rm = TRUE)) {
+      if (!is.na(suppressWarnings(as.ab(ab)))) {
+        # check if they are actually MICs or disks now that the antibiotic name is valid
+        if (all_valid_mics(x)) {
+          as.rsi(as.mic(x), ab = ab, ...)
+        } else if (all_valid_disks(x)) {
+          as.rsi(as.disk(x), ab = ab, ...)
+        }
+      }
+    }
     
     x <- x %>% unlist()
     x.bak <- x
@@ -632,9 +637,9 @@ plot.rsi <- function(x,
 #' @importFrom graphics barplot axis par
 #' @noRd
 barplot.rsi <- function(height,
-                        col = c("green3", "orange2", "red3"),
+                        col = c("chartreuse4", "chartreuse3", "brown3"),
                         xlab = ifelse(beside, "Antimicrobial Interpretation", ""),
-                        main = paste("Susceptibility Analysis of", deparse(substitute(height))),
+                        main = paste("Antimicrobial resistance of", deparse(substitute(height))),
                         ylab = "Frequency",
                         beside = TRUE,
                         axes = beside,

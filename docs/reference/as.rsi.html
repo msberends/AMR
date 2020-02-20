@@ -79,7 +79,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">0.9.0.9029</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.0.0.9001</span>
       </span>
     </div>
 
@@ -362,9 +362,7 @@ The <a href='lifecycle.html'>lifecycle</a> of this function is <strong>stable</s
   <span class='fu'>as.rsi</span>() <span class='co'># automatically determines urine isolates</span>
 
 <span class='no'>df</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate_all.html'>mutate_at</a></span>(<span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='no'>AMP</span>:<span class='no'>TOB</span>), <span class='no'>as.rsi</span>, <span class='kw'>mo</span> <span class='kw'>=</span> <span class='st'>"E. coli"</span>, <span class='kw'>uti</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
-
-
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate_all.html'>mutate_at</a></span>(<span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='no'>AMP</span>:<span class='no'>NIT</span>), <span class='no'>as.rsi</span>, <span class='kw'>mo</span> <span class='kw'>=</span> <span class='st'>"E. coli"</span>, <span class='kw'>uti</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
 
 <span class='co'># for single values</span>
 <span class='fu'>as.rsi</span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='fu'><a href='as.mic.html'>as.mic</a></span>(<span class='fl'>2</span>),

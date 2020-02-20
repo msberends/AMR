@@ -1,5 +1,5 @@
-# AMR 1.0.0.9000
-## <small>Last updated: 20-Feb-2020</small>
+# AMR 1.0.0.9001
+
 
 ### Changed
 * Added antibiotic abbreviations for a laboratory manufacturer (GLIMS) for cefuroxime, cefotaxime, ceftazidime, cefepime, cefoxitin and trimethoprim/sulfamethoxazole
