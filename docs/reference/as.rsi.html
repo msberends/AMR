@@ -79,7 +79,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.0.0.9002</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.0.0.9003</span>
       </span>
     </div>
 
@@ -342,6 +342,8 @@ The <a href='lifecycle.html'>lifecycle</a> of this function is <strong>stable</s
                  <span class='kw'>NIT</span> <span class='kw'>=</span> <span class='fu'><a href='as.mic.html'>as.mic</a></span>(<span class='fl'>32</span>))
 <span class='fu'>as.rsi</span>(<span class='no'>df</span>)
 
+<span class='co'># \donttest{</span>
+
 <span class='co'># the dplyr way</span>
 <span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>dplyr</span>)
 <span class='no'>df</span> <span class='kw'>%&gt;%</span>
@@ -363,6 +365,7 @@ The <a href='lifecycle.html'>lifecycle</a> of this function is <strong>stable</s
 
 <span class='no'>df</span> <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate_all.html'>mutate_at</a></span>(<span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='no'>AMP</span>:<span class='no'>NIT</span>), <span class='no'>as.rsi</span>, <span class='kw'>mo</span> <span class='kw'>=</span> <span class='st'>"E. coli"</span>, <span class='kw'>uti</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+<span class='co'># }</span>
 
 <span class='co'># for single values</span>
 <span class='fu'>as.rsi</span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='fu'><a href='as.mic.html'>as.mic</a></span>(<span class='fl'>2</span>),

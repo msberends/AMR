@@ -78,7 +78,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.0.0.9002</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.0.0.9003</span>
       </span>
     </div>
 
@@ -219,19 +219,18 @@
       
     </div>
 
-    <div id="amr-1009002" class="section level1">
+    <div id="amr-1009003" class="section level1">
 <h1 class="page-header">
-<a href="#amr-1009002" class="anchor"></a>AMR 1.0.0.9002<small> Unreleased </small>
+<a href="#amr-1009003" class="anchor"></a>AMR 1.0.0.9003<small> Unreleased </small>
 </h1>
-<div id="last-updated-20-feb-2020" class="section level2">
+<div id="last-updated-21-feb-2020" class="section level2">
 <h2 class="hasAnchor">
-<a href="#last-updated-20-feb-2020" class="anchor"></a><small>Last updated: 20-Feb-2020</small>
+<a href="#last-updated-21-feb-2020" class="anchor"></a><small>Last updated: 21-Feb-2020</small>
 </h2>
 <div id="changed" class="section level3">
 <h3 class="hasAnchor">
 <a href="#changed" class="anchor"></a>Changed</h3>
 <ul>
-<li><p>Added antibiotic abbreviations for a laboratory manufacturer (GLIMS) for cefuroxime, cefotaxime, ceftazidime, cefepime, cefoxitin and trimethoprim/sulfamethoxazole</p></li>
 <li><p>Fixed floating point error for some MIC compa in EUCAST 2020 guideline</p></li>
 <li>
 <p>Interpretation from MIC values to R/SI can now be used with <code><a href="https://dplyr.tidyverse.org/reference/mutate_all.html">mutate_at()</a></code> of the dplyr package:</p>
@@ -241,6 +240,7 @@
 <span id="cb1-4"><a href="#cb1-4"></a>yourdata <span class="op">%&gt;%</span><span class="st"> </span></span>
 <span id="cb1-5"><a href="#cb1-5"></a><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/mutate_all.html">mutate_at</a></span>(<span class="kw"><a href="https://dplyr.tidyverse.org/reference/vars.html">vars</a></span>(antibiotic1<span class="op">:</span>antibiotic25), as.rsi, <span class="dt">mo =</span> .<span class="op">$</span>mybacteria)</span></code></pre></div>
 </li>
+<li><p>Added antibiotic abbreviations for a laboratory manufacturer (GLIMS) for cefuroxime, cefotaxime, ceftazidime, cefepime, cefoxitin and trimethoprim/sulfamethoxazole</p></li>
 <li><p>Added <code>uti</code> (as abbreviation of urinary tract infections) as parameter to <code><a href="../reference/as.rsi.html">as.rsi()</a></code>, so interpretation of MIC values and disk zones can be made dependent on isolates specifically from UTIs</p></li>
 </ul>
 </div>
@@ -1473,7 +1473,7 @@
     <div id="tocnav">
       <h2>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
-        <li><a href="#amr-1009002">1.0.0.9002</a></li>
+        <li><a href="#amr-1009003">1.0.0.9003</a></li>
         <li><a href="#amr-100">1.0.0</a></li>
         <li><a href="#amr-090">0.9.0</a></li>
         <li><a href="#amr-080">0.8.0</a></li>

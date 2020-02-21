@@ -1,8 +1,7 @@
-# AMR 1.0.0.9002
-## <small>Last updated: 20-Feb-2020</small>
+# AMR 1.0.0.9003
+## <small>Last updated: 21-Feb-2020</small>
 
 ### Changed
-* Added antibiotic abbreviations for a laboratory manufacturer (GLIMS) for cefuroxime, cefotaxime, ceftazidime, cefepime, cefoxitin and trimethoprim/sulfamethoxazole
 * Fixed floating point error for some MIC compa in EUCAST 2020 guideline
 * Interpretation from MIC values to R/SI can now be used with `mutate_at()` of the dplyr package:
   ```r
@@ -12,6 +11,7 @@
   yourdata %>% 
     mutate_at(vars(antibiotic1:antibiotic25), as.rsi, mo = .$mybacteria)
   ```
+* Added antibiotic abbreviations for a laboratory manufacturer (GLIMS) for cefuroxime, cefotaxime, ceftazidime, cefepime, cefoxitin and trimethoprim/sulfamethoxazole
 * Added `uti` (as abbreviation of urinary tract infections) as parameter to `as.rsi()`, so interpretation of MIC values and disk zones can be made dependent on isolates specifically from UTIs
 
 # AMR 1.0.0

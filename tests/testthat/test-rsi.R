@@ -34,6 +34,8 @@ test_that("rsi works", {
   barplot(as.rsi(c("S", "I", "R")))
   plot(as.rsi(c("S", "I", "R")))
   print(as.rsi(c("S", "I", "R")))
+  
+  expect_equal(as.character(as.rsi(c(1:3))), c("S", "I", "R"))
 
   expect_equal(suppressWarnings(as.logical(as.rsi("INVALID VALUE"))), NA)
 
@@ -55,8 +57,16 @@ test_that("rsi works", {
                  as.logical() %>%
                  sum(),
                40)
+  
+  expect_output(tibble(ab = as.rsi("S")))
+  
+  expect_error(as.rsi.mic(as.mic(16)))
+  expect_error(as.rsi.disk(as.disk(16)))
+  
+  expect_error(get_guideline("this one does not exist"))
 
 })
+
 
 test_that("mic2rsi works", {
   

@@ -67,6 +67,8 @@
 #'                  NIT = as.mic(32))
 #' as.rsi(df)
 #' 
+#' \donttest{
+#' 
 #' # the dplyr way
 #' library(dplyr)
 #' df %>%
@@ -88,7 +90,8 @@
 #' 
 #' df %>%
 #'   mutate_at(vars(AMP:NIT), as.rsi, mo = "E. coli", uti = TRUE)  
-#'  
+#' }
+#' 
 #' # for single values
 #' as.rsi(x = as.mic(2),
 #'        mo = as.mo("S. pneumoniae"),
@@ -196,20 +199,6 @@ as.rsi.default <- function(x, ...) {
     
     structure(.Data = factor(x, levels = c("S", "I", "R"), ordered = TRUE),
               class =  c("rsi", "ordered", "factor"))
-  }
-}
-
-#' @importFrom dplyr %>%
-input_resembles_mic <- function(x) {
-  mic <- x %>%
-    gsub("[^0-9.,]+", "", .) %>%
-    unique()
-  mic_valid <- suppressWarnings(as.mic(mic))
-  result <- sum(!is.na(mic_valid)) / length(mic)
-  if (is.na(result)) {
-    0
-  } else {
-    result
   }
 }
 
@@ -402,10 +391,14 @@ get_guideline <- function(guideline) {
       rev() %>%
       .[1]
   }
+  if (!guideline_param %like% " ") {
+    # like 'EUCAST2020', should be 'EUCAST 2020'
+    guideline_param <- gsub("([a-z]+)([0-9]+)", "\\1 \\2", guideline_param, ignore.case = TRUE)
+  }
   
   if (!guideline_param %in% rsi_translation$guideline) {
     stop(paste0("invalid guideline: '", guideline,
-                "'.\nValid guidelines are: ", paste0("'", rev(sort(unique(rsi_translation$guideline))), "'", collapse = ", ")),
+                "'.\nValid guidelines are: ", paste0("'", unique(rsi_translation$guideline), "'", collapse = ", "), "."),
          call. = FALSE)
   }
   

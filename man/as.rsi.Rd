@@ -108,6 +108,8 @@ df <- data.frame(microorganism = "E. coli",
                  NIT = as.mic(32))
 as.rsi(df)
 
+\donttest{
+
 # the dplyr way
 library(dplyr)
 df \%>\%
@@ -129,7 +131,8 @@ data.frame(mo = "E. coli",
 
 df \%>\%
   mutate_at(vars(AMP:NIT), as.rsi, mo = "E. coli", uti = TRUE)  
- 
+}
+
 # for single values
 as.rsi(x = as.mic(2),
        mo = as.mo("S. pneumoniae"),
