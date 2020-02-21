@@ -33,7 +33,7 @@ test_that("disk works", {
   expect_warning(as.disk("INVALID VALUE"))
   
   expect_output(print(as.disk(12)))
-  library(tibble)
+  library(dplyr)
   expect_output(print(tibble(d = as.disk(12))))
 
 })
