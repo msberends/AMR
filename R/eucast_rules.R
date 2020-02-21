@@ -197,7 +197,7 @@ EUCAST_VERSION_EXPERT_RULES <- "3.1, 2016"
 #' }
 eucast_rules <- function(x,
                          col_mo = NULL,
-                         info = TRUE,
+                         info = interactive(),
                          rules = c("breakpoints", "expert", "other", "all"),
                          verbose = FALSE,
                          ...) {

@@ -125,6 +125,7 @@ search_type_in_df <- function(x, type) {
       found <- colnames(x)[colnames(x) %like% "(urine|urinary)"][1]
     }
     if (!is.null(found)) {
+      # this column should contain logicals
       if (!is.logical(x[, found, drop = TRUE])) {
         message(red(paste0("NOTE: Column `", bold(found), "` found as input for `col_", type,
                            "`, but this column does not contain 'logical' values (TRUE/FALSE) and was ignored.")))

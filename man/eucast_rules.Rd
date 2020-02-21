@@ -19,7 +19,7 @@ Leclercq et al. \strong{EUCAST expert rules in antimicrobial susceptibility test
 eucast_rules(
   x,
   col_mo = NULL,
-  info = TRUE,
+  info = interactive(),
   rules = c("breakpoints", "expert", "other", "all"),
   verbose = FALSE,
   ...

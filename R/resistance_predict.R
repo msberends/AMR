@@ -121,7 +121,7 @@ resistance_predict <- function(x,
                                model = NULL,
                                I_as_S = TRUE,
                                preserve_measurements = TRUE,
-                               info = TRUE,
+                               info = interactive(),
                                ...) {
 
   if (nrow(x) == 0) {

@@ -1,4 +1,4 @@
-# AMR 1.0.0.9004
+# AMR 1.0.0.9005
 ## <small>Last updated: 21-Feb-2020</small>
 
 ### Changed
@@ -13,6 +13,7 @@
   ```
 * Added antibiotic abbreviations for a laboratory manufacturer (GLIMS) for cefuroxime, cefotaxime, ceftazidime, cefepime, cefoxitin and trimethoprim/sulfamethoxazole
 * Added `uti` (as abbreviation of urinary tract infections) as parameter to `as.rsi()`, so interpretation of MIC values and disk zones can be made dependent on isolates specifically from UTIs
+* Info printing in functions `eucast_rules()`, `first_isolate()`, `mdro()` and `resistance_predict()` will now at default only print when R is in an interactive mode (i.e. not in RMarkdown)
 
 # AMR 1.0.0
 

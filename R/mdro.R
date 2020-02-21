@@ -84,7 +84,7 @@
 mdro <- function(x,
                  guideline = "CMI2012",
                  col_mo = NULL,
-                 info = TRUE,
+                 info = interactive(),
                  pct_required_classes = 0.5,
                  combine_SI = TRUE,
                  verbose = FALSE,

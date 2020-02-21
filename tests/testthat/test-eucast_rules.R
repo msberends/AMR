@@ -110,9 +110,9 @@ test_that("EUCAST rules work", {
     "S")
 
   # also test norf
-  expect_output(suppressWarnings(eucast_rules(example_isolates %>% mutate(NOR = "S", NAL = "S"))))
+  expect_output(suppressWarnings(eucast_rules(example_isolates %>% mutate(NOR = "S", NAL = "S"), info = TRUE)))
 
   # check verbose output
-  expect_output(suppressWarnings(eucast_rules(example_isolates, verbose = TRUE)))
+  expect_output(suppressWarnings(eucast_rules(example_isolates, verbose = TRUE, info = TRUE)))
 
 })

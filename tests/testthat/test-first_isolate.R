@@ -141,7 +141,8 @@ test_that("first isolates work", {
                    mutate(first = first_isolate(., "date", "patient_id",
                                                 col_mo = "mo",
                                                 col_specimen = "specimen",
-                                                filter_specimen = "something_unexisting")))
+                                                filter_specimen = "something_unexisting",
+                                                info = TRUE)))
 
   # printing of exclusion message
   expect_message(example_isolates %>%
@@ -149,7 +150,8 @@ test_that("first isolates work", {
                                 col_mo = "mo",
                                 col_patient_id = "patient_id",
                                 col_testcode = "gender",
-                                testcodes_exclude = "M"))
+                                testcodes_exclude = "M",
+                                info = TRUE))
 
   # errors
   expect_error(first_isolate("date", "patient_id", col_mo = "mo"))

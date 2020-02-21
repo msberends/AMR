@@ -18,7 +18,7 @@ resistance_predict(
   model = NULL,
   I_as_S = TRUE,
   preserve_measurements = TRUE,
-  info = TRUE,
+  info = interactive(),
   ...
 )
 
@@ -33,7 +33,7 @@ rsi_predict(
   model = NULL,
   I_as_S = TRUE,
   preserve_measurements = TRUE,
-  info = TRUE,
+  info = interactive(),
   ...
 )
 

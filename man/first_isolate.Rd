@@ -27,7 +27,7 @@ first_isolate(
   type = "keyantibiotics",
   ignore_I = TRUE,
   points_threshold = 2,
-  info = TRUE,
+  info = interactive(),
   include_unknown = FALSE,
   ...
 )
