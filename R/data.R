@@ -161,6 +161,18 @@ catalogue_of_life <- list(
 #' @inheritSection AMR Read more on our website!
 "example_isolates"
 
+#' Data set with unclean data
+#'
+#' A data set containing 3,000 microbial isolates that are not cleaned up and consequently not really for AMR analysis. This data set can be used for practice.
+#' @format A [`data.frame`] with 3,000 observations and 8 variables:
+#' - `patient_id`\cr ID of the patient
+#' - `date`\cr date of receipt at the laboratory
+#' - `hospital`\cr ID of the hospital, from A to C
+#' - `bacteria`\cr info about microorganism that can be transformed with [as.mo()], see also [microorganisms]
+#' - `AMX:GEN`\cr 4 different antibiotics that have to be transformed with [as.rsi()]
+#' @inheritSection AMR Read more on our website!
+"example_isolates_unclean"
+
 #' Data set with 500 isolates - WHONET example
 #'
 #' This example data set has the exact same structure as an export file from WHONET. Such files can be used with this package, as this example data set shows. The data itself was based on our [example_isolates] data set.

@@ -58,7 +58,7 @@ test_that("rsi works", {
                  sum(),
                40)
   
-  expect_output(tibble(ab = as.rsi("S")))
+  expect_output(print(tibble(ab = as.rsi("S"))))
   
   expect_error(as.rsi.mic(as.mic(16)))
   expect_error(as.rsi.disk(as.disk(16)))
