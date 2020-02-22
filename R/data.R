@@ -163,7 +163,7 @@ catalogue_of_life <- list(
 
 #' Data set with unclean data
 #'
-#' A data set containing 3,000 microbial isolates that are not cleaned up and consequently not really for AMR analysis. This data set can be used for practice.
+#' A data set containing 3,000 microbial isolates that are not cleaned up and consequently not ready for AMR analysis. This data set can be used for practice.
 #' @format A [`data.frame`] with 3,000 observations and 8 variables:
 #' - `patient_id`\cr ID of the patient
 #' - `date`\cr date of receipt at the laboratory

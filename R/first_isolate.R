@@ -22,6 +22,7 @@
 #' Determine first (weighted) isolates
 #'
 #' Determine first (weighted) isolates of all microorganisms of every patient per episode and (if needed) per specimen type.
+#' @inheritSection lifecycle Stable lifecycle
 #' @param x a [`data.frame`] containing isolates.
 #' @param col_date column name of the result date (or date that is was received on the lab), defaults to the first column of with a date class
 #' @param col_patient_id column name of the unique IDs of the patients, defaults to the first column that starts with 'patient' or 'patid' (case insensitive)

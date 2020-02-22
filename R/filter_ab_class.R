@@ -21,7 +21,7 @@
 
 #' Filter isolates on result in antibiotic class
 #'
-#' Filter isolates on results in specific antibiotic variables based on their class (ATC groups). This makes it easy to get a list of isolates that were tested for e.g. any aminoglycoside.
+#' Filter isolates on results in specific antibiotic variables based on their antibiotic class. This makes it easy to filter on isolates that were tested for e.g. any aminoglycoside.
 #' @inheritSection lifecycle Stable lifecycle
 #' @param x a data set
 #' @param ab_class an antimicrobial class, like `"carbapenems"`, as can be found in [`antibiotics$group`][antibiotics]

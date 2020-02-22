@@ -1,5 +1,5 @@
-# AMR 1.0.0.9006
-## <small>Last updated: 21-Feb-2020</small>
+# AMR 1.0.0.9007
+## <small>Last updated: 22-Feb-2020</small>
 
 ### Changed
 * Fixed floating point error for some MIC compa in EUCAST 2020 guideline

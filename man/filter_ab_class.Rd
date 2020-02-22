@@ -54,7 +54,7 @@ filter_tetracyclines(x, result = NULL, scope = "any", ...)
 \item{...}{parameters passed on to \code{filter_at} from the \code{dplyr} package}
 }
 \description{
-Filter isolates on results in specific antibiotic variables based on their class (ATC groups). This makes it easy to get a list of isolates that were tested for e.g. any aminoglycoside.
+Filter isolates on results in specific antibiotic variables based on their antibiotic class. This makes it easy to filter on isolates that were tested for e.g. any aminoglycoside.
 }
 \details{
 The \code{group} column in \link{antibiotics} data set will be searched for \code{ab_class} (case-insensitive). If no results are found, the \code{atc_group1} and \code{atc_group2} columns will be searched. Next, \code{x} will be checked for column names with a value in any abbreviations, codes or official names found in the \link{antibiotics} data set.

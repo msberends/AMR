@@ -16,7 +16,7 @@
 example_isolates_unclean
 }
 \description{
-A data set containing 3,000 microbial isolates that are not cleaned up and consequently not really for AMR analysis. This data set can be used for practice.
+A data set containing 3,000 microbial isolates that are not cleaned up and consequently not ready for AMR analysis. This data set can be used for practice.
 }
 \section{Read more on our website!}{
 
