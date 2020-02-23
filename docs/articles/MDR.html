@@ -16,9 +16,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/all.min.css" integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/v4-shims.min.css" integrity="sha256-6qHlizsOWFskGlwVOKuns+D1nB6ssZrHQrNj1wGplHc=" crossorigin="anonymous">
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/headroom.min.js" integrity="sha256-DJFC1kqIhelURkuza0AvYal5RxMtpzLjFhsnVIeuk+U=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
-<script src="../pkgdown.js"></script><!-- docsearch --><script src="../docsearch.js"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/docsearch.js/2.6.1/docsearch.min.css" integrity="sha256-QOSRU/ra9ActyXkIBbiIB144aDBdtvXBcNc3OTNuX/Q=" crossorigin="anonymous">
-<link href="../docsearch.css" rel="stylesheet">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/jquery.mark.min.js" integrity="sha256-4HLtjeVgH0eIB3aZ9mLYF6E8oU5chNdjU6p6rrXpl9U=" crossorigin="anonymous"></script><link href="../extra.css" rel="stylesheet">
+<script src="../pkgdown.js"></script><link href="../extra.css" rel="stylesheet">
 <script src="../extra.js"></script><meta property="og:title" content="How to determine multi-drug resistance (MDR)">
 <meta property="og:description" content="">
 <meta property="og:image" content="https://msberends.gitlab.io/AMR/logo.png">
@@ -41,7 +39,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">0.9.0.9013</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.0.1</span>
       </span>
     </div>
 
@@ -166,13 +164,7 @@
   </a>
 </li>
       </ul>
-<form class="navbar-form navbar-right hidden-xs hidden-sm" role="search">
-        <div class="form-group">
-          <input type="search" class="form-control" name="search-input" id="search-input" placeholder="Search..." aria-label="Search for..." autocomplete="off">
 </div>
-      </form>
-      
-    </div>
 <!--/.nav-collapse -->
   </div>
 <!--/.container -->
@@ -187,7 +179,7 @@
       <h1>How to determine multi-drug resistance (MDR)</h1>
                         <h4 class="author">Matthijs S. Berends</h4>
             
-            <h4 class="date">26 January 2020</h4>
+            <h4 class="date">23 February 2020</h4>
       
       
       <div class="hidden name"><code>MDR.Rmd</code></div>
@@ -210,16 +202,20 @@
 <ul>
 <li>
 <p><code>guideline = "CMI2012"</code> (default)</p>
-Magiorakos AP, Srinivasan A <em>et al.</em> “Multidrug-resistant, extensively drug-resistant and pandrug-resistant bacteria: an international expert proposal for interim standard definitions for acquired resistance.” Clinical Microbiology and Infection (2012) (<a href="https://www.clinicalmicrobiologyandinfection.com/article/S1198-743X(14)61632-3/fulltext">link</a>)</li>
+<p>Magiorakos AP, Srinivasan A <em>et al.</em> “Multidrug-resistant, extensively drug-resistant and pandrug-resistant bacteria: an international expert proposal for interim standard definitions for acquired resistance.” Clinical Microbiology and Infection (2012) (<a href="https://www.clinicalmicrobiologyandinfection.com/article/S1198-743X(14)61632-3/fulltext">link</a>)</p>
+</li>
 <li>
 <p><code>guideline = "EUCAST"</code></p>
-The European international guideline - EUCAST Expert Rules Version 3.1 “Intrinsic Resistance and Exceptional Phenotypes Tables” (<a href="http://www.eucast.org/fileadmin/src/media/PDFs/EUCAST_files/Expert_Rules/Expert_rules_intrinsic_exceptional_V3.1.pdf">link</a>)</li>
+<p>The European international guideline - EUCAST Expert Rules Version 3.1 “Intrinsic Resistance and Exceptional Phenotypes Tables” (<a href="http://www.eucast.org/fileadmin/src/media/PDFs/EUCAST_files/Expert_Rules/Expert_rules_intrinsic_exceptional_V3.1.pdf">link</a>)</p>
+</li>
 <li>
 <p><code>guideline = "TB"</code></p>
-The international guideline for multi-drug resistant tuberculosis - World Health Organization “Companion handbook to the WHO guidelines for the programmatic management of drug-resistant tuberculosis” (<a href="https://www.who.int/tb/publications/pmdt_companionhandbook/en/">link</a>)</li>
+<p>The international guideline for multi-drug resistant tuberculosis - World Health Organization “Companion handbook to the WHO guidelines for the programmatic management of drug-resistant tuberculosis” (<a href="https://www.who.int/tb/publications/pmdt_companionhandbook/en/">link</a>)</p>
+</li>
 <li>
 <p><code>guideline = "MRGN"</code></p>
-The German national guideline - Mueller et al. (2015) Antimicrobial Resistance and Infection Control 4:7. (<a href="https://doi.org/10.1186/s13756-015-0047-6">link</a>)</li>
+<p>The German national guideline - Mueller et al. (2015) Antimicrobial Resistance and Infection Control 4:7. (<a href="https://doi.org/10.1186/s13756-015-0047-6">link</a>)</p>
+</li>
 <li>
 <p><code>guideline = "BRMO"</code></p>
 <p>The Dutch national guideline - Rijksinstituut voor Volksgezondheid en Milieu “WIP-richtlijn BRMO (Bijzonder Resistente Micro-Organismen) [ZKH]” (<a href="https://www.rivm.nl/Documenten_en_publicaties/Professioneel_Praktisch/Richtlijnen/Infectieziekten/WIP_Richtlijnen/WIP_Richtlijnen/Ziekenhuizen/WIP_richtlijn_BRMO_Bijzonder_Resistente_Micro_Organismen_ZKH">link</a>)</p>
@@ -231,24 +227,20 @@ The German national guideline - Mueller et al. (2015) Antimicrobial Resistance a
 <a href="#examples" class="anchor"></a>Examples</h4>
 <p>The <code><a href="../reference/mdro.html">mdro()</a></code> function always returns an ordered <code>factor</code>. For example, the output of the default guideline by Magiorakos <em>et al.</em> returns a <code>factor</code> with levels ‘Negative’, ‘MDR’, ‘XDR’ or ‘PDR’ in that order.</p>
 <p>The next example uses the <code>example_isolates</code> data set. This is a data set included with this package and contains 2,000 microbial isolates with their full antibiograms. It reflects reality and can be used to practice AMR analysis. If we test the MDR/XDR/PDR guideline on this data set, we get:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(dplyr) <span class="co"># to support pipes: %&gt;%</span></a></code></pre></div>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1">example_isolates <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb2-2" data-line-number="2"><span class="st">  </span><span class="kw"><a href="../reference/mdro.html">mdro</a></span>() <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb2-3" data-line-number="3"><span class="st">  </span><span class="kw"><a href="https://rdrr.io/pkg/cleaner/man/freq.html">freq</a></span>() <span class="co"># show frequency table of the result</span></a>
-<a class="sourceLine" id="cb2-4" data-line-number="4"><span class="co"># </span><span class="al">NOTE</span><span class="co">: Using column `mo` as input for `col_mo`.</span></a>
-<a class="sourceLine" id="cb2-5" data-line-number="5"><span class="co"># </span><span class="al">NOTE</span><span class="co">: Auto-guessing columns suitable for analysis...OK.</span></a>
-<a class="sourceLine" id="cb2-6" data-line-number="6"><span class="co"># </span><span class="al">NOTE</span><span class="co">: Reliability will be improved if these antimicrobial results would be available too: SAM (ampicillin/sulbactam), ATM (aztreonam), CTT (cefotetan), CPT (ceftaroline), DAP (daptomycin), DOR (doripenem), ETP (ertapenem), FUS (fusidic acid), GEH (gentamicin-high), LVX (levofloxacin), MNO (minocycline), NET (netilmicin), PLB (polymyxin B), QDA (quinupristin/dalfopristin), STH (streptomycin-high), TLV (telavancin), TCC (ticarcillin/clavulanic acid)</span></a>
-<a class="sourceLine" id="cb2-7" data-line-number="7"><span class="co"># Table 1 - Staphylococcus aureus ... OK</span></a>
-<a class="sourceLine" id="cb2-8" data-line-number="8"><span class="co"># Table 2 - Enterococcus spp. ... OK</span></a>
-<a class="sourceLine" id="cb2-9" data-line-number="9"><span class="co"># Table 3 - Enterobacteriaceae ... OK</span></a>
-<a class="sourceLine" id="cb2-10" data-line-number="10"><span class="co"># Table 4 - Pseudomonas aeruginosa ... OK</span></a>
-<a class="sourceLine" id="cb2-11" data-line-number="11"><span class="co"># Table 5 - Acinetobacter spp. ... OK</span></a>
-<a class="sourceLine" id="cb2-12" data-line-number="12"><span class="co"># Warning in mdro(.): NA introduced for isolates where the available percentage of</span></a>
-<a class="sourceLine" id="cb2-13" data-line-number="13"><span class="co"># antimicrobial classes was below 50% (set with `pct_required_classes`)</span></a></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(dplyr) <span class="co"># to support pipes: %&gt;%</span></span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a>example_isolates <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb2-2"><a href="#cb2-2"></a><span class="st">  </span><span class="kw"><a href="../reference/mdro.html">mdro</a></span>() <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb2-3"><a href="#cb2-3"></a><span class="st">  </span><span class="kw"><a href="https://rdrr.io/pkg/cleaner/man/freq.html">freq</a></span>() <span class="co"># show frequency table of the result</span></span>
+<span id="cb2-4"><a href="#cb2-4"></a><span class="co"># </span><span class="al">NOTE</span><span class="co">: Using column `mo` as input for `col_mo`.</span></span>
+<span id="cb2-5"><a href="#cb2-5"></a><span class="co"># </span><span class="al">NOTE</span><span class="co">: Auto-guessing columns suitable for analysis...OK.</span></span>
+<span id="cb2-6"><a href="#cb2-6"></a><span class="co"># </span><span class="al">NOTE</span><span class="co">: Reliability will be improved if these antimicrobial results would be available too: SAM (ampicillin/sulbactam), ATM (aztreonam), CTT (cefotetan), CPT (ceftaroline), DAP (daptomycin), DOR (doripenem), ETP (ertapenem), FUS (fusidic acid), GEH (gentamicin-high), LVX (levofloxacin), MNO (minocycline), NET (netilmicin), PLB (polymyxin B), QDA (quinupristin/dalfopristin), STH (streptomycin-high), TLV (telavancin), TCC (ticarcillin/clavulanic acid)</span></span>
+<span id="cb2-7"><a href="#cb2-7"></a><span class="co"># Warning in mdro(.): NA introduced for isolates where the available percentage of</span></span>
+<span id="cb2-8"><a href="#cb2-8"></a><span class="co"># antimicrobial classes was below 50% (set with `pct_required_classes`)</span></span></code></pre></div>
 <p><strong>Frequency table</strong></p>
 <p>Class: factor &gt; ordered (numeric)<br>
-Length: 2,000 (of which NA: 289 = 14.45%)<br>
+Length: 2,000<br>
 Levels: 4: Negative &lt; Multi-drug-resistant (MDR) &lt; Extensively drug-resistant …<br>
+Available: 1,711 (85.55%, NA: 289 = 14.45%)<br>
 Unique: 2</p>
 <table class="table">
 <thead><tr class="header">
@@ -279,69 +271,60 @@ Unique: 2</p>
 </tbody>
 </table>
 <p>For another example, I will create a data set to determine multi-drug resistant TB:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="co"># a helper function to get a random vector with values S, I and R</span></a>
-<a class="sourceLine" id="cb3-2" data-line-number="2"><span class="co"># with the probabilities 50% - 10% - 40%</span></a>
-<a class="sourceLine" id="cb3-3" data-line-number="3">sample_rsi &lt;-<span class="st"> </span><span class="cf">function</span>() {</a>
-<a class="sourceLine" id="cb3-4" data-line-number="4">  <span class="kw"><a href="https://dplyr.tidyverse.org/reference/sample.html">sample</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"S"</span>, <span class="st">"I"</span>, <span class="st">"R"</span>),</a>
-<a class="sourceLine" id="cb3-5" data-line-number="5">         <span class="dt">size =</span> <span class="dv">5000</span>,</a>
-<a class="sourceLine" id="cb3-6" data-line-number="6">         <span class="dt">prob =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">0.5</span>, <span class="fl">0.1</span>, <span class="fl">0.4</span>),</a>
-<a class="sourceLine" id="cb3-7" data-line-number="7">         <span class="dt">replace =</span> <span class="ot">TRUE</span>)</a>
-<a class="sourceLine" id="cb3-8" data-line-number="8">}</a>
-<a class="sourceLine" id="cb3-9" data-line-number="9"></a>
-<a class="sourceLine" id="cb3-10" data-line-number="10">my_TB_data &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span>(<span class="dt">rifampicin =</span> <span class="kw">sample_rsi</span>(),</a>
-<a class="sourceLine" id="cb3-11" data-line-number="11">                         <span class="dt">isoniazid =</span> <span class="kw">sample_rsi</span>(),</a>
-<a class="sourceLine" id="cb3-12" data-line-number="12">                         <span class="dt">gatifloxacin =</span> <span class="kw">sample_rsi</span>(),</a>
-<a class="sourceLine" id="cb3-13" data-line-number="13">                         <span class="dt">ethambutol =</span> <span class="kw">sample_rsi</span>(),</a>
-<a class="sourceLine" id="cb3-14" data-line-number="14">                         <span class="dt">pyrazinamide =</span> <span class="kw">sample_rsi</span>(),</a>
-<a class="sourceLine" id="cb3-15" data-line-number="15">                         <span class="dt">moxifloxacin =</span> <span class="kw">sample_rsi</span>(),</a>
-<a class="sourceLine" id="cb3-16" data-line-number="16">                         <span class="dt">kanamycin =</span> <span class="kw">sample_rsi</span>())</a></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a><span class="co"># a helper function to get a random vector with values S, I and R</span></span>
+<span id="cb3-2"><a href="#cb3-2"></a><span class="co"># with the probabilities 50% - 10% - 40%</span></span>
+<span id="cb3-3"><a href="#cb3-3"></a>sample_rsi &lt;-<span class="st"> </span><span class="cf">function</span>() {</span>
+<span id="cb3-4"><a href="#cb3-4"></a>  <span class="kw"><a href="https://dplyr.tidyverse.org/reference/sample.html">sample</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"S"</span>, <span class="st">"I"</span>, <span class="st">"R"</span>),</span>
+<span id="cb3-5"><a href="#cb3-5"></a>         <span class="dt">size =</span> <span class="dv">5000</span>,</span>
+<span id="cb3-6"><a href="#cb3-6"></a>         <span class="dt">prob =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">0.5</span>, <span class="fl">0.1</span>, <span class="fl">0.4</span>),</span>
+<span id="cb3-7"><a href="#cb3-7"></a>         <span class="dt">replace =</span> <span class="ot">TRUE</span>)</span>
+<span id="cb3-8"><a href="#cb3-8"></a>}</span>
+<span id="cb3-9"><a href="#cb3-9"></a></span>
+<span id="cb3-10"><a href="#cb3-10"></a>my_TB_data &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span>(<span class="dt">rifampicin =</span> <span class="kw">sample_rsi</span>(),</span>
+<span id="cb3-11"><a href="#cb3-11"></a>                         <span class="dt">isoniazid =</span> <span class="kw">sample_rsi</span>(),</span>
+<span id="cb3-12"><a href="#cb3-12"></a>                         <span class="dt">gatifloxacin =</span> <span class="kw">sample_rsi</span>(),</span>
+<span id="cb3-13"><a href="#cb3-13"></a>                         <span class="dt">ethambutol =</span> <span class="kw">sample_rsi</span>(),</span>
+<span id="cb3-14"><a href="#cb3-14"></a>                         <span class="dt">pyrazinamide =</span> <span class="kw">sample_rsi</span>(),</span>
+<span id="cb3-15"><a href="#cb3-15"></a>                         <span class="dt">moxifloxacin =</span> <span class="kw">sample_rsi</span>(),</span>
+<span id="cb3-16"><a href="#cb3-16"></a>                         <span class="dt">kanamycin =</span> <span class="kw">sample_rsi</span>())</span></code></pre></div>
 <p>Because all column names are automatically verified for valid drug names or codes, this would have worked exactly the same:</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1">my_TB_data &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span>(<span class="dt">RIF =</span> <span class="kw">sample_rsi</span>(),</a>
-<a class="sourceLine" id="cb4-2" data-line-number="2">                         <span class="dt">INH =</span> <span class="kw">sample_rsi</span>(),</a>
-<a class="sourceLine" id="cb4-3" data-line-number="3">                         <span class="dt">GAT =</span> <span class="kw">sample_rsi</span>(),</a>
-<a class="sourceLine" id="cb4-4" data-line-number="4">                         <span class="dt">ETH =</span> <span class="kw">sample_rsi</span>(),</a>
-<a class="sourceLine" id="cb4-5" data-line-number="5">                         <span class="dt">PZA =</span> <span class="kw">sample_rsi</span>(),</a>
-<a class="sourceLine" id="cb4-6" data-line-number="6">                         <span class="dt">MFX =</span> <span class="kw">sample_rsi</span>(),</a>
-<a class="sourceLine" id="cb4-7" data-line-number="7">                         <span class="dt">KAN =</span> <span class="kw">sample_rsi</span>())</a></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a>my_TB_data &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span>(<span class="dt">RIF =</span> <span class="kw">sample_rsi</span>(),</span>
+<span id="cb4-2"><a href="#cb4-2"></a>                         <span class="dt">INH =</span> <span class="kw">sample_rsi</span>(),</span>
+<span id="cb4-3"><a href="#cb4-3"></a>                         <span class="dt">GAT =</span> <span class="kw">sample_rsi</span>(),</span>
+<span id="cb4-4"><a href="#cb4-4"></a>                         <span class="dt">ETH =</span> <span class="kw">sample_rsi</span>(),</span>
+<span id="cb4-5"><a href="#cb4-5"></a>                         <span class="dt">PZA =</span> <span class="kw">sample_rsi</span>(),</span>
+<span id="cb4-6"><a href="#cb4-6"></a>                         <span class="dt">MFX =</span> <span class="kw">sample_rsi</span>(),</span>
+<span id="cb4-7"><a href="#cb4-7"></a>                         <span class="dt">KAN =</span> <span class="kw">sample_rsi</span>())</span></code></pre></div>
 <p>The data set now looks like this:</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(my_TB_data)</a>
-<a class="sourceLine" id="cb5-2" data-line-number="2"><span class="co">#   rifampicin isoniazid gatifloxacin ethambutol pyrazinamide moxifloxacin</span></a>
-<a class="sourceLine" id="cb5-3" data-line-number="3"><span class="co"># 1          I         S            R          S            S            R</span></a>
-<a class="sourceLine" id="cb5-4" data-line-number="4"><span class="co"># 2          S         R            R          R            S            S</span></a>
-<a class="sourceLine" id="cb5-5" data-line-number="5"><span class="co"># 3          S         S            R          S            R            I</span></a>
-<a class="sourceLine" id="cb5-6" data-line-number="6"><span class="co"># 4          S         S            S          R            S            R</span></a>
-<a class="sourceLine" id="cb5-7" data-line-number="7"><span class="co"># 5          R         S            S          S            S            I</span></a>
-<a class="sourceLine" id="cb5-8" data-line-number="8"><span class="co"># 6          S         S            R          R            R            S</span></a>
-<a class="sourceLine" id="cb5-9" data-line-number="9"><span class="co">#   kanamycin</span></a>
-<a class="sourceLine" id="cb5-10" data-line-number="10"><span class="co"># 1         S</span></a>
-<a class="sourceLine" id="cb5-11" data-line-number="11"><span class="co"># 2         S</span></a>
-<a class="sourceLine" id="cb5-12" data-line-number="12"><span class="co"># 3         R</span></a>
-<a class="sourceLine" id="cb5-13" data-line-number="13"><span class="co"># 4         I</span></a>
-<a class="sourceLine" id="cb5-14" data-line-number="14"><span class="co"># 5         S</span></a>
-<a class="sourceLine" id="cb5-15" data-line-number="15"><span class="co"># 6         R</span></a></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a><span class="kw"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(my_TB_data)</span>
+<span id="cb5-2"><a href="#cb5-2"></a><span class="co">#   rifampicin isoniazid gatifloxacin ethambutol pyrazinamide moxifloxacin</span></span>
+<span id="cb5-3"><a href="#cb5-3"></a><span class="co"># 1          S         R            S          R            R            I</span></span>
+<span id="cb5-4"><a href="#cb5-4"></a><span class="co"># 2          S         R            S          S            R            S</span></span>
+<span id="cb5-5"><a href="#cb5-5"></a><span class="co"># 3          I         S            R          R            S            R</span></span>
+<span id="cb5-6"><a href="#cb5-6"></a><span class="co"># 4          S         S            S          S            S            R</span></span>
+<span id="cb5-7"><a href="#cb5-7"></a><span class="co"># 5          S         S            S          I            R            R</span></span>
+<span id="cb5-8"><a href="#cb5-8"></a><span class="co"># 6          I         I            R          R            S            S</span></span>
+<span id="cb5-9"><a href="#cb5-9"></a><span class="co">#   kanamycin</span></span>
+<span id="cb5-10"><a href="#cb5-10"></a><span class="co"># 1         S</span></span>
+<span id="cb5-11"><a href="#cb5-11"></a><span class="co"># 2         I</span></span>
+<span id="cb5-12"><a href="#cb5-12"></a><span class="co"># 3         R</span></span>
+<span id="cb5-13"><a href="#cb5-13"></a><span class="co"># 4         R</span></span>
+<span id="cb5-14"><a href="#cb5-14"></a><span class="co"># 5         R</span></span>
+<span id="cb5-15"><a href="#cb5-15"></a><span class="co"># 6         I</span></span></code></pre></div>
 <p>We can now add the interpretation of MDR-TB to our data set. You can use:</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1"><span class="kw"><a href="../reference/mdro.html">mdro</a></span>(my_TB_data, <span class="dt">guideline =</span> <span class="st">"TB"</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a><span class="kw"><a href="../reference/mdro.html">mdro</a></span>(my_TB_data, <span class="dt">guideline =</span> <span class="st">"TB"</span>)</span></code></pre></div>
 <p>or its shortcut <code><a href="../reference/mdro.html">mdr_tb()</a></code>:</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1">my_TB_data<span class="op">$</span>mdr &lt;-<span class="st"> </span><span class="kw"><a href="../reference/mdro.html">mdr_tb</a></span>(my_TB_data)</a>
-<a class="sourceLine" id="cb7-2" data-line-number="2"><span class="co"># </span><span class="al">NOTE</span><span class="co">: No column found as input for `col_mo`, assuming all records contain Mycobacterium tuberculosis.</span></a>
-<a class="sourceLine" id="cb7-3" data-line-number="3"><span class="co"># </span><span class="al">NOTE</span><span class="co">: Auto-guessing columns suitable for analysis...OK.</span></a>
-<a class="sourceLine" id="cb7-4" data-line-number="4"><span class="co"># </span><span class="al">NOTE</span><span class="co">: Reliability will be improved if these antimicrobial results would be available too: CAP (capreomycin), RIB (rifabutin), RFP (rifapentine)</span></a>
-<a class="sourceLine" id="cb7-5" data-line-number="5"><span class="co"># </span></a>
-<a class="sourceLine" id="cb7-6" data-line-number="6"><span class="co"># Only results with 'R' are considered as resistance. Use `combine_SI = FALSE` to also consider 'I' as resistance.</span></a>
-<a class="sourceLine" id="cb7-7" data-line-number="7"><span class="co"># </span></a>
-<a class="sourceLine" id="cb7-8" data-line-number="8"><span class="co"># Determining multidrug-resistant organisms (MDRO), according to:</span></a>
-<a class="sourceLine" id="cb7-9" data-line-number="9"><span class="co"># Guideline: Companion handbook to the WHO guidelines for the programmatic management of drug-resistant tuberculosis</span></a>
-<a class="sourceLine" id="cb7-10" data-line-number="10"><span class="co"># Version:   WHO/HTM/TB/2014.11</span></a>
-<a class="sourceLine" id="cb7-11" data-line-number="11"><span class="co"># Author:    WHO (World Health Organization)</span></a>
-<a class="sourceLine" id="cb7-12" data-line-number="12"><span class="co"># Source:    https://www.who.int/tb/publications/pmdt_companionhandbook/en/</span></a>
-<a class="sourceLine" id="cb7-13" data-line-number="13"><span class="co"># </span></a>
-<a class="sourceLine" id="cb7-14" data-line-number="14"><span class="co"># =&gt; Found 4338 MDROs out of 5000 tested isolates (86.8%)</span></a></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a>my_TB_data<span class="op">$</span>mdr &lt;-<span class="st"> </span><span class="kw"><a href="../reference/mdro.html">mdr_tb</a></span>(my_TB_data)</span>
+<span id="cb7-2"><a href="#cb7-2"></a><span class="co"># </span><span class="al">NOTE</span><span class="co">: No column found as input for `col_mo`, assuming all records contain Mycobacterium tuberculosis.</span></span>
+<span id="cb7-3"><a href="#cb7-3"></a><span class="co"># </span><span class="al">NOTE</span><span class="co">: Auto-guessing columns suitable for analysis...OK.</span></span>
+<span id="cb7-4"><a href="#cb7-4"></a><span class="co"># </span><span class="al">NOTE</span><span class="co">: Reliability will be improved if these antimicrobial results would be available too: CAP (capreomycin), RIB (rifabutin), RFP (rifapentine)</span></span></code></pre></div>
 <p>Create a frequency table of the results:</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/pkg/cleaner/man/freq.html">freq</a></span>(my_TB_data<span class="op">$</span>mdr)</a></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1"></a><span class="kw"><a href="https://rdrr.io/pkg/cleaner/man/freq.html">freq</a></span>(my_TB_data<span class="op">$</span>mdr)</span></code></pre></div>
 <p><strong>Frequency table</strong></p>
 <p>Class: factor &gt; ordered (numeric)<br>
-Length: 5,000 (of which NA: 0 = 0%)<br>
+Length: 5,000<br>
 Levels: 5: Negative &lt; Mono-resistant &lt; Poly-resistant &lt; Multi-drug-resistant &lt;…<br>
+Available: 5,000 (100%, NA: 0 = 0%)<br>
 Unique: 5</p>
 <table class="table">
 <thead><tr class="header">
@@ -356,40 +339,40 @@ Unique: 5</p>
 <tr class="odd">
 <td align="left">1</td>
 <td align="left">Mono-resistant</td>
-<td align="right">3217</td>
-<td align="right">64.34%</td>
-<td align="right">3217</td>
-<td align="right">64.34%</td>
+<td align="right">3274</td>
+<td align="right">65.48%</td>
+<td align="right">3274</td>
+<td align="right">65.48%</td>
 </tr>
 <tr class="even">
 <td align="left">2</td>
 <td align="left">Negative</td>
-<td align="right">662</td>
-<td align="right">13.24%</td>
-<td align="right">3879</td>
-<td align="right">77.58%</td>
+<td align="right">651</td>
+<td align="right">13.02%</td>
+<td align="right">3925</td>
+<td align="right">78.50%</td>
 </tr>
 <tr class="odd">
 <td align="left">3</td>
 <td align="left">Multi-drug-resistant</td>
-<td align="right">632</td>
-<td align="right">12.64%</td>
-<td align="right">4511</td>
-<td align="right">90.22%</td>
+<td align="right">612</td>
+<td align="right">12.24%</td>
+<td align="right">4537</td>
+<td align="right">90.74%</td>
 </tr>
 <tr class="even">
 <td align="left">4</td>
 <td align="left">Poly-resistant</td>
-<td align="right">280</td>
-<td align="right">5.60%</td>
-<td align="right">4791</td>
-<td align="right">95.82%</td>
+<td align="right">288</td>
+<td align="right">5.76%</td>
+<td align="right">4825</td>
+<td align="right">96.50%</td>
 </tr>
 <tr class="odd">
 <td align="left">5</td>
 <td align="left">Extensively drug-resistant</td>
-<td align="right">209</td>
-<td align="right">4.18%</td>
+<td align="right">175</td>
+<td align="right">3.50%</td>
 <td align="right">5000</td>
 <td align="right">100.00%</td>
 </tr>
@@ -418,20 +401,7 @@ Unique: 5</p>
 </div>
 
   
-<script src="https://cdnjs.cloudflare.com/ajax/libs/docsearch.js/2.6.1/docsearch.min.js" integrity="sha256-GKvGqXDznoRYHCwKXGnuchvKSwmx9SRMrZOTh2g4Sb0=" crossorigin="anonymous"></script><script>
-  docsearch({
-    
-    
-    apiKey: 'f737050abfd4d726c63938e18f8c496e',
-    indexName: 'amr',
-    inputSelector: 'input#search-input.form-control',
-    transformData: function(hits) {
-      return hits.map(function (hit) {
-        hit.url = updateHitURL(hit);
-        return hit;
-      });
-    }
-  });
-</script>
-</body>
+
+
+  </body>
 </html>

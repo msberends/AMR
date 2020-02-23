@@ -1,9 +1,8 @@
-# AMR 1.0.0.9007
-## <small>Last updated: 22-Feb-2020</small>
+# AMR 1.0.1
 
 ### Changed
-* Fixed floating point error for some MIC compa in EUCAST 2020 guideline
-* Interpretation from MIC values to R/SI can now be used with `mutate_at()` of the dplyr package:
+* Fixed important floating point error for some MIC comparisons in EUCAST 2020 guideline
+* Interpretation from MIC values (and disk zones) to R/SI can now be used with `mutate_at()` of the `dplyr` package:
   ```r
   yourdata %>% 
     mutate_at(vars(antibiotic1:antibiotic25), as.rsi, mo = "E. coli")

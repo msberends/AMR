@@ -16,9 +16,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/all.min.css" integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/v4-shims.min.css" integrity="sha256-6qHlizsOWFskGlwVOKuns+D1nB6ssZrHQrNj1wGplHc=" crossorigin="anonymous">
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/headroom.min.js" integrity="sha256-DJFC1kqIhelURkuza0AvYal5RxMtpzLjFhsnVIeuk+U=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
-<script src="../pkgdown.js"></script><!-- docsearch --><script src="../docsearch.js"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/docsearch.js/2.6.1/docsearch.min.css" integrity="sha256-QOSRU/ra9ActyXkIBbiIB144aDBdtvXBcNc3OTNuX/Q=" crossorigin="anonymous">
-<link href="../docsearch.css" rel="stylesheet">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/jquery.mark.min.js" integrity="sha256-4HLtjeVgH0eIB3aZ9mLYF6E8oU5chNdjU6p6rrXpl9U=" crossorigin="anonymous"></script><link href="../extra.css" rel="stylesheet">
+<script src="../pkgdown.js"></script><link href="../extra.css" rel="stylesheet">
 <script src="../extra.js"></script><meta property="og:title" content="How to work with WHONET data">
 <meta property="og:description" content="">
 <meta property="og:image" content="https://msberends.gitlab.io/AMR/logo.png">
@@ -41,7 +39,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">0.9.0.9013</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.0.1</span>
       </span>
     </div>
 
@@ -166,13 +164,7 @@
   </a>
 </li>
       </ul>
-<form class="navbar-form navbar-right hidden-xs hidden-sm" role="search">
-        <div class="form-group">
-          <input type="search" class="form-control" name="search-input" id="search-input" placeholder="Search..." aria-label="Search for..." autocomplete="off">
 </div>
-      </form>
-      
-    </div>
 <!--/.nav-collapse -->
   </div>
 <!--/.container -->
@@ -187,7 +179,7 @@
       <h1>How to work with WHONET data</h1>
                         <h4 class="author">Matthijs S. Berends</h4>
             
-            <h4 class="date">26 January 2020</h4>
+            <h4 class="date">23 February 2020</h4>
       
       
       <div class="hidden name"><code>WHONET.Rmd</code></div>
@@ -201,36 +193,37 @@
 <a href="#import-of-data" class="anchor"></a>Import of data</h3>
 <p>This tutorial assumes you already imported the WHONET data with e.g. the <a href="https://readxl.tidyverse.org/"><code>readxl</code> package</a>. In RStudio, this can be done using the menu button ‘Import Dataset’ in the tab ‘Environment’. Choose the option ‘From Excel’ and select your exported file. Make sure date fields are imported correctly.</p>
 <p>An example syntax could look like this:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(readxl)</a>
-<a class="sourceLine" id="cb1-2" data-line-number="2">data &lt;-<span class="st"> </span><span class="kw"><a href="https://readxl.tidyverse.org/reference/read_excel.html">read_excel</a></span>(<span class="dt">path =</span> <span class="st">"path/to/your/file.xlsx"</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(readxl)</span>
+<span id="cb1-2"><a href="#cb1-2"></a>data &lt;-<span class="st"> </span><span class="kw"><a href="https://readxl.tidyverse.org/reference/read_excel.html">read_excel</a></span>(<span class="dt">path =</span> <span class="st">"path/to/your/file.xlsx"</span>)</span></code></pre></div>
 <p>This package comes with an <a href="https://msberends.gitlab.io/AMR/reference/WHONET.html">example data set <code>WHONET</code></a>. We will use it for this analysis.</p>
 </div>
 <div id="preparation" class="section level3">
 <h3 class="hasAnchor">
 <a href="#preparation" class="anchor"></a>Preparation</h3>
 <p>First, load the relevant packages if you did not yet did this. I use the tidyverse for all of my analyses. All of them. If you don’t know it yet, I suggest you read about it on their website: <a href="https://www.tidyverse.org/" class="uri">https://www.tidyverse.org/</a>.</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(dplyr)   <span class="co"># part of tidyverse</span></a>
-<a class="sourceLine" id="cb2-2" data-line-number="2"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(ggplot2) <span class="co"># part of tidyverse</span></a>
-<a class="sourceLine" id="cb2-3" data-line-number="3"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(AMR)     <span class="co"># this package</span></a></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(dplyr)   <span class="co"># part of tidyverse</span></span>
+<span id="cb2-2"><a href="#cb2-2"></a><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(ggplot2) <span class="co"># part of tidyverse</span></span>
+<span id="cb2-3"><a href="#cb2-3"></a><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(AMR)     <span class="co"># this package</span></span></code></pre></div>
 <p>We will have to transform some variables to simplify and automate the analysis:</p>
 <ul>
 <li>Microorganisms should be transformed to our own microorganism IDs (called an <code>mo</code>) using <a href="https://msberends.gitlab.io/AMR/reference/catalogue_of_life">our Catalogue of Life reference data set</a>, which contains all ~70,000 microorganisms from the taxonomic kingdoms Bacteria, Fungi and Protozoa. We do the tranformation with <code><a href="../reference/as.mo.html">as.mo()</a></code>. This function also recognises almost all WHONET abbreviations of microorganisms.</li>
 <li>Antimicrobial results or interpretations have to be clean and valid. In other words, they should only contain values <code>"S"</code>, <code>"I"</code> or <code>"R"</code>. That is exactly where the <code><a href="../reference/as.rsi.html">as.rsi()</a></code> function is for.</li>
 </ul>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="co"># transform variables</span></a>
-<a class="sourceLine" id="cb3-2" data-line-number="2">data &lt;-<span class="st"> </span>WHONET <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb3-3" data-line-number="3"><span class="st">  </span><span class="co"># get microbial ID based on given organism</span></a>
-<a class="sourceLine" id="cb3-4" data-line-number="4"><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(<span class="dt">mo =</span> <span class="kw"><a href="../reference/as.mo.html">as.mo</a></span>(Organism)) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb3-5" data-line-number="5"><span class="st">  </span><span class="co"># transform everything from "AMP_ND10" to "CIP_EE" to the new `rsi` class</span></a>
-<a class="sourceLine" id="cb3-6" data-line-number="6"><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/mutate_all.html">mutate_at</a></span>(<span class="kw"><a href="https://dplyr.tidyverse.org/reference/vars.html">vars</a></span>(AMP_ND10<span class="op">:</span>CIP_EE), as.rsi)</a></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a><span class="co"># transform variables</span></span>
+<span id="cb3-2"><a href="#cb3-2"></a>data &lt;-<span class="st"> </span>WHONET <span class="op">%&gt;%</span></span>
+<span id="cb3-3"><a href="#cb3-3"></a><span class="st">  </span><span class="co"># get microbial ID based on given organism</span></span>
+<span id="cb3-4"><a href="#cb3-4"></a><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(<span class="dt">mo =</span> <span class="kw"><a href="../reference/as.mo.html">as.mo</a></span>(Organism)) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb3-5"><a href="#cb3-5"></a><span class="st">  </span><span class="co"># transform everything from "AMP_ND10" to "CIP_EE" to the new `rsi` class</span></span>
+<span id="cb3-6"><a href="#cb3-6"></a><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/mutate_all.html">mutate_at</a></span>(<span class="kw"><a href="https://dplyr.tidyverse.org/reference/vars.html">vars</a></span>(AMP_ND10<span class="op">:</span>CIP_EE), as.rsi)</span></code></pre></div>
 <p>No errors or warnings, so all values are transformed succesfully.</p>
 <p>We also created a package dedicated to data cleaning and checking, called the <code>cleaner</code> package. It gets automatically installed with the <code>AMR</code> package. For its <code><a href="https://rdrr.io/pkg/cleaner/man/freq.html">freq()</a></code> function to create frequency tables, you don’t even need to load it yourself as it is available through the <code>AMR</code> package as well.</p>
 <p>So let’s check our data, with a couple of frequency tables:</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="co"># our newly created `mo` variable, put in the mo_name() function</span></a>
-<a class="sourceLine" id="cb4-2" data-line-number="2">data <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/pkg/cleaner/man/freq.html">freq</a></span>(<span class="kw"><a href="../reference/mo_property.html">mo_name</a></span>(mo), <span class="dt">nmax =</span> <span class="dv">10</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a><span class="co"># our newly created `mo` variable, put in the mo_name() function</span></span>
+<span id="cb4-2"><a href="#cb4-2"></a>data <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/pkg/cleaner/man/freq.html">freq</a></span>(<span class="kw"><a href="../reference/mo_property.html">mo_name</a></span>(mo), <span class="dt">nmax =</span> <span class="dv">10</span>)</span></code></pre></div>
 <p><strong>Frequency table</strong></p>
 <p>Class: character<br>
-Length: 500 (of which NA: 0 = 0%)<br>
+Length: 500<br>
+Available: 500 (100%, NA: 0 = 0%)<br>
 Unique: 39</p>
 <p>Shortest: 11<br>
 Longest: 40</p>
@@ -327,13 +320,14 @@ Longest: 40</p>
 </tbody>
 </table>
 <p>(omitted 29 entries, n = 57 [11.40%])</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="co"># our transformed antibiotic columns</span></a>
-<a class="sourceLine" id="cb5-2" data-line-number="2"><span class="co"># amoxicillin/clavulanic acid (J01CR02) as an example</span></a>
-<a class="sourceLine" id="cb5-3" data-line-number="3">data <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/pkg/cleaner/man/freq.html">freq</a></span>(AMC_ND2)</a></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a><span class="co"># our transformed antibiotic columns</span></span>
+<span id="cb5-2"><a href="#cb5-2"></a><span class="co"># amoxicillin/clavulanic acid (J01CR02) as an example</span></span>
+<span id="cb5-3"><a href="#cb5-3"></a>data <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/pkg/cleaner/man/freq.html">freq</a></span>(AMC_ND2)</span></code></pre></div>
 <p><strong>Frequency table</strong></p>
 <p>Class: factor &gt; ordered &gt; rsi (numeric)<br>
-Length: 500 (of which NA: 19 = 3.8%)<br>
+Length: 500<br>
 Levels: 3: S &lt; I &lt; R<br>
+Available: 481 (96.2%, NA: 19 = 3.8%)<br>
 Unique: 3</p>
 <p>%SI: 78.6%</p>
 <table class="table">
@@ -377,10 +371,10 @@ Unique: 3</p>
 <h3 class="hasAnchor">
 <a href="#a-first-glimpse-at-results" class="anchor"></a>A first glimpse at results</h3>
 <p>An easy <code>ggplot</code> will already give a lot of information, using the included <code><a href="../reference/ggplot_rsi.html">ggplot_rsi()</a></code> function:</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1">data <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb6-2" data-line-number="2"><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span>(Country) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb6-3" data-line-number="3"><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span>(Country, AMP_ND2, AMC_ED20, CAZ_ED10, CIP_ED5) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb6-4" data-line-number="4"><span class="st">  </span><span class="kw"><a href="../reference/ggplot_rsi.html">ggplot_rsi</a></span>(<span class="dt">translate_ab =</span> <span class="st">'ab'</span>, <span class="dt">facet =</span> <span class="st">"Country"</span>, <span class="dt">datalabels =</span> <span class="ot">FALSE</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a>data <span class="op">%&gt;%</span></span>
+<span id="cb6-2"><a href="#cb6-2"></a><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span>(Country) <span class="op">%&gt;%</span></span>
+<span id="cb6-3"><a href="#cb6-3"></a><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span>(Country, AMP_ND2, AMC_ED20, CAZ_ED10, CIP_ED5) <span class="op">%&gt;%</span></span>
+<span id="cb6-4"><a href="#cb6-4"></a><span class="st">  </span><span class="kw"><a href="../reference/ggplot_rsi.html">ggplot_rsi</a></span>(<span class="dt">translate_ab =</span> <span class="st">'ab'</span>, <span class="dt">facet =</span> <span class="st">"Country"</span>, <span class="dt">datalabels =</span> <span class="ot">FALSE</span>)</span></code></pre></div>
 <p><img src="WHONET_files/figure-html/unnamed-chunk-7-1.png" width="720"></p>
 </div>
   </div>
@@ -405,20 +399,7 @@ Unique: 3</p>
 </div>
 
   
-<script src="https://cdnjs.cloudflare.com/ajax/libs/docsearch.js/2.6.1/docsearch.min.js" integrity="sha256-GKvGqXDznoRYHCwKXGnuchvKSwmx9SRMrZOTh2g4Sb0=" crossorigin="anonymous"></script><script>
-  docsearch({
-    
-    
-    apiKey: 'f737050abfd4d726c63938e18f8c496e',
-    indexName: 'amr',
-    inputSelector: 'input#search-input.form-control',
-    transformData: function(hits) {
-      return hits.map(function (hit) {
-        hit.url = updateHitURL(hit);
-        return hit;
-      });
-    }
-  });
-</script>
-</body>
+
+
+  </body>
 </html>

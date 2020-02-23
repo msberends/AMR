@@ -78,7 +78,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.0.0.9007</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.0.1</span>
       </span>
     </div>
 
@@ -219,21 +219,17 @@
       
     </div>
 
-    <div id="amr-1009007" class="section level1">
+    <div id="amr-101" class="section level1">
 <h1 class="page-header">
-<a href="#amr-1009007" class="anchor"></a>AMR 1.0.0.9007<small> Unreleased </small>
+<a href="#amr-101" class="anchor"></a>AMR 1.0.1<small> 2020-02-23 </small>
 </h1>
-<div id="last-updated-22-feb-2020" class="section level2">
-<h2 class="hasAnchor">
-<a href="#last-updated-22-feb-2020" class="anchor"></a><small>Last updated: 22-Feb-2020</small>
-</h2>
 <div id="changed" class="section level3">
 <h3 class="hasAnchor">
 <a href="#changed" class="anchor"></a>Changed</h3>
 <ul>
-<li><p>Fixed floating point error for some MIC compa in EUCAST 2020 guideline</p></li>
+<li><p>Fixed important floating point error for some MIC comparisons in EUCAST 2020 guideline</p></li>
 <li>
-<p>Interpretation from MIC values to R/SI can now be used with <code><a href="https://dplyr.tidyverse.org/reference/mutate_all.html">mutate_at()</a></code> of the dplyr package:</p>
+<p>Interpretation from MIC values (and disk zones) to R/SI can now be used with <code><a href="https://dplyr.tidyverse.org/reference/mutate_all.html">mutate_at()</a></code> of the <code>dplyr</code> package:</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a>yourdata <span class="op">%&gt;%</span><span class="st"> </span></span>
 <span id="cb1-2"><a href="#cb1-2"></a><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/mutate_all.html">mutate_at</a></span>(<span class="kw"><a href="https://dplyr.tidyverse.org/reference/vars.html">vars</a></span>(antibiotic1<span class="op">:</span>antibiotic25), as.rsi, <span class="dt">mo =</span> <span class="st">"E. coli"</span>)</span>
 <span id="cb1-3"><a href="#cb1-3"></a></span>
@@ -244,7 +240,6 @@
 <li><p>Added <code>uti</code> (as abbreviation of urinary tract infections) as parameter to <code><a href="../reference/as.rsi.html">as.rsi()</a></code>, so interpretation of MIC values and disk zones can be made dependent on isolates specifically from UTIs</p></li>
 <li><p>Info printing in functions <code><a href="../reference/eucast_rules.html">eucast_rules()</a></code>, <code><a href="../reference/first_isolate.html">first_isolate()</a></code>, <code><a href="../reference/mdro.html">mdro()</a></code> and <code><a href="../reference/resistance_predict.html">resistance_predict()</a></code> will now at default only print when R is in an interactive mode (i.e. not in RMarkdown)</p></li>
 </ul>
-</div>
 </div>
 </div>
     <div id="amr-100" class="section level1">
@@ -1474,7 +1469,7 @@
     <div id="tocnav">
       <h2>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
-        <li><a href="#amr-1009007">1.0.0.9007</a></li>
+        <li><a href="#amr-101">1.0.1</a></li>
         <li><a href="#amr-100">1.0.0</a></li>
         <li><a href="#amr-090">0.9.0</a></li>
         <li><a href="#amr-080">0.8.0</a></li>
