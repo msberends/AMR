@@ -79,7 +79,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.0.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.0.1.9000</span>
       </span>
     </div>
 
@@ -113,6 +113,13 @@
         <span class="fa fa-dice"></span>
          
         Predict antimicrobial resistance
+      </a>
+    </li>
+    <li>
+      <a href="../articles/PCA.html">
+        <span class="fa fa-compress-alt"></span>
+         
+        Conduct Principal Component Analysis for AMR
       </a>
     </li>
     <li>
@@ -240,23 +247,23 @@
     </tr>
     <tr>
       <th>na.rm</th>
-      <td><p>a logical to indicate whether missing values should be removed</p></td>
+      <td><p>a <a href='https://rdrr.io/r/base/logical.html'>logical</a> to indicate whether missing values should be removed</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>Ordered <code><a href='https://rdrr.io/r/base/factor.html'>factor</a></code></p>
+    <p>Ordered <a href='https://rdrr.io/r/base/factor.html'>factor</a></p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>To split ages, the input can be:</p><ul>
+    <p>To split ages, the input for the <code>split_at</code> parameter can be:</p><ul>
 <li><p>A numeric vector. A vector of e.g. <code><a href='https://rdrr.io/r/base/c.html'>c(10, 20)</a></code> will split on 0-9, 10-19 and 20+. A value of only <code>50</code> will split on 0-49 and 50+.
 The default is to split on young children (0-11), youth (12-24), young adults (25-54), middle-aged adults (55-74) and elderly (75+).</p></li>
 <li><p>A character:</p><ul>
 <li><p><code>"children"</code> or <code>"kids"</code>, equivalent of: <code><a href='https://rdrr.io/r/base/c.html'>c(0, 1, 2, 4, 6, 13, 18)</a></code>. This will split on 0, 1, 2-3, 4-5, 6-12, 13-17 and 18+.</p></li>
 <li><p><code>"elderly"</code> or <code>"seniors"</code>, equivalent of: <code><a href='https://rdrr.io/r/base/c.html'>c(65, 75, 85)</a></code>. This will split on 0-64, 65-74, 75-84, 85+.</p></li>
 <li><p><code>"fives"</code>, equivalent of: <code>1:20 * 5</code>. This will split on 0-4, 5-9, 10-14, ..., 90-94, 95-99, 100+.</p></li>
-<li><p><code>"tens"</code>, equivalent of: <code>1:10 * 10</code>. This will split on 0-9, 10-19, 20-29, ... 80-89, 90-99, 100+.</p></li>
+<li><p><code>"tens"</code>, equivalent of: <code>1:10 * 10</code>. This will split on 0-9, 10-19, 20-29, ..., 80-89, 90-99, 100+.</p></li>
 </ul></li>
 </ul>
 

@@ -12,7 +12,7 @@ This page contains a section for every lifecycle (with text borrowed from the af
 \section{Experimental lifecycle}{
 
 \if{html}{\figure{lifecycle_experimental.svg}{options: style=margin-bottom:5px} \cr}
-The \link[AMR:lifecycle]{lifecycle} of this function is \strong{experimental}. An experimental function is in the very early stages of development. The unlying code might be changing frequently as we rapidly iterate and explore variations in search of the best fit. Experimental functions might be removed without deprecation, so you are generally best off waiting until a function is more mature before you use it in production code. Experimental functions will not be included in releases we submit to CRAN.
+The \link[AMR:lifecycle]{lifecycle} of this function is \strong{experimental}. An experimental function is in the very early stages of development. The unlying code might be changing frequently as we rapidly iterate and explore variations in search of the best fit. Experimental functions might be removed without deprecation, so you are generally best off waiting until a function is more mature before you use it in production code. Experimental functions will not be included in releases we submit to CRAN, since they have not yet matured enough.
 }
 
 \section{Maturing lifecycle}{

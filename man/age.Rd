@@ -16,7 +16,7 @@ age(x, reference = Sys.Date(), exact = FALSE, na.rm = FALSE)
 \item{na.rm}{a logical to indicate whether missing values should be removed}
 }
 \value{
-An integer (no decimals) if \code{exact = FALSE}, a double (with decimals) otherwise
+An \link{integer} (no decimals) if \code{exact = FALSE}, a \link{double} (with decimals) otherwise
 }
 \description{
 Calculates age in years based on a reference date, which is the sytem date at default.

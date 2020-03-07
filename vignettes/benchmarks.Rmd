@@ -112,9 +112,9 @@ In the figure below, we compare *Escherichia coli* (which is very common) with *
 ```{r, echo = FALSE, fig.width=12}
 par(mar = c(5, 16, 4, 2))
 boxplot(microbenchmark(
-  as.mo("M. semesiae"),
-  as.mo("P. brevis"),
-  as.mo("E. coli"),
+  as.mo("Meth. semesiae"),
+  as.mo("Prev. brevis"),
+  as.mo("Esc. coli"),
   times = 10),
         horizontal = TRUE, las = 1, unit = "s", log = TRUE,
         xlab = "", ylab = "Time in seconds (log)",

@@ -82,6 +82,9 @@
     <loc>https://msberends.gitlab.io/AMR/reference/g.test.html</loc>
   </url>
   <url>
+    <loc>https://msberends.gitlab.io/AMR/reference/ggplot_pca.html</loc>
+  </url>
+  <url>
     <loc>https://msberends.gitlab.io/AMR/reference/ggplot_rsi.html</loc>
   </url>
   <url>
@@ -124,6 +127,9 @@
     <loc>https://msberends.gitlab.io/AMR/reference/p_symbol.html</loc>
   </url>
   <url>
+    <loc>https://msberends.gitlab.io/AMR/reference/pca.html</loc>
+  </url>
+  <url>
     <loc>https://msberends.gitlab.io/AMR/reference/proportion.html</loc>
   </url>
   <url>
@@ -152,6 +158,9 @@
   </url>
   <url>
     <loc>https://msberends.gitlab.io/AMR/articles/MDR.html</loc>
+  </url>
+  <url>
+    <loc>https://msberends.gitlab.io/AMR/articles/PCA.html</loc>
   </url>
   <url>
     <loc>https://msberends.gitlab.io/AMR/articles/SPSS.html</loc>

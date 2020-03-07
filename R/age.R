@@ -27,7 +27,7 @@
 #' @param reference reference date(s) (defaults to today), will be coerced with [as.POSIXlt()] and cannot be lower than `x`
 #' @param exact a logical to indicate whether age calculation should be exact, i.e. with decimals. It divides the number of days of [year-to-date](https://en.wikipedia.org/wiki/Year-to-date) (YTD) of `x` by the number of days in the year of `reference` (either 365 or 366).
 #' @param na.rm a logical to indicate whether missing values should be removed
-#' @return An integer (no decimals) if `exact = FALSE`, a double (with decimals) otherwise
+#' @return An [integer] (no decimals) if `exact = FALSE`, a [double] (with decimals) otherwise
 #' @seealso To split ages into groups, use the [age_groups()] function.
 #' @importFrom dplyr if_else
 #' @inheritSection AMR Read more on our website!
@@ -95,8 +95,8 @@ age <- function(x, reference = Sys.Date(), exact = FALSE, na.rm = FALSE) {
 #' @inheritSection lifecycle Stable lifecycle
 #' @param x age, e.g. calculated with [age()]
 #' @param split_at values to split `x` at, defaults to age groups 0-11, 12-24, 25-54, 55-74 and 75+. See Details.
-#' @param na.rm a logical to indicate whether missing values should be removed
-#' @details To split ages, the input can be:
+#' @param na.rm a [logical] to indicate whether missing values should be removed
+#' @details To split ages, the input for the `split_at` parameter can be:
 #' 
 #' * A numeric vector. A vector of e.g. `c(10, 20)` will split on 0-9, 10-19 and 20+. A value of only `50` will split on 0-49 and 50+.
 #'   The default is to split on young children (0-11), youth (12-24), young adults (25-54), middle-aged adults (55-74) and elderly (75+).
@@ -104,8 +104,8 @@ age <- function(x, reference = Sys.Date(), exact = FALSE, na.rm = FALSE) {
 #'   - `"children"` or `"kids"`, equivalent of: `c(0, 1, 2, 4, 6, 13, 18)`. This will split on 0, 1, 2-3, 4-5, 6-12, 13-17 and 18+.
 #'   - `"elderly"` or `"seniors"`, equivalent of: `c(65, 75, 85)`. This will split on 0-64, 65-74, 75-84, 85+.
 #'   - `"fives"`, equivalent of: `1:20 * 5`. This will split on 0-4, 5-9, 10-14, ..., 90-94, 95-99, 100+.
-#'   - `"tens"`, equivalent of: `1:10 * 10`. This will split on 0-9, 10-19, 20-29, ... 80-89, 90-99, 100+.
-#' @return Ordered [`factor`]
+#'   - `"tens"`, equivalent of: `1:10 * 10`. This will split on 0-9, 10-19, 20-29, ..., 80-89, 90-99, 100+.
+#' @return Ordered [factor]
 #' @seealso To determine ages, based on one or more reference dates, use the [age()] function.
 #' @export
 #' @inheritSection AMR Read more on our website!

@@ -186,12 +186,12 @@ ggplot_rsi <- function(data,
                        x.title = "Antimicrobial",
                        y.title = "Proportion",
                        ...) {
-
+  
   stopifnot_installed_package("ggplot2")
-
+  
   x <- x[1]
   facet <- facet[1]
-
+  
   # we work with aes_string later on
   x_deparse <- deparse(substitute(x))
   if (x_deparse != "x") {
@@ -210,16 +210,16 @@ ggplot_rsi <- function(data,
   if (facet %in% c("NULL", "")) {
     facet <- NULL
   }
-
+  
   if (is.null(position)) {
     position <- "fill"
   }
-
+  
   p <- ggplot2::ggplot(data = data) +
     geom_rsi(position = position, x = x, fill = fill, translate_ab = translate_ab,
              combine_SI = combine_SI, combine_IR = combine_IR, ...) +
     theme_rsi()
-
+  
   if (fill == "interpretation") {
     # set RSI colours
     if (isFALSE(colours) & missing(datalabels.colour)) {
@@ -228,12 +228,12 @@ ggplot_rsi <- function(data,
     }
     p <- p + scale_rsi_colours(colours = colours)
   }
-
+  
   if (identical(position, "fill")) {
     # proportions, so use y scale with percentage
     p <- p + scale_y_percent(breaks = breaks, limits = limits)
   }
-
+  
   if (datalabels == TRUE) {
     p <- p + labels_rsi_count(position = position,
                               x = x,
@@ -243,17 +243,17 @@ ggplot_rsi <- function(data,
                               datalabels.size = datalabels.size,
                               datalabels.colour = datalabels.colour)
   }
-
+  
   if (!is.null(facet)) {
     p <- p + facet_rsi(facet = facet, nrow = nrow)
   }
-
+  
   p <- p + ggplot2::labs(title = title,
                          subtitle = subtitle,
                          caption = caption,
                          x = x.title,
                          y = y.title)
-
+  
   p
 }
 
@@ -267,24 +267,24 @@ geom_rsi <- function(position = NULL,
                      combine_SI = TRUE,
                      combine_IR = FALSE,
                      ...)  {
-
+  
   stopifnot_installed_package("ggplot2")
-
+  
   if (is.data.frame(position)) {
     stop("`position` is invalid. Did you accidentally use '%>%' instead of '+'?", call. = FALSE)
   }
-
+  
   y <- "value"
   if (missing(position) | is.null(position)) {
     position <- "fill"
   }
-
+  
   if (identical(position, "fill")) {
     position <- ggplot2::position_fill(vjust = 0.5, reverse = TRUE)
   }
-
+  
   x <- x[1]
-
+  
   # we work with aes_string later on
   x_deparse <- deparse(substitute(x))
   if (x_deparse != "x") {
@@ -293,33 +293,33 @@ geom_rsi <- function(position = NULL,
   if (x %like% '".*"') {
     x <- substr(x, 2, nchar(x) - 1)
   }
-
+  
   if (tolower(x) %in% tolower(c("ab", "abx", "antibiotics"))) {
     x <- "antibiotic"
   } else if (tolower(x) %in% tolower(c("SIR", "RSI", "interpretations", "result"))) {
     x <- "interpretation"
   }
-
+  
   ggplot2::layer(geom = "bar", stat = "identity", position = position,
                  mapping = ggplot2::aes_string(x = x, y = y, fill = fill),
                  params = list(...), data = function(x) {
                    rsi_df(data = x,
-                               translate_ab = translate_ab,
-                               language = language,
-                               combine_SI = combine_SI,
-                               combine_IR = combine_IR)
+                          translate_ab = translate_ab,
+                          language = language,
+                          combine_SI = combine_SI,
+                          combine_IR = combine_IR)
                  })
-
+  
 }
 
 #' @rdname ggplot_rsi
 #' @export
 facet_rsi <- function(facet = c("interpretation", "antibiotic"), nrow = NULL) {
-
+  
   stopifnot_installed_package("ggplot2")
-
+  
   facet <- facet[1]
-
+  
   # we work with aes_string later on
   facet_deparse <- deparse(substitute(facet))
   if (facet_deparse != "facet") {
@@ -328,13 +328,13 @@ facet_rsi <- function(facet = c("interpretation", "antibiotic"), nrow = NULL) {
   if (facet %like% '".*"') {
     facet <- substr(facet, 2, nchar(facet) - 1)
   }
-
+  
   if (tolower(facet) %in% tolower(c("SIR", "RSI", "interpretations", "result"))) {
     facet <- "interpretation"
   } else if (tolower(facet) %in% tolower(c("ab", "abx", "antibiotics"))) {
     facet <- "antibiotic"
   }
-
+  
   ggplot2::facet_wrap(facets = facet, scales = "free_x", nrow = nrow)
 }
 
@@ -343,7 +343,7 @@ facet_rsi <- function(facet = c("interpretation", "antibiotic"), nrow = NULL) {
 #' @export
 scale_y_percent <- function(breaks = seq(0, 1, 0.1), limits = NULL) {
   stopifnot_installed_package("ggplot2")
-
+  
   if (all(breaks[breaks != 0] > 1)) {
     breaks <- breaks / 100
   }
@@ -362,7 +362,7 @@ scale_rsi_colours <- function(colours = c(S = "#61a8ff",
   stopifnot_installed_package("ggplot2")
   # previous colour: palette = "RdYlGn"
   # previous colours: values = c("#b22222", "#ae9c20", "#7cfc00")
-
+  
   if (!identical(colours, FALSE)) {
     original_cols <- c(S = "#61a8ff",
                        SI = "#61a8ff",

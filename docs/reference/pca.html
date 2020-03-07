@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Age in years of individuals — age • AMR (for R)</title>
+<title>Principal Component Analysis (for AMR) — prcomp.data.frame • AMR (for R)</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -44,8 +44,8 @@
   <link href="../extra.css" rel="stylesheet">
   <script src="../extra.js"></script>
 
-<meta property="og:title" content="Age in years of individuals — age" />
-<meta property="og:description" content="Calculates age in years based on a reference date, which is the sytem date at default." />
+<meta property="og:title" content="Principal Component Analysis (for AMR) — prcomp.data.frame" />
+<meta property="og:description" content="Performs a principal component analysis (PCA) based on a data set with automatic determination for afterwards plotting the groups and labels." />
 <meta property="og:image" content="https://msberends.gitlab.io/AMR/logo.png" />
 <meta name="twitter:card" content="summary" />
 
@@ -117,9 +117,9 @@
     </li>
     <li>
       <a href="../articles/PCA.html">
-        <span class="fa fa-compress-alt"></span>
+        <span class="fa fa-compress"></span>
          
-        Conduct Principal Component Analysis for AMR
+        Conduct principal component analysis for AMR
       </a>
     </li>
     <li>
@@ -223,75 +223,117 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Age in years of individuals</h1>
+    <h1>Principal Component Analysis (for AMR)</h1>
     
-    <div class="hidden name"><code>age.Rd</code></div>
+    <div class="hidden name"><code>pca.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Calculates age in years based on a reference date, which is the sytem date at default.</p>
+    <p>Performs a principal component analysis (PCA) based on a data set with automatic determination for afterwards plotting the groups and labels.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>age</span>(<span class='no'>x</span>, <span class='kw'>reference</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/Sys.time.html'>Sys.Date</a></span>(), <span class='kw'>exact</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>na.rm</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
+    <pre class="usage"><span class='co'># S3 method for data.frame</span>
+<span class='fu'><a href='https://rdrr.io/r/stats/prcomp.html'>prcomp</a></span>(
+  <span class='no'>x</span>,
+  <span class='no'>...</span>,
+  <span class='kw'>retx</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>center</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>scale.</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>tol</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>rank.</span> <span class='kw'>=</span> <span class='kw'>NULL</span>
+)
+
+<span class='fu'>pca</span>(<span class='no'>x</span>, <span class='no'>...</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>x</th>
-      <td><p>date(s), will be coerced with <code><a href='https://rdrr.io/r/base/as.POSIXlt.html'>as.POSIXlt()</a></code></p></td>
+      <td><p>a <a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a> containing numeric columns</p></td>
     </tr>
     <tr>
-      <th>reference</th>
-      <td><p>reference date(s) (defaults to today), will be coerced with <code><a href='https://rdrr.io/r/base/as.POSIXlt.html'>as.POSIXlt()</a></code> and cannot be lower than <code>x</code></p></td>
+      <th>...</th>
+      <td><p>columns of <code>x</code> to be selected for PCA</p></td>
     </tr>
     <tr>
-      <th>exact</th>
-      <td><p>a logical to indicate whether age calculation should be exact, i.e. with decimals. It divides the number of days of <a href='https://en.wikipedia.org/wiki/Year-to-date'>year-to-date</a> (YTD) of <code>x</code> by the number of days in the year of <code>reference</code> (either 365 or 366).</p></td>
+      <th>retx</th>
+      <td><p>a logical value indicating whether the rotated variables
+    should be returned.</p></td>
     </tr>
     <tr>
-      <th>na.rm</th>
-      <td><p>a logical to indicate whether missing values should be removed</p></td>
+      <th>center</th>
+      <td><p>a logical value indicating whether the variables
+    should be shifted to be zero centered. Alternately, a vector of
+    length equal the number of columns of <code>x</code> can be supplied.
+    The value is passed to <code>scale</code>.</p></td>
+    </tr>
+    <tr>
+      <th>scale.</th>
+      <td><p>a logical value indicating whether the variables should
+    be scaled to have unit variance before the analysis takes
+    place.  The default is <code>FALSE</code> for consistency with S, but
+    in general scaling is advisable.  Alternatively, a vector of length
+    equal the number of columns of <code>x</code> can be supplied.  The
+    value is passed to <code><a href='https://rdrr.io/r/base/scale.html'>scale</a></code>.</p></td>
+    </tr>
+    <tr>
+      <th>tol</th>
+      <td><p>a value indicating the magnitude below which components
+    should be omitted. (Components are omitted if their
+    standard deviations are less than or equal to <code>tol</code> times the
+    standard deviation of the first component.)  With the default null
+    setting, no components are omitted (unless <code>rank.</code> is specified
+    less than <code><a href='https://rdrr.io/r/base/Extremes.html'>min(dim(x))</a></code>.).  Other settings for tol could be
+    <code>tol = 0</code> or <code>tol = sqrt(.Machine$double.eps)</code>, which
+    would omit essentially constant components.</p></td>
+    </tr>
+    <tr>
+      <th>rank.</th>
+      <td><p>optionally, a number specifying the maximal rank, i.e.,
+    maximal number of principal components to be used.  Can be set as
+    alternative or in addition to <code>tol</code>, useful notably when the
+    desired rank is considerably smaller than the dimensions of the matrix.</p></td>
     </tr>
     </table>
 
-    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>An <a href='https://rdrr.io/r/base/integer.html'>integer</a> (no decimals) if <code>exact = FALSE</code>, a <a href='https://rdrr.io/r/base/double.html'>double</a> (with decimals) otherwise</p>
-    <h2 class="hasAnchor" id="stable-lifecycle"><a class="anchor" href="#stable-lifecycle"></a>Stable lifecycle</h2>
-
-    
-
-<p><img src='figures/lifecycle_stable.svg' style=margin-bottom:5px /> <br />
-The <a href='lifecycle.html'>lifecycle</a> of this function is <strong>stable</strong>. In a stable function, we are largely happy with the unlying code, and major changes are unlikely. This means that the unlying code will generally evolve by adding new arguments; we will avoid removing arguments or changing the meaning of existing arguments.</p>
-<p>If the unlying code needs breaking changes, they will occur gradually. To begin with, the function or argument will be deprecated; it will continue to work but will emit an message informing you of the change. Next, typically after at least one newly released version on CRAN, the message will be transformed to an error.</p>
-    <h2 class="hasAnchor" id="read-more-on-our-website-"><a class="anchor" href="#read-more-on-our-website-"></a>Read more on our website!</h2>
+    <p>The <code>pca()</code> function takes a <a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a> as input and performs the actual PCA with the R function <code><a href='https://rdrr.io/r/stats/prcomp.html'>prcomp()</a></code>.</p>
+<p>The result of the <code>pca()</code> function is a <code><a href='https://rdrr.io/r/stats/prcomp.html'>prcomp</a></code> object, with an additional attribute <code>non_numeric_cols</code> which is a vector with the column names of all columns that do not contain numeric values. These are probably the groups and labels, and will be used by <code><a href='ggplot_pca.html'>ggplot_pca()</a></code>.</p>
+    <h2 class="hasAnchor" id="experimental-lifecycle"><a class="anchor" href="#experimental-lifecycle"></a>Experimental lifecycle</h2>
 
     
 
-<p>On our website <a href='https://msberends.gitlab.io/AMR'>https://msberends.gitlab.io/AMR</a> you can find <a href='https://msberends.gitlab.io/AMR/articles/AMR.html'>a comprehensive tutorial</a> about how to conduct AMR analysis, the <a href='https://msberends.gitlab.io/AMR/reference'>complete documentation of all functions</a> (which reads a lot easier than here in R) and <a href='https://msberends.gitlab.io/AMR/articles/WHONET.html'>an example analysis using WHONET data</a>.</p>
-    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
-
-    <div class='dont-index'><p>To split ages into groups, use the <code><a href='age_groups.html'>age_groups()</a></code> function.</p></div>
+<p><img src='figures/lifecycle_experimental.svg' style=margin-bottom:5px /> <br />
+The <a href='lifecycle.html'>lifecycle</a> of this function is <strong>experimental</strong>. An experimental function is in the very early stages of development. The unlying code might be changing frequently as we rapidly iterate and explore variations in search of the best fit. Experimental functions might be removed without deprecation, so you are generally best off waiting until a function is more mature before you use it in production code. Experimental functions will not be included in releases we submit to CRAN, since they have not yet matured enough.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><span class='co'># 10 random birth dates</span>
-<span class='no'>df</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span>(<span class='kw'>birth_date</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/Sys.time.html'>Sys.Date</a></span>() - <span class='fu'><a href='https://rdrr.io/r/stats/Uniform.html'>runif</a></span>(<span class='fl'>10</span>) * <span class='fl'>25000</span>)
-<span class='co'># add ages</span>
-<span class='no'>df</span>$<span class='no'>age</span> <span class='kw'>&lt;-</span> <span class='fu'>age</span>(<span class='no'>df</span>$<span class='no'>birth_date</span>)
-<span class='co'># add exact ages</span>
-<span class='no'>df</span>$<span class='no'>age_exact</span> <span class='kw'>&lt;-</span> <span class='fu'>age</span>(<span class='no'>df</span>$<span class='no'>birth_date</span>, <span class='kw'>exact</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+    <pre class="examples"><span class='co'># `example_isolates` is a dataset available in the AMR package.</span>
+<span class='co'># See ?example_isolates.</span>
 
-<span class='no'>df</span></pre>
+<span class='co'># calculate the resistance per group first</span>
+<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>dplyr</span>)
+<span class='no'>resistance_data</span> <span class='kw'>&lt;-</span> <span class='no'>example_isolates</span> <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span>(<span class='kw'>order</span> <span class='kw'>=</span> <span class='fu'><a href='mo_property.html'>mo_order</a></span>(<span class='no'>mo</span>),       <span class='co'># group on anything, like order</span>
+           <span class='kw'>genus</span> <span class='kw'>=</span> <span class='fu'><a href='mo_property.html'>mo_genus</a></span>(<span class='no'>mo</span>)) <span class='kw'>%&gt;%</span>   <span class='co'>#  and genus as we do here</span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/summarise_all.html'>summarise_if</a></span>(<span class='no'>is.rsi</span>, <span class='no'>resistance</span>)     <span class='co'># then get resistance of all drugs</span>
+
+<span class='co'># now conduct PCA for certain antimicrobial agents</span>
+<span class='no'>pca_result</span> <span class='kw'>&lt;-</span> <span class='no'>resistance_data</span> <span class='kw'>%&gt;%</span>
+  <span class='fu'>pca</span>(<span class='no'>AMC</span>, <span class='no'>CXM</span>, <span class='no'>CTX</span>, <span class='no'>CAZ</span>, <span class='no'>GEN</span>, <span class='no'>TOB</span>, <span class='no'>TMP</span>, <span class='no'>SXT</span>)
+
+<span class='no'>pca_result</span>
+<span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span>(<span class='no'>pca_result</span>)
+<span class='fu'><a href='https://rdrr.io/r/stats/biplot.html'>biplot</a></span>(<span class='no'>pca_result</span>)
+<span class='fu'><a href='ggplot_pca.html'>ggplot_pca</a></span>(<span class='no'>pca_result</span>) <span class='co'># a new and convenient plot function</span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-      <li><a href="#value">Value</a></li>
-      <li><a href="#stable-lifecycle">Stable lifecycle</a></li>
-      <li><a href="#read-more-on-our-website-">Read more on our website!</a></li>
-      <li><a href="#see-also">See also</a></li>
+      <li><a href="#details">Details</a></li>
+      <li><a href="#experimental-lifecycle">Experimental lifecycle</a></li>
       <li><a href="#examples">Examples</a></li>
     </ul>
 

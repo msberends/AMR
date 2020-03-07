@@ -71,8 +71,8 @@ data
 knitr::kable(data, align = "lccccccc")
 ```
 ```{r, eval = FALSE}
-eucast_rules(data, info = FALSE)
+eucast_rules(data)
 ```
 ```{r, echo = FALSE, message = FALSE}
-knitr::kable(eucast_rules(data, info = FALSE), align = "lccccccc")
+knitr::kable(eucast_rules(data), align = "lccccccc")
 ```

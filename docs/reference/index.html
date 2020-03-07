@@ -78,7 +78,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.0.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.0.1.9000</span>
       </span>
     </div>
 
@@ -112,6 +112,13 @@
         <span class="fa fa-dice"></span>
          
         Predict antimicrobial resistance
+      </a>
+    </li>
+    <li>
+      <a href="../articles/PCA.html">
+        <span class="fa fa-compress"></span>
+         
+        Conduct principal component analysis for AMR
       </a>
     </li>
     <li>
@@ -287,12 +294,6 @@
           <p><code><a href="read.4D.html">read.4D()</a></code> </p>
         </td>
         <td><p>Read data from 4D database</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="rsi_translation.html">rsi_translation</a></code> </p>
-        </td>
-        <td><p>Data set for R/SI interpretation</p></td>
       </tr>
     </tbody><tbody>
       <tr>
@@ -372,6 +373,18 @@
       <tr>
         
         <td>
+          <p><code><a href="proportion.html">resistance()</a></code> <code><a href="proportion.html">susceptibility()</a></code> <code><a href="proportion.html">proportion_R()</a></code> <code><a href="proportion.html">proportion_IR()</a></code> <code><a href="proportion.html">proportion_I()</a></code> <code><a href="proportion.html">proportion_SI()</a></code> <code><a href="proportion.html">proportion_S()</a></code> <code><a href="proportion.html">proportion_df()</a></code> <code><a href="proportion.html">rsi_df()</a></code> </p>
+        </td>
+        <td><p>Calculate microbial resistance</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="count.html">count_resistant()</a></code> <code><a href="count.html">count_susceptible()</a></code> <code><a href="count.html">count_R()</a></code> <code><a href="count.html">count_IR()</a></code> <code><a href="count.html">count_I()</a></code> <code><a href="count.html">count_SI()</a></code> <code><a href="count.html">count_S()</a></code> <code><a href="count.html">count_all()</a></code> <code><a href="count.html">n_rsi()</a></code> <code><a href="count.html">count_df()</a></code> </p>
+        </td>
+        <td><p>Count available isolates</p></td>
+      </tr><tr>
+        
+        <td>
           <p><code><a href="availability.html">availability()</a></code> </p>
         </td>
         <td><p>Check availability of columns</p></td>
@@ -384,9 +397,15 @@
       </tr><tr>
         
         <td>
-          <p><code><a href="count.html">count_resistant()</a></code> <code><a href="count.html">count_susceptible()</a></code> <code><a href="count.html">count_R()</a></code> <code><a href="count.html">count_IR()</a></code> <code><a href="count.html">count_I()</a></code> <code><a href="count.html">count_SI()</a></code> <code><a href="count.html">count_S()</a></code> <code><a href="count.html">count_all()</a></code> <code><a href="count.html">n_rsi()</a></code> <code><a href="count.html">count_df()</a></code> </p>
+          <p><code><a href="resistance_predict.html">resistance_predict()</a></code> <code><a href="resistance_predict.html">rsi_predict()</a></code> <code><a href="resistance_predict.html">plot(<i>&lt;resistance_predict&gt;</i>)</a></code> <code><a href="resistance_predict.html">ggplot_rsi_predict()</a></code> </p>
         </td>
-        <td><p>Count available isolates</p></td>
+        <td><p>Predict antimicrobial resistance</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="pca.html">prcomp(<i>&lt;data.frame&gt;</i>)</a></code> <code><a href="pca.html">pca()</a></code> </p>
+        </td>
+        <td><p>Principal Component Analysis (for AMR)</p></td>
       </tr><tr>
         
         <td>
@@ -408,21 +427,15 @@
       </tr><tr>
         
         <td>
+          <p><code><a href="ggplot_pca.html">ggplot_pca()</a></code> </p>
+        </td>
+        <td><p>PCA biplot with <code>ggplot2</code></p></td>
+      </tr><tr>
+        
+        <td>
           <p><code><a href="kurtosis.html">kurtosis()</a></code> </p>
         </td>
         <td><p>Kurtosis of the sample</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="proportion.html">resistance()</a></code> <code><a href="proportion.html">susceptibility()</a></code> <code><a href="proportion.html">proportion_R()</a></code> <code><a href="proportion.html">proportion_IR()</a></code> <code><a href="proportion.html">proportion_I()</a></code> <code><a href="proportion.html">proportion_SI()</a></code> <code><a href="proportion.html">proportion_S()</a></code> <code><a href="proportion.html">proportion_df()</a></code> <code><a href="proportion.html">rsi_df()</a></code> </p>
-        </td>
-        <td><p>Calculate microbial resistance</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="resistance_predict.html">resistance_predict()</a></code> <code><a href="resistance_predict.html">rsi_predict()</a></code> <code><a href="resistance_predict.html">plot(<i>&lt;resistance_predict&gt;</i>)</a></code> <code><a href="resistance_predict.html">ggplot_rsi_predict()</a></code> </p>
-        </td>
-        <td><p>Predict antimicrobial resistance</p></td>
       </tr><tr>
         
         <td>
@@ -438,6 +451,12 @@
         </th>
       </tr>
       <tr>
+        
+        <td>
+          <p><code><a href="microorganisms.html">microorganisms</a></code> </p>
+        </td>
+        <td><p>Data set with ~70,000 microorganisms</p></td>
+      </tr><tr>
         
         <td>
           <p><code><a href="antibiotics.html">antibiotics</a></code> <code><a href="antibiotics.html">antivirals</a></code> </p>
@@ -458,6 +477,12 @@
       </tr><tr>
         
         <td>
+          <p><code><a href="rsi_translation.html">rsi_translation</a></code> </p>
+        </td>
+        <td><p>Data set for R/SI interpretation</p></td>
+      </tr><tr>
+        
+        <td>
           <p><code><a href="microorganisms.codes.html">microorganisms.codes</a></code> </p>
         </td>
         <td><p>Translation table for common microorganism codes</p></td>
@@ -467,12 +492,6 @@
           <p><code><a href="microorganisms.old.html">microorganisms.old</a></code> </p>
         </td>
         <td><p>Data set with previously accepted taxonomic names</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="microorganisms.html">microorganisms</a></code> </p>
-        </td>
-        <td><p>Data set with ~70,000 microorganisms</p></td>
       </tr><tr>
         
         <td>

@@ -154,7 +154,11 @@ data %>%
                                               origin = 'iso2c', 
                                               destination = 'country.name')) %>%
   summarise(first = min(timestamp_server)) %>%
-  arrange(desc(first))
+  arrange(desc(first)) %>% 
+  mutate(frame = case_when(first <= as.POSIXct("2019-06-30") ~ "Q1-Q2 2019",
+                           first <= as.POSIXct("2019-12-31") ~ "Q3-Q4 2019", 
+                           TRUE ~ "Q1-Q2 2020")) %>% 
+  View()
 # 
 # p1 <- data %>%
 #   group_by(country) %>%

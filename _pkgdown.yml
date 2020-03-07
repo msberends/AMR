@@ -44,6 +44,9 @@ navbar:
       - text: "Predict antimicrobial resistance"
         icon: "fa-dice"
         href: "articles/resistance_predict.html"
+      - text: "Conduct principal component analysis for AMR"
+        icon: "fa-compress"
+        href: "articles/PCA.html"
       - text: "Determine multi-drug resistance (MDR)"
         icon: "fa-skull-crossbones"
         href: "articles/MDR.html"
@@ -94,7 +97,6 @@ reference:
     - "`guess_ab_col`"
     - "`mo_source`"
     - "`read.4D`"
-    - "`rsi_translation`"
   - title: "Enhancing your data"
     desc: >
       Functions to add new data to your existing data, such as the determination
@@ -117,28 +119,31 @@ reference:
       Functions for conducting AMR analysis, like counting isolates, calculating
       resistance or susceptibility, or make plots.
     contents:
+    - "`proportion`"
+    - "`count`"
     - "`availability`"
     - "`bug_drug_combinations`"
-    - "`count`"
+    - "`resistance_predict`"
+    - "`pca`"
     - "`filter_ab_class`"
     - "`g.test`"
     - "`ggplot_rsi`"
+    - "`ggplot_pca`"
     - "`kurtosis`"
-    - "`portion`"
-    - "`resistance_predict`"
     - "`skewness`"
   - title: "Included data sets"
     desc: >
       Scientifically reliable references for microorganisms and
       antibiotics, and example data sets to use for practise.
     contents:
+    - "`microorganisms`"
     - "`antibiotics`"
     - "`antivirals`"
     - "`example_isolates`"
     - "`example_isolates_unclean`"
+    - "`rsi_translation`"
     - "`microorganisms.codes`"
     - "`microorganisms.old`"
-    - "`microorganisms`"
     - "`WHONET`"
   - title: "Background information"
     desc: >

@@ -78,7 +78,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.0.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.0.1.9000</span>
       </span>
     </div>
 
@@ -112,6 +112,13 @@
         <span class="fa fa-dice"></span>
          
         Predict antimicrobial resistance
+      </a>
+    </li>
+    <li>
+      <a href="../articles/PCA.html">
+        <span class="fa fa-compress"></span>
+         
+        Conduct principal component analysis for AMR
       </a>
     </li>
     <li>
@@ -219,6 +226,19 @@
       
     </div>
 
+    <div id="amr-1019000" class="section level1">
+<h1 class="page-header">
+<a href="#amr-1019000" class="anchor"></a>AMR 1.0.1.9000<small> Unreleased </small>
+</h1>
+<div id="new" class="section level3">
+<h3 class="hasAnchor">
+<a href="#new" class="anchor"></a>New</h3>
+<ul>
+<li>Support for easy principal component analysis for AMR, using the new <code><a href="../reference/pca.html">pca()</a></code> function</li>
+<li>Plotting biplots for principal component analysis using the new <code><a href="../reference/ggplot_pca.html">ggplot_pca()</a></code> function</li>
+</ul>
+</div>
+</div>
     <div id="amr-101" class="section level1">
 <h1 class="page-header">
 <a href="#amr-101" class="anchor"></a>AMR 1.0.1<small> 2020-02-23 </small>
@@ -247,9 +267,9 @@
 <a href="#amr-100" class="anchor"></a>AMR 1.0.0<small> 2020-02-17 </small>
 </h1>
 <p>This software is now out of beta and considered stable. Nonetheless, this package will be developed continually.</p>
-<div id="new" class="section level3">
+<div id="new-1" class="section level3">
 <h3 class="hasAnchor">
-<a href="#new" class="anchor"></a>New</h3>
+<a href="#new-1" class="anchor"></a>New</h3>
 <ul>
 <li>Support for the newest <a href="http://www.eucast.org/clinical_breakpoints/">EUCAST Clinical Breakpoint Tables v.10.0</a>, valid from 1 January 2020. This affects translation of MIC and disk zones using <code><a href="../reference/as.rsi.html">as.rsi()</a></code> and inferred resistance and susceptibility using <code><a href="../reference/eucast_rules.html">eucast_rules()</a></code>.</li>
 <li>The repository of this package now contains a clean version of the EUCAST and CLSI guidelines from 2011-2020 to translate MIC and disk diffusion values to R/SI: <a href="https://gitlab.com/msberends/AMR/blob/master/data-raw/rsi_translation.txt" class="uri">https://gitlab.com/msberends/AMR/blob/master/data-raw/rsi_translation.txt</a>. This <strong>allows for machine reading these guidelines</strong>, which is almost impossible with the Excel and PDF files distributed by EUCAST and CLSI. This file used to process the EUCAST Clinical Breakpoints Excel file <a href="https://gitlab.com/msberends/AMR/blob/master/data-raw/read_EUCAST.R">can be found here</a>.</li>
@@ -337,9 +357,9 @@
 </li>
 </ul>
 </div>
-<div id="new-1" class="section level3">
+<div id="new-2" class="section level3">
 <h3 class="hasAnchor">
-<a href="#new-1" class="anchor"></a>New</h3>
+<a href="#new-2" class="anchor"></a>New</h3>
 <ul>
 <li>
 <p>Functions <code><a href="../reference/proportion.html">susceptibility()</a></code> and <code><a href="../reference/proportion.html">resistance()</a></code> as aliases of <code><a href="../reference/proportion.html">proportion_SI()</a></code> and <code><a href="../reference/proportion.html">proportion_R()</a></code>, respectively. These functions were added to make it more clear that “I” should be considered susceptible and not resistant.</p>
@@ -449,9 +469,9 @@
 <li><p>Renamed data set <code>septic_patients</code> to <code>example_isolates</code></p></li>
 </ul>
 </div>
-<div id="new-2" class="section level3">
+<div id="new-3" class="section level3">
 <h3 class="hasAnchor">
-<a href="#new-2" class="anchor"></a>New</h3>
+<a href="#new-3" class="anchor"></a>New</h3>
 <ul>
 <li>
 <p>Function <code><a href="../reference/bug_drug_combinations.html">bug_drug_combinations()</a></code> to quickly get a <code>data.frame</code> with the results of all bug-drug combinations in a data set. The column containing microorganism codes is guessed automatically and its input is transformed with <code><a href="../reference/mo_property.html">mo_shortname()</a></code> at default:</p>
@@ -575,9 +595,9 @@
 <h1 class="page-header">
 <a href="#amr-071" class="anchor"></a>AMR 0.7.1<small> 2019-06-23 </small>
 </h1>
-<div id="new-3" class="section level4">
+<div id="new-4" class="section level4">
 <h4 class="hasAnchor">
-<a href="#new-3" class="anchor"></a>New</h4>
+<a href="#new-4" class="anchor"></a>New</h4>
 <ul>
 <li>
 <p>Function <code><a href="../reference/proportion.html">rsi_df()</a></code> to transform a <code>data.frame</code> to a data set containing only the microbial interpretation (S, I, R), the antibiotic, the percentage of S/I/R and the number of available isolates. This is a convenient combination of the existing functions <code><a href="../reference/count.html">count_df()</a></code> and <code><a href="../reference/AMR-deprecated.html">portion_df()</a></code> to immediately show resistance percentages and number of available isolates:</p>
@@ -656,9 +676,9 @@
 <h1 class="page-header">
 <a href="#amr-070" class="anchor"></a>AMR 0.7.0<small> 2019-06-03 </small>
 </h1>
-<div id="new-4" class="section level4">
+<div id="new-5" class="section level4">
 <h4 class="hasAnchor">
-<a href="#new-4" class="anchor"></a>New</h4>
+<a href="#new-5" class="anchor"></a>New</h4>
 <ul>
 <li>Support for translation of disk diffusion and MIC values to RSI values (i.e. antimicrobial interpretations). Supported guidelines are EUCAST (2011 to 2019) and CLSI (2011 to 2019). Use <code><a href="../reference/as.rsi.html">as.rsi()</a></code> on an MIC value (created with <code><a href="../reference/as.mic.html">as.mic()</a></code>), a disk diffusion value (created with the new <code><a href="../reference/as.disk.html">as.disk()</a></code>) or on a complete date set containing columns with MIC or disk diffusion values.</li>
 <li>Function <code><a href="../reference/mo_property.html">mo_name()</a></code> as alias of <code><a href="../reference/mo_property.html">mo_fullname()</a></code>
@@ -773,9 +793,9 @@
 <li>Contains the complete manual of this package and all of its functions with an explanation of their parameters</li>
 <li>Contains a comprehensive tutorial about how to conduct antimicrobial resistance analysis, import data from WHONET or SPSS and many more.</li>
 </ul>
-<div id="new-5" class="section level4">
+<div id="new-6" class="section level4">
 <h4 class="hasAnchor">
-<a href="#new-5" class="anchor"></a>New</h4>
+<a href="#new-6" class="anchor"></a>New</h4>
 <ul>
 <li><p><strong>BREAKING</strong>: removed deprecated functions, parameters and references to ‘bactid’. Use <code><a href="../reference/as.mo.html">as.mo()</a></code> to identify an MO code.</p></li>
 <li>
@@ -999,9 +1019,9 @@
 <h1 class="page-header">
 <a href="#amr-050" class="anchor"></a>AMR 0.5.0<small> 2018-11-30 </small>
 </h1>
-<div id="new-6" class="section level4">
+<div id="new-7" class="section level4">
 <h4 class="hasAnchor">
-<a href="#new-6" class="anchor"></a>New</h4>
+<a href="#new-7" class="anchor"></a>New</h4>
 <ul>
 <li>Repository moved to GitLab: <a href="https://gitlab.com/msberends/AMR" class="uri">https://gitlab.com/msberends/AMR</a>
 </li>
@@ -1118,9 +1138,9 @@
 <h1 class="page-header">
 <a href="#amr-040" class="anchor"></a>AMR 0.4.0<small> 2018-10-01 </small>
 </h1>
-<div id="new-7" class="section level4">
+<div id="new-8" class="section level4">
 <h4 class="hasAnchor">
-<a href="#new-7" class="anchor"></a>New</h4>
+<a href="#new-8" class="anchor"></a>New</h4>
 <ul>
 <li><p>The data set <code>microorganisms</code> now contains <strong>all microbial taxonomic data from ITIS</strong> (kingdoms Bacteria, Fungi and Protozoa), the Integrated Taxonomy Information System, available via <a href="https://itis.gov" class="uri">https://itis.gov</a>. The data set now contains more than 18,000 microorganisms with all known bacteria, fungi and protozoa according ITIS with genus, species, subspecies, family, order, class, phylum and subkingdom. The new data set <code>microorganisms.old</code> contains all previously known taxonomic names from those kingdoms.</p></li>
 <li>
@@ -1251,9 +1271,9 @@
 <h1 class="page-header">
 <a href="#amr-030" class="anchor"></a>AMR 0.3.0<small> 2018-08-14 </small>
 </h1>
-<div id="new-8" class="section level4">
+<div id="new-9" class="section level4">
 <h4 class="hasAnchor">
-<a href="#new-8" class="anchor"></a>New</h4>
+<a href="#new-9" class="anchor"></a>New</h4>
 <ul>
 <li>
 <strong>BREAKING</strong>: <code>rsi_df</code> was removed in favour of new functions <code>portion_R</code>, <code>portion_IR</code>, <code>portion_I</code>, <code>portion_SI</code> and <code>portion_S</code> to selectively calculate resistance or susceptibility. These functions are 20 to 30 times faster than the old <code>rsi</code> function. The old function still works, but is deprecated.
@@ -1388,9 +1408,9 @@
 <h1 class="page-header">
 <a href="#amr-020" class="anchor"></a>AMR 0.2.0<small> 2018-05-03 </small>
 </h1>
-<div id="new-9" class="section level4">
+<div id="new-10" class="section level4">
 <h4 class="hasAnchor">
-<a href="#new-9" class="anchor"></a>New</h4>
+<a href="#new-10" class="anchor"></a>New</h4>
 <ul>
 <li>Full support for Windows, Linux and macOS</li>
 <li>Full support for old R versions, only R-3.0.0 (April 2013) or later is needed (needed packages may have other dependencies)</li>
@@ -1469,6 +1489,7 @@
     <div id="tocnav">
       <h2>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
+        <li><a href="#amr-1019000">1.0.1.9000</a></li>
         <li><a href="#amr-101">1.0.1</a></li>
         <li><a href="#amr-100">1.0.0</a></li>
         <li><a href="#amr-090">0.9.0</a></li>
