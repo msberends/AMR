@@ -11,7 +11,7 @@ As per their GPL-2 licence that demands documentation of code changes, the chang
 \item Rewritten code to remove the dependency on packages \code{plyr}, \code{scales} and \code{grid}
 \item Parametrised more options, like arrow and ellipse settings
 \item Added total amount of explained variance as a caption in the plot
-\item Cleaned all syntax based on the \code{lintr} package
+\item Cleaned all syntax based on the \code{lintr} package and added integrity checks
 \item Updated documentation
 }
 }
@@ -20,14 +20,15 @@ ggplot_pca(
   x,
   choices = 1:2,
   scale = TRUE,
+  pc.biplot = TRUE,
   labels = NULL,
   labels_textsize = 3,
   labels_text_placement = 1.5,
   groups = NULL,
-  ellipse = FALSE,
+  ellipse = TRUE,
   ellipse_prob = 0.68,
   ellipse_size = 0.5,
-  ellipse_alpha = 0.25,
+  ellipse_alpha = 0.5,
   points_size = 2,
   points_alpha = 0.25,
   arrows = TRUE,
@@ -53,6 +54,14 @@ ggplot_pca(
     \code{lambda} are the singular values as computed by
     \code{\link[stats]{princomp}}. Normally \code{0 <= scale <= 1}, and a warning
     will be issued if the specified \code{scale} is outside this range.
+  }
+
+\item{pc.biplot}{
+    If true, use what Gabriel (1971) refers to as a "principal component
+    biplot", with \code{lambda = 1} and observations scaled up by sqrt(n) and
+    variables scaled down by sqrt(n).  Then inner products between
+    variables approximate covariances and distances between observations
+    approximate Mahalanobis distance.
   }
 
 \item{labels}{an optional vector of labels for the observations. If set, the labels will be placed below their respective points. When using the \code{\link[=pca]{pca()}} function as input for \code{x}, this will be determined automatically based on the attribute \code{non_numeric_cols}, see \code{\link[=pca]{pca()}}.}
@@ -93,7 +102,7 @@ ggplot_pca(
 This function is to produce a \code{ggplot2} variant of a so-called \href{https://en.wikipedia.org/wiki/Biplot}{biplot} for PCA (principal component analysis), but is more flexible and more appealing than the base \R \code{\link[=biplot]{biplot()}} function.
 }
 \details{
-The default colours for labels and points is set with \code{\link[=scale_colour_viridis_d]{scale_colour_viridis_d()}}, but these can be changed by adding another scale for colour, like \code{\link[=scale_colour_brewer]{scale_colour_brewer()}}.
+The colours for labels and points can be changed by adding another scale layer for colour, like \code{\link[=scale_colour_viridis_d]{scale_colour_viridis_d()}} or \code{\link[=scale_colour_brewer]{scale_colour_brewer()}}.
 }
 \section{Maturing lifecycle}{
 

@@ -43,7 +43,7 @@ check_dataset_integrity <- function() {
                                "iv_ddd", "iv_units", "loinc") %in% colnames(antibiotics),
                              na.rm = TRUE)
   }, error = function(e)
-    stop('Please use the command \'library("AMR")\' before using this function, to load the needed reference data.', call. = FALSE)
+    stop('Please use the command \'library("AMR")\' before using this function, to load the required reference data.', call. = FALSE)
   )
   if (!check_microorganisms | !check_antibiotics) {
     stop("Data set `microorganisms` or data set `antibiotics` is overwritten by your global environment and prevents the AMR package from working correctly. Please rename your object before using this function.", call. = FALSE)
@@ -153,6 +153,13 @@ stopifnot_installed_package <- function(package) {
                                     call. = FALSE))
   return(invisible())
 }
+
+stopifnot_msg <- function(expr, msg) {
+  if (!isTRUE(expr)) {
+    stop(msg, call. = FALSE)
+  }
+}
+
 
 "%or%" <- function(x, y) {
   if (is.null(x) | is.null(y)) {

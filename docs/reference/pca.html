@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Principal Component Analysis (for AMR) — prcomp.data.frame • AMR (for R)</title>
+<title>Principal Component Analysis (for AMR) — pca • AMR (for R)</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -44,8 +44,8 @@
   <link href="../extra.css" rel="stylesheet">
   <script src="../extra.js"></script>
 
-<meta property="og:title" content="Principal Component Analysis (for AMR) — prcomp.data.frame" />
-<meta property="og:description" content="Performs a principal component analysis (PCA) based on a data set with automatic determination for afterwards plotting the groups and labels." />
+<meta property="og:title" content="Principal Component Analysis (for AMR) — pca" />
+<meta property="og:description" content="Performs a principal component analysis (PCA) based on a data set with automatic determination for afterwards plotting the groups and labels, and automatic filtering on only suitable (i.e. non-empty and numeric) variables." />
 <meta property="og:image" content="https://msberends.gitlab.io/AMR/logo.png" />
 <meta name="twitter:card" content="summary" />
 
@@ -79,7 +79,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.0.1.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.0.1.9002</span>
       </span>
     </div>
 
@@ -229,11 +229,10 @@
     </div>
 
     <div class="ref-description">
-    <p>Performs a principal component analysis (PCA) based on a data set with automatic determination for afterwards plotting the groups and labels.</p>
+    <p>Performs a principal component analysis (PCA) based on a data set with automatic determination for afterwards plotting the groups and labels, and automatic filtering on only suitable (i.e. non-empty and numeric) variables.</p>
     </div>
 
-    <pre class="usage"><span class='co'># S3 method for data.frame</span>
-<span class='fu'><a href='https://rdrr.io/r/stats/prcomp.html'>prcomp</a></span>(
+    <pre class="usage"><span class='fu'>pca</span>(
   <span class='no'>x</span>,
   <span class='no'>...</span>,
   <span class='kw'>retx</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
@@ -241,9 +240,7 @@
   <span class='kw'>scale.</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
   <span class='kw'>tol</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>rank.</span> <span class='kw'>=</span> <span class='kw'>NULL</span>
-)
-
-<span class='fu'>pca</span>(<span class='no'>x</span>, <span class='no'>...</span>)</pre>
+)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -297,10 +294,13 @@
     </tr>
     </table>
 
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+
+    <p>An object of classes pca and <a href='https://rdrr.io/r/stats/prcomp.html'>prcomp</a></p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>The <code>pca()</code> function takes a <a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a> as input and performs the actual PCA with the R function <code><a href='https://rdrr.io/r/stats/prcomp.html'>prcomp()</a></code>.</p>
-<p>The result of the <code>pca()</code> function is a <code><a href='https://rdrr.io/r/stats/prcomp.html'>prcomp</a></code> object, with an additional attribute <code>non_numeric_cols</code> which is a vector with the column names of all columns that do not contain numeric values. These are probably the groups and labels, and will be used by <code><a href='ggplot_pca.html'>ggplot_pca()</a></code>.</p>
+    <p>The <code>pca()</code> function takes a <a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a> as input and performs the actual PCA with the <span style="R">R</span> function <code><a href='https://rdrr.io/r/stats/prcomp.html'>prcomp()</a></code>.</p>
+<p>The result of the <code>pca()</code> function is a <a href='https://rdrr.io/r/stats/prcomp.html'>prcomp</a> object, with an additional attribute <code>non_numeric_cols</code> which is a vector with the column names of all columns that do not contain numeric values. These are probably the groups and labels, and will be used by <code><a href='ggplot_pca.html'>ggplot_pca()</a></code>.</p>
     <h2 class="hasAnchor" id="experimental-lifecycle"><a class="anchor" href="#experimental-lifecycle"></a>Experimental lifecycle</h2>
 
     
@@ -332,6 +332,7 @@ The <a href='lifecycle.html'>lifecycle</a> of this function is <strong>experimen
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
+      <li><a href="#value">Value</a></li>
       <li><a href="#details">Details</a></li>
       <li><a href="#experimental-lifecycle">Experimental lifecycle</a></li>
       <li><a href="#examples">Examples</a></li>

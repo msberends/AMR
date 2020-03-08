@@ -21,17 +21,18 @@
 
 #' Principal Component Analysis (for AMR)
 #' 
-#' Performs a principal component analysis (PCA) based on a data set with automatic determination for afterwards plotting the groups and labels.
+#' Performs a principal component analysis (PCA) based on a data set with automatic determination for afterwards plotting the groups and labels, and automatic filtering on only suitable (i.e. non-empty and numeric) variables.
 #' @inheritSection lifecycle Experimental lifecycle
 #' @param x a [data.frame] containing numeric columns
 #' @param ... columns of `x` to be selected for PCA
 #' @inheritParams stats::prcomp
-#' @details The [pca()] function takes a [data.frame] as input and performs the actual PCA with the R function [prcomp()].
+#' @details The [pca()] function takes a [data.frame] as input and performs the actual PCA with the \R function [prcomp()].
 #' 
-#' The result of the [pca()] function is a [`prcomp`] object, with an additional attribute `non_numeric_cols` which is a vector with the column names of all columns that do not contain numeric values. These are probably the groups and labels, and will be used by [ggplot_pca()].
-#' @rdname pca
-#' @exportMethod prcomp.data.frame
+#' The result of the [pca()] function is a [prcomp] object, with an additional attribute `non_numeric_cols` which is a vector with the column names of all columns that do not contain numeric values. These are probably the groups and labels, and will be used by [ggplot_pca()].
+#' @return An object of classes [pca] and [prcomp]
 #' @importFrom stats prcomp
+#' @importFrom dplyr ungroup %>% filter_all all_vars
+#' @importFrom rlang enquos eval_tidy
 #' @export
 #' @examples 
 #' # `example_isolates` is a dataset available in the AMR package.
@@ -52,40 +53,19 @@
 #' summary(pca_result)
 #' biplot(pca_result)
 #' ggplot_pca(pca_result) # a new and convenient plot function
-prcomp.data.frame <- function(x,
-                              ...,
-                              retx = TRUE,
-                              center = TRUE, 
-                              scale. = TRUE,
-                              tol = NULL,
-                              rank. = NULL) {
+pca <- function(x,
+                ...,
+                retx = TRUE,
+                center = TRUE, 
+                scale. = TRUE,
+                tol = NULL,
+                rank. = NULL) {
   
-  x <- pca_transform_x(x = x, ... = ...)
-  pca_data <- x[, which(sapply(x, function(x) is.numeric(x)))]
-
-  message(blue(paste0("NOTE: Columns selected for PCA: ", paste0(bold(colnames(pca_data)), collapse = "/"),
-                      ".\n      Total observations available: ", nrow(pca_data), ".")))
-  
-  stats:::prcomp.default(pca_data, retx = retx, center = center, scale. = scale., tol = tol, rank. = rank.)
-}
-
-#' @rdname pca
-#' @export
-pca <- function(x, ...) {
   if (!is.data.frame(x)) {
     stop("this function only takes a data.frame as input")
   }
-  pca_model <- prcomp(x, ...)
   
-  x <- pca_transform_x(x = x, ... = ...)
-  attr(pca_model, "non_numeric_cols") <- x[, sapply(x, function(y) !is.numeric(y) & !all(is.na(y))), drop = FALSE]
-  pca_model
-}
-
-#' @importFrom dplyr ungroup %>% filter_all all_vars
-#' @importFrom rlang enquos eval_tidy
-pca_transform_x <- function(x, ...) {
-  # unset data.table, tbl_df, etc.
+  # unset data.table, tibble, etc.
   # also removes groups made by dplyr::group_by
   x <- as.data.frame(x, stringsAsFactors = FALSE)
   x.bak <- x
@@ -123,7 +103,17 @@ pca_transform_x <- function(x, ...) {
     x <- cbind(x.bak[, sapply(x.bak, function(y) !is.numeric(y) & !all(is.na(y))), drop = FALSE], x)
   }
   
-  x %>%
+  x <- x %>%
     ungroup() %>% # would otherwise select the grouping vars
     filter_all(all_vars(!is.na(.)))
+  
+  pca_data <- x[, which(sapply(x, function(x) is.numeric(x)))]
+  
+  message(blue(paste0("NOTE: Columns selected for PCA: ", paste0(bold(colnames(pca_data)), collapse = "/"),
+                      ".\n      Total observations available: ", nrow(pca_data), ".")))
+  
+  pca_model <- prcomp(pca_data, retx = retx, center = center, scale. = scale., tol = tol, rank. = rank.)
+  attr(pca_model, "non_numeric_cols") <- x[, sapply(x, function(y) !is.numeric(y) & !all(is.na(y))), drop = FALSE]
+  class(pca_model) <- c("pca", class(pca_model))
+  pca_model
 }

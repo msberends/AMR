@@ -30,8 +30,9 @@ test_that("PCA works", {
              genus = mo_genus(mo)) %>%   #  and genus as we do here
     summarise_if(is.rsi, resistance, minimum = 0)
   
-  expect_s3_class(pca(resistance_data), "prcomp")
-  expect_s3_class(prcomp(resistance_data), "prcomp")
+  pca_model <- pca(resistance_data)
   
-  ggplot_pca(pca(resistance_data), ellipse = TRUE)
+  expect_s3_class(pca_model, "pca")
+  
+  ggplot_pca(pca_model, ellipse = TRUE)
 })
