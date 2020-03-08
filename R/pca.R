@@ -31,6 +31,7 @@
 #' The result of the [pca()] function is a [`prcomp`] object, with an additional attribute `non_numeric_cols` which is a vector with the column names of all columns that do not contain numeric values. These are probably the groups and labels, and will be used by [ggplot_pca()].
 #' @rdname pca
 #' @exportMethod prcomp.data.frame
+#' @importFrom stats prcomp
 #' @export
 #' @examples 
 #' # `example_isolates` is a dataset available in the AMR package.

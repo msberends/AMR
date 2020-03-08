@@ -4,7 +4,7 @@
 \alias{ggplot_pca}
 \title{PCA biplot with \code{ggplot2}}
 \source{
-The \code{\link[=ggplot_pca]{ggplot_pca()}} function is based on the \code{\link[=ggbiplot]{ggbiplot()}} function from the \code{ggbiplot} package by Vince Vu, as found on GitHub: \url{https://github.com/vqv/ggbiplot} (retrieved: 2 March 2020, their latest commit: \href{https://github.com/vqv/ggbiplot/commit/7325e880485bea4c07465a0304c470608fffb5d9}{\code{7325e88}}; 12 February 2015).
+The \code{\link[=ggplot_pca]{ggplot_pca()}} function is based on the \code{ggbiplot()} function from the \code{ggbiplot} package by Vince Vu, as found on GitHub: \url{https://github.com/vqv/ggbiplot} (retrieved: 2 March 2020, their latest commit: \href{https://github.com/vqv/ggbiplot/commit/7325e880485bea4c07465a0304c470608fffb5d9}{\code{7325e88}}; 12 February 2015).
 
 As per their GPL-2 licence that demands documentation of code changes, the changes made based on the source code were:
 \enumerate{
@@ -70,6 +70,8 @@ ggplot_pca(
 \item{ellipse_size}{the size of the ellipse line}
 
 \item{ellipse_alpha}{the alpha (transparency) of the ellipse line}
+
+\item{points_size}{the size of the points}
 
 \item{points_alpha}{the alpha (transparency) of the points}
 
