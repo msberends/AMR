@@ -81,7 +81,7 @@ R-release:
 R-devel:
   stage: check
   image: rocker/r-devel
-  allow_failure: false
+  allow_failure: true
   script:
     - Rscriptdevel -e 'sessionInfo()'
     # install missing and outdated packages
