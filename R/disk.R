@@ -80,7 +80,7 @@ as.disk <- function(x, na.rm = FALSE) {
               list_missing, call. = FALSE)
     }
 
-    class(x) <- c("disk", "integer")
+    class(x) <- "disk"
     x
   }
 }
@@ -97,6 +97,20 @@ is.disk <- function(x) {
   inherits(x, "disk")
 }
 
+#' @exportMethod as.data.frame.disk
+#' @export
+#' @noRd
+as.data.frame.disk <- function(x, ...) {
+  # same as as.data.frame.integer but with removed stringsAsFactors, since it will be class "disk"
+  nm <- paste(deparse(substitute(x), width.cutoff = 500L),
+              collapse = " ")
+  if (!"nm" %in% names(list(...))) {
+    as.data.frame.vector(x, ..., nm = nm)
+  } else {
+    as.data.frame.vector(x, ...)
+  }
+}
+
 #' @exportMethod print.disk
 #' @export
 #' @noRd
@@ -105,16 +119,63 @@ print.disk <- function(x, ...) {
   print(as.integer(x), quote = FALSE)
 }
 
-#' @importFrom pillar type_sum
-#' @export
-type_sum.disk <- function(x) {
-  "disk"
-}
-
 #' @importFrom pillar pillar_shaft
 #' @export
 pillar_shaft.disk <- function(x, ...) {
   out <- trimws(format(x))
   out[is.na(x)] <- pillar::style_na(NA)
   pillar::new_pillar_shaft_simple(out, align = "right", min_width = 3)
+}
+
+#' @importFrom vctrs vec_ptype_abbr
+#' @export
+vec_ptype_abbr.disk <- function(x, ...) {
+  "disk"
+}
+
+#' @importFrom vctrs vec_ptype_full
+#' @export
+vec_ptype_full.disk <- function(x, ...) {
+  "disk"
+}
+
+#' @exportMethod [.disk
+#' @export
+#' @noRd
+"[.disk" <- function(x, ...) {
+  y <- NextMethod()
+  attributes(y) <- attributes(x)
+  y
+}
+#' @exportMethod [[.disk
+#' @export
+#' @noRd
+"[[.disk" <- function(x, ...) {
+  y <- NextMethod()
+  attributes(y) <- attributes(x)
+  y
+}
+#' @exportMethod [<-.disk
+#' @export
+#' @noRd
+"[<-.disk" <- function(i, j, ..., value) {
+  y <- NextMethod()
+  attributes(y) <- attributes(i)
+  y
+}
+#' @exportMethod [[<-.disk
+#' @export
+#' @noRd
+"[[<-.disk" <- function(i, j, ..., value) {
+  y <- NextMethod()
+  attributes(y) <- attributes(i)
+  y
+}
+#' @exportMethod c.disk
+#' @export
+#' @noRd
+c.disk <- function(x, ...) {
+  y <- NextMethod()
+  attributes(y) <- attributes(x)
+  y
 }

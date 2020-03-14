@@ -4,7 +4,8 @@
 \name{example_isolates}
 \alias{example_isolates}
 \title{Data set with 2,000 example isolates}
-\format{A \code{\link{data.frame}} with 2,000 observations and 49 variables:
+\format{
+A \code{\link{data.frame}} with 2,000 observations and 49 variables:
 \itemize{
 \item \code{date}\cr date of receipt at the laboratory
 \item \code{hospital_id}\cr ID of the hospital, from A to D
@@ -16,7 +17,8 @@
 \item \code{patient_id}\cr ID of the patient
 \item \code{mo}\cr ID of microorganism created with \code{\link[=as.mo]{as.mo()}}, see also \link{microorganisms}
 \item \code{PEN:RIF}\cr 40 different antibiotics with class \code{\link{rsi}} (see \code{\link[=as.rsi]{as.rsi()}}); these column names occur in the \link{antibiotics} data set and can be translated with \code{\link[=ab_name]{ab_name()}}
-}}
+}
+}
 \usage{
 example_isolates
 }

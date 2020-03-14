@@ -4,7 +4,8 @@
 \name{WHONET}
 \alias{WHONET}
 \title{Data set with 500 isolates - WHONET example}
-\format{A \code{\link{data.frame}} with 500 observations and 53 variables:
+\format{
+A \code{\link{data.frame}} with 500 observations and 53 variables:
 \itemize{
 \item \verb{Identification number}\cr ID of the sample
 \item \verb{Specimen number}\cr ID of the specimen
@@ -32,7 +33,8 @@
 \item \code{Comment}\cr Other comments
 \item \verb{Date of data entry}\cr Date this data was entered in WHONET
 \item \code{AMP_ND10:CIP_EE}\cr 27 different antibiotics. You can lookup the abbreviatons in the \link{antibiotics} data set, or use e.g. \code{\link[=ab_name]{ab_name("AMP")}} to get the official name immediately. Before analysis, you should transform this to a valid antibiotic class, using \code{\link[=as.rsi]{as.rsi()}}.
-}}
+}
+}
 \usage{
 WHONET
 }

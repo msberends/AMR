@@ -17,8 +17,8 @@ We created this package for both routine data analysis and academic research (as
 <div class="main-content"> 
   <p>
     <a href="./countries_large.png" target="_blank"><img src="./countries.png" class="countries_map"></a>
-    <strong>Used in almost 100 countries</strong><br>
-    Since its first public release in early 2018, this package has been downloaded over 25,000 times from 99 countries <small>(as of February 2020, <a href="https://cran-logs.rstudio.com" target="_blank">CRAN logs</a>)</small>. Click the map to enlarge.</p><br><br>
+    <strong>Used in more than 100 countries</strong><br>
+    Since its first public release in early 2018, this package has been downloaded from more than 100 countries <small>(as of March 2020, <a href="https://cran-logs.rstudio.com" target="_blank">CRAN logs</a>)</small>. Click the map to enlarge, to see the names of the countries.</p><br><br>
 </div>
 
 #### Partners
@@ -51,6 +51,7 @@ This package can be used for:
   * Getting SNOMED codes of a microorganism, or get its name associated with a SNOMED code ([manual](./reference/mo_property.html))
   * Getting LOINC codes of an antibiotic, or get its name associated with a LOINC code ([manual](./reference/ab_property.html))
   * Machine reading the EUCAST and CLSI guidelines from 2011-2020 to translate MIC values and disk diffusion diameters to R/SI ([link](https://gitlab.com/msberends/AMR/blob/master/data-raw/rsi_translation.txt))
+  * Principal component analysis for AMR ([tutorial](./articles/PCA.html))
 
 This package is ready-to-use for specialists in many fields:
 
@@ -85,8 +86,8 @@ It will be downloaded and installed automatically. For RStudio, click on the men
 
 The latest and unpublished development version can be installed with (**precaution: may be unstable**):
 ```r
-install.packages("devtools")
-devtools::install_gitlab("msberends/AMR")
+install.packages("remotes")
+remotes::install_gitlab("msberends/AMR")
 ```
 
 ### Get started

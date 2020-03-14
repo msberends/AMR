@@ -50,7 +50,7 @@ rm(data_json)
 # add country data based on IP address and ipinfo.io API
 unique_ip <- unique(data$ipaddress)
 ip_tbl <- GET_df(unique_ip[1])
-p <- progress_estimated(n = length(unique_ip) - 1, min_time = 0)
+p <- AMR:::progress_estimated(n = length(unique_ip) - 1, min_time = 0)
 for (i in 2:length(unique_ip)) {
   p$tick()$print()
   ip_tbl <- ip_tbl %>% 

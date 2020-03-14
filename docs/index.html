@@ -43,7 +43,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.0.1.9002</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.0.1.9004</span>
       </span>
     </div>
 
@@ -204,8 +204,8 @@ A methods paper about this package has been preprinted at bioRxiv (DOI: 10.1101/
 <div class="main-content"> 
   <p>
     <a href="./countries_large.png" target="_blank"><img src="./countries.png" class="countries_map"></a>
-    <strong>Used in almost 100 countries</strong><br>
-    Since its first public release in early 2018, this package has been downloaded over 25,000 times from 99 countries <small>(as of February 2020, <a href="https://cran-logs.rstudio.com" target="_blank">CRAN logs</a>)</small>. Click the map to enlarge.</p>
+    <strong>Used in more than 100 countries</strong><br>
+    Since its first public release in early 2018, this package has been downloaded from more than 100 countries <small>(as of March 2020, <a href="https://cran-logs.rstudio.com" target="_blank">CRAN logs</a>)</small>. Click the map to enlarge, to see the names of the countries.</p>
 <br><br>
 </div>
 <div id="partners" class="section level4">
@@ -240,6 +240,7 @@ A methods paper about this package has been preprinted at bioRxiv (DOI: 10.1101/
 <li>Getting SNOMED codes of a microorganism, or get its name associated with a SNOMED code (<a href="./reference/mo_property.html">manual</a>)</li>
 <li>Getting LOINC codes of an antibiotic, or get its name associated with a LOINC code (<a href="./reference/ab_property.html">manual</a>)</li>
 <li>Machine reading the EUCAST and CLSI guidelines from 2011-2020 to translate MIC values and disk diffusion diameters to R/SI (<a href="https://gitlab.com/msberends/AMR/blob/master/data-raw/rsi_translation.txt">link</a>)</li>
+<li>Principal component analysis for AMR (<a href="./articles/PCA.html">tutorial</a>)</li>
 </ul>
 <p>This package is ready-to-use for specialists in many fields:</p>
 <ul>
@@ -272,8 +273,8 @@ A methods paper about this package has been preprinted at bioRxiv (DOI: 10.1101/
 <h4 class="hasAnchor">
 <a href="#latest-development-version" class="anchor"></a>Latest development version</h4>
 <p>The latest and unpublished development version can be installed with (<strong>precaution: may be unstable</strong>):</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a><span class="kw"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span>(<span class="st">"devtools"</span>)</span>
-<span id="cb2-2"><a href="#cb2-2"></a>devtools<span class="op">::</span><span class="kw"><a href="https://devtools.r-lib.org//reference/remote-reexports.html">install_gitlab</a></span>(<span class="st">"msberends/AMR"</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a><span class="kw"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span>(<span class="st">"remotes"</span>)</span>
+<span id="cb2-2"><a href="#cb2-2"></a>remotes<span class="op">::</span><span class="kw"><a href="https://remotes.r-lib.org/reference/install_gitlab.html">install_gitlab</a></span>(<span class="st">"msberends/AMR"</span>)</span></code></pre></div>
 </div>
 </div>
 <div id="get-started" class="section level3">

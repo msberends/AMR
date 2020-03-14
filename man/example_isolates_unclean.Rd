@@ -4,14 +4,16 @@
 \name{example_isolates_unclean}
 \alias{example_isolates_unclean}
 \title{Data set with unclean data}
-\format{A \code{\link{data.frame}} with 3,000 observations and 8 variables:
+\format{
+A \code{\link{data.frame}} with 3,000 observations and 8 variables:
 \itemize{
 \item \code{patient_id}\cr ID of the patient
 \item \code{date}\cr date of receipt at the laboratory
 \item \code{hospital}\cr ID of the hospital, from A to C
 \item \code{bacteria}\cr info about microorganism that can be transformed with \code{\link[=as.mo]{as.mo()}}, see also \link{microorganisms}
 \item \code{AMX:GEN}\cr 4 different antibiotics that have to be transformed with \code{\link[=as.rsi]{as.rsi()}}
-}}
+}
+}
 \usage{
 example_isolates_unclean
 }

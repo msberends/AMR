@@ -26,6 +26,7 @@ This package can be used for:
 \item Getting SNOMED codes of a microorganism, or get its name associated with a SNOMED code
 \item Getting LOINC codes of an antibiotic, or get its name associated with a LOINC code
 \item Machine reading the EUCAST and CLSI guidelines from 2011-2020 to translate MIC values and disk diffusion diameters to R/SI
+\item Principal component analysis for AMR
 }
 }
 \section{Read more on our website!}{

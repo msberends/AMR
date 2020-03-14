@@ -235,9 +235,15 @@ barplot.mic <- function(height,
   axis(2, seq(0, max(table(droplevels.factor(height)))))
 }
 
-#' @importFrom pillar type_sum
+#' @importFrom vctrs vec_ptype_abbr
 #' @export
-type_sum.mic <- function(x) {
+vec_ptype_abbr.mic <- function(x, ...) {
+  "mic"
+}
+
+#' @importFrom vctrs vec_ptype_full
+#' @export
+vec_ptype_full.mic <- function(x, ...) {
   "mic"
 }
 

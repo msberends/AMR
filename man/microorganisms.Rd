@@ -4,7 +4,8 @@
 \name{microorganisms}
 \alias{microorganisms}
 \title{Data set with ~70,000 microorganisms}
-\format{A \code{\link{data.frame}} with 69,447 observations and 17 variables:
+\format{
+A \code{\link{data.frame}} with 69,447 observations and 17 variables:
 \itemize{
 \item \code{mo}\cr ID of microorganism as used by this package
 \item \code{col_id}\cr Catalogue of Life ID
@@ -16,7 +17,8 @@
 \item \code{source}\cr Either "CoL", "DSMZ" (see Source) or "manually added"
 \item \code{prevalence}\cr Prevalence of the microorganism, see \code{\link[=as.mo]{as.mo()}}
 \item \code{snomed}\cr SNOMED code of the microorganism. Use \code{\link[=mo_snomed]{mo_snomed()}} to retrieve it quickly, see \code{\link[=mo_property]{mo_property()}}.
-}}
+}
+}
 \source{
 Catalogue of Life: Annual Checklist (public online taxonomic database), \url{http://www.catalogueoflife.org} (check included annual version with \code{\link[=catalogue_of_life_version]{catalogue_of_life_version()}}).
 

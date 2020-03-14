@@ -78,9 +78,9 @@
 #' - Uncertainty level 3: allow all of level 1 and 2, strip off text elements from the end, allow any part of a taxonomic name.
 #' 
 #' This leads to e.g.:
-#' - `"Streptococcus group B (known as S. agalactiae)"`. The text between brackets will be removed and a warning will be thrown that the result *Streptococcus group B* (`B_STRPT_GRPB`) needs review.
-#' - `"S. aureus - please mind: MRSA"`. The last word will be stripped, after which the function will try to find a match. If it does not, the second last word will be stripped, etc. Again, a warning will be thrown that the result *Staphylococcus aureus* (`B_STPHY_AURS`) needs review.
-#' - `"Fluoroquinolone-resistant Neisseria gonorrhoeae"`. The first word will be stripped, after which the function will try to find a match. A warning will be thrown that the result *Neisseria gonorrhoeae* (`B_NESSR_GNRR`) needs review.
+#' - `"Streptococcus group B (known as S. agalactiae)"`. The text between brackets will be removed and a warning will be thrown that the result *Streptococcus group B* (``r as.mo("Streptococcus group B")``) needs review.
+#' - `"S. aureus - please mind: MRSA"`. The last word will be stripped, after which the function will try to find a match. If it does not, the second last word will be stripped, etc. Again, a warning will be thrown that the result *Staphylococcus aureus* (``r as.mo("Staphylococcus aureus")``) needs review.
+#' - `"Fluoroquinolone-resistant Neisseria gonorrhoeae"`. The first word will be stripped, after which the function will try to find a match. A warning will be thrown that the result *Neisseria gonorrhoeae* (``r as.mo("Neisseria gonorrhoeae")``) needs review.
 #'
 #' The level of uncertainty can be set using the argument `allow_uncertain`. The default is `allow_uncertain = TRUE`, which is equal to uncertainty level 2. Using `allow_uncertain = FALSE` is equal to uncertainty level 0 and will skip all rules. You can also use e.g. `as.mo(..., allow_uncertain = 1)` to only allow up to level 1 uncertainty.
 #' 
@@ -234,7 +234,7 @@ is.mo <- function(x) {
   inherits(x, "mo")
 }
 
-#' @importFrom dplyr %>% pull left_join n_distinct progress_estimated filter distinct
+#' @importFrom dplyr %>% pull left_join n_distinct filter distinct
 #' @importFrom data.table data.table as.data.table setkey
 #' @importFrom crayon magenta red blue silver italic
 #' @importFrom cleaner percentage
@@ -1675,10 +1675,46 @@ print.mo <- function(x, ...) {
   print.default(x, quote = FALSE)
 }
 
-#' @importFrom pillar type_sum
+#' @importFrom vctrs vec_ptype_abbr
 #' @export
-type_sum.mo <- function(x) {
+vec_ptype_abbr.mo <- function(x, ...) {
   "mo"
+}
+
+#' @importFrom vctrs vec_ptype_full
+#' @export
+vec_ptype_full.mo <- function(x, ...) {
+  "mo"
+}
+
+#' @importFrom vctrs vec_ptype2
+#' @export
+vec_ptype2.mo <- function(x, y, ...) {
+  vctrs::vec_ptype2(x = as.character(x), y = as.character(y), ...)
+}
+
+#' @importFrom vctrs vec_cast
+#' @export
+vec_cast.mo <- function(x, to, ...) {
+  as.mo(vctrs::vec_cast(x = as.character(x), to = as.character(to), ...))
+}
+
+#' @importFrom vctrs vec_cast
+#' @export
+vec_cast.mo.mo <- function(x, to, ...) {
+  as.mo(vctrs::vec_cast(x = as.character(x), to = as.character(to), ...))
+}
+
+#' @importFrom vctrs vec_cast
+#' @export
+vec_cast.mo.character <- function(x, to, ...) {
+  vctrs::vec_cast(x = as.character(x), to = as.character(to), ...)
+}
+
+#' @importFrom vctrs vec_cast
+#' @export
+vec_cast.character.mo <- function(x, to, ...) {
+  as.mo(vctrs::vec_cast(x = as.character(x), to = as.character(to), ...))
 }
 
 #' @importFrom pillar pillar_shaft

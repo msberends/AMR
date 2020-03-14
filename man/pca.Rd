@@ -59,10 +59,10 @@ The \code{\link[=pca]{pca()}} function takes a \link{data.frame} as input and pe
 
 The result of the \code{\link[=pca]{pca()}} function is a \link{prcomp} object, with an additional attribute \code{non_numeric_cols} which is a vector with the column names of all columns that do not contain numeric values. These are probably the groups and labels, and will be used by \code{\link[=ggplot_pca]{ggplot_pca()}}.
 }
-\section{Experimental lifecycle}{
+\section{Maturing lifecycle}{
 
-\if{html}{\figure{lifecycle_experimental.svg}{options: style=margin-bottom:5px} \cr}
-The \link[AMR:lifecycle]{lifecycle} of this function is \strong{experimental}. An experimental function is in the very early stages of development. The unlying code might be changing frequently as we rapidly iterate and explore variations in search of the best fit. Experimental functions might be removed without deprecation, so you are generally best off waiting until a function is more mature before you use it in production code. Experimental functions will not be included in releases we submit to CRAN, since they have not yet matured enough.
+\if{html}{\figure{lifecycle_maturing.svg}{options: style=margin-bottom:5px} \cr}
+The \link[AMR:lifecycle]{lifecycle} of this function is \strong{maturing}. The unlying code of a maturing function has been roughed out, but finer details might still change. We will strive to maintain backward compatibility, but the function needs wider usage and more extensive testing in order to optimise the unlying code.
 }
 
 \examples{

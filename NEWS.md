@@ -1,9 +1,12 @@
-# AMR 1.0.1.9003
-## <small>Last updated: 08-Mar-2020</small>
+# AMR 1.0.1.9004
+## <small>Last updated: 14-Mar-2020</small>
 
 ### New
 * Support for easy principal component analysis for AMR, using the new `pca()` function 
 * Plotting biplots for principal component analysis using the new `ggplot_pca()` function
+
+### Other
+* Support for the upcoming `dplyr` version 1.0.0
 
 # AMR 1.0.1
 

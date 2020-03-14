@@ -56,7 +56,7 @@
 #' - `"ml"` = milliliter (e.g. eyedrops)
 #' @export
 #' @rdname atc_online
-#' @importFrom dplyr %>% progress_estimated
+#' @importFrom dplyr %>%
 #' @inheritSection AMR Read more on our website!
 #' @source <https://www.whocc.no/atc_ddd_alterations__cumulative/ddd_alterations/abbrevations/>
 #' @examples

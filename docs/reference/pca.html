@@ -79,7 +79,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.0.1.9002</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.0.1.9004</span>
       </span>
     </div>
 
@@ -301,12 +301,12 @@
 
     <p>The <code>pca()</code> function takes a <a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a> as input and performs the actual PCA with the <span style="R">R</span> function <code><a href='https://rdrr.io/r/stats/prcomp.html'>prcomp()</a></code>.</p>
 <p>The result of the <code>pca()</code> function is a <a href='https://rdrr.io/r/stats/prcomp.html'>prcomp</a> object, with an additional attribute <code>non_numeric_cols</code> which is a vector with the column names of all columns that do not contain numeric values. These are probably the groups and labels, and will be used by <code><a href='ggplot_pca.html'>ggplot_pca()</a></code>.</p>
-    <h2 class="hasAnchor" id="experimental-lifecycle"><a class="anchor" href="#experimental-lifecycle"></a>Experimental lifecycle</h2>
+    <h2 class="hasAnchor" id="maturing-lifecycle"><a class="anchor" href="#maturing-lifecycle"></a>Maturing lifecycle</h2>
 
     
 
-<p><img src='figures/lifecycle_experimental.svg' style=margin-bottom:5px /> <br />
-The <a href='lifecycle.html'>lifecycle</a> of this function is <strong>experimental</strong>. An experimental function is in the very early stages of development. The unlying code might be changing frequently as we rapidly iterate and explore variations in search of the best fit. Experimental functions might be removed without deprecation, so you are generally best off waiting until a function is more mature before you use it in production code. Experimental functions will not be included in releases we submit to CRAN, since they have not yet matured enough.</p>
+<p><img src='figures/lifecycle_maturing.svg' style=margin-bottom:5px /> <br />
+The <a href='lifecycle.html'>lifecycle</a> of this function is <strong>maturing</strong>. The unlying code of a maturing function has been roughed out, but finer details might still change. We will strive to maintain backward compatibility, but the function needs wider usage and more extensive testing in order to optimise the unlying code.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><span class='co'># `example_isolates` is a dataset available in the AMR package.</span>
@@ -334,7 +334,7 @@ The <a href='lifecycle.html'>lifecycle</a> of this function is <strong>experimen
       <li><a href="#arguments">Arguments</a></li>
       <li><a href="#value">Value</a></li>
       <li><a href="#details">Details</a></li>
-      <li><a href="#experimental-lifecycle">Experimental lifecycle</a></li>
+      <li><a href="#maturing-lifecycle">Maturing lifecycle</a></li>
       <li><a href="#examples">Examples</a></li>
     </ul>
 

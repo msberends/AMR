@@ -50,13 +50,14 @@
 #' df_joined <- left_join_microorganisms(df, "bacteria")
 #' colnames(df_joined)
 inner_join_microorganisms <- function(x, by = NULL, suffix = c("2", ""), ...) {
+  check_dataset_integrity()
   checked <- joins_check_df(x, by)
   x <- checked$x
   by <- checked$by
   join <- suppressWarnings(
     dplyr::inner_join(x = x, y = microorganisms, by = by, suffix = suffix, ...)
   )
-  if (nrow(join) > nrow(x)) {
+  if (NROW(join) > NROW(x)) {
     warning("The newly joined tbl contains ", nrow(join) - nrow(x), " rows more that its original.")
   }
   join
@@ -65,13 +66,14 @@ inner_join_microorganisms <- function(x, by = NULL, suffix = c("2", ""), ...) {
 #' @rdname join
 #' @export
 left_join_microorganisms <- function(x, by = NULL, suffix = c("2", ""), ...) {
+  check_dataset_integrity()
   checked <- joins_check_df(x, by)
   x <- checked$x
   by <- checked$by
   join <- suppressWarnings(
     dplyr::left_join(x = x, y = microorganisms, by = by, suffix = suffix, ...)
   )
-  if (nrow(join) > nrow(x)) {
+  if (NROW(join) > NROW(x)) {
     warning("The newly joined tbl contains ", nrow(join) - nrow(x), " rows more that its original.")
   }
   join
@@ -80,13 +82,14 @@ left_join_microorganisms <- function(x, by = NULL, suffix = c("2", ""), ...) {
 #' @rdname join
 #' @export
 right_join_microorganisms <- function(x, by = NULL, suffix = c("2", ""), ...) {
+  check_dataset_integrity()
   checked <- joins_check_df(x, by)
   x <- checked$x
   by <- checked$by
   join <- suppressWarnings(
     dplyr::right_join(x = x, y = microorganisms, by = by, suffix = suffix, ...)
   )
-  if (nrow(join) > nrow(x)) {
+  if (NROW(join) > NROW(x)) {
     warning("The newly joined tbl contains ", nrow(join) - nrow(x), " rows more that its original.")
   }
   join
@@ -95,13 +98,14 @@ right_join_microorganisms <- function(x, by = NULL, suffix = c("2", ""), ...) {
 #' @rdname join
 #' @export
 full_join_microorganisms <- function(x, by = NULL, suffix = c("2", ""), ...) {
+  check_dataset_integrity()
   checked <- joins_check_df(x, by)
   x <- checked$x
   by <- checked$by
   join <- suppressWarnings(
     dplyr::full_join(x = x, y = microorganisms, by = by, suffix = suffix, ...)
   )
-  if (nrow(join) > nrow(x)) {
+  if (NROW(join) > NROW(x)) {
     warning("The newly joined tbl contains ", nrow(join) - nrow(x), " rows more that its original.")
   }
   join
@@ -110,6 +114,7 @@ full_join_microorganisms <- function(x, by = NULL, suffix = c("2", ""), ...) {
 #' @rdname join
 #' @export
 semi_join_microorganisms <- function(x, by = NULL, ...) {
+  check_dataset_integrity()
   checked <- joins_check_df(x, by)
   x <- checked$x
   by <- checked$by
@@ -121,6 +126,7 @@ semi_join_microorganisms <- function(x, by = NULL, ...) {
 #' @rdname join
 #' @export
 anti_join_microorganisms <- function(x, by = NULL, ...) {
+  check_dataset_integrity()
   checked <- joins_check_df(x, by)
   x <- checked$x
   by <- checked$by
@@ -131,7 +137,7 @@ anti_join_microorganisms <- function(x, by = NULL, ...) {
 
 joins_check_df <- function(x, by) {
   if (!any(class(x) %in% c("data.frame", "matrix"))) {
-    x <- data.frame(mo = as.character(x), stringsAsFactors = FALSE)
+    x <- data.frame(mo = as.mo(x), stringsAsFactors = FALSE)
     if (is.null(by)) {
       by <- "mo"
     }
@@ -142,6 +148,7 @@ joins_check_df <- function(x, by) {
     if (is.na(by)) {
       if ("mo" %in% colnames(x)) {
         by <- "mo"
+        x[, "mo"] <- as.mo(x[, "mo"])
       } else {
         stop("Cannot join - no column found with name or class  `mo`.", call. = FALSE)
       }

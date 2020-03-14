@@ -41,6 +41,7 @@
 #' - Getting SNOMED codes of a microorganism, or get its name associated with a SNOMED code
 #' - Getting LOINC codes of an antibiotic, or get its name associated with a LOINC code
 #' - Machine reading the EUCAST and CLSI guidelines from 2011-2020 to translate MIC values and disk diffusion diameters to R/SI
+#' - Principal component analysis for AMR
 
 #' @section Read more on our website!:
 #' On our website <https://msberends.gitlab.io/AMR> you can find [a comprehensive tutorial](https://msberends.gitlab.io/AMR/articles/AMR.html) about how to conduct AMR analysis, the [complete documentation of all functions](https://msberends.gitlab.io/AMR/reference) (which reads a lot easier than here in R) and [an example analysis using WHONET data](https://msberends.gitlab.io/AMR/articles/WHONET.html).

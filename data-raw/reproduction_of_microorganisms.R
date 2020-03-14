@@ -23,6 +23,7 @@
 
 # Data retrieved from the Catalogue of Life (CoL) through the Encyclopaedia of Life:
 # https://opendata.eol.org/dataset/catalogue-of-life/
+# https://doi.org/10.15468/rffz4x
 # (download the resource file with a name like "Catalogue of Life yyyy-mm-dd")
 # and from the Leibniz Institute DSMZ-German Collection of Microorganisms and Cell Cultures
 # https://www.dsmz.de/support/bacterial-nomenclature-up-to-date-downloads.html
@@ -32,7 +33,8 @@ library(dplyr)
 library(AMR)
 
 # unzip and extract taxon.tab (around 1.5 GB) from the CoL archive, then:
-data_col <- data.table::fread("data-raw/taxon.tab")
+# data_col <- data.table::fread("data-raw/taxon.tab")
+data_col <- data.table::fread("data-raw/taxa.txt", quote = "")
 
 # read the xlsx file from DSMZ (only around 2.5 MB):
 data_dsmz <- readxl::read_xlsx("data-raw/DSMZ_bactnames.xlsx")
@@ -66,7 +68,7 @@ data_col <- data_col %>%
          subspecies = infraspecificEpithet,
          rank = taxonRank,
          ref = scientificNameAuthorship,
-         species_id = furtherInformationURL)
+         species_id = references)
 data_col$source <- "CoL"
 
 # clean data_dsmz
@@ -761,6 +763,7 @@ new_families <- MOs %>%
 class(MOs$mo) <- "character"
 MOs <- rbind(MOs %>% filter(!(rank == "family" & fullname %in% new_families)), 
              AMR::microorganisms %>%
+               select(-snomed) %>% 
                filter(family == "Enterobacteriaceae" & rank == "family") %>%
                rbind(., ., ., ., ., ., .) %>% 
                mutate(fullname = new_families,
@@ -794,7 +797,9 @@ colnames(MOs)
 MOs %>% arrange(fullname) %>% filter(!fullname %in% AMR::microorganisms$fullname) %>% View()
 MOs.old %>% arrange(fullname) %>% filter(!fullname %in% AMR::microorganisms.old$fullname) %>% View()
 # and the ones we lost:
-AMR::microorganisms %>% filter(!fullname %in% MOs$fullname) %>% View()
+AMR::microorganisms %>% filter(!fullname %in% MOs$fullname) %>% View() # based on fullname
+AMR::microorganisms %>% filter(!mo %in% MOs$mo) %>% View()             # based on mo
+AMR::microorganisms %>% filter(!mo %in% MOs$mo & !fullname %in% MOs$fullname) %>% View() 
 # and these IDs have changed:
 old_new <- MOs %>%
   mutate(kingdom_fullname = paste(kingdom, fullname)) %>% 
@@ -805,24 +810,41 @@ old_new <- MOs %>%
 
 View(old_new)
 # to keep all the old IDs:
-# MOs <- MOs %>% filter(!mo %in% old_new$mo_new) %>% 
+# MOs <- MOs %>% filter(!mo %in% old_new$mo_new) %>%
 #   rbind(microorganisms %>%
 #           filter(mo %in% old_new$mo_old) %>%
 #           select(mo, fullname) %>%
-#           left_join(MOs %>% 
+#           left_join(MOs %>%
 #                       select(-mo), by = "fullname"))
 
 # and these codes are now missing (which will throw a unit test error):
 AMR::microorganisms.codes %>% filter(!mo %in% MOs$mo)
 AMR::rsi_translation %>% filter(!mo %in% MOs$mo)
-AMR::microorganisms.translation %>% filter(!mo_new %in% MOs$mo)
+AMR:::microorganisms.translation %>% filter(!mo_new %in% MOs$mo) %>% View()
 # this is how to fix it
 microorganisms.codes <- AMR::microorganisms.codes %>% 
   left_join(MOs %>%
               mutate(kingdom_fullname = paste(kingdom, fullname)) %>% 
-              left_join(AMR::microorganisms  %>%
-                          mutate(kingdom_fullname = paste(kingdom, fullname)) %>% 
-                          select(mo, kingdom_fullname), by = "kingdom_fullname", suffix = c("_new", "_old")) %>%
+              left_join(AMR::microorganisms %>%
+                          transmute(mo, kingdom_fullname = paste(kingdom, fullname)),
+                        by = "kingdom_fullname", suffix = c("_new", "_old")) %>%
+              select(mo_old, mo_new),
+            by = c("mo" = "mo_old")) %>% 
+  select(code, mo = mo_new) %>% 
+  filter(!is.na(mo))
+microorganisms.codes %>% filter(!mo %in% MOs$mo)
+# and for microorganisms.translation:
+microorganisms.translation <- AMR:::microorganisms.translation %>% 
+  select(mo = mo_new) %>% 
+  left_join(AMR::microorganisms %>%
+              transmute(mo, kingdom_fullname = paste(kingdom, fullname)),
+            by = "kingdom_fullname", suffix = c("_new", "_old")) %>%
+  select(mo_old, mo_new)
+  left_join(MOs %>%
+              mutate(kingdom_fullname = paste(kingdom, fullname)) %>% 
+              left_join(AMR::microorganisms %>%
+                          transmute(mo, kingdom_fullname = paste(kingdom, fullname)),
+                        by = "kingdom_fullname", suffix = c("_new", "_old")) %>%
               select(mo_old, mo_new),
             by = c("mo" = "mo_old")) %>% 
   select(code, mo = mo_new) %>% 

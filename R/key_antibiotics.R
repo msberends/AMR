@@ -245,7 +245,7 @@ key_antibiotics <- function(x,
 
 }
 
-#' @importFrom dplyr progress_estimated %>%
+#' @importFrom dplyr %>%
 #' @rdname key_antibiotics
 #' @export
 key_antibiotics_equal <- function(y,
@@ -270,7 +270,7 @@ key_antibiotics_equal <- function(y,
   result <- logical(length(x))
 
   if (info_needed == TRUE) {
-    p <- dplyr::progress_estimated(length(x))
+    p <- progress_estimated(length(x))
   }
 
   for (i in seq_len(length(x))) {

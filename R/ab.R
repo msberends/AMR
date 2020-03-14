@@ -396,9 +396,15 @@ c.ab <- function(x, ...) {
   class_integrity_check(y, "antimicrobial code", antibiotics$ab)
 }
 
-#' @importFrom pillar type_sum
+#' @importFrom vctrs vec_ptype_abbr
 #' @export
-type_sum.ab <- function(x) {
+vec_ptype_abbr.ab <- function(x, ...) {
+  "ab"
+}
+
+#' @importFrom vctrs vec_ptype_full
+#' @export
+vec_ptype_full.ab <- function(x, ...) {
   "ab"
 }
 

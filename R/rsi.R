@@ -659,9 +659,15 @@ barplot.rsi <- function(height,
   }
 }
 
-#' @importFrom pillar type_sum
+#' @importFrom vctrs vec_ptype_abbr
 #' @export
-type_sum.rsi <- function(x) {
+vec_ptype_abbr.rsi <- function(x, ...) {
+  "rsi"
+}
+
+#' @importFrom vctrs vec_ptype_full
+#' @export
+vec_ptype_full.rsi <- function(x, ...) {
   "rsi"
 }
 
