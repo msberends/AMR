@@ -17,16 +17,16 @@
 <link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png" />
 
 <!-- jquery -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
-<link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/flatly/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.4.0/flatly/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
 
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script>
 
 <!-- Font Awesome icons -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/all.min.css" integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78=" crossorigin="anonymous" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/v4-shims.min.css" integrity="sha256-6qHlizsOWFskGlwVOKuns+D1nB6ssZrHQrNj1wGplHc=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.1/css/all.min.css" integrity="sha256-PbSmjxuVAzJ6FPvNYsrXygfGhNJYyZ2GktDbkMBqQZg=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.1/css/v4-shims.min.css" integrity="sha256-A6jcAdwFD48VMjlI3GDxUd+eCQa7/KWy6G9oe/ovaPA=" crossorigin="anonymous" />
 
 <!-- clipboard.js -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script>
@@ -47,8 +47,7 @@
 <meta property="og:title" content="Use predefined reference data set — mo_source" />
 <meta property="og:description" content="These functions can be used to predefine your own reference to be used in as.mo() and consequently all mo_* functions like mo_genus() and mo_gramstain().
 This is the fastest way to have your organisation (or analysis) specific codes picked up and translated by this package." />
-<meta property="og:image" content="https://msberends.gitlab.io/AMR/logo.png" />
-<meta name="twitter:card" content="summary" />
+<meta property="og:image" content="/logo.svg" />
 
 
 
@@ -80,7 +79,7 @@ This is the fastest way to have your organisation (or analysis) specific codes p
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.0.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.0.1.9004</span>
       </span>
     </div>
 
@@ -114,6 +113,13 @@ This is the fastest way to have your organisation (or analysis) specific codes p
         <span class="fa fa-dice"></span>
          
         Predict antimicrobial resistance
+      </a>
+    </li>
+    <li>
+      <a href="../articles/PCA.html">
+        <span class="fa fa-compress"></span>
+         
+        Conduct principal component analysis for AMR
       </a>
     </li>
     <li>
@@ -256,9 +262,8 @@ This is the fastest way to have your organisation (or analysis) specific codes p
 4 |                    |              |
 </pre>
 
-<p>We save it as <code>"home/me/ourcodes.xlsx"</code>. Now we have to set it as a source:</p><pre>set_mo_source("home/me/ourcodes.xlsx")
-# Created mo_source file '~/.mo_source.rds' from 'home/me/ourcodes.xlsx'.
-</pre>
+<p>We save it as <code>"home/me/ourcodes.xlsx"</code>. Now we have to set it as a source:</p><pre><span class='fu'>set_mo_source</span>(<span class='st'>"home/me/ourcodes.xlsx"</span>)
+<span class='co'># Created mo_source file '~/.mo_source.rds' from 'home/me/ourcodes.xlsx'.</span></pre>
 
 <p>It has now created a file <code>"~/.mo_source.rds"</code> with the contents of our Excel file, but only the first column with foreign values and the 'mo' column will be kept.</p>
 <p>And now we can use it in our functions:</p><pre>as.mo("lab_mo_ecoli")
@@ -289,9 +294,8 @@ mo_genus("lab_Staph_aureus")
 [1] "Staphylococcus"
 </pre>
 
-<p>To remove the reference data file completely, just use <code>""</code> or <code>NULL</code> as input for <code>[set_mo_source()]</code>:</p><pre>set_mo_source(NULL)
-# Removed mo_source file '~/.mo_source.rds'.
-</pre>
+<p>To remove the reference data file completely, just use <code>""</code> or <code>NULL</code> as input for <code>[set_mo_source()]</code>:</p><pre><span class='fu'>set_mo_source</span>(<span class='kw'>NULL</span>)
+<span class='co'># Removed mo_source file '~/.mo_source.rds'.</span></pre>
 
 
     <h2 class="hasAnchor" id="stable-lifecycle"><a class="anchor" href="#stable-lifecycle"></a>Stable lifecycle</h2>
@@ -308,7 +312,7 @@ The <a href='lifecycle.html'>lifecycle</a> of this function is <strong>stable</s
 <p>On our website <a href='https://msberends.gitlab.io/AMR'>https://msberends.gitlab.io/AMR</a> you can find <a href='https://msberends.gitlab.io/AMR/articles/AMR.html'>a comprehensive tutorial</a> about how to conduct AMR analysis, the <a href='https://msberends.gitlab.io/AMR/reference'>complete documentation of all functions</a> (which reads a lot easier than here in R) and <a href='https://msberends.gitlab.io/AMR/articles/WHONET.html'>an example analysis using WHONET data</a>.</p>
 
   </div>
-  <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
+  <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
@@ -327,7 +331,7 @@ The <a href='lifecycle.html'>lifecycle</a> of this function is <strong>stable</s
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.9000.</p>
 </div>
 
       </footer>

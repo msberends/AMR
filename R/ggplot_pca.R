@@ -21,7 +21,7 @@
 
 #' PCA biplot with `ggplot2`
 #'
-#' This function is to produce a `ggplot2` variant of a so-called [biplot](https://en.wikipedia.org/wiki/Biplot) for PCA (principal component analysis), but is more flexible and more appealing than the base \R [biplot()] function.
+#' Produces a `ggplot2` variant of a so-called [biplot](https://en.wikipedia.org/wiki/Biplot) for PCA (principal component analysis), but is more flexible and more appealing than the base \R [biplot()] function.
 #' @inheritSection lifecycle Maturing lifecycle
 #' @param x an object returned by [pca()], [prcomp()] or [princomp()]
 #' @inheritParams stats::biplot.prcomp

@@ -254,3 +254,46 @@ pillar_shaft.mic <- function(x, ...) {
   out[is.na(x)] <- pillar::style_na(NA)
   pillar::new_pillar_shaft_simple(out, align = "right", min_width = 4)
 }
+
+#' @exportMethod [.mic
+#' @export
+#' @noRd
+"[.mic" <- function(x, ...) {
+  y <- NextMethod()
+  attributes(y) <- attributes(x)
+  y
+}
+#' @exportMethod [[.mic
+#' @export
+#' @noRd
+"[[.mic" <- function(x, ...) {
+  y <- NextMethod()
+  attributes(y) <- attributes(x)
+  y
+}
+#' @exportMethod [<-.mic
+#' @export
+#' @noRd
+"[<-.mic" <- function(i, j, ..., value) {
+  value <- as.mic(value)
+  y <- NextMethod()
+  attributes(y) <- attributes(i)
+  y
+}
+#' @exportMethod [[<-.mic
+#' @export
+#' @noRd
+"[[<-.mic" <- function(i, j, ..., value) {
+  value <- as.mic(value)
+  y <- NextMethod()
+  attributes(y) <- attributes(i)
+  y
+}
+#' @exportMethod c.mic
+#' @export
+#' @noRd
+c.mic <- function(x, ...) {
+  y <- NextMethod()
+  attributes(y) <- attributes(i)
+  y
+}

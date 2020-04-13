@@ -301,7 +301,7 @@ antibiotics[which(antibiotics$ab == "FLC"), "abbreviations"][[1]] <- list(c("clo
 antibiotics[which(antibiotics$ab == "CEC"), "abbreviations"][[1]] <- list(c(antibiotics[which(antibiotics$ab == "CEC"), "abbreviations"][[1]], "CFC")) # cefaclor old WHONET4 code
 antibiotics[which(antibiotics$ab == "AMX"), "synonyms"][[1]] <- list(sort(c(antibiotics[which(antibiotics$ab == "AMX"), "synonyms"][[1]], "Amoxy")))
 # 'Polymixin B' (POL) and 'Polymyxin B' (PLB) both exist, so:
-antibiotics[which(antibiotics$ab == "PLB"), "abbreviations"][[1]] <- list(c(antibiotics[which(antibiotics$ab == "PLB"), "abbreviations"][[1]], "POL", "Polymixin", "Polymixin B"))
+antibiotics[which(antibiotics$ab == "PLB"), "abbreviations"][[1]] <- list(c(antibiotics[which(antibiotics$ab == "PLB"), "abbreviations"][[1]], "POL", "Polymixin", "Polymixin B", "Poly B"))
 antibiotics <- filter(antibiotics, ab != "POL")
 # 'Latamoxef' (LTM) and 'Moxalactam (Latamoxef)' (MOX) both exist, so:
 antibiotics[which(antibiotics$ab == "LTM"), "abbreviations"][[1]] <- list(c("MOX", "moxa"))
@@ -323,7 +323,19 @@ antibiotics[which(antibiotics$ab == as.ab("cefotaxim")), "abbreviations"][[1]] <
 antibiotics[which(antibiotics$ab == as.ab("ceftazidime")), "abbreviations"][[1]] <- list(c(antibiotics[which(antibiotics$ab == as.ab("ceftazidime")), "abbreviations"][[1]], "cftz"))
 antibiotics[which(antibiotics$ab == as.ab("cefepime")), "abbreviations"][[1]] <- list(c(antibiotics[which(antibiotics$ab == as.ab("cefepime")), "abbreviations"][[1]], "cfpi"))
 antibiotics[which(antibiotics$ab == as.ab("cefoxitin")), "abbreviations"][[1]] <- list(c(antibiotics[which(antibiotics$ab == as.ab("cefoxitin")), "abbreviations"][[1]], "cfxt"))
-antibiotics[which(antibiotics$ab == as.ab("cotrimoxazol")), "abbreviations"][[1]] <- list(c(antibiotics[which(antibiotics$ab == as.ab("cotrimoxazol")), "abbreviations"][[1]], "trsx"))
+# More GLIMS codes
+antibiotics[which(antibiotics$ab == "CAZ"), "abbreviations"][[1]] <- list(c(antibiotics[which(antibiotics$ab == "CAZ"), "abbreviations"][[1]], "cftz"))
+antibiotics[which(antibiotics$ab == "CRO"), "abbreviations"][[1]] <- list(c(antibiotics[which(antibiotics$ab == "CRO"), "abbreviations"][[1]], "cftr"))
+antibiotics[which(antibiotics$ab == "CTX"), "abbreviations"][[1]] <- list(c(antibiotics[which(antibiotics$ab == "CTX"), "abbreviations"][[1]], "cftx"))
+antibiotics[which(antibiotics$ab == "CXM"), "abbreviations"][[1]] <- list(c(antibiotics[which(antibiotics$ab == "CXM"), "abbreviations"][[1]], "cfrx"))
+antibiotics[which(antibiotics$ab == "CZO"), "abbreviations"][[1]] <- list(c(antibiotics[which(antibiotics$ab == "CZO"), "abbreviations"][[1]], "cfzl"))
+antibiotics[which(antibiotics$ab == "FOX"), "abbreviations"][[1]] <- list(c(antibiotics[which(antibiotics$ab == "FOX"), "abbreviations"][[1]], "cfxt"))
+antibiotics[which(antibiotics$ab == "PIP"), "abbreviations"][[1]] <- list(c(antibiotics[which(antibiotics$ab == "PIP"), "abbreviations"][[1]], "pipc"))
+antibiotics[which(antibiotics$ab == "PIP"), "abbreviations"][[1]] <- list(c(antibiotics[which(antibiotics$ab == "PIP"), "abbreviations"][[1]], "PIPC"))
+antibiotics[which(antibiotics$ab == "SXT"), "abbreviations"][[1]] <- list(c(antibiotics[which(antibiotics$ab == "SXT"), "abbreviations"][[1]], "COTRIM"))
+antibiotics[which(antibiotics$ab == "SXT"), "abbreviations"][[1]] <- list(c(antibiotics[which(antibiotics$ab == "SXT"), "abbreviations"][[1]], "trsx"))
+antibiotics[which(antibiotics$ab == "TZP"), "abbreviations"][[1]] <- list(c(antibiotics[which(antibiotics$ab == "TZP"), "abbreviations"][[1]], "PIPTAZ"))
+antibiotics[which(antibiotics$ab == "TZP"), "abbreviations"][[1]] <- list(c(antibiotics[which(antibiotics$ab == "TZP"), "abbreviations"][[1]], "pita"))
 # ESBL E-test codes:
 antibiotics[which(antibiotics$ab == "CCV"), "abbreviations"][[1]] <- list(c("xtzl"))
 antibiotics[which(antibiotics$ab == "CAZ"), "abbreviations"][[1]] <- list(c(antibiotics[which(antibiotics$ab == "CAZ"), "abbreviations"][[1]], "xtz", "cefta"))
@@ -351,7 +363,6 @@ old_sym <- old_sym[!old_sym %in% c("Cotrimoxazole", "Bactrimel")]
 antibiotics[which(antibiotics$ab == "SMX"), "synonyms"][[1]] <- list(old_sym)
 antibiotics[which(antibiotics$ab == "SXT"), "synonyms"][[1]] <- list(sort(unique(c(antibiotics[which(antibiotics$ab == "COL"), "synonyms"][[1]], "Cotrimoxazole", "Bactrimel", "Septra", "Bactrim", "Cotrimazole"))))
 
-
 ## new ATC codes
 # ceftaroline
 antibiotics[which(antibiotics$ab == "CPT"), "atc"] <- "J01DI02"
@@ -362,7 +373,6 @@ antibiotics[which(antibiotics$ab == "BPR"), "atc"] <- "J01DI01"
 
 # typo
 antibiotics[which(antibiotics$ab == "RXT"), "name"] <- "Roxithromycin"
-
 antibiotics[which(antibiotics$ab == "PEN"), "atc"] <- "J01CE01"
 
 
@@ -408,8 +418,15 @@ antibiotics <- antibiotics %>%
 antibiotics <- as.data.frame(antibiotics, stringsAsFactors = FALSE)
 class(antibiotics$ab) <- "ab"
 
+# make all abbreviations and synonyms lower case, unique and alphabetically sorted
+for (i in 1:nrow(antibiotics)) {
+  abb <- sort(unique(tolower(antibiotics[i, "abbreviations"][[1]])))
+  syn <- sort(unique(tolower(antibiotics[i, "synonyms"][[1]])))
+  antibiotics[i, "abbreviations"][[1]] <- ifelse(length(abb[!abb == ""]) == 0, list(""), list(abb))
+  antibiotics[i, "synonyms"][[1]] <- ifelse(length(syn[!syn == ""]) == 0, list(""), list(syn))
+}
+
 # REFER TO data-raw/loinc.R FOR ADDING LOINC CODES
 
-dim(antibiotics) # for R/data.R
 usethis::use_data(antibiotics, overwrite = TRUE)
 rm(antibiotics)

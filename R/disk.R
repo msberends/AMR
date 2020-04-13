@@ -159,6 +159,7 @@ vec_ptype_full.disk <- function(x, ...) {
 #' @export
 #' @noRd
 "[<-.disk" <- function(i, j, ..., value) {
+  value <- as.disk(value)
   y <- NextMethod()
   attributes(y) <- attributes(i)
   y
@@ -167,6 +168,7 @@ vec_ptype_full.disk <- function(x, ...) {
 #' @export
 #' @noRd
 "[[<-.disk" <- function(i, j, ..., value) {
+  value <- as.disk(value)
   y <- NextMethod()
   attributes(y) <- attributes(i)
   y
@@ -176,6 +178,7 @@ vec_ptype_full.disk <- function(x, ...) {
 #' @noRd
 c.disk <- function(x, ...) {
   y <- NextMethod()
+  y <- as.disk(y)
   attributes(y) <- attributes(x)
   y
 }

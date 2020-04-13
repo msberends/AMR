@@ -890,6 +890,5 @@ rm(microorganisms.translation)
 devtools::load_all(".")
 
 # TO DO AFTER THIS
-# * Update the year and dim()s in R/data.R
 # * Rerun data-raw/reproduction_of_rsi_translation.R
 # * Run unit tests

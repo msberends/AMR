@@ -226,7 +226,7 @@ as.rsi.mic <- function(x, mo, ab = deparse(substitute(x)), guideline = "EUCAST",
     uti <- rep(uti, length(x))
   }
   
-  message(blue(paste0("=> Interpreting MIC values of column `", bold(ab), "` (",
+  message(blue(paste0("=> Interpreting MIC values of `", bold(ab), "` (",
                       ifelse(ab_coerced != ab, paste0(ab_coerced, ", "), ""),
                       ab_name(ab_coerced, tolower = TRUE), ") using guideline ", bold(guideline_coerced), " ... ")),
           appendLF = FALSE)
@@ -263,7 +263,7 @@ as.rsi.disk <- function(x, mo, ab = deparse(substitute(x)), guideline = "EUCAST"
     uti <- rep(uti, length(x))
   }
   
-  message(blue(paste0("=> Interpreting disk zones of column `", bold(ab), "` (",
+  message(blue(paste0("=> Interpreting disk zones of `", bold(ab), "` (",
                       ifelse(ab_coerced != ab, paste0(ab_coerced, ", "), ""),
                       ab_name(ab_coerced, tolower = TRUE), ") using guideline ", bold(guideline_coerced), " ... ")),
           appendLF = FALSE)
@@ -681,4 +681,31 @@ pillar_shaft.rsi <- function(x, ...) {
   out[x == "I"] <- bgYellow(black(" I "))
   out[x == "R"] <- bgRed(white(" R "))
   pillar::new_pillar_shaft_simple(out, align = "left", width = 3)
+}
+
+#' @exportMethod [<-.rsi
+#' @export
+#' @noRd
+"[<-.rsi" <- function(i, j, ..., value) {
+  value <- as.rsi(value)
+  y <- NextMethod()
+  attributes(y) <- attributes(i)
+  y
+}
+#' @exportMethod [[<-.rsi
+#' @export
+#' @noRd
+"[[<-.rsi" <- function(i, j, ..., value) {
+  value <- as.rsi(value)
+  y <- NextMethod()
+  attributes(y) <- attributes(i)
+  y
+}
+#' @exportMethod c.rsi
+#' @export
+#' @noRd
+c.rsi <- function(x, ...) {
+  y <- unlist(lapply(list(...), as.character))
+  x <- as.character(x)
+  as.rsi(c(x, y))
 }

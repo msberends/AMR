@@ -4,7 +4,7 @@
 \name{antibiotics}
 \alias{antibiotics}
 \alias{antivirals}
-\title{Data sets with ~550 antimicrobials}
+\title{Data sets with 554 antimicrobials}
 \format{
 \subsection{For the \link{antibiotics} data set: a \code{\link{data.frame}} with 452 observations and 14 variables:}{
 \itemize{

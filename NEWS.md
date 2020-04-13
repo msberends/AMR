@@ -1,12 +1,22 @@
-# AMR 1.0.1.9004
-## <small>Last updated: 14-Mar-2020</small>
+# AMR 1.0.1.9005
+## <small>Last updated: 13-Apr-2020</small>
 
 ### New
 * Support for easy principal component analysis for AMR, using the new `pca()` function 
 * Plotting biplots for principal component analysis using the new `ggplot_pca()` function
 
+### Changed
+* Improvements for the algorithm used by `as.mo()` (and consequently all `mo_*` functions, that use `as.mo()` internally):
+  * Support for codes ending with `SPE` for species, like `"ESCSPE"` for *Escherichia coli*
+  * Support for any encoding, which means that any language-specific character with accents can be used for input
+  * Support for more arbitrary IDs used in laboratory information systems
+  * Small fix for preventing viruses being treated as bacteria
+  * Small fix for preventing contamination and lack of growth being treated as valid microorganisms
+* Added more abbreviations to the `antibiotics` data set
+
 ### Other
 * Support for the upcoming `dplyr` version 1.0.0
+* More robust assigning for classes `rsi` and `mic`
 
 # AMR 1.0.1
 

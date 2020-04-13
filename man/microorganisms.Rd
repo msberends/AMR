@@ -3,7 +3,7 @@
 \docType{data}
 \name{microorganisms}
 \alias{microorganisms}
-\title{Data set with ~70,000 microorganisms}
+\title{Data set with 69,447 microorganisms}
 \format{
 A \code{\link{data.frame}} with 69,447 observations and 17 variables:
 \itemize{
@@ -38,7 +38,7 @@ Manually added were:
 \item 3 entries of \emph{Trichomonas} (\emph{Trichomonas vaginalis}, and its family and genus)
 \item 1 entry of \emph{Blastocystis} (\emph{Blastocystis hominis}), although it officially does not exist (Noel \emph{et al.} 2005, PMID 15634993)
 \item 5 other 'undefined' entries (unknown, unknown Gram negatives, unknown Gram positives, unknown yeast and unknown fungus)
-\item 6 families under the Enterobacterales order, according to Adeolu \emph{et al.} (2016, PMID 27620848), that are not in the Catalogue of Life
+\item 6 families under the Enterobacterales order, according to Adeolu \emph{et al.} (2016, PMID 27620848), that are not (yet) in the Catalogue of Life
 \item 12,600 species from the DSMZ (Deutsche Sammlung von Mikroorganismen und Zellkulturen) since the DSMZ contain the latest taxonomic information based on recent publications
 }
 \subsection{Direct download}{

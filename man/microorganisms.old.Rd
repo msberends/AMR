@@ -5,7 +5,7 @@
 \alias{microorganisms.old}
 \title{Data set with previously accepted taxonomic names}
 \format{
-A \code{\link{data.frame}} with 24,246 observations and 5 variables:
+A \code{\link{data.frame}} with 24,253 observations and 5 variables:
 \itemize{
 \item \code{col_id}\cr Catalogue of Life ID that was originally given
 \item \code{col_id_new}\cr New Catalogue of Life ID that responds to an entry in the \link{microorganisms} data set

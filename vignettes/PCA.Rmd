@@ -77,7 +77,7 @@ Good news. The first two components explain a total of `r cleaner::percentage(su
 biplot(pca_result)
 ```
 
-But we can't see the explanation of the points. Perhaps this works better with the new `ggplot_pca()` function, that automatically adds the right labels and even groups:
+But we can't see the explanation of the points. Perhaps this works better with our new `ggplot_pca()` function, that automatically adds the right labels and even groups:
 
 ```{r}
 ggplot_pca(pca_result)
@@ -86,6 +86,7 @@ ggplot_pca(pca_result)
 You can also print an ellipse per group, and edit the appearance:
 
 ```{r}
+
 ggplot_pca(pca_result, ellipse = TRUE) +
   ggplot2::labs(title = "An AMR/PCA biplot!")
 ```

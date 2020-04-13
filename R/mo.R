@@ -177,8 +177,14 @@ as.mo <- function(x,
   
   check_dataset_integrity()
   
+  # start off with replaced language-specific non-ASCII characters with ASCII characters
+  x <- parse_encoding(x)
+  
   # WHONET: xxx = no growth
   x[tolower(as.character(paste0(x, ""))) %in% c("", "xxx", "na", "nan")] <- NA_character_
+  # Laboratory systems: remove entries like "no growth" etc
+  x[trimws2(x) %like% "(no .*growth|keine? .*wachtstum|geen .*groei|no .*crecimientonon|sem .*crescimento|pas .*croissance)"] <- NA_character_
+  x[trimws2(x) %like% "^(no|not|kein|geen|niet|non|sem) [a-z]+"] <- "UNKNOWN"
   
   uncertainty_level <- translate_allow_uncertain(allow_uncertain)
 
@@ -256,9 +262,15 @@ exec_as.mo <- function(x,
   
   check_dataset_integrity()
   
+  # start off with replaced language-specific non-ASCII characters with ASCII characters
+  x <- parse_encoding(x)
+
   # WHONET: xxx = no growth
   x[tolower(as.character(paste0(x, ""))) %in% c("", "xxx", "na", "nan")] <- NA_character_
-  
+  # Laboratory systems: remove entries like "no growth" etc
+  x[trimws2(x) %like% "(no .*growth|keine? .*wachtstum|geen .*groei|no .*crecimientonon|sem .*crescimento|pas .*croissance)"] <- NA_character_
+  x[trimws2(x) %like% "^(no|not|kein|geen|niet|non|sem) [a-z]+"] <- "UNKNOWN"
+
   if (initial_search == TRUE) {
     options(mo_failures = NULL)
     options(mo_uncertainties = NULL)
@@ -298,7 +310,7 @@ exec_as.mo <- function(x,
   
   x_input <- x
   # already strip leading and trailing spaces
-  x <- trimws(x, which = "both")
+  x <- trimws(x)
   # only check the uniques, which is way faster
   x <- unique(x)
   # remove empty values (to later fill them in again with NAs)
@@ -417,7 +429,7 @@ exec_as.mo <- function(x,
     strip_whitespace <- function(x, dyslexia_mode) {
       # all whitespaces (tab, new lines, etc.) should be one space
       # and spaces before and after should be omitted
-      trimmed <- trimws(gsub("[\\s]+", " ", x, perl = TRUE), which = "both")
+      trimmed <- trimws2(x)
       # also, make sure the trailing and leading characters are a-z or 0-9
       # in case of non-regex
       if (dyslexia_mode == FALSE) {
@@ -439,8 +451,9 @@ exec_as.mo <- function(x,
     # remove spp and species
     x <- gsub(" +(spp.?|ssp.?|sp.? |ss ?.?|subsp.?|subspecies|biovar |serovar |species)", " ", x)
     x <- gsub("(spp.?|subsp.?|subspecies|biovar|serovar|species)", "", x)
+    x <- gsub("^([a-z]{2,4})(spe.?)$", "\\1", x) # when ending in SPE instead of SPP and preceded by 2-4 characters
     x <- strip_whitespace(x, dyslexia_mode)
-    
+
     x_backup_without_spp <- x
     x_species <- paste(x, "species")
     # translate to English for supported languages of mo_property
@@ -454,6 +467,8 @@ exec_as.mo <- function(x,
     x <- gsub("(hefe|gist|gisten|levadura|lievito|fermento|levure)[a-z]*", "yeast", x)
     x <- gsub("(schimmels?|mofo|molde|stampo|moisissure|fungi)[a-z]*", "fungus", x)
     x <- gsub("fungus[ph|f]rya", "fungiphrya", x)
+    # no contamination
+    x <- gsub("(contamination|kontamination|mengflora|contaminaci.n|contamina..o)", "", x)
     # remove non-text in case of "E. coli" except dots and spaces
     x <- trimws(gsub("[^.a-zA-Z0-9/ \\-]+", " ", x))
     # but make sure that dots are followed by a space
@@ -680,8 +695,8 @@ exec_as.mo <- function(x,
         next
       }
       
-      if (x_backup_without_spp[i] %like_case% "virus") {
-        # there is no fullname like virus, so don't try to coerce it
+      if (x_backup_without_spp[i] %like_case% "(virus|viridae)") {
+        # there is no fullname like virus or viridae, so don't try to coerce it
         x[i] <- NA_character_
         next
       }
@@ -1467,7 +1482,8 @@ exec_as.mo <- function(x,
     if (n_distinct(failures) > 1) {
       plural <- c("values", "them", "were")
     }
-    total_failures <- length(x_input[as.character(x_input) %in% as.character(failures) & !x_input %in% c(NA, NULL, NaN)])
+    x_input_clean <- trimws2(x_input)
+    total_failures <- length(x_input_clean[as.character(x_input_clean) %in% as.character(failures) & !x_input %in% c(NA, NULL, NaN)])
     total_n <- length(x_input[!x_input %in% c(NA, NULL, NaN)])
     msg <- paste0(nr2char(n_distinct(failures)), " unique ", plural[1],
                   " (covering ", percentage(total_failures / total_n),
@@ -1475,7 +1491,7 @@ exec_as.mo <- function(x,
     if (n_distinct(failures) <= 10) {
       msg <- paste0(msg, ": ", paste('"', unique(failures), '"', sep = "", collapse = ", "))
     }
-    msg <- paste0(msg,  ". Use mo_failures() to review ", plural[2], ". Edit the `allow_uncertain` parameter if needed (see ?as.mo).")
+    msg <- paste0(msg,  ".\nUse mo_failures() to review ", plural[2], ". Edit the `allow_uncertain` parameter if needed (see ?as.mo).")
     warning(red(paste0("\n", msg)),
             call. = FALSE,
             immediate. = TRUE) # thus will always be shown, even if >= warnings
@@ -1787,6 +1803,7 @@ as.data.frame.mo <- function(x, ...) {
 "[<-.mo" <- function(i, j, ..., value) {
   y <- NextMethod()
   attributes(y) <- attributes(i)
+  # must only contain valid MOs
   class_integrity_check(y, "microorganism code", c(as.character(microorganisms$mo), 
                                                    as.character(microorganisms.translation$mo_old)))
 }
@@ -1796,6 +1813,7 @@ as.data.frame.mo <- function(x, ...) {
 "[[<-.mo" <- function(i, j, ..., value) {
   y <- NextMethod()
   attributes(y) <- attributes(i)
+  # must only contain valid MOs
   class_integrity_check(y, "microorganism code", c(as.character(microorganisms$mo), 
                                                    as.character(microorganisms.translation$mo_old)))
 }
@@ -1805,6 +1823,7 @@ as.data.frame.mo <- function(x, ...) {
 c.mo <- function(x, ...) {
   y <- NextMethod()
   attributes(y) <- attributes(x)
+  # must only contain valid MOs
   class_integrity_check(y, "microorganism code", c(as.character(microorganisms$mo), 
                                                    as.character(microorganisms.translation$mo_old)))
 }
@@ -1948,4 +1967,16 @@ levenshtein_fraction <- function(input, output) {
   }
   # self-made score between 0 and 1 (for % certainty, so 0 means huge distance, 1 means no distance)
   (base::nchar(output) - 0.5 * levenshtein) / nchar(output)
+}
+
+trimws2 <- function(x) {
+  trimws(gsub("[\\s]+", " ", x, perl = TRUE))
+}
+
+parse_encoding <- function(x) {
+  tryCatch({
+    parsed <- iconv(x, to = "UTF-8")
+    parsed[is.na(parsed) & !is.na(x)] <- iconv(x[is.na(parsed) & !is.na(x)], from = "Latin1", to = "ASCII//TRANSLIT")
+    gsub('"', "", parsed, fixed = TRUE)
+  }, error = function(e) stop(e$message, call. = FALSE))
 }

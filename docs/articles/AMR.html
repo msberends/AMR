@@ -12,15 +12,14 @@
 <link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png">
 <link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png">
 <link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png">
-<!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script><!-- Bootstrap --><link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/flatly/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/all.min.css" integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78=" crossorigin="anonymous">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/v4-shims.min.css" integrity="sha256-6qHlizsOWFskGlwVOKuns+D1nB6ssZrHQrNj1wGplHc=" crossorigin="anonymous">
+<!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script><!-- Bootstrap --><link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.4.0/flatly/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.1/css/all.min.css" integrity="sha256-PbSmjxuVAzJ6FPvNYsrXygfGhNJYyZ2GktDbkMBqQZg=" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.1/css/v4-shims.min.css" integrity="sha256-A6jcAdwFD48VMjlI3GDxUd+eCQa7/KWy6G9oe/ovaPA=" crossorigin="anonymous">
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/headroom.min.js" integrity="sha256-DJFC1kqIhelURkuza0AvYal5RxMtpzLjFhsnVIeuk+U=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
 <script src="../pkgdown.js"></script><link href="../extra.css" rel="stylesheet">
 <script src="../extra.js"></script><meta property="og:title" content="How to conduct AMR analysis">
-<meta property="og:description" content="">
-<meta property="og:image" content="https://msberends.gitlab.io/AMR/logo.png">
-<meta name="twitter:card" content="summary">
+<meta property="og:description" content="AMR">
+<meta property="og:image" content="/logo.svg">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
@@ -39,7 +38,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.0.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.0.1.9004</span>
       </span>
     </div>
 
@@ -73,6 +72,13 @@
         <span class="fa fa-dice"></span>
          
         Predict antimicrobial resistance
+      </a>
+    </li>
+    <li>
+      <a href="../articles/PCA.html">
+        <span class="fa fa-compress"></span>
+         
+        Conduct principal component analysis for AMR
       </a>
     </li>
     <li>
@@ -179,7 +185,7 @@
       <h1>How to conduct AMR analysis</h1>
                         <h4 class="author">Matthijs S. Berends</h4>
             
-            <h4 class="date">23 February 2020</h4>
+            <h4 class="date">17 March 2020</h4>
       
       
       <div class="hidden name"><code>AMR.Rmd</code></div>
@@ -188,7 +194,7 @@
 
     
     
-<p><strong>Note:</strong> values on this page will change with every website update since they are based on randomly created values and the page was written in <a href="https://rmarkdown.rstudio.com/">R Markdown</a>. However, the methodology remains unchanged. This page was generated on 23 February 2020.</p>
+<p><strong>Note:</strong> values on this page will change with every website update since they are based on randomly created values and the page was written in <a href="https://rmarkdown.rstudio.com/">R Markdown</a>. However, the methodology remains unchanged. This page was generated on 17 March 2020.</p>
 <div id="introduction" class="section level1">
 <h1 class="hasAnchor">
 <a href="#introduction" class="anchor"></a>Introduction</h1>
@@ -219,21 +225,21 @@
 </tr></thead>
 <tbody>
 <tr class="odd">
-<td align="center">2020-02-23</td>
+<td align="center">2020-03-17</td>
 <td align="center">abcd</td>
 <td align="center">Escherichia coli</td>
 <td align="center">S</td>
 <td align="center">S</td>
 </tr>
 <tr class="even">
-<td align="center">2020-02-23</td>
+<td align="center">2020-03-17</td>
 <td align="center">abcd</td>
 <td align="center">Escherichia coli</td>
 <td align="center">S</td>
 <td align="center">R</td>
 </tr>
 <tr class="odd">
-<td align="center">2020-02-23</td>
+<td align="center">2020-03-17</td>
 <td align="center">efgh</td>
 <td align="center">Escherichia coli</td>
 <td align="center">R</td>
@@ -294,24 +300,24 @@
 <div id="put-everything-together" class="section level2">
 <h2 class="hasAnchor">
 <a href="#put-everything-together" class="anchor"></a>Put everything together</h2>
-<p>Using the <code><a href="https://dplyr.tidyverse.org/reference/sample.html">sample()</a></code> function, we can randomly select items from all objects we defined earlier. To let our fake data reflect reality a bit, we will also approximately define the probabilities of bacteria and the antibiotic results with the <code>prob</code> parameter.</p>
+<p>Using the <code><a href="https://rdrr.io/r/base/sample.html">sample()</a></code> function, we can randomly select items from all objects we defined earlier. To let our fake data reflect reality a bit, we will also approximately define the probabilities of bacteria and the antibiotic results with the <code>prob</code> parameter.</p>
 <div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a>sample_size &lt;-<span class="st"> </span><span class="dv">20000</span></span>
-<span id="cb7-2"><a href="#cb7-2"></a>data &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span>(<span class="dt">date =</span> <span class="kw"><a href="https://dplyr.tidyverse.org/reference/sample.html">sample</a></span>(dates, <span class="dt">size =</span> sample_size, <span class="dt">replace =</span> <span class="ot">TRUE</span>),</span>
-<span id="cb7-3"><a href="#cb7-3"></a>                   <span class="dt">patient_id =</span> <span class="kw"><a href="https://dplyr.tidyverse.org/reference/sample.html">sample</a></span>(patients, <span class="dt">size =</span> sample_size, <span class="dt">replace =</span> <span class="ot">TRUE</span>),</span>
-<span id="cb7-4"><a href="#cb7-4"></a>                   <span class="dt">hospital =</span> <span class="kw"><a href="https://dplyr.tidyverse.org/reference/sample.html">sample</a></span>(hospitals, <span class="dt">size =</span> sample_size, <span class="dt">replace =</span> <span class="ot">TRUE</span>,</span>
+<span id="cb7-2"><a href="#cb7-2"></a>data &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span>(<span class="dt">date =</span> <span class="kw"><a href="https://rdrr.io/r/base/sample.html">sample</a></span>(dates, <span class="dt">size =</span> sample_size, <span class="dt">replace =</span> <span class="ot">TRUE</span>),</span>
+<span id="cb7-3"><a href="#cb7-3"></a>                   <span class="dt">patient_id =</span> <span class="kw"><a href="https://rdrr.io/r/base/sample.html">sample</a></span>(patients, <span class="dt">size =</span> sample_size, <span class="dt">replace =</span> <span class="ot">TRUE</span>),</span>
+<span id="cb7-4"><a href="#cb7-4"></a>                   <span class="dt">hospital =</span> <span class="kw"><a href="https://rdrr.io/r/base/sample.html">sample</a></span>(hospitals, <span class="dt">size =</span> sample_size, <span class="dt">replace =</span> <span class="ot">TRUE</span>,</span>
 <span id="cb7-5"><a href="#cb7-5"></a>                                     <span class="dt">prob =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">0.30</span>, <span class="fl">0.35</span>, <span class="fl">0.15</span>, <span class="fl">0.20</span>)),</span>
-<span id="cb7-6"><a href="#cb7-6"></a>                   <span class="dt">bacteria =</span> <span class="kw"><a href="https://dplyr.tidyverse.org/reference/sample.html">sample</a></span>(bacteria, <span class="dt">size =</span> sample_size, <span class="dt">replace =</span> <span class="ot">TRUE</span>,</span>
+<span id="cb7-6"><a href="#cb7-6"></a>                   <span class="dt">bacteria =</span> <span class="kw"><a href="https://rdrr.io/r/base/sample.html">sample</a></span>(bacteria, <span class="dt">size =</span> sample_size, <span class="dt">replace =</span> <span class="ot">TRUE</span>,</span>
 <span id="cb7-7"><a href="#cb7-7"></a>                                     <span class="dt">prob =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">0.50</span>, <span class="fl">0.25</span>, <span class="fl">0.15</span>, <span class="fl">0.10</span>)),</span>
-<span id="cb7-8"><a href="#cb7-8"></a>                   <span class="dt">AMX =</span> <span class="kw"><a href="https://dplyr.tidyverse.org/reference/sample.html">sample</a></span>(ab_interpretations, <span class="dt">size =</span> sample_size, <span class="dt">replace =</span> <span class="ot">TRUE</span>,</span>
+<span id="cb7-8"><a href="#cb7-8"></a>                   <span class="dt">AMX =</span> <span class="kw"><a href="https://rdrr.io/r/base/sample.html">sample</a></span>(ab_interpretations, <span class="dt">size =</span> sample_size, <span class="dt">replace =</span> <span class="ot">TRUE</span>,</span>
 <span id="cb7-9"><a href="#cb7-9"></a>                                 <span class="dt">prob =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">0.60</span>, <span class="fl">0.05</span>, <span class="fl">0.35</span>)),</span>
-<span id="cb7-10"><a href="#cb7-10"></a>                   <span class="dt">AMC =</span> <span class="kw"><a href="https://dplyr.tidyverse.org/reference/sample.html">sample</a></span>(ab_interpretations, <span class="dt">size =</span> sample_size, <span class="dt">replace =</span> <span class="ot">TRUE</span>,</span>
+<span id="cb7-10"><a href="#cb7-10"></a>                   <span class="dt">AMC =</span> <span class="kw"><a href="https://rdrr.io/r/base/sample.html">sample</a></span>(ab_interpretations, <span class="dt">size =</span> sample_size, <span class="dt">replace =</span> <span class="ot">TRUE</span>,</span>
 <span id="cb7-11"><a href="#cb7-11"></a>                                 <span class="dt">prob =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">0.75</span>, <span class="fl">0.10</span>, <span class="fl">0.15</span>)),</span>
-<span id="cb7-12"><a href="#cb7-12"></a>                   <span class="dt">CIP =</span> <span class="kw"><a href="https://dplyr.tidyverse.org/reference/sample.html">sample</a></span>(ab_interpretations, <span class="dt">size =</span> sample_size, <span class="dt">replace =</span> <span class="ot">TRUE</span>,</span>
+<span id="cb7-12"><a href="#cb7-12"></a>                   <span class="dt">CIP =</span> <span class="kw"><a href="https://rdrr.io/r/base/sample.html">sample</a></span>(ab_interpretations, <span class="dt">size =</span> sample_size, <span class="dt">replace =</span> <span class="ot">TRUE</span>,</span>
 <span id="cb7-13"><a href="#cb7-13"></a>                                 <span class="dt">prob =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">0.80</span>, <span class="fl">0.00</span>, <span class="fl">0.20</span>)),</span>
-<span id="cb7-14"><a href="#cb7-14"></a>                   <span class="dt">GEN =</span> <span class="kw"><a href="https://dplyr.tidyverse.org/reference/sample.html">sample</a></span>(ab_interpretations, <span class="dt">size =</span> sample_size, <span class="dt">replace =</span> <span class="ot">TRUE</span>,</span>
+<span id="cb7-14"><a href="#cb7-14"></a>                   <span class="dt">GEN =</span> <span class="kw"><a href="https://rdrr.io/r/base/sample.html">sample</a></span>(ab_interpretations, <span class="dt">size =</span> sample_size, <span class="dt">replace =</span> <span class="ot">TRUE</span>,</span>
 <span id="cb7-15"><a href="#cb7-15"></a>                                 <span class="dt">prob =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">0.92</span>, <span class="fl">0.00</span>, <span class="fl">0.08</span>)))</span></code></pre></div>
-<p>Using the <code><a href="https://dplyr.tidyverse.org/reference/join.html">left_join()</a></code> function from the <code>dplyr</code> package, we can ‘map’ the gender to the patient ID using the <code>patients_table</code> object we created earlier:</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1"></a>data &lt;-<span class="st"> </span>data <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/join.html">left_join</a></span>(patients_table)</span></code></pre></div>
+<p>Using the <code><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">left_join()</a></code> function from the <code>dplyr</code> package, we can ‘map’ the gender to the patient ID using the <code>patients_table</code> object we created earlier:</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1"></a>data &lt;-<span class="st"> </span>data <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">left_join</a></span>(patients_table)</span></code></pre></div>
 <p>The resulting data set contains 20,000 blood culture isolates. With the <code><a href="https://rdrr.io/r/utils/head.html">head()</a></code> function we can preview the first 6 rows of this data set:</p>
 <div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a><span class="kw"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(data)</span></code></pre></div>
 <table class="table">
@@ -328,9 +334,20 @@
 </tr></thead>
 <tbody>
 <tr class="odd">
-<td align="center">2014-10-31</td>
-<td align="center">B4</td>
+<td align="center">2013-12-05</td>
+<td align="center">H6</td>
 <td align="center">Hospital B</td>
+<td align="center">Escherichia coli</td>
+<td align="center">S</td>
+<td align="center">R</td>
+<td align="center">R</td>
+<td align="center">S</td>
+<td align="center">M</td>
+</tr>
+<tr class="even">
+<td align="center">2015-04-13</td>
+<td align="center">I3</td>
+<td align="center">Hospital A</td>
 <td align="center">Staphylococcus aureus</td>
 <td align="center">S</td>
 <td align="center">S</td>
@@ -338,60 +355,49 @@
 <td align="center">S</td>
 <td align="center">M</td>
 </tr>
-<tr class="even">
-<td align="center">2012-02-24</td>
-<td align="center">E10</td>
-<td align="center">Hospital B</td>
-<td align="center">Escherichia coli</td>
-<td align="center">R</td>
-<td align="center">I</td>
-<td align="center">S</td>
-<td align="center">S</td>
-<td align="center">M</td>
-</tr>
 <tr class="odd">
-<td align="center">2017-11-04</td>
-<td align="center">G1</td>
-<td align="center">Hospital B</td>
-<td align="center">Escherichia coli</td>
-<td align="center">S</td>
-<td align="center">R</td>
-<td align="center">R</td>
-<td align="center">S</td>
-<td align="center">M</td>
-</tr>
-<tr class="even">
-<td align="center">2011-10-08</td>
-<td align="center">V4</td>
-<td align="center">Hospital B</td>
-<td align="center">Escherichia coli</td>
+<td align="center">2011-10-12</td>
+<td align="center">Z1</td>
+<td align="center">Hospital C</td>
+<td align="center">Klebsiella pneumoniae</td>
 <td align="center">R</td>
 <td align="center">S</td>
 <td align="center">S</td>
 <td align="center">S</td>
 <td align="center">F</td>
 </tr>
-<tr class="odd">
-<td align="center">2016-02-16</td>
-<td align="center">K6</td>
-<td align="center">Hospital D</td>
-<td align="center">Staphylococcus aureus</td>
-<td align="center">S</td>
-<td align="center">S</td>
+<tr class="even">
+<td align="center">2011-11-05</td>
+<td align="center">D1</td>
+<td align="center">Hospital B</td>
+<td align="center">Escherichia coli</td>
+<td align="center">R</td>
 <td align="center">S</td>
 <td align="center">R</td>
+<td align="center">S</td>
 <td align="center">M</td>
 </tr>
-<tr class="even">
-<td align="center">2014-05-28</td>
-<td align="center">N6</td>
+<tr class="odd">
+<td align="center">2017-12-28</td>
+<td align="center">B7</td>
 <td align="center">Hospital C</td>
 <td align="center">Escherichia coli</td>
 <td align="center">S</td>
 <td align="center">S</td>
 <td align="center">S</td>
 <td align="center">S</td>
-<td align="center">F</td>
+<td align="center">M</td>
+</tr>
+<tr class="even">
+<td align="center">2012-07-25</td>
+<td align="center">F8</td>
+<td align="center">Hospital D</td>
+<td align="center">Escherichia coli</td>
+<td align="center">S</td>
+<td align="center">R</td>
+<td align="center">S</td>
+<td align="center">R</td>
+<td align="center">M</td>
 </tr>
 </tbody>
 </table>
@@ -423,16 +429,16 @@ Unique: 2</p>
 <tr class="odd">
 <td align="left">1</td>
 <td align="left">M</td>
-<td align="right">10,361</td>
-<td align="right">51.81%</td>
-<td align="right">10,361</td>
-<td align="right">51.81%</td>
+<td align="right">10,489</td>
+<td align="right">52.45%</td>
+<td align="right">10,489</td>
+<td align="right">52.45%</td>
 </tr>
 <tr class="even">
 <td align="left">2</td>
 <td align="left">F</td>
-<td align="right">9,639</td>
-<td align="right">48.20%</td>
+<td align="right">9,511</td>
+<td align="right">47.56%</td>
 <td align="right">20,000</td>
 <td align="right">100.00%</td>
 </tr>
@@ -472,7 +478,7 @@ Unique: 2</p>
 <span id="cb15-3"><a href="#cb15-3"></a><span class="co"># </span><span class="al">NOTE</span><span class="co">: Using column `bacteria` as input for `col_mo`.</span></span>
 <span id="cb15-4"><a href="#cb15-4"></a><span class="co"># </span><span class="al">NOTE</span><span class="co">: Using column `date` as input for `col_date`.</span></span>
 <span id="cb15-5"><a href="#cb15-5"></a><span class="co"># </span><span class="al">NOTE</span><span class="co">: Using column `patient_id` as input for `col_patient_id`.</span></span></code></pre></div>
-<p>So only 28.4% is suitable for resistance analysis! We can now filter on it with the <code><a href="https://dplyr.tidyverse.org/reference/filter.html">filter()</a></code> function, also from the <code>dplyr</code> package:</p>
+<p>So only 28.5% is suitable for resistance analysis! We can now filter on it with the <code><a href="https://dplyr.tidyverse.org/reference/filter.html">filter()</a></code> function, also from the <code>dplyr</code> package:</p>
 <div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1"></a>data_1st &lt;-<span class="st"> </span>data <span class="op">%&gt;%</span><span class="st"> </span></span>
 <span id="cb16-2"><a href="#cb16-2"></a><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span>(first <span class="op">==</span><span class="st"> </span><span class="ot">TRUE</span>)</span></code></pre></div>
 <p>For future use, the above two syntaxes can be shortened with the <code><a href="../reference/first_isolate.html">filter_first_isolate()</a></code> function:</p>
@@ -482,7 +488,7 @@ Unique: 2</p>
 <div id="first-weighted-isolates" class="section level2">
 <h2 class="hasAnchor">
 <a href="#first-weighted-isolates" class="anchor"></a>First <em>weighted</em> isolates</h2>
-<p>We made a slight twist to the CLSI algorithm, to take into account the antimicrobial susceptibility profile. Have a look at all isolates of patient Q2, sorted on date:</p>
+<p>We made a slight twist to the CLSI algorithm, to take into account the antimicrobial susceptibility profile. Have a look at all isolates of patient A2, sorted on date:</p>
 <table class="table">
 <thead><tr class="header">
 <th align="center">isolate</th>
@@ -498,10 +504,10 @@ Unique: 2</p>
 <tbody>
 <tr class="odd">
 <td align="center">1</td>
-<td align="center">2010-02-26</td>
-<td align="center">Q2</td>
+<td align="center">2010-01-14</td>
+<td align="center">A2</td>
 <td align="center">B_ESCHR_COLI</td>
-<td align="center">R</td>
+<td align="center">S</td>
 <td align="center">S</td>
 <td align="center">S</td>
 <td align="center">S</td>
@@ -509,32 +515,32 @@ Unique: 2</p>
 </tr>
 <tr class="even">
 <td align="center">2</td>
-<td align="center">2010-03-25</td>
-<td align="center">Q2</td>
+<td align="center">2010-06-29</td>
+<td align="center">A2</td>
 <td align="center">B_ESCHR_COLI</td>
 <td align="center">S</td>
 <td align="center">S</td>
-<td align="center">R</td>
+<td align="center">S</td>
 <td align="center">S</td>
 <td align="center">FALSE</td>
 </tr>
 <tr class="odd">
 <td align="center">3</td>
-<td align="center">2010-05-23</td>
-<td align="center">Q2</td>
+<td align="center">2010-07-21</td>
+<td align="center">A2</td>
 <td align="center">B_ESCHR_COLI</td>
 <td align="center">R</td>
-<td align="center">R</td>
+<td align="center">S</td>
 <td align="center">S</td>
 <td align="center">S</td>
 <td align="center">FALSE</td>
 </tr>
 <tr class="even">
 <td align="center">4</td>
-<td align="center">2010-05-24</td>
-<td align="center">Q2</td>
+<td align="center">2010-08-18</td>
+<td align="center">A2</td>
 <td align="center">B_ESCHR_COLI</td>
-<td align="center">S</td>
+<td align="center">I</td>
 <td align="center">S</td>
 <td align="center">S</td>
 <td align="center">S</td>
@@ -542,10 +548,10 @@ Unique: 2</p>
 </tr>
 <tr class="odd">
 <td align="center">5</td>
-<td align="center">2010-09-08</td>
-<td align="center">Q2</td>
+<td align="center">2010-11-16</td>
+<td align="center">A2</td>
 <td align="center">B_ESCHR_COLI</td>
-<td align="center">R</td>
+<td align="center">S</td>
 <td align="center">S</td>
 <td align="center">S</td>
 <td align="center">S</td>
@@ -553,32 +559,32 @@ Unique: 2</p>
 </tr>
 <tr class="even">
 <td align="center">6</td>
-<td align="center">2011-03-19</td>
-<td align="center">Q2</td>
+<td align="center">2011-01-29</td>
+<td align="center">A2</td>
 <td align="center">B_ESCHR_COLI</td>
-<td align="center">S</td>
-<td align="center">S</td>
 <td align="center">R</td>
+<td align="center">S</td>
+<td align="center">S</td>
 <td align="center">S</td>
 <td align="center">TRUE</td>
 </tr>
 <tr class="odd">
 <td align="center">7</td>
-<td align="center">2011-04-02</td>
-<td align="center">Q2</td>
+<td align="center">2011-03-30</td>
+<td align="center">A2</td>
 <td align="center">B_ESCHR_COLI</td>
-<td align="center">S</td>
-<td align="center">S</td>
+<td align="center">R</td>
+<td align="center">R</td>
 <td align="center">R</td>
 <td align="center">S</td>
 <td align="center">FALSE</td>
 </tr>
 <tr class="even">
 <td align="center">8</td>
-<td align="center">2011-04-05</td>
-<td align="center">Q2</td>
+<td align="center">2011-04-08</td>
+<td align="center">A2</td>
 <td align="center">B_ESCHR_COLI</td>
-<td align="center">I</td>
+<td align="center">S</td>
 <td align="center">S</td>
 <td align="center">R</td>
 <td align="center">S</td>
@@ -586,19 +592,19 @@ Unique: 2</p>
 </tr>
 <tr class="odd">
 <td align="center">9</td>
-<td align="center">2011-11-13</td>
-<td align="center">Q2</td>
+<td align="center">2011-05-09</td>
+<td align="center">A2</td>
 <td align="center">B_ESCHR_COLI</td>
 <td align="center">S</td>
 <td align="center">S</td>
-<td align="center">S</td>
+<td align="center">R</td>
 <td align="center">S</td>
 <td align="center">FALSE</td>
 </tr>
 <tr class="even">
 <td align="center">10</td>
-<td align="center">2011-11-28</td>
-<td align="center">Q2</td>
+<td align="center">2011-07-16</td>
+<td align="center">A2</td>
 <td align="center">B_ESCHR_COLI</td>
 <td align="center">S</td>
 <td align="center">S</td>
@@ -634,10 +640,10 @@ Unique: 2</p>
 <tbody>
 <tr class="odd">
 <td align="center">1</td>
-<td align="center">2010-02-26</td>
-<td align="center">Q2</td>
+<td align="center">2010-01-14</td>
+<td align="center">A2</td>
 <td align="center">B_ESCHR_COLI</td>
-<td align="center">R</td>
+<td align="center">S</td>
 <td align="center">S</td>
 <td align="center">S</td>
 <td align="center">S</td>
@@ -646,23 +652,23 @@ Unique: 2</p>
 </tr>
 <tr class="even">
 <td align="center">2</td>
-<td align="center">2010-03-25</td>
-<td align="center">Q2</td>
+<td align="center">2010-06-29</td>
+<td align="center">A2</td>
 <td align="center">B_ESCHR_COLI</td>
 <td align="center">S</td>
 <td align="center">S</td>
-<td align="center">R</td>
+<td align="center">S</td>
 <td align="center">S</td>
 <td align="center">FALSE</td>
-<td align="center">TRUE</td>
+<td align="center">FALSE</td>
 </tr>
 <tr class="odd">
 <td align="center">3</td>
-<td align="center">2010-05-23</td>
-<td align="center">Q2</td>
+<td align="center">2010-07-21</td>
+<td align="center">A2</td>
 <td align="center">B_ESCHR_COLI</td>
 <td align="center">R</td>
-<td align="center">R</td>
+<td align="center">S</td>
 <td align="center">S</td>
 <td align="center">S</td>
 <td align="center">FALSE</td>
@@ -670,44 +676,68 @@ Unique: 2</p>
 </tr>
 <tr class="even">
 <td align="center">4</td>
-<td align="center">2010-05-24</td>
-<td align="center">Q2</td>
+<td align="center">2010-08-18</td>
+<td align="center">A2</td>
 <td align="center">B_ESCHR_COLI</td>
-<td align="center">S</td>
+<td align="center">I</td>
 <td align="center">S</td>
 <td align="center">S</td>
 <td align="center">S</td>
 <td align="center">FALSE</td>
-<td align="center">TRUE</td>
+<td align="center">FALSE</td>
 </tr>
 <tr class="odd">
 <td align="center">5</td>
-<td align="center">2010-09-08</td>
-<td align="center">Q2</td>
+<td align="center">2010-11-16</td>
+<td align="center">A2</td>
 <td align="center">B_ESCHR_COLI</td>
-<td align="center">R</td>
+<td align="center">S</td>
 <td align="center">S</td>
 <td align="center">S</td>
 <td align="center">S</td>
 <td align="center">FALSE</td>
-<td align="center">TRUE</td>
+<td align="center">FALSE</td>
 </tr>
 <tr class="even">
 <td align="center">6</td>
-<td align="center">2011-03-19</td>
-<td align="center">Q2</td>
+<td align="center">2011-01-29</td>
+<td align="center">A2</td>
 <td align="center">B_ESCHR_COLI</td>
-<td align="center">S</td>
-<td align="center">S</td>
 <td align="center">R</td>
+<td align="center">S</td>
+<td align="center">S</td>
 <td align="center">S</td>
 <td align="center">TRUE</td>
 <td align="center">TRUE</td>
 </tr>
 <tr class="odd">
 <td align="center">7</td>
-<td align="center">2011-04-02</td>
-<td align="center">Q2</td>
+<td align="center">2011-03-30</td>
+<td align="center">A2</td>
+<td align="center">B_ESCHR_COLI</td>
+<td align="center">R</td>
+<td align="center">R</td>
+<td align="center">R</td>
+<td align="center">S</td>
+<td align="center">FALSE</td>
+<td align="center">TRUE</td>
+</tr>
+<tr class="even">
+<td align="center">8</td>
+<td align="center">2011-04-08</td>
+<td align="center">A2</td>
+<td align="center">B_ESCHR_COLI</td>
+<td align="center">S</td>
+<td align="center">S</td>
+<td align="center">R</td>
+<td align="center">S</td>
+<td align="center">FALSE</td>
+<td align="center">TRUE</td>
+</tr>
+<tr class="odd">
+<td align="center">9</td>
+<td align="center">2011-05-09</td>
+<td align="center">A2</td>
 <td align="center">B_ESCHR_COLI</td>
 <td align="center">S</td>
 <td align="center">S</td>
@@ -717,21 +747,9 @@ Unique: 2</p>
 <td align="center">FALSE</td>
 </tr>
 <tr class="even">
-<td align="center">8</td>
-<td align="center">2011-04-05</td>
-<td align="center">Q2</td>
-<td align="center">B_ESCHR_COLI</td>
-<td align="center">I</td>
-<td align="center">S</td>
-<td align="center">R</td>
-<td align="center">S</td>
-<td align="center">FALSE</td>
-<td align="center">FALSE</td>
-</tr>
-<tr class="odd">
-<td align="center">9</td>
-<td align="center">2011-11-13</td>
-<td align="center">Q2</td>
+<td align="center">10</td>
+<td align="center">2011-07-16</td>
+<td align="center">A2</td>
 <td align="center">B_ESCHR_COLI</td>
 <td align="center">S</td>
 <td align="center">S</td>
@@ -740,25 +758,13 @@ Unique: 2</p>
 <td align="center">FALSE</td>
 <td align="center">TRUE</td>
 </tr>
-<tr class="even">
-<td align="center">10</td>
-<td align="center">2011-11-28</td>
-<td align="center">Q2</td>
-<td align="center">B_ESCHR_COLI</td>
-<td align="center">S</td>
-<td align="center">S</td>
-<td align="center">S</td>
-<td align="center">S</td>
-<td align="center">FALSE</td>
-<td align="center">FALSE</td>
-</tr>
 </tbody>
 </table>
-<p>Instead of 2, now 7 isolates are flagged. In total, 74.8% of all isolates are marked ‘first weighted’ - 46.4% more than when using the CLSI guideline. In real life, this novel algorithm will yield 5-10% more isolates than the classic CLSI guideline.</p>
+<p>Instead of 2, now 6 isolates are flagged. In total, 75.8% of all isolates are marked ‘first weighted’ - 47.3% more than when using the CLSI guideline. In real life, this novel algorithm will yield 5-10% more isolates than the classic CLSI guideline.</p>
 <p>As with <code><a href="../reference/first_isolate.html">filter_first_isolate()</a></code>, there’s a shortcut for this new algorithm too:</p>
 <div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1"></a>data_1st &lt;-<span class="st"> </span>data <span class="op">%&gt;%</span><span class="st"> </span></span>
 <span id="cb19-2"><a href="#cb19-2"></a><span class="st">  </span><span class="kw"><a href="../reference/first_isolate.html">filter_first_weighted_isolate</a></span>()</span></code></pre></div>
-<p>So we end up with 14,960 isolates for analysis.</p>
+<p>So we end up with 15,159 isolates for analysis.</p>
 <p>We can remove unneeded columns:</p>
 <div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1"></a>data_1st &lt;-<span class="st"> </span>data_1st <span class="op">%&gt;%</span><span class="st"> </span></span>
 <span id="cb20-2"><a href="#cb20-2"></a><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span>(<span class="op">-</span><span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(first, keyab))</span></code></pre></div>
@@ -782,9 +788,24 @@ Unique: 2</p>
 </tr></thead>
 <tbody>
 <tr class="odd">
-<td align="center">2014-10-31</td>
-<td align="center">B4</td>
+<td align="center">2013-12-05</td>
+<td align="center">H6</td>
 <td align="center">Hospital B</td>
+<td align="center">B_ESCHR_COLI</td>
+<td align="center">S</td>
+<td align="center">S</td>
+<td align="center">R</td>
+<td align="center">S</td>
+<td align="center">M</td>
+<td align="center">Gram-negative</td>
+<td align="center">Escherichia</td>
+<td align="center">coli</td>
+<td align="center">TRUE</td>
+</tr>
+<tr class="even">
+<td align="center">2015-04-13</td>
+<td align="center">I3</td>
+<td align="center">Hospital A</td>
 <td align="center">B_STPHY_AURS</td>
 <td align="center">S</td>
 <td align="center">S</td>
@@ -796,76 +817,61 @@ Unique: 2</p>
 <td align="center">aureus</td>
 <td align="center">TRUE</td>
 </tr>
-<tr class="even">
-<td align="center">2012-02-24</td>
-<td align="center">E10</td>
-<td align="center">Hospital B</td>
-<td align="center">B_ESCHR_COLI</td>
-<td align="center">R</td>
-<td align="center">I</td>
-<td align="center">S</td>
-<td align="center">S</td>
-<td align="center">M</td>
-<td align="center">Gram-negative</td>
-<td align="center">Escherichia</td>
-<td align="center">coli</td>
-<td align="center">TRUE</td>
-</tr>
 <tr class="odd">
-<td align="center">2017-11-04</td>
-<td align="center">G1</td>
-<td align="center">Hospital B</td>
-<td align="center">B_ESCHR_COLI</td>
-<td align="center">S</td>
-<td align="center">S</td>
-<td align="center">R</td>
-<td align="center">S</td>
-<td align="center">M</td>
-<td align="center">Gram-negative</td>
-<td align="center">Escherichia</td>
-<td align="center">coli</td>
-<td align="center">TRUE</td>
-</tr>
-<tr class="even">
-<td align="center">2011-10-08</td>
-<td align="center">V4</td>
-<td align="center">Hospital B</td>
-<td align="center">B_ESCHR_COLI</td>
+<td align="center">2011-10-12</td>
+<td align="center">Z1</td>
+<td align="center">Hospital C</td>
+<td align="center">B_KLBSL_PNMN</td>
 <td align="center">R</td>
 <td align="center">S</td>
 <td align="center">S</td>
 <td align="center">S</td>
 <td align="center">F</td>
 <td align="center">Gram-negative</td>
+<td align="center">Klebsiella</td>
+<td align="center">pneumoniae</td>
+<td align="center">TRUE</td>
+</tr>
+<tr class="even">
+<td align="center">2011-11-05</td>
+<td align="center">D1</td>
+<td align="center">Hospital B</td>
+<td align="center">B_ESCHR_COLI</td>
+<td align="center">R</td>
+<td align="center">S</td>
+<td align="center">R</td>
+<td align="center">S</td>
+<td align="center">M</td>
+<td align="center">Gram-negative</td>
 <td align="center">Escherichia</td>
 <td align="center">coli</td>
 <td align="center">TRUE</td>
 </tr>
 <tr class="odd">
-<td align="center">2016-02-16</td>
-<td align="center">K6</td>
-<td align="center">Hospital D</td>
-<td align="center">B_STPHY_AURS</td>
-<td align="center">S</td>
-<td align="center">S</td>
-<td align="center">S</td>
-<td align="center">R</td>
-<td align="center">M</td>
-<td align="center">Gram-positive</td>
-<td align="center">Staphylococcus</td>
-<td align="center">aureus</td>
-<td align="center">TRUE</td>
-</tr>
-<tr class="even">
-<td align="center">2014-05-28</td>
-<td align="center">N6</td>
+<td align="center">2017-12-28</td>
+<td align="center">B7</td>
 <td align="center">Hospital C</td>
 <td align="center">B_ESCHR_COLI</td>
 <td align="center">S</td>
 <td align="center">S</td>
 <td align="center">S</td>
 <td align="center">S</td>
-<td align="center">F</td>
+<td align="center">M</td>
+<td align="center">Gram-negative</td>
+<td align="center">Escherichia</td>
+<td align="center">coli</td>
+<td align="center">TRUE</td>
+</tr>
+<tr class="even">
+<td align="center">2012-07-25</td>
+<td align="center">F8</td>
+<td align="center">Hospital D</td>
+<td align="center">B_ESCHR_COLI</td>
+<td align="center">S</td>
+<td align="center">S</td>
+<td align="center">S</td>
+<td align="center">R</td>
+<td align="center">M</td>
 <td align="center">Gram-negative</td>
 <td align="center">Escherichia</td>
 <td align="center">coli</td>
@@ -890,8 +896,8 @@ Unique: 2</p>
 <div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1"></a>data_1st <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/pkg/cleaner/man/freq.html">freq</a></span>(genus, species)</span></code></pre></div>
 <p><strong>Frequency table</strong></p>
 <p>Class: character<br>
-Length: 14,960<br>
-Available: 14,960 (100%, NA: 0 = 0%)<br>
+Length: 15,159<br>
+Available: 15,159 (100%, NA: 0 = 0%)<br>
 Unique: 4</p>
 <p>Shortest: 16<br>
 Longest: 24</p>
@@ -908,33 +914,33 @@ Longest: 24</p>
 <tr class="odd">
 <td align="left">1</td>
 <td align="left">Escherichia coli</td>
-<td align="right">7,397</td>
-<td align="right">49.45%</td>
-<td align="right">7,397</td>
-<td align="right">49.45%</td>
+<td align="right">7,543</td>
+<td align="right">49.76%</td>
+<td align="right">7,543</td>
+<td align="right">49.76%</td>
 </tr>
 <tr class="even">
 <td align="left">2</td>
 <td align="left">Staphylococcus aureus</td>
-<td align="right">3,685</td>
-<td align="right">24.63%</td>
-<td align="right">11,082</td>
-<td align="right">74.08%</td>
+<td align="right">3,783</td>
+<td align="right">24.96%</td>
+<td align="right">11,326</td>
+<td align="right">74.71%</td>
 </tr>
 <tr class="odd">
 <td align="left">3</td>
 <td align="left">Streptococcus pneumoniae</td>
-<td align="right">2,361</td>
-<td align="right">15.78%</td>
-<td align="right">13,443</td>
-<td align="right">89.86%</td>
+<td align="right">2,316</td>
+<td align="right">15.28%</td>
+<td align="right">13,642</td>
+<td align="right">89.99%</td>
 </tr>
 <tr class="even">
 <td align="left">4</td>
 <td align="left">Klebsiella pneumoniae</td>
 <td align="right">1,517</td>
-<td align="right">10.14%</td>
-<td align="right">14,960</td>
+<td align="right">10.01%</td>
+<td align="right">15,159</td>
 <td align="right">100.00%</td>
 </tr>
 </tbody>
@@ -946,7 +952,7 @@ Longest: 24</p>
 <p>The functions <code><a href="../reference/proportion.html">resistance()</a></code> and <code><a href="../reference/proportion.html">susceptibility()</a></code> can be used to calculate antimicrobial resistance or susceptibility. For more specific analyses, the functions <code><a href="../reference/proportion.html">proportion_S()</a></code>, <code><a href="../reference/proportion.html">proportion_SI()</a></code>, <code><a href="../reference/proportion.html">proportion_I()</a></code>, <code><a href="../reference/proportion.html">proportion_IR()</a></code> and <code><a href="../reference/proportion.html">proportion_R()</a></code> can be used to determine the proportion of a specific antimicrobial outcome.</p>
 <p>As per the EUCAST guideline of 2019, we calculate resistance as the proportion of R (<code><a href="../reference/proportion.html">proportion_R()</a></code>, equal to <code><a href="../reference/proportion.html">resistance()</a></code>) and susceptibility as the proportion of S and I (<code><a href="../reference/proportion.html">proportion_SI()</a></code>, equal to <code><a href="../reference/proportion.html">susceptibility()</a></code>). These functions can be used on their own:</p>
 <div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1"></a>data_1st <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="../reference/proportion.html">resistance</a></span>(AMX)</span>
-<span id="cb24-2"><a href="#cb24-2"></a><span class="co"># [1] 0.4635695</span></span></code></pre></div>
+<span id="cb24-2"><a href="#cb24-2"></a><span class="co"># [1] 0.4593311</span></span></code></pre></div>
 <p>Or can be used in conjuction with <code><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by()</a></code> and <code><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise()</a></code>, both from the <code>dplyr</code> package:</p>
 <div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1"></a>data_1st <span class="op">%&gt;%</span><span class="st"> </span></span>
 <span id="cb25-2"><a href="#cb25-2"></a><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span>(hospital) <span class="op">%&gt;%</span><span class="st"> </span></span>
@@ -959,19 +965,19 @@ Longest: 24</p>
 <tbody>
 <tr class="odd">
 <td align="center">Hospital A</td>
-<td align="center">0.4490022</td>
+<td align="center">0.4554126</td>
 </tr>
 <tr class="even">
 <td align="center">Hospital B</td>
-<td align="center">0.4746786</td>
+<td align="center">0.4619586</td>
 </tr>
 <tr class="odd">
 <td align="center">Hospital C</td>
-<td align="center">0.4505104</td>
+<td align="center">0.4566170</td>
 </tr>
 <tr class="even">
 <td align="center">Hospital D</td>
-<td align="center">0.4760039</td>
+<td align="center">0.4625695</td>
 </tr>
 </tbody>
 </table>
@@ -989,23 +995,23 @@ Longest: 24</p>
 <tbody>
 <tr class="odd">
 <td align="center">Hospital A</td>
-<td align="center">0.4490022</td>
-<td align="center">4510</td>
+<td align="center">0.4554126</td>
+<td align="center">4508</td>
 </tr>
 <tr class="even">
 <td align="center">Hospital B</td>
-<td align="center">0.4746786</td>
-<td align="center">5134</td>
+<td align="center">0.4619586</td>
+<td align="center">5310</td>
 </tr>
 <tr class="odd">
 <td align="center">Hospital C</td>
-<td align="center">0.4505104</td>
-<td align="center">2253</td>
+<td align="center">0.4566170</td>
+<td align="center">2282</td>
 </tr>
 <tr class="even">
 <td align="center">Hospital D</td>
-<td align="center">0.4760039</td>
-<td align="center">3063</td>
+<td align="center">0.4625695</td>
+<td align="center">3059</td>
 </tr>
 </tbody>
 </table>
@@ -1025,27 +1031,27 @@ Longest: 24</p>
 <tbody>
 <tr class="odd">
 <td align="center">Escherichia</td>
-<td align="center">0.9251048</td>
-<td align="center">0.8952278</td>
-<td align="center">0.9928349</td>
+<td align="center">0.9241681</td>
+<td align="center">0.8932785</td>
+<td align="center">0.9935039</td>
 </tr>
 <tr class="even">
 <td align="center">Klebsiella</td>
-<td align="center">0.9169413</td>
-<td align="center">0.9083718</td>
-<td align="center">0.9947264</td>
+<td align="center">0.9215557</td>
+<td align="center">0.9004614</td>
+<td align="center">0.9953856</td>
 </tr>
 <tr class="odd">
 <td align="center">Staphylococcus</td>
-<td align="center">0.9305292</td>
-<td align="center">0.9158752</td>
-<td align="center">0.9937585</td>
+<td align="center">0.9188475</td>
+<td align="center">0.9254560</td>
+<td align="center">0.9939202</td>
 </tr>
 <tr class="even">
 <td align="center">Streptococcus</td>
-<td align="center">0.6027107</td>
+<td align="center">0.6178756</td>
 <td align="center">0.0000000</td>
-<td align="center">0.6027107</td>
+<td align="center">0.6178756</td>
 </tr>
 </tbody>
 </table>
@@ -1158,7 +1164,7 @@ Longest: 24</p>
 </div>
   </div>
 
-  <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
+  <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
 
         <div id="tocnav">
       <h2 class="hasAnchor">
@@ -1206,7 +1212,7 @@ Longest: 24</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.9000.</p>
 </div>
 
       </footer>
