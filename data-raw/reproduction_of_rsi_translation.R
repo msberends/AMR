@@ -42,9 +42,38 @@ rsi_translation <- bind_rows(tbl_mic, tbl_disk) %>%
   mutate(disk_dose = gsub("µ", "u", disk_dose)) %>% 
   select(-ends_with("_mic"), -ends_with("_disk"))
 
+# add extra CLSI general guidelines
+clsi_general <- read_tsv("data-raw/DRGLST.txt") %>%
+  filter(CLSI == "X") %>%
+  select(WHON5_CODE, 
+         disk_dose = POTENCY, 
+         starts_with("CLSI"), 
+         -c(CLSI, CLSI_ORDER)) %>%
+  mutate_at(vars(matches("CLSI")), as.double) %>%
+  pivot_longer(-c(WHON5_CODE, disk_dose)) %>%
+  mutate(method = ifelse(name %like% "_D", "DISK", "MIC"),
+         breakpoint = paste0("breakpoint_", gsub(".*([A-Z])$", "\\1", name)), 
+         guideline = paste0("CLSI 20", cleaner::clean_integer(name))) %>%
+  filter(breakpoint != "breakpoint_I", !is.na(value)) %>%
+  select(-name) %>%
+  pivot_wider(names_from = breakpoint, values_from = value) %>% 
+  transmute(guideline, 
+            method, 
+            site = NA_character_, 
+            mo = as.mo("UNKNOWN"),
+            ab = as.ab(WHON5_CODE),
+            ref_tbl = "Generic CLSI rules", 
+            disk_dose = gsub("/", "-", disk_dose, fixed = TRUE), 
+            breakpoint_S, 
+            breakpoint_R)
+
+
 # add new EUCAST with read_EUCAST.R
+# 2020-04-14 did that now for 2019 and 2020
 rsi_translation <- rsi_translation %>%
+  # filter(guideline != "EUCAST 2019") %>% 
   bind_rows(new_EUCAST) %>% 
+  bind_rows(clsi_general) %>% 
   mutate(uti = site %like% "(UTI|urinary)") %>% 
   as.data.frame(stringsAsFactors = FALSE) %>%
   # force classes again

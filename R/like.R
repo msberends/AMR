@@ -21,7 +21,7 @@
 
 #' Pattern Matching
 #'
-#' Convenient wrapper around [base::grep()] to match a pattern: `a %like% b`. It always returns a [`logical`] vector and is always case-insensitive (use `a %like_case% b` for case-sensitive matching). Also, `pattern` (*b*) can be as long as `x` (*a*) to compare items of each index in both vectors, or they both can have the same length to iterate over all cases.
+#' Convenient wrapper around [grep()] to match a pattern: `x %like% pattern`. It always returns a [`logical`] vector and is always case-insensitive (use `x %like_case% pattern` for case-sensitive matching). Also, `pattern` can be as long as `x` to compare items of each index in both vectors, or they both can have the same length to iterate over all cases.
 #' @inheritSection lifecycle Stable lifecycle
 #' @param x a character vector where matches are sought, or an object which can be coerced by [as.character()] to a character vector.
 #' @param pattern a character string containing a regular expression (or [`character`] string for `fixed = TRUE`) to be matched in the given character vector. Coerced by [as.character()] to a character string if possible.  If a [`character`] vector of length 2 or more is supplied, the first element is used with a warning.
@@ -30,7 +30,9 @@
 #' @name like
 #' @rdname like
 #' @export
-#' @details Using RStudio? This function can also be inserted from the Addins menu and can have its own Keyboard Shortcut like `Ctrl+Shift+L` or `Cmd+Shift+L` (see `Tools` > `Modify Keyboard Shortcuts...`).
+#' @details When running a regular expression fails, these functions try again with `base::grepl(..., perl = TRUE)`.
+#' 
+#' Using RStudio? This function can also be inserted from the Addins menu and can have its own Keyboard Shortcut like `Ctrl+Shift+L` or `Cmd+Shift+L` (see `Tools` > `Modify Keyboard Shortcuts...`).
 #' @source Idea from the [`like` function from the `data.table` package](https://github.com/Rdatatable/data.table/blob/master/R/like.R), but made it case insensitive at default and let it support multiple patterns. Also, if the regex fails the first time, it tries again with `perl = TRUE`.
 #' @seealso [base::grep()]
 #' @inheritSection AMR Read more on our website!
@@ -52,7 +54,7 @@
 #' # get frequencies of bacteria whose name start with 'Ent' or 'ent'
 #' library(dplyr)
 #' example_isolates %>%
-#'   filter(mo_name(mo) %like% '^ent') %>%
+#'   filter(mo_name(mo) %like% "^ent") %>%
 #'   freq(mo_genus(mo))
 like <- function(x, pattern, ignore.case = TRUE) {
   if (length(pattern) > 1) {
@@ -89,7 +91,7 @@ like <- function(x, pattern, ignore.case = TRUE) {
              error = function(e) ifelse(grepl("Invalid regexp", e$message),
                                         # try with perl = TRUE:
                                         return(base::grepl(pattern = pattern, x = x,
-                                                                 ignore.case = ignore.case, perl = TRUE)),
+                                                           ignore.case = ignore.case, perl = TRUE)),
                                         # stop otherwise
                                         stop(e$message)))
   }

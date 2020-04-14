@@ -1745,9 +1745,13 @@ pillar_shaft.mo <- function(x, ...) {
   # markup NA and UNKNOWN
   out[is.na(x)] <- pillar::style_na("  NA")
   out[x == "UNKNOWN"] <- pillar::style_na("  UNKNOWN")
-  
+
   # make it always fit exactly
-  pillar::new_pillar_shaft_simple(out, align = "left", width = max(nchar(x)))
+  pillar::new_pillar_shaft_simple(out,
+                                  align = "left", 
+                                  width = max(nchar(x)) + ifelse(length(x[x %in% c(NA, "UNKNOWN")]) > 0, 
+                                                                 2,
+                                                                 0))
 }
 
 #' @exportMethod summary.mo
@@ -1961,7 +1965,7 @@ load_mo_failures_uncertainties_renamed <- function(metadata) {
 levenshtein_fraction <- function(input, output) {
   levenshtein <- double(length = length(input))
   for (i in seq_len(length(input))) {
-    # determine levenshtein distance, but maximise to nchar of output
+    # determine Levenshtein distance, but maximise to nchar of output
     levenshtein[i] <- base::min(base::as.double(adist(input[i], output[i], ignore.case = TRUE)),
                                 base::nchar(output[i]))
   }
@@ -1975,8 +1979,10 @@ trimws2 <- function(x) {
 
 parse_encoding <- function(x) {
   tryCatch({
+    x <- unname(unlist(x))
     parsed <- iconv(x, to = "UTF-8")
     parsed[is.na(parsed) & !is.na(x)] <- iconv(x[is.na(parsed) & !is.na(x)], from = "Latin1", to = "ASCII//TRANSLIT")
-    gsub('"', "", parsed, fixed = TRUE)
-  }, error = function(e) stop(e$message, call. = FALSE))
+    parsed <- gsub('"', "", parsed, fixed = TRUE)
+  }, error = function(e) stop(e$message, call. = FALSE)) # this will also be thrown when running `as.mo(no_existing_object)`
+  parsed
 }

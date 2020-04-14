@@ -26,7 +26,7 @@ library(AMR)
 
 # USE THIS FUNCTION TO READ THE EUCAST EXCEL FILE THAT CONTAINS THE BREAKPOINT TABLES
 
-read_EUCAST <- function(sheet, file = "data-raw/v_10.0_Breakpoint_Tables.xlsx") { 
+read_EUCAST <- function(sheet, file, guideline_name) { 
   
   message("Getting sheet ", sheet)
   sheet.bak <- sheet
@@ -172,7 +172,7 @@ read_EUCAST <- function(sheet, file = "data-raw/v_10.0_Breakpoint_Tables.xlsx") 
     mutate(method = ifelse(type %like% "MIC", "MIC", "DISK"), 
            type = gsub("^.*_", "breakpoint_", type)) %>%
     pivot_wider(names_from = type, values_from = value) %>% 
-    mutate(guideline = "EUCAST 2020",
+    mutate(guideline = guideline_name,
            disk_dose = ifelse(method == "DISK", disk_dose, NA_character_),
            mo = ifelse(mo == "", mo_sheet, mo)) %>% 
     filter(!(is.na(breakpoint_S) & is.na(breakpoint_R))) %>% 
@@ -219,8 +219,18 @@ sheets_to_analyse <- c("Enterobacterales",
                        "M.tuberculosis",
                        "PK PD breakpoints")
 
-new_EUCAST <- read_EUCAST(sheets_to_analyse[1]) # takes the longest time
-for (i in 2:length(sheets_to_analyse)) {
-  new_EUCAST <<- new_EUCAST %>% bind_rows(read_EUCAST(sheets_to_analyse[i]))
-}
+file <- "data-raw/v_10.0_Breakpoint_Tables.xlsx"
+guideline_name <- "EUCAST 2020"
 
+# takes the longest time:
+new_EUCAST <- read_EUCAST(sheet = sheets_to_analyse[1],
+                          file = file, 
+                          guideline_name = guideline_name) 
+for (i in 2:length(sheets_to_analyse)) {
+  tryCatch(
+    new_EUCAST <<- bind_rows(new_EUCAST,
+                             read_EUCAST(sheet = sheets_to_analyse[i],
+                                         file = file, 
+                                         guideline_name = guideline_name))
+    , error = function(e) message(e$message))
+}

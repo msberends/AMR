@@ -24,16 +24,20 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script>
 
+<!-- bootstrap-toc -->
+<link rel="stylesheet" href="../bootstrap-toc.css">
+<script src="../bootstrap-toc.js"></script>
+
 <!-- Font Awesome icons -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.1/css/all.min.css" integrity="sha256-PbSmjxuVAzJ6FPvNYsrXygfGhNJYyZ2GktDbkMBqQZg=" crossorigin="anonymous" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.1/css/v4-shims.min.css" integrity="sha256-A6jcAdwFD48VMjlI3GDxUd+eCQa7/KWy6G9oe/ovaPA=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous" />
 
 <!-- clipboard.js -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script>
 
 <!-- headroom.js -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/headroom.min.js" integrity="sha256-DJFC1kqIhelURkuza0AvYal5RxMtpzLjFhsnVIeuk+U=" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
@@ -45,8 +49,8 @@
   <script src="../extra.js"></script>
 
 <meta property="og:title" content="Pattern Matching — like" />
-<meta property="og:description" content="Convenient wrapper around base::grep() to match a pattern: a %like% b. It always returns a logical vector and is always case-insensitive (use a %like_case% b for case-sensitive matching). Also, pattern (b) can be as long as x (a) to compare items of each index in both vectors, or they both can have the same length to iterate over all cases." />
-<meta property="og:image" content="/logo.svg" />
+<meta property="og:description" content="Convenient wrapper around grep() to match a pattern: x %like% pattern. It always returns a logical vector and is always case-insensitive (use x %like_case% pattern for case-sensitive matching). Also, pattern can be as long as x to compare items of each index in both vectors, or they both can have the same length to iterate over all cases." />
+<meta property="og:image" content="https://msberends.gitlab.io/AMR/logo.svg" />
 
 
 
@@ -64,7 +68,7 @@
 
   </head>
 
-  <body>
+  <body data-spy="scroll" data-target="#toc">
     <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -78,7 +82,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.0.1.9004</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.0.1.9006</span>
       </span>
     </div>
 
@@ -223,12 +227,12 @@
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Pattern Matching</h1>
-    
+    <small class="dont-index">Source: <a href='https://gitlab.com/msberends/AMR/blob/master/R/like.R'><code>R/like.R</code></a></small>
     <div class="hidden name"><code>like.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Convenient wrapper around <code><a href='https://rdrr.io/r/base/grep.html'>base::grep()</a></code> to match a pattern: <code>a %like% b</code>. It always returns a <code><a href='https://rdrr.io/r/base/logical.html'>logical</a></code> vector and is always case-insensitive (use <code>a %like_case% b</code> for case-sensitive matching). Also, <code>pattern</code> (<em>b</em>) can be as long as <code>x</code> (<em>a</em>) to compare items of each index in both vectors, or they both can have the same length to iterate over all cases.</p>
+    <p>Convenient wrapper around <code><a href='https://rdrr.io/r/base/grep.html'>grep()</a></code> to match a pattern: <code>x %like% pattern</code>. It always returns a <code><a href='https://rdrr.io/r/base/logical.html'>logical</a></code> vector and is always case-insensitive (use <code>x %like_case% pattern</code> for case-sensitive matching). Also, <code>pattern</code> can be as long as <code>x</code> to compare items of each index in both vectors, or they both can have the same length to iterate over all cases.</p>
     </div>
 
     <pre class="usage"><span class='fu'>like</span>(<span class='no'>x</span>, <span class='no'>pattern</span>, <span class='kw'>ignore.case</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
@@ -262,7 +266,8 @@
     <p>A <code><a href='https://rdrr.io/r/base/logical.html'>logical</a></code> vector</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>Using RStudio? This function can also be inserted from the Addins menu and can have its own Keyboard Shortcut like <code>Ctrl+Shift+L</code> or <code>Cmd+Shift+L</code> (see <code>Tools</code> &gt; <code>Modify Keyboard Shortcuts...</code>).</p>
+    <p>When running a regular expression fails, these functions try again with <code><a href='https://rdrr.io/r/base/grep.html'>base::grepl(..., perl = TRUE)</a></code>.</p>
+<p>Using RStudio? This function can also be inserted from the Addins menu and can have its own Keyboard Shortcut like <code>Ctrl+Shift+L</code> or <code>Cmd+Shift+L</code> (see <code>Tools</code> &gt; <code>Modify Keyboard Shortcuts...</code>).</p>
     <h2 class="hasAnchor" id="stable-lifecycle"><a class="anchor" href="#stable-lifecycle"></a>Stable lifecycle</h2>
 
     
@@ -297,22 +302,13 @@ The <a href='lifecycle.html'>lifecycle</a> of this function is <strong>stable</s
 <span class='co'># get frequencies of bacteria whose name start with 'Ent' or 'ent'</span>
 <span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>dplyr</span>)
 <span class='no'>example_isolates</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span>(<span class='fu'><a href='mo_property.html'>mo_name</a></span>(<span class='no'>mo</span>) <span class='kw'>%like%</span> <span class='st'>'^ent'</span>) <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span>(<span class='fu'><a href='mo_property.html'>mo_name</a></span>(<span class='no'>mo</span>) <span class='kw'>%like%</span> <span class='st'>"^ent"</span>) <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='https://rdrr.io/pkg/cleaner/man/freq.html'>freq</a></span>(<span class='fu'><a href='mo_property.html'>mo_genus</a></span>(<span class='no'>mo</span>))</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
-    <h2>Contents</h2>
-    <ul class="nav nav-pills nav-stacked">
-      <li><a href="#arguments">Arguments</a></li>
-      <li><a href="#source">Source</a></li>
-      <li><a href="#value">Value</a></li>
-      <li><a href="#details">Details</a></li>
-      <li><a href="#stable-lifecycle">Stable lifecycle</a></li>
-      <li><a href="#read-more-on-our-website-">Read more on our website!</a></li>
-      <li><a href="#see-also">See also</a></li>
-      <li><a href="#examples">Examples</a></li>
-    </ul>
-
+    <nav id="toc" data-toggle="toc" class="sticky-top">
+      <h2 data-toc-skip>Contents</h2>
+    </nav>
   </div>
 </div>
 
@@ -323,7 +319,7 @@ The <a href='lifecycle.html'>lifecycle</a> of this function is <strong>stable</s
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.9000.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.0.</p>
 </div>
 
       </footer>

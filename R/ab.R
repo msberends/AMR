@@ -253,7 +253,7 @@ as.ab <- function(x, ...) {
         next
       }
     }
-    
+
     if (!isFALSE(list(...)$initial_search)) {
       # transform back from other languages and try again
       x_translated <- paste(lapply(strsplit(x[i], "[^a-zA-Z0-9 ]"),
@@ -291,6 +291,15 @@ as.ab <- function(x, ...) {
           x_new[i] <- x_translated_guess
           next
         }
+      }
+    }
+    
+    # try by removing all trailing capitals
+    if (x[i] %like_case% "[a-z]+[A-Z]+$") {
+      found <- suppressWarnings(as.ab(gsub("[A-Z]+$", "", x[i])))
+      if (length(found) > 0 & !is.na(found)) {
+        x_new[i] <- found[1L]
+        next
       }
     }
     

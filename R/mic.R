@@ -294,6 +294,6 @@ pillar_shaft.mic <- function(x, ...) {
 #' @noRd
 c.mic <- function(x, ...) {
   y <- NextMethod()
-  attributes(y) <- attributes(i)
+  attributes(y) <- attributes(x)
   y
 }

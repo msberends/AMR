@@ -1,5 +1,5 @@
-# AMR 1.0.1.9005
-## <small>Last updated: 13-Apr-2020</small>
+# AMR 1.0.1.9006
+## <small>Last updated: 14-Apr-2020</small>
 
 ### New
 * Support for easy principal component analysis for AMR, using the new `pca()` function 
@@ -13,6 +13,8 @@
   * Small fix for preventing viruses being treated as bacteria
   * Small fix for preventing contamination and lack of growth being treated as valid microorganisms
 * Added more abbreviations to the `antibiotics` data set
+* Reloaded original EUCAST master tables from 2019 (2020 was already available). This seems more reliable than the data we used from WHONET.
+* Added generic CLSI rules for R/SI interpretation using `as.rsi()` for years 2010-2019 (thanks to Anthony Underwood)
 
 ### Other
 * Support for the upcoming `dplyr` version 1.0.0

@@ -26,9 +26,11 @@ x \%like_case\% pattern
 A \code{\link{logical}} vector
 }
 \description{
-Convenient wrapper around \code{\link[base:grep]{base::grep()}} to match a pattern: \code{a \%like\% b}. It always returns a \code{\link{logical}} vector and is always case-insensitive (use \code{a \%like_case\% b} for case-sensitive matching). Also, \code{pattern} (\emph{b}) can be as long as \code{x} (\emph{a}) to compare items of each index in both vectors, or they both can have the same length to iterate over all cases.
+Convenient wrapper around \code{\link[=grep]{grep()}} to match a pattern: \code{x \%like\% pattern}. It always returns a \code{\link{logical}} vector and is always case-insensitive (use \code{x \%like_case\% pattern} for case-sensitive matching). Also, \code{pattern} can be as long as \code{x} to compare items of each index in both vectors, or they both can have the same length to iterate over all cases.
 }
 \details{
+When running a regular expression fails, these functions try again with \code{base::grepl(..., perl = TRUE)}.
+
 Using RStudio? This function can also be inserted from the Addins menu and can have its own Keyboard Shortcut like \code{Ctrl+Shift+L} or \code{Cmd+Shift+L} (see \code{Tools} > \verb{Modify Keyboard Shortcuts...}).
 }
 \section{Stable lifecycle}{
@@ -62,7 +64,7 @@ a \%like\% b
 # get frequencies of bacteria whose name start with 'Ent' or 'ent'
 library(dplyr)
 example_isolates \%>\%
-  filter(mo_name(mo) \%like\% '^ent') \%>\%
+  filter(mo_name(mo) \%like\% "^ent") \%>\%
   freq(mo_genus(mo))
 }
 \seealso{
