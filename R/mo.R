@@ -178,7 +178,7 @@ as.mo <- function(x,
   check_dataset_integrity()
   
   # start off with replaced language-specific non-ASCII characters with ASCII characters
-  x <- parse_encoding(x)
+  x <- parse_and_convert(x)
   
   # WHONET: xxx = no growth
   x[tolower(as.character(paste0(x, ""))) %in% c("", "xxx", "na", "nan")] <- NA_character_
@@ -263,7 +263,7 @@ exec_as.mo <- function(x,
   check_dataset_integrity()
   
   # start off with replaced language-specific non-ASCII characters with ASCII characters
-  x <- parse_encoding(x)
+  x <- parse_and_convert(x)
 
   # WHONET: xxx = no growth
   x[tolower(as.character(paste0(x, ""))) %in% c("", "xxx", "na", "nan")] <- NA_character_
@@ -277,27 +277,7 @@ exec_as.mo <- function(x,
     options(mo_renamed = NULL)
   }
   options(mo_renamed_last_run = NULL)
-  
-  if (NCOL(x) == 2) {
-    # support tidyverse selection like: df %>% select(colA, colB)
-    # paste these columns together
-    x_vector <- vector("character", NROW(x))
-    for (i in seq_len(NROW(x))) {
-      x_vector[i] <- paste(pull(x[i, ], 1), pull(x[i, ], 2), sep = " ")
-    }
-    x <- x_vector
-  } else {
-    if (NCOL(x) > 2) {
-      stop("`x` can be 2 columns at most", call. = FALSE)
-    }
-    x[is.null(x)] <- NA
-    
-    # support tidyverse selection like: df %>% select(colA)
-    if (!is.vector(x) & !is.null(dim(x))) {
-      x <- pull(x, 1)
-    }
-  }
-  
+
   uncertainties <- data.frame(uncertainty = integer(0),
                               input = character(0),
                               fullname = character(0),
@@ -1977,9 +1957,23 @@ trimws2 <- function(x) {
   trimws(gsub("[\\s]+", " ", x, perl = TRUE))
 }
 
-parse_encoding <- function(x) {
+parse_and_convert <- function(x) {
   tryCatch({
-    x <- unname(unlist(x))
+    if (!is.null(dim(x))) {
+      if (NCOL(x) > 2) {
+        stop("A maximum of two columns is allowed.", call. = FALSE)
+      } else if (NCOL(x) == 2) {
+        # support tidyverse selection like: df %>% select(colA, colB)
+        # paste these columns together
+        x <- as.data.frame(x, stringsAsFactors = FALSE)
+        colnames(x) <- c("A", "B")
+        x <- paste(x$A, x$B)
+      } else {
+        # support tidyverse selection like: df %>% select(colA)
+        x <- as.data.frame(x, stringsAsFactors = FALSE)[[1]]
+      }
+    }
+    x[is.null(x)] <- NA
     parsed <- iconv(x, to = "UTF-8")
     parsed[is.na(parsed) & !is.na(x)] <- iconv(x[is.na(parsed) & !is.na(x)], from = "Latin1", to = "ASCII//TRANSLIT")
     parsed <- gsub('"', "", parsed, fixed = TRUE)
