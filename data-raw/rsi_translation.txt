@@ -8393,14 +8393,14 @@
 "CLSI 2019"	"MIC"		"Streptococcus pneumoniae"	"Sparfloxacin"	"Table 2G"		0.5	2	FALSE
 "CLSI 2019"	"DISK"		"(unknown name)"	"Sparfloxacin"	"Generic CLSI rules"	"5ug"	19	15	FALSE
 "CLSI 2019"	"MIC"		"(unknown name)"	"Sparfloxacin"	"Generic CLSI rules"	"5ug"	0.5	2	FALSE
-"CLSI 2019"	"DISK"		"Neisseria meningitidis"	"Sulfonamides"	"Table 2I"	"200-300ug"			FALSE
-"CLSI 2019"	"MIC"		"Neisseria meningitidis"	"Sulfonamides"	"Table 2I"		2	8	FALSE
-"CLSI 2019"	"DISK"		"Staphylococcus"	"Sulfonamides"	"Table 2C"	"200ug"	17	12	FALSE
-"CLSI 2019"	"MIC"		"Staphylococcus"	"Sulfonamides"	"Table 2C"		256	512	FALSE
-"CLSI 2019"	"DISK"		"Vibrio"	"Sulfonamides"	"M45 Table 20"	"200ug"	17	12	FALSE
-"CLSI 2019"	"MIC"		"Vibrio"	"Sulfonamides"	"M45 Table 20"		256	512	FALSE
-"CLSI 2019"	"DISK"		"(unknown name)"	"Sulfonamides"	"Generic CLSI rules"	"200-300ug"	17	12	FALSE
-"CLSI 2019"	"MIC"		"(unknown name)"	"Sulfonamides"	"Generic CLSI rules"	"200-300ug"	256	512	FALSE
+"CLSI 2019"	"DISK"		"Neisseria meningitidis"	"Sulfonamide"	"Table 2I"	"200-300ug"			FALSE
+"CLSI 2019"	"MIC"		"Neisseria meningitidis"	"Sulfonamide"	"Table 2I"		2	8	FALSE
+"CLSI 2019"	"DISK"		"Staphylococcus"	"Sulfonamide"	"Table 2C"	"200ug"	17	12	FALSE
+"CLSI 2019"	"MIC"		"Staphylococcus"	"Sulfonamide"	"Table 2C"		256	512	FALSE
+"CLSI 2019"	"DISK"		"Vibrio"	"Sulfonamide"	"M45 Table 20"	"200ug"	17	12	FALSE
+"CLSI 2019"	"MIC"		"Vibrio"	"Sulfonamide"	"M45 Table 20"		256	512	FALSE
+"CLSI 2019"	"DISK"		"(unknown name)"	"Sulfonamide"	"Generic CLSI rules"	"200-300ug"	17	12	FALSE
+"CLSI 2019"	"MIC"		"(unknown name)"	"Sulfonamide"	"Generic CLSI rules"	"200-300ug"	256	512	FALSE
 "CLSI 2019"	"DISK"		"Enterococcus"	"Streptomycin-high"	"Table 2D"	"300ug"	10	6	FALSE
 "CLSI 2019"	"MIC"		"Enterococcus"	"Streptomycin-high"	"Table 2D"		1024	1024	FALSE
 "CLSI 2019"	"DISK"		"(unknown name)"	"Streptomycin-high"	"Generic CLSI rules"	"300ug"	10	6	FALSE
@@ -9799,12 +9799,12 @@
 "CLSI 2018"	"MIC"		"Streptococcus pneumoniae"	"Sparfloxacin"	"Table 2G"		0.5	2	FALSE
 "CLSI 2018"	"DISK"		"(unknown name)"	"Sparfloxacin"	"Generic CLSI rules"	"5ug"	19	15	FALSE
 "CLSI 2018"	"MIC"		"(unknown name)"	"Sparfloxacin"	"Generic CLSI rules"	"5ug"	0.5	2	FALSE
-"CLSI 2018"	"DISK"		"Neisseria meningitidis"	"Sulfonamides"	"Table 2I"	"200-300ug"			FALSE
-"CLSI 2018"	"MIC"		"Neisseria meningitidis"	"Sulfonamides"	"Table 2I"		2	8	FALSE
-"CLSI 2018"	"DISK"		"Staphylococcus"	"Sulfonamides"	"Table 2C"	"200ug"	17	12	FALSE
-"CLSI 2018"	"MIC"		"Staphylococcus"	"Sulfonamides"	"Table 2C"		256	512	FALSE
-"CLSI 2018"	"DISK"		"(unknown name)"	"Sulfonamides"	"Generic CLSI rules"	"200-300ug"	17	12	FALSE
-"CLSI 2018"	"MIC"		"(unknown name)"	"Sulfonamides"	"Generic CLSI rules"	"200-300ug"	256	512	FALSE
+"CLSI 2018"	"DISK"		"Neisseria meningitidis"	"Sulfonamide"	"Table 2I"	"200-300ug"			FALSE
+"CLSI 2018"	"MIC"		"Neisseria meningitidis"	"Sulfonamide"	"Table 2I"		2	8	FALSE
+"CLSI 2018"	"DISK"		"Staphylococcus"	"Sulfonamide"	"Table 2C"	"200ug"	17	12	FALSE
+"CLSI 2018"	"MIC"		"Staphylococcus"	"Sulfonamide"	"Table 2C"		256	512	FALSE
+"CLSI 2018"	"DISK"		"(unknown name)"	"Sulfonamide"	"Generic CLSI rules"	"200-300ug"	17	12	FALSE
+"CLSI 2018"	"MIC"		"(unknown name)"	"Sulfonamide"	"Generic CLSI rules"	"200-300ug"	256	512	FALSE
 "CLSI 2018"	"DISK"		"Enterococcus"	"Streptomycin-high"	"Table 2D"	"300ug"	10	6	FALSE
 "CLSI 2018"	"MIC"		"Enterococcus"	"Streptomycin-high"	"Table 2D"		1024	1024	FALSE
 "CLSI 2018"	"DISK"		"(unknown name)"	"Streptomycin-high"	"Generic CLSI rules"	"300ug"	10	6	FALSE
@@ -11104,12 +11104,12 @@
 "CLSI 2017"	"MIC"		"Streptococcus pneumoniae"	"Sparfloxacin"	"Table 2G"		0.5	2	FALSE
 "CLSI 2017"	"DISK"		"(unknown name)"	"Sparfloxacin"	"Generic CLSI rules"	"5ug"	19	15	FALSE
 "CLSI 2017"	"MIC"		"(unknown name)"	"Sparfloxacin"	"Generic CLSI rules"	"5ug"	0.5	2	FALSE
-"CLSI 2017"	"DISK"		"Neisseria meningitidis"	"Sulfonamides"	"Table 2I"	"200-300ug"			FALSE
-"CLSI 2017"	"MIC"		"Neisseria meningitidis"	"Sulfonamides"	"Table 2I"		2	8	FALSE
-"CLSI 2017"	"DISK"		"Staphylococcus"	"Sulfonamides"	"Table 2C"	"200ug"	17	12	FALSE
-"CLSI 2017"	"MIC"		"Staphylococcus"	"Sulfonamides"	"Table 2C"		256	512	FALSE
-"CLSI 2017"	"DISK"		"(unknown name)"	"Sulfonamides"	"Generic CLSI rules"	"200-300ug"	17	12	FALSE
-"CLSI 2017"	"MIC"		"(unknown name)"	"Sulfonamides"	"Generic CLSI rules"	"200-300ug"	256	512	FALSE
+"CLSI 2017"	"DISK"		"Neisseria meningitidis"	"Sulfonamide"	"Table 2I"	"200-300ug"			FALSE
+"CLSI 2017"	"MIC"		"Neisseria meningitidis"	"Sulfonamide"	"Table 2I"		2	8	FALSE
+"CLSI 2017"	"DISK"		"Staphylococcus"	"Sulfonamide"	"Table 2C"	"200ug"	17	12	FALSE
+"CLSI 2017"	"MIC"		"Staphylococcus"	"Sulfonamide"	"Table 2C"		256	512	FALSE
+"CLSI 2017"	"DISK"		"(unknown name)"	"Sulfonamide"	"Generic CLSI rules"	"200-300ug"	17	12	FALSE
+"CLSI 2017"	"MIC"		"(unknown name)"	"Sulfonamide"	"Generic CLSI rules"	"200-300ug"	256	512	FALSE
 "CLSI 2017"	"DISK"		"Enterococcus"	"Streptomycin-high"	"Table 2D"	"300ug"	10	6	FALSE
 "CLSI 2017"	"MIC"		"Enterococcus"	"Streptomycin-high"	"Table 2D"		1024	1024	FALSE
 "CLSI 2017"	"DISK"		"(unknown name)"	"Streptomycin-high"	"Generic CLSI rules"	"300ug"	10	6	FALSE
@@ -12409,12 +12409,12 @@
 "CLSI 2016"	"MIC"		"Streptococcus pneumoniae"	"Sparfloxacin"	"Table 2G"		0.5	2	FALSE
 "CLSI 2016"	"DISK"		"(unknown name)"	"Sparfloxacin"	"Generic CLSI rules"	"5ug"	19	15	FALSE
 "CLSI 2016"	"MIC"		"(unknown name)"	"Sparfloxacin"	"Generic CLSI rules"	"5ug"	0.5	2	FALSE
-"CLSI 2016"	"DISK"		"Neisseria meningitidis"	"Sulfonamides"	"Table 2I"	"200-300ug"			FALSE
-"CLSI 2016"	"MIC"		"Neisseria meningitidis"	"Sulfonamides"	"Table 2I"		2	8	FALSE
-"CLSI 2016"	"DISK"		"Staphylococcus"	"Sulfonamides"	"Table 2C"	"200ug"	17	12	FALSE
-"CLSI 2016"	"MIC"		"Staphylococcus"	"Sulfonamides"	"Table 2C"		256	512	FALSE
-"CLSI 2016"	"DISK"		"(unknown name)"	"Sulfonamides"	"Generic CLSI rules"	"200-300ug"	17	12	FALSE
-"CLSI 2016"	"MIC"		"(unknown name)"	"Sulfonamides"	"Generic CLSI rules"	"200-300ug"	256	512	FALSE
+"CLSI 2016"	"DISK"		"Neisseria meningitidis"	"Sulfonamide"	"Table 2I"	"200-300ug"			FALSE
+"CLSI 2016"	"MIC"		"Neisseria meningitidis"	"Sulfonamide"	"Table 2I"		2	8	FALSE
+"CLSI 2016"	"DISK"		"Staphylococcus"	"Sulfonamide"	"Table 2C"	"200ug"	17	12	FALSE
+"CLSI 2016"	"MIC"		"Staphylococcus"	"Sulfonamide"	"Table 2C"		256	512	FALSE
+"CLSI 2016"	"DISK"		"(unknown name)"	"Sulfonamide"	"Generic CLSI rules"	"200-300ug"	17	12	FALSE
+"CLSI 2016"	"MIC"		"(unknown name)"	"Sulfonamide"	"Generic CLSI rules"	"200-300ug"	256	512	FALSE
 "CLSI 2016"	"DISK"		"Enterococcus"	"Streptomycin-high"	"Table 2D"	"300ug"	10	6	FALSE
 "CLSI 2016"	"MIC"		"Enterococcus"	"Streptomycin-high"	"Table 2D"		1024	1024	FALSE
 "CLSI 2016"	"DISK"		"(unknown name)"	"Streptomycin-high"	"Generic CLSI rules"	"300ug"	10	6	FALSE
@@ -13711,12 +13711,12 @@
 "CLSI 2015"	"MIC"		"Streptococcus pneumoniae"	"Sparfloxacin"	"Table 2G"		0.5	2	FALSE
 "CLSI 2015"	"DISK"		"(unknown name)"	"Sparfloxacin"	"Generic CLSI rules"	"5ug"	19	15	FALSE
 "CLSI 2015"	"MIC"		"(unknown name)"	"Sparfloxacin"	"Generic CLSI rules"	"5ug"	0.5	2	FALSE
-"CLSI 2015"	"DISK"		"Neisseria meningitidis"	"Sulfonamides"	"Table 2I"	"200-300ug"			FALSE
-"CLSI 2015"	"MIC"		"Neisseria meningitidis"	"Sulfonamides"	"Table 2I"		2	8	FALSE
-"CLSI 2015"	"DISK"		"Staphylococcus"	"Sulfonamides"	"Table 2C"	"200ug"	17	12	FALSE
-"CLSI 2015"	"MIC"		"Staphylococcus"	"Sulfonamides"	"Table 2C"		256	512	FALSE
-"CLSI 2015"	"DISK"		"(unknown name)"	"Sulfonamides"	"Generic CLSI rules"	"200-300ug"	17	12	FALSE
-"CLSI 2015"	"MIC"		"(unknown name)"	"Sulfonamides"	"Generic CLSI rules"	"200-300ug"	256	512	FALSE
+"CLSI 2015"	"DISK"		"Neisseria meningitidis"	"Sulfonamide"	"Table 2I"	"200-300ug"			FALSE
+"CLSI 2015"	"MIC"		"Neisseria meningitidis"	"Sulfonamide"	"Table 2I"		2	8	FALSE
+"CLSI 2015"	"DISK"		"Staphylococcus"	"Sulfonamide"	"Table 2C"	"200ug"	17	12	FALSE
+"CLSI 2015"	"MIC"		"Staphylococcus"	"Sulfonamide"	"Table 2C"		256	512	FALSE
+"CLSI 2015"	"DISK"		"(unknown name)"	"Sulfonamide"	"Generic CLSI rules"	"200-300ug"	17	12	FALSE
+"CLSI 2015"	"MIC"		"(unknown name)"	"Sulfonamide"	"Generic CLSI rules"	"200-300ug"	256	512	FALSE
 "CLSI 2015"	"DISK"		"Enterococcus"	"Streptomycin-high"	"Table 2D"	"300ug"	10	6	FALSE
 "CLSI 2015"	"MIC"		"Enterococcus"	"Streptomycin-high"	"Table 2D"		1024	1024	FALSE
 "CLSI 2015"	"DISK"		"(unknown name)"	"Streptomycin-high"	"Generic CLSI rules"	"300ug"	10	6	FALSE
@@ -15007,12 +15007,12 @@
 "CLSI 2014"	"MIC"		"Streptococcus pneumoniae"	"Sparfloxacin"	"Table 2G"		0.5	2	FALSE
 "CLSI 2014"	"DISK"		"(unknown name)"	"Sparfloxacin"	"Generic CLSI rules"	"5ug"	19	15	FALSE
 "CLSI 2014"	"MIC"		"(unknown name)"	"Sparfloxacin"	"Generic CLSI rules"	"5ug"	0.5	2	FALSE
-"CLSI 2014"	"DISK"		"Neisseria meningitidis"	"Sulfonamides"	"Table 2I"	"200-300ug"			FALSE
-"CLSI 2014"	"MIC"		"Neisseria meningitidis"	"Sulfonamides"	"Table 2I"		2	8	FALSE
-"CLSI 2014"	"DISK"		"Staphylococcus"	"Sulfonamides"	"Table 2C"	"200ug"	17	12	FALSE
-"CLSI 2014"	"MIC"		"Staphylococcus"	"Sulfonamides"	"Table 2C"		256	512	FALSE
-"CLSI 2014"	"DISK"		"(unknown name)"	"Sulfonamides"	"Generic CLSI rules"	"200-300ug"	17	12	FALSE
-"CLSI 2014"	"MIC"		"(unknown name)"	"Sulfonamides"	"Generic CLSI rules"	"200-300ug"	256	512	FALSE
+"CLSI 2014"	"DISK"		"Neisseria meningitidis"	"Sulfonamide"	"Table 2I"	"200-300ug"			FALSE
+"CLSI 2014"	"MIC"		"Neisseria meningitidis"	"Sulfonamide"	"Table 2I"		2	8	FALSE
+"CLSI 2014"	"DISK"		"Staphylococcus"	"Sulfonamide"	"Table 2C"	"200ug"	17	12	FALSE
+"CLSI 2014"	"MIC"		"Staphylococcus"	"Sulfonamide"	"Table 2C"		256	512	FALSE
+"CLSI 2014"	"DISK"		"(unknown name)"	"Sulfonamide"	"Generic CLSI rules"	"200-300ug"	17	12	FALSE
+"CLSI 2014"	"MIC"		"(unknown name)"	"Sulfonamide"	"Generic CLSI rules"	"200-300ug"	256	512	FALSE
 "CLSI 2014"	"DISK"		"Enterococcus"	"Streptomycin-high"	"Table 2D"	"300ug"	10	6	FALSE
 "CLSI 2014"	"MIC"		"Enterococcus"	"Streptomycin-high"	"Table 2D"		1024	1024	FALSE
 "CLSI 2014"	"DISK"		"(unknown name)"	"Streptomycin-high"	"Generic CLSI rules"	"300ug"	10	6	FALSE
@@ -16295,12 +16295,12 @@
 "CLSI 2013"	"MIC"		"Streptococcus pneumoniae"	"Sparfloxacin"	"Table 2G"		0.5	2	FALSE
 "CLSI 2013"	"DISK"		"(unknown name)"	"Sparfloxacin"	"Generic CLSI rules"	"5ug"	19	15	FALSE
 "CLSI 2013"	"MIC"		"(unknown name)"	"Sparfloxacin"	"Generic CLSI rules"	"5ug"	0.5	2	FALSE
-"CLSI 2013"	"DISK"		"Neisseria meningitidis"	"Sulfonamides"	"Table 2I"	"200-300ug"			FALSE
-"CLSI 2013"	"MIC"		"Neisseria meningitidis"	"Sulfonamides"	"Table 2I"		2	8	FALSE
-"CLSI 2013"	"DISK"		"Staphylococcus"	"Sulfonamides"	"Table 2C"	"200ug"	17	12	FALSE
-"CLSI 2013"	"MIC"		"Staphylococcus"	"Sulfonamides"	"Table 2C"		256	512	FALSE
-"CLSI 2013"	"DISK"		"(unknown name)"	"Sulfonamides"	"Generic CLSI rules"	"200-300ug"	17	12	FALSE
-"CLSI 2013"	"MIC"		"(unknown name)"	"Sulfonamides"	"Generic CLSI rules"	"200-300ug"	256	512	FALSE
+"CLSI 2013"	"DISK"		"Neisseria meningitidis"	"Sulfonamide"	"Table 2I"	"200-300ug"			FALSE
+"CLSI 2013"	"MIC"		"Neisseria meningitidis"	"Sulfonamide"	"Table 2I"		2	8	FALSE
+"CLSI 2013"	"DISK"		"Staphylococcus"	"Sulfonamide"	"Table 2C"	"200ug"	17	12	FALSE
+"CLSI 2013"	"MIC"		"Staphylococcus"	"Sulfonamide"	"Table 2C"		256	512	FALSE
+"CLSI 2013"	"DISK"		"(unknown name)"	"Sulfonamide"	"Generic CLSI rules"	"200-300ug"	17	12	FALSE
+"CLSI 2013"	"MIC"		"(unknown name)"	"Sulfonamide"	"Generic CLSI rules"	"200-300ug"	256	512	FALSE
 "CLSI 2013"	"DISK"		"Enterococcus"	"Streptomycin-high"	"Table 2D"	"300ug"	10	6	FALSE
 "CLSI 2013"	"MIC"		"Enterococcus"	"Streptomycin-high"	"Table 2D"		1024	1024	FALSE
 "CLSI 2013"	"DISK"		"(unknown name)"	"Streptomycin-high"	"Generic CLSI rules"	"300ug"	10	6	FALSE
@@ -17563,12 +17563,12 @@
 "CLSI 2012"	"MIC"		"Streptococcus pneumoniae"	"Sparfloxacin"	"Table 2G"		0.5	2	FALSE
 "CLSI 2012"	"DISK"		"(unknown name)"	"Sparfloxacin"	"Generic CLSI rules"	"5ug"	19	15	FALSE
 "CLSI 2012"	"MIC"		"(unknown name)"	"Sparfloxacin"	"Generic CLSI rules"	"5ug"	0.5	2	FALSE
-"CLSI 2012"	"DISK"		"Neisseria meningitidis"	"Sulfonamides"	"Table 2I"	"200-300ug"			FALSE
-"CLSI 2012"	"MIC"		"Neisseria meningitidis"	"Sulfonamides"	"Table 2I"		2	8	FALSE
-"CLSI 2012"	"DISK"		"Staphylococcus"	"Sulfonamides"	"Table 2C"	"200ug"	17	12	FALSE
-"CLSI 2012"	"MIC"		"Staphylococcus"	"Sulfonamides"	"Table 2C"		256	512	FALSE
-"CLSI 2012"	"DISK"		"(unknown name)"	"Sulfonamides"	"Generic CLSI rules"	"200-300ug"	17	12	FALSE
-"CLSI 2012"	"MIC"		"(unknown name)"	"Sulfonamides"	"Generic CLSI rules"	"200-300ug"	256	512	FALSE
+"CLSI 2012"	"DISK"		"Neisseria meningitidis"	"Sulfonamide"	"Table 2I"	"200-300ug"			FALSE
+"CLSI 2012"	"MIC"		"Neisseria meningitidis"	"Sulfonamide"	"Table 2I"		2	8	FALSE
+"CLSI 2012"	"DISK"		"Staphylococcus"	"Sulfonamide"	"Table 2C"	"200ug"	17	12	FALSE
+"CLSI 2012"	"MIC"		"Staphylococcus"	"Sulfonamide"	"Table 2C"		256	512	FALSE
+"CLSI 2012"	"DISK"		"(unknown name)"	"Sulfonamide"	"Generic CLSI rules"	"200-300ug"	17	12	FALSE
+"CLSI 2012"	"MIC"		"(unknown name)"	"Sulfonamide"	"Generic CLSI rules"	"200-300ug"	256	512	FALSE
 "CLSI 2012"	"DISK"		"Enterococcus"	"Streptomycin-high"	"Table 2D"	"300ug"	10	6	FALSE
 "CLSI 2012"	"MIC"		"Enterococcus"	"Streptomycin-high"	"Table 2D"		1024	1024	FALSE
 "CLSI 2012"	"DISK"		"(unknown name)"	"Streptomycin-high"	"Generic CLSI rules"	"300ug"	10	6	FALSE
@@ -18616,10 +18616,10 @@
 "CLSI 2011"	"MIC"		"Streptococcus pneumoniae"	"Sparfloxacin"			0.5	2	FALSE
 "CLSI 2011"	"DISK"		"(unknown name)"	"Sparfloxacin"	"Generic CLSI rules"	"5ug"	19	15	FALSE
 "CLSI 2011"	"MIC"		"(unknown name)"	"Sparfloxacin"	"Generic CLSI rules"	"5ug"	0.5	2	FALSE
-"CLSI 2011"	"DISK"		"Neisseria meningitidis"	"Sulfonamides"		"200-300ug"			FALSE
-"CLSI 2011"	"MIC"		"Neisseria meningitidis"	"Sulfonamides"			2	8	FALSE
-"CLSI 2011"	"DISK"		"(unknown name)"	"Sulfonamides"	"Generic CLSI rules"	"200-300ug"	17	12	FALSE
-"CLSI 2011"	"MIC"		"(unknown name)"	"Sulfonamides"	"Generic CLSI rules"	"200-300ug"	256	512	FALSE
+"CLSI 2011"	"DISK"		"Neisseria meningitidis"	"Sulfonamide"		"200-300ug"			FALSE
+"CLSI 2011"	"MIC"		"Neisseria meningitidis"	"Sulfonamide"			2	8	FALSE
+"CLSI 2011"	"DISK"		"(unknown name)"	"Sulfonamide"	"Generic CLSI rules"	"200-300ug"	17	12	FALSE
+"CLSI 2011"	"MIC"		"(unknown name)"	"Sulfonamide"	"Generic CLSI rules"	"200-300ug"	256	512	FALSE
 "CLSI 2011"	"DISK"		"(unknown name)"	"Streptomycin-high"	"Generic CLSI rules"	"300ug"	10	6	FALSE
 "CLSI 2011"	"MIC"		"(unknown name)"	"Streptomycin-high"	"Generic CLSI rules"	"300ug"	1024	1025	FALSE
 "CLSI 2011"	"MIC"		"Brucella"	"Streptoduocin"			8		FALSE
@@ -18933,8 +18933,8 @@
 "CLSI 2010"	"MIC"		"(unknown name)"	"Spectinomycin"	"Generic CLSI rules"	"100ug"	32	128	FALSE
 "CLSI 2010"	"DISK"		"(unknown name)"	"Sparfloxacin"	"Generic CLSI rules"	"5ug"	19	15	FALSE
 "CLSI 2010"	"MIC"		"(unknown name)"	"Sparfloxacin"	"Generic CLSI rules"	"5ug"	0.5	2	FALSE
-"CLSI 2010"	"DISK"		"(unknown name)"	"Sulfonamides"	"Generic CLSI rules"	"200-300ug"	17	12	FALSE
-"CLSI 2010"	"MIC"		"(unknown name)"	"Sulfonamides"	"Generic CLSI rules"	"200-300ug"	256	512	FALSE
+"CLSI 2010"	"DISK"		"(unknown name)"	"Sulfonamide"	"Generic CLSI rules"	"200-300ug"	17	12	FALSE
+"CLSI 2010"	"MIC"		"(unknown name)"	"Sulfonamide"	"Generic CLSI rules"	"200-300ug"	256	512	FALSE
 "CLSI 2010"	"DISK"		"(unknown name)"	"Streptomycin-high"	"Generic CLSI rules"	"300ug"	10	6	FALSE
 "CLSI 2010"	"MIC"		"(unknown name)"	"Streptomycin-high"	"Generic CLSI rules"	"300ug"	1024	1025	FALSE
 "CLSI 2010"	"DISK"		"(unknown name)"	"Streptoduocin"	"Generic CLSI rules"	"10ug"	15	11	FALSE

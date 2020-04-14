@@ -336,6 +336,170 @@ antibiotics[which(antibiotics$ab == "SXT"), "abbreviations"][[1]] <- list(c(anti
 antibiotics[which(antibiotics$ab == "SXT"), "abbreviations"][[1]] <- list(c(antibiotics[which(antibiotics$ab == "SXT"), "abbreviations"][[1]], "trsx"))
 antibiotics[which(antibiotics$ab == "TZP"), "abbreviations"][[1]] <- list(c(antibiotics[which(antibiotics$ab == "TZP"), "abbreviations"][[1]], "PIPTAZ"))
 antibiotics[which(antibiotics$ab == "TZP"), "abbreviations"][[1]] <- list(c(antibiotics[which(antibiotics$ab == "TZP"), "abbreviations"][[1]], "pita"))
+# official RIVM codes (Dutch National Health Institute)
+# https://www.rivm.nl/sites/default/files/2019-09/Bijlage_4_Lijst_antibiotica%202020%201.0.pdf
+antibiotics[which(antibiotics$ab == "FCT"), "abbreviations"][[1]] <- list(c(antibiotics[which(antibiotics$ab == "FCT"), "abbreviations"][[1]], "5flc"))
+antibiotics[which(antibiotics$ab == "AMC"), "abbreviations"][[1]] <- list(c(antibiotics[which(antibiotics$ab == "AMC"), "abbreviations"][[1]], "amcl"))
+antibiotics[which(antibiotics$ab == "AMB"), "abbreviations"][[1]] <- list(c(antibiotics[which(antibiotics$ab == "AMB"), "abbreviations"][[1]], "amfb"))
+antibiotics[which(antibiotics$ab == "AMH"), "abbreviations"][[1]] <- list(c(antibiotics[which(antibiotics$ab == "AMH"), "abbreviations"][[1]], "amhl"))
+antibiotics[which(antibiotics$ab == "AMK"), "abbreviations"][[1]] <- list(c(antibiotics[which(antibiotics$ab == "AMK"), "abbreviations"][[1]], "amik"))
+antibiotics[which(antibiotics$ab == "AMX"), "abbreviations"][[1]] <- list(c(antibiotics[which(antibiotics$ab == "AMX"), "abbreviations"][[1]], "amox"))
+antibiotics[which(antibiotics$ab == "AMP"), "abbreviations"][[1]] <- list(c(antibiotics[which(antibiotics$ab == "AMP"), "abbreviations"][[1]], "ampi"))
+antibiotics[which(antibiotics$ab == "SAM"), "abbreviations"][[1]] <- list(c(antibiotics[which(antibiotics$ab == "SAM"), "abbreviations"][[1]], "amsu"))
+antibiotics[which(antibiotics$ab == "ANI"), "abbreviations"][[1]] <- list(c(antibiotics[which(antibiotics$ab == "ANI"), "abbreviations"][[1]], "anid"))
+antibiotics[which(antibiotics$ab == "SAM"), "abbreviations"][[1]] <- list(c(antibiotics[which(antibiotics$ab == "SAM"), "abbreviations"][[1]], "apsu"))
+antibiotics[which(antibiotics$ab == "AZM"), "abbreviations"][[1]] <- list(c(antibiotics[which(antibiotics$ab == "AZM"), "abbreviations"][[1]], "azit"))
+antibiotics[which(antibiotics$ab == "AZL"), "abbreviations"][[1]] <- list(c(antibiotics[which(antibiotics$ab == "AZL"), "abbreviations"][[1]], "azlo"))
+antibiotics[which(antibiotics$ab == "ATM"), "abbreviations"][[1]] <- list(c(antibiotics[which(antibiotics$ab == "ATM"), "abbreviations"][[1]], "aztr"))
+antibiotics[which(antibiotics$ab == "PNV"), "abbreviations"][[1]] <- list(c(antibiotics[which(antibiotics$ab == "PNV"), "abbreviations"][[1]], "bepe"))
+antibiotics[which(antibiotics$ab == "CAP"), "abbreviations"][[1]] <- list(c(antibiotics[which(antibiotics$ab == "CAP"), "abbreviations"][[1]], "capr"))
+antibiotics[which(antibiotics$ab == "CRB"), "abbreviations"][[1]] <- list(c(antibiotics[which(antibiotics$ab == "CRB"), "abbreviations"][[1]], "carb"))
+antibiotics[which(antibiotics$ab == "CAS"), "abbreviations"][[1]] <- list(c(antibiotics[which(antibiotics$ab == "CAS"), "abbreviations"][[1]], "casp"))
+antibiotics[which(antibiotics$ab == "CDC"), "abbreviations"][[1]] <- list(c(antibiotics[which(antibiotics$ab == "CDC"), "abbreviations"][[1]], "cecl"))
+antibiotics[which(antibiotics$ab == "CXA"), "abbreviations"][[1]] <- list(c(antibiotics[which(antibiotics$ab == "CXA"), "abbreviations"][[1]], "cfax"))
+antibiotics[which(antibiotics$ab == "CTB"), "abbreviations"][[1]] <- list(c(antibiotics[which(antibiotics$ab == "CTB"), "abbreviations"][[1]], "cfbu"))
+antibiotics[which(antibiotics$ab == "CEC"), "abbreviations"][[1]] <- list(c(antibiotics[which(antibiotics$ab == "CEC"), "abbreviations"][[1]], "cfcl"))
+antibiotics[which(antibiotics$ab == "CFR"), "abbreviations"][[1]] <- list(c(antibiotics[which(antibiotics$ab == "CFR"), "abbreviations"][[1]], "cfdx"))
+antibiotics[which(antibiotics$ab == "CEP"), "abbreviations"][[1]] <- list(c(antibiotics[which(antibiotics$ab == "CEP"), "abbreviations"][[1]], "cflt"))
+antibiotics[which(antibiotics$ab == "LEX"), "abbreviations"][[1]] <- list(c(antibiotics[which(antibiotics$ab == "LEX"), "abbreviations"][[1]], "cflx"))
+antibiotics[which(antibiotics$ab == "MAN"), "abbreviations"][[1]] <- list(c(antibiotics[which(antibiotics$ab == "MAN"), "abbreviations"][[1]], "cfmn"))
+antibiotics[which(antibiotics$ab == "CPD"), "abbreviations"][[1]] <- list(c(antibiotics[which(antibiotics$ab == "CPD"), "abbreviations"][[1]], "cfpd"))
+antibiotics[which(antibiotics$ab == "FEP"), "abbreviations"][[1]] <- list(c(antibiotics[which(antibiotics$ab == "FEP"), "abbreviations"][[1]], "cfpi"))
+antibiotics[which(antibiotics$ab == "CPO"), "abbreviations"][[1]] <- list(c(antibiotics[which(antibiotics$ab == "CPO"), "abbreviations"][[1]], "cfpr"))
+antibiotics[which(antibiotics$ab == "CFP"), "abbreviations"][[1]] <- list(c(antibiotics[which(antibiotics$ab == "CFP"), "abbreviations"][[1]], "cfpz"))
+antibiotics[which(antibiotics$ab == "CED"), "abbreviations"][[1]] <- list(c(antibiotics[which(antibiotics$ab == "CED"), "abbreviations"][[1]], "cfrd"))
+antibiotics[which(antibiotics$ab == "CPT"), "abbreviations"][[1]] <- list(c(antibiotics[which(antibiotics$ab == "CPT"), "abbreviations"][[1]], "cfro"))
+antibiotics[which(antibiotics$ab == "CXM"), "abbreviations"][[1]] <- list(c(antibiotics[which(antibiotics$ab == "CXM"), "abbreviations"][[1]], "cfrx"))
+antibiotics[which(antibiotics$ab == "CFS"), "abbreviations"][[1]] <- list(c(antibiotics[which(antibiotics$ab == "CFS"), "abbreviations"][[1]], "cfsl"))
+antibiotics[which(antibiotics$ab == "CRO"), "abbreviations"][[1]] <- list(c(antibiotics[which(antibiotics$ab == "CRO"), "abbreviations"][[1]], "cftr"))
+antibiotics[which(antibiotics$ab == "CTT"), "abbreviations"][[1]] <- list(c(antibiotics[which(antibiotics$ab == "CTT"), "abbreviations"][[1]], "cftt"))
+antibiotics[which(antibiotics$ab == "CTX"), "abbreviations"][[1]] <- list(c(antibiotics[which(antibiotics$ab == "CTX"), "abbreviations"][[1]], "cftx"))
+antibiotics[which(antibiotics$ab == "CAZ"), "abbreviations"][[1]] <- list(c(antibiotics[which(antibiotics$ab == "CAZ"), "abbreviations"][[1]], "cftz"))
+antibiotics[which(antibiotics$ab == "CFM"), "abbreviations"][[1]] <- list(c(antibiotics[which(antibiotics$ab == "CFM"), "abbreviations"][[1]], "cfxm"))
+antibiotics[which(antibiotics$ab == "FOX"), "abbreviations"][[1]] <- list(c(antibiotics[which(antibiotics$ab == "FOX"), "abbreviations"][[1]], "cfxt"))
+antibiotics[which(antibiotics$ab == "CZO"), "abbreviations"][[1]] <- list(c(antibiotics[which(antibiotics$ab == "CZO"), "abbreviations"][[1]], "cfzl"))
+antibiotics[which(antibiotics$ab == "CZX"), "abbreviations"][[1]] <- list(c(antibiotics[which(antibiotics$ab == "CZX"), "abbreviations"][[1]], "cfzx"))
+antibiotics[which(antibiotics$ab == "CHL"), "abbreviations"][[1]] <- list(c(antibiotics[which(antibiotics$ab == "CHL"), "abbreviations"][[1]], "chlo"))
+antibiotics[which(antibiotics$ab == "CPC"), "abbreviations"][[1]] <- list(c(antibiotics[which(antibiotics$ab == "CPC"), "abbreviations"][[1]], "cicl"))
+antibiotics[which(antibiotics$ab == "CIN"), "abbreviations"][[1]] <- list(c(antibiotics[which(antibiotics$ab == "CIN"), "abbreviations"][[1]], "cino"))
+antibiotics[which(antibiotics$ab == "CIP"), "abbreviations"][[1]] <- list(c(antibiotics[which(antibiotics$ab == "CIP"), "abbreviations"][[1]], "cipr"))
+antibiotics[which(antibiotics$ab == "CIX"), "abbreviations"][[1]] <- list(c(antibiotics[which(antibiotics$ab == "CIX"), "abbreviations"][[1]], "cipx"))
+antibiotics[which(antibiotics$ab == "CLR"), "abbreviations"][[1]] <- list(c(antibiotics[which(antibiotics$ab == "CLR"), "abbreviations"][[1]], "clar"))
+antibiotics[which(antibiotics$ab == "CLI"), "abbreviations"][[1]] <- list(c(antibiotics[which(antibiotics$ab == "CLI"), "abbreviations"][[1]], "clin"))
+antibiotics[which(antibiotics$ab == "CTR"), "abbreviations"][[1]] <- list(c(antibiotics[which(antibiotics$ab == "CTR"), "abbreviations"][[1]], "clot"))
+antibiotics[which(antibiotics$ab == "CLO"), "abbreviations"][[1]] <- list(c(antibiotics[which(antibiotics$ab == "CLO"), "abbreviations"][[1]], "clox"))
+antibiotics[which(antibiotics$ab == "COL"), "abbreviations"][[1]] <- list(c(antibiotics[which(antibiotics$ab == "COL"), "abbreviations"][[1]], "coli"))
+antibiotics[which(antibiotics$ab == "CTC"), "abbreviations"][[1]] <- list(c(antibiotics[which(antibiotics$ab == "CTC"), "abbreviations"][[1]], "cxcl"))
+antibiotics[which(antibiotics$ab == "CYC"), "abbreviations"][[1]] <- list(c(antibiotics[which(antibiotics$ab == "CYC"), "abbreviations"][[1]], "cycl"))
+antibiotics[which(antibiotics$ab == "CCV"), "abbreviations"][[1]] <- list(c(antibiotics[which(antibiotics$ab == "CCV"), "abbreviations"][[1]], "czcl"))
+antibiotics[which(antibiotics$ab == "DAP"), "abbreviations"][[1]] <- list(c(antibiotics[which(antibiotics$ab == "DAP"), "abbreviations"][[1]], "dapt"))
+antibiotics[which(antibiotics$ab == "DIC"), "abbreviations"][[1]] <- list(c(antibiotics[which(antibiotics$ab == "DIC"), "abbreviations"][[1]], "dicl"))
+antibiotics[which(antibiotics$ab == "DOR"), "abbreviations"][[1]] <- list(c(antibiotics[which(antibiotics$ab == "DOR"), "abbreviations"][[1]], "dori"))
+antibiotics[which(antibiotics$ab == "DOX"), "abbreviations"][[1]] <- list(c(antibiotics[which(antibiotics$ab == "DOX"), "abbreviations"][[1]], "doxy"))
+antibiotics[which(antibiotics$ab == "ENX"), "abbreviations"][[1]] <- list(c(antibiotics[which(antibiotics$ab == "ENX"), "abbreviations"][[1]], "enox"))
+antibiotics[which(antibiotics$ab == "ETP"), "abbreviations"][[1]] <- list(c(antibiotics[which(antibiotics$ab == "ETP"), "abbreviations"][[1]], "erta"))
+antibiotics[which(antibiotics$ab == "ERY"), "abbreviations"][[1]] <- list(c(antibiotics[which(antibiotics$ab == "ERY"), "abbreviations"][[1]], "eryt"))
+antibiotics[which(antibiotics$ab == "PHE"), "abbreviations"][[1]] <- list(c(antibiotics[which(antibiotics$ab == "PHE"), "abbreviations"][[1]], "fene"))
+antibiotics[which(antibiotics$ab == "PHN"), "abbreviations"][[1]] <- list(c(antibiotics[which(antibiotics$ab == "PHN"), "abbreviations"][[1]], "fepe"))
+antibiotics[which(antibiotics$ab == "FLE"), "abbreviations"][[1]] <- list(c(antibiotics[which(antibiotics$ab == "FLE"), "abbreviations"][[1]], "fler"))
+antibiotics[which(antibiotics$ab == "FLU"), "abbreviations"][[1]] <- list(c(antibiotics[which(antibiotics$ab == "FLU"), "abbreviations"][[1]], "fluc"))
+antibiotics[which(antibiotics$ab == "FLC"), "abbreviations"][[1]] <- list(c(antibiotics[which(antibiotics$ab == "FLC"), "abbreviations"][[1]], "flux"))
+antibiotics[which(antibiotics$ab == "FOS"), "abbreviations"][[1]] <- list(c(antibiotics[which(antibiotics$ab == "FOS"), "abbreviations"][[1]], "fosf"))
+antibiotics[which(antibiotics$ab == "FRM"), "abbreviations"][[1]] <- list(c(antibiotics[which(antibiotics$ab == "FRM"), "abbreviations"][[1]], "fram"))
+antibiotics[which(antibiotics$ab == "FUS"), "abbreviations"][[1]] <- list(c(antibiotics[which(antibiotics$ab == "FUS"), "abbreviations"][[1]], "fusi"))
+antibiotics[which(antibiotics$ab == "GAT"), "abbreviations"][[1]] <- list(c(antibiotics[which(antibiotics$ab == "GAT"), "abbreviations"][[1]], "gati"))
+antibiotics[which(antibiotics$ab == "GEH"), "abbreviations"][[1]] <- list(c(antibiotics[which(antibiotics$ab == "GEH"), "abbreviations"][[1]], "gehl"))
+antibiotics[which(antibiotics$ab == "GEN"), "abbreviations"][[1]] <- list(c(antibiotics[which(antibiotics$ab == "GEN"), "abbreviations"][[1]], "gent"))
+antibiotics[which(antibiotics$ab == "GRX"), "abbreviations"][[1]] <- list(c(antibiotics[which(antibiotics$ab == "GRX"), "abbreviations"][[1]], "grep"))
+antibiotics[which(antibiotics$ab == "IPM"), "abbreviations"][[1]] <- list(c(antibiotics[which(antibiotics$ab == "IPM"), "abbreviations"][[1]], "imci"))
+antibiotics[which(antibiotics$ab == "IPM"), "abbreviations"][[1]] <- list(c(antibiotics[which(antibiotics$ab == "IPM"), "abbreviations"][[1]], "imip"))
+antibiotics[which(antibiotics$ab == "ISV"), "abbreviations"][[1]] <- list(c(antibiotics[which(antibiotics$ab == "ISV"), "abbreviations"][[1]], "isav"))
+antibiotics[which(antibiotics$ab == "ITR"), "abbreviations"][[1]] <- list(c(antibiotics[which(antibiotics$ab == "ITR"), "abbreviations"][[1]], "itra"))
+antibiotics[which(antibiotics$ab == "KAH"), "abbreviations"][[1]] <- list(c(antibiotics[which(antibiotics$ab == "KAH"), "abbreviations"][[1]], "kahl"))
+antibiotics[which(antibiotics$ab == "KAN"), "abbreviations"][[1]] <- list(c(antibiotics[which(antibiotics$ab == "KAN"), "abbreviations"][[1]], "kana"))
+antibiotics[which(antibiotics$ab == "KET"), "abbreviations"][[1]] <- list(c(antibiotics[which(antibiotics$ab == "KET"), "abbreviations"][[1]], "keto"))
+antibiotics[which(antibiotics$ab == "LVX"), "abbreviations"][[1]] <- list(c(antibiotics[which(antibiotics$ab == "LVX"), "abbreviations"][[1]], "levo"))
+antibiotics[which(antibiotics$ab == "LIN"), "abbreviations"][[1]] <- list(c(antibiotics[which(antibiotics$ab == "LIN"), "abbreviations"][[1]], "linc"))
+antibiotics[which(antibiotics$ab == "LNZ"), "abbreviations"][[1]] <- list(c(antibiotics[which(antibiotics$ab == "LNZ"), "abbreviations"][[1]], "line"))
+antibiotics[which(antibiotics$ab == "LOR"), "abbreviations"][[1]] <- list(c(antibiotics[which(antibiotics$ab == "LOR"), "abbreviations"][[1]], "lora"))
+antibiotics[which(antibiotics$ab == "MEM"), "abbreviations"][[1]] <- list(c(antibiotics[which(antibiotics$ab == "MEM"), "abbreviations"][[1]], "mero"))
+antibiotics[which(antibiotics$ab == "MET"), "abbreviations"][[1]] <- list(c(antibiotics[which(antibiotics$ab == "MET"), "abbreviations"][[1]], "meti"))
+antibiotics[which(antibiotics$ab == "MTR"), "abbreviations"][[1]] <- list(c(antibiotics[which(antibiotics$ab == "MTR"), "abbreviations"][[1]], "metr"))
+antibiotics[which(antibiotics$ab == "MEZ"), "abbreviations"][[1]] <- list(c(antibiotics[which(antibiotics$ab == "MEZ"), "abbreviations"][[1]], "mezl"))
+antibiotics[which(antibiotics$ab == "MIF"), "abbreviations"][[1]] <- list(c(antibiotics[which(antibiotics$ab == "MIF"), "abbreviations"][[1]], "mica"))
+antibiotics[which(antibiotics$ab == "MCZ"), "abbreviations"][[1]] <- list(c(antibiotics[which(antibiotics$ab == "MCZ"), "abbreviations"][[1]], "mico"))
+antibiotics[which(antibiotics$ab == "MNO"), "abbreviations"][[1]] <- list(c(antibiotics[which(antibiotics$ab == "MNO"), "abbreviations"][[1]], "mino"))
+antibiotics[which(antibiotics$ab == "LTM"), "abbreviations"][[1]] <- list(c(antibiotics[which(antibiotics$ab == "LTM"), "abbreviations"][[1]], "moxa"))
+antibiotics[which(antibiotics$ab == "MFX"), "abbreviations"][[1]] <- list(c(antibiotics[which(antibiotics$ab == "MFX"), "abbreviations"][[1]], "moxi"))
+antibiotics[which(antibiotics$ab == "NAL"), "abbreviations"][[1]] <- list(c(antibiotics[which(antibiotics$ab == "NAL"), "abbreviations"][[1]], "nali"))
+antibiotics[which(antibiotics$ab == "NEO"), "abbreviations"][[1]] <- list(c(antibiotics[which(antibiotics$ab == "NEO"), "abbreviations"][[1]], "neom"))
+antibiotics[which(antibiotics$ab == "NET"), "abbreviations"][[1]] <- list(c(antibiotics[which(antibiotics$ab == "NET"), "abbreviations"][[1]], "neti"))
+antibiotics[which(antibiotics$ab == "NIT"), "abbreviations"][[1]] <- list(c(antibiotics[which(antibiotics$ab == "NIT"), "abbreviations"][[1]], "nitr"))
+antibiotics[which(antibiotics$ab == "NOR"), "abbreviations"][[1]] <- list(c(antibiotics[which(antibiotics$ab == "NOR"), "abbreviations"][[1]], "norf"))
+antibiotics[which(antibiotics$ab == "NYS"), "abbreviations"][[1]] <- list(c(antibiotics[which(antibiotics$ab == "NYS"), "abbreviations"][[1]], "nyst"))
+antibiotics[which(antibiotics$ab == "OFX"), "abbreviations"][[1]] <- list(c(antibiotics[which(antibiotics$ab == "OFX"), "abbreviations"][[1]], "oflo"))
+antibiotics[which(antibiotics$ab == "OXA"), "abbreviations"][[1]] <- list(c(antibiotics[which(antibiotics$ab == "OXA"), "abbreviations"][[1]], "oxal"))
+antibiotics[which(antibiotics$ab == "PEF"), "abbreviations"][[1]] <- list(c(antibiotics[which(antibiotics$ab == "PEF"), "abbreviations"][[1]], "pefl"))
+antibiotics[which(antibiotics$ab == "PEN"), "abbreviations"][[1]] <- list(c(antibiotics[which(antibiotics$ab == "PEN"), "abbreviations"][[1]], "peni"))
+antibiotics[which(antibiotics$ab == "PIP"), "abbreviations"][[1]] <- list(c(antibiotics[which(antibiotics$ab == "PIP"), "abbreviations"][[1]], "pipc"))
+antibiotics[which(antibiotics$ab == "PPA"), "abbreviations"][[1]] <- list(c(antibiotics[which(antibiotics$ab == "PPA"), "abbreviations"][[1]], "pipz"))
+antibiotics[which(antibiotics$ab == "TZP"), "abbreviations"][[1]] <- list(c(antibiotics[which(antibiotics$ab == "TZP"), "abbreviations"][[1]], "pita"))
+antibiotics[which(antibiotics$ab == "PLB"), "abbreviations"][[1]] <- list(c(antibiotics[which(antibiotics$ab == "PLB"), "abbreviations"][[1]], "polb"))
+antibiotics[which(antibiotics$ab == "POS"), "abbreviations"][[1]] <- list(c(antibiotics[which(antibiotics$ab == "POS"), "abbreviations"][[1]], "posa"))
+antibiotics[which(antibiotics$ab == "PRI"), "abbreviations"][[1]] <- list(c(antibiotics[which(antibiotics$ab == "PRI"), "abbreviations"][[1]], "pris"))
+antibiotics[which(antibiotics$ab == "QDA"), "abbreviations"][[1]] <- list(c(antibiotics[which(antibiotics$ab == "QDA"), "abbreviations"][[1]], "quda"))
+antibiotics[which(antibiotics$ab == "RIF"), "abbreviations"][[1]] <- list(c(antibiotics[which(antibiotics$ab == "RIF"), "abbreviations"][[1]], "rifa"))
+antibiotics[which(antibiotics$ab == "RXT"), "abbreviations"][[1]] <- list(c(antibiotics[which(antibiotics$ab == "RXT"), "abbreviations"][[1]], "roxi"))
+antibiotics[which(antibiotics$ab == "SMX"), "abbreviations"][[1]] <- list(c(antibiotics[which(antibiotics$ab == "SMX"), "abbreviations"][[1]], "sfmx"))
+antibiotics[which(antibiotics$ab == "SLF4"), "abbreviations"][[1]] <- list(c(antibiotics[which(antibiotics$ab == "SLF4"), "abbreviations"][[1]], "sfmz"))
+antibiotics[which(antibiotics$ab == "SSS"), "abbreviations"][[1]] <- list(c(antibiotics[which(antibiotics$ab == "SSS"), "abbreviations"][[1]], "sfna"))
+antibiotics[which(antibiotics$ab == "SLF"), "abbreviations"][[1]] <- list(c(antibiotics[which(antibiotics$ab == "SLF"), "abbreviations"][[1]], "sfsz"))
+antibiotics[which(antibiotics$ab == "SPX"), "abbreviations"][[1]] <- list(c(antibiotics[which(antibiotics$ab == "SPX"), "abbreviations"][[1]], "spar"))
+antibiotics[which(antibiotics$ab == "SPT"), "abbreviations"][[1]] <- list(c(antibiotics[which(antibiotics$ab == "SPT"), "abbreviations"][[1]], "spec"))
+antibiotics[which(antibiotics$ab == "SPI"), "abbreviations"][[1]] <- list(c(antibiotics[which(antibiotics$ab == "SPI"), "abbreviations"][[1]], "spir"))
+antibiotics[which(antibiotics$ab == "STH"), "abbreviations"][[1]] <- list(c(antibiotics[which(antibiotics$ab == "STH"), "abbreviations"][[1]], "sthl"))
+antibiotics[which(antibiotics$ab == "STR1"), "abbreviations"][[1]] <- list(c(antibiotics[which(antibiotics$ab == "STR1"), "abbreviations"][[1]], "stre"))
+antibiotics[which(antibiotics$ab == "TAZ"), "abbreviations"][[1]] <- list(c(antibiotics[which(antibiotics$ab == "TAZ"), "abbreviations"][[1]], "tazo"))
+antibiotics[which(antibiotics$ab == "TEC"), "abbreviations"][[1]] <- list(c(antibiotics[which(antibiotics$ab == "TEC"), "abbreviations"][[1]], "teic"))
+antibiotics[which(antibiotics$ab == "TLT"), "abbreviations"][[1]] <- list(c(antibiotics[which(antibiotics$ab == "TLT"), "abbreviations"][[1]], "teli"))
+antibiotics[which(antibiotics$ab == "TMX"), "abbreviations"][[1]] <- list(c(antibiotics[which(antibiotics$ab == "TMX"), "abbreviations"][[1]], "tema"))
+antibiotics[which(antibiotics$ab == "TEM"), "abbreviations"][[1]] <- list(c(antibiotics[which(antibiotics$ab == "TEM"), "abbreviations"][[1]], "temo"))
+antibiotics[which(antibiotics$ab == "TRB"), "abbreviations"][[1]] <- list(c(antibiotics[which(antibiotics$ab == "TRB"), "abbreviations"][[1]], "terb"))
+antibiotics[which(antibiotics$ab == "TCY"), "abbreviations"][[1]] <- list(c(antibiotics[which(antibiotics$ab == "TCY"), "abbreviations"][[1]], "tetr"))
+antibiotics[which(antibiotics$ab == "TIC"), "abbreviations"][[1]] <- list(c(antibiotics[which(antibiotics$ab == "TIC"), "abbreviations"][[1]], "tica"))
+antibiotics[which(antibiotics$ab == "TCC"), "abbreviations"][[1]] <- list(c(antibiotics[which(antibiotics$ab == "TCC"), "abbreviations"][[1]], "ticl"))
+antibiotics[which(antibiotics$ab == "TGC"), "abbreviations"][[1]] <- list(c(antibiotics[which(antibiotics$ab == "TGC"), "abbreviations"][[1]], "tige"))
+antibiotics[which(antibiotics$ab == "TIN"), "abbreviations"][[1]] <- list(c(antibiotics[which(antibiotics$ab == "TIN"), "abbreviations"][[1]], "tini"))
+antibiotics[which(antibiotics$ab == "TOB"), "abbreviations"][[1]] <- list(c(antibiotics[which(antibiotics$ab == "TOB"), "abbreviations"][[1]], "tobr"))
+antibiotics[which(antibiotics$ab == "TOH"), "abbreviations"][[1]] <- list(c(antibiotics[which(antibiotics$ab == "TOH"), "abbreviations"][[1]], "tohl"))
+antibiotics[which(antibiotics$ab == "TMP"), "abbreviations"][[1]] <- list(c(antibiotics[which(antibiotics$ab == "TMP"), "abbreviations"][[1]], "trim"))
+antibiotics[which(antibiotics$ab == "TVA"), "abbreviations"][[1]] <- list(c(antibiotics[which(antibiotics$ab == "TVA"), "abbreviations"][[1]], "trov"))
+antibiotics[which(antibiotics$ab == "SLT4"), "abbreviations"][[1]] <- list(c(antibiotics[which(antibiotics$ab == "SLT4"), "abbreviations"][[1]], "trsm"))
+antibiotics[which(antibiotics$ab == "SXT"), "abbreviations"][[1]] <- list(c(antibiotics[which(antibiotics$ab == "SXT"), "abbreviations"][[1]], "trsx"))
+antibiotics[which(antibiotics$ab == "VAN"), "abbreviations"][[1]] <- list(c(antibiotics[which(antibiotics$ab == "VAN"), "abbreviations"][[1]], "vanc"))
+antibiotics[which(antibiotics$ab == "VOR"), "abbreviations"][[1]] <- list(c(antibiotics[which(antibiotics$ab == "VOR"), "abbreviations"][[1]], "vori"))
+antibiotics <- antibiotics %>% 
+  mutate(ab = as.character(ab)) %>% 
+  rbind(antibiotics %>% 
+          filter(ab == "GEH") %>% 
+          mutate(ab = "AMH",
+                 name = "Amphotericin B-high",
+                 abbreviations = list(c("amhl", "amfo b high", "ampho b high", "amphotericin high")))) %>% 
+  rbind(antibiotics %>% 
+          filter(ab == "GEH") %>% 
+          mutate(ab = "TOH",
+                 name = "Tobramycin-high",
+                 abbreviations = list(c("tohl", "tobra high", "tobramycin high")))) %>% 
+  rbind(antibiotics %>% 
+          filter(ab == "BUT") %>% 
+          mutate(ab = "CIX",
+                 atc = "D01AE14",
+                 name = "Ciclopirox",
+                 group = "Antifungals/antimycotics",
+                 atc_group1 = "Antifungals for topical use",
+                 atc_group2 = "Other antifungals for topical use",
+                 abbreviations = list(c("cipx"))))
+antibiotics[which(antibiotics$ab == "SSS"), "name"] <- "Sulfonamide"
 # ESBL E-test codes:
 antibiotics[which(antibiotics$ab == "CCV"), "abbreviations"][[1]] <- list(c("xtzl"))
 antibiotics[which(antibiotics$ab == "CAZ"), "abbreviations"][[1]] <- list(c(antibiotics[which(antibiotics$ab == "CAZ"), "abbreviations"][[1]], "xtz", "cefta"))
@@ -374,9 +538,6 @@ antibiotics[which(antibiotics$ab == "BPR"), "atc"] <- "J01DI01"
 # typo
 antibiotics[which(antibiotics$ab == "RXT"), "name"] <- "Roxithromycin"
 antibiotics[which(antibiotics$ab == "PEN"), "atc"] <- "J01CE01"
-
-
-antibiotics <- antibiotics %>% arrange(name)
 
 # set cephalosporins groups for the ones that could not be determined automatically:
 antibiotics <- antibiotics %>% 
@@ -417,6 +578,7 @@ antibiotics <- antibiotics %>%
 # set as data.frame again
 antibiotics <- as.data.frame(antibiotics, stringsAsFactors = FALSE)
 class(antibiotics$ab) <- "ab"
+antibiotics <- antibiotics %>% arrange(name)
 
 # make all abbreviations and synonyms lower case, unique and alphabetically sorted
 for (i in 1:nrow(antibiotics)) {

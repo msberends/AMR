@@ -47,6 +47,11 @@ This data set is available as 'flat file' for use even without R - you can find 
 \itemize{
 \item \url{https://gitlab.com/msberends/AMR/raw/master/data-raw/microorganisms.txt}
 }
+
+The file in R format (which data structure) can be found here:
+\itemize{
+\item \url{https://gitlab.com/msberends/AMR/raw/master/data/microorganisms.rda}
+}
 }
 }
 \section{About the records from DSMZ (see source)}{

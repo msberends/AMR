@@ -420,7 +420,6 @@ labels_rsi_count <- function(position = NULL,
                               combine_SI = combine_SI,
                               combine_IR = combine_IR) %>%
                          group_by_at(x_name) %>%
-                         mutate(lbl = paste0(percentage(value / sum(value, na.rm = TRUE)),
-                                             "\n(n=", isolates, ")"))
+                         mutate(lbl = paste0("n=", isolates))
                      })
 }

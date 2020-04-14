@@ -58,6 +58,11 @@
 #' 
 #' * <https://gitlab.com/msberends/AMR/raw/master/data-raw/antibiotics.txt>
 #' * <https://gitlab.com/msberends/AMR/raw/master/data-raw/antivirals.txt>
+#' 
+#' Files in R format (which data structure) can be found here:
+#' 
+#' * <https://gitlab.com/msberends/AMR/raw/master/data/antibiotics.rda>
+#' * <https://gitlab.com/msberends/AMR/raw/master/data/antivirals.rda>
 #' @source World Health Organization (WHO) Collaborating Centre for Drug Statistics Methodology (WHOCC): <https://www.whocc.no/atc_ddd_index/>
 #'
 #' WHONET 2019 software: <http://www.whonet.org/software.html>
@@ -95,10 +100,14 @@
 #' - 6 families under the Enterobacterales order, according to Adeolu *et al.* (2016, PMID 27620848), that are not (yet) in the Catalogue of Life
 #' - `r format(nrow(filter(microorganisms, source == "DSMZ")), big.mark = ",")` species from the DSMZ (Deutsche Sammlung von Mikroorganismen und Zellkulturen) since the DSMZ contain the latest taxonomic information based on recent publications
 #' 
-#'  ### Direct download
-#'  This data set is available as 'flat file' for use even without R - you can find the file here:
+#' ### Direct download
+#' This data set is available as 'flat file' for use even without R - you can find the file here:
 #' 
 #' * <https://gitlab.com/msberends/AMR/raw/master/data-raw/microorganisms.txt>
+#' 
+#' The file in R format (which data structure) can be found here:
+#' 
+#' * <https://gitlab.com/msberends/AMR/raw/master/data/microorganisms.rda>
 #' @section About the records from DSMZ (see source):
 #' Names of prokaryotes are defined as being validly published by the International Code of Nomenclature of Bacteria. Validly published are all names which are included in the Approved Lists of Bacterial Names and the names subsequently published in the International Journal of Systematic Bacteriology (IJSB) and, from January 2000, in the International Journal of Systematic and Evolutionary Microbiology (IJSEM) as original articles or in the validation lists.
 #'

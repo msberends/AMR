@@ -1,4 +1,4 @@
-# AMR 1.0.1.9007
+# AMR 1.0.1.9008
 ## <small>Last updated: 14-Apr-2020</small>
 
 ### New
@@ -12,6 +12,7 @@
   * Support for more arbitrary IDs used in laboratory information systems
   * Small fix for preventing viruses being treated as bacteria
   * Small fix for preventing contamination and lack of growth being treated as valid microorganisms
+* Support for all abbreviations of antibiotics and antimycotics used by the Netherlands National Institute for Public Health and the Environment (Rijksinstituut voor Volksgezondheid en Milieu; RIVM)
 * Added more abbreviations to the `antibiotics` data set
 * Reloaded original EUCAST master tables from 2019 (2020 was already available). This seems more reliable than the data we used from WHONET.
 * Added generic CLSI rules for R/SI interpretation using `as.rsi()` for years 2010-2019 (thanks to Anthony Underwood)

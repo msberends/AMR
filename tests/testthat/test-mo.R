@@ -167,7 +167,7 @@ test_that("as.mo works", {
       left_join_microorganisms() %>%
       select(genus, species) %>%
       as.mo())
-  
+
   # unknown results
   expect_warning(as.mo(c("INVALID", "Yeah, unknown")))
   
