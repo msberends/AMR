@@ -145,18 +145,8 @@ On our website \url{https://msberends.gitlab.io/AMR} you can find \href{https://
 library(dplyr)
 # Filter on first isolates:
 example_isolates \%>\%
-  mutate(first_isolate = first_isolate(.,
-                                       col_date = "date",
-                                       col_patient_id = "patient_id",
-                                       col_mo = "mo")) \%>\%
+  mutate(first_isolate = first_isolate(.)) \%>\%
   filter(first_isolate == TRUE)
-
-# Which can be shortened to:
-example_isolates \%>\%
-  filter_first_isolate()
-# or for first weighted isolates:
-example_isolates \%>\%
-  filter_first_weighted_isolate()
 
 # Now let's see if first isolates matter:
 A <- example_isolates \%>\%
@@ -171,14 +161,22 @@ B <- example_isolates \%>\%
             resistance = resistance(GEN))  # gentamicin resistance
 
 # Have a look at A and B.
-# B is more reliable because every isolate is only counted once.
-# Gentamicin resitance in hospital D appears to be 3.1\% higher than
+# B is more reliable because every isolate is counted only once.
+# Gentamicin resitance in hospital D appears to be 3.7\% higher than
 # when you (erroneously) would have used all isolates for analysis.
 
 
 ## OTHER EXAMPLES:
 
 \dontrun{
+
+# Short-hand versions:
+example_isolates \%>\%
+  filter_first_isolate()
+  
+example_isolates \%>\%
+  filter_first_weighted_isolate()
+
 
 # set key antibiotics to a new variable
 x$keyab <- key_antibiotics(x)
