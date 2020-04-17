@@ -19,17 +19,28 @@
 # Visit our website for more info: https://msberends.gitlab.io/AMR.    #
 # ==================================================================== #
 
-#######################################################################
-# To push new commits to the premaster branch, run:                   #
-# bash git_premaster.sh "commit message"                              #
-# This creates auto version numbering in DESCRIPTION and NEWS.md.     #
-#                                                                     #
-# After successful CRAN checks, merge it to the master branch with:   #
-# bash git_merge.sh                                                   #
-#                                                                     #
-# To prerelease a new version number, run:                            #
-# bash git_premaster.sh "v0.x.x" FALSE "0.x.x"                        #
-#######################################################################
+########################################################################
+# `git_premaster.sh` takes 3 parameters:                               #
+#   1. Commit message (character) [mandatory]                          #
+#   2. Lazy website generation (logical), with FALSE only changed      #
+#      files will be processed [defaults to TRUE]                      #
+#   3. Version number to be used in DESCRIPTION and NEWS.md            #
+#      [defaults to current tag and last commit number + 9000]         #
+#                                                                      #
+# To push new commits to the premaster branch, run:                    #
+# bash git_premaster.sh "commit message"                               #
+# This creates auto version numbering in DESCRIPTION and NEWS.md.      #
+#                                                                      #
+# After successful test checks, merge it to the master branch with:    #
+# bash git_merge.sh                                                    #
+#                                                                      #
+# To prerelease a new version number, run:                             #
+# bash git_premaster.sh "v1.x.x" FALSE "1.x.x"                         #
+#                                                                      #
+# To only update the website, run:                                     #
+# bash git_siteonly.sh                                                 #
+# (which is short for 'bash git_premaster.sh "website update" FALSE')  #
+########################################################################
 
 # stash current changes
 # git stash --quiet
@@ -55,7 +66,7 @@ case "$choice" in
   y|Y|j|J ) ;;
   * ) exit 1;;
 esac
-Rscript -e "rhub::check(devtools::build(), platform = c('debian-clang-devel', 'debian-gcc-devel', 'fedora-clang-devel', 'fedora-gcc-devel', 'windows-x86_64-devel', 'debian-gcc-patched', 'solaris-x86-patched', 'debian-gcc-release', 'windows-x86_64-release', 'macos-elcapitan-release', 'windows-x86_64-oldrel'))"
+Rscript -e "rhub::check(devtools::build(), platform = rhub::platforms()[!is.na(rhub::platforms()$`cran-name`), 'name'])"
 echo
 
 # and get stashed changes back

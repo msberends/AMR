@@ -13,19 +13,20 @@
 <link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png">
 <link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png">
 <!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script><!-- Bootstrap --><link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.4.0/flatly/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.1/css/all.min.css" integrity="sha256-PbSmjxuVAzJ6FPvNYsrXygfGhNJYyZ2GktDbkMBqQZg=" crossorigin="anonymous">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.1/css/v4-shims.min.css" integrity="sha256-A6jcAdwFD48VMjlI3GDxUd+eCQa7/KWy6G9oe/ovaPA=" crossorigin="anonymous">
-<!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/headroom.min.js" integrity="sha256-DJFC1kqIhelURkuza0AvYal5RxMtpzLjFhsnVIeuk+U=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script><!-- bootstrap-toc --><link rel="stylesheet" href="../bootstrap-toc.css">
+<script src="../bootstrap-toc.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
+<!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
 <script src="../pkgdown.js"></script><link href="../extra.css" rel="stylesheet">
 <script src="../extra.js"></script><meta property="og:title" content="How to import data from SPSS / SAS / Stata">
 <meta property="og:description" content="AMR">
-<meta property="og:image" content="/logo.svg">
+<meta property="og:image" content="https://msberends.gitlab.io/AMR/logo.svg">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
 </head>
-<body>
+<body data-spy="scroll" data-target="#toc">
     <div class="container template-article">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -38,7 +39,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.0.1.9004</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.1.0</span>
       </span>
     </div>
 
@@ -182,12 +183,12 @@
       </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
-      <h1>How to import data from SPSS / SAS / Stata</h1>
+      <h1 data-toc-skip>How to import data from SPSS / SAS / Stata</h1>
                         <h4 class="author">Matthijs S. Berends</h4>
             
-            <h4 class="date">17 March 2020</h4>
+            <h4 class="date">15 April 2020</h4>
       
-      
+      <small class="dont-index">Source: <a href="https://gitlab.com/msberends/AMR/blob/master/vignettes/SPSS.Rmd"><code>vignettes/SPSS.Rmd</code></a></small>
       <div class="hidden name"><code>SPSS.Rmd</code></div>
 
     </div>
@@ -239,39 +240,38 @@
 </li>
 </ul>
 <p>To demonstrate the first point:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="co"># not all values are valid MIC values:</span></span>
-<span id="cb1-2"><a href="#cb1-2"></a><span class="kw"><a href="../reference/as.mic.html">as.mic</a></span>(<span class="fl">0.125</span>)</span>
-<span id="cb1-3"><a href="#cb1-3"></a><span class="co"># Class 'mic'</span></span>
-<span id="cb1-4"><a href="#cb1-4"></a><span class="co"># [1] 0.125</span></span>
-<span id="cb1-5"><a href="#cb1-5"></a><span class="kw"><a href="../reference/as.mic.html">as.mic</a></span>(<span class="st">"testvalue"</span>)</span>
-<span id="cb1-6"><a href="#cb1-6"></a><span class="co"># Class 'mic'</span></span>
-<span id="cb1-7"><a href="#cb1-7"></a><span class="co"># [1] &lt;NA&gt;</span></span>
-<span id="cb1-8"><a href="#cb1-8"></a></span>
-<span id="cb1-9"><a href="#cb1-9"></a><span class="co"># the Gram stain is avaiable for all bacteria:</span></span>
-<span id="cb1-10"><a href="#cb1-10"></a><span class="kw"><a href="../reference/mo_property.html">mo_gramstain</a></span>(<span class="st">"E. coli"</span>)</span>
-<span id="cb1-11"><a href="#cb1-11"></a><span class="co"># [1] "Gram-negative"</span></span>
-<span id="cb1-12"><a href="#cb1-12"></a></span>
-<span id="cb1-13"><a href="#cb1-13"></a><span class="co"># Klebsiella is intrinsic resistant to amoxicllin, according to EUCAST:</span></span>
-<span id="cb1-14"><a href="#cb1-14"></a>klebsiella_test &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span>(<span class="dt">mo =</span> <span class="st">"klebsiella"</span>, </span>
-<span id="cb1-15"><a href="#cb1-15"></a>                              <span class="dt">amox =</span> <span class="st">"S"</span>,</span>
-<span id="cb1-16"><a href="#cb1-16"></a>                              <span class="dt">stringsAsFactors =</span> <span class="ot">FALSE</span>)</span>
-<span id="cb1-17"><a href="#cb1-17"></a>klebsiella_test <span class="co"># (our original data)</span></span>
-<span id="cb1-18"><a href="#cb1-18"></a><span class="co">#           mo amox</span></span>
-<span id="cb1-19"><a href="#cb1-19"></a><span class="co"># 1 klebsiella    S</span></span>
-<span id="cb1-20"><a href="#cb1-20"></a><span class="kw"><a href="../reference/eucast_rules.html">eucast_rules</a></span>(klebsiella_test, <span class="dt">info =</span> <span class="ot">FALSE</span>) <span class="co"># (the edited data by EUCAST rules)</span></span>
-<span id="cb1-21"><a href="#cb1-21"></a><span class="co">#           mo amox</span></span>
-<span id="cb1-22"><a href="#cb1-22"></a><span class="co"># 1 klebsiella    R</span></span>
-<span id="cb1-23"><a href="#cb1-23"></a></span>
-<span id="cb1-24"><a href="#cb1-24"></a><span class="co"># hundreds of trade names can be translated to a name, trade name or an ATC code:</span></span>
-<span id="cb1-25"><a href="#cb1-25"></a><span class="kw"><a href="../reference/ab_property.html">ab_name</a></span>(<span class="st">"floxapen"</span>)</span>
-<span id="cb1-26"><a href="#cb1-26"></a><span class="co"># [1] "Flucloxacillin"</span></span>
-<span id="cb1-27"><a href="#cb1-27"></a><span class="kw"><a href="../reference/ab_property.html">ab_tradenames</a></span>(<span class="st">"floxapen"</span>)</span>
-<span id="cb1-28"><a href="#cb1-28"></a><span class="co">#  [1] "Floxacillin"          "FLOXACILLIN"          "Floxapen"            </span></span>
-<span id="cb1-29"><a href="#cb1-29"></a><span class="co">#  [4] "Floxapen sodium salt" "Fluclox"              "Flucloxacilina"      </span></span>
-<span id="cb1-30"><a href="#cb1-30"></a><span class="co">#  [7] "Flucloxacillin"       "Flucloxacilline"      "Flucloxacillinum"    </span></span>
-<span id="cb1-31"><a href="#cb1-31"></a><span class="co"># [10] "Fluorochloroxacillin"</span></span>
-<span id="cb1-32"><a href="#cb1-32"></a><span class="kw"><a href="../reference/ab_property.html">ab_atc</a></span>(<span class="st">"floxapen"</span>)</span>
-<span id="cb1-33"><a href="#cb1-33"></a><span class="co"># [1] "J01CF05"</span></span></code></pre></div>
+<div class="sourceCode" id="cb1"><html><body><pre class="r"><span class="co"># not all values are valid MIC values:</span>
+<span class="fu"><a href="../reference/as.mic.html">as.mic</a></span>(<span class="fl">0.125</span>)
+<span class="co"># Class 'mic'</span>
+<span class="co"># [1] 0.125</span>
+<span class="fu"><a href="../reference/as.mic.html">as.mic</a></span>(<span class="st">"testvalue"</span>)
+<span class="co"># Class 'mic'</span>
+<span class="co"># [1] &lt;NA&gt;</span>
+
+<span class="co"># the Gram stain is avaiable for all bacteria:</span>
+<span class="fu"><a href="../reference/mo_property.html">mo_gramstain</a></span>(<span class="st">"E. coli"</span>)
+<span class="co"># [1] "Gram-negative"</span>
+
+<span class="co"># Klebsiella is intrinsic resistant to amoxicllin, according to EUCAST:</span>
+<span class="no">klebsiella_test</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span>(<span class="kw">mo</span> <span class="kw">=</span> <span class="st">"klebsiella"</span>,
+                              <span class="kw">amox</span> <span class="kw">=</span> <span class="st">"S"</span>,
+                              <span class="kw">stringsAsFactors</span> <span class="kw">=</span> <span class="fl">FALSE</span>)
+<span class="no">klebsiella_test</span> <span class="co"># (our original data)</span>
+<span class="co">#           mo amox</span>
+<span class="co"># 1 klebsiella    S</span>
+<span class="fu"><a href="../reference/eucast_rules.html">eucast_rules</a></span>(<span class="no">klebsiella_test</span>, <span class="kw">info</span> <span class="kw">=</span> <span class="fl">FALSE</span>) <span class="co"># (the edited data by EUCAST rules)</span>
+<span class="co">#           mo amox</span>
+<span class="co"># 1 klebsiella    R</span>
+
+<span class="co"># hundreds of trade names can be translated to a name, trade name or an ATC code:</span>
+<span class="fu"><a href="../reference/ab_property.html">ab_name</a></span>(<span class="st">"floxapen"</span>)
+<span class="co"># [1] "Flucloxacillin"</span>
+<span class="fu"><a href="../reference/ab_property.html">ab_tradenames</a></span>(<span class="st">"floxapen"</span>)
+<span class="co"># [1] "floxacillin"          "floxapen"             "floxapen sodium salt"</span>
+<span class="co"># [4] "fluclox"              "flucloxacilina"       "flucloxacillin"      </span>
+<span class="co"># [7] "flucloxacilline"      "flucloxacillinum"     "fluorochloroxacillin"</span>
+<span class="fu"><a href="../reference/ab_property.html">ab_atc</a></span>(<span class="st">"floxapen"</span>)
+<span class="co"># [1] "J01CF05"</span></pre></body></html></div>
 </div>
 <div id="import-data-from-spsssasstata" class="section level2">
 <h2 class="hasAnchor">
@@ -287,97 +287,97 @@
 <p><img src="https://gitlab.com/msberends/AMR/raw/master/docs/import2.png"></p>
 <p>If you want named variables to be imported as factors so it resembles SPSS more, use <code><a href="https://haven.tidyverse.org/reference/as_factor.html">as_factor()</a></code>.</p>
 <p>The difference is this:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a>SPSS_data</span>
-<span id="cb2-2"><a href="#cb2-2"></a><span class="co"># # A tibble: 4,203 x 4</span></span>
-<span id="cb2-3"><a href="#cb2-3"></a><span class="co">#     v001 sex       status    statusage</span></span>
-<span id="cb2-4"><a href="#cb2-4"></a><span class="co">#    &lt;dbl&gt; &lt;dbl+lbl&gt; &lt;dbl+lbl&gt;     &lt;dbl&gt;</span></span>
-<span id="cb2-5"><a href="#cb2-5"></a><span class="co">#  1 10002 1         1              76.6</span></span>
-<span id="cb2-6"><a href="#cb2-6"></a><span class="co">#  2 10004 0         1              59.1</span></span>
-<span id="cb2-7"><a href="#cb2-7"></a><span class="co">#  3 10005 1         1              54.5</span></span>
-<span id="cb2-8"><a href="#cb2-8"></a><span class="co">#  4 10006 1         1              54.1</span></span>
-<span id="cb2-9"><a href="#cb2-9"></a><span class="co">#  5 10007 1         1              57.7</span></span>
-<span id="cb2-10"><a href="#cb2-10"></a><span class="co">#  6 10008 1         1              62.8</span></span>
-<span id="cb2-11"><a href="#cb2-11"></a><span class="co">#  7 10010 0         1              63.7</span></span>
-<span id="cb2-12"><a href="#cb2-12"></a><span class="co">#  8 10011 1         1              73.1</span></span>
-<span id="cb2-13"><a href="#cb2-13"></a><span class="co">#  9 10017 1         1              56.7</span></span>
-<span id="cb2-14"><a href="#cb2-14"></a><span class="co"># 10 10018 0         1              66.6</span></span>
-<span id="cb2-15"><a href="#cb2-15"></a><span class="co"># # … with 4,193 more rows</span></span>
-<span id="cb2-16"><a href="#cb2-16"></a></span>
-<span id="cb2-17"><a href="#cb2-17"></a><span class="kw">as_factor</span>(SPSS_data)</span>
-<span id="cb2-18"><a href="#cb2-18"></a><span class="co"># # A tibble: 4,203 x 4</span></span>
-<span id="cb2-19"><a href="#cb2-19"></a><span class="co">#     v001 sex    status statusage</span></span>
-<span id="cb2-20"><a href="#cb2-20"></a><span class="co">#    &lt;dbl&gt; &lt;fct&gt;  &lt;fct&gt;      &lt;dbl&gt;</span></span>
-<span id="cb2-21"><a href="#cb2-21"></a><span class="co">#  1 10002 Male   alive       76.6</span></span>
-<span id="cb2-22"><a href="#cb2-22"></a><span class="co">#  2 10004 Female alive       59.1</span></span>
-<span id="cb2-23"><a href="#cb2-23"></a><span class="co">#  3 10005 Male   alive       54.5</span></span>
-<span id="cb2-24"><a href="#cb2-24"></a><span class="co">#  4 10006 Male   alive       54.1</span></span>
-<span id="cb2-25"><a href="#cb2-25"></a><span class="co">#  5 10007 Male   alive       57.7</span></span>
-<span id="cb2-26"><a href="#cb2-26"></a><span class="co">#  6 10008 Male   alive       62.8</span></span>
-<span id="cb2-27"><a href="#cb2-27"></a><span class="co">#  7 10010 Female alive       63.7</span></span>
-<span id="cb2-28"><a href="#cb2-28"></a><span class="co">#  8 10011 Male   alive       73.1</span></span>
-<span id="cb2-29"><a href="#cb2-29"></a><span class="co">#  9 10017 Male   alive       56.7</span></span>
-<span id="cb2-30"><a href="#cb2-30"></a><span class="co"># 10 10018 Female alive       66.6</span></span>
-<span id="cb2-31"><a href="#cb2-31"></a><span class="co"># # … with 4,193 more rows</span></span></code></pre></div>
+<div class="sourceCode" id="cb2"><html><body><pre class="r"><span class="no">SPSS_data</span>
+<span class="co"># # A tibble: 4,203 x 4</span>
+<span class="co">#     v001 sex       status    statusage</span>
+<span class="co">#    &lt;dbl&gt; &lt;dbl+lbl&gt; &lt;dbl+lbl&gt;     &lt;dbl&gt;</span>
+<span class="co">#  1 10002 1         1              76.6</span>
+<span class="co">#  2 10004 0         1              59.1</span>
+<span class="co">#  3 10005 1         1              54.5</span>
+<span class="co">#  4 10006 1         1              54.1</span>
+<span class="co">#  5 10007 1         1              57.7</span>
+<span class="co">#  6 10008 1         1              62.8</span>
+<span class="co">#  7 10010 0         1              63.7</span>
+<span class="co">#  8 10011 1         1              73.1</span>
+<span class="co">#  9 10017 1         1              56.7</span>
+<span class="co"># 10 10018 0         1              66.6</span>
+<span class="co"># # … with 4,193 more rows</span>
+
+<span class="fu">as_factor</span>(<span class="no">SPSS_data</span>)
+<span class="co"># # A tibble: 4,203 x 4</span>
+<span class="co">#     v001 sex    status statusage</span>
+<span class="co">#    &lt;dbl&gt; &lt;fct&gt;  &lt;fct&gt;      &lt;dbl&gt;</span>
+<span class="co">#  1 10002 Male   alive       76.6</span>
+<span class="co">#  2 10004 Female alive       59.1</span>
+<span class="co">#  3 10005 Male   alive       54.5</span>
+<span class="co">#  4 10006 Male   alive       54.1</span>
+<span class="co">#  5 10007 Male   alive       57.7</span>
+<span class="co">#  6 10008 Male   alive       62.8</span>
+<span class="co">#  7 10010 Female alive       63.7</span>
+<span class="co">#  8 10011 Male   alive       73.1</span>
+<span class="co">#  9 10017 Male   alive       56.7</span>
+<span class="co"># 10 10018 Female alive       66.6</span>
+<span class="co"># # … with 4,193 more rows</span></pre></body></html></div>
 </div>
 <div id="base-r" class="section level3">
 <h3 class="hasAnchor">
 <a href="#base-r" class="anchor"></a>Base R</h3>
 <p>To import data from SPSS, SAS or Stata, you can use the <a href="https://haven.tidyverse.org/">great <code>haven</code> package</a> yourself:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a><span class="co"># download and install the latest version:</span></span>
-<span id="cb3-2"><a href="#cb3-2"></a><span class="kw"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span>(<span class="st">"haven"</span>)</span>
-<span id="cb3-3"><a href="#cb3-3"></a><span class="co"># load the package you just installed:</span></span>
-<span id="cb3-4"><a href="#cb3-4"></a><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(haven) </span></code></pre></div>
+<div class="sourceCode" id="cb3"><html><body><pre class="r"><span class="co"># download and install the latest version:</span>
+<span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span>(<span class="st">"haven"</span>)
+<span class="co"># load the package you just installed:</span>
+<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">haven</span>)</pre></body></html></div>
 <p>You can now import files as follows:</p>
 <div id="spss" class="section level4">
 <h4 class="hasAnchor">
 <a href="#spss" class="anchor"></a>SPSS</h4>
 <p>To read files from SPSS into R:</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a><span class="co"># read any SPSS file based on file extension (best way):</span></span>
-<span id="cb4-2"><a href="#cb4-2"></a><span class="kw"><a href="https://haven.tidyverse.org/reference/read_spss.html">read_spss</a></span>(<span class="dt">file =</span> <span class="st">"path/to/file"</span>)</span>
-<span id="cb4-3"><a href="#cb4-3"></a></span>
-<span id="cb4-4"><a href="#cb4-4"></a><span class="co"># read .sav or .zsav file:</span></span>
-<span id="cb4-5"><a href="#cb4-5"></a><span class="kw"><a href="https://haven.tidyverse.org/reference/read_spss.html">read_sav</a></span>(<span class="dt">file =</span> <span class="st">"path/to/file"</span>)</span>
-<span id="cb4-6"><a href="#cb4-6"></a></span>
-<span id="cb4-7"><a href="#cb4-7"></a><span class="co"># read .por file:</span></span>
-<span id="cb4-8"><a href="#cb4-8"></a><span class="kw"><a href="https://haven.tidyverse.org/reference/read_spss.html">read_por</a></span>(<span class="dt">file =</span> <span class="st">"path/to/file"</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb4"><html><body><pre class="r"><span class="co"># read any SPSS file based on file extension (best way):</span>
+<span class="fu"><a href="https://haven.tidyverse.org/reference/read_spss.html">read_spss</a></span>(<span class="kw">file</span> <span class="kw">=</span> <span class="st">"path/to/file"</span>)
+
+<span class="co"># read .sav or .zsav file:</span>
+<span class="fu"><a href="https://haven.tidyverse.org/reference/read_spss.html">read_sav</a></span>(<span class="kw">file</span> <span class="kw">=</span> <span class="st">"path/to/file"</span>)
+
+<span class="co"># read .por file:</span>
+<span class="fu"><a href="https://haven.tidyverse.org/reference/read_spss.html">read_por</a></span>(<span class="kw">file</span> <span class="kw">=</span> <span class="st">"path/to/file"</span>)</pre></body></html></div>
 <p>Do not forget about <code><a href="https://haven.tidyverse.org/reference/as_factor.html">as_factor()</a></code>, as mentioned above.</p>
 <p>To export your R objects to the SPSS file format:</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a><span class="co"># save as .sav file:</span></span>
-<span id="cb5-2"><a href="#cb5-2"></a><span class="kw"><a href="https://haven.tidyverse.org/reference/read_spss.html">write_sav</a></span>(<span class="dt">data =</span> yourdata, <span class="dt">path =</span> <span class="st">"path/to/file"</span>)</span>
-<span id="cb5-3"><a href="#cb5-3"></a></span>
-<span id="cb5-4"><a href="#cb5-4"></a><span class="co"># save as compressed .zsav file:</span></span>
-<span id="cb5-5"><a href="#cb5-5"></a><span class="kw"><a href="https://haven.tidyverse.org/reference/read_spss.html">write_sav</a></span>(<span class="dt">data =</span> yourdata, <span class="dt">path =</span> <span class="st">"path/to/file"</span>, <span class="dt">compress =</span> <span class="ot">TRUE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb5"><html><body><pre class="r"><span class="co"># save as .sav file:</span>
+<span class="fu"><a href="https://haven.tidyverse.org/reference/read_spss.html">write_sav</a></span>(<span class="kw">data</span> <span class="kw">=</span> <span class="no">yourdata</span>, <span class="kw">path</span> <span class="kw">=</span> <span class="st">"path/to/file"</span>)
+
+<span class="co"># save as compressed .zsav file:</span>
+<span class="fu"><a href="https://haven.tidyverse.org/reference/read_spss.html">write_sav</a></span>(<span class="kw">data</span> <span class="kw">=</span> <span class="no">yourdata</span>, <span class="kw">path</span> <span class="kw">=</span> <span class="st">"path/to/file"</span>, <span class="kw">compress</span> <span class="kw">=</span> <span class="fl">TRUE</span>)</pre></body></html></div>
 </div>
 <div id="sas" class="section level4">
 <h4 class="hasAnchor">
 <a href="#sas" class="anchor"></a>SAS</h4>
 <p>To read files from SAS into R:</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a><span class="co"># read .sas7bdat + .sas7bcat files:</span></span>
-<span id="cb6-2"><a href="#cb6-2"></a><span class="kw"><a href="https://haven.tidyverse.org/reference/read_sas.html">read_sas</a></span>(<span class="dt">data_file =</span> <span class="st">"path/to/file"</span>, <span class="dt">catalog_file =</span> <span class="ot">NULL</span>)</span>
-<span id="cb6-3"><a href="#cb6-3"></a></span>
-<span id="cb6-4"><a href="#cb6-4"></a><span class="co"># read SAS transport files (version 5 and version 8):</span></span>
-<span id="cb6-5"><a href="#cb6-5"></a><span class="kw"><a href="https://haven.tidyverse.org/reference/read_xpt.html">read_xpt</a></span>(<span class="dt">file =</span> <span class="st">"path/to/file"</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb6"><html><body><pre class="r"><span class="co"># read .sas7bdat + .sas7bcat files:</span>
+<span class="fu"><a href="https://haven.tidyverse.org/reference/read_sas.html">read_sas</a></span>(<span class="kw">data_file</span> <span class="kw">=</span> <span class="st">"path/to/file"</span>, <span class="kw">catalog_file</span> <span class="kw">=</span> <span class="kw">NULL</span>)
+
+<span class="co"># read SAS transport files (version 5 and version 8):</span>
+<span class="fu"><a href="https://haven.tidyverse.org/reference/read_xpt.html">read_xpt</a></span>(<span class="kw">file</span> <span class="kw">=</span> <span class="st">"path/to/file"</span>)</pre></body></html></div>
 <p>To export your R objects to the SAS file format:</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a><span class="co"># save as regular SAS file:</span></span>
-<span id="cb7-2"><a href="#cb7-2"></a><span class="kw"><a href="https://haven.tidyverse.org/reference/read_sas.html">write_sas</a></span>(<span class="dt">data =</span> yourdata, <span class="dt">path =</span> <span class="st">"path/to/file"</span>)</span>
-<span id="cb7-3"><a href="#cb7-3"></a></span>
-<span id="cb7-4"><a href="#cb7-4"></a><span class="co"># the SAS transport format is an open format </span></span>
-<span id="cb7-5"><a href="#cb7-5"></a><span class="co"># (required for submission of the data to the FDA)</span></span>
-<span id="cb7-6"><a href="#cb7-6"></a><span class="kw"><a href="https://haven.tidyverse.org/reference/read_xpt.html">write_xpt</a></span>(<span class="dt">data =</span> yourdata, <span class="dt">path =</span> <span class="st">"path/to/file"</span>, <span class="dt">version =</span> <span class="dv">8</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb7"><html><body><pre class="r"><span class="co"># save as regular SAS file:</span>
+<span class="fu"><a href="https://haven.tidyverse.org/reference/read_sas.html">write_sas</a></span>(<span class="kw">data</span> <span class="kw">=</span> <span class="no">yourdata</span>, <span class="kw">path</span> <span class="kw">=</span> <span class="st">"path/to/file"</span>)
+
+<span class="co"># the SAS transport format is an open format </span>
+<span class="co"># (required for submission of the data to the FDA)</span>
+<span class="fu"><a href="https://haven.tidyverse.org/reference/read_xpt.html">write_xpt</a></span>(<span class="kw">data</span> <span class="kw">=</span> <span class="no">yourdata</span>, <span class="kw">path</span> <span class="kw">=</span> <span class="st">"path/to/file"</span>, <span class="kw">version</span> <span class="kw">=</span> <span class="fl">8</span>)</pre></body></html></div>
 </div>
 <div id="stata" class="section level4">
 <h4 class="hasAnchor">
 <a href="#stata" class="anchor"></a>Stata</h4>
 <p>To read files from Stata into R:</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1"></a><span class="co"># read .dta file:</span></span>
-<span id="cb8-2"><a href="#cb8-2"></a><span class="kw"><a href="https://haven.tidyverse.org/reference/read_dta.html">read_stata</a></span>(<span class="dt">file =</span> <span class="st">"/path/to/file"</span>)</span>
-<span id="cb8-3"><a href="#cb8-3"></a></span>
-<span id="cb8-4"><a href="#cb8-4"></a><span class="co"># works exactly the same:</span></span>
-<span id="cb8-5"><a href="#cb8-5"></a><span class="kw"><a href="https://haven.tidyverse.org/reference/read_dta.html">read_dta</a></span>(<span class="dt">file =</span> <span class="st">"/path/to/file"</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb8"><html><body><pre class="r"><span class="co"># read .dta file:</span>
+<span class="fu"><a href="https://haven.tidyverse.org/reference/read_dta.html">read_stata</a></span>(<span class="kw">file</span> <span class="kw">=</span> <span class="st">"/path/to/file"</span>)
+
+<span class="co"># works exactly the same:</span>
+<span class="fu"><a href="https://haven.tidyverse.org/reference/read_dta.html">read_dta</a></span>(<span class="kw">file</span> <span class="kw">=</span> <span class="st">"/path/to/file"</span>)</pre></body></html></div>
 <p>To export your R objects to the Stata file format:</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a><span class="co"># save as .dta file, Stata version 14:</span></span>
-<span id="cb9-2"><a href="#cb9-2"></a><span class="co"># (supports Stata v8 until v15 at the time of writing)</span></span>
-<span id="cb9-3"><a href="#cb9-3"></a><span class="kw"><a href="https://haven.tidyverse.org/reference/read_dta.html">write_dta</a></span>(<span class="dt">data =</span> yourdata, <span class="dt">path =</span> <span class="st">"/path/to/file"</span>, <span class="dt">version =</span> <span class="dv">14</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb9"><html><body><pre class="r"><span class="co"># save as .dta file, Stata version 14:</span>
+<span class="co"># (supports Stata v8 until v15 at the time of writing)</span>
+<span class="fu"><a href="https://haven.tidyverse.org/reference/read_dta.html">write_dta</a></span>(<span class="kw">data</span> <span class="kw">=</span> <span class="no">yourdata</span>, <span class="kw">path</span> <span class="kw">=</span> <span class="st">"/path/to/file"</span>, <span class="kw">version</span> <span class="kw">=</span> <span class="fl">14</span>)</pre></body></html></div>
 </div>
 </div>
 </div>
@@ -385,16 +385,9 @@
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
 
-        <div id="tocnav">
-      <h2 class="hasAnchor">
-<a href="#tocnav" class="anchor"></a>Contents</h2>
-      <ul class="nav nav-pills nav-stacked">
-<li><a href="#spss-sas-stata">SPSS / SAS / Stata</a></li>
-      <li><a href="#compared-to-r">Compared to R</a></li>
-      <li><a href="#import-data-from-spsssasstata">Import data from SPSS/SAS/Stata</a></li>
-      </ul>
+        <nav id="toc" data-toggle="toc"><h2 data-toc-skip>Contents</h2>
+    </nav>
 </div>
-      </div>
 
 </div>
 
@@ -405,7 +398,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.9000.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.0.</p>
 </div>
 
       </footer>

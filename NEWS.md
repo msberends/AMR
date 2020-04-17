@@ -1,5 +1,5 @@
-# AMR 1.0.1.9009
-## <small>Last updated: 15-Apr-2020</small>
+# AMR 1.1.0
+
 
 ### New
 * Support for easy principal component analysis for AMR, using the new `pca()` function 
