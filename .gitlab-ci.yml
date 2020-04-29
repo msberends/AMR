@@ -20,13 +20,13 @@
 # ==================================================================== #
 
 # to do a full CRAN check with R-Hub:
-# chck <- rhub::check(devtools::build(), platform = c('debian-clang-devel', 'debian-gcc-devel', 'fedora-clang-devel', 'fedora-gcc-devel', 'windows-x86_64-devel', 'debian-gcc-patched', 'solaris-x86-patched', 'debian-gcc-release', 'windows-x86_64-release', 'macos-elcapitan-release', 'windows-x86_64-oldrel'))
+# chck <- rhub::check(devtools::build(), platform = rhub::platforms()[!is.na(rhub::platforms()$`cran-name`), 'name'])
 
 stages:
   - check
   - lint
-  - coverage
   - website
+  - coverage
   
 image: rocker/r-base
 
@@ -35,7 +35,7 @@ before_script:
   # install dependencies for packages
   - apt-get install -y wget locales libxml2-dev libssl-dev libcurl4-openssl-dev zlib1g-dev > /dev/null
   # recent pandoc
-  - wget --quiet https://github.com/jgm/pandoc/releases/download/2.7.3/pandoc-2.7.3-1-amd64.deb
+  - wget --quiet https://github.com/jgm/pandoc/releases/download/2.9.2.1/pandoc-2.9.2.1-1-amd64.deb
   - dpkg -i pandoc*.deb
   - rm pandoc*.deb
   # set R system language
@@ -74,7 +74,7 @@ R-release:
       - '*.Rcheck/*'
     expire_in: '1 month'
   cache:
-    key: r350
+    key: release_4_0
     paths:
       - installed_deps/
 
@@ -100,7 +100,7 @@ R-devel:
       - '*.Rcheck/*'
     expire_in: '1 month'
   cache:
-    key: r360
+    key: devel_4_1
     paths:
       - installed_deps/
 
@@ -109,7 +109,7 @@ lintr:
   allow_failure: true
   when: on_success
   cache:
-    key: r350
+    key: release_4_0
     paths:
       - installed_deps/
     policy: pull # no uploading after run
@@ -120,12 +120,23 @@ lintr:
     # check all syntax with lintr
     - Rscript -e 'lintr::lint_package()'
 
+pages:
+  stage: website
+  when: always
+  only:
+    - master
+  script:
+    - mv docs public
+  artifacts:
+    paths:
+      - public
+
 codecovr:
   stage: coverage
   allow_failure: true
   when: on_success
   cache:
-    key: r350
+    key: release_4_0
     paths:
       - installed_deps/
     policy: pull # no uploading after run
@@ -138,14 +149,3 @@ codecovr:
     # Sys.setenv(NOT_CRAN = 'true'), because otherwise skip_on_cran() will be applied on Covr too, resulting in extremely low coverage percentages
     - Rscript -e "Sys.setenv(NOT_CRAN = 'true'); cc <- covr::package_coverage(line_exclusions = list('R/atc_online.R', 'R/mo_history.R', 'R/mo_source.R', 'R/resistance_predict.R')); covr::codecov(coverage = cc, token = '$codecov'); cat('Code coverage:', covr::percent_coverage(cc))"
   coverage: '/Code coverage: \d+\.\d+/'
-
-pages:
-  stage: website
-  when: always
-  only:
-    - master
-  script:
-    - mv docs public
-  artifacts:
-    paths:
-      - public

@@ -165,6 +165,7 @@ reference:
     - "`extended-functions`"
     - "`like`"
     - "`reexports`"
+    - "`AMR-vctrs`"
   - title: Deprecated functions
     desc: >
       These functions are deprecated, meaning that they will still

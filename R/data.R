@@ -59,7 +59,7 @@
 #' * <https://gitlab.com/msberends/AMR/raw/master/data-raw/antibiotics.txt>
 #' * <https://gitlab.com/msberends/AMR/raw/master/data-raw/antivirals.txt>
 #' 
-#' Files in R format (which data structure) can be found here:
+#' Files in R format (with preserved data structure) can be found here:
 #' 
 #' * <https://gitlab.com/msberends/AMR/raw/master/data/antibiotics.rda>
 #' * <https://gitlab.com/msberends/AMR/raw/master/data/antivirals.rda>
@@ -105,7 +105,7 @@
 #' 
 #' * <https://gitlab.com/msberends/AMR/raw/master/data-raw/microorganisms.txt>
 #' 
-#' The file in R format (which data structure) can be found here:
+#' The file in R format (with preserved data structure) can be found here:
 #' 
 #' * <https://gitlab.com/msberends/AMR/raw/master/data/microorganisms.rda>
 #' @section About the records from DSMZ (see source):

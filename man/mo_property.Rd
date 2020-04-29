@@ -103,6 +103,8 @@ All functions will return the most recently known taxonomic property according t
 \item \code{mo_ref("Chlamydophila psittaci")} will return \code{"Everett et al., 1999"} (without a warning)
 }
 
+The short name - \code{\link[=mo_shortname]{mo_shortname()}} - almost always returns the first character of the genus and the full species, like \emph{"E. coli"}. Exceptions are abbreviations of staphylococci and beta-haemolytic streptococci, like \emph{"CoNS"} (Coagulase-Negative Staphylococci) and \emph{"GBS"} (Group B Streptococci).
+
 The Gram stain - \code{\link[=mo_gramstain]{mo_gramstain()}} - will be determined on the taxonomic kingdom and phylum. According to Cavalier-Smith (2002) who defined subkingdoms Negibacteria and Posibacteria, only these phyla are Posibacteria: Actinobacteria, Chloroflexi, Firmicutes and Tenericutes. These bacteria are considered Gram-positive - all other bacteria are considered Gram-negative. Species outside the kingdom of Bacteria will return a value \code{NA}.
 
 All output will be \link{translate}d where possible.

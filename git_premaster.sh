@@ -63,10 +63,21 @@ if [ -z "$3" ]; then
   # no version number set, so get latest tags to create it
   git pull --tags --quiet
   current_tag=`git describe --tags --abbrev=0 | sed 's/v//'`
-  current_commit=`git describe --tags | sed 's/.*-\(.*\)-.*/\1/'`
+
+# current_commit=`git describe --tags | sed 's/.*-\(.*\)-.*/\1/'`
   if [ -z "current_tag" ]; then
     echo "FATAL - could not determine current tag"
     exit 1
+  fi
+  current_tag_dots=`echo $current_tag | grep -o "[.]" | wc -l`
+  if (( "$current_tag_dots" < 3 )); then
+    # contains two dots, so version number is like "1.0.0", commit nr is 0
+    current_commit=0
+    echo "---------------"
+    echo "Mind NEWS.md! Assuming sequence number 9000."
+    echo "---------------"
+  else
+    current_commit=`git describe --tags | sed 's/.*[.]//'`
   fi
   if [ -z "current_commit" ]; then
     echo "FATAL - could not determine last commit index number"
@@ -74,13 +85,6 @@ if [ -z "$3" ]; then
   fi
   # combine tag (e.g. 0.1.0) and commit number (like 40) increased by 9000 to indicate beta version
   new_version="$current_tag.$((current_commit + 9000))" # results in 0.1.0.9040
-  if [ -z "$new_version" ]; then
-    new_version="$current_tag.9000"
-    echo
-    echo "** COULD NOT CREATE NEW VERSION NUMBER! **"
-    echo "Are there some unpushed changes in a new tag? Then mind NEWS.md. Assuming sequence number 9000."
-    echo
-  fi
   # add date to 2nd line of NEWS.md when no version number was set
   sed -i -- "2s/.*/## \<small\>Last updated: $(date '+%d-%b-%Y')\<\/small\>/" NEWS.md
 else
@@ -100,6 +104,7 @@ echo
 echo "• First 2 lines of NEWS.md:"
 head -2 NEWS.md
 echo
+echo "R library location:" $(Rscript -e "cat(.libPaths()[1])")
 echo "•••••••••••••••••••••••••••••••••"
 echo "• Reloading/documenting package •"
 echo "•••••••••••••••••••••••••••••••••"

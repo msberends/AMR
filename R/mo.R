@@ -1671,48 +1671,6 @@ print.mo <- function(x, ...) {
   print.default(x, quote = FALSE)
 }
 
-#' @importFrom vctrs vec_ptype_abbr
-#' @export
-vec_ptype_abbr.mo <- function(x, ...) {
-  "mo"
-}
-
-#' @importFrom vctrs vec_ptype_full
-#' @export
-vec_ptype_full.mo <- function(x, ...) {
-  "mo"
-}
-
-#' @importFrom vctrs vec_ptype2
-#' @export
-vec_ptype2.mo <- function(x, y, ...) {
-  vctrs::vec_ptype2(x = as.character(x), y = as.character(y), ...)
-}
-
-#' @importFrom vctrs vec_cast
-#' @export
-vec_cast.mo <- function(x, to, ...) {
-  as.mo(vctrs::vec_cast(x = as.character(x), to = as.character(to), ...))
-}
-
-#' @importFrom vctrs vec_cast
-#' @export
-vec_cast.mo.mo <- function(x, to, ...) {
-  as.mo(vctrs::vec_cast(x = as.character(x), to = as.character(to), ...))
-}
-
-#' @importFrom vctrs vec_cast
-#' @export
-vec_cast.mo.character <- function(x, to, ...) {
-  vctrs::vec_cast(x = as.character(x), to = as.character(to), ...)
-}
-
-#' @importFrom vctrs vec_cast
-#' @export
-vec_cast.character.mo <- function(x, to, ...) {
-  as.mo(vctrs::vec_cast(x = as.character(x), to = as.character(to), ...))
-}
-
 #' @importFrom pillar pillar_shaft
 #' @export
 pillar_shaft.mo <- function(x, ...) {

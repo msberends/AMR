@@ -68,7 +68,7 @@ These data sets are available as 'flat files' for use even without R - you can f
 \item \url{https://gitlab.com/msberends/AMR/raw/master/data-raw/antivirals.txt}
 }
 
-Files in R format (which data structure) can be found here:
+Files in R format (with preserved data structure) can be found here:
 \itemize{
 \item \url{https://gitlab.com/msberends/AMR/raw/master/data/antibiotics.rda}
 \item \url{https://gitlab.com/msberends/AMR/raw/master/data/antivirals.rda}

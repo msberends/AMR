@@ -405,18 +405,6 @@ c.ab <- function(x, ...) {
   class_integrity_check(y, "antimicrobial code", antibiotics$ab)
 }
 
-#' @importFrom vctrs vec_ptype_abbr
-#' @export
-vec_ptype_abbr.ab <- function(x, ...) {
-  "ab"
-}
-
-#' @importFrom vctrs vec_ptype_full
-#' @export
-vec_ptype_full.ab <- function(x, ...) {
-  "ab"
-}
-
 #' @importFrom pillar pillar_shaft
 #' @export
 pillar_shaft.ab <- function(x, ...) {

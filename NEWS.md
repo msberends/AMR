@@ -1,5 +1,12 @@
-# AMR 1.1.0
+# AMR 1.1.0.9000
+## <small>Last updated: 29-Apr-2020</small>
 
+### Changed
+* Small fix for some text input that could not be coerced as valid MIC values 
+* Better support for the tidyverse. The tidyverse now heavily relies on the `vctrs` package for data transformation and data joining. In newer versions of e.g. the `dplyr` package, a function like `bind_rows()` would not preserve the right class for microorganisms (class `mo`) and antibiotics (class `ab`). This is fixed in this version.
+* Fixed interpretation of generic CLSI interpretation rules (thanks to Anthony Underwood)
+
+# AMR 1.1.0
 
 ### New
 * Support for easy principal component analysis for AMR, using the new `pca()` function 

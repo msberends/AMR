@@ -75,7 +75,7 @@ as.mic <- function(x, na.rm = FALSE) {
     x <- gsub("=>", ">=", x, fixed = TRUE)
     # starting dots must start with 0
     x <- gsub("^[.]+", "0.", x)
-    # <=0.2560.512 should be 0.512
+    # values like "<=0.2560.512" should be 0.512
     x <- gsub(".*[.].*[.]", "0.", x)
     # remove ending .0
     x <- gsub("[.]+0$", "", x)
@@ -90,11 +90,13 @@ as.mic <- function(x, na.rm = FALSE) {
     x <- gsub("(.*[.])0+$", "\\10", x)
     # remove ending .0 again
     x[x %like% "[.]"] <- gsub("0+$", "", x[x %like% "[.]"])
+    # never end with dot
+    x <- gsub("[.]$", "", x)
     # force to be character
     x <- as.character(x)
     # trim it
     x <- trimws(x)
-
+    
     ## previously unempty values now empty - should return a warning later on
     x[x.bak != "" & x == ""] <- "invalid"
 
@@ -233,18 +235,6 @@ barplot.mic <- function(height,
           main = main,
           ...)
   axis(2, seq(0, max(table(droplevels.factor(height)))))
-}
-
-#' @importFrom vctrs vec_ptype_abbr
-#' @export
-vec_ptype_abbr.mic <- function(x, ...) {
-  "mic"
-}
-
-#' @importFrom vctrs vec_ptype_full
-#' @export
-vec_ptype_full.mic <- function(x, ...) {
-  "mic"
 }
 
 #' @importFrom pillar pillar_shaft

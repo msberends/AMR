@@ -127,18 +127,6 @@ pillar_shaft.disk <- function(x, ...) {
   pillar::new_pillar_shaft_simple(out, align = "right", min_width = 3)
 }
 
-#' @importFrom vctrs vec_ptype_abbr
-#' @export
-vec_ptype_abbr.disk <- function(x, ...) {
-  "disk"
-}
-
-#' @importFrom vctrs vec_ptype_full
-#' @export
-vec_ptype_full.disk <- function(x, ...) {
-  "disk"
-}
-
 #' @exportMethod [.disk
 #' @export
 #' @noRd

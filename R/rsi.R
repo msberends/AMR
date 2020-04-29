@@ -423,7 +423,7 @@ exec_as.rsi <- function(method, x, mo, ab, guideline, uti) {
   mo_order <- as.mo(mo_order(mo))
   mo_becker <- as.mo(mo, Becker = TRUE)
   mo_lancefield <- as.mo(mo, Lancefield = TRUE)
-  mo_other <- as.mo("other")
+  mo_other <- as.mo(rep("UNKNOWN", length(mo)))
   
   guideline_coerced <- get_guideline(guideline)
   if (guideline_coerced != guideline) {
@@ -657,18 +657,6 @@ barplot.rsi <- function(height,
   if (axes == TRUE && beside == TRUE) {
     axis(side = 1, labels = levels(height), at = c(1, 2, 3) + 0.5, lwd = 0)
   }
-}
-
-#' @importFrom vctrs vec_ptype_abbr
-#' @export
-vec_ptype_abbr.rsi <- function(x, ...) {
-  "rsi"
-}
-
-#' @importFrom vctrs vec_ptype_full
-#' @export
-vec_ptype_full.rsi <- function(x, ...) {
-  "rsi"
 }
 
 #' @importFrom pillar pillar_shaft
