@@ -251,6 +251,11 @@ InstallGithub() {
     Rscript -e 'options(repos = c(CRAN = "'"${CRAN}"'"), download.file.method = "'"${DOWNLOAD_FILE_METHOD}"'"); remotes::install_github(commandArgs(TRUE), type="'"${PKGTYPE}"'")' "$@"
 }
 
+CleanLibrary() {
+    # removes all installed package so ensures a clean library
+    Rscript -e 'remove.packages(installed.packages()[is.na(installed.packages()[,"Priority"]), "Package"])'
+}
+
 InstallDeps() {
     EnsureRemotes
 
@@ -294,6 +299,8 @@ DumpLogs() {
 }
 
 RunTests() {
+    Rscript -e 'sessionInfo()'
+    
     echo "Building with: R CMD build ${R_BUILD_ARGS}"
     if [[ "${KEEP_VIGNETTES}" == "" ]]; then
         if [[ "${OS:0:5}" == "MINGW" || "${OS:0:4}" == "MSYS" ]]; then
@@ -358,6 +365,11 @@ case $COMMAND in
     ## Bootstrap a new core system
     "bootstrap")
         Bootstrap
+        ;;
+    ##
+    ## Clean library
+    "clean_library")
+        CleanLibrary
         ;;
     ##
     ## Ensure devtools is loaded (implicitly called)

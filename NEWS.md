@@ -1,5 +1,5 @@
 # AMR 1.1.0.9000
-## <small>Last updated: 29-Apr-2020</small>
+## <small>Last updated: 30-Apr-2020</small>
 
 ### Changed
 * Small fix for some text input that could not be coerced as valid MIC values 

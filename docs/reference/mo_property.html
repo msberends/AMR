@@ -325,7 +325,7 @@
 <li><p><code>mo_ref("Chlamydophila psittaci")</code> will return <code>"Everett et al., 1999"</code> (without a warning)</p></li>
 </ul>
 
-<p>The short name - <code>mo_shortname()</code> - almost always returns the first character of the genus and the species, like <em>"E. coli"</em>. Exceptions are abbreviations of staphylococci and beta-haemolytic streptococci, like <em>"CoNS"</em> (Coagulase-Negative Staphylococci) and <em>"GBS"</em> (Group B Streptococci).</p>
+<p>The short name - <code>mo_shortname()</code> - almost always returns the first character of the genus and the full species, like <em>"E. coli"</em>. Exceptions are abbreviations of staphylococci and beta-haemolytic streptococci, like <em>"CoNS"</em> (Coagulase-Negative Staphylococci) and <em>"GBS"</em> (Group B Streptococci).</p>
 <p>The Gram stain - <code>mo_gramstain()</code> - will be determined on the taxonomic kingdom and phylum. According to Cavalier-Smith (2002) who defined subkingdoms Negibacteria and Posibacteria, only these phyla are Posibacteria: Actinobacteria, Chloroflexi, Firmicutes and Tenericutes. These bacteria are considered Gram-positive - all other bacteria are considered Gram-negative. Species outside the kingdom of Bacteria will return a value <code>NA</code>.</p>
 <p>All output will be <a href='translate.html'>translate</a>d where possible.</p>
 <p>The function <code>mo_url()</code> will return the direct URL to the online database entry, which also shows the scientific reference of the concerned species.</p>

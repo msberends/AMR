@@ -90,6 +90,7 @@ vec_cast.mo.character <- function(x, to, ...) {
 }
 
 #' @method vec_cast.mo default
+#' @importFrom vctrs vec_default_cast
 #' @export
 vec_cast.mo.default <- function(x, to, ...) {
   vec_default_cast(x, to)
@@ -166,6 +167,7 @@ vec_cast.ab.character <- function(x, to, ...) {
 }
 
 #' @method vec_cast.ab default
+#' @importFrom vctrs vec_default_cast
 #' @export
 vec_cast.ab.default <- function(x, to, ...) {
   vec_default_cast(x, to)

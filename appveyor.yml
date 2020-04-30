@@ -48,9 +48,10 @@ environment:
 
 matrix:
   allow_failures:
-  - R_VERSION: "devel" # 9 nov 19: searches for R 4.0 and now fails...
-
+  - R_VERSION: "devel"
+  
 build_script:
+  - travis_tool.sh clean_library # turn off for caching, turn on for release of new R versions
   - travis_tool.sh install_deps
 
 test_script:
