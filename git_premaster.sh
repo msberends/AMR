@@ -63,21 +63,20 @@ if [ -z "$3" ]; then
   # no version number set, so get latest tags to create it
   git pull --tags --quiet
   current_tag=`git describe --tags --abbrev=0 | sed 's/v//'`
-
-# current_commit=`git describe --tags | sed 's/.*-\(.*\)-.*/\1/'`
   if [ -z "current_tag" ]; then
     echo "FATAL - could not determine current tag"
     exit 1
   fi
-  current_tag_dots=`echo $current_tag | grep -o "[.]" | wc -l`
-  if (( "$current_tag_dots" < 3 )); then
-    # contains two dots, so version number is like "1.0.0", commit nr is 0
+  current_tag_full=`git describe --tags | sed 's/v//'`
+  current_tag_dashes=`echo $current_tag_full | grep -o "[-]" | wc -l`
+  if (( "$current_tag_dashes" < 1 )); then
+    # so version number is like "1.0.0", commit nr is 0
     current_commit=0
     echo "---------------"
     echo "Mind NEWS.md! Assuming sequence number 9000."
     echo "---------------"
   else
-    current_commit=`git describe --tags | sed 's/.*[.]//'`
+    current_commit=`git describe --tags | sed 's/.*-\(.*\)-.*/\1/'`
   fi
   if [ -z "current_commit" ]; then
     echo "FATAL - could not determine last commit index number"

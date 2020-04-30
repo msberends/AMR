@@ -23,6 +23,7 @@
 # chck <- rhub::check(devtools::build(), platform = rhub::platforms()[!is.na(rhub::platforms()$`cran-name`), 'name'])
 
 stages:
+  - test
   - check
   - lint
   - website
@@ -53,9 +54,25 @@ before_script:
   - echo 'LANG="en_US.utf8"' >> .Renviron
   - echo 'LANGUAGE="en_US.utf8"' > ~/.Renviron
 
+R-release-test-only:
+  stage: test
+  when: always
+  allow_failure: false
+  script:
+    - Rscript -e 'sessionInfo()'
+    # install missing and outdated packages
+    - Rscript -e 'source(".gitlab-ci.R"); gl_update_pkg_all(repos = "https://cran.rstudio.com", quiet = TRUE, install_pkgdown = TRUE,  install_lintr = TRUE)'
+    - Rscript -e 'devtools::test(stop_on_failure = FALSE)'
+  cache:
+    key: release_4_0
+    paths:
+      - installed_deps/
+    policy: pull # no uploading after run
+      
 R-release:
   stage: check
-  allow_failure: false
+  when: on_success
+  allow_failure: true
   script:
     - Rscript -e 'sessionInfo()'
     # install missing and outdated packages
@@ -80,6 +97,7 @@ R-release:
 
 R-devel:
   stage: check
+  when: on_success
   image: rocker/r-devel
   allow_failure: true
   script:
@@ -107,7 +125,7 @@ R-devel:
 lintr:
   stage: lint
   allow_failure: true
-  when: on_success
+  when: always
   cache:
     key: release_4_0
     paths:
@@ -122,6 +140,7 @@ lintr:
 
 pages:
   stage: website
+  allow_failure: true
   when: always
   only:
     - master
@@ -134,7 +153,7 @@ pages:
 codecovr:
   stage: coverage
   allow_failure: true
-  when: on_success
+  when: always
   cache:
     key: release_4_0
     paths:
