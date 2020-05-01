@@ -288,10 +288,4 @@ test_that("as.mo works", {
   expect_warning(x[[1]] <- "invalid code")
   expect_warning(c(x[1], "test"))
   
-  # joining on mo class
-  expect_identical(class(bind_rows(example_isolates, 
-                                   example_isolates,
-                                   example_isolates)$mo),
-                   "mo")
-  
 })

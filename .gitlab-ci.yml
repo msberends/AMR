@@ -64,10 +64,9 @@ R-release-test-only:
     - Rscript -e 'source(".gitlab-ci.R"); gl_update_pkg_all(repos = "https://cran.rstudio.com", quiet = TRUE, install_pkgdown = TRUE,  install_lintr = TRUE)'
     - Rscript -e 'devtools::test(stop_on_failure = FALSE)'
   cache:
-    key: release_4_0
+    key: release
     paths:
       - installed_deps/
-    policy: pull # no uploading after run
       
 R-release:
   stage: check
@@ -91,7 +90,7 @@ R-release:
       - '*.Rcheck/*'
     expire_in: '1 month'
   cache:
-    key: release_4_0
+    key: release
     paths:
       - installed_deps/
 
@@ -118,7 +117,7 @@ R-devel:
       - '*.Rcheck/*'
     expire_in: '1 month'
   cache:
-    key: devel_4_1
+    key: devel
     paths:
       - installed_deps/
 
@@ -126,17 +125,17 @@ lintr:
   stage: lint
   allow_failure: true
   when: always
-  cache:
-    key: release_4_0
-    paths:
-      - installed_deps/
-    policy: pull # no uploading after run
   only:
     - premaster
     - master
   script:
     # check all syntax with lintr
     - Rscript -e 'lintr::lint_package()'
+  cache:
+    key: release
+    paths:
+      - installed_deps/
+    policy: pull # no uploading after run
 
 pages:
   stage: website
@@ -154,11 +153,6 @@ codecovr:
   stage: coverage
   allow_failure: true
   when: always
-  cache:
-    key: release_4_0
-    paths:
-      - installed_deps/
-    policy: pull # no uploading after run
   only:
     - premaster
     - master
@@ -168,3 +162,8 @@ codecovr:
     # Sys.setenv(NOT_CRAN = 'true'), because otherwise skip_on_cran() will be applied on Covr too, resulting in extremely low coverage percentages
     - Rscript -e "Sys.setenv(NOT_CRAN = 'true'); cc <- covr::package_coverage(line_exclusions = list('R/atc_online.R', 'R/mo_history.R', 'R/mo_source.R', 'R/resistance_predict.R')); covr::codecov(coverage = cc, token = '$codecov'); cat('Code coverage:', covr::percent_coverage(cc))"
   coverage: '/Code coverage: \d+\.\d+/'
+  cache:
+    key: release
+    paths:
+      - installed_deps/
+    policy: pull # no uploading after run
