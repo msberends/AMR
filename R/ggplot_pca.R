@@ -51,7 +51,7 @@
 #' 3. Added total amount of explained variance as a caption in the plot
 #' 4. Cleaned all syntax based on the `lintr` package and added integrity checks
 #' 5. Updated documentation
-#' @details The colours for labels and points can be changed by adding another scale layer for colour, like [scale_colour_viridis_d()] or [scale_colour_brewer()].
+#' @details The colours for labels and points can be changed by adding another scale layer for colour, like `scale_colour_viridis_d()` or `scale_colour_brewer()`.
 #' @rdname ggplot_pca
 #' @export
 #' @examples 

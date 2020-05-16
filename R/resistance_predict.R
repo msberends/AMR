@@ -188,34 +188,7 @@ resistance_predict <- function(x,
   df$year <- as.integer(rownames(df))
   rownames(df) <- NULL
 
-  # df <- df %>% 
-  #   filter_at(col_ab, all_vars(!is.na(.))) %>%
-  #   mutate(year = year(pull(., col_date))) %>%
-  #   group_by_at(c("year", col_ab)) %>%
-  #   summarise(n())
-
-  # if (df %>% pull(col_ab) %>% n_distinct(na.rm = TRUE) < 2) {
-  #   stop("No variety in antimicrobial interpretations - all isolates are '",
-  #        df %>% pull(col_ab) %>% unique(), "'.",
-  #        call. = FALSE)
-  # }
-  # 
-  # colnames(df) <- c("year", "antibiotic", "observations")
-  
   df <- subset(df, sum(df$R + df$S, na.rm = TRUE) >= minimum)
-  
-  # return(df)
-  # 
-  # df <- df %>%
-  #   filter(!is.na(antibiotic)) %>%
-  #   pivot_wider(names_from = antibiotic,
-  #               values_from = observations,
-  #               values_fill = list(observations = 0)) %>% 
-  #   filter((R + S) >= minimum)
-  # df_matrix <- df %>%
-  #   ungroup() %>%
-  #   select(R, S) %>%
-  #   as.matrix()
   df_matrix <- as.matrix(df[, c("R", "S"), drop = FALSE])
   
   if (NROW(df) == 0) {
@@ -375,6 +348,9 @@ ggplot_rsi_predict <- function(x,
                                main = paste("Resistance Prediction of", x_name),
                                ribbon = TRUE,
                                ...) {
+
+  stopifnot_installed_package("ggplot2")
+
   if (!"resistance_predict" %in% class(x)) {
     stop("`x` must be a resistance prediction model created with resistance_predict().")
   }

@@ -62,18 +62,13 @@ As with many uses in R, we need some additional packages for AMR analysis. Our p
 
 Our `AMR` package depends on these packages and even extends their use and functions.
 
-```{r lib packages, eval = FALSE}
+```{r lib packages, message = FALSE, warning = FALSE, results = 'asis'}
 library(dplyr)
 library(ggplot2)
 library(AMR)
 
 # (if not yet installed, install with:)
 # install.packages(c("dplyr", "ggplot2", "AMR"))
-```
-
-```{r lib packages 2, echo = FALSE, results = 'asis'}
-library(AMR)
-library(dplyr)
 ```
 
 # Creation of data

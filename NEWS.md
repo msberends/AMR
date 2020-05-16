@@ -1,4 +1,4 @@
-# AMR 1.1.0.9004
+# AMR 1.1.0.9005
 ## <small>Last updated: 16-May-2020</small>
 
 ### Breaking 
@@ -12,7 +12,7 @@
 
 ### Other
 * Removed dependency on **all** packages that were needed for the `AMR` package to work properly: `crayon`, `data.table`, `dplyr`, `ggplot2`, `R6`, `rlang` and `tidyr`. This is a major code change, but will probably not be noticeable by users. Making this package independent on especially the tidyverse (packages `dplyr`, `ggplot2` and `tidyr`) tremendously increases sustainability on the long term, since tidyverse functions change quite often. Most of our functions are replaced with versions that only rely on base R, which keeps this package fully functional for many years to come, without requiring a lot of maintenance to keep up with other packages anymore. The only dependencies that remained are for extending methods of other packages, like `pillar` and `vctrs` for printing and working with tibbles using our classes `mo` and `ab`.
-
+* Removed function `read.4d()`, that was only useful for reading from an old test database.
 
 # AMR 1.1.0
 

@@ -21,7 +21,7 @@
 
 #' Count available isolates
 #'
-#' @description These functions can be used to count resistant/susceptible microbial isolates. All functions support quasiquotation with pipes, can be used in [summarise()] and support grouped variables, see *Examples*.
+#' @description These functions can be used to count resistant/susceptible microbial isolates. All functions support quasiquotation with pipes, can be used in `summarise()` from the `dplyr` package and also support grouped variables, please see *Examples*.
 #'
 #' [count_resistant()] should be used to count resistant isolates, [count_susceptible()] should be used to count susceptible isolates.
 #' @inheritSection lifecycle Stable lifecycle
@@ -32,7 +32,7 @@
 #' 
 #' The function [count_resistant()] is equal to the function [count_R()]. The function [count_susceptible()] is equal to the function [count_SI()].
 #'
-#' The function [n_rsi()] is an alias of [count_all()]. They can be used to count all available isolates, i.e. where all input antibiotics have an available result (S, I or R). Their use is equal to [n_distinct()]. Their function is equal to `count_susceptible(...) + count_resistant(...)`.
+#' The function [n_rsi()] is an alias of [count_all()]. They can be used to count all available isolates, i.e. where all input antibiotics have an available result (S, I or R). Their use is equal to `n_distinct()`. Their function is equal to `count_susceptible(...) + count_resistant(...)`.
 #'
 #' The function [count_df()] takes any variable from `data` that has an [`rsi`] class (created with [as.rsi()]) and counts the number of S's, I's and R's. It also supports grouped variables. The function [rsi_df()] works exactly like [count_df()], but adds the percentage of S, I and R.
 #' @inheritSection proportion Combination therapy
@@ -68,39 +68,40 @@
 #' count_susceptible(example_isolates$AMX)
 #' susceptibility(example_isolates$AMX) * n_rsi(example_isolates$AMX)
 #'
-#' library(dplyr)
-#' example_isolates %>%
-#'   group_by(hospital_id) %>%
-#'   summarise(R  = count_R(CIP),
-#'             I  = count_I(CIP),
-#'             S  = count_S(CIP),
-#'             n1 = count_all(CIP),  # the actual total; sum of all three
-#'             n2 = n_rsi(CIP),      # same - analogous to n_distinct
-#'             total = n())          # NOT the number of tested isolates!
-#'
-#' # Count co-resistance between amoxicillin/clav acid and gentamicin,
-#' # so we can see that combination therapy does a lot more than mono therapy.
-#' # Please mind that `susceptibility()` calculates percentages right away instead.
-#' example_isolates %>% count_susceptible(AMC) # 1433
-#' example_isolates %>% count_all(AMC)         # 1879
-#'
-#' example_isolates %>% count_susceptible(GEN) # 1399
-#' example_isolates %>% count_all(GEN)         # 1855
-#'
-#' example_isolates %>% count_susceptible(AMC, GEN) # 1764
-#' example_isolates %>% count_all(AMC, GEN)         # 1936
-
-#' # Get number of S+I vs. R immediately of selected columns
-#' example_isolates %>%
-#'   select(AMX, CIP) %>%
-#'   count_df(translate = FALSE)
-#'
-#' # It also supports grouping variables
-#' example_isolates %>%
-#'   select(hospital_id, AMX, CIP) %>%
-#'   group_by(hospital_id) %>%
-#'   count_df(translate = FALSE)
-#'
+#' 
+#' if (!require("dplyr")) {
+#'   example_isolates %>%
+#'     group_by(hospital_id) %>%
+#'     summarise(R  = count_R(CIP),
+#'               I  = count_I(CIP),
+#'               S  = count_S(CIP),
+#'               n1 = count_all(CIP),  # the actual total; sum of all three
+#'               n2 = n_rsi(CIP),      # same - analogous to n_distinct
+#'               total = n())          # NOT the number of tested isolates!
+#'  
+#'   # Count co-resistance between amoxicillin/clav acid and gentamicin,
+#'   # so we can see that combination therapy does a lot more than mono therapy.
+#'   # Please mind that `susceptibility()` calculates percentages right away instead.
+#'   example_isolates %>% count_susceptible(AMC) # 1433
+#'   example_isolates %>% count_all(AMC)         # 1879
+#'  
+#'   example_isolates %>% count_susceptible(GEN) # 1399
+#'   example_isolates %>% count_all(GEN)         # 1855
+#'  
+#'   example_isolates %>% count_susceptible(AMC, GEN) # 1764
+#'   example_isolates %>% count_all(AMC, GEN)         # 1936
+#'  
+#'   # Get number of S+I vs. R immediately of selected columns
+#'   example_isolates %>%
+#'     select(AMX, CIP) %>%
+#'     count_df(translate = FALSE)
+#'  
+#'   # It also supports grouping variables
+#'   example_isolates %>%
+#'     select(hospital_id, AMX, CIP) %>%
+#'     group_by(hospital_id) %>%
+#'     count_df(translate = FALSE)
+#' }
 count_resistant <- function(..., only_all_tested = FALSE) {
   rsi_calc(...,
            ab_result = "R",

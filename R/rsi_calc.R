@@ -102,7 +102,7 @@ rsi_calc <- function(...,
 
     if (only_all_tested == TRUE) {
       # THE NUMBER OF ISOLATES WHERE *ALL* ABx ARE S/I/R
-      x <- apply(X = x %>% mutate_all(as.integer),
+      x <- apply(X = as.data.frame(lapply(x, as.integer), stringsAsFactors = FALSE),
                  MARGIN = 1,
                  FUN = base::min)
       numerator <- sum(as.integer(x) %in% as.integer(ab_result), na.rm = TRUE)
@@ -229,7 +229,9 @@ rsi_calc_df <- function(type, # "proportion", "count" or "both"
         } else {
           col_results$value <- rep(NA_real_, NROW(col_results))
         }
-        out_new <- data.frame(antibiotic = ab_property(colnames(.data)[i], property = translate_ab, language = language),
+        out_new <- data.frame(antibiotic = ifelse(isFALSE(translate_ab),
+                                                  colnames(.data)[i],
+                                                  ab_property(colnames(.data)[i], property = translate_ab, language = language)),
                               interpretation = col_results$interpretation,
                               value = col_results$value,
                               isolates = col_results$isolates,

@@ -74,7 +74,7 @@ rsi_df(
 A \code{\link{double}} or, when \code{as_percent = TRUE}, a \code{\link{character}}.
 }
 \description{
-These functions can be used to calculate the (co-)resistance or susceptibility of microbial isolates (i.e. percentage of S, SI, I, IR or R). All functions support quasiquotation with pipes, can be used in \code{\link[=summarise]{summarise()}} from the \code{dplyr} package and also supports grouped variables, please see \emph{Examples}.
+These functions can be used to calculate the (co-)resistance or susceptibility of microbial isolates (i.e. percentage of S, SI, I, IR or R). All functions support quasiquotation with pipes, can be used in \code{summarise()} from the \code{dplyr} package and also support grouped variables, please see \emph{Examples}.
 
 \code{\link[=resistance]{resistance()}} should be used to calculate resistance, \code{\link[=susceptibility]{susceptibility()}} should be used to calculate susceptibility.\cr
 }
@@ -160,70 +160,71 @@ proportion_I(example_isolates$AMX)
 proportion_IR(example_isolates$AMX)
 proportion_R(example_isolates$AMX)
 
-\dontrun{
-library(dplyr)
-example_isolates \%>\%
-  group_by(hospital_id) \%>\%
-  summarise(r = resistance(CIP),
-            n = n_rsi(CIP)) # n_rsi works like n_distinct in dplyr, see ?n_rsi
-
-example_isolates \%>\%
-  group_by(hospital_id) \%>\%
-  summarise(R  = resistance(CIP, as_percent = TRUE),
-            SI = susceptibility(CIP, as_percent = TRUE),
-            n1 = count_all(CIP),  # the actual total; sum of all three
-            n2 = n_rsi(CIP),      # same - analogous to n_distinct
-            total = n())          # NOT the number of tested isolates!
-
-# Calculate co-resistance between amoxicillin/clav acid and gentamicin,
-# so we can see that combination therapy does a lot more than mono therapy:
-example_isolates \%>\% susceptibility(AMC)  # \%SI = 76.3\%
-example_isolates \%>\% count_all(AMC)       #   n = 1879
-
-example_isolates \%>\% susceptibility(GEN)  # \%SI = 75.4\%
-example_isolates \%>\% count_all(GEN)       #   n = 1855
-
-example_isolates \%>\% susceptibility(AMC, GEN) # \%SI = 94.1\%
-example_isolates \%>\% count_all(AMC, GEN)      #   n = 1939
-
-
-# See Details on how `only_all_tested` works. Example:
-example_isolates \%>\%
-  summarise(numerator = count_susceptible(AMC, GEN),
-            denominator = count_all(AMC, GEN),
-            proportion = susceptibility(AMC, GEN))
-example_isolates \%>\%
-  summarise(numerator = count_susceptible(AMC, GEN, only_all_tested = TRUE),
-            denominator = count_all(AMC, GEN, only_all_tested = TRUE),
-            proportion = susceptibility(AMC, GEN, only_all_tested = TRUE))
-
-
-example_isolates \%>\%
-  group_by(hospital_id) \%>\%
-  summarise(cipro_p = susceptibility(CIP, as_percent = TRUE),
-            cipro_n = count_all(CIP),
-            genta_p = susceptibility(GEN, as_percent = TRUE),
-            genta_n = count_all(GEN),
-            combination_p = susceptibility(CIP, GEN, as_percent = TRUE),
-            combination_n = count_all(CIP, GEN))
-
-# Get proportions S/I/R immediately of all rsi columns
-example_isolates \%>\%
-  select(AMX, CIP) \%>\%
-  proportion_df(translate = FALSE)
-
-# It also supports grouping variables
-example_isolates \%>\%
-  select(hospital_id, AMX, CIP) \%>\%
-  group_by(hospital_id) \%>\%
-  proportion_df(translate = FALSE)
-
-# calculate current empiric combination therapy of Helicobacter gastritis:
-my_table \%>\%
-  filter(first_isolate == TRUE,
-         genus == "Helicobacter") \%>\%
-  summarise(p = susceptibility(AMX, MTR),  # amoxicillin with metronidazole
-            n = count_all(AMX, MTR))
+if (!require("dplyr")) {
+  library(dplyr)
+  example_isolates \%>\%
+    group_by(hospital_id) \%>\%
+    summarise(r = resistance(CIP),
+              n = n_rsi(CIP)) # n_rsi works like n_distinct in dplyr, see ?n_rsi
+ 
+  example_isolates \%>\%
+    group_by(hospital_id) \%>\%
+    summarise(R  = resistance(CIP, as_percent = TRUE),
+              SI = susceptibility(CIP, as_percent = TRUE),
+              n1 = count_all(CIP),  # the actual total; sum of all three
+              n2 = n_rsi(CIP),      # same - analogous to n_distinct
+              total = n())          # NOT the number of tested isolates!
+ 
+  # Calculate co-resistance between amoxicillin/clav acid and gentamicin,
+  # so we can see that combination therapy does a lot more than mono therapy:
+  example_isolates \%>\% susceptibility(AMC)  # \%SI = 76.3\%
+  example_isolates \%>\% count_all(AMC)       #   n = 1879
+ 
+  example_isolates \%>\% susceptibility(GEN)  # \%SI = 75.4\%
+  example_isolates \%>\% count_all(GEN)       #   n = 1855
+ 
+  example_isolates \%>\% susceptibility(AMC, GEN) # \%SI = 94.1\%
+  example_isolates \%>\% count_all(AMC, GEN)      #   n = 1939
+ 
+ 
+  # See Details on how `only_all_tested` works. Example:
+  example_isolates \%>\%
+    summarise(numerator = count_susceptible(AMC, GEN),
+              denominator = count_all(AMC, GEN),
+              proportion = susceptibility(AMC, GEN))
+ 
+  example_isolates \%>\%
+    summarise(numerator = count_susceptible(AMC, GEN, only_all_tested = TRUE),
+              denominator = count_all(AMC, GEN, only_all_tested = TRUE),
+              proportion = susceptibility(AMC, GEN, only_all_tested = TRUE))
+ 
+ 
+  example_isolates \%>\%
+    group_by(hospital_id) \%>\%
+    summarise(cipro_p = susceptibility(CIP, as_percent = TRUE),
+              cipro_n = count_all(CIP),
+              genta_p = susceptibility(GEN, as_percent = TRUE),
+              genta_n = count_all(GEN),
+              combination_p = susceptibility(CIP, GEN, as_percent = TRUE),
+              combination_n = count_all(CIP, GEN))
+ 
+  # Get proportions S/I/R immediately of all rsi columns
+  example_isolates \%>\%
+    select(AMX, CIP) \%>\%
+    proportion_df(translate = FALSE)
+ 
+  # It also supports grouping variables
+  example_isolates \%>\%
+    select(hospital_id, AMX, CIP) \%>\%
+    group_by(hospital_id) \%>\%
+    proportion_df(translate = FALSE)
+ 
+  # calculate current empiric combination therapy of Helicobacter gastritis:
+  my_table \%>\%
+    filter(first_isolate == TRUE,
+           genus == "Helicobacter") \%>\%
+    summarise(p = susceptibility(AMX, MTR),  # amoxicillin with metronidazole
+              n = count_all(AMX, MTR))
 }
 }
 \seealso{

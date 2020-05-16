@@ -219,11 +219,7 @@ key_antibiotics <- function(x,
   x$gramstain <- mo_gramstain(x[, col_mo, drop = TRUE], language = NULL)
   
   x$key_ab <- NA_character_
-    # mutate_at(vars(col_mo), as.mo) %>%
-    # left_join_microorganisms(by = col_mo) %>%
-    # mutate(key_ab = NA_character_,
-    #        gramstain = mo_gramstain(pull(., col_mo), language = NULL))
-  # 
+  
   # Gram +
   x$key_ab <- if_else(x$gramstain == "Gram-positive",
                       tryCatch(apply(X = x[, gram_positive],

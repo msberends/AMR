@@ -49,7 +49,7 @@
   <script src="../extra.js"></script>
 
 <meta property="og:title" content="Count available isolates — count" />
-<meta property="og:description" content="These functions can be used to count resistant/susceptible microbial isolates. All functions support quasiquotation with pipes, can be used in summarise() and support grouped variables, see Examples.
+<meta property="og:description" content="These functions can be used to count resistant/susceptible microbial isolates. All functions support quasiquotation with pipes, can be used in summarise() from the dplyr package and also support grouped variables, please see Examples.
 count_resistant() should be used to count resistant isolates, count_susceptible() should be used to count susceptible isolates." />
 <meta property="og:image" content="https://msberends.gitlab.io/AMR/logo.svg" />
 
@@ -83,7 +83,7 @@ count_resistant() should be used to count resistant isolates, count_susceptible(
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.1.0.9004</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.1.0.9005</span>
       </span>
     </div>
 
@@ -233,7 +233,7 @@ count_resistant() should be used to count resistant isolates, count_susceptible(
     </div>
 
     <div class="ref-description">
-    <p>These functions can be used to count resistant/susceptible microbial isolates. All functions support quasiquotation with pipes, can be used in <code>summarise()</code> and support grouped variables, see <em>Examples</em>.</p>
+    <p>These functions can be used to count resistant/susceptible microbial isolates. All functions support quasiquotation with pipes, can be used in <code>summarise()</code> from the <code>dplyr</code> package and also support grouped variables, please see <em>Examples</em>.</p>
 <p><code>count_resistant()</code> should be used to count resistant isolates, <code>count_susceptible()</code> should be used to count susceptible isolates.</p>
     </div>
 
@@ -391,37 +391,40 @@ A microorganism is categorised as <em>Susceptible, Increased exposure</em> when 
 <span class='fu'>count_susceptible</span>(<span class='no'>example_isolates</span>$<span class='no'>AMX</span>)
 <span class='fu'><a href='proportion.html'>susceptibility</a></span>(<span class='no'>example_isolates</span>$<span class='no'>AMX</span>) * <span class='fu'>n_rsi</span>(<span class='no'>example_isolates</span>$<span class='no'>AMX</span>)
 
-<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>dplyr</span>)
-<span class='no'>example_isolates</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span>(<span class='no'>hospital_id</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/summarise.html'>summarise</a></span>(<span class='kw'>R</span>  <span class='kw'>=</span> <span class='fu'>count_R</span>(<span class='no'>CIP</span>),
-            <span class='kw'>I</span>  <span class='kw'>=</span> <span class='fu'>count_I</span>(<span class='no'>CIP</span>),
-            <span class='kw'>S</span>  <span class='kw'>=</span> <span class='fu'>count_S</span>(<span class='no'>CIP</span>),
-            <span class='kw'>n1</span> <span class='kw'>=</span> <span class='fu'>count_all</span>(<span class='no'>CIP</span>),  <span class='co'># the actual total; sum of all three</span>
-            <span class='kw'>n2</span> <span class='kw'>=</span> <span class='fu'>n_rsi</span>(<span class='no'>CIP</span>),      <span class='co'># same - analogous to n_distinct</span>
-            <span class='kw'>total</span> <span class='kw'>=</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/n.html'>n</a></span>())          <span class='co'># NOT the number of tested isolates!</span>
 
-<span class='co'># Count co-resistance between amoxicillin/clav acid and gentamicin,</span>
-<span class='co'># so we can see that combination therapy does a lot more than mono therapy.</span>
-<span class='co'># Please mind that `susceptibility()` calculates percentages right away instead.</span>
-<span class='no'>example_isolates</span> <span class='kw'>%&gt;%</span> <span class='fu'>count_susceptible</span>(<span class='no'>AMC</span>) <span class='co'># 1433</span>
-<span class='no'>example_isolates</span> <span class='kw'>%&gt;%</span> <span class='fu'>count_all</span>(<span class='no'>AMC</span>)         <span class='co'># 1879</span>
+<span class='kw'>if</span> (!<span class='fu'><a href='https://rdrr.io/r/base/library.html'>require</a></span>(<span class='st'>"dplyr"</span>)) {
+  <span class='no'>example_isolates</span> <span class='kw'>%&gt;%</span>
+    <span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span>(<span class='no'>hospital_id</span>) <span class='kw'>%&gt;%</span>
+    <span class='fu'><a href='https://dplyr.tidyverse.org/reference/summarise.html'>summarise</a></span>(<span class='kw'>R</span>  <span class='kw'>=</span> <span class='fu'>count_R</span>(<span class='no'>CIP</span>),
+              <span class='kw'>I</span>  <span class='kw'>=</span> <span class='fu'>count_I</span>(<span class='no'>CIP</span>),
+              <span class='kw'>S</span>  <span class='kw'>=</span> <span class='fu'>count_S</span>(<span class='no'>CIP</span>),
+              <span class='kw'>n1</span> <span class='kw'>=</span> <span class='fu'>count_all</span>(<span class='no'>CIP</span>),  <span class='co'># the actual total; sum of all three</span>
+              <span class='kw'>n2</span> <span class='kw'>=</span> <span class='fu'>n_rsi</span>(<span class='no'>CIP</span>),      <span class='co'># same - analogous to n_distinct</span>
+              <span class='kw'>total</span> <span class='kw'>=</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/n.html'>n</a></span>())          <span class='co'># NOT the number of tested isolates!</span>
 
-<span class='no'>example_isolates</span> <span class='kw'>%&gt;%</span> <span class='fu'>count_susceptible</span>(<span class='no'>GEN</span>) <span class='co'># 1399</span>
-<span class='no'>example_isolates</span> <span class='kw'>%&gt;%</span> <span class='fu'>count_all</span>(<span class='no'>GEN</span>)         <span class='co'># 1855</span>
+  <span class='co'># Count co-resistance between amoxicillin/clav acid and gentamicin,</span>
+  <span class='co'># so we can see that combination therapy does a lot more than mono therapy.</span>
+  <span class='co'># Please mind that `susceptibility()` calculates percentages right away instead.</span>
+  <span class='no'>example_isolates</span> <span class='kw'>%&gt;%</span> <span class='fu'>count_susceptible</span>(<span class='no'>AMC</span>) <span class='co'># 1433</span>
+  <span class='no'>example_isolates</span> <span class='kw'>%&gt;%</span> <span class='fu'>count_all</span>(<span class='no'>AMC</span>)         <span class='co'># 1879</span>
 
-<span class='no'>example_isolates</span> <span class='kw'>%&gt;%</span> <span class='fu'>count_susceptible</span>(<span class='no'>AMC</span>, <span class='no'>GEN</span>) <span class='co'># 1764</span>
-<span class='no'>example_isolates</span> <span class='kw'>%&gt;%</span> <span class='fu'>count_all</span>(<span class='no'>AMC</span>, <span class='no'>GEN</span>)         <span class='co'># 1936</span>
-<span class='co'># Get number of S+I vs. R immediately of selected columns</span>
-<span class='no'>example_isolates</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='no'>AMX</span>, <span class='no'>CIP</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'>count_df</span>(<span class='kw'>translate</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
+  <span class='no'>example_isolates</span> <span class='kw'>%&gt;%</span> <span class='fu'>count_susceptible</span>(<span class='no'>GEN</span>) <span class='co'># 1399</span>
+  <span class='no'>example_isolates</span> <span class='kw'>%&gt;%</span> <span class='fu'>count_all</span>(<span class='no'>GEN</span>)         <span class='co'># 1855</span>
 
-<span class='co'># It also supports grouping variables</span>
-<span class='no'>example_isolates</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='no'>hospital_id</span>, <span class='no'>AMX</span>, <span class='no'>CIP</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span>(<span class='no'>hospital_id</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'>count_df</span>(<span class='kw'>translate</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
+  <span class='no'>example_isolates</span> <span class='kw'>%&gt;%</span> <span class='fu'>count_susceptible</span>(<span class='no'>AMC</span>, <span class='no'>GEN</span>) <span class='co'># 1764</span>
+  <span class='no'>example_isolates</span> <span class='kw'>%&gt;%</span> <span class='fu'>count_all</span>(<span class='no'>AMC</span>, <span class='no'>GEN</span>)         <span class='co'># 1936</span>
+
+  <span class='co'># Get number of S+I vs. R immediately of selected columns</span>
+  <span class='no'>example_isolates</span> <span class='kw'>%&gt;%</span>
+    <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='no'>AMX</span>, <span class='no'>CIP</span>) <span class='kw'>%&gt;%</span>
+    <span class='fu'>count_df</span>(<span class='kw'>translate</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
+
+  <span class='co'># It also supports grouping variables</span>
+  <span class='no'>example_isolates</span> <span class='kw'>%&gt;%</span>
+    <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='no'>hospital_id</span>, <span class='no'>AMX</span>, <span class='no'>CIP</span>) <span class='kw'>%&gt;%</span>
+    <span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span>(<span class='no'>hospital_id</span>) <span class='kw'>%&gt;%</span>
+    <span class='fu'>count_df</span>(<span class='kw'>translate</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
+}</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

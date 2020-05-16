@@ -83,8 +83,12 @@ atc_online_property <- function(atc_code,
   if (!all(atc_code %in% antibiotics)) {
     atc_code <- as.character(ab_atc(atc_code))
   }
-
-  if (!curl::has_internet()) {
+  
+  require("curl")
+  require("xml2")
+  require("rvest")
+  
+  if (!has_internet()) {
     message("There appears to be no internet connection.")
     return(rep(NA, length(atc_code)))
   }
@@ -129,15 +133,15 @@ atc_online_property <- function(atc_code,
     atc_url <- sub("%s", atc_code[i], url, fixed = TRUE)
 
     if (property == "groups") {
-      tbl <- xml2::read_html(atc_url) %>%
-        rvest::html_node("#content") %>%
-        rvest::html_children() %>%
-        rvest::html_node("a")
+      tbl <- read_html(atc_url) %>%
+        html_node("#content") %>%
+        html_children() %>%
+        html_node("a")
 
       # get URLS of items
-      hrefs <- tbl %>% rvest::html_attr("href")
+      hrefs <- tbl %>% html_attr("href")
       # get text of items
-      texts <- tbl %>% rvest::html_text()
+      texts <- tbl %>% html_text()
       # select only text items where URL like "code="
       texts <- texts[grepl("?code=", tolower(hrefs), fixed = TRUE)]
       # last one is antibiotics, skip it
@@ -145,9 +149,9 @@ atc_online_property <- function(atc_code,
       returnvalue <- c(list(texts), returnvalue)
 
     } else {
-      tbl <- xml2::read_html(atc_url) %>%
-        rvest::html_nodes("table") %>%
-        rvest::html_table(header = TRUE) %>%
+      tbl <- read_html(atc_url) %>%
+        html_nodes("table") %>%
+        html_table(header = TRUE) %>%
         as.data.frame(stringsAsFactors = FALSE)
 
       # case insensitive column names

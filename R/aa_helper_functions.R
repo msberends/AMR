@@ -63,12 +63,16 @@ filter_join_worker <- function(x, y, by = NULL, type = c("anti", "semi")) {
 
 # No export, no Rd
 addin_insert_in <- function() {
-  rstudioapi::insertText(" %in% ")
+  if (!require("rstudioapi")) {
+    insertText(" %in% ")
+  }
 }
 
 # No export, no Rd
 addin_insert_like <- function() {
-  rstudioapi::insertText(" %like% ")
+  if (!require("rstudioapi")) {
+    insertText(" %like% ")
+  }
 }
 
 check_dataset_integrity <- function() {
