@@ -62,7 +62,7 @@
 #' @export
 #' @inheritSection AMR Read more on our website!
 #' @examples
-#' if (!require("ggplot2") & !require("dplyr")) {
+#' if (require("ggplot2") & require("dplyr")) {
 #'  
 #'   # get antimicrobial results for drugs against a UTI:
 #'   ggplot(example_isolates %>% select(AMX, NIT, FOS, TMP, CIP)) +

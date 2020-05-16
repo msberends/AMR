@@ -70,7 +70,7 @@
 #'                  NIT = as.mic(32))
 #' as.rsi(df)
 #' 
-#' \donttest{
+#' \dontrun{
 #' 
 #' # the dplyr way
 #' library(dplyr)
@@ -117,6 +117,7 @@
 #' plot(rsi_data)    # for percentages
 #' barplot(rsi_data) # for frequencies
 #'
+#' \dontrun{
 #' library(dplyr)
 #' example_isolates %>%
 #'   mutate_at(vars(PEN:RIF), as.rsi)
@@ -132,6 +133,7 @@
 #' # default threshold of `is.rsi.eligible` is 5%.
 #' is.rsi.eligible(WHONET$`First name`) # fails, >80% is invalid
 #' is.rsi.eligible(WHONET$`First name`, threshold = 0.99) # succeeds
+#' }
 as.rsi <- function(x, ...) {
   UseMethod("as.rsi")
 }

@@ -57,10 +57,12 @@
 #' #> TRUE TRUE TRUE
 #'
 #' # get isolates whose name start with 'Ent' or 'ent'
+#' \dontrun{
 #' library(dplyr)
 #' example_isolates %>%
 #'   filter(mo_name(mo) %like% "^ent") %>% 
 #'   freq(mo)
+#' }
 like <- function(x, pattern, ignore.case = TRUE) {
   # set to fixed if no regex found
   fixed <- all(!grepl("[$.^*?+}{|)(]", pattern))

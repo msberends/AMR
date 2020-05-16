@@ -66,11 +66,12 @@
 #'                         year_min = 2010,
 #'                         model = "binomial")
 #' plot(x)
-#' ggplot_rsi_predict(x)
+#' if (require("ggplot2")) {
+#'   ggplot_rsi_predict(x)
+#' }
 #'
 #' # using dplyr:
-#' if (!require("dplyr")) {
-#'   library(dplyr)
+#' if (require("dplyr")) {
 #'   x <- example_isolates %>%
 #'     filter_first_isolate() %>%
 #'     filter(mo_genus(mo) == "Staphylococcus") %>%
@@ -83,7 +84,7 @@
 #' }
 #'
 #' # create nice plots with ggplot2 yourself
-#' if (!require(ggplot2) & !require("dplyr")) {
+#' if (require(ggplot2) & require("dplyr")) {
 #'
 #'   data <- example_isolates %>%
 #'     filter(mo == as.mo("E. coli")) %>%

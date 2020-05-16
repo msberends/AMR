@@ -206,7 +206,8 @@ eucast_rules <- function(x,
                   "\n\nThis may overwrite your existing data if you use e.g.:",
                   "\ndata <- eucast_rules(data, verbose = TRUE)\n\nDo you want to continue?")
     if ("rstudioapi" %in% rownames(utils::installed.packages())) {
-      q_continue <- rstudioapi::showQuestion("Using verbose = TRUE with eucast_rules()", txt)
+      showQuestion <- get("showQuestion", envir = asNamespace("rstudioapi"))
+      q_continue <- showQuestion("Using verbose = TRUE with eucast_rules()", txt)
     } else {
       q_continue <- utils::menu(choices = c("OK", "Cancel"), graphics = FALSE, title = txt)
     }

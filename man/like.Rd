@@ -68,10 +68,12 @@ a \%like\% b
 #> TRUE TRUE TRUE
 
 # get isolates whose name start with 'Ent' or 'ent'
+\dontrun{
 library(dplyr)
 example_isolates \%>\%
   filter(mo_name(mo) \%like\% "^ent") \%>\% 
   freq(mo)
+}
 }
 \seealso{
 \code{\link[base:grep]{base::grep()}}

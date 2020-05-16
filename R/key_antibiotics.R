@@ -73,6 +73,7 @@
 #' # `example_isolates` is a dataset available in the AMR package.
 #' # See ?example_isolates.
 #'
+#' \dontrun{
 #' library(dplyr)
 #' # set key antibiotics to a new variable
 #' my_patients <- example_isolates %>%
@@ -87,7 +88,7 @@
 #' # Check the difference, in this data set it results in 7% more isolates:
 #' sum(my_patients$first_regular, na.rm = TRUE)
 #' sum(my_patients$first_weighted, na.rm = TRUE)
-#'
+#' }
 #'
 #' # output of the `key_antibiotics` function could be like this:
 #' strainA <- "SSSRR.S.R..S"

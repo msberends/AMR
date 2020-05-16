@@ -36,6 +36,7 @@ On our website \url{https://msberends.gitlab.io/AMR} you can find \href{https://
 \examples{
 availability(example_isolates)
 
+\dontrun{
 library(dplyr)
 example_isolates \%>\% availability()
 
@@ -47,4 +48,5 @@ example_isolates \%>\%
   filter(mo == as.mo("E. coli")) \%>\%
   select_if(is.rsi) \%>\%
   availability()
+}
 }

@@ -126,7 +126,8 @@ set_mo_source <- function(path) {
   } else if (path %like% "[.]xlsx?$") {
     # is Excel file (old or new)
     stopifnot_installed_package("readxl")
-    df <- readxl::read_excel(path)
+    read_excel <- get("read_excel", envir = asNamespace("readxl"))
+    df <- read_excel(path)
 
   } else if (path %like% "[.]tsv$") {
     df <- utils::read.table(header = TRUE, sep = "\t", stringsAsFactors = FALSE)

@@ -82,7 +82,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.1.0.9004</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.1.0.9007</span>
       </span>
     </div>
 
@@ -388,6 +388,7 @@ The <a href='lifecycle.html'>lifecycle</a> of this function is <strong>stable</s
     <pre class="examples"><span class='co'># `example_isolates` is a dataset available in the AMR package.</span>
 <span class='co'># See ?example_isolates.</span>
 
+<span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
 <span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>dplyr</span>)
 <span class='co'># set key antibiotics to a new variable</span>
 <span class='no'>my_patients</span> <span class='kw'>&lt;-</span> <span class='no'>example_isolates</span> <span class='kw'>%&gt;%</span>
@@ -402,7 +403,7 @@ The <a href='lifecycle.html'>lifecycle</a> of this function is <strong>stable</s
 <span class='co'># Check the difference, in this data set it results in 7% more isolates:</span>
 <span class='fu'><a href='https://rdrr.io/r/base/sum.html'>sum</a></span>(<span class='no'>my_patients</span>$<span class='no'>first_regular</span>, <span class='kw'>na.rm</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
 <span class='fu'><a href='https://rdrr.io/r/base/sum.html'>sum</a></span>(<span class='no'>my_patients</span>$<span class='no'>first_weighted</span>, <span class='kw'>na.rm</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
-
+}
 
 <span class='co'># output of the `key_antibiotics` function could be like this:</span>
 <span class='no'>strainA</span> <span class='kw'>&lt;-</span> <span class='st'>"SSSRR.S.R..S"</span>

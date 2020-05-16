@@ -82,7 +82,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.1.0.9004</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.1.0.9007</span>
       </span>
     </div>
 
@@ -353,7 +353,7 @@ The <a href='lifecycle.html'>lifecycle</a> of this function is <strong>stable</s
                  <span class='kw'>NIT</span> <span class='kw'>=</span> <span class='fu'><a href='as.mic.html'>as.mic</a></span>(<span class='fl'>32</span>))
 <span class='fu'>as.rsi</span>(<span class='no'>df</span>)
 
-<span class='co'># \donttest{</span>
+<span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
 
 <span class='co'># the dplyr way</span>
 <span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>dplyr</span>)
@@ -376,7 +376,7 @@ The <a href='lifecycle.html'>lifecycle</a> of this function is <strong>stable</s
 
 <span class='no'>df</span> <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate_all.html'>mutate_at</a></span>(<span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='no'>AMP</span>:<span class='no'>NIT</span>), <span class='no'>as.rsi</span>, <span class='kw'>mo</span> <span class='kw'>=</span> <span class='st'>"E. coli"</span>, <span class='kw'>uti</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
-<span class='co'># }</span>
+}
 
 <span class='co'># for single values</span>
 <span class='fu'>as.rsi</span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='fu'><a href='as.mic.html'>as.mic</a></span>(<span class='fl'>2</span>),
@@ -400,6 +400,7 @@ The <a href='lifecycle.html'>lifecycle</a> of this function is <strong>stable</s
 <span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>rsi_data</span>)    <span class='co'># for percentages</span>
 <span class='fu'><a href='https://rdrr.io/r/graphics/barplot.html'>barplot</a></span>(<span class='no'>rsi_data</span>) <span class='co'># for frequencies</span>
 
+<span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
 <span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>dplyr</span>)
 <span class='no'>example_isolates</span> <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate_all.html'>mutate_at</a></span>(<span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='no'>PEN</span>:<span class='no'>RIF</span>), <span class='no'>as.rsi</span>)
@@ -414,7 +415,8 @@ The <a href='lifecycle.html'>lifecycle</a> of this function is <strong>stable</s
 
 <span class='co'># default threshold of `is.rsi.eligible` is 5%.</span>
 <span class='fu'>is.rsi.eligible</span>(<span class='no'>WHONET</span>$<span class='no'>`First name`</span>) <span class='co'># fails, &gt;80% is invalid</span>
-<span class='fu'>is.rsi.eligible</span>(<span class='no'>WHONET</span>$<span class='no'>`First name`</span>, <span class='kw'>threshold</span> <span class='kw'>=</span> <span class='fl'>0.99</span>) <span class='co'># succeeds</span></pre>
+<span class='fu'>is.rsi.eligible</span>(<span class='no'>WHONET</span>$<span class='no'>`First name`</span>, <span class='kw'>threshold</span> <span class='kw'>=</span> <span class='fl'>0.99</span>) <span class='co'># succeeds</span>
+}</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

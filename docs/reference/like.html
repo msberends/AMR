@@ -82,7 +82,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.1.0.9004</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.1.0.9007</span>
       </span>
     </div>
 
@@ -306,10 +306,12 @@ The <a href='lifecycle.html'>lifecycle</a> of this function is <strong>stable</s
 <span class='co'>#&gt; TRUE TRUE TRUE</span>
 
 <span class='co'># get isolates whose name start with 'Ent' or 'ent'</span>
+<span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
 <span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>dplyr</span>)
 <span class='no'>example_isolates</span> <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span>(<span class='fu'><a href='mo_property.html'>mo_name</a></span>(<span class='no'>mo</span>) <span class='kw'>%like%</span> <span class='st'>"^ent"</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='https://rdrr.io/pkg/cleaner/man/freq.html'>freq</a></span>(<span class='no'>mo</span>)</pre>
+  <span class='fu'><a href='https://rdrr.io/pkg/cleaner/man/freq.html'>freq</a></span>(<span class='no'>mo</span>)
+}</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

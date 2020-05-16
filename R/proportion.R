@@ -99,8 +99,7 @@
 #' proportion_IR(example_isolates$AMX)
 #' proportion_R(example_isolates$AMX)
 #'
-#' if (!require("dplyr")) {
-#'   library(dplyr)
+#' if (require("dplyr")) {
 #'   example_isolates %>%
 #'     group_by(hospital_id) %>%
 #'     summarise(r = resistance(CIP),
@@ -157,7 +156,9 @@
 #'     select(hospital_id, AMX, CIP) %>%
 #'     group_by(hospital_id) %>%
 #'     proportion_df(translate = FALSE)
-#'  
+#' }
+#' 
+#' \dontrun{  
 #'   # calculate current empiric combination therapy of Helicobacter gastritis:
 #'   my_table %>%
 #'     filter(first_isolate == TRUE,

@@ -32,6 +32,7 @@
 #' @examples
 #' availability(example_isolates)
 #'
+#' \dontrun{
 #' library(dplyr)
 #' example_isolates %>% availability()
 #'
@@ -43,6 +44,7 @@
 #'   filter(mo == as.mo("E. coli")) %>%
 #'   select_if(is.rsi) %>%
 #'   availability()
+#' }
 availability <- function(tbl, width = NULL) {
   x <- base::sapply(tbl, function(x) {
     1 - base::sum(base::is.na(x)) / base::length(x) 

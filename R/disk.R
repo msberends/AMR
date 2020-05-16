@@ -33,6 +33,7 @@
 #' @seealso [as.rsi()]
 #' @inheritSection AMR Read more on our website!
 #' @examples
+#' \dontrun{
 #' # transform existing disk zones to the `disk` class
 #' library(dplyr)
 #' df <- data.frame(microorganism = "E. coli",
@@ -50,6 +51,7 @@
 #'        guideline = "EUCAST")
 #'        
 #' as.rsi(df)
+#' }
 as.disk <- function(x, na.rm = FALSE) {
   if (is.disk(x)) {
     x

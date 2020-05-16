@@ -82,7 +82,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.1.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.1.0.9007</span>
       </span>
     </div>
 
@@ -272,6 +272,7 @@ The <a href='lifecycle.html'>lifecycle</a> of this function is <strong>stable</s
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><span class='fu'>availability</span>(<span class='no'>example_isolates</span>)
 
+<span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
 <span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>dplyr</span>)
 <span class='no'>example_isolates</span> <span class='kw'>%&gt;%</span> <span class='fu'>availability</span>()
 
@@ -282,7 +283,8 @@ The <a href='lifecycle.html'>lifecycle</a> of this function is <strong>stable</s
 <span class='no'>example_isolates</span> <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span>(<span class='no'>mo</span> <span class='kw'>==</span> <span class='fu'><a href='as.mo.html'>as.mo</a></span>(<span class='st'>"E. coli"</span>)) <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select_all.html'>select_if</a></span>(<span class='no'>is.rsi</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'>availability</span>()</pre>
+  <span class='fu'>availability</span>()
+}</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -298,7 +300,7 @@ The <a href='lifecycle.html'>lifecycle</a> of this function is <strong>stable</s
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
 </div>
 
       </footer>

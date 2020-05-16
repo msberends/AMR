@@ -38,6 +38,7 @@ On our website \url{https://msberends.gitlab.io/AMR} you can find \href{https://
 }
 
 \examples{
+\dontrun{
 # transform existing disk zones to the `disk` class
 library(dplyr)
 df <- data.frame(microorganism = "E. coli",
@@ -55,6 +56,7 @@ as.rsi(x = as.disk(18),
        guideline = "EUCAST")
        
 as.rsi(df)
+}
 }
 \seealso{
 \code{\link[=as.rsi]{as.rsi()}}

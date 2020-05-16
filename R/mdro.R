@@ -66,7 +66,7 @@
 #' @source
 #' Please see *Details* for the list of publications used for this function.
 #' @examples
-#' \donttest{
+#' \dontrun{
 #' library(dplyr)
 #' 
 #' example_isolates %>%
@@ -94,7 +94,8 @@ mdro <- function(x,
                   "\n\nThis may overwrite your existing data if you use e.g.:",
                   "\ndata <- mdro(data, verbose = TRUE)\n\nDo you want to continue?")
     if ("rstudioapi" %in% rownames(utils::installed.packages())) {
-      q_continue <- rstudioapi::showQuestion("Using verbose = TRUE with mdro()", txt)
+      showQuestion <- get("showQuestion", envir = asNamespace("rstudioapi"))
+      q_continue <- showQuestion("Using verbose = TRUE with mdro()", txt)
     } else {
       q_continue <- utils::menu(choices = c("OK", "Cancel"), graphics = FALSE, title = txt)
     }

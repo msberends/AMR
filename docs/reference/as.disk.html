@@ -82,7 +82,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.1.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.1.0.9007</span>
       </span>
     </div>
 
@@ -275,7 +275,8 @@ The <a href='lifecycle.html'>lifecycle</a> of this function is <strong>stable</s
     <div class='dont-index'><p><code><a href='as.rsi.html'>as.rsi()</a></code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><span class='co'># transform existing disk zones to the `disk` class</span>
+    <pre class="examples"><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
+<span class='co'># transform existing disk zones to the `disk` class</span>
 <span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>dplyr</span>)
 <span class='no'>df</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span>(<span class='kw'>microorganism</span> <span class='kw'>=</span> <span class='st'>"E. coli"</span>,
                  <span class='kw'>AMP</span> <span class='kw'>=</span> <span class='fl'>20</span>,
@@ -291,7 +292,8 @@ The <a href='lifecycle.html'>lifecycle</a> of this function is <strong>stable</s
        <span class='kw'>ab</span> <span class='kw'>=</span> <span class='st'>"ampicillin"</span>,  <span class='co'># and `ab` with as.ab()</span>
        <span class='kw'>guideline</span> <span class='kw'>=</span> <span class='st'>"EUCAST"</span>)
 
-<span class='fu'><a href='as.rsi.html'>as.rsi</a></span>(<span class='no'>df</span>)</pre>
+<span class='fu'><a href='as.rsi.html'>as.rsi</a></span>(<span class='no'>df</span>)
+}</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -307,7 +309,7 @@ The <a href='lifecycle.html'>lifecycle</a> of this function is <strong>stable</s
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
 </div>
 
       </footer>

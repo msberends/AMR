@@ -206,7 +206,7 @@ On our website \url{https://msberends.gitlab.io/AMR} you can find \href{https://
 }
 
 \examples{
-\donttest{
+\dontrun{
 library(dplyr)
 
 example_isolates \%>\%

@@ -83,7 +83,7 @@ resistance() should be used to calculate resistance, susceptibility() should be 
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.1.0.9005</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.1.0.9007</span>
       </span>
     </div>
 
@@ -398,8 +398,7 @@ A microorganism is categorised as <em>Susceptible, Increased exposure</em> when 
 <span class='fu'>proportion_IR</span>(<span class='no'>example_isolates</span>$<span class='no'>AMX</span>)
 <span class='fu'>proportion_R</span>(<span class='no'>example_isolates</span>$<span class='no'>AMX</span>)
 
-<span class='kw'>if</span> (!<span class='fu'><a href='https://rdrr.io/r/base/library.html'>require</a></span>(<span class='st'>"dplyr"</span>)) {
-  <span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>dplyr</span>)
+<span class='kw'>if</span> (<span class='fu'><a href='https://rdrr.io/r/base/library.html'>require</a></span>(<span class='st'>"dplyr"</span>)) {
   <span class='no'>example_isolates</span> <span class='kw'>%&gt;%</span>
     <span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span>(<span class='no'>hospital_id</span>) <span class='kw'>%&gt;%</span>
     <span class='fu'><a href='https://dplyr.tidyverse.org/reference/summarise.html'>summarise</a></span>(<span class='kw'>r</span> <span class='kw'>=</span> <span class='fu'>resistance</span>(<span class='no'>CIP</span>),
@@ -456,7 +455,9 @@ A microorganism is categorised as <em>Susceptible, Increased exposure</em> when 
     <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='no'>hospital_id</span>, <span class='no'>AMX</span>, <span class='no'>CIP</span>) <span class='kw'>%&gt;%</span>
     <span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span>(<span class='no'>hospital_id</span>) <span class='kw'>%&gt;%</span>
     <span class='fu'>proportion_df</span>(<span class='kw'>translate</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
+}
 
+<span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
   <span class='co'># calculate current empiric combination therapy of Helicobacter gastritis:</span>
   <span class='no'>my_table</span> <span class='kw'>%&gt;%</span>
     <span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span>(<span class='no'>first_isolate</span> <span class='kw'>==</span> <span class='fl'>TRUE</span>,

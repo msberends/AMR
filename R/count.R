@@ -69,7 +69,7 @@
 #' susceptibility(example_isolates$AMX) * n_rsi(example_isolates$AMX)
 #'
 #' 
-#' if (!require("dplyr")) {
+#' if (require("dplyr")) {
 #'   example_isolates %>%
 #'     group_by(hospital_id) %>%
 #'     summarise(R  = count_R(CIP),
