@@ -49,7 +49,7 @@
   <script src="../extra.js"></script>
 
 <meta property="og:title" content="Calculate microbial resistance — proportion" />
-<meta property="og:description" content="These functions can be used to calculate the (co-)resistance or susceptibility of microbial isolates (i.e. percentage of S, SI, I, IR or R). All functions support quasiquotation with pipes, can be used in summarise()][dplyr::summarise()] and also support grouped variables, please see Examples.
+<meta property="og:description" content="These functions can be used to calculate the (co-)resistance or susceptibility of microbial isolates (i.e. percentage of S, SI, I, IR or R). All functions support quasiquotation with pipes, can be used in summarise() from the dplyr package and also supports grouped variables, please see Examples.
 resistance() should be used to calculate resistance, susceptibility() should be used to calculate susceptibility." />
 <meta property="og:image" content="https://msberends.gitlab.io/AMR/logo.svg" />
 
@@ -83,7 +83,7 @@ resistance() should be used to calculate resistance, susceptibility() should be 
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.1.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.1.0.9004</span>
       </span>
     </div>
 
@@ -233,7 +233,7 @@ resistance() should be used to calculate resistance, susceptibility() should be 
     </div>
 
     <div class="ref-description">
-    <p>These functions can be used to calculate the (co-)resistance or susceptibility of microbial isolates (i.e. percentage of S, SI, I, IR or R). All functions support quasiquotation with pipes, can be used in <code>summarise()</code>][dplyr::summarise()] and also support grouped variables, please see <em>Examples</em>.</p>
+    <p>These functions can be used to calculate the (co-)resistance or susceptibility of microbial isolates (i.e. percentage of S, SI, I, IR or R). All functions support quasiquotation with pipes, can be used in <code>summarise()</code> from the <code>dplyr</code> package and also supports grouped variables, please see <em>Examples</em>.</p>
 <p><code>resistance()</code> should be used to calculate resistance, <code>susceptibility()</code> should be used to calculate susceptibility.<br /></p>
     </div>
 
@@ -323,7 +323,7 @@ resistance() should be used to calculate resistance, susceptibility() should be 
     <p>The function <code>resistance()</code> is equal to the function <code>proportion_R()</code>. The function <code>susceptibility()</code> is equal to the function <code>proportion_SI()</code>.</p>
 <p><strong>Remember that you should filter your table to let it contain only first isolates!</strong> This is needed to exclude duplicates and to reduce selection bias. Use <code><a href='first_isolate.html'>first_isolate()</a></code> to determine them in your data set.</p>
 <p>These functions are not meant to count isolates, but to calculate the proportion of resistance/susceptibility. Use the <code><a href='count.html'>count()</a></code>][AMR::count()] functions to count isolates. The function <code>susceptibility()</code> is essentially equal to <code>count_susceptible() / count_all()</code>. <em>Low counts can influence the outcome - the <code>proportion</code> functions may camouflage this, since they only return the proportion (albeit being dependent on the <code>minimum</code> parameter).</em></p>
-<p>The function <code>proportion_df()</code> takes any variable from <code>data</code> that has an <code><a href='as.rsi.html'>rsi</a></code> class (created with <code><a href='as.rsi.html'>as.rsi()</a></code>) and calculates the proportions R, I and S. The function <code>rsi_df()</code> works exactly like <code>proportion_df()</code>, but adds the number of isolates.</p>
+<p>The function <code>proportion_df()</code> takes any variable from <code>data</code> that has an <code><a href='as.rsi.html'>rsi</a></code> class (created with <code><a href='as.rsi.html'>as.rsi()</a></code>) and calculates the proportions R, I and S. It also supports grouped variables. The function <code>rsi_df()</code> works exactly like <code>proportion_df()</code>, but adds the number of isolates.</p>
     <h2 class="hasAnchor" id="combination-therapy"><a class="anchor" href="#combination-therapy"></a>Combination therapy</h2>
 
     
@@ -336,21 +336,21 @@ resistance() should be used to calculate resistance, susceptibility() should be 
 --------  --------  ----------  -----------  ----------  -----------
  S or I    S or I       X            X            X            X
    R       S or I       X            X            X            X
-  &lt;NA&gt;     S or I       X            X            -            -
+  &amp;lt;NA&amp;gt;     S or I       X            X            -            -
  S or I      R          X            X            X            X
    R         R          -            X            -            X
-  &lt;NA&gt;       R          -            -            -            -
- S or I     &lt;NA&gt;        X            X            -            -
-   R        &lt;NA&gt;        -            -            -            -
-  &lt;NA&gt;      &lt;NA&gt;        -            -            -            -
+  &amp;lt;NA&amp;gt;       R          -            -            -            -
+ S or I     &amp;lt;NA&amp;gt;        X            X            -            -
+   R        &amp;lt;NA&amp;gt;        -            -            -            -
+  &amp;lt;NA&amp;gt;      &amp;lt;NA&amp;gt;        -            -            -            -
 --------------------------------------------------------------------
 </pre>
 
 <p>Please note that, in combination therapies, for <code>only_all_tested = TRUE</code> applies that:</p><pre>    <span class='fu'><a href='count.html'>count_S</a></span>()    +   <span class='fu'><a href='count.html'>count_I</a></span>()    +   <span class='fu'><a href='count.html'>count_R</a></span>()    <span class='kw'>=</span> <span class='fu'><a href='count.html'>count_all</a></span>()
   <span class='fu'>proportion_S</span>() + <span class='fu'>proportion_I</span>() + <span class='fu'>proportion_R</span>() <span class='kw'>=</span> <span class='fl'>1</span></pre>
 
-<p>and that, in combination therapies, for <code>only_all_tested = FALSE</code> applies that:</p><pre>    count_S()    +   count_I()    +   count_R()    &gt;= count_all()
-  proportion_S() + proportion_I() + proportion_R() &gt;= 1
+<p>and that, in combination therapies, for <code>only_all_tested = FALSE</code> applies that:</p><pre>    count_S()    +   count_I()    +   count_R()    &amp;gt;= count_all()
+  proportion_S() + proportion_I() + proportion_R() &amp;gt;= 1
 </pre>
 
 <p>Using <code>only_all_tested</code> has no impact when only using one antibiotic as input.</p>
@@ -398,6 +398,7 @@ A microorganism is categorised as <em>Susceptible, Increased exposure</em> when 
 <span class='fu'>proportion_IR</span>(<span class='no'>example_isolates</span>$<span class='no'>AMX</span>)
 <span class='fu'>proportion_R</span>(<span class='no'>example_isolates</span>$<span class='no'>AMX</span>)
 
+<span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
 <span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>dplyr</span>)
 <span class='no'>example_isolates</span> <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span>(<span class='no'>hospital_id</span>) <span class='kw'>%&gt;%</span>
@@ -410,7 +411,7 @@ A microorganism is categorised as <em>Susceptible, Increased exposure</em> when 
             <span class='kw'>SI</span> <span class='kw'>=</span> <span class='fu'>susceptibility</span>(<span class='no'>CIP</span>, <span class='kw'>as_percent</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>),
             <span class='kw'>n1</span> <span class='kw'>=</span> <span class='fu'><a href='count.html'>count_all</a></span>(<span class='no'>CIP</span>),  <span class='co'># the actual total; sum of all three</span>
             <span class='kw'>n2</span> <span class='kw'>=</span> <span class='fu'><a href='count.html'>n_rsi</a></span>(<span class='no'>CIP</span>),      <span class='co'># same - analogous to n_distinct</span>
-            <span class='kw'>total</span> <span class='kw'>=</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/context.html'>n</a></span>())          <span class='co'># NOT the number of tested isolates!</span>
+            <span class='kw'>total</span> <span class='kw'>=</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/n.html'>n</a></span>())          <span class='co'># NOT the number of tested isolates!</span>
 
 <span class='co'># Calculate co-resistance between amoxicillin/clav acid and gentamicin,</span>
 <span class='co'># so we can see that combination therapy does a lot more than mono therapy:</span>
@@ -455,9 +456,6 @@ A microorganism is categorised as <em>Susceptible, Increased exposure</em> when 
   <span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span>(<span class='no'>hospital_id</span>) <span class='kw'>%&gt;%</span>
   <span class='fu'>proportion_df</span>(<span class='kw'>translate</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
 
-
-<span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
-
 <span class='co'># calculate current empiric combination therapy of Helicobacter gastritis:</span>
 <span class='no'>my_table</span> <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span>(<span class='no'>first_isolate</span> <span class='kw'>==</span> <span class='fl'>TRUE</span>,
@@ -480,7 +478,7 @@ A microorganism is categorised as <em>Susceptible, Increased exposure</em> when 
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
 </div>
 
       </footer>

@@ -45,7 +45,7 @@ is.rsi.eligible(x, threshold = 0.05)
 
 \item{ab}{any (vector of) text that can be coerced to a valid antimicrobial code with \code{\link[=as.ab]{as.ab()}}}
 
-\item{guideline}{defaults to the latest included EUCAST guideline, run \code{unique(rsi_translation$guideline)} for all options}
+\item{guideline}{defaults to the latest included EUCAST guideline, see Details for all options}
 
 \item{uti}{(Urinary Tract Infection) A vector with \link{logical}s (\code{TRUE} or \code{FALSE}) to specify whether a UTI specific interpretation from the guideline should be chosen. For using \code{\link[=as.rsi]{as.rsi()}} on a \link{data.frame}, this can also be a column containing \link{logical}s or when left blank, the data set will be search for a 'specimen' and rows containing 'urin' in that column will be regarded isolates from a UTI. See \emph{Examples}.}
 
@@ -60,9 +60,11 @@ Ordered factor with new class \code{\link{rsi}}
 Interpret MIC values and disk diffusion diameters according to EUCAST or CLSI, or clean up existing R/SI values. This transforms the input to a new class \code{\link{rsi}}, which is an ordered factor with levels \verb{S < I < R}. Invalid antimicrobial interpretations will be translated as \code{NA} with a warning.
 }
 \details{
-Run \code{unique(rsi_translation$guideline)} for a list of all supported guidelines. The repository of this package contains \href{https://gitlab.com/msberends/AMR/blob/master/data-raw/rsi_translation.txt}{this machine readable version} of these guidelines.
+When using \code{\link[=as.rsi]{as.rsi()}} on untransformed data, the data will be cleaned to only contain values S, I and R. When using the function on data with class \code{\link{mic}} (using \code{\link[=as.mic]{as.mic()}}) or class \code{\link{disk}} (using \code{\link[=as.disk]{as.disk()}}), the data will be interpreted based on the guideline set with the \code{guideline} parameter.
 
-These guidelines are machine readable, since \href{https://gitlab.com/msberends/AMR/blob/master/data-raw/rsi_translation.txt}{}.
+Supported guidelines to be used as input for the \code{guideline} parameter are: "CLSI 2010", "CLSI 2011", "CLSI 2012", "CLSI 2013", "CLSI 2014", "CLSI 2015", "CLSI 2016", "CLSI 2017", "CLSI 2018", "CLSI 2019", "EUCAST 2011", "EUCAST 2012", "EUCAST 2013", "EUCAST 2014", "EUCAST 2015", "EUCAST 2016", "EUCAST 2017", "EUCAST 2018", "EUCAST 2019", "EUCAST 2020". Simply using \code{"CLSI"} or \code{"EUCAST"} for input will automatically select the latest version of that guideline.
+
+The repository of this package \href{https://gitlab.com/msberends/AMR/blob/master/data-raw/rsi_translation.txt}{contains a machine readable version} of all guidelines. This is a CSV file consisting of 18,964 rows and 10 columns. This file is machine readable, since it contains one row for every unique combination of the test method (MIC or disk diffusion), the antimicrobial agent and the microorganism. This \strong{allows for easy implementation of these rules in laboratory information systems (LIS)}.
 
 After using \code{\link[=as.rsi]{as.rsi()}}, you can use \code{\link[=eucast_rules]{eucast_rules()}} to (1) apply inferred susceptibility and resistance based on results of other antimicrobials and (2) apply intrinsic resistance based on taxonomic properties of a microorganism.
 
@@ -154,7 +156,6 @@ rsi_data <- as.rsi(c(rep("S", 474), rep("I", 36), rep("R", 370)))
 is.rsi(rsi_data)
 plot(rsi_data)    # for percentages
 barplot(rsi_data) # for frequencies
-freq(rsi_data)    # frequency table with informative header
 
 library(dplyr)
 example_isolates \%>\%

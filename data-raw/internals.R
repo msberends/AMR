@@ -70,15 +70,14 @@ rm(translations_file)
 rm(microorganisms.translation)
 
 # Save to raw data to repository ----
-library(dplyr, warn.conflicts = FALSE, quietly = TRUE)
 usethis::ui_done(paste0("Saving raw data to {usethis::ui_value('/data-raw/')}"))
 devtools::load_all(quiet = TRUE)
 # give official names to ABs and MOs
-write.table(rsi_translation %>% mutate(ab = ab_name(ab), mo = mo_name(mo)),
+write.table(dplyr::mutate(rsi_translation, ab = ab_name(ab), mo = mo_name(mo)),
             "data-raw/rsi_translation.txt", sep = "\t", na = "", row.names = FALSE)
-write.table(microorganisms %>% mutate_if(~!is.numeric(.), as.character),
+write.table(dplyr::mutate_if(microorganisms, ~!is.numeric(.), as.character),
             "data-raw/microorganisms.txt", sep = "\t", na = "", row.names = FALSE)
-write.table(antibiotics %>% mutate_if(~!is.numeric(.), as.character),
+write.table(dplyr::mutate_if(antibiotics, ~!is.numeric(.), as.character),
             "data-raw/antibiotics.txt", sep = "\t", na = "", row.names = FALSE)
-write.table(antivirals %>% mutate_all(as.character),
+write.table(dplyr::mutate_all(antivirals, as.character),
             "data-raw/antivirals.txt", sep = "\t", na = "", row.names = FALSE)

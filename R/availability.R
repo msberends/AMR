@@ -28,7 +28,6 @@
 #' @details The function returns a [`data.frame`] with columns `"resistant"` and `"visual_resistance"`. The values in that columns are calculated with [resistance()].
 #' @return [`data.frame`] with column names of `tbl` as row names
 #' @inheritSection AMR Read more on our website!
-#' @importFrom cleaner percentage
 #' @export
 #' @examples
 #' availability(example_isolates)

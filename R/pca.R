@@ -24,20 +24,19 @@
 #' Performs a principal component analysis (PCA) based on a data set with automatic determination for afterwards plotting the groups and labels, and automatic filtering on only suitable (i.e. non-empty and numeric) variables.
 #' @inheritSection lifecycle Maturing lifecycle
 #' @param x a [data.frame] containing numeric columns
-#' @param ... columns of `x` to be selected for PCA
+#' @param ... columns of `x` to be selected for PCA, can be unquoted since it supports quasiquotation.
 #' @inheritParams stats::prcomp
 #' @details The [pca()] function takes a [data.frame] as input and performs the actual PCA with the \R function [prcomp()].
 #' 
 #' The result of the [pca()] function is a [prcomp] object, with an additional attribute `non_numeric_cols` which is a vector with the column names of all columns that do not contain numeric values. These are probably the groups and labels, and will be used by [ggplot_pca()].
 #' @return An object of classes [pca] and [prcomp]
 #' @importFrom stats prcomp
-#' @importFrom dplyr ungroup %>% filter_all all_vars
-#' @importFrom rlang enquos eval_tidy
 #' @export
 #' @examples 
 #' # `example_isolates` is a dataset available in the AMR package.
 #' # See ?example_isolates.
 #'
+#' \dontrun{
 #' # calculate the resistance per group first
 #' library(dplyr)
 #' resistance_data <- example_isolates %>% 
@@ -53,6 +52,7 @@
 #' summary(pca_result)
 #' biplot(pca_result)
 #' ggplot_pca(pca_result) # a new and convenient plot function
+#' }
 pca <- function(x,
                 ...,
                 retx = TRUE,
@@ -70,47 +70,46 @@ pca <- function(x,
   x <- as.data.frame(x, stringsAsFactors = FALSE)
   x.bak <- x
   
-  user_exprs <- enquos(...)
-  
-  if (length(user_exprs) > 0) {
+  # defuse R expressions, this replaces rlang::enquos()
+  dots <- substitute(list(...))
+  if (length(dots) > 1) {
     new_list <- list(0)
-    for (i in seq_len(length(user_exprs))) {
-      new_list[[i]] <- tryCatch(eval_tidy(user_exprs[[i]], data = x),
+    for (i in seq_len(length(dots) - 1)) {
+      new_list[[i]] <- tryCatch(eval(dots[[i + 1]], envir = x),
                                 error = function(e) stop(e$message, call. = FALSE))
       if (length(new_list[[i]]) == 1) {
-        if (i == 1) {
-          # only for first item:
-          if (is.character(new_list[[i]]) & new_list[[i]] %in% colnames(x)) {
-            # this is to support: df %>% pca("mycol")
-            new_list[[i]] <- x[, new_list[[i]]]
-          }
+        if (is.character(new_list[[i]]) & new_list[[i]] %in% colnames(x)) {
+          # this is to support quoted variables: df %>% pca("mycol1", "mycol2")
+          new_list[[i]] <- x[, new_list[[i]]]
         } else {
           # remove item - it's a parameter like `center`
           new_list[[i]] <- NULL
         }
       }
     }
+    
     x <- as.data.frame(new_list, stringsAsFactors = FALSE)
     if (any(sapply(x, function(y) !is.numeric(y)))) {
       warning("Be sure to first calculate the resistance (or susceptibility) of variables with antimicrobial test results, since PCA works with numeric variables only. Please see Examples in ?pca.")
     }
+    
     # set column names
-    tryCatch(colnames(x) <- sapply(user_exprs, function(y) as_label(y)),
+    tryCatch(colnames(x) <- as.character(dots)[2:length(dots)],
              error = function(e) warning("column names could not be set"))
+    
     # keep only numeric columns
     x <- x[, sapply(x, function(y) is.numeric(y))]
     # bind the data set with the non-numeric columns
     x <- cbind(x.bak[, sapply(x.bak, function(y) !is.numeric(y) & !all(is.na(y))), drop = FALSE], x)
   }
   
-  x <- x %>%
-    ungroup() %>% # would otherwise select the grouping vars
-    filter_all(all_vars(!is.na(.)))
+  x <- ungroup(x)  # would otherwise select the grouping vars
+  x <- x[rowSums(is.na(x)) == 0, ] # remove columns containing NAs
   
   pca_data <- x[, which(sapply(x, function(x) is.numeric(x)))]
   
-  message(blue(paste0("NOTE: Columns selected for PCA: ", paste0(bold(colnames(pca_data)), collapse = "/"),
-                      ".\n      Total observations available: ", nrow(pca_data), ".")))
+  message(font_blue(paste0("NOTE: Columns selected for PCA: ", paste0(font_bold(colnames(pca_data)), collapse = "/"),
+                           ".\n      Total observations available: ", nrow(pca_data), ".")))
   
   pca_model <- prcomp(pca_data, retx = retx, center = center, scale. = scale., tol = tol, rank. = rank.)
   attr(pca_model, "non_numeric_cols") <- x[, sapply(x, function(y) !is.numeric(y) & !all(is.na(y))), drop = FALSE]

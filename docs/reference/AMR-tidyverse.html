@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Class 'mic' — as.mic • AMR (for R)</title>
+<title>Methods for tidyverse — AMR-tidyverse • AMR (for R)</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -48,8 +48,8 @@
   <link href="../extra.css" rel="stylesheet">
   <script src="../extra.js"></script>
 
-<meta property="og:title" content="Class 'mic' — as.mic" />
-<meta property="og:description" content="This transforms a vector to a new class mic, which is an ordered factor with valid MIC values as levels. Invalid MIC values will be translated as NA with a warning." />
+<meta property="og:title" content="Methods for tidyverse — AMR-tidyverse" />
+<meta property="og:description" content="These methods are needed to support methods used by the tidyverse, like joining and transforming data, with new classes that come with this package." />
 <meta property="og:image" content="https://msberends.gitlab.io/AMR/logo.svg" />
 
 
@@ -226,38 +226,28 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Class 'mic'</h1>
-    <small class="dont-index">Source: <a href='https://gitlab.com/msberends/AMR/blob/master/R/mic.R'><code>R/mic.R</code></a></small>
-    <div class="hidden name"><code>as.mic.Rd</code></div>
+    <h1>Methods for tidyverse</h1>
+    <small class="dont-index">Source: <a href='https://gitlab.com/msberends/AMR/blob/master/R/tidyverse.R'><code>R/tidyverse.R</code></a></small>
+    <div class="hidden name"><code>AMR-tidyverse.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>This transforms a vector to a new class <code>mic</code>, which is an ordered <code><a href='https://rdrr.io/r/base/factor.html'>factor</a></code> with valid MIC values as levels. Invalid MIC values will be translated as <code>NA</code> with a warning.</p>
+    <p>These methods are needed to support methods used by the tidyverse, like joining and transforming data, with new classes that come with this package.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>as.mic</span>(<span class='no'>x</span>, <span class='kw'>na.rm</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
+    <pre class="usage"><span class='fu'>scale_type.mo</span>(<span class='no'>x</span>)
 
-<span class='fu'>is.mic</span>(<span class='no'>x</span>)</pre>
+<span class='fu'>scale_type.ab</span>(<span class='no'>x</span>)
 
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
-    <table class="ref-arguments">
-    <colgroup><col class="name" /><col class="desc" /></colgroup>
-    <tr>
-      <th>x</th>
-      <td><p>vector</p></td>
-    </tr>
-    <tr>
-      <th>na.rm</th>
-      <td><p>a logical indicating whether missing values should be removed</p></td>
-    </tr>
-    </table>
+<span class='fu'>vec_ptype2.mo</span>(<span class='no'>x</span>, <span class='no'>y</span>, <span class='no'>...</span>)
 
-    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+<span class='fu'>vec_cast.mo</span>(<span class='no'>x</span>, <span class='no'>to</span>, <span class='no'>...</span>)
 
-    <p>Ordered <code><a href='https://rdrr.io/r/base/factor.html'>factor</a></code> with new class <code>mic</code></p>
-    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+<span class='fu'>vec_ptype2.ab</span>(<span class='no'>x</span>, <span class='no'>y</span>, <span class='no'>...</span>)
 
-    <p>To interpret MIC values as RSI values, use <code><a href='as.rsi.html'>as.rsi()</a></code> on MIC values. It supports guidelines from EUCAST and CLSI.</p>
+<span class='fu'>vec_cast.ab</span>(<span class='no'>x</span>, <span class='no'>to</span>, <span class='no'>...</span>)</pre>
+
+
     <h2 class="hasAnchor" id="stable-lifecycle"><a class="anchor" href="#stable-lifecycle"></a>Stable lifecycle</h2>
 
     
@@ -270,29 +260,7 @@ The <a href='lifecycle.html'>lifecycle</a> of this function is <strong>stable</s
     
 
 <p>On our website <a href='https://msberends.gitlab.io/AMR'>https://msberends.gitlab.io/AMR</a> you can find <a href='https://msberends.gitlab.io/AMR/articles/AMR.html'>a comprehensive tutorial</a> about how to conduct AMR analysis, the <a href='https://msberends.gitlab.io/AMR/reference'>complete documentation of all functions</a> (which reads a lot easier than here in R) and <a href='https://msberends.gitlab.io/AMR/articles/WHONET.html'>an example analysis using WHONET data</a>.</p>
-    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><code><a href='as.rsi.html'>as.rsi()</a></code></p></div>
-
-    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><span class='no'>mic_data</span> <span class='kw'>&lt;-</span> <span class='fu'>as.mic</span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"&gt;=32"</span>, <span class='st'>"1.0"</span>, <span class='st'>"1"</span>, <span class='st'>"1.00"</span>, <span class='fl'>8</span>, <span class='st'>"&lt;=0.128"</span>, <span class='st'>"8"</span>, <span class='st'>"16"</span>, <span class='st'>"16"</span>))
-<span class='fu'>is.mic</span>(<span class='no'>mic_data</span>)
-
-<span class='co'># this can also coerce combined MIC/RSI values:</span>
-<span class='fu'>as.mic</span>(<span class='st'>"&lt;=0.002; S"</span>) <span class='co'># will return &lt;=0.002</span>
-
-<span class='co'># interpret MIC values</span>
-<span class='fu'><a href='as.rsi.html'>as.rsi</a></span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='fu'>as.mic</span>(<span class='fl'>2</span>),
-       <span class='kw'>mo</span> <span class='kw'>=</span> <span class='fu'><a href='as.mo.html'>as.mo</a></span>(<span class='st'>"S. pneumoniae"</span>),
-       <span class='kw'>ab</span> <span class='kw'>=</span> <span class='st'>"AMX"</span>,
-       <span class='kw'>guideline</span> <span class='kw'>=</span> <span class='st'>"EUCAST"</span>)
-<span class='fu'><a href='as.rsi.html'>as.rsi</a></span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='fu'>as.mic</span>(<span class='fl'>4</span>),
-       <span class='kw'>mo</span> <span class='kw'>=</span> <span class='fu'><a href='as.mo.html'>as.mo</a></span>(<span class='st'>"S. pneumoniae"</span>),
-       <span class='kw'>ab</span> <span class='kw'>=</span> <span class='st'>"AMX"</span>,
-       <span class='kw'>guideline</span> <span class='kw'>=</span> <span class='st'>"EUCAST"</span>)
-
-<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>mic_data</span>)
-<span class='fu'><a href='https://rdrr.io/r/graphics/barplot.html'>barplot</a></span>(<span class='no'>mic_data</span>)</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

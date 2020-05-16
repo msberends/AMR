@@ -52,7 +52,7 @@ unique_ip <- unique(data$ipaddress)
 ip_tbl <- GET_df(unique_ip[1])
 p <- AMR:::progress_estimated(n = length(unique_ip) - 1, min_time = 0)
 for (i in 2:length(unique_ip)) {
-  p$tick()$print()
+  p$tick()
   ip_tbl <- ip_tbl %>% 
     bind_rows(GET_df(unique_ip[i]))
 }

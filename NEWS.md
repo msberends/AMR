@@ -1,10 +1,18 @@
-# AMR 1.1.0.9003
-## <small>Last updated: 01-May-2020</small>
+# AMR 1.1.0.9004
+## <small>Last updated: 16-May-2020</small>
+
+### Breaking 
+* Removed previously deprecated function `p.symbol()` - it was replaced with `p_symbol()`
 
 ### Changed
 * Small fix for some text input that could not be coerced as valid MIC values 
-* Better support for the tidyverse. The tidyverse now heavily relies on the `vctrs` package for data transformation and data joining. In newer versions of e.g. the `dplyr` package, a function like `bind_rows()` would not preserve the right class for microorganisms (class `mo`) and antibiotics (class `ab`). This is fixed in this version.
+* Fix for cases where some functions of newer versions of the `dplyr` package (such as `bind_rows()`) would not preserve the right class for microorganisms (class `mo`) and antibiotics (class `ab`)
 * Fixed interpretation of generic CLSI interpretation rules (thanks to Anthony Underwood)
+* Added official drug names to verbose output of `eucast_rules()`
+
+### Other
+* Removed dependency on **all** packages that were needed for the `AMR` package to work properly: `crayon`, `data.table`, `dplyr`, `ggplot2`, `R6`, `rlang` and `tidyr`. This is a major code change, but will probably not be noticeable by users. Making this package independent on especially the tidyverse (packages `dplyr`, `ggplot2` and `tidyr`) tremendously increases sustainability on the long term, since tidyverse functions change quite often. Most of our functions are replaced with versions that only rely on base R, which keeps this package fully functional for many years to come, without requiring a lot of maintenance to keep up with other packages anymore. The only dependencies that remained are for extending methods of other packages, like `pillar` and `vctrs` for printing and working with tibbles using our classes `mo` and `ab`.
+
 
 # AMR 1.1.0
 

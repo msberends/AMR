@@ -28,11 +28,6 @@ This package contains the complete taxonomic tree of almost all microorganisms (
 On our website \url{https://msberends.gitlab.io/AMR} you can find \href{https://msberends.gitlab.io/AMR/articles/AMR.html}{a comprehensive tutorial} about how to conduct AMR analysis, the \href{https://msberends.gitlab.io/AMR/reference}{complete documentation of all functions} (which reads a lot easier than here in R) and \href{https://msberends.gitlab.io/AMR/articles/WHONET.html}{an example analysis using WHONET data}.
 }
 
-\examples{
-library(dplyr)
-microorganisms \%>\% freq(kingdom)
-microorganisms \%>\% group_by(kingdom) \%>\% freq(phylum, nmax = NULL)
-}
 \seealso{
 \link{microorganisms}
 }

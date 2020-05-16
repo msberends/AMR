@@ -2,7 +2,6 @@
 % Please edit documentation in R/deprecated.R
 \name{AMR-deprecated}
 \alias{AMR-deprecated}
-\alias{p.symbol}
 \alias{portion_R}
 \alias{portion_IR}
 \alias{portion_I}
@@ -11,8 +10,6 @@
 \alias{portion_df}
 \title{Deprecated functions}
 \usage{
-p.symbol(...)
-
 portion_R(...)
 
 portion_IR(...)

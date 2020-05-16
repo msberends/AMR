@@ -9,7 +9,7 @@
 \alias{full_join_microorganisms}
 \alias{semi_join_microorganisms}
 \alias{anti_join_microorganisms}
-\title{Join a table with \link{microorganisms}}
+\title{Join \link{microorganisms} to a data set}
 \usage{
 inner_join_microorganisms(x, by = NULL, suffix = c("2", ""), ...)
 
@@ -36,7 +36,9 @@ anti_join_microorganisms(x, by = NULL, ...)
 Join the data set \link{microorganisms} easily to an existing table or character vector.
 }
 \details{
-\strong{Note:} As opposed to the \code{\link[dplyr:join]{dplyr::join()}} functions of \code{dplyr}, \code{\link{character}} vectors are supported and at default existing columns will get a suffix \code{"2"} and the newly joined columns will not get a suffix. See \code{\link[dplyr:join]{dplyr::join()}} for more information.
+\strong{Note:} As opposed to the \code{\link[=join]{join()}} functions of \code{dplyr}, \code{\link{character}} vectors are supported and at default existing columns will get a suffix \code{"2"} and the newly joined columns will not get a suffix.
+
+These functions rely on \code{\link[=merge]{merge()}}, a base R function to do joins.
 }
 \section{Stable lifecycle}{
 
@@ -55,6 +57,7 @@ On our website \url{https://msberends.gitlab.io/AMR} you can find \href{https://
 left_join_microorganisms(as.mo("K. pneumoniae"))
 left_join_microorganisms("B_KLBSL_PNE")
 
+\dontrun{
 library(dplyr)
 example_isolates \%>\% left_join_microorganisms()
 
@@ -67,4 +70,5 @@ df <- data.frame(date = seq(from = as.Date("2018-01-01"),
 colnames(df)
 df_joined <- left_join_microorganisms(df, "bacteria")
 colnames(df_joined)
+}
 }

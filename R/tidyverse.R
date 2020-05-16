@@ -19,14 +19,34 @@
 # Visit our website for more info: https://msberends.gitlab.io/AMR.    #
 # ==================================================================== #
 
-#' `vctrs` methods
+#' Methods for tidyverse
 #' 
 #' These methods are needed to support methods used by the tidyverse, like joining and transforming data, with new classes that come with this package.
 #' @inheritSection lifecycle Stable lifecycle
 #' @inheritSection AMR Read more on our website!
 #' @keywords internal
-#' @name AMR-vctrs
+#' @name AMR-tidyverse
 NULL
+
+#' @rdname AMR-tidyverse
+#' @exportMethod scale_type.mo
+#' @export
+scale_type.mo <- function(x) {
+  # fix for:
+  # "Don't know how to automatically pick scale for object of type mo. Defaulting to continuous."
+  # "Error: Discrete value supplied to continuous scale"
+  "discrete"
+}
+
+#' @rdname AMR-tidyverse
+#' @exportMethod scale_type.ab
+#' @export
+scale_type.ab <- function(x) {
+  # fix for:
+  # "Don't know how to automatically pick scale for object of type mo. Defaulting to continuous."
+  # "Error: Discrete value supplied to continuous scale"
+  "discrete"
+}
 
 
 # Class mo ----------------------------------------------------------------
@@ -46,7 +66,7 @@ vec_ptype_full.mo <- function(x, ...) {
   "mo"
 }
 
-#' @rdname AMR-vctrs
+#' @rdname AMR-tidyverse
 #' @export
 vec_ptype2.mo <- function(x, y, ...) {
   UseMethod("vec_ptype2.mo", y)
@@ -65,13 +85,14 @@ vec_ptype2.mo.character <- function(x, y, ...) {
 }
 
 #' @method vec_ptype2.character mo
+#' @exportMethod vec_ptype2.character.mo
 #' @importFrom vctrs vec_ptype2.character
 #' @export
 vec_ptype2.character.mo <- function(x, y, ...) {
   y
 }
 
-#' @rdname AMR-vctrs
+#' @rdname AMR-tidyverse
 #' @export
 vec_cast.mo <- function(x, to, ...) {
   UseMethod("vec_cast.mo")
@@ -96,12 +117,11 @@ vec_cast.mo.default <- function(x, to, ...) {
   vec_default_cast(x, to)
 }
 
-# @method vec_cast.character mo
+#' @method vec_cast.character mo
 #' @exportMethod vec_cast.character.mo
-#' @importFrom vctrs vec_cast
+#' @importFrom vctrs vec_cast vec_cast.character
 #' @export
 vec_cast.character.mo <- function(x, to, ...) {
-  # purrr::map_chr(x, stringr::str_c, collapse = " ")
   unclass(x)
 }
 
@@ -123,7 +143,7 @@ vec_ptype_full.ab <- function(x, ...) {
   "ab"
 }
 
-#' @rdname AMR-vctrs
+#' @rdname AMR-tidyverse
 #' @export
 vec_ptype2.ab <- function(x, y, ...) {
   UseMethod("vec_ptype2.ab", y)
@@ -142,13 +162,14 @@ vec_ptype2.ab.character <- function(x, y, ...) {
 }
 
 #' @method vec_ptype2.character ab
+#' @exportMethod vec_ptype2.character.ab
 #' @importFrom vctrs vec_ptype2.character
 #' @export
 vec_ptype2.character.ab <- function(x, y, ...) {
   y
 }
 
-#' @rdname AMR-vctrs
+#' @rdname AMR-tidyverse
 #' @export
 vec_cast.ab <- function(x, to, ...) {
   UseMethod("vec_cast.ab")
@@ -173,12 +194,11 @@ vec_cast.ab.default <- function(x, to, ...) {
   vec_default_cast(x, to)
 }
 
-# @method vec_cast.character ab
+#' @method vec_cast.character ab
 #' @exportMethod vec_cast.character.ab
-#' @importFrom vctrs vec_cast
+#' @importFrom vctrs vec_cast vec_cast.character
 #' @export
 vec_cast.character.ab <- function(x, to, ...) {
-  # purrr::map_chr(x, stringr::str_c, collapse = " ")
   unclass(x)
 }
 

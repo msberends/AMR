@@ -70,7 +70,7 @@ The function \code{\link[=count_resistant]{count_resistant()}} is equal to the f
 
 The function \code{\link[=n_rsi]{n_rsi()}} is an alias of \code{\link[=count_all]{count_all()}}. They can be used to count all available isolates, i.e. where all input antibiotics have an available result (S, I or R). Their use is equal to \code{\link[=n_distinct]{n_distinct()}}. Their function is equal to \code{count_susceptible(...) + count_resistant(...)}.
 
-The function \code{\link[=count_df]{count_df()}} takes any variable from \code{data} that has an \code{\link{rsi}} class (created with \code{\link[=as.rsi]{as.rsi()}}) and counts the number of S's, I's and R's. The function \code{\link[=rsi_df]{rsi_df()}} works exactly like \code{\link[=count_df]{count_df()}}, but adds the percentage of S, I and R.
+The function \code{\link[=count_df]{count_df()}} takes any variable from \code{data} that has an \code{\link{rsi}} class (created with \code{\link[=as.rsi]{as.rsi()}}) and counts the number of S's, I's and R's. It also supports grouped variables. The function \code{\link[=rsi_df]{rsi_df()}} works exactly like \code{\link[=count_df]{count_df()}}, but adds the percentage of S, I and R.
 }
 \section{Stable lifecycle}{
 

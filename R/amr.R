@@ -60,6 +60,4 @@
 #' <https://gitlab.com/msberends/AMR/issues>
 #' @name AMR
 #' @rdname AMR
-#' @importFrom microbenchmark microbenchmark
-#' @importFrom knitr kable
 NULL

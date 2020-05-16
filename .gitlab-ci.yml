@@ -54,7 +54,9 @@ before_script:
   - echo 'LANG="en_US.utf8"' >> .Renviron
   - echo 'LANGUAGE="en_US.utf8"' > ~/.Renviron
 
-R-release-test-only:
+# ---- TEST
+
+R-release:
   stage: test
   when: always
   allow_failure: false
@@ -67,6 +69,23 @@ R-release-test-only:
     key: release
     paths:
       - installed_deps/
+      
+R-devel:
+  stage: test
+  when: always
+  image: rocker/r-devel
+  allow_failure: false
+  script:
+    - Rscriptdevel -e 'sessionInfo()'
+    # install missing and outdated packages
+    - Rscriptdevel -e 'source(".gitlab-ci.R"); gl_update_pkg_all(repos = "https://cran.rstudio.com", quiet = TRUE, install_pkgdown = TRUE,  install_lintr = TRUE)'
+    - Rscriptdevel -e 'devtools::test(stop_on_failure = FALSE)'
+  cache:
+    key: devel
+    paths:
+      - installed_deps/
+      
+# ---- CHECK
       
 R-release:
   stage: check
@@ -120,6 +139,8 @@ R-devel:
     key: devel
     paths:
       - installed_deps/
+      
+# ---- OTHER
 
 lintr:
   stage: lint

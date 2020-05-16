@@ -19,30 +19,22 @@
 # Visit our website for more info: https://msberends.gitlab.io/AMR.    #
 # ==================================================================== #
 
-#' Extended functions
-#'
-#' These functions are extensions of functions in other packages.
-#' @inheritSection lifecycle Stable lifecycle
-#' @inheritSection AMR Read more on our website!
-#' @export
-#' @keywords internal
-#' @name extended-functions
-#' @rdname extended-functions
-#' @exportMethod scale_type.mo
-#' @export
-scale_type.mo <- function(x) {
-  # fix for:
-  # "Don't know how to automatically pick scale for object of type mo. Defaulting to continuous."
-  # "Error: Discrete value supplied to continuous scale"
-  "discrete"
-}
+# ------------------------------------------------
+# THIS FILE WAS CREATED AUTOMATICALLY!
+# Source file: data-raw/reproduction_of_poorman.R
+# ------------------------------------------------
 
-#' @rdname extended-functions
-#' @exportMethod scale_type.ab
-#' @export
-scale_type.ab <- function(x) {
-  # fix for:
-  # "Don't know how to automatically pick scale for object of type mo. Defaulting to continuous."
-  # "Error: Discrete value supplied to continuous scale"
-  "discrete"
-}
+# Poorman: a package to replace all dplyr functions with base R so we can lose dependency on dplyr.
+# These functions were downloaded from https://github.com/nathaneastwood/poorman,
+# from this commit: https://github.com/nathaneastwood/poorman/tree/{commit}
+#
+# All code below was released under MIT license, that permits 'free of charge, to any person obtaining a 
+# copy of the software and associated documentation files (the "Software"), to deal in the Software
+# without restriction, including without limitation the rights to use, copy, modify, merge, publish,
+# distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software 
+# is furnished to do so', given that a copyright notice is given in the software.
+#
+# Copyright notice as found on https://github.com/nathaneastwood/poorman/blob/master/LICENSE on 2 May 2020:
+# YEAR: 2020
+# COPYRIGHT HOLDER: Nathan Eastwood
+

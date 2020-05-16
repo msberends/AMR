@@ -114,6 +114,7 @@ The \link[AMR:lifecycle]{lifecycle} of this function is \strong{maturing}. The u
 # `example_isolates` is a dataset available in the AMR package.
 # See ?example_isolates.
 
+\dontrun{
 # See ?pca for more info about Principal Component Analysis (PCA).
 library(dplyr)
 pca_model <- example_isolates \%>\% 
@@ -127,4 +128,5 @@ biplot(pca_model)
 
 # new 
 ggplot_pca(pca_model)
+}
 }

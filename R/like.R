@@ -30,10 +30,15 @@
 #' @name like
 #' @rdname like
 #' @export
-#' @details When running a regular expression fails, these functions try again with `base::grepl(..., perl = TRUE)`.
+#' @details
+#' The `%like%` function:
+#' * Is case insensitive (use `%like_case%` for case-sensitive matching)
+#' * Supports multiple patterns
+#' * Checks if `pattern` is a regular expression and sets `fixed = TRUE` if not, to greatly improve speed
+#' * Tries again with `perl = TRUE` if regex fails
 #' 
 #' Using RStudio? This function can also be inserted from the Addins menu and can have its own Keyboard Shortcut like `Ctrl+Shift+L` or `Cmd+Shift+L` (see `Tools` > `Modify Keyboard Shortcuts...`).
-#' @source Idea from the [`like` function from the `data.table` package](https://github.com/Rdatatable/data.table/blob/master/R/like.R), but made it case insensitive at default and let it support multiple patterns. Also, if the regex fails the first time, it tries again with `perl = TRUE`.
+#' @source Idea from the [`like` function from the `data.table` package](https://github.com/Rdatatable/data.table/blob/master/R/like.R)
 #' @seealso [base::grep()]
 #' @inheritSection AMR Read more on our website!
 #' @examples
@@ -51,19 +56,27 @@
 #' a %like% b
 #' #> TRUE TRUE TRUE
 #'
-#' # get frequencies of bacteria whose name start with 'Ent' or 'ent'
+#' # get isolates whose name start with 'Ent' or 'ent'
 #' library(dplyr)
 #' example_isolates %>%
-#'   filter(mo_name(mo) %like% "^ent") %>%
-#'   freq(mo_genus(mo))
+#'   filter(mo_name(mo) %like% "^ent") %>% 
+#'   freq(mo)
 like <- function(x, pattern, ignore.case = TRUE) {
+  # set to fixed if no regex found
+  fixed <- all(!grepl("[$.^*?+}{|)(]", pattern))
+  if (ignore.case == TRUE) {
+    # set here, otherwise if fixed = TRUE, this warning will be thrown: argument 'ignore.case = TRUE' will be ignored
+    x <- tolower(x)
+    pattern <- tolower(pattern)
+  }
+  
   if (length(pattern) > 1) {
     if (length(x) != length(pattern)) {
       if (length(x) == 1) {
         x <- rep(x, length(pattern))
       }
       # return TRUE for every 'x' that matches any 'pattern', FALSE otherwise
-      res <- sapply(pattern, function(pttrn) base::grepl(pttrn, x, ignore.case = ignore.case))
+      res <- sapply(pattern, function(pttrn) base::grepl(pttrn, x, ignore.case = FALSE, fixed = fixed))
       res2 <- as.logical(rowSums(res))
       # get only first item of every hit in pattern
       res2[duplicated(res)] <- FALSE
@@ -74,9 +87,9 @@ like <- function(x, pattern, ignore.case = TRUE) {
       res <- vector(length = length(pattern))
       for (i in seq_len(length(res))) {
         if (is.factor(x[i])) {
-          res[i] <- as.integer(x[i]) %in% base::grep(pattern[i], levels(x[i]), ignore.case = ignore.case)
+          res[i] <- as.integer(x[i]) %in% base::grep(pattern[i], levels(x[i]), ignore.case = FALSE, fixed = fixed)
         } else {
-          res[i] <- base::grepl(pattern[i], x[i], ignore.case = ignore.case)
+          res[i] <- base::grepl(pattern[i], x[i], ignore.case = FALSE, fixed = fixed)
         }
       }
       return(res)
@@ -85,13 +98,15 @@ like <- function(x, pattern, ignore.case = TRUE) {
 
   # the regular way how grepl works; just one pattern against one or more x
   if (is.factor(x)) {
-    as.integer(x) %in% base::grep(pattern, levels(x), ignore.case = ignore.case)
+    as.integer(x) %in% base::grep(pattern, levels(x), ignore.case = FALSE, fixed = fixed)
   } else {
-    tryCatch(base::grepl(pattern, x, ignore.case = ignore.case),
+    tryCatch(base::grepl(pattern, x, ignore.case = FALSE, fixed = fixed),
              error = function(e) ifelse(grepl("Invalid regexp", e$message),
                                         # try with perl = TRUE:
                                         return(base::grepl(pattern = pattern, x = x,
-                                                           ignore.case = ignore.case, perl = TRUE)),
+                                                           ignore.case = FALSE, 
+                                                           fixed = fixed,
+                                                           perl = TRUE)),
                                         # stop otherwise
                                         stop(e$message)))
   }

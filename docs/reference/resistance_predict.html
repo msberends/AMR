@@ -82,7 +82,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.1.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.1.0.9004</span>
       </span>
     </div>
 
@@ -266,7 +266,7 @@
 )
 
 <span class='co'># S3 method for resistance_predict</span>
-<span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>x</span>, <span class='kw'>main</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste</a></span>(<span class='st'>"Resistance Prediction of"</span>, <span class='no'>x_name</span>), <span class='no'>...</span>)
+<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>x</span>, <span class='kw'>main</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste</a></span>(<span class='st'>"Resistance Prediction of"</span>, <span class='no'>x_name</span>), <span class='no'>...</span>)
 
 <span class='fu'>ggplot_rsi_predict</span>(
   <span class='no'>x</span>,
@@ -392,25 +392,25 @@ A microorganism is categorised as <em>Susceptible, Increased exposure</em> when 
                         <span class='kw'>col_ab</span> <span class='kw'>=</span> <span class='st'>"AMX"</span>,
                         <span class='kw'>year_min</span> <span class='kw'>=</span> <span class='fl'>2010</span>,
                         <span class='kw'>model</span> <span class='kw'>=</span> <span class='st'>"binomial"</span>)
-<span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>x</span>)
+<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>x</span>)
 <span class='fu'>ggplot_rsi_predict</span>(<span class='no'>x</span>)
 
-<span class='co'># use dplyr so you can actually read it:</span>
-<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>dplyr</span>)
-<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='no'>example_isolates</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='first_isolate.html'>filter_first_isolate</a></span>() <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span>(<span class='fu'><a href='mo_property.html'>mo_genus</a></span>(<span class='no'>mo</span>) <span class='kw'>==</span> <span class='st'>"Staphylococcus"</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'>resistance_predict</span>(<span class='st'>"PEN"</span>, <span class='kw'>model</span> <span class='kw'>=</span> <span class='st'>"binomial"</span>)
-<span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>x</span>)
+<span class='co'># using dplyr:</span>
+<span class='kw'>if</span> (!<span class='fu'><a href='https://rdrr.io/r/base/library.html'>require</a></span>(<span class='st'>"dplyr"</span>)) {
+  <span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>dplyr</span>)
+  <span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='no'>example_isolates</span> <span class='kw'>%&gt;%</span>
+    <span class='fu'><a href='first_isolate.html'>filter_first_isolate</a></span>() <span class='kw'>%&gt;%</span>
+    <span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span>(<span class='fu'><a href='mo_property.html'>mo_genus</a></span>(<span class='no'>mo</span>) <span class='kw'>==</span> <span class='st'>"Staphylococcus"</span>) <span class='kw'>%&gt;%</span>
+    <span class='fu'>resistance_predict</span>(<span class='st'>"PEN"</span>, <span class='kw'>model</span> <span class='kw'>=</span> <span class='st'>"binomial"</span>)
+  <span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>x</span>)
 
-
-<span class='co'># get the model from the object</span>
-<span class='no'>mymodel</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/attributes.html'>attributes</a></span>(<span class='no'>x</span>)$<span class='no'>model</span>
-<span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span>(<span class='no'>mymodel</span>)
-
+  <span class='co'># get the model from the object</span>
+  <span class='no'>mymodel</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/attributes.html'>attributes</a></span>(<span class='no'>x</span>)$<span class='no'>model</span>
+  <span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span>(<span class='no'>mymodel</span>)
+}
 
 <span class='co'># create nice plots with ggplot2 yourself</span>
-<span class='kw'>if</span> (!<span class='fu'><a href='https://rdrr.io/r/base/library.html'>require</a></span>(<span class='no'>ggplot2</span>)) {
+<span class='kw'>if</span> (!<span class='fu'><a href='https://rdrr.io/r/base/library.html'>require</a></span>(<span class='no'>ggplot2</span>) <span class='kw'>&amp;</span> !<span class='fu'><a href='https://rdrr.io/r/base/library.html'>require</a></span>(<span class='st'>"dplyr"</span>)) {
 
   <span class='no'>data</span> <span class='kw'>&lt;-</span> <span class='no'>example_isolates</span> <span class='kw'>%&gt;%</span>
     <span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span>(<span class='no'>mo</span> <span class='kw'>==</span> <span class='fu'><a href='as.mo.html'>as.mo</a></span>(<span class='st'>"E. coli"</span>)) <span class='kw'>%&gt;%</span>
@@ -451,7 +451,7 @@ A microorganism is categorised as <em>Susceptible, Increased exposure</em> when 
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
 </div>
 
       </footer>

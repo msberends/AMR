@@ -96,7 +96,6 @@
 #' set_mo_source(NULL)
 #' # Removed mo_source file '~/.mo_source.rds'.
 #' ```
-#' @importFrom dplyr select everything
 #' @export
 #' @inheritSection AMR Read more on our website!
 set_mo_source <- function(path) {
@@ -137,13 +136,13 @@ set_mo_source <- function(path) {
     try(
       df <- utils::read.table(header = TRUE, sep = ",", stringsAsFactors = FALSE),
       silent = TRUE)
-    if (!mo_source_isvalid(df)) {
+    if (!mo_source_isvalid(df, stop_on_error = FALSE)) {
       # try tab
       try(
         df <- utils::read.table(header = TRUE, sep = "\t", stringsAsFactors = FALSE),
         silent = TRUE)
     }
-    if (!mo_source_isvalid(df)) {
+    if (!mo_source_isvalid(df, stop_on_error = FALSE)) {
       # try pipe
       try(
         df <- utils::read.table(header = TRUE, sep = "|", stringsAsFactors = FALSE),
@@ -151,9 +150,8 @@ set_mo_source <- function(path) {
     }
   }
 
-  if (!mo_source_isvalid(df)) {
-    stop("File must contain a column with self-defined values and a reference column `mo` with valid values from the `microorganisms` data set.")
-  }
+  # check integrity
+  mo_source_isvalid(df)
 
   df <- df %>% filter(!is.na(mo))
 
@@ -201,7 +199,7 @@ get_mo_source <- function() {
   }
 }
 
-mo_source_isvalid <- function(x) {
+mo_source_isvalid <- function(x, refer_to_name = "`reference_df`", stop_on_error = TRUE) {
   
   check_dataset_integrity()
   
@@ -212,13 +210,41 @@ mo_source_isvalid <- function(x) {
     return(TRUE)
   }
   if (is.null(x)) {
-    return(TRUE)
+    if (stop_on_error == TRUE) {
+      stop(refer_to_name, " cannot be NULL.", call. = FALSE)
+    } else {
+      return(FALSE)
+    }
   }
   if (!is.data.frame(x)) {
-    return(FALSE)
+    if (stop_on_error == TRUE) {
+      stop(refer_to_name, " must be a data.frame.", call. = FALSE)
+    } else {
+      return(FALSE)
+    }
   }
   if (!"mo" %in% colnames(x)) {
-    return(FALSE)
+    if (stop_on_error == TRUE) {
+      stop(refer_to_name, " must contain a column 'mo'.", call. = FALSE)
+    } else {
+      return(FALSE)
+    }
   }
-  all(x$mo %in% c("", microorganisms$mo, microorganisms.translation$mo_old), na.rm = TRUE)
+  if (!all(x$mo %in% c("", microorganisms$mo, microorganisms.translation$mo_old), na.rm = TRUE)) {
+    if (stop_on_error == TRUE) {
+      invalid <- x[which(!x$mo %in% c("", microorganisms$mo, microorganisms.translation$mo_old)), , drop = FALSE]
+      if (nrow(invalid) > 1) {
+        plural <- "s"
+      } else {
+        plural <- ""
+      }
+      stop("Value", plural, " ", paste0("'", invalid[, 1, drop = TRUE], "'", collapse = ", "), 
+           " found in ", tolower(refer_to_name), 
+           ", but with invalid microorganism code", plural, " ", paste0("'", invalid$mo, "'", collapse = ", "), ".",
+           call. = FALSE)
+    } else {
+      return(FALSE)
+    }
+  }
+  TRUE
 }

@@ -100,14 +100,12 @@ test_that("mo_property works", {
   expect_warning(mo_name(c("B_ESCHR_COL", "B_STPHY_AUR")))
   
   # outcome of mo_fullname must always return the fullname from the data set
-  library(dplyr)
-  x <- microorganisms %>%
-    transmute(mo,
-              # fullname from the original data:
-              f1 = fullname,
-              # newly created fullname based on MO code:
-              f2 = mo_fullname(mo, language = "en")) %>%
-    filter(f1 != f2)
-  expect_equal(nrow(x), 0)
-
+  x <- data.frame(mo = microorganisms$mo,
+                  # fullname from the original data:
+                  f1 = microorganisms$fullname,
+                  # newly created fullname based on MO code:
+                  f2 = mo_fullname(microorganisms$mo, language = "en"),
+                  stringsAsFactors = FALSE)
+  expect_equal(nrow(subset(x, f1 != f2)), 0)
+  
 })

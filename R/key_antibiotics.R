@@ -31,7 +31,9 @@
 #' @param GramNeg_1,GramNeg_2,GramNeg_3,GramNeg_4,GramNeg_5,GramNeg_6 column names of antibiotics for **Gram-negatives**, case-insensitive. At default, the columns containing these antibiotics will be guessed with [guess_ab_col()].
 #' @param warnings give warning about missing antibiotic columns, they will anyway be ignored
 #' @param ... other parameters passed on to function
-#' @details The function [key_antibiotics()] returns a character vector with 12 antibiotic results for every isolate. These isolates can then be compared using [key_antibiotics_equal()], to check if two isolates have generally the same antibiogram. Missing and invalid values are replaced with a dot (`"."`). The [first_isolate()] function only uses this function on the same microbial species from the same patient. Using this, an MRSA will be included after a susceptible *S. aureus* (MSSA) found within the same episode (see `episode` parameter of [first_isolate()]). Without key antibiotic comparison it would not.
+#' @details The function [key_antibiotics()] returns a character vector with 12 antibiotic results for every isolate. These isolates can then be compared using [key_antibiotics_equal()], to check if two isolates have generally the same antibiogram. Missing and invalid values are replaced with a dot (`"."`) by [key_antibiotics()] and ignored by [key_antibiotics_equal()].
+#' 
+#' The [first_isolate()] function only uses this function on the same microbial species from the same patient. Using this, e.g. an MRSA will be included after a susceptible *S. aureus* (MSSA) is found within the same patient episode. Without key antibiotic comparison it would not. See [first_isolate()] for more info.
 #'
 #' At default, the antibiotics that are used for **Gram-positive bacteria** are:
 #' - Amoxicillin
@@ -65,8 +67,6 @@
 #' @inheritSection first_isolate Key antibiotics
 #' @rdname key_antibiotics
 #' @export
-#' @importFrom dplyr %>% mutate if_else pull
-#' @importFrom crayon blue bold
 #' @seealso [first_isolate()]
 #' @inheritSection AMR Read more on our website!
 #' @examples
@@ -120,6 +120,15 @@ key_antibiotics <- function(x,
                             GramNeg_6 = guess_ab_col(x, "meropenem"),
                             warnings = TRUE,
                             ...) {
+  
+  dots <- unlist(list(...))
+  if (length(dots) != 0) {
+    # backwards compatibility with old parameters
+    dots.names <- dots %>% names()
+    if ("info" %in% dots.names) {
+      warnings <- dots[which(dots.names == "info")]
+    }
+  }
 
   # try to find columns based on type
   # -- mo
@@ -134,7 +143,7 @@ key_antibiotics <- function(x,
   col.list <- c(universal_1, universal_2, universal_3, universal_4, universal_5, universal_6,
                 GramPos_1, GramPos_2, GramPos_3, GramPos_4, GramPos_5, GramPos_6,
                 GramNeg_1, GramNeg_2, GramNeg_3, GramNeg_4, GramNeg_5, GramNeg_6)
-  check_available_columns <- function(x, col.list, info = TRUE) {
+  check_available_columns <- function(x, col.list, warnings = TRUE) {
     # check columns
     col.list <- col.list[!is.na(col.list) & !is.null(col.list)]
     names(col.list) <- col.list
@@ -152,7 +161,7 @@ key_antibiotics <- function(x,
       }
     }
     if (!all(col.list %in% colnames(x))) {
-      if (info == TRUE) {
+      if (warnings == TRUE) {
         warning("Some columns do not exist and will be ignored: ",
                 col.list.bak[!(col.list %in% colnames(x))] %>% toString(),
                 ".\nTHIS MAY STRONGLY INFLUENCE THE OUTCOME.",
@@ -163,7 +172,7 @@ key_antibiotics <- function(x,
     col.list
   }
 
-  col.list <- check_available_columns(x = x, col.list = col.list, info = warnings)
+  col.list <- check_available_columns(x = x, col.list = col.list, warnings = warnings)
   universal_1 <- col.list[universal_1]
   universal_2 <- col.list[universal_2]
   universal_3 <- col.list[universal_3]
@@ -205,37 +214,34 @@ key_antibiotics <- function(x,
   }
 
   # join to microorganisms data set
-  x <- x %>%
-    as.data.frame(stringsAsFactors = FALSE) %>% 
-    mutate_at(vars(col_mo), as.mo) %>%
-    left_join_microorganisms(by = col_mo) %>%
-    mutate(key_ab = NA_character_,
-           gramstain = mo_gramstain(pull(., col_mo), language = NULL))
+  x <- x %>% as.data.frame(stringsAsFactors = FALSE)
+  x[, col_mo] <- as.mo(x[, col_mo, drop = TRUE])
+  x$gramstain <- mo_gramstain(x[, col_mo, drop = TRUE], language = NULL)
   
+  x$key_ab <- NA_character_
+    # mutate_at(vars(col_mo), as.mo) %>%
+    # left_join_microorganisms(by = col_mo) %>%
+    # mutate(key_ab = NA_character_,
+    #        gramstain = mo_gramstain(pull(., col_mo), language = NULL))
+  # 
   # Gram +
-  x <- x %>% mutate(key_ab =
-                      if_else(gramstain == "Gram-positive",
-                              tryCatch(apply(X = x[, gram_positive],
-                                             MARGIN = 1,
-                                             FUN = function(x) paste(x, collapse = "")),
-                                       error = function(e) paste0(rep(".", 12), collapse = "")),
-                              key_ab))
+  x$key_ab <- if_else(x$gramstain == "Gram-positive",
+                      tryCatch(apply(X = x[, gram_positive],
+                                     MARGIN = 1,
+                                     FUN = function(x) paste(x, collapse = "")),
+                               error = function(e) paste0(rep(".", 12), collapse = "")),
+                      x$key_ab)
   
   # Gram -
-  x <- x %>% mutate(key_ab =
-                      if_else(gramstain == "Gram-negative",
-                              tryCatch(apply(X = x[, gram_negative],
-                                             MARGIN = 1,
-                                             FUN = function(x) paste(x, collapse = "")),
-                                       error = function(e) paste0(rep(".", 12), collapse = "")),
-                              key_ab))
+  x$key_ab <- if_else(x$gramstain == "Gram-negative",
+                      tryCatch(apply(X = x[, gram_negative],
+                                     MARGIN = 1,
+                                     FUN = function(x) paste(x, collapse = "")),
+                               error = function(e) paste0(rep(".", 12), collapse = "")),
+                      x$key_ab)
 
   # format
-  key_abs <- x %>%
-    pull(key_ab) %>%
-    gsub("(NA|NULL)", ".", .) %>%
-    gsub("[^SIR]", ".", ., ignore.case = TRUE) %>%
-    toupper()
+  key_abs <- toupper(gsub("[^SIR]", ".", gsub("(NA|NULL)", ".", x$key_ab)))
   
   if (n_distinct(key_abs) == 1) {
     warning("No distinct key antibiotics determined.", call. = FALSE)
@@ -245,7 +251,6 @@ key_antibiotics <- function(x,
 
 }
 
-#' @importFrom dplyr %>%
 #' @rdname key_antibiotics
 #' @export
 key_antibiotics_equal <- function(y,
@@ -271,12 +276,13 @@ key_antibiotics_equal <- function(y,
 
   if (info_needed == TRUE) {
     p <- progress_estimated(length(x))
+    on.exit(close(p))
   }
 
   for (i in seq_len(length(x))) {
 
     if (info_needed == TRUE) {
-      p$tick()$print()
+      p$tick()
     }
 
     if (is.na(x[i])) {

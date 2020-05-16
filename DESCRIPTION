@@ -1,6 +1,6 @@
 Package: AMR
-Version: 1.1.0.9003
-Date: 2020-05-01
+Version: 1.1.0.9004
+Date: 2020-05-16
 Title: Antimicrobial Resistance Analysis
 Authors@R: c(
     person(role = c("aut", "cre"), 
@@ -36,30 +36,24 @@ Description: Functions to simplify the analysis and prediction of Antimicrobial
     Standards Institute (2014) <isbn: 1-56238-899-1>.
 Depends:
     R (>= 3.1.0)
+Enhances:
+    ggplot2
 Imports:
     backports,
     cleaner,
-    crayon (>= 1.3.0),
-    data.table (>= 1.9.0),
-    dplyr (>= 0.7.0),
-    ggplot2,
-    knitr (>= 1.0.0),
-    microbenchmark,
     pillar,
-    R6,
-    rlang (>= 0.3.1),
     tidyr (>= 1.0.0),
-    vctrs (>= 0.2.4)
+    vctrs
 Suggests:
-    covr (>= 3.0.1),
-    curl,
-    readxl,
+    covr,
+    dplyr,
+    knitr,
+    microbenchmark,
     rmarkdown,
-    rstudioapi,
-    rvest (>= 0.3.2),
-    testthat (>= 1.0.2),
-    xml2 (>= 1.0.0)
-VignetteBuilder: knitr
+    rvest,
+    testthat,
+    utils
+VignetteBuilder: knitr,rmarkdown
 URL: https://msberends.gitlab.io/AMR, https://gitlab.com/msberends/AMR
 BugReports: https://gitlab.com/msberends/AMR/issues
 License: GPL-2 | file LICENSE

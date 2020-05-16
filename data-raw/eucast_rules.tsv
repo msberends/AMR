@@ -128,24 +128,24 @@ genus_species	is	Kingella kingae	TCY	R	DOX	R	Kingella kingae	Breakpoints
 genus_species	is	Burkholderia pseudomallei	TCY	S	DOX	S	Burkholderia pseudomallei	Breakpoints
 genus_species	is	Burkholderia pseudomallei	TCY	I	DOX	I	Burkholderia pseudomallei	Breakpoints
 genus_species	is	Burkholderia pseudomallei	TCY	R	DOX	R	Burkholderia pseudomallei	Breakpoints
-order	is	Enterobacterales			PEN, glycopeptides, FUS, macrolides, LIN, streptogramins, RIF, DAP, LNZ	R	Table 01: Intrinsic resistance in Enterobacteriaceae	Expert Rules
-fullname	like	^Citrobacter (koseri|amalonaticus|sedlakii|farmeri|rodentium)			aminopenicillins, TIC	R	Table 01: Intrinsic resistance in Enterobacteriaceae	Expert Rules
-fullname	like	^Citrobacter (freundii|braakii|murliniae|werkmanii|youngae)			aminopenicillins, AMC, CZO, FOX	R	Table 01: Intrinsic resistance in Enterobacteriaceae	Expert Rules
-genus_species	is	Enterobacter cloacae			aminopenicillins, AMC, CZO, FOX	R	Table 01: Intrinsic resistance in Enterobacteriaceae	Expert Rules
-genus_species	is	Enterobacter aerogenes			aminopenicillins, AMC, CZO, FOX	R	Table 01: Intrinsic resistance in Enterobacteriaceae	Expert Rules
-genus_species	is	Escherichia hermanni			aminopenicillins, TIC	R	Table 01: Intrinsic resistance in Enterobacteriaceae	Expert Rules
-genus_species	is	Hafnia alvei			aminopenicillins, AMC, CZO, FOX	R	Table 01: Intrinsic resistance in Enterobacteriaceae	Expert Rules
-genus	is	Klebsiella			aminopenicillins, TIC	R	Table 01: Intrinsic resistance in Enterobacteriaceae	Expert Rules
-genus_species	is	Morganella morganii			aminopenicillins, AMC, CZO, tetracyclines, polymyxins, NIT	R	Table 01: Intrinsic resistance in Enterobacteriaceae	Expert Rules
-genus_species	is	Proteus mirabilis			tetracyclines, TGC, polymyxins, NIT	R	Table 01: Intrinsic resistance in Enterobacteriaceae	Expert Rules
-genus_species	is	Proteus penneri			aminopenicillins, CZO, CXM, tetracyclines, TGC, polymyxins, NIT	R	Table 01: Intrinsic resistance in Enterobacteriaceae	Expert Rules
-genus_species	is	Proteus vulgaris			aminopenicillins, CZO, CXM, tetracyclines, TGC, polymyxins, NIT	R	Table 01: Intrinsic resistance in Enterobacteriaceae	Expert Rules
-genus_species	is	Providencia rettgeri			aminopenicillins, AMC, CZO, CXM, tetracyclines, TGC, polymyxins, NIT	R	Table 01: Intrinsic resistance in Enterobacteriaceae	Expert Rules
-genus_species	is	Providencia stuartii			aminopenicillins, AMC, CZO, CXM, tetracyclines, TGC, polymyxins, NIT	R	Table 01: Intrinsic resistance in Enterobacteriaceae	Expert Rules
-genus	is	Raoultella			aminopenicillins, TIC	R	Table 01: Intrinsic resistance in Enterobacteriaceae	Expert Rules
-genus_species	is	Serratia marcescens			aminopenicillins, AMC, CZO, FOX, CXM, DOX, TCY, polymyxins, NIT	R	Table 01: Intrinsic resistance in Enterobacteriaceae	Expert Rules
-genus_species	is	Yersinia enterocolitica			aminopenicillins, AMC, TIC, CZO, FOX	R	Table 01: Intrinsic resistance in Enterobacteriaceae	Expert Rules
-genus_species	is	Yersinia pseudotuberculosis			PLB, COL	R	Table 01: Intrinsic resistance in Enterobacteriaceae	Expert Rules
+order	is	Enterobacterales			PEN, glycopeptides, FUS, macrolides, LIN, streptogramins, RIF, DAP, LNZ	R	Table 01: Intrinsic resistance in Enterobacterales (at the time: Enterobacteriaceae)	Expert Rules
+fullname	like	^Citrobacter (koseri|amalonaticus|sedlakii|farmeri|rodentium)			aminopenicillins, TIC	R	Table 01: Intrinsic resistance in Enterobacterales (at the time: Enterobacteriaceae)	Expert Rules
+fullname	like	^Citrobacter (freundii|braakii|murliniae|werkmanii|youngae)			aminopenicillins, AMC, CZO, FOX	R	Table 01: Intrinsic resistance in Enterobacterales (at the time: Enterobacteriaceae)	Expert Rules
+genus_species	is	Enterobacter cloacae			aminopenicillins, AMC, CZO, FOX	R	Table 01: Intrinsic resistance in Enterobacterales (at the time: Enterobacteriaceae)	Expert Rules
+genus_species	is	Enterobacter aerogenes			aminopenicillins, AMC, CZO, FOX	R	Table 01: Intrinsic resistance in Enterobacterales (at the time: Enterobacteriaceae)	Expert Rules
+genus_species	is	Escherichia hermanni			aminopenicillins, TIC	R	Table 01: Intrinsic resistance in Enterobacterales (at the time: Enterobacteriaceae)	Expert Rules
+genus_species	is	Hafnia alvei			aminopenicillins, AMC, CZO, FOX	R	Table 01: Intrinsic resistance in Enterobacterales (at the time: Enterobacteriaceae)	Expert Rules
+genus	is	Klebsiella			aminopenicillins, TIC	R	Table 01: Intrinsic resistance in Enterobacterales (at the time: Enterobacteriaceae)	Expert Rules
+genus_species	is	Morganella morganii			aminopenicillins, AMC, CZO, tetracyclines, polymyxins, NIT	R	Table 01: Intrinsic resistance in Enterobacterales (at the time: Enterobacteriaceae)	Expert Rules
+genus_species	is	Proteus mirabilis			tetracyclines, TGC, polymyxins, NIT	R	Table 01: Intrinsic resistance in Enterobacterales (at the time: Enterobacteriaceae)	Expert Rules
+genus_species	is	Proteus penneri			aminopenicillins, CZO, CXM, tetracyclines, TGC, polymyxins, NIT	R	Table 01: Intrinsic resistance in Enterobacterales (at the time: Enterobacteriaceae)	Expert Rules
+genus_species	is	Proteus vulgaris			aminopenicillins, CZO, CXM, tetracyclines, TGC, polymyxins, NIT	R	Table 01: Intrinsic resistance in Enterobacterales (at the time: Enterobacteriaceae)	Expert Rules
+genus_species	is	Providencia rettgeri			aminopenicillins, AMC, CZO, CXM, tetracyclines, TGC, polymyxins, NIT	R	Table 01: Intrinsic resistance in Enterobacterales (at the time: Enterobacteriaceae)	Expert Rules
+genus_species	is	Providencia stuartii			aminopenicillins, AMC, CZO, CXM, tetracyclines, TGC, polymyxins, NIT	R	Table 01: Intrinsic resistance in Enterobacterales (at the time: Enterobacteriaceae)	Expert Rules
+genus	is	Raoultella			aminopenicillins, TIC	R	Table 01: Intrinsic resistance in Enterobacterales (at the time: Enterobacteriaceae)	Expert Rules
+genus_species	is	Serratia marcescens			aminopenicillins, AMC, CZO, FOX, CXM, DOX, TCY, polymyxins, NIT	R	Table 01: Intrinsic resistance in Enterobacterales (at the time: Enterobacteriaceae)	Expert Rules
+genus_species	is	Yersinia enterocolitica			aminopenicillins, AMC, TIC, CZO, FOX	R	Table 01: Intrinsic resistance in Enterobacterales (at the time: Enterobacteriaceae)	Expert Rules
+genus_species	is	Yersinia pseudotuberculosis			PLB, COL	R	Table 01: Intrinsic resistance in Enterobacterales (at the time: Enterobacteriaceae)	Expert Rules
 genus	one_of	Achromobacter, Acinetobacter, Alcaligenes, Bordatella, Burkholderia, Elizabethkingia, Flavobacterium, Ochrobactrum, Pseudomonas, Stenotrophomonas			PEN, FOX, CXM, glycopeptides, FUS, macrolides, LIN, streptogramins, RIF, DAP, LNZ	R	Table 02: Intrinsic resistance in non-fermentative Gram-negative bacteria	Expert Rules
 genus_species	is	Acinetobacter baumannii			aminopenicillins, AMC, CZO, CTX, CRO, ATM, ETP, TMP, FOS, DOX, TCY	R	Table 02: Intrinsic resistance in non-fermentative Gram-negative bacteria	Expert Rules
 genus_species	is	Acinetobacter pittii			aminopenicillins, AMC, CZO, CTX, CRO, ATM, ETP, TMP, FOS, DOX, TCY	R	Table 02: Intrinsic resistance in non-fermentative Gram-negative bacteria	Expert Rules

@@ -74,7 +74,7 @@ rsi_df(
 A \code{\link{double}} or, when \code{as_percent = TRUE}, a \code{\link{character}}.
 }
 \description{
-These functions can be used to calculate the (co-)resistance or susceptibility of microbial isolates (i.e. percentage of S, SI, I, IR or R). All functions support quasiquotation with pipes, can be used in \code{summarise()}][dplyr::summarise()] and also support grouped variables, please see \emph{Examples}.
+These functions can be used to calculate the (co-)resistance or susceptibility of microbial isolates (i.e. percentage of S, SI, I, IR or R). All functions support quasiquotation with pipes, can be used in \code{\link[=summarise]{summarise()}} from the \code{dplyr} package and also supports grouped variables, please see \emph{Examples}.
 
 \code{\link[=resistance]{resistance()}} should be used to calculate resistance, \code{\link[=susceptibility]{susceptibility()}} should be used to calculate susceptibility.\cr
 }
@@ -85,7 +85,7 @@ The function \code{\link[=resistance]{resistance()}} is equal to the function \c
 
 These functions are not meant to count isolates, but to calculate the proportion of resistance/susceptibility. Use the \code{count()}][AMR::count()] functions to count isolates. The function \code{\link[=susceptibility]{susceptibility()}} is essentially equal to \code{count_susceptible() / count_all()}. \emph{Low counts can influence the outcome - the \code{proportion} functions may camouflage this, since they only return the proportion (albeit being dependent on the \code{minimum} parameter).}
 
-The function \code{\link[=proportion_df]{proportion_df()}} takes any variable from \code{data} that has an \code{\link{rsi}} class (created with \code{\link[=as.rsi]{as.rsi()}}) and calculates the proportions R, I and S. The function \code{\link[=rsi_df]{rsi_df()}} works exactly like \code{\link[=proportion_df]{proportion_df()}}, but adds the number of isolates.
+The function \code{\link[=proportion_df]{proportion_df()}} takes any variable from \code{data} that has an \code{\link{rsi}} class (created with \code{\link[=as.rsi]{as.rsi()}}) and calculates the proportions R, I and S. It also supports grouped variables. The function \code{\link[=rsi_df]{rsi_df()}} works exactly like \code{\link[=proportion_df]{proportion_df()}}, but adds the number of isolates.
 }
 \section{Combination therapy}{
 
@@ -160,6 +160,7 @@ proportion_I(example_isolates$AMX)
 proportion_IR(example_isolates$AMX)
 proportion_R(example_isolates$AMX)
 
+\dontrun{
 library(dplyr)
 example_isolates \%>\%
   group_by(hospital_id) \%>\%
@@ -216,9 +217,6 @@ example_isolates \%>\%
   select(hospital_id, AMX, CIP) \%>\%
   group_by(hospital_id) \%>\%
   proportion_df(translate = FALSE)
-
-
-\dontrun{
 
 # calculate current empiric combination therapy of Helicobacter gastritis:
 my_table \%>\%

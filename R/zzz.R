@@ -19,18 +19,16 @@
 # Visit our website for more info: https://msberends.gitlab.io/AMR.    #
 # ==================================================================== #
 
-#' @importFrom data.table as.data.table setkey
 .onLoad <- function(libname, pkgname) {
   # get new functions not available in older versions of R
   backports::import(pkgname)
   
-  # register data
-  assign(x = "microorganismsDT",
-         value = make_DT(),
+  assign(x = "MO_lookup",
+         value = create_MO_lookup(),
          envir = asNamespace("AMR"))
 
-  assign(x = "microorganisms.oldDT",
-         value = make_oldDT(),
+  assign(x = "MO.old_lookup",
+         value = create_MO.old_lookup(),
          envir = asNamespace("AMR"))
 
   assign(x = "mo_codes_v0.5.0",
@@ -41,52 +39,43 @@
 
 # maybe add survey later: "https://www.surveymonkey.com/r/AMR_for_R"
 
-#' @importFrom data.table as.data.table setkey
-#' @importFrom dplyr %>% mutate case_when
-make_DT <- function() {
-  microorganismsDT <- AMR::microorganisms %>% 
-    mutate(kingdom_index = case_when(kingdom == "Bacteria" ~ 1,
-                                     kingdom == "Fungi" ~ 2,
-                                     kingdom == "Protozoa" ~ 3,
-                                     kingdom == "Archaea" ~ 4,
-                                     TRUE ~ 99),
-           # for fullname_lower: keep only dots, letters,
-           # numbers, slashes, spaces and dashes
-           fullname_lower = gsub("[^.a-z0-9/ \\-]+", "",
-                                 # use this paste instead of `fullname` to
-                                 # work with Viridans Group Streptococci, etc.
-                                 tolower(trimws(ifelse(genus == "",
-                                                       fullname,
-                                                       paste(genus, species, subspecies))))),
-           # add a column with only "e coli" like combinations
-           g_species = gsub("^([a-z])[a-z]+ ([a-z]+) ?.*", "\\1 \\2", fullname_lower)) %>% 
-    as.data.table()
+create_MO_lookup <- function() {
+  MO_lookup <- AMR::microorganisms
+  
+  MO_lookup$kingdom_index <- 99
+  MO_lookup[which(MO_lookup$kingdom == "Bacteria" | MO_lookup$mo == "UNKNOWN"), "kingdom_index"] <- 1
+  MO_lookup[which(MO_lookup$kingdom == "Fungi"), "kingdom_index"] <- 2
+  MO_lookup[which(MO_lookup$kingdom == "Protozoa"), "kingdom_index"] <- 3
+  MO_lookup[which(MO_lookup$kingdom == "Archaea"), "kingdom_index"] <- 4
+  
+  # use this paste instead of `fullname` to
+  # work with Viridans Group Streptococci, etc.
+  MO_lookup$fullname_lower <- tolower(trimws(paste(MO_lookup$genus, 
+                                                          MO_lookup$species,
+                                                          MO_lookup$subspecies)))
+  MO_lookup[MO_lookup$genus == "" | grepl("^[(]unknown ", MO_lookup$fullname), "fullname_lower"] <- tolower(trimws(MO_lookup[MO_lookup$genus == "" | grepl("^[(]unknown ", MO_lookup$fullname), 
+                                                                                                      "fullname"]))
+  MO_lookup$fullname_lower <- gsub("[^.a-z0-9/ \\-]+", "",MO_lookup$fullname_lower)
+  
+  # add a column with only "e coli" like combinations
+  MO_lookup$g_species <- gsub("^([a-z])[a-z]+ ([a-z]+) ?.*", "\\1 \\2", MO_lookup$fullname_lower)
   
   # so arrange data on prevalence first, then kingdom, then full name
-  setkey(microorganismsDT,
-         prevalence,
-         kingdom_index,
-         fullname_lower)
-  microorganismsDT
+  MO_lookup[order(MO_lookup$prevalence, MO_lookup$kingdom_index, MO_lookup$fullname_lower),]
 }
 
-#' @importFrom data.table as.data.table setkey
-#' @importFrom dplyr %>% mutate
-make_oldDT <- function() {
-  microorganisms.oldDT <- AMR::microorganisms.old %>% 
-    mutate(
-      # for fullname_lower: keep only dots, letters,
-      # numbers, slashes, spaces and dashes
-      fullname_lower = gsub("[^.a-z0-9/ \\-]+", "", tolower(fullname)),
-      # add a column with only "e coli" like combinations
-      g_species = gsub("^([a-z])[a-z]+ ([a-z]+) ?.*", "\\1 \\2", fullname_lower)) %>% 
-    as.data.table()
+create_MO.old_lookup <- function() {
+  MO.old_lookup <- AMR::microorganisms.old
+  
+  # use this paste instead of `fullname` to
+  # work with Viridans Group Streptococci, etc.
+  MO.old_lookup$fullname_lower <- gsub("[^.a-z0-9/ \\-]+", "", tolower(trimws(MO.old_lookup$fullname)))
+  
+  # add a column with only "e coli" like combinations
+  MO.old_lookup$g_species <- gsub("^([a-z])[a-z]+ ([a-z]+) ?.*", "\\1 \\2", MO.old_lookup$fullname_lower)
   
   # so arrange data on prevalence first, then full name
-  setkey(microorganisms.oldDT,
-         prevalence,
-         fullname)
-  microorganisms.oldDT
+  MO.old_lookup[order(MO.old_lookup$prevalence, MO.old_lookup$fullname_lower),]
 }
 
 make_trans_tbl <- function() {

@@ -29,7 +29,6 @@
 #' @param na.rm a logical to indicate whether missing values should be removed
 #' @return An [integer] (no decimals) if `exact = FALSE`, a [double] (with decimals) otherwise
 #' @seealso To split ages into groups, use the [age_groups()] function.
-#' @importFrom dplyr if_else
 #' @inheritSection AMR Read more on our website!
 #' @export
 #' @examples
@@ -54,7 +53,7 @@ age <- function(x, reference = Sys.Date(), exact = FALSE, na.rm = FALSE) {
 
   # from https://stackoverflow.com/a/25450756/4575331
   years_gap <- reference$year - x$year
-  ages <- if_else(reference$mon < x$mon | (reference$mon == x$mon & reference$mday < x$mday),
+  ages <- ifelse(reference$mon < x$mon | (reference$mon == x$mon & reference$mday < x$mday),
                   as.integer(years_gap - 1),
                   as.integer(years_gap))
 

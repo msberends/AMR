@@ -17,7 +17,7 @@ pca(
 \arguments{
 \item{x}{a \link{data.frame} containing numeric columns}
 
-\item{...}{columns of \code{x} to be selected for PCA}
+\item{...}{columns of \code{x} to be selected for PCA, can be unquoted since it supports quasiquotation.}
 
 \item{retx}{a logical value indicating whether the rotated variables
     should be returned.}
@@ -69,6 +69,7 @@ The \link[AMR:lifecycle]{lifecycle} of this function is \strong{maturing}. The u
 # `example_isolates` is a dataset available in the AMR package.
 # See ?example_isolates.
 
+\dontrun{
 # calculate the resistance per group first
 library(dplyr)
 resistance_data <- example_isolates \%>\% 
@@ -84,4 +85,5 @@ pca_result
 summary(pca_result)
 biplot(pca_result)
 ggplot_pca(pca_result) # a new and convenient plot function
+}
 }

@@ -29,28 +29,22 @@ One of the most important features of this package is the complete microbial tax
 Using the `microbenchmark` package, we can review the calculation performance of this function. Its function `microbenchmark()` runs different input expressions independently of each other and measures their time-to-result.
 
 ```{r, message = FALSE, echo = FALSE}
-library(dplyr)
 library(ggplot2)
 ggplot.bm <- function(df, title = NULL) {
-  p <- df %>%
-    group_by(expr) %>%
-    summarise(t = median(time) / 1e+06) %>%
-    arrange(t) %>%
-    mutate(expr = factor(as.character(expr), levels = rev(as.character(expr))),
-           t_round = round(t, 1))
+  s <- summary(df)[order(summary(df)$median), ]
   suppressWarnings(
     print(
-      p %>%
-        ggplot(aes(x = expr, y = t)) + 
-        geom_linerange(aes(ymin = 0, ymax = t), colour = "#555555") +
-        geom_text(aes(label = t_round, hjust = -0.5), size = 3) +
+      s %>%
+        ggplot(aes(x = expr, y = median)) + 
+        geom_linerange(aes(ymin = 0, ymax = median), colour = "#555555") +
+        geom_text(aes(label = round(s$median, 0), hjust = -0.5), size = 3) +
         geom_point(size = 3, colour = "#555555") + 
         coord_flip() +
         scale_y_log10(breaks = c(1, 2, 5, 
                                  10, 20, 50,
                                  100, 200, 500,
                                  1000, 2000, 5000),
-                      limits = c(1, max(p$t) * 2)) +
+                      limits = c(1, max(s$median) * 2)) +
         labs(x = "Expression", y = "Median time in milliseconds (log scale)", title = title)
     )
   )
@@ -58,7 +52,7 @@ ggplot.bm <- function(df, title = NULL) {
 ```
 
 ```{r, message = FALSE}
-library(microbenchmark)
+microbenchmark <- microbenchmark::microbenchmark
 library(AMR)
 ```
 
@@ -105,7 +99,7 @@ M.semesiae <- microbenchmark(as.mo("metsem"),
 print(M.semesiae, unit = "ms", signif = 4)
 ```
 
-That takes `r round(mean(M.semesiae$time, na.rm = TRUE) / mean(S.aureus$time, na.rm = TRUE), 1)` times as much time on average. We can conclude that looking up arbitrary codes of less prevalent microorganisms is the worst way to go, in terms of calculation performance. Full names (like *Methanosarcina semesiae*) are always very fast and only take some thousands of seconds to coerce - they are the most probable input from most data sets.
+Looking up arbitrary codes of less prevalent microorganisms costs the most time. Full names (like *Methanosarcina semesiae*) are always very fast and only take some thousands of seconds to coerce - they are the most probable input from most data sets.
 
 In the figure below, we compare *Escherichia coli* (which is very common) with *Prevotella brevis* (which is moderately common) and with *Methanosarcina semesiae* (which is uncommon):
 
@@ -115,20 +109,22 @@ boxplot(microbenchmark(
   as.mo("Meth. semesiae"),
   as.mo("Prev. brevis"),
   as.mo("Esc. coli"),
-  times = 10),
+  times = 100),
         horizontal = TRUE, las = 1, unit = "s", log = TRUE,
         xlab = "", ylab = "Time in seconds (log)",
         main = "Benchmarks per prevalence")
 ```
 
-Uncommon microorganisms take a lot more time than common microorganisms. To relieve this pitfall and further improve performance, two important calculations take almost no time at all: **repetitive results** and **already precalculated results**.
+Uncommon microorganisms take some more time than common microorganisms. To further improve performance, two important calculations take almost no time at all: **repetitive results** and **already precalculated results**.
 
 ### Repetitive results
 
 Repetitive results are unique values that are present more than once. Unique values will only be calculated once by `as.mo()`. We will use `mo_name()` for this test - a helper function that returns the full microbial name (genus, species and possibly subspecies) which uses `as.mo()` internally.
 
-```{r, message = FALSE}
+```{r, message = FALSE, eval = FALSE}
 library(dplyr)
+```
+```{r, message = FALSE}
 # take all MO codes from the example_isolates data set
 x <- example_isolates$mo %>%
   # keep only the unique ones
@@ -148,11 +144,11 @@ n_distinct(x)
 
 # now let's see:
 run_it <- microbenchmark(mo_name(x),
-                         times = 100)
+                         times = 10)
 print(run_it, unit = "ms", signif = 3)
 ```
 
-So transforming 500,000 values (!!) of `r n_distinct(x)` unique values only takes `r round(median(run_it$time, na.rm = TRUE) / 1e9, 2)` seconds (`r as.integer(median(run_it$time, na.rm = TRUE) / 1e6)` ms). You only lose time on your unique input values.
+So transforming 500,000 values (!!) of `r n_distinct(x)` unique values only takes `r round(median(run_it$time, na.rm = TRUE) / 1e9, 2)` seconds. You only lose time on your unique input values.
 
 ### Precalculated results
 

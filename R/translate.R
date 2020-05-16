@@ -21,15 +21,15 @@
 
 #' Translate strings from AMR package
 #'
-#' For language-dependent output of AMR functions, like [mo_name()], [mo_type()] and [ab_name()].
+#' For language-dependent output of AMR functions, like [mo_name()], [mo_gramstain()], [mo_type()] and [ab_name()].
 #' @inheritSection lifecycle Stable lifecycle
 #' @details Strings will be translated to foreign languages if they are defined in a local translation file. Additions to this file can be suggested at our repository. The file can be found here: <https://gitlab.com/msberends/AMR/blob/master/data-raw/translations.tsv>.
 #'
-#' Currently supported languages can be found if running: `unique(AMR:::translations_file$lang)`.
+#' Currently supported languages are (besides English): `r paste(sort(gsub(";.*", "", ISOcodes::ISO_639_2[which(ISOcodes::ISO_639_2$Alpha_2 %in% unique(AMR:::translations_file$lang)), "Name"])), collapse = ", ")`. Not all these languages currently have translations available for all antimicrobial agents and colloquial microorganism names. 
 #'
 #' Please suggest your own translations [by creating a new issue on our repository](https://gitlab.com/msberends/AMR/issues/new?issue[title]=Translation\%20suggestion).
 #'
-#' This file will be read by all functions where a translated output can be desired, like all [mo_property()] functions ([mo_fullname()], [mo_type()], etc.).
+#' This file will be read by all functions where a translated output can be desired, like all [mo_property()] functions ([mo_name()], [mo_gramstain()], [mo_type()], etc.).
 #'
 #' The system language will be used at default, if that language is supported. The system language can be overwritten with `Sys.setenv(AMR_locale = yourlanguage)`.
 #' @inheritSection AMR Read more on our website!
@@ -68,7 +68,7 @@ get_locale <- function() {
   if (!is.null(getOption("AMR_locale", default = NULL))) {
     return(getOption("AMR_locale"))
   }
-
+  
   lang <- Sys.getlocale("LC_COLLATE")
   
   # Check the locale settings for a start with one of these languages:
@@ -82,13 +82,13 @@ get_locale <- function() {
     "de"
   } else if (grepl("^(Dutch|Nederlands|nl_|NL_)", lang, ignore.case = FALSE)) {
     "nl"
-  } else if (grepl("^(Spanish|Espa.ol|es_|ES_)", lang, ignore.case = FALSE)) {
+  } else if (grepl("^(Spanish|Espa.+ol|es_|ES_)", lang, ignore.case = FALSE)) {
     "es"
   } else if (grepl("^(Italian|Italiano|it_|IT_)", lang, ignore.case = FALSE)) {
     "it"
-  } else if (grepl("^(French|Fran.ais|fr_|FR_)", lang, ignore.case = FALSE)) {
+  } else if (grepl("^(French|Fran.+ais|fr_|FR_)", lang, ignore.case = FALSE)) {
     "fr"
-  } else if (grepl("^(Portuguese|Portugu.s|pt_|PT_)", lang, ignore.case = FALSE)) {
+  } else if (grepl("^(Portuguese|Portugu.+s|pt_|PT_)", lang, ignore.case = FALSE)) {
     "pt"
   } else {
     # other language -> set to English
@@ -97,9 +97,8 @@ get_locale <- function() {
 }
 
 # translate strings based on inst/translations.tsv
-#' @importFrom dplyr %>% filter
 translate_AMR <- function(from, language = get_locale(), only_unknown = FALSE) {
-
+  
   if (is.null(language)) {
     return(from)
   }
@@ -115,9 +114,9 @@ translate_AMR <- function(from, language = get_locale(), only_unknown = FALSE) {
          call. = FALSE)
   }
   
-  df_trans <- df_trans %>% filter(lang == language)
+  df_trans <- df_trans %>% subset(lang == language)
   if (only_unknown == TRUE) {
-    df_trans <- df_trans %>% filter(pattern %like% "unknown")
+    df_trans <- df_trans %>% subset(pattern %like% "unknown")
   }
   
   # default case sensitive if value if 'ignore.case' is missing:

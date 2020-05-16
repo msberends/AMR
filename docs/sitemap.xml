@@ -7,7 +7,7 @@
     <loc>https://msberends.gitlab.io/AMR/reference/AMR-deprecated.html</loc>
   </url>
   <url>
-    <loc>https://msberends.gitlab.io/AMR/reference/AMR-vctrs.html</loc>
+    <loc>https://msberends.gitlab.io/AMR/reference/AMR-tidyverse.html</loc>
   </url>
   <url>
     <loc>https://msberends.gitlab.io/AMR/reference/AMR.html</loc>
@@ -71,9 +71,6 @@
   </url>
   <url>
     <loc>https://msberends.gitlab.io/AMR/reference/example_isolates_unclean.html</loc>
-  </url>
-  <url>
-    <loc>https://msberends.gitlab.io/AMR/reference/extended-functions.html</loc>
   </url>
   <url>
     <loc>https://msberends.gitlab.io/AMR/reference/filter_ab_class.html</loc>

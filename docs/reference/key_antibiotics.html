@@ -82,7 +82,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.1.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.1.0.9004</span>
       </span>
     </div>
 
@@ -324,7 +324,8 @@
 
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>The function <code>key_antibiotics()</code> returns a character vector with 12 antibiotic results for every isolate. These isolates can then be compared using <code>key_antibiotics_equal()</code>, to check if two isolates have generally the same antibiogram. Missing and invalid values are replaced with a dot (<code>"."</code>). The <code><a href='first_isolate.html'>first_isolate()</a></code> function only uses this function on the same microbial species from the same patient. Using this, an MRSA will be included after a susceptible <em>S. aureus</em> (MSSA) found within the same episode (see <code>episode</code> parameter of <code><a href='first_isolate.html'>first_isolate()</a></code>). Without key antibiotic comparison it would not.</p>
+    <p>The function <code>key_antibiotics()</code> returns a character vector with 12 antibiotic results for every isolate. These isolates can then be compared using <code>key_antibiotics_equal()</code>, to check if two isolates have generally the same antibiogram. Missing and invalid values are replaced with a dot (<code>"."</code>) by <code>key_antibiotics()</code> and ignored by <code>key_antibiotics_equal()</code>.</p>
+<p>The <code><a href='first_isolate.html'>first_isolate()</a></code> function only uses this function on the same microbial species from the same patient. Using this, e.g. an MRSA will be included after a susceptible <em>S. aureus</em> (MSSA) is found within the same patient episode. Without key antibiotic comparison it would not. See <code><a href='first_isolate.html'>first_isolate()</a></code> for more info.</p>
 <p>At default, the antibiotics that are used for <strong>Gram-positive bacteria</strong> are:</p><ul>
 <li><p>Amoxicillin</p></li>
 <li><p>Amoxicillin/clavulanic acid</p></li>
@@ -427,7 +428,7 @@ The <a href='lifecycle.html'>lifecycle</a> of this function is <strong>stable</s
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
 </div>
 
       </footer>

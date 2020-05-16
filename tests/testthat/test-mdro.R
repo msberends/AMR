@@ -25,8 +25,6 @@ test_that("mdro works", {
   
   skip_on_cran()
   
-  library(dplyr)
-
   expect_error(suppressWarnings(mdro(example_isolates, country = "invalid", col_mo = "mo", info = TRUE)))
   expect_error(suppressWarnings(mdro(example_isolates, country = "fr", info = TRUE)))
   expect_error(mdro(example_isolates, guideline = c("BRMO", "MRGN"), info = TRUE))
@@ -100,7 +98,7 @@ test_that("mdro works", {
   expect_equal(
     # select only rifampicine, mo will be determined automatically (as M. tuberculosis),
     # number of mono-resistant strains should be equal to number of rifampicine-resistant strains
-    example_isolates %>% select(RIF) %>% mdr_tb() %>% freq() %>% pull(count) %>% .[2],
+    freq(mdr_tb(example_isolates[, "RIF", drop = FALSE]))$count[2],
     count_R(example_isolates$RIF))
 
   sample_rsi <- function() {
@@ -109,69 +107,113 @@ test_that("mdro works", {
            prob = c(0.5, 0.1, 0.4),
            replace = TRUE)
   }
-  expect_gt(
-    #suppressWarnings(
-      data.frame(rifampicin = sample_rsi(),
-                 inh = sample_rsi(),
-                 gatifloxacin = sample_rsi(),
-                 eth = sample_rsi(),
-                 pza = sample_rsi(),
-                 MFX = sample_rsi(),
-                 KAN = sample_rsi()) %>%
-        mdr_tb() %>%
-        n_distinct()
-      #)
-      ,
-    2)
+  x <- data.frame(rifampicin = sample_rsi(),
+                     inh = sample_rsi(),
+                     gatifloxacin = sample_rsi(),
+                     eth = sample_rsi(),
+                     pza = sample_rsi(),
+                     MFX = sample_rsi(),
+                     KAN = sample_rsi())
+  expect_gt(n_distinct(mdr_tb(x)), 2)
   
   # check the guideline by Magiorakos  et al. (2012), the default guideline
-  stau <- tribble(
-    ~mo,         ~GEN, ~RIF, ~CPT, ~OXA, ~CIP, ~MFX, ~SXT, ~FUS, ~VAN, ~TEC, ~TLV, ~TGC, ~CLI, ~DAP, ~ERY, ~LNZ, ~CHL, ~FOS, ~QDA, ~TCY, ~DOX, ~MNO,
-    "S. aureus",  "R",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",
-    "S. aureus",  "R",  "R",  "R",  "R",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",
-    "S. aureus",  "S",  "S",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",
-    "S. aureus",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R"
-  )
+  stau <- data.frame(mo = c("S. aureus", "S. aureus", "S. aureus", "S. aureus"), 
+                     GEN = c("R", "R", "S", "R"), 
+                     RIF = c("S", "R", "S", "R"), 
+                     CPT = c("S", "R", "R", "R"), 
+                     OXA = c("S", "R", "R", "R"), 
+                     CIP = c("S", "S", "R", "R"), 
+                     MFX = c("S", "S", "R", "R"),
+                     SXT = c("S", "S", "R", "R"), 
+                     FUS = c("S", "S", "R", "R"),     
+                     VAN = c("S", "S", "R", "R"), 
+                     TEC = c("S", "S", "R", "R"),     
+                     TLV = c("S", "S", "R", "R"), 
+                     TGC = c("S", "S", "R", "R"),     
+                     CLI = c("S", "S", "R", "R"), 
+                     DAP = c("S", "S", "R", "R"),     
+                     ERY = c("S", "S", "R", "R"), 
+                     LNZ = c("S", "S", "R", "R"),     
+                     CHL = c("S", "S", "R", "R"), 
+                     FOS = c("S", "S", "R", "R"),     
+                     QDA = c("S", "S", "R", "R"), 
+                     TCY = c("S", "S", "R", "R"),     
+                     DOX = c("S", "S", "R", "R"), 
+                     MNO = c("S", "S", "R", "R"),
+                     stringsAsFactors = FALSE)
   expect_equal(as.integer(mdro(stau)), c(1:4))
   expect_s3_class(mdro(stau, verbose = TRUE), "data.frame")
   
-  ente <- tribble(
-    ~mo,            ~GEH, ~STH, ~IPM, ~MEM, ~DOR, ~CIP, ~LVX, ~MFX, ~VAN, ~TEC, ~TGC, ~DAP, ~LNZ, ~AMP, ~QDA, ~DOX, ~MNO,
-    "Enterococcus",  "R",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",
-    "Enterococcus",  "R",  "R",  "R",  "R",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",
-    "Enterococcus",  "S",  "S",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",
-    "Enterococcus",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R"
-  )
+  ente <- data.frame(mo = c("Enterococcus", "Enterococcus", "Enterococcus", "Enterococcus"), 
+                     GEH = c("R", "R", "S", "R"), 
+                     STH = c("S", "R", "S", "R"), 
+                     IPM = c("S", "R", "R", "R"), 
+                     MEM = c("S", "R", "R", "R"), 
+                     DOR = c("S", "S", "R", "R"), 
+                     CIP = c("S", "S", "R", "R"), 
+                     LVX = c("S", "S", "R", "R"), 
+                     MFX = c("S", "S", "R", "R"),     
+                     VAN = c("S", "S", "R", "R"), 
+                     TEC = c("S", "S", "R", "R"),     
+                     TGC = c("S", "S", "R", "R"), 
+                     DAP = c("S", "S", "R", "R"),     
+                     LNZ = c("S", "S", "R", "R"), 
+                     AMP = c("S", "S", "R", "R"),     
+                     QDA = c("S", "S", "R", "R"), 
+                     DOX = c("S", "S", "R", "R"),     
+                     MNO = c("S", "S", "R", "R"),
+                     stringsAsFactors = FALSE)
   expect_equal(as.integer(mdro(ente)), c(1:4))
   expect_s3_class(mdro(ente, verbose = TRUE), "data.frame")
   
-  entero <- tribble(
-    ~mo,       ~GEN, ~TOB, ~AMK, ~NET, ~CPT, ~TCC, ~TZP, ~ETP, ~IPM, ~MEM, ~DOR, ~CZO, ~CXM, ~CTX, ~CAZ, ~FEP, ~FOX, ~CTT, ~CIP, ~SXT, ~TGC, ~ATM, ~AMP, ~AMC, ~SAM, ~CHL, ~FOS, ~COL, ~TCY, ~DOX, ~MNO,
-    "E. coli",  "R",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",
-    "E. coli",  "R",  "R",  "R",  "R",  "R",  "R",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",
-    "E. coli",  "S",  "S",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",
-    "E. coli",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R"
-  )
+  entero <- data.frame(mo = c("E. coli", "E. coli", "E. coli", "E. coli"),
+                       GEN = c("R", "R", "S", "R"), TOB = c("S", "R", "S", "R"), 
+                       AMK = c("S", "R", "R", "R"), NET = c("S", "R", "R", "R"), 
+                       CPT = c("S", "R", "R", "R"), TCC = c("S", "R", "R", "R"), 
+                       TZP = c("S", "S", "R", "R"), ETP = c("S", "S", "R", "R"), 
+                       IPM = c("S", "S", "R", "R"), MEM = c("S", "S", "R", "R"), 
+                       DOR = c("S", "S", "R", "R"), CZO = c("S", "S", "R", "R"), 
+                       CXM = c("S", "S", "R", "R"), CTX = c("S", "S", "R", "R"), 
+                       CAZ = c("S", "S", "R", "R"), FEP = c("S", "S", "R", "R"), 
+                       FOX = c("S", "S", "R", "R"), CTT = c("S", "S", "R", "R"), 
+                       CIP = c("S", "S", "R", "R"), SXT = c("S", "S", "R", "R"), 
+                       TGC = c("S", "S", "R", "R"), ATM = c("S", "S", "R", "R"), 
+                       AMP = c("S", "S", "R", "R"), AMC = c("S", "S", "R", "R"), 
+                       SAM = c("S", "S", "R", "R"), CHL = c("S", "S", "R", "R"), 
+                       FOS = c("S", "S", "R", "R"), COL = c("S", "S", "R", "R"), 
+                       TCY = c("S", "S", "R", "R"), DOX = c("S", "S", "R", "R"), 
+                       MNO = c("S", "S", "R", "R"),
+                       stringsAsFactors = FALSE)
   expect_equal(as.integer(mdro(entero)), c(1:4))
   expect_s3_class(mdro(entero, verbose = TRUE), "data.frame")
   
-  pseud <- tribble(
-    ~mo,             ~GEN, ~TOB, ~AMK, ~NET, ~IPM, ~MEM, ~DOR, ~CAZ, ~FEP, ~CIP, ~LVX, ~TCC, ~TZP, ~ATM, ~FOS, ~COL, ~PLB,
-    "P. aeruginosa",  "R",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",
-    "P. aeruginosa",  "R",  "S",  "S",  "S",  "R",  "S",  "S",  "S",  "R",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",
-    "P. aeruginosa",  "S",  "S",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",
-    "P. aeruginosa",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R"
-  )
+  pseud <- data.frame(mo = c("P. aeruginosa", "P. aeruginosa", "P. aeruginosa", "P. aeruginosa"),
+                      GEN = c("R", "R", "S", "R"), TOB = c("S", "S", "S", "R"), 
+                      AMK = c("S", "S", "R", "R"), NET = c("S", "S", "R", "R"),
+                      IPM = c("S", "R", "R", "R"), MEM = c("S", "S", "R", "R"), 
+                      DOR = c("S", "S", "R", "R"), CAZ = c("S", "S", "R", "R"), 
+                      FEP = c("S", "R", "R", "R"), CIP = c("S", "S", "R", "R"), 
+                      LVX = c("S", "S", "R", "R"), TCC = c("S", "S", "R", "R"), 
+                      TZP = c("S", "S", "R", "R"), ATM = c("S", "S", "R", "R"), 
+                      FOS = c("S", "S", "R", "R"), COL = c("S", "S", "R", "R"), 
+                      PLB = c("S", "S", "R", "R"),
+                      stringsAsFactors = FALSE)
   expect_equal(as.integer(mdro(pseud)), c(1:4))
   expect_s3_class(mdro(pseud, verbose = TRUE), "data.frame")
   
-  acin <- tribble(
-    ~mo,            ~GEN, ~TOB, ~AMK, ~NET, ~IPM, ~MEM, ~DOR, ~CIP, ~LVX, ~TZP, ~TCC, ~CTX, ~CRO, ~CAZ, ~FEP, ~SXT, ~SAM, ~COL, ~PLB, ~TCY, ~DOX, ~MNO,
-    "A. baumannii",  "R",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",
-    "A. baumannii",  "R",  "R",  "R",  "R",  "S",  "R",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "S",  "R",  "S",  "S",  "S",  "S",  "S",  "S",  "S",
-    "A. baumannii",  "S",  "S",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",
-    "A. baumannii",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R",  "R"
-  )
+  acin <- data.frame(mo = c("A. baumannii", "A. baumannii", "A. baumannii", "A. baumannii"), 
+                     GEN = c("R", "R", "S", "R"), TOB = c("S", "R", "S", "R"), 
+                     AMK = c("S", "R", "R", "R"), NET = c("S", "R", "R", "R"), 
+                     IPM = c("S", "S", "R", "R"), MEM = c("S", "R", "R", "R"),
+                     DOR = c("S", "S", "R", "R"), CIP = c("S", "S", "R", "R"), 
+                     LVX = c("S", "S", "R", "R"), TZP = c("S", "S", "R", "R"), 
+                     TCC = c("S", "S", "R", "R"), CTX = c("S", "S", "R", "R"), 
+                     CRO = c("S", "S", "R", "R"), CAZ = c("S", "S", "R", "R"), 
+                     FEP = c("S", "R", "R", "R"), SXT = c("S", "S", "R", "R"), 
+                     SAM = c("S", "S", "R", "R"), COL = c("S", "S", "R", "R"), 
+                     PLB = c("S", "S", "R", "R"), TCY = c("S", "S", "R", "R"), 
+                     DOX = c("S", "S", "R", "R"), MNO = c("S", "S", "R", "R"),
+                     stringsAsFactors = FALSE)
   expect_equal(as.integer(mdro(acin)), c(1:4))
   expect_s3_class(mdro(acin, verbose = TRUE), "data.frame")
   

@@ -6,7 +6,7 @@
 \alias{\%like_case\%}
 \title{Pattern Matching}
 \source{
-Idea from the \href{https://github.com/Rdatatable/data.table/blob/master/R/like.R}{\code{like} function from the \code{data.table} package}, but made it case insensitive at default and let it support multiple patterns. Also, if the regex fails the first time, it tries again with \code{perl = TRUE}.
+Idea from the \href{https://github.com/Rdatatable/data.table/blob/master/R/like.R}{\code{like} function from the \code{data.table} package}
 }
 \usage{
 like(x, pattern, ignore.case = TRUE)
@@ -29,7 +29,13 @@ A \code{\link{logical}} vector
 Convenient wrapper around \code{\link[=grep]{grep()}} to match a pattern: \code{x \%like\% pattern}. It always returns a \code{\link{logical}} vector and is always case-insensitive (use \code{x \%like_case\% pattern} for case-sensitive matching). Also, \code{pattern} can be as long as \code{x} to compare items of each index in both vectors, or they both can have the same length to iterate over all cases.
 }
 \details{
-When running a regular expression fails, these functions try again with \code{base::grepl(..., perl = TRUE)}.
+The \verb{\%like\%} function:
+\itemize{
+\item Is case insensitive (use \verb{\%like_case\%} for case-sensitive matching)
+\item Supports multiple patterns
+\item Checks if \code{pattern} is a regular expression and sets \code{fixed = TRUE} if not, to greatly improve speed
+\item Tries again with \code{perl = TRUE} if regex fails
+}
 
 Using RStudio? This function can also be inserted from the Addins menu and can have its own Keyboard Shortcut like \code{Ctrl+Shift+L} or \code{Cmd+Shift+L} (see \code{Tools} > \verb{Modify Keyboard Shortcuts...}).
 }
@@ -61,11 +67,11 @@ b <- c(     "case",           "diff",      "yet")
 a \%like\% b
 #> TRUE TRUE TRUE
 
-# get frequencies of bacteria whose name start with 'Ent' or 'ent'
+# get isolates whose name start with 'Ent' or 'ent'
 library(dplyr)
 example_isolates \%>\%
-  filter(mo_name(mo) \%like\% "^ent") \%>\%
-  freq(mo_genus(mo))
+  filter(mo_name(mo) \%like\% "^ent") \%>\% 
+  freq(mo)
 }
 \seealso{
 \code{\link[base:grep]{base::grep()}}

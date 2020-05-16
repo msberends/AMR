@@ -19,7 +19,7 @@
 # Visit our website for more info: https://msberends.gitlab.io/AMR.    #
 # ==================================================================== #
 
-#' Join a table with [microorganisms]
+#' Join [microorganisms] to a data set
 #'
 #' Join the data set [microorganisms] easily to an existing table or character vector.
 #' @inheritSection lifecycle Stable lifecycle
@@ -30,13 +30,16 @@
 #' @param by a variable to join by - if left empty will search for a column with class [`mo`] (created with [as.mo()]) or will be `"mo"` if that column name exists in `x`, could otherwise be a column name of `x` with values that exist in `microorganisms$mo` (like `by = "bacteria_id"`), or another column in [microorganisms] (but then it should be named, like `by = c("my_genus_species" = "fullname")`)
 #' @param suffix if there are non-joined duplicate variables in `x` and `y`, these suffixes will be added to the output to disambiguate them. Should be a character vector of length 2.
 #' @param ... other parameters to pass on to [dplyr::join()]
-#' @details **Note:** As opposed to the [dplyr::join()] functions of `dplyr`, [`character`] vectors are supported and at default existing columns will get a suffix `"2"` and the newly joined columns will not get a suffix. See [dplyr::join()] for more information.
+#' @details **Note:** As opposed to the [join()] functions of `dplyr`, [`character`] vectors are supported and at default existing columns will get a suffix `"2"` and the newly joined columns will not get a suffix. 
+#' 
+#' These functions rely on [merge()], a base R function to do joins.
 #' @inheritSection AMR Read more on our website!
 #' @export
 #' @examples
 #' left_join_microorganisms(as.mo("K. pneumoniae"))
 #' left_join_microorganisms("B_KLBSL_PNE")
 #'
+#' \dontrun{
 #' library(dplyr)
 #' example_isolates %>% left_join_microorganisms()
 #'
@@ -49,13 +52,14 @@
 #' colnames(df)
 #' df_joined <- left_join_microorganisms(df, "bacteria")
 #' colnames(df_joined)
+#' }
 inner_join_microorganisms <- function(x, by = NULL, suffix = c("2", ""), ...) {
   check_dataset_integrity()
   checked <- joins_check_df(x, by)
   x <- checked$x
   by <- checked$by
   join <- suppressWarnings(
-    dplyr::inner_join(x = x, y = microorganisms, by = by, suffix = suffix, ...)
+    inner_join(x = x, y = microorganisms, by = by, suffix = suffix, ...)
   )
   if (NROW(join) > NROW(x)) {
     warning("The newly joined tbl contains ", nrow(join) - nrow(x), " rows more that its original.")
@@ -71,7 +75,7 @@ left_join_microorganisms <- function(x, by = NULL, suffix = c("2", ""), ...) {
   x <- checked$x
   by <- checked$by
   join <- suppressWarnings(
-    dplyr::left_join(x = x, y = microorganisms, by = by, suffix = suffix, ...)
+    left_join(x = x, y = microorganisms, by = by, suffix = suffix, ...)
   )
   if (NROW(join) > NROW(x)) {
     warning("The newly joined tbl contains ", nrow(join) - nrow(x), " rows more that its original.")
@@ -87,7 +91,7 @@ right_join_microorganisms <- function(x, by = NULL, suffix = c("2", ""), ...) {
   x <- checked$x
   by <- checked$by
   join <- suppressWarnings(
-    dplyr::right_join(x = x, y = microorganisms, by = by, suffix = suffix, ...)
+    right_join(x = x, y = microorganisms, by = by, suffix = suffix, ...)
   )
   if (NROW(join) > NROW(x)) {
     warning("The newly joined tbl contains ", nrow(join) - nrow(x), " rows more that its original.")
@@ -103,7 +107,7 @@ full_join_microorganisms <- function(x, by = NULL, suffix = c("2", ""), ...) {
   x <- checked$x
   by <- checked$by
   join <- suppressWarnings(
-    dplyr::full_join(x = x, y = microorganisms, by = by, suffix = suffix, ...)
+    full_join(x = x, y = microorganisms, by = by, suffix = suffix, ...)
   )
   if (NROW(join) > NROW(x)) {
     warning("The newly joined tbl contains ", nrow(join) - nrow(x), " rows more that its original.")
@@ -119,7 +123,7 @@ semi_join_microorganisms <- function(x, by = NULL, ...) {
   x <- checked$x
   by <- checked$by
   suppressWarnings(
-    dplyr::semi_join(x = x, y = microorganisms, by = by, ...)
+    semi_join(x = x, y = microorganisms, by = by, ...)
   )
 }
 
@@ -131,7 +135,7 @@ anti_join_microorganisms <- function(x, by = NULL, ...) {
   x <- checked$x
   by <- checked$by
   suppressWarnings(
-    dplyr::anti_join(x = x, y = microorganisms, by = by, ...)
+    anti_join(x = x, y = microorganisms, by = by, ...)
   )
 }
 

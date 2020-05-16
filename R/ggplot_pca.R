@@ -58,6 +58,7 @@
 #' # `example_isolates` is a dataset available in the AMR package.
 #' # See ?example_isolates.
 #'
+#' \dontrun{
 #' # See ?pca for more info about Principal Component Analysis (PCA).
 #' library(dplyr)
 #' pca_model <- example_isolates %>% 
@@ -71,6 +72,7 @@
 #' 
 #' # new 
 #' ggplot_pca(pca_model)
+#' }
 ggplot_pca <- function(x,
                        choices = 1:2,
                        scale = TRUE,
@@ -120,14 +122,9 @@ ggplot_pca <- function(x,
                                    pc.biplot = pc.biplot,
                                    ellipse_prob = ellipse_prob,
                                    labels_text_placement = labels_text_placement)
-  nobs.factor <- calculations$nobs.factor
-  d <- calculations$d
-  u <- calculations$u
-  v <- calculations$v
   choices <- calculations$choices
   df.u <- calculations$df.u
   df.v <- calculations$df.v
-  r <- calculations$r
   ell <- calculations$ell
   groups <- calculations$groups
   group_name <- calculations$group_name
@@ -232,7 +229,6 @@ ggplot_pca <- function(x,
   g
 }
 
-#' @importFrom dplyr bind_rows
 #' @importFrom stats qchisq var
 pca_calculations <- function(pca_model,
                              groups = NULL,
@@ -328,18 +324,25 @@ pca_calculations <- function(pca_model,
   if (!is.null(df.u$groups)) {
     theta <- c(seq(-pi, pi, length = 50), seq(pi, -pi, length = 50))
     circle <- cbind(cos(theta), sin(theta))
-    ell <- bind_rows(
-      sapply(unique(df.u$groups), function(g, df = df.u) {
-        x <- df[which(df$groups == g), , drop = FALSE]
-        if (nrow(x) <= 2) {
-          return(NULL)
-        }
-        sigma <- var(cbind(x$xvar, x$yvar))
-        mu <- c(mean(x$xvar), mean(x$yvar))
-        ed <- sqrt(qchisq(ellipse_prob, df = 2))
-        data.frame(sweep(circle %*% chol(sigma) * ed, 2, mu, FUN = "+"), 
-                         groups = x$groups[1])
-      }))
+    
+    df.groups <- lapply(unique(df.u$groups), function(g, df = df.u) {
+      x <- df[which(df$groups == g), , drop = FALSE]
+      if (nrow(x) <= 2) {
+        return(data.frame(X1 = numeric(0),
+                          X2 = numeric(0),
+                          groups = character(0)))
+      }
+      sigma <- var(cbind(x$xvar, x$yvar))
+      mu <- c(mean(x$xvar), mean(x$yvar))
+      ed <- sqrt(qchisq(ellipse_prob, df = 2))
+      data.frame(sweep(circle %*% chol(sigma) * ed,
+                       MARGIN = 2,
+                       STATS = mu, 
+                       FUN = "+"), 
+                 groups = x$groups[1],
+                 stringsAsFactors = FALSE)
+    })
+    ell <- do.call(rbind, df.groups)
     if (NROW(ell) == 0) {
       ell <- NULL
     } else {
@@ -349,14 +352,9 @@ pca_calculations <- function(pca_model,
     ell <- NULL
   }
   
-  list(nobs.factor = nobs.factor,
-       d = d,
-       u = u,
-       v = v,
-       choices = choices,
+  list(choices = choices,
        df.u = df.u,
        df.v = df.v,
-       r = r,
        ell = ell,
        groups = groups,
        group_name = group_name,

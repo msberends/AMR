@@ -32,7 +32,7 @@ Conducting antimicrobial resistance analysis unfortunately requires in-depth kno
 
 * Good questions (always start with these!)
 * A thorough understanding of (clinical) epidemiology, to understand the clinical and epidemiological relevance and possible bias of results
-* A thorough understanding of (clinical) microbiology/infectious diseases, to understand which microorganisms are causal to which infections and the implications of pharmaceutical treatment
+* A thorough understanding of (clinical) microbiology/infectious diseases, to understand which microorganisms are causal to which infections and the implications of pharmaceutical treatment, as well as understanding intrinsic and acquired microbial resistance
 * Experience with data analysis with microbiological tests and their results, to understand the determination and limitations of MIC values and their interpretations to RSI values
 * Availability of the biological taxonomy of microorganisms and probably normalisation factors for pharmaceuticals, such as defined daily doses (DDD)
 * Available (inter-)national guidelines, and profound methods to apply them
@@ -48,11 +48,12 @@ For this tutorial, we will create fake demonstration data to work with.
 You can skip to [Cleaning the data](#cleaning-the-data) if you already have your own data ready. If you start your analysis, try to make the structure of your data generally look like this:
 
 ```{r example table, echo = FALSE, results = 'asis'}
-knitr::kable(dplyr::tibble(date = Sys.Date(),
-                           patient_id = c("abcd", "abcd", "efgh"),
-                           mo = "Escherichia coli", 
-                           AMX = c("S", "S", "R"),
-                           CIP = c("S", "R", "S")), 
+knitr::kable(data.frame(date = Sys.Date(),
+                        patient_id = c("abcd", "abcd", "efgh"),
+                        mo = "Escherichia coli", 
+                        AMX = c("S", "S", "R"),
+                        CIP = c("S", "R", "S"),
+                        stringsAsFactors = FALSE), 
              align = "c")
 ``` 
 
@@ -61,13 +62,18 @@ As with many uses in R, we need some additional packages for AMR analysis. Our p
 
 Our `AMR` package depends on these packages and even extends their use and functions.
 
-```{r lib packages, message = FALSE}
+```{r lib packages, eval = FALSE}
 library(dplyr)
 library(ggplot2)
 library(AMR)
 
 # (if not yet installed, install with:)
-# install.packages(c("tidyverse", "AMR"))
+# install.packages(c("dplyr", "ggplot2", "AMR"))
+```
+
+```{r lib packages 2, echo = FALSE, results = 'asis'}
+library(AMR)
+library(dplyr)
 ```
 
 # Creation of data

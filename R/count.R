@@ -34,7 +34,7 @@
 #'
 #' The function [n_rsi()] is an alias of [count_all()]. They can be used to count all available isolates, i.e. where all input antibiotics have an available result (S, I or R). Their use is equal to [n_distinct()]. Their function is equal to `count_susceptible(...) + count_resistant(...)`.
 #'
-#' The function [count_df()] takes any variable from `data` that has an [`rsi`] class (created with [as.rsi()]) and counts the number of S's, I's and R's. The function [rsi_df()] works exactly like [count_df()], but adds the percentage of S, I and R.
+#' The function [count_df()] takes any variable from `data` that has an [`rsi`] class (created with [as.rsi()]) and counts the number of S's, I's and R's. It also supports grouped variables. The function [rsi_df()] works exactly like [count_df()], but adds the percentage of S, I and R.
 #' @inheritSection proportion Combination therapy
 #' @seealso [`proportion_*`][proportion] to calculate microbial resistance and susceptibility.
 #' @return An [`integer`]

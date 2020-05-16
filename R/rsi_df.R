@@ -29,28 +29,14 @@ rsi_df <- function(data,
                    combine_SI = TRUE,
                    combine_IR = FALSE) {
   
-  proportions <- rsi_calc_df(type = "proportion",
-                             data = data,
-                             translate_ab = translate_ab,
-                             language = language,
-                             minimum = minimum,
-                             as_percent = as_percent,
-                             combine_SI = combine_SI,
-                             combine_IR = combine_IR,
-                             combine_SI_missing = missing(combine_SI))
-  
-  counts <- rsi_calc_df(type = "count",
-                        data = data,
-                        translate_ab = FALSE,
-                        language = "en",
-                        minimum = minimum,
-                        as_percent = as_percent,
-                        combine_SI = combine_SI,
-                        combine_IR = combine_IR,
-                        combine_SI_missing = missing(combine_SI))
-  
-  data.frame(proportions,
-             isolates = counts$value,
-             stringsAsFactors = FALSE)
+  rsi_calc_df(type = "both",
+              data = data,
+              translate_ab = translate_ab,
+              language = language,
+              minimum = minimum,
+              as_percent = as_percent,
+              combine_SI = combine_SI,
+              combine_IR = combine_IR,
+              combine_SI_missing = missing(combine_SI))
   
 }

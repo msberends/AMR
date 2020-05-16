@@ -162,10 +162,9 @@ reference:
       'like' function can be useful: `if (x %like% y) {...}`.
     contents:
     - "`get_locale`"
-    - "`extended-functions`"
     - "`like`"
     - "`reexports`"
-    - "`AMR-vctrs`"
+    - "`AMR-tidyverse`"
   - title: Deprecated functions
     desc: >
       These functions are deprecated, meaning that they will still

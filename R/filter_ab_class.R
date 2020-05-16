@@ -19,9 +19,9 @@
 # Visit our website for more info: https://msberends.gitlab.io/AMR.    #
 # ==================================================================== #
 
-#' Filter isolates on result in antibiotic class
+#' Filter isolates on result in antimicrobial class
 #'
-#' Filter isolates on results in specific antibiotic variables based on their antibiotic class. This makes it easy to filter on isolates that were tested for e.g. any aminoglycoside.
+#' Filter isolates on results in specific antimicrobial classes. This makes it easy to filter on isolates that were tested for e.g. any aminoglycoside.
 #' @inheritSection lifecycle Stable lifecycle
 #' @param x a data set
 #' @param ab_class an antimicrobial class, like `"carbapenems"`, as can be found in [`antibiotics$group`][antibiotics]
@@ -30,10 +30,9 @@
 #' @param ... parameters passed on to `filter_at` from the `dplyr` package
 #' @details The `group` column in [antibiotics] data set will be searched for `ab_class` (case-insensitive). If no results are found, the `atc_group1` and `atc_group2` columns will be searched. Next, `x` will be checked for column names with a value in any abbreviations, codes or official names found in the [antibiotics] data set.
 #' @rdname filter_ab_class
-#' @importFrom dplyr filter_at %>% select vars any_vars all_vars
-#' @importFrom crayon bold blue
 #' @export
 #' @examples
+#' \dontrun{
 #' library(dplyr)
 #'
 #' # filter on isolates that have any result for any aminoglycoside
@@ -62,6 +61,7 @@
 #' example_isolates %>%
 #'   filter_aminoglycosides("R", "all") %>%
 #'   filter_fluoroquinolones("R", "all")
+#' }
 filter_ab_class <- function(x,
                             ab_class,
                             result = NULL,
@@ -76,17 +76,23 @@ filter_ab_class <- function(x,
   }
   # make result = "SI" work too:
   result <- unlist(strsplit(result, ""))
-
+  
   if (!all(result %in% c("S", "I", "R"))) {
     stop("`result` must be one or more of: S, I, R", call. = FALSE)
   }
   if (!all(scope %in% c("any", "all"))) {
     stop("`scope` must be one of: any, all", call. = FALSE)
   }
-
-  vars_df <- colnames(x)[tolower(colnames(x)) %in% tolower(ab_class_vars(ab_class))]
+  
+  # get only columns with class ab, mic or disk - those are AMR results
+  vars_df <- colnames(x)[sapply(x, function(y) is.rsi(y) | is.mic(y) | is.disk(y))]
+  vars_df_ab <- suppressWarnings(as.ab(vars_df))
+  # get the columns with a group names in the chosen ab class
+  vars_df <- vars_df[which(ab_group(vars_df_ab) %like% ab_class | 
+                             ab_atc_group1(vars_df_ab) %like% ab_class |
+                             ab_atc_group2(vars_df_ab) %like% ab_class)]
   ab_group <- find_ab_group(ab_class)
-
+  
   if (length(vars_df) > 0) {
     if (length(result) == 1) {
       operator <- " is "
@@ -95,10 +101,10 @@ filter_ab_class <- function(x,
     }
     if (scope == "any") {
       scope_txt <- " or "
-      scope_fn <- any_vars
+      scope_fn <- any
     } else {
       scope_txt <- " and "
-      scope_fn <- all_vars
+      scope_fn <- all
       if (length(vars_df) > 1) {
         operator <- gsub("is", "are", operator)
       }
@@ -108,14 +114,13 @@ filter_ab_class <- function(x,
     } else {
       scope <- "column "
     }
-    message(blue(paste0("Filtering on ", ab_group, ": ", scope,
-                        paste(bold(paste0("`", vars_df, "`")), collapse = scope_txt), operator, toString(result))))
-    x %>%
-      filter_at(vars(vars_df),
-                scope_fn(. %in% result),
-                ...)
+    message(font_blue(paste0("Filtering on ", ab_group, ": ", scope,
+                             paste0(font_bold(paste0("`", vars_df, "`"), collapse = NULL), collapse = scope_txt), operator, toString(result))))
+    x[as.logical(by(x, seq_len(nrow(x)), function(row) scope_fn(unlist(row[, vars_df]) %in% result, na.rm = TRUE))), , drop = FALSE]
   } else {
-    warning(paste0("no antibiotics of class ", ab_group, " found, leaving data unchanged"), call. = FALSE)
+    message(font_blue(paste0("NOTE: no antimicrobial agents of class ", ab_group, 
+                             " (such as ", find_ab_names(ab_group), 
+                             ") found, data left unchanged.")))
     x
   }
 }
@@ -276,38 +281,6 @@ filter_tetracyclines <- function(x,
                   ...)
 }
 
-#' @importFrom dplyr %>% filter_at vars any_vars select
-ab_class_vars <- function(ab_class) {
-  ab_class <- gsub("[^a-z0-9]+", ".*", ab_class)
-  ab_vars <- antibiotics %>%
-    filter(group %like% ab_class) %>% 
-    select(ab:name, abbreviations, synonyms) %>%
-    unlist() %>%
-    as.matrix() %>%
-    as.character() %>%
-    paste(collapse = "|") %>%
-    strsplit("|", fixed = TRUE) %>%
-    unlist() %>%
-    unique()
-  ab_vars <- ab_vars[!ab_vars %in% c(NA, "", "NA") & nchar(ab_vars) > 2]
-  if (length(ab_vars) == 0) {
-    # try again, searching atc_group1 and atc_group2 columns
-    ab_vars <- antibiotics %>%
-      filter_at(vars(c("atc_group1", "atc_group2")), any_vars(. %like% ab_class)) %>% 
-      select(ab:name, abbreviations, synonyms) %>%
-      unlist() %>%
-      as.matrix() %>%
-      as.character() %>%
-      paste(collapse = "|") %>%
-      strsplit("|", fixed = TRUE) %>%
-      unlist() %>%
-      unique()
-    ab_vars <- ab_vars[!ab_vars %in% c(NA, "", "NA") & nchar(ab_vars) > 2]
-  }
-  ab_vars
-}
-
-#' @importFrom dplyr %>% filter pull
 find_ab_group <- function(ab_class) {
   ifelse(ab_class %in% c("aminoglycoside",
                          "carbapenem",
@@ -318,10 +291,19 @@ find_ab_group <- function(ab_class) {
                          "tetracycline"),
          paste0(ab_class, "s"),
          antibiotics %>%
-           filter(ab %in% ab_class_vars(ab_class)) %>%
+           subset(group %like% ab_class | 
+                    atc_group1 %like% ab_class | 
+                    atc_group2 %like% ab_class) %>%
            pull(group) %>%
            unique() %>%
            tolower() %>%
            paste(collapse = "/")
   )
+}
+
+find_ab_names <- function(ab_group) {
+  drugs <- antibiotics[which(antibiotics$group %like% ab_group), "name"]
+  paste0(ab_name(sample(drugs, size = min(4, length(drugs)), replace = FALSE),
+                 tolower = TRUE, language = NULL), 
+         collapse = ", ")
 }

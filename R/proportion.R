@@ -21,7 +21,7 @@
 
 #' Calculate microbial resistance
 #'
-#' @description These functions can be used to calculate the (co-)resistance or susceptibility of microbial isolates (i.e. percentage of S, SI, I, IR or R). All functions support quasiquotation with pipes, can be used in `summarise()`][dplyr::summarise()] and also support grouped variables, please see *Examples*.
+#' @description These functions can be used to calculate the (co-)resistance or susceptibility of microbial isolates (i.e. percentage of S, SI, I, IR or R). All functions support quasiquotation with pipes, can be used in [summarise()] from the `dplyr` package and also supports grouped variables, please see *Examples*.
 #'
 #' [resistance()] should be used to calculate resistance, [susceptibility()] should be used to calculate susceptibility.\cr
 #' @inheritSection lifecycle Stable lifecycle
@@ -42,7 +42,7 @@
 #'
 #' These functions are not meant to count isolates, but to calculate the proportion of resistance/susceptibility. Use the `count()`][AMR::count()] functions to count isolates. The function [susceptibility()] is essentially equal to `count_susceptible() / count_all()`. *Low counts can influence the outcome - the `proportion` functions may camouflage this, since they only return the proportion (albeit being dependent on the `minimum` parameter).*
 #'
-#' The function [proportion_df()] takes any variable from `data` that has an [`rsi`] class (created with [as.rsi()]) and calculates the proportions R, I and S. The function [rsi_df()] works exactly like [proportion_df()], but adds the number of isolates.
+#' The function [proportion_df()] takes any variable from `data` that has an [`rsi`] class (created with [as.rsi()]) and calculates the proportions R, I and S. It also supports grouped variables. The function [rsi_df()] works exactly like [proportion_df()], but adds the number of isolates.
 #' @section Combination therapy:
 #' When using more than one variable for `...` (= combination therapy)), use `only_all_tested` to only count isolates that are tested for all antibiotics/variables that you test them for. See this example for two antibiotics, Drug A and Drug B, about how [susceptibility()] works to calculate the %SI:
 #'
@@ -99,6 +99,7 @@
 #' proportion_IR(example_isolates$AMX)
 #' proportion_R(example_isolates$AMX)
 #'
+#' \dontrun{
 #' library(dplyr)
 #' example_isolates %>%
 #'   group_by(hospital_id) %>%
@@ -135,7 +136,6 @@
 #'   summarise(numerator = count_susceptible(AMC, GEN, only_all_tested = TRUE),
 #'             denominator = count_all(AMC, GEN, only_all_tested = TRUE),
 #'             proportion = susceptibility(AMC, GEN, only_all_tested = TRUE))
-
 #'
 #'
 #' example_isolates %>%
@@ -157,9 +157,6 @@
 #'   select(hospital_id, AMX, CIP) %>%
 #'   group_by(hospital_id) %>%
 #'   proportion_df(translate = FALSE)
-#'
-#'
-#' \dontrun{
 #'
 #' # calculate current empiric combination therapy of Helicobacter gastritis:
 #' my_table %>%
@@ -265,7 +262,6 @@ proportion_S <- function(...,
 }
 
 #' @rdname proportion
-#' @importFrom dplyr %>% select_if bind_rows summarise_if mutate group_vars select everything
 #' @export
 proportion_df <- function(data,
                           translate_ab = "name",

@@ -219,29 +219,5 @@ example_isolates \%>\%
              title = "AMR of Anti-UTI Drugs Per Hospital",
              x.title = "Hospital",
              datalabels = FALSE)
-
-# genuine analysis: check 3 most prevalent microorganisms
-example_isolates \%>\%
-  # create new bacterial ID's, with all CoNS under the same group (Becker et al.)
-  mutate(mo = as.mo(mo, Becker = TRUE)) \%>\%
-  # filter on top three bacterial ID's
-  filter(mo \%in\% top_freq(freq(.$mo), 3)) \%>\%
-  # filter on first isolates
-  filter_first_isolate() \%>\%
-  # get short MO names (like "E. coli")
-  mutate(bug = mo_shortname(mo, Becker = TRUE)) \%>\%
-  # select this short name and some antiseptic drugs
-  select(bug, CXM, GEN, CIP) \%>\%
-  # group by MO
-  group_by(bug) \%>\%
-  # plot the thing, putting MOs on the facet
-  ggplot_rsi(x = "antibiotic",
-             facet = "bug",
-             translate_ab = FALSE,
-             nrow = 1,
-             title = "AMR of Top Three Microorganisms In Blood Culture Isolates",
-             subtitle = expression(paste("Only First Isolates, CoNS grouped according to Becker ",
-                                         italic("et al."), " (2014)")),
-             x.title = "Antibiotic (EARS-Net code)")
 }
 }

@@ -82,7 +82,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.1.0.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.1.0.9004</span>
       </span>
     </div>
 
@@ -352,7 +352,7 @@
 
     <h2 class="hasAnchor" id="source"><a class="anchor" href="#source"></a>Source</h2>
 
-    <p>Methodology of this function is based on:</p>
+    <p>Methodology of this function is strictly based on:</p>
 <p><strong>M39 Analysis and Presentation of Cumulative Antimicrobial Susceptibility Test Data, 4th Edition</strong>, 2014, <em>Clinical and Laboratory Standards Institute (CLSI)</em>. <a href='https://clsi.org/standards/products/microbiology/documents/m39/'>https://clsi.org/standards/products/microbiology/documents/m39/</a>.</p>
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
@@ -405,6 +405,7 @@ The <a href='lifecycle.html'>lifecycle</a> of this function is <strong>stable</s
     <pre class="examples"><span class='co'># `example_isolates` is a dataset available in the AMR package.</span>
 <span class='co'># See ?example_isolates.</span>
 
+<span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
 <span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>dplyr</span>)
 <span class='co'># Filter on first isolates:</span>
 <span class='no'>example_isolates</span> <span class='kw'>%&gt;%</span>
@@ -425,13 +426,11 @@ The <a href='lifecycle.html'>lifecycle</a> of this function is <strong>stable</s
 
 <span class='co'># Have a look at A and B.</span>
 <span class='co'># B is more reliable because every isolate is counted only once.</span>
-<span class='co'># Gentamicin resitance in hospital D appears to be 3.7% higher than</span>
+<span class='co'># Gentamicin resistance in hospital D appears to be 3.7% higher than</span>
 <span class='co'># when you (erroneously) would have used all isolates for analysis.</span>
 
 
 <span class='co'>## OTHER EXAMPLES:</span>
-
-<span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
 
 <span class='co'># Short-hand versions:</span>
 <span class='no'>example_isolates</span> <span class='kw'>%&gt;%</span>

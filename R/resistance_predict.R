@@ -59,8 +59,6 @@
 #' @rdname resistance_predict
 #' @export
 #' @importFrom stats predict glm lm
-#' @importFrom dplyr %>% pull mutate mutate_at n group_by_at summarise filter filter_at all_vars n_distinct arrange case_when n_groups transmute ungroup
-#' @importFrom tidyr pivot_wider
 #' @inheritSection AMR Read more on our website!
 #' @examples
 #' x <- resistance_predict(example_isolates, 
@@ -70,22 +68,22 @@
 #' plot(x)
 #' ggplot_rsi_predict(x)
 #'
-#' # use dplyr so you can actually read it:
-#' library(dplyr)
-#' x <- example_isolates %>%
-#'   filter_first_isolate() %>%
-#'   filter(mo_genus(mo) == "Staphylococcus") %>%
-#'   resistance_predict("PEN", model = "binomial")
-#' plot(x)
+#' # using dplyr:
+#' if (!require("dplyr")) {
+#'   library(dplyr)
+#'   x <- example_isolates %>%
+#'     filter_first_isolate() %>%
+#'     filter(mo_genus(mo) == "Staphylococcus") %>%
+#'     resistance_predict("PEN", model = "binomial")
+#'   plot(x)
 #'
-#'
-#' # get the model from the object
-#' mymodel <- attributes(x)$model
-#' summary(mymodel)
-#'
+#'   # get the model from the object
+#'   mymodel <- attributes(x)$model
+#'   summary(mymodel)
+#' }
 #'
 #' # create nice plots with ggplot2 yourself
-#' if (!require(ggplot2)) {
+#' if (!require(ggplot2) & !require("dplyr")) {
 #'
 #'   data <- example_isolates %>%
 #'     filter(mo == as.mo("E. coli")) %>%
@@ -160,11 +158,9 @@ resistance_predict <- function(x,
     stop("Column ", col_date, " not found.")
   }
 
-  if (n_groups(x) > 1) {
-    # no grouped tibbles please, mutate will throw errors
-    x <- base::as.data.frame(x, stringsAsFactors = FALSE)
-  }
-
+  # no grouped tibbles, mutate will throw errors
+  x <- as.data.frame(x, stringsAsFactors = FALSE)
+  
   year <- function(x) {
     # don't depend on lubridate or so, would be overkill for only this function
     if (all(grepl("^[0-9]{4}$", x))) {
@@ -174,42 +170,54 @@ resistance_predict <- function(x,
     }
   }
   
-  df <- x %>%
-    mutate_at(col_ab, as.rsi) %>%
-    mutate_at(col_ab, droplevels)
+  df <- x
+  df[, col_ab] <- droplevels(as.rsi(df[, col_ab, drop = TRUE]))
   if (I_as_S == TRUE) {
-    df <- df %>%
-      mutate_at(col_ab, ~gsub("I", "S", .))
+    # then I as S
+    df[, col_ab] <- gsub("I", "S", df[, col_ab, drop = TRUE])
   } else {
     # then I as R
-    df <- df %>%
-      mutate_at(col_ab, ~gsub("I", "R", .))
+    df[, col_ab] <- gsub("I", "R", df[, col_ab, drop = TRUE])
   }
-  df <- df %>% 
-    filter_at(col_ab, all_vars(!is.na(.))) %>%
-    mutate(year = year(pull(., col_date))) %>%
-    group_by_at(c("year", col_ab)) %>%
-    summarise(n())
+  df[, col_ab] <- ifelse(is.na(df[, col_ab, drop = TRUE]), 0, df[, col_ab, drop = TRUE])
+  
+  # remove rows with NAs
+  df <- subset(df, !is.na(df[, col_ab, drop = TRUE]))
+  df$year <- year(df[, col_date, drop = TRUE])
+  df <- as.data.frame(rbind(table(df[, c("year", col_ab)])), stringsAsFactors = FALSE)
+  df$year <- as.integer(rownames(df))
+  rownames(df) <- NULL
 
-  if (df %>% pull(col_ab) %>% n_distinct(na.rm = TRUE) < 2) {
-    stop("No variety in antimicrobial interpretations - all isolates are '",
-         df %>% pull(col_ab) %>% unique(), "'.",
-         call. = FALSE)
-  }
+  # df <- df %>% 
+  #   filter_at(col_ab, all_vars(!is.na(.))) %>%
+  #   mutate(year = year(pull(., col_date))) %>%
+  #   group_by_at(c("year", col_ab)) %>%
+  #   summarise(n())
 
-  colnames(df) <- c("year", "antibiotic", "observations")
-
-  df <- df %>%
-    filter(!is.na(antibiotic)) %>%
-    pivot_wider(names_from = antibiotic,
-                values_from = observations,
-                values_fill = list(observations = 0)) %>% 
-    filter((R + S) >= minimum)
-  df_matrix <- df %>%
-    ungroup() %>%
-    select(R, S) %>%
-    as.matrix()
-
+  # if (df %>% pull(col_ab) %>% n_distinct(na.rm = TRUE) < 2) {
+  #   stop("No variety in antimicrobial interpretations - all isolates are '",
+  #        df %>% pull(col_ab) %>% unique(), "'.",
+  #        call. = FALSE)
+  # }
+  # 
+  # colnames(df) <- c("year", "antibiotic", "observations")
+  
+  df <- subset(df, sum(df$R + df$S, na.rm = TRUE) >= minimum)
+  
+  # return(df)
+  # 
+  # df <- df %>%
+  #   filter(!is.na(antibiotic)) %>%
+  #   pivot_wider(names_from = antibiotic,
+  #               values_from = observations,
+  #               values_fill = list(observations = 0)) %>% 
+  #   filter((R + S) >= minimum)
+  # df_matrix <- df %>%
+  #   ungroup() %>%
+  #   select(R, S) %>%
+  #   as.matrix()
+  df_matrix <- as.matrix(df[, c("R", "S"), drop = FALSE])
+  
   if (NROW(df) == 0) {
     stop("There are no observations.")
   }
@@ -272,49 +280,39 @@ resistance_predict <- function(x,
   # prepare the output dataframe
   df_prediction <- data.frame(year = unlist(years),
                               value = prediction,
-                              stringsAsFactors = FALSE) %>%
-
-    mutate(se_min = value - se,
-           se_max = value + se)
+                              se_min = prediction - se,
+                              se_max = prediction + se,
+                              stringsAsFactors = FALSE)
 
   if (model == "poisson") {
-    df_prediction <- df_prediction %>%
-      mutate(value = value %>%
-               format(scientific = FALSE) %>%
-               as.integer(),
-             se_min = as.integer(se_min),
-             se_max = as.integer(se_max))
+    df_prediction$value <- as.integer(format(df_prediction$value, scientific = FALSE))
+    df_prediction$se_min <- as.integer(df_prediction$se_min)
+    df_prediction$se_max <- as.integer(df_prediction$se_max)
+    
   } else {
-    df_prediction <- df_prediction %>%
-      # se_max not above 1
-      mutate(se_max = ifelse(se_max > 1, 1, se_max))
+    # se_max not above 1
+    df_prediction$se_max <- ifelse(df_prediction$se_max > 1, 1, df_prediction$se_max)
   }
-  df_prediction <- df_prediction %>%
-    # se_min not below 0
-    mutate(se_min = ifelse(se_min < 0, 0, se_min))
+  # se_min not below 0
+  df_prediction$se_min <- ifelse(df_prediction$se_min < 0, 0, df_prediction$se_min)
 
-  df_observations <- df %>%
-    ungroup() %>%
-    transmute(year,
-              observations = R + S,
-              observed = R / (R + S))
+  df_observations <- data.frame(year = df$year,
+                                observations = df$R + df$S,
+                                observed = df$R / (df$R + df$S),
+                                stringsAsFactors = FALSE)
   df_prediction <- df_prediction %>%
-    left_join(df_observations, by = "year") %>%
-    mutate(estimated = value)
+    left_join(df_observations, by = "year")
+  df_prediction$estimated <- df_prediction$value
 
   if (preserve_measurements == TRUE) {
     # replace estimated data by observed data
-    df_prediction <- df_prediction %>%
-      mutate(value = ifelse(!is.na(observed), observed, value),
-             se_min = ifelse(!is.na(observed), NA, se_min),
-             se_max = ifelse(!is.na(observed), NA, se_max))
+    df_prediction$value <- ifelse(!is.na(df_prediction$observed), df_prediction$observed, df_prediction$value)
+    df_prediction$se_min <- ifelse(!is.na(df_prediction$observed), NA, df_prediction$se_min)
+    df_prediction$se_max <- ifelse(!is.na(df_prediction$observed), NA, df_prediction$se_max)
   }
 
-  df_prediction <- df_prediction %>%
-    mutate(value = case_when(value > 1 ~ 1,
-                             value < 0 ~ 0,
-                             TRUE ~ value)) %>%
-    arrange(year)
+  df_prediction$value <- ifelse(df_prediction$value > 1, 1, ifelse(df_prediction$value < 0, 0, df_prediction$value))
+  df_prediction <- df_prediction[order(df_prediction$year), ]
 
   structure(
     .Data = df_prediction,
@@ -332,7 +330,6 @@ rsi_predict <- resistance_predict
 
 #' @exportMethod plot.mic
 #' @export
-#' @importFrom dplyr filter
 #' @importFrom graphics plot axis arrows points
 #' @rdname resistance_predict
 plot.resistance_predict <- function(x, main = paste("Resistance Prediction of", x_name), ...) {
@@ -366,14 +363,13 @@ plot.resistance_predict <- function(x, main = paste("Resistance Prediction of", 
          length = 0.05, angle = 90, code = 3, lwd = 1.5)
 
   # overlay grey points for prediction
-  points(x = filter(x, is.na(observations))$year,
-         y = filter(x, is.na(observations))$value,
+  points(x = subset(x, is.na(observations))$year,
+         y = subset(x, is.na(observations))$value,
          pch = 19,
          col = "grey40")
 }
 
 #' @rdname resistance_predict
-#' @importFrom dplyr filter
 #' @export
 ggplot_rsi_predict <- function(x,
                                main = paste("Resistance Prediction of", x_name),
@@ -392,7 +388,7 @@ ggplot_rsi_predict <- function(x,
   }
 
   p <- ggplot2::ggplot(x, ggplot2::aes(x = year, y = value)) +
-    ggplot2::geom_point(data = filter(x, !is.na(observations)),
+    ggplot2::geom_point(data = subset(x, !is.na(observations)),
                         size = 2) +
     scale_y_percent(limits = c(0, 1)) +
     ggplot2::labs(title = main,
@@ -408,7 +404,7 @@ ggplot_rsi_predict <- function(x,
   }
   p <- p +
     # overlay grey points for prediction
-    ggplot2::geom_point(data = filter(x, is.na(observations)),
+    ggplot2::geom_point(data = subset(x, is.na(observations)),
                         size = 2,
                         colour = "grey40")
   p

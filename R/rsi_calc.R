@@ -19,27 +19,13 @@
 # Visit our website for more info: https://msberends.gitlab.io/AMR.    #
 # ==================================================================== #
 
-#' @importFrom rlang enquos as_label
 dots2vars <- function(...) {
   # this function is to give more informative output about 
   # variable names in count_* and proportion_* functions
-  paste(
-    unlist(
-      lapply(enquos(...),
-             function(x) {
-               l <- as_label(x)
-               if (l != ".") {
-                 l
-               } else {
-                 character(0)
-               }
-             })
-    ),
-    collapse = ", ")
+  dots <- substitute(list(...))
+  paste(as.character(dots)[2:length(dots)], collapse = ", ")
 }
 
-#' @importFrom dplyr %>% pull all_vars any_vars filter_all funs mutate_all
-#' @importFrom cleaner percentage
 rsi_calc <- function(...,
                      ab_result,
                      minimum = 0,
@@ -72,10 +58,10 @@ rsi_calc <- function(...,
     dots <- dots[dots != "."]
     if (length(dots) == 0 | all(dots == "df")) {
       # for complete data.frames, like example_isolates %>% select(amcl, gent) %>% proportion_S()
-      # and the old rsi function, that has "df" as name of the first parameter
+      # and the old rsi function, which has "df" as name of the first parameter
       x <- dots_df
     } else {
-      x <- dots_df[, dots]
+      x <- dots_df[, dots[dots %in% colnames(dots_df)]]
     }
   } else if (ndots == 1) {
     # only 1 variable passed (can also be data.frame), like: proportion_S(example_isolates$amcl) and example_isolates$amcl %>% proportion_S()
@@ -85,8 +71,8 @@ rsi_calc <- function(...,
     x <- NULL
     try(x <- as.data.frame(dots), silent = TRUE)
     if (is.null(x)) {
-      # support for: with(example_isolates, proportion_S(amcl, gent))
-      x <- as.data.frame(rlang::list2(...))
+      # support for example_isolates %>% group_by(hospital_id) %>% summarise(amox = susceptibility(GEN, AMX))
+      x <- as.data.frame(list(...))
     }
   }
   
@@ -113,7 +99,7 @@ rsi_calc <- function(...,
       # this will give a warning for invalid results, of all input columns (so only 1 warning)
       rsi_integrity_check <- as.rsi(rsi_integrity_check)
     }
-    
+
     if (only_all_tested == TRUE) {
       # THE NUMBER OF ISOLATES WHERE *ALL* ABx ARE S/I/R
       x <- apply(X = x %>% mutate_all(as.integer),
@@ -128,8 +114,8 @@ rsi_calc <- function(...,
       other_values_filter <- base::apply(x, 1, function(y) {
         base::all(y %in% other_values) & base::any(is.na(y))
       })
-      numerator <- x %>% filter_all(any_vars(. %in% ab_result)) %>% nrow()
-      denominator <- x %>% filter(!other_values_filter) %>% nrow()
+      numerator <- sum(as.logical(by(x, seq_len(nrow(x)), function(row) any(unlist(row) %in% ab_result, na.rm = TRUE))))
+      denominator <- nrow(x[!other_values_filter, ])
     }
   } else {
     # x is not a data.frame
@@ -167,9 +153,7 @@ rsi_calc <- function(...,
   }
 }
 
-#' @importFrom dplyr %>% summarise_if mutate select everything bind_rows arrange
-#' @importFrom tidyr pivot_longer
-rsi_calc_df <- function(type, # "proportion" or "count"
+rsi_calc_df <- function(type, # "proportion", "count" or "both"
                         data,
                         translate_ab = "name",
                         language = get_locale(),
@@ -199,63 +183,106 @@ rsi_calc_df <- function(type, # "proportion" or "count"
   if (as.character(translate_ab) %in% c("TRUE", "official")) {
     translate_ab <- "name"
   }
+
+  # select only groups and antibiotics
+  if (has_groups(data)) {
+    data_has_groups <- TRUE
+    groups <- setdiff(names(get_groups(data)), ".rows") # get_groups is from poorman.R
+    data <- data[, c(groups, colnames(data)[sapply(data, is.rsi)]), drop = FALSE]
+  } else {
+    data_has_groups <- FALSE
+    data <- data[, colnames(data)[sapply(data, is.rsi)], drop = FALSE]
+  }
   
-  get_summaryfunction <- function(int, type) {
-    # look for proportion_S, count_S, etc:
-    int_fn <- get(paste0(type, "_", int), envir = asNamespace("AMR"))
-    
-    suppressWarnings(
-      if (type == "proportion") {
-        summ <- summarise_if(.tbl = data,
-                             .predicate = is.rsi,
-                             .funs = int_fn,
-                             minimum = minimum,
-                             as_percent = as_percent)
-      } else if (type == "count") {
-        summ <- summarise_if(.tbl = data,
-                             .predicate = is.rsi,
-                             .funs = int_fn)
+  data <- as.data.frame(data, stringsAsFactors = FALSE)
+  if (isTRUE(combine_SI) | isTRUE(combine_IR)) {
+    for (i in seq_len(ncol(data))) {
+      if (is.rsi(data[, i, drop = TRUE])) {
+        data[, i] <- as.character(data[, i, drop = TRUE])
+        if (isTRUE(combine_SI)) {
+          data[, i] <- gsub("(I|S)", "SI", data[, i, drop = TRUE])
+        } else if (isTRUE(combine_IR)) {
+          data[, i] <- gsub("(I|R)", "IR", data[, i, drop = TRUE])
+        }
       }
-    )
-    summ %>%
-      mutate(interpretation = int) %>%
-      select(interpretation, everything())
+    }
   }
   
-  resS <- get_summaryfunction("S", type)
-  resI <- get_summaryfunction("I", type)
-  resR <- get_summaryfunction("R", type)
-  resSI <- get_summaryfunction("SI", type)
-  resIR <- get_summaryfunction("IR", type)
-  data.groups <- group_vars(data)
+  sum_it <- function(.data) {
+    out <- data.frame(antibiotic = character(0),
+                      interpretation = character(0),
+                      value = double(0),
+                      isolates <- integer(0),
+                      stringsAsFactors = FALSE)
+    if (data_has_groups) {
+      group_values <- unique(.data[, which(colnames(.data) %in% groups), drop = FALSE])
+      rownames(group_values) <- NULL
+      .data <- .data[, which(!colnames(.data) %in% groups), drop = FALSE]
+    }
+    for (i in seq_len(ncol(.data))) {
+      col_results <- as.data.frame(as.matrix(table(.data[, i, drop = TRUE])))
+      col_results$interpretation <- rownames(col_results)
+      col_results$isolates <- col_results[, 1, drop = TRUE]
+      if (nrow(col_results) > 0) {
+        if (sum(col_results$isolates, na.rm = TRUE) >= minimum) {
+          col_results$value <- col_results$isolates / sum(col_results$isolates, na.rm = TRUE)
+        } else {
+          col_results$value <- rep(NA_real_, NROW(col_results))
+        }
+        out_new <- data.frame(antibiotic = ab_property(colnames(.data)[i], property = translate_ab, language = language),
+                              interpretation = col_results$interpretation,
+                              value = col_results$value,
+                              isolates = col_results$isolates,
+                              stringsAsFactors = FALSE)
+        if (data_has_groups) {
+          out_new <- cbind(group_values, out_new)
+        }
+        out <- rbind(out, out_new)
+      }
+    }
+    out
+  }
   
-  if (isFALSE(combine_SI) & isFALSE(combine_IR)) {
-    res <- bind_rows(resS, resI, resR) %>%
-      mutate(interpretation = factor(interpretation,
-                                     levels = c("S", "I", "R"),
-                                     ordered = TRUE))
-    
+  # support dplyr groups
+  apply_group <- function(.data, fn, groups, ...) {
+    grouped <- split(x = .data, f = lapply(groups, function(x, .data) as.factor(.data[, x]), .data))
+    res <- do.call(rbind, unname(lapply(grouped, fn, ...)))
+    if (any(groups %in% colnames(res))) {
+      class(res) <- c("grouped_data", class(res))
+      attr(res, "groups") <- groups[groups %in% colnames(res)]
+    }
+    res
+  }
+  
+  if (data_has_groups) {
+    out <- apply_group(data, "sum_it", groups)
+  } else {
+    out <- sum_it(data)
+  }
+  
+  # apply factors for right sorting in interpretation
+  if (isTRUE(combine_SI)) {
+    out$interpretation <- factor(out$interpretation, levels = c("SI", "R"), ordered = TRUE)
   } else if (isTRUE(combine_IR)) {
-    res <- bind_rows(resS, resIR) %>%
-      mutate(interpretation = factor(interpretation,
-                                     levels = c("S", "IR"),
-                                     ordered = TRUE))
-    
-  } else if (isTRUE(combine_SI)) {
-    res <- bind_rows(resSI, resR) %>%
-      mutate(interpretation = factor(interpretation,
-                                     levels = c("SI", "R"),
-                                     ordered = TRUE))
+    out$interpretation <- factor(out$interpretation, levels = c("S", "IR"), ordered = TRUE)
+  } else {
+    out$interpretation <- as.rsi(out$interpretation)
   }
   
-  res <- res %>%
-    pivot_longer(-c(interpretation, data.groups), names_to = "antibiotic") %>% 
-    select(antibiotic, everything()) %>% 
-    arrange(antibiotic, interpretation)
-  
-  if (!translate_ab == FALSE) {
-    res <- res %>% mutate(antibiotic = ab_property(antibiotic, property = translate_ab, language = language))
+  if (data_has_groups) {
+    # ordering by the groups and two more: "antibiotic" and "interpretation"
+    out <- out[do.call("order", out[, seq_len(length(groups) + 2)]), ]
+  } else {
+    out <- out[order(out$antibiotic, out$interpretation), ]
   }
   
-  as.data.frame(res, stringsAsFactors = FALSE)
+  if (type == "proportion") {
+    out <- subset(out, select = -c(isolates))
+  } else if (type == "count") {
+    out$value <- out$isolates
+    out <- subset(out, select = -c(isolates))
+  } 
+  
+  rownames(out) <- NULL
+  out
 }

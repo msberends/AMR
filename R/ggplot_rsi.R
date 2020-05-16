@@ -134,30 +134,6 @@
 #'              title = "AMR of Anti-UTI Drugs Per Hospital",
 #'              x.title = "Hospital",
 #'              datalabels = FALSE)
-#'
-#' # genuine analysis: check 3 most prevalent microorganisms
-#' example_isolates %>%
-#'   # create new bacterial ID's, with all CoNS under the same group (Becker et al.)
-#'   mutate(mo = as.mo(mo, Becker = TRUE)) %>%
-#'   # filter on top three bacterial ID's
-#'   filter(mo %in% top_freq(freq(.$mo), 3)) %>%
-#'   # filter on first isolates
-#'   filter_first_isolate() %>%
-#'   # get short MO names (like "E. coli")
-#'   mutate(bug = mo_shortname(mo, Becker = TRUE)) %>%
-#'   # select this short name and some antiseptic drugs
-#'   select(bug, CXM, GEN, CIP) %>%
-#'   # group by MO
-#'   group_by(bug) %>%
-#'   # plot the thing, putting MOs on the facet
-#'   ggplot_rsi(x = "antibiotic",
-#'              facet = "bug",
-#'              translate_ab = FALSE,
-#'              nrow = 1,
-#'              title = "AMR of Top Three Microorganisms In Blood Culture Isolates",
-#'              subtitle = expression(paste("Only First Isolates, CoNS grouped according to Becker ",
-#'                                          italic("et al."), " (2014)")),
-#'              x.title = "Antibiotic (EARS-Net code)")
 #' }
 ggplot_rsi <- function(data,
                        position = NULL,
@@ -339,7 +315,6 @@ facet_rsi <- function(facet = c("interpretation", "antibiotic"), nrow = NULL) {
 }
 
 #' @rdname ggplot_rsi
-#' @importFrom cleaner percentage
 #' @export
 scale_y_percent <- function(breaks = seq(0, 1, 0.1), limits = NULL) {
   stopifnot_installed_package("ggplot2")
@@ -388,8 +363,6 @@ theme_rsi <- function() {
 }
 
 #' @rdname ggplot_rsi
-#' @importFrom dplyr mutate %>% group_by_at
-#' @importFrom cleaner percentage
 #' @export
 labels_rsi_count <- function(position = NULL,
                              x = "antibiotic",
@@ -415,11 +388,15 @@ labels_rsi_count <- function(position = NULL,
                      colour = datalabels.colour,
                      lineheight = 0.75,
                      data = function(x) {
-                       rsi_df(data = x,
+                       transformed <- rsi_df(data = x,
                               translate_ab = translate_ab,
                               combine_SI = combine_SI,
-                              combine_IR = combine_IR) %>%
-                         group_by_at(x_name) %>%
-                         mutate(lbl = paste0("n=", isolates))
+                              combine_IR = combine_IR)
+                       transformed$gr <- transformed[, x_name, drop = TRUE]
+                       transformed %>% 
+                         group_by(gr) %>% 
+                         mutate(lbl = paste0("n=", isolates)) %>% 
+                         ungroup() %>% 
+                         select(-gr)
                      })
 }

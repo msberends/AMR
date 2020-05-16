@@ -27,7 +27,6 @@
 #' @param ... arguments passed on to internal functions
 #' @rdname as.ab
 #' @inheritSection WHOCC WHOCC
-#' @importFrom dplyr %>% filter slice pull
 #' @details All entries in the [antibiotics] data set have three different identifiers: a human readable EARS-Net code (column `ab`, used by ECDC and WHONET), an ATC code (column `atc`, used by WHO), and a CID code (column `cid`, Compound ID, used by PubChem). The data set contains more than 5,000 official brand names from many different countries, as found in PubChem.
 #'
 #' Use the [ab_property()] functions to get properties based on the returned antibiotic ID, see Examples.
@@ -409,6 +408,6 @@ c.ab <- function(x, ...) {
 #' @export
 pillar_shaft.ab <- function(x, ...) {
   out <- format(x)
-  out[is.na(x)] <- pillar::style_na("NA")
+  out[is.na(x)] <- font_red("NA")
   pillar::new_pillar_shaft_simple(out, align = "left", min_width = 4)
 }

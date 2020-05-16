@@ -25,7 +25,6 @@ test_that("as.mo works", {
   
   skip_on_cran()
  
-  library(dplyr)
   MOs <- microorganisms %>% filter(!is.na(mo), nchar(mo) > 3)
   expect_identical(as.character(MOs$mo), as.character(as.mo(MOs$mo)))
   
@@ -64,7 +63,7 @@ test_that("as.mo works", {
   
   expect_equal(as.character(as.mo("MRSE")), "B_STPHY_EPDR")
   expect_equal(as.character(as.mo("VRE")), "B_ENTRC")
-  expect_equal(as.character(as.mo("MRPA")), "B_PSDMN_ARGN")
+  expect_equal(as.character(as.mo("MRPA")), "B_PSDMN_AERG")
   expect_equal(as.character(as.mo("PISP")), "B_STRPT_PNMN")
   expect_equal(as.character(as.mo("PRSP")), "B_STRPT_PNMN")
   expect_equal(as.character(as.mo("VISP")), "B_STRPT_PNMN")

@@ -6,7 +6,7 @@
 \alias{filter_first_weighted_isolate}
 \title{Determine first (weighted) isolates}
 \source{
-Methodology of this function is based on:
+Methodology of this function is strictly based on:
 
 \strong{M39 Analysis and Presentation of Cumulative Antimicrobial Susceptibility Test Data, 4th Edition}, 2014, \emph{Clinical and Laboratory Standards Institute (CLSI)}. \url{https://clsi.org/standards/products/microbiology/documents/m39/}.
 }
@@ -142,6 +142,7 @@ On our website \url{https://msberends.gitlab.io/AMR} you can find \href{https://
 # `example_isolates` is a dataset available in the AMR package.
 # See ?example_isolates.
 
+\dontrun{
 library(dplyr)
 # Filter on first isolates:
 example_isolates \%>\%
@@ -162,13 +163,11 @@ B <- example_isolates \%>\%
 
 # Have a look at A and B.
 # B is more reliable because every isolate is counted only once.
-# Gentamicin resitance in hospital D appears to be 3.7\% higher than
+# Gentamicin resistance in hospital D appears to be 3.7\% higher than
 # when you (erroneously) would have used all isolates for analysis.
 
 
 ## OTHER EXAMPLES:
-
-\dontrun{
 
 # Short-hand versions:
 example_isolates \%>\%

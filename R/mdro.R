@@ -61,9 +61,6 @@
 #'   Ordered [`factor`] with levels `Negative` < `Positive, unconfirmed` < `Positive`. The value `"Positive, unconfirmed"` means that, according to the guideline, it is not entirely sure if the isolate is multi-drug resistant and this should be confirmed with additional (e.g. molecular) tests
 #' @rdname mdro
 #' @aliases MDR XDR PDR BRMO 3MRGN 4MRGN
-#' @importFrom dplyr %>% filter_at vars all_vars pull mutate_at
-#' @importFrom crayon blue bold italic red
-#' @importFrom cleaner percentage
 #' @export
 #' @inheritSection AMR Read more on our website!
 #' @source
@@ -99,7 +96,7 @@ mdro <- function(x,
     if ("rstudioapi" %in% rownames(utils::installed.packages())) {
       q_continue <- rstudioapi::showQuestion("Using verbose = TRUE with mdro()", txt)
     } else {
-      q_continue <- menu(choices = c("OK", "Cancel"), graphics = TRUE, title = txt)
+      q_continue <- utils::menu(choices = c("OK", "Cancel"), graphics = FALSE, title = txt)
     }
     if (q_continue %in% c(FALSE, 2)) {
       message("Cancelled, returning original data")
@@ -110,6 +107,9 @@ mdro <- function(x,
   if (!is.data.frame(x)) {
     stop("`x` must be a data frame.", call. = FALSE)
   }
+  # force regular data.frame, not a tibble or data.table
+  x <- as.data.frame(x, stringsAsFactors = FALSE)
+  
   if (!is.numeric(pct_required_classes)) {
     stop("`pct_required_classes` must be numeric.", call. = FALSE)
   }
@@ -147,8 +147,8 @@ mdro <- function(x,
     col_mo <- search_type_in_df(x = x, type = "mo")
   }
   if (is.null(col_mo) & guideline$code == "tb") {
-    message(blue("NOTE: No column found as input for `col_mo`,",
-                 bold("assuming all records contain", italic("Mycobacterium tuberculosis.\n"))))
+    message(font_blue("NOTE: No column found as input for `col_mo`,",
+                 font_bold("assuming all records contain", font_italic("Mycobacterium tuberculosis."))))
     x$mo <- as.mo("Mycobacterium tuberculosis")
     col_mo <- "mo"
   }
@@ -418,7 +418,7 @@ mdro <- function(x,
   if (guideline$code == "tb" & length(abx_tb) == 0) {
     stop("No antimycobacterials found in data set.", call. = FALSE)
   }
-
+  
   if (combine_SI == TRUE) {
     search_result <- "R"
   } else {
@@ -427,15 +427,15 @@ mdro <- function(x,
   
   if (info == TRUE) {
     if (combine_SI == TRUE) {
-      cat(red("\nOnly results with 'R' are considered as resistance. Use `combine_SI = FALSE` to also consider 'I' as resistance.\n"))
+      cat(font_red("\nOnly results with 'R' are considered as resistance. Use `combine_SI = FALSE` to also consider 'I' as resistance.\n"))
     } else {
-      cat(red("\nResults with 'R' or 'I' are considered as resistance. Use `combine_SI = TRUE` to only consider 'R' as resistance.\n"))
+      cat(font_red("\nResults with 'R' or 'I' are considered as resistance. Use `combine_SI = TRUE` to only consider 'R' as resistance.\n"))
     }
     cat("\nDetermining multidrug-resistant organisms (MDRO), according to:\n",
-        bold("Guideline: "), italic(guideline$name), "\n",
-        bold("Version:   "), guideline$version, "\n",
-        bold("Author:    "),    guideline$author, "\n",
-        bold("Source:    "), guideline$source, "\n",
+        font_bold("Guideline: "), font_italic(guideline$name), "\n",
+        font_bold("Version:   "), guideline$version, "\n",
+        font_bold("Author:    "),    guideline$author, "\n",
+        font_bold("Source:    "), guideline$source, "\n",
         "\n", sep = "")
   }
   
@@ -460,7 +460,7 @@ mdro <- function(x,
     cols <- cols[!ab_missing(cols)]
     cols <- cols[!is.na(cols)]
     if (length(rows) > 0 & length(cols) > 0) {
-      x <<- x %>% mutate_at(vars(cols), as.rsi)
+      x[, cols] <- as.data.frame(lapply(x[, cols, drop = FALSE], function(col) as.rsi(col)))
       x[rows, "columns_nonsusceptible"] <<- sapply(rows, 
                                                    function(row, group_vct = cols) {
                                                      cols_nonsus <- sapply(x[row, group_vct, drop = FALSE], 
@@ -471,13 +471,14 @@ mdro <- function(x,
                                                    })
       
       if (any_all == "any") {
-        search_function <- dplyr::any_vars
+        search_function <- any
       } else if (any_all == "all") {
-        search_function <- dplyr::all_vars
+        search_function <- all
       }
-      row_filter <- x %>%
-        filter_at(vars(cols), search_function(. %in% search_result)) %>%
-        pull("row_number")
+      row_filter <- as.logical(by(x, 
+                                  seq_len(nrow(x)), 
+                                  function(row) search_function(unlist(row[, cols]) %in% search_result, na.rm = TRUE)))
+      row_filter <- x[row_filter, "row_number", drop = TRUE]
       rows <- rows[rows %in% row_filter]
       x[rows, "MDRO"] <<- to
       x[rows, "reason"] <<- paste0(any_all, " of the required antibiotics ", ifelse(any_all == "any", "is", "are"), " R")
@@ -485,12 +486,12 @@ mdro <- function(x,
   }
   trans_tbl2 <- function(txt, rows, lst) {
     if (info == TRUE) {
-      message(blue(txt, "..."), appendLF = FALSE)
+      message(font_blue(txt, "..."), appendLF = FALSE)
     }
     if (length(rows) > 0) {
       # function specific for the CMI paper of 2012 (Magiorakos et al.)
       lst_vector <- unlist(lst)[!is.na(unlist(lst))]
-      x <<- x %>% mutate_at(vars(lst_vector), as.rsi)
+      x[, lst_vector] <- as.data.frame(lapply(x[, lst_vector, drop = FALSE], function(col) as.rsi(col)))
       x[rows, "classes_in_guideline"] <<- length(lst)
       x[rows, "classes_available"] <<- sapply(rows, 
                                               function(row, group_tbl = lst) {
@@ -513,28 +514,25 @@ mdro <- function(x,
                                                   na.rm = TRUE) 
                                             })
       # for PDR; all agents are R (or I if combine_SI = FALSE)
-      x[filter_at(x[rows, ],
-                  vars(lst_vector),
-                  all_vars(. %in% search_result))$row_number, "classes_affected"] <<- 999
+      row_filter <- as.logical(by(x[rows, ], 
+                                  seq_len(nrow(x[rows, ])),
+                                  function(row) all(unlist(row[, lst_vector]) %in% search_result, na.rm = TRUE)))
+      x[row_filter, "classes_affected"] <<- 999
     }
     
     if (info == TRUE) {
-      message(blue(" OK"))
+      message(font_blue(" OK"))
     }
   }
   
-  x <- x %>%
-    mutate_at(vars(col_mo), as.mo) %>%
-    # join to microorganisms data set
-    left_join_microorganisms(by = col_mo) %>%
-    # add unavailable to where genus is available
-    mutate(MDRO = ifelse(!is.na(genus), 1, NA_integer_),
-           row_number = seq_len(nrow(.)),
-           reason = paste0("not covered by ", toupper(guideline$code), " guideline"),
-           columns_nonsusceptible = "") %>% 
-    # transform to data.frame so subsetting is possible with x[y, z] (might not be the case with tibble/data.table/...)
-    as.data.frame(stringsAsFactors = FALSE)
-  
+  x[, col_mo] <- as.mo(x[, col_mo, drop = TRUE])
+  # join to microorganisms data set
+  x <- left_join_microorganisms(x, by = col_mo)
+  x$MDRO <- ifelse(!is.na(x$genus), 1, NA_integer_)
+  x$row_number <- seq_len(nrow(x))
+  x$reason <- paste0("not covered by ", toupper(guideline$code), " guideline")
+  x$columns_nonsusceptible <- ""
+
   if (guideline$code == "cmi2012") {
     # CMI, 2012 ---------------------------------------------------------------
     # Non-susceptible = R and I
@@ -543,20 +541,20 @@ mdro <- function(x,
     # take amoxicillin if ampicillin is unavailable
     if (is.na(AMP) & !is.na(AMX)) {
       if (verbose == TRUE) {
-        message(blue("NOTE: Filling ampicillin (AMP) results with amoxicillin (AMX) results"))
+        message(font_blue("NOTE: Filling ampicillin (AMP) results with amoxicillin (AMX) results"))
       }
       AMP <- AMX
     }
     # take ceftriaxone if cefotaxime is unavailable and vice versa
     if (is.na(CRO) & !is.na(CTX)) {
       if (verbose == TRUE) {
-        message(blue("NOTE: Filling ceftriaxone (CRO) results with cefotaxime (CTX) results"))
+        message(font_blue("NOTE: Filling ceftriaxone (CRO) results with cefotaxime (CTX) results"))
       }
       CRO <- CTX
     }
     if (is.na(CTX) & !is.na(CRO)) {
       if (verbose == TRUE) {
-        message(blue("NOTE: Filling cefotaxime (CTX) results with ceftriaxone (CRO) results"))
+        message(font_blue("NOTE: Filling cefotaxime (CTX) results with ceftriaxone (CRO) results"))
       }
       CTX <- CRO
     }
@@ -642,7 +640,7 @@ mdro <- function(x,
               which(x$genus == "Staphylococcus" & x$species == "aureus"),
               c(OXA, FOX),
               "any")
-    trans_tbl2(paste("Table 1 -", italic("Staphylococcus aureus")),
+    trans_tbl2(paste("Table 1 -", font_italic("Staphylococcus aureus")),
                which(x$genus == "Staphylococcus" & x$species == "aureus"),
                list(GEN,
                     RIF,
@@ -661,7 +659,7 @@ mdro <- function(x,
                     FOS,
                     QDA,
                     c(TCY, DOX, MNO)))
-    trans_tbl2(paste("Table 2 -", italic("Enterococcus"), "spp."),
+    trans_tbl2(paste("Table 2 -", font_italic("Enterococcus"), "spp."),
                which(x$genus == "Enterococcus"),
                list(GEH,
                     STH,
@@ -674,7 +672,7 @@ mdro <- function(x,
                     AMP,
                     QDA,
                     c(DOX, MNO)))
-    trans_tbl2(paste0("Table 3 - ", italic("Enterobacteriaceae")),
+    trans_tbl2(paste0("Table 3 - ", font_italic("Enterobacteriaceae")),
                # this new order was previously 'Enterobacteriales' and contained only the family 'Enterobacteriaceae':
                which(x$order == "Enterobacterales"),
                list(c(GEN, TOB, AMK, NET),
@@ -695,7 +693,7 @@ mdro <- function(x,
                     FOS,
                     COL,
                     c(TCY, DOX, MNO)))
-    trans_tbl2(paste("Table 4 -", italic("Pseudomonas aeruginosa")),
+    trans_tbl2(paste("Table 4 -", font_italic("Pseudomonas aeruginosa")),
                which(x$genus == "Pseudomonas" & x$species == "aeruginosa"),
                list(c(GEN, TOB, AMK, NET),
                     c(IPM, MEM, DOR),
@@ -705,7 +703,7 @@ mdro <- function(x,
                     ATM,
                     FOS,
                     c(COL, PLB)))
-    trans_tbl2(paste("Table 5 -", italic("Acinetobacter"), "spp."),
+    trans_tbl2(paste("Table 5 -", font_italic("Acinetobacter"), "spp."),
                which(x$genus == "Acinetobacter"),
                list(c(GEN, TOB, AMK, NET),
                     c(IPM, MEM, DOR),
@@ -941,70 +939,73 @@ mdro <- function(x,
               "all")
   }
   
-  prepare_drug <- function(ab) {
-    # returns vector values of drug
-    # if `ab` is a column name, looks up the values in `x`
-    if (length(ab) == 1 & is.character(ab)) {
-      if (ab %in% colnames(x)) {
-        ab <- as.data.frame(x)[, ab]
-      }
-    }
-    ab <- as.character(as.rsi(ab))
-    ab[is.na(ab)] <- ""
-    ab
-  }
-  drug_is_R <- function(ab) {
-    # returns logical vector
-    ab <- prepare_drug(ab)
-    if (length(ab) == 1) {
-      rep(ab, NROW(x)) == "R"
-    } else {
-      ab == "R"
-    }
-  }
-  drug_is_not_R <- function(ab) {
-    # returns logical vector
-    ab <- prepare_drug(ab)
-    if (length(ab) == 1) {
-      rep(ab, NROW(x)) != "R"
-    } else {
-      ab != "R"
-    }
-  }
-  
   if (guideline$code == "tb") {
     # Tuberculosis ------------------------------------------------------------
-    x <- x %>%
-      mutate(mono_count = 0,
-             mono_count = ifelse(drug_is_R(INH), mono_count + 1, mono_count),
-             mono_count = ifelse(drug_is_R(RIF), mono_count + 1, mono_count),
-             mono_count = ifelse(drug_is_R(ETH), mono_count + 1, mono_count),
-             mono_count = ifelse(drug_is_R(PZA), mono_count + 1, mono_count),
-             mono_count = ifelse(drug_is_R(RIB), mono_count + 1, mono_count),
-             mono_count = ifelse(drug_is_R(RFP), mono_count + 1, mono_count),
-             # from here on logicals
-             mono = mono_count > 0,
-             poly = ifelse(mono_count > 1 & drug_is_not_R(RIF) & drug_is_not_R(INH),
-                           TRUE, FALSE),
-             mdr = ifelse(drug_is_R(RIF) & drug_is_R(INH),
-                          TRUE, FALSE),
-             xdr = ifelse(drug_is_R(LVX) | drug_is_R(MFX) | drug_is_R(GAT),
-                          TRUE, FALSE),
-             second = ifelse(drug_is_R(CAP) | drug_is_R(KAN) | drug_is_R(AMK),
-                             TRUE, FALSE),
-             xdr = ifelse(mdr & xdr & second, TRUE, FALSE)) %>%
-      mutate(MDRO = case_when(xdr ~ 5,
-                              mdr ~ 4,
-                              poly ~ 3,
-                              mono ~ 2,
-                              TRUE ~ 1),
-             # keep all real TB, make other species NA
-             MDRO = ifelse(x$fullname == "Mycobacterium tuberculosis", MDRO, NA_real_))
+    prepare_drug <- function(ab) {
+      # returns vector values of drug
+      # if `ab` is a column name, looks up the values in `x`
+      if (length(ab) == 1 & is.character(ab)) {
+        if (ab %in% colnames(x)) {
+          ab <- x[, ab, drop = TRUE]
+        }
+      }
+      ab <- as.character(as.rsi(ab))
+      ab[is.na(ab)] <- ""
+      ab
+    }
+    drug_is_R <- function(ab) {
+      # returns logical vector
+      ab <- prepare_drug(ab)
+      if (length(ab) == 0) {
+        rep(FALSE, NROW(x))
+      } else if (length(ab) == 1) {
+        rep(ab, NROW(x)) == "R"
+      } else {
+        ab == "R"
+      }
+    }
+    drug_is_not_R <- function(ab) {
+      # returns logical vector
+      ab <- prepare_drug(ab)
+      if (length(ab) == 0) {
+        rep(TRUE, NROW(x))
+      } else if (length(ab) == 1) {
+        rep(ab, NROW(x)) != "R"
+      } else {
+        ab != "R"
+      }
+    }
+ 
+    x$mono_count <- 0
+    x[drug_is_R(INH), "mono_count"] <- x[drug_is_R(INH), "mono_count"] + 1
+    x[drug_is_R(RIF), "mono_count"] <- x[drug_is_R(RIF), "mono_count"] + 1
+    x[drug_is_R(ETH), "mono_count"] <- x[drug_is_R(ETH), "mono_count"] + 1
+    x[drug_is_R(PZA), "mono_count"] <- x[drug_is_R(PZA), "mono_count"] + 1
+    x[drug_is_R(RIB), "mono_count"] <- x[drug_is_R(RIB), "mono_count"] + 1
+    x[drug_is_R(RFP), "mono_count"] <- x[drug_is_R(RFP), "mono_count"] + 1
+    
+    x$mono <- x$mono_count > 0
+    x$poly <- x$mono_count > 1 & drug_is_not_R(RIF) & drug_is_not_R(INH)
+    x$mdr <- drug_is_R(RIF) & drug_is_R(INH)
+    x$xdr <- drug_is_R(LVX) | drug_is_R(MFX) | drug_is_R(GAT)
+    x$second <- drug_is_R(CAP) | drug_is_R(KAN) | drug_is_R(AMK)
+    x$xdr <- x$mdr & x$xdr & x$second
+    x$MDRO <- ifelse(x$xdr, 5,
+                     ifelse(x$mdr, 4,
+                            ifelse(x$poly, 3,
+                                   ifelse(x$mono, 2,
+                                          1))))
+    # keep all real TB, make other species NA
+    x$MDRO <- ifelse(x$fullname == "Mycobacterium tuberculosis", x$MDRO, NA_real_)
   }
   
   if (info == TRUE) {
-    cat(bold(paste0("=> Found ", sum(x$MDRO %in% c(2:5), na.rm = TRUE), " MDROs out of ", sum(!is.na(x$MDRO)), 
-                    " tested isolates (", percentage(sum(x$MDRO %in% c(2:5), na.rm = TRUE) / sum(!is.na(x$MDRO))), ")\n")))
+    if (sum(!is.na(x$MDRO) == 0)) {
+      cat(font_bold(paste0("=> Found 0 MDROs since no isolates are covered by the guideline")))
+    } else {
+      cat(font_bold(paste0("=> Found ", sum(x$MDRO %in% c(2:5), na.rm = TRUE), " MDROs out of ", sum(!is.na(x$MDRO)), 
+                           " isolates (", trimws(percentage(sum(x$MDRO %in% c(2:5), na.rm = TRUE) / sum(!is.na(x$MDRO)))), ")\n")))
+    }
   }
   
   # some more info on negative results

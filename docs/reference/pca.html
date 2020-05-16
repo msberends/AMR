@@ -82,7 +82,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.1.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.1.0.9004</span>
       </span>
     </div>
 
@@ -254,7 +254,7 @@
     </tr>
     <tr>
       <th>...</th>
-      <td><p>columns of <code>x</code> to be selected for PCA</p></td>
+      <td><p>columns of <code>x</code> to be selected for PCA, can be unquoted since it supports quasiquotation.</p></td>
     </tr>
     <tr>
       <th>retx</th>
@@ -315,6 +315,7 @@ The <a href='lifecycle.html'>lifecycle</a> of this function is <strong>maturing<
     <pre class="examples"><span class='co'># `example_isolates` is a dataset available in the AMR package.</span>
 <span class='co'># See ?example_isolates.</span>
 
+<span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
 <span class='co'># calculate the resistance per group first</span>
 <span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>dplyr</span>)
 <span class='no'>resistance_data</span> <span class='kw'>&lt;-</span> <span class='no'>example_isolates</span> <span class='kw'>%&gt;%</span>
@@ -329,7 +330,8 @@ The <a href='lifecycle.html'>lifecycle</a> of this function is <strong>maturing<
 <span class='no'>pca_result</span>
 <span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span>(<span class='no'>pca_result</span>)
 <span class='fu'><a href='https://rdrr.io/r/stats/biplot.html'>biplot</a></span>(<span class='no'>pca_result</span>)
-<span class='fu'><a href='ggplot_pca.html'>ggplot_pca</a></span>(<span class='no'>pca_result</span>) <span class='co'># a new and convenient plot function</span></pre>
+<span class='fu'><a href='ggplot_pca.html'>ggplot_pca</a></span>(<span class='no'>pca_result</span>) <span class='co'># a new and convenient plot function</span>
+}</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -345,7 +347,7 @@ The <a href='lifecycle.html'>lifecycle</a> of this function is <strong>maturing<
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
 </div>
 
       </footer>

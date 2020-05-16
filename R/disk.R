@@ -92,7 +92,6 @@ all_valid_disks <- function(x) {
 
 #' @rdname as.disk
 #' @export
-#' @importFrom dplyr %>%
 is.disk <- function(x) {
   inherits(x, "disk")
 }
@@ -123,7 +122,7 @@ print.disk <- function(x, ...) {
 #' @export
 pillar_shaft.disk <- function(x, ...) {
   out <- trimws(format(x))
-  out[is.na(x)] <- pillar::style_na(NA)
+  out[is.na(x)] <- font_red(NA)
   pillar::new_pillar_shaft_simple(out, align = "right", min_width = 3)
 }
 

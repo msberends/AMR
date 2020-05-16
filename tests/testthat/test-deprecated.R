@@ -22,9 +22,6 @@
 context("deprecated.R")
 
 test_that("deprecated functions work", {
-  expect_identical(suppressWarnings(p.symbol(seq(0, 1, 0.001))),
-                   p_symbol(seq(0, 1, 0.001)))
-  
   expect_equal(suppressWarnings(portion_S(example_isolates$AMX)), proportion_S(example_isolates$AMX))
   expect_equal(suppressWarnings(portion_SI(example_isolates$AMX)), proportion_SI(example_isolates$AMX))
   expect_equal(suppressWarnings(portion_I(example_isolates$AMX)), proportion_I(example_isolates$AMX))

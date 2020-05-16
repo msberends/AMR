@@ -27,13 +27,6 @@
 #' @export
 #' @keywords internal
 #' @name AMR-deprecated
-#' @rdname AMR-deprecated
-p.symbol <- function(...) {
-  .Deprecated("p_symbol()", package = "AMR")
-  p_symbol(...)
-}
-
-#' @rdname AMR-deprecated
 #' @export
 portion_R <- function(...) {
   .Deprecated("resistance()", package = "AMR")

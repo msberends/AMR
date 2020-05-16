@@ -358,30 +358,32 @@ mo_info <- function(x, language = get_locale(),  ...) {
 }
 
 #' @rdname mo_property
-#' @importFrom utils browseURL
-#' @importFrom dplyr %>% left_join select mutate case_when
 #' @export
 mo_url <- function(x, open = FALSE, ...) {
   mo <- as.mo(x = x, ... = ...)
   mo_names <- mo_name(mo)
   metadata <- get_mo_failures_uncertainties_renamed()
-
+  
   df <- data.frame(mo, stringsAsFactors = FALSE) %>%
-    left_join(select(microorganisms, mo, source, species_id), by = "mo") %>%
-    mutate(url = case_when(source == "CoL" ~
-                             paste0(gsub("{year}", catalogue_of_life$year, catalogue_of_life$url_CoL, fixed = TRUE), "details/species/id/", species_id),
-                           source == "DSMZ" ~
-                             paste0(catalogue_of_life$url_DSMZ, "/", unlist(lapply(strsplit(mo_names, ""), function(x) x[1]))),
-                           TRUE ~
-                             NA_character_))
-
+    left_join(select(microorganisms, mo, source, species_id), by = "mo")
+  df$url <- ifelse(df$source == "CoL",
+                   paste0(gsub("{year}",
+                               catalogue_of_life$year, 
+                               catalogue_of_life$url_CoL,
+                               fixed = TRUE), 
+                          "details/species/id/",
+                          df$species_id),
+                   ifelse(df$source == "DSMZ",
+                          paste0(catalogue_of_life$url_DSMZ, "/", unlist(lapply(strsplit(mo_names, ""), function(x) x[1]))),
+                          NA_character_))
   u <- df$url
   names(u) <- mo_names
+  
   if (open == TRUE) {
     if (length(u) > 1) {
       warning("only the first URL will be opened, as `browseURL()` only suports one string.")
     }
-    browseURL(u[1L])
+    utils::browseURL(u[1L])
   }
 
   load_mo_failures_uncertainties_renamed(metadata)
@@ -390,7 +392,6 @@ mo_url <- function(x, open = FALSE, ...) {
 
 
 #' @rdname mo_property
-#' @importFrom data.table data.table as.data.table setkey
 #' @export
 mo_property <- function(x, property = "fullname", language = get_locale(), ...) {
   if (length(property) != 1L) {
@@ -419,7 +420,7 @@ mo_validate <- function(x, property, ...) {
 
   # try to catch an error when inputting an invalid parameter
   # so the 'call.' can be set to FALSE
-  tryCatch(x[1L] %in% microorganisms[1, property],
+  tryCatch(x[1L] %in% MO_lookup[1, property, drop = TRUE],
            error = function(e) stop(e$message, call. = FALSE))
   
   if (is.mo(x) 
@@ -428,7 +429,7 @@ mo_validate <- function(x, property, ...) {
     # this will not reset mo_uncertainties and mo_failures
     # because it's already a valid MO
     x <- exec_as.mo(x, property = property, initial_search = FALSE, ...)
-  } else if (!all(x %in% pull(microorganisms, property))
+  } else if (!all(x %in% MO_lookup[, property, drop = TRUE])
              | Becker %in% c(TRUE, "all")
              | Lancefield %in% c(TRUE, "all")) {
     x <- exec_as.mo(x, property = property, ...)

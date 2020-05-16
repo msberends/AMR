@@ -30,7 +30,6 @@
 #' @return Ordered [`factor`] with new class [`mic`]
 #' @aliases mic
 #' @export
-#' @importFrom dplyr %>%
 #' @seealso [as.rsi()]
 #' @inheritSection AMR Read more on our website!
 #' @examples
@@ -52,7 +51,6 @@
 #'
 #' plot(mic_data)
 #' barplot(mic_data)
-#' freq(mic_data)
 as.mic <- function(x, na.rm = FALSE) {
   if (is.mic(x)) {
     x
@@ -138,7 +136,6 @@ all_valid_mics <- function(x) {
 
 #' @rdname as.mic
 #' @export
-#' @importFrom dplyr %>%
 is.mic <- function(x) {
   inherits(x, "mic")
 }
@@ -175,7 +172,6 @@ droplevels.mic <- function(x, exclude = ifelse(anyNA(levels(x)), NULL, NA), ...)
 
 #' @exportMethod print.mic
 #' @export
-#' @importFrom dplyr %>% tibble group_by summarise pull
 #' @noRd
 print.mic <- function(x, ...) {
   cat("Class 'mic'\n")
@@ -184,7 +180,6 @@ print.mic <- function(x, ...) {
 
 #' @exportMethod summary.mic
 #' @export
-#' @importFrom dplyr %>%
 #' @noRd
 summary.mic <- function(object, ...) {
   x <- object
@@ -241,7 +236,7 @@ barplot.mic <- function(height,
 #' @export
 pillar_shaft.mic <- function(x, ...) {
   out <- trimws(format(x))
-  out[is.na(x)] <- pillar::style_na(NA)
+  out[is.na(x)] <- font_red(NA)
   pillar::new_pillar_shaft_simple(out, align = "right", min_width = 4)
 }
 

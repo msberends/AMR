@@ -134,22 +134,22 @@ x <- resistance_predict(example_isolates,
 plot(x)
 ggplot_rsi_predict(x)
 
-# use dplyr so you can actually read it:
-library(dplyr)
-x <- example_isolates \%>\%
-  filter_first_isolate() \%>\%
-  filter(mo_genus(mo) == "Staphylococcus") \%>\%
-  resistance_predict("PEN", model = "binomial")
-plot(x)
+# using dplyr:
+if (!require("dplyr")) {
+  library(dplyr)
+  x <- example_isolates \%>\%
+    filter_first_isolate() \%>\%
+    filter(mo_genus(mo) == "Staphylococcus") \%>\%
+    resistance_predict("PEN", model = "binomial")
+  plot(x)
 
-
-# get the model from the object
-mymodel <- attributes(x)$model
-summary(mymodel)
-
+  # get the model from the object
+  mymodel <- attributes(x)$model
+  summary(mymodel)
+}
 
 # create nice plots with ggplot2 yourself
-if (!require(ggplot2)) {
+if (!require(ggplot2) & !require("dplyr")) {
 
   data <- example_isolates \%>\%
     filter(mo == as.mo("E. coli")) \%>\%

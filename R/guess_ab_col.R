@@ -27,8 +27,6 @@
 #' @param search_string a text to search `x` for, will be checked with [as.ab()] if this value is not a column in `x`
 #' @param verbose a logical to indicate whether additional info should be printed
 #' @details You can look for an antibiotic (trade) name or abbreviation and it will search `x` and the [antibiotics] data set for any column containing a name or code of that antibiotic. **Longer columns names take precendence over shorter column names.**
-#' @importFrom dplyr %>% select filter_all any_vars
-#' @importFrom crayon blue
 #' @return A column name of `x`, or `NULL` when no result is found.
 #' @export
 #' @inheritSection AMR Read more on our website!
@@ -103,23 +101,20 @@ guess_ab_col <- function(x = NULL, search_string = NULL, verbose = FALSE) {
     return(NULL)
   } else {
     if (verbose == TRUE) {
-      message(blue(paste0("NOTE: Using column `", bold(ab_result), "` as input for `", search_string,
+      message(font_blue(paste0("NOTE: Using column `", font_bold(ab_result), "` as input for `", search_string,
                           "` (", ab_name(search_string, language = "en", tolower = TRUE), ").")))
     }
     return(ab_result)
   }
 }
 
-
-#' @importFrom crayon blue bold
-#' @importFrom dplyr %>% mutate arrange pull
 get_column_abx <- function(x,
                            soft_dependencies = NULL,
                            hard_dependencies = NULL,
                            verbose = FALSE,
                            ...) {
 
-  message(blue("NOTE: Auto-guessing columns suitable for analysis..."), appendLF = FALSE)
+  message(font_blue("NOTE: Auto-guessing columns suitable for analysis..."), appendLF = FALSE)
   
   x <- as.data.frame(x, stringsAsFactors = FALSE)
   x_bak <- x
@@ -173,15 +168,15 @@ get_column_abx <- function(x,
   x <- x[order(names(x), x)]
   
   # succeeded with aut-guessing
-  message(blue("OK."))
+  message(font_blue("OK."))
 
   for (i in seq_len(length(x))) {
     if (verbose == TRUE & !names(x[i]) %in% names(duplicates)) {
-      message(blue(paste0("NOTE: Using column `", bold(x[i]), "` as input for `", names(x)[i],
+      message(font_blue(paste0("NOTE: Using column `", font_bold(x[i]), "` as input for `", names(x)[i],
                           "` (", ab_name(names(x)[i], tolower = TRUE), ").")))
     }
     if (names(x[i]) %in% names(duplicates)) {
-      warning(red(paste0("Using column `", bold(x[i]), "` as input for `", names(x)[i],
+      warning(font_red(paste0("Using column `", font_bold(x[i]), "` as input for `", names(x)[i],
                          "` (", ab_name(names(x)[i], tolower = TRUE),
                          "), although it was matched for multiple antibiotics or columns.")), 
               call. = FALSE, 
@@ -204,14 +199,11 @@ get_column_abx <- function(x,
     if (!all(soft_dependencies %in% names(x))) {
       # missing a soft dependency may lower the reliability
       missing <- soft_dependencies[!soft_dependencies %in% names(x)]
-      missing_txt <- data.frame(missing = missing,
-                                missing_names = ab_name(missing, tolower = TRUE),
-                                stringsAsFactors = FALSE) %>%
-        mutate(txt = paste0(bold(missing), " (", missing_names, ")")) %>%
-        arrange(missing_names) %>%
-        pull(txt)
-      message(blue("NOTE: Reliability will be improved if these antimicrobial results would be available too:",
-                   paste(missing_txt, collapse = ", ")))
+      missing_txt <- paste(paste0(ab_name(missing, tolower = TRUE, language = NULL), 
+                        " (", font_bold(missing, collapse = NULL), ")"), 
+                 collapse = ", ")
+      message(font_blue("NOTE: Reliability would be improved if these antimicrobial results would be available too:",
+                        missing_txt))
     }
   }
   x

@@ -22,13 +22,20 @@
 context("pca.R")
 
 test_that("PCA works", {
-  library(dplyr)
-  resistance_data <- example_isolates %>% 
-    filter(mo %in% as.mo(c("E. coli", "K. pneumoniae", "S. aureus"))) %>% 
-    select(mo, AMC, CXM, CTX, TOB, TMP) %>% 
-    group_by(order = mo_order(mo),       # group on anything, like order
-             genus = mo_genus(mo)) %>%   #  and genus as we do here
-    summarise_if(is.rsi, resistance, minimum = 0)
+  resistance_data <- structure(list(order = c("Bacillales", "Enterobacterales", "Enterobacterales"),
+                                    genus = c("Staphylococcus", "Escherichia", "Klebsiella"), 
+                                    AMC = c(0.00425, 0.13062, 0.10344),
+                                    CXM = c(0.00425, 0.05376, 0.10344),
+                                    CTX = c(0.00000, 0.02396, 0.05172), 
+                                    TOB = c(0.02325, 0.02597, 0.10344),
+                                    TMP = c(0.08387, 0.39141, 0.18367)),
+                               class = c("grouped_df", "tbl_df", "tbl", "data.frame"),
+                               row.names = c(NA, -3L), 
+                               groups = structure(list(order = c("Bacillales", "Enterobacterales"),
+                                                       .rows = list(1L, 2:3)),
+                                                  row.names = c(NA, -2L),
+                                                  class = c("tbl_df", "tbl", "data.frame"), 
+                                                  .drop = TRUE))
   
   pca_model <- pca(resistance_data)
   

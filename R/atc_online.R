@@ -56,7 +56,6 @@
 #' - `"ml"` = milliliter (e.g. eyedrops)
 #' @export
 #' @rdname atc_online
-#' @importFrom dplyr %>%
 #' @inheritSection AMR Read more on our website!
 #' @source <https://www.whocc.no/atc_ddd_alterations__cumulative/ddd_alterations/abbrevations/>
 #' @examples
@@ -77,12 +76,10 @@ atc_online_property <- function(atc_code,
                                 administration = "O",
                                 url = "https://www.whocc.no/atc_ddd_index/?code=%s&showdescription=no") {
   
+  stopifnot_installed_package(c("curl", "rvest", "xml2"))
+
   check_dataset_integrity()
-
-  if (!all(c("curl", "rvest", "xml2") %in% rownames(utils::installed.packages()))) {
-    stop("Packages 'xml2', 'rvest' and 'curl' are required for this function")
-  }
-
+  
   if (!all(atc_code %in% antibiotics)) {
     atc_code <- as.character(ab_atc(atc_code))
   }

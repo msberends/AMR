@@ -54,7 +54,7 @@ test_that("counts work", {
                            combination = count_susceptible(CIP, GEN)) %>%
                  pull(combination),
                c(253, 465, 192, 558))
-
+  
   # count_df
   expect_equal(
     example_isolates %>% select(AMX) %>% count_df() %>% pull(value),
