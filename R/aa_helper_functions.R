@@ -63,16 +63,14 @@ filter_join_worker <- function(x, y, by = NULL, type = c("anti", "semi")) {
 
 # No export, no Rd
 addin_insert_in <- function() {
-  if (!require("rstudioapi")) {
-    insertText(" %in% ")
-  }
+  stopifnot_installed_package("rstudioapi")
+  get("insertText", envir = asNamespace("rstudioapi"))(" %in% ")
 }
 
 # No export, no Rd
 addin_insert_like <- function() {
-  if (!require("rstudioapi")) {
-    insertText(" %like% ")
-  }
+  stopifnot_installed_package("rstudioapi")
+  get("insertText", envir = asNamespace("rstudioapi"))(" %like% ")
 }
 
 check_dataset_integrity <- function() {

@@ -59,7 +59,7 @@
 #' @inheritSection AMR Read more on our website!
 #' @source <https://www.whocc.no/atc_ddd_alterations__cumulative/ddd_alterations/abbrevations/>
 #' @examples
-#' \donttest{
+#' \dontrun{
 #' # oral DDD (Defined Daily Dose) of amoxicillin
 #' atc_online_property("J01CA04", "DDD", "O")
 #' # parenteral DDD (Defined Daily Dose) of amoxicillin
@@ -77,16 +77,20 @@ atc_online_property <- function(atc_code,
                                 url = "https://www.whocc.no/atc_ddd_index/?code=%s&showdescription=no") {
   
   stopifnot_installed_package(c("curl", "rvest", "xml2"))
+  has_internet <- get("has_internet", envir = asNamespace("curl"))
+  html_attr <- get("html_attr", envir = asNamespace("rvest"))
+  html_children <- get("html_children", envir = asNamespace("rvest"))
+  html_node <- get("html_node", envir = asNamespace("rvest"))
+  html_nodes <- get("html_nodes", envir = asNamespace("rvest"))
+  html_table <- get("html_table", envir = asNamespace("rvest"))
+  html_text <- get("html_text", envir = asNamespace("rvest"))
+  read_html <- get("read_html", envir = asNamespace("xml2"))
 
   check_dataset_integrity()
   
   if (!all(atc_code %in% antibiotics)) {
     atc_code <- as.character(ab_atc(atc_code))
   }
-  
-  require("curl")
-  require("xml2")
-  require("rvest")
   
   if (!has_internet()) {
     message("There appears to be no internet connection.")

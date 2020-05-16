@@ -62,44 +62,45 @@
 #' @export
 #' @inheritSection AMR Read more on our website!
 #' @examples
-#' library(dplyr)
-#' library(ggplot2)
-#'
-#' # get antimicrobial results for drugs against a UTI:
-#' ggplot(example_isolates %>% select(AMX, NIT, FOS, TMP, CIP)) +
-#'   geom_rsi()
-#'
-#' # prettify the plot using some additional functions:
-#' df <- example_isolates %>% select(AMX, NIT, FOS, TMP, CIP)
-#' ggplot(df) +
-#'   geom_rsi() +
-#'   scale_y_percent() +
-#'   scale_rsi_colours() +
-#'   labels_rsi_count() +
-#'   theme_rsi()
-#'
-#' # or better yet, simplify this using the wrapper function - a single command:
-#' example_isolates %>%
-#'   select(AMX, NIT, FOS, TMP, CIP) %>%
-#'   ggplot_rsi()
-#'
-#' # get only proportions and no counts:
-#' example_isolates %>%
-#'   select(AMX, NIT, FOS, TMP, CIP) %>%
-#'   ggplot_rsi(datalabels = FALSE)
-#'
-#' # add other ggplot2 parameters as you like:
-#' example_isolates %>%
-#'   select(AMX, NIT, FOS, TMP, CIP) %>%
-#'   ggplot_rsi(width = 0.5,
-#'              colour = "black",
-#'              size = 1,
-#'              linetype = 2,
-#'              alpha = 0.25)
-#'
-#' example_isolates %>%
-#'   select(AMX) %>%
-#'   ggplot_rsi(colours = c(SI = "yellow"))
+#' if (!require("ggplot2") & !require("dplyr")) {
+#'  
+#'   # get antimicrobial results for drugs against a UTI:
+#'   ggplot(example_isolates %>% select(AMX, NIT, FOS, TMP, CIP)) +
+#'     geom_rsi()
+#'  
+#'   # prettify the plot using some additional functions:
+#'   df <- example_isolates %>% select(AMX, NIT, FOS, TMP, CIP)
+#'   ggplot(df) +
+#'     geom_rsi() +
+#'     scale_y_percent() +
+#'     scale_rsi_colours() +
+#'     labels_rsi_count() +
+#'     theme_rsi()
+#'  
+#'   # or better yet, simplify this using the wrapper function - a single command:
+#'   example_isolates %>%
+#'     select(AMX, NIT, FOS, TMP, CIP) %>%
+#'     ggplot_rsi()
+#'  
+#'   # get only proportions and no counts:
+#'   example_isolates %>%
+#'     select(AMX, NIT, FOS, TMP, CIP) %>%
+#'     ggplot_rsi(datalabels = FALSE)
+#'  
+#'   # add other ggplot2 parameters as you like:
+#'   example_isolates %>%
+#'     select(AMX, NIT, FOS, TMP, CIP) %>%
+#'     ggplot_rsi(width = 0.5,
+#'                colour = "black",
+#'                size = 1,
+#'                linetype = 2,
+#'                alpha = 0.25)
+#'  
+#'   example_isolates %>%
+#'     select(AMX) %>%
+#'     ggplot_rsi(colours = c(SI = "yellow"))
+#'   
+#' }
 #'   
 #' \dontrun{
 #' 

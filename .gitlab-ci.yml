@@ -62,6 +62,7 @@ R-release:
   allow_failure: false
   script:
     - Rscript -e 'sessionInfo()'
+    - Rscript -e 'AMR::eucast_rules(AMR::example_isolates_unclean, info = TRUE)'
     # install missing and outdated packages
     - Rscript -e 'source(".gitlab-ci.R"); gl_update_pkg_all(repos = "https://cran.rstudio.com", quiet = TRUE, install_pkgdown = TRUE,  install_lintr = TRUE)'
     - Rscript -e 'devtools::test(stop_on_failure = FALSE)'
@@ -77,6 +78,7 @@ R-devel:
   allow_failure: false
   script:
     - Rscriptdevel -e 'sessionInfo()'
+    - Rscriptdevel -e 'AMR::eucast_rules(AMR::example_isolates_unclean, info = TRUE)'
     # install missing and outdated packages
     - Rscriptdevel -e 'source(".gitlab-ci.R"); gl_update_pkg_all(repos = "https://cran.rstudio.com", quiet = TRUE, install_pkgdown = TRUE,  install_lintr = TRUE)'
     - Rscriptdevel -e 'devtools::test(stop_on_failure = FALSE)'

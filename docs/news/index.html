@@ -81,7 +81,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.1.0.9003</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.1.0.9006</span>
       </span>
     </div>
 
@@ -229,21 +229,39 @@
       <small>Source: <a href='https://gitlab.com/msberends/AMR/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
-    <div id="amr-1-1-0-9003" class="section level1">
-<h1 class="page-header" data-toc-text="1.1.0.9003">
-<a href="#amr-1-1-0-9003" class="anchor"></a>AMR 1.1.0.9003<small> Unreleased </small>
+    <div id="amr-1-1-0-9006" class="section level1">
+<h1 class="page-header" data-toc-text="1.1.0.9006">
+<a href="#amr-1-1-0-9006" class="anchor"></a>AMR 1.1.0.9006<small> Unreleased </small>
 </h1>
-<div id="last-updated-01-may-2020" class="section level2">
+<div id="last-updated-16-may-2020" class="section level2">
 <h2 class="hasAnchor">
-<a href="#last-updated-01-may-2020" class="anchor"></a><small>Last updated: 01-May-2020</small>
+<a href="#last-updated-16-may-2020" class="anchor"></a><small>Last updated: 16-May-2020</small>
 </h2>
+<div id="breaking" class="section level3">
+<h3 class="hasAnchor">
+<a href="#breaking" class="anchor"></a>Breaking</h3>
+<ul>
+<li>Removed previously deprecated function <code>p.symbol()</code> - it was replaced with <code><a href="../reference/p_symbol.html">p_symbol()</a></code>
+</li>
+</ul>
+</div>
 <div id="changed" class="section level3">
 <h3 class="hasAnchor">
 <a href="#changed" class="anchor"></a>Changed</h3>
 <ul>
 <li>Small fix for some text input that could not be coerced as valid MIC values</li>
-<li>Better support for the tidyverse. The tidyverse now heavily relies on the <code>vctrs</code> package for data transformation and data joining. In newer versions of e.g. the <code>dplyr</code> package, a function like <code><a href="https://dplyr.tidyverse.org/reference/bind.html">bind_rows()</a></code> would not preserve the right class for microorganisms (class <code>mo</code>) and antibiotics (class <code>ab</code>). This is fixed in this version.</li>
+<li>Fix for cases where some functions of newer versions of the <code>dplyr</code> package (such as <code><a href="https://dplyr.tidyverse.org/reference/bind.html">bind_rows()</a></code>) would not preserve the right class for microorganisms (class <code>mo</code>) and antibiotics (class <code>ab</code>)</li>
 <li>Fixed interpretation of generic CLSI interpretation rules (thanks to Anthony Underwood)</li>
+<li>Added official drug names to verbose output of <code><a href="../reference/eucast_rules.html">eucast_rules()</a></code>
+</li>
+</ul>
+</div>
+<div id="other" class="section level3">
+<h3 class="hasAnchor">
+<a href="#other" class="anchor"></a>Other</h3>
+<ul>
+<li>Removed dependency on <strong>all</strong> packages that were needed for the <code>AMR</code> package to work properly: <code>crayon</code>, <code>data.table</code>, <code>dplyr</code>, <code>ggplot2</code>, <code>R6</code>, <code>rlang</code> and <code>tidyr</code>. This is a major code change, but will probably not be noticeable by users. Making this package independent on especially the tidyverse (packages <code>dplyr</code>, <code>ggplot2</code> and <code>tidyr</code>) tremendously increases sustainability on the long term, since tidyverse functions change quite often. Most of our functions are replaced with versions that only rely on base R, which keeps this package fully functional for many years to come, without requiring a lot of maintenance to keep up with other packages anymore. The only dependencies that remained are for extending methods of other packages, like <code>pillar</code> and <code>vctrs</code> for printing and working with tibbles using our classes <code>mo</code> and <code>ab</code>.</li>
+<li>Removed function <code>read.4d()</code>, that was only useful for reading from an old test database.</li>
 </ul>
 </div>
 </div>
@@ -280,9 +298,9 @@
 <li>Added generic CLSI rules for R/SI interpretation using <code><a href="../reference/as.rsi.html">as.rsi()</a></code> for years 2010-2019 (thanks to Anthony Underwood)</li>
 </ul>
 </div>
-<div id="other" class="section level3">
+<div id="other-1" class="section level3">
 <h3 class="hasAnchor">
-<a href="#other" class="anchor"></a>Other</h3>
+<a href="#other-1" class="anchor"></a>Other</h3>
 <ul>
 <li>Support for the upcoming <code>dplyr</code> version 1.0.0</li>
 <li>More robust assigning for classes <code>rsi</code> and <code>mic</code>
@@ -378,9 +396,9 @@
 </li>
 </ul>
 </div>
-<div id="other-1" class="section level3">
+<div id="other-2" class="section level3">
 <h3 class="hasAnchor">
-<a href="#other-1" class="anchor"></a>Other</h3>
+<a href="#other-2" class="anchor"></a>Other</h3>
 <ul>
 <li>Add a <code>CITATION</code> file</li>
 <li>Full support for the upcoming R 4.0</li>
@@ -392,9 +410,9 @@
 <h1 class="page-header" data-toc-text="0.9.0">
 <a href="#amr-0-9-0" class="anchor"></a>AMR 0.9.0<small> 2019-11-29 </small>
 </h1>
-<div id="breaking" class="section level3">
+<div id="breaking-1" class="section level3">
 <h3 class="hasAnchor">
-<a href="#breaking" class="anchor"></a>Breaking</h3>
+<a href="#breaking-1" class="anchor"></a>Breaking</h3>
 <ul>
 <li>Adopted Adeolu <em>et al.</em> (2016), <a href="https://www.ncbi.nlm.nih.gov/pubmed/27620848">PMID 27620848</a> for the <code>microorganisms</code> data set, which means that the new order Enterobacterales now consists of a part of the existing family Enterobacteriaceae, but that this family has been split into other families as well (like <em>Morganellaceae</em> and <em>Yersiniaceae</em>). Although published in 2016, this information is not yet in the Catalogue of Life version of 2019. All MDRO determinations with <code><a href="../reference/mdro.html">mdro()</a></code> will now use the Enterobacterales order for all guidelines before 2016 that were dependent on the Enterobacteriaceae family.
 <ul>
@@ -477,9 +495,9 @@
 </li>
 </ul>
 </div>
-<div id="other-2" class="section level3">
+<div id="other-3" class="section level3">
 <h3 class="hasAnchor">
-<a href="#other-2" class="anchor"></a>Other</h3>
+<a href="#other-3" class="anchor"></a>Other</h3>
 <ul>
 <li>Rewrote the complete documentation to markdown format, to be able to use the very latest version of the great <a href="https://roxygen2.r-lib.org/index.html">Roxygen2</a>, released in November 2019. This tremously improved the documentation quality, since the rewrite forced us to go over all texts again and make changes where needed.</li>
 <li>Change dependency on <code>clean</code> to <code>cleaner</code>, as this package was renamed accordingly upon CRAN request</li>
@@ -491,9 +509,9 @@
 <h1 class="page-header" data-toc-text="0.8.0">
 <a href="#amr-0-8-0" class="anchor"></a>AMR 0.8.0<small> 2019-10-15 </small>
 </h1>
-<div id="breaking-1" class="section level3">
+<div id="breaking-2" class="section level3">
 <h3 class="hasAnchor">
-<a href="#breaking-1" class="anchor"></a>Breaking</h3>
+<a href="#breaking-2" class="anchor"></a>Breaking</h3>
 <ul>
 <li>
 <p>Determination of first isolates now <strong>excludes</strong> all ‘unknown’ microorganisms at default, i.e. microbial code <code>"UNKNOWN"</code>. They can be included with the new parameter <code>include_unknown</code>:</p>
@@ -619,7 +637,7 @@ Since this is a major change, usage of the old <code>also_single_tested</code> w
 <li>Improved <code><a href="../reference/filter_ab_class.html">filter_ab_class()</a></code> to be more reliable and to support 5th generation cephalosporins</li>
 <li>Function <code><a href="../reference/availability.html">availability()</a></code> now uses <code><a href="../reference/AMR-deprecated.html">portion_R()</a></code> instead of <code><a href="../reference/AMR-deprecated.html">portion_IR()</a></code>, to comply with EUCAST insights</li>
 <li>Functions <code><a href="../reference/age.html">age()</a></code> and <code><a href="../reference/age_groups.html">age_groups()</a></code> now have a <code>na.rm</code> parameter to remove empty values</li>
-<li>Renamed function <code><a href="../reference/AMR-deprecated.html">p.symbol()</a></code> to <code><a href="../reference/p_symbol.html">p_symbol()</a></code> (the former is now deprecated and will be removed in a future version)</li>
+<li>Renamed function <code>p.symbol()</code> to <code><a href="../reference/p_symbol.html">p_symbol()</a></code> (the former is now deprecated and will be removed in a future version)</li>
 <li>Using negative values for <code>x</code> in <code><a href="../reference/age_groups.html">age_groups()</a></code> will now introduce <code>NA</code>s and not return an error anymore</li>
 <li>Fix for determining the system’s language</li>
 <li>Fix for <code><a href="../reference/key_antibiotics.html">key_antibiotics()</a></code> on foreign systems</li>
@@ -628,9 +646,9 @@ Since this is a major change, usage of the old <code>also_single_tested</code> w
 </li>
 <li>Added more MIC factor levels (<code><a href="../reference/as.mic.html">as.mic()</a></code>)</li>
 </ul>
-<div id="other-3" class="section level4">
+<div id="other-4" class="section level4">
 <h4 class="hasAnchor">
-<a href="#other-3" class="anchor"></a>Other</h4>
+<a href="#other-4" class="anchor"></a>Other</h4>
 <ul>
 <li>Added Prof. Dr. Casper Albers as doctoral advisor and added Dr. Judith Fonville, Eric Hazenberg, Dr. Bart Meijer, Dr. Dennis Souverein and Annick Lenglet as contributors</li>
 <li>Cleaned the coding style of every single syntax line in this package with the help of the <code>lintr</code> package</li>
@@ -711,9 +729,9 @@ Since this is a major change, usage of the old <code>also_single_tested</code> w
 </li>
 </ul>
 </div>
-<div id="other-4" class="section level4">
+<div id="other-5" class="section level4">
 <h4 class="hasAnchor">
-<a href="#other-4" class="anchor"></a>Other</h4>
+<a href="#other-5" class="anchor"></a>Other</h4>
 <ul>
 <li>Fixed a note thrown by CRAN tests</li>
 </ul>
@@ -807,9 +825,9 @@ Please <a href="https://gitlab.com/msberends/AMR/issues/new?issue%5Btitle%5D=EUC
 <li><p>Fix for <code><a href="../reference/mo_property.html">mo_shortname()</a></code> where species would not be determined correctly</p></li>
 </ul>
 </div>
-<div id="other-5" class="section level4">
+<div id="other-6" class="section level4">
 <h4 class="hasAnchor">
-<a href="#other-5" class="anchor"></a>Other</h4>
+<a href="#other-6" class="anchor"></a>Other</h4>
 <ul>
 <li>Support for R 3.6.0 and later by providing support for <a href="https://developer.r-project.org/Blog/public/2019/02/14/staged-install/index.html">staged install</a>
 </li>
@@ -1055,9 +1073,9 @@ Using <code><a href="../reference/as.mo.html">as.mo(..., allow_uncertain = 3)</a
 <li>if using different lengths of pattern and x in <code><a href="../reference/like.html">%like%</a></code>, it will now return the call</li>
 </ul>
 </div>
-<div id="other-6" class="section level4">
+<div id="other-7" class="section level4">
 <h4 class="hasAnchor">
-<a href="#other-6" class="anchor"></a>Other</h4>
+<a href="#other-7" class="anchor"></a>Other</h4>
 <ul>
 <li>Updated licence text to emphasise GPL 2.0 and that this is an R package.</li>
 </ul>
@@ -1180,9 +1198,9 @@ Using <code><a href="../reference/as.mo.html">as.mo(..., allow_uncertain = 3)</a
 <li><p>Percentages will now will rounded more logically (e.g. in <code>freq</code> function)</p></li>
 </ul>
 </div>
-<div id="other-7" class="section level4">
+<div id="other-8" class="section level4">
 <h4 class="hasAnchor">
-<a href="#other-7" class="anchor"></a>Other</h4>
+<a href="#other-8" class="anchor"></a>Other</h4>
 <ul>
 <li>New dependency on package <code>crayon</code>, to support formatted text in the console</li>
 <li>Dependency <code>tidyr</code> is now mandatory (went to <code>Import</code> field) since <code>portion_df</code> and <code>count_df</code> rely on it</li>
@@ -1317,9 +1335,9 @@ Using <code><a href="../reference/as.mo.html">as.mo(..., allow_uncertain = 3)</a
 </li>
 </ul>
 </div>
-<div id="other-8" class="section level4">
+<div id="other-9" class="section level4">
 <h4 class="hasAnchor">
-<a href="#other-8" class="anchor"></a>Other</h4>
+<a href="#other-9" class="anchor"></a>Other</h4>
 <ul>
 <li>More unit tests to ensure better integrity of functions</li>
 </ul>
@@ -1446,9 +1464,9 @@ Using <code><a href="../reference/as.mo.html">as.mo(..., allow_uncertain = 3)</a
 <li>Other small fixes</li>
 </ul>
 </div>
-<div id="other-9" class="section level4">
+<div id="other-10" class="section level4">
 <h4 class="hasAnchor">
-<a href="#other-9" class="anchor"></a>Other</h4>
+<a href="#other-10" class="anchor"></a>Other</h4>
 <ul>
 <li>Added integration tests (check if everything works as expected) for all releases of R 3.1 and higher
 <ul>
@@ -1508,9 +1526,9 @@ Using <code><a href="../reference/as.mo.html">as.mo(..., allow_uncertain = 3)</a
 <li>Functions <code>as.rsi</code> and <code>as.mic</code> now add the package name and version as attributes</li>
 </ul>
 </div>
-<div id="other-10" class="section level4">
+<div id="other-11" class="section level4">
 <h4 class="hasAnchor">
-<a href="#other-10" class="anchor"></a>Other</h4>
+<a href="#other-11" class="anchor"></a>Other</h4>
 <ul>
 <li>Expanded <code>README.md</code> with more examples</li>
 <li>Added <a href="https://orcid.org">ORCID</a> of authors to DESCRIPTION file</li>
