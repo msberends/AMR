@@ -1,3 +1,5 @@
+# from https://github.com/krlmlr/r-appveyor/tree/master/scripts
+
 if ( -not(Test-Path Env:\CRAN) ) {
   $CRAN = "https://cran.rstudio.com"
 }
@@ -44,7 +46,7 @@ Function TravisTool
       [string[]]$Params
   )
 
-  Exec { bash.exe ../travis_tool.sh $Params }
+  Exec { bash.exe ../travis-tool.sh $Params }
 }
 
 Function InstallR {
@@ -100,6 +102,7 @@ Function InstallR {
   Progress ("URL path: " + $url_path)
 
   $rurl = $CRAN + "/bin/windows/base/" + $url_path + "R-" + $version + "-win.exe"
+  $global:rversion = $version
 
   Progress ("Downloading R from: " + $rurl)
   & "C:\Program Files\Git\mingw64\bin\curl.exe" -s -o ../R-win.exe -L $rurl
@@ -117,16 +120,28 @@ Function InstallR {
   Rscript -e "sessionInfo()"
 }
 
+Function InstallRtools40 {
+  $rtoolsurl = $CRAN + "/bin/windows/Rtools/rtools40-x86_64.exe"
+
+  Progress ("Downloading Rtools40 from: " + $rtoolsurl)
+  & "C:\Program Files\Git\mingw64\bin\curl.exe" -s -o ../rtools40-x86_64.exe -L $rtoolsurl
+
+  Progress "Running Rtools40 installer"
+  Start-Process -FilePath ..\rtools40-x86_64.exe -ArgumentList /VERYSILENT -NoNewWindow -Wait
+
+  Progress "Setting PATH"
+  $env:PATH = 'c:\rtools40\usr\bin;c:\rtools40\mingw64\bin;' + $env:PATH
+}
+
 Function InstallRtools {
   if ( -not(Test-Path Env:\RTOOLS_VERSION) ) {
-    Progress "Determining Rtools version"
-    $rtoolsver = $(Invoke-WebRequest ($CRAN + "/bin/windows/Rtools/VERSION.txt")).Content.Split(' ')[2].Split('.')[0..1] -Join ''
+    $rtoolsver = '35'
   }
   Else {
     $rtoolsver = $env:RTOOLS_VERSION
   }
 
-  $rtoolsurl = $CRAN + "/bin/windows/Rtools/Rtools$rtoolsver-x86_64.exe"
+  $rtoolsurl = $CRAN + "/bin/windows/Rtools/Rtools$rtoolsver.exe"
 
   Progress ("Downloading Rtools from: " + $rtoolsurl)
   & "C:\Program Files\Git\mingw64\bin\curl.exe" -s -o ../Rtools-current.exe -L $rtoolsurl
@@ -165,24 +180,28 @@ Function Bootstrap {
   InstallR
 
   if ((Test-Path "src") -or ($env:USE_RTOOLS -eq "true") -or ($env:USE_RTOOLS -eq "yes")) {
-    InstallRtools
+    if ($rversion.StartsWith("3")) {
+      InstallRtools
+    } Else {
+      InstallRtools40
+    }
   }
   Else {
     Progress "Skipping download of Rtools because src/ directory is missing."
   }
 
-  Progress "Downloading and installing travis_tool.sh"
-  
+  Progress "Downloading and installing travis-tool.sh"
   cp "tests\appveyor\travis_tool.sh" "..\travis_tool.sh"
-  echo '@bash.exe ../travis_tool.sh %*' | Out-File -Encoding ASCII .\travis_tool.sh.cmd
-  cat .\travis_tool.sh.cmd
-  bash -c "( echo; echo '^travis_tool\.sh\.cmd$' ) >> .Rbuildignore"
+  # Invoke-WebRequest https://raw.githubusercontent.com/krlmlr/r-appveyor/master/r-travis/scripts/travis-tool.sh -OutFile "..\travis-tool.sh"
+  echo '@bash.exe ../travis-tool.sh %*' | Out-File -Encoding ASCII .\travis-tool.sh.cmd
+  cat .\travis-tool.sh.cmd
+  bash -c "( echo; echo '^travis-tool\.sh\.cmd$' ) >> .Rbuildignore"
   cat .\.Rbuildignore
 
   $env:PATH.Split(";")
 
   Progress "Setting R_LIBS_USER"
-  $env:R_LIBS_USER = 'c:\RLibrary'
+  $env:R_LIBS_USER = 'c:\RLibrary\' + $rversion.Substring(0,3)
   if ( -not(Test-Path $env:R_LIBS_USER) ) {
     mkdir $env:R_LIBS_USER
   }

@@ -1,6 +1,6 @@
 Package: AMR
-Version: 1.1.0.9007
-Date: 2020-05-16
+Version: 1.1.0.9008
+Date: 2020-05-17
 Title: Antimicrobial Resistance Analysis
 Authors@R: c(
     person(role = c("aut", "cre"), 
@@ -36,8 +36,6 @@ Description: Functions to simplify the analysis and prediction of Antimicrobial
     Standards Institute (2014) <isbn: 1-56238-899-1>.
 Depends:
     R (>= 3.1.0)
-Enhances:
-    ggplot2
 Imports:
     backports,
     cleaner,
@@ -47,6 +45,7 @@ Imports:
 Suggests:
     covr,
     dplyr,
+    ggplot2,
     knitr,
     microbenchmark,
     rmarkdown,

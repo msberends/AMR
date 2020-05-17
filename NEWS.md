@@ -1,5 +1,5 @@
-# AMR 1.1.0.9007
-## <small>Last updated: 16-May-2020</small>
+# AMR 1.1.0.9008
+## <small>Last updated: 17-May-2020</small>
 
 ### Breaking 
 * Removed previously deprecated function `p.symbol()` - it was replaced with `p_symbol()`
