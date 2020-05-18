@@ -214,11 +214,9 @@ key_antibiotics <- function(x,
     warning("only using ", length(gram_negative), " different antibiotics as key antibiotics for Gram-negatives. See ?key_antibiotics.", call. = FALSE)
   }
 
-  # join to microorganisms data set
-  x <- x %>% as.data.frame(stringsAsFactors = FALSE)
+  x <- as.data.frame(x, stringsAsFactors = FALSE)
   x[, col_mo] <- as.mo(x[, col_mo, drop = TRUE])
   x$gramstain <- mo_gramstain(x[, col_mo, drop = TRUE], language = NULL)
-  
   x$key_ab <- NA_character_
   
   # Gram +

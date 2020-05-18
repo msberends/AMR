@@ -98,10 +98,7 @@ To conduct an analysis of antimicrobial resistance, you should only include the 
 
 All isolates with a microbial ID of \code{NA} will be excluded as first isolate.
 
-The functions \code{\link[=filter_first_isolate]{filter_first_isolate()}} and \code{\link[=filter_first_weighted_isolate]{filter_first_weighted_isolate()}} are helper functions to quickly filter on first isolates. The function \code{\link[=filter_first_isolate]{filter_first_isolate()}} is essentially equal to:\preformatted{ x \%>\%
-   mutate(only_firsts = first_isolate(x, ...)) \%>\%
-   filter(only_firsts == TRUE) \%>\%
-   select(-only_firsts)
+The functions \code{\link[=filter_first_isolate]{filter_first_isolate()}} and \code{\link[=filter_first_weighted_isolate]{filter_first_weighted_isolate()}} are helper functions to quickly filter on first isolates. The function \code{\link[=filter_first_isolate]{filter_first_isolate()}} is essentially equal to one of:\preformatted{ x \%>\% filter(first_isolate(., ...))
 }
 
 The function \code{\link[=filter_first_weighted_isolate]{filter_first_weighted_isolate()}} is essentially equal to:\preformatted{ x \%>\%
@@ -109,7 +106,7 @@ The function \code{\link[=filter_first_weighted_isolate]{filter_first_weighted_i
    mutate(only_weighted_firsts = first_isolate(x,
                                                col_keyantibiotics = "keyab", ...)) \%>\%
    filter(only_weighted_firsts == TRUE) \%>\%
-   select(-only_weighted_firsts)
+   select(-only_weighted_firsts, -keyab)
 }
 }
 \section{Key antibiotics}{

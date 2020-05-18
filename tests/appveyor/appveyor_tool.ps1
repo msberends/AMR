@@ -191,7 +191,7 @@ Function Bootstrap {
   }
 
   Progress "Downloading and installing travis-tool.sh"
-  cp "tests\appveyor\travis_tool.sh" "..\travis_tool.sh"
+  cp "tests\appveyor\travis_tool.sh" "..\travis-tool.sh"
   # Invoke-WebRequest https://raw.githubusercontent.com/krlmlr/r-appveyor/master/r-travis/scripts/travis-tool.sh -OutFile "..\travis-tool.sh"
   echo '@bash.exe ../travis-tool.sh %*' | Out-File -Encoding ASCII .\travis-tool.sh.cmd
   cat .\travis-tool.sh.cmd

@@ -188,5 +188,13 @@ test_that("first isolates work", {
   test_unknown$mo <- ifelse(test_unknown$mo == "UNKNOWN", NA, test_unknown$mo)
   expect_equal(sum(first_isolate(test_unknown)),
                1062)
-
+  
+  # shortcuts
+  expect_identical(filter_first_isolate(example_isolates),
+                   subset(example_isolates, first_isolate(example_isolates)))
+  ex <- example_isolates
+  ex$keyab <- key_antibiotics(ex)
+  expect_identical(filter_first_weighted_isolate(example_isolates),
+                   subset(example_isolates, first_isolate(ex)))
+  
 })

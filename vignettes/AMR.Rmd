@@ -30,7 +30,7 @@ knitr::opts_chunk$set(
 
 Conducting antimicrobial resistance analysis unfortunately requires in-depth knowledge from different scientific fields, which makes it hard to do right. At least, it requires:
 
-* Good questions (always start with these!)
+* Good questions (always start with those!)
 * A thorough understanding of (clinical) epidemiology, to understand the clinical and epidemiological relevance and possible bias of results
 * A thorough understanding of (clinical) microbiology/infectious diseases, to understand which microorganisms are causal to which infections and the implications of pharmaceutical treatment, as well as understanding intrinsic and acquired microbial resistance
 * Experience with data analysis with microbiological tests and their results, to understand the determination and limitations of MIC values and their interpretations to RSI values

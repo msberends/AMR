@@ -46,12 +46,9 @@
 #'
 #' All isolates with a microbial ID of `NA` will be excluded as first isolate.
 #'
-#' The functions [filter_first_isolate()] and [filter_first_weighted_isolate()] are helper functions to quickly filter on first isolates. The function [filter_first_isolate()] is essentially equal to:
+#' The functions [filter_first_isolate()] and [filter_first_weighted_isolate()] are helper functions to quickly filter on first isolates. The function [filter_first_isolate()] is essentially equal to one of:
 #' ```
-#'  x %>%
-#'    mutate(only_firsts = first_isolate(x, ...)) %>%
-#'    filter(only_firsts == TRUE) %>%
-#'    select(-only_firsts)
+#'  x %>% filter(first_isolate(., ...))
 #' ```
 #' The function [filter_first_weighted_isolate()] is essentially equal to:
 #' ```
@@ -60,7 +57,7 @@
 #'    mutate(only_weighted_firsts = first_isolate(x,
 #'                                                col_keyantibiotics = "keyab", ...)) %>%
 #'    filter(only_weighted_firsts == TRUE) %>%
-#'    select(-only_weighted_firsts)
+#'    select(-only_weighted_firsts, -keyab)
 #' ```
 #' @section Key antibiotics:
 #' There are two ways to determine whether isolates can be included as first *weighted* isolates which will give generally the same results:
@@ -451,7 +448,7 @@ filter_first_isolate <- function(x,
                                  col_patient_id = NULL,
                                  col_mo = NULL,
                                  ...) {
-  filter(x, first_isolate(x = x,
+  subset(x, first_isolate(x = x,
                           col_date = col_date,
                           col_patient_id = col_patient_id,
                           col_mo = col_mo,
@@ -466,15 +463,23 @@ filter_first_weighted_isolate <- function(x,
                                           col_mo = NULL,
                                           col_keyantibiotics = NULL,
                                           ...) {
-  tbl_keyab <- x %>%
-    mutate(keyab = suppressMessages(key_antibiotics(.,
-                                                    col_mo = col_mo,
-                                                    ...))) %>%
-    mutate(firsts = first_isolate(.,
-                                  col_date = col_date,
-                                  col_patient_id = col_patient_id,
-                                  col_mo = col_mo,
-                                  col_keyantibiotics = "keyab",
-                                  ...))
-  x[which(tbl_keyab$firsts == TRUE), ]
+  y <- x
+  if (is.null(col_keyantibiotics)) {
+    # first try to look for it
+    col_keyantibiotics <- search_type_in_df(x = x, type = "keyantibiotics")
+    # still NULL? Then create it since we are calling filter_first_WEIGHTED_isolate()
+    if (is.null(col_keyantibiotics)) {
+      y$keyab <- suppressMessages(key_antibiotics(x,
+                                                  col_mo = col_mo,
+                                                  ...))
+      col_keyantibiotics <- "keyab"
+    }
+  }
+
+  subset(x, first_isolate(x = y,
+                          col_date = col_date,
+                          col_patient_id = col_patient_id,
+                          col_mo = col_mo,
+                          col_keyantibiotics = col_keyantibiotics,
+                          ...))
 }

@@ -96,7 +96,6 @@ reference:
     - "`eucast_rules`"
     - "`guess_ab_col`"
     - "`mo_source`"
-    - "`read.4D`"
   - title: "Enhancing your data"
     desc: >
       Functions to add new data to your existing data, such as the determination

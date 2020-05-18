@@ -132,7 +132,7 @@ atc_online_property <- function(atc_code,
 
   for (i in seq_len(length(atc_code))) {
 
-    progress$tick()$print()
+    progress$tick()
 
     atc_url <- sub("%s", atc_code[i], url, fixed = TRUE)
 

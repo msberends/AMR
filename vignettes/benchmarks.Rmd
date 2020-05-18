@@ -54,6 +54,7 @@ ggplot.bm <- function(df, title = NULL) {
 ```{r, message = FALSE}
 microbenchmark <- microbenchmark::microbenchmark
 library(AMR)
+library(dplyr)
 ```
 
 In the next test, we try to 'coerce' different input values into the microbial code of *Staphylococcus aureus*. Coercion is a computational process of forcing output based on an input. For microorganism names, coercing user input to taxonomically valid microorganism names is crucial to ensure correct interpretation and to enable grouping based on taxonomic properties. 
