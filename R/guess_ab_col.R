@@ -79,8 +79,8 @@ guess_ab_col <- function(x = NULL, search_string = NULL, verbose = FALSE) {
     if (search_string.ab %in% colnames(x)) {
       ab_result <- colnames(x)[colnames(x) == search_string.ab][1L]
 
-    } else if (any(tolower(colnames(x)) %in% tolower(unlist(ab_property(search_string.ab, "abbreviations"))))) {
-      ab_result <- colnames(x)[tolower(colnames(x)) %in% tolower(unlist(ab_property(search_string.ab, "abbreviations")))][1L]
+    } else if (any(tolower(colnames(x)) %in% tolower(unlist(ab_property(search_string.ab, "abbreviations", language = NULL))))) {
+      ab_result <- colnames(x)[tolower(colnames(x)) %in% tolower(unlist(ab_property(search_string.ab, "abbreviations", language = NULL)))][1L]
 
     } else {
       # sort colnames on length - longest first
@@ -96,13 +96,13 @@ guess_ab_col <- function(x = NULL, search_string = NULL, verbose = FALSE) {
   if (length(ab_result) == 0) {
     if (verbose == TRUE) {
       message(paste0("No column found as input for `", search_string,
-                     "` (", ab_name(search_string, language = "en", tolower = TRUE), ")."))
+                     "` (", ab_name(search_string, language = NULL, tolower = TRUE), ")."))
     }
     return(NULL)
   } else {
     if (verbose == TRUE) {
       message(font_blue(paste0("NOTE: Using column `", font_bold(ab_result), "` as input for `", search_string,
-                          "` (", ab_name(search_string, language = "en", tolower = TRUE), ").")))
+                          "` (", ab_name(search_string, language = NULL, tolower = TRUE), ").")))
     }
     return(ab_result)
   }
@@ -173,11 +173,11 @@ get_column_abx <- function(x,
   for (i in seq_len(length(x))) {
     if (verbose == TRUE & !names(x[i]) %in% names(duplicates)) {
       message(font_blue(paste0("NOTE: Using column `", font_bold(x[i]), "` as input for `", names(x)[i],
-                          "` (", ab_name(names(x)[i], tolower = TRUE), ").")))
+                          "` (", ab_name(names(x)[i], tolower = TRUE, language = NULL), ").")))
     }
     if (names(x[i]) %in% names(duplicates)) {
       warning(font_red(paste0("Using column `", font_bold(x[i]), "` as input for `", names(x)[i],
-                         "` (", ab_name(names(x)[i], tolower = TRUE),
+                         "` (", ab_name(names(x)[i], tolower = TRUE, language = NULL),
                          "), although it was matched for multiple antibiotics or columns.")), 
               call. = FALSE, 
               immediate. = verbose)
@@ -210,7 +210,7 @@ get_column_abx <- function(x,
 }
 
 generate_warning_abs_missing <- function(missing, any = FALSE) {
-  missing <- paste0(missing, " (", ab_name(missing, tolower = TRUE), ")")
+  missing <- paste0(missing, " (", ab_name(missing, tolower = TRUE, language = NULL), ")")
   if (any == TRUE) {
     any_txt <- c(" any of", "is")
   } else {

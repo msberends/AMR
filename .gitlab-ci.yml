@@ -101,8 +101,6 @@ R-release:
     # build package
     - R CMD build . --no-build-vignettes --no-manual
     - PKG_FILE_NAME=$(ls -1t *.tar.gz | head -n 1)
-    - Rscript -e 'devtools::install_local("${PKG_FILE_NAME}")'
-    - Rscript -e 'AMR::eucast_rules(AMR::example_isolates_unclean, info = TRUE)'
     - Rscript -e 'Sys.setenv(NOT_CRAN = "true")'
     - R CMD check "${PKG_FILE_NAME}" --no-build-vignettes --no-manual --as-cran
   artifacts:
@@ -130,8 +128,6 @@ R-devel:
     # build package
     - Rdevel CMD build . --no-build-vignettes --no-manual
     - PKG_FILE_NAME=$(ls -1t *.tar.gz | head -n 1)
-    - Rscript -e 'devtools::install_local("${PKG_FILE_NAME}")'
-    - Rscript -e 'AMR::eucast_rules(AMR::example_isolates_unclean, info = TRUE)'
     - Rscript -e 'Sys.setenv(NOT_CRAN = "true")'
     - Rdevel CMD check "${PKG_FILE_NAME}" --no-build-vignettes --no-manual --as-cran
   artifacts:

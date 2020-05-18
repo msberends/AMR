@@ -52,10 +52,10 @@ matrix:
   
 build_script:
   # - travis_tool.sh clean_library # turn off for caching, turn on for release of new R versions
-  - travis_tool.sh install_deps
+  - travis-tool.sh install_deps
 
 test_script:
-  - travis_tool.sh run_tests
+  - travis-tool.sh run_tests
 
 on_failure:
   - 7z a failure.zip *.Rcheck\*

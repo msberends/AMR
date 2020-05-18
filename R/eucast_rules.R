@@ -520,7 +520,7 @@ eucast_rules <- function(x,
   x[, col_mo] <- as.mo(x[, col_mo, drop = TRUE])
   x <- x %>%
     left_join_microorganisms(by = col_mo, suffix = c("_oldcols", ""))
-  x$gramstain <- mo_gramstain(x[, col_mo, drop = TRUE])
+  x$gramstain <- mo_gramstain(x[, col_mo, drop = TRUE], language = NULL)
   x$genus_species <- paste(x$genus, x$species)
 
   if (ab_missing(AMP) & !ab_missing(AMX)) {
@@ -658,7 +658,7 @@ eucast_rules <- function(x,
               rule_group_current %like% "expert",
               paste0("\nEUCAST Expert Rules, Intrinsic Resistance and Exceptional Phenotypes (", 
                      font_red(paste0("v", EUCAST_VERSION_EXPERT_RULES)), ")\n"),
-              "\nOther rules by this AMR package\n"))))
+              "\nOther rules by this AMR package (turn on/off with 'rules' parameter)\n"))))
       }
       # Print rule  -------------------------------------------------------------
       if (rule_current != rule_previous) {
@@ -678,32 +678,27 @@ eucast_rules <- function(x,
     like_is_one_of <- eucast_rules_df[i, 2]
     
     # be sure to comprise all coagulase-negative/-positive Staphylococci when they are mentioned
-    if (eucast_rules_df[i, 3] %like% "coagulase-") {
-      suppressWarnings(
-        all_staph <- microorganisms %>%
-          filter(genus == "Staphylococcus") %>%
-          mutate(CNS_CPS = mo_name(mo, Becker = "all"))
-      )
-      if (eucast_rules_df[i, 3] %like% "coagulase-") {
-        eucast_rules_df[i, 3] <- paste0("^(",
-                                        paste0(all_staph %>%
-                                                 filter(CNS_CPS %like% "coagulase-negative") %>%
-                                                 pull(fullname),
-                                               collapse = "|"),
+    if (eucast_rules_df[i, 3] %like% "coagulase") {
+      all_staph <- microorganisms[which(microorganisms$genus == "Staphylococcus"), ]
+      all_staph$CNS_CPS <- suppressWarnings(mo_name(all_staph$mo, Becker = "all", language = NULL))
+      if (eucast_rules_df[i, 3] %like% "coagulase") {
+        eucast_rules_df[i, 3] <- paste0("^(", paste0(all_staph[which(all_staph$CNS_CPS %like% "negative"),
+                                                               "fullname", 
+                                                               drop = TRUE],
+                                                     collapse = "|"),
                                         ")$")
       } else {
-        eucast_rules_df[i, 3] <- paste0("^(",
-                                        paste0(all_staph %>%
-                                                 filter(CNS_CPS %like% "coagulase-positive") %>%
-                                                 pull(fullname),
-                                               collapse = "|"),
+        eucast_rules_df[i, 3] <- paste0("^(", paste0(all_staph[which(all_staph$CNS_CPS %like% "positive"),
+                                                               "fullname", 
+                                                               drop = TRUE],
+                                                     collapse = "|"),
                                         ")$")
       }
       like_is_one_of <- "like"
     }
     
     if (like_is_one_of == "is") {
-      # so 'Enterococcus' will turn into '^Enterococcus$'
+      # so e.g. 'Enterococcus' will turn into '^Enterococcus$'
       mo_value <- paste0("^", eucast_rules_df[i, 3], "$")
     } else if (like_is_one_of == "one_of") {
       # so 'Clostridium, Actinomyces, ...' will turn into '^(Clostridium|Actinomyces|...)$'
