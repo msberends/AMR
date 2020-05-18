@@ -45,7 +45,7 @@ rsi_calc <- function(...,
     stop("`only_all_tested` must be logical", call. = FALSE)
   }
   
-  dots_df <- ...elt(1) # it needs this evaluation
+  dots_df <- switch(1, ...) # it needs this evaluation
   dots <- base::eval(base::substitute(base::alist(...)))
   if ("also_single_tested" %in% names(dots)) {
     stop("`also_single_tested` was replaced by `only_all_tested`. Please read Details in the help page (`?proportion`) as this may have a considerable impact on your analysis.", call. = FALSE)

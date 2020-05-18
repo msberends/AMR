@@ -1,5 +1,5 @@
 Package: AMR
-Version: 1.1.0.9010
+Version: 1.1.0.9011
 Date: 2020-05-18
 Title: Antimicrobial Resistance Analysis
 Authors@R: c(
@@ -37,10 +37,8 @@ Description: Functions to simplify the analysis and prediction of Antimicrobial
 Depends:
     R (>= 3.1.0)
 Imports:
-    backports,
     cleaner,
     pillar,
-    tidyr (>= 1.0.0),
     vctrs
 Suggests:
     covr,
@@ -51,6 +49,7 @@ Suggests:
     rmarkdown,
     rvest,
     testthat,
+    tidyr,
     utils
 VignetteBuilder: knitr,rmarkdown
 URL: https://msberends.gitlab.io/AMR, https://gitlab.com/msberends/AMR

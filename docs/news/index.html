@@ -81,7 +81,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.1.0.9010</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.1.0.9011</span>
       </span>
     </div>
 
@@ -229,9 +229,9 @@
       <small>Source: <a href='https://gitlab.com/msberends/AMR/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
-    <div id="amr-1-1-0-9010" class="section level1">
-<h1 class="page-header" data-toc-text="1.1.0.9010">
-<a href="#amr-1-1-0-9010" class="anchor"></a>AMR 1.1.0.9010<small> Unreleased </small>
+    <div id="amr-1-1-0-9011" class="section level1">
+<h1 class="page-header" data-toc-text="1.1.0.9011">
+<a href="#amr-1-1-0-9011" class="anchor"></a>AMR 1.1.0.9011<small> Unreleased </small>
 </h1>
 <div id="last-updated-18-may-2020" class="section level2">
 <h2 class="hasAnchor">
@@ -260,7 +260,7 @@
 <h3 class="hasAnchor">
 <a href="#other" class="anchor"></a>Other</h3>
 <ul>
-<li>Removed dependency on <strong>all</strong> packages that were needed for the <code>AMR</code> package to work properly: <code>crayon</code>, <code>data.table</code>, <code>dplyr</code>, <code>ggplot2</code>, <code>R6</code>, <code>rlang</code> and <code>tidyr</code>. This is a major code change, but will probably not be noticeable by users. Making this package independent on especially the tidyverse (packages <code>dplyr</code>, <code>ggplot2</code> and <code>tidyr</code>) tremendously increases sustainability on the long term, since tidyverse functions change quite often. Most of our functions are replaced with versions that only rely on base R, which keeps this package fully functional for many years to come, without requiring a lot of maintenance to keep up with other packages anymore. The only dependencies that remained are for extending methods of other packages, like <code>pillar</code> and <code>vctrs</code> for printing and working with tibbles using our classes <code>mo</code> and <code>ab</code>.</li>
+<li>Removed dependency on <strong>all</strong> packages that were needed for the <code>AMR</code> package to work properly: <code>backports</code>, <code>crayon</code>, <code>data.table</code>, <code>dplyr</code>, <code>ggplot2</code>, <code>R6</code>, <code>rlang</code> and <code>tidyr</code>. This is a major code change, but will probably not be noticeable by users. Making this package independent on especially the tidyverse (packages <code>dplyr</code>, <code>ggplot2</code> and <code>tidyr</code>) tremendously increases sustainability on the long term, since tidyverse functions change quite often. Most of our functions are replaced with versions that only rely on base R, which keeps this package fully functional for many years to come, without requiring a lot of maintenance to keep up with other packages anymore. The only dependencies that remained are for extending methods of other packages, like <code>pillar</code> and <code>vctrs</code> for printing and working with tibbles using our classes <code>mo</code> and <code>ab</code>.</li>
 <li>Removed function <code>read.4d()</code>, that was only useful for reading from an old test database.</li>
 </ul>
 </div>

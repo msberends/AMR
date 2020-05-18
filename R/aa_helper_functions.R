@@ -338,12 +338,6 @@ font_stripstyle <- function(x) {
 }
 
 progress_estimated <- function(n = 1, n_min = 0, ...) {
-  # initiate with:
-  # progress <- progressbar(n)
-  # on.exit(close(progress))
-  #
-  # update with:
-  # progress$tick()
   if (n >= n_min) {
     pb <- utils::txtProgressBar(max = n, style = 3)
     pb$tick <- function() {
@@ -430,4 +424,30 @@ percentage <- function(x, digits = NULL, ...) {
   format_percentage(structure(.Data = as.double(x),
                               class = c("percentage", "numeric")),
                     digits = digits, ...)
+}
+
+# prevent dependency on package 'backports'
+strrep = function(x, times) {
+  x = as.character(x)
+  if (length(x) == 0L) 
+    return(x)
+  unlist(.mapply(function(x, times) {
+    if (is.na(x) || is.na(times)) 
+      return(NA_character_)
+    if (times <= 0L) 
+      return("")
+    paste0(replicate(times, x), collapse = "")
+  }, list(x = x, times = times), MoreArgs = list()), use.names = FALSE)
+}
+trimws <- function (x, which = c("both", "left", "right")) {
+  which = match.arg(which)
+  mysub = function(re, x) sub(re, "", x, perl = TRUE)
+  if (which == "left") 
+    return(mysub("^[ \t\r\n]+", x))
+  if (which == "right") 
+    return(mysub("[ \t\r\n]+$", x))
+  mysub("[ \t\r\n]+$", mysub("^[ \t\r\n]+", x))
+}
+isFALSE <- function (x) {
+  is.logical(x) && length(x) == 1L && !is.na(x) && !x
 }

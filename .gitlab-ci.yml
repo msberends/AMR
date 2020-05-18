@@ -151,7 +151,7 @@ lintr:
     - master
   script:
     # check all syntax with lintr
-    - Rscript -e 'lintr::lint_package()'
+    - Rscript -e 'lintr::lint_package(exclusions = list("R/aa_helper_functions_dplyr.R"))'
   cache:
     key: release
     paths:

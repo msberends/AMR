@@ -20,9 +20,6 @@
 # ==================================================================== #
 
 .onLoad <- function(libname, pkgname) {
-  # get new functions not available in older versions of R
-  backports::import(pkgname)
-  
   assign(x = "MO_lookup",
          value = create_MO_lookup(),
          envir = asNamespace("AMR"))
@@ -34,7 +31,6 @@
   assign(x = "mo_codes_v0.5.0",
          value = make_trans_tbl(),
          envir = asNamespace("AMR"))
-
 }
 
 # maybe add survey later: "https://www.surveymonkey.com/r/AMR_for_R"
@@ -55,13 +51,13 @@ create_MO_lookup <- function() {
                                                           MO_lookup$subspecies)))
   MO_lookup[MO_lookup$genus == "" | grepl("^[(]unknown ", MO_lookup$fullname), "fullname_lower"] <- tolower(trimws(MO_lookup[MO_lookup$genus == "" | grepl("^[(]unknown ", MO_lookup$fullname), 
                                                                                                       "fullname"]))
-  MO_lookup$fullname_lower <- gsub("[^.a-z0-9/ \\-]+", "",MO_lookup$fullname_lower)
+  MO_lookup$fullname_lower <- gsub("[^.a-z0-9/ \\-]+", "", MO_lookup$fullname_lower)
   
   # add a column with only "e coli" like combinations
   MO_lookup$g_species <- gsub("^([a-z])[a-z]+ ([a-z]+) ?.*", "\\1 \\2", MO_lookup$fullname_lower)
   
   # so arrange data on prevalence first, then kingdom, then full name
-  MO_lookup[order(MO_lookup$prevalence, MO_lookup$kingdom_index, MO_lookup$fullname_lower),]
+  MO_lookup[order(MO_lookup$prevalence, MO_lookup$kingdom_index, MO_lookup$fullname_lower), ]
 }
 
 create_MO.old_lookup <- function() {
@@ -75,7 +71,7 @@ create_MO.old_lookup <- function() {
   MO.old_lookup$g_species <- gsub("^([a-z])[a-z]+ ([a-z]+) ?.*", "\\1 \\2", MO.old_lookup$fullname_lower)
   
   # so arrange data on prevalence first, then full name
-  MO.old_lookup[order(MO.old_lookup$prevalence, MO.old_lookup$fullname_lower),]
+  MO.old_lookup[order(MO.old_lookup$prevalence, MO.old_lookup$fullname_lower), ]
 }
 
 make_trans_tbl <- function() {

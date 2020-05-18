@@ -129,7 +129,8 @@ atc_online_property <- function(atc_code,
   }
 
   progress <- progress_estimated(n = length(atc_code))
-
+  on.exit(close(progress))
+  
   for (i in seq_len(length(atc_code))) {
 
     progress$tick()
