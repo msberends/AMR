@@ -352,7 +352,7 @@ print.ab <- function(x, ...) {
 #' @exportMethod as.data.frame.ab
 #' @export
 #' @noRd
-as.data.frame.ab <- function (x, ...) {
+as.data.frame.ab <- function(x, ...) {
   nm <- deparse1(substitute(x))
   if (!"nm" %in% names(list(...))) {
     as.data.frame.vector(as.ab(x), ..., nm = nm)

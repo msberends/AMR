@@ -1,9 +1,8 @@
-# AMR 1.1.0.9012
+# AMR 1.1.0.9013
 ## <small>Last updated: 19-May-2020</small>
 
 ### Breaking 
-
-* Removed code dependency on **all** R packages that this `AMR` package relied upon: `cleaner`, `crayon`, `data.table`, `dplyr`, `ggplot2`, `knitr`, `microbenchmark`, `pillar`, `R6`, `rlang`, `tidyr` and `vctrs`. This is a major code change, but will probably not be noticeable by most users.
+* Removed code dependency on **all** R packages that this `AMR` package required: `cleaner`, `crayon`, `data.table`, `dplyr`, `ggplot2`, `knitr`, `microbenchmark`, `pillar`, `R6`, `rlang`, `tidyr` and `vctrs`. This is a major code change, but will probably not be noticeable by most users.
 
   Making this package independent on especially the tidyverse tremendously increases sustainability on the long term, since tidyverse functions change quite often. Most of our functions are replaced with versions that only rely on base R, which keeps this package fully functional for many years to come, without requiring a lot of maintenance to keep up with other packages anymore. Another upside it that this package can now be used with all versions of R since R-3.0.0 (April 2013). Our package is being used in settings where the resources are very limited. Fewer dependencies on newer software is helpful for such settings.
   

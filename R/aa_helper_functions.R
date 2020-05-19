@@ -429,8 +429,8 @@ percentage <- function(x, digits = NULL, ...) {
 # prevent dependency on package 'backports'
 # these functions were not available in previous versions of R (last checked: R 4.0.0)
 # see here for the full list: https://github.com/r-lib/backports
-strrep = function(x, times) {
-  x = as.character(x)
+strrep <- function(x, times) {
+  x <- as.character(x)
   if (length(x) == 0L) 
     return(x)
   unlist(.mapply(function(x, times) {
@@ -441,18 +441,18 @@ strrep = function(x, times) {
     paste0(replicate(times, x), collapse = "")
   }, list(x = x, times = times), MoreArgs = list()), use.names = FALSE)
 }
-trimws <- function (x, which = c("both", "left", "right")) {
-  which = match.arg(which)
-  mysub = function(re, x) sub(re, "", x, perl = TRUE)
+trimws <- function(x, which = c("both", "left", "right")) {
+  which <- match.arg(which)
+  mysub <- function(re, x) sub(re, "", x, perl = TRUE)
   if (which == "left") 
     return(mysub("^[ \t\r\n]+", x))
   if (which == "right") 
     return(mysub("[ \t\r\n]+$", x))
   mysub("[ \t\r\n]+$", mysub("^[ \t\r\n]+", x))
 }
-isFALSE <- function (x) {
+isFALSE <- function(x) {
   is.logical(x) && length(x) == 1L && !is.na(x) && !x
 }
-deparse1 = function (expr, collapse = " ", width.cutoff = 500L, ...) {
+deparse1 <- function(expr, collapse = " ", width.cutoff = 500L, ...) {
   paste(deparse(expr, width.cutoff, ...), collapse = collapse)
 }

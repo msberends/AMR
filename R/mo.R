@@ -1578,7 +1578,7 @@ summary.mo <- function(object, ...) {
 #' @exportMethod as.data.frame.mo
 #' @export
 #' @noRd
-as.data.frame.mo <- function (x, ...) {
+as.data.frame.mo <- function(x, ...) {
   nm <- deparse1(substitute(x))
   if (!"nm" %in% names(list(...))) {
     as.data.frame.vector(as.mo(x), ..., nm = nm)
