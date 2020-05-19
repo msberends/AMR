@@ -1,15 +1,15 @@
-# AMR 1.1.0.9013
+# AMR 1.1.0.9014
 ## <small>Last updated: 19-May-2020</small>
 
 ### Breaking 
-* Removed code dependency on **all** R packages that this `AMR` package required: `cleaner`, `crayon`, `data.table`, `dplyr`, `ggplot2`, `knitr`, `microbenchmark`, `pillar`, `R6`, `rlang`, `tidyr` and `vctrs`. This is a major code change, but will probably not be noticeable by most users.
+* Removed code dependency on all other R packages: `cleaner`, `crayon`, `data.table`, `dplyr`, `ggplot2`, `knitr`, `microbenchmark`, `pillar`, `R6`, `rlang`, `tidyr` and `vctrs`. This is a major code change, but will probably not be noticeable by most users.
 
   Making this package independent on especially the tidyverse tremendously increases sustainability on the long term, since tidyverse functions change quite often. Most of our functions are replaced with versions that only rely on base R, which keeps this package fully functional for many years to come, without requiring a lot of maintenance to keep up with other packages anymore. Another upside it that this package can now be used with all versions of R since R-3.0.0 (April 2013). Our package is being used in settings where the resources are very limited. Fewer dependencies on newer software is helpful for such settings.
   
   Negative effects of this change are:
   * Function `freq()` that was borrowed from the `cleaner` package was removed. Use `cleaner::freq()`, or run `library("cleaner")` before you use `freq()`.
   * Printing values of class `mo` or `ab` in a tibble will no longer be in colour.
-  * All functions from the `mo_*` family (like `mo_name()` and `mo_gramstain()`) are noticeably slower when running on tens of thousands of rows.
+  * All functions from the `mo_*` family (like `mo_name()` and `mo_gramstain()`) are noticeably slower when running on hundreds of thousands of rows.
   * For developers: classes `mo` and `ab` now both also inherit class `character`, to support any data transformation. This change invalidates code that checks for class length == 1.
 
 ### Changed

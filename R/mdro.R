@@ -68,6 +68,7 @@
 #' @examples
 #' \dontrun{
 #' library(dplyr)
+#' library(cleaner)
 #' 
 #' example_isolates %>%
 #'   mdro() %>%

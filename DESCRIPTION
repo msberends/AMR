@@ -1,5 +1,5 @@
 Package: AMR
-Version: 1.1.0.9013
+Version: 1.1.0.9014
 Date: 2020-05-19
 Title: Antimicrobial Resistance Analysis
 Authors@R: c(
@@ -38,13 +38,11 @@ Depends:
     R (>= 3.0.0)
 Suggests:
     cleaner,
-    covr,
     dplyr,
     ggplot2,
     knitr,
     microbenchmark,
     rmarkdown,
-    rvest,
     testthat,
     tidyr,
     utils

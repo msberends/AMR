@@ -39,7 +39,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.1.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.1.0.9014</span>
       </span>
     </div>
 
@@ -186,7 +186,7 @@
       <h1 data-toc-skip>How to work with WHONET data</h1>
                         <h4 class="author">Matthijs S. Berends</h4>
             
-            <h4 class="date">15 April 2020</h4>
+            <h4 class="date">19 May 2020</h4>
       
       <small class="dont-index">Source: <a href="https://gitlab.com/msberends/AMR/blob/master/vignettes/WHONET.Rmd"><code>vignettes/WHONET.Rmd</code></a></small>
       <div class="hidden name"><code>WHONET.Rmd</code></div>
@@ -210,7 +210,8 @@
 <p>First, load the relevant packages if you did not yet did this. I use the tidyverse for all of my analyses. All of them. If you don’t know it yet, I suggest you read about it on their website: <a href="https://www.tidyverse.org/" class="uri">https://www.tidyverse.org/</a>.</p>
 <div class="sourceCode" id="cb2"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">dplyr</span>)   <span class="co"># part of tidyverse</span>
 <span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">ggplot2</span>) <span class="co"># part of tidyverse</span>
-<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">AMR</span>)     <span class="co"># this package</span></pre></body></html></div>
+<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">AMR</span>)     <span class="co"># this package</span>
+<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">cleaner</span>) <span class="co"># to create frequency tables</span></pre></body></html></div>
 <p>We will have to transform some variables to simplify and automate the analysis:</p>
 <ul>
 <li>Microorganisms should be transformed to our own microorganism IDs (called an <code>mo</code>) using <a href="https://msberends.gitlab.io/AMR/reference/catalogue_of_life">our Catalogue of Life reference data set</a>, which contains all ~70,000 microorganisms from the taxonomic kingdoms Bacteria, Fungi and Protozoa. We do the tranformation with <code><a href="../reference/as.mo.html">as.mo()</a></code>. This function also recognises almost all WHONET abbreviations of microorganisms.</li>
@@ -223,7 +224,7 @@
   <span class="co"># transform everything from "AMP_ND10" to "CIP_EE" to the new `rsi` class</span>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate_all.html">mutate_at</a></span>(<span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html">vars</a></span>(<span class="no">AMP_ND10</span>:<span class="no">CIP_EE</span>), <span class="no">as.rsi</span>)</pre></body></html></div>
 <p>No errors or warnings, so all values are transformed succesfully.</p>
-<p>We also created a package dedicated to data cleaning and checking, called the <code>cleaner</code> package. It gets automatically installed with the <code>AMR</code> package. For its <code><a href="https://rdrr.io/pkg/cleaner/man/freq.html">freq()</a></code> function to create frequency tables, you don’t even need to load it yourself as it is available through the <code>AMR</code> package as well.</p>
+<p>We also created a package dedicated to data cleaning and checking, called the <code>cleaner</code> package. Its <code><a href="https://rdrr.io/pkg/cleaner/man/freq.html">freq()</a></code> function can be used to create frequency tables.</p>
 <p>So let’s check our data, with a couple of frequency tables:</p>
 <div class="sourceCode" id="cb4"><html><body><pre class="r"><span class="co"># our newly created `mo` variable, put in the mo_name() function</span>
 <span class="no">data</span> <span class="kw">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/pkg/cleaner/man/freq.html">freq</a></span>(<span class="fu"><a href="../reference/mo_property.html">mo_name</a></span>(<span class="no">mo</span>), <span class="kw">nmax</span> <span class="kw">=</span> <span class="fl">10</span>)</pre></body></html></div>
@@ -336,7 +337,6 @@ Length: 500<br>
 Levels: 3: S &lt; I &lt; R<br>
 Available: 481 (96.2%, NA: 19 = 3.8%)<br>
 Unique: 3</p>
-<p>%SI: 78.6%</p>
 <table class="table">
 <thead><tr class="header">
 <th align="left"></th>
@@ -399,7 +399,7 @@ Unique: 3</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
 </div>
 
       </footer>

@@ -71,8 +71,7 @@ a \%like\% b
 \dontrun{
 library(dplyr)
 example_isolates \%>\%
-  filter(mo_name(mo) \%like\% "^ent") \%>\% 
-  freq(mo)
+  filter(mo_name(mo) \%like\% "^ent")
 }
 }
 \seealso{

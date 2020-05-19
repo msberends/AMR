@@ -56,7 +56,8 @@ The `mdro()` function always returns an ordered `factor`. For example, the outpu
 The next example uses the `example_isolates` data set. This is a data set included with this package and contains 2,000 microbial isolates with their full antibiograms. It reflects reality and can be used to practice AMR analysis. If we test the MDR/XDR/PDR guideline on this data set, we get:
 
 ```{r, message = FALSE}
-library(dplyr) # to support pipes: %>%
+library(dplyr)   # to support pipes: %>%
+library(cleaner) # to create frequency tables
 ```
 ```{r, results = 'hide'}
 example_isolates %>% 

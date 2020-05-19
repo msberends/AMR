@@ -81,7 +81,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.1.0.9013</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.1.0.9014</span>
       </span>
     </div>
 
@@ -229,9 +229,9 @@
       <small>Source: <a href='https://gitlab.com/msberends/AMR/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
-    <div id="amr-1-1-0-9013" class="section level1">
-<h1 class="page-header" data-toc-text="1.1.0.9013">
-<a href="#amr-1-1-0-9013" class="anchor"></a>AMR 1.1.0.9013<small> Unreleased </small>
+    <div id="amr-1-1-0-9014" class="section level1">
+<h1 class="page-header" data-toc-text="1.1.0.9014">
+<a href="#amr-1-1-0-9014" class="anchor"></a>AMR 1.1.0.9014<small> Unreleased </small>
 </h1>
 <div id="last-updated-19-may-2020" class="section level2">
 <h2 class="hasAnchor">
@@ -242,13 +242,13 @@
 <a href="#breaking" class="anchor"></a>Breaking</h3>
 <ul>
 <li>
-<p>Removed code dependency on <strong>all</strong> R packages that this <code>AMR</code> package required: <code>cleaner</code>, <code>crayon</code>, <code>data.table</code>, <code>dplyr</code>, <code>ggplot2</code>, <code>knitr</code>, <code>microbenchmark</code>, <code>pillar</code>, <code>R6</code>, <code>rlang</code>, <code>tidyr</code> and <code>vctrs</code>. This is a major code change, but will probably not be noticeable by most users.</p>
+<p>Removed code dependency on all other R packages: <code>cleaner</code>, <code>crayon</code>, <code>data.table</code>, <code>dplyr</code>, <code>ggplot2</code>, <code>knitr</code>, <code>microbenchmark</code>, <code>pillar</code>, <code>R6</code>, <code>rlang</code>, <code>tidyr</code> and <code>vctrs</code>. This is a major code change, but will probably not be noticeable by most users.</p>
 <p>Making this package independent on especially the tidyverse tremendously increases sustainability on the long term, since tidyverse functions change quite often. Most of our functions are replaced with versions that only rely on base R, which keeps this package fully functional for many years to come, without requiring a lot of maintenance to keep up with other packages anymore. Another upside it that this package can now be used with all versions of R since R-3.0.0 (April 2013). Our package is being used in settings where the resources are very limited. Fewer dependencies on newer software is helpful for such settings.</p>
 Negative effects of this change are:
 <ul>
 <li>Function <code>freq()</code> that was borrowed from the <code>cleaner</code> package was removed. Use <code><a href="https://rdrr.io/pkg/cleaner/man/freq.html">cleaner::freq()</a></code>, or run <code><a href="https://rdrr.io/pkg/cleaner/man">library("cleaner")</a></code> before you use <code>freq()</code>.</li>
 <li>Printing values of class <code>mo</code> or <code>ab</code> in a tibble will no longer be in colour.</li>
-<li>All functions from the <code>mo_*</code> family (like <code><a href="../reference/mo_property.html">mo_name()</a></code> and <code><a href="../reference/mo_property.html">mo_gramstain()</a></code>) are noticeably slower when running on tens of thousands of rows.</li>
+<li>All functions from the <code>mo_*</code> family (like <code><a href="../reference/mo_property.html">mo_name()</a></code> and <code><a href="../reference/mo_property.html">mo_gramstain()</a></code>) are noticeably slower when running on hundreds of thousands of rows.</li>
 <li>For developers: classes <code>mo</code> and <code>ab</code> now both also inherit class <code>character</code>, to support any data transformation. This change invalidates code that checks for class length == 1.</li>
 </ul>
 </li>

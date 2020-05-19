@@ -39,7 +39,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.1.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.1.0.9014</span>
       </span>
     </div>
 
@@ -186,7 +186,7 @@
       <h1 data-toc-skip>How to determine multi-drug resistance (MDR)</h1>
                         <h4 class="author">Matthijs S. Berends</h4>
             
-            <h4 class="date">15 April 2020</h4>
+            <h4 class="date">19 May 2020</h4>
       
       <small class="dont-index">Source: <a href="https://gitlab.com/msberends/AMR/blob/master/vignettes/MDR.Rmd"><code>vignettes/MDR.Rmd</code></a></small>
       <div class="hidden name"><code>MDR.Rmd</code></div>
@@ -209,20 +209,16 @@
 <ul>
 <li>
 <p><code>guideline = "CMI2012"</code> (default)</p>
-<p>Magiorakos AP, Srinivasan A <em>et al.</em> “Multidrug-resistant, extensively drug-resistant and pandrug-resistant bacteria: an international expert proposal for interim standard definitions for acquired resistance.” Clinical Microbiology and Infection (2012) (<a href="https://www.clinicalmicrobiologyandinfection.com/article/S1198-743X(14)61632-3/fulltext">link</a>)</p>
-</li>
+Magiorakos AP, Srinivasan A <em>et al.</em> “Multidrug-resistant, extensively drug-resistant and pandrug-resistant bacteria: an international expert proposal for interim standard definitions for acquired resistance.” Clinical Microbiology and Infection (2012) (<a href="https://www.clinicalmicrobiologyandinfection.com/article/S1198-743X(14)61632-3/fulltext">link</a>)</li>
 <li>
 <p><code>guideline = "EUCAST"</code></p>
-<p>The European international guideline - EUCAST Expert Rules Version 3.1 “Intrinsic Resistance and Exceptional Phenotypes Tables” (<a href="http://www.eucast.org/fileadmin/src/media/PDFs/EUCAST_files/Expert_Rules/Expert_rules_intrinsic_exceptional_V3.1.pdf">link</a>)</p>
-</li>
+The European international guideline - EUCAST Expert Rules Version 3.1 “Intrinsic Resistance and Exceptional Phenotypes Tables” (<a href="http://www.eucast.org/fileadmin/src/media/PDFs/EUCAST_files/Expert_Rules/Expert_rules_intrinsic_exceptional_V3.1.pdf">link</a>)</li>
 <li>
 <p><code>guideline = "TB"</code></p>
-<p>The international guideline for multi-drug resistant tuberculosis - World Health Organization “Companion handbook to the WHO guidelines for the programmatic management of drug-resistant tuberculosis” (<a href="https://www.who.int/tb/publications/pmdt_companionhandbook/en/">link</a>)</p>
-</li>
+The international guideline for multi-drug resistant tuberculosis - World Health Organization “Companion handbook to the WHO guidelines for the programmatic management of drug-resistant tuberculosis” (<a href="https://www.who.int/tb/publications/pmdt_companionhandbook/en/">link</a>)</li>
 <li>
 <p><code>guideline = "MRGN"</code></p>
-<p>The German national guideline - Mueller et al. (2015) Antimicrobial Resistance and Infection Control 4:7. (<a href="https://doi.org/10.1186/s13756-015-0047-6">link</a>)</p>
-</li>
+The German national guideline - Mueller et al. (2015) Antimicrobial Resistance and Infection Control 4:7. (<a href="https://doi.org/10.1186/s13756-015-0047-6">link</a>)</li>
 <li>
 <p><code>guideline = "BRMO"</code></p>
 <p>The Dutch national guideline - Rijksinstituut voor Volksgezondheid en Milieu “WIP-richtlijn BRMO (Bijzonder Resistente Micro-Organismen) [ZKH]” (<a href="https://www.rivm.nl/Documenten_en_publicaties/Professioneel_Praktisch/Richtlijnen/Infectieziekten/WIP_Richtlijnen/WIP_Richtlijnen/Ziekenhuizen/WIP_richtlijn_BRMO_Bijzonder_Resistente_Micro_Organismen_ZKH">link</a>)</p>
@@ -234,13 +230,14 @@
 <a href="#examples" class="anchor"></a>Examples</h4>
 <p>The <code><a href="../reference/mdro.html">mdro()</a></code> function always returns an ordered <code>factor</code>. For example, the output of the default guideline by Magiorakos <em>et al.</em> returns a <code>factor</code> with levels ‘Negative’, ‘MDR’, ‘XDR’ or ‘PDR’ in that order.</p>
 <p>The next example uses the <code>example_isolates</code> data set. This is a data set included with this package and contains 2,000 microbial isolates with their full antibiograms. It reflects reality and can be used to practice AMR analysis. If we test the MDR/XDR/PDR guideline on this data set, we get:</p>
-<div class="sourceCode" id="cb1"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">dplyr</span>) <span class="co"># to support pipes: %&gt;%</span></pre></body></html></div>
+<div class="sourceCode" id="cb1"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">dplyr</span>)   <span class="co"># to support pipes: %&gt;%</span>
+<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">cleaner</span>) <span class="co"># to create frequency tables</span></pre></body></html></div>
 <div class="sourceCode" id="cb2"><html><body><pre class="r"><span class="no">example_isolates</span> <span class="kw">%&gt;%</span>
   <span class="fu"><a href="../reference/mdro.html">mdro</a></span>() <span class="kw">%&gt;%</span>
   <span class="fu"><a href="https://rdrr.io/pkg/cleaner/man/freq.html">freq</a></span>() <span class="co"># show frequency table of the result</span>
-<span class="co"># NOTE: Using column `mo` as input for `col_mo`.</span>
-<span class="co"># NOTE: Auto-guessing columns suitable for analysis...OK.</span>
-<span class="co"># NOTE: Reliability will be improved if these antimicrobial results would be available too: SAM (ampicillin/sulbactam), ATM (aztreonam), CTT (cefotetan), CPT (ceftaroline), DAP (daptomycin), DOR (doripenem), ETP (ertapenem), FUS (fusidic acid), GEH (gentamicin-high), LVX (levofloxacin), MNO (minocycline), NET (netilmicin), PLB (polymyxin B), QDA (quinupristin/dalfopristin), STH (streptomycin-high), TLV (telavancin), TCC (ticarcillin/clavulanic acid)</span>
+<span class="co"># [34mNOTE: Using column `[1mmo[22m` as input for `col_mo`.[39m</span>
+<span class="co"># [34mNOTE: Auto-guessing columns suitable for analysis...[39m[34mOK.[39m</span>
+<span class="co"># [34mNOTE: Reliability would be improved if these antimicrobial results would be available too: ceftaroline ([1mCPT[22m), fusidic acid ([1mFUS[22m), telavancin ([1mTLV[22m), daptomycin ([1mDAP[22m), quinupristin/dalfopristin ([1mQDA[22m), minocycline ([1mMNO[22m), gentamicin-high ([1mGEH[22m), streptomycin-high ([1mSTH[22m), doripenem ([1mDOR[22m), levofloxacin ([1mLVX[22m), netilmicin ([1mNET[22m), ticarcillin/clavulanic acid ([1mTCC[22m), ertapenem ([1mETP[22m), cefotetan ([1mCTT[22m), aztreonam ([1mATM[22m), ampicillin/sulbactam ([1mSAM[22m), polymyxin B ([1mPLB[22m)[39m</span>
 <span class="co"># Warning in mdro(.): NA introduced for isolates where the available percentage of</span>
 <span class="co"># antimicrobial classes was below 50% (set with `pct_required_classes`)</span></pre></body></html></div>
 <p><strong>Frequency table</strong></p>
@@ -281,7 +278,7 @@ Unique: 2</p>
 <div class="sourceCode" id="cb3"><html><body><pre class="r"><span class="co"># a helper function to get a random vector with values S, I and R</span>
 <span class="co"># with the probabilities 50% - 10% - 40%</span>
 <span class="no">sample_rsi</span> <span class="kw">&lt;-</span> <span class="kw">function</span>() {
-  <span class="fu"><a href="https://rdrr.io/r/base/sample.html">sample</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"S"</span>, <span class="st">"I"</span>, <span class="st">"R"</span>),
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/sample.html">sample</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"S"</span>, <span class="st">"I"</span>, <span class="st">"R"</span>),
          <span class="kw">size</span> <span class="kw">=</span> <span class="fl">5000</span>,
          <span class="kw">prob</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">0.5</span>, <span class="fl">0.1</span>, <span class="fl">0.4</span>),
          <span class="kw">replace</span> <span class="kw">=</span> <span class="fl">TRUE</span>)
@@ -305,26 +302,26 @@ Unique: 2</p>
 <p>The data set now looks like this:</p>
 <div class="sourceCode" id="cb5"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(<span class="no">my_TB_data</span>)
 <span class="co">#   rifampicin isoniazid gatifloxacin ethambutol pyrazinamide moxifloxacin</span>
-<span class="co"># 1          S         I            R          R            S            I</span>
-<span class="co"># 2          R         S            S          R            S            S</span>
-<span class="co"># 3          R         S            S          R            R            I</span>
-<span class="co"># 4          I         S            S          R            R            S</span>
-<span class="co"># 5          R         R            S          R            I            R</span>
-<span class="co"># 6          R         I            S          I            R            S</span>
+<span class="co"># 1          R         R            R          R            S            R</span>
+<span class="co"># 2          I         S            R          R            S            R</span>
+<span class="co"># 3          S         R            R          R            I            S</span>
+<span class="co"># 4          R         R            R          R            R            R</span>
+<span class="co"># 5          S         R            I          R            R            R</span>
+<span class="co"># 6          S         R            R          S            R            S</span>
 <span class="co">#   kanamycin</span>
 <span class="co"># 1         S</span>
 <span class="co"># 2         S</span>
-<span class="co"># 3         R</span>
+<span class="co"># 3         S</span>
 <span class="co"># 4         S</span>
-<span class="co"># 5         I</span>
-<span class="co"># 6         I</span></pre></body></html></div>
+<span class="co"># 5         R</span>
+<span class="co"># 6         S</span></pre></body></html></div>
 <p>We can now add the interpretation of MDR-TB to our data set. You can use:</p>
 <div class="sourceCode" id="cb6"><html><body><pre class="r"><span class="fu"><a href="../reference/mdro.html">mdro</a></span>(<span class="no">my_TB_data</span>, <span class="kw">guideline</span> <span class="kw">=</span> <span class="st">"TB"</span>)</pre></body></html></div>
 <p>or its shortcut <code><a href="../reference/mdro.html">mdr_tb()</a></code>:</p>
 <div class="sourceCode" id="cb7"><html><body><pre class="r"><span class="no">my_TB_data</span>$<span class="no">mdr</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/mdro.html">mdr_tb</a></span>(<span class="no">my_TB_data</span>)
-<span class="co"># NOTE: No column found as input for `col_mo`, assuming all records contain Mycobacterium tuberculosis.</span>
-<span class="co"># NOTE: Auto-guessing columns suitable for analysis...OK.</span>
-<span class="co"># NOTE: Reliability will be improved if these antimicrobial results would be available too: CAP (capreomycin), RIB (rifabutin), RFP (rifapentine)</span></pre></body></html></div>
+<span class="co"># [34mNOTE: No column found as input for `col_mo`, [1massuming all records contain [3mMycobacterium tuberculosis.[23m[22m[39m</span>
+<span class="co"># [34mNOTE: Auto-guessing columns suitable for analysis...[39m[34mOK.[39m</span>
+<span class="co"># [34mNOTE: Reliability would be improved if these antimicrobial results would be available too: capreomycin ([1mCAP[22m), rifabutin ([1mRIB[22m), rifapentine ([1mRFP[22m)[39m</span></pre></body></html></div>
 <p>Create a frequency table of the results:</p>
 <div class="sourceCode" id="cb8"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/pkg/cleaner/man/freq.html">freq</a></span>(<span class="no">my_TB_data</span>$<span class="no">mdr</span>)</pre></body></html></div>
 <p><strong>Frequency table</strong></p>
@@ -346,40 +343,40 @@ Unique: 5</p>
 <tr class="odd">
 <td align="left">1</td>
 <td align="left">Mono-resistant</td>
-<td align="right">3310</td>
-<td align="right">66.20%</td>
-<td align="right">3310</td>
-<td align="right">66.20%</td>
+<td align="right">3294</td>
+<td align="right">65.88%</td>
+<td align="right">3294</td>
+<td align="right">65.88%</td>
 </tr>
 <tr class="even">
 <td align="left">2</td>
 <td align="left">Negative</td>
-<td align="right">637</td>
-<td align="right">12.74%</td>
-<td align="right">3947</td>
-<td align="right">78.94%</td>
+<td align="right">613</td>
+<td align="right">12.26%</td>
+<td align="right">3907</td>
+<td align="right">78.14%</td>
 </tr>
 <tr class="odd">
 <td align="left">3</td>
 <td align="left">Multi-drug-resistant</td>
-<td align="right">569</td>
-<td align="right">11.38%</td>
-<td align="right">4516</td>
-<td align="right">90.32%</td>
+<td align="right">572</td>
+<td align="right">11.44%</td>
+<td align="right">4479</td>
+<td align="right">89.58%</td>
 </tr>
 <tr class="even">
 <td align="left">4</td>
 <td align="left">Poly-resistant</td>
-<td align="right">283</td>
-<td align="right">5.66%</td>
-<td align="right">4799</td>
-<td align="right">95.98%</td>
+<td align="right">312</td>
+<td align="right">6.24%</td>
+<td align="right">4791</td>
+<td align="right">95.82%</td>
 </tr>
 <tr class="odd">
 <td align="left">5</td>
 <td align="left">Extensively drug-resistant</td>
-<td align="right">201</td>
-<td align="right">4.02%</td>
+<td align="right">209</td>
+<td align="right">4.18%</td>
 <td align="right">5000</td>
 <td align="right">100.00%</td>
 </tr>
@@ -401,7 +398,7 @@ Unique: 5</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
 </div>
 
       </footer>

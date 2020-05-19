@@ -44,6 +44,7 @@ First, load the relevant packages if you did not yet did this. I use the tidyver
 library(dplyr)   # part of tidyverse
 library(ggplot2) # part of tidyverse
 library(AMR)     # this package
+library(cleaner) # to create frequency tables
 ```
 
 We will have to transform some variables to simplify and automate the analysis:
@@ -62,7 +63,7 @@ data <- WHONET %>%
 
 No errors or warnings, so all values are transformed succesfully.
 
-We also created a package dedicated to data cleaning and checking, called the `cleaner` package. It gets automatically installed with the `AMR` package. For its `freq()` function to create frequency tables, you don't even need to load it yourself as it is available through the `AMR` package as well.
+We also created a package dedicated to data cleaning and checking, called the `cleaner` package. Its `freq()` function can be used to create frequency tables.
 
 So let's check our data, with a couple of frequency tables:
 

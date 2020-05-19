@@ -208,6 +208,7 @@ On our website \url{https://msberends.gitlab.io/AMR} you can find \href{https://
 \examples{
 \dontrun{
 library(dplyr)
+library(cleaner)
 
 example_isolates \%>\%
   mdro() \%>\%

@@ -60,8 +60,7 @@
 #' \dontrun{
 #' library(dplyr)
 #' example_isolates %>%
-#'   filter(mo_name(mo) %like% "^ent") %>% 
-#'   freq(mo)
+#'   filter(mo_name(mo) %like% "^ent")
 #' }
 like <- function(x, pattern, ignore.case = TRUE) {
   # set to fixed if no regex found

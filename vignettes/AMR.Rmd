@@ -58,17 +58,18 @@ knitr::kable(data.frame(date = Sys.Date(),
 ``` 
 
 ## Needed R packages
-As with many uses in R, we need some additional packages for AMR analysis. Our package works closely together with the [tidyverse packages](https://www.tidyverse.org) [`dplyr`](https://dplyr.tidyverse.org/) and [`ggplot2`](https://ggplot2.tidyverse.org) by Dr Hadley Wickham. The tidyverse tremendously improves the way we conduct data science - it allows for a very natural way of writing syntaxes and creating beautiful plots in R.
+As with many uses in R, we need some additional packages for AMR analysis. Our package works closely together with the [tidyverse packages](https://www.tidyverse.org) [`dplyr`](https://dplyr.tidyverse.org/) and [`ggplot2`](https://ggplot2.tidyverse.org) by RStudio. The tidyverse tremendously improves the way we conduct data science - it allows for a very natural way of writing syntaxes and creating beautiful plots in R.
 
-Our `AMR` package depends on these packages and even extends their use and functions.
+We will also use the `cleaner` package, that can be used for cleaning data and creating frequency tables.
 
 ```{r lib packages, message = FALSE, warning = FALSE, results = 'asis'}
 library(dplyr)
 library(ggplot2)
 library(AMR)
+library(cleaner)
 
 # (if not yet installed, install with:)
-# install.packages(c("dplyr", "ggplot2", "AMR"))
+# install.packages(c("dplyr", "ggplot2", "AMR", "cleaner"))
 ```
 
 # Creation of data
@@ -160,12 +161,12 @@ Now, let's start the cleaning and the analysis!
 
 # Cleaning the data
 
-We also created a package dedicated to data cleaning and checking, called the `cleaner` package. It gets automatically installed with the `AMR` package. For its `freq()` function to create frequency tables, you don't even need to load it yourself as it is available through the `AMR` package as well.
+We also created a package dedicated to data cleaning and checking, called the `cleaner` package. It `freq()` function can be used to create frequency tables.
 
 For example, for the `gender` variable:
 
 ```{r freq gender 1, results="asis"}
-data %>% freq(gender) # this would be the same: freq(data$gender)
+data %>% freq(gender)
 ```
 
 So, we can draw at least two conclusions immediately. From a data scientists perspective, the data looks clean: only values `M` and `F`. From a researchers perspective: there are slightly more men. Nothing we didn't already know.
@@ -218,7 +219,7 @@ data <- data %>%
   mutate(first = first_isolate(.))
 ```
 
-So only `r cleaner::percentage(sum(data$first) / nrow(data))` is suitable for resistance analysis! We can now filter on it with the `filter()` function, also from the `dplyr` package:
+So only `r percentage(sum(data$first) / nrow(data))` is suitable for resistance analysis! We can now filter on it with the `filter()` function, also from the `dplyr` package:
 
 ```{r 1st isolate filter}
 data_1st <- data %>% 
@@ -238,7 +239,7 @@ data_1st <- data %>%
 weighted_df <- data %>%
   filter(bacteria == as.mo("E. coli")) %>% 
   # only most prevalent patient
-  filter(patient_id == cleaner::top_freq(freq(., patient_id), 1)[1]) %>% 
+  filter(patient_id == top_freq(freq(., patient_id), 1)[1]) %>% 
   arrange(date) %>%
   select(date, patient_id, bacteria, AMX:GEN, first) %>% 
   # maximum of 10 rows
@@ -268,7 +269,7 @@ data <- data %>%
 weighted_df2 <- data %>%
   filter(bacteria == as.mo("E. coli")) %>% 
   # only most prevalent patient
-  filter(patient_id == cleaner::top_freq(freq(., patient_id), 1)[1]) %>% 
+  filter(patient_id == top_freq(freq(., patient_id), 1)[1]) %>% 
   arrange(date) %>%
   select(date, patient_id, bacteria, AMX:GEN, first, first_weighted) %>% 
   # maximum of 10 rows
@@ -280,7 +281,7 @@ weighted_df2 %>%
   knitr::kable(align = "c")
 ```
 
-Instead of `r sum(weighted_df$first)`, now `r sum(weighted_df2$first_weighted)` isolates are flagged. In total, `r cleaner::percentage(sum(data$first_weighted) / nrow(data))` of all isolates are marked 'first weighted' - `r cleaner::percentage((sum(data$first_weighted) / nrow(data)) - (sum(data$first) / nrow(data)))` more than when using the CLSI guideline. In real life, this novel algorithm will yield 5-10% more isolates than the classic CLSI guideline.
+Instead of `r sum(weighted_df$first)`, now `r sum(weighted_df2$first_weighted)` isolates are flagged. In total, `r percentage(sum(data$first_weighted) / nrow(data))` of all isolates are marked 'first weighted' - `r percentage((sum(data$first_weighted) / nrow(data)) - (sum(data$first) / nrow(data)))` more than when using the CLSI guideline. In real life, this novel algorithm will yield 5-10% more isolates than the classic CLSI guideline.
 
 As with `filter_first_isolate()`, there's a shortcut for this new algorithm too:
 ```{r 1st isolate filter 3, results = 'hide', message = FALSE, warning = FALSE}
