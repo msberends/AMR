@@ -12,7 +12,7 @@
 
 After installing this package, R knows [**~70,000 distinct microbial species**](./reference/microorganisms.html) and all [**~550 antibiotic, antimycotic and antiviral drugs**](./reference/antibiotics.html) by name and code (including ATC, LOINC and SNOMED CT), and knows all about valid R/SI and MIC values. It supports any data format, including WHONET/EARS-Net data.
 
-We created this package for both routine data analysis and academic research (as part of our PhD theses) at the Faculty of Medical Sciences of the University of Groningen, the Netherlands, and the Medical Microbiology & Infection Prevention (MMBI) department of the University Medical Center Groningen (UMCG). This R package is [actively maintained](./news) and is free software (see [Copyright](#copyright)).
+We created this package for both routine data analysis and academic research (as part of our PhD theses) at the Faculty of Medical Sciences of the University of Groningen, the Netherlands, and the Medical Microbiology & Infection Prevention (MMBI) department of the University Medical Center Groningen (UMCG). This R package is [actively maintained](./news) and is free software (see [Copyright](#copyright)). It is fully independent on any other R package and only requires R version 3.0.0 (April 2013) or higher to run.
 
 <div class="main-content"> 
   <p>

@@ -232,14 +232,6 @@ barplot.mic <- function(height,
   axis(2, seq(0, max(table(droplevels.factor(height)))))
 }
 
-#' @importFrom pillar pillar_shaft
-#' @export
-pillar_shaft.mic <- function(x, ...) {
-  out <- trimws(format(x))
-  out[is.na(x)] <- font_red(NA)
-  pillar::new_pillar_shaft_simple(out, align = "right", min_width = 4)
-}
-
 #' @exportMethod [.mic
 #' @export
 #' @noRd

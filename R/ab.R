@@ -75,7 +75,7 @@ as.ab <- function(x, ...) {
   if (all(toupper(x) %in% antibiotics$ab)) {
     # valid AB code, but not yet right class
     return(structure(.Data = toupper(x),
-                     class = "ab"))
+                     class = c("ab", "character")))
   }
 
   x_bak <- x
@@ -332,7 +332,7 @@ as.ab <- function(x, ...) {
   }
 
   structure(.Data = x_result,
-            class = "ab")
+            class = c("ab", "character"))
 }
 
 #' @rdname as.ab
@@ -352,17 +352,14 @@ print.ab <- function(x, ...) {
 #' @exportMethod as.data.frame.ab
 #' @export
 #' @noRd
-as.data.frame.ab <- function(x, ...) {
-  # same as as.data.frame.character but with removed stringsAsFactors
-  nm <- paste(deparse(substitute(x), width.cutoff = 500L),
-              collapse = " ")
+as.data.frame.ab <- function (x, ...) {
+  nm <- deparse1(substitute(x))
   if (!"nm" %in% names(list(...))) {
-    as.data.frame.vector(x, ..., nm = nm)
+    as.data.frame.vector(as.ab(x), ..., nm = nm)
   } else {
-    as.data.frame.vector(x, ...)
+    as.data.frame.vector(as.ab(x), ...)
   }
 }
-
 #' @exportMethod [.ab
 #' @export
 #' @noRd
@@ -402,12 +399,4 @@ c.ab <- function(x, ...) {
   y <- NextMethod()
   attributes(y) <- attributes(x)
   class_integrity_check(y, "antimicrobial code", antibiotics$ab)
-}
-
-#' @importFrom pillar pillar_shaft
-#' @export
-pillar_shaft.ab <- function(x, ...) {
-  out <- format(x)
-  out[is.na(x)] <- font_red("NA")
-  pillar::new_pillar_shaft_simple(out, align = "left", min_width = 4)
 }

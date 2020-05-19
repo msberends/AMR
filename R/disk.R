@@ -53,9 +53,7 @@
 #' as.rsi(df)
 #' }
 as.disk <- function(x, na.rm = FALSE) {
-  if (is.disk(x)) {
-    x
-  } else {
+  if (!is.disk(x)) {
     x <- x %>% unlist()
     if (na.rm == TRUE) {
       x <- x[!is.na(x)]
@@ -81,10 +79,9 @@ as.disk <- function(x, na.rm = FALSE) {
               "%) that were invalid disk zones: ",
               list_missing, call. = FALSE)
     }
-
-    class(x) <- "disk"
-    x
   }
+  structure(as.integer(x),
+            class = c("disk", "integer"))
 }
 
 all_valid_disks <- function(x) {
@@ -98,34 +95,12 @@ is.disk <- function(x) {
   inherits(x, "disk")
 }
 
-#' @exportMethod as.data.frame.disk
-#' @export
-#' @noRd
-as.data.frame.disk <- function(x, ...) {
-  # same as as.data.frame.integer but with removed stringsAsFactors, since it will be class "disk"
-  nm <- paste(deparse(substitute(x), width.cutoff = 500L),
-              collapse = " ")
-  if (!"nm" %in% names(list(...))) {
-    as.data.frame.vector(x, ..., nm = nm)
-  } else {
-    as.data.frame.vector(x, ...)
-  }
-}
-
 #' @exportMethod print.disk
 #' @export
 #' @noRd
 print.disk <- function(x, ...) {
   cat("Class 'disk'\n")
   print(as.integer(x), quote = FALSE)
-}
-
-#' @importFrom pillar pillar_shaft
-#' @export
-pillar_shaft.disk <- function(x, ...) {
-  out <- trimws(format(x))
-  out[is.na(x)] <- font_red(NA)
-  pillar::new_pillar_shaft_simple(out, align = "right", min_width = 3)
 }
 
 #' @exportMethod [.disk

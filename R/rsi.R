@@ -650,17 +650,6 @@ barplot.rsi <- function(height,
   }
 }
 
-#' @importFrom pillar pillar_shaft
-#' @export 
-pillar_shaft.rsi <- function(x, ...) {
-  out <- trimws(format(x))
-  out[is.na(x)] <- font_subtle(" NA")
-  out[x == "S"] <- font_green_bg(font_white(" S "))
-  out[x == "I"] <- font_yellow_bg(font_black(" I "))
-  out[x == "R"] <- font_red_bg(font_white(" R "))
-  pillar::new_pillar_shaft_simple(out, align = "left", width = 3)
-}
-
 #' @exportMethod [<-.rsi
 #' @export
 #' @noRd

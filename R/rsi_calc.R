@@ -45,7 +45,7 @@ rsi_calc <- function(...,
     stop("`only_all_tested` must be logical", call. = FALSE)
   }
   
-  dots_df <- switch(1, ...) # it needs this evaluation
+  dots_df <- switch(1, ...)
   dots <- base::eval(base::substitute(base::alist(...)))
   if ("also_single_tested" %in% names(dots)) {
     stop("`also_single_tested` was replaced by `only_all_tested`. Please read Details in the help page (`?proportion`) as this may have a considerable impact on your analysis.", call. = FALSE)
@@ -53,21 +53,21 @@ rsi_calc <- function(...,
   ndots <- length(dots)
   
   if ("data.frame" %in% class(dots_df)) {
-    # data.frame passed with other columns, like: example_isolates %>% proportion_S(amcl, gent)
+    # data.frame passed with other columns, like: example_isolates %>% proportion_S(AMC, GEN)
     dots <- as.character(dots)
     dots <- dots[dots != "."]
     if (length(dots) == 0 | all(dots == "df")) {
-      # for complete data.frames, like example_isolates %>% select(amcl, gent) %>% proportion_S()
+      # for complete data.frames, like example_isolates %>% select(AMC, GEN) %>% proportion_S()
       # and the old rsi function, which has "df" as name of the first parameter
       x <- dots_df
     } else {
       x <- dots_df[, dots[dots %in% colnames(dots_df)]]
     }
   } else if (ndots == 1) {
-    # only 1 variable passed (can also be data.frame), like: proportion_S(example_isolates$amcl) and example_isolates$amcl %>% proportion_S()
+    # only 1 variable passed (can also be data.frame), like: proportion_S(example_isolates$AMC) and example_isolates$AMC %>% proportion_S()
     x <- dots_df
   } else {
-    # multiple variables passed without pipe, like: proportion_S(example_isolates$amcl, example_isolates$gent)
+    # multiple variables passed without pipe, like: proportion_S(example_isolates$AMC, example_isolates$GEN)
     x <- NULL
     try(x <- as.data.frame(dots), silent = TRUE)
     if (is.null(x)) {

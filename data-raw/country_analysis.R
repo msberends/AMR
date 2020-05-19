@@ -56,6 +56,7 @@ for (i in 2:length(unique_ip)) {
   ip_tbl <- ip_tbl %>% 
     bind_rows(GET_df(unique_ip[i]))
 }
+close(p)
 
 ip_tbl.bak <- ip_tbl
 

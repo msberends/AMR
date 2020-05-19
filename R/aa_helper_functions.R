@@ -427,6 +427,8 @@ percentage <- function(x, digits = NULL, ...) {
 }
 
 # prevent dependency on package 'backports'
+# these functions were not available in previous versions of R (last checked: R 4.0.0)
+# see here for the full list: https://github.com/r-lib/backports
 strrep = function(x, times) {
   x = as.character(x)
   if (length(x) == 0L) 
@@ -450,4 +452,7 @@ trimws <- function (x, which = c("both", "left", "right")) {
 }
 isFALSE <- function (x) {
   is.logical(x) && length(x) == 1L && !is.na(x) && !x
+}
+deparse1 = function (expr, collapse = " ", width.cutoff = 500L, ...) {
+  paste(deparse(expr, width.cutoff, ...), collapse = collapse)
 }

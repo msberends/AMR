@@ -1,8 +1,17 @@
-# AMR 1.1.0.9011
-## <small>Last updated: 18-May-2020</small>
+# AMR 1.1.0.9012
+## <small>Last updated: 19-May-2020</small>
 
 ### Breaking 
-* Removed previously deprecated function `p.symbol()` - it was replaced with `p_symbol()`
+
+* Removed code dependency on **all** R packages that this `AMR` package relied upon: `cleaner`, `crayon`, `data.table`, `dplyr`, `ggplot2`, `knitr`, `microbenchmark`, `pillar`, `R6`, `rlang`, `tidyr` and `vctrs`. This is a major code change, but will probably not be noticeable by most users.
+
+  Making this package independent on especially the tidyverse tremendously increases sustainability on the long term, since tidyverse functions change quite often. Most of our functions are replaced with versions that only rely on base R, which keeps this package fully functional for many years to come, without requiring a lot of maintenance to keep up with other packages anymore. Another upside it that this package can now be used with all versions of R since R-3.0.0 (April 2013). Our package is being used in settings where the resources are very limited. Fewer dependencies on newer software is helpful for such settings.
+  
+  Negative effects of this change are:
+  * Function `freq()` that was borrowed from the `cleaner` package was removed. Use `cleaner::freq()`, or run `library("cleaner")` before you use `freq()`.
+  * Printing values of class `mo` or `ab` in a tibble will no longer be in colour.
+  * All functions from the `mo_*` family (like `mo_name()` and `mo_gramstain()`) are noticeably slower when running on tens of thousands of rows.
+  * For developers: classes `mo` and `ab` now both also inherit class `character`, to support any data transformation. This change invalidates code that checks for class length == 1.
 
 ### Changed
 * Small fix for some text input that could not be coerced as valid MIC values 
@@ -11,7 +20,7 @@
 * Added official drug names to verbose output of `eucast_rules()`
 
 ### Other
-* Removed dependency on **all** packages that were needed for the `AMR` package to work properly: `backports`, `crayon`, `data.table`, `dplyr`, `ggplot2`, `R6`, `rlang` and `tidyr`. This is a major code change, but will probably not be noticeable by users. Making this package independent on especially the tidyverse (packages `dplyr`, `ggplot2` and `tidyr`) tremendously increases sustainability on the long term, since tidyverse functions change quite often. Most of our functions are replaced with versions that only rely on base R, which keeps this package fully functional for many years to come, without requiring a lot of maintenance to keep up with other packages anymore. The only dependencies that remained are for extending methods of other packages, like `pillar` and `vctrs` for printing and working with tibbles using our classes `mo` and `ab`.
+* Removed previously deprecated function `p.symbol()` - it was replaced with `p_symbol()`
 * Removed function `read.4d()`, that was only useful for reading from an old test database.
 
 # AMR 1.1.0

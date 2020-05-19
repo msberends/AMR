@@ -230,7 +230,8 @@ as.mo <- function(x,
 }
 
 to_class_mo <- function(x) {
-  structure(.Data = x, class = "mo")
+  structure(.Data = x,
+            class = c("mo", "character"))
 }
 
 #' @rdname as.mo
@@ -1558,27 +1559,6 @@ print.mo <- function(x, ...) {
   print.default(x, quote = FALSE)
 }
 
-#' @importFrom pillar pillar_shaft
-#' @export
-pillar_shaft.mo <- function(x, ...) {
-  out <- format(x)
-  # grey out the kingdom (part until first "_")
-  out[!is.na(x)] <- gsub("^([A-Z]+_)(.*)", paste0(font_subtle("\\1"), "\\2"), out[!is.na(x)])
-  # and grey out every _
-  out[!is.na(x)] <- gsub("_", font_subtle("_"), out[!is.na(x)])
-  
-  # markup NA and UNKNOWN
-  out[is.na(x)] <- font_red("  NA")
-  out[x == "UNKNOWN"] <- font_red("  UNKNOWN")
-  
-  # make it always fit exactly
-  pillar::new_pillar_shaft_simple(out,
-                                  align = "left", 
-                                  width = max(nchar(x)) + ifelse(length(x[x %in% c(NA, "UNKNOWN")]) > 0, 
-                                                                 2,
-                                                                 0))
-}
-
 #' @exportMethod summary.mo
 #' @export
 #' @noRd
@@ -1598,14 +1578,12 @@ summary.mo <- function(object, ...) {
 #' @exportMethod as.data.frame.mo
 #' @export
 #' @noRd
-as.data.frame.mo <- function(x, ...) {
-  # same as as.data.frame.character but with removed stringsAsFactors, since it will be class "mo"
-  nm <- paste(deparse(substitute(x), width.cutoff = 500L),
-              collapse = " ")
+as.data.frame.mo <- function (x, ...) {
+  nm <- deparse1(substitute(x))
   if (!"nm" %in% names(list(...))) {
-    as.data.frame.vector(x, ..., nm = nm)
+    as.data.frame.vector(as.mo(x), ..., nm = nm)
   } else {
-    as.data.frame.vector(x, ...)
+    as.data.frame.vector(as.mo(x), ...)
   }
 }
 

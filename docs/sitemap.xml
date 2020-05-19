@@ -7,9 +7,6 @@
     <loc>https://msberends.gitlab.io/AMR/reference/AMR-deprecated.html</loc>
   </url>
   <url>
-    <loc>https://msberends.gitlab.io/AMR/reference/AMR-tidyverse.html</loc>
-  </url>
-  <url>
     <loc>https://msberends.gitlab.io/AMR/reference/AMR.html</loc>
   </url>
   <url>
@@ -131,9 +128,6 @@
   </url>
   <url>
     <loc>https://msberends.gitlab.io/AMR/reference/proportion.html</loc>
-  </url>
-  <url>
-    <loc>https://msberends.gitlab.io/AMR/reference/reexports.html</loc>
   </url>
   <url>
     <loc>https://msberends.gitlab.io/AMR/reference/resistance_predict.html</loc>

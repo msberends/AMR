@@ -162,8 +162,6 @@ reference:
     contents:
     - "`get_locale`"
     - "`like`"
-    - "`reexports`"
-    - "`AMR-tidyverse`"
   - title: Deprecated functions
     desc: >
       These functions are deprecated, meaning that they will still

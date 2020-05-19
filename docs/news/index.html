@@ -81,7 +81,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.1.0.9011</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.1.0.9012</span>
       </span>
     </div>
 
@@ -229,19 +229,28 @@
       <small>Source: <a href='https://gitlab.com/msberends/AMR/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
-    <div id="amr-1-1-0-9011" class="section level1">
-<h1 class="page-header" data-toc-text="1.1.0.9011">
-<a href="#amr-1-1-0-9011" class="anchor"></a>AMR 1.1.0.9011<small> Unreleased </small>
+    <div id="amr-1-1-0-9012" class="section level1">
+<h1 class="page-header" data-toc-text="1.1.0.9012">
+<a href="#amr-1-1-0-9012" class="anchor"></a>AMR 1.1.0.9012<small> Unreleased </small>
 </h1>
-<div id="last-updated-18-may-2020" class="section level2">
+<div id="last-updated-19-may-2020" class="section level2">
 <h2 class="hasAnchor">
-<a href="#last-updated-18-may-2020" class="anchor"></a><small>Last updated: 18-May-2020</small>
+<a href="#last-updated-19-may-2020" class="anchor"></a><small>Last updated: 19-May-2020</small>
 </h2>
 <div id="breaking" class="section level3">
 <h3 class="hasAnchor">
 <a href="#breaking" class="anchor"></a>Breaking</h3>
 <ul>
-<li>Removed previously deprecated function <code>p.symbol()</code> - it was replaced with <code><a href="../reference/p_symbol.html">p_symbol()</a></code>
+<li>
+<p>Removed code dependency on <strong>all</strong> R packages that this <code>AMR</code> package relied upon: <code>cleaner</code>, <code>crayon</code>, <code>data.table</code>, <code>dplyr</code>, <code>ggplot2</code>, <code>knitr</code>, <code>microbenchmark</code>, <code>pillar</code>, <code>R6</code>, <code>rlang</code>, <code>tidyr</code> and <code>vctrs</code>. This is a major code change, but will probably not be noticeable by most users.</p>
+<p>Making this package independent on especially the tidyverse tremendously increases sustainability on the long term, since tidyverse functions change quite often. Most of our functions are replaced with versions that only rely on base R, which keeps this package fully functional for many years to come, without requiring a lot of maintenance to keep up with other packages anymore. Another upside it that this package can now be used with all versions of R since R-3.0.0 (April 2013). Our package is being used in settings where the resources are very limited. Fewer dependencies on newer software is helpful for such settings.</p>
+Negative effects of this change are:
+<ul>
+<li>Function <code>freq()</code> that was borrowed from the <code>cleaner</code> package was removed. Use <code><a href="https://rdrr.io/pkg/cleaner/man/freq.html">cleaner::freq()</a></code>, or run <code><a href="https://rdrr.io/pkg/cleaner/man">library("cleaner")</a></code> before you use <code>freq()</code>.</li>
+<li>Printing values of class <code>mo</code> or <code>ab</code> in a tibble will no longer be in colour.</li>
+<li>All functions from the <code>mo_*</code> family (like <code><a href="../reference/mo_property.html">mo_name()</a></code> and <code><a href="../reference/mo_property.html">mo_gramstain()</a></code>) are noticeably slower when running on tens of thousands of rows.</li>
+<li>For developers: classes <code>mo</code> and <code>ab</code> now both also inherit class <code>character</code>, to support any data transformation. This change invalidates code that checks for class length == 1.</li>
+</ul>
 </li>
 </ul>
 </div>
@@ -260,7 +269,8 @@
 <h3 class="hasAnchor">
 <a href="#other" class="anchor"></a>Other</h3>
 <ul>
-<li>Removed dependency on <strong>all</strong> packages that were needed for the <code>AMR</code> package to work properly: <code>backports</code>, <code>crayon</code>, <code>data.table</code>, <code>dplyr</code>, <code>ggplot2</code>, <code>R6</code>, <code>rlang</code> and <code>tidyr</code>. This is a major code change, but will probably not be noticeable by users. Making this package independent on especially the tidyverse (packages <code>dplyr</code>, <code>ggplot2</code> and <code>tidyr</code>) tremendously increases sustainability on the long term, since tidyverse functions change quite often. Most of our functions are replaced with versions that only rely on base R, which keeps this package fully functional for many years to come, without requiring a lot of maintenance to keep up with other packages anymore. The only dependencies that remained are for extending methods of other packages, like <code>pillar</code> and <code>vctrs</code> for printing and working with tibbles using our classes <code>mo</code> and <code>ab</code>.</li>
+<li>Removed previously deprecated function <code>p.symbol()</code> - it was replaced with <code><a href="../reference/p_symbol.html">p_symbol()</a></code>
+</li>
 <li>Removed function <code>read.4d()</code>, that was only useful for reading from an old test database.</li>
 </ul>
 </div>
@@ -531,7 +541,7 @@ For WHONET users, this means that all records/isolates with organism code <code>
 <span class="co">#&gt; Warning message:</span>
 <span class="co">#&gt; invalid microorganism code, NA generated</span></pre></div>
 This is important, because a value like <code>"testvalue"</code> could never be understood by e.g. <code><a href="../reference/mo_property.html">mo_name()</a></code>, although the class would suggest a valid microbial code.</li>
-<li>Function <code><a href="https://rdrr.io/pkg/cleaner/man/freq.html">freq()</a></code> has moved to a new package, <a href="https://github.com/msberends/clean"><code>clean</code></a> (<a href="https://cran.r-project.org/package=clean">CRAN link</a>), since creating frequency tables actually does not fit the scope of this package. The <code><a href="https://rdrr.io/pkg/cleaner/man/freq.html">freq()</a></code> function still works, since it is re-exported from the <code>clean</code> package (which will be installed automatically upon updating this <code>AMR</code> package).</li>
+<li>Function <code>freq()</code> has moved to a new package, <a href="https://github.com/msberends/clean"><code>clean</code></a> (<a href="https://cran.r-project.org/package=clean">CRAN link</a>), since creating frequency tables actually does not fit the scope of this package. The <code>freq()</code> function still works, since it is re-exported from the <code>clean</code> package (which will be installed automatically upon updating this <code>AMR</code> package).</li>
 <li><p>Renamed data set <code>septic_patients</code> to <code>example_isolates</code></p></li>
 </ul>
 </div>
@@ -788,7 +798,7 @@ Please <a href="https://gitlab.com/msberends/AMR/issues/new?issue%5Btitle%5D=Tra
 <li>The <code><a href="../reference/age.html">age()</a></code> function gained a new parameter <code>exact</code> to determine ages with decimals</li>
 <li>Removed deprecated functions <code>guess_mo()</code>, <code>guess_atc()</code>, <code>EUCAST_rules()</code>, <code>interpretive_reading()</code>, <code><a href="../reference/as.rsi.html">rsi()</a></code>
 </li>
-<li>Frequency tables (<code><a href="https://rdrr.io/pkg/cleaner/man/freq.html">freq()</a></code>):
+<li>Frequency tables (<code>freq()</code>):
 <ul>
 <li>speed improvement for microbial IDs</li>
 <li>fixed factor level names for R Markdown</li>
@@ -796,12 +806,12 @@ Please <a href="https://gitlab.com/msberends/AMR/issues/new?issue%5Btitle%5D=Tra
 <li>
 <p>support for boxplots:</p>
 <div class="sourceCode" id="cb16"><pre class="r"><span class="no">septic_patients</span> <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="https://rdrr.io/pkg/cleaner/man/freq.html">freq</a></span>(<span class="no">age</span>) <span class="kw">%&gt;%</span>
+  <span class="fu">freq</span>(<span class="no">age</span>) <span class="kw">%&gt;%</span>
   <span class="fu"><a href="https://rdrr.io/r/graphics/boxplot.html">boxplot</a></span>()
 <span class="co"># grouped boxplots:</span>
 <span class="no">septic_patients</span> <span class="kw">%&gt;%</span>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span>(<span class="no">hospital_id</span>) <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="https://rdrr.io/pkg/cleaner/man/freq.html">freq</a></span>(<span class="no">age</span>) <span class="kw">%&gt;%</span>
+  <span class="fu">freq</span>(<span class="no">age</span>) <span class="kw">%&gt;%</span>
   <span class="fu"><a href="https://rdrr.io/r/graphics/boxplot.html">boxplot</a></span>()</pre></div>
 </li>
 </ul>
@@ -812,7 +822,7 @@ Please <a href="https://gitlab.com/msberends/AMR/issues/new?issue%5Btitle%5D=EUC
 <li>Added ceftazidim intrinsic resistance to <em>Streptococci</em>
 </li>
 <li>Changed default settings for <code><a href="../reference/age_groups.html">age_groups()</a></code>, to let groups of fives and tens end with 100+ instead of 120+</li>
-<li>Fix for <code><a href="https://rdrr.io/pkg/cleaner/man/freq.html">freq()</a></code> for when all values are <code>NA</code>
+<li>Fix for <code>freq()</code> for when all values are <code>NA</code>
 </li>
 <li>Fix for <code><a href="../reference/first_isolate.html">first_isolate()</a></code> for when dates are missing</li>
 <li>Improved speed of <code><a href="../reference/guess_ab_col.html">guess_ab_col()</a></code>
@@ -1034,7 +1044,7 @@ Using <code><a href="../reference/as.mo.html">as.mo(..., allow_uncertain = 3)</a
 </li>
 </ul>
 </li>
-<li>Frequency tables (<code><a href="https://rdrr.io/pkg/cleaner/man/freq.html">freq()</a></code> function):
+<li>Frequency tables (<code>freq()</code> function):
 <ul>
 <li>
 <p>Support for tidyverse quasiquotation! Now you can create frequency tables of function outcomes:</p>
@@ -1042,15 +1052,15 @@ Using <code><a href="../reference/as.mo.html">as.mo(..., allow_uncertain = 3)</a
 <span class="co"># OLD WAY</span>
 <span class="no">septic_patients</span> <span class="kw">%&gt;%</span>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(<span class="kw">genus</span> <span class="kw">=</span> <span class="fu"><a href="../reference/mo_property.html">mo_genus</a></span>(<span class="no">mo</span>)) <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="https://rdrr.io/pkg/cleaner/man/freq.html">freq</a></span>(<span class="no">genus</span>)
+  <span class="fu">freq</span>(<span class="no">genus</span>)
 <span class="co"># NEW WAY</span>
 <span class="no">septic_patients</span> <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="https://rdrr.io/pkg/cleaner/man/freq.html">freq</a></span>(<span class="fu"><a href="../reference/mo_property.html">mo_genus</a></span>(<span class="no">mo</span>))
+  <span class="fu">freq</span>(<span class="fu"><a href="../reference/mo_property.html">mo_genus</a></span>(<span class="no">mo</span>))
 
 <span class="co"># Even supports grouping variables:</span>
 <span class="no">septic_patients</span> <span class="kw">%&gt;%</span>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span>(<span class="no">gender</span>) <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="https://rdrr.io/pkg/cleaner/man/freq.html">freq</a></span>(<span class="fu"><a href="../reference/mo_property.html">mo_genus</a></span>(<span class="no">mo</span>))</pre></div>
+  <span class="fu">freq</span>(<span class="fu"><a href="../reference/mo_property.html">mo_genus</a></span>(<span class="no">mo</span>))</pre></div>
 </li>
 <li>Header info is now available as a list, with the <code>header</code> function</li>
 <li>The parameter <code>header</code> is now set to <code>TRUE</code> at default, even for markdown</li>
@@ -1137,18 +1147,18 @@ Using <code><a href="../reference/as.mo.html">as.mo(..., allow_uncertain = 3)</a
 <li>Using <code>portion_*</code> functions now throws a warning when total available isolate is below parameter <code>minimum</code>
 </li>
 <li>Functions <code>as.mo</code>, <code>as.rsi</code>, <code>as.mic</code>, <code>as.atc</code> and <code>freq</code> will not set package name as attribute anymore</li>
-<li>Frequency tables - <code><a href="https://rdrr.io/pkg/cleaner/man/freq.html">freq()</a></code>:
+<li>Frequency tables - <code>freq()</code>:
 <ul>
 <li>
 <p>Support for grouping variables, test with:</p>
 <div class="sourceCode" id="cb28"><pre class="r"><span class="no">septic_patients</span> <span class="kw">%&gt;%</span>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span>(<span class="no">hospital_id</span>) <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="https://rdrr.io/pkg/cleaner/man/freq.html">freq</a></span>(<span class="no">gender</span>)</pre></div>
+  <span class="fu">freq</span>(<span class="no">gender</span>)</pre></div>
 </li>
 <li>
 <p>Support for (un)selecting columns:</p>
 <div class="sourceCode" id="cb29"><pre class="r"><span class="no">septic_patients</span> <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="https://rdrr.io/pkg/cleaner/man/freq.html">freq</a></span>(<span class="no">hospital_id</span>) <span class="kw">%&gt;%</span>
+  <span class="fu">freq</span>(<span class="no">hospital_id</span>) <span class="kw">%&gt;%</span>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span>(-<span class="no">count</span>, -<span class="no">cum_count</span>) <span class="co"># only get item, percent, cum_percent</span></pre></div>
 </li>
 <li>Check for <code><a href="https://hms.tidyverse.org/reference/Deprecated.html">hms::is.hms</a></code>
@@ -1327,11 +1337,11 @@ Using <code><a href="../reference/as.mo.html">as.mo(..., allow_uncertain = 3)</a
 <li>
 <p>Support for types (classes) list and matrix for <code>freq</code></p>
 <div class="sourceCode" id="cb36"><pre class="r"><span class="no">my_matrix</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/with.html">with</a></span>(<span class="no">septic_patients</span>, <span class="fu"><a href="https://rdrr.io/r/base/matrix.html">matrix</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="no">age</span>, <span class="no">gender</span>), <span class="kw">ncol</span> <span class="kw">=</span> <span class="fl">2</span>))
-<span class="fu"><a href="https://rdrr.io/pkg/cleaner/man/freq.html">freq</a></span>(<span class="no">my_matrix</span>)</pre></div>
+<span class="fu">freq</span>(<span class="no">my_matrix</span>)</pre></div>
 <p>For lists, subsetting is possible:</p>
 <div class="sourceCode" id="cb37"><pre class="r"><span class="no">my_list</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="kw">age</span> <span class="kw">=</span> <span class="no">septic_patients</span>$<span class="no">age</span>, <span class="kw">gender</span> <span class="kw">=</span> <span class="no">septic_patients</span>$<span class="no">gender</span>)
-<span class="no">my_list</span> <span class="kw">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/pkg/cleaner/man/freq.html">freq</a></span>(<span class="no">age</span>)
-<span class="no">my_list</span> <span class="kw">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/pkg/cleaner/man/freq.html">freq</a></span>(<span class="no">gender</span>)</pre></div>
+<span class="no">my_list</span> <span class="kw">%&gt;%</span> <span class="fu">freq</span>(<span class="no">age</span>)
+<span class="no">my_list</span> <span class="kw">%&gt;%</span> <span class="fu">freq</span>(<span class="no">gender</span>)</pre></div>
 </li>
 </ul>
 </div>
@@ -1405,13 +1415,13 @@ Using <code><a href="../reference/as.mo.html">as.mo(..., allow_uncertain = 3)</a
 <ul>
 <li>A vignette to explain its usage</li>
 <li>Support for <code>rsi</code> (antimicrobial resistance) to use as input</li>
-<li>Support for <code>table</code> to use as input: <code><a href="https://rdrr.io/pkg/cleaner/man/freq.html">freq(table(x, y))</a></code>
+<li>Support for <code>table</code> to use as input: <code>freq(table(x, y))</code>
 </li>
 <li>Support for existing functions <code>hist</code> and <code>plot</code> to use a frequency table as input: <code><a href="https://rdrr.io/r/graphics/hist.html">hist(freq(df$age))</a></code>
 </li>
 <li>Support for <code>as.vector</code>, <code>as.data.frame</code>, <code>as_tibble</code> and <code>format</code>
 </li>
-<li>Support for quasiquotation: <code><a href="https://rdrr.io/pkg/cleaner/man/freq.html">freq(mydata, mycolumn)</a></code> is the same as <code>mydata %&gt;% freq(mycolumn)</code>
+<li>Support for quasiquotation: <code>freq(mydata, mycolumn)</code> is the same as <code>mydata %&gt;% freq(mycolumn)</code>
 </li>
 <li>Function <code>top_freq</code> function to return the top/below <em>n</em> items as vector</li>
 <li>Header of frequency tables now also show Mean Absolute Deviaton (MAD) and Interquartile Range (IQR)</li>

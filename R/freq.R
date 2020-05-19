@@ -19,12 +19,15 @@
 # Visit our website for more info: https://msberends.gitlab.io/AMR.    #
 # ==================================================================== #
 
-#' @importFrom cleaner freq
-#' @export
-cleaner::freq
+if ("cleaner" %in% rownames(utils::installed.packages())) {
+  freq <- get("freq", envir = asNamespace("cleaner"))
+  freq.default <- get("freq.default", envir = asNamespace("cleaner"))
+} else {
+  freq <- ""
+  freq.default <- ""
+}
 
-#' @exportMethod freq.mo
-#' @importFrom cleaner freq.default
+#' @method freq mo
 #' @export
 #' @noRd
 freq.mo <- function(x, ...) {
@@ -47,11 +50,10 @@ freq.mo <- function(x, ...) {
                                                            ")"),
                                   `No of genera` = n_distinct(mo_genus(x_noNA, language = NULL)),
                                   `No of species` = n_distinct(paste(mo_genus(x_noNA, language = NULL),
-                                                             mo_species(x_noNA, language = NULL)))))
+                                                                     mo_species(x_noNA, language = NULL)))))
 }
 
-#' @exportMethod freq.rsi
-#' @importFrom cleaner freq.default
+#' @method freq rsi
 #' @export
 #' @noRd
 freq.rsi <- function(x, ...) {
