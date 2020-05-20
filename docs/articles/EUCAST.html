@@ -39,7 +39,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.1.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.1.0.9015</span>
       </span>
     </div>
 
@@ -186,7 +186,7 @@
       <h1 data-toc-skip>How to apply EUCAST rules</h1>
                         <h4 class="author">Matthijs S. Berends</h4>
             
-            <h4 class="date">15 April 2020</h4>
+            <h4 class="date">20 May 2020</h4>
       
       <small class="dont-index">Source: <a href="https://gitlab.com/msberends/AMR/blob/master/vignettes/EUCAST.Rmd"><code>vignettes/EUCAST.Rmd</code></a></small>
       <div class="hidden name"><code>EUCAST.Rmd</code></div>
@@ -208,7 +208,7 @@
 <h2 class="hasAnchor">
 <a href="#examples" class="anchor"></a>Examples</h2>
 <p>These rules can be used to discard impossible bug-drug combinations in your data. For example, <em>Klebsiella</em> produces beta-lactamase that prevents ampicillin (or amoxicillin) from working against it. In other words, practically every strain of <em>Klebsiella</em> is resistant to ampicillin.</p>
-<p>Sometimes, laboratory data can still contain such strains with ampicillin being susceptible to ampicillin. This could be because an antibiogram is available before an identification is available, and the antibiogram is then not re-interpreted based on the identification (namely, <em>Klebsiella</em>). EUCAST expert rules solve this, that can be used with <code><a href="../reference/eucast_rules.html">eucast_rules()</a></code>:</p>
+<p>Sometimes, laboratory data can still contain such strains with ampicillin being susceptible to ampicillin. This could be because an antibiogram is available before an identification is available, and the antibiogram is then not re-interpreted based on the identification (namely, <em>Klebsiella</em>). EUCAST expert rules solve this, that can be applied using <code><a href="../reference/eucast_rules.html">eucast_rules()</a></code>:</p>
 <div class="sourceCode" id="cb1"><html><body><pre class="r"><span class="no">oops</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span>(<span class="kw">mo</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"Klebsiella"</span>,
                           <span class="st">"Escherichia"</span>),
                    <span class="kw">ampicillin</span> <span class="kw">=</span> <span class="st">"S"</span>)
@@ -218,6 +218,10 @@
 <span class="co"># 2 Escherichia          S</span>
 
 <span class="fu"><a href="../reference/eucast_rules.html">eucast_rules</a></span>(<span class="no">oops</span>, <span class="kw">info</span> <span class="kw">=</span> <span class="fl">FALSE</span>)
+<span class="co"># [31m</span>
+<span class="co"># Skipping inheritance rules defined by this package, such as setting trimethoprim (TMP) = R where trimethoprim/sulfamethoxazole (SXT) = R.</span>
+<span class="co"># Use eucast_rules(..., rules = "all") to also apply those rules.</span>
+<span class="co"># [39m</span>
 <span class="co">#            mo ampicillin</span>
 <span class="co"># 1  Klebsiella          R</span>
 <span class="co"># 2 Escherichia          S</span></pre></body></html></div>
@@ -301,6 +305,10 @@
 </tbody>
 </table>
 <div class="sourceCode" id="cb4"><html><body><pre class="r"><span class="fu"><a href="../reference/eucast_rules.html">eucast_rules</a></span>(<span class="no">data</span>)</pre></body></html></div>
+<pre><code># [31m
+# Skipping inheritance rules defined by this package, such as setting trimethoprim (TMP) = R where trimethoprim/sulfamethoxazole (SXT) = R.
+# Use eucast_rules(..., rules = "all") to also apply those rules.
+# [39m</code></pre>
 <table class="table">
 <thead><tr class="header">
 <th align="left">mo</th>
@@ -383,7 +391,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
 </div>
 
       </footer>

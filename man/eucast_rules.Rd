@@ -20,7 +20,7 @@ eucast_rules(
   x,
   col_mo = NULL,
   info = interactive(),
-  rules = c("breakpoints", "expert", "other", "all"),
+  rules = getOption("AMR.eucast_rules", default = c("breakpoints", "expert")),
   verbose = FALSE,
   ...
 )
@@ -32,7 +32,7 @@ eucast_rules(
 
 \item{info}{print progress}
 
-\item{rules}{a character vector that specifies which rules should be applied - one or more of \code{c("breakpoints", "expert", "other", "all")}}
+\item{rules}{a character vector that specifies which rules should be applied. Must be one or more of \code{"breakpoints"}, \code{"expert"}, \code{"other"}, \code{"all"}, and defaults to \code{c("breakpoints", "expert")}. The default value can be set to another value using e.g. \code{options(AMR.eucast_rules = "all")}.}
 
 \item{verbose}{a logical to turn Verbose mode on and off (default is off). In Verbose mode, the function does not apply rules to the data, but instead returns a data set in logbook form with extensive info about which rows and columns would be effected and in which way.}
 
@@ -42,7 +42,7 @@ eucast_rules(
 The input of \code{x}, possibly with edited values of antibiotics. Or, if \code{verbose = TRUE}, a \code{\link{data.frame}} with all original and new values of the affected bug-drug combinations.
 }
 \description{
-Apply susceptibility rules as defined by the European Committee on Antimicrobial Susceptibility Testing (EUCAST, \url{http://eucast.org}), see \emph{Source}. This includes (1) expert rules, (2) intrinsic resistance and (3) inferred resistance as defined in their breakpoint tables.
+Apply susceptibility rules as defined by the European Committee on Antimicrobial Susceptibility Testing (EUCAST, \url{http://eucast.org}), see \emph{Source}. This includes (1) expert rules and intrinsic resistance and (2) inferred resistance as defined in their breakpoint tables.
 
 To improve the interpretation of the antibiogram before EUCAST rules are applied, some non-EUCAST rules are applied at default, see Details.
 }
@@ -50,7 +50,7 @@ To improve the interpretation of the antibiogram before EUCAST rules are applied
 \strong{Note:} This function does not translate MIC values to RSI values. Use \code{\link[=as.rsi]{as.rsi()}} for that. \cr
 \strong{Note:} When ampicillin (AMP, J01CA01) is not available but amoxicillin (AMX, J01CA04) is, the latter will be used for all rules where there is a dependency on ampicillin. These drugs are interchangeable when it comes to expression of antimicrobial resistance.
 
-Before further processing, some non-EUCAST rules are applied to improve the efficacy of the EUCAST rules. These non-EUCAST rules, that are applied to all isolates, are:
+Before further processing, some non-EUCAST rules can be applied to improve the efficacy of the EUCAST rules. These non-EUCAST rules, that are then applied to all isolates, are:
 \itemize{
 \item Inherit amoxicillin (AMX) from ampicillin (AMP), where amoxicillin (AMX) is unavailable;
 \item Inherit ampicillin (AMP) from amoxicillin (AMX), where ampicillin (AMP) is unavailable;
@@ -62,7 +62,7 @@ Before further processing, some non-EUCAST rules are applied to improve the effi
 \item Set trimethoprim/sulfamethoxazole (SXT) = S where trimethoprim (TMP) = S.
 }
 
-To \emph{not} use these rules, please use \code{eucast_rules(..., rules = c("breakpoints", "expert"))}.
+These rules are not applied at default, since they are not approved by EUCAST. To use these rules, please use \code{eucast_rules(..., rules = "all")}, or set the default behaviour of the \verb{[eucast_rules()]} function with \code{options(AMR.eucast_rules = "all")} (or any other valid input value(s) to the \code{rules} parameter).
 
 The file containing all EUCAST rules is located here: \url{https://gitlab.com/msberends/AMR/blob/master/data-raw/eucast_rules.tsv}.
 }

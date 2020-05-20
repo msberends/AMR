@@ -39,7 +39,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.1.0.9014</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.1.0.9015</span>
       </span>
     </div>
 
@@ -186,7 +186,7 @@
       <h1 data-toc-skip>How to determine multi-drug resistance (MDR)</h1>
                         <h4 class="author">Matthijs S. Berends</h4>
             
-            <h4 class="date">19 May 2020</h4>
+            <h4 class="date">20 May 2020</h4>
       
       <small class="dont-index">Source: <a href="https://gitlab.com/msberends/AMR/blob/master/vignettes/MDR.Rmd"><code>vignettes/MDR.Rmd</code></a></small>
       <div class="hidden name"><code>MDR.Rmd</code></div>
@@ -302,18 +302,18 @@ Unique: 2</p>
 <p>The data set now looks like this:</p>
 <div class="sourceCode" id="cb5"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(<span class="no">my_TB_data</span>)
 <span class="co">#   rifampicin isoniazid gatifloxacin ethambutol pyrazinamide moxifloxacin</span>
-<span class="co"># 1          R         R            R          R            S            R</span>
-<span class="co"># 2          I         S            R          R            S            R</span>
-<span class="co"># 3          S         R            R          R            I            S</span>
-<span class="co"># 4          R         R            R          R            R            R</span>
-<span class="co"># 5          S         R            I          R            R            R</span>
-<span class="co"># 6          S         R            R          S            R            S</span>
+<span class="co"># 1          R         R            R          R            S            S</span>
+<span class="co"># 2          S         S            S          I            R            S</span>
+<span class="co"># 3          S         R            S          I            S            I</span>
+<span class="co"># 4          S         R            S          S            S            R</span>
+<span class="co"># 5          R         S            R          S            S            R</span>
+<span class="co"># 6          I         S            R          R            R            R</span>
 <span class="co">#   kanamycin</span>
-<span class="co"># 1         S</span>
+<span class="co"># 1         I</span>
 <span class="co"># 2         S</span>
-<span class="co"># 3         S</span>
-<span class="co"># 4         S</span>
-<span class="co"># 5         R</span>
+<span class="co"># 3         R</span>
+<span class="co"># 4         I</span>
+<span class="co"># 5         I</span>
 <span class="co"># 6         S</span></pre></body></html></div>
 <p>We can now add the interpretation of MDR-TB to our data set. You can use:</p>
 <div class="sourceCode" id="cb6"><html><body><pre class="r"><span class="fu"><a href="../reference/mdro.html">mdro</a></span>(<span class="no">my_TB_data</span>, <span class="kw">guideline</span> <span class="kw">=</span> <span class="st">"TB"</span>)</pre></body></html></div>
@@ -343,40 +343,40 @@ Unique: 5</p>
 <tr class="odd">
 <td align="left">1</td>
 <td align="left">Mono-resistant</td>
-<td align="right">3294</td>
-<td align="right">65.88%</td>
-<td align="right">3294</td>
-<td align="right">65.88%</td>
+<td align="right">3288</td>
+<td align="right">65.76%</td>
+<td align="right">3288</td>
+<td align="right">65.76%</td>
 </tr>
 <tr class="even">
 <td align="left">2</td>
 <td align="left">Negative</td>
-<td align="right">613</td>
-<td align="right">12.26%</td>
-<td align="right">3907</td>
-<td align="right">78.14%</td>
+<td align="right">631</td>
+<td align="right">12.62%</td>
+<td align="right">3919</td>
+<td align="right">78.38%</td>
 </tr>
 <tr class="odd">
 <td align="left">3</td>
 <td align="left">Multi-drug-resistant</td>
-<td align="right">572</td>
-<td align="right">11.44%</td>
-<td align="right">4479</td>
-<td align="right">89.58%</td>
+<td align="right">582</td>
+<td align="right">11.64%</td>
+<td align="right">4501</td>
+<td align="right">90.02%</td>
 </tr>
 <tr class="even">
 <td align="left">4</td>
 <td align="left">Poly-resistant</td>
-<td align="right">312</td>
-<td align="right">6.24%</td>
-<td align="right">4791</td>
-<td align="right">95.82%</td>
+<td align="right">298</td>
+<td align="right">5.96%</td>
+<td align="right">4799</td>
+<td align="right">95.98%</td>
 </tr>
 <tr class="odd">
 <td align="left">5</td>
 <td align="left">Extensively drug-resistant</td>
-<td align="right">209</td>
-<td align="right">4.18%</td>
+<td align="right">201</td>
+<td align="right">4.02%</td>
 <td align="right">5000</td>
 <td align="right">100.00%</td>
 </tr>

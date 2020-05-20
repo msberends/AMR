@@ -1,18 +1,18 @@
-# AMR 1.1.0.9014
-## <small>Last updated: 19-May-2020</small>
+# AMR 1.1.0.9015
+## <small>Last updated: 20-May-2020</small>
 
 ### Breaking 
-* Removed code dependency on all other R packages: `cleaner`, `crayon`, `data.table`, `dplyr`, `ggplot2`, `knitr`, `microbenchmark`, `pillar`, `R6`, `rlang`, `tidyr` and `vctrs`. This is a major code change, but will probably not be noticeable by most users.
+* Removed code dependency on all other R packages, making this package fully independent on the development process of others. This is a major code change, but will probably not be noticeable by most users.
 
-  Making this package independent on especially the tidyverse tremendously increases sustainability on the long term, since tidyverse functions change quite often. Most of our functions are replaced with versions that only rely on base R, which keeps this package fully functional for many years to come, without requiring a lot of maintenance to keep up with other packages anymore. Another upside it that this package can now be used with all versions of R since R-3.0.0 (April 2013). Our package is being used in settings where the resources are very limited. Fewer dependencies on newer software is helpful for such settings.
-  
+  Making this package independent on especially the tidyverse tremendously increases sustainability on the long term, since tidyverse functions change quite often. Good for users, but hard for package maintainers. Most of our functions are replaced with versions that only rely on base R, which keeps this package fully functional for many years to come, without requiring a lot of maintenance to keep up with other packages anymore. Another upside it that this package can now be used with all versions of R since R-3.0.0 (April 2013). Our package is being used in settings where the resources are very limited. Fewer dependencies on newer software is helpful for such settings.
   Negative effects of this change are:
   * Function `freq()` that was borrowed from the `cleaner` package was removed. Use `cleaner::freq()`, or run `library("cleaner")` before you use `freq()`.
-  * Printing values of class `mo` or `ab` in a tibble will no longer be in colour.
+  * Printing values of class `mo` or `ab` in a tibble will no longer be in colour and printing `rsi` in a tibble will show the class `<ord>`, not `<rsi>` anymore. This is purely a visual effect.
   * All functions from the `mo_*` family (like `mo_name()` and `mo_gramstain()`) are noticeably slower when running on hundreds of thousands of rows.
   * For developers: classes `mo` and `ab` now both also inherit class `character`, to support any data transformation. This change invalidates code that checks for class length == 1.
 
 ### Changed
+* The EUCAST rules function (`eucast_rules()`) at default no longer applies "other" rules that are made available by this package (like setting ampicillin = R when ampicillin + enzym inhibitor = R). The default input value for `rules` is now `c("breakpoints", "expert")` instead of `"all"`, but this can be changed by the user. To return to the old behaviour, set `options(AMR.eucast_rules = "all")`.
 * Small fix for some text input that could not be coerced as valid MIC values 
 * Fix for cases where some functions of newer versions of the `dplyr` package (such as `bind_rows()`) would not preserve the right class for microorganisms (class `mo`) and antibiotics (class `ab`)
 * Fixed interpretation of generic CLSI interpretation rules (thanks to Anthony Underwood)
@@ -20,7 +20,7 @@
 
 ### Other
 * Removed previously deprecated function `p.symbol()` - it was replaced with `p_symbol()`
-* Removed function `read.4d()`, that was only useful for reading from an old test database.
+* Removed function `read.4d()`, that was only useful for reading data from an old test database.
 
 # AMR 1.1.0
 

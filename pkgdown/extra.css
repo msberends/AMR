@@ -65,7 +65,7 @@ footer p {
 #read-more-on-our-website-,
 #read-more-on-our-website- + p,
 li a[href="#read-more-on-our-website-"] {
-  display: none;
+  display: none !important;
 }
 
 /* make colour darker and better readable for links */

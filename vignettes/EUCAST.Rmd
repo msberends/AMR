@@ -36,7 +36,7 @@ In Europe, a lot of medical microbiological laboratories already apply these rul
 
 These rules can be used to discard impossible bug-drug combinations in your data. For example, *Klebsiella* produces beta-lactamase that prevents ampicillin (or amoxicillin) from working against it. In other words, practically every strain of *Klebsiella* is resistant to ampicillin.
 
-Sometimes, laboratory data can still contain such strains with ampicillin being susceptible to ampicillin. This could be because an antibiogram is available before an identification is available, and the antibiogram is then not re-interpreted based on the identification (namely, *Klebsiella*). EUCAST expert rules solve this, that can be used with `eucast_rules()`:
+Sometimes, laboratory data can still contain such strains with ampicillin being susceptible to ampicillin. This could be because an antibiogram is available before an identification is available, and the antibiogram is then not re-interpreted based on the identification (namely, *Klebsiella*). EUCAST expert rules solve this, that can be applied using `eucast_rules()`:
 
 ```{r, warning = FALSE, message = FALSE}
 oops <- data.frame(mo = c("Klebsiella", 

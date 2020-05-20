@@ -49,7 +49,7 @@
   <script src="../extra.js"></script>
 
 <meta property="og:title" content="Apply EUCAST rules — eucast_rules" />
-<meta property="og:description" content="Apply susceptibility rules as defined by the European Committee on Antimicrobial Susceptibility Testing (EUCAST, http://eucast.org), see Source. This includes (1) expert rules, (2) intrinsic resistance and (3) inferred resistance as defined in their breakpoint tables.
+<meta property="og:description" content="Apply susceptibility rules as defined by the European Committee on Antimicrobial Susceptibility Testing (EUCAST, http://eucast.org), see Source. This includes (1) expert rules and intrinsic resistance and (2) inferred resistance as defined in their breakpoint tables.
 To improve the interpretation of the antibiogram before EUCAST rules are applied, some non-EUCAST rules are applied at default, see Details." />
 <meta property="og:image" content="https://msberends.gitlab.io/AMR/logo.svg" />
 
@@ -83,7 +83,7 @@ To improve the interpretation of the antibiogram before EUCAST rules are applied
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.1.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.1.0.9015</span>
       </span>
     </div>
 
@@ -233,7 +233,7 @@ To improve the interpretation of the antibiogram before EUCAST rules are applied
     </div>
 
     <div class="ref-description">
-    <p>Apply susceptibility rules as defined by the European Committee on Antimicrobial Susceptibility Testing (EUCAST, <a href='http://eucast.org'>http://eucast.org</a>), see <em>Source</em>. This includes (1) expert rules, (2) intrinsic resistance and (3) inferred resistance as defined in their breakpoint tables.</p>
+    <p>Apply susceptibility rules as defined by the European Committee on Antimicrobial Susceptibility Testing (EUCAST, <a href='http://eucast.org'>http://eucast.org</a>), see <em>Source</em>. This includes (1) expert rules and intrinsic resistance and (2) inferred resistance as defined in their breakpoint tables.</p>
 <p>To improve the interpretation of the antibiogram before EUCAST rules are applied, some non-EUCAST rules are applied at default, see Details.</p>
     </div>
 
@@ -241,7 +241,7 @@ To improve the interpretation of the antibiogram before EUCAST rules are applied
   <span class='no'>x</span>,
   <span class='kw'>col_mo</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>info</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/interactive.html'>interactive</a></span>(),
-  <span class='kw'>rules</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"breakpoints"</span>, <span class='st'>"expert"</span>, <span class='st'>"other"</span>, <span class='st'>"all"</span>),
+  <span class='kw'>rules</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/options.html'>getOption</a></span>(<span class='st'>"AMR.eucast_rules"</span>, <span class='kw'>default</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"breakpoints"</span>, <span class='st'>"expert"</span>)),
   <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='no'>...</span>
 )</pre>
@@ -263,7 +263,7 @@ To improve the interpretation of the antibiogram before EUCAST rules are applied
     </tr>
     <tr>
       <th>rules</th>
-      <td><p>a character vector that specifies which rules should be applied - one or more of <code><a href='https://rdrr.io/r/base/c.html'>c("breakpoints", "expert", "other", "all")</a></code></p></td>
+      <td><p>a character vector that specifies which rules should be applied. Must be one or more of <code>"breakpoints"</code>, <code>"expert"</code>, <code>"other"</code>, <code>"all"</code>, and defaults to <code><a href='https://rdrr.io/r/base/c.html'>c("breakpoints", "expert")</a></code>. The default value can be set to another value using e.g. <code><a href='https://rdrr.io/r/base/options.html'>options(AMR.eucast_rules = "all")</a></code>.</p></td>
     </tr>
     <tr>
       <th>verbose</th>
@@ -295,7 +295,7 @@ Leclercq et al. <strong>EUCAST expert rules in antimicrobial susceptibility test
 
     <p><strong>Note:</strong> This function does not translate MIC values to RSI values. Use <code><a href='as.rsi.html'>as.rsi()</a></code> for that. <br />
 <strong>Note:</strong> When ampicillin (AMP, J01CA01) is not available but amoxicillin (AMX, J01CA04) is, the latter will be used for all rules where there is a dependency on ampicillin. These drugs are interchangeable when it comes to expression of antimicrobial resistance.</p>
-<p>Before further processing, some non-EUCAST rules are applied to improve the efficacy of the EUCAST rules. These non-EUCAST rules, that are applied to all isolates, are:</p><ul>
+<p>Before further processing, some non-EUCAST rules can be applied to improve the efficacy of the EUCAST rules. These non-EUCAST rules, that are then applied to all isolates, are:</p><ul>
 <li><p>Inherit amoxicillin (AMX) from ampicillin (AMP), where amoxicillin (AMX) is unavailable;</p></li>
 <li><p>Inherit ampicillin (AMP) from amoxicillin (AMX), where ampicillin (AMP) is unavailable;</p></li>
 <li><p>Set amoxicillin (AMX) = R where amoxicillin/clavulanic acid (AMC) = R;</p></li>
@@ -306,7 +306,7 @@ Leclercq et al. <strong>EUCAST expert rules in antimicrobial susceptibility test
 <li><p>Set trimethoprim/sulfamethoxazole (SXT) = S where trimethoprim (TMP) = S.</p></li>
 </ul>
 
-<p>To <em>not</em> use these rules, please use <code>eucast_rules(..., rules = c("breakpoints", "expert"))</code>.</p>
+<p>These rules are not applied at default, since they are not approved by EUCAST. To use these rules, please use <code>eucast_rules(..., rules = "all")</code>, or set the default behaviour of the <code>[eucast_rules()]</code> function with <code><a href='https://rdrr.io/r/base/options.html'>options(AMR.eucast_rules = "all")</a></code> (or any other valid input value(s) to the <code>rules</code> parameter).</p>
 <p>The file containing all EUCAST rules is located here: <a href='https://gitlab.com/msberends/AMR/blob/master/data-raw/eucast_rules.tsv'>https://gitlab.com/msberends/AMR/blob/master/data-raw/eucast_rules.tsv</a>.</p>
     <h2 class="hasAnchor" id="antibiotics"><a class="anchor" href="#antibiotics"></a>Antibiotics</h2>
 
@@ -461,7 +461,7 @@ The <a href='lifecycle.html'>lifecycle</a> of this function is <strong>maturing<
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
 </div>
 
       </footer>

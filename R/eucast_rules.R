@@ -26,13 +26,13 @@ EUCAST_VERSION_EXPERT_RULES <- "3.1, 2016"
 #' Apply EUCAST rules
 #' 
 #' @description
-#' Apply susceptibility rules as defined by the European Committee on Antimicrobial Susceptibility Testing (EUCAST, <http://eucast.org>), see *Source*. This includes (1) expert rules, (2) intrinsic resistance and (3) inferred resistance as defined in their breakpoint tables. 
+#' Apply susceptibility rules as defined by the European Committee on Antimicrobial Susceptibility Testing (EUCAST, <http://eucast.org>), see *Source*. This includes (1) expert rules and intrinsic resistance and (2) inferred resistance as defined in their breakpoint tables. 
 #' 
 #' To improve the interpretation of the antibiogram before EUCAST rules are applied, some non-EUCAST rules are applied at default, see Details.
 #' @inheritSection lifecycle Maturing lifecycle
 #' @param x data with antibiotic columns, like e.g. `AMX` and `AMC`
 #' @param info print progress
-#' @param rules a character vector that specifies which rules should be applied - one or more of `c("breakpoints", "expert", "other", "all")`
+#' @param rules a character vector that specifies which rules should be applied. Must be one or more of `"breakpoints"`, `"expert"`, `"other"`, `"all"`, and defaults to `c("breakpoints", "expert")`. The default value can be set to another value using e.g. `options(AMR.eucast_rules = "all")`.
 #' @param verbose a logical to turn Verbose mode on and off (default is off). In Verbose mode, the function does not apply rules to the data, but instead returns a data set in logbook form with extensive info about which rows and columns would be effected and in which way.
 #' @param ... column name of an antibiotic, please see section *Antibiotics* below
 #' @inheritParams first_isolate
@@ -40,7 +40,7 @@ EUCAST_VERSION_EXPERT_RULES <- "3.1, 2016"
 #' **Note:** This function does not translate MIC values to RSI values. Use [as.rsi()] for that. \cr
 #' **Note:** When ampicillin (AMP, J01CA01) is not available but amoxicillin (AMX, J01CA04) is, the latter will be used for all rules where there is a dependency on ampicillin. These drugs are interchangeable when it comes to expression of antimicrobial resistance.
 #'
-#' Before further processing, some non-EUCAST rules are applied to improve the efficacy of the EUCAST rules. These non-EUCAST rules, that are applied to all isolates, are:
+#' Before further processing, some non-EUCAST rules can be applied to improve the efficacy of the EUCAST rules. These non-EUCAST rules, that are then applied to all isolates, are:
 #' - Inherit amoxicillin (AMX) from ampicillin (AMP), where amoxicillin (AMX) is unavailable;
 #' - Inherit ampicillin (AMP) from amoxicillin (AMX), where ampicillin (AMP) is unavailable;
 #' - Set amoxicillin (AMX) = R where amoxicillin/clavulanic acid (AMC) = R;
@@ -50,7 +50,7 @@ EUCAST_VERSION_EXPERT_RULES <- "3.1, 2016"
 #' - Set piperacillin/tazobactam (TZP) = S where piperacillin (PIP) = S;
 #' - Set trimethoprim/sulfamethoxazole (SXT) = S where trimethoprim (TMP) = S.
 #' 
-#' To *not* use these rules, please use `eucast_rules(..., rules = c("breakpoints", "expert"))`.
+#' These rules are not applied at default, since they are not approved by EUCAST. To use these rules, please use `eucast_rules(..., rules = "all")`, or set the default behaviour of the `[eucast_rules()]` function with `options(AMR.eucast_rules = "all")` (or any other valid input value(s) to the `rules` parameter).
 #'
 #' The file containing all EUCAST rules is located here: <https://gitlab.com/msberends/AMR/blob/master/data-raw/eucast_rules.tsv>.
 #'
@@ -195,7 +195,7 @@ EUCAST_VERSION_EXPERT_RULES <- "3.1, 2016"
 eucast_rules <- function(x,
                          col_mo = NULL,
                          info = interactive(),
-                         rules = c("breakpoints", "expert", "other", "all"),
+                         rules = getOption("AMR.eucast_rules", default = c("breakpoints", "expert")),
                          verbose = FALSE,
                          ...) {
   
@@ -231,7 +231,7 @@ eucast_rules <- function(x,
   }
   
   if (!all(rules %in% c("breakpoints", "expert", "other", "all"))) {
-    stop("`rules` must be one or more of:  'breakpoints', 'expert', 'other', 'all'.")
+    stop('`rules` must be one or more of: "breakpoints", "expert", "other", "all".')
   }
   
   if (is.null(col_mo)) {
@@ -599,6 +599,10 @@ eucast_rules <- function(x,
     }
   }
   
+  if (!any(c("other", "all") %in% rules, na.rm = TRUE)) {
+    cat(font_red("\nSkipping inheritance rules defined by this package, such as setting trimethoprim (TMP) = R where trimethoprim/sulfamethoxazole (SXT) = R.\nUse eucast_rules(..., rules = \"all\") to also apply those rules.\n"))
+  }
+  
   eucast_notification_shown <- FALSE
   eucast_rules_df <- eucast_rules_file # internal data file
   no_added <- 0
@@ -658,7 +662,7 @@ eucast_rules <- function(x,
               rule_group_current %like% "expert",
               paste0("\nEUCAST Expert Rules, Intrinsic Resistance and Exceptional Phenotypes (", 
                      font_red(paste0("v", EUCAST_VERSION_EXPERT_RULES)), ")\n"),
-              "\nOther rules by this AMR package (turn on/off with 'rules' parameter)\n"))))
+              "\nOther rules by this AMR package\n"))))
       }
       # Print rule  -------------------------------------------------------------
       if (rule_current != rule_previous) {
