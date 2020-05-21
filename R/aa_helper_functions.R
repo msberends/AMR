@@ -252,9 +252,9 @@ dataset_UTF8_to_ASCII <- function(df) {
 }
 
 
-# replace crayon::has_color
+# replace crayon::has_color, but now also FALSE on non-interactive mode
 has_colour <- function() {
-  if (Sys.getenv("TERM") == "dumb") {
+  if (Sys.getenv("TERM") == "dumb" | !interactive()) {
     return(FALSE)
   }
   if (tolower(Sys.info()["sysname"]) == "windows") {

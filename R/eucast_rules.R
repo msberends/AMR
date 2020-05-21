@@ -599,7 +599,7 @@ eucast_rules <- function(x,
     }
   }
   
-  if (!any(c("other", "all") %in% rules, na.rm = TRUE)) {
+  if (info == TRUE & !any(c("other", "all") %in% rules, na.rm = TRUE)) {
     cat(font_red("\nSkipping inheritance rules defined by this package, such as setting trimethoprim (TMP) = R where trimethoprim/sulfamethoxazole (SXT) = R.\nUse eucast_rules(..., rules = \"all\") to also apply those rules.\n"))
   }
   

@@ -1,5 +1,5 @@
-# AMR 1.1.0.9015
-## <small>Last updated: 20-May-2020</small>
+# AMR 1.1.0.9016
+## <small>Last updated: 21-May-2020</small>
 
 ### Breaking 
 * Removed code dependency on all other R packages, making this package fully independent on the development process of others. This is a major code change, but will probably not be noticeable by most users.

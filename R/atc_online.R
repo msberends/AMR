@@ -128,7 +128,7 @@ atc_online_property <- function(atc_code,
     returnvalue <- rep(NA_character_, length(atc_code))
   }
 
-  progress <- progress_estimated(n = length(atc_code))
+  progress <- progress_estimated(n = length(atc_code), 3)
   on.exit(close(progress))
   
   for (i in seq_len(length(atc_code))) {
@@ -160,7 +160,7 @@ atc_online_property <- function(atc_code,
         as.data.frame(stringsAsFactors = FALSE)
 
       # case insensitive column names
-      colnames(tbl) <- tolower(colnames(tbl)) %>% gsub("^atc.*", "atc", .)
+      colnames(tbl) <- gsub("^atc.*", "atc", tolower(colnames(tbl)))
 
       if (length(tbl) == 0) {
         warning("ATC not found: ", atc_code[i], ". Please check ", atc_url, ".", call. = FALSE)
