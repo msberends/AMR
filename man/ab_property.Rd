@@ -56,6 +56,8 @@ ab_property(x, property = "name", language = get_locale(), ...)
 
 \item{units}{a logical to indicate whether the units instead of the DDDs itself must be returned, see Examples}
 
+\item{open}{browse the URL using \code{\link[utils:browseURL]{utils::browseURL()}}}
+
 \item{property}{one of the column names of one of the \link{antibiotics} data set}
 }
 \value{

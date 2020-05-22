@@ -29,6 +29,7 @@
 #' @param language language of the returned text, defaults to system language (see [get_locale()]) and can also be set with `getOption("AMR_locale")`. Use `language = NULL` or `language = ""` to prevent translation.
 #' @param administration way of administration, either `"oral"` or `"iv"`
 #' @param units a logical to indicate whether the units instead of the DDDs itself must be returned, see Examples
+#' @param open browse the URL using [utils::browseURL()]
 #' @param ... other parameters passed on to [as.ab()]
 #' @details All output will be [translate]d where possible.
 #' 
