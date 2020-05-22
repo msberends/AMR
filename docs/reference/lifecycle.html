@@ -49,9 +49,9 @@
   <script src="../extra.js"></script>
 
 <meta property="og:title" content="Lifecycles of functions in the <code>AMR</code> package — lifecycle" />
-<meta property="og:description" content="Our functions are categorised using the lifecycle circle of the tidyverse as found on www.tidyverse.org/lifecycle.
+<meta property="og:description" content="Functions in this AMR package are categorised using the lifecycle circle of the tidyverse as found on www.tidyverse.org/lifecycle.
  
-This page contains a section for every lifecycle (with text borrowed from the aforementioned tidyverse website), so they can be used in the manual pages of our functions." />
+This page contains a section for every lifecycle (with text borrowed from the aforementioned tidyverse website), so they can be used in the manual pages of the functions." />
 <meta property="og:image" content="https://msberends.gitlab.io/AMR/logo.svg" />
 
 
@@ -84,7 +84,7 @@ This page contains a section for every lifecycle (with text borrowed from the af
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.1.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.1.0.9017</span>
       </span>
     </div>
 
@@ -234,9 +234,9 @@ This page contains a section for every lifecycle (with text borrowed from the af
     </div>
 
     <div class="ref-description">
-    <p>Our functions are categorised using <a href='https://www.tidyverse.org/lifecycle'>the lifecycle circle of the <code>tidyverse</code> as found on www.tidyverse.org/lifecycle</a>.</p>
+    <p>Functions in this <code>AMR</code> package are categorised using <a href='https://www.tidyverse.org/lifecycle'>the lifecycle circle of the <code>tidyverse</code> as found on www.tidyverse.org/lifecycle</a>.</p>
 <p><img src='figures/lifecycle_tidyverse.svg' height=200px style=margin-bottom:5px /> <br />
-This page contains a section for every lifecycle (with text borrowed from the aforementioned <code>tidyverse</code> website), so they can be used in the manual pages of our functions.</p>
+This page contains a section for every lifecycle (with text borrowed from the aforementioned <code>tidyverse</code> website), so they can be used in the manual pages of the functions.</p>
     </div>
 
 
@@ -246,44 +246,32 @@ This page contains a section for every lifecycle (with text borrowed from the af
     
 
 <p><img src='figures/lifecycle_experimental.svg' style=margin-bottom:5px /> <br />
-The lifecycle of this function is <strong>experimental</strong>. An experimental function is in the very early stages of development. The unlying code might be changing frequently as we rapidly iterate and explore variations in search of the best fit. Experimental functions might be removed without deprecation, so you are generally best off waiting until a function is more mature before you use it in production code. Experimental functions will not be included in releases we submit to CRAN, since they have not yet matured enough.</p>
+The lifecycle of this function is <strong>experimental</strong>. An experimental function is in early stages of development. The unlying code might be changing frequently. Experimental functions might be removed without deprecation, so you are generally best off waiting until a function is more mature before you use it in production code. Experimental functions are only available in development versions of this <code>AMR</code> package and will thus not be included in releases that are submitted to CRAN, since such functions have not yet matured enough.</p>
     <h2 class="hasAnchor" id="maturing-lifecycle"><a class="anchor" href="#maturing-lifecycle"></a>Maturing lifecycle</h2>
 
     
 
 <p><img src='figures/lifecycle_maturing.svg' style=margin-bottom:5px /> <br />
-The lifecycle of this function is <strong>maturing</strong>. The unlying code of a maturing function has been roughed out, but finer details might still change. We will strive to maintain backward compatibility, but the function needs wider usage and more extensive testing in order to optimise the unlying code.</p>
+The lifecycle of this function is <strong>maturing</strong>. The unlying code of a maturing function has been roughed out, but finer details might still change. This function needs wider usage and more extensive testing in order to optimise the unlying code.</p>
     <h2 class="hasAnchor" id="stable-lifecycle"><a class="anchor" href="#stable-lifecycle"></a>Stable lifecycle</h2>
 
     
 
 <p><img src='figures/lifecycle_stable.svg' style=margin-bottom:5px /> <br />
-The lifecycle of this function is <strong>stable</strong>. In a stable function, we are largely happy with the unlying code, and major changes are unlikely. This means that the unlying code will generally evolve by adding new arguments; we will avoid removing arguments or changing the meaning of existing arguments.</p>
-<p>If the unlying code needs breaking changes, they will occur gradually. To begin with, the function or argument will be deprecated; it will continue to work but will emit an message informing you of the change. Next, typically after at least one newly released version on CRAN, the message will be transformed to an error.</p>
+The lifecycle of this function is <strong>stable</strong>. In a stable function, major changes are unlikely. This means that the unlying code will generally evolve by adding new arguments; removing arguments or changing the meaning of existing arguments will be avoided.</p>
+<p>If the unlying code needs breaking changes, they will occur gradually. For example, a parameter will be deprecated and first continue to work, but will emit an message informing you of the change. Next, typically after at least one newly released version on CRAN, the message will be transformed to an error.</p>
     <h2 class="hasAnchor" id="retired-lifecycle"><a class="anchor" href="#retired-lifecycle"></a>Retired lifecycle</h2>
 
     
 
 <p><img src='figures/lifecycle_retired.svg' style=margin-bottom:5px /> <br />
-The lifecycle of this function is <strong>retired</strong>. A retired function is no longer under active development, and (if appropiate) a better alternative is available. We will only make the necessary changes to ensure that retired functions remain available. No new arguments will be added, and only the most critical bugs will be fixed.</p>
-    <h2 class="hasAnchor" id="archived-lifecycle"><a class="anchor" href="#archived-lifecycle"></a>Archived lifecycle</h2>
-
-    
-
-<p><img src='figures/lifecycle_archived.svg' style=margin-bottom:5px /> <br />
-The lifecycle of this function is <strong>archived</strong>. The development of an archived function has ended, and it is no longer available in future package versions.</p>
-    <h2 class="hasAnchor" id="dormant-lifecycle"><a class="anchor" href="#dormant-lifecycle"></a>Dormant lifecycle</h2>
-
-    
-
-<p><img src='figures/lifecycle_dormant.svg' style=margin-bottom:5px /> <br />
-The lifecycle of this function is <strong>dormant</strong>. A dormant function is currently not under active development and has not reached a stable phase. We might return to it in the future. As with experimental functions, you are best off waiting until a function is more mature before you use it in production code.</p>
+The lifecycle of this function is <strong>retired</strong>. A retired function is no longer under active development, and (if appropiate) a better alternative is available. No new arguments will be added, and only the most critical bugs will be fixed. In a future version, this function will be removed.</p>
     <h2 class="hasAnchor" id="questioning-lifecycle"><a class="anchor" href="#questioning-lifecycle"></a>Questioning lifecycle</h2>
 
     
 
 <p><img src='figures/lifecycle_questioning.svg' style=margin-bottom:5px /> <br />
-The lifecycle of this function is <strong>questioning</strong>. We are no longer convinced that this function is the optimal approach (but we do not know yet what a better approach would be), or whether this function should be in our <code>AMR</code> package at all.</p>
+The lifecycle of this function is <strong>questioning</strong>. This function might be no longer be optimal approach, or is it questionable whether this function should be in this <code>AMR</code> package at all.</p>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
@@ -300,7 +288,7 @@ The lifecycle of this function is <strong>questioning</strong>. We are no longer
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
 </div>
 
       </footer>

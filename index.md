@@ -1,18 +1,17 @@
 # `AMR` (for R) <img src="./logo.png" align="right" height="120px" />
 
-> *18 October 2019*  
 > **METHODS PAPER PREPRINTED**  
-> A methods paper about this package has been preprinted at bioRxiv (DOI: 10.1101/810622). It was **updated on 18 December 2019** and in parallel sent to a journal. Please click [here for the paper on bioRxiv's publishers page](https://doi.org/10.1101/810622).
+> A methods paper about this package has been preprinted at bioRxiv (DOI: 10.1101/810622). Please click [here for the paper on bioRxiv's publishers page](https://doi.org/10.1101/810622).
 
 ### What is `AMR` (for R)?
 
-*(<help title="Too Long, Didn't Read">TLDR</help> - to find out how to conduct AMR analysis, please [continue reading here to get started](./articles/AMR.html).*
+*(To find out how to conduct AMR analysis, please [continue reading here to get started](./articles/AMR.html).*
 
 `AMR` is a free, open-source and independent [R package](https://www.r-project.org) to simplify the analysis and prediction of Antimicrobial Resistance (AMR) and to work with microbial and antimicrobial data and properties, by using evidence-based methods. **Our aim is to provide a standard** for clean and reproducible antimicrobial resistance data analysis, that can therefore empower epidemiological analyses to continuously enable surveillance and treatment evaluation in any setting.
 
 After installing this package, R knows [**~70,000 distinct microbial species**](./reference/microorganisms.html) and all [**~550 antibiotic, antimycotic and antiviral drugs**](./reference/antibiotics.html) by name and code (including ATC, LOINC and SNOMED CT), and knows all about valid R/SI and MIC values. It supports any data format, including WHONET/EARS-Net data.
 
-We created this package for both routine data analysis and academic research (as part of our PhD theses) at the Faculty of Medical Sciences of the University of Groningen, the Netherlands, and the Medical Microbiology & Infection Prevention (MMBI) department of the University Medical Center Groningen (UMCG). This R package is [actively maintained](./news) and is free software (see [Copyright](#copyright)). It is fully independent on any other R package and only requires R version 3.0.0 (April 2013) or higher to run.
+This package was created for both routine data analysis and academic research, at the Faculty of Medical Sciences of the University of Groningen, the Netherlands, and the Medical Microbiology & Infection Prevention (MMBI) department of the University Medical Center Groningen (UMCG). This R package is [actively maintained](./news) and is free software (see [Copyright](#copyright)). It is fully independent of any other R package and can be used with all versions of R since R-3.0.0 (April 2013) and has a total file size of only 5 MB. It was designed to work in any setting, including those with very limited resources.
 
 <div class="main-content"> 
   <p>
@@ -48,25 +47,10 @@ This package can be used for:
   * Getting properties for any antibiotic (like name, code of EARS-Net/ATC/LOINC/PubChem, defined daily dose or trade name) ([manual](./reference/ab_property.html))
   * Plotting antimicrobial resistance ([tutorial](./articles/AMR.html))
   * Applying EUCAST expert rules ([manual](./reference/eucast_rules.html))
-  * Getting SNOMED codes of a microorganism, or get its name associated with a SNOMED code ([manual](./reference/mo_property.html))
-  * Getting LOINC codes of an antibiotic, or get its name associated with a LOINC code ([manual](./reference/ab_property.html))
+  * Getting SNOMED codes of a microorganism, or getting properties of a microorganism based on a SNOMED code ([manual](./reference/mo_property.html))
+  * Getting LOINC codes of an antibiotic, or getting properties of an antibiotic based on a LOINC code ([manual](./reference/ab_property.html))
   * Machine reading the EUCAST and CLSI guidelines from 2011-2020 to translate MIC values and disk diffusion diameters to R/SI ([link](https://gitlab.com/msberends/AMR/blob/master/data-raw/rsi_translation.txt))
   * Principal component analysis for AMR ([tutorial](./articles/PCA.html))
-
-This package is ready-to-use for specialists in many fields:
-
-  * Epidemiologists (both clinical microbiological and research)
-  * (Research) Microbiologists
-  * Biomedical Researchers
-  * Research Pharmacologists
-  * Data Scientists / Data Analysts
-  * Statisticians
-  * Bioinformaticians
-  * Research Veterinarians
-  * Veterinary Epidemiologists
-  * Soil Microbiologists
-  * Extremophile Researchers
-  * Astrobiologists
 
 ### Get this package
 

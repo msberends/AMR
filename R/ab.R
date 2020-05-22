@@ -216,7 +216,7 @@ as.ab <- function(x, ...) {
     # replace multiple same characters to single one with '+', like "ll" -> "l+"
     x_spelling <- gsub("(.)\\1+", "\\1+", x_spelling)
     # replace spaces and slashes with a possibility on both
-    x_spelling <- gsub("[ /]", "( |/)", x_spelling)
+    x_spelling <- gsub("[ /]", "( .*|.*/)", x_spelling)
   
     # try if name starts with it
     found <- antibiotics[which(antibiotics$name %like% paste0("^", x_spelling)), ]$ab

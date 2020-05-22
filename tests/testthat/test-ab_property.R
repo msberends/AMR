@@ -58,4 +58,7 @@ test_that("ab_property works", {
   expect_equal(ab_name("21066-6", language = NULL), "Ampicillin")
   expect_equal(ab_loinc("ampicillin"),
                c("21066-6", "3355-5", "33562-0", "33919-2", "43883-8", "43884-6", "87604-5"))
+  
+  expect_true(ab_url("AMX") %like% "whocc.no")
+  expect_warning(ab_url("ASP"))
 })

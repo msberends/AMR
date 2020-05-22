@@ -81,7 +81,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.1.0.9016</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.1.0.9017</span>
       </span>
     </div>
 
@@ -229,24 +229,25 @@
       <small>Source: <a href='https://gitlab.com/msberends/AMR/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
-    <div id="amr-1-1-0-9016" class="section level1">
-<h1 class="page-header" data-toc-text="1.1.0.9016">
-<a href="#amr-1-1-0-9016" class="anchor"></a>AMR 1.1.0.9016<small> Unreleased </small>
+    <div id="amr-1-1-0-9017" class="section level1">
+<h1 class="page-header" data-toc-text="1.1.0.9017">
+<a href="#amr-1-1-0-9017" class="anchor"></a>AMR 1.1.0.9017<small> Unreleased </small>
 </h1>
-<div id="last-updated-21-may-2020" class="section level2">
+<div id="last-updated-22-may-2020" class="section level2">
 <h2 class="hasAnchor">
-<a href="#last-updated-21-may-2020" class="anchor"></a><small>Last updated: 21-May-2020</small>
+<a href="#last-updated-22-may-2020" class="anchor"></a><small>Last updated: 22-May-2020</small>
 </h2>
 <div id="breaking" class="section level3">
 <h3 class="hasAnchor">
 <a href="#breaking" class="anchor"></a>Breaking</h3>
 <ul>
 <li>
-<p>Removed code dependency on all other R packages, making this package fully independent on the development process of others. This is a major code change, but will probably not be noticeable by most users.</p>
-Making this package independent on especially the tidyverse tremendously increases sustainability on the long term, since tidyverse functions change quite often. Good for users, but hard for package maintainers. Most of our functions are replaced with versions that only rely on base R, which keeps this package fully functional for many years to come, without requiring a lot of maintenance to keep up with other packages anymore. Another upside it that this package can now be used with all versions of R since R-3.0.0 (April 2013). Our package is being used in settings where the resources are very limited. Fewer dependencies on newer software is helpful for such settings. Negative effects of this change are:
+<p>Removed code dependency on all other R packages, making this package fully independent of the development process of others. This is a major code change, but will probably not be noticeable by most users.</p>
+<p>Making this package independent of especially the tidyverse (e.g. packages <code>dplyr</code> and <code>tidyr</code>) tremendously increases sustainability on the long term, since tidyverse functions change quite often. Good for users, but hard for package maintainers. Most of our functions are replaced with versions that only rely on base R, which keeps this package fully functional for many years to come, without requiring a lot of maintenance to keep up with other packages anymore. Another upside it that this package can now be used with all versions of R since R-3.0.0 (April 2013). Our package is being used in settings where the resources are very limited. Fewer dependencies on newer software is helpful for such settings.</p>
+Negative effects of this change are:
 <ul>
 <li>Function <code>freq()</code> that was borrowed from the <code>cleaner</code> package was removed. Use <code><a href="https://rdrr.io/pkg/cleaner/man/freq.html">cleaner::freq()</a></code>, or run <code><a href="https://rdrr.io/pkg/cleaner/man">library("cleaner")</a></code> before you use <code>freq()</code>.</li>
-<li>Printing values of class <code>mo</code> or <code>ab</code> in a tibble will no longer be in colour and printing <code>rsi</code> in a tibble will show the class <code>&lt;ord&gt;</code>, not <code>&lt;rsi&gt;</code> anymore. This is purely a visual effect.</li>
+<li>Printing values of class <code>mo</code> or <code>rsi</code> in a tibble will no longer be in colour and printing <code>rsi</code> in a tibble will show the class <code>&lt;ord&gt;</code>, not <code>&lt;rsi&gt;</code> anymore. This is purely a visual effect.</li>
 <li>All functions from the <code>mo_*</code> family (like <code><a href="../reference/mo_property.html">mo_name()</a></code> and <code><a href="../reference/mo_property.html">mo_gramstain()</a></code>) are noticeably slower when running on hundreds of thousands of rows.</li>
 <li>For developers: classes <code>mo</code> and <code>ab</code> now both also inherit class <code>character</code>, to support any data transformation. This change invalidates code that checks for class length == 1.</li>
 </ul>
@@ -257,12 +258,18 @@ Making this package independent on especially the tidyverse tremendously increas
 <h3 class="hasAnchor">
 <a href="#changed" class="anchor"></a>Changed</h3>
 <ul>
-<li>The EUCAST rules function (<code><a href="../reference/eucast_rules.html">eucast_rules()</a></code>) at default no longer applies “other” rules that are made available by this package (like setting ampicillin = R when ampicillin + enzym inhibitor = R). The default input value for <code>rules</code> is now <code><a href="https://rdrr.io/r/base/c.html">c("breakpoints", "expert")</a></code> instead of <code>"all"</code>, but this can be changed by the user. To return to the old behaviour, set <code><a href="https://rdrr.io/r/base/options.html">options(AMR.eucast_rules = "all")</a></code>.</li>
-<li>Small fix for some text input that could not be coerced as valid MIC values</li>
-<li>Fix for cases where some functions of newer versions of the <code>dplyr</code> package (such as <code><a href="https://dplyr.tidyverse.org/reference/bind.html">bind_rows()</a></code>) would not preserve the right class for microorganisms (class <code>mo</code>) and antibiotics (class <code>ab</code>)</li>
-<li>Fixed interpretation of generic CLSI interpretation rules (thanks to Anthony Underwood)</li>
+<li>EUCAST rules:
+<ul>
+<li>The <code><a href="../reference/eucast_rules.html">eucast_rules()</a></code> function no longer applies “other” rules at default that are made available by this package (like setting ampicillin = R when ampicillin + enzym inhibitor = R). The default input value for <code>rules</code> is now <code><a href="https://rdrr.io/r/base/c.html">c("breakpoints", "expert")</a></code> instead of <code>"all"</code>, but this can be changed by the user. To return to the old behaviour, set <code><a href="https://rdrr.io/r/base/options.html">options(AMR.eucast_rules = "all")</a></code>.</li>
 <li>Added official drug names to verbose output of <code><a href="../reference/eucast_rules.html">eucast_rules()</a></code>
 </li>
+</ul>
+</li>
+<li>Added function <code><a href="../reference/ab_property.html">ab_url()</a></code> to return the direct URL of an antimicrobial agent from the official WHO website</li>
+<li>Improvements for algorithm in <code><a href="../reference/as.ab.html">as.ab()</a></code>, so that e.g. <code><a href="../reference/as.ab.html">as.ab("ampi sul")</a></code> and <code><a href="../reference/ab_property.html">ab_name("ampi sul")</a></code> work</li>
+<li>Functions <code><a href="../reference/ab_property.html">ab_atc()</a></code> and <code><a href="../reference/ab_property.html">ab_group()</a></code> now return <code>NA</code> if no antimicrobial agent could be found</li>
+<li>Small fix for some text input that could not be coerced as valid MIC values</li>
+<li>Fixed interpretation of generic CLSI interpretation rules (thanks to Anthony Underwood)</li>
 </ul>
 </div>
 <div id="other" class="section level3">
