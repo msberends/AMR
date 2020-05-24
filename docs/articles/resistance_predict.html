@@ -39,7 +39,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.1.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.1.0.9019</span>
       </span>
     </div>
 
@@ -186,7 +186,7 @@
       <h1 data-toc-skip>How to predict antimicrobial resistance</h1>
                         <h4 class="author">Matthijs S. Berends</h4>
             
-            <h4 class="date">15 April 2020</h4>
+            <h4 class="date">25 May 2020</h4>
       
       <small class="dont-index">Source: <a href="https://gitlab.com/msberends/AMR/blob/master/vignettes/resistance_predict.Rmd"><code>vignettes/resistance_predict.Rmd</code></a></small>
       <div class="hidden name"><code>resistance_predict.Rmd</code></div>
@@ -221,7 +221,7 @@ example_isolates %&gt;%
                      model  "binomial")
 
 # to bind it to object 'predict_TZP' for example:
-predict_TZP % 
+predict_TZP &lt;- example_isolates %&gt;% 
   resistance_predict(col_ab = "TZP",
                      model = "binomial")</pre></body></html></div>
 <p>The function will look for a date column itself if <code>col_date</code> is not set.</p>
@@ -230,36 +230,37 @@ predict_TZP %
 <p>This text is only a printed summary - the actual result (output) of the function is a <code>data.frame</code> containing for each year: the number of observations, the actual observed resistance, the estimated resistance and the standard error below and above the estimation:</p>
 <div class="sourceCode" id="cb4"><html><body><pre class="r"><span class="no">predict_TZP</span>
 <span class="co">#    year      value    se_min    se_max observations   observed  estimated</span>
-<span class="co"># 1  2003 0.06250000        NA        NA           32 0.06250000 0.05486389</span>
-<span class="co"># 2  2004 0.08536585        NA        NA           82 0.08536585 0.06089002</span>
-<span class="co"># 3  2005 0.05000000        NA        NA           60 0.05000000 0.06753075</span>
-<span class="co"># 4  2006 0.05084746        NA        NA           59 0.05084746 0.07483801</span>
-<span class="co"># 5  2007 0.12121212        NA        NA           66 0.12121212 0.08286570</span>
-<span class="co"># 6  2008 0.04166667        NA        NA           72 0.04166667 0.09166918</span>
-<span class="co"># 7  2009 0.01639344        NA        NA           61 0.01639344 0.10130461</span>
-<span class="co"># 8  2010 0.05660377        NA        NA           53 0.05660377 0.11182814</span>
-<span class="co"># 9  2011 0.18279570        NA        NA           93 0.18279570 0.12329488</span>
-<span class="co"># 10 2012 0.30769231        NA        NA           65 0.30769231 0.13575768</span>
-<span class="co"># 11 2013 0.06896552        NA        NA           58 0.06896552 0.14926576</span>
-<span class="co"># 12 2014 0.10000000        NA        NA           60 0.10000000 0.16386307</span>
-<span class="co"># 13 2015 0.23636364        NA        NA           55 0.23636364 0.17958657</span>
-<span class="co"># 14 2016 0.22619048        NA        NA           84 0.22619048 0.19646431</span>
-<span class="co"># 15 2017 0.16279070        NA        NA           86 0.16279070 0.21451350</span>
-<span class="co"># 16 2018 0.23373852 0.2021578 0.2653193           NA         NA 0.23373852</span>
-<span class="co"># 17 2019 0.25412909 0.2168525 0.2914057           NA         NA 0.25412909</span>
-<span class="co"># 18 2020 0.27565854 0.2321869 0.3191302           NA         NA 0.27565854</span>
-<span class="co"># 19 2021 0.29828252 0.2481942 0.3483709           NA         NA 0.29828252</span>
-<span class="co"># 20 2022 0.32193804 0.2649008 0.3789753           NA         NA 0.32193804</span>
-<span class="co"># 21 2023 0.34654311 0.2823269 0.4107593           NA         NA 0.34654311</span>
-<span class="co"># 22 2024 0.37199700 0.3004860 0.4435080           NA         NA 0.37199700</span>
-<span class="co"># 23 2025 0.39818127 0.3193839 0.4769787           NA         NA 0.39818127</span>
-<span class="co"># 24 2026 0.42496142 0.3390173 0.5109056           NA         NA 0.42496142</span>
-<span class="co"># 25 2027 0.45218939 0.3593720 0.5450068           NA         NA 0.45218939</span>
-<span class="co"># 26 2028 0.47970658 0.3804212 0.5789920           NA         NA 0.47970658</span>
-<span class="co"># 27 2029 0.50734745 0.4021241 0.6125708           NA         NA 0.50734745</span>
-<span class="co"># 28 2030 0.53494347 0.4244247 0.6454622           NA         NA 0.53494347</span></pre></body></html></div>
+<span class="co"># 1  2002 0.20000000        NA        NA           15 0.20000000 0.05616378</span>
+<span class="co"># 2  2003 0.06250000        NA        NA           32 0.06250000 0.06163839</span>
+<span class="co"># 3  2004 0.08536585        NA        NA           82 0.08536585 0.06760841</span>
+<span class="co"># 4  2005 0.05000000        NA        NA           60 0.05000000 0.07411100</span>
+<span class="co"># 5  2006 0.05084746        NA        NA           59 0.05084746 0.08118454</span>
+<span class="co"># 6  2007 0.12121212        NA        NA           66 0.12121212 0.08886843</span>
+<span class="co"># 7  2008 0.04166667        NA        NA           72 0.04166667 0.09720264</span>
+<span class="co"># 8  2009 0.01639344        NA        NA           61 0.01639344 0.10622731</span>
+<span class="co"># 9  2010 0.05660377        NA        NA           53 0.05660377 0.11598223</span>
+<span class="co"># 10 2011 0.18279570        NA        NA           93 0.18279570 0.12650615</span>
+<span class="co"># 11 2012 0.30769231        NA        NA           65 0.30769231 0.13783610</span>
+<span class="co"># 12 2013 0.06896552        NA        NA           58 0.06896552 0.15000651</span>
+<span class="co"># 13 2014 0.10000000        NA        NA           60 0.10000000 0.16304829</span>
+<span class="co"># 14 2015 0.23636364        NA        NA           55 0.23636364 0.17698785</span>
+<span class="co"># 15 2016 0.22619048        NA        NA           84 0.22619048 0.19184597</span>
+<span class="co"># 16 2017 0.16279070        NA        NA           86 0.16279070 0.20763675</span>
+<span class="co"># 17 2018 0.22436641 0.1938710 0.2548618           NA         NA 0.22436641</span>
+<span class="co"># 18 2019 0.24203228 0.2062911 0.2777735           NA         NA 0.24203228</span>
+<span class="co"># 19 2020 0.26062172 0.2191758 0.3020676           NA         NA 0.26062172</span>
+<span class="co"># 20 2021 0.28011130 0.2325557 0.3276669           NA         NA 0.28011130</span>
+<span class="co"># 21 2022 0.30046606 0.2464567 0.3544755           NA         NA 0.30046606</span>
+<span class="co"># 22 2023 0.32163907 0.2609011 0.3823771           NA         NA 0.32163907</span>
+<span class="co"># 23 2024 0.34357130 0.2759081 0.4112345           NA         NA 0.34357130</span>
+<span class="co"># 24 2025 0.36619175 0.2914934 0.4408901           NA         NA 0.36619175</span>
+<span class="co"># 25 2026 0.38941799 0.3076686 0.4711674           NA         NA 0.38941799</span>
+<span class="co"># 26 2027 0.41315710 0.3244399 0.5018743           NA         NA 0.41315710</span>
+<span class="co"># 27 2028 0.43730688 0.3418075 0.5328063           NA         NA 0.43730688</span>
+<span class="co"># 28 2029 0.46175755 0.3597639 0.5637512           NA         NA 0.46175755</span>
+<span class="co"># 29 2030 0.48639359 0.3782932 0.5944939           NA         NA 0.48639359</span></pre></body></html></div>
 <p>The function <code>plot</code> is available in base R, and can be extended by other packages to depend the output based on the type of input. We extended its function to cope with resistance predictions:</p>
-<div class="sourceCode" id="cb5"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.html">plot</a></span>(<span class="no">predict_TZP</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb5"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/plot.html">plot</a></span>(<span class="no">predict_TZP</span>)</pre></body></html></div>
 <p><img src="resistance_predict_files/figure-html/unnamed-chunk-4-1.png" width="720"></p>
 <p>This is the fastest way to plot the result. It automatically adds the right axes, error bars, titles, number of available observations and type of model.</p>
 <p>We also support the <code>ggplot2</code> package with our custom function <code><a href="../reference/resistance_predict.html">ggplot_rsi_predict()</a></code> to create more appealing plots:</p>
@@ -272,7 +273,7 @@ predict_TZP %
 <div id="choosing-the-right-model" class="section level3">
 <h3 class="hasAnchor">
 <a href="#choosing-the-right-model" class="anchor"></a>Choosing the right model</h3>
-<p>Resistance is not easily predicted; if we look at vancomycin resistance in Gram positives, the spread (i.e. standard error) is enormous:</p>
+<p>Resistance is not easily predicted; if we look at vancomycin resistance in Gram-positive bacteria, the spread (i.e. standard error) is enormous:</p>
 <div class="sourceCode" id="cb8"><html><body><pre class="r"><span class="no">example_isolates</span> <span class="kw">%&gt;%</span>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span>(<span class="fu"><a href="../reference/mo_property.html">mo_gramstain</a></span>(<span class="no">mo</span>, <span class="kw">language</span> <span class="kw">=</span> <span class="kw">NULL</span>) <span class="kw">==</span> <span class="st">"Gram-positive"</span>) <span class="kw">%&gt;%</span>
   <span class="fu"><a href="../reference/resistance_predict.html">resistance_predict</a></span>(<span class="kw">col_ab</span> <span class="kw">=</span> <span class="st">"VAN"</span>, <span class="kw">year_min</span> <span class="kw">=</span> <span class="fl">2010</span>, <span class="kw">info</span> <span class="kw">=</span> <span class="fl">FALSE</span>, <span class="kw">model</span> <span class="kw">=</span> <span class="st">"binomial"</span>) <span class="kw">%&gt;%</span>
@@ -317,7 +318,7 @@ predict_TZP %
 </tr>
 </tbody>
 </table>
-<p>For the vancomycin resistance in Gram positive bacteria, a linear model might be more appropriate since no (left half of a) binomial distribution is to be expected based on the observed years:</p>
+<p>For the vancomycin resistance in Gram-positive bacteria, a linear model might be more appropriate since no binomial distribution is to be expected based on the observed years:</p>
 <div class="sourceCode" id="cb9"><html><body><pre class="r"><span class="no">example_isolates</span> <span class="kw">%&gt;%</span>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span>(<span class="fu"><a href="../reference/mo_property.html">mo_gramstain</a></span>(<span class="no">mo</span>, <span class="kw">language</span> <span class="kw">=</span> <span class="kw">NULL</span>) <span class="kw">==</span> <span class="st">"Gram-positive"</span>) <span class="kw">%&gt;%</span>
   <span class="fu"><a href="../reference/resistance_predict.html">resistance_predict</a></span>(<span class="kw">col_ab</span> <span class="kw">=</span> <span class="st">"VAN"</span>, <span class="kw">year_min</span> <span class="kw">=</span> <span class="fl">2010</span>, <span class="kw">info</span> <span class="kw">=</span> <span class="fl">FALSE</span>, <span class="kw">model</span> <span class="kw">=</span> <span class="st">"linear"</span>) <span class="kw">%&gt;%</span>
@@ -334,9 +335,9 @@ predict_TZP %
 <span class="co"># Link function: logit</span>
 
 <span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span>(<span class="no">model</span>)$<span class="no">coefficients</span>
-<span class="co">#                 Estimate Std. Error   z value     Pr(&gt;|z|)</span>
-<span class="co"># (Intercept) -224.3987194 48.0335384 -4.671709 2.987038e-06</span>
-<span class="co"># year           0.1106102  0.0238753  4.632831 3.606990e-06</span></pre></body></html></div>
+<span class="co">#                  Estimate  Std. Error   z value     Pr(&gt;|z|)</span>
+<span class="co"># (Intercept) -200.67944891 46.17315349 -4.346237 1.384932e-05</span>
+<span class="co"># year           0.09883005  0.02295317  4.305725 1.664395e-05</span></pre></body></html></div>
 </div>
 </div>
   </div>
@@ -356,7 +357,7 @@ predict_TZP %
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
 </div>
 
       </footer>

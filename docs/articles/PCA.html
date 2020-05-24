@@ -39,7 +39,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.1.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.1.0.9019</span>
       </span>
     </div>
 
@@ -186,7 +186,7 @@
       <h1 data-toc-skip>How to conduct principal component analysis (PCA) for AMR</h1>
                         <h4 class="author">Matthijs S. Berends</h4>
             
-            <h4 class="date">15 April 2020</h4>
+            <h4 class="date">25 May 2020</h4>
       
       <small class="dont-index">Source: <a href="https://gitlab.com/msberends/AMR/blob/master/vignettes/PCA.Rmd"><code>vignettes/PCA.Rmd</code></a></small>
       <div class="hidden name"><code>PCA.Rmd</code></div>
@@ -217,47 +217,47 @@
 <span class="co"># $ age             &lt;dbl&gt; 65, 65, 45, 45, 45, 45, 78, 78, 45, 79, 67, 67, 71, 7…</span>
 <span class="co"># $ gender          &lt;chr&gt; "F", "F", "F", "F", "F", "F", "M", "M", "F", "F", "M"…</span>
 <span class="co"># $ patient_id      &lt;chr&gt; "A77334", "A77334", "067927", "067927", "067927", "06…</span>
-<span class="co"># $ mo              &lt;mo&gt; B_ESCHR_COLI, B_ESCHR_COLI, B_STPHY_EPDR, B_STPHY_EPDR…</span>
-<span class="co"># $ PEN             &lt;rsi&gt; R, R, R, R, R, R, R, R, R, R, R, R, R, R, R, R, R, R,…</span>
-<span class="co"># $ OXA             &lt;rsi&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…</span>
-<span class="co"># $ FLC             &lt;rsi&gt; NA, NA, R, R, R, R, S, S, R, S, S, S, NA, NA, NA, NA,…</span>
-<span class="co"># $ AMX             &lt;rsi&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…</span>
-<span class="co"># $ AMC             &lt;rsi&gt; I, I, NA, NA, NA, NA, S, S, NA, NA, S, S, I, I, R, I,…</span>
-<span class="co"># $ AMP             &lt;rsi&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…</span>
-<span class="co"># $ TZP             &lt;rsi&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…</span>
-<span class="co"># $ CZO             &lt;rsi&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…</span>
-<span class="co"># $ FEP             &lt;rsi&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…</span>
-<span class="co"># $ CXM             &lt;rsi&gt; I, I, R, R, R, R, S, S, R, S, S, S, S, S, NA, S, S, R…</span>
-<span class="co"># $ FOX             &lt;rsi&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…</span>
-<span class="co"># $ CTX             &lt;rsi&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, S, S,…</span>
-<span class="co"># $ CAZ             &lt;rsi&gt; NA, NA, R, R, R, R, R, R, R, R, R, R, NA, NA, NA, S, …</span>
-<span class="co"># $ CRO             &lt;rsi&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, S, S,…</span>
-<span class="co"># $ GEN             &lt;rsi&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…</span>
-<span class="co"># $ TOB             &lt;rsi&gt; NA, NA, NA, NA, NA, NA, S, S, NA, NA, NA, NA, S, S, N…</span>
-<span class="co"># $ AMK             &lt;rsi&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…</span>
-<span class="co"># $ KAN             &lt;rsi&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…</span>
-<span class="co"># $ TMP             &lt;rsi&gt; R, R, S, S, R, R, R, R, S, S, NA, NA, S, S, S, S, S, …</span>
-<span class="co"># $ SXT             &lt;rsi&gt; R, R, S, S, NA, NA, NA, NA, S, S, NA, NA, S, S, S, S,…</span>
-<span class="co"># $ NIT             &lt;rsi&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…</span>
-<span class="co"># $ FOS             &lt;rsi&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…</span>
-<span class="co"># $ LNZ             &lt;rsi&gt; R, R, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, R, R, R…</span>
-<span class="co"># $ CIP             &lt;rsi&gt; NA, NA, NA, NA, NA, NA, NA, NA, S, S, NA, NA, NA, NA,…</span>
-<span class="co"># $ MFX             &lt;rsi&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…</span>
-<span class="co"># $ VAN             &lt;rsi&gt; R, R, S, S, S, S, S, S, S, S, NA, NA, R, R, R, R, R, …</span>
-<span class="co"># $ TEC             &lt;rsi&gt; R, R, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, R, R, R…</span>
-<span class="co"># $ TCY             &lt;rsi&gt; R, R, S, S, S, S, S, S, S, I, S, S, NA, NA, I, R, R, …</span>
-<span class="co"># $ TGC             &lt;rsi&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…</span>
-<span class="co"># $ DOX             &lt;rsi&gt; NA, NA, S, S, S, S, S, S, S, NA, S, S, NA, NA, NA, R,…</span>
-<span class="co"># $ ERY             &lt;rsi&gt; R, R, R, R, R, R, S, S, R, S, S, S, R, R, R, R, R, R,…</span>
-<span class="co"># $ CLI             &lt;rsi&gt; NA, NA, NA, NA, NA, R, NA, NA, NA, NA, NA, NA, NA, NA…</span>
-<span class="co"># $ AZM             &lt;rsi&gt; R, R, R, R, R, R, S, S, R, S, S, S, R, R, R, R, R, R,…</span>
-<span class="co"># $ IPM             &lt;rsi&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, S, S,…</span>
-<span class="co"># $ MEM             &lt;rsi&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…</span>
-<span class="co"># $ MTR             &lt;rsi&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…</span>
-<span class="co"># $ CHL             &lt;rsi&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…</span>
-<span class="co"># $ COL             &lt;rsi&gt; NA, NA, R, R, R, R, R, R, R, R, R, R, NA, NA, NA, R, …</span>
-<span class="co"># $ MUP             &lt;rsi&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…</span>
-<span class="co"># $ RIF             &lt;rsi&gt; R, R, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, R, R, R…</span></pre></body></html></div>
+<span class="co"># $ mo              &lt;mo&gt; "B_ESCHR_COLI", "B_ESCHR_COLI", "B_STPHY_EPDR", "B_STP…</span>
+<span class="co"># $ PEN             &lt;ord&gt; R, R, R, R, R, R, R, R, R, R, R, R, R, R, R, R, R, R,…</span>
+<span class="co"># $ OXA             &lt;ord&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…</span>
+<span class="co"># $ FLC             &lt;ord&gt; NA, NA, R, R, R, R, S, S, R, S, S, S, NA, NA, NA, NA,…</span>
+<span class="co"># $ AMX             &lt;ord&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…</span>
+<span class="co"># $ AMC             &lt;ord&gt; I, I, NA, NA, NA, NA, S, S, NA, NA, S, S, I, I, R, I,…</span>
+<span class="co"># $ AMP             &lt;ord&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…</span>
+<span class="co"># $ TZP             &lt;ord&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…</span>
+<span class="co"># $ CZO             &lt;ord&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…</span>
+<span class="co"># $ FEP             &lt;ord&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…</span>
+<span class="co"># $ CXM             &lt;ord&gt; I, I, R, R, R, R, S, S, R, S, S, S, S, S, NA, S, S, R…</span>
+<span class="co"># $ FOX             &lt;ord&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…</span>
+<span class="co"># $ CTX             &lt;ord&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, S, S,…</span>
+<span class="co"># $ CAZ             &lt;ord&gt; NA, NA, R, R, R, R, R, R, R, R, R, R, NA, NA, NA, S, …</span>
+<span class="co"># $ CRO             &lt;ord&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, S, S,…</span>
+<span class="co"># $ GEN             &lt;ord&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…</span>
+<span class="co"># $ TOB             &lt;ord&gt; NA, NA, NA, NA, NA, NA, S, S, NA, NA, NA, NA, S, S, N…</span>
+<span class="co"># $ AMK             &lt;ord&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…</span>
+<span class="co"># $ KAN             &lt;ord&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…</span>
+<span class="co"># $ TMP             &lt;ord&gt; R, R, S, S, R, R, R, R, S, S, NA, NA, S, S, S, S, S, …</span>
+<span class="co"># $ SXT             &lt;ord&gt; R, R, S, S, NA, NA, NA, NA, S, S, NA, NA, S, S, S, S,…</span>
+<span class="co"># $ NIT             &lt;ord&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…</span>
+<span class="co"># $ FOS             &lt;ord&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…</span>
+<span class="co"># $ LNZ             &lt;ord&gt; R, R, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, R, R, R…</span>
+<span class="co"># $ CIP             &lt;ord&gt; NA, NA, NA, NA, NA, NA, NA, NA, S, S, NA, NA, NA, NA,…</span>
+<span class="co"># $ MFX             &lt;ord&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…</span>
+<span class="co"># $ VAN             &lt;ord&gt; R, R, S, S, S, S, S, S, S, S, NA, NA, R, R, R, R, R, …</span>
+<span class="co"># $ TEC             &lt;ord&gt; R, R, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, R, R, R…</span>
+<span class="co"># $ TCY             &lt;ord&gt; R, R, S, S, S, S, S, S, S, I, S, S, NA, NA, I, R, R, …</span>
+<span class="co"># $ TGC             &lt;ord&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…</span>
+<span class="co"># $ DOX             &lt;ord&gt; NA, NA, S, S, S, S, S, S, S, NA, S, S, NA, NA, NA, R,…</span>
+<span class="co"># $ ERY             &lt;ord&gt; R, R, R, R, R, R, S, S, R, S, S, S, R, R, R, R, R, R,…</span>
+<span class="co"># $ CLI             &lt;ord&gt; NA, NA, NA, NA, NA, R, NA, NA, NA, NA, NA, NA, NA, NA…</span>
+<span class="co"># $ AZM             &lt;ord&gt; R, R, R, R, R, R, S, S, R, S, S, S, R, R, R, R, R, R,…</span>
+<span class="co"># $ IPM             &lt;ord&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, S, S,…</span>
+<span class="co"># $ MEM             &lt;ord&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…</span>
+<span class="co"># $ MTR             &lt;ord&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…</span>
+<span class="co"># $ CHL             &lt;ord&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…</span>
+<span class="co"># $ COL             &lt;ord&gt; NA, NA, R, R, R, R, R, R, R, R, R, R, NA, NA, NA, R, …</span>
+<span class="co"># $ MUP             &lt;ord&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…</span>
+<span class="co"># $ RIF             &lt;ord&gt; R, R, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, R, R, R…</span></pre></body></html></div>
 <p>Now to transform this to a data set with only resistance percentages per taxonomic order and genus:</p>
 <div class="sourceCode" id="cb2"><html><body><pre class="r"><span class="no">resistance_data</span> <span class="kw">&lt;-</span> <span class="no">example_isolates</span> <span class="kw">%&gt;%</span>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span>(<span class="kw">order</span> <span class="kw">=</span> <span class="fu"><a href="../reference/mo_property.html">mo_order</a></span>(<span class="no">mo</span>),       <span class="co"># group on anything, like order</span>
@@ -283,7 +283,7 @@
 <a href="#perform-principal-component-analysis" class="anchor"></a>Perform principal component analysis</h1>
 <p>The new <code><a href="../reference/pca.html">pca()</a></code> function will automatically filter on rows that contain numeric values in all selected variables, so we now only need to do:</p>
 <div class="sourceCode" id="cb3"><html><body><pre class="r"><span class="no">pca_result</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/pca.html">pca</a></span>(<span class="no">resistance_data</span>)
-<span class="co"># NOTE: Columns selected for PCA: AMC/CXM/CTX/CAZ/GEN/TOB/TMP/SXT.</span>
+<span class="co"># NOTE: Columns selected for PCA: AMC CXM CTX CAZ GEN TOB TMP SXT.</span>
 <span class="co">#       Total observations available: 7.</span></pre></body></html></div>
 <p>The result can be reviewed with the good old <code><a href="https://rdrr.io/r/base/summary.html">summary()</a></code> function:</p>
 <div class="sourceCode" id="cb4"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span>(<span class="no">pca_result</span>)
@@ -303,8 +303,7 @@
 <div class="sourceCode" id="cb6"><html><body><pre class="r"><span class="fu"><a href="../reference/ggplot_pca.html">ggplot_pca</a></span>(<span class="no">pca_result</span>)</pre></body></html></div>
 <p><img src="PCA_files/figure-html/unnamed-chunk-6-1.png" width="750"></p>
 <p>You can also print an ellipse per group, and edit the appearance:</p>
-<div class="sourceCode" id="cb7"><html><body><pre class="r">
-<span class="fu"><a href="../reference/ggplot_pca.html">ggplot_pca</a></span>(<span class="no">pca_result</span>, <span class="kw">ellipse</span> <span class="kw">=</span> <span class="fl">TRUE</span>) +
+<div class="sourceCode" id="cb7"><html><body><pre class="r"><span class="fu"><a href="../reference/ggplot_pca.html">ggplot_pca</a></span>(<span class="no">pca_result</span>, <span class="kw">ellipse</span> <span class="kw">=</span> <span class="fl">TRUE</span>) +
   <span class="kw pkg">ggplot2</span><span class="kw ns">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span>(<span class="kw">title</span> <span class="kw">=</span> <span class="st">"An AMR/PCA biplot!"</span>)</pre></body></html></div>
 <p><img src="PCA_files/figure-html/unnamed-chunk-7-1.png" width="750"></p>
 </div>
@@ -325,7 +324,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
 </div>
 
       </footer>

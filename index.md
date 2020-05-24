@@ -5,13 +5,13 @@
 
 ### What is `AMR` (for R)?
 
-*(To find out how to conduct AMR analysis, please [continue reading here to get started](./articles/AMR.html).*
+*(To find out how to conduct AMR analysis, please [continue reading here to get started](./articles/AMR.html).)*
 
 `AMR` is a free, open-source and independent [R package](https://www.r-project.org) to simplify the analysis and prediction of Antimicrobial Resistance (AMR) and to work with microbial and antimicrobial data and properties, by using evidence-based methods. **Our aim is to provide a standard** for clean and reproducible antimicrobial resistance data analysis, that can therefore empower epidemiological analyses to continuously enable surveillance and treatment evaluation in any setting.
 
 After installing this package, R knows [**~70,000 distinct microbial species**](./reference/microorganisms.html) and all [**~550 antibiotic, antimycotic and antiviral drugs**](./reference/antibiotics.html) by name and code (including ATC, LOINC and SNOMED CT), and knows all about valid R/SI and MIC values. It supports any data format, including WHONET/EARS-Net data.
 
-This package was created for both routine data analysis and academic research, at the Faculty of Medical Sciences of the University of Groningen, the Netherlands, and the Medical Microbiology & Infection Prevention (MMBI) department of the University Medical Center Groningen (UMCG). This R package is [actively maintained](./news) and is free software (see [Copyright](#copyright)). It is fully independent of any other R package and can be used with all versions of R since R-3.0.0 (April 2013) and has a total file size of only 5 MB. It was designed to work in any setting, including those with very limited resources.
+This package was created for both routine data analysis and academic research, at the Faculty of Medical Sciences of the University of Groningen, the Netherlands, and the Medical Microbiology & Infection Prevention (MMBI) department of the University Medical Center Groningen (UMCG). This R package is [actively maintained](./news) and is free software (see [Copyright](#copyright)). It is fully independent of any other R package, can be used with all versions of R since R-3.0.0 (April 2013) and has a total file size of only 5 MB. It was designed to work in any setting, including those with very limited resources.
 
 <div class="main-content"> 
   <p>

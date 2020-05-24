@@ -4,14 +4,14 @@
 \alias{mo_source}
 \alias{set_mo_source}
 \alias{get_mo_source}
-\title{Use predefined reference data set}
+\title{User-defined reference data set for microorganisms}
 \usage{
 set_mo_source(path)
 
 get_mo_source()
 }
 \arguments{
-\item{path}{location of your reference file, see Details}
+\item{path}{location of your reference file, see Details. Can be \code{""}, \code{NULL} or \code{FALSE} to delete the reference file.}
 }
 \description{
 These functions can be used to predefine your own reference to be used in \code{\link[=as.mo]{as.mo()}} and consequently all \verb{mo_*} functions like \code{\link[=mo_genus]{mo_genus()}} and \code{\link[=mo_gramstain]{mo_gramstain()}}.
@@ -25,10 +25,12 @@ The reference file can be a text file seperated with commas (CSV) or tabs or pip
 
 \code{\link[=get_mo_source]{get_mo_source()}} will return the data set by reading \code{"~/.mo_source.rds"} with \code{\link[=readRDS]{readRDS()}}. If the original file has changed (the file defined with \code{path}), it will call \code{\link[=set_mo_source]{set_mo_source()}} to update the data file automatically.
 
-Reading an Excel file (\code{.xlsx}) with only one row has a size of 8-9 kB. The compressed file used by this package will have a size of 0.1 kB and can be read by \code{\link[=get_mo_source]{get_mo_source()}} in only a couple of microseconds (a millionth of a second).
-\subsection{How it works}{
+Reading an Excel file (\code{.xlsx}) with only one row has a size of 8-9 kB. The compressed file created with \code{\link[=set_mo_source]{set_mo_source()}} will then have a size of 0.1 kB and can be read by \code{\link[=get_mo_source]{get_mo_source()}} in only a couple of microseconds (millionths of a second).
+}
+\section{How to setup}{
 
-Imagine this data on a sheet of an Excel file (mo codes were looked up in the \code{microorganisms} data set). The first column contains the organisation specific codes, the second column contains an MO code from this package:\preformatted{  |         A          |       B      |
+
+Imagine this data on a sheet of an Excel file (mo codes were looked up in the \link{microorganisms} data set). The first column contains the organisation specific codes, the second column contains an MO code from this package:\preformatted{  |         A          |       B      |
 --|--------------------|--------------|
 1 | Organisation XYZ   | mo           |
 2 | lab_mo_ecoli       | B_ESCHR_COLI |
@@ -37,23 +39,24 @@ Imagine this data on a sheet of an Excel file (mo codes were looked up in the \c
 }
 
 We save it as \code{"home/me/ourcodes.xlsx"}. Now we have to set it as a source:\preformatted{set_mo_source("home/me/ourcodes.xlsx")
-# Created mo_source file '~/.mo_source.rds' from 'home/me/ourcodes.xlsx'.
+#> NOTE: Created mo_source file '~/.mo_source.rds' from 'home/me/ourcodes.xlsx'
+#>       (columns "Organisation XYZ" and "mo")
 }
 
-It has now created a file \code{"~/.mo_source.rds"} with the contents of our Excel file, but only the first column with foreign values and the 'mo' column will be kept.
+It has now created a file \code{"~/.mo_source.rds"} with the contents of our Excel file. Only the first column with foreign values and the 'mo' column will be kept when creating the RDS file.
 
 And now we can use it in our functions:\preformatted{as.mo("lab_mo_ecoli")
-[1] B_ESCHR_COLI
+#> [1] B_ESCHR_COLI
 
 mo_genus("lab_mo_kpneumoniae")
-[1] "Klebsiella"
+#> [1] "Klebsiella"
 
 # other input values still work too
 as.mo(c("Escherichia coli", "E. coli", "lab_mo_ecoli"))
-[1] B_ESCHR_COLI B_ESCHR_COLI B_ESCHR_COLI
+#> [1] B_ESCHR_COLI B_ESCHR_COLI B_ESCHR_COLI
 }
 
-If we edit the Excel file to, let's say, by adding row 4 like this:\preformatted{  |         A          |       B      |
+If we edit the Excel file by, let's say, adding row 4 like this:\preformatted{  |         A          |       B      |
 --|--------------------|--------------|
 1 | Organisation XYZ   | mo           |
 2 | lab_mo_ecoli       | B_ESCHR_COLI |
@@ -63,18 +66,21 @@ If we edit the Excel file to, let's say, by adding row 4 like this:\preformatted
 }
 
 ...any new usage of an MO function in this package will update your data file:\preformatted{as.mo("lab_mo_ecoli")
-# Updated mo_source file '~/.mo_source.rds' from 'home/me/ourcodes.xlsx'.
-[1] B_ESCHR_COLI
+#> NOTE: Updated mo_source file '~/.mo_source.rds' from 'home/me/ourcodes.xlsx'
+#>       (columns "Organisation XYZ" and "mo")
+#> [1] B_ESCHR_COLI
 
 mo_genus("lab_Staph_aureus")
-[1] "Staphylococcus"
+#> [1] "Staphylococcus"
 }
 
-To remove the reference data file completely, just use \code{""} or \code{NULL} as input for \verb{[set_mo_source()]}:\preformatted{set_mo_source(NULL)
+To delete the reference data file, just use \code{""}, \code{NULL} or \code{FALSE} as input for \code{\link[=set_mo_source]{set_mo_source()}}:\preformatted{set_mo_source(NULL)
 # Removed mo_source file '~/.mo_source.rds'.
 }
+
+If the original Excel file is moved or deleted, the mo_source file will be removed upon the next use of \code{\link[=as.mo]{as.mo()}}. If the mo_source file is manually deleted (i.e. without using \code{\link[=set_mo_source]{set_mo_source()}}), the references to the mo_source file will be removed upon the next use of \code{\link[=as.mo]{as.mo()}}.
 }
-}
+
 \section{Stable lifecycle}{
 
 \if{html}{\figure{lifecycle_stable.svg}{options: style=margin-bottom:5px} \cr}

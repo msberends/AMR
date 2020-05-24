@@ -86,7 +86,6 @@ ggplot_pca(pca_result)
 You can also print an ellipse per group, and edit the appearance:
 
 ```{r}
-
 ggplot_pca(pca_result, ellipse = TRUE) +
   ggplot2::labs(title = "An AMR/PCA biplot!")
 ```

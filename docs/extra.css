@@ -215,6 +215,11 @@ table a:not(.btn):hover, .table a:not(.btn):hover {
   font-size: 15px;
 }
 
+.template-home h4 {
+  padding-top: 40px !important;
+  font-weight: bold !important;
+}
+
 /* logos on index page */
 .logo_img {
   display: inline-block;

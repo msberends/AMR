@@ -1,5 +1,5 @@
-# AMR 1.1.0.9018
-## <small>Last updated: 22-May-2020</small>
+# AMR 1.1.0.9019
+## <small>Last updated: 25-May-2020</small>
 
 ### Breaking 
 * Removed code dependency on all other R packages, making this package fully independent of the development process of others. This is a major code change, but will probably not be noticeable by most users.
@@ -20,7 +20,8 @@
 * Improvements for algorithm in `as.ab()`, so that e.g. `as.ab("ampi sul")` and `ab_name("ampi sul")` work
 * Functions `ab_atc()` and `ab_group()` now return `NA` if no antimicrobial agent could be found
 * Small fix for some text input that could not be coerced as valid MIC values 
-* Fixed interpretation of generic CLSI interpretation rules (thanks to Anthony Underwood)
+* Fix for interpretation of generic CLSI interpretation rules (thanks to Anthony Underwood)
+* Fix for `set_mo_source()` to make sure that column `mo` will always be the second column
 
 ### Other
 * Removed previously deprecated function `p.symbol()` - it was replaced with `p_symbol()`

@@ -477,8 +477,7 @@ The next example uses the `example_isolates` data set. This is a data set includ
 We will compare the resistance to fosfomycin (column `FOS`) in hospital A and D. The input for the `fisher.test()` can be retrieved with a transformation like this:
 
 ```{r, results = 'markup'}
-# use package 'tidyr' to pivot data; 
-# it gets installed with this 'AMR' package
+# use package 'tidyr' to pivot data:
 library(tidyr)
 
 check_FOS <- example_isolates %>%
@@ -501,4 +500,4 @@ We can apply the test now with:
 fisher.test(check_FOS)                            
 ```
 
-As can be seen, the p value is `r round(fisher.test(check_FOS)$p.value, 3)`, which means that the fosfomycin resistance found in hospital A and D are really different.
+As can be seen, the p value is `r round(fisher.test(check_FOS)$p.value, 3)`, which means that the fosfomycin resistance found in isolates from patients in hospital A and D are really different.

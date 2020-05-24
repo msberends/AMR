@@ -89,7 +89,7 @@ ggplot_rsi_predict(predict_TZP, ribbon = FALSE)
 
 ### Choosing the right model
 
-Resistance is not easily predicted; if we look at vancomycin resistance in Gram positives, the spread (i.e. standard error) is enormous:
+Resistance is not easily predicted; if we look at vancomycin resistance in Gram-positive bacteria, the spread (i.e. standard error) is enormous:
 
 ```{r}
 example_isolates %>%
@@ -110,7 +110,7 @@ Valid values are:
 | `"loglin"` or `"poisson"`              | `glm(..., family = poisson)`  | Generalised linear model with poisson distribution  |
 | `"lin"` or `"linear"`                  | `lm()`                        | Linear model                                        |
 
-For the vancomycin resistance in Gram positive bacteria, a linear model might be more appropriate since no (left half of a) binomial distribution is to be expected based on the observed years:
+For the vancomycin resistance in Gram-positive bacteria, a linear model might be more appropriate since no binomial distribution is to be expected based on the observed years:
 
 ```{r}
 example_isolates %>%

@@ -122,9 +122,6 @@ Uncommon microorganisms take some more time than common microorganisms. To furth
 
 Repetitive results are unique values that are present more than once. Unique values will only be calculated once by `as.mo()`. We will use `mo_name()` for this test - a helper function that returns the full microbial name (genus, species and possibly subspecies) which uses `as.mo()` internally.
 
-```{r, message = FALSE, eval = FALSE}
-library(dplyr)
-```
 ```{r, message = FALSE}
 # take all MO codes from the example_isolates data set
 x <- example_isolates$mo %>%

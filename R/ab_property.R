@@ -22,7 +22,7 @@
 #' Property of an antibiotic
 #'
 #' Use these functions to return a specific property of an antibiotic from the [antibiotics] data set. All input values will be evaluated internally with [as.ab()].
-#' @inheritSection lifecycle Maturing lifecycle
+#' @inheritSection lifecycle Stable lifecycle
 #' @param x any (vector of) text that can be coerced to a valid microorganism code with [as.ab()]
 #' @param tolower logical to indicate whether the first character of every output should be transformed to a lower case character. This will lead to e.g. "polymyxin B" and not "polymyxin b".
 #' @param property one of the column names of one of the [antibiotics] data set
@@ -33,7 +33,7 @@
 #' @param ... other parameters passed on to [as.ab()]
 #' @details All output will be [translate]d where possible.
 #' 
-#' The function [ab_url()] will return the direct URL to the official WHO website. A warning will be returned if the reauired ATC code is not available.
+#' The function [ab_url()] will return the direct URL to the official WHO website. A warning will be returned if the required ATC code is not available.
 #' @inheritSection as.ab Source
 #' @rdname ab_property
 #' @name ab_property
