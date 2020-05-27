@@ -126,7 +126,6 @@
 #' as.mo("MRSA")    # Methicillin Resistant S. aureus
 #' as.mo("VISA")    # Vancomycin Intermediate S. aureus
 #' as.mo("VRSA")    # Vancomycin Resistant S. aureus
-#' as.mo(22242419)  # Catalogue of Life ID
 #' as.mo(115329001) # SNOMED CT code
 #' 
 #' # Dyslexia is no problem - these all work:
@@ -556,17 +555,41 @@ exec_as.mo <- function(x,
       if (initial_search == TRUE) {
         progress$tick()
       }
-      
-      if (x_backup[i] %like_case% "\\(unknown [a-z]+\\)" | tolower(x_backup_without_spp[i]) %in% c("other", "none", "unknown")) {
-        # empty and nonsense values, ignore without warning
-        x[i] <- lookup(mo == "UNKNOWN")
-        next
-      }
-      
-      # valid MO code ---
+
+      # valid MO code ----
       found <- lookup(mo == toupper(x_backup[i]))
       if (!is.na(found)) {
         x[i] <- found[1L]
+        next
+      }
+      
+      # valid fullname ----
+      found <- lookup(fullname_lower %in% gsub("[^a-zA-Z0-9_. -]", "", tolower(c(x_backup[i], x_backup_without_spp[i]))))
+      # added the gsub() for "(unknown fungus)", since fullname_lower does not contain brackets
+      if (!is.na(found)) {
+        x[i] <- found[1L]
+        next
+      }
+      
+      # old fullname ----
+      found <- lookup(fullname_lower %in% tolower(c(x_backup[i], x_backup_without_spp[i])),
+                      column = NULL, # all columns
+                      haystack = MO.old_lookup)
+      if (!all(is.na(found))) {
+        # when property is "ref" (which is the case in mo_ref, mo_authors and mo_year), return the old value, so:
+        # mo_ref() of "Chlamydia psittaci" will be "Page, 1968" (with warning)
+        # mo_ref() of "Chlamydophila psittaci" will be "Everett et al., 1999"
+        if (property == "ref") {
+          x[i] <- found["ref"]
+        } else {
+          x[i] <- lookup(fullname == found["fullname_new"], haystack = MO_lookup)
+        }
+        options(mo_renamed_last_run = found["fullname"])
+        was_renamed(name_old = found["fullname"],
+                    name_new = lookup(fullname == found["fullname_new"], "fullname", haystack = MO_lookup),
+                    ref_old = found["ref"],
+                    ref_new = lookup(fullname == found["fullname_new"], "ref", haystack = MO_lookup),
+                    mo = lookup(fullname == found["fullname_new"], "mo", haystack = MO_lookup))
         next
       }
       
@@ -582,10 +605,9 @@ exec_as.mo <- function(x,
         }
       }
       
-      found <- lookup(fullname_lower %in% tolower(c(x_backup[i], x_backup_without_spp[i])))
-      # most probable: is exact match in fullname
-      if (!is.na(found)) {
-        x[i] <- found[1L]
+      if (x_backup[i] %like_case% "\\(unknown [a-z]+\\)" | tolower(x_backup_without_spp[i]) %in% c("other", "none", "unknown")) {
+        # empty and nonsense values, ignore without warning
+        x[i] <- lookup(mo == "UNKNOWN")
         next
       }
       
@@ -609,13 +631,6 @@ exec_as.mo <- function(x,
       # very probable: is G. species ----
       found <- lookup(g_species %in% gsub("[^a-z0-9/ \\-]+", "", 
                                           tolower(c(x_backup[i], x_backup_without_spp[i]))))
-      if (!is.na(found)) {
-        x[i] <- found[1L]
-        next
-      }
-      
-      # valid Catalogue of Life ID ---
-      found <- lookup(col_id == x_backup[i])
       if (!is.na(found)) {
         x[i] <- found[1L]
         next
@@ -943,21 +958,20 @@ exec_as.mo <- function(x,
                         column = NULL, # all columns
                         haystack = data.old_to_check)
         if (!all(is.na(found))) {
-          col_id_new <- found["col_id_new"]
           # when property is "ref" (which is the case in mo_ref, mo_authors and mo_year), return the old value, so:
           # mo_ref() of "Chlamydia psittaci" will be "Page, 1968" (with warning)
           # mo_ref() of "Chlamydophila psittaci" will be "Everett et al., 1999"
           if (property == "ref") {
             x[i] <- found["ref"]
           } else {
-            x[i] <- lookup(col_id == found["col_id_new"], haystack = MO_lookup)
+            x[i] <- lookup(fullname == found["fullname_new"], haystack = MO_lookup)
           }
           options(mo_renamed_last_run = found["fullname"])
           was_renamed(name_old = found["fullname"],
-                      name_new = lookup(col_id == found["col_id_new"], "fullname", haystack = MO_lookup),
+                      name_new = lookup(fullname == found["fullname_new"], "fullname", haystack = MO_lookup),
                       ref_old = found["ref"],
-                      ref_new = lookup(col_id == found["col_id_new"], "ref", haystack = MO_lookup),
-                      mo = lookup(col_id == found["col_id_new"], "mo", haystack = MO_lookup))
+                      ref_new = lookup(fullname == found["fullname_new"], "ref", haystack = MO_lookup),
+                      mo = lookup(fullname == found["fullname_new"], "mo", haystack = MO_lookup))
           return(x[i])
         }
         
@@ -997,18 +1011,18 @@ exec_as.mo <- function(x,
                 # mo_ref("Chlamydophila psittaci) = "Everett et al., 1999"
                 x <- found["ref"]
               } else {
-                x <- lookup(col_id == found["col_id_new"], haystack = MO_lookup)
+                x <- lookup(fullname == found["fullname_new"], haystack = MO_lookup)
               }
               was_renamed(name_old = found["fullname"],
-                          name_new = lookup(col_id == found["col_id_new"], "fullname", haystack = MO_lookup),
+                          name_new = lookup(fullname == found["fullname_new"], "fullname", haystack = MO_lookup),
                           ref_old = found["ref"],
-                          ref_new = lookup(col_id == found["col_id_new"], "ref", haystack = MO_lookup),
-                          mo = lookup(col_id == found["col_id_new"], "mo", haystack = MO_lookup))
+                          ref_new = lookup(fullname == found["fullname_new"], "ref", haystack = MO_lookup),
+                          mo = lookup(fullname == found["fullname_new"], "mo", haystack = MO_lookup))
               options(mo_renamed_last_run = found["fullname"])
               uncertainties <<- rbind(uncertainties,
                                       format_uncertainty_as_df(uncertainty_level = now_checks_for_uncertainty_level,
                                                                input = a.x_backup,
-                                                               result_mo = lookup(col_id == found["col_id_new"], "mo", haystack = MO_lookup)))
+                                                               result_mo = lookup(fullname == found["fullname_new"], "mo", haystack = MO_lookup)))
               return(x)
             }
             
@@ -1366,6 +1380,10 @@ exec_as.mo <- function(x,
         failures <- c(failures, x_backup[i])
       }
     }
+    
+    if (initial_search == TRUE) {
+      close(progress)
+    }
   }
   
   # handling failures ----
@@ -1494,7 +1512,7 @@ exec_as.mo <- function(x,
   if (property == "mo") {
     x <- to_class_mo(x)
   }
-  
+
   if (length(mo_renamed()) > 0) {
     print(mo_renamed())
   }
@@ -1552,7 +1570,7 @@ format_uncertainty_as_df <- function(uncertainty_level,
 #' @export
 #' @noRd
 print.mo <- function(x, ...) {
-  cat("Class 'mo'\n")
+  cat("Class <mo>\n")
   x_names <- names(x)
   x <- as.character(x)
   names(x) <- x_names
@@ -1711,6 +1729,9 @@ print.mo_renamed <- function(x, ...) {
                              font_italic(x$old_name[i]), ifelse(x$old_ref[i] %in% c("", NA), "", 
                                                                 paste0(" (",  gsub("et al.", font_italic("et al."), x$old_ref[i]), ")")),
                              " was renamed ", 
+                             ifelse(as.integer(gsub("[^0-9]", "", x$new_ref[i])) < as.integer(gsub("[^0-9]", "", x$old_ref[i])),
+                                    font_bold("back to "),
+                                    ""),
                              font_italic(x$new_name[i]), ifelse(x$new_ref[i] %in% c("", NA), "", 
                                                                 paste0(" (",  gsub("et al.", font_italic("et al."), x$new_ref[i]), ")")),
                              " [", x$mo[i], "]")))
@@ -1747,9 +1768,14 @@ translate_allow_uncertain <- function(allow_uncertain) {
 }
 
 get_mo_failures_uncertainties_renamed <- function() {
-  list(failures = getOption("mo_failures"),
-       uncertainties = getOption("mo_uncertainties"),
-       renamed = getOption("mo_renamed"))
+  remember <- list(failures = getOption("mo_failures"),
+                   uncertainties = getOption("mo_uncertainties"),
+                   renamed = getOption("mo_renamed"))
+  # empty them, otherwise mo_shortname("Chlamydophila psittaci") will give 3 notes
+  options("mo_failures" = NULL)
+  options("mo_uncertainties" = NULL)
+  options("mo_renamed" = NULL)
+  remember
 }
 
 load_mo_failures_uncertainties_renamed <- function(metadata) {

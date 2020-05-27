@@ -174,7 +174,7 @@ droplevels.mic <- function(x, exclude = ifelse(anyNA(levels(x)), NULL, NA), ...)
 #' @export
 #' @noRd
 print.mic <- function(x, ...) {
-  cat("Class 'mic'\n")
+  cat("Class <mic>\n")
   print(as.character(x), quote = FALSE)
 }
 

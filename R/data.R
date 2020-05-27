@@ -82,7 +82,6 @@
 #' @inheritSection catalogue_of_life Catalogue of Life
 #' @format A [`data.frame`] with `r format(nrow(microorganisms), big.mark = ",")` observations and `r ncol(microorganisms)` variables:
 #' - `mo`\cr ID of microorganism as used by this package
-#' - `col_id`\cr Catalogue of Life ID
 #' - `fullname`\cr Full name, like `"Escherichia coli"`
 #' - `kingdom`, `phylum`, `class`, `order`, `family`, `genus`, `species`, `subspecies`\cr Taxonomic rank of the microorganism
 #' - `rank`\cr Text of the taxonomic rank of the microorganism, like `"species"` or `"genus"`
@@ -113,6 +112,8 @@
 #'
 #' From: <https://www.dsmz.de/services/online-tools/prokaryotic-nomenclature-up-to-date/complete-list-readme>
 #' @source Catalogue of Life: Annual Checklist (public online taxonomic database), <http://www.catalogueoflife.org> (check included annual version with [catalogue_of_life_version()]).
+#' 
+#' Parte, A.C. (2018). LPSN — List of Prokaryotic names with Standing in Nomenclature (bacterio.net), 20 years on. International Journal of Systematic and Evolutionary Microbiology, 68, 1825-1829; doi: 10.1099/ijsem.0.002786
 #'
 #' Leibniz Institute DSMZ-German Collection of Microorganisms and Cell Cultures, Germany, Prokaryotic Nomenclature Up-to-Date, <https://www.dsmz.de/services/online-tools/prokaryotic-nomenclature-up-to-date> (check included version with [catalogue_of_life_version()]).
 #' @inheritSection AMR Read more on our website!
@@ -120,11 +121,11 @@
 "microorganisms"
 
 catalogue_of_life <- list(
-  year = 2018,
+  year = 2019,
   version = "Catalogue of Life: {year} Annual Checklist",
-  url_CoL = "http://www.catalogueoflife.org/annual-checklist/{year}/",
-  url_DSMZ = "https://www.dsmz.de/services/online-tools/prokaryotic-nomenclature-up-to-date/prokaryotic-nomenclature-up-to-date/genus-search",
-  yearmonth_DSMZ = "August 2019"
+  url_CoL = "http://www.catalogueoflife.org/col/",
+  url_DSMZ = "https://lpsn.dsmz.de",
+  yearmonth_DSMZ = "May 2020"
 )
 
 #' Data set with previously accepted taxonomic names
@@ -132,17 +133,18 @@ catalogue_of_life <- list(
 #' A data set containing old (previously valid or accepted) taxonomic names according to the Catalogue of Life. This data set is used internally by [as.mo()].
 #' @inheritSection catalogue_of_life Catalogue of Life
 #' @format A [`data.frame`] with `r format(nrow(microorganisms.old), big.mark = ",")` observations and `r ncol(microorganisms.old)` variables:
-#' - `col_id`\cr Catalogue of Life ID that was originally given
-#' - `col_id_new`\cr New Catalogue of Life ID that responds to an entry in the [microorganisms] data set
 #' - `fullname`\cr Old full taxonomic name of the microorganism
+#' - `fullname_new`\cr New full taxonomic name of the microorganism
 #' - `ref`\cr Author(s) and year of concerning scientific publication
 #' - `prevalence`\cr Prevalence of the microorganism, see [as.mo()]
 #' @source Catalogue of Life: Annual Checklist (public online taxonomic database), <http://www.catalogueoflife.org> (check included annual version with [catalogue_of_life_version()]).
+#' 
+#' Parte, A.C. (2018). LPSN — List of Prokaryotic names with Standing in Nomenclature (bacterio.net), 20 years on. International Journal of Systematic and Evolutionary Microbiology, 68, 1825-1829; doi: 10.1099/ijsem.0.002786
 #' @inheritSection AMR Read more on our website!
 #' @seealso [as.mo()] [mo_property()] [microorganisms]
 "microorganisms.old"
 
-#' Translation table for common microorganism codes
+#' Translation table with `r format(nrow(microorganisms.codes), big.mark = ",")` common microorganism codes
 #'
 #' A data set containing commonly used codes for microorganisms, from laboratory systems and WHONET. Define your own with [set_mo_source()]. They will all be searched when using [as.mo()] and consequently all the [`mo_*`][mo_property()] functions.
 #' @format A [`data.frame`] with `r format(nrow(microorganisms.codes), big.mark = ",")` observations and `r ncol(microorganisms.codes)` variables:

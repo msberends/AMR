@@ -82,7 +82,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.1.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.1.0.9020</span>
       </span>
     </div>
 
@@ -275,9 +275,9 @@ Function <code><a href='as.mo.html'>as.mo()</a></code> to use the data for intel
 
 
 <span class='co'># Get a note when a species was renamed</span>
-<span class='fu'><a href='mo_property.html'>mo_shortname</a></span>(<span class='st'>"Chlamydia psittaci"</span>)
-<span class='co'># Note: 'Chlamydia psittaci' (Page, 1968) was renamed</span>
-<span class='co'>#       'Chlamydophila psittaci' (Everett et al., 1999)</span>
+<span class='fu'><a href='mo_property.html'>mo_shortname</a></span>(<span class='st'>"Chlamydophila psittaci"</span>)
+<span class='co'># Note: 'Chlamydophila psittaci' (Everett et al., 1999) was renamed back to</span>
+<span class='co'>#       'Chlamydia psittaci' (Page, 1968)</span>
 <span class='co'># [1] "C. psittaci"</span>
 
 <span class='co'># Get any property from the entire taxonomic tree for all included species</span>
@@ -295,9 +295,9 @@ Function <code><a href='as.mo.html'>as.mo()</a></code> to use the data for intel
 
 <span class='co'># Do not get mistaken - this package is about microorganisms</span>
 <span class='fu'><a href='mo_property.html'>mo_kingdom</a></span>(<span class='st'>"C. elegans"</span>)
-<span class='co'># [1] "Bacteria"                        # Bacteria?!</span>
+<span class='co'># [1] "Fungi"                 # Fungi?!</span>
 <span class='fu'><a href='mo_property.html'>mo_name</a></span>(<span class='st'>"C. elegans"</span>)
-<span class='co'># [1] "Chroococcus limneticus elegans"  # Because a microorganism was found</span></pre>
+<span class='co'># [1] "Cladosporium elegans"  # Because a microorganism was found</span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -313,7 +313,7 @@ Function <code><a href='as.mo.html'>as.mo()</a></code> to use the data for intel
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
 </div>
 
       </footer>

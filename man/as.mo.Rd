@@ -166,7 +166,6 @@ as.mo("Zthafilokkoockus oureuz") # handles incorrect spelling
 as.mo("MRSA")    # Methicillin Resistant S. aureus
 as.mo("VISA")    # Vancomycin Intermediate S. aureus
 as.mo("VRSA")    # Vancomycin Resistant S. aureus
-as.mo(22242419)  # Catalogue of Life ID
 as.mo(115329001) # SNOMED CT code
 
 # Dyslexia is no problem - these all work:

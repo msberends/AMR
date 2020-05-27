@@ -78,8 +78,7 @@ check_dataset_integrity <- function() {
     check_microorganisms <- all(c("mo", "fullname", "kingdom", "phylum",
                                   "class", "order", "family", "genus", 
                                   "species", "subspecies", "rank",
-                                  "col_id", "species_id", "source",
-                                  "ref", "prevalence", "snomed") %in% colnames(microorganisms),
+                                  "species_id", "source", "ref", "prevalence") %in% colnames(microorganisms),
                                 na.rm = TRUE) & NROW(microorganisms) == NROW(MO_lookup)
     check_antibiotics <- all(c("ab", "atc", "cid", "name", "group", 
                                "atc_group1", "atc_group2", "abbreviations",

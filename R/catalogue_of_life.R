@@ -50,9 +50,9 @@
 #'
 #'
 #' # Get a note when a species was renamed
-#' mo_shortname("Chlamydia psittaci")
-#' # Note: 'Chlamydia psittaci' (Page, 1968) was renamed
-#' #       'Chlamydophila psittaci' (Everett et al., 1999)
+#' mo_shortname("Chlamydophila psittaci")
+#' # Note: 'Chlamydophila psittaci' (Everett et al., 1999) was renamed back to
+#' #       'Chlamydia psittaci' (Page, 1968)
 #' # [1] "C. psittaci"
 #'
 #' # Get any property from the entire taxonomic tree for all included species
@@ -70,9 +70,9 @@
 #'
 #' # Do not get mistaken - this package is about microorganisms
 #' mo_kingdom("C. elegans")
-#' # [1] "Bacteria"                        # Bacteria?!
+#' # [1] "Fungi"                 # Fungi?!
 #' mo_name("C. elegans")
-#' # [1] "Chroococcus limneticus elegans"  # Because a microorganism was found
+#' # [1] "Cladosporium elegans"  # Because a microorganism was found
 NULL
 
 #' Version info of included Catalogue of Life

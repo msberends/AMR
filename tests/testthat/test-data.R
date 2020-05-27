@@ -56,11 +56,11 @@ test_that("creation of data sets is valid", {
   expect_lt(nrow(df[which(df$prevalence == 2), ]), nrow(df[which(df$prevalence == 3), ]))
   expect_true(all(c("mo", "fullname",
                     "kingdom", "phylum", "class", "order", "family", "genus", "species", "subspecies",
-                    "rank", "col_id", "species_id", "source", "ref", "prevalence",
+                    "rank", "ref", "species_id", "source", "prevalence", "snomed",
                     "kingdom_index", "fullname_lower", "g_species") %in% colnames(df)))
 
   olddf <- create_MO.old_lookup()
-  expect_true(all(c("col_id", "col_id_new", "fullname", "ref", "prevalence",
+  expect_true(all(c("fullname", "fullname_new", "ref", "prevalence",
                     "fullname_lower", "g_species") %in% colnames(olddf)))
   
   old <- make_trans_tbl()

@@ -81,7 +81,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.1.0.9019</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.1.0.9020</span>
       </span>
     </div>
 
@@ -229,13 +229,13 @@
       <small>Source: <a href='https://gitlab.com/msberends/AMR/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
-    <div id="amr-1-1-0-9019" class="section level1">
-<h1 class="page-header" data-toc-text="1.1.0.9019">
-<a href="#amr-1-1-0-9019" class="anchor"></a>AMR 1.1.0.9019<small> Unreleased </small>
+    <div id="amr-1-1-0-9020" class="section level1">
+<h1 class="page-header" data-toc-text="1.1.0.9020">
+<a href="#amr-1-1-0-9020" class="anchor"></a>AMR 1.1.0.9020<small> Unreleased </small>
 </h1>
-<div id="last-updated-25-may-2020" class="section level2">
+<div id="last-updated-27-may-2020" class="section level2">
 <h2 class="hasAnchor">
-<a href="#last-updated-25-may-2020" class="anchor"></a><small>Last updated: 25-May-2020</small>
+<a href="#last-updated-27-may-2020" class="anchor"></a><small>Last updated: 27-May-2020</small>
 </h2>
 <div id="breaking" class="section level3">
 <h3 class="hasAnchor">
@@ -258,9 +258,22 @@ Negative effects of this change are:
 <h3 class="hasAnchor">
 <a href="#changed" class="anchor"></a>Changed</h3>
 <ul>
+<li>Taxonomy:
+<ul>
+<li>Updated the taxonomy of microorganisms tot May 2020, using the Catalogue of Life (CoL), the Global Biodiversity Information Facility (GBIF) and the List of Prokaryotic names with Standing in Nomenclature (LPSN, hosted by DSMZ since February 2020)</li>
+<li>Removed the Catalogue of Life IDs (like 776351), since they now work with a species ID (hexadecimal string)</li>
+</ul>
+</li>
 <li>EUCAST rules:
 <ul>
-<li>The <code><a href="../reference/eucast_rules.html">eucast_rules()</a></code> function no longer applies “other” rules at default that are made available by this package (like setting ampicillin = R when ampicillin + enzym inhibitor = R). The default input value for <code>rules</code> is now <code><a href="https://rdrr.io/r/base/c.html">c("breakpoints", "expert")</a></code> instead of <code>"all"</code>, but this can be changed by the user. To return to the old behaviour, set <code><a href="https://rdrr.io/r/base/options.html">options(AMR.eucast_rules = "all")</a></code>.</li>
+<li>The <code><a href="../reference/eucast_rules.html">eucast_rules()</a></code> function no longer applies “other” rules at default that are made available by this package (like setting ampicillin = R when ampicillin + enzyme inhibitor = R). The default input value for <code>rules</code> is now <code><a href="https://rdrr.io/r/base/c.html">c("breakpoints", "expert")</a></code> instead of <code>"all"</code>, but this can be changed by the user. To return to the old behaviour, set <code><a href="https://rdrr.io/r/base/options.html">options(AMR.eucast_rules = "all")</a></code>.</li>
+<li>Fixed a bug where checking antimicrobial results in the original data were not regarded as valid R/SI values</li>
+<li>All “other” rules now apply for all drug combinations in the <code>antibiotics</code> data set these two rules:
+<ol>
+<li>A drug <strong>with</strong> enzyme inhibitor will be set to S if the drug <strong>without</strong> enzyme inhibitor is S</li>
+<li>A drug <strong>without</strong> enzyme inhibitor will be set to R if the drug <strong>with</strong> enzyme inhibitor is R</li>
+</ol>
+This works for all drug combinations, such as ampicillin/sulbactam, ceftazidime/avibactam, trimethoprim/sulfamethoxazole, etc.</li>
 <li>Added official drug names to verbose output of <code><a href="../reference/eucast_rules.html">eucast_rules()</a></code>
 </li>
 </ul>
@@ -271,6 +284,7 @@ Negative effects of this change are:
 <li>Small fix for some text input that could not be coerced as valid MIC values</li>
 <li>Fix for interpretation of generic CLSI interpretation rules (thanks to Anthony Underwood)</li>
 <li>Fix for <code><a href="../reference/mo_source.html">set_mo_source()</a></code> to make sure that column <code>mo</code> will always be the second column</li>
+<li>Added abbreviation “cfsc” for Cefoxitin and “cfav” for Ceftazidime/avibactam</li>
 </ul>
 </div>
 <div id="other" class="section level3">

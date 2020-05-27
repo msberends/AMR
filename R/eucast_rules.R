@@ -245,6 +245,7 @@ eucast_rules <- function(x,
   }
   
   warned <- FALSE
+  warn_lacking_rsi_class <- FALSE
   
   txt_error <- function() {
     if (info == TRUE) cat("", font_red_bg(font_white(" ERROR ")), "\n\n") 
@@ -410,6 +411,7 @@ eucast_rules <- function(x,
   RID <- cols_ab["RID"]
   RIF <- cols_ab["RIF"]
   RXT <- cols_ab["RXT"]
+  SAM <- cols_ab["SAM"]
   SIS <- cols_ab["SIS"]
   SXT <- cols_ab["SXT"]
   TCY <- cols_ab["TCY"]
@@ -440,7 +442,9 @@ eucast_rules <- function(x,
     cols <- unique(cols[!is.na(cols) & !is.null(cols)])
     if (length(rows) > 0 & length(cols) > 0) {
       before_df <- x_original
-      
+      if (any(!sapply(x[, cols, drop = FALSE], is.rsi), na.rm = TRUE)) {
+        warn_lacking_rsi_class <<- TRUE
+      }
       tryCatch(
         # insert into original table
         x_original[rows, cols] <<- to,
@@ -599,14 +603,79 @@ eucast_rules <- function(x,
     }
   }
   
-  if (info == TRUE & !any(c("other", "all") %in% rules, na.rm = TRUE)) {
-    cat(font_red("\nSkipping inheritance rules defined by this package, such as setting trimethoprim (TMP) = R where trimethoprim/sulfamethoxazole (SXT) = R.\nUse eucast_rules(..., rules = \"all\") to also apply those rules.\n"))
-  }
-  
-  eucast_notification_shown <- FALSE
-  eucast_rules_df <- eucast_rules_file # internal data file
+  as.rsi_no_warning <- function(x) suppressWarnings(as.rsi(x))
   no_added <- 0
   no_changed <- 0
+  
+  # Other rules: enzyme inhibitors ------------------------------------------
+  if (any(c("all", "other") %in% rules)) {
+    if (info == TRUE) {
+      cat(font_bold(paste0("\nRules by this AMR package (",
+                           font_red(paste0("v", utils::packageVersion("AMR"), ", ", 
+                                           format(utils::packageDate("AMR"), "%Y"))), ")\n")))
+    }
+    
+    ab_enzyme <- subset(antibiotics, name %like% "/")[, c("ab", "name")]
+    ab_enzyme$base_name <- gsub("^([a-zA-Z0-9]+).*", "\\1", ab_enzyme$name)
+    ab_enzyme$base_ab <- as.ab(ab_enzyme$base_name)
+    for (i in seq_len(nrow(ab_enzyme))) {
+      if (all(c(ab_enzyme[i, ]$ab, ab_enzyme[i, ]$base_ab) %in% names(cols_ab), na.rm = TRUE)) {
+        ab_name_base <- ab_name(cols_ab[ab_enzyme[i, ]$base_ab], language = NULL, tolower = TRUE)
+        ab_name_enzyme <- ab_name(cols_ab[ab_enzyme[i, ]$ab], language = NULL, tolower = TRUE)
+        
+        # Set base to R where base + enzyme inhibitor is R
+        rule_current <- paste0("Set ", ab_name_base, " (", cols_ab[ab_enzyme[i, ]$base_ab], ") = R where ",
+                               ab_name_enzyme, " (", cols_ab[ab_enzyme[i, ]$ab], ") = R")
+        if (info == TRUE) {
+          cat(rule_current)
+        }
+        run_changes <- edit_rsi(to = "R",
+                                rule = c(rule_current, "Other rules", ""),
+                                rows = which(as.rsi_no_warning(x[, cols_ab[ab_enzyme[i, ]$ab]]) == "R"),
+                                cols = cols_ab[ab_enzyme[i, ]$base_ab])
+        no_added <- no_added + run_changes$added
+        no_changed <- no_changed + run_changes$changed
+        # Print number of new changes
+        if (info == TRUE) {
+          # print only on last one of rules in this group
+          txt_ok(no_added = no_added, no_changed = no_changed)
+          # and reset counters
+          no_added <- 0
+          no_changed <- 0
+        }
+        
+        # Set base + enzyme inhibitor to S where base is S
+        rule_current <- paste0("Set ", ab_name_enzyme, " (", cols_ab[ab_enzyme[i, ]$ab], ") = S where ",
+                               ab_name_base, " (", cols_ab[ab_enzyme[i, ]$base_ab], ") = S")
+        if (info == TRUE) {
+          cat(rule_current)
+        }
+        run_changes <- edit_rsi(to = "S",
+                                rule = c(rule_current, "Other rules", ""),
+                                rows = which(as.rsi_no_warning(x[, cols_ab[ab_enzyme[i, ]$base_ab]]) == "S"),
+                                cols = cols_ab[ab_enzyme[i, ]$ab])
+        no_added <- no_added + run_changes$added
+        no_changed <- no_changed + run_changes$changed
+        # Print number of new changes
+        if (info == TRUE) {
+          # print only on last one of rules in this group
+          txt_ok(no_added = no_added, no_changed = no_changed)
+          # and reset counters
+          no_added <- 0
+          no_changed <- 0
+        }
+      }
+    }
+    
+  } else {
+    if (info == TRUE) {
+      cat(font_red("\nSkipping inheritance rules defined by this package, such as setting trimethoprim (TMP) = R where trimethoprim/sulfamethoxazole (SXT) = R.\nUse eucast_rules(..., rules = \"all\") to also apply those rules.\n"))
+    }
+  }
+  
+  # Official EUCAST rules ---------------------------------------------------
+  eucast_notification_shown <- FALSE
+  eucast_rules_df <- eucast_rules_file # internal data file
   for (i in seq_len(nrow(eucast_rules_df))) {
     
     rule_previous <- eucast_rules_df[max(1, i - 1), "reference.rule"]
@@ -637,17 +706,13 @@ eucast_rules <- function(x,
     if (rule_group_current %like% "expert" & !any(c("all", "expert") %in% rules)) {
       next
     }
-    if (rule_group_current %like% "other" & !any(c("all", "other") %in% rules)) {
-      next
-    }
     
     if (info == TRUE & !rule_group_current %like% "other" & eucast_notification_shown == FALSE) {
-      cat(paste0(
-        "\n----\nRules by the ", font_bold("European Committee on Antimicrobial Susceptibility Testing (EUCAST)"),
+      cat(paste0("\n", font_grey(strrep("-", options()$width - 1)),
+        "\nRules by the ", font_bold("European Committee on Antimicrobial Susceptibility Testing (EUCAST)"),
         "\n", font_blue("http://eucast.org/"), "\n"))
       eucast_notification_shown <- TRUE
     }
-    
     
     if (info == TRUE) {
       # Print rule (group) ------------------------------------------------------
@@ -662,7 +727,7 @@ eucast_rules <- function(x,
               rule_group_current %like% "expert",
               paste0("\nEUCAST Expert Rules, Intrinsic Resistance and Exceptional Phenotypes (", 
                      font_red(paste0("v", EUCAST_VERSION_EXPERT_RULES)), ")\n"),
-              "\nOther rules by this AMR package\n"))))
+              ""))))
       }
       # Print rule  -------------------------------------------------------------
       if (rule_current != rule_previous) {
@@ -733,18 +798,18 @@ eucast_rules <- function(x,
         rows <- integer(0)
       } else if (length(source_antibiotics) == 1) {
         rows <-  tryCatch(which(x[, col_mo_property] %like% mo_value
-                                & x[, source_antibiotics[1L]] == source_value[1L]),
+                                & as.rsi_no_warning(x[, source_antibiotics[1L]]) == source_value[1L]),
                           error = function(e) integer(0))
       } else if (length(source_antibiotics) == 2) {
         rows <-  tryCatch(which(x[, col_mo_property] %like% mo_value
-                                & x[, source_antibiotics[1L]] == source_value[1L]
-                                & x[, source_antibiotics[2L]] == source_value[2L]),
+                                & as.rsi_no_warning(x[, source_antibiotics[1L]]) == source_value[1L]
+                                & as.rsi_no_warning(x[, source_antibiotics[2L]]) == source_value[2L]),
                           error = function(e) integer(0))
       } else if (length(source_antibiotics) == 3) {
         rows <-  tryCatch(which(x[, col_mo_property] %like% mo_value
-                                & x[, source_antibiotics[1L]] == source_value[1L]
-                                & x[, source_antibiotics[2L]] == source_value[2L]
-                                & x[, source_antibiotics[3L]] == source_value[3L]),
+                                & as.rsi_no_warning(x[, source_antibiotics[1L]]) == source_value[1L]
+                                & as.rsi_no_warning(x[, source_antibiotics[2L]]) == source_value[2L]
+                                & as.rsi_no_warning(x[, source_antibiotics[3L]]) == source_value[3L]),
                           error = function(e) integer(0))
       } else {
         stop("only 3 antibiotics supported for source_antibiotics ", call. = FALSE)
@@ -784,7 +849,7 @@ eucast_rules <- function(x,
       arrange(row, rule_group, rule_name, col)
     
     cat(paste0("\n", font_grey(strrep("-", options()$width - 1)), "\n"))
-    cat(font_bold(paste("EUCAST rules", paste0(wouldve, "affected"),
+    cat(font_bold(paste("The rules", paste0(wouldve, "affected"),
                    formatnr(n_distinct(verbose_info$row)),
                    "out of", formatnr(nrow(x_original)),
                    "rows, making a total of", formatnr(nrow(verbose_info)), "edits\n")))
@@ -844,6 +909,12 @@ eucast_rules <- function(x,
     } else if (verbose == TRUE) {
       cat(paste0("\nUsed 'Verbose mode' (", font_bold("verbose = TRUE"), "), which returns a data.frame with all specified edits.\nUse ", font_bold("verbose = FALSE"), " to apply the rules on your data.\n\n"))
     }
+  }
+  
+  if (isTRUE(warn_lacking_rsi_class)) {
+    warning("Not all columns with antimicrobial results are of class <rsi>.\n",
+            "Transform eligible columns to class <rsi> on beforehand: your_data %>% mutate_if(is.rsi.eligible, as.rsi)",
+            call. = FALSE)
   }
   
   # Return data set ---------------------------------------------------------

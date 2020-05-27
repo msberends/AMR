@@ -5,17 +5,18 @@
 \alias{microorganisms.old}
 \title{Data set with previously accepted taxonomic names}
 \format{
-A \code{\link{data.frame}} with 24,253 observations and 5 variables:
+A \code{\link{data.frame}} with 12,709 observations and 4 variables:
 \itemize{
-\item \code{col_id}\cr Catalogue of Life ID that was originally given
-\item \code{col_id_new}\cr New Catalogue of Life ID that responds to an entry in the \link{microorganisms} data set
 \item \code{fullname}\cr Old full taxonomic name of the microorganism
+\item \code{fullname_new}\cr New full taxonomic name of the microorganism
 \item \code{ref}\cr Author(s) and year of concerning scientific publication
 \item \code{prevalence}\cr Prevalence of the microorganism, see \code{\link[=as.mo]{as.mo()}}
 }
 }
 \source{
 Catalogue of Life: Annual Checklist (public online taxonomic database), \url{http://www.catalogueoflife.org} (check included annual version with \code{\link[=catalogue_of_life_version]{catalogue_of_life_version()}}).
+
+Parte, A.C. (2018). LPSN — List of Prokaryotic names with Standing in Nomenclature (bacterio.net), 20 years on. International Journal of Systematic and Evolutionary Microbiology, 68, 1825-1829; doi: 10.1099/ijsem.0.002786
 }
 \usage{
 microorganisms.old

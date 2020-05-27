@@ -533,7 +533,7 @@ is.rsi.eligible <- function(x, threshold = 0.05) {
 #' @export
 #' @noRd
 print.rsi <- function(x, ...) {
-  cat("Class 'rsi'\n")
+  cat("Class <rsi>\n")
   print(as.character(x), quote = FALSE)
 }
 

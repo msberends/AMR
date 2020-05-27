@@ -99,7 +99,7 @@ is.disk <- function(x) {
 #' @export
 #' @noRd
 print.disk <- function(x, ...) {
-  cat("Class 'disk'\n")
+  cat("Class <disk>\n")
   print(as.integer(x), quote = FALSE)
 }
 

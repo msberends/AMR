@@ -128,7 +128,7 @@ rsi_calc <- function(...,
   }
   
   if (print_warning == TRUE) {
-    warning("Increase speed by transforming to class `rsi` on beforehand: df %>% mutate_if(is.rsi.eligible, as.rsi)",
+    warning("Increase speed by transforming to class <rsi> on beforehand: your_data %>% mutate_if(is.rsi.eligible, as.rsi)",
             call. = FALSE)
   }
   
@@ -177,7 +177,7 @@ rsi_calc_df <- function(type, # "proportion", "count" or "both"
   }
   
   if (!any(sapply(data, is.rsi), na.rm = TRUE)) {
-    stop("No columns with class 'rsi' found. See ?as.rsi.", call. = FALSE)
+    stop("No columns with class <rsi> found. See ?as.rsi.", call. = FALSE)
   }
   
   if (as.character(translate_ab) %in% c("TRUE", "official")) {

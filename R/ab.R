@@ -347,7 +347,7 @@ is.ab <- function(x) {
 #' @export
 #' @noRd
 print.ab <- function(x, ...) {
-  cat("Class 'ab'\n")
+  cat("Class <ab>\n")
   print(as.character(x), quote = FALSE)
 }
 

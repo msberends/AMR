@@ -322,7 +322,7 @@ antibiotics[which(antibiotics$ab == as.ab("cefuroxim")), "abbreviations"][[1]] <
 antibiotics[which(antibiotics$ab == as.ab("cefotaxim")), "abbreviations"][[1]] <- list(c(antibiotics[which(antibiotics$ab == as.ab("cefotaxim")), "abbreviations"][[1]], "cftx"))
 antibiotics[which(antibiotics$ab == as.ab("ceftazidime")), "abbreviations"][[1]] <- list(c(antibiotics[which(antibiotics$ab == as.ab("ceftazidime")), "abbreviations"][[1]], "cftz"))
 antibiotics[which(antibiotics$ab == as.ab("cefepime")), "abbreviations"][[1]] <- list(c(antibiotics[which(antibiotics$ab == as.ab("cefepime")), "abbreviations"][[1]], "cfpi"))
-antibiotics[which(antibiotics$ab == as.ab("cefoxitin")), "abbreviations"][[1]] <- list(c(antibiotics[which(antibiotics$ab == as.ab("cefoxitin")), "abbreviations"][[1]], "cfxt"))
+antibiotics[which(antibiotics$ab == as.ab("cefoxitin")), "abbreviations"][[1]] <- list(c(antibiotics[which(antibiotics$ab == as.ab("cefoxitin")), "abbreviations"][[1]], "cfxt", "cfsc"))
 # More GLIMS codes
 antibiotics[which(antibiotics$ab == "CAZ"), "abbreviations"][[1]] <- list(c(antibiotics[which(antibiotics$ab == "CAZ"), "abbreviations"][[1]], "cftz"))
 antibiotics[which(antibiotics$ab == "CRO"), "abbreviations"][[1]] <- list(c(antibiotics[which(antibiotics$ab == "CRO"), "abbreviations"][[1]], "cftr"))
@@ -377,6 +377,7 @@ antibiotics[which(antibiotics$ab == "CTX"), "abbreviations"][[1]] <- list(c(anti
 antibiotics[which(antibiotics$ab == "CAZ"), "abbreviations"][[1]] <- list(c(antibiotics[which(antibiotics$ab == "CAZ"), "abbreviations"][[1]], "cftz"))
 antibiotics[which(antibiotics$ab == "CFM"), "abbreviations"][[1]] <- list(c(antibiotics[which(antibiotics$ab == "CFM"), "abbreviations"][[1]], "cfxm"))
 antibiotics[which(antibiotics$ab == "FOX"), "abbreviations"][[1]] <- list(c(antibiotics[which(antibiotics$ab == "FOX"), "abbreviations"][[1]], "cfxt"))
+antibiotics[which(antibiotics$ab == "CZA"), "abbreviations"][[1]] <- list(c(antibiotics[which(antibiotics$ab == "CZA"), "abbreviations"][[1]], "cfav"))
 antibiotics[which(antibiotics$ab == "CZO"), "abbreviations"][[1]] <- list(c(antibiotics[which(antibiotics$ab == "CZO"), "abbreviations"][[1]], "cfzl"))
 antibiotics[which(antibiotics$ab == "CZX"), "abbreviations"][[1]] <- list(c(antibiotics[which(antibiotics$ab == "CZX"), "abbreviations"][[1]], "cfzx"))
 antibiotics[which(antibiotics$ab == "CHL"), "abbreviations"][[1]] <- list(c(antibiotics[which(antibiotics$ab == "CHL"), "abbreviations"][[1]], "chlo"))
@@ -577,10 +578,10 @@ antibiotics <- antibiotics %>%
 
 # set as data.frame again
 antibiotics <- as.data.frame(antibiotics, stringsAsFactors = FALSE)
-class(antibiotics$ab) <- "ab"
+class(antibiotics$ab) <- c("ab", "character")
 antibiotics <- antibiotics %>% arrange(name)
 
-# make all abbreviations and synonyms lower case, unique and alphabetically sorted
+# make all abbreviations and synonyms lower case, unique and alphabetically sorted ----
 for (i in 1:nrow(antibiotics)) {
   abb <- sort(unique(tolower(antibiotics[i, "abbreviations"][[1]])))
   syn <- sort(unique(tolower(antibiotics[i, "synonyms"][[1]])))

@@ -149,6 +149,7 @@ mo_fullname <- mo_name
 #' @export
 mo_shortname <- function(x, language = get_locale(), ...) {
   x.mo <- as.mo(x, ...)
+
   metadata <- get_mo_failures_uncertainties_renamed()
 
   replace_empty <- function(x) {
@@ -158,7 +159,7 @@ mo_shortname <- function(x, language = get_locale(), ...) {
   
   # get first char of genus and complete species in English
   shortnames <- paste0(substr(mo_genus(x.mo, language = NULL), 1, 1), ". ", replace_empty(mo_species(x.mo, language = NULL)))
-  
+
   # exceptions for Staphylococci
   shortnames[shortnames == "S. coagulase-negative"] <- "CoNS"
   shortnames[shortnames == "S. coagulase-positive"] <- "CoPS"
@@ -315,9 +316,9 @@ mo_synonyms <- function(x, ...) {
   x <- as.mo(x, ...)
   metadata <- get_mo_failures_uncertainties_renamed()
 
-  IDs <- mo_property(x = x, property = "col_id", language = NULL)
-  syns <- lapply(IDs, function(col_id) {
-    res <- sort(microorganisms.old[which(microorganisms.old$col_id_new == col_id), "fullname"])
+  IDs <- mo_name(x = x, language = NULL)
+  syns <- lapply(IDs, function(newname) {
+    res <- sort(microorganisms.old[which(microorganisms.old$fullname_new == newname), "fullname"])
     if (length(res) == 0) {
       NULL
     } else {
@@ -368,14 +369,9 @@ mo_url <- function(x, open = FALSE, ...) {
   df <- data.frame(mo, stringsAsFactors = FALSE) %>%
     left_join(select(microorganisms, mo, source, species_id), by = "mo")
   df$url <- ifelse(df$source == "CoL",
-                   paste0(gsub("{year}",
-                               catalogue_of_life$year, 
-                               catalogue_of_life$url_CoL,
-                               fixed = TRUE), 
-                          "details/species/id/",
-                          df$species_id),
+                   paste0(catalogue_of_life$url_CoL, "details/species/id/", df$species_id, "/"),
                    ifelse(df$source == "DSMZ",
-                          paste0(catalogue_of_life$url_DSMZ, "/", unlist(lapply(strsplit(mo_names, ""), function(x) x[1]))),
+                          paste0(catalogue_of_life$url_DSMZ, "/advanced_search?adv[taxon-name]=", gsub(" ", "+", mo_names), "/"),
                           NA_character_))
   u <- df$url
   names(u) <- mo_names

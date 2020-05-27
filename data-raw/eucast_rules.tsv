@@ -9,22 +9,6 @@
 # >>>>> IF YOU WANT TO IMPORT THIS FILE INTO YOUR OWN SOFTWARE, HAVE THE FIRST 10 LINES SKIPPED <<<<<
 # -------------------------------------------------------------------------------------------------------------------------------
 if_mo_property	like.is.one_of	this_value	and_these_antibiotics	have_these_values	then_change_these_antibiotics	to_value	reference.rule	reference.rule_group
-genus	like	.*	AMP	S	AMX	S	Non-EUCAST: inherit ampicillin results for unavailable amoxicillin	Other rules
-genus	like	.*	AMP	I	AMX	I	Non-EUCAST: inherit ampicillin results for unavailable amoxicillin	Other rules
-genus	like	.*	AMP	R	AMX	R	Non-EUCAST: inherit ampicillin results for unavailable amoxicillin	Other rules
-genus	like	.*	AMX	S	AMP	S	Non-EUCAST: inherit amoxicillin results for unavailable ampicillin	Other rules
-genus	like	.*	AMX	I	AMP	I	Non-EUCAST: inherit amoxicillin results for unavailable ampicillin	Other rules
-genus	like	.*	AMX	R	AMP	R	Non-EUCAST: inherit amoxicillin results for unavailable ampicillin	Other rules
-genus	like	.*	AMC	R	AMP, AMX	R	Non-EUCAST: set ampicillin = R where amoxicillin/clav acid = R	Other rules
-genus	like	.*	SAM	R	AMP, AMX	R	Non-EUCAST: set ampicillin = R where ampicillin/sulbactam = R	Other rules
-genus	like	.*	TZP	R	PIP	R	Non-EUCAST: set piperacillin = R where piperacillin/tazobactam = R	Other rules
-genus	like	.*	SXT	R	TMP	R	Non-EUCAST: set trimethoprim = R where trimethoprim/sulfa = R	Other rules
-genus	like	.*	AMP	S	AMC	S	Non-EUCAST: set amoxicillin/clav acid = S where ampicillin = S	Other rules
-genus	like	.*	AMX	S	AMC	S	Non-EUCAST: set amoxicillin/clav acid = S where ampicillin = S	Other rules
-genus	like	.*	AMP	S	SAM	S	Non-EUCAST: set ampicillin/sulbactam = S where ampicillin = S	Other rules
-genus	like	.*	AMX	S	SAM	S	Non-EUCAST: set ampicillin/sulbactam = S where ampicillin = S	Other rules
-genus	like	.*	PIP	S	TZP	S	Non-EUCAST: set piperacillin/tazobactam = S where piperacillin = S	Other rules
-genus	like	.*	TMP	S	SXT	S	Non-EUCAST: set trimethoprim/sulfa = S where trimethoprim = S	Other rules
 order	is	Enterobacterales	AMP	S	AMX	S	Enterobacterales (Order)	Breakpoints
 order	is	Enterobacterales	AMP	I	AMX	I	Enterobacterales (Order)	Breakpoints
 order	is	Enterobacterales	AMP	R	AMX	R	Enterobacterales (Order)	Breakpoints

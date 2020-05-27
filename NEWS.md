@@ -1,5 +1,5 @@
-# AMR 1.1.0.9019
-## <small>Last updated: 25-May-2020</small>
+# AMR 1.1.0.9020
+## <small>Last updated: 27-May-2020</small>
 
 ### Breaking 
 * Removed code dependency on all other R packages, making this package fully independent of the development process of others. This is a major code change, but will probably not be noticeable by most users.
@@ -13,8 +13,17 @@
   * For developers: classes `mo` and `ab` now both also inherit class `character`, to support any data transformation. This change invalidates code that checks for class length == 1.
 
 ### Changed
+* Taxonomy:
+  * Updated the taxonomy of microorganisms tot May 2020, using the Catalogue of Life (CoL), the Global Biodiversity Information Facility (GBIF) and the List of Prokaryotic names with Standing in Nomenclature (LPSN, hosted by DSMZ since February 2020)
+  * Removed the Catalogue of Life IDs (like 776351), since they now work with a species ID (hexadecimal string)
 * EUCAST rules:
-  * The `eucast_rules()` function no longer applies "other" rules at default that are made available by this package (like setting ampicillin = R when ampicillin + enzym inhibitor = R). The default input value for `rules` is now `c("breakpoints", "expert")` instead of `"all"`, but this can be changed by the user. To return to the old behaviour, set `options(AMR.eucast_rules = "all")`.
+  * The `eucast_rules()` function no longer applies "other" rules at default that are made available by this package (like setting ampicillin = R when ampicillin + enzyme inhibitor = R). The default input value for `rules` is now `c("breakpoints", "expert")` instead of `"all"`, but this can be changed by the user. To return to the old behaviour, set `options(AMR.eucast_rules = "all")`.
+  * Fixed a bug where checking antimicrobial results in the original data were not regarded as valid R/SI values
+  * All "other" rules now apply for all drug combinations in the `antibiotics` data set these two rules:
+    1. A drug **with** enzyme inhibitor will be set to S if the drug **without** enzyme inhibitor is S
+    2. A drug **without** enzyme inhibitor will be set to R if the drug **with** enzyme inhibitor is R
+    
+    This works for all drug combinations, such as ampicillin/sulbactam, ceftazidime/avibactam, trimethoprim/sulfamethoxazole, etc.
   * Added official drug names to verbose output of `eucast_rules()`
 * Added function `ab_url()` to return the direct URL of an antimicrobial agent from the official WHO website
 * Improvements for algorithm in `as.ab()`, so that e.g. `as.ab("ampi sul")` and `ab_name("ampi sul")` work
@@ -22,6 +31,7 @@
 * Small fix for some text input that could not be coerced as valid MIC values 
 * Fix for interpretation of generic CLSI interpretation rules (thanks to Anthony Underwood)
 * Fix for `set_mo_source()` to make sure that column `mo` will always be the second column
+* Added abbreviation "cfsc" for Cefoxitin and "cfav" for Ceftazidime/avibactam
 
 ### Other
 * Removed previously deprecated function `p.symbol()` - it was replaced with `p_symbol()`

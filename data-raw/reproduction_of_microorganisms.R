@@ -23,94 +23,134 @@
 
 # Data retrieved from the Catalogue of Life (CoL) through the Encyclopaedia of Life:
 # https://opendata.eol.org/dataset/catalogue-of-life/
+# Data retrieved from the Global Biodiversity Information Facility (GBIF): 
 # https://doi.org/10.15468/rffz4x
-# (download the resource file with a name like "Catalogue of Life yyyy-mm-dd")
-# and from the Leibniz Institute DSMZ-German Collection of Microorganisms and Cell Cultures
-# https://www.dsmz.de/support/bacterial-nomenclature-up-to-date-downloads.html
-# (download the latest "Complete List" as xlsx file)
+#
+# And from the Leibniz Institute: German Collection of Microorganisms and Cell Cultures (DSMZ)
+# (register first at https://bacdive.dsmz.de/api/pnu/registration/register/ and use API as done below)
 
 library(dplyr)
 library(AMR)
+# also needed: data.table, httr, jsonlite, cleaner, stringr
 
-# unzip and extract taxon.tab (around 1.5 GB) from the CoL archive, then:
-# data_col <- data.table::fread("data-raw/taxon.tab")
-data_col <- data.table::fread("data-raw/taxa.txt", quote = "")
+# unzip and extract taxa.txt (both around 1.5 GB, 3.7-3.9M rows) from Col and GBIF, then:
+data_col_raw <- data.table::fread("data-raw/taxon.tab", quote = "")
+data_gbif <- data.table::fread("data-raw/taxa.txt", quote = "")
 
-# read the xlsx file from DSMZ (only around 2.5 MB):
-data_dsmz <- readxl::read_xlsx("data-raw/DSMZ_bactnames.xlsx")
+# merge the two
+data_col <- data_gbif %>% 
+  rename(referenceID = identifier) %>% 
+  bind_rows(data_col_raw) %>% 
+  distinct(scientificName, kingdom, genus, specificEpithet, infraspecificEpithet, .keep_all = TRUE)
+rm(data_col_raw)
+rm(data_gbif)
+
+
+# read the data from the DSMZ API (around 19000 rows)
+dsmz_username <- ""
+dsmz_password <- ""
+GET_df <- function(url) {
+  result <- httr::GET(url, httr::authenticate(dsmz_username, dsmz_password))
+  httr::stop_for_status(result)
+  result %>%
+    httr::content(type = "text", encoding = "UTF-8") %>%
+    jsonlite::fromJSON(flatten = TRUE)
+}
+dsmz_first <- GET_df("https://bacdive.dsmz.de/api/pnu/species?page=1&format=json")
+data_dsmz <- dsmz_first$results
+# this next process will take appr. `dsmz_first$count / 100 * 5 / 60` minutes
+for (i in 2:round((dsmz_first$count / 100) + 0.5)) {
+  data_dsmz <<- rbind(data_dsmz,
+                      GET_df(paste0("https://bacdive.dsmz.de/api/pnu/species/?page=", i, "&format=json"))$results)
+  cat(i, "-", AMR:::percentage(i / round((dsmz_first$count / 100) + 0.5)), "\n")
+}
+rm(dsmz_first)
 
 # the CoL data is over 3.7M rows:
-data_col %>% freq(kingdom)
+data_col %>% cleaner::freq(kingdom)
 #      Item             Count   Percent   Cum. Count   Cum. Percent
 # ---  ----------  ----------  --------  -----------  -------------
-# 1    Animalia     2,225,627     59.1%    2,225,627          59.1%
-# 2    Plantae      1,177,412     31.3%    3,403,039          90.4%
-# 3    Fungi          290,145      7.7%    3,693,184          98.1%
-# 4    Chromista       47,126      1.3%    3,740,310          99.3%
-# 5    Bacteria        14,478      0.4%    3,754,788          99.7%
-# 6    Protozoa         6,060      0.2%    3,760,848          99.9%
-# 7    Viruses          3,827      0.1%    3,764,675         100.0%
-# 8    Archaea            610      0.0%    3,765,285         100.0%
+# 1    Animalia     2,494,992    55.43%    2,494,992         55.43%
+# 2    Plantae      1,379,674    30.65%    3,874,666         86.08%
+# 3    Fungi          547,619    12.17%    4,422,285         98.24%
+# 4    Chromista       51,475     1.14%    4,473,760         99.39%
+# 5    Bacteria        14,442     0.32%    4,488,202         99.71%
+# 6    Protozoa         8,750     0.19%    4,496,952         99.90%
+# 7    Viruses          3,805     0.08%    4,500,757         99.99%
+# 8    Archaea            609     0.01%    4,501,366        100.00%
 
 # clean data_col
-data_col <- data_col %>%
+data_col.bak <- data_col
+data_col_old <- data_col %>%
+  # filter: has new accepted name
+  filter(!is.na(acceptedNameUsageID)) %>% 
   as_tibble() %>%
-  select(col_id = taxonID,
-         col_id_new = acceptedNameUsageID,
-         fullname = scientificName,
-         kingdom,
-         phylum,
-         class,
-         order,
-         family,
-         genus,
-         species = specificEpithet,
-         subspecies = infraspecificEpithet,
-         rank = taxonRank,
-         ref = scientificNameAuthorship,
-         species_id = references)
-data_col$source <- "CoL"
+  transmute(fullname = trimws(stringr::str_replace(scientificName, 
+                                                   pattern = stringr::fixed(scientificNameAuthorship), 
+                                                   replacement = "")),
+            fullname_new = trimws(paste(ifelse(is.na(genus), "", genus), 
+                                        ifelse(is.na(specificEpithet), "", specificEpithet), 
+                                        ifelse(is.na(infraspecificEpithet), "", infraspecificEpithet))),
+            ref = scientificNameAuthorship,
+            prevalence = NA_integer_)
+data_col <- data_col %>%
+  # filter: has no new accepted name
+  filter(is.na(acceptedNameUsageID)) %>% 
+  as_tibble() %>%
+  transmute(fullname = "",
+            kingdom,
+            phylum,
+            class,
+            order,
+            family,
+            genus,
+            species = specificEpithet,
+            subspecies = infraspecificEpithet,
+            rank = taxonRank,
+            ref = scientificNameAuthorship,
+            species_id = referenceID,
+            source = "CoL")
 
 # clean data_dsmz
-data_dsmz <- data_dsmz %>%
+data_dsmz.bak <- data_dsmz
+data_dsmz_old <- data_dsmz %>%
+  # filter: correct name is not NULL
+  filter(!sapply(correct_name, is.null)) %>% 
   as_tibble() %>%
-  transmute(col_id = NA_integer_,
-            col_id_new = NA_integer_,
-            fullname = "",
-            # kingdom = "",
-            # phylum = "",
-            # class = "",
-            # order = "",
-            # family = "",
-            genus = ifelse(is.na(GENUS), "", GENUS),
-            species = ifelse(is.na(SPECIES), "", SPECIES),
-            subspecies = ifelse(is.na(SUBSPECIES), "", SUBSPECIES),
+  transmute(fullname = trimws(paste(ifelse(is.na(genus), "", genus), 
+                                    ifelse(is.na(species_epithet), "", species_epithet), 
+                                    ifelse(is.na(subspecies_epithet), "", subspecies_epithet))),
+            fullname_new = sapply(correct_name, function(x) x[2L]),
+            ref = authors,
+            prevalence = NA_integer_)
+
+data_dsmz <- data_dsmz %>%
+  # filter: correct name is NULL
+  filter(sapply(correct_name, is.null)) %>% 
+  as_tibble() %>%
+  transmute(fullname = "",
+            kingdom = regio,
+            phylum,
+            class = classis,
+            # order = "", # does not contain order, will add later based on CoL
+            family = familia,
+            genus = ifelse(is.na(genus), "", genus),
+            species = ifelse(is.na(species_epithet), "", species_epithet),
+            subspecies = ifelse(is.na(subspecies_epithet), "", subspecies_epithet),
             rank = ifelse(species == "", "genus", "species"),
-            ref = AUTHORS,
-            species_id = as.character(RECORD_NO),
+            ref = authors,
+            species_id = as.character(pnu_no),
             source = "DSMZ")
 
 # DSMZ only contains genus/(sub)species, try to find taxonomic properties based on genus and data_col
 ref_taxonomy <- data_col %>%
-  filter(genus %in% data_dsmz$genus,
-         kingdom %in% c("Bacteria", "Chromista", "Archaea", "Protozoa", "Fungi"),
-         family != "") %>%
-  mutate(kingdom = factor(kingdom,
-                          # in the left_join following, try Bacteria first, then Chromista, ...
-                          levels = c("Bacteria", "Chromista", "Archaea", "Protozoa", "Fungi"),
-                          ordered = TRUE)) %>% 
+  filter(family %in% data_dsmz$family & family != "") %>% 
   arrange(kingdom) %>% 
-  distinct(genus, .keep_all = TRUE) %>%
-  select(kingdom, phylum, class, order, family, genus)
+  distinct(family, .keep_all = TRUE) %>% 
+  select(family, order)
 
 data_dsmz <- data_dsmz %>%
-  left_join(ref_taxonomy, by = "genus") %>%
-  mutate(kingdom = "Bacteria",
-         phylum = ifelse(is.na(phylum), "(unknown phylum)", phylum),
-         class = ifelse(is.na(class), "(unknown class)", class),
-         order = ifelse(is.na(order), "(unknown order)", order),
-         family = ifelse(is.na(family), "(unknown family)", family),
-  )
+  left_join(ref_taxonomy, by = "family") # NAs will later become "(unknown ...)"
 
 # combine everything
 data_total <- data_col %>%
@@ -119,6 +159,8 @@ data_total <- data_col %>%
 rm(data_col)
 rm(data_dsmz)
 rm(ref_taxonomy)
+rm(data_col.bak)
+rm(data_dsmz.bak)
 
 mo_found_in_NL <- c("Absidia", "Acremonium", "Actinotignum", "Aedes", "Alternaria", "Anaerosalibacter", "Ancylostoma", 
                     "Angiostrongylus", "Anisakis", "Anopheles", "Apophysomyces", "Arachnia", "Ascaris", "Aspergillus", 
@@ -158,8 +200,6 @@ MOs <- data_total %>%
     )
     # or the genus has to be one of the genera we found in our hospitals last decades (Northern Netherlands, 2002-2018)
     | genus %in% mo_found_in_NL
-    # or the taxonomic entry is old - the species was renamed
-    | !is.na(col_id_new)
   ) %>%
   # really no Plantae (e.g. Dracunculus exist both as worm and as plant)
   filter(kingdom != "Plantae") %>% 
@@ -174,59 +214,56 @@ MOs <- MOs %>% bind_rows(data_total %>%
                                   | (family %in% MOs$family & rank == "family")
                                   | (genus %in% MOs$genus & rank == "genus")))
 
-# filter old taxonomic names so only the ones with an existing reference will be kept
-MOs <- MOs %>%
-  filter(is.na(col_id_new) | (!is.na(col_id_new) & col_id_new %in% MOs$col_id))
+get_author_year <- function(ref) {
+  # Only keep first author, e.g. transform 'Smith, Jones, 2011' to 'Smith et al., 2011'
+  
+  authors2 <- iconv(ref, from = "UTF-8", to = "ASCII//TRANSLIT")
+  # remove leading and trailing brackets
+  authors2 <- gsub("^[(](.*)[)]$", "\\1", authors2)
+  # only take part after brackets if there's a name
+  authors2 <- ifelse(grepl(".*[)] [a-zA-Z]+.*", authors2),
+                     gsub(".*[)] (.*)", "\\1", authors2),
+                     authors2)
+  # get year from last 4 digits
+  lastyear = as.integer(gsub(".*([0-9]{4})$", "\\1", authors2))
+  # can never be later than now
+  lastyear = ifelse(lastyear > as.integer(format(Sys.Date(), "%Y")),
+                    NA,
+                    lastyear)
+  # get authors without last year
+  authors <- gsub("(.*)[0-9]{4}$", "\\1", authors2)
+  # remove nonsense characters from names
+  authors <- gsub("[^a-zA-Z,'& -]", "", authors)
+  # remove trailing and leading spaces
+  authors <- trimws(authors)
+  # only keep first author and replace all others by 'et al'
+  authors <- gsub("(,| and| et| &| ex| emend\\.?) .*", " et al.", authors)
+  # et al. always with ending dot
+  authors <- gsub(" et al\\.?", " et al.", authors)
+  authors <- gsub(" ?,$", "", authors)
+  # don't start with 'sensu' or 'ehrenb'
+  authors <- gsub("^(sensu|Ehrenb.?) ", "", authors, ignore.case = TRUE)
+  # no initials, only surname
+  authors <- gsub("^([A-Z]+ )+", "", authors, ignore.case = FALSE)
+  # combine author and year if year is available
+  ref <- ifelse(!is.na(lastyear),
+                paste0(authors, ", ", lastyear),
+                authors)
+  # fix beginning and ending
+  ref <- gsub(", $", "", ref)
+  ref <- gsub("^, ", "", ref)
+  ref <- gsub("^(emend|et al.,?)", "", ref)
+  ref <- trimws(ref)
+  
+  # a lot start with a lowercase character - fix that
+  ref[!grepl("^d[A-Z]", ref)] <- gsub("^([a-z])", "\\U\\1", ref[!grepl("^d[A-Z]", ref)], perl = TRUE)
+  # specific one for the French that are named dOrbigny 
+  ref[grepl("^d[A-Z]", ref)] <- gsub("^d", "d'", ref[grepl("^d[A-Z]", ref)])
+  ref <- gsub(" +", " ", ref)
+  ref
+}
 
-MOs <- MOs %>%
-  # remove text if it contains 'Not assigned' like phylum in viruses
-  mutate_all(~gsub("(Not assigned|\\[homonym\\]|\\[mistake\\])", "", ., ignore.case = TRUE))
-
-MOs <- MOs %>%
-  # Only keep first author, e.g. transform 'Smith, Jones, 2011' to 'Smith et al., 2011':
-  mutate(authors2 = iconv(ref, from = "UTF-8", to = "ASCII//TRANSLIT"),
-         # remove leading and trailing brackets
-         authors2 = gsub("^[(](.*)[)]$", "\\1", authors2),
-         # only take part after brackets if there's a name
-         authors2 = ifelse(grepl(".*[)] [a-zA-Z]+.*", authors2),
-                           gsub(".*[)] (.*)", "\\1", authors2),
-                           authors2),
-         # get year from last 4 digits
-         lastyear = as.integer(gsub(".*([0-9]{4})$", "\\1", authors2)),
-         # can never be later than now
-         lastyear = ifelse(lastyear > as.integer(format(Sys.Date(), "%Y")),
-                           NA,
-                           lastyear),
-         # get authors without last year
-         authors = gsub("(.*)[0-9]{4}$", "\\1", authors2),
-         # remove nonsense characters from names
-         authors = gsub("[^a-zA-Z,'& -]", "", authors),
-         # remove trailing and leading spaces
-         authors = trimws(authors),
-         # only keep first author and replace all others by 'et al'
-         authors = gsub("(,| and| et| &| ex| emend\\.?) .*", " et al.", authors),
-         # et al. always with ending dot
-         authors = gsub(" et al\\.?", " et al.", authors),
-         authors = gsub(" ?,$", "", authors),
-         # don't start with 'sensu' or 'ehrenb'
-         authors = gsub("^(sensu|Ehrenb.?) ", "", authors, ignore.case = TRUE),
-         # no initials, only surname
-         authors = gsub("^([A-Z]+ )+", "", authors, ignore.case = FALSE),
-         # combine author and year if year is available
-         ref = ifelse(!is.na(lastyear),
-                      paste0(authors, ", ", lastyear),
-                      authors),
-         # fix beginning and ending
-         ref = gsub(", $", "", ref),
-         ref = gsub("^, ", "", ref),
-         ref = gsub("^(emend|et al.,?)", "", ref),
-         ref = trimws(ref)
-  )
-# a lot start with a lowercase character - fix that
-MOs$ref[!grepl("^d[A-Z]", MOs$ref)] <- gsub("^([a-z])", "\\U\\1", MOs$ref[!grepl("^d[A-Z]", MOs$ref)], perl = TRUE)
-# specific one for the French that are named dOrbigny 
-MOs$ref[grepl("^d[A-Z]", MOs$ref)] <- gsub("^d", "d'", MOs$ref[grepl("^d[A-Z]", MOs$ref)])
-MOs <- MOs %>% mutate(ref = gsub(" +", " ", ref))
+MOs <- MOs %>% mutate(ref = get_author_year(ref))
 
 # Remove non-ASCII characters (these are not allowed by CRAN)
 MOs <- MOs %>%
@@ -235,53 +272,58 @@ MOs <- MOs %>%
   # remove invalid characters
   mutate_all(~gsub("[\"'`]+", "", .))
 
-# Split old taxonomic names - they refer in the original data to a new `taxonID` with `acceptedNameUsageID`
-MOs.old <- MOs %>%
-  filter(!is.na(col_id_new),
-         ref != "",
-         source != "DSMZ") %>%
-  transmute(col_id,
-            col_id_new,
-            fullname =
-              trimws(
-                gsub("(.*)[(].*", "\\1",
-                     stringr::str_replace(
-                       string = fullname,
-                       pattern = stringr::fixed(authors2),
-                       replacement = "")) %>%
-                  gsub(" (var|f|subsp)[.]", "", .)),
-            ref) %>%
-  filter(!is.na(fullname)) %>%
-  distinct(fullname, .keep_all = TRUE) %>%
-  arrange(col_id)
+# set new fullnames
+MOs <- MOs %>%
+  mutate(fullname = trimws(case_when(rank == "family" ~ family,
+                                     rank == "order" ~ order,
+                                     rank == "class" ~ class,
+                                     rank == "phylum" ~ phylum,
+                                     rank == "kingdom" ~ kingdom,
+                                     TRUE ~ paste(genus, species, subspecies))),
+         fullname = gsub(" (var|f|subsp)[.]", "", fullname)) %>% 
+  # remove text if it contains 'Not assigned', etc.
+  mutate_all(function(x) ifelse(x %like% "(not assigned|homonym|mistake)", NA, x)) %>% 
+  # clean taxonomy
+  mutate(kingdom = ifelse(is.na(kingdom) | trimws(kingdom) == "", "(unknown kingdom)", trimws(kingdom)),
+         phylum = ifelse(is.na(phylum) | trimws(phylum) == "", "(unknown phylum)", trimws(phylum)),
+         class = ifelse(is.na(class) | trimws(class) == "", "(unknown class)", trimws(class)),
+         order = ifelse(is.na(order) | trimws(order) == "", "(unknown order)", trimws(order)),
+         family = ifelse(is.na(family) | trimws(family) == "", "(unknown family)", trimws(family)))
 
-MO.bak <- MOs
+# Split old taxonomic names
+MOs.old <- data_col_old %>% 
+  filter(!gsub(" (var|f|subsp)[.]", "", fullname_new) %in% data_dsmz_old$fullname) %>% 
+  bind_rows(data_dsmz_old) %>%
+  mutate(fullname_new = gsub(" (var|f|subsp)[.]", "", fullname_new),
+         fullname = gsub(" (var|f|subsp)[.]", "", fullname)) %>% 
+  # for cases like Chlamydia pneumoniae -> Chlamydophila pneumoniae -> Chlamydia pneumoniae:
+  filter(!fullname %in% fullname_new &
+           fullname_new %in% MOs$fullname &
+           !is.na(fullname) & 
+           fullname != fullname_new) %>%
+  distinct(fullname, .keep_all = TRUE) %>%
+  arrange(fullname) %>% 
+  mutate(ref = get_author_year(ref))
 
 MOs <- MOs %>%
-  filter(is.na(col_id_new) | source == "DSMZ") %>%
-  transmute(col_id,
-            fullname = trimws(case_when(rank == "family" ~ family,
-                                        rank == "order" ~ order,
-                                        rank == "class" ~ class,
-                                        rank == "phylum" ~ phylum,
-                                        rank == "kingdom" ~ kingdom,
-                                        TRUE ~ paste(genus, species, subspecies))),
+  # remove entries that are old and in MOs.old
+  filter(!fullname %in% MOs.old$fullname) %>% 
+  # mark up
+  transmute(fullname,
             kingdom,
             phylum,
             class,
             order,
             family,
-            genus = gsub(":", "", genus),
+            genus,
             species,
             subspecies,
             rank,
             ref,
-            species_id = gsub(".*/([a-f0-9]+)", "\\1", species_id),
+            species_id = gsub("[^a-zA-Z0-9].*", "", species_id),
             source) %>%
-  #distinct(fullname, .keep_all = TRUE) %>%
-  filter(!grepl("unassigned", fullname, ignore.case = TRUE)) %>% 
-  # prefer DSMZ over CoL, since that's more recent
-  arrange(desc(source)) %>% 
+  # prefer known taxonomy over unknown taxonomy, then DSMZ over CoL (= desc)
+  arrange(desc(kingdom, genus, species, source)) %>%
   distinct(kingdom, fullname, .keep_all = TRUE)
 
 # remove all genera that have no species - they are irrelevant for microbiology and almost all from the kingdom of Animalia
@@ -296,43 +338,45 @@ to_remove <- MOs %>%
 MOs <- MOs %>% filter(!(paste(kingdom, genus) %in% to_remove))
 rm(to_remove)
 
-# add CoL's col_id, source and ref from MOs.bak, for the cases where DSMZ took preference
+# add all mssing genera, families and orders
 MOs <- MOs %>% 
-  mutate(kingdom_fullname = paste(kingdom, fullname)) %>% 
-  left_join(MO.bak %>%
-              filter(is.na(col_id_new), !is.na(col_id)) %>%
-              transmute(col_id, species_id, source, ref, kingdom_fullname = trimws(paste(kingdom, genus, species, subspecies))), 
-            by = "kingdom_fullname",
-            suffix = c("_dsmz", "_col")) %>% 
-  mutate(col_id = col_id_col, 
-         species_id = ifelse(!is.na(species_id_col) & ref_col == ref_dsmz, 
-                             gsub(".*/(.*)$", "\\1", species_id_col), 
-                             species_id_dsmz),
-         source = ifelse(!is.na(species_id_col) & ref_col == ref_dsmz,
-                         source_col, 
-                         source_dsmz), 
-         ref = ifelse(!is.na(species_id_col) & ref_col == ref_dsmz,
-                      ref_col, 
-                      ref_dsmz)) %>% 
-  select(-matches("(_col|_dsmz|kingdom_fullname)"))
+  bind_rows(MOs %>% 
+              arrange(genus, species) %>%
+              distinct(genus, .keep_all = TRUE) %>%
+              filter(rank == "species") %>%
+              mutate(fullname = genus, 
+                     species = "", 
+                     rank = "genus", 
+                     species_id = "",
+                     ref = NA_character_)) %>% 
+  bind_rows(MOs %>% 
+              arrange(family, genus) %>%
+              distinct(family, .keep_all = TRUE) %>%
+              filter(rank == "genus") %>%
+              mutate(fullname = family, 
+                     genus = "",
+                     rank = "family", 
+                     species_id = "",
+                     ref = NA_character_)) %>% 
+  bind_rows(MOs %>% 
+              arrange(order, family) %>%
+              distinct(family, .keep_all = TRUE) %>%
+              filter(rank == "family") %>%
+              mutate(fullname = order, 
+                     family = "",
+                     rank = "order", 
+                     species_id = "",
+                     ref = NA_character_))
 
-
-MOs.old <- MOs.old %>%
-  # remove the ones that are in the MOs data set
-  filter(col_id_new %in% MOs$col_id) %>% 
-  # and remove the ones that have the exact same fullname in the MOs data set, like Moraxella catarrhalis
-  left_join(MOs, by = "fullname") %>%
-  filter(col_id_new != col_id.y | is.na(col_id.y)) %>% 
-  select(col_id = col_id.x, col_id_new, fullname, ref = ref.x)
-
-# remove the records that are in MOs.old
-sum(MOs.old$fullname %in% MOs$fullname)
-MOs <- MOs %>% filter(!fullname %in% MOs.old$fullname)
-sum(MOs.old$fullname %in% MOs$fullname)
+# remove the empty ones
+MOs <- MOs %>%
+  mutate(fullname = gsub(",.*", "", fullname)) %>% 
+  distinct(kingdom, fullname, .keep_all = TRUE) %>% 
+  filter(fullname != "")
 
 # what characters are in the fullnames?
 table(sort(unlist(strsplit(x = paste(MOs$fullname, collapse = ""), split = ""))))
-MOs %>% filter(!fullname %like% "^[a-z ]+$") %>% View()
+MOs %>% filter(!fullname %like% "^[a-z ]+$") %>% arrange(fullname) %>% View()
 
 table(MOs$kingdom, MOs$rank)
 table(AMR::microorganisms$kingdom, AMR::microorganisms$rank)
@@ -436,7 +480,6 @@ MOs <- MOs %>%
   bind_rows(
     # Unknowns
     data.frame(mo = "UNKNOWN",
-               col_id = NA_integer_,
                fullname = "(unknown name)",
                kingdom = "(unknown kingdom)",
                phylum = "(unknown phylum)",
@@ -453,7 +496,6 @@ MOs <- MOs %>%
                prevalence = 1,
                stringsAsFactors = FALSE),
     data.frame(mo = "B_GRAMN",
-               col_id = NA_integer_,
                fullname = "(unknown Gram-negatives)",
                kingdom = "Bacteria",
                phylum = "(unknown phylum)",
@@ -470,7 +512,6 @@ MOs <- MOs %>%
                prevalence = 1,
                stringsAsFactors = FALSE),
     data.frame(mo = "B_GRAMP",
-               col_id = NA_integer_,
                fullname = "(unknown Gram-positives)",
                kingdom = "Bacteria",
                phylum = "(unknown phylum)",
@@ -487,7 +528,6 @@ MOs <- MOs %>%
                prevalence = 1,
                stringsAsFactors = FALSE),
     data.frame(mo = "F_YEAST",
-               col_id = NA_integer_,
                fullname = "(unknown yeast)",
                kingdom = "Fungi",
                phylum = "(unknown phylum)",
@@ -504,7 +544,6 @@ MOs <- MOs %>%
                prevalence = 2,
                stringsAsFactors = FALSE),
     data.frame(mo = "F_FUNGUS",
-               col_id = NA_integer_,
                fullname = "(unknown fungus)",
                kingdom = "Fungi",
                phylum = "(unknown phylum)",
@@ -524,7 +563,6 @@ MOs <- MOs %>%
     MOs %>%
       filter(genus == "Staphylococcus", species == "epidermidis") %>% .[1,] %>%
       mutate(mo = gsub("(.*)_(.*)_.*", "\\1_\\2_CONS", mo),
-             col_id = NA_integer_,
              species = "coagulase-negative",
              fullname = "Coagulase-negative Staphylococcus (CoNS)",
              ref = NA_character_,
@@ -534,7 +572,6 @@ MOs <- MOs %>%
     MOs %>%
       filter(genus == "Staphylococcus", species == "epidermidis") %>% .[1,] %>%
       mutate(mo = gsub("(.*)_(.*)_.*", "\\1_\\2_COPS", mo),
-             col_id = NA_integer_,
              species = "coagulase-positive",
              fullname = "Coagulase-positive Staphylococcus (CoPS)",
              ref = NA_character_,
@@ -558,7 +595,6 @@ MOs <- MOs %>%
     MOs %>%
       filter(genus == "Streptococcus", species == "dysgalactiae") %>% .[1,] %>%
       mutate(mo = gsub("(.*)_(.*)_.*", "\\1_\\2_GRPC", mo),
-             col_id = NA_integer_,
              species = "group C" ,
              fullname = "Streptococcus group C",
              ref = NA_character_,
@@ -567,7 +603,6 @@ MOs <- MOs %>%
     MOs %>%
       filter(genus == "Streptococcus", species == "agalactiae") %>% .[1,] %>%
       mutate(mo = gsub("(.*)_(.*)_.*", "\\1_\\2_GRPD", mo),
-             col_id = NA_integer_,
              species = "group D" ,
              fullname = "Streptococcus group D",
              ref = NA_character_,
@@ -576,7 +611,6 @@ MOs <- MOs %>%
     MOs %>%
       filter(genus == "Streptococcus", species == "agalactiae") %>% .[1,] %>%
       mutate(mo = gsub("(.*)_(.*)_.*", "\\1_\\2_GRPF", mo),
-             col_id = NA_integer_,
              species = "group F" ,
              fullname = "Streptococcus group F",
              ref = NA_character_,
@@ -585,7 +619,6 @@ MOs <- MOs %>%
     MOs %>%
       filter(genus == "Streptococcus", species == "agalactiae") %>% .[1,] %>%
       mutate(mo = gsub("(.*)_(.*)_.*", "\\1_\\2_GRPG", mo),
-             col_id = NA_integer_,
              species = "group G" ,
              fullname = "Streptococcus group G",
              ref = NA_character_,
@@ -594,7 +627,6 @@ MOs <- MOs %>%
     MOs %>%
       filter(genus == "Streptococcus", species == "agalactiae") %>% .[1,] %>%
       mutate(mo = gsub("(.*)_(.*)_.*", "\\1_\\2_GRPH", mo),
-             col_id = NA_integer_,
              species = "group H" ,
              fullname = "Streptococcus group H",
              ref = NA_character_,
@@ -603,7 +635,6 @@ MOs <- MOs %>%
     MOs %>%
       filter(genus == "Streptococcus", species == "agalactiae") %>% .[1,] %>%
       mutate(mo = gsub("(.*)_(.*)_.*", "\\1_\\2_GRPK", mo),
-             col_id = NA_integer_,
              species = "group K" ,
              fullname = "Streptococcus group K",
              ref = NA_character_,
@@ -613,7 +644,6 @@ MOs <- MOs %>%
     MOs %>%
       filter(genus == "Streptococcus", species == "agalactiae") %>% .[1,] %>%
       mutate(mo = gsub("(.*)_(.*)_.*", "\\1_\\2_HAEM", mo),
-             col_id = NA_integer_,
              species = "beta-haemolytic" ,
              fullname = "Beta-haemolytic Streptococcus",
              ref = NA_character_,
@@ -623,7 +653,6 @@ MOs <- MOs %>%
     MOs %>%
       filter(genus == "Streptococcus", species == "agalactiae") %>% .[1,] %>%
       mutate(mo = gsub("(.*)_(.*)_.*", "\\1_\\2_VIRI", mo),
-             col_id = NA_integer_,
              species = "viridans" ,
              fullname = "Viridans Group Streptococcus (VGS)",
              ref = NA_character_,
@@ -633,7 +662,6 @@ MOs <- MOs %>%
     MOs %>%
       filter(genus == "Streptococcus", species == "agalactiae") %>% .[1,] %>%
       mutate(mo = gsub("(.*)_(.*)_.*", "\\1_\\2_MILL", mo),
-             col_id = NA_integer_,
              species = "milleri" ,
              fullname = "Milleri Group Streptococcus (MGS)",
              ref = NA_character_,
@@ -646,7 +674,6 @@ MOs <- MOs %>%
       mutate(mo = paste0(mo, "_HMNS"),
              fullname = paste(fullname, "hominis"),
              species = "hominis",
-             col_id = NA,
              source = "manually added",
              ref = NA_character_,
              species_id = ""),
@@ -654,7 +681,6 @@ MOs <- MOs %>%
     MOs %>%
       filter(fullname == "Dientamoeba") %>%
       mutate(mo = gsub("(.*?)_.*", "\\1_THMNS", mo),
-             col_id = NA,
              fullname = "Trichomonas",
              family = "Trichomonadidae",
              genus = "Trichomonas",
@@ -664,7 +690,6 @@ MOs <- MOs %>%
     MOs %>%
       filter(fullname == "Dientamoeba fragilis") %>%
       mutate(mo = gsub("(.*?)_.*", "\\1_THMNS_VAG", mo),
-             col_id = NA,
              fullname = "Trichomonas vaginalis",
              family = "Trichomonadidae",
              genus = "Trichomonas",
@@ -675,7 +700,6 @@ MOs <- MOs %>%
     MOs %>% # add family as such too
       filter(fullname == "Monocercomonadidae") %>%
       mutate(mo = gsub("(.*)_(.*)_.*", "\\1_\\2_TRCHMNDD", mo),
-             col_id = NA,
              fullname = "Trichomonadidae",
              family = "Trichomonadidae",
              rank = "family",
@@ -760,33 +784,37 @@ new_families <- MOs %>%
   filter(order == "Enterobacterales") %>%
   pull(family) %>%
   unique()
-class(MOs$mo) <- "character"
-MOs <- rbind(MOs %>% filter(!(rank == "family" & fullname %in% new_families)), 
-             AMR::microorganisms %>%
-               select(-snomed) %>% 
-               filter(family == "Enterobacteriaceae" & rank == "family") %>%
-               rbind(., ., ., ., ., ., .) %>% 
-               mutate(fullname = new_families,
-                      source = "manually added",
-                      ref = "Adeolu et al., 2016",
-                      family = fullname, mo = paste0("B_[FAM]_",
-                                                     toupper(abbreviate(new_families,
-                                                                        minlength = 8,
-                                                                        use.classes = TRUE,
-                                                                        method = "both.sides",
-                                                                        strict = FALSE)))))
+
+MOs <- MOs %>% 
+  filter(!(rank == "family" & fullname %in% new_families)) %>% 
+  bind_rows(tibble(mo = paste0("B_[FAM]_",
+                               toupper(abbreviate(new_families,
+                                                  minlength = 8,
+                                                  use.classes = TRUE,
+                                                  method = "both.sides",
+                                                  strict = FALSE))),
+                   fullname = new_families,
+                   kingdom = "Bacteria",
+                   phylum = "Proteobacteria",
+                   class = "Gammaproteobacteria",
+                   order = "Enterobacterales",
+                   family = new_families,
+                   genus = "",
+                   species = "",
+                   subspecies = "",
+                   rank = "family",
+                   ref = "Adeolu et al., 2016",
+                   species_id = NA_character_,
+                   source = "manually added",
+                   prevalence = 1))
+
 MOs[which(MOs$order == "Enterobacteriales"), "order"] <- "Enterobacterales"
 MOs[which(MOs$fullname == "Enterobacteriales"), "fullname"] <- "Enterobacterales"
 
-MOs <- MOs %>%
-  group_by(kingdom) %>%
-  distinct(fullname, .keep_all = TRUE) %>% 
-  ungroup() %>% 
-  filter(fullname != "")
-
 # add prevalence to old taxonomic names
 MOs.old <- MOs.old %>% 
-  left_join(MOs %>% select(col_id, prevalence), by = c("col_id_new" = "col_id"))
+  select(-prevalence) %>% 
+  left_join(MOs %>% select(fullname, prevalence), by = c("fullname_new" = "fullname"))
 
 # everything distinct?
 sum(duplicated(MOs$mo))
@@ -797,18 +825,105 @@ colnames(MOs)
 MOs %>% arrange(fullname) %>% filter(!fullname %in% AMR::microorganisms$fullname) %>% View()
 MOs.old %>% arrange(fullname) %>% filter(!fullname %in% AMR::microorganisms.old$fullname) %>% View()
 # and the ones we lost:
-AMR::microorganisms %>% filter(!fullname %in% MOs$fullname) %>% View() # based on fullname
-AMR::microorganisms %>% filter(!mo %in% MOs$mo) %>% View()             # based on mo
-AMR::microorganisms %>% filter(!mo %in% MOs$mo & !fullname %in% MOs$fullname) %>% View() 
+# AMR::microorganisms %>% filter(!fullname %in% MOs$fullname) %>% View() # based on fullname
+AMR::microorganisms %>% filter(!fullname %in% c(MOs$fullname, MOs.old$fullname)) %>% View() # excluding renamed ones
+# AMR::microorganisms %>% filter(!mo %in% MOs$mo) %>% View()             # based on mo
+# AMR::microorganisms %>% filter(!mo %in% MOs$mo & !fullname %in% MOs$fullname) %>% View() 
 # and these IDs have changed:
 old_new <- MOs %>%
   mutate(kingdom_fullname = paste(kingdom, fullname)) %>% 
-  filter(kingdom_fullname %in% (AMR::microorganisms %>% mutate(kingdom_fullname = paste(kingdom, fullname)) %>% pull(kingdom_fullname))) %>%
-  left_join(AMR::microorganisms %>% mutate(kingdom_fullname = paste(kingdom, fullname)) %>% select(mo, kingdom_fullname), by = "kingdom_fullname", suffix = c("_new", "_old")) %>% 
+  filter(kingdom_fullname %in% (AMR::microorganisms %>% 
+                                  mutate(kingdom_fullname = paste(kingdom, fullname)) %>%
+                                  pull(kingdom_fullname))) %>%
+  left_join(AMR::microorganisms %>% 
+              mutate(kingdom_fullname = paste(kingdom, fullname)) %>%
+              select(mo, kingdom_fullname), by = "kingdom_fullname", suffix = c("_new", "_old")) %>% 
   filter(mo_new != mo_old) %>% 
   select(mo_old, mo_new, everything())
-
 View(old_new)
+
+# set new MO codes as names to existing data sets
+rsi_translation$mo <- mo_name(rsi_translation$mo, language = NULL)
+microorganisms.codes$mo <- mo_name(microorganisms.codes$mo, language = NULL)
+microorganisms.translation <- AMR:::microorganisms.translation %>%
+  bind_rows(tibble(mo_old = AMR:::microorganisms.translation$mo_new, mo_new = mo_old)) %>%
+  filter(!mo_old %in% MOs$mo) %>% 
+  mutate(mo_new = mo_name(mo_new, language = NULL)) %>% 
+  bind_rows(old_new %>% select(mo_old, mo_new)) %>% 
+  distinct(mo_old, .keep_all = TRUE)
+
+# arrange the data sets to save
+MOs <- MOs %>% arrange(fullname)
+MOs.old <- MOs.old %>% arrange(fullname)
+
+# transform
+MOs <- as.data.frame(MOs, stringsAsFactors = FALSE)
+MOs.old <- as.data.frame(MOs.old, stringsAsFactors = FALSE)
+microorganisms.codes <- as.data.frame(microorganisms.codes, stringsAsFactors = FALSE)
+class(MOs$mo) <- c("mo", "character")
+
+# SAVE
+### for same server
+microorganisms <- dataset_UTF8_to_ASCII(MOs)
+microorganisms.old <- dataset_UTF8_to_ASCII(MOs.old)
+### for other server
+saveRDS(MOs, "microorganisms.rds")
+saveRDS(MOs.old, "microorganisms.old.rds")
+saveRDS(microorganisms.codes, "microorganisms.codes.rds")
+
+# on the server, do:
+usethis::use_data(microorganisms, overwrite = TRUE, version = 2)
+usethis::use_data(microorganisms.old, overwrite = TRUE, version = 2)
+rm(microorganisms)
+rm(microorganisms.old)
+
+# load new data sets
+devtools::load_all(".")
+
+# reset previously changed mo codes
+rsi_translation$mo <- as.mo(rsi_translation$mo)
+microorganisms.codes$mo <- as.mo(microorganisms.codes$mo)
+class(microorganisms.codes$mo) <- c("mo", "character")
+microorganisms.translation <- microorganisms.translation %>%
+  left_join(microorganisms.old[, c("fullname", "fullname_new")], # microorganisms.old is now new and loaded
+            by = c("mo_new" = "fullname")) %>%
+  mutate(name = ifelse(!is.na(fullname_new), fullname_new, mo_new)) %>% 
+  left_join(microorganisms[, c("fullname", "mo")],               # as is microorganisms
+            by = c("name" = "fullname")) %>% 
+  select(mo_old, mo_new = mo) %>% 
+  filter(!is.na(mo_old), !is.na(mo_new))
+class(microorganisms.translation$mo_old) <- "character" # no class <mo> since those aren't valid MO codes
+class(microorganisms.translation$mo_new) <- c("mo", "character")
+# save those to the package
+usethis::use_data(rsi_translation, overwrite = TRUE, version = 2)
+usethis::use_data(microorganisms.codes, overwrite = TRUE, version = 2)
+saveRDS(microorganisms.translation, file = "data-raw/microorganisms.translation.rds", version = 2)
+# to save microorganisms.translation internally to the package
+source("data-raw/internals.R")
+
+# load new data sets again
+devtools::load_all(".")
+
+# and check: these codes should not be missing (will otherwise throw a unit test error):
+AMR::microorganisms.codes %>% filter(!mo %in% MOs$mo)
+AMR::rsi_translation %>% filter(!mo %in% MOs$mo)
+AMR:::microorganisms.translation %>% filter(!mo_new %in% MOs$mo)
+
+# update the example_isolates data set
+example_isolates$mo <- as.mo(example_isolates$mo)
+usethis::use_data(example_isolates, overwrite = TRUE)
+
+# Don't forget to add SNOMED codes! (data-raw/snomed.R)
+
+# run the unit tests
+testthat::test_file("tests/testthat/test-data.R")
+testthat::test_file("tests/testthat/test-mo.R")
+testthat::test_file("tests/testthat/test-mo_property.R")
+
+
+
+# OLD CODE ----------------------------------------------------------------
+
 # to keep all the old IDs:
 # MOs <- MOs %>% filter(!mo %in% old_new$mo_new) %>%
 #   rbind(microorganisms %>%
@@ -816,79 +931,32 @@ View(old_new)
 #           select(mo, fullname) %>%
 #           left_join(MOs %>%
 #                       select(-mo), by = "fullname"))
-
-# and these codes are now missing (which will throw a unit test error):
-AMR::microorganisms.codes %>% filter(!mo %in% MOs$mo)
-AMR::rsi_translation %>% filter(!mo %in% MOs$mo)
-AMR:::microorganisms.translation %>% filter(!mo_new %in% MOs$mo) %>% View()
 # this is how to fix it
-microorganisms.codes <- AMR::microorganisms.codes %>% 
-  left_join(MOs %>%
-              mutate(kingdom_fullname = paste(kingdom, fullname)) %>% 
-              left_join(AMR::microorganisms %>%
-                          transmute(mo, kingdom_fullname = paste(kingdom, fullname)),
-                        by = "kingdom_fullname", suffix = c("_new", "_old")) %>%
-              select(mo_old, mo_new),
-            by = c("mo" = "mo_old")) %>% 
-  select(code, mo = mo_new) %>% 
-  filter(!is.na(mo))
-microorganisms.codes %>% filter(!mo %in% MOs$mo)
-# and for microorganisms.translation:
-microorganisms.translation <- AMR:::microorganisms.translation %>% 
-  select(mo = mo_new) %>% 
-  left_join(AMR::microorganisms %>%
-              transmute(mo, kingdom_fullname = paste(kingdom, fullname)),
-            by = "kingdom_fullname", suffix = c("_new", "_old")) %>%
-  select(mo_old, mo_new)
-  left_join(MOs %>%
-              mutate(kingdom_fullname = paste(kingdom, fullname)) %>% 
-              left_join(AMR::microorganisms %>%
-                          transmute(mo, kingdom_fullname = paste(kingdom, fullname)),
-                        by = "kingdom_fullname", suffix = c("_new", "_old")) %>%
-              select(mo_old, mo_new),
-            by = c("mo" = "mo_old")) %>% 
-  select(code, mo = mo_new) %>% 
-  filter(!is.na(mo))
-microorganisms.codes %>% filter(!mo %in% MOs$mo)
-
-# arrange
-MOs <- MOs %>% arrange(fullname)
-MOs.old <- MOs.old %>% arrange(fullname)
-microorganisms.codes <- microorganisms.codes %>% arrange(code)
-
-# transform
-MOs <- as.data.frame(MOs, stringsAsFactors = FALSE)
-MOs.old <- as.data.frame(MOs.old, stringsAsFactors = FALSE)
-microorganisms.codes <- as.data.frame(microorganisms.codes, stringsAsFactors = FALSE)
-class(MOs$mo) <- "mo"
-class(microorganisms.codes$mo) <- "mo"
-MOs$col_id <- as.integer(MOs$col_id)
-MOs.old$col_id <- as.integer(MOs.old$col_id)
-MOs.old$col_id_new <- as.integer(MOs.old$col_id_new)
-
-# SAVE
-### for other server
-saveRDS(MOs, "microorganisms.rds")
-saveRDS(MOs.old, "microorganisms.old.rds")
-saveRDS(microorganisms.codes, "microorganisms.codes.rds")
-### for same server
-microorganisms <- MOs
-microorganisms.old <- MOs.old
-microorganisms.translation <- old_new %>% select(mo_old, mo_new) %>% as.data.frame()
-class(microorganisms.translation$mo_old) <- "mo"
-class(microorganisms.translation$mo_new) <- "mo"
-
-# on the server, do:
-usethis::use_data(microorganisms, overwrite = TRUE, version = 2)
-usethis::use_data(microorganisms.old, overwrite = TRUE, version = 2)
-usethis::use_data(microorganisms.codes, overwrite = TRUE, version = 2)
-saveRDS(microorganisms.translation, file = "data-raw/microorganisms.translation.rds", version = 2) # this one will be covered in data-raw/internals.R
-rm(microorganisms)
-rm(microorganisms.old)
-rm(microorganisms.codes)
-rm(microorganisms.translation)
-devtools::load_all(".")
-
-# TO DO AFTER THIS
-# * Rerun data-raw/reproduction_of_rsi_translation.R
-# * Run unit tests
+# microorganisms.codes <- AMR::microorganisms.codes %>% 
+#   left_join(MOs %>%
+#               mutate(kingdom_fullname = paste(kingdom, fullname)) %>% 
+#               left_join(AMR::microorganisms %>%
+#                           transmute(mo, kingdom_fullname = paste(kingdom, fullname)),
+#                         by = "kingdom_fullname", suffix = c("_new", "_old")) %>%
+#               select(mo_old, mo_new),
+#             by = c("mo" = "mo_old")) %>% 
+#   select(code, mo = mo_new) %>% 
+#   filter(!is.na(mo))
+# microorganisms.codes %>% filter(!mo %in% MOs$mo)
+# # and for microorganisms.translation:
+# microorganisms.translation <- AMR:::microorganisms.translation %>% 
+#   select(mo = mo_new) %>% 
+#   left_join(AMR::microorganisms %>%
+#               transmute(mo, kingdom_fullname = paste(kingdom, fullname)),
+#             by = "kingdom_fullname", suffix = c("_new", "_old")) %>%
+#   select(mo_old, mo_new)
+#   left_join(MOs %>%
+#               mutate(kingdom_fullname = paste(kingdom, fullname)) %>% 
+#               left_join(AMR::microorganisms %>%
+#                           transmute(mo, kingdom_fullname = paste(kingdom, fullname)),
+#                         by = "kingdom_fullname", suffix = c("_new", "_old")) %>%
+#               select(mo_old, mo_new),
+#             by = c("mo" = "mo_old")) %>% 
+#   select(code, mo = mo_new) %>% 
+#   filter(!is.na(mo))
+# microorganisms.codes %>% filter(!mo %in% MOs$mo)

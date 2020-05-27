@@ -36,7 +36,7 @@ The development of this package is part of, related to, or made possible by:
 
 This package can be used for:
 
-  * Reference for the taxonomy of microorganisms, since the package contains all microbial (sub)species from the [Catalogue of Life](http://www.catalogueoflife.org) ([manual](./reference/mo_property.html))
+  * Reference for the taxonomy of microorganisms, since the package contains all microbial (sub)species from the [Catalogue of Life](http://www.catalogueoflife.org) and [List of Prokaryotic names with Standing in Nomenclature](https://lpsn.dsmz.de) ([manual](./reference/mo_property.html))
   * Interpreting raw MIC and disk diffusion values, based on the latest CLSI or EUCAST guidelines ([manual](./reference/as.rsi.html))
   * Determining first isolates to be used for AMR analysis ([manual](./reference/first_isolate.html))
   * Calculating antimicrobial resistance ([tutorial](./articles/AMR.html))
@@ -82,7 +82,7 @@ To find out how to conduct AMR analysis, please [continue reading here to get st
 
 #### Microbial (taxonomic) reference data
 
-This package contains the complete taxonomic tree of almost all ~70,000 microorganisms from the authoritative and comprehensive Catalogue of Life (CoL, [www.catalogueoflife.org](http://www.catalogueoflife.org)), supplemented by data from the Deutsche Sammlung von Mikroorganismen und Zellkulturen (DSMZ, [www.dsmz.de](https://www.dsmz.de)). This supplementation is needed until the [CoL+ project](https://github.com/Sp2000/colplus) is finished, which we await. With `catalogue_of_life_version()` can be checked which version of the CoL is included in this package. 
+This package contains the complete taxonomic tree of almost all ~70,000 microorganisms from the authoritative and comprehensive Catalogue of Life (CoL, [www.catalogueoflife.org](http://www.catalogueoflife.org)), supplemented by data from the List of Prokaryotic names with Standing in Nomenclature (LPSN, [lpsn.dsmz.de](https://lpsn.dsmz.de)). This supplementation is needed until the [CoL+ project](https://github.com/Sp2000/colplus) is finished, which we await. With `catalogue_of_life_version()` can be checked which version of the CoL is included in this package. 
 
 Read more about which data from the Catalogue of Life [in our manual](./reference/catalogue_of_life.html).
 

@@ -3,12 +3,11 @@
 \docType{data}
 \name{microorganisms}
 \alias{microorganisms}
-\title{Data set with 69,447 microorganisms}
+\title{Data set with 67,107 microorganisms}
 \format{
-A \code{\link{data.frame}} with 69,447 observations and 17 variables:
+A \code{\link{data.frame}} with 67,107 observations and 16 variables:
 \itemize{
 \item \code{mo}\cr ID of microorganism as used by this package
-\item \code{col_id}\cr Catalogue of Life ID
 \item \code{fullname}\cr Full name, like \code{"Escherichia coli"}
 \item \code{kingdom}, \code{phylum}, \code{class}, \code{order}, \code{family}, \code{genus}, \code{species}, \code{subspecies}\cr Taxonomic rank of the microorganism
 \item \code{rank}\cr Text of the taxonomic rank of the microorganism, like \code{"species"} or \code{"genus"}
@@ -21,6 +20,8 @@ A \code{\link{data.frame}} with 69,447 observations and 17 variables:
 }
 \source{
 Catalogue of Life: Annual Checklist (public online taxonomic database), \url{http://www.catalogueoflife.org} (check included annual version with \code{\link[=catalogue_of_life_version]{catalogue_of_life_version()}}).
+
+Parte, A.C. (2018). LPSN — List of Prokaryotic names with Standing in Nomenclature (bacterio.net), 20 years on. International Journal of Systematic and Evolutionary Microbiology, 68, 1825-1829; doi: 10.1099/ijsem.0.002786
 
 Leibniz Institute DSMZ-German Collection of Microorganisms and Cell Cultures, Germany, Prokaryotic Nomenclature Up-to-Date, \url{https://www.dsmz.de/services/online-tools/prokaryotic-nomenclature-up-to-date} (check included version with \code{\link[=catalogue_of_life_version]{catalogue_of_life_version()}}).
 }
@@ -39,7 +40,7 @@ Manually added were:
 \item 1 entry of \emph{Blastocystis} (\emph{Blastocystis hominis}), although it officially does not exist (Noel \emph{et al.} 2005, PMID 15634993)
 \item 5 other 'undefined' entries (unknown, unknown Gram negatives, unknown Gram positives, unknown yeast and unknown fungus)
 \item 6 families under the Enterobacterales order, according to Adeolu \emph{et al.} (2016, PMID 27620848), that are not (yet) in the Catalogue of Life
-\item 12,600 species from the DSMZ (Deutsche Sammlung von Mikroorganismen und Zellkulturen) since the DSMZ contain the latest taxonomic information based on recent publications
+\item 7,368 species from the DSMZ (Deutsche Sammlung von Mikroorganismen und Zellkulturen) since the DSMZ contain the latest taxonomic information based on recent publications
 }
 \subsection{Direct download}{
 
