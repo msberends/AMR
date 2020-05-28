@@ -34,7 +34,7 @@ test_that("first isolates work", {
                     col_mo = "mo",
                     info = TRUE),
       na.rm = TRUE),
-    1317)
+    1300)
 
   # first weighted isolates
   ex_iso_with_keyab <- example_isolates
@@ -47,7 +47,7 @@ test_that("first isolates work", {
                       type = "keyantibiotics",
                       info = TRUE),
         na.rm = TRUE)),
-    1413)
+    1396)
 
   # when not ignoring I
   expect_equal(
@@ -62,7 +62,7 @@ test_that("first isolates work", {
                       type = "keyantibiotics",
                       info = TRUE),
         na.rm = TRUE)),
-    1436)
+    1419)
   # when using points
   expect_equal(
     suppressWarnings(
@@ -75,7 +75,7 @@ test_that("first isolates work", {
                       type = "points",
                       info = TRUE),
         na.rm = TRUE)),
-    1417)
+    1400)
 
   # first non-ICU isolates
   expect_equal(
@@ -88,7 +88,7 @@ test_that("first isolates work", {
                     info = TRUE,
                     icu_exclude = TRUE),
       na.rm = TRUE),
-    891)
+    881)
 
   # set 1500 random observations to be of specimen type 'Urine'
   random_rows <- sample(x = 1:2000, size = 1500, replace = FALSE)
@@ -175,19 +175,19 @@ test_that("first isolates work", {
                     col_mo = "mo",
                     info = TRUE),
       na.rm = TRUE),
-    1322)
+    1305)
   
   # unknown MOs
   test_unknown <- example_isolates
   test_unknown$mo <- ifelse(test_unknown$mo == "B_ESCHR_COLI", "UNKNOWN", test_unknown$mo)
   expect_equal(sum(first_isolate(test_unknown, include_unknown = FALSE)), 
-               1062)
+               1045)
   expect_equal(sum(first_isolate(test_unknown, include_unknown = TRUE)),
-               1529)
+               1528)
   
   test_unknown$mo <- ifelse(test_unknown$mo == "UNKNOWN", NA, test_unknown$mo)
   expect_equal(sum(first_isolate(test_unknown)),
-               1062)
+               1045)
   
   # shortcuts
   expect_identical(filter_first_isolate(example_isolates),

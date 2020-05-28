@@ -90,8 +90,28 @@ countries_geometry <- sf::st_as_sf(map('world', plot = FALSE, fill = TRUE)) %>%
          not_antarctica = as.integer(ID != "Antarctica"),
          countries_name = ifelse(included == 1, as.character(ID), NA))
 
+# add countries not in the list
+countries_missing <- unique(ip_tbl$country[!ip_tbl$country %in% countries_geometry$countries_code])
+for (i in seq_len(length(countries_missing))) {
+  countries_geometry <- countries_geometry %>%
+    rbind(countries_geometry %>% 
+            filter(ID == "Netherlands") %>%
+            mutate(ID = countrycode::countrycode(countries_missing[i],
+                                                 origin = 'iso2c', 
+                                                 destination = 'country.name'),
+                   countries_code = countries_missing[i],
+                   included = 1,
+                   not_antarctica = 1,
+                   countries_name = countrycode::countrycode(countries_missing[i],
+                                                             origin = 'iso2c', 
+                                                             destination = 'country.name')))
+}
+
 # how many?
 countries_geometry %>% filter(included == 1) %>% nrow()
+
+countries_geometry$countries_name <- gsub("UK", "United Kingdom", countries_geometry$countries_name, fixed = TRUE)
+countries_geometry$countries_name <- gsub("USA", "United States", countries_geometry$countries_name, fixed = TRUE)
 
 countries_plot <- ggplot(countries_geometry) +
     geom_sf(aes(fill = included, colour = not_antarctica),
@@ -101,9 +121,9 @@ countries_plot <- ggplot(countries_geometry) +
     theme(panel.grid = element_blank(),
           axis.title = element_blank(),
           axis.text = element_blank()) +
-    scale_fill_gradient(low = "white", high = "#CAD6EA", ) +
+    scale_fill_gradient(low = "white", high = "#128f7645") +
     # this makes the border Antarctica turn white (invisible):
-    scale_colour_gradient(low = "white", high = "#81899B")
+    scale_colour_gradient(low = "white", high = "#128f76")
 
 countries_plot_mini <- countries_plot
 countries_plot_mini$data <- countries_plot_mini$data %>% filter(ID != "Antarctica")

@@ -39,7 +39,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.1.0.9019</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.1.0.9021</span>
       </span>
     </div>
 
@@ -186,7 +186,7 @@
       <h1 data-toc-skip>How to conduct principal component analysis (PCA) for AMR</h1>
                         <h4 class="author">Matthijs S. Berends</h4>
             
-            <h4 class="date">25 May 2020</h4>
+            <h4 class="date">28 May 2020</h4>
       
       <small class="dont-index">Source: <a href="https://gitlab.com/msberends/AMR/blob/master/vignettes/PCA.Rmd"><code>vignettes/PCA.Rmd</code></a></small>
       <div class="hidden name"><code>PCA.Rmd</code></div>
@@ -269,14 +269,14 @@
 <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(<span class="no">resistance_data</span>)
 <span class="co"># # A tibble: 6 x 10</span>
 <span class="co"># # Groups:   order [2]</span>
-<span class="co">#   order          genus             AMC   CXM   CTX   CAZ   GEN   TOB   TMP   SXT</span>
-<span class="co">#   &lt;chr&gt;          &lt;chr&gt;           &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;</span>
-<span class="co"># 1 (unknown orde… Micrococcoides     NA    NA    NA    NA    NA    NA    NA    NA</span>
-<span class="co"># 2 Actinomycetal… Actinomyces        NA    NA    NA    NA    NA    NA    NA    NA</span>
-<span class="co"># 3 Actinomycetal… Corynebacterium    NA    NA    NA    NA    NA    NA    NA    NA</span>
-<span class="co"># 4 Actinomycetal… Dermabacter        NA    NA    NA    NA    NA    NA    NA    NA</span>
-<span class="co"># 5 Actinomycetal… Micrococcus        NA    NA    NA    NA    NA    NA    NA    NA</span>
-<span class="co"># 6 Actinomycetal… Propionibacter…    NA    NA    NA    NA    NA    NA    NA    NA</span></pre></body></html></div>
+<span class="co">#   order           genus            AMC   CXM   CTX   CAZ   GEN   TOB   TMP   SXT</span>
+<span class="co">#   &lt;chr&gt;           &lt;chr&gt;          &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;</span>
+<span class="co"># 1 (unknown order) (unknown genu…    NA    NA    NA    NA    NA    NA    NA    NA</span>
+<span class="co"># 2 Actinomycetales Corynebacteri…    NA    NA    NA    NA    NA    NA    NA    NA</span>
+<span class="co"># 3 Actinomycetales Cutibacterium     NA    NA    NA    NA    NA    NA    NA    NA</span>
+<span class="co"># 4 Actinomycetales Dermabacter       NA    NA    NA    NA    NA    NA    NA    NA</span>
+<span class="co"># 5 Actinomycetales Micrococcus       NA    NA    NA    NA    NA    NA    NA    NA</span>
+<span class="co"># 6 Actinomycetales Rothia            NA    NA    NA    NA    NA    NA    NA    NA</span></pre></body></html></div>
 </div>
 <div id="perform-principal-component-analysis" class="section level1">
 <h1 class="hasAnchor">
@@ -288,11 +288,11 @@
 <p>The result can be reviewed with the good old <code><a href="https://rdrr.io/r/base/summary.html">summary()</a></code> function:</p>
 <div class="sourceCode" id="cb4"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span>(<span class="no">pca_result</span>)
 <span class="co"># Importance of components:</span>
-<span class="co">#                           PC1    PC2     PC3     PC4     PC5     PC6       PC7</span>
-<span class="co"># Standard deviation     2.1580 1.6783 0.61282 0.33017 0.20150 0.03190 2.123e-16</span>
-<span class="co"># Proportion of Variance 0.5821 0.3521 0.04694 0.01363 0.00508 0.00013 0.000e+00</span>
-<span class="co"># Cumulative Proportion  0.5821 0.9342 0.98117 0.99480 0.99987 1.00000 1.000e+00</span></pre></body></html></div>
-<p>Good news. The first two components explain a total of 93.4% of the variance (see the PC1 and PC2 values of the <em>Proportion of Variance</em>. We can create a so-called biplot with the base R <code><a href="https://rdrr.io/r/stats/biplot.html">biplot()</a></code> function, to see which antimicrobial resistance per drug explain the difference per microorganism.</p>
+<span class="co">#                          PC1    PC2     PC3     PC4     PC5     PC6       PC7</span>
+<span class="co"># Standard deviation     2.154 1.6809 0.61305 0.33882 0.20755 0.03137 1.602e-16</span>
+<span class="co"># Proportion of Variance 0.580 0.3532 0.04698 0.01435 0.00538 0.00012 0.000e+00</span>
+<span class="co"># Cumulative Proportion  0.580 0.9332 0.98014 0.99449 0.99988 1.00000 1.000e+00</span></pre></body></html></div>
+<p>Good news. The first two components explain a total of 93.3% of the variance (see the PC1 and PC2 values of the <em>Proportion of Variance</em>. We can create a so-called biplot with the base R <code><a href="https://rdrr.io/r/stats/biplot.html">biplot()</a></code> function, to see which antimicrobial resistance per drug explain the difference per microorganism.</p>
 </div>
 <div id="plotting-the-results" class="section level1">
 <h1 class="hasAnchor">

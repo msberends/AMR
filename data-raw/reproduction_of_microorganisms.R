@@ -920,6 +920,22 @@ testthat::test_file("tests/testthat/test-data.R")
 testthat::test_file("tests/testthat/test-mo.R")
 testthat::test_file("tests/testthat/test-mo_property.R")
 
+# edit 2020-05-28
+# Not sure why it now says M. tuberculosis was renamed to M. africanum (B_MYCBC_AFRC), but that's not true
+microorganisms <- microorganisms %>% 
+  bind_rows(microorganisms %>% 
+              filter(mo == "B_MYCBC_AFRC") %>%
+              mutate(mo = "B_MYCBC_TBRC", snomed = list(c("113861009", "113858008")),
+                     ref = "Lehmann et al., 2018",species_id = "778540",
+                     source = "DSMZ", species = "tuberculosis",
+                     fullname = "Mycobacterium tuberculosis")) %>% 
+  arrange(fullname)
+class(microorganisms$mo) <- c("mo", "character")
+microorganisms.old <- microorganisms.old %>% filter(fullname != "Mycobacterium tuberculosis")
+
+usethis::use_data(microorganisms, overwrite = TRUE, version = 2)
+usethis::use_data(microorganisms.old, overwrite = TRUE, version = 2)
+
 
 
 # OLD CODE ----------------------------------------------------------------

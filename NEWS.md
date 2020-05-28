@@ -1,5 +1,5 @@
-# AMR 1.1.0.9020
-## <small>Last updated: 27-May-2020</small>
+# AMR 1.1.0.9021
+## <small>Last updated: 28-May-2020</small>
 
 ### Breaking 
 * Removed code dependency on all other R packages, making this package fully independent of the development process of others. This is a major code change, but will probably not be noticeable by most users.
@@ -14,7 +14,7 @@
 
 ### Changed
 * Taxonomy:
-  * Updated the taxonomy of microorganisms tot May 2020, using the Catalogue of Life (CoL), the Global Biodiversity Information Facility (GBIF) and the List of Prokaryotic names with Standing in Nomenclature (LPSN, hosted by DSMZ since February 2020)
+  * Updated the taxonomy of microorganisms tot May 2020, using the Catalogue of Life (CoL), the Global Biodiversity Information Facility (GBIF) and the List of Prokaryotic names with Standing in Nomenclature (LPSN, hosted by DSMZ since February 2020). **Note:** a taxonomic update may always impact determination of first isolates (using `first_isolate()`), since some bacterial names might be renamed to other genera or other (sub)species. This is expected behaviour.
   * Removed the Catalogue of Life IDs (like 776351), since they now work with a species ID (hexadecimal string)
 * EUCAST rules:
   * The `eucast_rules()` function no longer applies "other" rules at default that are made available by this package (like setting ampicillin = R when ampicillin + enzyme inhibitor = R). The default input value for `rules` is now `c("breakpoints", "expert")` instead of `"all"`, but this can be changed by the user. To return to the old behaviour, set `options(AMR.eucast_rules = "all")`.

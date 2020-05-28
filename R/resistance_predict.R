@@ -304,7 +304,7 @@ rsi_predict <- resistance_predict
 
 #' @exportMethod plot.mic
 #' @export
-#' @importFrom graphics plot axis arrows points
+#' @importFrom graphics axis arrows points
 #' @rdname resistance_predict
 plot.resistance_predict <- function(x, main = paste("Resistance Prediction of", x_name), ...) {
   x_name <- paste0(ab_name(attributes(x)$ab), " (", attributes(x)$ab, ")")
@@ -313,6 +313,12 @@ plot.resistance_predict <- function(x, main = paste("Resistance Prediction of", 
     ylab <- "%R"
   } else {
     ylab <- "%IR"
+  }
+  # get plot() generic; this was moved from the 'graphics' pkg to the 'base' pkg in R 4.0.0
+  if (as.integer(R.Version()$major) >= 4) {
+    plot <- get("plot", envir = asNamespace("base"))
+  } else {
+    plot <- get("plot", envir = asNamespace("graphics"))
   }
   plot(x = x$year,
        y = x$value,

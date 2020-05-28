@@ -563,25 +563,20 @@ summary.rsi <- function(object, ...) {
 
 #' @exportMethod plot.rsi
 #' @export
-#' @importFrom graphics plot text
+#' @importFrom graphics text axis
 #' @noRd
 plot.rsi <- function(x,
                      lwd = 2,
                      ylim = NULL,
                      ylab = "Percentage",
                      xlab = "Antimicrobial Interpretation",
-                     main = paste("Susceptibility Analysis of", deparse(substitute(x))),
+                     main = paste("Resistance Overview of", deparse(substitute(x))),
                      axes = FALSE,
                      ...) {
-  suppressWarnings(
-    data <- data.frame(x = x,
-                       y = 1,
-                       stringsAsFactors = TRUE) %>%
-      group_by(x) %>%
-      summarise(n = sum(y)) %>%
-      filter(!is.na(x)) %>%
-      mutate(s = round((n / sum(n)) * 100, 1))
-  )
+  data <- as.data.frame(table(x), stringsAsFactors = FALSE)
+  colnames(data) <- c("x", "n")
+  data$s <- round((data$n / sum(data$n)) * 100, 1)
+
   if (!"S" %in% data$x) {
     data <- rbind(data, data.frame(x = "S", n = 0, s = 0))
   }
@@ -592,10 +587,17 @@ plot.rsi <- function(x,
     data <- rbind(data, data.frame(x = "R", n = 0, s = 0))
   }
   
+  # don't use as.rsi() here, it will confuse plot()
   data$x <- factor(data$x, levels = c("S", "I", "R"), ordered = TRUE)
   
   ymax <- if_else(max(data$s) > 95, 105, 100)
   
+  # get plot() generic; this was moved from the 'graphics' pkg to the 'base' pkg in R 4.0.0
+  if (as.integer(R.Version()$major) >= 4) {
+    plot <- get("plot", envir = asNamespace("base"))
+  } else {
+    plot <- get("plot", envir = asNamespace("graphics"))
+  }
   plot(x = data$x,
        y = data$s,
        lwd = lwd,
@@ -623,7 +625,7 @@ plot.rsi <- function(x,
 barplot.rsi <- function(height,
                         col = c("chartreuse4", "chartreuse3", "brown3"),
                         xlab = ifelse(beside, "Antimicrobial Interpretation", ""),
-                        main = paste("Antimicrobial resistance of", deparse(substitute(height))),
+                        main = paste("Resistance Overview of", deparse(substitute(height))),
                         ylab = "Frequency",
                         beside = TRUE,
                         axes = beside,
