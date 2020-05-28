@@ -39,7 +39,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.1.0.9016</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.2.0</span>
       </span>
     </div>
 
@@ -186,7 +186,7 @@
       <h1 data-toc-skip>How to apply EUCAST rules</h1>
                         <h4 class="author">Matthijs S. Berends</h4>
             
-            <h4 class="date">21 May 2020</h4>
+            <h4 class="date">28 May 2020</h4>
       
       <small class="dont-index">Source: <a href="https://gitlab.com/msberends/AMR/blob/master/vignettes/EUCAST.Rmd"><code>vignettes/EUCAST.Rmd</code></a></small>
       <div class="hidden name"><code>EUCAST.Rmd</code></div>
@@ -301,6 +301,8 @@
 </tbody>
 </table>
 <div class="sourceCode" id="cb4"><html><body><pre class="r"><span class="fu"><a href="../reference/eucast_rules.html">eucast_rules</a></span>(<span class="no">data</span>)</pre></body></html></div>
+<pre><code># Warning: Not all columns with antimicrobial results are of class &lt;rsi&gt;.
+# Transform eligible columns to class &lt;rsi&gt; on beforehand: your_data %&gt;% mutate_if(is.rsi.eligible, as.rsi)</code></pre>
 <table class="table">
 <thead><tr class="header">
 <th align="left">mo</th>

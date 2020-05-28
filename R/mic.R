@@ -140,28 +140,28 @@ is.mic <- function(x) {
   inherits(x, "mic")
 }
 
-#' @exportMethod as.double.mic
+#' @method as.double mic
 #' @export
 #' @noRd
 as.double.mic <- function(x, ...) {
   as.double(gsub("(<|=|>)+", "", as.character(x)))
 }
 
-#' @exportMethod as.integer.mic
+#' @method as.integer mic
 #' @export
 #' @noRd
 as.integer.mic <- function(x, ...) {
   as.integer(gsub("(<|=|>)+", "", as.character(x)))
 }
 
-#' @exportMethod as.numeric.mic
+#' @method as.numeric mic
 #' @export
 #' @noRd
 as.numeric.mic <- function(x, ...) {
   as.numeric(gsub("(<|=|>)+", "", as.character(x)))
 }
 
-#' @exportMethod droplevels.mic
+#' @method droplevels mic
 #' @export
 #' @noRd
 droplevels.mic <- function(x, exclude = ifelse(anyNA(levels(x)), NULL, NA), ...) {
@@ -170,7 +170,7 @@ droplevels.mic <- function(x, exclude = ifelse(anyNA(levels(x)), NULL, NA), ...)
   x
 }
 
-#' @exportMethod print.mic
+#' @method print mic
 #' @export
 #' @noRd
 print.mic <- function(x, ...) {
@@ -178,7 +178,7 @@ print.mic <- function(x, ...) {
   print(as.character(x), quote = FALSE)
 }
 
-#' @exportMethod summary.mic
+#' @method summary mic
 #' @export
 #' @noRd
 summary.mic <- function(object, ...) {
@@ -194,7 +194,7 @@ summary.mic <- function(object, ...) {
   )
 }
 
-#' @exportMethod plot.mic
+#' @method plot mic
 #' @export
 #' @importFrom graphics barplot axis par
 #' @noRd
@@ -213,7 +213,7 @@ plot.mic <- function(x,
   axis(2, seq(0, max(table(droplevels.factor(x)))))
 }
 
-#' @exportMethod barplot.mic
+#' @method barplot mic
 #' @export
 #' @importFrom graphics barplot axis
 #' @noRd
@@ -232,7 +232,7 @@ barplot.mic <- function(height,
   axis(2, seq(0, max(table(droplevels.factor(height)))))
 }
 
-#' @exportMethod [.mic
+#' @method [ mic
 #' @export
 #' @noRd
 "[.mic" <- function(x, ...) {
@@ -240,7 +240,7 @@ barplot.mic <- function(height,
   attributes(y) <- attributes(x)
   y
 }
-#' @exportMethod [[.mic
+#' @method [[ mic
 #' @export
 #' @noRd
 "[[.mic" <- function(x, ...) {
@@ -248,7 +248,7 @@ barplot.mic <- function(height,
   attributes(y) <- attributes(x)
   y
 }
-#' @exportMethod [<-.mic
+#' @method [<- mic
 #' @export
 #' @noRd
 "[<-.mic" <- function(i, j, ..., value) {
@@ -257,7 +257,7 @@ barplot.mic <- function(height,
   attributes(y) <- attributes(i)
   y
 }
-#' @exportMethod [[<-.mic
+#' @method [[<- mic
 #' @export
 #' @noRd
 "[[<-.mic" <- function(i, j, ..., value) {
@@ -266,7 +266,7 @@ barplot.mic <- function(height,
   attributes(y) <- attributes(i)
   y
 }
-#' @exportMethod c.mic
+#' @method c mic
 #' @export
 #' @noRd
 c.mic <- function(x, ...) {

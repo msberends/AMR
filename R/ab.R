@@ -343,7 +343,7 @@ is.ab <- function(x) {
   inherits(x, "ab")
 }
 
-#' @exportMethod print.ab
+#' @method print ab
 #' @export
 #' @noRd
 print.ab <- function(x, ...) {
@@ -351,7 +351,7 @@ print.ab <- function(x, ...) {
   print(as.character(x), quote = FALSE)
 }
 
-#' @exportMethod as.data.frame.ab
+#' @method as.data.frame ab
 #' @export
 #' @noRd
 as.data.frame.ab <- function(x, ...) {
@@ -362,7 +362,7 @@ as.data.frame.ab <- function(x, ...) {
     as.data.frame.vector(as.ab(x), ...)
   }
 }
-#' @exportMethod [.ab
+#' @method [ ab
 #' @export
 #' @noRd
 "[.ab" <- function(x, ...) {
@@ -370,7 +370,7 @@ as.data.frame.ab <- function(x, ...) {
   attributes(y) <- attributes(x)
   y
 }
-#' @exportMethod [[.ab
+#' @method [[ ab
 #' @export
 #' @noRd
 "[[.ab" <- function(x, ...) {
@@ -378,7 +378,7 @@ as.data.frame.ab <- function(x, ...) {
   attributes(y) <- attributes(x)
   y
 }
-#' @exportMethod [<-.ab
+#' @method [<- ab
 #' @export
 #' @noRd
 "[<-.ab" <- function(i, j, ..., value) {
@@ -386,7 +386,7 @@ as.data.frame.ab <- function(x, ...) {
   attributes(y) <- attributes(i)
   class_integrity_check(y, "antimicrobial code", antibiotics$ab)
 }
-#' @exportMethod [[<-.ab
+#' @method [[<- ab
 #' @export
 #' @noRd
 "[[<-.ab" <- function(i, j, ..., value) {
@@ -394,7 +394,7 @@ as.data.frame.ab <- function(x, ...) {
   attributes(y) <- attributes(i)
   class_integrity_check(y, "antimicrobial code", antibiotics$ab)
 }
-#' @exportMethod c.ab
+#' @method c ab
 #' @export
 #' @noRd
 c.ab <- function(x, ...) {

@@ -107,7 +107,7 @@ bug_drug_combinations <- function(x,
   structure(.Data = out, class = c("bug_drug_combinations", class(x)))
 }
 
-#' @exportMethod format.bug_drug_combinations
+#' @method format bug_drug_combinations
 #' @export
 #' @rdname bug_drug_combinations
 format.bug_drug_combinations <- function(x,
@@ -218,7 +218,7 @@ format.bug_drug_combinations <- function(x,
   y
 }
 
-#' @exportMethod print.bug_drug_combinations
+#' @method print bug_drug_combinations
 #' @export
 print.bug_drug_combinations <- function(x, ...) {
   print(as.data.frame(x, stringsAsFactors = FALSE))

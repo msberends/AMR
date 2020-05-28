@@ -1566,7 +1566,7 @@ format_uncertainty_as_df <- function(uncertainty_level,
   df
 }
 
-#' @exportMethod print.mo
+#' @method print mo
 #' @export
 #' @noRd
 print.mo <- function(x, ...) {
@@ -1577,7 +1577,7 @@ print.mo <- function(x, ...) {
   print.default(x, quote = FALSE)
 }
 
-#' @exportMethod summary.mo
+#' @method summary mo
 #' @export
 #' @noRd
 summary.mo <- function(object, ...) {
@@ -1593,7 +1593,7 @@ summary.mo <- function(object, ...) {
     "#3" = top_3[3])
 }
 
-#' @exportMethod as.data.frame.mo
+#' @method as.data.frame mo
 #' @export
 #' @noRd
 as.data.frame.mo <- function(x, ...) {
@@ -1605,7 +1605,7 @@ as.data.frame.mo <- function(x, ...) {
   }
 }
 
-#' @exportMethod [.mo
+#' @method [ mo
 #' @export
 #' @noRd
 "[.mo" <- function(x, ...) {
@@ -1613,7 +1613,7 @@ as.data.frame.mo <- function(x, ...) {
   attributes(y) <- attributes(x)
   y
 }
-#' @exportMethod [[.mo
+#' @method [[ mo
 #' @export
 #' @noRd
 "[[.mo" <- function(x, ...) {
@@ -1621,7 +1621,7 @@ as.data.frame.mo <- function(x, ...) {
   attributes(y) <- attributes(x)
   y
 }
-#' @exportMethod [<-.mo
+#' @method [<- mo
 #' @export
 #' @noRd
 "[<-.mo" <- function(i, j, ..., value) {
@@ -1631,7 +1631,7 @@ as.data.frame.mo <- function(x, ...) {
   class_integrity_check(y, "microorganism code", c(as.character(microorganisms$mo), 
                                                    as.character(microorganisms.translation$mo_old)))
 }
-#' @exportMethod [[<-.mo
+#' @method [[<- mo
 #' @export
 #' @noRd
 "[[<-.mo" <- function(i, j, ..., value) {
@@ -1641,7 +1641,7 @@ as.data.frame.mo <- function(x, ...) {
   class_integrity_check(y, "microorganism code", c(as.character(microorganisms$mo), 
                                                    as.character(microorganisms.translation$mo_old)))
 }
-#' @exportMethod c.mo
+#' @method c mo
 #' @export
 #' @noRd
 c.mo <- function(x, ...) {
@@ -1668,7 +1668,7 @@ mo_uncertainties <- function() {
             class = c("mo_uncertainties", "data.frame"))
 }
 
-#' @exportMethod print.mo_uncertainties
+#' @method print mo_uncertainties
 #' @export
 #' @noRd
 print.mo_uncertainties <- function(x, ...) {
@@ -1717,7 +1717,7 @@ mo_renamed <- function() {
             class = c("mo_renamed", "data.frame"))
 }
 
-#' @exportMethod print.mo_renamed
+#' @method print mo_renamed
 #' @export
 #' @noRd
 print.mo_renamed <- function(x, ...) {

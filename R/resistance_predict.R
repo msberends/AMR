@@ -302,7 +302,7 @@ resistance_predict <- function(x,
 #' @export
 rsi_predict <- resistance_predict
 
-#' @exportMethod plot.mic
+#' @method plot resistance_predict
 #' @export
 #' @importFrom graphics axis arrows points
 #' @rdname resistance_predict

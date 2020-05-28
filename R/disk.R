@@ -95,7 +95,7 @@ is.disk <- function(x) {
   inherits(x, "disk")
 }
 
-#' @exportMethod print.disk
+#' @method print disk
 #' @export
 #' @noRd
 print.disk <- function(x, ...) {
@@ -103,7 +103,7 @@ print.disk <- function(x, ...) {
   print(as.integer(x), quote = FALSE)
 }
 
-#' @exportMethod [.disk
+#' @method [ disk
 #' @export
 #' @noRd
 "[.disk" <- function(x, ...) {
@@ -111,7 +111,7 @@ print.disk <- function(x, ...) {
   attributes(y) <- attributes(x)
   y
 }
-#' @exportMethod [[.disk
+#' @method [[ disk
 #' @export
 #' @noRd
 "[[.disk" <- function(x, ...) {
@@ -119,7 +119,7 @@ print.disk <- function(x, ...) {
   attributes(y) <- attributes(x)
   y
 }
-#' @exportMethod [<-.disk
+#' @method [<- disk
 #' @export
 #' @noRd
 "[<-.disk" <- function(i, j, ..., value) {
@@ -128,7 +128,7 @@ print.disk <- function(x, ...) {
   attributes(y) <- attributes(i)
   y
 }
-#' @exportMethod [[<-.disk
+#' @method [[<- disk
 #' @export
 #' @noRd
 "[[<-.disk" <- function(i, j, ..., value) {
@@ -137,7 +137,7 @@ print.disk <- function(x, ...) {
   attributes(y) <- attributes(i)
   y
 }
-#' @exportMethod c.disk
+#' @method c disk
 #' @export
 #' @noRd
 c.disk <- function(x, ...) {

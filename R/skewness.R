@@ -27,7 +27,6 @@
 #' @inheritSection lifecycle Questioning lifecycle
 #' @param x a vector of values, a [`matrix`] or a [`data.frame`]
 #' @param na.rm a logical value indicating whether `NA` values should be stripped before the computation proceeds.
-#' @exportMethod skewness
 #' @seealso [kurtosis()]
 #' @rdname skewness
 #' @inheritSection AMR Read more on our website!
@@ -36,7 +35,7 @@ skewness <- function(x, na.rm = FALSE) {
   UseMethod("skewness")
 }
 
-#' @exportMethod skewness.default
+#' @method skewness default
 #' @rdname skewness
 #' @export
 skewness.default <- function(x, na.rm = FALSE) {
@@ -48,14 +47,14 @@ skewness.default <- function(x, na.rm = FALSE) {
   (base::sum((x - base::mean(x))^3) / n) / (base::sum((x - base::mean(x)) ^ 2) / n) ^ (3 / 2)
 }
 
-#' @exportMethod skewness.matrix
+#' @method skewness matrix
 #' @rdname skewness
 #' @export
 skewness.matrix <- function(x, na.rm = FALSE) {
   base::apply(x, 2, skewness.default, na.rm = na.rm)
 }
 
-#' @exportMethod skewness.data.frame
+#' @method skewness data.frame
 #' @rdname skewness
 #' @export
 skewness.data.frame <- function(x, na.rm = FALSE) {

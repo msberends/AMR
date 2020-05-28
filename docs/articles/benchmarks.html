@@ -39,7 +39,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.1.0.9021</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.2.0</span>
       </span>
     </div>
 
@@ -221,21 +221,21 @@
   <span class="kw">times</span> <span class="kw">=</span> <span class="fl">10</span>)
 <span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span>(<span class="no">S.aureus</span>, <span class="kw">unit</span> <span class="kw">=</span> <span class="st">"ms"</span>, <span class="kw">signif</span> <span class="kw">=</span> <span class="fl">2</span>)
 <span class="co"># Unit: milliseconds</span>
-<span class="co">#                                   expr   min    lq  mean median    uq  max</span>
-<span class="co">#                           as.mo("sau")   8.2   9.7  22.0   14.0  38.0   43</span>
-<span class="co">#                          as.mo("stau") 130.0 130.0 160.0  170.0 170.0  190</span>
-<span class="co">#                          as.mo("STAU") 120.0 130.0 150.0  150.0 180.0  190</span>
-<span class="co">#                        as.mo("staaur")   8.3   9.1  13.0    9.4  10.0   40</span>
-<span class="co">#                        as.mo("STAAUR")   8.0   9.3  15.0   10.0  13.0   35</span>
-<span class="co">#                     as.mo("S. aureus")   9.3  11.0  26.0   14.0  15.0  120</span>
-<span class="co">#                      as.mo("S aureus")  10.0  12.0  22.0   13.0  38.0   49</span>
-<span class="co">#         as.mo("Staphylococcus aureus")   6.6   7.7   8.5    8.6   9.1   10</span>
-<span class="co">#  as.mo("Staphylococcus aureus (MRSA)") 820.0 860.0 890.0  880.0 930.0 1000</span>
-<span class="co">#       as.mo("Sthafilokkockus aaureuz") 350.0 350.0 370.0  370.0 370.0  380</span>
-<span class="co">#                          as.mo("MRSA")   7.8   9.1  13.0   10.0  11.0   42</span>
-<span class="co">#                          as.mo("VISA")  11.0  12.0  19.0   13.0  15.0   47</span>
-<span class="co">#                          as.mo("VRSA")  11.0  12.0  21.0   14.0  39.0   42</span>
-<span class="co">#                        as.mo(22242419) 130.0 140.0 150.0  140.0 150.0  190</span>
+<span class="co">#                                   expr   min    lq  mean median    uq    max</span>
+<span class="co">#                           as.mo("sau")   8.5  11.0  17.0   12.0  12.0   43.0</span>
+<span class="co">#                          as.mo("stau") 120.0 130.0 150.0  140.0 160.0  180.0</span>
+<span class="co">#                          as.mo("STAU") 130.0 140.0 150.0  150.0 160.0  170.0</span>
+<span class="co">#                        as.mo("staaur")   7.7   9.1  13.0   11.0  12.0   38.0</span>
+<span class="co">#                        as.mo("STAAUR")   8.3   9.3  15.0   10.0  11.0   37.0</span>
+<span class="co">#                     as.mo("S. aureus")  11.0  12.0  18.0   13.0  14.0   41.0</span>
+<span class="co">#                      as.mo("S aureus")   8.8  11.0  17.0   12.0  13.0   41.0</span>
+<span class="co">#         as.mo("Staphylococcus aureus")   6.4   6.6   7.4    7.6   7.8    9.1</span>
+<span class="co">#  as.mo("Staphylococcus aureus (MRSA)") 810.0 870.0 890.0  890.0 900.0 1000.0</span>
+<span class="co">#       as.mo("Sthafilokkockus aaureuz") 320.0 340.0 370.0  350.0 400.0  490.0</span>
+<span class="co">#                          as.mo("MRSA")   9.2  10.0  13.0   11.0  12.0   37.0</span>
+<span class="co">#                          as.mo("VISA")  12.0  12.0  22.0   13.0  43.0   44.0</span>
+<span class="co">#                          as.mo("VRSA")  11.0  13.0  21.0   14.0  38.0   41.0</span>
+<span class="co">#                        as.mo(22242419) 130.0 140.0 150.0  140.0 170.0  200.0</span>
 <span class="co">#  neval</span>
 <span class="co">#     10</span>
 <span class="co">#     10</span>
@@ -262,12 +262,12 @@
                              <span class="kw">times</span> <span class="kw">=</span> <span class="fl">10</span>)
 <span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span>(<span class="no">M.semesiae</span>, <span class="kw">unit</span> <span class="kw">=</span> <span class="st">"ms"</span>, <span class="kw">signif</span> <span class="kw">=</span> <span class="fl">4</span>)
 <span class="co"># Unit: milliseconds</span>
-<span class="co">#                              expr     min      lq    mean  median     uq    max</span>
-<span class="co">#                   as.mo("metsem") 135.600 143.500 157.800 153.400 175.70 191.40</span>
-<span class="co">#                   as.mo("METSEM") 139.700 140.800 158.100 148.300 176.10 188.50</span>
-<span class="co">#              as.mo("M. semesiae")   9.010   9.317  13.280   9.802  12.51  40.46</span>
-<span class="co">#             as.mo("M.  semesiae")   9.155   9.321   9.665   9.557  10.07  10.37</span>
-<span class="co">#  as.mo("Methanosarcina semesiae")   6.737   7.160  16.020   8.413  33.21  37.10</span>
+<span class="co">#                              expr     min      lq   mean  median      uq    max</span>
+<span class="co">#                   as.mo("metsem") 143.400 146.300 156.10 155.400 164.900 176.40</span>
+<span class="co">#                   as.mo("METSEM") 141.600 146.900 167.00 170.700 185.000 188.00</span>
+<span class="co">#              as.mo("M. semesiae")   9.665   9.879  16.50  10.090  11.960  44.29</span>
+<span class="co">#             as.mo("M.  semesiae")  10.000  10.080  14.46  11.660  13.140  42.01</span>
+<span class="co">#  as.mo("Methanosarcina semesiae")   7.161   7.389  10.40   7.542   9.294  33.00</span>
 <span class="co">#  neval</span>
 <span class="co">#     10</span>
 <span class="co">#     10</span>
@@ -307,7 +307,7 @@
 <span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span>(<span class="no">run_it</span>, <span class="kw">unit</span> <span class="kw">=</span> <span class="st">"ms"</span>, <span class="kw">signif</span> <span class="kw">=</span> <span class="fl">3</span>)
 <span class="co"># Unit: milliseconds</span>
 <span class="co">#        expr  min   lq mean median   uq  max neval</span>
-<span class="co">#  mo_name(x) 1670 1740 1800   1790 1880 1900    10</span></pre></body></html></div>
+<span class="co">#  mo_name(x) 1650 1730 1790   1790 1840 1900    10</span></pre></body></html></div>
 <p>So transforming 500,000 values (!!) of 50 unique values only takes 1.79 seconds. You only lose time on your unique input values.</p>
 </div>
 <div id="precalculated-results" class="section level3">
@@ -320,10 +320,10 @@
                          <span class="kw">times</span> <span class="kw">=</span> <span class="fl">10</span>)
 <span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span>(<span class="no">run_it</span>, <span class="kw">unit</span> <span class="kw">=</span> <span class="st">"ms"</span>, <span class="kw">signif</span> <span class="kw">=</span> <span class="fl">3</span>)
 <span class="co"># Unit: milliseconds</span>
-<span class="co">#  expr   min     lq   mean median     uq    max neval</span>
-<span class="co">#     A 5.630  5.900  6.420  6.480  6.910  7.120    10</span>
-<span class="co">#     B 9.940 11.300 15.000 11.800 12.300 45.300    10</span>
-<span class="co">#     C 0.247  0.277  0.315  0.295  0.358  0.386    10</span></pre></body></html></div>
+<span class="co">#  expr   min     lq  mean median     uq    max neval</span>
+<span class="co">#     A 5.680  5.820  9.61   6.36  6.850 39.500    10</span>
+<span class="co">#     B 9.790 10.000 10.60  10.40 10.900 11.900    10</span>
+<span class="co">#     C 0.229  0.259  0.27   0.27  0.286  0.311    10</span></pre></body></html></div>
 <p>So going from <code><a href="../reference/mo_property.html">mo_name("Staphylococcus aureus")</a></code> to <code>"Staphylococcus aureus"</code> takes 0.0003 seconds - it doesn’t even start calculating <em>if the result would be the same as the expected resulting value</em>. That goes for all helper functions:</p>
 <div class="sourceCode" id="cb6"><html><body><pre class="r"><span class="no">run_it</span> <span class="kw">&lt;-</span> <span class="fu">microbenchmark</span>(<span class="kw">A</span> <span class="kw">=</span> <span class="fu"><a href="../reference/mo_property.html">mo_species</a></span>(<span class="st">"aureus"</span>),
                          <span class="kw">B</span> <span class="kw">=</span> <span class="fu"><a href="../reference/mo_property.html">mo_genus</a></span>(<span class="st">"Staphylococcus"</span>),
@@ -337,14 +337,14 @@
 <span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span>(<span class="no">run_it</span>, <span class="kw">unit</span> <span class="kw">=</span> <span class="st">"ms"</span>, <span class="kw">signif</span> <span class="kw">=</span> <span class="fl">3</span>)
 <span class="co"># Unit: milliseconds</span>
 <span class="co">#  expr   min    lq  mean median    uq   max neval</span>
-<span class="co">#     A 0.207 0.214 0.241  0.218 0.240 0.412    10</span>
-<span class="co">#     B 0.178 0.207 0.215  0.211 0.219 0.272    10</span>
-<span class="co">#     C 0.218 0.221 0.234  0.233 0.240 0.264    10</span>
-<span class="co">#     D 0.203 0.211 0.221  0.214 0.218 0.290    10</span>
-<span class="co">#     E 0.208 0.209 0.223  0.214 0.227 0.279    10</span>
-<span class="co">#     F 0.172 0.203 0.222  0.212 0.222 0.302    10</span>
-<span class="co">#     G 0.200 0.202 0.212  0.208 0.213 0.253    10</span>
-<span class="co">#     H 0.193 0.194 0.208  0.200 0.215 0.261    10</span></pre></body></html></div>
+<span class="co">#     A 0.209 0.221 0.236  0.225 0.244 0.311    10</span>
+<span class="co">#     B 0.197 0.201 0.215  0.212 0.222 0.266    10</span>
+<span class="co">#     C 0.205 0.224 0.243  0.229 0.242 0.383    10</span>
+<span class="co">#     D 0.199 0.207 0.216  0.211 0.214 0.270    10</span>
+<span class="co">#     E 0.196 0.206 0.218  0.215 0.221 0.270    10</span>
+<span class="co">#     F 0.188 0.197 0.212  0.210 0.216 0.269    10</span>
+<span class="co">#     G 0.195 0.198 0.213  0.203 0.215 0.299    10</span>
+<span class="co">#     H 0.184 0.193 0.205  0.201 0.207 0.252    10</span></pre></body></html></div>
 <p>Of course, when running <code><a href="../reference/mo_property.html">mo_phylum("Firmicutes")</a></code> the function has zero knowledge about the actual microorganism, namely <em>S. aureus</em>. But since the result would be <code>"Firmicutes"</code> anyway, there is no point in calculating the result. And because this package ‘knows’ all phyla of all known bacteria (according to the Catalogue of Life), it can just return the initial value immediately.</p>
 </div>
 <div id="results-in-other-languages" class="section level3">
@@ -370,14 +370,14 @@
                          <span class="kw">times</span> <span class="kw">=</span> <span class="fl">100</span>)
 <span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span>(<span class="no">run_it</span>, <span class="kw">unit</span> <span class="kw">=</span> <span class="st">"ms"</span>, <span class="kw">signif</span> <span class="kw">=</span> <span class="fl">4</span>)
 <span class="co"># Unit: milliseconds</span>
-<span class="co">#  expr   min    lq  mean median    uq    max neval</span>
-<span class="co">#    en 11.24 11.97 16.09  13.31 13.71  48.40   100</span>
-<span class="co">#    de 12.18 12.84 19.63  14.33 15.00  55.14   100</span>
-<span class="co">#    nl 16.24 17.07 24.36  18.61 19.83  55.70   100</span>
-<span class="co">#    es 12.23 12.77 17.38  13.71 14.72  51.57   100</span>
-<span class="co">#    it 12.15 13.01 18.55  14.03 14.81 146.90   100</span>
-<span class="co">#    fr 12.23 13.08 16.81  14.30 14.86  49.30   100</span>
-<span class="co">#    pt 12.30 12.85 18.13  14.24 14.88  49.70   100</span></pre></body></html></div>
+<span class="co">#  expr    min    lq  mean median    uq   max neval</span>
+<span class="co">#    en  9.303 11.59 14.90  12.40 13.63 45.92   100</span>
+<span class="co">#    de 10.080 12.39 15.77  13.11 14.45 46.27   100</span>
+<span class="co">#    nl 13.200 16.26 20.88  17.80 19.52 49.93   100</span>
+<span class="co">#    es  9.957 12.23 15.57  13.12 14.59 51.99   100</span>
+<span class="co">#    it 10.210 12.44 19.02  13.34 14.74 52.96   100</span>
+<span class="co">#    fr 10.040 12.40 18.90  13.26 15.07 54.40   100</span>
+<span class="co">#    pt 10.450 12.67 16.91  13.46 14.68 51.47   100</span></pre></body></html></div>
 <p>Currently supported are German, Dutch, Spanish, Italian, French and Portuguese.</p>
 </div>
   </div>

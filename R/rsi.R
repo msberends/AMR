@@ -529,7 +529,7 @@ is.rsi.eligible <- function(x, threshold = 0.05) {
   }
 }
 
-#' @exportMethod print.rsi
+#' @method print rsi
 #' @export
 #' @noRd
 print.rsi <- function(x, ...) {
@@ -537,7 +537,7 @@ print.rsi <- function(x, ...) {
   print(as.character(x), quote = FALSE)
 }
 
-#' @exportMethod droplevels.rsi
+#' @method droplevels rsi
 #' @export
 #' @noRd
 droplevels.rsi <- function(x, exclude = if (anyNA(levels(x))) NULL else NA, ...) {
@@ -546,7 +546,7 @@ droplevels.rsi <- function(x, exclude = if (anyNA(levels(x))) NULL else NA, ...)
   x
 }
 
-#' @exportMethod summary.rsi
+#' @method summary rsi
 #' @export
 #' @noRd
 summary.rsi <- function(object, ...) {
@@ -561,7 +561,7 @@ summary.rsi <- function(object, ...) {
   )
 }
 
-#' @exportMethod plot.rsi
+#' @method plot rsi
 #' @export
 #' @importFrom graphics text axis
 #' @noRd
@@ -618,7 +618,7 @@ plot.rsi <- function(x,
 }
 
 
-#' @exportMethod barplot.rsi
+#' @method barplot rsi
 #' @export
 #' @importFrom graphics barplot axis par
 #' @noRd
@@ -652,7 +652,7 @@ barplot.rsi <- function(height,
   }
 }
 
-#' @exportMethod [<-.rsi
+#' @method [<- rsi
 #' @export
 #' @noRd
 "[<-.rsi" <- function(i, j, ..., value) {
@@ -661,7 +661,7 @@ barplot.rsi <- function(height,
   attributes(y) <- attributes(i)
   y
 }
-#' @exportMethod [[<-.rsi
+#' @method [[<- rsi
 #' @export
 #' @noRd
 "[[<-.rsi" <- function(i, j, ..., value) {
@@ -670,7 +670,7 @@ barplot.rsi <- function(height,
   attributes(y) <- attributes(i)
   y
 }
-#' @exportMethod c.rsi
+#' @method c rsi
 #' @export
 #' @noRd
 c.rsi <- function(x, ...) {

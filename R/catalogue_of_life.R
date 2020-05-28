@@ -107,7 +107,7 @@ catalogue_of_life_version <- function() {
             class = c("catalogue_of_life_version", "list"))
 }
 
-#' @exportMethod print.catalogue_of_life_version
+#' @method print catalogue_of_life_version
 #' @export
 #' @noRd
 print.catalogue_of_life_version <- function(x, ...) {
