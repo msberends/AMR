@@ -70,6 +70,14 @@ filter_ab_class <- function(x,
   
   check_dataset_integrity()
   
+  if (!is.data.frame(x)) {
+    stop("`x` must be a data frame.", call. = FALSE)
+  }
+  
+  # save to return later
+  x_class <- class(x)
+  x <- as.data.frame(x, stringsAsFactors = FALSE)
+  
   scope <- scope[1L]
   if (is.null(result)) {
     result <- c("S", "I", "R")
@@ -116,13 +124,16 @@ filter_ab_class <- function(x,
     }
     message(font_blue(paste0("Filtering on ", ab_group, ": ", scope,
                              paste0(font_bold(paste0("`", vars_df, "`"), collapse = NULL), collapse = scope_txt), operator, toString(result))))
-    x[as.logical(by(x, seq_len(nrow(x)), function(row) scope_fn(unlist(row[, vars_df]) %in% result, na.rm = TRUE))), , drop = FALSE]
+    filtered <<- as.logical(by(x, seq_len(nrow(x)),
+                              function(row) scope_fn(unlist(row[, vars_df]) %in% result, na.rm = TRUE)))
+    x <- x[which(filtered), , drop = FALSE]
   } else {
     message(font_blue(paste0("NOTE: no antimicrobial agents of class ", ab_group, 
                              " (such as ", find_ab_names(ab_group), 
                              ") found, data left unchanged.")))
-    x
   }
+  class(x) <- x_class
+  x
 }
 
 #' @rdname filter_ab_class

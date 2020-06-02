@@ -1,5 +1,11 @@
-# AMR 1.2.0
+# AMR 1.2.0.9000
+## <small>Last updated: 02-Jun-2020</small>
 
+### Changed
+* Fixed a bug where `eucast_rules()` would not work on a tibble when the `tibble` or `dplyr` package was loaded
+* Fixed a bug where `as.ab()` would return an error on invalid input values
+
+# AMR 1.2.0
 
 ### Breaking 
 * Removed code dependency on all other R packages, making this package fully independent of the development process of others. This is a major code change, but will probably not be noticeable by most users.

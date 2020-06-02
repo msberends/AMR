@@ -518,6 +518,8 @@ eucast_rules <- function(x,
   
   # save original table
   x_original <- x
+  x_original_attr <- attributes(x)
+  x_original <- as.data.frame(x_original, stringsAsFactors = FALSE) # no tibbles, data.tables, etc.
   
   # join to microorganisms data set
   x <- as.data.frame(x, stringsAsFactors = FALSE)
@@ -922,6 +924,8 @@ eucast_rules <- function(x,
     rownames(verbose_info) <- NULL
     verbose_info
   } else {
+    # reset original attributes
+    attributes(x_original) <- x_original_attr
     x_original
   }
 }

@@ -103,21 +103,20 @@ as.ab <- function(x, ...) {
   x <- unique(x_bak_clean)
   x_new <- rep(NA_character_, length(x))
   x_unknown <- character(0)
-
+  
   for (i in seq_len(length(x))) {
     if (is.na(x[i]) | is.null(x[i])) {
       next
     }
-    if (identical(x[i], "")) {
+    if (identical(x[i], "") |
+        # no short names:
+        nchar(x[i]) <= 2 |
+        # prevent "bacteria" from coercing to TMP, since Bacterial is a brand name of it:
+        identical(tolower(x[i]), "bacteria")) {
       x_unknown <- c(x_unknown, x_bak[x[i] == x_bak_clean][1])
       next
     }
-    # prevent "bacteria" from coercing to TMP, since Bacterial is a brand name of it
-    if (identical(tolower(x[i]), "bacteria")) {
-      x_unknown <- c(x_unknown, x_bak[x[i] == x_bak_clean][1])
-      next
-    }
-
+    
     # exact AB code
     found <- antibiotics[which(antibiotics$ab == toupper(x[i])), ]$ab
     if (length(found) > 0) {
@@ -217,7 +216,7 @@ as.ab <- function(x, ...) {
     x_spelling <- gsub("(.)\\1+", "\\1+", x_spelling)
     # replace spaces and slashes with a possibility on both
     x_spelling <- gsub("[ /]", "( .*|.*/)", x_spelling)
-  
+
     # try if name starts with it
     found <- antibiotics[which(antibiotics$name %like% paste0("^", x_spelling)), ]$ab
     if (length(found) > 0) {
@@ -303,7 +302,7 @@ as.ab <- function(x, ...) {
         next
       }
     }
-    
+
     # not found
     x_unknown <- c(x_unknown, x_bak[x[i] == x_bak_clean][1])
   }
