@@ -57,7 +57,7 @@ inner_join_microorganisms <- function(x, by = NULL, suffix = c("2", ""), ...) {
   check_dataset_integrity()
   check_groups_before_join(x, "inner_join_microorganisms")
   checked <- joins_check_df(x, by)
-  x_class <- class(x)
+  x_class <- get_prejoined_class(x)
   x <- checked$x
   by <- checked$by
   join <- suppressWarnings(
@@ -76,7 +76,7 @@ left_join_microorganisms <- function(x, by = NULL, suffix = c("2", ""), ...) {
   check_dataset_integrity()
   check_groups_before_join(x, "left_join_microorganisms")
   checked <- joins_check_df(x, by)
-  x_class <- class(x)
+  x_class <- get_prejoined_class(x)
   x <- checked$x
   by <- checked$by
   join <- suppressWarnings(
@@ -95,7 +95,7 @@ right_join_microorganisms <- function(x, by = NULL, suffix = c("2", ""), ...) {
   check_dataset_integrity()
   check_groups_before_join(x, "right_join_microorganisms")
   checked <- joins_check_df(x, by)
-  x_class <- class(x)
+  x_class <- get_prejoined_class(x)
   x <- checked$x
   by <- checked$by
   join <- suppressWarnings(
@@ -114,7 +114,7 @@ full_join_microorganisms <- function(x, by = NULL, suffix = c("2", ""), ...) {
   check_dataset_integrity()
   check_groups_before_join(x, "full_join_microorganisms")
   checked <- joins_check_df(x, by)
-  x_class <- class(x)
+  x_class <- get_prejoined_class(x)
   x <- checked$x
   by <- checked$by
   join <- suppressWarnings(
@@ -132,7 +132,7 @@ full_join_microorganisms <- function(x, by = NULL, suffix = c("2", ""), ...) {
 semi_join_microorganisms <- function(x, by = NULL, ...) {
   check_dataset_integrity()
   check_groups_before_join(x, "semi_join_microorganisms")
-  x_class <- class(x)
+  x_class <- get_prejoined_class(x)
   checked <- joins_check_df(x, by)
   x <- checked$x
   by <- checked$by
@@ -149,7 +149,7 @@ anti_join_microorganisms <- function(x, by = NULL, ...) {
   check_dataset_integrity()
   check_groups_before_join(x, "anti_join_microorganisms")
   checked <- joins_check_df(x, by)
-  x_class <- class(x)
+  x_class <- get_prejoined_class(x)
   x <- checked$x
   by <- checked$by
   join <- suppressWarnings(
@@ -188,6 +188,14 @@ joins_check_df <- function(x, by) {
   }
   list(x = x,
        by = joinby)
+}
+
+get_prejoined_class <- function(x) {
+  if (is.data.frame(x)) {
+    class(x)
+  } else {
+    "data.frame"
+  }
 }
 
 check_groups_before_join <- function(x, fn) {
