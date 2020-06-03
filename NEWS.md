@@ -1,9 +1,12 @@
-# AMR 1.2.0.9000
-## <small>Last updated: 02-Jun-2020</small>
+# AMR 1.2.0.9001
+## <small>Last updated: 03-Jun-2020</small>
 
 ### Changed
 * Fixed a bug where `eucast_rules()` would not work on a tibble when the `tibble` or `dplyr` package was loaded
+* All `*_join_microorganisms()` functions now return the original data class (e.g. tibbles and data.tables)
 * Fixed a bug where `as.ab()` would return an error on invalid input values
+* Added function `filter_penicillins()` to filter isolates on a specific result in any column with a name in the antimicrobial 'penicillins' class (more specific: ATC subgroup *Beta-lactam antibacterials, penicillins*)
+* Added official antimicrobial names to all `filter_ab_class()` functions, such as `filter_aminoglycosides()`
 
 # AMR 1.2.0
 
@@ -20,7 +23,7 @@
 
 ### Changed
 * Taxonomy:
-  * Updated the taxonomy of microorganisms tot May 2020, using the Catalogue of Life (CoL), the Global Biodiversity Information Facility (GBIF) and the List of Prokaryotic names with Standing in Nomenclature (LPSN, hosted by DSMZ since February 2020). **Note:** a taxonomic update may always impact determination of first isolates (using `first_isolate()`), since some bacterial names might be renamed to other genera or other (sub)species. This is expected behaviour.
+  * Updated the taxonomy of microorganisms to May 2020, using the Catalogue of Life (CoL), the Global Biodiversity Information Facility (GBIF) and the List of Prokaryotic names with Standing in Nomenclature (LPSN, hosted by DSMZ since February 2020). **Note:** a taxonomic update may always impact determination of first isolates (using `first_isolate()`), since some bacterial names might be renamed to other genera or other (sub)species. This is expected behaviour.
   * Removed the Catalogue of Life IDs (like 776351), since they now work with a species ID (hexadecimal string)
 * EUCAST rules:
   * The `eucast_rules()` function no longer applies "other" rules at default that are made available by this package (like setting ampicillin = R when ampicillin + enzyme inhibitor = R). The default input value for `rules` is now `c("breakpoints", "expert")` instead of `"all"`, but this can be changed by the user. To return to the old behaviour, set `options(AMR.eucast_rules = "all")`.

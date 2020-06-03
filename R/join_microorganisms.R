@@ -55,7 +55,9 @@
 #' }
 inner_join_microorganisms <- function(x, by = NULL, suffix = c("2", ""), ...) {
   check_dataset_integrity()
+  check_groups_before_join(x, "inner_join_microorganisms")
   checked <- joins_check_df(x, by)
+  x_class <- class(x)
   x <- checked$x
   by <- checked$by
   join <- suppressWarnings(
@@ -64,6 +66,7 @@ inner_join_microorganisms <- function(x, by = NULL, suffix = c("2", ""), ...) {
   if (NROW(join) > NROW(x)) {
     warning("The newly joined tbl contains ", nrow(join) - nrow(x), " rows more that its original.")
   }
+  class(join) <- x_class
   join
 }
 
@@ -71,7 +74,9 @@ inner_join_microorganisms <- function(x, by = NULL, suffix = c("2", ""), ...) {
 #' @export
 left_join_microorganisms <- function(x, by = NULL, suffix = c("2", ""), ...) {
   check_dataset_integrity()
+  check_groups_before_join(x, "left_join_microorganisms")
   checked <- joins_check_df(x, by)
+  x_class <- class(x)
   x <- checked$x
   by <- checked$by
   join <- suppressWarnings(
@@ -80,6 +85,7 @@ left_join_microorganisms <- function(x, by = NULL, suffix = c("2", ""), ...) {
   if (NROW(join) > NROW(x)) {
     warning("The newly joined tbl contains ", nrow(join) - nrow(x), " rows more that its original.")
   }
+  class(join) <- x_class
   join
 }
 
@@ -87,7 +93,9 @@ left_join_microorganisms <- function(x, by = NULL, suffix = c("2", ""), ...) {
 #' @export
 right_join_microorganisms <- function(x, by = NULL, suffix = c("2", ""), ...) {
   check_dataset_integrity()
+  check_groups_before_join(x, "right_join_microorganisms")
   checked <- joins_check_df(x, by)
+  x_class <- class(x)
   x <- checked$x
   by <- checked$by
   join <- suppressWarnings(
@@ -96,6 +104,7 @@ right_join_microorganisms <- function(x, by = NULL, suffix = c("2", ""), ...) {
   if (NROW(join) > NROW(x)) {
     warning("The newly joined tbl contains ", nrow(join) - nrow(x), " rows more that its original.")
   }
+  class(join) <- x_class
   join
 }
 
@@ -103,7 +112,9 @@ right_join_microorganisms <- function(x, by = NULL, suffix = c("2", ""), ...) {
 #' @export
 full_join_microorganisms <- function(x, by = NULL, suffix = c("2", ""), ...) {
   check_dataset_integrity()
+  check_groups_before_join(x, "full_join_microorganisms")
   checked <- joins_check_df(x, by)
+  x_class <- class(x)
   x <- checked$x
   by <- checked$by
   join <- suppressWarnings(
@@ -112,6 +123,7 @@ full_join_microorganisms <- function(x, by = NULL, suffix = c("2", ""), ...) {
   if (NROW(join) > NROW(x)) {
     warning("The newly joined tbl contains ", nrow(join) - nrow(x), " rows more that its original.")
   }
+  class(join) <- x_class
   join
 }
 
@@ -119,24 +131,32 @@ full_join_microorganisms <- function(x, by = NULL, suffix = c("2", ""), ...) {
 #' @export
 semi_join_microorganisms <- function(x, by = NULL, ...) {
   check_dataset_integrity()
+  check_groups_before_join(x, "semi_join_microorganisms")
+  x_class <- class(x)
   checked <- joins_check_df(x, by)
   x <- checked$x
   by <- checked$by
-  suppressWarnings(
+  join <- suppressWarnings(
     semi_join(x = x, y = microorganisms, by = by, ...)
   )
+  class(join) <- x_class
+  join
 }
 
 #' @rdname join
 #' @export
 anti_join_microorganisms <- function(x, by = NULL, ...) {
   check_dataset_integrity()
+  check_groups_before_join(x, "anti_join_microorganisms")
   checked <- joins_check_df(x, by)
+  x_class <- class(x)
   x <- checked$x
   by <- checked$by
-  suppressWarnings(
+  join <- suppressWarnings(
     anti_join(x = x, y = microorganisms, by = by, ...)
   )
+  class(join) <- x_class
+  join
 }
 
 joins_check_df <- function(x, by) {
@@ -146,6 +166,7 @@ joins_check_df <- function(x, by) {
       by <- "mo"
     }
   }
+  x <- as.data.frame(x, stringsAsFactors = FALSE)
   if (is.null(by)) {
     # search for column with class `mo` and return first one found
     by <- colnames(x)[lapply(x, is.mo) == TRUE][1]
@@ -167,4 +188,10 @@ joins_check_df <- function(x, by) {
   }
   list(x = x,
        by = joinby)
+}
+
+check_groups_before_join <- function(x, fn) {
+  if (is.data.frame(x) && !is.null(attributes(x)$groups)) {
+    warning("Groups are dropped, since the ", fn, "() function relies on merge() from base R, not on join() from dplyr.", call. = FALSE)
+  }
 }

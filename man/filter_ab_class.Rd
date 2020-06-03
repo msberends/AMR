@@ -13,6 +13,7 @@
 \alias{filter_fluoroquinolones}
 \alias{filter_glycopeptides}
 \alias{filter_macrolides}
+\alias{filter_penicillins}
 \alias{filter_tetracyclines}
 \title{Filter isolates on result in antimicrobial class}
 \usage{
@@ -40,6 +41,8 @@ filter_glycopeptides(x, result = NULL, scope = "any", ...)
 
 filter_macrolides(x, result = NULL, scope = "any", ...)
 
+filter_penicillins(x, result = NULL, scope = "any", ...)
+
 filter_tetracyclines(x, result = NULL, scope = "any", ...)
 }
 \arguments{
@@ -54,10 +57,10 @@ filter_tetracyclines(x, result = NULL, scope = "any", ...)
 \item{...}{parameters passed on to \code{filter_at} from the \code{dplyr} package}
 }
 \description{
-Filter isolates on results in specific antimicrobial classes. This makes it easy to filter on isolates that were tested for e.g. any aminoglycoside.
+Filter isolates on results in specific antimicrobial classes. This makes it easy to filter on isolates that were tested for e.g. any aminoglycoside, or to filter on carbapenem-resistant isolates without the need to specify the drugs.
 }
 \details{
-The \code{group} column in \link{antibiotics} data set will be searched for \code{ab_class} (case-insensitive). If no results are found, the \code{atc_group1} and \code{atc_group2} columns will be searched. Next, \code{x} will be checked for column names with a value in any abbreviations, codes or official names found in the \link{antibiotics} data set.
+The columns \code{group}, \code{atc_group1} and \code{atc_group2} of the \link{antibiotics} data set will be searched for the input given in \code{ab_class} (case-insensitive). Next, \code{x} will be checked for column names with a value in any abbreviation, code or official name found in the \link{antibiotics} data set.
 }
 \section{Stable lifecycle}{
 
@@ -72,6 +75,7 @@ If the unlying code needs breaking changes, they will occur gradually. For examp
 library(dplyr)
 
 # filter on isolates that have any result for any aminoglycoside
+example_isolates \%>\% filter_ab_class("aminoglycoside")
 example_isolates \%>\% filter_aminoglycosides()
 
 # this is essentially the same as (but without determination of column names):
@@ -81,7 +85,7 @@ example_isolates \%>\%
 
 
 # filter on isolates that show resistance to ANY aminoglycoside
-example_isolates \%>\% filter_aminoglycosides("R")
+example_isolates \%>\% filter_aminoglycosides("R", "any")
 
 # filter on isolates that show resistance to ALL aminoglycosides
 example_isolates \%>\% filter_aminoglycosides("R", "all")

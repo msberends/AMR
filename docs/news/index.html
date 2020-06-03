@@ -81,7 +81,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.2.0.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.2.0.9001</span>
       </span>
     </div>
 
@@ -229,20 +229,24 @@
       <small>Source: <a href='https://gitlab.com/msberends/AMR/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
-    <div id="amr-1209000" class="section level1">
-<h1 class="page-header" data-toc-text="1.2.0.9000">
-<a href="#amr-1209000" class="anchor"></a>AMR 1.2.0.9000<small> Unreleased </small>
+    <div id="amr-1209001" class="section level1">
+<h1 class="page-header" data-toc-text="1.2.0.9001">
+<a href="#amr-1209001" class="anchor"></a>AMR 1.2.0.9001<small> Unreleased </small>
 </h1>
-<div id="last-updated-02-jun-2020" class="section level2">
+<div id="last-updated-03-jun-2020" class="section level2">
 <h2 class="hasAnchor">
-<a href="#last-updated-02-jun-2020" class="anchor"></a><small>Last updated: 02-Jun-2020</small>
+<a href="#last-updated-03-jun-2020" class="anchor"></a><small>Last updated: 03-Jun-2020</small>
 </h2>
 <div id="changed" class="section level3">
 <h3 class="hasAnchor">
 <a href="#changed" class="anchor"></a>Changed</h3>
 <ul>
 <li>Fixed a bug where <code><a href="../reference/eucast_rules.html">eucast_rules()</a></code> would not work on a tibble when the <code>tibble</code> or <code>dplyr</code> package was loaded</li>
+<li>All <code>*_join_microorganisms()</code> functions now return the original data class (e.g. tibbles and data.tables)</li>
 <li>Fixed a bug where <code><a href="../reference/as.ab.html">as.ab()</a></code> would return an error on invalid input values</li>
+<li>Added function <code><a href="../reference/filter_ab_class.html">filter_penicillins()</a></code> to filter isolates on a specific result in any column with a name in the antimicrobial ‘penicillins’ class (more specific: ATC subgroup <em>Beta-lactam antibacterials, penicillins</em>)</li>
+<li>Added official antimicrobial names to all <code><a href="../reference/filter_ab_class.html">filter_ab_class()</a></code> functions, such as <code><a href="../reference/filter_ab_class.html">filter_aminoglycosides()</a></code>
+</li>
 </ul>
 </div>
 </div>
@@ -274,7 +278,7 @@
 <ul>
 <li>Taxonomy:
 <ul>
-<li>Updated the taxonomy of microorganisms tot May 2020, using the Catalogue of Life (CoL), the Global Biodiversity Information Facility (GBIF) and the List of Prokaryotic names with Standing in Nomenclature (LPSN, hosted by DSMZ since February 2020). <strong>Note:</strong> a taxonomic update may always impact determination of first isolates (using <code><a href="../reference/first_isolate.html">first_isolate()</a></code>), since some bacterial names might be renamed to other genera or other (sub)species. This is expected behaviour.</li>
+<li>Updated the taxonomy of microorganisms to May 2020, using the Catalogue of Life (CoL), the Global Biodiversity Information Facility (GBIF) and the List of Prokaryotic names with Standing in Nomenclature (LPSN, hosted by DSMZ since February 2020). <strong>Note:</strong> a taxonomic update may always impact determination of first isolates (using <code><a href="../reference/first_isolate.html">first_isolate()</a></code>), since some bacterial names might be renamed to other genera or other (sub)species. This is expected behaviour.</li>
 <li>Removed the Catalogue of Life IDs (like 776351), since they now work with a species ID (hexadecimal string)</li>
 </ul>
 </li>

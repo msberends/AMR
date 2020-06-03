@@ -160,6 +160,11 @@ get_column_abx <- function(x,
     x <- x[!is.na(x)]
   }
 
+  if (length(x) == 0) {
+    message(font_blue("No columns found."))
+    return(x)
+  }
+  
   # sort on name
   x <- x[order(names(x), x)]
   duplicates <- c(x[base::duplicated(x)], x[base::duplicated(names(x))]) 
@@ -167,7 +172,7 @@ get_column_abx <- function(x,
   x <- c(x[!names(x) %in% names(duplicates)], duplicates)
   x <- x[order(names(x), x)]
   
-  # succeeded with aut-guessing
+  # succeeded with auto-guessing
   message(font_blue("OK."))
 
   for (i in seq_len(length(x))) {

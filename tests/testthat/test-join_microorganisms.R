@@ -55,5 +55,9 @@ test_that("joins work", {
 
   expect_warning(right_join_microorganisms("B_ESCHR_COLI"))
   expect_warning(full_join_microorganisms("B_ESCHR_COLI"))
+  
+  library(dplyr)
+  x <- tibble(bact = as.mo("E.coli"))
+  expect_warning(left_join_microorganisms(x %>% group_by(bact), "bact"))
 
 })

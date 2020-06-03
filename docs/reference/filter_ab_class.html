@@ -49,7 +49,7 @@
   <script src="../extra.js"></script>
 
 <meta property="og:title" content="Filter isolates on result in antimicrobial class — filter_ab_class" />
-<meta property="og:description" content="Filter isolates on results in specific antimicrobial classes. This makes it easy to filter on isolates that were tested for e.g. any aminoglycoside." />
+<meta property="og:description" content="Filter isolates on results in specific antimicrobial classes. This makes it easy to filter on isolates that were tested for e.g. any aminoglycoside, or to filter on carbapenem-resistant isolates without the need to specify the drugs." />
 <meta property="og:image" content="https://msberends.gitlab.io/AMR/logo.svg" />
 
 
@@ -82,7 +82,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.2.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.2.0.9001</span>
       </span>
     </div>
 
@@ -232,7 +232,7 @@
     </div>
 
     <div class="ref-description">
-    <p>Filter isolates on results in specific antimicrobial classes. This makes it easy to filter on isolates that were tested for e.g. any aminoglycoside.</p>
+    <p>Filter isolates on results in specific antimicrobial classes. This makes it easy to filter on isolates that were tested for e.g. any aminoglycoside, or to filter on carbapenem-resistant isolates without the need to specify the drugs.</p>
     </div>
 
     <pre class="usage"><span class='fu'>filter_ab_class</span>(<span class='no'>x</span>, <span class='no'>ab_class</span>, <span class='kw'>result</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>scope</span> <span class='kw'>=</span> <span class='st'>"any"</span>, <span class='no'>...</span>)
@@ -258,6 +258,8 @@
 <span class='fu'>filter_glycopeptides</span>(<span class='no'>x</span>, <span class='kw'>result</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>scope</span> <span class='kw'>=</span> <span class='st'>"any"</span>, <span class='no'>...</span>)
 
 <span class='fu'>filter_macrolides</span>(<span class='no'>x</span>, <span class='kw'>result</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>scope</span> <span class='kw'>=</span> <span class='st'>"any"</span>, <span class='no'>...</span>)
+
+<span class='fu'>filter_penicillins</span>(<span class='no'>x</span>, <span class='kw'>result</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>scope</span> <span class='kw'>=</span> <span class='st'>"any"</span>, <span class='no'>...</span>)
 
 <span class='fu'>filter_tetracyclines</span>(<span class='no'>x</span>, <span class='kw'>result</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>scope</span> <span class='kw'>=</span> <span class='st'>"any"</span>, <span class='no'>...</span>)</pre>
 
@@ -288,7 +290,7 @@
 
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>The <code>group</code> column in <a href='antibiotics.html'>antibiotics</a> data set will be searched for <code>ab_class</code> (case-insensitive). If no results are found, the <code>atc_group1</code> and <code>atc_group2</code> columns will be searched. Next, <code>x</code> will be checked for column names with a value in any abbreviations, codes or official names found in the <a href='antibiotics.html'>antibiotics</a> data set.</p>
+    <p>The columns <code>group</code>, <code>atc_group1</code> and <code>atc_group2</code> of the <a href='antibiotics.html'>antibiotics</a> data set will be searched for the input given in <code>ab_class</code> (case-insensitive). Next, <code>x</code> will be checked for column names with a value in any abbreviation, code or official name found in the <a href='antibiotics.html'>antibiotics</a> data set.</p>
     <h2 class="hasAnchor" id="stable-lifecycle"><a class="anchor" href="#stable-lifecycle"></a>Stable lifecycle</h2>
 
     
@@ -302,6 +304,7 @@ The <a href='lifecycle.html'>lifecycle</a> of this function is <strong>stable</s
 <span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>dplyr</span>)
 
 <span class='co'># filter on isolates that have any result for any aminoglycoside</span>
+<span class='no'>example_isolates</span> <span class='kw'>%&gt;%</span> <span class='fu'>filter_ab_class</span>(<span class='st'>"aminoglycoside"</span>)
 <span class='no'>example_isolates</span> <span class='kw'>%&gt;%</span> <span class='fu'>filter_aminoglycosides</span>()
 
 <span class='co'># this is essentially the same as (but without determination of column names):</span>
@@ -311,7 +314,7 @@ The <a href='lifecycle.html'>lifecycle</a> of this function is <strong>stable</s
 
 
 <span class='co'># filter on isolates that show resistance to ANY aminoglycoside</span>
-<span class='no'>example_isolates</span> <span class='kw'>%&gt;%</span> <span class='fu'>filter_aminoglycosides</span>(<span class='st'>"R"</span>)
+<span class='no'>example_isolates</span> <span class='kw'>%&gt;%</span> <span class='fu'>filter_aminoglycosides</span>(<span class='st'>"R"</span>, <span class='st'>"any"</span>)
 
 <span class='co'># filter on isolates that show resistance to ALL aminoglycosides</span>
 <span class='no'>example_isolates</span> <span class='kw'>%&gt;%</span> <span class='fu'>filter_aminoglycosides</span>(<span class='st'>"R"</span>, <span class='st'>"all"</span>)

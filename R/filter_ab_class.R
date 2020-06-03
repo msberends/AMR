@@ -21,14 +21,14 @@
 
 #' Filter isolates on result in antimicrobial class
 #'
-#' Filter isolates on results in specific antimicrobial classes. This makes it easy to filter on isolates that were tested for e.g. any aminoglycoside.
+#' Filter isolates on results in specific antimicrobial classes. This makes it easy to filter on isolates that were tested for e.g. any aminoglycoside, or to filter on carbapenem-resistant isolates without the need to specify the drugs.
 #' @inheritSection lifecycle Stable lifecycle
 #' @param x a data set
 #' @param ab_class an antimicrobial class, like `"carbapenems"`, as can be found in [`antibiotics$group`][antibiotics]
 #' @param result an antibiotic result: S, I or R (or a combination of more of them)
 #' @param scope the scope to check which variables to check, can be `"any"` (default) or `"all"`
 #' @param ... parameters passed on to `filter_at` from the `dplyr` package
-#' @details The `group` column in [antibiotics] data set will be searched for `ab_class` (case-insensitive). If no results are found, the `atc_group1` and `atc_group2` columns will be searched. Next, `x` will be checked for column names with a value in any abbreviations, codes or official names found in the [antibiotics] data set.
+#' @details The columns `group`, `atc_group1` and `atc_group2` of the [antibiotics] data set will be searched for the input given in `ab_class` (case-insensitive). Next, `x` will be checked for column names with a value in any abbreviation, code or official name found in the [antibiotics] data set.
 #' @rdname filter_ab_class
 #' @export
 #' @examples
@@ -36,6 +36,7 @@
 #' library(dplyr)
 #'
 #' # filter on isolates that have any result for any aminoglycoside
+#' example_isolates %>% filter_ab_class("aminoglycoside")
 #' example_isolates %>% filter_aminoglycosides()
 #'
 #' # this is essentially the same as (but without determination of column names):
@@ -45,7 +46,7 @@
 #'
 #'
 #' # filter on isolates that show resistance to ANY aminoglycoside
-#' example_isolates %>% filter_aminoglycosides("R")
+#' example_isolates %>% filter_aminoglycosides("R", "any")
 #'
 #' # filter on isolates that show resistance to ALL aminoglycosides
 #' example_isolates %>% filter_aminoglycosides("R", "all")
@@ -76,13 +77,14 @@ filter_ab_class <- function(x,
   
   # save to return later
   x_class <- class(x)
+  x.bak <- x
   x <- as.data.frame(x, stringsAsFactors = FALSE)
   
   scope <- scope[1L]
   if (is.null(result)) {
     result <- c("S", "I", "R")
   }
-  # make result = "SI" work too:
+  # make result = "SI" works too:
   result <- unlist(strsplit(result, ""))
   
   if (!all(result %in% c("S", "I", "R"))) {
@@ -92,46 +94,62 @@ filter_ab_class <- function(x,
     stop("`scope` must be one of: any, all", call. = FALSE)
   }
   
-  # get only columns with class ab, mic or disk - those are AMR results
-  vars_df <- colnames(x)[sapply(x, function(y) is.rsi(y) | is.mic(y) | is.disk(y))]
-  vars_df_ab <- suppressWarnings(as.ab(vars_df))
-  # get the columns with a group names in the chosen ab class
-  vars_df <- vars_df[which(ab_group(vars_df_ab) %like% ab_class | 
-                             ab_atc_group1(vars_df_ab) %like% ab_class |
-                             ab_atc_group2(vars_df_ab) %like% ab_class)]
-  ab_group <- find_ab_group(ab_class)
-  
-  if (length(vars_df) > 0) {
-    if (length(result) == 1) {
-      operator <- " is "
-    } else {
-      operator <- " is one of "
-    }
-    if (scope == "any") {
-      scope_txt <- " or "
-      scope_fn <- any
-    } else {
-      scope_txt <- " and "
-      scope_fn <- all
-      if (length(vars_df) > 1) {
-        operator <- gsub("is", "are", operator)
-      }
-    }
-    if (length(vars_df) > 1) {
-      scope <- paste(scope, "of columns ")
-    } else {
-      scope <- "column "
-    }
-    message(font_blue(paste0("Filtering on ", ab_group, ": ", scope,
-                             paste0(font_bold(paste0("`", vars_df, "`"), collapse = NULL), collapse = scope_txt), operator, toString(result))))
-    filtered <<- as.logical(by(x, seq_len(nrow(x)),
-                              function(row) scope_fn(unlist(row[, vars_df]) %in% result, na.rm = TRUE)))
-    x <- x[which(filtered), , drop = FALSE]
-  } else {
-    message(font_blue(paste0("NOTE: no antimicrobial agents of class ", ab_group, 
-                             " (such as ", find_ab_names(ab_group), 
-                             ") found, data left unchanged.")))
+  # get all columns in data with names that resemble antibiotics
+  ab_in_data <- suppressMessages(get_column_abx(x))
+  if (length(ab_in_data) == 0) {
+    message(font_blue("NOTE: no antimicrobial agents found, data left unchanged."))
+    return(x.bak)
   }
+  # get reference data
+  ab_class <- gsub("[^a-zA-Z0-9]+", ".*", ab_class)
+  ab_class <- gsub("(ph|f)", "(ph|f)", ab_class)
+  ab_class <- gsub("(t|th)", "(t|th)", ab_class)
+  ab_reference <- subset(antibiotics,
+                         group %like% ab_class | 
+                           atc_group1 %like% ab_class | 
+                           atc_group2 %like% ab_class)
+  ab_group <- find_ab_group(ab_class)
+  # get the columns with a group names in the chosen ab class
+  agents <- ab_in_data[names(ab_in_data) %in% ab_reference$ab]
+  if (length(agents) == 0) {
+    message(font_blue(paste0("NOTE: no antimicrobial agents of class ", ab_group, 
+                             " found (such as ", find_ab_names(ab_class, 2), 
+                             "), data left unchanged.")))
+    return(x.bak)
+  }
+  
+  if (length(result) == 1) {
+    operator <- " is "
+  } else {
+    operator <- " is one of "
+  }
+  if (scope == "any") {
+    scope_txt <- " or "
+    scope_fn <- any
+  } else {
+    scope_txt <- " and "
+    scope_fn <- all
+    if (length(agents) > 1) {
+      operator <- gsub("is", "are", operator)
+    }
+  }
+  if (length(agents) > 1) {
+    scope <- paste(scope, "of columns ")
+  } else {
+    scope <- "column "
+  }
+  
+  # sort columns on official name
+  agents <- agents[order(ab_name(names(agents), language = NULL))]
+  
+  message(font_blue(paste0("Filtering on ", ab_group, ": ", scope,
+                           paste(paste0("`", font_bold(agents, collapse = NULL),
+                                        "` (", ab_name(names(agents), tolower = TRUE, language = NULL), ")"),
+                                 collapse = scope_txt),
+                           operator, toString(result))))
+  filtered <- as.logical(by(x, seq_len(nrow(x)),
+                            function(row) scope_fn(unlist(row[, agents]) %in% result, na.rm = TRUE)))
+  x <- x[which(filtered), , drop = FALSE]
   class(x) <- x_class
   x
 }
@@ -281,6 +299,19 @@ filter_macrolides <- function(x,
 
 #' @rdname filter_ab_class
 #' @export
+filter_penicillins <- function(x,
+                               result = NULL,
+                               scope = "any",
+                               ...) {
+  filter_ab_class(x = x,
+                  ab_class = "penicillin",
+                  result = result,
+                  scope = scope,
+                  ...)
+}
+
+#' @rdname filter_ab_class
+#' @export
 filter_tetracyclines <- function(x,
                                  result = NULL,
                                  scope = "any",
@@ -312,9 +343,9 @@ find_ab_group <- function(ab_class) {
   )
 }
 
-find_ab_names <- function(ab_group) {
+find_ab_names <- function(ab_group, n = 3) {
   drugs <- antibiotics[which(antibiotics$group %like% ab_group), "name"]
-  paste0(ab_name(sample(drugs, size = min(4, length(drugs)), replace = FALSE),
-                 tolower = TRUE, language = NULL), 
+  paste0(sort(ab_name(sample(drugs, size = min(n, length(drugs)), replace = FALSE),
+                      tolower = TRUE, language = NULL)), 
          collapse = ", ")
 }
