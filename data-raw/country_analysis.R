@@ -127,12 +127,12 @@ countries_plot <- ggplot(countries_geometry) +
 
 countries_plot_mini <- countries_plot
 countries_plot_mini$data <- countries_plot_mini$data %>% filter(ID != "Antarctica")
-countries_plot_mini <- countries_plot_mini + scale_colour_gradient(low = "#81899B", high = "#81899B")
+# countries_plot_mini <- countries_plot_mini + scale_colour_gradient(low = "#81899B", high = "#81899B")
 countries_plot_big <- countries_plot +
-  labs(title = tools::toTitleCase("Countries where the AMR package for R was downloaded from"),
-       subtitle = paste0("Between March 2018 (first release) and ", format(Sys.Date(), "%B %Y"), "." #,
-                         #"The dots denote visitors on our website https://gitlab.io/msberends/AMR."
-                         )) +
+  labs(title = tools::toTitleCase("Countries the AMR package for R was downloaded from"),
+       subtitle = paste0("Between March 2018 (first release) and ",
+                         format(Sys.Date(), "%B %Y")),
+       caption = "Source: https://cran-logs.rstudio.com") +
   theme(plot.title = element_text(size = 16, hjust = 0.5),
         plot.subtitle = element_text(size = 12, hjust = 0.5)) +
   geom_text(aes(x = -170,
@@ -142,12 +142,7 @@ countries_plot_big <- countries_plot +
                                                  paste(sort(countries_name[!is.na(countries_name)]), collapse = ", ")),
                                           200)),
             hjust = 0,
-             size = 4) # +
-  # # points of visitors
-  # geom_point(data = ip_tbl,
-  #            aes(x = x, y = y), 
-  #            size = 1,
-  #            colour = "#81899B")
+             size = 4) 
 
 # main website page
 ggsave("pkgdown/logos/countries.png",

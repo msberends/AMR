@@ -614,7 +614,7 @@ eucast_rules <- function(x,
     if (info == TRUE) {
       cat(font_bold(paste0("\nRules by this AMR package (",
                            font_red(paste0("v", utils::packageVersion("AMR"), ", ", 
-                                           format(utils::packageDate("AMR"), "%Y"))), ")\n")))
+                                           format(utils::packageDate("AMR"), "%Y"))), "), see ?eucast_rules\n")))
     }
     
     ab_enzyme <- subset(antibiotics, name %like% "/")[, c("ab", "name")]

@@ -250,25 +250,62 @@ dataset_UTF8_to_ASCII <- function(df) {
   df
 }
 
-
-# replace crayon::has_color, but now also FALSE on non-interactive mode
-has_colour <- function() {
-  if (Sys.getenv("TERM") == "dumb" | !interactive()) {
+has_colour <- function () {
+  # this is a base R version of crayon::has_color
+  enabled <- getOption("crayon.enabled")
+  if (!is.null(enabled)) {
+    return(isTRUE(enabled))
+  }
+  rstudio_with_ansi_support <- function(x) {
+    if (Sys.getenv("RSTUDIO", "") == "") {
+      return(FALSE)
+    }
+    if ((cols <- Sys.getenv("RSTUDIO_CONSOLE_COLOR", "")) != "" && !is.na(as.numeric(cols))) {
+      return(TRUE)
+    }
+    tryCatch(get("isAvailable", envir = asNamespace("rstudioapi"))(), error = function(e) return(FALSE)) &&
+      tryCatch(get("hasFun", envir = asNamespace("rstudioapi"))("getConsoleHasColor"), error = function(e) return(FALSE))
+  }
+  if (rstudio_with_ansi_support() && sink.number() == 0) {
+    return(TRUE)
+  }
+  if (!isatty(stdout())) {
     return(FALSE)
   }
   if (tolower(Sys.info()["sysname"]) == "windows") {
-    if (Sys.getenv("ConEmuANSI") == "ON" | Sys.getenv("CMDER_ROOT") != "") {
+    if (Sys.getenv("ConEmuANSI") == "ON") {
       return(TRUE)
-    } else {
-      return(FALSE)
     }
+    if (Sys.getenv("CMDER_ROOT") != "") {
+      return(TRUE)
+    }
+    return(FALSE)
   }
-  "COLORTERM" %in% names(Sys.getenv()) | grepl("^screen|^xterm|^vt100|color|ansi|cygwin|linux",
-                                               Sys.getenv("TERM"), 
-                                               ignore.case = TRUE,
-                                               perl = TRUE)
+  emacs_version <- function () {
+    ver <- Sys.getenv("INSIDE_EMACS")
+    if (ver == "") {
+      return(NA_integer_)
+    }
+    ver <- gsub("'", "", ver)
+    ver <- strsplit(ver, ",", fixed = TRUE)[[1]]
+    ver <- strsplit(ver, ".", fixed = TRUE)[[1]]
+    as.numeric(ver)
+  }
+  if ((Sys.getenv("EMACS") != "" || Sys.getenv("INSIDE_EMACS") != "") &&
+      !is.na(emacs_version()[1]) && emacs_version()[1] >= 23) {
+    return(TRUE)
+  }
+  if ("COLORTERM" %in% names(Sys.getenv())) {
+    return(TRUE)
+  }
+  if (Sys.getenv("TERM") == "dumb") {
+    return(FALSE)
+  }
+  grepl(pattern = "^screen|^xterm|^vt100|color|ansi|cygwin|linux", 
+        x = Sys.getenv("TERM"),
+        ignore.case = TRUE,
+        perl = TRUE)
 }
-
 
 # the crayon colours
 try_colour <- function(..., before, after, collapse = " ") {

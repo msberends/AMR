@@ -1,5 +1,5 @@
-# AMR 1.2.0.9002
-## <small>Last updated: 03-Jun-2020</small>
+# AMR 1.2.0.9003
+## <small>Last updated: 05-Jun-2020</small>
 
 ### Changed
 * Fixed a bug where `eucast_rules()` would not work on a tibble when the `tibble` or `dplyr` package was loaded

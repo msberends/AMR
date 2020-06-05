@@ -101,6 +101,7 @@ filter_ab_class <- function(x,
     return(x.bak)
   }
   # get reference data
+  ab_class.bak <- ab_class
   ab_class <- gsub("[^a-zA-Z0-9]+", ".*", ab_class)
   ab_class <- gsub("(ph|f)", "(ph|f)", ab_class)
   ab_class <- gsub("(t|th)", "(t|th)", ab_class)
@@ -109,6 +110,10 @@ filter_ab_class <- function(x,
                            atc_group1 %like% ab_class | 
                            atc_group2 %like% ab_class)
   ab_group <- find_ab_group(ab_class)
+  if (ab_group == "") {
+    message(font_blue(paste0("NOTE: unknown antimicrobial class '", ab_class.bak, "', data left unchanged.")))
+    return(x.bak)
+  }
   # get the columns with a group names in the chosen ab class
   agents <- ab_in_data[names(ab_in_data) %in% ab_reference$ab]
   if (length(agents) == 0) {
