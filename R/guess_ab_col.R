@@ -114,9 +114,16 @@ get_column_abx <- function(x,
                            verbose = FALSE,
                            ...) {
 
-  message(font_blue("NOTE: Auto-guessing columns suitable for analysis..."), appendLF = FALSE)
+  message(font_blue("NOTE: Auto-guessing columns suitable for analysis"), appendLF = FALSE)
   
   x <- as.data.frame(x, stringsAsFactors = FALSE)
+  if (NROW(x) > 10000) {
+    # only test maximum of 10,000 values per column
+    message(font_blue(paste0(" (using only ", font_bold("the first 10,000 rows"), ")...")), appendLF = FALSE)
+    x <- x[1:10000, , drop = FALSE]
+  } else {
+    message(font_blue("..."), appendLF = FALSE)
+  }
   x_bak <- x
   # only check columns that are a valid AB code, ATC code, name, abbreviation or synonym,
   # or already have the rsi class (as.rsi) 

@@ -81,7 +81,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.2.0.9003</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.2.0.9004</span>
       </span>
     </div>
 
@@ -229,13 +229,13 @@
       <small>Source: <a href='https://gitlab.com/msberends/AMR/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
-    <div id="amr-1209003" class="section level1">
-<h1 class="page-header" data-toc-text="1.2.0.9003">
-<a href="#amr-1209003" class="anchor"></a>AMR 1.2.0.9003<small> Unreleased </small>
+    <div id="amr-1209004" class="section level1">
+<h1 class="page-header" data-toc-text="1.2.0.9004">
+<a href="#amr-1209004" class="anchor"></a>AMR 1.2.0.9004<small> Unreleased </small>
 </h1>
-<div id="last-updated-05-jun-2020" class="section level2">
+<div id="last-updated-09-jun-2020" class="section level2">
 <h2 class="hasAnchor">
-<a href="#last-updated-05-jun-2020" class="anchor"></a><small>Last updated: 05-Jun-2020</small>
+<a href="#last-updated-09-jun-2020" class="anchor"></a><small>Last updated: 09-Jun-2020</small>
 </h2>
 <div id="changed" class="section level3">
 <h3 class="hasAnchor">
@@ -244,9 +244,12 @@
 <li>Fixed a bug where <code><a href="../reference/eucast_rules.html">eucast_rules()</a></code> would not work on a tibble when the <code>tibble</code> or <code>dplyr</code> package was loaded</li>
 <li>All <code>*_join_microorganisms()</code> functions now return the original data class (e.g. tibbles and data.tables)</li>
 <li>Fixed a bug where <code><a href="../reference/as.ab.html">as.ab()</a></code> would return an error on invalid input values</li>
+<li>Fixed a bug for using grouped versions of <code><a href="../reference/proportion.html">rsi_df()</a></code>, <code><a href="../reference/proportion.html">proportion_df()</a></code> and <code><a href="../reference/count.html">count_df()</a></code>
+</li>
 <li>Added function <code><a href="../reference/filter_ab_class.html">filter_penicillins()</a></code> to filter isolates on a specific result in any column with a name in the antimicrobial ‘penicillins’ class (more specific: ATC subgroup <em>Beta-lactam antibacterials, penicillins</em>)</li>
 <li>Added official antimicrobial names to all <code><a href="../reference/filter_ab_class.html">filter_ab_class()</a></code> functions, such as <code><a href="../reference/filter_ab_class.html">filter_aminoglycosides()</a></code>
 </li>
+<li>Added antibiotics code “FOX1” for cefoxitin screening (abbreviation “cfsc”) to the <code>antibiotics</code> data set</li>
 </ul>
 </div>
 </div>

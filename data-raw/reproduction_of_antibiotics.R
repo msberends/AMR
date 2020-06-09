@@ -322,7 +322,16 @@ antibiotics[which(antibiotics$ab == as.ab("cefuroxim")), "abbreviations"][[1]] <
 antibiotics[which(antibiotics$ab == as.ab("cefotaxim")), "abbreviations"][[1]] <- list(c(antibiotics[which(antibiotics$ab == as.ab("cefotaxim")), "abbreviations"][[1]], "cftx"))
 antibiotics[which(antibiotics$ab == as.ab("ceftazidime")), "abbreviations"][[1]] <- list(c(antibiotics[which(antibiotics$ab == as.ab("ceftazidime")), "abbreviations"][[1]], "cftz"))
 antibiotics[which(antibiotics$ab == as.ab("cefepime")), "abbreviations"][[1]] <- list(c(antibiotics[which(antibiotics$ab == as.ab("cefepime")), "abbreviations"][[1]], "cfpi"))
-antibiotics[which(antibiotics$ab == as.ab("cefoxitin")), "abbreviations"][[1]] <- list(c(antibiotics[which(antibiotics$ab == as.ab("cefoxitin")), "abbreviations"][[1]], "cfxt", "cfsc"))
+antibiotics[which(antibiotics$ab == as.ab("cefoxitin")), "abbreviations"][[1]] <- list(c(antibiotics[which(antibiotics$ab == as.ab("cefoxitin")), "abbreviations"][[1]], "cfxt"))
+# Add cefoxitin screening
+class(antibiotics$ab) <- "character"
+antibiotics <- rbind(antibiotics,data.frame(ab = "FOX1", atc = NA, cid = NA, 
+                                            name = "Cefoxitin screening",
+                                            group = "Cephalosporins (2nd gen.)", atc_group1 = NA, atc_group2 = NA, 
+                                            abbreviations = "cfsc", synonyms = NA, 
+                                            oral_ddd = NA, oral_units  = NA, iv_ddd  = NA, iv_units = NA,
+                                            loinc = NA,
+                                            stringsAsFactors = FALSE))
 # More GLIMS codes
 antibiotics[which(antibiotics$ab == "CAZ"), "abbreviations"][[1]] <- list(c(antibiotics[which(antibiotics$ab == "CAZ"), "abbreviations"][[1]], "cftz"))
 antibiotics[which(antibiotics$ab == "CRO"), "abbreviations"][[1]] <- list(c(antibiotics[which(antibiotics$ab == "CRO"), "abbreviations"][[1]], "cftr"))
@@ -579,7 +588,7 @@ antibiotics <- antibiotics %>%
 # set as data.frame again
 antibiotics <- as.data.frame(antibiotics, stringsAsFactors = FALSE)
 class(antibiotics$ab) <- c("ab", "character")
-antibiotics <- antibiotics %>% arrange(name)
+antibiotics <- antibiotics %>% dplyr::arrange(name)
 
 # make all abbreviations and synonyms lower case, unique and alphabetically sorted ----
 for (i in 1:nrow(antibiotics)) {

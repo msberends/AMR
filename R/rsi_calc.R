@@ -220,10 +220,18 @@ rsi_calc_df <- function(type, # "proportion", "count" or "both"
       .data <- .data[, which(!colnames(.data) %in% groups), drop = FALSE]
     }
     for (i in seq_len(ncol(.data))) {
-      col_results <- as.data.frame(as.matrix(table(.data[, i, drop = TRUE])))
+      values <- .data[, i, drop = TRUE]
+      if (isTRUE(combine_SI)) {
+        values <- factor(values, levels = c("SI", "R"), ordered = TRUE)
+      } else if (isTRUE(combine_IR)) {
+        values <- factor(values, levels = c("S", "IR"), ordered = TRUE)
+      } else {
+        values <- factor(values, levels = c("S", "I", "R"), ordered = TRUE)
+      }
+      col_results <- as.data.frame(as.matrix(table(values)))
       col_results$interpretation <- rownames(col_results)
       col_results$isolates <- col_results[, 1, drop = TRUE]
-      if (nrow(col_results) > 0) {
+      if (NROW(col_results) > 0 && sum(col_results$isolates, na.rm = TRUE) > 0) {
         if (sum(col_results$isolates, na.rm = TRUE) >= minimum) {
           col_results$value <- col_results$isolates / sum(col_results$isolates, na.rm = TRUE)
         } else {
@@ -237,6 +245,12 @@ rsi_calc_df <- function(type, # "proportion", "count" or "both"
                               isolates = col_results$isolates,
                               stringsAsFactors = FALSE)
         if (data_has_groups) {
+          if (nrow(group_values) < nrow(out_new)) {
+            # repeat group_values for the number of rows in out_new
+            repeated <- rep(seq_len(nrow(group_values)),
+                            each = nrow(out_new) / nrow(group_values))
+            group_values <- group_values[repeated, , drop = FALSE]
+          }
           out_new <- cbind(group_values, out_new)
         }
         out <- rbind(out, out_new)
@@ -273,7 +287,7 @@ rsi_calc_df <- function(type, # "proportion", "count" or "both"
   
   if (data_has_groups) {
     # ordering by the groups and two more: "antibiotic" and "interpretation"
-    out <- out[do.call("order", out[, seq_len(length(groups) + 2)]), ]
+    out <- ungroup(out[do.call("order", out[, seq_len(length(groups) + 2)]), ])
   } else {
     out <- out[order(out$antibiotic, out$interpretation), ]
   }
