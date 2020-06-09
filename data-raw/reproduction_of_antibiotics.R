@@ -592,10 +592,14 @@ antibiotics <- antibiotics %>% dplyr::arrange(name)
 
 # make all abbreviations and synonyms lower case, unique and alphabetically sorted ----
 for (i in 1:nrow(antibiotics)) {
-  abb <- sort(unique(tolower(antibiotics[i, "abbreviations"][[1]])))
-  syn <- sort(unique(tolower(antibiotics[i, "synonyms"][[1]])))
+  abb <- as.character(sort(unique(tolower(antibiotics[i, "abbreviations"][[1]]))))
+  syn <- as.character(sort(unique(tolower(antibiotics[i, "synonyms"][[1]]))))
   antibiotics[i, "abbreviations"][[1]] <- ifelse(length(abb[!abb == ""]) == 0, list(""), list(abb))
   antibiotics[i, "synonyms"][[1]] <- ifelse(length(syn[!syn == ""]) == 0, list(""), list(syn))
+  if ("loinc" %in% colnames(antibiotics)) {
+    loinc <- as.character(sort(unique(tolower(antibiotics[i, "loinc"][[1]]))))
+    antibiotics[i, "loinc"][[1]] <- ifelse(length(syn[!syn == ""]) == 0, list(""), list(loinc))
+  }
 }
 
 # REFER TO data-raw/loinc.R FOR ADDING LOINC CODES
