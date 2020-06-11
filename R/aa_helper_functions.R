@@ -103,60 +103,55 @@ search_type_in_df <- function(x, type) {
   
   # -- mo
   if (type == "mo") {
-    if ("mo" %in% lapply(x, class)) {
-      found <- colnames(x)[lapply(x, class) == "mo"][1]
+    if (any(sapply(x, is.mo))) {
+      found <- sort(colnames(x)[sapply(x, is.mo)])[1]
     } else if ("mo" %in% colnames(x) &
                suppressWarnings(
                  all(x$mo %in% c(NA,
                                  microorganisms$mo,
                                  microorganisms.translation$mo_old)))) {
       found <- "mo"
-    } else if (any(colnames(x) %like% "^(mo|microorganism|organism|bacteria|bacterie)s?$")) {
-      found <- colnames(x)[colnames(x) %like% "^(mo|microorganism|organism|bacteria|bacterie)s?$"][1]
-    } else if (any(colnames(x) %like% "^(microorganism|organism|bacteria|bacterie)")) {
-      found <- colnames(x)[colnames(x) %like% "^(microorganism|organism|bacteria|bacterie)"][1]
+    } else if (any(colnames(x) %like% "^(mo|microorganism|organism|bacteria|ba[ck]terie)s?$")) {
+      found <- sort(colnames(x)[colnames(x) %like% "^(mo|microorganism|organism|bacteria|ba[ck]terie)s?$"])[1]
+    } else if (any(colnames(x) %like% "^(microorganism|organism|bacteria|ba[ck]terie)")) {
+      found <- sort(colnames(x)[colnames(x) %like% "^(microorganism|organism|bacteria|ba[ck]terie)"])[1]
     } else if (any(colnames(x) %like% "species")) {
-      found <- colnames(x)[colnames(x) %like% "species"][1]
+      found <- sort(colnames(x)[colnames(x) %like% "species"])[1]
     }
     
   }
   # -- key antibiotics
   if (type == "keyantibiotics") {
     if (any(colnames(x) %like% "^key.*(ab|antibiotics)")) {
-      found <- colnames(x)[colnames(x) %like% "^key.*(ab|antibiotics)"][1]
+      found <- sort(colnames(x)[colnames(x) %like% "^key.*(ab|antibiotics)"])[1]
     }
   }
   # -- date
   if (type == "date") {
     if (any(colnames(x) %like% "^(specimen date|specimen_date|spec_date)")) {
       # WHONET support
-      found <- colnames(x)[colnames(x) %like% "^(specimen date|specimen_date|spec_date)"][1]
+      found <- sort(colnames(x)[colnames(x) %like% "^(specimen date|specimen_date|spec_date)"])[1]
       if (!any(class(pull(x, found)) %in% c("Date", "POSIXct"))) {
         stop(font_red(paste0("ERROR: Found column `", font_bold(found), "` to be used as input for `col_", type,
-                        "`, but this column contains no valid dates. Transform its values to valid dates first.")),
+                             "`, but this column contains no valid dates. Transform its values to valid dates first.")),
              call. = FALSE)
       }
-    } else {
-      for (i in seq_len(ncol(x))) {
-        if (any(class(pull(x, i)) %in% c("Date", "POSIXct"))) {
-          found <- colnames(x)[i]
-          break
-        }
-      }
+    } else if (any(sapply(x, function(x) inherits(x, c("Date", "POSIXct"))))) {
+      found <- sort(colnames(x)[sapply(x, function(x) inherits(x, c("Date", "POSIXct")))])[1]
     }
   }
   # -- patient id
   if (type == "patient_id") {
     if (any(colnames(x) %like% "^(identification |patient|patid)")) {
-      found <- colnames(x)[colnames(x) %like% "^(identification |patient|patid)"][1]
+      found <- sort(colnames(x)[colnames(x) %like% "^(identification |patient|patid)"])[1]
     }
   }
   # -- specimen
   if (type == "specimen") {
     if (any(colnames(x) %like% "(specimen type|spec_type)")) {
-      found <- colnames(x)[colnames(x) %like% "(specimen type|spec_type)"][1]
+      found <- sort(colnames(x)[colnames(x) %like% "(specimen type|spec_type)"])[1]
     } else if (any(colnames(x) %like% "^(specimen)")) {
-      found <- colnames(x)[colnames(x) %like% "^(specimen)"][1]
+      found <- sort(colnames(x)[colnames(x) %like% "^(specimen)"])[1]
     }
   }
   # -- UTI (urinary tract infection)
@@ -164,13 +159,13 @@ search_type_in_df <- function(x, type) {
     if (any(colnames(x) == "uti")) {
       found <- colnames(x)[colnames(x) == "uti"][1]
     } else if (any(colnames(x) %like% "(urine|urinary)")) {
-      found <- colnames(x)[colnames(x) %like% "(urine|urinary)"][1]
+      found <- sort(colnames(x)[colnames(x) %like% "(urine|urinary)"])[1]
     }
     if (!is.null(found)) {
       # this column should contain logicals
       if (!is.logical(x[, found, drop = TRUE])) {
         message(font_red(paste0("NOTE: Column `", font_bold(found), "` found as input for `col_", type,
-                           "`, but this column does not contain 'logical' values (TRUE/FALSE) and was ignored.")))
+                                "`, but this column does not contain 'logical' values (TRUE/FALSE) and was ignored.")))
         found <- NULL
       }
     }

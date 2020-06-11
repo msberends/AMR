@@ -1,5 +1,5 @@
-# AMR 1.2.0.9005
-## <small>Last updated: 09-Jun-2020</small>
+# AMR 1.2.0.9006
+## <small>Last updated: 11-Jun-2020</small>
 
 ### Changed
 * Fixed a bug where `eucast_rules()` would not work on a tibble when the `tibble` or `dplyr` package was loaded
@@ -9,6 +9,7 @@
 * Added function `filter_penicillins()` to filter isolates on a specific result in any column with a name in the antimicrobial 'penicillins' class (more specific: ATC subgroup *Beta-lactam antibacterials, penicillins*)
 * Added official antimicrobial names to all `filter_ab_class()` functions, such as `filter_aminoglycosides()`
 * Added antibiotics code "FOX1" for cefoxitin screening (abbreviation "cfsc") to the `antibiotics` data set
+* Improved auto-determination for columns of types <mo> and <Date>
 
 # AMR 1.2.0
 
