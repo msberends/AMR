@@ -124,6 +124,7 @@ reference:
     - "`bug_drug_combinations`"
     - "`resistance_predict`"
     - "`pca`"
+    - "`antibiotic_class_selectors`"
     - "`filter_ab_class`"
     - "`g.test`"
     - "`ggplot_rsi`"

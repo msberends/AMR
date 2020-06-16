@@ -48,7 +48,7 @@ filter_tetracyclines(x, result = NULL, scope = "any", ...)
 \arguments{
 \item{x}{a data set}
 
-\item{ab_class}{an antimicrobial class, like \code{"carbapenems"}, as can be found in \code{\link[=antibiotics]{antibiotics$group}}}
+\item{ab_class}{an antimicrobial class, like \code{"carbapenems"}. The columns \code{group}, \code{atc_group1} and \code{atc_group2} of the \link{antibiotics} data set will be searched (case-insensitive) for this value.}
 
 \item{result}{an antibiotic result: S, I or R (or a combination of more of them)}
 
@@ -60,7 +60,7 @@ filter_tetracyclines(x, result = NULL, scope = "any", ...)
 Filter isolates on results in specific antimicrobial classes. This makes it easy to filter on isolates that were tested for e.g. any aminoglycoside, or to filter on carbapenem-resistant isolates without the need to specify the drugs.
 }
 \details{
-The columns \code{group}, \code{atc_group1} and \code{atc_group2} of the \link{antibiotics} data set will be searched for the input given in \code{ab_class} (case-insensitive). Next, \code{x} will be checked for column names with a value in any abbreviation, code or official name found in the \link{antibiotics} data set.
+All columns of \code{x} will be searched for known antibiotic names, abbreviations, brand names and codes (ATC, EARS-Net, WHO, etc.). This means that a filter function like e.g. \code{\link[=filter_aminoglycosides]{filter_aminoglycosides()}} will include column names like 'gen', 'genta', 'J01GB03', 'tobra', 'Tobracin', etc.
 }
 \section{Stable lifecycle}{
 
@@ -102,4 +102,7 @@ example_isolates \%>\%
   filter_aminoglycosides("R", "all") \%>\%
   filter_fluoroquinolones("R", "all")
 }
+}
+\seealso{
+\code{\link[=antibiotic_class_selectors]{antibiotic_class_selectors()}} for the \code{select()} equivalent.
 }

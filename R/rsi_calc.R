@@ -282,7 +282,9 @@ rsi_calc_df <- function(type, # "proportion", "count" or "both"
   } else if (isTRUE(combine_IR)) {
     out$interpretation <- factor(out$interpretation, levels = c("S", "IR"), ordered = TRUE)
   } else {
-    out$interpretation <- as.rsi(out$interpretation)
+    # don't use as.rsi() here, as it would add the class <rsi> and we would like
+    # the same data structure as output, regardless of input
+    out$interpretation <- factor(out$interpretation, levels = c("S", "I", "R"), ordered = TRUE)
   }
   
   if (data_has_groups) {

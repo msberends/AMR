@@ -24,12 +24,13 @@
 #' Filter isolates on results in specific antimicrobial classes. This makes it easy to filter on isolates that were tested for e.g. any aminoglycoside, or to filter on carbapenem-resistant isolates without the need to specify the drugs.
 #' @inheritSection lifecycle Stable lifecycle
 #' @param x a data set
-#' @param ab_class an antimicrobial class, like `"carbapenems"`, as can be found in [`antibiotics$group`][antibiotics]
+#' @param ab_class an antimicrobial class, like `"carbapenems"`. The columns `group`, `atc_group1` and `atc_group2` of the [antibiotics] data set will be searched (case-insensitive) for this value.
 #' @param result an antibiotic result: S, I or R (or a combination of more of them)
 #' @param scope the scope to check which variables to check, can be `"any"` (default) or `"all"`
 #' @param ... parameters passed on to `filter_at` from the `dplyr` package
-#' @details The columns `group`, `atc_group1` and `atc_group2` of the [antibiotics] data set will be searched for the input given in `ab_class` (case-insensitive). Next, `x` will be checked for column names with a value in any abbreviation, code or official name found in the [antibiotics] data set.
+#' @details All columns of `x` will be searched for known antibiotic names, abbreviations, brand names and codes (ATC, EARS-Net, WHO, etc.). This means that a filter function like e.g. [filter_aminoglycosides()] will include column names like 'gen', 'genta', 'J01GB03', 'tobra', 'Tobracin', etc.
 #' @rdname filter_ab_class
+#' @seealso [antibiotic_class_selectors()] for the `select()` equivalent.
 #' @export
 #' @examples
 #' \dontrun{
@@ -329,6 +330,7 @@ filter_tetracyclines <- function(x,
 }
 
 find_ab_group <- function(ab_class) {
+  ab_class <- gsub("[^a-zA-Z0-9]", ".*", ab_class)
   ifelse(ab_class %in% c("aminoglycoside",
                          "carbapenem",
                          "cephalosporin",
@@ -344,12 +346,14 @@ find_ab_group <- function(ab_class) {
            pull(group) %>%
            unique() %>%
            tolower() %>%
+           sort() %>% 
            paste(collapse = "/")
   )
 }
 
 find_ab_names <- function(ab_group, n = 3) {
-  drugs <- antibiotics[which(antibiotics$group %like% ab_group), "name"]
+  ab_group <- gsub("[^a-zA-Z0-9]", ".*", ab_group)
+  drugs <- antibiotics[which(antibiotics$group %like% ab_group & !antibiotics$ab %like% "[0-9]$"), ]$name
   paste0(sort(ab_name(sample(drugs, size = min(n, length(drugs)), replace = FALSE),
                       tolower = TRUE, language = NULL)), 
          collapse = ", ")
