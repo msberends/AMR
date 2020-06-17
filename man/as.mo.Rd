@@ -192,7 +192,7 @@ mo_gramstain("E. coli")       # returns "Gram negative"
 \dontrun{
 df$mo <- as.mo(df$microorganism_name)
 
-# the select function of tidyverse is also supported:
+# the select function of the Tidyverse is also supported:
 library(dplyr)
 df$mo <- df \%>\%
   select(microorganism_name) \%>\%

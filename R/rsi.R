@@ -594,9 +594,9 @@ plot.rsi <- function(x,
   
   # get plot() generic; this was moved from the 'graphics' pkg to the 'base' pkg in R 4.0.0
   if (as.integer(R.Version()$major) >= 4) {
-    plot <- get("plot", envir = asNamespace("base"))
+    plot <- import_fn("plot", "base")
   } else {
-    plot <- get("plot", envir = asNamespace("graphics"))
+    plot <- import_fn("plot", "graphics")
   }
   plot(x = data$x,
        y = data$s,

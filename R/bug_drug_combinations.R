@@ -62,6 +62,9 @@ bug_drug_combinations <- function(x,
   if (!is.data.frame(x)) {
     stop("`x` must be a data frame.", call. = FALSE)
   }
+  if (!any(sapply(x, is.rsi), na.rm = TRUE)) {
+    stop("No columns with class <rsi> found. See ?as.rsi.", call. = FALSE)
+  }
   
   # try to find columns based on type
   # -- mo
@@ -72,12 +75,13 @@ bug_drug_combinations <- function(x,
     stop("`col_mo` must be set.", call. = FALSE)
   }
   
+  x_class <- class(x)
   x <- as.data.frame(x, stringsAsFactors = FALSE)
   x[, col_mo] <- FUN(x[, col_mo, drop = TRUE])
-  x <- x[, c(col_mo, names(which(sapply(x, is.rsi))))]
+  x <- x[, c(col_mo, names(which(sapply(x, is.rsi)))), drop = FALSE]
   
   unique_mo <- sort(unique(x[, col_mo, drop = TRUE]))
-  
+
   out <- data.frame(
     mo = character(0),
     ab = character(0),
@@ -85,10 +89,10 @@ bug_drug_combinations <- function(x,
     I = integer(0),
     R = integer(0),
     total = integer(0))
-  
+
   for (i in seq_len(length(unique_mo))) {
     # filter on MO group and only select R/SI columns
-    x_mo_filter <- x[which(x[, col_mo, drop = TRUE] == unique_mo[i]), names(which(sapply(x, is.rsi)))]
+    x_mo_filter <- x[which(x[, col_mo, drop = TRUE] == unique_mo[i]), names(which(sapply(x, is.rsi))), drop = FALSE]
     # turn and merge everything
     pivot <- lapply(x_mo_filter, function(x) {
       m <- as.matrix(table(x))
@@ -103,8 +107,8 @@ bug_drug_combinations <- function(x,
                             total = merged$S + merged$I + merged$R)
     out <- rbind(out, out_group)
   }
-  
-  structure(.Data = out, class = c("bug_drug_combinations", class(x)))
+
+  structure(.Data = out, class = c("bug_drug_combinations", x_class))
 }
 
 #' @method format bug_drug_combinations
@@ -121,6 +125,7 @@ format.bug_drug_combinations <- function(x,
                                          decimal.mark = getOption("OutDec"),
                                          big.mark = ifelse(decimal.mark == ",", ".", ","),
                                          ...) {
+  x <- as.data.frame(x, stringsAsFactors = FALSE)
   x <- subset(x, total >= minimum)
   
   if (remove_intrinsic_resistant == TRUE) {
@@ -221,6 +226,8 @@ format.bug_drug_combinations <- function(x,
 #' @method print bug_drug_combinations
 #' @export
 print.bug_drug_combinations <- function(x, ...) {
-  print(as.data.frame(x, stringsAsFactors = FALSE))
-  message(font_blue("NOTE: Use 'format()' on this result to get a publicable/printable format."))
+  x_class <- class(x)
+  print(structure(x, class = x_class[x_class != "bug_drug_combinations"]),
+        ...)
+  message(font_blue("NOTE: Use 'format()' on this result to get a publishable/printable format."))
 }

@@ -83,7 +83,7 @@ resistance() should be used to calculate resistance, susceptibility() should be 
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.2.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.2.0.9008</span>
       </span>
     </div>
 
@@ -322,7 +322,7 @@ resistance() should be used to calculate resistance, susceptibility() should be 
 
     <p>The function <code>resistance()</code> is equal to the function <code>proportion_R()</code>. The function <code>susceptibility()</code> is equal to the function <code>proportion_SI()</code>.</p>
 <p><strong>Remember that you should filter your table to let it contain only first isolates!</strong> This is needed to exclude duplicates and to reduce selection bias. Use <code><a href='first_isolate.html'>first_isolate()</a></code> to determine them in your data set.</p>
-<p>These functions are not meant to count isolates, but to calculate the proportion of resistance/susceptibility. Use the <code><a href='count.html'>count()</a></code>][AMR::count()] functions to count isolates. The function <code>susceptibility()</code> is essentially equal to <code>count_susceptible() / count_all()</code>. <em>Low counts can influence the outcome - the <code>proportion</code> functions may camouflage this, since they only return the proportion (albeit being dependent on the <code>minimum</code> parameter).</em></p>
+<p>These functions are not meant to count isolates, but to calculate the proportion of resistance/susceptibility. Use the <code><a href='count.html'>count()</a></code> functions to count isolates. The function <code>susceptibility()</code> is essentially equal to <code>count_susceptible() / count_all()</code>. <em>Low counts can influence the outcome - the <code>proportion</code> functions may camouflage this, since they only return the proportion (albeit being dependent on the <code>minimum</code> parameter).</em></p>
 <p>The function <code>proportion_df()</code> takes any variable from <code>data</code> that has an <code><a href='as.rsi.html'>rsi</a></code> class (created with <code><a href='as.rsi.html'>as.rsi()</a></code>) and calculates the proportions R, I and S. It also supports grouped variables. The function <code>rsi_df()</code> works exactly like <code>proportion_df()</code>, but adds the number of isolates.</p>
     <h2 class="hasAnchor" id="combination-therapy"><a class="anchor" href="#combination-therapy"></a>Combination therapy</h2>
 
@@ -410,7 +410,7 @@ A microorganism is categorised as <em>Susceptible, Increased exposure</em> when 
               <span class='kw'>SI</span> <span class='kw'>=</span> <span class='fu'>susceptibility</span>(<span class='no'>CIP</span>, <span class='kw'>as_percent</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>),
               <span class='kw'>n1</span> <span class='kw'>=</span> <span class='fu'><a href='count.html'>count_all</a></span>(<span class='no'>CIP</span>),  <span class='co'># the actual total; sum of all three</span>
               <span class='kw'>n2</span> <span class='kw'>=</span> <span class='fu'><a href='count.html'>n_rsi</a></span>(<span class='no'>CIP</span>),      <span class='co'># same - analogous to n_distinct</span>
-              <span class='kw'>total</span> <span class='kw'>=</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/n.html'>n</a></span>())          <span class='co'># NOT the number of tested isolates!</span>
+              <span class='kw'>total</span> <span class='kw'>=</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/context.html'>n</a></span>())          <span class='co'># NOT the number of tested isolates!</span>
 
   <span class='co'># Calculate co-resistance between amoxicillin/clav acid and gentamicin,</span>
   <span class='co'># so we can see that combination therapy does a lot more than mono therapy:</span>

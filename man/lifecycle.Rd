@@ -4,10 +4,10 @@
 \alias{lifecycle}
 \title{Lifecycles of functions in the \code{AMR} package}
 \description{
-Functions in this \code{AMR} package are categorised using \href{https://www.tidyverse.org/lifecycle}{the lifecycle circle of the \code{tidyverse} as found on www.tidyverse.org/lifecycle}.
+Functions in this \code{AMR} package are categorised using \href{https://www.Tidyverse.org/lifecycle}{the lifecycle circle of the Tidyverse as found on www.tidyverse.org/lifecycle}.
 
-\if{html}{\figure{lifecycle_tidyverse.svg}{options: height=200px style=margin-bottom:5px} \cr}
-This page contains a section for every lifecycle (with text borrowed from the aforementioned \code{tidyverse} website), so they can be used in the manual pages of the functions.
+\if{html}{\figure{lifecycle_Tidyverse.svg}{options: height=200px style=margin-bottom:5px} \cr}
+This page contains a section for every lifecycle (with text borrowed from the aforementioned Tidyverse website), so they can be used in the manual pages of the functions.
 }
 \section{Experimental lifecycle}{
 

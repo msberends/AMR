@@ -63,14 +63,12 @@ filter_join_worker <- function(x, y, by = NULL, type = c("anti", "semi")) {
 
 # No export, no Rd
 addin_insert_in <- function() {
-  stopifnot_installed_package("rstudioapi")
-  get("insertText", envir = asNamespace("rstudioapi"))(" %in% ")
+  import_fn("insertText", "rstudioapi")(" %in% ")
 }
 
 # No export, no Rd
 addin_insert_like <- function() {
-  stopifnot_installed_package("rstudioapi")
-  get("insertText", envir = asNamespace("rstudioapi"))(" %like% ")
+  import_fn("insertText", "rstudioapi")(" %like% ")
 }
 
 check_dataset_integrity <- function() {
@@ -186,10 +184,21 @@ stopifnot_installed_package <- function(package) {
   # https://developer.r-project.org/Blog/public/2019/02/14/staged-install/index.html
   sapply(package, function(x)
     tryCatch(get(".packageName", envir = asNamespace(x)),
-             error = function(e) stop("package '", x, "' required but not installed.",
-                                      "\nTry to install it with: install.packages(\"", x, "\")",
-                                      call. = FALSE)))
+             error = function(e) { 
+               if (package == "rstudioapi") {
+                 stop("This function only works in RStudio.", call. = FALSE)
+               } else {
+                 stop("package '", x, "' required but not installed.",
+                      "\nTry to install it with: install.packages(\"", x, "\")",
+                      call. = FALSE)
+               }
+             }))
   return(invisible())
+}
+
+import_fn <- function(name, pkg) {
+  stopifnot_installed_package(pkg)
+  get(name, envir = asNamespace(pkg))
 }
 
 stopifnot_msg <- function(expr, msg) {
@@ -245,7 +254,7 @@ dataset_UTF8_to_ASCII <- function(df) {
   df
 }
 
-has_colour <- function () {
+has_colour <- function() {
   # this is a base R version of crayon::has_color
   enabled <- getOption("crayon.enabled")
   if (!is.null(enabled)) {
@@ -276,7 +285,7 @@ has_colour <- function () {
     }
     return(FALSE)
   }
-  emacs_version <- function () {
+  emacs_version <- function() {
     ver <- Sys.getenv("INSIDE_EMACS")
     if (ver == "") {
       return(NA_integer_)

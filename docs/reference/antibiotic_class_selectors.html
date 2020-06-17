@@ -82,7 +82,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.2.0.9007</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.2.0.9008</span>
       </span>
     </div>
 
@@ -235,7 +235,9 @@
     <p>Use these selection helpers inside any function that allows <a href='https://tidyselect.r-lib.org/reference/language.html'>Tidyverse selections</a>, like <code><a href='https://dplyr.tidyverse.org/reference/select.html'>dplyr::select()</a></code> or <code><a href='https://tidyr.tidyverse.org/reference/pivot_longer.html'>tidyr::pivot_longer()</a></code>. They help to select the columns of antibiotics that are of a specific antibiotic class, without the need to define the columns or antibiotic abbreviations.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>aminoglycosides</span>()
+    <pre class="usage"><span class='fu'>ab_class</span>(<span class='no'>ab_class</span>)
+
+<span class='fu'>aminoglycosides</span>()
 
 <span class='fu'>carbapenems</span>()
 
@@ -261,6 +263,14 @@
 
 <span class='fu'>tetracyclines</span>()</pre>
 
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>ab_class</th>
+      <td><p>an antimicrobial class, like <code>"carbapenems"</code>. The columns <code>group</code>, <code>atc_group1</code> and <code>atc_group2</code> of the <a href='antibiotics.html'>antibiotics</a> data set will be searched (case-insensitive) for this value.</p></td>
+    </tr>
+    </table>
 
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
@@ -277,10 +287,21 @@
   <span class='no'>example_isolates</span> <span class='kw'>%&gt;%</span>
     <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='fu'>carbapenems</span>())
 
-
   <span class='co'># this will select columns 'mo', 'AMK', 'GEN', 'KAN' and 'TOB':</span>
   <span class='no'>example_isolates</span> <span class='kw'>%&gt;%</span>
     <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='no'>mo</span>, <span class='fu'>aminoglycosides</span>())
+
+  <span class='co'># this will select columns 'mo' and all antimycobacterial drugs ('RIF'):</span>
+  <span class='no'>example_isolates</span> <span class='kw'>%&gt;%</span>
+    <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='no'>mo</span>, <span class='fu'>ab_class</span>(<span class='st'>"mycobact"</span>))
+
+
+  <span class='co'># get bug/drug combinations for only macrolides in Gram-positives:</span>
+  <span class='no'>example_isolates</span> <span class='kw'>%&gt;%</span>
+    <span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span>(<span class='fu'><a href='mo_property.html'>mo_gramstain</a></span>(<span class='no'>mo</span>) <span class='kw'>%like%</span> <span class='st'>"pos"</span>) <span class='kw'>%&gt;%</span>
+    <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='no'>mo</span>, <span class='fu'>macrolides</span>()) <span class='kw'>%&gt;%</span>
+    <span class='fu'><a href='bug_drug_combinations.html'>bug_drug_combinations</a></span>() <span class='kw'>%&gt;%</span>
+    <span class='fu'><a href='https://rdrr.io/r/base/format.html'>format</a></span>()
 
 
   <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span>(<span class='kw'>irrelevant</span> <span class='kw'>=</span> <span class='st'>"value"</span>,

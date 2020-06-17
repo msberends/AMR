@@ -83,7 +83,7 @@ The function \code{\link[=resistance]{resistance()}} is equal to the function \c
 
 \strong{Remember that you should filter your table to let it contain only first isolates!} This is needed to exclude duplicates and to reduce selection bias. Use \code{\link[=first_isolate]{first_isolate()}} to determine them in your data set.
 
-These functions are not meant to count isolates, but to calculate the proportion of resistance/susceptibility. Use the \code{count()}][AMR::count()] functions to count isolates. The function \code{\link[=susceptibility]{susceptibility()}} is essentially equal to \code{count_susceptible() / count_all()}. \emph{Low counts can influence the outcome - the \code{proportion} functions may camouflage this, since they only return the proportion (albeit being dependent on the \code{minimum} parameter).}
+These functions are not meant to count isolates, but to calculate the proportion of resistance/susceptibility. Use the \code{\link[AMR:count]{count()}} functions to count isolates. The function \code{\link[=susceptibility]{susceptibility()}} is essentially equal to \code{count_susceptible() / count_all()}. \emph{Low counts can influence the outcome - the \code{proportion} functions may camouflage this, since they only return the proportion (albeit being dependent on the \code{minimum} parameter).}
 
 The function \code{\link[=proportion_df]{proportion_df()}} takes any variable from \code{data} that has an \code{\link{rsi}} class (created with \code{\link[=as.rsi]{as.rsi()}}) and calculates the proportions R, I and S. It also supports grouped variables. The function \code{\link[=rsi_df]{rsi_df()}} works exactly like \code{\link[=proportion_df]{proportion_df()}}, but adds the number of isolates.
 }

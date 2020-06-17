@@ -81,7 +81,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.2.0.9007</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.2.0.9008</span>
       </span>
     </div>
 
@@ -229,9 +229,9 @@
       <small>Source: <a href='https://gitlab.com/msberends/AMR/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
-    <div id="amr-1209007" class="section level1">
-<h1 class="page-header" data-toc-text="1.2.0.9007">
-<a href="#amr-1209007" class="anchor"></a>AMR 1.2.0.9007<small> Unreleased </small>
+    <div id="amr-1209008" class="section level1">
+<h1 class="page-header" data-toc-text="1.2.0.9008">
+<a href="#amr-1209008" class="anchor"></a>AMR 1.2.0.9008<small> Unreleased </small>
 </h1>
 <div id="last-updated-17-jun-2020" class="section level2">
 <h2 class="hasAnchor">
@@ -251,7 +251,12 @@
 
 <span class="fu"><a href="https://dplyr.tidyverse.org/reference/reexports.html">tibble</a></span>(<span class="kw">J01CA01</span> <span class="kw">=</span> <span class="st">"S"</span>) <span class="kw">%&gt;%</span>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span>(<span class="fu"><a href="../reference/antibiotic_class_selectors.html">penicillins</a></span>())
-<span class="co">#&gt; Selecting beta-lactams/penicillins: `J01CA01` (ampicillin)</span></pre></div>
+<span class="co">#&gt; Selecting beta-lactams/penicillins: `J01CA01` (ampicillin)</span>
+
+<span class="co"># select an antibiotic class manually with `ab_class()`</span>
+<span class="no">example_isolates</span> <span class="kw">%&gt;%</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span>(<span class="fu"><a href="../reference/antibiotic_class_selectors.html">ab_class</a></span>(<span class="st">"mycobact"</span>))
+<span class="co">#&gt; Selecting antimycobacterials: `RIF` (rifampicin)</span></pre></div>
 </li>
 </ul>
 </div>
@@ -260,7 +265,7 @@
 <a href="#changed" class="anchor"></a>Changed</h3>
 <ul>
 <li>Fixed a bug where <code><a href="../reference/eucast_rules.html">eucast_rules()</a></code> would not work on a tibble when the <code>tibble</code> or <code>dplyr</code> package was loaded</li>
-<li>All <code>*_join_microorganisms()</code> functions now return the original data class (e.g. tibbles and data.tables)</li>
+<li>All <code>*_join_microorganisms()</code> functions and <code><a href="../reference/bug_drug_combinations.html">bug_drug_combinations()</a></code> now return the original data class (e.g. <code>tibble</code>s and <code>data.table</code>s)</li>
 <li>Fixed a bug where <code><a href="../reference/as.ab.html">as.ab()</a></code> would return an error on invalid input values</li>
 <li>Fixed a bug for using grouped versions of <code><a href="../reference/proportion.html">rsi_df()</a></code>, <code><a href="../reference/proportion.html">proportion_df()</a></code> and <code><a href="../reference/count.html">count_df()</a></code>, and fixed a bug where not all different antimicrobial results were added as rows</li>
 <li>Added function <code><a href="../reference/filter_ab_class.html">filter_penicillins()</a></code> to filter isolates on a specific result in any column with a name in the antimicrobial ‘penicillins’ class (more specific: ATC subgroup <em>Beta-lactam antibacterials, penicillins</em>)</li>
@@ -269,6 +274,7 @@
 <li>Added antibiotics code “FOX1” for cefoxitin screening (abbreviation “cfsc”) to the <code>antibiotics</code> data set</li>
 <li>Improved auto-determination for columns of types <code>&lt;mo&gt;</code> and <code>&lt;Date&gt;</code>
 </li>
+<li>Fixed a bug in <code><a href="../reference/bug_drug_combinations.html">bug_drug_combinations()</a></code> for when only one antibiotic was in the input data</li>
 </ul>
 </div>
 </div>

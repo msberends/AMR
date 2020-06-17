@@ -2,6 +2,7 @@
 % Please edit documentation in R/ab_class_selectors.R
 \name{antibiotic_class_selectors}
 \alias{antibiotic_class_selectors}
+\alias{ab_class}
 \alias{aminoglycosides}
 \alias{carbapenems}
 \alias{cephalosporins}
@@ -17,6 +18,8 @@
 \alias{tetracyclines}
 \title{Antibiotic class selectors}
 \usage{
+ab_class(ab_class)
+
 aminoglycosides()
 
 carbapenems()
@@ -43,6 +46,9 @@ penicillins()
 
 tetracyclines()
 }
+\arguments{
+\item{ab_class}{an antimicrobial class, like \code{"carbapenems"}. The columns \code{group}, \code{atc_group1} and \code{atc_group2} of the \link{antibiotics} data set will be searched (case-insensitive) for this value.}
+}
 \description{
 Use these selection helpers inside any function that allows \href{https://tidyselect.r-lib.org/reference/language.html}{Tidyverse selections}, like \code{dplyr::select()} or \code{tidyr::pivot_longer()}. They help to select the columns of antibiotics that are of a specific antibiotic class, without the need to define the columns or antibiotic abbreviations.
 }
@@ -58,16 +64,27 @@ if (require("dplyr")) {
   example_isolates \%>\% 
     select(carbapenems())
     
-    
   # this will select columns 'mo', 'AMK', 'GEN', 'KAN' and 'TOB':
   example_isolates \%>\% 
     select(mo, aminoglycosides())
+    
+  # this will select columns 'mo' and all antimycobacterial drugs ('RIF'):
+  example_isolates \%>\% 
+    select(mo, ab_class("mycobact"))
+    
+    
+  # get bug/drug combinations for only macrolides in Gram-positives:
+  example_isolates \%>\% 
+    filter(mo_gramstain(mo) \%like\% "pos") \%>\% 
+    select(mo, macrolides()) \%>\% 
+    bug_drug_combinations() \%>\%
+    format()
     
     
   data.frame(irrelevant = "value",
              J01CA01 = "S") \%>\%   # ATC code of ampicillin
     select(penicillins())         # so the 'J01CA01' column is selected
-    
+
 }
 }
 \seealso{

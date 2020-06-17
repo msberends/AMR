@@ -26,10 +26,10 @@
 #' Lifecycles of functions in the `AMR` package
 #' @name lifecycle
 #' @rdname lifecycle
-#' @description Functions in this `AMR` package are categorised using [the lifecycle circle of the `tidyverse` as found on www.tidyverse.org/lifecycle](https://www.tidyverse.org/lifecycle).
+#' @description Functions in this `AMR` package are categorised using [the lifecycle circle of the Tidyverse as found on www.tidyverse.org/lifecycle](https://www.Tidyverse.org/lifecycle).
 #' 
-#' \if{html}{\figure{lifecycle_tidyverse.svg}{options: height=200px style=margin-bottom:5px} \cr}
-#' This page contains a section for every lifecycle (with text borrowed from the aforementioned `tidyverse` website), so they can be used in the manual pages of the functions. 
+#' \if{html}{\figure{lifecycle_Tidyverse.svg}{options: height=200px style=margin-bottom:5px} \cr}
+#' This page contains a section for every lifecycle (with text borrowed from the aforementioned Tidyverse website), so they can be used in the manual pages of the functions. 
 #' @section Experimental lifecycle:
 #' \if{html}{\figure{lifecycle_experimental.svg}{options: style=margin-bottom:5px} \cr}
 #' The [lifecycle][AMR::lifecycle] of this function is **experimental**. An experimental function is in early stages of development. The unlying code might be changing frequently. Experimental functions might be removed without deprecation, so you are generally best off waiting until a function is more mature before you use it in production code. Experimental functions are only available in development versions of this `AMR` package and will thus not be included in releases that are submitted to CRAN, since such functions have not yet matured enough.

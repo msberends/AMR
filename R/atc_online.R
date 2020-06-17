@@ -76,15 +76,14 @@ atc_online_property <- function(atc_code,
                                 administration = "O",
                                 url = "https://www.whocc.no/atc_ddd_index/?code=%s&showdescription=no") {
   
-  stopifnot_installed_package(c("curl", "rvest", "xml2"))
-  has_internet <- get("has_internet", envir = asNamespace("curl"))
-  html_attr <- get("html_attr", envir = asNamespace("rvest"))
-  html_children <- get("html_children", envir = asNamespace("rvest"))
-  html_node <- get("html_node", envir = asNamespace("rvest"))
-  html_nodes <- get("html_nodes", envir = asNamespace("rvest"))
-  html_table <- get("html_table", envir = asNamespace("rvest"))
-  html_text <- get("html_text", envir = asNamespace("rvest"))
-  read_html <- get("read_html", envir = asNamespace("xml2"))
+  has_internet <- import_fn("has_internet", "curl")
+  html_attr <- import_fn("html_attr", "rvest")
+  html_children <- import_fn("html_children", "rvest")
+  html_node <- import_fn("html_node", "rvest")
+  html_nodes <- import_fn("html_nodes", "rvest")
+  html_table <- import_fn("html_table", "rvest")
+  html_text <- import_fn("html_text", "rvest")
+  read_html <- import_fn("read_html", "xml2")
 
   check_dataset_integrity()
   

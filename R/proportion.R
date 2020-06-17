@@ -40,7 +40,7 @@
 #'  
 #' **Remember that you should filter your table to let it contain only first isolates!** This is needed to exclude duplicates and to reduce selection bias. Use [first_isolate()] to determine them in your data set.
 #'
-#' These functions are not meant to count isolates, but to calculate the proportion of resistance/susceptibility. Use the `count()`][AMR::count()] functions to count isolates. The function [susceptibility()] is essentially equal to `count_susceptible() / count_all()`. *Low counts can influence the outcome - the `proportion` functions may camouflage this, since they only return the proportion (albeit being dependent on the `minimum` parameter).*
+#' These functions are not meant to count isolates, but to calculate the proportion of resistance/susceptibility. Use the [`count()`][AMR::count()] functions to count isolates. The function [susceptibility()] is essentially equal to `count_susceptible() / count_all()`. *Low counts can influence the outcome - the `proportion` functions may camouflage this, since they only return the proportion (albeit being dependent on the `minimum` parameter).*
 #'
 #' The function [proportion_df()] takes any variable from `data` that has an [`rsi`] class (created with [as.rsi()]) and calculates the proportions R, I and S. It also supports grouped variables. The function [rsi_df()] works exactly like [proportion_df()], but adds the number of isolates.
 #' @section Combination therapy:

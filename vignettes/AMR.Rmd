@@ -190,7 +190,7 @@ Finally, we will apply [EUCAST rules](http://www.eucast.org/expert_rules_and_int
 Because the amoxicillin (column `AMX`) and amoxicillin/clavulanic acid (column `AMC`) in our data were generated randomly, some rows will undoubtedly contain AMX = S and AMC = R, which is technically impossible. The `eucast_rules()` fixes this:
 
 ```{r eucast, warning = FALSE, message = FALSE}
-data <- eucast_rules(data, col_mo = "bacteria")
+data <- eucast_rules(data, col_mo = "bacteria", rules = "all")
 ```
 
 # Adding new variables
@@ -331,6 +331,41 @@ data_1st %>% freq(genus, species)
 data_1st %>% 
   freq(genus, species, header = TRUE)
 ```
+
+## Overview of different bug/drug combinations
+
+If you want to get a quick glance of the number of isolates in different bug/drug combinations, you can use the `bug_drug_combinations()` function:
+
+```{r bug_drg 1a, eval = FALSE}
+data_1st %>% 
+  bug_drug_combinations() %>% 
+  head() # show first 6 rows
+```
+
+```{r bug_drg 1b, echo = FALSE, results = 'asis'}
+knitr::kable(data_1st %>% 
+               bug_drug_combinations() %>% 
+               head(),
+             align = "c")
+```
+
+Using [Tidyverse selections](https://tidyselect.r-lib.org/reference/language.html), you can also select columns based on the antibiotic class they are in:
+
+```{r bug_drg 2a, eval = FALSE}
+data_1st %>% 
+  select(bacteria, fluoroquinolones()) %>% 
+  bug_drug_combinations()
+```
+
+
+```{r bug_drg 2b, echo = FALSE, results = 'asis'}
+knitr::kable(data_1st %>% 
+               select(bacteria, fluoroquinolones()) %>% 
+               bug_drug_combinations(),
+             align = "c")
+```
+
+This will only give you the crude numbers in the data. To calculate antimicrobial resistance, we use the `resistance()` and `susceptibility()` functions.
 
 ## Resistance percentages
 

@@ -152,7 +152,7 @@
 #' \dontrun{
 #' df$mo <- as.mo(df$microorganism_name)
 #'
-#' # the select function of tidyverse is also supported:
+#' # the select function of the Tidyverse is also supported:
 #' library(dplyr)
 #' df$mo <- df %>%
 #'   select(microorganism_name) %>%
@@ -1805,13 +1805,13 @@ parse_and_convert <- function(x) {
       if (NCOL(x) > 2) {
         stop("A maximum of two columns is allowed.", call. = FALSE)
       } else if (NCOL(x) == 2) {
-        # support tidyverse selection like: df %>% select(colA, colB)
+        # support Tidyverse selection like: df %>% select(colA, colB)
         # paste these columns together
         x <- as.data.frame(x, stringsAsFactors = FALSE)
         colnames(x) <- c("A", "B")
         x <- paste(x$A, x$B)
       } else {
-        # support tidyverse selection like: df %>% select(colA)
+        # support Tidyverse selection like: df %>% select(colA)
         x <- as.data.frame(x, stringsAsFactors = FALSE)[[1]]
       }
     }
