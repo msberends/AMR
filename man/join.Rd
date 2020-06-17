@@ -30,13 +30,13 @@ anti_join_microorganisms(x, by = NULL, ...)
 
 \item{suffix}{if there are non-joined duplicate variables in \code{x} and \code{y}, these suffixes will be added to the output to disambiguate them. Should be a character vector of length 2.}
 
-\item{...}{other parameters to pass on to \code{\link[dplyr:join]{dplyr::join()}}}
+\item{...}{ignored}
 }
 \description{
 Join the data set \link{microorganisms} easily to an existing table or character vector.
 }
 \details{
-\strong{Note:} As opposed to the \code{\link[=join]{join()}} functions of \code{dplyr}, \code{\link{character}} vectors are supported and at default existing columns will get a suffix \code{"2"} and the newly joined columns will not get a suffix.
+\strong{Note:} As opposed to the \code{join()} functions of \code{dplyr}, \code{\link{character}} vectors are supported and at default existing columns will get a suffix \code{"2"} and the newly joined columns will not get a suffix.
 
 These functions rely on \code{\link[=merge]{merge()}}, a base R function to do joins.
 }

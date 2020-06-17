@@ -165,7 +165,7 @@ resistance_predict <- function(x,
   year <- function(x) {
     # don't depend on lubridate or so, would be overkill for only this function
     if (all(grepl("^[0-9]{4}$", x))) {
-      x
+      as.integer(x)
     } else {
       as.integer(format(as.Date(x), "%Y"))
     }
