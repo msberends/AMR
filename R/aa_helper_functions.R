@@ -182,14 +182,14 @@ search_type_in_df <- function(x, type) {
 stopifnot_installed_package <- function(package) {
   # no "utils::installed.packages()" since it requires non-staged install since R 3.6.0
   # https://developer.r-project.org/Blog/public/2019/02/14/staged-install/index.html
-  sapply(package, function(x)
-    tryCatch(get(".packageName", envir = asNamespace(x)),
+  sapply(package, function(pkg)
+    tryCatch(get(".packageName", envir = asNamespace(pkg)),
              error = function(e) { 
                if (package == "rstudioapi") {
                  stop("This function only works in RStudio.", call. = FALSE)
-               } else {
-                 stop("package '", x, "' required but not installed.",
-                      "\nTry to install it with: install.packages(\"", x, "\")",
+               } else if (pkg != "base") {
+                 stop("package '", pkg, "' required but not installed.",
+                      "\nTry to install it with: install.packages(\"", pkg, "\")",
                       call. = FALSE)
                }
              }))
