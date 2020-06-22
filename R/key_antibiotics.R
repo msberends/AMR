@@ -136,9 +136,7 @@ key_antibiotics <- function(x,
   if (is.null(col_mo)) {
     col_mo <- search_type_in_df(x = x, type = "mo")
   }
-  if (is.null(col_mo)) {
-    stop("`col_mo` must be set.", call. = FALSE)
-  }
+  stop_if(is.null(col_mo), "`col_mo` must be set")
 
   # check columns
   col.list <- c(universal_1, universal_2, universal_3, universal_4, universal_5, universal_6,
@@ -260,9 +258,7 @@ key_antibiotics_equal <- function(y,
 
   type <- type[1]
 
-  if (length(x) != length(y)) {
-    stop("Length of `x` and `y` must be equal.")
-  }
+  stop_ifnot(length(x) == length(y), "length of `x` and `y` must be equal")
 
   # only show progress bar on points or when at least 5000 isolates
   info_needed <- info == TRUE & (type == "points" | length(x) > 5000)

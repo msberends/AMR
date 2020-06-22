@@ -106,15 +106,13 @@ mdro <- function(x,
     }
   }
   
-  if (!is.data.frame(x)) {
-    stop("`x` must be a data frame.", call. = FALSE)
-  }
+  stop_ifnot(is.data.frame(x), "`x` must be a data.frame")
+  stop_if(any(dim(x) == 0), "`x` must contain rows and columns")
+  
   # force regular data.frame, not a tibble or data.table
   x <- as.data.frame(x, stringsAsFactors = FALSE)
   
-  if (!is.numeric(pct_required_classes)) {
-    stop("`pct_required_classes` must be numeric.", call. = FALSE)
-  }
+  stop_ifnot(is.numeric(pct_required_classes), "`pct_required_classes` must be numeric")
   if (pct_required_classes > 1) {
     # allow pct_required_classes = 75 -> pct_required_classes = 0.75
     pct_required_classes <- pct_required_classes / 100
@@ -124,9 +122,7 @@ mdro <- function(x,
     warning("Using `country` is deprecated, use `guideline` instead. Please see ?mdro.", call. = FALSE)
     guideline <- list(...)$country
   }
-  if (length(guideline) > 1) {
-    stop("`guideline` must be a length one character string.", call. = FALSE)
-  }
+  stop_ifnot(length(guideline) == 1, "`guideline` must be of length 1")
   
   if (is.null(guideline)) {
     # default to the paper by Magiorakos et al. (2012)
@@ -138,9 +134,8 @@ mdro <- function(x,
   if (tolower(guideline) == "de") {
     guideline <- "MRGN"
   }
-  if (!tolower(guideline) %in% c("brmo", "mrgn", "eucast", "tb", "cmi2012")) {
-    stop("invalid guideline: ", guideline, call. = FALSE)
-  }
+  stop_ifnot(tolower(guideline) %in% c("brmo", "mrgn", "eucast", "tb", "cmi2012"),
+             "invalid guideline: ", guideline)
   guideline <- list(code = tolower(guideline))
   
   # try to find columns based on type
@@ -154,9 +149,7 @@ mdro <- function(x,
     x$mo <- as.mo("Mycobacterium tuberculosis")
     col_mo <- "mo"
   }
-  if (is.null(col_mo)) {
-    stop("`col_mo` must be set.", call. = FALSE)
-  }
+  stop_if(is.null(col_mo), "`col_mo` must be set")
   
   if (guideline$code == "cmi2012") {
     guideline$name <- "Multidrug-resistant, extensively drug-resistant and pandrug-resistant bacteria: an international expert proposal for interim standard definitions for acquired resistance."
@@ -417,9 +410,7 @@ mdro <- function(x,
   RFP <- cols_ab["RFP"]
   abx_tb <- c(CAP, ETH, GAT, INH, PZA, RIF, RIB, RFP)
   abx_tb <- abx_tb[!is.na(abx_tb)]
-  if (guideline$code == "tb" & length(abx_tb) == 0) {
-    stop("No antimycobacterials found in data set.", call. = FALSE)
-  }
+  stop_if(guideline$code == "tb" & length(abx_tb) == 0, "no antimycobacterials found in data set")
   
   if (combine_SI == TRUE) {
     search_result <- "R"

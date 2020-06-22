@@ -108,11 +108,10 @@ translate_AMR <- function(from, language = get_locale(), only_unknown = FALSE) {
   
   df_trans <- translations_file # internal data file
   
-  if (!language %in% df_trans$lang) {
-    stop("Unsupported language: '", language, "' - use one of: ",
-         paste0("'", sort(unique(df_trans$lang)), "'", collapse = ", "),
-         call. = FALSE)
-  }
+  stop_ifnot(language %in% df_trans$lang,
+             "unsupported language: '", language, "' - use one of: ",
+             paste0("'", sort(unique(df_trans$lang)), "'", collapse = ", "),
+             call = FALSE)
   
   df_trans <- df_trans %>% subset(lang == language)
   if (only_unknown == TRUE) {

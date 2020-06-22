@@ -46,6 +46,7 @@
 #'   availability()
 #' }
 availability <- function(tbl, width = NULL) {
+  stop_ifnot(is.data.frame(tbl), "`tbl` must be a data.frame")
   x <- base::sapply(tbl, function(x) {
     1 - base::sum(base::is.na(x)) / base::length(x) 
   })

@@ -209,12 +209,11 @@ as.rsi.default <- function(x, ...) {
 #' @rdname as.rsi
 #' @export
 as.rsi.mic <- function(x, mo, ab = deparse(substitute(x)), guideline = "EUCAST", uti = FALSE, ...) {
-  if (missing(mo)) {
-    stop('No information was supplied about the microorganisms (missing parameter "mo"). See ?as.rsi.\n\n',
-         "To transform certain columns with e.g. mutate_at(), use\n",
-         "`data %>% mutate_at(vars(...), as.rsi, mo = .$x)`, where x is your column with microorganisms.\n\n",
-         "To tranform all MIC variables in a data set, use `as.rsi(data)` or `data %>% as.rsi()`.", call. = FALSE)
-  }
+  stop_if(missing(mo),
+          'No information was supplied about the microorganisms (missing parameter "mo"). See ?as.rsi.\n\n',
+          "To transform certain columns with e.g. mutate_at(), use\n",
+          "`data %>% mutate_at(vars(...), as.rsi, mo = .$x)`, where x is your column with microorganisms.\n\n",
+          "To tranform all MIC variables in a data set, use `as.rsi(data)` or `data %>% as.rsi()`.", call = FALSE)
   
   ab_coerced <- suppressWarnings(as.ab(ab))
   mo_coerced <- suppressWarnings(as.mo(mo))
@@ -246,12 +245,11 @@ as.rsi.mic <- function(x, mo, ab = deparse(substitute(x)), guideline = "EUCAST",
 #' @rdname as.rsi
 #' @export
 as.rsi.disk <- function(x, mo, ab = deparse(substitute(x)), guideline = "EUCAST", uti = FALSE, ...) {
-  if (missing(mo)) {
-    stop('No information was supplied about the microorganisms (missing parameter "mo"). See ?as.rsi.\n\n',
-         "To transform certain columns with e.g. mutate_at(), use\n",
-         "`data %>% mutate_at(vars(...), as.rsi, mo = .$x)`, where x is your column with microorganisms.\n\n",
-         "To tranform all disk diffusion zones in a data set, use `as.rsi(data)` or `data %>% as.rsi()`.", call. = FALSE)
-  }
+  stop_if(missing(mo),
+          'No information was supplied about the microorganisms (missing parameter "mo"). See ?as.rsi.\n\n',
+          "To transform certain columns with e.g. mutate_at(), use\n",
+          "`data %>% mutate_at(vars(...), as.rsi, mo = .$x)`, where x is your column with microorganisms.\n\n",
+          "To tranform all disk diffusion zones in a data set, use `as.rsi(data)` or `data %>% as.rsi()`.", call = FALSE)
   
   ab_coerced <- suppressWarnings(as.ab(ab))
   mo_coerced <- suppressWarnings(as.mo(mo))
@@ -287,10 +285,9 @@ as.rsi.data.frame <- function(x, col_mo = NULL, guideline = "EUCAST", uti = NULL
   # -- mo
   if (is.null(col_mo)) {
     col_mo <- search_type_in_df(x = x, type = "mo")
+    stop_if(is.null(col_mo), "`col_mo` must be set")
   }
-  if (is.null(col_mo)) {
-    stop("`col_mo` must be set.", call. = FALSE)
-  }
+  
   # -- UTIs
   col_uti <- uti
   if (is.null(col_uti)) {
@@ -353,9 +350,8 @@ as.rsi.data.frame <- function(x, col_mo = NULL, guideline = "EUCAST", uti = NULL
     }
   })]
   
-  if (length(ab_cols) == 0) {
-    stop("No columns with MIC values or disk zones found in this data set. Use as.mic() or as.disk() to transform antimicrobial columns.", call. = FALSE)
-  }
+  stop_if(length(ab_cols) == 0,
+          "no columns with MIC values or disk zones found in this data set. Use as.mic() or as.disk() to transform antimicrobial columns.")
   
   # set type per column
   types <- character(length(ab_cols))
@@ -393,11 +389,9 @@ get_guideline <- function(guideline) {
     guideline_param <- gsub("([a-z]+)([0-9]+)", "\\1 \\2", guideline_param, ignore.case = TRUE)
   }
   
-  if (!guideline_param %in% rsi_translation$guideline) {
-    stop(paste0("invalid guideline: '", guideline,
-                "'.\nValid guidelines are: ", paste0("'", unique(rsi_translation$guideline), "'", collapse = ", "), "."),
-         call. = FALSE)
-  }
+  stop_ifnot(guideline_param %in% rsi_translation$guideline,
+             "invalid guideline: '", guideline,
+             "'.\nValid guidelines are: ", paste0("'", unique(rsi_translation$guideline), "'", collapse = ", "), call = FALSE)
   
   guideline_param
   
@@ -503,9 +497,8 @@ is.rsi <- function(x) {
 #' @rdname as.rsi
 #' @export
 is.rsi.eligible <- function(x, threshold = 0.05) {
-  if (NCOL(x) > 1) {
-    stop("`x` must be a one-dimensional vector.")
-  }
+  stop_if(NCOL(x) > 1, "`x` must be a one-dimensional vector.")
+  
   if (any(c("logical",
             "numeric",
             "integer",
@@ -551,13 +544,16 @@ droplevels.rsi <- function(x, exclude = if (anyNA(levels(x))) NULL else NA, ...)
 #' @noRd
 summary.rsi <- function(object, ...) {
   x <- object
+  n <- sum(!is.na(x))
+  S <- sum(x == "S", na.rm = TRUE)
+  I <- sum(x == "I", na.rm = TRUE)
+  R <- sum(x == "R", na.rm = TRUE)
   c(
     "Class" = "rsi",
-    "<NA>" = sum(is.na(x)),
-    "Sum S" = sum(x == "S", na.rm = TRUE),
-    "Sum IR" = sum(x %in% c("I", "R"), na.rm = TRUE),
-    "-Sum R" = sum(x == "R", na.rm = TRUE),
-    "-Sum I" = sum(x == "I", na.rm = TRUE)
+    "%R" = paste0(percentage(R / n), " (n=", R, ")"),
+    "%SI" = paste0(percentage((S + I) / n), " (n=", S + I, ")"),
+    "- %S" = paste0(percentage(S / n), " (n=", S, ")"),
+    "- %I" = paste0(percentage(I / n), " (n=", I, ")")
   )
 }
 

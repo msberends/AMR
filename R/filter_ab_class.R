@@ -71,10 +71,7 @@ filter_ab_class <- function(x,
                             ...) {
   
   check_dataset_integrity()
-  
-  if (!is.data.frame(x)) {
-    stop("`x` must be a data frame.", call. = FALSE)
-  }
+  stop_ifnot(is.data.frame(x), "`x` must be a data frame")
   
   # save to return later
   x_class <- class(x)
@@ -88,12 +85,8 @@ filter_ab_class <- function(x,
   # make result = "SI" works too:
   result <- unlist(strsplit(result, ""))
   
-  if (!all(result %in% c("S", "I", "R"))) {
-    stop("`result` must be one or more of: S, I, R", call. = FALSE)
-  }
-  if (!all(scope %in% c("any", "all"))) {
-    stop("`scope` must be one of: any, all", call. = FALSE)
-  }
+  stop_ifnot(all(result %in% c("S", "I", "R")), "`result` must be one or more of: S, I, R")
+  stop_ifnot(all(scope %in% c("any", "all")), "`scope` must be one of: any, all")
   
   # get all columns in data with names that resemble antibiotics
   ab_in_data <- suppressMessages(get_column_abx(x))

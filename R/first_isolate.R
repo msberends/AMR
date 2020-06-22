@@ -156,9 +156,9 @@ first_isolate <- function(x,
     }
   }
   
-  if (!is.data.frame(x)) {
-    stop("`x` must be a data.frame.", call. = FALSE)
-  }
+  stop_ifnot(is.data.frame(x), "`x` must be a data.frame")
+  stop_if(any(dim(x) == 0), "`x` must contain rows and columns")
+  
   # remove data.table, grouping from tibbles, etc.
   x <- as.data.frame(x, stringsAsFactors = FALSE)
   
@@ -166,17 +166,13 @@ first_isolate <- function(x,
   # -- mo
   if (is.null(col_mo)) {
     col_mo <- search_type_in_df(x = x, type = "mo")
-    if (is.null(col_mo)) {
-      stop("`col_mo` must be set.", call. = FALSE)
-    }
+    stop_if(is.null(col_mo), "`col_mo` must be set")
   }
   
   # -- date
   if (is.null(col_date)) {
     col_date <- search_type_in_df(x = x, type = "date")
-    if (is.null(col_date)) {
-      stop("`col_date` must be set.", call. = FALSE)
-    }
+    stop_if(is.null(col_date), "`col_date` must be set")
   }
   # convert to Date
   dates <- as.Date(x[, col_date, drop = TRUE])
@@ -193,9 +189,7 @@ first_isolate <- function(x,
     } else {
       col_patient_id <- search_type_in_df(x = x, type = "patient_id")
     }
-    if (is.null(col_patient_id)) {
-      stop("`col_patient_id` must be set.", call. = FALSE)
-    }
+    stop_if(is.null(col_patient_id), "`col_patient_id` must be set")
   }
   
   # -- key antibiotics
@@ -216,14 +210,9 @@ first_isolate <- function(x,
   
   # check if columns exist
   check_columns_existance <- function(column, tblname = x) {
-    if (NROW(tblname) <= 1 | NCOL(tblname) <= 1) {
-      stop("Please check tbl for existance.")
-    }
-    
     if (!is.null(column)) {
-      if (!(column %in% colnames(tblname))) {
-        stop("Column `", column, "` not found.")
-      }
+      stop_ifnot(column %in% colnames(tblname),
+                 "Column `", column, "` not found.", call = FALSE)
     }
   }
   

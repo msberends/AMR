@@ -95,22 +95,22 @@ ggplot_pca <- function(x,
                        base_textsize = 10,
                        ...) {
   
-  stopifnot_installed_package("ggplot2")
-  stopifnot_msg(length(choices) == 2, "`choices` must be of length 2")
-  stopifnot_msg(is.logical(scale), "`scale` must be TRUE or FALSE")
-  stopifnot_msg(is.logical(pc.biplot), "`pc.biplot` must be TRUE or FALSE")
-  stopifnot_msg(is.numeric(choices), "`choices` must be numeric")
-  stopifnot_msg(is.numeric(labels_textsize), "`labels_textsize` must be numeric")
-  stopifnot_msg(is.numeric(labels_text_placement), "`labels_text_placement` must be numeric")
-  stopifnot_msg(is.logical(ellipse), "`ellipse` must be TRUE or FALSE")
-  stopifnot_msg(is.numeric(ellipse_prob), "`ellipse_prob` must be numeric")
-  stopifnot_msg(is.numeric(ellipse_size), "`ellipse_size` must be numeric")
-  stopifnot_msg(is.numeric(ellipse_alpha), "`ellipse_alpha` must be numeric")
-  stopifnot_msg(is.logical(arrows), "`arrows` must be TRUE or FALSE")
-  stopifnot_msg(is.numeric(arrows_size), "`arrows_size` must be numeric")
-  stopifnot_msg(is.numeric(arrows_textsize), "`arrows_textsize` must be numeric")
-  stopifnot_msg(is.numeric(arrows_alpha), "`arrows_alpha` must be numeric")
-  stopifnot_msg(is.numeric(base_textsize), "`base_textsize` must be numeric")
+  stop_ifnot_installed("ggplot2")
+  stop_ifnot(length(choices) == 2, "`choices` must be of length 2")
+  stop_ifnot(is.logical(scale), "`scale` must be TRUE or FALSE")
+  stop_ifnot(is.logical(pc.biplot), "`pc.biplot` must be TRUE or FALSE")
+  stop_ifnot(is.numeric(choices), "`choices` must be numeric")
+  stop_ifnot(is.numeric(labels_textsize), "`labels_textsize` must be numeric")
+  stop_ifnot(is.numeric(labels_text_placement), "`labels_text_placement` must be numeric")
+  stop_ifnot(is.logical(ellipse), "`ellipse` must be TRUE or FALSE")
+  stop_ifnot(is.numeric(ellipse_prob), "`ellipse_prob` must be numeric")
+  stop_ifnot(is.numeric(ellipse_size), "`ellipse_size` must be numeric")
+  stop_ifnot(is.numeric(ellipse_alpha), "`ellipse_alpha` must be numeric")
+  stop_ifnot(is.logical(arrows), "`arrows` must be TRUE or FALSE")
+  stop_ifnot(is.numeric(arrows_size), "`arrows_size` must be numeric")
+  stop_ifnot(is.numeric(arrows_textsize), "`arrows_textsize` must be numeric")
+  stop_ifnot(is.numeric(arrows_alpha), "`arrows_alpha` must be numeric")
+  stop_ifnot(is.numeric(base_textsize), "`base_textsize` must be numeric")
   
   calculations <- pca_calculations(pca_model = x,
                                    groups = groups, 

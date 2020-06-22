@@ -217,26 +217,17 @@ eucast_rules <- function(x,
     }
   }
   
-  if (!is.data.frame(x)) {
-    stop("`x` must be a data frame.", call. = FALSE)
-  }
+  stop_ifnot(is.data.frame(x), "`x` must be a data frame")
   
   # try to find columns based on type
   # -- mo
   if (is.null(col_mo)) {
     col_mo <- search_type_in_df(x = x, type = "mo")
   }
-  if (is.null(col_mo)) {
-    stop("`col_mo` must be set.", call. = FALSE)
-  }
+  stop_if(is.null(col_mo), "`col_mo` must be set")
   
-  if (!all(rules %in% c("breakpoints", "expert", "other", "all"))) {
-    stop('`rules` must be one or more of: "breakpoints", "expert", "other", "all".')
-  }
-  
-  if (is.null(col_mo)) {
-    stop("`col_mo` must be set")
-  }
+  stop_ifnot(all(rules %in% c("breakpoints", "expert", "other", "all")),
+             '`rules` must be one or more of: "breakpoints", "expert", "other", "all".')
   
   decimal.mark <- getOption("OutDec")
   big.mark <- ifelse(decimal.mark != ",", ",", ".")

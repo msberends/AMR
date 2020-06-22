@@ -157,9 +157,7 @@ ab_loinc <- function(x, ...) {
 #' @rdname ab_property
 #' @export
 ab_ddd <- function(x, administration = "oral", units = FALSE, ...) {
-  if (!administration %in% c("oral", "iv")) {
-    stop("`administration` must be 'oral' or 'iv'", call. = FALSE)
-  }
+  stop_ifnot(administration %in% c("oral", "iv"), "`administration` must be 'oral' or 'iv'")
   ddd_prop <- administration
   if (units == TRUE) {
     ddd_prop <- paste0(ddd_prop, "_units")
@@ -215,12 +213,9 @@ ab_url <- function(x, open = FALSE, ...) {
 #' @rdname ab_property
 #' @export
 ab_property <- function(x, property = "name", language = get_locale(), ...) {
-  if (length(property) != 1L) {
-    stop("'property' must be of length 1.")
-  }
-  if (!property %in% colnames(antibiotics)) {
-    stop("invalid property: '", property, "' - use a column name of the `antibiotics` data set")
-  }
+  stop_if(length(property) != 1L, "'property' must be of length 1.")
+  stop_ifnot(property %in% colnames(antibiotics),
+             "invalid property: '", property, "' - use a column name of the `antibiotics` data set")
 
   translate_AMR(ab_validate(x = x, property = property, ...), language = language)
 }

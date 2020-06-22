@@ -61,9 +61,8 @@ pca <- function(x,
                 tol = NULL,
                 rank. = NULL) {
   
-  if (!is.data.frame(x)) {
-    stop("this function only takes a data.frame as input")
-  }
+  stop_ifnot(is.data.frame(x), "`x` must be a data.frame")
+  stop_if(any(dim(x) == 0), "`x` must contain rows and columns")
   
   # unset data.table, tibble, etc.
   # also removes groups made by dplyr::group_by

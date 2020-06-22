@@ -96,12 +96,8 @@ atc_online_property <- function(atc_code,
     return(rep(NA, length(atc_code)))
   }
 
-  if (length(property) != 1L) {
-    stop("`property` must be of length 1", call. = FALSE)
-  }
-  if (length(administration) != 1L) {
-    stop("`administration` must be of length 1", call. = FALSE)
-  }
+  stop_if(length(property) != 1L, "`property` must be of length 1")
+  stop_if(length(administration) != 1L, "`administration` must be of length 1")
 
   # also allow unit as property
   if (property %like% "unit") {
@@ -115,9 +111,8 @@ atc_online_property <- function(atc_code,
   property <- tolower(property)
   valid_properties <- tolower(valid_properties)
 
-  if (!property %in% valid_properties) {
-    stop("Invalid `property`, use one of ", paste(valid_properties.bak, collapse = ", "), ".")
-  }
+  stop_ifnot(property %in% valid_properties,
+             "Invalid `property`, use one of ", paste(valid_properties.bak, collapse = ", "))
 
   if (property == "ddd") {
     returnvalue <- rep(NA_real_, length(atc_code))

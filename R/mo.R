@@ -350,9 +350,8 @@ exec_as.mo <- function(x,
   
   # defined df to check for
   if (!is.null(reference_df)) {
-    if (!mo_source_isvalid(reference_df)) {
-      stop("`reference_df` must contain a column `mo` with values from the 'microorganisms' data set.", call. = FALSE)
-    }
+    mo_source_isvalid(reference_df)
+    
     reference_df <- reference_df %>% filter(!is.na(mo))
     # keep only first two columns, second must be mo
     if (colnames(reference_df)[1] == "mo") {
@@ -1760,9 +1759,8 @@ translate_allow_uncertain <- function(allow_uncertain) {
     allow_uncertain[tolower(allow_uncertain) == "none"] <- 0
     allow_uncertain[tolower(allow_uncertain) == "all"] <- 3
     allow_uncertain <- as.integer(allow_uncertain)
-    if (!allow_uncertain %in% c(0:3)) {
-      stop('`allow_uncertain` must be a number between 0 (or "none") and 3 (or "all"), or TRUE (= 2) or FALSE (= 0).', call. = FALSE)
-    }
+    stop_ifnot(allow_uncertain %in% c(0:3),
+               '`allow_uncertain` must be a number between 0 (or "none") and 3 (or "all"), or TRUE (= 2) or FALSE (= 0)', call = FALSE)
   }
   allow_uncertain
 }
@@ -1803,7 +1801,7 @@ parse_and_convert <- function(x) {
   tryCatch({
     if (!is.null(dim(x))) {
       if (NCOL(x) > 2) {
-        stop("A maximum of two columns is allowed.", call. = FALSE)
+        stop("a maximum of two columns is allowed", call. = FALSE)
       } else if (NCOL(x) == 2) {
         # support Tidyverse selection like: df %>% select(colA, colB)
         # paste these columns together

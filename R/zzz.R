@@ -23,11 +23,11 @@
   assign(x = "MO_lookup",
          value = create_MO_lookup(),
          envir = asNamespace("AMR"))
-
+  
   assign(x = "MO.old_lookup",
          value = create_MO.old_lookup(),
          envir = asNamespace("AMR"))
-
+  
   assign(x = "mo_codes_v0.5.0",
          value = make_trans_tbl(),
          envir = asNamespace("AMR"))
@@ -47,10 +47,10 @@ create_MO_lookup <- function() {
   # use this paste instead of `fullname` to
   # work with Viridans Group Streptococci, etc.
   MO_lookup$fullname_lower <- tolower(trimws(paste(MO_lookup$genus, 
-                                                          MO_lookup$species,
-                                                          MO_lookup$subspecies)))
+                                                   MO_lookup$species,
+                                                   MO_lookup$subspecies)))
   MO_lookup[MO_lookup$genus == "" | grepl("^[(]unknown ", MO_lookup$fullname), "fullname_lower"] <- tolower(trimws(MO_lookup[MO_lookup$genus == "" | grepl("^[(]unknown ", MO_lookup$fullname), 
-                                                                                                      "fullname"]))
+                                                                                                                             "fullname"]))
   MO_lookup$fullname_lower <- gsub("[^.a-z0-9/ \\-]+", "", MO_lookup$fullname_lower)
   
   # add a column with only "e coli" like combinations

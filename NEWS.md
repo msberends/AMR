@@ -1,11 +1,12 @@
-# AMR 1.2.0.9010
-## <small>Last updated: 17-Jun-2020</small>
+# AMR 1.2.0.9011
+## <small>Last updated: 22-Jun-2020</small>
 
 ### New
-* [Tidyverse selections](https://tidyselect.r-lib.org/reference/language.html), that help to select the columns of antibiotics that are of a specific antibiotic class, without the need to define the columns or antibiotic abbreviations. They can be used in any function that allows Tidyverse selections, like `dplyr::select()` and `tidyr::pivot_longer()`:
+* [Tidyverse selections](https://tidyselect.r-lib.org/reference/language.html) for antibiotic classes, that help to select the columns of antibiotics that are of a specific antibiotic class, without the need to define the columns or antibiotic abbreviations. They can be used in any function that allows Tidyverse selections, like `dplyr::select()` and `tidyr::pivot_longer()`:
   ```r
   library(dplyr)
   
+  # Columns 'IPM' and 'MEM' are in the example_isolates data set
   example_isolates %>% 
     select(carbapenems())
   #> Selecting carbapenems: `IPM` (imipenem), `MEM` (meropenem)
@@ -19,17 +20,20 @@
     select(ab_class("mycobact"))
   #> Selecting antimycobacterials: `RIF` (rifampicin)
   ```
+* Added `mo_domain()` as an alias to `mo_kingdom()`
+* Added function `filter_penicillins()` to filter isolates on a specific result in any column with a name in the antimicrobial 'penicillins' class (more specific: ATC subgroup *Beta-lactam antibacterials, penicillins*)
+* Added official antimicrobial names to all `filter_ab_class()` functions, such as `filter_aminoglycosides()`
+* Added antibiotics code "FOX1" for cefoxitin screening (abbreviation "cfsc") to the `antibiotics` data set
 
 ### Changed
 * Fixed a bug where `eucast_rules()` would not work on a tibble when the `tibble` or `dplyr` package was loaded
 * All `*_join_microorganisms()` functions and `bug_drug_combinations()` now return the original data class (e.g. `tibble`s and `data.table`s)
 * Fixed a bug where `as.ab()` would return an error on invalid input values
 * Fixed a bug for using grouped versions of `rsi_df()`, `proportion_df()` and `count_df()`, and fixed a bug where not all different antimicrobial results were added as rows
-* Added function `filter_penicillins()` to filter isolates on a specific result in any column with a name in the antimicrobial 'penicillins' class (more specific: ATC subgroup *Beta-lactam antibacterials, penicillins*)
-* Added official antimicrobial names to all `filter_ab_class()` functions, such as `filter_aminoglycosides()`
-* Added antibiotics code "FOX1" for cefoxitin screening (abbreviation "cfsc") to the `antibiotics` data set
 * Improved auto-determination for columns of types `<mo>` and `<Date>`
 * Fixed a bug in `bug_drug_combinations()` for when only one antibiotic was in the input data
+* Changed the summary for class `<mo>`, to highlight the %SI vs. %R
+* Improved error handling, giving more useful info when functions return an error
 
 # AMR 1.2.0
 

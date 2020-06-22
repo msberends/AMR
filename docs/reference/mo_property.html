@@ -82,7 +82,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.2.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.2.0.9011</span>
       </span>
     </div>
 
@@ -257,6 +257,8 @@
 
 <span class='fu'>mo_kingdom</span>(<span class='no'>x</span>, <span class='kw'>language</span> <span class='kw'>=</span> <span class='fu'><a href='translate.html'>get_locale</a></span>(), <span class='no'>...</span>)
 
+<span class='fu'>mo_domain</span>(<span class='no'>x</span>, <span class='kw'>language</span> <span class='kw'>=</span> <span class='fu'><a href='translate.html'>get_locale</a></span>(), <span class='no'>...</span>)
+
 <span class='fu'>mo_type</span>(<span class='no'>x</span>, <span class='kw'>language</span> <span class='kw'>=</span> <span class='fu'><a href='translate.html'>get_locale</a></span>(), <span class='no'>...</span>)
 
 <span class='fu'>mo_gramstain</span>(<span class='no'>x</span>, <span class='kw'>language</span> <span class='kw'>=</span> <span class='fu'><a href='translate.html'>get_locale</a></span>(), <span class='no'>...</span>)
@@ -319,14 +321,15 @@
 
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>All functions will return the most recently known taxonomic property according to the Catalogue of Life, except for <code>mo_ref()</code>, <code>mo_authors()</code> and <code>mo_year()</code>. This leads to the following results:</p><ul>
-<li><p><code>mo_name("Chlamydia psittaci")</code> will return <code>"Chlamydophila psittaci"</code> (with a warning about the renaming)</p></li>
-<li><p><code>mo_ref("Chlamydia psittaci")</code> will return <code>"Page, 1968"</code> (with a warning about the renaming)</p></li>
-<li><p><code>mo_ref("Chlamydophila psittaci")</code> will return <code>"Everett et al., 1999"</code> (without a warning)</p></li>
+    <p>All functions will return the most recently known taxonomic property according to the Catalogue of Life, except for <code>mo_ref()</code>, <code>mo_authors()</code> and <code>mo_year()</code>. Please refer to this example, knowing that <em>Escherichia blattae</em> was renamed to <em>Shimwellia blattae</em> in 2010:</p><ul>
+<li><p><code>mo_name("Escherichia blattae")</code> will return <code>"Shimwellia blattae"</code> (with a message about the renaming)</p></li>
+<li><p><code>mo_ref("Escherichia blattae")</code> will return <code>"Burgess et al., 1973"</code> (with a message about the renaming)</p></li>
+<li><p><code>mo_ref("Shimwellia blattae")</code> will return <code>"Priest et al., 2010"</code> (without a message)</p></li>
 </ul>
 
-<p>The short name - <code>mo_shortname()</code> - almost always returns the first character of the genus and the full species, like <em>"E. coli"</em>. Exceptions are abbreviations of staphylococci and beta-haemolytic streptococci, like <em>"CoNS"</em> (Coagulase-Negative Staphylococci) and <em>"GBS"</em> (Group B Streptococci).</p>
-<p>The Gram stain - <code>mo_gramstain()</code> - will be determined on the taxonomic kingdom and phylum. According to Cavalier-Smith (2002) who defined subkingdoms Negibacteria and Posibacteria, only these phyla are Posibacteria: Actinobacteria, Chloroflexi, Firmicutes and Tenericutes. These bacteria are considered Gram-positive - all other bacteria are considered Gram-negative. Species outside the kingdom of Bacteria will return a value <code>NA</code>.</p>
+<p>The short name - <code>mo_shortname()</code> - almost always returns the first character of the genus and the full species, like <code>"E. coli"</code>. Exceptions are abbreviations of staphylococci (like <em>"CoNS"</em>, Coagulase-Negative Staphylococci) and beta-haemolytic streptococci (like <em>"GBS"</em>, Group B Streptococci). Please bear in mind that e.g. <em>E. coli</em> could mean <em>Escherichia coli</em> (kingdom of Bacteria) as well as <em>Entamoeba coli</em> (kingdom of Protozoa). Returning to the full name will be done using <code><a href='as.mo.html'>as.mo()</a></code> internally, giving priority to bacteria and human pathogens, i.e. <code>"E. coli"</code> will be considered <em>Escherichia coli</em>. In other words, <code>mo_fullname(mo_shortname("Entamoeba coli"))</code> returns <code>"Escherichia coli"</code>.</p>
+<p>Since the top-level of the taxonomy is sometimes referred to as 'kingdom' and sometimes as 'domain', the functions <code>mo_kingdom()</code> and <code>mo_domain()</code> return the exact same results.</p>
+<p>The Gram stain - <code>mo_gramstain()</code> - will be determined based on the taxonomic kingdom and phylum. According to Cavalier-Smith (2002, <a href='https://pubmed.ncbi.nlm.nih.gov/11837318'>PMID 11837318</a>), who defined subkingdoms Negibacteria and Posibacteria, only these phyla are Posibacteria: Actinobacteria, Chloroflexi, Firmicutes and Tenericutes. These bacteria are considered Gram-positive - all other bacteria are considered Gram-negative. Species outside the kingdom of Bacteria will return a value <code>NA</code>.</p>
 <p>All output will be <a href='translate.html'>translate</a>d where possible.</p>
 <p>The function <code>mo_url()</code> will return the direct URL to the online database entry, which also shows the scientific reference of the concerned species.</p>
     <h2 class="hasAnchor" id="stable-lifecycle"><a class="anchor" href="#stable-lifecycle"></a>Stable lifecycle</h2>

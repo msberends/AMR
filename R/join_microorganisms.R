@@ -175,7 +175,7 @@ joins_check_df <- function(x, by) {
         by <- "mo"
         x[, "mo"] <- as.mo(x[, "mo"])
       } else {
-        stop("Cannot join - no column found with name or class <mo>.", call. = FALSE)
+        stop("Cannot join - no column found with name 'mo' or with class <mo>.", call. = FALSE)
       }
     }
     message('Joining, by = "', by, '"') # message same as dplyr::join functions

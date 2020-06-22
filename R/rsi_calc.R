@@ -33,23 +33,19 @@ rsi_calc <- function(...,
                      only_all_tested = FALSE,
                      only_count = FALSE) {
   
+  stop_ifnot(is.numeric(minimum), "`minimum` must be numeric", call = -2)
+  stop_ifnot(is.logical(as_percent), "`as_percent` must be logical", call = -2)
+  stop_ifnot(is.logical(only_all_tested), "`only_all_tested` must be logical", call = -2)
+  
   data_vars <- dots2vars(...)
-  
-  if (!is.numeric(minimum)) {
-    stop("`minimum` must be numeric", call. = FALSE)
-  }
-  if (!is.logical(as_percent)) {
-    stop("`as_percent` must be logical", call. = FALSE)
-  }
-  if (!is.logical(only_all_tested)) {
-    stop("`only_all_tested` must be logical", call. = FALSE)
-  }
-  
+
   dots_df <- switch(1, ...)
   dots <- base::eval(base::substitute(base::alist(...)))
-  if ("also_single_tested" %in% names(dots)) {
-    stop("`also_single_tested` was replaced by `only_all_tested`. Please read Details in the help page (`?proportion`) as this may have a considerable impact on your analysis.", call. = FALSE)
-  }
+  stop_if(length(dots) == 0, "no variables selected", call = -2)
+
+  stop_if("also_single_tested" %in% names(dots),
+          "`also_single_tested` was replaced by `only_all_tested`.\n",
+          "Please read Details in the help page (`?proportion`) as this may have a considerable impact on your analysis.", call = -2)
   ndots <- length(dots)
   
   if ("data.frame" %in% class(dots_df)) {
@@ -164,22 +160,15 @@ rsi_calc_df <- function(type, # "proportion", "count" or "both"
                         combine_SI_missing = FALSE) {
   
   check_dataset_integrity()
-  
-  if (!"data.frame" %in% class(data)) {
-    stop(paste0("`", type, "_df` must be called on a data.frame"), call. = FALSE)
-  }
+  stop_ifnot(is.data.frame(data), "`data` must be a data.frame", call = -2)
+  stop_if(any(dim(data) == 0), "`data` must contain rows and columns", call = -2)
+  stop_ifnot(any(sapply(data, is.rsi), na.rm = TRUE), "no columns with class <rsi> found. See ?as.rsi.", call = -2)
+  stop_if(isTRUE(combine_SI) & isTRUE(combine_IR), "either `combine_SI` or `combine_IR` can be TRUE, not both", call = -2)
   
   if (isTRUE(combine_IR) & isTRUE(combine_SI_missing)) {
     combine_SI <- FALSE
   }
-  if (isTRUE(combine_SI) & isTRUE(combine_IR)) {
-    stop("either `combine_SI` or `combine_IR` can be TRUE, not both", call. = FALSE)
-  }
-  
-  if (!any(sapply(data, is.rsi), na.rm = TRUE)) {
-    stop("No columns with class <rsi> found. See ?as.rsi.", call. = FALSE)
-  }
-  
+
   if (as.character(translate_ab) %in% c("TRUE", "official")) {
     translate_ab <- "name"
   }

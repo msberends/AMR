@@ -179,7 +179,7 @@ search_type_in_df <- function(x, type) {
   found
 }
 
-stopifnot_installed_package <- function(package) {
+stop_ifnot_installed <- function(package) {
   # no "utils::installed.packages()" since it requires non-staged install since R 3.6.0
   # https://developer.r-project.org/Blog/public/2019/02/14/staged-install/index.html
   sapply(package, function(pkg)
@@ -197,16 +197,41 @@ stopifnot_installed_package <- function(package) {
 }
 
 import_fn <- function(name, pkg) {
-  stopifnot_installed_package(pkg)
+  stop_ifnot_installed(pkg)
   get(name, envir = asNamespace(pkg))
 }
 
-stopifnot_msg <- function(expr, msg) {
-  if (!isTRUE(expr)) {
+stop_if <- function(expr, ..., call = TRUE) {
+  msg <- paste0(c(...), collapse = "")
+  if (!isFALSE(call)) {
+    if (isTRUE(call)) {
+      call <- as.character(sys.call(-1)[1])
+    } else {
+      # so you can go back more than 1 call, as used in rsi_calc(), that now throws a reference to e.g. n_rsi()
+      call <- as.character(sys.call(call)[1])
+    }
+    msg <- paste0("in ", call, "(): ", msg)
+  }
+  if (isTRUE(expr)) {
     stop(msg, call. = FALSE)
   }
 }
 
+stop_ifnot <- function(expr, ..., call = TRUE) {
+  msg <- paste0(c(...), collapse = "")
+  if (!isFALSE(call)) {
+    if (isTRUE(call)) {
+      call <- as.character(sys.call(-1)[1])
+    } else {
+      # so you can go back more than 1 call, as used in rsi_calc(), that now throws a reference to e.g. n_rsi()
+      call <- as.character(sys.call(call)[1])
+    }
+    msg <- paste0("in ", call, "(): ", msg)
+  }
+  if (!isTRUE(expr)) {
+    stop(msg, call. = FALSE)
+  }
+}
 
 "%or%" <- function(x, y) {
   if (is.null(x) | is.null(y)) {
@@ -396,7 +421,7 @@ progress_estimated <- function(n = 1, n_min = 0, ...) {
   }
 }
 
-# works exactly like round(), but rounds `round(44.55, 1)` as 44.6 instead of 44.5
+# works exactly like round(), but rounds `round2(44.55, 1)` to 44.6 instead of 44.5
 # and adds decimal zeroes until `digits` is reached when force_zero = TRUE
 round2 <- function(x, digits = 0, force_zero = TRUE) {
   x <- as.double(x)

@@ -164,7 +164,7 @@ ggplot_rsi <- function(data,
                        y.title = "Proportion",
                        ...) {
   
-  stopifnot_installed_package("ggplot2")
+  stop_ifnot_installed("ggplot2")
   
   x <- x[1]
   facet <- facet[1]
@@ -245,11 +245,8 @@ geom_rsi <- function(position = NULL,
                      combine_IR = FALSE,
                      ...)  {
   
-  stopifnot_installed_package("ggplot2")
-  
-  if (is.data.frame(position)) {
-    stop("`position` is invalid. Did you accidentally use '%>%' instead of '+'?", call. = FALSE)
-  }
+  stop_ifnot_installed("ggplot2")
+  stop_if(is.data.frame(position), "`position` is invalid. Did you accidentally use '%>%' instead of '+'?")
   
   y <- "value"
   if (missing(position) | is.null(position)) {
@@ -293,7 +290,7 @@ geom_rsi <- function(position = NULL,
 #' @export
 facet_rsi <- function(facet = c("interpretation", "antibiotic"), nrow = NULL) {
   
-  stopifnot_installed_package("ggplot2")
+  stop_ifnot_installed("ggplot2")
   
   facet <- facet[1]
   
@@ -318,7 +315,7 @@ facet_rsi <- function(facet = c("interpretation", "antibiotic"), nrow = NULL) {
 #' @rdname ggplot_rsi
 #' @export
 scale_y_percent <- function(breaks = seq(0, 1, 0.1), limits = NULL) {
-  stopifnot_installed_package("ggplot2")
+  stop_ifnot_installed("ggplot2")
   
   if (all(breaks[breaks != 0] > 1)) {
     breaks <- breaks / 100
@@ -335,7 +332,7 @@ scale_rsi_colours <- function(colours = c(S = "#61a8ff",
                                           I = "#61f7ff",
                                           IR = "#ff6961",
                                           R = "#ff6961")) {
-  stopifnot_installed_package("ggplot2")
+  stop_ifnot_installed("ggplot2")
   # previous colour: palette = "RdYlGn"
   # previous colours: values = c("#b22222", "#ae9c20", "#7cfc00")
   
@@ -353,7 +350,7 @@ scale_rsi_colours <- function(colours = c(S = "#61a8ff",
 #' @rdname ggplot_rsi
 #' @export
 theme_rsi <- function() {
-  stopifnot_installed_package("ggplot2")
+  stop_ifnot_installed("ggplot2")
   ggplot2::theme_minimal(base_size = 10) +
     ggplot2::theme(panel.grid.major.x = ggplot2::element_blank(),
                    panel.grid.minor = ggplot2::element_blank(),
@@ -372,7 +369,7 @@ labels_rsi_count <- function(position = NULL,
                              combine_IR = FALSE,
                              datalabels.size = 3,
                              datalabels.colour = "gray15") {
-  stopifnot_installed_package("ggplot2")
+  stop_ifnot_installed("ggplot2")
   if (is.null(position)) {
     position <- "fill"
   }

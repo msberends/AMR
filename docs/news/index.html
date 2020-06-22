@@ -81,7 +81,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.2.0.9010</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.2.0.9011</span>
       </span>
     </div>
 
@@ -229,22 +229,23 @@
       <small>Source: <a href='https://gitlab.com/msberends/AMR/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
-    <div id="amr-1209010" class="section level1">
-<h1 class="page-header" data-toc-text="1.2.0.9010">
-<a href="#amr-1209010" class="anchor"></a>AMR 1.2.0.9010<small> Unreleased </small>
+    <div id="amr-1209011" class="section level1">
+<h1 class="page-header" data-toc-text="1.2.0.9011">
+<a href="#amr-1209011" class="anchor"></a>AMR 1.2.0.9011<small> Unreleased </small>
 </h1>
-<div id="last-updated-17-jun-2020" class="section level2">
+<div id="last-updated-22-jun-2020" class="section level2">
 <h2 class="hasAnchor">
-<a href="#last-updated-17-jun-2020" class="anchor"></a><small>Last updated: 17-Jun-2020</small>
+<a href="#last-updated-22-jun-2020" class="anchor"></a><small>Last updated: 22-Jun-2020</small>
 </h2>
 <div id="new" class="section level3">
 <h3 class="hasAnchor">
 <a href="#new" class="anchor"></a>New</h3>
 <ul>
 <li>
-<p><a href="https://tidyselect.r-lib.org/reference/language.html">Tidyverse selections</a>, that help to select the columns of antibiotics that are of a specific antibiotic class, without the need to define the columns or antibiotic abbreviations. They can be used in any function that allows Tidyverse selections, like <code><a href="https://dplyr.tidyverse.org/reference/select.html">dplyr::select()</a></code> and <code><a href="https://tidyr.tidyverse.org/reference/pivot_longer.html">tidyr::pivot_longer()</a></code>:</p>
+<p><a href="https://tidyselect.r-lib.org/reference/language.html">Tidyverse selections</a> for antibiotic classes, that help to select the columns of antibiotics that are of a specific antibiotic class, without the need to define the columns or antibiotic abbreviations. They can be used in any function that allows Tidyverse selections, like <code><a href="https://dplyr.tidyverse.org/reference/select.html">dplyr::select()</a></code> and <code><a href="https://tidyr.tidyverse.org/reference/pivot_longer.html">tidyr::pivot_longer()</a></code>:</p>
 <div class="sourceCode" id="cb1"><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">dplyr</span>)
 
+<span class="co"># Columns 'IPM' and 'MEM' are in the example_isolates data set</span>
 <span class="no">example_isolates</span> <span class="kw">%&gt;%</span>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span>(<span class="fu"><a href="../reference/antibiotic_class_selectors.html">carbapenems</a></span>())
 <span class="co">#&gt; Selecting carbapenems: `IPM` (imipenem), `MEM` (meropenem)</span>
@@ -258,6 +259,10 @@
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span>(<span class="fu"><a href="../reference/antibiotic_class_selectors.html">ab_class</a></span>(<span class="st">"mycobact"</span>))
 <span class="co">#&gt; Selecting antimycobacterials: `RIF` (rifampicin)</span></pre></div>
 </li>
+<li><p>Added <code><a href="../reference/mo_property.html">mo_domain()</a></code> as an alias to <code><a href="../reference/mo_property.html">mo_kingdom()</a></code></p></li>
+<li><p>Added function <code><a href="../reference/filter_ab_class.html">filter_penicillins()</a></code> to filter isolates on a specific result in any column with a name in the antimicrobial ‘penicillins’ class (more specific: ATC subgroup <em>Beta-lactam antibacterials, penicillins</em>)</p></li>
+<li><p>Added official antimicrobial names to all <code><a href="../reference/filter_ab_class.html">filter_ab_class()</a></code> functions, such as <code><a href="../reference/filter_ab_class.html">filter_aminoglycosides()</a></code></p></li>
+<li><p>Added antibiotics code “FOX1” for cefoxitin screening (abbreviation “cfsc”) to the <code>antibiotics</code> data set</p></li>
 </ul>
 </div>
 <div id="changed" class="section level3">
@@ -268,13 +273,11 @@
 <li>All <code>*_join_microorganisms()</code> functions and <code><a href="../reference/bug_drug_combinations.html">bug_drug_combinations()</a></code> now return the original data class (e.g. <code>tibble</code>s and <code>data.table</code>s)</li>
 <li>Fixed a bug where <code><a href="../reference/as.ab.html">as.ab()</a></code> would return an error on invalid input values</li>
 <li>Fixed a bug for using grouped versions of <code><a href="../reference/proportion.html">rsi_df()</a></code>, <code><a href="../reference/proportion.html">proportion_df()</a></code> and <code><a href="../reference/count.html">count_df()</a></code>, and fixed a bug where not all different antimicrobial results were added as rows</li>
-<li>Added function <code><a href="../reference/filter_ab_class.html">filter_penicillins()</a></code> to filter isolates on a specific result in any column with a name in the antimicrobial ‘penicillins’ class (more specific: ATC subgroup <em>Beta-lactam antibacterials, penicillins</em>)</li>
-<li>Added official antimicrobial names to all <code><a href="../reference/filter_ab_class.html">filter_ab_class()</a></code> functions, such as <code><a href="../reference/filter_ab_class.html">filter_aminoglycosides()</a></code>
-</li>
-<li>Added antibiotics code “FOX1” for cefoxitin screening (abbreviation “cfsc”) to the <code>antibiotics</code> data set</li>
 <li>Improved auto-determination for columns of types <code>&lt;mo&gt;</code> and <code>&lt;Date&gt;</code>
 </li>
 <li>Fixed a bug in <code><a href="../reference/bug_drug_combinations.html">bug_drug_combinations()</a></code> for when only one antibiotic was in the input data</li>
+<li>Changed the summary for class <code>&lt;mo&gt;</code>, to highlight the %SI vs. %R</li>
+<li>Improved error handling, giving more useful info when functions return an error</li>
 </ul>
 </div>
 </div>

@@ -28,14 +28,16 @@
 #' @param language language of the returned text, defaults to system language (see [get_locale()]) and can also be set with `getOption("AMR_locale")`. Use `language = NULL` or `language = ""` to prevent translation.
 #' @param ... other parameters passed on to [as.mo()]
 #' @param open browse the URL using [utils::browseURL()]
-#' @details All functions will return the most recently known taxonomic property according to the Catalogue of Life, except for [mo_ref()], [mo_authors()] and [mo_year()]. This leads to the following results:
-#' - `mo_name("Chlamydia psittaci")` will return `"Chlamydophila psittaci"` (with a warning about the renaming)
-#' - `mo_ref("Chlamydia psittaci")` will return `"Page, 1968"` (with a warning about the renaming)
-#' - `mo_ref("Chlamydophila psittaci")` will return `"Everett et al., 1999"` (without a warning)
+#' @details All functions will return the most recently known taxonomic property according to the Catalogue of Life, except for [mo_ref()], [mo_authors()] and [mo_year()]. Please refer to this example, knowing that *Escherichia blattae* was renamed to *Shimwellia blattae* in 2010:
+#' - `mo_name("Escherichia blattae")` will return `"Shimwellia blattae"` (with a message about the renaming)
+#' - `mo_ref("Escherichia blattae")` will return `"Burgess et al., 1973"` (with a message about the renaming)
+#' - `mo_ref("Shimwellia blattae")` will return `"Priest et al., 2010"` (without a message)
 #'
-#' The short name - [mo_shortname()] - almost always returns the first character of the genus and the full species, like *"E. coli"*. Exceptions are abbreviations of staphylococci and beta-haemolytic streptococci, like *"CoNS"* (Coagulase-Negative Staphylococci) and *"GBS"* (Group B Streptococci).
+#' The short name - [mo_shortname()] - almost always returns the first character of the genus and the full species, like `"E. coli"`. Exceptions are abbreviations of staphylococci (like *"CoNS"*, Coagulase-Negative Staphylococci) and beta-haemolytic streptococci (like *"GBS"*, Group B Streptococci). Please bear in mind that e.g. *E. coli* could mean *Escherichia coli* (kingdom of Bacteria) as well as *Entamoeba coli* (kingdom of Protozoa). Returning to the full name will be done using [as.mo()] internally, giving priority to bacteria and human pathogens, i.e. `"E. coli"` will be considered *Escherichia coli*. In other words, `mo_fullname(mo_shortname("Entamoeba coli"))` returns `"Escherichia coli"`.
+#' 
+#' Since the top-level of the taxonomy is sometimes referred to as 'kingdom' and sometimes as 'domain', the functions [mo_kingdom()] and [mo_domain()] return the exact same results.
 #'
-#' The Gram stain - [mo_gramstain()] - will be determined on the taxonomic kingdom and phylum. According to Cavalier-Smith (2002) who defined subkingdoms Negibacteria and Posibacteria, only these phyla are Posibacteria: Actinobacteria, Chloroflexi, Firmicutes and Tenericutes. These bacteria are considered Gram-positive - all other bacteria are considered Gram-negative. Species outside the kingdom of Bacteria will return a value `NA`.
+#' The Gram stain - [mo_gramstain()] - will be determined based on the taxonomic kingdom and phylum. According to Cavalier-Smith (2002, [PMID 11837318](https://pubmed.ncbi.nlm.nih.gov/11837318)), who defined subkingdoms Negibacteria and Posibacteria, only these phyla are Posibacteria: Actinobacteria, Chloroflexi, Firmicutes and Tenericutes. These bacteria are considered Gram-positive - all other bacteria are considered Gram-negative. Species outside the kingdom of Bacteria will return a value `NA`.
 #'
 #' All output will be [translate]d where possible.
 #'
@@ -220,6 +222,10 @@ mo_kingdom <- function(x, language = get_locale(), ...) {
 
 #' @rdname mo_property
 #' @export
+mo_domain <- mo_kingdom
+
+#' @rdname mo_property
+#' @export
 mo_type <- function(x, language = get_locale(), ...) {
   translate_AMR(mo_validate(x = x, property = "kingdom", ...), language = language, only_unknown = FALSE)
 }
@@ -391,12 +397,9 @@ mo_url <- function(x, open = FALSE, ...) {
 #' @rdname mo_property
 #' @export
 mo_property <- function(x, property = "fullname", language = get_locale(), ...) {
-  if (length(property) != 1L) {
-    stop("'property' must be of length 1.")
-  }
-  if (!property %in% colnames(microorganisms)) {
-    stop("invalid property: '", property, "' - use a column name of the `microorganisms` data set")
-  }
+  stop_ifnot(length(property) == 1L, "'property' must be of length 1")
+  stop_ifnot(property %in% colnames(microorganisms),
+             "invalid property: '", property, "' - use a column name of the `microorganisms` data set")
 
   translate_AMR(mo_validate(x = x, property = property, ...), language = language, only_unknown = TRUE)
 }

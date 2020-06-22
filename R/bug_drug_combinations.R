@@ -59,21 +59,15 @@ bug_drug_combinations <- function(x,
                                   col_mo = NULL, 
                                   FUN = mo_shortname,
                                   ...) {
-  if (!is.data.frame(x)) {
-    stop("`x` must be a data frame.", call. = FALSE)
-  }
-  if (!any(sapply(x, is.rsi), na.rm = TRUE)) {
-    stop("No columns with class <rsi> found. See ?as.rsi.", call. = FALSE)
-  }
+  stop_ifnot(is.data.frame(x), "`x` must be a data frame")
+  stop_ifnot(any(sapply(x, is.rsi), na.rm = TRUE), "No columns with class <rsi> found. See ?as.rsi.")
   
   # try to find columns based on type
   # -- mo
   if (is.null(col_mo)) {
     col_mo <- search_type_in_df(x = x, type = "mo")
   }
-  if (is.null(col_mo)) {
-    stop("`col_mo` must be set.", call. = FALSE)
-  }
+  stop_if(is.null(col_mo), "`col_mo` must be set")
   
   x_class <- class(x)
   x <- as.data.frame(x, stringsAsFactors = FALSE)

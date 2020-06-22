@@ -26,6 +26,7 @@ test_that("mo_property works", {
   skip_on_cran()
   
   expect_equal(mo_kingdom("Escherichia coli"), "Bacteria")
+  expect_equal(mo_kingdom("Escherichia coli"), mo_domain("Escherichia coli"))
   expect_equal(mo_phylum("Escherichia coli"), "Proteobacteria")
   expect_equal(mo_class("Escherichia coli"), "Gammaproteobacteria")
   expect_equal(mo_order("Escherichia coli"), "Enterobacterales")

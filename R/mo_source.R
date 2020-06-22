@@ -112,9 +112,7 @@ set_mo_source <- function(path) {
 
   file_location <- path.expand("~/mo_source.rds")
 
-  if (length(path) > 1) {
-    stop("`path` must be of length 1.")
-  }
+  stop_ifnot(length(path) == 1, "`path` must be of length 1")
 
   if (is.null(path) || path %in% c(FALSE, "")) {
     options(mo_source = NULL)
@@ -126,9 +124,8 @@ set_mo_source <- function(path) {
     return(invisible())
   }
 
-  if (!file.exists(path)) {
-    stop("File not found: ", path)
-  }
+  stop_ifnot(file.exists(path),
+             "file not found: ", path)
 
   if (path %like% "[.]rds$") {
     df <- readRDS(path)
@@ -231,21 +228,21 @@ mo_source_isvalid <- function(x, refer_to_name = "`reference_df`", stop_on_error
   }
   if (is.null(x)) {
     if (stop_on_error == TRUE) {
-      stop(refer_to_name, " cannot be NULL.", call. = FALSE)
+      stop(refer_to_name, " cannot be NULL", call. = FALSE)
     } else {
       return(FALSE)
     }
   }
   if (!is.data.frame(x)) {
     if (stop_on_error == TRUE) {
-      stop(refer_to_name, " must be a data.frame.", call. = FALSE)
+      stop(refer_to_name, " must be a data.frame", call. = FALSE)
     } else {
       return(FALSE)
     }
   }
   if (!"mo" %in% colnames(x)) {
     if (stop_on_error == TRUE) {
-      stop(refer_to_name, " must contain a column 'mo'.", call. = FALSE)
+      stop(refer_to_name, " must contain a column 'mo'", call. = FALSE)
     } else {
       return(FALSE)
     }
@@ -260,7 +257,7 @@ mo_source_isvalid <- function(x, refer_to_name = "`reference_df`", stop_on_error
       }
       stop("Value", plural, " ", paste0("'", invalid[, 1, drop = TRUE], "'", collapse = ", "), 
            " found in ", tolower(refer_to_name), 
-           ", but with invalid microorganism code", plural, " ", paste0("'", invalid$mo, "'", collapse = ", "), ".",
+           ", but with invalid microorganism code", plural, " ", paste0("'", invalid$mo, "'", collapse = ", "),
            call. = FALSE)
     } else {
       return(FALSE)
