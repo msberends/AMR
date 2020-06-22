@@ -59,6 +59,8 @@
 #' @seealso [as.mic()]
 #' @inheritSection AMR Read more on our website!
 #' @examples
+#' summary(example_isolates) # see all R/SI results at a glance
+#' 
 #' # For INTERPRETING disk diffusion and MIC values -----------------------
 #'        
 #' # a whole data set, even with combined MIC values and disk zones
