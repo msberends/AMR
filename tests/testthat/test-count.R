@@ -28,13 +28,13 @@ test_that("counts work", {
   expect_equal(count_all(example_isolates$AMX), n_rsi(example_isolates$AMX))
   
   # AMX resistance in `example_isolates`
-    expect_equal(count_R(example_isolates$AMX), 683)
-    expect_equal(count_I(example_isolates$AMX), 3)
-    expect_equal(suppressWarnings(count_S(example_isolates$AMX)), 543)
-    expect_equal(count_R(example_isolates$AMX) + count_I(example_isolates$AMX),
-                 suppressWarnings(count_IR(example_isolates$AMX)))
-    expect_equal(suppressWarnings(count_S(example_isolates$AMX)) + count_I(example_isolates$AMX),
-                 count_SI(example_isolates$AMX))
+  expect_equal(count_R(example_isolates$AMX), 683)
+  expect_equal(count_I(example_isolates$AMX), 3)
+  expect_equal(suppressWarnings(count_S(example_isolates$AMX)), 543)
+  expect_equal(count_R(example_isolates$AMX) + count_I(example_isolates$AMX),
+               suppressWarnings(count_IR(example_isolates$AMX)))
+  expect_equal(suppressWarnings(count_S(example_isolates$AMX)) + count_I(example_isolates$AMX),
+               count_SI(example_isolates$AMX))
   
   library(dplyr)
   expect_equal(example_isolates %>% count_susceptible(AMC), 1433)
@@ -45,7 +45,7 @@ test_that("counts work", {
   expect_identical(example_isolates %>% count_all(AMC, GEN, only_all_tested = TRUE),
                    example_isolates %>% count_susceptible(AMC, GEN, only_all_tested = TRUE) +
                      example_isolates %>% count_resistant(AMC, GEN, only_all_tested = TRUE))
-
+  
   # count of cases
   expect_equal(example_isolates %>%
                  group_by(hospital_id) %>%
@@ -83,8 +83,8 @@ test_that("counts work", {
   expect_error(count_resistant("test", as_percent = "test"))
   expect_error(count_susceptible("test", minimum = "test"))
   expect_error(count_susceptible("test", as_percent = "test"))
-
+  
   expect_error(count_df(c("A", "B", "C")))
   expect_error(count_df(example_isolates[, "date"]))
-
+  
 })

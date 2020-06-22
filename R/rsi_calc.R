@@ -163,11 +163,10 @@ rsi_calc_df <- function(type, # "proportion", "count" or "both"
   stop_ifnot(is.data.frame(data), "`data` must be a data.frame", call = -2)
   stop_if(any(dim(data) == 0), "`data` must contain rows and columns", call = -2)
   stop_ifnot(any(sapply(data, is.rsi), na.rm = TRUE), "no columns with class <rsi> found. See ?as.rsi.", call = -2)
-  stop_if(isTRUE(combine_SI) & isTRUE(combine_IR), "either `combine_SI` or `combine_IR` can be TRUE, not both", call = -2)
-  
   if (isTRUE(combine_IR) & isTRUE(combine_SI_missing)) {
     combine_SI <- FALSE
   }
+  stop_if(isTRUE(combine_SI) & isTRUE(combine_IR), "either `combine_SI` or `combine_IR` can be TRUE, not both", call = -2)
 
   if (as.character(translate_ab) %in% c("TRUE", "official")) {
     translate_ab <- "name"
