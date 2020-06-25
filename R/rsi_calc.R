@@ -56,8 +56,10 @@ rsi_calc <- function(...,
       # for complete data.frames, like example_isolates %>% select(AMC, GEN) %>% proportion_S()
       # and the old rsi function, which has "df" as name of the first parameter
       x <- dots_df
+    } else if (length(dots) == 1 | all(!dots %in% colnames(dots_df))) {
+      x <- dots_df
     } else {
-      x <- dots_df[, dots[dots %in% colnames(dots_df)]]
+      x <- dots_df[, dots[dots %in% colnames(dots_df)], drop = FALSE]
     }
   } else if (ndots == 1) {
     # only 1 variable passed (can also be data.frame), like: proportion_S(example_isolates$AMC) and example_isolates$AMC %>% proportion_S()
@@ -111,7 +113,7 @@ rsi_calc <- function(...,
         base::all(y %in% other_values) & base::any(is.na(y))
       })
       numerator <- sum(as.logical(by(x, seq_len(nrow(x)), function(row) any(unlist(row) %in% ab_result, na.rm = TRUE))))
-      denominator <- nrow(x[!other_values_filter, ])
+      denominator <- nrow(x[!other_values_filter, , drop = FALSE])
     }
   } else {
     # x is not a data.frame
@@ -168,9 +170,7 @@ rsi_calc_df <- function(type, # "proportion", "count" or "both"
   }
   stop_if(isTRUE(combine_SI) & isTRUE(combine_IR), "either `combine_SI` or `combine_IR` can be TRUE, not both", call = -2)
 
-  if (as.character(translate_ab) %in% c("TRUE", "official")) {
-    translate_ab <- "name"
-  }
+  translate_ab <- get_translate_ab(translate_ab)
 
   # select only groups and antibiotics
   if (has_groups(data)) {
@@ -291,4 +291,20 @@ rsi_calc_df <- function(type, # "proportion", "count" or "both"
   
   rownames(out) <- NULL
   out
+}
+
+get_translate_ab <- function(translate_ab) {
+  translate_ab <- as.character(translate_ab)[1L]
+  if (translate_ab %in% c("TRUE", "official")) {
+    return("name")
+  } else if (translate_ab %in% c(NA_character_, "FALSE")) {
+    return(FALSE)
+  } else {
+    translate_ab <- tolower(translate_ab)
+    stop_ifnot(translate_ab %in% colnames(AMR::antibiotics),
+               "invalid value for 'translate_ab', this must be a column name of the antibiotics data set\n",
+               "or TRUE (equals 'name') or FALSE to not translate at all.",
+               call = FALSE)
+    translate_ab
+  }
 }

@@ -488,6 +488,10 @@ antibiotics[which(antibiotics$ab == "SLT4"), "abbreviations"][[1]] <- list(c(ant
 antibiotics[which(antibiotics$ab == "SXT"), "abbreviations"][[1]] <- list(c(antibiotics[which(antibiotics$ab == "SXT"), "abbreviations"][[1]], "trsx"))
 antibiotics[which(antibiotics$ab == "VAN"), "abbreviations"][[1]] <- list(c(antibiotics[which(antibiotics$ab == "VAN"), "abbreviations"][[1]], "vanc"))
 antibiotics[which(antibiotics$ab == "VOR"), "abbreviations"][[1]] <- list(c(antibiotics[which(antibiotics$ab == "VOR"), "abbreviations"][[1]], "vori"))
+
+antibiotics[which(antibiotics$ab == "FOS"), "synonyms"][[1]] <- list(sort(c(antibiotics[which(antibiotics$ab == "FOS"), "synonyms"][[1]], "Monuril")))
+antibiotics[which(antibiotics$ab == "FOS"), "synonyms"][[1]] <- list(sort(c(antibiotics[which(antibiotics$ab == "FOS"), "synonyms"][[1]], "Monurol")))
+
 antibiotics <- antibiotics %>% 
   mutate(ab = as.character(ab)) %>% 
   rbind(antibiotics %>% 

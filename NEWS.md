@@ -1,7 +1,12 @@
-# AMR 1.2.0.9013
-## <small>Last updated: 22-Jun-2020</small>
+# AMR 1.2.0.9014
+## <small>Last updated: 25-Jun-2020</small>
 
 ### New
+* Function `ab_from_text()` to retrieve antimicrobial drugs from clinical texts in e.g. health care records, which also corrects for misspelling since it uses `as.ab()` internally:
+  ```r
+  ab_from_text("28/03/2020 regular amoxiciliin 500mg po tds")
+  #> [1] "Amoxicillin"
+  ```
 * [Tidyverse selections](https://tidyselect.r-lib.org/reference/language.html) for antibiotic classes, that help to select the columns of antibiotics that are of a specific antibiotic class, without the need to define the columns or antibiotic abbreviations. They can be used in any function that allows Tidyverse selections, like `dplyr::select()` and `tidyr::pivot_longer()`:
   ```r
   library(dplyr)
@@ -26,6 +31,7 @@
 * Added antibiotics code "FOX1" for cefoxitin screening (abbreviation "cfsc") to the `antibiotics` data set
 
 ### Changed
+* Fixed a bug for using `susceptibility` or `resistance()` outside `summarise()`
 * Fixed a bug where `eucast_rules()` would not work on a tibble when the `tibble` or `dplyr` package was loaded
 * All `*_join_microorganisms()` functions and `bug_drug_combinations()` now return the original data class (e.g. `tibble`s and `data.table`s)
 * Fixed a bug where `as.ab()` would return an error on invalid input values
@@ -34,6 +40,8 @@
 * Fixed a bug in `bug_drug_combinations()` for when only one antibiotic was in the input data
 * Changed the summary for class `<mo>`, to highlight the %SI vs. %R
 * Improved error handling, giving more useful info when functions return an error
+* Algorithm improvements to `as.ab()`
+* Added Monuril as trade name for fosfomycin
 
 # AMR 1.2.0
 

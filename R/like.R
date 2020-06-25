@@ -64,7 +64,7 @@
 #' }
 like <- function(x, pattern, ignore.case = TRUE) {
   # set to fixed if no regex found
-  fixed <- all(!grepl("[$.^*?+}{|)(]", pattern))
+  fixed <- all(!grepl("[\\[$.^*?+-}{|)(]", pattern))
   if (ignore.case == TRUE) {
     # set here, otherwise if fixed = TRUE, this warning will be thrown: argument 'ignore.case = TRUE' will be ignored
     x <- tolower(x)

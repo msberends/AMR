@@ -1,0 +1,32 @@
+# ==================================================================== #
+# TITLE                                                                #
+# Antimicrobial Resistance (AMR) Analysis                              #
+#                                                                      #
+# SOURCE                                                               #
+# https://gitlab.com/msberends/AMR                                     #
+#                                                                      #
+# LICENCE                                                              #
+# (c) 2018-2020 Berends MS, Luz CF et al.                              #
+#                                                                      #
+# This R package is free software; you can freely use and distribute   #
+# it for both personal and commercial purposes under the terms of the  #
+# GNU General Public License version 2.0 (GNU GPL-2), as published by  #
+# the Free Software Foundation.                                        #
+#                                                                      #
+# We created this package for both routine data analysis and academic  #
+# research and it was publicly released in the hope that it will be    #
+# useful, but it comes WITHOUT ANY WARRANTY OR LIABILITY.              #
+# Visit our website for more info: https://msberends.gitlab.io/AMR.    #
+# ==================================================================== #
+
+context("ab_from_text.R")
+
+test_that("ab_from_text works", {
+  
+  expect_identical(ab_from_text("28/03/2020 regular amoxicilliin 500mg po tds"),
+                   "Amoxicillin")
+  expect_identical(ab_from_text("28/03/2020 regular amoxicilliin 500mg po tds", translate_ab = FALSE),
+                   as.ab("AMX"))
+  expect_identical(ab_from_text("administered amoxi/clav and cipro", collapse = ", "),
+                   "Amoxicillin, Ciprofloxacin")
+})

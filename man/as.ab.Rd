@@ -83,5 +83,8 @@ ab_name("J01FA01")    # "Erythromycin"
 ab_name("eryt")       # "Erythromycin"
 }
 \seealso{
-\link{antibiotics} for the dataframe that is being used to determine ATCs.
+\itemize{
+\item \link{antibiotics} for the dataframe that is being used to determine ATCs
+\item \code{\link[=ab_from_text]{ab_from_text()}} for a function to retrieve antimicrobial drugs from clinical text (from health care records)
+}
 }

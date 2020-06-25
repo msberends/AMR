@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Transform to antibiotic ID — as.ab • AMR (for R)</title>
+<title>Retrieve antimicrobial drugs from text — ab_from_text • AMR (for R)</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -48,8 +48,8 @@
   <link href="../extra.css" rel="stylesheet">
   <script src="../extra.js"></script>
 
-<meta property="og:title" content="Transform to antibiotic ID — as.ab" />
-<meta property="og:description" content="Use this function to determine the antibiotic code of one or more antibiotics. The data set antibiotics will be searched for abbreviations, official names and synonyms (brand names)." />
+<meta property="og:title" content="Retrieve antimicrobial drugs from text — ab_from_text" />
+<meta property="og:description" content="Use this function on e.g. clinical texts from health care records. It returns a vector of antimicrobial drugs found in the texts." />
 <meta property="og:image" content="https://msberends.gitlab.io/AMR/logo.svg" />
 
 
@@ -226,98 +226,55 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Transform to antibiotic ID</h1>
-    <small class="dont-index">Source: <a href='https://gitlab.com/msberends/AMR/blob/master/R/ab.R'><code>R/ab.R</code></a></small>
-    <div class="hidden name"><code>as.ab.Rd</code></div>
+    <h1>Retrieve antimicrobial drugs from text</h1>
+    <small class="dont-index">Source: <a href='https://gitlab.com/msberends/AMR/blob/master/R/ab_from_text.R'><code>R/ab_from_text.R</code></a></small>
+    <div class="hidden name"><code>ab_from_text.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Use this function to determine the antibiotic code of one or more antibiotics. The data set <a href='antibiotics.html'>antibiotics</a> will be searched for abbreviations, official names and synonyms (brand names).</p>
+    <p>Use this function on e.g. clinical texts from health care records. It returns a vector of antimicrobial drugs found in the texts.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>as.ab</span>(<span class='no'>x</span>, <span class='no'>...</span>)
-
-<span class='fu'>is.ab</span>(<span class='no'>x</span>)</pre>
+    <pre class="usage"><span class='fu'>ab_from_text</span>(<span class='no'>text</span>, <span class='kw'>collapse</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>translate_ab</span> <span class='kw'>=</span> <span class='st'>"name"</span>, <span class='no'>...</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>x</th>
-      <td><p>character vector to determine to antibiotic ID</p></td>
+      <th>text</th>
+      <td><p>text to analyse</p></td>
+    </tr>
+    <tr>
+      <th>collapse</th>
+      <td><p>character to pass on to <code><a href='https://rdrr.io/r/base/paste.html'>paste(..., collapse = ...)</a></code> to only return one character per element of <code>text</code>, see Examples</p></td>
+    </tr>
+    <tr>
+      <th>translate_ab</th>
+      <td><p>a column name of the <a href='antibiotics.html'>antibiotics</a> data set to translate the antibiotic abbreviations to, using <code><a href='ab_property.html'>ab_property()</a></code>. Defaults to "name", which is equal to using <code>TRUE</code>. Use a value <code>FALSE</code>, <code>NULL</code> or <code>NA</code> to prevent translation of the <code>&lt;ab&gt;</code> code.</p></td>
     </tr>
     <tr>
       <th>...</th>
-      <td><p>arguments passed on to internal functions</p></td>
+      <td><p>parameters passed on to <code><a href='as.ab.html'>as.ab()</a></code></p></td>
     </tr>
     </table>
 
-    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
-
-    <p>Character (vector) with class <code>ab</code>. Unknown values will return <code>NA</code>.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>All entries in the <a href='antibiotics.html'>antibiotics</a> data set have three different identifiers: a human readable EARS-Net code (column <code>ab</code>, used by ECDC and WHONET), an ATC code (column <code>atc</code>, used by WHO), and a CID code (column <code>cid</code>, Compound ID, used by PubChem). The data set contains more than 5,000 official brand names from many different countries, as found in PubChem.</p>
-<p>Use the <code><a href='ab_property.html'>ab_property()</a></code> functions to get properties based on the returned antibiotic ID, see Examples.</p>
-    <h2 class="hasAnchor" id="source"><a class="anchor" href="#source"></a>Source</h2>
-
-    
-
-<p>World Health Organization (WHO) Collaborating Centre for Drug Statistics Methodology: <a href='https://www.whocc.no/atc_ddd_index/'>https://www.whocc.no/atc_ddd_index/</a></p>
-<p>WHONET 2019 software: <a href='http://www.whonet.org/software.html'>http://www.whonet.org/software.html</a></p>
-<p>European Commission Public Health PHARMACEUTICALS - COMMUNITY REGISTER: <a href='http://ec.europa.eu/health/documents/community-register/html/atc.htm'>http://ec.europa.eu/health/documents/community-register/html/atc.htm</a></p>
-    <h2 class="hasAnchor" id="maturing-lifecycle"><a class="anchor" href="#maturing-lifecycle"></a>Maturing lifecycle</h2>
-
-    
-
-<p><img src='figures/lifecycle_maturing.svg' style=margin-bottom:5px /> <br />
-The <a href='lifecycle.html'>lifecycle</a> of this function is <strong>maturing</strong>. The unlying code of a maturing function has been roughed out, but finer details might still change. This function needs wider usage and more extensive testing in order to optimise the unlying code.</p>
-    <h2 class="hasAnchor" id="whocc"><a class="anchor" href="#whocc"></a>WHOCC</h2>
-
-    
-
-<p><img src='figures/logo_who.png' height=60px style=margin-bottom:5px /> <br />
-This package contains <strong>all ~550 antibiotic, antimycotic and antiviral drugs</strong> and their Anatomical Therapeutic Chemical (ATC) codes, ATC groups and Defined Daily Dose (DDD) from the World Health Organization Collaborating Centre for Drug Statistics Methodology (WHOCC, <a href='https://www.whocc.no'>https://www.whocc.no</a>) and the Pharmaceuticals Community Register of the European Commission (<a href='http://ec.europa.eu/health/documents/community-register/html/atc.htm'>http://ec.europa.eu/health/documents/community-register/html/atc.htm</a>).</p>
-<p>These have become the gold standard for international drug utilisation monitoring and research.</p>
-<p>The WHOCC is located in Oslo at the Norwegian Institute of Public Health and funded by the Norwegian government. The European Commission is the executive of the European Union and promotes its general interest.</p>
-<p><strong>NOTE: The WHOCC copyright does not allow use for commercial purposes, unlike any other info from this package.</strong> See <a href='https://www.whocc.no/copyright_disclaimer/.'>https://www.whocc.no/copyright_disclaimer/.</a></p>
-    <h2 class="hasAnchor" id="read-more-on-our-website-"><a class="anchor" href="#read-more-on-our-website-"></a>Read more on our website!</h2>
-
-    
-
-<p>On our website <a href='https://msberends.gitlab.io/AMR'>https://msberends.gitlab.io/AMR</a> you can find <a href='https://msberends.gitlab.io/AMR/articles/AMR.html'>a comprehensive tutorial</a> about how to conduct AMR analysis, the <a href='https://msberends.gitlab.io/AMR/reference'>complete documentation of all functions</a> (which reads a lot easier than here in R) and <a href='https://msberends.gitlab.io/AMR/articles/WHONET.html'>an example analysis using WHONET data</a>.</p>
-    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
-
-    <div class='dont-index'>
-<ul>
-<li><p><a href='antibiotics.html'>antibiotics</a> for the dataframe that is being used to determine ATCs</p></li>
-<li><p><code><a href='ab_from_text.html'>ab_from_text()</a></code> for a function to retrieve antimicrobial drugs from clinical text (from health care records)</p></li>
-</ul>
-</div>
+    <p>To use this for creating a new variable in a data set (e.g. with <code>mutate()</code>), it could be convenient to paste the outcome together with the <code>collapse</code> parameter so every value in your new variable will be a character of length 1:<br />
+<code>df %&gt;% mutate(abx = ab_from_text(clinical_text, collapse = "|"))</code></p>
+<p>This function is also internally used by <code><a href='as.ab.html'>as.ab()</a></code>, although it then only returns the first hit.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><span class='co'># these examples all return "ERY", the ID of erythromycin:</span>
-<span class='fu'>as.ab</span>(<span class='st'>"J01FA01"</span>)
-<span class='fu'>as.ab</span>(<span class='st'>"J 01 FA 01"</span>)
-<span class='fu'>as.ab</span>(<span class='st'>"Erythromycin"</span>)
-<span class='fu'>as.ab</span>(<span class='st'>"eryt"</span>)
-<span class='fu'>as.ab</span>(<span class='st'>"   eryt 123"</span>)
-<span class='fu'>as.ab</span>(<span class='st'>"ERYT"</span>)
-<span class='fu'>as.ab</span>(<span class='st'>"ERY"</span>)
-<span class='fu'>as.ab</span>(<span class='st'>"eritromicine"</span>) <span class='co'># spelled wrong, yet works</span>
-<span class='fu'>as.ab</span>(<span class='st'>"Erythrocin"</span>)   <span class='co'># trade name</span>
-<span class='fu'>as.ab</span>(<span class='st'>"Romycin"</span>)      <span class='co'># trade name</span>
+    <pre class="examples"><span class='co'># mind the bad spelling of amoxicillin in this line, </span>
+<span class='co'># straight from a true health care record:</span>
+<span class='fu'>ab_from_text</span>(<span class='st'>"28/03/2020 regular amoxicilliin 500mg po tds"</span>)
 
-<span class='co'># spelling from different languages and dyslexia are no problem</span>
-<span class='fu'><a href='ab_property.html'>ab_atc</a></span>(<span class='st'>"ceftriaxon"</span>)
-<span class='fu'><a href='ab_property.html'>ab_atc</a></span>(<span class='st'>"cephtriaxone"</span>)     <span class='co'># small spelling error</span>
-<span class='fu'><a href='ab_property.html'>ab_atc</a></span>(<span class='st'>"cephthriaxone"</span>)    <span class='co'># or a bit more severe</span>
-<span class='fu'><a href='ab_property.html'>ab_atc</a></span>(<span class='st'>"seephthriaaksone"</span>) <span class='co'># and even this works</span>
+<span class='fu'>ab_from_text</span>(<span class='st'>"administered amoxi/clav and cipro"</span>)
+<span class='fu'>ab_from_text</span>(<span class='st'>"administered amoxi/clav and cipro"</span>, <span class='kw'>collapse</span> <span class='kw'>=</span> <span class='st'>", "</span>)
 
-<span class='co'># use ab_* functions to get a specific properties (see ?ab_property);</span>
-<span class='co'># they use as.ab() internally:</span>
-<span class='fu'><a href='ab_property.html'>ab_name</a></span>(<span class='st'>"J01FA01"</span>)    <span class='co'># "Erythromycin"</span>
-<span class='fu'><a href='ab_property.html'>ab_name</a></span>(<span class='st'>"eryt"</span>)       <span class='co'># "Erythromycin"</span></pre>
+<span class='co'># if you want to know which antibiotic groups were administered, check it:</span>
+<span class='no'>abx</span> <span class='kw'>&lt;-</span> <span class='fu'>ab_from_text</span>(<span class='st'>"administered amoxi/clav and cipro"</span>)
+<span class='fu'><a href='ab_property.html'>ab_group</a></span>(<span class='no'>abx</span>)</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
