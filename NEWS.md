@@ -1,4 +1,4 @@
-# AMR 1.2.0.9014
+# AMR 1.2.0.9015
 ## <small>Last updated: 25-Jun-2020</small>
 
 ### New
@@ -40,7 +40,7 @@
 * Fixed a bug in `bug_drug_combinations()` for when only one antibiotic was in the input data
 * Changed the summary for class `<mo>`, to highlight the %SI vs. %R
 * Improved error handling, giving more useful info when functions return an error
-* Algorithm improvements to `as.ab()`
+* Algorithm improvements to `as.ab()`, many more misspellings are now translatable
 * Added Monuril as trade name for fosfomycin
 
 # AMR 1.2.0

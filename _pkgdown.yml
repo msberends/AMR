@@ -94,6 +94,7 @@ reference:
     contents:
     - starts_with("as.")
     - "`eucast_rules`"
+    - "`ab_from_text`"
     - "`guess_ab_col`"
     - "`mo_source`"
   - title: "Enhancing your data"

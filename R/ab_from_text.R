@@ -30,6 +30,7 @@
 #' `df %>% mutate(abx = ab_from_text(clinical_text, collapse = "|"))` 
 #' 
 #' This function is also internally used by [as.ab()], although it then only returns the first hit.
+#' @export
 #' @examples 
 #' # mind the bad spelling of amoxicillin in this line, 
 #' # straight from a true health care record:
