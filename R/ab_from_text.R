@@ -58,12 +58,17 @@ ab_from_text <- function(text, collapse = NULL, translate_ab = "name", ...) {
   }
   
   text_split <- unlist(strsplit(text, "[ ;.,:/\\|-]"))
-  result <- as.ab(unique(c(text_split[grep(to_regex(abbr), text_split)],
-                           text_split[grep(to_regex(names), text_split)],
-                           # regular expression must not be too long, so split synonyms in two:
-                           text_split[grep(to_regex(synonyms[c(1:0.5 * length(synonyms))]), text_split)],
-                           text_split[grep(to_regex(synonyms[c(0.5 * length(synonyms):length(synonyms))]), text_split)])),
-                  ...)
+  result <- suppressWarnings(
+    as.ab(unique(c(text_split[grep(to_regex(abbr), text_split)],
+                   text_split[grep(to_regex(names), text_split)],
+                   # regular expression must not be too long, so split synonyms in two:
+                   text_split[grep(to_regex(synonyms[c(1:0.5 * length(synonyms))]), text_split)],
+                   text_split[grep(to_regex(synonyms[c(0.5 * length(synonyms):length(synonyms))]), text_split)])),
+          ...))
+  result <- result[!is.na(result)]
+  if (length(result) == 0) {
+    result <- as.ab(NA)
+  }
   translate_ab <- get_translate_ab(translate_ab)
   if (!isFALSE(translate_ab)) {
     result <- ab_property(result, property = translate_ab)

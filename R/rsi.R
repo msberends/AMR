@@ -166,10 +166,10 @@ as.rsi.default <- function(x, ...) {
       }
     }
     
-    x <- x %>% unlist()
+    x <- as.character(unlist(x))
     x.bak <- x
     
-    na_before <- x[is.na(x) | x == ""] %>% length()
+    na_before <- length(x[is.na(x) | x == ""])
     # remove all spaces
     x <- gsub(" +", "", x)
     # remove all MIC-like values: numbers, operators and periods
@@ -188,7 +188,7 @@ as.rsi.default <- function(x, ...) {
     x <- gsub("^I+$", "I", x)
     x <- gsub("^R+$", "R", x)
     x[!x %in% c("S", "I", "R")] <- NA
-    na_after <- x[is.na(x) | x == ""] %>% length()
+    na_after <- length(x[is.na(x) | x == ""])
     
     if (!isFALSE(list(...)$warn)) { # so as.rsi(..., warn = FALSE) will never throw a warning
       if (na_before != na_after) {

@@ -130,7 +130,8 @@ as.mic <- function(x, na.rm = FALSE) {
 }
 
 all_valid_mics <- function(x) {
-  x_mic <- suppressWarnings(as.mic(x[!is.na(x)]))
+  x_mic <- tryCatch(suppressWarnings(as.mic(x[!is.na(x)])),
+                    error = function(e) NA)
   !any(is.na(x_mic)) & !all(is.na(x))
 }
 

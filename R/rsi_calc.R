@@ -48,18 +48,23 @@ rsi_calc <- function(...,
           "Please read Details in the help page (`?proportion`) as this may have a considerable impact on your analysis.", call = -2)
   ndots <- length(dots)
   
-  if ("data.frame" %in% class(dots_df)) {
+  if (is.data.frame(dots_df)) {
     # data.frame passed with other columns, like: example_isolates %>% proportion_S(AMC, GEN)
     dots <- as.character(dots)
-    dots <- dots[dots != "."]
+    # remove first element, it's the data.frame
+    if (length(dots) == 1) {
+      dots <- character(0)
+    } else {
+      dots <- dots[2:length(dots)]
+    }
     if (length(dots) == 0 | all(dots == "df")) {
       # for complete data.frames, like example_isolates %>% select(AMC, GEN) %>% proportion_S()
       # and the old rsi function, which has "df" as name of the first parameter
       x <- dots_df
-    } else if (length(dots) == 1 | all(!dots %in% colnames(dots_df))) {
-      x <- dots_df
     } else {
-      x <- dots_df[, dots[dots %in% colnames(dots_df)], drop = FALSE]
+      dots_not_exist <- dots[!dots %in% colnames(dots_df)]
+      stop_if(length(dots_not_exist) > 0, "column(s) not found: ", paste0("'", dots_not_exist, "'", collapse = ", "), call = -2)
+      x <- dots_df[, dots, drop = FALSE]
     }
   } else if (ndots == 1) {
     # only 1 variable passed (can also be data.frame), like: proportion_S(example_isolates$AMC) and example_isolates$AMC %>% proportion_S()

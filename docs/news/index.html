@@ -81,7 +81,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.2.0.9015</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.2.0.9016</span>
       </span>
     </div>
 
@@ -229,13 +229,13 @@
       <small>Source: <a href='https://gitlab.com/msberends/AMR/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
-    <div id="amr-1209015" class="section level1">
-<h1 class="page-header" data-toc-text="1.2.0.9015">
-<a href="#amr-1209015" class="anchor"></a>AMR 1.2.0.9015<small> Unreleased </small>
+    <div id="amr-1209016" class="section level1">
+<h1 class="page-header" data-toc-text="1.2.0.9016">
+<a href="#amr-1209016" class="anchor"></a>AMR 1.2.0.9016<small> Unreleased </small>
 </h1>
-<div id="last-updated-25-jun-2020" class="section level2">
+<div id="last-updated-26-jun-2020" class="section level2">
 <h2 class="hasAnchor">
-<a href="#last-updated-25-jun-2020" class="anchor"></a><small>Last updated: 25-Jun-2020</small>
+<a href="#last-updated-26-jun-2020" class="anchor"></a><small>Last updated: 26-Jun-2020</small>
 </h2>
 <div id="new" class="section level3">
 <h3 class="hasAnchor">
@@ -274,8 +274,7 @@
 <h3 class="hasAnchor">
 <a href="#changed" class="anchor"></a>Changed</h3>
 <ul>
-<li>Fixed a bug for using <code>susceptibility</code> or <code><a href="../reference/proportion.html">resistance()</a></code> outside <code><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise()</a></code>
-</li>
+<li>Using unexisting columns in all <code>count_*()</code>, <code>proportion_*()</code>, <code><a href="../reference/proportion.html">susceptibility()</a></code> and <code><a href="../reference/proportion.html">resistance()</a></code> functions wil now return an error instead of dropping them silently</li>
 <li>Fixed a bug where <code><a href="../reference/eucast_rules.html">eucast_rules()</a></code> would not work on a tibble when the <code>tibble</code> or <code>dplyr</code> package was loaded</li>
 <li>All <code>*_join_microorganisms()</code> functions and <code><a href="../reference/bug_drug_combinations.html">bug_drug_combinations()</a></code> now return the original data class (e.g. <code>tibble</code>s and <code>data.table</code>s)</li>
 <li>Fixed a bug where <code><a href="../reference/as.ab.html">as.ab()</a></code> would return an error on invalid input values</li>

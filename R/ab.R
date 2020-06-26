@@ -209,7 +209,7 @@ as.ab <- function(x, ...) {
       # correct for digital reading text (OCR)
       x_spelling <- gsub("[NRD]", "[NRD]", x_spelling)
     }
-    
+
     # try if name starts with it
     found <- antibiotics[which(antibiotics$name %like% paste0("^", x_spelling)), ]$ab
     if (length(found) > 0) {

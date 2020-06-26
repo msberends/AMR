@@ -1,5 +1,5 @@
-# AMR 1.2.0.9015
-## <small>Last updated: 25-Jun-2020</small>
+# AMR 1.2.0.9016
+## <small>Last updated: 26-Jun-2020</small>
 
 ### New
 * Function `ab_from_text()` to retrieve antimicrobial drugs from clinical texts in e.g. health care records, which also corrects for misspelling since it uses `as.ab()` internally:
@@ -31,7 +31,7 @@
 * Added antibiotics code "FOX1" for cefoxitin screening (abbreviation "cfsc") to the `antibiotics` data set
 
 ### Changed
-* Fixed a bug for using `susceptibility` or `resistance()` outside `summarise()`
+* Using unexisting columns in all `count_*()`, `proportion_*()`, `susceptibility()` and `resistance()` functions wil now return an error instead of dropping them silently
 * Fixed a bug where `eucast_rules()` would not work on a tibble when the `tibble` or `dplyr` package was loaded
 * All `*_join_microorganisms()` functions and `bug_drug_combinations()` now return the original data class (e.g. `tibble`s and `data.table`s)
 * Fixed a bug where `as.ab()` would return an error on invalid input values
