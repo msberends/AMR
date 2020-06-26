@@ -1,4 +1,4 @@
-# AMR 1.2.0.9017
+# AMR 1.2.0.9018
 ## <small>Last updated: 26-Jun-2020</small>
 
 ### New
