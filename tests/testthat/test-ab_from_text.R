@@ -23,10 +23,10 @@ context("ab_from_text.R")
 
 test_that("ab_from_text works", {
   
-  expect_identical(ab_from_text("28/03/2020 regular amoxicilliin 500mg po tds"),
+  expect_identical(ab_from_text("28/03/2020 regular amoxicilliin 500mg po tds")[[1]],
+                   as.ab("Amoxicillin"))
+  expect_identical(ab_from_text("28/03/2020 regular amoxicilliin 500mg po tds", translate_ab = TRUE)[[1]],
                    "Amoxicillin")
-  expect_identical(ab_from_text("28/03/2020 regular amoxicilliin 500mg po tds", translate_ab = FALSE),
-                   as.ab("AMX"))
-  expect_identical(ab_from_text("administered amoxi/clav and cipro", collapse = ", "),
-                   "Amoxicillin, Ciprofloxacin")
+  expect_identical(ab_from_text("administered amoxi/clav and cipro", collapse = ", ")[[1]],
+                   "AMX, CIP")
 })

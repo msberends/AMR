@@ -54,6 +54,8 @@ test_that("as.ab works", {
   
   expect_equal(as.character(as.ab("Amoxy + clavulaanzuur")),
                "AMC")
+  
+  expect_message(as.ab("cipro mero"))
 
   # assigning and subsetting
   x <- antibiotics$ab

@@ -2,27 +2,35 @@
 % Please edit documentation in R/ab_from_text.R
 \name{ab_from_text}
 \alias{ab_from_text}
-\title{Retrieve antimicrobial drugs from text}
+\title{Retrieve antimicrobial drugs from clinical text}
 \usage{
-ab_from_text(text, collapse = NULL, translate_ab = "name", ...)
+ab_from_text(text, collapse = NULL, translate_ab = FALSE, ...)
 }
 \arguments{
 \item{text}{text to analyse}
 
 \item{collapse}{character to pass on to \code{paste(..., collapse = ...)} to only return one character per element of \code{text}, see Examples}
 
-\item{translate_ab}{a column name of the \link{antibiotics} data set to translate the antibiotic abbreviations to, using \code{\link[=ab_property]{ab_property()}}. Defaults to "name", which is equal to using \code{TRUE}. Use a value \code{FALSE}, \code{NULL} or \code{NA} to prevent translation of the \verb{<ab>} code.}
+\item{translate_ab}{a column name of the \link{antibiotics} data set to translate the antibiotic abbreviations to, using \code{\link[=ab_property]{ab_property()}}. Defaults to \code{FALSE}. Using \code{TRUE} is equal to using "name".}
 
 \item{...}{parameters passed on to \code{\link[=as.ab]{as.ab()}}}
 }
+\value{
+A \link{list}, or a \link{character} if \code{collapse} is not \code{NULL}
+}
 \description{
-Use this function on e.g. clinical texts from health care records. It returns a vector of antimicrobial drugs found in the texts.
+Use this function on e.g. clinical texts from health care records. It returns a \link{list} with all antimicrobial drugs found in the texts.
 }
 \details{
-To use this for creating a new variable in a data set (e.g. with \code{mutate()}), it could be convenient to paste the outcome together with the \code{collapse} parameter so every value in your new variable will be a character of length 1:\cr
+Without using \code{collapse}, this function will return a \link{list}. This can be convenient to use e.g. inside a \code{mutate()}):\cr
+\code{df \%>\% mutate(abx = ab_from_text(clinical_text))}
+
+The returned AB codes can be transformed to official names, groups, etc. with all \code{\link[=ab_property]{ab_property()}} functions like \code{\link[=ab_name]{ab_name()}} and \code{\link[=ab_group]{ab_group()}}, or by using the \code{translate_ab} parameter.
+
+With using \code{collapse}, this function will return a \link{character}:\cr
 \code{df \%>\% mutate(abx = ab_from_text(clinical_text, collapse = "|"))}
 
-This function is also internally used by \code{\link[=as.ab]{as.ab()}}, although it then only returns the first hit.
+This function is also internally used by \code{\link[=as.ab]{as.ab()}}, although it then only returns the first hit and will throw a note if more results could have been returned.
 }
 \examples{
 # mind the bad spelling of amoxicillin in this line, 
@@ -34,5 +42,17 @@ ab_from_text("administered amoxi/clav and cipro", collapse = ", ")
 
 # if you want to know which antibiotic groups were administered, check it:
 abx <- ab_from_text("administered amoxi/clav and cipro")
-ab_group(abx)
+ab_group(abx[[1]])
+
+if (require(dplyr)) {
+  tibble(clinical_text = c("given cipro and mero",
+                           "started on doxy today")) \%>\% 
+    mutate(abx = ab_from_text(clinical_text),
+           abx2 = ab_from_text(clinical_text,
+                               collapse = "|"),
+           abx3 = ab_from_text(clinical_text,
+                               collapse = "|",
+                               translate_ab = "name"))
+
+}
 }

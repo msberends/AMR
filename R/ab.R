@@ -24,6 +24,7 @@
 #' Use this function to determine the antibiotic code of one or more antibiotics. The data set [antibiotics] will be searched for abbreviations, official names and synonyms (brand names).
 #' @inheritSection lifecycle Maturing lifecycle
 #' @param x character vector to determine to antibiotic ID
+#' @param flag_multiple_results logical to indicate whether a note should be printed to the console that probably more than one antibiotic code or name can be retrieved from a single input value.
 #' @param ... arguments passed on to internal functions
 #' @rdname as.ab
 #' @inheritSection WHOCC WHOCC
@@ -67,7 +68,7 @@
 #' # they use as.ab() internally:
 #' ab_name("J01FA01")    # "Erythromycin"
 #' ab_name("eryt")       # "Erythromycin"
-as.ab <- function(x, ...) {
+as.ab <- function(x, flag_multiple_results = TRUE, ...) {
   
   check_dataset_integrity()
   
@@ -75,7 +76,7 @@ as.ab <- function(x, ...) {
     return(x)
   }
 
-  initial <- is.null(list(...)$initial)
+  initial_search <- is.null(list(...)$initial_search)
   already_regex <- isTRUE(list(...)$already_regex)
 
   if (all(toupper(x) %in% antibiotics$ab)) {
@@ -114,7 +115,24 @@ as.ab <- function(x, ...) {
   x_new <- rep(NA_character_, length(x))
   x_unknown <- character(0)
   
+  note_if_more_than_one_found <- function(found, index, from_text) {
+    if (initial_search == TRUE & isTRUE(length(from_text) > 1)) {
+      message(font_blue(paste0("NOTE: more than one result was found for item ", index, ": ",
+                               paste0(ab_name(from_text, tolower = TRUE, initial_search = FALSE), collapse = ", "))))
+    }
+    found[1L]
+  }
+  
+  if (initial_search == TRUE) {
+    progress <- progress_estimated(n = length(x), n_min = 25) # start if n >= 25
+    on.exit(close(progress))
+  }
+  
   for (i in seq_len(length(x))) {
+    if (initial_search == TRUE) {
+      progress$tick()
+    }
+    
     if (is.na(x[i]) | is.null(x[i])) {
       next
     }
@@ -127,31 +145,37 @@ as.ab <- function(x, ...) {
       next
     }
     
+    if (isTRUE(flag_multiple_results) & x[i] %like% "[ ]") {
+      from_text <- suppressWarnings(ab_from_text(x[i], initial_search = FALSE, translate_ab = FALSE))
+    } else {
+      from_text <- character(0)
+    }
+    
     # exact AB code
     found <- antibiotics[which(antibiotics$ab == x[i]), ]$ab
     if (length(found) > 0) {
-      x_new[i] <- found[1L]
+      x_new[i] <- note_if_more_than_one_found(found, i, from_text)
       next
     }
 
     # exact ATC code
     found <- antibiotics[which(antibiotics$atc == x[i]), ]$ab
     if (length(found) > 0) {
-      x_new[i] <- found[1L]
+      x_new[i] <- note_if_more_than_one_found(found, i, from_text)
       next
     }
 
     # exact CID code
     found <- antibiotics[which(antibiotics$cid == x[i]), ]$ab
     if (length(found) > 0) {
-      x_new[i] <- found[1L]
+      x_new[i] <- note_if_more_than_one_found(found, i, from_text)
       next
     }
 
     # exact name
     found <- antibiotics[which(toupper(antibiotics$name) == x[i]), ]$ab
     if (length(found) > 0) {
-      x_new[i] <- found[1L]
+      x_new[i] <- note_if_more_than_one_found(found, i, from_text)
       next
     }
     
@@ -160,7 +184,7 @@ as.ab <- function(x, ...) {
                                    function(s) x[i] %in% s))
     found <- antibiotics$ab[loinc_found == TRUE]
     if (length(found) > 0) {
-      x_new[i] <- found[1L]
+      x_new[i] <- note_if_more_than_one_found(found, i, from_text)
       next
     }
 
@@ -169,7 +193,7 @@ as.ab <- function(x, ...) {
                                    function(s) x[i] %in% toupper(s)))
     found <- antibiotics$ab[synonym_found == TRUE]
     if (length(found) > 0) {
-      x_new[i] <- found[1L]
+      x_new[i] <- note_if_more_than_one_found(found, i, from_text)
       next
     }
 
@@ -178,7 +202,7 @@ as.ab <- function(x, ...) {
                                 function(a) x[i] %in% toupper(a)))
     found <- antibiotics$ab[abbr_found == TRUE]
     if (length(found) > 0) {
-      x_new[i] <- found[1L]
+      x_new[i] <- note_if_more_than_one_found(found, i, from_text)
       next
     }
 
@@ -213,13 +237,13 @@ as.ab <- function(x, ...) {
     # try if name starts with it
     found <- antibiotics[which(antibiotics$name %like% paste0("^", x_spelling)), ]$ab
     if (length(found) > 0) {
-      x_new[i] <- found[1L]
+      x_new[i] <- note_if_more_than_one_found(found, i, from_text)
       next
     }
     # try if name ends with it
     found <- antibiotics[which(antibiotics$name %like% paste0(x_spelling, "$")), ]$ab
     if (nchar(x[i]) >= 4 & length(found) > 0) {
-      x_new[i] <- found[1L]
+      x_new[i] <- note_if_more_than_one_found(found, i, from_text)
       next
     }
     # and try if any synonym starts with it
@@ -227,29 +251,29 @@ as.ab <- function(x, ...) {
                                    function(s) any(s %like% paste0("^", x_spelling))))
     found <- antibiotics$ab[synonym_found == TRUE]
     if (length(found) > 0) {
-      x_new[i] <- found[1L]
+      x_new[i] <- note_if_more_than_one_found(found, i, from_text)
       next
     }
     
-    # INITIAL - More uncertain results ----
+    # INITIAL SEARCH - More uncertain results ----
     
-    if (initial == TRUE) {
+    if (initial_search == TRUE) {
       # only run on first try
       
       # try by removing all spaces
       if (x[i] %like% " ") {
-        found <- suppressWarnings(as.ab(gsub(" +", "", x[i]), initial = FALSE))
+        found <- suppressWarnings(as.ab(gsub(" +", "", x[i]), initial_search = FALSE))
         if (length(found) > 0 & !is.na(found)) {
-          x_new[i] <- found[1L]
+          x_new[i] <- note_if_more_than_one_found(found, i, from_text)
           next
         }
       }
       
       # try by removing all spaces and numbers
       if (x[i] %like% " " | x[i] %like% "[0-9]") {
-        found <- suppressWarnings(as.ab(gsub("[ 0-9]", "", x[i]), initial = FALSE))
+        found <- suppressWarnings(as.ab(gsub("[ 0-9]", "", x[i]), initial_search = FALSE))
         if (length(found) > 0 & !is.na(found)) {
-          x_new[i] <- found[1L]
+          x_new[i] <- note_if_more_than_one_found(found, i, from_text)
           next
         }
       }
@@ -266,7 +290,7 @@ as.ab <- function(x, ...) {
                                      y
                                    })[[1]],
                             collapse = "/")
-      x_translated_guess <- suppressWarnings(as.ab(x_translated, initial = FALSE))
+      x_translated_guess <- suppressWarnings(as.ab(x_translated, initial_search = FALSE))
       if (!is.na(x_translated_guess)) {
         x_new[i] <- x_translated_guess
         next
@@ -276,7 +300,7 @@ as.ab <- function(x, ...) {
       x_translated <- paste(lapply(strsplit(x_translated, "[^A-Z0-9 ]"),
                                    function(y) {
                                      for (i in seq_len(length(y))) {
-                                       y_name <- suppressWarnings(ab_name(y[i], language = NULL, initial = FALSE))
+                                       y_name <- suppressWarnings(ab_name(y[i], language = NULL, initial_search = FALSE))
                                        y[i] <- ifelse(!is.na(y_name),
                                                       y_name,
                                                       y[i])
@@ -284,7 +308,7 @@ as.ab <- function(x, ...) {
                                      y
                                    })[[1]],
                             collapse = "/")
-      x_translated_guess <- suppressWarnings(as.ab(x_translated, initial = FALSE))
+      x_translated_guess <- suppressWarnings(as.ab(x_translated, initial_search = FALSE))
       if (!is.na(x_translated_guess)) {
         x_new[i] <- x_translated_guess
         next
@@ -292,60 +316,65 @@ as.ab <- function(x, ...) {
       
       # try by removing all trailing capitals
       if (x[i] %like_case% "[a-z]+[A-Z]+$") {
-        found <- suppressWarnings(as.ab(gsub("[A-Z]+$", "", x[i]), initial = FALSE))
+        found <- suppressWarnings(as.ab(gsub("[A-Z]+$", "", x[i]), initial_search = FALSE))
         if (!is.na(found)) {
-          x_new[i] <- found[1L]
+          x_new[i] <- note_if_more_than_one_found(found, i, from_text)
           next
         }
       }
       
       # keep only letters
-      found <- suppressWarnings(as.ab(gsub("[^A-Z]", "", x[i]), initial = FALSE))
+      found <- suppressWarnings(as.ab(gsub("[^A-Z]", "", x[i]), initial_search = FALSE))
       if (!is.na(found)) {
-        x_new[i] <- found[1L]
+        x_new[i] <- note_if_more_than_one_found(found, i, from_text)
         next
       }
       
       # try from a bigger text, like from a health care record, see ?ab_from_text
-      found <- suppressWarnings(ab_from_text(x[i], initial = FALSE, translate_ab = FALSE)[1L])
+      # already calculated above if flag_multiple_results = TRUE
+      if (isTRUE(flag_multiple_results)) {
+        found <- from_text[1L]
+      } else {
+        found <- suppressWarnings(ab_from_text(x[i], initial_search = FALSE, translate_ab = FALSE)[1L])
+      }
       if (!is.na(found)) {
-        x_new[i] <- found[1L]
+        x_new[i] <- note_if_more_than_one_found(found, i, from_text)
         next
       }
       
       # first 5 except for cephalosporins, then first 7 (those cephalosporins all start quite the same!)
-      found <- suppressWarnings(as.ab(substr(x[i], 1, 5), initial = FALSE))
-      if (!is.na(found) && !ab_group(found, initial = FALSE) %like% "cephalosporins") {
-        x_new[i] <- found[1L]
+      found <- suppressWarnings(as.ab(substr(x[i], 1, 5), initial_search = FALSE))
+      if (!is.na(found) && !ab_group(found, initial_search = FALSE) %like% "cephalosporins") {
+        x_new[i] <- note_if_more_than_one_found(found, i, from_text)
         next
       }
-      found <- suppressWarnings(as.ab(substr(x[i], 1, 7), initial = FALSE))
+      found <- suppressWarnings(as.ab(substr(x[i], 1, 7), initial_search = FALSE))
       if (!is.na(found)) {
-        x_new[i] <- found[1L]
+        x_new[i] <- note_if_more_than_one_found(found, i, from_text)
         next
       }
       
       # make all consonants facultative
       search_str <- gsub("([BCDFGHJKLMNPQRSTVWXZ])", "\\1*", x[i])
-      found <- suppressWarnings(as.ab(search_str, initial = FALSE, already_regex = TRUE))
+      found <- suppressWarnings(as.ab(search_str, initial_search = FALSE, already_regex = TRUE))
       # keep at least 4 normal characters
       if (nchar(gsub(".\\*", "", search_str)) < 4) {
         found <- NA
       }
       if (!is.na(found)) {
-        x_new[i] <- found[1L]
+        x_new[i] <- note_if_more_than_one_found(found, i, from_text)
         next
       }
       
       # make all vowels facultative
       search_str <- gsub("([AEIOUY])", "\\1*", x[i])
-      found <- suppressWarnings(as.ab(search_str, initial = FALSE, already_regex = TRUE))
+      found <- suppressWarnings(as.ab(search_str, initial_search = FALSE, already_regex = TRUE))
       # keep at least 5 normal characters
       if (nchar(gsub(".\\*", "", search_str)) < 5) {
         found <- NA
       }
       if (!is.na(found)) {
-        x_new[i] <- found[1L]
+        x_new[i] <- note_if_more_than_one_found(found, i, from_text)
         next
       }
       
@@ -355,16 +384,20 @@ as.ab <- function(x, ...) {
       x_spelling <- gsub("I+", "[AEIOU]+", x_spelling, fixed = TRUE)
       x_spelling <- gsub("O+", "[AEIOU]+", x_spelling, fixed = TRUE)
       x_spelling <- gsub("U+", "[AEIOU]+", x_spelling, fixed = TRUE)
-      found <- suppressWarnings(as.ab(x_spelling, initial = FALSE, already_regex = TRUE))
+      found <- suppressWarnings(as.ab(x_spelling, initial_search = FALSE, already_regex = TRUE))
       if (!is.na(found)) {
-        x_new[i] <- found[1L]
+        x_new[i] <- note_if_more_than_one_found(found, i, from_text)
         next
       }
       
-    } # end of initial = TRUE
+    } # end of initial_search = TRUE
 
     # not found
     x_unknown <- c(x_unknown, x_bak[x[i] == x_bak_clean][1])
+  }
+  
+  if (initial_search == TRUE) {
+    close(progress)
   }
 
   # take failed ATC codes apart from rest

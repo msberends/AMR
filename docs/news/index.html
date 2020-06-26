@@ -81,7 +81,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.2.0.9016</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.2.0.9017</span>
       </span>
     </div>
 
@@ -229,9 +229,9 @@
       <small>Source: <a href='https://gitlab.com/msberends/AMR/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
-    <div id="amr-1209016" class="section level1">
-<h1 class="page-header" data-toc-text="1.2.0.9016">
-<a href="#amr-1209016" class="anchor"></a>AMR 1.2.0.9016<small> Unreleased </small>
+    <div id="amr-1209017" class="section level1">
+<h1 class="page-header" data-toc-text="1.2.0.9017">
+<a href="#amr-1209017" class="anchor"></a>AMR 1.2.0.9017<small> Unreleased </small>
 </h1>
 <div id="last-updated-26-jun-2020" class="section level2">
 <h2 class="hasAnchor">
@@ -243,8 +243,15 @@
 <ul>
 <li>
 <p>Function <code><a href="../reference/ab_from_text.html">ab_from_text()</a></code> to retrieve antimicrobial drugs from clinical texts in e.g. health care records, which also corrects for misspelling since it uses <code><a href="../reference/as.ab.html">as.ab()</a></code> internally:</p>
-<div class="sourceCode" id="cb1"><pre class="r"><span class="fu"><a href="../reference/ab_from_text.html">ab_from_text</a></span>(<span class="st">"28/03/2020 regular amoxiciliin 500mg po tds"</span>)
-<span class="co">#&gt; [1] "Amoxicillin"</span></pre></div>
+<div class="sourceCode" id="cb1"><pre class="r"><span class="fu"><a href="../reference/ab_from_text.html">ab_from_text</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"28/03/2020 regular amoxiciliin 500mg po tds"</span>,
+               <span class="st">"15/04/2020 started on ciprofloxi-thingy and tobra today"</span>))
+<span class="co">#&gt; [[1]]</span>
+<span class="co">#&gt; Class &lt;ab&gt;</span>
+<span class="co">#&gt; [1] AMX</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; [[2]]</span>
+<span class="co">#&gt; Class &lt;ab&gt;</span>
+<span class="co">#&gt; [1] CIP TOB</span></pre></div>
 </li>
 <li>
 <p><a href="https://tidyselect.r-lib.org/reference/language.html">Tidyverse selections</a> for antibiotic classes, that help to select the columns of antibiotics that are of a specific antibiotic class, without the need to define the columns or antibiotic abbreviations. They can be used in any function that allows Tidyverse selections, like <code><a href="https://dplyr.tidyverse.org/reference/select.html">dplyr::select()</a></code> and <code><a href="https://tidyr.tidyverse.org/reference/pivot_longer.html">tidyr::pivot_longer()</a></code>:</p>
@@ -268,6 +275,7 @@
 <li><p>Added function <code><a href="../reference/filter_ab_class.html">filter_penicillins()</a></code> to filter isolates on a specific result in any column with a name in the antimicrobial ‘penicillins’ class (more specific: ATC subgroup <em>Beta-lactam antibacterials, penicillins</em>)</p></li>
 <li><p>Added official antimicrobial names to all <code><a href="../reference/filter_ab_class.html">filter_ab_class()</a></code> functions, such as <code><a href="../reference/filter_ab_class.html">filter_aminoglycosides()</a></code></p></li>
 <li><p>Added antibiotics code “FOX1” for cefoxitin screening (abbreviation “cfsc”) to the <code>antibiotics</code> data set</p></li>
+<li><p>Added Monuril as trade name for fosfomycin</p></li>
 </ul>
 </div>
 <div id="changed" class="section level3">
@@ -284,8 +292,9 @@
 <li>Fixed a bug in <code><a href="../reference/bug_drug_combinations.html">bug_drug_combinations()</a></code> for when only one antibiotic was in the input data</li>
 <li>Changed the summary for class <code>&lt;mo&gt;</code>, to highlight the %SI vs. %R</li>
 <li>Improved error handling, giving more useful info when functions return an error</li>
-<li>Algorithm improvements to <code><a href="../reference/as.ab.html">as.ab()</a></code>, many more misspellings are now translatable</li>
-<li>Added Monuril as trade name for fosfomycin</li>
+<li>Algorithm improvements to <code><a href="../reference/as.ab.html">as.ab()</a></code>, many more misspellings are now translatable. The <code><a href="../reference/as.ab.html">as.ab()</a></code> function will now throw a note if more than 1 antimicrobial drug could be retrieved from a single input value.</li>
+<li>Added progress bar to <code><a href="../reference/as.ab.html">as.ab()</a></code>
+</li>
 </ul>
 </div>
 </div>

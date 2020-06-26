@@ -82,7 +82,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.2.0.9016</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.2.0.9017</span>
       </span>
     </div>
 
@@ -235,7 +235,7 @@
     <p>Use this function to determine the antibiotic code of one or more antibiotics. The data set <a href='antibiotics.html'>antibiotics</a> will be searched for abbreviations, official names and synonyms (brand names).</p>
     </div>
 
-    <pre class="usage"><span class='fu'>as.ab</span>(<span class='no'>x</span>, <span class='no'>...</span>)
+    <pre class="usage"><span class='fu'>as.ab</span>(<span class='no'>x</span>, <span class='kw'>flag_multiple_results</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>...</span>)
 
 <span class='fu'>is.ab</span>(<span class='no'>x</span>)</pre>
 
@@ -245,6 +245,10 @@
     <tr>
       <th>x</th>
       <td><p>character vector to determine to antibiotic ID</p></td>
+    </tr>
+    <tr>
+      <th>flag_multiple_results</th>
+      <td><p>logical to indicate whether a note should be printed to the console that probably more than one antibiotic code or name can be retrieved from a single input value.</p></td>
     </tr>
     <tr>
       <th>...</th>

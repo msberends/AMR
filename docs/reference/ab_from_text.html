@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Retrieve antimicrobial drugs from text — ab_from_text • AMR (for R)</title>
+<title>Retrieve antimicrobial drugs from clinical text — ab_from_text • AMR (for R)</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -48,8 +48,8 @@
   <link href="../extra.css" rel="stylesheet">
   <script src="../extra.js"></script>
 
-<meta property="og:title" content="Retrieve antimicrobial drugs from text — ab_from_text" />
-<meta property="og:description" content="Use this function on e.g. clinical texts from health care records. It returns a vector of antimicrobial drugs found in the texts." />
+<meta property="og:title" content="Retrieve antimicrobial drugs from clinical text — ab_from_text" />
+<meta property="og:description" content="Use this function on e.g. clinical texts from health care records. It returns a list with all antimicrobial drugs found in the texts." />
 <meta property="og:image" content="https://msberends.gitlab.io/AMR/logo.svg" />
 
 
@@ -82,7 +82,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.2.0.9016</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.2.0.9017</span>
       </span>
     </div>
 
@@ -226,16 +226,16 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Retrieve antimicrobial drugs from text</h1>
+    <h1>Retrieve antimicrobial drugs from clinical text</h1>
     <small class="dont-index">Source: <a href='https://gitlab.com/msberends/AMR/blob/master/R/ab_from_text.R'><code>R/ab_from_text.R</code></a></small>
     <div class="hidden name"><code>ab_from_text.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Use this function on e.g. clinical texts from health care records. It returns a vector of antimicrobial drugs found in the texts.</p>
+    <p>Use this function on e.g. clinical texts from health care records. It returns a <a href='https://rdrr.io/r/base/list.html'>list</a> with all antimicrobial drugs found in the texts.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>ab_from_text</span>(<span class='no'>text</span>, <span class='kw'>collapse</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>translate_ab</span> <span class='kw'>=</span> <span class='st'>"name"</span>, <span class='no'>...</span>)</pre>
+    <pre class="usage"><span class='fu'>ab_from_text</span>(<span class='no'>text</span>, <span class='kw'>collapse</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>translate_ab</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>...</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -250,7 +250,7 @@
     </tr>
     <tr>
       <th>translate_ab</th>
-      <td><p>a column name of the <a href='antibiotics.html'>antibiotics</a> data set to translate the antibiotic abbreviations to, using <code><a href='ab_property.html'>ab_property()</a></code>. Defaults to "name", which is equal to using <code>TRUE</code>. Use a value <code>FALSE</code>, <code>NULL</code> or <code>NA</code> to prevent translation of the <code>&lt;ab&gt;</code> code.</p></td>
+      <td><p>a column name of the <a href='antibiotics.html'>antibiotics</a> data set to translate the antibiotic abbreviations to, using <code><a href='ab_property.html'>ab_property()</a></code>. Defaults to <code>FALSE</code>. Using <code>TRUE</code> is equal to using "name".</p></td>
     </tr>
     <tr>
       <th>...</th>
@@ -258,11 +258,17 @@
     </tr>
     </table>
 
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+
+    <p>A <a href='https://rdrr.io/r/base/list.html'>list</a>, or a <a href='https://rdrr.io/r/base/character.html'>character</a> if <code>collapse</code> is not <code>NULL</code></p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>To use this for creating a new variable in a data set (e.g. with <code>mutate()</code>), it could be convenient to paste the outcome together with the <code>collapse</code> parameter so every value in your new variable will be a character of length 1:<br />
+    <p>Without using <code>collapse</code>, this function will return a <a href='https://rdrr.io/r/base/list.html'>list</a>. This can be convenient to use e.g. inside a <code><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate()</a></code>):<br />
+<code>df %&gt;% mutate(abx = ab_from_text(clinical_text))</code></p>
+<p>The returned AB codes can be transformed to official names, groups, etc. with all <code><a href='ab_property.html'>ab_property()</a></code> functions like <code><a href='ab_property.html'>ab_name()</a></code> and <code><a href='ab_property.html'>ab_group()</a></code>, or by using the <code>translate_ab</code> parameter.</p>
+<p>With using <code>collapse</code>, this function will return a <a href='https://rdrr.io/r/base/character.html'>character</a>:<br />
 <code>df %&gt;% mutate(abx = ab_from_text(clinical_text, collapse = "|"))</code></p>
-<p>This function is also internally used by <code><a href='as.ab.html'>as.ab()</a></code>, although it then only returns the first hit.</p>
+<p>This function is also internally used by <code><a href='as.ab.html'>as.ab()</a></code>, although it then only returns the first hit and will throw a note if more results could have been returned.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><span class='co'># mind the bad spelling of amoxicillin in this line, </span>
@@ -274,7 +280,19 @@
 
 <span class='co'># if you want to know which antibiotic groups were administered, check it:</span>
 <span class='no'>abx</span> <span class='kw'>&lt;-</span> <span class='fu'>ab_from_text</span>(<span class='st'>"administered amoxi/clav and cipro"</span>)
-<span class='fu'><a href='ab_property.html'>ab_group</a></span>(<span class='no'>abx</span>)</pre>
+<span class='fu'><a href='ab_property.html'>ab_group</a></span>(<span class='no'>abx</span><span class='kw'>[[</span><span class='fl'>1</span>]])
+
+<span class='kw'>if</span> (<span class='fu'><a href='https://rdrr.io/r/base/library.html'>require</a></span>(<span class='no'>dplyr</span>)) {
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/reexports.html'>tibble</a></span>(<span class='kw'>clinical_text</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"given cipro and mero"</span>,
+                           <span class='st'>"started on doxy today"</span>)) <span class='kw'>%&gt;%</span>
+    <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span>(<span class='kw'>abx</span> <span class='kw'>=</span> <span class='fu'>ab_from_text</span>(<span class='no'>clinical_text</span>),
+           <span class='kw'>abx2</span> <span class='kw'>=</span> <span class='fu'>ab_from_text</span>(<span class='no'>clinical_text</span>,
+                               <span class='kw'>collapse</span> <span class='kw'>=</span> <span class='st'>"|"</span>),
+           <span class='kw'>abx3</span> <span class='kw'>=</span> <span class='fu'>ab_from_text</span>(<span class='no'>clinical_text</span>,
+                               <span class='kw'>collapse</span> <span class='kw'>=</span> <span class='st'>"|"</span>,
+                               <span class='kw'>translate_ab</span> <span class='kw'>=</span> <span class='st'>"name"</span>))
+
+}</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

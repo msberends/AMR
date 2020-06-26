@@ -291,7 +291,8 @@ first_isolate <- function(x,
   # did find some isolates - add new index numbers of rows
   x$newvar_row_index_sorted <- seq_len(nrow(x))
 
-  scope.size <- row.end - row.start + 1
+  scope.size <- nrow(x[which(x$newvar_row_index_sorted %in% c(row.start + 1:row.end) &
+                               !is.na(x$newvar_mo)), , drop = FALSE])
   
   identify_new_year <- function(x, episode_days) {
     # I asked on StackOverflow:
@@ -390,7 +391,7 @@ first_isolate <- function(x,
   # handle empty microorganisms
   if (any(x$newvar_mo == "UNKNOWN", na.rm = TRUE) & info == TRUE) {
     message(font_blue(paste0("NOTE: ", ifelse(include_unknown == TRUE, "Included ", "Excluded "), 
-                        format(sum(x$newvar_mo == "UNKNOWN"),
+                        format(sum(x$newvar_mo == "UNKNOWN", na.rm = TRUE),
                                decimal.mark = decimal.mark, big.mark = big.mark), 
                         " isolates with a microbial ID 'UNKNOWN' (column `", font_bold(col_mo), "`)")))
   }
@@ -398,7 +399,7 @@ first_isolate <- function(x,
   
   # exclude all NAs
   if (any(is.na(x$newvar_mo)) & info == TRUE) {
-    message(font_blue(paste0("NOTE: Excluded ", format(sum(is.na(x$newvar_mo)),
+    message(font_blue(paste0("NOTE: Excluded ", format(sum(is.na(x$newvar_mo), na.rm = TRUE),
                                                   decimal.mark = decimal.mark, big.mark = big.mark), 
                         " isolates with a microbial ID 'NA' (column `", font_bold(col_mo), "`)")))
   }
@@ -410,18 +411,18 @@ first_isolate <- function(x,
   
   if (info == TRUE) {
     n_found <- base::sum(x$newvar_first_isolate, na.rm = TRUE)
-    p_found_total <- percentage(n_found / nrow(x))
+    p_found_total <- percentage(n_found / nrow(x[which(!is.na(x$newvar_mo)), , drop = FALSE]))
     p_found_scope <- percentage(n_found / scope.size)
     # mark up number of found
     n_found <- base::format(n_found, big.mark = big.mark, decimal.mark = decimal.mark)
     if (p_found_total != p_found_scope) {
       msg_txt <- paste0("=> Found ",
                         font_bold(paste0(n_found, " first ", weighted.notice, "isolates")),
-                        " (", p_found_scope, " within scope and ", p_found_total, " of total)")
+                        " (", p_found_scope, " within scope and ", p_found_total, " of total where a microbial ID was available)")
     } else {
       msg_txt <- paste0("=> Found ",
                         font_bold(paste0(n_found, " first ", weighted.notice, "isolates")),
-                        " (", p_found_total, " of total)")
+                        " (", p_found_total, " of total where a microbial ID was available)")
     }
     message(font_black(msg_txt))
   }

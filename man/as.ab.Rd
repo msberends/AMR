@@ -6,12 +6,14 @@
 \alias{is.ab}
 \title{Transform to antibiotic ID}
 \usage{
-as.ab(x, ...)
+as.ab(x, flag_multiple_results = TRUE, ...)
 
 is.ab(x)
 }
 \arguments{
 \item{x}{character vector to determine to antibiotic ID}
+
+\item{flag_multiple_results}{logical to indicate whether a note should be printed to the console that probably more than one antibiotic code or name can be retrieved from a single input value.}
 
 \item{...}{arguments passed on to internal functions}
 }

@@ -1,11 +1,18 @@
-# AMR 1.2.0.9016
+# AMR 1.2.0.9017
 ## <small>Last updated: 26-Jun-2020</small>
 
 ### New
 * Function `ab_from_text()` to retrieve antimicrobial drugs from clinical texts in e.g. health care records, which also corrects for misspelling since it uses `as.ab()` internally:
   ```r
-  ab_from_text("28/03/2020 regular amoxiciliin 500mg po tds")
-  #> [1] "Amoxicillin"
+  ab_from_text(c("28/03/2020 regular amoxiciliin 500mg po tds",
+                 "15/04/2020 started on ciprofloxi-thingy and tobra today"))
+  #> [[1]]
+  #> Class <ab>
+  #> [1] AMX
+  #> 
+  #> [[2]]
+  #> Class <ab>
+  #> [1] CIP TOB
   ```
 * [Tidyverse selections](https://tidyselect.r-lib.org/reference/language.html) for antibiotic classes, that help to select the columns of antibiotics that are of a specific antibiotic class, without the need to define the columns or antibiotic abbreviations. They can be used in any function that allows Tidyverse selections, like `dplyr::select()` and `tidyr::pivot_longer()`:
   ```r
@@ -29,6 +36,7 @@
 * Added function `filter_penicillins()` to filter isolates on a specific result in any column with a name in the antimicrobial 'penicillins' class (more specific: ATC subgroup *Beta-lactam antibacterials, penicillins*)
 * Added official antimicrobial names to all `filter_ab_class()` functions, such as `filter_aminoglycosides()`
 * Added antibiotics code "FOX1" for cefoxitin screening (abbreviation "cfsc") to the `antibiotics` data set
+* Added Monuril as trade name for fosfomycin
 
 ### Changed
 * Using unexisting columns in all `count_*()`, `proportion_*()`, `susceptibility()` and `resistance()` functions wil now return an error instead of dropping them silently
@@ -40,8 +48,8 @@
 * Fixed a bug in `bug_drug_combinations()` for when only one antibiotic was in the input data
 * Changed the summary for class `<mo>`, to highlight the %SI vs. %R
 * Improved error handling, giving more useful info when functions return an error
-* Algorithm improvements to `as.ab()`, many more misspellings are now translatable
-* Added Monuril as trade name for fosfomycin
+* Algorithm improvements to `as.ab()`, many more misspellings are now translatable. The `as.ab()` function will now throw a note if more than 1 antimicrobial drug could be retrieved from a single input value.
+* Added progress bar to `as.ab()`
 
 # AMR 1.2.0
 
