@@ -201,35 +201,43 @@ import_fn <- function(name, pkg) {
   get(name, envir = asNamespace(pkg))
 }
 
+stop_ <- function(..., call = TRUE) {
+  msg <- paste0(c(...), collapse = "")
+  if (!isFALSE(call)) {
+    if (isTRUE(call)) {
+      call <- as.character(sys.call(-1)[1])
+    } else {
+      # so you can go back more than 1 call, as used in rsi_calc(), that now throws a reference to e.g. n_rsi()
+      call <- as.character(sys.call(call)[1])
+    }
+    msg <- paste0("in ", call, "(): ", msg)
+  }
+  stop(msg, call. = FALSE)
+}
+
 stop_if <- function(expr, ..., call = TRUE) {
   if (isTRUE(expr)) {
-    msg <- paste0(c(...), collapse = "")
-    if (!isFALSE(call)) {
-      if (isTRUE(call)) {
-        call <- as.character(sys.call(-1)[1])
-      } else {
-        # so you can go back more than 1 call, as used in rsi_calc(), that now throws a reference to e.g. n_rsi()
-        call <- as.character(sys.call(call)[1])
-      }
-      msg <- paste0("in ", call, "(): ", msg)
+    if (isTRUE(call)) {
+      call <- -1
     }
-    stop(msg, call. = FALSE)
+    if (!isFALSE(call)) {
+      # since we're calling stop_(), which is another call
+      call <- call - 1
+    }
+    stop_(..., call = call)
   }
 }
 
 stop_ifnot <- function(expr, ..., call = TRUE) {
   if (!isTRUE(expr)) {
-    msg <- paste0(c(...), collapse = "")
-    if (!isFALSE(call)) {
-      if (isTRUE(call)) {
-        call <- as.character(sys.call(-1)[1])
-      } else {
-        # so you can go back more than 1 call, as used in rsi_calc(), that now throws a reference to e.g. n_rsi()
-        call <- as.character(sys.call(call)[1])
-      }
-      msg <- paste0("in ", call, "(): ", msg)
+    if (isTRUE(call)) {
+      call <- -1
     }
-    stop(msg, call. = FALSE)
+    if (!isFALSE(call)) {
+      # since we're calling stop_(), which is another call
+      call <- call - 1
+    }
+    stop_(..., call = call)
   }
 }
 

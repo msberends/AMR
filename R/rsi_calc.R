@@ -174,7 +174,9 @@ rsi_calc_df <- function(type, # "proportion", "count" or "both"
     combine_SI <- FALSE
   }
   stop_if(isTRUE(combine_SI) & isTRUE(combine_IR), "either `combine_SI` or `combine_IR` can be TRUE, not both", call = -2)
-
+  stop_ifnot(is.numeric(minimum), "`minimum` must be numeric", call = -2)
+  stop_ifnot(is.logical(as_percent), "`as_percent` must be logical", call = -2)
+  
   translate_ab <- get_translate_ab(translate_ab)
 
   # select only groups and antibiotics

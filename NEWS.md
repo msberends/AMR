@@ -1,5 +1,5 @@
-# AMR 1.2.0.9018
-## <small>Last updated: 26-Jun-2020</small>
+# AMR 1.2.0.9019
+## <small>Last updated: 01-Jul-2020</small>
 
 ### New
 * Function `ab_from_text()` to retrieve antimicrobial drugs from clinical texts in e.g. health care records, which also corrects for misspelling since it uses `as.ab()` internally:

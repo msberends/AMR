@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Retrieve antimicrobial drugs from clinical text — ab_from_text • AMR (for R)</title>
+<title>Retrieve antimicrobial drug names and doses from clinical text — ab_from_text • AMR (for R)</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -48,8 +48,8 @@
   <link href="../extra.css" rel="stylesheet">
   <script src="../extra.js"></script>
 
-<meta property="og:title" content="Retrieve antimicrobial drugs from clinical text — ab_from_text" />
-<meta property="og:description" content="Use this function on e.g. clinical texts from health care records. It returns a list with all antimicrobial drugs found in the texts." />
+<meta property="og:title" content="Retrieve antimicrobial drug names and doses from clinical text — ab_from_text" />
+<meta property="og:description" content="Use this function on e.g. clinical texts from health care records. It returns a list with all antimicrobial drugs, doses and forms of administration found in the texts." />
 <meta property="og:image" content="https://msberends.gitlab.io/AMR/logo.svg" />
 
 
@@ -82,7 +82,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.2.0.9017</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.2.0.9019</span>
       </span>
     </div>
 
@@ -226,16 +226,22 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Retrieve antimicrobial drugs from clinical text</h1>
+    <h1>Retrieve antimicrobial drug names and doses from clinical text</h1>
     <small class="dont-index">Source: <a href='https://gitlab.com/msberends/AMR/blob/master/R/ab_from_text.R'><code>R/ab_from_text.R</code></a></small>
     <div class="hidden name"><code>ab_from_text.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Use this function on e.g. clinical texts from health care records. It returns a <a href='https://rdrr.io/r/base/list.html'>list</a> with all antimicrobial drugs found in the texts.</p>
+    <p>Use this function on e.g. clinical texts from health care records. It returns a <a href='https://rdrr.io/r/base/list.html'>list</a> with all antimicrobial drugs, doses and forms of administration found in the texts.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>ab_from_text</span>(<span class='no'>text</span>, <span class='kw'>collapse</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>translate_ab</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>...</span>)</pre>
+    <pre class="usage"><span class='fu'>ab_from_text</span>(
+  <span class='no'>text</span>,
+  <span class='kw'>type</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"drug"</span>, <span class='st'>"dose"</span>, <span class='st'>"administration"</span>),
+  <span class='kw'>collapse</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>translate_ab</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='no'>...</span>
+)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -245,12 +251,16 @@
       <td><p>text to analyse</p></td>
     </tr>
     <tr>
+      <th>type</th>
+      <td><p>type of property to search for, either <code>"drug"</code>, <code>"dose"</code> or <code>"administration"</code>, see <em>Examples</em></p></td>
+    </tr>
+    <tr>
       <th>collapse</th>
-      <td><p>character to pass on to <code><a href='https://rdrr.io/r/base/paste.html'>paste(..., collapse = ...)</a></code> to only return one character per element of <code>text</code>, see Examples</p></td>
+      <td><p>character to pass on to <code><a href='https://rdrr.io/r/base/paste.html'>paste(..., collapse = ...)</a></code> to only return one character per element of <code>text</code>, see <em>Examples</em></p></td>
     </tr>
     <tr>
       <th>translate_ab</th>
-      <td><p>a column name of the <a href='antibiotics.html'>antibiotics</a> data set to translate the antibiotic abbreviations to, using <code><a href='ab_property.html'>ab_property()</a></code>. Defaults to <code>FALSE</code>. Using <code>TRUE</code> is equal to using "name".</p></td>
+      <td><p>if <code>type = "drug"</code>: a column name of the <a href='antibiotics.html'>antibiotics</a> data set to translate the antibiotic abbreviations to, using <code><a href='ab_property.html'>ab_property()</a></code>. Defaults to <code>FALSE</code>. Using <code>TRUE</code> is equal to using "name".</p></td>
     </tr>
     <tr>
       <th>...</th>
@@ -263,34 +273,65 @@
     <p>A <a href='https://rdrr.io/r/base/list.html'>list</a>, or a <a href='https://rdrr.io/r/base/character.html'>character</a> if <code>collapse</code> is not <code>NULL</code></p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>Without using <code>collapse</code>, this function will return a <a href='https://rdrr.io/r/base/list.html'>list</a>. This can be convenient to use e.g. inside a <code><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate()</a></code>):<br />
+    <p>This function is also internally used by <code><a href='as.ab.html'>as.ab()</a></code>, although it then only searches for the first drug name and will throw a note if more drug names could have been returned.</p><h3>Parameter <code>type</code></h3>
+
+
+<p>At default, the function will search for antimicrobial drug names. All text elements will be searched for official names, ATC codes and brand names. As it uses <code><a href='as.ab.html'>as.ab()</a></code> internally, it will correct for misspelling.</p>
+<p>With <code>type = "dose"</code> (or similar, like "dosing", "doses"), all text elements will be searched for numeric values that are higher than 100 and do not resemble years. The output will be numeric. It supports any unit (g, mg, IE, etc.) and multiple values in one clinical text, see <em>Examples</em>.</p>
+<p>With <code>type = "administration"</code> (or abbreviations, like "admin", "adm"), all text elements will be searched for a form of drug administration. It supports the following forms (including common abbreviations): buccal, implant, inhalation, instillation, intravenous, nasal, oral, parenteral, rectal, sublingual, transdermal and vaginal. Abbreviations for oral (such as 'po', 'per os') will become "oral", all values for intravenous (such as 'iv', 'intraven') will become "iv". It supports multiple values in one clinical text, see <em>Examples</em>.</p>
+
+<h3>Parameter <code>collapse</code></h3>
+
+
+<p>Without using <code>collapse</code>, this function will return a <a href='https://rdrr.io/r/base/list.html'>list</a>. This can be convenient to use e.g. inside a <code><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate()</a></code>):<br />
 <code>df %&gt;% mutate(abx = ab_from_text(clinical_text))</code></p>
 <p>The returned AB codes can be transformed to official names, groups, etc. with all <code><a href='ab_property.html'>ab_property()</a></code> functions like <code><a href='ab_property.html'>ab_name()</a></code> and <code><a href='ab_property.html'>ab_group()</a></code>, or by using the <code>translate_ab</code> parameter.</p>
 <p>With using <code>collapse</code>, this function will return a <a href='https://rdrr.io/r/base/character.html'>character</a>:<br />
 <code>df %&gt;% mutate(abx = ab_from_text(clinical_text, collapse = "|"))</code></p>
-<p>This function is also internally used by <code><a href='as.ab.html'>as.ab()</a></code>, although it then only returns the first hit and will throw a note if more results could have been returned.</p>
+
+    <h2 class="hasAnchor" id="maturing-lifecycle"><a class="anchor" href="#maturing-lifecycle"></a>Maturing lifecycle</h2>
+
+    
+
+<p><img src='figures/lifecycle_maturing.svg' style=margin-bottom:5px /> <br />
+The <a href='lifecycle.html'>lifecycle</a> of this function is <strong>maturing</strong>. The unlying code of a maturing function has been roughed out, but finer details might still change. Since this function needs wider usage and more extensive testing, you are very welcome <a href='https://gitlab.com/msberends/AMR/-/issues'>to suggest changes at our repository</a> or <a href='AMR.html'>write us an email (see section 'Contact Us')</a>.</p>
+    <h2 class="hasAnchor" id="read-more-on-our-website-"><a class="anchor" href="#read-more-on-our-website-"></a>Read more on our website!</h2>
+
+    
+
+<p>On our website <a href='https://msberends.gitlab.io/AMR'>https://msberends.gitlab.io/AMR</a> you can find <a href='https://msberends.gitlab.io/AMR/articles/AMR.html'>a comprehensive tutorial</a> about how to conduct AMR analysis, the <a href='https://msberends.gitlab.io/AMR/reference'>complete documentation of all functions</a> (which reads a lot easier than here in R) and <a href='https://msberends.gitlab.io/AMR/articles/WHONET.html'>an example analysis using WHONET data</a>.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><span class='co'># mind the bad spelling of amoxicillin in this line, </span>
 <span class='co'># straight from a true health care record:</span>
 <span class='fu'>ab_from_text</span>(<span class='st'>"28/03/2020 regular amoxicilliin 500mg po tds"</span>)
 
-<span class='fu'>ab_from_text</span>(<span class='st'>"administered amoxi/clav and cipro"</span>)
-<span class='fu'>ab_from_text</span>(<span class='st'>"administered amoxi/clav and cipro"</span>, <span class='kw'>collapse</span> <span class='kw'>=</span> <span class='st'>", "</span>)
+<span class='fu'>ab_from_text</span>(<span class='st'>"500 mg amoxi po and 400mg cipro iv"</span>)
+<span class='fu'>ab_from_text</span>(<span class='st'>"500 mg amoxi po and 400mg cipro iv"</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"dose"</span>)
+<span class='fu'>ab_from_text</span>(<span class='st'>"500 mg amoxi po and 400mg cipro iv"</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"admin"</span>)
 
-<span class='co'># if you want to know which antibiotic groups were administered, check it:</span>
-<span class='no'>abx</span> <span class='kw'>&lt;-</span> <span class='fu'>ab_from_text</span>(<span class='st'>"administered amoxi/clav and cipro"</span>)
+<span class='fu'>ab_from_text</span>(<span class='st'>"500 mg amoxi po and 400mg cipro iv"</span>, <span class='kw'>collapse</span> <span class='kw'>=</span> <span class='st'>", "</span>)
+
+<span class='co'># if you want to know which antibiotic groups were administered, do e.g.:</span>
+<span class='no'>abx</span> <span class='kw'>&lt;-</span> <span class='fu'>ab_from_text</span>(<span class='st'>"500 mg amoxi po and 400mg cipro iv"</span>)
 <span class='fu'><a href='ab_property.html'>ab_group</a></span>(<span class='no'>abx</span><span class='kw'>[[</span><span class='fl'>1</span>]])
 
 <span class='kw'>if</span> (<span class='fu'><a href='https://rdrr.io/r/base/library.html'>require</a></span>(<span class='no'>dplyr</span>)) {
-  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/reexports.html'>tibble</a></span>(<span class='kw'>clinical_text</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"given cipro and mero"</span>,
-                           <span class='st'>"started on doxy today"</span>)) <span class='kw'>%&gt;%</span>
-    <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span>(<span class='kw'>abx</span> <span class='kw'>=</span> <span class='fu'>ab_from_text</span>(<span class='no'>clinical_text</span>),
-           <span class='kw'>abx2</span> <span class='kw'>=</span> <span class='fu'>ab_from_text</span>(<span class='no'>clinical_text</span>,
-                               <span class='kw'>collapse</span> <span class='kw'>=</span> <span class='st'>"|"</span>),
-           <span class='kw'>abx3</span> <span class='kw'>=</span> <span class='fu'>ab_from_text</span>(<span class='no'>clinical_text</span>,
-                               <span class='kw'>collapse</span> <span class='kw'>=</span> <span class='st'>"|"</span>,
-                               <span class='kw'>translate_ab</span> <span class='kw'>=</span> <span class='st'>"name"</span>))
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/reexports.html'>tibble</a></span>(<span class='kw'>clinical_text</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"given 400mg cipro and 500 mg amox"</span>,
+                           <span class='st'>"started on doxy iv today"</span>)) <span class='kw'>%&gt;%</span>
+    <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span>(<span class='kw'>abx_codes</span> <span class='kw'>=</span> <span class='fu'>ab_from_text</span>(<span class='no'>clinical_text</span>),
+           <span class='kw'>abx_doses</span> <span class='kw'>=</span> <span class='fu'>ab_from_text</span>(<span class='no'>clinical_text</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"doses"</span>),
+           <span class='kw'>abx_admin</span> <span class='kw'>=</span> <span class='fu'>ab_from_text</span>(<span class='no'>clinical_text</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"admin"</span>),
+           <span class='kw'>abx_coll</span> <span class='kw'>=</span> <span class='fu'>ab_from_text</span>(<span class='no'>clinical_text</span>, <span class='kw'>collapse</span> <span class='kw'>=</span> <span class='st'>"|"</span>),
+           <span class='kw'>abx_coll_names</span> <span class='kw'>=</span> <span class='fu'>ab_from_text</span>(<span class='no'>clinical_text</span>,
+                                         <span class='kw'>collapse</span> <span class='kw'>=</span> <span class='st'>"|"</span>,
+                                         <span class='kw'>translate_ab</span> <span class='kw'>=</span> <span class='st'>"name"</span>),
+           <span class='kw'>abx_coll_doses</span> <span class='kw'>=</span> <span class='fu'>ab_from_text</span>(<span class='no'>clinical_text</span>,
+                                         <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"doses"</span>,
+                                         <span class='kw'>collapse</span> <span class='kw'>=</span> <span class='st'>"|"</span>),
+           <span class='kw'>abx_coll_admin</span> <span class='kw'>=</span> <span class='fu'>ab_from_text</span>(<span class='no'>clinical_text</span>,
+                                         <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"admin"</span>,
+                                         <span class='kw'>collapse</span> <span class='kw'>=</span> <span class='st'>"|"</span>))
 
 }</pre>
   </div>

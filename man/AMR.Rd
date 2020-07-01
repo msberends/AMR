@@ -15,6 +15,7 @@ This package can be used for:
 \itemize{
 \item Reference for the taxonomy of microorganisms, since the package contains all microbial (sub)species from the \href{http://www.catalogueoflife.org}{Catalogue of Life}
 \item Interpreting raw MIC and disk diffusion values, based on the latest CLSI or EUCAST guidelines
+\item Retrieving antimicrobial drug names, doses and forms of administration from clinical health care records
 \item Determining first isolates to be used for AMR analysis
 \item Calculating antimicrobial resistance
 \item Determining multi-drug resistance (MDR) / multi-drug resistant organisms (MDRO)
@@ -34,13 +35,14 @@ This package can be used for:
 On our website \url{https://msberends.gitlab.io/AMR} you can find \href{https://msberends.gitlab.io/AMR/articles/AMR.html}{a comprehensive tutorial} about how to conduct AMR analysis, the \href{https://msberends.gitlab.io/AMR/reference}{complete documentation of all functions} (which reads a lot easier than here in R) and \href{https://msberends.gitlab.io/AMR/articles/WHONET.html}{an example analysis using WHONET data}.
 }
 
-\section{Contact us}{
+\section{Contact Us}{
 
 For suggestions, comments or questions, please contact us at:
 
 Matthijs S. Berends \cr
 m.s.berends [at] umcg [dot] nl \cr
-Department of Medical Microbiology, University of Groningen \cr
+University of Groningen
+Department of Medical Microbiology
 University Medical Center Groningen \cr
 Post Office Box 30001 \cr
 9700 RB Groningen \cr

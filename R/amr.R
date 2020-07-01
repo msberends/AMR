@@ -30,6 +30,7 @@
 #' This package can be used for:
 #' - Reference for the taxonomy of microorganisms, since the package contains all microbial (sub)species from the [Catalogue of Life](http://www.catalogueoflife.org)
 #' - Interpreting raw MIC and disk diffusion values, based on the latest CLSI or EUCAST guidelines
+#' - Retrieving antimicrobial drug names, doses and forms of administration from clinical health care records
 #' - Determining first isolates to be used for AMR analysis
 #' - Calculating antimicrobial resistance
 #' - Determining multi-drug resistance (MDR) / multi-drug resistant organisms (MDRO)
@@ -45,12 +46,13 @@
 
 #' @section Read more on our website!:
 #' On our website <https://msberends.gitlab.io/AMR> you can find [a comprehensive tutorial](https://msberends.gitlab.io/AMR/articles/AMR.html) about how to conduct AMR analysis, the [complete documentation of all functions](https://msberends.gitlab.io/AMR/reference) (which reads a lot easier than here in R) and [an example analysis using WHONET data](https://msberends.gitlab.io/AMR/articles/WHONET.html).
-#' @section Contact us:
+#' @section Contact Us:
 #' For suggestions, comments or questions, please contact us at:
 #'
 #' Matthijs S. Berends \cr
 #' m.s.berends \[at\] umcg \[dot\] nl \cr
-#' Department of Medical Microbiology, University of Groningen \cr
+#' University of Groningen
+#' Department of Medical Microbiology
 #' University Medical Center Groningen \cr
 #' Post Office Box 30001 \cr
 #' 9700 RB Groningen \cr
