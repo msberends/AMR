@@ -94,7 +94,7 @@ ab_from_text <- function(text,
   stop_if(length(type) != 1, "`type` must be of length 1")
   
   text <- tolower(as.character(text))
-  text_split_all <- strsplit(text, "[ ;.,:/\\|-]")
+  text_split_all <- strsplit(text, "[ ;.,:\\|]")
   
   if (type %like% "(drug|ab|anti)") {
     

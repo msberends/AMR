@@ -1,19 +1,8 @@
-# AMR 1.2.0.9019
+# AMR 1.2.0.9020
 ## <small>Last updated: 01-Jul-2020</small>
 
 ### New
-* Function `ab_from_text()` to retrieve antimicrobial drugs from clinical texts in e.g. health care records, which also corrects for misspelling since it uses `as.ab()` internally:
-  ```r
-  ab_from_text(c("28/03/2020 regular amoxiciliin 500mg po tds",
-                 "15/04/2020 started on ciprofloxi-thingy and tobra today"))
-  #> [[1]]
-  #> Class <ab>
-  #> [1] AMX
-  #> 
-  #> [[2]]
-  #> Class <ab>
-  #> [1] CIP TOB
-  ```
+* Function `ab_from_text()` to retrieve antimicrobial drug names, doses and forms of administration from clinical texts in e.g. health care records, which also corrects for misspelling since it uses `as.ab()` internally
 * [Tidyverse selections](https://tidyselect.r-lib.org/reference/language.html) for antibiotic classes, that help to select the columns of antibiotics that are of a specific antibiotic class, without the need to define the columns or antibiotic abbreviations. They can be used in any function that allows Tidyverse selections, like `dplyr::select()` and `tidyr::pivot_longer()`:
   ```r
   library(dplyr)
@@ -22,15 +11,6 @@
   example_isolates %>% 
     select(carbapenems())
   #> Selecting carbapenems: `IPM` (imipenem), `MEM` (meropenem)
-    
-  tibble(J01CA01 = "S") %>%
-    select(penicillins())
-  #> Selecting beta-lactams/penicillins: `J01CA01` (ampicillin)
-  
-  # select an antibiotic class manually with `ab_class()`
-  example_isolates %>% 
-    select(ab_class("mycobact"))
-  #> Selecting antimycobacterials: `RIF` (rifampicin)
   ```
 * Added `mo_domain()` as an alias to `mo_kingdom()`
 * Added function `filter_penicillins()` to filter isolates on a specific result in any column with a name in the antimicrobial 'penicillins' class (more specific: ATC subgroup *Beta-lactam antibacterials, penicillins*)
