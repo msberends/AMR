@@ -1,4 +1,4 @@
-# AMR 1.2.0.9021
+# AMR 1.2.0.9022
 ## <small>Last updated: 01-Jul-2020</small>
 
 ### New
@@ -20,16 +20,19 @@
 
 ### Changed
 * Using unexisting columns in all `count_*()`, `proportion_*()`, `susceptibility()` and `resistance()` functions wil now return an error instead of dropping them silently
+* Improvements for `as.ab()`:
+  * Dramatic improvement of the algorithm behind `as.ab()`, making many more input errors translatable like from digitalised health care records, using too few or too many vowels or consonants and many more
+  * Added progress bar
+  * Fixed a bug where `as.ab()` would return an error on invalid input values
+  * The `as.ab()` function will now throw a note if more than 1 antimicrobial drug could be retrieved from a single input value.
 * Fixed a bug where `eucast_rules()` would not work on a tibble when the `tibble` or `dplyr` package was loaded
 * All `*_join_microorganisms()` functions and `bug_drug_combinations()` now return the original data class (e.g. `tibble`s and `data.table`s)
-* Fixed a bug where `as.ab()` would return an error on invalid input values
 * Fixed a bug for using grouped versions of `rsi_df()`, `proportion_df()` and `count_df()`, and fixed a bug where not all different antimicrobial results were added as rows
 * Improved auto-determination for columns of types `<mo>` and `<Date>`
 * Fixed a bug in `bug_drug_combinations()` for when only one antibiotic was in the input data
 * Changed the summary for class `<mo>`, to highlight the %SI vs. %R
 * Improved error handling, giving more useful info when functions return an error
-* Algorithm improvements to `as.ab()`, many more misspellings are now translatable. The `as.ab()` function will now throw a note if more than 1 antimicrobial drug could be retrieved from a single input value.
-* Added progress bar to `as.ab()`
+
 
 # AMR 1.2.0
 

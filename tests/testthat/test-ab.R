@@ -40,7 +40,7 @@ test_that("as.ab works", {
   expect_output(print(as.ab("amox")))
   expect_output(print(data.frame(a = as.ab("amox"))))
 
-  expect_warning(as.ab("Z00ZZ00")) # not yet available in data set
+  expect_warning(as.ab("J00AA00")) # ATC not yet available in data set
   expect_warning(as.ab("UNKNOWN"))
   expect_warning(as.ab(""))
 
@@ -55,8 +55,11 @@ test_that("as.ab works", {
   expect_equal(as.character(as.ab("Amoxy + clavulaanzuur")),
                "AMC")
   
+  expect_equal(as.character(as.ab(c("mreopenem", "co-maoxiclav"))),
+               c("MEM", "AMC"))
+  
   expect_message(as.ab("cipro mero"))
-
+  
   # assigning and subsetting
   x <- antibiotics$ab
   expect_s3_class(x[1], "ab")

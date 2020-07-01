@@ -82,7 +82,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.2.0.9019</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.2.0.9022</span>
       </span>
     </div>
 
@@ -262,6 +262,13 @@
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>All entries in the <a href='antibiotics.html'>antibiotics</a> data set have three different identifiers: a human readable EARS-Net code (column <code>ab</code>, used by ECDC and WHONET), an ATC code (column <code>atc</code>, used by WHO), and a CID code (column <code>cid</code>, Compound ID, used by PubChem). The data set contains more than 5,000 official brand names from many different countries, as found in PubChem.</p>
+<p>All these properties will be searched for the user input. The <code>as.ab()</code> can correct for different forms of misspelling:</p><ul>
+<li><p>Wrong spelling of drug names (like "tobramicin" or "gentamycin"), which corrects for most audible similarities such as f/ph, x/ks, c/z/s, t/th, etc.</p></li>
+<li><p>Too few or too many vowels or consonants</p></li>
+<li><p>Switching two characters (like "mreopenem", often the case in clinical data, when doctors typed too fast)</p></li>
+<li><p>Digitalised paper records, leaving artefacts like 0/o/O (zero and O's), B/8, n/r, etc.</p></li>
+</ul>
+
 <p>Use the <code><a href='ab_property.html'>ab_property()</a></code> functions to get properties based on the returned antibiotic ID, see Examples.</p>
     <h2 class="hasAnchor" id="source"><a class="anchor" href="#source"></a>Source</h2>
 

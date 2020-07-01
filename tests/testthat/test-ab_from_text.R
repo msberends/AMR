@@ -28,7 +28,7 @@ test_that("ab_from_text works", {
   expect_identical(ab_from_text("28/03/2020 regular amoxicilliin 500mg po tds", translate_ab = TRUE)[[1]],
                    "Amoxicillin")
   expect_identical(ab_from_text("administered amoxi/clav and cipro", collapse = ", ")[[1]],
-                   "AMX, CIP")
+                   "AMC, CIP")
   
   expect_identical(ab_from_text("28/03/2020 regular amoxicilliin 500mg po tds", type = "dose")[[1]],
                    500)

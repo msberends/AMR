@@ -29,6 +29,13 @@
 #' @rdname as.ab
 #' @inheritSection WHOCC WHOCC
 #' @details All entries in the [antibiotics] data set have three different identifiers: a human readable EARS-Net code (column `ab`, used by ECDC and WHONET), an ATC code (column `atc`, used by WHO), and a CID code (column `cid`, Compound ID, used by PubChem). The data set contains more than 5,000 official brand names from many different countries, as found in PubChem.
+#' 
+#' All these properties will be searched for the user input. The [as.ab()] can correct for different forms of misspelling:
+#' 
+#'  * Wrong spelling of drug names (like "tobramicin" or "gentamycin"), which corrects for most audible similarities such as f/ph, x/ks, c/z/s, t/th, etc.
+#'  * Too few or too many vowels or consonants
+#'  * Switching two characters (like "mreopenem", often the case in clinical data, when doctors typed too fast)
+#'  * Digitalised paper records, leaving artefacts like 0/o/O (zero and O's), B/8, n/r, etc.
 #'
 #' Use the [ab_property()] functions to get properties based on the returned antibiotic ID, see Examples.
 #' 
@@ -231,7 +238,9 @@ as.ab <- function(x, flag_multiple_results = TRUE, ...) {
       # replace spaces and slashes with a possibility on both
       x_spelling <- gsub("[ /]", "( .*|.*/)", x_spelling)
       # correct for digital reading text (OCR)
-      x_spelling <- gsub("[NRD]", "[NRD]", x_spelling)
+      x_spelling <- gsub("[NRD8B]", "[NRD8B]", x_spelling)
+      x_spelling <- gsub("(O|0)", "(O|0)+", x_spelling)
+      x_spelling <- gsub("++", "+", x_spelling, fixed = TRUE)
     }
 
     # try if name starts with it
@@ -246,6 +255,7 @@ as.ab <- function(x, flag_multiple_results = TRUE, ...) {
       x_new[i] <- note_if_more_than_one_found(found, i, from_text)
       next
     }
+
     # and try if any synonym starts with it
     synonym_found <- unlist(lapply(antibiotics$synonyms,
                                    function(s) any(s %like% paste0("^", x_spelling))))
@@ -254,7 +264,7 @@ as.ab <- function(x, flag_multiple_results = TRUE, ...) {
       x_new[i] <- note_if_more_than_one_found(found, i, from_text)
       next
     }
-    
+
     # INITIAL SEARCH - More uncertain results ----
     
     if (initial_search == TRUE) {
@@ -341,7 +351,7 @@ as.ab <- function(x, flag_multiple_results = TRUE, ...) {
         x_new[i] <- note_if_more_than_one_found(found, i, from_text)
         next
       }
-      
+
       # first 5 except for cephalosporins, then first 7 (those cephalosporins all start quite the same!)
       found <- suppressWarnings(as.ab(substr(x[i], 1, 5), initial_search = FALSE))
       if (!is.na(found) && !ab_group(found, initial_search = FALSE) %like% "cephalosporins") {
@@ -365,7 +375,7 @@ as.ab <- function(x, flag_multiple_results = TRUE, ...) {
         x_new[i] <- note_if_more_than_one_found(found, i, from_text)
         next
       }
-      
+  
       # make all vowels facultative
       search_str <- gsub("([AEIOUY])", "\\1*", x[i])
       found <- suppressWarnings(as.ab(search_str, initial_search = FALSE, already_regex = TRUE))
@@ -390,8 +400,28 @@ as.ab <- function(x, flag_multiple_results = TRUE, ...) {
         next
       }
       
+      # try with switched character, like "mreopenem"
+      for (j in seq_len(nchar(x[i]))) {
+        x_switched <- paste0(
+          # beginning part:
+          substr(x[i], 1, j - 1),
+          # here is the switching of 2 characters:
+          substr(x[i], j + 1, j + 1), 
+          substr(x[i], j, j), 
+          # ending part:
+          substr(x[i], j + 2, nchar(x[i])))
+        found <- suppressWarnings(as.ab(x_switched, initial_search = FALSE))
+        if (!is.na(found)) {
+          break
+        }
+      }
+      if (!is.na(found)) {
+        x_new[i] <- found[1L]
+        next
+      }
+      
     } # end of initial_search = TRUE
-
+    
     # not found
     x_unknown <- c(x_unknown, x_bak[x[i] == x_bak_clean][1])
   }
