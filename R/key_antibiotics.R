@@ -327,7 +327,7 @@ key_antibiotics_equal <- function(y,
     }
   }
   if (info_needed == TRUE) {
-    cat("\n")
+    close(p)
   }
   result
 }

@@ -124,7 +124,7 @@ ab_from_text <- function(text,
         as.ab(NA)
       } else {
         if (!isFALSE(translate_ab)) {
-          out <- ab_property(out, property = translate_ab, initial = FALSE)
+          out <- ab_property(out, property = translate_ab, initial_search = FALSE)
         }
         out
       }

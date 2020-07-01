@@ -411,7 +411,7 @@ font_stripstyle <- function(x) {
 }
 
 progress_estimated <- function(n = 1, n_min = 0, ...) {
-  if (n >= n_min) {
+  if (n >= n_min & interactive()) {
     pb <- utils::txtProgressBar(max = n, style = 3)
     pb$tick <- function() {
       pb$up(pb$getVal() + 1)
