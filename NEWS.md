@@ -1,5 +1,5 @@
-# AMR 1.2.0.9022
-## <small>Last updated: 01-Jul-2020</small>
+# AMR 1.2.0.9023
+## <small>Last updated: 02-Jul-2020</small>
 
 ### New
 * Function `ab_from_text()` to retrieve antimicrobial drug names, doses and forms of administration from clinical texts in e.g. health care records, which also corrects for misspelling since it uses `as.ab()` internally
@@ -19,9 +19,9 @@
 * Added Monuril as trade name for fosfomycin
 
 ### Changed
-* Using unexisting columns in all `count_*()`, `proportion_*()`, `susceptibility()` and `resistance()` functions wil now return an error instead of dropping them silently
+* Using unexisting columns in all `count_*()`, `proportion_*()`, `susceptibility()` and `resistance()` functions wil now return an error instead of dropping them silently. Using variables for column names (as well as `dplyr::all_of()`) now works again.
 * Improvements for `as.ab()`:
-  * Dramatic improvement of the algorithm behind `as.ab()`, making many more input errors translatable like from digitalised health care records, using too few or too many vowels or consonants and many more
+  * Dramatic improvement of the algorithm behind `as.ab()`, making many more input errors translatable, such as digitalised health care records, using too few or too many vowels or consonants and many more
   * Added progress bar
   * Fixed a bug where `as.ab()` would return an error on invalid input values
   * The `as.ab()` function will now throw a note if more than 1 antimicrobial drug could be retrieved from a single input value.
@@ -32,7 +32,7 @@
 * Fixed a bug in `bug_drug_combinations()` for when only one antibiotic was in the input data
 * Changed the summary for class `<mo>`, to highlight the %SI vs. %R
 * Improved error handling, giving more useful info when functions return an error
-
+* Any progress bar will now only show in interactive mode (i.e. not in R Markdown)
 
 # AMR 1.2.0
 

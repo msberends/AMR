@@ -102,14 +102,19 @@ like <- function(x, pattern, ignore.case = TRUE) {
     as.integer(x) %in% base::grep(pattern, levels(x), ignore.case = FALSE, fixed = fixed)
   } else {
     tryCatch(base::grepl(pattern, x, ignore.case = FALSE, fixed = fixed),
-             error = function(e) ifelse(grepl("Invalid regexp", e$message),
-                                        # try with perl = TRUE:
-                                        return(base::grepl(pattern = pattern, x = x,
-                                                           ignore.case = FALSE, 
-                                                           fixed = fixed,
-                                                           perl = TRUE)),
-                                        # stop otherwise
-                                        stop(e$message)))
+             error = function(e) {
+               if (grepl("invalid reg(ular )?exp", e$message, ignore.case = TRUE)) {
+                 # try with perl = TRUE:
+                 return(base::grepl(pattern = pattern, 
+                                    x = x,
+                                    ignore.case = FALSE, 
+                                    fixed = fixed,
+                                    perl = TRUE))
+               } else {
+                 # stop otherwise
+                 stop(e$message)
+               }
+             })
   }
 }
 

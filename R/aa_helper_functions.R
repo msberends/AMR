@@ -184,7 +184,7 @@ stop_ifnot_installed <- function(package) {
   # https://developer.r-project.org/Blog/public/2019/02/14/staged-install/index.html
   sapply(package, function(pkg)
     tryCatch(get(".packageName", envir = asNamespace(pkg)),
-             error = function(e) { 
+             error = function(e) {
                if (package == "rstudioapi") {
                  stop("This function only works in RStudio.", call. = FALSE)
                } else if (pkg != "base") {

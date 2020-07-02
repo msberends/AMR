@@ -27,6 +27,7 @@
 #' @param type type of property to search for, either `"drug"`, `"dose"` or `"administration"`, see *Examples*
 #' @param collapse character to pass on to `paste(..., collapse = ...)` to only return one character per element of `text`, see *Examples*
 #' @param translate_ab if `type = "drug"`: a column name of the [antibiotics] data set to translate the antibiotic abbreviations to, using [ab_property()]. Defaults to `FALSE`. Using `TRUE` is equal to using "name".
+#' @param thorough_search logical to indicate whether the input must be extensively searched for misspelling and other faulty input values. Setting this to `TRUE` will take considerably more time than when using `FALSE`. At default, it will turn `TRUE` when all input elements contain a maximum of three words.
 #' @param ... parameters passed on to [as.ab()]
 #' @details This function is also internally used by [as.ab()], although it then only searches for the first drug name and will throw a note if more drug names could have been returned.
 #' 
@@ -85,6 +86,7 @@ ab_from_text <- function(text,
                          type = c("drug", "dose", "administration"),
                          collapse = NULL,
                          translate_ab = FALSE,
+                         thorough_search = NULL,
                          ...) {
   
   if (missing(type)) {
@@ -95,30 +97,54 @@ ab_from_text <- function(text,
   
   text <- tolower(as.character(text))
   text_split_all <- strsplit(text, "[ ;.,:\\|]")
+  progress <- progress_estimated(n = length(text_split_all), n_min = 5)
+  on.exit(close(progress))
   
   if (type %like% "(drug|ab|anti)") {
     
     translate_ab <- get_translate_ab(translate_ab)
     
-    abbr <- unlist(antibiotics$abbreviations)
-    abbr <- abbr[nchar(abbr) >= 4]
-    names_atc <- substr(c(antibiotics$name, antibiotics$atc), 1, 5)
-    synonyms <- unlist(antibiotics$synonyms)
-    synonyms <- synonyms[nchar(synonyms) >= 4]
-    to_regex <- function(x) {
-      paste0("^(",
-             paste0(unique(gsub("[^a-z0-9]", ".*", sort(tolower(x)))), collapse = "|"),
-             ").*")
+    if (isTRUE(thorough_search) | 
+        (isTRUE(is.null(thorough_search)) & max(sapply(text_split_all, length), na.rm = TRUE) <= 3)) {
+      text_split_all <- text_split_all[nchar(text_split_all) >= 4 & grepl("[a-z]+", text_split_all)]
+      result <- lapply(text_split_all, function(text_split) {
+        progress$tick()
+        suppressWarnings(
+          out <- as.ab(text_split, ...)
+        )
+      })
+      
+    } else {
+      # no thorough search
+      abbr <- unlist(antibiotics$abbreviations)
+      abbr <- abbr[nchar(abbr) >= 4]
+      names_atc <- substr(c(antibiotics$name, antibiotics$atc), 1, 5)
+      synonyms <- unlist(antibiotics$synonyms)
+      synonyms <- synonyms[nchar(synonyms) >= 4]
+      # regular expression must not be too long, so split synonyms in two:
+      synonyms_part1 <- synonyms[seq_len(0.5 * length(synonyms))]
+      synonyms_part2 <- synonyms[!synonyms %in% synonyms_part1]
+      to_regex <- function(x) {
+        paste0("^(",
+               paste0(unique(gsub("[^a-z0-9]+", "", sort(tolower(x)))), collapse = "|"),
+               ").*")
+      }
+      result <- lapply(text_split_all, function(text_split) {
+        progress$tick()
+        suppressWarnings(
+          out <- as.ab(unique(c(text_split[text_split %like_case% to_regex(abbr)],
+                                text_split[text_split %like_case% to_regex(names_atc)],
+                                text_split[text_split %like_case% to_regex(synonyms_part1)],
+                                text_split[text_split %like_case% to_regex(synonyms_part2)])
+                              ),
+                       ...)
+        )
+      })
     }
     
-    result <- lapply(text_split_all, function(text_split) {
-      suppressWarnings(
-        out <- as.ab(unique(c(text_split[grep(to_regex(abbr), text_split)],
-                              text_split[grep(to_regex(names_atc), text_split)],
-                              # regular expression must not be too long, so split synonyms in two:
-                              text_split[grep(to_regex(synonyms[c(1:0.5 * length(synonyms))]), text_split)],
-                              text_split[grep(to_regex(synonyms[c(0.5 * length(synonyms):length(synonyms))]), text_split)])),
-                     ...))
+    close(progress)
+    
+    result <- lapply(result, function(out) {
       out <- out[!is.na(out)]
       if (length(out) == 0) {
         as.ab(NA)
@@ -128,6 +154,7 @@ ab_from_text <- function(text,
         }
         out
       }
+      
     })
     
   } else if (type %like% "dos") {
@@ -167,7 +194,7 @@ ab_from_text <- function(text,
   # collapse text if needed
   if (!is.null(collapse)) {
     result <- sapply(result, function(x) {
-      if(length(x) == 1 & all(is.na(x))) {
+      if (length(x) == 1 & all(is.na(x))) {
         NA_character_
       } else {
         paste0(x, collapse = collapse)

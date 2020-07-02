@@ -135,7 +135,7 @@ format.bug_drug_combinations <- function(x,
     format <- tolower(format)
     ab_txt <- rep(format, length(ab))
     for (i in seq_len(length(ab_txt))) {
-      ab_txt[i] <- gsub("ab", ab[i], ab_txt[i])
+      ab_txt[i] <- gsub("ab", as.character(as.ab(ab[i])), ab_txt[i])
       ab_txt[i] <- gsub("cid", ab_cid(ab[i]), ab_txt[i])
       ab_txt[i] <- gsub("group", ab_group(ab[i], language = language), ab_txt[i])
       ab_txt[i] <- gsub("atc_group1", ab_atc_group1(ab[i], language = language), ab_txt[i])

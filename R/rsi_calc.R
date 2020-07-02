@@ -40,6 +40,11 @@ rsi_calc <- function(...,
   data_vars <- dots2vars(...)
 
   dots_df <- switch(1, ...)
+  if (is.data.frame(dots_df)) {
+    # make sure to remove all other classes like tibbles, data.tables, etc
+    dots_df <- as.data.frame(dots_df, stringsAsFactors = FALSE)
+  }
+  
   dots <- base::eval(base::substitute(base::alist(...)))
   stop_if(length(dots) == 0, "no variables selected", call = -2)
 
@@ -50,6 +55,7 @@ rsi_calc <- function(...,
   
   if (is.data.frame(dots_df)) {
     # data.frame passed with other columns, like: example_isolates %>% proportion_S(AMC, GEN)
+  
     dots <- as.character(dots)
     # remove first element, it's the data.frame
     if (length(dots) == 1) {
@@ -62,6 +68,10 @@ rsi_calc <- function(...,
       # and the old rsi function, which has "df" as name of the first parameter
       x <- dots_df
     } else {
+      # get dots that are in column names already, and the ones that will be once evaluated using dots_df or global env
+      # this is to support susceptibility(example_isolates, AMC, dplyr::all_of(some_vector_with_AB_names))
+      dots <- c(dots[dots %in% colnames(dots_df)],
+                eval(parse(text = dots[!dots %in% colnames(dots_df)]), envir = dots_df, enclos = globalenv()))
       dots_not_exist <- dots[!dots %in% colnames(dots_df)]
       stop_if(length(dots_not_exist) > 0, "column(s) not found: ", paste0("'", dots_not_exist, "'", collapse = ", "), call = -2)
       x <- dots_df[, dots, drop = FALSE]
@@ -72,10 +82,10 @@ rsi_calc <- function(...,
   } else {
     # multiple variables passed without pipe, like: proportion_S(example_isolates$AMC, example_isolates$GEN)
     x <- NULL
-    try(x <- as.data.frame(dots), silent = TRUE)
+    try(x <- as.data.frame(dots, stringsAsFactors = FALSE), silent = TRUE)
     if (is.null(x)) {
       # support for example_isolates %>% group_by(hospital_id) %>% summarise(amox = susceptibility(GEN, AMX))
-      x <- as.data.frame(list(...))
+      x <- as.data.frame(list(...), stringsAsFactors = FALSE)
     }
   }
   
@@ -92,9 +102,9 @@ rsi_calc <- function(...,
     rsi_integrity_check <- character(0)
     for (i in seq_len(ncol(x))) {
       # check integrity of columns: force rsi class
-      if (!is.rsi(x %>% pull(i))) {
-        rsi_integrity_check <- c(rsi_integrity_check, x %>% pull(i) %>% as.character())
-        x[, i] <- suppressWarnings(x %>% pull(i) %>% as.rsi()) # warning will be given later
+      if (!is.rsi(x[, i, drop = TRUE])) {
+        rsi_integrity_check <- c(rsi_integrity_check, as.character(x[, i, drop = TRUE]))
+        x[, i] <- suppressWarnings(as.rsi(x[, i, drop = TRUE])) # warning will be given later
         print_warning <- TRUE
       }
     }

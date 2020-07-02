@@ -82,7 +82,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.2.0.9019</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.2.0.9023</span>
       </span>
     </div>
 
@@ -240,6 +240,7 @@
   <span class='kw'>type</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"drug"</span>, <span class='st'>"dose"</span>, <span class='st'>"administration"</span>),
   <span class='kw'>collapse</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>translate_ab</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>thorough_search</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='no'>...</span>
 )</pre>
 
@@ -261,6 +262,10 @@
     <tr>
       <th>translate_ab</th>
       <td><p>if <code>type = "drug"</code>: a column name of the <a href='antibiotics.html'>antibiotics</a> data set to translate the antibiotic abbreviations to, using <code><a href='ab_property.html'>ab_property()</a></code>. Defaults to <code>FALSE</code>. Using <code>TRUE</code> is equal to using "name".</p></td>
+    </tr>
+    <tr>
+      <th>thorough_search</th>
+      <td><p>logical to indicate whether the input must be extensively searched for misspelling and other faulty input values. Setting this to <code>TRUE</code> will take considerably more time than when using <code>FALSE</code>. At default, it will turn <code>TRUE</code> when all input elements contain a maximum of three words.</p></td>
     </tr>
     <tr>
       <th>...</th>

@@ -259,25 +259,25 @@ first_isolate <- function(x,
   
   # arrange data to the right sorting
   if (is.null(specimen_group)) {
-      x <- x[order(x$newvar_patient_id, 
-                   x$newvar_genus_species,
-                   x$newvar_date), ]
-      rownames(x) <- NULL
-      row.start <- 1
-      row.end <- nrow(x)
+    x <- x[order(x$newvar_patient_id, 
+                 x$newvar_genus_species,
+                 x$newvar_date), ]
+    rownames(x) <- NULL
+    row.start <- 1
+    row.end <- nrow(x)
   } else {
     # filtering on specimen and only analyse these rows to save time
-      x <- x[order(pull(x, col_specimen),
-                   x$newvar_patient_id, 
-                   x$newvar_genus_species,
-                   x$newvar_date), ]
-      rownames(x) <- NULL
-      suppressWarnings(
-        row.start <- which(x %>% pull(col_specimen) == specimen_group) %>% min(na.rm = TRUE)
-      )
-      suppressWarnings(
-        row.end <- which(x %>% pull(col_specimen) == specimen_group) %>% max(na.rm = TRUE)
-      )
+    x <- x[order(pull(x, col_specimen),
+                 x$newvar_patient_id, 
+                 x$newvar_genus_species,
+                 x$newvar_date), ]
+    rownames(x) <- NULL
+    suppressWarnings(
+      row.start <- which(x %>% pull(col_specimen) == specimen_group) %>% min(na.rm = TRUE)
+    )
+    suppressWarnings(
+      row.end <- which(x %>% pull(col_specimen) == specimen_group) %>% max(na.rm = TRUE)
+    )
   }
   
   # no isolates found
@@ -290,7 +290,7 @@ first_isolate <- function(x,
   
   # did find some isolates - add new index numbers of rows
   x$newvar_row_index_sorted <- seq_len(nrow(x))
-
+  
   scope.size <- nrow(x[which(x$newvar_row_index_sorted %in% c(row.start + 1:row.end) &
                                !is.na(x$newvar_mo)), , drop = FALSE])
   
@@ -318,17 +318,17 @@ first_isolate <- function(x,
   
   # Analysis of first isolate ----
   x$other_pat_or_mo <- if_else(x$newvar_patient_id == lag(x$newvar_patient_id) &
-                                         x$newvar_genus_species == lag(x$newvar_genus_species),
-                                       FALSE,
-                                       TRUE)
+                                 x$newvar_genus_species == lag(x$newvar_genus_species),
+                               FALSE,
+                               TRUE)
   x$episode_group <- paste(x$newvar_patient_id, x$newvar_genus_species)
-  x$more_than_episode_ago <- unname(unlist(lapply(unique(x$episode_group), 
-                                                          function(g, 
-                                                                   df = x,
-                                                                   days = episode_days) {
-                                                            identify_new_year(x = df[which(df$episode_group == g), "newvar_date"],
-                                                                              episode_days = days)
-                                                          })))
+  x$more_than_episode_ago <- unlist(lapply(unique(x$episode_group),
+                                           function(g,
+                                                    df = x,
+                                                    days = episode_days) {
+                                             identify_new_year(x = df[which(df$episode_group == g), "newvar_date", drop = TRUE],
+                                                               episode_days = days)
+                                           }))
   
   weighted.notice <- ""
   if (!is.null(col_keyantibiotics)) {
@@ -336,38 +336,38 @@ first_isolate <- function(x,
     if (info == TRUE) {
       if (type == "keyantibiotics") {
         message(font_black(paste0("[Criterion] Base inclusion on key antibiotics, ",
-                            ifelse(ignore_I == FALSE, "not ", ""),
-                            "ignoring I")))
+                                  ifelse(ignore_I == FALSE, "not ", ""),
+                                  "ignoring I")))
       }
       if (type == "points") {
         message(font_black(paste0("[Criterion] Base inclusion on key antibiotics, using points threshold of "
-                            , points_threshold)))
+                                  , points_threshold)))
       }
     }
     type_param <- type
     
     x$other_key_ab <- !key_antibiotics_equal(y = x$newvar_key_ab,
-                                                     z = lag(x$newvar_key_ab),
-                                                     type = type_param,
-                                                     ignore_I = ignore_I,
-                                                     points_threshold = points_threshold,
-                                                     info = info)
+                                             z = lag(x$newvar_key_ab),
+                                             type = type_param,
+                                             ignore_I = ignore_I,
+                                             points_threshold = points_threshold,
+                                             info = info)
     # with key antibiotics
     x$newvar_first_isolate <- if_else(x$newvar_row_index_sorted >= row.start &
-                                              x$newvar_row_index_sorted <= row.end &
-                                              x$newvar_genus_species != "" & 
-                                              (x$other_pat_or_mo | x$more_than_episode_ago | x$other_key_ab),
-                                            TRUE,
-                                            FALSE)
+                                        x$newvar_row_index_sorted <= row.end &
+                                        x$newvar_genus_species != "" & 
+                                        (x$other_pat_or_mo | x$more_than_episode_ago | x$other_key_ab),
+                                      TRUE,
+                                      FALSE)
     
   } else {
     # no key antibiotics
     x$newvar_first_isolate <- if_else(x$newvar_row_index_sorted >= row.start &
-                                              x$newvar_row_index_sorted <= row.end &
-                                              x$newvar_genus_species != "" & 
-                                              (x$other_pat_or_mo | x$more_than_episode_ago),
-                                            TRUE,
-                                            FALSE)
+                                        x$newvar_row_index_sorted <= row.end &
+                                        x$newvar_genus_species != "" & 
+                                        (x$other_pat_or_mo | x$more_than_episode_ago),
+                                      TRUE,
+                                      FALSE)
   }
   
   # first one as TRUE
@@ -391,17 +391,17 @@ first_isolate <- function(x,
   # handle empty microorganisms
   if (any(x$newvar_mo == "UNKNOWN", na.rm = TRUE) & info == TRUE) {
     message(font_blue(paste0("NOTE: ", ifelse(include_unknown == TRUE, "Included ", "Excluded "), 
-                        format(sum(x$newvar_mo == "UNKNOWN", na.rm = TRUE),
-                               decimal.mark = decimal.mark, big.mark = big.mark), 
-                        " isolates with a microbial ID 'UNKNOWN' (column `", font_bold(col_mo), "`)")))
+                             format(sum(x$newvar_mo == "UNKNOWN", na.rm = TRUE),
+                                    decimal.mark = decimal.mark, big.mark = big.mark), 
+                             " isolates with a microbial ID 'UNKNOWN' (column `", font_bold(col_mo), "`)")))
   }
   x[which(x$newvar_mo == "UNKNOWN"), "newvar_first_isolate"] <- include_unknown
   
   # exclude all NAs
   if (any(is.na(x$newvar_mo)) & info == TRUE) {
     message(font_blue(paste0("NOTE: Excluded ", format(sum(is.na(x$newvar_mo), na.rm = TRUE),
-                                                  decimal.mark = decimal.mark, big.mark = big.mark), 
-                        " isolates with a microbial ID 'NA' (column `", font_bold(col_mo), "`)")))
+                                                       decimal.mark = decimal.mark, big.mark = big.mark), 
+                             " isolates with a microbial ID 'NA' (column `", font_bold(col_mo), "`)")))
   }
   x[which(is.na(x$newvar_mo)), "newvar_first_isolate"] <- FALSE
   
@@ -465,7 +465,7 @@ filter_first_weighted_isolate <- function(x,
       col_keyantibiotics <- "keyab"
     }
   }
-
+  
   subset(x, first_isolate(x = y,
                           col_date = col_date,
                           col_patient_id = col_patient_id,

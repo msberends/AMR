@@ -23,7 +23,13 @@ context("ab_from_text.R")
 
 test_that("ab_from_text works", {
   
+  skip_on_cran()
+  
   expect_identical(ab_from_text("28/03/2020 regular amoxicilliin 500mg po tds")[[1]],
+                   as.ab("Amoxicillin"))
+  expect_identical(ab_from_text("28/03/2020 regular amoxicilliin 500mg po tds", thorough_search = TRUE)[[1]],
+                   as.ab("Amoxicillin"))
+  expect_identical(ab_from_text("28/03/2020 regular amoxicilliin 500mg po tds", thorough_search = FALSE)[[1]],
                    as.ab("Amoxicillin"))
   expect_identical(ab_from_text("28/03/2020 regular amoxicilliin 500mg po tds", translate_ab = TRUE)[[1]],
                    "Amoxicillin")
