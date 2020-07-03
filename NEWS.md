@@ -1,5 +1,5 @@
-# AMR 1.2.0.9023
-## <small>Last updated: 02-Jul-2020</small>
+# AMR 1.2.0.9024
+## <small>Last updated: 03-Jul-2020</small>
 
 ### New
 * Function `ab_from_text()` to retrieve antimicrobial drug names, doses and forms of administration from clinical texts in e.g. health care records, which also corrects for misspelling since it uses `as.ab()` internally
@@ -19,7 +19,10 @@
 * Added Monuril as trade name for fosfomycin
 
 ### Changed
-* Using unexisting columns in all `count_*()`, `proportion_*()`, `susceptibility()` and `resistance()` functions wil now return an error instead of dropping them silently. Using variables for column names (as well as `dplyr::all_of()`) now works again.
+* Improvements for `susceptibility()` and `resistance()` and all `count_*()`, `proportion_*()` functions:
+  * 95% speed improvement (!) by using other base R functions for calculation
+  * Using unexisting columns wil now return an error instead of dropping them silently
+  * Using variables for column names (as well as `dplyr::all_of()`) now works again
 * Improvements for `as.ab()`:
   * Dramatic improvement of the algorithm behind `as.ab()`, making many more input errors translatable, such as digitalised health care records, using too few or too many vowels or consonants and many more
   * Added progress bar

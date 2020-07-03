@@ -81,7 +81,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.2.0.9023</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.2.0.9024</span>
       </span>
     </div>
 
@@ -229,13 +229,13 @@
       <small>Source: <a href='https://gitlab.com/msberends/AMR/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
-    <div id="amr-1209023" class="section level1">
-<h1 class="page-header" data-toc-text="1.2.0.9023">
-<a href="#amr-1209023" class="anchor"></a>AMR 1.2.0.9023<small> Unreleased </small>
+    <div id="amr-1209024" class="section level1">
+<h1 class="page-header" data-toc-text="1.2.0.9024">
+<a href="#amr-1209024" class="anchor"></a>AMR 1.2.0.9024<small> Unreleased </small>
 </h1>
-<div id="last-updated-02-jul-2020" class="section level2">
+<div id="last-updated-03-jul-2020" class="section level2">
 <h2 class="hasAnchor">
-<a href="#last-updated-02-jul-2020" class="anchor"></a><small>Last updated: 02-Jul-2020</small>
+<a href="#last-updated-03-jul-2020" class="anchor"></a><small>Last updated: 03-Jul-2020</small>
 </h2>
 <div id="new" class="section level3">
 <h3 class="hasAnchor">
@@ -262,7 +262,13 @@
 <h3 class="hasAnchor">
 <a href="#changed" class="anchor"></a>Changed</h3>
 <ul>
-<li>Using unexisting columns in all <code>count_*()</code>, <code>proportion_*()</code>, <code><a href="../reference/proportion.html">susceptibility()</a></code> and <code><a href="../reference/proportion.html">resistance()</a></code> functions wil now return an error instead of dropping them silently. Using variables for column names (as well as <code><a href="https://dplyr.tidyverse.org/reference/reexports.html">dplyr::all_of()</a></code>) now works again.</li>
+<li>Improvements for <code><a href="../reference/proportion.html">susceptibility()</a></code> and <code><a href="../reference/proportion.html">resistance()</a></code> and all <code>count_*()</code>, <code>proportion_*()</code> functions:
+<ul>
+<li>95% speed improvement (!) by using other base R functions for calculation</li>
+<li>Using unexisting columns wil now return an error instead of dropping them silently</li>
+<li>Using variables for column names (as well as <code><a href="https://dplyr.tidyverse.org/reference/reexports.html">dplyr::all_of()</a></code>) now works again</li>
+</ul>
+</li>
 <li>Improvements for <code><a href="../reference/as.ab.html">as.ab()</a></code>:
 <ul>
 <li>Dramatic improvement of the algorithm behind <code><a href="../reference/as.ab.html">as.ab()</a></code>, making many more input errors translatable, such as digitalised health care records, using too few or too many vowels or consonants and many more</li>

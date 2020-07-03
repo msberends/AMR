@@ -101,7 +101,7 @@ rsi_calc <- function(...,
   if (is.data.frame(x)) {
     rsi_integrity_check <- character(0)
     for (i in seq_len(ncol(x))) {
-      # check integrity of columns: force rsi class
+      # check integrity of columns: force <rsi> class
       if (!is.rsi(x[, i, drop = TRUE])) {
         rsi_integrity_check <- c(rsi_integrity_check, as.character(x[, i, drop = TRUE]))
         x[, i] <- suppressWarnings(as.rsi(x[, i, drop = TRUE])) # warning will be given later
@@ -113,22 +113,16 @@ rsi_calc <- function(...,
       rsi_integrity_check <- as.rsi(rsi_integrity_check)
     }
 
+    x_transposed <- as.list(as.data.frame(t(x)))
     if (only_all_tested == TRUE) {
-      # THE NUMBER OF ISOLATES WHERE *ALL* ABx ARE S/I/R
-      x <- apply(X = as.data.frame(lapply(x, as.integer), stringsAsFactors = FALSE),
-                 MARGIN = 1,
-                 FUN = base::min)
-      numerator <- sum(as.integer(x) %in% as.integer(ab_result), na.rm = TRUE)
-      denominator <- length(x) - sum(is.na(x))
-      
+      # no NAs in any column
+      numerator <- sum(sapply(x_transposed, function(y) !any(is.na(y)) & any(y %in% ab_result, na.rm = TRUE)))
+      denominator <- sum(sapply(x_transposed, function(y) !(any(is.na(y)))))
     } else {
-      # THE NUMBER OF ISOLATES WHERE *ANY* ABx IS S/I/R
+      # may contain NAs in any column
       other_values <- base::setdiff(c(NA, levels(ab_result)), ab_result)
-      other_values_filter <- base::apply(x, 1, function(y) {
-        base::all(y %in% other_values) & base::any(is.na(y))
-      })
-      numerator <- sum(as.logical(by(x, seq_len(nrow(x)), function(row) any(unlist(row) %in% ab_result, na.rm = TRUE))))
-      denominator <- nrow(x[!other_values_filter, , drop = FALSE])
+      numerator <- sum(sapply(x_transposed, function(y) any(y %in% ab_result, na.rm = TRUE)))
+      denominator <- sum(sapply(x_transposed, function(y) !(all(y %in% other_values) & any(is.na(y)))))
     }
   } else {
     # x is not a data.frame
@@ -153,7 +147,7 @@ rsi_calc <- function(...,
     if (data_vars != "") {
       data_vars <- paste(" for", data_vars)
     }
-    warning("Introducing NA: only ", denominator, " results available", data_vars, " (`minimum` was set to ", minimum, ").", call. = FALSE)
+    warning("Introducing NA: only ", denominator, " results available", data_vars, " (`minimum` = ", minimum, ").", call. = FALSE)
     fraction <- NA
   } else {
     fraction <- numerator / denominator
