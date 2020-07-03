@@ -116,7 +116,10 @@ rsi_calc <- function(...,
     x_transposed <- as.list(as.data.frame(t(x)))
     if (only_all_tested == TRUE) {
       # no NAs in any column
-      numerator <- sum(sapply(x_transposed, function(y) !any(is.na(y)) & any(y %in% ab_result, na.rm = TRUE)))
+      y <- apply(X = as.data.frame(lapply(x, as.integer), stringsAsFactors = FALSE),
+                 MARGIN = 1,
+                 FUN = base::min)
+      numerator <- sum(as.integer(y) %in% as.integer(ab_result), na.rm = TRUE)
       denominator <- sum(sapply(x_transposed, function(y) !(any(is.na(y)))))
     } else {
       # may contain NAs in any column
