@@ -41,7 +41,7 @@ $( document ).ready(function() {
 
   // redirect to GitLab
   var url_old = window.location.href;
-  var url_new = url_old.replace("github", "gitlab");
+  var url_new = url_old.replace("gitlab", "github");
   if (url_old != url_new) {
     window.location.replace(url_new);
   }

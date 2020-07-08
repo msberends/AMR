@@ -50,7 +50,7 @@ This package can be used for:
   * Applying EUCAST expert rules ([manual](./reference/eucast_rules.html))
   * Getting SNOMED codes of a microorganism, or getting properties of a microorganism based on a SNOMED code ([manual](./reference/mo_property.html))
   * Getting LOINC codes of an antibiotic, or getting properties of an antibiotic based on a LOINC code ([manual](./reference/ab_property.html))
-  * Machine reading the EUCAST and CLSI guidelines from 2011-2020 to translate MIC values and disk diffusion diameters to R/SI ([link](https://gitlab.com/msberends/AMR/blob/master/data-raw/rsi_translation.txt))
+  * Machine reading the EUCAST and CLSI guidelines from 2011-2020 to translate MIC values and disk diffusion diameters to R/SI ([link](https://github.com/msberends/AMR/blob/master/data-raw/rsi_translation.txt))
   * Principal component analysis for AMR ([tutorial](./articles/PCA.html))
 
 ### Get this package
@@ -69,10 +69,10 @@ It will be downloaded and installed automatically. For RStudio, click on the men
 
 #### Latest development version
 
-The latest and unpublished development version can be installed with (**precaution: may be unstable**):
+The latest and unpublished development version can be installed from GitHub using:
 ```r
-install.packages("remotes")
-remotes::install_gitlab("msberends/AMR")
+install.packages("remotes") 
+remotes::install_github("msberends/AMR")
 ```
 
 ### Get started

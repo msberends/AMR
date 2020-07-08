@@ -28,10 +28,10 @@ on:
     branches:
       - master
 
-name: R-CMD-check
+name: check
 
 jobs:
-  R-CMD-check:
+  check:
     runs-on: ${{ matrix.config.os }}
 
     name: ${{ matrix.config.os }} (${{ matrix.config.r }})
@@ -43,9 +43,9 @@ jobs:
           - {os: windows-latest, r: 'release'}
           - {os: macOS-latest,   r: 'release'}
           - {os: ubuntu-16.04,   r: 'release', rspm: "https://packagemanager.rstudio.com/cran/__linux__/xenial/latest"}
-          - {os: windows-latest, r: 'oldrel'}
-          - {os: macOS-latest,   r: 'oldrel'}
-          - {os: ubuntu-16.04,   r: 'oldrel', rspm: "https://packagemanager.rstudio.com/cran/__linux__/xenial/latest"}
+          # - {os: windows-latest, r: 'oldrel'}
+          # - {os: macOS-latest,   r: 'oldrel'}
+          # - {os: ubuntu-16.04,   r: 'oldrel', rspm: "https://packagemanager.rstudio.com/cran/__linux__/xenial/latest"}
           - {os: windows-latest, r: 'devel'}
           - {os: macOS-latest,   r: 'devel'}
           - {os: ubuntu-16.04,   r: 'devel', rspm: "https://packagemanager.rstudio.com/cran/__linux__/xenial/latest"}

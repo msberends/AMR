@@ -1,4 +1,4 @@
-# AMR 1.2.0.9026
+# AMR 1.2.0.9027
 ## <small>Last updated: 08-Jul-2020</small>
 
 ### New
@@ -36,6 +36,9 @@
 * Changed the summary for class `<mo>`, to highlight the %SI vs. %R
 * Improved error handling, giving more useful info when functions return an error
 * Any progress bar will now only show in interactive mode (i.e. not in R Markdown)
+
+### Other
+* Project moved to GitHub
 
 # AMR 1.2.0
 
