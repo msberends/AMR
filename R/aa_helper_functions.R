@@ -3,7 +3,7 @@
 # Antimicrobial Resistance (AMR) Analysis                              #
 #                                                                      #
 # SOURCE                                                               #
-# https://gitlab.com/msberends/AMR                                     #
+# https://github.com/msberends/AMR                                     #
 #                                                                      #
 # LICENCE                                                              #
 # (c) 2018-2020 Berends MS, Luz CF et al.                              #
@@ -16,7 +16,7 @@
 # We created this package for both routine data analysis and academic  #
 # research and it was publicly released in the hope that it will be    #
 # useful, but it comes WITHOUT ANY WARRANTY OR LIABILITY.              #
-# Visit our website for more info: https://msberends.gitlab.io/AMR.    #
+# Visit our website for more info: https://msberends.github.io/AMR.    #
 # ==================================================================== #
 
 # functions from dplyr, will perhaps become poorman
@@ -77,18 +77,22 @@ check_dataset_integrity <- function() {
                                   "class", "order", "family", "genus", 
                                   "species", "subspecies", "rank",
                                   "species_id", "source", "ref", "prevalence") %in% colnames(microorganisms),
-                                na.rm = TRUE) & NROW(microorganisms) == NROW(MO_lookup)
+                                na.rm = TRUE)
     check_antibiotics <- all(c("ab", "atc", "cid", "name", "group", 
                                "atc_group1", "atc_group2", "abbreviations",
                                "synonyms", "oral_ddd", "oral_units", 
                                "iv_ddd", "iv_units", "loinc") %in% colnames(antibiotics),
                              na.rm = TRUE)
   }, error = function(e)
-    stop('Please use the command \'library("AMR")\' before using this function, to load the required reference data.', call. = FALSE)
+    stop_('please use the command \'library("AMR")\' before using this function, to load the required reference data.', call = FALSE)
   )
-  if (!check_microorganisms | !check_antibiotics) {
-    stop("Data set `microorganisms` or data set `antibiotics` is overwritten by your global environment and prevents the AMR package from working correctly. Please rename your object before using this function.", call. = FALSE)
-  }
+  data_in_pkg <- data(package = "AMR", envir = asNamespace("AMR"))$results[, "Item"]
+  data_in_globalenv <- ls(envir = globalenv())
+  overwritten <- data_in_pkg[data_in_pkg %in% data_in_globalenv]
+  stop_if(length(overwritten) > 0,
+          "the following data set is overwritten by your global environment and prevents the AMR package from working correctly:\n",
+          paste0("'", overwritten, "'", collapse = ", "),
+          ".\nPlease rename your object before using this function.", call = FALSE)
   invisible(TRUE)
 }
 
@@ -198,7 +202,9 @@ stop_ifnot_installed <- function(package) {
 
 import_fn <- function(name, pkg) {
   stop_ifnot_installed(pkg)
-  get(name, envir = asNamespace(pkg))
+  tryCatch(
+    get(name, envir = asNamespace(pkg)),
+    error = function(e) stop_("an error occurred in import_fn() while using this function", call = FALSE))
 }
 
 stop_ <- function(..., call = TRUE) {

@@ -1,0 +1,68 @@
+# ==================================================================== #
+# TITLE                                                                #
+# Antimicrobial Resistance (AMR) Analysis                              #
+#                                                                      #
+# SOURCE                                                               #
+# https://github.com/msberends/AMR                                     #
+#                                                                      #
+# LICENCE                                                              #
+# (c) 2018-2020 Berends MS, Luz CF et al.                              #
+#                                                                      #
+# This R package is free software; you can freely use and distribute   #
+# it for both personal and commercial purposes under the terms of the  #
+# GNU General Public License version 2.0 (GNU GPL-2), as published by  #
+# the Free Software Foundation.                                        #
+#                                                                      #
+# We created this package for both routine data analysis and academic  #
+# research and it was publicly released in the hope that it will be    #
+# useful, but it comes WITHOUT ANY WARRANTY OR LIABILITY.              #
+# Visit our website for more info: https://msberends.github.io/AMR.    #
+# ==================================================================== #
+
+on:
+  push:
+    branches:
+      - premaster
+      - master
+  pull_request:
+    branches:
+      - master
+
+name: test-coverage
+
+jobs:
+  test-coverage:
+    runs-on: macOS-latest
+    env:
+      GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: r-lib/actions/setup-r@master
+
+      - uses: r-lib/actions/setup-pandoc@master
+
+      - name: Query dependencies
+        run: |
+          install.packages('remotes')
+          saveRDS(remotes::dev_package_deps(dependencies = TRUE), ".github/depends.Rds", version = 2)
+          writeLines(sprintf("R-%i.%i", getRversion()$major, getRversion()$minor), ".github/R-version")
+        shell: Rscript {0}
+
+      - name: Cache R packages
+        uses: actions/cache@v1
+        with:
+          path: ${{ env.R_LIBS_USER }}
+          key: ${{ runner.os }}-${{ hashFiles('.github/R-version') }}-1-${{ hashFiles('.github/depends.Rds') }}
+          restore-keys: ${{ runner.os }}-${{ hashFiles('.github/R-version') }}-1-
+
+      - name: Install dependencies
+        run: |
+          install.packages(c("remotes"))
+          remotes::install_deps(dependencies = TRUE)
+          remotes::install_cran("covr")
+        shell: Rscript {0}
+
+      - name: Test coverage
+        run: covr::codecov()
+        shell: Rscript {0}

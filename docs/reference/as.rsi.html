@@ -50,7 +50,7 @@
 
 <meta property="og:title" content="Class 'rsi' — as.rsi" />
 <meta property="og:description" content="Interpret MIC values and disk diffusion diameters according to EUCAST or CLSI, or clean up existing R/SI values. This transforms the input to a new class rsi, which is an ordered factor with levels S &amp;lt; I &amp;lt; R. Invalid antimicrobial interpretations will be translated as NA with a warning." />
-<meta property="og:image" content="https://msberends.gitlab.io/AMR/logo.svg" />
+<meta property="og:image" content="https://msberends.github.io/AMR/logo.svg" />
 
 
 
@@ -82,7 +82,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.2.0.9014</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.2.0.9026</span>
       </span>
     </div>
 
@@ -200,8 +200,8 @@
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li>
-  <a href="https://gitlab.com/msberends/AMR">
-    <span class="fab fa fab fa-gitlab"></span>
+  <a href="https://github.com/msberends/AMR">
+    <span class="fab fa fab fa-github"></span>
      
     Source Code
   </a>
@@ -227,7 +227,7 @@
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Class 'rsi'</h1>
-    <small class="dont-index">Source: <a href='https://gitlab.com/msberends/AMR/blob/master/R/rsi.R'><code>R/rsi.R</code></a></small>
+    <small class="dont-index">Source: <a href='https://github.com/msberends/AMR/blob/master/R/rsi.R'><code>R/rsi.R</code></a></small>
     <div class="hidden name"><code>as.rsi.Rd</code></div>
     </div>
 
@@ -308,7 +308,7 @@
 
     <p>When using <code>as.rsi()</code> on untransformed data, the data will be cleaned to only contain values S, I and R. When using the function on data with class <code><a href='as.mic.html'>mic</a></code> (using <code><a href='as.mic.html'>as.mic()</a></code>) or class <code><a href='as.disk.html'>disk</a></code> (using <code><a href='as.disk.html'>as.disk()</a></code>), the data will be interpreted based on the guideline set with the <code>guideline</code> parameter.</p>
 <p>Supported guidelines to be used as input for the <code>guideline</code> parameter are: "CLSI 2010", "CLSI 2011", "CLSI 2012", "CLSI 2013", "CLSI 2014", "CLSI 2015", "CLSI 2016", "CLSI 2017", "CLSI 2018", "CLSI 2019", "EUCAST 2011", "EUCAST 2012", "EUCAST 2013", "EUCAST 2014", "EUCAST 2015", "EUCAST 2016", "EUCAST 2017", "EUCAST 2018", "EUCAST 2019", "EUCAST 2020". Simply using <code>"CLSI"</code> or <code>"EUCAST"</code> for input will automatically select the latest version of that guideline.</p>
-<p>The repository of this package <a href='https://gitlab.com/msberends/AMR/blob/master/data-raw/rsi_translation.txt'>contains a machine readable version</a> of all guidelines. This is a CSV file consisting of 18,964 rows and 10 columns. This file is machine readable, since it contains one row for every unique combination of the test method (MIC or disk diffusion), the antimicrobial agent and the microorganism. This <strong>allows for easy implementation of these rules in laboratory information systems (LIS)</strong>.</p>
+<p>The repository of this package <a href='https://github.com/msberends/AMR/blob/master/data-raw/rsi_translation.txt'>contains a machine readable version</a> of all guidelines. This is a CSV file consisting of 18,964 rows and 10 columns. This file is machine readable, since it contains one row for every unique combination of the test method (MIC or disk diffusion), the antimicrobial agent and the microorganism. This <strong>allows for easy implementation of these rules in laboratory information systems (LIS)</strong>.</p>
 <p>After using <code>as.rsi()</code>, you can use <code><a href='eucast_rules.html'>eucast_rules()</a></code> to (1) apply inferred susceptibility and resistance based on results of other antimicrobials and (2) apply intrinsic resistance based on taxonomic properties of a microorganism.</p>
 <p>The function <code>is.rsi.eligible()</code> returns <code>TRUE</code> when a columns contains at most 5% invalid antimicrobial interpretations (not S and/or I and/or R), and <code>FALSE</code> otherwise. The threshold of 5% can be set with the <code>threshold</code> parameter.</p>
     <h2 class="hasAnchor" id="interpretation-of-r-and-s-i"><a class="anchor" href="#interpretation-of-r-and-s-i"></a>Interpretation of R and S/I</h2>
@@ -336,7 +336,7 @@ The <a href='lifecycle.html'>lifecycle</a> of this function is <strong>stable</s
 
     
 
-<p>On our website <a href='https://msberends.gitlab.io/AMR'>https://msberends.gitlab.io/AMR</a> you can find <a href='https://msberends.gitlab.io/AMR/articles/AMR.html'>a comprehensive tutorial</a> about how to conduct AMR analysis, the <a href='https://msberends.gitlab.io/AMR/reference'>complete documentation of all functions</a> (which reads a lot easier than here in R) and <a href='https://msberends.gitlab.io/AMR/articles/WHONET.html'>an example analysis using WHONET data</a>.</p>
+<p>On our website <a href='https://msberends.github.io/AMR'>https://msberends.github.io/AMR</a> you can find <a href='https://msberends.github.io/AMR/articles/AMR.html'>a comprehensive tutorial</a> about how to conduct AMR analysis, the <a href='https://msberends.github.io/AMR/reference'>complete documentation of all functions</a> (which reads a lot easier than here in R) and <a href='https://msberends.github.io/AMR/articles/WHONET.html'>an example analysis using WHONET data</a>.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><code><a href='as.mic.html'>as.mic()</a></code></p></div>

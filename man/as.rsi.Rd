@@ -64,7 +64,7 @@ When using \code{\link[=as.rsi]{as.rsi()}} on untransformed data, the data will 
 
 Supported guidelines to be used as input for the \code{guideline} parameter are: "CLSI 2010", "CLSI 2011", "CLSI 2012", "CLSI 2013", "CLSI 2014", "CLSI 2015", "CLSI 2016", "CLSI 2017", "CLSI 2018", "CLSI 2019", "EUCAST 2011", "EUCAST 2012", "EUCAST 2013", "EUCAST 2014", "EUCAST 2015", "EUCAST 2016", "EUCAST 2017", "EUCAST 2018", "EUCAST 2019", "EUCAST 2020". Simply using \code{"CLSI"} or \code{"EUCAST"} for input will automatically select the latest version of that guideline.
 
-The repository of this package \href{https://gitlab.com/msberends/AMR/blob/master/data-raw/rsi_translation.txt}{contains a machine readable version} of all guidelines. This is a CSV file consisting of 18,964 rows and 10 columns. This file is machine readable, since it contains one row for every unique combination of the test method (MIC or disk diffusion), the antimicrobial agent and the microorganism. This \strong{allows for easy implementation of these rules in laboratory information systems (LIS)}.
+The repository of this package \href{https://github.com/msberends/AMR/blob/master/data-raw/rsi_translation.txt}{contains a machine readable version} of all guidelines. This is a CSV file consisting of 18,964 rows and 10 columns. This file is machine readable, since it contains one row for every unique combination of the test method (MIC or disk diffusion), the antimicrobial agent and the microorganism. This \strong{allows for easy implementation of these rules in laboratory information systems (LIS)}.
 
 After using \code{\link[=as.rsi]{as.rsi()}}, you can use \code{\link[=eucast_rules]{eucast_rules()}} to (1) apply inferred susceptibility and resistance based on results of other antimicrobials and (2) apply intrinsic resistance based on taxonomic properties of a microorganism.
 
@@ -88,14 +88,14 @@ This AMR package honours this new insight. Use \code{\link[=susceptibility]{susc
 \section{Stable lifecycle}{
 
 \if{html}{\figure{lifecycle_stable.svg}{options: style=margin-bottom:5px} \cr}
-The \link[AMR:lifecycle]{lifecycle} of this function is \strong{stable}. In a stable function, major changes are unlikely. This means that the unlying code will generally evolve by adding new arguments; removing arguments or changing the meaning of existing arguments will be avoided.
+The \link[=lifecycle]{lifecycle} of this function is \strong{stable}. In a stable function, major changes are unlikely. This means that the unlying code will generally evolve by adding new arguments; removing arguments or changing the meaning of existing arguments will be avoided.
 
 If the unlying code needs breaking changes, they will occur gradually. For example, a parameter will be deprecated and first continue to work, but will emit an message informing you of the change. Next, typically after at least one newly released version on CRAN, the message will be transformed to an error.
 }
 
 \section{Read more on our website!}{
 
-On our website \url{https://msberends.gitlab.io/AMR} you can find \href{https://msberends.gitlab.io/AMR/articles/AMR.html}{a comprehensive tutorial} about how to conduct AMR analysis, the \href{https://msberends.gitlab.io/AMR/reference}{complete documentation of all functions} (which reads a lot easier than here in R) and \href{https://msberends.gitlab.io/AMR/articles/WHONET.html}{an example analysis using WHONET data}.
+On our website \url{https://msberends.github.io/AMR} you can find \href{https://msberends.github.io/AMR/articles/AMR.html}{a comprehensive tutorial} about how to conduct AMR analysis, the \href{https://msberends.github.io/AMR/reference}{complete documentation of all functions} (which reads a lot easier than here in R) and \href{https://msberends.github.io/AMR/articles/WHONET.html}{an example analysis using WHONET data}.
 }
 
 \examples{

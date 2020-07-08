@@ -49,8 +49,8 @@
   <script src="../extra.js"></script>
 
 <meta property="og:title" content="AMR plots with <code>ggplot2</code> — ggplot_rsi" />
-<meta property="og:description" content="Use these functions to create bar plots for antimicrobial resistance analysis. All functions rely on internal ggplot2 functions." />
-<meta property="og:image" content="https://msberends.gitlab.io/AMR/logo.svg" />
+<meta property="og:description" content="Use these functions to create bar plots for antimicrobial resistance analysis. All functions rely on ggplot2 functions." />
+<meta property="og:image" content="https://msberends.github.io/AMR/logo.svg" />
 
 
 
@@ -82,7 +82,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.2.0.9023</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.2.0.9026</span>
       </span>
     </div>
 
@@ -200,8 +200,8 @@
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li>
-  <a href="https://gitlab.com/msberends/AMR">
-    <span class="fab fa fab fa-gitlab"></span>
+  <a href="https://github.com/msberends/AMR">
+    <span class="fab fa fab fa-github"></span>
      
     Source Code
   </a>
@@ -227,12 +227,12 @@
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>AMR plots with <code>ggplot2</code></h1>
-    <small class="dont-index">Source: <a href='https://gitlab.com/msberends/AMR/blob/master/R/ggplot_rsi.R'><code>R/ggplot_rsi.R</code></a></small>
+    <small class="dont-index">Source: <a href='https://github.com/msberends/AMR/blob/master/R/ggplot_rsi.R'><code>R/ggplot_rsi.R</code></a></small>
     <div class="hidden name"><code>ggplot_rsi.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Use these functions to create bar plots for antimicrobial resistance analysis. All functions rely on internal <a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot2</a> functions.</p>
+    <p>Use these functions to create bar plots for antimicrobial resistance analysis. All functions rely on <a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot2</a> functions.</p>
     </div>
 
     <pre class="usage"><span class='fu'>ggplot_rsi</span>(
@@ -393,10 +393,10 @@
 
 <p><code>geom_rsi()</code> will take any variable from the data that has an <code><a href='as.rsi.html'>rsi</a></code> class (created with <code><a href='as.rsi.html'>as.rsi()</a></code>) using <code><a href='proportion.html'>rsi_df()</a></code> and will plot bars with the percentage R, I and S. The default behaviour is to have the bars stacked and to have the different antibiotics on the x axis.</p>
 <p><code>facet_rsi()</code> creates 2d plots (at default based on S/I/R) using <code><a href='https://ggplot2.tidyverse.org/reference/facet_wrap.html'>ggplot2::facet_wrap()</a></code>.</p>
-<p><code>scale_y_percent()</code> transforms the y axis to a 0 to 100% range using <code>ggplot2::scale_continuous()</code>.</p>
-<p><code>scale_rsi_colours()</code> sets colours to the bars: pastel blue for S, pastel turquoise for I and pastel red for R, using <code>ggplot2::scale_brewer()</code>.</p>
+<p><code>scale_y_percent()</code> transforms the y axis to a 0 to 100% range using <code><a href='https://ggplot2.tidyverse.org/reference/scale_continuous.html'>ggplot2::scale_y_continuous()</a></code>.</p>
+<p><code>scale_rsi_colours()</code> sets colours to the bars: pastel blue for S, pastel turquoise for I and pastel red for R, using <code><a href='https://ggplot2.tidyverse.org/reference/scale_manual.html'>ggplot2::scale_fill_manual()</a></code>.</p>
 <p><code>theme_rsi()</code> is a [ggplot2 theme][<code><a href='https://ggplot2.tidyverse.org/reference/theme.html'>ggplot2::theme()</a></code> with minimal distraction.</p>
-<p><code>labels_rsi_count()</code> print datalabels on the bars with percentage and amount of isolates using <code><a href='https://ggplot2.tidyverse.org/reference/geom_text.html'>ggplot2::geom_text()</a></code></p>
+<p><code>labels_rsi_count()</code> print datalabels on the bars with percentage and amount of isolates using <code><a href='https://ggplot2.tidyverse.org/reference/geom_text.html'>ggplot2::geom_text()</a></code>.</p>
 <p><code>ggplot_rsi()</code> is a wrapper around all above functions that uses data as first input. This makes it possible to use this function after a pipe (<code>%&gt;%</code>). See Examples.</p>
 
     <h2 class="hasAnchor" id="maturing-lifecycle"><a class="anchor" href="#maturing-lifecycle"></a>Maturing lifecycle</h2>
@@ -404,12 +404,12 @@
     
 
 <p><img src='figures/lifecycle_maturing.svg' style=margin-bottom:5px /> <br />
-The <a href='lifecycle.html'>lifecycle</a> of this function is <strong>maturing</strong>. The unlying code of a maturing function has been roughed out, but finer details might still change. Since this function needs wider usage and more extensive testing, you are very welcome <a href='https://gitlab.com/msberends/AMR/-/issues'>to suggest changes at our repository</a> or <a href='AMR.html'>write us an email (see section 'Contact Us')</a>.</p>
+The <a href='lifecycle.html'>lifecycle</a> of this function is <strong>maturing</strong>. The unlying code of a maturing function has been roughed out, but finer details might still change. Since this function needs wider usage and more extensive testing, you are very welcome <a href='https://github.com/msberends/AMR/issues'>to suggest changes at our repository</a> or <a href='AMR.html'>write us an email (see section 'Contact Us')</a>.</p>
     <h2 class="hasAnchor" id="read-more-on-our-website-"><a class="anchor" href="#read-more-on-our-website-"></a>Read more on our website!</h2>
 
     
 
-<p>On our website <a href='https://msberends.gitlab.io/AMR'>https://msberends.gitlab.io/AMR</a> you can find <a href='https://msberends.gitlab.io/AMR/articles/AMR.html'>a comprehensive tutorial</a> about how to conduct AMR analysis, the <a href='https://msberends.gitlab.io/AMR/reference'>complete documentation of all functions</a> (which reads a lot easier than here in R) and <a href='https://msberends.gitlab.io/AMR/articles/WHONET.html'>an example analysis using WHONET data</a>.</p>
+<p>On our website <a href='https://msberends.github.io/AMR'>https://msberends.github.io/AMR</a> you can find <a href='https://msberends.github.io/AMR/articles/AMR.html'>a comprehensive tutorial</a> about how to conduct AMR analysis, the <a href='https://msberends.github.io/AMR/reference'>complete documentation of all functions</a> (which reads a lot easier than here in R) and <a href='https://msberends.github.io/AMR/articles/WHONET.html'>an example analysis using WHONET data</a>.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><span class='kw'>if</span> (<span class='fu'><a href='https://rdrr.io/r/base/library.html'>require</a></span>(<span class='st'>"ggplot2"</span>) <span class='kw'>&amp;</span> <span class='fu'><a href='https://rdrr.io/r/base/library.html'>require</a></span>(<span class='st'>"dplyr"</span>)) {

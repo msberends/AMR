@@ -821,6 +821,18 @@ sum(duplicated(MOs$mo))
 sum(duplicated(MOs$fullname))
 colnames(MOs)
 
+# add the ones we would delete now, that have unexisting codes and names (also in the old names)
+MOs <- MOs %>% 
+  mutate(mo = as.character(mo)) %>% 
+  bind_rows(
+    AMR::microorganisms %>%
+      mutate(mo = as.character(mo)) %>% 
+      filter(genus %in% gen & !fullname %in% AMR::microorganisms$fullname & 
+               !fullname %in% AMR::microorganisms.old$fullname &
+               !mo  %in% microorganisms$mo) %>%
+      select(all_of(colnames(AMR::microorganisms)))
+  )
+
 # here we welcome the new ones:
 MOs %>% arrange(fullname) %>% filter(!fullname %in% AMR::microorganisms$fullname) %>% View()
 MOs.old %>% arrange(fullname) %>% filter(!fullname %in% AMR::microorganisms.old$fullname) %>% View()

@@ -51,7 +51,7 @@
 <meta property="og:title" content="Apply EUCAST rules — eucast_rules" />
 <meta property="og:description" content="Apply susceptibility rules as defined by the European Committee on Antimicrobial Susceptibility Testing (EUCAST, http://eucast.org), see Source. This includes (1) expert rules and intrinsic resistance and (2) inferred resistance as defined in their breakpoint tables.
 To improve the interpretation of the antibiogram before EUCAST rules are applied, some non-EUCAST rules are applied at default, see Details." />
-<meta property="og:image" content="https://msberends.gitlab.io/AMR/logo.svg" />
+<meta property="og:image" content="https://msberends.github.io/AMR/logo.svg" />
 
 
 
@@ -83,7 +83,7 @@ To improve the interpretation of the antibiogram before EUCAST rules are applied
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.2.0.9023</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.2.0.9026</span>
       </span>
     </div>
 
@@ -201,8 +201,8 @@ To improve the interpretation of the antibiogram before EUCAST rules are applied
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li>
-  <a href="https://gitlab.com/msberends/AMR">
-    <span class="fab fa fab fa-gitlab"></span>
+  <a href="https://github.com/msberends/AMR">
+    <span class="fab fa fab fa-github"></span>
      
     Source Code
   </a>
@@ -228,7 +228,7 @@ To improve the interpretation of the antibiogram before EUCAST rules are applied
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Apply EUCAST rules</h1>
-    <small class="dont-index">Source: <a href='https://gitlab.com/msberends/AMR/blob/master/R/eucast_rules.R'><code>R/eucast_rules.R</code></a></small>
+    <small class="dont-index">Source: <a href='https://github.com/msberends/AMR/blob/master/R/eucast_rules.R'><code>R/eucast_rules.R</code></a></small>
     <div class="hidden name"><code>eucast_rules.Rd</code></div>
     </div>
 
@@ -307,7 +307,7 @@ Leclercq et al. <strong>EUCAST expert rules in antimicrobial susceptibility test
 </ul>
 
 <p>These rules are not applied at default, since they are not approved by EUCAST. To use these rules, please use <code>eucast_rules(..., rules = "all")</code>, or set the default behaviour of the <code>[eucast_rules()]</code> function with <code><a href='https://rdrr.io/r/base/options.html'>options(AMR.eucast_rules = "all")</a></code> (or any other valid input value(s) to the <code>rules</code> parameter).</p>
-<p>The file containing all EUCAST rules is located here: <a href='https://gitlab.com/msberends/AMR/blob/master/data-raw/eucast_rules.tsv'>https://gitlab.com/msberends/AMR/blob/master/data-raw/eucast_rules.tsv</a>.</p>
+<p>The file containing all EUCAST rules is located here: <a href='https://github.com/msberends/AMR/blob/master/data-raw/eucast_rules.tsv'>https://github.com/msberends/AMR/blob/master/data-raw/eucast_rules.tsv</a>.</p>
     <h2 class="hasAnchor" id="antibiotics"><a class="anchor" href="#antibiotics"></a>Antibiotics</h2>
 
     
@@ -398,12 +398,12 @@ Leclercq et al. <strong>EUCAST expert rules in antimicrobial susceptibility test
     
 
 <p><img src='figures/lifecycle_maturing.svg' style=margin-bottom:5px /> <br />
-The <a href='lifecycle.html'>lifecycle</a> of this function is <strong>maturing</strong>. The unlying code of a maturing function has been roughed out, but finer details might still change. Since this function needs wider usage and more extensive testing, you are very welcome <a href='https://gitlab.com/msberends/AMR/-/issues'>to suggest changes at our repository</a> or <a href='AMR.html'>write us an email (see section 'Contact Us')</a>.</p>
+The <a href='lifecycle.html'>lifecycle</a> of this function is <strong>maturing</strong>. The unlying code of a maturing function has been roughed out, but finer details might still change. Since this function needs wider usage and more extensive testing, you are very welcome <a href='https://github.com/msberends/AMR/issues'>to suggest changes at our repository</a> or <a href='AMR.html'>write us an email (see section 'Contact Us')</a>.</p>
     <h2 class="hasAnchor" id="read-more-on-our-website-"><a class="anchor" href="#read-more-on-our-website-"></a>Read more on our website!</h2>
 
     
 
-<p>On our website <a href='https://msberends.gitlab.io/AMR'>https://msberends.gitlab.io/AMR</a> you can find <a href='https://msberends.gitlab.io/AMR/articles/AMR.html'>a comprehensive tutorial</a> about how to conduct AMR analysis, the <a href='https://msberends.gitlab.io/AMR/reference'>complete documentation of all functions</a> (which reads a lot easier than here in R) and <a href='https://msberends.gitlab.io/AMR/articles/WHONET.html'>an example analysis using WHONET data</a>.</p>
+<p>On our website <a href='https://msberends.github.io/AMR'>https://msberends.github.io/AMR</a> you can find <a href='https://msberends.github.io/AMR/articles/AMR.html'>a comprehensive tutorial</a> about how to conduct AMR analysis, the <a href='https://msberends.github.io/AMR/reference'>complete documentation of all functions</a> (which reads a lot easier than here in R) and <a href='https://msberends.github.io/AMR/articles/WHONET.html'>an example analysis using WHONET data</a>.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><span class='co'># \donttest{</span>

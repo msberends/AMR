@@ -3,7 +3,7 @@
 # Antimicrobial Resistance (AMR) Analysis                              #
 #                                                                      #
 # SOURCE                                                               #
-# https://gitlab.com/msberends/AMR                                     #
+# https://github.com/msberends/AMR                                     #
 #                                                                      #
 # LICENCE                                                              #
 # (c) 2018-2020 Berends MS, Luz CF et al.                              #
@@ -16,7 +16,7 @@
 # We created this package for both routine data analysis and academic  #
 # research and it was publicly released in the hope that it will be    #
 # useful, but it comes WITHOUT ANY WARRANTY OR LIABILITY.              #
-# Visit our website for more info: https://msberends.gitlab.io/AMR.    #
+# Visit our website for more info: https://msberends.github.io/AMR.    #
 # ==================================================================== #
 
 #' Class 'rsi'
@@ -37,7 +37,7 @@
 #' 
 #' Supported guidelines to be used as input for the `guideline` parameter are: `r paste0('"', sort(unique(AMR::rsi_translation$guideline)), '"', collapse = ", ")`. Simply using `"CLSI"` or `"EUCAST"` for input will automatically select the latest version of that guideline. 
 #' 
-#' The repository of this package [contains a machine readable version](https://gitlab.com/msberends/AMR/blob/master/data-raw/rsi_translation.txt) of all guidelines. This is a CSV file consisting of `r format(nrow(AMR::rsi_translation), big.mark = ",")` rows and `r ncol(AMR::rsi_translation)` columns. This file is machine readable, since it contains one row for every unique combination of the test method (MIC or disk diffusion), the antimicrobial agent and the microorganism. This **allows for easy implementation of these rules in laboratory information systems (LIS)**.
+#' The repository of this package [contains a machine readable version](https://github.com/msberends/AMR/blob/master/data-raw/rsi_translation.txt) of all guidelines. This is a CSV file consisting of `r format(nrow(AMR::rsi_translation), big.mark = ",")` rows and `r ncol(AMR::rsi_translation)` columns. This file is machine readable, since it contains one row for every unique combination of the test method (MIC or disk diffusion), the antimicrobial agent and the microorganism. This **allows for easy implementation of these rules in laboratory information systems (LIS)**.
 #'
 #' After using [as.rsi()], you can use [eucast_rules()] to (1) apply inferred susceptibility and resistance based on results of other antimicrobials and (2) apply intrinsic resistance based on taxonomic properties of a microorganism.
 #'

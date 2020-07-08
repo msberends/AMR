@@ -64,7 +64,7 @@ Before further processing, some non-EUCAST rules can be applied to improve the e
 
 These rules are not applied at default, since they are not approved by EUCAST. To use these rules, please use \code{eucast_rules(..., rules = "all")}, or set the default behaviour of the \verb{[eucast_rules()]} function with \code{options(AMR.eucast_rules = "all")} (or any other valid input value(s) to the \code{rules} parameter).
 
-The file containing all EUCAST rules is located here: \url{https://gitlab.com/msberends/AMR/blob/master/data-raw/eucast_rules.tsv}.
+The file containing all EUCAST rules is located here: \url{https://github.com/msberends/AMR/blob/master/data-raw/eucast_rules.tsv}.
 }
 \section{Antibiotics}{
 
@@ -156,12 +156,12 @@ The following antibiotics are used for the functions \code{\link[=eucast_rules]{
 \section{Maturing lifecycle}{
 
 \if{html}{\figure{lifecycle_maturing.svg}{options: style=margin-bottom:5px} \cr}
-The \link[AMR:lifecycle]{lifecycle} of this function is \strong{maturing}. The unlying code of a maturing function has been roughed out, but finer details might still change. Since this function needs wider usage and more extensive testing, you are very welcome \href{https://gitlab.com/msberends/AMR/-/issues}{to suggest changes at our repository} or \link[AMR:AMR]{write us an email (see section 'Contact Us')}.
+The \link[=lifecycle]{lifecycle} of this function is \strong{maturing}. The unlying code of a maturing function has been roughed out, but finer details might still change. Since this function needs wider usage and more extensive testing, you are very welcome \href{https://github.com/msberends/AMR/issues}{to suggest changes at our repository} or \link[=AMR]{write us an email (see section 'Contact Us')}.
 }
 
 \section{Read more on our website!}{
 
-On our website \url{https://msberends.gitlab.io/AMR} you can find \href{https://msberends.gitlab.io/AMR/articles/AMR.html}{a comprehensive tutorial} about how to conduct AMR analysis, the \href{https://msberends.gitlab.io/AMR/reference}{complete documentation of all functions} (which reads a lot easier than here in R) and \href{https://msberends.gitlab.io/AMR/articles/WHONET.html}{an example analysis using WHONET data}.
+On our website \url{https://msberends.github.io/AMR} you can find \href{https://msberends.github.io/AMR/articles/AMR.html}{a comprehensive tutorial} about how to conduct AMR analysis, the \href{https://msberends.github.io/AMR/reference}{complete documentation of all functions} (which reads a lot easier than here in R) and \href{https://msberends.github.io/AMR/articles/WHONET.html}{an example analysis using WHONET data}.
 }
 
 \examples{

@@ -50,7 +50,7 @@
 
 <meta property="og:title" content="Translate strings from AMR package — translate" />
 <meta property="og:description" content="For language-dependent output of AMR functions, like mo_name(), mo_gramstain(), mo_type() and ab_name()." />
-<meta property="og:image" content="https://msberends.gitlab.io/AMR/logo.svg" />
+<meta property="og:image" content="https://msberends.github.io/AMR/logo.svg" />
 
 
 
@@ -82,7 +82,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.2.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.2.0.9026</span>
       </span>
     </div>
 
@@ -200,8 +200,8 @@
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li>
-  <a href="https://gitlab.com/msberends/AMR">
-    <span class="fab fa fab fa-gitlab"></span>
+  <a href="https://github.com/msberends/AMR">
+    <span class="fab fa fab fa-github"></span>
      
     Source Code
   </a>
@@ -227,7 +227,7 @@
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Translate strings from AMR package</h1>
-    <small class="dont-index">Source: <a href='https://gitlab.com/msberends/AMR/blob/master/R/translate.R'><code>R/translate.R</code></a></small>
+    <small class="dont-index">Source: <a href='https://github.com/msberends/AMR/blob/master/R/translate.R'><code>R/translate.R</code></a></small>
     <div class="hidden name"><code>translate.Rd</code></div>
     </div>
 
@@ -240,9 +240,9 @@
 
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>Strings will be translated to foreign languages if they are defined in a local translation file. Additions to this file can be suggested at our repository. The file can be found here: <a href='https://gitlab.com/msberends/AMR/blob/master/data-raw/translations.tsv'>https://gitlab.com/msberends/AMR/blob/master/data-raw/translations.tsv</a>.</p>
-<p>Currently supported languages are (besides English): Dutch, French, German, Italian, Portuguese, Spanish. Not all these languages currently have translations available for all antimicrobial agents and colloquial microorganism names.</p>
-<p>Please suggest your own translations <a href='https://gitlab.com/msberends/AMR/issues/new?issue[title]=Translation%20suggestion'>by creating a new issue on our repository</a>.</p>
+    <p>Strings will be translated to foreign languages if they are defined in a local translation file. Additions to this file can be suggested at our repository. The file can be found here: <a href='https://github.com/msberends/AMR/blob/master/data-raw/translations.tsv'>https://github.com/msberends/AMR/blob/master/data-raw/translations.tsv</a>.</p>
+<p>Currently supported languages are (besides English): Dutch, French, German, Italian, Portuguese, Spanish. Please note that currently not all these languages have translations available for all antimicrobial agents and colloquial microorganism names.</p>
+<p>Please suggest your own translations <a href='https://github.com/msberends/AMR/issues/new?title=Translations'>by creating a new issue on our repository</a>.</p>
 <p>This file will be read by all functions where a translated output can be desired, like all <code><a href='mo_property.html'>mo_property()</a></code> functions (<code><a href='mo_property.html'>mo_name()</a></code>, <code><a href='mo_property.html'>mo_gramstain()</a></code>, <code><a href='mo_property.html'>mo_type()</a></code>, etc.).</p>
 <p>The system language will be used at default, if that language is supported. The system language can be overwritten with <code><a href='https://rdrr.io/r/base/Sys.setenv.html'>Sys.setenv(AMR_locale = yourlanguage)</a></code>.</p>
     <h2 class="hasAnchor" id="stable-lifecycle"><a class="anchor" href="#stable-lifecycle"></a>Stable lifecycle</h2>
@@ -256,7 +256,7 @@ The <a href='lifecycle.html'>lifecycle</a> of this function is <strong>stable</s
 
     
 
-<p>On our website <a href='https://msberends.gitlab.io/AMR'>https://msberends.gitlab.io/AMR</a> you can find <a href='https://msberends.gitlab.io/AMR/articles/AMR.html'>a comprehensive tutorial</a> about how to conduct AMR analysis, the <a href='https://msberends.gitlab.io/AMR/reference'>complete documentation of all functions</a> (which reads a lot easier than here in R) and <a href='https://msberends.gitlab.io/AMR/articles/WHONET.html'>an example analysis using WHONET data</a>.</p>
+<p>On our website <a href='https://msberends.github.io/AMR'>https://msberends.github.io/AMR</a> you can find <a href='https://msberends.github.io/AMR/articles/AMR.html'>a comprehensive tutorial</a> about how to conduct AMR analysis, the <a href='https://msberends.github.io/AMR/reference'>complete documentation of all functions</a> (which reads a lot easier than here in R) and <a href='https://msberends.github.io/AMR/articles/WHONET.html'>an example analysis using WHONET data</a>.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><span class='co'># The 'language' parameter of below functions</span>

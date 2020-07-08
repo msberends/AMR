@@ -12,6 +12,7 @@
 ^codecov\.yml$
 ^cran-comments\.md$
 ^CRAN-RELEASE$
+^\.github$
 ^doc$
 ^docs$
 ^git_.*\.sh$

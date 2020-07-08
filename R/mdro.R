@@ -3,7 +3,7 @@
 # Antimicrobial Resistance (AMR) Analysis                              #
 #                                                                      #
 # SOURCE                                                               #
-# https://gitlab.com/msberends/AMR                                     #
+# https://github.com/msberends/AMR                                     #
 #                                                                      #
 # LICENCE                                                              #
 # (c) 2018-2020 Berends MS, Luz CF et al.                              #
@@ -16,7 +16,7 @@
 # We created this package for both routine data analysis and academic  #
 # research and it was publicly released in the hope that it will be    #
 # useful, but it comes WITHOUT ANY WARRANTY OR LIABILITY.              #
-# Visit our website for more info: https://msberends.gitlab.io/AMR.    #
+# Visit our website for more info: https://msberends.github.io/AMR.    #
 # ==================================================================== #
 
 #' Determine multidrug-resistant organisms (MDRO)
@@ -46,7 +46,7 @@
 #' - `guideline = "BRMO"`\cr
 #'   The Dutch national guideline - Rijksinstituut voor Volksgezondheid en Milieu "WIP-richtlijn BRMO (Bijzonder Resistente Micro-Organismen) (ZKH)" ([link](https://www.rivm.nl/Documenten_en_publicaties/Professioneel_Praktisch/Richtlijnen/Infectieziekten/WIP_Richtlijnen/WIP_Richtlijnen/Ziekenhuizen/WIP_richtlijn_BRMO_Bijzonder_Resistente_Micro_Organismen_ZKH))
 #'
-#' Please suggest your own (country-specific) guidelines by letting us know: <https://gitlab.com/msberends/AMR/issues/new>.
+#' Please suggest your own (country-specific) guidelines by letting us know: <https://github.com/msberends/AMR/issues/new>.
 #' 
 #' **Note:** Every test that involves the Enterobacteriaceae family, will internally be performed using its newly named order Enterobacterales, since the Enterobacteriaceae family has been taxonomically reclassified by Adeolu *et al.* in 2016. Before that, Enterobacteriaceae was the only family under the Enterobacteriales (with an i) order. All species under the old Enterobacteriaceae family are still under the new Enterobacterales (without an i) order, but divided into multiple families. The way tests are performed now by this [mdro()] function makes sure that results from before 2016 and after 2016 are identical.
 #' @inheritSection as.rsi Interpretation of R and S/I

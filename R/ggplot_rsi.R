@@ -3,7 +3,7 @@
 # Antimicrobial Resistance (AMR) Analysis                              #
 #                                                                      #
 # SOURCE                                                               #
-# https://gitlab.com/msberends/AMR                                     #
+# https://github.com/msberends/AMR                                     #
 #                                                                      #
 # LICENCE                                                              #
 # (c) 2018-2020 Berends MS, Luz CF et al.                              #
@@ -16,12 +16,12 @@
 # We created this package for both routine data analysis and academic  #
 # research and it was publicly released in the hope that it will be    #
 # useful, but it comes WITHOUT ANY WARRANTY OR LIABILITY.              #
-# Visit our website for more info: https://msberends.gitlab.io/AMR.    #
+# Visit our website for more info: https://msberends.github.io/AMR.    #
 # ==================================================================== #
 
 #' AMR plots with `ggplot2`
 #'
-#' Use these functions to create bar plots for antimicrobial resistance analysis. All functions rely on internal [ggplot2][ggplot2::ggplot()] functions.
+#' Use these functions to create bar plots for antimicrobial resistance analysis. All functions rely on [ggplot2][ggplot2::ggplot()] functions.
 #' @inheritSection lifecycle Maturing lifecycle
 #' @param data a [`data.frame`] with column(s) of class [`rsi`] (see [as.rsi()])
 #' @param position position adjustment of bars, either `"fill"`, `"stack"` or `"dodge"`
@@ -49,13 +49,13 @@
 #'
 #' [facet_rsi()] creates 2d plots (at default based on S/I/R) using [ggplot2::facet_wrap()].
 #'
-#' [scale_y_percent()] transforms the y axis to a 0 to 100% range using [ggplot2::scale_continuous()].
+#' [scale_y_percent()] transforms the y axis to a 0 to 100% range using [ggplot2::scale_y_continuous()].
 #'
-#' [scale_rsi_colours()] sets colours to the bars: pastel blue for S, pastel turquoise for I and pastel red for R, using [ggplot2::scale_brewer()].
+#' [scale_rsi_colours()] sets colours to the bars: pastel blue for S, pastel turquoise for I and pastel red for R, using [ggplot2::scale_fill_manual()].
 #'
 #' [theme_rsi()] is a [ggplot2 theme][[ggplot2::theme()] with minimal distraction.
 #'
-#' [labels_rsi_count()] print datalabels on the bars with percentage and amount of isolates using [ggplot2::geom_text()]
+#' [labels_rsi_count()] print datalabels on the bars with percentage and amount of isolates using [ggplot2::geom_text()].
 #'
 #' [ggplot_rsi()] is a wrapper around all above functions that uses data as first input. This makes it possible to use this function after a pipe (`%>%`). See Examples.
 #' @rdname ggplot_rsi

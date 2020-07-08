@@ -3,7 +3,7 @@
 # Antimicrobial Resistance (AMR) Analysis                              #
 #                                                                      #
 # SOURCE                                                               #
-# https://gitlab.com/msberends/AMR                                     #
+# https://github.com/msberends/AMR                                     #
 #                                                                      #
 # LICENCE                                                              #
 # (c) 2018-2020 Berends MS, Luz CF et al.                              #
@@ -16,13 +16,13 @@
 # We created this package for both routine data analysis and academic  #
 # research and it was publicly released in the hope that it will be    #
 # useful, but it comes WITHOUT ANY WARRANTY OR LIABILITY.              #
-# Visit our website for more info: https://msberends.gitlab.io/AMR.    #
+# Visit our website for more info: https://msberends.github.io/AMR.    #
 # ==================================================================== #
 
 ########################################################################
 # `git_premaster.sh` takes 3 parameters:                               #
 #   1. Commit message (character) [mandatory]                          #
-#   2. Lazy website generation (logical), with FALSE only changed      #
+#   2. Lazy website generation (logical), with TRUE only changed       #
 #      files will be processed [defaults to TRUE]                      #
 #   3. Version number to be used in DESCRIPTION and NEWS.md            #
 #      [defaults to current tag and last commit number + 9000]         #
@@ -139,10 +139,13 @@ echo
 echo "•••••••••••••••••••••••••••"
 echo "• Uploading to repository •"
 echo "•••••••••••••••••••••••••••"
+# save latest changes as well
+git add .
+# and commit
 git commit -a -m "(v$new_version) $1" --quiet
 git push --quiet
 echo "Comparison:"
-echo "https://gitlab.com/msberends/AMR/compare/master...premaster?view=inline"
+echo "https://github.com/msberends/AMR/compare/master...premaster?view=inline"
 
 echo
 echo "•••••••••"

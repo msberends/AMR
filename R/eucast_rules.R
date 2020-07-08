@@ -3,7 +3,7 @@
 # Antimicrobial Resistance (AMR) Analysis                              #
 #                                                                      #
 # SOURCE                                                               #
-# https://gitlab.com/msberends/AMR                                     #
+# https://github.com/msberends/AMR                                     #
 #                                                                      #
 # LICENCE                                                              #
 # (c) 2018-2020 Berends MS, Luz CF et al.                              #
@@ -16,7 +16,7 @@
 # We created this package for both routine data analysis and academic  #
 # research and it was publicly released in the hope that it will be    #
 # useful, but it comes WITHOUT ANY WARRANTY OR LIABILITY.              #
-# Visit our website for more info: https://msberends.gitlab.io/AMR.    #
+# Visit our website for more info: https://msberends.github.io/AMR.    #
 # ==================================================================== #
 
 # global variables
@@ -52,7 +52,7 @@ EUCAST_VERSION_EXPERT_RULES <- "3.1, 2016"
 #' 
 #' These rules are not applied at default, since they are not approved by EUCAST. To use these rules, please use `eucast_rules(..., rules = "all")`, or set the default behaviour of the `[eucast_rules()]` function with `options(AMR.eucast_rules = "all")` (or any other valid input value(s) to the `rules` parameter).
 #'
-#' The file containing all EUCAST rules is located here: <https://gitlab.com/msberends/AMR/blob/master/data-raw/eucast_rules.tsv>.
+#' The file containing all EUCAST rules is located here: <https://github.com/msberends/AMR/blob/master/data-raw/eucast_rules.tsv>.
 #'
 #' @section Antibiotics:
 #' To define antibiotics column names, leave as it is to determine it automatically with [guess_ab_col()] or input a text (case-insensitive), or use `NULL` to skip a column (e.g. `TIC = NULL` to skip ticarcillin). Manually defined but non-existing columns will be skipped with a warning.

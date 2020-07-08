@@ -3,7 +3,7 @@
 # Antimicrobial Resistance (AMR) Analysis                              #
 #                                                                      #
 # SOURCE                                                               #
-# https://gitlab.com/msberends/AMR                                     #
+# https://github.com/msberends/AMR                                     #
 #                                                                      #
 # LICENCE                                                              #
 # (c) 2018-2020 Berends MS, Luz CF et al.                              #
@@ -16,7 +16,7 @@
 # We created this package for both routine data analysis and academic  #
 # research and it was publicly released in the hope that it will be    #
 # useful, but it comes WITHOUT ANY WARRANTY OR LIABILITY.              #
-# Visit our website for more info: https://msberends.gitlab.io/AMR.    #
+# Visit our website for more info: https://msberends.github.io/AMR.    #
 # ==================================================================== #
 
 #' Data sets with `r format(nrow(antibiotics) + nrow(antivirals), big.mark = ",")` antimicrobials
@@ -56,13 +56,13 @@
 #' ### Direct download
 #' These data sets are available as 'flat files' for use even without R - you can find the files here:
 #' 
-#' * <https://gitlab.com/msberends/AMR/raw/master/data-raw/antibiotics.txt>
-#' * <https://gitlab.com/msberends/AMR/raw/master/data-raw/antivirals.txt>
+#' * <https://github.com/msberends/AMR/raw/master/data-raw/antibiotics.txt>
+#' * <https://github.com/msberends/AMR/raw/master/data-raw/antivirals.txt>
 #' 
 #' Files in R format (with preserved data structure) can be found here:
 #' 
-#' * <https://gitlab.com/msberends/AMR/raw/master/data/antibiotics.rda>
-#' * <https://gitlab.com/msberends/AMR/raw/master/data/antivirals.rda>
+#' * <https://github.com/msberends/AMR/raw/master/data/antibiotics.rda>
+#' * <https://github.com/msberends/AMR/raw/master/data/antivirals.rda>
 #' @source World Health Organization (WHO) Collaborating Centre for Drug Statistics Methodology (WHOCC): <https://www.whocc.no/atc_ddd_index/>
 #'
 #' WHONET 2019 software: <http://www.whonet.org/software.html>
@@ -102,11 +102,11 @@
 #' ### Direct download
 #' This data set is available as 'flat file' for use even without R - you can find the file here:
 #' 
-#' * <https://gitlab.com/msberends/AMR/raw/master/data-raw/microorganisms.txt>
+#' * <https://github.com/msberends/AMR/raw/master/data-raw/microorganisms.txt>
 #' 
 #' The file in R format (with preserved data structure) can be found here:
 #' 
-#' * <https://gitlab.com/msberends/AMR/raw/master/data/microorganisms.rda>
+#' * <https://github.com/msberends/AMR/raw/master/data/microorganisms.rda>
 #' @section About the records from DSMZ (see source):
 #' Names of prokaryotes are defined as being validly published by the International Code of Nomenclature of Bacteria. Validly published are all names which are included in the Approved Lists of Bacterial Names and the names subsequently published in the International Journal of Systematic Bacteriology (IJSB) and, from January 2000, in the International Journal of Systematic and Evolutionary Microbiology (IJSEM) as original articles or in the validation lists.
 #'
@@ -157,7 +157,7 @@ catalogue_of_life <- list(
 
 #' Data set with `r format(nrow(example_isolates), big.mark = ",")` example isolates
 #'
-#' A data set containing `r format(nrow(example_isolates), big.mark = ",")` microbial isolates with their full antibiograms. The data set reflects reality and can be used to practice AMR analysis. For examples, please read [the tutorial on our website](https://msberends.gitlab.io/AMR/articles/AMR.html).
+#' A data set containing `r format(nrow(example_isolates), big.mark = ",")` microbial isolates with their full antibiograms. The data set reflects reality and can be used to practice AMR analysis. For examples, please read [the tutorial on our website](https://msberends.github.io/AMR/articles/AMR.html).
 #' @format A [`data.frame`] with `r format(nrow(example_isolates), big.mark = ",")` observations and `r ncol(example_isolates)` variables:
 #' - `date`\cr date of receipt at the laboratory
 #' - `hospital_id`\cr ID of the hospital, from A to D
@@ -231,6 +231,6 @@ catalogue_of_life <- list(
 #' - `breakpoint_S`\cr Lowest MIC value or highest number of millimetres that leads to "S"
 #' - `breakpoint_R`\cr Highest MIC value or lowest number of millimetres that leads to "R"
 #' - `uti`\cr A logical value (`TRUE`/`FALSE`) to indicate whether the rule applies to a urinary tract infection (UTI)
-#' @details The repository of this `AMR` package contains a file comprising this exact data set: <https://gitlab.com/msberends/AMR/blob/master/data-raw/rsi_translation.txt>. This file **allows for machine reading EUCAST and CLSI guidelines**, which is almost impossible with the Excel and PDF files distributed by EUCAST and CLSI. This file is updated automatically.
+#' @details The repository of this `AMR` package contains a file comprising this exact data set: <https://github.com/msberends/AMR/blob/master/data-raw/rsi_translation.txt>. This file **allows for machine reading EUCAST and CLSI guidelines**, which is almost impossible with the Excel and PDF files distributed by EUCAST and CLSI. This file is updated automatically.
 #' @inheritSection AMR Read more on our website!
 "rsi_translation"

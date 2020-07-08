@@ -1,6 +1,6 @@
 Package: AMR
-Version: 1.2.0.9025
-Date: 2020-07-03
+Version: 1.2.0.9026
+Date: 2020-07-08
 Title: Antimicrobial Resistance Analysis
 Authors@R: c(
     person(role = c("aut", "cre"), 
@@ -47,10 +47,10 @@ Suggests:
     tidyr,
     utils
 VignetteBuilder: knitr,rmarkdown
-URL: https://msberends.gitlab.io/AMR, https://gitlab.com/msberends/AMR
-BugReports: https://gitlab.com/msberends/AMR/issues
+URL: https://msberends.github.io/AMR, https://github.com/msberends/AMR
+BugReports: https://github.com/msberends/AMR/issues
 License: GPL-2 | file LICENSE
 Encoding: UTF-8
 LazyData: true
-RoxygenNote: 7.1.0
+RoxygenNote: 7.1.1
 Roxygen: list(markdown = TRUE)

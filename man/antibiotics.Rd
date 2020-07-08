@@ -64,14 +64,14 @@ Synonyms (i.e. trade names) are derived from the Compound ID (\code{cid}) and co
 
 These data sets are available as 'flat files' for use even without R - you can find the files here:
 \itemize{
-\item \url{https://gitlab.com/msberends/AMR/raw/master/data-raw/antibiotics.txt}
-\item \url{https://gitlab.com/msberends/AMR/raw/master/data-raw/antivirals.txt}
+\item \url{https://github.com/msberends/AMR/raw/master/data-raw/antibiotics.txt}
+\item \url{https://github.com/msberends/AMR/raw/master/data-raw/antivirals.txt}
 }
 
 Files in R format (with preserved data structure) can be found here:
 \itemize{
-\item \url{https://gitlab.com/msberends/AMR/raw/master/data/antibiotics.rda}
-\item \url{https://gitlab.com/msberends/AMR/raw/master/data/antivirals.rda}
+\item \url{https://github.com/msberends/AMR/raw/master/data/antibiotics.rda}
+\item \url{https://github.com/msberends/AMR/raw/master/data/antivirals.rda}
 }
 }
 }
@@ -89,7 +89,7 @@ The WHOCC is located in Oslo at the Norwegian Institute of Public Health and fun
 
 \section{Read more on our website!}{
 
-On our website \url{https://msberends.gitlab.io/AMR} you can find \href{https://msberends.gitlab.io/AMR/articles/AMR.html}{a comprehensive tutorial} about how to conduct AMR analysis, the \href{https://msberends.gitlab.io/AMR/reference}{complete documentation of all functions} (which reads a lot easier than here in R) and \href{https://msberends.gitlab.io/AMR/articles/WHONET.html}{an example analysis using WHONET data}.
+On our website \url{https://msberends.github.io/AMR} you can find \href{https://msberends.github.io/AMR/articles/AMR.html}{a comprehensive tutorial} about how to conduct AMR analysis, the \href{https://msberends.github.io/AMR/reference}{complete documentation of all functions} (which reads a lot easier than here in R) and \href{https://msberends.github.io/AMR/articles/WHONET.html}{an example analysis using WHONET data}.
 }
 
 \seealso{

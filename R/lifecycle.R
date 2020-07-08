@@ -3,7 +3,7 @@
 # Antimicrobial Resistance (AMR) Analysis                              #
 #                                                                      #
 # SOURCE                                                               #
-# https://gitlab.com/msberends/AMR                                     #
+# https://github.com/msberends/AMR                                     #
 #                                                                      #
 # LICENCE                                                              #
 # (c) 2018-2020 Berends MS, Luz CF et al.                              #
@@ -16,7 +16,7 @@
 # We created this package for both routine data analysis and academic  #
 # research and it was publicly released in the hope that it will be    #
 # useful, but it comes WITHOUT ANY WARRANTY OR LIABILITY.              #
-# Visit our website for more info: https://msberends.gitlab.io/AMR.    #
+# Visit our website for more info: https://msberends.github.io/AMR.    #
 # ==================================================================== #
 
 ###############
@@ -35,7 +35,7 @@
 #' The [lifecycle][AMR::lifecycle] of this function is **experimental**. An experimental function is in early stages of development. The unlying code might be changing frequently. Experimental functions might be removed without deprecation, so you are generally best off waiting until a function is more mature before you use it in production code. Experimental functions are only available in development versions of this `AMR` package and will thus not be included in releases that are submitted to CRAN, since such functions have not yet matured enough.
 #' @section Maturing lifecycle:
 #' \if{html}{\figure{lifecycle_maturing.svg}{options: style=margin-bottom:5px} \cr}
-#' The [lifecycle][AMR::lifecycle] of this function is **maturing**. The unlying code of a maturing function has been roughed out, but finer details might still change. Since this function needs wider usage and more extensive testing, you are very welcome [to suggest changes at our repository](https://gitlab.com/msberends/AMR/-/issues) or [write us an email (see section 'Contact Us')][AMR::AMR].
+#' The [lifecycle][AMR::lifecycle] of this function is **maturing**. The unlying code of a maturing function has been roughed out, but finer details might still change. Since this function needs wider usage and more extensive testing, you are very welcome [to suggest changes at our repository](https://github.com/msberends/AMR/issues) or [write us an email (see section 'Contact Us')][AMR::AMR].
 #' @section Stable lifecycle:
 #' \if{html}{\figure{lifecycle_stable.svg}{options: style=margin-bottom:5px} \cr}
 #' The [lifecycle][AMR::lifecycle] of this function is **stable**. In a stable function, major changes are unlikely. This means that the unlying code will generally evolve by adding new arguments; removing arguments or changing the meaning of existing arguments will be avoided.

@@ -3,7 +3,7 @@
 # Antimicrobial Resistance (AMR) Analysis                              #
 #                                                                      #
 # SOURCE                                                               #
-# https://gitlab.com/msberends/AMR                                     #
+# https://github.com/msberends/AMR                                     #
 #                                                                      #
 # LICENCE                                                              #
 # (c) 2018-2020 Berends MS, Luz CF et al.                              #
@@ -16,18 +16,18 @@
 # We created this package for both routine data analysis and academic  #
 # research and it was publicly released in the hope that it will be    #
 # useful, but it comes WITHOUT ANY WARRANTY OR LIABILITY.              #
-# Visit our website for more info: https://msberends.gitlab.io/AMR.    #
+# Visit our website for more info: https://msberends.github.io/AMR.    #
 # ==================================================================== #
 
 #' Translate strings from AMR package
 #'
 #' For language-dependent output of AMR functions, like [mo_name()], [mo_gramstain()], [mo_type()] and [ab_name()].
 #' @inheritSection lifecycle Stable lifecycle
-#' @details Strings will be translated to foreign languages if they are defined in a local translation file. Additions to this file can be suggested at our repository. The file can be found here: <https://gitlab.com/msberends/AMR/blob/master/data-raw/translations.tsv>.
+#' @details Strings will be translated to foreign languages if they are defined in a local translation file. Additions to this file can be suggested at our repository. The file can be found here: <https://github.com/msberends/AMR/blob/master/data-raw/translations.tsv>.
 #'
-#' Currently supported languages are (besides English): `r paste(sort(gsub(";.*", "", ISOcodes::ISO_639_2[which(ISOcodes::ISO_639_2$Alpha_2 %in% unique(AMR:::translations_file$lang)), "Name"])), collapse = ", ")`. Not all these languages currently have translations available for all antimicrobial agents and colloquial microorganism names. 
+#' Currently supported languages are (besides English): `r paste(sort(gsub(";.*", "", ISOcodes::ISO_639_2[which(ISOcodes::ISO_639_2$Alpha_2 %in% unique(AMR:::translations_file$lang)), "Name"])), collapse = ", ")`. Please note that currently not all these languages have translations available for all antimicrobial agents and colloquial microorganism names. 
 #'
-#' Please suggest your own translations [by creating a new issue on our repository](https://gitlab.com/msberends/AMR/issues/new?issue[title]=Translation\%20suggestion).
+#' Please suggest your own translations [by creating a new issue on our repository](https://github.com/msberends/AMR/issues/new?title=Translations).
 #'
 #' This file will be read by all functions where a translated output can be desired, like all [mo_property()] functions ([mo_name()], [mo_gramstain()], [mo_type()], etc.).
 #'
@@ -113,9 +113,9 @@ translate_AMR <- function(from, language = get_locale(), only_unknown = FALSE) {
              paste0("'", sort(unique(df_trans$lang)), "'", collapse = ", "),
              call = FALSE)
   
-  df_trans <- df_trans %>% subset(lang == language)
+  df_trans <- subset(df_trans, lang == language)
   if (only_unknown == TRUE) {
-    df_trans <- df_trans %>% subset(pattern %like% "unknown")
+    df_trans <- subset(df_trans, pattern %like% "unknown")
   }
   
   # default case sensitive if value if 'ignore.case' is missing:
@@ -126,7 +126,7 @@ translate_AMR <- function(from, language = get_locale(), only_unknown = FALSE) {
   # check if text to look for is in one of the patterns
   any_form_in_patterns <- tryCatch(any(from %like% paste0("(", paste(df_trans$pattern, collapse = "|"), ")")),
                                    error = function(e) {
-                                     warning("Translation not possible. Please open an issue on GitLab (https://gitlab.com/msberends/AMR/issues) or GitHub (https://github.com/msberends/AMR/issues).", call. = FALSE)
+                                     warning("Translation not possible. Please open an issue on GitLab (https://github.com/msberends/AMR/issues) or GitHub (https://github.com/msberends/AMR/issues).", call. = FALSE)
                                      return(FALSE)
                                    })
   if (NROW(df_trans) == 0 | !any_form_in_patterns) {

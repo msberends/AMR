@@ -114,7 +114,7 @@ labels_rsi_count(
 \item{...}{other parameters passed on to \code{\link[=geom_rsi]{geom_rsi()}}}
 }
 \description{
-Use these functions to create bar plots for antimicrobial resistance analysis. All functions rely on internal \link[ggplot2:ggplot]{ggplot2} functions.
+Use these functions to create bar plots for antimicrobial resistance analysis. All functions rely on \link[ggplot2:ggplot]{ggplot2} functions.
 }
 \details{
 At default, the names of antibiotics will be shown on the plots using \code{\link[=ab_name]{ab_name()}}. This can be set with the \code{translate_ab} parameter. See \code{\link[=count_df]{count_df()}}.
@@ -124,13 +124,13 @@ At default, the names of antibiotics will be shown on the plots using \code{\lin
 
 \code{\link[=facet_rsi]{facet_rsi()}} creates 2d plots (at default based on S/I/R) using \code{\link[ggplot2:facet_wrap]{ggplot2::facet_wrap()}}.
 
-\code{\link[=scale_y_percent]{scale_y_percent()}} transforms the y axis to a 0 to 100\% range using \code{\link[ggplot2:scale_continuous]{ggplot2::scale_continuous()}}.
+\code{\link[=scale_y_percent]{scale_y_percent()}} transforms the y axis to a 0 to 100\% range using \code{\link[ggplot2:scale_continuous]{ggplot2::scale_y_continuous()}}.
 
-\code{\link[=scale_rsi_colours]{scale_rsi_colours()}} sets colours to the bars: pastel blue for S, pastel turquoise for I and pastel red for R, using \code{\link[ggplot2:scale_brewer]{ggplot2::scale_brewer()}}.
+\code{\link[=scale_rsi_colours]{scale_rsi_colours()}} sets colours to the bars: pastel blue for S, pastel turquoise for I and pastel red for R, using \code{\link[ggplot2:scale_manual]{ggplot2::scale_fill_manual()}}.
 
 \code{\link[=theme_rsi]{theme_rsi()}} is a [ggplot2 theme][\code{\link[ggplot2:theme]{ggplot2::theme()}} with minimal distraction.
 
-\code{\link[=labels_rsi_count]{labels_rsi_count()}} print datalabels on the bars with percentage and amount of isolates using \code{\link[ggplot2:geom_text]{ggplot2::geom_text()}}
+\code{\link[=labels_rsi_count]{labels_rsi_count()}} print datalabels on the bars with percentage and amount of isolates using \code{\link[ggplot2:geom_text]{ggplot2::geom_text()}}.
 
 \code{\link[=ggplot_rsi]{ggplot_rsi()}} is a wrapper around all above functions that uses data as first input. This makes it possible to use this function after a pipe (\verb{\%>\%}). See Examples.
 }
@@ -138,12 +138,12 @@ At default, the names of antibiotics will be shown on the plots using \code{\lin
 \section{Maturing lifecycle}{
 
 \if{html}{\figure{lifecycle_maturing.svg}{options: style=margin-bottom:5px} \cr}
-The \link[AMR:lifecycle]{lifecycle} of this function is \strong{maturing}. The unlying code of a maturing function has been roughed out, but finer details might still change. Since this function needs wider usage and more extensive testing, you are very welcome \href{https://gitlab.com/msberends/AMR/-/issues}{to suggest changes at our repository} or \link[AMR:AMR]{write us an email (see section 'Contact Us')}.
+The \link[=lifecycle]{lifecycle} of this function is \strong{maturing}. The unlying code of a maturing function has been roughed out, but finer details might still change. Since this function needs wider usage and more extensive testing, you are very welcome \href{https://github.com/msberends/AMR/issues}{to suggest changes at our repository} or \link[=AMR]{write us an email (see section 'Contact Us')}.
 }
 
 \section{Read more on our website!}{
 
-On our website \url{https://msberends.gitlab.io/AMR} you can find \href{https://msberends.gitlab.io/AMR/articles/AMR.html}{a comprehensive tutorial} about how to conduct AMR analysis, the \href{https://msberends.gitlab.io/AMR/reference}{complete documentation of all functions} (which reads a lot easier than here in R) and \href{https://msberends.gitlab.io/AMR/articles/WHONET.html}{an example analysis using WHONET data}.
+On our website \url{https://msberends.github.io/AMR} you can find \href{https://msberends.github.io/AMR/articles/AMR.html}{a comprehensive tutorial} about how to conduct AMR analysis, the \href{https://msberends.github.io/AMR/reference}{complete documentation of all functions} (which reads a lot easier than here in R) and \href{https://msberends.github.io/AMR/articles/WHONET.html}{an example analysis using WHONET data}.
 }
 
 \examples{

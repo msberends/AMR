@@ -3,12 +3,12 @@
 # `AMR` (for R)
 <img src="man/figures/logo.png" align="right" height="120px" />
 
-This is the development source of the `AMR` package for R. Not a developer? Then please visit our website [https://msberends.gitlab.io/AMR](https://msberends.gitlab.io/AMR) to read about this package.
+This is the development source of the `AMR` package for R. Not a developer? Then please visit our website [https://msberends.github.io/AMR](https://msberends.github.io/AMR) to read about this package.
 
-*NOTE: this source code is on GitLab (https://gitlab.com/msberends/AMR) and GitHub (https://github.com/msberends/AMR).*
+*NOTE: this source code is on GitHub (https://github.com/msberends/AMR) and GitLab (https://gitlab.com/msberends/AMR).*
 
 ### How to get this package
-Please see [our website](https://msberends.gitlab.io/AMR/#get-this-package).
+Please see [our website](https://msberends.github.io/AMR/#get-this-package).
 
 ### Copyright
 

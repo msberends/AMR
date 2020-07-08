@@ -3,7 +3,7 @@
 # Antimicrobial Resistance (AMR) Analysis                              #
 #                                                                      #
 # SOURCE                                                               #
-# https://gitlab.com/msberends/AMR                                     #
+# https://github.com/msberends/AMR                                     #
 #                                                                      #
 # LICENCE                                                              #
 # (c) 2018-2020 Berends MS, Luz CF et al.                              #
@@ -16,7 +16,7 @@
 # We created this package for both routine data analysis and academic  #
 # research and it was publicly released in the hope that it will be    #
 # useful, but it comes WITHOUT ANY WARRANTY OR LIABILITY.              #
-# Visit our website for more info: https://msberends.gitlab.io/AMR.    #
+# Visit our website for more info: https://msberends.github.io/AMR.    #
 # ==================================================================== #
 
 #' The `AMR` Package
@@ -45,7 +45,7 @@
 #' - Principal component analysis for AMR
 
 #' @section Read more on our website!:
-#' On our website <https://msberends.gitlab.io/AMR> you can find [a comprehensive tutorial](https://msberends.gitlab.io/AMR/articles/AMR.html) about how to conduct AMR analysis, the [complete documentation of all functions](https://msberends.gitlab.io/AMR/reference) (which reads a lot easier than here in R) and [an example analysis using WHONET data](https://msberends.gitlab.io/AMR/articles/WHONET.html).
+#' On our website <https://msberends.github.io/AMR> you can find [a comprehensive tutorial](https://msberends.github.io/AMR/articles/AMR.html) about how to conduct AMR analysis, the [complete documentation of all functions](https://msberends.github.io/AMR/reference) (which reads a lot easier than here in R) and [an example analysis using WHONET data](https://msberends.github.io/AMR/articles/WHONET.html).
 #' @section Contact Us:
 #' For suggestions, comments or questions, please contact us at:
 #'
@@ -59,7 +59,7 @@
 #' The Netherlands
 #'
 #' If you have found a bug, please file a new issue at: \cr
-#' <https://gitlab.com/msberends/AMR/issues>
+#' <https://github.com/msberends/AMR/issues>
 #' @name AMR
 #' @rdname AMR
 NULL
