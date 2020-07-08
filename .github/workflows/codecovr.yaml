@@ -28,10 +28,10 @@ on:
     branches:
       - master
 
-name: test-coverage
+name: code-tested
 
 jobs:
-  test-coverage:
+  code-tested:
     runs-on: macOS-latest
     env:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}

@@ -28,10 +28,10 @@ on:
     branches:
       - master
 
-name: check
+name: R-code-check
 
 jobs:
-  check:
+  R-code-check:
     runs-on: ${{ matrix.config.os }}
 
     name: ${{ matrix.config.os }} (${{ matrix.config.r }})

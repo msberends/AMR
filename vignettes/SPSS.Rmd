@@ -33,7 +33,7 @@ As said, SPSS is easier to learn than R. But SPSS, SAS and Stata come with major
 
 * **R is highly modular.**
 
-  The [official R network (CRAN)](https://cran.r-project.org/) features almost 14,000 packages at the time of writing, our `AMR` package being one of them. All these packages were peer-reviewed before publication. Aside from this official channel, there are also developers who choose not to submit to CRAN, but rather keep it on their own public repository, like GitLab or GitHub. So there may even be a lot more than 14,000 packages out there.
+  The [official R network (CRAN)](https://cran.r-project.org/) features almost 14,000 packages at the time of writing, our `AMR` package being one of them. All these packages were peer-reviewed before publication. Aside from this official channel, there are also developers who choose not to submit to CRAN, but rather keep it on their own public repository, like GitHub. So there may even be a lot more than 14,000 packages out there.
   
   Bottom line is, you can really extend it yourself or ask somebody to do this for you. Take for example our `AMR` package. Among other things, it adds reliable reference data to R to help you with the data cleaning and analysis. SPSS, SAS and Stata will never know what a valid MIC value is or what the Gram stain of *E. coli* is. Or that all species of *Klebiella* are resistant to amoxicillin and that Floxapen^&reg;^ is a trade name of flucloxacillin. These facts and properties are often needed to clean existing data, which would be very inconvenient in a software package without reliable reference data. See below for a demonstration.
   
@@ -99,13 +99,13 @@ To work with R, probably the best option is to use [RStudio](https://www.rstudio
 
 To import a data file, just click *Import Dataset* in the Environment tab:
     
-![](https://gitlab.com/msberends/AMR/raw/master/docs/import1.png)
+![](https://github.com/msberends/AMR/raw/master/docs/import1.png)
 
 If additional packages are needed, RStudio will ask you if they should be installed on beforehand.
 
 In the the window that opens, you can define all options (parameters) that should be used for import and you're ready to go:
 
-![](https://gitlab.com/msberends/AMR/raw/master/docs/import2.png)
+![](https://github.com/msberends/AMR/raw/master/docs/import2.png)
 
 If you want named variables to be imported as factors so it resembles SPSS more, use `as_factor()`.
 
