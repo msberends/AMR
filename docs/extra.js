@@ -24,10 +24,6 @@
 // Add updated Font Awesome 5.8.2 library
 $('head').append('<!-- Updated Font Awesome library --><link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">');
 
-// Email template for new GitLab issues
-//https://stackoverflow.com/a/33190494/4575331
-//incoming+msberends-amr-9011429-5miwzuo1xo70wbz9r6fwv4dmg-issue@incoming.gitlab.com
-
 $( document ).ready(function() {
 
   // add SurveyMonkey
@@ -39,7 +35,7 @@ $( document ).ready(function() {
   // remove version label from header
   $(".version.label").remove();
 
-  // redirect to GitLab
+  // redirect GitLab to GitHub
   var url_old = window.location.href;
   var url_new = url_old.replace("gitlab", "github");
   if (url_old != url_new) {
@@ -57,7 +53,7 @@ $( document ).ready(function() {
     '    Learn R reading this great book: R for Data Science.' +
     '    <br><br>' +
     '    Click to read it online - it was published for free.' +
-    '    <img src="https://gitlab.com/msberends/AMR/raw/master/docs/cover_r4ds.png" height="100px">' +
+    '    <img src="https://github.com/msberends/AMR/raw/master/docs/cover_r4ds.png" height="100px">' +
     '  </a>     ' +
     '  <hr>' +
     '</div>');
@@ -67,7 +63,7 @@ $( document ).ready(function() {
   $('footer').html(
     '<div>' +
       '<p><code>AMR</code> (for R). Developed at the <a href="https://www.rug.nl">University of Groningen</a> in collaboration with non-profit organisations <a href="https://www.certe.nl">Certe Medical Diagnostics and Advice</a> and <a href="https://www.umcg.nl">University Medical Center Groningen</a>.</p>' +
-            '<a href="https://www.rug.nl"><img src="https://gitlab.com/msberends/AMR/raw/master/docs/logo_rug.png" class="footer_logo"></a>' + 
+            '<a href="https://www.rug.nl"><img src="https://github.com/msberends/AMR/raw/master/docs/logo_rug.png" class="footer_logo"></a>' + 
     '</div>');
   // all links should open in new tab/window
   $('footer').html($('footer').html().replace(/href/g, 'target="_blank" href'));
@@ -101,4 +97,4 @@ $( document ).ready(function() {
   $('.template-reference-index h1').text('Manual');
 });
 
-$('head').append("<!-- Matomo --><script type='text/javascript'> var _paq = _paq || []; /* tracker methods like 'setCustomDimension' should be called before 'trackPageView' */ _paq.push(['setDomains', ['*.msberends.gitlab.io/AMR']]); _paq.push(['enableCrossDomainLinking']); _paq.push(['trackPageView']); _paq.push(['enableLinkTracking']); (function() { var u='https://analyse.uscloud.nl/'; _paq.push(['setTrackerUrl', u+'piwik.php']); _paq.push(['setSiteId', '3']); var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0]; g.type='text/javascript'; g.async=true; g.defer=true; g.src=u+'piwik.js'; s.parentNode.insertBefore(g,s);  })();</script><!-- End Matomo Code -->");
+$('head').append("<!-- Global site tag (gtag.js) - Google Analytics --> <script async src=\"https://www.googletagmanager.com/gtag/js?id=UA-172114740-1\"></script> <script> window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);} gtag('js', new Date()); gtag('config', 'UA-172114740-1'); </script><!-- Matomo --><script type='text/javascript'> var _paq = _paq || []; /* tracker methods like 'setCustomDimension' should be called before 'trackPageView' */ _paq.push(['setDomains', ['*.msberends.github.io/AMR']]); _paq.push(['enableCrossDomainLinking']); _paq.push(['trackPageView']); _paq.push(['enableLinkTracking']); (function() { var u='https://analyse.uscloud.nl/'; _paq.push(['setTrackerUrl', u+'piwik.php']); _paq.push(['setSiteId', '3']); var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0]; g.type='text/javascript'; g.async=true; g.defer=true; g.src=u+'piwik.js'; s.parentNode.insertBefore(g,s);  })();</script><!-- End Matomo Code -->");
