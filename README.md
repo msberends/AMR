@@ -1,18 +1,18 @@
 % AMR (for R)
 
 # `AMR` (for R)
-<img src="man/figures/logo.png" align="right" height="120px" />
+<img src="https://msberends.github.io/AMR/works_great_on.png" align="center" height="150px" />
 
 This is the development source of the `AMR` package for R. Not a developer? Then please visit our website [https://msberends.github.io/AMR](https://msberends.github.io/AMR) to read about this package.
 
-*NOTE: this source code is on GitHub (https://github.com/msberends/AMR) and GitLab (https://gitlab.com/msberends/AMR).*
+*NOTE: this source code is on GitHub (https://github.com/msberends/AMR), but also automatically mirrored to GitLab (https://gitlab.com/msberends/AMR).*
 
 ### How to get this package
 Please see [our website](https://msberends.github.io/AMR/#get-this-package).
 
 ### Copyright
 
-This R package is licensed under the [GNU General Public License (GPL) v2.0](https://gitlab.com/msberends/AMR/blob/master/LICENSE). In a nutshell, this means that this package:
+This R package is licensed under the [GNU General Public License (GPL) v2.0](https://github.com/msberends/AMR/blob/master/LICENSE). In a nutshell, this means that this package:
 
 - May be used for commercial purposes
 

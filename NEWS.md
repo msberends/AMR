@@ -1,4 +1,4 @@
-# AMR 1.2.0.9031
+# AMR 1.2.0.9032
 ## <small>Last updated: 09-Jul-2020</small>
 
 ### New
@@ -38,7 +38,7 @@
 * Any progress bar will now only show in interactive mode (i.e. not in R Markdown)
 
 ### Other
-* Project moved to GitHub
+* Moved primary location of this project from GitLab to [GitHub](https://github.com/msberends/AMR), giving us native support for automated syntax checking without being dependent on external services such as AppVeyor and Travis CI.
 
 # AMR 1.2.0
 

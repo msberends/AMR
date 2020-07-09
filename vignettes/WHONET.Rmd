@@ -34,7 +34,7 @@ library(readxl)
 data <- read_excel(path = "path/to/your/file.xlsx")
 ```
 
-This package comes with an [example data set `WHONET`](https://msberends.gitlab.io/AMR/reference/WHONET.html). We will use it for this analysis.
+This package comes with an [example data set `WHONET`](https://msberends.github.io/AMR/reference/WHONET.html). We will use it for this analysis.
 
 ### Preparation
 
@@ -49,7 +49,7 @@ library(cleaner) # to create frequency tables
 
 We will have to transform some variables to simplify and automate the analysis:
 
-* Microorganisms should be transformed to our own microorganism IDs (called an `mo`) using [our Catalogue of Life reference data set](https://msberends.gitlab.io/AMR/reference/catalogue_of_life), which contains all ~70,000 microorganisms from the taxonomic kingdoms Bacteria, Fungi and Protozoa. We do the tranformation with `as.mo()`. This function also recognises almost all WHONET abbreviations of microorganisms.
+* Microorganisms should be transformed to our own microorganism IDs (called an `mo`) using [our Catalogue of Life reference data set](https://msberends.github.io/AMR/reference/catalogue_of_life), which contains all ~70,000 microorganisms from the taxonomic kingdoms Bacteria, Fungi and Protozoa. We do the tranformation with `as.mo()`. This function also recognises almost all WHONET abbreviations of microorganisms.
 * Antimicrobial results or interpretations have to be clean and valid. In other words, they should only contain values `"S"`, `"I"` or `"R"`. That is exactly where the `as.rsi()` function is for.
 
 ```{r}
