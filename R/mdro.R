@@ -468,9 +468,8 @@ mdro <- function(x,
       } else if (any_all == "all") {
         search_function <- all
       }
-      row_filter <- as.logical(by(x, 
-                                  seq_len(nrow(x)), 
-                                  function(row) search_function(unlist(row[, cols]) %in% search_result, na.rm = TRUE)))
+      x_transposed <- as.list(as.data.frame(t(x[, cols, drop = FALSE])))
+      row_filter <- sapply(x_transposed, function(y) search_function(y %in% search_result, na.rm = TRUE))
       row_filter <- x[row_filter, "row_number", drop = TRUE]
       rows <- rows[rows %in% row_filter]
       x[rows, "MDRO"] <<- to
@@ -507,9 +506,8 @@ mdro <- function(x,
                                                   na.rm = TRUE) 
                                             })
       # for PDR; all agents are R (or I if combine_SI = FALSE)
-      row_filter <- as.logical(by(x[rows, ], 
-                                  seq_len(nrow(x[rows, ])),
-                                  function(row) all(unlist(row[, lst_vector]) %in% search_result, na.rm = TRUE)))
+      x_transposed <- as.list(as.data.frame(t(x[rows, lst_vector, drop = FALSE])))
+      row_filter <- sapply(x_transposed, function(y) all(y %in% search_result, na.rm = TRUE))
       x[row_filter, "classes_affected"] <<- 999
     }
     

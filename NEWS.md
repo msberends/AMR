@@ -1,5 +1,5 @@
-# AMR 1.2.0.9032
-## <small>Last updated: 09-Jul-2020</small>
+# AMR 1.2.0.9033
+## <small>Last updated: 12-Jul-2020</small>
 
 ### New
 * Function `ab_from_text()` to retrieve antimicrobial drug names, doses and forms of administration from clinical texts in e.g. health care records, which also corrects for misspelling since it uses `as.ab()` internally
@@ -36,6 +36,7 @@
 * Changed the summary for class `<mo>`, to highlight the %SI vs. %R
 * Improved error handling, giving more useful info when functions return an error
 * Any progress bar will now only show in interactive mode (i.e. not in R Markdown)
+* Speed improvement for `mdro()` and `filter_ab_class()`
 
 ### Other
 * Moved primary location of this project from GitLab to [GitHub](https://github.com/msberends/AMR), giving us native support for automated syntax checking without being dependent on external services such as AppVeyor and Travis CI.

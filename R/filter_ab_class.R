@@ -27,7 +27,7 @@
 #' @param ab_class an antimicrobial class, like `"carbapenems"`. The columns `group`, `atc_group1` and `atc_group2` of the [antibiotics] data set will be searched (case-insensitive) for this value.
 #' @param result an antibiotic result: S, I or R (or a combination of more of them)
 #' @param scope the scope to check which variables to check, can be `"any"` (default) or `"all"`
-#' @param ... parameters passed on to `filter_at` from the `dplyr` package
+#' @param ... previously used when this package still depended on the `dplyr` package, now ignored
 #' @details All columns of `x` will be searched for known antibiotic names, abbreviations, brand names and codes (ATC, EARS-Net, WHO, etc.). This means that a filter function like e.g. [filter_aminoglycosides()] will include column names like 'gen', 'genta', 'J01GB03', 'tobra', 'Tobracin', etc.
 #' @rdname filter_ab_class
 #' @seealso [antibiotic_class_selectors()] for the `select()` equivalent.
@@ -85,13 +85,13 @@ filter_ab_class <- function(x,
   # make result = "SI" works too:
   result <- unlist(strsplit(result, ""))
   
-  stop_ifnot(all(result %in% c("S", "I", "R")), "`result` must be one or more of: S, I, R")
-  stop_ifnot(all(scope %in% c("any", "all")), "`scope` must be one of: any, all")
+  stop_ifnot(all(result %in% c("S", "I", "R")), "`result` must be one or more of: 'S', 'I', 'R'")
+  stop_ifnot(all(scope %in% c("any", "all")), "`scope` must be one of: 'any', 'all'")
   
   # get all columns in data with names that resemble antibiotics
   ab_in_data <- suppressMessages(get_column_abx(x))
   if (length(ab_in_data) == 0) {
-    message(font_blue("NOTE: no antimicrobial agents found, data left unchanged."))
+    message(font_blue("NOTE: no columns with class <rsi> found (see ?as.rsi), data left unchanged."))
     return(x.bak)
   }
   # get reference data
@@ -146,8 +146,8 @@ filter_ab_class <- function(x,
                                         "` (", ab_name(names(agents), tolower = TRUE, language = NULL), ")"),
                                  collapse = scope_txt),
                            operator, toString(result))))
-  filtered <- as.logical(by(x, seq_len(nrow(x)),
-                            function(row) scope_fn(unlist(row[, agents]) %in% result, na.rm = TRUE)))
+  x_transposed <- as.list(as.data.frame(t(x[, agents, drop = FALSE])))
+  filtered <- sapply(x_transposed, function(y) scope_fn(y %in% result, na.rm = TRUE))
   x <- x[which(filtered), , drop = FALSE]
   class(x) <- x_class
   x

@@ -54,7 +54,7 @@ filter_tetracyclines(x, result = NULL, scope = "any", ...)
 
 \item{scope}{the scope to check which variables to check, can be \code{"any"} (default) or \code{"all"}}
 
-\item{...}{parameters passed on to \code{filter_at} from the \code{dplyr} package}
+\item{...}{previously used when this package still depended on the \code{dplyr} package, now ignored}
 }
 \description{
 Filter isolates on results in specific antimicrobial classes. This makes it easy to filter on isolates that were tested for e.g. any aminoglycoside, or to filter on carbapenem-resistant isolates without the need to specify the drugs.
