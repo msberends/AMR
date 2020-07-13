@@ -216,7 +216,7 @@ ab_property <- function(x, property = "name", language = get_locale(), ...) {
   stop_if(length(property) != 1L, "'property' must be of length 1.")
   stop_ifnot(property %in% colnames(antibiotics),
              "invalid property: '", property, "' - use a column name of the `antibiotics` data set")
-
+  
   translate_AMR(ab_validate(x = x, property = property, ...), language = language)
 }
 

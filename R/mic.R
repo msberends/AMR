@@ -60,7 +60,7 @@ as.mic <- function(x, na.rm = FALSE) {
       x <- x[!is.na(x)]
     }
     x.bak <- x
-
+    
     # comma to period
     x <- gsub(",", ".", x, fixed = TRUE)
     # transform Unicode for >= and <=
@@ -97,7 +97,7 @@ as.mic <- function(x, na.rm = FALSE) {
     
     ## previously unempty values now empty - should return a warning later on
     x[x.bak != "" & x == ""] <- "invalid"
-
+    
     # these are allowed MIC values and will become factor levels
     ops <- c("<", "<=", "", ">=", ">")
     lvls <- c(c(t(sapply(ops, function(x) paste0(x, "0.00", 1:9)))),
@@ -108,11 +108,11 @@ as.mic <- function(x, na.rm = FALSE) {
               c(t(sapply(ops, function(x) paste0(x, sort(c(1:9, 1.5)))))),
               c(t(sapply(ops, function(x) paste0(x, c(10:98)[9:98 %% 2 == TRUE])))),
               c(t(sapply(ops, function(x) paste0(x, sort(c(2 ^ c(7:10), 80 * c(2:12))))))))
-
+    
     na_before <- x[is.na(x) | x == ""] %>% length()
     x[!x %in% lvls] <- NA
     na_after <- x[is.na(x) | x == ""] %>% length()
-
+    
     if (na_before != na_after) {
       list_missing <- x.bak[is.na(x) & !is.na(x.bak) & x.bak != ""] %>%
         unique() %>%
@@ -123,7 +123,7 @@ as.mic <- function(x, na.rm = FALSE) {
               "%) that were invalid MICs: ",
               list_missing, call. = FALSE)
     }
-
+    
     structure(.Data = factor(x, levels = lvls, ordered = TRUE),
               class =  c("mic", "ordered", "factor"))
   }

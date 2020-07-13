@@ -29,10 +29,10 @@
 #' @inheritSection AMR Read more on our website!
 #' @export
 p_symbol <- function(p, emptychar = " ") {
-
+  
   p <- as.double(p)
   s <- rep(NA_character_, length(p))
-
+  
   s[p <= 1] <- emptychar
   s[p <= 0.100] <- "."
   s[p <= 0.050] <- "*"

@@ -38,7 +38,7 @@ rsi_calc <- function(...,
   stop_ifnot(is.logical(only_all_tested), "`only_all_tested` must be logical", call = -2)
   
   data_vars <- dots2vars(...)
-
+  
   dots_df <- switch(1, ...)
   if (is.data.frame(dots_df)) {
     # make sure to remove all other classes like tibbles, data.tables, etc
@@ -47,7 +47,7 @@ rsi_calc <- function(...,
   
   dots <- base::eval(base::substitute(base::alist(...)))
   stop_if(length(dots) == 0, "no variables selected", call = -2)
-
+  
   stop_if("also_single_tested" %in% names(dots),
           "`also_single_tested` was replaced by `only_all_tested`.\n",
           "Please read Details in the help page (`?proportion`) as this may have a considerable impact on your analysis.", call = -2)
@@ -55,7 +55,7 @@ rsi_calc <- function(...,
   
   if (is.data.frame(dots_df)) {
     # data.frame passed with other columns, like: example_isolates %>% proportion_S(AMC, GEN)
-  
+    
     dots <- as.character(dots)
     # remove first element, it's the data.frame
     if (length(dots) == 1) {
@@ -112,7 +112,7 @@ rsi_calc <- function(...,
       # this will give a warning for invalid results, of all input columns (so only 1 warning)
       rsi_integrity_check <- as.rsi(rsi_integrity_check)
     }
-
+    
     x_transposed <- as.list(as.data.frame(t(x)))
     if (only_all_tested == TRUE) {
       # no NAs in any column
@@ -185,7 +185,7 @@ rsi_calc_df <- function(type, # "proportion", "count" or "both"
   stop_ifnot(is.logical(as_percent), "`as_percent` must be logical", call = -2)
   
   translate_ab <- get_translate_ab(translate_ab)
-
+  
   # select only groups and antibiotics
   if (has_groups(data)) {
     data_has_groups <- TRUE

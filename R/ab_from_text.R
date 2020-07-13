@@ -136,8 +136,8 @@ ab_from_text <- function(text,
                                 text_split[text_split %like_case% to_regex(names_atc)],
                                 text_split[text_split %like_case% to_regex(synonyms_part1)],
                                 text_split[text_split %like_case% to_regex(synonyms_part2)])
-                              ),
-                       ...)
+          ),
+          ...)
         )
       })
     }

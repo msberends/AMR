@@ -102,7 +102,7 @@ catalogue_of_life_version <- function() {
                 list(
                   n_total_species = nrow(microorganisms),
                   n_total_synonyms = nrow(microorganisms.old)))
-
+  
   structure(.Data = lst,
             class = c("catalogue_of_life_version", "list"))
 }
@@ -117,7 +117,7 @@ print.catalogue_of_life_version <- function(x, ...) {
              "  Available at: ", lst$catalogue_of_life$url, "\n",
              "  Number of included species: ", format(lst$catalogue_of_life$n, big.mark = ","), "\n",
              font_underline(paste0(lst$deutsche_sammlung_von_mikroorganismen_und_zellkulturen$version, " (",
-                              lst$deutsche_sammlung_von_mikroorganismen_und_zellkulturen$yearmonth, ")")), "\n",
+                                   lst$deutsche_sammlung_von_mikroorganismen_und_zellkulturen$yearmonth, ")")), "\n",
              "  Available at: ", lst$deutsche_sammlung_von_mikroorganismen_und_zellkulturen$url, "\n",
              "  Number of included species: ", format(lst$deutsche_sammlung_von_mikroorganismen_und_zellkulturen$n, big.mark = ","), "\n\n",
              "=> Total number of species included:  ", format(lst$total_included$n_total_species, big.mark = ","), "\n",

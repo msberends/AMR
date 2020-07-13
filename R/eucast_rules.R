@@ -519,7 +519,7 @@ eucast_rules <- function(x,
     left_join_microorganisms(by = col_mo, suffix = c("_oldcols", ""))
   x$gramstain <- mo_gramstain(x[, col_mo, drop = TRUE], language = NULL)
   x$genus_species <- paste(x$genus, x$species)
-
+  
   if (ab_missing(AMP) & !ab_missing(AMX)) {
     # ampicillin column is missing, but amoxicillin is available
     message(font_blue(paste0("NOTE: Using column `", font_bold(AMX), "` as input for ampicillin (J01CA01) since many EUCAST rules depend on it.")))
@@ -702,8 +702,8 @@ eucast_rules <- function(x,
     
     if (info == TRUE & !rule_group_current %like% "other" & eucast_notification_shown == FALSE) {
       cat(paste0("\n", font_grey(strrep("-", options()$width - 1)),
-        "\nRules by the ", font_bold("European Committee on Antimicrobial Susceptibility Testing (EUCAST)"),
-        "\n", font_blue("http://eucast.org/"), "\n"))
+                 "\nRules by the ", font_bold("European Committee on Antimicrobial Susceptibility Testing (EUCAST)"),
+                 "\n", font_blue("http://eucast.org/"), "\n"))
       eucast_notification_shown <- TRUE
     }
     
@@ -843,9 +843,9 @@ eucast_rules <- function(x,
     
     cat(paste0("\n", font_grey(strrep("-", options()$width - 1)), "\n"))
     cat(font_bold(paste("The rules", paste0(wouldve, "affected"),
-                   formatnr(n_distinct(verbose_info$row)),
-                   "out of", formatnr(nrow(x_original)),
-                   "rows, making a total of", formatnr(nrow(verbose_info)), "edits\n")))
+                        formatnr(n_distinct(verbose_info$row)),
+                        "out of", formatnr(nrow(x_original)),
+                        "rows, making a total of", formatnr(nrow(verbose_info)), "edits\n")))
     
     n_added <- verbose_info %>% filter(is.na(old)) %>% nrow()
     n_changed <- verbose_info %>% filter(!is.na(old)) %>% nrow()
@@ -858,8 +858,8 @@ eucast_rules <- function(x,
     }
     cat(colour(paste0("=> ", wouldve, "added ",
                       font_bold(formatnr(verbose_info %>%
-                                      filter(is.na(old)) %>%
-                                      nrow()), "test results"),
+                                           filter(is.na(old)) %>%
+                                           nrow()), "test results"),
                       "\n")))
     if (n_added > 0) {
       added_summary <- verbose_info %>%
@@ -882,8 +882,8 @@ eucast_rules <- function(x,
     }
     cat(colour(paste0("=> ", wouldve, "changed ",
                       font_bold(formatnr(verbose_info %>%
-                                      filter(!is.na(old)) %>%
-                                      nrow()), "test results"),
+                                           filter(!is.na(old)) %>%
+                                           nrow()), "test results"),
                       "\n")))
     if (n_changed > 0) {
       changed_summary <- verbose_info %>%

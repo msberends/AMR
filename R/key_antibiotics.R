@@ -130,14 +130,14 @@ key_antibiotics <- function(x,
       warnings <- dots[which(dots.names == "info")]
     }
   }
-
+  
   # try to find columns based on type
   # -- mo
   if (is.null(col_mo)) {
     col_mo <- search_type_in_df(x = x, type = "mo")
   }
   stop_if(is.null(col_mo), "`col_mo` must be set")
-
+  
   # check columns
   col.list <- c(universal_1, universal_2, universal_3, universal_4, universal_5, universal_6,
                 GramPos_1, GramPos_2, GramPos_3, GramPos_4, GramPos_5, GramPos_6,
@@ -170,7 +170,7 @@ key_antibiotics <- function(x,
     }
     col.list
   }
-
+  
   col.list <- check_available_columns(x = x, col.list = col.list, warnings = warnings)
   universal_1 <- col.list[universal_1]
   universal_2 <- col.list[universal_2]
@@ -190,28 +190,28 @@ key_antibiotics <- function(x,
   GramNeg_4 <- col.list[GramNeg_4]
   GramNeg_5 <- col.list[GramNeg_5]
   GramNeg_6 <- col.list[GramNeg_6]
-
+  
   universal <- c(universal_1, universal_2, universal_3,
                  universal_4, universal_5, universal_6)
-
+  
   gram_positive <- c(universal,
-                    GramPos_1, GramPos_2, GramPos_3,
-                    GramPos_4, GramPos_5, GramPos_6)
+                     GramPos_1, GramPos_2, GramPos_3,
+                     GramPos_4, GramPos_5, GramPos_6)
   gram_positive <- gram_positive[!is.null(gram_positive)]
   gram_positive <- gram_positive[!is.na(gram_positive)]
   if (length(gram_positive) < 12) {
     warning("only using ", length(gram_positive), " different antibiotics as key antibiotics for Gram-positives. See ?key_antibiotics.", call. = FALSE)
   }
-
+  
   gram_negative <- c(universal,
-                    GramNeg_1, GramNeg_2, GramNeg_3,
-                    GramNeg_4, GramNeg_5, GramNeg_6)
+                     GramNeg_1, GramNeg_2, GramNeg_3,
+                     GramNeg_4, GramNeg_5, GramNeg_6)
   gram_negative <- gram_negative[!is.null(gram_negative)]
   gram_negative <- gram_negative[!is.na(gram_negative)]
   if (length(gram_negative) < 12) {
     warning("only using ", length(gram_negative), " different antibiotics as key antibiotics for Gram-negatives. See ?key_antibiotics.", call. = FALSE)
   }
-
+  
   x <- as.data.frame(x, stringsAsFactors = FALSE)
   x[, col_mo] <- as.mo(x[, col_mo, drop = TRUE])
   x$gramstain <- mo_gramstain(x[, col_mo, drop = TRUE], language = NULL)
@@ -232,16 +232,16 @@ key_antibiotics <- function(x,
                                      FUN = function(x) paste(x, collapse = "")),
                                error = function(e) paste0(rep(".", 12), collapse = "")),
                       x$key_ab)
-
+  
   # format
   key_abs <- toupper(gsub("[^SIR]", ".", gsub("(NA|NULL)", ".", x$key_ab)))
   
   if (n_distinct(key_abs) == 1) {
     warning("No distinct key antibiotics determined.", call. = FALSE)
   }
-
+  
   key_abs
-
+  
 }
 
 #' @rdname key_antibiotics
@@ -255,72 +255,72 @@ key_antibiotics_equal <- function(y,
   # y is active row, z is lag
   x <- y
   y <- z
-
+  
   type <- type[1]
-
+  
   stop_ifnot(length(x) == length(y), "length of `x` and `y` must be equal")
-
+  
   # only show progress bar on points or when at least 5000 isolates
   info_needed <- info == TRUE & (type == "points" | length(x) > 5000)
-
+  
   result <- logical(length(x))
-
+  
   if (info_needed == TRUE) {
     p <- progress_estimated(length(x))
     on.exit(close(p))
   }
-
+  
   for (i in seq_len(length(x))) {
-
+    
     if (info_needed == TRUE) {
       p$tick()
     }
-
+    
     if (is.na(x[i])) {
       x[i] <- ""
     }
     if (is.na(y[i])) {
       y[i] <- ""
     }
-
+    
     if (x[i] == y[i]) {
-
+      
       result[i] <- TRUE
-
+      
     } else if (nchar(x[i]) != nchar(y[i])) {
-
+      
       result[i] <- FALSE
-
+      
     } else {
-
+      
       x_split <- strsplit(x[i], "")[[1]]
       y_split <- strsplit(y[i], "")[[1]]
-
+      
       if (type == "keyantibiotics") {
-
+        
         if (ignore_I == TRUE) {
           x_split[x_split == "I"] <- "."
           y_split[y_split == "I"] <- "."
         }
-
+        
         y_split[x_split == "."] <- "."
         x_split[y_split == "."] <- "."
-
+        
         result[i] <- all(x_split == y_split)
-
+        
       } else if (type == "points") {
         # count points for every single character:
         # - no change is 0 points
         # - I <-> S|R is 0.5 point
         # - S|R <-> R|S is 1 point
         # use the levels of as.rsi (S = 1, I = 2, R = 3)
-
+        
         suppressWarnings(x_split <- x_split %>% as.rsi() %>% as.double())
         suppressWarnings(y_split <- y_split %>% as.rsi() %>% as.double())
-
+        
         points <- (x_split - y_split) %>% abs() %>% sum(na.rm = TRUE) / 2
         result[i] <- points >= points_threshold
-
+        
       } else {
         stop("`", type, '` is not a valid value for type, must be "points" or "keyantibiotics". See ?key_antibiotics')
       }

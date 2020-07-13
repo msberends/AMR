@@ -554,7 +554,7 @@ exec_as.mo <- function(x,
       if (initial_search == TRUE) {
         progress$tick()
       }
-
+      
       # valid MO code ----
       found <- lookup(mo == toupper(x_backup[i]))
       if (!is.na(found)) {
@@ -1511,7 +1511,7 @@ exec_as.mo <- function(x,
   if (property == "mo") {
     x <- to_class_mo(x)
   }
-
+  
   if (length(mo_renamed()) > 0) {
     print(mo_renamed())
   }

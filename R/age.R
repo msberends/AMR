@@ -47,13 +47,13 @@ age <- function(x, reference = Sys.Date(), exact = FALSE, na.rm = FALSE) {
   }
   x <- as.POSIXlt(x)
   reference <- as.POSIXlt(reference)
-
+  
   # from https://stackoverflow.com/a/25450756/4575331
   years_gap <- reference$year - x$year
   ages <- ifelse(reference$mon < x$mon | (reference$mon == x$mon & reference$mday < x$mday),
-                  as.integer(years_gap - 1),
-                  as.integer(years_gap))
-
+                 as.integer(years_gap - 1),
+                 as.integer(years_gap))
+  
   # add decimals
   if (exact == TRUE) {
     # get dates of `x` when `x` would have the year of `reference`
@@ -69,7 +69,7 @@ age <- function(x, reference = Sys.Date(), exact = FALSE, na.rm = FALSE) {
     # and finally add to ages
     ages <- ages + mod
   }
-
+  
   if (any(ages < 0, na.rm = TRUE)) {
     ages[ages < 0] <- NA
     warning("NAs introduced for ages below 0.")
@@ -81,7 +81,7 @@ age <- function(x, reference = Sys.Date(), exact = FALSE, na.rm = FALSE) {
   if (isTRUE(na.rm)) {
     ages <- ages[!is.na(ages)]
   }
-
+  
   ages
 }
 
@@ -162,7 +162,7 @@ age_groups <- function(x, split_at = c(12, 25, 55, 75), na.rm = FALSE) {
   }
   split_at <- split_at[!is.na(split_at)]
   stop_if(length(split_at) == 1, "invalid value for `split_at`") # only 0 is available
-
+  
   # turn input values to 'split_at' indices
   y <- x
   labs <- split_at
@@ -171,10 +171,10 @@ age_groups <- function(x, split_at = c(12, 25, 55, 75), na.rm = FALSE) {
     # create labels
     labs[i - 1] <- paste0(unique(c(split_at[i - 1], split_at[i] - 1)), collapse = "-")
   }
-
+  
   # last category
   labs[length(labs)] <- paste0(split_at[length(split_at)], "+")
-
+  
   agegroups <- factor(labs[y], levels = labs, ordered = TRUE)
   
   if (isTRUE(na.rm)) {

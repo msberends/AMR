@@ -75,7 +75,7 @@ bug_drug_combinations <- function(x,
   x <- x[, c(col_mo, names(which(sapply(x, is.rsi)))), drop = FALSE]
   
   unique_mo <- sort(unique(x[, col_mo, drop = TRUE]))
-
+  
   out <- data.frame(
     mo = character(0),
     ab = character(0),
@@ -83,7 +83,7 @@ bug_drug_combinations <- function(x,
     I = integer(0),
     R = integer(0),
     total = integer(0))
-
+  
   for (i in seq_len(length(unique_mo))) {
     # filter on MO group and only select R/SI columns
     x_mo_filter <- x[which(x[, col_mo, drop = TRUE] == unique_mo[i]), names(which(sapply(x, is.rsi))), drop = FALSE]
@@ -101,7 +101,7 @@ bug_drug_combinations <- function(x,
                             total = merged$S + merged$I + merged$R)
     out <- rbind(out, out_group)
   }
-
+  
   structure(.Data = out, class = c("bug_drug_combinations", x_class))
 }
 
@@ -172,11 +172,11 @@ format.bug_drug_combinations <- function(x,
   
   y <- y %>% 
     create_var(txt = paste0(percentage(y$isolates / y$total, decimal.mark = decimal.mark, big.mark = big.mark), 
-                                          " (", trimws(format(y$isolates, big.mark = big.mark)), "/",
-                                          trimws(format(y$total, big.mark = big.mark)), ")")) %>% 
+                            " (", trimws(format(y$isolates, big.mark = big.mark)), "/",
+                            trimws(format(y$total, big.mark = big.mark)), ")")) %>% 
     select(ab, ab_txt, mo, txt) %>%
     arrange(mo)
-
+  
   # replace tidyr::pivot_wider() from here
   for (i in unique(y$mo)) {
     mo_group <- y[which(y$mo == i), c("ab", "txt")]
@@ -194,14 +194,14 @@ format.bug_drug_combinations <- function(x,
   select_ab_vars <- function(.data) {
     .data[, c("ab_group", "ab_txt", colnames(.data)[!colnames(.data) %in% c("ab_group", "ab_txt", "ab")])]
   }
-
+  
   y <- y %>% 
     create_var(ab_group = ab_group(y$ab, language = language)) %>% 
     select_ab_vars() %>% 
     arrange(ab_group, ab_txt)
   y <- y %>% 
     create_var(ab_group = ifelse(y$ab_group != lag(y$ab_group) | is.na(lag(y$ab_group)), y$ab_group, ""))
-
+  
   if (add_ab_group == FALSE) {
     y <- y %>% 
       select(-ab_group) %>%

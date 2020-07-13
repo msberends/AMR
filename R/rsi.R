@@ -153,7 +153,7 @@ as.rsi.default <- function(x, ...) {
     structure(.Data = factor(x, levels = c("S", "I", "R"), ordered = TRUE),
               class =  c("rsi", "ordered", "factor"))
   } else {
-
+    
     ab <- deparse(substitute(x))
     if (!any(x %like% "(R|S|I)", na.rm = TRUE)) {
       if (!is.na(suppressWarnings(as.ab(ab)))) {
@@ -232,8 +232,8 @@ as.rsi.mic <- function(x, mo, ab = deparse(substitute(x)), guideline = "EUCAST",
   }
   
   message(font_blue(paste0("=> Interpreting MIC values of `", font_bold(ab), "` (",
-                      ifelse(ab_coerced != ab, paste0(ab_coerced, ", "), ""),
-                      ab_name(ab_coerced, tolower = TRUE), ") using guideline ", font_bold(guideline_coerced), " ... ")),
+                           ifelse(ab_coerced != ab, paste0(ab_coerced, ", "), ""),
+                           ab_name(ab_coerced, tolower = TRUE), ") using guideline ", font_bold(guideline_coerced), " ... ")),
           appendLF = FALSE)
   result <- exec_as.rsi(method = "mic",
                         x = x,
@@ -268,8 +268,8 @@ as.rsi.disk <- function(x, mo, ab = deparse(substitute(x)), guideline = "EUCAST"
   }
   
   message(font_blue(paste0("=> Interpreting disk zones of `", font_bold(ab), "` (",
-                      ifelse(ab_coerced != ab, paste0(ab_coerced, ", "), ""),
-                      ab_name(ab_coerced, tolower = TRUE), ") using guideline ", font_bold(guideline_coerced), " ... ")),
+                           ifelse(ab_coerced != ab, paste0(ab_coerced, ", "), ""),
+                           ab_name(ab_coerced, tolower = TRUE), ") using guideline ", font_bold(guideline_coerced), " ... ")),
           appendLF = FALSE)
   result <- exec_as.rsi(method = "disk",
                         x = x,
@@ -319,15 +319,15 @@ as.rsi.data.frame <- function(x, col_mo = NULL, guideline = "EUCAST", uti = NULL
         plural <- c("", "s", "a ")
       }
       message(font_blue(paste0("NOTE: Assuming value", plural[1], " ", 
-              paste(paste0('"', values, '"'), collapse = ", "),
-              " in column `", font_bold(col_specimen),
-              "` reflect", plural[2], " ", plural[3], "urinary tract infection", plural[1], ".\n  Use `as.rsi(uti = FALSE)` to prevent this.")))
+                               paste(paste0('"', values, '"'), collapse = ", "),
+                               " in column `", font_bold(col_specimen),
+                               "` reflect", plural[2], " ", plural[3], "urinary tract infection", plural[1], ".\n  Use `as.rsi(uti = FALSE)` to prevent this.")))
     } else {
       # no data about UTI's found
       uti <- FALSE
     }
   }
-
+  
   i <- 0
   ab_cols <- colnames(x)[sapply(x, function(y) {
     i <<- i + 1
@@ -339,13 +339,13 @@ as.rsi.data.frame <- function(x, col_mo = NULL, guideline = "EUCAST", uti = NULL
       return(FALSE)
     } else if (!check & all_valid_mics(y)) {
       message(font_blue(paste0("NOTE: Assuming column `", ab, "` (",
-                          ifelse(ab_coerced != ab, paste0(ab_coerced, ", "), ""),
-                          ab_name(ab_coerced, tolower = TRUE), ") contains MIC values.")))
+                               ifelse(ab_coerced != ab, paste0(ab_coerced, ", "), ""),
+                               ab_name(ab_coerced, tolower = TRUE), ") contains MIC values.")))
       return(TRUE)
     } else if (!check & all_valid_disks(y)) {
       message(font_blue(paste0("NOTE: Assuming column `", ab, "` (",
-                          ifelse(ab_coerced != ab, paste0(ab_coerced, ", "), ""),
-                          ab_name(ab_coerced, tolower = TRUE), ") contains disk zones.")))
+                               ifelse(ab_coerced != ab, paste0(ab_coerced, ", "), ""),
+                               ab_name(ab_coerced, tolower = TRUE), ") contains disk zones.")))
       return(TRUE)
     } else {
       return(check)
@@ -574,7 +574,7 @@ plot.rsi <- function(x,
   data <- as.data.frame(table(x), stringsAsFactors = FALSE)
   colnames(data) <- c("x", "n")
   data$s <- round((data$n / sum(data$n)) * 100, 1)
-
+  
   if (!"S" %in% data$x) {
     data <- rbind(data, data.frame(x = "S", n = 0, s = 0))
   }

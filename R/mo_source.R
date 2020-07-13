@@ -109,11 +109,11 @@
 #' @export
 #' @inheritSection AMR Read more on our website!
 set_mo_source <- function(path) {
-
+  
   file_location <- path.expand("~/mo_source.rds")
-
+  
   stop_ifnot(length(path) == 1, "`path` must be of length 1")
-
+  
   if (is.null(path) || path %in% c(FALSE, "")) {
     options(mo_source = NULL)
     options(mo_source_timestamp = NULL)
@@ -123,21 +123,21 @@ set_mo_source <- function(path) {
     }
     return(invisible())
   }
-
+  
   stop_ifnot(file.exists(path),
              "file not found: ", path)
-
+  
   if (path %like% "[.]rds$") {
     df <- readRDS(path)
-
+    
   } else if (path %like% "[.]xlsx?$") {
     # is Excel file (old or new)
     read_excel <- import_fn("read_excel", "readxl")
     df <- read_excel(path)
-
+    
   } else if (path %like% "[.]tsv$") {
     df <- utils::read.table(header = TRUE, sep = "\t", stringsAsFactors = FALSE)
-
+    
   } else {
     # try comma first
     try(
@@ -156,21 +156,21 @@ set_mo_source <- function(path) {
         silent = TRUE)
     }
   }
-
+  
   # check integrity
   mo_source_isvalid(df)
-
+  
   df <- subset(df, !is.na(mo))
-
+  
   # keep only first two columns, second must be mo
   if (colnames(df)[1] == "mo") {
     df <- df[, c(colnames(df)[2], "mo")]
   } else {
     df <- df[, c(colnames(df)[1], "mo")]
   }
-
+  
   df <- as.data.frame(df, stringAsFactors = FALSE)
-
+  
   # success
   if (file.exists(file_location)) {
     action <- "Updated"

@@ -96,7 +96,7 @@ like <- function(x, pattern, ignore.case = TRUE) {
       return(res)
     }
   }
-
+  
   # the regular way how grepl works; just one pattern against one or more x
   if (is.factor(x)) {
     as.integer(x) %in% base::grep(pattern, levels(x), ignore.case = FALSE, fixed = fixed)

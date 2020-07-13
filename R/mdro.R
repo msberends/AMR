@@ -117,7 +117,7 @@ mdro <- function(x,
     # allow pct_required_classes = 75 -> pct_required_classes = 0.75
     pct_required_classes <- pct_required_classes / 100
   }
-
+  
   if (!is.null(list(...)$country)) {
     warning("Using `country` is deprecated, use `guideline` instead. Please see ?mdro.", call. = FALSE)
     guideline <- list(...)$country
@@ -145,7 +145,7 @@ mdro <- function(x,
   }
   if (is.null(col_mo) & guideline$code == "tb") {
     message(font_blue("NOTE: No column found as input for `col_mo`,",
-                 font_bold("assuming all records contain", font_italic("Mycobacterium tuberculosis."))))
+                      font_bold("assuming all records contain", font_italic("Mycobacterium tuberculosis."))))
     x$mo <- as.mo("Mycobacterium tuberculosis")
     col_mo <- "mo"
   }
@@ -470,7 +470,7 @@ mdro <- function(x,
       }
       x_transposed <- as.list(as.data.frame(t(x[, cols, drop = FALSE])))
       row_filter <- sapply(x_transposed, function(y) search_function(y %in% search_result, na.rm = TRUE))
-      row_filter <- x[row_filter, "row_number", drop = TRUE]
+      row_filter <- x[which(row_filter), "row_number", drop = TRUE]
       rows <- rows[rows %in% row_filter]
       x[rows, "MDRO"] <<- to
       x[rows, "reason"] <<- paste0(any_all, " of the required antibiotics ", ifelse(any_all == "any", "is", "are"), " R")
@@ -492,23 +492,23 @@ mdro <- function(x,
       
       if (verbose == TRUE) {
         x[rows, "columns_nonsusceptible"] <<- sapply(rows, 
-                                                      function(row, group_vct = lst_vector) {
-                                                        cols_nonsus <- sapply(x[row, group_vct, drop = FALSE], function(y) y %in% search_result)
-                                                        paste(sort(names(cols_nonsus)[cols_nonsus]), collapse = ", ")
-                                                      })
+                                                     function(row, group_vct = lst_vector) {
+                                                       cols_nonsus <- sapply(x[row, group_vct, drop = FALSE], function(y) y %in% search_result)
+                                                       paste(sort(names(cols_nonsus)[cols_nonsus]), collapse = ", ")
+                                                     })
       }
       x[rows, "classes_affected"] <<- sapply(rows, 
-                                            function(row, group_tbl = lst) {
-                                              sum(sapply(group_tbl, 
-                                                         function(group) {
-                                                           any(unlist(x[row, group[!is.na(group)], drop = TRUE]) %in% search_result, na.rm = TRUE)
-                                                         }),
-                                                  na.rm = TRUE) 
-                                            })
+                                             function(row, group_tbl = lst) {
+                                               sum(sapply(group_tbl, 
+                                                          function(group) {
+                                                            any(unlist(x[row, group[!is.na(group)], drop = TRUE]) %in% search_result, na.rm = TRUE)
+                                                          }),
+                                                   na.rm = TRUE) 
+                                             })
       # for PDR; all agents are R (or I if combine_SI = FALSE)
       x_transposed <- as.list(as.data.frame(t(x[rows, lst_vector, drop = FALSE])))
       row_filter <- sapply(x_transposed, function(y) all(y %in% search_result, na.rm = TRUE))
-      x[row_filter, "classes_affected"] <<- 999
+      x[which(row_filter), "classes_affected"] <<- 999
     }
     
     if (info == TRUE) {
@@ -523,7 +523,7 @@ mdro <- function(x,
   x$row_number <- seq_len(nrow(x))
   x$reason <- paste0("not covered by ", toupper(guideline$code), " guideline")
   x$columns_nonsusceptible <- ""
-
+  
   if (guideline$code == "cmi2012") {
     # CMI, 2012 ---------------------------------------------------------------
     # Non-susceptible = R and I
@@ -718,7 +718,7 @@ mdro <- function(x,
     x[which((x$classes_in_guideline - x$classes_affected) <= 2), "MDRO"] <- 3
     if (verbose == TRUE) {
       x[which(x$MDRO == 3), "reason"] <- paste0("less than 3 classes remain susceptible (", x$classes_in_guideline[which((x$classes_in_guideline - x$classes_affected) <= 2)] - x$classes_affected[which(x$MDRO == 3)],
-                                                                                       " out of ", x$classes_in_guideline[which(x$MDRO == 3)], " classes)")
+                                                " out of ", x$classes_in_guideline[which(x$MDRO == 3)], " classes)")
     }
     
     # PDR (=4): all agents are R 
@@ -966,7 +966,7 @@ mdro <- function(x,
         ab != "R"
       }
     }
- 
+    
     x$mono_count <- 0
     x[drug_is_R(INH), "mono_count"] <- x[drug_is_R(INH), "mono_count"] + 1
     x[drug_is_R(RIF), "mono_count"] <- x[drug_is_R(RIF), "mono_count"] + 1
@@ -1002,7 +1002,7 @@ mdro <- function(x,
   # some more info on negative results
   if (verbose == TRUE) {
     if (guideline$code == "cmi2012") {
-        x[which(x$MDRO == 1 & !is.na(x$classes_affected)), "reason"] <- paste0(x$classes_affected[which(x$MDRO == 1 & !is.na(x$classes_affected))], " of ", x$classes_available[which(x$MDRO == 1 & !is.na(x$classes_affected))], " available classes contain R or I (3 required for MDR)")
+      x[which(x$MDRO == 1 & !is.na(x$classes_affected)), "reason"] <- paste0(x$classes_affected[which(x$MDRO == 1 & !is.na(x$classes_affected))], " of ", x$classes_available[which(x$MDRO == 1 & !is.na(x$classes_affected))], " available classes contain R or I (3 required for MDR)")
     } else {
       x[which(x$MDRO == 1), "reason"] <- "too few antibiotics are R"
     }

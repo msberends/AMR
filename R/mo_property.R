@@ -151,9 +151,9 @@ mo_fullname <- mo_name
 #' @export
 mo_shortname <- function(x, language = get_locale(), ...) {
   x.mo <- as.mo(x, ...)
-
+  
   metadata <- get_mo_failures_uncertainties_renamed()
-
+  
   replace_empty <- function(x) {
     x[x == ""] <- "spp."
     x
@@ -161,13 +161,13 @@ mo_shortname <- function(x, language = get_locale(), ...) {
   
   # get first char of genus and complete species in English
   shortnames <- paste0(substr(mo_genus(x.mo, language = NULL), 1, 1), ". ", replace_empty(mo_species(x.mo, language = NULL)))
-
+  
   # exceptions for Staphylococci
   shortnames[shortnames == "S. coagulase-negative"] <- "CoNS"
   shortnames[shortnames == "S. coagulase-positive"] <- "CoPS"
   # exceptions for Streptococci: Streptococcus Group A -> GAS
   shortnames[shortnames %like% "S. group [ABCDFGHK]"] <- paste0("G", gsub("S. group ([ABCDFGHK])", "\\1", shortnames[shortnames %like% "S. group [ABCDFGHK]"]), "S")
-
+  
   load_mo_failures_uncertainties_renamed(metadata)
   translate_AMR(shortnames, language = language, only_unknown = FALSE)
 }
@@ -235,7 +235,7 @@ mo_type <- function(x, language = get_locale(), ...) {
 mo_gramstain <- function(x, language = get_locale(), ...) {
   x.mo <- as.mo(x, ...)
   metadata <- get_mo_failures_uncertainties_renamed()
-
+  
   x.phylum <- mo_phylum(x.mo)
   # DETERMINE GRAM STAIN FOR BACTERIA
   # Source: https://itis.gov/servlet/SingleRpt/SingleRpt?search_topic=TSN&search_value=956097
@@ -256,7 +256,7 @@ mo_gramstain <- function(x, language = get_locale(), ...) {
                     "Firmicutes",
                     "Tenericutes")
     | x.mo == "B_GRAMP"] <- "Gram-positive"
-
+  
   load_mo_failures_uncertainties_renamed(metadata)
   translate_AMR(x, language = language, only_unknown = FALSE)
 }
@@ -302,16 +302,16 @@ mo_rank <- function(x, ...) {
 mo_taxonomy <- function(x, language = get_locale(),  ...) {
   x <- as.mo(x, ...)
   metadata <- get_mo_failures_uncertainties_renamed()
-
+  
   result <- base::list(kingdom = mo_kingdom(x, language = language),
-             phylum = mo_phylum(x, language = language),
-             class = mo_class(x, language = language),
-             order = mo_order(x, language = language),
-             family = mo_family(x, language = language),
-             genus = mo_genus(x, language = language),
-             species = mo_species(x, language = language),
-             subspecies = mo_subspecies(x, language = language))
-
+                       phylum = mo_phylum(x, language = language),
+                       class = mo_class(x, language = language),
+                       order = mo_order(x, language = language),
+                       family = mo_family(x, language = language),
+                       genus = mo_genus(x, language = language),
+                       species = mo_species(x, language = language),
+                       subspecies = mo_subspecies(x, language = language))
+  
   load_mo_failures_uncertainties_renamed(metadata)
   result
 }
@@ -321,7 +321,7 @@ mo_taxonomy <- function(x, language = get_locale(),  ...) {
 mo_synonyms <- function(x, ...) {
   x <- as.mo(x, ...)
   metadata <- get_mo_failures_uncertainties_renamed()
-
+  
   IDs <- mo_name(x = x, language = NULL)
   syns <- lapply(IDs, function(newname) {
     res <- sort(microorganisms.old[which(microorganisms.old$fullname_new == newname), "fullname"])
@@ -337,7 +337,7 @@ mo_synonyms <- function(x, ...) {
   } else {
     result <- unlist(syns)
   }
-
+  
   load_mo_failures_uncertainties_renamed(metadata)
   result
 }
@@ -347,7 +347,7 @@ mo_synonyms <- function(x, ...) {
 mo_info <- function(x, language = get_locale(),  ...) {
   x <- as.mo(x, ...)
   metadata <- get_mo_failures_uncertainties_renamed()
-
+  
   info <- lapply(x, function(y)
     c(mo_taxonomy(y, language = language),
       list(synonyms = mo_synonyms(y),
@@ -360,7 +360,7 @@ mo_info <- function(x, language = get_locale(),  ...) {
   } else {
     result <- info[[1L]]
   }
-
+  
   load_mo_failures_uncertainties_renamed(metadata)
   result
 }
@@ -388,7 +388,7 @@ mo_url <- function(x, open = FALSE, ...) {
     }
     utils::browseURL(u[1L])
   }
-
+  
   load_mo_failures_uncertainties_renamed(metadata)
   u
 }
@@ -400,14 +400,14 @@ mo_property <- function(x, property = "fullname", language = get_locale(), ...) 
   stop_ifnot(length(property) == 1L, "'property' must be of length 1")
   stop_ifnot(property %in% colnames(microorganisms),
              "invalid property: '", property, "' - use a column name of the `microorganisms` data set")
-
+  
   translate_AMR(mo_validate(x = x, property = property, ...), language = language, only_unknown = TRUE)
 }
 
 mo_validate <- function(x, property, ...) {
   
   check_dataset_integrity()
-
+  
   dots <- list(...)
   Becker <- dots$Becker
   if (is.null(Becker)) {
@@ -417,7 +417,7 @@ mo_validate <- function(x, property, ...) {
   if (is.null(Lancefield)) {
     Lancefield <- FALSE
   }
-
+  
   # try to catch an error when inputting an invalid parameter
   # so the 'call.' can be set to FALSE
   tryCatch(x[1L] %in% MO_lookup[1, property, drop = TRUE],

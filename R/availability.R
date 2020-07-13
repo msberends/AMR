@@ -55,7 +55,7 @@ availability <- function(tbl, width = NULL) {
   R_print <- character(length(R))
   R_print[!is.na(R)] <- percentage(R[!is.na(R)])
   R_print[is.na(R)] <- ""
-
+  
   if (is.null(width)) {
     width <- options()$width -
       (max(nchar(colnames(tbl))) +
@@ -69,19 +69,19 @@ availability <- function(tbl, width = NULL) {
          5)
     width <- width / 2
   }
-
+  
   if (length(R[is.na(R)]) == ncol(tbl)) {
     width <- width * 2 + 10
   }
-
+  
   x_chars_R <- strrep("#", round(width * R, digits = 2))
   x_chars_SI <- strrep("-", width - nchar(x_chars_R))
   vis_resistance <- paste0("|", x_chars_R, x_chars_SI, "|")
   vis_resistance[is.na(R)] <- ""
-
+  
   x_chars <- strrep("#", round(x, digits = 2) / (1 / width))
   x_chars_empty <- strrep("-", width - nchar(x_chars))
-
+  
   df <- data.frame(count = n,
                    available = percentage(x),
                    visual_availabilty = paste0("|", x_chars, x_chars_empty, "|"),

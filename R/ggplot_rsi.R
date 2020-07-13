@@ -387,9 +387,9 @@ labels_rsi_count <- function(position = NULL,
                      lineheight = 0.75,
                      data = function(x) {
                        transformed <- rsi_df(data = x,
-                              translate_ab = translate_ab,
-                              combine_SI = combine_SI,
-                              combine_IR = combine_IR)
+                                             translate_ab = translate_ab,
+                                             combine_SI = combine_SI,
+                                             combine_IR = combine_IR)
                        transformed$gr <- transformed[, x_name, drop = TRUE]
                        transformed %>% 
                          group_by(gr) %>% 

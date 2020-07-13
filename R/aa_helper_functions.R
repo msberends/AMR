@@ -493,7 +493,7 @@ percentage <- function(x, digits = NULL, ...) {
     x_formatted[!grepl(pattern = "^[0-9.,e-]+$", x = x)] <- NA_character_
     x_formatted
   }
-
+  
   # the actual working part
   x <- as.double(x)
   if (is.null(digits)) {

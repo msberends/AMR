@@ -59,16 +59,16 @@ as.disk <- function(x, na.rm = FALSE) {
       x <- x[!is.na(x)]
     }
     x.bak <- x
-
+    
     na_before <- length(x[is.na(x)])
-
+    
     # force it to be integer
     x <- suppressWarnings(as.integer(x))
-
+    
     # disks can never be less than 6 mm (size of smallest disk) or more than 50 mm
     x[x < 6 | x > 50] <- NA_integer_
     na_after <- length(x[is.na(x)])
-
+    
     if (na_before != na_after) {
       list_missing <- x.bak[is.na(x) & !is.na(x.bak)] %>%
         unique() %>%

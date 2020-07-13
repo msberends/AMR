@@ -122,12 +122,12 @@ resistance_predict <- function(x,
                                preserve_measurements = TRUE,
                                info = interactive(),
                                ...) {
-
+  
   stop_ifnot(is.data.frame(x), "`x` must be a data.frame")
   stop_if(any(dim(x) == 0), "`x` must contain rows and columns")
   stop_if(is.null(model), 'choose a regression model with the `model` parameter, e.g. resistance_predict(..., model = "binomial")')
   stop_ifnot(col_ab %in% colnames(x),
-               "column `", col_ab, "` not found")
+             "column `", col_ab, "` not found")
   
   dots <- unlist(list(...))
   if (length(dots) != 0) {
@@ -140,7 +140,7 @@ resistance_predict <- function(x,
       warning("`I_as_R is deprecated - use I_as_S instead.", call. = FALSE)
     }
   }
-
+  
   # -- date
   if (is.null(col_date)) {
     col_date <- search_type_in_df(x = x, type = "date")
@@ -148,7 +148,7 @@ resistance_predict <- function(x,
   }
   stop_ifnot(col_date %in% colnames(x),
              "column `", col_date, "` not found")
-
+  
   # no grouped tibbles
   x <- as.data.frame(x, stringsAsFactors = FALSE)
   
@@ -178,7 +178,7 @@ resistance_predict <- function(x,
   df <- as.data.frame(rbind(table(df[, c("year", col_ab)])), stringsAsFactors = FALSE)
   df$year <- as.integer(rownames(df))
   rownames(df) <- NULL
-
+  
   df <- subset(df, sum(df$R + df$S, na.rm = TRUE) >= minimum)
   df_matrix <- as.matrix(df[, c("R", "S"), drop = FALSE])
   
@@ -193,9 +193,9 @@ resistance_predict <- function(x,
   if (is.null(year_max)) {
     year_max <- year(Sys.Date()) + 10
   }
-
+  
   years <- list(year = seq(from = year_min, to = year_max, by = year_every))
-
+  
   if (model %in% c("binomial", "binom", "logit")) {
     model <- "binomial"
     model_lm <- with(df, glm(df_matrix ~ year, family = binomial))
@@ -204,11 +204,11 @@ resistance_predict <- function(x,
       cat("\n------------------------------------------------------------\n")
       print(summary(model_lm))
     }
-
+    
     predictmodel <- predict(model_lm, newdata = years, type = "response", se.fit = TRUE)
     prediction <- predictmodel$fit
     se <- predictmodel$se.fit
-
+    
   } else if (model %in% c("loglin", "poisson")) {
     model <- "poisson"
     model_lm <- with(df, glm(R ~ year, family = poisson))
@@ -217,11 +217,11 @@ resistance_predict <- function(x,
       cat("\n--------------------------------------------------------------\n")
       print(summary(model_lm))
     }
-
+    
     predictmodel <- predict(model_lm, newdata = years, type = "response", se.fit = TRUE)
     prediction <- predictmodel$fit
     se <- predictmodel$se.fit
-
+    
   } else if (model %in% c("lin", "linear")) {
     model <- "linear"
     model_lm <- with(df, lm((R / (R + S)) ~ year))
@@ -230,22 +230,22 @@ resistance_predict <- function(x,
       cat("\n-----------------------\n")
       print(summary(model_lm))
     }
-
+    
     predictmodel <- predict(model_lm, newdata = years, se.fit = TRUE)
     prediction <- predictmodel$fit
     se <- predictmodel$se.fit
-
+    
   } else {
     stop("no valid model selected. See ?resistance_predict.")
   }
-
+  
   # prepare the output dataframe
   df_prediction <- data.frame(year = unlist(years),
                               value = prediction,
                               se_min = prediction - se,
                               se_max = prediction + se,
                               stringsAsFactors = FALSE)
-
+  
   if (model == "poisson") {
     df_prediction$value <- as.integer(format(df_prediction$value, scientific = FALSE))
     df_prediction$se_min <- as.integer(df_prediction$se_min)
@@ -257,7 +257,7 @@ resistance_predict <- function(x,
   }
   # se_min not below 0
   df_prediction$se_min <- ifelse(df_prediction$se_min < 0, 0, df_prediction$se_min)
-
+  
   df_observations <- data.frame(year = df$year,
                                 observations = df$R + df$S,
                                 observed = df$R / (df$R + df$S),
@@ -265,17 +265,17 @@ resistance_predict <- function(x,
   df_prediction <- df_prediction %>%
     left_join(df_observations, by = "year")
   df_prediction$estimated <- df_prediction$value
-
+  
   if (preserve_measurements == TRUE) {
     # replace estimated data by observed data
     df_prediction$value <- ifelse(!is.na(df_prediction$observed), df_prediction$observed, df_prediction$value)
     df_prediction$se_min <- ifelse(!is.na(df_prediction$observed), NA, df_prediction$se_min)
     df_prediction$se_max <- ifelse(!is.na(df_prediction$observed), NA, df_prediction$se_max)
   }
-
+  
   df_prediction$value <- ifelse(df_prediction$value > 1, 1, ifelse(df_prediction$value < 0, 0, df_prediction$value))
   df_prediction <- df_prediction[order(df_prediction$year), ]
-
+  
   structure(
     .Data = df_prediction,
     class = c("resistance_predict", "data.frame"),
@@ -296,7 +296,7 @@ rsi_predict <- resistance_predict
 #' @rdname resistance_predict
 plot.resistance_predict <- function(x, main = paste("Resistance Prediction of", x_name), ...) {
   x_name <- paste0(ab_name(attributes(x)$ab), " (", attributes(x)$ab, ")")
-
+  
   if (attributes(x)$I_as_S == TRUE) {
     ylab <- "%R"
   } else {
@@ -319,17 +319,17 @@ plot.resistance_predict <- function(x, main = paste("Resistance Prediction of", 
        sub = paste0("(n = ", sum(x$observations, na.rm = TRUE),
                     ", model: ", attributes(x)$model_title, ")"),
        cex.sub = 0.75)
-
-
+  
+  
   axis(side = 2, at = seq(0, 1, 0.1), labels = paste0(0:10 * 10, "%"))
-
+  
   # hack for error bars: https://stackoverflow.com/a/22037078/4575331
   arrows(x0 = x$year,
          y0 = x$se_min,
          x1 = x$year,
          y1 = x$se_max,
          length = 0.05, angle = 90, code = 3, lwd = 1.5)
-
+  
   # overlay grey points for prediction
   points(x = subset(x, is.na(observations))$year,
          y = subset(x, is.na(observations))$value,
@@ -346,15 +346,15 @@ ggplot_rsi_predict <- function(x,
   
   stop_ifnot_installed("ggplot2")
   stop_ifnot(inherits(x, "resistance_predict"), "`x` must be a resistance prediction model created with resistance_predict()")
-
+  
   x_name <- paste0(ab_name(attributes(x)$ab), " (", attributes(x)$ab, ")")
-
+  
   if (attributes(x)$I_as_S == TRUE) {
     ylab <- "%R"
   } else {
     ylab <- "%IR"
   }
-
+  
   p <- ggplot2::ggplot(x, ggplot2::aes(x = year, y = value)) +
     ggplot2::geom_point(data = subset(x, !is.na(observations)),
                         size = 2) +
@@ -364,7 +364,7 @@ ggplot_rsi_predict <- function(x,
                   x = "Year",
                   caption = paste0("(n = ", sum(x$observations, na.rm = TRUE),
                                    ", model: ", attributes(x)$model_title, ")"))
-
+  
   if (ribbon == TRUE) {
     p <- p + ggplot2::geom_ribbon(ggplot2::aes(ymin = se_min, ymax = se_max), alpha = 0.25)
   } else {
