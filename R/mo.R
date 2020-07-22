@@ -178,7 +178,7 @@ as.mo <- function(x,
   # start off with replaced language-specific non-ASCII characters with ASCII characters
   x <- parse_and_convert(x)
   # replace mo codes used in older package versions
-  x <- replace_old_mo_codes(x)
+  x <- replace_old_mo_codes(x, property = "mo")
 
   # WHONET: xxx = no growth
   x[tolower(as.character(paste0(x, ""))) %in% c("", "xxx", "na", "nan")] <- NA_character_
@@ -291,7 +291,7 @@ exec_as.mo <- function(x,
   # start off with replaced language-specific non-ASCII characters with ASCII characters
   x <- parse_and_convert(x)
   # replace mo codes used in older package versions
-  x <- replace_old_mo_codes(x)
+  x <- replace_old_mo_codes(x, property)
   
   # WHONET: xxx = no growth
   x[tolower(as.character(paste0(x, ""))) %in% c("", "xxx", "na", "nan")] <- NA_character_
@@ -1782,7 +1782,7 @@ parse_and_convert <- function(x) {
   parsed
 }
 
-replace_old_mo_codes <- function(x) {
+replace_old_mo_codes <- function(x, property) {
   if (any(toupper(x) %in% microorganisms.translation$mo_old, na.rm = TRUE)) {
     # get the ones that match
     matched <- match(toupper(x), microorganisms.translation$mo_old)
@@ -1790,6 +1790,9 @@ replace_old_mo_codes <- function(x) {
     mo_new <- microorganisms.translation$mo_new[matched]
     # assign on places where a match was found
     x[which(!is.na(matched))] <- mo_new[which(!is.na(matched))]
+    if (property != "mo") {
+      message(font_blue("NOTE: Old microbial codes (from previous package versions) were replaced with current codes used by this package.\n      Please update your MO codes with as.mo()." ))
+    }
   }
   x
 }

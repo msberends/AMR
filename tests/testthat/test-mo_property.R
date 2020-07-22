@@ -97,7 +97,7 @@ test_that("mo_property works", {
   expect_equal(mo_snomed("Escherichia coli"), 112283007)
   
   # old codes must throw a warning in mo_* family
-  expect_warning(mo_name(c("B_ESCHR_COL", "B_STPHY_AUR")))
+  expect_message(mo_name(c("B_ESCHR_COL", "B_STPHY_AUR")))
   
   # outcome of mo_fullname must always return the fullname from the data set
   x <- data.frame(mo = microorganisms$mo,

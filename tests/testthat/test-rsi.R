@@ -37,16 +37,17 @@ test_that("rsi works", {
   expect_equal(as.character(as.rsi(c(1:3))), c("S", "I", "R"))
 
   expect_equal(suppressWarnings(as.logical(as.rsi("INVALID VALUE"))), NA)
-
-  expect_equal(summary(as.rsi(c("S", "R"))), c("Class" = "rsi",
-                                               "%R" = "50% (n=1)",
-                                               "%SI" = "50% (n=1)",
-                                               "- %S" = "50% (n=1)",
-                                               "- %I" = "0% (n=0)"))
-
+  
+  expect_equal(summary(as.rsi(c("S", "R"))),
+               structure(c("Class" = "rsi",
+                           "%R" = "50% (n=1)",
+                           "%SI" = "50% (n=1)",
+                           "- %S" = "50% (n=1)",
+                           "- %I" = "0% (n=0)"), class = c("summaryDefault", "table")))
+  
   expect_identical(as.logical(lapply(example_isolates, is.rsi.eligible)),
                    rep(FALSE, length(example_isolates)))
-
+  
   library(dplyr)
   # 40 rsi columns
   expect_equal(example_isolates %>%
