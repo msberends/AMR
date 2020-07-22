@@ -38,6 +38,7 @@ test_that("data sets are valid", {
   expect_true(all(rsi_translation$mo %in% microorganisms$mo))
   expect_false(any(is.na(microorganisms.codes$code)))
   expect_false(any(is.na(microorganisms.codes$mo)))
+  expect_false(any(microorganisms.translation$mo_old %in% microorganisms$mo))
 
   # antibiotic names must always be coercible to their original AB code
   expect_identical(antibiotics$ab, as.ab(antibiotics$name))
@@ -62,10 +63,7 @@ test_that("creation of data sets is valid", {
   olddf <- create_MO.old_lookup()
   expect_true(all(c("fullname", "fullname_new", "ref", "prevalence",
                     "fullname_lower", "g_species") %in% colnames(olddf)))
-  
-  old <- make_trans_tbl()
-  expect_gt(length(old), 0)
-  
+
 })
 
 test_that("CoL version info works", {

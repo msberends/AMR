@@ -174,10 +174,6 @@ first_isolate <- function(x,
     col_date <- search_type_in_df(x = x, type = "date")
     stop_if(is.null(col_date), "`col_date` must be set")
   }
-  # convert to Date
-  dates <- as.Date(x[, col_date, drop = TRUE])
-  dates[is.na(dates)] <- as.Date("1970-01-01")
-  x[, col_date] <- dates
   
   # -- patient id
   if (is.null(col_patient_id)) {
@@ -223,12 +219,17 @@ first_isolate <- function(x,
   check_columns_existance(col_icu)
   check_columns_existance(col_keyantibiotics)
   
+  # convert dates to Date
+  dates <- as.Date(x[, col_date, drop = TRUE])
+  dates[is.na(dates)] <- as.Date("1970-01-01")
+  x[, col_date] <- dates
+  
   # create original row index
   x$newvar_row_index <- seq_len(nrow(x))
-  x$newvar_mo <- x %>% pull(col_mo) %>% as.mo()
+  x$newvar_mo <- x[, col_mo, drop = TRUE]
   x$newvar_genus_species <- paste(mo_genus(x$newvar_mo), mo_species(x$newvar_mo))
-  x$newvar_date <- x %>% pull(col_date)
-  x$newvar_patient_id <- x %>% pull(col_patient_id)
+  x$newvar_date <- x[, col_date, drop = TRUE]
+  x$newvar_patient_id <- x[, col_patient_id, drop = TRUE]
   
   if (is.null(col_testcode)) {
     testcodes_exclude <- NULL
@@ -317,10 +318,10 @@ first_isolate <- function(x,
   }
   
   # Analysis of first isolate ----
-  x$other_pat_or_mo <- if_else(x$newvar_patient_id == lag(x$newvar_patient_id) &
-                                 x$newvar_genus_species == lag(x$newvar_genus_species),
-                               FALSE,
-                               TRUE)
+  x$other_pat_or_mo <- ifelse(x$newvar_patient_id == lag(x$newvar_patient_id) &
+                                x$newvar_genus_species == lag(x$newvar_genus_species),
+                              FALSE,
+                              TRUE)
   x$episode_group <- paste(x$newvar_patient_id, x$newvar_genus_species)
   x$more_than_episode_ago <- unlist(lapply(unique(x$episode_group),
                                            function(g,

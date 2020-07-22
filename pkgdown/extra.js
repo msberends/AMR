@@ -24,7 +24,7 @@
 // Add updated Font Awesome 5.8.2 library
 $('head').append('<!-- Updated Font Awesome library --><link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">');
 
-$( document ).ready(function() {
+$(document).ready(function() {
 
   // add SurveyMonkey
   // $('body').append('<script>(function(t,e,s,o){var n,a,c;t.SMCX=t.SMCX||[],e.getElementById(o)||(n=e.getElementsByTagName(s),a=n[n.length-1],c=e.createElement(s),c.type="text/javascript",c.async=!0,c.id=o,c.src=["https:"===location.protocol?"https://":"http://","widget.surveymonkey.com/collect/website/js/tRaiETqnLgj758hTBazgd_2BrwaGaWbg59AiLjNGdPaaJiBHKqgXKIw46VauwBvZ67.js"].join(""),a.parentNode.insertBefore(c,a))})(window,document,"script","smcx-sdk");</script>');
@@ -90,8 +90,9 @@ $( document ).ready(function() {
   }
   $(".template-authors").html(doct_tit($(".template-authors").html()));
   $(".template-citation-authors").html(doct_tit($(".template-citation-authors").html()));
+  $('.template-citation-authors h1').eq(0).text('How to cite');
+  $('.template-citation-authors h1').eq(1).text('All contributors');
   $(".developers").html(doct_tit($(".developers").html()));
-  // $("footer").html(doct_tit($("footer").html()));
 
   // Edit title of manual
   $('.template-reference-index h1').text('Manual');

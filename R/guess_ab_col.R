@@ -40,7 +40,7 @@
 #' # [1] "tetr"
 #'
 #' guess_ab_col(df, "J01AA07", verbose = TRUE)
-#' # Note: Using column `tetr` as input for "J01AA07".
+#' # NOTE: Using column `tetr` as input for `J01AA07` (tetracycline).
 #' # [1] "tetr"
 #'
 #' # WHONET codes

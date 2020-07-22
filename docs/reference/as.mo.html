@@ -82,7 +82,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.2.0.9032</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.2.0.9035</span>
       </span>
     </div>
 
@@ -285,7 +285,7 @@
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A <code><a href='https://rdrr.io/r/base/character.html'>character</a></code> vector with class <code>mo</code></p>
+    <p>A <code><a href='https://rdrr.io/r/base/character.html'>character</a></code> <code><a href='https://rdrr.io/r/base/vector.html'>vector</a></code> with additional class <code>mo</code></p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     
@@ -306,7 +306,7 @@
                             C (Chromista), F (Fungi), P (Protozoa)
 </pre>
 
-<p>Values that cannot be coered will be considered 'unknown' and will get the MO code <code>UNKNOWN</code>.</p>
+<p>Values that cannot be coerced will be considered 'unknown' and will get the MO code <code>UNKNOWN</code>.</p>
 <p>Use the <code><a href='mo_property.html'>mo_*</a></code> functions to get properties based on the returned code, see Examples.</p>
 <p>The algorithm uses data from the Catalogue of Life (see below) and from one other source (see <a href='microorganisms.html'>microorganisms</a>).</p>
 <p>The <code>as.mo()</code> function uses several coercion rules for fast and logical results. It assesses the input matching criteria in the following order:</p><ol>
@@ -327,17 +327,17 @@
 <li><p>Uncertainty level 3: allow all of level 1 and 2, strip off text elements from the end, allow any part of a taxonomic name.</p></li>
 </ul>
 
-<p>This leads to e.g.:</p><ul>
+<p>The level of uncertainty can be set using the argument <code>allow_uncertain</code>. The default is <code>allow_uncertain = TRUE</code>, which is equal to uncertainty level 2. Using <code>allow_uncertain = FALSE</code> is equal to uncertainty level 0 and will skip all rules. You can also use e.g. <code>as.mo(..., allow_uncertain = 1)</code> to only allow up to level 1 uncertainty.</p>
+<p>With the default setting (<code>allow_uncertain = TRUE</code>, level 2), below examples will lead to valid results:</p><ul>
 <li><p><code>"Streptococcus group B (known as S. agalactiae)"</code>. The text between brackets will be removed and a warning will be thrown that the result <em>Streptococcus group B</em> (<code>B_STRPT_GRPB</code>) needs review.</p></li>
 <li><p><code>"S. aureus - please mind: MRSA"</code>. The last word will be stripped, after which the function will try to find a match. If it does not, the second last word will be stripped, etc. Again, a warning will be thrown that the result <em>Staphylococcus aureus</em> (<code>B_STPHY_AURS</code>) needs review.</p></li>
 <li><p><code>"Fluoroquinolone-resistant Neisseria gonorrhoeae"</code>. The first word will be stripped, after which the function will try to find a match. A warning will be thrown that the result <em>Neisseria gonorrhoeae</em> (<code>B_NESSR_GNRR</code>) needs review.</p></li>
 </ul>
 
-<p>The level of uncertainty can be set using the argument <code>allow_uncertain</code>. The default is <code>allow_uncertain = TRUE</code>, which is equal to uncertainty level 2. Using <code>allow_uncertain = FALSE</code> is equal to uncertainty level 0 and will skip all rules. You can also use e.g. <code>as.mo(..., allow_uncertain = 1)</code> to only allow up to level 1 uncertainty.</p>
-<p>There are three helper functions that can be run after then <code>as.mo()</code> function:</p><ul>
-<li><p>Use <code>mo_uncertainties()</code> to get a <code><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></code> with all values that were coerced to a valid value, but with uncertainty. The output contains a score, that is calculated as \((n - 0.5 * L) / n\), where <em>n</em> is the number of characters of the returned full name of the microorganism, and <em>L</em> is the <a href='https://en.wikipedia.org/wiki/Levenshtein_distance'>Levenshtein distance</a> between that full name and the user input.</p></li>
-<li><p>Use <code>mo_failures()</code> to get a <code><a href='https://rdrr.io/r/base/vector.html'>vector</a></code> with all values that could not be coerced to a valid value.</p></li>
-<li><p>Use <code>mo_renamed()</code> to get a <code><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></code> with all values that could be coerced based on an old, previously accepted taxonomic name.</p></li>
+<p>There are three helper functions that can be run after using the <code>as.mo()</code> function:</p><ul>
+<li><p>Use <code>mo_uncertainties()</code> to get a <code><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></code> with all values that were coerced to a valid value, but with uncertainty. The output contains a score, that is calculated as \((n - 0.5 * L) / n\), where <em>n</em> is the number of characters of the full taxonomic name of the microorganism, and <em>L</em> is the <a href='https://en.wikipedia.org/wiki/Levenshtein_distance'>Levenshtein distance</a> between that full name and the user input.</p></li>
+<li><p>Use <code>mo_failures()</code> to get a <code><a href='https://rdrr.io/r/base/character.html'>character</a></code> <code><a href='https://rdrr.io/r/base/vector.html'>vector</a></code> with all values that could not be coerced to a valid value.</p></li>
+<li><p>Use <code>mo_renamed()</code> to get a <code><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></code> with all values that could be coerced based on old, previously accepted taxonomic names.</p></li>
 </ul>
 
 
@@ -345,9 +345,9 @@
 
 
 <p>The intelligent rules consider the prevalence of microorganisms in humans grouped into three groups, which is available as the <code>prevalence</code> columns in the <a href='microorganisms.html'>microorganisms</a> and <a href='microorganisms.old.html'>microorganisms.old</a> data sets. The grouping into prevalence groups is based on experience from several microbiological laboratories in the Netherlands in conjunction with international reports on pathogen prevalence.</p>
-<p>Group 1 (most prevalent microorganisms) consists of all microorganisms where the taxonomic class is Gammaproteobacteria or where the taxonomic genus is  <em>Enterococcus</em>, <em>Staphylococcus</em> or <em>Streptococcus</em>. This group consequently contains all common Gram-negative bacteria, such as <em>Pseudomonas</em> and <em>Legionella</em> and all species within the order Enterobacteriales.</p>
-<p>Group 2 consists of all microorganisms where the taxonomic phylum is Proteobacteria, Firmicutes, Actinobacteria or Sarcomastigophora, or where the taxonomic genus is <em>Aspergillus</em>, <em>Bacteroides</em>, <em>Candida</em>, <em>Capnocytophaga</em>, <em>Chryseobacterium</em>, <em>Cryptococcus</em>, <em>Elisabethkingia</em>, <em>Flavobacterium</em>, <em>Fusobacterium</em>, <em>Giardia</em>, <em>Leptotrichia</em>, <em>Mycoplasma</em>, <em>Prevotella</em>, <em>Rhodotorula</em>, <em>Treponema</em>, <em>Trichophyton</em> or <em>Ureaplasma</em>.</p>
-<p>Group 3 (least prevalent microorganisms) consists of all other microorganisms.</p>
+<p>Group 1 (most prevalent microorganisms) consists of all microorganisms where the taxonomic class is Gammaproteobacteria or where the taxonomic genus is  <em>Enterococcus</em>, <em>Staphylococcus</em> or <em>Streptococcus</em>. This group consequently contains all common Gram-negative bacteria, such as <em>Klebsiella</em>, <em>Pseudomonas</em> and <em>Legionella</em>.</p>
+<p>Group 2 consists of all microorganisms where the taxonomic phylum is Proteobacteria, Firmicutes, Actinobacteria or Sarcomastigophora, or where the taxonomic genus is <em>Aspergillus</em>, <em>Bacteroides</em>, <em>Candida</em>, <em>Capnocytophaga</em>, <em>Chryseobacterium</em>, <em>Cryptococcus</em>, <em>Elisabethkingia</em>, <em>Flavobacterium</em>, <em>Fusobacterium</em>, <em>Giardia</em>, <em>Leptotrichia</em>, <em>Mycoplasma</em>, <em>Prevotella</em>, <em>Rhodotorula</em>, <em>Treponema</em>, <em>Trichophyton</em> or <em>Ureaplasma</em>. This group consequently contains all less common and rare human pathogens.</p>
+<p>Group 3 (least prevalent microorganisms) consists of all other microorganisms. This group contains microorganisms most probably not found in humans.</p>
 
     <h2 class="hasAnchor" id="source"><a class="anchor" href="#source"></a>Source</h2>
 

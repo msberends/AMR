@@ -81,7 +81,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.2.0.9034</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.2.0.9035</span>
       </span>
     </div>
 
@@ -229,13 +229,13 @@
       <small>Source: <a href='https://github.com/msberends/AMR/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
-    <div id="amr-1209034" class="section level1">
-<h1 class="page-header" data-toc-text="1.2.0.9034">
-<a href="#amr-1209034" class="anchor"></a>AMR 1.2.0.9034<small> Unreleased </small>
+    <div id="amr-1209035" class="section level1">
+<h1 class="page-header" data-toc-text="1.2.0.9035">
+<a href="#amr-1209035" class="anchor"></a>AMR 1.2.0.9035<small> Unreleased </small>
 </h1>
-<div id="last-updated-13-jul-2020" class="section level2">
+<div id="last-updated-22-july-2020" class="section level2">
 <h2 class="hasAnchor">
-<a href="#last-updated-13-jul-2020" class="anchor"></a><small>Last updated: 13-Jul-2020</small>
+<a href="#last-updated-22-july-2020" class="anchor"></a><small>Last updated: 22 July 2020</small>
 </h2>
 <div id="new" class="section level3">
 <h3 class="hasAnchor">
@@ -262,14 +262,20 @@
 <h3 class="hasAnchor">
 <a href="#changed" class="anchor"></a>Changed</h3>
 <ul>
-<li>Improvements for <code><a href="../reference/proportion.html">susceptibility()</a></code> and <code><a href="../reference/proportion.html">resistance()</a></code> and all <code>count_*()</code>, <code>proportion_*()</code> functions:
+<li>
+<p>Big speed improvement for using any function on microorganism codes from earlier package versions (prior to <code>AMR</code> v1.2.0), such as <code><a href="../reference/as.mo.html">as.mo()</a></code>, <code><a href="../reference/mo_property.html">mo_name()</a></code>, <code><a href="../reference/first_isolate.html">first_isolate()</a></code>, <code><a href="../reference/eucast_rules.html">eucast_rules()</a></code>, <code><a href="../reference/mdro.html">mdro()</a></code>, etc.</p>
+<p>As a consequence, very old microbial codes (from <code>AMR</code> v0.5.0 and lower) <strong>are not supported anymore</strong>. Use <code><a href="../reference/as.mo.html">as.mo()</a></code> on your microorganism names or codes to transform them to current abbreviations used in this package.</p>
+</li>
+<li>
+<p>Improvements for <code><a href="../reference/proportion.html">susceptibility()</a></code> and <code><a href="../reference/proportion.html">resistance()</a></code> and all <code>count_*()</code>, <code>proportion_*()</code> functions:</p>
 <ul>
-<li>95% speed improvement (!) by using other base R functions for calculation</li>
+<li>95% speed improvement by using other base R functions for calculation</li>
 <li>Using unexisting columns wil now return an error instead of dropping them silently</li>
 <li>Using variables for column names (as well as selectors like <code><a href="https://dplyr.tidyverse.org/reference/reexports.html">dplyr::all_of()</a></code>) now works again</li>
 </ul>
 </li>
-<li>Improvements for <code><a href="../reference/as.ab.html">as.ab()</a></code>:
+<li>
+<p>Improvements for <code><a href="../reference/as.ab.html">as.ab()</a></code>:</p>
 <ul>
 <li>Dramatic improvement of the algorithm behind <code><a href="../reference/as.ab.html">as.ab()</a></code>, making many more input errors translatable, such as digitalised health care records, using too few or too many vowels or consonants and many more</li>
 <li>Added progress bar</li>
@@ -277,17 +283,15 @@
 <li>The <code><a href="../reference/as.ab.html">as.ab()</a></code> function will now throw a note if more than 1 antimicrobial drug could be retrieved from a single input value.</li>
 </ul>
 </li>
-<li>Fixed a bug where <code><a href="../reference/eucast_rules.html">eucast_rules()</a></code> would not work on a tibble when the <code>tibble</code> or <code>dplyr</code> package was loaded</li>
-<li>All <code>*_join_microorganisms()</code> functions and <code><a href="../reference/bug_drug_combinations.html">bug_drug_combinations()</a></code> now return the original data class (e.g. <code>tibble</code>s and <code>data.table</code>s)</li>
-<li>Fixed a bug for using grouped versions of <code><a href="../reference/proportion.html">rsi_df()</a></code>, <code><a href="../reference/proportion.html">proportion_df()</a></code> and <code><a href="../reference/count.html">count_df()</a></code>, and fixed a bug where not all different antimicrobial results were added as rows</li>
-<li>Improved auto-determination for columns of types <code>&lt;mo&gt;</code> and <code>&lt;Date&gt;</code>
-</li>
-<li>Fixed a bug in <code><a href="../reference/bug_drug_combinations.html">bug_drug_combinations()</a></code> for when only one antibiotic was in the input data</li>
-<li>Changed the summary for class <code>&lt;mo&gt;</code>, to highlight the %SI vs. %R</li>
-<li>Improved error handling, giving more useful info when functions return an error</li>
-<li>Any progress bar will now only show in interactive mode (i.e. not in R Markdown)</li>
-<li>Speed improvement for <code><a href="../reference/mdro.html">mdro()</a></code> and <code><a href="../reference/filter_ab_class.html">filter_ab_class()</a></code>
-</li>
+<li><p>Fixed a bug where <code><a href="../reference/eucast_rules.html">eucast_rules()</a></code> would not work on a tibble when the <code>tibble</code> or <code>dplyr</code> package was loaded</p></li>
+<li><p>All <code>*_join_microorganisms()</code> functions and <code><a href="../reference/bug_drug_combinations.html">bug_drug_combinations()</a></code> now return the original data class (e.g. <code>tibble</code>s and <code>data.table</code>s)</p></li>
+<li><p>Fixed a bug for using grouped versions of <code><a href="../reference/proportion.html">rsi_df()</a></code>, <code><a href="../reference/proportion.html">proportion_df()</a></code> and <code><a href="../reference/count.html">count_df()</a></code>, and fixed a bug where not all different antimicrobial results were added as rows</p></li>
+<li><p>Improved auto-determination for columns of types <code>&lt;mo&gt;</code> and <code>&lt;Date&gt;</code></p></li>
+<li><p>Fixed a bug in <code><a href="../reference/bug_drug_combinations.html">bug_drug_combinations()</a></code> for when only one antibiotic was in the input data</p></li>
+<li><p>Changed the summary for class <code>&lt;rsi&gt;</code>, to highlight the %SI vs. %R</p></li>
+<li><p>Improved error handling, giving more useful info when functions return an error</p></li>
+<li><p>Any progress bar will now only show in interactive mode (i.e. not in R Markdown)</p></li>
+<li><p>Speed improvement for <code><a href="../reference/mdro.html">mdro()</a></code> and <code><a href="../reference/filter_ab_class.html">filter_ab_class()</a></code></p></li>
 </ul>
 </div>
 <div id="other" class="section level3">

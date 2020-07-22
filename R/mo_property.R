@@ -437,8 +437,6 @@ mo_validate <- function(x, property, ...) {
   
   if (property == "mo") {
     return(to_class_mo(x))
-  } else if (property == "col_id") {
-    return(as.integer(x))
   } else if (property == "snomed") {
     return(as.double(eval(parse(text = x))))
   } else {

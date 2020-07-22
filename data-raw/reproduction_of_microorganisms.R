@@ -667,7 +667,16 @@ MOs <- MOs %>%
              ref = NA_character_,
              species_id = "",
              source = "manually added"),
-    # Blastocystis hominis does not exist (it means 'got a Bastocystis from humans', PMID 15634993)
+    # Candida krusei
+    MOs %>%
+      filter(genus == "Candida", species == "glabrata") %>% .[1,] %>%
+      mutate(mo = gsub("(.*)_(.*)_.*", "\\1_\\2_KRUS", mo),
+             species = "krusei" ,
+             fullname = "Candida krusei",
+             ref = NA_character_,
+             species_id = "",
+             source = "manually added"),
+    # Blastocystis hominis does not exist (it means 'got a Blastocystis from humans', PMID 15634993)
     # but let's be nice to the clinical people in microbiology
     MOs %>%
       filter(fullname == "Blastocystis") %>%
@@ -897,6 +906,7 @@ rsi_translation$mo <- as.mo(rsi_translation$mo)
 microorganisms.codes$mo <- as.mo(microorganisms.codes$mo)
 class(microorganisms.codes$mo) <- c("mo", "character")
 microorganisms.translation <- microorganisms.translation %>%
+  # (to do: add last package version to column pkg_version)
   left_join(microorganisms.old[, c("fullname", "fullname_new")], # microorganisms.old is now new and loaded
             by = c("mo_new" = "fullname")) %>%
   mutate(name = ifelse(!is.na(fullname_new), fullname_new, mo_new)) %>% 

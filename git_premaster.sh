@@ -85,7 +85,7 @@ if [ -z "$3" ]; then
   # combine tag (e.g. 0.1.0) and commit number (like 40) increased by 9000 to indicate beta version
   new_version="$current_tag.$((current_commit + 9000))" # results in 0.1.0.9040
   # add date to 2nd line of NEWS.md when no version number was set
-  sed -i -- "2s/.*/## \<small\>Last updated: $(date '+%d-%b-%Y')\<\/small\>/" NEWS.md
+  sed -i -- "2s/.*/## \<small\>Last updated: $(date '+%e %B %Y')\<\/small\>/" NEWS.md
 else
   # version number set in command
   new_version=$3

@@ -3,9 +3,9 @@
 \docType{data}
 \name{microorganisms}
 \alias{microorganisms}
-\title{Data set with 67,150 microorganisms}
+\title{Data set with 67,151 microorganisms}
 \format{
-A \code{\link{data.frame}} with 67,150 observations and 16 variables:
+A \code{\link{data.frame}} with 67,151 observations and 16 variables:
 \itemize{
 \item \code{mo}\cr ID of microorganism as used by this package
 \item \code{fullname}\cr Full name, like \code{"Escherichia coli"}
@@ -23,7 +23,7 @@ Catalogue of Life: Annual Checklist (public online taxonomic database), \url{htt
 
 Parte, A.C. (2018). LPSN — List of Prokaryotic names with Standing in Nomenclature (bacterio.net), 20 years on. International Journal of Systematic and Evolutionary Microbiology, 68, 1825-1829; doi: 10.1099/ijsem.0.002786
 
-Leibniz Institute DSMZ-German Collection of Microorganisms and Cell Cultures, Germany, Prokaryotic Nomenclature Up-to-Date, \url{https://www.dsmz.de/services/online-tools/prokaryotic-nomenclature-up-to-date} (check included version with \code{\link[=catalogue_of_life_version]{catalogue_of_life_version()}}).
+Leibniz Institute DSMZ-German Collection of Microorganisms and Cell Cultures, Germany, Prokaryotic Nomenclature Up-to-Date, \url{https://www.dsmz.de/services/online-tools/prokaryotic-nomenclature-up-to-date} and \url{https://lpsn.dsmz.de} (check included version with \code{\link[=catalogue_of_life_version]{catalogue_of_life_version()}}).
 }
 \usage{
 microorganisms
@@ -37,6 +37,7 @@ Manually added were:
 \item 11 entries of \emph{Streptococcus} (beta-haemolytic: groups A, B, C, D, F, G, H, K and unspecified; other: viridans, milleri)
 \item 2 entries of \emph{Staphylococcus} (coagulase-negative (CoNS) and coagulase-positive (CoPS))
 \item 3 entries of \emph{Trichomonas} (\emph{Trichomonas vaginalis}, and its family and genus)
+\item 1 entry of \emph{Candida} (\emph{Candida krusei}), that is not (yet) in the Catalogue of Life
 \item 1 entry of \emph{Blastocystis} (\emph{Blastocystis hominis}), although it officially does not exist (Noel \emph{et al.} 2005, PMID 15634993)
 \item 5 other 'undefined' entries (unknown, unknown Gram negatives, unknown Gram positives, unknown yeast and unknown fungus)
 \item 6 families under the Enterobacterales order, according to Adeolu \emph{et al.} (2016, PMID 27620848), that are not (yet) in the Catalogue of Life
@@ -58,8 +59,9 @@ The file in R format (with preserved data structure) can be found here:
 \section{About the records from DSMZ (see source)}{
 
 Names of prokaryotes are defined as being validly published by the International Code of Nomenclature of Bacteria. Validly published are all names which are included in the Approved Lists of Bacterial Names and the names subsequently published in the International Journal of Systematic Bacteriology (IJSB) and, from January 2000, in the International Journal of Systematic and Evolutionary Microbiology (IJSEM) as original articles or in the validation lists.
+\emph{(from \url{https://www.dsmz.de/services/online-tools/prokaryotic-nomenclature-up-to-date/complete-list-readme})}
 
-From: \url{https://www.dsmz.de/services/online-tools/prokaryotic-nomenclature-up-to-date/complete-list-readme}
+In February 2020, the DSMZ records were merged with the List of Prokaryotic names with Standing in Nomenclature (LPSN).
 }
 
 \section{Catalogue of Life}{

@@ -550,13 +550,15 @@ summary.rsi <- function(object, ...) {
   S <- sum(x == "S", na.rm = TRUE)
   I <- sum(x == "I", na.rm = TRUE)
   R <- sum(x == "R", na.rm = TRUE)
-  c(
+  value <- c(
     "Class" = "rsi",
     "%R" = paste0(percentage(R / n), " (n=", R, ")"),
     "%SI" = paste0(percentage((S + I) / n), " (n=", S + I, ")"),
     "- %S" = paste0(percentage(S / n), " (n=", S, ")"),
     "- %I" = paste0(percentage(I / n), " (n=", I, ")")
   )
+  class(value) <- c("summaryDefault", "table")
+  value
 }
 
 #' @method plot rsi

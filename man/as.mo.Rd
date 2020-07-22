@@ -44,7 +44,7 @@ This excludes \emph{Enterococci} at default (who are in group D), use \code{Lanc
 \item{...}{other parameters passed on to functions}
 }
 \value{
-A \code{\link{character}} vector with class \code{\link{mo}}
+A \code{\link{character}} \code{\link{vector}} with additional class \code{\link{mo}}
 }
 \description{
 Use this function to determine a valid microorganism ID (\code{\link{mo}}). Determination is done using intelligent rules and the complete taxonomic kingdoms Bacteria, Chromista, Protozoa, Archaea and most microbial species from the kingdom Fungi (see Source). The input can be almost anything: a full name (like \code{"Staphylococcus aureus"}), an abbreviated name (like \code{"S. aureus"}), an abbreviation known in the field (like \code{"MRSA"}), or just a genus. Please see \emph{Examples}.
@@ -66,7 +66,7 @@ A microorganism ID from this package (class: \code{\link{mo}}) typically looks l
                             C (Chromista), F (Fungi), P (Protozoa)
 }
 
-Values that cannot be coered will be considered 'unknown' and will get the MO code \code{UNKNOWN}.
+Values that cannot be coerced will be considered 'unknown' and will get the MO code \code{UNKNOWN}.
 
 Use the \code{\link[=mo_property]{mo_*}} functions to get properties based on the returned code, see Examples.
 
@@ -92,20 +92,20 @@ In addition, the \code{\link[=as.mo]{as.mo()}} function can differentiate four l
 \item Uncertainty level 3: allow all of level 1 and 2, strip off text elements from the end, allow any part of a taxonomic name.
 }
 
-This leads to e.g.:
+The level of uncertainty can be set using the argument \code{allow_uncertain}. The default is \code{allow_uncertain = TRUE}, which is equal to uncertainty level 2. Using \code{allow_uncertain = FALSE} is equal to uncertainty level 0 and will skip all rules. You can also use e.g. \code{as.mo(..., allow_uncertain = 1)} to only allow up to level 1 uncertainty.
+
+With the default setting (\code{allow_uncertain = TRUE}, level 2), below examples will lead to valid results:
 \itemize{
 \item \code{"Streptococcus group B (known as S. agalactiae)"}. The text between brackets will be removed and a warning will be thrown that the result \emph{Streptococcus group B} (\code{B_STRPT_GRPB}) needs review.
 \item \code{"S. aureus - please mind: MRSA"}. The last word will be stripped, after which the function will try to find a match. If it does not, the second last word will be stripped, etc. Again, a warning will be thrown that the result \emph{Staphylococcus aureus} (\code{B_STPHY_AURS}) needs review.
 \item \code{"Fluoroquinolone-resistant Neisseria gonorrhoeae"}. The first word will be stripped, after which the function will try to find a match. A warning will be thrown that the result \emph{Neisseria gonorrhoeae} (\code{B_NESSR_GNRR}) needs review.
 }
 
-The level of uncertainty can be set using the argument \code{allow_uncertain}. The default is \code{allow_uncertain = TRUE}, which is equal to uncertainty level 2. Using \code{allow_uncertain = FALSE} is equal to uncertainty level 0 and will skip all rules. You can also use e.g. \code{as.mo(..., allow_uncertain = 1)} to only allow up to level 1 uncertainty.
-
-There are three helper functions that can be run after then \code{\link[=as.mo]{as.mo()}} function:
+There are three helper functions that can be run after using the \code{\link[=as.mo]{as.mo()}} function:
 \itemize{
-\item Use \code{\link[=mo_uncertainties]{mo_uncertainties()}} to get a \code{\link{data.frame}} with all values that were coerced to a valid value, but with uncertainty. The output contains a score, that is calculated as \eqn{(n - 0.5 * L) / n}, where \emph{n} is the number of characters of the returned full name of the microorganism, and \emph{L} is the \href{https://en.wikipedia.org/wiki/Levenshtein_distance}{Levenshtein distance} between that full name and the user input.
-\item Use \code{\link[=mo_failures]{mo_failures()}} to get a \code{\link{vector}} with all values that could not be coerced to a valid value.
-\item Use \code{\link[=mo_renamed]{mo_renamed()}} to get a \code{\link{data.frame}} with all values that could be coerced based on an old, previously accepted taxonomic name.
+\item Use \code{\link[=mo_uncertainties]{mo_uncertainties()}} to get a \code{\link{data.frame}} with all values that were coerced to a valid value, but with uncertainty. The output contains a score, that is calculated as \eqn{(n - 0.5 * L) / n}, where \emph{n} is the number of characters of the full taxonomic name of the microorganism, and \emph{L} is the \href{https://en.wikipedia.org/wiki/Levenshtein_distance}{Levenshtein distance} between that full name and the user input.
+\item Use \code{\link[=mo_failures]{mo_failures()}} to get a \code{\link{character}} \code{\link{vector}} with all values that could not be coerced to a valid value.
+\item Use \code{\link[=mo_renamed]{mo_renamed()}} to get a \code{\link{data.frame}} with all values that could be coerced based on old, previously accepted taxonomic names.
 }
 }
 
@@ -113,11 +113,11 @@ There are three helper functions that can be run after then \code{\link[=as.mo]{
 
 The intelligent rules consider the prevalence of microorganisms in humans grouped into three groups, which is available as the \code{prevalence} columns in the \link{microorganisms} and \link{microorganisms.old} data sets. The grouping into prevalence groups is based on experience from several microbiological laboratories in the Netherlands in conjunction with international reports on pathogen prevalence.
 
-Group 1 (most prevalent microorganisms) consists of all microorganisms where the taxonomic class is Gammaproteobacteria or where the taxonomic genus is  \emph{Enterococcus}, \emph{Staphylococcus} or \emph{Streptococcus}. This group consequently contains all common Gram-negative bacteria, such as \emph{Pseudomonas} and \emph{Legionella} and all species within the order Enterobacteriales.
+Group 1 (most prevalent microorganisms) consists of all microorganisms where the taxonomic class is Gammaproteobacteria or where the taxonomic genus is  \emph{Enterococcus}, \emph{Staphylococcus} or \emph{Streptococcus}. This group consequently contains all common Gram-negative bacteria, such as \emph{Klebsiella}, \emph{Pseudomonas} and \emph{Legionella}.
 
-Group 2 consists of all microorganisms where the taxonomic phylum is Proteobacteria, Firmicutes, Actinobacteria or Sarcomastigophora, or where the taxonomic genus is \emph{Aspergillus}, \emph{Bacteroides}, \emph{Candida}, \emph{Capnocytophaga}, \emph{Chryseobacterium}, \emph{Cryptococcus}, \emph{Elisabethkingia}, \emph{Flavobacterium}, \emph{Fusobacterium}, \emph{Giardia}, \emph{Leptotrichia}, \emph{Mycoplasma}, \emph{Prevotella}, \emph{Rhodotorula}, \emph{Treponema}, \emph{Trichophyton} or \emph{Ureaplasma}.
+Group 2 consists of all microorganisms where the taxonomic phylum is Proteobacteria, Firmicutes, Actinobacteria or Sarcomastigophora, or where the taxonomic genus is \emph{Aspergillus}, \emph{Bacteroides}, \emph{Candida}, \emph{Capnocytophaga}, \emph{Chryseobacterium}, \emph{Cryptococcus}, \emph{Elisabethkingia}, \emph{Flavobacterium}, \emph{Fusobacterium}, \emph{Giardia}, \emph{Leptotrichia}, \emph{Mycoplasma}, \emph{Prevotella}, \emph{Rhodotorula}, \emph{Treponema}, \emph{Trichophyton} or \emph{Ureaplasma}. This group consequently contains all less common and rare human pathogens.
 
-Group 3 (least prevalent microorganisms) consists of all other microorganisms.
+Group 3 (least prevalent microorganisms) consists of all other microorganisms. This group contains microorganisms most probably not found in humans.
 }
 }
 \section{Source}{

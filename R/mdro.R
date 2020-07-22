@@ -968,12 +968,12 @@ mdro <- function(x,
     }
     
     x$mono_count <- 0
-    x[drug_is_R(INH), "mono_count"] <- x[drug_is_R(INH), "mono_count"] + 1
-    x[drug_is_R(RIF), "mono_count"] <- x[drug_is_R(RIF), "mono_count"] + 1
-    x[drug_is_R(ETH), "mono_count"] <- x[drug_is_R(ETH), "mono_count"] + 1
-    x[drug_is_R(PZA), "mono_count"] <- x[drug_is_R(PZA), "mono_count"] + 1
-    x[drug_is_R(RIB), "mono_count"] <- x[drug_is_R(RIB), "mono_count"] + 1
-    x[drug_is_R(RFP), "mono_count"] <- x[drug_is_R(RFP), "mono_count"] + 1
+    x[drug_is_R(INH), "mono_count"] <- x[drug_is_R(INH), "mono_count", drop = TRUE] + 1
+    x[drug_is_R(RIF), "mono_count"] <- x[drug_is_R(RIF), "mono_count", drop = TRUE] + 1
+    x[drug_is_R(ETH), "mono_count"] <- x[drug_is_R(ETH), "mono_count", drop = TRUE] + 1
+    x[drug_is_R(PZA), "mono_count"] <- x[drug_is_R(PZA), "mono_count", drop = TRUE] + 1
+    x[drug_is_R(RIB), "mono_count"] <- x[drug_is_R(RIB), "mono_count", drop = TRUE] + 1
+    x[drug_is_R(RFP), "mono_count"] <- x[drug_is_R(RFP), "mono_count", drop = TRUE] + 1
     
     x$mono <- x$mono_count > 0
     x$poly <- x$mono_count > 1 & drug_is_not_R(RIF) & drug_is_not_R(INH)

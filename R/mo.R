@@ -55,7 +55,7 @@
 #'                             C (Chromista), F (Fungi), P (Protozoa)
 #' ```
 #'
-#' Values that cannot be coered will be considered 'unknown' and will get the MO code `UNKNOWN`.
+#' Values that cannot be coerced will be considered 'unknown' and will get the MO code `UNKNOWN`.
 #'
 #' Use the [`mo_*`][mo_property()] functions to get properties based on the returned code, see Examples.
 #'
@@ -77,27 +77,27 @@
 #' - Uncertainty level 2: allow all of level 1, strip values between brackets, inverse the words of the input, strip off text elements from the end keeping at least two elements;
 #' - Uncertainty level 3: allow all of level 1 and 2, strip off text elements from the end, allow any part of a taxonomic name.
 #' 
-#' This leads to e.g.:
+#' The level of uncertainty can be set using the argument `allow_uncertain`. The default is `allow_uncertain = TRUE`, which is equal to uncertainty level 2. Using `allow_uncertain = FALSE` is equal to uncertainty level 0 and will skip all rules. You can also use e.g. `as.mo(..., allow_uncertain = 1)` to only allow up to level 1 uncertainty.
+#' 
+#' With the default setting (`allow_uncertain = TRUE`, level 2), below examples will lead to valid results:
 #' - `"Streptococcus group B (known as S. agalactiae)"`. The text between brackets will be removed and a warning will be thrown that the result *Streptococcus group B* (``r as.mo("Streptococcus group B")``) needs review.
 #' - `"S. aureus - please mind: MRSA"`. The last word will be stripped, after which the function will try to find a match. If it does not, the second last word will be stripped, etc. Again, a warning will be thrown that the result *Staphylococcus aureus* (``r as.mo("Staphylococcus aureus")``) needs review.
 #' - `"Fluoroquinolone-resistant Neisseria gonorrhoeae"`. The first word will be stripped, after which the function will try to find a match. A warning will be thrown that the result *Neisseria gonorrhoeae* (``r as.mo("Neisseria gonorrhoeae")``) needs review.
-#'
-#' The level of uncertainty can be set using the argument `allow_uncertain`. The default is `allow_uncertain = TRUE`, which is equal to uncertainty level 2. Using `allow_uncertain = FALSE` is equal to uncertainty level 0 and will skip all rules. You can also use e.g. `as.mo(..., allow_uncertain = 1)` to only allow up to level 1 uncertainty.
 #' 
-#' There are three helper functions that can be run after then [as.mo()] function:
-#' - Use [mo_uncertainties()] to get a [`data.frame`] with all values that were coerced to a valid value, but with uncertainty. The output contains a score, that is calculated as \eqn{(n - 0.5 * L) / n}, where *n* is the number of characters of the returned full name of the microorganism, and *L* is the [Levenshtein distance](https://en.wikipedia.org/wiki/Levenshtein_distance) between that full name and the user input.
-#' - Use [mo_failures()] to get a [`vector`] with all values that could not be coerced to a valid value.
-#' - Use [mo_renamed()] to get a [`data.frame`] with all values that could be coerced based on an old, previously accepted taxonomic name.
+#' There are three helper functions that can be run after using the [as.mo()] function:
+#' - Use [mo_uncertainties()] to get a [`data.frame`] with all values that were coerced to a valid value, but with uncertainty. The output contains a score, that is calculated as \eqn{(n - 0.5 * L) / n}, where *n* is the number of characters of the full taxonomic name of the microorganism, and *L* is the [Levenshtein distance](https://en.wikipedia.org/wiki/Levenshtein_distance) between that full name and the user input.
+#' - Use [mo_failures()] to get a [`character`] [`vector`] with all values that could not be coerced to a valid value.
+#' - Use [mo_renamed()] to get a [`data.frame`] with all values that could be coerced based on old, previously accepted taxonomic names.
 #'
 #' ## Microbial prevalence of pathogens in humans
 #' 
 #' The intelligent rules consider the prevalence of microorganisms in humans grouped into three groups, which is available as the `prevalence` columns in the [microorganisms] and [microorganisms.old] data sets. The grouping into prevalence groups is based on experience from several microbiological laboratories in the Netherlands in conjunction with international reports on pathogen prevalence.
 #' 
-#' Group 1 (most prevalent microorganisms) consists of all microorganisms where the taxonomic class is Gammaproteobacteria or where the taxonomic genus is  *Enterococcus*, *Staphylococcus* or *Streptococcus*. This group consequently contains all common Gram-negative bacteria, such as *Pseudomonas* and *Legionella* and all species within the order Enterobacteriales. 
+#' Group 1 (most prevalent microorganisms) consists of all microorganisms where the taxonomic class is Gammaproteobacteria or where the taxonomic genus is  *Enterococcus*, *Staphylococcus* or *Streptococcus*. This group consequently contains all common Gram-negative bacteria, such as *Klebsiella*, *Pseudomonas* and *Legionella*.
 #' 
-#' Group 2 consists of all microorganisms where the taxonomic phylum is Proteobacteria, Firmicutes, Actinobacteria or Sarcomastigophora, or where the taxonomic genus is *Aspergillus*, *Bacteroides*, *Candida*, *Capnocytophaga*, *Chryseobacterium*, *Cryptococcus*, *Elisabethkingia*, *Flavobacterium*, *Fusobacterium*, *Giardia*, *Leptotrichia*, *Mycoplasma*, *Prevotella*, *Rhodotorula*, *Treponema*, *Trichophyton* or *Ureaplasma*. 
+#' Group 2 consists of all microorganisms where the taxonomic phylum is Proteobacteria, Firmicutes, Actinobacteria or Sarcomastigophora, or where the taxonomic genus is *Aspergillus*, *Bacteroides*, *Candida*, *Capnocytophaga*, *Chryseobacterium*, *Cryptococcus*, *Elisabethkingia*, *Flavobacterium*, *Fusobacterium*, *Giardia*, *Leptotrichia*, *Mycoplasma*, *Prevotella*, *Rhodotorula*, *Treponema*, *Trichophyton* or *Ureaplasma*. This group consequently contains all less common and rare human pathogens.
 #' 
-#' Group 3 (least prevalent microorganisms) consists of all other microorganisms.
+#' Group 3 (least prevalent microorganisms) consists of all other microorganisms. This group contains microorganisms most probably not found in humans.
 #' @inheritSection catalogue_of_life Catalogue of Life
 #  (source as a section here, so it can be inherited by other man pages:)
 #' @section Source:
@@ -106,7 +106,7 @@
 #' 3. Lancefield RC **A serological differentiation of human and other groups of hemolytic streptococci**. 1933. J Exp Med. 57(4): 571–95. <https://dx.doi.org/10.1084/jem.57.4.571>
 #' 4. Catalogue of Life: Annual Checklist (public online taxonomic database), <http://www.catalogueoflife.org> (check included annual version with [catalogue_of_life_version()]).
 #' @export
-#' @return A [`character`] vector with class [`mo`]
+#' @return A [`character`] [`vector`] with additional class [`mo`]
 #' @seealso [microorganisms] for the [`data.frame`] that is being used to determine ID's.
 #' 
 #' The [mo_property()] functions (like [mo_genus()], [mo_gramstain()]) to get properties based on the returned code.
@@ -177,7 +177,9 @@ as.mo <- function(x,
   
   # start off with replaced language-specific non-ASCII characters with ASCII characters
   x <- parse_and_convert(x)
-  
+  # replace mo codes used in older package versions
+  x <- replace_old_mo_codes(x)
+
   # WHONET: xxx = no growth
   x[tolower(as.character(paste0(x, ""))) %in% c("", "xxx", "na", "nan")] <- NA_character_
   # Laboratory systems: remove entries like "no growth" etc
@@ -288,6 +290,8 @@ exec_as.mo <- function(x,
   
   # start off with replaced language-specific non-ASCII characters with ASCII characters
   x <- parse_and_convert(x)
+  # replace mo codes used in older package versions
+  x <- replace_old_mo_codes(x)
   
   # WHONET: xxx = no growth
   x[tolower(as.character(paste0(x, ""))) %in% c("", "xxx", "na", "nan")] <- NA_character_
@@ -323,30 +327,6 @@ exec_as.mo <- function(x,
          & !is.null(x)
          & !identical(x, "")
          & !identical(x, "xxx")]
-  
-  # conversion of old MO codes from v0.5.0 (ITIS) to later versions (Catalogue of Life)
-  if (any(x %like_case% "^[BFP]_[A-Z]{3,7}") & !all(x %in% microorganisms$mo)) {
-    leftpart <- gsub("^([BFP]_[A-Z]{3,7}).*", "\\1", x)
-    if (any(leftpart %in% names(mo_codes_v0.5.0))) {
-      old_mo_warning <- TRUE
-      rightpart <- gsub("^[BFP]_[A-Z]{3,7}(.*)", "\\1", x)
-      leftpart <- mo_codes_v0.5.0[leftpart]
-      x[!is.na(leftpart)] <- paste0(leftpart[!is.na(leftpart)], rightpart[!is.na(leftpart)])
-    }
-    # now check if some are still old
-    still_old <- x[x %in% names(mo_codes_v0.5.0)]
-    if (length(still_old) > 0) {
-      old_mo_warning <- TRUE
-      x[x %in% names(mo_codes_v0.5.0)] <- data.frame(old = still_old, stringsAsFactors = FALSE) %>%
-        left_join(data.frame(old = names(mo_codes_v0.5.0),
-                             new = mo_codes_v0.5.0,
-                             stringsAsFactors = FALSE), by = "old") %>%
-        # if they couldn't be found, replace them with the old ones again,
-        # so they will throw a warning in the end
-        mutate(new = ifelse(is.na(new), old, new)) %>%
-        pull(new)
-    }
-  }
   
   # defined df to check for
   if (!is.null(reference_df)) {
@@ -411,15 +391,6 @@ exec_as.mo <- function(x,
     # x <- reference_data_to_use[data.table(mo = y[["mo"]]),
     #                            on = "mo",
     #                            ..property][[1]]
-    
-  } else if (all(x %in% microorganisms.translation$mo_old)) {
-    # is an old mo code, used in previous versions of this package
-    old_mo_warning <- TRUE
-    x <- data.frame(mo_old = toupper(x), stringsAsFactors = FALSE) %>%
-      left_join(microorganisms.translation, by = "mo_old") %>%
-      rename(mo = mo_new) %>% 
-      left_join_MO_lookup(by = "mo") %>%
-      pull(property)
     
   } else if (!all(x %in% microorganisms[, property])) {
     
@@ -590,18 +561,6 @@ exec_as.mo <- function(x,
                     ref_new = lookup(fullname == found["fullname_new"], "ref", haystack = MO_lookup),
                     mo = lookup(fullname == found["fullname_new"], "mo", haystack = MO_lookup))
         next
-      }
-      
-      # old mo code, used in previous versions of this package ----
-      if (x_backup[i] %in% microorganisms.translation$mo_old) {
-        old_mo_warning <- TRUE
-        found <- lookup(mo_old == toupper(x_backup[i]), column = "mo_new", haystack = microorganisms.translation)
-        found <- lookup(mo == found)
-        if (!is.na(found)) {
-          # get property
-          x[i] <- found[1L]
-          next
-        }
       }
       
       if (x_backup[i] %like_case% "\\(unknown [a-z]+\\)" | tolower(x_backup_without_spp[i]) %in% c("other", "none", "unknown")) {
@@ -1584,12 +1543,14 @@ summary.mo <- function(object, ...) {
   x <- as.mo(object) # force again, could be mo from older pkg version
   top <- as.data.frame(table(x), responseName = "n", stringsAsFactors = FALSE)
   top_3 <- top[order(-top$n), 1][1:3]
-  c("Class" = "mo",
+  value <- c("Class" = "mo",
     "<NA>" = length(x[is.na(x)]),
     "Unique" = n_distinct(x[!is.na(x)]),
     "#1" = top_3[1],
     "#2" = top_3[2],
     "#3" = top_3[3])
+  class(value) <- c("summaryDefault", "table")
+  value
 }
 
 #' @method as.data.frame mo
@@ -1819,6 +1780,18 @@ parse_and_convert <- function(x) {
     parsed <- gsub('"', "", parsed, fixed = TRUE)
   }, error = function(e) stop(e$message, call. = FALSE)) # this will also be thrown when running `as.mo(no_existing_object)`
   parsed
+}
+
+replace_old_mo_codes <- function(x) {
+  if (any(toupper(x) %in% microorganisms.translation$mo_old, na.rm = TRUE)) {
+    # get the ones that match
+    matched <- match(toupper(x), microorganisms.translation$mo_old)
+    # and their new codes
+    mo_new <- microorganisms.translation$mo_new[matched]
+    # assign on places where a match was found
+    x[which(!is.na(matched))] <- mo_new[which(!is.na(matched))]
+  }
+  x
 }
 
 left_join_MO_lookup <- function(x, ...) {

@@ -1,5 +1,5 @@
-# AMR 1.2.0.9034
-## <small>Last updated: 13-Jul-2020</small>
+# AMR 1.2.0.9035
+## <small>Last updated: 22 July 2020</small>
 
 ### New
 * Function `ab_from_text()` to retrieve antimicrobial drug names, doses and forms of administration from clinical texts in e.g. health care records, which also corrects for misspelling since it uses `as.ab()` internally
@@ -19,8 +19,11 @@
 * Added Monuril as trade name for fosfomycin
 
 ### Changed
+* Big speed improvement for using any function on microorganism codes from earlier package versions (prior to `AMR` v1.2.0), such as `as.mo()`, `mo_name()`, `first_isolate()`, `eucast_rules()`, `mdro()`, etc.
+
+  As a consequence, very old microbial codes (from `AMR` v0.5.0 and lower) **are not supported anymore**. Use `as.mo()` on your microorganism names or codes to transform them to current abbreviations used in this package.
 * Improvements for `susceptibility()` and `resistance()` and all `count_*()`, `proportion_*()` functions:
-  * 95% speed improvement (!) by using other base R functions for calculation
+  * 95% speed improvement by using other base R functions for calculation
   * Using unexisting columns wil now return an error instead of dropping them silently
   * Using variables for column names (as well as selectors like `dplyr::all_of()`) now works again
 * Improvements for `as.ab()`:
@@ -33,7 +36,7 @@
 * Fixed a bug for using grouped versions of `rsi_df()`, `proportion_df()` and `count_df()`, and fixed a bug where not all different antimicrobial results were added as rows
 * Improved auto-determination for columns of types `<mo>` and `<Date>`
 * Fixed a bug in `bug_drug_combinations()` for when only one antibiotic was in the input data
-* Changed the summary for class `<mo>`, to highlight the %SI vs. %R
+* Changed the summary for class `<rsi>`, to highlight the %SI vs. %R
 * Improved error handling, giving more useful info when functions return an error
 * Any progress bar will now only show in interactive mode (i.e. not in R Markdown)
 * Speed improvement for `mdro()` and `filter_ab_class()`
