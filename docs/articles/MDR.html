@@ -39,7 +39,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.2.0.9030</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.2.0.9037</span>
       </span>
     </div>
 
@@ -134,7 +134,7 @@
   </ul>
 </li>
 <li>
-  <a href="../reference/">
+  <a href="../reference/index.html">
     <span class="fa fa-book-open"></span>
      
     Manual
@@ -148,7 +148,7 @@
   </a>
 </li>
 <li>
-  <a href="../news/">
+  <a href="../news/index.html">
     <span class="far fa far fa-newspaper"></span>
      
     Changelog
@@ -164,10 +164,10 @@
   </a>
 </li>
 <li>
-  <a href="../LICENSE-text.html">
-    <span class="fa fa-book"></span>
+  <a href="../survey.html">
+    <span class="fa fa-clipboard-list"></span>
      
-    Licence
+    Survey
   </a>
 </li>
       </ul>
@@ -186,7 +186,7 @@
       <h1 data-toc-skip>How to determine multi-drug resistance (MDR)</h1>
                         <h4 class="author">Matthijs S. Berends</h4>
             
-            <h4 class="date">09 July 2020</h4>
+            <h4 class="date">24 July 2020</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/msberends/AMR/blob/master/vignettes/MDR.Rmd"><code>vignettes/MDR.Rmd</code></a></small>
       <div class="hidden name"><code>MDR.Rmd</code></div>
@@ -306,19 +306,19 @@ Unique: 2</p>
 <p>The data set now looks like this:</p>
 <div class="sourceCode" id="cb5"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(<span class="no">my_TB_data</span>)
 <span class="co">#   rifampicin isoniazid gatifloxacin ethambutol pyrazinamide moxifloxacin</span>
-<span class="co"># 1          S         R            R          S            S            I</span>
-<span class="co"># 2          S         R            S          S            S            S</span>
-<span class="co"># 3          S         S            S          S            S            S</span>
-<span class="co"># 4          S         R            S          S            S            R</span>
-<span class="co"># 5          R         S            S          S            R            R</span>
-<span class="co"># 6          S         R            I          R            R            S</span>
+<span class="co"># 1          R         S            S          R            R            R</span>
+<span class="co"># 2          R         R            R          R            I            S</span>
+<span class="co"># 3          S         S            S          S            R            S</span>
+<span class="co"># 4          S         S            R          S            S            S</span>
+<span class="co"># 5          R         S            R          R            I            S</span>
+<span class="co"># 6          R         S            R          I            S            S</span>
 <span class="co">#   kanamycin</span>
-<span class="co"># 1         S</span>
-<span class="co"># 2         R</span>
+<span class="co"># 1         R</span>
+<span class="co"># 2         S</span>
 <span class="co"># 3         R</span>
 <span class="co"># 4         S</span>
 <span class="co"># 5         R</span>
-<span class="co"># 6         S</span></pre></body></html></div>
+<span class="co"># 6         R</span></pre></body></html></div>
 <p>We can now add the interpretation of MDR-TB to our data set. You can use:</p>
 <div class="sourceCode" id="cb6"><html><body><pre class="r"><span class="fu"><a href="../reference/mdro.html">mdro</a></span>(<span class="no">my_TB_data</span>, <span class="kw">guideline</span> <span class="kw">=</span> <span class="st">"TB"</span>)</pre></body></html></div>
 <p>or its shortcut <code><a href="../reference/mdro.html">mdr_tb()</a></code>:</p>
@@ -347,32 +347,32 @@ Unique: 5</p>
 <tr class="odd">
 <td align="left">1</td>
 <td align="left">Mono-resistant</td>
-<td align="right">3300</td>
-<td align="right">66.00%</td>
-<td align="right">3300</td>
-<td align="right">66.00%</td>
+<td align="right">3196</td>
+<td align="right">63.92%</td>
+<td align="right">3196</td>
+<td align="right">63.92%</td>
 </tr>
 <tr class="even">
 <td align="left">2</td>
 <td align="left">Negative</td>
-<td align="right">636</td>
-<td align="right">12.72%</td>
-<td align="right">3936</td>
-<td align="right">78.72%</td>
+<td align="right">694</td>
+<td align="right">13.88%</td>
+<td align="right">3890</td>
+<td align="right">77.80%</td>
 </tr>
 <tr class="odd">
 <td align="left">3</td>
 <td align="left">Multi-drug-resistant</td>
-<td align="right">561</td>
-<td align="right">11.22%</td>
-<td align="right">4497</td>
-<td align="right">89.94%</td>
+<td align="right">606</td>
+<td align="right">12.12%</td>
+<td align="right">4496</td>
+<td align="right">89.92%</td>
 </tr>
 <tr class="even">
 <td align="left">4</td>
 <td align="left">Poly-resistant</td>
-<td align="right">310</td>
-<td align="right">6.20%</td>
+<td align="right">311</td>
+<td align="right">6.22%</td>
 <td align="right">4807</td>
 <td align="right">96.14%</td>
 </tr>

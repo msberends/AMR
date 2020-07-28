@@ -82,7 +82,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.2.0.9033</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.2.0.9037</span>
       </span>
     </div>
 
@@ -177,7 +177,7 @@
   </ul>
 </li>
 <li>
-  <a href="../reference/">
+  <a href="../reference/index.html">
     <span class="fa fa-book-open"></span>
      
     Manual
@@ -191,7 +191,7 @@
   </a>
 </li>
 <li>
-  <a href="../news/">
+  <a href="../news/index.html">
     <span class="far fa far fa-newspaper"></span>
      
     Changelog
@@ -207,10 +207,10 @@
   </a>
 </li>
 <li>
-  <a href="../LICENSE-text.html">
-    <span class="fa fa-book"></span>
+  <a href="../survey.html">
+    <span class="fa fa-clipboard-list"></span>
      
-    Licence
+    Survey
   </a>
 </li>
       </ul>
@@ -303,8 +303,7 @@ The <a href='lifecycle.html'>lifecycle</a> of this function is <strong>stable</s
     <div class='dont-index'><p><code><a href='antibiotic_class_selectors.html'>antibiotic_class_selectors()</a></code> for the <code><a href='https://dplyr.tidyverse.org/reference/select.html'>select()</a></code> equivalent.</p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
-<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>dplyr</span>)
+    <pre class="examples"><span class='kw'>if</span> (<span class='fu'><a href='https://rdrr.io/r/base/library.html'>require</a></span>(<span class='no'>dplyr</span>)) {
 
 <span class='co'># filter on isolates that have any result for any aminoglycoside</span>
 <span class='no'>example_isolates</span> <span class='kw'>%&gt;%</span> <span class='fu'>filter_ab_class</span>(<span class='st'>"aminoglycoside"</span>)
@@ -333,6 +332,12 @@ The <a href='lifecycle.html'>lifecycle</a> of this function is <strong>stable</s
 <span class='no'>example_isolates</span> <span class='kw'>%&gt;%</span>
   <span class='fu'>filter_aminoglycosides</span>(<span class='st'>"R"</span>, <span class='st'>"all"</span>) <span class='kw'>%&gt;%</span>
   <span class='fu'>filter_fluoroquinolones</span>(<span class='st'>"R"</span>, <span class='st'>"all"</span>)
+}
+
+<span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
+<span class='co'># with dplyr 1.0.0 and higher (that adds 'across()'), this is equal:</span>
+<span class='no'>example_isolates</span> <span class='kw'>%&gt;%</span> <span class='fu'>filter_carbapenems</span>(<span class='st'>"R"</span>, <span class='st'>"all"</span>)
+<span class='no'>example_isolates</span> <span class='kw'>%&gt;%</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span>(<span class='fu'><a href='https://dplyr.tidyverse.org/reference/across.html'>across</a></span>(<span class='fu'><a href='antibiotic_class_selectors.html'>carbapenems</a></span>(), ~<span class='no'>.</span> <span class='kw'>==</span> <span class='st'>"R"</span>))
 }</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

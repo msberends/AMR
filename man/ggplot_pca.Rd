@@ -35,6 +35,7 @@ ggplot_pca(
   arrows_colour = "darkblue",
   arrows_size = 0.5,
   arrows_textsize = 3,
+  arrows_textangled = TRUE,
   arrows_alpha = 0.75,
   base_textsize = 10,
   ...
@@ -92,6 +93,8 @@ ggplot_pca(
 
 \item{arrows_textsize}{the size of the text at the end of the arrows}
 
+\item{arrows_textangled}{a logical whether the text at the end of the arrows should be angled}
+
 \item{arrows_alpha}{the alpha (transparency) of the arrows and their text}
 
 \item{base_textsize}{the text size for all plot elements except the labels and arrows}
@@ -114,19 +117,24 @@ The \link[=lifecycle]{lifecycle} of this function is \strong{maturing}. The unly
 # `example_isolates` is a dataset available in the AMR package.
 # See ?example_isolates.
 
-\dontrun{
 # See ?pca for more info about Principal Component Analysis (PCA).
-library(dplyr)
-pca_model <- example_isolates \%>\% 
-  filter(mo_genus(mo) == "Staphylococcus") \%>\% 
-  group_by(species = mo_shortname(mo)) \%>\%
-  summarise_if (is.rsi, resistance) \%>\%
-  pca(FLC, AMC, CXM, GEN, TOB, TMP, SXT, CIP, TEC, TCY, ERY)
+if (require("dplyr")) {
+  pca_model <- example_isolates \%>\% 
+    filter(mo_genus(mo) == "Staphylococcus") \%>\% 
+    group_by(species = mo_shortname(mo)) \%>\%
+    summarise_if (is.rsi, resistance) \%>\%
+    pca(FLC, AMC, CXM, GEN, TOB, TMP, SXT, CIP, TEC, TCY, ERY)
+    
+  # old (base R)
+  biplot(pca_model)
   
-# old
-biplot(pca_model)
-
-# new 
-ggplot_pca(pca_model)
+  # new 
+  ggplot_pca(pca_model)
+  
+  if (require("ggplot2")) {
+    ggplot_pca(pca_model) +
+      scale_colour_viridis_d() +
+      labs(title = "Title here")
+  }
 }
 }

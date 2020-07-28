@@ -117,10 +117,16 @@ li, p {
 li p {
   margin-top: 10.5px;
 }
+.template-news li p {
+  margin: 0;
+}
 
 /* slightly smaller blockquote */
 blockquote {
   font-size: 98%;
+}
+.template-home blockquote {
+  border: 5px solid #128f7645 !important;
 }
 
 /* 2nd list in navigation should be smaller */

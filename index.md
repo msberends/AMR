@@ -1,7 +1,8 @@
 # `AMR` (for R) <img src="./logo.png" align="right" height="120px" />
 
-> **METHODS PAPER PREPRINTED**  
-> A methods paper about this package has been preprinted at bioRxiv (DOI: 10.1101/810622). Please click [here for the paper on bioRxiv's publishers page](https://doi.org/10.1101/810622).
+> *July 2020*<br>
+> <span class="fa fa-clipboard-list" style="color: #128f76; font-size: 20pt; margin-right: 5px;"></span> **PLEASE TAKE PART IN OUR SURVEY!**  
+> Since you are one of our users, we would like to know how you use the package and what it brought you or your organisation. **If you have a minute, please [anonymously fill in this short questionnaire](./survey.html)**. Your valuable input will help to improve the package and its functionalities. You can answer the open questions in either English, Spanish, French, Dutch, or German. Thank you very much in advance!
 
 ### What is `AMR` (for R)?
 
@@ -11,13 +12,13 @@
 
 After installing this package, R knows [**~70,000 distinct microbial species**](./reference/microorganisms.html) and all [**~550 antibiotic, antimycotic and antiviral drugs**](./reference/antibiotics.html) by name and code (including ATC, EARS-NET, LOINC and SNOMED CT), and knows all about valid R/SI and MIC values. It supports any data format, including WHONET/EARS-Net data.
 
-This package is fully independent of any other R package and works on Windows, macOS and Linux with all versions of R since R-3.0.0 (April 2013). **It was designed to work in any setting, including those with very limited resources**. It was created for both routine data analysis and academic research at the Faculty of Medical Sciences of the [University of Groningen](https://www.rug.nl), in collaboration with non-profit organisations [Certe Medical Diagnostics and Advice](https://www.certe.nl) and [University Medical Center Groningen](https://www.umcg.nl). This R package is [actively maintained](./news) and is free software (see [Copyright](#copyright)).
+This package is [fully independent of any other R package](https://en.wikipedia.org/wiki/Dependency_hell) and works on Windows, macOS and Linux with all versions of R since R-3.0.0 (April 2013). **It was designed to work in any setting, including those with very limited resources**. It was created for both routine data analysis and academic research at the Faculty of Medical Sciences of the [University of Groningen](https://www.rug.nl), in collaboration with non-profit organisations [Certe Medical Diagnostics and Advice](https://www.certe.nl) and [University Medical Center Groningen](https://www.umcg.nl). This R package is [actively maintained](./news) and is free software (see [Copyright](#copyright)).
 
-<div class="main-content"> 
+<div class="main-content">
   <p>
     <a href="./countries_large.png" target="_blank"><img src="./countries.png" class="countries_map"></a>
     <strong>Used in more than 100 countries</strong><br>
-    Since its first public release in early 2018, this package has been downloaded from more than 100 countries <small>(source: <a href="https://cran-logs.rstudio.com" target="_blank">CRAN logs</a>)</small>. Click the map to enlarge, to see the names of the countries.</p><br><br>
+    Since its first public release in early 2018, this package has been downloaded from more than 100 countries. Click the map to enlarge and to also see the names of the countries.</p><br><br>
 </div>
 
 #### Partners

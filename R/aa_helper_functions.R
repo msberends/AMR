@@ -72,6 +72,15 @@ addin_insert_like <- function() {
 }
 
 check_dataset_integrity <- function() {
+  # check if user overwrote our data sets in their global environment
+  data_in_pkg <- data(package = "AMR", envir = asNamespace("AMR"))$results[, "Item", drop = TRUE]
+  data_in_globalenv <- ls(envir = globalenv())
+  overwritten <- data_in_pkg[data_in_pkg %in% data_in_globalenv]
+  stop_if(length(overwritten) > 0,
+          "the following data set is overwritten by your global environment and prevents the AMR package from working correctly:\n",
+          paste0("'", overwritten, "'", collapse = ", "),
+          ".\nPlease rename your object before using this function.", call = FALSE)
+  # check if other packages did not overwrite our data sets
   tryCatch({
     check_microorganisms <- all(c("mo", "fullname", "kingdom", "phylum",
                                   "class", "order", "family", "genus", 
@@ -86,13 +95,6 @@ check_dataset_integrity <- function() {
   }, error = function(e)
     stop_('please use the command \'library("AMR")\' before using this function, to load the required reference data.', call = FALSE)
   )
-  data_in_pkg <- data(package = "AMR", envir = asNamespace("AMR"))$results[, "Item"]
-  data_in_globalenv <- ls(envir = globalenv())
-  overwritten <- data_in_pkg[data_in_pkg %in% data_in_globalenv]
-  stop_if(length(overwritten) > 0,
-          "the following data set is overwritten by your global environment and prevents the AMR package from working correctly:\n",
-          paste0("'", overwritten, "'", collapse = ", "),
-          ".\nPlease rename your object before using this function.", call = FALSE)
   invisible(TRUE)
 }
 

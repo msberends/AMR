@@ -122,6 +122,8 @@ echo "•••••••••••••••••"
 echo "• Installing..."
 Rscript -e "devtools::install(quiet = TRUE, dependencies = FALSE)"
 Rscript -e "suppressMessages(pkgdown::build_site(lazy = $lazy, examples = FALSE))"
+# add the survey
+Rscript -e "source('data-raw/create_survey_page.R')"
 echo
 echo "•••••••••••••••••••••••••"
 echo "• List of changed files •"

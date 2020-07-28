@@ -22,7 +22,6 @@
 on:
   push:
     branches:
-      - premaster
       - master
   pull_request:
     branches:

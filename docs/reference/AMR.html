@@ -82,7 +82,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.2.0.9032</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.2.0.9037</span>
       </span>
     </div>
 
@@ -177,7 +177,7 @@
   </ul>
 </li>
 <li>
-  <a href="../reference/">
+  <a href="../reference/index.html">
     <span class="fa fa-book-open"></span>
      
     Manual
@@ -191,7 +191,7 @@
   </a>
 </li>
 <li>
-  <a href="../news/">
+  <a href="../news/index.html">
     <span class="far fa far fa-newspaper"></span>
      
     Changelog
@@ -207,10 +207,10 @@
   </a>
 </li>
 <li>
-  <a href="../LICENSE-text.html">
-    <span class="fa fa-book"></span>
+  <a href="../survey.html">
+    <span class="fa fa-clipboard-list"></span>
      
-    Licence
+    Survey
   </a>
 </li>
       </ul>
@@ -239,10 +239,11 @@
 
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p><code>AMR</code> is a free and open-source R package to simplify the analysis and prediction of Antimicrobial Resistance (AMR) and to work with microbial and antimicrobial properties by using evidence-based methods. It supports any table format, including WHONET/EARS-Net data.</p>
-<p>We created this package for both academic research and routine analysis at the Faculty of Medical Sciences of the University of Groningen and the Medical Microbiology &amp; Infection Prevention (MMBI) department of the University Medical Center Groningen (UMCG). This R package is actively maintained and free software; you can freely use and distribute it for both personal and commercial (but not patent) purposes under the terms of the GNU General Public License version 2.0 (GPL-2), as published by the Free Software Foundation.</p>
+    <p><code>AMR</code> is a free, open-source and independent R package to simplify the analysis and prediction of Antimicrobial Resistance (AMR) and to work with microbial and antimicrobial data and properties, by using evidence-based methods. Our aim is to provide a standard for clean and reproducible antimicrobial resistance data analysis, that can therefore empower epidemiological analyses to continuously enable surveillance and treatment evaluation in any setting.</p>
+<p>After installing this package, R knows ~70,000 distinct microbial species and all ~550 antibiotic, antimycotic and antiviral drugs by name and code (including ATC, EARS-NET, LOINC and SNOMED CT), and knows all about valid R/SI and MIC values. It supports any data format, including WHONET/EARS-Net data.</p>
+<p>This package is fully independent of any other R package and works on Windows, macOS and Linux with all versions of R since R-3.0.0 (April 2013). It was designed to work in any setting, including those with very limited resources. It was created for both routine data analysis and academic research at the Faculty of Medical Sciences of the University of Groningen, in collaboration with non-profit organisations Certe Medical Diagnostics and Advice and University Medical Center Groningen. This R package is actively maintained and free software; you can freely use and distribute it for both personal and commercial (but not patent) purposes under the terms of the GNU General Public License version 2.0 (GPL-2), as published by the Free Software Foundation.</p>
 <p>This package can be used for:</p><ul>
-<li><p>Reference for the taxonomy of microorganisms, since the package contains all microbial (sub)species from the <a href='http://www.catalogueoflife.org'>Catalogue of Life</a></p></li>
+<li><p>Reference for the taxonomy of microorganisms, since the package contains all microbial (sub)species from the Catalogue of Life and List of Prokaryotic names with Standing in Nomenclature</p></li>
 <li><p>Interpreting raw MIC and disk diffusion values, based on the latest CLSI or EUCAST guidelines</p></li>
 <li><p>Retrieving antimicrobial drug names, doses and forms of administration from clinical health care records</p></li>
 <li><p>Determining first isolates to be used for AMR analysis</p></li>
@@ -251,10 +252,11 @@
 <li><p>Calculating (empirical) susceptibility of both mono therapy and combination therapies</p></li>
 <li><p>Predicting future antimicrobial resistance using regression models</p></li>
 <li><p>Getting properties for any microorganism (like Gram stain, species, genus or family)</p></li>
-<li><p>Getting properties for any antibiotic (like name, EARS-Net code, ATC code, PubChem code, defined daily dose or trade name)</p></li>
+<li><p>Getting properties for any antibiotic (like name, code of EARS-Net/ATC/LOINC/PubChem, defined daily dose or trade name)</p></li>
 <li><p>Plotting antimicrobial resistance</p></li>
-<li><p>Getting SNOMED codes of a microorganism, or get its name associated with a SNOMED code</p></li>
-<li><p>Getting LOINC codes of an antibiotic, or get its name associated with a LOINC code</p></li>
+<li><p>Applying EUCAST expert rules</p></li>
+<li><p>Getting SNOMED codes of a microorganism, or getting properties of a microorganism based on a SNOMED code</p></li>
+<li><p>Getting LOINC codes of an antibiotic, or getting properties of an antibiotic based on a LOINC code</p></li>
 <li><p>Machine reading the EUCAST and CLSI guidelines from 2011-2020 to translate MIC values and disk diffusion diameters to R/SI</p></li>
 <li><p>Principal component analysis for AMR</p></li>
 </ul>
@@ -263,7 +265,7 @@
 
     
 
-<p>On our website <a href='https://msberends.github.io/AMR'>https://msberends.github.io/AMR</a> you can find <a href='https://msberends.github.io/AMR/articles/AMR.html'>a comprehensive tutorial</a> about how to conduct AMR analysis, the <a href='https://msberends.github.io/AMR/reference'>complete documentation of all functions</a> (which reads a lot easier than here in R) and <a href='https://msberends.github.io/AMR/articles/WHONET.html'>an example analysis using WHONET data</a>.</p>
+<p>On our website <a href='https://msberends.github.io/AMR'>https://msberends.github.io/AMR</a> you can find <a href='https://msberends.github.io/AMR/articles/AMR.html'>a comprehensive tutorial</a> about how to conduct AMR analysis, the <a href='https://msberends.github.io/AMR/reference'>complete documentation of all functions</a> (which reads a lot easier than here in R) and <a href='https://msberends.github.io/AMR/articles/WHONET.html'>an example analysis using WHONET data</a>. As we would like to better understand the backgrounds and needs of our users, please <a href='https://msberends.github.io/AMR/survey.html'>participate in our survey</a>!</p>
     <h2 class="hasAnchor" id="contact-us"><a class="anchor" href="#contact-us"></a>Contact Us</h2>
 
     

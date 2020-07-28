@@ -7,7 +7,7 @@ output:
     toc: true
     toc_depth: 3
 vignette: >
-  %\VignetteIndexEntry{Benchmarks}
+  %\VignetteIndexEntry{How to conduct principal component analysis (PCA) for AMR}
   %\VignetteEncoding{UTF-8}
   %\VignetteEngine{knitr::rmarkdown}
 editor_options: 

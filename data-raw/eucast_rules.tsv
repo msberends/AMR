@@ -177,7 +177,7 @@ genus_species	is	Clostridium innocuum			VAN	R	Table 04: Intrinsic resistance in 
 genus_species	like	^Streptococcus (pyogenes|agalactiae|dysgalactiae|group A|group B|group C|group G)	PEN	S	aminopenicillins, cephalosporins_except_CAZ, carbapenems	S	Table 08: Interpretive rules for B-lactam agents and Gram-positive cocci	Expert Rules
 genus	is	Enterococcus	AMP	R	ureidopenicillins, carbapenems	R	Table 08: Interpretive rules for B-lactam agents and Gram-positive cocci	Expert Rules
 genus	is	Enterococcus	AMX	R	ureidopenicillins, carbapenems	R	Table 08: Interpretive rules for B-lactam agents and Gram-positive cocci	Expert Rules
-family	is	Enterobacteriaceae	TIC, PIP	R, S	PIP	R	Table 09: Interpretive rules for B-lactam agents and Gram-negative rods	Expert Rules
+order	is	Enterobacterales	TIC, PIP	R, S	PIP	R	Table 09: Interpretive rules for B-lactam agents and Gram-negative rods (at the time: Enterobacteriaceae)	Expert Rules
 genus	like	.*	ERY	S	AZM, CLR	S	Table 11: Interpretive rules for macrolides, lincosamides, and streptogramins	Expert Rules
 genus	like	.*	ERY	I	AZM, CLR	I	Table 11: Interpretive rules for macrolides, lincosamides, and streptogramins	Expert Rules
 genus	like	.*	ERY	R	AZM, CLR	R	Table 11: Interpretive rules for macrolides, lincosamides, and streptogramins	Expert Rules

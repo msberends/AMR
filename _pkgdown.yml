@@ -70,20 +70,20 @@ navbar:
         href: "articles/benchmarks.html"
     - text: "Manual"
       icon: "fa-book-open"
-      href: "reference/"
+      href: "reference/index.html"
     - text: "Authors"
       icon: "fa-users"
       href: "authors.html"
     - text: "Changelog"
       icon: "far fa-newspaper"
-      href: "news/"
+      href: "news/index.html"
   right:
     - text: "Source Code"
       icon: "fab fa-github"
       href: "https://github.com/msberends/AMR"
-    - text: "Licence"
-      icon: "fa-book"
-      href: "LICENSE-text.html"
+    - text: "Survey"
+      icon: "fa-clipboard-list"
+      href: "survey.html"
 
 reference:
   - title: "Cleaning your data"
@@ -156,7 +156,7 @@ reference:
     - "`catalogue_of_life_version`"
     - "`WHOCC`"
     - "`lifecycle`"
-  - title: Other functions
+  - title: "Other functions"
     desc: >
       These functions are mostly for internal use, but some of
       them may also be suitable for your analysis. Especially the
@@ -164,7 +164,7 @@ reference:
     contents:
     - "`get_locale`"
     - "`like`"
-  - title: Deprecated functions
+  - title: "Deprecated functions"
     desc: >
       These functions are deprecated, meaning that they will still
       work but show a warning with every use and will be removed

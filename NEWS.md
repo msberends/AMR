@@ -1,9 +1,9 @@
-# AMR 1.2.0.9036
-## <small>Last updated: 22 July 2020</small>
+# AMR 1.2.0.9037
+## <small>Last updated: 28 July 2020</small>
 
 ### New
 * Function `ab_from_text()` to retrieve antimicrobial drug names, doses and forms of administration from clinical texts in e.g. health care records, which also corrects for misspelling since it uses `as.ab()` internally
-* [Tidyverse selections](https://tidyselect.r-lib.org/reference/language.html) for antibiotic classes, that help to select the columns of antibiotics that are of a specific antibiotic class, without the need to define the columns or antibiotic abbreviations. They can be used in any function that allows Tidyverse selections, like `dplyr::select()` and `tidyr::pivot_longer()`:
+* [Tidyverse selection helpers](https://tidyselect.r-lib.org/reference/language.html) for antibiotic classes, that help to select the columns of antibiotics that are of a specific antibiotic class, without the need to define the columns or antibiotic abbreviations. They can be used in any function that allows selection helpers, like `dplyr::select()` and `tidyr::pivot_longer()`:
   ```r
   library(dplyr)
   
@@ -33,13 +33,17 @@
   * The `as.ab()` function will now throw a note if more than 1 antimicrobial drug could be retrieved from a single input value.
 * Fixed a bug where `eucast_rules()` would not work on a tibble when the `tibble` or `dplyr` package was loaded
 * All `*_join_microorganisms()` functions and `bug_drug_combinations()` now return the original data class (e.g. `tibble`s and `data.table`s)
-* Fixed a bug for using grouped versions of `rsi_df()`, `proportion_df()` and `count_df()`, and fixed a bug where not all different antimicrobial results were added as rows
+* For functions `rsi_df()`, `proportion_df()` and `count_df()`:
+  * Fixed a bug for using grouped versions
+  * Fixed a bug where not all different antimicrobial results were added as rows
+  * Fixed a bug when only calculating counts (`count_df()`) when all antibiotics in the data set have only `NA`s
 * Improved auto-determination for columns of types `<mo>` and `<Date>`
 * Fixed a bug in `bug_drug_combinations()` for when only one antibiotic was in the input data
 * Changed the summary for class `<rsi>`, to highlight the %SI vs. %R
 * Improved error handling, giving more useful info when functions return an error
 * Any progress bar will now only show in interactive mode (i.e. not in R Markdown)
 * Speed improvement for `mdro()` and `filter_ab_class()`
+* New option `arrows_textangled` for `ggplot_pca()` to indicate whether the text at the end of the arrows should be angled (defaults to `TRUE`, as it was in previous versions)
 
 ### Other
 * Moved primary location of this project from GitLab to [GitHub](https://github.com/msberends/AMR), giving us native support for automated syntax checking without being dependent on external services such as AppVeyor and Travis CI.

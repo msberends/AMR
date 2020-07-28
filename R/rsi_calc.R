@@ -214,7 +214,7 @@ rsi_calc_df <- function(type, # "proportion", "count" or "both"
     out <- data.frame(antibiotic = character(0),
                       interpretation = character(0),
                       value = double(0),
-                      isolates <- integer(0),
+                      isolates = integer(0),
                       stringsAsFactors = FALSE)
     if (data_has_groups) {
       group_values <- unique(.data[, which(colnames(.data) %in% groups), drop = FALSE])

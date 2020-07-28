@@ -27,7 +27,7 @@ A data set containing 2,000 microbial isolates with their full antibiograms. The
 }
 \section{Read more on our website!}{
 
-On our website \url{https://msberends.github.io/AMR} you can find \href{https://msberends.github.io/AMR/articles/AMR.html}{a comprehensive tutorial} about how to conduct AMR analysis, the \href{https://msberends.github.io/AMR/reference}{complete documentation of all functions} (which reads a lot easier than here in R) and \href{https://msberends.github.io/AMR/articles/WHONET.html}{an example analysis using WHONET data}.
+On our website \url{https://msberends.github.io/AMR} you can find \href{https://msberends.github.io/AMR/articles/AMR.html}{a comprehensive tutorial} about how to conduct AMR analysis, the \href{https://msberends.github.io/AMR/reference}{complete documentation of all functions} (which reads a lot easier than here in R) and \href{https://msberends.github.io/AMR/articles/WHONET.html}{an example analysis using WHONET data}. As we would like to better understand the backgrounds and needs of our users, please \href{https://msberends.github.io/AMR/survey.html}{participate in our survey}!
 }
 
 \keyword{datasets}
