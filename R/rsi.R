@@ -143,6 +143,40 @@ as.rsi <- function(x, ...) {
   UseMethod("as.rsi")
 }
 
+#' @rdname as.rsi
+#' @export
+is.rsi <- function(x) {
+  inherits(x, "rsi")
+}
+
+#' @rdname as.rsi
+#' @export
+is.rsi.eligible <- function(x, threshold = 0.05) {
+  stop_if(NCOL(x) > 1, "`x` must be a one-dimensional vector.")
+  
+  if (any(c("logical",
+            "numeric",
+            "integer",
+            "mo",
+            "Date",
+            "POSIXct",
+            "rsi",
+            "raw",
+            "hms")
+          %in% class(x))) {
+    # no transformation needed
+    FALSE
+  } else {
+    x <- x[!is.na(x) & !is.null(x) & !identical(x, "")]
+    if (length(x) == 0) {
+      return(FALSE)
+    }
+    checked <- suppressWarnings(as.rsi(x))
+    outcome <- sum(is.na(checked)) / length(x)
+    outcome <= threshold
+  }
+}
+
 #' @export
 as.rsi.default <- function(x, ...) {
   if (is.rsi(x)) {
@@ -511,40 +545,6 @@ exec_as.rsi <- function(method, x, mo, ab, guideline, uti, conserve_capped_value
   }
   structure(.Data = factor(new_rsi, levels = c("S", "I", "R"), ordered = TRUE),
             class =  c("rsi", "ordered", "factor"))
-}
-
-#' @rdname as.rsi
-#' @export
-is.rsi <- function(x) {
-  inherits(x, "rsi")
-}
-
-#' @rdname as.rsi
-#' @export
-is.rsi.eligible <- function(x, threshold = 0.05) {
-  stop_if(NCOL(x) > 1, "`x` must be a one-dimensional vector.")
-  
-  if (any(c("logical",
-            "numeric",
-            "integer",
-            "mo",
-            "Date",
-            "POSIXct",
-            "rsi",
-            "raw",
-            "hms")
-          %in% class(x))) {
-    # no transformation needed
-    FALSE
-  } else {
-    x <- x[!is.na(x) & !is.null(x) & !identical(x, "")]
-    if (length(x) == 0) {
-      return(FALSE)
-    }
-    checked <- suppressWarnings(as.rsi(x))
-    outcome <- sum(is.na(checked)) / length(x)
-    outcome <= threshold
-  }
 }
 
 #' @method print rsi

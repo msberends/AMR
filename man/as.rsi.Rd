@@ -3,14 +3,18 @@
 \name{as.rsi}
 \alias{as.rsi}
 \alias{rsi}
+\alias{is.rsi}
+\alias{is.rsi.eligible}
 \alias{as.rsi.mic}
 \alias{as.rsi.disk}
 \alias{as.rsi.data.frame}
-\alias{is.rsi}
-\alias{is.rsi.eligible}
 \title{Class 'rsi'}
 \usage{
 as.rsi(x, ...)
+
+is.rsi(x)
+
+is.rsi.eligible(x, threshold = 0.05)
 
 \method{as.rsi}{mic}(
   x,
@@ -39,15 +43,13 @@ as.rsi(x, ...)
   conserve_capped_values = FALSE,
   ...
 )
-
-is.rsi(x)
-
-is.rsi.eligible(x, threshold = 0.05)
 }
 \arguments{
 \item{x}{vector of values (for class \code{\link{mic}}: an MIC value in mg/L, for class \code{\link{disk}}: a disk diffusion radius in millimetres)}
 
 \item{...}{parameters passed on to methods}
+
+\item{threshold}{maximum fraction of invalid antimicrobial interpretations of \code{x}, please see \emph{Examples}}
 
 \item{mo}{any (vector of) text that can be coerced to a valid microorganism code with \code{\link[=as.mo]{as.mo()}}}
 
@@ -60,8 +62,6 @@ is.rsi.eligible(x, threshold = 0.05)
 \item{conserve_capped_values}{a logical to indicate that MIC values starting with \code{">"} (but not \code{">="}) must always return "R" , and that MIC values starting with \code{"<"} (but not \code{"<="}) must always return "S"}
 
 \item{col_mo}{column name of the IDs of the microorganisms (see \code{\link[=as.mo]{as.mo()}}), defaults to the first column of class \code{\link{mo}}. Values will be coerced using \code{\link[=as.mo]{as.mo()}}.}
-
-\item{threshold}{maximum fraction of invalid antimicrobial interpretations of \code{x}, please see \emph{Examples}}
 }
 \value{
 Ordered factor with new class \code{\link{rsi}}
