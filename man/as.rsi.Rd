@@ -28,7 +28,6 @@ as.rsi(x, ...)
   ab = deparse(substitute(x)),
   guideline = "EUCAST",
   uti = FALSE,
-  conserve_capped_values = FALSE,
   ...
 )
 

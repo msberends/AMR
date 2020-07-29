@@ -93,6 +93,7 @@ $(document).ready(function() {
   $('.template-citation-authors h1').eq(0).text('How to cite');
   $('.template-citation-authors h1').eq(1).text('All contributors');
   $(".developers").html(doct_tit($(".developers").html()));
+  $(".developers a[href='authors.html']").text("All contributors...");
 
   // Edit title of manual
   $('.template-reference-index h1').text('Manual');

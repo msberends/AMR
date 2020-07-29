@@ -261,7 +261,6 @@ as.rsi.disk <- function(x,
                         ab = deparse(substitute(x)), 
                         guideline = "EUCAST", 
                         uti = FALSE,
-                        conserve_capped_values = FALSE,
                         ...) {
   stop_if(missing(mo),
           'No information was supplied about the microorganisms (missing parameter "mo"). See ?as.rsi.\n\n',
