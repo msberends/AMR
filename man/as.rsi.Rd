@@ -18,6 +18,7 @@ as.rsi(x, ...)
   ab = deparse(substitute(x)),
   guideline = "EUCAST",
   uti = FALSE,
+  conserve_capped_values = FALSE,
   ...
 )
 
@@ -27,10 +28,18 @@ as.rsi(x, ...)
   ab = deparse(substitute(x)),
   guideline = "EUCAST",
   uti = FALSE,
+  conserve_capped_values = FALSE,
   ...
 )
 
-\method{as.rsi}{data.frame}(x, col_mo = NULL, guideline = "EUCAST", uti = NULL, ...)
+\method{as.rsi}{data.frame}(
+  x,
+  col_mo = NULL,
+  guideline = "EUCAST",
+  uti = NULL,
+  conserve_capped_values = FALSE,
+  ...
+)
 
 is.rsi(x)
 
@@ -49,6 +58,8 @@ is.rsi.eligible(x, threshold = 0.05)
 
 \item{uti}{(Urinary Tract Infection) A vector with \link{logical}s (\code{TRUE} or \code{FALSE}) to specify whether a UTI specific interpretation from the guideline should be chosen. For using \code{\link[=as.rsi]{as.rsi()}} on a \link{data.frame}, this can also be a column containing \link{logical}s or when left blank, the data set will be search for a 'specimen' and rows containing 'urin' in that column will be regarded isolates from a UTI. See \emph{Examples}.}
 
+\item{conserve_capped_values}{a logical to indicate that MIC values starting with \code{">"} (but not \code{">="}) must always return "R" , and that MIC values starting with \code{"<"} (but not \code{"<="}) must always return "S"}
+
 \item{col_mo}{column name of the IDs of the microorganisms (see \code{\link[=as.mo]{as.mo()}}), defaults to the first column of class \code{\link{mo}}. Values will be coerced using \code{\link[=as.mo]{as.mo()}}.}
 
 \item{threshold}{maximum fraction of invalid antimicrobial interpretations of \code{x}, please see \emph{Examples}}
@@ -57,12 +68,14 @@ is.rsi.eligible(x, threshold = 0.05)
 Ordered factor with new class \code{\link{rsi}}
 }
 \description{
-Interpret MIC values and disk diffusion diameters according to EUCAST or CLSI, or clean up existing R/SI values. This transforms the input to a new class \code{\link{rsi}}, which is an ordered factor with levels \verb{S < I < R}. Invalid antimicrobial interpretations will be translated as \code{NA} with a warning.
+Interpret minimum inhibitory concentration (MIC) values and disk diffusion diameters according to EUCAST or CLSI, or clean up existing R/SI values. This transforms the input to a new class \code{\link{rsi}}, which is an ordered factor with levels \verb{S < I < R}. Invalid antimicrobial interpretations will be translated as \code{NA} with a warning.
 }
 \details{
 When using \code{\link[=as.rsi]{as.rsi()}} on untransformed data, the data will be cleaned to only contain values S, I and R. When using the function on data with class \code{\link{mic}} (using \code{\link[=as.mic]{as.mic()}}) or class \code{\link{disk}} (using \code{\link[=as.disk]{as.disk()}}), the data will be interpreted based on the guideline set with the \code{guideline} parameter.
 
 Supported guidelines to be used as input for the \code{guideline} parameter are: "CLSI 2010", "CLSI 2011", "CLSI 2012", "CLSI 2013", "CLSI 2014", "CLSI 2015", "CLSI 2016", "CLSI 2017", "CLSI 2018", "CLSI 2019", "EUCAST 2011", "EUCAST 2012", "EUCAST 2013", "EUCAST 2014", "EUCAST 2015", "EUCAST 2016", "EUCAST 2017", "EUCAST 2018", "EUCAST 2019", "EUCAST 2020". Simply using \code{"CLSI"} or \code{"EUCAST"} for input will automatically select the latest version of that guideline.
+
+When using \code{conserve_capped_values = TRUE}, an MIC value of e.g. ">2" will always return "R", even if the breakpoint according to the chosen guideline is ">=4". This is to prevent that capped values from raw laboratory data would not be treated conservatively. The default behaviour (\code{conserve_capped_values = FALSE}) considers ">2" to be lower than ">=4" and will in this case return "S" or "I".
 
 The repository of this package \href{https://github.com/msberends/AMR/blob/master/data-raw/rsi_translation.txt}{contains a machine readable version} of all guidelines. This is a CSV file consisting of 18,650 rows and 10 columns. This file is machine readable, since it contains one row for every unique combination of the test method (MIC or disk diffusion), the antimicrobial agent and the microorganism. \strong{This allows for easy implementation of these rules in laboratory information systems (LIS)}. Note that it only contains interpretation guidelines for humans - interpretation guidelines from CLSI for animals were removed.
 

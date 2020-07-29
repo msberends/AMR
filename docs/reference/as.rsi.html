@@ -49,7 +49,7 @@
   <script src="../extra.js"></script>
 
 <meta property="og:title" content="Class 'rsi' — as.rsi" />
-<meta property="og:description" content="Interpret MIC values and disk diffusion diameters according to EUCAST or CLSI, or clean up existing R/SI values. This transforms the input to a new class rsi, which is an ordered factor with levels S &amp;lt; I &amp;lt; R. Invalid antimicrobial interpretations will be translated as NA with a warning." />
+<meta property="og:description" content="Interpret minimum inhibitory concentration (MIC) values and disk diffusion diameters according to EUCAST or CLSI, or clean up existing R/SI values. This transforms the input to a new class rsi, which is an ordered factor with levels S &amp;lt; I &amp;lt; R. Invalid antimicrobial interpretations will be translated as NA with a warning." />
 <meta property="og:image" content="https://msberends.github.io/AMR/logo.svg" />
 
 
@@ -82,7 +82,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.2.0.9038</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.2.0.9039</span>
       </span>
     </div>
 
@@ -232,7 +232,7 @@
     </div>
 
     <div class="ref-description">
-    <p>Interpret MIC values and disk diffusion diameters according to EUCAST or CLSI, or clean up existing R/SI values. This transforms the input to a new class <code>rsi</code>, which is an ordered factor with levels <code>S &lt; I &lt; R</code>. Invalid antimicrobial interpretations will be translated as <code>NA</code> with a warning.</p>
+    <p>Interpret minimum inhibitory concentration (MIC) values and disk diffusion diameters according to EUCAST or CLSI, or clean up existing R/SI values. This transforms the input to a new class <code>rsi</code>, which is an ordered factor with levels <code>S &lt; I &lt; R</code>. Invalid antimicrobial interpretations will be translated as <code>NA</code> with a warning.</p>
     </div>
 
     <pre class="usage"><span class='fu'>as.rsi</span>(<span class='no'>x</span>, <span class='no'>...</span>)
@@ -244,6 +244,7 @@
   <span class='kw'>ab</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/deparse.html'>deparse</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/substitute.html'>substitute</a></span>(<span class='no'>x</span>)),
   <span class='kw'>guideline</span> <span class='kw'>=</span> <span class='st'>"EUCAST"</span>,
   <span class='kw'>uti</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>conserve_capped_values</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='no'>...</span>
 )
 
@@ -254,11 +255,19 @@
   <span class='kw'>ab</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/deparse.html'>deparse</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/substitute.html'>substitute</a></span>(<span class='no'>x</span>)),
   <span class='kw'>guideline</span> <span class='kw'>=</span> <span class='st'>"EUCAST"</span>,
   <span class='kw'>uti</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>conserve_capped_values</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='no'>...</span>
 )
 
 <span class='co'># S3 method for data.frame</span>
-<span class='fu'>as.rsi</span>(<span class='no'>x</span>, <span class='kw'>col_mo</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>guideline</span> <span class='kw'>=</span> <span class='st'>"EUCAST"</span>, <span class='kw'>uti</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)
+<span class='fu'>as.rsi</span>(
+  <span class='no'>x</span>,
+  <span class='kw'>col_mo</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>guideline</span> <span class='kw'>=</span> <span class='st'>"EUCAST"</span>,
+  <span class='kw'>uti</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>conserve_capped_values</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='no'>...</span>
+)
 
 <span class='fu'>is.rsi</span>(<span class='no'>x</span>)
 
@@ -292,6 +301,10 @@
       <td><p>(Urinary Tract Infection) A vector with <a href='https://rdrr.io/r/base/logical.html'>logical</a>s (<code>TRUE</code> or <code>FALSE</code>) to specify whether a UTI specific interpretation from the guideline should be chosen. For using <code>as.rsi()</code> on a <a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a>, this can also be a column containing <a href='https://rdrr.io/r/base/logical.html'>logical</a>s or when left blank, the data set will be search for a 'specimen' and rows containing 'urin' in that column will be regarded isolates from a UTI. See <em>Examples</em>.</p></td>
     </tr>
     <tr>
+      <th>conserve_capped_values</th>
+      <td><p>a logical to indicate that MIC values starting with <code>"&gt;"</code> (but not <code>"&gt;="</code>) must always return "R" , and that MIC values starting with <code>"&lt;"</code> (but not <code>"&lt;="</code>) must always return "S"</p></td>
+    </tr>
+    <tr>
       <th>col_mo</th>
       <td><p>column name of the IDs of the microorganisms (see <code><a href='as.mo.html'>as.mo()</a></code>), defaults to the first column of class <code><a href='as.mo.html'>mo</a></code>. Values will be coerced using <code><a href='as.mo.html'>as.mo()</a></code>.</p></td>
     </tr>
@@ -308,6 +321,7 @@
 
     <p>When using <code>as.rsi()</code> on untransformed data, the data will be cleaned to only contain values S, I and R. When using the function on data with class <code><a href='as.mic.html'>mic</a></code> (using <code><a href='as.mic.html'>as.mic()</a></code>) or class <code><a href='as.disk.html'>disk</a></code> (using <code><a href='as.disk.html'>as.disk()</a></code>), the data will be interpreted based on the guideline set with the <code>guideline</code> parameter.</p>
 <p>Supported guidelines to be used as input for the <code>guideline</code> parameter are: "CLSI 2010", "CLSI 2011", "CLSI 2012", "CLSI 2013", "CLSI 2014", "CLSI 2015", "CLSI 2016", "CLSI 2017", "CLSI 2018", "CLSI 2019", "EUCAST 2011", "EUCAST 2012", "EUCAST 2013", "EUCAST 2014", "EUCAST 2015", "EUCAST 2016", "EUCAST 2017", "EUCAST 2018", "EUCAST 2019", "EUCAST 2020". Simply using <code>"CLSI"</code> or <code>"EUCAST"</code> for input will automatically select the latest version of that guideline.</p>
+<p>When using <code>conserve_capped_values = TRUE</code>, an MIC value of e.g. "&gt;2" will always return "R", even if the breakpoint according to the chosen guideline is "&gt;=4". This is to prevent that capped values from raw laboratory data would not be treated conservatively. The default behaviour (<code>conserve_capped_values = FALSE</code>) considers "&gt;2" to be lower than "&gt;=4" and will in this case return "S" or "I".</p>
 <p>The repository of this package <a href='https://github.com/msberends/AMR/blob/master/data-raw/rsi_translation.txt'>contains a machine readable version</a> of all guidelines. This is a CSV file consisting of 18,650 rows and 10 columns. This file is machine readable, since it contains one row for every unique combination of the test method (MIC or disk diffusion), the antimicrobial agent and the microorganism. <strong>This allows for easy implementation of these rules in laboratory information systems (LIS)</strong>. Note that it only contains interpretation guidelines for humans - interpretation guidelines from CLSI for animals were removed.</p>
 <p>After using <code>as.rsi()</code>, you can use <code><a href='eucast_rules.html'>eucast_rules()</a></code> to (1) apply inferred susceptibility and resistance based on results of other antimicrobials and (2) apply intrinsic resistance based on taxonomic properties of a microorganism.</p>
 <p>The function <code>is.rsi.eligible()</code> returns <code>TRUE</code> when a columns contains at most 5% invalid antimicrobial interpretations (not S and/or I and/or R), and <code>FALSE</code> otherwise. The threshold of 5% can be set with the <code>threshold</code> parameter.</p>

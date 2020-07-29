@@ -1,4 +1,4 @@
-# AMR 1.2.0.9038
+# AMR 1.2.0.9039
 ## <small>Last updated: 29 July 2020</small>
 
 ### New
@@ -17,6 +17,7 @@
 * Added official antimicrobial names to all `filter_ab_class()` functions, such as `filter_aminoglycosides()`
 * Added antibiotics code "FOX1" for cefoxitin screening (abbreviation "cfsc") to the `antibiotics` data set
 * Added Monuril as trade name for fosfomycin
+* Added parameter `conserve_capped_values` to `as.rsi()` for interpreting MIC values - it makes sure that values starting with "<" (but not "<=") will always return "S" and values starting with ">" (but not ">=") will always return "R". The default behaviour of `as.rsi()` has not changed, so you need to specifically do `as.rsi(..., conserve_capped_values = TRUE)`.
 
 ### Changed
 * Big speed improvement for using any function on microorganism codes from earlier package versions (prior to `AMR` v1.2.0), such as `as.mo()`, `mo_name()`, `first_isolate()`, `eucast_rules()`, `mdro()`, etc.

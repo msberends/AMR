@@ -21,7 +21,7 @@
 
 #' Class 'rsi'
 #'
-#' Interpret MIC values and disk diffusion diameters according to EUCAST or CLSI, or clean up existing R/SI values. This transforms the input to a new class [`rsi`], which is an ordered factor with levels `S < I < R`. Invalid antimicrobial interpretations will be translated as `NA` with a warning.
+#' Interpret minimum inhibitory concentration (MIC) values and disk diffusion diameters according to EUCAST or CLSI, or clean up existing R/SI values. This transforms the input to a new class [`rsi`], which is an ordered factor with levels `S < I < R`. Invalid antimicrobial interpretations will be translated as `NA` with a warning.
 #' @inheritSection lifecycle Stable lifecycle
 #' @rdname as.rsi
 #' @param x vector of values (for class [`mic`]: an MIC value in mg/L, for class [`disk`]: a disk diffusion radius in millimetres)
@@ -30,12 +30,15 @@
 #' @param uti (Urinary Tract Infection) A vector with [logical]s (`TRUE` or `FALSE`) to specify whether a UTI specific interpretation from the guideline should be chosen. For using [as.rsi()] on a [data.frame], this can also be a column containing [logical]s or when left blank, the data set will be search for a 'specimen' and rows containing 'urin' in that column will be regarded isolates from a UTI. See *Examples*.
 #' @inheritParams first_isolate
 #' @param guideline defaults to the latest included EUCAST guideline, see Details for all options
+#' @param conserve_capped_values a logical to indicate that MIC values starting with `">"` (but not `">="`) must always return "R" , and that MIC values starting with `"<"` (but not `"<="`) must always return "S"
 #' @param threshold maximum fraction of invalid antimicrobial interpretations of `x`, please see *Examples*
 #' @param ... parameters passed on to methods
 #' @details 
 #' When using [as.rsi()] on untransformed data, the data will be cleaned to only contain values S, I and R. When using the function on data with class [`mic`] (using [as.mic()]) or class [`disk`] (using [as.disk()]), the data will be interpreted based on the guideline set with the `guideline` parameter. 
 #' 
 #' Supported guidelines to be used as input for the `guideline` parameter are: `r paste0('"', sort(unique(AMR::rsi_translation$guideline)), '"', collapse = ", ")`. Simply using `"CLSI"` or `"EUCAST"` for input will automatically select the latest version of that guideline. 
+#' 
+#' When using `conserve_capped_values = TRUE`, an MIC value of e.g. ">2" will always return "R", even if the breakpoint according to the chosen guideline is ">=4". This is to prevent that capped values from raw laboratory data would not be treated conservatively. The default behaviour (`conserve_capped_values = FALSE`) considers ">2" to be lower than ">=4" and will in this case return "S" or "I".
 #' 
 #' The repository of this package [contains a machine readable version](https://github.com/msberends/AMR/blob/master/data-raw/rsi_translation.txt) of all guidelines. This is a CSV file consisting of `r format(nrow(AMR::rsi_translation), big.mark = ",")` rows and `r ncol(AMR::rsi_translation)` columns. This file is machine readable, since it contains one row for every unique combination of the test method (MIC or disk diffusion), the antimicrobial agent and the microorganism. **This allows for easy implementation of these rules in laboratory information systems (LIS)**. Note that it only contains interpretation guidelines for humans - interpretation guidelines from CLSI for animals were removed.
 #'
@@ -210,7 +213,13 @@ as.rsi.default <- function(x, ...) {
 
 #' @rdname as.rsi
 #' @export
-as.rsi.mic <- function(x, mo, ab = deparse(substitute(x)), guideline = "EUCAST", uti = FALSE, ...) {
+as.rsi.mic <- function(x,
+                       mo, 
+                       ab = deparse(substitute(x)), 
+                       guideline = "EUCAST", 
+                       uti = FALSE,
+                       conserve_capped_values = FALSE,
+                       ...) {
   stop_if(missing(mo),
           'No information was supplied about the microorganisms (missing parameter "mo"). See ?as.rsi.\n\n',
           "To transform certain columns with e.g. mutate_at(), use\n",
@@ -240,13 +249,20 @@ as.rsi.mic <- function(x, mo, ab = deparse(substitute(x)), guideline = "EUCAST",
                         mo = mo_coerced,
                         ab = ab_coerced,
                         guideline = guideline_coerced,
-                        uti = uti) # exec_as.rsi will return message(font_blue(" OK."))
+                        uti = uti,
+                        conserve_capped_values = conserve_capped_values) # exec_as.rsi will return message(font_blue(" OK."))
   result
 }
 
 #' @rdname as.rsi
 #' @export
-as.rsi.disk <- function(x, mo, ab = deparse(substitute(x)), guideline = "EUCAST", uti = FALSE, ...) {
+as.rsi.disk <- function(x,
+                        mo, 
+                        ab = deparse(substitute(x)), 
+                        guideline = "EUCAST", 
+                        uti = FALSE,
+                        conserve_capped_values = FALSE,
+                        ...) {
   stop_if(missing(mo),
           'No information was supplied about the microorganisms (missing parameter "mo"). See ?as.rsi.\n\n',
           "To transform certain columns with e.g. mutate_at(), use\n",
@@ -282,7 +298,12 @@ as.rsi.disk <- function(x, mo, ab = deparse(substitute(x)), guideline = "EUCAST"
 
 #' @rdname as.rsi
 #' @export
-as.rsi.data.frame <- function(x, col_mo = NULL, guideline = "EUCAST", uti = NULL, ...) {
+as.rsi.data.frame <- function(x, 
+                              col_mo = NULL, 
+                              guideline = "EUCAST",
+                              uti = NULL,
+                              conserve_capped_values = FALSE,
+                              ...) {
   # try to find columns based on type
   # -- mo
   if (is.null(col_mo)) {
@@ -368,7 +389,8 @@ as.rsi.data.frame <- function(x, col_mo = NULL, guideline = "EUCAST", uti = NULL
                                     mo = x %>% pull(col_mo),
                                     ab = ab_cols[i],
                                     guideline = guideline,
-                                    uti = uti)
+                                    uti = uti,
+                                    conserve_capped_values = conserve_capped_values)
     } else if (types[i] == "disk") {
       x[, ab_cols[i]] <- as.rsi.disk(x = x %>% pull(ab_cols[i]),
                                      mo = x %>% pull(col_mo),
@@ -399,7 +421,7 @@ get_guideline <- function(guideline) {
   
 }
 
-exec_as.rsi <- function(method, x, mo, ab, guideline, uti) {
+exec_as.rsi <- function(method, x, mo, ab, guideline, uti, conserve_capped_values) {
   if (method == "mic") {
     x <- as.mic(x) # when as.rsi.mic is called directly
   } else if (method == "disk") {
@@ -471,10 +493,12 @@ exec_as.rsi <- function(method, x, mo, ab, guideline, uti) {
         mic_input <- x[i]
         mic_S <- as.mic(get_record$breakpoint_S)
         mic_R <- as.mic(get_record$breakpoint_R)
-        new_rsi[i] <- ifelse(isTRUE(which(levels(mic_input) == mic_input) <= which(levels(mic_S) == mic_S)), "S",
-                             ifelse(isTRUE(which(levels(mic_input) == mic_input) >= which(levels(mic_R) == mic_R)), "R",
-                                    ifelse(!is.na(get_record$breakpoint_S) & !is.na(get_record$breakpoint_R), "I",
-                                           NA_character_)))
+        new_rsi[i] <- ifelse(isTRUE(conserve_capped_values) & mic_input %like% "^<[0-9]", "S",
+                             ifelse(isTRUE(conserve_capped_values) & mic_input %like% "^>[0-9]", "R",
+                                    ifelse(isTRUE(which(levels(mic_input) == mic_input) <= which(levels(mic_S) == mic_S)), "S",
+                                           ifelse(isTRUE(which(levels(mic_input) == mic_input) >= which(levels(mic_R) == mic_R)), "R",
+                                                  ifelse(!is.na(get_record$breakpoint_S) & !is.na(get_record$breakpoint_R), "I",
+                                                         NA_character_)))))
       } else if (method == "disk") {
         new_rsi[i] <- ifelse(isTRUE(as.double(x[i]) >= as.double(get_record$breakpoint_S)), "S",
                              ifelse(isTRUE(as.double(x[i]) <= as.double(get_record$breakpoint_R)), "R",
