@@ -419,13 +419,7 @@ font_stripstyle <- function(x) {
 }
 
 progress_estimated <- function(n = 1, n_min = 0, ...) {
-  if (n >= n_min & interactive()) {
-    pb <- utils::txtProgressBar(max = n, style = 3)
-    pb$tick <- function() {
-      pb$up(pb$getVal() + 1)
-    }
-    pb
-  } else {
+  if (!interactive() || n < n_min) {
     pb <- list()
     pb$tick <- function() {
       invisible()
@@ -434,6 +428,12 @@ progress_estimated <- function(n = 1, n_min = 0, ...) {
       invisible()
     }
     structure(pb, class = "txtProgressBar")
+  } else if (n >= n_min) {
+    pb <- utils::txtProgressBar(max = n, style = 3)
+    pb$tick <- function() {
+      pb$up(pb$getVal() + 1)
+    }
+    pb
   }
 }
 

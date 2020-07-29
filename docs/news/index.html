@@ -81,7 +81,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.2.0.9037</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.2.0.9038</span>
       </span>
     </div>
 
@@ -229,13 +229,13 @@
       <small>Source: <a href='https://github.com/msberends/AMR/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
-    <div id="amr-1209037" class="section level1">
-<h1 class="page-header" data-toc-text="1.2.0.9037">
-<a href="#amr-1209037" class="anchor"></a>AMR 1.2.0.9037<small> Unreleased </small>
+    <div id="amr-1209038" class="section level1">
+<h1 class="page-header" data-toc-text="1.2.0.9038">
+<a href="#amr-1209038" class="anchor"></a>AMR 1.2.0.9038<small> Unreleased </small>
 </h1>
-<div id="last-updated-28-july-2020" class="section level2">
+<div id="last-updated-29-july-2020" class="section level2">
 <h2 class="hasAnchor">
-<a href="#last-updated-28-july-2020" class="anchor"></a><small>Last updated: 28 July 2020</small>
+<a href="#last-updated-29-july-2020" class="anchor"></a><small>Last updated: 29 July 2020</small>
 </h2>
 <div id="new" class="section level3">
 <h3 class="hasAnchor">
@@ -284,6 +284,7 @@
 </ul>
 </li>
 <li><p>Fixed a bug where <code><a href="../reference/eucast_rules.html">eucast_rules()</a></code> would not work on a tibble when the <code>tibble</code> or <code>dplyr</code> package was loaded</p></li>
+<li><p>Fixed a bug for CLSI 2019 guidelines (using <code><a href="../reference/as.rsi.html">as.rsi()</a></code>), that also included results for animals. It now only contains interpretation guidelines for humans.</p></li>
 <li><p>All <code>*_join_microorganisms()</code> functions and <code><a href="../reference/bug_drug_combinations.html">bug_drug_combinations()</a></code> now return the original data class (e.g. <code>tibble</code>s and <code>data.table</code>s)</p></li>
 <li>
 <p>For functions <code><a href="../reference/proportion.html">rsi_df()</a></code>, <code><a href="../reference/proportion.html">proportion_df()</a></code> and <code><a href="../reference/count.html">count_df()</a></code>:</p>

@@ -9,8 +9,8 @@
 "EUCAST 2020"	"MIC"		"Bilophila"	"Amoxicillin/clavulanic acid"	"Anaerobes, Gramnegative"		4	8	FALSE
 "EUCAST 2020"	"DISK"		"Burkholderia pseudomallei"	"Amoxicillin/clavulanic acid"	"B.pseudomallei"	"20-10ug"	50	22	FALSE
 "EUCAST 2020"	"MIC"		"Burkholderia pseudomallei"	"Amoxicillin/clavulanic acid"	"B.pseudomallei"		0.001	8	FALSE
-"EUCAST 2020"	"MIC"		"Cutibacterium"	"Amoxicillin/clavulanic acid"	"Anaerobes, Grampositive"		4	8	FALSE
 "EUCAST 2020"	"MIC"		"Clostridioides"	"Amoxicillin/clavulanic acid"	"Anaerobes, Grampositive"		4	8	FALSE
+"EUCAST 2020"	"MIC"		"Cutibacterium"	"Amoxicillin/clavulanic acid"	"Anaerobes, Grampositive"		4	8	FALSE
 "EUCAST 2020"	"MIC"		"Clostridium"	"Amoxicillin/clavulanic acid"	"Anaerobes, Grampositive"		4	8	FALSE
 "EUCAST 2020"	"MIC"		"Eubacterium"	"Amoxicillin/clavulanic acid"	"Anaerobes, Grampositive"		4	8	FALSE
 "EUCAST 2020"	"MIC"		"Eggerthella"	"Amoxicillin/clavulanic acid"	"Anaerobes, Grampositive"		4	8	FALSE
@@ -60,8 +60,8 @@
 "EUCAST 2020"	"MIC"		"Bacteroides"	"Ampicillin"	"Anaerobes, Gramnegative"		0.5	2	FALSE
 "EUCAST 2020"	"MIC"		"Bifidobacterium"	"Ampicillin"	"Anaerobes, Grampositive"		4	8	FALSE
 "EUCAST 2020"	"MIC"		"Bilophila"	"Ampicillin"	"Anaerobes, Gramnegative"		0.5	2	FALSE
-"EUCAST 2020"	"MIC"		"Cutibacterium"	"Ampicillin"	"Anaerobes, Grampositive"		4	8	FALSE
 "EUCAST 2020"	"MIC"		"Clostridioides"	"Ampicillin"	"Anaerobes, Grampositive"		4	8	FALSE
+"EUCAST 2020"	"MIC"		"Cutibacterium"	"Ampicillin"	"Anaerobes, Grampositive"		4	8	FALSE
 "EUCAST 2020"	"MIC"		"Clostridium"	"Ampicillin"	"Anaerobes, Grampositive"		4	8	FALSE
 "EUCAST 2020"	"MIC"		"Eubacterium"	"Ampicillin"	"Anaerobes, Grampositive"		4	8	FALSE
 "EUCAST 2020"	"MIC"		"Eggerthella"	"Ampicillin"	"Anaerobes, Grampositive"		4	8	FALSE
@@ -92,8 +92,8 @@
 "EUCAST 2020"	"MIC"		"Bacteroides"	"Amoxicillin"	"Anaerobes, Gramnegative"		0.5	2	FALSE
 "EUCAST 2020"	"MIC"		"Bifidobacterium"	"Amoxicillin"	"Anaerobes, Grampositive"		4	8	FALSE
 "EUCAST 2020"	"MIC"		"Bilophila"	"Amoxicillin"	"Anaerobes, Gramnegative"		0.5	2	FALSE
-"EUCAST 2020"	"MIC"		"Cutibacterium"	"Amoxicillin"	"Anaerobes, Grampositive"		4	8	FALSE
 "EUCAST 2020"	"MIC"		"Clostridioides"	"Amoxicillin"	"Anaerobes, Grampositive"		4	8	FALSE
+"EUCAST 2020"	"MIC"		"Cutibacterium"	"Amoxicillin"	"Anaerobes, Grampositive"		4	8	FALSE
 "EUCAST 2020"	"MIC"		"Clostridium"	"Amoxicillin"	"Anaerobes, Grampositive"		4	8	FALSE
 "EUCAST 2020"	"MIC"		"Eubacterium"	"Amoxicillin"	"Anaerobes, Grampositive"		4	8	FALSE
 "EUCAST 2020"	"MIC"		"Eggerthella"	"Amoxicillin"	"Anaerobes, Grampositive"		4	8	FALSE
@@ -181,8 +181,8 @@
 "EUCAST 2020"	"MIC"		"Bilophila"	"Chloramphenicol"	"Anaerobes, Gramnegative"		8	8	FALSE
 "EUCAST 2020"	"DISK"		"Burkholderia pseudomallei"	"Chloramphenicol"	"B.pseudomallei"	"30ug"	50	22	FALSE
 "EUCAST 2020"	"MIC"		"Burkholderia pseudomallei"	"Chloramphenicol"	"B.pseudomallei"		0.001	8	FALSE
-"EUCAST 2020"	"MIC"		"Cutibacterium"	"Chloramphenicol"	"Anaerobes, Grampositive"		8	8	FALSE
 "EUCAST 2020"	"MIC"		"Clostridioides"	"Chloramphenicol"	"Anaerobes, Grampositive"		8	8	FALSE
+"EUCAST 2020"	"MIC"		"Cutibacterium"	"Chloramphenicol"	"Anaerobes, Grampositive"		8	8	FALSE
 "EUCAST 2020"	"MIC"		"Clostridium"	"Chloramphenicol"	"Anaerobes, Grampositive"		8	8	FALSE
 "EUCAST 2020"	"MIC"		"Eubacterium"	"Chloramphenicol"	"Anaerobes, Grampositive"		8	8	FALSE
 "EUCAST 2020"	"MIC"		"Eggerthella"	"Chloramphenicol"	"Anaerobes, Grampositive"		8	8	FALSE
@@ -206,14 +206,14 @@
 "EUCAST 2020"	"DISK"		"Streptococcus anginosus"	"Chloramphenicol"	"Streptococcus A,B,C,G"	"30ug"	19	19	FALSE
 "EUCAST 2020"	"MIC"		"Streptococcus anginosus"	"Chloramphenicol"	"Streptococcus A,B,C,G"		8	8	FALSE
 "EUCAST 2020"	"DISK"		"Streptococcus dysgalactiae"	"Chloramphenicol"	"Streptococcus A,B,C,G"	"30ug"	19	19	FALSE
-"EUCAST 2020"	"MIC"		"Streptococcus dysgalactiae"	"Chloramphenicol"	"Streptococcus A,B,C,G"		8	8	FALSE
 "EUCAST 2020"	"DISK"		"Streptococcus dysgalactiae"	"Chloramphenicol"	"Streptococcus A,B,C,G"	"30ug"	19	19	FALSE
+"EUCAST 2020"	"MIC"		"Streptococcus dysgalactiae"	"Chloramphenicol"	"Streptococcus A,B,C,G"		8	8	FALSE
 "EUCAST 2020"	"MIC"		"Streptococcus dysgalactiae"	"Chloramphenicol"	"Streptococcus A,B,C,G"		8	8	FALSE
 "EUCAST 2020"	"DISK"		"Streptococcus dysgalactiae equisimilis"	"Chloramphenicol"	"Streptococcus A,B,C,G"	"30ug"	19	19	FALSE
 "EUCAST 2020"	"MIC"		"Streptococcus dysgalactiae equisimilis"	"Chloramphenicol"	"Streptococcus A,B,C,G"		8	8	FALSE
 "EUCAST 2020"	"DISK"		"Streptococcus equi"	"Chloramphenicol"	"Streptococcus A,B,C,G"	"30ug"	19	19	FALSE
-"EUCAST 2020"	"MIC"		"Streptococcus equi"	"Chloramphenicol"	"Streptococcus A,B,C,G"		8	8	FALSE
 "EUCAST 2020"	"DISK"		"Streptococcus equi"	"Chloramphenicol"	"Streptococcus A,B,C,G"	"30ug"	19	19	FALSE
+"EUCAST 2020"	"MIC"		"Streptococcus equi"	"Chloramphenicol"	"Streptococcus A,B,C,G"		8	8	FALSE
 "EUCAST 2020"	"MIC"		"Streptococcus equi"	"Chloramphenicol"	"Streptococcus A,B,C,G"		8	8	FALSE
 "EUCAST 2020"	"DISK"		"Streptococcus equi ruminatorum"	"Chloramphenicol"	"Streptococcus A,B,C,G"	"30ug"	19	19	FALSE
 "EUCAST 2020"	"MIC"		"Streptococcus equi ruminatorum"	"Chloramphenicol"	"Streptococcus A,B,C,G"		8	8	FALSE
@@ -283,10 +283,10 @@
 "EUCAST 2020"	"MIC"		"Bacteroides"	"Clindamycin"	"Anaerobes, Gramnegative"		4	4	FALSE
 "EUCAST 2020"	"MIC"		"Bifidobacterium"	"Clindamycin"	"Anaerobes, Grampositive"		4	4	FALSE
 "EUCAST 2020"	"MIC"		"Bilophila"	"Clindamycin"	"Anaerobes, Gramnegative"		4	4	FALSE
-"EUCAST 2020"	"MIC"		"Cutibacterium"	"Clindamycin"	"Anaerobes, Grampositive"		4	4	FALSE
 "EUCAST 2020"	"MIC"		"Clostridioides"	"Clindamycin"	"Anaerobes, Grampositive"		4	4	FALSE
 "EUCAST 2020"	"DISK"		"Corynebacterium"	"Clindamycin"	"Corynebacterium"	"2ug"	20	20	FALSE
 "EUCAST 2020"	"MIC"		"Corynebacterium"	"Clindamycin"	"Corynebacterium"		0.5	0.5	FALSE
+"EUCAST 2020"	"MIC"		"Cutibacterium"	"Clindamycin"	"Anaerobes, Grampositive"		4	4	FALSE
 "EUCAST 2020"	"MIC"		"Clostridium"	"Clindamycin"	"Anaerobes, Grampositive"		4	4	FALSE
 "EUCAST 2020"	"MIC"		"Eubacterium"	"Clindamycin"	"Anaerobes, Grampositive"		4	4	FALSE
 "EUCAST 2020"	"MIC"		"Eggerthella"	"Clindamycin"	"Anaerobes, Grampositive"		4	4	FALSE
@@ -305,14 +305,14 @@
 "EUCAST 2020"	"DISK"		"Streptococcus anginosus"	"Clindamycin"	"Streptococcus A,B,C,G"	"2ug"	17	17	FALSE
 "EUCAST 2020"	"MIC"		"Streptococcus anginosus"	"Clindamycin"	"Streptococcus A,B,C,G"		0.5	0.5	FALSE
 "EUCAST 2020"	"DISK"		"Streptococcus dysgalactiae"	"Clindamycin"	"Streptococcus A,B,C,G"	"2ug"	17	17	FALSE
-"EUCAST 2020"	"MIC"		"Streptococcus dysgalactiae"	"Clindamycin"	"Streptococcus A,B,C,G"		0.5	0.5	FALSE
 "EUCAST 2020"	"DISK"		"Streptococcus dysgalactiae"	"Clindamycin"	"Streptococcus A,B,C,G"	"2ug"	17	17	FALSE
+"EUCAST 2020"	"MIC"		"Streptococcus dysgalactiae"	"Clindamycin"	"Streptococcus A,B,C,G"		0.5	0.5	FALSE
 "EUCAST 2020"	"MIC"		"Streptococcus dysgalactiae"	"Clindamycin"	"Streptococcus A,B,C,G"		0.5	0.5	FALSE
 "EUCAST 2020"	"DISK"		"Streptococcus dysgalactiae equisimilis"	"Clindamycin"	"Streptococcus A,B,C,G"	"2ug"	17	17	FALSE
 "EUCAST 2020"	"MIC"		"Streptococcus dysgalactiae equisimilis"	"Clindamycin"	"Streptococcus A,B,C,G"		0.5	0.5	FALSE
 "EUCAST 2020"	"DISK"		"Streptococcus equi"	"Clindamycin"	"Streptococcus A,B,C,G"	"2ug"	17	17	FALSE
-"EUCAST 2020"	"MIC"		"Streptococcus equi"	"Clindamycin"	"Streptococcus A,B,C,G"		0.5	0.5	FALSE
 "EUCAST 2020"	"DISK"		"Streptococcus equi"	"Clindamycin"	"Streptococcus A,B,C,G"	"2ug"	17	17	FALSE
+"EUCAST 2020"	"MIC"		"Streptococcus equi"	"Clindamycin"	"Streptococcus A,B,C,G"		0.5	0.5	FALSE
 "EUCAST 2020"	"MIC"		"Streptococcus equi"	"Clindamycin"	"Streptococcus A,B,C,G"		0.5	0.5	FALSE
 "EUCAST 2020"	"DISK"		"Streptococcus equi ruminatorum"	"Clindamycin"	"Streptococcus A,B,C,G"	"2ug"	17	17	FALSE
 "EUCAST 2020"	"MIC"		"Streptococcus equi ruminatorum"	"Clindamycin"	"Streptococcus A,B,C,G"		0.5	0.5	FALSE
@@ -586,14 +586,14 @@
 "EUCAST 2020"	"DISK"		"Streptococcus anginosus"	"Erythromycin"	"Streptococcus A,B,C,G"	"15ug"	21	18	FALSE
 "EUCAST 2020"	"MIC"		"Streptococcus anginosus"	"Erythromycin"	"Streptococcus A,B,C,G"		0.25	0.5	FALSE
 "EUCAST 2020"	"DISK"		"Streptococcus dysgalactiae"	"Erythromycin"	"Streptococcus A,B,C,G"	"15ug"	21	18	FALSE
-"EUCAST 2020"	"MIC"		"Streptococcus dysgalactiae"	"Erythromycin"	"Streptococcus A,B,C,G"		0.25	0.5	FALSE
 "EUCAST 2020"	"DISK"		"Streptococcus dysgalactiae"	"Erythromycin"	"Streptococcus A,B,C,G"	"15ug"	21	18	FALSE
+"EUCAST 2020"	"MIC"		"Streptococcus dysgalactiae"	"Erythromycin"	"Streptococcus A,B,C,G"		0.25	0.5	FALSE
 "EUCAST 2020"	"MIC"		"Streptococcus dysgalactiae"	"Erythromycin"	"Streptococcus A,B,C,G"		0.25	0.5	FALSE
 "EUCAST 2020"	"DISK"		"Streptococcus dysgalactiae equisimilis"	"Erythromycin"	"Streptococcus A,B,C,G"	"15ug"	21	18	FALSE
 "EUCAST 2020"	"MIC"		"Streptococcus dysgalactiae equisimilis"	"Erythromycin"	"Streptococcus A,B,C,G"		0.25	0.5	FALSE
 "EUCAST 2020"	"DISK"		"Streptococcus equi"	"Erythromycin"	"Streptococcus A,B,C,G"	"15ug"	21	18	FALSE
-"EUCAST 2020"	"MIC"		"Streptococcus equi"	"Erythromycin"	"Streptococcus A,B,C,G"		0.25	0.5	FALSE
 "EUCAST 2020"	"DISK"		"Streptococcus equi"	"Erythromycin"	"Streptococcus A,B,C,G"	"15ug"	21	18	FALSE
+"EUCAST 2020"	"MIC"		"Streptococcus equi"	"Erythromycin"	"Streptococcus A,B,C,G"		0.25	0.5	FALSE
 "EUCAST 2020"	"MIC"		"Streptococcus equi"	"Erythromycin"	"Streptococcus A,B,C,G"		0.25	0.5	FALSE
 "EUCAST 2020"	"DISK"		"Streptococcus equi ruminatorum"	"Erythromycin"	"Streptococcus A,B,C,G"	"15ug"	21	18	FALSE
 "EUCAST 2020"	"MIC"		"Streptococcus equi ruminatorum"	"Erythromycin"	"Streptococcus A,B,C,G"		0.25	0.5	FALSE
@@ -629,8 +629,8 @@
 "EUCAST 2020"	"MIC"		"Bacteroides"	"Ertapenem"	"Anaerobes, Gramnegative"		0.5	0.5	FALSE
 "EUCAST 2020"	"MIC"		"Bifidobacterium"	"Ertapenem"	"Anaerobes, Grampositive"		0.5	0.5	FALSE
 "EUCAST 2020"	"MIC"		"Bilophila"	"Ertapenem"	"Anaerobes, Gramnegative"		0.5	0.5	FALSE
-"EUCAST 2020"	"MIC"		"Cutibacterium"	"Ertapenem"	"Anaerobes, Grampositive"		0.5	0.5	FALSE
 "EUCAST 2020"	"MIC"		"Clostridioides"	"Ertapenem"	"Anaerobes, Grampositive"		0.5	0.5	FALSE
+"EUCAST 2020"	"MIC"		"Cutibacterium"	"Ertapenem"	"Anaerobes, Grampositive"		0.5	0.5	FALSE
 "EUCAST 2020"	"MIC"		"Clostridium"	"Ertapenem"	"Anaerobes, Grampositive"		0.5	0.5	FALSE
 "EUCAST 2020"	"MIC"		"Eubacterium"	"Ertapenem"	"Anaerobes, Grampositive"		0.5	0.5	FALSE
 "EUCAST 2020"	"MIC"		"Eggerthella"	"Ertapenem"	"Anaerobes, Grampositive"		0.5	0.5	FALSE
@@ -690,8 +690,8 @@
 "EUCAST 2020"	"MIC"		"Bacteroides"	"Imipenem/relebactam"	"Anaerobes, Gramnegative"		2	2	FALSE
 "EUCAST 2020"	"MIC"		"Bifidobacterium"	"Imipenem/relebactam"	"Anaerobes, Grampositive"		2	2	FALSE
 "EUCAST 2020"	"MIC"		"Bilophila"	"Imipenem/relebactam"	"Anaerobes, Gramnegative"		2	2	FALSE
-"EUCAST 2020"	"MIC"		"Cutibacterium"	"Imipenem/relebactam"	"Anaerobes, Grampositive"		2	2	FALSE
 "EUCAST 2020"	"MIC"		"Clostridioides"	"Imipenem/relebactam"	"Anaerobes, Grampositive"		2	2	FALSE
+"EUCAST 2020"	"MIC"		"Cutibacterium"	"Imipenem/relebactam"	"Anaerobes, Grampositive"		2	2	FALSE
 "EUCAST 2020"	"MIC"		"Clostridium"	"Imipenem/relebactam"	"Anaerobes, Grampositive"		2	2	FALSE
 "EUCAST 2020"	"MIC"		"Eubacterium"	"Imipenem/relebactam"	"Anaerobes, Grampositive"		2	2	FALSE
 "EUCAST 2020"	"MIC"		"Eggerthella"	"Imipenem/relebactam"	"Anaerobes, Grampositive"		2	2	FALSE
@@ -716,8 +716,8 @@
 "EUCAST 2020"	"MIC"		"Bilophila"	"Imipenem"	"Anaerobes, Gramnegative"		2	4	FALSE
 "EUCAST 2020"	"DISK"		"Burkholderia pseudomallei"	"Imipenem"	"B.pseudomallei"	"10ug"	29	29	FALSE
 "EUCAST 2020"	"MIC"		"Burkholderia pseudomallei"	"Imipenem"	"B.pseudomallei"		2	2	FALSE
-"EUCAST 2020"	"MIC"		"Cutibacterium"	"Imipenem"	"Anaerobes, Grampositive"		2	4	FALSE
 "EUCAST 2020"	"MIC"		"Clostridioides"	"Imipenem"	"Anaerobes, Grampositive"		2	4	FALSE
+"EUCAST 2020"	"MIC"		"Cutibacterium"	"Imipenem"	"Anaerobes, Grampositive"		2	4	FALSE
 "EUCAST 2020"	"MIC"		"Clostridium"	"Imipenem"	"Anaerobes, Grampositive"		2	4	FALSE
 "EUCAST 2020"	"MIC"		"Eubacterium"	"Imipenem"	"Anaerobes, Grampositive"		2	4	FALSE
 "EUCAST 2020"	"MIC"		"Eggerthella"	"Imipenem"	"Anaerobes, Grampositive"		2	4	FALSE
@@ -759,14 +759,14 @@
 "EUCAST 2020"	"DISK"		"Streptococcus anginosus"	"Linezolid"	"Streptococcus A,B,C,G"	"10ug"	19	19	FALSE
 "EUCAST 2020"	"MIC"		"Streptococcus anginosus"	"Linezolid"	"Streptococcus A,B,C,G"		2	2	FALSE
 "EUCAST 2020"	"DISK"		"Streptococcus dysgalactiae"	"Linezolid"	"Streptococcus A,B,C,G"	"10ug"	19	19	FALSE
-"EUCAST 2020"	"MIC"		"Streptococcus dysgalactiae"	"Linezolid"	"Streptococcus A,B,C,G"		2	2	FALSE
 "EUCAST 2020"	"DISK"		"Streptococcus dysgalactiae"	"Linezolid"	"Streptococcus A,B,C,G"	"10ug"	19	19	FALSE
+"EUCAST 2020"	"MIC"		"Streptococcus dysgalactiae"	"Linezolid"	"Streptococcus A,B,C,G"		2	2	FALSE
 "EUCAST 2020"	"MIC"		"Streptococcus dysgalactiae"	"Linezolid"	"Streptococcus A,B,C,G"		2	2	FALSE
 "EUCAST 2020"	"DISK"		"Streptococcus dysgalactiae equisimilis"	"Linezolid"	"Streptococcus A,B,C,G"	"10ug"	19	19	FALSE
 "EUCAST 2020"	"MIC"		"Streptococcus dysgalactiae equisimilis"	"Linezolid"	"Streptococcus A,B,C,G"		2	2	FALSE
 "EUCAST 2020"	"DISK"		"Streptococcus equi"	"Linezolid"	"Streptococcus A,B,C,G"	"10ug"	19	19	FALSE
-"EUCAST 2020"	"MIC"		"Streptococcus equi"	"Linezolid"	"Streptococcus A,B,C,G"		2	2	FALSE
 "EUCAST 2020"	"DISK"		"Streptococcus equi"	"Linezolid"	"Streptococcus A,B,C,G"	"10ug"	19	19	FALSE
+"EUCAST 2020"	"MIC"		"Streptococcus equi"	"Linezolid"	"Streptococcus A,B,C,G"		2	2	FALSE
 "EUCAST 2020"	"MIC"		"Streptococcus equi"	"Linezolid"	"Streptococcus A,B,C,G"		2	2	FALSE
 "EUCAST 2020"	"DISK"		"Streptococcus equi ruminatorum"	"Linezolid"	"Streptococcus A,B,C,G"	"10ug"	19	19	FALSE
 "EUCAST 2020"	"MIC"		"Streptococcus equi ruminatorum"	"Linezolid"	"Streptococcus A,B,C,G"		2	2	FALSE
@@ -827,14 +827,14 @@
 "EUCAST 2020"	"DISK"		"Streptococcus anginosus"	"Levofloxacin"	"Streptococcus A,B,C,G"	"5ug"	50	17	FALSE
 "EUCAST 2020"	"MIC"		"Streptococcus anginosus"	"Levofloxacin"	"Streptococcus A,B,C,G"		0.001	2	FALSE
 "EUCAST 2020"	"DISK"		"Streptococcus dysgalactiae"	"Levofloxacin"	"Streptococcus A,B,C,G"	"5ug"	50	17	FALSE
-"EUCAST 2020"	"MIC"		"Streptococcus dysgalactiae"	"Levofloxacin"	"Streptococcus A,B,C,G"		0.001	2	FALSE
 "EUCAST 2020"	"DISK"		"Streptococcus dysgalactiae"	"Levofloxacin"	"Streptococcus A,B,C,G"	"5ug"	50	17	FALSE
+"EUCAST 2020"	"MIC"		"Streptococcus dysgalactiae"	"Levofloxacin"	"Streptococcus A,B,C,G"		0.001	2	FALSE
 "EUCAST 2020"	"MIC"		"Streptococcus dysgalactiae"	"Levofloxacin"	"Streptococcus A,B,C,G"		0.001	2	FALSE
 "EUCAST 2020"	"DISK"		"Streptococcus dysgalactiae equisimilis"	"Levofloxacin"	"Streptococcus A,B,C,G"	"5ug"	50	17	FALSE
 "EUCAST 2020"	"MIC"		"Streptococcus dysgalactiae equisimilis"	"Levofloxacin"	"Streptococcus A,B,C,G"		0.001	2	FALSE
 "EUCAST 2020"	"DISK"		"Streptococcus equi"	"Levofloxacin"	"Streptococcus A,B,C,G"	"5ug"	50	17	FALSE
-"EUCAST 2020"	"MIC"		"Streptococcus equi"	"Levofloxacin"	"Streptococcus A,B,C,G"		0.001	2	FALSE
 "EUCAST 2020"	"DISK"		"Streptococcus equi"	"Levofloxacin"	"Streptococcus A,B,C,G"	"5ug"	50	17	FALSE
+"EUCAST 2020"	"MIC"		"Streptococcus equi"	"Levofloxacin"	"Streptococcus A,B,C,G"		0.001	2	FALSE
 "EUCAST 2020"	"MIC"		"Streptococcus equi"	"Levofloxacin"	"Streptococcus A,B,C,G"		0.001	2	FALSE
 "EUCAST 2020"	"DISK"		"Streptococcus equi ruminatorum"	"Levofloxacin"	"Streptococcus A,B,C,G"	"5ug"	50	17	FALSE
 "EUCAST 2020"	"MIC"		"Streptococcus equi ruminatorum"	"Levofloxacin"	"Streptococcus A,B,C,G"		0.001	2	FALSE
@@ -891,8 +891,8 @@
 "EUCAST 2020"	"MIC"		"Bilophila"	"Meropenem"	"Anaerobes, Gramnegative"		2	8	FALSE
 "EUCAST 2020"	"DISK"		"Burkholderia pseudomallei"	"Meropenem"	"B.pseudomallei"	"10ug"	24	24	FALSE
 "EUCAST 2020"	"MIC"		"Burkholderia pseudomallei"	"Meropenem"	"B.pseudomallei"		2	2	FALSE
-"EUCAST 2020"	"MIC"		"Cutibacterium"	"Meropenem"	"Anaerobes, Grampositive"		2	8	FALSE
 "EUCAST 2020"	"MIC"		"Clostridioides"	"Meropenem"	"Anaerobes, Grampositive"		2	8	FALSE
+"EUCAST 2020"	"MIC"		"Cutibacterium"	"Meropenem"	"Anaerobes, Grampositive"		2	8	FALSE
 "EUCAST 2020"	"MIC"		"Clostridium"	"Meropenem"	"Anaerobes, Grampositive"		2	8	FALSE
 "EUCAST 2020"	"MIC"		"Eubacterium"	"Meropenem"	"Anaerobes, Grampositive"		2	8	FALSE
 "EUCAST 2020"	"MIC"		"Eggerthella"	"Meropenem"	"Anaerobes, Grampositive"		2	8	FALSE
@@ -938,14 +938,14 @@
 "EUCAST 2020"	"DISK"		"Streptococcus anginosus"	"Moxifloxacin"	"Streptococcus A,B,C,G"	"5ug"	19	19	FALSE
 "EUCAST 2020"	"MIC"		"Streptococcus anginosus"	"Moxifloxacin"	"Streptococcus A,B,C,G"		0.5	0.5	FALSE
 "EUCAST 2020"	"DISK"		"Streptococcus dysgalactiae"	"Moxifloxacin"	"Streptococcus A,B,C,G"	"5ug"	19	19	FALSE
-"EUCAST 2020"	"MIC"		"Streptococcus dysgalactiae"	"Moxifloxacin"	"Streptococcus A,B,C,G"		0.5	0.5	FALSE
 "EUCAST 2020"	"DISK"		"Streptococcus dysgalactiae"	"Moxifloxacin"	"Streptococcus A,B,C,G"	"5ug"	19	19	FALSE
+"EUCAST 2020"	"MIC"		"Streptococcus dysgalactiae"	"Moxifloxacin"	"Streptococcus A,B,C,G"		0.5	0.5	FALSE
 "EUCAST 2020"	"MIC"		"Streptococcus dysgalactiae"	"Moxifloxacin"	"Streptococcus A,B,C,G"		0.5	0.5	FALSE
 "EUCAST 2020"	"DISK"		"Streptococcus dysgalactiae equisimilis"	"Moxifloxacin"	"Streptococcus A,B,C,G"	"5ug"	19	19	FALSE
 "EUCAST 2020"	"MIC"		"Streptococcus dysgalactiae equisimilis"	"Moxifloxacin"	"Streptococcus A,B,C,G"		0.5	0.5	FALSE
 "EUCAST 2020"	"DISK"		"Streptococcus equi"	"Moxifloxacin"	"Streptococcus A,B,C,G"	"5ug"	19	19	FALSE
-"EUCAST 2020"	"MIC"		"Streptococcus equi"	"Moxifloxacin"	"Streptococcus A,B,C,G"		0.5	0.5	FALSE
 "EUCAST 2020"	"DISK"		"Streptococcus equi"	"Moxifloxacin"	"Streptococcus A,B,C,G"	"5ug"	19	19	FALSE
+"EUCAST 2020"	"MIC"		"Streptococcus equi"	"Moxifloxacin"	"Streptococcus A,B,C,G"		0.5	0.5	FALSE
 "EUCAST 2020"	"MIC"		"Streptococcus equi"	"Moxifloxacin"	"Streptococcus A,B,C,G"		0.5	0.5	FALSE
 "EUCAST 2020"	"DISK"		"Streptococcus equi ruminatorum"	"Moxifloxacin"	"Streptococcus A,B,C,G"	"5ug"	19	19	FALSE
 "EUCAST 2020"	"MIC"		"Streptococcus equi ruminatorum"	"Moxifloxacin"	"Streptococcus A,B,C,G"		0.5	0.5	FALSE
@@ -988,14 +988,14 @@
 "EUCAST 2020"	"DISK"		"Streptococcus anginosus"	"Minocycline"	"Streptococcus A,B,C,G"	"30ug"	23	23	FALSE
 "EUCAST 2020"	"MIC"		"Streptococcus anginosus"	"Minocycline"	"Streptococcus A,B,C,G"		0.5	0.5	FALSE
 "EUCAST 2020"	"DISK"		"Streptococcus dysgalactiae"	"Minocycline"	"Streptococcus A,B,C,G"	"30ug"	23	23	FALSE
-"EUCAST 2020"	"MIC"		"Streptococcus dysgalactiae"	"Minocycline"	"Streptococcus A,B,C,G"		0.5	0.5	FALSE
 "EUCAST 2020"	"DISK"		"Streptococcus dysgalactiae"	"Minocycline"	"Streptococcus A,B,C,G"	"30ug"	23	23	FALSE
+"EUCAST 2020"	"MIC"		"Streptococcus dysgalactiae"	"Minocycline"	"Streptococcus A,B,C,G"		0.5	0.5	FALSE
 "EUCAST 2020"	"MIC"		"Streptococcus dysgalactiae"	"Minocycline"	"Streptococcus A,B,C,G"		0.5	0.5	FALSE
 "EUCAST 2020"	"DISK"		"Streptococcus dysgalactiae equisimilis"	"Minocycline"	"Streptococcus A,B,C,G"	"30ug"	23	23	FALSE
 "EUCAST 2020"	"MIC"		"Streptococcus dysgalactiae equisimilis"	"Minocycline"	"Streptococcus A,B,C,G"		0.5	0.5	FALSE
 "EUCAST 2020"	"DISK"		"Streptococcus equi"	"Minocycline"	"Streptococcus A,B,C,G"	"30ug"	23	23	FALSE
-"EUCAST 2020"	"MIC"		"Streptococcus equi"	"Minocycline"	"Streptococcus A,B,C,G"		0.5	0.5	FALSE
 "EUCAST 2020"	"DISK"		"Streptococcus equi"	"Minocycline"	"Streptococcus A,B,C,G"	"30ug"	23	23	FALSE
+"EUCAST 2020"	"MIC"		"Streptococcus equi"	"Minocycline"	"Streptococcus A,B,C,G"		0.5	0.5	FALSE
 "EUCAST 2020"	"MIC"		"Streptococcus equi"	"Minocycline"	"Streptococcus A,B,C,G"		0.5	0.5	FALSE
 "EUCAST 2020"	"DISK"		"Streptococcus equi ruminatorum"	"Minocycline"	"Streptococcus A,B,C,G"	"30ug"	23	23	FALSE
 "EUCAST 2020"	"MIC"		"Streptococcus equi ruminatorum"	"Minocycline"	"Streptococcus A,B,C,G"		0.5	0.5	FALSE
@@ -1029,10 +1029,10 @@
 "EUCAST 2020"	"MIC"		"Bacteroides"	"Metronidazole"	"Anaerobes, Gramnegative"		4	4	FALSE
 "EUCAST 2020"	"MIC"		"Bifidobacterium"	"Metronidazole"	"Anaerobes, Grampositive"		4	4	FALSE
 "EUCAST 2020"	"MIC"		"Bilophila"	"Metronidazole"	"Anaerobes, Gramnegative"		4	4	FALSE
-"EUCAST 2020"	"MIC"		"Cutibacterium"	"Metronidazole"	"Anaerobes, Grampositive"		4	4	FALSE
 "EUCAST 2020"	"MIC"		"Clostridioides"	"Metronidazole"	"Anaerobes, Grampositive"		4	4	FALSE
-"EUCAST 2020"	"MIC"		"Clostridium"	"Metronidazole"	"Anaerobes, Grampositive"		4	4	FALSE
 "EUCAST 2020"	"MIC"		"Clostridioides difficile"	"Metronidazole"	"C.difficile"		2	2	FALSE
+"EUCAST 2020"	"MIC"		"Cutibacterium"	"Metronidazole"	"Anaerobes, Grampositive"		4	4	FALSE
+"EUCAST 2020"	"MIC"		"Clostridium"	"Metronidazole"	"Anaerobes, Grampositive"		4	4	FALSE
 "EUCAST 2020"	"MIC"		"Eubacterium"	"Metronidazole"	"Anaerobes, Grampositive"		4	4	FALSE
 "EUCAST 2020"	"MIC"		"Eggerthella"	"Metronidazole"	"Anaerobes, Grampositive"		4	4	FALSE
 "EUCAST 2020"	"MIC"		"Fusobacterium"	"Metronidazole"	"Anaerobes, Gramnegative"		4	4	FALSE
@@ -1103,10 +1103,10 @@
 "EUCAST 2020"	"MIC"		"Bacteroides"	"Penicillin G"	"Anaerobes, Gramnegative"		0.25	0.5	FALSE
 "EUCAST 2020"	"MIC"		"Bifidobacterium"	"Penicillin G"	"Anaerobes, Grampositive"		0.25	0.5	FALSE
 "EUCAST 2020"	"MIC"		"Bilophila"	"Penicillin G"	"Anaerobes, Gramnegative"		0.25	0.5	FALSE
-"EUCAST 2020"	"MIC"		"Cutibacterium"	"Penicillin G"	"Anaerobes, Grampositive"		0.25	0.5	FALSE
 "EUCAST 2020"	"MIC"		"Clostridioides"	"Penicillin G"	"Anaerobes, Grampositive"		0.25	0.5	FALSE
 "EUCAST 2020"	"DISK"		"Corynebacterium"	"Penicillin G"	"Corynebacterium"	"1ug"	29	29	FALSE
 "EUCAST 2020"	"MIC"		"Corynebacterium"	"Penicillin G"	"Corynebacterium"		0.125	0.125	FALSE
+"EUCAST 2020"	"MIC"		"Cutibacterium"	"Penicillin G"	"Anaerobes, Grampositive"		0.25	0.5	FALSE
 "EUCAST 2020"	"MIC"		"Clostridium"	"Penicillin G"	"Anaerobes, Grampositive"		0.25	0.5	FALSE
 "EUCAST 2020"	"MIC"		"Eubacterium"	"Penicillin G"	"Anaerobes, Grampositive"		0.25	0.5	FALSE
 "EUCAST 2020"	"MIC"		"Eggerthella"	"Penicillin G"	"Anaerobes, Grampositive"		0.25	0.5	FALSE
@@ -1135,14 +1135,14 @@
 "EUCAST 2020"	"DISK"		"Streptococcus anginosus"	"Penicillin G"	"Streptococcus A,B,C,G"	"1ug"	18	18	FALSE
 "EUCAST 2020"	"MIC"		"Streptococcus anginosus"	"Penicillin G"	"Streptococcus A,B,C,G"		0.25	0.25	FALSE
 "EUCAST 2020"	"DISK"		"Streptococcus dysgalactiae"	"Penicillin G"	"Streptococcus A,B,C,G"	"1ug"	18	18	FALSE
-"EUCAST 2020"	"MIC"		"Streptococcus dysgalactiae"	"Penicillin G"	"Streptococcus A,B,C,G"		0.25	0.25	FALSE
 "EUCAST 2020"	"DISK"		"Streptococcus dysgalactiae"	"Penicillin G"	"Streptococcus A,B,C,G"	"1ug"	18	18	FALSE
+"EUCAST 2020"	"MIC"		"Streptococcus dysgalactiae"	"Penicillin G"	"Streptococcus A,B,C,G"		0.25	0.25	FALSE
 "EUCAST 2020"	"MIC"		"Streptococcus dysgalactiae"	"Penicillin G"	"Streptococcus A,B,C,G"		0.25	0.25	FALSE
 "EUCAST 2020"	"DISK"		"Streptococcus dysgalactiae equisimilis"	"Penicillin G"	"Streptococcus A,B,C,G"	"1ug"	18	18	FALSE
 "EUCAST 2020"	"MIC"		"Streptococcus dysgalactiae equisimilis"	"Penicillin G"	"Streptococcus A,B,C,G"		0.25	0.25	FALSE
 "EUCAST 2020"	"DISK"		"Streptococcus equi"	"Penicillin G"	"Streptococcus A,B,C,G"	"1ug"	18	18	FALSE
-"EUCAST 2020"	"MIC"		"Streptococcus equi"	"Penicillin G"	"Streptococcus A,B,C,G"		0.25	0.25	FALSE
 "EUCAST 2020"	"DISK"		"Streptococcus equi"	"Penicillin G"	"Streptococcus A,B,C,G"	"1ug"	18	18	FALSE
+"EUCAST 2020"	"MIC"		"Streptococcus equi"	"Penicillin G"	"Streptococcus A,B,C,G"		0.25	0.25	FALSE
 "EUCAST 2020"	"MIC"		"Streptococcus equi"	"Penicillin G"	"Streptococcus A,B,C,G"		0.25	0.25	FALSE
 "EUCAST 2020"	"DISK"		"Streptococcus equi ruminatorum"	"Penicillin G"	"Streptococcus A,B,C,G"	"1ug"	18	18	FALSE
 "EUCAST 2020"	"MIC"		"Streptococcus equi ruminatorum"	"Penicillin G"	"Streptococcus A,B,C,G"		0.25	0.25	FALSE
@@ -1180,8 +1180,8 @@
 "EUCAST 2020"	"MIC"		"Bacteroides"	"Piperacillin"	"Anaerobes, Gramnegative"		1	1	FALSE
 "EUCAST 2020"	"MIC"		"Bifidobacterium"	"Piperacillin"	"Anaerobes, Grampositive"		8	1	FALSE
 "EUCAST 2020"	"MIC"		"Bilophila"	"Piperacillin"	"Anaerobes, Gramnegative"		1	1	FALSE
-"EUCAST 2020"	"MIC"		"Cutibacterium"	"Piperacillin"	"Anaerobes, Grampositive"		8	1	FALSE
 "EUCAST 2020"	"MIC"		"Clostridioides"	"Piperacillin"	"Anaerobes, Grampositive"		8	1	FALSE
+"EUCAST 2020"	"MIC"		"Cutibacterium"	"Piperacillin"	"Anaerobes, Grampositive"		8	1	FALSE
 "EUCAST 2020"	"MIC"		"Clostridium"	"Piperacillin"	"Anaerobes, Grampositive"		8	1	FALSE
 "EUCAST 2020"	"MIC"		"Eubacterium"	"Piperacillin"	"Anaerobes, Grampositive"		8	1	FALSE
 "EUCAST 2020"	"MIC"		"Eggerthella"	"Piperacillin"	"Anaerobes, Grampositive"		8	1	FALSE
@@ -1219,14 +1219,14 @@
 "EUCAST 2020"	"DISK"		"Streptococcus anginosus"	"Rifampicin"	"Streptococcus A,B,C,G"	"5ug"	21	15	FALSE
 "EUCAST 2020"	"MIC"		"Streptococcus anginosus"	"Rifampicin"	"Streptococcus A,B,C,G"		0.06	0.5	FALSE
 "EUCAST 2020"	"DISK"		"Streptococcus dysgalactiae"	"Rifampicin"	"Streptococcus A,B,C,G"	"5ug"	21	15	FALSE
-"EUCAST 2020"	"MIC"		"Streptococcus dysgalactiae"	"Rifampicin"	"Streptococcus A,B,C,G"		0.06	0.5	FALSE
 "EUCAST 2020"	"DISK"		"Streptococcus dysgalactiae"	"Rifampicin"	"Streptococcus A,B,C,G"	"5ug"	21	15	FALSE
+"EUCAST 2020"	"MIC"		"Streptococcus dysgalactiae"	"Rifampicin"	"Streptococcus A,B,C,G"		0.06	0.5	FALSE
 "EUCAST 2020"	"MIC"		"Streptococcus dysgalactiae"	"Rifampicin"	"Streptococcus A,B,C,G"		0.06	0.5	FALSE
 "EUCAST 2020"	"DISK"		"Streptococcus dysgalactiae equisimilis"	"Rifampicin"	"Streptococcus A,B,C,G"	"5ug"	21	15	FALSE
 "EUCAST 2020"	"MIC"		"Streptococcus dysgalactiae equisimilis"	"Rifampicin"	"Streptococcus A,B,C,G"		0.06	0.5	FALSE
 "EUCAST 2020"	"DISK"		"Streptococcus equi"	"Rifampicin"	"Streptococcus A,B,C,G"	"5ug"	21	15	FALSE
-"EUCAST 2020"	"MIC"		"Streptococcus equi"	"Rifampicin"	"Streptococcus A,B,C,G"		0.06	0.5	FALSE
 "EUCAST 2020"	"DISK"		"Streptococcus equi"	"Rifampicin"	"Streptococcus A,B,C,G"	"5ug"	21	15	FALSE
+"EUCAST 2020"	"MIC"		"Streptococcus equi"	"Rifampicin"	"Streptococcus A,B,C,G"		0.06	0.5	FALSE
 "EUCAST 2020"	"MIC"		"Streptococcus equi"	"Rifampicin"	"Streptococcus A,B,C,G"		0.06	0.5	FALSE
 "EUCAST 2020"	"DISK"		"Streptococcus equi ruminatorum"	"Rifampicin"	"Streptococcus A,B,C,G"	"5ug"	21	15	FALSE
 "EUCAST 2020"	"MIC"		"Streptococcus equi ruminatorum"	"Rifampicin"	"Streptococcus A,B,C,G"		0.06	0.5	FALSE
@@ -1285,8 +1285,8 @@
 "EUCAST 2020"	"MIC"		"Bacteroides"	"Ampicillin/sulbactam"	"Anaerobes, Gramnegative"		4	8	FALSE
 "EUCAST 2020"	"MIC"		"Bifidobacterium"	"Ampicillin/sulbactam"	"Anaerobes, Grampositive"		4	8	FALSE
 "EUCAST 2020"	"MIC"		"Bilophila"	"Ampicillin/sulbactam"	"Anaerobes, Gramnegative"		4	8	FALSE
-"EUCAST 2020"	"MIC"		"Cutibacterium"	"Ampicillin/sulbactam"	"Anaerobes, Grampositive"		4	8	FALSE
 "EUCAST 2020"	"MIC"		"Clostridioides"	"Ampicillin/sulbactam"	"Anaerobes, Grampositive"		4	8	FALSE
+"EUCAST 2020"	"MIC"		"Cutibacterium"	"Ampicillin/sulbactam"	"Anaerobes, Grampositive"		4	8	FALSE
 "EUCAST 2020"	"MIC"		"Clostridium"	"Ampicillin/sulbactam"	"Anaerobes, Grampositive"		4	8	FALSE
 "EUCAST 2020"	"MIC"		"Eubacterium"	"Ampicillin/sulbactam"	"Anaerobes, Grampositive"		4	8	FALSE
 "EUCAST 2020"	"MIC"		"Eggerthella"	"Ampicillin/sulbactam"	"Anaerobes, Grampositive"		4	8	FALSE
@@ -1330,14 +1330,14 @@
 "EUCAST 2020"	"DISK"		"Streptococcus anginosus"	"Trimethoprim/sulfamethoxazole"	"Streptococcus A,B,C,G"	"1.25-23.75ug"	18	15	FALSE
 "EUCAST 2020"	"MIC"		"Streptococcus anginosus"	"Trimethoprim/sulfamethoxazole"	"Streptococcus A,B,C,G"		1	2	FALSE
 "EUCAST 2020"	"DISK"		"Streptococcus dysgalactiae"	"Trimethoprim/sulfamethoxazole"	"Streptococcus A,B,C,G"	"1.25-23.75ug"	18	15	FALSE
-"EUCAST 2020"	"MIC"		"Streptococcus dysgalactiae"	"Trimethoprim/sulfamethoxazole"	"Streptococcus A,B,C,G"		1	2	FALSE
 "EUCAST 2020"	"DISK"		"Streptococcus dysgalactiae"	"Trimethoprim/sulfamethoxazole"	"Streptococcus A,B,C,G"	"1.25-23.75ug"	18	15	FALSE
+"EUCAST 2020"	"MIC"		"Streptococcus dysgalactiae"	"Trimethoprim/sulfamethoxazole"	"Streptococcus A,B,C,G"		1	2	FALSE
 "EUCAST 2020"	"MIC"		"Streptococcus dysgalactiae"	"Trimethoprim/sulfamethoxazole"	"Streptococcus A,B,C,G"		1	2	FALSE
 "EUCAST 2020"	"DISK"		"Streptococcus dysgalactiae equisimilis"	"Trimethoprim/sulfamethoxazole"	"Streptococcus A,B,C,G"	"1.25-23.75ug"	18	15	FALSE
 "EUCAST 2020"	"MIC"		"Streptococcus dysgalactiae equisimilis"	"Trimethoprim/sulfamethoxazole"	"Streptococcus A,B,C,G"		1	2	FALSE
 "EUCAST 2020"	"DISK"		"Streptococcus equi"	"Trimethoprim/sulfamethoxazole"	"Streptococcus A,B,C,G"	"1.25-23.75ug"	18	15	FALSE
-"EUCAST 2020"	"MIC"		"Streptococcus equi"	"Trimethoprim/sulfamethoxazole"	"Streptococcus A,B,C,G"		1	2	FALSE
 "EUCAST 2020"	"DISK"		"Streptococcus equi"	"Trimethoprim/sulfamethoxazole"	"Streptococcus A,B,C,G"	"1.25-23.75ug"	18	15	FALSE
+"EUCAST 2020"	"MIC"		"Streptococcus equi"	"Trimethoprim/sulfamethoxazole"	"Streptococcus A,B,C,G"		1	2	FALSE
 "EUCAST 2020"	"MIC"		"Streptococcus equi"	"Trimethoprim/sulfamethoxazole"	"Streptococcus A,B,C,G"		1	2	FALSE
 "EUCAST 2020"	"DISK"		"Streptococcus equi ruminatorum"	"Trimethoprim/sulfamethoxazole"	"Streptococcus A,B,C,G"	"1.25-23.75ug"	18	15	FALSE
 "EUCAST 2020"	"MIC"		"Streptococcus equi ruminatorum"	"Trimethoprim/sulfamethoxazole"	"Streptococcus A,B,C,G"		1	2	FALSE
@@ -1373,8 +1373,8 @@
 "EUCAST 2020"	"MIC"		"Bacteroides"	"Ticarcillin/clavulanic acid"	"Anaerobes, Gramnegative"		8	16	FALSE
 "EUCAST 2020"	"MIC"		"Bifidobacterium"	"Ticarcillin/clavulanic acid"	"Anaerobes, Grampositive"		8	16	FALSE
 "EUCAST 2020"	"MIC"		"Bilophila"	"Ticarcillin/clavulanic acid"	"Anaerobes, Gramnegative"		8	16	FALSE
-"EUCAST 2020"	"MIC"		"Cutibacterium"	"Ticarcillin/clavulanic acid"	"Anaerobes, Grampositive"		8	16	FALSE
 "EUCAST 2020"	"MIC"		"Clostridioides"	"Ticarcillin/clavulanic acid"	"Anaerobes, Grampositive"		8	16	FALSE
+"EUCAST 2020"	"MIC"		"Cutibacterium"	"Ticarcillin/clavulanic acid"	"Anaerobes, Grampositive"		8	16	FALSE
 "EUCAST 2020"	"MIC"		"Clostridium"	"Ticarcillin/clavulanic acid"	"Anaerobes, Grampositive"		8	16	FALSE
 "EUCAST 2020"	"MIC"		"Eubacterium"	"Ticarcillin/clavulanic acid"	"Anaerobes, Grampositive"		8	16	FALSE
 "EUCAST 2020"	"MIC"		"Eggerthella"	"Ticarcillin/clavulanic acid"	"Anaerobes, Grampositive"		8	16	FALSE
@@ -1411,14 +1411,14 @@
 "EUCAST 2020"	"DISK"		"Streptococcus anginosus"	"Tetracycline"	"Streptococcus A,B,C,G"	"30ug"	23	20	FALSE
 "EUCAST 2020"	"MIC"		"Streptococcus anginosus"	"Tetracycline"	"Streptococcus A,B,C,G"		1	2	FALSE
 "EUCAST 2020"	"DISK"		"Streptococcus dysgalactiae"	"Tetracycline"	"Streptococcus A,B,C,G"	"30ug"	23	20	FALSE
-"EUCAST 2020"	"MIC"		"Streptococcus dysgalactiae"	"Tetracycline"	"Streptococcus A,B,C,G"		1	2	FALSE
 "EUCAST 2020"	"DISK"		"Streptococcus dysgalactiae"	"Tetracycline"	"Streptococcus A,B,C,G"	"30ug"	23	20	FALSE
+"EUCAST 2020"	"MIC"		"Streptococcus dysgalactiae"	"Tetracycline"	"Streptococcus A,B,C,G"		1	2	FALSE
 "EUCAST 2020"	"MIC"		"Streptococcus dysgalactiae"	"Tetracycline"	"Streptococcus A,B,C,G"		1	2	FALSE
 "EUCAST 2020"	"DISK"		"Streptococcus dysgalactiae equisimilis"	"Tetracycline"	"Streptococcus A,B,C,G"	"30ug"	23	20	FALSE
 "EUCAST 2020"	"MIC"		"Streptococcus dysgalactiae equisimilis"	"Tetracycline"	"Streptococcus A,B,C,G"		1	2	FALSE
 "EUCAST 2020"	"DISK"		"Streptococcus equi"	"Tetracycline"	"Streptococcus A,B,C,G"	"30ug"	23	20	FALSE
-"EUCAST 2020"	"MIC"		"Streptococcus equi"	"Tetracycline"	"Streptococcus A,B,C,G"		1	2	FALSE
 "EUCAST 2020"	"DISK"		"Streptococcus equi"	"Tetracycline"	"Streptococcus A,B,C,G"	"30ug"	23	20	FALSE
+"EUCAST 2020"	"MIC"		"Streptococcus equi"	"Tetracycline"	"Streptococcus A,B,C,G"		1	2	FALSE
 "EUCAST 2020"	"MIC"		"Streptococcus equi"	"Tetracycline"	"Streptococcus A,B,C,G"		1	2	FALSE
 "EUCAST 2020"	"DISK"		"Streptococcus equi ruminatorum"	"Tetracycline"	"Streptococcus A,B,C,G"	"30ug"	23	20	FALSE
 "EUCAST 2020"	"MIC"		"Streptococcus equi ruminatorum"	"Tetracycline"	"Streptococcus A,B,C,G"		1	2	FALSE
@@ -1457,14 +1457,14 @@
 "EUCAST 2020"	"DISK"		"Streptococcus anginosus"	"Teicoplanin"	"Streptococcus A,B,C,G"	"30ug"	15	15	FALSE
 "EUCAST 2020"	"MIC"		"Streptococcus anginosus"	"Teicoplanin"	"Streptococcus A,B,C,G"		2	2	FALSE
 "EUCAST 2020"	"DISK"		"Streptococcus dysgalactiae"	"Teicoplanin"	"Streptococcus A,B,C,G"	"30ug"	15	15	FALSE
-"EUCAST 2020"	"MIC"		"Streptococcus dysgalactiae"	"Teicoplanin"	"Streptococcus A,B,C,G"		2	2	FALSE
 "EUCAST 2020"	"DISK"		"Streptococcus dysgalactiae"	"Teicoplanin"	"Streptococcus A,B,C,G"	"30ug"	15	15	FALSE
+"EUCAST 2020"	"MIC"		"Streptococcus dysgalactiae"	"Teicoplanin"	"Streptococcus A,B,C,G"		2	2	FALSE
 "EUCAST 2020"	"MIC"		"Streptococcus dysgalactiae"	"Teicoplanin"	"Streptococcus A,B,C,G"		2	2	FALSE
 "EUCAST 2020"	"DISK"		"Streptococcus dysgalactiae equisimilis"	"Teicoplanin"	"Streptococcus A,B,C,G"	"30ug"	15	15	FALSE
 "EUCAST 2020"	"MIC"		"Streptococcus dysgalactiae equisimilis"	"Teicoplanin"	"Streptococcus A,B,C,G"		2	2	FALSE
 "EUCAST 2020"	"DISK"		"Streptococcus equi"	"Teicoplanin"	"Streptococcus A,B,C,G"	"30ug"	15	15	FALSE
-"EUCAST 2020"	"MIC"		"Streptococcus equi"	"Teicoplanin"	"Streptococcus A,B,C,G"		2	2	FALSE
 "EUCAST 2020"	"DISK"		"Streptococcus equi"	"Teicoplanin"	"Streptococcus A,B,C,G"	"30ug"	15	15	FALSE
+"EUCAST 2020"	"MIC"		"Streptococcus equi"	"Teicoplanin"	"Streptococcus A,B,C,G"		2	2	FALSE
 "EUCAST 2020"	"MIC"		"Streptococcus equi"	"Teicoplanin"	"Streptococcus A,B,C,G"		2	2	FALSE
 "EUCAST 2020"	"DISK"		"Streptococcus equi ruminatorum"	"Teicoplanin"	"Streptococcus A,B,C,G"	"30ug"	15	15	FALSE
 "EUCAST 2020"	"MIC"		"Streptococcus equi ruminatorum"	"Teicoplanin"	"Streptococcus A,B,C,G"		2	2	FALSE
@@ -1511,14 +1511,14 @@
 "EUCAST 2020"	"DISK"		"Streptococcus anginosus"	"Tigecycline"	"Streptococcus A,B,C,G"	"15ug"	19	19	FALSE
 "EUCAST 2020"	"MIC"		"Streptococcus anginosus"	"Tigecycline"	"Streptococcus A,B,C,G"		0.125	0.125	FALSE
 "EUCAST 2020"	"DISK"		"Streptococcus dysgalactiae"	"Tigecycline"	"Streptococcus A,B,C,G"	"15ug"	19	19	FALSE
-"EUCAST 2020"	"MIC"		"Streptococcus dysgalactiae"	"Tigecycline"	"Streptococcus A,B,C,G"		0.125	0.125	FALSE
 "EUCAST 2020"	"DISK"		"Streptococcus dysgalactiae"	"Tigecycline"	"Streptococcus A,B,C,G"	"15ug"	19	19	FALSE
+"EUCAST 2020"	"MIC"		"Streptococcus dysgalactiae"	"Tigecycline"	"Streptococcus A,B,C,G"		0.125	0.125	FALSE
 "EUCAST 2020"	"MIC"		"Streptococcus dysgalactiae"	"Tigecycline"	"Streptococcus A,B,C,G"		0.125	0.125	FALSE
 "EUCAST 2020"	"DISK"		"Streptococcus dysgalactiae equisimilis"	"Tigecycline"	"Streptococcus A,B,C,G"	"15ug"	19	19	FALSE
 "EUCAST 2020"	"MIC"		"Streptococcus dysgalactiae equisimilis"	"Tigecycline"	"Streptococcus A,B,C,G"		0.125	0.125	FALSE
 "EUCAST 2020"	"DISK"		"Streptococcus equi"	"Tigecycline"	"Streptococcus A,B,C,G"	"15ug"	19	19	FALSE
-"EUCAST 2020"	"MIC"		"Streptococcus equi"	"Tigecycline"	"Streptococcus A,B,C,G"		0.125	0.125	FALSE
 "EUCAST 2020"	"DISK"		"Streptococcus equi"	"Tigecycline"	"Streptococcus A,B,C,G"	"15ug"	19	19	FALSE
+"EUCAST 2020"	"MIC"		"Streptococcus equi"	"Tigecycline"	"Streptococcus A,B,C,G"		0.125	0.125	FALSE
 "EUCAST 2020"	"MIC"		"Streptococcus equi"	"Tigecycline"	"Streptococcus A,B,C,G"		0.125	0.125	FALSE
 "EUCAST 2020"	"DISK"		"Streptococcus equi ruminatorum"	"Tigecycline"	"Streptococcus A,B,C,G"	"15ug"	19	19	FALSE
 "EUCAST 2020"	"MIC"		"Streptococcus equi ruminatorum"	"Tigecycline"	"Streptococcus A,B,C,G"		0.125	0.125	FALSE
@@ -1553,8 +1553,8 @@
 "EUCAST 2020"	"MIC"		"Bacteroides"	"Ticarcillin"	"Anaerobes, Gramnegative"		1	1	FALSE
 "EUCAST 2020"	"MIC"		"Bifidobacterium"	"Ticarcillin"	"Anaerobes, Grampositive"		8	1	FALSE
 "EUCAST 2020"	"MIC"		"Bilophila"	"Ticarcillin"	"Anaerobes, Gramnegative"		1	1	FALSE
-"EUCAST 2020"	"MIC"		"Cutibacterium"	"Ticarcillin"	"Anaerobes, Grampositive"		8	1	FALSE
 "EUCAST 2020"	"MIC"		"Clostridioides"	"Ticarcillin"	"Anaerobes, Grampositive"		8	1	FALSE
+"EUCAST 2020"	"MIC"		"Cutibacterium"	"Ticarcillin"	"Anaerobes, Grampositive"		8	1	FALSE
 "EUCAST 2020"	"MIC"		"Clostridium"	"Ticarcillin"	"Anaerobes, Grampositive"		8	1	FALSE
 "EUCAST 2020"	"MIC"		"Eubacterium"	"Ticarcillin"	"Anaerobes, Grampositive"		8	1	FALSE
 "EUCAST 2020"	"MIC"		"Eggerthella"	"Ticarcillin"	"Anaerobes, Grampositive"		8	1	FALSE
@@ -1576,14 +1576,14 @@
 "EUCAST 2020"	"DISK"		"Streptococcus anginosus"	"Telithromycin"	"Streptococcus A,B,C,G"	"15ug"	20	17	FALSE
 "EUCAST 2020"	"MIC"		"Streptococcus anginosus"	"Telithromycin"	"Streptococcus A,B,C,G"		0.25	0.5	FALSE
 "EUCAST 2020"	"DISK"		"Streptococcus dysgalactiae"	"Telithromycin"	"Streptococcus A,B,C,G"	"15ug"	20	17	FALSE
-"EUCAST 2020"	"MIC"		"Streptococcus dysgalactiae"	"Telithromycin"	"Streptococcus A,B,C,G"		0.25	0.5	FALSE
 "EUCAST 2020"	"DISK"		"Streptococcus dysgalactiae"	"Telithromycin"	"Streptococcus A,B,C,G"	"15ug"	20	17	FALSE
+"EUCAST 2020"	"MIC"		"Streptococcus dysgalactiae"	"Telithromycin"	"Streptococcus A,B,C,G"		0.25	0.5	FALSE
 "EUCAST 2020"	"MIC"		"Streptococcus dysgalactiae"	"Telithromycin"	"Streptococcus A,B,C,G"		0.25	0.5	FALSE
 "EUCAST 2020"	"DISK"		"Streptococcus dysgalactiae equisimilis"	"Telithromycin"	"Streptococcus A,B,C,G"	"15ug"	20	17	FALSE
 "EUCAST 2020"	"MIC"		"Streptococcus dysgalactiae equisimilis"	"Telithromycin"	"Streptococcus A,B,C,G"		0.25	0.5	FALSE
 "EUCAST 2020"	"DISK"		"Streptococcus equi"	"Telithromycin"	"Streptococcus A,B,C,G"	"15ug"	20	17	FALSE
-"EUCAST 2020"	"MIC"		"Streptococcus equi"	"Telithromycin"	"Streptococcus A,B,C,G"		0.25	0.5	FALSE
 "EUCAST 2020"	"DISK"		"Streptococcus equi"	"Telithromycin"	"Streptococcus A,B,C,G"	"15ug"	20	17	FALSE
+"EUCAST 2020"	"MIC"		"Streptococcus equi"	"Telithromycin"	"Streptococcus A,B,C,G"		0.25	0.5	FALSE
 "EUCAST 2020"	"MIC"		"Streptococcus equi"	"Telithromycin"	"Streptococcus A,B,C,G"		0.25	0.5	FALSE
 "EUCAST 2020"	"DISK"		"Streptococcus equi ruminatorum"	"Telithromycin"	"Streptococcus A,B,C,G"	"15ug"	20	17	FALSE
 "EUCAST 2020"	"MIC"		"Streptococcus equi ruminatorum"	"Telithromycin"	"Streptococcus A,B,C,G"		0.25	0.5	FALSE
@@ -1645,14 +1645,14 @@
 "EUCAST 2020"	"MIC"		"Streptococcus anginosus"	"Tedizolid"	"Streptococcus A,B,C,G"		0.5	0.5	FALSE
 "EUCAST 2020"	"MIC"		"Streptococcus anginosus"	"Tedizolid"	"Viridans group streptococci"		0.25	0.25	FALSE
 "EUCAST 2020"	"DISK"		"Streptococcus dysgalactiae"	"Tedizolid"	"Streptococcus A,B,C,G"	"2ug"	18	18	FALSE
-"EUCAST 2020"	"MIC"		"Streptococcus dysgalactiae"	"Tedizolid"	"Streptococcus A,B,C,G"		0.5	0.5	FALSE
 "EUCAST 2020"	"DISK"		"Streptococcus dysgalactiae"	"Tedizolid"	"Streptococcus A,B,C,G"	"2ug"	18	18	FALSE
+"EUCAST 2020"	"MIC"		"Streptococcus dysgalactiae"	"Tedizolid"	"Streptococcus A,B,C,G"		0.5	0.5	FALSE
 "EUCAST 2020"	"MIC"		"Streptococcus dysgalactiae"	"Tedizolid"	"Streptococcus A,B,C,G"		0.5	0.5	FALSE
 "EUCAST 2020"	"DISK"		"Streptococcus dysgalactiae equisimilis"	"Tedizolid"	"Streptococcus A,B,C,G"	"2ug"	18	18	FALSE
 "EUCAST 2020"	"MIC"		"Streptococcus dysgalactiae equisimilis"	"Tedizolid"	"Streptococcus A,B,C,G"		0.5	0.5	FALSE
 "EUCAST 2020"	"DISK"		"Streptococcus equi"	"Tedizolid"	"Streptococcus A,B,C,G"	"2ug"	18	18	FALSE
-"EUCAST 2020"	"MIC"		"Streptococcus equi"	"Tedizolid"	"Streptococcus A,B,C,G"		0.5	0.5	FALSE
 "EUCAST 2020"	"DISK"		"Streptococcus equi"	"Tedizolid"	"Streptococcus A,B,C,G"	"2ug"	18	18	FALSE
+"EUCAST 2020"	"MIC"		"Streptococcus equi"	"Tedizolid"	"Streptococcus A,B,C,G"		0.5	0.5	FALSE
 "EUCAST 2020"	"MIC"		"Streptococcus equi"	"Tedizolid"	"Streptococcus A,B,C,G"		0.5	0.5	FALSE
 "EUCAST 2020"	"DISK"		"Streptococcus equi ruminatorum"	"Tedizolid"	"Streptococcus A,B,C,G"	"2ug"	18	18	FALSE
 "EUCAST 2020"	"MIC"		"Streptococcus equi ruminatorum"	"Tedizolid"	"Streptococcus A,B,C,G"		0.5	0.5	FALSE
@@ -1686,8 +1686,8 @@
 "EUCAST 2020"	"MIC"		"Bacteroides"	"Piperacillin/tazobactam"	"Anaerobes, Gramnegative"		8	16	FALSE
 "EUCAST 2020"	"MIC"		"Bifidobacterium"	"Piperacillin/tazobactam"	"Anaerobes, Grampositive"		8	16	FALSE
 "EUCAST 2020"	"MIC"		"Bilophila"	"Piperacillin/tazobactam"	"Anaerobes, Gramnegative"		8	16	FALSE
-"EUCAST 2020"	"MIC"		"Cutibacterium"	"Piperacillin/tazobactam"	"Anaerobes, Grampositive"		8	16	FALSE
 "EUCAST 2020"	"MIC"		"Clostridioides"	"Piperacillin/tazobactam"	"Anaerobes, Grampositive"		8	16	FALSE
+"EUCAST 2020"	"MIC"		"Cutibacterium"	"Piperacillin/tazobactam"	"Anaerobes, Grampositive"		8	16	FALSE
 "EUCAST 2020"	"MIC"		"Clostridium"	"Piperacillin/tazobactam"	"Anaerobes, Grampositive"		8	16	FALSE
 "EUCAST 2020"	"MIC"		"Eubacterium"	"Piperacillin/tazobactam"	"Anaerobes, Grampositive"		8	16	FALSE
 "EUCAST 2020"	"MIC"		"Eggerthella"	"Piperacillin/tazobactam"	"Anaerobes, Grampositive"		8	16	FALSE
@@ -1710,12 +1710,12 @@
 "EUCAST 2020"	"MIC"		"Aerococcus urinae"	"Vancomycin"	"A.sanguinicola_A.urinae"		1	1	FALSE
 "EUCAST 2020"	"MIC"		"Actinomyces"	"Vancomycin"	"Anaerobes, Grampositive"		2	2	FALSE
 "EUCAST 2020"	"MIC"		"Bifidobacterium"	"Vancomycin"	"Anaerobes, Grampositive"		2	2	FALSE
-"EUCAST 2020"	"MIC"		"Cutibacterium"	"Vancomycin"	"Anaerobes, Grampositive"		2	2	FALSE
 "EUCAST 2020"	"MIC"		"Clostridioides"	"Vancomycin"	"Anaerobes, Grampositive"		2	2	FALSE
+"EUCAST 2020"	"MIC"		"Clostridioides difficile"	"Vancomycin"	"C.difficile"		2	2	FALSE
 "EUCAST 2020"	"DISK"		"Corynebacterium"	"Vancomycin"	"Corynebacterium"	"5ug"	17	17	FALSE
 "EUCAST 2020"	"MIC"		"Corynebacterium"	"Vancomycin"	"Corynebacterium"		2	2	FALSE
+"EUCAST 2020"	"MIC"		"Cutibacterium"	"Vancomycin"	"Anaerobes, Grampositive"		2	2	FALSE
 "EUCAST 2020"	"MIC"		"Clostridium"	"Vancomycin"	"Anaerobes, Grampositive"		2	2	FALSE
-"EUCAST 2020"	"MIC"		"Clostridioides difficile"	"Vancomycin"	"C.difficile"		2	2	FALSE
 "EUCAST 2020"	"MIC"		"Eubacterium"	"Vancomycin"	"Anaerobes, Grampositive"		2	2	FALSE
 "EUCAST 2020"	"MIC"		"Eggerthella"	"Vancomycin"	"Anaerobes, Grampositive"		2	2	FALSE
 "EUCAST 2020"	"DISK"		"Enterococcus"	"Vancomycin"	"Enterococcus"	"5ug"	12	12	FALSE
@@ -1730,14 +1730,14 @@
 "EUCAST 2020"	"DISK"		"Streptococcus anginosus"	"Vancomycin"	"Streptococcus A,B,C,G"	"5ug"	13	13	FALSE
 "EUCAST 2020"	"MIC"		"Streptococcus anginosus"	"Vancomycin"	"Streptococcus A,B,C,G"		2	2	FALSE
 "EUCAST 2020"	"DISK"		"Streptococcus dysgalactiae"	"Vancomycin"	"Streptococcus A,B,C,G"	"5ug"	13	13	FALSE
-"EUCAST 2020"	"MIC"		"Streptococcus dysgalactiae"	"Vancomycin"	"Streptococcus A,B,C,G"		2	2	FALSE
 "EUCAST 2020"	"DISK"		"Streptococcus dysgalactiae"	"Vancomycin"	"Streptococcus A,B,C,G"	"5ug"	13	13	FALSE
+"EUCAST 2020"	"MIC"		"Streptococcus dysgalactiae"	"Vancomycin"	"Streptococcus A,B,C,G"		2	2	FALSE
 "EUCAST 2020"	"MIC"		"Streptococcus dysgalactiae"	"Vancomycin"	"Streptococcus A,B,C,G"		2	2	FALSE
 "EUCAST 2020"	"DISK"		"Streptococcus dysgalactiae equisimilis"	"Vancomycin"	"Streptococcus A,B,C,G"	"5ug"	13	13	FALSE
 "EUCAST 2020"	"MIC"		"Streptococcus dysgalactiae equisimilis"	"Vancomycin"	"Streptococcus A,B,C,G"		2	2	FALSE
 "EUCAST 2020"	"DISK"		"Streptococcus equi"	"Vancomycin"	"Streptococcus A,B,C,G"	"5ug"	13	13	FALSE
-"EUCAST 2020"	"MIC"		"Streptococcus equi"	"Vancomycin"	"Streptococcus A,B,C,G"		2	2	FALSE
 "EUCAST 2020"	"DISK"		"Streptococcus equi"	"Vancomycin"	"Streptococcus A,B,C,G"	"5ug"	13	13	FALSE
+"EUCAST 2020"	"MIC"		"Streptococcus equi"	"Vancomycin"	"Streptococcus A,B,C,G"		2	2	FALSE
 "EUCAST 2020"	"MIC"		"Streptococcus equi"	"Vancomycin"	"Streptococcus A,B,C,G"		2	2	FALSE
 "EUCAST 2020"	"DISK"		"Streptococcus equi ruminatorum"	"Vancomycin"	"Streptococcus A,B,C,G"	"5ug"	13	13	FALSE
 "EUCAST 2020"	"MIC"		"Streptococcus equi ruminatorum"	"Vancomycin"	"Streptococcus A,B,C,G"		2	2	FALSE
@@ -1777,8 +1777,8 @@
 "EUCAST 2019"	"MIC"		"Bacteroides"	"Amoxicillin/clavulanic acid"	"Anaerobes, Gramnegative"		4	8	FALSE
 "EUCAST 2019"	"MIC"		"Bifidobacterium"	"Amoxicillin/clavulanic acid"	"Anaerobes, Grampositive"		4	8	FALSE
 "EUCAST 2019"	"MIC"		"Bilophila"	"Amoxicillin/clavulanic acid"	"Anaerobes, Gramnegative"		4	8	FALSE
-"EUCAST 2019"	"MIC"		"Cutibacterium"	"Amoxicillin/clavulanic acid"	"Anaerobes, Grampositive"		4	8	FALSE
 "EUCAST 2019"	"MIC"		"Clostridioides"	"Amoxicillin/clavulanic acid"	"Anaerobes, Grampositive"		4	8	FALSE
+"EUCAST 2019"	"MIC"		"Cutibacterium"	"Amoxicillin/clavulanic acid"	"Anaerobes, Grampositive"		4	8	FALSE
 "EUCAST 2019"	"MIC"		"Clostridium"	"Amoxicillin/clavulanic acid"	"Anaerobes, Grampositive"		4	8	FALSE
 "EUCAST 2019"	"MIC"		"Eubacterium"	"Amoxicillin/clavulanic acid"	"Anaerobes, Grampositive"		4	8	FALSE
 "EUCAST 2019"	"MIC"		"Eggerthella"	"Amoxicillin/clavulanic acid"	"Anaerobes, Grampositive"		4	8	FALSE
@@ -1821,8 +1821,8 @@
 "EUCAST 2019"	"MIC"		"Bacteroides"	"Ampicillin"	"Anaerobes, Gramnegative"		0.5	2	FALSE
 "EUCAST 2019"	"MIC"		"Bifidobacterium"	"Ampicillin"	"Anaerobes, Grampositive"		4	8	FALSE
 "EUCAST 2019"	"MIC"		"Bilophila"	"Ampicillin"	"Anaerobes, Gramnegative"		0.5	2	FALSE
-"EUCAST 2019"	"MIC"		"Cutibacterium"	"Ampicillin"	"Anaerobes, Grampositive"		4	8	FALSE
 "EUCAST 2019"	"MIC"		"Clostridioides"	"Ampicillin"	"Anaerobes, Grampositive"		4	8	FALSE
+"EUCAST 2019"	"MIC"		"Cutibacterium"	"Ampicillin"	"Anaerobes, Grampositive"		4	8	FALSE
 "EUCAST 2019"	"MIC"		"Clostridium"	"Ampicillin"	"Anaerobes, Grampositive"		4	8	FALSE
 "EUCAST 2019"	"MIC"		"Eubacterium"	"Ampicillin"	"Anaerobes, Grampositive"		4	8	FALSE
 "EUCAST 2019"	"MIC"		"Eggerthella"	"Ampicillin"	"Anaerobes, Grampositive"		4	8	FALSE
@@ -1853,8 +1853,8 @@
 "EUCAST 2019"	"MIC"		"Bacteroides"	"Amoxicillin"	"Anaerobes, Gramnegative"		0.5	2	FALSE
 "EUCAST 2019"	"MIC"		"Bifidobacterium"	"Amoxicillin"	"Anaerobes, Grampositive"		4	8	FALSE
 "EUCAST 2019"	"MIC"		"Bilophila"	"Amoxicillin"	"Anaerobes, Gramnegative"		0.5	2	FALSE
-"EUCAST 2019"	"MIC"		"Cutibacterium"	"Amoxicillin"	"Anaerobes, Grampositive"		4	8	FALSE
 "EUCAST 2019"	"MIC"		"Clostridioides"	"Amoxicillin"	"Anaerobes, Grampositive"		4	8	FALSE
+"EUCAST 2019"	"MIC"		"Cutibacterium"	"Amoxicillin"	"Anaerobes, Grampositive"		4	8	FALSE
 "EUCAST 2019"	"MIC"		"Clostridium"	"Amoxicillin"	"Anaerobes, Grampositive"		4	8	FALSE
 "EUCAST 2019"	"MIC"		"Eubacterium"	"Amoxicillin"	"Anaerobes, Grampositive"		4	8	FALSE
 "EUCAST 2019"	"MIC"		"Eggerthella"	"Amoxicillin"	"Anaerobes, Grampositive"		4	8	FALSE
@@ -1938,8 +1938,8 @@
 "EUCAST 2019"	"MIC"		"Bacteroides"	"Chloramphenicol"	"Anaerobes, Gramnegative"		8	8	FALSE
 "EUCAST 2019"	"MIC"		"Bifidobacterium"	"Chloramphenicol"	"Anaerobes, Grampositive"		8	8	FALSE
 "EUCAST 2019"	"MIC"		"Bilophila"	"Chloramphenicol"	"Anaerobes, Gramnegative"		8	8	FALSE
-"EUCAST 2019"	"MIC"		"Cutibacterium"	"Chloramphenicol"	"Anaerobes, Grampositive"		8	8	FALSE
 "EUCAST 2019"	"MIC"		"Clostridioides"	"Chloramphenicol"	"Anaerobes, Grampositive"		8	8	FALSE
+"EUCAST 2019"	"MIC"		"Cutibacterium"	"Chloramphenicol"	"Anaerobes, Grampositive"		8	8	FALSE
 "EUCAST 2019"	"MIC"		"Clostridium"	"Chloramphenicol"	"Anaerobes, Grampositive"		8	8	FALSE
 "EUCAST 2019"	"MIC"		"Eubacterium"	"Chloramphenicol"	"Anaerobes, Grampositive"		8	8	FALSE
 "EUCAST 2019"	"MIC"		"Eggerthella"	"Chloramphenicol"	"Anaerobes, Grampositive"		8	8	FALSE
@@ -1963,14 +1963,14 @@
 "EUCAST 2019"	"DISK"		"Streptococcus anginosus"	"Chloramphenicol"	"Streptococcus A,B,C,G"	"30ug"	19	19	FALSE
 "EUCAST 2019"	"MIC"		"Streptococcus anginosus"	"Chloramphenicol"	"Streptococcus A,B,C,G"		8	8	FALSE
 "EUCAST 2019"	"DISK"		"Streptococcus dysgalactiae"	"Chloramphenicol"	"Streptococcus A,B,C,G"	"30ug"	19	19	FALSE
-"EUCAST 2019"	"MIC"		"Streptococcus dysgalactiae"	"Chloramphenicol"	"Streptococcus A,B,C,G"		8	8	FALSE
 "EUCAST 2019"	"DISK"		"Streptococcus dysgalactiae"	"Chloramphenicol"	"Streptococcus A,B,C,G"	"30ug"	19	19	FALSE
+"EUCAST 2019"	"MIC"		"Streptococcus dysgalactiae"	"Chloramphenicol"	"Streptococcus A,B,C,G"		8	8	FALSE
 "EUCAST 2019"	"MIC"		"Streptococcus dysgalactiae"	"Chloramphenicol"	"Streptococcus A,B,C,G"		8	8	FALSE
 "EUCAST 2019"	"DISK"		"Streptococcus dysgalactiae equisimilis"	"Chloramphenicol"	"Streptococcus A,B,C,G"	"30ug"	19	19	FALSE
 "EUCAST 2019"	"MIC"		"Streptococcus dysgalactiae equisimilis"	"Chloramphenicol"	"Streptococcus A,B,C,G"		8	8	FALSE
 "EUCAST 2019"	"DISK"		"Streptococcus equi"	"Chloramphenicol"	"Streptococcus A,B,C,G"	"30ug"	19	19	FALSE
-"EUCAST 2019"	"MIC"		"Streptococcus equi"	"Chloramphenicol"	"Streptococcus A,B,C,G"		8	8	FALSE
 "EUCAST 2019"	"DISK"		"Streptococcus equi"	"Chloramphenicol"	"Streptococcus A,B,C,G"	"30ug"	19	19	FALSE
+"EUCAST 2019"	"MIC"		"Streptococcus equi"	"Chloramphenicol"	"Streptococcus A,B,C,G"		8	8	FALSE
 "EUCAST 2019"	"MIC"		"Streptococcus equi"	"Chloramphenicol"	"Streptococcus A,B,C,G"		8	8	FALSE
 "EUCAST 2019"	"DISK"		"Streptococcus equi ruminatorum"	"Chloramphenicol"	"Streptococcus A,B,C,G"	"30ug"	19	19	FALSE
 "EUCAST 2019"	"MIC"		"Streptococcus equi ruminatorum"	"Chloramphenicol"	"Streptococcus A,B,C,G"		8	8	FALSE
@@ -2040,10 +2040,10 @@
 "EUCAST 2019"	"MIC"		"Bacteroides"	"Clindamycin"	"Anaerobes, Gramnegative"		4	4	FALSE
 "EUCAST 2019"	"MIC"		"Bifidobacterium"	"Clindamycin"	"Anaerobes, Grampositive"		4	4	FALSE
 "EUCAST 2019"	"MIC"		"Bilophila"	"Clindamycin"	"Anaerobes, Gramnegative"		4	4	FALSE
-"EUCAST 2019"	"MIC"		"Cutibacterium"	"Clindamycin"	"Anaerobes, Grampositive"		4	4	FALSE
 "EUCAST 2019"	"MIC"		"Clostridioides"	"Clindamycin"	"Anaerobes, Grampositive"		4	4	FALSE
 "EUCAST 2019"	"DISK"		"Corynebacterium"	"Clindamycin"	"Corynebacterium"	"2ug"	20	20	FALSE
 "EUCAST 2019"	"MIC"		"Corynebacterium"	"Clindamycin"	"Corynebacterium"		0.5	0.5	FALSE
+"EUCAST 2019"	"MIC"		"Cutibacterium"	"Clindamycin"	"Anaerobes, Grampositive"		4	4	FALSE
 "EUCAST 2019"	"MIC"		"Clostridium"	"Clindamycin"	"Anaerobes, Grampositive"		4	4	FALSE
 "EUCAST 2019"	"MIC"		"Eubacterium"	"Clindamycin"	"Anaerobes, Grampositive"		4	4	FALSE
 "EUCAST 2019"	"MIC"		"Eggerthella"	"Clindamycin"	"Anaerobes, Grampositive"		4	4	FALSE
@@ -2062,14 +2062,14 @@
 "EUCAST 2019"	"DISK"		"Streptococcus anginosus"	"Clindamycin"	"Streptococcus A,B,C,G"	"2ug"	17	17	FALSE
 "EUCAST 2019"	"MIC"		"Streptococcus anginosus"	"Clindamycin"	"Streptococcus A,B,C,G"		0.5	0.5	FALSE
 "EUCAST 2019"	"DISK"		"Streptococcus dysgalactiae"	"Clindamycin"	"Streptococcus A,B,C,G"	"2ug"	17	17	FALSE
-"EUCAST 2019"	"MIC"		"Streptococcus dysgalactiae"	"Clindamycin"	"Streptococcus A,B,C,G"		0.5	0.5	FALSE
 "EUCAST 2019"	"DISK"		"Streptococcus dysgalactiae"	"Clindamycin"	"Streptococcus A,B,C,G"	"2ug"	17	17	FALSE
+"EUCAST 2019"	"MIC"		"Streptococcus dysgalactiae"	"Clindamycin"	"Streptococcus A,B,C,G"		0.5	0.5	FALSE
 "EUCAST 2019"	"MIC"		"Streptococcus dysgalactiae"	"Clindamycin"	"Streptococcus A,B,C,G"		0.5	0.5	FALSE
 "EUCAST 2019"	"DISK"		"Streptococcus dysgalactiae equisimilis"	"Clindamycin"	"Streptococcus A,B,C,G"	"2ug"	17	17	FALSE
 "EUCAST 2019"	"MIC"		"Streptococcus dysgalactiae equisimilis"	"Clindamycin"	"Streptococcus A,B,C,G"		0.5	0.5	FALSE
 "EUCAST 2019"	"DISK"		"Streptococcus equi"	"Clindamycin"	"Streptococcus A,B,C,G"	"2ug"	17	17	FALSE
-"EUCAST 2019"	"MIC"		"Streptococcus equi"	"Clindamycin"	"Streptococcus A,B,C,G"		0.5	0.5	FALSE
 "EUCAST 2019"	"DISK"		"Streptococcus equi"	"Clindamycin"	"Streptococcus A,B,C,G"	"2ug"	17	17	FALSE
+"EUCAST 2019"	"MIC"		"Streptococcus equi"	"Clindamycin"	"Streptococcus A,B,C,G"		0.5	0.5	FALSE
 "EUCAST 2019"	"MIC"		"Streptococcus equi"	"Clindamycin"	"Streptococcus A,B,C,G"		0.5	0.5	FALSE
 "EUCAST 2019"	"DISK"		"Streptococcus equi ruminatorum"	"Clindamycin"	"Streptococcus A,B,C,G"	"2ug"	17	17	FALSE
 "EUCAST 2019"	"MIC"		"Streptococcus equi ruminatorum"	"Clindamycin"	"Streptococcus A,B,C,G"		0.5	0.5	FALSE
@@ -2310,14 +2310,14 @@
 "EUCAST 2019"	"DISK"		"Streptococcus anginosus"	"Erythromycin"	"Streptococcus A,B,C,G"	"15ug"	21	18	FALSE
 "EUCAST 2019"	"MIC"		"Streptococcus anginosus"	"Erythromycin"	"Streptococcus A,B,C,G"		0.25	0.5	FALSE
 "EUCAST 2019"	"DISK"		"Streptococcus dysgalactiae"	"Erythromycin"	"Streptococcus A,B,C,G"	"15ug"	21	18	FALSE
-"EUCAST 2019"	"MIC"		"Streptococcus dysgalactiae"	"Erythromycin"	"Streptococcus A,B,C,G"		0.25	0.5	FALSE
 "EUCAST 2019"	"DISK"		"Streptococcus dysgalactiae"	"Erythromycin"	"Streptococcus A,B,C,G"	"15ug"	21	18	FALSE
+"EUCAST 2019"	"MIC"		"Streptococcus dysgalactiae"	"Erythromycin"	"Streptococcus A,B,C,G"		0.25	0.5	FALSE
 "EUCAST 2019"	"MIC"		"Streptococcus dysgalactiae"	"Erythromycin"	"Streptococcus A,B,C,G"		0.25	0.5	FALSE
 "EUCAST 2019"	"DISK"		"Streptococcus dysgalactiae equisimilis"	"Erythromycin"	"Streptococcus A,B,C,G"	"15ug"	21	18	FALSE
 "EUCAST 2019"	"MIC"		"Streptococcus dysgalactiae equisimilis"	"Erythromycin"	"Streptococcus A,B,C,G"		0.25	0.5	FALSE
 "EUCAST 2019"	"DISK"		"Streptococcus equi"	"Erythromycin"	"Streptococcus A,B,C,G"	"15ug"	21	18	FALSE
-"EUCAST 2019"	"MIC"		"Streptococcus equi"	"Erythromycin"	"Streptococcus A,B,C,G"		0.25	0.5	FALSE
 "EUCAST 2019"	"DISK"		"Streptococcus equi"	"Erythromycin"	"Streptococcus A,B,C,G"	"15ug"	21	18	FALSE
+"EUCAST 2019"	"MIC"		"Streptococcus equi"	"Erythromycin"	"Streptococcus A,B,C,G"		0.25	0.5	FALSE
 "EUCAST 2019"	"MIC"		"Streptococcus equi"	"Erythromycin"	"Streptococcus A,B,C,G"		0.25	0.5	FALSE
 "EUCAST 2019"	"DISK"		"Streptococcus equi ruminatorum"	"Erythromycin"	"Streptococcus A,B,C,G"	"15ug"	21	18	FALSE
 "EUCAST 2019"	"MIC"		"Streptococcus equi ruminatorum"	"Erythromycin"	"Streptococcus A,B,C,G"		0.25	0.5	FALSE
@@ -2353,8 +2353,8 @@
 "EUCAST 2019"	"MIC"		"Bacteroides"	"Ertapenem"	"Anaerobes, Gramnegative"		0.5	0.5	FALSE
 "EUCAST 2019"	"MIC"		"Bifidobacterium"	"Ertapenem"	"Anaerobes, Grampositive"		0.5	0.5	FALSE
 "EUCAST 2019"	"MIC"		"Bilophila"	"Ertapenem"	"Anaerobes, Gramnegative"		0.5	0.5	FALSE
-"EUCAST 2019"	"MIC"		"Cutibacterium"	"Ertapenem"	"Anaerobes, Grampositive"		0.5	0.5	FALSE
 "EUCAST 2019"	"MIC"		"Clostridioides"	"Ertapenem"	"Anaerobes, Grampositive"		0.5	0.5	FALSE
+"EUCAST 2019"	"MIC"		"Cutibacterium"	"Ertapenem"	"Anaerobes, Grampositive"		0.5	0.5	FALSE
 "EUCAST 2019"	"MIC"		"Clostridium"	"Ertapenem"	"Anaerobes, Grampositive"		0.5	0.5	FALSE
 "EUCAST 2019"	"MIC"		"Eubacterium"	"Ertapenem"	"Anaerobes, Grampositive"		0.5	0.5	FALSE
 "EUCAST 2019"	"MIC"		"Eggerthella"	"Ertapenem"	"Anaerobes, Grampositive"		0.5	0.5	FALSE
@@ -2415,8 +2415,8 @@
 "EUCAST 2019"	"MIC"		"Bacteroides"	"Imipenem"	"Anaerobes, Gramnegative"		2	4	FALSE
 "EUCAST 2019"	"MIC"		"Bifidobacterium"	"Imipenem"	"Anaerobes, Grampositive"		2	4	FALSE
 "EUCAST 2019"	"MIC"		"Bilophila"	"Imipenem"	"Anaerobes, Gramnegative"		2	4	FALSE
-"EUCAST 2019"	"MIC"		"Cutibacterium"	"Imipenem"	"Anaerobes, Grampositive"		2	4	FALSE
 "EUCAST 2019"	"MIC"		"Clostridioides"	"Imipenem"	"Anaerobes, Grampositive"		2	4	FALSE
+"EUCAST 2019"	"MIC"		"Cutibacterium"	"Imipenem"	"Anaerobes, Grampositive"		2	4	FALSE
 "EUCAST 2019"	"MIC"		"Clostridium"	"Imipenem"	"Anaerobes, Grampositive"		2	4	FALSE
 "EUCAST 2019"	"MIC"		"Eubacterium"	"Imipenem"	"Anaerobes, Grampositive"		2	4	FALSE
 "EUCAST 2019"	"MIC"		"Eggerthella"	"Imipenem"	"Anaerobes, Grampositive"		2	4	FALSE
@@ -2456,14 +2456,14 @@
 "EUCAST 2019"	"DISK"		"Streptococcus anginosus"	"Linezolid"	"Streptococcus A,B,C,G"	"10ug"	19	16	FALSE
 "EUCAST 2019"	"MIC"		"Streptococcus anginosus"	"Linezolid"	"Streptococcus A,B,C,G"		2	4	FALSE
 "EUCAST 2019"	"DISK"		"Streptococcus dysgalactiae"	"Linezolid"	"Streptococcus A,B,C,G"	"10ug"	19	16	FALSE
-"EUCAST 2019"	"MIC"		"Streptococcus dysgalactiae"	"Linezolid"	"Streptococcus A,B,C,G"		2	4	FALSE
 "EUCAST 2019"	"DISK"		"Streptococcus dysgalactiae"	"Linezolid"	"Streptococcus A,B,C,G"	"10ug"	19	16	FALSE
+"EUCAST 2019"	"MIC"		"Streptococcus dysgalactiae"	"Linezolid"	"Streptococcus A,B,C,G"		2	4	FALSE
 "EUCAST 2019"	"MIC"		"Streptococcus dysgalactiae"	"Linezolid"	"Streptococcus A,B,C,G"		2	4	FALSE
 "EUCAST 2019"	"DISK"		"Streptococcus dysgalactiae equisimilis"	"Linezolid"	"Streptococcus A,B,C,G"	"10ug"	19	16	FALSE
 "EUCAST 2019"	"MIC"		"Streptococcus dysgalactiae equisimilis"	"Linezolid"	"Streptococcus A,B,C,G"		2	4	FALSE
 "EUCAST 2019"	"DISK"		"Streptococcus equi"	"Linezolid"	"Streptococcus A,B,C,G"	"10ug"	19	16	FALSE
-"EUCAST 2019"	"MIC"		"Streptococcus equi"	"Linezolid"	"Streptococcus A,B,C,G"		2	4	FALSE
 "EUCAST 2019"	"DISK"		"Streptococcus equi"	"Linezolid"	"Streptococcus A,B,C,G"	"10ug"	19	16	FALSE
+"EUCAST 2019"	"MIC"		"Streptococcus equi"	"Linezolid"	"Streptococcus A,B,C,G"		2	4	FALSE
 "EUCAST 2019"	"MIC"		"Streptococcus equi"	"Linezolid"	"Streptococcus A,B,C,G"		2	4	FALSE
 "EUCAST 2019"	"DISK"		"Streptococcus equi ruminatorum"	"Linezolid"	"Streptococcus A,B,C,G"	"10ug"	19	16	FALSE
 "EUCAST 2019"	"MIC"		"Streptococcus equi ruminatorum"	"Linezolid"	"Streptococcus A,B,C,G"		2	4	FALSE
@@ -2524,14 +2524,14 @@
 "EUCAST 2019"	"DISK"		"Streptococcus anginosus"	"Levofloxacin"	"Streptococcus A,B,C,G"	"5ug"	17	17	FALSE
 "EUCAST 2019"	"MIC"		"Streptococcus anginosus"	"Levofloxacin"	"Streptococcus A,B,C,G"		2	2	FALSE
 "EUCAST 2019"	"DISK"		"Streptococcus dysgalactiae"	"Levofloxacin"	"Streptococcus A,B,C,G"	"5ug"	17	17	FALSE
-"EUCAST 2019"	"MIC"		"Streptococcus dysgalactiae"	"Levofloxacin"	"Streptococcus A,B,C,G"		2	2	FALSE
 "EUCAST 2019"	"DISK"		"Streptococcus dysgalactiae"	"Levofloxacin"	"Streptococcus A,B,C,G"	"5ug"	17	17	FALSE
+"EUCAST 2019"	"MIC"		"Streptococcus dysgalactiae"	"Levofloxacin"	"Streptococcus A,B,C,G"		2	2	FALSE
 "EUCAST 2019"	"MIC"		"Streptococcus dysgalactiae"	"Levofloxacin"	"Streptococcus A,B,C,G"		2	2	FALSE
 "EUCAST 2019"	"DISK"		"Streptococcus dysgalactiae equisimilis"	"Levofloxacin"	"Streptococcus A,B,C,G"	"5ug"	17	17	FALSE
 "EUCAST 2019"	"MIC"		"Streptococcus dysgalactiae equisimilis"	"Levofloxacin"	"Streptococcus A,B,C,G"		2	2	FALSE
 "EUCAST 2019"	"DISK"		"Streptococcus equi"	"Levofloxacin"	"Streptococcus A,B,C,G"	"5ug"	17	17	FALSE
-"EUCAST 2019"	"MIC"		"Streptococcus equi"	"Levofloxacin"	"Streptococcus A,B,C,G"		2	2	FALSE
 "EUCAST 2019"	"DISK"		"Streptococcus equi"	"Levofloxacin"	"Streptococcus A,B,C,G"	"5ug"	17	17	FALSE
+"EUCAST 2019"	"MIC"		"Streptococcus equi"	"Levofloxacin"	"Streptococcus A,B,C,G"		2	2	FALSE
 "EUCAST 2019"	"MIC"		"Streptococcus equi"	"Levofloxacin"	"Streptococcus A,B,C,G"		2	2	FALSE
 "EUCAST 2019"	"DISK"		"Streptococcus equi ruminatorum"	"Levofloxacin"	"Streptococcus A,B,C,G"	"5ug"	17	17	FALSE
 "EUCAST 2019"	"MIC"		"Streptococcus equi ruminatorum"	"Levofloxacin"	"Streptococcus A,B,C,G"		2	2	FALSE
@@ -2580,8 +2580,8 @@
 "EUCAST 2019"	"MIC"		"Bacteroides"	"Meropenem"	"Anaerobes, Gramnegative"		2	8	FALSE
 "EUCAST 2019"	"MIC"		"Bifidobacterium"	"Meropenem"	"Anaerobes, Grampositive"		2	8	FALSE
 "EUCAST 2019"	"MIC"		"Bilophila"	"Meropenem"	"Anaerobes, Gramnegative"		2	8	FALSE
-"EUCAST 2019"	"MIC"		"Cutibacterium"	"Meropenem"	"Anaerobes, Grampositive"		2	8	FALSE
 "EUCAST 2019"	"MIC"		"Clostridioides"	"Meropenem"	"Anaerobes, Grampositive"		2	8	FALSE
+"EUCAST 2019"	"MIC"		"Cutibacterium"	"Meropenem"	"Anaerobes, Grampositive"		2	8	FALSE
 "EUCAST 2019"	"MIC"		"Clostridium"	"Meropenem"	"Anaerobes, Grampositive"		2	8	FALSE
 "EUCAST 2019"	"MIC"		"Eubacterium"	"Meropenem"	"Anaerobes, Grampositive"		2	8	FALSE
 "EUCAST 2019"	"MIC"		"Eggerthella"	"Meropenem"	"Anaerobes, Grampositive"		2	8	FALSE
@@ -2627,14 +2627,14 @@
 "EUCAST 2019"	"DISK"		"Streptococcus anginosus"	"Moxifloxacin"	"Streptococcus A,B,C,G"	"5ug"	19	19	FALSE
 "EUCAST 2019"	"MIC"		"Streptococcus anginosus"	"Moxifloxacin"	"Streptococcus A,B,C,G"		0.5	0.5	FALSE
 "EUCAST 2019"	"DISK"		"Streptococcus dysgalactiae"	"Moxifloxacin"	"Streptococcus A,B,C,G"	"5ug"	19	19	FALSE
-"EUCAST 2019"	"MIC"		"Streptococcus dysgalactiae"	"Moxifloxacin"	"Streptococcus A,B,C,G"		0.5	0.5	FALSE
 "EUCAST 2019"	"DISK"		"Streptococcus dysgalactiae"	"Moxifloxacin"	"Streptococcus A,B,C,G"	"5ug"	19	19	FALSE
+"EUCAST 2019"	"MIC"		"Streptococcus dysgalactiae"	"Moxifloxacin"	"Streptococcus A,B,C,G"		0.5	0.5	FALSE
 "EUCAST 2019"	"MIC"		"Streptococcus dysgalactiae"	"Moxifloxacin"	"Streptococcus A,B,C,G"		0.5	0.5	FALSE
 "EUCAST 2019"	"DISK"		"Streptococcus dysgalactiae equisimilis"	"Moxifloxacin"	"Streptococcus A,B,C,G"	"5ug"	19	19	FALSE
 "EUCAST 2019"	"MIC"		"Streptococcus dysgalactiae equisimilis"	"Moxifloxacin"	"Streptococcus A,B,C,G"		0.5	0.5	FALSE
 "EUCAST 2019"	"DISK"		"Streptococcus equi"	"Moxifloxacin"	"Streptococcus A,B,C,G"	"5ug"	19	19	FALSE
-"EUCAST 2019"	"MIC"		"Streptococcus equi"	"Moxifloxacin"	"Streptococcus A,B,C,G"		0.5	0.5	FALSE
 "EUCAST 2019"	"DISK"		"Streptococcus equi"	"Moxifloxacin"	"Streptococcus A,B,C,G"	"5ug"	19	19	FALSE
+"EUCAST 2019"	"MIC"		"Streptococcus equi"	"Moxifloxacin"	"Streptococcus A,B,C,G"		0.5	0.5	FALSE
 "EUCAST 2019"	"MIC"		"Streptococcus equi"	"Moxifloxacin"	"Streptococcus A,B,C,G"		0.5	0.5	FALSE
 "EUCAST 2019"	"DISK"		"Streptococcus equi ruminatorum"	"Moxifloxacin"	"Streptococcus A,B,C,G"	"5ug"	19	19	FALSE
 "EUCAST 2019"	"MIC"		"Streptococcus equi ruminatorum"	"Moxifloxacin"	"Streptococcus A,B,C,G"		0.5	0.5	FALSE
@@ -2677,14 +2677,14 @@
 "EUCAST 2019"	"DISK"		"Streptococcus anginosus"	"Minocycline"	"Streptococcus A,B,C,G"	"30ug"	23	20	FALSE
 "EUCAST 2019"	"MIC"		"Streptococcus anginosus"	"Minocycline"	"Streptococcus A,B,C,G"		0.5	1	FALSE
 "EUCAST 2019"	"DISK"		"Streptococcus dysgalactiae"	"Minocycline"	"Streptococcus A,B,C,G"	"30ug"	23	20	FALSE
-"EUCAST 2019"	"MIC"		"Streptococcus dysgalactiae"	"Minocycline"	"Streptococcus A,B,C,G"		0.5	1	FALSE
 "EUCAST 2019"	"DISK"		"Streptococcus dysgalactiae"	"Minocycline"	"Streptococcus A,B,C,G"	"30ug"	23	20	FALSE
+"EUCAST 2019"	"MIC"		"Streptococcus dysgalactiae"	"Minocycline"	"Streptococcus A,B,C,G"		0.5	1	FALSE
 "EUCAST 2019"	"MIC"		"Streptococcus dysgalactiae"	"Minocycline"	"Streptococcus A,B,C,G"		0.5	1	FALSE
 "EUCAST 2019"	"DISK"		"Streptococcus dysgalactiae equisimilis"	"Minocycline"	"Streptococcus A,B,C,G"	"30ug"	23	20	FALSE
 "EUCAST 2019"	"MIC"		"Streptococcus dysgalactiae equisimilis"	"Minocycline"	"Streptococcus A,B,C,G"		0.5	1	FALSE
 "EUCAST 2019"	"DISK"		"Streptococcus equi"	"Minocycline"	"Streptococcus A,B,C,G"	"30ug"	23	20	FALSE
-"EUCAST 2019"	"MIC"		"Streptococcus equi"	"Minocycline"	"Streptococcus A,B,C,G"		0.5	1	FALSE
 "EUCAST 2019"	"DISK"		"Streptococcus equi"	"Minocycline"	"Streptococcus A,B,C,G"	"30ug"	23	20	FALSE
+"EUCAST 2019"	"MIC"		"Streptococcus equi"	"Minocycline"	"Streptococcus A,B,C,G"		0.5	1	FALSE
 "EUCAST 2019"	"MIC"		"Streptococcus equi"	"Minocycline"	"Streptococcus A,B,C,G"		0.5	1	FALSE
 "EUCAST 2019"	"DISK"		"Streptococcus equi ruminatorum"	"Minocycline"	"Streptococcus A,B,C,G"	"30ug"	23	20	FALSE
 "EUCAST 2019"	"MIC"		"Streptococcus equi ruminatorum"	"Minocycline"	"Streptococcus A,B,C,G"		0.5	1	FALSE
@@ -2718,10 +2718,10 @@
 "EUCAST 2019"	"MIC"		"Bacteroides"	"Metronidazole"	"Anaerobes, Gramnegative"		4	4	FALSE
 "EUCAST 2019"	"MIC"		"Bifidobacterium"	"Metronidazole"	"Anaerobes, Grampositive"		4	4	FALSE
 "EUCAST 2019"	"MIC"		"Bilophila"	"Metronidazole"	"Anaerobes, Gramnegative"		4	4	FALSE
-"EUCAST 2019"	"MIC"		"Cutibacterium"	"Metronidazole"	"Anaerobes, Grampositive"		4	4	FALSE
 "EUCAST 2019"	"MIC"		"Clostridioides"	"Metronidazole"	"Anaerobes, Grampositive"		4	4	FALSE
-"EUCAST 2019"	"MIC"		"Clostridium"	"Metronidazole"	"Anaerobes, Grampositive"		4	4	FALSE
 "EUCAST 2019"	"MIC"		"Clostridioides difficile"	"Metronidazole"	"C.difficile"		2	2	FALSE
+"EUCAST 2019"	"MIC"		"Cutibacterium"	"Metronidazole"	"Anaerobes, Grampositive"		4	4	FALSE
+"EUCAST 2019"	"MIC"		"Clostridium"	"Metronidazole"	"Anaerobes, Grampositive"		4	4	FALSE
 "EUCAST 2019"	"MIC"		"Eubacterium"	"Metronidazole"	"Anaerobes, Grampositive"		4	4	FALSE
 "EUCAST 2019"	"MIC"		"Eggerthella"	"Metronidazole"	"Anaerobes, Grampositive"		4	4	FALSE
 "EUCAST 2019"	"MIC"		"Fusobacterium"	"Metronidazole"	"Anaerobes, Gramnegative"		4	4	FALSE
@@ -2802,10 +2802,10 @@
 "EUCAST 2019"	"MIC"		"Bacteroides"	"Penicillin G"	"Anaerobes, Gramnegative"		0.25	0.5	FALSE
 "EUCAST 2019"	"MIC"		"Bifidobacterium"	"Penicillin G"	"Anaerobes, Grampositive"		0.25	0.5	FALSE
 "EUCAST 2019"	"MIC"		"Bilophila"	"Penicillin G"	"Anaerobes, Gramnegative"		0.25	0.5	FALSE
-"EUCAST 2019"	"MIC"		"Cutibacterium"	"Penicillin G"	"Anaerobes, Grampositive"		0.25	0.5	FALSE
 "EUCAST 2019"	"MIC"		"Clostridioides"	"Penicillin G"	"Anaerobes, Grampositive"		0.25	0.5	FALSE
 "EUCAST 2019"	"DISK"		"Corynebacterium"	"Penicillin G"	"Corynebacterium"	"1ug"	29	29	FALSE
 "EUCAST 2019"	"MIC"		"Corynebacterium"	"Penicillin G"	"Corynebacterium"		0.125	0.125	FALSE
+"EUCAST 2019"	"MIC"		"Cutibacterium"	"Penicillin G"	"Anaerobes, Grampositive"		0.25	0.5	FALSE
 "EUCAST 2019"	"MIC"		"Clostridium"	"Penicillin G"	"Anaerobes, Grampositive"		0.25	0.5	FALSE
 "EUCAST 2019"	"MIC"		"Eubacterium"	"Penicillin G"	"Anaerobes, Grampositive"		0.25	0.5	FALSE
 "EUCAST 2019"	"MIC"		"Eggerthella"	"Penicillin G"	"Anaerobes, Grampositive"		0.25	0.5	FALSE
@@ -2834,14 +2834,14 @@
 "EUCAST 2019"	"DISK"		"Streptococcus anginosus"	"Penicillin G"	"Streptococcus A,B,C,G"	"1ug"	18	18	FALSE
 "EUCAST 2019"	"MIC"		"Streptococcus anginosus"	"Penicillin G"	"Streptococcus A,B,C,G"		0.25	0.25	FALSE
 "EUCAST 2019"	"DISK"		"Streptococcus dysgalactiae"	"Penicillin G"	"Streptococcus A,B,C,G"	"1ug"	18	18	FALSE
-"EUCAST 2019"	"MIC"		"Streptococcus dysgalactiae"	"Penicillin G"	"Streptococcus A,B,C,G"		0.25	0.25	FALSE
 "EUCAST 2019"	"DISK"		"Streptococcus dysgalactiae"	"Penicillin G"	"Streptococcus A,B,C,G"	"1ug"	18	18	FALSE
+"EUCAST 2019"	"MIC"		"Streptococcus dysgalactiae"	"Penicillin G"	"Streptococcus A,B,C,G"		0.25	0.25	FALSE
 "EUCAST 2019"	"MIC"		"Streptococcus dysgalactiae"	"Penicillin G"	"Streptococcus A,B,C,G"		0.25	0.25	FALSE
 "EUCAST 2019"	"DISK"		"Streptococcus dysgalactiae equisimilis"	"Penicillin G"	"Streptococcus A,B,C,G"	"1ug"	18	18	FALSE
 "EUCAST 2019"	"MIC"		"Streptococcus dysgalactiae equisimilis"	"Penicillin G"	"Streptococcus A,B,C,G"		0.25	0.25	FALSE
 "EUCAST 2019"	"DISK"		"Streptococcus equi"	"Penicillin G"	"Streptococcus A,B,C,G"	"1ug"	18	18	FALSE
-"EUCAST 2019"	"MIC"		"Streptococcus equi"	"Penicillin G"	"Streptococcus A,B,C,G"		0.25	0.25	FALSE
 "EUCAST 2019"	"DISK"		"Streptococcus equi"	"Penicillin G"	"Streptococcus A,B,C,G"	"1ug"	18	18	FALSE
+"EUCAST 2019"	"MIC"		"Streptococcus equi"	"Penicillin G"	"Streptococcus A,B,C,G"		0.25	0.25	FALSE
 "EUCAST 2019"	"MIC"		"Streptococcus equi"	"Penicillin G"	"Streptococcus A,B,C,G"		0.25	0.25	FALSE
 "EUCAST 2019"	"DISK"		"Streptococcus equi ruminatorum"	"Penicillin G"	"Streptococcus A,B,C,G"	"1ug"	18	18	FALSE
 "EUCAST 2019"	"MIC"		"Streptococcus equi ruminatorum"	"Penicillin G"	"Streptococcus A,B,C,G"		0.25	0.25	FALSE
@@ -2879,8 +2879,8 @@
 "EUCAST 2019"	"MIC"		"Bacteroides"	"Piperacillin"	"Anaerobes, Gramnegative"		1	1	FALSE
 "EUCAST 2019"	"MIC"		"Bifidobacterium"	"Piperacillin"	"Anaerobes, Grampositive"		8	1	FALSE
 "EUCAST 2019"	"MIC"		"Bilophila"	"Piperacillin"	"Anaerobes, Gramnegative"		1	1	FALSE
-"EUCAST 2019"	"MIC"		"Cutibacterium"	"Piperacillin"	"Anaerobes, Grampositive"		8	1	FALSE
 "EUCAST 2019"	"MIC"		"Clostridioides"	"Piperacillin"	"Anaerobes, Grampositive"		8	1	FALSE
+"EUCAST 2019"	"MIC"		"Cutibacterium"	"Piperacillin"	"Anaerobes, Grampositive"		8	1	FALSE
 "EUCAST 2019"	"MIC"		"Clostridium"	"Piperacillin"	"Anaerobes, Grampositive"		8	1	FALSE
 "EUCAST 2019"	"MIC"		"Eubacterium"	"Piperacillin"	"Anaerobes, Grampositive"		8	1	FALSE
 "EUCAST 2019"	"MIC"		"Eggerthella"	"Piperacillin"	"Anaerobes, Grampositive"		8	1	FALSE
@@ -2918,14 +2918,14 @@
 "EUCAST 2019"	"DISK"		"Streptococcus anginosus"	"Rifampicin"	"Streptococcus A,B,C,G"	"5ug"	21	15	FALSE
 "EUCAST 2019"	"MIC"		"Streptococcus anginosus"	"Rifampicin"	"Streptococcus A,B,C,G"		0.06	0.5	FALSE
 "EUCAST 2019"	"DISK"		"Streptococcus dysgalactiae"	"Rifampicin"	"Streptococcus A,B,C,G"	"5ug"	21	15	FALSE
-"EUCAST 2019"	"MIC"		"Streptococcus dysgalactiae"	"Rifampicin"	"Streptococcus A,B,C,G"		0.06	0.5	FALSE
 "EUCAST 2019"	"DISK"		"Streptococcus dysgalactiae"	"Rifampicin"	"Streptococcus A,B,C,G"	"5ug"	21	15	FALSE
+"EUCAST 2019"	"MIC"		"Streptococcus dysgalactiae"	"Rifampicin"	"Streptococcus A,B,C,G"		0.06	0.5	FALSE
 "EUCAST 2019"	"MIC"		"Streptococcus dysgalactiae"	"Rifampicin"	"Streptococcus A,B,C,G"		0.06	0.5	FALSE
 "EUCAST 2019"	"DISK"		"Streptococcus dysgalactiae equisimilis"	"Rifampicin"	"Streptococcus A,B,C,G"	"5ug"	21	15	FALSE
 "EUCAST 2019"	"MIC"		"Streptococcus dysgalactiae equisimilis"	"Rifampicin"	"Streptococcus A,B,C,G"		0.06	0.5	FALSE
 "EUCAST 2019"	"DISK"		"Streptococcus equi"	"Rifampicin"	"Streptococcus A,B,C,G"	"5ug"	21	15	FALSE
-"EUCAST 2019"	"MIC"		"Streptococcus equi"	"Rifampicin"	"Streptococcus A,B,C,G"		0.06	0.5	FALSE
 "EUCAST 2019"	"DISK"		"Streptococcus equi"	"Rifampicin"	"Streptococcus A,B,C,G"	"5ug"	21	15	FALSE
+"EUCAST 2019"	"MIC"		"Streptococcus equi"	"Rifampicin"	"Streptococcus A,B,C,G"		0.06	0.5	FALSE
 "EUCAST 2019"	"MIC"		"Streptococcus equi"	"Rifampicin"	"Streptococcus A,B,C,G"		0.06	0.5	FALSE
 "EUCAST 2019"	"DISK"		"Streptococcus equi ruminatorum"	"Rifampicin"	"Streptococcus A,B,C,G"	"5ug"	21	15	FALSE
 "EUCAST 2019"	"MIC"		"Streptococcus equi ruminatorum"	"Rifampicin"	"Streptococcus A,B,C,G"		0.06	0.5	FALSE
@@ -2984,8 +2984,8 @@
 "EUCAST 2019"	"MIC"		"Bacteroides"	"Ampicillin/sulbactam"	"Anaerobes, Gramnegative"		4	8	FALSE
 "EUCAST 2019"	"MIC"		"Bifidobacterium"	"Ampicillin/sulbactam"	"Anaerobes, Grampositive"		4	8	FALSE
 "EUCAST 2019"	"MIC"		"Bilophila"	"Ampicillin/sulbactam"	"Anaerobes, Gramnegative"		4	8	FALSE
-"EUCAST 2019"	"MIC"		"Cutibacterium"	"Ampicillin/sulbactam"	"Anaerobes, Grampositive"		4	8	FALSE
 "EUCAST 2019"	"MIC"		"Clostridioides"	"Ampicillin/sulbactam"	"Anaerobes, Grampositive"		4	8	FALSE
+"EUCAST 2019"	"MIC"		"Cutibacterium"	"Ampicillin/sulbactam"	"Anaerobes, Grampositive"		4	8	FALSE
 "EUCAST 2019"	"MIC"		"Clostridium"	"Ampicillin/sulbactam"	"Anaerobes, Grampositive"		4	8	FALSE
 "EUCAST 2019"	"MIC"		"Eubacterium"	"Ampicillin/sulbactam"	"Anaerobes, Grampositive"		4	8	FALSE
 "EUCAST 2019"	"MIC"		"Eggerthella"	"Ampicillin/sulbactam"	"Anaerobes, Grampositive"		4	8	FALSE
@@ -3027,14 +3027,14 @@
 "EUCAST 2019"	"DISK"		"Streptococcus anginosus"	"Trimethoprim/sulfamethoxazole"	"Streptococcus A,B,C,G"	"1.25-23.75ug"	18	15	FALSE
 "EUCAST 2019"	"MIC"		"Streptococcus anginosus"	"Trimethoprim/sulfamethoxazole"	"Streptococcus A,B,C,G"		1	2	FALSE
 "EUCAST 2019"	"DISK"		"Streptococcus dysgalactiae"	"Trimethoprim/sulfamethoxazole"	"Streptococcus A,B,C,G"	"1.25-23.75ug"	18	15	FALSE
-"EUCAST 2019"	"MIC"		"Streptococcus dysgalactiae"	"Trimethoprim/sulfamethoxazole"	"Streptococcus A,B,C,G"		1	2	FALSE
 "EUCAST 2019"	"DISK"		"Streptococcus dysgalactiae"	"Trimethoprim/sulfamethoxazole"	"Streptococcus A,B,C,G"	"1.25-23.75ug"	18	15	FALSE
+"EUCAST 2019"	"MIC"		"Streptococcus dysgalactiae"	"Trimethoprim/sulfamethoxazole"	"Streptococcus A,B,C,G"		1	2	FALSE
 "EUCAST 2019"	"MIC"		"Streptococcus dysgalactiae"	"Trimethoprim/sulfamethoxazole"	"Streptococcus A,B,C,G"		1	2	FALSE
 "EUCAST 2019"	"DISK"		"Streptococcus dysgalactiae equisimilis"	"Trimethoprim/sulfamethoxazole"	"Streptococcus A,B,C,G"	"1.25-23.75ug"	18	15	FALSE
 "EUCAST 2019"	"MIC"		"Streptococcus dysgalactiae equisimilis"	"Trimethoprim/sulfamethoxazole"	"Streptococcus A,B,C,G"		1	2	FALSE
 "EUCAST 2019"	"DISK"		"Streptococcus equi"	"Trimethoprim/sulfamethoxazole"	"Streptococcus A,B,C,G"	"1.25-23.75ug"	18	15	FALSE
-"EUCAST 2019"	"MIC"		"Streptococcus equi"	"Trimethoprim/sulfamethoxazole"	"Streptococcus A,B,C,G"		1	2	FALSE
 "EUCAST 2019"	"DISK"		"Streptococcus equi"	"Trimethoprim/sulfamethoxazole"	"Streptococcus A,B,C,G"	"1.25-23.75ug"	18	15	FALSE
+"EUCAST 2019"	"MIC"		"Streptococcus equi"	"Trimethoprim/sulfamethoxazole"	"Streptococcus A,B,C,G"		1	2	FALSE
 "EUCAST 2019"	"MIC"		"Streptococcus equi"	"Trimethoprim/sulfamethoxazole"	"Streptococcus A,B,C,G"		1	2	FALSE
 "EUCAST 2019"	"DISK"		"Streptococcus equi ruminatorum"	"Trimethoprim/sulfamethoxazole"	"Streptococcus A,B,C,G"	"1.25-23.75ug"	18	15	FALSE
 "EUCAST 2019"	"MIC"		"Streptococcus equi ruminatorum"	"Trimethoprim/sulfamethoxazole"	"Streptococcus A,B,C,G"		1	2	FALSE
@@ -3070,8 +3070,8 @@
 "EUCAST 2019"	"MIC"		"Bacteroides"	"Ticarcillin/clavulanic acid"	"Anaerobes, Gramnegative"		8	16	FALSE
 "EUCAST 2019"	"MIC"		"Bifidobacterium"	"Ticarcillin/clavulanic acid"	"Anaerobes, Grampositive"		8	16	FALSE
 "EUCAST 2019"	"MIC"		"Bilophila"	"Ticarcillin/clavulanic acid"	"Anaerobes, Gramnegative"		8	16	FALSE
-"EUCAST 2019"	"MIC"		"Cutibacterium"	"Ticarcillin/clavulanic acid"	"Anaerobes, Grampositive"		8	16	FALSE
 "EUCAST 2019"	"MIC"		"Clostridioides"	"Ticarcillin/clavulanic acid"	"Anaerobes, Grampositive"		8	16	FALSE
+"EUCAST 2019"	"MIC"		"Cutibacterium"	"Ticarcillin/clavulanic acid"	"Anaerobes, Grampositive"		8	16	FALSE
 "EUCAST 2019"	"MIC"		"Clostridium"	"Ticarcillin/clavulanic acid"	"Anaerobes, Grampositive"		8	16	FALSE
 "EUCAST 2019"	"MIC"		"Eubacterium"	"Ticarcillin/clavulanic acid"	"Anaerobes, Grampositive"		8	16	FALSE
 "EUCAST 2019"	"MIC"		"Eggerthella"	"Ticarcillin/clavulanic acid"	"Anaerobes, Grampositive"		8	16	FALSE
@@ -3108,14 +3108,14 @@
 "EUCAST 2019"	"DISK"		"Streptococcus anginosus"	"Tetracycline"	"Streptococcus A,B,C,G"	"30ug"	23	20	FALSE
 "EUCAST 2019"	"MIC"		"Streptococcus anginosus"	"Tetracycline"	"Streptococcus A,B,C,G"		1	2	FALSE
 "EUCAST 2019"	"DISK"		"Streptococcus dysgalactiae"	"Tetracycline"	"Streptococcus A,B,C,G"	"30ug"	23	20	FALSE
-"EUCAST 2019"	"MIC"		"Streptococcus dysgalactiae"	"Tetracycline"	"Streptococcus A,B,C,G"		1	2	FALSE
 "EUCAST 2019"	"DISK"		"Streptococcus dysgalactiae"	"Tetracycline"	"Streptococcus A,B,C,G"	"30ug"	23	20	FALSE
+"EUCAST 2019"	"MIC"		"Streptococcus dysgalactiae"	"Tetracycline"	"Streptococcus A,B,C,G"		1	2	FALSE
 "EUCAST 2019"	"MIC"		"Streptococcus dysgalactiae"	"Tetracycline"	"Streptococcus A,B,C,G"		1	2	FALSE
 "EUCAST 2019"	"DISK"		"Streptococcus dysgalactiae equisimilis"	"Tetracycline"	"Streptococcus A,B,C,G"	"30ug"	23	20	FALSE
 "EUCAST 2019"	"MIC"		"Streptococcus dysgalactiae equisimilis"	"Tetracycline"	"Streptococcus A,B,C,G"		1	2	FALSE
 "EUCAST 2019"	"DISK"		"Streptococcus equi"	"Tetracycline"	"Streptococcus A,B,C,G"	"30ug"	23	20	FALSE
-"EUCAST 2019"	"MIC"		"Streptococcus equi"	"Tetracycline"	"Streptococcus A,B,C,G"		1	2	FALSE
 "EUCAST 2019"	"DISK"		"Streptococcus equi"	"Tetracycline"	"Streptococcus A,B,C,G"	"30ug"	23	20	FALSE
+"EUCAST 2019"	"MIC"		"Streptococcus equi"	"Tetracycline"	"Streptococcus A,B,C,G"		1	2	FALSE
 "EUCAST 2019"	"MIC"		"Streptococcus equi"	"Tetracycline"	"Streptococcus A,B,C,G"		1	2	FALSE
 "EUCAST 2019"	"DISK"		"Streptococcus equi ruminatorum"	"Tetracycline"	"Streptococcus A,B,C,G"	"30ug"	23	20	FALSE
 "EUCAST 2019"	"MIC"		"Streptococcus equi ruminatorum"	"Tetracycline"	"Streptococcus A,B,C,G"		1	2	FALSE
@@ -3154,14 +3154,14 @@
 "EUCAST 2019"	"DISK"		"Streptococcus anginosus"	"Teicoplanin"	"Streptococcus A,B,C,G"	"30ug"	15	15	FALSE
 "EUCAST 2019"	"MIC"		"Streptococcus anginosus"	"Teicoplanin"	"Streptococcus A,B,C,G"		2	2	FALSE
 "EUCAST 2019"	"DISK"		"Streptococcus dysgalactiae"	"Teicoplanin"	"Streptococcus A,B,C,G"	"30ug"	15	15	FALSE
-"EUCAST 2019"	"MIC"		"Streptococcus dysgalactiae"	"Teicoplanin"	"Streptococcus A,B,C,G"		2	2	FALSE
 "EUCAST 2019"	"DISK"		"Streptococcus dysgalactiae"	"Teicoplanin"	"Streptococcus A,B,C,G"	"30ug"	15	15	FALSE
+"EUCAST 2019"	"MIC"		"Streptococcus dysgalactiae"	"Teicoplanin"	"Streptococcus A,B,C,G"		2	2	FALSE
 "EUCAST 2019"	"MIC"		"Streptococcus dysgalactiae"	"Teicoplanin"	"Streptococcus A,B,C,G"		2	2	FALSE
 "EUCAST 2019"	"DISK"		"Streptococcus dysgalactiae equisimilis"	"Teicoplanin"	"Streptococcus A,B,C,G"	"30ug"	15	15	FALSE
 "EUCAST 2019"	"MIC"		"Streptococcus dysgalactiae equisimilis"	"Teicoplanin"	"Streptococcus A,B,C,G"		2	2	FALSE
 "EUCAST 2019"	"DISK"		"Streptococcus equi"	"Teicoplanin"	"Streptococcus A,B,C,G"	"30ug"	15	15	FALSE
-"EUCAST 2019"	"MIC"		"Streptococcus equi"	"Teicoplanin"	"Streptococcus A,B,C,G"		2	2	FALSE
 "EUCAST 2019"	"DISK"		"Streptococcus equi"	"Teicoplanin"	"Streptococcus A,B,C,G"	"30ug"	15	15	FALSE
+"EUCAST 2019"	"MIC"		"Streptococcus equi"	"Teicoplanin"	"Streptococcus A,B,C,G"		2	2	FALSE
 "EUCAST 2019"	"MIC"		"Streptococcus equi"	"Teicoplanin"	"Streptococcus A,B,C,G"		2	2	FALSE
 "EUCAST 2019"	"DISK"		"Streptococcus equi ruminatorum"	"Teicoplanin"	"Streptococcus A,B,C,G"	"30ug"	15	15	FALSE
 "EUCAST 2019"	"MIC"		"Streptococcus equi ruminatorum"	"Teicoplanin"	"Streptococcus A,B,C,G"		2	2	FALSE
@@ -3206,14 +3206,14 @@
 "EUCAST 2019"	"DISK"		"Streptococcus anginosus"	"Tigecycline"	"Streptococcus A,B,C,G"	"15ug"	19	19	FALSE
 "EUCAST 2019"	"MIC"		"Streptococcus anginosus"	"Tigecycline"	"Streptococcus A,B,C,G"		0.125	0.125	FALSE
 "EUCAST 2019"	"DISK"		"Streptococcus dysgalactiae"	"Tigecycline"	"Streptococcus A,B,C,G"	"15ug"	19	19	FALSE
-"EUCAST 2019"	"MIC"		"Streptococcus dysgalactiae"	"Tigecycline"	"Streptococcus A,B,C,G"		0.125	0.125	FALSE
 "EUCAST 2019"	"DISK"		"Streptococcus dysgalactiae"	"Tigecycline"	"Streptococcus A,B,C,G"	"15ug"	19	19	FALSE
+"EUCAST 2019"	"MIC"		"Streptococcus dysgalactiae"	"Tigecycline"	"Streptococcus A,B,C,G"		0.125	0.125	FALSE
 "EUCAST 2019"	"MIC"		"Streptococcus dysgalactiae"	"Tigecycline"	"Streptococcus A,B,C,G"		0.125	0.125	FALSE
 "EUCAST 2019"	"DISK"		"Streptococcus dysgalactiae equisimilis"	"Tigecycline"	"Streptococcus A,B,C,G"	"15ug"	19	19	FALSE
 "EUCAST 2019"	"MIC"		"Streptococcus dysgalactiae equisimilis"	"Tigecycline"	"Streptococcus A,B,C,G"		0.125	0.125	FALSE
 "EUCAST 2019"	"DISK"		"Streptococcus equi"	"Tigecycline"	"Streptococcus A,B,C,G"	"15ug"	19	19	FALSE
-"EUCAST 2019"	"MIC"		"Streptococcus equi"	"Tigecycline"	"Streptococcus A,B,C,G"		0.125	0.125	FALSE
 "EUCAST 2019"	"DISK"		"Streptococcus equi"	"Tigecycline"	"Streptococcus A,B,C,G"	"15ug"	19	19	FALSE
+"EUCAST 2019"	"MIC"		"Streptococcus equi"	"Tigecycline"	"Streptococcus A,B,C,G"		0.125	0.125	FALSE
 "EUCAST 2019"	"MIC"		"Streptococcus equi"	"Tigecycline"	"Streptococcus A,B,C,G"		0.125	0.125	FALSE
 "EUCAST 2019"	"DISK"		"Streptococcus equi ruminatorum"	"Tigecycline"	"Streptococcus A,B,C,G"	"15ug"	19	19	FALSE
 "EUCAST 2019"	"MIC"		"Streptococcus equi ruminatorum"	"Tigecycline"	"Streptococcus A,B,C,G"		0.125	0.125	FALSE
@@ -3248,8 +3248,8 @@
 "EUCAST 2019"	"MIC"		"Bacteroides"	"Ticarcillin"	"Anaerobes, Gramnegative"		1	1	FALSE
 "EUCAST 2019"	"MIC"		"Bifidobacterium"	"Ticarcillin"	"Anaerobes, Grampositive"		8	1	FALSE
 "EUCAST 2019"	"MIC"		"Bilophila"	"Ticarcillin"	"Anaerobes, Gramnegative"		1	1	FALSE
-"EUCAST 2019"	"MIC"		"Cutibacterium"	"Ticarcillin"	"Anaerobes, Grampositive"		8	1	FALSE
 "EUCAST 2019"	"MIC"		"Clostridioides"	"Ticarcillin"	"Anaerobes, Grampositive"		8	1	FALSE
+"EUCAST 2019"	"MIC"		"Cutibacterium"	"Ticarcillin"	"Anaerobes, Grampositive"		8	1	FALSE
 "EUCAST 2019"	"MIC"		"Clostridium"	"Ticarcillin"	"Anaerobes, Grampositive"		8	1	FALSE
 "EUCAST 2019"	"MIC"		"Eubacterium"	"Ticarcillin"	"Anaerobes, Grampositive"		8	1	FALSE
 "EUCAST 2019"	"MIC"		"Eggerthella"	"Ticarcillin"	"Anaerobes, Grampositive"		8	1	FALSE
@@ -3271,14 +3271,14 @@
 "EUCAST 2019"	"DISK"		"Streptococcus anginosus"	"Telithromycin"	"Streptococcus A,B,C,G"	"15ug"	20	17	FALSE
 "EUCAST 2019"	"MIC"		"Streptococcus anginosus"	"Telithromycin"	"Streptococcus A,B,C,G"		0.25	0.5	FALSE
 "EUCAST 2019"	"DISK"		"Streptococcus dysgalactiae"	"Telithromycin"	"Streptococcus A,B,C,G"	"15ug"	20	17	FALSE
-"EUCAST 2019"	"MIC"		"Streptococcus dysgalactiae"	"Telithromycin"	"Streptococcus A,B,C,G"		0.25	0.5	FALSE
 "EUCAST 2019"	"DISK"		"Streptococcus dysgalactiae"	"Telithromycin"	"Streptococcus A,B,C,G"	"15ug"	20	17	FALSE
+"EUCAST 2019"	"MIC"		"Streptococcus dysgalactiae"	"Telithromycin"	"Streptococcus A,B,C,G"		0.25	0.5	FALSE
 "EUCAST 2019"	"MIC"		"Streptococcus dysgalactiae"	"Telithromycin"	"Streptococcus A,B,C,G"		0.25	0.5	FALSE
 "EUCAST 2019"	"DISK"		"Streptococcus dysgalactiae equisimilis"	"Telithromycin"	"Streptococcus A,B,C,G"	"15ug"	20	17	FALSE
 "EUCAST 2019"	"MIC"		"Streptococcus dysgalactiae equisimilis"	"Telithromycin"	"Streptococcus A,B,C,G"		0.25	0.5	FALSE
 "EUCAST 2019"	"DISK"		"Streptococcus equi"	"Telithromycin"	"Streptococcus A,B,C,G"	"15ug"	20	17	FALSE
-"EUCAST 2019"	"MIC"		"Streptococcus equi"	"Telithromycin"	"Streptococcus A,B,C,G"		0.25	0.5	FALSE
 "EUCAST 2019"	"DISK"		"Streptococcus equi"	"Telithromycin"	"Streptococcus A,B,C,G"	"15ug"	20	17	FALSE
+"EUCAST 2019"	"MIC"		"Streptococcus equi"	"Telithromycin"	"Streptococcus A,B,C,G"		0.25	0.5	FALSE
 "EUCAST 2019"	"MIC"		"Streptococcus equi"	"Telithromycin"	"Streptococcus A,B,C,G"		0.25	0.5	FALSE
 "EUCAST 2019"	"DISK"		"Streptococcus equi ruminatorum"	"Telithromycin"	"Streptococcus A,B,C,G"	"15ug"	20	17	FALSE
 "EUCAST 2019"	"MIC"		"Streptococcus equi ruminatorum"	"Telithromycin"	"Streptococcus A,B,C,G"		0.25	0.5	FALSE
@@ -3352,8 +3352,8 @@
 "EUCAST 2019"	"MIC"		"Bacteroides"	"Piperacillin/tazobactam"	"Anaerobes, Gramnegative"		8	16	FALSE
 "EUCAST 2019"	"MIC"		"Bifidobacterium"	"Piperacillin/tazobactam"	"Anaerobes, Grampositive"		8	16	FALSE
 "EUCAST 2019"	"MIC"		"Bilophila"	"Piperacillin/tazobactam"	"Anaerobes, Gramnegative"		8	16	FALSE
-"EUCAST 2019"	"MIC"		"Cutibacterium"	"Piperacillin/tazobactam"	"Anaerobes, Grampositive"		8	16	FALSE
 "EUCAST 2019"	"MIC"		"Clostridioides"	"Piperacillin/tazobactam"	"Anaerobes, Grampositive"		8	16	FALSE
+"EUCAST 2019"	"MIC"		"Cutibacterium"	"Piperacillin/tazobactam"	"Anaerobes, Grampositive"		8	16	FALSE
 "EUCAST 2019"	"MIC"		"Clostridium"	"Piperacillin/tazobactam"	"Anaerobes, Grampositive"		8	16	FALSE
 "EUCAST 2019"	"MIC"		"Eubacterium"	"Piperacillin/tazobactam"	"Anaerobes, Grampositive"		8	16	FALSE
 "EUCAST 2019"	"MIC"		"Eggerthella"	"Piperacillin/tazobactam"	"Anaerobes, Grampositive"		8	16	FALSE
@@ -3376,12 +3376,12 @@
 "EUCAST 2019"	"MIC"		"Aerococcus urinae"	"Vancomycin"	"A.sanguinicola_A.urinae"		1	1	FALSE
 "EUCAST 2019"	"MIC"		"Actinomyces"	"Vancomycin"	"Anaerobes, Grampositive"		2	2	FALSE
 "EUCAST 2019"	"MIC"		"Bifidobacterium"	"Vancomycin"	"Anaerobes, Grampositive"		2	2	FALSE
-"EUCAST 2019"	"MIC"		"Cutibacterium"	"Vancomycin"	"Anaerobes, Grampositive"		2	2	FALSE
 "EUCAST 2019"	"MIC"		"Clostridioides"	"Vancomycin"	"Anaerobes, Grampositive"		2	2	FALSE
+"EUCAST 2019"	"MIC"		"Clostridioides difficile"	"Vancomycin"	"C.difficile"		2	2	FALSE
 "EUCAST 2019"	"DISK"		"Corynebacterium"	"Vancomycin"	"Corynebacterium"	"5ug"	17	17	FALSE
 "EUCAST 2019"	"MIC"		"Corynebacterium"	"Vancomycin"	"Corynebacterium"		2	2	FALSE
+"EUCAST 2019"	"MIC"		"Cutibacterium"	"Vancomycin"	"Anaerobes, Grampositive"		2	2	FALSE
 "EUCAST 2019"	"MIC"		"Clostridium"	"Vancomycin"	"Anaerobes, Grampositive"		2	2	FALSE
-"EUCAST 2019"	"MIC"		"Clostridioides difficile"	"Vancomycin"	"C.difficile"		2	2	FALSE
 "EUCAST 2019"	"MIC"		"Eubacterium"	"Vancomycin"	"Anaerobes, Grampositive"		2	2	FALSE
 "EUCAST 2019"	"MIC"		"Eggerthella"	"Vancomycin"	"Anaerobes, Grampositive"		2	2	FALSE
 "EUCAST 2019"	"DISK"		"Enterococcus"	"Vancomycin"	"Enterococcus"	"5ug"	12	12	FALSE
@@ -3396,14 +3396,14 @@
 "EUCAST 2019"	"DISK"		"Streptococcus anginosus"	"Vancomycin"	"Streptococcus A,B,C,G"	"5ug"	13	13	FALSE
 "EUCAST 2019"	"MIC"		"Streptococcus anginosus"	"Vancomycin"	"Streptococcus A,B,C,G"		2	2	FALSE
 "EUCAST 2019"	"DISK"		"Streptococcus dysgalactiae"	"Vancomycin"	"Streptococcus A,B,C,G"	"5ug"	13	13	FALSE
-"EUCAST 2019"	"MIC"		"Streptococcus dysgalactiae"	"Vancomycin"	"Streptococcus A,B,C,G"		2	2	FALSE
 "EUCAST 2019"	"DISK"		"Streptococcus dysgalactiae"	"Vancomycin"	"Streptococcus A,B,C,G"	"5ug"	13	13	FALSE
+"EUCAST 2019"	"MIC"		"Streptococcus dysgalactiae"	"Vancomycin"	"Streptococcus A,B,C,G"		2	2	FALSE
 "EUCAST 2019"	"MIC"		"Streptococcus dysgalactiae"	"Vancomycin"	"Streptococcus A,B,C,G"		2	2	FALSE
 "EUCAST 2019"	"DISK"		"Streptococcus dysgalactiae equisimilis"	"Vancomycin"	"Streptococcus A,B,C,G"	"5ug"	13	13	FALSE
 "EUCAST 2019"	"MIC"		"Streptococcus dysgalactiae equisimilis"	"Vancomycin"	"Streptococcus A,B,C,G"		2	2	FALSE
 "EUCAST 2019"	"DISK"		"Streptococcus equi"	"Vancomycin"	"Streptococcus A,B,C,G"	"5ug"	13	13	FALSE
-"EUCAST 2019"	"MIC"		"Streptococcus equi"	"Vancomycin"	"Streptococcus A,B,C,G"		2	2	FALSE
 "EUCAST 2019"	"DISK"		"Streptococcus equi"	"Vancomycin"	"Streptococcus A,B,C,G"	"5ug"	13	13	FALSE
+"EUCAST 2019"	"MIC"		"Streptococcus equi"	"Vancomycin"	"Streptococcus A,B,C,G"		2	2	FALSE
 "EUCAST 2019"	"MIC"		"Streptococcus equi"	"Vancomycin"	"Streptococcus A,B,C,G"		2	2	FALSE
 "EUCAST 2019"	"DISK"		"Streptococcus equi ruminatorum"	"Vancomycin"	"Streptococcus A,B,C,G"	"5ug"	13	13	FALSE
 "EUCAST 2019"	"MIC"		"Streptococcus equi ruminatorum"	"Vancomycin"	"Streptococcus A,B,C,G"		2	2	FALSE
@@ -3690,8 +3690,8 @@
 "EUCAST 2018"	"MIC"	"Meningitis"	"Streptococcus pneumoniae"	"Meropenem"	"Pneumo"		0.25	2	FALSE
 "EUCAST 2018"	"MIC"		"Viridans Group Streptococcus (VGS)"	"Meropenem"	"Viridans strept"		2	4	FALSE
 "EUCAST 2018"	"MIC"		"Enterobacteriaceae"	"Moxifloxacin"	"Enterobacteriaceae"		0.25	0.5	FALSE
-"EUCAST 2018"	"MIC"		"Corynebacterium"	"Moxifloxacin"	"Corynebacterium spp."		0.5	1	FALSE
 "EUCAST 2018"	"MIC"		"Clostridioides difficile"	"Moxifloxacin"	"C. difficile"		4		FALSE
+"EUCAST 2018"	"MIC"		"Corynebacterium"	"Moxifloxacin"	"Corynebacterium spp."		0.5	1	FALSE
 "EUCAST 2018"	"MIC"		"Haemophilus influenzae"	"Moxifloxacin"	"H. influenzae"		0.125	0.25	FALSE
 "EUCAST 2018"	"MIC"		"Moraxella catarrhalis"	"Moxifloxacin"	"M. catarrhalis"		0.25	0.5	FALSE
 "EUCAST 2018"	"MIC"		"Staphylococcus aureus"	"Moxifloxacin"	"Staphs"		0.25	0.5	FALSE
@@ -3759,8 +3759,8 @@
 "EUCAST 2018"	"MIC"		"Enterococcus"	"Quinupristin/dalfopristin"	"Enterococcus"		1	8	FALSE
 "EUCAST 2018"	"MIC"		"Staphylococcus"	"Quinupristin/dalfopristin"	"Staphs"		1	4	FALSE
 "EUCAST 2018"	"MIC"		"Aerococcus"	"Rifampicin"	"Aerococcus"		0.125	0.25	FALSE
-"EUCAST 2018"	"MIC"		"Corynebacterium"	"Rifampicin"	"Corynebacterium spp."		0.064	1	FALSE
 "EUCAST 2018"	"MIC"		"Clostridioides difficile"	"Rifampicin"	"C. difficile"		0.004		FALSE
+"EUCAST 2018"	"MIC"		"Corynebacterium"	"Rifampicin"	"Corynebacterium spp."		0.064	1	FALSE
 "EUCAST 2018"	"MIC"		"Helicobacter pylori"	"Rifampicin"	"H. pylori"		1	2	FALSE
 "EUCAST 2018"	"MIC"	"Prophylaxis"	"Haemophilus influenzae"	"Rifampicin"	"H. influenzae"		1	2	FALSE
 "EUCAST 2018"	"MIC"		"Kingella kingae"	"Rifampicin"	"Kingella"		0.5	1	FALSE
@@ -3840,8 +3840,8 @@
 "EUCAST 2018"	"MIC"		"Enterobacteriaceae"	"Piperacillin/tazobactam"	"Enterobacteriaceae"		8	32	FALSE
 "EUCAST 2018"	"MIC"		"Pseudomonas"	"Piperacillin/tazobactam"	"Pseudo"		16	32	FALSE
 "EUCAST 2018"	"MIC"		"Aerococcus"	"Vancomycin"	"Aerococcus"		1	2	FALSE
-"EUCAST 2018"	"MIC"		"Corynebacterium"	"Vancomycin"	"Corynebacterium spp."		2	4	FALSE
 "EUCAST 2018"	"MIC"		"Clostridioides difficile"	"Vancomycin"	"C. difficile"		2	4	FALSE
+"EUCAST 2018"	"MIC"		"Corynebacterium"	"Vancomycin"	"Corynebacterium spp."		2	4	FALSE
 "EUCAST 2018"	"MIC"		"Enterococcus"	"Vancomycin"	"Enterococcus"		4	8	FALSE
 "EUCAST 2018"	"MIC"		"Staphylococcus aureus"	"Vancomycin"	"Staphs"		2	4	FALSE
 "EUCAST 2018"	"MIC"		"Coagulase-negative Staphylococcus (CoNS)"	"Vancomycin"	"Staphs"		4	8	FALSE
@@ -4106,8 +4106,8 @@
 "EUCAST 2017"	"MIC"	"Meningitis"	"Streptococcus pneumoniae"	"Meropenem"	"Pneumo"		0.25	2	FALSE
 "EUCAST 2017"	"MIC"		"Viridans Group Streptococcus (VGS)"	"Meropenem"	"Viridans strept"		2	4	FALSE
 "EUCAST 2017"	"MIC"		"Enterobacteriaceae"	"Moxifloxacin"	"Enterobacteriaceae"		0.25	0.5	FALSE
-"EUCAST 2017"	"MIC"		"Corynebacterium"	"Moxifloxacin"	"Corynebacterium spp."		0.5	1	FALSE
 "EUCAST 2017"	"MIC"		"Clostridioides difficile"	"Moxifloxacin"	"C. difficile"		4		FALSE
+"EUCAST 2017"	"MIC"		"Corynebacterium"	"Moxifloxacin"	"Corynebacterium spp."		0.5	1	FALSE
 "EUCAST 2017"	"MIC"		"Haemophilus influenzae"	"Moxifloxacin"	"H. influenzae"		0.125	0.25	FALSE
 "EUCAST 2017"	"MIC"		"Moraxella catarrhalis"	"Moxifloxacin"	"M. catarrhalis"		0.5	1	FALSE
 "EUCAST 2017"	"MIC"		"Staphylococcus aureus"	"Moxifloxacin"	"Staphs"		0.25	0.5	FALSE
@@ -4175,8 +4175,8 @@
 "EUCAST 2017"	"MIC"		"Enterococcus"	"Quinupristin/dalfopristin"	"Enterococcus"		1	8	FALSE
 "EUCAST 2017"	"MIC"		"Staphylococcus"	"Quinupristin/dalfopristin"	"Staphs"		1	4	FALSE
 "EUCAST 2017"	"MIC"		"Aerococcus"	"Rifampicin"	"Aerococcus"		0.125	0.25	FALSE
-"EUCAST 2017"	"MIC"		"Corynebacterium"	"Rifampicin"	"Corynebacterium spp."		0.064	1	FALSE
 "EUCAST 2017"	"MIC"		"Clostridioides difficile"	"Rifampicin"	"C. difficile"		0.004		FALSE
+"EUCAST 2017"	"MIC"		"Corynebacterium"	"Rifampicin"	"Corynebacterium spp."		0.064	1	FALSE
 "EUCAST 2017"	"MIC"		"Helicobacter pylori"	"Rifampicin"	"H. pylori"		1	2	FALSE
 "EUCAST 2017"	"MIC"	"Prophylaxis"	"Haemophilus influenzae"	"Rifampicin"	"H. influenzae"		1	2	FALSE
 "EUCAST 2017"	"MIC"		"Kingella kingae"	"Rifampicin"	"Kingella"		0.5	1	FALSE
@@ -4256,8 +4256,8 @@
 "EUCAST 2017"	"MIC"		"Enterobacteriaceae"	"Piperacillin/tazobactam"	"Enterobacteriaceae"		8	32	FALSE
 "EUCAST 2017"	"MIC"		"Pseudomonas"	"Piperacillin/tazobactam"	"Pseudo"		16	32	FALSE
 "EUCAST 2017"	"MIC"		"Aerococcus"	"Vancomycin"	"Aerococcus"		1	2	FALSE
-"EUCAST 2017"	"MIC"		"Corynebacterium"	"Vancomycin"	"Corynebacterium spp."		2	4	FALSE
 "EUCAST 2017"	"MIC"		"Clostridioides difficile"	"Vancomycin"	"C. difficile"		2	4	FALSE
+"EUCAST 2017"	"MIC"		"Corynebacterium"	"Vancomycin"	"Corynebacterium spp."		2	4	FALSE
 "EUCAST 2017"	"MIC"		"Enterococcus"	"Vancomycin"	"Enterococcus"		4	8	FALSE
 "EUCAST 2017"	"MIC"		"Staphylococcus aureus"	"Vancomycin"	"Staphs"		2	4	FALSE
 "EUCAST 2017"	"MIC"		"Coagulase-negative Staphylococcus (CoNS)"	"Vancomycin"	"Staphs"		4	8	FALSE
@@ -4500,8 +4500,8 @@
 "EUCAST 2016"	"MIC"	"Meningitis"	"Streptococcus pneumoniae"	"Meropenem"	"Pneumo"		0.25	2	FALSE
 "EUCAST 2016"	"MIC"		"Viridans Group Streptococcus (VGS)"	"Meropenem"	"Viridans strept"		2	4	FALSE
 "EUCAST 2016"	"MIC"		"Enterobacteriaceae"	"Moxifloxacin"	"Enterobacteriaceae"		0.5	2	FALSE
-"EUCAST 2016"	"MIC"		"Corynebacterium"	"Moxifloxacin"	"Corynebacterium spp."		0.5	1	FALSE
 "EUCAST 2016"	"MIC"		"Clostridioides difficile"	"Moxifloxacin"	"C. difficile"		4		FALSE
+"EUCAST 2016"	"MIC"		"Corynebacterium"	"Moxifloxacin"	"Corynebacterium spp."		0.5	1	FALSE
 "EUCAST 2016"	"MIC"		"Haemophilus influenzae"	"Moxifloxacin"	"H. influenzae"		0.5	1	FALSE
 "EUCAST 2016"	"MIC"		"Moraxella catarrhalis"	"Moxifloxacin"	"M. catarrhalis"		0.5	1	FALSE
 "EUCAST 2016"	"MIC"		"Staphylococcus"	"Moxifloxacin"	"Staphs"		0.5	2	FALSE
@@ -4559,8 +4559,8 @@
 "EUCAST 2016"	"MIC"		"Candida tropicalis"	"Posaconazole"	"Candida"		0.064	0.12	FALSE
 "EUCAST 2016"	"MIC"		"Enterococcus"	"Quinupristin/dalfopristin"	"Enterococcus"		1	8	FALSE
 "EUCAST 2016"	"MIC"		"Staphylococcus"	"Quinupristin/dalfopristin"	"Staphs"		1	4	FALSE
-"EUCAST 2016"	"MIC"		"Corynebacterium"	"Rifampicin"	"Corynebacterium spp."		0.064	1	FALSE
 "EUCAST 2016"	"MIC"		"Clostridioides difficile"	"Rifampicin"	"C. difficile"		0.004		FALSE
+"EUCAST 2016"	"MIC"		"Corynebacterium"	"Rifampicin"	"Corynebacterium spp."		0.064	1	FALSE
 "EUCAST 2016"	"MIC"		"Helicobacter pylori"	"Rifampicin"	"H. pylori"		1	2	FALSE
 "EUCAST 2016"	"MIC"	"Prophylaxis"	"Haemophilus influenzae"	"Rifampicin"	"H. influenzae"		1	2	FALSE
 "EUCAST 2016"	"MIC"		"Neisseria meningitidis"	"Rifampicin"	"N. meningitidis"		0.25	0.5	FALSE
@@ -4635,8 +4635,8 @@
 "EUCAST 2016"	"MIC"		"Viridans Group Streptococcus (VGS)"	"Tedizolid"	"Viridans strept"		0.25	0.5	FALSE
 "EUCAST 2016"	"MIC"		"Enterobacteriaceae"	"Piperacillin/tazobactam"	"Enterobacteriaceae"		8	32	FALSE
 "EUCAST 2016"	"MIC"		"Pseudomonas"	"Piperacillin/tazobactam"	"Pseudo"		16	32	FALSE
-"EUCAST 2016"	"MIC"		"Corynebacterium"	"Vancomycin"	"Corynebacterium spp."		2	4	FALSE
 "EUCAST 2016"	"MIC"		"Clostridioides difficile"	"Vancomycin"	"C. difficile"		2	4	FALSE
+"EUCAST 2016"	"MIC"		"Corynebacterium"	"Vancomycin"	"Corynebacterium spp."		2	4	FALSE
 "EUCAST 2016"	"MIC"		"Enterococcus"	"Vancomycin"	"Enterococcus"		4	8	FALSE
 "EUCAST 2016"	"MIC"		"Staphylococcus aureus"	"Vancomycin"	"Staphs"		2	4	FALSE
 "EUCAST 2016"	"MIC"		"Coagulase-negative Staphylococcus (CoNS)"	"Vancomycin"	"Staphs"		4	8	FALSE
@@ -4869,8 +4869,8 @@
 "EUCAST 2015"	"MIC"	"Meningitis"	"Streptococcus pneumoniae"	"Meropenem"	"Pneumo"		0.25	2	FALSE
 "EUCAST 2015"	"MIC"		"Viridans Group Streptococcus (VGS)"	"Meropenem"	"Viridans strept"		2	4	FALSE
 "EUCAST 2015"	"MIC"		"Enterobacteriaceae"	"Moxifloxacin"	"Enterobacteriaceae"		0.5	2	FALSE
-"EUCAST 2015"	"MIC"		"Corynebacterium"	"Moxifloxacin"	"Corynebacterium spp."		0.5	1	FALSE
 "EUCAST 2015"	"MIC"		"Clostridioides difficile"	"Moxifloxacin"	"C. difficile"		4		FALSE
+"EUCAST 2015"	"MIC"		"Corynebacterium"	"Moxifloxacin"	"Corynebacterium spp."		0.5	1	FALSE
 "EUCAST 2015"	"MIC"		"Haemophilus influenzae"	"Moxifloxacin"	"H. influenaza"		0.5	1	FALSE
 "EUCAST 2015"	"MIC"		"Moraxella catarrhalis"	"Moxifloxacin"	"M. cattharalis"		0.5	1	FALSE
 "EUCAST 2015"	"MIC"		"Staphylococcus"	"Moxifloxacin"	"Staphs"		0.5	2	FALSE
@@ -4924,8 +4924,8 @@
 "EUCAST 2015"	"MIC"		"Candida tropicalis"	"Posaconazole"	"Candida"		0.064	0.12	FALSE
 "EUCAST 2015"	"MIC"		"Enterococcus"	"Quinupristin/dalfopristin"	"Enterococcus"		1	8	FALSE
 "EUCAST 2015"	"MIC"		"Staphylococcus"	"Quinupristin/dalfopristin"	"Staphs"		1	4	FALSE
-"EUCAST 2015"	"MIC"		"Corynebacterium"	"Rifampicin"	"Corynebacterium spp."		0.064	1	FALSE
 "EUCAST 2015"	"MIC"		"Clostridioides difficile"	"Rifampicin"	"C. difficile"		0.004		FALSE
+"EUCAST 2015"	"MIC"		"Corynebacterium"	"Rifampicin"	"Corynebacterium spp."		0.064	1	FALSE
 "EUCAST 2015"	"MIC"		"Helicobacter pylori"	"Rifampicin"	"H. pylori"		1	2	FALSE
 "EUCAST 2015"	"MIC"	"Prophylaxis"	"Haemophilus influenzae"	"Rifampicin"	"H. influenaza"		1	2	FALSE
 "EUCAST 2015"	"MIC"		"Neisseria meningitidis"	"Rifampicin"	"N. meningitidis"		0.25	0.5	FALSE
@@ -4994,8 +4994,8 @@
 "EUCAST 2015"	"MIC"		"Coagulase-negative Staphylococcus (CoNS)"	"Tobramycin"	"Staphs"		1	2	FALSE
 "EUCAST 2015"	"MIC"		"Enterobacteriaceae"	"Piperacillin/tazobactam"	"Enterobacteriaceae"		8	32	FALSE
 "EUCAST 2015"	"MIC"		"Pseudomonas"	"Piperacillin/tazobactam"	"Pseudo"		16	32	FALSE
-"EUCAST 2015"	"MIC"		"Corynebacterium"	"Vancomycin"	"Corynebacterium spp."		2	4	FALSE
 "EUCAST 2015"	"MIC"		"Clostridioides difficile"	"Vancomycin"	"C. difficile"		2	4	FALSE
+"EUCAST 2015"	"MIC"		"Corynebacterium"	"Vancomycin"	"Corynebacterium spp."		2	4	FALSE
 "EUCAST 2015"	"MIC"		"Enterococcus"	"Vancomycin"	"Enterococcus"		4	8	FALSE
 "EUCAST 2015"	"MIC"		"Staphylococcus aureus"	"Vancomycin"	"Staphs"		2	4	FALSE
 "EUCAST 2015"	"MIC"		"Coagulase-negative Staphylococcus (CoNS)"	"Vancomycin"	"Staphs"		4	8	FALSE
@@ -5225,8 +5225,8 @@
 "EUCAST 2014"	"MIC"	"Meningitis"	"Streptococcus pneumoniae"	"Meropenem"	"Pneumo"		0.25	2	FALSE
 "EUCAST 2014"	"MIC"		"Viridans Group Streptococcus (VGS)"	"Meropenem"	"Viridans strept"		2	4	FALSE
 "EUCAST 2014"	"MIC"		"Enterobacteriaceae"	"Moxifloxacin"	"Enterobacteriaceae"		0.5	2	FALSE
-"EUCAST 2014"	"MIC"		"Corynebacterium"	"Moxifloxacin"	"Corynebacterium spp."		0.5	1	FALSE
 "EUCAST 2014"	"MIC"		"Clostridioides difficile"	"Moxifloxacin"	"C. difficile"		4		FALSE
+"EUCAST 2014"	"MIC"		"Corynebacterium"	"Moxifloxacin"	"Corynebacterium spp."		0.5	1	FALSE
 "EUCAST 2014"	"MIC"		"Haemophilus influenzae"	"Moxifloxacin"	"H. influenaza"		0.5	1	FALSE
 "EUCAST 2014"	"MIC"		"Moraxella catarrhalis"	"Moxifloxacin"	"M. cattharalis"		0.5	1	FALSE
 "EUCAST 2014"	"MIC"		"Staphylococcus"	"Moxifloxacin"	"Staphs"		0.5	2	FALSE
@@ -5280,8 +5280,8 @@
 "EUCAST 2014"	"MIC"		"Candida tropicalis"	"Posaconazole"	"Candida"		0.064	0.12	FALSE
 "EUCAST 2014"	"MIC"		"Enterococcus"	"Quinupristin/dalfopristin"	"Enterococcus"		1	8	FALSE
 "EUCAST 2014"	"MIC"		"Staphylococcus"	"Quinupristin/dalfopristin"	"Staphs"		1	4	FALSE
-"EUCAST 2014"	"MIC"		"Corynebacterium"	"Rifampicin"	"Corynebacterium spp."		0.064	1	FALSE
 "EUCAST 2014"	"MIC"		"Clostridioides difficile"	"Rifampicin"	"C. difficile"		0.004		FALSE
+"EUCAST 2014"	"MIC"		"Corynebacterium"	"Rifampicin"	"Corynebacterium spp."		0.064	1	FALSE
 "EUCAST 2014"	"MIC"		"Helicobacter pylori"	"Rifampicin"	"H. pylori"		1	2	FALSE
 "EUCAST 2014"	"MIC"	"Prophylaxis"	"Haemophilus influenzae"	"Rifampicin"	"H. influenaza"		1	2	FALSE
 "EUCAST 2014"	"MIC"		"Neisseria meningitidis"	"Rifampicin"	"N. meningitidis"		0.25	0.5	FALSE
@@ -5350,8 +5350,8 @@
 "EUCAST 2014"	"MIC"		"Coagulase-negative Staphylococcus (CoNS)"	"Tobramycin"	"Staphs"		1	2	FALSE
 "EUCAST 2014"	"MIC"		"Enterobacteriaceae"	"Piperacillin/tazobactam"	"Enterobacteriaceae"		8	32	FALSE
 "EUCAST 2014"	"MIC"		"Pseudomonas"	"Piperacillin/tazobactam"	"Pseudo"		16	32	FALSE
-"EUCAST 2014"	"MIC"		"Corynebacterium"	"Vancomycin"	"Corynebacterium spp."		2	4	FALSE
 "EUCAST 2014"	"MIC"		"Clostridioides difficile"	"Vancomycin"	"C. difficile"		2	4	FALSE
+"EUCAST 2014"	"MIC"		"Corynebacterium"	"Vancomycin"	"Corynebacterium spp."		2	4	FALSE
 "EUCAST 2014"	"MIC"		"Enterococcus"	"Vancomycin"	"Enterococcus"		4	8	FALSE
 "EUCAST 2014"	"MIC"		"Staphylococcus aureus"	"Vancomycin"	"Staphs"		2	4	FALSE
 "EUCAST 2014"	"MIC"		"Coagulase-negative Staphylococcus (CoNS)"	"Vancomycin"	"Staphs"		4	8	FALSE
@@ -6980,10 +6980,6 @@
 "CLSI 2019"	"MIC"		"Burkholderia pseudomallei"	"Amoxicillin/clavulanic acid"	"M45 Table 21"		8	32	FALSE
 "CLSI 2019"	"MIC"		"Cardiobacterium"	"Amoxicillin/clavulanic acid"	"M45 Table 9"		4	8	FALSE
 "CLSI 2019"	"MIC"		"Eikenella corrodens"	"Amoxicillin/clavulanic acid"	"M45 Table 9"		4	8	FALSE
-"CLSI 2019"	"DISK"	"UTI"	"Escherichia coli"	"Amoxicillin/clavulanic acid"	"VET08 Table 2A"	"20ug"	18		TRUE
-"CLSI 2019"	"MIC"	"Skin, soft tissue"	"Escherichia coli"	"Amoxicillin/clavulanic acid"	"VET08 Table 2A"		0.25	1	FALSE
-"CLSI 2019"	"MIC"	"UTI"	"Escherichia coli"	"Amoxicillin/clavulanic acid"	"VET08 Table 2A"		8		TRUE
-"CLSI 2019"	"MIC"	"Skin, soft tissue, UTI"	"Escherichia coli"	"Amoxicillin/clavulanic acid"	"VET08 Table 2A"		0.25	1	TRUE
 "CLSI 2019"	"DISK"		"Haemophilus"	"Amoxicillin/clavulanic acid"	"Table 2E"	"20/10ug"	20	19	FALSE
 "CLSI 2019"	"MIC"		"Haemophilus"	"Amoxicillin/clavulanic acid"	"Table 2E"		4	8	FALSE
 "CLSI 2019"	"MIC"		"Kingella"	"Amoxicillin/clavulanic acid"	"M45 Table 9"		4	8	FALSE
@@ -6991,15 +6987,10 @@
 "CLSI 2019"	"MIC"		"Moraxella catarrhalis"	"Amoxicillin/clavulanic acid"	"M45 Table 16"		4	8	FALSE
 "CLSI 2019"	"DISK"		"Pasteurella"	"Amoxicillin/clavulanic acid"	"M45 Table 17"	"20ug"	27		FALSE
 "CLSI 2019"	"MIC"		"Pasteurella"	"Amoxicillin/clavulanic acid"	"M45 Table 17"		0.5		FALSE
-"CLSI 2019"	"MIC"	"Skin, soft tissue, UTI"	"Pasteurella multocida"	"Amoxicillin/clavulanic acid"	"VET08 Table 2H"		0.25	1	TRUE
 "CLSI 2019"	"DISK"		"Staphylococcus"	"Amoxicillin/clavulanic acid"	"Table 2C"	"20ug"	20	19	FALSE
 "CLSI 2019"	"MIC"		"Staphylococcus"	"Amoxicillin/clavulanic acid"	"Table 2C"		4	8	FALSE
-"CLSI 2019"	"MIC"	"Skin, soft tissue"	"Staphylococcus"	"Amoxicillin/clavulanic acid"	"VET08 Table 2C"		0.25	1	FALSE
-"CLSI 2019"	"MIC"	"UTI"	"Staphylococcus"	"Amoxicillin/clavulanic acid"	"VET08 Table 2C"		8		TRUE
-"CLSI 2019"	"MIC"	"Skin, soft tissue, UTI"	"Staphylococcus"	"Amoxicillin/clavulanic acid"	"VET08 Table 2C"		0.25	1	TRUE
 "CLSI 2019"	"DISK"		"Streptococcus"	"Amoxicillin/clavulanic acid"	"Table 2H-1"	"20ug"			FALSE
 "CLSI 2019"	"MIC"		"Streptococcus"	"Amoxicillin/clavulanic acid"	"Table 2H-1"				FALSE
-"CLSI 2019"	"MIC"	"Skin, soft tissue, UTI"	"Streptococcus"	"Amoxicillin/clavulanic acid"	"VET08 Table 2D"		0.25	1	TRUE
 "CLSI 2019"	"DISK"		"Streptococcus pneumoniae"	"Amoxicillin/clavulanic acid"	"Table 2G"	"10/10ug"			FALSE
 "CLSI 2019"	"MIC"	"Non-meningitis"	"Streptococcus pneumoniae"	"Amoxicillin/clavulanic acid"	"Table 2G"		2	8	FALSE
 "CLSI 2019"	"DISK"		"Vibrio"	"Amoxicillin/clavulanic acid"	"M45 Table 20"	"20ug"	18	13	FALSE
@@ -7012,76 +7003,44 @@
 "CLSI 2019"	"DISK"		"Aeromonas"	"Amikacin"	"M45 Table 3"		17	14	FALSE
 "CLSI 2019"	"MIC"		"Aeromonas"	"Amikacin"	"M45 Table 3"		16	64	FALSE
 "CLSI 2019"	"MIC"		"Bacillus"	"Amikacin"	"M45 Table 4"		16	64	FALSE
-"CLSI 2019"	"MIC"		"Escherichia coli"	"Amikacin"	"VET08 Table 2A"		4	16	FALSE
-"CLSI 2019"	"MIC"		"Escherichia coli"	"Amikacin"	"VET08 Table 2A"		2	8	FALSE
-"CLSI 2019"	"MIC"		"Escherichia coli"	"Amikacin"	"VET08 Table 2A"		4	16	FALSE
 "CLSI 2019"	"DISK"		"Pseudomonas aeruginosa"	"Amikacin"	"Table 2B-1"	"30ug"	17	14	FALSE
 "CLSI 2019"	"MIC"		"Pseudomonas aeruginosa"	"Amikacin"	"Table 2B-1"		16	64	FALSE
-"CLSI 2019"	"MIC"		"Pseudomonas aeruginosa"	"Amikacin"	"VET08 Table 2B"		4	16	FALSE
-"CLSI 2019"	"MIC"		"Pseudomonas aeruginosa"	"Amikacin"	"VET08 Table 2B"		2	8	FALSE
-"CLSI 2019"	"MIC"		"Pseudomonas aeruginosa"	"Amikacin"	"VET08 Table 2B"		4	16	FALSE
-"CLSI 2019"	"MIC"		"Staphylococcus"	"Amikacin"	"VET08 Table 2C"		4	16	FALSE
-"CLSI 2019"	"MIC"		"Staphylococcus aureus"	"Amikacin"	"VET08 Table 2C"		2	8	FALSE
-"CLSI 2019"	"MIC"		"Staphylococcus aureus"	"Amikacin"	"VET08 Table 2C"		4	16	FALSE
-"CLSI 2019"	"MIC"		"Streptococcus"	"Amikacin"	"VET08 Table 2D"		4	16	FALSE
-"CLSI 2019"	"MIC"		"Streptococcus equi"	"Amikacin"	"VET08 Table 2D"		2	8	FALSE
-"CLSI 2019"	"MIC"		"Streptococcus equi"	"Amikacin"	"VET08 Table 2D"		4	16	FALSE
-"CLSI 2019"	"MIC"		"Streptococcus equi zooepidemicus"	"Amikacin"	"VET08 Table 2D"		2	8	FALSE
-"CLSI 2019"	"MIC"		"Streptococcus equi zooepidemicus"	"Amikacin"	"VET08 Table 2D"		4	16	FALSE
 "CLSI 2019"	"DISK"		"Vibrio"	"Amikacin"	"M45 Table 20"	"30ug"	17	14	FALSE
 "CLSI 2019"	"MIC"		"Vibrio"	"Amikacin"	"M45 Table 20"		16	64	FALSE
 "CLSI 2019"	"DISK"		"(unknown name)"	"Amikacin"	"Generic CLSI rules"	"30ug"	17	14	FALSE
 "CLSI 2019"	"MIC"		"(unknown name)"	"Amikacin"	"Generic CLSI rules"	"30ug"	16	64	FALSE
 "CLSI 2019"	"MIC"		"Abiotrophia"	"Ampicillin"	"M45 Table 1"		0.25	8	FALSE
-"CLSI 2019"	"MIC"	"Respiratory"	"Actinobacillus pleuropneumoniae"	"Ampicillin"	"VET08 Table 2I"		0.5	2	FALSE
 "CLSI 2019"	"MIC"		"Aggregatibacter"	"Ampicillin"	"M45 Table 9"		1	4	FALSE
 "CLSI 2019"	"MIC"		"Anaerosalibacter"	"Ampicillin"	"Table 2J"		0.5	2	FALSE
 "CLSI 2019"	"MIC"		"Bacillus"	"Ampicillin"	"M45 Table 4"		0.25	0.5	FALSE
-"CLSI 2019"	"MIC"	"Respiratory"	"Bordetella bronchiseptica"	"Ampicillin"	"VET08 Table 2F"		0.5	2	FALSE
 "CLSI 2019"	"MIC"		"Cardiobacterium"	"Ampicillin"	"M45 Table 9"		1	4	FALSE
 "CLSI 2019"	"MIC"		"Eikenella corrodens"	"Ampicillin"	"M45 Table 9"		1	4	FALSE
 "CLSI 2019"	"DISK"		"Enterococcus"	"Ampicillin"	"Table 2D"	"10ug"	17	16	FALSE
 "CLSI 2019"	"MIC"		"Enterococcus"	"Ampicillin"	"Table 2D"		8	16	FALSE
-"CLSI 2019"	"MIC"	"Skin, soft tissue"	"Escherichia coli"	"Ampicillin"	"VET08 Table 2A"		0.25	1	FALSE
-"CLSI 2019"	"MIC"	"UTI"	"Escherichia coli"	"Ampicillin"	"VET08 Table 2A"		8		TRUE
-"CLSI 2019"	"MIC"	"Skin, soft tissue, UTI"	"Escherichia coli"	"Ampicillin"	"VET08 Table 2A"		0.25	1	TRUE
-"CLSI 2019"	"MIC"	"Metritis"	"Escherichia coli"	"Ampicillin"	"VET08 Table 2A"		0.25	1	FALSE
 "CLSI 2019"	"MIC"		"Granulicatella"	"Ampicillin"	"M45 Table 1"		0.25	8	FALSE
 "CLSI 2019"	"DISK"		"Haemophilus"	"Ampicillin"	"Table 2E"	"10ug"	22	18	FALSE
 "CLSI 2019"	"MIC"		"Haemophilus"	"Ampicillin"	"Table 2E"		1	4	FALSE
-"CLSI 2019"	"MIC"	"Respiratory"	"Histophilus somni"	"Ampicillin"	"VET08 Table 2J"		0.032	0.25	FALSE
 "CLSI 2019"	"MIC"		"Kingella"	"Ampicillin"	"M45 Table 9"		1	4	FALSE
 "CLSI 2019"	"MIC"		"Leuconostoc"	"Ampicillin"	"M45 Table 13"		8		FALSE
 "CLSI 2019"	"MIC"		"Lactobacillus"	"Ampicillin"	"M45 Table 11"		8		FALSE
 "CLSI 2019"	"MIC"		"Lactococcus"	"Ampicillin"	"M45 Table 12"		1	4	FALSE
 "CLSI 2019"	"MIC"		"Listeria monocytogenes"	"Ampicillin"	"M45 Table 14"		2		FALSE
-"CLSI 2019"	"MIC"	"Respiratory"	"Mannheimia haemolytica"	"Ampicillin"	"VET08 Table 2G"		0.032	0.25	FALSE
 "CLSI 2019"	"DISK"		"Neisseria meningitidis"	"Ampicillin"	"Table 2I"	"10ug"			FALSE
 "CLSI 2019"	"MIC"		"Neisseria meningitidis"	"Ampicillin"	"Table 2I"		0.125	2	FALSE
 "CLSI 2019"	"MIC"		"Pediococcus"	"Ampicillin"	"M45 Table 18"		8		FALSE
 "CLSI 2019"	"DISK"		"Pasteurella"	"Ampicillin"	"M45 Table 17"	"10ug"	27		FALSE
 "CLSI 2019"	"MIC"		"Pasteurella"	"Ampicillin"	"M45 Table 17"		0.5		FALSE
-"CLSI 2019"	"MIC"	"Skin, soft tissue, UTI"	"Pasteurella multocida"	"Ampicillin"	"VET08 Table 2H"		0.25	1	TRUE
-"CLSI 2019"	"MIC"	"Respiratory"	"Pasteurella multocida"	"Ampicillin"	"VET08 Table 2H"		0.5	2	FALSE
-"CLSI 2019"	"MIC"	"Respiratory"	"Pasteurella multocida"	"Ampicillin"	"VET08 Table 2H"		0.032	0.25	FALSE
 "CLSI 2019"	"DISK"		"Staphylococcus"	"Ampicillin"	"Table 2C"	"10ug"	29	28	FALSE
 "CLSI 2019"	"MIC"		"Staphylococcus"	"Ampicillin"	"Table 2C"		0.25	0.5	FALSE
-"CLSI 2019"	"MIC"	"Skin, soft tissue, UTI"	"Staphylococcus"	"Ampicillin"	"VET08 Table 2C"		0.25	1	TRUE
 "CLSI 2019"	"DISK"		"Streptococcus"	"Ampicillin"	"Table 2H-1"	"10ug"	24		FALSE
 "CLSI 2019"	"MIC"		"Streptococcus"	"Ampicillin"	"M45 Table 1"		0.25	8	FALSE
 "CLSI 2019"	"MIC"		"Streptococcus"	"Ampicillin"	"Table 2H-1"		0.25		FALSE
-"CLSI 2019"	"MIC"	"Skin, soft tissue"	"Streptococcus"	"Ampicillin"	"VET08 Table 2D"		0.25		FALSE
-"CLSI 2019"	"MIC"	"Skin, soft tissue, UTI"	"Streptococcus"	"Ampicillin"	"VET08 Table 2D"		0.25	1	TRUE
-"CLSI 2019"	"MIC"	"Respiratory"	"Streptococcus equi"	"Ampicillin"	"VET08 Table 2D"		0.25		FALSE
-"CLSI 2019"	"MIC"	"Respiratory"	"Streptococcus equi zooepidemicus"	"Ampicillin"	"VET08 Table 2D"		0.25		FALSE
 "CLSI 2019"	"DISK"		"Streptococcus pneumoniae"	"Ampicillin"	"Table 2G"	"10ug"			FALSE
 "CLSI 2019"	"MIC"		"Streptococcus pneumoniae"	"Ampicillin"	"Table 2G"				FALSE
-"CLSI 2019"	"MIC"	"Respiratory"	"Streptococcus suis"	"Ampicillin"	"VET08 Table 2D"		0.5	2	FALSE
 "CLSI 2019"	"DISK"		"Viridans Group Streptococcus (VGS)"	"Ampicillin"	"Table 2H-2"	"10ug"			FALSE
 "CLSI 2019"	"MIC"		"Viridans Group Streptococcus (VGS)"	"Ampicillin"	"Table 2H-2"		0.25	8	FALSE
 "CLSI 2019"	"DISK"		"Vibrio"	"Ampicillin"	"M45 Table 20"	"10ug"	17	13	FALSE
 "CLSI 2019"	"MIC"		"Vibrio"	"Ampicillin"	"M45 Table 20"		8	32	FALSE
-"CLSI 2019"	"MIC"	"Skin, soft tissue"	"Pseudallescheria"	"Ampicillin"	"VET08 Table 2C"		0.25	0.5	FALSE
 "CLSI 2019"	"DISK"		"(unknown name)"	"Ampicillin"	"Generic CLSI rules"	"10ug"	17	13	FALSE
 "CLSI 2019"	"MIC"		"(unknown name)"	"Ampicillin"	"Generic CLSI rules"	"10ug"	8	32	FALSE
 "CLSI 2019"	"MIC"		"Bacillus anthracis"	"Amoxicillin"	"M45 Table 21"		0.125	0.25	FALSE
@@ -7190,9 +7149,6 @@
 "CLSI 2019"	"MIC"		"(unknown name)"	"Cefaclor"	"Generic CLSI rules"	"30ug"	8	32	FALSE
 "CLSI 2019"	"DISK"		"Staphylococcus"	"Cephalothin"	"Table 2C"	"30ug"	18	14	FALSE
 "CLSI 2019"	"MIC"		"Staphylococcus"	"Cephalothin"	"Table 2C"		8	32	FALSE
-"CLSI 2019"	"MIC"	"Skin, soft tissue"	"Staphylococcus aureus"	"Cephalothin"	"VET08 Table 2C"		2	8	FALSE
-"CLSI 2019"	"MIC"	"Skin, soft tissue"	"Beta-haemolytic Streptococcus"	"Cephalothin"	"VET08 Table 2D"		2	8	FALSE
-"CLSI 2019"	"MIC"	"Skin, soft tissue"	"Pseudallescheria"	"Cephalothin"	"VET08 Table 2C"		2	8	FALSE
 "CLSI 2019"	"DISK"		"Haemophilus"	"Cefixime"	"Table 2E"	"5ug"	21		FALSE
 "CLSI 2019"	"MIC"		"Haemophilus"	"Cefixime"	"Table 2E"		1		FALSE
 "CLSI 2019"	"DISK"		"Neisseria gonorrhoeae"	"Cefixime"	"Table 2F"	"5ug"	31		FALSE
@@ -7308,14 +7264,10 @@
 "CLSI 2019"	"MIC"		"Moraxella catarrhalis"	"Clindamycin"	"M45 Table 16"		0.5	4	FALSE
 "CLSI 2019"	"MIC"		"Rothia"	"Clindamycin"	"M45 Table 19"		0.5	4	FALSE
 "CLSI 2019"	"DISK"		"Staphylococcus"	"Clindamycin"	"Table 2C"	"2ug"	21	14	FALSE
-"CLSI 2019"	"DISK"	"Skin, soft tissue"	"Staphylococcus"	"Clindamycin"	"VET08 Table 2C"	"2ug"	21	14	FALSE
 "CLSI 2019"	"MIC"		"Staphylococcus"	"Clindamycin"	"Table 2C"		0.5	4	FALSE
-"CLSI 2019"	"MIC"	"Skin, soft tissue"	"Staphylococcus"	"Clindamycin"	"VET08 Table 2C"		0.5	4	FALSE
 "CLSI 2019"	"DISK"		"Streptococcus"	"Clindamycin"	"Table 2H-1"	"2ug"	19	15	FALSE
 "CLSI 2019"	"MIC"		"Streptococcus"	"Clindamycin"	"M45 Table 1"		0.25	1	FALSE
 "CLSI 2019"	"MIC"		"Streptococcus"	"Clindamycin"	"Table 2H-1"		0.25	1	FALSE
-"CLSI 2019"	"DISK"	"Skin, soft tissue"	"Beta-haemolytic Streptococcus"	"Clindamycin"	"VET08 Table 2D"	"2ug"	21	14	FALSE
-"CLSI 2019"	"MIC"	"Skin, soft tissue"	"Beta-haemolytic Streptococcus"	"Clindamycin"	"VET08 Table 2D"		0.5	4	FALSE
 "CLSI 2019"	"DISK"		"Streptococcus pneumoniae"	"Clindamycin"	"Table 2G"	"2ug"	19	15	FALSE
 "CLSI 2019"	"MIC"		"Streptococcus pneumoniae"	"Clindamycin"	"Table 2G"		0.25	1	FALSE
 "CLSI 2019"	"DISK"		"Viridans Group Streptococcus (VGS)"	"Clindamycin"	"Table 2H-2"	"2ug"	19	15	FALSE
@@ -7351,26 +7303,14 @@
 "CLSI 2019"	"MIC"		"Pseudomonas aeruginosa"	"Colistin"	"Table 2B-1"		2	4	FALSE
 "CLSI 2019"	"DISK"		"(unknown name)"	"Colistin"	"Generic CLSI rules"	"10ug"	11	10	FALSE
 "CLSI 2019"	"MIC"		"(unknown name)"	"Colistin"	"Generic CLSI rules"	"10ug"	2	8	FALSE
-"CLSI 2019"	"DISK"	"Wounds, abscesses"	"Schaalia canis"	"Cefpodoxime"	"VET08 Table 2D"	"10ug"	21	17	FALSE
-"CLSI 2019"	"MIC"	"Wounds, abscesses"	"Schaalia canis"	"Cefpodoxime"	"VET08 Table 2D"		2	8	FALSE
-"CLSI 2019"	"DISK"	"Wounds, abscesses, UTI"	"Escherichia coli"	"Cefpodoxime"	"VET08 Table 2A"	"10ug"	21	17	TRUE
-"CLSI 2019"	"MIC"	"UTI"	"Escherichia coli"	"Cefpodoxime"	"VET08 Table 2A"		2	8	TRUE
 "CLSI 2019"	"DISK"		"Haemophilus"	"Cefpodoxime"	"Table 2E"	"10ug"	21		FALSE
 "CLSI 2019"	"MIC"		"Haemophilus"	"Cefpodoxime"	"Table 2E"		2		FALSE
 "CLSI 2019"	"DISK"		"Neisseria gonorrhoeae"	"Cefpodoxime"	"Table 2F"	"10ug"	29		FALSE
 "CLSI 2019"	"MIC"		"Neisseria gonorrhoeae"	"Cefpodoxime"	"Table 2F"		0.5		FALSE
-"CLSI 2019"	"DISK"	"Wounds, abscesses, UTI"	"Proteus mirabilis"	"Cefpodoxime"	"VET08 Table 2A"	"10ug"	21	17	TRUE
-"CLSI 2019"	"MIC"	"UTI"	"Proteus mirabilis"	"Cefpodoxime"	"VET08 Table 2A"		2	8	TRUE
-"CLSI 2019"	"DISK"	"Wounds, abscesses"	"Pasteurella multocida"	"Cefpodoxime"	"VET08 Table 2H"	"10ug"	21	17	FALSE
-"CLSI 2019"	"MIC"	"Wounds, abscesses"	"Pasteurella multocida"	"Cefpodoxime"	"VET08 Table 2H"		2	8	FALSE
 "CLSI 2019"	"DISK"		"Staphylococcus"	"Cefpodoxime"	"Table 2C"	"10ug"	21	17	FALSE
 "CLSI 2019"	"MIC"		"Staphylococcus"	"Cefpodoxime"	"Table 2C"		2	8	FALSE
-"CLSI 2019"	"DISK"	"Wounds, abscesses"	"Staphylococcus aureus"	"Cefpodoxime"	"VET08 Table 2C"	"10ug"	21	17	FALSE
-"CLSI 2019"	"MIC"	"Wounds, abscesses"	"Staphylococcus aureus"	"Cefpodoxime"	"VET08 Table 2C"		2	8	FALSE
 "CLSI 2019"	"DISK"		"Streptococcus pneumoniae"	"Cefpodoxime"	"Table 2G"	"10ug"			FALSE
 "CLSI 2019"	"MIC"		"Streptococcus pneumoniae"	"Cefpodoxime"	"Table 2G"		0.5	2	FALSE
-"CLSI 2019"	"DISK"	"Wounds, abscesses"	"Pseudallescheria"	"Cefpodoxime"	"VET08 Table 2C"	"10ug"	21	17	FALSE
-"CLSI 2019"	"MIC"	"Wounds, abscesses"	"Pseudallescheria"	"Cefpodoxime"	"VET08 Table 2C"		2	8	FALSE
 "CLSI 2019"	"DISK"		"(unknown name)"	"Cefpodoxime"	"Generic CLSI rules"	"10ug"	21	17	FALSE
 "CLSI 2019"	"MIC"		"(unknown name)"	"Cefpodoxime"	"Generic CLSI rules"	"10ug"	2	8	FALSE
 "CLSI 2019"	"DISK"		"Haemophilus"	"Cefprozil"	"Table 2E"	"30ug"	18	14	FALSE
@@ -7513,19 +7453,9 @@
 "CLSI 2019"	"MIC"		"(unknown name)"	"Ceftazidime/avibactam"	"Generic CLSI rules"	"30-20ug"	8	16	FALSE
 "CLSI 2019"	"DISK"	"Urine"	"Enterobacteriaceae"	"Cefazolin"	"Table 2A"		15	14	FALSE
 "CLSI 2019"	"MIC"	"Urine"	"Enterobacteriaceae"	"Cefazolin"	"Table 2A"		16	32	FALSE
-"CLSI 2019"	"MIC"	"Respiratory, genital"	"Escherichia coli"	"Cefazolin"	"VET08 Table 2A"		2	8	FALSE
-"CLSI 2019"	"MIC"	"Skin, soft tissue"	"Escherichia coli"	"Cefazolin"	"VET08 Table 2A"		2	8	FALSE
-"CLSI 2019"	"MIC"	"UTI"	"Escherichia coli"	"Cefazolin"	"VET08 Table 2A"		16	32	TRUE
-"CLSI 2019"	"MIC"	"UTI"	"Klebsiella pneumoniae"	"Cefazolin"	"VET08 Table 2A"		16	32	TRUE
-"CLSI 2019"	"MIC"	"UTI"	"Proteus mirabilis"	"Cefazolin"	"VET08 Table 2A"		16	32	TRUE
-"CLSI 2019"	"MIC"	"Skin, soft tissue, respiratory, urinary/genital"	"Pasteurella multocida"	"Cefazolin"	"VET08 Table 2H"		2	8	TRUE
 "CLSI 2019"	"DISK"		"Staphylococcus"	"Cefazolin"	"Table 2C"	"30ug"	18	14	FALSE
 "CLSI 2019"	"MIC"		"Staphylococcus"	"Cefazolin"	"Table 2C"		8	32	FALSE
-"CLSI 2019"	"MIC"	"Skin, soft tissue, UTI, respiratory"	"Staphylococcus aureus"	"Cefazolin"	"VET08 Table 2C"		2	8	TRUE
-"CLSI 2019"	"MIC"	"Skin, soft tissue, respiratory, urinary/genital"	"Beta-haemolytic Streptococcus"	"Cefazolin"	"VET08 Table 2D"		2	8	TRUE
-"CLSI 2019"	"MIC"	"Respiratory, genital"	"Beta-haemolytic Streptococcus"	"Cefazolin"	"VET08 Table 2D"		2	8	FALSE
 "CLSI 2019"	"MIC"		"Vibrio"	"Cefazolin"	"M45 Table 20"		2	8	FALSE
-"CLSI 2019"	"MIC"	"Skin, soft tissue, UTI, respiratory"	"Pseudallescheria"	"Cefazolin"	"VET08 Table 2C"		2	8	TRUE
 "CLSI 2019"	"DISK"		"(unknown name)"	"Cefazolin"	"Generic CLSI rules"	"30ug"	23	19	FALSE
 "CLSI 2019"	"MIC"		"(unknown name)"	"Cefazolin"	"Generic CLSI rules"	"30ug"	2	8	FALSE
 "CLSI 2019"	"MIC"		"Pseudomonas aeruginosa"	"Ceftolozane/tazobactam"	"Table 2B-1"		4	16	FALSE
@@ -7546,10 +7476,6 @@
 "CLSI 2019"	"MIC"		"Coagulase-positive Staphylococcus (CoPS)"	"Dalbavancin"	"Table 2C"		0.25		FALSE
 "CLSI 2019"	"MIC"		"Streptococcus"	"Dalbavancin"	"Table 2H-1"		0.25		FALSE
 "CLSI 2019"	"MIC"		"Viridans Group Streptococcus (VGS)"	"Dalbavancin"	"Table 2H-2"		0.25		FALSE
-"CLSI 2019"	"DISK"	"Respiratory"	"Mannheimia haemolytica"	"Danofloxacin"	"VET08 Table 2G"	"5ug"	22	17	FALSE
-"CLSI 2019"	"MIC"	"Respiratory"	"Mannheimia haemolytica"	"Danofloxacin"	"VET08 Table 2G"		0.25	1	FALSE
-"CLSI 2019"	"DISK"	"Respiratory"	"Pasteurella multocida"	"Danofloxacin"	"VET08 Table 2H"	"5ug"	22	17	FALSE
-"CLSI 2019"	"MIC"	"Respiratory"	"Pasteurella multocida"	"Danofloxacin"	"VET08 Table 2H"		0.25	1	FALSE
 "CLSI 2019"	"MIC"		"Enterococcus"	"Daptomycin"	"Table 2D"		2	8	FALSE
 "CLSI 2019"	"MIC"		"Enterococcus faecium"	"Daptomycin"	"Table 2D"		4	8	FALSE
 "CLSI 2019"	"MIC"		"Lactobacillus"	"Daptomycin"	"M45 Table 11"		4		FALSE
@@ -7561,12 +7487,6 @@
 "CLSI 2019"	"DISK"		"Viridans Group Streptococcus (VGS)"	"Daptomycin"	"Table 2H-2"	"30ug"			FALSE
 "CLSI 2019"	"MIC"		"Viridans Group Streptococcus (VGS)"	"Daptomycin"	"Table 2H-2"		1		FALSE
 "CLSI 2019"	"MIC"		"(unknown name)"	"Daptomycin"	"Generic CLSI rules"	"30ug"	1		FALSE
-"CLSI 2019"	"DISK"	"Skin, soft tissue, UTI"	"Enterobacteriaceae"	"Difloxacin"	"VET08 Table 2A"	"10ug"	21	17	TRUE
-"CLSI 2019"	"MIC"	"Skin, soft tissue, UTI"	"Enterobacteriaceae"	"Difloxacin"	"VET08 Table 2A"		0.5	4	TRUE
-"CLSI 2019"	"DISK"	"Skin, soft tissue, UTI"	"Staphylococcus"	"Difloxacin"	"VET08 Table 2C"	"10ug"	21	17	TRUE
-"CLSI 2019"	"MIC"	"Skin, soft tissue, UTI"	"Staphylococcus"	"Difloxacin"	"VET08 Table 2C"		0.5	4	TRUE
-"CLSI 2019"	"DISK"	"Skin, soft tissue, UTI"	"Streptococcus"	"Difloxacin"	"VET08 Table 2D"	"10ug"	21	17	TRUE
-"CLSI 2019"	"MIC"	"Skin, soft tissue, UTI"	"Streptococcus"	"Difloxacin"	"VET08 Table 2D"		0.5	4	TRUE
 "CLSI 2019"	"DISK"		"(unknown name)"	"Difloxacin"	"Generic CLSI rules"	"10ug"	21	17	FALSE
 "CLSI 2019"	"MIC"		"(unknown name)"	"Difloxacin"	"Generic CLSI rules"	"10ug"	0.5	4	FALSE
 "CLSI 2019"	"DISK"		"Staphylococcus"	"Dirithromycin"	"Table 2C"	"15ug"	19	15	FALSE
@@ -7607,60 +7527,22 @@
 "CLSI 2019"	"MIC"		"Campylobacter"	"Doxycycline"	"M45 Table 5"		2	8	FALSE
 "CLSI 2019"	"DISK"		"Enterococcus"	"Doxycycline"	"Table 2D"	"30ug"	16	12	FALSE
 "CLSI 2019"	"MIC"		"Enterococcus"	"Doxycycline"	"Table 2D"		4	16	FALSE
-"CLSI 2019"	"MIC"		"Escherichia coli"	"Doxycycline"	"VET08 Table 2A"		0.125	0.5	FALSE
 "CLSI 2019"	"MIC"		"Francisella tularensis"	"Doxycycline"	"M45 Table 21"		4		FALSE
 "CLSI 2019"	"DISK"		"Pasteurella"	"Doxycycline"	"M45 Table 17"	"30ug"	23		FALSE
 "CLSI 2019"	"MIC"		"Pasteurella"	"Doxycycline"	"M45 Table 17"		0.5		FALSE
 "CLSI 2019"	"DISK"		"Staphylococcus"	"Doxycycline"	"Table 2C"	"30ug"	16	12	FALSE
 "CLSI 2019"	"MIC"		"Staphylococcus"	"Doxycycline"	"Table 2C"		4	16	FALSE
-"CLSI 2019"	"MIC"		"Staphylococcus aureus"	"Doxycycline"	"VET08 Table 2C"		0.125	0.5	FALSE
-"CLSI 2019"	"MIC"		"Streptococcus equi"	"Doxycycline"	"VET08 Table 2D"		0.125	0.5	FALSE
-"CLSI 2019"	"MIC"		"Streptococcus equi zooepidemicus"	"Doxycycline"	"VET08 Table 2D"		0.125	0.5	FALSE
 "CLSI 2019"	"DISK"		"Streptococcus pneumoniae"	"Doxycycline"	"Table 2G"	"30ug"	28	24	FALSE
 "CLSI 2019"	"MIC"		"Streptococcus pneumoniae"	"Doxycycline"	"Table 2G"		0.25	1	FALSE
 "CLSI 2019"	"DISK"		"Vibrio"	"Doxycycline"	"M45 Table 20"	"30ug"			FALSE
 "CLSI 2019"	"MIC"		"Yersinia pestis"	"Doxycycline"	"M45 Table 21"		4	16	FALSE
-"CLSI 2019"	"DISK"	"Skin, soft tissue"	"Pseudallescheria"	"Doxycycline"	"VET08 Table 2C"	"30ug"	25	20	FALSE
-"CLSI 2019"	"MIC"	"Skin, soft tissue"	"Pseudallescheria"	"Doxycycline"	"VET08 Table 2C"		0.125	0.5	FALSE
 "CLSI 2019"	"DISK"		"(unknown name)"	"Doxycycline"	"Generic CLSI rules"	"30ug"	14	10	FALSE
 "CLSI 2019"	"MIC"		"(unknown name)"	"Doxycycline"	"Generic CLSI rules"	"30ug"	4	16	FALSE
-"CLSI 2019"	"DISK"	"Skin, soft tissue, respiratory, UTI"	"Enterobacteriaceae"	"Enrofloxacin"	"VET08 Table 2A"	"5ug"	23	16	TRUE
-"CLSI 2019"	"DISK"	"Skin, soft tissue"	"Enterobacteriaceae"	"Enrofloxacin"	"VET08 Table 2A"	"5ug"	23	16	FALSE
-"CLSI 2019"	"MIC"	"Skin, soft tissue, respiratory, UTI"	"Enterobacteriaceae"	"Enrofloxacin"	"VET08 Table 2A"		0.5	4	TRUE
-"CLSI 2019"	"MIC"	"Skin, soft tissue"	"Enterobacteriaceae"	"Enrofloxacin"	"VET08 Table 2A"		0.5	4	FALSE
-"CLSI 2019"	"DISK"	"Respiratory"	"Actinobacillus pleuropneumoniae"	"Enrofloxacin"	"VET08 Table 2I"	"5ug"	23	18	FALSE
-"CLSI 2019"	"MIC"	"Respiratory"	"Actinobacillus pleuropneumoniae"	"Enrofloxacin"	"VET08 Table 2I"		0.25	1	FALSE
 "CLSI 2019"	"MIC"	"Canine, feline"	"Alloscardovia"	"Enrofloxacin"	"Vet Table"		0.5	4	FALSE
-"CLSI 2019"	"DISK"		"Escherichia coli"	"Enrofloxacin"	"VET08 Table 2A"	"5ug"	23	16	FALSE
-"CLSI 2019"	"MIC"	"Skin, soft tissue, respiratory"	"Escherichia coli"	"Enrofloxacin"	"VET08 Table 2A"		0.125	0.5	FALSE
-"CLSI 2019"	"MIC"		"Escherichia coli"	"Enrofloxacin"	"VET08 Table 2A"		0.25	2	FALSE
 "CLSI 2019"	"DISK"		"Histophilus somni"	"Enrofloxacin"	"Vet Table"	"5ug"	21	16	FALSE
-"CLSI 2019"	"DISK"	"Respiratory"	"Histophilus somni"	"Enrofloxacin"	"VET08 Table 2J"	"5ug"	21	16	FALSE
 "CLSI 2019"	"MIC"		"Histophilus somni"	"Enrofloxacin"	"Vet Table"		0.25	2	FALSE
-"CLSI 2019"	"MIC"	"Respiratory"	"Histophilus somni"	"Enrofloxacin"	"VET08 Table 2J"		0.25	2	FALSE
-"CLSI 2019"	"DISK"	"Respiratory"	"Mannheimia haemolytica"	"Enrofloxacin"	"VET08 Table 2G"	"5ug"	21	16	FALSE
-"CLSI 2019"	"MIC"	"Respiratory"	"Mannheimia haemolytica"	"Enrofloxacin"	"VET08 Table 2G"		0.25	2	FALSE
 "CLSI 2019"	"DISK"		"Providencia heimbachae"	"Enrofloxacin"	"Vet Table"	"5ug"	21	16	FALSE
-"CLSI 2019"	"DISK"	"Skin, soft tissue"	"Pseudomonas aeruginosa"	"Enrofloxacin"	"VET08 Table 2B"	"5ug"	23	16	FALSE
-"CLSI 2019"	"MIC"	"Skin, soft tissue"	"Pseudomonas aeruginosa"	"Enrofloxacin"	"VET08 Table 2B"		0.5	4	FALSE
-"CLSI 2019"	"MIC"	"Skin, soft tissue, respiratory"	"Pseudomonas aeruginosa"	"Enrofloxacin"	"VET08 Table 2B"		0.125	0.5	FALSE
 "CLSI 2019"	"DISK"		"Pasteurella multocida"	"Enrofloxacin"	"Vet Table"	"5ug"	21	16	FALSE
-"CLSI 2019"	"DISK"	"Respiratory"	"Pasteurella multocida"	"Enrofloxacin"	"VET08 Table 2H"	"5ug"	23	18	FALSE
-"CLSI 2019"	"DISK"	"Respiratory"	"Pasteurella multocida"	"Enrofloxacin"	"VET08 Table 2H"	"5ug"	21	16	FALSE
-"CLSI 2019"	"MIC"	"Respiratory"	"Pasteurella multocida"	"Enrofloxacin"	"VET08 Table 2H"		0.25	1	FALSE
-"CLSI 2019"	"MIC"	"Respiratory"	"Pasteurella multocida"	"Enrofloxacin"	"VET08 Table 2H"		0.25	2	FALSE
-"CLSI 2019"	"DISK"	"Skin, soft tissue, UTI, respiratory"	"Staphylococcus"	"Enrofloxacin"	"VET08 Table 2C"	"5ug"	23	16	TRUE
-"CLSI 2019"	"DISK"	"Skin, soft tissue"	"Staphylococcus"	"Enrofloxacin"	"VET08 Table 2C"	"5ug"	23	16	FALSE
-"CLSI 2019"	"MIC"	"Skin, soft tissue, UTI, respiratory"	"Staphylococcus"	"Enrofloxacin"	"VET08 Table 2C"		0.5	4	TRUE
-"CLSI 2019"	"MIC"	"Skin, soft tissue"	"Staphylococcus"	"Enrofloxacin"	"VET08 Table 2C"		0.5	4	FALSE
-"CLSI 2019"	"MIC"	"Skin, soft tissue, respiratory"	"Staphylococcus aureus"	"Enrofloxacin"	"VET08 Table 2C"		0.125	0.5	FALSE
-"CLSI 2019"	"DISK"	"Skin, soft tissue, respiratory, UIT"	"Streptococcus"	"Enrofloxacin"	"VET08 Table 2D"	"5ug"	23	16	FALSE
-"CLSI 2019"	"DISK"	"Skin, soft tissue"	"Streptococcus"	"Enrofloxacin"	"VET08 Table 2D"	"5ug"	23	16	FALSE
-"CLSI 2019"	"MIC"	"Skin, soft tissue, respiratory, UIT"	"Streptococcus"	"Enrofloxacin"	"VET08 Table 2D"		0.5	4	FALSE
-"CLSI 2019"	"MIC"	"Skin, soft tissue"	"Streptococcus"	"Enrofloxacin"	"VET08 Table 2D"		0.5	4	FALSE
-"CLSI 2019"	"MIC"	"Skin, soft tissue, respiratory"	"Streptococcus equi"	"Enrofloxacin"	"VET08 Table 2D"		0.125	0.5	FALSE
-"CLSI 2019"	"MIC"	"Skin, soft tissue, respiratory"	"Streptococcus equi zooepidemicus"	"Enrofloxacin"	"VET08 Table 2D"		0.125	0.5	FALSE
-"CLSI 2019"	"MIC"	"Respiratory"	"Streptococcus suis"	"Enrofloxacin"	"VET08 Table 2D"		0.5	2	FALSE
 "CLSI 2019"	"DISK"		"(unknown name)"	"Enrofloxacin"	"Generic CLSI rules"	"5ug"	23	16	FALSE
 "CLSI 2019"	"MIC"		"(unknown name)"	"Enrofloxacin"	"Generic CLSI rules"	"5ug"	0.25	2	FALSE
 "CLSI 2019"	"DISK"		"Staphylococcus"	"Enoxacin"	"Table 2C"	"10ug"	18	14	FALSE
@@ -7751,22 +7633,6 @@
 "CLSI 2019"	"MIC"		"Staphylococcus"	"Fleroxacin"	"Table 2C"		2	8	FALSE
 "CLSI 2019"	"DISK"		"(unknown name)"	"Fleroxacin"	"Generic CLSI rules"	"5ug"	19	15	FALSE
 "CLSI 2019"	"MIC"		"(unknown name)"	"Fleroxacin"	"Generic CLSI rules"	"5ug"	2	8	FALSE
-"CLSI 2019"	"MIC"	"Respiratory"	"Schistosomatidae"	"Florfenicol"	"VET08 Table 2A"		4	16	FALSE
-"CLSI 2019"	"DISK"	"Respiratory"	"Actinobacillus pleuropneumoniae"	"Florfenicol"	"VET08 Table 2I"	"30ug"	22	18	FALSE
-"CLSI 2019"	"MIC"	"Respiratory"	"Actinobacillus pleuropneumoniae"	"Florfenicol"	"VET08 Table 2I"		2	8	FALSE
-"CLSI 2019"	"DISK"	"Respiratory"	"Bordetella bronchiseptica"	"Florfenicol"	"VET08 Table 2F"	"30ug"	22	18	FALSE
-"CLSI 2019"	"MIC"	"Respiratory"	"Bordetella bronchiseptica"	"Florfenicol"	"VET08 Table 2F"		2	8	FALSE
-"CLSI 2019"	"DISK"	"Respiratory"	"Histophilus somni"	"Florfenicol"	"VET08 Table 2J"	"30ug"	19	14	FALSE
-"CLSI 2019"	"MIC"	"Respiratory"	"Histophilus somni"	"Florfenicol"	"VET08 Table 2J"		2	8	FALSE
-"CLSI 2019"	"DISK"	"Respiratory"	"Mannheimia haemolytica"	"Florfenicol"	"VET08 Table 2G"	"30ug"	19	14	FALSE
-"CLSI 2019"	"MIC"	"Respiratory"	"Mannheimia haemolytica"	"Florfenicol"	"VET08 Table 2G"		2	8	FALSE
-"CLSI 2019"	"DISK"	"Respiratory"	"Pasteurella multocida"	"Florfenicol"	"VET08 Table 2H"	"30ug"	22	18	FALSE
-"CLSI 2019"	"DISK"	"Respiratory"	"Pasteurella multocida"	"Florfenicol"	"VET08 Table 2H"	"30ug"	19	14	FALSE
-"CLSI 2019"	"MIC"	"Respiratory"	"Pasteurella multocida"	"Florfenicol"	"VET08 Table 2H"		2	8	FALSE
-"CLSI 2019"	"MIC"	"Respiratory"	"Pasteurella multocida"	"Florfenicol"	"VET08 Table 2H"		2	8	FALSE
-"CLSI 2019"	"MIC"	"Respiratory"	"Salmonella enterica"	"Florfenicol"	"VET08 Table 2A"		4	16	FALSE
-"CLSI 2019"	"DISK"	"Respiratory"	"Streptococcus suis"	"Florfenicol"	"VET08 Table 2D"	"30ug"	22	18	FALSE
-"CLSI 2019"	"MIC"	"Respiratory"	"Streptococcus suis"	"Florfenicol"	"VET08 Table 2D"		2	8	FALSE
 "CLSI 2019"	"DISK"		"(unknown name)"	"Florfenicol"	"Generic CLSI rules"	"30ug"	19	14	FALSE
 "CLSI 2019"	"MIC"		"(unknown name)"	"Florfenicol"	"Generic CLSI rules"	"30ug"	2	8	FALSE
 "CLSI 2019"	"DISK"		"Candida albicans"	"Fluconazole"	"Table 1"		17	13	FALSE
@@ -7781,18 +7647,6 @@
 "CLSI 2019"	"MIC"		"Enterococcus"	"Fosfomycin"	"Table 2D"		64	256	FALSE
 "CLSI 2019"	"MIC"		"Escherichia coli"	"Fosfomycin"	"Table 2A"		64	256	FALSE
 "CLSI 2019"	"MIC"		"Escherichia coli"	"Fosfomycin"	"Table 2A"		64	256	FALSE
-"CLSI 2019"	"DISK"	"UTI"	"Escherichia coli"	"Cefovecin"	"VET08 Table 2A"	"30ug"	24	20	TRUE
-"CLSI 2019"	"DISK"	"UTI"	"Escherichia coli"	"Cefovecin"	"VET08 Table 2A"	"30ug"	24	20	TRUE
-"CLSI 2019"	"MIC"	"UTI"	"Escherichia coli"	"Cefovecin"	"VET08 Table 2A"		2	8	TRUE
-"CLSI 2019"	"MIC"	"UTI"	"Escherichia coli"	"Cefovecin"	"VET08 Table 2A"		2	8	TRUE
-"CLSI 2019"	"DISK"	"UTI"	"Proteus mirabilis"	"Cefovecin"	"VET08 Table 2A"	"30ug"	24	20	TRUE
-"CLSI 2019"	"MIC"	"UTI"	"Proteus mirabilis"	"Cefovecin"	"VET08 Table 2A"		2	8	TRUE
-"CLSI 2019"	"DISK"	"Skin, soft tissue"	"Pasteurella multocida"	"Cefovecin"	"VET08 Table 2H"	"30ug"	24	20	FALSE
-"CLSI 2019"	"MIC"	"Skin, soft tissue"	"Pasteurella multocida"	"Cefovecin"	"VET08 Table 2H"		0.125	0.5	FALSE
-"CLSI 2019"	"DISK"	"Skin, soft tissue"	"Beta-haemolytic Streptococcus"	"Cefovecin"	"VET08 Table 2D"	"30ug"	24	20	FALSE
-"CLSI 2019"	"MIC"	"Skin, soft tissue"	"Beta-haemolytic Streptococcus"	"Cefovecin"	"VET08 Table 2D"		0.125	0.5	FALSE
-"CLSI 2019"	"DISK"	"Skin, soft tissue"	"Pseudallescheria"	"Cefovecin"	"VET08 Table 2C"	"30ug"	24	20	FALSE
-"CLSI 2019"	"MIC"	"Skin, soft tissue"	"Pseudallescheria"	"Cefovecin"	"VET08 Table 2C"		0.5	2	FALSE
 "CLSI 2019"	"DISK"		"Aeromonas"	"Cefoxitin"	"M45 Table 2"	"30ug"	18	14	FALSE
 "CLSI 2019"	"DISK"		"Aeromonas"	"Cefoxitin"	"M45 Table 3"		18	14	FALSE
 "CLSI 2019"	"MIC"		"Aeromonas"	"Cefoxitin"	"M45 Table 3"		8	32	FALSE
@@ -7811,12 +7665,6 @@
 "CLSI 2019"	"MIC"		"Vibrio"	"Cefoxitin"	"M45 Table 20"		8	32	FALSE
 "CLSI 2019"	"DISK"		"(unknown name)"	"Cefoxitin"	"Generic CLSI rules"	"30ug"	18	14	FALSE
 "CLSI 2019"	"MIC"		"(unknown name)"	"Cefoxitin"	"Generic CLSI rules"	"30ug"	8	32	FALSE
-"CLSI 2019"	"DISK"	"Respiratory"	"Histophilus somni"	"Gamithromycin"	"VET08 Table 2J"	"15ug"	15	11	FALSE
-"CLSI 2019"	"MIC"	"Respiratory"	"Histophilus somni"	"Gamithromycin"	"VET08 Table 2J"		4	16	FALSE
-"CLSI 2019"	"DISK"	"Respiratory"	"Mannheimia haemolytica"	"Gamithromycin"	"VET08 Table 2G"	"15ug"	15	11	FALSE
-"CLSI 2019"	"MIC"	"Respiratory"	"Mannheimia haemolytica"	"Gamithromycin"	"VET08 Table 2G"		4	16	FALSE
-"CLSI 2019"	"DISK"	"Respiratory"	"Pasteurella multocida"	"Gamithromycin"	"VET08 Table 2H"	"15ug"	15	11	FALSE
-"CLSI 2019"	"MIC"	"Respiratory"	"Pasteurella multocida"	"Gamithromycin"	"VET08 Table 2H"		4	16	FALSE
 "CLSI 2019"	"DISK"		"Acinetobacter"	"Gatifloxacin"	"Table 2B-2"	"5ug"	18	14	FALSE
 "CLSI 2019"	"MIC"		"Acinetobacter"	"Gatifloxacin"	"Table 2B-2"		2	8	FALSE
 "CLSI 2019"	"DISK"		"Enterococcus"	"Gatifloxacin"	"Table 2D"	"5ug"	18	14	FALSE
@@ -7850,14 +7698,8 @@
 "CLSI 2019"	"MIC"		"Streptococcus pneumoniae"	"Gemifloxacin"	"Table 2G"		0.125	0.5	FALSE
 "CLSI 2019"	"DISK"		"(unknown name)"	"Gemifloxacin"	"Generic CLSI rules"	"5ug"	20	15	FALSE
 "CLSI 2019"	"MIC"		"(unknown name)"	"Gemifloxacin"	"Generic CLSI rules"	"5ug"	0.25	1	FALSE
-"CLSI 2019"	"DISK"		"Enterobacteriaceae"	"Gentamicin"	"VET08 Table 2A"	"10ug"	16	12	FALSE
-"CLSI 2019"	"DISK"		"Enterobacteriaceae"	"Gentamicin"	"VET08 Table 2A"	"10ug"	16	12	FALSE
-"CLSI 2019"	"MIC"		"Enterobacteriaceae"	"Gentamicin"	"VET08 Table 2A"		2	8	FALSE
-"CLSI 2019"	"MIC"		"Enterobacteriaceae"	"Gentamicin"	"VET08 Table 2A"		2	8	FALSE
 "CLSI 2019"	"DISK"		"Acinetobacter"	"Gentamicin"	"Table 2B-2"	"10ug"	15	12	FALSE
 "CLSI 2019"	"MIC"		"Acinetobacter"	"Gentamicin"	"Table 2B-2"		4	16	FALSE
-"CLSI 2019"	"DISK"		"Actinobacillus pleuropneumoniae"	"Gentamicin"	"VET08 Table 2I"	"10ug"	16	12	FALSE
-"CLSI 2019"	"MIC"		"Actinobacillus pleuropneumoniae"	"Gentamicin"	"VET08 Table 2I"		2	8	FALSE
 "CLSI 2019"	"DISK"		"Aeromonas"	"Gentamicin"	"M45 Table 2"	"10ug"	15	12	FALSE
 "CLSI 2019"	"DISK"		"Aeromonas"	"Gentamicin"	"M45 Table 3"		15	12	FALSE
 "CLSI 2019"	"MIC"		"Aeromonas"	"Gentamicin"	"M45 Table 3"		4	16	FALSE
@@ -7867,11 +7709,7 @@
 "CLSI 2019"	"MIC"		"Francisella tularensis"	"Gentamicin"	"M45 Table 21"		4		FALSE
 "CLSI 2019"	"MIC"		"Lactobacillus"	"Gentamicin"	"M45 Table 11"		4	16	FALSE
 "CLSI 2019"	"DISK"		"Pseudomonas aeruginosa"	"Gentamicin"	"Table 2B-1"	"10ug"	15	12	FALSE
-"CLSI 2019"	"DISK"		"Pseudomonas aeruginosa"	"Gentamicin"	"VET08 Table 2B"	"10ug"	16	12	FALSE
-"CLSI 2019"	"DISK"		"Pseudomonas aeruginosa"	"Gentamicin"	"VET08 Table 2B"	"10ug"	16	12	FALSE
 "CLSI 2019"	"MIC"		"Pseudomonas aeruginosa"	"Gentamicin"	"Table 2B-1"		4	16	FALSE
-"CLSI 2019"	"MIC"		"Pseudomonas aeruginosa"	"Gentamicin"	"VET08 Table 2B"		2	8	FALSE
-"CLSI 2019"	"MIC"		"Pseudomonas aeruginosa"	"Gentamicin"	"VET08 Table 2B"		2	8	FALSE
 "CLSI 2019"	"DISK"		"Staphylococcus"	"Gentamicin"	"Table 2C"	"10ug"	15	12	FALSE
 "CLSI 2019"	"MIC"		"Staphylococcus"	"Gentamicin"	"Table 2C"		4	16	FALSE
 "CLSI 2019"	"DISK"		"Vibrio"	"Gentamicin"	"M45 Table 20"	"10ug"	15	12	FALSE
@@ -7927,13 +7765,6 @@
 "CLSI 2019"	"MIC"		"(unknown name)"	"Imipenem"	"Generic CLSI rules"	"10ug"	1	4	FALSE
 "CLSI 2019"	"DISK"		"(unknown name)"	"Kanamycin"	"Generic CLSI rules"	"30ug"	18	13	FALSE
 "CLSI 2019"	"MIC"		"(unknown name)"	"Kanamycin"	"Generic CLSI rules"	"30ug"	16	64	FALSE
-"CLSI 2019"	"MIC"	"Skin, soft tissue"	"Escherichia coli"	"Cephalexin"	"VET08 Table 2A"		2	8	FALSE
-"CLSI 2019"	"MIC"	"UTI"	"Escherichia coli"	"Cephalexin"	"VET08 Table 2A"		16	32	TRUE
-"CLSI 2019"	"MIC"	"UTI"	"Klebsiella pneumoniae"	"Cephalexin"	"VET08 Table 2A"		16	32	TRUE
-"CLSI 2019"	"MIC"	"UTI"	"Proteus mirabilis"	"Cephalexin"	"VET08 Table 2A"		16	32	TRUE
-"CLSI 2019"	"MIC"	"Skin, soft tissue"	"Staphylococcus aureus"	"Cephalexin"	"VET08 Table 2C"		2	4	FALSE
-"CLSI 2019"	"MIC"	"Skin, soft tissue"	"Beta-haemolytic Streptococcus"	"Cephalexin"	"VET08 Table 2D"		2	8	FALSE
-"CLSI 2019"	"MIC"	"Skin, soft tissue"	"Pseudallescheria"	"Cephalexin"	"VET08 Table 2C"		2	4	FALSE
 "CLSI 2019"	"MIC"		"Aerococcus"	"Linezolid"	"M45 Table 2"		2		FALSE
 "CLSI 2019"	"DISK"		"Enterococcus"	"Linezolid"	"Table 2D"	"30ug"	23	20	FALSE
 "CLSI 2019"	"MIC"		"Enterococcus"	"Linezolid"	"Table 2D"		2	8	FALSE
@@ -8026,18 +7857,6 @@
 "CLSI 2019"	"MIC"		"Staphylococcus"	"Cefamandole"	"Table 2C"		8	32	FALSE
 "CLSI 2019"	"DISK"		"(unknown name)"	"Cefamandole"	"Generic CLSI rules"	"30ug"	18	14	FALSE
 "CLSI 2019"	"MIC"		"(unknown name)"	"Cefamandole"	"Generic CLSI rules"	"30ug"	8	32	FALSE
-"CLSI 2019"	"DISK"	"Skin, soft tissue, UTI"	"Enterobacteriaceae"	"Marbofloxacin"	"VET08 Table 2A"	"5ug"	20	14	TRUE
-"CLSI 2019"	"DISK"	"Skin, soft tissue"	"Enterobacteriaceae"	"Marbofloxacin"	"VET08 Table 2A"	"5ug"	20	14	FALSE
-"CLSI 2019"	"MIC"	"Skin, soft tissue, UTI"	"Enterobacteriaceae"	"Marbofloxacin"	"VET08 Table 2A"		1	4	TRUE
-"CLSI 2019"	"MIC"	"Skin, soft tissue"	"Enterobacteriaceae"	"Marbofloxacin"	"VET08 Table 2A"		1	4	FALSE
-"CLSI 2019"	"DISK"	"Skin, soft tissue, UTI"	"Staphylococcus"	"Marbofloxacin"	"VET08 Table 2C"	"5ug"	20	14	TRUE
-"CLSI 2019"	"DISK"	"Skin, soft tissue"	"Staphylococcus"	"Marbofloxacin"	"VET08 Table 2C"	"5ug"	20	14	FALSE
-"CLSI 2019"	"MIC"	"Skin, soft tissue, UTI"	"Staphylococcus"	"Marbofloxacin"	"VET08 Table 2C"		1	4	TRUE
-"CLSI 2019"	"MIC"	"Skin, soft tissue"	"Staphylococcus"	"Marbofloxacin"	"VET08 Table 2C"		1	4	FALSE
-"CLSI 2019"	"DISK"	"Skin, soft tissue, UTI"	"Streptococcus"	"Marbofloxacin"	"VET08 Table 2D"	"5ug"	20	14	TRUE
-"CLSI 2019"	"DISK"	"Skin, soft tissue"	"Streptococcus"	"Marbofloxacin"	"VET08 Table 2D"	"5ug"	20	14	FALSE
-"CLSI 2019"	"MIC"	"Skin, soft tissue, UTI"	"Streptococcus"	"Marbofloxacin"	"VET08 Table 2D"		1	4	TRUE
-"CLSI 2019"	"MIC"	"Skin, soft tissue"	"Streptococcus"	"Marbofloxacin"	"VET08 Table 2D"		1	4	FALSE
 "CLSI 2019"	"DISK"		"(unknown name)"	"Marbofloxacin"	"Generic CLSI rules"	"5ug"	20	14	FALSE
 "CLSI 2019"	"MIC"		"(unknown name)"	"Marbofloxacin"	"Generic CLSI rules"	"5ug"	1	4	FALSE
 "CLSI 2019"	"DISK"		"(unknown name)"	"Mecillinam (Amdinocillin)"	"Generic CLSI rules"	"10ug"	15	11	FALSE
@@ -8121,7 +7940,6 @@
 "CLSI 2019"	"MIC"		"Burkholderia cepacia"	"Minocycline"	"Table 2B-3"		4	16	FALSE
 "CLSI 2019"	"DISK"		"Enterococcus"	"Minocycline"	"Table 2D"	"30ug"	19	14	FALSE
 "CLSI 2019"	"MIC"		"Enterococcus"	"Minocycline"	"Table 2D"		4	16	FALSE
-"CLSI 2019"	"MIC"	"Respiratory, skin, soft tissue"	"Escherichia coli"	"Minocycline"	"VET08 Table 2A"		0.125	0.5	FALSE
 "CLSI 2019"	"MIC"		"Leuconostoc"	"Minocycline"	"M45 Table 13"		4	16	FALSE
 "CLSI 2019"	"DISK"		"Neisseria meningitidis"	"Minocycline"	"Table 2I"	"30ug"	26		FALSE
 "CLSI 2019"	"MIC"		"Neisseria meningitidis"	"Minocycline"	"Table 2I"		2		FALSE
@@ -8129,9 +7947,6 @@
 "CLSI 2019"	"MIC"		"Stenotrophomonas maltophilia"	"Minocycline"	"Table 2B-4"		4	16	FALSE
 "CLSI 2019"	"DISK"		"Staphylococcus"	"Minocycline"	"Table 2C"	"30ug"	19	14	FALSE
 "CLSI 2019"	"MIC"		"Staphylococcus"	"Minocycline"	"Table 2C"		4	16	FALSE
-"CLSI 2019"	"MIC"	"Respiratory, skin, soft tissue"	"Staphylococcus aureus"	"Minocycline"	"VET08 Table 2C"		0.125	0.5	FALSE
-"CLSI 2019"	"MIC"	"Respiratory, skin, soft tissue"	"Streptococcus"	"Minocycline"	"VET08 Table 2D"		0.125	0.5	FALSE
-"CLSI 2019"	"MIC"	"Skin, soft tissue"	"Pseudallescheria"	"Minocycline"	"VET08 Table 2C"		0.5	2	FALSE
 "CLSI 2019"	"DISK"		"(unknown name)"	"Minocycline"	"Generic CLSI rules"	"30ug"	16	12	FALSE
 "CLSI 2019"	"MIC"		"(unknown name)"	"Minocycline"	"Generic CLSI rules"	"30ug"	4	16	FALSE
 "CLSI 2019"	"MIC"		"Anaerosalibacter"	"Metronidazole"	"Table 2J"		8	32	FALSE
@@ -8173,18 +7988,6 @@
 "CLSI 2019"	"MIC"		"Vibrio"	"Ofloxacin"	"M45 Table 20"		2	8	FALSE
 "CLSI 2019"	"DISK"		"(unknown name)"	"Ofloxacin"	"Generic CLSI rules"	"5ug"	16	12	FALSE
 "CLSI 2019"	"MIC"		"(unknown name)"	"Ofloxacin"	"Generic CLSI rules"	"5ug"	2	8	FALSE
-"CLSI 2019"	"DISK"	"Skin, soft tissue, UTI"	"Enterobacteriaceae"	"Orbifloxacin"	"VET08 Table 2A"	"10ug"	23	17	TRUE
-"CLSI 2019"	"DISK"	"Skin, soft tissue"	"Enterobacteriaceae"	"Orbifloxacin"	"VET08 Table 2A"	"10ug"	23	17	FALSE
-"CLSI 2019"	"MIC"	"Skin, soft tissue, UTI"	"Enterobacteriaceae"	"Orbifloxacin"	"VET08 Table 2A"		1	8	TRUE
-"CLSI 2019"	"MIC"	"Skin, soft tissue"	"Enterobacteriaceae"	"Orbifloxacin"	"VET08 Table 2A"		1	8	FALSE
-"CLSI 2019"	"DISK"	"Skin, soft tissue, UTI"	"Staphylococcus"	"Orbifloxacin"	"VET08 Table 2C"	"10ug"	23	17	TRUE
-"CLSI 2019"	"DISK"	"Skin, soft tissue"	"Staphylococcus"	"Orbifloxacin"	"VET08 Table 2C"	"10ug"	23	17	FALSE
-"CLSI 2019"	"MIC"	"Skin, soft tissue, UTI"	"Staphylococcus"	"Orbifloxacin"	"VET08 Table 2C"		1	8	TRUE
-"CLSI 2019"	"MIC"	"Skin, soft tissue"	"Staphylococcus"	"Orbifloxacin"	"VET08 Table 2C"		1	8	FALSE
-"CLSI 2019"	"DISK"	"Skin, soft tissue, UTI"	"Streptococcus"	"Orbifloxacin"	"VET08 Table 2D"	"10ug"	23	17	TRUE
-"CLSI 2019"	"DISK"	"Skin, soft tissue"	"Streptococcus"	"Orbifloxacin"	"VET08 Table 2D"	"10ug"	23	17	FALSE
-"CLSI 2019"	"MIC"	"Skin, soft tissue, UTI"	"Streptococcus"	"Orbifloxacin"	"VET08 Table 2D"		1	8	TRUE
-"CLSI 2019"	"MIC"	"Skin, soft tissue"	"Streptococcus"	"Orbifloxacin"	"VET08 Table 2D"		1	8	FALSE
 "CLSI 2019"	"DISK"		"(unknown name)"	"Orbifloxacin"	"Generic CLSI rules"	"10ug"	23	17	FALSE
 "CLSI 2019"	"MIC"		"(unknown name)"	"Orbifloxacin"	"Generic CLSI rules"	"10ug"	1	8	FALSE
 "CLSI 2019"	"MIC"		"Enterococcus"	"Oritavancin"	"Table 2D"		0.125		FALSE
@@ -8206,10 +8009,6 @@
 "CLSI 2019"	"MIC"		"Pseudallescheria"	"Oxacillin"	"Table 2C"		0.25	0.5	FALSE
 "CLSI 2019"	"MIC"		"Pseudallescheria"	"Oxacillin"	"Table 2C"		0.25	0.5	FALSE
 "CLSI 2019"	"MIC"		"(unknown name)"	"Oxacillin"	"Generic CLSI rules"	"1ug"	0.25	0.5	FALSE
-"CLSI 2019"	"DISK"		"Aeromonas salmonicida"	"Oxolinic acid"	"VET03 Table 12"	"2ug"	30	24	FALSE
-"CLSI 2019"	"MIC"		"Aeromonas salmonicida"	"Oxolinic acid"	"VET03 Table 12"		0.125	1	FALSE
-"CLSI 2019"	"DISK"		"Aeromonas salmonicida"	"Oxytetracycline"	"VET03 Table 12"	"30ug"	28	21	FALSE
-"CLSI 2019"	"MIC"		"Aeromonas salmonicida"	"Oxytetracycline"	"VET03 Table 12"		1	8	FALSE
 "CLSI 2019"	"MIC"		"Abiotrophia"	"Penicillin G"	"M45 Table 1"		0.125	4	FALSE
 "CLSI 2019"	"MIC"		"Aerococcus"	"Penicillin G"	"M45 Table 2"		0.125	4	FALSE
 "CLSI 2019"	"MIC"		"Aggregatibacter"	"Penicillin G"	"M45 Table 9"		1	4	FALSE
@@ -8222,14 +8021,12 @@
 "CLSI 2019"	"MIC"		"Enterococcus"	"Penicillin G"	"Table 2D"		8	16	FALSE
 "CLSI 2019"	"MIC"		"Gemella"	"Penicillin G"	"M45 Table 8"		0.125	4	FALSE
 "CLSI 2019"	"MIC"		"Granulicatella"	"Penicillin G"	"M45 Table 1"		0.125	4	FALSE
-"CLSI 2019"	"MIC"	"Respiratory"	"Histophilus somni"	"Penicillin G"	"VET08 Table 2J"		0.25	1	FALSE
 "CLSI 2019"	"MIC"		"Kingella"	"Penicillin G"	"M45 Table 9"		1	4	FALSE
 "CLSI 2019"	"MIC"		"Leuconostoc"	"Penicillin G"	"M45 Table 13"		8		FALSE
 "CLSI 2019"	"MIC"		"Lactobacillus"	"Penicillin G"	"M45 Table 11"		8		FALSE
 "CLSI 2019"	"MIC"		"Lactococcus"	"Penicillin G"	"M45 Table 12"		1	4	FALSE
 "CLSI 2019"	"MIC"		"Listeria monocytogenes"	"Penicillin G"	"M45 Table 14"		2		FALSE
 "CLSI 2019"	"MIC"		"Micrococcus"	"Penicillin G"	"M45 Table 15"		0.125	0.25	FALSE
-"CLSI 2019"	"MIC"	"Respiratory"	"Mannheimia haemolytica"	"Penicillin G"	"VET08 Table 2G"		0.25	1	FALSE
 "CLSI 2019"	"DISK"		"Neisseria gonorrhoeae"	"Penicillin G"	"Table 2F"	"10units"	47	26	FALSE
 "CLSI 2019"	"MIC"		"Neisseria gonorrhoeae"	"Penicillin G"	"Table 2F"		0.064	2	FALSE
 "CLSI 2019"	"DISK"		"Neisseria meningitidis"	"Penicillin G"	"Table 2I"	"10units"			FALSE
@@ -8237,21 +8034,16 @@
 "CLSI 2019"	"MIC"		"Pediococcus"	"Penicillin G"	"M45 Table 18"		8		FALSE
 "CLSI 2019"	"DISK"		"Pasteurella"	"Penicillin G"	"M45 Table 17"	"10 Units"	25		FALSE
 "CLSI 2019"	"MIC"		"Pasteurella"	"Penicillin G"	"M45 Table 17"		0.5		FALSE
-"CLSI 2019"	"MIC"		"Pasteurella multocida"	"Penicillin G"	"VET08 Table 2H"		0.25	1	FALSE
-"CLSI 2019"	"MIC"	"Respiratory"	"Pasteurella multocida"	"Penicillin G"	"VET08 Table 2H"		0.25	1	FALSE
 "CLSI 2019"	"MIC"		"Rothia"	"Penicillin G"	"M45 Table 19"		0.125	4	FALSE
 "CLSI 2019"	"DISK"		"Staphylococcus"	"Penicillin G"	"Table 2C"	"10ug"	29	28	FALSE
 "CLSI 2019"	"MIC"		"Staphylococcus"	"Penicillin G"	"Table 2C"		0.125	0.25	FALSE
-"CLSI 2019"	"MIC"	"Respiratory, soft tissue"	"Staphylococcus"	"Penicillin G"	"VET08 Table 2C"		0.5	2	FALSE
 "CLSI 2019"	"DISK"		"Streptococcus"	"Penicillin G"	"Table 2H-1"	"10units"	24		FALSE
 "CLSI 2019"	"MIC"		"Streptococcus"	"Penicillin G"	"M45 Table 1"		0.125	4	FALSE
 "CLSI 2019"	"MIC"		"Streptococcus"	"Penicillin G"	"Table 2H-1"		0.125		FALSE
-"CLSI 2019"	"MIC"	"Respiratory, soft tissue"	"Streptococcus"	"Penicillin G"	"VET08 Table 2D"		0.5	2	FALSE
 "CLSI 2019"	"DISK"		"Streptococcus pneumoniae"	"Penicillin G"	"Table 2G"	"10units"			FALSE
 "CLSI 2019"	"MIC"	"Meningitis"	"Streptococcus pneumoniae"	"Penicillin G"	"Table 2G"		0.064	0.12	FALSE
 "CLSI 2019"	"MIC"	"Non-meningitis"	"Streptococcus pneumoniae"	"Penicillin G"	"Table 2G"		2	8	FALSE
 "CLSI 2019"	"MIC"	"Oral"	"Streptococcus pneumoniae"	"Penicillin G"	"Table 2G"		0.064	2	FALSE
-"CLSI 2019"	"MIC"		"Streptococcus suis"	"Penicillin G"	"VET08 Table 2D"		0.25	1	FALSE
 "CLSI 2019"	"DISK"		"Viridans Group Streptococcus (VGS)"	"Penicillin G"	"Table 2H-2"	"10units"			FALSE
 "CLSI 2019"	"MIC"		"Viridans Group Streptococcus (VGS)"	"Penicillin G"	"Table 2H-2"		0.125	4	FALSE
 "CLSI 2019"	"DISK"		"(unknown name)"	"Penicillin G"	"Generic CLSI rules"	"10units"	29	28	FALSE
@@ -8270,42 +8062,10 @@
 "CLSI 2019"	"MIC"		"Pseudomonas aeruginosa"	"Polymyxin B"	"Table 2B-1"		2	8	FALSE
 "CLSI 2019"	"DISK"		"(unknown name)"	"Polymyxin B"	"Generic CLSI rules"	"300units"	12	11	FALSE
 "CLSI 2019"	"MIC"		"(unknown name)"	"Polymyxin B"	"Generic CLSI rules"	"300units"	2	8	FALSE
-"CLSI 2019"	"DISK"	"Mastitis"	"Staphylococcus aureus"	"Penicillin/novobiocin"	"VET08 Table 2C"	"10units/30ug"	18	14	FALSE
-"CLSI 2019"	"MIC"	"Mastitis"	"Staphylococcus aureus"	"Penicillin/novobiocin"	"VET08 Table 2C"		1	4	FALSE
-"CLSI 2019"	"DISK"	"Mastitis"	"Streptococcus agalactiae"	"Penicillin/novobiocin"	"VET08 Table 2D"	"10units/30ug"	18	14	FALSE
-"CLSI 2019"	"MIC"	"Mastitis"	"Streptococcus agalactiae"	"Penicillin/novobiocin"	"VET08 Table 2D"		1	4	FALSE
-"CLSI 2019"	"DISK"	"Mastitis"	"Streptococcus dysgalactiae"	"Penicillin/novobiocin"	"VET08 Table 2D"	"10units/30ug"	18	14	FALSE
-"CLSI 2019"	"MIC"	"Mastitis"	"Streptococcus dysgalactiae"	"Penicillin/novobiocin"	"VET08 Table 2D"		1	4	FALSE
-"CLSI 2019"	"DISK"	"Mastitis"	"Streptococcus uberis"	"Penicillin/novobiocin"	"VET08 Table 2D"	"10units/30ug"	18	14	FALSE
-"CLSI 2019"	"MIC"	"Mastitis"	"Streptococcus uberis"	"Penicillin/novobiocin"	"VET08 Table 2D"		1	4	FALSE
 "CLSI 2019"	"DISK"		"(unknown name)"	"Penicillin/novobiocin"	"Generic CLSI rules"	"10units-30ug"	18	14	FALSE
 "CLSI 2019"	"MIC"		"(unknown name)"	"Penicillin/novobiocin"	"Generic CLSI rules"	"10units-30ug"	1	4	FALSE
 "CLSI 2019"	"DISK"		"Streptococcus pneumoniae"	"Penicillin V"	"Table 2G"	"10ug"			FALSE
 "CLSI 2019"	"MIC"	"Oral"	"Streptococcus pneumoniae"	"Penicillin V"	"Table 2G"		0.064	2	FALSE
-"CLSI 2019"	"DISK"	"Skin, respiratory"	"Schaalia canis"	"Pradofloxacin"	"VET08 Table 2D"	"5ug"	24		FALSE
-"CLSI 2019"	"MIC"	"Skin, respiratory"	"Schaalia canis"	"Pradofloxacin"	"VET08 Table 2D"		0.25		FALSE
-"CLSI 2019"	"DISK"	"Skin, UTI"	"Escherichia coli"	"Pradofloxacin"	"VET08 Table 2A"	"5ug"	24	19	TRUE
-"CLSI 2019"	"DISK"	"Skin, respiratory"	"Escherichia coli"	"Pradofloxacin"	"VET08 Table 2A"	"5ug"	24	19	FALSE
-"CLSI 2019"	"MIC"	"Skin, UTI"	"Escherichia coli"	"Pradofloxacin"	"VET08 Table 2A"		0.25	2	TRUE
-"CLSI 2019"	"MIC"	"Skin, respiratory"	"Escherichia coli"	"Pradofloxacin"	"VET08 Table 2A"		0.25	2	FALSE
-"CLSI 2019"	"DISK"	"Skin, respiratory"	"Pasteurella multocida"	"Pradofloxacin"	"VET08 Table 2H"	"5ug"	24		FALSE
-"CLSI 2019"	"MIC"	"Skin, respiratory"	"Pasteurella multocida"	"Pradofloxacin"	"VET08 Table 2H"		0.25		FALSE
-"CLSI 2019"	"DISK"	"Skin, respiratory"	"Staphylococcus aureus"	"Pradofloxacin"	"VET08 Table 2C"	"5ug"	24	19	FALSE
-"CLSI 2019"	"MIC"	"Skin, respiratory"	"Staphylococcus aureus"	"Pradofloxacin"	"VET08 Table 2C"		0.25	2	FALSE
-"CLSI 2019"	"DISK"	"Skin, respiratory"	"Staphylococcus felis"	"Pradofloxacin"	"VET08 Table 2C"	"5ug"	24	19	FALSE
-"CLSI 2019"	"MIC"	"Skin, respiratory"	"Staphylococcus felis"	"Pradofloxacin"	"VET08 Table 2C"		0.25	2	FALSE
-"CLSI 2019"	"DISK"	"Skin, UTI"	"Pseudallescheria"	"Pradofloxacin"	"VET08 Table 2C"	"5ug"	24	19	TRUE
-"CLSI 2019"	"DISK"	"Skin, respiratory"	"Pseudallescheria"	"Pradofloxacin"	"VET08 Table 2C"	"5ug"	24	19	FALSE
-"CLSI 2019"	"MIC"	"Skin, UTI"	"Pseudallescheria"	"Pradofloxacin"	"VET08 Table 2C"		0.25	2	TRUE
-"CLSI 2019"	"MIC"	"Skin, respiratory"	"Pseudallescheria"	"Pradofloxacin"	"VET08 Table 2C"		0.25	2	FALSE
-"CLSI 2019"	"DISK"	"Mastitis"	"Staphylococcus aureus"	"Pirlimycin"	"VET08 Table 2C"	"2ug"	13	12	FALSE
-"CLSI 2019"	"MIC"	"Mastitis"	"Staphylococcus aureus"	"Pirlimycin"	"VET08 Table 2C"		2	4	FALSE
-"CLSI 2019"	"DISK"	"Mastitis"	"Streptococcus agalactiae"	"Pirlimycin"	"VET08 Table 2D"	"2ug"	13	12	FALSE
-"CLSI 2019"	"MIC"	"Mastitis"	"Streptococcus agalactiae"	"Pirlimycin"	"VET08 Table 2D"		2	4	FALSE
-"CLSI 2019"	"DISK"	"Mastitis"	"Streptococcus dysgalactiae"	"Pirlimycin"	"VET08 Table 2D"	"2ug"	13	12	FALSE
-"CLSI 2019"	"MIC"	"Mastitis"	"Streptococcus dysgalactiae"	"Pirlimycin"	"VET08 Table 2D"		2	4	FALSE
-"CLSI 2019"	"DISK"	"Mastitis"	"Streptococcus uberis"	"Pirlimycin"	"VET08 Table 2D"	"2ug"	13	12	FALSE
-"CLSI 2019"	"MIC"	"Mastitis"	"Streptococcus uberis"	"Pirlimycin"	"VET08 Table 2D"		2	4	FALSE
 "CLSI 2019"	"DISK"		"(unknown name)"	"Pirlimycin"	"Generic CLSI rules"	"2ug"	13	12	FALSE
 "CLSI 2019"	"MIC"		"(unknown name)"	"Pirlimycin"	"Generic CLSI rules"	"2ug"	2	4	FALSE
 "CLSI 2019"	"DISK"		"Enterococcus"	"Quinupristin/dalfopristin"	"Table 2D"	"15ug"	19	15	FALSE
@@ -8373,16 +8133,10 @@
 "CLSI 2019"	"DISK"		"(unknown name)"	"Sulfisoxazole"	"Generic CLSI rules"	"200-300ug"	17	12	FALSE
 "CLSI 2019"	"MIC"		"(unknown name)"	"Sulfisoxazole"	"Generic CLSI rules"	"200-300ug"	256	512	FALSE
 "CLSI 2019"	"DISK"		"Histophilus somni"	"Spectinomycin"	"Vet Table"	"100ug"	14	10	FALSE
-"CLSI 2019"	"DISK"	"Respiratory"	"Histophilus somni"	"Spectinomycin"	"VET08 Table 2J"	"100ug"	14	10	FALSE
-"CLSI 2019"	"MIC"	"Respiratory"	"Histophilus somni"	"Spectinomycin"	"VET08 Table 2J"		32	128	FALSE
-"CLSI 2019"	"DISK"	"Respiratory"	"Mannheimia haemolytica"	"Spectinomycin"	"VET08 Table 2G"	"100ug"	14	10	FALSE
-"CLSI 2019"	"MIC"	"Respiratory"	"Mannheimia haemolytica"	"Spectinomycin"	"VET08 Table 2G"		32	128	FALSE
 "CLSI 2019"	"DISK"		"Neisseria gonorrhoeae"	"Spectinomycin"	"Table 2F"	"100ug"	18	14	FALSE
 "CLSI 2019"	"MIC"		"Neisseria gonorrhoeae"	"Spectinomycin"	"Table 2F"		32	128	FALSE
 "CLSI 2019"	"DISK"		"Providencia heimbachae"	"Spectinomycin"		"100ug"	14	10	FALSE
 "CLSI 2019"	"DISK"		"Pasteurella multocida"	"Spectinomycin"		"100ug"	14	10	FALSE
-"CLSI 2019"	"DISK"	"Respiratory"	"Pasteurella multocida"	"Spectinomycin"	"VET08 Table 2H"	"100ug"	14	10	FALSE
-"CLSI 2019"	"MIC"	"Respiratory"	"Pasteurella multocida"	"Spectinomycin"	"VET08 Table 2H"		32	128	FALSE
 "CLSI 2019"	"DISK"		"Haemophilus"	"Sparfloxacin"	"Table 2E"	"5ug"			FALSE
 "CLSI 2019"	"MIC"		"Haemophilus"	"Sparfloxacin"	"Table 2E"		0.25		FALSE
 "CLSI 2019"	"DISK"		"Staphylococcus"	"Sparfloxacin"	"Table 2C"	"5ug"	19	15	FALSE
@@ -8468,7 +8222,6 @@
 "CLSI 2019"	"MIC"		"(unknown name)"	"Ticarcillin/clavulanic acid"	"Generic CLSI rules"	"75-10-15ug"	16	128	FALSE
 "CLSI 2019"	"DISK"		"Acinetobacter"	"Tetracycline"	"Table 2B-2"	"30ug"	15	11	FALSE
 "CLSI 2019"	"MIC"		"Acinetobacter"	"Tetracycline"	"Table 2B-2"		4	16	FALSE
-"CLSI 2019"	"MIC"	"Respiratory"	"Actinobacillus pleuropneumoniae"	"Tetracycline"	"VET08 Table 2I"		0.5	2	FALSE
 "CLSI 2019"	"MIC"		"Aerococcus"	"Tetracycline"	"M45 Table 2"		2	8	FALSE
 "CLSI 2019"	"DISK"		"Aeromonas"	"Tetracycline"	"M45 Table 2"	"30ug"	15	11	FALSE
 "CLSI 2019"	"DISK"		"Aeromonas"	"Tetracycline"	"M45 Table 3"		15	11	FALSE
@@ -8488,27 +8241,20 @@
 "CLSI 2019"	"MIC"		"Francisella tularensis"	"Tetracycline"	"M45 Table 21"		4		FALSE
 "CLSI 2019"	"DISK"		"Haemophilus"	"Tetracycline"	"Table 2E"	"30ug"	29	25	FALSE
 "CLSI 2019"	"MIC"		"Haemophilus"	"Tetracycline"	"Table 2E"		2	8	FALSE
-"CLSI 2019"	"MIC"	"Respiratory"	"Histophilus somni"	"Tetracycline"	"VET08 Table 2J"		2	8	FALSE
 "CLSI 2019"	"MIC"		"Kingella"	"Tetracycline"	"M45 Table 9"		2	8	FALSE
 "CLSI 2019"	"MIC"		"Lactococcus"	"Tetracycline"	"M45 Table 12"		2	8	FALSE
-"CLSI 2019"	"MIC"	"Respiratory"	"Mannheimia haemolytica"	"Tetracycline"	"VET08 Table 2G"		2	8	FALSE
 "CLSI 2019"	"DISK"		"Moraxella catarrhalis"	"Tetracycline"	"M45 Table 16"	"30ug"	29	24	FALSE
 "CLSI 2019"	"MIC"		"Moraxella catarrhalis"	"Tetracycline"	"M45 Table 16"		2	8	FALSE
 "CLSI 2019"	"DISK"		"Neisseria gonorrhoeae"	"Tetracycline"	"Table 2F"	"30ug"	38	30	FALSE
 "CLSI 2019"	"MIC"		"Neisseria gonorrhoeae"	"Tetracycline"	"Table 2F"		0.25	2	FALSE
 "CLSI 2019"	"DISK"		"Pasteurella"	"Tetracycline"	"M45 Table 17"	"30ug"	23		FALSE
 "CLSI 2019"	"MIC"		"Pasteurella"	"Tetracycline"	"M45 Table 17"		1		FALSE
-"CLSI 2019"	"MIC"	"Respiratory"	"Pasteurella multocida"	"Tetracycline"	"VET08 Table 2H"		2	8	FALSE
-"CLSI 2019"	"MIC"	"Respiratory"	"Pasteurella multocida"	"Tetracycline"	"VET08 Table 2H"		0.5	2	FALSE
 "CLSI 2019"	"DISK"		"Staphylococcus"	"Tetracycline"	"Table 2C"	"30ug"	19	14	FALSE
-"CLSI 2019"	"DISK"	"Skin, soft tissue"	"Staphylococcus"	"Tetracycline"	"VET08 Table 2C"	"30ug"	23	17	FALSE
 "CLSI 2019"	"MIC"		"Staphylococcus"	"Tetracycline"	"Table 2C"		4	16	FALSE
-"CLSI 2019"	"MIC"	"Skin, soft tissue"	"Staphylococcus"	"Tetracycline"	"VET08 Table 2C"		0.25	1	FALSE
 "CLSI 2019"	"DISK"		"Streptococcus"	"Tetracycline"	"Table 2H-1"	"30ug"	23	18	FALSE
 "CLSI 2019"	"MIC"		"Streptococcus"	"Tetracycline"	"Table 2H-1"		2	8	FALSE
 "CLSI 2019"	"DISK"		"Streptococcus pneumoniae"	"Tetracycline"	"Table 2G"	"30ug"	28	24	FALSE
 "CLSI 2019"	"MIC"		"Streptococcus pneumoniae"	"Tetracycline"	"Table 2G"		1	4	FALSE
-"CLSI 2019"	"MIC"	"Respiratory"	"Streptococcus suis"	"Tetracycline"	"VET08 Table 2D"		0.5	2	FALSE
 "CLSI 2019"	"DISK"		"Viridans Group Streptococcus (VGS)"	"Tetracycline"	"Table 2H-2"	"30ug"	23	18	FALSE
 "CLSI 2019"	"MIC"		"Viridans Group Streptococcus (VGS)"	"Tetracycline"	"Table 2H-2"		2	8	FALSE
 "CLSI 2019"	"DISK"		"Vibrio"	"Tetracycline"	"M45 Table 20"	"30ug"	15	11	FALSE
@@ -8522,61 +8268,16 @@
 "CLSI 2019"	"MIC"		"Staphylococcus"	"Teicoplanin"	"Table 2C"		8	32	FALSE
 "CLSI 2019"	"DISK"		"(unknown name)"	"Teicoplanin"	"Generic CLSI rules"	"30ug"	14	10	FALSE
 "CLSI 2019"	"MIC"		"(unknown name)"	"Teicoplanin"	"Generic CLSI rules"	"30ug"	8	32	FALSE
-"CLSI 2019"	"DISK"	"Respiratory"	"Actinobacillus pleuropneumoniae"	"Tiamulin"	"VET08 Table 2I"	"30ug"	9	8	FALSE
-"CLSI 2019"	"MIC"	"Respiratory"	"Actinobacillus pleuropneumoniae"	"Tiamulin"	"VET08 Table 2I"		16	32	FALSE
 "CLSI 2019"	"DISK"		"(unknown name)"	"Tiamulin"	"Generic CLSI rules"	"30ug"	9	8	FALSE
 "CLSI 2019"	"MIC"		"(unknown name)"	"Tiamulin"	"Generic CLSI rules"	"30ug"	16	32	FALSE
 "CLSI 2019"	"DISK"		"Actinobacillus pleuropneumoniae"	"Tilmicosin"	"Vet Table"	"15ug"	11	10	FALSE
-"CLSI 2019"	"DISK"	"Respiratory"	"Actinobacillus pleuropneumoniae"	"Tilmicosin"	"VET08 Table 2I"	"15ug"	11	10	FALSE
 "CLSI 2019"	"MIC"		"Actinobacillus pleuropneumoniae"	"Tilmicosin"	"Vet Table"		16	32	FALSE
-"CLSI 2019"	"MIC"	"Respiratory"	"Actinobacillus pleuropneumoniae"	"Tilmicosin"	"VET08 Table 2I"		16	32	FALSE
-"CLSI 2019"	"DISK"	"Respiratory"	"Mannheimia haemolytica"	"Tilmicosin"	"VET08 Table 2G"	"15ug"	14	10	FALSE
-"CLSI 2019"	"MIC"	"Respiratory"	"Mannheimia haemolytica"	"Tilmicosin"	"VET08 Table 2G"		8	32	FALSE
 "CLSI 2019"	"DISK"		"Pasteurella multocida"	"Tilmicosin"	"Vet Table"	"15ug"	11	10	FALSE
-"CLSI 2019"	"DISK"	"Respiratory"	"Pasteurella multocida"	"Tilmicosin"	"VET08 Table 2H"	"15ug"	11	10	FALSE
 "CLSI 2019"	"MIC"		"Pasteurella multocida"	"Tilmicosin"	"Vet Table"		16	32	FALSE
-"CLSI 2019"	"MIC"	"Respiratory"	"Pasteurella multocida"	"Tilmicosin"	"VET08 Table 2H"		16	32	FALSE
 "CLSI 2019"	"DISK"		"(unknown name)"	"Tilmicosin"	"Generic CLSI rules"	"15ug"	14	10	FALSE
 "CLSI 2019"	"MIC"		"(unknown name)"	"Tilmicosin"	"Generic CLSI rules"	"15ug"	8	32	FALSE
-"CLSI 2019"	"DISK"	"Respiratory"	"Schistosomatidae"	"Ceftiofur"	"VET08 Table 2A"	"30ug"	21	17	FALSE
-"CLSI 2019"	"MIC"	"Respiratory"	"Schistosomatidae"	"Ceftiofur"	"VET08 Table 2A"		2	8	FALSE
-"CLSI 2019"	"DISK"	"Respiratory"	"Actinobacillus pleuropneumoniae"	"Ceftiofur"	"VET08 Table 2I"	"30ug"	21	17	FALSE
-"CLSI 2019"	"MIC"	"Respiratory"	"Actinobacillus pleuropneumoniae"	"Ceftiofur"	"VET08 Table 2I"		2	8	FALSE
-"CLSI 2019"	"DISK"	"Mastitis"	"Escherichia coli"	"Ceftiofur"	"VET08 Table 2A"	"30ug"	21	17	FALSE
-"CLSI 2019"	"MIC"	"Mastitis"	"Escherichia coli"	"Ceftiofur"	"VET08 Table 2A"		2	8	FALSE
-"CLSI 2019"	"DISK"	"Respiratory"	"Histophilus somni"	"Ceftiofur"	"VET08 Table 2J"	"30ug"	21	17	FALSE
-"CLSI 2019"	"MIC"	"Respiratory"	"Histophilus somni"	"Ceftiofur"	"VET08 Table 2J"		2	8	FALSE
-"CLSI 2019"	"DISK"	"Respiratory"	"Mannheimia haemolytica"	"Ceftiofur"	"VET08 Table 2G"	"30ug"	21	17	FALSE
-"CLSI 2019"	"MIC"	"Respiratory"	"Mannheimia haemolytica"	"Ceftiofur"	"VET08 Table 2G"		2	8	FALSE
-"CLSI 2019"	"DISK"	"Respiratory"	"Pasteurella multocida"	"Ceftiofur"	"VET08 Table 2H"	"30ug"	21	17	FALSE
-"CLSI 2019"	"DISK"	"Respiratory"	"Pasteurella multocida"	"Ceftiofur"	"VET08 Table 2H"	"30ug"	21	17	FALSE
-"CLSI 2019"	"MIC"	"Respiratory"	"Pasteurella multocida"	"Ceftiofur"	"VET08 Table 2H"		2	8	FALSE
-"CLSI 2019"	"MIC"	"Respiratory"	"Pasteurella multocida"	"Ceftiofur"	"VET08 Table 2H"		2	8	FALSE
-"CLSI 2019"	"DISK"	"Mastitis"	"Staphylococcus aureus"	"Ceftiofur"	"VET08 Table 2C"	"30ug"	21	17	FALSE
-"CLSI 2019"	"MIC"	"Mastitis"	"Staphylococcus aureus"	"Ceftiofur"	"VET08 Table 2C"		2	8	FALSE
-"CLSI 2019"	"DISK"	"Mastitis"	"Streptococcus agalactiae"	"Ceftiofur"	"VET08 Table 2D"	"30ug"	21	17	FALSE
-"CLSI 2019"	"MIC"	"Mastitis"	"Streptococcus agalactiae"	"Ceftiofur"	"VET08 Table 2D"		2	8	FALSE
-"CLSI 2019"	"DISK"	"Mastitis"	"Streptococcus dysgalactiae"	"Ceftiofur"	"VET08 Table 2D"	"30ug"	21	17	FALSE
-"CLSI 2019"	"MIC"	"Mastitis"	"Streptococcus dysgalactiae"	"Ceftiofur"	"VET08 Table 2D"		2	8	FALSE
-"CLSI 2019"	"DISK"	"Respiratory"	"Streptococcus equi zooepidemicus"	"Ceftiofur"	"VET08 Table 2D"	"30ug"	22		FALSE
-"CLSI 2019"	"MIC"	"Respiratory"	"Streptococcus equi zooepidemicus"	"Ceftiofur"	"VET08 Table 2D"		0.25		FALSE
-"CLSI 2019"	"DISK"	"Respiratory"	"Streptococcus suis"	"Ceftiofur"	"VET08 Table 2D"	"30ug"	21	17	FALSE
-"CLSI 2019"	"MIC"	"Respiratory"	"Streptococcus suis"	"Ceftiofur"	"VET08 Table 2D"		2	8	FALSE
-"CLSI 2019"	"DISK"	"Mastitis"	"Streptococcus uberis"	"Ceftiofur"	"VET08 Table 2D"	"30ug"	21	17	FALSE
-"CLSI 2019"	"MIC"	"Mastitis"	"Streptococcus uberis"	"Ceftiofur"	"VET08 Table 2D"		2	8	FALSE
 "CLSI 2019"	"DISK"		"(unknown name)"	"Ceftiofur"	"Generic CLSI rules"	"30ug"	21	17	FALSE
 "CLSI 2019"	"MIC"		"(unknown name)"	"Ceftiofur"	"Generic CLSI rules"	"30ug"	2	8	FALSE
-"CLSI 2019"	"MIC"	"Respiratory"	"Actinobacillus pleuropneumoniae"	"Tildipirosin"	"VET08 Table 2I"		16		FALSE
-"CLSI 2019"	"DISK"	"Respiratory"	"Bordetella bronchiseptica"	"Tildipirosin"	"VET08 Table 2F"	"60ug"	18		FALSE
-"CLSI 2019"	"MIC"	"Respiratory"	"Bordetella bronchiseptica"	"Tildipirosin"	"VET08 Table 2F"		8		FALSE
-"CLSI 2019"	"DISK"	"Respiratory"	"Histophilus somni"	"Tildipirosin"	"VET08 Table 2J"	"60ug"	17	13	FALSE
-"CLSI 2019"	"MIC"	"Respiratory"	"Histophilus somni"	"Tildipirosin"	"VET08 Table 2J"		8	32	FALSE
-"CLSI 2019"	"DISK"	"Respiratory"	"Mannheimia haemolytica"	"Tildipirosin"	"VET08 Table 2G"	"60ug"	20	16	FALSE
-"CLSI 2019"	"MIC"	"Respiratory"	"Mannheimia haemolytica"	"Tildipirosin"	"VET08 Table 2G"		4	16	FALSE
-"CLSI 2019"	"DISK"	"Respiratory"	"Pasteurella multocida"	"Tildipirosin"	"VET08 Table 2H"	"60ug"	21	17	FALSE
-"CLSI 2019"	"DISK"	"Respiratory"	"Pasteurella multocida"	"Tildipirosin"	"VET08 Table 2H"	"60ug"	19		FALSE
-"CLSI 2019"	"MIC"	"Respiratory"	"Pasteurella multocida"	"Tildipirosin"	"VET08 Table 2H"		8	32	FALSE
-"CLSI 2019"	"MIC"	"Respiratory"	"Pasteurella multocida"	"Tildipirosin"	"VET08 Table 2H"		4		FALSE
 "CLSI 2019"	"MIC"		"Streptococcus"	"Telithromycin"	"Table 2H-1"				FALSE
 "CLSI 2019"	"DISK"		"Streptococcus pneumoniae"	"Telithromycin"	"Table 2G"	"15ug"	19	15	FALSE
 "CLSI 2019"	"MIC"		"Streptococcus pneumoniae"	"Telithromycin"	"Table 2G"		1	4	FALSE
@@ -8597,18 +8298,6 @@
 "CLSI 2019"	"MIC"		"Pseudomonas aeruginosa"	"Tobramycin"	"Table 2B-1"		4	16	FALSE
 "CLSI 2019"	"DISK"		"(unknown name)"	"Tobramycin"	"Generic CLSI rules"	"10ug"	15	12	FALSE
 "CLSI 2019"	"MIC"		"(unknown name)"	"Tobramycin"	"Generic CLSI rules"	"10ug"	4	16	FALSE
-"CLSI 2019"	"DISK"	"Respiratory"	"Actinobacillus pleuropneumoniae"	"Tulathromycin"	"VET08 Table 2I"	"30ug"	10		FALSE
-"CLSI 2019"	"MIC"	"Respiratory"	"Actinobacillus pleuropneumoniae"	"Tulathromycin"	"VET08 Table 2I"		64		FALSE
-"CLSI 2019"	"DISK"	"Respiratory"	"Bordetella bronchiseptica"	"Tulathromycin"	"VET08 Table 2F"	"30ug"	18	14	FALSE
-"CLSI 2019"	"MIC"	"Respiratory"	"Bordetella bronchiseptica"	"Tulathromycin"	"VET08 Table 2F"		16	64	FALSE
-"CLSI 2019"	"DISK"	"Respiratory"	"Histophilus somni"	"Tulathromycin"	"VET08 Table 2J"	"30ug"	18	14	FALSE
-"CLSI 2019"	"MIC"	"Respiratory"	"Histophilus somni"	"Tulathromycin"	"VET08 Table 2J"		16	64	FALSE
-"CLSI 2019"	"DISK"	"Respiratory"	"Mannheimia haemolytica"	"Tulathromycin"	"VET08 Table 2G"	"30ug"	18	14	FALSE
-"CLSI 2019"	"MIC"	"Respiratory"	"Mannheimia haemolytica"	"Tulathromycin"	"VET08 Table 2G"		16	64	FALSE
-"CLSI 2019"	"DISK"	"Respiratory"	"Pasteurella multocida"	"Tulathromycin"	"VET08 Table 2H"	"30ug"	18	14	FALSE
-"CLSI 2019"	"DISK"	"Respiratory"	"Pasteurella multocida"	"Tulathromycin"	"VET08 Table 2H"	"30ug"	18	14	FALSE
-"CLSI 2019"	"MIC"	"Respiratory"	"Pasteurella multocida"	"Tulathromycin"	"VET08 Table 2H"		16	64	FALSE
-"CLSI 2019"	"MIC"	"Respiratory"	"Pasteurella multocida"	"Tulathromycin"	"VET08 Table 2H"		16	64	FALSE
 "CLSI 2019"	"DISK"		"(unknown name)"	"Tulathromycin"	"Generic CLSI rules"		18	14	FALSE
 "CLSI 2019"	"MIC"		"(unknown name)"	"Tulathromycin"	"Generic CLSI rules"		16	64	FALSE
 "CLSI 2019"	"DISK"		"Haemophilus"	"Trovafloxacin"	"Table 2E"	"10ug"	22		FALSE
@@ -8626,7 +8315,6 @@
 "CLSI 2019"	"MIC"		"Coagulase-positive Staphylococcus (CoPS)"	"Tedizolid"	"Table 2C"		0.5	2	FALSE
 "CLSI 2019"	"MIC"		"Streptococcus"	"Tedizolid"	"Table 2H-1"		0.5		FALSE
 "CLSI 2019"	"MIC"		"Viridans Group Streptococcus (VGS)"	"Tedizolid"	"Table 2H-2"		0.25		FALSE
-"CLSI 2019"	"MIC"	"Skin, soft tissue, UTI"	"Enterobacteriaceae"	"Piperacillin/tazobactam"	"VET08 Table 2A"		8	32	TRUE
 "CLSI 2019"	"DISK"		"Acinetobacter"	"Piperacillin/tazobactam"	"Table 2B-2"	"100ug"	21	17	FALSE
 "CLSI 2019"	"MIC"		"Acinetobacter"	"Piperacillin/tazobactam"	"Table 2B-2"		16	128	FALSE
 "CLSI 2019"	"DISK"		"Aeromonas"	"Piperacillin/tazobactam"	"M45 Table 2"	"100ug"	21	17	FALSE
@@ -8637,10 +8325,8 @@
 "CLSI 2019"	"MIC"		"Haemophilus"	"Piperacillin/tazobactam"	"Table 2E"		1	2	FALSE
 "CLSI 2019"	"DISK"		"Pseudomonas aeruginosa"	"Piperacillin/tazobactam"	"Table 2B-1"	"100ug"	21	14	FALSE
 "CLSI 2019"	"MIC"		"Pseudomonas aeruginosa"	"Piperacillin/tazobactam"	"Table 2B-1"		16	128	FALSE
-"CLSI 2019"	"MIC"	"Skin, soft tissue, UTI"	"Pseudomonas aeruginosa"	"Piperacillin/tazobactam"	"VET08 Table 2B"		8	32	TRUE
 "CLSI 2019"	"DISK"		"Staphylococcus"	"Piperacillin/tazobactam"	"Table 2C"	"100/10ug"	18	17	FALSE
 "CLSI 2019"	"MIC"		"Staphylococcus"	"Piperacillin/tazobactam"	"Table 2C"		8	16	FALSE
-"CLSI 2019"	"MIC"	"Skin, soft tissue, UTI"	"Staphylococcus"	"Piperacillin/tazobactam"	"VET08 Table 2C"		8	32	TRUE
 "CLSI 2019"	"DISK"		"Vibrio"	"Piperacillin/tazobactam"	"M45 Table 20"	"100ug"	21	17	FALSE
 "CLSI 2019"	"MIC"		"Vibrio"	"Piperacillin/tazobactam"	"M45 Table 20"		16	128	FALSE
 "CLSI 2019"	"DISK"		"(unknown name)"	"Piperacillin/tazobactam"	"Generic CLSI rules"	"100-10ug"	21	17	FALSE

@@ -1,5 +1,5 @@
-# AMR 1.2.0.9037
-## <small>Last updated: 28 July 2020</small>
+# AMR 1.2.0.9038
+## <small>Last updated: 29 July 2020</small>
 
 ### New
 * Function `ab_from_text()` to retrieve antimicrobial drug names, doses and forms of administration from clinical texts in e.g. health care records, which also corrects for misspelling since it uses `as.ab()` internally
@@ -32,6 +32,7 @@
   * Fixed a bug where `as.ab()` would return an error on invalid input values
   * The `as.ab()` function will now throw a note if more than 1 antimicrobial drug could be retrieved from a single input value.
 * Fixed a bug where `eucast_rules()` would not work on a tibble when the `tibble` or `dplyr` package was loaded
+* Fixed a bug for CLSI 2019 guidelines (using `as.rsi()`), that also included results for animals. It now only contains interpretation guidelines for humans.
 * All `*_join_microorganisms()` functions and `bug_drug_combinations()` now return the original data class (e.g. `tibble`s and `data.table`s)
 * For functions `rsi_df()`, `proportion_df()` and `count_df()`:
   * Fixed a bug for using grouped versions

@@ -1,12 +1,19 @@
 library(dplyr)
+library(readr)
+library(tidyr)
 
 # Installed WHONET 2019 software on Windows (http://www.whonet.org/software.html),
 #    opened C:\WHONET\Codes\WHONETCodes.mdb in MS Access
 #    and exported table 'DRGLST1' to MS Excel
 DRGLST1 <- readxl::read_excel("data-raw/DRGLST1.xlsx", na = c("", "NA", "-"))
-rsi_translation <- DRGLST1 %>%
+rsi_trans <- DRGLST1 %>%
   # only keep CLSI and EUCAST guidelines:
-  filter(GUIDELINES %like% "^(CLSI|EUCST)") %>%
+  filter(GUIDELINES %like% "^(CLSI|EUCST)")
+if (any(is.na(rsi_trans$BREAKPOINT_TYPE)) | !"Human" %in% rsi_trans$BREAKPOINT_TYPE) {
+  stop("Check column BREAKPOINT_TYPE - something is WRONG!")
+}
+rsi_trans <- rsi_trans %>% 
+  filter(BREAKPOINT_TYPE == "Human") %>% 
   mutate(DISK_S = ifelse(as.double(DISK_S) > 50, 50, DISK_S),
          MIC_R = ifelse(as.double(MIC_R) %in% c(1025, 129, 513), as.double(MIC_R) - 1, MIC_R)) %>%
   # set a nice layout:
@@ -29,15 +36,15 @@ rsi_translation <- DRGLST1 %>%
 print(mo_failures())
 
 # create 2 tables: MIC and disk
-tbl_mic <- rsi_translation %>%
+tbl_mic <- rsi_trans %>%
   filter(method == "MIC") %>%
   mutate(breakpoint_S = as.double(S_mic), breakpoint_R = as.double(R_mic))
-tbl_disk <- rsi_translation %>%
+tbl_disk <- rsi_trans %>%
   filter(method == "DISK") %>%
   mutate(breakpoint_S = as.double(S_disk), breakpoint_R = as.double(R_disk))
 
 # merge them so every record is a unique combination of method, mo and ab
-rsi_translation <- bind_rows(tbl_mic, tbl_disk) %>%
+rsi_trans <- bind_rows(tbl_mic, tbl_disk) %>%
   rename(disk_dose = dose_disk) %>% 
   mutate(disk_dose = gsub("µ", "u", disk_dose)) %>% 
   select(-ends_with("_mic"), -ends_with("_disk"))
@@ -70,8 +77,8 @@ clsi_general <- read_tsv("data-raw/DRGLST.txt") %>%
 
 # add new EUCAST with read_EUCAST.R
 # 2020-04-14 did that now for 2019 and 2020
-rsi_translation <- rsi_translation %>%
-  # filter(guideline != "EUCAST 2019") %>% 
+rsi_trans <- rsi_trans %>%
+  filter(guideline != "EUCAST 2019") %>% 
   bind_rows(new_EUCAST) %>% 
   bind_rows(clsi_general) %>% 
   mutate(uti = site %like% "(UTI|urinary)") %>% 
@@ -82,6 +89,8 @@ rsi_translation <- rsi_translation %>%
   arrange(desc(guideline), ab, mo, method)
 
 # save to package
+rsi_translation <- rsi_trans
 usethis::use_data(rsi_translation, overwrite = TRUE)
+rm(rsi_trans)
 rm(rsi_translation)
 devtools::load_all(".")
