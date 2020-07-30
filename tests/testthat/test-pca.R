@@ -22,6 +22,9 @@
 context("pca.R")
 
 test_that("PCA works", {
+  
+  skip_on_cran()
+  
   resistance_data <- structure(list(order = c("Bacillales", "Enterobacterales", "Enterobacterales"),
                                     genus = c("Staphylococcus", "Escherichia", "Klebsiella"), 
                                     AMC = c(0.00425, 0.13062, 0.10344),

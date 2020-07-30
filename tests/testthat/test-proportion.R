@@ -22,6 +22,9 @@
 context("proportion.R")
 
 test_that("proportions works", {
+  
+  skip_on_cran()
+  
   expect_equal(proportion_R(example_isolates$AMX), resistance(example_isolates$AMX))
   expect_equal(proportion_SI(example_isolates$AMX), susceptibility(example_isolates$AMX))
   

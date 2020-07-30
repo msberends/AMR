@@ -23,6 +23,8 @@ context("count.R")
 
 test_that("counts work", {
   
+  skip_on_cran()
+  
   expect_equal(count_resistant(example_isolates$AMX), count_R(example_isolates$AMX))
   expect_equal(count_susceptible(example_isolates$AMX), count_SI(example_isolates$AMX))
   expect_equal(count_all(example_isolates$AMX), n_rsi(example_isolates$AMX))

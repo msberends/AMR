@@ -46,6 +46,8 @@
 * Any progress bar will now only show in interactive mode (i.e. not in R Markdown)
 * Speed improvement for `mdro()` and `filter_ab_class()`
 * New option `arrows_textangled` for `ggplot_pca()` to indicate whether the text at the end of the arrows should be angled (defaults to `TRUE`, as it was in previous versions)
+* Added parenteral DDD to benzylpenicillin
+* Fixed a bug where `as.mic()` could not handle dots without a leading zero (like `"<=.25`)
 
 ### Other
 * Moved primary location of this project from GitLab to [GitHub](https://github.com/msberends/AMR), giving us native support for automated syntax checking without being dependent on external services such as AppVeyor and Travis CI.
@@ -132,7 +134,7 @@ This software is now out of beta and considered stable. Nonetheless, this packag
 
 ### New
 * Support for the newest [EUCAST Clinical Breakpoint Tables v.10.0](http://www.eucast.org/clinical_breakpoints/), valid from 1 January 2020. This affects translation of MIC and disk zones using `as.rsi()` and inferred resistance and susceptibility using `eucast_rules()`.
-* The repository of this package now contains a clean version of the EUCAST and CLSI guidelines from 2011-2020 to translate MIC and disk diffusion values to R/SI: <https://gitlab.com/msberends/AMR/blob/master/data-raw/rsi_translation.txt>. This **allows for machine reading these guidelines**, which is almost impossible with the Excel and PDF files distributed by EUCAST and CLSI. This file used to process the EUCAST Clinical Breakpoints Excel file [can be found here](https://gitlab.com/msberends/AMR/blob/master/data-raw/read_EUCAST.R).
+* The repository of this package now contains a clean version of the EUCAST and CLSI guidelines from 2011-2020 to translate MIC and disk diffusion values to R/SI: <https://github.com/msberends/AMR/blob/master/data-raw/rsi_translation.txt>. This **allows for machine reading these guidelines**, which is almost impossible with the Excel and PDF files distributed by EUCAST and CLSI. This file used to process the EUCAST Clinical Breakpoints Excel file [can be found here](https://github.com/msberends/AMR/blob/master/data-raw/read_EUCAST.R).
 * Support for LOINC and SNOMED codes
   * Support for LOINC codes in the `antibiotics` data set. Use `ab_loinc()` to retrieve LOINC codes, or use a LOINC code for input in any `ab_*` function:
     ```r
@@ -449,9 +451,7 @@ This software is now out of beta and considered stable. Nonetheless, this packag
   * All references to antibiotics in our package now use EARS-Net codes, like `AMX` for amoxicillin
   * Functions `atc_certe`, `ab_umcg` and `atc_trivial_nl` have been removed
   * All `atc_*` functions are superceded by `ab_*` functions
-  * All output will be translated by using an included translation file which [can be viewed here](https://gitlab.com/msberends/AMR/blob/master/data-raw/translations.tsv).
-    
-    Please [create an issue in one of our repositories](https://gitlab.com/msberends/AMR/issues/new?issue[title]=Translation%20suggestion) if you want additions in this file.
+  * All output will be translated by using an included translation file which [can be viewed here](https://github.com/msberends/AMR/blob/master/data-raw/translations.tsv)
 * Improvements to plotting AMR results with `ggplot_rsi()`:
   * New parameter `colours` to set the bar colours
   * New parameters `title`, `subtitle`, `caption`, `x.title` and `y.title` to set titles and axis descriptions
@@ -475,9 +475,7 @@ This software is now out of beta and considered stable. Nonetheless, this packag
       freq(age) %>%
       boxplot()
     ```
-* Removed all hardcoded EUCAST rules and replaced them with a new reference file which [can be viewed here](https://gitlab.com/msberends/AMR/blob/master/data-raw/eucast_rules.tsv).
-  
-  Please [create an issue in one of our repositories](https://gitlab.com/msberends/AMR/issues/new?issue[title]=EUCAST%20edit) if you want changes in this file.
+* Removed all hardcoded EUCAST rules and replaced them with a new reference file which [can be viewed here](https://github.com/msberends/AMR/blob/master/data-raw/eucast_rules.tsv)
 * Added ceftazidim intrinsic resistance to *Streptococci*
 * Changed default settings for `age_groups()`, to let groups of fives and tens end with 100+ instead of 120+
 * Fix for `freq()` for when all values are `NA`
@@ -694,7 +692,7 @@ We've got a new website: [https://msberends.gitlab.io/AMR](https://msberends.git
 # AMR 0.5.0
 
 #### New
-* Repository moved to GitLab: https://gitlab.com/msberends/AMR
+* Repository moved to GitLab
 * Function `count_all` to get all available isolates (that like all `portion_*` and `count_*` functions also supports `summarise` and `group_by`), the old `n_rsi` is now an alias of `count_all`
 * Function `get_locale` to determine language for language-dependent output for some `mo_*` functions. This is now the default value for their `language` parameter, by which the system language will be used at default.
 * Data sets `microorganismsDT`, `microorganisms.prevDT`, `microorganisms.unprevDT` and `microorganisms.oldDT` to improve the speed of `as.mo`. They are for reference only, since they are primarily for internal use of `as.mo`.

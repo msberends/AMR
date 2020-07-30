@@ -298,6 +298,8 @@
 <li><p>Any progress bar will now only show in interactive mode (i.e. not in R Markdown)</p></li>
 <li><p>Speed improvement for <code><a href="../reference/mdro.html">mdro()</a></code> and <code><a href="../reference/filter_ab_class.html">filter_ab_class()</a></code></p></li>
 <li><p>New option <code>arrows_textangled</code> for <code><a href="../reference/ggplot_pca.html">ggplot_pca()</a></code> to indicate whether the text at the end of the arrows should be angled (defaults to <code>TRUE</code>, as it was in previous versions)</p></li>
+<li><p>Added parenteral DDD to benzylpenicillin</p></li>
+<li><p>Fixed a bug where <code><a href="../reference/as.mic.html">as.mic()</a></code> could not handle dots without a leading zero (like <code>"&lt;=.25</code>)</p></li>
 </ul>
 </div>
 <div id="other" class="section level3">
@@ -447,7 +449,7 @@ This works for all drug combinations, such as ampicillin/sulbactam, ceftazidime/
 <a href="#new-2" class="anchor"></a>New</h3>
 <ul>
 <li>Support for the newest <a href="http://www.eucast.org/clinical_breakpoints/">EUCAST Clinical Breakpoint Tables v.10.0</a>, valid from 1 January 2020. This affects translation of MIC and disk zones using <code><a href="../reference/as.rsi.html">as.rsi()</a></code> and inferred resistance and susceptibility using <code><a href="../reference/eucast_rules.html">eucast_rules()</a></code>.</li>
-<li>The repository of this package now contains a clean version of the EUCAST and CLSI guidelines from 2011-2020 to translate MIC and disk diffusion values to R/SI: <a href="https://gitlab.com/msberends/AMR/blob/master/data-raw/rsi_translation.txt" class="uri">https://gitlab.com/msberends/AMR/blob/master/data-raw/rsi_translation.txt</a>. This <strong>allows for machine reading these guidelines</strong>, which is almost impossible with the Excel and PDF files distributed by EUCAST and CLSI. This file used to process the EUCAST Clinical Breakpoints Excel file <a href="https://gitlab.com/msberends/AMR/blob/master/data-raw/read_EUCAST.R">can be found here</a>.</li>
+<li>The repository of this package now contains a clean version of the EUCAST and CLSI guidelines from 2011-2020 to translate MIC and disk diffusion values to R/SI: <a href="https://github.com/msberends/AMR/blob/master/data-raw/rsi_translation.txt" class="uri">https://github.com/msberends/AMR/blob/master/data-raw/rsi_translation.txt</a>. This <strong>allows for machine reading these guidelines</strong>, which is almost impossible with the Excel and PDF files distributed by EUCAST and CLSI. This file used to process the EUCAST Clinical Breakpoints Excel file <a href="https://github.com/msberends/AMR/blob/master/data-raw/read_EUCAST.R">can be found here</a>.</li>
 <li>Support for LOINC and SNOMED codes
 <ul>
 <li>
@@ -865,43 +867,39 @@ This works for all drug combinations, such as ampicillin/sulbactam, ceftazidime/
 <h4 class="hasAnchor">
 <a href="#changed-6" class="anchor"></a>Changed</h4>
 <ul>
-<li><p>Fixed a critical bug in <code><a href="../reference/first_isolate.html">first_isolate()</a></code> where missing species would lead to incorrect FALSEs. This bug was not present in AMR v0.5.0, but was in v0.6.0 and v0.6.1.</p></li>
-<li><p>Fixed a bug in <code><a href="../reference/eucast_rules.html">eucast_rules()</a></code> where antibiotics from WHONET software would not be recognised</p></li>
-<li>
-<p>Completely reworked the <code>antibiotics</code> data set:</p>
+<li>Fixed a critical bug in <code><a href="../reference/first_isolate.html">first_isolate()</a></code> where missing species would lead to incorrect FALSEs. This bug was not present in AMR v0.5.0, but was in v0.6.0 and v0.6.1.</li>
+<li>Fixed a bug in <code><a href="../reference/eucast_rules.html">eucast_rules()</a></code> where antibiotics from WHONET software would not be recognised</li>
+<li>Completely reworked the <code>antibiotics</code> data set:
 <ul>
-<li>
-<p>All entries now have 3 different identifiers:</p>
+<li>All entries now have 3 different identifiers:
 <ul>
 <li>Column <code>ab</code> contains a human readable EARS-Net code, used by ECDC and WHO/WHONET - this is the primary identifier used in this package</li>
 <li>Column <code>atc</code> contains the ATC code, used by WHO/WHOCC</li>
 <li>Column <code>cid</code> contains the CID code (Compound ID), used by PubChem</li>
 </ul>
 </li>
-<li><p>Based on the Compound ID, almost 5,000 official brand names have been added from many different countries</p></li>
-<li><p>All references to antibiotics in our package now use EARS-Net codes, like <code>AMX</code> for amoxicillin</p></li>
-<li><p>Functions <code>atc_certe</code>, <code>ab_umcg</code> and <code>atc_trivial_nl</code> have been removed</p></li>
-<li><p>All <code>atc_*</code> functions are superceded by <code>ab_*</code> functions</p></li>
-<li>
-<p>All output will be translated by using an included translation file which <a href="https://gitlab.com/msberends/AMR/blob/master/data-raw/translations.tsv">can be viewed here</a>.</p>
-<p>Please <a href="https://gitlab.com/msberends/AMR/issues/new?issue%5Btitle%5D=Translation%20suggestion">create an issue in one of our repositories</a> if you want additions in this file.</p>
+<li>Based on the Compound ID, almost 5,000 official brand names have been added from many different countries</li>
+<li>All references to antibiotics in our package now use EARS-Net codes, like <code>AMX</code> for amoxicillin</li>
+<li>Functions <code>atc_certe</code>, <code>ab_umcg</code> and <code>atc_trivial_nl</code> have been removed</li>
+<li>All <code>atc_*</code> functions are superceded by <code>ab_*</code> functions</li>
+<li>All output will be translated by using an included translation file which <a href="https://github.com/msberends/AMR/blob/master/data-raw/translations.tsv">can be viewed here</a>
 </li>
 </ul>
 </li>
-<li>
-<p>Improvements to plotting AMR results with <code><a href="../reference/ggplot_rsi.html">ggplot_rsi()</a></code>:</p>
+<li>Improvements to plotting AMR results with <code><a href="../reference/ggplot_rsi.html">ggplot_rsi()</a></code>:
 <ul>
 <li>New parameter <code>colours</code> to set the bar colours</li>
 <li>New parameters <code>title</code>, <code>subtitle</code>, <code>caption</code>, <code>x.title</code> and <code>y.title</code> to set titles and axis descriptions</li>
 </ul>
 </li>
-<li><p>Improved intelligence of looking up antibiotic columns in a data set using <code><a href="../reference/guess_ab_col.html">guess_ab_col()</a></code></p></li>
-<li><p>Added ~5,000 more old taxonomic names to the <code>microorganisms.old</code> data set, which leads to better results finding when using the <code><a href="../reference/as.mo.html">as.mo()</a></code> function</p></li>
-<li><p>This package now honours the new EUCAST insight (2019) that S and I are but classified as susceptible, where I is defined as ‘increased exposure’ and not ‘intermediate’ anymore. For functions like <code><a href="../reference/AMR-deprecated.html">portion_df()</a></code> and <code><a href="../reference/count.html">count_df()</a></code> this means that their new parameter <code>combine_SI</code> is TRUE at default. Our plotting function <code><a href="../reference/ggplot_rsi.html">ggplot_rsi()</a></code> also reflects this change since it uses <code><a href="../reference/count.html">count_df()</a></code> internally.</p></li>
-<li><p>The <code><a href="../reference/age.html">age()</a></code> function gained a new parameter <code>exact</code> to determine ages with decimals</p></li>
-<li><p>Removed deprecated functions <code>guess_mo()</code>, <code>guess_atc()</code>, <code>EUCAST_rules()</code>, <code>interpretive_reading()</code>, <code><a href="../reference/as.rsi.html">rsi()</a></code></p></li>
-<li>
-<p>Frequency tables (<code>freq()</code>):</p>
+<li>Improved intelligence of looking up antibiotic columns in a data set using <code><a href="../reference/guess_ab_col.html">guess_ab_col()</a></code>
+</li>
+<li>Added ~5,000 more old taxonomic names to the <code>microorganisms.old</code> data set, which leads to better results finding when using the <code><a href="../reference/as.mo.html">as.mo()</a></code> function</li>
+<li>This package now honours the new EUCAST insight (2019) that S and I are but classified as susceptible, where I is defined as ‘increased exposure’ and not ‘intermediate’ anymore. For functions like <code><a href="../reference/AMR-deprecated.html">portion_df()</a></code> and <code><a href="../reference/count.html">count_df()</a></code> this means that their new parameter <code>combine_SI</code> is TRUE at default. Our plotting function <code><a href="../reference/ggplot_rsi.html">ggplot_rsi()</a></code> also reflects this change since it uses <code><a href="../reference/count.html">count_df()</a></code> internally.</li>
+<li>The <code><a href="../reference/age.html">age()</a></code> function gained a new parameter <code>exact</code> to determine ages with decimals</li>
+<li>Removed deprecated functions <code>guess_mo()</code>, <code>guess_atc()</code>, <code>EUCAST_rules()</code>, <code>interpretive_reading()</code>, <code><a href="../reference/as.rsi.html">rsi()</a></code>
+</li>
+<li>Frequency tables (<code>freq()</code>):
 <ul>
 <li><p>speed improvement for microbial IDs</p></li>
 <li><p>fixed factor level names for R Markdown</p></li>
@@ -919,20 +917,22 @@ This works for all drug combinations, such as ampicillin/sulbactam, ceftazidime/
 </li>
 </ul>
 </li>
-<li>
-<p>Removed all hardcoded EUCAST rules and replaced them with a new reference file which <a href="https://gitlab.com/msberends/AMR/blob/master/data-raw/eucast_rules.tsv">can be viewed here</a>.</p>
-<p>Please <a href="https://gitlab.com/msberends/AMR/issues/new?issue%5Btitle%5D=EUCAST%20edit">create an issue in one of our repositories</a> if you want changes in this file.</p>
+<li>Removed all hardcoded EUCAST rules and replaced them with a new reference file which <a href="https://github.com/msberends/AMR/blob/master/data-raw/eucast_rules.tsv">can be viewed here</a>
 </li>
-<li><p>Added ceftazidim intrinsic resistance to <em>Streptococci</em></p></li>
-<li><p>Changed default settings for <code><a href="../reference/age_groups.html">age_groups()</a></code>, to let groups of fives and tens end with 100+ instead of 120+</p></li>
-<li><p>Fix for <code>freq()</code> for when all values are <code>NA</code></p></li>
-<li><p>Fix for <code><a href="../reference/first_isolate.html">first_isolate()</a></code> for when dates are missing</p></li>
-<li><p>Improved speed of <code><a href="../reference/guess_ab_col.html">guess_ab_col()</a></code></p></li>
-<li><p>Function <code><a href="../reference/as.mo.html">as.mo()</a></code> now gently interprets any number of whitespace characters (like tabs) as one space</p></li>
-<li><p>Function <code><a href="../reference/as.mo.html">as.mo()</a></code> now returns <code>UNKNOWN</code> for <code>"con"</code> (WHONET ID of ‘contamination’) and returns <code>NA</code> for <code>"xxx"</code>(WHONET ID of ‘no growth’)</p></li>
-<li><p>Small algorithm fix for <code><a href="../reference/as.mo.html">as.mo()</a></code></p></li>
-<li><p>Removed viruses from data set <code>microorganisms.codes</code> and cleaned it up</p></li>
-<li><p>Fix for <code><a href="../reference/mo_property.html">mo_shortname()</a></code> where species would not be determined correctly</p></li>
+<li>Added ceftazidim intrinsic resistance to <em>Streptococci</em>
+</li>
+<li>Changed default settings for <code><a href="../reference/age_groups.html">age_groups()</a></code>, to let groups of fives and tens end with 100+ instead of 120+</li>
+<li>Fix for <code>freq()</code> for when all values are <code>NA</code>
+</li>
+<li>Fix for <code><a href="../reference/first_isolate.html">first_isolate()</a></code> for when dates are missing</li>
+<li>Improved speed of <code><a href="../reference/guess_ab_col.html">guess_ab_col()</a></code>
+</li>
+<li>Function <code><a href="../reference/as.mo.html">as.mo()</a></code> now gently interprets any number of whitespace characters (like tabs) as one space</li>
+<li>Function <code><a href="../reference/as.mo.html">as.mo()</a></code> now returns <code>UNKNOWN</code> for <code>"con"</code> (WHONET ID of ‘contamination’) and returns <code>NA</code> for <code>"xxx"</code>(WHONET ID of ‘no growth’)</li>
+<li>Small algorithm fix for <code><a href="../reference/as.mo.html">as.mo()</a></code>
+</li>
+<li>Removed viruses from data set <code>microorganisms.codes</code> and cleaned it up</li>
+<li>Fix for <code><a href="../reference/mo_property.html">mo_shortname()</a></code> where species would not be determined correctly</li>
 </ul>
 </div>
 <div id="other-7" class="section level4">
@@ -1198,8 +1198,7 @@ This works for all drug combinations, such as ampicillin/sulbactam, ceftazidime/
 <h4 class="hasAnchor">
 <a href="#new-8" class="anchor"></a>New</h4>
 <ul>
-<li>Repository moved to GitLab: <a href="https://gitlab.com/msberends/AMR" class="uri">https://gitlab.com/msberends/AMR</a>
-</li>
+<li>Repository moved to GitLab</li>
 <li>Function <code>count_all</code> to get all available isolates (that like all <code>portion_*</code> and <code>count_*</code> functions also supports <code>summarise</code> and <code>group_by</code>), the old <code>n_rsi</code> is now an alias of <code>count_all</code>
 </li>
 <li>Function <code>get_locale</code> to determine language for language-dependent output for some <code>mo_*</code> functions. This is now the default value for their <code>language</code> parameter, by which the system language will be used at default.</li>

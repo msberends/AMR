@@ -22,7 +22,9 @@
 context("ab_property.R")
 
 test_that("ab_property works", {
-
+  
+  skip_on_cran()
+  
   expect_identical(ab_name("AMX"), "Amoxicillin")
   expect_identical(as.character(ab_atc("AMX")), "J01CA04")
   expect_identical(ab_cid("AMX"), as.integer(33613))

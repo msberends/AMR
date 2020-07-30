@@ -22,6 +22,9 @@
 context("ab.R")
 
 test_that("as.ab works", {
+  
+  skip_on_cran()
+  
   expect_equal(as.character(as.ab(c("J01FA01",
                                     "J 01 FA 01",
                                     "Erythromycin",

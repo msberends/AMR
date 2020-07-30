@@ -541,6 +541,10 @@ old_sym <- old_sym[!old_sym %in% c("Cotrimoxazole", "Bactrimel")]
 antibiotics[which(antibiotics$ab == "SMX"), "synonyms"][[1]] <- list(old_sym)
 antibiotics[which(antibiotics$ab == "SXT"), "synonyms"][[1]] <- list(sort(unique(c(antibiotics[which(antibiotics$ab == "COL"), "synonyms"][[1]], "Cotrimoxazole", "Bactrimel", "Septra", "Bactrim", "Cotrimazole"))))
 
+# New DDDs
+antibiotics[which(antibiotics$ab == "PEN"), "iv_ddd"] <- 3.6
+antibiotics[which(antibiotics$ab == "PEN"), "iv_units"] <- "g"
+
 ## new ATC codes
 # ceftaroline
 antibiotics[which(antibiotics$ab == "CPT"), "atc"] <- "J01DI02"
