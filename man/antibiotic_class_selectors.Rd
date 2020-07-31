@@ -58,7 +58,8 @@ All columns will be searched for known antibiotic names, abbreviations, brand na
 These functions only work if the \code{tidyselect} package is installed, that comes with the \code{dplyr} package. An error will be thrown if \code{tidyselect} package is not installed, or if the functions are used outside a function that allows Tidyverse selections like \code{select()} or \code{pivot_longer()}.
 }
 \examples{
-if (require("dplyr")) {
+\dontrun{
+  library(dplyr)
 
   # this will select columns 'IPM' (imipenem) and 'MEM' (meropenem):
   example_isolates \%>\% 

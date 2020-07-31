@@ -22,6 +22,7 @@
 context("get_locale.R")
 
 test_that("get_locale works", {
+  skip_on_cran()
   expect_identical(mo_genus("B_GRAMP", language = "pt"),
                    "(Gram positivos desconhecidos)")
 

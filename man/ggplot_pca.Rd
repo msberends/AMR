@@ -118,7 +118,8 @@ The \link[=lifecycle]{lifecycle} of this function is \strong{maturing}. The unly
 # See ?example_isolates.
 
 # See ?pca for more info about Principal Component Analysis (PCA).
-if (require("dplyr")) {
+\dontrun{
+  library(dplyr)
   pca_model <- example_isolates \%>\% 
     filter(mo_genus(mo) == "Staphylococcus") \%>\% 
     group_by(species = mo_shortname(mo)) \%>\%

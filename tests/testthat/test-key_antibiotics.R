@@ -22,6 +22,7 @@
 context("key_antibiotics.R")
 
 test_that("keyantibiotics work", {
+  skip_on_cran()
   expect_equal(length(key_antibiotics(example_isolates, warnings = FALSE)), nrow(example_isolates))
   expect_false(all(is.na(key_antibiotics(example_isolates))))
   expect_true(key_antibiotics_equal("SSS", "SSS"))

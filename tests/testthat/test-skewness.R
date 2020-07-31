@@ -22,6 +22,7 @@
 context("skewness.R")
 
 test_that("skewness works", {
+  skip_on_cran()
   expect_equal(skewness(example_isolates$age),
                -0.8958019,
                tolerance = 0.00001)

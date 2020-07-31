@@ -22,6 +22,7 @@
 context("g.test.R")
 
 test_that("G-test works", {
+  skip_on_cran()
 
   # GOODNESS-OF-FIT
 

@@ -22,6 +22,7 @@
 context("resistance_predict.R")
 
 test_that("prediction of rsi works", {
+  skip_on_cran()
   AMX_R <- example_isolates %>%
     filter(mo == "B_ESCHR_COLI") %>%
     rsi_predict(col_ab = "AMX",

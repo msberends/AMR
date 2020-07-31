@@ -22,6 +22,7 @@
 context("mic.R")
 
 test_that("mic works", {
+  skip_on_cran()
   expect_true(as.mic(8) == as.mic("8"))
   expect_true(as.mic("1") > as.mic("<=0.0625"))
   expect_true(as.mic("1") < as.mic(">=32"))

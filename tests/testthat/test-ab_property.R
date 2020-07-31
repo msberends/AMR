@@ -22,7 +22,6 @@
 context("ab_property.R")
 
 test_that("ab_property works", {
-  
   skip_on_cran()
   
   expect_identical(ab_name("AMX"), "Amoxicillin")

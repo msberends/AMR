@@ -22,7 +22,6 @@
 context("rsi.R")
 
 test_that("rsi works", {
-  
   skip_on_cran()
   
   expect_true(as.rsi("S") < as.rsi("I"))

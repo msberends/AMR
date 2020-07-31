@@ -33,7 +33,8 @@
 #' @seealso [antibiotic_class_selectors()] for the `select()` equivalent.
 #' @export
 #' @examples
-#' if (require(dplyr)) {
+#' \dontrun{
+#' library(dplyr)
 #'
 #' # filter on isolates that have any result for any aminoglycoside
 #' example_isolates %>% filter_ab_class("aminoglycoside")
@@ -62,9 +63,7 @@
 #' example_isolates %>%
 #'   filter_aminoglycosides("R", "all") %>%
 #'   filter_fluoroquinolones("R", "all")
-#' }
 #' 
-#' \dontrun{
 #' # with dplyr 1.0.0 and higher (that adds 'across()'), this is equal:
 #' example_isolates %>% filter_carbapenems("R", "all")
 #' example_isolates %>% filter(across(carbapenems(), ~. == "R"))

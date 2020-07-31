@@ -22,6 +22,7 @@
 context("like.R")
 
 test_that("`like` works", {
+  skip_on_cran()
   expect_true(sum("test" %like% c("^t", "^s")) == 1)
   expect_true("test" %like% "test")
   expect_true("test" %like% "TEST")

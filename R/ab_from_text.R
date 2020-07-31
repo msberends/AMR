@@ -64,7 +64,7 @@
 #' abx <- ab_from_text("500 mg amoxi po and 400mg cipro iv")
 #' ab_group(abx[[1]])
 #' 
-#' if (require(dplyr)) {
+#' if (require("dplyr")) {
 #'   tibble(clinical_text = c("given 400mg cipro and 500 mg amox",
 #'                            "started on doxy iv today")) %>% 
 #'     mutate(abx_codes = ab_from_text(clinical_text),

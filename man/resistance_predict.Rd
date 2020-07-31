@@ -150,7 +150,9 @@ if (require("dplyr")) {
 }
 
 # create nice plots with ggplot2 yourself
-if (require(ggplot2) & require("dplyr")) {
+\dontrun{
+  library(dplyr)
+  library(ggplot2)
 
   data <- example_isolates \%>\%
     filter(mo == as.mo("E. coli")) \%>\%

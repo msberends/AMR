@@ -25,7 +25,7 @@ test_that("ggplot_rsi works", {
 
   skip_on_cran()
   
-  skip_if_not("ggplot2" %in% rownames(installed.packages()))
+  skip_if_not_installed("ggplot2")
 
   library(dplyr)
   library(ggplot2)

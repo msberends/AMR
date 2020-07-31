@@ -31,7 +31,8 @@
 #' @name antibiotic_class_selectors
 #' @export
 #' @examples 
-#' if (require("dplyr")) {
+#' \dontrun{
+#'   library(dplyr)
 #' 
 #'   # this will select columns 'IPM' (imipenem) and 'MEM' (meropenem):
 #'   example_isolates %>% 

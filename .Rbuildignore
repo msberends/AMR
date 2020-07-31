@@ -1,6 +1,4 @@
 ^.*\.Rproj$
-^\.gitlab-ci\.R$
-^\.gitlab-ci\.yml$
 ^\.Renviron$
 ^\.Rprofile$
 ^\.Rproj\.user$
@@ -23,6 +21,4 @@
 ^public$
 ^data-raw$
 ^\.lintr$
-^vignettes/benchmark.*
-^vignettes/SPSS.*
-^tests/appveyor$
+^vignettes$

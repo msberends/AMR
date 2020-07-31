@@ -22,6 +22,7 @@
 context("disk.R")
 
 test_that("disk works", {
+  skip_on_cran()
   expect_true(as.disk(8) == as.disk("8"))
   expect_true(is.disk(as.disk(8)))
 

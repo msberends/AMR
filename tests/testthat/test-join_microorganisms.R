@@ -22,6 +22,7 @@
 context("join_microorganisms.R")
 
 test_that("joins work", {
+  skip_on_cran()
   unjoined <- example_isolates
   inner <- example_isolates %>% inner_join_microorganisms()
   left <- example_isolates %>% left_join_microorganisms()

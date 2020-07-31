@@ -22,5 +22,6 @@
 context("availability.R")
 
 test_that("availability works", {
+  skip_on_cran()
   expect_equal(class(availability(example_isolates)), "data.frame")
 })

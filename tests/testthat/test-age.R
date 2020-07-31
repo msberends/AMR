@@ -22,6 +22,7 @@
 context("age.R")
 
 test_that("age works", {
+  skip_on_cran()
   expect_equal(age(x = c("1980-01-01", "1985-01-01", "1990-01-01"),
                    reference = "2019-01-01"),
                c(39, 34, 29))
@@ -47,6 +48,7 @@ test_that("age works", {
 })
 
 test_that("age_groups works", {
+  skip_on_cran()
   ages <- c(3, 8, 16, 54, 31, 76, 101, 43, 21)
 
   expect_equal(length(unique(age_groups(ages, 50))),

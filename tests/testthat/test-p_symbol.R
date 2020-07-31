@@ -22,6 +22,7 @@
 context("p_symbol.R")
 
 test_that("P symbol works", {
+  skip_on_cran()
   expect_identical(p_symbol(c(0.001, 0.01, 0.05, 0.1, 1, NA, 3)),
                    c("***", "**", "*", ".", " ", NA, NA))
 })

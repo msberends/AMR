@@ -22,6 +22,7 @@
 context("deprecated.R")
 
 test_that("deprecated functions work", {
+  skip_on_cran()
   expect_equal(suppressWarnings(portion_S(example_isolates$AMX)), proportion_S(example_isolates$AMX))
   expect_equal(suppressWarnings(portion_SI(example_isolates$AMX)), proportion_SI(example_isolates$AMX))
   expect_equal(suppressWarnings(portion_I(example_isolates$AMX)), proportion_I(example_isolates$AMX))

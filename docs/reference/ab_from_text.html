@@ -321,7 +321,7 @@ The <a href='lifecycle.html'>lifecycle</a> of this function is <strong>maturing<
 <span class='no'>abx</span> <span class='kw'>&lt;-</span> <span class='fu'>ab_from_text</span>(<span class='st'>"500 mg amoxi po and 400mg cipro iv"</span>)
 <span class='fu'><a href='ab_property.html'>ab_group</a></span>(<span class='no'>abx</span><span class='kw'>[[</span><span class='fl'>1</span>]])
 
-<span class='kw'>if</span> (<span class='fu'><a href='https://rdrr.io/r/base/library.html'>require</a></span>(<span class='no'>dplyr</span>)) {
+<span class='kw'>if</span> (<span class='fu'><a href='https://rdrr.io/r/base/library.html'>require</a></span>(<span class='st'>"dplyr"</span>)) {
   <span class='fu'><a href='https://dplyr.tidyverse.org/reference/reexports.html'>tibble</a></span>(<span class='kw'>clinical_text</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"given 400mg cipro and 500 mg amox"</span>,
                            <span class='st'>"started on doxy iv today"</span>)) <span class='kw'>%&gt;%</span>
     <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span>(<span class='kw'>abx_codes</span> <span class='kw'>=</span> <span class='fu'>ab_from_text</span>(<span class='no'>clinical_text</span>),

@@ -22,6 +22,7 @@
 context("kurtosis.R")
 
 test_that("kurtosis works", {
+  skip_on_cran()
   expect_equal(kurtosis(example_isolates$age),
                3.549319,
                tolerance = 0.00001)

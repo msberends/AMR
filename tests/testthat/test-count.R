@@ -22,7 +22,6 @@
 context("count.R")
 
 test_that("counts work", {
-  
   skip_on_cran()
   
   expect_equal(count_resistant(example_isolates$AMX), count_R(example_isolates$AMX))
