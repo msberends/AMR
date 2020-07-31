@@ -10,7 +10,8 @@ articles:
   WHONET: WHONET.html
   benchmarks: benchmarks.html
   resistance_predict: resistance_predict.html
-last_built: 2020-07-31T08:49Z
+  welcome_to_AMR: welcome_to_AMR.html
+last_built: 2020-07-31T09:39Z
 urls:
   reference: https://msberends.github.io/AMR/reference
   article: https://msberends.github.io/AMR/articles

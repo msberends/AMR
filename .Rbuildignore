@@ -21,4 +21,11 @@
 ^public$
 ^data-raw$
 ^\.lintr$
-^vignettes$
+^vignettes/AMR.Rmd$
+^vignettes/benchmarks.Rmd$
+^vignettes/EUCAST.Rmd$
+^vignettes/MDR.Rmd$
+^vignettes/PCA.Rmd$
+^vignettes/resistance_predict.Rmd$
+^vignettes/SPSS.Rmd$
+^vignettes/WHONET.Rmd$
