@@ -21,11 +21,11 @@
 
 #' Class 'rsi'
 #'
-#' Interpret minimum inhibitory concentration (MIC) values and disk diffusion diameters according to EUCAST or CLSI, or clean up existing R/SI values. This transforms the input to a new class [`rsi`], which is an ordered factor with levels `S < I < R`. Invalid antimicrobial interpretations will be translated as `NA` with a warning.
+#' Interpret minimum inhibitory concentration (MIC) values and disk diffusion diameters according to EUCAST or CLSI, or clean up existing R/SI values. This transforms the input to a new class [`rsi`], which is an ordered factor with levels `S < I < R`. Values that cannot be interpreted will be returned as `NA` with a warning.
 #' @inheritSection lifecycle Stable lifecycle
 #' @rdname as.rsi
 #' @param x vector of values (for class [`mic`]: an MIC value in mg/L, for class [`disk`]: a disk diffusion radius in millimetres)
-#' @param mo any (vector of) text that can be coerced to a valid microorganism code with [as.mo()]
+#' @param mo any (vector of) text that can be coerced to a valid microorganism code with [as.mo()], will be determined automatically if the `dplyr` package is installed
 #' @param ab any (vector of) text that can be coerced to a valid antimicrobial code with [as.ab()]
 #' @param uti (Urinary Tract Infection) A vector with [logical]s (`TRUE` or `FALSE`) to specify whether a UTI specific interpretation from the guideline should be chosen. For using [as.rsi()] on a [data.frame], this can also be a column containing [logical]s or when left blank, the data set will be search for a 'specimen' and rows containing 'urin' in that column will be regarded isolates from a UTI. See *Examples*.
 #' @inheritParams first_isolate
@@ -34,15 +34,44 @@
 #' @param threshold maximum fraction of invalid antimicrobial interpretations of `x`, please see *Examples*
 #' @param ... parameters passed on to methods
 #' @details 
-#' When using [as.rsi()] on untransformed data, the data will be cleaned to only contain values S, I and R. When using the function on data with class [`mic`] (using [as.mic()]) or class [`disk`] (using [as.disk()]), the data will be interpreted based on the guideline set with the `guideline` parameter. 
+#' ## How it works
 #' 
-#' Supported guidelines to be used as input for the `guideline` parameter are: `r paste0('"', sort(unique(AMR::rsi_translation$guideline)), '"', collapse = ", ")`. Simply using `"CLSI"` or `"EUCAST"` for input will automatically select the latest version of that guideline. 
+#' The [as.rsi()] function works in four ways:
 #' 
-#' When using `conserve_capped_values = TRUE`, an MIC value of e.g. ">2" will always return "R", even if the breakpoint according to the chosen guideline is ">=4". This is to prevent that capped values from raw laboratory data would not be treated conservatively. The default behaviour (`conserve_capped_values = FALSE`) considers ">2" to be lower than ">=4" and will in this case return "S" or "I".
+#' 1. For **cleaning raw / untransformed data**. The data will be cleaned to only contain values S, I and R and will try its best to determine this with some intelligence. For example, mixed values with R/SI interpretations and MIC values such as `"<0.25; S"` will be coerced to `"S"`. Combined interpretations for multiple test methods (as seen in laboratory records) such as `"S; S"` will be coerced to `"S"`, but a value like `"S; I"` will return `NA` with a warning that the input is unclear.
+#' 
+#' 2. For **interpreting minimum inhibitory concentration (MIC) values** according to EUCAST or CLSI. You must clean your MIC values first using [as.mic()], that also gives your columns the new data class [`mic`]. Also, be sure to have a column with microorganism names or codes. It will be found automatically, but can be set manually using the `mo` parameter.
+#'    * Using `dplyr`, R/SI interpretation can be done very easily with either: 
+#'      ```
+#'      your_data %>% mutate_if(is.mic, as.rsi)             # until dplyr 1.0.0
+#'      your_data %>% mutate(across(where(is.mic), as.rsi)) # since dplyr 1.0.0
+#'      ```
+#'    * Operators like "<=" will be stripped before interpretation. When using `conserve_capped_values = TRUE`, an MIC value of e.g. ">2" will always return "R", even if the breakpoint according to the chosen guideline is ">=4". This is to prevent that capped values from raw laboratory data would not be treated conservatively. The default behaviour (`conserve_capped_values = FALSE`) considers ">2" to be lower than ">=4" and might in this case return "S" or "I".
+#'      
+#' 3. For **interpreting disk diffusion diameters** according to EUCAST or CLSI. You must clean your disk zones first using [as.disk()], that also gives your columns the new data class [`disk`]. Also, be sure to have a column with microorganism names or codes. It will be found automatically, but can be set manually using the `mo` parameter.
+#'    * Using `dplyr`, R/SI interpretation can be done very easily with either: 
+#'      ```
+#'      your_data %>% mutate_if(is.disk, as.rsi)             # until dplyr 1.0.0
+#'      your_data %>% mutate(across(where(is.disk), as.rsi)) # since dplyr 1.0.0
+#'      ```
+#' 
+#' 4. For **interpreting a complete data set**, with automatic determination of MIC values, disk diffusion diameters, microorganism names or codes, and antimicrobial test results. This is done very simply by running `as.rsi(data)`.
+#' 
+#' ## Supported guidelines
+#' 
+#' For interpreting MIC values as well as disk diffusion diameters, supported guidelines to be used as input for the `guideline` parameter are: `r paste0('"', sort(unique(AMR::rsi_translation$guideline)), '"', collapse = ", ")`.
+#' 
+#' Simply using `"CLSI"` or `"EUCAST"` as input will automatically select the latest version of that guideline. 
+#' 
+#' ## After interpretation
+#' 
+#' After using [as.rsi()], you can use the [eucast_rules()] defined by EUCAST to (1) apply inferred susceptibility and resistance based on results of other antimicrobials and (2) apply intrinsic resistance based on taxonomic properties of a microorganism.
+#' 
+#' ## Machine readable interpretation guidelines
 #' 
 #' The repository of this package [contains a machine readable version](https://github.com/msberends/AMR/blob/master/data-raw/rsi_translation.txt) of all guidelines. This is a CSV file consisting of `r format(nrow(AMR::rsi_translation), big.mark = ",")` rows and `r ncol(AMR::rsi_translation)` columns. This file is machine readable, since it contains one row for every unique combination of the test method (MIC or disk diffusion), the antimicrobial agent and the microorganism. **This allows for easy implementation of these rules in laboratory information systems (LIS)**. Note that it only contains interpretation guidelines for humans - interpretation guidelines from CLSI for animals were removed.
 #'
-#' After using [as.rsi()], you can use [eucast_rules()] to (1) apply inferred susceptibility and resistance based on results of other antimicrobials and (2) apply intrinsic resistance based on taxonomic properties of a microorganism.
+#' ## Other
 #'
 #' The function [is.rsi.eligible()] returns `TRUE` when a columns contains at most 5% invalid antimicrobial interpretations (not S and/or I and/or R), and `FALSE` otherwise. The threshold of 5% can be set with the `threshold` parameter.
 #' @section Interpretation of R and S/I:
@@ -59,7 +88,7 @@
 #' @return Ordered factor with new class [`rsi`]
 #' @aliases rsi
 #' @export
-#' @seealso [as.mic()]
+#' @seealso [as.mic()], [as.disk()], [as.mo()]
 #' @inheritSection AMR Read more on our website!
 #' @examples
 #' summary(example_isolates) # see all R/SI results at a glance
@@ -79,11 +108,11 @@
 #' 
 #' # the dplyr way
 #' library(dplyr)
+#' df %>% mutate_at(vars(AMP:TOB), as.rsi)
+#' df %>% mutate(across(AMP:TOB), as.rsi)
+
 #' df %>%
 #'   mutate_at(vars(AMP:TOB), as.rsi, mo = "E. coli")
-#'   
-#' df %>%
-#'   mutate_at(vars(AMP:TOB), as.rsi, mo = .$microorganism)
 #'   
 #' # to include information about urinary tract infections (UTI)
 #' data.frame(mo = "E. coli",
@@ -248,17 +277,42 @@ as.rsi.default <- function(x, ...) {
 #' @rdname as.rsi
 #' @export
 as.rsi.mic <- function(x,
-                       mo, 
+                       mo = NULL, 
                        ab = deparse(substitute(x)), 
                        guideline = "EUCAST", 
                        uti = FALSE,
                        conserve_capped_values = FALSE,
                        ...) {
-  stop_if(missing(mo),
-          'No information was supplied about the microorganisms (missing parameter "mo"). See ?as.rsi.\n\n',
+  
+  # for dplyr's across()
+  cur_column_dplyr <- import_fn("cur_column", "dplyr", error_on_fail = FALSE)
+  if (!is.null(cur_column_dplyr)) {
+    # try to get current column, which will only be available when in across()
+    ab <- tryCatch(cur_column_dplyr(),
+                   error = function(e) ab)
+  }
+  
+  # for auto-determining mo
+  mo_var_found <- ""
+  if (is.null(mo)) {
+    peek_mask_dplyr <- import_fn("peek_mask", "dplyr", error_on_fail = FALSE)
+    if (!is.null(peek_mask_dplyr)) {
+      try({
+        df <- as.data.frame(peek_mask_dplyr()$across_cols(), stringsAsFactors = FALSE)
+        mo <- suppressMessages(search_type_in_df(df, "mo"))
+        if (!is.null(mo)) {
+          mo_var_found <- paste0(" based on column `", font_bold(mo), "`")
+          mo <- df[, mo, drop = TRUE]
+        }
+      }, silent = TRUE)
+    }
+  }
+  if (is.null(mo)) {
+    stop_('No information was supplied about the microorganisms (missing parameter "mo"). See ?as.rsi.\n\n',
           "To transform certain columns with e.g. mutate_at(), use\n",
           "`data %>% mutate_at(vars(...), as.rsi, mo = .$x)`, where x is your column with microorganisms.\n\n",
           "To tranform all MIC variables in a data set, use `as.rsi(data)` or `data %>% as.rsi()`.", call = FALSE)
+  }
   
   ab_coerced <- suppressWarnings(as.ab(ab))
   mo_coerced <- suppressWarnings(as.mo(mo))
@@ -276,7 +330,8 @@ as.rsi.mic <- function(x,
   
   message(font_blue(paste0("=> Interpreting MIC values of `", font_bold(ab), "` (",
                            ifelse(ab_coerced != ab, paste0(ab_coerced, ", "), ""),
-                           ab_name(ab_coerced, tolower = TRUE), ") using guideline ", font_bold(guideline_coerced), " ... ")),
+                           ab_name(ab_coerced, tolower = TRUE), ")", mo_var_found, 
+                           " according to ", font_bold(guideline_coerced), " ... ")),
           appendLF = FALSE)
   result <- exec_as.rsi(method = "mic",
                         x = x,
@@ -291,16 +346,41 @@ as.rsi.mic <- function(x,
 #' @rdname as.rsi
 #' @export
 as.rsi.disk <- function(x,
-                        mo, 
+                        mo = NULL, 
                         ab = deparse(substitute(x)), 
                         guideline = "EUCAST", 
                         uti = FALSE,
                         ...) {
-  stop_if(missing(mo),
-          'No information was supplied about the microorganisms (missing parameter "mo"). See ?as.rsi.\n\n',
+  
+  # for dplyr's across()
+  cur_column_dplyr <- import_fn("cur_column", "dplyr", error_on_fail = FALSE)
+  if (!is.null(cur_column_dplyr)) {
+    # try to get current column, which will only be available when in across()
+    ab <- tryCatch(cur_column_dplyr(),
+                   error = function(e) ab)
+  }
+  
+  # for auto-determining mo
+  mo_var_found <- ""
+  if (is.null(mo)) {
+    peek_mask_dplyr <- import_fn("peek_mask", "dplyr", error_on_fail = FALSE)
+    if (!is.null(peek_mask_dplyr)) {
+      try({
+        df <- as.data.frame(peek_mask_dplyr()$across_cols(), stringsAsFactors = FALSE)
+        mo <- suppressMessages(search_type_in_df(df, "mo"))
+        if (!is.null(mo)) {
+          mo_var_found <- paste0(" based on column `", font_bold(mo), "`")
+          mo <- df[, mo, drop = TRUE]
+        }
+      }, silent = TRUE)
+    }
+  }
+  if (is.null(mo)) {
+    stop_('No information was supplied about the microorganisms (missing parameter "mo"). See ?as.rsi.\n\n',
           "To transform certain columns with e.g. mutate_at(), use\n",
           "`data %>% mutate_at(vars(...), as.rsi, mo = .$x)`, where x is your column with microorganisms.\n\n",
           "To tranform all disk diffusion zones in a data set, use `as.rsi(data)` or `data %>% as.rsi()`.", call = FALSE)
+  }
   
   ab_coerced <- suppressWarnings(as.ab(ab))
   mo_coerced <- suppressWarnings(as.mo(mo))
@@ -573,12 +653,21 @@ summary.rsi <- function(object, ...) {
   S <- sum(x == "S", na.rm = TRUE)
   I <- sum(x == "I", na.rm = TRUE)
   R <- sum(x == "R", na.rm = TRUE)
+  pad <- function(x) {
+    if (x == "0%") {
+      x <- " 0.0%"
+    }
+    if (nchar(x) < 5) {
+      x <- paste0(rep(" ", 5 - nchar(x)), x)
+    }
+    x
+  }
   value <- c(
     "Class" = "rsi",
-    "%R" = paste0(percentage(R / n), " (n=", R, ")"),
-    "%SI" = paste0(percentage((S + I) / n), " (n=", S + I, ")"),
-    "- %S" = paste0(percentage(S / n), " (n=", S, ")"),
-    "- %I" = paste0(percentage(I / n), " (n=", I, ")")
+    "%R" = paste0(pad(percentage(R / n, digits = 1)), " (n=", R, ")"),
+    "%SI" = paste0(pad(percentage((S + I) / n, digits = 1)), " (n=", S + I, ")"),
+    "- %S" = paste0(pad(percentage(S / n, digits = 1)), " (n=", S, ")"),
+    "- %I" = paste0(pad(percentage(I / n, digits = 1)), " (n=", I, ")")
   )
   class(value) <- c("summaryDefault", "table")
   value

@@ -237,3 +237,16 @@ table a:not(.btn):hover, .table a:not(.btn):hover {
   color: black;
   font-weight: bold;
 }
+
+.btn.btn-info.btn-amr {
+  background: #128f76;
+  color: #ffffff;
+  border-color: #128f76;
+  line-height: 1;
+  width: 100%;
+  font-weight: bold;
+}
+.btn.btn-info.btn-amr:hover {
+  background: #128f7645;
+  color: #2c3e50;
+}

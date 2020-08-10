@@ -39,10 +39,10 @@ test_that("rsi works", {
   
   expect_equal(summary(as.rsi(c("S", "R"))),
                structure(c("Class" = "rsi",
-                           "%R" = "50% (n=1)",
-                           "%SI" = "50% (n=1)",
-                           "- %S" = "50% (n=1)",
-                           "- %I" = "0% (n=0)"), class = c("summaryDefault", "table")))
+                           "%R" = "50.0% (n=1)",
+                           "%SI" = "50.0% (n=1)",
+                           "- %S" = "50.0% (n=1)",
+                           "- %I" = " 0.0% (n=0)"), class = c("summaryDefault", "table")))
   
   expect_identical(as.logical(lapply(example_isolates, is.rsi.eligible)),
                    rep(FALSE, length(example_isolates)))

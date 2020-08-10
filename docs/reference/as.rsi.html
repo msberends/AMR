@@ -49,7 +49,7 @@
   <script src="../extra.js"></script>
 
 <meta property="og:title" content="Class 'rsi' — as.rsi" />
-<meta property="og:description" content="Interpret minimum inhibitory concentration (MIC) values and disk diffusion diameters according to EUCAST or CLSI, or clean up existing R/SI values. This transforms the input to a new class rsi, which is an ordered factor with levels S &amp;lt; I &amp;lt; R. Invalid antimicrobial interpretations will be translated as NA with a warning." />
+<meta property="og:description" content="Interpret minimum inhibitory concentration (MIC) values and disk diffusion diameters according to EUCAST or CLSI, or clean up existing R/SI values. This transforms the input to a new class rsi, which is an ordered factor with levels S &amp;lt; I &amp;lt; R. Values that cannot be interpreted will be returned as NA with a warning." />
 <meta property="og:image" content="https://msberends.github.io/AMR/logo.svg" />
 
 
@@ -82,7 +82,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.3.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.3.0.9000</span>
       </span>
     </div>
 
@@ -232,7 +232,7 @@
     </div>
 
     <div class="ref-description">
-    <p>Interpret minimum inhibitory concentration (MIC) values and disk diffusion diameters according to EUCAST or CLSI, or clean up existing R/SI values. This transforms the input to a new class <code>rsi</code>, which is an ordered factor with levels <code>S &lt; I &lt; R</code>. Invalid antimicrobial interpretations will be translated as <code>NA</code> with a warning.</p>
+    <p>Interpret minimum inhibitory concentration (MIC) values and disk diffusion diameters according to EUCAST or CLSI, or clean up existing R/SI values. This transforms the input to a new class <code>rsi</code>, which is an ordered factor with levels <code>S &lt; I &lt; R</code>. Values that cannot be interpreted will be returned as <code>NA</code> with a warning.</p>
     </div>
 
     <pre class="usage"><span class='fu'>as.rsi</span>(<span class='no'>x</span>, <span class='no'>...</span>)
@@ -244,7 +244,7 @@
 <span class='co'># S3 method for mic</span>
 <span class='fu'>as.rsi</span>(
   <span class='no'>x</span>,
-  <span class='no'>mo</span>,
+  <span class='kw'>mo</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>ab</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/deparse.html'>deparse</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/substitute.html'>substitute</a></span>(<span class='no'>x</span>)),
   <span class='kw'>guideline</span> <span class='kw'>=</span> <span class='st'>"EUCAST"</span>,
   <span class='kw'>uti</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
@@ -255,7 +255,7 @@
 <span class='co'># S3 method for disk</span>
 <span class='fu'>as.rsi</span>(
   <span class='no'>x</span>,
-  <span class='no'>mo</span>,
+  <span class='kw'>mo</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>ab</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/deparse.html'>deparse</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/substitute.html'>substitute</a></span>(<span class='no'>x</span>)),
   <span class='kw'>guideline</span> <span class='kw'>=</span> <span class='st'>"EUCAST"</span>,
   <span class='kw'>uti</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
@@ -289,7 +289,7 @@
     </tr>
     <tr>
       <th>mo</th>
-      <td><p>any (vector of) text that can be coerced to a valid microorganism code with <code><a href='as.mo.html'>as.mo()</a></code></p></td>
+      <td><p>any (vector of) text that can be coerced to a valid microorganism code with <code><a href='as.mo.html'>as.mo()</a></code>, will be determined automatically if the <code>dplyr</code> package is installed</p></td>
     </tr>
     <tr>
       <th>ab</th>
@@ -318,12 +318,46 @@
     <p>Ordered factor with new class <code>rsi</code></p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>When using <code>as.rsi()</code> on untransformed data, the data will be cleaned to only contain values S, I and R. When using the function on data with class <code><a href='as.mic.html'>mic</a></code> (using <code><a href='as.mic.html'>as.mic()</a></code>) or class <code><a href='as.disk.html'>disk</a></code> (using <code><a href='as.disk.html'>as.disk()</a></code>), the data will be interpreted based on the guideline set with the <code>guideline</code> parameter.</p>
-<p>Supported guidelines to be used as input for the <code>guideline</code> parameter are: "CLSI 2010", "CLSI 2011", "CLSI 2012", "CLSI 2013", "CLSI 2014", "CLSI 2015", "CLSI 2016", "CLSI 2017", "CLSI 2018", "CLSI 2019", "EUCAST 2011", "EUCAST 2012", "EUCAST 2013", "EUCAST 2014", "EUCAST 2015", "EUCAST 2016", "EUCAST 2017", "EUCAST 2018", "EUCAST 2019", "EUCAST 2020". Simply using <code>"CLSI"</code> or <code>"EUCAST"</code> for input will automatically select the latest version of that guideline.</p>
-<p>When using <code>conserve_capped_values = TRUE</code>, an MIC value of e.g. "&gt;2" will always return "R", even if the breakpoint according to the chosen guideline is "&gt;=4". This is to prevent that capped values from raw laboratory data would not be treated conservatively. The default behaviour (<code>conserve_capped_values = FALSE</code>) considers "&gt;2" to be lower than "&gt;=4" and will in this case return "S" or "I".</p>
+    
+<h3>How it works</h3>
+
+
+<p>The <code>as.rsi()</code> function works in four ways:</p><ol>
+<li><p>For <strong>cleaning raw / untransformed data</strong>. The data will be cleaned to only contain values S, I and R and will try its best to determine this with some intelligence. For example, mixed values with R/SI interpretations and MIC values such as <code>"&lt;0.25; S"</code> will be coerced to <code>"S"</code>. Combined interpretations for multiple test methods (as seen in laboratory records) such as <code>"S; S"</code> will be coerced to <code>"S"</code>, but a value like <code>"S; I"</code> will return <code>NA</code> with a warning that the input is unclear.</p></li>
+<li><p>For <strong>interpreting minimum inhibitory concentration (MIC) values</strong> according to EUCAST or CLSI. You must clean your MIC values first using <code><a href='as.mic.html'>as.mic()</a></code>, that also gives your columns the new data class <code><a href='as.mic.html'>mic</a></code>. Also, be sure to have a column with microorganism names or codes. It will be found automatically, but can be set manually using the <code>mo</code> parameter.</p><ul>
+<li><p>Using <code>dplyr</code>, R/SI interpretation can be done very easily with either:</p><pre><span class='no'>your_data</span> <span class='kw'>%&amp;gt;%</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate_all.html'>mutate_if</a></span>(<span class='no'>is.mic</span>, <span class='no'>as.rsi</span>)             <span class='co'># until dplyr 1.0.0</span>
+<span class='no'>your_data</span> <span class='kw'>%&amp;gt;%</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span>(<span class='fu'><a href='https://dplyr.tidyverse.org/reference/across.html'>across</a></span>(<span class='fu'>where</span>(<span class='no'>is.mic</span>), <span class='no'>as.rsi</span>)) <span class='co'># since dplyr 1.0.0</span></pre></li>
+<li><p>Operators like "&lt;=" will be stripped before interpretation. When using <code>conserve_capped_values = TRUE</code>, an MIC value of e.g. "&gt;2" will always return "R", even if the breakpoint according to the chosen guideline is "&gt;=4". This is to prevent that capped values from raw laboratory data would not be treated conservatively. The default behaviour (<code>conserve_capped_values = FALSE</code>) considers "&gt;2" to be lower than "&gt;=4" and might in this case return "S" or "I".</p></li>
+</ul></li>
+<li><p>For <strong>interpreting disk diffusion diameters</strong> according to EUCAST or CLSI. You must clean your disk zones first using <code><a href='as.disk.html'>as.disk()</a></code>, that also gives your columns the new data class <code><a href='as.disk.html'>disk</a></code>. Also, be sure to have a column with microorganism names or codes. It will be found automatically, but can be set manually using the <code>mo</code> parameter.</p><ul>
+<li><p>Using <code>dplyr</code>, R/SI interpretation can be done very easily with either:</p><pre><span class='no'>your_data</span> <span class='kw'>%&amp;gt;%</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate_all.html'>mutate_if</a></span>(<span class='no'>is.disk</span>, <span class='no'>as.rsi</span>)             <span class='co'># until dplyr 1.0.0</span>
+<span class='no'>your_data</span> <span class='kw'>%&amp;gt;%</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span>(<span class='fu'><a href='https://dplyr.tidyverse.org/reference/across.html'>across</a></span>(<span class='fu'>where</span>(<span class='no'>is.disk</span>), <span class='no'>as.rsi</span>)) <span class='co'># since dplyr 1.0.0</span></pre></li>
+</ul></li>
+<li><p>For <strong>interpreting a complete data set</strong>, with automatic determination of MIC values, disk diffusion diameters, microorganism names or codes, and antimicrobial test results. This is done very simply by running <code>as.rsi(data)</code>.</p></li>
+</ol>
+
+
+<h3>Supported guidelines</h3>
+
+
+<p>For interpreting MIC values as well as disk diffusion diameters, supported guidelines to be used as input for the <code>guideline</code> parameter are: "CLSI 2010", "CLSI 2011", "CLSI 2012", "CLSI 2013", "CLSI 2014", "CLSI 2015", "CLSI 2016", "CLSI 2017", "CLSI 2018", "CLSI 2019", "EUCAST 2011", "EUCAST 2012", "EUCAST 2013", "EUCAST 2014", "EUCAST 2015", "EUCAST 2016", "EUCAST 2017", "EUCAST 2018", "EUCAST 2019", "EUCAST 2020".</p>
+<p>Simply using <code>"CLSI"</code> or <code>"EUCAST"</code> as input will automatically select the latest version of that guideline.</p>
+
+<h3>After interpretation</h3>
+
+
+<p>After using <code>as.rsi()</code>, you can use the <code><a href='eucast_rules.html'>eucast_rules()</a></code> defined by EUCAST to (1) apply inferred susceptibility and resistance based on results of other antimicrobials and (2) apply intrinsic resistance based on taxonomic properties of a microorganism.</p>
+
+<h3>Machine readable interpretation guidelines</h3>
+
+
 <p>The repository of this package <a href='https://github.com/msberends/AMR/blob/master/data-raw/rsi_translation.txt'>contains a machine readable version</a> of all guidelines. This is a CSV file consisting of 18,650 rows and 10 columns. This file is machine readable, since it contains one row for every unique combination of the test method (MIC or disk diffusion), the antimicrobial agent and the microorganism. <strong>This allows for easy implementation of these rules in laboratory information systems (LIS)</strong>. Note that it only contains interpretation guidelines for humans - interpretation guidelines from CLSI for animals were removed.</p>
-<p>After using <code>as.rsi()</code>, you can use <code><a href='eucast_rules.html'>eucast_rules()</a></code> to (1) apply inferred susceptibility and resistance based on results of other antimicrobials and (2) apply intrinsic resistance based on taxonomic properties of a microorganism.</p>
+
+<h3>Other</h3>
+
+
 <p>The function <code>is.rsi.eligible()</code> returns <code>TRUE</code> when a columns contains at most 5% invalid antimicrobial interpretations (not S and/or I and/or R), and <code>FALSE</code> otherwise. The threshold of 5% can be set with the <code>threshold</code> parameter.</p>
+
     <h2 class="hasAnchor" id="interpretation-of-r-and-s-i"><a class="anchor" href="#interpretation-of-r-and-s-i"></a>Interpretation of R and S/I</h2>
 
     
@@ -352,7 +386,7 @@ The <a href='lifecycle.html'>lifecycle</a> of this function is <strong>stable</s
 <p>On our website <a href='https://msberends.github.io/AMR'>https://msberends.github.io/AMR</a> you can find <a href='https://msberends.github.io/AMR/articles/AMR.html'>a comprehensive tutorial</a> about how to conduct AMR analysis, the <a href='https://msberends.github.io/AMR/reference'>complete documentation of all functions</a> (which reads a lot easier than here in R) and <a href='https://msberends.github.io/AMR/articles/WHONET.html'>an example analysis using WHONET data</a>. As we would like to better understand the backgrounds and needs of our users, please <a href='https://msberends.github.io/AMR/survey.html'>participate in our survey</a>!</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><code><a href='as.mic.html'>as.mic()</a></code></p></div>
+    <div class='dont-index'><p><code><a href='as.mic.html'>as.mic()</a></code>, <code><a href='as.disk.html'>as.disk()</a></code>, <code><a href='as.mo.html'>as.mo()</a></code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span>(<span class='no'>example_isolates</span>) <span class='co'># see all R/SI results at a glance</span>
@@ -372,11 +406,10 @@ The <a href='lifecycle.html'>lifecycle</a> of this function is <strong>stable</s
 
 <span class='co'># the dplyr way</span>
 <span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>dplyr</span>)
+<span class='no'>df</span> <span class='kw'>%&gt;%</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate_all.html'>mutate_at</a></span>(<span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='no'>AMP</span>:<span class='no'>TOB</span>), <span class='no'>as.rsi</span>)
+<span class='no'>df</span> <span class='kw'>%&gt;%</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span>(<span class='fu'><a href='https://dplyr.tidyverse.org/reference/across.html'>across</a></span>(<span class='no'>AMP</span>:<span class='no'>TOB</span>), <span class='no'>as.rsi</span>)
 <span class='no'>df</span> <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate_all.html'>mutate_at</a></span>(<span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='no'>AMP</span>:<span class='no'>TOB</span>), <span class='no'>as.rsi</span>, <span class='kw'>mo</span> <span class='kw'>=</span> <span class='st'>"E. coli"</span>)
-
-<span class='no'>df</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate_all.html'>mutate_at</a></span>(<span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='no'>AMP</span>:<span class='no'>TOB</span>), <span class='no'>as.rsi</span>, <span class='kw'>mo</span> <span class='kw'>=</span> <span class='no'>.</span>$<span class='no'>microorganism</span>)
 
 <span class='co'># to include information about urinary tract infections (UTI)</span>
 <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span>(<span class='kw'>mo</span> <span class='kw'>=</span> <span class='st'>"E. coli"</span>,

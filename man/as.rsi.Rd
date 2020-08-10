@@ -18,7 +18,7 @@ is.rsi.eligible(x, threshold = 0.05)
 
 \method{as.rsi}{mic}(
   x,
-  mo,
+  mo = NULL,
   ab = deparse(substitute(x)),
   guideline = "EUCAST",
   uti = FALSE,
@@ -28,7 +28,7 @@ is.rsi.eligible(x, threshold = 0.05)
 
 \method{as.rsi}{disk}(
   x,
-  mo,
+  mo = NULL,
   ab = deparse(substitute(x)),
   guideline = "EUCAST",
   uti = FALSE,
@@ -51,7 +51,7 @@ is.rsi.eligible(x, threshold = 0.05)
 
 \item{threshold}{maximum fraction of invalid antimicrobial interpretations of \code{x}, please see \emph{Examples}}
 
-\item{mo}{any (vector of) text that can be coerced to a valid microorganism code with \code{\link[=as.mo]{as.mo()}}}
+\item{mo}{any (vector of) text that can be coerced to a valid microorganism code with \code{\link[=as.mo]{as.mo()}}, will be determined automatically if the \code{dplyr} package is installed}
 
 \item{ab}{any (vector of) text that can be coerced to a valid antimicrobial code with \code{\link[=as.ab]{as.ab()}}}
 
@@ -67,20 +67,52 @@ is.rsi.eligible(x, threshold = 0.05)
 Ordered factor with new class \code{\link{rsi}}
 }
 \description{
-Interpret minimum inhibitory concentration (MIC) values and disk diffusion diameters according to EUCAST or CLSI, or clean up existing R/SI values. This transforms the input to a new class \code{\link{rsi}}, which is an ordered factor with levels \verb{S < I < R}. Invalid antimicrobial interpretations will be translated as \code{NA} with a warning.
+Interpret minimum inhibitory concentration (MIC) values and disk diffusion diameters according to EUCAST or CLSI, or clean up existing R/SI values. This transforms the input to a new class \code{\link{rsi}}, which is an ordered factor with levels \verb{S < I < R}. Values that cannot be interpreted will be returned as \code{NA} with a warning.
 }
 \details{
-When using \code{\link[=as.rsi]{as.rsi()}} on untransformed data, the data will be cleaned to only contain values S, I and R. When using the function on data with class \code{\link{mic}} (using \code{\link[=as.mic]{as.mic()}}) or class \code{\link{disk}} (using \code{\link[=as.disk]{as.disk()}}), the data will be interpreted based on the guideline set with the \code{guideline} parameter.
+\subsection{How it works}{
 
-Supported guidelines to be used as input for the \code{guideline} parameter are: "CLSI 2010", "CLSI 2011", "CLSI 2012", "CLSI 2013", "CLSI 2014", "CLSI 2015", "CLSI 2016", "CLSI 2017", "CLSI 2018", "CLSI 2019", "EUCAST 2011", "EUCAST 2012", "EUCAST 2013", "EUCAST 2014", "EUCAST 2015", "EUCAST 2016", "EUCAST 2017", "EUCAST 2018", "EUCAST 2019", "EUCAST 2020". Simply using \code{"CLSI"} or \code{"EUCAST"} for input will automatically select the latest version of that guideline.
+The \code{\link[=as.rsi]{as.rsi()}} function works in four ways:
+\enumerate{
+\item For \strong{cleaning raw / untransformed data}. The data will be cleaned to only contain values S, I and R and will try its best to determine this with some intelligence. For example, mixed values with R/SI interpretations and MIC values such as \code{"<0.25; S"} will be coerced to \code{"S"}. Combined interpretations for multiple test methods (as seen in laboratory records) such as \code{"S; S"} will be coerced to \code{"S"}, but a value like \code{"S; I"} will return \code{NA} with a warning that the input is unclear.
+\item For \strong{interpreting minimum inhibitory concentration (MIC) values} according to EUCAST or CLSI. You must clean your MIC values first using \code{\link[=as.mic]{as.mic()}}, that also gives your columns the new data class \code{\link{mic}}. Also, be sure to have a column with microorganism names or codes. It will be found automatically, but can be set manually using the \code{mo} parameter.
+\itemize{
+\item Using \code{dplyr}, R/SI interpretation can be done very easily with either:\preformatted{your_data \%>\% mutate_if(is.mic, as.rsi)             # until dplyr 1.0.0
+your_data \%>\% mutate(across(where(is.mic), as.rsi)) # since dplyr 1.0.0
+}
+\item Operators like "<=" will be stripped before interpretation. When using \code{conserve_capped_values = TRUE}, an MIC value of e.g. ">2" will always return "R", even if the breakpoint according to the chosen guideline is ">=4". This is to prevent that capped values from raw laboratory data would not be treated conservatively. The default behaviour (\code{conserve_capped_values = FALSE}) considers ">2" to be lower than ">=4" and might in this case return "S" or "I".
+}
+\item For \strong{interpreting disk diffusion diameters} according to EUCAST or CLSI. You must clean your disk zones first using \code{\link[=as.disk]{as.disk()}}, that also gives your columns the new data class \code{\link{disk}}. Also, be sure to have a column with microorganism names or codes. It will be found automatically, but can be set manually using the \code{mo} parameter.
+\itemize{
+\item Using \code{dplyr}, R/SI interpretation can be done very easily with either:\preformatted{your_data \%>\% mutate_if(is.disk, as.rsi)             # until dplyr 1.0.0
+your_data \%>\% mutate(across(where(is.disk), as.rsi)) # since dplyr 1.0.0
+}
+}
+\item For \strong{interpreting a complete data set}, with automatic determination of MIC values, disk diffusion diameters, microorganism names or codes, and antimicrobial test results. This is done very simply by running \code{as.rsi(data)}.
+}
+}
 
-When using \code{conserve_capped_values = TRUE}, an MIC value of e.g. ">2" will always return "R", even if the breakpoint according to the chosen guideline is ">=4". This is to prevent that capped values from raw laboratory data would not be treated conservatively. The default behaviour (\code{conserve_capped_values = FALSE}) considers ">2" to be lower than ">=4" and will in this case return "S" or "I".
+\subsection{Supported guidelines}{
+
+For interpreting MIC values as well as disk diffusion diameters, supported guidelines to be used as input for the \code{guideline} parameter are: "CLSI 2010", "CLSI 2011", "CLSI 2012", "CLSI 2013", "CLSI 2014", "CLSI 2015", "CLSI 2016", "CLSI 2017", "CLSI 2018", "CLSI 2019", "EUCAST 2011", "EUCAST 2012", "EUCAST 2013", "EUCAST 2014", "EUCAST 2015", "EUCAST 2016", "EUCAST 2017", "EUCAST 2018", "EUCAST 2019", "EUCAST 2020".
+
+Simply using \code{"CLSI"} or \code{"EUCAST"} as input will automatically select the latest version of that guideline.
+}
+
+\subsection{After interpretation}{
+
+After using \code{\link[=as.rsi]{as.rsi()}}, you can use the \code{\link[=eucast_rules]{eucast_rules()}} defined by EUCAST to (1) apply inferred susceptibility and resistance based on results of other antimicrobials and (2) apply intrinsic resistance based on taxonomic properties of a microorganism.
+}
+
+\subsection{Machine readable interpretation guidelines}{
 
 The repository of this package \href{https://github.com/msberends/AMR/blob/master/data-raw/rsi_translation.txt}{contains a machine readable version} of all guidelines. This is a CSV file consisting of 18,650 rows and 10 columns. This file is machine readable, since it contains one row for every unique combination of the test method (MIC or disk diffusion), the antimicrobial agent and the microorganism. \strong{This allows for easy implementation of these rules in laboratory information systems (LIS)}. Note that it only contains interpretation guidelines for humans - interpretation guidelines from CLSI for animals were removed.
+}
 
-After using \code{\link[=as.rsi]{as.rsi()}}, you can use \code{\link[=eucast_rules]{eucast_rules()}} to (1) apply inferred susceptibility and resistance based on results of other antimicrobials and (2) apply intrinsic resistance based on taxonomic properties of a microorganism.
+\subsection{Other}{
 
 The function \code{\link[=is.rsi.eligible]{is.rsi.eligible()}} returns \code{TRUE} when a columns contains at most 5\% invalid antimicrobial interpretations (not S and/or I and/or R), and \code{FALSE} otherwise. The threshold of 5\% can be set with the \code{threshold} parameter.
+}
 }
 \section{Interpretation of R and S/I}{
 
@@ -128,11 +160,10 @@ as.rsi(df)
 
 # the dplyr way
 library(dplyr)
+df \%>\% mutate_at(vars(AMP:TOB), as.rsi)
+df \%>\% mutate(across(AMP:TOB), as.rsi)
 df \%>\%
   mutate_at(vars(AMP:TOB), as.rsi, mo = "E. coli")
-  
-df \%>\%
-  mutate_at(vars(AMP:TOB), as.rsi, mo = .$microorganism)
   
 # to include information about urinary tract infections (UTI)
 data.frame(mo = "E. coli",
@@ -190,5 +221,5 @@ is.rsi.eligible(WHONET$`First name`, threshold = 0.99) # succeeds
 }
 }
 \seealso{
-\code{\link[=as.mic]{as.mic()}}
+\code{\link[=as.mic]{as.mic()}}, \code{\link[=as.disk]{as.disk()}}, \code{\link[=as.mo]{as.mo()}}
 }

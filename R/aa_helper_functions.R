@@ -202,11 +202,19 @@ stop_ifnot_installed <- function(package) {
   return(invisible())
 }
 
-import_fn <- function(name, pkg) {
-  stop_ifnot_installed(pkg)
+import_fn <- function(name, pkg, error_on_fail = TRUE) {
+  if (isTRUE(error_on_fail)) {
+    stop_ifnot_installed(pkg)
+  }
   tryCatch(
     get(name, envir = asNamespace(pkg)),
-    error = function(e) stop_("an error occurred in import_fn() while using this function", call = FALSE))
+    error = function(e) {
+      if (isTRUE(error_on_fail)) {
+        stop_("function ", name, "() not found in package '", pkg, "'. Please contact the maintainers of the AMR package at https://github.com/msberends/AMR/issues.", call = FALSE)
+      } else {
+        return(NULL)
+      }
+    })
 }
 
 stop_ <- function(..., call = TRUE) {

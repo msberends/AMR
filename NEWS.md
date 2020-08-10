@@ -1,5 +1,19 @@
-# AMR 1.3.0
+# AMR 1.3.0.9000
+## <small>Last updated: 10 August 2020</small>
 
+### Changed
+* Support for using `dplyr`'s `across()` in `as.rsi()` to interpret MIC values or disk zone diameters, that now also automatically determines the column with microorganism names or codes.
+  ```r
+  # until dplyr 1.0.0
+  your_data %>% mutate_if(is.mic, as.rsi)
+  your_data %>% mutate_if(is.disk, as.rsi)
+  
+   # since dplyr 1.0.0
+   your_data %>% mutate(across(where(is.mic), as.rsi))
+  your_data %>% mutate(across(where(is.disk), as.rsi))
+  ```
+
+# AMR 1.3.0
 
 ### New
 * Function `ab_from_text()` to retrieve antimicrobial drug names, doses and forms of administration from clinical texts in e.g. health care records, which also corrects for misspelling since it uses `as.ab()` internally
