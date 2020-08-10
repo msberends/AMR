@@ -82,7 +82,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.3.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.3.0.9001</span>
       </span>
     </div>
 
@@ -236,15 +236,15 @@
     </div>
 
     <pre class="usage"><span class='fu'>as.mo</span>(
-  <span class='no'>x</span>,
-  <span class='kw'>Becker</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>Lancefield</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>allow_uncertain</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>reference_df</span> <span class='kw'>=</span> <span class='fu'><a href='mo_source.html'>get_mo_source</a></span>(),
-  <span class='no'>...</span>
+  <span class='kw'>x</span>,
+  Becker = <span class='fl'>FALSE</span>,
+  Lancefield = <span class='fl'>FALSE</span>,
+  allow_uncertain = <span class='fl'>TRUE</span>,
+  reference_df = <span class='fu'><a href='mo_source.html'>get_mo_source</a></span>(),
+  <span class='kw'>...</span>
 )
 
-<span class='fu'>is.mo</span>(<span class='no'>x</span>)
+<span class='fu'>is.mo</span>(<span class='kw'>x</span>)
 
 <span class='fu'>mo_failures</span>()
 
@@ -299,10 +299,10 @@
   B_KLBSL_PNMN_RHNS  Klebsiella pneumoniae rhinoscleromatis
   |   |    |    |
   |   |    |    |
-  |   |    |     ---&amp;gt; subspecies, a 4-5 letter acronym
-  |   |     ----&amp;gt; species, a 4-5 letter acronym
-  |    ----&amp;gt; genus, a 5-7 letter acronym
-   ----&amp;gt; taxonomic kingdom: A (Archaea), AN (Animalia), B (Bacteria),
+  |   |    |     ---&gt; subspecies, a 4-5 letter acronym
+  |   |     ----&gt; species, a 4-5 letter acronym
+  |    ----&gt; genus, a 5-7 letter acronym
+   ----&gt; taxonomic kingdom: A (Archaea), AN (Animalia), B (Bacteria),
                             C (Chromista), F (Fungi), P (Protozoa)
 </pre>
 
@@ -412,32 +412,32 @@ This package contains the complete taxonomic tree of almost all microorganisms (
 <span class='fu'>as.mo</span>(<span class='st'>"GBS"</span>) <span class='co'># Group B Streptococci</span>
 
 <span class='fu'>as.mo</span>(<span class='st'>"S. epidermidis"</span>)                 <span class='co'># will remain species: B_STPHY_EPDR</span>
-<span class='fu'>as.mo</span>(<span class='st'>"S. epidermidis"</span>, <span class='kw'>Becker</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)  <span class='co'># will not remain species: B_STPHY_CONS</span>
+<span class='fu'>as.mo</span>(<span class='st'>"S. epidermidis"</span>, Becker = <span class='fl'>TRUE</span>)  <span class='co'># will not remain species: B_STPHY_CONS</span>
 
 <span class='fu'>as.mo</span>(<span class='st'>"S. pyogenes"</span>)                    <span class='co'># will remain species: B_STRPT_PYGN</span>
-<span class='fu'>as.mo</span>(<span class='st'>"S. pyogenes"</span>, <span class='kw'>Lancefield</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>) <span class='co'># will not remain species: B_STRPT_GRPA</span>
+<span class='fu'>as.mo</span>(<span class='st'>"S. pyogenes"</span>, Lancefield = <span class='fl'>TRUE</span>) <span class='co'># will not remain species: B_STRPT_GRPA</span>
 
 <span class='co'># All mo_* functions use as.mo() internally too (see ?mo_property):</span>
 <span class='fu'><a href='mo_property.html'>mo_genus</a></span>(<span class='st'>"E. coli"</span>)           <span class='co'># returns "Escherichia"</span>
 <span class='fu'><a href='mo_property.html'>mo_gramstain</a></span>(<span class='st'>"E. coli"</span>)       <span class='co'># returns "Gram negative"</span>
 
 <span class='co'># }</span>
-<span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
-<span class='no'>df</span>$<span class='no'>mo</span> <span class='kw'>&lt;-</span> <span class='fu'>as.mo</span>(<span class='no'>df</span>$<span class='no'>microorganism_name</span>)
+<span class='co'>if</span> (<span class='fl'>FALSE</span>) {
+<span class='kw'>df</span><span class='op'>$</span><span class='kw'>mo</span> <span class='op'>&lt;-</span> <span class='fu'>as.mo</span>(<span class='kw'>df</span><span class='op'>$</span><span class='kw'>microorganism_name</span>)
 
 <span class='co'># the select function of the Tidyverse is also supported:</span>
-<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>dplyr</span>)
-<span class='no'>df</span>$<span class='no'>mo</span> <span class='kw'>&lt;-</span> <span class='no'>df</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='no'>microorganism_name</span>) <span class='kw'>%&gt;%</span>
+<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='kw'><a href='https://dplyr.tidyverse.org'>dplyr</a></span>)
+<span class='kw'>df</span><span class='op'>$</span><span class='kw'>mo</span> <span class='op'>&lt;-</span> <span class='kw'>df</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='kw'>microorganism_name</span>) <span class='op'>%&gt;%</span>
   <span class='fu'>as.mo</span>()
 
 <span class='co'># and can even contain 2 columns, which is convenient for genus/species combinations:</span>
-<span class='no'>df</span>$<span class='no'>mo</span> <span class='kw'>&lt;-</span> <span class='no'>df</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='no'>genus</span>, <span class='no'>species</span>) <span class='kw'>%&gt;%</span>
+<span class='kw'>df</span><span class='op'>$</span><span class='kw'>mo</span> <span class='op'>&lt;-</span> <span class='kw'>df</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='kw'>genus</span>, <span class='kw'>species</span>) <span class='op'>%&gt;%</span>
   <span class='fu'>as.mo</span>()
 <span class='co'># although this works easier and does the same:</span>
-<span class='no'>df</span> <span class='kw'>&lt;-</span> <span class='no'>df</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span>(<span class='kw'>mo</span> <span class='kw'>=</span> <span class='fu'>as.mo</span>(<span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste</a></span>(<span class='no'>genus</span>, <span class='no'>species</span>)))
+<span class='kw'>df</span> <span class='op'>&lt;-</span> <span class='kw'>df</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span>(mo = <span class='fu'>as.mo</span>(<span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste</a></span>(<span class='kw'>genus</span>, <span class='kw'>species</span>)))
 }</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
@@ -454,7 +454,7 @@ This package contains the complete taxonomic tree of almost all microorganisms (
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.9000.</p>
 </div>
 
       </footer>

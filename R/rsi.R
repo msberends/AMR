@@ -110,7 +110,7 @@
 #' library(dplyr)
 #' df %>% mutate_at(vars(AMP:TOB), as.rsi)
 #' df %>% mutate(across(AMP:TOB), as.rsi)
-
+#'
 #' df %>%
 #'   mutate_at(vars(AMP:TOB), as.rsi, mo = "E. coli")
 #'   

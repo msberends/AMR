@@ -39,7 +39,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.3.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.3.0.9001</span>
       </span>
     </div>
 
@@ -186,7 +186,7 @@
       <h1 data-toc-skip>How to work with WHONET data</h1>
                         <h4 class="author">Matthijs S. Berends</h4>
             
-            <h4 class="date">30 July 2020</h4>
+            <h4 class="date">10 August 2020</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/msberends/AMR/blob/master/vignettes/WHONET.Rmd"><code>vignettes/WHONET.Rmd</code></a></small>
       <div class="hidden name"><code>WHONET.Rmd</code></div>
@@ -200,34 +200,42 @@
 <a href="#import-of-data" class="anchor"></a>Import of data</h3>
 <p>This tutorial assumes you already imported the WHONET data with e.g. the <a href="https://readxl.tidyverse.org/"><code>readxl</code> package</a>. In RStudio, this can be done using the menu button ‘Import Dataset’ in the tab ‘Environment’. Choose the option ‘From Excel’ and select your exported file. Make sure date fields are imported correctly.</p>
 <p>An example syntax could look like this:</p>
-<div class="sourceCode" id="cb1"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">readxl</span>)
-<span class="no">data</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://readxl.tidyverse.org/reference/read_excel.html">read_excel</a></span>(<span class="kw">path</span> <span class="kw">=</span> <span class="st">"path/to/your/file.xlsx"</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb1"><pre class="downlit">
+<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="kw"><a href="https://readxl.tidyverse.org">readxl</a></span>)
+<span class="kw">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://readxl.tidyverse.org/reference/read_excel.html">read_excel</a></span>(path = <span class="st">"path/to/your/file.xlsx"</span>)
+</pre></div>
 <p>This package comes with an <a href="https://msberends.github.io/AMR/reference/WHONET.html">example data set <code>WHONET</code></a>. We will use it for this analysis.</p>
 </div>
 <div id="preparation" class="section level3">
 <h3 class="hasAnchor">
 <a href="#preparation" class="anchor"></a>Preparation</h3>
 <p>First, load the relevant packages if you did not yet did this. I use the tidyverse for all of my analyses. All of them. If you don’t know it yet, I suggest you read about it on their website: <a href="https://www.tidyverse.org/" class="uri">https://www.tidyverse.org/</a>.</p>
-<div class="sourceCode" id="cb2"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">dplyr</span>)   <span class="co"># part of tidyverse</span>
-<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">ggplot2</span>) <span class="co"># part of tidyverse</span>
-<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">AMR</span>)     <span class="co"># this package</span>
-<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">cleaner</span>) <span class="co"># to create frequency tables</span></pre></body></html></div>
+<div class="sourceCode" id="cb2"><pre class="downlit">
+<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="kw"><a href="https://dplyr.tidyverse.org">dplyr</a></span>)   <span class="co"># part of tidyverse</span>
+<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="kw"><a href="http://ggplot2.tidyverse.org">ggplot2</a></span>) <span class="co"># part of tidyverse</span>
+<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="kw"><a href="https://msberends.github.io/AMR">AMR</a></span>)     <span class="co"># this package</span>
+<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="kw"><a href="https://github.com/msberends/cleaner">cleaner</a></span>) <span class="co"># to create frequency tables</span>
+</pre></div>
 <p>We will have to transform some variables to simplify and automate the analysis:</p>
 <ul>
 <li>Microorganisms should be transformed to our own microorganism IDs (called an <code>mo</code>) using <a href="https://msberends.github.io/AMR/reference/catalogue_of_life">our Catalogue of Life reference data set</a>, which contains all ~70,000 microorganisms from the taxonomic kingdoms Bacteria, Fungi and Protozoa. We do the tranformation with <code><a href="../reference/as.mo.html">as.mo()</a></code>. This function also recognises almost all WHONET abbreviations of microorganisms.</li>
 <li>Antimicrobial results or interpretations have to be clean and valid. In other words, they should only contain values <code>"S"</code>, <code>"I"</code> or <code>"R"</code>. That is exactly where the <code><a href="../reference/as.rsi.html">as.rsi()</a></code> function is for.</li>
 </ul>
-<div class="sourceCode" id="cb3"><html><body><pre class="r"><span class="co"># transform variables</span>
-<span class="no">data</span> <span class="kw">&lt;-</span> <span class="no">WHONET</span> <span class="kw">%&gt;%</span>
+<div class="sourceCode" id="cb3"><pre class="downlit">
+<span class="co"># transform variables</span>
+<span class="kw">data</span> <span class="op">&lt;-</span> <span class="kw">WHONET</span> <span class="op">%&gt;%</span>
   <span class="co"># get microbial ID based on given organism</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(<span class="kw">mo</span> <span class="kw">=</span> <span class="fu"><a href="../reference/as.mo.html">as.mo</a></span>(<span class="no">Organism</span>)) <span class="kw">%&gt;%</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(mo = <span class="fu"><a href="../reference/as.mo.html">as.mo</a></span>(<span class="kw">Organism</span>)) <span class="op">%&gt;%</span> 
   <span class="co"># transform everything from "AMP_ND10" to "CIP_EE" to the new `rsi` class</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate_all.html">mutate_at</a></span>(<span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html">vars</a></span>(<span class="no">AMP_ND10</span>:<span class="no">CIP_EE</span>), <span class="no">as.rsi</span>)</pre></body></html></div>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate_all.html">mutate_at</a></span>(<span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html">vars</a></span>(<span class="kw">AMP_ND10</span><span class="op">:</span><span class="kw">CIP_EE</span>), <span class="kw">as.rsi</span>)
+</pre></div>
 <p>No errors or warnings, so all values are transformed succesfully.</p>
 <p>We also created a package dedicated to data cleaning and checking, called the <code>cleaner</code> package. Its <code><a href="https://rdrr.io/pkg/cleaner/man/freq.html">freq()</a></code> function can be used to create frequency tables.</p>
 <p>So let’s check our data, with a couple of frequency tables:</p>
-<div class="sourceCode" id="cb4"><html><body><pre class="r"><span class="co"># our newly created `mo` variable, put in the mo_name() function</span>
-<span class="no">data</span> <span class="kw">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/pkg/cleaner/man/freq.html">freq</a></span>(<span class="fu"><a href="../reference/mo_property.html">mo_name</a></span>(<span class="no">mo</span>), <span class="kw">nmax</span> <span class="kw">=</span> <span class="fl">10</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb4"><pre class="downlit">
+<span class="co"># our newly created `mo` variable, put in the mo_name() function</span>
+<span class="kw">data</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/pkg/cleaner/man/freq.html">freq</a></span>(<span class="fu"><a href="../reference/mo_property.html">mo_name</a></span>(<span class="kw">mo</span>), nmax = <span class="fl">10</span>)
+</pre></div>
 <p><strong>Frequency table</strong></p>
 <p>Class: character<br>
 Length: 500<br>
@@ -328,9 +336,11 @@ Longest: 40</p>
 </tbody>
 </table>
 <p>(omitted 27 entries, n = 56 [11.20%])</p>
-<div class="sourceCode" id="cb5"><html><body><pre class="r"><span class="co"># our transformed antibiotic columns</span>
+<div class="sourceCode" id="cb5"><pre class="downlit">
+<span class="co"># our transformed antibiotic columns</span>
 <span class="co"># amoxicillin/clavulanic acid (J01CR02) as an example</span>
-<span class="no">data</span> <span class="kw">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/pkg/cleaner/man/freq.html">freq</a></span>(<span class="no">AMC_ND2</span>)</pre></body></html></div>
+<span class="kw">data</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/pkg/cleaner/man/freq.html">freq</a></span>(<span class="kw">AMC_ND2</span>)
+</pre></div>
 <p><strong>Frequency table</strong></p>
 <p>Class: factor &gt; ordered &gt; rsi (numeric)<br>
 Length: 500<br>
@@ -378,10 +388,12 @@ Unique: 3</p>
 <h3 class="hasAnchor">
 <a href="#a-first-glimpse-at-results" class="anchor"></a>A first glimpse at results</h3>
 <p>An easy <code>ggplot</code> will already give a lot of information, using the included <code><a href="../reference/ggplot_rsi.html">ggplot_rsi()</a></code> function:</p>
-<div class="sourceCode" id="cb6"><html><body><pre class="r"><span class="no">data</span> <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span>(<span class="no">Country</span>) <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span>(<span class="no">Country</span>, <span class="no">AMP_ND2</span>, <span class="no">AMC_ED20</span>, <span class="no">CAZ_ED10</span>, <span class="no">CIP_ED5</span>) <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="../reference/ggplot_rsi.html">ggplot_rsi</a></span>(<span class="kw">translate_ab</span> <span class="kw">=</span> <span class="st">'ab'</span>, <span class="kw">facet</span> <span class="kw">=</span> <span class="st">"Country"</span>, <span class="kw">datalabels</span> <span class="kw">=</span> <span class="fl">FALSE</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb6"><pre class="downlit">
+<span class="kw">data</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span>(<span class="kw">Country</span>) <span class="op">%&gt;%</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span>(<span class="kw">Country</span>, <span class="kw">AMP_ND2</span>, <span class="kw">AMC_ED20</span>, <span class="kw">CAZ_ED10</span>, <span class="kw">CIP_ED5</span>) <span class="op">%&gt;%</span>
+  <span class="fu"><a href="../reference/ggplot_rsi.html">ggplot_rsi</a></span>(translate_ab = <span class="st">'ab'</span>, facet = <span class="st">"Country"</span>, datalabels = <span class="fl">FALSE</span>)
+</pre></div>
 <p><img src="WHONET_files/figure-html/unnamed-chunk-7-1.png" width="720"></p>
 </div>
   </div>
@@ -399,7 +411,7 @@ Unique: 3</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.9000.</p>
 </div>
 
       </footer>

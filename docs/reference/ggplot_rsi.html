@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>AMR plots with <code>ggplot2</code> — ggplot_rsi • AMR (for R)</title>
+<title>AMR plots with ggplot2 — ggplot_rsi • AMR (for R)</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -48,7 +48,7 @@
   <link href="../extra.css" rel="stylesheet">
   <script src="../extra.js"></script>
 
-<meta property="og:title" content="AMR plots with <code>ggplot2</code> — ggplot_rsi" />
+<meta property="og:title" content="AMR plots with ggplot2 — ggplot_rsi" />
 <meta property="og:description" content="Use these functions to create bar plots for antimicrobial resistance analysis. All functions rely on ggplot2 functions." />
 <meta property="og:image" content="https://msberends.github.io/AMR/logo.svg" />
 
@@ -82,7 +82,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.3.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.3.0.9001</span>
       </span>
     </div>
 
@@ -236,61 +236,61 @@
     </div>
 
     <pre class="usage"><span class='fu'>ggplot_rsi</span>(
-  <span class='no'>data</span>,
-  <span class='kw'>position</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>x</span> <span class='kw'>=</span> <span class='st'>"antibiotic"</span>,
-  <span class='kw'>fill</span> <span class='kw'>=</span> <span class='st'>"interpretation"</span>,
-  <span class='kw'>facet</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>breaks</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq</a></span>(<span class='fl'>0</span>, <span class='fl'>1</span>, <span class='fl'>0.1</span>),
-  <span class='kw'>limits</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>translate_ab</span> <span class='kw'>=</span> <span class='st'>"name"</span>,
-  <span class='kw'>combine_SI</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>combine_IR</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>language</span> <span class='kw'>=</span> <span class='fu'><a href='translate.html'>get_locale</a></span>(),
-  <span class='kw'>nrow</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>colours</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='kw'>S</span> <span class='kw'>=</span> <span class='st'>"#61a8ff"</span>, <span class='kw'>SI</span> <span class='kw'>=</span> <span class='st'>"#61a8ff"</span>, <span class='kw'>I</span> <span class='kw'>=</span> <span class='st'>"#61f7ff"</span>, <span class='kw'>IR</span> <span class='kw'>=</span> <span class='st'>"#ff6961"</span>, <span class='kw'>R</span> <span class='kw'>=</span>
+  <span class='kw'>data</span>,
+  position = <span class='kw'>NULL</span>,
+  x = <span class='st'>"antibiotic"</span>,
+  fill = <span class='st'>"interpretation"</span>,
+  facet = <span class='kw'>NULL</span>,
+  breaks = <span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq</a></span>(<span class='fl'>0</span>, <span class='fl'>1</span>, <span class='fl'>0.1</span>),
+  limits = <span class='kw'>NULL</span>,
+  translate_ab = <span class='st'>"name"</span>,
+  combine_SI = <span class='fl'>TRUE</span>,
+  combine_IR = <span class='fl'>FALSE</span>,
+  language = <span class='fu'><a href='translate.html'>get_locale</a></span>(),
+  nrow = <span class='kw'>NULL</span>,
+  colours = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(S = <span class='st'>"#61a8ff"</span>, SI = <span class='st'>"#61a8ff"</span>, I = <span class='st'>"#61f7ff"</span>, IR = <span class='st'>"#ff6961"</span>, R =
     <span class='st'>"#ff6961"</span>),
-  <span class='kw'>datalabels</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>datalabels.size</span> <span class='kw'>=</span> <span class='fl'>2.5</span>,
-  <span class='kw'>datalabels.colour</span> <span class='kw'>=</span> <span class='st'>"gray15"</span>,
-  <span class='kw'>title</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>subtitle</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>caption</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>x.title</span> <span class='kw'>=</span> <span class='st'>"Antimicrobial"</span>,
-  <span class='kw'>y.title</span> <span class='kw'>=</span> <span class='st'>"Proportion"</span>,
-  <span class='no'>...</span>
+  datalabels = <span class='fl'>TRUE</span>,
+  datalabels.size = <span class='fl'>2.5</span>,
+  datalabels.colour = <span class='st'>"gray15"</span>,
+  title = <span class='kw'>NULL</span>,
+  subtitle = <span class='kw'>NULL</span>,
+  caption = <span class='kw'>NULL</span>,
+  x.title = <span class='st'>"Antimicrobial"</span>,
+  y.title = <span class='st'>"Proportion"</span>,
+  <span class='kw'>...</span>
 )
 
 <span class='fu'>geom_rsi</span>(
-  <span class='kw'>position</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>x</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"antibiotic"</span>, <span class='st'>"interpretation"</span>),
-  <span class='kw'>fill</span> <span class='kw'>=</span> <span class='st'>"interpretation"</span>,
-  <span class='kw'>translate_ab</span> <span class='kw'>=</span> <span class='st'>"name"</span>,
-  <span class='kw'>language</span> <span class='kw'>=</span> <span class='fu'><a href='translate.html'>get_locale</a></span>(),
-  <span class='kw'>combine_SI</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>combine_IR</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='no'>...</span>
+  position = <span class='kw'>NULL</span>,
+  x = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"antibiotic"</span>, <span class='st'>"interpretation"</span>),
+  fill = <span class='st'>"interpretation"</span>,
+  translate_ab = <span class='st'>"name"</span>,
+  language = <span class='fu'><a href='translate.html'>get_locale</a></span>(),
+  combine_SI = <span class='fl'>TRUE</span>,
+  combine_IR = <span class='fl'>FALSE</span>,
+  <span class='kw'>...</span>
 )
 
-<span class='fu'>facet_rsi</span>(<span class='kw'>facet</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"interpretation"</span>, <span class='st'>"antibiotic"</span>), <span class='kw'>nrow</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)
+<span class='fu'>facet_rsi</span>(facet = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"interpretation"</span>, <span class='st'>"antibiotic"</span>), nrow = <span class='kw'>NULL</span>)
 
-<span class='fu'>scale_y_percent</span>(<span class='kw'>breaks</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq</a></span>(<span class='fl'>0</span>, <span class='fl'>1</span>, <span class='fl'>0.1</span>), <span class='kw'>limits</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)
+<span class='fu'>scale_y_percent</span>(breaks = <span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq</a></span>(<span class='fl'>0</span>, <span class='fl'>1</span>, <span class='fl'>0.1</span>), limits = <span class='kw'>NULL</span>)
 
 <span class='fu'>scale_rsi_colours</span>(
-  <span class='kw'>colours</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='kw'>S</span> <span class='kw'>=</span> <span class='st'>"#61a8ff"</span>, <span class='kw'>SI</span> <span class='kw'>=</span> <span class='st'>"#61a8ff"</span>, <span class='kw'>I</span> <span class='kw'>=</span> <span class='st'>"#61f7ff"</span>, <span class='kw'>IR</span> <span class='kw'>=</span> <span class='st'>"#ff6961"</span>, <span class='kw'>R</span> <span class='kw'>=</span>
+  colours = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(S = <span class='st'>"#61a8ff"</span>, SI = <span class='st'>"#61a8ff"</span>, I = <span class='st'>"#61f7ff"</span>, IR = <span class='st'>"#ff6961"</span>, R =
     <span class='st'>"#ff6961"</span>)
 )
 
 <span class='fu'>theme_rsi</span>()
 
 <span class='fu'>labels_rsi_count</span>(
-  <span class='kw'>position</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>x</span> <span class='kw'>=</span> <span class='st'>"antibiotic"</span>,
-  <span class='kw'>translate_ab</span> <span class='kw'>=</span> <span class='st'>"name"</span>,
-  <span class='kw'>combine_SI</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>combine_IR</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>datalabels.size</span> <span class='kw'>=</span> <span class='fl'>3</span>,
-  <span class='kw'>datalabels.colour</span> <span class='kw'>=</span> <span class='st'>"gray15"</span>
+  position = <span class='kw'>NULL</span>,
+  x = <span class='st'>"antibiotic"</span>,
+  translate_ab = <span class='st'>"name"</span>,
+  combine_SI = <span class='fl'>TRUE</span>,
+  combine_IR = <span class='fl'>FALSE</span>,
+  datalabels.size = <span class='fl'>3</span>,
+  datalabels.colour = <span class='st'>"gray15"</span>
 )</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -412,79 +412,79 @@ The <a href='lifecycle.html'>lifecycle</a> of this function is <strong>maturing<
 <p>On our website <a href='https://msberends.github.io/AMR'>https://msberends.github.io/AMR</a> you can find <a href='https://msberends.github.io/AMR/articles/AMR.html'>a comprehensive tutorial</a> about how to conduct AMR analysis, the <a href='https://msberends.github.io/AMR/reference'>complete documentation of all functions</a> (which reads a lot easier than here in R) and <a href='https://msberends.github.io/AMR/articles/WHONET.html'>an example analysis using WHONET data</a>. As we would like to better understand the backgrounds and needs of our users, please <a href='https://msberends.github.io/AMR/survey.html'>participate in our survey</a>!</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><span class='kw'>if</span> (<span class='fu'><a href='https://rdrr.io/r/base/library.html'>require</a></span>(<span class='st'>"ggplot2"</span>) <span class='kw'>&amp;</span> <span class='fu'><a href='https://rdrr.io/r/base/library.html'>require</a></span>(<span class='st'>"dplyr"</span>)) {
-
+    <pre class="examples"><span class='co'>if</span> (<span class='fu'><a href='https://rdrr.io/r/base/library.html'>require</a></span>(<span class='st'><a href='http://ggplot2.tidyverse.org'>"ggplot2"</a></span>) <span class='op'>&amp;</span> <span class='fu'><a href='https://rdrr.io/r/base/library.html'>require</a></span>(<span class='st'><a href='https://dplyr.tidyverse.org'>"dplyr"</a></span>)) {
+ 
   <span class='co'># get antimicrobial results for drugs against a UTI:</span>
-  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span>(<span class='no'>example_isolates</span> <span class='kw'>%&gt;%</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='no'>AMX</span>, <span class='no'>NIT</span>, <span class='no'>FOS</span>, <span class='no'>TMP</span>, <span class='no'>CIP</span>)) +
+  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span>(<span class='kw'>example_isolates</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='kw'>AMX</span>, <span class='kw'>NIT</span>, <span class='kw'>FOS</span>, <span class='kw'>TMP</span>, <span class='kw'>CIP</span>)) <span class='op'>+</span>
     <span class='fu'>geom_rsi</span>()
-
+ 
   <span class='co'># prettify the plot using some additional functions:</span>
-  <span class='no'>df</span> <span class='kw'>&lt;-</span> <span class='no'>example_isolates</span> <span class='kw'>%&gt;%</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='no'>AMX</span>, <span class='no'>NIT</span>, <span class='no'>FOS</span>, <span class='no'>TMP</span>, <span class='no'>CIP</span>)
-  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span>(<span class='no'>df</span>) +
-    <span class='fu'>geom_rsi</span>() +
-    <span class='fu'>scale_y_percent</span>() +
-    <span class='fu'>scale_rsi_colours</span>() +
-    <span class='fu'>labels_rsi_count</span>() +
+  <span class='kw'>df</span> <span class='op'>&lt;-</span> <span class='kw'>example_isolates</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='kw'>AMX</span>, <span class='kw'>NIT</span>, <span class='kw'>FOS</span>, <span class='kw'>TMP</span>, <span class='kw'>CIP</span>)
+  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span>(<span class='kw'>df</span>) <span class='op'>+</span>
+    <span class='fu'>geom_rsi</span>() <span class='op'>+</span>
+    <span class='fu'>scale_y_percent</span>() <span class='op'>+</span>
+    <span class='fu'>scale_rsi_colours</span>() <span class='op'>+</span>
+    <span class='fu'>labels_rsi_count</span>() <span class='op'>+</span>
     <span class='fu'>theme_rsi</span>()
-
+ 
   <span class='co'># or better yet, simplify this using the wrapper function - a single command:</span>
-  <span class='no'>example_isolates</span> <span class='kw'>%&gt;%</span>
-    <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='no'>AMX</span>, <span class='no'>NIT</span>, <span class='no'>FOS</span>, <span class='no'>TMP</span>, <span class='no'>CIP</span>) <span class='kw'>%&gt;%</span>
+  <span class='kw'>example_isolates</span> <span class='op'>%&gt;%</span>
+    <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='kw'>AMX</span>, <span class='kw'>NIT</span>, <span class='kw'>FOS</span>, <span class='kw'>TMP</span>, <span class='kw'>CIP</span>) <span class='op'>%&gt;%</span>
     <span class='fu'>ggplot_rsi</span>()
-
+ 
   <span class='co'># get only proportions and no counts:</span>
-  <span class='no'>example_isolates</span> <span class='kw'>%&gt;%</span>
-    <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='no'>AMX</span>, <span class='no'>NIT</span>, <span class='no'>FOS</span>, <span class='no'>TMP</span>, <span class='no'>CIP</span>) <span class='kw'>%&gt;%</span>
-    <span class='fu'>ggplot_rsi</span>(<span class='kw'>datalabels</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
-
+  <span class='kw'>example_isolates</span> <span class='op'>%&gt;%</span>
+    <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='kw'>AMX</span>, <span class='kw'>NIT</span>, <span class='kw'>FOS</span>, <span class='kw'>TMP</span>, <span class='kw'>CIP</span>) <span class='op'>%&gt;%</span>
+    <span class='fu'>ggplot_rsi</span>(datalabels = <span class='fl'>FALSE</span>)
+ 
   <span class='co'># add other ggplot2 parameters as you like:</span>
-  <span class='no'>example_isolates</span> <span class='kw'>%&gt;%</span>
-    <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='no'>AMX</span>, <span class='no'>NIT</span>, <span class='no'>FOS</span>, <span class='no'>TMP</span>, <span class='no'>CIP</span>) <span class='kw'>%&gt;%</span>
-    <span class='fu'>ggplot_rsi</span>(<span class='kw'>width</span> <span class='kw'>=</span> <span class='fl'>0.5</span>,
-               <span class='kw'>colour</span> <span class='kw'>=</span> <span class='st'>"black"</span>,
-               <span class='kw'>size</span> <span class='kw'>=</span> <span class='fl'>1</span>,
-               <span class='kw'>linetype</span> <span class='kw'>=</span> <span class='fl'>2</span>,
-               <span class='kw'>alpha</span> <span class='kw'>=</span> <span class='fl'>0.25</span>)
-
-  <span class='no'>example_isolates</span> <span class='kw'>%&gt;%</span>
-    <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='no'>AMX</span>) <span class='kw'>%&gt;%</span>
-    <span class='fu'>ggplot_rsi</span>(<span class='kw'>colours</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='kw'>SI</span> <span class='kw'>=</span> <span class='st'>"yellow"</span>))
-
+  <span class='kw'>example_isolates</span> <span class='op'>%&gt;%</span>
+    <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='kw'>AMX</span>, <span class='kw'>NIT</span>, <span class='kw'>FOS</span>, <span class='kw'>TMP</span>, <span class='kw'>CIP</span>) <span class='op'>%&gt;%</span>
+    <span class='fu'>ggplot_rsi</span>(width = <span class='fl'>0.5</span>,
+               colour = <span class='st'>"black"</span>,
+               size = <span class='fl'>1</span>,
+               linetype = <span class='fl'>2</span>,
+               alpha = <span class='fl'>0.25</span>)
+ 
+  <span class='kw'>example_isolates</span> <span class='op'>%&gt;%</span>
+    <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='kw'>AMX</span>) <span class='op'>%&gt;%</span>
+    <span class='fu'>ggplot_rsi</span>(colours = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(SI = <span class='st'>"yellow"</span>))
+  
 }
-
-<span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
+  
+<span class='co'>if</span> (<span class='fl'>FALSE</span>) {
 
 <span class='co'># resistance of ciprofloxacine per age group</span>
-<span class='no'>example_isolates</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span>(<span class='kw'>first_isolate</span> <span class='kw'>=</span> <span class='fu'><a href='first_isolate.html'>first_isolate</a></span>(<span class='no'>.</span>)) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span>(<span class='no'>first_isolate</span> <span class='kw'>==</span> <span class='fl'>TRUE</span>,
-         <span class='no'>mo</span> <span class='kw'>==</span> <span class='fu'><a href='as.mo.html'>as.mo</a></span>(<span class='st'>"E. coli"</span>)) <span class='kw'>%&gt;%</span>
+<span class='kw'>example_isolates</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span>(first_isolate = <span class='fu'><a href='first_isolate.html'>first_isolate</a></span>(<span class='kw'>.</span>)) <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span>(<span class='kw'>first_isolate</span> <span class='op'>==</span> <span class='fl'>TRUE</span>,
+         <span class='kw'>mo</span> <span class='op'>==</span> <span class='fu'><a href='as.mo.html'>as.mo</a></span>(<span class='st'>"E. coli"</span>)) <span class='op'>%&gt;%</span>
   <span class='co'># `age_group` is also a function of this package:</span>
-  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span>(<span class='kw'>age_group</span> <span class='kw'>=</span> <span class='fu'><a href='age_groups.html'>age_groups</a></span>(<span class='no'>age</span>)) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='no'>age_group</span>,
-         <span class='no'>CIP</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'>ggplot_rsi</span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='st'>"age_group"</span>)
-
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span>(age_group = <span class='fu'><a href='age_groups.html'>age_groups</a></span>(<span class='kw'>age</span>)) <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='kw'>age_group</span>,
+         <span class='kw'>CIP</span>) <span class='op'>%&gt;%</span>
+  <span class='fu'>ggplot_rsi</span>(x = <span class='st'>"age_group"</span>)
+  
 <span class='co'># for colourblind mode, use divergent colours from the viridis package:</span>
-<span class='no'>example_isolates</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='no'>AMX</span>, <span class='no'>NIT</span>, <span class='no'>FOS</span>, <span class='no'>TMP</span>, <span class='no'>CIP</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'>ggplot_rsi</span>() + <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/scale_viridis.html'>scale_fill_viridis_d</a></span>()
+<span class='kw'>example_isolates</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='kw'>AMX</span>, <span class='kw'>NIT</span>, <span class='kw'>FOS</span>, <span class='kw'>TMP</span>, <span class='kw'>CIP</span>) <span class='op'>%&gt;%</span>
+  <span class='fu'>ggplot_rsi</span>() <span class='op'>+</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/scale_viridis.html'>scale_fill_viridis_d</a></span>()
 <span class='co'># a shorter version which also adjusts data label colours:</span>
-<span class='no'>example_isolates</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='no'>AMX</span>, <span class='no'>NIT</span>, <span class='no'>FOS</span>, <span class='no'>TMP</span>, <span class='no'>CIP</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'>ggplot_rsi</span>(<span class='kw'>colours</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
+<span class='kw'>example_isolates</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='kw'>AMX</span>, <span class='kw'>NIT</span>, <span class='kw'>FOS</span>, <span class='kw'>TMP</span>, <span class='kw'>CIP</span>) <span class='op'>%&gt;%</span>
+  <span class='fu'>ggplot_rsi</span>(colours = <span class='fl'>FALSE</span>)
 
 
 <span class='co'># it also supports groups (don't forget to use the group var on `x` or `facet`):</span>
-<span class='no'>example_isolates</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='no'>hospital_id</span>, <span class='no'>AMX</span>, <span class='no'>NIT</span>, <span class='no'>FOS</span>, <span class='no'>TMP</span>, <span class='no'>CIP</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span>(<span class='no'>hospital_id</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'>ggplot_rsi</span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='st'>"hospital_id"</span>,
-             <span class='kw'>facet</span> <span class='kw'>=</span> <span class='st'>"antibiotic"</span>,
-             <span class='kw'>nrow</span> <span class='kw'>=</span> <span class='fl'>1</span>,
-             <span class='kw'>title</span> <span class='kw'>=</span> <span class='st'>"AMR of Anti-UTI Drugs Per Hospital"</span>,
-             <span class='kw'>x.title</span> <span class='kw'>=</span> <span class='st'>"Hospital"</span>,
-             <span class='kw'>datalabels</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
+<span class='kw'>example_isolates</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='kw'>hospital_id</span>, <span class='kw'>AMX</span>, <span class='kw'>NIT</span>, <span class='kw'>FOS</span>, <span class='kw'>TMP</span>, <span class='kw'>CIP</span>) <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span>(<span class='kw'>hospital_id</span>) <span class='op'>%&gt;%</span>
+  <span class='fu'>ggplot_rsi</span>(x = <span class='st'>"hospital_id"</span>,
+             facet = <span class='st'>"antibiotic"</span>,
+             nrow = <span class='fl'>1</span>,
+             title = <span class='st'>"AMR of Anti-UTI Drugs Per Hospital"</span>,
+             x.title = <span class='st'>"Hospital"</span>,
+             datalabels = <span class='fl'>FALSE</span>)
 }</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
@@ -501,7 +501,7 @@ The <a href='lifecycle.html'>lifecycle</a> of this function is <strong>maturing<
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.9000.</p>
 </div>
 
       </footer>

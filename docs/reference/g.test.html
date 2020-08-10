@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title><em>G</em>-test for Count Data — g.test • AMR (for R)</title>
+<title>G-test for Count Data — g.test • AMR (for R)</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -48,7 +48,7 @@
   <link href="../extra.css" rel="stylesheet">
   <script src="../extra.js"></script>
 
-<meta property="og:title" content="<em>G</em>-test for Count Data — g.test" />
+<meta property="og:title" content="G-test for Count Data — g.test" />
 <meta property="og:description" content="g.test() performs chi-squared contingency table tests and goodness-of-fit tests, just like chisq.test() but is more reliable (1). A G-test can be used to see whether the number of observations in each category fits a theoretical expectation (called a G-test of goodness-of-fit), or to see whether the proportions of one variable are different for different values of the other variable (called a G-test of independence)." />
 <meta property="og:image" content="https://msberends.github.io/AMR/logo.svg" />
 
@@ -82,7 +82,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.3.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.3.0.9001</span>
       </span>
     </div>
 
@@ -235,7 +235,7 @@
     <p><code>g.test()</code> performs chi-squared contingency table tests and goodness-of-fit tests, just like <code><a href='https://rdrr.io/r/stats/chisq.test.html'>chisq.test()</a></code> but is more reliable (1). A <em>G</em>-test can be used to see whether the number of observations in each category fits a theoretical expectation (called a <strong><em>G</em>-test of goodness-of-fit</strong>), or to see whether the proportions of one variable are different for different values of the other variable (called a <strong><em>G</em>-test of independence</strong>).</p>
     </div>
 
-    <pre class="usage"><span class='fu'>g.test</span>(<span class='no'>x</span>, <span class='kw'>y</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>p</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span>(<span class='fl'>1</span>/<span class='fu'><a href='https://rdrr.io/r/base/length.html'>length</a></span>(<span class='no'>x</span>), <span class='fu'><a href='https://rdrr.io/r/base/length.html'>length</a></span>(<span class='no'>x</span>)), <span class='kw'>rescale.p</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
+    <pre class="usage"><span class='fu'>g.test</span>(<span class='kw'>x</span>, y = <span class='kw'>NULL</span>, p = <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span>(<span class='fl'>1</span><span class='op'>/</span><span class='fu'><a href='https://rdrr.io/r/base/length.html'>length</a></span>(<span class='kw'>x</span>), <span class='fu'><a href='https://rdrr.io/r/base/length.html'>length</a></span>(<span class='kw'>x</span>)), rescale.p = <span class='fl'>FALSE</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -319,7 +319,7 @@
 <p>Unlike the exact test of goodness-of-fit (<code><a href='https://rdrr.io/r/stats/fisher.test.html'>fisher.test()</a></code>), the <em>G</em>-test does not directly calculate the probability of obtaining the observed results or something more extreme. Instead, like almost all statistical tests, the <em>G</em>-test has an intermediate step; it uses the data to calculate a test statistic that measures how far the observed data are from the null expectation. You then use a mathematical relationship, in this case the chi-square distribution, to estimate the probability of obtaining that value of the test statistic.</p>
 <p>The <em>G</em>-test uses the log of the ratio of two likelihoods as the test statistic, which is why it is also called a likelihood ratio test or log-likelihood ratio test. The formula to calculate a <em>G</em>-statistic is:</p>
 <p>\(G = 2 * sum(x * log(x / E))\)</p>
-<p>where <code>E</code> are the expected values. Since this is chi-square distributed, the p value can be calculated in <span style="R">R</span> with:</p><pre><span class='no'>p</span> <span class='kw'>&amp;</span><span class='no'>lt</span>;- <span class='kw pkg'>stats</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/r/stats/Chisquare.html'>pchisq</a></span>(<span class='no'>G</span>, <span class='no'>df</span>, <span class='kw'>lower.tail</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
+<p>where <code>E</code> are the expected values. Since this is chi-square distributed, the p value can be calculated in <span style="R">R</span> with:</p><pre><span class='kw'>p</span> <span class='op'>&lt;-</span> <span class='kw'>stats</span>::<span class='fu'><a href='https://rdrr.io/r/stats/Chisquare.html'>pchisq</a></span>(<span class='kw'>G</span>, <span class='kw'>df</span>, lower.tail = <span class='fl'>FALSE</span>)</pre>
 
 <p>where <code>df</code> are the degrees of freedom.</p>
 <p>If there are more than two categories and you want to find out which ones are significantly different from their null expectation, you can use the same method of testing each category vs. the sum of all categories, with the Bonferroni correction. You use <em>G</em>-tests for each category, of course.</p>
@@ -356,8 +356,8 @@ The <a href='lifecycle.html'>lifecycle</a> of this function is <strong>questioni
 <span class='co'># by a single gene with two co-dominant alleles, you would expect a 1:2:1</span>
 <span class='co'># ratio.</span>
 
-<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>772</span>, <span class='fl'>1611</span>, <span class='fl'>737</span>)
-<span class='no'>G</span> <span class='kw'>&lt;-</span> <span class='fu'>g.test</span>(<span class='no'>x</span>, <span class='kw'>p</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span>, <span class='fl'>2</span>, <span class='fl'>1</span>) / <span class='fl'>4</span>)
+<span class='kw'>x</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>772</span>, <span class='fl'>1611</span>, <span class='fl'>737</span>)
+<span class='kw'>G</span> <span class='op'>&lt;-</span> <span class='fu'>g.test</span>(<span class='kw'>x</span>, p = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span>, <span class='fl'>2</span>, <span class='fl'>1</span>) <span class='op'>/</span> <span class='fl'>4</span>)
 <span class='co'># G$p.value = 0.12574.</span>
 
 <span class='co'># There is no significant difference from a 1:2:1 ratio.</span>
@@ -372,12 +372,13 @@ The <a href='lifecycle.html'>lifecycle</a> of this function is <strong>questioni
 <span class='co'># keep the number of right and left-billed birds at a 1:1 ratio. Groth (1992)</span>
 <span class='co'># observed 1752 right-billed and 1895 left-billed crossbills.</span>
 
-<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1752</span>, <span class='fl'>1895</span>)
-<span class='fu'>g.test</span>(<span class='no'>x</span>)
+<span class='kw'>x</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1752</span>, <span class='fl'>1895</span>)
+<span class='fu'>g.test</span>(<span class='kw'>x</span>)
 <span class='co'># p = 0.01787343</span>
 
 <span class='co'># There is a significant difference from a 1:1 ratio.</span>
-<span class='co'># Meaning: there are significantly more left-billed birds.</span></pre>
+<span class='co'># Meaning: there are significantly more left-billed birds.</span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -393,7 +394,7 @@ The <a href='lifecycle.html'>lifecycle</a> of this function is <strong>questioni
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.9000.</p>
 </div>
 
       </footer>

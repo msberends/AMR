@@ -82,7 +82,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.3.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.3.0.9001</span>
       </span>
     </div>
 
@@ -235,7 +235,7 @@
     <p>Split ages into age groups defined by the <code>split</code> parameter. This allows for easier demographic (antimicrobial resistance) analysis.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>age_groups</span>(<span class='no'>x</span>, <span class='kw'>split_at</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>12</span>, <span class='fl'>25</span>, <span class='fl'>55</span>, <span class='fl'>75</span>), <span class='kw'>na.rm</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
+    <pre class="usage"><span class='fu'>age_groups</span>(<span class='kw'>x</span>, split_at = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>12</span>, <span class='fl'>25</span>, <span class='fl'>55</span>, <span class='fl'>75</span>), na.rm = <span class='fl'>FALSE</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -287,36 +287,36 @@ The <a href='lifecycle.html'>lifecycle</a> of this function is <strong>stable</s
     <div class='dont-index'><p>To determine ages, based on one or more reference dates, use the <code><a href='age.html'>age()</a></code> function.</p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><span class='no'>ages</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>3</span>, <span class='fl'>8</span>, <span class='fl'>16</span>, <span class='fl'>54</span>, <span class='fl'>31</span>, <span class='fl'>76</span>, <span class='fl'>101</span>, <span class='fl'>43</span>, <span class='fl'>21</span>)
+    <pre class="examples"><span class='kw'>ages</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>3</span>, <span class='fl'>8</span>, <span class='fl'>16</span>, <span class='fl'>54</span>, <span class='fl'>31</span>, <span class='fl'>76</span>, <span class='fl'>101</span>, <span class='fl'>43</span>, <span class='fl'>21</span>)
 
 <span class='co'># split into 0-49 and 50+</span>
-<span class='fu'>age_groups</span>(<span class='no'>ages</span>, <span class='fl'>50</span>)
+<span class='fu'>age_groups</span>(<span class='kw'>ages</span>, <span class='fl'>50</span>)
 
 <span class='co'># split into 0-19, 20-49 and 50+</span>
-<span class='fu'>age_groups</span>(<span class='no'>ages</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>20</span>, <span class='fl'>50</span>))
+<span class='fu'>age_groups</span>(<span class='kw'>ages</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>20</span>, <span class='fl'>50</span>))
 
 <span class='co'># split into groups of ten years</span>
-<span class='fu'>age_groups</span>(<span class='no'>ages</span>, <span class='fl'>1</span>:<span class='fl'>10</span> * <span class='fl'>10</span>)
-<span class='fu'>age_groups</span>(<span class='no'>ages</span>, <span class='kw'>split_at</span> <span class='kw'>=</span> <span class='st'>"tens"</span>)
+<span class='fu'>age_groups</span>(<span class='kw'>ages</span>, <span class='fl'>1</span><span class='op'>:</span><span class='fl'>10</span> <span class='op'>*</span> <span class='fl'>10</span>)
+<span class='fu'>age_groups</span>(<span class='kw'>ages</span>, split_at = <span class='st'>"tens"</span>)
 
 <span class='co'># split into groups of five years</span>
-<span class='fu'>age_groups</span>(<span class='no'>ages</span>, <span class='fl'>1</span>:<span class='fl'>20</span> * <span class='fl'>5</span>)
-<span class='fu'>age_groups</span>(<span class='no'>ages</span>, <span class='kw'>split_at</span> <span class='kw'>=</span> <span class='st'>"fives"</span>)
+<span class='fu'>age_groups</span>(<span class='kw'>ages</span>, <span class='fl'>1</span><span class='op'>:</span><span class='fl'>20</span> <span class='op'>*</span> <span class='fl'>5</span>)
+<span class='fu'>age_groups</span>(<span class='kw'>ages</span>, split_at = <span class='st'>"fives"</span>)
 
 <span class='co'># split specifically for children</span>
-<span class='fu'>age_groups</span>(<span class='no'>ages</span>, <span class='st'>"children"</span>)
+<span class='fu'>age_groups</span>(<span class='kw'>ages</span>, <span class='st'>"children"</span>)
 <span class='co'># same:</span>
-<span class='fu'>age_groups</span>(<span class='no'>ages</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span>, <span class='fl'>2</span>, <span class='fl'>4</span>, <span class='fl'>6</span>, <span class='fl'>13</span>, <span class='fl'>17</span>))
+<span class='fu'>age_groups</span>(<span class='kw'>ages</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span>, <span class='fl'>2</span>, <span class='fl'>4</span>, <span class='fl'>6</span>, <span class='fl'>13</span>, <span class='fl'>17</span>))
 
-<span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
+<span class='co'>if</span> (<span class='fl'>FALSE</span>) {
 <span class='co'># resistance of ciprofloxacine per age group</span>
-<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>dplyr</span>)
-<span class='no'>example_isolates</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='first_isolate.html'>filter_first_isolate</a></span>() <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span>(<span class='no'>mo</span> <span class='kw'>==</span> <span class='fu'><a href='as.mo.html'>as.mo</a></span>(<span class='st'>"E. coli"</span>)) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span>(<span class='kw'>age_group</span> <span class='kw'>=</span> <span class='fu'>age_groups</span>(<span class='no'>age</span>)) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='no'>age_group</span>, <span class='no'>CIP</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='ggplot_rsi.html'>ggplot_rsi</a></span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='st'>"age_group"</span>)
+<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='kw'><a href='https://dplyr.tidyverse.org'>dplyr</a></span>)
+<span class='kw'>example_isolates</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='first_isolate.html'>filter_first_isolate</a></span>() <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span>(<span class='kw'>mo</span> <span class='op'>==</span> <span class='fu'><a href='as.mo.html'>as.mo</a></span>(<span class='st'>"E. coli"</span>)) <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span>(age_group = <span class='fu'>age_groups</span>(<span class='kw'>age</span>)) <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='kw'>age_group</span>, <span class='kw'>CIP</span>) <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='ggplot_rsi.html'>ggplot_rsi</a></span>(x = <span class='st'>"age_group"</span>)
 }</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
@@ -333,7 +333,7 @@ The <a href='lifecycle.html'>lifecycle</a> of this function is <strong>stable</s
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.9000.</p>
 </div>
 
       </footer>

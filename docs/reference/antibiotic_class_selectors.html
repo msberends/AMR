@@ -82,7 +82,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.3.0.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.3.0.9001</span>
       </span>
     </div>
 
@@ -235,7 +235,7 @@
     <p>Use these selection helpers inside any function that allows <a href='https://tidyselect.r-lib.org/reference/language.html'>Tidyverse selections</a>, like <code><a href='https://dplyr.tidyverse.org/reference/select.html'>dplyr::select()</a></code> or <code><a href='https://tidyr.tidyverse.org/reference/pivot_longer.html'>tidyr::pivot_longer()</a></code>. They help to select the columns of antibiotics that are of a specific antibiotic class, without the need to define the columns or antibiotic abbreviations.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>ab_class</span>(<span class='no'>ab_class</span>)
+    <pre class="usage"><span class='fu'>ab_class</span>(<span class='kw'>ab_class</span>)
 
 <span class='fu'>aminoglycosides</span>()
 
@@ -281,32 +281,32 @@
     <div class='dont-index'><p><code><a href='filter_ab_class.html'>filter_ab_class()</a></code> for the <code><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter()</a></code> equivalent.</p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
-  <span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>dplyr</span>)
+    <pre class="examples"><span class='co'>if</span> (<span class='fl'>FALSE</span>) {
+  <span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='kw'><a href='https://dplyr.tidyverse.org'>dplyr</a></span>)
 
   <span class='co'># this will select columns 'IPM' (imipenem) and 'MEM' (meropenem):</span>
-  <span class='no'>example_isolates</span> <span class='kw'>%&gt;%</span>
+  <span class='kw'>example_isolates</span> <span class='op'>%&gt;%</span> 
     <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='fu'>carbapenems</span>())
-
+    
   <span class='co'># this will select columns 'mo', 'AMK', 'GEN', 'KAN' and 'TOB':</span>
-  <span class='no'>example_isolates</span> <span class='kw'>%&gt;%</span>
-    <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='no'>mo</span>, <span class='fu'>aminoglycosides</span>())
-
+  <span class='kw'>example_isolates</span> <span class='op'>%&gt;%</span> 
+    <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='kw'>mo</span>, <span class='fu'>aminoglycosides</span>())
+    
   <span class='co'># this will select columns 'mo' and all antimycobacterial drugs ('RIF'):</span>
-  <span class='no'>example_isolates</span> <span class='kw'>%&gt;%</span>
-    <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='no'>mo</span>, <span class='fu'>ab_class</span>(<span class='st'>"mycobact"</span>))
-
-
+  <span class='kw'>example_isolates</span> <span class='op'>%&gt;%</span> 
+    <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='kw'>mo</span>, <span class='fu'>ab_class</span>(<span class='st'>"mycobact"</span>))
+    
+    
   <span class='co'># get bug/drug combinations for only macrolides in Gram-positives:</span>
-  <span class='no'>example_isolates</span> <span class='kw'>%&gt;%</span>
-    <span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span>(<span class='fu'><a href='mo_property.html'>mo_gramstain</a></span>(<span class='no'>mo</span>) <span class='kw'>%like%</span> <span class='st'>"pos"</span>) <span class='kw'>%&gt;%</span>
-    <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='no'>mo</span>, <span class='fu'>macrolides</span>()) <span class='kw'>%&gt;%</span>
-    <span class='fu'><a href='bug_drug_combinations.html'>bug_drug_combinations</a></span>() <span class='kw'>%&gt;%</span>
+  <span class='kw'>example_isolates</span> <span class='op'>%&gt;%</span> 
+    <span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span>(<span class='fu'><a href='mo_property.html'>mo_gramstain</a></span>(<span class='kw'>mo</span>) <span class='op'>%like%</span> <span class='st'>"pos"</span>) <span class='op'>%&gt;%</span> 
+    <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='kw'>mo</span>, <span class='fu'>macrolides</span>()) <span class='op'>%&gt;%</span> 
+    <span class='fu'><a href='bug_drug_combinations.html'>bug_drug_combinations</a></span>() <span class='op'>%&gt;%</span>
     <span class='fu'><a href='https://rdrr.io/r/base/format.html'>format</a></span>()
-
-
-  <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span>(<span class='kw'>irrelevant</span> <span class='kw'>=</span> <span class='st'>"value"</span>,
-             <span class='kw'>J01CA01</span> <span class='kw'>=</span> <span class='st'>"S"</span>) <span class='kw'>%&gt;%</span>   <span class='co'># ATC code of ampicillin</span>
+    
+    
+  <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span>(irrelevant = <span class='st'>"value"</span>,
+             J01CA01 = <span class='st'>"S"</span>) <span class='op'>%&gt;%</span>   <span class='co'># ATC code of ampicillin</span>
     <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='fu'>penicillins</span>())         <span class='co'># so the 'J01CA01' column is selected</span>
 
 }</pre>
@@ -325,7 +325,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.9000.</p>
 </div>
 
       </footer>

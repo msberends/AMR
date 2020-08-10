@@ -4,7 +4,7 @@
 > <span class="fa fa-clipboard-list" style="color: #128f76; font-size: 20pt; margin-right: 5px;"></span> **PLEASE TAKE PART IN OUR SURVEY!**  
 > Since you are one of our users, we would like to know how you use the package and what it brought you or your organisation. **If you have a minute, please [anonymously fill in this short questionnaire](./survey.html)**. Your valuable input will help to improve the package and its functionalities. You can answer the open questions in either English, Spanish, French, Dutch, or German. Thank you very much in advance!
 > <br>
-> <a class="btn btn-info btn-amr">Take me to the 5-min survey!</a>
+> <a class="btn btn-info btn-amr" href="./survey.html">Take me to the 5-min survey!</a>
 
 ### What is `AMR` (for R)?
 

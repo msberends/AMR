@@ -82,7 +82,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.3.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.3.0.9001</span>
       </span>
     </div>
 
@@ -235,9 +235,9 @@
     <p>This transforms a vector to a new class <code>mic</code>, which is an ordered <code><a href='https://rdrr.io/r/base/factor.html'>factor</a></code> with valid MIC values as levels. Invalid MIC values will be translated as <code>NA</code> with a warning.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>as.mic</span>(<span class='no'>x</span>, <span class='kw'>na.rm</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
+    <pre class="usage"><span class='fu'>as.mic</span>(<span class='kw'>x</span>, na.rm = <span class='fl'>FALSE</span>)
 
-<span class='fu'>is.mic</span>(<span class='no'>x</span>)</pre>
+<span class='fu'>is.mic</span>(<span class='kw'>x</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -275,24 +275,24 @@ The <a href='lifecycle.html'>lifecycle</a> of this function is <strong>stable</s
     <div class='dont-index'><p><code><a href='as.rsi.html'>as.rsi()</a></code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><span class='no'>mic_data</span> <span class='kw'>&lt;-</span> <span class='fu'>as.mic</span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"&gt;=32"</span>, <span class='st'>"1.0"</span>, <span class='st'>"1"</span>, <span class='st'>"1.00"</span>, <span class='fl'>8</span>, <span class='st'>"&lt;=0.128"</span>, <span class='st'>"8"</span>, <span class='st'>"16"</span>, <span class='st'>"16"</span>))
-<span class='fu'>is.mic</span>(<span class='no'>mic_data</span>)
+    <pre class="examples"><span class='kw'>mic_data</span> <span class='op'>&lt;-</span> <span class='fu'>as.mic</span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"&gt;=32"</span>, <span class='st'>"1.0"</span>, <span class='st'>"1"</span>, <span class='st'>"1.00"</span>, <span class='fl'>8</span>, <span class='st'>"&lt;=0.128"</span>, <span class='st'>"8"</span>, <span class='st'>"16"</span>, <span class='st'>"16"</span>))
+<span class='fu'>is.mic</span>(<span class='kw'>mic_data</span>)
 
 <span class='co'># this can also coerce combined MIC/RSI values:</span>
 <span class='fu'>as.mic</span>(<span class='st'>"&lt;=0.002; S"</span>) <span class='co'># will return &lt;=0.002</span>
 
 <span class='co'># interpret MIC values</span>
-<span class='fu'><a href='as.rsi.html'>as.rsi</a></span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='fu'>as.mic</span>(<span class='fl'>2</span>),
-       <span class='kw'>mo</span> <span class='kw'>=</span> <span class='fu'><a href='as.mo.html'>as.mo</a></span>(<span class='st'>"S. pneumoniae"</span>),
-       <span class='kw'>ab</span> <span class='kw'>=</span> <span class='st'>"AMX"</span>,
-       <span class='kw'>guideline</span> <span class='kw'>=</span> <span class='st'>"EUCAST"</span>)
-<span class='fu'><a href='as.rsi.html'>as.rsi</a></span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='fu'>as.mic</span>(<span class='fl'>4</span>),
-       <span class='kw'>mo</span> <span class='kw'>=</span> <span class='fu'><a href='as.mo.html'>as.mo</a></span>(<span class='st'>"S. pneumoniae"</span>),
-       <span class='kw'>ab</span> <span class='kw'>=</span> <span class='st'>"AMX"</span>,
-       <span class='kw'>guideline</span> <span class='kw'>=</span> <span class='st'>"EUCAST"</span>)
+<span class='fu'><a href='as.rsi.html'>as.rsi</a></span>(x = <span class='fu'>as.mic</span>(<span class='fl'>2</span>),
+       mo = <span class='fu'><a href='as.mo.html'>as.mo</a></span>(<span class='st'>"S. pneumoniae"</span>),
+       ab = <span class='st'>"AMX"</span>,
+       guideline = <span class='st'>"EUCAST"</span>)
+<span class='fu'><a href='as.rsi.html'>as.rsi</a></span>(x = <span class='fu'>as.mic</span>(<span class='fl'>4</span>),
+       mo = <span class='fu'><a href='as.mo.html'>as.mo</a></span>(<span class='st'>"S. pneumoniae"</span>),
+       ab = <span class='st'>"AMX"</span>,
+       guideline = <span class='st'>"EUCAST"</span>)
 
-<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>mic_data</span>)
-<span class='fu'><a href='https://rdrr.io/r/graphics/barplot.html'>barplot</a></span>(<span class='no'>mic_data</span>)</pre>
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span>(<span class='kw'>mic_data</span>)
+<span class='fu'><a href='https://rdrr.io/r/graphics/barplot.html'>barplot</a></span>(<span class='kw'>mic_data</span>)</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -308,7 +308,7 @@ The <a href='lifecycle.html'>lifecycle</a> of this function is <strong>stable</s
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.9000.</p>
 </div>
 
       </footer>

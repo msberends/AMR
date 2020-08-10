@@ -82,7 +82,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.3.0.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.3.0.9001</span>
       </span>
     </div>
 
@@ -235,31 +235,31 @@
     <p>Use these functions to return a specific property of an antibiotic from the <a href='antibiotics.html'>antibiotics</a> data set. All input values will be evaluated internally with <code><a href='as.ab.html'>as.ab()</a></code>.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>ab_name</span>(<span class='no'>x</span>, <span class='kw'>language</span> <span class='kw'>=</span> <span class='fu'><a href='translate.html'>get_locale</a></span>(), <span class='kw'>tolower</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>...</span>)
+    <pre class="usage"><span class='fu'>ab_name</span>(<span class='kw'>x</span>, language = <span class='fu'><a href='translate.html'>get_locale</a></span>(), tolower = <span class='fl'>FALSE</span>, <span class='kw'>...</span>)
 
-<span class='fu'>ab_atc</span>(<span class='no'>x</span>, <span class='no'>...</span>)
+<span class='fu'>ab_atc</span>(<span class='kw'>x</span>, <span class='kw'>...</span>)
 
-<span class='fu'>ab_cid</span>(<span class='no'>x</span>, <span class='no'>...</span>)
+<span class='fu'>ab_cid</span>(<span class='kw'>x</span>, <span class='kw'>...</span>)
 
-<span class='fu'>ab_synonyms</span>(<span class='no'>x</span>, <span class='no'>...</span>)
+<span class='fu'>ab_synonyms</span>(<span class='kw'>x</span>, <span class='kw'>...</span>)
 
-<span class='fu'>ab_tradenames</span>(<span class='no'>x</span>, <span class='no'>...</span>)
+<span class='fu'>ab_tradenames</span>(<span class='kw'>x</span>, <span class='kw'>...</span>)
 
-<span class='fu'>ab_group</span>(<span class='no'>x</span>, <span class='kw'>language</span> <span class='kw'>=</span> <span class='fu'><a href='translate.html'>get_locale</a></span>(), <span class='no'>...</span>)
+<span class='fu'>ab_group</span>(<span class='kw'>x</span>, language = <span class='fu'><a href='translate.html'>get_locale</a></span>(), <span class='kw'>...</span>)
 
-<span class='fu'>ab_atc_group1</span>(<span class='no'>x</span>, <span class='kw'>language</span> <span class='kw'>=</span> <span class='fu'><a href='translate.html'>get_locale</a></span>(), <span class='no'>...</span>)
+<span class='fu'>ab_atc_group1</span>(<span class='kw'>x</span>, language = <span class='fu'><a href='translate.html'>get_locale</a></span>(), <span class='kw'>...</span>)
 
-<span class='fu'>ab_atc_group2</span>(<span class='no'>x</span>, <span class='kw'>language</span> <span class='kw'>=</span> <span class='fu'><a href='translate.html'>get_locale</a></span>(), <span class='no'>...</span>)
+<span class='fu'>ab_atc_group2</span>(<span class='kw'>x</span>, language = <span class='fu'><a href='translate.html'>get_locale</a></span>(), <span class='kw'>...</span>)
 
-<span class='fu'>ab_loinc</span>(<span class='no'>x</span>, <span class='no'>...</span>)
+<span class='fu'>ab_loinc</span>(<span class='kw'>x</span>, <span class='kw'>...</span>)
 
-<span class='fu'>ab_ddd</span>(<span class='no'>x</span>, <span class='kw'>administration</span> <span class='kw'>=</span> <span class='st'>"oral"</span>, <span class='kw'>units</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>...</span>)
+<span class='fu'>ab_ddd</span>(<span class='kw'>x</span>, administration = <span class='st'>"oral"</span>, units = <span class='fl'>FALSE</span>, <span class='kw'>...</span>)
 
-<span class='fu'>ab_info</span>(<span class='no'>x</span>, <span class='kw'>language</span> <span class='kw'>=</span> <span class='fu'><a href='translate.html'>get_locale</a></span>(), <span class='no'>...</span>)
+<span class='fu'>ab_info</span>(<span class='kw'>x</span>, language = <span class='fu'><a href='translate.html'>get_locale</a></span>(), <span class='kw'>...</span>)
 
-<span class='fu'>ab_url</span>(<span class='no'>x</span>, <span class='kw'>open</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>...</span>)
+<span class='fu'>ab_url</span>(<span class='kw'>x</span>, open = <span class='fl'>FALSE</span>, <span class='kw'>...</span>)
 
-<span class='fu'>ab_property</span>(<span class='no'>x</span>, <span class='kw'>property</span> <span class='kw'>=</span> <span class='st'>"name"</span>, <span class='kw'>language</span> <span class='kw'>=</span> <span class='fu'><a href='translate.html'>get_locale</a></span>(), <span class='no'>...</span>)</pre>
+<span class='fu'>ab_property</span>(<span class='kw'>x</span>, property = <span class='st'>"name"</span>, language = <span class='fu'><a href='translate.html'>get_locale</a></span>(), <span class='kw'>...</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -348,15 +348,15 @@ The <a href='lifecycle.html'>lifecycle</a> of this function is <strong>stable</s
 <span class='fu'>ab_url</span>(<span class='st'>"AMX"</span>)        <span class='co'># link to the official WHO page</span>
 
 <span class='co'># smart lowercase tranformation</span>
-<span class='fu'>ab_name</span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"AMC"</span>, <span class='st'>"PLB"</span>))  <span class='co'># "Amoxicillin/clavulanic acid" "Polymyxin B"</span>
-<span class='fu'>ab_name</span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"AMC"</span>, <span class='st'>"PLB"</span>),
-        <span class='kw'>tolower</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)       <span class='co'># "amoxicillin/clavulanic acid" "polymyxin B"</span>
+<span class='fu'>ab_name</span>(x = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"AMC"</span>, <span class='st'>"PLB"</span>))  <span class='co'># "Amoxicillin/clavulanic acid" "Polymyxin B"</span>
+<span class='fu'>ab_name</span>(x = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"AMC"</span>, <span class='st'>"PLB"</span>),
+        tolower = <span class='fl'>TRUE</span>)       <span class='co'># "amoxicillin/clavulanic acid" "polymyxin B"</span>
 
 <span class='co'># defined daily doses (DDD)</span>
 <span class='fu'>ab_ddd</span>(<span class='st'>"AMX"</span>, <span class='st'>"oral"</span>)               <span class='co'>#  1</span>
-<span class='fu'>ab_ddd</span>(<span class='st'>"AMX"</span>, <span class='st'>"oral"</span>, <span class='kw'>units</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>) <span class='co'># "g"</span>
+<span class='fu'>ab_ddd</span>(<span class='st'>"AMX"</span>, <span class='st'>"oral"</span>, units = <span class='fl'>TRUE</span>) <span class='co'># "g"</span>
 <span class='fu'>ab_ddd</span>(<span class='st'>"AMX"</span>, <span class='st'>"iv"</span>)                 <span class='co'>#  1</span>
-<span class='fu'>ab_ddd</span>(<span class='st'>"AMX"</span>, <span class='st'>"iv"</span>, <span class='kw'>units</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)   <span class='co'># "g"</span>
+<span class='fu'>ab_ddd</span>(<span class='st'>"AMX"</span>, <span class='st'>"iv"</span>, units = <span class='fl'>TRUE</span>)   <span class='co'># "g"</span>
 
 <span class='fu'>ab_info</span>(<span class='st'>"AMX"</span>)       <span class='co'># all properties as a list</span>
 
@@ -388,7 +388,7 @@ The <a href='lifecycle.html'>lifecycle</a> of this function is <strong>stable</s
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.9000.</p>
 </div>
 
       </footer>

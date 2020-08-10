@@ -24,6 +24,8 @@ knitr::opts_chunk$set(
 )
 ```
 
+**READ ALL VIGNETTES [ON OUR WEBSITE](https://msberends.github.io/AMR/articles/)**
+
 # Welcome to the AMR package
 
 `AMR` is a free, open-source and independent R package to simplify the analysis and prediction of Antimicrobial Resistance (AMR) and to work with microbial and antimicrobial data and properties, by using evidence-based methods. **Our aim is to provide a standard** for clean and reproducible antimicrobial resistance data analysis, that can therefore empower epidemiological analyses to continuously enable surveillance and treatment evaluation in any setting.
