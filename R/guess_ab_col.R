@@ -141,7 +141,7 @@ get_column_abx <- function(x,
   x <- x[, x_columns, drop = FALSE] # without drop = TRUE, x will become a vector when x_columns is length 1
   
   df_trans <- data.frame(colnames = colnames(x),
-                         abcode = suppressWarnings(as.ab(colnames(x))))
+                         abcode = suppressWarnings(as.ab(colnames(x), info = FALSE)))
   df_trans <- df_trans[!is.na(df_trans$abcode), ]
   x <- as.character(df_trans$colnames)
   names(x) <- df_trans$abcode
@@ -150,7 +150,7 @@ get_column_abx <- function(x,
   # such as get_column_abx(example_isolates %>% rename(thisone = AMX), amox = "thisone")
   dots <- list(...)
   if (length(dots) > 0) {
-    newnames <- suppressWarnings(as.ab(names(dots)))
+    newnames <- suppressWarnings(as.ab(names(dots), info = FALSE))
     if (any(is.na(newnames))) {
       warning("Invalid antibiotic reference(s): ", toString(names(dots)[is.na(newnames)]),
               call. = FALSE, immediate. = TRUE)

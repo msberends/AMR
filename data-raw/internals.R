@@ -81,3 +81,5 @@ write.table(dplyr::mutate_if(antibiotics, ~!is.numeric(.), as.character),
             "data-raw/antibiotics.txt", sep = "\t", na = "", row.names = FALSE)
 write.table(dplyr::mutate_all(antivirals, as.character),
             "data-raw/antivirals.txt", sep = "\t", na = "", row.names = FALSE)
+write.table(intrinsic_resistant,
+            "data-raw/intrinsic_resistant.txt", sep = "\t", na = "", row.names = FALSE)

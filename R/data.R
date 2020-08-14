@@ -70,7 +70,7 @@
 #' European Commission Public Health PHARMACEUTICALS - COMMUNITY REGISTER: <http://ec.europa.eu/health/documents/community-register/html/atc.htm>
 #' @inheritSection WHOCC WHOCC
 #' @inheritSection AMR Read more on our website!
-#' @seealso [microorganisms]
+#' @seealso [microorganisms], [intrinsic_resistant]
 "antibiotics"
 
 #' @rdname antibiotics
@@ -119,7 +119,7 @@
 #'
 #' Leibniz Institute DSMZ-German Collection of Microorganisms and Cell Cultures, Germany, Prokaryotic Nomenclature Up-to-Date, <https://www.dsmz.de/services/online-tools/prokaryotic-nomenclature-up-to-date> and <https://lpsn.dsmz.de> (check included version with [catalogue_of_life_version()]).
 #' @inheritSection AMR Read more on our website!
-#' @seealso [as.mo()], [mo_property()], [microorganisms.codes]
+#' @seealso [as.mo()], [mo_property()], [microorganisms.codes], [intrinsic_resistant]
 "microorganisms"
 
 catalogue_of_life <- list(
@@ -235,4 +235,25 @@ catalogue_of_life <- list(
 #' - `uti`\cr A logical value (`TRUE`/`FALSE`) to indicate whether the rule applies to a urinary tract infection (UTI)
 #' @details The repository of this `AMR` package contains a file comprising this exact data set: <https://github.com/msberends/AMR/blob/master/data-raw/rsi_translation.txt>. This file **allows for machine reading EUCAST and CLSI guidelines**, which is almost impossible with the Excel and PDF files distributed by EUCAST and CLSI. The file is updated automatically.
 #' @inheritSection AMR Read more on our website!
+#' @seealso [intrinsic_resistant]
 "rsi_translation"
+
+#' Data set with bacterial intrinsic resistance
+#'
+#' Data set containing defined intrinsic resistance by EUCAST of all bug-drug combinations.
+#' @format A [`data.frame`] with `r format(nrow(intrinsic_resistant), big.mark = ",")` observations and `r ncol(intrinsic_resistant)` variables:
+#' - `microorganism`\cr Name of the microorganism
+#' - `antibiotic`\cr Name of the antibiotic drug
+#' @details The repository of this `AMR` package contains a file comprising this exact data set: <https://github.com/msberends/AMR/blob/master/data-raw/intrinsic_resistant.txt>. This file **allows for machine reading EUCAST guidelines about intrinsic resistance**, which is almost impossible with the Excel and PDF files distributed by EUCAST. The file is updated automatically.
+#' 
+#' This data set is based on 'EUCAST Expert Rules, Intrinsic Resistance and Exceptional Phenotypes', version `r EUCAST_VERSION_EXPERT_RULES`.
+#' @inheritSection AMR Read more on our website!
+#' @examples
+#' if (require("dplyr")) {
+#'   intrinsic_resistant %>%
+#'     filter(antibiotic == "Vancomycin", microorganism %like% "Enterococcus") %>% 
+#'     pull(microorganism)
+#'   # [1] "Enterococcus casseliflavus" "Enterococcus gallinarum"
+#' }
+#' @seealso [intrinsic_resistant]
+"intrinsic_resistant"

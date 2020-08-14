@@ -375,22 +375,20 @@ exec_as.mo <- function(x,
     x <- data.frame(fullname_lower = tolower(x), stringsAsFactors = FALSE) %>% 
       left_join_MO_lookup(by = "fullname_lower") %>% 
       pull(property)
-    # x <- reference_data_to_use[data.table(fullname_lower = tolower(x)),
-    #                            on = "fullname_lower",
-    #                            ..property][[1]]
     
+  } else if (all(x %in% reference_data_to_use$fullname)) {
+    # we need special treatment for very prevalent full names, they are likely!
+    # e.g. as.mo("Staphylococcus aureus")
+    x <- data.frame(fullname = x, stringsAsFactors = FALSE) %>% 
+      left_join_MO_lookup(by = "fullname") %>% 
+      pull(property)
+
   } else if (all(toupper(x) %in% microorganisms.codes$code)) {
     # commonly used MO codes
     x <- data.frame(code = toupper(x), stringsAsFactors = FALSE) %>%
       left_join(microorganisms.codes, by = "code") %>%
       left_join_MO_lookup(by = "mo") %>%
       pull(property)
-    # y <- as.data.table(microorganisms.codes)[data.table(code = toupper(x)),
-    #                                               on = "code", ]
-    # 
-    # x <- reference_data_to_use[data.table(mo = y[["mo"]]),
-    #                            on = "mo",
-    #                            ..property][[1]]
     
   } else if (!all(x %in% microorganisms[, property])) {
     

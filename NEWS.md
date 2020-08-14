@@ -1,5 +1,18 @@
-# AMR 1.3.0.9001
-## <small>Last updated: 10 August 2020</small>
+# AMR 1.3.0.9002
+## <small>Last updated: 14 August 2020</small>
+
+### New
+* Data set `intrinsic_resistant`. This data set contains all bug-drug combinations where the 'bug' is intrinsic resistant to the 'drug' according to the latest EUCAST insights. It contains just two columns: `microorganism` and `antibiotic`.
+
+  Curious about which enterococci are actually intrinsic resistant to vancomycin?
+  ```r
+  library(AMR)
+  library(dplyr)
+  intrinsic_resistant %>%
+    filter(antibiotic == "Vancomycin", microorganism %like% "Enterococcus") %>% 
+    pull(microorganism)
+  # [1] "Enterococcus casseliflavus" "Enterococcus gallinarum"   
+  ```
 
 ### Changed
 * Support for using `dplyr`'s `across()` in `as.rsi()` to interpret MIC values or disk zone diameters, that now also automatically determines the column with microorganism names or codes.
@@ -8,10 +21,12 @@
   your_data %>% mutate_if(is.mic, as.rsi)
   your_data %>% mutate_if(is.disk, as.rsi)
   
-   # since dplyr 1.0.0
-   your_data %>% mutate(across(where(is.mic), as.rsi))
+  # since dplyr 1.0.0
+  your_data %>% mutate(across(where(is.mic), as.rsi))
   your_data %>% mutate(across(where(is.disk), as.rsi))
   ```
+* Improved overall speed by tweaking joining functions
+
 
 # AMR 1.3.0
 

@@ -668,7 +668,13 @@ eucast_rules <- function(x,
   
   # Official EUCAST rules ---------------------------------------------------
   eucast_notification_shown <- FALSE
-  eucast_rules_df <- eucast_rules_file # internal data file
+  if (!is.null(list(...)$eucast_rules_df)) {
+    # this allows: eucast_rules(x, eucast_rules_df = AMR:::eucast_rules_file %>% filter(is.na(have_these_values)))
+    eucast_rules_df <- list(...)$eucast_rules_df
+  } else {
+    # otherwise internal data file, created in data-raw/internals.R
+    eucast_rules_df <- eucast_rules_file
+  }
   for (i in seq_len(nrow(eucast_rules_df))) {
     
     rule_previous <- eucast_rules_df[max(1, i - 1), "reference.rule"]

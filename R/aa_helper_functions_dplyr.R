@@ -248,9 +248,9 @@ inner_join <- function(x, y, by = NULL, suffix = c(".x", ".y")) {
   join_worker(x = x, y = y, by = by, suffix = suffix, sort = FALSE)
 }
 
-left_join <- function(x, y, by = NULL, suffix = c(".x", ".y")) {
-  join_worker(x = x, y = y, by = by, suffix = suffix, all.x = TRUE)
-}
+# left_join <- function(x, y, by = NULL, suffix = c(".x", ".y")) {
+#   join_worker(x = x, y = y, by = by, suffix = suffix, all.x = TRUE)
+# }
 
 right_join <- function(x, y, by = NULL, suffix = c(".x", ".y")) {
   join_worker(x = x, y = y, by = by, suffix = suffix, all.y = TRUE)

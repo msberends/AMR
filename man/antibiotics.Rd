@@ -93,6 +93,6 @@ On our website \url{https://msberends.github.io/AMR} you can find \href{https://
 }
 
 \seealso{
-\link{microorganisms}
+\link{microorganisms}, \link{intrinsic_resistant}
 }
 \keyword{datasets}

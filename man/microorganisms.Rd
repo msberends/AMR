@@ -78,6 +78,6 @@ On our website \url{https://msberends.github.io/AMR} you can find \href{https://
 }
 
 \seealso{
-\code{\link[=as.mo]{as.mo()}}, \code{\link[=mo_property]{mo_property()}}, \link{microorganisms.codes}
+\code{\link[=as.mo]{as.mo()}}, \code{\link[=mo_property]{mo_property()}}, \link{microorganisms.codes}, \link{intrinsic_resistant}
 }
 \keyword{datasets}

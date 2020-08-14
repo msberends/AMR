@@ -48,6 +48,37 @@ distinct.default <- function(.data, ..., .keep_all = FALSE) {
 distinct.grouped_data <- function(.data, ..., .keep_all = FALSE) {
   apply_grouped_function(.data, "distinct", ..., .keep_all = .keep_all)
 }
+# faster implementation of left_join than using base::merge() by poorman - we use base::match():
+left_join <- function(x, y, by = NULL, suffix = c(".x", ".y")) {
+  if (is.null(by)) {
+    by <- intersect(names(x), names(y))[1L]
+    if (is.na(by)) {
+      stop_("no common column found for left_join()")
+    }
+    join_message(by)
+  } else if (!is.null(names(by))) {
+    by <- unname(c(names(by), by))
+  }
+  if (length(by) == 1) {
+    by <- rep(by, 2)
+  }
+  requires_suffix <- any(colnames(x) %in% colnames(y))
+  if (requires_suffix == TRUE) {
+    int_x <- colnames(x) %in% colnames(y) & colnames(x) != by[1]
+    int_y <- colnames(y) %in% colnames(x) & colnames(y) != by[2]
+    
+    colnames(x)[int_x] <- paste0(colnames(x)[int_x], suffix[1L])
+    colnames(y)[int_y] <- paste0(colnames(y)[int_y], suffix[2L])
+  }
+  merged <- cbind(x,
+                  y[match(x[, by[1], drop = TRUE],
+                          y[, by[2], drop = TRUE]),
+                    colnames(y)[!colnames(y) %in% colnames(x) & !colnames(y) == by[2]],
+                    drop = FALSE])
+  
+  rownames(merged) <- NULL
+  merged
+}
 filter_join_worker <- function(x, y, by = NULL, type = c("anti", "semi")) {
   type <- match.arg(type, choices = c("anti", "semi"), several.ok = FALSE)
   if (is.null(by)) {
@@ -92,9 +123,10 @@ check_dataset_integrity <- function() {
                                "synonyms", "oral_ddd", "oral_units", 
                                "iv_ddd", "iv_units", "loinc") %in% colnames(antibiotics),
                              na.rm = TRUE)
-  }, error = function(e)
-    stop_('please use the command \'library("AMR")\' before using this function, to load the required reference data.', call = FALSE)
-  )
+  }, error = function(e) {
+    # package not yet loaded
+    require("AMR")
+  })
   invisible(TRUE)
 }
 

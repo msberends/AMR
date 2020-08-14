@@ -25,6 +25,7 @@
 #' @inheritSection lifecycle Maturing lifecycle
 #' @param x character vector to determine to antibiotic ID
 #' @param flag_multiple_results logical to indicate whether a note should be printed to the console that probably more than one antibiotic code or name can be retrieved from a single input value.
+#' @param info logical to indicate whether a progress bar should be printed
 #' @param ... arguments passed on to internal functions
 #' @rdname as.ab
 #' @inheritSection WHOCC WHOCC
@@ -75,7 +76,7 @@
 #' # they use as.ab() internally:
 #' ab_name("J01FA01")    # "Erythromycin"
 #' ab_name("eryt")       # "Erythromycin"
-as.ab <- function(x, flag_multiple_results = TRUE, ...) {
+as.ab <- function(x, flag_multiple_results = TRUE, info = TRUE, ...) {
   
   check_dataset_integrity()
   
@@ -131,7 +132,7 @@ as.ab <- function(x, flag_multiple_results = TRUE, ...) {
   }
   
   if (initial_search == TRUE) {
-    progress <- progress_estimated(n = length(x), n_min = 25) # start if n >= 25
+    progress <- progress_estimated(n = length(x), n_min = ifelse(isTRUE(info), 25, length(x) + 1)) # start if n >= 25
     on.exit(close(progress))
   }
   
@@ -158,6 +159,13 @@ as.ab <- function(x, flag_multiple_results = TRUE, ...) {
       from_text <- character(0)
     }
     
+    # exact name
+    found <- antibiotics[which(toupper(antibiotics$name) == x[i]), ]$ab
+    if (length(found) > 0) {
+      x_new[i] <- found[1L]
+      next
+    }
+    
     # exact AB code
     found <- antibiotics[which(antibiotics$ab == x[i]), ]$ab
     if (length(found) > 0) {
@@ -174,13 +182,6 @@ as.ab <- function(x, flag_multiple_results = TRUE, ...) {
     
     # exact CID code
     found <- antibiotics[which(antibiotics$cid == x[i]), ]$ab
-    if (length(found) > 0) {
-      x_new[i] <- note_if_more_than_one_found(found, i, from_text)
-      next
-    }
-    
-    # exact name
-    found <- antibiotics[which(toupper(antibiotics$name) == x[i]), ]$ab
     if (length(found) > 0) {
       x_new[i] <- note_if_more_than_one_found(found, i, from_text)
       next

@@ -97,7 +97,7 @@ This AMR package honours this new insight. Use \code{\link[=susceptibility]{susc
 
 \section{Combination therapy}{
 
-When using more than one variable for \code{...} (= combination therapy)), use \code{only_all_tested} to only count isolates that are tested for all antibiotics/variables that you test them for. See this example for two antibiotics, Drug A and Drug B, about how \code{\link[=susceptibility]{susceptibility()}} works to calculate the \%SI:\preformatted{--------------------------------------------------------------------
+When using more than one variable for \code{...} (= combination therapy), use \code{only_all_tested} to only count isolates that are tested for all antibiotics/variables that you test them for. See this example for two antibiotics, Drug A and Drug B, about how \code{\link[=susceptibility]{susceptibility()}} works to calculate the \%SI:\preformatted{--------------------------------------------------------------------
                     only_all_tested = FALSE  only_all_tested = TRUE
                     -----------------------  -----------------------
  Drug A    Drug B   include as  include as   include as  include as

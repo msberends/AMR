@@ -28,7 +28,7 @@
 #' @rdname lifecycle
 #' @description Functions in this `AMR` package are categorised using [the lifecycle circle of the Tidyverse as found on www.tidyverse.org/lifecycle](https://www.Tidyverse.org/lifecycle).
 #' 
-#' \if{html}{\figure{lifecycle_Tidyverse.svg}{options: height=200px style=margin-bottom:5px} \cr}
+#' \if{html}{\figure{lifecycle_tidyverse.svg}{options: height=200px style=margin-bottom:5px} \cr}
 #' This page contains a section for every lifecycle (with text borrowed from the aforementioned Tidyverse website), so they can be used in the manual pages of the functions. 
 #' @section Experimental lifecycle:
 #' \if{html}{\figure{lifecycle_experimental.svg}{options: style=margin-bottom:5px} \cr}

@@ -24,7 +24,7 @@ knitr::opts_chunk$set(
 )
 ```
 
-**READ ALL VIGNETTES [ON OUR WEBSITE](https://msberends.github.io/AMR/articles/)**
+**READ ALL VIGNETTES [ON OUR WEBSITE](https://msberends.github.io/AMR/articles/).**
 
 # Welcome to the AMR package
 
