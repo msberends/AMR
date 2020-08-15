@@ -62,14 +62,12 @@ left_join <- function(x, y, by = NULL, suffix = c(".x", ".y")) {
   if (length(by) == 1) {
     by <- rep(by, 2)
   }
-  requires_suffix <- any(colnames(x) %in% colnames(y))
-  if (requires_suffix == TRUE) {
-    int_x <- colnames(x) %in% colnames(y) & colnames(x) != by[1]
-    int_y <- colnames(y) %in% colnames(x) & colnames(y) != by[2]
-    
-    colnames(x)[int_x] <- paste0(colnames(x)[int_x], suffix[1L])
-    colnames(y)[int_y] <- paste0(colnames(y)[int_y], suffix[2L])
-  }
+  
+  int_x <- colnames(x) %in% colnames(y) & colnames(x) != by[1]
+  int_y <- colnames(y) %in% colnames(x) & colnames(y) != by[2]
+  colnames(x)[int_x] <- paste0(colnames(x)[int_x], suffix[1L])
+  colnames(y)[int_y] <- paste0(colnames(y)[int_y], suffix[2L])
+  
   merged <- cbind(x,
                   y[match(x[, by[1], drop = TRUE],
                           y[, by[2], drop = TRUE]),

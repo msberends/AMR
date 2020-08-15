@@ -255,5 +255,4 @@ catalogue_of_life <- list(
 #'     pull(microorganism)
 #'   # [1] "Enterococcus casseliflavus" "Enterococcus gallinarum"
 #' }
-#' @seealso [intrinsic_resistant]
 "intrinsic_resistant"

@@ -311,7 +311,7 @@ as.rsi.mic <- function(x,
     stop_('No information was supplied about the microorganisms (missing parameter "mo"). See ?as.rsi.\n\n',
           "To transform certain columns with e.g. mutate_at(), use\n",
           "`data %>% mutate_at(vars(...), as.rsi, mo = .$x)`, where x is your column with microorganisms.\n\n",
-          "To tranform all MIC variables in a data set, use `as.rsi(data)` or `data %>% as.rsi()`.", call = FALSE)
+          "To tranform all MIC values in a data set, use `data %>% as.rsi()` or data %>% mutate_if(is.mic, as.rsi).", call = FALSE)
   }
   
   ab_coerced <- suppressWarnings(as.ab(ab))
@@ -379,7 +379,7 @@ as.rsi.disk <- function(x,
     stop_('No information was supplied about the microorganisms (missing parameter "mo"). See ?as.rsi.\n\n',
           "To transform certain columns with e.g. mutate_at(), use\n",
           "`data %>% mutate_at(vars(...), as.rsi, mo = .$x)`, where x is your column with microorganisms.\n\n",
-          "To tranform all disk diffusion zones in a data set, use `as.rsi(data)` or `data %>% as.rsi()`.", call = FALSE)
+          "To tranform all disk diffusion zones in a data set, use `data %>% as.rsi()` or data %>% mutate_if(is.disk, as.rsi).", call = FALSE)
   }
   
   ab_coerced <- suppressWarnings(as.ab(ab))
@@ -535,6 +535,11 @@ get_guideline <- function(guideline) {
 }
 
 exec_as.rsi <- function(method, x, mo, ab, guideline, uti, conserve_capped_values) {
+  x_bak <- data.frame(x_mo = paste0(x, mo))
+  df <- unique(data.frame(x, mo), stringsAsFactors = FALSE)
+  x <- df$x
+  mo <- df$mo
+  
   if (method == "mic") {
     x <- as.mic(x) # when as.rsi.mic is called directly
   } else if (method == "disk") {
@@ -575,10 +580,10 @@ exec_as.rsi <- function(method, x, mo, ab, guideline, uti, conserve_capped_value
     warning("Interpretation of ", font_bold(ab_name(ab, tolower = TRUE)), " for some microorganisms is only available for (uncomplicated) urinary tract infections (UTI).\n  Use parameter 'uti' to set which isolates are from urine. See ?as.rsi.", call. = FALSE)
     warned <- TRUE
   }
-  
+
   for (i in seq_len(length(x))) {
     get_record <- trans %>%
-      # no UTI for now
+      # no sebsetting to UTI for now
       subset(lookup %in% c(lookup_mo[i],
                            lookup_genus[i],
                            lookup_family[i],
@@ -591,7 +596,7 @@ exec_as.rsi <- function(method, x, mo, ab, guideline, uti, conserve_capped_value
       get_record <- get_record %>% 
         # be as specific as possible (i.e. prefer species over genus):
         # desc(uti) = TRUE on top and FALSE on bottom
-        arrange(desc(uti), desc(nchar(mo))) # 'uti' is a column in rsi_translation
+        arrange(desc(uti), desc(nchar(mo))) # 'uti' is a column in data set 'rsi_translation'
     } else {
       get_record <- get_record %>% 
         filter(uti == FALSE) %>% # 'uti' is a column in rsi_translation
@@ -620,9 +625,15 @@ exec_as.rsi <- function(method, x, mo, ab, guideline, uti, conserve_capped_value
       }
     }
   }
+  
+  new_rsi <- x_bak %>%
+    left_join(data.frame(x_mo = paste0(df$x, df$mo), new_rsi), by = "x_mo") %>%
+    pull(new_rsi)
+  
   if (warned == FALSE) {
     message(font_green("OK."))
   }
+  
   structure(.Data = factor(new_rsi, levels = c("S", "I", "R"), ordered = TRUE),
             class =  c("rsi", "ordered", "factor"))
 }

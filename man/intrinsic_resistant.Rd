@@ -35,7 +35,4 @@ if (require("dplyr")) {
   # [1] "Enterococcus casseliflavus" "Enterococcus gallinarum"
 }
 }
-\seealso{
-\link{intrinsic_resistant}
-}
 \keyword{datasets}

@@ -139,7 +139,7 @@ reference:
     contents:
     - "`microorganisms`"
     - "`antibiotics`"
-    - "`antivirals`"
+    - "`intrinsic_resistant`"
     - "`example_isolates`"
     - "`example_isolates_unclean`"
     - "`rsi_translation`"

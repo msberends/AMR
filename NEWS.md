@@ -1,5 +1,5 @@
-# AMR 1.3.0.9002
-## <small>Last updated: 14 August 2020</small>
+# AMR 1.3.0.9003
+## <small>Last updated: 15 August 2020</small>
 
 ### New
 * Data set `intrinsic_resistant`. This data set contains all bug-drug combinations where the 'bug' is intrinsic resistant to the 'drug' according to the latest EUCAST insights. It contains just two columns: `microorganism` and `antibiotic`.
@@ -15,18 +15,19 @@
   ```
 
 ### Changed
-* Support for using `dplyr`'s `across()` in `as.rsi()` to interpret MIC values or disk zone diameters, that now also automatically determines the column with microorganism names or codes.
-  ```r
-  # until dplyr 1.0.0
-  your_data %>% mutate_if(is.mic, as.rsi)
-  your_data %>% mutate_if(is.disk, as.rsi)
+* Improvements for `as.rsi()`:
+  * Support for using `dplyr`'s `across()` to interpret MIC values or disk zone diameters, which also automatically determines the column with microorganism names or codes.
+    ```r
+    # until dplyr 1.0.0
+    your_data %>% mutate_if(is.mic, as.rsi)
+    your_data %>% mutate_if(is.disk, as.rsi)
   
-  # since dplyr 1.0.0
-  your_data %>% mutate(across(where(is.mic), as.rsi))
-  your_data %>% mutate(across(where(is.disk), as.rsi))
-  ```
-* Improved overall speed by tweaking joining functions
-
+    # since dplyr 1.0.0
+    your_data %>% mutate(across(where(is.mic), as.rsi))
+    your_data %>% mutate(across(where(is.disk), as.rsi))
+    ```
+  * Big speed improvement for interpreting MIC values and disk zone diameters. When interpreting 5,000 MIC values of two antibiotics (10,000 values in total), our benchmarks showed a total run time going from 80.7-85.1 seconds to 1.8-2.0 seconds.
+* Overall speed improvement by tweaking joining functions
 
 # AMR 1.3.0
 
