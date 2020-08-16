@@ -31,6 +31,7 @@
 #' @inheritParams first_isolate
 #' @param guideline defaults to the latest included EUCAST guideline, see Details for all options
 #' @param conserve_capped_values a logical to indicate that MIC values starting with `">"` (but not `">="`) must always return "R" , and that MIC values starting with `"<"` (but not `"<="`) must always return "S"
+#' @param add_intrinsic_resistance *(only useful when using a EUCAST guideline)* a logical to indicate whether intrinsic antibiotic resistance must also be considered for applicable bug-drug combinations, meaning that e.g. ampicillin will always return "R" in *Klebsiella* species. Determination is based on the [intrinsic_resistant] data set, that itself is based on 'EUCAST Expert Rules, Intrinsic Resistance and Exceptional Phenotypes', version `r EUCAST_VERSION_EXPERT_RULES`.
 #' @param threshold maximum fraction of invalid antimicrobial interpretations of `x`, please see *Examples*
 #' @param ... parameters passed on to methods
 #' @details 
@@ -108,6 +109,9 @@
 #' 
 #' # the dplyr way
 #' library(dplyr)
+#' df %>% mutate_if(is.mic, as.rsi)
+#' df %>% mutate_if(function(x) is.mic(x) | is.disk(x), as.rsi)
+#' df %>% mutate(across(where(is.mic), as.rsi))
 #' df %>% mutate_at(vars(AMP:TOB), as.rsi)
 #' df %>% mutate(across(AMP:TOB), as.rsi)
 #'
@@ -282,6 +286,7 @@ as.rsi.mic <- function(x,
                        guideline = "EUCAST", 
                        uti = FALSE,
                        conserve_capped_values = FALSE,
+                       add_intrinsic_resistance = FALSE,
                        ...) {
   
   # for dplyr's across()
@@ -339,7 +344,8 @@ as.rsi.mic <- function(x,
                         ab = ab_coerced,
                         guideline = guideline_coerced,
                         uti = uti,
-                        conserve_capped_values = conserve_capped_values) # exec_as.rsi will return message(font_blue(" OK."))
+                        conserve_capped_values = conserve_capped_values,
+                        add_intrinsic_resistance = add_intrinsic_resistance) # exec_as.rsi will return message(font_blue(" OK."))
   result
 }
 
@@ -350,6 +356,7 @@ as.rsi.disk <- function(x,
                         ab = deparse(substitute(x)), 
                         guideline = "EUCAST", 
                         uti = FALSE,
+                        add_intrinsic_resistance = FALSE,
                         ...) {
   
   # for dplyr's across()
@@ -405,7 +412,9 @@ as.rsi.disk <- function(x,
                         mo = mo_coerced,
                         ab = ab_coerced,
                         guideline = guideline_coerced,
-                        uti = uti) # exec_as.rsi will return message(font_blue(" OK."))
+                        uti = uti,
+                        conserve_capped_values = FALSE,
+                        add_intrinsic_resistance = add_intrinsic_resistance) # exec_as.rsi will return message(font_blue(" OK."))
   result
 }
 
@@ -416,6 +425,7 @@ as.rsi.data.frame <- function(x,
                               guideline = "EUCAST",
                               uti = NULL,
                               conserve_capped_values = FALSE,
+                              add_intrinsic_resistance = FALSE,
                               ...) {
   # try to find columns based on type
   # -- mo
@@ -534,7 +544,15 @@ get_guideline <- function(guideline) {
   
 }
 
-exec_as.rsi <- function(method, x, mo, ab, guideline, uti, conserve_capped_values) {
+exec_as.rsi <- function(method,
+                        x,
+                        mo,
+                        ab,
+                        guideline,
+                        uti,
+                        conserve_capped_values, 
+                        add_intrinsic_resistance) {
+  
   x_bak <- data.frame(x_mo = paste0(x, mo))
   df <- unique(data.frame(x, mo), stringsAsFactors = FALSE)
   x <- df$x
@@ -580,10 +598,23 @@ exec_as.rsi <- function(method, x, mo, ab, guideline, uti, conserve_capped_value
     warning("Interpretation of ", font_bold(ab_name(ab, tolower = TRUE)), " for some microorganisms is only available for (uncomplicated) urinary tract infections (UTI).\n  Use parameter 'uti' to set which isolates are from urine. See ?as.rsi.", call. = FALSE)
     warned <- TRUE
   }
-
+  
   for (i in seq_len(length(x))) {
+    if (isTRUE(add_intrinsic_resistance)) {
+      if (!guideline_coerced %like% "EUCAST") {
+        warning("Using 'add_intrinsic_resistance' is only useful when using EUCAST guidelines, since the rules for intrinsic resistance are based on EUCAST.", call. = FALSE)
+      } else {
+        get_record <- subset(intrinsic_resistant, 
+                             microorganism == mo_name(mo[i], language = NULL) & antibiotic == ab_name(ab, language = NULL))
+        if (nrow(get_record) > 0) {
+          new_rsi[i] <- "R"
+          next
+        }
+      }
+    }
+    
     get_record <- trans %>%
-      # no sebsetting to UTI for now
+      # no subsetting to UTI for now
       subset(lookup %in% c(lookup_mo[i],
                            lookup_genus[i],
                            lookup_family[i],

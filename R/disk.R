@@ -62,8 +62,27 @@ as.disk <- function(x, na.rm = FALSE) {
     
     na_before <- length(x[is.na(x)])
     
-    # force it to be integer
-    x <- suppressWarnings(as.integer(x))
+    # heavily based on the function from our cleaner package:
+    clean_double2 <- function(x, remove = "[^0-9.,-]", fixed = FALSE) {
+      x <- gsub(",", ".", x)
+      # remove ending dot/comma
+      x <- gsub("[,.]$", "", x)
+      # only keep last dot/comma
+      reverse <- function(x) sapply(lapply(strsplit(x, NULL), rev), paste, collapse = "")
+      x <- sub("{{dot}}", ".", 
+               gsub(".", "",
+                    reverse(sub(".", "}}tod{{",
+                                reverse(x), 
+                                fixed = TRUE)),
+                    fixed = TRUE), 
+               fixed = TRUE)
+      x_clean <- gsub(remove, "", x, ignore.case = TRUE, fixed = fixed)
+      # remove everything that is not a number or dot
+      as.numeric(gsub("[^0-9.]+", "", x_clean))
+    }
+    
+    # round up and make it an integer
+    x <- as.integer(ceiling(clean_double2(x)))
     
     # disks can never be less than 6 mm (size of smallest disk) or more than 50 mm
     x[x < 6 | x > 50] <- NA_integer_

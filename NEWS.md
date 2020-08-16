@@ -1,5 +1,5 @@
-# AMR 1.3.0.9003
-## <small>Last updated: 15 August 2020</small>
+# AMR 1.3.0.9004
+## <small>Last updated: 16 August 2020</small>
 
 ### New
 * Data set `intrinsic_resistant`. This data set contains all bug-drug combinations where the 'bug' is intrinsic resistant to the 'drug' according to the latest EUCAST insights. It contains just two columns: `microorganism` and `antibiotic`.
@@ -11,7 +11,7 @@
   intrinsic_resistant %>%
     filter(antibiotic == "Vancomycin", microorganism %like% "Enterococcus") %>% 
     pull(microorganism)
-  # [1] "Enterococcus casseliflavus" "Enterococcus gallinarum"   
+  #> [1] "Enterococcus casseliflavus" "Enterococcus gallinarum"   
   ```
 
 ### Changed
@@ -27,6 +27,13 @@
     your_data %>% mutate(across(where(is.disk), as.rsi))
     ```
   * Big speed improvement for interpreting MIC values and disk zone diameters. When interpreting 5,000 MIC values of two antibiotics (10,000 values in total), our benchmarks showed a total run time going from 80.7-85.1 seconds to 1.8-2.0 seconds.
+  * Added parameter 'add_intrinsic_resistance' (defaults to `FALSE`), that considers intrinsic resistance according to EUCAST
+* Added intelligent data cleaning to `as.disk()`, so numbers can also be extracted from text and decimal numbers will always be rounded up:
+  ```r
+  as.disk(c("disk zone: 23.4 mm", 23.4))
+  #> Class <disk>
+  #> [1] 24 24
+  ```
 * Overall speed improvement by tweaking joining functions
 
 # AMR 1.3.0

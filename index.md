@@ -23,6 +23,33 @@ This package is [fully independent of any other R package](https://en.wikipedia.
     Since its first public release in early 2018, this package has been downloaded from more than 100 countries. Click the map to enlarge and to also see the names of the countries.</p><br><br>
 </div>
 
+<div class="home-buttons">
+	<a href="articles/datasets.html">
+		<div style="background-color: #128f7635;">
+			<div class="fa fa-database"></div>
+			<span>Download free data sets</span>
+		</div>
+	</a>
+	<a href="articles/AMR.html">
+		<div style="background-color: #138F3865;">
+			<div class="fa fa-chalkboard-teacher"></div>
+			<span>Start learning AMR analysis</span>
+		</div>
+	</a>
+	<a href="reference/as.rsi.html">
+		<div style="background-color: #128f7650;">
+			<div class="fa fa-language"></div>
+			<span>Interpret MIC/disk values to R/SI</span>
+		</div>
+	</a>
+	<a href="articles/MDR.html">
+		<div style="background-color: #138F3835;">
+			<div class="fa fa-skull-crossbones"></div>
+			<span>Determine multi-drug resistance (MDR)</span>
+		</div>
+	</a>
+</div>
+
 #### Partners
 
 The development of this package is part of, related to, or made possible by:
@@ -59,6 +86,8 @@ This package can be used for:
 ### Get this package
 
 #### Latest released version
+<img src="https://www.r-pkg.org/badges/version-ago/AMR" />
+<img src="https://cranlogs.r-pkg.org/badges/grand-total/AMR" />
 
 This package is available [here on the official R network (CRAN)](https://cran.r-project.org/package=AMR), which has a peer-reviewed submission process. Install this package in R from CRAN by using the command:
 

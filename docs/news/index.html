@@ -81,7 +81,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.3.0.9003</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.3.0.9004</span>
       </span>
     </div>
 
@@ -115,6 +115,13 @@
         <span class="fa fa-dice"></span>
          
         Predict antimicrobial resistance
+      </a>
+    </li>
+    <li>
+      <a href="../articles/datasets.html">
+        <span class="fa fa-database"></span>
+         
+        Download our free data sets
       </a>
     </li>
     <li>
@@ -229,13 +236,13 @@
       <small>Source: <a href='https://github.com/msberends/AMR/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
-    <div id="amr-1309003" class="section level1">
-<h1 class="page-header" data-toc-text="1.3.0.9003">
-<a href="#amr-1309003" class="anchor"></a>AMR 1.3.0.9003<small> Unreleased </small>
+    <div id="amr-1309004" class="section level1">
+<h1 class="page-header" data-toc-text="1.3.0.9004">
+<a href="#amr-1309004" class="anchor"></a>AMR 1.3.0.9004<small> Unreleased </small>
 </h1>
-<div id="last-updated-15-august-2020" class="section level2">
+<div id="last-updated-16-august-2020" class="section level2">
 <h2 class="hasAnchor">
-<a href="#last-updated-15-august-2020" class="anchor"></a><small>Last updated: 15 August 2020</small>
+<a href="#last-updated-16-august-2020" class="anchor"></a><small>Last updated: 16 August 2020</small>
 </h2>
 <div id="new" class="section level3">
 <h3 class="hasAnchor">
@@ -250,7 +257,7 @@
 <span class="kw">intrinsic_resistant</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span>(<span class="kw">antibiotic</span> <span class="op">==</span> <span class="st">"Vancomycin"</span>, <span class="kw">microorganism</span> <span class="op">%like%</span> <span class="st">"Enterococcus"</span>) <span class="op">%&gt;%</span> 
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/pull.html">pull</a></span>(<span class="kw">microorganism</span>)
-<span class="co"># [1] "Enterococcus casseliflavus" "Enterococcus gallinarum"   </span>
+<span class="co">#&gt; [1] "Enterococcus casseliflavus" "Enterococcus gallinarum"   </span>
 </pre></div>
 </li>
 </ul>
@@ -259,7 +266,8 @@
 <h3 class="hasAnchor">
 <a href="#changed" class="anchor"></a>Changed</h3>
 <ul>
-<li>Improvements for <code><a href="../reference/as.rsi.html">as.rsi()</a></code>:
+<li>
+<p>Improvements for <code><a href="../reference/as.rsi.html">as.rsi()</a></code>:</p>
 <ul>
 <li>
 <p>Support for using <code>dplyr</code>’s <code><a href="https://dplyr.tidyverse.org/reference/across.html">across()</a></code> to interpret MIC values or disk zone diameters, which also automatically determines the column with microorganism names or codes.</p>
@@ -274,9 +282,18 @@
 </pre></div>
 </li>
 <li><p>Big speed improvement for interpreting MIC values and disk zone diameters. When interpreting 5,000 MIC values of two antibiotics (10,000 values in total), our benchmarks showed a total run time going from 80.7-85.1 seconds to 1.8-2.0 seconds.</p></li>
+<li><p>Added parameter ‘add_intrinsic_resistance’ (defaults to <code>FALSE</code>), that considers intrinsic resistance according to EUCAST</p></li>
 </ul>
 </li>
-<li>Overall speed improvement by tweaking joining functions</li>
+<li>
+<p>Added intelligent data cleaning to <code><a href="../reference/as.disk.html">as.disk()</a></code>, so numbers can also be extracted from text and decimal numbers will always be rounded up:</p>
+<div class="sourceCode" id="cb3"><pre class="downlit">
+<span class="fu"><a href="../reference/as.disk.html">as.disk</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"disk zone: 23.4 mm"</span>, <span class="fl">23.4</span>))
+<span class="co">#&gt; Class &lt;disk&gt;</span>
+<span class="co">#&gt; [1] 24 24</span>
+</pre></div>
+</li>
+<li><p>Overall speed improvement by tweaking joining functions</p></li>
 </ul>
 </div>
 </div>
@@ -292,7 +309,7 @@
 <li><p>Function <code><a href="../reference/ab_from_text.html">ab_from_text()</a></code> to retrieve antimicrobial drug names, doses and forms of administration from clinical texts in e.g. health care records, which also corrects for misspelling since it uses <code><a href="../reference/as.ab.html">as.ab()</a></code> internally</p></li>
 <li>
 <p><a href="https://tidyselect.r-lib.org/reference/language.html">Tidyverse selection helpers</a> for antibiotic classes, that help to select the columns of antibiotics that are of a specific antibiotic class, without the need to define the columns or antibiotic abbreviations. They can be used in any function that allows selection helpers, like <code><a href="https://dplyr.tidyverse.org/reference/select.html">dplyr::select()</a></code> and <code><a href="https://tidyr.tidyverse.org/reference/pivot_longer.html">tidyr::pivot_longer()</a></code>:</p>
-<div class="sourceCode" id="cb3"><pre class="downlit">
+<div class="sourceCode" id="cb4"><pre class="downlit">
 <span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="kw"><a href="https://dplyr.tidyverse.org">dplyr</a></span>)
 
 <span class="co"># Columns 'IPM' and 'MEM' are in the example_isolates data set</span>
@@ -481,7 +498,7 @@ This works for all drug combinations, such as ampicillin/sulbactam, ceftazidime/
 <li><p>Fixed important floating point error for some MIC comparisons in EUCAST 2020 guideline</p></li>
 <li>
 <p>Interpretation from MIC values (and disk zones) to R/SI can now be used with <code><a href="https://dplyr.tidyverse.org/reference/mutate_all.html">mutate_at()</a></code> of the <code>dplyr</code> package:</p>
-<div class="sourceCode" id="cb4"><pre class="downlit">
+<div class="sourceCode" id="cb5"><pre class="downlit">
 <span class="kw">yourdata</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate_all.html">mutate_at</a></span>(<span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html">vars</a></span>(<span class="kw">antibiotic1</span><span class="op">:</span><span class="kw">antibiotic25</span>), <span class="kw">as.rsi</span>, mo = <span class="st">"E. coli"</span>)
 
@@ -510,7 +527,7 @@ This works for all drug combinations, such as ampicillin/sulbactam, ceftazidime/
 <ul>
 <li>
 <p>Support for LOINC codes in the <code>antibiotics</code> data set. Use <code><a href="../reference/ab_property.html">ab_loinc()</a></code> to retrieve LOINC codes, or use a LOINC code for input in any <code>ab_*</code> function:</p>
-<div class="sourceCode" id="cb5"><pre class="downlit">
+<div class="sourceCode" id="cb6"><pre class="downlit">
 <span class="fu"><a href="../reference/ab_property.html">ab_loinc</a></span>(<span class="st">"ampicillin"</span>)
 <span class="co">#&gt; [1] "21066-6" "3355-5"  "33562-0" "33919-2" "43883-8" "43884-6" "87604-5"</span>
 <span class="fu"><a href="../reference/ab_property.html">ab_name</a></span>(<span class="st">"21066-6"</span>)
@@ -521,7 +538,7 @@ This works for all drug combinations, such as ampicillin/sulbactam, ceftazidime/
 </li>
 <li>
 <p>Support for SNOMED CT codes in the <code>microorganisms</code> data set. Use <code><a href="../reference/mo_property.html">mo_snomed()</a></code> to retrieve SNOMED codes, or use a SNOMED code for input in any <code>mo_*</code> function:</p>
-<div class="sourceCode" id="cb6"><pre class="downlit">
+<div class="sourceCode" id="cb7"><pre class="downlit">
 <span class="fu"><a href="../reference/mo_property.html">mo_snomed</a></span>(<span class="st">"S. aureus"</span>)
 <span class="co">#&gt; [1] 115329001   3092008 113961008</span>
 <span class="fu"><a href="../reference/mo_property.html">mo_name</a></span>(<span class="fl">115329001</span>)
@@ -586,11 +603,11 @@ This works for all drug combinations, such as ampicillin/sulbactam, ceftazidime/
 <ul>
 <li>
 <p>If you were dependent on the old Enterobacteriaceae family e.g. by using in your code:</p>
-<div class="sourceCode" id="cb7"><pre class="downlit">
+<div class="sourceCode" id="cb8"><pre class="downlit">
 <span class="co">if</span> (<span class="fu"><a href="../reference/mo_property.html">mo_family</a></span>(<span class="kw">somebugs</span>) <span class="op">==</span> <span class="st">"Enterobacteriaceae"</span>) <span class="kw">...</span>
 </pre></div>
 <p>then please adjust this to:</p>
-<div class="sourceCode" id="cb8"><pre class="downlit">
+<div class="sourceCode" id="cb9"><pre class="downlit">
 <span class="co">if</span> (<span class="fu"><a href="../reference/mo_property.html">mo_order</a></span>(<span class="kw">somebugs</span>) <span class="op">==</span> <span class="st">"Enterobacterales"</span>) <span class="kw">...</span>
 </pre></div>
 </li>
@@ -604,7 +621,7 @@ This works for all drug combinations, such as ampicillin/sulbactam, ceftazidime/
 <ul>
 <li>
 <p>Functions <code><a href="../reference/proportion.html">susceptibility()</a></code> and <code><a href="../reference/proportion.html">resistance()</a></code> as aliases of <code><a href="../reference/proportion.html">proportion_SI()</a></code> and <code><a href="../reference/proportion.html">proportion_R()</a></code>, respectively. These functions were added to make it more clear that “I” should be considered susceptible and not resistant.</p>
-<div class="sourceCode" id="cb9"><pre class="downlit">
+<div class="sourceCode" id="cb10"><pre class="downlit">
 <span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="kw"><a href="https://dplyr.tidyverse.org">dplyr</a></span>)
 <span class="kw">example_isolates</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span>(bug = <span class="fu"><a href="../reference/mo_property.html">mo_name</a></span>(<span class="kw">mo</span>)) <span class="op">%&gt;%</span> 
@@ -633,7 +650,7 @@ This works for all drug combinations, such as ampicillin/sulbactam, ceftazidime/
 <li><p>More intelligent way of coping with some consonants like “l” and “r”</p></li>
 <li>
 <p>Added a score (a certainty percentage) to <code><a href="../reference/as.mo.html">mo_uncertainties()</a></code>, that is calculated using the <a href="https://en.wikipedia.org/wiki/Levenshtein_distance">Levenshtein distance</a>:</p>
-<div class="sourceCode" id="cb10"><pre class="downlit">
+<div class="sourceCode" id="cb11"><pre class="downlit">
 <span class="fu"><a href="../reference/as.mo.html">as.mo</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"Stafylococcus aureus"</span>,
         <span class="st">"staphylokok aureuz"</span>))
 <span class="co">#&gt; Warning: </span>
@@ -692,14 +709,14 @@ This works for all drug combinations, such as ampicillin/sulbactam, ceftazidime/
 <ul>
 <li>
 <p>Determination of first isolates now <strong>excludes</strong> all ‘unknown’ microorganisms at default, i.e. microbial code <code>"UNKNOWN"</code>. They can be included with the new parameter <code>include_unknown</code>:</p>
-<div class="sourceCode" id="cb11"><pre class="downlit">
+<div class="sourceCode" id="cb12"><pre class="downlit">
 <span class="fu"><a href="../reference/first_isolate.html">first_isolate</a></span>(<span class="kw">...</span>, include_unknown = <span class="fl">TRUE</span>)
 </pre></div>
 <p>For WHONET users, this means that all records/isolates with organism code <code>"con"</code> (<em>contamination</em>) will be excluded at default, since <code>as.mo("con") = "UNKNOWN"</code>. The function always shows a note with the number of ‘unknown’ microorganisms that were included or excluded.</p>
 </li>
 <li>
 <p>For code consistency, classes <code>ab</code> and <code>mo</code> will now be preserved in any subsetting or assignment. For the sake of data integrity, this means that invalid assignments will now result in <code>NA</code>:</p>
-<div class="sourceCode" id="cb12"><pre class="downlit">
+<div class="sourceCode" id="cb13"><pre class="downlit">
 <span class="co"># how it works in base R:</span>
 <span class="kw">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span>(<span class="st">"A"</span>)
 <span class="kw">x</span>[<span class="fl">1</span>] <span class="op">&lt;-</span> <span class="st">"B"</span>
@@ -724,7 +741,7 @@ This works for all drug combinations, such as ampicillin/sulbactam, ceftazidime/
 <ul>
 <li>
 <p>Function <code><a href="../reference/bug_drug_combinations.html">bug_drug_combinations()</a></code> to quickly get a <code>data.frame</code> with the results of all bug-drug combinations in a data set. The column containing microorganism codes is guessed automatically and its input is transformed with <code><a href="../reference/mo_property.html">mo_shortname()</a></code> at default:</p>
-<div class="sourceCode" id="cb13"><pre class="downlit">
+<div class="sourceCode" id="cb14"><pre class="downlit">
 <span class="kw">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/bug_drug_combinations.html">bug_drug_combinations</a></span>(<span class="kw">example_isolates</span>)
 <span class="co">#&gt; NOTE: Using column `mo` as input for `col_mo`.</span>
 <span class="kw">x</span>[<span class="fl">1</span><span class="op">:</span><span class="fl">4</span>, ]
@@ -747,13 +764,13 @@ This works for all drug combinations, such as ampicillin/sulbactam, ceftazidime/
 <span class="co">#&gt; NOTE: Use 'format()' on this result to get a publicable/printable format.</span>
 </pre></div>
 <p>You can format this to a printable format, ready for reporting or exporting to e.g. Excel with the base R <code><a href="https://rdrr.io/r/base/format.html">format()</a></code> function:</p>
-<div class="sourceCode" id="cb14"><pre class="downlit">
+<div class="sourceCode" id="cb15"><pre class="downlit">
 <span class="fu"><a href="https://rdrr.io/r/base/format.html">format</a></span>(<span class="kw">x</span>, combine_IR = <span class="fl">FALSE</span>)
 </pre></div>
 </li>
 <li>
 <p>Additional way to calculate co-resistance, i.e. when using multiple antimicrobials as input for <code>portion_*</code> functions or <code>count_*</code> functions. This can be used to determine the empiric susceptibility of a combination therapy. A new parameter <code>only_all_tested</code> (<strong>which defaults to <code>FALSE</code></strong>) replaces the old <code>also_single_tested</code> and can be used to select one of the two methods to count isolates and calculate portions. The difference can be seen in this example table (which is also on the <code>portion</code> and <code>count</code> help pages), where the %SI is being determined:</p>
-<div class="sourceCode" id="cb15"><pre class="downlit">
+<div class="sourceCode" id="cb16"><pre class="downlit">
 <span class="co"># --------------------------------------------------------------------</span>
 <span class="co">#                     only_all_tested = FALSE  only_all_tested = TRUE</span>
 <span class="co">#                     -----------------------  -----------------------</span>
@@ -775,7 +792,7 @@ This works for all drug combinations, such as ampicillin/sulbactam, ceftazidime/
 </li>
 <li>
 <p><code>tibble</code> printing support for classes <code>rsi</code>, <code>mic</code>, <code>disk</code>, <code>ab</code> <code>mo</code>. When using <code>tibble</code>s containing antimicrobial columns, values <code>S</code> will print in green, values <code>I</code> will print in yellow and values <code>R</code> will print in red. Microbial IDs (class <code>mo</code>) will emphasise on the genus and species, not on the kingdom.</p>
-<div class="sourceCode" id="cb16"><pre class="downlit">
+<div class="sourceCode" id="cb17"><pre class="downlit">
 <span class="co"># (run this on your own console, as this page does not support colour printing)</span>
 <span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="kw"><a href="https://dplyr.tidyverse.org">dplyr</a></span>)
 <span class="kw">example_isolates</span> <span class="op">%&gt;%</span>
@@ -858,7 +875,7 @@ This works for all drug combinations, such as ampicillin/sulbactam, ceftazidime/
 <ul>
 <li>
 <p>Function <code><a href="../reference/proportion.html">rsi_df()</a></code> to transform a <code>data.frame</code> to a data set containing only the microbial interpretation (S, I, R), the antibiotic, the percentage of S/I/R and the number of available isolates. This is a convenient combination of the existing functions <code><a href="../reference/count.html">count_df()</a></code> and <code><a href="../reference/AMR-deprecated.html">portion_df()</a></code> to immediately show resistance percentages and number of available isolates:</p>
-<div class="sourceCode" id="cb17"><pre class="downlit">
+<div class="sourceCode" id="cb18"><pre class="downlit">
 <span class="kw">septic_patients</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span>(<span class="kw">AMX</span>, <span class="kw">CIP</span>) <span class="op">%&gt;%</span>
   <span class="fu"><a href="../reference/proportion.html">rsi_df</a></span>()
@@ -885,7 +902,7 @@ This works for all drug combinations, such as ampicillin/sulbactam, ceftazidime/
 <li>UPEC (Uropathogenic <em>E. coli</em>)</li>
 </ul>
 <p>All these lead to the microbial ID of <em>E. coli</em>:</p>
-<div class="sourceCode" id="cb18"><pre class="downlit">
+<div class="sourceCode" id="cb19"><pre class="downlit">
 <span class="fu"><a href="../reference/as.mo.html">as.mo</a></span>(<span class="st">"UPEC"</span>)
 <span class="co"># B_ESCHR_COL</span>
 <span class="fu"><a href="../reference/mo_property.html">mo_name</a></span>(<span class="st">"UPEC"</span>)
@@ -990,7 +1007,7 @@ This works for all drug combinations, such as ampicillin/sulbactam, ceftazidime/
 <li><p>when all values are unique it now shows a message instead of a warning</p></li>
 <li>
 <p>support for boxplots:</p>
-<div class="sourceCode" id="cb19"><pre class="downlit">
+<div class="sourceCode" id="cb20"><pre class="downlit">
 <span class="kw">septic_patients</span> <span class="op">%&gt;%</span> 
   <span class="fu">freq</span>(<span class="kw">age</span>) <span class="op">%&gt;%</span> 
   <span class="fu"><a href="https://rdrr.io/r/graphics/boxplot.html">boxplot</a></span>()
@@ -1085,7 +1102,7 @@ This works for all drug combinations, such as ampicillin/sulbactam, ceftazidime/
 </li>
 <li>
 <p>New filters for antimicrobial classes. Use these functions to filter isolates on results in one of more antibiotics from a specific class:</p>
-<div class="sourceCode" id="cb20"><pre class="downlit">
+<div class="sourceCode" id="cb21"><pre class="downlit">
 <span class="fu"><a href="../reference/filter_ab_class.html">filter_aminoglycosides</a></span>()
 <span class="fu"><a href="../reference/filter_ab_class.html">filter_carbapenems</a></span>()
 <span class="fu"><a href="../reference/filter_ab_class.html">filter_cephalosporins</a></span>()
@@ -1099,7 +1116,7 @@ This works for all drug combinations, such as ampicillin/sulbactam, ceftazidime/
 <span class="fu"><a href="../reference/filter_ab_class.html">filter_tetracyclines</a></span>()
 </pre></div>
 <p>The <code>antibiotics</code> data set will be searched, after which the input data will be checked for column names with a value in any abbreviations, codes or official names found in the <code>antibiotics</code> data set. For example:</p>
-<div class="sourceCode" id="cb21"><pre class="downlit">
+<div class="sourceCode" id="cb22"><pre class="downlit">
 <span class="kw">septic_patients</span> <span class="op">%&gt;%</span> <span class="fu"><a href="../reference/filter_ab_class.html">filter_glycopeptides</a></span>(result = <span class="st">"R"</span>)
 <span class="co"># Filtering on glycopeptide antibacterials: any of `vanc` or `teic` is R</span>
 <span class="kw">septic_patients</span> <span class="op">%&gt;%</span> <span class="fu"><a href="../reference/filter_ab_class.html">filter_glycopeptides</a></span>(result = <span class="st">"R"</span>, scope = <span class="st">"all"</span>)
@@ -1108,7 +1125,7 @@ This works for all drug combinations, such as ampicillin/sulbactam, ceftazidime/
 </li>
 <li>
 <p>All <code>ab_*</code> functions are deprecated and replaced by <code>atc_*</code> functions:</p>
-<div class="sourceCode" id="cb22"><pre class="downlit">
+<div class="sourceCode" id="cb23"><pre class="downlit">
 <span class="kw">ab_property</span> <span class="op">-&gt;</span> <span class="fu">atc_property</span>()
 <span class="kw">ab_name</span> <span class="op">-&gt;</span> <span class="fu">atc_name</span>()
 <span class="kw">ab_official</span> <span class="op">-&gt;</span> <span class="fu">atc_official</span>()
@@ -1129,7 +1146,7 @@ This works for all drug combinations, such as ampicillin/sulbactam, ceftazidime/
 <li><p>New function <code><a href="../reference/age_groups.html">age_groups()</a></code> to split ages into custom or predefined groups (like children or elderly). This allows for easier demographic antimicrobial resistance analysis per age group.</p></li>
 <li>
 <p>New function <code><a href="../reference/resistance_predict.html">ggplot_rsi_predict()</a></code> as well as the base R <code><a href="https://rdrr.io/r/graphics/plot.default.html">plot()</a></code> function can now be used for resistance prediction calculated with <code><a href="../reference/resistance_predict.html">resistance_predict()</a></code>:</p>
-<div class="sourceCode" id="cb23"><pre class="downlit">
+<div class="sourceCode" id="cb24"><pre class="downlit">
 <span class="kw">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/resistance_predict.html">resistance_predict</a></span>(<span class="kw">septic_patients</span>, col_ab = <span class="st">"amox"</span>)
 <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span>(<span class="kw">x</span>)
 <span class="fu"><a href="../reference/resistance_predict.html">ggplot_rsi_predict</a></span>(<span class="kw">x</span>)
@@ -1137,13 +1154,13 @@ This works for all drug combinations, such as ampicillin/sulbactam, ceftazidime/
 </li>
 <li>
 <p>Functions <code><a href="../reference/first_isolate.html">filter_first_isolate()</a></code> and <code><a href="../reference/first_isolate.html">filter_first_weighted_isolate()</a></code> to shorten and fasten filtering on data sets with antimicrobial results, e.g.:</p>
-<div class="sourceCode" id="cb24"><pre class="downlit">
+<div class="sourceCode" id="cb25"><pre class="downlit">
 <span class="kw">septic_patients</span> <span class="op">%&gt;%</span> <span class="fu"><a href="../reference/first_isolate.html">filter_first_isolate</a></span>(<span class="kw">...</span>)
 <span class="co"># or</span>
 <span class="fu"><a href="../reference/first_isolate.html">filter_first_isolate</a></span>(<span class="kw">septic_patients</span>, <span class="kw">...</span>)
 </pre></div>
 <p>is equal to:</p>
-<div class="sourceCode" id="cb25"><pre class="downlit">
+<div class="sourceCode" id="cb26"><pre class="downlit">
 <span class="kw">septic_patients</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(only_firsts = <span class="fu"><a href="../reference/first_isolate.html">first_isolate</a></span>(<span class="kw">septic_patients</span>, <span class="kw">...</span>)) <span class="op">%&gt;%</span>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span>(<span class="kw">only_firsts</span> <span class="op">==</span> <span class="fl">TRUE</span>) <span class="op">%&gt;%</span>
@@ -1176,7 +1193,7 @@ This works for all drug combinations, such as ampicillin/sulbactam, ceftazidime/
 <ul>
 <li>
 <p>Now handles incorrect spelling, like <code>i</code> instead of <code>y</code> and <code>f</code> instead of <code>ph</code>:</p>
-<div class="sourceCode" id="cb26"><pre class="downlit">
+<div class="sourceCode" id="cb27"><pre class="downlit">
 <span class="co"># mo_fullname() uses as.mo() internally</span>
 
 <span class="fu"><a href="../reference/mo_property.html">mo_fullname</a></span>(<span class="st">"Sthafilokockus aaureuz"</span>)
@@ -1188,7 +1205,7 @@ This works for all drug combinations, such as ampicillin/sulbactam, ceftazidime/
 </li>
 <li>
 <p>Uncertainty of the algorithm is now divided into four levels, 0 to 3, where the default <code>allow_uncertain = TRUE</code> is equal to uncertainty level 2. Run <code><a href="../reference/as.mo.html">?as.mo</a></code> for more info about these levels.</p>
-<div class="sourceCode" id="cb27"><pre class="downlit">
+<div class="sourceCode" id="cb28"><pre class="downlit">
 <span class="co"># equal:</span>
 <span class="fu"><a href="../reference/as.mo.html">as.mo</a></span>(<span class="kw">...</span>, allow_uncertain = <span class="fl">TRUE</span>)
 <span class="fu"><a href="../reference/as.mo.html">as.mo</a></span>(<span class="kw">...</span>, allow_uncertain = <span class="fl">2</span>)
@@ -1203,7 +1220,7 @@ This works for all drug combinations, such as ampicillin/sulbactam, ceftazidime/
 <li><p>All microbial IDs that found are now saved to a local file <code>~/.Rhistory_mo</code>. Use the new function <code>clean_mo_history()</code> to delete this file, which resets the algorithms.</p></li>
 <li>
 <p>Incoercible results will now be considered ‘unknown’, MO code <code>UNKNOWN</code>. On foreign systems, properties of these will be translated to all languages already previously supported: German, Dutch, French, Italian, Spanish and Portuguese:</p>
-<div class="sourceCode" id="cb28"><pre class="downlit">
+<div class="sourceCode" id="cb29"><pre class="downlit">
 <span class="fu"><a href="../reference/mo_property.html">mo_genus</a></span>(<span class="st">"qwerty"</span>, language = <span class="st">"es"</span>)
 <span class="co"># Warning: </span>
 <span class="co"># one unique value (^= 100.0%) could not be coerced and is considered 'unknown': "qwerty". Use mo_failures() to review it.</span>
@@ -1253,7 +1270,7 @@ This works for all drug combinations, such as ampicillin/sulbactam, ceftazidime/
 <ul>
 <li>
 <p>Support for tidyverse quasiquotation! Now you can create frequency tables of function outcomes:</p>
-<div class="sourceCode" id="cb29"><pre class="downlit">
+<div class="sourceCode" id="cb30"><pre class="downlit">
 <span class="co"># Determine genus of microorganisms (mo) in `septic_patients` data set:</span>
 <span class="co"># OLD WAY</span>
 <span class="kw">septic_patients</span> <span class="op">%&gt;%</span>
@@ -1337,7 +1354,7 @@ This works for all drug combinations, such as ampicillin/sulbactam, ceftazidime/
 <li><p>Fewer than 3 characters as input for <code>as.mo</code> will return NA</p></li>
 <li>
 <p>Function <code>as.mo</code> (and all <code>mo_*</code> wrappers) now supports genus abbreviations with “species” attached</p>
-<div class="sourceCode" id="cb30"><pre class="downlit">
+<div class="sourceCode" id="cb31"><pre class="downlit">
 <span class="fu"><a href="../reference/as.mo.html">as.mo</a></span>(<span class="st">"E. species"</span>)        <span class="co"># B_ESCHR</span>
 <span class="fu"><a href="../reference/mo_property.html">mo_fullname</a></span>(<span class="st">"E. spp."</span>)     <span class="co"># "Escherichia species"</span>
 <span class="fu"><a href="../reference/as.mo.html">as.mo</a></span>(<span class="st">"S. spp"</span>)            <span class="co"># B_STPHY</span>
@@ -1354,7 +1371,7 @@ This works for all drug combinations, such as ampicillin/sulbactam, ceftazidime/
 <ul>
 <li>
 <p>Support for grouping variables, test with:</p>
-<div class="sourceCode" id="cb31"><pre class="downlit">
+<div class="sourceCode" id="cb32"><pre class="downlit">
 <span class="kw">septic_patients</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span>(<span class="kw">hospital_id</span>) <span class="op">%&gt;%</span> 
   <span class="fu">freq</span>(<span class="kw">gender</span>)
@@ -1362,7 +1379,7 @@ This works for all drug combinations, such as ampicillin/sulbactam, ceftazidime/
 </li>
 <li>
 <p>Support for (un)selecting columns:</p>
-<div class="sourceCode" id="cb32"><pre class="downlit">
+<div class="sourceCode" id="cb33"><pre class="downlit">
 <span class="kw">septic_patients</span> <span class="op">%&gt;%</span> 
   <span class="fu">freq</span>(<span class="kw">hospital_id</span>) <span class="op">%&gt;%</span> 
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span>(<span class="op">-</span><span class="kw">count</span>, <span class="op">-</span><span class="kw">cum_count</span>) <span class="co"># only get item, percent, cum_percent</span>
@@ -1442,7 +1459,7 @@ This works for all drug combinations, such as ampicillin/sulbactam, ceftazidime/
 </li>
 </ul>
 <p>They also come with support for German, Dutch, French, Italian, Spanish and Portuguese:</p>
-<div class="sourceCode" id="cb33"><pre class="downlit">
+<div class="sourceCode" id="cb34"><pre class="downlit">
 <span class="fu"><a href="../reference/mo_property.html">mo_gramstain</a></span>(<span class="st">"E. coli"</span>)
 <span class="co"># [1] "Gram negative"</span>
 <span class="fu"><a href="../reference/mo_property.html">mo_gramstain</a></span>(<span class="st">"E. coli"</span>, language = <span class="st">"de"</span>) <span class="co"># German</span>
@@ -1453,7 +1470,7 @@ This works for all drug combinations, such as ampicillin/sulbactam, ceftazidime/
 <span class="co"># [1] "Streptococcus grupo A"</span>
 </pre></div>
 <p>Furthermore, former taxonomic names will give a note about the current taxonomic name:</p>
-<div class="sourceCode" id="cb34"><pre class="downlit">
+<div class="sourceCode" id="cb35"><pre class="downlit">
 <span class="fu"><a href="../reference/mo_property.html">mo_gramstain</a></span>(<span class="st">"Esc blattae"</span>)
 <span class="co"># Note: 'Escherichia blattae' (Burgess et al., 1973) was renamed 'Shimwellia blattae' (Priest and Barker, 2010)</span>
 <span class="co"># [1] "Gram negative"</span>
@@ -1468,7 +1485,7 @@ This works for all drug combinations, such as ampicillin/sulbactam, ceftazidime/
 <li><p>Function <code>is.rsi.eligible</code> to check for columns that have valid antimicrobial results, but do not have the <code>rsi</code> class yet. Transform the columns of your raw data with: <code>data %&gt;% mutate_if(is.rsi.eligible, as.rsi)</code></p></li>
 <li>
 <p>Functions <code>as.mo</code> and <code>is.mo</code> as replacements for <code>as.bactid</code> and <code>is.bactid</code> (since the <code>microoganisms</code> data set not only contains bacteria). These last two functions are deprecated and will be removed in a future release. The <code>as.mo</code> function determines microbial IDs using intelligent rules:</p>
-<div class="sourceCode" id="cb35"><pre class="downlit">
+<div class="sourceCode" id="cb36"><pre class="downlit">
 <span class="fu"><a href="../reference/as.mo.html">as.mo</a></span>(<span class="st">"E. coli"</span>)
 <span class="co"># [1] B_ESCHR_COL</span>
 <span class="fu"><a href="../reference/as.mo.html">as.mo</a></span>(<span class="st">"MRSA"</span>)
@@ -1477,7 +1494,7 @@ This works for all drug combinations, such as ampicillin/sulbactam, ceftazidime/
 <span class="co"># [1] B_STRPTC_GRA</span>
 </pre></div>
 <p>And with great speed too - on a quite regular Linux server from 2007 it takes us less than 0.02 seconds to transform 25,000 items:</p>
-<div class="sourceCode" id="cb36"><pre class="downlit">
+<div class="sourceCode" id="cb37"><pre class="downlit">
 <span class="kw">thousands_of_E_colis</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span>(<span class="st">"E. coli"</span>, <span class="fl">25000</span>)
 <span class="kw">microbenchmark</span>::<span class="fu"><a href="https://rdrr.io/pkg/microbenchmark/man/microbenchmark.html">microbenchmark</a></span>(<span class="fu"><a href="../reference/as.mo.html">as.mo</a></span>(<span class="kw">thousands_of_E_colis</span>), unit = <span class="st">"s"</span>)
 <span class="co"># Unit: seconds</span>
@@ -1511,7 +1528,7 @@ This works for all drug combinations, such as ampicillin/sulbactam, ceftazidime/
 <li><p>Added three antimicrobial agents to the <code>antibiotics</code> data set: Terbinafine (D01BA02), Rifaximin (A07AA11) and Isoconazole (D01AC05)</p></li>
 <li>
 <p>Added 163 trade names to the <code>antibiotics</code> data set, it now contains 298 different trade names in total, e.g.:</p>
-<div class="sourceCode" id="cb37"><pre class="downlit">
+<div class="sourceCode" id="cb38"><pre class="downlit">
 <span class="fu">ab_official</span>(<span class="st">"Bactroban"</span>)
 <span class="co"># [1] "Mupirocin"</span>
 <span class="fu"><a href="../reference/ab_property.html">ab_name</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"Bactroban"</span>, <span class="st">"Amoxil"</span>, <span class="st">"Zithromax"</span>, <span class="st">"Floxapen"</span>))
@@ -1528,7 +1545,7 @@ This works for all drug combinations, such as ampicillin/sulbactam, ceftazidime/
 <li><p>Added parameters <code>minimum</code> and <code>as_percent</code> to <code>portion_df</code></p></li>
 <li>
 <p>Support for quasiquotation in the functions series <code>count_*</code> and <code>portions_*</code>, and <code>n_rsi</code>. This allows to check for more than 2 vectors or columns.</p>
-<div class="sourceCode" id="cb38"><pre class="downlit">
+<div class="sourceCode" id="cb39"><pre class="downlit">
 <span class="kw">septic_patients</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span>(<span class="kw">amox</span>, <span class="kw">cipr</span>) <span class="op">%&gt;%</span> <span class="fu"><a href="../reference/count.html">count_IR</a></span>()
 <span class="co"># which is the same as:</span>
 <span class="kw">septic_patients</span> <span class="op">%&gt;%</span> <span class="fu"><a href="../reference/count.html">count_IR</a></span>(<span class="kw">amox</span>, <span class="kw">cipr</span>)
@@ -1548,12 +1565,12 @@ This works for all drug combinations, such as ampicillin/sulbactam, ceftazidime/
 <li><p>Added longest en shortest character length in the frequency table (<code>freq</code>) header of class <code>character</code></p></li>
 <li>
 <p>Support for types (classes) list and matrix for <code>freq</code></p>
-<div class="sourceCode" id="cb39"><pre class="downlit">
+<div class="sourceCode" id="cb40"><pre class="downlit">
 <span class="kw">my_matrix</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/with.html">with</a></span>(<span class="kw">septic_patients</span>, <span class="fu"><a href="https://rdrr.io/r/base/matrix.html">matrix</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="kw">age</span>, <span class="kw">gender</span>), ncol = <span class="fl">2</span>))
 <span class="fu">freq</span>(<span class="kw">my_matrix</span>)
 </pre></div>
 <p>For lists, subsetting is possible:</p>
-<div class="sourceCode" id="cb40"><pre class="downlit">
+<div class="sourceCode" id="cb41"><pre class="downlit">
 <span class="kw">my_list</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(age = <span class="kw">septic_patients</span><span class="op">$</span><span class="kw">age</span>, gender = <span class="kw">septic_patients</span><span class="op">$</span><span class="kw">gender</span>)
 <span class="kw">my_list</span> <span class="op">%&gt;%</span> <span class="fu">freq</span>(<span class="kw">age</span>)
 <span class="kw">my_list</span> <span class="op">%&gt;%</span> <span class="fu">freq</span>(<span class="kw">gender</span>)

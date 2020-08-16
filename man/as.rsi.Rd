@@ -23,6 +23,7 @@ is.rsi.eligible(x, threshold = 0.05)
   guideline = "EUCAST",
   uti = FALSE,
   conserve_capped_values = FALSE,
+  add_intrinsic_resistance = FALSE,
   ...
 )
 
@@ -32,6 +33,7 @@ is.rsi.eligible(x, threshold = 0.05)
   ab = deparse(substitute(x)),
   guideline = "EUCAST",
   uti = FALSE,
+  add_intrinsic_resistance = FALSE,
   ...
 )
 
@@ -41,6 +43,7 @@ is.rsi.eligible(x, threshold = 0.05)
   guideline = "EUCAST",
   uti = NULL,
   conserve_capped_values = FALSE,
+  add_intrinsic_resistance = FALSE,
   ...
 )
 }
@@ -60,6 +63,8 @@ is.rsi.eligible(x, threshold = 0.05)
 \item{uti}{(Urinary Tract Infection) A vector with \link{logical}s (\code{TRUE} or \code{FALSE}) to specify whether a UTI specific interpretation from the guideline should be chosen. For using \code{\link[=as.rsi]{as.rsi()}} on a \link{data.frame}, this can also be a column containing \link{logical}s or when left blank, the data set will be search for a 'specimen' and rows containing 'urin' in that column will be regarded isolates from a UTI. See \emph{Examples}.}
 
 \item{conserve_capped_values}{a logical to indicate that MIC values starting with \code{">"} (but not \code{">="}) must always return "R" , and that MIC values starting with \code{"<"} (but not \code{"<="}) must always return "S"}
+
+\item{add_intrinsic_resistance}{\emph{(only useful when using a EUCAST guideline)} a logical to indicate whether intrinsic antibiotic resistance must also be considered for applicable bug-drug combinations, meaning that e.g. ampicillin will always return "R" in \emph{Klebsiella} species. Determination is based on the \link{intrinsic_resistant} data set, that itself is based on 'EUCAST Expert Rules, Intrinsic Resistance and Exceptional Phenotypes', version 3.1, 2016.}
 
 \item{col_mo}{column name of the IDs of the microorganisms (see \code{\link[=as.mo]{as.mo()}}), defaults to the first column of class \code{\link{mo}}. Values will be coerced using \code{\link[=as.mo]{as.mo()}}.}
 }
@@ -160,6 +165,9 @@ as.rsi(df)
 
 # the dplyr way
 library(dplyr)
+df \%>\% mutate_if(is.mic, as.rsi)
+df \%>\% mutate_if(function(x) is.mic(x) | is.disk(x), as.rsi)
+df \%>\% mutate(across(where(is.mic), as.rsi))
 df \%>\% mutate_at(vars(AMP:TOB), as.rsi)
 df \%>\% mutate(across(AMP:TOB), as.rsi)
 

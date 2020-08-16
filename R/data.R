@@ -221,7 +221,7 @@ catalogue_of_life <- list(
 
 #' Data set for R/SI interpretation
 #'
-#' Data set to interpret MIC and disk diffusion to R/SI values. Included guidelines are CLSI (2011-2019) and EUCAST (2011-2020). Use [as.rsi()] to transform MICs or disks measurements to R/SI values.
+#' Data set to interpret MIC and disk diffusion to R/SI values. Included guidelines are CLSI (`r min(as.integer(gsub("[^0-9]", "", subset(rsi_translation, guideline %like% "CLSI")$guideline)))`-`r max(as.integer(gsub("[^0-9]", "", subset(rsi_translation, guideline %like% "CLSI")$guideline)))`) and EUCAST (`r min(as.integer(gsub("[^0-9]", "", subset(rsi_translation, guideline %like% "EUCAST")$guideline)))`-`r max(as.integer(gsub("[^0-9]", "", subset(rsi_translation, guideline %like% "EUCAST")$guideline)))`). Use [as.rsi()] to transform MICs or disks measurements to R/SI values.
 #' @format A [`data.frame`] with `r format(nrow(rsi_translation), big.mark = ",")` observations and `r ncol(rsi_translation)` variables:
 #' - `guideline`\cr Name of the guideline
 #' - `method`\cr Either "MIC" or "DISK"
@@ -234,6 +234,8 @@ catalogue_of_life <- list(
 #' - `breakpoint_R`\cr Highest MIC value or lowest number of millimetres that leads to "R"
 #' - `uti`\cr A logical value (`TRUE`/`FALSE`) to indicate whether the rule applies to a urinary tract infection (UTI)
 #' @details The repository of this `AMR` package contains a file comprising this exact data set: <https://github.com/msberends/AMR/blob/master/data-raw/rsi_translation.txt>. This file **allows for machine reading EUCAST and CLSI guidelines**, which is almost impossible with the Excel and PDF files distributed by EUCAST and CLSI. The file is updated automatically.
+#' 
+#' 
 #' @inheritSection AMR Read more on our website!
 #' @seealso [intrinsic_resistant]
 "rsi_translation"
