@@ -1,7 +1,5 @@
 ---
 title: "How to predict antimicrobial resistance"
-author: "Matthijs S. Berends"
-date: '`r format(Sys.Date(), "%d %B %Y")`'
 output: 
   rmarkdown::html_vignette:
     toc: true

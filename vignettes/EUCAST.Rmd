@@ -1,7 +1,5 @@
 ---
 title: "How to apply EUCAST rules"
-author: "Matthijs S. Berends"
-date: '`r format(Sys.Date(), "%d %B %Y")`'
 output:
   rmarkdown::html_vignette:
     toc: true

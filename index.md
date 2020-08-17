@@ -27,7 +27,7 @@ This package is [fully independent of any other R package](https://en.wikipedia.
 	<a href="articles/datasets.html">
 		<div style="background-color: #128f7635;">
 			<div class="fa fa-database"></div>
-			<span>Download free data sets</span>
+			<span>Download our data sets</span>
 		</div>
 	</a>
 	<a href="articles/AMR.html">

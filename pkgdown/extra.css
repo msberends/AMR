@@ -257,12 +257,13 @@ table a:not(.btn):hover, .table a:not(.btn):hover {
 .home-buttons a {
 	display: grid;
 	text-align: center;
-	font-size: 16px;
+	font-size: 14px;
 	text-transform: uppercase;
-	width: 25%;
+	max-width: 25%;
 }
 .home-buttons a:hover {
 	text-decoration: none;
+	opacity: 0.75;
 }
 .home-buttons div {
 	display: grid;

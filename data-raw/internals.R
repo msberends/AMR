@@ -89,6 +89,13 @@ haven::write_sav(mo, "data-raw/microorganisms.sav")
 haven::write_dta(mo, "data-raw/microorganisms.dta")
 openxlsx::write.xlsx(mo, "data-raw/microorganisms.xlsx")
 
+saveRDS(microorganisms.old, "data-raw/microorganisms.old.rds", version = 2)
+write.table(microorganisms.old, "data-raw/microorganisms.old.txt", sep = "\t", na = "", row.names = FALSE)
+haven::write_sas(microorganisms.old, "data-raw/microorganisms.old.sas")
+haven::write_sav(microorganisms.old, "data-raw/microorganisms.old.sav")
+haven::write_dta(microorganisms.old, "data-raw/microorganisms.old.dta")
+openxlsx::write.xlsx(microorganisms.old, "data-raw/microorganisms.old.xlsx")
+
 ab <- dplyr::mutate_if(antibiotics, ~!is.numeric(.), as.character)
 saveRDS(ab, "data-raw/antibiotics.rds", version = 2)
 write.table(ab, "data-raw/antibiotics.txt", sep = "\t", na = "", row.names = FALSE)

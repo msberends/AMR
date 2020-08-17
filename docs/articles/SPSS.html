@@ -39,7 +39,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.3.0.9002</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.3.0.9005</span>
       </span>
     </div>
 
@@ -73,6 +73,13 @@
         <span class="fa fa-dice"></span>
          
         Predict antimicrobial resistance
+      </a>
+    </li>
+    <li>
+      <a href="../articles/datasets.html">
+        <span class="fa fa-database"></span>
+         
+        Download our reference data sets for own use
       </a>
     </li>
     <li>
@@ -186,7 +193,7 @@
       <h1 data-toc-skip>How to import data from SPSS / SAS / Stata</h1>
                         <h4 class="author">Matthijs S. Berends</h4>
             
-            <h4 class="date">14 August 2020</h4>
+            <h4 class="date">17 August 2020</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/msberends/AMR/blob/master/vignettes/SPSS.Rmd"><code>vignettes/SPSS.Rmd</code></a></small>
       <div class="hidden name"><code>SPSS.Rmd</code></div>
@@ -207,7 +214,7 @@
 <ul>
 <li>
 <p><strong>R is highly modular.</strong></p>
-<p>The <a href="https://cran.r-project.org/">official R network (CRAN)</a> features almost 14,000 packages at the time of writing, our <code>AMR</code> package being one of them. All these packages were peer-reviewed before publication. Aside from this official channel, there are also developers who choose not to submit to CRAN, but rather keep it on their own public repository, like GitHub. So there may even be a lot more than 14,000 packages out there.</p>
+<p>The <a href="https://cran.r-project.org/">official R network (CRAN)</a> features more than 16,000 packages at the time of writing, our <code>AMR</code> package being one of them. All these packages were peer-reviewed before publication. Aside from this official channel, there are also developers who choose not to submit to CRAN, but rather keep it on their own public repository, like GitHub. So there may even be a lot more than 14,000 packages out there.</p>
 <p>Bottom line is, you can really extend it yourself or ask somebody to do this for you. Take for example our <code>AMR</code> package. Among other things, it adds reliable reference data to R to help you with the data cleaning and analysis. SPSS, SAS and Stata will never know what a valid MIC value is or what the Gram stain of <em>E. coli</em> is. Or that all species of <em>Klebiella</em> are resistant to amoxicillin and that Floxapen<sup>®</sup> is a trade name of flucloxacillin. These facts and properties are often needed to clean existing data, which would be very inconvenient in a software package without reliable reference data. See below for a demonstration.</p>
 </li>
 <li>
@@ -221,7 +228,7 @@
 </li>
 <li>
 <p><strong>R has a huge community.</strong></p>
-<p>Many R users just ask questions on websites like <a href="https://stackoverflow.com">StackOverflow.com</a>, the largest online community for programmers. At the time of writing, more than <a href="https://stackoverflow.com/questions/tagged/r?sort=votes">300,000 R-related questions</a> have already been asked on this platform (which covers questions and answers for any programming language). In my own experience, most questions are answered within a couple of minutes.</p>
+<p>Many R users just ask questions on websites like <a href="https://stackoverflow.com">StackOverflow.com</a>, the largest online community for programmers. At the time of writing, more than <a href="https://stackoverflow.com/questions/tagged/r?sort=votes">360,000 R-related questions</a> have already been asked on this platform (which covers questions and answers for any programming language). In my own experience, most questions are answered within a couple of minutes.</p>
 </li>
 <li>
 <p><strong>R understands any data type, including SPSS/SAS/Stata.</strong></p>

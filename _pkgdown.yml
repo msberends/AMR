@@ -44,7 +44,7 @@ navbar:
       - text: "Predict antimicrobial resistance"
         icon: "fa-dice"
         href: "articles/resistance_predict.html"
-      - text: "Download our free data sets"
+      - text: "Download our reference data sets for own use"
         icon: "fa-database"
         href: "articles/datasets.html"
       - text: "Conduct principal component analysis for AMR"

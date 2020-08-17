@@ -1,7 +1,5 @@
 ---
 title: "Benchmarks"
-author: "Matthijs S. Berends"
-date: '`r format(Sys.Date(), "%d %B %Y")`'
 output: 
   rmarkdown::html_vignette:
     toc: true
@@ -88,35 +86,7 @@ ggplot.bm(S.aureus)
 
 In the table above, all measurements are shown in milliseconds (thousands of seconds). A value of 5 milliseconds means it can determine 200 input values per second. It case of 100 milliseconds, this is only 10 input values per second. 
 
-To achieve this speed, the `as.mo` function also takes into account the prevalence of human pathogenic microorganisms. The downside of this is of course that less prevalent microorganisms will be determined less fast. See this example for the ID of *Methanosarcina semesiae* (`B_MTHNSR_SEMS`), a bug probably never found before in humans:
-
-```{r, warning=FALSE}
-M.semesiae <- microbenchmark(as.mo("metsem"),
-                             as.mo("METSEM"),
-                             as.mo("M. semesiae"),
-                             as.mo("M.  semesiae"),
-                             as.mo("Methanosarcina semesiae"),
-                             times = 10)
-print(M.semesiae, unit = "ms", signif = 4)
-```
-
-Looking up arbitrary codes of less prevalent microorganisms costs the most time. Full names (like *Methanosarcina semesiae*) are always very fast and only take some thousands of seconds to coerce - they are the most probable input from most data sets.
-
-In the figure below, we compare *Escherichia coli* (which is very common) with *Prevotella brevis* (which is moderately common) and with *Methanosarcina semesiae* (which is uncommon):
-
-```{r, echo = FALSE, fig.width=12}
-par(mar = c(5, 16, 4, 2))
-boxplot(microbenchmark(
-  as.mo("Meth. semesiae"),
-  as.mo("Prev. brevis"),
-  as.mo("Esc. coli"),
-  times = 100),
-        horizontal = TRUE, las = 1, unit = "s", log = TRUE,
-        xlab = "", ylab = "Time in seconds (log)",
-        main = "Benchmarks per prevalence")
-```
-
-Uncommon microorganisms take some more time than common microorganisms. To further improve performance, two important calculations take almost no time at all: **repetitive results** and **already precalculated results**.
+To improve performance, two important calculations take almost no time at all: **repetitive results** and **already precalculated results**.
 
 ### Repetitive results
 
