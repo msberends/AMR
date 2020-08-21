@@ -82,7 +82,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.3.0.9002</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.3.0.9006</span>
       </span>
     </div>
 
@@ -116,6 +116,13 @@
         <span class="fa fa-dice"></span>
          
         Predict antimicrobial resistance
+      </a>
+    </li>
+    <li>
+      <a href="../articles/datasets.html">
+        <span class="fa fa-database"></span>
+         
+        Download our reference data sets for own use
       </a>
     </li>
     <li>
@@ -276,6 +283,11 @@
 
     <p>All columns will be searched for known antibiotic names, abbreviations, brand names and codes (ATC, EARS-Net, WHO, etc.). This means that a selector like e.g. <code>aminoglycosides()</code> will pick up column names like 'gen', 'genta', 'J01GB03', 'tobra', 'Tobracin', etc.</p>
 <p>These functions only work if the <code>tidyselect</code> package is installed, that comes with the <code>dplyr</code> package. An error will be thrown if <code>tidyselect</code> package is not installed, or if the functions are used outside a function that allows Tidyverse selections like <code><a href='https://dplyr.tidyverse.org/reference/select.html'>select()</a></code> or <code>pivot_longer()</code>.</p>
+    <h2 class="hasAnchor" id="read-more-on-our-website-"><a class="anchor" href="#read-more-on-our-website-"></a>Read more on our website!</h2>
+
+    
+
+<p>On our website <a href='https://msberends.github.io/AMR'>https://msberends.github.io/AMR</a> you can find <a href='https://msberends.github.io/AMR/articles/AMR.html'>a comprehensive tutorial</a> about how to conduct AMR analysis, the <a href='https://msberends.github.io/AMR/reference'>complete documentation of all functions</a> (which reads a lot easier than here in R) and <a href='https://msberends.github.io/AMR/articles/WHONET.html'>an example analysis using WHONET data</a>. As we would like to better understand the backgrounds and needs of our users, please <a href='https://msberends.github.io/AMR/survey.html'>participate in our survey</a>!</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><code><a href='filter_ab_class.html'>filter_ab_class()</a></code> for the <code><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter()</a></code> equivalent.</p></div>

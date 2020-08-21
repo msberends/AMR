@@ -110,6 +110,7 @@
 #' @seealso [microorganisms] for the [`data.frame`] that is being used to determine ID's.
 #' 
 #' The [mo_property()] functions (like [mo_genus()], [mo_gramstain()]) to get properties based on the returned code.
+#' @inheritSection AMR Reference data publicly available
 #' @inheritSection AMR Read more on our website!
 #' @examples
 #' \donttest{

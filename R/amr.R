@@ -47,6 +47,8 @@
 #' - Machine reading the EUCAST and CLSI guidelines from 2011-2020 to translate MIC values and disk diffusion diameters to R/SI
 #' - Principal component analysis for AMR
 #' 
+#' @section Reference data publicly available:
+#' All reference data sets (about microorganisms, antibiotics, R/SI interpretation, EUCAST rules, etc.) in this `AMR` package are publicly and freely available. We continually export our data sets to formats for use in R, SPSS, SAS, Stata and Excel. We also supply flat files that are machine-readable and suitable for input in any software program, such as laboratory information systems. Please find [all download links on our website](https://msberends.github.io/AMR/articles/datasets.html), which is automatically updated with every code change.
 #' @section Read more on our website!:
 #' On our website <https://msberends.github.io/AMR> you can find [a comprehensive tutorial](https://msberends.github.io/AMR/articles/AMR.html) about how to conduct AMR analysis, the [complete documentation of all functions](https://msberends.github.io/AMR/reference) (which reads a lot easier than here in R) and [an example analysis using WHONET data](https://msberends.github.io/AMR/articles/WHONET.html). As we would like to better understand the backgrounds and needs of our users, please [participate in our survey](https://msberends.github.io/AMR/survey.html)!
 #' @section Contact Us:

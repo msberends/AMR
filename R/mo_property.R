@@ -54,6 +54,7 @@
 #' - A [`character`] in all other cases
 #' @export
 #' @seealso [microorganisms]
+#' @inheritSection AMR Reference data publicly available
 #' @inheritSection AMR Read more on our website!
 #' @examples
 #' # taxonomic tree -----------------------------------------------------------

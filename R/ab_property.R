@@ -44,6 +44,7 @@
 #' - A [`character`] in all other cases
 #' @export
 #' @seealso [antibiotics]
+#' @inheritSection AMR Reference data publicly available
 #' @inheritSection AMR Read more on our website!
 #' @examples
 #' # all properties:

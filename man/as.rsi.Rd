@@ -142,6 +142,11 @@ The \link[=lifecycle]{lifecycle} of this function is \strong{stable}. In a stabl
 If the unlying code needs breaking changes, they will occur gradually. For example, a parameter will be deprecated and first continue to work, but will emit an message informing you of the change. Next, typically after at least one newly released version on CRAN, the message will be transformed to an error.
 }
 
+\section{Reference data publicly available}{
+
+All reference data sets (about microorganisms, antibiotics, R/SI interpretation, EUCAST rules, etc.) in this \code{AMR} package are publicly and freely available. We continually export our data sets to formats for use in R, SPSS, SAS, Stata and Excel. We also supply flat files that are machine-readable and suitable for input in any software program, such as laboratory information systems. Please find \href{https://msberends.github.io/AMR/articles/datasets.html}{all download links on our website}, which is automatically updated with every code change.
+}
+
 \section{Read more on our website!}{
 
 On our website \url{https://msberends.github.io/AMR} you can find \href{https://msberends.github.io/AMR/articles/AMR.html}{a comprehensive tutorial} about how to conduct AMR analysis, the \href{https://msberends.github.io/AMR/reference}{complete documentation of all functions} (which reads a lot easier than here in R) and \href{https://msberends.github.io/AMR/articles/WHONET.html}{an example analysis using WHONET data}. As we would like to better understand the backgrounds and needs of our users, please \href{https://msberends.github.io/AMR/survey.html}{participate in our survey}!

@@ -150,6 +150,7 @@ EUCAST_VERSION_EXPERT_RULES <- "3.1, 2016"
 #'   <http://www.eucast.org/fileadmin/src/media/PDFs/EUCAST_files/Expert_Rules/Expert_rules_intrinsic_exceptional_V3.1.pdf>
 #' - EUCAST Breakpoint tables for interpretation of MICs and zone diameters. Version 9.0, 2019. \cr
 #'   <http://www.eucast.org/fileadmin/src/media/PDFs/EUCAST_files/Breakpoint_tables/v_9.0_Breakpoint_Tables.xlsx>
+#' @inheritSection AMR Reference data publicly available
 #' @inheritSection AMR Read more on our website!
 #' @examples
 #' \donttest{

@@ -30,6 +30,7 @@
 #' @seealso [filter_ab_class()] for the `filter()` equivalent.
 #' @name antibiotic_class_selectors
 #' @export
+#' @inheritSection AMR Read more on our website!
 #' @examples 
 #' \dontrun{
 #'   library(dplyr)

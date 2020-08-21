@@ -75,6 +75,11 @@ Files in R format (with preserved data structure) can be found here:
 }
 }
 }
+\section{Reference data publicly available}{
+
+All reference data sets (about microorganisms, antibiotics, R/SI interpretation, EUCAST rules, etc.) in this \code{AMR} package are publicly and freely available. We continually export our data sets to formats for use in R, SPSS, SAS, Stata and Excel. We also supply flat files that are machine-readable and suitable for input in any software program, such as laboratory information systems. Please find \href{https://msberends.github.io/AMR/articles/datasets.html}{all download links on our website}, which is automatically updated with every code change.
+}
+
 \section{WHOCC}{
 
 \if{html}{\figure{logo_who.png}{options: height=60px style=margin-bottom:5px} \cr}

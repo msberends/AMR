@@ -68,6 +68,7 @@
 #' WHONET 2019 software: <http://www.whonet.org/software.html>
 #'
 #' European Commission Public Health PHARMACEUTICALS - COMMUNITY REGISTER: <http://ec.europa.eu/health/documents/community-register/html/atc.htm>
+#' @inheritSection AMR Reference data publicly available
 #' @inheritSection WHOCC WHOCC
 #' @inheritSection AMR Read more on our website!
 #' @seealso [microorganisms], [intrinsic_resistant]
@@ -118,6 +119,7 @@
 #' Parte, A.C. (2018). LPSN — List of Prokaryotic names with Standing in Nomenclature (bacterio.net), 20 years on. International Journal of Systematic and Evolutionary Microbiology, 68, 1825-1829; doi: 10.1099/ijsem.0.002786
 #'
 #' Leibniz Institute DSMZ-German Collection of Microorganisms and Cell Cultures, Germany, Prokaryotic Nomenclature Up-to-Date, <https://www.dsmz.de/services/online-tools/prokaryotic-nomenclature-up-to-date> and <https://lpsn.dsmz.de> (check included version with [catalogue_of_life_version()]).
+#' @inheritSection AMR Reference data publicly available
 #' @inheritSection AMR Read more on our website!
 #' @seealso [as.mo()], [mo_property()], [microorganisms.codes], [intrinsic_resistant]
 "microorganisms"
@@ -142,6 +144,7 @@ catalogue_of_life <- list(
 #' @source Catalogue of Life: Annual Checklist (public online taxonomic database), <http://www.catalogueoflife.org> (check included annual version with [catalogue_of_life_version()]).
 #' 
 #' Parte, A.C. (2018). LPSN — List of Prokaryotic names with Standing in Nomenclature (bacterio.net), 20 years on. International Journal of Systematic and Evolutionary Microbiology, 68, 1825-1829; doi: 10.1099/ijsem.0.002786
+#' @inheritSection AMR Reference data publicly available
 #' @inheritSection AMR Read more on our website!
 #' @seealso [as.mo()] [mo_property()] [microorganisms]
 "microorganisms.old"
@@ -152,6 +155,7 @@ catalogue_of_life <- list(
 #' @format A [`data.frame`] with `r format(nrow(microorganisms.codes), big.mark = ",")` observations and `r ncol(microorganisms.codes)` variables:
 #' - `code`\cr Commonly used code of a microorganism
 #' - `mo`\cr ID of the microorganism in the [microorganisms] data set
+#' @inheritSection AMR Reference data publicly available
 #' @inheritSection catalogue_of_life Catalogue of Life
 #' @inheritSection AMR Read more on our website!
 #' @seealso [as.mo()] [microorganisms]
@@ -171,6 +175,7 @@ catalogue_of_life <- list(
 #' - `patient_id`\cr ID of the patient
 #' - `mo`\cr ID of microorganism created with [as.mo()], see also [microorganisms]
 #' - `PEN:RIF`\cr `r sum(sapply(example_isolates, is.rsi))` different antibiotics with class [`rsi`] (see [as.rsi()]); these column names occur in the [antibiotics] data set and can be translated with [ab_name()]
+#' @inheritSection AMR Reference data publicly available
 #' @inheritSection AMR Read more on our website!
 "example_isolates"
 
@@ -183,6 +188,7 @@ catalogue_of_life <- list(
 #' - `hospital`\cr ID of the hospital, from A to C
 #' - `bacteria`\cr info about microorganism that can be transformed with [as.mo()], see also [microorganisms]
 #' - `AMX:GEN`\cr 4 different antibiotics that have to be transformed with [as.rsi()]
+#' @inheritSection AMR Reference data publicly available
 #' @inheritSection AMR Read more on our website!
 "example_isolates_unclean"
 
@@ -216,6 +222,7 @@ catalogue_of_life <- list(
 #' - `Comment`\cr Other comments
 #' - `Date of data entry`\cr Date this data was entered in WHONET
 #' - `AMP_ND10:CIP_EE`\cr `r sum(sapply(WHONET, is.rsi))` different antibiotics. You can lookup the abbreviations in the [antibiotics] data set, or use e.g. [`ab_name("AMP")`][ab_name()] to get the official name immediately. Before analysis, you should transform this to a valid antibiotic class, using [as.rsi()].
+#' @inheritSection AMR Reference data publicly available
 #' @inheritSection AMR Read more on our website!
 "WHONET"
 
@@ -234,8 +241,7 @@ catalogue_of_life <- list(
 #' - `breakpoint_R`\cr Highest MIC value or lowest number of millimetres that leads to "R"
 #' - `uti`\cr A logical value (`TRUE`/`FALSE`) to indicate whether the rule applies to a urinary tract infection (UTI)
 #' @details The repository of this `AMR` package contains a file comprising this exact data set: <https://github.com/msberends/AMR/blob/master/data-raw/rsi_translation.txt>. This file **allows for machine reading EUCAST and CLSI guidelines**, which is almost impossible with the Excel and PDF files distributed by EUCAST and CLSI. The file is updated automatically.
-#' 
-#' 
+#' @inheritSection AMR Reference data publicly available
 #' @inheritSection AMR Read more on our website!
 #' @seealso [intrinsic_resistant]
 "rsi_translation"
@@ -249,6 +255,7 @@ catalogue_of_life <- list(
 #' @details The repository of this `AMR` package contains a file comprising this exact data set: <https://github.com/msberends/AMR/blob/master/data-raw/intrinsic_resistant.txt>. This file **allows for machine reading EUCAST guidelines about intrinsic resistance**, which is almost impossible with the Excel and PDF files distributed by EUCAST. The file is updated automatically.
 #' 
 #' This data set is based on 'EUCAST Expert Rules, Intrinsic Resistance and Exceptional Phenotypes', version `r EUCAST_VERSION_EXPERT_RULES`.
+#' @inheritSection AMR Reference data publicly available
 #' @inheritSection AMR Read more on our website!
 #' @examples
 #' if (require("dplyr")) {

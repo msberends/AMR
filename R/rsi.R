@@ -90,6 +90,7 @@
 #' @aliases rsi
 #' @export
 #' @seealso [as.mic()], [as.disk()], [as.mo()]
+#' @inheritSection AMR Reference data publicly available
 #' @inheritSection AMR Read more on our website!
 #' @examples
 #' summary(example_isolates) # see all R/SI results at a glance

@@ -17,6 +17,11 @@ microorganisms.codes
 \description{
 A data set containing commonly used codes for microorganisms, from laboratory systems and WHONET. Define your own with \code{\link[=set_mo_source]{set_mo_source()}}. They will all be searched when using \code{\link[=as.mo]{as.mo()}} and consequently all the \code{\link[=mo_property]{mo_*}} functions.
 }
+\section{Reference data publicly available}{
+
+All reference data sets (about microorganisms, antibiotics, R/SI interpretation, EUCAST rules, etc.) in this \code{AMR} package are publicly and freely available. We continually export our data sets to formats for use in R, SPSS, SAS, Stata and Excel. We also supply flat files that are machine-readable and suitable for input in any software program, such as laboratory information systems. Please find \href{https://msberends.github.io/AMR/articles/datasets.html}{all download links on our website}, which is automatically updated with every code change.
+}
+
 \section{Catalogue of Life}{
 
 \if{html}{\figure{logo_col.png}{options: height=40px style=margin-bottom:5px} \cr}

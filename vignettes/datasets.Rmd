@@ -47,8 +47,8 @@ download_txt <- function(filename) {
   txt <- paste0(filename, ".txt")
   rds <- paste0(filename, ".rds")
   spss <- paste0(filename, ".sav")
-  stata <- paste0(filename, ".sav")
-  sas <- paste0(filename, ".dta")
+  stata <- paste0(filename, ".dta")
+  sas <- paste0(filename, ".sas")
   excel <- paste0(filename, ".xlsx")
   create_txt <- function(filename, type) {
     paste0("[", type, "](", github_base, filename, "), ", file_size(filename), " -- ")
@@ -59,7 +59,7 @@ download_txt <- function(filename) {
   if (file.exists(spss)) msg <- c(msg, create_txt(spss, "SPSS file (.sav)"))
   if (file.exists(stata)) msg <- c(msg, create_txt(stata, "Stata file (.dta)"))
   if (file.exists(sas)) msg <- c(msg, create_txt(sas, "SAS file (.sas)"))
-  if (file.exists(txt)) msg <- c(msg, create_txt(txt, "Tab separated file (.txt)"))
+  if (file.exists(txt)) msg <- c(msg, create_txt(txt, "tab separated file (.txt)"))
   msg[length(msg)] <- gsub(" --", ".", msg[length(msg)], fixed = TRUE)
   paste0(msg, collapse = "")
 }
@@ -90,11 +90,9 @@ print_df <- function(x) {
 
 ```
 
-This package contains a lot of reference data sets that are all reliable, up-to-date and free to download. You can even use them outside of R, for example to teach your laboratory information system (LIS) about intrinsic resistance! 
+All reference data (about microorganisms, antibiotics, R/SI interpretation, EUCAST rules, etc.) in this `AMR` package are reliable, up-to-date and freely available. We continually export our data sets to formats for use in R, SPSS, SAS, Stata and Excel. We also supply  tab separated files that are machine-readable and suitable for input in any software program, such as laboratory information systems. 
 
-We included them in our `AMR` package, but also automatically 'mirror' them to our public repository in different software formats. On this page, we explain how to download them and how the structure of the data sets look like. The tab separated files **allow for machine reading taxonomic data and EUCAST and CLSI interpretation guidelines**, which is almost impossible with the Excel and PDF files distributed by EUCAST and CLSI. We also offer all data sets in formats for R, SPSS, SAS, Stata and Excel.
-
-*Note: Years and dates of updates mentioned on this page, are from on `AMR` package version `r utils::packageVersion("AMR")`, online released on `r format(utils::packageDate("AMR"), "%e %B %Y")`. **If you are reading this page from within R, please [visit our website](https://msberends.github.io/AMR/articles/datasets.html) for the latest update.***
+On this page, we explain how to download them and how the structure of the data sets look like. If you are reading this page from within R, please [visit our website](https://msberends.github.io/AMR/articles/datasets.html), which is automatically updated with every code change.
 
 ## Microorganisms (currently accepted names)
 

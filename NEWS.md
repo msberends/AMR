@@ -1,5 +1,5 @@
-# AMR 1.3.0.9005
-## <small>Last updated: 17 August 2020</small>
+# AMR 1.3.0.9006
+## <small>Last updated: 21 August 2020</small>
 
 ### New
 * Data set `intrinsic_resistant`. This data set contains all bug-drug combinations where the 'bug' is intrinsic resistant to the 'drug' according to the latest EUCAST insights. It contains just two columns: `microorganism` and `antibiotic`.
