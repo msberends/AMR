@@ -224,7 +224,7 @@ stop_ifnot_installed <- function(package) {
                if (package == "rstudioapi") {
                  stop("This function only works in RStudio.", call. = FALSE)
                } else if (pkg != "base") {
-                 stop("package '", pkg, "' required but not installed.",
+                 stop("This requires the '", pkg, "' package.",
                       "\nTry to install it with: install.packages(\"", pkg, "\")",
                       call. = FALSE)
                }
@@ -240,7 +240,9 @@ import_fn <- function(name, pkg, error_on_fail = TRUE) {
     get(name, envir = asNamespace(pkg)),
     error = function(e) {
       if (isTRUE(error_on_fail)) {
-        stop_("function ", name, "() not found in package '", pkg, "'. Please contact the maintainers of the AMR package at https://github.com/msberends/AMR/issues.", call = FALSE)
+        stop_("function ", name, "() not found in package '", pkg, 
+              "'. Please create an issue at https://github.com/msberends/AMR/issues. Many thanks!", 
+              call = FALSE)
       } else {
         return(NULL)
       }

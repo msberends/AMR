@@ -51,7 +51,7 @@
 #'                            FUN = mo_gramstain)
 #'                            
 #' x <- bug_drug_combinations(example_isolates,
-#'                            FUN = function(x) ifelse(x == "B_ESCHR_COLI",
+#'                            FUN = function(x) ifelse(x == as.mo("E. coli"),
 #'                                                     "E. coli",
 #'                                                     "Others"))
 #' }

@@ -50,13 +50,18 @@ tetracyclines()
 \item{ab_class}{an antimicrobial class, like \code{"carbapenems"}. The columns \code{group}, \code{atc_group1} and \code{atc_group2} of the \link{antibiotics} data set will be searched (case-insensitive) for this value.}
 }
 \description{
-Use these selection helpers inside any function that allows \href{https://tidyselect.r-lib.org/reference/language.html}{Tidyverse selections}, like \code{dplyr::select()} or \code{tidyr::pivot_longer()}. They help to select the columns of antibiotics that are of a specific antibiotic class, without the need to define the columns or antibiotic abbreviations.
+Use these selection helpers inside any function that allows \href{https://tidyselect.r-lib.org/reference/language.html}{Tidyverse selection helpers}, like \code{dplyr::select()} or \code{tidyr::pivot_longer()}. They help to select the columns of antibiotics that are of a specific antibiotic class, without the need to define the columns or antibiotic abbreviations.
 }
 \details{
-All columns will be searched for known antibiotic names, abbreviations, brand names and codes (ATC, EARS-Net, WHO, etc.). This means that a selector like e.g. \code{\link[=aminoglycosides]{aminoglycosides()}} will pick up column names like 'gen', 'genta', 'J01GB03', 'tobra', 'Tobracin', etc.
+All columns will be searched for known antibiotic names, abbreviations, brand names and codes (ATC, EARS-Net, WHO, etc.) in the \link{antibiotics} data set. This means that a selector like e.g. \code{\link[=aminoglycosides]{aminoglycosides()}} will pick up column names like 'gen', 'genta', 'J01GB03', 'tobra', 'Tobracin', etc.
 
-These functions only work if the \code{tidyselect} package is installed, that comes with the \code{dplyr} package. An error will be thrown if \code{tidyselect} package is not installed, or if the functions are used outside a function that allows Tidyverse selections like \code{select()} or \code{pivot_longer()}.
+\strong{N.B. These functions only work if the \code{tidyselect} package is installed}, that comes with the \code{dplyr} package. An error will be thrown if the \code{tidyselect} package is not installed, or if the functions are used outside a function that allows Tidyverse selections like \code{select()} or \code{pivot_longer()}.
 }
+\section{Reference data publicly available}{
+
+All reference data sets (about microorganisms, antibiotics, R/SI interpretation, EUCAST rules, etc.) in this \code{AMR} package are publicly and freely available. We continually export our data sets to formats for use in R, SPSS, SAS, Stata and Excel. We also supply flat files that are machine-readable and suitable for input in any software program, such as laboratory information systems. Please find \href{https://msberends.github.io/AMR/articles/datasets.html}{all download links on our website}, which is automatically updated with every code change.
+}
+
 \section{Read more on our website!}{
 
 On our website \url{https://msberends.github.io/AMR} you can find \href{https://msberends.github.io/AMR/articles/AMR.html}{a comprehensive tutorial} about how to conduct AMR analysis, the \href{https://msberends.github.io/AMR/reference}{complete documentation of all functions} (which reads a lot easier than here in R) and \href{https://msberends.github.io/AMR/articles/WHONET.html}{an example analysis using WHONET data}. As we would like to better understand the backgrounds and needs of our users, please \href{https://msberends.github.io/AMR/survey.html}{participate in our survey}!
@@ -89,7 +94,7 @@ On our website \url{https://msberends.github.io/AMR} you can find \href{https://
     
   data.frame(irrelevant = "value",
              J01CA01 = "S") \%>\%   # ATC code of ampicillin
-    select(penicillins())         # so the 'J01CA01' column is selected
+    select(penicillins())         # the 'J01CA01' column will be selected
 
 }
 }

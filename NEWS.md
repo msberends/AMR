@@ -1,4 +1,4 @@
-# AMR 1.3.0.9008
+# AMR 1.3.0.9009
 ## <small>Last updated: 26 August 2020</small>
 
 ### New
@@ -36,9 +36,9 @@
   ```
 * Speed improvement for `eucast_rules()`
 * Overall speed improvement by tweaking joining functions
-* Function `mo_shortname()` now return the genus for input where the species is unknown
-* BORSA is now recognised as an abbreviation for a *Staphylococcus aureus*, meaning that e.g. `mo_genus("BORSA")` will return "Staphylococcus"
-* Support for coloured `tibble` printing of classes `mo`, `rsi`, `mic` and `disk`
+* Function `mo_shortname()` now returns the genus for input where the species is unknown
+* BORSA is now recognised as an abbreviation for *Staphylococcus aureus*, meaning that e.g. `mo_genus("BORSA")` will return "Staphylococcus"
+* Support for coloured `tibble` printing of classes `ab`, `mo`, `rsi`, `mic` and `disk`
 
 # AMR 1.3.0
 
