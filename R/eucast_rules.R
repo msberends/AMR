@@ -350,6 +350,9 @@ eucast_rules <- function(x,
                             verbose = verbose,
                             ...)
   
+  # data preparation ----
+  message(font_blue("NOTE: Preparing data..."), appendLF = FALSE)
+  
   AMC <- cols_ab["AMC"]
   AMK <- cols_ab["AMK"]
   AMP <- cols_ab["AMP"]
@@ -429,7 +432,7 @@ eucast_rules <- function(x,
                              rule_name = character(0),
                              stringsAsFactors = FALSE)
   
-  # helper function for editing the table
+  # helper function for editing the table ----
   edit_rsi <- function(to, rule, rows, cols) {
     cols <- unique(cols[!is.na(cols) & !is.null(cols)])
     if (length(rows) > 0 & length(cols) > 0) {
@@ -508,10 +511,21 @@ eucast_rules <- function(x,
                 changed = 0))
   }
   
-  # save original table
+
+  old_cols <- colnames(x)
+  old_attributes <- attributes(x)
+  x <- as.data.frame(x, stringsAsFactors = FALSE) # no tibbles, data.tables, etc.
+  # create unique row IDs - combination of the MO and all ABx columns (so they will only run once per unique combination)
+  x$`.rowid` <- sapply(as.list(as.data.frame(t(x[, c(col_mo, cols_ab), drop = FALSE]))), function(x) {
+    x[is.na(x)] <- "."
+    paste0(x, collapse = "")
+  })
+  
+  # save original table, with the new .rowid column
+  x_original.bak <- x
+  # keep only unique rows for MO and ABx
+  x <- x %>% distinct(`.rowid`, .keep_all = TRUE)
   x_original <- x
-  x_original_attr <- attributes(x)
-  x_original <- as.data.frame(x_original, stringsAsFactors = FALSE) # no tibbles, data.tables, etc.
   
   # join to microorganisms data set
   x <- as.data.frame(x, stringsAsFactors = FALSE)
@@ -520,6 +534,7 @@ eucast_rules <- function(x,
     left_join_microorganisms(by = col_mo, suffix = c("_oldcols", ""))
   x$gramstain <- mo_gramstain(x[, col_mo, drop = TRUE], language = NULL)
   x$genus_species <- paste(x$genus, x$species)
+  message(font_blue("OK."))
   
   if (ab_missing(AMP) & !ab_missing(AMX)) {
     # ampicillin column is missing, but amoxicillin is available
@@ -528,7 +543,7 @@ eucast_rules <- function(x,
   }
   
   # nolint start
-  # antibiotic classes
+  # antibiotic classes ----
   aminoglycosides <- c(TOB, GEN, KAN, NEO, NET, SIS)
   tetracyclines <- c(DOX, MNO, TCY) # since EUCAST v3.1 tigecycline (TGC) is set apart
   polymyxins <- c(PLB, COL)
@@ -544,7 +559,7 @@ eucast_rules <- function(x,
   fluoroquinolones <- c(OFX, CIP, NOR, LVX, MFX)
   # nolint end
   
-  # Help function to get available antibiotic column names ------------------
+  # help function to get available antibiotic column names ------------------
   get_antibiotic_columns <- function(x, df) {
     x <- trimws(unlist(strsplit(x, ",", fixed = TRUE)))
     y <- character(0)
@@ -923,7 +938,12 @@ eucast_rules <- function(x,
     verbose_info
   } else {
     # reset original attributes
-    attributes(x_original) <- x_original_attr
-    x_original
+    x_original <- x_original[, c(col_mo, cols_ab, ".rowid"), drop = FALSE]
+    x_original.bak <- x_original.bak[, setdiff(colnames(x_original.bak), c(col_mo, cols_ab)), drop = FALSE]
+    x_original.bak <- x_original.bak %>% 
+      left_join(x_original, by = ".rowid")
+    x_original.bak <- x_original.bak[, old_cols, drop = FALSE]
+    attributes(x_original.bak) <- old_attributes
+    x_original.bak
   }
 }

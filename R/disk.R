@@ -114,6 +114,22 @@ is.disk <- function(x) {
   inherits(x, "disk")
 }
 
+#' @method pillar_shaft disk
+#' @export
+pillar_shaft.disk <- function(x, ...) {
+  style_na <- import_fn("style_na", "pillar", error_on_fail = FALSE)
+  new_pillar_shaft_simple <- import_fn("new_pillar_shaft_simple", "pillar", error_on_fail = FALSE)
+  out <- trimws(format(x))
+  out[is.na(x)] <- style_na(NA)
+  new_pillar_shaft_simple(out, align = "right", min_width = 3)
+}
+
+#' @method type_sum disk
+#' @export
+type_sum.disk <- function(x, ...) {
+  "disk"
+}
+
 #' @method print disk
 #' @export
 #' @noRd

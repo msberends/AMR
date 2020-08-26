@@ -1,5 +1,5 @@
-# AMR 1.3.0.9006
-## <small>Last updated: 21 August 2020</small>
+# AMR 1.3.0.9007
+## <small>Last updated: 26 August 2020</small>
 
 ### New
 * Data set `intrinsic_resistant`. This data set contains all bug-drug combinations where the 'bug' is intrinsic resistant to the 'drug' according to the latest EUCAST insights. It contains just two columns: `microorganism` and `antibiotic`.
@@ -34,7 +34,11 @@
   #> Class <disk>
   #> [1] 24 24
   ```
+* Speed improvement for `eucast_rules()`
 * Overall speed improvement by tweaking joining functions
+* Function `mo_shortname()` now return the genus for input where the species is unknown
+* BORSA is now recognised as an abbreviation for a *Staphylococcus aureus*, meaning that e.g. `mo_genus("BORSA")` will return "Staphylococcus"
+* Support for coloured `tibble` printing of classes `mo`, `rsi`, `mic` and `disk`
 
 # AMR 1.3.0
 

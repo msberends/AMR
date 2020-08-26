@@ -171,6 +171,22 @@ droplevels.mic <- function(x, exclude = ifelse(anyNA(levels(x)), NULL, NA), ...)
   x
 }
 
+#' @method pillar_shaft mic
+#' @export
+pillar_shaft.mic <- function(x, ...) {
+  style_na <- import_fn("style_na", "pillar", error_on_fail = FALSE)
+  new_pillar_shaft_simple <- import_fn("new_pillar_shaft_simple", "pillar", error_on_fail = FALSE)
+  out <- trimws(format(x))
+  out[is.na(x)] <- style_na(NA)
+  new_pillar_shaft_simple(out, align = "right", min_width = 4)
+}
+
+#' @method type_sum mic
+#' @export
+type_sum.mic <- function(x, ...) {
+  "mic"
+}
+
 #' @method print mic
 #' @export
 #' @noRd

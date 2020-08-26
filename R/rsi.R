@@ -670,6 +670,24 @@ exec_as.rsi <- function(method,
             class =  c("rsi", "ordered", "factor"))
 }
 
+#' @method pillar_shaft rsi
+#' @export 
+pillar_shaft.rsi <- function(x, ...) {
+  out <- trimws(format(x))
+  out[is.na(x)] <- font_grey(" NA")
+  out[x == "S"] <- font_green_bg(font_white(" S "))
+  out[x == "I"] <- font_yellow_bg(font_black(" I "))
+  out[x == "R"] <- font_red_bg(font_white(" R "))
+  new_pillar_shaft_simple <- import_fn("new_pillar_shaft_simple", "pillar", error_on_fail = FALSE)
+  new_pillar_shaft_simple(out, align = "left", width = 3)
+}
+
+#' @method type_sum rsi
+#' @export
+type_sum.rsi <- function(x, ...) {
+  "rsi"
+}
+
 #' @method print rsi
 #' @export
 #' @noRd

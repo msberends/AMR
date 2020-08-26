@@ -203,7 +203,8 @@ df$mo <- df \%>\%
   select(microorganism_name) \%>\%
   as.mo()
 
-# and can even contain 2 columns, which is convenient for genus/species combinations:
+# and can even contain 2 columns, which is convenient
+# for genus/species combinations:
 df$mo <- df \%>\%
   select(genus, species) \%>\%
   as.mo()

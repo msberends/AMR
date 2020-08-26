@@ -27,7 +27,19 @@
   assign(x = "MO.old_lookup",
          value = create_MO.old_lookup(),
          envir = asNamespace("AMR"))
+  
+  # support for tibble headers (type_sum) and tibble columns content (pillar_shaft)
+  s3_register("pillar::pillar_shaft", "mo")
+  s3_register("tibble::type_sum", "mo")
+  s3_register("pillar::pillar_shaft", "rsi")
+  s3_register("tibble::type_sum", "rsi")
+  s3_register("pillar::pillar_shaft", "mic")
+  s3_register("tibble::type_sum", "mic")
+  s3_register("pillar::pillar_shaft", "disk")
+  s3_register("tibble::type_sum", "disk")
 }
+pillar_shaft <- import_fn("pillar_shaft", "pillar", error_on_fail = FALSE)
+type_sum <- import_fn("type_sum", "tibble", error_on_fail = FALSE)
 
 .onAttach <- function(...) {
   if (!interactive() || stats::runif(1) > 0.1 || isTRUE(as.logical(Sys.getenv("AMR_silentstart", FALSE)))) {
@@ -72,4 +84,47 @@ create_MO.old_lookup <- function() {
   
   # so arrange data on prevalence first, then full name
   MO.old_lookup[order(MO.old_lookup$prevalence, MO.old_lookup$fullname_lower), ]
+}
+
+# copied from vctrs::s3_register
+s3_register <- function (generic, class, method = NULL) {
+  stopifnot(is.character(generic), length(generic) == 1)
+  stopifnot(is.character(class), length(class) == 1)
+  pieces <- strsplit(generic, "::")[[1]]
+  stopifnot(length(pieces) == 2)
+  package <- pieces[[1]]
+  generic <- pieces[[2]]
+  caller <- parent.frame()
+  get_method_env <- function() {
+    top <- topenv(caller)
+    if (isNamespace(top)) {
+      asNamespace(environmentName(top))
+    }
+    else {
+      caller
+    }
+  }
+  get_method <- function(method, env) {
+    if (is.null(method)) {
+      get(paste0(generic, ".", class), envir = get_method_env())
+    }
+    else {
+      method
+    }
+  }
+  method_fn <- get_method(method)
+  stopifnot(is.function(method_fn))
+  setHook(packageEvent(package, "onLoad"), function(...) {
+    ns <- asNamespace(package)
+    method_fn <- get_method(method)
+    registerS3method(generic, class, method_fn, envir = ns)
+  })
+  if (!isNamespaceLoaded(package)) {
+    return(invisible())
+  }
+  envir <- asNamespace(package)
+  if (exists(generic, envir)) {
+    registerS3method(generic, class, method_fn, envir = envir)
+  }
+  invisible()
 }

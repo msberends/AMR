@@ -82,7 +82,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.3.0.9006</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.3.0.9007</span>
       </span>
     </div>
 
@@ -443,7 +443,8 @@ This package contains the complete taxonomic tree of almost all microorganisms (
   <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='kw'>microorganism_name</span>) <span class='op'>%&gt;%</span>
   <span class='fu'>as.mo</span>()
 
-<span class='co'># and can even contain 2 columns, which is convenient for genus/species combinations:</span>
+<span class='co'># and can even contain 2 columns, which is convenient</span>
+<span class='co'># for genus/species combinations:</span>
 <span class='kw'>df</span><span class='op'>$</span><span class='kw'>mo</span> <span class='op'>&lt;-</span> <span class='kw'>df</span> <span class='op'>%&gt;%</span>
   <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='kw'>genus</span>, <span class='kw'>species</span>) <span class='op'>%&gt;%</span>
   <span class='fu'>as.mo</span>()

@@ -159,7 +159,8 @@
 #'   select(microorganism_name) %>%
 #'   as.mo()
 #'
-#' # and can even contain 2 columns, which is convenient for genus/species combinations:
+#' # and can even contain 2 columns, which is convenient
+#' # for genus/species combinations:
 #' df$mo <- df %>%
 #'   select(genus, species) %>%
 #'   as.mo()
@@ -459,13 +460,15 @@ exec_as.mo <- function(x,
       x <- gsub("(th|ht|t)+", "(th|ht|t)+", x)
       x <- gsub("a+", "a+", x)
       x <- gsub("u+", "u+", x)
-      # allow any ending of -um, -us, -ium, -icum, -ius, -icus, -ica and -a (needs perl for the negative backward lookup):
+      # allow any ending of -um, -us, -ium, -icum, -ius, -icus, -ica, -ia and -a (needs perl for the negative backward lookup):
       x <- gsub("(u\\+\\(c\\|k\\|q\\|qu\\+\\|s\\|z\\|x\\|ks\\)\\+)(?![a-z])",
                 "(u[s|m]|[iy][ck]?u[ms]|[iy]?[ck]?a)", x, perl = TRUE)
       x <- gsub("(\\[iy\\]\\+\\(c\\|k\\|q\\|qu\\+\\|s\\|z\\|x\\|ks\\)\\+a\\+)(?![a-z])",
                 "(u[s|m]|[iy][ck]?u[ms]|[iy]?[ck]?a)", x, perl = TRUE)
       x <- gsub("(\\[iy\\]\\+u\\+m)(?![a-z])",
                 "(u[s|m]|[iy][ck]?u[ms]|[iy]?[ck]?a)", x, perl = TRUE)
+      x <- gsub("(\\[iy\\]\\+a\\+)(?![a-z])",
+                "([iy]*a+|[iy]+a*)", x, perl = TRUE)
       x <- gsub("e+", "e+", x)
       x <- gsub("o+", "o+", x)
       x <- gsub("(.)\\1+", "\\1+", x)
@@ -636,7 +639,7 @@ exec_as.mo <- function(x,
       }
       
       # translate known trivial abbreviations to genus + species ----
-      if (toupper(x_backup_without_spp[i]) %in% c("MRSA", "MSSA", "VISA", "VRSA")
+      if (toupper(x_backup_without_spp[i]) %in% c("MRSA", "MSSA", "VISA", "VRSA", "BORSA")
           | x_backup_without_spp[i] %like_case% " (mrsa|mssa|visa|vrsa) ") {
         x[i] <- lookup(fullname == "Staphylococcus aureus")
         next
@@ -1523,12 +1526,50 @@ format_uncertainty_as_df <- function(uncertainty_level,
   df
 }
 
+#' @method pillar_shaft mo
+#' @export
+pillar_shaft.mo <- function(x, ...) {
+  # import from the pillar package, without being dependent on it!
+  style_na <- import_fn("style_na", "pillar", error_on_fail = FALSE)
+  style_subtle <- import_fn("style_subtle", "pillar", error_on_fail = FALSE)
+  new_pillar_shaft_simple <- import_fn("new_pillar_shaft_simple", "pillar", error_on_fail = FALSE)
+  if (is.null(style_na) | is.null(style_subtle) | is.null(new_pillar_shaft_simple)) {
+    return(x)
+  }
+  
+  out <- format(x)
+  # grey out the kingdom (part until first "_")
+  out[!is.na(x)] <- gsub("^([A-Z]+_)(.*)", paste0(style_subtle("\\1"), "\\2"), out[!is.na(x)])
+  # and grey out every _
+  out[!is.na(x)] <- gsub("_", style_subtle("_"), out[!is.na(x)])
+  
+  # markup NA and UNKNOWN
+  out[is.na(x)] <- style_na("  NA")
+  out[x == "UNKNOWN"] <- style_na("  UNKNOWN")
+  
+  # make it always fit exactly
+  new_pillar_shaft_simple(out,
+                          align = "left", 
+                          width = max(nchar(x)) + ifelse(length(x[x %in% c(NA, "UNKNOWN")]) > 0, 
+                                                         2,
+                                                         0))
+}
+
+#' @method type_sum mo
+#' @export
+type_sum.mo <- function(x, ...) {
+  "mo"
+}
+
 #' @method print mo
 #' @export
 #' @noRd
-print.mo <- function(x, ...) {
+print.mo <- function(x, print.shortnames = FALSE, ...) {
   cat("Class <mo>\n")
   x_names <- names(x)
+  if (is.null(x_names) & print.shortnames == TRUE) {
+    x_names <- tryCatch(mo_shortname(x, ...), error = function(e) NULL)
+  }
   x <- as.character(x)
   names(x) <- x_names
   print.default(x, quote = FALSE)
