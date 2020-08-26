@@ -29,6 +29,8 @@
          envir = asNamespace("AMR"))
   
   # support for tibble headers (type_sum) and tibble columns content (pillar_shaft)
+  s3_register("pillar::pillar_shaft", "ab")
+  s3_register("tibble::type_sum", "ab")
   s3_register("pillar::pillar_shaft", "mo")
   s3_register("tibble::type_sum", "mo")
   s3_register("pillar::pillar_shaft", "rsi")
@@ -87,7 +89,7 @@ create_MO.old_lookup <- function() {
 }
 
 # copied from vctrs::s3_register
-s3_register <- function (generic, class, method = NULL) {
+s3_register <- function(generic, class, method = NULL) {
   stopifnot(is.character(generic), length(generic) == 1)
   stopifnot(is.character(class), length(class) == 1)
   pieces <- strsplit(generic, "::")[[1]]

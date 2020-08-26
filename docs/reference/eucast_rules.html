@@ -83,7 +83,7 @@ To improve the interpretation of the antibiogram before EUCAST rules are applied
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.3.0.9007</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.3.0.9008</span>
       </span>
     </div>
 
@@ -302,18 +302,12 @@ Leclercq et al. <strong>EUCAST expert rules in antimicrobial susceptibility test
 
     <p><strong>Note:</strong> This function does not translate MIC values to RSI values. Use <code><a href='as.rsi.html'>as.rsi()</a></code> for that. <br />
 <strong>Note:</strong> When ampicillin (AMP, J01CA01) is not available but amoxicillin (AMX, J01CA04) is, the latter will be used for all rules where there is a dependency on ampicillin. These drugs are interchangeable when it comes to expression of antimicrobial resistance.</p>
-<p>Before further processing, some non-EUCAST rules can be applied to improve the efficacy of the EUCAST rules. These non-EUCAST rules, that are then applied to all isolates, are:</p><ul>
-<li><p>Inherit amoxicillin (AMX) from ampicillin (AMP), where amoxicillin (AMX) is unavailable;</p></li>
-<li><p>Inherit ampicillin (AMP) from amoxicillin (AMX), where ampicillin (AMP) is unavailable;</p></li>
-<li><p>Set amoxicillin (AMX) = R where amoxicillin/clavulanic acid (AMC) = R;</p></li>
-<li><p>Set piperacillin (PIP) = R where piperacillin/tazobactam (TZP) = R;</p></li>
-<li><p>Set trimethoprim (TMP) = R where trimethoprim/sulfamethoxazole (SXT) = R;</p></li>
-<li><p>Set amoxicillin/clavulanic acid (AMC) = S where amoxicillin (AMX) = S;</p></li>
-<li><p>Set piperacillin/tazobactam (TZP) = S where piperacillin (PIP) = S;</p></li>
-<li><p>Set trimethoprim/sulfamethoxazole (SXT) = S where trimethoprim (TMP) = S.</p></li>
-</ul>
+<p>Before further processing, two non-EUCAST rules about drug combinations can be applied to improve the efficacy of the EUCAST rules. These rules are:</p><ol>
+<li><p>A drug <strong>with</strong> enzyme inhibitor will be set to S if the drug <strong>without</strong> enzyme inhibitor is S</p></li>
+<li><p>A drug <strong>without</strong> enzyme inhibitor will be set to R if the drug <strong>with</strong> enzyme inhibitor is R</p></li>
+</ol>
 
-<p>These rules are not applied at default, since they are not approved by EUCAST. To use these rules, please use <code>eucast_rules(..., rules = "all")</code>, or set the default behaviour of the <code>[eucast_rules()]</code> function with <code><a href='https://rdrr.io/r/base/options.html'>options(AMR.eucast_rules = "all")</a></code> (or any other valid input value(s) to the <code>rules</code> parameter).</p>
+<p>These rules are not applied at default, since they are not approved by EUCAST. To use these rules, use <code>eucast_rules(..., rules = "all")</code>, or set the default behaviour of the <code>[eucast_rules()]</code> function with <code><a href='https://rdrr.io/r/base/options.html'>options(AMR.eucast_rules = "all")</a></code> (or any other valid input value(s) to the <code>rules</code> parameter).</p>
 <p>The file containing all EUCAST rules is located here: <a href='https://github.com/msberends/AMR/blob/master/data-raw/eucast_rules.tsv'>https://github.com/msberends/AMR/blob/master/data-raw/eucast_rules.tsv</a>.</p>
     <h2 class="hasAnchor" id="antibiotics"><a class="anchor" href="#antibiotics"></a>Antibiotics</h2>
 

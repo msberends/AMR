@@ -50,19 +50,13 @@ To improve the interpretation of the antibiogram before EUCAST rules are applied
 \strong{Note:} This function does not translate MIC values to RSI values. Use \code{\link[=as.rsi]{as.rsi()}} for that. \cr
 \strong{Note:} When ampicillin (AMP, J01CA01) is not available but amoxicillin (AMX, J01CA04) is, the latter will be used for all rules where there is a dependency on ampicillin. These drugs are interchangeable when it comes to expression of antimicrobial resistance.
 
-Before further processing, some non-EUCAST rules can be applied to improve the efficacy of the EUCAST rules. These non-EUCAST rules, that are then applied to all isolates, are:
-\itemize{
-\item Inherit amoxicillin (AMX) from ampicillin (AMP), where amoxicillin (AMX) is unavailable;
-\item Inherit ampicillin (AMP) from amoxicillin (AMX), where ampicillin (AMP) is unavailable;
-\item Set amoxicillin (AMX) = R where amoxicillin/clavulanic acid (AMC) = R;
-\item Set piperacillin (PIP) = R where piperacillin/tazobactam (TZP) = R;
-\item Set trimethoprim (TMP) = R where trimethoprim/sulfamethoxazole (SXT) = R;
-\item Set amoxicillin/clavulanic acid (AMC) = S where amoxicillin (AMX) = S;
-\item Set piperacillin/tazobactam (TZP) = S where piperacillin (PIP) = S;
-\item Set trimethoprim/sulfamethoxazole (SXT) = S where trimethoprim (TMP) = S.
+Before further processing, two non-EUCAST rules about drug combinations can be applied to improve the efficacy of the EUCAST rules. These rules are:
+\enumerate{
+\item A drug \strong{with} enzyme inhibitor will be set to S if the drug \strong{without} enzyme inhibitor is S
+\item A drug \strong{without} enzyme inhibitor will be set to R if the drug \strong{with} enzyme inhibitor is R
 }
 
-These rules are not applied at default, since they are not approved by EUCAST. To use these rules, please use \code{eucast_rules(..., rules = "all")}, or set the default behaviour of the \verb{[eucast_rules()]} function with \code{options(AMR.eucast_rules = "all")} (or any other valid input value(s) to the \code{rules} parameter).
+These rules are not applied at default, since they are not approved by EUCAST. To use these rules, use \code{eucast_rules(..., rules = "all")}, or set the default behaviour of the \verb{[eucast_rules()]} function with \code{options(AMR.eucast_rules = "all")} (or any other valid input value(s) to the \code{rules} parameter).
 
 The file containing all EUCAST rules is located here: \url{https://github.com/msberends/AMR/blob/master/data-raw/eucast_rules.tsv}.
 }

@@ -467,6 +467,26 @@ is.ab <- function(x) {
   inherits(x, "ab")
 }
 
+
+#' @method pillar_shaft ab
+#' @export
+pillar_shaft.ab <- function(x, ...) {
+  # import from the pillar package, without being dependent on it!
+  style_na <- import_fn("style_na", "pillar", error_on_fail = FALSE)
+  new_pillar_shaft_simple <- import_fn("new_pillar_shaft_simple", "pillar", error_on_fail = FALSE)
+  out <- format(x)
+  out[is.na(x)] <- style_na(NA)
+  new_pillar_shaft_simple(out,
+                          align = "left", 
+                          min_width = 4)
+}
+
+#' @method type_sum ab
+#' @export
+type_sum.ab <- function(x, ...) {
+  "ab"
+}
+
 #' @method print ab
 #' @export
 #' @noRd

@@ -54,7 +54,7 @@ test_that("mo_property works", {
   expect_equal(mo_year("Escherichia coli"), 1919)
 
   expect_equal(mo_shortname("Escherichia coli"), "E. coli")
-  expect_equal(mo_shortname("Escherichia"), "E. spp.")
+  expect_equal(mo_shortname("Escherichia"), "Escherichia")
   expect_equal(mo_shortname("Staphylococcus aureus"), "S. aureus")
   expect_equal(mo_shortname("Staphylococcus aureus", Becker = TRUE), "S. aureus")
   expect_equal(mo_shortname("Staphylococcus aureus", Becker = "all", language = "en"), "CoPS")

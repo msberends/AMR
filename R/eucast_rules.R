@@ -40,17 +40,12 @@ EUCAST_VERSION_EXPERT_RULES <- "3.1, 2016"
 #' **Note:** This function does not translate MIC values to RSI values. Use [as.rsi()] for that. \cr
 #' **Note:** When ampicillin (AMP, J01CA01) is not available but amoxicillin (AMX, J01CA04) is, the latter will be used for all rules where there is a dependency on ampicillin. These drugs are interchangeable when it comes to expression of antimicrobial resistance.
 #'
-#' Before further processing, some non-EUCAST rules can be applied to improve the efficacy of the EUCAST rules. These non-EUCAST rules, that are then applied to all isolates, are:
-#' - Inherit amoxicillin (AMX) from ampicillin (AMP), where amoxicillin (AMX) is unavailable;
-#' - Inherit ampicillin (AMP) from amoxicillin (AMX), where ampicillin (AMP) is unavailable;
-#' - Set amoxicillin (AMX) = R where amoxicillin/clavulanic acid (AMC) = R;
-#' - Set piperacillin (PIP) = R where piperacillin/tazobactam (TZP) = R;
-#' - Set trimethoprim (TMP) = R where trimethoprim/sulfamethoxazole (SXT) = R;
-#' - Set amoxicillin/clavulanic acid (AMC) = S where amoxicillin (AMX) = S;
-#' - Set piperacillin/tazobactam (TZP) = S where piperacillin (PIP) = S;
-#' - Set trimethoprim/sulfamethoxazole (SXT) = S where trimethoprim (TMP) = S.
+#' Before further processing, two non-EUCAST rules about drug combinations can be applied to improve the efficacy of the EUCAST rules. These rules are:
 #' 
-#' These rules are not applied at default, since they are not approved by EUCAST. To use these rules, please use `eucast_rules(..., rules = "all")`, or set the default behaviour of the `[eucast_rules()]` function with `options(AMR.eucast_rules = "all")` (or any other valid input value(s) to the `rules` parameter).
+#' 1. A drug **with** enzyme inhibitor will be set to S if the drug **without** enzyme inhibitor is S
+#' 2. A drug **without** enzyme inhibitor will be set to R if the drug **with** enzyme inhibitor is R
+#' 
+#' These rules are not applied at default, since they are not approved by EUCAST. To use these rules, use `eucast_rules(..., rules = "all")`, or set the default behaviour of the `[eucast_rules()]` function with `options(AMR.eucast_rules = "all")` (or any other valid input value(s) to the `rules` parameter).
 #'
 #' The file containing all EUCAST rules is located here: <https://github.com/msberends/AMR/blob/master/data-raw/eucast_rules.tsv>.
 #'
