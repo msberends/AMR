@@ -670,22 +670,40 @@ exec_as.rsi <- function(method,
             class =  c("rsi", "ordered", "factor"))
 }
 
-#' @method pillar_shaft rsi
-#' @export 
+# will be exported using s3_register() in R/zzz.R
 pillar_shaft.rsi <- function(x, ...) {
   out <- trimws(format(x))
   out[is.na(x)] <- font_grey(" NA")
-  out[x == "S"] <- font_green_bg(font_white(" S "))
-  out[x == "I"] <- font_yellow_bg(font_black(" I "))
-  out[x == "R"] <- font_red_bg(font_white(" R "))
-  new_pillar_shaft_simple <- import_fn("new_pillar_shaft_simple", "pillar", error_on_fail = FALSE)
-  new_pillar_shaft_simple(out, align = "left", width = 3)
+  out[x == "S"] <- font_green_bg(font_white("  S  "))
+  out[x == "I"] <- font_yellow_bg(font_black("  I  "))
+  out[x == "R"] <- font_red_bg(font_white("  R  "))
+  create_pillar_column(out, align = "left", width = 5)
 }
 
-#' @method type_sum rsi
-#' @export
+# will be exported using s3_register() in R/zzz.R
 type_sum.rsi <- function(x, ...) {
   "rsi"
+}
+
+# will be exported using s3_register() in R/zzz.R
+freq.rsi <- function(x, ...) {
+  x_name <- deparse(substitute(x))
+  x_name <- gsub(".*[$]", "", x_name)
+  ab <- suppressMessages(suppressWarnings(as.ab(x_name)))
+  freq.default <- import_fn("freq.default", "cleaner", error_on_fail = FALSE)
+  digits <- list(...)$digits
+  if (is.null(digits)) {
+    digits <- 2
+  }
+  if (!is.na(ab)) {
+    freq.default(x = x, ...,
+                 .add_header = list(Drug = paste0(ab_name(ab, language = NULL), " (", ab, ", ", ab_atc(ab), ")"),
+                                    `Drug group` = ab_group(ab, language = NULL),
+                                    `%SI` = percentage(susceptibility(x, minimum = 0, as_percent = FALSE), digits = digits)))
+  } else {
+    freq.default(x = x, ...,
+                 .add_header = list(`%SI` = percentage(susceptibility(x, minimum = 0, as_percent = FALSE), digits = digits)))
+  }
 }
 
 #' @method print rsi

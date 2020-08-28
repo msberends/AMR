@@ -467,22 +467,14 @@ is.ab <- function(x) {
   inherits(x, "ab")
 }
 
-
-#' @method pillar_shaft ab
-#' @export
+# will be exported using s3_register() in R/zzz.R
 pillar_shaft.ab <- function(x, ...) {
-  # import from the pillar package, without being dependent on it!
-  style_na <- import_fn("style_na", "pillar", error_on_fail = FALSE)
-  new_pillar_shaft_simple <- import_fn("new_pillar_shaft_simple", "pillar", error_on_fail = FALSE)
-  out <- format(x)
-  out[is.na(x)] <- style_na(NA)
-  new_pillar_shaft_simple(out,
-                          align = "left", 
-                          min_width = 4)
+  out <- trimws(format(x))
+  out[is.na(x)] <- font_na(NA)
+  create_pillar_column(out, align = "left", min_width = 4)
 }
 
-#' @method type_sum ab
-#' @export
+# will be exported using s3_register() in R/zzz.R
 type_sum.ab <- function(x, ...) {
   "ab"
 }

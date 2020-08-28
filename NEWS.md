@@ -1,7 +1,8 @@
-# AMR 1.3.0.9009
-## <small>Last updated: 26 August 2020</small>
+# AMR 1.3.0.9010
+## <small>Last updated: 28 August 2020</small>
 
 ### New
+* A new vignette and website page with info about all our public and freely available data sets, that can be downloaded as flat files or in formats for use in R, SPSS, SAS, Stata and Excel: https://msberends.github.io/AMR/articles/datasets.html
 * Data set `intrinsic_resistant`. This data set contains all bug-drug combinations where the 'bug' is intrinsic resistant to the 'drug' according to the latest EUCAST insights. It contains just two columns: `microorganism` and `antibiotic`.
 
   Curious about which enterococci are actually intrinsic resistant to vancomycin?
@@ -38,7 +39,7 @@
 * Overall speed improvement by tweaking joining functions
 * Function `mo_shortname()` now returns the genus for input where the species is unknown
 * BORSA is now recognised as an abbreviation for *Staphylococcus aureus*, meaning that e.g. `mo_genus("BORSA")` will return "Staphylococcus"
-* Support for coloured `tibble` printing of classes `ab`, `mo`, `rsi`, `mic` and `disk`
+* Added a feature from AMR 1.1.0 and earlier again, but now without other package dependencies: `tibble` printing support for classes `<rsi>`, `<mic>`, `<disk>`, `<ab>` and `<mo>`. When using `tibble`s containing antimicrobial columns (class `<rsi>`), "S" will print in green, "I" will print in yellow and "R" will print in red. Microbial IDs (class `<mo>`) will emphasise on the genus and species, not on the kingdom.
 
 # AMR 1.3.0
 
@@ -102,8 +103,8 @@
   
   Negative effects of this change are:
   * Function `freq()` that was borrowed from the `cleaner` package was removed. Use `cleaner::freq()`, or run `library("cleaner")` before you use `freq()`.
-  * Printing values of class `mo` or `rsi` in a tibble will no longer be in colour and printing `rsi` in a tibble will show the class `<ord>`, not `<rsi>` anymore. This is purely a visual effect.
-  * All functions from the `mo_*` family (like `mo_name()` and `mo_gramstain()`) are noticeably slower when running on hundreds of thousands of rows.
+  * ~~Printing values of class `mo` or `rsi` in a tibble will no longer be in colour and printing `rsi` in a tibble will show the class `<ord>`, not `<rsi>` anymore. This is purely a visual effect.~~
+  * ~~All functions from the `mo_*` family (like `mo_name()` and `mo_gramstain()`) are noticeably slower when running on hundreds of thousands of rows.~~
   * For developers: classes `mo` and `ab` now both also inherit class `character`, to support any data transformation. This change invalidates code that checks for class length == 1.
 
 ### Changed

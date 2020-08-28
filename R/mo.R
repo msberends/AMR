@@ -181,7 +181,7 @@ as.mo <- function(x,
   x <- parse_and_convert(x)
   # replace mo codes used in older package versions
   x <- replace_old_mo_codes(x, property = "mo")
-
+  
   # WHONET: xxx = no growth
   x[tolower(as.character(paste0(x, ""))) %in% c("", "xxx", "na", "nan")] <- NA_character_
   # Laboratory systems: remove entries like "no growth" etc
@@ -384,7 +384,7 @@ exec_as.mo <- function(x,
     x <- data.frame(fullname = x, stringsAsFactors = FALSE) %>% 
       left_join_MO_lookup(by = "fullname") %>% 
       pull(property)
-
+    
   } else if (all(toupper(x) %in% microorganisms.codes$code)) {
     # commonly used MO codes
     x <- data.frame(code = toupper(x), stringsAsFactors = FALSE) %>%
@@ -1526,39 +1526,52 @@ format_uncertainty_as_df <- function(uncertainty_level,
   df
 }
 
-#' @method pillar_shaft mo
-#' @export
+# will be exported using s3_register() in R/zzz.R
 pillar_shaft.mo <- function(x, ...) {
-  # import from the pillar package, without being dependent on it!
-  style_na <- import_fn("style_na", "pillar", error_on_fail = FALSE)
-  style_subtle <- import_fn("style_subtle", "pillar", error_on_fail = FALSE)
-  new_pillar_shaft_simple <- import_fn("new_pillar_shaft_simple", "pillar", error_on_fail = FALSE)
-  if (is.null(style_na) | is.null(style_subtle) | is.null(new_pillar_shaft_simple)) {
-    return(x)
-  }
-  
   out <- format(x)
   # grey out the kingdom (part until first "_")
-  out[!is.na(x)] <- gsub("^([A-Z]+_)(.*)", paste0(style_subtle("\\1"), "\\2"), out[!is.na(x)])
+  out[!is.na(x)] <- gsub("^([A-Z]+_)(.*)", paste0(font_subtle("\\1"), "\\2"), out[!is.na(x)])
   # and grey out every _
-  out[!is.na(x)] <- gsub("_", style_subtle("_"), out[!is.na(x)])
+  out[!is.na(x)] <- gsub("_", font_subtle("_"), out[!is.na(x)])
   
   # markup NA and UNKNOWN
-  out[is.na(x)] <- style_na("  NA")
-  out[x == "UNKNOWN"] <- style_na("  UNKNOWN")
+  out[is.na(x)] <- font_na("  NA")
+  out[x == "UNKNOWN"] <- font_na("  UNKNOWN")
   
   # make it always fit exactly
-  new_pillar_shaft_simple(out,
-                          align = "left", 
-                          width = max(nchar(x)) + ifelse(length(x[x %in% c(NA, "UNKNOWN")]) > 0, 
-                                                         2,
-                                                         0))
+  create_pillar_column(out,
+                       align = "left", 
+                       width = max(nchar(x)) + ifelse(any(x %in% c(NA, "UNKNOWN")), 2, 0))
 }
 
-#' @method type_sum mo
-#' @export
+# will be exported using s3_register() in R/zzz.R
 type_sum.mo <- function(x, ...) {
   "mo"
+}
+
+# will be exported using s3_register() in R/zzz.R
+freq.mo <- function(x, ...) {
+  x_noNA <- as.mo(x[!is.na(x)]) # as.mo() to get the newest mo codes
+  grams <- mo_gramstain(x_noNA, language = NULL)
+  digits <- list(...)$digits
+  if (is.null(digits)) {
+    digits <- 2
+  }
+  freq.default <- import_fn("freq.default", "cleaner", error_on_fail = FALSE)
+  freq.default(x = x, ...,
+               .add_header = list(`Gram-negative` = paste0(format(sum(grams == "Gram-negative", na.rm = TRUE),
+                                                                  big.mark = ",",
+                                                                  decimal.mark = "."),
+                                                           " (", percentage(sum(grams == "Gram-negative", na.rm = TRUE) / length(grams), digits = digits),
+                                                           ")"),
+                                  `Gram-positive` = paste0(format(sum(grams == "Gram-positive", na.rm = TRUE),
+                                                                  big.mark = ",",
+                                                                  decimal.mark = "."),
+                                                           " (", percentage(sum(grams == "Gram-positive", na.rm = TRUE) / length(grams), digits = digits),
+                                                           ")"),
+                                  `No. of genera` = n_distinct(mo_genus(x_noNA, language = NULL)),
+                                  `No. of species` = n_distinct(paste(mo_genus(x_noNA, language = NULL),
+                                                                      mo_species(x_noNA, language = NULL)))))
 }
 
 #' @method print mo
@@ -1584,11 +1597,11 @@ summary.mo <- function(object, ...) {
   top <- as.data.frame(table(x), responseName = "n", stringsAsFactors = FALSE)
   top_3 <- top[order(-top$n), 1][1:3]
   value <- c("Class" = "mo",
-    "<NA>" = length(x[is.na(x)]),
-    "Unique" = n_distinct(x[!is.na(x)]),
-    "#1" = top_3[1],
-    "#2" = top_3[2],
-    "#3" = top_3[3])
+             "<NA>" = length(x[is.na(x)]),
+             "Unique" = n_distinct(x[!is.na(x)]),
+             "#1" = top_3[1],
+             "#2" = top_3[2],
+             "#3" = top_3[3])
   class(value) <- c("summaryDefault", "table")
   value
 }

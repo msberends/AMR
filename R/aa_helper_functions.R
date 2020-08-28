@@ -444,6 +444,9 @@ font_red_bg <- function(..., collapse = " ") {
 font_yellow_bg <- function(..., collapse = " ") {
   try_colour(..., before = "\033[43m", after = "\033[49m", collapse = collapse)
 }
+font_na <- function(..., collapse = " ") {
+  font_red(..., collapse = collapse)
+}
 font_bold <- function(..., collapse = " ") {
   try_colour(..., before = "\033[1m", after = "\033[22m", collapse = collapse)
 }
@@ -475,6 +478,61 @@ progress_estimated <- function(n = 1, n_min = 0, ...) {
     }
     pb
   }
+}
+
+create_pillar_column <- function(x, ...) {
+  new_pillar_shaft_simple <- import_fn("new_pillar_shaft_simple", "pillar", error_on_fail = FALSE)
+  if (!is.null(new_pillar_shaft_simple)) {
+    new_pillar_shaft_simple(x, ...)  
+  } else {
+    # does not exist in package 'pillar' anymore
+    structure(list(x),
+              class = "pillar_shaft_simple",
+              ...)
+  }
+}
+
+# copied from vctrs::s3_register by their permission
+s3_register <- function(generic, class, method = NULL) {
+  stopifnot(is.character(generic), length(generic) == 1)
+  stopifnot(is.character(class), length(class) == 1)
+  pieces <- strsplit(generic, "::")[[1]]
+  stopifnot(length(pieces) == 2)
+  package <- pieces[[1]]
+  generic <- pieces[[2]]
+  caller <- parent.frame()
+  get_method_env <- function() {
+    top <- topenv(caller)
+    if (isNamespace(top)) {
+      asNamespace(environmentName(top))
+    }
+    else {
+      caller
+    }
+  }
+  get_method <- function(method, env) {
+    if (is.null(method)) {
+      get(paste0(generic, ".", class), envir = get_method_env())
+    }
+    else {
+      method
+    }
+  }
+  method_fn <- get_method(method)
+  stopifnot(is.function(method_fn))
+  setHook(packageEvent(package, "onLoad"), function(...) {
+    ns <- asNamespace(package)
+    method_fn <- get_method(method)
+    registerS3method(generic, class, method_fn, envir = ns)
+  })
+  if (!isNamespaceLoaded(package)) {
+    return(invisible())
+  }
+  envir <- asNamespace(package)
+  if (exists(generic, envir)) {
+    registerS3method(generic, class, method_fn, envir = envir)
+  }
+  invisible()
 }
 
 # works exactly like round(), but rounds `round2(44.55, 1)` to 44.6 instead of 44.5
