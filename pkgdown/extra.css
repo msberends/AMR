@@ -275,3 +275,9 @@ table a:not(.btn):hover, .table a:not(.btn):hover {
 .dataset-within-r {
   display: none;
 }
+.dataset-download-button {
+  margin-right: 10px;
+}
+.dataset-download-button img {
+  height: 100px !important;
+}
