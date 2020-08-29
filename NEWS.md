@@ -1,5 +1,5 @@
-# AMR 1.3.0.9010
-## <small>Last updated: 28 August 2020</small>
+# AMR 1.3.0.9011
+## <small>Last updated: 29 August 2020</small>
 
 ### New
 * A new vignette and website page with info about all our public and freely available data sets, that can be downloaded as flat files or in formats for use in R, SPSS, SAS, Stata and Excel: https://msberends.github.io/AMR/articles/datasets.html
