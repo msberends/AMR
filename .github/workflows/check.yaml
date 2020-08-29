@@ -27,6 +27,10 @@ on:
   pull_request:
     branches:
       - master
+  schedule:
+    # run a schedule everyday at 3 AM.
+    # this is to check that all dependencies are still available (see R/zzz.R)
+    - cron:  '0 3 * * *'
 
 name: R-code-check
 

@@ -272,3 +272,6 @@ table a:not(.btn):hover, .table a:not(.btn):hover {
 .home-buttons .fa {
 	font-size: 3.5em;
 }
+.dataset-within-r {
+  display: none;
+}

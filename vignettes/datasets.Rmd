@@ -35,13 +35,13 @@ structure_txt <- function(dataset) {
   paste0("A data set with ",
          format(nrow(dataset), big.mark = ","), " rows and ", 
          ncol(dataset), " columns, containing the following column names:  \n*",
-         paste0(colnames(dataset), collapse = ", "), "*.")
+         paste0("'", colnames(dataset), "'", collapse = ", "), "*.")
 }
 
 download_txt <- function(filename) {
   msg <- paste0("It was last updated on ", 
                 trimws(format(file.mtime(paste0("../data/", filename, ".rda")), "%e %B %Y %H:%M:%S %Z")), 
-                ".\n\nDirect download links:  \n")
+                ". Find more info about the structure of this data set [here](https://msberends.github.io/AMR/reference/", filename, ".html).\n")
   github_base <- "https://github.com/msberends/AMR/raw/master/data-raw/"
   filename <- paste0("../data-raw/", filename)
   txt <- paste0(filename, ".txt")
@@ -51,15 +51,25 @@ download_txt <- function(filename) {
   sas <- paste0(filename, ".sas")
   excel <- paste0(filename, ".xlsx")
   create_txt <- function(filename, type) {
-    paste0("[", type, "](", github_base, filename, "), ", file_size(filename), " -- ")
+    paste0('<a class="dataset-download-button" href="', github_base, filename, '" target="_blank">',
+           '<img src="download_', type, '.png" height="70px" title="', file_size(filename), '">',
+           '</a>')
   }
 
-  if (file.exists(rds)) msg <- c(msg, create_txt(rds, "R file (.rds)"))
-  if (file.exists(excel)) msg <- c(msg, create_txt(excel, "Excel workbook (.xlsx)"))
-  if (file.exists(spss)) msg <- c(msg, create_txt(spss, "SPSS file (.sav)"))
-  if (file.exists(stata)) msg <- c(msg, create_txt(stata, "Stata file (.dta)"))
-  if (file.exists(sas)) msg <- c(msg, create_txt(sas, "SAS file (.sas)"))
-  if (file.exists(txt)) msg <- c(msg, create_txt(txt, "tab separated file (.txt)"))
+  if (any(file.exists(rds),
+          file.exists(excel),
+          file.exists(txt),
+          file.exists(sas),
+          file.exists(spss),
+          file.exists(stata))) {
+    msg <- c(msg, "\n**Direct download links:**  \n")
+  }
+  if (file.exists(rds)) msg <- c(msg, create_txt(rds, "rds"))
+  if (file.exists(excel)) msg <- c(msg, create_txt(excel, "xlsx"))
+  if (file.exists(txt)) msg <- c(msg, create_txt(txt, "txt"))
+  if (file.exists(sas)) msg <- c(msg, create_txt(sas, "sas"))
+  if (file.exists(spss)) msg <- c(msg, create_txt(spss, "sav"))
+  if (file.exists(stata)) msg <- c(msg, create_txt(stata, "dta"))
   msg[length(msg)] <- gsub(" --", ".", msg[length(msg)], fixed = TRUE)
   paste0(msg, collapse = "")
 }
@@ -67,9 +77,9 @@ download_txt <- function(filename) {
 library(AMR)
 library(dplyr)
 
-print_df <- function(x) {
+print_df <- function(x, rows = 6) {
   x %>% 
-    head() %>% 
+    head(n = rows) %>% 
     mutate_all(function(x) {
       if (is.list(x)) {
         sapply(x, function(y) {
@@ -92,9 +102,13 @@ print_df <- function(x) {
 
 All reference data (about microorganisms, antibiotics, R/SI interpretation, EUCAST rules, etc.) in this `AMR` package are reliable, up-to-date and freely available. We continually export our data sets to formats for use in R, SPSS, SAS, Stata and Excel. We also supply  tab separated files that are machine-readable and suitable for input in any software program, such as laboratory information systems. 
 
-On this page, we explain how to download them and how the structure of the data sets look like. If you are reading this page from within R, please [visit our website](https://msberends.github.io/AMR/articles/datasets.html), which is automatically updated with every code change.
+On this page, we explain how to download them and how the structure of the data sets look like. 
+
+<p class="dataset-within-r">If you are reading this page from within R, please <a href="https://msberends.github.io/AMR/articles/datasets.html">visit our website</a>, which is automatically updated with every code change.</p>
 
 ## Microorganisms (currently accepted names)
+
+`r structure_txt(microorganisms)`
 
 This data set is in R available as `microorganisms`, after you load the `AMR` package.
 
@@ -107,9 +121,7 @@ Our full taxonomy of microorganisms is based on the authoritative and comprehens
 * [Catalogue of Life](http://www.catalogueoflife.org) (included version: `r AMR:::catalogue_of_life$year`)
 * [List of Prokaryotic names with Standing in Nomenclature](https://lpsn.dsmz.de) (LPSN, included version: `r AMR:::catalogue_of_life$yearmonth_DSMZ`)
 
-### Structure
-
-`r structure_txt(microorganisms)`
+### Example content
 
 Included (sub)species per taxonomic kingdom:
 
@@ -133,6 +145,10 @@ microorganisms %>%
 
 ## Microorganisms (previously accepted names)
 
+`r structure_txt(microorganisms.old)`
+
+**Note:** remember that the 'ref' columns contains the scientific reference to the old taxonomic entries, i.e. of column *'fullname'*. For the scientific reference of the new names, i.e. of column *'fullname_new'*, see the `microorganisms` data set.
+
 This data set is in R available as `microorganisms.old`, after you load the `AMR` package.
 
 `r download_txt("microorganisms.old")`
@@ -144,11 +160,7 @@ This data set contains old, previously accepted taxonomic names. The data source
 * [Catalogue of Life](http://www.catalogueoflife.org) (included version: `r AMR:::catalogue_of_life$year`)
 * [List of Prokaryotic names with Standing in Nomenclature](https://lpsn.dsmz.de) (LPSN, included version: `r AMR:::catalogue_of_life$yearmonth_DSMZ`)
 
-### Structure
-
-`r structure_txt(microorganisms.old)`
-
-**Note:** remember that the 'ref' columns contains the scientific reference to the old taxonomic entries, i.e. of column *fullname*. For the scientific reference of the new names, i.e. of column *fullname_new*, see the `microorganisms` data set.
+### Example content
 
 Example rows when filtering on *Escherichia*:
 
@@ -160,6 +172,8 @@ microorganisms.old %>%
 
 
 ## Antibiotic agents
+
+`r structure_txt(antibiotics)`
 
 This data set is in R available as `antibiotics`, after you load the `AMR` package.
 
@@ -173,11 +187,7 @@ This data set contains all EARS-Net and ATC codes gathered from WHO and WHONET, 
 * [PubChem by the US National Library of Medicine](https://pubchem.ncbi.nlm.nih.gov)
 * [WHONET software 2019](https://whonet.org)
 
-### Structure
-
-`r structure_txt(antibiotics)`
-
-Example rows:
+### Example content
 
 ```{r, echo = FALSE}
 antibiotics %>%
@@ -187,6 +197,8 @@ antibiotics %>%
 
 
 ## Antiviral agents
+
+`r structure_txt(antivirals)`
 
 This data set is in R available as `antivirals`, after you load the `AMR` package.
 
@@ -199,11 +211,7 @@ This data set contains all ATC codes gathered from WHO and all compound IDs from
 * [ATC/DDD index from WHO Collaborating Centre for Drug Statistics Methodology](https://www.whocc.no/atc_ddd_index/) (note: this may not be used for commercial purposes, but is frelly available from the WHO CC website for personal use)
 * [PubChem by the US National Library of Medicine](https://pubchem.ncbi.nlm.nih.gov)
 
-### Structure
-
-`r structure_txt(antivirals)`
-
-Example rows:
+### Example content
 
 ```{r, echo = FALSE}
 antivirals %>%
@@ -213,30 +221,30 @@ antivirals %>%
 
 ## Intrinsic bacterial resistance
 
+`r structure_txt(intrinsic_resistant)`
+
 This data set is in R available as `intrinsic_resistant`, after you load the `AMR` package.
 
 `r download_txt("intrinsic_resistant")`
 
 ### Source
 
-This data set contains all defined intrinsic resistance by EUCAST of all bug-drug combinations. 
+This data set contains all defined intrinsic resistance by EUCAST of all bug-drug combinations, and is based on 'EUCAST Expert Rules, Intrinsic Resistance and Exceptional Phenotypes', version `r AMR:::EUCAST_VERSION_EXPERT_RULES`.
 
-The data set is based on 'EUCAST Expert Rules, Intrinsic Resistance and Exceptional Phenotypes', version `r AMR:::EUCAST_VERSION_EXPERT_RULES`.
+### Example content
 
-### Structure
-
-`r structure_txt(intrinsic_resistant)`
-
-Example rows when filtering on *Klebsiella*:
+Example rows when filtering on *Enterobacter cloacae*:
 
 ```{r, echo = FALSE}
 intrinsic_resistant %>%
-  filter(microorganism %like% "^Klebsiella") %>% 
-  print_df()
+  filter(microorganism == "Enterobacter cloacae") %>% 
+  print_df(rows = Inf)
 ```
 
 
 ## Interpretation from MIC values / disk diameters to R/SI
+
+`r structure_txt(rsi_translation)`
 
 This data set is in R available as `rsi_translation`, after you load the `AMR` package.
 
@@ -246,11 +254,7 @@ This data set is in R available as `rsi_translation`, after you load the `AMR` p
 
 This data set contains interpretation rules for MIC values and disk diffusion diameters. Included guidelines are CLSI (`r min(as.integer(gsub("[^0-9]", "", subset(rsi_translation, guideline %like% "CLSI")$guideline)))`-`r max(as.integer(gsub("[^0-9]", "", subset(rsi_translation, guideline %like% "CLSI")$guideline)))`) and EUCAST (`r min(as.integer(gsub("[^0-9]", "", subset(rsi_translation, guideline %like% "EUCAST")$guideline)))`-`r max(as.integer(gsub("[^0-9]", "", subset(rsi_translation, guideline %like% "EUCAST")$guideline)))`).
 
-### Structure
-
-`r structure_txt(rsi_translation)`
-
-Example rows:
+### Example content
 
 ```{r, echo = FALSE}
 rsi_translation %>% 

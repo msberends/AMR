@@ -81,7 +81,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.3.0.9011</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.3.0.9012</span>
       </span>
     </div>
 
@@ -236,9 +236,9 @@
       <small>Source: <a href='https://github.com/msberends/AMR/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
-    <div id="amr-1309011" class="section level1">
-<h1 class="page-header" data-toc-text="1.3.0.9011">
-<a href="#amr-1309011" class="anchor"></a>AMR 1.3.0.9011<small> Unreleased </small>
+    <div id="amr-1309012" class="section level1">
+<h1 class="page-header" data-toc-text="1.3.0.9012">
+<a href="#amr-1309012" class="anchor"></a>AMR 1.3.0.9012<small> Unreleased </small>
 </h1>
 <div id="last-updated-29-august-2020" class="section level2">
 <h2 class="hasAnchor">
@@ -299,6 +299,7 @@
 <li><p>Function <code><a href="../reference/mo_property.html">mo_shortname()</a></code> now returns the genus for input where the species is unknown</p></li>
 <li><p>BORSA is now recognised as an abbreviation for <em>Staphylococcus aureus</em>, meaning that e.g. <code><a href="../reference/mo_property.html">mo_genus("BORSA")</a></code> will return “Staphylococcus”</p></li>
 <li><p>Added a feature from AMR 1.1.0 and earlier again, but now without other package dependencies: <code>tibble</code> printing support for classes <code>&lt;rsi&gt;</code>, <code>&lt;mic&gt;</code>, <code>&lt;disk&gt;</code>, <code>&lt;ab&gt;</code> and <code>&lt;mo&gt;</code>. When using <code>tibble</code>s containing antimicrobial columns (class <code>&lt;rsi&gt;</code>), “S” will print in green, “I” will print in yellow and “R” will print in red. Microbial IDs (class <code>&lt;mo&gt;</code>) will emphasise on the genus and species, not on the kingdom.</p></li>
+<li><p>Names of antiviral agents in data set <code>antivirals</code> now have a starting capital letter, like it is the case in the <code>antibiotics</code> data set</p></li>
 </ul>
 </div>
 </div>

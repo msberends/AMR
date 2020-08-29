@@ -1,4 +1,4 @@
-# AMR 1.3.0.9011
+# AMR 1.3.0.9012
 ## <small>Last updated: 29 August 2020</small>
 
 ### New
@@ -40,6 +40,7 @@
 * Function `mo_shortname()` now returns the genus for input where the species is unknown
 * BORSA is now recognised as an abbreviation for *Staphylococcus aureus*, meaning that e.g. `mo_genus("BORSA")` will return "Staphylococcus"
 * Added a feature from AMR 1.1.0 and earlier again, but now without other package dependencies: `tibble` printing support for classes `<rsi>`, `<mic>`, `<disk>`, `<ab>` and `<mo>`. When using `tibble`s containing antimicrobial columns (class `<rsi>`), "S" will print in green, "I" will print in yellow and "R" will print in red. Microbial IDs (class `<mo>`) will emphasise on the genus and species, not on the kingdom.
+* Names of antiviral agents in data set `antivirals` now have a starting capital letter, like it is the case in the `antibiotics` data set
 
 # AMR 1.3.0
 

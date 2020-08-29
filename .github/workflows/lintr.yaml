@@ -26,7 +26,6 @@ on:
       - master
   pull_request:
     branches:
-      - premaster
       - master
 
 name: lintr
