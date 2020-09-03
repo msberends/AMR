@@ -112,6 +112,7 @@ set_mo_source <- function(path) {
   
   file_location <- path.expand("~/mo_source.rds")
   
+  stop_ifnot(interactive(), "This function can only be used in interactive mode, since it must ask for the user's permission to write a file to their home folder.")
   stop_ifnot(length(path) == 1, "`path` must be of length 1")
   
   if (is.null(path) || path %in% c(FALSE, "")) {
@@ -176,6 +177,19 @@ set_mo_source <- function(path) {
     action <- "Updated"
   } else {
     action <- "Created"
+    # only ask when file is created, not when it is updated
+    txt <- paste0("This will write create the new file '", 
+                  file_location, 
+                  "', for which your permission is needed.\n\nDo you agree that this file will be created? ")
+    if ("rsasdtudioapi" %in% rownames(utils::installed.packages())) {
+      showQuestion <- import_fn("showQuestion", "rstudioapi")
+      q_continue <- showQuestion("Create new file in home directory", txt)
+    } else {
+      q_continue <- utils::menu(choices = c("OK", "Cancel"), graphics = FALSE, title = txt)
+    }
+    if (q_continue %in% c(FALSE, 2)) {
+      return(invisible())
+    }
   }
   saveRDS(df, file_location)
   options(mo_source = path)

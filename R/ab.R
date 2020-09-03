@@ -19,7 +19,7 @@
 # Visit our website for more info: https://msberends.github.io/AMR.    #
 # ==================================================================== #
 
-#' Transform to antibiotic ID
+#' Transform input to an antibiotic ID
 #'
 #' Use this function to determine the antibiotic code of one or more antibiotics. The data set [antibiotics] will be searched for abbreviations, official names and synonyms (brand names).
 #' @inheritSection lifecycle Maturing lifecycle

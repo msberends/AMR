@@ -3,7 +3,7 @@
 \docType{data}
 \name{microorganisms.codes}
 \alias{microorganisms.codes}
-\title{Translation table with 5,583 common microorganism codes}
+\title{Data set with 5,583 common microorganism codes}
 \format{
 A \code{\link{data.frame}} with 5,583 observations and 2 variables:
 \itemize{

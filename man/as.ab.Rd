@@ -4,7 +4,7 @@
 \alias{as.ab}
 \alias{ab}
 \alias{is.ab}
-\title{Transform to antibiotic ID}
+\title{Transform input to an antibiotic ID}
 \usage{
 as.ab(x, flag_multiple_results = TRUE, info = TRUE, ...)
 

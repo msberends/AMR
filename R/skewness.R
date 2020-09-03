@@ -44,19 +44,19 @@ skewness.default <- function(x, na.rm = FALSE) {
     x <- x[!is.na(x)]
   }
   n <- length(x)
-  (base::sum((x - base::mean(x))^3) / n) / (base::sum((x - base::mean(x)) ^ 2) / n) ^ (3 / 2)
+  (sum((x - mean(x))^3) / n) / (sum((x - mean(x)) ^ 2) / n) ^ (3 / 2)
 }
 
 #' @method skewness matrix
 #' @rdname skewness
 #' @export
 skewness.matrix <- function(x, na.rm = FALSE) {
-  base::apply(x, 2, skewness.default, na.rm = na.rm)
+  apply(x, 2, skewness.default, na.rm = na.rm)
 }
 
 #' @method skewness data.frame
 #' @rdname skewness
 #' @export
 skewness.data.frame <- function(x, na.rm = FALSE) {
-  base::sapply(x, skewness.default, na.rm = na.rm)
+  sapply(x, skewness.default, na.rm = na.rm)
 }

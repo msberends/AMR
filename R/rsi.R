@@ -19,7 +19,7 @@
 # Visit our website for more info: https://msberends.github.io/AMR.    #
 # ==================================================================== #
 
-#' Class 'rsi'
+#' Interpret MIC and disk, or clean raw R/SI data
 #'
 #' Interpret minimum inhibitory concentration (MIC) values and disk diffusion diameters according to EUCAST or CLSI, or clean up existing R/SI values. This transforms the input to a new class [`rsi`], which is an ordered factor with levels `S < I < R`. Values that cannot be interpreted will be returned as `NA` with a warning.
 #' @inheritSection lifecycle Stable lifecycle

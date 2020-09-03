@@ -19,7 +19,7 @@
 # Visit our website for more info: https://msberends.github.io/AMR.    #
 # ==================================================================== #
 
-#' Property of an antibiotic
+#' Get properties of an antibiotic
 #'
 #' Use these functions to return a specific property of an antibiotic from the [antibiotics] data set. All input values will be evaluated internally with [as.ab()].
 #' @inheritSection lifecycle Stable lifecycle
@@ -172,7 +172,7 @@ ab_ddd <- function(x, administration = "oral", units = FALSE, ...) {
 #' @export
 ab_info <- function(x, language = get_locale(), ...) {
   x <- as.ab(x, ...)
-  base::list(ab = as.character(x),
+  list(ab = as.character(x),
              atc = ab_atc(x),
              cid = ab_cid(x),
              name = ab_name(x, language = language),

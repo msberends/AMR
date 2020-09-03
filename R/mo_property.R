@@ -19,14 +19,14 @@
 # Visit our website for more info: https://msberends.github.io/AMR.    #
 # ==================================================================== #
 
-#' Property of a microorganism
+#' Get properties of a microorganism
 #'
-#' Use these functions to return a specific property of a microorganism. All input values will be evaluated internally with [as.mo()], which makes it possible to use microbial abbreviations, codes and names as input. Please see *Examples*.
+#' Use these functions to return a specific property of a microorganism based on the latest accepted taxonomy. All input values will be evaluated internally with [as.mo()], which makes it possible to use microbial abbreviations, codes and names as input. Please see *Examples*.
 #' @inheritSection lifecycle Stable lifecycle
 #' @param x any (vector of) text that can be coerced to a valid microorganism code with [as.mo()]
 #' @param property one of the column names of the [microorganisms] data set or `"shortname"`
-#' @param language language of the returned text, defaults to system language (see [get_locale()]) and can also be set with `getOption("AMR_locale")`. Use `language = NULL` or `language = ""` to prevent translation.
-#' @param ... other parameters passed on to [as.mo()]
+#' @param language language of the returned text, defaults to system language (see [get_locale()]) and can be overwritten by setting the option `AMR_locale`, e.g. `options(AMR_locale = "de")`, see [translate]. Use `language = NULL` or `language = ""` to prevent translation.
+#' @param ... other parameters passed on to [as.mo()], such as 'allow_uncertain' and 'ignore_pattern'
 #' @param open browse the URL using [utils::browseURL()]
 #' @details All functions will return the most recently known taxonomic property according to the Catalogue of Life, except for [mo_ref()], [mo_authors()] and [mo_year()]. Please refer to this example, knowing that *Escherichia blattae* was renamed to *Shimwellia blattae* in 2010:
 #' - `mo_name("Escherichia blattae")` will return `"Shimwellia blattae"` (with a message about the renaming)
@@ -309,7 +309,7 @@ mo_taxonomy <- function(x, language = get_locale(),  ...) {
   x <- as.mo(x, ...)
   metadata <- get_mo_failures_uncertainties_renamed()
   
-  result <- base::list(kingdom = mo_kingdom(x, language = language),
+  result <- list(kingdom = mo_kingdom(x, language = language),
                        phylum = mo_phylum(x, language = language),
                        class = mo_class(x, language = language),
                        order = mo_order(x, language = language),
@@ -413,6 +413,11 @@ mo_property <- function(x, property = "fullname", language = get_locale(), ...) 
 mo_validate <- function(x, property, ...) {
   
   check_dataset_integrity()
+  
+  if (tryCatch(all(x %in% MO_lookup$mo) & length(list(...)) == 0, error = function(e) FALSE)) {
+    # special case for mo_* functions where class is already <mo>
+    return(MO_lookup[match(x, MO_lookup$mo), property, drop = TRUE])
+  }
   
   dots <- list(...)
   Becker <- dots$Becker

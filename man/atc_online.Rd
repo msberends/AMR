@@ -33,8 +33,6 @@ atc_online_ddd(atc_code, ...)
 }
 \description{
 Gets data from the WHO to determine properties of an ATC (e.g. an antibiotic) like name, defined daily dose (DDD) or standard unit.
-
-\strong{This function requires an internet connection.}
 }
 \details{
 Options for parameter \code{administration}:
@@ -62,11 +60,15 @@ Abbreviations of return values when using \code{property = "U"} (unit):
 \item \code{"mmol"} = millimole
 \item \code{"ml"} = milliliter (e.g. eyedrops)
 }
-}
-\section{Questioning lifecycle}{
 
-\if{html}{\figure{lifecycle_questioning.svg}{options: style=margin-bottom:5px} \cr}
-The \link[=lifecycle]{lifecycle} of this function is \strong{questioning}. This function might be no longer be optimal approach, or is it questionable whether this function should be in this \code{AMR} package at all.
+\strong{N.B. This function requires an internet connection and only works if the following packages are installed: \code{curl}, \code{rvest}, \code{xml2}.}
+}
+\section{Stable lifecycle}{
+
+\if{html}{\figure{lifecycle_stable.svg}{options: style=margin-bottom:5px} \cr}
+The \link[=lifecycle]{lifecycle} of this function is \strong{stable}. In a stable function, major changes are unlikely. This means that the unlying code will generally evolve by adding new arguments; removing arguments or changing the meaning of existing arguments will be avoided.
+
+If the unlying code needs breaking changes, they will occur gradually. For example, a parameter will be deprecated and first continue to work, but will emit an message informing you of the change. Next, typically after at least one newly released version on CRAN, the message will be transformed to an error.
 }
 
 \section{Read more on our website!}{

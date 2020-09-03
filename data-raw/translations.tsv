@@ -26,6 +26,8 @@ de	biotype	Biotyp	FALSE	FALSE
 de	vegetative	vegetativ	FALSE	FALSE
 de	([([ ]*?)group	\\1Gruppe	FALSE	FALSE
 de	([([ ]*?)Group	\\1Gruppe	FALSE	FALSE
+de	no .*growth	keine? .*wachstum	FALSE	TRUE
+
 nl	Coagulase-negative Staphylococcus	Coagulase-negatieve Staphylococcus	FALSE	FALSE
 nl	Coagulase-positive Staphylococcus	Coagulase-positieve Staphylococcus	FALSE	FALSE
 nl	Beta-haemolytic Streptococcus	Beta-hemolytische Streptococcus	FALSE	FALSE
@@ -56,6 +58,7 @@ nl	antibiotic	antibioticum	FALSE	FALSE
 nl	Antibiotic	Antibioticum	FALSE	FALSE
 nl	Drug Middel	FALSE	FALSE
 nl	drug middel	FALSE	FALSE
+
 es	Coagulase-negative Staphylococcus	Staphylococcus coagulasa negativo	FALSE	FALSE
 es	Coagulase-positive Staphylococcus	Staphylococcus coagulasa positivo	FALSE	FALSE
 es	Beta-haemolytic Streptococcus	Streptococcus Beta-hemolítico	FALSE	FALSE
@@ -83,6 +86,7 @@ es	biotype	biotipo	FALSE	FALSE
 es	vegetative	vegetativo	FALSE	FALSE
 es	([([ ]*?)group	\\1grupo	FALSE	FALSE
 es	([([ ]*?)Group	\\1Grupo	FALSE	FALSE
+
 it	Coagulase-negative Staphylococcus	Staphylococcus negativo coagulasi	FALSE	FALSE
 it	Coagulase-positive Staphylococcus	Staphylococcus positivo coagulasi	FALSE	FALSE
 it	Beta-haemolytic Streptococcus	Streptococcus Beta-emolitico	FALSE	FALSE
@@ -108,6 +112,7 @@ it	biotype	biotipo	FALSE	FALSE
 it	vegetative	vegetativo	FALSE	FALSE
 it	([([ ]*?)group	\\1gruppo	FALSE	FALSE
 it	([([ ]*?)Group	\\1Gruppo	FALSE	FALSE
+
 fr	Coagulase-negative Staphylococcus	Staphylococcus à coagulase négative	FALSE	FALSE
 fr	Coagulase-positive Staphylococcus	Staphylococcus à coagulase positif	FALSE	FALSE
 fr	Beta-haemolytic Streptococcus	Streptococcus Bêta-hémolytique	FALSE	FALSE
@@ -132,6 +137,7 @@ fr	biogroup	biogroupe	FALSE	FALSE
 fr	vegetative	végétatif	FALSE	FALSE
 fr	([([ ]*?)group	\\1groupe	FALSE	FALSE
 fr	([([ ]*?)Group	\\1Groupe	FALSE	FALSE
+
 pt	Coagulase-negative Staphylococcus	Staphylococcus coagulase negativo	FALSE	FALSE
 pt	Coagulase-positive Staphylococcus	Staphylococcus coagulase positivo	FALSE	FALSE
 pt	Beta-haemolytic Streptococcus	Streptococcus Beta-hemolítico	FALSE	FALSE

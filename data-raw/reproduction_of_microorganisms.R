@@ -955,9 +955,8 @@ microorganisms <- microorganisms %>%
 class(microorganisms$mo) <- c("mo", "character")
 microorganisms.old <- microorganisms.old %>% filter(fullname != "Mycobacterium tuberculosis")
 
-usethis::use_data(microorganisms, overwrite = TRUE, version = 2)
+usethis::use_data(microorganisms, overwrite = TRUE, version = 2, compress = "xz")
 usethis::use_data(microorganisms.old, overwrite = TRUE, version = 2)
-
 
 
 # OLD CODE ----------------------------------------------------------------

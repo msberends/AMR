@@ -32,14 +32,14 @@
 #' @export
 #' @details
 #' The `%like%` function:
-#' * Is case insensitive (use `%like_case%` for case-sensitive matching)
+#' * Is case-insensitive (use `%like_case%` for case-sensitive matching)
 #' * Supports multiple patterns
 #' * Checks if `pattern` is a regular expression and sets `fixed = TRUE` if not, to greatly improve speed
 #' * Tries again with `perl = TRUE` if regex fails
 #' 
 #' Using RStudio? This function can also be inserted from the Addins menu and can have its own Keyboard Shortcut like `Ctrl+Shift+L` or `Cmd+Shift+L` (see `Tools` > `Modify Keyboard Shortcuts...`).
 #' @source Idea from the [`like` function from the `data.table` package](https://github.com/Rdatatable/data.table/blob/master/R/like.R)
-#' @seealso [base::grep()]
+#' @seealso [grep()]
 #' @inheritSection AMR Read more on our website!
 #' @examples
 #' # simple test
@@ -71,13 +71,25 @@ like <- function(x, pattern, ignore.case = TRUE) {
     pattern <- tolower(pattern)
   }
   
+  if (length(pattern) > 1 & length(x) == 1) {
+    x <- rep(x, length(pattern))
+  }
+    
   if (length(pattern) > 1) {
+    res <- vector(length = length(pattern))
     if (length(x) != length(pattern)) {
       if (length(x) == 1) {
         x <- rep(x, length(pattern))
       }
       # return TRUE for every 'x' that matches any 'pattern', FALSE otherwise
-      res <- sapply(pattern, function(pttrn) base::grepl(pttrn, x, ignore.case = FALSE, fixed = fixed))
+      for (i in seq_len(length(res))) {
+        if (is.factor(x[i])) {
+          res[i] <- as.integer(x[i]) %in% grep(pattern[i], levels(x[i]), ignore.case = FALSE, fixed = fixed)
+        } else {
+          res[i] <- grepl(pattern[i], x[i], ignore.case = FALSE, fixed = fixed)
+        }
+      }
+      res <- sapply(pattern, function(pttrn) grepl(pttrn, x, ignore.case = FALSE, fixed = fixed))
       res2 <- as.logical(rowSums(res))
       # get only first item of every hit in pattern
       res2[duplicated(res)] <- FALSE
@@ -85,12 +97,11 @@ like <- function(x, pattern, ignore.case = TRUE) {
       return(res2)
     } else {
       # x and pattern are of same length, so items with each other
-      res <- vector(length = length(pattern))
       for (i in seq_len(length(res))) {
         if (is.factor(x[i])) {
-          res[i] <- as.integer(x[i]) %in% base::grep(pattern[i], levels(x[i]), ignore.case = FALSE, fixed = fixed)
+          res[i] <- as.integer(x[i]) %in% grep(pattern[i], levels(x[i]), ignore.case = FALSE, fixed = fixed)
         } else {
-          res[i] <- base::grepl(pattern[i], x[i], ignore.case = FALSE, fixed = fixed)
+          res[i] <- grepl(pattern[i], x[i], ignore.case = FALSE, fixed = fixed)
         }
       }
       return(res)
@@ -99,13 +110,13 @@ like <- function(x, pattern, ignore.case = TRUE) {
   
   # the regular way how grepl works; just one pattern against one or more x
   if (is.factor(x)) {
-    as.integer(x) %in% base::grep(pattern, levels(x), ignore.case = FALSE, fixed = fixed)
+    as.integer(x) %in% grep(pattern, levels(x), ignore.case = FALSE, fixed = fixed)
   } else {
-    tryCatch(base::grepl(pattern, x, ignore.case = FALSE, fixed = fixed),
+    tryCatch(grepl(pattern, x, ignore.case = FALSE, fixed = fixed),
              error = function(e) {
                if (grepl("invalid reg(ular )?exp", e$message, ignore.case = TRUE)) {
                  # try with perl = TRUE:
-                 return(base::grepl(pattern = pattern, 
+                 return(grepl(pattern = pattern, 
                                     x = x,
                                     ignore.case = FALSE, 
                                     fixed = fixed,

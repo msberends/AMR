@@ -31,7 +31,7 @@ Convenient wrapper around \code{\link[=grep]{grep()}} to match a pattern: \code{
 \details{
 The \verb{\%like\%} function:
 \itemize{
-\item Is case insensitive (use \verb{\%like_case\%} for case-sensitive matching)
+\item Is case-insensitive (use \verb{\%like_case\%} for case-sensitive matching)
 \item Supports multiple patterns
 \item Checks if \code{pattern} is a regular expression and sets \code{fixed = TRUE} if not, to greatly improve speed
 \item Tries again with \code{perl = TRUE} if regex fails
@@ -75,5 +75,5 @@ example_isolates \%>\%
 }
 }
 \seealso{
-\code{\link[base:grep]{base::grep()}}
+\code{\link[=grep]{grep()}}
 }

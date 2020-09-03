@@ -149,7 +149,7 @@ catalogue_of_life <- list(
 #' @seealso [as.mo()] [mo_property()] [microorganisms]
 "microorganisms.old"
 
-#' Translation table with `r format(nrow(microorganisms.codes), big.mark = ",")` common microorganism codes
+#' Data set with `r format(nrow(microorganisms.codes), big.mark = ",")` common microorganism codes
 #'
 #' A data set containing commonly used codes for microorganisms, from laboratory systems and WHONET. Define your own with [set_mo_source()]. They will all be searched when using [as.mo()] and consequently all the [`mo_*`][mo_property()] functions.
 #' @format A [`data.frame`] with `r format(nrow(microorganisms.codes), big.mark = ",")` observations and `r ncol(microorganisms.codes)` variables:
@@ -194,17 +194,17 @@ catalogue_of_life <- list(
 
 #' Data set with `r format(nrow(WHONET), big.mark = ",")` isolates - WHONET example
 #'
-#' This example data set has the exact same structure as an export file from WHONET. Such files can be used with this package, as this example data set shows. The data itself was based on our [example_isolates] data set.
+#' This example data set has the exact same structure as an export file from WHONET. Such files can be used with this package, as this example data set shows. The antibiotic results are based on our [example_isolates] data set. All patient names are created using online surname generators and are only in place for practice purposes.
 #' @format A [`data.frame`] with `r format(nrow(WHONET), big.mark = ",")` observations and `r ncol(WHONET)` variables:
 #' - `Identification number`\cr ID of the sample
 #' - `Specimen number`\cr ID of the specimen
 #' - `Organism`\cr Name of the microorganism. Before analysis, you should transform this to a valid microbial class, using [as.mo()].
 #' - `Country`\cr Country of origin
 #' - `Laboratory`\cr Name of laboratory
-#' - `Last name`\cr Last name of patient
-#' - `First name`\cr Initial of patient
-#' - `Sex`\cr Gender of patient
-#' - `Age`\cr Age of patient
+#' - `Last name`\cr Fictitious last name of patient
+#' - `First name`\cr Fictitious initial of patient
+#' - `Sex`\cr Fictitious gender of patient
+#' - `Age`\cr Fictitious age of patient
 #' - `Age category`\cr Age group, can also be looked up using [age_groups()]
 #' - `Date of admission`\cr Date of hospital admission
 #' - `Specimen date`\cr Date when specimen was received at laboratory

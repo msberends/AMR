@@ -7,7 +7,7 @@
 \alias{mo_failures}
 \alias{mo_uncertainties}
 \alias{mo_renamed}
-\title{Transform to microorganism ID}
+\title{Transform input to a microorganism ID}
 \usage{
 as.mo(
   x,
@@ -15,6 +15,7 @@ as.mo(
   Lancefield = FALSE,
   allow_uncertain = TRUE,
   reference_df = get_mo_source(),
+  ignore_pattern = getOption("AMR_ignore_pattern"),
   ...
 )
 
@@ -41,6 +42,8 @@ This excludes \emph{Enterococci} at default (who are in group D), use \code{Lanc
 
 \item{reference_df}{a \code{\link{data.frame}} to be used for extra reference when translating \code{x} to a valid \code{\link{mo}}. See \code{\link[=set_mo_source]{set_mo_source()}} and \code{\link[=get_mo_source]{get_mo_source()}} to automate the usage of your own codes (e.g. used in your analysis or organisation).}
 
+\item{ignore_pattern}{a regular expression (case-insensitive) of which all matches in \code{x} must return \code{NA}. This can be convenient to exclude known non-relevant input and can also be set with the option \code{AMR_ignore_pattern}, e.g. \code{options(AMR_ignore_pattern = "(not reported|contaminated flora)")}.}
+
 \item{...}{other parameters passed on to functions}
 }
 \value{
@@ -52,17 +55,17 @@ Use this function to determine a valid microorganism ID (\code{\link{mo}}). Dete
 \details{
 \subsection{General info}{
 
-A microorganism ID from this package (class: \code{\link{mo}}) typically looks like these examples:\preformatted{  Code               Full name
+A microorganism ID from this package (class: \code{\link{mo}}) is human readable and typically looks like these examples:\preformatted{  Code               Full name
   ---------------    --------------------------------------
   B_KLBSL            Klebsiella
   B_KLBSL_PNMN       Klebsiella pneumoniae
   B_KLBSL_PNMN_RHNS  Klebsiella pneumoniae rhinoscleromatis
   |   |    |    |
   |   |    |    |
-  |   |    |     ---> subspecies, a 4-5 letter acronym
-  |   |     ----> species, a 4-5 letter acronym
-  |    ----> genus, a 5-7 letter acronym
-   ----> taxonomic kingdom: A (Archaea), AN (Animalia), B (Bacteria),
+  |   |    |    \\---> subspecies, a 4-5 letter acronym
+  |   |    \\----> species, a 4-5 letter acronym
+  |   \\----> genus, a 5-7 letter acronym
+  \\----> taxonomic kingdom: A (Archaea), AN (Animalia), B (Bacteria),
                             C (Chromista), F (Fungi), P (Protozoa)
 }
 

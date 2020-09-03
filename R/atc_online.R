@@ -21,10 +21,8 @@
 
 #' Get ATC properties from WHOCC website
 #'
-#' @inheritSection lifecycle Questioning lifecycle
+#' @inheritSection lifecycle Stable lifecycle
 #' @description Gets data from the WHO to determine properties of an ATC (e.g. an antibiotic) like name, defined daily dose (DDD) or standard unit.
-#' 
-#' **This function requires an internet connection.**
 #' @param atc_code a character or character vector with ATC code(s) of antibiotic(s)
 #' @param property property of an ATC code. Valid values are `"ATC"`, `"Name"`, `"DDD"`, `"U"` (`"unit"`), `"Adm.R"`, `"Note"` and `groups`. For this last option, all hierarchical groups of an ATC code will be returned, see Examples.
 #' @param administration type of administration when using `property = "Adm.R"`, see Details
@@ -54,6 +52,8 @@
 #' - `"MU"` = million units
 #' - `"mmol"` = millimole
 #' - `"ml"` = milliliter (e.g. eyedrops)
+#' 
+#' **N.B. This function requires an internet connection and only works if the following packages are installed: `curl`, `rvest`, `xml2`.**
 #' @export
 #' @rdname atc_online
 #' @inheritSection AMR Read more on our website!

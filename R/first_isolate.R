@@ -411,11 +411,11 @@ first_isolate <- function(x,
   rownames(x) <- NULL
   
   if (info == TRUE) {
-    n_found <- base::sum(x$newvar_first_isolate, na.rm = TRUE)
+    n_found <- sum(x$newvar_first_isolate, na.rm = TRUE)
     p_found_total <- percentage(n_found / nrow(x[which(!is.na(x$newvar_mo)), , drop = FALSE]))
     p_found_scope <- percentage(n_found / scope.size)
     # mark up number of found
-    n_found <- base::format(n_found, big.mark = big.mark, decimal.mark = decimal.mark)
+    n_found <- format(n_found, big.mark = big.mark, decimal.mark = decimal.mark)
     if (p_found_total != p_found_scope) {
       msg_txt <- paste0("=> Found ",
                         font_bold(paste0(n_found, " first ", weighted.notice, "isolates")),

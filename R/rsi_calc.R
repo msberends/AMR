@@ -45,7 +45,7 @@ rsi_calc <- function(...,
     dots_df <- as.data.frame(dots_df, stringsAsFactors = FALSE)
   }
   
-  dots <- base::eval(base::substitute(base::alist(...)))
+  dots <- eval(substitute(alist(...)))
   stop_if(length(dots) == 0, "no variables selected", call = -2)
   
   stop_if("also_single_tested" %in% names(dots),
@@ -118,12 +118,12 @@ rsi_calc <- function(...,
       # no NAs in any column
       y <- apply(X = as.data.frame(lapply(x, as.integer), stringsAsFactors = FALSE),
                  MARGIN = 1,
-                 FUN = base::min)
+                 FUN = min)
       numerator <- sum(as.integer(y) %in% as.integer(ab_result), na.rm = TRUE)
       denominator <- sum(sapply(x_transposed, function(y) !(any(is.na(y)))))
     } else {
       # may contain NAs in any column
-      other_values <- base::setdiff(c(NA, levels(ab_result)), ab_result)
+      other_values <- setdiff(c(NA, levels(ab_result)), ab_result)
       numerator <- sum(sapply(x_transposed, function(y) any(y %in% ab_result, na.rm = TRUE)))
       denominator <- sum(sapply(x_transposed, function(y) !(all(y %in% other_values) & any(is.na(y)))))
     }

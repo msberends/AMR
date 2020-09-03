@@ -276,8 +276,9 @@ table a:not(.btn):hover, .table a:not(.btn):hover {
   display: none;
 }
 .dataset-download-button {
-  margin-right: 10px;
+  margin-right: 2%;
 }
 .dataset-download-button img {
-  height: 100px !important;
+  width: 80px !important;
+  max-width: 14% !important;
 }

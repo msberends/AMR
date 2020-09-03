@@ -728,10 +728,10 @@ mdro <- function(x,
     }
     
     # not enough classes available
-    x[which(x$MDRO %in% c(1, 3) & x$classes_available < base::floor(x$classes_in_guideline * pct_required_classes)), "MDRO"] <- -1
+    x[which(x$MDRO %in% c(1, 3) & x$classes_available < floor(x$classes_in_guideline * pct_required_classes)), "MDRO"] <- -1
     if (verbose == TRUE) {
       x[which(x$MDRO == -1), "reason"] <- paste0("not enough classes available: ", x$classes_available[which(x$MDRO == -1)], 
-                                                 " of required ", (base::floor(x$classes_in_guideline * pct_required_classes))[which(x$MDRO == -1)], 
+                                                 " of required ", (floor(x$classes_in_guideline * pct_required_classes))[which(x$MDRO == -1)], 
                                                  " (~", percentage(pct_required_classes), " of ", x$classes_in_guideline[which(x$MDRO == -1)], ")")
     }
     

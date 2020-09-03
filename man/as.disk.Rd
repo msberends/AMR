@@ -4,7 +4,7 @@
 \alias{as.disk}
 \alias{disk}
 \alias{is.disk}
-\title{Class 'disk'}
+\title{Transform input to disk diffusion diameters}
 \usage{
 as.disk(x, na.rm = FALSE)
 
@@ -19,7 +19,7 @@ is.disk(x)
 An \code{\link{integer}} with additional new class \code{\link{disk}}
 }
 \description{
-This transforms a vector to a new class \code{\link{disk}}, which is a growth zone size (around an antibiotic disk) in millimetres between 6 and 50.
+This transforms a vector to a new class \code{\link{disk}}, which is a disk diffusion growth zone size (around an antibiotic disk) in millimetres between 6 and 50.
 }
 \details{
 Interpret disk values as RSI values with \code{\link[=as.rsi]{as.rsi()}}. It supports guidelines from EUCAST and CLSI.

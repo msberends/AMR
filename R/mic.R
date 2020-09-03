@@ -19,9 +19,9 @@
 # Visit our website for more info: https://msberends.github.io/AMR.    #
 # ==================================================================== #
 
-#' Class 'mic'
+#' Transform input to minimum inhibitory concentrations
 #'
-#' This transforms a vector to a new class [`mic`], which is an ordered [`factor`] with valid MIC values as levels. Invalid MIC values will be translated as `NA` with a warning.
+#' This transforms a vector to a new class [`mic`], which is an ordered [`factor`] with valid minimum inhibitory concentrations (MIC) as levels. Invalid MIC values will be translated as `NA` with a warning.
 #' @inheritSection lifecycle Stable lifecycle
 #' @rdname as.mic
 #' @param x vector

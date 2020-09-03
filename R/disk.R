@@ -19,9 +19,9 @@
 # Visit our website for more info: https://msberends.github.io/AMR.    #
 # ==================================================================== #
 
-#' Class 'disk'
+#' Transform input to disk diffusion diameters
 #'
-#' This transforms a vector to a new class [`disk`], which is a growth zone size (around an antibiotic disk) in millimetres between 6 and 50.
+#' This transforms a vector to a new class [`disk`], which is a disk diffusion growth zone size (around an antibiotic disk) in millimetres between 6 and 50.
 #' @inheritSection lifecycle Stable lifecycle
 #' @rdname as.disk
 #' @param x vector

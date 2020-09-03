@@ -172,7 +172,7 @@ get_column_abx <- function(x,
   
   # sort on name
   x <- x[order(names(x), x)]
-  duplicates <- c(x[base::duplicated(x)], x[base::duplicated(names(x))]) 
+  duplicates <- c(x[duplicated(x)], x[duplicated(names(x))]) 
   duplicates <- duplicates[unique(names(duplicates))]
   x <- c(x[!names(x) %in% names(duplicates)], duplicates)
   x <- x[order(names(x), x)]

@@ -25,7 +25,7 @@
 \alias{mo_synonyms}
 \alias{mo_info}
 \alias{mo_url}
-\title{Property of a microorganism}
+\title{Get properties of a microorganism}
 \usage{
 mo_name(x, language = get_locale(), ...)
 
@@ -78,9 +78,9 @@ mo_property(x, property = "fullname", language = get_locale(), ...)
 \arguments{
 \item{x}{any (vector of) text that can be coerced to a valid microorganism code with \code{\link[=as.mo]{as.mo()}}}
 
-\item{language}{language of the returned text, defaults to system language (see \code{\link[=get_locale]{get_locale()}}) and can also be set with \code{getOption("AMR_locale")}. Use \code{language = NULL} or \code{language = ""} to prevent translation.}
+\item{language}{language of the returned text, defaults to system language (see \code{\link[=get_locale]{get_locale()}}) and can be overwritten by setting the option \code{AMR_locale}, e.g. \code{options(AMR_locale = "de")}, see \link{translate}. Use \code{language = NULL} or \code{language = ""} to prevent translation.}
 
-\item{...}{other parameters passed on to \code{\link[=as.mo]{as.mo()}}}
+\item{...}{other parameters passed on to \code{\link[=as.mo]{as.mo()}}, such as 'allow_uncertain' and 'ignore_pattern'}
 
 \item{open}{browse the URL using \code{\link[utils:browseURL]{utils::browseURL()}}}
 
@@ -96,7 +96,7 @@ mo_property(x, property = "fullname", language = get_locale(), ...)
 }
 }
 \description{
-Use these functions to return a specific property of a microorganism. All input values will be evaluated internally with \code{\link[=as.mo]{as.mo()}}, which makes it possible to use microbial abbreviations, codes and names as input. Please see \emph{Examples}.
+Use these functions to return a specific property of a microorganism based on the latest accepted taxonomy. All input values will be evaluated internally with \code{\link[=as.mo]{as.mo()}}, which makes it possible to use microbial abbreviations, codes and names as input. Please see \emph{Examples}.
 }
 \details{
 All functions will return the most recently known taxonomic property according to the Catalogue of Life, except for \code{\link[=mo_ref]{mo_ref()}}, \code{\link[=mo_authors]{mo_authors()}} and \code{\link[=mo_year]{mo_year()}}. Please refer to this example, knowing that \emph{Escherichia blattae} was renamed to \emph{Shimwellia blattae} in 2010:

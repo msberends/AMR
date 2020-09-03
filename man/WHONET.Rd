@@ -12,10 +12,10 @@ A \code{\link{data.frame}} with 500 observations and 53 variables:
 \item \code{Organism}\cr Name of the microorganism. Before analysis, you should transform this to a valid microbial class, using \code{\link[=as.mo]{as.mo()}}.
 \item \code{Country}\cr Country of origin
 \item \code{Laboratory}\cr Name of laboratory
-\item \verb{Last name}\cr Last name of patient
-\item \verb{First name}\cr Initial of patient
-\item \code{Sex}\cr Gender of patient
-\item \code{Age}\cr Age of patient
+\item \verb{Last name}\cr Fictitious last name of patient
+\item \verb{First name}\cr Fictitious initial of patient
+\item \code{Sex}\cr Fictitious gender of patient
+\item \code{Age}\cr Fictitious age of patient
 \item \verb{Age category}\cr Age group, can also be looked up using \code{\link[=age_groups]{age_groups()}}
 \item \verb{Date of admission}\cr Date of hospital admission
 \item \verb{Specimen date}\cr Date when specimen was received at laboratory
@@ -39,7 +39,7 @@ A \code{\link{data.frame}} with 500 observations and 53 variables:
 WHONET
 }
 \description{
-This example data set has the exact same structure as an export file from WHONET. Such files can be used with this package, as this example data set shows. The data itself was based on our \link{example_isolates} data set.
+This example data set has the exact same structure as an export file from WHONET. Such files can be used with this package, as this example data set shows. The antibiotic results are based on our \link{example_isolates} data set. All patient names are created using online surname generators and are only in place for practice purposes.
 }
 \section{Reference data publicly available}{
 

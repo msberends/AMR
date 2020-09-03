@@ -33,8 +33,6 @@
 #' @inheritParams rsi_df
 #' @inheritParams base::formatC
 #' @details The function [format()] calculates the resistance per bug-drug combination. Use `combine_IR = FALSE` (default) to test R vs. S+I and `combine_IR = TRUE` to test R+I vs. S. 
-#' 
-#' The language of the output can be overwritten with `options(AMR_locale)`, please see [translate].
 #' @export
 #' @rdname bug_drug_combinations
 #' @return The function [bug_drug_combinations()] returns a [`data.frame`] with columns "mo", "ab", "S", "I", "R" and "total".
@@ -71,7 +69,7 @@ bug_drug_combinations <- function(x,
   
   x_class <- class(x)
   x <- as.data.frame(x, stringsAsFactors = FALSE)
-  x[, col_mo] <- FUN(x[, col_mo, drop = TRUE])
+  x[, col_mo] <- FUN(x[, col_mo, drop = TRUE], ...)
   x <- x[, c(col_mo, names(which(sapply(x, is.rsi)))), drop = FALSE]
   
   unique_mo <- sort(unique(x[, col_mo, drop = TRUE]))

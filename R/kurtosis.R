@@ -42,20 +42,20 @@ kurtosis.default <- function(x, na.rm = FALSE) {
     x <- x[!is.na(x)]
   }
   n <- length(x)
-  n * base::sum((x - base::mean(x, na.rm = na.rm))^4, na.rm = na.rm) /
-    (base::sum((x - base::mean(x, na.rm = na.rm))^2, na.rm = na.rm)^2)
+  n * sum((x - mean(x, na.rm = na.rm))^4, na.rm = na.rm) /
+    (sum((x - mean(x, na.rm = na.rm))^2, na.rm = na.rm)^2)
 }
 
 #' @method kurtosis matrix
 #' @rdname kurtosis
 #' @export
 kurtosis.matrix <- function(x, na.rm = FALSE) {
-  base::apply(x, 2, kurtosis.default, na.rm = na.rm)
+  apply(x, 2, kurtosis.default, na.rm = na.rm)
 }
 
 #' @method kurtosis data.frame
 #' @rdname kurtosis
 #' @export
 kurtosis.data.frame <- function(x, na.rm = FALSE) {
-  base::sapply(x, kurtosis.default, na.rm = na.rm)
+  sapply(x, kurtosis.default, na.rm = na.rm)
 }

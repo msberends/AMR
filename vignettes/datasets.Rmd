@@ -3,7 +3,7 @@ title: "Data sets for download / own use"
 output: 
   rmarkdown::html_vignette:
     toc: true
-    toc_depth: 2
+    toc_depth: 1
 vignette: >
   %\VignetteIndexEntry{Data sets for download / own use}
   %\VignetteEncoding{UTF-8}
@@ -52,7 +52,7 @@ download_txt <- function(filename) {
   excel <- paste0(filename, ".xlsx")
   create_txt <- function(filename, type) {
     paste0('<a class="dataset-download-button" href="', github_base, filename, '" target="_blank">',
-           '<img src="download_', type, '.png" height="70px" title="', file_size(filename), '">',
+           '<img src="download_', type, '.png" width="50px" title="', file_size(filename), '">',
            '</a>')
   }
 

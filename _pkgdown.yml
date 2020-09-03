@@ -44,7 +44,7 @@ navbar:
       - text: "Predict antimicrobial resistance"
         icon: "fa-dice"
         href: "articles/resistance_predict.html"
-      - text: "Download our reference data sets for own use"
+      - text: "Data sets for download / own use"
         icon: "fa-database"
         href: "articles/datasets.html"
       - text: "Conduct principal component analysis for AMR"
@@ -64,10 +64,10 @@ navbar:
         href: "articles/EUCAST.html"
       - text: "Get properties of a microorganism"
         icon: "fa-bug"
-        href: "reference/mo_property.html" # reference instead of article
+        href: "reference/mo_property.html" # reference instead of an article
       - text: "Get properties of an antibiotic"
         icon: "fa-capsules"
-        href: "reference/ab_property.html" # reference instead of article
+        href: "reference/ab_property.html" # reference instead of an article
       - text: "Other: benchmarks"
         icon: "fa-shipping-fast"
         href: "articles/benchmarks.html"
@@ -89,67 +89,7 @@ navbar:
       href: "survey.html"
 
 reference:
-  - title: "Cleaning your data"
-    desc: >
-      Functions for cleaning and optimising your data, to be able to add
-      variables later on (like taxonomic properties) or to fix and extend
-      antibiotic interpretations by applying [EUCAST rules](http://www.eucast.org/expert_rules_and_intrinsic_resistance/).
-    contents:
-    - starts_with("as.")
-    - "`eucast_rules`"
-    - "`ab_from_text`"
-    - "`guess_ab_col`"
-    - "`mo_source`"
-  - title: "Enhancing your data"
-    desc: >
-      Functions to add new data to your existing data, such as the determination
-      of first isolates, multi-drug resistant microorganisms (MDRO), getting
-      properties of microorganisms or antibiotics and determining the age of
-      patients or divide ages into age groups.
-    contents:
-    - "`ab_property`"
-    - "`age_groups`"
-    - "`age`"
-    - "`atc_online_property`"
-    - "`first_isolate`"
-    - "`join`"
-    - "`key_antibiotics`"
-    - "`mdro`"
-    - "`mo_property`"
-    - "`p_symbol`"
-  - title: "Analysing your data"
-    desc: >
-      Functions for conducting AMR analysis, like counting isolates, calculating
-      resistance or susceptibility, or make plots.
-    contents:
-    - "`proportion`"
-    - "`count`"
-    - "`availability`"
-    - "`bug_drug_combinations`"
-    - "`resistance_predict`"
-    - "`pca`"
-    - "`antibiotic_class_selectors`"
-    - "`filter_ab_class`"
-    - "`g.test`"
-    - "`ggplot_rsi`"
-    - "`ggplot_pca`"
-    - "`kurtosis`"
-    - "`skewness`"
-  - title: "Included data sets"
-    desc: >
-      Scientifically reliable references for microorganisms and
-      antibiotics, and example data sets to use for practise.
-    contents:
-    - "`microorganisms`"
-    - "`antibiotics`"
-    - "`intrinsic_resistant`"
-    - "`example_isolates`"
-    - "`example_isolates_unclean`"
-    - "`rsi_translation`"
-    - "`microorganisms.codes`"
-    - "`microorganisms.old`"
-    - "`WHONET`"
-  - title: "Background information"
+  - title: "Background information on included data"
     desc: >
       Some pages about our package and its external sources. Be sure to read our [How To's](./../articles/index.html)
       for more information about how to work with functions in this package.
@@ -159,7 +99,66 @@ reference:
     - "`catalogue_of_life_version`"
     - "`WHOCC`"
     - "`lifecycle`"
-  - title: "Other functions"
+    - "`microorganisms`"
+    - "`antibiotics`"
+    - "`intrinsic_resistant`"
+    - "`example_isolates`"
+    - "`example_isolates_unclean`"
+    - "`rsi_translation`"
+    - "`microorganisms.codes`"
+    - "`microorganisms.old`"
+    - "`WHONET`"
+    
+  - title: "Preparing data: microorganisms"
+    desc: >
+      These functions are meant to get taxonomically valid properties of microorganisms from any input.
+      Use `mo_source()` to teach this package how to translate your own codes to valid microorganism codes.
+    contents:
+    - "`as.mo`"
+    - "`mo_property`"
+    - "`mo_source`"
+    
+  - title: "Preparing data: antibiotics"
+    desc: >
+      Use these functions to get valid properties of antibiotics from any input or to clean your input.
+      You can even retrieve drug names and doses from clinical text records, using `ab_from_text()`.
+    contents:
+    - "`as.ab`"
+    - "`ab_property`"
+    - "`ab_from_text`"
+    - "`atc_online_property`"
+    
+  - title: "Preparing data: antimicrobial resistance"
+    desc: >
+      With `as.mic()` and `as.disk()` you can transform your raw input to valid MIC or disk diffusion values.
+      Use `as.rsi()` for cleaning raw data to let it only contain "R", "I" and "S", or to interpret MIC or disk diffusion values as R/SI based on the lastest EUCAST and CLSI guidelines.
+      Afterwards, you can extend antibiotic interpretations by applying [EUCAST rules](http://www.eucast.org/expert_rules_and_intrinsic_resistance/) with `eucast_rules()`.
+    contents:
+    - "`as.rsi`"
+    - "`as.mic`"
+    - "`as.disk`"
+    - "`eucast_rules`"
+    
+  - title: "Analysing data: antimicrobial resistance"
+    desc: >
+      Use these function for the analysis part. You can use `susceptibility()` or `resistance()` on any antibiotic column.
+      Be sure to first select the isolates that are appropiate for analysis, by using `first_isolate()`.
+      You can also filter your data on certain resistance in certain antibiotic classes (`filter_ab_class()`), or determine multi-drug resistant microorganisms (MDRO, `mdro()`).
+    contents:
+    - "`proportion`"
+    - "`count`"
+    - "`first_isolate`"
+    - "`key_antibiotics`"
+    - "`mdro`"
+    - "`count`"
+    - "`ggplot_rsi`"
+    - "`bug_drug_combinations`"
+    - "`antibiotic_class_selectors`"
+    - "`filter_ab_class`"
+    - "`resistance_predict`"
+    - "`guess_ab_col`"
+    
+  - title: "Other: miscellaneous functions"
     desc: >
       These functions are mostly for internal use, but some of
       them may also be suitable for your analysis. Especially the
@@ -167,7 +166,23 @@ reference:
     contents:
     - "`get_locale`"
     - "`like`"
-  - title: "Deprecated functions"
+    - "`age_groups`"
+    - "`age`"
+    - "`join`"
+    - "`availability`"
+    - "`pca`"
+    - "`ggplot_pca`"
+  
+  - title: "Other: statistical tests"
+    desc: >
+      Some statistical tests or methods are not part of base R and are added to this package for convenience.
+    contents:
+    - "`g.test`"
+    - "`kurtosis`"
+    - "`skewness`"
+    - "`p_symbol`"
+
+  - title: "Other: deprecated functions"
     desc: >
       These functions are deprecated, meaning that they will still
       work but show a warning with every use and will be removed

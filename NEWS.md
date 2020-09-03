@@ -1,5 +1,7 @@
-# AMR 1.3.0.9013
-## <small>Last updated: 29 August 2020</small>
+# AMR 1.3.0.9014
+## <small>Last updated:  3 September 2020</small>
+
+Note: some changes in this version were suggested by anonymous reviewers from the journal we submitted our manuscipt to. We are those reviewers very grateful for going through our code so thoroughly!
 
 ### New
 * A new vignette and website page with info about all our public and freely available data sets, that can be downloaded as flat files or in formats for use in R, SPSS, SAS, Stata and Excel: https://msberends.github.io/AMR/articles/datasets.html
@@ -16,6 +18,7 @@
   ```
 
 ### Changed
+* Although advertised that this package should work under R 3.0.0, we still had a dependency on R 3.6.0. This is fixed, meaning that our package should now work under R 3.0.0.
 * Improvements for `as.rsi()`:
   * Support for using `dplyr`'s `across()` to interpret MIC values or disk zone diameters, which also automatically determines the column with microorganism names or codes.
     ```r
@@ -35,12 +38,20 @@
   #> Class <disk>
   #> [1] 24 24
   ```
+* Improvements for `as.mo()`:
+  * Big speed improvement for already valid microorganism ID. This also means an significant speed improvement for using `mo_*` functions like `mo_name()` on microoganism IDs.
+  * Added parameter `ignore_pattern` to `as.mo()` which can also be given to `mo_*` functions like `mo_name()`, to exclude known non-relevant input from analysing. This can also be set with the option `AMR_ignore_pattern`.
+* `get_locale()` now uses `Sys.getlocale()` instead of `Sys.getlocale("LC_COLLATE")`
 * Speed improvement for `eucast_rules()`
 * Overall speed improvement by tweaking joining functions
 * Function `mo_shortname()` now returns the genus for input where the species is unknown
 * BORSA is now recognised as an abbreviation for *Staphylococcus aureus*, meaning that e.g. `mo_genus("BORSA")` will return "Staphylococcus"
 * Added a feature from AMR 1.1.0 and earlier again, but now without other package dependencies: `tibble` printing support for classes `<rsi>`, `<mic>`, `<disk>`, `<ab>` and `<mo>`. When using `tibble`s containing antimicrobial columns (class `<rsi>`), "S" will print in green, "I" will print in yellow and "R" will print in red. Microbial IDs (class `<mo>`) will emphasise on the genus and species, not on the kingdom.
 * Names of antiviral agents in data set `antivirals` now have a starting capital letter, like it is the case in the `antibiotics` data set
+
+### Other
+* Removed unnecessary references to the `base` package
+* Added packages that could be useful for some functions to the `Suggests` field of the `DESCRIPTION` file
 
 # AMR 1.3.0
 

@@ -28,6 +28,10 @@
          value = create_MO.old_lookup(),
          envir = asNamespace("AMR"))
   
+  assign(x = "LANGUAGES_SUPPORTED",
+         value = sort(c("en", unique(AMR:::translations_file$lang))),
+         envir = asNamespace("AMR"))
+
   # support for tibble headers (type_sum) and tibble columns content (pillar_shaft)
   # without the need to depend on other packages
   s3_register("pillar::pillar_shaft", "ab")

@@ -81,7 +81,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.3.0.9013</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.3.0.9014</span>
       </span>
     </div>
 
@@ -121,7 +121,7 @@
       <a href="../articles/datasets.html">
         <span class="fa fa-database"></span>
          
-        Download our reference data sets for own use
+        Data sets for download / own use
       </a>
     </li>
     <li>
@@ -236,14 +236,15 @@
       <small>Source: <a href='https://github.com/msberends/AMR/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
-    <div id="amr-1309013" class="section level1">
-<h1 class="page-header" data-toc-text="1.3.0.9013">
-<a href="#amr-1309013" class="anchor"></a>AMR 1.3.0.9013<small> Unreleased </small>
+    <div id="amr-1309014" class="section level1">
+<h1 class="page-header" data-toc-text="1.3.0.9014">
+<a href="#amr-1309014" class="anchor"></a>AMR 1.3.0.9014<small> Unreleased </small>
 </h1>
-<div id="last-updated-29-august-2020" class="section level2">
+<div id="last-updated-3-september-2020" class="section level2">
 <h2 class="hasAnchor">
-<a href="#last-updated-29-august-2020" class="anchor"></a><small>Last updated: 29 August 2020</small>
+<a href="#last-updated-3-september-2020" class="anchor"></a><small>Last updated: 3 September 2020</small>
 </h2>
+<p>Note: some changes in this version were suggested by anonymous reviewers from the journal we submitted our manuscipt to. We are those reviewers very grateful for going through our code so thoroughly!</p>
 <div id="new" class="section level3">
 <h3 class="hasAnchor">
 <a href="#new" class="anchor"></a>New</h3>
@@ -267,6 +268,7 @@
 <h3 class="hasAnchor">
 <a href="#changed" class="anchor"></a>Changed</h3>
 <ul>
+<li><p>Although advertised that this package should work under R 3.0.0, we still had a dependency on R 3.6.0. This is fixed, meaning that our package should now work under R 3.0.0.</p></li>
 <li>
 <p>Improvements for <code><a href="../reference/as.rsi.html">as.rsi()</a></code>:</p>
 <ul>
@@ -294,12 +296,28 @@
 <span class="co">#&gt; [1] 24 24</span>
 </pre></div>
 </li>
+<li>
+<p>Improvements for <code><a href="../reference/as.mo.html">as.mo()</a></code>:</p>
+<ul>
+<li>Big speed improvement for already valid microorganism ID. This also means an significant speed improvement for using <code>mo_*</code> functions like <code><a href="../reference/mo_property.html">mo_name()</a></code> on microoganism IDs.</li>
+<li>Added parameter <code>ignore_pattern</code> to <code><a href="../reference/as.mo.html">as.mo()</a></code> which can also be given to <code>mo_*</code> functions like <code><a href="../reference/mo_property.html">mo_name()</a></code>, to exclude known non-relevant input from analysing. This can also be set with the option <code>AMR_ignore_pattern</code>.</li>
+</ul>
+</li>
+<li><p><code><a href="../reference/translate.html">get_locale()</a></code> now uses <code><a href="https://rdrr.io/r/base/locales.html">Sys.getlocale()</a></code> instead of <code><a href="https://rdrr.io/r/base/locales.html">Sys.getlocale("LC_COLLATE")</a></code></p></li>
 <li><p>Speed improvement for <code><a href="../reference/eucast_rules.html">eucast_rules()</a></code></p></li>
 <li><p>Overall speed improvement by tweaking joining functions</p></li>
 <li><p>Function <code><a href="../reference/mo_property.html">mo_shortname()</a></code> now returns the genus for input where the species is unknown</p></li>
 <li><p>BORSA is now recognised as an abbreviation for <em>Staphylococcus aureus</em>, meaning that e.g. <code><a href="../reference/mo_property.html">mo_genus("BORSA")</a></code> will return “Staphylococcus”</p></li>
 <li><p>Added a feature from AMR 1.1.0 and earlier again, but now without other package dependencies: <code>tibble</code> printing support for classes <code>&lt;rsi&gt;</code>, <code>&lt;mic&gt;</code>, <code>&lt;disk&gt;</code>, <code>&lt;ab&gt;</code> and <code>&lt;mo&gt;</code>. When using <code>tibble</code>s containing antimicrobial columns (class <code>&lt;rsi&gt;</code>), “S” will print in green, “I” will print in yellow and “R” will print in red. Microbial IDs (class <code>&lt;mo&gt;</code>) will emphasise on the genus and species, not on the kingdom.</p></li>
 <li><p>Names of antiviral agents in data set <code>antivirals</code> now have a starting capital letter, like it is the case in the <code>antibiotics</code> data set</p></li>
+</ul>
+</div>
+<div id="other" class="section level3">
+<h3 class="hasAnchor">
+<a href="#other" class="anchor"></a>Other</h3>
+<ul>
+<li>Removed unnecessary references to the <code>base</code> package</li>
+<li>Added packages that could be useful for some functions to the <code>Suggests</code> field of the <code>DESCRIPTION</code> file</li>
 </ul>
 </div>
 </div>
@@ -379,9 +397,9 @@
 <li><p>Fixed a bug where <code><a href="../reference/as.mic.html">as.mic()</a></code> could not handle dots without a leading zero (like <code>"&lt;=.25</code>)</p></li>
 </ul>
 </div>
-<div id="other" class="section level3">
+<div id="other-1" class="section level3">
 <h3 class="hasAnchor">
-<a href="#other" class="anchor"></a>Other</h3>
+<a href="#other-1" class="anchor"></a>Other</h3>
 <ul>
 <li>Moved primary location of this project from GitLab to <a href="https://github.com/msberends/AMR">GitHub</a>, giving us native support for automated syntax checking without being dependent on external services such as AppVeyor and Travis CI.</li>
 </ul>
@@ -441,9 +459,9 @@ This works for all drug combinations, such as ampicillin/sulbactam, ceftazidime/
 <li>Added abbreviation “cfsc” for Cefoxitin and “cfav” for Ceftazidime/avibactam</li>
 </ul>
 </div>
-<div id="other-1" class="section level3">
+<div id="other-2" class="section level3">
 <h3 class="hasAnchor">
-<a href="#other-1" class="anchor"></a>Other</h3>
+<a href="#other-2" class="anchor"></a>Other</h3>
 <ul>
 <li>Removed previously deprecated function <code>p.symbol()</code> - it was replaced with <code><a href="../reference/p_symbol.html">p_symbol()</a></code>
 </li>
@@ -483,9 +501,9 @@ This works for all drug combinations, such as ampicillin/sulbactam, ceftazidime/
 <li>Added generic CLSI rules for R/SI interpretation using <code><a href="../reference/as.rsi.html">as.rsi()</a></code> for years 2010-2019 (thanks to Anthony Underwood)</li>
 </ul>
 </div>
-<div id="other-2" class="section level3">
+<div id="other-3" class="section level3">
 <h3 class="hasAnchor">
-<a href="#other-2" class="anchor"></a>Other</h3>
+<a href="#other-3" class="anchor"></a>Other</h3>
 <ul>
 <li>Support for the upcoming <code>dplyr</code> version 1.0.0</li>
 <li>More robust assigning for classes <code>rsi</code> and <code>mic</code>
@@ -587,9 +605,9 @@ This works for all drug combinations, such as ampicillin/sulbactam, ceftazidime/
 </li>
 </ul>
 </div>
-<div id="other-3" class="section level3">
+<div id="other-4" class="section level3">
 <h3 class="hasAnchor">
-<a href="#other-3" class="anchor"></a>Other</h3>
+<a href="#other-4" class="anchor"></a>Other</h3>
 <ul>
 <li>Add a <code>CITATION</code> file</li>
 <li>Full support for the upcoming R 4.0</li>
@@ -695,9 +713,9 @@ This works for all drug combinations, such as ampicillin/sulbactam, ceftazidime/
 </li>
 </ul>
 </div>
-<div id="other-4" class="section level3">
+<div id="other-5" class="section level3">
 <h3 class="hasAnchor">
-<a href="#other-4" class="anchor"></a>Other</h3>
+<a href="#other-5" class="anchor"></a>Other</h3>
 <ul>
 <li>Rewrote the complete documentation to markdown format, to be able to use the very latest version of the great <a href="https://roxygen2.r-lib.org/index.html">Roxygen2</a>, released in November 2019. This tremously improved the documentation quality, since the rewrite forced us to go over all texts again and make changes where needed.</li>
 <li>Change dependency on <code>clean</code> to <code>cleaner</code>, as this package was renamed accordingly upon CRAN request</li>
@@ -861,9 +879,9 @@ This works for all drug combinations, such as ampicillin/sulbactam, ceftazidime/
 </li>
 <li>Added more MIC factor levels (<code><a href="../reference/as.mic.html">as.mic()</a></code>)</li>
 </ul>
-<div id="other-5" class="section level4">
+<div id="other-6" class="section level4">
 <h4 class="hasAnchor">
-<a href="#other-5" class="anchor"></a>Other</h4>
+<a href="#other-6" class="anchor"></a>Other</h4>
 <ul>
 <li>Added Prof. Dr. Casper Albers as doctoral advisor and added Dr. Judith Fonville, Eric Hazenberg, Dr. Bart Meijer, Dr. Dennis Souverein and Annick Lenglet as contributors</li>
 <li>Cleaned the coding style of every single syntax line in this package with the help of the <code>lintr</code> package</li>
@@ -948,9 +966,9 @@ This works for all drug combinations, such as ampicillin/sulbactam, ceftazidime/
 </li>
 </ul>
 </div>
-<div id="other-6" class="section level4">
+<div id="other-7" class="section level4">
 <h4 class="hasAnchor">
-<a href="#other-6" class="anchor"></a>Other</h4>
+<a href="#other-7" class="anchor"></a>Other</h4>
 <ul>
 <li>Fixed a note thrown by CRAN tests</li>
 </ul>
@@ -1044,9 +1062,9 @@ This works for all drug combinations, such as ampicillin/sulbactam, ceftazidime/
 <li>Fix for <code><a href="../reference/mo_property.html">mo_shortname()</a></code> where species would not be determined correctly</li>
 </ul>
 </div>
-<div id="other-7" class="section level4">
+<div id="other-8" class="section level4">
 <h4 class="hasAnchor">
-<a href="#other-7" class="anchor"></a>Other</h4>
+<a href="#other-8" class="anchor"></a>Other</h4>
 <ul>
 <li>Support for R 3.6.0 and later by providing support for <a href="https://developer.r-project.org/Blog/public/2019/02/14/staged-install/index.html">staged install</a>
 </li>
@@ -1311,9 +1329,9 @@ This works for all drug combinations, such as ampicillin/sulbactam, ceftazidime/
 <li>if using different lengths of pattern and x in <code><a href="../reference/like.html">%like%</a></code>, it will now return the call</li>
 </ul>
 </div>
-<div id="other-8" class="section level4">
+<div id="other-9" class="section level4">
 <h4 class="hasAnchor">
-<a href="#other-8" class="anchor"></a>Other</h4>
+<a href="#other-9" class="anchor"></a>Other</h4>
 <ul>
 <li>Updated licence text to emphasise GPL 2.0 and that this is an R package.</li>
 </ul>
@@ -1433,9 +1451,9 @@ This works for all drug combinations, such as ampicillin/sulbactam, ceftazidime/
 <li><p>Percentages will now will rounded more logically (e.g. in <code>freq</code> function)</p></li>
 </ul>
 </div>
-<div id="other-9" class="section level4">
+<div id="other-10" class="section level4">
 <h4 class="hasAnchor">
-<a href="#other-9" class="anchor"></a>Other</h4>
+<a href="#other-10" class="anchor"></a>Other</h4>
 <ul>
 <li>New dependency on package <code>crayon</code>, to support formatted text in the console</li>
 <li>Dependency <code>tidyr</code> is now mandatory (went to <code>Import</code> field) since <code>portion_df</code> and <code>count_df</code> rely on it</li>
@@ -1584,9 +1602,9 @@ This works for all drug combinations, such as ampicillin/sulbactam, ceftazidime/
 </li>
 </ul>
 </div>
-<div id="other-10" class="section level4">
+<div id="other-11" class="section level4">
 <h4 class="hasAnchor">
-<a href="#other-10" class="anchor"></a>Other</h4>
+<a href="#other-11" class="anchor"></a>Other</h4>
 <ul>
 <li>More unit tests to ensure better integrity of functions</li>
 </ul>
@@ -1713,9 +1731,9 @@ This works for all drug combinations, such as ampicillin/sulbactam, ceftazidime/
 <li>Other small fixes</li>
 </ul>
 </div>
-<div id="other-11" class="section level4">
+<div id="other-12" class="section level4">
 <h4 class="hasAnchor">
-<a href="#other-11" class="anchor"></a>Other</h4>
+<a href="#other-12" class="anchor"></a>Other</h4>
 <ul>
 <li>Added integration tests (check if everything works as expected) for all releases of R 3.1 and higher
 <ul>
@@ -1775,9 +1793,9 @@ This works for all drug combinations, such as ampicillin/sulbactam, ceftazidime/
 <li>Functions <code>as.rsi</code> and <code>as.mic</code> now add the package name and version as attributes</li>
 </ul>
 </div>
-<div id="other-12" class="section level4">
+<div id="other-13" class="section level4">
 <h4 class="hasAnchor">
-<a href="#other-12" class="anchor"></a>Other</h4>
+<a href="#other-13" class="anchor"></a>Other</h4>
 <ul>
 <li>Expanded <code>README.md</code> with more examples</li>
 <li>Added <a href="https://orcid.org">ORCID</a> of authors to DESCRIPTION file</li>

@@ -48,7 +48,7 @@ distinct.default <- function(.data, ..., .keep_all = FALSE) {
 distinct.grouped_data <- function(.data, ..., .keep_all = FALSE) {
   apply_grouped_function(.data, "distinct", ..., .keep_all = .keep_all)
 }
-# faster implementation of left_join than using base::merge() by poorman - we use base::match():
+# faster implementation of left_join than using merge() by poorman - we use match():
 left_join <- function(x, y, by = NULL, suffix = c(".x", ".y")) {
   if (is.null(by)) {
     by <- intersect(names(x), names(y))[1L]
@@ -606,7 +606,7 @@ percentage <- function(x, digits = NULL, ...) {
 }
 
 # prevent dependency on package 'backports'
-# these functions were not available in previous versions of R (last checked: R 4.0.0)
+# these functions were not available in previous versions of R (last checked: R 4.0.2)
 # see here for the full list: https://github.com/r-lib/backports
 strrep <- function(x, times) {
   x <- as.character(x)
@@ -636,8 +636,14 @@ deparse1 <- function(expr, collapse = " ", width.cutoff = 500L, ...) {
   paste(deparse(expr, width.cutoff, ...), collapse = collapse)
 }
 file.size <- function(...) {
-  base::file.info(...)$size
+  file.info(...)$size
 }
 file.mtime <- function(...) {
-  base::file.info(...)$mtime
+  file.info(...)$mtime
+}
+str2lang <- function(s) {
+  stopifnot(length(s) == 1L)
+  ex <- parse(text = s, keep.source=FALSE)
+  stopifnot(length(ex) == 1L)
+  ex[[1L]]
 }

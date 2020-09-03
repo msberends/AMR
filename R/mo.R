@@ -19,7 +19,7 @@
 # Visit our website for more info: https://msberends.github.io/AMR.    #
 # ==================================================================== #
 
-#' Transform to microorganism ID
+#' Transform input to a microorganism ID
 #'
 #' Use this function to determine a valid microorganism ID ([`mo`]). Determination is done using intelligent rules and the complete taxonomic kingdoms Bacteria, Chromista, Protozoa, Archaea and most microbial species from the kingdom Fungi (see Source). The input can be almost anything: a full name (like `"Staphylococcus aureus"`), an abbreviated name (like `"S. aureus"`), an abbreviation known in the field (like `"MRSA"`), or just a genus. Please see *Examples*.
 #' @inheritSection lifecycle Stable lifecycle
@@ -32,6 +32,7 @@
 #' This excludes *Enterococci* at default (who are in group D), use `Lancefield = "all"` to also categorise all *Enterococci* as group D.
 #' @param allow_uncertain a number between `0` (or `"none"`) and `3` (or `"all"`), or `TRUE` (= `2`) or `FALSE` (= `0`) to indicate whether the input should be checked for less probable results, please see *Details*
 #' @param reference_df a [`data.frame`] to be used for extra reference when translating `x` to a valid [`mo`]. See [set_mo_source()] and [get_mo_source()] to automate the usage of your own codes (e.g. used in your analysis or organisation).
+#' @param ignore_pattern a regular expression (case-insensitive) of which all matches in `x` must return `NA`. This can be convenient to exclude known non-relevant input and can also be set with the option `AMR_ignore_pattern`, e.g. `options(AMR_ignore_pattern = "(not reported|contaminated flora)")`.
 #' @param ... other parameters passed on to functions
 #' @rdname as.mo
 #' @aliases mo
@@ -39,7 +40,7 @@
 #' @details
 #' ## General info
 #' 
-#' A microorganism ID from this package (class: [`mo`]) typically looks like these examples:
+#' A microorganism ID from this package (class: [`mo`]) is human readable and typically looks like these examples:
 #' ```
 #'   Code               Full name
 #'   ---------------    --------------------------------------
@@ -48,10 +49,10 @@
 #'   B_KLBSL_PNMN_RHNS  Klebsiella pneumoniae rhinoscleromatis
 #'   |   |    |    |
 #'   |   |    |    |
-#'   |   |    |     ---> subspecies, a 4-5 letter acronym
-#'   |   |     ----> species, a 4-5 letter acronym
-#'   |    ----> genus, a 5-7 letter acronym
-#'    ----> taxonomic kingdom: A (Archaea), AN (Animalia), B (Bacteria),
+#'   |   |    |    \---> subspecies, a 4-5 letter acronym
+#'   |   |    \----> species, a 4-5 letter acronym
+#'   |   \----> genus, a 5-7 letter acronym
+#'   \----> taxonomic kingdom: A (Archaea), AN (Animalia), B (Bacteria),
 #'                             C (Chromista), F (Fungi), P (Protozoa)
 #' ```
 #'
@@ -172,7 +173,8 @@ as.mo <- function(x,
                   Becker = FALSE, 
                   Lancefield = FALSE, 
                   allow_uncertain = TRUE, 
-                  reference_df = get_mo_source(), 
+                  reference_df = get_mo_source(),
+                  ignore_pattern = getOption("AMR_ignore_pattern"),
                   ...) {
   
   check_dataset_integrity()
@@ -181,10 +183,12 @@ as.mo <- function(x,
   x <- parse_and_convert(x)
   # replace mo codes used in older package versions
   x <- replace_old_mo_codes(x, property = "mo")
+  # ignore cases that match the ignore pattern
+  x <- replace_ignore_pattern(x, ignore_pattern)
   
   # WHONET: xxx = no growth
   x[tolower(as.character(paste0(x, ""))) %in% c("", "xxx", "na", "nan")] <- NA_character_
-  # Laboratory systems: remove entries like "no growth" etc
+  # Laboratory systems: remove entries like "no growth", etc.
   x[trimws2(x) %like% "(no .*growth|keine? .*wachtstum|geen .*groei|no .*crecimientonon|sem .*crescimento|pas .*croissance)"] <- NA_character_
   x[trimws2(x) %like% "^(no|not|kein|geen|niet|non|sem) [a-z]+"] <- "UNKNOWN"
   
@@ -226,6 +230,7 @@ as.mo <- function(x,
     y <- mo_validate(x = x, property = "mo",
                      Becker = Becker, Lancefield = Lancefield,
                      allow_uncertain = uncertainty_level, reference_df = reference_df,
+                     ignore_pattern = ignore_pattern,
                      ...)
   }
   
@@ -257,6 +262,7 @@ exec_as.mo <- function(x,
                        initial_search = TRUE,
                        dyslexia_mode = FALSE,
                        debug = FALSE,
+                       ignore_pattern = getOption("AMR_ignore_pattern"),
                        reference_data_to_use = MO_lookup) {
   
   check_dataset_integrity()
@@ -294,6 +300,8 @@ exec_as.mo <- function(x,
   x <- parse_and_convert(x)
   # replace mo codes used in older package versions
   x <- replace_old_mo_codes(x, property)
+  # ignore cases that match the ignore pattern
+  x <- replace_ignore_pattern(x, ignore_pattern)
   
   # WHONET: xxx = no growth
   x[tolower(as.character(paste0(x, ""))) %in% c("", "xxx", "na", "nan")] <- NA_character_
@@ -360,37 +368,31 @@ exec_as.mo <- function(x,
     # all in reference df
     colnames(reference_df)[1] <- "x"
     suppressWarnings(
-      x <- data.frame(x = x, stringsAsFactors = FALSE) %>%
-        left_join(reference_df, by = "x") %>%
-        left_join(microorganisms, by = "mo") %>%
-        pull(property)
+      x <- MO_lookup[match(reference_df[match(x, reference_df$x), "mo", drop = TRUE], MO_lookup$mo), property, drop = TRUE]
     )
     
   } else if (all(x %in% reference_data_to_use$mo)) {
-    x <- data.frame(mo = x, stringsAsFactors = FALSE) %>% 
-      left_join_microorganisms(by = "mo") %>% 
-      pull(property)
+    x <- MO_lookup[match(x, MO_lookup$mo), property, drop = TRUE]
     
   } else if (all(tolower(x) %in% reference_data_to_use$fullname_lower)) {
     # we need special treatment for very prevalent full names, they are likely!
     # e.g. as.mo("Staphylococcus aureus")
-    x <- data.frame(fullname_lower = tolower(x), stringsAsFactors = FALSE) %>% 
-      left_join_MO_lookup(by = "fullname_lower") %>% 
-      pull(property)
-    
+    x <- MO_lookup[match(tolower(x), MO_lookup$fullname_lower), property, drop = TRUE]
+
   } else if (all(x %in% reference_data_to_use$fullname)) {
     # we need special treatment for very prevalent full names, they are likely!
     # e.g. as.mo("Staphylococcus aureus")
-    x <- data.frame(fullname = x, stringsAsFactors = FALSE) %>% 
-      left_join_MO_lookup(by = "fullname") %>% 
-      pull(property)
+    x <- MO_lookup[match(x, MO_lookup$fullname), property, drop = TRUE]
     
   } else if (all(toupper(x) %in% microorganisms.codes$code)) {
     # commonly used MO codes
-    x <- data.frame(code = toupper(x), stringsAsFactors = FALSE) %>%
-      left_join(microorganisms.codes, by = "code") %>%
-      left_join_MO_lookup(by = "mo") %>%
-      pull(property)
+    x <- MO_lookup[match(microorganisms.codes[match(toupper(x), 
+                                                    microorganisms.codes$code), 
+                                              "mo",
+                                              drop = TRUE], 
+                         MO_lookup$mo), 
+                   property,
+                   drop = TRUE]
     
   } else if (!all(x %in% microorganisms[, property])) {
     
@@ -1466,7 +1468,7 @@ exec_as.mo <- function(x,
   df_input <- data.frame(input = as.character(x_input),
                          stringsAsFactors = FALSE)
   
-  # super fast using base::match() which is a lot faster than base::merge()
+  # super fast using match() which is a lot faster than merge()
   x <- df_found$found[match(df_input$input, df_found$input)]
   
   if (property == "mo") {
@@ -1800,11 +1802,11 @@ levenshtein_fraction <- function(input, output) {
   levenshtein <- double(length = length(input))
   for (i in seq_len(length(input))) {
     # determine Levenshtein distance, but maximise to nchar of output
-    levenshtein[i] <- base::min(base::as.double(utils::adist(input[i], output[i], ignore.case = TRUE)),
-                                base::nchar(output[i]))
+    levenshtein[i] <- min(as.double(utils::adist(input[i], output[i], ignore.case = TRUE)),
+                                nchar(output[i]))
   }
   # self-made score between 0 and 1 (for % certainty, so 0 means huge distance, 1 means no distance)
-  (base::nchar(output) - 0.5 * levenshtein) / nchar(output)
+  (nchar(output) - 0.5 * levenshtein) / nchar(output)
 }
 
 trimws2 <- function(x) {
@@ -1845,6 +1847,19 @@ replace_old_mo_codes <- function(x, property) {
     x[which(!is.na(matched))] <- mo_new[which(!is.na(matched))]
     if (property != "mo") {
       message(font_blue("NOTE: Old microbial codes (from previous package versions) were replaced with current codes used by this package.\n      Please update your MO codes with as.mo()." ))
+    }
+  }
+  x
+}
+
+replace_ignore_pattern <- function(x, ignore_pattern) {
+  if (!is.null(ignore_pattern) && !identical(trimws2(ignore_pattern), "")) {
+    ignore_cases <- x %like% ignore_pattern
+    if (sum(ignore_cases) > 0) {
+      message(font_blue(paste0("NOTE: the following input was ignored by `ignore_pattern = \"", ignore_pattern, "\"`: ", 
+                               paste0("'", sort(unique(x[x %like% ignore_pattern])), "'", collapse = ", "), 
+                               collapse = ", ")))
+      x[x %like% ignore_pattern] <- NA_character_
     }
   }
   x

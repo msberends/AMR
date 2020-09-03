@@ -15,7 +15,7 @@
 \alias{ab_ddd}
 \alias{ab_info}
 \alias{ab_url}
-\title{Property of an antibiotic}
+\title{Get properties of an antibiotic}
 \usage{
 ab_name(x, language = get_locale(), tolower = FALSE, ...)
 

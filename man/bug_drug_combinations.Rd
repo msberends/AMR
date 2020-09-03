@@ -62,8 +62,6 @@ Determine antimicrobial resistance (AMR) of all bug-drug combinations in your da
 }
 \details{
 The function \code{\link[=format]{format()}} calculates the resistance per bug-drug combination. Use \code{combine_IR = FALSE} (default) to test R vs. S+I and \code{combine_IR = TRUE} to test R+I vs. S.
-
-The language of the output can be overwritten with \code{options(AMR_locale)}, please see \link{translate}.
 }
 \section{Stable lifecycle}{
 

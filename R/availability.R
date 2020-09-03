@@ -47,11 +47,11 @@
 #' }
 availability <- function(tbl, width = NULL) {
   stop_ifnot(is.data.frame(tbl), "`tbl` must be a data.frame")
-  x <- base::sapply(tbl, function(x) {
-    1 - base::sum(base::is.na(x)) / base::length(x) 
+  x <- sapply(tbl, function(x) {
+    1 - sum(is.na(x)) / length(x) 
   })
-  n <- base::sapply(tbl, function(x) base::length(x[!base::is.na(x)]))
-  R <- base::sapply(tbl, function(x) base::ifelse(is.rsi(x), resistance(x, minimum = 0), NA))
+  n <- sapply(tbl, function(x) length(x[!is.na(x)]))
+  R <- sapply(tbl, function(x) ifelse(is.rsi(x), resistance(x, minimum = 0), NA))
   R_print <- character(length(R))
   R_print[!is.na(R)] <- percentage(R[!is.na(R)])
   R_print[is.na(R)] <- ""

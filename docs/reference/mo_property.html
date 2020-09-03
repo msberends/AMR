@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Property of a microorganism — mo_property • AMR (for R)</title>
+<title>Get properties of a microorganism — mo_property • AMR (for R)</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -48,8 +48,8 @@
   <link href="../extra.css" rel="stylesheet">
   <script src="../extra.js"></script>
 
-<meta property="og:title" content="Property of a microorganism — mo_property" />
-<meta property="og:description" content="Use these functions to return a specific property of a microorganism. All input values will be evaluated internally with as.mo(), which makes it possible to use microbial abbreviations, codes and names as input. Please see Examples." />
+<meta property="og:title" content="Get properties of a microorganism — mo_property" />
+<meta property="og:description" content="Use these functions to return a specific property of a microorganism based on the latest accepted taxonomy. All input values will be evaluated internally with as.mo(), which makes it possible to use microbial abbreviations, codes and names as input. Please see Examples." />
 <meta property="og:image" content="https://msberends.github.io/AMR/logo.svg" />
 
 
@@ -82,7 +82,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.3.0.9007</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.3.0.9014</span>
       </span>
     </div>
 
@@ -122,7 +122,7 @@
       <a href="../articles/datasets.html">
         <span class="fa fa-database"></span>
          
-        Download our reference data sets for own use
+        Data sets for download / own use
       </a>
     </li>
     <li>
@@ -233,13 +233,13 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Property of a microorganism</h1>
+    <h1>Get properties of a microorganism</h1>
     <small class="dont-index">Source: <a href='https://github.com/msberends/AMR/blob/master/R/mo_property.R'><code>R/mo_property.R</code></a></small>
     <div class="hidden name"><code>mo_property.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Use these functions to return a specific property of a microorganism. All input values will be evaluated internally with <code><a href='as.mo.html'>as.mo()</a></code>, which makes it possible to use microbial abbreviations, codes and names as input. Please see <em>Examples</em>.</p>
+    <p>Use these functions to return a specific property of a microorganism based on the latest accepted taxonomy. All input values will be evaluated internally with <code><a href='as.mo.html'>as.mo()</a></code>, which makes it possible to use microbial abbreviations, codes and names as input. Please see <em>Examples</em>.</p>
     </div>
 
     <pre class="usage"><span class='fu'>mo_name</span>(<span class='kw'>x</span>, language = <span class='fu'><a href='translate.html'>get_locale</a></span>(), <span class='kw'>...</span>)
@@ -299,11 +299,11 @@
     </tr>
     <tr>
       <th>language</th>
-      <td><p>language of the returned text, defaults to system language (see <code><a href='translate.html'>get_locale()</a></code>) and can also be set with <code><a href='https://rdrr.io/r/base/options.html'>getOption("AMR_locale")</a></code>. Use <code>language = NULL</code> or <code>language = ""</code> to prevent translation.</p></td>
+      <td><p>language of the returned text, defaults to system language (see <code><a href='translate.html'>get_locale()</a></code>) and can be overwritten by setting the option <code>AMR_locale</code>, e.g. <code><a href='https://rdrr.io/r/base/options.html'>options(AMR_locale = "de")</a></code>, see <a href='translate.html'>translate</a>. Use <code>language = NULL</code> or <code>language = ""</code> to prevent translation.</p></td>
     </tr>
     <tr>
       <th>...</th>
-      <td><p>other parameters passed on to <code><a href='as.mo.html'>as.mo()</a></code></p></td>
+      <td><p>other parameters passed on to <code><a href='as.mo.html'>as.mo()</a></code>, such as 'allow_uncertain' and 'ignore_pattern'</p></td>
     </tr>
     <tr>
       <th>open</th>
