@@ -178,6 +178,13 @@ as.mo <- function(x,
                   ...) {
   
   check_dataset_integrity()
+       
+  if (tryCatch(all(tolower(x) %in% MO_lookup$fullname_lower, na.rm = TRUE)
+               & isFALSE(Becker)
+               & isFALSE(Lancefield), error = function(e) FALSE)) {
+    # to improve speed, special case for taxonomically correct full names (case-insensitive)
+    return(MO_lookup[match(tolower(x), MO_lookup$fullname_lower), "mo", drop = TRUE])
+  }
   
   # start off with replaced language-specific non-ASCII characters with ASCII characters
   x <- parse_and_convert(x)

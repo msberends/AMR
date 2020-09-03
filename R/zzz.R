@@ -29,7 +29,7 @@
          envir = asNamespace("AMR"))
   
   assign(x = "LANGUAGES_SUPPORTED",
-         value = sort(c("en", unique(AMR:::translations_file$lang))),
+         value = sort(c("en", unique(translations_file$lang))),
          envir = asNamespace("AMR"))
 
   # support for tibble headers (type_sum) and tibble columns content (pillar_shaft)
@@ -50,13 +50,13 @@
 }
 
 .onAttach <- function(...) {
-  if (!interactive() || stats::runif(1) > 0.1 || isTRUE(as.logical(Sys.getenv("AMR_silentstart", FALSE)))) {
+  if (!interactive() || stats::runif(1) > 0.1 || isTRUE(as.logical(getOption("AMR_silentstart", FALSE)))) {
     return()
   }
   packageStartupMessage("Thank you for using the AMR package! ",
                         "If you have a minute, please anonymously fill in this short questionnaire to improve the package and its functionalities:",
                         "\nhttps://msberends.github.io/AMR/survey.html",
-                        "\n[ prevent his notice with suppressPackageStartupMessages(library(AMR)) or use Sys.setenv(AMR_silentstart = TRUE) ]")
+                        "\n[ prevent his notice with suppressPackageStartupMessages(library(AMR)) or use options(AMR_silentstart = TRUE) ]")
 }
 
 create_MO_lookup <- function() {

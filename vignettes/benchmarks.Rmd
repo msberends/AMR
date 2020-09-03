@@ -76,7 +76,6 @@ S.aureus <- microbenchmark(
   as.mo("MRSA"), # Methicillin Resistant S. aureus
   as.mo("VISA"), # Vancomycin Intermediate S. aureus
   as.mo("VRSA"), # Vancomycin Resistant S. aureus
-  as.mo(22242419), # Catalogue of Life ID
   times = 10)
 print(S.aureus, unit = "ms", signif = 2)
 ```
@@ -84,7 +83,7 @@ print(S.aureus, unit = "ms", signif = 2)
 ggplot.bm(S.aureus)
 ```
 
-In the table above, all measurements are shown in milliseconds (thousands of seconds). A value of 5 milliseconds means it can determine 200 input values per second. It case of 100 milliseconds, this is only 10 input values per second. 
+In the table above, all measurements are shown in milliseconds (thousands of seconds). A value of 5 milliseconds means it can determine 200 input values per second. It case of 100 milliseconds, this is only 10 input values per second. It is clear that accepted taxonomic names are extremely fast, but some variations can take up to 500-1000 times as much time.
 
 To improve performance, two important calculations take almost no time at all: **repetitive results** and **already precalculated results**.
 
@@ -95,16 +94,12 @@ Repetitive results are unique values that are present more than once. Unique val
 ```{r, message = FALSE}
 # take all MO codes from the example_isolates data set
 x <- example_isolates$mo %>%
-  # keep only the unique ones
-  unique() %>%
-  # pick 50 of them at random
-  sample(50) %>%
-  # paste that 10,000 times
-  rep(10000) %>%
-  # scramble it
+  # and copy them a thousand times
+  rep(1000) %>%
+  # then scramble them
   sample()
   
-# got indeed 50 times 10,000 = half a million?
+# as the example_isolates has 2,000 rows, we should have 2 million items
 length(x)
 
 # and how many unique values do we have?
@@ -116,14 +111,14 @@ run_it <- microbenchmark(mo_name(x),
 print(run_it, unit = "ms", signif = 3)
 ```
 
-So transforming 500,000 values (!!) of `r n_distinct(x)` unique values only takes `r round(median(run_it$time, na.rm = TRUE) / 1e9, 2)` seconds. You only lose time on your unique input values.
+So getting official taxonomic names of `r format(length(x), big.mark = ",")` (!!) items consisting of `r n_distinct(x)` unique values only takes `r round(median(run_it$time, na.rm = TRUE) / 1e9, 3)` seconds. You only lose time on your unique input values.
 
 ### Precalculated results
 
 What about precalculated results? If the input is an already precalculated result of a helper function like `mo_name()`, it almost doesn't take any time at all (see 'C' below):
 
 ```{r}
-run_it <- microbenchmark(A = mo_name("B_STPHY_AURS"),
+run_it <- microbenchmark(A = mo_name("STAAUR"),
                          B = mo_name("S. aureus"),
                          C = mo_name("Staphylococcus aureus"),
                          times = 10)

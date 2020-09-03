@@ -20,6 +20,10 @@ knitr::opts_chunk$set(
   fig.width = 7.5,
   fig.height = 5
 )
+
+library(AMR)
+library(dplyr)
+
 options(knitr.kable.NA = '')
 
 file_size <- function(...) {
@@ -73,9 +77,6 @@ download_txt <- function(filename) {
   msg[length(msg)] <- gsub(" --", ".", msg[length(msg)], fixed = TRUE)
   paste0(msg, collapse = "")
 }
-
-library(AMR)
-library(dplyr)
 
 print_df <- function(x, rows = 6) {
   x %>% 
